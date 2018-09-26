@@ -3,6 +3,7 @@ project(qt-mvvm)
 
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 
+include(CTest)
 include(configuration)
 
 add_subdirectory(mvvm)

@@ -14,4 +14,5 @@ set(CMAKE_AUTOMOC ON)
 add_executable(${test} ${source_files} ${include_files})
 target_link_libraries(${test} gtest Qt5::Core Qt5::Test mvvm)
 
-add_custom_target(${test}_run ALL DEPENDS ${test} COMMAND ${test})
+#add_custom_target(${test}_run ALL DEPENDS ${test} COMMAND ${test})
+gtest_discover_tests(${test})
