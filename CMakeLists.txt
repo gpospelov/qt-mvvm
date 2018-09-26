@@ -7,6 +7,7 @@ include(configuration)
 
 add_subdirectory(mvvm)
 add_subdirectory(app)
+add_subdirectory(thirdparty/gtest)
 
 
 
