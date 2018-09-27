@@ -65,6 +65,7 @@ TEST_F(TestSessionItem, insertChildren)
     auto child1 = new SessionItem;
     auto child2 = new SessionItem;
     auto child3 = new SessionItem;
+    auto child4 = new SessionItem;
 
     // inserting two items
     parent->insertItem(-1, child1);
@@ -87,4 +88,50 @@ TEST_F(TestSessionItem, insertChildren)
     EXPECT_EQ(parent->childAt(1), child3);
     EXPECT_EQ(parent->childAt(2), child2);
     EXPECT_EQ(parent->childAt(3), nullptr);
+
+    // inserting forth item using index equal to number of items
+    parent->insertItem(parent->childrenCount(), child4);
+
+    // checking parents
+    EXPECT_EQ(child1->parent(), parent.get());
+    EXPECT_EQ(child2->parent(), parent.get());
+    EXPECT_EQ(child3->parent(), parent.get());
+    EXPECT_EQ(child4->parent(), parent.get());
+
+    // attempt to insert same item twice
+    EXPECT_THROW(parent->insertItem(-1, child2), std::runtime_error);
+
+    // attempt to insert item using out of scope index
+    auto child5 = new SessionItem;
+    EXPECT_THROW(parent->insertItem(parent->childrenCount()+1, child5), std::runtime_error);
+    delete child5;
 }
+
+TEST_F(TestSessionItem, takeRow)
+{
+    std::unique_ptr<SessionItem> parent(new SessionItem);
+    auto child1 = new SessionItem;
+    auto child2 = new SessionItem;
+    auto child3 = new SessionItem;
+
+    // inserting items
+    parent->insertItem(-1, child1);
+    parent->insertItem(-1, child2);
+    parent->insertItem(-1, child3);
+
+    // taking non-existing rows
+    auto taken = parent->takeRow(-1);
+    EXPECT_EQ(taken, nullptr);
+    taken = parent->takeRow(parent->childrenCount());
+    EXPECT_EQ(taken, nullptr);
+    EXPECT_EQ(parent->childrenCount(), 3);
+
+    // taking first row
+    taken = parent->takeRow(0);
+    EXPECT_EQ(taken->parent(), nullptr);
+    std::vector<SessionItem*> expected = {child2, child3};
+    EXPECT_EQ(parent->children(), expected);
+
+    delete taken;
+}
+

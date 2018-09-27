@@ -93,6 +93,21 @@ int SessionItem::rowOfChild(SessionItem* child) const
     return pos == m_children.end() ? -1 : static_cast<int>(std::distance(m_children.begin(), pos));
 }
 
+//! Removes row from item and returns the item.
+
+SessionItem* SessionItem::takeRow(int row)
+{
+    SessionItem* result(nullptr);
+
+    if (row >=0 && row < childrenCount()) {
+        m_children.erase(m_children.begin() + row);
+        auto result = childAt(row);
+        if (result)
+            result->setParent(nullptr);
+    }
+    return result;
+}
+
 void SessionItem::setParent(SessionItem* parent)
 {
     m_parent = parent;

@@ -39,6 +39,8 @@ public:
 
     int rowOfChild(SessionItem* child) const;
 
+    SessionItem* takeRow(int row);
+
 private:
     void setParent(SessionItem* parent);
     void setModel(SessionModel* model);
