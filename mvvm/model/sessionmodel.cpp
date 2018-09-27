@@ -9,6 +9,8 @@
 
 #include "sessionmodel.h"
 #include "sessionitem.h"
+#include "commands.h"
+#include <QUndoStack>
 
 SessionModel::SessionModel()
     : m_root_item(nullptr)
@@ -45,7 +47,13 @@ QVariant SessionModel::data(SessionItem* item) const
 
 bool SessionModel::setData(SessionItem* item, const QVariant& value)
 {
-    return item->setData(value);
+    if (m_undoStack) {
+        m_undoStack->push(new SetValueCommand(this, pathFromItem(item), value));
+    } else {
+        return item->setData(value);
+    }
+
+    return true;
 }
 
 //! Returns path from item.
@@ -75,6 +83,19 @@ SessionItem* SessionModel::itemFromPath(Path path)
     }
 
     return result;
+}
+
+void SessionModel::setUndoRedoEnabled(bool value)
+{
+    if (value)
+        m_undoStack.reset(new QUndoStack);
+    else
+        m_undoStack.reset();
+}
+
+QUndoStack* SessionModel::undoStack() const
+{
+    return m_undoStack.get();
 }
 
 void SessionModel::createRootItem()

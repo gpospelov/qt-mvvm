@@ -38,3 +38,18 @@ TEST_F(TestSessionModel, insertItem)
     EXPECT_EQ(child->model(), nullptr);
     delete taken;
 }
+
+TEST_F(TestSessionModel, setData)
+{
+    SessionModel model;
+
+    // inserting single item
+    auto item = model.insertNewItem();
+    EXPECT_FALSE(model.data(item).isValid());
+
+    // setting new data
+    QVariant value(42.0);
+    model.setData(item, value);
+    EXPECT_EQ(model.data(item), value);
+}
+

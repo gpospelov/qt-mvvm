@@ -11,8 +11,11 @@
 #define SESSIONMODEL_H
 
 #include <QVariant>
+#include <memory>
 #include "path.h"
+
 class SessionItem;
+class QUndoStack;
 
 class SessionModel
 {
@@ -31,10 +34,15 @@ public:
     Path pathFromItem(SessionItem* item);
     SessionItem* itemFromPath(Path path);
 
+    void setUndoRedoEnabled(bool value);
+
+    QUndoStack *undoStack() const;
+
 private:
     void createRootItem();
 
     SessionItem* m_root_item;
+    std::unique_ptr<QUndoStack> m_undoStack;
 };
 
 #endif
