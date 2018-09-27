@@ -100,7 +100,7 @@ SessionItem* SessionItem::takeRow(int row)
     SessionItem* result(nullptr);
 
     if (row >=0 && row < childrenCount()) {
-        auto result = childAt(row);
+        result = childAt(row);
         m_children.erase(m_children.begin() + row);
         if (result)
             result->setParent(nullptr);
