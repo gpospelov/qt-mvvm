@@ -10,6 +10,7 @@
 #ifndef SESSIONMODEL_H
 #define SESSIONMODEL_H
 
+#include <QVariant>
 class SessionItem;
 
 class SessionModel
@@ -21,6 +22,11 @@ public:
     SessionItem* insertNewItem(SessionItem* parent = nullptr, int row = -1);
 
     SessionItem* rootItem() const;
+
+    QVariant data(SessionItem* item) const;
+
+    bool setData(SessionItem* item, const QVariant& value);
+
 private:
     void createRootItem();
 

@@ -102,8 +102,10 @@ SessionItem* SessionItem::takeRow(int row)
     if (row >=0 && row < childrenCount()) {
         result = childAt(row);
         m_children.erase(m_children.begin() + row);
-        if (result)
+        if (result) {
             result->setParent(nullptr);
+            result->setModel(nullptr);
+        }
     }
     return result;
 }

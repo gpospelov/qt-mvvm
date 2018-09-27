@@ -38,6 +38,16 @@ SessionItem* SessionModel::rootItem() const
     return m_root_item;
 }
 
+QVariant SessionModel::data(SessionItem* item) const
+{
+    return item->data();
+}
+
+bool SessionModel::setData(SessionItem* item, const QVariant& value)
+{
+    return item->setData(value);
+}
+
 void SessionModel::createRootItem()
 {
     m_root_item = new SessionItem;
