@@ -135,3 +135,50 @@ TEST_F(TestSessionItem, takeRow)
     delete taken;
 }
 
+TEST_F(TestSessionItem, littleTree)
+{
+    std::unique_ptr<SessionItem> parent(new SessionItem);
+    auto child1 = new SessionItem;
+    auto child2 = new SessionItem;
+    auto child3 = new SessionItem;
+
+    auto child11 = new SessionItem;
+    auto child12 = new SessionItem;
+    auto child31 = new SessionItem;
+    auto child32 = new SessionItem;
+
+    // creating tree
+    child1->insertItem(-1, child11);
+    child1->insertItem(-1, child12);
+    child3->insertItem(-1, child31);
+    child3->insertItem(-1, child32);
+
+    parent->insertItem(-1, child1);
+    parent->insertItem(-1, child2);
+    parent->insertItem(-1, child3);
+
+    // checking parents
+    EXPECT_EQ(parent->childrenCount(), 3);
+    EXPECT_EQ(child1->childrenCount(), 2);
+    EXPECT_EQ(child2->childrenCount(), 1);
+    EXPECT_EQ(child3->childrenCount(), 2);
+
+    EXPECT_EQ(child1->parent(), parent.get());
+    EXPECT_EQ(child2->parent(), parent.get());
+    EXPECT_EQ(child3->parent(), parent.get());
+
+    EXPECT_EQ(child11->parent(), child1);
+    EXPECT_EQ(child12->parent(), child1);
+    EXPECT_EQ(child31->parent(), child3);
+    EXPECT_EQ(child32->parent(), child3);
+
+    // take last row
+    auto taken = parent->takeRow(2);
+    EXPECT_EQ(taken, child3);
+    EXPECT_EQ(child3->parent(), nullptr);
+    EXPECT_EQ(child31->parent(), child3);
+    EXPECT_EQ(child32->parent(), child3);
+    delete taken;
+}
+
+
