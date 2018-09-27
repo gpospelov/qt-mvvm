@@ -13,19 +13,37 @@
 #include <vector>
 #include <string>
 
+//! Provides navigation through SessionModel.
+//! Contains chain of row indexes which has to be used to reach desired SessionItem starting
+//! from root item.
+
 class Path
 {
 public:
     using PathElement = int;
+    using container_t = std::vector<PathElement>;
+    using iterator = container_t::iterator;
+    using const_iterator = container_t::const_iterator;
 
     Path() = default;
+
+    static Path fromString(const std::string& str);
+
+    static Path fromVector(const std::vector<int>& data);
 
     std::string str();
 
     void append(PathElement element);
+    void prepend(PathElement element);
+
+    iterator begin();
+    const_iterator begin() const;
+
+    iterator end();
+    const_iterator end() const;
 
 private:
-    std::vector<PathElement> m_data;
+    container_t m_data;
 };
 
 #endif

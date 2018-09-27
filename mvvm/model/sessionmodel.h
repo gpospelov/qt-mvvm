@@ -11,6 +11,7 @@
 #define SESSIONMODEL_H
 
 #include <QVariant>
+#include "path.h"
 class SessionItem;
 
 class SessionModel
@@ -26,6 +27,9 @@ public:
     QVariant data(SessionItem* item) const;
 
     bool setData(SessionItem* item, const QVariant& value);
+
+    Path pathFromItem(SessionItem* item);
+    SessionItem* itemFromPath(Path path);
 
 private:
     void createRootItem();

@@ -48,6 +48,35 @@ bool SessionModel::setData(SessionItem* item, const QVariant& value)
     return item->setData(value);
 }
 
+//! Returns path from item.
+
+Path SessionModel::pathFromItem(SessionItem* item)
+{
+    Path result;
+
+    SessionItem* current(item);
+    while (current && current->parent()) {
+        result.prepend(current->parent()->rowOfChild(current));
+        current = current->parent();
+    }
+
+    return result;
+}
+
+//! Returns item from path.
+
+SessionItem* SessionModel::itemFromPath(Path path)
+{
+    SessionItem* result(rootItem());
+    for(const auto& x : path) {
+        result = result->childAt(x);
+        if (!result)
+            break;
+    }
+
+    return result;
+}
+
 void SessionModel::createRootItem()
 {
     m_root_item = new SessionItem;
