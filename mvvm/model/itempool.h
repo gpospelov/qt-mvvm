@@ -11,6 +11,7 @@
 #define ITEMPOOL_H
 
 #include <map>
+#include "mvvm_types.h"
 
 class SessionItem;
 
@@ -20,7 +21,7 @@ class SessionItem;
 class ItemPool
 {
 public:
-    using key_type = std::string;
+    using key_type = identifier_type;
 
     ItemPool() = default;
     ItemPool(const ItemPool&) = delete;

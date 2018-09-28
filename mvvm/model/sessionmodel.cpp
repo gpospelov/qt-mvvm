@@ -10,10 +10,12 @@
 #include "sessionmodel.h"
 #include "sessionitem.h"
 #include "commands.h"
+#include "itemfactory.h"
 #include <QUndoStack>
 
 SessionModel::SessionModel()
     : m_root_item(nullptr)
+    , m_item_factory(new ItemFactory)
 {
     createRootItem();
 }
@@ -28,7 +30,7 @@ SessionItem* SessionModel::insertNewItem(SessionItem* parent, int row)
     if (!parent)
         parent = m_root_item;
 
-    auto result = new SessionItem;
+    auto result = m_item_factory->createItem();
     result->setModel(this);
     parent->insertItem(row, result);
 
@@ -100,6 +102,6 @@ QUndoStack* SessionModel::undoStack() const
 
 void SessionModel::createRootItem()
 {
-    m_root_item = new SessionItem;
+    m_root_item = m_item_factory->createEmptyItem();
     m_root_item->setModel(this);
 }
