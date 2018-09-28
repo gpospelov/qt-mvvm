@@ -39,6 +39,8 @@ public:
 
     QUndoStack *undoStack() const;
 
+    ItemFactory* factory();
+
 private:
     void createRootItem();
 

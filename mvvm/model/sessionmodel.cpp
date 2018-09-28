@@ -100,6 +100,11 @@ QUndoStack* SessionModel::undoStack() const
     return m_undoStack.get();
 }
 
+ItemFactory* SessionModel::factory()
+{
+    return m_item_factory.get();
+}
+
 void SessionModel::createRootItem()
 {
     m_root_item = m_item_factory->createEmptyItem();

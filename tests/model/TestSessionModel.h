@@ -52,4 +52,3 @@ TEST_F(TestSessionModel, setData)
     model.setData(item, value);
     EXPECT_EQ(model.data(item), value);
 }
-

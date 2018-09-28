@@ -26,6 +26,10 @@ public:
 
     identifier_type findIdentifier(SessionItem* item) const;
 
+    void forgetItem(SessionItem* item);
+
+    const ItemPool& itemPool() const;
+
 private:
     ItemPool m_item_pool;
 };

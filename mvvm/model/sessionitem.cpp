@@ -8,6 +8,9 @@
 // ************************************************************************** //
 
 #include "sessionitem.h"
+#include "sessionmodel.h"
+#include "itemfactory.h"
+#include "itemfactory.h"
 #include <stdexcept>
 #include <iterator>
 
@@ -20,14 +23,14 @@ SessionItem::SessionItem()
 
 SessionItem::~SessionItem()
 {
-    for (auto item : m_children) {
-        if (item)
-            item->setModel(nullptr);
+    for (auto item : m_children)
         delete item;
-    }
     m_children.clear();
+
     if (m_parent)
         m_parent->childDeleted(this);
+    if (m_model)
+        m_model->factory()->forgetItem(this);
 }
 
 bool SessionItem::setData(QVariant data)

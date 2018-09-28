@@ -4,6 +4,7 @@
 #include "TestPath.h"
 #include "TestUndoRedo.h"
 #include "TestItemPool.h"
+#include "TestItemFactory.h"
 
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);

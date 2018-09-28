@@ -33,3 +33,13 @@ identifier_type ItemFactory::findIdentifier(SessionItem* item) const
 {
     return m_item_pool.key_for_item(item);
 }
+
+void ItemFactory::forgetItem(SessionItem* item)
+{
+    m_item_pool.deregister_item(item);
+}
+
+const ItemPool& ItemFactory::itemPool() const
+{
+    return m_item_pool;
+}
