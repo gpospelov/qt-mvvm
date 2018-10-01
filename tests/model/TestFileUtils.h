@@ -6,11 +6,6 @@
 #include <QDir>
 #include <stdexcept>
 
-namespace
-{
-const std::string projectDir = "test_ProjectUtils";
-}
-
 class TestFileUtils : public ::testing::Test
 {
 public:
@@ -30,6 +25,7 @@ public:
         out << "Test file " << 42 << "\n";
         file.close();
     }
+    const std::string projectDir = "test_FileUtils";
 
 };
 

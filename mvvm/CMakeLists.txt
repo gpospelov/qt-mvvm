@@ -1,6 +1,8 @@
 set(library_name mvvm)
 
-set(include_dirs ${CMAKE_CURRENT_SOURCE_DIR}/model ${CMAKE_CURRENT_SOURCE_DIR}/viewmodel)
+set(include_dirs
+    ${CMAKE_CURRENT_SOURCE_DIR}/model
+    ${CMAKE_CURRENT_SOURCE_DIR}/utils)
 
 set(source_files)
 set(include_files)
@@ -17,7 +19,7 @@ add_library(${library_name} SHARED ${source_files} ${include_files})
 target_include_directories(${library_name}
     PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/model>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/viewmodel>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/utils>
 )
 
 target_link_libraries(${library_name} Qt5::Widgets)
