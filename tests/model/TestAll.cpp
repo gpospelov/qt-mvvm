@@ -5,6 +5,8 @@
 #include "TestUndoRedo.h"
 #include "TestItemPool.h"
 #include "TestItemFactory.h"
+#include "TestJsonBasics.h"
+#include "TestFileUtils.h"
 
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
