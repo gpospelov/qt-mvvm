@@ -12,6 +12,7 @@
 
 #include <QVariant>
 #include <memory>
+#include <string>
 #include "path.h"
 
 class SessionItem;
@@ -21,8 +22,10 @@ class ItemFactory;
 class SessionModel
 {
 public:
-    SessionModel();
+    SessionModel(const std::string& model_type = {});
     virtual ~SessionModel();
+
+    std::string modelType() const;
 
     SessionItem* insertNewItem(SessionItem* parent = nullptr, int row = -1);
 
@@ -47,6 +50,7 @@ private:
     SessionItem* m_root_item;
     std::unique_ptr<QUndoStack> m_undoStack;
     std::unique_ptr<ItemFactory> m_item_factory;
+    std::string m_model_type;
 };
 
 #endif

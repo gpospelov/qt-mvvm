@@ -19,6 +19,7 @@ TEST_F(TestSessionItem, initialState)
     EXPECT_EQ(item.childrenCount(), 0);
     EXPECT_FALSE(item.data().isValid());
     EXPECT_TRUE(item.children().empty());
+    EXPECT_TRUE(item.modelType().empty());
 }
 
 TEST_F(TestSessionItem, value)
@@ -29,6 +30,9 @@ TEST_F(TestSessionItem, value)
     QVariant expected(42.0);
     EXPECT_TRUE(item.setData(expected));
     EXPECT_EQ(item.data(), expected);
+
+    SessionItem item2("Layer");
+    EXPECT_EQ(item2.modelType(), "Layer");
 }
 
 TEST_F(TestSessionItem, insertItem)

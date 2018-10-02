@@ -14,9 +14,10 @@
 #include <stdexcept>
 #include <iterator>
 
-SessionItem::SessionItem()
+SessionItem::SessionItem(const model_type& modelType)
     : m_parent(nullptr)
     , m_model(nullptr)
+    , m_modelType(modelType)
 {
 
 }
@@ -31,6 +32,11 @@ SessionItem::~SessionItem()
         m_parent->childDeleted(this);
     if (m_model)
         m_model->factory()->forgetItem(this);
+}
+
+model_type SessionItem::modelType() const
+{
+    return m_modelType;
 }
 
 bool SessionItem::setData(QVariant data)

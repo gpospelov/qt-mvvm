@@ -10,9 +10,9 @@
 #include "itemfactory.h"
 #include "sessionitem.h"
 
-SessionItem* ItemFactory::createItem(const model_type&)
+SessionItem* ItemFactory::createItem(const model_type& modelType)
 {
-    auto result = new SessionItem;
+    auto result = new SessionItem(modelType);
     m_item_pool.register_item(result);
     return result;
 }

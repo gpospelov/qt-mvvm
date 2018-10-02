@@ -18,7 +18,7 @@ class SessionItem;
 
 class ItemFactory {
 public:
-    SessionItem* createItem(const model_type& = {});
+    SessionItem* createItem(const model_type& modelType = {});
 
     SessionItem* createEmptyItem();
 

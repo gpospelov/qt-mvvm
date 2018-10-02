@@ -12,14 +12,17 @@
 
 #include <QVariant>
 #include <vector>
+#include "mvvm_types.h"
 
 class SessionModel;
 
 class SessionItem {
     friend class SessionModel;
 public:
-    SessionItem();
+    SessionItem(const model_type& modelType = {});
     virtual ~SessionItem();
+
+    model_type modelType() const;
 
     bool setData(QVariant data);
 
@@ -50,6 +53,7 @@ private:
     SessionItem* m_parent;
     SessionModel* m_model;
     std::vector<SessionItem*> m_children;
+    model_type m_modelType;
 };
 
 #endif

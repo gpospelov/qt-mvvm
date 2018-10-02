@@ -13,9 +13,10 @@
 #include "itemfactory.h"
 #include <QUndoStack>
 
-SessionModel::SessionModel()
+SessionModel::SessionModel(const std::string& model_type)
     : m_root_item(nullptr)
     , m_item_factory(new ItemFactory)
+    , m_model_type(model_type)
 {
     createRootItem();
 }
