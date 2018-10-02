@@ -8,6 +8,7 @@
 #include "TestJsonBasics.h"
 #include "TestFileUtils.h"
 #include "TestItemUtils.h"
+#include "TestModelJson.h"
 
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);

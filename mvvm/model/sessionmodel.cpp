@@ -26,6 +26,11 @@ SessionModel::~SessionModel()
     delete m_root_item;
 }
 
+std::string SessionModel::modelType() const
+{
+    return m_model_type;
+}
+
 SessionItem* SessionModel::insertNewItem(SessionItem* parent, int row)
 {
     if (!parent)

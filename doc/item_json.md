@@ -98,7 +98,7 @@
             "value" : "MultiLayer"
         }
     ],
-    "items" : [
+    "children" : [
         {
             "modelType" : "PropertyItem",
             "tag" : "xpos",
@@ -116,6 +116,24 @@
     ]
 }
 
+```
+
++ Many models
+
+```
+{
+    "models" : [
+        {
+            "modelType" : "MaterialModel",
+            "items" : [
+                {
+
+                }
+            ]
+        }
+    ]
+}
 
 
 ```
+
