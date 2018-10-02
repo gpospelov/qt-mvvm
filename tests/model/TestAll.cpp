@@ -7,6 +7,7 @@
 #include "TestItemFactory.h"
 #include "TestJsonBasics.h"
 #include "TestFileUtils.h"
+#include "TestItemUtils.h"
 
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
