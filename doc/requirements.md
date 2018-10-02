@@ -11,5 +11,19 @@ See bornagainproject.org
 + Project file back compatibility
 
 
++ Alternative to item tag?
++ SessionItemData of SessionItem shold be recorded uniformly (all limits, displayRoles, etc)
++ Business logic of SessionItem should be invoked outside of constructor
++ Buisiness logic shouldn't be invoked during item clone
++ Problem of DistributionItem
 
 
+
+## RealTimeView
+
++ Should contain materials to tune
++ Should be possible to tune integeres
+
+## Projections
+
++ Possibility to have projections integrated along some band
