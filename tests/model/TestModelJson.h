@@ -3,6 +3,7 @@
 #include "modeljson.h"
 #include "fileutils.h"
 #include "modeljson.h"
+#include "sessionitem.h"
 #include <QFile>
 #include <stdexcept>
 #include <QJsonDocument>
@@ -32,6 +33,27 @@ TEST_F(TestModelJson, writeModel)
 
     QJsonObject object;
     ModelJson::write(model, object);
+
+    QJsonDocument saveDoc(object);
+    saveFile.write(saveDoc.toJson());
+}
+
+TEST_F(TestModelJson, writeItems)
+{
+    Utils::create_subdir(".", projectDir);
+
+    QFile saveFile(QString::fromStdString(projectDir + "/save2.json"));
+
+    if (!saveFile.open(QIODevice::WriteOnly))
+        throw std::runtime_error("TestJsonBasics::singleVariant() -> Can't save file");
+
+    std::unique_ptr<SessionItem> parent(new SessionItem("MultiLayer"));
+    parent->insertItem(-1, new SessionItem("Layer1"));
+    parent->insertItem(-1, new SessionItem("Layer2"));
+    parent->insertItem(-1, new SessionItem("Layer3"));
+
+    QJsonObject object;
+    ModelJson::write(parent.get(), object);
 
     QJsonDocument saveDoc(object);
     saveFile.write(saveDoc.toJson());

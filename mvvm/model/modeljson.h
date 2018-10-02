@@ -12,17 +12,22 @@
 #define MODELJSON_H
 
 #include <string>
+#include <functional>
 class SessionModel;
 class QJsonObject;
+class SessionItem;
 
 namespace ModelJson
 {
 
 const std::string modelKey = "model";
-
+const std::string itemsKey = "items";
 
 //! Writes content of model into json object.
 void write(const SessionModel& model, QJsonObject& json);
+
+void write(const SessionItem* item, QJsonObject& json);
+
 
 }
 
