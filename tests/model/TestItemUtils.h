@@ -12,7 +12,7 @@ public:
 
 TestItemUtils::~TestItemUtils() = default;
 
-//! Simple iteration over item ahd its children
+//! Simple iteration over item and its children
 
 TEST_F(TestItemUtils, iterateItem)
 {
@@ -91,4 +91,102 @@ TEST_F(TestItemUtils, iterateModel)
 
     std::vector<const SessionItem*> expected = {model.rootItem(), parent1, child1, child2, parent2};
     EXPECT_EQ(visited_items, expected);
+}
+
+//! Comparing types of variant.
+
+TEST_F(TestItemUtils, VariantType)
+{
+    EXPECT_TRUE(Utils::VariantType(QVariant::fromValue(1.0))
+                == Utils::VariantType(QVariant::fromValue(2.0)));
+    EXPECT_FALSE(Utils::VariantType(QVariant::fromValue(1.0))
+                 == Utils::VariantType(QVariant::fromValue(1)));
+    EXPECT_FALSE(Utils::VariantType(QVariant::fromValue(1.0))
+                 == Utils::VariantType(QVariant::fromValue(QString("a"))));
+
+    QVariant v1, v2;
+    EXPECT_TRUE(Utils::VariantType(v1) == Utils::VariantType(v2));
+    EXPECT_FALSE(Utils::VariantType(v1)
+                 == Utils::VariantType(QVariant::fromValue(42.0)));
+
+//    ComboProperty c1, c2;
+//    EXPECT_TRUE(Utils::VariantType(c1.variant())
+//                == Utils::VariantType(c2.variant()));
+//    EXPECT_FALSE(Utils::VariantType(c1.variant())
+//                 == Utils::VariantType(QVariant::fromValue(42.0)));
+//    EXPECT_FALSE(Utils::VariantType(c1.variant())
+//                 == Utils::VariantType(QVariant()));
+
+//    ExternalProperty p1, p2;
+//    EXPECT_TRUE(Utils::VariantType(p1.variant())
+//                == Utils::VariantType(p2.variant()));
+//    EXPECT_FALSE(Utils::VariantType(p1.variant())
+//                 == Utils::VariantType(QVariant::fromValue(42.0)));
+//    EXPECT_FALSE(Utils::VariantType(p1.variant())
+//                 == Utils::VariantType(c1.variant()));
+//    EXPECT_FALSE(Utils::VariantType(p1.variant())
+//                 == Utils::VariantType(QVariant()));
+}
+
+//! Comparing types of variant.
+
+TEST_F(TestItemUtils, CompatibleVariantTypes)
+{
+    QVariant undefined;
+    QVariant intProperty = QVariant::fromValue(1);
+    QVariant doubleProperty = QVariant::fromValue(42.0);
+    QVariant stringProperty = QVariant::fromValue(QString("string"));
+    //    QVariant comboProperty = QVariant::fromValue(ComboProperty());
+    //    QVariant externProperty = QVariant::fromValue(ExternalProperty());
+
+    EXPECT_TRUE(Utils::CompatibleVariantTypes(undefined, intProperty));
+    EXPECT_TRUE(Utils::CompatibleVariantTypes(undefined, doubleProperty));
+    EXPECT_TRUE(Utils::CompatibleVariantTypes(undefined, stringProperty));
+//    EXPECT_TRUE(Utils::CompatibleVariantTypes(undefined, comboProperty));
+//    EXPECT_TRUE(Utils::CompatibleVariantTypes(undefined, externProperty));
+
+    EXPECT_TRUE(Utils::CompatibleVariantTypes(intProperty, intProperty));
+    EXPECT_TRUE(Utils::CompatibleVariantTypes(doubleProperty, doubleProperty));
+    EXPECT_TRUE(Utils::CompatibleVariantTypes(stringProperty, stringProperty));
+//    EXPECT_TRUE(Utils::CompatibleVariantTypes(comboProperty, comboProperty));
+//    EXPECT_TRUE(Utils::CompatibleVariantTypes(externProperty, externProperty));
+
+    EXPECT_FALSE(Utils::CompatibleVariantTypes(intProperty, doubleProperty));
+    EXPECT_FALSE(Utils::CompatibleVariantTypes(intProperty, stringProperty));
+    EXPECT_FALSE(Utils::CompatibleVariantTypes(doubleProperty, stringProperty));
+//    EXPECT_FALSE(Utils::CompatibleVariantTypes(doubleProperty, comboProperty));
+//    EXPECT_FALSE(Utils::CompatibleVariantTypes(comboProperty, doubleProperty));
+}
+
+//! Test variant equality reported by SessionItemUtils::isTheSame
+
+TEST_F(TestItemUtils, IsTheSameVariant)
+{
+    // comparing undefined variants
+    QVariant v1, v2;
+    EXPECT_TRUE(Utils::IsTheSame(v1, v2));
+
+    // comparing QVariant based on double
+    EXPECT_TRUE(Utils::IsTheSame(QVariant::fromValue(1.0), QVariant::fromValue(1.0)));
+    EXPECT_FALSE(Utils::IsTheSame(QVariant::fromValue(1.0), QVariant::fromValue(2.0)));
+
+    // comparing QVariant based on strings
+    EXPECT_TRUE(Utils::IsTheSame(QVariant::fromValue(QString("a")),
+                                            QVariant::fromValue(QString("a"))));
+    EXPECT_FALSE(Utils::IsTheSame(QVariant::fromValue(QString("a")),
+                                             QVariant::fromValue(QString("b"))));
+
+    // comparing variants of different type
+    EXPECT_FALSE(Utils::IsTheSame(QVariant::fromValue(1.0), QVariant::fromValue(1)));
+
+//    // comparing custom variants (should be always false)
+//    ExternalProperty p1, p2;
+//    EXPECT_FALSE(Utils::IsTheSame(p1.variant(), p2.variant()));
+//    EXPECT_FALSE(Utils::IsTheSame(p1.variant(), QVariant::fromValue(42.0)));
+
+//    ComboProperty c1, c2;
+//    EXPECT_FALSE(Utils::IsTheSame(c1.variant(), c2.variant()));
+//    EXPECT_FALSE(Utils::IsTheSame(c1.variant(), QVariant::fromValue(42.0)));
+
+//    EXPECT_FALSE(Utils::IsTheSame(p1.variant(), c1.variant()));
 }
