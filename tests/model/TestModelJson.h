@@ -4,6 +4,7 @@
 #include "fileutils.h"
 #include "modeljson.h"
 #include "sessionitem.h"
+#include "testconfig.h"
 #include <QFile>
 #include <stdexcept>
 #include <QJsonDocument>
@@ -15,16 +16,18 @@ class TestModelJson : public ::testing::Test
 {
 public:
     ~TestModelJson();
-    const std::string projectDir = "test_ModelJson";
+    std::string projectDir() const {
+        return Testing::TestOutputDir() + "/" + "test_ModelJson";
+    }
 };
 
 TestModelJson::~TestModelJson() = default;
 
 TEST_F(TestModelJson, writeModel)
 {
-    Utils::create_subdir(".", projectDir);
+    Utils::create_subdir(".", projectDir());
 
-    QFile saveFile(QString::fromStdString(projectDir + "/save.json"));
+    QFile saveFile(QString::fromStdString(projectDir() + "/save.json"));
 
     if (!saveFile.open(QIODevice::WriteOnly))
         throw std::runtime_error("TestJsonBasics::singleVariant() -> Can't save file");
@@ -40,9 +43,9 @@ TEST_F(TestModelJson, writeModel)
 
 TEST_F(TestModelJson, writeItems)
 {
-    Utils::create_subdir(".", projectDir);
+    Utils::create_subdir(".", projectDir());
 
-    QFile saveFile(QString::fromStdString(projectDir + "/save2.json"));
+    QFile saveFile(QString::fromStdString(projectDir() + "/save2.json"));
 
     if (!saveFile.open(QIODevice::WriteOnly))
         throw std::runtime_error("TestJsonBasics::singleVariant() -> Can't save file");

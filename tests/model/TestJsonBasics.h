@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include "fileutils.h"
+#include "testconfig.h"
 #include <QFile>
 #include <stdexcept>
 #include <QJsonDocument>
@@ -11,16 +12,18 @@ class TestJsonBasics : public ::testing::Test
 {
 public:
     ~TestJsonBasics();
-    const std::string projectDir = "test_JsonBasics";
+    std::string projectDir() const {
+        return Testing::TestOutputDir() + "/" + "test_JsonBasics";
+    }
 };
 
 TestJsonBasics::~TestJsonBasics() = default;
 
 TEST_F(TestJsonBasics, singleVariant)
 {
-    Utils::create_subdir(".", projectDir);
+    Utils::create_subdir(".", projectDir());
 
-    QFile saveFile(QString::fromStdString(projectDir + "/save.json"));
+    QFile saveFile(QString::fromStdString(projectDir() + "/save.json"));
 
     if (!saveFile.open(QIODevice::WriteOnly))
         throw std::runtime_error("TestJsonBasics::singleVariant() -> Can't save file");

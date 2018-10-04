@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include "fileutils.h"
+#include "testconfig.h"
 #include <string>
 #include <QFile>
 #include <QTextStream>
@@ -25,23 +26,24 @@ public:
         out << "Test file " << 42 << "\n";
         file.close();
     }
-    const std::string projectDir = "test_FileUtils";
-
+    std::string projectDir() const {
+        return Testing::TestOutputDir() + "/" + "test_FileUtils";
+    }
 };
 
 TestFileUtils::~TestFileUtils() = default;
 
 TEST_F(TestFileUtils, initialState)
 {
-    QDir dir(QString::fromStdString(projectDir));
+    QDir dir(QString::fromStdString(projectDir()));
     if (dir.exists()) {
-        EXPECT_TRUE(Utils::removeRecursively(projectDir) == true);
+        EXPECT_TRUE(Utils::removeRecursively(projectDir()) == true);
         EXPECT_TRUE(dir.exists() == false);
     }
 
-    Utils::create_subdir(".", projectDir);
-    EXPECT_TRUE(Utils::exists(projectDir));
+    Utils::create_subdir(".", projectDir());
+    EXPECT_TRUE(Utils::exists(projectDir()));
 
-    createTestFile(projectDir, "a.txt");
-    EXPECT_TRUE(Utils::exists(projectDir + "/a.txt"));
+    createTestFile(projectDir(), "a.txt");
+    EXPECT_TRUE(Utils::exists(projectDir() + "/a.txt"));
 }
