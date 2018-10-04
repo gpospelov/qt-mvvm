@@ -48,17 +48,17 @@ SessionItem* SessionModel::rootItem() const
     return m_root_item;
 }
 
-QVariant SessionModel::data(SessionItem* item) const
+QVariant SessionModel::data(SessionItem* item, int role) const
 {
-    return item->data();
+    return item->data(role);
 }
 
-bool SessionModel::setData(SessionItem* item, const QVariant& value)
+bool SessionModel::setData(SessionItem* item, const QVariant& value, int role)
 {
     if (m_undoStack) {
-        m_undoStack->push(new SetValueCommand(this, pathFromItem(item), value));
+        m_undoStack->push(new SetValueCommand(this, pathFromItem(item), value, role));
     } else {
-        return item->setData(value);
+        return item->setData(value, role);
     }
 
     return true;

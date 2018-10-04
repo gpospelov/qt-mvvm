@@ -19,7 +19,7 @@ class SessionModel;
 class SetValueCommand : public QUndoCommand
 {
 public:
-    SetValueCommand(SessionModel* model, Path path, const QVariant& value,
+    SetValueCommand(SessionModel* model, Path path, const QVariant& value, int role,
                     QUndoCommand* parent = nullptr);
 
     void undo() override;
@@ -29,6 +29,7 @@ private:
     Path m_path;
     SessionModel* m_model;
     QVariant m_value;
+    int m_role;
 };
 
 #endif

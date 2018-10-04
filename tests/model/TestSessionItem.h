@@ -13,11 +13,12 @@ TestSessionItem::~TestSessionItem() = default;
 TEST_F(TestSessionItem, initialState)
 {
     SessionItem item;
+    const int role = Qt::DisplayRole;
 
     EXPECT_EQ(item.model(), nullptr);
     EXPECT_EQ(item.parent(), nullptr);
     EXPECT_EQ(item.childrenCount(), 0);
-    EXPECT_FALSE(item.data().isValid());
+    EXPECT_FALSE(item.data(role).isValid());
     EXPECT_TRUE(item.children().empty());
     EXPECT_TRUE(item.modelType().empty());
 }
@@ -25,11 +26,13 @@ TEST_F(TestSessionItem, initialState)
 TEST_F(TestSessionItem, value)
 {
     SessionItem item;
-    EXPECT_FALSE(item.data().isValid());
+    const int role = Qt::DisplayRole;
+
+    EXPECT_FALSE(item.data(role).isValid());
 
     QVariant expected(42.0);
-    EXPECT_TRUE(item.setData(expected));
-    EXPECT_EQ(item.data(), expected);
+    EXPECT_TRUE(item.setData(expected, role));
+    EXPECT_EQ(item.data(role), expected);
 
     SessionItem item2("Layer");
     EXPECT_EQ(item2.modelType(), "Layer");

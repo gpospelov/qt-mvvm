@@ -39,15 +39,14 @@ model_type SessionItem::modelType() const
     return m_modelType;
 }
 
-bool SessionItem::setData(QVariant data)
+bool SessionItem::setData(const QVariant& data, int role)
 {
-    m_data = data;
-    return true;
+    return m_data.setData(data, role);
 }
 
-QVariant SessionItem::data() const
+QVariant SessionItem::data(int role) const
 {
-    return m_data;
+    return m_data.data(role);
 }
 
 SessionModel* SessionItem::model() const

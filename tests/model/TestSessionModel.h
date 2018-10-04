@@ -42,13 +42,14 @@ TEST_F(TestSessionModel, insertItem)
 TEST_F(TestSessionModel, setData)
 {
     SessionModel model;
+    const int role = Qt::DisplayRole;
 
     // inserting single item
     auto item = model.insertNewItem();
-    EXPECT_FALSE(model.data(item).isValid());
+    EXPECT_FALSE(model.data(item, role).isValid());
 
     // setting new data
     QVariant value(42.0);
-    model.setData(item, value);
-    EXPECT_EQ(model.data(item), value);
+    model.setData(item, value, role);
+    EXPECT_EQ(model.data(item, role), value);
 }

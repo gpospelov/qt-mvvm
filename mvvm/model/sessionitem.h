@@ -13,6 +13,7 @@
 #include <QVariant>
 #include <vector>
 #include "mvvm_types.h"
+#include "sessionitemdata.h"
 
 class SessionModel;
 
@@ -24,9 +25,9 @@ public:
 
     model_type modelType() const;
 
-    bool setData(QVariant data);
+    bool setData(const QVariant& data, int role);
 
-    QVariant data() const;
+    QVariant data(int role) const;
 
     SessionModel* model() const;
 
@@ -49,7 +50,7 @@ private:
     void setModel(SessionModel* model);
     void childDeleted(SessionItem* child);
 
-    QVariant m_data;
+    SessionItemData m_data;
     SessionItem* m_parent;
     SessionModel* m_model;
     std::vector<SessionItem*> m_children;

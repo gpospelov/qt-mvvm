@@ -26,18 +26,19 @@ TEST_F(TestUndoRedo, initialState)
 
 TEST_F(TestUndoRedo, setData)
 {
+    const int role = Qt::DisplayRole;
     SessionModel model;
     model.setUndoRedoEnabled(true);
     auto stack = model.undoStack();
 
     // creating item
     auto item = model.insertNewItem();
-    EXPECT_FALSE(model.data(item).isValid());
+    EXPECT_FALSE(model.data(item, role).isValid());
 
     // setting new data
     QVariant value(42.0);
-    model.setData(item, value);
-    EXPECT_EQ(model.data(item), value);
+    model.setData(item, value, role);
+    EXPECT_EQ(model.data(item, role), value);
 
     EXPECT_EQ(stack->index(), 1);
     EXPECT_FALSE(model.undoStack()->canRedo());
@@ -46,19 +47,18 @@ TEST_F(TestUndoRedo, setData)
     // undoing and checking
     stack->undo();
     EXPECT_EQ(stack->index(), 0);
-    EXPECT_FALSE(model.data(item).isValid());
+    EXPECT_FALSE(model.data(item, role).isValid());
 
     // setting data three times
-    model.setData(item, QVariant::fromValue(42.0));
-    model.setData(item, QVariant::fromValue(43.0));
-    model.setData(item, QVariant::fromValue(44.0));
+    model.setData(item, QVariant::fromValue(42.0), role);
+    model.setData(item, QVariant::fromValue(43.0), role);
+    model.setData(item, QVariant::fromValue(44.0), role);
     EXPECT_EQ(stack->index(), 3);
-    EXPECT_EQ(model.data(item).toDouble(), 44.0);
+    EXPECT_EQ(model.data(item, role).toDouble(), 44.0);
     stack->undo();
     stack->undo();
-    EXPECT_EQ(model.data(item).toDouble(), 42.0);
+    EXPECT_EQ(model.data(item, role).toDouble(), 42.0);
     stack->redo();
     stack->redo();
-    EXPECT_EQ(model.data(item).toDouble(), 44.0);
-
+    EXPECT_EQ(model.data(item, role).toDouble(), 44.0);
 }

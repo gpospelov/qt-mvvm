@@ -31,9 +31,9 @@ public:
 
     SessionItem* rootItem() const;
 
-    QVariant data(SessionItem* item) const;
+    QVariant data(SessionItem* item, int role) const;
 
-    bool setData(SessionItem* item, const QVariant& value);
+    bool setData(SessionItem* item, const QVariant& value, int role);
 
     Path pathFromItem(SessionItem* item);
     SessionItem* itemFromPath(Path path);
