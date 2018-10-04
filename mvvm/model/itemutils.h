@@ -34,7 +34,6 @@ bool CompatibleVariantTypes(const QVariant& oldValue, const QVariant& newValue);
 //! Returns true if given variants have same type and value.
 //! For custom variants (ComboProperty, ExternalProperty) will always return false (see
 //! explanations in cpp file).
-
 bool IsTheSame(const QVariant& var1, const QVariant& var2);
 
 }

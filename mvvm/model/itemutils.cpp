@@ -63,9 +63,9 @@ bool Utils::IsTheSame(const QVariant& var1, const QVariant& var2)
     if (VariantType(var1) != VariantType(var2))
         return false;
 
-    // custom type variants are always reported as not the same
-    if (var1.type() == QVariant::UserType)
-        return false;
+//    // custom type variants are always reported as not the same
+//    if (var1.type() == QVariant::UserType)
+//        return false;
 
     // standard variants (based on double, int, etc) are compared by value they are holding
     return var1 == var2;

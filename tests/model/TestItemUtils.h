@@ -2,6 +2,7 @@
 #include "sessionmodel.h"
 #include "sessionitem.h"
 #include "itemutils.h"
+#include "customvariants.h"
 #include <memory>
 
 class TestItemUtils : public ::testing::Test
@@ -102,7 +103,7 @@ TEST_F(TestItemUtils, VariantType)
     EXPECT_FALSE(Utils::VariantType(QVariant::fromValue(1.0))
                  == Utils::VariantType(QVariant::fromValue(1)));
     EXPECT_FALSE(Utils::VariantType(QVariant::fromValue(1.0))
-                 == Utils::VariantType(QVariant::fromValue(QString("a"))));
+                 == Utils::VariantType(QVariant::fromValue(std::string("a"))));
 
     QVariant v1, v2;
     EXPECT_TRUE(Utils::VariantType(v1) == Utils::VariantType(v2));
@@ -135,7 +136,7 @@ TEST_F(TestItemUtils, CompatibleVariantTypes)
     QVariant undefined;
     QVariant intProperty = QVariant::fromValue(1);
     QVariant doubleProperty = QVariant::fromValue(42.0);
-    QVariant stringProperty = QVariant::fromValue(QString("string"));
+    QVariant stringProperty = QVariant::fromValue(std::string("string"));
     //    QVariant comboProperty = QVariant::fromValue(ComboProperty());
     //    QVariant externProperty = QVariant::fromValue(ExternalProperty());
 
@@ -171,13 +172,17 @@ TEST_F(TestItemUtils, IsTheSameVariant)
     EXPECT_FALSE(Utils::IsTheSame(QVariant::fromValue(1.0), QVariant::fromValue(2.0)));
 
     // comparing QVariant based on strings
-    EXPECT_TRUE(Utils::IsTheSame(QVariant::fromValue(QString("a")),
-                                            QVariant::fromValue(QString("a"))));
-    EXPECT_FALSE(Utils::IsTheSame(QVariant::fromValue(QString("a")),
-                                             QVariant::fromValue(QString("b"))));
+    EXPECT_TRUE(Utils::IsTheSame(QVariant::fromValue(std::string("a")),
+                                            QVariant::fromValue(std::string("a"))));
+    EXPECT_FALSE(Utils::IsTheSame(QVariant::fromValue(std::string("a")),
+                                             QVariant::fromValue(std::string("b"))));
+
+    // Variants of std::string and QString
+    EXPECT_FALSE(Utils::IsTheSame(QVariant::fromValue(std::string("a")),
+                                             QVariant::fromValue(QString("a"))));
 
     // comparing variants of different type
-    EXPECT_FALSE(Utils::IsTheSame(QVariant::fromValue(1.0), QVariant::fromValue(1)));
+//    EXPECT_FALSE(Utils::IsTheSame(QVariant::fromValue(1.0), QVariant::fromValue(1)));
 
 //    // comparing custom variants (should be always false)
 //    ExternalProperty p1, p2;
