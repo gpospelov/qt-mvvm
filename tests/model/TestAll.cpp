@@ -9,6 +9,7 @@
 #include "TestFileUtils.h"
 #include "TestItemUtils.h"
 #include "TestModelJson.h"
+#include "TestSessionItemData.h"
 #include <string>
 
 int main(int argc, char** argv) {
