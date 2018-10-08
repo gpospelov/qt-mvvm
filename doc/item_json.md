@@ -105,11 +105,15 @@
             "itemData" : [
                 {
                     "role" : displayRole,
+                    "variant" : "string",
                     "value" : "xpos"
                 },
                 {
                     "role" : dataRole,
-                    "value" : 1.0
+                    "variant" : {
+                        "type" : "string",
+                        "value" : "abc",
+                    }
                 }
             ]
         },

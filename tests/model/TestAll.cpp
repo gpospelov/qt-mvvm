@@ -10,6 +10,7 @@
 #include "TestItemUtils.h"
 #include "TestModelJson.h"
 #include "TestSessionItemData.h"
+#include "TestJsonVariant.h"
 #include <string>
 
 int main(int argc, char** argv) {
