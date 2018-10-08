@@ -63,3 +63,33 @@ TEST_F(TestJsonVariant, invalidVariant)
     // saving to file
     save_object(object, "invalid_variant.json");
 }
+
+//! Invalid QVariant convertion.
+
+TEST_F(TestJsonVariant, intVariant)
+{
+    const int value(42);
+    QVariant variant(value);
+
+    // from variant to json object
+    auto object = json::get_json(variant);
+    EXPECT_EQ(object.size(), 2);
+    QStringList expected = QStringList() << json::variantTypeKey << json::variantValueKey;
+    EXPECT_EQ(object.keys(), expected);
+    EXPECT_EQ(object[json::variantTypeKey], json::int_type_name);
+    EXPECT_EQ(object[json::variantValueKey].toInt(), value);
+
+    // from json object to variant
+    QJsonObject object2{
+        {json::variantTypeKey, json::int_type_name},
+        {json::variantValueKey, value}
+    };
+    QVariant variant2 = json::get_variant(object2);
+    EXPECT_EQ(variant2.toInt(), value);
+
+    // final comparison
+    EXPECT_EQ(variant, variant2);
+
+    // saving to file
+    save_object(object, "int_variant.json");
+}

@@ -17,6 +17,8 @@ namespace {
 
 bool is_valid(const QJsonObject& json);
 QJsonObject from_invalid();
+QJsonObject from_int(const QVariant& variant);
+QVariant to_int(const QJsonObject& variant);
 
 }
 
@@ -26,6 +28,8 @@ QJsonObject json::get_json(const QVariant& variant)
 
     if (!variant.isValid())
         return from_invalid();
+    else if (variant.typeName() == json::int_type_name)
+        return from_int(variant);
 
     throw std::runtime_error("json::get_json() -> Error. Unknown variant type '" +
                              std::string(variant.typeName())+"'.");
@@ -38,7 +42,14 @@ QVariant json::get_variant(const QJsonObject& object)
     if (!is_valid(object))
         throw std::runtime_error("json::get_variant() -> Error. Invalid json object");
 
-    return result;
+    const auto variant_type = object[json::variantTypeKey];
+
+    if (variant_type == json::invalid_type_name)
+        return QVariant();
+    else if(variant_type == json::int_type_name)
+        return to_int(object);
+
+    throw std::runtime_error("json::get_variant() -> Error. Invalid json object");
 }
 
 namespace {
@@ -56,4 +67,18 @@ QJsonObject from_invalid()
     result[json::variantValueKey] = QJsonValue();
     return result;
 }
+
+QJsonObject from_int(const QVariant& variant)
+{
+    QJsonObject result;
+    result[json::variantTypeKey] = json::int_type_name;
+    result[json::variantValueKey] = variant.toInt();
+    return result;
+}
+
+QVariant to_int(const QJsonObject& object)
+{
+    return object[json::variantValueKey].toVariant();
+}
+
 }
