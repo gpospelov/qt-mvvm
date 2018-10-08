@@ -19,9 +19,9 @@ bool SessionItemData::DataRole::operator==(const SessionItemData::DataRole& othe
     return m_role == other.m_role && Utils::IsTheSame(m_data, other.m_data);
 }
 
-QVector<int> SessionItemData::roles() const
+std::vector<int> SessionItemData::roles() const
 {
-    QVector<int> result;
+    std::vector<int> result;
     for (const auto& value : m_values)
         result.push_back(value.m_role);
     return result;

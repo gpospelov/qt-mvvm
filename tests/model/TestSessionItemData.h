@@ -16,7 +16,7 @@ TestSessionItemData::~TestSessionItemData() = default;
 TEST_F(TestSessionItemData, initialState)
 {
     SessionItemData data;
-    EXPECT_TRUE(data.roles().isEmpty());
+    EXPECT_TRUE(data.roles().empty());
     EXPECT_FALSE(data.data(Qt::DisplayRole).isValid());
 }
 
@@ -31,7 +31,7 @@ TEST_F(TestSessionItemData, setData)
 
     // setting variant for role
     EXPECT_TRUE(data.setData(variant, role));
-    QVector<int> expected {role};
+    std::vector<int> expected {role};
     EXPECT_EQ(data.roles(), expected);
     EXPECT_TRUE(data.data(role) == variant);
 
@@ -47,7 +47,7 @@ TEST_F(TestSessionItemData, setData)
 
     // setting invalid variant for the role
     EXPECT_TRUE(data.setData(QVariant(), role));
-    EXPECT_TRUE(data.roles().isEmpty());
+    EXPECT_TRUE(data.roles().empty());
     EXPECT_FALSE(data.data(role).isValid());
 }
 
@@ -63,7 +63,7 @@ TEST_F(TestSessionItemData, differentRoles)
     EXPECT_TRUE(data.setData(QVariant::fromValue(42.0), role1));
     EXPECT_TRUE(data.setData(QVariant::fromValue(std::string("str")), role2));
 
-    QVector<int> expected {role1, role2};
+    std::vector<int> expected {role1, role2};
     EXPECT_EQ(data.roles(), expected);
 
     EXPECT_TRUE(data.data(role1) == QVariant(42.0));
@@ -83,7 +83,7 @@ TEST_F(TestSessionItemData, changingRole)
 
     // setting variant for role
     EXPECT_TRUE(data.setData(variant, role));
-    QVector<int> expected {role};
+    std::vector<int> expected {role};
     EXPECT_EQ(data.roles(), expected);
     EXPECT_TRUE(data.data(role) == variant);
 
@@ -103,7 +103,7 @@ TEST_F(TestSessionItemData, editRole)
 
     // setting displayRole, accessing editRole
     EXPECT_TRUE(data.setData(variant, role));
-    QVector<int> expected {role};
+    std::vector<int> expected {role};
     EXPECT_EQ(data.roles(), expected);
     EXPECT_TRUE(data.data(role) == variant);
     EXPECT_TRUE(data.data(Qt::EditRole) == variant);

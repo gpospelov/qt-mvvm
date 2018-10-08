@@ -11,14 +11,14 @@
 #define SESSIONITEMDATA_H
 
 #include <QVariant>
-#include <QVector>
+#include <vector>
 
 //! Handles data roles for SessionItem.
 
 class SessionItemData
 {
 public:
-    QVector<int> roles() const;
+    std::vector<int> roles() const;
 
     QVariant data(int role) const;
 
@@ -34,7 +34,7 @@ private:
         bool operator==(const DataRole& other) const;
     };
 
-    QVector<DataRole> m_values;
+    std::vector<DataRole> m_values;
 };
 
 #endif
