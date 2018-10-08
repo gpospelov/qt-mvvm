@@ -5,33 +5,40 @@
 #include "fileutils.h"
 #include <QFile>
 #include <QJsonDocument>
+#include <QJsonArray>
+#include <QDebug>
 
 //! Test convertion of QVariant from/to QJsonObject.
+
 
 class TestJsonVariant : public ::testing::Test
 {
 public:
-    TestJsonVariant()
-    {
-        Utils::create_dir(projectDir());
-    }
     ~TestJsonVariant();
-    std::string projectDir() const {
+
+    static std::string projectDir() {
         return Testing::TestOutputDir() + "/" + "test_JsonVariant";
     }
 
+    static QJsonArray m_array;
 
-    void save_object(const QJsonObject& object, const QString& file_name)
-    {
-        QFile saveFile(QString::fromStdString(projectDir()) + "/" + file_name);
+    static void SetUpTestCase() {
+        Utils::create_dir(projectDir());
+    }
+
+    static void TearDownTestCase() {
+        QFile saveFile(QString::fromStdString(projectDir()) + "/variants.json");
 
         if (!saveFile.open(QIODevice::WriteOnly))
-            throw std::runtime_error("TestJsonBasics::singleVariant() -> Can't save file");
+            throw std::runtime_error("TestJsonBasics::save_object() -> Can't save file");
 
-        QJsonDocument saveDoc(object);
+        // saving our variants to file
+        QJsonDocument saveDoc(m_array);
         saveFile.write(saveDoc.toJson());
-    }
+     }
 };
+
+QJsonArray TestJsonVariant::m_array = QJsonArray();
 
 TestJsonVariant::~TestJsonVariant() = default;
 
@@ -43,6 +50,8 @@ TEST_F(TestJsonVariant, invalidVariant)
 
     // from variant to json object
     auto object = json::get_json(variant);
+    m_array.append(object);
+
     EXPECT_EQ(object.size(), 2);
     QStringList expected = QStringList() << json::variantTypeKey << json::variantValueKey;
     EXPECT_EQ(object.keys(), expected);
@@ -59,9 +68,6 @@ TEST_F(TestJsonVariant, invalidVariant)
 
     // final comparison
     EXPECT_EQ(variant, variant2);
-
-    // saving to file
-    save_object(object, "invalid_variant.json");
 }
 
 //! Int QVariant convertion.
@@ -73,6 +79,8 @@ TEST_F(TestJsonVariant, intVariant)
 
     // from variant to json object
     auto object = json::get_json(variant);
+    m_array.append(object);
+
     EXPECT_EQ(object.size(), 2);
     QStringList expected = QStringList() << json::variantTypeKey << json::variantValueKey;
     EXPECT_EQ(object.keys(), expected);
@@ -89,9 +97,6 @@ TEST_F(TestJsonVariant, intVariant)
 
     // final comparison
     EXPECT_EQ(variant, variant2);
-
-    // saving to file
-    save_object(object, "int_variant.json");
 }
 
 //! std::string QVariant convertion.
@@ -103,6 +108,8 @@ TEST_F(TestJsonVariant, stringVariant)
 
     // from variant to json object
     auto object = json::get_json(variant);
+    m_array.append(object);
+
     EXPECT_EQ(object.size(), 2);
     QStringList expected = QStringList() << json::variantTypeKey << json::variantValueKey;
     EXPECT_EQ(object.keys(), expected);
@@ -119,7 +126,4 @@ TEST_F(TestJsonVariant, stringVariant)
     };
     QVariant variant2 = json::get_variant(object2);
     EXPECT_EQ(variant2.value<std::string>(), value);
-
-    // saving to file
-    save_object(object, "string_variant.json");
 }
