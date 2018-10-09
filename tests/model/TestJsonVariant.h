@@ -99,7 +99,7 @@ TEST_F(TestJsonVariant, intVariant)
     EXPECT_EQ(variant, variant2);
 }
 
-//! std::string QVariant convertion.
+//! QVariant(std::string) convertion.
 
 TEST_F(TestJsonVariant, stringVariant)
 {
@@ -126,4 +126,33 @@ TEST_F(TestJsonVariant, stringVariant)
     };
     QVariant variant2 = json::get_variant(object2);
     EXPECT_EQ(variant2.value<std::string>(), value);
+}
+
+//! QVariant(double) convertion.
+
+TEST_F(TestJsonVariant, doubleVariant)
+{
+    const double value(42.3);
+    QVariant variant = QVariant::fromValue(value);
+
+    // from variant to json object
+    auto object = json::get_json(variant);
+    m_array.append(object);
+
+    EXPECT_EQ(object.size(), 2);
+    QStringList expected = QStringList() << json::variantTypeKey << json::variantValueKey;
+    EXPECT_EQ(object.keys(), expected);
+    EXPECT_EQ(object[json::variantTypeKey], json::double_type_name);
+    EXPECT_EQ(object[json::variantValueKey].toDouble(), value);
+
+    // from json object to variant
+    QJsonObject object2{
+        {json::variantTypeKey, json::double_type_name},
+        {json::variantValueKey, value}
+    };
+    QVariant variant2 = json::get_variant(object2);
+    EXPECT_EQ(variant2.toDouble(), value);
+
+    // final comparison
+    EXPECT_EQ(variant, variant2);
 }

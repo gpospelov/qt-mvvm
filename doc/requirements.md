@@ -17,7 +17,7 @@ See bornagainproject.org
 + Buisiness logic shouldn't be invoked during item clone
 + Problem of DistributionItem
 
-
++ Provide copying of SessionItem containing non-xml data
 
 ## RealTimeView
 
