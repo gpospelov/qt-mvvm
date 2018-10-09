@@ -7,6 +7,7 @@
 #include <QJsonDocument>
 #include <QJsonArray>
 #include <QDebug>
+#include <vector>
 
 //! Test convertion of QVariant from/to QJsonObject.
 
@@ -155,4 +156,31 @@ TEST_F(TestJsonVariant, doubleVariant)
 
     // final comparison
     EXPECT_EQ(variant, variant2);
+}
+
+//! QVariant(std::vector<double>) convertion.
+
+TEST_F(TestJsonVariant, vectorOfDoubleVariant)
+{
+    const std::vector<double> value = {42.0, 43.0, 44.0};
+    QVariant variant = QVariant::fromValue(value);
+
+    // from variant to json object
+    auto object = json::get_json(variant);
+    m_array.append(object);
+
+    EXPECT_EQ(object.size(), 2);
+    QStringList expected = QStringList() << json::variantTypeKey << json::variantValueKey;
+    EXPECT_EQ(object.keys(), expected);
+    EXPECT_EQ(object[json::variantTypeKey], json::vector_double_type_name);
+
+    QJsonArray array = object[json::variantValueKey].toArray();
+    std::vector<double> vec_expected;
+    for ( auto x : object[json::variantValueKey].toArray()) {
+        vec_expected.push_back(x.toDouble());
+    }
+    EXPECT_EQ(value, vec_expected);
+
+    QVariant variant2 = json::get_variant(object);
+    EXPECT_EQ(variant2.value<std::vector<double>>(), value);
 }
