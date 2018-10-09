@@ -7,17 +7,19 @@
 //
 // ************************************************************************** //
 
-#ifndef CUSTOMVARIANTS_H
-#define CUSTOMVARIANTS_H
+#ifndef COMPARATORS_H
+#define COMPARATORS_H
 
-//! Registrations for custom variants.
+//! Helper class to register variant comparators.
 
-#include <QVariant>
-#include <QMetaType>
-#include <string>
-#include <vector>
+class Comparators
+{
+public:
+    static void registerComparators();
+    static bool registered();
 
-Q_DECLARE_METATYPE(std::string)
-Q_DECLARE_METATYPE(std::vector<double>)
+private:
+    static bool m_is_registered;
+};
 
 #endif

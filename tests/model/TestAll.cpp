@@ -11,12 +11,13 @@
 #include "TestModelJson.h"
 #include "TestSessionItemData.h"
 #include "TestJsonVariant.h"
+#include "comparators.h"
 #include <string>
 
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
 
-    QMetaType::registerComparators<std::string>();
+    Comparators::registerComparators();
 
     // run all google tests
     return RUN_ALL_TESTS();
