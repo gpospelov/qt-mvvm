@@ -10,15 +10,6 @@
 #include "sessionitemdata.h"
 #include "itemutils.h"
 
-SessionItemData::DataRole::DataRole(const QVariant& data, int role) : m_data(data), m_role(role)
-{
-}
-
-bool SessionItemData::DataRole::operator==(const SessionItemData::DataRole& other) const
-{
-    return m_role == other.m_role && Utils::IsTheSame(m_data, other.m_data);
-}
-
 std::vector<int> SessionItemData::roles() const
 {
     std::vector<int> result;
@@ -56,4 +47,14 @@ bool SessionItemData::setData(const QVariant& value, int role)
     }
     m_values.push_back(DataRole(value, role));
     return true;
+}
+
+SessionItemData::const_iterator SessionItemData::begin() const
+{
+    return m_values.begin();
+}
+
+SessionItemData::const_iterator SessionItemData::end() const
+{
+    return m_values.end();
 }

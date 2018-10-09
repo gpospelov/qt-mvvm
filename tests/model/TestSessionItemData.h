@@ -114,3 +114,25 @@ TEST_F(TestSessionItemData, editRole)
     EXPECT_TRUE(data.data(Qt::DisplayRole) == QVariant::fromValue(std::string("str")));
     EXPECT_EQ(data.roles(), expected);
 }
+
+TEST_F(TestSessionItemData, rangeLoop)
+{
+    SessionItemData data;
+    const std::vector<double> expected_values = {1.2, 1.3};
+    const std::vector<int> expected_roles = {Qt::UserRole + 1, Qt::UserRole + 2};
+
+    for(size_t i=0; i<expected_values.size(); ++i) {
+        data.setData(QVariant::fromValue(expected_values[i]), expected_roles[i]);
+    }
+
+    std::vector<double> values;
+    std::vector<int> roles;
+
+    for(const auto& x : data) {
+        values.push_back(x.m_data.toDouble());
+        roles.push_back(x.m_role);
+    }
+
+    EXPECT_EQ(values, expected_values);
+    EXPECT_EQ(roles, expected_roles);
+}

@@ -12,29 +12,27 @@
 
 #include <QVariant>
 #include <vector>
+#include "datarole.h"
 
 //! Handles data roles for SessionItem.
 
 class SessionItemData
 {
 public:
+    using container_type = std::vector<DataRole>;
+    using const_iterator = container_type::const_iterator;
+
     std::vector<int> roles() const;
 
     QVariant data(int role) const;
 
     bool setData(const QVariant& value, int role);
 
-private:
-    class DataRole
-    {
-    public:
-        DataRole(const QVariant& data = QVariant(), int role = -1);
-        QVariant m_data;
-        int m_role;
-        bool operator==(const DataRole& other) const;
-    };
+    const_iterator begin() const;
+    const_iterator end() const;
 
-    std::vector<DataRole> m_values;
+private:
+    container_type m_values;
 };
 
 #endif
