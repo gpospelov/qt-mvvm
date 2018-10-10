@@ -12,6 +12,7 @@
 
 #include "jsonconverterinterfaces.h"
 #include <QString>
+#include <memory>
 
 class QJsonObject;
 
@@ -23,11 +24,16 @@ public:
     static const QString roleKey;
     static const QString variantKey;
 
+    JsonItemData();
+
     QJsonArray get_json(const SessionItemData& data) override;
 
     SessionItemData get_data(const QJsonArray& object) override;
 
     bool is_valid(const QJsonObject& json);
+
+private:
+    std::unique_ptr<JsonVariantInterface> m_variant_converter;
 };
 
 #endif

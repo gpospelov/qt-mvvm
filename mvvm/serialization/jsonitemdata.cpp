@@ -10,25 +10,26 @@
 #include "jsonitemdata.h"
 #include "jsonvariant.h"
 #include "sessionitemdata.h"
-#include <QJsonObject>
 #include <QJsonArray>
+#include <QJsonObject>
 #include <stdexcept>
-
 
 const QString JsonItemData::roleKey = "role";
 const QString JsonItemData::variantKey = "variant";
 
+JsonItemData::JsonItemData()
+    : m_variant_converter(new JsonVariant)
+{
+}
 
 QJsonArray JsonItemData::get_json(const SessionItemData& data)
 {
-    JsonVariant variant_converter;
-
     QJsonArray result;
 
     QJsonObject object;
     for (const auto& x : data) {
         object[roleKey] = x.m_role;
-        object[variantKey] = variant_converter.get_json(x.m_data);
+        object[variantKey] = m_variant_converter->get_json(x.m_data);
         result.append(object);
     }
 
@@ -37,14 +38,13 @@ QJsonArray JsonItemData::get_json(const SessionItemData& data)
 
 SessionItemData JsonItemData::get_data(const QJsonArray& object)
 {
-    JsonVariant variant_converter;
     SessionItemData result;
 
-    for ( const auto& x : object) {
+    for (const auto& x : object) {
         if (!is_valid(x.toObject()))
-            throw std::runtime_error("JsonItemData::get_data() -> Invalid");
+            throw std::runtime_error("JsonItemData::get_data() -> Invalid json object.");
         auto role = x[roleKey].toInt();
-        auto variant = variant_converter.get_variant(x[variantKey].toObject());
+        auto variant = m_variant_converter->get_variant(x[variantKey].toObject());
         result.setData(variant, role);
     }
 
