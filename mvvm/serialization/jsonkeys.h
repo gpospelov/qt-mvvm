@@ -17,9 +17,6 @@
 namespace JsonVariant
 {
 
-const QString variantTypeKey = "type";
-const QString variantValueKey = "value";
-
 const QString invalid_type_name = "invalid";
 const QString int_type_name = "int";
 const QString string_type_name = "std::string";

@@ -21,6 +21,7 @@ target_include_directories(${library_name}
     PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/model>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/utils>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/serialization>
 )
 
 target_link_libraries(${library_name} Qt5::Widgets)

@@ -32,7 +32,7 @@ TEST_F(TestJsonItemData, isValidDataRole)
     // valid json object representing DataRole
     QJsonObject object;
     object[JsonItemData::roleKey] = 42;
-    object[JsonItemData::variantKey] = json::get_json(QVariant(1.23));
+    object[JsonItemData::variantKey] = JsonVariant::get_json(QVariant(1.23));
     EXPECT_TRUE(JsonItemData::is_valid(object));
 
     // invalid json object which can't represent DataRole
@@ -43,8 +43,8 @@ TEST_F(TestJsonItemData, isValidDataRole)
     // another invalid json object
     QJsonObject object3;
     object3[JsonItemData::roleKey] = 42;
-    object3[JsonItemData::variantKey] = json::get_json(QVariant(1.23));
-    object3["abc"] = json::get_json(QVariant::fromValue(std::string("xxx")));
+    object3[JsonItemData::variantKey] = JsonVariant::get_json(QVariant(1.23));
+    object3["abc"] = JsonVariant::get_json(QVariant::fromValue(std::string("xxx")));
     EXPECT_FALSE(JsonItemData::is_valid(object3));
 }
 

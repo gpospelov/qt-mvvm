@@ -95,7 +95,7 @@ namespace {
 
 bool is_valid(const QJsonObject& json)
 {
-    static const QStringList expected = QStringList() << json::variantTypeKey << json::variantValueKey;
+    static const QStringList expected = QStringList() << JsonVariant::variantTypeKey << JsonVariant::variantValueKey;
     return json.keys() == expected ? true : false;
 }
 

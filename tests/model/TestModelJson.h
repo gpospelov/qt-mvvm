@@ -1,6 +1,5 @@
 #include <gtest/gtest.h>
 #include "sessionmodel.h"
-#include "modeljson.h"
 #include "fileutils.h"
 #include "modeljson.h"
 #include "sessionitem.h"

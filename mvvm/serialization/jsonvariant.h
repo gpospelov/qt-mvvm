@@ -15,6 +15,9 @@
 
 namespace JsonVariant {
 
+const QString variantTypeKey = "type";
+const QString variantValueKey = "value";
+
 QJsonObject get_json(const QVariant& variant);
 
 QVariant get_variant(const QJsonObject& object);
