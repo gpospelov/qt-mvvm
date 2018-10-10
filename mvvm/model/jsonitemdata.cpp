@@ -11,6 +11,7 @@
 #include "jsonvariant.h"
 #include <QJsonObject>
 #include <QJsonArray>
+#include <stdexcept>
 
 QJsonArray JsonItemData::get_json(const SessionItemData& data)
 {
@@ -26,7 +27,24 @@ QJsonArray JsonItemData::get_json(const SessionItemData& data)
     return result;
 }
 
-SessionItemData JsonItemData::get_data(const QJsonObject& object)
+SessionItemData JsonItemData::get_data(const QJsonArray& object)
 {
-    return {};
+    SessionItemData result;
+
+    for ( const auto& x : object) {
+        if (!is_valid(x.toObject()))
+            throw std::runtime_error("JsonItemData::get_data() -> Invalid");
+        auto role = x[roleKey].toInt();
+        auto variant = json::get_variant(x[variantKey].toObject());
+        result.setData(variant, role);
+    }
+
+    return result;
+}
+
+//! Returns true if it is valid DataRole
+bool JsonItemData::is_valid(const QJsonObject& json)
+{
+    static const QStringList expected = QStringList() << roleKey << variantKey;
+    return json.keys() == expected ? true : false;
 }

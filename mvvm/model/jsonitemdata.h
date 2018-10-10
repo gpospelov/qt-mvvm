@@ -23,7 +23,10 @@ const QString variantKey = "variant";
 
 QJsonArray get_json(const SessionItemData& data);
 
-SessionItemData get_data(const QJsonObject& object);
+SessionItemData get_data(const QJsonArray& object);
+
+bool is_valid(const QJsonObject& json);
+
 
 }
 
