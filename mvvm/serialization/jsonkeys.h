@@ -14,7 +14,7 @@
 
 //! @file Contains collection of constants that represent json keys.
 
-namespace json
+namespace JsonVariant
 {
 
 const QString variantTypeKey = "type";

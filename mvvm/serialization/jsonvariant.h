@@ -13,7 +13,7 @@
 #include <QJsonObject>
 #include <QVariant>
 
-namespace json {
+namespace JsonVariant {
 
 QJsonObject get_json(const QVariant& variant);
 
