@@ -26,7 +26,7 @@ TEST_F(TestSessionItemData, setData)
 {
     SessionItemData data;
 
-    const int role = Qt::UserRole + 1;
+    const int role(1);
     const QVariant variant(42.0);
 
     // setting variant for role
@@ -57,7 +57,7 @@ TEST_F(TestSessionItemData, differentRoles)
 {
     SessionItemData data;
 
-    const int role1 = Qt::UserRole + 1;
+    const int role1(1);
     const int role2 = role1 + 1;
 
     EXPECT_TRUE(data.setData(QVariant::fromValue(42.0), role1));
@@ -78,7 +78,7 @@ TEST_F(TestSessionItemData, changingRole)
 {
     SessionItemData data;
 
-    const int role = Qt::UserRole + 1;
+    const int role(1);
     const QVariant variant(42.0);
 
     // setting variant for role
@@ -92,34 +92,11 @@ TEST_F(TestSessionItemData, changingRole)
     EXPECT_TRUE(data.data(role) == s);
 }
 
-//! Edit role is treated as edit role.
-
-TEST_F(TestSessionItemData, editRole)
-{
-    SessionItemData data;
-
-    const int role = Qt::DisplayRole;
-    const QVariant variant(42.0);
-
-    // setting displayRole, accessing editRole
-    EXPECT_TRUE(data.setData(variant, role));
-    std::vector<int> expected {role};
-    EXPECT_EQ(data.roles(), expected);
-    EXPECT_TRUE(data.data(role) == variant);
-    EXPECT_TRUE(data.data(Qt::EditRole) == variant);
-
-    // setting editRole, accessing displayRole
-    EXPECT_FALSE(data.setData(variant, Qt::EditRole));
-    EXPECT_TRUE(data.setData(QVariant::fromValue(std::string("str")), Qt::EditRole));
-    EXPECT_TRUE(data.data(Qt::DisplayRole) == QVariant::fromValue(std::string("str")));
-    EXPECT_EQ(data.roles(), expected);
-}
-
 TEST_F(TestSessionItemData, rangeLoop)
 {
     SessionItemData data;
     const std::vector<double> expected_values = {1.2, 1.3};
-    const std::vector<int> expected_roles = {Qt::UserRole + 1, Qt::UserRole + 2};
+    const std::vector<int> expected_roles = {1, 2};
 
     for(size_t i=0; i<expected_values.size(); ++i) {
         data.setData(QVariant::fromValue(expected_values[i]), expected_roles[i]);

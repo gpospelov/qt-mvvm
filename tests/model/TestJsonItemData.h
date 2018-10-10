@@ -93,9 +93,9 @@ TEST_F(TestJsonItemData, thereAndBack)
     auto data2 = JsonItemData::get_data(array);
     EXPECT_EQ(data2.roles().size(), 3u);
 
-//    EXPECT_EQ(data2.roles(), roles);
-//    for (auto role : roles) {
-//        EXPECT_EQ(data2.data(role), variants[role-1]);
-//    }
+    EXPECT_EQ(data2.roles(), roles);
+    for (auto role : roles) {
+        EXPECT_EQ(data2.data(role), variants[role-1]);
+    }
 
 }

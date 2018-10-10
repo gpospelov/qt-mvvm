@@ -20,7 +20,6 @@ std::vector<int> SessionItemData::roles() const
 
 QVariant SessionItemData::data(int role) const
 {
-    role = (role == Qt::EditRole) ? Qt::DisplayRole : role;
     for (const auto& value : m_values) {
         if (value.m_role == role)
             return value.m_data;
@@ -32,7 +31,6 @@ QVariant SessionItemData::data(int role) const
 
 bool SessionItemData::setData(const QVariant& value, int role)
 {
-    role = (role == Qt::EditRole) ? Qt::DisplayRole : role;
     for (auto it = m_values.begin(); it != m_values.end(); ++it) {
         if (it->m_role == role) {
             if (value.isValid()) {
