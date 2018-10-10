@@ -38,10 +38,12 @@ TestJsonVariant::~TestJsonVariant() = default;
 
 TEST_F(TestJsonVariant, invalidVariant)
 {
+    JsonVariant converter;
+
     QVariant variant;
 
     // from variant to json object
-    auto object = JsonVariant::get_json(variant);
+    auto object = converter.get_json(variant);
     m_array.append(object);
 
     EXPECT_EQ(object.size(), 2);
@@ -55,7 +57,7 @@ TEST_F(TestJsonVariant, invalidVariant)
         {JsonVariant::variantTypeKey, JsonVariant::invalid_type_name},
         {JsonVariant::variantValueKey, QJsonValue()}
     };
-    QVariant variant2 = JsonVariant::get_variant(object2);
+    QVariant variant2 = converter.get_variant(object2);
     EXPECT_FALSE(variant2.isValid());
 
     // final comparison
@@ -66,11 +68,13 @@ TEST_F(TestJsonVariant, invalidVariant)
 
 TEST_F(TestJsonVariant, intVariant)
 {
+    JsonVariant converter;
+
     const int value(42);
     QVariant variant(value);
 
     // from variant to json object
-    auto object = JsonVariant::get_json(variant);
+    auto object = converter.get_json(variant);
     m_array.append(object);
 
     EXPECT_EQ(object.size(), 2);
@@ -84,7 +88,7 @@ TEST_F(TestJsonVariant, intVariant)
         {JsonVariant::variantTypeKey, JsonVariant::int_type_name},
         {JsonVariant::variantValueKey, value}
     };
-    QVariant variant2 = JsonVariant::get_variant(object2);
+    QVariant variant2 = converter.get_variant(object2);
     EXPECT_EQ(variant2.toInt(), value);
 
     // final comparison
@@ -95,11 +99,13 @@ TEST_F(TestJsonVariant, intVariant)
 
 TEST_F(TestJsonVariant, stringVariant)
 {
+    JsonVariant converter;
+
     const std::string value("abc");
     QVariant variant = QVariant::fromValue(value);
 
     // from variant to json object
-    auto object = JsonVariant::get_json(variant);
+    auto object = converter.get_json(variant);
     m_array.append(object);
 
     EXPECT_EQ(object.size(), 2);
@@ -116,7 +122,7 @@ TEST_F(TestJsonVariant, stringVariant)
         {JsonVariant::variantTypeKey, JsonVariant::string_type_name},
         {JsonVariant::variantValueKey, QString::fromStdString(value)}
     };
-    QVariant variant2 = JsonVariant::get_variant(object2);
+    QVariant variant2 = converter.get_variant(object2);
     EXPECT_EQ(variant2.value<std::string>(), value);
 }
 
@@ -124,11 +130,13 @@ TEST_F(TestJsonVariant, stringVariant)
 
 TEST_F(TestJsonVariant, doubleVariant)
 {
+    JsonVariant converter;
+
     const double value(42.3);
     QVariant variant = QVariant::fromValue(value);
 
     // from variant to json object
-    auto object = JsonVariant::get_json(variant);
+    auto object = converter.get_json(variant);
     m_array.append(object);
 
     EXPECT_EQ(object.size(), 2);
@@ -142,7 +150,7 @@ TEST_F(TestJsonVariant, doubleVariant)
         {JsonVariant::variantTypeKey, JsonVariant::double_type_name},
         {JsonVariant::variantValueKey, value}
     };
-    QVariant variant2 = JsonVariant::get_variant(object2);
+    QVariant variant2 = converter.get_variant(object2);
     EXPECT_EQ(variant2.toDouble(), value);
 
     // final comparison
@@ -153,11 +161,13 @@ TEST_F(TestJsonVariant, doubleVariant)
 
 TEST_F(TestJsonVariant, vectorOfDoubleVariant)
 {
+    JsonVariant converter;
+
     const std::vector<double> value = {42.0, 43.0, 44.0};
     QVariant variant = QVariant::fromValue(value);
 
     // from variant to json object
-    auto object = JsonVariant::get_json(variant);
+    auto object = converter.get_json(variant);
     m_array.append(object);
 
     EXPECT_EQ(object.size(), 2);
@@ -172,6 +182,6 @@ TEST_F(TestJsonVariant, vectorOfDoubleVariant)
     }
     EXPECT_EQ(value, vec_expected);
 
-    QVariant variant2 = JsonVariant::get_variant(object);
+    QVariant variant2 = converter.get_variant(object);
     EXPECT_EQ(variant2.value<std::vector<double>>(), value);
 }

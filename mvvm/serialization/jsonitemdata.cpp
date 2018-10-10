@@ -21,12 +21,14 @@ const QString JsonItemData::variantKey = "variant";
 
 QJsonArray JsonItemData::get_json(const SessionItemData& data)
 {
+    JsonVariant variant_converter;
+
     QJsonArray result;
 
     QJsonObject object;
     for (const auto& x : data) {
         object[roleKey] = x.m_role;
-        object[variantKey] = JsonVariant::get_json(x.m_data);
+        object[variantKey] = variant_converter.get_json(x.m_data);
         result.append(object);
     }
 
@@ -35,13 +37,14 @@ QJsonArray JsonItemData::get_json(const SessionItemData& data)
 
 SessionItemData JsonItemData::get_data(const QJsonArray& object)
 {
+    JsonVariant variant_converter;
     SessionItemData result;
 
     for ( const auto& x : object) {
         if (!is_valid(x.toObject()))
             throw std::runtime_error("JsonItemData::get_data() -> Invalid");
         auto role = x[roleKey].toInt();
-        auto variant = JsonVariant::get_variant(x[variantKey].toObject());
+        auto variant = variant_converter.get_variant(x[variantKey].toObject());
         result.setData(variant, role);
     }
 

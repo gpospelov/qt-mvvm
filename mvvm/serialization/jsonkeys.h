@@ -14,8 +14,8 @@
 
 //! @file Contains collection of constants that represent json keys.
 
-namespace JsonVariant
-{
+//namespace JsonVariant
+//{
 
 const QString invalid_type_name = "invalid";
 const QString int_type_name = "int";
@@ -23,6 +23,6 @@ const QString string_type_name = "std::string";
 const QString double_type_name = "double";
 const QString vector_double_type_name = "std::vector<double>";
 
-}
+//}
 
 #endif

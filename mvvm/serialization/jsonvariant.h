@@ -13,15 +13,23 @@
 #include <QJsonObject>
 #include <QVariant>
 
-namespace JsonVariant {
+class JsonVariant {
+public:
 
-const QString variantTypeKey = "type";
-const QString variantValueKey = "value";
+    static const QString variantTypeKey;
+    static const QString variantValueKey;
 
-QJsonObject get_json(const QVariant& variant);
+    static const QString invalid_type_name;
+    static const QString int_type_name;
+    static const QString string_type_name;
+    static const QString double_type_name;
+    static const QString vector_double_type_name;
 
-QVariant get_variant(const QJsonObject& object);
 
-}
+    QJsonObject get_json(const QVariant& variant);
+
+    QVariant get_variant(const QJsonObject& object);
+
+};
 
 #endif

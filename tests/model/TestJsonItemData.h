@@ -2,7 +2,9 @@
 #include "jsonitemdata.h"
 #include "test_utils.h"
 #include "jsonvariant.h"
+#include "sessionitemdata.h"
 #include <QJsonObject>
+#include <QJsonArray>
 #include <string>
 #include <QDebug>
 
@@ -30,11 +32,12 @@ TestJsonItemData::~TestJsonItemData() = default;
 TEST_F(TestJsonItemData, isValidDataRole)
 {
     JsonItemData converter;
+    JsonVariant variant_converter;
 
     // valid json object representing DataRole
     QJsonObject object;
     object[JsonItemData::roleKey] = 42;
-    object[JsonItemData::variantKey] = JsonVariant::get_json(QVariant(1.23));
+    object[JsonItemData::variantKey] = variant_converter.get_json(QVariant(1.23));
     EXPECT_TRUE(converter.is_valid(object));
 
     // invalid json object which can't represent DataRole
@@ -45,8 +48,8 @@ TEST_F(TestJsonItemData, isValidDataRole)
     // another invalid json object
     QJsonObject object3;
     object3[JsonItemData::roleKey] = 42;
-    object3[JsonItemData::variantKey] = JsonVariant::get_json(QVariant(1.23));
-    object3["abc"] = JsonVariant::get_json(QVariant::fromValue(std::string("xxx")));
+    object3[JsonItemData::variantKey] = variant_converter.get_json(QVariant(1.23));
+    object3["abc"] = variant_converter.get_json(QVariant::fromValue(std::string("xxx")));
     EXPECT_FALSE(converter.is_valid(object3));
 }
 

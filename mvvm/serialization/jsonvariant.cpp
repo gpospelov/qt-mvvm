@@ -8,13 +8,21 @@
 // ************************************************************************** //
 
 #include "jsonvariant.h"
-#include "jsonkeys.h"
 #include <QJsonObject>
 #include <QJsonArray>
 #include <stdexcept>
 #include <sstream>
 #include <customvariants.h>
 #include <QDebug>
+
+const QString JsonVariant::variantTypeKey = "type";
+const QString JsonVariant::variantValueKey = "value";
+const QString JsonVariant::invalid_type_name = "invalid";
+const QString JsonVariant::int_type_name = "int";
+const QString JsonVariant::string_type_name = "std::string";
+const QString JsonVariant::double_type_name = "double";
+const QString JsonVariant::vector_double_type_name = "std::vector<double>";
+
 
 namespace {
 
