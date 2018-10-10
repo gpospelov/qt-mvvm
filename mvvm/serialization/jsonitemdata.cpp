@@ -13,6 +13,11 @@
 #include <QJsonArray>
 #include <stdexcept>
 
+
+const QString JsonItemData::roleKey = "role";
+const QString JsonItemData::variantKey = "variant";
+
+
 QJsonArray JsonItemData::get_json(const SessionItemData& data)
 {
     QJsonArray result;

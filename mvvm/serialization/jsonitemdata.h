@@ -13,21 +13,20 @@
 #include <QJsonArray>
 #include "sessionitemdata.h"
 
-//! Converts SessionItemData to/from json object.
+//! Default converter of SessionItemData to/from json object.
 
-namespace JsonItemData
+class JsonItemData
 {
+public:
+    static const QString roleKey;
+    static const QString variantKey;
 
-const QString roleKey = "role";
-const QString variantKey = "variant";
+    QJsonArray get_json(const SessionItemData& data);
 
-QJsonArray get_json(const SessionItemData& data);
+    SessionItemData get_data(const QJsonArray& object);
 
-SessionItemData get_data(const QJsonArray& object);
+    bool is_valid(const QJsonObject& json);
 
-bool is_valid(const QJsonObject& json);
-
-
-}
+};
 
 #endif
