@@ -27,7 +27,7 @@ void TestUtils::CreateTestDirectory(const QString& test_sub_dir)
 
 QString TestUtils::TestDirectoryPath(const QString& test_sub_dir)
 {
-    return QString::fromStdString(Testing::TestOutputDir()) + "/" + test_sub_dir;
+    return QString::fromStdString(TestConfig::TestOutputDir()) + "/" + test_sub_dir;
 }
 
 QString TestUtils::TestFileName(const QString& test_sub_dir, const QString& file_name)

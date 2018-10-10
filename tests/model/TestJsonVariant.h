@@ -1,8 +1,7 @@
 #include <gtest/gtest.h>
 #include "jsonvariant.h"
 #include "jsonkeys.h"
-#include "testconfig.h"
-#include "fileutils.h"
+#include "test_utils.h"
 #include <QFile>
 #include <QJsonDocument>
 #include <QJsonArray>
@@ -11,34 +10,26 @@
 
 //! Test convertion of QVariant from/to QJsonObject.
 
-
 class TestJsonVariant : public ::testing::Test
 {
 public:
     ~TestJsonVariant();
 
-    static std::string projectDir() {
-        return Testing::TestOutputDir() + "/" + "test_JsonVariant";
-    }
-
+    static const QString test_dir;
     static QJsonArray m_array;
 
-    static void SetUpTestCase() {
-        Utils::create_dir(projectDir());
+    static void SetUpTestCase()
+    {
+        TestUtils::CreateTestDirectory(test_dir);
     }
 
     static void TearDownTestCase() {
-        QFile saveFile(QString::fromStdString(projectDir()) + "/variants.json");
-
-        if (!saveFile.open(QIODevice::WriteOnly))
-            throw std::runtime_error("TestJsonBasics::save_object() -> Can't save file");
-
-        // saving our variants to file
-        QJsonDocument saveDoc(m_array);
-        saveFile.write(saveDoc.toJson());
-     }
+        auto fileName = TestUtils::TestFileName(test_dir, "variants.json");
+        TestUtils::SaveJson(m_array, fileName);
+    }
 };
 
+const QString TestJsonVariant::test_dir = "test_JsonVariant";
 QJsonArray TestJsonVariant::m_array = QJsonArray();
 
 TestJsonVariant::~TestJsonVariant() = default;
