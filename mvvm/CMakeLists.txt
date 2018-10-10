@@ -2,7 +2,8 @@ set(library_name mvvm)
 
 set(include_dirs
     ${CMAKE_CURRENT_SOURCE_DIR}/model
-    ${CMAKE_CURRENT_SOURCE_DIR}/utils)
+    ${CMAKE_CURRENT_SOURCE_DIR}/utils
+    ${CMAKE_CURRENT_SOURCE_DIR}/serialization)
 
 set(source_files)
 set(include_files)

@@ -10,6 +10,7 @@ See bornagainproject.org
 + Every SessionItem should be able to save non-xml data
 + Project file back compatibility
 
++ Exceptions handling - see qt-breakpad in Qt-creator
 
 + Alternative to item tag?
 + SessionItemData of SessionItem shold be recorded uniformly (all limits, displayRoles, etc)
