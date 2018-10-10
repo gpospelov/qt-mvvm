@@ -23,9 +23,9 @@ public:
     static const QString roleKey;
     static const QString variantKey;
 
-    QJsonArray get_json(const SessionItemData& data);
+    QJsonArray get_json(const SessionItemData& data) override;
 
-    SessionItemData get_data(const QJsonArray& object);
+    SessionItemData get_data(const QJsonArray& object) override;
 
     bool is_valid(const QJsonObject& json);
 };

@@ -15,14 +15,29 @@ class QJsonArray;
 
 //! Base class for all converters of SessionItemData to/from json object
 
-class JsonItemDataInterface {
+class JsonItemDataInterface
+{
 public:
     virtual ~JsonItemDataInterface() = default;
 
     virtual QJsonArray get_json(const SessionItemData&) = 0;
 
     virtual SessionItemData get_data(const QJsonArray&) = 0;
+};
 
+//! Base class for all supported converters of Qvariant to/from json object
+
+class QJsonObject;
+class QVariant;
+
+class JsonVariantInterface
+{
+public:
+    virtual ~JsonVariantInterface() = default;
+
+    virtual QJsonObject get_json(const QVariant&) = 0;
+
+    virtual QVariant get_variant(const QJsonObject&) = 0;
 };
 
 #endif

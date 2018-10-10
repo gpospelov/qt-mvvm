@@ -10,25 +10,24 @@
 #ifndef JSONVARIANT_H
 #define JSONVARIANT_H
 
+#include "jsonconverterinterfaces.h"
 #include <QJsonObject>
 #include <QVariant>
 
-class JsonVariant {
+class JsonVariant : public JsonVariantInterface {
 public:
 
     static const QString variantTypeKey;
     static const QString variantValueKey;
-
     static const QString invalid_type_name;
     static const QString int_type_name;
     static const QString string_type_name;
     static const QString double_type_name;
     static const QString vector_double_type_name;
 
+    QJsonObject get_json(const QVariant& variant) override;
 
-    QJsonObject get_json(const QVariant& variant);
-
-    QVariant get_variant(const QJsonObject& object);
+    QVariant get_variant(const QJsonObject& object) override;
 
 };
 
