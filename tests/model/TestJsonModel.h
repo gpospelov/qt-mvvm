@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include "sessionmodel.h"
 #include "fileutils.h"
-#include "modeljson.h"
+#include "jsonmodel.h"
 #include "sessionitem.h"
 #include "testconfig.h"
 #include <QFile>
@@ -11,19 +11,21 @@
 
 //! Set of tests to learn basic Qt/json manipulationx.
 
-class TestModelJson : public ::testing::Test
+class TestJsonModel : public ::testing::Test
 {
 public:
-    ~TestModelJson();
+    ~TestJsonModel();
     std::string projectDir() const {
         return TestConfig::TestOutputDir() + "/" + "test_ModelJson";
     }
 };
 
-TestModelJson::~TestModelJson() = default;
+TestJsonModel::~TestJsonModel() = default;
 
-TEST_F(TestModelJson, writeModel)
+TEST_F(TestJsonModel, writeModel)
 {
+    JsonModel converter;
+
     Utils::create_subdir(".", projectDir());
 
     QFile saveFile(QString::fromStdString(projectDir() + "/save.json"));
@@ -34,14 +36,16 @@ TEST_F(TestModelJson, writeModel)
     SessionModel model("MaterialModel");
 
     QJsonObject object;
-    JsonModel::write(model, object);
+    converter.write(model, object);
 
     QJsonDocument saveDoc(object);
     saveFile.write(saveDoc.toJson());
 }
 
-TEST_F(TestModelJson, writeItems)
+TEST_F(TestJsonModel, writeItems)
 {
+    JsonModel converter;
+
     Utils::create_subdir(".", projectDir());
 
     QFile saveFile(QString::fromStdString(projectDir() + "/save2.json"));
@@ -55,7 +59,7 @@ TEST_F(TestModelJson, writeItems)
     parent->insertItem(-1, new SessionItem("Layer3"));
 
     QJsonObject object;
-    JsonModel::write(parent.get(), object);
+    converter.write(parent.get(), object);
 
     QJsonDocument saveDoc(object);
     saveFile.write(saveDoc.toJson());

@@ -7,12 +7,15 @@
 //
 // ************************************************************************** //
 
-#include "modeljson.h"
+#include "jsonmodel.h"
 #include "sessionmodel.h"
 #include "sessionitem.h"
 #include "itemutils.h"
 #include <QJsonObject>
 #include <QJsonArray>
+
+const std::string JsonModel::modelKey = "model";
+const std::string JsonModel::itemsKey = "items";
 
 
 void JsonModel::write(const SessionModel& model, QJsonObject& json)

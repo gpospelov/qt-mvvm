@@ -9,7 +9,7 @@
 #include "TestJsonBasics.h"
 #include "TestFileUtils.h"
 #include "TestItemUtils.h"
-#include "TestModelJson.h"
+#include "TestJsonModel.h"
 #include "TestSessionItemData.h"
 #include "TestJsonVariant.h"
 #include "TestJsonItemData.h"
