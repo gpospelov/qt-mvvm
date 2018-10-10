@@ -28,7 +28,6 @@ public:
     QJsonObject get_json(const QVariant& variant) override;
 
     QVariant get_variant(const QJsonObject& object) override;
-
 };
 
 #endif
