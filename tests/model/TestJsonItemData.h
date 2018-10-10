@@ -103,5 +103,4 @@ TEST_F(TestJsonItemData, thereAndBack)
     for (auto role : roles) {
         EXPECT_EQ(data2.data(role), variants[role-1]);
     }
-
 }

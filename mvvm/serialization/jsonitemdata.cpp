@@ -9,6 +9,7 @@
 
 #include "jsonitemdata.h"
 #include "jsonvariant.h"
+#include "sessionitemdata.h"
 #include <QJsonObject>
 #include <QJsonArray>
 #include <stdexcept>

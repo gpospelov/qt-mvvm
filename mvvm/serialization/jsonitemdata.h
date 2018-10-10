@@ -10,12 +10,14 @@
 #ifndef JSONITEMDATA_H
 #define JSONITEMDATA_H
 
-#include <QJsonArray>
-#include "sessionitemdata.h"
+#include "jsonconverterinterfaces.h"
+#include <QString>
+
+class QJsonObject;
 
 //! Default converter of SessionItemData to/from json object.
 
-class JsonItemData
+class JsonItemData : public JsonItemDataInterface
 {
 public:
     static const QString roleKey;
@@ -26,7 +28,6 @@ public:
     SessionItemData get_data(const QJsonArray& object);
 
     bool is_valid(const QJsonObject& json);
-
 };
 
 #endif
