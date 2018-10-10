@@ -17,7 +17,7 @@ class SessionModel;
 class QJsonObject;
 class SessionItem;
 
-namespace ModelJson
+namespace JsonModel
 {
 
 const std::string modelKey = "model";

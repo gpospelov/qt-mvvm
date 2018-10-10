@@ -34,7 +34,7 @@ TEST_F(TestModelJson, writeModel)
     SessionModel model("MaterialModel");
 
     QJsonObject object;
-    ModelJson::write(model, object);
+    JsonModel::write(model, object);
 
     QJsonDocument saveDoc(object);
     saveFile.write(saveDoc.toJson());
@@ -55,7 +55,7 @@ TEST_F(TestModelJson, writeItems)
     parent->insertItem(-1, new SessionItem("Layer3"));
 
     QJsonObject object;
-    ModelJson::write(parent.get(), object);
+    JsonModel::write(parent.get(), object);
 
     QJsonDocument saveDoc(object);
     saveFile.write(saveDoc.toJson());

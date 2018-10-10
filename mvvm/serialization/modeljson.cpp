@@ -15,7 +15,7 @@
 #include <QJsonArray>
 
 
-void ModelJson::write(const SessionModel& model, QJsonObject& json)
+void JsonModel::write(const SessionModel& model, QJsonObject& json)
 {
     json[modelKey.c_str()] = QString::fromStdString(model.modelType());
 
@@ -29,7 +29,7 @@ void ModelJson::write(const SessionModel& model, QJsonObject& json)
     json[itemsKey.c_str()] = itemArray;
 }
 
-void ModelJson::write(const SessionItem* item, QJsonObject& json)
+void JsonModel::write(const SessionItem* item, QJsonObject& json)
 {
     if (!item)
         return;
