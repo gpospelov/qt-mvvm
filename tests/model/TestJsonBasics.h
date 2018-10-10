@@ -13,7 +13,7 @@ class TestJsonBasics : public ::testing::Test
 public:
     ~TestJsonBasics();
     std::string projectDir() const {
-        return Testing::TestOutputDir() + "/" + "test_JsonBasics";
+        return TestConfig::TestOutputDir() + "/" + "test_JsonBasics";
     }
 };
 

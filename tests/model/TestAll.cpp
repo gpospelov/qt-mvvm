@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+#include "comparators.h"
 #include "TestSessionItem.h"
 #include "TestSessionModel.h"
 #include "TestPath.h"
@@ -11,7 +12,7 @@
 #include "TestModelJson.h"
 #include "TestSessionItemData.h"
 #include "TestJsonVariant.h"
-#include "comparators.h"
+#include "TestJsonItemData.h"
 #include <string>
 
 int main(int argc, char** argv) {

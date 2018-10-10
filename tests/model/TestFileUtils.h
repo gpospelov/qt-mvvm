@@ -27,7 +27,7 @@ public:
         file.close();
     }
     std::string projectDir() const {
-        return Testing::TestOutputDir() + "/" + "test_FileUtils";
+        return TestConfig::TestOutputDir() + "/" + "test_FileUtils";
     }
 };
 

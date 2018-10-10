@@ -17,7 +17,7 @@ class TestModelJson : public ::testing::Test
 public:
     ~TestModelJson();
     std::string projectDir() const {
-        return Testing::TestOutputDir() + "/" + "test_ModelJson";
+        return TestConfig::TestOutputDir() + "/" + "test_ModelJson";
     }
 };
 
