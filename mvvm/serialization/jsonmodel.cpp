@@ -46,10 +46,10 @@ JsonModel::JsonModel()
 
 }
 
-void JsonModel::write(const SessionModel& model, QJsonObject& json)
+void JsonModel::to_json(const SessionModel& model, QJsonObject& json)
 {
     if (!model.rootItem())
-        throw std::runtime_error("JsonModel::write() -> Error. Empty model.");
+        throw std::runtime_error("JsonModel::to_json() -> Error. Model is not initialized.");
 
     json[modelKey] = QString::fromStdString(model.modelType());
 
@@ -57,14 +57,44 @@ void JsonModel::write(const SessionModel& model, QJsonObject& json)
 
     for(auto item : model.rootItem()->children()) {
         QJsonObject object;
-        JsonModel::write(item, object);
+        JsonModel::item_to_json(item, object);
         itemArray.append(object);
     }
 
     json[itemsKey] = itemArray;
 }
 
-void JsonModel::write(const SessionItem* item, QJsonObject& json)
+void JsonModel::from_json(const QJsonObject& json, SessionModel& model)
+{
+    if (!model.rootItem())
+        throw std::runtime_error("JsonModel::from_json() -> Error. Model is not initialized.");
+
+    if (model.rootItem()->childrenCount())
+        throw std::runtime_error("JsonModel::from_json() -> Error. Model is not empty.");
+
+    if (!is_model(json))
+        throw std::runtime_error("JsonModel::from_json() -> Error. Invalid json object.");
+
+    if (json[modelKey].toString() != QString::fromStdString(model.modelType()))
+            throw std::runtime_error("JsonModel::from_json() -> Unexpected model type.");
+
+    auto parent = model.rootItem();
+//    for(const auto obj : json[itemsKey].toArray()) {
+//        json_to_item(obj, parent);
+
+//    }
+
+}
+
+void JsonModel::json_to_item(const QJsonObject& json, SessionItem* parent)
+{
+    if (!parent)
+        throw std::runtime_error("JsonModel::json_to_item() -> Non initialized item");
+
+
+}
+
+void JsonModel::item_to_json(const SessionItem* item, QJsonObject& json)
 {
     if (!item)
         return;
@@ -75,13 +105,13 @@ void JsonModel::write(const SessionItem* item, QJsonObject& json)
     QJsonArray itemArray;
     for (auto child : item->children()) {
         QJsonObject child_json;
-        write(child, child_json);
+        item_to_json(child, child_json);
         itemArray.append(child_json);
     }
     json[itemsKey] = itemArray;
 }
 
-bool JsonModel::is_item(QJsonObject& object)
+bool JsonModel::is_item(const QJsonObject& object)
 {
     static const QStringList expected = expected_item_keys();
 
@@ -97,7 +127,7 @@ bool JsonModel::is_item(QJsonObject& object)
     return true;
 }
 
-bool JsonModel::is_model(QJsonObject& object)
+bool JsonModel::is_model(const QJsonObject& object)
 {
     static const QStringList expected = expected_model_keys();
 

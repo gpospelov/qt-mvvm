@@ -61,7 +61,7 @@ TEST_F(TestJsonModel, singleItem)
     std::unique_ptr<SessionItem> parent(new SessionItem(model_type.toStdString()));
 
     QJsonObject object;
-    converter.write(parent.get(), object);
+    converter.item_to_json(parent.get(), object);
 
     EXPECT_EQ(object[JsonModel::modelKey], model_type);
     EXPECT_EQ(object[JsonModel::itemsKey].toArray().size(), 0);
@@ -82,7 +82,7 @@ TEST_F(TestJsonModel, parentAndChild)
     parent->insertItem(-1, child);
 
     QJsonObject object;
-    converter.write(parent.get(), object);
+    converter.item_to_json(parent.get(), object);
 
     EXPECT_EQ(object[JsonModel::modelKey], model_type);
     EXPECT_EQ(object[JsonModel::itemsKey].toArray().size(), 1);
@@ -123,7 +123,7 @@ TEST_F(TestJsonModel, emptyModel)
     SessionModel model("TestModel");
 
     QJsonObject object;
-    converter.write(model, object);
+    converter.to_json(model, object);
 
     EXPECT_EQ(object[JsonModel::modelKey], "TestModel");
     EXPECT_EQ(object[JsonModel::itemsKey].toArray().size(), 0);
@@ -140,7 +140,7 @@ TEST_F(TestJsonModel, singleItemInModel)
     model.insertNewItem("abc", nullptr, -1);
 
     QJsonObject object;
-    converter.write(model, object);
+    converter.to_json(model, object);
 
     EXPECT_EQ(object[JsonModel::modelKey], QString::fromStdString(model.modelType()));
     EXPECT_EQ(object[JsonModel::itemsKey].toArray().size(), 1);
@@ -157,7 +157,7 @@ TEST_F(TestJsonModel, parentAndChildInModel)
     auto child = model.insertNewItem("Layer", parent);
 
     QJsonObject object;
-    converter.write(model, object);
+    converter.to_json(model, object);
 
     EXPECT_EQ(object[JsonModel::modelKey], QString::fromStdString(model.modelType()));
     EXPECT_EQ(object[JsonModel::itemsKey].toArray().size(), 1);

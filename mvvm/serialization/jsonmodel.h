@@ -29,16 +29,23 @@ public:
 
     JsonModel();
 
-    //! Writes content of model into json object.
-    void write(const SessionModel& model, QJsonObject& json);
+    //! Writes content of model into json.
+    void to_json(const SessionModel& model, QJsonObject& json);
 
-    void write(const SessionItem* item, QJsonObject& json);
+    //! Reads json object and build the model.
+    void from_json(const QJsonObject& json, SessionModel& model);
+
+    //! Constructs SessionItem tree from json.
+    void json_to_item(const QJsonObject& json, SessionItem* parent);
+
+    //! Writes SessionItem tree to json.
+    void item_to_json(const SessionItem* item, QJsonObject& json);
 
     //! Returns true if given json object represents SessionItem tree.
-    bool is_item(QJsonObject& object);
+    bool is_item(const QJsonObject& object);
 
     //! Returns true if given json object represents SessionModel.
-    bool is_model(QJsonObject& object);
+    bool is_model(const QJsonObject& object);
 
 private:
     std::unique_ptr<JsonItemDataInterface> m_itemdata_converter;
