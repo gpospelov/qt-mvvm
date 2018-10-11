@@ -26,22 +26,29 @@ const QString TestJsonModel::test_dir = "test_JsonModel";
 
 //! Checks the validity of json object representing item tree.
 
-TEST_F(TestJsonModel, isValidTree)
+TEST_F(TestJsonModel, isValidItem)
 {
     JsonModel converter;
 
     // empty json object is not valid
     QJsonObject object;
-    EXPECT_FALSE(converter.is_valid(object));
+    EXPECT_FALSE(converter.is_item(object));
 
     // it also should contain array
     object[JsonModel::modelKey] = "abc";
     object[JsonModel::itemsKey] = 42; // incorrect
-    EXPECT_FALSE(converter.is_valid(object));
+    object[JsonModel::itemDataKey] = QJsonArray();
+    EXPECT_FALSE(converter.is_item(object));
 
     // correctly constructed
     object[JsonModel::itemsKey] = QJsonArray();
-    EXPECT_TRUE(converter.is_valid(object));
+    object[JsonModel::itemDataKey] = QJsonArray();
+    EXPECT_TRUE(converter.is_item(object));
+
+    // wrong extra key in json
+    object["abc"] = "abc";
+    EXPECT_FALSE(converter.is_item(object));
+    EXPECT_FALSE(converter.is_item(object));
 }
 
 //! Check single item (no children) without the data.
@@ -58,6 +65,11 @@ TEST_F(TestJsonModel, singleItem)
 
     EXPECT_EQ(object[JsonModel::modelKey], model_type);
     EXPECT_EQ(object[JsonModel::itemsKey].toArray().size(), 0);
+
+    // saving to file
+    auto fileName = TestUtils::TestFileName(test_dir, "model.json");
+    TestUtils::SaveJson(object, fileName);
+
 }
 
 

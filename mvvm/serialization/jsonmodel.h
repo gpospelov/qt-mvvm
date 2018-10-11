@@ -21,6 +21,7 @@ class JsonModel
 {
 public:
     static const QString modelKey;
+    static const QString itemDataKey;
     static const QString itemsKey;
 
     //! Writes content of model into json object.
@@ -29,7 +30,7 @@ public:
     void write(const SessionItem* item, QJsonObject& json);
 
     //! Returns true if given json object represents SessionItem tree.
-    bool is_valid(QJsonObject& object);
+    bool is_item(QJsonObject& object);
 };
 
 #endif

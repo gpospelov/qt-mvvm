@@ -19,6 +19,7 @@ class SessionModel;
 
 class SessionItem {
     friend class SessionModel;
+    friend class JsonModel;
 public:
     SessionItem(const model_type& modelType = {});
     virtual ~SessionItem();
