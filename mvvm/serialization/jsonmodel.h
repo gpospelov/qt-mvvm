@@ -12,10 +12,12 @@
 #define MODELJSON_H
 
 #include <QString>
+#include <memory>
 
 class SessionModel;
 class QJsonObject;
 class SessionItem;
+class JsonItemDataInterface;
 
 class JsonModel
 {
@@ -24,6 +26,8 @@ public:
     static const QString itemDataKey;
     static const QString itemsKey;
 
+    JsonModel();
+
     //! Writes content of model into json object.
     void write(const SessionModel& model, QJsonObject& json);
 
@@ -31,6 +35,9 @@ public:
 
     //! Returns true if given json object represents SessionItem tree.
     bool is_item(QJsonObject& object);
+
+private:
+    std::unique_ptr<JsonItemDataInterface> m_itemdata_converter;
 };
 
 #endif

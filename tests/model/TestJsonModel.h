@@ -65,11 +65,11 @@ TEST_F(TestJsonModel, singleItem)
 
     EXPECT_EQ(object[JsonModel::modelKey], model_type);
     EXPECT_EQ(object[JsonModel::itemsKey].toArray().size(), 0);
+    EXPECT_EQ(object[JsonModel::itemDataKey].toArray().size(), 0);
 
     // saving to file
     auto fileName = TestUtils::TestFileName(test_dir, "model.json");
     TestUtils::SaveJson(object, fileName);
-
 }
 
 

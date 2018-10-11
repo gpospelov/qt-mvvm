@@ -30,6 +30,12 @@ const QString JsonModel::itemDataKey = "itemData";
 const QString JsonModel::itemsKey = "items";
 
 
+JsonModel::JsonModel()
+    : m_itemdata_converter(new JsonItemData)
+{
+
+}
+
 void JsonModel::write(const SessionModel& model, QJsonObject& json)
 {
     json[modelKey] = QString::fromStdString(model.modelType());
@@ -46,12 +52,11 @@ void JsonModel::write(const SessionModel& model, QJsonObject& json)
 
 void JsonModel::write(const SessionItem* item, QJsonObject& json)
 {
-    JsonItemData item_data_converter;
     if (!item)
         return;
 
     json[modelKey] = QString::fromStdString(item->modelType());
-    json[itemDataKey] = item_data_converter.get_json(item->m_data);
+    json[itemDataKey] = m_itemdata_converter->get_json(item->m_data);
 
     QJsonArray itemArray;
     for (auto child : item->children()) {
@@ -62,7 +67,6 @@ void JsonModel::write(const SessionItem* item, QJsonObject& json)
     json[itemsKey] = itemArray;
 }
 
-#include <QDebug>
 bool JsonModel::is_item(QJsonObject& object)
 {
     static const QStringList expected = expected_keys();
