@@ -6,7 +6,7 @@
 #include <QJsonObject>
 #include <QJsonArray>
 
-//! Checks SessionModel class and its ability to convert SessionItem trees to json objects and back.
+//! Checks JsonModel class and its ability to convert SessionModel to json and back.
 
 class TestJsonModel : public ::testing::Test
 {
@@ -66,47 +66,29 @@ TEST_F(TestJsonModel, singleItem)
     EXPECT_EQ(object[JsonModel::modelKey], model_type);
     EXPECT_EQ(object[JsonModel::itemsKey].toArray().size(), 0);
     EXPECT_EQ(object[JsonModel::itemDataKey].toArray().size(), 0);
+}
+
+//! Parent item with one data variant and one child on board.
+
+TEST_F(TestJsonModel, parentAndChild)
+{
+    const QString model_type("MultiLayer");
+    JsonModel converter;
+
+    // constructing multilayer
+    std::unique_ptr<SessionItem> parent(new SessionItem(model_type.toStdString()));
+    parent->setData(QVariant::fromValue(42), 1);
+    auto child = new SessionItem("Layer");
+    parent->insertItem(-1, child);
+
+    QJsonObject object;
+    converter.write(parent.get(), object);
+
+    EXPECT_EQ(object[JsonModel::modelKey], model_type);
+    EXPECT_EQ(object[JsonModel::itemsKey].toArray().size(), 1);
+    EXPECT_EQ(object[JsonModel::itemDataKey].toArray().size(), 1);
 
     // saving to file
     auto fileName = TestUtils::TestFileName(test_dir, "model.json");
     TestUtils::SaveJson(object, fileName);
 }
-
-
-
-//TEST_F(TestJsonModel, writeItems)
-//{
-//    JsonModel converter;
-
-//    std::unique_ptr<SessionItem> parent(new SessionItem("MultiLayer"));
-//    parent->insertItem(-1, new SessionItem("Layer1"));
-//    parent->insertItem(-1, new SessionItem("Layer2"));
-//    parent->insertItem(-1, new SessionItem("Layer3"));
-
-//    QJsonObject object;
-//    converter.write(parent.get(), object);
-
-//    // saving to file
-//    auto fileName = TestUtils::TestFileName(test_dir, "model.json");
-//    TestUtils::SaveJson(object, fileName);
-//}
-
-//TEST_F(TestJsonModel, writeModel)
-//{
-//    JsonModel converter;
-
-//    Utils::create_subdir(".", projectDir());
-
-//    QFile saveFile(QString::fromStdString(projectDir() + "/save.json"));
-
-//    if (!saveFile.open(QIODevice::WriteOnly))
-//        throw std::runtime_error("TestJsonBasics::singleVariant() -> Can't save file");
-
-//    SessionModel model("MaterialModel");
-
-//    QJsonObject object;
-//    converter.write(model, object);
-
-//    QJsonDocument saveDoc(object);
-//    saveFile.write(saveDoc.toJson());
-//}

@@ -17,7 +17,7 @@
 #include <QJsonArray>
 
 namespace {
-QStringList expected_keys() {
+QStringList expected_item_keys() {
     QStringList result = QStringList() << JsonModel::modelKey << JsonModel::itemDataKey
                                        << JsonModel::itemsKey;
     std::sort(result.begin(), result.end());
@@ -69,7 +69,7 @@ void JsonModel::write(const SessionItem* item, QJsonObject& json)
 
 bool JsonModel::is_item(QJsonObject& object)
 {
-    static const QStringList expected = expected_keys();
+    static const QStringList expected = expected_item_keys();
 
     if (object.keys() != expected)
         return false;
