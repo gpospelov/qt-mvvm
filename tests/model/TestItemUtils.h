@@ -74,13 +74,14 @@ TEST_F(TestItemUtils, iterateIfItem)
 
 TEST_F(TestItemUtils, iterateModel)
 {
+    const model_type modelType("abc");
     SessionModel model;
 
     // building model
-    auto parent1 = model.insertNewItem();
-    auto parent2 = model.insertNewItem();
-    auto child1 = model.insertNewItem(parent1);
-    auto child2 = model.insertNewItem(parent1);
+    auto parent1 = model.insertNewItem(modelType);
+    auto parent2 = model.insertNewItem(modelType);
+    auto child1 = model.insertNewItem(modelType, parent1);
+    auto child2 = model.insertNewItem(modelType, parent1);
 
     std::vector<const SessionItem*> visited_items;
     auto fun = [&](const SessionItem* item ) {

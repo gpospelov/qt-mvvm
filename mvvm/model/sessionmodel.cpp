@@ -31,12 +31,12 @@ std::string SessionModel::modelType() const
     return m_model_type;
 }
 
-SessionItem* SessionModel::insertNewItem(SessionItem* parent, int row)
+SessionItem* SessionModel::insertNewItem(const model_type& modelType, SessionItem* parent, int row)
 {
     if (!parent)
         parent = m_root_item;
 
-    auto result = m_item_factory->createItem();
+    auto result = m_item_factory->createItem(modelType);
     result->setModel(this);
     parent->insertItem(row, result);
 

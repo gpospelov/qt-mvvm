@@ -26,13 +26,15 @@ TEST_F(TestUndoRedo, initialState)
 
 TEST_F(TestUndoRedo, setData)
 {
+    const model_type modelType("abc");
+
     const int role = Qt::DisplayRole;
     SessionModel model;
     model.setUndoRedoEnabled(true);
     auto stack = model.undoStack();
 
     // creating item
-    auto item = model.insertNewItem();
+    auto item = model.insertNewItem(modelType);
     EXPECT_FALSE(model.data(item, role).isValid());
 
     // setting new data

@@ -14,6 +14,7 @@
 #include <memory>
 #include <string>
 #include "path.h"
+#include "mvvm_types.h"
 
 class SessionItem;
 class QUndoStack;
@@ -27,7 +28,8 @@ public:
 
     std::string modelType() const;
 
-    SessionItem* insertNewItem(SessionItem* parent = nullptr, int row = -1);
+    SessionItem* insertNewItem(const model_type& modelType, SessionItem* parent = nullptr,
+                               int row = -1);
 
     SessionItem* rootItem() const;
 

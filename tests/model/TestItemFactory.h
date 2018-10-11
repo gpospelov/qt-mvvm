@@ -45,7 +45,7 @@ TEST_F(TestItemFactory, modelContext)
 
     EXPECT_EQ(factory->itemPool().size(), 1u); // root item already there
 
-    auto item1 = model.insertNewItem();
+    auto item1 = model.insertNewItem("abc");
     EXPECT_EQ(factory->itemPool().size(), 2u);
     auto key = factory->findIdentifier(item1);
     EXPECT_EQ(factory->findItem(key), item1);

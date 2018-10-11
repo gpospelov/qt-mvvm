@@ -45,6 +45,7 @@ TEST_F(TestPath, fromString)
 
 TEST_F(TestPath, pathFromItem)
 {
+    const model_type modelType("abc");
     SessionModel model;
 
     // unexisting path
@@ -54,25 +55,25 @@ TEST_F(TestPath, pathFromItem)
     EXPECT_TRUE(model.pathFromItem(xx.get()).str().empty());
 
     // three children beneeth root item
-    SessionItem* item0 = model.insertNewItem();
-    SessionItem* item1 = model.insertNewItem();
-    SessionItem* item2 = model.insertNewItem();
+    SessionItem* item0 = model.insertNewItem(modelType);
+    SessionItem* item1 = model.insertNewItem(modelType);
+    SessionItem* item2 = model.insertNewItem(modelType);
 
     EXPECT_EQ(model.pathFromItem(item0).str(), "0");
     EXPECT_EQ(model.pathFromItem(item1).str(), "1");
     EXPECT_EQ(model.pathFromItem(item2).str(), "2");
 
     // adding granchildren to item0
-    SessionItem* child00 = model.insertNewItem(item0);
-    SessionItem* child01 = model.insertNewItem(item0);
+    SessionItem* child00 = model.insertNewItem(modelType, item0);
+    SessionItem* child01 = model.insertNewItem(modelType, item0);
 
     EXPECT_EQ(model.pathFromItem(child00).str(), "0,0");
     EXPECT_EQ(model.pathFromItem(child01).str(), "0,1");
 
     // adding grandchildren to item2
-    SessionItem* child20 = model.insertNewItem(item2);
-    SessionItem* child200 = model.insertNewItem(child20);
-    SessionItem* child201 = model.insertNewItem(child20);
+    SessionItem* child20 = model.insertNewItem(modelType, item2);
+    SessionItem* child200 = model.insertNewItem(modelType, child20);
+    SessionItem* child201 = model.insertNewItem(modelType, child20);
 
     EXPECT_EQ(model.pathFromItem(child200).str(), "2,0,0");
     EXPECT_EQ(model.pathFromItem(child201).str(), "2,0,1");
@@ -80,6 +81,7 @@ TEST_F(TestPath, pathFromItem)
 
 TEST_F(TestPath, itemFromPath)
 {
+    const model_type modelType("abc");
     SessionModel model;
 
     // access to non-existing item
@@ -87,17 +89,17 @@ TEST_F(TestPath, itemFromPath)
     non_existing.append(8);
     EXPECT_EQ(model.itemFromPath(non_existing), nullptr);
 
-    SessionItem* item0 = model.insertNewItem();
-    SessionItem* item1 = model.insertNewItem();
-    SessionItem* item2 = model.insertNewItem();
+    SessionItem* item0 = model.insertNewItem(modelType);
+    SessionItem* item1 = model.insertNewItem(modelType);
+    SessionItem* item2 = model.insertNewItem(modelType);
 
     EXPECT_EQ(model.itemFromPath(Path::fromVector({0})), item0);
     EXPECT_EQ(model.itemFromPath(Path::fromVector({1})), item1);
     EXPECT_EQ(model.itemFromPath(Path::fromVector({2})), item2);
 
-    SessionItem* child20 = model.insertNewItem(item2);
-    SessionItem* child200 = model.insertNewItem(child20);
-    SessionItem* child201 = model.insertNewItem(child20);
+    SessionItem* child20 = model.insertNewItem(modelType, item2);
+    SessionItem* child200 = model.insertNewItem(modelType, child20);
+    SessionItem* child201 = model.insertNewItem(modelType, child20);
 
     EXPECT_EQ(model.itemFromPath(Path::fromVector({2,0})), child20);
     EXPECT_EQ(model.itemFromPath(Path::fromVector({2,0,0})), child200);

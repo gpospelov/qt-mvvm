@@ -51,7 +51,7 @@ TEST_F(TestJsonModel, isValidItem)
     EXPECT_FALSE(converter.is_item(object));
 }
 
-//! Check single item (no children) without the data.
+//! Checks creation of json object: single item (no children) without the data.
 
 TEST_F(TestJsonModel, singleItem)
 {
@@ -68,7 +68,7 @@ TEST_F(TestJsonModel, singleItem)
     EXPECT_EQ(object[JsonModel::itemDataKey].toArray().size(), 0);
 }
 
-//! Parent item with one data variant and one child on board.
+//! Checks creation of json object: parent item with one data variant and one child on board.
 
 TEST_F(TestJsonModel, parentAndChild)
 {
@@ -87,6 +87,80 @@ TEST_F(TestJsonModel, parentAndChild)
     EXPECT_EQ(object[JsonModel::modelKey], model_type);
     EXPECT_EQ(object[JsonModel::itemsKey].toArray().size(), 1);
     EXPECT_EQ(object[JsonModel::itemDataKey].toArray().size(), 1);
+
+    // saving to file
+    auto fileName = TestUtils::TestFileName(test_dir, "items.json");
+    TestUtils::SaveJson(object, fileName);
+}
+
+//! Validity of json object represention SessionModel.
+
+TEST_F(TestJsonModel, isValidModel)
+{
+    JsonModel converter;
+
+    // empty json object is not valid
+    QJsonObject object;
+    EXPECT_FALSE(converter.is_model(object));
+
+    // jsob object representing SessionItem can not represent the model
+    object[JsonModel::modelKey] = "abc";
+    object[JsonModel::itemsKey] = QJsonArray();
+    object[JsonModel::itemDataKey] = QJsonArray();
+    EXPECT_FALSE(converter.is_model(object));
+
+    QJsonObject object2;
+    object2[JsonModel::modelKey] = "abc";
+    object2[JsonModel::itemsKey] = QJsonArray();
+    EXPECT_TRUE(converter.is_model(object2));
+}
+
+//! Creation of json object: empty model.
+
+TEST_F(TestJsonModel, emptyModel)
+{
+    JsonModel converter;
+    SessionModel model("TestModel");
+
+    QJsonObject object;
+    converter.write(model, object);
+
+    EXPECT_EQ(object[JsonModel::modelKey], "TestModel");
+    EXPECT_EQ(object[JsonModel::itemsKey].toArray().size(), 0);
+
+}
+
+//! Checks creation of json object: single item in a model.
+
+TEST_F(TestJsonModel, singleItemInModel)
+{
+    JsonModel converter;
+    SessionModel model("TestModel");
+
+    model.insertNewItem("abc", nullptr, -1);
+
+    QJsonObject object;
+    converter.write(model, object);
+
+    EXPECT_EQ(object[JsonModel::modelKey], QString::fromStdString(model.modelType()));
+    EXPECT_EQ(object[JsonModel::itemsKey].toArray().size(), 1);
+}
+
+//! Checks creation of json object: parent and child in a model.
+
+TEST_F(TestJsonModel, parentAndChildInModel)
+{
+    JsonModel converter;
+    SessionModel model("TestModel");
+
+    auto parent = model.insertNewItem("MultiLayer");
+    auto child = model.insertNewItem("Layer", parent);
+
+    QJsonObject object;
+    converter.write(model, object);
+
+    EXPECT_EQ(object[JsonModel::modelKey], QString::fromStdString(model.modelType()));
+    EXPECT_EQ(object[JsonModel::itemsKey].toArray().size(), 1);
 
     // saving to file
     auto fileName = TestUtils::TestFileName(test_dir, "model.json");

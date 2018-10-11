@@ -25,6 +25,7 @@ public:
     static const QString modelKey;
     static const QString itemDataKey;
     static const QString itemsKey;
+    static const QString versionKey;
 
     JsonModel();
 
@@ -35,6 +36,9 @@ public:
 
     //! Returns true if given json object represents SessionItem tree.
     bool is_item(QJsonObject& object);
+
+    //! Returns true if given json object represents SessionModel.
+    bool is_model(QJsonObject& object);
 
 private:
     std::unique_ptr<JsonItemDataInterface> m_itemdata_converter;

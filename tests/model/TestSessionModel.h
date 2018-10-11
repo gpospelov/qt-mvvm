@@ -22,15 +22,19 @@ TEST_F(TestSessionModel, insertItem)
 {
     SessionModel model;
 
+    model_type modelType("abc");
+
     // inserting single item
-    auto item = model.insertNewItem();
+    auto item = model.insertNewItem(modelType);
     EXPECT_EQ(item->parent(), model.rootItem());
     EXPECT_EQ(item->model(), &model);
+    EXPECT_EQ(item->modelType(), modelType);
 
     // adding child to it
-    auto child = model.insertNewItem(item);
+    auto child = model.insertNewItem(modelType, item);
     EXPECT_EQ(child->parent(), item);
     EXPECT_EQ(child->model(), &model);
+    EXPECT_EQ(child->modelType(), modelType);
 
     // taking child back
     auto taken = item->takeRow(0);
@@ -45,7 +49,7 @@ TEST_F(TestSessionModel, setData)
     const int role = Qt::DisplayRole;
 
     // inserting single item
-    auto item = model.insertNewItem();
+    auto item = model.insertNewItem("abc");
     EXPECT_FALSE(model.data(item, role).isValid());
 
     // setting new data
