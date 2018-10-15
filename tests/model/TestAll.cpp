@@ -6,7 +6,6 @@
 #include "TestUndoRedo.h"
 #include "TestItemPool.h"
 #include "TestItemFactory.h"
-#include "TestJsonBasics.h"
 #include "TestFileUtils.h"
 #include "TestItemUtils.h"
 #include "TestJsonModel.h"
