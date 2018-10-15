@@ -13,6 +13,7 @@
 #include "jsonconverterinterfaces.h"
 #include <QString>
 #include <memory>
+#include <vector>
 
 class QJsonObject;
 
@@ -30,10 +31,16 @@ public:
 
     SessionItemData get_data(const QJsonArray& object) override;
 
-    bool is_valid(const QJsonObject& json);
+    bool is_item_data(const QJsonObject& json);
+
+    void set_role_filter(const std::vector<int>& roles);
+
+    bool role_to_save(int role) const;
 
 private:
     std::unique_ptr<JsonVariantInterface> m_variant_converter;
+    //!< List of roles to filter while writing to json.
+    std::vector<int> m_roles_to_filter;
 };
 
 #endif
