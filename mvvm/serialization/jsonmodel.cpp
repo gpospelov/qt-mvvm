@@ -46,7 +46,7 @@ JsonModel::JsonModel()
 
 }
 
-void JsonModel::to_json(const SessionModel& model, QJsonObject& json)
+void JsonModel::model_to_json(const SessionModel& model, QJsonObject& json)
 {
     if (!model.rootItem())
         throw std::runtime_error("JsonModel::to_json() -> Error. Model is not initialized.");
@@ -64,7 +64,7 @@ void JsonModel::to_json(const SessionModel& model, QJsonObject& json)
     json[itemsKey] = itemArray;
 }
 
-void JsonModel::from_json(const QJsonObject& json, SessionModel& model)
+void JsonModel::json_to_model(const QJsonObject& json, SessionModel& model)
 {
     if (!model.rootItem())
         throw std::runtime_error("JsonModel::from_json() -> Error. Model is not initialized.");
@@ -79,10 +79,10 @@ void JsonModel::from_json(const QJsonObject& json, SessionModel& model)
             throw std::runtime_error("JsonModel::from_json() -> Unexpected model type.");
 
     auto parent = model.rootItem();
-//    for(const auto obj : json[itemsKey].toArray()) {
-//        json_to_item(obj, parent);
+    for(const auto obj : json[itemsKey].toArray()) {
+        json_to_item(obj, parent);
 
-//    }
+    }
 
 }
 
@@ -91,6 +91,8 @@ void JsonModel::json_to_item(const QJsonObject& json, SessionItem* parent)
     if (!parent)
         throw std::runtime_error("JsonModel::json_to_item() -> Non initialized item");
 
+    if (!parent->model())
+        throw std::runtime_error("JsonModel::json_to_item() -> Item is not a part of the model.");
 
 }
 

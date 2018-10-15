@@ -30,10 +30,10 @@ public:
     JsonModel();
 
     //! Writes content of model into json.
-    void to_json(const SessionModel& model, QJsonObject& json);
+    void model_to_json(const SessionModel& model, QJsonObject& json);
 
     //! Reads json object and build the model.
-    void from_json(const QJsonObject& json, SessionModel& model);
+    void json_to_model(const QJsonObject& json, SessionModel& model);
 
     //! Constructs SessionItem tree from json.
     void json_to_item(const QJsonObject& json, SessionItem* parent);
