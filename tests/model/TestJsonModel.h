@@ -93,7 +93,7 @@ TEST_F(TestJsonModel, parentAndChild)
     TestUtils::SaveJson(object, fileName);
 }
 
-//! Validity of json object represention SessionModel.
+//! Validity of json object representing SessionModel.
 
 TEST_F(TestJsonModel, isValidModel)
 {
@@ -103,12 +103,13 @@ TEST_F(TestJsonModel, isValidModel)
     QJsonObject object;
     EXPECT_FALSE(converter.is_model(object));
 
-    // jsob object representing SessionItem can not represent the model
+    // json object representing SessionItem can not represent the model
     object[JsonModel::modelKey] = "abc";
     object[JsonModel::itemsKey] = QJsonArray();
     object[JsonModel::itemDataKey] = QJsonArray();
     EXPECT_FALSE(converter.is_model(object));
 
+    // json object representing valid SessionModel
     QJsonObject object2;
     object2[JsonModel::modelKey] = "abc";
     object2[JsonModel::itemsKey] = QJsonArray();
@@ -127,10 +128,9 @@ TEST_F(TestJsonModel, emptyModel)
 
     EXPECT_EQ(object[JsonModel::modelKey], "TestModel");
     EXPECT_EQ(object[JsonModel::itemsKey].toArray().size(), 0);
-
 }
 
-//! Checks creation of json object: single item in a model.
+//! Creation of json object: single item in a model.
 
 TEST_F(TestJsonModel, singleItemInModel)
 {
@@ -146,7 +146,7 @@ TEST_F(TestJsonModel, singleItemInModel)
     EXPECT_EQ(object[JsonModel::itemsKey].toArray().size(), 1);
 }
 
-//! Checks creation of json object: parent and child in a model.
+//! Creation of json object: parent and child in a model.
 
 TEST_F(TestJsonModel, parentAndChildInModel)
 {
@@ -154,6 +154,7 @@ TEST_F(TestJsonModel, parentAndChildInModel)
     SessionModel model("TestModel");
 
     auto parent = model.insertNewItem("MultiLayer");
+    parent->setData(QVariant::fromValue(42), 1);
     auto child = model.insertNewItem("Layer", parent);
 
     QJsonObject object;
@@ -165,4 +166,60 @@ TEST_F(TestJsonModel, parentAndChildInModel)
     // saving to file
     auto fileName = TestUtils::TestFileName(test_dir, "model.json");
     TestUtils::SaveJson(object, fileName);
+}
+
+//! Filling model from json: empty model to json and then back.
+
+TEST_F(TestJsonModel, emptyModelFromJson)
+{
+    JsonModel converter;
+    SessionModel model("TestModel");
+
+    QJsonObject object;
+    converter.model_to_json(model, object);
+
+    // attempt to reconstruct model of different type.
+    SessionModel target1("NewModel");
+    EXPECT_THROW(converter.json_to_model(object, target1), std::runtime_error);
+
+    // attempt to reconstruct non-empty model
+    SessionModel target2("TestModel");
+    target2.insertNewItem("Layer");
+    EXPECT_THROW(converter.json_to_model(object, target2), std::runtime_error);
+
+    // succesfull reconstruction
+    SessionModel target3("TestModel");
+    EXPECT_NO_THROW(converter.json_to_model(object, target3));
+    EXPECT_EQ(target3.rootItem()->childrenCount(), 0u);
+}
+
+//! Filling model from json: parent and child in a model to json and back.
+
+TEST_F(TestJsonModel, parentAndChildModelFromJson)
+{
+    JsonModel converter;
+    SessionModel model("TestModel");
+
+    // filling original model with content
+    auto parent = model.insertNewItem("MultiLayer");
+    parent->setData(QVariant::fromValue(42), 1);
+    auto child = model.insertNewItem("Layer", parent);
+
+    // writing model to json
+    QJsonObject object;
+    converter.model_to_json(model, object);
+
+    // reading model from json
+    SessionModel target("TestModel");
+    converter.json_to_model(object, target);
+
+    // checking target model
+    EXPECT_EQ(target.rootItem()->childrenCount(), 1u);
+    auto parent2 = target.rootItem()->childAt(0);
+    EXPECT_EQ(parent2->childrenCount(), 1u);
+    EXPECT_EQ(parent2->modelType(), "MultiLayer");
+    EXPECT_EQ(parent2->data(1), 42);
+    auto child2 = parent2->childAt(0);
+    EXPECT_EQ(child2->childrenCount(), 0u);
+    EXPECT_EQ(child2->modelType(), "Layer");
 }

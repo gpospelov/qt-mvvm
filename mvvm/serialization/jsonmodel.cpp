@@ -67,22 +67,20 @@ void JsonModel::model_to_json(const SessionModel& model, QJsonObject& json)
 void JsonModel::json_to_model(const QJsonObject& json, SessionModel& model)
 {
     if (!model.rootItem())
-        throw std::runtime_error("JsonModel::from_json() -> Error. Model is not initialized.");
+        throw std::runtime_error("JsonModel::json_to_model() -> Error. Model is not initialized.");
 
     if (model.rootItem()->childrenCount())
-        throw std::runtime_error("JsonModel::from_json() -> Error. Model is not empty.");
+        throw std::runtime_error("JsonModel::json_to_model() -> Error. Model is not empty.");
 
     if (!is_model(json))
-        throw std::runtime_error("JsonModel::from_json() -> Error. Invalid json object.");
+        throw std::runtime_error("JsonModel::json_to_model() -> Error. Invalid json object.");
 
     if (json[modelKey].toString() != QString::fromStdString(model.modelType()))
-            throw std::runtime_error("JsonModel::from_json() -> Unexpected model type.");
+            throw std::runtime_error("JsonModel::json_to_model() -> Unexpected model type.");
 
     auto parent = model.rootItem();
-    for(const auto obj : json[itemsKey].toArray()) {
-        json_to_item(obj, parent);
-
-    }
+    for(const auto ref : json[itemsKey].toArray())
+        json_to_item(ref.toObject(), parent);
 
 }
 
@@ -93,6 +91,19 @@ void JsonModel::json_to_item(const QJsonObject& json, SessionItem* parent)
 
     if (!parent->model())
         throw std::runtime_error("JsonModel::json_to_item() -> Item is not a part of the model.");
+
+    if (!is_item(json))
+        throw std::runtime_error("JsonModel::json_to_item() -> Error. Given json object can't represent an item.");
+
+    auto modelType = json[modelKey].toString().toStdString();
+    auto item = parent->model()->insertNewItem(modelType, parent);
+
+    auto itemData = m_itemdata_converter->get_data(json[itemDataKey].toArray());
+    item->m_data = itemData;
+
+    parent = item;
+    for(const auto ref : json[itemsKey].toArray())
+        json_to_item(ref.toObject(), parent);
 
 }
 
