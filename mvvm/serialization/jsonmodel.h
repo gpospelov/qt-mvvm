@@ -11,6 +11,7 @@
 #ifndef MODELJSON_H
 #define MODELJSON_H
 
+#include "jsonconverterinterfaces.h"
 #include <QString>
 #include <memory>
 
@@ -19,7 +20,7 @@ class QJsonObject;
 class SessionItem;
 class JsonItemDataInterface;
 
-class JsonModel
+class JsonModel : public JsonModelInterface
 {
 public:
     static const QString modelKey;
