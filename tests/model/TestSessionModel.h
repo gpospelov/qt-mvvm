@@ -18,7 +18,7 @@ TEST_F(TestSessionModel, initialState)
     EXPECT_EQ(model.rootItem()->parent(), nullptr);
 }
 
-TEST_F(TestSessionModel, insertItem)
+TEST_F(TestSessionModel, insertNewItem)
 {
     SessionModel model;
 

@@ -11,10 +11,12 @@
 #include "sessionitem.h"
 #include "commands.h"
 #include "itemfactory.h"
+#include "commandservice.h"
 #include <QUndoStack>
 
 SessionModel::SessionModel(const std::string& model_type)
     : m_root_item(nullptr)
+    , m_commands(new CommandService(this))
     , m_item_factory(new ItemFactory)
     , m_model_type(model_type)
     , m_pause_undo(false)
@@ -34,13 +36,14 @@ std::string SessionModel::modelType() const
 
 SessionItem* SessionModel::insertNewItem(const model_type& modelType, SessionItem* parent, int row)
 {
-    if (!parent)
-        parent = m_root_item;
+//    if (!parent)
+//        parent = m_root_item;
 
-    auto result = m_item_factory->createItem(modelType);
-    insertRow(parent, row, result);
+//    auto result = m_item_factory->createItem(modelType);
+//    insertRow(parent, row, result);
 
-    return result;
+//    return result;
+    return m_commands->insertNewItem(modelType, parent, row);
 }
 
 SessionItem* SessionModel::rootItem() const
@@ -99,6 +102,8 @@ void SessionModel::setUndoRedoEnabled(bool value)
         m_undoStack.reset(new QUndoStack);
     else
         m_undoStack.reset();
+
+    m_commands->setUndoRedoEnabled(value);
 }
 
 void SessionModel::setUndoRecordPause(bool value)

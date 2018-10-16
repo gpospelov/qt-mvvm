@@ -11,6 +11,7 @@
 #include "sessionmodel.h"
 #include "sessionitem.h"
 #include "jsonmodel.h"
+#include "itemfactory.h"
 #include <QJsonObject>
 
 SetValueCommand::SetValueCommand(SessionModel* model, Path path, const QVariant& value, int role,
@@ -44,27 +45,23 @@ void SetValueCommand::redo()
 
 InsertNewItemCommand::InsertNewItemCommand(const model_type& modelType, SessionItem* parent, int row)
     : m_row(row)
+    , m_model_type(modelType)
     , m_model(parent->model())
 {
-    Q_ASSERT(m_model);
     m_parent_path = m_model->pathFromItem(parent);
-    m_model_type = modelType;
 }
 
 void InsertNewItemCommand::undo()
 {
-    m_model->setUndoRecordPause(true);
     auto parent = m_model->itemFromPath(m_parent_path);
-    m_model->removeRow(parent, m_row);
-    m_model->setUndoRecordPause(false);
+    delete parent->takeRow(m_row);
 }
 
 void InsertNewItemCommand::redo()
 {
-    m_model->setUndoRecordPause(true);
     auto parent = m_model->itemFromPath(m_parent_path);
-    m_model->insertNewItem(m_model_type, parent, m_row);
-    m_model->setUndoRecordPause(false);
+    auto child = m_model->factory()->createItem(m_model_type);
+    parent->insertItem(m_row, child);
 }
 
 

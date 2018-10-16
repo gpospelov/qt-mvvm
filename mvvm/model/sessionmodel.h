@@ -19,6 +19,7 @@
 class SessionItem;
 class QUndoStack;
 class ItemFactory;
+class CommandService;
 
 class SessionModel
 {
@@ -57,6 +58,7 @@ private:
 
     SessionItem* m_root_item;
     std::unique_ptr<QUndoStack> m_undoStack;
+    std::unique_ptr<CommandService> m_commands;
     std::unique_ptr<ItemFactory> m_item_factory;
     std::string m_model_type;
     bool m_pause_undo;
