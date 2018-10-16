@@ -95,6 +95,8 @@ void JsonModel::json_to_item(const QJsonObject& json, SessionItem* parent, int r
     if (!is_item(json))
         throw std::runtime_error("JsonModel::json_to_item() -> Error. Given json object can't represent an item.");
 
+    parent->model()->setUndoRecordPause(true);
+
     auto modelType = json[modelKey].toString().toStdString();
     auto item = parent->model()->insertNewItem(modelType, parent, row);
 
@@ -105,6 +107,7 @@ void JsonModel::json_to_item(const QJsonObject& json, SessionItem* parent, int r
     for(const auto ref : json[itemsKey].toArray())
         json_to_item(ref.toObject(), parent);
 
+    parent->model()->setUndoRecordPause(false);
 }
 
 void JsonModel::item_to_json(const SessionItem* item, QJsonObject& json)

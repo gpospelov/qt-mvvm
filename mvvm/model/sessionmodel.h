@@ -41,6 +41,7 @@ public:
     SessionItem* itemFromPath(Path path);
 
     void setUndoRedoEnabled(bool value);
+    void setUndoRecordPause(bool value);
 
     QUndoStack *undoStack() const;
 
@@ -52,11 +53,13 @@ public:
 
 private:
     void createRootItem();
+    bool provideUndo() const;
 
     SessionItem* m_root_item;
     std::unique_ptr<QUndoStack> m_undoStack;
     std::unique_ptr<ItemFactory> m_item_factory;
     std::string m_model_type;
+    bool m_pause_undo;
 };
 
 #endif

@@ -42,12 +42,44 @@ void SetValueCommand::redo()
 
 // ----------------------------------------------------------------------------
 
+InsertNewItemCommand::InsertNewItemCommand(const model_type& modelType, SessionItem* parent, int row)
+    : m_row(row)
+    , m_model(parent->model())
+{
+    Q_ASSERT(m_model);
+    m_parent_path = m_model->pathFromItem(parent);
+    m_model_type = modelType;
+}
+
+void InsertNewItemCommand::undo()
+{
+    m_model->setUndoRecordPause(true);
+    auto parent = m_model->itemFromPath(m_parent_path);
+    m_model->removeRow(parent, m_row);
+    m_model->setUndoRecordPause(false);
+}
+
+void InsertNewItemCommand::redo()
+{
+    m_model->setUndoRecordPause(true);
+    auto parent = m_model->itemFromPath(m_parent_path);
+    m_model->insertNewItem(m_model_type, parent, m_row);
+    m_model->setUndoRecordPause(false);
+}
+
+
+// ----------------------------------------------------------------------------
+
 InsertRowCommand::InsertRowCommand(SessionItem* parent, int row, SessionItem* child)
     : m_row(row)
     , m_model(parent->model())
 {
     Q_ASSERT(m_model);
     m_parent_path = m_model->pathFromItem(parent);
+
+    JsonModel converter; // FIXME get converter from the model
+    m_child_backup.reset(new QJsonObject);
+    converter.item_to_json(child, *m_child_backup);
 }
 
 void InsertRowCommand::undo()
@@ -58,7 +90,9 @@ void InsertRowCommand::undo()
 
 void InsertRowCommand::redo()
 {
-
+    JsonModel converter; // FIXME get converter from the model
+    auto parent = m_model->itemFromPath(m_parent_path);
+    converter.json_to_item(*m_child_backup, parent, m_row);
 }
 
 // ----------------------------------------------------------------------------

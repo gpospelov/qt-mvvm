@@ -11,6 +11,7 @@
 #define COMMANDS_H
 
 #include "path.h"
+#include "mvvm_types.h"
 #include <QUndoCommand>
 #include <QVariant>
 #include <memory>
@@ -37,6 +38,23 @@ private:
     int m_role;
 };
 
+//! Command for unddo/redo to insert new item.
+
+class InsertNewItemCommand : public QUndoCommand
+{
+public:
+    InsertNewItemCommand(const model_type& modelType, SessionItem* parent, int row);
+
+    void undo() override;
+    void redo() override;
+
+private:
+    Path m_parent_path;
+    int m_row;
+    model_type m_model_type;
+    SessionModel* m_model;
+};
+
 //! Command for unddo/redo framework to insert row in a model.
 
 class InsertRowCommand : public QUndoCommand
@@ -50,6 +68,7 @@ public:
 private:
     Path m_parent_path;
     int m_row;
+    std::unique_ptr<QJsonObject> m_child_backup;
     SessionModel* m_model;
 };
 
