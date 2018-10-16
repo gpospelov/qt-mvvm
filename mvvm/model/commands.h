@@ -13,8 +13,13 @@
 #include "path.h"
 #include <QUndoCommand>
 #include <QVariant>
+#include <memory>
 
 class SessionModel;
+class SessionItem;
+class QJsonObject;
+
+//! Command for unddo/redo framework to set the data of SessionItem.
 
 class SetValueCommand : public QUndoCommand
 {
@@ -30,6 +35,39 @@ private:
     SessionModel* m_model;
     QVariant m_value;
     int m_role;
+};
+
+//! Command for unddo/redo framework to insert row in a model.
+
+class InsertRowCommand : public QUndoCommand
+{
+public:
+    InsertRowCommand(SessionItem* parent, int row, SessionItem* child);
+
+    void undo() override;
+    void redo() override;
+
+private:
+    Path m_parent_path;
+    int m_row;
+    SessionModel* m_model;
+};
+
+//! Command for unddo/redo framework to remove row from a model.
+
+class RemoveRowCommand : public QUndoCommand
+{
+public:
+    RemoveRowCommand(SessionItem* parent, int row);
+
+    void undo() override;
+    void redo() override;
+
+private:
+    Path m_parent_path;
+    int m_row;
+    std::unique_ptr<QJsonObject> m_child_backup;
+    SessionModel* m_model;
 };
 
 #endif

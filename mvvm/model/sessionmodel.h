@@ -46,6 +46,10 @@ public:
 
     ItemFactory* factory();
 
+    void removeRow(SessionItem* parent, int row);
+
+    void insertRow(SessionItem* parent, int row, SessionItem* child);
+
 private:
     void createRootItem();
 

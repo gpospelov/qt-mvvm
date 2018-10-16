@@ -37,8 +37,7 @@ SessionItem* SessionModel::insertNewItem(const model_type& modelType, SessionIte
         parent = m_root_item;
 
     auto result = m_item_factory->createItem(modelType);
-    result->setModel(this);
-    parent->insertItem(row, result);
+    insertRow(parent, row, result);
 
     return result;
 }
@@ -109,6 +108,26 @@ QUndoStack* SessionModel::undoStack() const
 ItemFactory* SessionModel::factory()
 {
     return m_item_factory.get();
+}
+
+//! Removes given row from parent.
+
+void SessionModel::removeRow(SessionItem* parent, int row)
+{
+    Q_ASSERT(parent->model() == this);
+
+    if (m_undoStack) {
+        m_undoStack->push(new RemoveRowCommand(parent, row));
+    } else {
+        delete parent->takeRow(row);
+    }
+}
+
+void SessionModel::insertRow(SessionItem* parent, int row, SessionItem* child)
+{
+    Q_ASSERT(parent->model() == this);
+
+    parent->insertItem(row, child);
 }
 
 void SessionModel::createRootItem()

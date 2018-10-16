@@ -84,7 +84,7 @@ void JsonModel::json_to_model(const QJsonObject& json, SessionModel& model)
 
 }
 
-void JsonModel::json_to_item(const QJsonObject& json, SessionItem* parent)
+void JsonModel::json_to_item(const QJsonObject& json, SessionItem* parent, int row)
 {
     if (!parent)
         throw std::runtime_error("JsonModel::json_to_item() -> Non initialized item");
@@ -96,7 +96,7 @@ void JsonModel::json_to_item(const QJsonObject& json, SessionItem* parent)
         throw std::runtime_error("JsonModel::json_to_item() -> Error. Given json object can't represent an item.");
 
     auto modelType = json[modelKey].toString().toStdString();
-    auto item = parent->model()->insertNewItem(modelType, parent);
+    auto item = parent->model()->insertNewItem(modelType, parent, row);
 
     auto itemData = m_itemdata_converter->get_data(json[itemDataKey].toArray());
     item->m_data = itemData;

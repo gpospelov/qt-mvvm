@@ -37,7 +37,7 @@ public:
     void json_to_model(const QJsonObject& json, SessionModel& model);
 
     //! Constructs SessionItem tree from json.
-    void json_to_item(const QJsonObject& json, SessionItem* parent);
+    void json_to_item(const QJsonObject& json, SessionItem* parent, int row = -1);
 
     //! Writes SessionItem tree to json.
     void item_to_json(const SessionItem* item, QJsonObject& json);
