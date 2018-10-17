@@ -258,4 +258,44 @@ TEST_F(TestUndoRedo, removeRow)
     EXPECT_EQ(item->modelType(), "MultiLayer");
 }
 
+//! Inserting parent and child, setting data to them, removing parent, undoing and checking.
+
+TEST_F(TestUndoRedo, removeParentAndChild)
+{
+    const int role1(0), role2(1);
+    const QVariant data1(42), data2(43);
+
+    SessionModel model;
+    model.setUndoRedoEnabled(true);
+    auto stack = model.undoStack();
+
+    auto parent = model.insertNewItem("MultiLayer");
+    parent->setData(data1, role1);
+    auto child = model.insertNewItem("Layer", parent);
+    child->setData(data2, role2);
+
+    EXPECT_EQ(stack->count(), 4);
+    EXPECT_EQ(stack->index(), 4);
+
+    // removing parent
+    model.removeRow(model.rootItem(), 0);
+    EXPECT_EQ(stack->count(), 5);
+    EXPECT_EQ(stack->index(), 5);
+    EXPECT_EQ(model.rootItem()->childrenCount(), 0);
+
+    // undoing
+    stack->undo();
+    EXPECT_EQ(stack->count(), 5);
+    EXPECT_EQ(stack->index(), 4);
+    EXPECT_EQ(model.rootItem()->childrenCount(), 1);
+    parent = model.rootItem()->childAt(0);
+    child = parent->childAt(0);
+
+    EXPECT_EQ(parent->modelType(), "MultiLayer");
+    EXPECT_EQ(child->modelType(), "Layer");
+
+    EXPECT_EQ(parent->data(role1), data1);
+    EXPECT_EQ(child->data(role2), data2);
+}
+
 
