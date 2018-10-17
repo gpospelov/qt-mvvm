@@ -104,16 +104,11 @@ ItemFactory* SessionModel::factory()
 
 //! Removes given row from parent.
 
-//void SessionModel::removeRow(SessionItem* parent, int row)
-//{
-//    Q_ASSERT(parent->model() == this);
-
-//    if (provideUndo()) {
-//        m_undoStack->push(new RemoveRowCommand(parent, row));
-//    } else {
-//        delete parent->takeRow(row);
-//    }
-//}
+void SessionModel::removeRow(SessionItem* parent, int row)
+{
+    Q_ASSERT(parent->model() == this);
+    delete parent->takeRow(row);
+}
 
 //void SessionModel::insertRow(SessionItem* parent, int row, SessionItem* child)
 //{

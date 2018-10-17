@@ -59,3 +59,18 @@ TEST_F(TestSessionModel, setData)
     model.setData(item, value, role);
     EXPECT_EQ(model.data(item, role), value);
 }
+
+TEST_F(TestSessionModel, removeRow)
+{
+    SessionModel model;
+
+    auto parent = model.insertNewItem("MultiLayer");
+    auto child1 = model.insertNewItem("Layer1", parent);
+    auto child2 = model.insertNewItem("Layer2", parent, 0);
+    Q_UNUSED(child2);
+
+    // removing child2
+    model.removeRow(parent, 0); // removing child2
+    EXPECT_EQ(parent->childrenCount(), 1);
+    EXPECT_EQ(parent->childAt(0), child1);
+}
