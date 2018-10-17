@@ -21,6 +21,8 @@ TEST_F(TestItemFactory, initialState)
     EXPECT_EQ(factory.itemPool().size(), 0u);
 }
 
+//! Creation of item through factory leads to the item registration in a pool.
+
 TEST_F(TestItemFactory, createItem)
 {
     ItemFactory factory;
@@ -31,12 +33,13 @@ TEST_F(TestItemFactory, createItem)
     auto id = factory.findIdentifier(item.get());
     EXPECT_EQ(factory.findItem(id), item.get());
 
-    factory.forgetItem(item.get());
+    // item deletion leads to its automatic deregistration
+    item.reset();
     EXPECT_EQ(factory.findItem(id), nullptr);
 }
 
-//! Checking that in the model context the deletion of item will lead to
-//! id dissapearance.
+
+//! Item factory should forget the item on item deletion (in the model context).
 
 TEST_F(TestItemFactory, modelContext)
 {
@@ -54,3 +57,4 @@ TEST_F(TestItemFactory, modelContext)
     EXPECT_EQ(factory->itemPool().size(), 1u);
     EXPECT_EQ(factory->findItem(key), nullptr);
 }
+

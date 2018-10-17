@@ -10,36 +10,37 @@
 #include "itemfactory.h"
 #include "sessionitem.h"
 
+ItemFactory::ItemFactory()
+    : m_item_pool(new ItemPool)
+{
+
+}
+
 SessionItem* ItemFactory::createItem(const model_type& modelType)
 {
     auto result = new SessionItem(modelType);
-    m_item_pool.register_item(result);
+    result->register_item(m_item_pool);
     return result;
 }
 
 SessionItem* ItemFactory::createEmptyItem()
 {
     auto result = new SessionItem;
-    m_item_pool.register_item(result);
+    result->register_item(m_item_pool);
     return result;
 }
 
 SessionItem* ItemFactory::findItem(identifier_type id) const
 {
-    return m_item_pool.item_for_key(id);
+    return m_item_pool->item_for_key(id);
 }
 
 identifier_type ItemFactory::findIdentifier(SessionItem* item) const
 {
-    return m_item_pool.key_for_item(item);
-}
-
-void ItemFactory::forgetItem(SessionItem* item)
-{
-    m_item_pool.deregister_item(item);
+    return m_item_pool->key_for_item(item);
 }
 
 const ItemPool& ItemFactory::itemPool() const
 {
-    return m_item_pool;
+    return *m_item_pool.get();
 }

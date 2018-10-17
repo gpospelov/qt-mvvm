@@ -13,11 +13,14 @@
 #include <string>
 #include "mvvm_types.h"
 #include "itempool.h"
+#include <memory>
 
 class SessionItem;
 
 class ItemFactory {
 public:
+    ItemFactory();
+
     SessionItem* createItem(const model_type& modelType = {});
 
     SessionItem* createEmptyItem();
@@ -26,12 +29,10 @@ public:
 
     identifier_type findIdentifier(SessionItem* item) const;
 
-    void forgetItem(SessionItem* item);
-
     const ItemPool& itemPool() const;
 
 private:
-    ItemPool m_item_pool;
+    std::shared_ptr<ItemPool> m_item_pool;
 };
 
 #endif
