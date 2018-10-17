@@ -42,9 +42,27 @@ SessionItem* CommandService::insertNewItem(const model_type& modelType, SessionI
     if (!parent)
         parent = m_model->rootItem();
 
+    // FIXME when tag is there
+    row = row < 0 ? parent->childrenCount() : row;
+
     push(new InsertNewItemCommand(modelType, parent, row));
 
     return parent->childAt(row);
+}
+
+bool CommandService::setData(SessionItem* item, const QVariant& value, int role)
+{
+    if (!item)
+        return false;
+
+    push(new SetValueCommand(item, value, role));
+
+    return true;
+}
+
+QUndoStack* CommandService::undoStack() const
+{
+    return m_commands.get();
 }
 
 bool CommandService::provideUndo() const

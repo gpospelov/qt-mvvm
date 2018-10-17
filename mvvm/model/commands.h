@@ -25,17 +25,16 @@ class QJsonObject;
 class SetValueCommand : public QUndoCommand
 {
 public:
-    SetValueCommand(SessionModel* model, Path path, const QVariant& value, int role,
-                    QUndoCommand* parent = nullptr);
+    SetValueCommand(SessionItem* item, const QVariant& value, int role);
 
     void undo() override;
     void redo() override;
 
 private:
-    Path m_path;
-    SessionModel* m_model;
     QVariant m_value;
     int m_role;
+    Path m_path;
+    SessionModel* m_model;
 };
 
 //! Command for unddo/redo to insert new item.

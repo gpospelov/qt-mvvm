@@ -44,20 +44,19 @@ public:
     void setUndoRedoEnabled(bool value);
     void setUndoRecordPause(bool value);
 
-    QUndoStack *undoStack() const;
+    QUndoStack* undoStack() const;
 
     ItemFactory* factory();
 
-    void removeRow(SessionItem* parent, int row);
+//    void removeRow(SessionItem* parent, int row);
 
-    void insertRow(SessionItem* parent, int row, SessionItem* child);
+//    void insertRow(SessionItem* parent, int row, SessionItem* child);
 
 private:
     void createRootItem();
     bool provideUndo() const;
 
     SessionItem* m_root_item;
-    std::unique_ptr<QUndoStack> m_undoStack;
     std::unique_ptr<CommandService> m_commands;
     std::unique_ptr<ItemFactory> m_item_factory;
     std::string m_model_type;

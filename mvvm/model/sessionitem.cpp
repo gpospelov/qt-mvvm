@@ -43,7 +43,10 @@ model_type SessionItem::modelType() const
 
 bool SessionItem::setData(const QVariant& data, int role)
 {
-    return m_data.setData(data, role);
+    if (m_model)
+        return m_model->setData(this, data, role); // to use undo/redo
+    else
+        return setDataIntern(data, role);
 }
 
 QVariant SessionItem::data(int role) const
@@ -144,4 +147,9 @@ void SessionItem::childDeleted(SessionItem* child)
     auto index = rowOfChild(child);
     assert(index != -1);
     m_children[static_cast<size_t>(index)] = nullptr;
+}
+
+bool SessionItem::setDataIntern(const QVariant& data, int role)
+{
+    return m_data.setData(data, role);
 }

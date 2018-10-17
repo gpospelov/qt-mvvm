@@ -22,16 +22,18 @@ TEST_F(TestSessionModel, insertNewItem)
 {
     SessionModel model;
 
-    model_type modelType("abc");
+    const model_type modelType("abc");
 
     // inserting single item
     auto item = model.insertNewItem(modelType);
+    EXPECT_TRUE(item != nullptr);
     EXPECT_EQ(item->parent(), model.rootItem());
     EXPECT_EQ(item->model(), &model);
     EXPECT_EQ(item->modelType(), modelType);
 
     // adding child to it
     auto child = model.insertNewItem(modelType, item);
+    EXPECT_TRUE(child != nullptr);
     EXPECT_EQ(child->parent(), item);
     EXPECT_EQ(child->model(), &model);
     EXPECT_EQ(child->modelType(), modelType);

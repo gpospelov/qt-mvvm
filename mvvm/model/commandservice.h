@@ -17,6 +17,7 @@ class SessionModel;
 class QUndoStack;
 class QUndoCommand;
 class SessionItem;
+class QVariant;
 
 //! Provides undo/redo for all commands of SessionModel.
 
@@ -30,6 +31,10 @@ public:
     void push(QUndoCommand* command);
 
     SessionItem* insertNewItem(const model_type& modelType, SessionItem* parent, int row);
+
+    bool setData(SessionItem* item, const QVariant& value, int role);
+
+    QUndoStack* undoStack() const;
 
 private:
     bool provideUndo() const;

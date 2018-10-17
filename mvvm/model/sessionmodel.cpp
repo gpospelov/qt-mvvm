@@ -12,7 +12,6 @@
 #include "commands.h"
 #include "itemfactory.h"
 #include "commandservice.h"
-#include <QUndoStack>
 
 SessionModel::SessionModel(const std::string& model_type)
     : m_root_item(nullptr)
@@ -36,13 +35,6 @@ std::string SessionModel::modelType() const
 
 SessionItem* SessionModel::insertNewItem(const model_type& modelType, SessionItem* parent, int row)
 {
-//    if (!parent)
-//        parent = m_root_item;
-
-//    auto result = m_item_factory->createItem(modelType);
-//    insertRow(parent, row, result);
-
-//    return result;
     return m_commands->insertNewItem(modelType, parent, row);
 }
 
@@ -58,13 +50,7 @@ QVariant SessionModel::data(SessionItem* item, int role) const
 
 bool SessionModel::setData(SessionItem* item, const QVariant& value, int role)
 {
-    if (provideUndo()) {
-        m_undoStack->push(new SetValueCommand(this, pathFromItem(item), value, role));
-    } else {
-        return item->setData(value, role);
-    }
-
-    return true;
+    return m_commands->setData(item, value, role);
 }
 
 //! Returns path from item.
@@ -98,11 +84,6 @@ SessionItem* SessionModel::itemFromPath(Path path)
 
 void SessionModel::setUndoRedoEnabled(bool value)
 {
-    if (value)
-        m_undoStack.reset(new QUndoStack);
-    else
-        m_undoStack.reset();
-
     m_commands->setUndoRedoEnabled(value);
 }
 
@@ -113,7 +94,7 @@ void SessionModel::setUndoRecordPause(bool value)
 
 QUndoStack* SessionModel::undoStack() const
 {
-    return m_undoStack.get();
+    return m_commands->undoStack();
 }
 
 ItemFactory* SessionModel::factory()
@@ -123,27 +104,27 @@ ItemFactory* SessionModel::factory()
 
 //! Removes given row from parent.
 
-void SessionModel::removeRow(SessionItem* parent, int row)
-{
-    Q_ASSERT(parent->model() == this);
+//void SessionModel::removeRow(SessionItem* parent, int row)
+//{
+//    Q_ASSERT(parent->model() == this);
 
-    if (provideUndo()) {
-        m_undoStack->push(new RemoveRowCommand(parent, row));
-    } else {
-        delete parent->takeRow(row);
-    }
-}
+//    if (provideUndo()) {
+//        m_undoStack->push(new RemoveRowCommand(parent, row));
+//    } else {
+//        delete parent->takeRow(row);
+//    }
+//}
 
-void SessionModel::insertRow(SessionItem* parent, int row, SessionItem* child)
-{
-    Q_ASSERT(parent->model() == this);
+//void SessionModel::insertRow(SessionItem* parent, int row, SessionItem* child)
+//{
+//    Q_ASSERT(parent->model() == this);
 
-    if (provideUndo()) {
-        m_undoStack->push(new InsertRowCommand(parent, row, child));
-    } else {
-        parent->insertItem(row, child);
-    }
-}
+//    if (provideUndo()) {
+//        m_undoStack->push(new InsertRowCommand(parent, row, child));
+//    } else {
+//        parent->insertItem(row, child);
+//    }
+//}
 
 void SessionModel::createRootItem()
 {
@@ -153,5 +134,5 @@ void SessionModel::createRootItem()
 
 bool SessionModel::provideUndo() const
 {
-    return m_undoStack && !m_pause_undo ? true : false;
+    return false;
 }

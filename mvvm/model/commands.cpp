@@ -14,22 +14,20 @@
 #include "itemfactory.h"
 #include <QJsonObject>
 
-SetValueCommand::SetValueCommand(SessionModel* model, Path path, const QVariant& value, int role,
-                                 QUndoCommand* parent)
-    : QUndoCommand(parent)
-    , m_path(path)
-    , m_model(model)
-    , m_value(value)
+SetValueCommand::SetValueCommand(SessionItem* item, const QVariant& value, int role)
+    : m_value(value)
     , m_role(role)
+    , m_model(item->model())
 {
-
+    Q_ASSERT(m_model);
+    m_path = m_model->pathFromItem(item);
 }
 
 void SetValueCommand::undo()
 {
     auto item = m_model->itemFromPath(m_path);
     QVariant old = item->data(m_role);
-    item->setData(m_value, m_role);
+    item->setDataIntern(m_value, m_role);
     m_value = old;
 }
 
@@ -37,7 +35,7 @@ void SetValueCommand::redo()
 {
     auto item = m_model->itemFromPath(m_path);
     QVariant old = item->data(m_role);
-    item->setData(m_value, m_role);
+    item->setDataIntern(m_value, m_role);
     m_value = old;
 }
 
