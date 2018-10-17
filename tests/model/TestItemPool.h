@@ -3,6 +3,8 @@
 #include "sessionitem.h"
 #include <memory>
 
+//! Tests of ItemPool and its abilities to register/deregister SessionItem.
+
 class TestItemPool : public ::testing::Test
 {
 public:
@@ -16,6 +18,8 @@ TEST_F(TestItemPool, initialState)
     std::unique_ptr<ItemPool> pool(new ItemPool);
     EXPECT_EQ(pool->size(), 0u);
 }
+
+//! Explicit item registrations.
 
 TEST_F(TestItemPool, registerItem)
 {
@@ -46,6 +50,8 @@ TEST_F(TestItemPool, registerItem)
     EXPECT_THROW(pool->register_item(item2.get()), std::runtime_error);
 }
 
+//! Explicit item de-registrations.
+
 TEST_F(TestItemPool, deregisterItem)
 {
     std::unique_ptr<ItemPool> pool(new ItemPool);
@@ -73,4 +79,35 @@ TEST_F(TestItemPool, deregisterItem)
     EXPECT_EQ(pool->size(), 0u);
 }
 
+//! Item registrations via method call.
 
+TEST_F(TestItemPool, sessionItemRegistration)
+{
+    std::shared_ptr<ItemPool> pool(new ItemPool);
+    EXPECT_EQ(pool.use_count(), 1l);
+
+    // explicit item registration
+    auto item = new SessionItem;
+    item->register_item(pool);
+    EXPECT_EQ(pool.use_count(), 1l); // weak ptr inside of SessionItem
+    EXPECT_EQ(pool->size(), 1u);
+    EXPECT_FALSE(pool->key_for_item(item).empty());
+
+    // deleting item
+    delete item;
+    EXPECT_EQ(pool->size(), 0u);
+}
+
+//! Checks what happened if pool deleted before item
+
+TEST_F(TestItemPool, poolTimeOfLife)
+{
+    auto item = new SessionItem;
+
+    {
+        std::shared_ptr<ItemPool> pool(new ItemPool);
+        item->register_item(pool);
+    }
+
+    EXPECT_NO_THROW(delete item);
+}

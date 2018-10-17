@@ -11,6 +11,7 @@
 #include "sessionmodel.h"
 #include "itemfactory.h"
 #include "itemfactory.h"
+#include "itempool.h"
 #include <stdexcept>
 #include <iterator>
 
@@ -30,8 +31,9 @@ SessionItem::~SessionItem()
 
     if (m_parent)
         m_parent->childDeleted(this);
-    if (m_model)
-        m_model->factory()->forgetItem(this);
+
+    if (auto pool = m_item_pool.lock())
+        pool->deregister_item(this);
 }
 
 model_type SessionItem::modelType() const
@@ -116,6 +118,12 @@ SessionItem* SessionItem::takeRow(int row)
         }
     }
     return result;
+}
+
+void SessionItem::register_item(std::shared_ptr<ItemPool> item_pool)
+{
+    item_pool->register_item(this);
+    m_item_pool = item_pool;
 }
 
 void SessionItem::setParent(SessionItem* parent)

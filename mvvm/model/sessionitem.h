@@ -12,10 +12,12 @@
 
 #include <QVariant>
 #include <vector>
+#include <memory>
 #include "mvvm_types.h"
 #include "sessionitemdata.h"
 
 class SessionModel;
+class ItemPool;
 
 class SessionItem {
     friend class SessionModel;
@@ -46,6 +48,8 @@ public:
 
     SessionItem* takeRow(int row);
 
+    void register_item(std::shared_ptr<ItemPool> item_pool);
+
 private:
     void setParent(SessionItem* parent);
     void setModel(SessionModel* model);
@@ -55,6 +59,7 @@ private:
     SessionItem* m_parent;
     SessionModel* m_model;
     std::vector<SessionItem*> m_children;
+    std::weak_ptr<ItemPool> m_item_pool;
     model_type m_modelType;
 };
 
