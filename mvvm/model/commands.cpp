@@ -65,33 +65,6 @@ void InsertNewItemCommand::redo()
 
 // ----------------------------------------------------------------------------
 
-InsertRowCommand::InsertRowCommand(SessionItem* parent, int row, SessionItem* child)
-    : m_row(row)
-    , m_model(parent->model())
-{
-    Q_ASSERT(m_model);
-    m_parent_path = m_model->pathFromItem(parent);
-
-    JsonModel converter; // FIXME get converter from the model
-    m_child_backup.reset(new QJsonObject);
-    converter.item_to_json(child, *m_child_backup);
-}
-
-void InsertRowCommand::undo()
-{
-    auto parent = m_model->itemFromPath(m_parent_path);
-    delete parent->takeRow(m_row);
-}
-
-void InsertRowCommand::redo()
-{
-    JsonModel converter; // FIXME get converter from the model
-    auto parent = m_model->itemFromPath(m_parent_path);
-    converter.json_to_item(*m_child_backup, parent, m_row);
-}
-
-// ----------------------------------------------------------------------------
-
 RemoveRowCommand::RemoveRowCommand(SessionItem* parent, int row)
     : m_row(row)
     , m_model(parent->model())

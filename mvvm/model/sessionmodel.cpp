@@ -108,24 +108,8 @@ void SessionModel::removeRow(SessionItem* parent, int row)
     m_commands->removeRow(parent, row);
 }
 
-//void SessionModel::insertRow(SessionItem* parent, int row, SessionItem* child)
-//{
-//    Q_ASSERT(parent->model() == this);
-
-//    if (provideUndo()) {
-//        m_undoStack->push(new InsertRowCommand(parent, row, child));
-//    } else {
-//        parent->insertItem(row, child);
-//    }
-//}
-
 void SessionModel::createRootItem()
 {
     m_root_item = m_item_factory->createEmptyItem();
     m_root_item->setModel(this);
-}
-
-bool SessionModel::provideUndo() const
-{
-    return false;
 }

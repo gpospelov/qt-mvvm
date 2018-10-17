@@ -54,23 +54,6 @@ private:
     SessionModel* m_model;
 };
 
-//! Command for unddo/redo framework to insert row in a model.
-
-class InsertRowCommand : public QUndoCommand
-{
-public:
-    InsertRowCommand(SessionItem* parent, int row, SessionItem* child);
-
-    void undo() override;
-    void redo() override;
-
-private:
-    Path m_parent_path;
-    int m_row;
-    std::unique_ptr<QJsonObject> m_child_backup;
-    SessionModel* m_model;
-};
-
 //! Command for unddo/redo framework to remove row from a model.
 
 class RemoveRowCommand : public QUndoCommand

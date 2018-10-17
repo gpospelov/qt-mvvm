@@ -50,11 +50,8 @@ public:
 
     void removeRow(SessionItem* parent, int row);
 
-//    void insertRow(SessionItem* parent, int row, SessionItem* child);
-
 private:
     void createRootItem();
-    bool provideUndo() const;
 
     SessionItem* m_root_item;
     std::unique_ptr<CommandService> m_commands;
