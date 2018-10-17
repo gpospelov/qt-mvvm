@@ -18,7 +18,6 @@ SessionModel::SessionModel(const std::string& model_type)
     , m_commands(new CommandService(this))
     , m_item_factory(new ItemFactory)
     , m_model_type(model_type)
-    , m_pause_undo(false)
 {
     createRootItem();
 }
@@ -87,9 +86,9 @@ void SessionModel::setUndoRedoEnabled(bool value)
     m_commands->setUndoRedoEnabled(value);
 }
 
-void SessionModel::setUndoRecordPause(bool value)
+void SessionModel::setCommandRecordPause(bool value)
 {
-    m_pause_undo = value;
+    m_commands->setCommandRecordPause(value);
 }
 
 QUndoStack* SessionModel::undoStack() const
@@ -106,8 +105,7 @@ ItemFactory* SessionModel::factory()
 
 void SessionModel::removeRow(SessionItem* parent, int row)
 {
-    Q_ASSERT(parent->model() == this);
-    delete parent->takeRow(row);
+    m_commands->removeRow(parent, row);
 }
 
 //void SessionModel::insertRow(SessionItem* parent, int row, SessionItem* child)

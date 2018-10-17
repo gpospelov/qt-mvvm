@@ -42,7 +42,7 @@ public:
     SessionItem* itemFromPath(Path path);
 
     void setUndoRedoEnabled(bool value);
-    void setUndoRecordPause(bool value);
+    void setCommandRecordPause(bool value);
 
     QUndoStack* undoStack() const;
 
@@ -60,7 +60,6 @@ private:
     std::unique_ptr<CommandService> m_commands;
     std::unique_ptr<ItemFactory> m_item_factory;
     std::string m_model_type;
-    bool m_pause_undo;
 };
 
 #endif

@@ -34,13 +34,17 @@ public:
 
     bool setData(SessionItem* item, const QVariant& value, int role);
 
+    void removeRow(SessionItem* parent, int row);
+
     QUndoStack* undoStack() const;
 
+    void setCommandRecordPause(bool value);
 private:
     bool provideUndo() const;
 
     SessionModel* m_model;
     std::unique_ptr<QUndoStack> m_commands;
+    bool m_pause_record;
 };
 
 #endif

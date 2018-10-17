@@ -60,12 +60,25 @@ bool CommandService::setData(SessionItem* item, const QVariant& value, int role)
     return true;
 }
 
+void CommandService::removeRow(SessionItem* parent, int row)
+{
+    if (parent->model() != m_model)
+        throw std::runtime_error("CommandService::removeRow() -> Item doesn't belong to given model");
+
+    push(new RemoveRowCommand(parent, row));
+}
+
 QUndoStack* CommandService::undoStack() const
 {
     return m_commands.get();
 }
 
+void CommandService::setCommandRecordPause(bool value)
+{
+    m_pause_record = value;
+}
+
 bool CommandService::provideUndo() const
 {
-    return m_commands ? true : false;
+    return m_commands && !m_pause_record ? true : false;
 }

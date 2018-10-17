@@ -102,19 +102,26 @@ RemoveRowCommand::RemoveRowCommand(SessionItem* parent, int row)
 
 void RemoveRowCommand::undo()
 {
+    m_model->setCommandRecordPause(true);
+
     JsonModel converter; // FIXME get converter from the model
     auto parent = m_model->itemFromPath(m_parent_path);
     converter.json_to_item(*m_child_backup, parent, m_row);
+
+    m_model->setCommandRecordPause(false);
 }
 
 void RemoveRowCommand::redo()
 {
+    m_model->setCommandRecordPause(true);
+
     JsonModel converter; // FIXME get converter from the model
     m_child_backup.reset(new QJsonObject);
 
     auto parent = m_model->itemFromPath(m_parent_path);
     auto child = parent->childAt(m_row);
     converter.item_to_json(child, *m_child_backup);
-
     delete parent->takeRow(m_row);
+
+    m_model->setCommandRecordPause(false);
 }

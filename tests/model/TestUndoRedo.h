@@ -151,6 +151,36 @@ TEST_F(TestUndoRedo, setData)
     EXPECT_EQ(model.data(item, role).toDouble(), 44.0);
 }
 
+//! Undo/redo scenario when item data changed thourgh item and not the model.
+
+TEST_F(TestUndoRedo, setDataThroughItem)
+{
+    const int role(0);
+    const QVariant value(42.0);
+
+    SessionModel model;
+    model.setUndoRedoEnabled(true);
+    auto stack = model.undoStack();
+
+    // creating item
+    auto item = model.insertNewItem("Layer");
+    EXPECT_FALSE(model.data(item, role).isValid());
+
+    // setting new data through item (and not through model)
+    item->setData(value, role);
+    EXPECT_EQ(item->data(role), value);
+
+    EXPECT_EQ(stack->index(), 2); // insert and setData commands
+    EXPECT_FALSE(model.undoStack()->canRedo());
+    EXPECT_TRUE(model.undoStack()->canUndo());
+
+    // undoing and checking
+    stack->undo();
+    EXPECT_EQ(stack->index(), 1);
+    EXPECT_FALSE(model.data(item, role).isValid());
+}
+
+
 //! Checks if we insert item, set data and undo everything we can get back to the data.
 
 TEST_F(TestUndoRedo, insertAndSetData)
@@ -189,3 +219,43 @@ TEST_F(TestUndoRedo, insertAndSetData)
     item = model.rootItem()->childAt(0);
     EXPECT_EQ(model.data(item, role).toDouble(), 42.0);
 }
+
+//! Inserting item, setting the data, removing row, undoing, checking item and data.
+
+TEST_F(TestUndoRedo, removeRow)
+{
+    const int role = 0;
+    const QVariant data(42);
+
+    SessionModel model;
+    model.setUndoRedoEnabled(true);
+    auto stack = model.undoStack();
+
+    auto item = model.insertNewItem("MultiLayer");
+    item->setData(data, role);
+
+    // initial state before removing the row
+    EXPECT_EQ(stack->count(), 2); // insert and setData commands
+    EXPECT_EQ(stack->index(), 2); // insert and setData commands
+    EXPECT_FALSE(model.undoStack()->canRedo());
+    EXPECT_TRUE(model.undoStack()->canUndo());
+    EXPECT_EQ(item->data(role), data);
+    EXPECT_EQ(model.rootItem()->childrenCount(), 1);
+
+    // removing the row
+    model.removeRow(model.rootItem(), 0);
+    EXPECT_EQ(stack->count(), 3);
+    EXPECT_EQ(stack->index(), 3);
+    EXPECT_EQ(model.rootItem()->childrenCount(), 0);
+
+    // undoing and checking the data
+    stack->undo();
+    EXPECT_EQ(stack->count(), 3);
+    EXPECT_EQ(stack->index(), 2);
+    EXPECT_EQ(model.rootItem()->childrenCount(), 1);
+    item = model.rootItem()->childAt(0);
+    EXPECT_EQ(model.data(item, role).toDouble(), 42.0);
+    EXPECT_EQ(item->modelType(), "MultiLayer");
+}
+
+

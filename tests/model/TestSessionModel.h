@@ -66,7 +66,7 @@ TEST_F(TestSessionModel, removeRow)
 
     auto parent = model.insertNewItem("MultiLayer");
     auto child1 = model.insertNewItem("Layer1", parent);
-    auto child2 = model.insertNewItem("Layer2", parent, 0);
+    auto child2 = model.insertNewItem("Layer2", parent, 0); // before child1
     Q_UNUSED(child2);
 
     // removing child2
