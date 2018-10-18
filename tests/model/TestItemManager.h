@@ -26,7 +26,7 @@ TEST_F(TestItemFactory, initialState)
 TEST_F(TestItemFactory, createItem)
 {
     ItemManager factory;
-    std::unique_ptr<SessionItem> item(factory.createEmptyItem());
+    std::unique_ptr<SessionItem> item(factory.createRootItem());
 
     EXPECT_EQ(factory.itemPool().size(), 1u);
 
@@ -44,7 +44,7 @@ TEST_F(TestItemFactory, createItem)
 TEST_F(TestItemFactory, modelContext)
 {
     SessionModel model;
-    auto factory = model.factory();
+    auto factory = model.manager();
 
     EXPECT_EQ(factory->itemPool().size(), 1u); // root item already there
 

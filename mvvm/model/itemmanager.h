@@ -11,21 +11,23 @@
 #define ITEMMANAGER_H
 
 #include <string>
-#include "mvvm_types.h"
-#include "itempool.h"
 #include <memory>
+#include "mvvm_types.h"
 
 class SessionItem;
+class ItemPool;
+class ItemFactoryInterface;
 
 //! Manages item creation/registration for SessionModel.
 
 class ItemManager {
 public:
     ItemManager();
+    ~ItemManager();
 
     SessionItem* createItem(const model_type& modelType = {});
 
-    SessionItem* createEmptyItem();
+    SessionItem* createRootItem();
 
     SessionItem* findItem(identifier_type id) const;
 
@@ -35,6 +37,7 @@ public:
 
 private:
     std::shared_ptr<ItemPool> m_item_pool;
+    std::unique_ptr<ItemFactoryInterface> m_item_factory;
 };
 
 #endif

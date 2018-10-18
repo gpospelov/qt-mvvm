@@ -9,23 +9,28 @@
 
 #include "itemmanager.h"
 #include "sessionitem.h"
+#include "itempool.h"
+#include "itemfactory.h"
 
 ItemManager::ItemManager()
     : m_item_pool(new ItemPool)
+    , m_item_factory(new ItemFactory)
 {
 
 }
 
+ItemManager::~ItemManager() = default;
+
 SessionItem* ItemManager::createItem(const model_type& modelType)
 {
-    auto result = new SessionItem(modelType);
+    auto result = m_item_factory->createItem(modelType);
     result->register_item(m_item_pool);
     return result;
 }
 
-SessionItem* ItemManager::createEmptyItem()
+SessionItem* ItemManager::createRootItem()
 {
-    auto result = new SessionItem;
+    auto result = m_item_factory->createEmptyItem();
     result->register_item(m_item_pool);
     return result;
 }

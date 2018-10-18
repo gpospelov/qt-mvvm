@@ -16,7 +16,7 @@
 SessionModel::SessionModel(const std::string& model_type)
     : m_root_item(nullptr)
     , m_commands(new CommandService(this))
-    , m_item_factory(new ItemManager)
+    , m_item_manager(new ItemManager)
     , m_model_type(model_type)
 {
     createRootItem();
@@ -98,7 +98,7 @@ QUndoStack* SessionModel::undoStack() const
 
 ItemManager* SessionModel::factory()
 {
-    return m_item_factory.get();
+    return m_item_manager.get();
 }
 
 //! Removes given row from parent.
@@ -110,6 +110,6 @@ void SessionModel::removeRow(SessionItem* parent, int row)
 
 void SessionModel::createRootItem()
 {
-    m_root_item = m_item_factory->createEmptyItem();
+    m_root_item = m_item_manager->createRootItem();
     m_root_item->setModel(this);
 }
