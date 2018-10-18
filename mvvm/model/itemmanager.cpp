@@ -15,11 +15,15 @@
 #include "jsonmodel.h"
 
 ItemManager::ItemManager()
-    : m_item_pool(new ItemPool)
-    , m_item_factory(new ItemFactory)
+    : m_item_factory(new ItemFactory)
     , m_converter(new JsonModel)
 {
 
+}
+
+void ItemManager::setItemPool(std::shared_ptr<ItemPool> pool)
+{
+    m_item_pool = pool;
 }
 
 ItemManager::~ItemManager() = default;

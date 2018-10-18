@@ -12,6 +12,7 @@
 #include "commands.h"
 #include "itemmanager.h"
 #include "commandservice.h"
+#include "itempool.h"
 
 SessionModel::SessionModel(const std::string& model_type)
     : m_root_item(nullptr)
@@ -19,6 +20,7 @@ SessionModel::SessionModel(const std::string& model_type)
     , m_item_manager(new ItemManager)
     , m_model_type(model_type)
 {
+    m_item_manager->setItemPool(std::shared_ptr<ItemPool>(new ItemPool));
     createRootItem();
 }
 

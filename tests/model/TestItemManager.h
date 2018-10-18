@@ -17,25 +17,33 @@ TestItemManager::~TestItemManager() = default;
 
 TEST_F(TestItemManager, initialState)
 {
-    ItemManager factory;
-    EXPECT_EQ(factory.itemPool()->size(), 0u);
+    ItemManager manager;
+    EXPECT_EQ(manager.itemPool(), nullptr);
+
+    std::shared_ptr<ItemPool> pool(new ItemPool);
+    manager.setItemPool(pool);
+    EXPECT_EQ(manager.itemPool(), pool.get());
+    EXPECT_EQ(manager.itemPool()->size(), 0);
 }
 
 //! Creation of item through factory leads to the item registration in a pool.
 
 TEST_F(TestItemManager, createItem)
 {
-    ItemManager factory;
-    std::unique_ptr<SessionItem> item(factory.createRootItem());
+    ItemManager manager;
+    std::shared_ptr<ItemPool> pool(new ItemPool);
+    manager.setItemPool(pool);
 
-    EXPECT_EQ(factory.itemPool()->size(), 1u);
+    std::unique_ptr<SessionItem> item(manager.createRootItem());
 
-    auto id = factory.findIdentifier(item.get());
-    EXPECT_EQ(factory.findItem(id), item.get());
+    EXPECT_EQ(manager.itemPool()->size(), 1u);
+
+    auto id = manager.findIdentifier(item.get());
+    EXPECT_EQ(manager.findItem(id), item.get());
 
     // item deletion leads to its automatic deregistration
     item.reset();
-    EXPECT_EQ(factory.findItem(id), nullptr);
+    EXPECT_EQ(manager.findItem(id), nullptr);
 }
 
 

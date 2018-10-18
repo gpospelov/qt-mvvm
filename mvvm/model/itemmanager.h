@@ -26,6 +26,8 @@ public:
     ItemManager();
     ~ItemManager();
 
+    void setItemPool(std::shared_ptr<ItemPool> pool);
+
     SessionItem* createItem(const model_type& modelType = {});
 
     SessionItem* createRootItem();
