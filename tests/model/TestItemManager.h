@@ -44,17 +44,17 @@ TEST_F(TestItemFactory, createItem)
 TEST_F(TestItemFactory, modelContext)
 {
     SessionModel model;
-    auto factory = model.manager();
+    auto manager = model.manager();
 
-    EXPECT_EQ(factory->itemPool().size(), 1u); // root item already there
+    EXPECT_EQ(manager->itemPool().size(), 1u); // root item already there
 
     auto item1 = model.insertNewItem("abc");
-    EXPECT_EQ(factory->itemPool().size(), 2u);
-    auto key = factory->findIdentifier(item1);
-    EXPECT_EQ(factory->findItem(key), item1);
+    EXPECT_EQ(manager->itemPool().size(), 2u);
+    auto key = manager->findIdentifier(item1);
+    EXPECT_EQ(manager->findItem(key), item1);
 
     delete item1;
-    EXPECT_EQ(factory->itemPool().size(), 1u);
-    EXPECT_EQ(factory->findItem(key), nullptr);
+    EXPECT_EQ(manager->itemPool().size(), 1u);
+    EXPECT_EQ(manager->findItem(key), nullptr);
 }
 

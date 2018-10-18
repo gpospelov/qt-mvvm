@@ -46,7 +46,7 @@ JsonModel::JsonModel()
 
 }
 
-void JsonModel::model_to_json(const SessionModel& model, QJsonObject& json)
+void JsonModel::model_to_json(const SessionModel& model, QJsonObject& json) const
 {
     if (!model.rootItem())
         throw std::runtime_error("JsonModel::to_json() -> Error. Model is not initialized.");
@@ -57,14 +57,14 @@ void JsonModel::model_to_json(const SessionModel& model, QJsonObject& json)
 
     for(auto item : model.rootItem()->children()) {
         QJsonObject object;
-        JsonModel::item_to_json(item, object);
+        item_to_json(item, object);
         itemArray.append(object);
     }
 
     json[itemsKey] = itemArray;
 }
 
-void JsonModel::json_to_model(const QJsonObject& json, SessionModel& model)
+void JsonModel::json_to_model(const QJsonObject& json, SessionModel& model) const
 {
     if (!model.rootItem())
         throw std::runtime_error("JsonModel::json_to_model() -> Error. Model is not initialized.");
@@ -84,7 +84,7 @@ void JsonModel::json_to_model(const QJsonObject& json, SessionModel& model)
 
 }
 
-void JsonModel::json_to_item(const QJsonObject& json, SessionItem* parent, int row)
+void JsonModel::json_to_item(const QJsonObject& json, SessionItem* parent, int row) const
 {
     if (!parent)
         throw std::runtime_error("JsonModel::json_to_item() -> Non initialized item");
@@ -107,7 +107,7 @@ void JsonModel::json_to_item(const QJsonObject& json, SessionItem* parent, int r
 
 }
 
-void JsonModel::item_to_json(const SessionItem* item, QJsonObject& json)
+void JsonModel::item_to_json(const SessionItem* item, QJsonObject& json) const
 {
     if (!item)
         return;
@@ -124,7 +124,7 @@ void JsonModel::item_to_json(const SessionItem* item, QJsonObject& json)
     json[itemsKey] = itemArray;
 }
 
-bool JsonModel::is_item(const QJsonObject& object)
+bool JsonModel::is_item(const QJsonObject& object) const
 {
     static const QStringList expected = expected_item_keys();
 
@@ -140,7 +140,7 @@ bool JsonModel::is_item(const QJsonObject& object)
     return true;
 }
 
-bool JsonModel::is_model(const QJsonObject& object)
+bool JsonModel::is_model(const QJsonObject& object) const
 {
     static const QStringList expected = expected_model_keys();
 

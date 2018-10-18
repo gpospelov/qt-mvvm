@@ -11,10 +11,13 @@
 #include "sessionitem.h"
 #include "itempool.h"
 #include "itemfactory.h"
+#include "jsonconverterinterfaces.h"
+#include "jsonmodel.h"
 
 ItemManager::ItemManager()
     : m_item_pool(new ItemPool)
     , m_item_factory(new ItemFactory)
+    , m_converter(new JsonModel)
 {
 
 }
@@ -48,4 +51,9 @@ identifier_type ItemManager::findIdentifier(SessionItem* item) const
 const ItemPool& ItemManager::itemPool() const
 {
     return *m_item_pool.get();
+}
+
+const JsonModelInterface& ItemManager::converter() const
+{
+    return *m_converter.get();
 }

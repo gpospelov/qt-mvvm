@@ -58,7 +58,7 @@ void InsertNewItemCommand::undo()
 void InsertNewItemCommand::redo()
 {
     auto parent = m_model->itemFromPath(m_parent_path);
-    auto child = m_model->factory()->createItem(m_model_type);
+    auto child = m_model->manager()->createItem(m_model_type);
     parent->insertItem(m_row, child);
 }
 
@@ -77,7 +77,8 @@ void RemoveRowCommand::undo()
 {
     m_model->setCommandRecordPause(true);
 
-    JsonModel converter; // FIXME get converter from the model
+    const auto& converter = m_model->manager()->converter();
+
     auto parent = m_model->itemFromPath(m_parent_path);
     converter.json_to_item(*m_child_backup, parent, m_row);
 
@@ -88,7 +89,7 @@ void RemoveRowCommand::redo()
 {
     m_model->setCommandRecordPause(true);
 
-    JsonModel converter; // FIXME get converter from the model
+    const auto& converter = m_model->manager()->converter();
     m_child_backup.reset(new QJsonObject);
 
     auto parent = m_model->itemFromPath(m_parent_path);

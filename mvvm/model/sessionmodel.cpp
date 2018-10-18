@@ -96,7 +96,7 @@ QUndoStack* SessionModel::undoStack() const
     return m_commands->undoStack();
 }
 
-ItemManager* SessionModel::factory()
+ItemManager* SessionModel::manager()
 {
     return m_item_manager.get();
 }

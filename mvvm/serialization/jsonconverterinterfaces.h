@@ -43,15 +43,21 @@ public:
 //! Base class for all converters of SessionModel to/from json object.
 
 class SessionModel;
+class SessionItem;
 
 class JsonModelInterface
 {
 public:
     virtual ~JsonModelInterface() = default;
 
-    virtual void model_to_json(const SessionModel&, QJsonObject&) = 0;
+    virtual void model_to_json(const SessionModel&, QJsonObject&) const  = 0;
 
-    virtual void json_to_model(const QJsonObject&, SessionModel&) = 0;
+    virtual void json_to_model(const QJsonObject&, SessionModel&) const = 0;
+
+    virtual void json_to_item(const QJsonObject& json, SessionItem* parent, int row = -1)  const = 0;
+
+    virtual void item_to_json(const SessionItem* item, QJsonObject& json) const = 0;
+
 };
 
 #endif
