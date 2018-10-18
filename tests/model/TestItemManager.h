@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "itemfactory.h"
+#include "itemmanager.h"
 #include "itempool.h"
 #include "sessionmodel.h"
 #include "sessionitem.h"
@@ -17,7 +17,7 @@ TestItemFactory::~TestItemFactory() = default;
 
 TEST_F(TestItemFactory, initialState)
 {
-    ItemFactory factory;
+    ItemManager factory;
     EXPECT_EQ(factory.itemPool().size(), 0u);
 }
 
@@ -25,7 +25,7 @@ TEST_F(TestItemFactory, initialState)
 
 TEST_F(TestItemFactory, createItem)
 {
-    ItemFactory factory;
+    ItemManager factory;
     std::unique_ptr<SessionItem> item(factory.createEmptyItem());
 
     EXPECT_EQ(factory.itemPool().size(), 1u);

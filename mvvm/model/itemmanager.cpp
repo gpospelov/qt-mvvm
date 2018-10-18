@@ -7,40 +7,40 @@
 //
 // ************************************************************************** //
 
-#include "itemfactory.h"
+#include "itemmanager.h"
 #include "sessionitem.h"
 
-ItemFactory::ItemFactory()
+ItemManager::ItemManager()
     : m_item_pool(new ItemPool)
 {
 
 }
 
-SessionItem* ItemFactory::createItem(const model_type& modelType)
+SessionItem* ItemManager::createItem(const model_type& modelType)
 {
     auto result = new SessionItem(modelType);
     result->register_item(m_item_pool);
     return result;
 }
 
-SessionItem* ItemFactory::createEmptyItem()
+SessionItem* ItemManager::createEmptyItem()
 {
     auto result = new SessionItem;
     result->register_item(m_item_pool);
     return result;
 }
 
-SessionItem* ItemFactory::findItem(identifier_type id) const
+SessionItem* ItemManager::findItem(identifier_type id) const
 {
     return m_item_pool->item_for_key(id);
 }
 
-identifier_type ItemFactory::findIdentifier(SessionItem* item) const
+identifier_type ItemManager::findIdentifier(SessionItem* item) const
 {
     return m_item_pool->key_for_item(item);
 }
 
-const ItemPool& ItemFactory::itemPool() const
+const ItemPool& ItemManager::itemPool() const
 {
     return *m_item_pool.get();
 }

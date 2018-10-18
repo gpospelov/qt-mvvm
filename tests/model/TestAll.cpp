@@ -5,7 +5,7 @@
 #include "TestPath.h"
 #include "TestUndoRedo.h"
 #include "TestItemPool.h"
-#include "TestItemFactory.h"
+#include "TestItemManager.h"
 #include "TestFileUtils.h"
 #include "TestItemUtils.h"
 #include "TestJsonModel.h"

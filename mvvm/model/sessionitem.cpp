@@ -9,8 +9,7 @@
 
 #include "sessionitem.h"
 #include "sessionmodel.h"
-#include "itemfactory.h"
-#include "itemfactory.h"
+#include "itemmanager.h"
 #include "itempool.h"
 #include <stdexcept>
 #include <iterator>

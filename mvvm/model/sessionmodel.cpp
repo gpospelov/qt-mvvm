@@ -10,13 +10,13 @@
 #include "sessionmodel.h"
 #include "sessionitem.h"
 #include "commands.h"
-#include "itemfactory.h"
+#include "itemmanager.h"
 #include "commandservice.h"
 
 SessionModel::SessionModel(const std::string& model_type)
     : m_root_item(nullptr)
     , m_commands(new CommandService(this))
-    , m_item_factory(new ItemFactory)
+    , m_item_factory(new ItemManager)
     , m_model_type(model_type)
 {
     createRootItem();
@@ -96,7 +96,7 @@ QUndoStack* SessionModel::undoStack() const
     return m_commands->undoStack();
 }
 
-ItemFactory* SessionModel::factory()
+ItemManager* SessionModel::factory()
 {
     return m_item_factory.get();
 }

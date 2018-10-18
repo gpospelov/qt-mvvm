@@ -4,7 +4,6 @@
 #include <QFile>
 #include <QJsonDocument>
 #include <QJsonArray>
-#include <QDebug>
 #include <vector>
 
 //! Test convertion of QVariant from/to QJsonObject.

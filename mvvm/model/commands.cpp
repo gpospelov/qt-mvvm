@@ -11,7 +11,7 @@
 #include "sessionmodel.h"
 #include "sessionitem.h"
 #include "jsonmodel.h"
-#include "itemfactory.h"
+#include "itemmanager.h"
 #include <QJsonObject>
 
 SetValueCommand::SetValueCommand(SessionItem* item, const QVariant& value, int role)

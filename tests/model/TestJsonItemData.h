@@ -6,7 +6,6 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <string>
-#include <QDebug>
 
 //! Test convertion of SessionItemData from/to QJsonObject.
 

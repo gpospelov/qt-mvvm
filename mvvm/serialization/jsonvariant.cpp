@@ -13,7 +13,6 @@
 #include <stdexcept>
 #include <sstream>
 #include <customvariants.h>
-#include <QDebug>
 
 const QString JsonVariant::variantTypeKey = "type";
 const QString JsonVariant::variantValueKey = "value";

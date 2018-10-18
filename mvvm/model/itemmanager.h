@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef ITEMFACTORY_H
-#define ITEMFACTORY_H
+#ifndef ITEMMANAGER_H
+#define ITEMMANAGER_H
 
 #include <string>
 #include "mvvm_types.h"
@@ -17,9 +17,11 @@
 
 class SessionItem;
 
-class ItemFactory {
+//! Manages item creation/registration for SessionModel.
+
+class ItemManager {
 public:
-    ItemFactory();
+    ItemManager();
 
     SessionItem* createItem(const model_type& modelType = {});
 
