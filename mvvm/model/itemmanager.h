@@ -34,11 +34,11 @@ public:
 
     identifier_type findIdentifier(SessionItem* item) const;
 
-    const ItemPool& itemPool() const;
+    const ItemPool* itemPool() const;
 
     const JsonModelInterface& converter() const;
 
-    private:
+private:
     std::shared_ptr<ItemPool> m_item_pool;
     std::unique_ptr<ItemFactoryInterface> m_item_factory;
     std::unique_ptr<JsonModelInterface> m_converter;

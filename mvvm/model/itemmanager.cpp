@@ -27,30 +27,32 @@ ItemManager::~ItemManager() = default;
 SessionItem* ItemManager::createItem(const model_type& modelType)
 {
     auto result = m_item_factory->createItem(modelType);
-    result->register_item(m_item_pool);
+    if (m_item_pool)
+        result->register_item(m_item_pool);
     return result;
 }
 
 SessionItem* ItemManager::createRootItem()
 {
     auto result = m_item_factory->createEmptyItem();
-    result->register_item(m_item_pool);
+    if (m_item_pool)
+        result->register_item(m_item_pool);
     return result;
 }
 
 SessionItem* ItemManager::findItem(identifier_type id) const
 {
-    return m_item_pool->item_for_key(id);
+    return m_item_pool ? m_item_pool->item_for_key(id) : nullptr;
 }
 
 identifier_type ItemManager::findIdentifier(SessionItem* item) const
 {
-    return m_item_pool->key_for_item(item);
+    return m_item_pool ? m_item_pool->key_for_item(item) : identifier_type();
 }
 
-const ItemPool& ItemManager::itemPool() const
+const ItemPool* ItemManager::itemPool() const
 {
-    return *m_item_pool.get();
+    return m_item_pool.get();
 }
 
 const JsonModelInterface& ItemManager::converter() const
