@@ -99,38 +99,47 @@ TEST_F(TestItemUtils, iterateModel)
 
 TEST_F(TestItemUtils, VariantType)
 {
-    EXPECT_TRUE(Utils::VariantType(QVariant::fromValue(1.0))
-                == Utils::VariantType(QVariant::fromValue(2.0)));
-    EXPECT_FALSE(Utils::VariantType(QVariant::fromValue(1.0))
-                 == Utils::VariantType(QVariant::fromValue(1)));
-    EXPECT_FALSE(Utils::VariantType(QVariant::fromValue(1.0))
-                 == Utils::VariantType(QVariant::fromValue(std::string("a"))));
+    QVariant undefined;
+    QVariant intProperty = QVariant::fromValue(1);
+    QVariant doubleProperty = QVariant::fromValue(42.0);
+    QVariant stringProperty = QVariant::fromValue(std::string("abc"));
+    std::vector<double> vec {1, 2};
+    QVariant vectorProperty = QVariant::fromValue(vec);
 
-    QVariant v1, v2;
-    EXPECT_TRUE(Utils::VariantType(v1) == Utils::VariantType(v2));
-    EXPECT_FALSE(Utils::VariantType(v1)
-                 == Utils::VariantType(QVariant::fromValue(42.0)));
+    EXPECT_TRUE(Utils::VariantType(undefined) == Utils::VariantType(QVariant()));
+    EXPECT_FALSE(Utils::VariantType(undefined) == Utils::VariantType(intProperty));
+    EXPECT_FALSE(Utils::VariantType(undefined) == Utils::VariantType(doubleProperty));
+    EXPECT_FALSE(Utils::VariantType(undefined) == Utils::VariantType(stringProperty));
+    EXPECT_FALSE(Utils::VariantType(undefined) == Utils::VariantType(vectorProperty));
 
-//    ComboProperty c1, c2;
-//    EXPECT_TRUE(Utils::VariantType(c1.variant())
-//                == Utils::VariantType(c2.variant()));
-//    EXPECT_FALSE(Utils::VariantType(c1.variant())
-//                 == Utils::VariantType(QVariant::fromValue(42.0)));
-//    EXPECT_FALSE(Utils::VariantType(c1.variant())
-//                 == Utils::VariantType(QVariant()));
+    EXPECT_TRUE(Utils::VariantType(intProperty) == Utils::VariantType(QVariant::fromValue(2)));
+    EXPECT_FALSE(Utils::VariantType(intProperty) == Utils::VariantType(undefined));
+    EXPECT_FALSE(Utils::VariantType(intProperty) == Utils::VariantType(doubleProperty));
+    EXPECT_FALSE(Utils::VariantType(intProperty) == Utils::VariantType(stringProperty));
+    EXPECT_FALSE(Utils::VariantType(intProperty) == Utils::VariantType(vectorProperty));
 
-//    ExternalProperty p1, p2;
-//    EXPECT_TRUE(Utils::VariantType(p1.variant())
-//                == Utils::VariantType(p2.variant()));
-//    EXPECT_FALSE(Utils::VariantType(p1.variant())
-//                 == Utils::VariantType(QVariant::fromValue(42.0)));
-//    EXPECT_FALSE(Utils::VariantType(p1.variant())
-//                 == Utils::VariantType(c1.variant()));
-//    EXPECT_FALSE(Utils::VariantType(p1.variant())
-//                 == Utils::VariantType(QVariant()));
+    EXPECT_TRUE(Utils::VariantType(doubleProperty) == Utils::VariantType(QVariant::fromValue(43.0)));
+    EXPECT_FALSE(Utils::VariantType(doubleProperty) == Utils::VariantType(undefined));
+    EXPECT_FALSE(Utils::VariantType(doubleProperty) == Utils::VariantType(intProperty));
+    EXPECT_FALSE(Utils::VariantType(doubleProperty) == Utils::VariantType(stringProperty));
+    EXPECT_FALSE(Utils::VariantType(doubleProperty) == Utils::VariantType(vectorProperty));
+
+    EXPECT_TRUE(Utils::VariantType(stringProperty) == Utils::VariantType(QVariant::fromValue(std::string("cde"))));
+    EXPECT_FALSE(Utils::VariantType(stringProperty) == Utils::VariantType(undefined));
+    EXPECT_FALSE(Utils::VariantType(stringProperty) == Utils::VariantType(intProperty));
+    EXPECT_FALSE(Utils::VariantType(stringProperty) == Utils::VariantType(doubleProperty));
+    EXPECT_FALSE(Utils::VariantType(stringProperty) == Utils::VariantType(vectorProperty));
+
+    std::vector<double> vec2 {1, 2};
+    EXPECT_TRUE(Utils::VariantType(vectorProperty) == Utils::VariantType(QVariant::fromValue(vec2)));
+    EXPECT_FALSE(Utils::VariantType(vectorProperty) == Utils::VariantType(undefined));
+    EXPECT_FALSE(Utils::VariantType(vectorProperty) == Utils::VariantType(intProperty));
+    EXPECT_FALSE(Utils::VariantType(vectorProperty) == Utils::VariantType(doubleProperty));
+    EXPECT_FALSE(Utils::VariantType(vectorProperty) == Utils::VariantType(stringProperty));
 }
 
-//! Comparing types of variant.
+//! Variant compatibility.
+//! For the moment, undefined variant
 
 TEST_F(TestItemUtils, CompatibleVariantTypes)
 {
@@ -138,61 +147,83 @@ TEST_F(TestItemUtils, CompatibleVariantTypes)
     QVariant intProperty = QVariant::fromValue(1);
     QVariant doubleProperty = QVariant::fromValue(42.0);
     QVariant stringProperty = QVariant::fromValue(std::string("string"));
-    //    QVariant comboProperty = QVariant::fromValue(ComboProperty());
-    //    QVariant externProperty = QVariant::fromValue(ExternalProperty());
+    std::vector<double> vec {1, 2};
+    QVariant vectorProperty = QVariant::fromValue(vec);
 
     EXPECT_TRUE(Utils::CompatibleVariantTypes(undefined, intProperty));
     EXPECT_TRUE(Utils::CompatibleVariantTypes(undefined, doubleProperty));
     EXPECT_TRUE(Utils::CompatibleVariantTypes(undefined, stringProperty));
-//    EXPECT_TRUE(Utils::CompatibleVariantTypes(undefined, comboProperty));
-//    EXPECT_TRUE(Utils::CompatibleVariantTypes(undefined, externProperty));
+    EXPECT_TRUE(Utils::CompatibleVariantTypes(undefined, vectorProperty));
 
     EXPECT_TRUE(Utils::CompatibleVariantTypes(intProperty, intProperty));
-    EXPECT_TRUE(Utils::CompatibleVariantTypes(doubleProperty, doubleProperty));
-    EXPECT_TRUE(Utils::CompatibleVariantTypes(stringProperty, stringProperty));
-//    EXPECT_TRUE(Utils::CompatibleVariantTypes(comboProperty, comboProperty));
-//    EXPECT_TRUE(Utils::CompatibleVariantTypes(externProperty, externProperty));
-
+    EXPECT_FALSE(Utils::CompatibleVariantTypes(intProperty, undefined));
     EXPECT_FALSE(Utils::CompatibleVariantTypes(intProperty, doubleProperty));
     EXPECT_FALSE(Utils::CompatibleVariantTypes(intProperty, stringProperty));
+    EXPECT_FALSE(Utils::CompatibleVariantTypes(intProperty, vectorProperty));
+
+    EXPECT_TRUE(Utils::CompatibleVariantTypes(doubleProperty, doubleProperty));
+    EXPECT_FALSE(Utils::CompatibleVariantTypes(doubleProperty, undefined));
     EXPECT_FALSE(Utils::CompatibleVariantTypes(doubleProperty, stringProperty));
-//    EXPECT_FALSE(Utils::CompatibleVariantTypes(doubleProperty, comboProperty));
-//    EXPECT_FALSE(Utils::CompatibleVariantTypes(comboProperty, doubleProperty));
+    EXPECT_FALSE(Utils::CompatibleVariantTypes(doubleProperty, intProperty));
+    EXPECT_FALSE(Utils::CompatibleVariantTypes(doubleProperty, vectorProperty));
+
+    EXPECT_TRUE(Utils::CompatibleVariantTypes(stringProperty, stringProperty));
+    EXPECT_FALSE(Utils::CompatibleVariantTypes(stringProperty, undefined));
+    EXPECT_FALSE(Utils::CompatibleVariantTypes(stringProperty, intProperty));
+    EXPECT_FALSE(Utils::CompatibleVariantTypes(stringProperty, doubleProperty));
+    EXPECT_FALSE(Utils::CompatibleVariantTypes(stringProperty, vectorProperty));
 }
 
 //! Test variant equality reported by SessionItemUtils::isTheSame
 
 TEST_F(TestItemUtils, IsTheSameVariant)
 {
-    // comparing undefined variants
-    QVariant v1, v2;
-    EXPECT_TRUE(Utils::IsTheSame(v1, v2));
+    QVariant undefined;
+    QVariant intProperty = QVariant::fromValue(1);
+    QVariant doubleProperty = QVariant::fromValue(42.0);
+    QVariant stringProperty = QVariant::fromValue(std::string("string"));
+    std::vector<double> vec {1, 2};
+    QVariant vectorProperty = QVariant::fromValue(vec);
 
-    // comparing QVariant based on double
-    EXPECT_TRUE(Utils::IsTheSame(QVariant::fromValue(1.0), QVariant::fromValue(1.0)));
-    EXPECT_FALSE(Utils::IsTheSame(QVariant::fromValue(1.0), QVariant::fromValue(2.0)));
+    // undefined variant
+    EXPECT_TRUE(Utils::IsTheSame(undefined, QVariant()));
+    EXPECT_FALSE(Utils::IsTheSame(undefined, intProperty));
+    EXPECT_FALSE(Utils::IsTheSame(undefined, doubleProperty));
+    EXPECT_FALSE(Utils::IsTheSame(undefined, stringProperty));
+    EXPECT_FALSE(Utils::IsTheSame(undefined, vectorProperty));
 
-    // comparing QVariant based on strings
-    EXPECT_TRUE(Utils::IsTheSame(QVariant::fromValue(std::string("a")),
-                                            QVariant::fromValue(std::string("a"))));
-    EXPECT_FALSE(Utils::IsTheSame(QVariant::fromValue(std::string("a")),
-                                             QVariant::fromValue(std::string("b"))));
+    // int variant
+    EXPECT_TRUE(Utils::IsTheSame(intProperty, intProperty));
+    EXPECT_FALSE(Utils::IsTheSame(intProperty, undefined));
+    EXPECT_FALSE(Utils::IsTheSame(intProperty, QVariant::fromValue(2)));
+    EXPECT_FALSE(Utils::IsTheSame(intProperty, doubleProperty));
+    EXPECT_FALSE(Utils::IsTheSame(intProperty, stringProperty));
+    EXPECT_FALSE(Utils::IsTheSame(intProperty, vectorProperty));
 
-    // Variants of std::string and QString
-    EXPECT_FALSE(Utils::IsTheSame(QVariant::fromValue(std::string("a")),
-                                             QVariant::fromValue(QString("a"))));
+    // double variant
+    EXPECT_TRUE(Utils::IsTheSame(doubleProperty, doubleProperty));
+    EXPECT_FALSE(Utils::IsTheSame(doubleProperty, undefined));
+    EXPECT_FALSE(Utils::IsTheSame(doubleProperty, QVariant::fromValue(43.0)));
+    EXPECT_FALSE(Utils::IsTheSame(doubleProperty, intProperty));
+    EXPECT_FALSE(Utils::IsTheSame(doubleProperty, stringProperty));
+    EXPECT_FALSE(Utils::IsTheSame(doubleProperty, vectorProperty));
 
-    // comparing variants of different type
-//    EXPECT_FALSE(Utils::IsTheSame(QVariant::fromValue(1.0), QVariant::fromValue(1)));
+    // string variant
+    EXPECT_TRUE(Utils::IsTheSame(stringProperty, stringProperty));
+    EXPECT_FALSE(Utils::IsTheSame(stringProperty, undefined));
+    EXPECT_FALSE(Utils::IsTheSame(stringProperty, QVariant::fromValue(std::string("cde"))));
+    EXPECT_FALSE(Utils::IsTheSame(stringProperty, intProperty));
+    EXPECT_FALSE(Utils::IsTheSame(stringProperty, doubleProperty));
+    EXPECT_FALSE(Utils::IsTheSame(stringProperty, vectorProperty));
 
-//    // comparing custom variants (should be always false)
-//    ExternalProperty p1, p2;
-//    EXPECT_FALSE(Utils::IsTheSame(p1.variant(), p2.variant()));
-//    EXPECT_FALSE(Utils::IsTheSame(p1.variant(), QVariant::fromValue(42.0)));
-
-//    ComboProperty c1, c2;
-//    EXPECT_FALSE(Utils::IsTheSame(c1.variant(), c2.variant()));
-//    EXPECT_FALSE(Utils::IsTheSame(c1.variant(), QVariant::fromValue(42.0)));
-
-//    EXPECT_FALSE(Utils::IsTheSame(p1.variant(), c1.variant()));
+    // vector variant
+    std::vector<double> vec2 {1, 2, 3}, vec3{1, 1};
+    EXPECT_TRUE(Utils::IsTheSame(vectorProperty, vectorProperty));
+    EXPECT_FALSE(Utils::IsTheSame(vectorProperty, QVariant::fromValue(vec2)));
+    EXPECT_FALSE(Utils::IsTheSame(vectorProperty, QVariant::fromValue(vec3)));
+    EXPECT_FALSE(Utils::IsTheSame(vectorProperty, undefined));
+    EXPECT_FALSE(Utils::IsTheSame(vectorProperty, QVariant::fromValue(43.0)));
+    EXPECT_FALSE(Utils::IsTheSame(vectorProperty, intProperty));
+    EXPECT_FALSE(Utils::IsTheSame(vectorProperty, doubleProperty));
+    EXPECT_FALSE(Utils::IsTheSame(vectorProperty, stringProperty));
 }

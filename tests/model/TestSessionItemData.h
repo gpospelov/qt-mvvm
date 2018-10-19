@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include "sessionitemdata.h"
+#include "model_types.h"
 
 //! Test of SessionItemData.
 
@@ -22,11 +23,11 @@ TEST_F(TestSessionItemData, initialState)
 
 //! Basic setData, data operations.
 
-TEST_F(TestSessionItemData, setData)
+TEST_F(TestSessionItemData, setDataDouble)
 {
     SessionItemData data;
 
-    const int role(1);
+    const int role(ItemDataRole::DATA);
     const QVariant variant(42.0);
 
     // setting variant for role
@@ -45,7 +46,7 @@ TEST_F(TestSessionItemData, setData)
     EXPECT_EQ(data.roles(), expected);
     EXPECT_TRUE(data.data(role) == QVariant(43.0));
 
-    // setting invalid variant for the role
+    // setting invalid variant for the role will remove data
     EXPECT_TRUE(data.setData(QVariant(), role));
     EXPECT_TRUE(data.roles().empty());
     EXPECT_FALSE(data.data(role).isValid());
