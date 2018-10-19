@@ -114,7 +114,7 @@ TEST_F(TestUndoRedo, setData)
 {
     const model_type modelType("abc");
 
-    const int role = Qt::DisplayRole;
+    const int role = ItemDataRole::DATA;
     SessionModel model;
     model.setUndoRedoEnabled(true);
     auto stack = model.undoStack();
@@ -155,7 +155,7 @@ TEST_F(TestUndoRedo, setData)
 
 TEST_F(TestUndoRedo, setDataThroughItem)
 {
-    const int role(0);
+    const int role = ItemDataRole::DATA;
     const QVariant value(42.0);
 
     SessionModel model;
@@ -187,7 +187,7 @@ TEST_F(TestUndoRedo, insertAndSetData)
 {
     const model_type modelType("abc");
 
-    const int role = Qt::DisplayRole;
+    const int role = ItemDataRole::DATA;
     SessionModel model;
     model.setUndoRedoEnabled(true);
     auto stack = model.undoStack();
@@ -224,7 +224,7 @@ TEST_F(TestUndoRedo, insertAndSetData)
 
 TEST_F(TestUndoRedo, removeRow)
 {
-    const int role = 0;
+    const int role = ItemDataRole::DATA;
     const QVariant data(42);
 
     SessionModel model;

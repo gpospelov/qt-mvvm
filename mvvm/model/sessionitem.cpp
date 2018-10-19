@@ -11,6 +11,7 @@
 #include "sessionmodel.h"
 #include "itemmanager.h"
 #include "itempool.h"
+#include "customvariants.h"
 #include <stdexcept>
 #include <iterator>
 
@@ -124,8 +125,16 @@ SessionItem* SessionItem::takeRow(int row)
 
 void SessionItem::register_item(std::shared_ptr<ItemPool> item_pool)
 {
-    item_pool->register_item(this);
-    m_item_pool = item_pool;
+    if (item_pool) {
+        auto key = item_pool->register_item(this);
+        m_item_pool = item_pool;
+        setDataIntern(QVariant::fromValue(key), ItemDataRole::IDENTIFIER);
+    }
+}
+
+std::vector<int> SessionItem::roles() const
+{
+    return m_data.roles();
 }
 
 void SessionItem::setParent(SessionItem* parent)

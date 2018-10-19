@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include "sessionitem.h"
+#include "itempool.h"
 #include <memory>
 
 class TestSessionItem : public ::testing::Test
@@ -21,6 +22,7 @@ TEST_F(TestSessionItem, initialState)
     EXPECT_FALSE(item.data(role).isValid());
     EXPECT_TRUE(item.children().empty());
     EXPECT_TRUE(item.modelType().empty());
+    EXPECT_TRUE(item.roles().empty());
 }
 
 TEST_F(TestSessionItem, value)
@@ -32,6 +34,7 @@ TEST_F(TestSessionItem, value)
 
     QVariant expected(42.0);
     EXPECT_TRUE(item.setData(expected, role));
+    EXPECT_EQ(item.roles().size(), 1);
     EXPECT_EQ(item.data(role), expected);
 
     SessionItem item2("Layer");
@@ -141,3 +144,26 @@ TEST_F(TestSessionItem, takeRow)
 
     delete taken;
 }
+
+//! Item registration in a pool.
+
+TEST_F(TestSessionItem, registerItem)
+{
+    std::unique_ptr<SessionItem> item(new SessionItem);
+    std::shared_ptr<ItemPool> pool;
+
+    EXPECT_TRUE(item->roles().empty());
+
+    // registering item on unexisting pool
+    item->register_item(pool);
+    EXPECT_TRUE(item->roles().empty());
+
+    // creating pool
+    pool.reset(new ItemPool);
+    item->register_item(pool);
+    auto key = pool->key_for_item(item.get());
+    std::vector<int> expected_roles = {ItemDataRole::IDENTIFIER};
+    EXPECT_EQ(item->roles(), expected_roles);
+    EXPECT_EQ(item->data(ItemDataRole::IDENTIFIER).value<std::string>(), key);
+}
+

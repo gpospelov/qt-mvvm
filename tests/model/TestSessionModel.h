@@ -48,7 +48,7 @@ TEST_F(TestSessionModel, insertNewItem)
 TEST_F(TestSessionModel, setData)
 {
     SessionModel model;
-    const int role = Qt::DisplayRole;
+    const int role = ItemDataRole::DISPLAY;
 
     // inserting single item
     auto item = model.insertNewItem("abc");

@@ -7,12 +7,20 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVMTYPES_H
-#define MVVMTYPES_H
+#ifndef MODELTYPES_H
+#define MODELTYPES_H
 
 #include <string>
 
 using identifier_type = std::string;
 using model_type = std::string;
+
+//! Defines constants to be used as SessionItem data role.
+
+namespace ItemDataRole {
+const int IDENTIFIER = 0;
+const int DATA = 1;
+const int DISPLAY = 2;
+};
 
 #endif

@@ -51,6 +51,8 @@ public:
 
     void register_item(std::shared_ptr<ItemPool> item_pool);
 
+    std::vector<int> roles() const;
+
 private:
     void setParent(SessionItem* parent);
     void setModel(SessionModel* model);

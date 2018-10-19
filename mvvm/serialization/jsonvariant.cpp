@@ -8,11 +8,11 @@
 // ************************************************************************** //
 
 #include "jsonvariant.h"
+#include "customvariants.h"
 #include <QJsonObject>
 #include <QJsonArray>
 #include <stdexcept>
 #include <sstream>
-#include <customvariants.h>
 
 const QString JsonVariant::variantTypeKey = "type";
 const QString JsonVariant::variantValueKey = "value";
