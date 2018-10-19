@@ -33,7 +33,7 @@ public:
 
     size_t size() const;
 
-    key_type register_item(SessionItem* item);
+    key_type register_item(SessionItem* item, key_type = {});
     void deregister_item(SessionItem* item);
 
     key_type key_for_item(SessionItem* item) const;

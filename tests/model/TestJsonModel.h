@@ -3,8 +3,10 @@
 #include "jsonmodel.h"
 #include "sessionitem.h"
 #include "test_utils.h"
+#include "itemmanager.h"
 #include <QJsonObject>
 #include <QJsonArray>
+#include <QDebug>
 
 //! Checks JsonModel class and its ability to convert SessionModel to json and back.
 
@@ -222,4 +224,36 @@ TEST_F(TestJsonModel, parentAndChildModelFromJson)
     auto child2 = parent2->childAt(0);
     EXPECT_EQ(child2->childrenCount(), 0u);
     EXPECT_EQ(child2->modelType(), "Layer");
+}
+
+//! Item in a model to json and back: how persistent are identifiers.
+
+TEST_F(TestJsonModel, identifiers)
+{
+    // creating model and converting it to json
+    SessionModel source("SourceModel");
+    auto parent1 = source.insertNewItem("MultiLayer");
+    QJsonObject json_source;
+    source.manager()->converter().model_to_json(source, json_source);
+
+    // creating source and filling it from json
+    SessionModel target("SourceModel");
+    target.manager()->converter().json_to_model(json_source, target);
+    auto parent2 = target.rootItem()->childAt(0);
+
+    // comparing identifiers of two items from different models
+    auto id1 = parent1->data(ItemDataRole::IDENTIFIER).value<std::string>();
+    auto id2 = parent2->data(ItemDataRole::IDENTIFIER).value<std::string>();
+    EXPECT_EQ(id1, id2);
+
+    // saving target in its own json
+    QJsonObject json_target;
+    target.manager()->converter().model_to_json(target, json_target);
+
+    // comparing text representations of two json
+    EXPECT_EQ(TestUtils::JsonToString(json_source), TestUtils::JsonToString(json_target));
+
+    // checking item registrations
+    EXPECT_EQ(source.manager()->findItem(id1), parent1);
+    EXPECT_EQ(target.manager()->findItem(id2), parent2);
 }

@@ -128,9 +128,9 @@ void SessionItem::register_item(std::shared_ptr<ItemPool> item_pool)
 {
     if (item_pool) {
         auto key = item_pool->register_item(this);
-        m_item_pool = item_pool;
         setDataIntern(QVariant::fromValue(key), ItemDataRole::IDENTIFIER);
     }
+    m_item_pool = item_pool;
 }
 
 std::vector<int> SessionItem::roles() const

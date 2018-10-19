@@ -22,16 +22,21 @@ size_t ItemPool::size() const
     return m_key_to_item.size();
 }
 
-ItemPool::key_type ItemPool::register_item(SessionItem* item)
+ItemPool::key_type ItemPool::register_item(SessionItem* item, key_type key)
 
 {
     if (m_item_to_key.find(item) != m_item_to_key.end())
         throw std::runtime_error("ItemPool::register_item() -> Attempt to register already "
                                  "registered item.");
 
-    auto key = generate_key();
-    while (m_key_to_item.find(key) != m_key_to_item.end())
-        key = generate_key(); // preventing improbably duplicates
+    if (key.empty()) {
+        key = generate_key();
+        while (m_key_to_item.find(key) != m_key_to_item.end())
+            key = generate_key(); // preventing improbable duplicates
+    } else {
+        if (m_key_to_item.find(key) != m_key_to_item.end())
+            throw std::runtime_error(" ItemPool::register_item() -> Attempt to reuse existing key");
+    }
 
     m_key_to_item.insert(std::make_pair(key, item));
     m_item_to_key.insert(std::make_pair(item, key));

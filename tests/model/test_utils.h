@@ -33,6 +33,8 @@ void SaveJson(const QJsonObject& object, const QString& fileName);
 
 void SaveJson(const QJsonArray& object, const QString& fileName);
 
+QString JsonToString(const QJsonObject& object);
+
 }
 
 #endif

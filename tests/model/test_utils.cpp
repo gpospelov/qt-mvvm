@@ -47,6 +47,13 @@ void TestUtils::SaveJson(const QJsonArray& object, const QString& fileName)
     SaveDocument(document, fileName);
 }
 
+QString TestUtils::JsonToString(const QJsonObject& object)
+{
+    QJsonDocument document(object);
+    return QString(document.toJson(QJsonDocument::Compact));
+}
+
+
 namespace {
 
 void SaveDocument(const QJsonDocument& document, const QString& fileName)
@@ -60,3 +67,4 @@ void SaveDocument(const QJsonDocument& document, const QString& fileName)
 }
 
 }
+

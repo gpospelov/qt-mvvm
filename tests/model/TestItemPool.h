@@ -111,3 +111,20 @@ TEST_F(TestItemPool, poolTimeOfLife)
 
     EXPECT_NO_THROW(delete item);
 }
+
+//!Providing custom key.
+
+TEST_F(TestItemPool, customKey)
+{
+    std::shared_ptr<ItemPool> pool(new ItemPool);
+    EXPECT_EQ(pool.use_count(), 1l);
+
+    // explicit item registration
+    const identifier_type id("abc-cde-fgh");
+    auto item = new SessionItem;
+    pool->register_item(item, id);
+
+    // attempt to reuse key again
+    std::unique_ptr<SessionItem> item2(new SessionItem);
+    EXPECT_THROW(pool->register_item(item2.get(), id), std::runtime_error);
+}

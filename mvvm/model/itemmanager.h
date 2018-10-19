@@ -40,6 +40,8 @@ public:
 
     const JsonModelInterface& converter() const;
 
+    void fix_registration(SessionItem* item, identifier_type id);
+
 private:
     std::shared_ptr<ItemPool> m_item_pool;
     std::unique_ptr<ItemFactoryInterface> m_item_factory;

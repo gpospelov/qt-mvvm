@@ -12,6 +12,9 @@
 #include "sessionmodel.h"
 #include "sessionitem.h"
 #include "itemutils.h"
+#include "itemmanager.h"
+#include "customvariants.h"
+#include "model_types.h"
 #include <QSet>
 #include <QJsonObject>
 #include <QJsonArray>
@@ -100,6 +103,10 @@ void JsonModel::json_to_item(const QJsonObject& json, SessionItem* parent, int r
 
     auto itemData = m_itemdata_converter->get_data(json[itemDataKey].toArray());
     item->m_data = itemData;
+
+    // FIXME find more elegant way to replace item registration
+    identifier_type identifier = itemData.data(ItemDataRole::IDENTIFIER).value<std::string>();
+    parent->model()->manager()->fix_registration(item, identifier);
 
     parent = item;
     for(const auto ref : json[itemsKey].toArray())

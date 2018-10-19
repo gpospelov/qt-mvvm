@@ -63,3 +63,11 @@ const JsonModelInterface& ItemManager::converter() const
 {
     return *m_converter.get();
 }
+
+//! Replacing existing registration in item pool with new id.
+
+void ItemManager::fix_registration(SessionItem* item, identifier_type id)
+{
+    m_item_pool->deregister_item(item);
+    m_item_pool->register_item(item, id);
+}
