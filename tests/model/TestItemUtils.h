@@ -156,19 +156,19 @@ TEST_F(TestItemUtils, CompatibleVariantTypes)
     EXPECT_TRUE(Utils::CompatibleVariantTypes(undefined, vectorProperty));
 
     EXPECT_TRUE(Utils::CompatibleVariantTypes(intProperty, intProperty));
-    EXPECT_FALSE(Utils::CompatibleVariantTypes(intProperty, undefined));
+    EXPECT_TRUE(Utils::CompatibleVariantTypes(intProperty, undefined));
     EXPECT_FALSE(Utils::CompatibleVariantTypes(intProperty, doubleProperty));
     EXPECT_FALSE(Utils::CompatibleVariantTypes(intProperty, stringProperty));
     EXPECT_FALSE(Utils::CompatibleVariantTypes(intProperty, vectorProperty));
 
     EXPECT_TRUE(Utils::CompatibleVariantTypes(doubleProperty, doubleProperty));
-    EXPECT_FALSE(Utils::CompatibleVariantTypes(doubleProperty, undefined));
+    EXPECT_TRUE(Utils::CompatibleVariantTypes(doubleProperty, undefined));
     EXPECT_FALSE(Utils::CompatibleVariantTypes(doubleProperty, stringProperty));
     EXPECT_FALSE(Utils::CompatibleVariantTypes(doubleProperty, intProperty));
     EXPECT_FALSE(Utils::CompatibleVariantTypes(doubleProperty, vectorProperty));
 
     EXPECT_TRUE(Utils::CompatibleVariantTypes(stringProperty, stringProperty));
-    EXPECT_FALSE(Utils::CompatibleVariantTypes(stringProperty, undefined));
+    EXPECT_TRUE(Utils::CompatibleVariantTypes(stringProperty, undefined));
     EXPECT_FALSE(Utils::CompatibleVariantTypes(stringProperty, intProperty));
     EXPECT_FALSE(Utils::CompatibleVariantTypes(stringProperty, doubleProperty));
     EXPECT_FALSE(Utils::CompatibleVariantTypes(stringProperty, vectorProperty));

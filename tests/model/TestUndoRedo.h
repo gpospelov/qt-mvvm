@@ -76,14 +76,13 @@ TEST_F(TestUndoRedo, insertNewItem)
 
 TEST_F(TestUndoRedo, insertParentAndChild)
 {
-
     SessionModel model;
     model.setUndoRedoEnabled(true);
     auto stack = model.undoStack();
 
     auto parent = model.insertNewItem("MultiLayer1");
-    auto child0 = model.insertNewItem("Layer0", parent);
-    auto child1 = model.insertNewItem("Layer1", parent);
+    model.insertNewItem("Layer0", parent);
+    model.insertNewItem("Layer1", parent);
 
     // state of the stack after insertion of 3 items
     EXPECT_EQ(stack->count(), 3);
@@ -180,7 +179,6 @@ TEST_F(TestUndoRedo, setDataThroughItem)
     EXPECT_FALSE(model.data(item, role).isValid());
 }
 
-
 //! Checks if we insert item, set data and undo everything we can get back to the data.
 
 TEST_F(TestUndoRedo, insertAndSetData)
@@ -262,7 +260,7 @@ TEST_F(TestUndoRedo, removeRow)
 
 TEST_F(TestUndoRedo, removeParentAndChild)
 {
-    const int role1(0), role2(1);
+    const int role1(ItemDataRole::DATA), role2(ItemDataRole::DISPLAY);
     const QVariant data1(42), data2(43);
 
     SessionModel model;

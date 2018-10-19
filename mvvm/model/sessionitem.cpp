@@ -11,6 +11,7 @@
 #include "sessionmodel.h"
 #include "itemmanager.h"
 #include "itempool.h"
+#include "itemutils.h"
 #include "customvariants.h"
 #include <stdexcept>
 #include <iterator>
@@ -41,12 +42,12 @@ model_type SessionItem::modelType() const
     return m_modelType;
 }
 
-bool SessionItem::setData(const QVariant& data, int role)
+bool SessionItem::setData(const QVariant& variant, int role)
 {
     if (m_model)
-        return m_model->setData(this, data, role); // to use undo/redo
+        return m_model->setData(this, variant, role); // to use undo/redo
     else
-        return setDataIntern(data, role);
+        return setDataIntern(variant, role);
 }
 
 QVariant SessionItem::data(int role) const
@@ -157,7 +158,10 @@ void SessionItem::childDeleted(SessionItem* child)
     m_children[static_cast<size_t>(index)] = nullptr;
 }
 
-bool SessionItem::setDataIntern(const QVariant& data, int role)
+bool SessionItem::setDataIntern(const QVariant& variant, int role)
 {
-    return m_data.setData(data, role);
+    if (!Utils::CompatibleVariantTypes(data(role), variant))
+        throw std::runtime_error("SessionItem::setDataIntern() -> Error. Variant types mismatch");
+
+    return m_data.setData(variant, role);
 }

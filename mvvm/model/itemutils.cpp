@@ -45,13 +45,14 @@ int Utils::VariantType(const QVariant& variant)
 
 bool Utils::CompatibleVariantTypes(const QVariant& oldValue, const QVariant& newValue)
 {
-    // if oldValue is undefined than it is compatible with any value, otherwise newValue
-    // should have same variant type as oldValue
+    // Invalid variant can be rewritten by any variant.
+    // Valid Variant can be replaced by invalid variant.
+    // In other cases types of variants should coincide to be compatible.
 
-    if (oldValue.isValid())
-        return Utils::VariantType(oldValue) == Utils::VariantType(newValue);
-    else
+    if (!oldValue.isValid() || !newValue.isValid())
         return true;
+
+    return Utils::VariantType(oldValue) == Utils::VariantType(newValue);
 }
 
 bool Utils::IsTheSame(const QVariant& var1, const QVariant& var2)

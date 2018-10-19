@@ -14,7 +14,7 @@ TestSessionItem::~TestSessionItem() = default;
 TEST_F(TestSessionItem, initialState)
 {
     SessionItem item;
-    const int role = Qt::DisplayRole;
+    const int role = ItemDataRole::DATA;
 
     EXPECT_EQ(item.model(), nullptr);
     EXPECT_EQ(item.parent(), nullptr);
@@ -25,10 +25,16 @@ TEST_F(TestSessionItem, initialState)
     EXPECT_TRUE(item.roles().empty());
 }
 
-TEST_F(TestSessionItem, value)
+TEST_F(TestSessionItem, modelType)
+{
+    SessionItem item2("Layer");
+    EXPECT_EQ(item2.modelType(), "Layer");
+}
+
+TEST_F(TestSessionItem, setData)
 {
     SessionItem item;
-    const int role = Qt::DisplayRole;
+    const int role = ItemDataRole::DATA;
 
     EXPECT_FALSE(item.data(role).isValid());
 
@@ -37,8 +43,31 @@ TEST_F(TestSessionItem, value)
     EXPECT_EQ(item.roles().size(), 1);
     EXPECT_EQ(item.data(role), expected);
 
-    SessionItem item2("Layer");
-    EXPECT_EQ(item2.modelType(), "Layer");
+    // setting another value
+    EXPECT_TRUE(item.setData(QVariant::fromValue(43.0), role));
+    EXPECT_EQ(item.roles().size(), 1);
+    EXPECT_EQ(item.data(role), QVariant::fromValue(43.0));
+}
+
+//! Attempt to set the different Variant to already existing role.
+
+TEST_F(TestSessionItem, variantMismatch)
+{
+    SessionItem item;
+    const int role = ItemDataRole::DATA;
+    QVariant expected(42.0);
+
+    // setting data for the first time
+    EXPECT_TRUE(item.setData(expected, role));
+    EXPECT_EQ(item.roles().size(), 1);
+    EXPECT_EQ(item.data(role), expected);
+
+    // attempt to rewrite variant with another type
+    EXPECT_THROW(item.setData(QVariant::fromValue(std::string("abc")), role), std::runtime_error);
+
+    // removing value by passing invalid variant
+    EXPECT_NO_THROW(item.setData(QVariant(), role));
+    EXPECT_EQ(item.roles().size(), 0);
 }
 
 TEST_F(TestSessionItem, insertItem)

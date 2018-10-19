@@ -28,8 +28,8 @@ public:
 
     model_type modelType() const;
 
-    bool setData(const QVariant& data, int role);
-    bool setDataIntern(const QVariant& data, int role);
+    bool setData(const QVariant& variant, int role);
+    bool setDataIntern(const QVariant& variant, int role);
 
     QVariant data(int role) const;
 
