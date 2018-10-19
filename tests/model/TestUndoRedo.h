@@ -296,4 +296,32 @@ TEST_F(TestUndoRedo, removeParentAndChild)
     EXPECT_EQ(child->data(role2), data2);
 }
 
+//! Insert item, remove row, undo and check item id.
 
+TEST_F(TestUndoRedo, itemIdentifierOnRemove)
+{
+
+    SessionModel model;
+    model.setUndoRedoEnabled(true);
+    auto stack = model.undoStack();
+
+    auto parent = model.insertNewItem("MultiLayer");
+    identifier_type parent_id = parent->data(ItemDataRole::IDENTIFIER).value<std::string>();
+    auto child = model.insertNewItem("Layer", parent);
+    identifier_type child_id = child->data(ItemDataRole::IDENTIFIER).value<std::string>();
+
+    // removing parent
+    model.removeRow(model.rootItem(), 0);
+    EXPECT_EQ(stack->count(), 3);
+    EXPECT_EQ(stack->index(), 3);
+    EXPECT_EQ(model.rootItem()->childrenCount(), 0);
+
+    stack->undo();
+    parent = model.rootItem()->childAt(0);
+    child = parent->childAt(0);
+    identifier_type parent_id2 = parent->data(ItemDataRole::IDENTIFIER).value<std::string>();
+    identifier_type child_id2 = child->data(ItemDataRole::IDENTIFIER).value<std::string>();
+
+    EXPECT_EQ(parent_id, parent_id2);
+    EXPECT_EQ(child_id, child_id2);
+}
