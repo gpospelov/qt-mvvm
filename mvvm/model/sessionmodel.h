@@ -13,8 +13,8 @@
 #include <QVariant>
 #include <memory>
 #include <string>
+#include "model_types.h"
 #include "path.h"
-#include "mvvm_types.h"
 
 class SessionItem;
 class QUndoStack;

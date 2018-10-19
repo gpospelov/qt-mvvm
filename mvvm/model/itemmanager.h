@@ -12,7 +12,7 @@
 
 #include <string>
 #include <memory>
-#include "mvvm_types.h"
+#include "model_types.h"
 
 class SessionItem;
 class ItemPool;

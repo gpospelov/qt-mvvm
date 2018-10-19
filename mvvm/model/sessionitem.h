@@ -13,7 +13,7 @@
 #include <QVariant>
 #include <vector>
 #include <memory>
-#include "mvvm_types.h"
+#include "model_types.h"
 #include "sessionitemdata.h"
 
 class SessionModel;

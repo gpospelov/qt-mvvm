@@ -10,8 +10,8 @@
 #ifndef COMMANDS_H
 #define COMMANDS_H
 
+#include "model_types.h"
 #include "path.h"
-#include "mvvm_types.h"
 #include <QUndoCommand>
 #include <QVariant>
 #include <memory>

@@ -10,7 +10,7 @@
 #ifndef COMMANDSERVICE_H
 #define COMMANDSERVICE_H
 
-#include "mvvm_types.h"
+#include "model_types.h"
 #include <memory>
 
 class SessionModel;

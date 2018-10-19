@@ -11,7 +11,7 @@
 #define ITEMPOOL_H
 
 #include <map>
-#include "mvvm_types.h"
+#include "model_types.h"
 
 class SessionItem;
 

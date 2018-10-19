@@ -10,7 +10,7 @@
 #ifndef ITEMFACTORYINTERFACE_H
 #define ITEMFACTORYINTERFACE_H
 
-#include "mvvm_types.h"
+#include "model_types.h"
 
 class SessionItem;
 
