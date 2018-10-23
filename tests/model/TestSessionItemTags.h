@@ -23,8 +23,10 @@ TEST_F(TestSessionItemTags, registerTag)
 {
     SessionItemTags tags;
 
-    // registering tag
+    // registering tag    
     std::vector<std::string> expected = {ParticleType};
+    EXPECT_FALSE(tags.registerTag("", 0, 1, expected));
+
     EXPECT_TRUE(tags.registerTag("tag1", 0, 1, expected));
     EXPECT_TRUE(tags.isValid("tag1"));
     EXPECT_TRUE(tags.isValid("tag1", ParticleType));

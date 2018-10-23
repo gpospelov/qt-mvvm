@@ -14,6 +14,7 @@
 #include "itemutils.h"
 #include "customvariants.h"
 #include "sessionitemdata.h"
+#include "sessionitemtags.h"
 #include <stdexcept>
 #include <iterator>
 
@@ -21,6 +22,7 @@ SessionItem::SessionItem(const model_type& modelType)
     : m_parent(nullptr)
     , m_model(nullptr)
     , m_data(new SessionItemData)
+    , m_tags(new SessionItemTags)
     , m_modelType(modelType)
 {
 
@@ -91,6 +93,24 @@ bool SessionItem::insertItem(int row, SessionItem* item)
     m_children.insert(std::next(m_children.begin(), row), item);
 
     return true;
+}
+
+bool SessionItem::insertTagItem(int row, SessionItem* item, const std::string& tag)
+{
+    if (!item)
+        throw std::runtime_error("SessionItem::insertTagItem() -> Invalid item.");
+
+    if (item->parent())
+        throw std::runtime_error("SessionItem::insertItem() -> Existing parent.");
+
+    if (!m_tags->isValid(tag, item->modelType()))
+        throw std::runtime_error("SessionItem::insertTagItem() -> Invalid tag, modelType.");
+
+    int index = m_tags->insertIndexFromTagRow(tag, row);
+    if (index <0)
+        throw std::runtime_error("SessionItem::insertTagItem() -> Can't get insert index");
+
+    return insertItem(index, item);
 }
 
 std::vector<SessionItem*> SessionItem::children() const

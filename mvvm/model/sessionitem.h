@@ -18,6 +18,7 @@
 class SessionModel;
 class ItemPool;
 class SessionItemData;
+class SessionItemTags;
 
 class SessionItem {
     friend class SessionModel;
@@ -40,6 +41,7 @@ public:
     int childrenCount() const;
 
     bool insertItem(int row, SessionItem* item);
+    bool insertTagItem(int row, SessionItem* item, const std::string& tag);
 
     std::vector<SessionItem*> children() const;
 
@@ -63,6 +65,7 @@ private:
     std::vector<SessionItem*> m_children;
     std::weak_ptr<ItemPool> m_item_pool;
     std::unique_ptr<SessionItemData> m_data;
+    std::unique_ptr<SessionItemTags> m_tags;
     model_type m_modelType;
 };
 
