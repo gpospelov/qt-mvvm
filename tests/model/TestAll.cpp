@@ -12,6 +12,7 @@
 #include "TestSessionItemData.h"
 #include "TestJsonVariant.h"
 #include "TestJsonItemData.h"
+#include "TestSessionItemTags.h"
 #include <string>
 
 int main(int argc, char** argv) {
