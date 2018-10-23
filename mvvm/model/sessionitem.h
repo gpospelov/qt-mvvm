@@ -14,10 +14,10 @@
 #include <vector>
 #include <memory>
 #include "model_types.h"
-#include "sessionitemdata.h"
 
 class SessionModel;
 class ItemPool;
+class SessionItemData;
 
 class SessionItem {
     friend class SessionModel;
@@ -58,11 +58,11 @@ private:
     void setModel(SessionModel* model);
     void childDeleted(SessionItem* child);
 
-    SessionItemData m_data;
     SessionItem* m_parent;
     SessionModel* m_model;
     std::vector<SessionItem*> m_children;
     std::weak_ptr<ItemPool> m_item_pool;
+    std::unique_ptr<SessionItemData> m_data;
     model_type m_modelType;
 };
 

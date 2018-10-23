@@ -13,12 +13,14 @@
 #include "itempool.h"
 #include "itemutils.h"
 #include "customvariants.h"
+#include "sessionitemdata.h"
 #include <stdexcept>
 #include <iterator>
 
 SessionItem::SessionItem(const model_type& modelType)
     : m_parent(nullptr)
     , m_model(nullptr)
+    , m_data(new SessionItemData)
     , m_modelType(modelType)
 {
 
@@ -52,7 +54,7 @@ bool SessionItem::setData(const QVariant& variant, int role)
 
 QVariant SessionItem::data(int role) const
 {
-    return m_data.data(role);
+    return m_data->data(role);
 }
 
 SessionModel* SessionItem::model() const
@@ -135,7 +137,7 @@ void SessionItem::register_item(std::shared_ptr<ItemPool> item_pool)
 
 std::vector<int> SessionItem::roles() const
 {
-    return m_data.roles();
+    return m_data->roles();
 }
 
 void SessionItem::setParent(SessionItem* parent)
@@ -163,5 +165,5 @@ bool SessionItem::setDataIntern(const QVariant& variant, int role)
     if (!Utils::CompatibleVariantTypes(data(role), variant))
         throw std::runtime_error("SessionItem::setDataIntern() -> Error. Variant types mismatch");
 
-    return m_data.setData(variant, role);
+    return m_data->setData(variant, role);
 }

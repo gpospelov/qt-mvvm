@@ -88,7 +88,7 @@ int SessionItemTags::tagStartIndex(const std::string& tagName) const
             index += tag.childCount;
     }
 
-    throw std::runtime_error("SessionItemTags::tagStartIndex() -> Error. Can';t find start index");
+    throw std::runtime_error("SessionItemTags::tagStartIndex() -> Error. Can't find start index");
 }
 
 //! Returns index in SessionItem's m_children corresponding to given row in tagName.
