@@ -10,6 +10,8 @@
 #include "sessionitemdata.h"
 #include "itemutils.h"
 
+using namespace ModelView;
+
 std::vector<int> SessionItemData::roles() const
 {
     std::vector<int> result;

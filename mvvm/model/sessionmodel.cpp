@@ -14,6 +14,8 @@
 #include "commandservice.h"
 #include "itempool.h"
 
+using namespace ModelView;
+
 SessionModel::SessionModel(const std::string& model_type)
     : m_root_item(nullptr)
     , m_commands(new CommandService(this))

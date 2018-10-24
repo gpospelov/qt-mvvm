@@ -11,6 +11,8 @@
 #include <QUuid>
 #include <stdexcept>
 
+using namespace ModelView;
+
 ItemPool::key_type ItemPool::generate_key()
 {
     return  QUuid::createUuid().toString().toStdString();

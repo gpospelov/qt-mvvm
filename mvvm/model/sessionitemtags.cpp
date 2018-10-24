@@ -24,6 +24,8 @@ template <typename A, typename B> bool contains(const A& container, const B& ele
 }
 }
 
+using namespace ModelView;
+
 SessionItemTags::TagInfo::TagInfo() : min(0), max(-1), childCount(0)
 {
 }

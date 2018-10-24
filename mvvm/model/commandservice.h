@@ -13,11 +13,14 @@
 #include "model_types.h"
 #include <memory>
 
-class SessionModel;
 class QUndoStack;
 class QUndoCommand;
-class SessionItem;
 class QVariant;
+
+namespace ModelView {
+
+class SessionModel;
+class SessionItem;
 
 //! Provides undo/redo for all commands of SessionModel.
 
@@ -46,5 +49,7 @@ private:
     std::unique_ptr<QUndoStack> m_commands;
     bool m_pause_record;
 };
+
+}  // namespace ModelView
 
 #endif

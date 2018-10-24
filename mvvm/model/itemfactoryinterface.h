@@ -12,6 +12,8 @@
 
 #include "model_types.h"
 
+namespace ModelView {
+
 class SessionItem;
 
 //! Interface class for all factories capable of producing SessionItem's.
@@ -25,5 +27,7 @@ public:
     virtual SessionItem* createEmptyItem() = 0;
 
 };
+
+}  // namespace ModelView
 
 #endif

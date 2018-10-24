@@ -12,6 +12,8 @@
 #include <QFileInfo>
 #include <stdexcept>
 
+using namespace ModelView;
+
 void Utils::create_dir(const std::string& dir_name)
 {
     if (Utils::exists(dir_name))

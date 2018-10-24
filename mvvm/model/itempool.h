@@ -13,6 +13,8 @@
 #include <map>
 #include "model_types.h"
 
+namespace ModelView {
+
 class SessionItem;
 
 //! Provides registration of SessionItem pointers and their unique identifiers
@@ -44,5 +46,7 @@ private:
     std::map<key_type, SessionItem*> m_key_to_item;
     std::map<SessionItem*, key_type> m_item_to_key;
 };
+
+}  // namespace ModelView
 
 #endif

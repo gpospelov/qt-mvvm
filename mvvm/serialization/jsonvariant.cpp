@@ -14,6 +14,8 @@
 #include <stdexcept>
 #include <sstream>
 
+using namespace ModelView;
+
 const QString JsonVariant::variantTypeKey = "type";
 const QString JsonVariant::variantValueKey = "value";
 const QString JsonVariant::invalid_type_name = "invalid";

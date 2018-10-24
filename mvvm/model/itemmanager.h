@@ -14,6 +14,8 @@
 #include <memory>
 #include "model_types.h"
 
+namespace ModelView {
+
 class SessionItem;
 class ItemPool;
 class ItemFactoryInterface;
@@ -47,5 +49,7 @@ private:
     std::unique_ptr<ItemFactoryInterface> m_item_factory;
     std::unique_ptr<JsonModelInterface> m_converter;
 };
+
+}  // namespace ModelView
 
 #endif

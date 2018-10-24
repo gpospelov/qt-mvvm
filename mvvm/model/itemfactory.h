@@ -12,6 +12,8 @@
 
 #include "itemfactoryinterface.h"
 
+namespace ModelView {
+
 //! Default SessionItem factory.
 
 class ItemFactory : public ItemFactoryInterface
@@ -24,5 +26,7 @@ public:
     SessionItem* createEmptyItem();
 
 };
+
+}  // namespace ModelView
 
 #endif

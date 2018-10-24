@@ -12,6 +12,8 @@
 
 #include <QVariant>
 
+namespace ModelView {
+
 //! Represents pair of data,role for SessionItemData.
 
 class DataRole
@@ -22,5 +24,7 @@ public:
     int m_role;
     bool operator==(const DataRole& other) const;
 };
+
+}  // namespace ModelView
 
 #endif

@@ -15,8 +15,11 @@
 #include <QString>
 #include <memory>
 
-class SessionModel;
 class QJsonObject;
+
+namespace ModelView {
+
+class SessionModel;
 class SessionItem;
 class JsonItemDataInterface;
 
@@ -51,5 +54,7 @@ public:
 private:
     std::unique_ptr<JsonItemDataInterface> m_itemdata_converter;
 };
+
+}  // namespace ModelView
 
 #endif

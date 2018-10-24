@@ -13,6 +13,8 @@
 #include "sessionitem.h"
 #include <QUndoStack>
 
+using namespace ModelView;
+
 CommandService::CommandService(SessionModel* model)
     : m_model(model)
 {

@@ -14,6 +14,8 @@
 #include <QJsonObject>
 #include <stdexcept>
 
+using namespace ModelView;
+
 const QString JsonItemData::roleKey = "role";
 const QString JsonItemData::variantKey = "variant";
 

@@ -16,9 +16,12 @@
 #include <QVariant>
 #include <memory>
 
+class QJsonObject;
+
+namespace ModelView {
+
 class SessionModel;
 class SessionItem;
-class QJsonObject;
 
 //! Command for unddo/redo framework to set the data of SessionItem.
 
@@ -70,5 +73,7 @@ private:
     std::unique_ptr<QJsonObject> m_child_backup;
     SessionModel* m_model;
 };
+
+}  // namespace ModelView
 
 #endif

@@ -10,6 +10,8 @@
 #include "datarole.h"
 #include "itemutils.h"
 
+using namespace ModelView;
+
 DataRole::DataRole(const QVariant& data, int role) : m_data(data), m_role(role)
 {
 }

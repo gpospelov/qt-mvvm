@@ -14,6 +14,8 @@
 #include "jsonconverterinterfaces.h"
 #include "jsonmodel.h"
 
+using namespace ModelView;
+
 ItemManager::ItemManager()
     : m_item_factory(new ItemFactory)
     , m_converter(new JsonModel)

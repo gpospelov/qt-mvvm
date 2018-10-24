@@ -13,6 +13,8 @@
 #include <vector>
 #include <string>
 
+namespace ModelView {
+
 //! Provides navigation through SessionModel.
 //! Contains chain of row indexes which has to be used to reach desired SessionItem starting
 //! from root item.
@@ -45,5 +47,7 @@ public:
 private:
     container_t m_data;
 };
+
+}  // namespace ModelView
 
 #endif

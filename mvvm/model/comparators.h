@@ -10,6 +10,8 @@
 #ifndef COMPARATORS_H
 #define COMPARATORS_H
 
+namespace ModelView {
+
 //! Helper class to register variant comparators.
 
 class Comparators
@@ -21,5 +23,7 @@ public:
 private:
     static bool m_is_registered;
 };
+
+}  // namespace ModelView
 
 #endif

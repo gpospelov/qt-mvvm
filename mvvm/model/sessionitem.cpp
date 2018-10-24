@@ -18,6 +18,8 @@
 #include <stdexcept>
 #include <iterator>
 
+using namespace ModelView;
+
 SessionItem::SessionItem(const model_type& modelType)
     : m_parent(nullptr)
     , m_model(nullptr)

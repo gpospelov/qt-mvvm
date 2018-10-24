@@ -12,6 +12,8 @@
 #include <algorithm>
 #include <iterator>
 
+using namespace ModelView;
+
 Path Path::fromString(const std::string& str)
 {
     Path result;

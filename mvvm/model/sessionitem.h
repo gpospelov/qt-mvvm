@@ -15,6 +15,8 @@
 #include <memory>
 #include "model_types.h"
 
+namespace ModelView {
+
 class SessionModel;
 class ItemPool;
 class SessionItemData;
@@ -68,5 +70,7 @@ private:
     std::unique_ptr<SessionItemTags> m_tags;
     model_type m_modelType;
 };
+
+}  // namespace ModelView
 
 #endif

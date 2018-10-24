@@ -21,6 +21,8 @@
 #include <QJsonArray>
 #include <stdexcept>
 
+using namespace ModelView;
+
 namespace {
 QStringList expected_item_keys() {
     QStringList result = QStringList() << JsonModel::modelKey << JsonModel::itemDataKey

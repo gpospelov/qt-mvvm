@@ -13,6 +13,8 @@
 #include <string>
 #include <vector>
 
+namespace ModelView {
+
 //! Holds all tag info for SessionItem.
 
 class SessionItemTags
@@ -59,5 +61,7 @@ private:
 
     std::vector<TagInfo> m_tags;
 };
+
+}  // namespace ModelView
 
 #endif //  SESSIONITEMTAGS_H

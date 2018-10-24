@@ -17,6 +17,8 @@
 
 class QJsonObject;
 
+namespace ModelView {
+
 //! Default converter of SessionItemData to/from json object.
 
 class JsonItemData : public JsonItemDataInterface
@@ -42,5 +44,7 @@ private:
     //!< List of roles to filter while writing to json.
     std::vector<int> m_roles_to_filter;
 };
+
+}  // namespace ModelView
 
 #endif

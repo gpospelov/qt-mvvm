@@ -14,6 +14,8 @@
 #include "itemmanager.h"
 #include <QJsonObject>
 
+using namespace ModelView;
+
 SetValueCommand::SetValueCommand(SessionItem* item, const QVariant& value, int role)
     : m_value(value)
     , m_role(role)

@@ -2,6 +2,8 @@
 #include "customvariants.h"
 #include <QMetaType>
 
+using namespace ModelView;
+
 bool Comparators::m_is_registered = false;
 
 void Comparators::registerComparators()

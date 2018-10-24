@@ -12,6 +12,8 @@
 
 #include <string>
 
+namespace ModelView {
+
 using identifier_type = std::string;
 using model_type = std::string;
 
@@ -22,5 +24,7 @@ const int IDENTIFIER = 0;
 const int DATA = 1;
 const int DISPLAY = 2;
 };
+
+}  // namespace ModelView
 
 #endif

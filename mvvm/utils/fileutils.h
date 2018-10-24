@@ -12,6 +12,8 @@
 
 #include <string>
 
+namespace ModelView {
+
 namespace Utils {
 
 //! Returns true if file exists.
@@ -29,6 +31,8 @@ void create_subdir(const std::string& parentName, const std::string& subdirName)
 //! to the parent (working directory of the executable).
 bool removeRecursively(const std::string& dirname);
 
-}
+}  // namespace Utils
+
+}  // namespace ModelView
 
 #endif

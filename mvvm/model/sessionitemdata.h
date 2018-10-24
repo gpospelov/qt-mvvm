@@ -14,6 +14,8 @@
 #include <vector>
 #include "datarole.h"
 
+namespace ModelView {
+
 //! Handles data roles for SessionItem.
 
 class SessionItemData
@@ -34,5 +36,7 @@ public:
 private:
     container_type m_values;
 };
+
+}  // namespace ModelView
 
 #endif

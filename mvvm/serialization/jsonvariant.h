@@ -14,6 +14,8 @@
 #include <QJsonObject>
 #include <QVariant>
 
+namespace ModelView {
+
 class JsonVariant : public JsonVariantInterface {
 public:
 
@@ -29,5 +31,7 @@ public:
 
     QVariant get_variant(const QJsonObject& object) override;
 };
+
+}  // namespace ModelView
 
 #endif

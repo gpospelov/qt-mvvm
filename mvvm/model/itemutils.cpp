@@ -10,6 +10,8 @@
 #include "itemutils.h"
 #include "sessionitem.h"
 
+using namespace ModelView;
+
 void Utils::iterate(const SessionItem* item, const std::function<void(const SessionItem*)>& fun)
 {
     if (item)

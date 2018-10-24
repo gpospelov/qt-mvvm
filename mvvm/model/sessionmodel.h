@@ -16,8 +16,11 @@
 #include "model_types.h"
 #include "path.h"
 
-class SessionItem;
 class QUndoStack;
+
+namespace ModelView {
+
+class SessionItem;
 class ItemManager;
 class CommandService;
 
@@ -58,5 +61,7 @@ private:
     std::unique_ptr<ItemManager> m_item_manager;
     std::string m_model_type;
 };
+
+}  // namespace ModelView
 
 #endif

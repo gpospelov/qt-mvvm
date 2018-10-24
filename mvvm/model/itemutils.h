@@ -13,6 +13,9 @@
 #include <functional>
 
 class QVariant;
+
+namespace ModelView {
+
 class SessionItem;
 
 namespace Utils
@@ -34,6 +37,8 @@ bool CompatibleVariantTypes(const QVariant& oldValue, const QVariant& newValue);
 //! Returns true if given variants have same type and value.
 bool IsTheSame(const QVariant& var1, const QVariant& var2);
 
-}
+}  // namespace Utils
+
+}  // namespace ModelView
 
 #endif

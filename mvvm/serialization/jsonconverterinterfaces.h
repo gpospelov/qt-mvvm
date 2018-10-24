@@ -10,10 +10,13 @@
 #ifndef JSONCONVERTERINTERFACES_H
 #define JSONCONVERTERINTERFACES_H
 
-//! Base class for all supported converters of QVariant to/from json object
-
 class QJsonObject;
 class QVariant;
+class QJsonArray;
+
+namespace ModelView {
+
+//! Base class for all supported converters of QVariant to/from json object
 
 class JsonVariantInterface
 {
@@ -28,7 +31,6 @@ public:
 //! Base class for all converters of SessionItemData to/from json object
 
 class SessionItemData;
-class QJsonArray;
 
 class JsonItemDataInterface
 {
@@ -59,5 +61,7 @@ public:
     virtual void item_to_json(const SessionItem* item, QJsonObject& json) const = 0;
 
 };
+
+}  // namespace ModelView
 
 #endif

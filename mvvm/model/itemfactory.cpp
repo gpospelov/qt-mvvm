@@ -10,6 +10,8 @@
 #include "itemfactory.h"
 #include "sessionitem.h"
 
+using namespace ModelView;
+
 ItemFactory::ItemFactory()
 {
 
