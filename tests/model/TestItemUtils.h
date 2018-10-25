@@ -5,6 +5,8 @@
 #include "customvariants.h"
 #include <memory>
 
+using namespace ModelView;
+
 class TestItemUtils : public ::testing::Test
 {
 public:

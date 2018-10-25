@@ -4,6 +4,8 @@
 #include "sessionitem.h"
 #include <memory>
 
+using namespace ModelView;
+
 class TestPath : public ::testing::Test
 {
 public:

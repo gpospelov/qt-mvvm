@@ -7,6 +7,8 @@
 #include <QJsonArray>
 #include <string>
 
+using namespace ModelView;
+
 //! Test convertion of SessionItemData from/to QJsonObject.
 
 class TestJsonItemData : public ::testing::Test

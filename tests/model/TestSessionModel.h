@@ -3,6 +3,8 @@
 #include "sessionitem.h"
 #include <memory>
 
+using namespace ModelView;
+
 class TestSessionModel : public ::testing::Test
 {
 public:

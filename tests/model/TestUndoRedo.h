@@ -3,6 +3,8 @@
 #include "sessionitem.h"
 #include <QUndoStack>
 
+using namespace ModelView;
+
 class TestUndoRedo : public ::testing::Test
 {
 public:

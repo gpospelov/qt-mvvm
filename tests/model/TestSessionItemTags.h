@@ -1,6 +1,8 @@
 #include <gtest/gtest.h>
 #include "sessionitemtags.h"
 
+using namespace ModelView;
+
 class TestSessionItemTags : public ::testing::Test
 {
 public:

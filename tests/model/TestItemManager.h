@@ -5,6 +5,8 @@
 #include "sessionitem.h"
 #include <memory>
 
+using namespace ModelView;
+
 //! Testing ItemFactory in the context of SessionModel and unique identifiers of SessionItem.
 
 class TestItemManager : public ::testing::Test

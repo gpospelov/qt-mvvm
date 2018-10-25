@@ -3,6 +3,8 @@
 #include "sessionitem.h"
 #include <memory>
 
+using namespace ModelView;
+
 //! Tests of ItemPool and its abilities to register/deregister SessionItem.
 
 class TestItemPool : public ::testing::Test

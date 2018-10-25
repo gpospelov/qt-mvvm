@@ -7,6 +7,8 @@
 #include <QDir>
 #include <stdexcept>
 
+using namespace ModelView;
+
 class TestFileUtils : public ::testing::Test
 {
 public:

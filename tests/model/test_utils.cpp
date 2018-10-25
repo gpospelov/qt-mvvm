@@ -15,6 +15,8 @@
 #include <QJsonDocument>
 #include <string>
 
+using namespace ModelView;
+
 namespace {
 void SaveDocument(const QJsonDocument& document, const QString& fileName);
 }

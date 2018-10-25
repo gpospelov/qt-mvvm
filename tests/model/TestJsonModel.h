@@ -8,6 +8,8 @@
 #include <QJsonArray>
 #include <QDebug>
 
+using namespace ModelView;
+
 //! Checks JsonModel class and its ability to convert SessionModel to json and back.
 
 class TestJsonModel : public ::testing::Test

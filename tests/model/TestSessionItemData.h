@@ -2,6 +2,8 @@
 #include "sessionitemdata.h"
 #include "model_types.h"
 
+using namespace ModelView;
+
 //! Test of SessionItemData.
 
 class TestSessionItemData : public ::testing::Test

@@ -6,6 +6,8 @@
 #include <QJsonArray>
 #include <vector>
 
+using namespace ModelView;
+
 //! Test convertion of QVariant from/to QJsonObject.
 
 class TestJsonVariant : public ::testing::Test

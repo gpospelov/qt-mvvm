@@ -3,6 +3,8 @@
 #include "itempool.h"
 #include <memory>
 
+using namespace ModelView;
+
 class TestSessionItem : public ::testing::Test
 {
 public:
