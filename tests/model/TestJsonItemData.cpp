@@ -1,8 +1,9 @@
-#include <gtest/gtest.h>
+#include "google_test.h"
 #include "jsonitemdata.h"
 #include "test_utils.h"
 #include "jsonvariant.h"
 #include "sessionitemdata.h"
+#include "customvariants.h"
 #include <QJsonObject>
 #include <QJsonArray>
 #include <string>

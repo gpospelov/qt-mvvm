@@ -1,4 +1,4 @@
-#include <gtest/gtest.h>
+#include "google_test.h"
 #include "sessionitemtags.h"
 
 using namespace ModelView;

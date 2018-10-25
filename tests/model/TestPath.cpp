@@ -1,4 +1,4 @@
-#include <gtest/gtest.h>
+#include "google_test.h"
 #include "path.h"
 #include "sessionmodel.h"
 #include "sessionitem.h"

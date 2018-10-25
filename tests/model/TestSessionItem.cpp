@@ -1,4 +1,5 @@
-#include <gtest/gtest.h>
+#include "google_test.h"
+#include "test_utils.h"
 #include "sessionitem.h"
 #include "itempool.h"
 #include <memory>

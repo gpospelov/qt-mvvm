@@ -1,4 +1,4 @@
-#include <gtest/gtest.h>
+#include "google_test.h"
 #include "jsonvariant.h"
 #include "test_utils.h"
 #include <QFile>

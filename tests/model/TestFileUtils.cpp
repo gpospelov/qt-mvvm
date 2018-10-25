@@ -1,6 +1,5 @@
-#include <gtest/gtest.h>
+#include "google_test.h"
 #include "fileutils.h"
-#include "testconfig.h"
 #include <string>
 #include <QFile>
 #include <QTextStream>

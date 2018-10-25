@@ -10,6 +10,7 @@
 #ifndef TESTUTILS_H
 #define TESTUTILS_H
 
+#include "customvariants.h"
 #include <QString>
 class QJsonObject;
 class QJsonArray;
