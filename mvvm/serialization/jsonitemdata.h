@@ -21,7 +21,7 @@ namespace ModelView {
 
 //! Default converter of SessionItemData to/from json object.
 
-class JsonItemData : public JsonItemDataInterface
+class CORE_EXPORT JsonItemData : public JsonItemDataInterface
 {
 public:
     static const QString roleKey;

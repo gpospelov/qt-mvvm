@@ -10,6 +10,7 @@
 #ifndef SESSIONITEMDATA_H
 #define SESSIONITEMDATA_H
 
+#include "global.h"
 #include <QVariant>
 #include <vector>
 #include "datarole.h"
@@ -18,7 +19,7 @@ namespace ModelView {
 
 //! Handles data roles for SessionItem.
 
-class SessionItemData
+class CORE_EXPORT SessionItemData
 {
 public:
     using container_type = std::vector<DataRole>;

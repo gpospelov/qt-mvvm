@@ -10,8 +10,9 @@
 #ifndef ITEMPOOL_H
 #define ITEMPOOL_H
 
-#include <map>
+#include "global.h"
 #include "model_types.h"
+#include <map>
 
 namespace ModelView {
 
@@ -20,7 +21,7 @@ class SessionItem;
 //! Provides registration of SessionItem pointers and their unique identifiers
 //! in global memory pool.
 
-class ItemPool
+class CORE_EXPORT ItemPool
 {
 public:
     using key_type = identifier_type;

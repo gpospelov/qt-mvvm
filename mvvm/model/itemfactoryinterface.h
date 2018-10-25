@@ -10,6 +10,7 @@
 #ifndef ITEMFACTORYINTERFACE_H
 #define ITEMFACTORYINTERFACE_H
 
+#include "global.h"
 #include "model_types.h"
 
 namespace ModelView {
@@ -18,7 +19,7 @@ class SessionItem;
 
 //! Interface class for all factories capable of producing SessionItem's.
 
-class ItemFactoryInterface {
+class CORE_EXPORT ItemFactoryInterface {
 public:
     virtual ~ItemFactoryInterface() = default;
 

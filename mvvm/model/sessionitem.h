@@ -10,10 +10,11 @@
 #ifndef SESSIONITEM_H
 #define SESSIONITEM_H
 
+#include "global.h"
+#include "model_types.h"
 #include <QVariant>
 #include <vector>
 #include <memory>
-#include "model_types.h"
 
 namespace ModelView {
 
@@ -22,7 +23,7 @@ class ItemPool;
 class SessionItemData;
 class SessionItemTags;
 
-class SessionItem {
+class CORE_EXPORT SessionItem {
     friend class SessionModel;
     friend class JsonModel;
 public:

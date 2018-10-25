@@ -10,6 +10,7 @@
 #ifndef PATH_H
 #define PATH_H
 
+#include "global.h"
 #include <vector>
 #include <string>
 
@@ -19,7 +20,7 @@ namespace ModelView {
 //! Contains chain of row indexes which has to be used to reach desired SessionItem starting
 //! from root item.
 
-class Path
+class CORE_EXPORT Path
 {
 public:
     using PathElement = int;

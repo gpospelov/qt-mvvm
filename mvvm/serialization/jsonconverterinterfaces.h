@@ -10,15 +10,21 @@
 #ifndef JSONCONVERTERINTERFACES_H
 #define JSONCONVERTERINTERFACES_H
 
+#include "global.h"
+
 class QJsonObject;
 class QVariant;
 class QJsonArray;
 
 namespace ModelView {
 
+class SessionItemData;
+class SessionModel;
+class SessionItem;
+
 //! Base class for all supported converters of QVariant to/from json object
 
-class JsonVariantInterface
+class CORE_EXPORT JsonVariantInterface
 {
 public:
     virtual ~JsonVariantInterface() = default;
@@ -30,9 +36,7 @@ public:
 
 //! Base class for all converters of SessionItemData to/from json object
 
-class SessionItemData;
-
-class JsonItemDataInterface
+class CORE_EXPORT JsonItemDataInterface
 {
 public:
     virtual ~JsonItemDataInterface() = default;
@@ -44,10 +48,7 @@ public:
 
 //! Base class for all converters of SessionModel to/from json object.
 
-class SessionModel;
-class SessionItem;
-
-class JsonModelInterface
+class CORE_EXPORT JsonModelInterface
 {
 public:
     virtual ~JsonModelInterface() = default;

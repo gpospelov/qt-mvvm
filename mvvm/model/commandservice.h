@@ -10,6 +10,7 @@
 #ifndef COMMANDSERVICE_H
 #define COMMANDSERVICE_H
 
+#include "global.h"
 #include "model_types.h"
 #include <memory>
 
@@ -24,7 +25,7 @@ class SessionItem;
 
 //! Provides undo/redo for all commands of SessionModel.
 
-class CommandService
+class CORE_EXPORT CommandService
 {
 public:
     CommandService(SessionModel* model);

@@ -10,9 +10,10 @@
 #ifndef ITEMMANAGER_H
 #define ITEMMANAGER_H
 
+#include "global.h"
+#include "model_types.h"
 #include <string>
 #include <memory>
-#include "model_types.h"
 
 namespace ModelView {
 
@@ -23,7 +24,7 @@ class JsonModelInterface;
 
 //! Manages item creation/registration for SessionModel.
 
-class ItemManager {
+class CORE_EXPORT ItemManager {
 public:
     ItemManager();
     ~ItemManager();

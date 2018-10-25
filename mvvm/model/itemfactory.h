@@ -10,13 +10,14 @@
 #ifndef ITEMFACTORY_H
 #define ITEMFACTORY_H
 
+#include "global.h"
 #include "itemfactoryinterface.h"
 
 namespace ModelView {
 
 //! Default SessionItem factory.
 
-class ItemFactory : public ItemFactoryInterface
+class CORE_EXPORT ItemFactory : public ItemFactoryInterface
 {
 public:
     ItemFactory();

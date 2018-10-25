@@ -10,11 +10,12 @@
 #ifndef SESSIONMODEL_H
 #define SESSIONMODEL_H
 
+#include "global.h"
+#include "model_types.h"
+#include "path.h"
 #include <QVariant>
 #include <memory>
 #include <string>
-#include "model_types.h"
-#include "path.h"
 
 class QUndoStack;
 
@@ -24,7 +25,7 @@ class SessionItem;
 class ItemManager;
 class CommandService;
 
-class SessionModel
+class CORE_EXPORT SessionModel
 {
 public:
     SessionModel(const std::string& model_type = {});

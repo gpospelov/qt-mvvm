@@ -7,25 +7,22 @@
 //
 // ************************************************************************** //
 
-#ifndef COMPARATORS_H
-#define COMPARATORS_H
+#ifndef GLOBAL_H
+#define GLOBAL_H
 
-#include "global.h"
+#ifdef _WIN32
 
-namespace ModelView {
+#ifdef CORE_BUILD_DLL
 
-//! Helper class to register variant comparators.
+#define CORE_EXPORT __declspec(dllexport)
+#else
+#define CORE_EXPORT __declspec(dllimport)
+#endif  // CORE_BUILD_DLL
 
-class CORE_EXPORT Comparators
-{
-public:
-    static void registerComparators();
-    static bool registered();
+#endif  // _WIN32
 
-private:
-    static bool m_is_registered;
-};
-
-}  // namespace ModelView
+#ifndef CORE_EXPORT
+#define CORE_EXPORT
+#endif
 
 #endif

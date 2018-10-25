@@ -10,6 +10,7 @@
 #ifndef COMMANDS_H
 #define COMMANDS_H
 
+#include "global.h"
 #include "model_types.h"
 #include "path.h"
 #include <QUndoCommand>
@@ -25,7 +26,7 @@ class SessionItem;
 
 //! Command for unddo/redo framework to set the data of SessionItem.
 
-class SetValueCommand : public QUndoCommand
+class CORE_EXPORT SetValueCommand : public QUndoCommand
 {
 public:
     SetValueCommand(SessionItem* item, const QVariant& value, int role);
@@ -42,7 +43,7 @@ private:
 
 //! Command for unddo/redo to insert new item.
 
-class InsertNewItemCommand : public QUndoCommand
+class CORE_EXPORT InsertNewItemCommand : public QUndoCommand
 {
 public:
     InsertNewItemCommand(const model_type& modelType, SessionItem* parent, int row);
@@ -59,7 +60,7 @@ private:
 
 //! Command for unddo/redo framework to remove row from a model.
 
-class RemoveRowCommand : public QUndoCommand
+class CORE_EXPORT RemoveRowCommand : public QUndoCommand
 {
 public:
     RemoveRowCommand(SessionItem* parent, int row);

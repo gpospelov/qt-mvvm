@@ -16,7 +16,7 @@
 
 namespace ModelView {
 
-class JsonVariant : public JsonVariantInterface {
+class CORE_EXPORT JsonVariant : public JsonVariantInterface {
 public:
 
     static const QString variantTypeKey;

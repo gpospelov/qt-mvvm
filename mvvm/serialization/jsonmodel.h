@@ -23,7 +23,7 @@ class SessionModel;
 class SessionItem;
 class JsonItemDataInterface;
 
-class JsonModel : public JsonModelInterface
+class CORE_EXPORT JsonModel : public JsonModelInterface
 {
 public:
     static const QString modelKey;

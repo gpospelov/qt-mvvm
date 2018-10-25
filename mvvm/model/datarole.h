@@ -10,13 +10,14 @@
 #ifndef DATAROLE_H
 #define DATAROLE_H
 
+#include "global.h"
 #include <QVariant>
 
 namespace ModelView {
 
 //! Represents pair of data,role for SessionItemData.
 
-class DataRole
+class CORE_EXPORT DataRole
 {
 public:
     DataRole(const QVariant& data = QVariant(), int role = -1);

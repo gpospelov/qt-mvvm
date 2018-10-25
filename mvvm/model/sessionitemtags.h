@@ -10,6 +10,7 @@
 #ifndef SESSIONITEMTAGS_H
 #define SESSIONITEMTAGS_H
 
+#include "global.h"
 #include <string>
 #include <vector>
 
@@ -17,7 +18,7 @@ namespace ModelView {
 
 //! Holds all tag info for SessionItem.
 
-class SessionItemTags
+class CORE_EXPORT SessionItemTags
 {
 public:
     bool registerTag(const std::string& name, int min, int max,
