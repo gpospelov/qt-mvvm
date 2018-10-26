@@ -16,13 +16,13 @@
 
 using namespace ModelView;
 
-const QString JsonVariant::variantTypeKey = "type";
-const QString JsonVariant::variantValueKey = "value";
-const QString JsonVariant::invalid_type_name = "invalid";
-const QString JsonVariant::int_type_name = "int";
-const QString JsonVariant::string_type_name = "std::string";
-const QString JsonVariant::double_type_name = "double";
-const QString JsonVariant::vector_double_type_name = "std::vector<double>";
+const QString ModelView::JsonVariant::variantTypeKey = "type";
+const QString ModelView::JsonVariant::variantValueKey = "value";
+const QString ModelView::JsonVariant::invalid_type_name = "invalid";
+const QString ModelView::JsonVariant::int_type_name = "int";
+const QString ModelView::JsonVariant::string_type_name = "std::string";
+const QString ModelView::JsonVariant::double_type_name = "double";
+const QString ModelView::JsonVariant::vector_double_type_name = "std::vector<double>";
 
 
 namespace {
