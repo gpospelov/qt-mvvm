@@ -17,6 +17,7 @@
 #include "sessionitemtags.h"
 #include <stdexcept>
 #include <iterator>
+#include <cassert>
 
 using namespace ModelView;
 

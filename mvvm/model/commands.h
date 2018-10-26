@@ -64,6 +64,7 @@ class CORE_EXPORT RemoveRowCommand : public QUndoCommand
 {
 public:
     RemoveRowCommand(SessionItem* parent, int row);
+    ~RemoveRowCommand() override;
 
     void undo() override;
     void redo() override;

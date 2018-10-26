@@ -75,6 +75,8 @@ RemoveRowCommand::RemoveRowCommand(SessionItem* parent, int row)
     m_parent_path = m_model->pathFromItem(parent);
 }
 
+RemoveRowCommand::~RemoveRowCommand() = default;
+
 void RemoveRowCommand::undo()
 {
     m_model->setCommandRecordPause(true);
