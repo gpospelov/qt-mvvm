@@ -26,4 +26,9 @@ message(STATUS "  Includes: ${Qt5Widgets_INCLUDE_DIRS}")
 
 configure_file(${CMAKE_SOURCE_DIR}/cmake/scripts/testconfig.h.in  ${BUILD_INC_DIR}/testconfig.h @ONLY)
 add_definitions(-I${BUILD_INC_DIR})
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -I${BUILD_INC_DIR}")
+
+# Windows specific
+
+if(WIN32)
+    add_definitions(-DCORE_BUILD_DLL)
+endif()
