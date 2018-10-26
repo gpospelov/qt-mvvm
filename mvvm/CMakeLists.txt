@@ -15,6 +15,10 @@ foreach(dir ${include_dirs})
     list(APPEND include_files ${include})
 endforeach()
 
+if(WIN32)
+    add_definitions(-DCORE_BUILD_DLL)
+endif()
+
 add_library(${library_name} SHARED ${source_files} ${include_files})
 
 target_include_directories(${library_name}
