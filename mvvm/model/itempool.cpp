@@ -10,6 +10,7 @@
 #include "itempool.h"
 #include <QUuid>
 #include <stdexcept>
+#include <cassert>
 
 using namespace ModelView;
 
