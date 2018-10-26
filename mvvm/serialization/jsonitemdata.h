@@ -28,6 +28,7 @@ public:
     static const QString variantKey;
 
     JsonItemData();
+    ~JsonItemData() override;
 
     QJsonArray get_json(const SessionItemData& data) override;
 

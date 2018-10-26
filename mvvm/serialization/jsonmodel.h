@@ -32,18 +32,19 @@ public:
     static const QString versionKey;
 
     JsonModel();
+    ~JsonModel() override;
 
     //! Writes content of model into json.
-    void model_to_json(const SessionModel& model, QJsonObject& json) const;
+    void model_to_json(const SessionModel& model, QJsonObject& json) const override;
 
     //! Reads json object and build the model.
-    void json_to_model(const QJsonObject& json, SessionModel& model) const;
+    void json_to_model(const QJsonObject& json, SessionModel& model) const override;
 
     //! Constructs SessionItem tree from json.
-    void json_to_item(const QJsonObject& json, SessionItem* parent, int row = -1) const;
+    void json_to_item(const QJsonObject& json, SessionItem* parent, int row = -1) const override;
 
     //! Writes SessionItem tree to json.
-    void item_to_json(const SessionItem* item, QJsonObject& json) const;
+    void item_to_json(const SessionItem* item, QJsonObject& json) const override;
 
     //! Returns true if given json object represents SessionItem tree.
     bool is_item(const QJsonObject& object) const;

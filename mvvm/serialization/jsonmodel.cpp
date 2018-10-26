@@ -52,6 +52,8 @@ JsonModel::JsonModel()
 
 }
 
+JsonModel::~JsonModel() = default;
+
 void JsonModel::model_to_json(const SessionModel& model, QJsonObject& json) const
 {
     if (!model.rootItem())

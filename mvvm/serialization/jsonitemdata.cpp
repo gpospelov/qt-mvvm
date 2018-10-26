@@ -24,6 +24,8 @@ JsonItemData::JsonItemData()
 {
 }
 
+JsonItemData::~JsonItemData() = default;
+
 QJsonArray JsonItemData::get_json(const SessionItemData& data)
 {
     QJsonArray result;

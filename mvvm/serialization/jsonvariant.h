@@ -13,12 +13,12 @@
 #include "jsonconverterinterfaces.h"
 #include <QJsonObject>
 #include <QVariant>
+#include <QString>
 
 namespace ModelView {
 
 class CORE_EXPORT JsonVariant : public JsonVariantInterface {
 public:
-
     static const QString variantTypeKey;
     static const QString variantValueKey;
     static const QString invalid_type_name;
