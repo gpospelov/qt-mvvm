@@ -59,16 +59,19 @@ bool SessionItemTags::registerTag(const std::string& name, int min, int max,
 
 bool SessionItemTags::isValid(const std::string& tagName, const std::string& modelType) const
 {
+    bool result(false);
+
     for (const auto& tag : m_tags) {
         if (tag.name == tagName) {
             if (modelType.empty())
-                return true;
+                result = true;
             else
-                return tag.modelTypes.empty() ? true : contains(tag.modelTypes, modelType);
+                result = tag.modelTypes.empty() ? true : contains(tag.modelTypes, modelType);
+            break;
         }
     }
 
-    return false;
+    return result;
 }
 
 //! Returns list of modelTypes the given tagName is intended for.

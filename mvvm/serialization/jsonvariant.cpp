@@ -175,8 +175,6 @@ QJsonObject from_vector_double(const QVariant& variant)
 
 QVariant to_vector_double(const QJsonObject& object)
 {
-    auto array = object[JsonVariant::variantValueKey].toArray();
-
     std::vector<double> vec;
     for ( auto x : object[JsonVariant::variantValueKey].toArray())
         vec.push_back(x.toDouble());
