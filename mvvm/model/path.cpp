@@ -28,7 +28,7 @@ Path Path::fromString(const std::string& str)
          std::istream_iterator<std::string>(),
          std::back_inserter(parts));
 
-    for (auto x : parts)
+    for (const auto& x : parts)
         result.append(std::stoi(x));
 
     return result;

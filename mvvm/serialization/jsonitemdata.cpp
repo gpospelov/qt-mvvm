@@ -60,7 +60,7 @@ SessionItemData JsonItemData::get_data(const QJsonArray& object)
 bool JsonItemData::is_item_data(const QJsonObject& json)
 {
     static const QStringList expected = QStringList() << roleKey << variantKey;
-    return json.keys() == expected ? true : false;
+    return json.keys() == expected;
 }
 
 //! Sets the list of roles which should be excluded from json.
@@ -74,8 +74,7 @@ void JsonItemData::set_role_filter(const std::vector<int>& roles)
 
 bool JsonItemData::role_to_save(int role) const
 {
-    if (std::find(m_roles_to_filter.begin(), m_roles_to_filter.end(), role) !=m_roles_to_filter.end())
-        return false;
-
-    return true;
+    bool role_in_list = std::find(m_roles_to_filter.begin(), m_roles_to_filter.end(), role)
+            !=m_roles_to_filter.end();
+    return !role_in_list;
 }

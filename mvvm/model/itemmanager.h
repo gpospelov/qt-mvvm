@@ -35,7 +35,7 @@ public:
 
     SessionItem* createRootItem();
 
-    SessionItem* findItem(identifier_type id) const;
+    SessionItem* findItem(const identifier_type& id) const;
 
     identifier_type findIdentifier(SessionItem* item) const;
 
@@ -43,7 +43,7 @@ public:
 
     const JsonModelInterface& converter() const;
 
-    void fix_registration(SessionItem* item, identifier_type id);
+    void fix_registration(SessionItem* item, const identifier_type& id);
 
 private:
     std::shared_ptr<ItemPool> m_item_pool;

@@ -41,7 +41,7 @@ public:
 
     key_type key_for_item(SessionItem* item) const;
 
-    SessionItem* item_for_key(key_type) const;
+    SessionItem* item_for_key(const key_type& key) const;
 
 private:
     std::map<key_type, SessionItem*> m_key_to_item;

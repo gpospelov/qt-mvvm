@@ -20,12 +20,12 @@
 
 using namespace ModelView;
 
-SessionItem::SessionItem(const model_type& modelType)
+SessionItem::SessionItem(model_type modelType)
     : m_parent(nullptr)
     , m_model(nullptr)
     , m_data(new SessionItemData)
     , m_tags(new SessionItemTags)
-    , m_modelType(modelType)
+    , m_modelType(std::move(modelType))
 {
 
 }
@@ -150,11 +150,12 @@ SessionItem* SessionItem::takeRow(int row)
 
 void SessionItem::register_item(std::shared_ptr<ItemPool> item_pool)
 {
-    if (item_pool) {
-        auto key = item_pool->register_item(this);
+    m_item_pool = item_pool;
+
+    if (auto pool = m_item_pool.lock()) {
+        auto key = pool->register_item(this);
         setDataIntern(QVariant::fromValue(key), ItemDataRole::IDENTIFIER);
     }
-    m_item_pool = item_pool;
 }
 
 std::vector<int> SessionItem::roles() const

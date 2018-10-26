@@ -68,7 +68,7 @@ ItemPool::key_type ItemPool::key_for_item(SessionItem* item) const
     return {};
 }
 
-SessionItem* ItemPool::item_for_key(key_type key) const
+SessionItem* ItemPool::item_for_key(const key_type& key) const
 {
     auto it = m_key_to_item.find(key);
     if (it != m_key_to_item.end())

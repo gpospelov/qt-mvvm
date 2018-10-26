@@ -27,7 +27,7 @@ class CORE_EXPORT SessionItem {
     friend class SessionModel;
     friend class JsonModel;
 public:
-    SessionItem(const model_type& modelType = {});
+    SessionItem(model_type modelType = {});
     virtual ~SessionItem();
 
     model_type modelType() const;

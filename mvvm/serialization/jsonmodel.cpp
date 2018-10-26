@@ -105,7 +105,7 @@ void JsonModel::json_to_item(const QJsonObject& json, SessionItem* parent, int r
     auto item = parent->model()->insertNewItem(modelType, parent, row);
 
     auto itemData = m_itemdata_converter->get_data(json[itemDataKey].toArray());
-    item->m_data.reset(new SessionItemData(itemData));
+    item->m_data = std::make_unique<SessionItemData>(itemData);
 
     // FIXME find more elegant way to replace item registration
     identifier_type identifier = itemData.data(ItemDataRole::IDENTIFIER).value<std::string>();
@@ -123,7 +123,7 @@ void JsonModel::item_to_json(const SessionItem* item, QJsonObject& json) const
         return;
 
     json[modelKey] = QString::fromStdString(item->modelType());
-    json[itemDataKey] = m_itemdata_converter->get_json(*item->m_data.get());
+    json[itemDataKey] = m_itemdata_converter->get_json(*item->m_data);
 
     QJsonArray itemArray;
     for (auto child : item->children()) {

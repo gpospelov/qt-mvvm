@@ -28,7 +28,7 @@ class CommandService;
 class CORE_EXPORT SessionModel
 {
 public:
-    SessionModel(const std::string& model_type = {});
+    SessionModel(std::string model_type = {});
     virtual ~SessionModel();
 
     std::string modelType() const;

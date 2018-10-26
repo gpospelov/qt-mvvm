@@ -12,7 +12,8 @@
 
 using namespace ModelView;
 
-DataRole::DataRole(const QVariant& data, int role) : m_data(data), m_role(role)
+DataRole::DataRole(QVariant data, int role)
+    : m_data(std::move(data)), m_role(role)
 {
 }
 

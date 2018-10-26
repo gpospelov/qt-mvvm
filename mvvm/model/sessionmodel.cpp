@@ -16,13 +16,13 @@
 
 using namespace ModelView;
 
-SessionModel::SessionModel(const std::string& model_type)
+SessionModel::SessionModel(std::string model_type)
     : m_root_item(nullptr)
     , m_commands(new CommandService(this))
     , m_item_manager(new ItemManager)
-    , m_model_type(model_type)
+    , m_model_type(std::move(model_type))
 {
-    m_item_manager->setItemPool(std::shared_ptr<ItemPool>(new ItemPool));
+    m_item_manager->setItemPool(std::make_shared<ItemPool>());
     createRootItem();
 }
 

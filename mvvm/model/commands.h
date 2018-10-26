@@ -29,7 +29,7 @@ class SessionItem;
 class CORE_EXPORT SetValueCommand : public QUndoCommand
 {
 public:
-    SetValueCommand(SessionItem* item, const QVariant& value, int role);
+    SetValueCommand(SessionItem* item, QVariant value, int role);
 
     void undo() override;
     void redo() override;
@@ -46,7 +46,7 @@ private:
 class CORE_EXPORT InsertNewItemCommand : public QUndoCommand
 {
 public:
-    InsertNewItemCommand(const model_type& modelType, SessionItem* parent, int row);
+    InsertNewItemCommand(model_type modelType, SessionItem* parent, int row);
 
     void undo() override;
     void redo() override;

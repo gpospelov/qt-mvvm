@@ -20,7 +20,7 @@ namespace ModelView {
 class CORE_EXPORT DataRole
 {
 public:
-    DataRole(const QVariant& data = QVariant(), int role = -1);
+    DataRole(QVariant data = QVariant(), int role = -1);
     QVariant m_data;
     int m_role;
     bool operator==(const DataRole& other) const;

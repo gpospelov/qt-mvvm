@@ -39,7 +39,7 @@ void Utils::iterate_if(const SessionItem* item, const std::function<bool(const S
 
 int Utils::VariantType(const QVariant& variant)
 {
-    int result = static_cast<int>(variant.type());
+    auto result = static_cast<int>(variant.type());
     if (result == QVariant::UserType)
         result = variant.userType();
     return result;

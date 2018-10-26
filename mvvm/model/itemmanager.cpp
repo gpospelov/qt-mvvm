@@ -25,7 +25,7 @@ ItemManager::ItemManager()
 
 void ItemManager::setItemPool(std::shared_ptr<ItemPool> pool)
 {
-    m_item_pool = pool;
+    m_item_pool = std::move(pool);
 }
 
 ItemManager::~ItemManager() = default;
@@ -46,7 +46,7 @@ SessionItem* ItemManager::createRootItem()
     return result;
 }
 
-SessionItem* ItemManager::findItem(identifier_type id) const
+SessionItem* ItemManager::findItem(const identifier_type& id) const
 {
     return m_item_pool ? m_item_pool->item_for_key(id) : nullptr;
 }
@@ -63,12 +63,12 @@ const ItemPool* ItemManager::itemPool() const
 
 const JsonModelInterface& ItemManager::converter() const
 {
-    return *m_converter.get();
+    return *m_converter;
 }
 
 //! Replacing existing registration in item pool with new id.
 
-void ItemManager::fix_registration(SessionItem* item, identifier_type id)
+void ItemManager::fix_registration(SessionItem* item, const identifier_type& id)
 {
     m_item_pool->deregister_item(item);
     m_item_pool->register_item(item, id);

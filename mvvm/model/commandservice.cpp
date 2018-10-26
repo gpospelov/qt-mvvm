@@ -17,6 +17,7 @@ using namespace ModelView;
 
 CommandService::CommandService(SessionModel* model)
     : m_model(model)
+    , m_pause_record(false)
 {
 
 }
@@ -24,7 +25,7 @@ CommandService::CommandService(SessionModel* model)
 void CommandService::setUndoRedoEnabled(bool value)
 {
     if (value)
-        m_commands.reset(new QUndoStack);
+        m_commands = std::make_unique<QUndoStack>();
     else
         m_commands.reset();
 }
@@ -82,5 +83,5 @@ void CommandService::setCommandRecordPause(bool value)
 
 bool CommandService::provideUndo() const
 {
-    return m_commands && !m_pause_record ? true : false;
+    return m_commands && !m_pause_record;
 }

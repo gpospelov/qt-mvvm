@@ -196,9 +196,5 @@ const SessionItemTags::TagInfo& SessionItemTags::tagInfo(const std::string& tagN
 bool SessionItemTags::maximumReached(const std::string& tagName) const
 {
     auto& tag = tagInfo(tagName);
-
-    if (tag.max != -1 && tag.max == tag.childCount)
-        return true;
-
-    return false;
+    return tag.max != -1 && tag.max == tag.childCount;
 }

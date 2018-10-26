@@ -12,10 +12,7 @@
 
 using namespace ModelView;
 
-ItemFactory::ItemFactory()
-{
-
-}
+ItemFactory::ItemFactory() = default;
 
 SessionItem* ItemFactory::createItem(const model_type& modelType)
 {

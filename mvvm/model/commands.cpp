@@ -16,8 +16,8 @@
 
 using namespace ModelView;
 
-SetValueCommand::SetValueCommand(SessionItem* item, const QVariant& value, int role)
-    : m_value(value)
+SetValueCommand::SetValueCommand(SessionItem* item, QVariant value, int role)
+    : m_value(std::move(value))
     , m_role(role)
     , m_model(item->model())
 {
@@ -43,9 +43,9 @@ void SetValueCommand::redo()
 
 // ----------------------------------------------------------------------------
 
-InsertNewItemCommand::InsertNewItemCommand(const model_type& modelType, SessionItem* parent, int row)
+InsertNewItemCommand::InsertNewItemCommand(model_type modelType, SessionItem* parent, int row)
     : m_row(row)
-    , m_model_type(modelType)
+    , m_model_type(std::move(modelType))
     , m_model(parent->model())
 {
     m_parent_path = m_model->pathFromItem(parent);
@@ -92,7 +92,7 @@ void RemoveRowCommand::redo()
     m_model->setCommandRecordPause(true);
 
     const auto& converter = m_model->manager()->converter();
-    m_child_backup.reset(new QJsonObject);
+    m_child_backup = std::make_unique<QJsonObject>();
 
     auto parent = m_model->itemFromPath(m_parent_path);
     auto child = parent->childAt(m_row);
