@@ -24,7 +24,8 @@ void SaveDocument(const QJsonDocument& document, const QString& fileName);
 void TestUtils::CreateTestDirectory(const QString& test_sub_dir)
 {
     auto path = TestDirectoryPath(test_sub_dir);
-    Utils::create_dir(path.toStdString());
+    if(!Utils::exists(path.toStdString()))
+        Utils::create_dir(path.toStdString());
 }
 
 QString TestUtils::TestDirectoryPath(const QString& test_sub_dir)

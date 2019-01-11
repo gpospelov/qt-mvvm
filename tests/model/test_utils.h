@@ -20,8 +20,7 @@ class QJsonArray;
 namespace TestUtils
 {
 
-//! Creates test directory in CMAKE_BINARY_DIR. If directory exists, it will be removed
-//! recursively first.
+//! Creates test directory in CMAKE_BINARY_DIR. If directory exists, will do nothing.
 void CreateTestDirectory(const QString& test_sub_dir);
 
 //! Returns full path to the test directory in CMAKE_BINARY_DIR.
