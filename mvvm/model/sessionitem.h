@@ -44,7 +44,6 @@ public:
     int childrenCount() const;
 
     bool insertItem(int row, SessionItem* item);
-    bool insertTagItem(int row, SessionItem* item, const std::string& tag);
 
     std::vector<SessionItem*> children() const;
 

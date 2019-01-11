@@ -98,24 +98,6 @@ bool SessionItem::insertItem(int row, SessionItem* item)
     return true;
 }
 
-bool SessionItem::insertTagItem(int row, SessionItem* item, const std::string& tag)
-{
-    if (!item)
-        throw std::runtime_error("SessionItem::insertTagItem() -> Invalid item.");
-
-    if (item->parent())
-        throw std::runtime_error("SessionItem::insertItem() -> Existing parent.");
-
-    if (!m_tags->isValid(tag, item->modelType()))
-        throw std::runtime_error("SessionItem::insertTagItem() -> Invalid tag, modelType.");
-
-    int index = m_tags->insertIndexFromTagRow(tag, row);
-    if (index <0)
-        throw std::runtime_error("SessionItem::insertTagItem() -> Can't get insert index");
-
-    return insertItem(index, item);
-}
-
 std::vector<SessionItem*> SessionItem::children() const
 {
     return m_children;
