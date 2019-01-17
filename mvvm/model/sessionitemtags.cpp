@@ -147,11 +147,6 @@ int SessionItemTags::childCount(const std::string& tagName)
     return tagInfo(tagName).childCount;
 }
 
-int SessionItemTags::childMax(const std::string& tagName)
-{
-    return tagInfo(tagName).max;
-}
-
 void SessionItemTags::addChild(const std::string& tagName)
 {
     if (maximumReached(tagName))

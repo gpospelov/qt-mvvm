@@ -36,7 +36,6 @@ public:
     std::string tagFromIndex(int index) const;
 
     int childCount(const std::string& tagName);
-    int childMax(const std::string& tagName);
 
     void addChild(const std::string& tagName);
     void removeChild(const std::string& tagName);
