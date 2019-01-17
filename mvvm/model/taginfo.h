@@ -39,11 +39,13 @@ public:
 
     int childCount() const;
 
+    std::vector<std::string> modelTypes() const;
+
     bool maximumReached() const;
 
     bool isValidChild(const std::string& child) const;
 
-    void add(const std::string& child);
+    void add();
 
     void remove();
 

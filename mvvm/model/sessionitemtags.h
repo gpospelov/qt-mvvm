@@ -11,6 +11,7 @@
 #define SESSIONITEMTAGS_H
 
 #include "global.h"
+#include "taginfo.h"
 #include <string>
 #include <vector>
 
@@ -45,17 +46,6 @@ public:
     bool maximumReached(const std::string& tagName) const;
 
 private:
-    class TagInfo
-    {
-    public:
-        TagInfo();
-        std::string name;
-        int min;
-        int max;
-        int childCount;
-        std::vector<std::string> modelTypes;
-    };
-
     TagInfo& tagInfo(const std::string& tagName);
     const TagInfo& tagInfo(const std::string& tagName) const;
 

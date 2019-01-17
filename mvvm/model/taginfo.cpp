@@ -67,6 +67,11 @@ int ModelView::TagInfo::childCount() const
     return m_childCount;
 }
 
+std::vector<std::string> ModelView::TagInfo::modelTypes() const
+{
+    return m_modelTypes;
+}
+
 //! Returns true if given tag has already maximum number of assigned items.
 
 bool ModelView::TagInfo::maximumReached() const
@@ -79,11 +84,8 @@ bool ModelView::TagInfo::isValidChild(const std::string& child) const
     return m_modelTypes.empty() ? true : contains(m_modelTypes, child);
 }
 
-void ModelView::TagInfo::add(const std::string& child)
+void ModelView::TagInfo::add()
 {
-    if (!isValidChild(child))
-        throw std::runtime_error("TagInfo::add() -> Invalid child.");
-
     if (maximumReached())
         throw std::runtime_error("TagInfo::add() -> Maximum reached.");
 

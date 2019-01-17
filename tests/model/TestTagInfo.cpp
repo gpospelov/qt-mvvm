@@ -40,9 +40,9 @@ TEST_F(TestTagInfo, defaultTag)
     EXPECT_TRUE(tag.isValidChild("abc"));
 
     // adding child
-    tag.add("");
+    tag.add();
     EXPECT_EQ(tag.childCount(), 1u);
-    tag.add("abc");
+    tag.add();
     EXPECT_EQ(tag.childCount(), 2u);
 
     // removing children
@@ -69,15 +69,12 @@ TEST_F(TestTagInfo, propertyTag)
     EXPECT_TRUE(tag.isValidChild("model_type"));
     EXPECT_FALSE(tag.isValidChild("abc"));
 
-    // adding child with non-expected type is not allowed
-    EXPECT_THROW(tag.add("invalid_model"), std::runtime_error);
-
     // adding valid child once is allowed
-    tag.add("model_type");
+    tag.add();
     EXPECT_EQ(tag.childCount(), 1u);
 
     // it shouldn't be possible to add/remove children after
     EXPECT_THROW(tag.remove(), std::runtime_error);
-    EXPECT_THROW(tag.add("model_type"), std::runtime_error);
+    EXPECT_THROW(tag.add(), std::runtime_error);
 }
 
