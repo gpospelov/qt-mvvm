@@ -23,6 +23,8 @@ class CORE_EXPORT TagInfo
 public:
     TagInfo();
 
+    TagInfo(std::string name, int min, int max, std::vector<std::string> modelTypes);
+
     //! Returns default tag (intended for unlimited amount of various items).
     static TagInfo defaultTag(std::string name);
 
@@ -48,8 +50,6 @@ public:
     bool isSingleItemTag() const;
 
 private:
-    TagInfo(std::string name, int min, int max, std::vector<std::string> modelTypes);
-
     std::string m_name;
     int m_min;
     int m_max;

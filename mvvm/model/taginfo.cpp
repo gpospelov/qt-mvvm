@@ -10,6 +10,7 @@
 #include "taginfo.h"
 #include <stdexcept>
 #include <algorithm>
+#include <sstream>
 
 namespace
 {
@@ -22,6 +23,18 @@ template <typename A, typename B> bool contains(const A& container, const B& ele
 ModelView::TagInfo::TagInfo() : m_min(0), m_max(-1), m_childCount(0)
 {
 
+}
+
+ModelView::TagInfo::TagInfo(std::string name, int min, int max, std::vector<std::string> modelTypes)
+    : m_name(std::move(name)), m_min(min), m_max(max), m_childCount(0),
+      m_modelTypes(std::move(modelTypes))
+{
+    if (m_min < 0 || (m_min > m_max && m_max >= 0) || m_name.empty()) {
+        std::ostringstream ostr;
+        ostr << "Invalid constructor parameters"
+             << " " << m_name << " " << m_min << " " << m_max;
+        throw std::runtime_error(ostr.str());
+    }
 }
 
 ModelView::TagInfo ModelView::TagInfo::defaultTag(std::string name)
@@ -88,11 +101,4 @@ void ModelView::TagInfo::remove()
 bool ModelView::TagInfo::isSingleItemTag() const
 {
     return m_min == 1 && m_max == 1 && m_childCount == 1;
-}
-
-ModelView::TagInfo::TagInfo(std::string name, int min, int max, std::vector<std::string> modelTypes)
-    : m_name(std::move(name)), m_min(min), m_max(max), m_childCount(0),
-      m_modelTypes(std::move(modelTypes))
-{
-
 }
