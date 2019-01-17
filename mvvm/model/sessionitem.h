@@ -57,6 +57,9 @@ public:
 
     std::vector<int> roles() const;
 
+    std::string defaultTag() const;
+    void setDefaultTag(const std::string& tag);
+
 private:
     void setParent(SessionItem* parent);
     void setModel(SessionModel* model);
@@ -69,6 +72,7 @@ private:
     std::unique_ptr<SessionItemData> m_data;
     std::unique_ptr<SessionItemTags> m_tags;
     model_type m_modelType;
+    std::string m_default_tag;
 };
 
 }  // namespace ModelView

@@ -19,6 +19,10 @@
 #include <iterator>
 #include <cassert>
 
+namespace {
+    const std::string default_tag = "defaultTag";
+}
+
 using namespace ModelView;
 
 SessionItem::SessionItem(model_type modelType)
@@ -28,7 +32,7 @@ SessionItem::SessionItem(model_type modelType)
     , m_tags(new SessionItemTags)
     , m_modelType(std::move(modelType))
 {
-
+    setDefaultTag(default_tag);
 }
 
 SessionItem::~SessionItem()
@@ -144,6 +148,16 @@ void SessionItem::register_item(std::shared_ptr<ItemPool> item_pool)
 std::vector<int> SessionItem::roles() const
 {
     return m_data->roles();
+}
+
+std::string SessionItem::defaultTag() const
+{
+    return m_default_tag;
+}
+
+void SessionItem::setDefaultTag(const std::string& tag)
+{
+    m_default_tag = tag;
 }
 
 void SessionItem::setParent(SessionItem* parent)
