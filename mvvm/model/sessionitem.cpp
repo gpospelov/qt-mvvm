@@ -92,7 +92,7 @@ bool SessionItem::insertItem(int row, SessionItem* item, const std::string& tag)
     if (item->parent())
         throw std::runtime_error("SessionItem::insertItem() -> Existing parent.");
 
-    auto tagName = ensure(tag);
+    auto tagName = ensure(tag, item->modelType());
 
     int index = m_tags->insertIndexFromTagRow(tagName, row);
     if (index < 0)
@@ -216,11 +216,11 @@ void SessionItem::childDeleted(SessionItem* child)
 
 //! Check if tag name is registered and returns it back. If tag is empty, returns defaultTag.
 
-std::string SessionItem::ensure(const std::string& tag) const
+std::string SessionItem::ensure(const std::string& tag, const std::string& model_type) const
 {
     const std::string result = tag.empty() ? defaultTag() : tag;
 
-    if (!m_tags->isValid(result))
+    if (!m_tags->isValid(result, model_type))
         throw std::runtime_error("SessionItem::ensure() -> Non existing tag");
 
     return result;

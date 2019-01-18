@@ -320,7 +320,7 @@ TEST_F(TestSessionItem, twoTagsAndItems)
     expected = {child_t2_a, child_t2_b, child_t2_c};
     EXPECT_EQ(parent->getItems(tag2), expected);
 
-    // removing item
+    // removing item from the middle of tag2
     delete parent->takeItem(1, tag2);
     expected = {child_t1_a, child_t1_b};
     EXPECT_EQ(parent->getItems(tag1), expected);
@@ -361,3 +361,36 @@ TEST_F(TestSessionItem, tagWithLimits)
     EXPECT_EQ(parent->getItems(tag1), expected);
 }
 
+//! Inserting and removing items when tag has limits.
+
+TEST_F(TestSessionItem, tagModelTypes)
+{
+    const std::string tag1 = "tag1";
+    const std::string tag2 = "tag2";
+    const std::string modelType1 = "ModelType1";
+    const std::string modelType2 = "ModelType2";
+    const std::string modelType3 = "ModelType3";
+    const std::string modelType4 = "ModelType4";
+
+    std::unique_ptr<SessionItem> parent(new SessionItem("ModelType"));
+    parent->registerTag(TagInfo(tag1, 0, -1, std::vector<std::string>() = {modelType1, modelType2}));
+    parent->registerTag(TagInfo(tag2, 0, -1, std::vector<std::string>() = {modelType3}));
+
+    auto item1 = new SessionItem(modelType1);
+    auto item2 = new SessionItem(modelType2);
+    auto item3 = new SessionItem(modelType3);
+
+    // attempt to add item not intended for tag
+    EXPECT_THROW(parent->insertItem(-1, item1, tag2), std::runtime_error);
+    EXPECT_THROW(parent->insertItem(-1, item3, tag1), std::runtime_error);
+
+    // normal insert to appropriate tag
+    parent->insertItem(-1, item3, tag2);
+    parent->insertItem(-1, item1, tag1);
+    parent->insertItem(-1, item2, tag1);
+
+    std::vector<SessionItem*> expected = {item1, item2};
+    EXPECT_EQ(parent->getItems(tag1), expected);
+    expected = {item3};
+    EXPECT_EQ(parent->getItems(tag2), expected);
+}

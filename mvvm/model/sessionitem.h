@@ -74,7 +74,7 @@ private:
     void setParent(SessionItem* parent);
     void setModel(SessionModel* model);
     void childDeleted(SessionItem* child);
-    std::string ensure(const std::string& tag) const;
+    std::string ensure(const std::string& tag, const std::string& model_type={}) const;
 
     SessionItem* m_parent;
     SessionModel* m_model;
