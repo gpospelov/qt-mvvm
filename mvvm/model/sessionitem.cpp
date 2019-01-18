@@ -82,7 +82,9 @@ int SessionItem::childrenCount() const
     return static_cast<int>(m_children.size());
 }
 
-bool SessionItem::insertItem(int row, SessionItem* item)
+//! Insert item into given tag into given row.
+
+bool SessionItem::insertItem(int row, SessionItem* item, const std::string& tag)
 {
     if (!item)
         throw std::runtime_error("SessionItem::insertItem() -> Invalid item.");
@@ -90,17 +92,35 @@ bool SessionItem::insertItem(int row, SessionItem* item)
     if (item->parent())
         throw std::runtime_error("SessionItem::insertItem() -> Existing parent.");
 
-    if ( row < 0)
-        row = childrenCount();
+    auto tagName = ensure(tag);
 
-    if ( row > childrenCount())
-        throw std::runtime_error("SessionItem::insertItem() -> Invalid index.");
+    int index = m_tags->insertIndexFromTagRow(tagName, row);
+    if (index < 0)
+        throw std::runtime_error("SessionItem::insertItem() -> Invalid row, maximum reached.");
 
     item->setParent(this);
     item->setModel(model());
-    m_children.insert(std::next(m_children.begin(), row), item);
+    m_children.insert(std::next(m_children.begin(), index), item);
+    m_tags->addChild(tagName);
 
     return true;
+}
+
+//! Remove item from given row from given tag.
+
+SessionItem* SessionItem::takeItem(int row, const std::string& tag)
+{
+    SessionItem* result(nullptr);
+    auto tagName = ensure(tag);
+    int index = m_tags->indexFromTagRow(tagName, row);
+
+        result = childAt(index);
+        m_children.erase(m_children.begin() + index);
+        if (result) {
+            result->setParent(nullptr);
+            result->setModel(nullptr);
+        }
+    return result;
 }
 
 std::vector<SessionItem*> SessionItem::children() const
@@ -117,23 +137,6 @@ int SessionItem::rowOfChild(SessionItem* child) const
 {
     auto pos = find(m_children.begin(), m_children.end(), child);
     return pos == m_children.end() ? -1 : static_cast<int>(std::distance(m_children.begin(), pos));
-}
-
-//! Removes row from item and returns the item.
-
-SessionItem* SessionItem::takeRow(int row)
-{
-    SessionItem* result(nullptr);
-
-    if (row >=0 && row < childrenCount()) {
-        result = childAt(row);
-        m_children.erase(m_children.begin() + row);
-        if (result) {
-            result->setParent(nullptr);
-            result->setModel(nullptr);
-        }
-    }
-    return result;
 }
 
 void SessionItem::register_item(std::shared_ptr<ItemPool> item_pool)
@@ -189,6 +192,18 @@ void SessionItem::childDeleted(SessionItem* child)
     auto index = rowOfChild(child);
     assert(index != -1);
     m_children[static_cast<size_t>(index)] = nullptr;
+}
+
+//! Check if tag name is registered and returns it back. If tag is empty, returns defaultTag.
+
+std::string SessionItem::ensure(const std::string& tag) const
+{
+    const std::string result = tag.empty() ? defaultTag() : tag;
+
+    if (!m_tags->isValid(result))
+        throw std::runtime_error("SessionItem::ensure() -> Non existing tag");
+
+    return result;
 }
 
 bool SessionItem::setDataIntern(const QVariant& variant, int role)

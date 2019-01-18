@@ -54,7 +54,7 @@ InsertNewItemCommand::InsertNewItemCommand(model_type modelType, SessionItem* pa
 void InsertNewItemCommand::undo()
 {
     auto parent = m_model->itemFromPath(m_parent_path);
-    delete parent->takeRow(m_row);
+    delete parent->takeItem(m_row);
 }
 
 void InsertNewItemCommand::redo()
@@ -99,7 +99,7 @@ void RemoveRowCommand::redo()
     auto parent = m_model->itemFromPath(m_parent_path);
     auto child = parent->childAt(m_row);
     converter.item_to_json(child, *m_child_backup);
-    delete parent->takeRow(m_row);
+    delete parent->takeItem(m_row);
 
     m_model->setCommandRecordPause(false);
 }

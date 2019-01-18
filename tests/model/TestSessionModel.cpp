@@ -41,7 +41,7 @@ TEST_F(TestSessionModel, insertNewItem)
     EXPECT_EQ(child->modelType(), modelType);
 
     // taking child back
-    auto taken = item->takeRow(0);
+    auto taken = item->takeItem(0);
     EXPECT_EQ(taken, child);
     EXPECT_EQ(child->model(), nullptr);
     delete taken;

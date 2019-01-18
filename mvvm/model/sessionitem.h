@@ -44,15 +44,15 @@ public:
 
     int childrenCount() const;
 
-    bool insertItem(int row, SessionItem* item);
+    bool insertItem(int row, SessionItem* item, const std::string& tag = {});
+
+    SessionItem* takeItem(int row, const std::string& tag = {});
 
     std::vector<SessionItem*> children() const;
 
     SessionItem* childAt(int row) const;
 
     int rowOfChild(SessionItem* child) const;
-
-    SessionItem* takeRow(int row);
 
     void register_item(std::shared_ptr<ItemPool> item_pool);
 
@@ -70,6 +70,7 @@ private:
     void setParent(SessionItem* parent);
     void setModel(SessionModel* model);
     void childDeleted(SessionItem* child);
+    std::string ensure(const std::string& tag) const;
 
     SessionItem* m_parent;
     SessionModel* m_model;

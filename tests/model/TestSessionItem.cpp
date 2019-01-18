@@ -150,7 +150,7 @@ TEST_F(TestSessionItem, insertChildren)
     delete child5;
 }
 
-TEST_F(TestSessionItem, takeRow)
+TEST_F(TestSessionItem, takeItem)
 {
     std::unique_ptr<SessionItem> parent(new SessionItem);
     auto child1 = new SessionItem;
@@ -162,15 +162,14 @@ TEST_F(TestSessionItem, takeRow)
     parent->insertItem(-1, child2);
     parent->insertItem(-1, child3);
 
-    // taking non-existing rows
-    auto taken = parent->takeRow(-1);
-    EXPECT_EQ(taken, nullptr);
-    taken = parent->takeRow(parent->childrenCount());
-    EXPECT_EQ(taken, nullptr);
     EXPECT_EQ(parent->childrenCount(), 3);
 
+    // taking non-existing rows
+    EXPECT_THROW(parent->takeItem(-1), std::runtime_error);
+    EXPECT_THROW(parent->takeItem(parent->childrenCount()), std::runtime_error);
+
     // taking first row
-    taken = parent->takeRow(0);
+    auto taken = parent->takeItem(0);
     EXPECT_EQ(taken->parent(), nullptr);
     std::vector<SessionItem*> expected = {child2, child3};
     EXPECT_EQ(parent->children(), expected);
