@@ -66,6 +66,10 @@ public:
 
     bool isTag(const std::string& name);
 
+    // access tagged items
+    SessionItem* getItem(const std::string& tag = {}, int row = 0) const;
+    std::vector<SessionItem*> getItems(const std::string& tag = {}) const;
+
 private:
     void setParent(SessionItem* parent);
     void setModel(SessionModel* model);

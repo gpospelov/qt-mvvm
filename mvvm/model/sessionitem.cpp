@@ -174,6 +174,19 @@ bool SessionItem::isTag(const std::string& name)
     return m_tags->isValid(name);
 }
 
+//! Returns item in given row of given tag.
+
+SessionItem* SessionItem::getItem(const std::string& tag, int row) const
+{
+    int index = m_tags->indexFromTagRow(ensure(tag), row);
+    return m_children[static_cast<size_t>(index)];
+}
+
+std::vector<SessionItem*> SessionItem::getItems(const std::string& tag) const
+{
+    return {};
+}
+
 void SessionItem::setParent(SessionItem* parent)
 {
     m_parent = parent;

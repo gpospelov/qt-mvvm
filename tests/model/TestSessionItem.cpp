@@ -218,6 +218,41 @@ TEST_F(TestSessionItem, registerTag)
 
     //registering of tag with same name forbidden
     EXPECT_THROW(item.registerTag(TagInfo::universalTag("tagname")), std::runtime_error);
+
+    //registering empty tag is forbidden
+    EXPECT_THROW(item.registerTag(TagInfo::universalTag("")), std::runtime_error);
+
+}
+
+//! Insert and take tagged items.
+
+TEST_F(TestSessionItem, singleTagAndItems)
+{
+    const std::string tag1 = "tag1";
+
+    // creating parent with one tag
+    std::unique_ptr<SessionItem> parent(new SessionItem);
+    parent->registerTag(TagInfo::universalTag(tag1));
+    EXPECT_TRUE(parent->isTag(tag1));
+
+    // inserting two children
+    auto child1 = new SessionItem;
+    auto child2 = new SessionItem;
+    parent->insertItem(-1, child1, tag1);
+    parent->insertItem(-1, child2, tag1);
+
+    // testing result of insertion via non-tag interface
+    std::vector<SessionItem*> expected = {child1, child2};
+    EXPECT_EQ(parent->children(), expected);
+    EXPECT_EQ(parent->rowOfChild(child1), 0);
+    EXPECT_EQ(parent->rowOfChild(child2), 1);
+
+    // testing single item access via tag interface
+    EXPECT_THROW(parent->getItem(), std::runtime_error); // no items in default tag
+    EXPECT_EQ(parent->getItem(tag1), child1);
+    EXPECT_EQ(parent->getItem(tag1, 0), child1);
+    EXPECT_EQ(parent->getItem(tag1, 1), child2);
+    EXPECT_THROW(parent->getItem(tag1, 2), std::runtime_error); // wrong row
 }
 
 
