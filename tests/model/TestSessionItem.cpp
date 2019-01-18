@@ -2,6 +2,7 @@
 #include "test_utils.h"
 #include "sessionitem.h"
 #include "itempool.h"
+#include "taginfo.h"
 #include <memory>
 
 using namespace ModelView;
@@ -198,4 +199,26 @@ TEST_F(TestSessionItem, registerItem)
     EXPECT_EQ(item->roles(), expected_roles);
     EXPECT_EQ(item->data(ItemDataRole::IDENTIFIER).value<std::string>(), key);
 }
+
+//! Item registration in a pool.
+
+TEST_F(TestSessionItem, defaultTag)
+{
+    SessionItem item;
+    EXPECT_EQ(item.defaultTag(), std::string("defaultTag"));
+    EXPECT_TRUE(item.isTag("defaultTag"));
+}
+
+//! Registering tags
+
+TEST_F(TestSessionItem, registerTag)
+{
+    SessionItem item;
+    item.registerTag(TagInfo::defaultTag("tagname"));
+    EXPECT_TRUE(item.isTag("tagname"));
+
+    //registering of tag with same name forbidden
+    EXPECT_THROW(item.registerTag(TagInfo::defaultTag("tagname")), std::runtime_error);
+}
+
 

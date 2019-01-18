@@ -44,6 +44,18 @@ TEST_F(TestSessionItemTags, registerTag)
     EXPECT_EQ(tags.modelTypesForTag("tag2"), expected);
 }
 
+//! Registering tag from TagInfo object.
+
+TEST_F(TestSessionItemTags, registerTagInfo)
+{
+    SessionItemTags tags;
+
+    TagInfo tag = TagInfo::defaultTag("tagname");
+    tags.registerTag(tag);
+    EXPECT_TRUE(tags.isValid(tag.name()));
+}
+
+
 TEST_F(TestSessionItemTags, modelTypesForTag)
 {
     SessionItemTags tags;

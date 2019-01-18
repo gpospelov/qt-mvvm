@@ -22,6 +22,9 @@ namespace ModelView {
 class CORE_EXPORT SessionItemTags
 {
 public:
+
+    bool registerTag(const TagInfo& info);
+
     bool registerTag(const std::string& name, int min, int max,
                      const std::vector<std::string>& modelTypes);
 

@@ -21,6 +21,16 @@ using namespace ModelView;
 //! Register tag with given parameters. Returns true in case of success. Returns
 //! false if parameters are invalid or such tag was already registered.
 
+bool SessionItemTags::registerTag(const TagInfo& info)
+{
+    if (isValid(info.name()))
+        throw std::runtime_error("SessionItemTags::registerTag() -> Error. Existing name");
+
+    m_tags.push_back(info);
+
+    return true;
+}
+
 bool SessionItemTags::registerTag(const std::string& name, int min, int max,
                                   const std::vector<std::string>& modelTypes)
 {

@@ -20,7 +20,7 @@
 #include <cassert>
 
 namespace {
-    const std::string default_tag = "defaultTag";
+    const std::string default_tag_name = "defaultTag";
 }
 
 using namespace ModelView;
@@ -32,7 +32,8 @@ SessionItem::SessionItem(model_type modelType)
     , m_tags(new SessionItemTags)
     , m_modelType(std::move(modelType))
 {
-    setDefaultTag(default_tag);
+    registerTag(TagInfo::defaultTag(default_tag_name));
+    setDefaultTag(default_tag_name);
 }
 
 SessionItem::~SessionItem()
@@ -158,6 +159,16 @@ std::string SessionItem::defaultTag() const
 void SessionItem::setDefaultTag(const std::string& tag)
 {
     m_default_tag = tag;
+}
+
+void SessionItem::registerTag(const TagInfo& tagInfo)
+{
+    m_tags->registerTag(tagInfo);
+}
+
+bool SessionItem::isTag(const std::string& name)
+{
+    return m_tags->isValid(name);
 }
 
 void SessionItem::setParent(SessionItem* parent)

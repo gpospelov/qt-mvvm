@@ -22,6 +22,7 @@ class SessionModel;
 class ItemPool;
 class SessionItemData;
 class SessionItemTags;
+class TagInfo;
 
 class CORE_EXPORT SessionItem {
     friend class SessionModel;
@@ -57,8 +58,13 @@ public:
 
     std::vector<int> roles() const;
 
+    // tags
     std::string defaultTag() const;
     void setDefaultTag(const std::string& tag);
+
+    void registerTag(const TagInfo& tagInfo);
+
+    bool isTag(const std::string& name);
 
 private:
     void setParent(SessionItem* parent);
