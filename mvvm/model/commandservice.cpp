@@ -40,7 +40,7 @@ void CommandService::push(QUndoCommand* command)
     }
 }
 
-SessionItem* CommandService::insertNewItem(const model_type& modelType, SessionItem* parent, int row)
+SessionItem* CommandService::insertNewItem(const model_type& modelType, SessionItem* parent, int row, std::string tag)
 {
     if (!parent)
         parent = m_model->rootItem();
@@ -48,7 +48,7 @@ SessionItem* CommandService::insertNewItem(const model_type& modelType, SessionI
     // FIXME when tag is there
     row = row < 0 ? parent->childrenCount() : row;
 
-    push(new InsertNewItemCommand(modelType, parent, row));
+    push(new InsertNewItemCommand(modelType, parent, row, tag));
 
     return parent->childAt(row);
 }

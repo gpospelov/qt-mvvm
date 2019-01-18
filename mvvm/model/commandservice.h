@@ -34,7 +34,7 @@ public:
 
     void push(QUndoCommand* command);
 
-    SessionItem* insertNewItem(const model_type& modelType, SessionItem* parent, int row);
+    SessionItem* insertNewItem(const model_type& modelType, SessionItem* parent, int row, std::string tag);
 
     bool setData(SessionItem* item, const QVariant& value, int role);
 

@@ -43,8 +43,10 @@ void SetValueCommand::redo()
 
 // ----------------------------------------------------------------------------
 
-InsertNewItemCommand::InsertNewItemCommand(model_type modelType, SessionItem* parent, int row)
+InsertNewItemCommand::InsertNewItemCommand(model_type modelType, SessionItem* parent, int row,
+                                           std::string tag)
     : m_row(row)
+    , m_tag(std::move(tag))
     , m_model_type(std::move(modelType))
     , m_model(parent->model())
 {
@@ -54,14 +56,14 @@ InsertNewItemCommand::InsertNewItemCommand(model_type modelType, SessionItem* pa
 void InsertNewItemCommand::undo()
 {
     auto parent = m_model->itemFromPath(m_parent_path);
-    delete parent->takeItem(m_row);
+    delete parent->takeItem(m_row, m_tag);
 }
 
 void InsertNewItemCommand::redo()
 {
     auto parent = m_model->itemFromPath(m_parent_path);
     auto child = m_model->manager()->createItem(m_model_type);
-    parent->insertItem(m_row, child);
+    parent->insertItem(m_row, child, m_tag);
 }
 
 

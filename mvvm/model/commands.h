@@ -46,7 +46,7 @@ private:
 class CORE_EXPORT InsertNewItemCommand : public QUndoCommand
 {
 public:
-    InsertNewItemCommand(model_type modelType, SessionItem* parent, int row);
+    InsertNewItemCommand(model_type modelType, SessionItem* parent, int row, std::string tag);
 
     void undo() override;
     void redo() override;
@@ -54,6 +54,7 @@ public:
 private:
     Path m_parent_path;
     int m_row;
+    std::string m_tag;
     model_type m_model_type;
     SessionModel* m_model;
 };
