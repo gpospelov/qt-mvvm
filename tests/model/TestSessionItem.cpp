@@ -328,3 +328,36 @@ TEST_F(TestSessionItem, twoTagsAndItems)
     EXPECT_EQ(parent->getItems(tag2), expected);
 }
 
+//! Inserting and removing items when tag has limits.
+
+TEST_F(TestSessionItem, tagWithLimits)
+{
+    const std::string tag1 = "tag1";
+    const int maxItems = 3;
+    std::unique_ptr<SessionItem> parent(new SessionItem);
+    parent->registerTag(TagInfo(tag1, 0, maxItems, std::vector<std::string>() = {}));
+
+    // placing maximu allowed number of items
+    std::vector<SessionItem*> expected;
+    for (int i = 0; i < maxItems; ++i) {
+        auto child = new SessionItem;
+        expected.push_back(child);
+        EXPECT_TRUE(parent->insertItem(-1, child, tag1));
+    }
+    EXPECT_EQ(parent->getItems(tag1), expected);
+
+    // no room for extra item
+    auto extra = new SessionItem;
+    EXPECT_THROW(parent->insertItem(-1, extra, tag1), std::runtime_error);
+
+    // removing first element
+    delete parent->takeItem(0, tag1);
+    expected.erase(expected.begin());
+    EXPECT_EQ(parent->getItems(tag1), expected);
+
+    // adding extra item
+    parent->insertItem(-1, extra, tag1);
+    expected.push_back(extra);
+    EXPECT_EQ(parent->getItems(tag1), expected);
+}
+
