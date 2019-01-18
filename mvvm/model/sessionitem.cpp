@@ -32,7 +32,7 @@ SessionItem::SessionItem(model_type modelType)
     , m_tags(new SessionItemTags)
     , m_modelType(std::move(modelType))
 {
-    registerTag(TagInfo::defaultTag(default_tag_name));
+    registerTag(TagInfo::universalTag(default_tag_name));
     setDefaultTag(default_tag_name);
 }
 

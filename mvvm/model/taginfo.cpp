@@ -37,14 +37,14 @@ ModelView::TagInfo::TagInfo(std::string name, int min, int max, std::vector<std:
     }
 }
 
-ModelView::TagInfo ModelView::TagInfo::defaultTag(std::string name)
+ModelView::TagInfo ModelView::TagInfo::universalTag(std::string name)
 {
     return TagInfo(std::move(name), 0, -1, {});
 }
 
-ModelView::TagInfo ModelView::TagInfo::propertyTag(std::string name, std::string property_type)
+ModelView::TagInfo ModelView::TagInfo::propertyTag(std::string name, std::string model_type)
 {
-    return TagInfo(std::move(name), 1, 1, {std::move(property_type)});
+    return TagInfo(std::move(name), 1, 1, {std::move(model_type)});
 }
 
 std::string ModelView::TagInfo::name() const
@@ -100,7 +100,7 @@ void ModelView::TagInfo::remove()
     m_childCount--;
 }
 
-bool ModelView::TagInfo::isSingleItemTag() const
+bool ModelView::TagInfo::isSinglePropertyTag() const
 {
     return m_min == 1 && m_max == 1 && m_childCount == 1;
 }

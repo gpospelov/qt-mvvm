@@ -50,7 +50,7 @@ TEST_F(TestSessionItemTags, registerTagInfo)
 {
     SessionItemTags tags;
 
-    TagInfo tag = TagInfo::defaultTag("tagname");
+    TagInfo tag = TagInfo::universalTag("tagname");
     tags.registerTag(tag);
     EXPECT_TRUE(tags.isValid(tag.name()));
 }

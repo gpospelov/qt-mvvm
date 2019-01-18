@@ -25,11 +25,11 @@ public:
 
     TagInfo(std::string name, int min, int max, std::vector<std::string> modelTypes);
 
-    //! Returns default tag (intended for unlimited amount of various items).
-    static TagInfo defaultTag(std::string name);
+    //! Returns universal tag intended for unlimited amount of various items.
+    static TagInfo universalTag(std::string name);
 
-    //! Returns tag inteded for single property.
-    static TagInfo propertyTag(std::string name, std::string property_type);
+    //! Returns tag intended for single property.
+    static TagInfo propertyTag(std::string name, std::string model_type);
 
     std::string name() const;
 
@@ -49,7 +49,7 @@ public:
 
     void remove();
 
-    bool isSingleItemTag() const;
+    bool isSinglePropertyTag() const;
 
 private:
     std::string m_name;

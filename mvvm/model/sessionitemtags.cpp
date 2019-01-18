@@ -148,7 +148,7 @@ void SessionItemTags::removeChild(const std::string& tagName)
 
 bool SessionItemTags::isSingleItemTag(const std::string& tagName)
 {
-    return tagInfo(tagName).isSingleItemTag();
+    return tagInfo(tagName).isSinglePropertyTag();
 }
 
 TagInfo& SessionItemTags::tagInfo(const std::string& tagName)

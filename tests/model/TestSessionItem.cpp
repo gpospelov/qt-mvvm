@@ -214,11 +214,11 @@ TEST_F(TestSessionItem, defaultTag)
 TEST_F(TestSessionItem, registerTag)
 {
     SessionItem item;
-    item.registerTag(TagInfo::defaultTag("tagname"));
+    item.registerTag(TagInfo::universalTag("tagname"));
     EXPECT_TRUE(item.isTag("tagname"));
 
     //registering of tag with same name forbidden
-    EXPECT_THROW(item.registerTag(TagInfo::defaultTag("tagname")), std::runtime_error);
+    EXPECT_THROW(item.registerTag(TagInfo::universalTag("tagname")), std::runtime_error);
 }
 
 

@@ -19,7 +19,7 @@ TEST_F(TestTagInfo, initialState)
     EXPECT_EQ(tag.min(), 0);
     EXPECT_EQ(tag.max(), -1);
     EXPECT_FALSE(tag.maximumReached());
-    EXPECT_FALSE(tag.isSingleItemTag());
+    EXPECT_FALSE(tag.isSinglePropertyTag());
     EXPECT_TRUE(tag.isValidChild(""));
     EXPECT_TRUE(tag.isValidChild("abc"));
 }
@@ -29,13 +29,13 @@ TEST_F(TestTagInfo, initialState)
 TEST_F(TestTagInfo, defaultTag)
 {
     // initial state
-    TagInfo tag = TagInfo::defaultTag("name");
+    TagInfo tag = TagInfo::universalTag("name");
     EXPECT_EQ(tag.name(), std::string("name"));
     EXPECT_EQ(tag.childCount(), 0);
     EXPECT_EQ(tag.min(), 0);
     EXPECT_EQ(tag.max(), -1);
     EXPECT_FALSE(tag.maximumReached());
-    EXPECT_FALSE(tag.isSingleItemTag());
+    EXPECT_FALSE(tag.isSinglePropertyTag());
     EXPECT_TRUE(tag.isValidChild(""));
     EXPECT_TRUE(tag.isValidChild("abc"));
 
@@ -65,7 +65,7 @@ TEST_F(TestTagInfo, propertyTag)
     EXPECT_EQ(tag.min(), 1);
     EXPECT_EQ(tag.max(), 1);
     EXPECT_FALSE(tag.maximumReached());
-    EXPECT_FALSE(tag.isSingleItemTag());
+    EXPECT_FALSE(tag.isSinglePropertyTag());
     EXPECT_TRUE(tag.isValidChild("model_type"));
     EXPECT_FALSE(tag.isValidChild("abc"));
 
