@@ -253,6 +253,15 @@ TEST_F(TestSessionItem, singleTagAndItems)
     EXPECT_EQ(parent->getItem(tag1, 0), child1);
     EXPECT_EQ(parent->getItem(tag1, 1), child2);
     EXPECT_THROW(parent->getItem(tag1, 2), std::runtime_error); // wrong row
+
+    // access to multiple items via tags interface
+    EXPECT_EQ(parent->getItems(), std::vector<SessionItem*>()); // no items in default tag
+    EXPECT_EQ(parent->getItems(tag1), expected);
+
+    // removing first item
+    delete parent->takeItem(0, tag1);
+    EXPECT_EQ(parent->getItems(tag1), std::vector<SessionItem*>() = {child2});
+
 }
 
 

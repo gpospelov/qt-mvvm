@@ -116,6 +116,7 @@ SessionItem* SessionItem::takeItem(int row, const std::string& tag)
 
         result = childAt(index);
         m_children.erase(m_children.begin() + index);
+        m_tags->removeChild(tagName);
         if (result) {
             result->setParent(nullptr);
             result->setModel(nullptr);
@@ -184,7 +185,13 @@ SessionItem* SessionItem::getItem(const std::string& tag, int row) const
 
 std::vector<SessionItem*> SessionItem::getItems(const std::string& tag) const
 {
-    return {};
+    auto tagName = ensure(tag);
+    int startIndex = m_tags->tagStartIndex(tagName);
+    int endIndex = startIndex + m_tags->childCount(tagName);
+    std::vector<SessionItem*> result;
+    std::copy(m_children.begin()+startIndex, m_children.begin()+endIndex,
+               std::back_inserter(result));
+    return result;
 }
 
 void SessionItem::setParent(SessionItem* parent)
