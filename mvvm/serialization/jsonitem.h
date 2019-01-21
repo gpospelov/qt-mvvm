@@ -20,12 +20,14 @@ namespace ModelView {
 
 class SessionItem;
 class JsonItemDataInterface;
+class JsonItemTagsInterface;
 
 class CORE_EXPORT JsonItem : public JsonItemInterface
 {
 public:
     static const QString modelKey;
     static const QString itemDataKey;
+    static const QString itemTagsKey;
     static const QString itemsKey;
 
     JsonItem();
@@ -42,6 +44,7 @@ public:
 
 private:
     std::unique_ptr<JsonItemDataInterface> m_itemdata_converter;
+    std::unique_ptr<JsonItemTagsInterface> m_itemtags_converter;
 };
 
 }  // namespace ModelView

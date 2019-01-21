@@ -9,8 +9,10 @@
 
 #include "jsonitem.h"
 #include "jsonitemdata.h"
+#include "jsonitemtags.h"
 #include "sessionitem.h"
 #include "sessionitemdata.h"
+#include "sessionitemtags.h"
 #include "itemutils.h"
 #include "itemmanager.h"
 #include "customvariants.h"
@@ -26,7 +28,7 @@ using namespace ModelView;
 namespace {
 QStringList expected_item_keys() {
     QStringList result = QStringList() << JsonItem::modelKey << JsonItem::itemDataKey
-                                       << JsonItem::itemsKey;
+                                       << JsonItem::itemsKey << JsonItem::itemTagsKey;
     std::sort(result.begin(), result.end());
     return result;
 }
@@ -35,11 +37,13 @@ QStringList expected_item_keys() {
 
 const QString ModelView::JsonItem::modelKey = "model";
 const QString ModelView::JsonItem::itemDataKey = "itemData";
+const QString ModelView::JsonItem::itemTagsKey = "itemTags";
 const QString ModelView::JsonItem::itemsKey = "items";
 
 
 JsonItem::JsonItem()
     : m_itemdata_converter(new JsonItemData)
+    , m_itemtags_converter(new JsonItemTags)
 {
 
 }
@@ -63,6 +67,9 @@ void JsonItem::json_to_item(const QJsonObject& json, SessionItem* parent, int ro
     auto itemData = m_itemdata_converter->get_data(json[itemDataKey].toArray());
     item->m_data = std::make_unique<SessionItemData>(itemData);
 
+    auto itemTags = m_itemtags_converter->get_tags(json[itemTagsKey].toArray());
+    item->m_tags = std::make_unique<SessionItemTags>(itemTags);
+
     // FIXME find more elegant way to replace item registration
     identifier_type identifier = itemData.data(ItemDataRole::IDENTIFIER).value<std::string>();
     parent->model()->manager()->fix_registration(item, identifier);
@@ -80,6 +87,7 @@ void JsonItem::item_to_json(const SessionItem* item, QJsonObject& json) const
 
     json[modelKey] = QString::fromStdString(item->modelType());
     json[itemDataKey] = m_itemdata_converter->get_json(*item->m_data);
+    json[itemTagsKey] = m_itemtags_converter->get_json(*item->m_tags);
 
     QJsonArray itemArray;
     for (auto child : item->children()) {
@@ -101,6 +109,9 @@ bool JsonItem::is_item(const QJsonObject& object) const
         return false;
 
     if (!object[itemDataKey].isArray())
+        return false;
+
+    if (!object[itemTagsKey].isArray())
         return false;
 
     return true;

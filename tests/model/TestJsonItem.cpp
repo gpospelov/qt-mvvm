@@ -40,11 +40,13 @@ TEST_F(TestJsonItem, isValidItem)
     object[JsonItem::modelKey] = "abc";
     object[JsonItem::itemsKey] = 42; // incorrect
     object[JsonItem::itemDataKey] = QJsonArray();
+    object[JsonItem::itemTagsKey] = QJsonArray();
     EXPECT_FALSE(converter.is_item(object));
 
     // correctly constructed
     object[JsonItem::itemsKey] = QJsonArray();
     object[JsonItem::itemDataKey] = QJsonArray();
+    object[JsonItem::itemTagsKey] = QJsonArray();
     EXPECT_TRUE(converter.is_item(object));
 
     // wrong extra key in json
