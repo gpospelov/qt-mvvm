@@ -1,6 +1,7 @@
 #include "google_test.h"
 #include "sessionmodel.h"
 #include "sessionitem.h"
+#include "taginfo.h"
 #include <memory>
 
 using namespace ModelView;
@@ -46,6 +47,26 @@ TEST_F(TestSessionModel, insertNewItem)
     EXPECT_EQ(child->model(), nullptr);
     delete taken;
 }
+
+TEST_F(TestSessionModel, insertNewItemWithTag)
+{
+    const std::string tag1("tag1");
+    SessionModel model;
+    auto parent = model.insertNewItem("parentModel");
+    parent->registerTag(TagInfo::universalTag(tag1));
+    auto child1 = model.insertNewItem("childModel", parent, -1, tag1);
+
+    EXPECT_EQ(parent->tagFromItem(child1), tag1);
+    EXPECT_EQ(parent->rowOfChild(child1), 0);
+
+    // adding second child
+    auto child2 = model.insertNewItem("childModel", parent, 0, tag1);
+
+    EXPECT_EQ(parent->tagFromItem(child2), tag1);
+    EXPECT_EQ(parent->rowOfChild(child1), 1);
+    EXPECT_EQ(parent->rowOfChild(child2), 0);
+}
+
 
 TEST_F(TestSessionModel, setData)
 {
