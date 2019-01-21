@@ -30,8 +30,8 @@ QJsonArray JsonItemData::get_json(const SessionItemData& data)
 {
     QJsonArray result;
 
-    QJsonObject object;
     for (const auto& x : data) {
+        QJsonObject object;
         if (role_to_save(x.m_role)) {
             object[roleKey] = x.m_role;
             object[variantKey] = m_variant_converter->get_json(x.m_data);
