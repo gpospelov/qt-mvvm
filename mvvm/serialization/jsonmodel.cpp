@@ -58,7 +58,7 @@ void JsonModel::model_to_json(const SessionModel& model, QJsonObject& json) cons
 
     for(auto item : model.rootItem()->children()) {
         QJsonObject object;
-        item_to_json(item, object);
+        m_item_converter->item_to_json(item, object);
         itemArray.append(object);
     }
 
@@ -81,7 +81,7 @@ void JsonModel::json_to_model(const QJsonObject& json, SessionModel& model) cons
 
     auto parent = model.rootItem();
     for(const auto ref : json[itemsKey].toArray())
-        json_to_item(ref.toObject(), parent);
+        m_item_converter->json_to_item(ref.toObject(), parent);
 
 }
 
@@ -93,11 +93,6 @@ void JsonModel::json_to_item(const QJsonObject& json, SessionItem* parent, int r
 void JsonModel::item_to_json(const SessionItem* item, QJsonObject& json) const
 {
     return m_item_converter->item_to_json(item, json);
-}
-
-bool JsonModel::is_item(const QJsonObject& object) const
-{
-    return m_item_converter->is_item(object);
 }
 
 bool JsonModel::is_model(const QJsonObject& object) const
