@@ -194,6 +194,17 @@ std::vector<SessionItem*> SessionItem::getItems(const std::string& tag) const
     return result;
 }
 
+std::string SessionItem::tagFromItem(const SessionItem* item) const
+{
+    auto it = std::find(m_children.begin(), m_children.end(), item);
+    if (it!=m_children.end()) {
+        int index = static_cast<int>(std::distance(m_children.begin(), it));
+        return m_tags->tagFromIndex(index);
+    }
+
+    return {};
+}
+
 void SessionItem::setParent(SessionItem* parent)
 {
     m_parent = parent;

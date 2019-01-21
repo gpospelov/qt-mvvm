@@ -394,3 +394,37 @@ TEST_F(TestSessionItem, tagModelTypes)
     expected = {item3};
     EXPECT_EQ(parent->getItems(tag2), expected);
 }
+
+TEST_F(TestSessionItem, tagFromItem)
+{
+    const std::string tag1 = "tag1";
+    const std::string tag2 = "tag2";
+
+    // creating parent with one tag
+    std::unique_ptr<SessionItem> parent(new SessionItem);
+    parent->registerTag(TagInfo::universalTag(tag1));
+    parent->registerTag(TagInfo::universalTag(tag2));
+
+    // inserting two children
+    auto child_t1_a = new SessionItem;
+    auto child_t1_b = new SessionItem;
+    auto child_t2_a = new SessionItem;
+    auto child_t2_b = new SessionItem;
+    auto child_t2_c = new SessionItem;
+    parent->insertItem(-1, child_t2_a, tag2);
+    parent->insertItem(-1, child_t2_c, tag2);
+    parent->insertItem(-1, child_t1_a, tag1);
+    parent->insertItem(-1, child_t1_b, tag1);
+    parent->insertItem(1, child_t2_b, tag2); // between child_t2_a and child_t2_c
+
+    EXPECT_EQ(parent->tagFromItem(child_t1_a), "tag1");
+    EXPECT_EQ(parent->tagFromItem(child_t1_b), "tag1");
+    EXPECT_EQ(parent->tagFromItem(child_t2_a), "tag2");
+    EXPECT_EQ(parent->tagFromItem(child_t2_b), "tag2");
+    EXPECT_EQ(parent->tagFromItem(child_t2_c), "tag2");
+
+    auto child = new SessionItem;
+    EXPECT_EQ(parent->tagFromItem(child), "");
+    delete child;
+}
+

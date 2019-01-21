@@ -69,6 +69,7 @@ public:
     // access tagged items
     SessionItem* getItem(const std::string& tag = {}, int row = 0) const;
     std::vector<SessionItem*> getItems(const std::string& tag = {}) const;
+    std::string tagFromItem(const SessionItem* item) const;
 
 private:
     void setParent(SessionItem* parent);
