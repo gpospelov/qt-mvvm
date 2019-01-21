@@ -190,3 +190,13 @@ bool SessionItemTags::maximumReached(const std::string& tagName) const
 {
     return tagInfo(tagName).maximumReached();
 }
+
+SessionItemTags::const_iterator SessionItemTags::begin() const
+{
+    return m_tags.begin();
+}
+
+SessionItemTags::const_iterator SessionItemTags::end() const
+{
+    return m_tags.end();
+}

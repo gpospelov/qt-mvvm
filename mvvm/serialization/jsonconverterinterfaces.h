@@ -18,6 +18,7 @@ class QJsonArray;
 
 namespace ModelView {
 
+class SessionItemTags;
 class SessionItemData;
 class SessionModel;
 class SessionItem;
@@ -32,6 +33,18 @@ public:
     virtual QJsonObject get_json(const QVariant&) = 0;
 
     virtual QVariant get_variant(const QJsonObject&) = 0;
+};
+
+//! Base class for all converters of SessionItemTags to/from json object
+
+class CORE_EXPORT JsonItemTagsInterface
+{
+public:
+    virtual ~JsonItemTagsInterface() = default;
+
+    virtual QJsonArray get_json(const SessionItemTags&) = 0;
+
+    virtual SessionItemTags get_tags(const QJsonArray&) = 0;
 };
 
 //! Base class for all converters of SessionItemData to/from json object
@@ -58,7 +71,6 @@ public:
     virtual void item_to_json(const SessionItem* item, QJsonObject& json) const = 0;
 
     virtual bool is_item(const QJsonObject& object) const = 0;
-
 };
 
 //! Base class for all converters of SessionModel to/from json object.
@@ -75,7 +87,6 @@ public:
     virtual void json_to_item(const QJsonObject& json, SessionItem* parent, int row = -1)  const = 0;
 
     virtual void item_to_json(const SessionItem* item, QJsonObject& json) const = 0;
-
 };
 
 }  // namespace ModelView

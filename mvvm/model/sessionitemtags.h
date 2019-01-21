@@ -22,6 +22,8 @@ namespace ModelView {
 class CORE_EXPORT SessionItemTags
 {
 public:
+    using container_type = std::vector<TagInfo>;
+    using const_iterator = container_type::const_iterator;
 
     bool registerTag(const TagInfo& info);
 
@@ -48,11 +50,14 @@ public:
 
     bool maximumReached(const std::string& tagName) const;
 
+    const_iterator begin() const;
+    const_iterator end() const;
+
 private:
     TagInfo& tagInfo(const std::string& tagName);
     const TagInfo& tagInfo(const std::string& tagName) const;
 
-    std::vector<TagInfo> m_tags;
+    container_type m_tags;
 };
 
 }  // namespace ModelView
