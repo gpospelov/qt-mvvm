@@ -1,6 +1,7 @@
 #include "google_test.h"
 #include "sessionmodel.h"
 #include "jsonmodel.h"
+#include "jsonitem.h"
 #include "sessionitem.h"
 #include "test_utils.h"
 #include "itemmanager.h"
@@ -28,75 +29,6 @@ public:
 TestJsonModel::~TestJsonModel() = default;
 const QString TestJsonModel::test_dir = "test_JsonModel";
 
-//! Checks the validity of json object representing item tree.
-
-TEST_F(TestJsonModel, isValidItem)
-{
-    JsonModel converter;
-
-    // empty json object is not valid
-    QJsonObject object;
-    EXPECT_FALSE(converter.is_item(object));
-
-    // it also should contain array
-    object[JsonModel::modelKey] = "abc";
-    object[JsonModel::itemsKey] = 42; // incorrect
-    object[JsonModel::itemDataKey] = QJsonArray();
-    EXPECT_FALSE(converter.is_item(object));
-
-    // correctly constructed
-    object[JsonModel::itemsKey] = QJsonArray();
-    object[JsonModel::itemDataKey] = QJsonArray();
-    EXPECT_TRUE(converter.is_item(object));
-
-    // wrong extra key in json
-    object["abc"] = "abc";
-    EXPECT_FALSE(converter.is_item(object));
-    EXPECT_FALSE(converter.is_item(object));
-}
-
-//! Checks creation of json object: single item (no children) without the data.
-
-TEST_F(TestJsonModel, singleItem)
-{
-    const QString model_type("MultiLayer");
-
-    JsonModel converter;
-    std::unique_ptr<SessionItem> parent(new SessionItem(model_type.toStdString()));
-
-    QJsonObject object;
-    converter.item_to_json(parent.get(), object);
-
-    EXPECT_EQ(object[JsonModel::modelKey], model_type);
-    EXPECT_EQ(object[JsonModel::itemsKey].toArray().size(), 0);
-    EXPECT_EQ(object[JsonModel::itemDataKey].toArray().size(), 0);
-}
-
-//! Checks creation of json object: parent item with one data variant and one child on board.
-
-TEST_F(TestJsonModel, parentAndChild)
-{
-    const QString model_type("MultiLayer");
-    JsonModel converter;
-
-    // constructing multilayer
-    std::unique_ptr<SessionItem> parent(new SessionItem(model_type.toStdString()));
-    parent->setData(QVariant::fromValue(42), 1);
-    auto child = new SessionItem("Layer");
-    parent->insertItem(-1, child);
-
-    QJsonObject object;
-    converter.item_to_json(parent.get(), object);
-
-    EXPECT_EQ(object[JsonModel::modelKey], model_type);
-    EXPECT_EQ(object[JsonModel::itemsKey].toArray().size(), 1);
-    EXPECT_EQ(object[JsonModel::itemDataKey].toArray().size(), 1);
-
-    // saving to file
-    auto fileName = TestUtils::TestFileName(test_dir, "items.json");
-    TestUtils::SaveJson(object, fileName);
-}
-
 //! Validity of json object representing SessionModel.
 
 TEST_F(TestJsonModel, isValidModel)
@@ -110,7 +42,7 @@ TEST_F(TestJsonModel, isValidModel)
     // json object representing SessionItem can not represent the model
     object[JsonModel::modelKey] = "abc";
     object[JsonModel::itemsKey] = QJsonArray();
-    object[JsonModel::itemDataKey] = QJsonArray();
+    object[JsonItem::itemDataKey] = QJsonArray();
     EXPECT_FALSE(converter.is_model(object));
 
     // json object representing valid SessionModel
@@ -159,7 +91,7 @@ TEST_F(TestJsonModel, parentAndChildInModel)
 
     auto parent = model.insertNewItem("MultiLayer");
     parent->setData(QVariant::fromValue(42), 1);
-    auto child = model.insertNewItem("Layer", parent);
+    model.insertNewItem("Layer", parent);
 
     QJsonObject object;
     converter.model_to_json(model, object);
@@ -207,7 +139,7 @@ TEST_F(TestJsonModel, parentAndChildModelFromJson)
     // filling original model with content
     auto parent = model.insertNewItem("MultiLayer");
     parent->setData(QVariant::fromValue(42), 1);
-    auto child = model.insertNewItem("Layer", parent);
+    model.insertNewItem("Layer", parent);
 
     // writing model to json
     QJsonObject object;

@@ -35,7 +35,6 @@ QStringList expected_model_keys() {
 }
 
 const QString ModelView::JsonModel::modelKey = "model";
-const QString ModelView::JsonModel::itemDataKey = "itemData";
 const QString ModelView::JsonModel::itemsKey = "items";
 const QString ModelView::JsonModel::versionKey = "version";
 

@@ -26,7 +26,6 @@ class CORE_EXPORT JsonModel : public JsonModelInterface
 {
 public:
     static const QString modelKey;
-    static const QString itemDataKey;
     static const QString itemsKey;
     static const QString versionKey;
 
