@@ -27,6 +27,7 @@ class TagInfo;
 class CORE_EXPORT SessionItem {
     friend class SessionModel;
     friend class JsonModel;
+    friend class JsonItem;
 public:
     SessionItem(model_type modelType = {});
     virtual ~SessionItem();
