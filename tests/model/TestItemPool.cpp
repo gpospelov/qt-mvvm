@@ -129,4 +129,6 @@ TEST_F(TestItemPool, customKey)
     // attempt to reuse key again
     std::unique_ptr<SessionItem> item2(new SessionItem);
     EXPECT_THROW(pool->register_item(item2.get(), id), std::runtime_error);
+
+    delete item;
 }

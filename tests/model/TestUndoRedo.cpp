@@ -152,7 +152,7 @@ TEST_F(TestUndoRedo, setData)
     EXPECT_EQ(model.data(item, role).toDouble(), 44.0);
 }
 
-//! Undo/redo scenario when item data changed thourgh item and not the model.
+//! Undo/redo scenario when item data changed through item and not the model.
 
 TEST_F(TestUndoRedo, setDataThroughItem)
 {
