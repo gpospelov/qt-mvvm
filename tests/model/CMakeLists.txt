@@ -12,7 +12,7 @@ include_directories(${BUILD_INC_DIR} ${gtest_SOURCE_DIR}/include ${gtest_SOURCE_
 
 set(CMAKE_AUTOMOC ON)
 add_executable(${test} ${source_files} ${include_files})
-target_link_libraries(${test} gtest Qt5::Core Qt5::Test mvvm)
+target_link_libraries(${test} gtest Qt5::Core Qt5::Test mvvm testmachinery)
 
 #add_custom_target(${test}_run ALL DEPENDS ${test} COMMAND ${test})
 gtest_discover_tests(${test})
