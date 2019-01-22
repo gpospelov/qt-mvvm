@@ -8,9 +8,9 @@
 // ************************************************************************** //
 
 #include "taginfo.h"
-#include <stdexcept>
 #include <algorithm>
 #include <sstream>
+#include <stdexcept>
 
 namespace
 {
@@ -22,7 +22,6 @@ template <typename A, typename B> bool contains(const A& container, const B& ele
 
 ModelView::TagInfo::TagInfo() : m_min(0), m_max(-1), m_childCount(0)
 {
-
 }
 
 ModelView::TagInfo::TagInfo(std::string name, int min, int max, std::vector<std::string> modelTypes)
@@ -37,9 +36,10 @@ ModelView::TagInfo::TagInfo(std::string name, int min, int max, std::vector<std:
     }
 }
 
-ModelView::TagInfo ModelView::TagInfo::universalTag(std::string name)
+ModelView::TagInfo ModelView::TagInfo::universalTag(std::string name,
+                                                    std::vector<std::string> modelTypes)
 {
-    return TagInfo(std::move(name), 0, -1, {});
+    return TagInfo(std::move(name), 0, -1, modelTypes);
 }
 
 ModelView::TagInfo ModelView::TagInfo::propertyTag(std::string name, std::string model_type)

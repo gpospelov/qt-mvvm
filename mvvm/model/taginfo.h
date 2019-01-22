@@ -26,7 +26,7 @@ public:
     TagInfo(std::string name, int min, int max, std::vector<std::string> modelTypes);
 
     //! Returns universal tag intended for unlimited amount of various items.
-    static TagInfo universalTag(std::string name);
+    static TagInfo universalTag(std::string name, std::vector<std::string> modelTypes={});
 
     //! Returns tag intended for single property.
     static TagInfo propertyTag(std::string name, std::string model_type);
