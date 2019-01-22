@@ -157,12 +157,12 @@ std::vector<int> SessionItem::roles() const
 
 std::string SessionItem::defaultTag() const
 {
-    return m_default_tag;
+    return data(ItemDataRole::DEFAULT_TAG).value<std::string>();
 }
 
 void SessionItem::setDefaultTag(const std::string& tag)
 {
-    m_default_tag = tag;
+    setDataIntern(QVariant::fromValue(tag), ItemDataRole::DEFAULT_TAG);
 }
 
 void SessionItem::registerTag(const TagInfo& tagInfo)
@@ -232,7 +232,8 @@ std::string SessionItem::ensure(const std::string& tag, const std::string& model
     const std::string result = tag.empty() ? defaultTag() : tag;
 
     if (!m_tags->isValid(result, model_type))
-        throw std::runtime_error("SessionItem::ensure() -> Non existing tag");
+        throw std::runtime_error("SessionItem::ensure() -> Invalid tag '"+tag+"' for model '"+
+                                 model_type+"'");
 
     return result;
 }

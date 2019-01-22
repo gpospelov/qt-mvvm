@@ -26,7 +26,8 @@ TEST_F(TestSessionItem, initialState)
     EXPECT_FALSE(item.data(role).isValid());
     EXPECT_TRUE(item.children().empty());
     EXPECT_TRUE(item.modelType().empty());
-    EXPECT_TRUE(item.roles().empty());
+//    EXPECT_TRUE(item.roles().empty()); // FIXME defaultTag
+    EXPECT_EQ(item.roles().size(), 1u);
 }
 
 TEST_F(TestSessionItem, modelType)
@@ -44,12 +45,12 @@ TEST_F(TestSessionItem, setData)
 
     QVariant expected(42.0);
     EXPECT_TRUE(item.setData(expected, role));
-    EXPECT_EQ(item.roles().size(), 1);
+    EXPECT_EQ(item.roles().size(), 2); // FIXME defautlTag
     EXPECT_EQ(item.data(role), expected);
 
     // setting another value
     EXPECT_TRUE(item.setData(QVariant::fromValue(43.0), role));
-    EXPECT_EQ(item.roles().size(), 1);
+    EXPECT_EQ(item.roles().size(), 2); // FIXME defautlTag
     EXPECT_EQ(item.data(role), QVariant::fromValue(43.0));
 }
 
@@ -63,7 +64,7 @@ TEST_F(TestSessionItem, variantMismatch)
 
     // setting data for the first time
     EXPECT_TRUE(item.setData(expected, role));
-    EXPECT_EQ(item.roles().size(), 1);
+    EXPECT_EQ(item.roles().size(), 2); // FIXME defaultTag
     EXPECT_EQ(item.data(role), expected);
 
     // attempt to rewrite variant with another type
@@ -71,7 +72,7 @@ TEST_F(TestSessionItem, variantMismatch)
 
     // removing value by passing invalid variant
     EXPECT_NO_THROW(item.setData(QVariant(), role));
-    EXPECT_EQ(item.roles().size(), 0);
+    EXPECT_EQ(item.roles().size(), 1); // FIXME defaultTag
 }
 
 TEST_F(TestSessionItem, insertItem)
@@ -184,17 +185,20 @@ TEST_F(TestSessionItem, registerItem)
     std::unique_ptr<SessionItem> item(new SessionItem);
     std::shared_ptr<ItemPool> pool;
 
-    EXPECT_TRUE(item->roles().empty());
+//    EXPECT_TRUE(item->roles().empty());
+    EXPECT_EQ(item->roles().size(), 1u); // FIXME defaultTag
 
     // registering item on unexisting pool
     item->register_item(pool);
-    EXPECT_TRUE(item->roles().empty());
+//    EXPECT_TRUE(item->roles().empty());
+    EXPECT_EQ(item->roles().size(), 1u);// FIXME defaultTag
 
     // creating pool
     pool.reset(new ItemPool);
     item->register_item(pool);
     auto key = pool->key_for_item(item.get());
-    std::vector<int> expected_roles = {ItemDataRole::IDENTIFIER};
+    // FIXME default tag
+    std::vector<int> expected_roles = {ItemDataRole::DEFAULT_TAG, ItemDataRole::IDENTIFIER};
     EXPECT_EQ(item->roles(), expected_roles);
     EXPECT_EQ(item->data(ItemDataRole::IDENTIFIER).value<std::string>(), key);
 }

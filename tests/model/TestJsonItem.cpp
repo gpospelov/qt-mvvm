@@ -70,7 +70,7 @@ TEST_F(TestJsonItem, singleItem)
 
     EXPECT_EQ(object[JsonItem::modelKey], model_type);
     EXPECT_EQ(object[JsonItem::itemsKey].toArray().size(), 0);
-    EXPECT_EQ(object[JsonItem::itemDataKey].toArray().size(), 0);
+    EXPECT_EQ(object[JsonItem::itemDataKey].toArray().size(), 1); // FIXME defaultTag
 }
 
 //! Checks creation of json object: parent item with one data variant and one child on board.
@@ -91,7 +91,7 @@ TEST_F(TestJsonItem, parentAndChild)
 
     EXPECT_EQ(object[JsonItem::modelKey], model_type);
     EXPECT_EQ(object[JsonItem::itemsKey].toArray().size(), 1);
-    EXPECT_EQ(object[JsonItem::itemDataKey].toArray().size(), 1);
+    EXPECT_EQ(object[JsonItem::itemDataKey].toArray().size(), 2); // FIXME defaultTag
 
     // saving to file
     auto fileName = TestUtils::TestFileName(test_dir, "items.json");

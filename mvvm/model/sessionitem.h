@@ -85,7 +85,6 @@ private:
     std::unique_ptr<SessionItemData> m_data;
     std::unique_ptr<SessionItemTags> m_tags;
     model_type m_modelType;
-    std::string m_default_tag;
 };
 
 }  // namespace ModelView

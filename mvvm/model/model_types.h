@@ -23,6 +23,7 @@ namespace ItemDataRole {
 const int IDENTIFIER = 0;
 const int DATA = 1;
 const int DISPLAY = 2;
+const int DEFAULT_TAG = 3;
 };
 
 }  // namespace ModelView
