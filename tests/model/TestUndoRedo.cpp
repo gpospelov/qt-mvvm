@@ -1,7 +1,9 @@
 #include "google_test.h"
 #include "sessionmodel.h"
 #include "sessionitem.h"
+#include "itemmanager.h"
 #include "taginfo.h"
+#include "toy_items.h"
 #include <QUndoStack>
 
 using namespace ModelView;
@@ -334,3 +336,64 @@ TEST_F(TestUndoRedo, itemIdentifierOnRemove)
     EXPECT_EQ(parent_id, parent_id2);
     EXPECT_EQ(child_id, child_id2);
 }
+
+//! Create multilayer, add two layers, remove everything and undo.
+//! Toy models are used here.
+
+TEST_F(TestUndoRedo, multiLayer)
+{
+    ToyItems::SampleModel model;
+    model.setUndoRedoEnabled(true);
+    auto stack = model.undoStack();
+
+    // creating multi layer
+    auto parent = model.insertNewItem(ToyItems::MultiLayerType);
+    EXPECT_TRUE(dynamic_cast<ToyItems::MultiLayer*>(parent) != nullptr);
+    EXPECT_EQ(parent->modelType(), ToyItems::MultiLayerType);
+
+    // inserting two layers
+    auto layer0 = model.insertNewItem(ToyItems::LayerType, parent);
+    auto layer1 = model.insertNewItem(ToyItems::LayerType, parent);
+
+    // saving identifiers for further reference
+    identifier_type id_parent = parent->data(ItemDataRole::IDENTIFIER).value<std::string>();
+    identifier_type id_layer0 = layer0->data(ItemDataRole::IDENTIFIER).value<std::string>();
+    identifier_type id_layer1 = layer1->data(ItemDataRole::IDENTIFIER).value<std::string>();
+
+    // checking status of unddo stack
+    EXPECT_EQ(stack->count(), 3);
+    EXPECT_EQ(stack->index(), 3);
+
+    // removing multi layer completely
+    model.removeRow(model.rootItem(), 0);
+    EXPECT_EQ(stack->count(), 4);
+    EXPECT_EQ(stack->index(), 4);
+    EXPECT_EQ(model.rootItem()->childrenCount(), 0);
+
+    // multilayer and its two layers should gone from registration
+    EXPECT_TRUE(model.manager()->findItem(id_parent) == nullptr);
+    EXPECT_TRUE(model.manager()->findItem(id_layer0) == nullptr);
+    EXPECT_TRUE(model.manager()->findItem(id_layer1) == nullptr);
+
+    // undoing multilayer removal
+    stack->undo();
+    EXPECT_EQ(stack->count(), 4);
+    EXPECT_EQ(stack->index(), 3);
+
+    // restoring pointers back
+    parent = model.rootItem()->childAt(0);
+    layer0 = parent->childAt(0);
+    layer1 = parent->childAt(1);
+
+    // checking that restored item has corrrect identifiers
+    EXPECT_EQ(parent->data(ItemDataRole::IDENTIFIER).value<std::string>(), id_parent);
+    EXPECT_EQ(layer0->data(ItemDataRole::IDENTIFIER).value<std::string>(), id_layer0);
+    EXPECT_EQ(layer1->data(ItemDataRole::IDENTIFIER).value<std::string>(), id_layer1);
+
+    // checking tag
+    EXPECT_EQ(parent->tagFromItem(layer0), ToyItems::MultiLayer::T_LAYERS);
+    EXPECT_EQ(parent->tagFromItem(layer1), ToyItems::MultiLayer::T_LAYERS);
+    std::vector<SessionItem*> expected = {layer0, layer1};
+    EXPECT_EQ(parent->getItems(ToyItems::MultiLayer::T_LAYERS), expected);
+}
+
