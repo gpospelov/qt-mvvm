@@ -29,6 +29,7 @@ public:
     ItemManager();
     ~ItemManager();
 
+    void setItemFactory(std::unique_ptr<ItemFactoryInterface> factory);
     void setItemPool(std::shared_ptr<ItemPool> pool);
 
     SessionItem* createItem(const model_type& modelType = {});

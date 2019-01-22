@@ -54,12 +54,14 @@ public:
 
     void removeRow(SessionItem* parent, int row);
 
+protected:
+    std::unique_ptr<ItemManager> m_item_manager;
+
 private:
     void createRootItem();
 
     SessionItem* m_root_item;
     std::unique_ptr<CommandService> m_commands;
-    std::unique_ptr<ItemManager> m_item_manager;
     std::string m_model_type;
 };
 

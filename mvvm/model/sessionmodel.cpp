@@ -18,9 +18,9 @@
 using namespace ModelView;
 
 SessionModel::SessionModel(std::string model_type)
-    : m_root_item(nullptr)
+    : m_item_manager(new ItemManager)
+    , m_root_item(nullptr)
     , m_commands(new CommandService(this))
-    , m_item_manager(new ItemManager)
     , m_model_type(std::move(model_type))
 {
     m_item_manager->setItemPool(std::make_shared<ItemPool>());

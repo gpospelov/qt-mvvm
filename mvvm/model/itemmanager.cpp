@@ -23,6 +23,11 @@ ItemManager::ItemManager()
 
 }
 
+void ItemManager::setItemFactory(std::unique_ptr<ItemFactoryInterface> factory)
+{
+    m_item_factory = std::move(factory);
+}
+
 void ItemManager::setItemPool(std::shared_ptr<ItemPool> pool)
 {
     m_item_pool = std::move(pool);
