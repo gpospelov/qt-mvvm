@@ -26,8 +26,7 @@ TEST_F(TestSessionItem, initialState)
     EXPECT_FALSE(item.data(role).isValid());
     EXPECT_TRUE(item.children().empty());
     EXPECT_TRUE(item.modelType().empty());
-//    EXPECT_TRUE(item.roles().empty()); // FIXME defaultTag
-    EXPECT_EQ(item.roles().size(), 1u);
+    EXPECT_TRUE(item.roles().empty());
 }
 
 TEST_F(TestSessionItem, modelType)
@@ -45,12 +44,12 @@ TEST_F(TestSessionItem, setData)
 
     QVariant expected(42.0);
     EXPECT_TRUE(item.setData(expected, role));
-    EXPECT_EQ(item.roles().size(), 2); // FIXME defautlTag
+    EXPECT_EQ(item.roles().size(), 1);
     EXPECT_EQ(item.data(role), expected);
 
     // setting another value
     EXPECT_TRUE(item.setData(QVariant::fromValue(43.0), role));
-    EXPECT_EQ(item.roles().size(), 2); // FIXME defautlTag
+    EXPECT_EQ(item.roles().size(), 1);
     EXPECT_EQ(item.data(role), QVariant::fromValue(43.0));
 }
 
@@ -64,7 +63,7 @@ TEST_F(TestSessionItem, variantMismatch)
 
     // setting data for the first time
     EXPECT_TRUE(item.setData(expected, role));
-    EXPECT_EQ(item.roles().size(), 2); // FIXME defaultTag
+    EXPECT_EQ(item.roles().size(), 1);
     EXPECT_EQ(item.data(role), expected);
 
     // attempt to rewrite variant with another type
@@ -72,12 +71,71 @@ TEST_F(TestSessionItem, variantMismatch)
 
     // removing value by passing invalid variant
     EXPECT_NO_THROW(item.setData(QVariant(), role));
-    EXPECT_EQ(item.roles().size(), 1); // FIXME defaultTag
+    EXPECT_EQ(item.roles().size(), 0);
 }
+
+//! Item registration in a pool.
+
+TEST_F(TestSessionItem, registerItem)
+{
+    std::unique_ptr<SessionItem> item(new SessionItem);
+    std::shared_ptr<ItemPool> pool;
+
+    EXPECT_TRUE(item->roles().empty());
+
+    // registering item on unexisting pool
+    item->register_item(pool);
+    EXPECT_TRUE(item->roles().empty());
+
+    // creating pool
+    pool.reset(new ItemPool);
+    item->register_item(pool);
+    auto key = pool->key_for_item(item.get());
+    std::vector<int> expected_roles = {ItemDataRole::IDENTIFIER};
+    EXPECT_EQ(item->roles(), expected_roles);
+    EXPECT_EQ(item->data(ItemDataRole::IDENTIFIER).value<std::string>(), key);
+}
+
+//! Item registration in a pool.
+
+TEST_F(TestSessionItem, defaultTag)
+{
+    SessionItem item;
+    EXPECT_EQ(item.defaultTag(), std::string());
+    EXPECT_FALSE(item.isTag("defaultTag"));
+}
+
+//! Registering tags
+
+TEST_F(TestSessionItem, registerTag)
+{
+    SessionItem item;
+    item.registerTag(TagInfo::universalTag("tagname"));
+    EXPECT_TRUE(item.isTag("tagname"));
+
+    //registering of tag with same name forbidden
+    EXPECT_THROW(item.registerTag(TagInfo::universalTag("tagname")), std::runtime_error);
+
+    //registering empty tag is forbidden
+    EXPECT_THROW(item.registerTag(TagInfo::universalTag("")), std::runtime_error);
+}
+
+//! Registering tag and setting it as default
+
+TEST_F(TestSessionItem, registerDefaultTag)
+{
+    SessionItem item;
+    item.registerTag(TagInfo::universalTag("tagname"), /*set_as_default*/true);
+    EXPECT_EQ(item.defaultTag(), "tagname");
+}
+
+//! Simple child insert.
 
 TEST_F(TestSessionItem, insertItem)
 {
     std::unique_ptr<SessionItem> parent(new SessionItem);
+    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/true);
+
     std::unique_ptr<SessionItem> child(new SessionItem);
 
     // empty parent
@@ -97,15 +155,19 @@ TEST_F(TestSessionItem, insertItem)
     EXPECT_EQ(parent->childAt(0), p_child);
     EXPECT_EQ(p_child->parent(), parent.get());
 
-    // deleting child
+    // deleting child, pointer in parent should become zero
     delete p_child;
     EXPECT_EQ(parent->childrenCount(), 1);
     EXPECT_EQ(parent->children()[0], nullptr);
 }
 
+//! Simple children insert.
+
 TEST_F(TestSessionItem, insertChildren)
 {
     std::unique_ptr<SessionItem> parent(new SessionItem);
+    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/true);
+
     auto child1 = new SessionItem;
     auto child2 = new SessionItem;
     auto child3 = new SessionItem;
@@ -151,9 +213,13 @@ TEST_F(TestSessionItem, insertChildren)
     delete child5;
 }
 
+//! Removing (taking) item from parent.
+
 TEST_F(TestSessionItem, takeItem)
 {
     std::unique_ptr<SessionItem> parent(new SessionItem);
+    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/true);
+
     auto child1 = new SessionItem;
     auto child2 = new SessionItem;
     auto child3 = new SessionItem;
@@ -176,56 +242,6 @@ TEST_F(TestSessionItem, takeItem)
     EXPECT_EQ(parent->children(), expected);
 
     delete taken;
-}
-
-//! Item registration in a pool.
-
-TEST_F(TestSessionItem, registerItem)
-{
-    std::unique_ptr<SessionItem> item(new SessionItem);
-    std::shared_ptr<ItemPool> pool;
-
-//    EXPECT_TRUE(item->roles().empty());
-    EXPECT_EQ(item->roles().size(), 1u); // FIXME defaultTag
-
-    // registering item on unexisting pool
-    item->register_item(pool);
-//    EXPECT_TRUE(item->roles().empty());
-    EXPECT_EQ(item->roles().size(), 1u);// FIXME defaultTag
-
-    // creating pool
-    pool.reset(new ItemPool);
-    item->register_item(pool);
-    auto key = pool->key_for_item(item.get());
-    // FIXME default tag
-    std::vector<int> expected_roles = {ItemDataRole::DEFAULT_TAG, ItemDataRole::IDENTIFIER};
-    EXPECT_EQ(item->roles(), expected_roles);
-    EXPECT_EQ(item->data(ItemDataRole::IDENTIFIER).value<std::string>(), key);
-}
-
-//! Item registration in a pool.
-
-TEST_F(TestSessionItem, defaultTag)
-{
-    SessionItem item;
-    EXPECT_EQ(item.defaultTag(), std::string("defaultTag"));
-    EXPECT_TRUE(item.isTag("defaultTag"));
-}
-
-//! Registering tags
-
-TEST_F(TestSessionItem, registerTag)
-{
-    SessionItem item;
-    item.registerTag(TagInfo::universalTag("tagname"));
-    EXPECT_TRUE(item.isTag("tagname"));
-
-    //registering of tag with same name forbidden
-    EXPECT_THROW(item.registerTag(TagInfo::universalTag("tagname")), std::runtime_error);
-
-    //registering empty tag is forbidden
-    EXPECT_THROW(item.registerTag(TagInfo::universalTag("")), std::runtime_error);
-
 }
 
 //! Insert and take tagged items.
@@ -259,7 +275,7 @@ TEST_F(TestSessionItem, singleTagAndItems)
     EXPECT_THROW(parent->getItem(tag1, 2), std::runtime_error); // wrong row
 
     // access to multiple items via tags interface
-    EXPECT_EQ(parent->getItems(), std::vector<SessionItem*>()); // no items in default tag
+    EXPECT_THROW(parent->getItems(), std::runtime_error); // no default tag registered
     EXPECT_EQ(parent->getItems(tag1), expected);
 
     // removing first item
@@ -308,7 +324,7 @@ TEST_F(TestSessionItem, twoTagsAndItems)
     EXPECT_EQ(parent->rowOfChild(child_t2_c), 4);
 
     // testing single item access via tag interface
-    EXPECT_THROW(parent->getItem(), std::runtime_error); // no items in default tag
+    EXPECT_THROW(parent->getItem(), std::runtime_error); // no default tag registered
     EXPECT_EQ(parent->getItem(tag1), child_t1_a);
     EXPECT_EQ(parent->getItem(tag1, 0), child_t1_a);
     EXPECT_EQ(parent->getItem(tag1, 1), child_t1_b);
@@ -318,7 +334,7 @@ TEST_F(TestSessionItem, twoTagsAndItems)
     EXPECT_THROW(parent->getItem(tag2, 3), std::runtime_error); // no items with such row
 
     // access to multiple items via tags interface
-    EXPECT_EQ(parent->getItems(), std::vector<SessionItem*>()); // no items in default tag
+    EXPECT_THROW(parent->getItems(), std::runtime_error); // no default tag registered
     expected = {child_t1_a, child_t1_b};
     EXPECT_EQ(parent->getItems(tag1), expected);
     expected = {child_t2_a, child_t2_b, child_t2_c};

@@ -5,6 +5,7 @@
 #include "sessionitem.h"
 #include "test_utils.h"
 #include "itemmanager.h"
+#include "taginfo.h"
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QDebug>
@@ -90,6 +91,8 @@ TEST_F(TestJsonModel, parentAndChildInModel)
     SessionModel model("TestModel");
 
     auto parent = model.insertNewItem("MultiLayer");
+    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/true);
+
     parent->setData(QVariant::fromValue(42), 1);
     model.insertNewItem("Layer", parent);
 
@@ -138,6 +141,8 @@ TEST_F(TestJsonModel, parentAndChildModelFromJson)
 
     // filling original model with content
     auto parent = model.insertNewItem("MultiLayer");
+    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/true);
+
     parent->setData(QVariant::fromValue(42), 1);
     model.insertNewItem("Layer", parent);
 

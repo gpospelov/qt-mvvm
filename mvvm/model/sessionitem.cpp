@@ -32,8 +32,6 @@ SessionItem::SessionItem(model_type modelType)
     , m_tags(new SessionItemTags)
     , m_modelType(std::move(modelType))
 {
-    registerTag(TagInfo::universalTag(default_tag_name));
-    setDefaultTag(default_tag_name);
 }
 
 SessionItem::~SessionItem()
@@ -165,9 +163,11 @@ void SessionItem::setDefaultTag(const std::string& tag)
     setDataIntern(QVariant::fromValue(tag), ItemDataRole::DEFAULT_TAG);
 }
 
-void SessionItem::registerTag(const TagInfo& tagInfo)
+void SessionItem::registerTag(const TagInfo& tagInfo, bool set_as_default)
 {
     m_tags->registerTag(tagInfo);
+    if (set_as_default)
+        setDefaultTag(tagInfo.name());
 }
 
 bool SessionItem::isTag(const std::string& name)

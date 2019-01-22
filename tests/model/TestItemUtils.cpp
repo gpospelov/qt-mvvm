@@ -3,6 +3,7 @@
 #include "sessionitem.h"
 #include "itemutils.h"
 #include "customvariants.h"
+#include "taginfo.h"
 #include <memory>
 
 using namespace ModelView;
@@ -31,6 +32,8 @@ TEST_F(TestItemUtils, iterateItem)
 
     // iteration over lonely parent
     std::unique_ptr<SessionItem> parent(new SessionItem);
+    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/true);
+
     std::vector<const SessionItem*> expected = {parent.get()};
     Utils::iterate(parent.get(), fun);
     EXPECT_EQ(visited_items, expected);
@@ -62,6 +65,8 @@ TEST_F(TestItemUtils, iterateIfItem)
 
     // iteration over lonely parent
     std::unique_ptr<SessionItem> parent(new SessionItem);
+    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/true);
+
     auto child1 = new SessionItem;
     auto child2 = new SessionItem;
     parent->insertItem(-1, child1);
@@ -82,6 +87,8 @@ TEST_F(TestItemUtils, iterateModel)
     // building model
     auto parent1 = model.insertNewItem(modelType);
     auto parent2 = model.insertNewItem(modelType);
+    parent1->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/true);
+    parent2->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/true);
     auto child1 = model.insertNewItem(modelType, parent1);
     auto child2 = model.insertNewItem(modelType, parent1);
 

@@ -13,6 +13,7 @@
 #include "itemmanager.h"
 #include "commandservice.h"
 #include "itempool.h"
+#include "taginfo.h"
 
 using namespace ModelView;
 
@@ -116,4 +117,5 @@ void SessionModel::createRootItem()
 {
     m_root_item = m_item_manager->createRootItem();
     m_root_item->setModel(this);
+    m_root_item->registerTag(TagInfo::universalTag("rootTag"), /*set_as_default*/true);
 }

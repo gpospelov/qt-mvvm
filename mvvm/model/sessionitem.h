@@ -63,7 +63,7 @@ public:
     std::string defaultTag() const;
     void setDefaultTag(const std::string& tag);
 
-    void registerTag(const TagInfo& tagInfo);
+    void registerTag(const TagInfo& tagInfo, bool set_as_default=false);
 
     bool isTag(const std::string& name);
 

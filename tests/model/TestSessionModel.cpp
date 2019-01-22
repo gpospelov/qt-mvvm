@@ -34,6 +34,9 @@ TEST_F(TestSessionModel, insertNewItem)
     EXPECT_EQ(item->model(), &model);
     EXPECT_EQ(item->modelType(), modelType);
 
+    // registering tag
+    item->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/true);
+
     // adding child to it
     auto child = model.insertNewItem(modelType, item);
     EXPECT_TRUE(child != nullptr);
@@ -88,6 +91,8 @@ TEST_F(TestSessionModel, removeRow)
     SessionModel model;
 
     auto parent = model.insertNewItem("MultiLayer");
+    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/true);
+
     auto child1 = model.insertNewItem("Layer1", parent);
     auto child2 = model.insertNewItem("Layer2", parent, 0); // before child1
     Q_UNUSED(child2);

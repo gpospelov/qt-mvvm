@@ -1,6 +1,7 @@
 #include "google_test.h"
 #include "sessionmodel.h"
 #include "sessionitem.h"
+#include "taginfo.h"
 #include <QUndoStack>
 
 using namespace ModelView;
@@ -83,6 +84,8 @@ TEST_F(TestUndoRedo, insertParentAndChild)
     auto stack = model.undoStack();
 
     auto parent = model.insertNewItem("MultiLayer1");
+    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/true);
+
     model.insertNewItem("Layer0", parent);
     model.insertNewItem("Layer1", parent);
 
@@ -270,6 +273,8 @@ TEST_F(TestUndoRedo, removeParentAndChild)
     auto stack = model.undoStack();
 
     auto parent = model.insertNewItem("MultiLayer");
+    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/true);
+
     parent->setData(data1, role1);
     auto child = model.insertNewItem("Layer", parent);
     child->setData(data2, role2);
@@ -308,6 +313,8 @@ TEST_F(TestUndoRedo, itemIdentifierOnRemove)
     auto stack = model.undoStack();
 
     auto parent = model.insertNewItem("MultiLayer");
+    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/true);
+
     identifier_type parent_id = parent->data(ItemDataRole::IDENTIFIER).value<std::string>();
     auto child = model.insertNewItem("Layer", parent);
     identifier_type child_id = child->data(ItemDataRole::IDENTIFIER).value<std::string>();
