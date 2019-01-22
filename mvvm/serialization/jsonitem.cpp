@@ -27,8 +27,9 @@ using namespace ModelView;
 
 namespace {
 QStringList expected_item_keys() {
-    QStringList result = QStringList() << JsonItem::modelKey << JsonItem::itemDataKey
-                                       << JsonItem::itemsKey << JsonItem::itemTagsKey;
+    QStringList result = QStringList() << JsonItem::modelKey << JsonItem::parentTagKey
+                                       << JsonItem::itemDataKey << JsonItem::itemTagsKey
+                                       << JsonItem::itemsKey;
     std::sort(result.begin(), result.end());
     return result;
 }
@@ -36,6 +37,7 @@ QStringList expected_item_keys() {
 }
 
 const QString ModelView::JsonItem::modelKey = "model";
+const QString ModelView::JsonItem::parentTagKey = "parentTag";
 const QString ModelView::JsonItem::itemDataKey = "itemData";
 const QString ModelView::JsonItem::itemTagsKey = "itemTags";
 const QString ModelView::JsonItem::itemsKey = "items";
@@ -62,7 +64,9 @@ void JsonItem::json_to_item(const QJsonObject& json, SessionItem* parent, int ro
         throw std::runtime_error("JsonModel::json_to_item() -> Error. Given json object can't represent an item.");
 
     auto modelType = json[modelKey].toString().toStdString();
-    auto item = parent->model()->insertNewItem(modelType, parent, row);
+    auto parentTag = json[parentTagKey].toString().toStdString();
+
+    auto item = parent->model()->insertNewItem(modelType, parent, row, parentTag);
 
     auto itemData = m_itemdata_converter->get_data(json[itemDataKey].toArray());
     item->m_data = std::make_unique<SessionItemData>(itemData);
@@ -86,6 +90,9 @@ void JsonItem::item_to_json(const SessionItem* item, QJsonObject& json) const
         return;
 
     json[modelKey] = QString::fromStdString(item->modelType());
+
+    std::string parentTag = item->parent() ? item->parent()->tagFromItem(item) : "";
+    json[parentTagKey] = QString::fromStdString(parentTag);
     json[itemDataKey] = m_itemdata_converter->get_json(*item->m_data);
     json[itemTagsKey] = m_itemtags_converter->get_json(*item->m_tags);
 

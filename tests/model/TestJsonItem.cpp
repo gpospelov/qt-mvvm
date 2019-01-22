@@ -38,6 +38,7 @@ TEST_F(TestJsonItem, isValidItem)
 
     // it also should contain array
     object[JsonItem::modelKey] = "abc";
+    object[JsonItem::parentTagKey] = "tag";
     object[JsonItem::itemsKey] = 42; // incorrect
     object[JsonItem::itemDataKey] = QJsonArray();
     object[JsonItem::itemTagsKey] = QJsonArray();

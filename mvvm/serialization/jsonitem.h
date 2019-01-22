@@ -26,6 +26,7 @@ class CORE_EXPORT JsonItem : public JsonItemInterface
 {
 public:
     static const QString modelKey;
+    static const QString parentTagKey;
     static const QString itemDataKey;
     static const QString itemTagsKey;
     static const QString itemsKey;
