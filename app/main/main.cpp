@@ -1,10 +1,15 @@
-#include <iostream>
-#include "sessionitem.h"
+#include "mainwindow.h"
+#include <QApplication>
+#include <QLocale>
 
-int main()
+int main(int argc, char **argv)
 {
-    std::cout << "Hello world" << std::endl;
+    QLocale::setDefault(QLocale(QLocale::English, QLocale::UnitedStates));
 
-    return 0;
+    QApplication app(argc, argv);
+
+    MainWindow win;
+    win.show();
+
+    return app.exec();
 }
-

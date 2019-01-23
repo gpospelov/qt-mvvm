@@ -22,10 +22,7 @@ endif()
 
 add_library(${library_name} SHARED ${source_files} ${include_files})
 
-target_include_directories(${library_name}
-    PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}
-)
+target_include_directories(${library_name} PUBLIC ${include_dirs})
 
 target_link_libraries(${library_name} mvvm Qt5::Widgets)
 
