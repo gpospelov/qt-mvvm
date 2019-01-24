@@ -13,7 +13,7 @@
 #include "global.h"
 #include <QMainWindow>
 
-class TestWidget1;
+class QTabWidget;
 
 class MainWindow : public QMainWindow
 {
@@ -22,7 +22,7 @@ public:
     MainWindow();
 
 private:
-    TestWidget1* m_widget1;
+    QTabWidget* m_tabWidget;
 };
 
 #endif //  MAINWINDOW_H

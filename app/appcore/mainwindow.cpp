@@ -9,10 +9,13 @@
 
 #include "mainwindow.h"
 #include "testwidget1.h"
+#include <QTabWidget>
 
 MainWindow::MainWindow()
-    : m_widget1(new TestWidget1)
+    : m_tabWidget(new QTabWidget)
 {    
-    setCentralWidget(m_widget1);
+    m_tabWidget->addTab(new TestWidget1, "Model basics");
+
+    setCentralWidget(m_tabWidget);
     resize(800, 600);
 }
