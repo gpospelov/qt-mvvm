@@ -104,5 +104,3 @@ TEST_F(TestViewItem, ViewLabelItem_setData)
     EXPECT_THROW(viewItem.setData(not_allowed_value, Qt::EditRole), std::runtime_error);
 }
 
-
-
