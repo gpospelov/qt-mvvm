@@ -11,8 +11,8 @@
 
 using namespace ModelView;
 
-ViewItem::ViewItem(const QString& text)
-   : QStandardItem(text)
+ViewItem::ViewItem(SessionItem* item)
+   : m_item(item)
 {
 
 }

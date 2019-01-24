@@ -1,2 +1,3 @@
-add_subdirectory(model)
 add_subdirectory(testmachinery)
+add_subdirectory(model)
+add_subdirectory(viewmodel)

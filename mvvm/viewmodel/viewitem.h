@@ -15,6 +15,8 @@
 
 namespace ModelView {
 
+class SessionItem;
+
 //! Represents the view of SessionItem's data in single cell of Qt table/tree.
 //! Act as QStandardItem which stores SessionItem inside.
 //!
@@ -23,7 +25,10 @@ namespace ModelView {
 
 class CORE_EXPORT ViewItem : public QStandardItem {
 public:
-    explicit ViewItem(const QString& text);
+    explicit ViewItem(SessionItem* item);
+
+private:
+    SessionItem* m_item;
 };
 
 }  // namespace ModelView
