@@ -15,11 +15,18 @@
 
 namespace ModelView {
 
+class SessionModel;
+
 //! The view model to show content of our SessionModel in Qt views.
 
 class CORE_EXPORT ViewModel : public QStandardItemModel {
 public:
     ViewModel(QObject* parent = nullptr);
+
+    void setSessionModel(SessionModel* model);
+
+private:
+    SessionModel* m_sessionModel;
 };
 
 }  // namespace ModelView

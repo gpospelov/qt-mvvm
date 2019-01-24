@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef TOYITEMS_H
-#define TOYITEMS_H
+#ifndef APPITEMS_H
+#define APPITEMS_H
 
 #include "sessionitem.h"
 #include "sessionmodel.h"
@@ -17,7 +17,7 @@
 
 //! Collection of toy items and models for testing purposes.
 
-namespace ToyItems
+namespace AppItems
 {
 
 const ModelView::model_type MultiLayerType = "MultiLayer";
@@ -51,7 +51,6 @@ public:
 
 };
 
-} // ToyItems
+}
 
-#endif // TOYITEMS_H
-
+#endif // APPITEMS_H

@@ -8,11 +8,18 @@
 // ************************************************************************** //
 
 #include "viewmodel.h"
+#include "sessionmodel.h"
 
 using namespace ModelView;
 
 ViewModel::ViewModel(QObject* parent)
     : QStandardItemModel(parent)
+    , m_sessionModel(nullptr)
 {
 
+}
+
+void ViewModel::setSessionModel(SessionModel* model)
+{
+    m_sessionModel = model;
 }
