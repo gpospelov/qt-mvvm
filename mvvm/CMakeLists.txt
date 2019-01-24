@@ -2,6 +2,7 @@ set(library_name mvvm)
 
 set(include_dirs
     ${CMAKE_CURRENT_SOURCE_DIR}/model
+    ${CMAKE_CURRENT_SOURCE_DIR}/viewmodel
     ${CMAKE_CURRENT_SOURCE_DIR}/utils
     ${CMAKE_CURRENT_SOURCE_DIR}/serialization)
 
@@ -24,6 +25,7 @@ add_library(${library_name} SHARED ${source_files} ${include_files})
 target_include_directories(${library_name}
     PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/model>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/viewmodel>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/utils>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/serialization>
 )
