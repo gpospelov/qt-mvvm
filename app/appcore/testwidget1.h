@@ -7,22 +7,25 @@
 //
 // ************************************************************************** //
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef TESTWIDGET1_H
+#define TESTWIDGET1_H
 
-#include "global.h"
-#include <QMainWindow>
+#include <QWidget>
 
-class TestWidget1;
+class QTreeView;
+class QStandardItemModel;
 
-class MainWindow : public QMainWindow
+//! Playground to test basics of QStandardItemModel.
+
+class TestWidget1 : public QWidget
 {
     Q_OBJECT
 public:
-    MainWindow();
+    TestWidget1(QWidget* parent = nullptr);
 
 private:
-    TestWidget1* m_widget1;
+    QTreeView* m_treeView;
+    QStandardItemModel* m_model;
 };
 
-#endif //  MAINWINDOW_H
+#endif // TESTWIDGET1_H
