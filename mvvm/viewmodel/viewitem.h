@@ -13,7 +13,8 @@
 #include "global.h"
 #include <QStandardItem>
 
-namespace ModelView {
+namespace ModelView
+{
 
 class SessionItem;
 
@@ -23,20 +24,23 @@ class SessionItem;
 //! In principle, it is intended to show SessionItem's data role, but it can be used for
 //! any role SessionItem can carry on board.
 
-class CORE_EXPORT ViewItem : public QStandardItem {
+class CORE_EXPORT ViewItem : public QStandardItem
+{
 public:
-    explicit ViewItem(SessionItem* item);
 
     QVariant data(int role) const override;
 
-    void setData(const QVariant &value, int role);
+    void setData(const QVariant& value, int role) override;
 
     SessionItem* item();
 
-private:
+protected:
+    ViewItem(SessionItem* item, int item_role);
+
     SessionItem* m_item;
+    int m_item_role; // one of roles defined in ItemDataRole
 };
 
-}  // namespace ModelView
+} // namespace ModelView
 
 #endif // VIEWITEM_H

@@ -12,10 +12,8 @@
 
 using namespace ModelView;
 
-ViewItem::ViewItem(SessionItem* item)
-   : m_item(item)
+ViewItem::ViewItem(SessionItem* item, int item_role) : m_item(item), m_item_role(item_role)
 {
-
 }
 
 //! Returns data from underlying SessionItem.
@@ -26,7 +24,7 @@ QVariant ViewItem::data(int role) const
         return QVariant();
 
     if (role == Qt::DisplayRole || role == Qt::EditRole) {
-        return m_item->data(ItemDataRole::DATA);
+        return m_item->data(m_item_role);
     }
 
     return QVariant();
@@ -38,7 +36,7 @@ void ViewItem::setData(const QVariant& value, int role)
         return;
 
     if (role == Qt::EditRole)
-        m_item->setData(value, ItemDataRole::DATA);
+        m_item->setData(value, m_item_role);
 }
 
 SessionItem* ViewItem::item()
