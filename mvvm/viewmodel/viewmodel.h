@@ -17,7 +17,7 @@ namespace ModelView {
 
 //! The view model to show content of our SessionModel in Qt views.
 
-class CORE_EXPORT ViewModel : public QObject {
+class CORE_EXPORT ViewModel : public QStandardItemModel {
 public:
     ViewModel(QObject* parent = nullptr);
 };

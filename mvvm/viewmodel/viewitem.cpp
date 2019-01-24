@@ -11,8 +11,8 @@
 
 using namespace ModelView;
 
-ViewItem::ViewItem(QObject* parent)
-    : QObject(parent)
+ViewItem::ViewItem(const QString& text)
+   : QStandardItem(text)
 {
 
 }

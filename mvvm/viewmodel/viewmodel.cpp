@@ -12,7 +12,7 @@
 using namespace ModelView;
 
 ViewModel::ViewModel(QObject* parent)
-    : QObject(parent)
+    : QStandardItemModel(parent)
 {
 
 }

@@ -21,9 +21,9 @@ namespace ModelView {
 //! In principle, it is intended to show SessionItem's data role, but it can be used for
 //! any role SessionItem can carry on board.
 
-class CORE_EXPORT ViewItem : public QObject {
+class CORE_EXPORT ViewItem : public QStandardItem {
 public:
-    ViewItem(QObject* parent = nullptr);
+    explicit ViewItem(const QString& text);
 };
 
 }  // namespace ModelView
