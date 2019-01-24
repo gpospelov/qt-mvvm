@@ -13,11 +13,18 @@
 #include "global.h"
 #include <QMainWindow>
 
+class QTreeView;
+class QStandardItemModel;
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 public:
     MainWindow();
+
+private:
+    QTreeView* m_treeView;
+    QStandardItemModel* m_model;
 };
 
 #endif //  MAINWINDOW_H
