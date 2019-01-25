@@ -7,21 +7,11 @@
 //
 // ************************************************************************** //
 
-#include "itemfactory.h"
-#include "sessionitem.h"
 #include "propertyitem.h"
 
 using namespace ModelView;
 
-ItemFactory::ItemFactory() = default;
-
-SessionItem* ItemFactory::createItem(const model_type& modelType)
+PropertyItem::PropertyItem() : SessionItem(Constants::PropertyType)
 {
-    auto result = new SessionItem(modelType);
-    return result;
-}
 
-SessionItem* ItemFactory::createEmptyItem()
-{
-    return new SessionItem;
 }

@@ -7,21 +7,24 @@
 //
 // ************************************************************************** //
 
-#include "itemfactory.h"
+#ifndef COMPOUNDITEM_H
+#define COMPOUNDITEM_H
+
 #include "sessionitem.h"
-#include "propertyitem.h"
 
-using namespace ModelView;
+namespace ModelView {
 
-ItemFactory::ItemFactory() = default;
+//! Complex item holding mixed SessionItem types (properties, other
 
-SessionItem* ItemFactory::createItem(const model_type& modelType)
+class CORE_EXPORT CompoundItem : public SessionItem
 {
-    auto result = new SessionItem(modelType);
-    return result;
-}
+public:
+    CompoundItem();
 
-SessionItem* ItemFactory::createEmptyItem()
-{
-    return new SessionItem;
-}
+    SessionItem* addProperty(const std::string& name, const QVariant& variant);
+
+};
+
+} // namespace ModelView
+
+#endif // COMPOUNDITEM_H

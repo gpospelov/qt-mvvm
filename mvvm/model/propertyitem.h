@@ -7,21 +7,20 @@
 //
 // ************************************************************************** //
 
-#include "itemfactory.h"
+#ifndef PROPERTYITEM_H
+#define PROPERTYITEM_H
+
 #include "sessionitem.h"
-#include "propertyitem.h"
 
-using namespace ModelView;
+namespace ModelView {
 
-ItemFactory::ItemFactory() = default;
+//! Holds single data property for complex SessionItems.
 
-SessionItem* ItemFactory::createItem(const model_type& modelType)
+class CORE_EXPORT PropertyItem : public SessionItem
 {
-    auto result = new SessionItem(modelType);
-    return result;
-}
+    PropertyItem();
+};
 
-SessionItem* ItemFactory::createEmptyItem()
-{
-    return new SessionItem;
-}
+} // namespace ModelView
+
+#endif // PROPERTYITEM_H

@@ -26,6 +26,11 @@ const int DISPLAY = 2;
 const int DEFAULT_TAG = 3;
 };
 
-}  // namespace ModelView
+namespace Constants {
+const model_type PropertyType = "Property";
+const model_type CompoundType = "Compound";
+} // namespace Constants
+
+} // namespace ModelView
 
 #endif
