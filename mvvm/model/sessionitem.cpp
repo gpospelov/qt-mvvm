@@ -52,6 +52,16 @@ model_type SessionItem::modelType() const
     return m_modelType;
 }
 
+std::string SessionItem::displayName() const
+{
+    return data(ItemDataRole::DISPLAY).value<std::string>();
+}
+
+void SessionItem::setDisplayName(const std::string& name)
+{
+    setData(QVariant::fromValue(name), ItemDataRole::DISPLAY);
+}
+
 bool SessionItem::setData(const QVariant& variant, int role)
 {
     if (m_model)

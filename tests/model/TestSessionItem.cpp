@@ -53,6 +53,20 @@ TEST_F(TestSessionItem, setData)
     EXPECT_EQ(item.data(role), QVariant::fromValue(43.0));
 }
 
+//! Display role.
+
+TEST_F(TestSessionItem, displayName)
+{
+    SessionItem item("Layer");
+
+    // by default item doesn't have any display name
+    EXPECT_EQ(item.displayName(), "");
+
+    // checking setter
+    item.setDisplayName("width");
+    EXPECT_EQ(item.displayName(), "width");
+}
+
 //! Attempt to set the different Variant to already existing role.
 
 TEST_F(TestSessionItem, variantMismatch)

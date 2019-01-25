@@ -34,6 +34,9 @@ public:
 
     model_type modelType() const;
 
+    std::string displayName() const;
+    void setDisplayName(const std::string& name);
+
     bool setData(const QVariant& variant, int role);
     bool setDataIntern(const QVariant& variant, int role);
 
