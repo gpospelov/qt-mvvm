@@ -24,5 +24,5 @@ add_library(${library_name} SHARED ${source_files} ${include_files})
 
 target_include_directories(${library_name} PUBLIC ${include_dirs})
 
-target_link_libraries(${library_name} mvvm Qt5::Core Qt5::Gui Qt5::Widgets)
+target_link_libraries(${library_name} mvvm toyitems Qt5::Core Qt5::Gui Qt5::Widgets)
 
