@@ -13,9 +13,12 @@
 #include "global.h"
 #include <QStandardItemModel>
 
+class QStandardItem;
+
 namespace ModelView {
 
 class SessionModel;
+class SessionItem;
 
 //! The view model to show content of our SessionModel in Qt views.
 
@@ -26,6 +29,9 @@ public:
     void setSessionModel(SessionModel* model);
 
 private:
+    void update_model();
+    void iterate(SessionItem* item, QStandardItem* parent);
+
     SessionModel* m_sessionModel;
 };
 
