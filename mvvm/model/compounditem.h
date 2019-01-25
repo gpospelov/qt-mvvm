@@ -14,12 +14,12 @@
 
 namespace ModelView {
 
-//! Complex item holding mixed SessionItem types (properties, other
+//! Complex item holding mixed SessionItem types (single properties and other CompountItems).
 
 class CORE_EXPORT CompoundItem : public SessionItem
 {
 public:
-    CompoundItem();
+    CompoundItem(const std::string& modelType={});
 
     SessionItem* addProperty(const std::string& name, const QVariant& variant);
 

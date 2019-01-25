@@ -15,8 +15,8 @@
 
 using namespace ModelView;
 
-CompoundItem::CompoundItem()
-    : SessionItem(Constants::CompoundType)
+CompoundItem::CompoundItem(const std::string& modelType)
+    : SessionItem(modelType)
 {
 
 }

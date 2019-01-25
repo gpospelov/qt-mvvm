@@ -13,6 +13,17 @@ public:
 
 TestToyItem::~TestToyItem() = default;
 
+//! Toy layer as prodused by toy SampleModel.
+
+TEST_F(TestToyItem, Layer)
+{
+    ToyItems::SampleModel model;
+    auto layer = model.insertNewItem(ToyItems::Constants::LayerType);
+
+    EXPECT_FALSE(layer->data(ItemDataRole::DATA).isValid());
+    EXPECT_EQ(layer->displayName(), ToyItems::Constants::LayerType);
+}
+
 //! Toy multilayer as produced bo toy SampleModel.
 
 TEST_F(TestToyItem, multiLayer)

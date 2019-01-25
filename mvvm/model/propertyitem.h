@@ -18,6 +18,7 @@ namespace ModelView {
 
 class CORE_EXPORT PropertyItem : public SessionItem
 {
+public:
     PropertyItem();
 };
 

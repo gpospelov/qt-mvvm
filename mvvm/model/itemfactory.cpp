@@ -10,15 +10,21 @@
 #include "itemfactory.h"
 #include "sessionitem.h"
 #include "propertyitem.h"
+#include "compounditem.h"
 
 using namespace ModelView;
 
 ItemFactory::ItemFactory() = default;
 
+// FIXME revise items which default factory should produce
 SessionItem* ItemFactory::createItem(const model_type& modelType)
 {
-    auto result = new SessionItem(modelType);
-    return result;
+    if (modelType == Constants::PropertyType)
+        return new PropertyItem;
+    else if (modelType == Constants::CompoundType)
+        return new CompoundItem;
+    else
+        return new SessionItem(modelType);
 }
 
 SessionItem* ItemFactory::createEmptyItem()
