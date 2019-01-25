@@ -9,6 +9,8 @@
 
 #include "viewitem.h"
 #include "sessionitem.h"
+#include "customvariants.h"
+#include <QDebug>
 
 using namespace ModelView;
 
@@ -24,7 +26,8 @@ QVariant ViewItem::data(int role) const
         return QVariant();
 
     if (role == Qt::DisplayRole || role == Qt::EditRole) {
-        return m_item->data(m_item_role);
+        qDebug() << "aaa" << m_item_role << m_item->data(m_item_role) << QString::fromStdString(m_item->displayName());
+        return toQtVariant(m_item->data(m_item_role));
     }
 
     return QVariant();
@@ -36,7 +39,7 @@ void ViewItem::setData(const QVariant& value, int role)
         return;
 
     if (role == Qt::EditRole)
-        m_item->setData(value, m_item_role);
+        m_item->setData(toCustomVariant(value), m_item_role);
 }
 
 SessionItem* ViewItem::item()

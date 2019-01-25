@@ -18,6 +18,7 @@
 #include <stdexcept>
 #include <iterator>
 #include <cassert>
+#include <sstream>
 
 namespace {
     const std::string default_tag_name = "defaultTag";
@@ -250,8 +251,17 @@ std::string SessionItem::ensure(const std::string& tag, const std::string& model
 
 bool SessionItem::setDataIntern(const QVariant& variant, int role)
 {
-    if (!Utils::CompatibleVariantTypes(data(role), variant))
-        throw std::runtime_error("SessionItem::setDataIntern() -> Error. Variant types mismatch");
+    // FIXME remove temporary check
+    if (variant.typeName() == QStringLiteral("QString"))
+        throw std::runtime_error("Attempt to set QString based variant");
+
+    if (!Utils::CompatibleVariantTypes(data(role), variant)) {
+        std::ostringstream ostr;
+        ostr << "SessionItem::setDataIntern() -> Error. Variant types mismatch. "
+             << "Old variant type '" << data(role).typeName() << "' "
+             << "new variant type '" << variant.typeName() << "\n";
+        throw std::runtime_error(ostr.str());
+    }
 
     return m_data->setData(variant, role);
 }

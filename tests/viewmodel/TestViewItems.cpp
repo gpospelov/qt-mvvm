@@ -1,6 +1,7 @@
 #include "google_test.h"
 #include "viewitems.h"
 #include "sessionitem.h"
+#include "toy_includes.h"
 #include <memory>
 #include <QDebug>
 
@@ -45,13 +46,13 @@ TEST_F(TestViewItem, ViewLabelItem_data)
 {
     // create SessionItem with data on board
     std::unique_ptr<SessionItem> item(new SessionItem);
-    QVariant expected("Layer");
+    QVariant expected = QVariant::fromValue(std::string("Layer"));
     EXPECT_TRUE(item->setData(expected, ItemDataRole::DISPLAY));
 
     // initialize viewItem with sessionItem and check the data
     ViewLabelItem viewItem(item.get());
-    EXPECT_EQ(viewItem.data(Qt::EditRole), expected);
-    EXPECT_EQ(viewItem.data(Qt::DisplayRole), expected);
+    EXPECT_EQ(toCustomVariant(viewItem.data(Qt::EditRole)), expected);
+    EXPECT_EQ(toCustomVariant(viewItem.data(Qt::DisplayRole)), expected);
 }
 
 //! ViewDataItem::setData
@@ -86,7 +87,7 @@ TEST_F(TestViewItem, ViewLabelItem_setData)
 {
     // create SessionItem with data on board
     std::unique_ptr<SessionItem> item(new SessionItem);
-    QVariant expected("Layer");
+    QVariant expected = QVariant::fromValue(std::string("Layer"));
     EXPECT_TRUE(item->setData(expected, ItemDataRole::DISPLAY));
 
     // initialize viewItem with sessionItem and set the data
@@ -97,10 +98,22 @@ TEST_F(TestViewItem, ViewLabelItem_setData)
     EXPECT_EQ(viewItem.data(Qt::EditRole), new_data); // new data
 
     // SessionItem itself should have new data
-    EXPECT_EQ(item->data(ItemDataRole::DISPLAY), new_data); // new data
+    EXPECT_EQ(item->data(ItemDataRole::DISPLAY), toCustomVariant(new_data)); // new data
 
     // it is not allowed to set another type of data to ViewLabelItem
     QVariant not_allowed_value(42);
     EXPECT_THROW(viewItem.setData(not_allowed_value, Qt::EditRole), std::runtime_error);
+}
+
+//! How ViewLabelItem sees MultiLayer
+
+TEST_F(TestViewItem, viewItemsForMultiLayer)
+{
+    ToyItems::SampleModel model;
+
+    auto multiLayer = model.insertNewItem(ToyItems::Constants::MultiLayerType);
+
+    ViewLabelItem labelItem(multiLayer);
+    EXPECT_EQ(labelItem.data(Qt::DisplayRole).toString().toStdString(), ToyItems::Constants::MultiLayerType);
 }
 
