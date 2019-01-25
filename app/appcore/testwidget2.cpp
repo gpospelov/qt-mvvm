@@ -11,16 +11,15 @@
 #include "viewitem.h"
 #include "viewmodel.h"
 #include "sessionmodel.h"
-#include "app_items.h"
+#include "toy_includes.h"
 #include <QTreeView>
 #include <QVBoxLayout>
 
 using namespace ModelView;
-using namespace AppItems;
 
 TestWidget2::TestWidget2(QWidget* parent)
     : QWidget(parent), m_treeView(new QTreeView), m_viewModel(new ViewModel(this))
-    , m_sessionModel(new SampleModel)
+    , m_sessionModel(new ToyItems::SampleModel)
 {
     auto layout = new QVBoxLayout;
     layout->addWidget(m_treeView);
@@ -37,6 +36,6 @@ TestWidget2::~TestWidget2() = default;
 
 void TestWidget2::init_session_model()
 {
-    auto multi_layer = m_sessionModel->insertNewItem(MultiLayerType);
-    m_sessionModel->insertNewItem(LayerType, multi_layer);
+    auto multi_layer = m_sessionModel->insertNewItem(ToyItems::Constants::MultiLayerType);
+    m_sessionModel->insertNewItem(ToyItems::Constants::LayerType, multi_layer);
 }

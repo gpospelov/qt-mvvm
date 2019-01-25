@@ -17,7 +17,7 @@ namespace ModelView {
 class ViewModel;
 }
 
-namespace AppItems {
+namespace ToyItems {
 class SampleModel;
 }
 
@@ -38,7 +38,7 @@ private:
 
     QTreeView* m_treeView;
     ModelView::ViewModel* m_viewModel;
-    std::unique_ptr<AppItems::SampleModel> m_sessionModel;
+    std::unique_ptr<ToyItems::SampleModel> m_sessionModel;
 };
 
 #endif // TESTWIDGET2_H
