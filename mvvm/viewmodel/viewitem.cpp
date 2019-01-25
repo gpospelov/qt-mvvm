@@ -14,7 +14,8 @@
 
 using namespace ModelView;
 
-ViewItem::ViewItem(SessionItem* item, int item_role) : m_item(item), m_item_role(item_role)
+ViewItem::ViewItem(SessionItem* item, int item_role)
+    : m_item(item), m_item_role(item_role)
 {
 }
 
@@ -23,23 +24,27 @@ ViewItem::ViewItem(SessionItem* item, int item_role) : m_item(item), m_item_role
 QVariant ViewItem::data(int role) const
 {
     if (!m_item)
-        return QVariant();
+        return QStandardItem::data(role);
 
     if (role == Qt::DisplayRole || role == Qt::EditRole) {
-        qDebug() << "aaa" << m_item_role << m_item->data(m_item_role) << QString::fromStdString(m_item->displayName());
+        qDebug() << "aaa" << role << m_item_role << m_item->data(m_item_role) << QString::fromStdString(m_item->displayName());
         return toQtVariant(m_item->data(m_item_role));
     }
 
-    return QVariant();
+    return QStandardItem::data(role);
 }
 
 void ViewItem::setData(const QVariant& value, int role)
 {
-    if (!m_item)
+    if (!m_item) {
+        QStandardItem::setData(value, role);
         return;
+    }
 
     if (role == Qt::EditRole)
         m_item->setData(toCustomVariant(value), m_item_role);
+
+    QStandardItem::setData(value, role);
 }
 
 SessionItem* ViewItem::item()

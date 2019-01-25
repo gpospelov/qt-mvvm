@@ -23,6 +23,7 @@ class CORE_EXPORT ViewLabelItem : public ViewItem
 {
 public:
     explicit ViewLabelItem(SessionItem* item);
+    int type() const override;
 };
 
 //! Represents data role of SessionItem in any cell of Qt's trees and tables.
@@ -31,6 +32,7 @@ class CORE_EXPORT ViewDataItem : public ViewItem
 {
 public:
     explicit ViewDataItem(SessionItem* item);
+    int type() const override;
 };
 
 } // namespace ModelView
