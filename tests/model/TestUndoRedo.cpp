@@ -3,7 +3,7 @@
 #include "sessionitem.h"
 #include "itemmanager.h"
 #include "taginfo.h"
-#include "toy_items.h"
+#include "toy_includes.h"
 #include <QUndoStack>
 
 using namespace ModelView;
@@ -347,13 +347,13 @@ TEST_F(TestUndoRedo, multiLayer)
     auto stack = model.undoStack();
 
     // creating multi layer
-    auto parent = model.insertNewItem(ToyItems::MultiLayerType);
+    auto parent = model.insertNewItem(ToyItems::Constants::MultiLayerType);
     EXPECT_TRUE(dynamic_cast<ToyItems::MultiLayer*>(parent) != nullptr);
-    EXPECT_EQ(parent->modelType(), ToyItems::MultiLayerType);
+    EXPECT_EQ(parent->modelType(), ToyItems::Constants::MultiLayerType);
 
     // inserting two layers
-    auto layer0 = model.insertNewItem(ToyItems::LayerType, parent);
-    auto layer1 = model.insertNewItem(ToyItems::LayerType, parent);
+    auto layer0 = model.insertNewItem(ToyItems::Constants::LayerType, parent);
+    auto layer1 = model.insertNewItem(ToyItems::Constants::LayerType, parent);
 
     // saving identifiers for further reference
     identifier_type id_parent = parent->data(ItemDataRole::IDENTIFIER).value<std::string>();

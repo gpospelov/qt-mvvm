@@ -7,33 +7,25 @@
 //
 // ************************************************************************** //
 
-#ifndef TOYITEMS_H
-#define TOYITEMS_H
+#ifndef TOYFACTORIES_H
+#define TOYFACTORIES_H
 
-#include "sessionitem.h"
-#include "sessionmodel.h"
 #include "itemfactoryinterface.h"
-#include <string>
 
 //! Collection of toy items and models for testing purposes.
 
 namespace ToyItems
 {
 
-class MultiLayer : public ModelView::SessionItem
+class ItemFactory : public ModelView::ItemFactoryInterface
 {
 public:
-    static const std::string T_LAYERS;
-    MultiLayer();
-};
+    ModelView::SessionItem* createItem(const ModelView::model_type& modelType = {}) override;
 
-class Layer : public ModelView::SessionItem
-{
-public:
-    Layer();
+    ModelView::SessionItem* createEmptyItem() override;
 };
 
 } // ToyItems
 
-#endif // TOYITEMS_H
+#endif // TOYFACTORIES_H
 

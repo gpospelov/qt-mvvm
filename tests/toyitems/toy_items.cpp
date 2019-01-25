@@ -8,52 +8,24 @@
 // ************************************************************************** //
 
 #include "toy_items.h"
+#include "toy_constants.h"
+#include "toy_factories.h"
 #include "taginfo.h"
 #include "itemmanager.h"
 #include <stdexcept>
 
 using namespace ToyItems;
-using namespace ModelView;
 
 const std::string MultiLayer::T_LAYERS = "layer tag";
 
 MultiLayer::MultiLayer()
-    : SessionItem(MultiLayerType)
+    : SessionItem(Constants::MultiLayerType)
 {
-    registerTag(TagInfo::universalTag(T_LAYERS, {LayerType}), /*set_as_default*/true);
+    registerTag(ModelView::TagInfo::universalTag(T_LAYERS, {Constants::LayerType}), /*set_as_default*/true);
 }
 
 Layer::Layer()
-    : SessionItem(LayerType)
+    : SessionItem(Constants::LayerType)
 {
 
-}
-
-SessionItem* ItemFactory::createItem(const model_type& modelType)
-{
-    SessionItem* result(nullptr);
-
-    if (modelType == MultiLayerType)
-        result = new MultiLayer;
-
-    else if (modelType == LayerType)
-        result = new Layer;
-
-    if (!result)
-        throw std::runtime_error("ItemFactory::createItem() -> Error. Unknown model '"+
-                                 modelType+"'");
-
-    result->setDisplayName(modelType);
-    return result;
-}
-
-SessionItem* ItemFactory::createEmptyItem()
-{
-    return new SessionItem;
-}
-
-SampleModel::SampleModel()
-    : SessionModel("ToyModel")
-{
-    m_item_manager->setItemFactory(std::make_unique<ItemFactory>());
 }
