@@ -12,4 +12,4 @@ include_directories(${BUILD_INC_DIR})
 
 add_library(${library_name} STATIC ${source_files} ${include_files})
 target_link_libraries(${library_name} mvvm)
-target_include_directories(${library_name} PUBLIC  $<BUILD_INTERFACE:${include_dirs}>)
+target_include_directories(${library_name} PUBLIC ${include_dirs})
