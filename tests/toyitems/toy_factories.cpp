@@ -9,6 +9,7 @@
 
 #include "toy_factories.h"
 #include "sessionitem.h"
+#include "propertyitem.h"
 #include "toy_constants.h"
 #include "toy_items.h"
 #include <stdexcept>
@@ -23,6 +24,9 @@ ModelView::SessionItem* ItemFactory::createItem(const ModelView::model_type& mod
         result = new MultiLayer;
 
     else if (modelType == Constants::LayerType)
+        result = new Layer;
+
+    else if (modelType == ModelView::Constants::PropertyType)
         result = new Layer;
 
     if (!result)

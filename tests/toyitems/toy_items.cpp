@@ -18,12 +18,15 @@ using namespace ToyItems;
 
 const std::string MultiLayer::T_LAYERS = "layer tag";
 
-MultiLayer::MultiLayer() : SessionItem(Constants::MultiLayerType)
+MultiLayer::MultiLayer() : CompoundItem(Constants::MultiLayerType)
 {
     registerTag(ModelView::TagInfo::universalTag(T_LAYERS, {Constants::LayerType}),
                 /*set_as_default*/ true);
 }
 
-Layer::Layer() : SessionItem(Constants::LayerType)
+const std::string Layer::P_THICKNESS = "Thickness";
+
+Layer::Layer() : CompoundItem(Constants::LayerType)
 {
+//    addProperty(P_THICKNESS, 42.0);
 }

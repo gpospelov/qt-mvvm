@@ -10,7 +10,7 @@
 #ifndef TOYITEMS_H
 #define TOYITEMS_H
 
-#include "sessionitem.h"
+#include "compounditem.h"
 #include "sessionmodel.h"
 #include "itemfactoryinterface.h"
 #include <string>
@@ -20,16 +20,17 @@
 namespace ToyItems
 {
 
-class MultiLayer : public ModelView::SessionItem
+class MultiLayer : public ModelView::CompoundItem
 {
 public:
     static const std::string T_LAYERS;
     MultiLayer();
 };
 
-class Layer : public ModelView::SessionItem
+class Layer : public ModelView::CompoundItem
 {
 public:
+    static const std::string P_THICKNESS;
     Layer();
 };
 
