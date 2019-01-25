@@ -16,5 +16,21 @@ TestViewModel::~TestViewModel() = default;
 
 TEST_F(TestViewModel, initialState)
 {
-    EXPECT_EQ(1, 1);
+    ViewModel viewModel;
+    EXPECT_EQ(viewModel.rowCount(), 0);
+    EXPECT_EQ(viewModel.columnCount(), 0);
 }
+
+TEST_F(TestViewModel, fromMultiLayer)
+{
+    ToyItems::SampleModel model;
+    model.insertNewItem(ToyItems::Constants::MultiLayerType);
+
+    ViewModel viewModel;
+    viewModel.setSessionModel(&model);
+    EXPECT_EQ(viewModel.rowCount(), 1);
+    EXPECT_EQ(viewModel.columnCount(), 1);
+}
+
+
+

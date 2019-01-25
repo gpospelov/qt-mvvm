@@ -16,6 +16,21 @@
 
 using namespace ModelView;
 
+namespace {
+
+//! Constructs row (display name and data) for given item.
+QList<QStandardItem* > constructRow(SessionItem* item)
+{
+    QList<QStandardItem* > result;
+    result.append(new ViewLabelItem(item));
+    if (item->data(ItemDataRole::DATA).isValid())
+        result.append(new ViewDataItem(item));
+    return result;
+}
+
+}
+
+
 ViewModel::ViewModel(QObject* parent)
     : QStandardItemModel(parent)
     , m_sessionModel(nullptr)
@@ -40,21 +55,12 @@ void ViewModel::update_model()
 
 void ViewModel::iterate(SessionItem* item, QStandardItem* parent)
 {
-    qDebug() << "XXX"
-             << QString::fromStdString(item->modelType())
-             << QString::fromStdString(item->displayName())
-             << item->childrenCount();
     for (auto child : item->children()) {
-        qDebug() << " child:" << QString::fromStdString(child->modelType());
-        ViewLabelItem* labelItem = new ViewLabelItem(child);
-        ViewDataItem* dataItem = new ViewDataItem(child);
-
-        QList<QStandardItem* > row;
-        row.append(labelItem);
-        row.append(dataItem);
-
-        parent->appendRow(row);
-        parent = labelItem;
+        auto row = constructRow(child);
+        if (row.size()) {
+            parent->appendRow(row);
+            parent = row.at(0); // labelItem
+        }
         iterate(child, parent);
     }
 }
