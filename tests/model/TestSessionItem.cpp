@@ -57,7 +57,9 @@ TEST_F(TestSessionItem, setData)
 
 TEST_F(TestSessionItem, displayName)
 {
-    SessionItem item("Layer");
+    SessionItem item("Property");
+    QVariant data(42.0);
+    EXPECT_TRUE(item.setData(data, ItemDataRole::DATA));
 
     // by default item doesn't have any display name
     EXPECT_EQ(item.displayName(), "");
@@ -65,6 +67,7 @@ TEST_F(TestSessionItem, displayName)
     // checking setter
     item.setDisplayName("width");
     EXPECT_EQ(item.displayName(), "width");
+    EXPECT_EQ(item.data(ItemDataRole::DATA).toDouble(), 42.0);
 }
 
 //! Attempt to set the different Variant to already existing role.

@@ -31,15 +31,20 @@ Layer::Layer()
 
 SessionItem* ItemFactory::createItem(const model_type& modelType)
 {
+    SessionItem* result(nullptr);
+
     if (modelType == MultiLayerType)
-        return new MultiLayer;
+        result = new MultiLayer;
 
     else if (modelType == LayerType)
-        return new Layer;
+        result = new Layer;
 
-    else
+    if (!result)
         throw std::runtime_error("ItemFactory::createItem() -> Error. Unknown model '"+
                                  modelType+"'");
+
+    result->setDisplayName(modelType);
+    return result;
 }
 
 SessionItem* ItemFactory::createEmptyItem()

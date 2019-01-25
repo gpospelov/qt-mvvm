@@ -40,7 +40,10 @@ void ViewModel::update_model()
 
 void ViewModel::iterate(SessionItem* item, QStandardItem* parent)
 {
-    qDebug() << "XXX" << QString::fromStdString(item->modelType()) << item->childrenCount();
+    qDebug() << "XXX"
+             << QString::fromStdString(item->modelType())
+             << QString::fromStdString(item->displayName())
+             << item->childrenCount();
     for (auto child : item->children()) {
         qDebug() << " child:" << QString::fromStdString(child->modelType());
         ViewLabelItem* labelItem = new ViewLabelItem(child);

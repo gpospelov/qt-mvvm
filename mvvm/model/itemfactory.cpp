@@ -16,7 +16,8 @@ ItemFactory::ItemFactory() = default;
 
 SessionItem* ItemFactory::createItem(const model_type& modelType)
 {
-    return new SessionItem(modelType);
+    auto result = new SessionItem(modelType);
+    return result;
 }
 
 SessionItem* ItemFactory::createEmptyItem()
