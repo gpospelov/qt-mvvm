@@ -27,17 +27,28 @@ TEST_F(TestCompoundItem, addProperty)
 {
     CompoundItem item;
 
-    // Adding properties is only possible when item is created through the model,
-    // since item itself know nothing about factories.
-    EXPECT_THROW(item.addProperty("height", 42.0), std::runtime_error);
+    auto propertyItem = item.addProperty<PropertyItem>("height", 42.0);
+    EXPECT_TRUE(item.isTag("height"));
 
-    SessionModel model;
-    auto item2 = dynamic_cast<CompoundItem*>(model.insertNewItem(Constants::CompoundType));
-    EXPECT_TRUE(item2 != nullptr);
-
-    item2->addProperty("height", 42.0);
-    EXPECT_TRUE(item2->isTag("height"));
-
-    EXPECT_EQ(item2->childrenCount(), 1);
-    EXPECT_EQ(item2->getItem("height")->modelType(), Constants::PropertyType);
+    EXPECT_EQ(propertyItem->modelType(), Constants::PropertyType);
+    EXPECT_EQ(propertyItem->displayName(), "height");
+    EXPECT_EQ(propertyItem->data(ItemDataRole::DATA).toDouble(), 42.0);
 }
+
+TEST_F(TestCompoundItem, itemValue)
+{
+    CompoundItem item;
+
+    auto propertyItem = item.addProperty<PropertyItem>("height", 42.0);
+    EXPECT_TRUE(item.isTag("height"));
+
+    EXPECT_EQ(propertyItem->modelType(), Constants::PropertyType);
+    EXPECT_EQ(item.getItemValue("height").toDouble(), 42.0);
+
+    // setting value
+    double expected(442.0);
+    item.setItemValue("height", expected);
+    EXPECT_EQ(item.getItemValue("height").toDouble(), expected);
+    EXPECT_EQ(propertyItem->data(ItemDataRole::DATA).toDouble(), expected);
+}
+

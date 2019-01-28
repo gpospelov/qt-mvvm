@@ -21,22 +21,13 @@ CompoundItem::CompoundItem(const std::string& modelType)
 
 }
 
-//! Registers single item tag and adds PropertyItem with given variant value.
-
-SessionItem* CompoundItem::addProperty(const std::string& name, const QVariant& variant)
+QVariant CompoundItem::getItemValue(const std::string& tag) const
 {
-    if (!model())
-        throw std::runtime_error("CompoundItem::addProperty() -> Can't create property, "
-                                 "model is undefined");
-
-    registerTag(TagInfo::propertyTag(name, Constants::PropertyType));
-
-    // not inserting through SessionModel::insertNewItem to bypass unddo/redo
-    auto propertyItem = model()->manager()->createItem(Constants::PropertyType);
-    insertItem(0, propertyItem, name);
-
-    propertyItem->setDisplayName(name);
-    propertyItem->setData(variant, ItemDataRole::DATA);
-
-    return propertyItem;
+    return getItem(tag)->data(ItemDataRole::DATA);
 }
+
+void CompoundItem::setItemValue(const std::string& tag, const QVariant& variant)
+{
+    getItem(tag)->setData(variant, ItemDataRole::DATA);
+}
+
