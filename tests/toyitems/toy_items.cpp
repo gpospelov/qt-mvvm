@@ -28,5 +28,5 @@ const std::string Layer::P_THICKNESS = "Thickness";
 
 Layer::Layer() : CompoundItem(Constants::LayerType)
 {
-//    addProperty(P_THICKNESS, 42.0);
+    addProperty<ModelView::PropertyItem>(P_THICKNESS, 42.0);
 }

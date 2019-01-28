@@ -49,3 +49,8 @@ SessionItem* ViewItem::item()
 {
     return m_item;
 }
+
+ViewItem* ViewItem::clone() const
+{
+    throw std::runtime_error("ViewItem::clone() -> Error. Attempt to call clone.");
+}

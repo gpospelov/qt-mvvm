@@ -34,7 +34,9 @@ public:
 
     SessionItem* item();
 
-protected:
+    ViewItem* clone() const override;
+
+    protected:
     ViewItem(SessionItem* item, int item_role);
 
     SessionItem* m_item;

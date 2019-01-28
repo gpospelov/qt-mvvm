@@ -31,10 +31,10 @@ TestWidget1::TestWidget1(QWidget* parent)
 {
     auto layout = new QVBoxLayout;
 
-    m_model->setColumnCount(3);
+//    m_model->setColumnCount(3);
     QStandardItem* parentItem = m_model->invisibleRootItem();
 
-    auto item_row1 = get_items(3, "aaa");
+    auto item_row1 = get_items(1, "aaa");
     parentItem->appendRow(item_row1);
     item_row1.at(0)->appendRow(get_items(2, "bbb"));
 

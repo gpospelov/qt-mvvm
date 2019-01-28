@@ -22,9 +22,11 @@ namespace {
 QList<QStandardItem* > constructRow(SessionItem* item)
 {
     QList<QStandardItem* > result;
+    qDebug() << "aaa" << QString::fromStdString(item->displayName()) << item->data(ItemDataRole::DATA);
     result.append(new ViewLabelItem(item));
     if (item->data(ItemDataRole::DATA).isValid())
         result.append(new ViewDataItem(item));
+    qDebug() << "   " << result.size();
     return result;
 }
 
@@ -50,12 +52,17 @@ void ViewModel::update_model()
     if(!m_sessionModel)
         return;
 
+    setColumnCount(2);
+
     iterate(m_sessionModel->rootItem(), invisibleRootItem());
 }
 
 void ViewModel::iterate(SessionItem* item, QStandardItem* parent)
 {
     for (auto child : item->children()) {
+        qDebug() << "Constructing row for child"
+                 << QString::fromStdString(child->modelType())
+                 << "parent" << parent;
         auto row = constructRow(child);
         if (row.size()) {
             parent->appendRow(row);
