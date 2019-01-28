@@ -53,7 +53,6 @@ TEST_F(TestViewModel, fromLayer)
     QModelIndex layerIndex = viewModel.index(0, 0);
     EXPECT_EQ(viewModel.rowCount(layerIndex), 1);
     EXPECT_EQ(viewModel.columnCount(layerIndex), 2);
-
 }
 
 

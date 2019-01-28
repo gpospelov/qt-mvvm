@@ -37,5 +37,7 @@ TestWidget2::~TestWidget2() = default;
 void TestWidget2::init_session_model()
 {
     auto multi_layer = m_sessionModel->insertNewItem(ToyItems::Constants::MultiLayerType);
-    m_sessionModel->insertNewItem(ToyItems::Constants::LayerType, multi_layer);
+    auto layer = m_sessionModel->insertNewItem(ToyItems::Constants::LayerType, multi_layer);
+    m_sessionModel->insertNewItem(ToyItems::Constants::ParticleType, layer);
+
 }

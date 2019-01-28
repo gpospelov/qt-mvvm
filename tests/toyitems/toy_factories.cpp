@@ -26,6 +26,9 @@ ModelView::SessionItem* ItemFactory::createItem(const ModelView::model_type& mod
     else if (modelType == Constants::LayerType)
         result = new Layer;
 
+    else if (modelType == Constants::ParticleType)
+        result = new Particle;
+
     else if (modelType == ModelView::Constants::PropertyType)
         result = new Layer;
 

@@ -27,11 +27,34 @@ public:
     MultiLayer();
 };
 
+// ----------------------------------------------------------------------------
+
 class Layer : public ModelView::CompoundItem
 {
 public:
     static const std::string P_THICKNESS;
+    static const std::string T_PARTICLES;
     Layer();
+};
+
+// ----------------------------------------------------------------------------
+
+class Vector : public ModelView::CompoundItem
+{
+public:
+    static const std::string P_X;
+    static const std::string P_Y;
+    static const std::string P_Z;
+    Vector();
+};
+
+// ----------------------------------------------------------------------------
+
+class Particle : public ModelView::CompoundItem
+{
+public:
+    static const std::string P_POSITION;
+    Particle();
 };
 
 } // ToyItems

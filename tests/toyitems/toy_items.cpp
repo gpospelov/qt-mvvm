@@ -25,8 +25,34 @@ MultiLayer::MultiLayer() : CompoundItem(Constants::MultiLayerType)
 }
 
 const std::string Layer::P_THICKNESS = "Thickness";
+const std::string Layer::T_PARTICLES = "Particles";
 
 Layer::Layer() : CompoundItem(Constants::LayerType)
 {
     addProperty<ModelView::PropertyItem>(P_THICKNESS, 42.0);
+    registerTag(ModelView::TagInfo::universalTag(T_PARTICLES, {Constants::ParticleType}),
+                /*set_as_default*/ true);
+}
+
+// ----------------------------------------------------------------------------
+
+const std::string Vector::P_X = "X";
+const std::string Vector::P_Y = "Y";
+const std::string Vector::P_Z = "Z";
+
+Vector::Vector()
+{
+    addProperty<ModelView::PropertyItem>(P_X, 0.0);
+    addProperty<ModelView::PropertyItem>(P_Y, 0.0);
+    addProperty<ModelView::PropertyItem>(P_Z, 0.0);
+}
+
+
+// ----------------------------------------------------------------------------
+
+const std::string Particle::P_POSITION = "Position";
+
+Particle::Particle()
+{
+    addProperty<Vector>(P_POSITION);
 }
