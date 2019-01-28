@@ -17,6 +17,18 @@ namespace ModelView
 
 class SessionItem;
 
+class CORE_EXPORT ViewEmptyItem : public ViewItem
+{
+public:
+    explicit ViewEmptyItem();
+    int type() const override;
+
+    QVariant data(int role) const override;
+
+    ViewEmptyItem* clone() const override;
+};
+
+
 //! Represents display name of SessionItem in any cell of Qt's trees and tables.
 
 class CORE_EXPORT ViewLabelItem : public ViewItem

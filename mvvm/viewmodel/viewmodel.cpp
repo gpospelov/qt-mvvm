@@ -37,7 +37,7 @@ ViewModel::ViewModel(QObject* parent)
     : QStandardItemModel(parent)
     , m_sessionModel(nullptr)
 {
-
+    setItemPrototype(new ViewEmptyItem);
 }
 
 void ViewModel::setSessionModel(SessionModel* model)

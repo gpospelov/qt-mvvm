@@ -13,8 +13,34 @@
 using namespace ModelView;
 
 namespace {
-const int label_item_type = QStandardItem::UserType+1;
-const int data_item_type = QStandardItem::UserType+2;
+const int empty_item_type = QStandardItem::UserType+1;
+const int label_item_type = QStandardItem::UserType+2;
+const int data_item_type = QStandardItem::UserType+3;
+}
+
+ViewEmptyItem::ViewEmptyItem()
+    : ViewItem(nullptr, ItemDataRole::DISPLAY)
+{
+    setEditable(false);
+}
+
+int ViewEmptyItem::type() const
+{
+    return empty_item_type;
+}
+
+QVariant ViewEmptyItem::data(int role) const
+{
+    if (role == Qt::DisplayRole || role == Qt::EditRole) {
+        return QString("placeholder");
+    }
+
+    return QStandardItem::data(role);
+}
+
+ViewEmptyItem* ViewEmptyItem::clone() const
+{
+    return new ViewEmptyItem;
 }
 
 ViewLabelItem::ViewLabelItem(SessionItem* item)
