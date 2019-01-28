@@ -33,6 +33,7 @@ SessionItem::SessionItem(model_type modelType)
     , m_tags(new SessionItemTags)
     , m_modelType(std::move(modelType))
 {
+    setDataIntern(QVariant::fromValue(ItemPool::generate_key()), ItemDataRole::IDENTIFIER);
 }
 
 SessionItem::~SessionItem()
@@ -154,8 +155,7 @@ void SessionItem::register_item(std::shared_ptr<ItemPool> item_pool)
     m_item_pool = item_pool;
 
     if (auto pool = m_item_pool.lock()) {
-        auto key = pool->register_item(this);
-        setDataIntern(QVariant::fromValue(key), ItemDataRole::IDENTIFIER);
+        auto key = pool->register_item(this, data(ItemDataRole::IDENTIFIER).value<std::string>());
     }
 }
 

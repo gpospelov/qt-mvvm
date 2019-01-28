@@ -26,7 +26,13 @@ TEST_F(TestSessionItem, initialState)
     EXPECT_FALSE(item.data(role).isValid());
     EXPECT_TRUE(item.children().empty());
     EXPECT_TRUE(item.modelType().empty());
-    EXPECT_TRUE(item.roles().empty());
+
+    // Initially item has already an identifier defined.
+    std::vector<int> expected_roles = {ItemDataRole::IDENTIFIER};
+    EXPECT_EQ(item.roles(), expected_roles);
+
+    // Identifier is not zero
+    EXPECT_FALSE(item.data(ItemDataRole::IDENTIFIER).value<std::string>().empty());
 }
 
 TEST_F(TestSessionItem, modelType)
@@ -44,12 +50,14 @@ TEST_F(TestSessionItem, setData)
 
     QVariant expected(42.0);
     EXPECT_TRUE(item.setData(expected, role));
-    EXPECT_EQ(item.roles().size(), 1);
+
+    std::vector<int> expected_roles = {ItemDataRole::IDENTIFIER, ItemDataRole::DATA};
+    EXPECT_EQ(item.roles(), expected_roles);
     EXPECT_EQ(item.data(role), expected);
 
     // setting another value
     EXPECT_TRUE(item.setData(QVariant::fromValue(43.0), role));
-    EXPECT_EQ(item.roles().size(), 1);
+    EXPECT_EQ(item.roles(), expected_roles);
     EXPECT_EQ(item.data(role), QVariant::fromValue(43.0));
 }
 
@@ -80,7 +88,9 @@ TEST_F(TestSessionItem, variantMismatch)
 
     // setting data for the first time
     EXPECT_TRUE(item.setData(expected, role));
-    EXPECT_EQ(item.roles().size(), 1);
+
+    std::vector<int> expected_roles = {ItemDataRole::IDENTIFIER, ItemDataRole::DATA};
+    EXPECT_EQ(item.roles(), expected_roles);
     EXPECT_EQ(item.data(role), expected);
 
     // attempt to rewrite variant with another type
@@ -88,7 +98,7 @@ TEST_F(TestSessionItem, variantMismatch)
 
     // removing value by passing invalid variant
     EXPECT_NO_THROW(item.setData(QVariant(), role));
-    EXPECT_EQ(item.roles().size(), 0);
+    EXPECT_EQ(item.roles().size(), 1);
 }
 
 //! Item registration in a pool.
@@ -96,21 +106,26 @@ TEST_F(TestSessionItem, variantMismatch)
 TEST_F(TestSessionItem, registerItem)
 {
     std::unique_ptr<SessionItem> item(new SessionItem);
-    std::shared_ptr<ItemPool> pool;
+    auto item_id = item->data(ItemDataRole::IDENTIFIER).value<std::string>();
+    EXPECT_EQ(item->roles().size(), 1u);
 
-    EXPECT_TRUE(item->roles().empty());
+    std::shared_ptr<ItemPool> pool;
 
     // registering item on unexisting pool
     item->register_item(pool);
-    EXPECT_TRUE(item->roles().empty());
+    EXPECT_EQ(item->data(ItemDataRole::IDENTIFIER).value<std::string>(), item_id);
 
     // creating pool
     pool.reset(new ItemPool);
     item->register_item(pool);
+    // registration shouldn't change item identifier
+    EXPECT_EQ(item->data(ItemDataRole::IDENTIFIER).value<std::string>(), item_id);
+
+    // registration key should coincide with item identifier
     auto key = pool->key_for_item(item.get());
     std::vector<int> expected_roles = {ItemDataRole::IDENTIFIER};
     EXPECT_EQ(item->roles(), expected_roles);
-    EXPECT_EQ(item->data(ItemDataRole::IDENTIFIER).value<std::string>(), key);
+    EXPECT_EQ(item_id, key);
 }
 
 //! Item registration in a pool.
