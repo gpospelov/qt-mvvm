@@ -58,8 +58,6 @@ public:
 
     int rowOfChild(SessionItem* child) const;
 
-    void register_item(std::shared_ptr<ItemPool> item_pool);
-
     std::vector<int> roles() const;
 
     // tags
@@ -84,7 +82,6 @@ private:
     SessionItem* m_parent;
     SessionModel* m_model;
     std::vector<SessionItem*> m_children;
-    std::weak_ptr<ItemPool> m_item_pool;
     std::unique_ptr<SessionItemData> m_data;
     std::unique_ptr<SessionItemTags> m_tags;
     model_type m_modelType;

@@ -1,7 +1,9 @@
 #include "google_test.h"
 #include "sessionmodel.h"
 #include "sessionitem.h"
+#include "itemmanager.h"
 #include "taginfo.h"
+#include "itempool.h"
 #include <memory>
 
 using namespace ModelView;
@@ -34,11 +36,18 @@ TEST_F(TestSessionModel, insertNewItem)
     EXPECT_EQ(item->model(), &model);
     EXPECT_EQ(item->modelType(), modelType);
 
+    // checking registration
+    auto item_key = item->data(ItemDataRole::IDENTIFIER).value<std::string>();
+    EXPECT_EQ(model.manager()->itemPool()->item_for_key(item_key), item);
+
     // registering tag
     item->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/true);
 
     // adding child to it
     auto child = model.insertNewItem(modelType, item);
+    auto child_key = child->data(ItemDataRole::IDENTIFIER).value<std::string>();
+    EXPECT_EQ(model.manager()->itemPool()->item_for_key(child_key), child);
+
     EXPECT_TRUE(child != nullptr);
     EXPECT_EQ(child->parent(), item);
     EXPECT_EQ(child->model(), &model);
@@ -48,6 +57,10 @@ TEST_F(TestSessionModel, insertNewItem)
     auto taken = item->takeItem(0);
     EXPECT_EQ(taken, child);
     EXPECT_EQ(child->model(), nullptr);
+
+    // childitem not registered anymore
+    EXPECT_EQ(model.manager()->itemPool()->item_for_key(child_key), nullptr);
+
     delete taken;
 }
 
@@ -101,4 +114,27 @@ TEST_F(TestSessionModel, removeRow)
     model.removeRow(parent, 0); // removing child2
     EXPECT_EQ(parent->childrenCount(), 1);
     EXPECT_EQ(parent->childAt(0), child1);
+
+    // child2 shouldn't be registered anymore
+    EXPECT_EQ(model.manager()->itemPool()->key_for_item(child2), "");
+}
+
+TEST_F(TestSessionModel, takeRowFromRootItem)
+{
+    SessionModel model;
+
+    auto parent = model.insertNewItem("MultiLayer");
+    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/true);
+    auto parent_key = parent->data(ItemDataRole::IDENTIFIER).value<std::string>();
+
+    auto child = model.insertNewItem("Layer1", parent);
+    auto child_key = child->data(ItemDataRole::IDENTIFIER).value<std::string>();
+
+    EXPECT_EQ(model.manager()->itemPool()->item_for_key(parent_key), parent);
+    EXPECT_EQ(model.manager()->itemPool()->item_for_key(child_key), child);
+
+    // taking parent
+    auto taken = model.rootItem()->takeItem(0);
+    EXPECT_EQ(model.manager()->itemPool()->item_for_key(parent_key), nullptr);
+    EXPECT_EQ(model.manager()->itemPool()->item_for_key(child_key), nullptr);
 }

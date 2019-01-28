@@ -41,6 +41,7 @@ public:
     identifier_type findIdentifier(SessionItem* item) const;
 
     const ItemPool* itemPool() const;
+    ItemPool* itemPool();
 
     const JsonModelInterface& converter() const;
 

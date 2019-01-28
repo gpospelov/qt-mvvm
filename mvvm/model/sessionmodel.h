@@ -54,6 +54,8 @@ public:
 
     void removeRow(SessionItem* parent, int row);
 
+    void make_registered(SessionItem* item, bool flag = true);
+
 protected:
     std::unique_ptr<ItemManager> m_item_manager;
 

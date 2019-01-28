@@ -45,8 +45,8 @@ SessionItem::~SessionItem()
     if (m_parent)
         m_parent->childDeleted(this);
 
-    if (auto pool = m_item_pool.lock())
-        pool->deregister_item(this);
+    if (m_model)
+        m_model->make_registered(this, false);
 }
 
 model_type SessionItem::modelType() const
@@ -150,14 +150,14 @@ int SessionItem::rowOfChild(SessionItem* child) const
     return pos == m_children.end() ? -1 : static_cast<int>(std::distance(m_children.begin(), pos));
 }
 
-void SessionItem::register_item(std::shared_ptr<ItemPool> item_pool)
-{
-    m_item_pool = item_pool;
+//void SessionItem::register_item(std::shared_ptr<ItemPool> item_pool)
+//{
+//    m_item_pool = item_pool;
 
-    if (auto pool = m_item_pool.lock()) {
-        auto key = pool->register_item(this, data(ItemDataRole::IDENTIFIER).value<std::string>());
-    }
-}
+//    if (auto pool = m_item_pool.lock()) {
+//        auto key = pool->register_item(this, data(ItemDataRole::IDENTIFIER).value<std::string>());
+//    }
+//}
 
 std::vector<int> SessionItem::roles() const
 {
@@ -223,7 +223,15 @@ void SessionItem::setParent(SessionItem* parent)
 
 void SessionItem::setModel(SessionModel* model)
 {
+    if (m_model) {
+        m_model->make_registered(this, false);
+    }
+
     m_model = model;
+
+    if (m_model) {
+        m_model->make_registered(this, true);
+    }
 
     for (auto child : m_children)
         child->setModel(model);

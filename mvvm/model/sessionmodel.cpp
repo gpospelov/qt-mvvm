@@ -14,6 +14,7 @@
 #include "commandservice.h"
 #include "itempool.h"
 #include "taginfo.h"
+#include "customvariants.h"
 
 using namespace ModelView;
 
@@ -111,6 +112,18 @@ ItemManager* SessionModel::manager()
 void SessionModel::removeRow(SessionItem* parent, int row)
 {
     m_commands->removeRow(parent, row);
+}
+
+void SessionModel::make_registered(SessionItem* item, bool flag)
+{
+    if (!m_item_manager->itemPool())
+        return;
+
+    if (flag) {
+        m_item_manager->itemPool()->register_item(item, item->data(ItemDataRole::IDENTIFIER).value<std::string>());
+    } else {
+        m_item_manager->itemPool()->deregister_item(item);
+    }
 }
 
 void SessionModel::createRootItem()

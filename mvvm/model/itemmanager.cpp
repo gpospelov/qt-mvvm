@@ -13,6 +13,7 @@
 #include "itemfactory.h"
 #include "jsonconverterinterfaces.h"
 #include "jsonmodel.h"
+#include "customvariants.h"
 
 using namespace ModelView;
 
@@ -38,16 +39,12 @@ ItemManager::~ItemManager() = default;
 SessionItem* ItemManager::createItem(const model_type& modelType)
 {
     auto result = m_item_factory->createItem(modelType);
-    if (m_item_pool)
-        result->register_item(m_item_pool);
     return result;
 }
 
 SessionItem* ItemManager::createRootItem()
 {
     auto result = m_item_factory->createEmptyItem();
-    if (m_item_pool)
-        result->register_item(m_item_pool);
     return result;
 }
 
@@ -62,6 +59,11 @@ identifier_type ItemManager::findIdentifier(SessionItem* item) const
 }
 
 const ItemPool* ItemManager::itemPool() const
+{
+    return m_item_pool.get();
+}
+
+ItemPool* ItemManager::itemPool()
 {
     return m_item_pool.get();
 }

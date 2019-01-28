@@ -111,13 +111,9 @@ TEST_F(TestSessionItem, registerItem)
 
     std::shared_ptr<ItemPool> pool;
 
-    // registering item on unexisting pool
-    item->register_item(pool);
-    EXPECT_EQ(item->data(ItemDataRole::IDENTIFIER).value<std::string>(), item_id);
-
     // creating pool
     pool.reset(new ItemPool);
-    item->register_item(pool);
+    pool->register_item(item.get(), item_id);
     // registration shouldn't change item identifier
     EXPECT_EQ(item->data(ItemDataRole::IDENTIFIER).value<std::string>(), item_id);
 
