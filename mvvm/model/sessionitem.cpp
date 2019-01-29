@@ -39,6 +39,9 @@ SessionItem::SessionItem(model_type modelType)
 
 SessionItem::~SessionItem()
 {
+    if (m_mapper)
+        m_mapper->callOnItemDestroy();
+
     for (auto item : m_children)
         delete item;
     m_children.clear();

@@ -25,6 +25,7 @@ class SessionItem;
 
 class CORE_EXPORT ItemMapper
 {
+    friend class SessionItem;
 public:
     using caller_t = const void*;
     using func_item_t = std::function<void(SessionItem*)>;

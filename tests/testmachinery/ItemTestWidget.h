@@ -23,7 +23,7 @@ namespace TestUtils
 
 class ItemTestWidgetInterface {
 public:
-    virtual ~ItemTestWidgetInterface();
+    virtual ~ItemTestWidgetInterface() = default;
 
     virtual void onItemDestroy(ModelView::SessionItem* item) = 0;
     virtual void onDataChange(ModelView::SessionItem* item, int role) = 0;

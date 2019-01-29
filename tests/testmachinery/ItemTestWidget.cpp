@@ -10,16 +10,16 @@
 #include "ItemTestWidget.h"
 #include "sessionitem.h"
 #include "itemmapper.h"
+#include <QDebug>
 
-using namespace TestUtils;
-
-void ConnectItemWidget(ItemTestWidgetInterface* widget, ModelView::SessionItem* item)
+void TestUtils::ConnectItemWidget(TestUtils::ItemTestWidgetInterface* widget, ModelView::SessionItem* item)
 {
     item->mapper()->setOnItemDestroy([widget](ModelView::SessionItem* item) {
+        qDebug() << "in ConnectitemWidget";
         widget->onItemDestroy(item);
-    });
+    }, widget);
 
     item->mapper()->setOnDataChange([widget](ModelView::SessionItem* item, int role) {
         widget->onDataChange(item, role);
-    });
+    }, widget);
 }
