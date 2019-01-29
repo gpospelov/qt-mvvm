@@ -23,15 +23,12 @@ namespace TestUtils
 
 class ItemTestWidgetInterface {
 public:
-    virtual ~ItemTestWidgetInterface() = default;
+    virtual ~ItemTestWidgetInterface();
 
     virtual void onItemDestroy(ModelView::SessionItem* item) = 0;
     virtual void onDataChange(ModelView::SessionItem* item, int role) = 0;
 
 };
-
-//! Connects all callbacks between testing class and SessionItem.
-void ConnectItemWidget(ItemTestWidgetInterface* widget, ModelView::SessionItem* item);
 
 } // TestUtils
 

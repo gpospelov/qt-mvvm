@@ -282,5 +282,9 @@ bool SessionItem::setDataIntern(const QVariant& variant, int role)
         throw std::runtime_error(ostr.str());
     }
 
-    return m_data->setData(variant, role);
+    bool result = m_data->setData(variant, role);
+    if (result && m_mapper)
+        m_mapper->callOnDataChange(role);
+
+    return result;
 }
