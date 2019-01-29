@@ -23,6 +23,7 @@ class ItemPool;
 class SessionItemData;
 class SessionItemTags;
 class TagInfo;
+class ItemMapper;
 
 class CORE_EXPORT SessionItem {
     friend class SessionModel;
@@ -72,6 +73,7 @@ public:
     std::vector<SessionItem*> getItems(const std::string& tag = {}) const;
     std::string tagFromItem(const SessionItem* item) const;
 
+    ItemMapper* mapper();
 private:
     void setParent(SessionItem* parent);
     void setModel(SessionModel* model);
@@ -81,6 +83,7 @@ private:
     SessionItem* m_parent;
     SessionModel* m_model;
     std::vector<SessionItem*> m_children;
+    std::unique_ptr<ItemMapper> m_mapper;
     std::unique_ptr<SessionItemData> m_data;
     std::unique_ptr<SessionItemTags> m_tags;
     model_type m_modelType;

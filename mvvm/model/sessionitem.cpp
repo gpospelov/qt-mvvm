@@ -15,6 +15,7 @@
 #include "customvariants.h"
 #include "sessionitemdata.h"
 #include "sessionitemtags.h"
+#include "itemmapper.h"
 #include <stdexcept>
 #include <iterator>
 #include <cassert>
@@ -214,6 +215,13 @@ std::string SessionItem::tagFromItem(const SessionItem* item) const
     }
 
     return {};
+}
+
+ItemMapper* SessionItem::mapper()
+{
+    if (!m_mapper)
+        m_mapper = std::make_unique<ItemMapper>(this);
+    return m_mapper.get();
 }
 
 void SessionItem::setParent(SessionItem* parent)
