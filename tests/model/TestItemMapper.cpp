@@ -37,10 +37,24 @@ TEST(TestItemMapper, onDataChange)
 
     auto expected_role = ItemDataRole::DATA;
     auto expected_item = item.get();
-    EXPECT_CALL(widget, onItemDestroy(expected_item)).Times(0);
+    EXPECT_CALL(widget, onItemDestroy(_)).Times(0);
     EXPECT_CALL(widget, onDataChange(expected_item, expected_role)).Times(1);
 
     item->setData(42.0, ItemDataRole::DATA); // perform action
 }
 
+//! Setting same data to item, expecting no callbacks on onDataChange.
+
+TEST(TestItemMapper, onDataChangeDuplicate)
+{
+    std::unique_ptr<SessionItem> item = std::make_unique<SessionItem>();
+    MockWidget widget(item.get());
+
+    EXPECT_CALL(widget, onItemDestroy(_)).Times(0);
+    EXPECT_CALL(widget, onDataChange(_, _)).Times(1);
+
+    // perform actions, only one call should be triggered
+    item->setData(42.0, ItemDataRole::DATA);
+    item->setData(42.0, ItemDataRole::DATA); // same data
+}
 
