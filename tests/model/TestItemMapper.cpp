@@ -58,3 +58,36 @@ TEST(TestItemMapper, onDataChangeDuplicate)
     item->setData(42.0, ItemDataRole::DATA); // same data
 }
 
+//! Setting mapper activity to false, change the data, expect no callbacks.
+
+TEST(TestItemMapper, setActivity)
+{
+    std::unique_ptr<SessionItem> item = std::make_unique<SessionItem>();
+    MockWidget widget(item.get());
+
+    item->mapper()->setActive(false);
+
+    EXPECT_CALL(widget, onItemDestroy(_)).Times(0);
+    EXPECT_CALL(widget, onDataChange(_, _)).Times(0);
+
+    // perform actions, no calls should be triggered
+    item->setData(42.0, ItemDataRole::DATA);
+}
+
+//! Unsubscribing from item, expecting no callbacks.
+
+
+TEST(TestItemMapper, unsubscribe)
+{
+    std::unique_ptr<SessionItem> item = std::make_unique<SessionItem>();
+    MockWidget widget1(item.get());
+    MockWidget widget2(item.get());
+
+    item->mapper()->unsubscribe(&widget1);
+
+    EXPECT_CALL(widget1, onDataChange(_, _)).Times(0);
+    EXPECT_CALL(widget2, onDataChange(_, _)).Times(1);
+
+    // perform action, only one widget should be triggered
+    item->setData(42.0, ItemDataRole::DATA);
+}

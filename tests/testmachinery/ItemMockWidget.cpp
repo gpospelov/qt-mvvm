@@ -19,6 +19,9 @@ void MockWidget::setItem(ModelView::SessionItem* item)
 {
     m_item = item;
 
+    if (m_item == nullptr)
+        return;
+
     m_item->mapper()->setOnItemDestroy([this](ModelView::SessionItem* item) {
         m_item = nullptr;
         onItemDestroy(item);
