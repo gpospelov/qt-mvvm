@@ -116,6 +116,9 @@ bool SessionItem::insertItem(int row, SessionItem* item, const std::string& tag)
     m_children.insert(std::next(m_children.begin(), index), item);
     m_tags->addChild(tagName);
 
+    if(m_model)
+        m_model->mapper()->callOnRowInserted(this, index);
+
     return true;
 }
 

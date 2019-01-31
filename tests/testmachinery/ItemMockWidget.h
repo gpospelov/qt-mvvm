@@ -34,6 +34,7 @@ public:
     void setModel(ModelView::SessionModel* model);
 
     MOCK_METHOD2(onDataChange, void(ModelView::SessionItem* item, int role));
+    MOCK_METHOD2(onRowInserted, void(ModelView::SessionItem* item, int row));
 
 private:
     ModelView::SessionModel* m_model;

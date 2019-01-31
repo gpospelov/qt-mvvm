@@ -52,5 +52,9 @@ void MockWidgetForModel::setModel(ModelView::SessionModel* model)
     m_model->mapper()->setOnDataChange([this](ModelView::SessionItem* item, int role) {
         onDataChange(item, role);
     }, this);
+
+    m_model->mapper()->setOnRowInserted([this](ModelView::SessionItem* item, int row) {
+        onRowInserted(item, row);
+    }, this);
 }
 
