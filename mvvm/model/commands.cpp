@@ -58,6 +58,7 @@ InsertNewItemCommand::InsertNewItemCommand(model_type modelType, SessionItem* pa
     , m_tag(std::move(tag))
     , m_model_type(std::move(modelType))
     , m_model(parent->model())
+    , m_result(nullptr)
 {
     m_parent_path = m_model->pathFromItem(parent);
 }
@@ -65,7 +66,11 @@ InsertNewItemCommand::InsertNewItemCommand(model_type modelType, SessionItem* pa
 void InsertNewItemCommand::undo()
 {
     auto parent = m_model->itemFromPath(m_parent_path);
-    delete parent->takeItem(m_row, m_tag);
+
+    int row = m_row < 0 ? static_cast<int>(parent->getItems(m_tag).size())-1 : m_row;
+
+    delete parent->takeItem(row, m_tag); // FIXME revise negative row
+    m_result = nullptr;
 }
 
 void InsertNewItemCommand::redo()
@@ -73,8 +78,13 @@ void InsertNewItemCommand::redo()
     auto parent = m_model->itemFromPath(m_parent_path);
     auto child = m_model->manager()->createItem(m_model_type);
     parent->insertItem(m_row, child, m_tag);
+    m_result = child;
 }
 
+InsertNewItemCommand::result_t InsertNewItemCommand::result() const
+{
+    return m_result;
+}
 
 // ----------------------------------------------------------------------------
 

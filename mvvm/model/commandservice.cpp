@@ -45,12 +45,7 @@ SessionItem* CommandService::insertNewItem(const model_type& modelType, SessionI
     if (!parent)
         parent = m_model->rootItem();
 
-    // FIXME Find more elegant way to return just inserted item
-    row = row < 0 ? static_cast<int>(parent->getItems(tag).size()) : row;
-
-    push(new InsertNewItemCommand(modelType, parent, row, tag));
-
-    return parent->childAt(row);
+    return process_command<InsertNewItemCommand>(modelType, parent, row, tag);
 }
 
 bool CommandService::setData(SessionItem* item, const QVariant& value, int role)

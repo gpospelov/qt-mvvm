@@ -50,10 +50,14 @@ private:
 class CORE_EXPORT InsertNewItemCommand : public QUndoCommand
 {
 public:
+    using result_t = SessionItem*;
+
     InsertNewItemCommand(model_type modelType, SessionItem* parent, int row, std::string tag);
 
     void undo() override;
     void redo() override;
+
+    result_t result() const;
 
 private:
     Path m_parent_path;
@@ -61,6 +65,7 @@ private:
     std::string m_tag;
     model_type m_model_type;
     SessionModel* m_model;
+    result_t m_result;
 };
 
 //! Command for unddo/redo framework to remove row from a model.
