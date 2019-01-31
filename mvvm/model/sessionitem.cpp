@@ -8,31 +8,29 @@
 // ************************************************************************** //
 
 #include "sessionitem.h"
-#include "sessionmodel.h"
+#include "customvariants.h"
 #include "itemmanager.h"
+#include "itemmapper.h"
 #include "itempool.h"
 #include "itemutils.h"
-#include "customvariants.h"
 #include "sessionitemdata.h"
 #include "sessionitemtags.h"
-#include "itemmapper.h"
-#include <stdexcept>
-#include <iterator>
+#include "sessionmodel.h"
 #include <cassert>
+#include <iterator>
 #include <sstream>
+#include <stdexcept>
 
-namespace {
-    const std::string default_tag_name = "defaultTag";
+namespace
+{
+const std::string default_tag_name = "defaultTag";
 }
 
 using namespace ModelView;
 
 SessionItem::SessionItem(model_type modelType)
-    : m_parent(nullptr)
-    , m_model(nullptr)
-    , m_data(new SessionItemData)
-    , m_tags(new SessionItemTags)
-    , m_modelType(std::move(modelType))
+    : m_parent(nullptr), m_model(nullptr), m_data(new SessionItemData), m_tags(new SessionItemTags),
+      m_modelType(std::move(modelType))
 {
     setDataIntern(QVariant::fromValue(ItemPool::generate_key()), ItemDataRole::IDENTIFIER);
 }
@@ -128,13 +126,13 @@ SessionItem* SessionItem::takeItem(int row, const std::string& tag)
     auto tagName = ensure(tag);
     int index = m_tags->indexFromTagRow(tagName, row);
 
-        result = childAt(index);
-        m_children.erase(m_children.begin() + index);
-        m_tags->removeChild(tagName);
-        if (result) {
-            result->setParent(nullptr);
-            result->setModel(nullptr);
-        }
+    result = childAt(index);
+    m_children.erase(m_children.begin() + index);
+    m_tags->removeChild(tagName);
+    if (result) {
+        result->setParent(nullptr);
+        result->setModel(nullptr);
+    }
     return result;
 }
 
@@ -199,15 +197,15 @@ std::vector<SessionItem*> SessionItem::getItems(const std::string& tag) const
     int startIndex = m_tags->tagStartIndex(tagName);
     int endIndex = startIndex + m_tags->childCount(tagName);
     std::vector<SessionItem*> result;
-    std::copy(m_children.begin()+startIndex, m_children.begin()+endIndex,
-               std::back_inserter(result));
+    std::copy(m_children.begin() + startIndex, m_children.begin() + endIndex,
+              std::back_inserter(result));
     return result;
 }
 
 std::string SessionItem::tagFromItem(const SessionItem* item) const
 {
     auto it = std::find(m_children.begin(), m_children.end(), item);
-    if (it!=m_children.end()) {
+    if (it != m_children.end()) {
         int index = static_cast<int>(std::distance(m_children.begin(), it));
         return m_tags->tagFromIndex(index);
     }
@@ -257,8 +255,8 @@ std::string SessionItem::ensure(const std::string& tag, const std::string& model
     const std::string result = tag.empty() ? defaultTag() : tag;
 
     if (!m_tags->isValid(result, model_type))
-        throw std::runtime_error("SessionItem::ensure() -> Invalid tag '"+tag+"' for model '"+
-                                 model_type+"'");
+        throw std::runtime_error("SessionItem::ensure() -> Invalid tag '" + tag + "' for model '"
+                                 + model_type + "'");
 
     return result;
 }

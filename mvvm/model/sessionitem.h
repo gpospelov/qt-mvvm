@@ -13,10 +13,11 @@
 #include "global.h"
 #include "model_types.h"
 #include <QVariant>
-#include <vector>
 #include <memory>
+#include <vector>
 
-namespace ModelView {
+namespace ModelView
+{
 
 class SessionModel;
 class ItemPool;
@@ -25,9 +26,11 @@ class SessionItemTags;
 class TagInfo;
 class ItemMapper;
 
-class CORE_EXPORT SessionItem {
+class CORE_EXPORT SessionItem
+{
     friend class SessionModel;
     friend class JsonItem;
+
 public:
     SessionItem(model_type modelType = {});
     virtual ~SessionItem();
@@ -64,7 +67,7 @@ public:
     std::string defaultTag() const;
     void setDefaultTag(const std::string& tag);
 
-    void registerTag(const TagInfo& tagInfo, bool set_as_default=false);
+    void registerTag(const TagInfo& tagInfo, bool set_as_default = false);
 
     bool isTag(const std::string& name);
 
@@ -74,11 +77,12 @@ public:
     std::string tagFromItem(const SessionItem* item) const;
 
     ItemMapper* mapper();
+
 private:
     void setParent(SessionItem* parent);
     void setModel(SessionModel* model);
     void childDeleted(SessionItem* child);
-    std::string ensure(const std::string& tag, const std::string& model_type={}) const;
+    std::string ensure(const std::string& tag, const std::string& model_type = {}) const;
 
     SessionItem* m_parent;
     SessionModel* m_model;
@@ -89,6 +93,6 @@ private:
     model_type m_modelType;
 };
 
-}  // namespace ModelView
+} // namespace ModelView
 
 #endif
