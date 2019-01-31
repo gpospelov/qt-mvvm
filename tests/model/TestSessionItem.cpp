@@ -59,6 +59,11 @@ TEST_F(TestSessionItem, setData)
     EXPECT_TRUE(item.setData(QVariant::fromValue(43.0), role));
     EXPECT_EQ(item.roles(), expected_roles);
     EXPECT_EQ(item.data(role), QVariant::fromValue(43.0));
+
+    // setting same value
+    EXPECT_FALSE(item.setData(QVariant::fromValue(43.0), role));
+    EXPECT_EQ(item.roles(), expected_roles);
+    EXPECT_EQ(item.data(role), QVariant::fromValue(43.0));
 }
 
 //! Display role.

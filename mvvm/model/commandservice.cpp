@@ -58,9 +58,7 @@ bool CommandService::setData(SessionItem* item, const QVariant& value, int role)
     if (!item)
         return false;
 
-    push(new SetValueCommand(item, value, role));
-
-    return true;
+    return process_command<SetValueCommand>(item, value, role);
 }
 
 void CommandService::removeRow(SessionItem* parent, int row)
@@ -79,6 +77,20 @@ QUndoStack* CommandService::undoStack() const
 void CommandService::setCommandRecordPause(bool value)
 {
     m_pause_record = value;
+}
+
+//! Runs command by pushing it in undo/redo stack if stack is active, or executing it directly.
+//! Returns true if command was added to the stack.
+
+bool CommandService::run_command(QUndoCommand* command)
+{
+    if (provideUndo()) {
+        m_commands->push(command); // command will be executed by stack
+        return true;
+    }
+
+    command->redo();
+    return false;
 }
 
 bool CommandService::provideUndo() const

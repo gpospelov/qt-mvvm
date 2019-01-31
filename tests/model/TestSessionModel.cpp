@@ -95,8 +95,11 @@ TEST_F(TestSessionModel, setData)
 
     // setting new data
     QVariant value(42.0);
-    model.setData(item, value, role);
+    EXPECT_TRUE(model.setData(item, value, role));
     EXPECT_EQ(model.data(item, role), value);
+
+    // setting same data twice should return false
+    EXPECT_FALSE(model.setData(item, value, role));
 }
 
 TEST_F(TestSessionModel, removeRow)
@@ -137,4 +140,5 @@ TEST_F(TestSessionModel, takeRowFromRootItem)
     auto taken = model.rootItem()->takeItem(0);
     EXPECT_EQ(model.manager()->itemPool()->item_for_key(parent_key), nullptr);
     EXPECT_EQ(model.manager()->itemPool()->item_for_key(child_key), nullptr);
+
 }

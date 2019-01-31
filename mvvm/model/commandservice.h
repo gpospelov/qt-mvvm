@@ -43,7 +43,11 @@ public:
     QUndoStack* undoStack() const;
 
     void setCommandRecordPause(bool value);
+
 private:
+    template<typename C, typename... Args> typename C::result_t process_command(Args&&... args);
+
+    bool run_command(QUndoCommand* command);
     bool provideUndo() const;
 
     SessionModel* m_model;
@@ -51,6 +55,22 @@ private:
     bool m_pause_record;
 };
 
-}  // namespace ModelView
+//! Creates and processes command of given type using given argument list.
 
-#endif
+template<typename C, typename... Args>
+typename C::result_t CommandService::process_command(Args&&... args)
+{
+    auto command = std::make_unique<C>(std::forward<Args>(args)...);
+
+    bool was_added_to_stack = run_command(command.get());
+    typename C::result_t result = command->result();
+
+    if (was_added_to_stack)
+        command.release();
+
+    return result;
+}
+
+} // namespace ModelView
+
+#endif // COMMANDSERVICE_H

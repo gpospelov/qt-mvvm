@@ -29,16 +29,20 @@ class SessionItem;
 class CORE_EXPORT SetValueCommand : public QUndoCommand
 {
 public:
+    using result_t = bool;
     SetValueCommand(SessionItem* item, QVariant value, int role);
 
     void undo() override;
     void redo() override;
+
+    result_t result() const;
 
 private:
     QVariant m_value;
     int m_role;
     Path m_path;
     SessionModel* m_model;
+    result_t m_result;
 };
 
 //! Command for unddo/redo to insert new item.
