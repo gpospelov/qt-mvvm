@@ -28,6 +28,7 @@ class SessionModel;
 class CORE_EXPORT ModelMapper
 {
     friend class SessionModel;
+    friend class SessionItem;
 public:
     using caller_t = const void*;
     using func_item_t = std::function<void(SessionItem*)>;

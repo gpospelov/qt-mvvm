@@ -16,6 +16,7 @@
 #include "sessionitemdata.h"
 #include "sessionitemtags.h"
 #include "sessionmodel.h"
+#include "modelmapper.h"
 #include <cassert>
 #include <iterator>
 #include <sstream>
@@ -285,6 +286,9 @@ bool SessionItem::setDataIntern(const QVariant& variant, int role)
     bool result = m_data->setData(variant, role);
     if (result && m_mapper)
         m_mapper->callOnDataChange(role);
+
+    if(result && m_model)
+        m_model->mapper()->callOnDataChange(this, role);
 
     return result;
 }

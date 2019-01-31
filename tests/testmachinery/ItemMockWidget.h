@@ -27,7 +27,7 @@ private:
 
 //! Mock class to test ModelMapper functionality.
 
-class MockWidgetForModel : public TestUtils::ItemTestWidgetInterface {
+class MockWidgetForModel : public TestUtils::ModelTestWidgetInterface {
 public:
     MockWidgetForModel(ModelView::SessionModel* item);
 
