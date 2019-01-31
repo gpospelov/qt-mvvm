@@ -2,6 +2,7 @@
 #include "toy_includes.h"
 #include "viewitems.h"
 #include "viewmodel.h"
+#include <QSignalSpy>
 #include <QDebug>
 
 using namespace ModelView;
@@ -20,6 +21,9 @@ TEST_F(TestViewModel, initialState)
     EXPECT_EQ(viewModel.rowCount(), 0);
     EXPECT_EQ(viewModel.columnCount(), 0);
 }
+
+//! Constructing ViewModel from a MultiLayer.
+//! Checking that view items point co correct SessionItem.
 
 TEST_F(TestViewModel, fromMultiLayer)
 {
@@ -40,7 +44,8 @@ TEST_F(TestViewModel, fromMultiLayer)
     EXPECT_EQ(viewItem->item(), multiLayerItem);
 }
 
-//! Model with Layer. The layer has single property: thickness.
+//! Constructing ViewModel from a Layer with one "thickness" property.
+//! Checking that view items point to correct SessionItem.
 
 TEST_F(TestViewModel, fromLayer)
 {
@@ -82,7 +87,8 @@ TEST_F(TestViewModel, fromLayer)
     EXPECT_EQ(thicknessValueView->item(), layerItem->getItem(ToyItems::Layer::P_THICKNESS));
 }
 
-//! Model with VectorItem. The vector has three properties: x, y, z.
+//! Constructing ViewModel from a VectorItem.
+//! Checking that view items point to correct SessionItem.
 
 TEST_F(TestViewModel, fromVector)
 {
@@ -127,4 +133,22 @@ TEST_F(TestViewModel, fromVector)
         = dynamic_cast<ViewDataItem*>(viewModel.itemFromIndex(viewModel.index(2, 1, vectorIndex)));
     EXPECT_EQ(pxLabel->item(), vectorItem->getItem(ToyItems::Vector::P_Z));
     EXPECT_EQ(pxData->item(), vectorItem->getItem(ToyItems::Vector::P_Z));
+}
+
+//! Constructing ViewModel from a Layer with one "thickness" property.
+//! Change thickness property in SessionItem, control dataChanged signals from ViewModel.
+
+TEST_F(TestViewModel, setDataToItem)
+{
+    ToyItems::SampleModel model;
+    auto layerItem = dynamic_cast<CompoundItem*>(model.insertNewItem(ToyItems::Constants::LayerType));
+
+    // constructing viewModel from sample model
+    ViewModel viewModel;
+    viewModel.setSessionModel(&model);
+
+    QSignalSpy spyDataChanged(&viewModel, &ViewModel::itemChanged);
+
+    layerItem->setItemValue(ToyItems::Layer::P_THICKNESS, 50.0);
+    EXPECT_EQ(spyDataChanged.count(), 1);
 }

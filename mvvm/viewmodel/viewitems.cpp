@@ -9,6 +9,9 @@
 
 #include "viewitems.h"
 #include "model_types.h"
+#include "sessionitem.h"
+#include "itemmapper.h"
+#include <QDebug>
 
 using namespace ModelView;
 
@@ -57,6 +60,15 @@ int ViewLabelItem::type() const
 ViewDataItem::ViewDataItem(SessionItem* item)
     : ViewItem(item, ItemDataRole::DATA)
 {
+    if (m_item) {
+
+    m_item->mapper()->setOnDataChange([this](ModelView::SessionItem* item, int role) {
+                if (model()) {
+                    qDebug() << "in setOnDataChange() emitting signal" << item << role;
+                    model()->itemChanged(this);
+                }
+            }, this);
+    }
 }
 
 int ViewDataItem::type() const

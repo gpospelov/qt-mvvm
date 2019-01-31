@@ -27,6 +27,7 @@ class SessionItem;
 class CORE_EXPORT ViewItem : public QStandardItem
 {
 public:
+    ~ViewItem();
 
     QVariant data(int role) const override;
 
@@ -36,7 +37,7 @@ public:
 
     ViewItem* clone() const override;
 
-    protected:
+protected:
     ViewItem(SessionItem* item, int item_role);
 
     SessionItem* m_item;
