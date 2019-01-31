@@ -38,10 +38,12 @@ template<typename T> T* CompoundItem::addProperty(const std::string& name, const
 
     registerTag(TagInfo::propertyTag(name, property->modelType()));
 
-    insertItem(0, property, name);
     property->setDisplayName(name);
     if (variant.isValid())
         property->setData(variant, ItemDataRole::DATA);
+
+    insertItem(0, property, name);
+
     return property;
 }
 
