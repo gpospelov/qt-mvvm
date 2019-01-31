@@ -33,7 +33,7 @@ ModelView::SessionItem* ItemFactory::createItem(const ModelView::model_type& mod
         result = new Vector;
 
     else if (modelType == ModelView::Constants::PropertyType)
-        result = new Layer;
+        result = new ModelView::PropertyItem;
 
     if (!result)
         throw std::runtime_error("ItemFactory::createItem() -> Error. Unknown model '"+

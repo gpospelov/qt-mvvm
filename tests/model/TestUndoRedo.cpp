@@ -378,24 +378,24 @@ TEST_F(TestUndoRedo, multiLayer)
     // FIXME restore functionality below
 
     // undoing multilayer removal
-//    stack->undo();
-//    EXPECT_EQ(stack->count(), 4);
-//    EXPECT_EQ(stack->index(), 3);
+    stack->undo();
+    EXPECT_EQ(stack->count(), 4);
+    EXPECT_EQ(stack->index(), 3);
 
-//    // restoring pointers back
-//    parent = model.rootItem()->childAt(0);
-//    layer0 = parent->childAt(0);
-//    layer1 = parent->childAt(1);
+    // restoring pointers back
+    parent = model.rootItem()->childAt(0);
+    layer0 = parent->childAt(0);
+    layer1 = parent->childAt(1);
 
-//    // checking that restored item has corrrect identifiers
-//    EXPECT_EQ(parent->data(ItemDataRole::IDENTIFIER).value<std::string>(), id_parent);
-//    EXPECT_EQ(layer0->data(ItemDataRole::IDENTIFIER).value<std::string>(), id_layer0);
-//    EXPECT_EQ(layer1->data(ItemDataRole::IDENTIFIER).value<std::string>(), id_layer1);
+    // checking that restored item has corrrect identifiers
+    EXPECT_EQ(parent->data(ItemDataRole::IDENTIFIER).value<std::string>(), id_parent);
+    EXPECT_EQ(layer0->data(ItemDataRole::IDENTIFIER).value<std::string>(), id_layer0);
+    EXPECT_EQ(layer1->data(ItemDataRole::IDENTIFIER).value<std::string>(), id_layer1);
 
-//    // checking tag
-//    EXPECT_EQ(parent->tagFromItem(layer0), ToyItems::MultiLayer::T_LAYERS);
-//    EXPECT_EQ(parent->tagFromItem(layer1), ToyItems::MultiLayer::T_LAYERS);
-//    std::vector<SessionItem*> expected = {layer0, layer1};
-//    EXPECT_EQ(parent->getItems(ToyItems::MultiLayer::T_LAYERS), expected);
+    // checking tag
+    EXPECT_EQ(parent->tagFromItem(layer0), ToyItems::MultiLayer::T_LAYERS);
+    EXPECT_EQ(parent->tagFromItem(layer1), ToyItems::MultiLayer::T_LAYERS);
+    std::vector<SessionItem*> expected = {layer0, layer1};
+    EXPECT_EQ(parent->getItems(ToyItems::MultiLayer::T_LAYERS), expected);
 }
 
