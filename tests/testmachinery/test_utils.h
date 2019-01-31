@@ -12,8 +12,14 @@
 
 #include "customvariants.h"
 #include <QString>
+
 class QJsonObject;
 class QJsonArray;
+
+namespace ModelView
+{
+class SessionModel;
+}
 
 //! Various common utils for unit tests.
 
@@ -34,6 +40,9 @@ void SaveJson(const QJsonObject& object, const QString& fileName);
 void SaveJson(const QJsonArray& object, const QString& fileName);
 
 QString JsonToString(const QJsonObject& object);
+
+//! Returns string representing serialized json content of the model.
+QString ModelToJsonString(ModelView::SessionModel& model);
 
 }
 

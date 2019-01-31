@@ -10,9 +10,13 @@
 #include "test_utils.h"
 #include "testconfig.h"
 #include "fileutils.h"
+#include "sessionmodel.h"
+#include "itemmanager.h"
+#include "jsonconverterinterfaces.h"
 #include <QFile>
 #include <QString>
 #include <QJsonDocument>
+#include <QJsonObject>
 #include <string>
 
 using namespace ModelView;
@@ -56,6 +60,13 @@ QString TestUtils::JsonToString(const QJsonObject& object)
     return QString(document.toJson(QJsonDocument::Compact));
 }
 
+QString TestUtils::ModelToJsonString(SessionModel& model)
+{
+    QJsonObject json_source;
+    model.manager()->converter().model_to_json(model, json_source);
+    return JsonToString(json_source);
+}
+
 
 namespace {
 
@@ -70,4 +81,5 @@ void SaveDocument(const QJsonDocument& document, const QString& fileName)
 }
 
 }
+
 
