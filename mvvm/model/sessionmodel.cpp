@@ -15,6 +15,7 @@
 #include "itempool.h"
 #include "taginfo.h"
 #include "customvariants.h"
+#include "modelmapper.h"
 
 using namespace ModelView;
 
@@ -23,6 +24,7 @@ SessionModel::SessionModel(std::string model_type)
     , m_root_item(nullptr)
     , m_commands(new CommandService(this))
     , m_model_type(std::move(model_type))
+    , m_mapper(new ModelMapper(this))
 {
     m_item_manager->setItemPool(std::make_shared<ItemPool>());
     createRootItem();
@@ -124,6 +126,11 @@ void SessionModel::make_registered(SessionItem* item, bool flag)
     } else {
         m_item_manager->itemPool()->deregister_item(item);
     }
+}
+
+ModelMapper* SessionModel::mapper()
+{
+    return m_mapper.get();
 }
 
 void SessionModel::createRootItem()

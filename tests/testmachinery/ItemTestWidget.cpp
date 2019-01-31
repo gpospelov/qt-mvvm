@@ -13,3 +13,4 @@
 
 TestUtils::ItemTestWidgetInterface::~ItemTestWidgetInterface() = default;
 
+TestUtils::ModelTestWidgetInterface::~ModelTestWidgetInterface() = default;

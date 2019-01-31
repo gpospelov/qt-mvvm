@@ -30,6 +30,16 @@ public:
 
 };
 
+//! Interface for testing callbacks comming from SessionModel within gmock framework.
+
+class ModelTestWidgetInterface {
+public:
+    virtual ~ModelTestWidgetInterface();
+
+    virtual void onDataChange(ModelView::SessionItem* item, int role) = 0;
+
+};
+
 } // TestUtils
 
 #endif // ITEMTESTWIDGET_H

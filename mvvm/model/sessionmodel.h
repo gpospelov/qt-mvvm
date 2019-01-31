@@ -24,6 +24,7 @@ namespace ModelView {
 class SessionItem;
 class ItemManager;
 class CommandService;
+class ModelMapper;
 
 class CORE_EXPORT SessionModel
 {
@@ -56,6 +57,8 @@ public:
 
     void make_registered(SessionItem* item, bool flag = true);
 
+    ModelMapper* mapper();
+
 protected:
     std::unique_ptr<ItemManager> m_item_manager;
 
@@ -65,6 +68,7 @@ private:
     SessionItem* m_root_item;
     std::unique_ptr<CommandService> m_commands;
     std::string m_model_type;
+    std::unique_ptr<ModelMapper> m_mapper;
 };
 
 }  // namespace ModelView
