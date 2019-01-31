@@ -51,6 +51,7 @@ public:
 
     bool isSinglePropertyTag() const;
 
+    std::string toString() const;
 private:
     std::string m_name;
     int m_min;

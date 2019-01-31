@@ -19,20 +19,6 @@
 
 using namespace ModelView;
 
-namespace {
-std::string toString(const TagInfo& tag) {
-    std::ostringstream ostr;
-    ostr << "TagInfo> name:'" << tag.name()
-         << "', min:"<< tag.min() <<", max:"<<tag.max() << ", modelTypes:{";
-    for(const auto& model_type : tag.modelTypes() ) {
-        ostr << model_type << " ";
-    }
-    ostr << "} childCount:" << tag.childCount();
-    return ostr.str();
-}
-}
-
-
 
 //! Register tag with given parameters. Returns true in case of success. Returns
 //! false if parameters are invalid or such tag was already registered.
@@ -110,8 +96,7 @@ int SessionItemTags::indexFromTagRow(const std::string& tagName, int row) const
     if (row < 0 || row >= tag.childCount()) {
         std::ostringstream ostr;
         ostr << "SessionItemTags::tagIndexFromRow() -> Wrong row " << row << " for tag "
-             << "'" << tagName << "'\n"
-             << toString(tag);
+             << "'" << tagName << "'\n" << tag.toString();
         throw std::runtime_error(ostr.str());
     }
 

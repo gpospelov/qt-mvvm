@@ -104,3 +104,15 @@ bool ModelView::TagInfo::isSinglePropertyTag() const
 {
     return m_min == 1 && m_max == 1 && m_childCount == 1;
 }
+
+std::string ModelView::TagInfo::toString() const
+{
+    std::ostringstream ostr;
+    ostr << "TagInfo> name:'" << name()
+         << "', min:"<< min() <<", max:"<<max() << ", modelTypes:{";
+    for(const auto& model_type : modelTypes() ) {
+        ostr << model_type << " ";
+    }
+    ostr << "} childCount:" << childCount();
+    return ostr.str();
+}

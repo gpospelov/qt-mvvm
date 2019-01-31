@@ -254,9 +254,16 @@ std::string SessionItem::ensure(const std::string& tag, const std::string& model
 {
     const std::string result = tag.empty() ? defaultTag() : tag;
 
-    if (!m_tags->isValid(result, model_type))
-        throw std::runtime_error("SessionItem::ensure() -> Invalid tag '" + tag + "' for model '"
-                                 + model_type + "'");
+    if (!m_tags->isValid(result, model_type)) {
+        std::ostringstream ostr;
+        ostr << "SessionItem::ensure() -> Invalid tag '" << tag
+             << "' for model '" << model_type << "', "
+             << "defaultTag:'"<< defaultTag() << "', available tags:\n";
+        for(const auto& tag : *m_tags)
+            ostr << tag.toString() << "\n";
+
+        throw std::runtime_error(ostr.str());
+    }
 
     return result;
 }
