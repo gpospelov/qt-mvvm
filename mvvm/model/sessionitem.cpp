@@ -143,25 +143,20 @@ std::vector<SessionItem*> SessionItem::children() const
     return m_children;
 }
 
-SessionItem* SessionItem::childAt(int row) const
+//! Returns child at given index of children array. No tags involved.
+
+SessionItem* SessionItem::childAt(int index) const
 {
-    return row >= 0 && row < childrenCount() ? m_children[static_cast<size_t>(row)] : nullptr;
+    return index >= 0 && index < childrenCount() ? m_children[static_cast<size_t>(index)] : nullptr;
 }
 
-int SessionItem::rowOfChild(SessionItem* child) const
+//! Returns index in children array corresponding to given child. No tags involved.
+
+int SessionItem::indexOfChild(SessionItem* child) const
 {
     auto pos = find(m_children.begin(), m_children.end(), child);
     return pos == m_children.end() ? -1 : static_cast<int>(std::distance(m_children.begin(), pos));
 }
-
-//void SessionItem::register_item(std::shared_ptr<ItemPool> item_pool)
-//{
-//    m_item_pool = item_pool;
-
-//    if (auto pool = m_item_pool.lock()) {
-//        auto key = pool->register_item(this, data(ItemDataRole::IDENTIFIER).value<std::string>());
-//    }
-//}
 
 std::vector<int> SessionItem::roles() const
 {
@@ -250,7 +245,7 @@ void SessionItem::setModel(SessionModel* model)
 
 void SessionItem::childDeleted(SessionItem* child)
 {
-    auto index = rowOfChild(child);
+    auto index = indexOfChild(child);
     assert(index != -1);
     m_children[static_cast<size_t>(index)] = nullptr;
 }

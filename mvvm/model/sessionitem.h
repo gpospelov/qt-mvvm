@@ -54,9 +54,9 @@ public:
 
     std::vector<SessionItem*> children() const;
 
-    SessionItem* childAt(int row) const;
+    SessionItem* childAt(int index) const;
 
-    int rowOfChild(SessionItem* child) const;
+    int indexOfChild(SessionItem* child) const;
 
     std::vector<int> roles() const;
 
