@@ -91,6 +91,7 @@ InsertNewItemCommand::result_t InsertNewItemCommand::result() const
 RemoveRowCommand::RemoveRowCommand(SessionItem* parent, int row)
     : m_row(row)
     , m_model(parent->model())
+    , m_result(true)
 {
     Q_ASSERT(m_model);
     m_parent_path = m_model->pathFromItem(parent);
@@ -123,4 +124,9 @@ void RemoveRowCommand::redo()
     delete parent->takeItem(m_row);
 
     m_model->setCommandRecordPause(false);
+}
+
+RemoveRowCommand::result_t RemoveRowCommand::result() const
+{
+    return m_result;
 }

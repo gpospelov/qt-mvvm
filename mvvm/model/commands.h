@@ -73,17 +73,22 @@ private:
 class CORE_EXPORT RemoveRowCommand : public QUndoCommand
 {
 public:
+    using result_t = bool;
+
     RemoveRowCommand(SessionItem* parent, int row);
     ~RemoveRowCommand() override;
 
     void undo() override;
     void redo() override;
 
+    result_t result() const;
+
 private:
     Path m_parent_path;
     int m_row;
     std::unique_ptr<QJsonObject> m_child_backup;
     SessionModel* m_model;
+    result_t m_result;
 };
 
 }  // namespace ModelView

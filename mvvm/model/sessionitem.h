@@ -51,6 +51,7 @@ public:
 
     int childrenCount() const;
 
+    // FIXME revise return type usage
     bool insertItem(int row, SessionItem* item, const std::string& tag = {});
 
     SessionItem* takeItem(int row, const std::string& tag = {});

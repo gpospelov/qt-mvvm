@@ -18,7 +18,8 @@ class QUndoStack;
 class QUndoCommand;
 class QVariant;
 
-namespace ModelView {
+namespace ModelView
+{
 
 class SessionModel;
 class SessionItem;
@@ -32,9 +33,8 @@ public:
 
     void setUndoRedoEnabled(bool value);
 
-    void push(QUndoCommand* command);
-
-    SessionItem* insertNewItem(const model_type& modelType, SessionItem* parent, int row, std::string tag);
+    SessionItem* insertNewItem(const model_type& modelType, SessionItem* parent, int row,
+                               std::string tag);
 
     bool setData(SessionItem* item, const QVariant& value, int role);
 
@@ -45,7 +45,7 @@ public:
     void setCommandRecordPause(bool value);
 
 private:
-    template<typename C, typename... Args> typename C::result_t process_command(Args&&... args);
+    template <typename C, typename... Args> typename C::result_t process_command(Args&&... args);
 
     bool run_command(QUndoCommand* command);
     bool provideUndo() const;
@@ -57,7 +57,7 @@ private:
 
 //! Creates and processes command of given type using given argument list.
 
-template<typename C, typename... Args>
+template <typename C, typename... Args>
 typename C::result_t CommandService::process_command(Args&&... args)
 {
     auto command = std::make_unique<C>(std::forward<Args>(args)...);
