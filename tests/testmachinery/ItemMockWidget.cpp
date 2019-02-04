@@ -56,5 +56,9 @@ void MockWidgetForModel::setModel(ModelView::SessionModel* model)
     m_model->mapper()->setOnRowInserted([this](ModelView::SessionItem* item, int row) {
         onRowInserted(item, row);
     }, this);
+
+    m_model->mapper()->setOnRowRemoved([this](ModelView::SessionItem* item, int row) {
+        onRowRemoved(item, row);
+    }, this);
 }
 

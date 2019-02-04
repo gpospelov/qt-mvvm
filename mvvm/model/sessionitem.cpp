@@ -137,6 +137,10 @@ SessionItem* SessionItem::takeItem(int row, const std::string& tag)
         result->setParent(nullptr);
         result->setModel(nullptr);
     }
+
+    if (m_model)
+        m_model->mapper()->callOnRowRemoved(this, index);
+
     return result;
 }
 

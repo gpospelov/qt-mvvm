@@ -28,13 +28,22 @@ void ModelMapper::setOnDataChange(ModelMapper::func_item_int_t f, ModelMapper::c
 }
 
 //! Sets callback to be notified on item insert.
-//! Callback will be called with (SessionItem* parent, index).
+//! Callback will be called with (SessionItem* parent, index), where index correspondx
+//! to new item index in children array.
 
 void ModelMapper::setOnRowInserted(ModelMapper::func_item_int_t f, ModelMapper::caller_t caller)
 {
     m_on_row_inserted.push_back(std::make_pair(f, caller));
 }
 
+//! Sets callback to be notified on removed row.
+//! Callback will be called with (SessionItem* parent, index), where index correspondx
+//! to removed index in children array.
+
+void ModelMapper::setOnRowRemoved(ModelMapper::func_item_int_t f, ModelMapper::caller_t caller)
+{
+    m_on_row_removed.push_back(std::make_pair(f, caller));
+}
 
 //! Sets activity flag to given value. Will disable all callbacks if false.
 
@@ -61,9 +70,16 @@ void ModelMapper::callOnDataChange(SessionItem* item, int role)
 
 //! Calls all callbacks subscribed to "item data is changed" event.
 
-void ModelMapper::callOnRowInserted(SessionItem* item, int index)
+void ModelMapper::callOnRowInserted(SessionItem* parent, int index)
 {
     if (m_active)
         for (auto f : m_on_row_inserted)
-            f.first(item, index);
+            f.first(parent, index);
+}
+
+void ModelMapper::callOnRowRemoved(SessionItem* parent, int index)
+{
+    if (m_active)
+        for (auto f : m_on_row_removed)
+            f.first(parent, index);
 }
