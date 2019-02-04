@@ -24,6 +24,7 @@ class SampleModel;
 class QTreeView;
 class QStandardItemModel;
 class QTextEdit;
+class QPoint;
 
 //! Playground to test basics of ViewModel.
 
@@ -33,6 +34,9 @@ class TestWidget2 : public QWidget
 public:
     TestWidget2(QWidget* parent = nullptr);
     ~TestWidget2();
+
+private slots:
+    void onContextMenuRequest(const QPoint& point);
 
 private:
     void init_session_model();

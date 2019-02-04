@@ -20,7 +20,8 @@
 #include <QTextEdit>
 #include <QJsonObject>
 #include <QJsonDocument>
-
+#include <QMenu>
+#include <QDebug>
 using namespace ModelView;
 
 TestWidget2::TestWidget2(QWidget* parent)
@@ -50,12 +51,39 @@ TestWidget2::TestWidget2(QWidget* parent)
     m_treeView1->expandAll();
     m_treeView2->expandAll();
 
+    m_treeView1->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(m_treeView1, &QTreeView::customContextMenuRequested, this,
+            &TestWidget2::onContextMenuRequest);
+
     m_plainText->setReadOnly(true);
     QFont f("unexistent");
     f.setStyleHint(QFont::Monospace);
     m_plainText->setFont(f);
 
     auto highlighter = new SyntaxHighlighter(m_plainText->document());
+}
+
+void TestWidget2::onContextMenuRequest(const QPoint& point)
+{
+    QMenu menu;
+
+    QAction* action = menu.addAction("Add item");
+
+    connect(action, &QAction::triggered, [&]()
+    {
+        QModelIndex index = m_treeView1->indexAt(point);
+        auto item = m_viewModel->itemFromIndex(index);
+        auto viewItem = dynamic_cast<ViewItem*>(item);
+        qDebug() << index << viewItem;
+        if (viewItem) {
+            auto child = viewItem->item();
+            int index = child->parent()->indexOfChild(child);
+            qDebug() << QString::fromStdString(viewItem->item()->modelType()) << index;
+            m_sessionModel->insertNewItem(child->modelType(), child->parent(), index+1);
+        }
+    });
+
+    menu.exec(m_treeView1->mapToGlobal(point));
 }
 
 TestWidget2::~TestWidget2() = default;
