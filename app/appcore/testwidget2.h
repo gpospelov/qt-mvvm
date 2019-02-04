@@ -23,6 +23,7 @@ class SampleModel;
 
 class QTreeView;
 class QStandardItemModel;
+class QTextEdit;
 
 //! Playground to test basics of ViewModel.
 
@@ -35,8 +36,11 @@ public:
 
 private:
     void init_session_model();
+    void update_json();
 
-    QTreeView* m_treeView;
+    QTreeView* m_treeView1;
+    QTreeView* m_treeView2;
+    QTextEdit* m_plainText;
     ModelView::ViewModel* m_viewModel;
     std::unique_ptr<ToyItems::SampleModel> m_sessionModel;
 };

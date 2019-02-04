@@ -12,6 +12,8 @@
 
 #include "global.h"
 #include <QStandardItemModel>
+#include <vector>
+#include <map>
 
 class QStandardItem;
 
@@ -19,6 +21,7 @@ namespace ModelView {
 
 class SessionModel;
 class SessionItem;
+class ViewItem;
 
 //! The view model to show content of our SessionModel in Qt views.
 
@@ -29,10 +32,15 @@ public:
     void setSessionModel(SessionModel* model);
 
 private:
+    void onDataChange(SessionItem* item, int role);
+    void onRowInserted(SessionItem* item, int row);
+    void onRowRemoved(SessionItem* item, int row);
+
     void update_model();
     void iterate(SessionItem* item, QStandardItem* parent);
 
     SessionModel* m_sessionModel;
+    std::map<SessionItem*, std::vector<ViewItem*>> m_item_to_view;
 };
 
 }  // namespace ModelView
