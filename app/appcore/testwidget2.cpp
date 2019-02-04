@@ -13,6 +13,7 @@
 #include "sessionmodel.h"
 #include "toy_includes.h"
 #include "jsonutils.h"
+#include "syntaxhighlighter.h"
 #include <QTreeView>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -53,6 +54,8 @@ TestWidget2::TestWidget2(QWidget* parent)
     QFont f("unexistent");
     f.setStyleHint(QFont::Monospace);
     m_plainText->setFont(f);
+
+    auto highlighter = new SyntaxHighlighter(m_plainText->document());
 }
 
 TestWidget2::~TestWidget2() = default;
