@@ -52,6 +52,7 @@ public:
     QUndoStack* undoStack() const;
 
     ItemManager* manager();
+    const ItemManager* manager() const;
 
     void removeRow(SessionItem* parent, int row);
 
