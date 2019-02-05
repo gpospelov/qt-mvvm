@@ -33,8 +33,8 @@ public:
 
 private:
     void onDataChange(SessionItem* item, int role);
-    void onRowInserted(SessionItem* item, int row);
-    void onRowRemoved(SessionItem* item, int row);
+    void onRowInserted(SessionItem* parent, int row);
+    void onRowRemoved(SessionItem* parent, int row);
 
     void update_model();
     void iterate(SessionItem* item, QStandardItem* parent);

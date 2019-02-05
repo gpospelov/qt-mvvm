@@ -152,3 +152,56 @@ TEST_F(TestViewModel, setDataToItem)
     layerItem->setItemValue(ToyItems::Layer::P_THICKNESS, 50.0);
     EXPECT_EQ(spyDataChanged.count(), 1);
 }
+
+//! Inserting item in parent
+
+TEST_F(TestViewModel, insertItem)
+{
+
+    SessionModel model;
+    const model_type modelType("abc");
+
+    // inserting single item
+    auto parent = model.insertNewItem(modelType);
+    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/true);
+
+    // constructing viewModel from sample model
+    ViewModel viewModel;
+    viewModel.setSessionModel(&model);
+
+    // root item should have one child
+    EXPECT_EQ(viewModel.rowCount(), 1);
+    EXPECT_EQ(viewModel.columnCount(), 2);
+
+    // parent item should have no children
+    QModelIndex parentIndex = viewModel.index(0, 0);
+    EXPECT_EQ(viewModel.rowCount(parentIndex), 0);
+    EXPECT_EQ(viewModel.columnCount(parentIndex), 0);
+
+    QSignalSpy spyInsert(&viewModel, &ViewModel::rowsInserted);
+
+    // adding child
+    model.insertNewItem(modelType, parent);
+    EXPECT_EQ(spyInsert.count(), 1);
+    EXPECT_EQ(viewModel.rowCount(parentIndex), 1);
+    EXPECT_EQ(viewModel.columnCount(parentIndex), 1); // inserted item has no data
+
+    QList<QVariant> arguments = spyInsert.takeFirst();
+    EXPECT_EQ(arguments.size(), 3); // QModelIndex &parent, int first, int last
+    EXPECT_EQ(arguments.at(0).value<QModelIndex>(), parentIndex);
+    EXPECT_EQ(arguments.at(1).toInt(), 0);
+    EXPECT_EQ(arguments.at(2).toInt(), 0);
+
+    // appending second child
+    model.insertNewItem(modelType, parent);
+    EXPECT_EQ(spyInsert.count(), 1);
+    EXPECT_EQ(viewModel.rowCount(parentIndex), 2);
+    EXPECT_EQ(viewModel.columnCount(parentIndex), 1); // inserted item has no data
+    arguments = spyInsert.takeFirst();
+    EXPECT_EQ(arguments.size(), 3); // QModelIndex &parent, int first, int last
+    EXPECT_EQ(arguments.at(0).value<QModelIndex>(), parentIndex);
+    EXPECT_EQ(arguments.at(1).toInt(), 1);
+    EXPECT_EQ(arguments.at(2).toInt(), 1);
+
+
+}

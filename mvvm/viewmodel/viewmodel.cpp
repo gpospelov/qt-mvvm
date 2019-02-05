@@ -72,14 +72,23 @@ void ViewModel::onDataChange(SessionItem* item, int role)
     qDebug() << "ViewModel::onDataChange" << item << role;
 }
 
-void ViewModel::onRowInserted(SessionItem* item, int row)
+void ViewModel::onRowInserted(SessionItem* parent, int row)
 {
-    qDebug() << "ViewModel::onRowInserted" << item << row;
+    qDebug() << "ViewModel::onRowInserted" << parent << row;
+    auto it = m_item_to_view.find(parent);
+    if (it != m_item_to_view.end()) {
+        qDebug() << "ViewModel::onRowInserted iterating";
+        auto view = it->second.at(0);
+        iterate(parent, view);
+    } else {
+        throw std::runtime_error("Unexpected onRowInsert");
+    }
+
 }
 
-void ViewModel::onRowRemoved(SessionItem* item, int row)
+void ViewModel::onRowRemoved(SessionItem* parent, int row)
 {
-    qDebug() << "ViewModel::onRowRemoved" << item << row;
+    qDebug() << "ViewModel::onRowRemoved" << parent << row;
 }
 
 void ViewModel::update_model()
@@ -96,15 +105,26 @@ void ViewModel::update_model()
 void ViewModel::iterate(SessionItem* item, QStandardItem* parent)
 {
     QStandardItem* origParent(parent);
+    int insert_index(0);
     for (auto child : item->children()) {
-        auto row = constructRow(child);
 
-        m_item_to_view[child] = row;
+        std::vector<ViewItem* > row;
 
-        if (row.size()) {
-            parent->appendRow(toStandardItemList(row));
-            parent = row.at(0); // labelItem
+        auto it = m_item_to_view.find(child);
+        if (it == m_item_to_view.end()) {
+            row = constructRow(child);
+            m_item_to_view[child] = row;
+            if (row.size())
+                parent->insertRow(insert_index, toStandardItemList(row));
+        } else {
+            row = it->second;
         }
+
+        ++insert_index;
+
+        if (row.size())
+            parent = row.at(0); // labelItem
+
         iterate(child, parent);
         parent = origParent;
     }
