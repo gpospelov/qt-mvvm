@@ -225,6 +225,20 @@ std::string SessionItem::tagFromItem(const SessionItem* item) const
     return {};
 }
 
+//! Returns item's row in its tag.
+
+int SessionItem::tagRowFromItem(const SessionItem* item) const
+{
+    auto it = std::find(m_children.begin(), m_children.end(), item);
+    if (it != m_children.end()) {
+        int index = static_cast<int>(std::distance(m_children.begin(), it));
+        auto tag = m_tags->tagFromIndex(index);
+        return index - m_tags->tagStartIndex(tag);
+    }
+
+    return -1;
+}
+
 ItemMapper* SessionItem::mapper()
 {
     if (!m_mapper)

@@ -481,3 +481,34 @@ TEST_F(TestSessionItem, tagFromItem)
     delete child;
 }
 
+//! Checks row of item in its tag
+
+TEST_F(TestSessionItem, tagRowFromItem)
+{
+    const std::string tag1 = "tag1";
+    const std::string tag2 = "tag2";
+
+    // creating parent with one tag
+    std::unique_ptr<SessionItem> parent(new SessionItem);
+    parent->registerTag(TagInfo::universalTag(tag1));
+    parent->registerTag(TagInfo::universalTag(tag2));
+
+    // inserting two children
+    auto child_t1_a = new SessionItem;
+    auto child_t1_b = new SessionItem;
+    auto child_t2_a = new SessionItem;
+    auto child_t2_b = new SessionItem;
+    auto child_t2_c = new SessionItem;
+    parent->insertItem(-1, child_t2_a, tag2); // 0
+    parent->insertItem(-1, child_t2_c, tag2); // 2
+    parent->insertItem(-1, child_t1_a, tag1); // 0
+    parent->insertItem(-1, child_t1_b, tag1); // 1
+    parent->insertItem(1, child_t2_b, tag2); // 1 between child_t2_a and child_t2_c
+
+    EXPECT_EQ(parent->tagRowFromItem(child_t1_a), 0);
+    EXPECT_EQ(parent->tagRowFromItem(child_t1_b), 1);
+    EXPECT_EQ(parent->tagRowFromItem(child_t2_a), 0);
+    EXPECT_EQ(parent->tagRowFromItem(child_t2_b), 1);
+    EXPECT_EQ(parent->tagRowFromItem(child_t2_c), 2);
+}
+
