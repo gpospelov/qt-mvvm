@@ -60,8 +60,9 @@ void ViewModel::setSessionModel(SessionModel* model)
         m_sessionModel->mapper()->setOnRowInserted(
             [this](ModelView::SessionItem* item, int row) { onRowInserted(item, row); }, this);
 
-        m_sessionModel->mapper()->setOnRowRemoved(
-            [this](ModelView::SessionItem* item, int row) { onRowRemoved(item, row); }, this);
+        m_sessionModel->mapper()->setOnRowRemoved2(
+            [this](ModelView::SessionItem* item, int row, std::string id) {
+            onRowRemoved(item, row, id); }, this);
     }
 
     m_item_to_view.clear();
@@ -79,14 +80,23 @@ void ViewModel::onDataChange(SessionItem* item, int role)
 void ViewModel::onRowInserted(SessionItem* parent, int row)
 {
     (void)row;
-    auto it = m_item_to_view.find(parent);
+    auto it = m_item_to_view.find(parent->identifier());
     auto parentView = it != m_item_to_view.end() ? it->second.at(0) : invisibleRootItem();
     iterate(parent, parentView);
 }
 
-void ViewModel::onRowRemoved(SessionItem* parent, int row)
+void ViewModel::onRowRemoved(SessionItem* parent, int row, std::string id)
 {
-    qDebug() << "ViewModel::onRowRemoved" << parent << row;
+    auto it = m_item_to_view.find(parent->identifier());
+    auto parentView = it != m_item_to_view.end() ? it->second.at(0) : invisibleRootItem();
+
+    m_item_to_view.erase(id);
+    auto rr = parentView->takeRow(row);
+    qDebug() << "aaa " << rr;
+    qDebug() << "aaa " << parentView->rowCount() << parentView->columnCount();
+
+    for (auto view : rr)
+        delete view;
 }
 
 void ViewModel::update_model()
@@ -105,10 +115,10 @@ void ViewModel::iterate(SessionItem* item, QStandardItem* parent)
 
         std::vector<ViewItem*> row;
 
-        auto it = m_item_to_view.find(child);
+        auto it = m_item_to_view.find(child->identifier());
         if (it == m_item_to_view.end()) {
             row = constructRow(child);
-            m_item_to_view[child] = row;
+            m_item_to_view[child->identifier()] = row;
             if (row.size())
                 parent->insertRow(insert_index, toStandardItemList(row));
         } else {

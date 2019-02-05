@@ -67,21 +67,34 @@ void TestWidget2::onContextMenuRequest(const QPoint& point)
 {
     QMenu menu;
 
-    QAction* action = menu.addAction("Add item");
+    QAction* addItemAction = menu.addAction("Add item");
 
-    connect(action, &QAction::triggered, [&]()
+    connect(addItemAction, &QAction::triggered, [&]()
     {
         QModelIndex index = m_treeView1->indexAt(point);
         auto item = m_viewModel->itemFromIndex(index);
         auto viewItem = dynamic_cast<ViewItem*>(item);
-        qDebug() << index << viewItem;
         if (viewItem) {
             auto child = viewItem->item();
             int index = child->parent()->tagRowFromItem(child);
-            qDebug() << QString::fromStdString(viewItem->item()->modelType()) << index;
             m_sessionModel->insertNewItem(child->modelType(), child->parent(), index+1);
         }
     });
+
+    QAction* removeItemAction = menu.addAction("Remove item");
+
+    connect(removeItemAction, &QAction::triggered, [&]()
+    {
+        QModelIndex index = m_treeView1->indexAt(point);
+        auto item = m_viewModel->itemFromIndex(index);
+        auto viewItem = dynamic_cast<ViewItem*>(item);
+        if (viewItem) {
+            auto child = viewItem->item();
+            int index = child->parent()->indexOfChild(child);
+            m_sessionModel->removeRow(child->parent(), index);
+        }
+    });
+
 
     menu.exec(m_treeView1->mapToGlobal(point));
 }

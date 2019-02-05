@@ -34,13 +34,13 @@ public:
 private:
     void onDataChange(SessionItem* item, int role);
     void onRowInserted(SessionItem* parent, int row);
-    void onRowRemoved(SessionItem* parent, int row);
+    void onRowRemoved(SessionItem* parent, int row, std::string id);
 
     void update_model();
     void iterate(SessionItem* item, QStandardItem* parent);
 
     SessionModel* m_sessionModel;
-    std::map<SessionItem*, std::vector<ViewItem*>> m_item_to_view;
+    std::map<std::string, std::vector<ViewItem*>> m_item_to_view;
 };
 
 }  // namespace ModelView

@@ -157,7 +157,6 @@ TEST_F(TestViewModel, setDataToItem)
 
 TEST_F(TestViewModel, insertItem)
 {
-
     SessionModel model;
     const model_type modelType("abc");
 
@@ -202,6 +201,44 @@ TEST_F(TestViewModel, insertItem)
     EXPECT_EQ(arguments.at(0).value<QModelIndex>(), parentIndex);
     EXPECT_EQ(arguments.at(1).toInt(), 1);
     EXPECT_EQ(arguments.at(2).toInt(), 1);
+}
 
+//! Removing item from parent
 
+TEST_F(TestViewModel, removeRow)
+{
+    SessionModel model;
+    const model_type modelType("abc");
+
+    // inserting single item
+    auto parent = model.insertNewItem(modelType);
+    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/true);
+    model.insertNewItem(modelType, parent);
+
+    // constructing viewModel from sample model
+    ViewModel viewModel;
+    viewModel.setSessionModel(&model);
+
+    // root item should have one child
+    EXPECT_EQ(viewModel.rowCount(), 1);
+    EXPECT_EQ(viewModel.columnCount(), 2);
+
+    // parent item should have no children
+    QModelIndex parentIndex = viewModel.index(0, 0);
+    EXPECT_EQ(viewModel.rowCount(parentIndex), 1);
+    EXPECT_EQ(viewModel.columnCount(parentIndex), 1); // no data in item
+
+    QSignalSpy spyRemove(&viewModel, &ViewModel::rowsRemoved);
+
+    // removing child
+    model.removeRow(parent, 0);
+    EXPECT_EQ(spyRemove.count(), 1);
+    EXPECT_EQ(viewModel.rowCount(parentIndex), 0);
+    EXPECT_EQ(viewModel.columnCount(parentIndex), 1); // for some reason child removal doesn't affect column
+
+    QList<QVariant> arguments = spyRemove.takeFirst();
+    EXPECT_EQ(arguments.size(), 3); // QModelIndex &parent, int first, int last
+    EXPECT_EQ(arguments.at(0).value<QModelIndex>(), parentIndex);
+    EXPECT_EQ(arguments.at(1).toInt(), 0);
+    EXPECT_EQ(arguments.at(2).toInt(), 0);
 }

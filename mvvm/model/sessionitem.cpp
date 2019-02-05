@@ -67,6 +67,11 @@ void SessionItem::setDisplayName(const std::string& name)
     setData(QVariant::fromValue(name), ItemDataRole::DISPLAY);
 }
 
+std::string SessionItem::identifier() const
+{
+    return data(ItemDataRole::IDENTIFIER).value<std::string>();
+}
+
 bool SessionItem::setData(const QVariant& variant, int role)
 {
     if (m_model)
@@ -142,8 +147,10 @@ SessionItem* SessionItem::takeItem(int row, const std::string& tag)
         result->setModel(nullptr);
     }
 
-    if (m_model)
+    if (m_model) {
         m_model->mapper()->callOnRowRemoved(this, index);
+        m_model->mapper()->callOnRowRemoved2(this, index, result->identifier());
+    }
 
     return result;
 }

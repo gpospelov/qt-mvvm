@@ -40,6 +40,8 @@ public:
     std::string displayName() const;
     void setDisplayName(const std::string& name);
 
+    std::string identifier() const;
+
     bool setData(const QVariant& variant, int role);
     bool setDataIntern(const QVariant& variant, int role);
 
