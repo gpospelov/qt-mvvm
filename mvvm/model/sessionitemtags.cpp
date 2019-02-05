@@ -113,8 +113,13 @@ int SessionItemTags::insertIndexFromTagRow(const std::string& tagName, int row)
 
     auto& tag = tagInfo(tagName);
 
-    if (row > tag.childCount())
-        return -1;
+    if (row > tag.childCount()) {
+        std::ostringstream ostr;
+        ostr << "SessionItemTags::insertIndexFromTagRow() -> Invalid row:" << row << " "
+             << "for tagName:'" << tagName << "'\n"
+             << tag.toString();
+        throw std::runtime_error(ostr.str());
+    }
 
     if (row < 0)
         row = tag.childCount();

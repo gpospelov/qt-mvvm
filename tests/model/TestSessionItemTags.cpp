@@ -166,7 +166,7 @@ TEST_F(TestSessionItemTags, insertIndexFromTagRow)
     EXPECT_EQ(tags.insertIndexFromTagRow("tag1", 0), 0);
     EXPECT_EQ(tags.insertIndexFromTagRow("tag1", -1), 3);
     EXPECT_EQ(tags.insertIndexFromTagRow("tag1", 3), 3);
-    EXPECT_EQ(tags.insertIndexFromTagRow("tag1", 4), -1);
+    EXPECT_THROW(tags.insertIndexFromTagRow("tag1", 4), std::runtime_error); // too big
 
     EXPECT_EQ(tags.insertIndexFromTagRow("tag2", 0), 3);
     EXPECT_EQ(tags.insertIndexFromTagRow("tag2", -1), 4);

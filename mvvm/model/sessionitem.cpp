@@ -108,8 +108,12 @@ bool SessionItem::insertItem(int row, SessionItem* item, const std::string& tag)
     auto tagName = ensure(tag, item->modelType());
 
     int index = m_tags->insertIndexFromTagRow(tagName, row);
-    if (index < 0)
-        throw std::runtime_error("SessionItem::insertItem() -> Invalid row, maximum reached.");
+    if (index < 0) {
+        std::ostringstream ostr;
+        ostr << "SessionItem::insertItem() -> Invalid row, maximum reached. "
+             << "tagName:'"<<tagName<<"', row: " << row << "\n";
+        throw std::runtime_error(ostr.str());
+    }
 
     item->setParent(this);
     item->setModel(model());
