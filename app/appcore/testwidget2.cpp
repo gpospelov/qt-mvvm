@@ -77,7 +77,7 @@ void TestWidget2::onContextMenuRequest(const QPoint& point)
         qDebug() << index << viewItem;
         if (viewItem) {
             auto child = viewItem->item();
-            int index = child->parent()->indexOfChild(child);
+            int index = child->parent()->tagRowFromItem(child);
             qDebug() << QString::fromStdString(viewItem->item()->modelType()) << index;
             m_sessionModel->insertNewItem(child->modelType(), child->parent(), index+1);
         }

@@ -40,7 +40,7 @@ const std::string Vector::P_X = "X";
 const std::string Vector::P_Y = "Y";
 const std::string Vector::P_Z = "Z";
 
-Vector::Vector()
+Vector::Vector() : CompoundItem(Constants::VectorType)
 {
     addProperty<ModelView::PropertyItem>(P_X, 0.0);
     addProperty<ModelView::PropertyItem>(P_Y, 0.0);
@@ -52,7 +52,7 @@ Vector::Vector()
 
 const std::string Particle::P_POSITION = "Position";
 
-Particle::Particle()
+Particle::Particle() : CompoundItem(Constants::ParticleType)
 {
     addProperty<Vector>(P_POSITION);
 }

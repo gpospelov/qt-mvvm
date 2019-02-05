@@ -74,16 +74,10 @@ void ViewModel::onDataChange(SessionItem* item, int role)
 
 void ViewModel::onRowInserted(SessionItem* parent, int row)
 {
-    qDebug() << "ViewModel::onRowInserted" << parent << row;
+    (void)row;
     auto it = m_item_to_view.find(parent);
-    if (it != m_item_to_view.end()) {
-        qDebug() << "ViewModel::onRowInserted iterating";
-        auto view = it->second.at(0);
-        iterate(parent, view);
-    } else {
-        throw std::runtime_error("Unexpected onRowInsert");
-    }
-
+    auto parentView = it != m_item_to_view.end() ? it->second.at(0) : invisibleRootItem();
+    iterate(parent, parentView);
 }
 
 void ViewModel::onRowRemoved(SessionItem* parent, int row)
