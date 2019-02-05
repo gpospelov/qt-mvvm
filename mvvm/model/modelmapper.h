@@ -33,12 +33,14 @@ public:
     using caller_t = const void*;
     using func_item_t = std::function<void(SessionItem*)>;
     using func_item_int_t = std::function<void(SessionItem*, int)>;
+    using func_item_int_str_t = std::function<void(SessionItem*, int, std::string)>;
 
     ModelMapper(SessionModel* item);
 
     void setOnDataChange(func_item_int_t f, caller_t caller = 0);
     void setOnRowInserted(func_item_int_t f, caller_t caller = 0);
     void setOnRowRemoved(func_item_int_t f, caller_t caller = 0);
+    void setOnRowRemoved2(func_item_int_str_t f, caller_t caller = 0);
 
     void setActive(bool value);
 
@@ -50,10 +52,12 @@ private:
     void callOnDataChange(SessionItem* item, int role);
     void callOnRowInserted(SessionItem* parent, int index);
     void callOnRowRemoved(SessionItem* parent, int index);
+    void callOnRowRemoved2(SessionItem* parent, int index, std::string id);
 
     std::vector<std::pair<func_item_int_t, caller_t>> m_on_data_change;
     std::vector<std::pair<func_item_int_t, caller_t>> m_on_row_inserted;
     std::vector<std::pair<func_item_int_t, caller_t>> m_on_row_removed;
+    std::vector<std::pair<func_item_int_str_t, caller_t>> m_on_row_removed2;
 
     bool m_active;
     SessionModel* m_model;

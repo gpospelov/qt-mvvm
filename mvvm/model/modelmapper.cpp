@@ -40,9 +40,14 @@ void ModelMapper::setOnRowInserted(ModelMapper::func_item_int_t f, ModelMapper::
 //! Callback will be called with (SessionItem* parent, index), where index correspondx
 //! to removed index in children array.
 
-void ModelMapper::setOnRowRemoved(ModelMapper::func_item_int_t f, ModelMapper::caller_t caller)
+void ModelMapper::setOnRowRemoved(func_item_int_t f, ModelMapper::caller_t caller)
 {
     m_on_row_removed.push_back(std::make_pair(f, caller));
+}
+
+void ModelMapper::setOnRowRemoved2(ModelMapper::func_item_int_str_t f, ModelMapper::caller_t caller)
+{
+    m_on_row_removed2.push_back(std::make_pair(f, caller));
 }
 
 //! Sets activity flag to given value. Will disable all callbacks if false.
@@ -82,4 +87,11 @@ void ModelMapper::callOnRowRemoved(SessionItem* parent, int index)
     if (m_active)
         for (auto f : m_on_row_removed)
             f.first(parent, index);
+}
+
+void ModelMapper::callOnRowRemoved2(SessionItem* parent, int index, std::string id)
+{
+    if (m_active)
+        for (auto f : m_on_row_removed2)
+            f.first(parent, index, id);
 }
