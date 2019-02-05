@@ -75,6 +75,13 @@ void ViewModel::setSessionModel(SessionModel* model)
 void ViewModel::onDataChange(SessionItem* item, int role)
 {
     qDebug() << "ViewModel::onDataChange" << item << role;
+    auto it = m_item_to_view.find(item->identifier());
+    if (it != m_item_to_view.end()) {
+        for (auto view : it->second)
+            if (view->item_role() == role)
+                itemChanged(view);
+    }
+
 }
 
 void ViewModel::onRowInserted(SessionItem* parent, int row)

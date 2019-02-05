@@ -18,19 +18,12 @@ using namespace ModelView;
 ViewItem::ViewItem(SessionItem* item, int item_role)
     : m_item(item), m_item_role(item_role)
 {
-    if (m_item) {
-        m_item->mapper()->setOnItemDestroy([this](ModelView::SessionItem*) {
-            m_item = nullptr;
-        }, this);
-    }
 }
 
 //! Returns data from underlying SessionItem.
 
 ViewItem::~ViewItem()
 {
-    if (m_item)
-        m_item->mapper()->unsubscribe(this);
 }
 
 QVariant ViewItem::data(int role) const
@@ -56,10 +49,6 @@ void ViewItem::setData(const QVariant& value, int role)
         qDebug() << "ViewItem::setData";
         m_item->setData(toCustomVariant(value), m_item_role);
         qDebug() << "!!! setting data";
-        if (model()) {
-            qDebug() << "!!! emmiting signal";
-            model()->itemChanged(this);
-        }
     }
 
     QStandardItem::setData(value, role);
@@ -73,4 +62,11 @@ SessionItem* ViewItem::item()
 ViewItem* ViewItem::clone() const
 {
     throw std::runtime_error("ViewItem::clone() -> Error. Attempt to call clone.");
+}
+
+//! Returns SessionItem role tracked by this ViewItem.
+
+int ViewItem::item_role() const
+{
+    return m_item_role;
 }

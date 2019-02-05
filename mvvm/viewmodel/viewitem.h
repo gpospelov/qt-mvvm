@@ -37,6 +37,8 @@ public:
 
     ViewItem* clone() const override;
 
+    int item_role() const;
+
 protected:
     ViewItem(SessionItem* item, int item_role);
 
