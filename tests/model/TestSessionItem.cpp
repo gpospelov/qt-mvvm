@@ -248,6 +248,37 @@ TEST_F(TestSessionItem, insertChildren)
 
 //! Removing (taking) item from parent.
 
+TEST_F(TestSessionItem, takeRow)
+{
+    std::unique_ptr<SessionItem> parent(new SessionItem);
+    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/true);
+
+    auto child1 = new SessionItem;
+    auto child2 = new SessionItem;
+    auto child3 = new SessionItem;
+
+    // inserting items
+    parent->insertItem(-1, child1);
+    parent->insertItem(-1, child2);
+    parent->insertItem(-1, child3);
+
+    EXPECT_EQ(parent->childrenCount(), 3);
+
+    // taking non-existing rows
+    EXPECT_THROW(parent->takeRow(-1), std::runtime_error);
+    EXPECT_THROW(parent->takeRow(parent->childrenCount()), std::runtime_error);
+
+    // taking first row
+    auto taken = parent->takeRow(0);
+    EXPECT_EQ(taken->parent(), nullptr);
+    std::vector<SessionItem*> expected = {child2, child3};
+    EXPECT_EQ(parent->children(), expected);
+
+    delete taken;
+}
+
+//! Removing (taking) item from parent.
+
 TEST_F(TestSessionItem, takeItem)
 {
     std::unique_ptr<SessionItem> parent(new SessionItem);
@@ -505,10 +536,16 @@ TEST_F(TestSessionItem, tagRowFromItem)
     parent->insertItem(-1, child_t1_b, tag1); // 1
     parent->insertItem(1, child_t2_b, tag2); // 1 between child_t2_a and child_t2_c
 
-    EXPECT_EQ(parent->tagRowFromItem(child_t1_a), 0);
-    EXPECT_EQ(parent->tagRowFromItem(child_t1_b), 1);
-    EXPECT_EQ(parent->tagRowFromItem(child_t2_a), 0);
-    EXPECT_EQ(parent->tagRowFromItem(child_t2_b), 1);
-    EXPECT_EQ(parent->tagRowFromItem(child_t2_c), 2);
+    EXPECT_EQ(parent->tagRowFromItem(child_t1_a).first, 0);
+    EXPECT_EQ(parent->tagRowFromItem(child_t1_b).first, 1);
+    EXPECT_EQ(parent->tagRowFromItem(child_t2_a).first, 0);
+    EXPECT_EQ(parent->tagRowFromItem(child_t2_b).first, 1);
+    EXPECT_EQ(parent->tagRowFromItem(child_t2_c).first, 2);
+
+    EXPECT_EQ(parent->tagRowFromItem(child_t1_a).second, "tag1");
+    EXPECT_EQ(parent->tagRowFromItem(child_t1_b).second, "tag1");
+    EXPECT_EQ(parent->tagRowFromItem(child_t2_a).second, "tag2");
+    EXPECT_EQ(parent->tagRowFromItem(child_t2_b).second, "tag2");
+    EXPECT_EQ(parent->tagRowFromItem(child_t2_c).second, "tag2");
 }
 

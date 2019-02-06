@@ -100,6 +100,15 @@ int SessionItem::childrenCount() const
     return static_cast<int>(m_children.size());
 }
 
+//! Removes item from given row, returns item. No tags.
+
+SessionItem* SessionItem::takeRow(int row)
+{
+    SessionItem* item = childAt(row);
+    auto row_tag = tagRowFromItem(item);
+    return takeItem(row_tag.first, row_tag.second);
+}
+
 //! Insert item into given tag into given row.
 
 bool SessionItem::insertItem(int row, SessionItem* item, const std::string& tag)
@@ -234,16 +243,16 @@ std::string SessionItem::tagFromItem(const SessionItem* item) const
 
 //! Returns item's row in its tag.
 
-int SessionItem::tagRowFromItem(const SessionItem* item) const
+std::pair<int, std::string> SessionItem::tagRowFromItem(const SessionItem* item) const
 {
     auto it = std::find(m_children.begin(), m_children.end(), item);
     if (it != m_children.end()) {
         int index = static_cast<int>(std::distance(m_children.begin(), it));
         auto tag = m_tags->tagFromIndex(index);
-        return index - m_tags->tagStartIndex(tag);
+        return std::make_pair(index - m_tags->tagStartIndex(tag), tag);
     }
 
-    return -1;
+    return {-1, ""};
 }
 
 ItemMapper* SessionItem::mapper()

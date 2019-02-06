@@ -76,7 +76,7 @@ void TestWidget2::onContextMenuRequest(const QPoint& point)
         auto viewItem = dynamic_cast<ViewItem*>(item);
         if (viewItem) {
             auto child = viewItem->item();
-            int index = child->parent()->tagRowFromItem(child);
+            int index = child->parent()->tagRowFromItem(child).first;
             m_sessionModel->insertNewItem(child->modelType(), child->parent(), index+1);
         }
     });
