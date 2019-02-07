@@ -37,7 +37,7 @@ public:
 
     model_type modelType() const;
 
-    std::string displayName() const;
+    virtual std::string displayName() const;
     void setDisplayName(const std::string& name);
 
     std::string identifier() const;
