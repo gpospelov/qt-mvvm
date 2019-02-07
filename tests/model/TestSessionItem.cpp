@@ -4,6 +4,7 @@
 #include "itempool.h"
 #include "taginfo.h"
 #include <memory>
+#include <QDebug>
 
 using namespace ModelView;
 
@@ -305,23 +306,26 @@ TEST_F(TestSessionItem, takeAtMultitag)
 
     parent->insertItem(1, child_t2_b, tag2); // between child_t2_a and child_t2_c
 
-    // taking items
-    auto taken = parent->takeAt(0);
-    EXPECT_EQ(taken, child_t1_a);
-    delete taken;
-    taken = parent->takeAt(3);
-    EXPECT_EQ(taken, child_t2_b);
-
-    // items access via non-tag interface
-    std::vector<SessionItem*> expected = {child_t1_b, child_t2_a, child_t2_c};
+    // before removal
+    std::vector<SessionItem*> expected = {child_t1_a, child_t1_b, child_t2_a, child_t2_b, child_t2_c};
     EXPECT_EQ(parent->children(), expected);
 
-    // items access via tag interface
-    expected = {child_t1_b};
+    expected = {child_t1_a, child_t1_b};
+    EXPECT_EQ(parent->getItems(tag1), expected);
+
+    expected = {child_t2_a, child_t2_b, child_t2_c};
+    EXPECT_EQ(parent->getItems(tag2), expected);
+
+    // taking items
+    auto taken = parent->takeAt(3);
+    EXPECT_EQ(taken, child_t2_b);
+    delete taken;
+
+    expected = {child_t1_a, child_t1_b};
     EXPECT_EQ(parent->getItems(tag1), expected);
 
     expected = {child_t2_a, child_t2_c};
-    EXPECT_EQ(parent->getItems(tag1), expected);
+    EXPECT_EQ(parent->getItems(tag2), expected);
 }
 
 //! Removing (taking) item from parent.

@@ -68,15 +68,15 @@ private:
     result_t m_result;
 };
 
-//! Command for unddo/redo framework to remove row from a model.
+//! Command for unddo/redo framework to remove item from a model using given child index.
 
-class CORE_EXPORT RemoveRowCommand : public QUndoCommand
+class CORE_EXPORT RemoveAtCommand : public QUndoCommand
 {
 public:
     using result_t = bool;
 
-    RemoveRowCommand(SessionItem* parent, int row);
-    ~RemoveRowCommand() override;
+    RemoveAtCommand(SessionItem* parent, int index);
+    ~RemoveAtCommand() override;
 
     void undo() override;
     void redo() override;
@@ -85,7 +85,7 @@ public:
 
 private:
     Path m_parent_path;
-    int m_row;
+    int m_index;
     std::unique_ptr<QJsonObject> m_child_backup;
     SessionModel* m_model;
     result_t m_result;

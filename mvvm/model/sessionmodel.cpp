@@ -118,7 +118,7 @@ const ItemManager* SessionModel::manager() const
 
 void SessionModel::removeRow(SessionItem* parent, int row)
 {
-    m_commands->removeRow(parent, row);
+    m_commands->removeAt(parent, row);
 }
 
 void SessionModel::make_registered(SessionItem* item, bool flag)

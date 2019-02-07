@@ -88,8 +88,8 @@ InsertNewItemCommand::result_t InsertNewItemCommand::result() const
 
 // ----------------------------------------------------------------------------
 
-RemoveRowCommand::RemoveRowCommand(SessionItem* parent, int row)
-    : m_row(row)
+RemoveAtCommand::RemoveAtCommand(SessionItem* parent, int index)
+    : m_index(index)
     , m_model(parent->model())
     , m_result(true)
 {
@@ -97,21 +97,21 @@ RemoveRowCommand::RemoveRowCommand(SessionItem* parent, int row)
     m_parent_path = m_model->pathFromItem(parent);
 }
 
-RemoveRowCommand::~RemoveRowCommand() = default;
+RemoveAtCommand::~RemoveAtCommand() = default;
 
-void RemoveRowCommand::undo()
+void RemoveAtCommand::undo()
 {
     m_model->setCommandRecordPause(true);
 
     const auto& converter = m_model->manager()->converter();
 
     auto parent = m_model->itemFromPath(m_parent_path);
-    converter.json_to_item(*m_child_backup, parent, m_row);
+    converter.json_to_item(*m_child_backup, parent, m_index);
 
     m_model->setCommandRecordPause(false);
 }
 
-void RemoveRowCommand::redo()
+void RemoveAtCommand::redo()
 {
     m_model->setCommandRecordPause(true);
 
@@ -119,14 +119,14 @@ void RemoveRowCommand::redo()
     m_child_backup = std::make_unique<QJsonObject>();
 
     auto parent = m_model->itemFromPath(m_parent_path);
-    auto child = parent->childAt(m_row);
+    auto child = parent->takeAt(m_index);
     converter.item_to_json(child, *m_child_backup);
-    delete parent->takeItem(m_row);
+    delete child;
 
     m_model->setCommandRecordPause(false);
 }
 
-RemoveRowCommand::result_t RemoveRowCommand::result() const
+RemoveAtCommand::result_t RemoveAtCommand::result() const
 {
     return m_result;
 }

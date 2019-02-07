@@ -122,7 +122,7 @@ TEST_F(TestCommands, removeRowCommand)
     auto item_identifier = item->data(ItemDataRole::IDENTIFIER).value<std::string>();
 
     // command to insert parent in the model
-    auto command = std::make_unique<RemoveRowCommand>(model.rootItem(), 0);
+    auto command = std::make_unique<RemoveAtCommand>(model.rootItem(), 0);
     command->redo(); // removal
 
     EXPECT_EQ(command->result(), true);
@@ -148,7 +148,7 @@ TEST_F(TestCommands, removeRowCommandChild)
     auto child1_identifier = child1->data(ItemDataRole::IDENTIFIER).value<std::string>();
 
     // command to remove one child
-    auto command = std::make_unique<RemoveRowCommand>(parent, 0);
+    auto command = std::make_unique<RemoveAtCommand>(parent, 0);
     command->redo(); // removal
 
     // check that one child was removed
@@ -178,7 +178,7 @@ TEST_F(TestCommands, removeRowCommandParentWithChild)
     auto child1_identifier = child1->data(ItemDataRole::IDENTIFIER).value<std::string>();
 
     // command to remove parent
-    auto command = std::make_unique<RemoveRowCommand>(model.rootItem(), 0);
+    auto command = std::make_unique<RemoveAtCommand>(model.rootItem(), 0);
     command->redo(); // removal
 
     // check that one child was removed

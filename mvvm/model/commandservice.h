@@ -38,7 +38,7 @@ public:
 
     bool setData(SessionItem* item, const QVariant& value, int role);
 
-    void removeRow(SessionItem* parent, int row);
+    void removeAt(SessionItem* parent, int index);
 
     QUndoStack* undoStack() const;
 
