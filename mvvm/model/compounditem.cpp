@@ -21,6 +21,11 @@ CompoundItem::CompoundItem(const std::string& modelType)
 
 }
 
+std::string CompoundItem::displayName() const
+{
+    return SessionItem::displayName();
+}
+
 QVariant CompoundItem::getItemValue(const std::string& tag) const
 {
     return getItem(tag)->data(ItemDataRole::DATA);

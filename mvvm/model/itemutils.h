@@ -38,6 +38,10 @@ CORE_EXPORT bool CompatibleVariantTypes(const QVariant& oldValue, const QVariant
 //! Returns true if given variants have same type and value.
 CORE_EXPORT bool IsTheSame(const QVariant& var1, const QVariant& var2);
 
+//! Returns copy number of given item in it's parent hierarchy. Takes into account only items with
+//! same modelType.
+CORE_EXPORT int CopyNumber(const SessionItem* item);
+
 }  // namespace Utils
 
 }  // namespace ModelView

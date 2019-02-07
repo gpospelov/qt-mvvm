@@ -26,6 +26,9 @@ public:
     //! Registers single property item.
     template<typename T> T* addProperty(const std::string& name, const QVariant& variant=QVariant());
 
+    std::string displayName() const override;
+
+    // tag specifics
     QVariant getItemValue(const std::string& tag) const;
 
     void setItemValue(const std::string& tag, const QVariant& variant);

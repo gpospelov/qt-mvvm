@@ -66,3 +66,26 @@ bool Utils::IsTheSame(const QVariant& var1, const QVariant& var2)
     // variants of same type are compared by value
     return var1 == var2;
 }
+
+
+
+int Utils::CopyNumber(const SessionItem* item)
+{
+    int result(-1);
+
+    if(!item)
+        return result;
+
+    int count(0);
+    auto model_type = item->modelType();
+    if (auto parent = item->parent()) {
+        for (auto child : parent->children()) {
+            if (child == item)
+                result = count;
+            if (child->modelType() == model_type)
+                ++count;
+        }
+    }
+
+    return count >1 ? result : -1;
+}
