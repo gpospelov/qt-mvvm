@@ -100,11 +100,18 @@ int SessionItem::childrenCount() const
     return static_cast<int>(m_children.size());
 }
 
-//! Removes item from given row, returns item. No tags.
+//! Returns child at given index of children array. No tags involved.
 
-SessionItem* SessionItem::takeRow(int row)
+SessionItem* SessionItem::childAt(int index) const
 {
-    SessionItem* item = childAt(row);
+    return index >= 0 && index < childrenCount() ? m_children[static_cast<size_t>(index)] : nullptr;
+}
+
+//! Takes item from given index, returns item. No tags.
+
+SessionItem* SessionItem::takeAt(int index)
+{
+    SessionItem* item = childAt(index);
     auto row_tag = tagRowFromItem(item);
     return takeItem(row_tag.first, row_tag.second);
 }
@@ -167,13 +174,6 @@ SessionItem* SessionItem::takeItem(int row, const std::string& tag)
 std::vector<SessionItem*> SessionItem::children() const
 {
     return m_children;
-}
-
-//! Returns child at given index of children array. No tags involved.
-
-SessionItem* SessionItem::childAt(int index) const
-{
-    return index >= 0 && index < childrenCount() ? m_children[static_cast<size_t>(index)] : nullptr;
 }
 
 //! Returns index in children array corresponding to given child. No tags involved.

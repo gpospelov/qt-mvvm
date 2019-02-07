@@ -53,7 +53,9 @@ public:
 
     int childrenCount() const;
 
-    SessionItem* takeRow(int row);
+    SessionItem* childAt(int index) const;
+
+    SessionItem* takeAt(int index);
 
     // FIXME revise return type usage
     bool insertItem(int row, SessionItem* item, const std::string& tag = {});
@@ -61,8 +63,6 @@ public:
     SessionItem* takeItem(int row, const std::string& tag = {});
 
     std::vector<SessionItem*> children() const;
-
-    SessionItem* childAt(int index) const;
 
     int indexOfChild(SessionItem* child) const;
 

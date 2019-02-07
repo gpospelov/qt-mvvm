@@ -248,7 +248,7 @@ TEST_F(TestSessionItem, insertChildren)
 
 //! Removing (taking) item from parent.
 
-TEST_F(TestSessionItem, takeRow)
+TEST_F(TestSessionItem, takeAt)
 {
     std::unique_ptr<SessionItem> parent(new SessionItem);
     parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/true);
@@ -265,16 +265,63 @@ TEST_F(TestSessionItem, takeRow)
     EXPECT_EQ(parent->childrenCount(), 3);
 
     // taking non-existing rows
-    EXPECT_THROW(parent->takeRow(-1), std::runtime_error);
-    EXPECT_THROW(parent->takeRow(parent->childrenCount()), std::runtime_error);
+    EXPECT_THROW(parent->takeAt(-1), std::runtime_error);
+    EXPECT_THROW(parent->takeAt(parent->childrenCount()), std::runtime_error);
 
     // taking first row
-    auto taken = parent->takeRow(0);
+    auto taken = parent->takeAt(0);
     EXPECT_EQ(taken->parent(), nullptr);
     std::vector<SessionItem*> expected = {child2, child3};
     EXPECT_EQ(parent->children(), expected);
 
     delete taken;
+}
+
+//! Removing (taking) item from parent in multitag context.
+
+TEST_F(TestSessionItem, takeAtMultitag)
+{
+    const std::string tag1 = "tag1";
+    const std::string tag2 = "tag2";
+
+    // creating parent with one tag
+    std::unique_ptr<SessionItem> parent(new SessionItem);
+    parent->registerTag(TagInfo::universalTag(tag1));
+    parent->registerTag(TagInfo::universalTag(tag2));
+    EXPECT_TRUE(parent->isTag(tag1));
+    EXPECT_TRUE(parent->isTag(tag2));
+
+    // inserting two children
+    auto child_t1_a = new SessionItem; // index=0 tag1 row=0
+    auto child_t1_b = new SessionItem; // index=1 tag1 row=1
+    auto child_t2_a = new SessionItem; // index=2 tag2 row=0
+    auto child_t2_b = new SessionItem; // index=3 tag2 row=1
+    auto child_t2_c = new SessionItem; // index=4 tag2 row=2
+    parent->insertItem(-1, child_t2_a, tag2);
+    parent->insertItem(-1, child_t2_c, tag2);
+
+    parent->insertItem(-1, child_t1_a, tag1);
+    parent->insertItem(-1, child_t1_b, tag1);
+
+    parent->insertItem(1, child_t2_b, tag2); // between child_t2_a and child_t2_c
+
+    // taking items
+    auto taken = parent->takeAt(0);
+    EXPECT_EQ(taken, child_t1_a);
+    delete taken;
+    taken = parent->takeAt(3);
+    EXPECT_EQ(taken, child_t2_b);
+
+    // items access via non-tag interface
+    std::vector<SessionItem*> expected = {child_t1_b, child_t2_a, child_t2_c};
+    EXPECT_EQ(parent->children(), expected);
+
+    // items access via tag interface
+    expected = {child_t1_b};
+    EXPECT_EQ(parent->getItems(tag1), expected);
+
+    expected = {child_t2_a, child_t2_c};
+    EXPECT_EQ(parent->getItems(tag1), expected);
 }
 
 //! Removing (taking) item from parent.
