@@ -114,7 +114,7 @@ TEST_F(TestCommands, insertNewItemWithTagCommand)
     EXPECT_EQ(nullptr, command2->result());
 }
 
-TEST_F(TestCommands, removeRowCommand)
+TEST_F(TestCommands, removeAtCommand)
 {
     SessionModel model;
     auto item = model.insertNewItem("abc", model.rootItem(), 0, "");
@@ -135,7 +135,7 @@ TEST_F(TestCommands, removeRowCommand)
     EXPECT_EQ(restored->data(ItemDataRole::IDENTIFIER).value<std::string>(), item_identifier);
 }
 
-TEST_F(TestCommands, removeRowCommandChild)
+TEST_F(TestCommands, removeAtCommandChild)
 {
     SessionModel model;
     auto parent = model.insertNewItem("abc", model.rootItem(), 0, "");
@@ -165,7 +165,7 @@ TEST_F(TestCommands, removeRowCommandChild)
     EXPECT_EQ(restored->data(ItemDataRole::DATA).toDouble(), 42.0);
 }
 
-TEST_F(TestCommands, removeRowCommandParentWithChild)
+TEST_F(TestCommands, removeAtCommandParentWithChild)
 {
     SessionModel model;
     auto parent = model.insertNewItem("abc", model.rootItem(), 0, "");
@@ -196,4 +196,47 @@ TEST_F(TestCommands, removeRowCommandParentWithChild)
 
     // checking the data of restored item
     EXPECT_EQ(restored_child->data(ItemDataRole::DATA).toDouble(), 42.0);
+}
+
+//! RemoveAtCommand in multitag context
+
+TEST_F(TestCommands, removeAtCommandMultitag)
+{
+    SessionModel model;
+    auto parent = model.insertNewItem("abc", model.rootItem(), 0, "");
+    parent->registerTag(TagInfo::universalTag("tag1"));
+    parent->registerTag(TagInfo::universalTag("tag2"));
+
+    auto child1 = model.insertNewItem("child_model", parent, -1, "tag1");
+    child1->setData(41.0, ItemDataRole::DATA);
+    auto child2 = model.insertNewItem("child_model", parent, -1, "tag1");
+    child2->setData(42.0, ItemDataRole::DATA);
+
+    auto child3 = model.insertNewItem("child_model", parent, -1, "tag2");
+    child3->setData(43.0, ItemDataRole::DATA);
+
+    auto parent_identifier = parent->data(ItemDataRole::IDENTIFIER).value<std::string>();
+    auto child1_identifier = child1->data(ItemDataRole::IDENTIFIER).value<std::string>();
+    auto child2_identifier = child2->data(ItemDataRole::IDENTIFIER).value<std::string>();
+    auto child3_identifier = child3->data(ItemDataRole::IDENTIFIER).value<std::string>();
+
+    // command to remove parent
+    auto command = std::make_unique<RemoveAtCommand>(parent, 1);
+    command->redo(); // removal
+
+    // check that one child was removed
+    EXPECT_EQ(command->result(), true);
+    EXPECT_EQ(model.rootItem()->childrenCount(), 2);
+
+    // undo command
+    command->undo();
+    EXPECT_EQ(model.rootItem()->childrenCount(), 3);
+    auto restored_parent = model.rootItem()->childAt(0);
+    auto restored_child2 = restored_parent->childAt(1);
+
+    EXPECT_EQ(restored_parent->data(ItemDataRole::IDENTIFIER).value<std::string>(), parent_identifier);
+    EXPECT_EQ(restored_child2->data(ItemDataRole::IDENTIFIER).value<std::string>(), child2_identifier);
+
+    // checking the data of restored item
+    EXPECT_EQ(restored_child2->data(ItemDataRole::DATA).toDouble(), 42.0);
 }
