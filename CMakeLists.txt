@@ -3,6 +3,9 @@ project(qt-mvvm)
 
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules)
 
+option(MVVM_TESTS_AUTOEXEC "Execute tests automatically at the end of build" ON)
+option(MVVM_TESTS_AUTODISCOVERY "Auto discover tests and add to ctest" ON)
+
 include(CTest)
 include(configuration)
 
