@@ -259,3 +259,20 @@ TEST_F(TestItemUtils, variantTranslation)
     EXPECT_TRUE(ModelView::toCustomVariant(value) == QVariant::fromValue(42.0));
     EXPECT_TRUE(ModelView::toQtVariant(value) == QVariant::fromValue(42.0));
 }
+
+TEST_F(TestItemUtils, itemCopyNumber)
+{
+    SessionModel model;
+
+    auto parent = model.insertNewItem("parent");
+    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/true);
+
+    const std::string model_a("model_a");
+    const std::string model_b("model_b");
+    auto child1 = model.insertNewItem(model_a, parent);
+    auto child2 = model.insertNewItem(model_a, parent);
+    auto child3 = model.insertNewItem(model_b, parent);
+
+    EXPECT_EQ(Utils::CopyNumber(child1), 0);
+}
+
