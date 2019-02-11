@@ -200,3 +200,9 @@ std::vector<std::pair<int, std::string> > SessionItemTags::tagsSummary()
     }
     return result;
 }
+
+void SessionItemTags::resetTags()
+{
+    for (auto& tag : m_tags)
+        tag.setCount(0);
+}

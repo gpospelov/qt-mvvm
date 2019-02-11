@@ -55,6 +55,9 @@ public:
 
     std::vector<std::pair<int, std::string>> tagsSummary();
 
+    // FIXME remove hack
+    void resetTags();
+
 private:
     TagInfo& tagInfo(const std::string& tagName);
     const TagInfo& tagInfo(const std::string& tagName) const;

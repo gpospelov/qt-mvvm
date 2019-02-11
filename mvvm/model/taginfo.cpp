@@ -116,3 +116,8 @@ std::string ModelView::TagInfo::toString() const
     ostr << "} childCount:" << childCount();
     return ostr.str();
 }
+
+void ModelView::TagInfo::setCount(int count)
+{
+    m_childCount = count;
+}

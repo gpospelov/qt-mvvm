@@ -52,6 +52,8 @@ public:
     bool isSinglePropertyTag() const;
 
     std::string toString() const;
+
+    void setCount(int count);
 private:
     std::string m_name;
     int m_min;
