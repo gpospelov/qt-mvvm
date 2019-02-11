@@ -53,6 +53,8 @@ public:
     const_iterator begin() const;
     const_iterator end() const;
 
+    std::vector<std::pair<int, std::string>> tagsSummary();
+
 private:
     TagInfo& tagInfo(const std::string& tagName);
     const TagInfo& tagInfo(const std::string& tagName) const;

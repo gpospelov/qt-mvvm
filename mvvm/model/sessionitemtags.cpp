@@ -190,3 +190,13 @@ SessionItemTags::const_iterator SessionItemTags::end() const
 {
     return m_tags.end();
 }
+
+std::vector<std::pair<int, std::string> > SessionItemTags::tagsSummary()
+{
+    std::vector<std::pair<int, std::string> > result;
+    for (const auto& tag : m_tags) {
+        for (int row=0; row<tag.childCount(); ++row)
+            result.push_back({row, tag.name()});
+    }
+    return result;
+}

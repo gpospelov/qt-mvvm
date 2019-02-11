@@ -25,7 +25,7 @@ TEST_F(TestSessionItemTags, registerTag)
 {
     SessionItemTags tags;
 
-    // registering tag    
+    // registering tag
     std::vector<std::string> expected = {ParticleType};
     EXPECT_FALSE(tags.registerTag("", 0, 1, expected));
 
@@ -35,7 +35,7 @@ TEST_F(TestSessionItemTags, registerTag)
     EXPECT_FALSE(tags.isValid("tag1", "wrongModelType"));
     EXPECT_EQ(tags.modelTypesForTag("tag1"), expected);
 
-    // registering tag twice    
+    // registering tag twice
     EXPECT_FALSE(tags.registerTag("tag1", 0, 1, expected));
 
     // registering another tag
@@ -54,7 +54,6 @@ TEST_F(TestSessionItemTags, registerTagInfo)
     tags.registerTag(tag);
     EXPECT_TRUE(tags.isValid(tag.name()));
 }
-
 
 TEST_F(TestSessionItemTags, modelTypesForTag)
 {
@@ -170,7 +169,25 @@ TEST_F(TestSessionItemTags, insertIndexFromTagRow)
 
     EXPECT_EQ(tags.insertIndexFromTagRow("tag2", 0), 3);
     EXPECT_EQ(tags.insertIndexFromTagRow("tag2", -1), 4);
-    tags.addChild("tag2"); // index=4, row=1
-    EXPECT_EQ(tags.insertIndexFromTagRow("tag2", 0), -1); // maximum reached
+    tags.addChild("tag2");                                 // index=4, row=1
+    EXPECT_EQ(tags.insertIndexFromTagRow("tag2", 0), -1);  // maximum reached
     EXPECT_EQ(tags.insertIndexFromTagRow("tag2", -1), -1); // maximum reached
+}
+
+//! Tag summary info
+
+TEST_F(TestSessionItemTags, tagSummaryInfo)
+{
+    SessionItemTags tags;
+    tags.registerTag("tag1", 0, -1, {ParticleType});
+    tags.registerTag("tag2", 0, 2, {ParticleType});
+
+    tags.addChild("tag1"); // index=0, row=0
+    tags.addChild("tag1"); // index=1, row=1
+    tags.addChild("tag1"); // index=2, row=2
+    tags.addChild("tag2"); // index=3, row=0
+
+    std::vector<std::pair<int, std::string>> expected
+        = {{0, "tag1"}, {1, "tag1"}, {2, "tag1"}, {0, "tag2"}};
+    EXPECT_EQ(tags.tagsSummary(), expected);
 }
