@@ -74,6 +74,8 @@ void JsonItem::json_to_item(const QJsonObject& json, SessionItem* parent, int ro
     item->m_data = std::make_unique<SessionItemData>(itemData);
 
     auto itemTags = m_itemtags_converter->get_tags(json[itemTagsKey].toArray());
+    // FIXME remove hack after refactoring of SessionItemData
+    itemTags.resetTags();
     item->m_tags = std::make_unique<SessionItemTags>(itemTags);
 //    auto tagSummary = item->m_tags->tagsSummary();
 

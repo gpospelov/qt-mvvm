@@ -27,6 +27,7 @@ public:
     static const QString nameKey;
     static const QString minKey;
     static const QString maxKey;
+    static const QString countKey;
     static const QString modelsKey;
 
     JsonItemTags();

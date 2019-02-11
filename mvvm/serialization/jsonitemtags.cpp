@@ -21,7 +21,8 @@ QStringList expected_tags_keys()
 {
     QStringList result = QStringList() << JsonItemTags::nameKey << JsonItemTags::minKey
                                        << JsonItemTags::maxKey
-                                       << JsonItemTags::modelsKey;
+                                       << JsonItemTags::modelsKey
+                                       << JsonItemTags::countKey;
     std::sort(result.begin(), result.end());
     return result;
 }
@@ -30,6 +31,7 @@ QStringList expected_tags_keys()
 const QString JsonItemTags::nameKey = "name";
 const QString JsonItemTags::minKey = "min";
 const QString JsonItemTags::maxKey = "max";
+const QString JsonItemTags::countKey = "count";
 const QString JsonItemTags::modelsKey = "models";
 
 JsonItemTags::JsonItemTags()
@@ -50,6 +52,7 @@ QJsonArray JsonItemTags::get_json(const SessionItemTags& itemTags)
         object[nameKey] = QString::fromStdString(tag.name());
         object[minKey] = tag.min();
         object[maxKey] = tag.max();
+        object[countKey] = tag.childCount();
         QJsonArray str_array;
         for (const auto& str : tag.modelTypes())
             str_array.append(QString::fromStdString(str));
@@ -73,10 +76,13 @@ SessionItemTags JsonItemTags::get_tags(const QJsonArray& object)
         auto name = json_tag[nameKey].toString().toStdString();
         auto min = json_tag[minKey].toInt();
         auto max = json_tag[maxKey].toInt();
+        auto count = json_tag[countKey].toInt();
         std::vector<std::string> models;
         for(const auto ref : json_tag[modelsKey].toArray()) {
             models.push_back(ref.toString().toStdString());
         }
+        TagInfo tag(name, min, max, models);
+        tag.setCount(count);
         result.registerTag(TagInfo(name, min, max, models));
     }
 

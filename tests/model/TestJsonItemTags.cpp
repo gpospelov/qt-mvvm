@@ -41,6 +41,7 @@ TEST_F(TestJsonItemTags, isItemTag)
     object[JsonItemTags::nameKey] = QString::fromStdString("tag1");
     object[JsonItemTags::minKey] = 0;
     object[JsonItemTags::maxKey] = 1;
+    object[JsonItemTags::countKey] = 10;
     object[JsonItemTags::modelsKey] = QJsonArray();
 
     EXPECT_TRUE(converter.is_item_tag(object));
