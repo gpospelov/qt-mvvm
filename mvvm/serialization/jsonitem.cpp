@@ -52,7 +52,7 @@ JsonItem::JsonItem()
 
 JsonItem::~JsonItem() = default;
 
-void JsonItem::json_to_item(const QJsonObject& json, SessionItem* parent, int row) const
+void JsonItem::json_to_item(const QJsonObject& json, SessionItem* parent, int row, const std::string& tag) const
 {
     if (!parent)
         throw std::runtime_error("JsonModel::json_to_item() -> Non initialized item");

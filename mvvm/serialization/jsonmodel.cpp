@@ -85,9 +85,9 @@ void JsonModel::json_to_model(const QJsonObject& json, SessionModel& model) cons
 
 }
 
-void JsonModel::json_to_item(const QJsonObject& json, SessionItem* parent, int row) const
+void JsonModel::json_to_item(const QJsonObject& json, SessionItem* parent, int row, const std::string& tag) const
 {
-    return m_item_converter->json_to_item(json, parent, row);
+    return m_item_converter->json_to_item(json, parent, row, tag);
 }
 
 void JsonModel::item_to_json(const SessionItem* item, QJsonObject& json) const

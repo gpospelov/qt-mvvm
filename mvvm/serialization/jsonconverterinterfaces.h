@@ -11,6 +11,7 @@
 #define JSONCONVERTERINTERFACES_H
 
 #include "global.h"
+#include <string>
 
 class QJsonObject;
 class QVariant;
@@ -66,7 +67,7 @@ class CORE_EXPORT JsonItemInterface
 public:
     virtual ~JsonItemInterface() = default;
 
-    virtual void json_to_item(const QJsonObject& json, SessionItem* parent, int row = -1)  const = 0;
+    virtual void json_to_item(const QJsonObject& json, SessionItem* parent, int row = -1, const std::string& tag={})  const = 0;
 
     virtual void item_to_json(const SessionItem* item, QJsonObject& json) const = 0;
 };
@@ -82,7 +83,7 @@ public:
 
     virtual void json_to_model(const QJsonObject&, SessionModel&) const = 0;
 
-    virtual void json_to_item(const QJsonObject& json, SessionItem* parent, int row = -1)  const = 0;
+    virtual void json_to_item(const QJsonObject& json, SessionItem* parent, int row = -1, const std::string& tag={})  const = 0;
 
     virtual void item_to_json(const SessionItem* item, QJsonObject& json) const = 0;
 };

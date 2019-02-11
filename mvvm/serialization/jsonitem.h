@@ -35,7 +35,7 @@ public:
     ~JsonItem() override;
 
     //! Constructs SessionItem tree from json.
-    void json_to_item(const QJsonObject& json, SessionItem* parent, int row = -1) const override;
+    void json_to_item(const QJsonObject& json, SessionItem* parent, int row = -1, const std::string& tag={}) const override;
 
     //! Writes SessionItem tree to json.
     void item_to_json(const SessionItem* item, QJsonObject& json) const override;
