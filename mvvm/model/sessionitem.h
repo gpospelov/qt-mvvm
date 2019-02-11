@@ -30,6 +30,7 @@ class CORE_EXPORT SessionItem
 {
     friend class SessionModel;
     friend class JsonItem;
+    friend class JsonModel;
 
 public:
     SessionItem(model_type modelType = {});

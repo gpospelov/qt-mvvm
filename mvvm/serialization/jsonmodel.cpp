@@ -17,6 +17,7 @@
 #include "itemmanager.h"
 #include "customvariants.h"
 #include "model_types.h"
+#include "sessionitemtags.h"
 #include <QSet>
 #include <QJsonObject>
 #include <QJsonArray>
@@ -78,6 +79,15 @@ void JsonModel::json_to_model(const QJsonObject& json, SessionModel& model) cons
 
     if (json[modelKey].toString() != QString::fromStdString(model.modelType()))
             throw std::runtime_error("JsonModel::json_to_model() -> Unexpected model type.");
+
+
+//    size_t index(0);
+//    auto parent = model.rootItem();
+//    auto tagSummary = parent->m_tags->tagsSummary();
+//    for(const auto ref : json[itemsKey].toArray()) {
+//        m_item_converter->json_to_item(ref.toObject(), parent, tagSummary[index].first, tagSummary[index].second);
+//        index++;
+//    }
 
     auto parent = model.rootItem();
     for(const auto ref : json[itemsKey].toArray())
