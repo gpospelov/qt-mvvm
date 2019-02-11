@@ -82,8 +82,8 @@ SessionItemTags JsonItemTags::get_tags(const QJsonArray& object)
             models.push_back(ref.toString().toStdString());
         }
         TagInfo tag(name, min, max, models);
-        tag.setCount(count);
-        result.registerTag(TagInfo(name, min, max, models));
+        tag.setCount(count); // FIXME remove after refactoring
+        result.registerTag(tag);
     }
 
     return result;

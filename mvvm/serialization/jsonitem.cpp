@@ -65,43 +65,42 @@ void JsonItem::json_to_item(const QJsonObject& json, SessionItem* parent, int ro
         throw std::runtime_error("JsonModel::json_to_item() -> Error. Given json object can't represent an item.");
 
     auto modelType = json[modelKey].toString().toStdString();
-    auto parentTag = json[parentTagKey].toString().toStdString();
+//    auto parentTag = json[parentTagKey].toString().toStdString();
 
-    auto item = parent->model()->insertNewItem(modelType, parent, row, parentTag);
-//    auto item = parent->model()->insertNewItem(modelType, parent, row, tag);
+//    auto item = parent->model()->insertNewItem(modelType, parent, row, parentTag);
+    auto item = parent->model()->insertNewItem(modelType, parent, row, tag);
 
     auto itemData = m_itemdata_converter->get_data(json[itemDataKey].toArray());
     item->m_data = std::make_unique<SessionItemData>(itemData);
 
     auto itemTags = m_itemtags_converter->get_tags(json[itemTagsKey].toArray());
-    // FIXME remove hack after refactoring of SessionItemData
-    itemTags.resetTags();
+
     item->m_tags = std::make_unique<SessionItemTags>(itemTags);
-//    auto tagSummary = item->m_tags->tagsSummary();
 
     // FIXME find more elegant way to replace item registration
     identifier_type identifier = itemData.data(ItemDataRole::IDENTIFIER).value<std::string>();
     parent->model()->manager()->fix_registration(item, identifier);
 
     parent = item;
+    auto tagSummary = parent->m_tags->tagsSummary();
+//    parent->m_tags->resetTags();
 
-//    if (static_cast<int>(tagSummary.size()) != json[itemsKey].toArray().size()) {
-//        std::ostringstream ostr;
-//        ostr << "JsonItem::json_to_item() -> Size of json array " << json[itemsKey].toArray().size()
-//             << " does not match tag summary size " << tagSummary.size();
-//        throw std::runtime_error(ostr.str());
-//    }
+    if (static_cast<int>(tagSummary.size()) != json[itemsKey].toArray().size()) {
+        std::ostringstream ostr;
+        ostr << "JsonItem::json_to_item() -> Size of json array " << json[itemsKey].toArray().size()
+             << " does not match tag summary size " << tagSummary.size();
+        throw std::runtime_error(ostr.str());
+    }
 
-//    size_t index(0);
-//    for(const auto ref : json[itemsKey].toArray()) {
+    size_t index(0);
+    for(const auto ref : json[itemsKey].toArray()) {
 
-//        json_to_item(ref.toObject(), parent, tagSummary[index].first, tagSummary[index].second);
-//        index++;
-//    }
+        json_to_item(ref.toObject(), parent, tagSummary[index].first, tagSummary[index].second);
+        index++;
+    }
 
-
-    for(const auto ref : json[itemsKey].toArray())
-        json_to_item(ref.toObject(), parent);
+//    for(const auto ref : json[itemsKey].toArray())
+//        json_to_item(ref.toObject(), parent);
 }
 
 void JsonItem::item_to_json(const SessionItem* item, QJsonObject& json) const
