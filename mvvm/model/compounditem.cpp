@@ -11,6 +11,7 @@
 #include "taginfo.h"
 #include "sessionmodel.h"
 #include "itemmanager.h"
+#include "itemutils.h"
 #include <stdexcept>
 
 using namespace ModelView;
@@ -23,7 +24,8 @@ CompoundItem::CompoundItem(const std::string& modelType)
 
 std::string CompoundItem::displayName() const
 {
-    return SessionItem::displayName();
+    int copy_number = Utils::CopyNumber(this);
+    return copy_number!=-1 ? SessionItem::displayName()+std::to_string(copy_number) : SessionItem::displayName();
 }
 
 QVariant CompoundItem::getItemValue(const std::string& tag) const

@@ -274,5 +274,7 @@ TEST_F(TestItemUtils, itemCopyNumber)
     auto child3 = model.insertNewItem(model_b, parent);
 
     EXPECT_EQ(Utils::CopyNumber(child1), 0);
+    EXPECT_EQ(Utils::CopyNumber(child2), 1);
+    EXPECT_EQ(Utils::CopyNumber(child3), -1);
 }
 

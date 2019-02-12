@@ -34,3 +34,18 @@ TEST_F(TestToyItem, multiLayer)
     EXPECT_FALSE(multiLayer->data(ItemDataRole::DATA).isValid());
     EXPECT_EQ(multiLayer->displayName(), ToyItems::Constants::MultiLayerType);
 }
+
+//! Validates display name
+
+TEST_F(TestToyItem, displayName)
+{
+    ToyItems::SampleModel model;
+    auto multiLayer = model.insertNewItem(ToyItems::Constants::MultiLayerType);
+
+    auto layer0 = model.insertNewItem(ToyItems::Constants::LayerType, multiLayer);
+    EXPECT_EQ(layer0->displayName(), "Layer");
+
+    auto layer1 = model.insertNewItem(ToyItems::Constants::LayerType, multiLayer);
+    EXPECT_EQ(layer0->displayName(), "Layer0");
+    EXPECT_EQ(layer1->displayName(), "Layer1");
+}

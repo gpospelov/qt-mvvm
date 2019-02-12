@@ -11,6 +11,7 @@
 #include "model_types.h"
 #include "sessionitem.h"
 #include "itemmapper.h"
+#include "customvariants.h"
 #include <QDebug>
 
 using namespace ModelView;
@@ -46,6 +47,8 @@ ViewEmptyItem* ViewEmptyItem::clone() const
     return new ViewEmptyItem;
 }
 
+// ----------------------------------------------------------------------------
+
 ViewLabelItem::ViewLabelItem(SessionItem* item)
     : ViewItem(item, ItemDataRole::DISPLAY)
 {
@@ -56,6 +59,19 @@ int ViewLabelItem::type() const
 {
     return label_item_type;
 }
+
+QVariant ViewLabelItem::data(int role) const
+{
+    if (!m_item)
+        return QStandardItem::data(role);
+
+    if (role == Qt::DisplayRole || role == Qt::EditRole)
+        return QVariant::fromValue(QString::fromStdString(m_item->displayName()));
+
+    return QStandardItem::data(role);
+}
+
+// ----------------------------------------------------------------------------
 
 ViewDataItem::ViewDataItem(SessionItem* item)
     : ViewItem(item, ItemDataRole::DATA)
