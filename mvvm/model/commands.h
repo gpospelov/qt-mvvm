@@ -75,7 +75,7 @@ class CORE_EXPORT RemoveItemCommand : public QUndoCommand
 public:
     using result_t = bool;
 
-    RemoveItemCommand(SessionItem* parent, int index);
+    RemoveItemCommand(SessionItem* parent, int row, std::string tag={});
     ~RemoveItemCommand() override;
 
     void undo() override;
@@ -85,7 +85,8 @@ public:
 
 private:
     Path m_parent_path;
-    int m_index;
+    int m_row;
+    std::string m_tag;
     std::unique_ptr<QJsonObject> m_child_backup;
     SessionModel* m_model;
     result_t m_result;

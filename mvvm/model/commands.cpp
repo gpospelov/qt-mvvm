@@ -88,8 +88,9 @@ InsertNewItemCommand::result_t InsertNewItemCommand::result() const
 
 // ----------------------------------------------------------------------------
 
-RemoveItemCommand::RemoveItemCommand(SessionItem* parent, int index)
-    : m_index(index)
+RemoveItemCommand::RemoveItemCommand(SessionItem* parent, int row, std::string tag)
+    : m_row(row)
+    , m_tag(std::move(tag))
     , m_model(parent->model())
     , m_result(true)
 {
@@ -106,7 +107,7 @@ void RemoveItemCommand::undo()
     const auto& converter = m_model->manager()->converter();
 
     auto parent = m_model->itemFromPath(m_parent_path);
-    converter.json_to_item(*m_child_backup, parent, m_index);
+    converter.json_to_item(*m_child_backup, parent, m_row);
 
     m_model->setCommandRecordPause(false);
 }
@@ -119,7 +120,7 @@ void RemoveItemCommand::redo()
     m_child_backup = std::make_unique<QJsonObject>();
 
     auto parent = m_model->itemFromPath(m_parent_path);
-    auto child = parent->takeAt(m_index);
+    auto child = parent->takeAt(m_row);
     converter.item_to_json(child, *m_child_backup);
     delete child;
 
