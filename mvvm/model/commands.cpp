@@ -88,7 +88,7 @@ InsertNewItemCommand::result_t InsertNewItemCommand::result() const
 
 // ----------------------------------------------------------------------------
 
-RemoveAtCommand::RemoveAtCommand(SessionItem* parent, int index)
+RemoveItemCommand::RemoveItemCommand(SessionItem* parent, int index)
     : m_index(index)
     , m_model(parent->model())
     , m_result(true)
@@ -97,9 +97,9 @@ RemoveAtCommand::RemoveAtCommand(SessionItem* parent, int index)
     m_parent_path = m_model->pathFromItem(parent);
 }
 
-RemoveAtCommand::~RemoveAtCommand() = default;
+RemoveItemCommand::~RemoveItemCommand() = default;
 
-void RemoveAtCommand::undo()
+void RemoveItemCommand::undo()
 {
     m_model->setCommandRecordPause(true);
 
@@ -111,7 +111,7 @@ void RemoveAtCommand::undo()
     m_model->setCommandRecordPause(false);
 }
 
-void RemoveAtCommand::redo()
+void RemoveItemCommand::redo()
 {
     m_model->setCommandRecordPause(true);
 
@@ -126,7 +126,7 @@ void RemoveAtCommand::redo()
     m_model->setCommandRecordPause(false);
 }
 
-RemoveAtCommand::result_t RemoveAtCommand::result() const
+RemoveItemCommand::result_t RemoveItemCommand::result() const
 {
     return m_result;
 }

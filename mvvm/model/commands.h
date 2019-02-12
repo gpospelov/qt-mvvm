@@ -70,13 +70,13 @@ private:
 
 //! Command for unddo/redo framework to remove item from a model using given child index.
 
-class CORE_EXPORT RemoveAtCommand : public QUndoCommand
+class CORE_EXPORT RemoveItemCommand : public QUndoCommand
 {
 public:
     using result_t = bool;
 
-    RemoveAtCommand(SessionItem* parent, int index);
-    ~RemoveAtCommand() override;
+    RemoveItemCommand(SessionItem* parent, int index);
+    ~RemoveItemCommand() override;
 
     void undo() override;
     void redo() override;
