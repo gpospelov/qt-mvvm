@@ -90,8 +90,8 @@ void TestWidget2::onContextMenuRequest(const QPoint& point)
         auto viewItem = dynamic_cast<ViewItem*>(item);
         if (viewItem) {
             auto child = viewItem->item();
-            int index = child->parent()->indexOfChild(child);
-            m_sessionModel->removeItem(child->parent(), index);
+            auto taginfo = child->parent()->tagRowFromItem(child);
+            m_sessionModel->removeItem(child->parent(), taginfo.first, taginfo.second);
         }
     });
 

@@ -107,7 +107,7 @@ void RemoveItemCommand::undo()
     const auto& converter = m_model->manager()->converter();
 
     auto parent = m_model->itemFromPath(m_parent_path);
-    converter.json_to_item(*m_child_backup, parent, m_row);
+    converter.json_to_item(*m_child_backup, parent, m_row, m_tag);
 
     m_model->setCommandRecordPause(false);
 }
@@ -120,7 +120,7 @@ void RemoveItemCommand::redo()
     m_child_backup = std::make_unique<QJsonObject>();
 
     auto parent = m_model->itemFromPath(m_parent_path);
-    auto child = parent->takeAt(m_row);
+    auto child = parent->takeItem(m_row, m_tag);
     converter.item_to_json(child, *m_child_backup);
     delete child;
 
