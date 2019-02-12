@@ -375,8 +375,6 @@ TEST_F(TestUndoRedo, multiLayer)
     EXPECT_TRUE(model.manager()->findItem(id_layer0) == nullptr);
     EXPECT_TRUE(model.manager()->findItem(id_layer1) == nullptr);
 
-    // FIXME restore functionality below
-
     // undoing multilayer removal
     stack->undo();
     EXPECT_EQ(stack->count(), 4);

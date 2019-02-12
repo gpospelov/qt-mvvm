@@ -58,10 +58,10 @@ public:
     // FIXME remove hack
     void resetTags();
 
-private:
-    TagInfo& tagInfo(const std::string& tagName);
     const TagInfo& tagInfo(const std::string& tagName) const;
+    TagInfo& tagInfo(const std::string& tagName);
 
+private:
     container_type m_tags;
 };
 

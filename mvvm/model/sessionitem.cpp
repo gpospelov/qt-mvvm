@@ -132,7 +132,8 @@ bool SessionItem::insertItem(int row, SessionItem* item, const std::string& tag)
     if (index < 0) {
         std::ostringstream ostr;
         ostr << "SessionItem::insertItem() -> Invalid row, maximum reached. "
-             << "tagName:'"<<tagName<<"', row: " << row << "\n";
+             << "tagName:'"<<tagName<<"', row: " << row << "\n"
+             << m_tags->tagInfo(tagName).toString();
         throw std::runtime_error(ostr.str());
     }
 

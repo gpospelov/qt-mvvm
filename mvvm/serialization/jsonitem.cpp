@@ -83,7 +83,7 @@ void JsonItem::json_to_item(const QJsonObject& json, SessionItem* parent, int ro
 
     parent = item;
     auto tagSummary = parent->m_tags->tagsSummary();
-//    parent->m_tags->resetTags();
+    parent->m_tags->resetTags(); // FIXME remove hack
 
     if (static_cast<int>(tagSummary.size()) != json[itemsKey].toArray().size()) {
         std::ostringstream ostr;
@@ -98,9 +98,6 @@ void JsonItem::json_to_item(const QJsonObject& json, SessionItem* parent, int ro
         json_to_item(ref.toObject(), parent, tagSummary[index].first, tagSummary[index].second);
         index++;
     }
-
-//    for(const auto ref : json[itemsKey].toArray())
-//        json_to_item(ref.toObject(), parent);
 }
 
 void JsonItem::item_to_json(const SessionItem* item, QJsonObject& json) const
