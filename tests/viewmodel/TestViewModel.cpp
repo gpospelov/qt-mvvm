@@ -231,7 +231,7 @@ TEST_F(TestViewModel, removeRow)
     QSignalSpy spyRemove(&viewModel, &ViewModel::rowsRemoved);
 
     // removing child
-    model.removeRow(parent, 0);
+    model.removeItem(parent, 0);
     EXPECT_EQ(spyRemove.count(), 1);
     EXPECT_EQ(viewModel.rowCount(parentIndex), 0);
     EXPECT_EQ(viewModel.columnCount(parentIndex), 1); // for some reason child removal doesn't affect column

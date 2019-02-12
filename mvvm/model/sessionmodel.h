@@ -54,7 +54,7 @@ public:
     ItemManager* manager();
     const ItemManager* manager() const;
 
-    void removeRow(SessionItem* parent, int row);
+    void removeItem(SessionItem* parent, int row, const std::string& tag = {});
 
     void make_registered(SessionItem* item, bool flag = true);
 

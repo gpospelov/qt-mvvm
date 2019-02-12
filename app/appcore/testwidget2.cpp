@@ -91,7 +91,7 @@ void TestWidget2::onContextMenuRequest(const QPoint& point)
         if (viewItem) {
             auto child = viewItem->item();
             int index = child->parent()->indexOfChild(child);
-            m_sessionModel->removeRow(child->parent(), index);
+            m_sessionModel->removeItem(child->parent(), index);
         }
     });
 
