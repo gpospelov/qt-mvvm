@@ -10,6 +10,7 @@
 #include "mainwindow.h"
 #include "testwidget1.h"
 #include "testwidget2.h"
+#include "testwidget3.h"
 #include <QTabWidget>
 
 MainWindow::MainWindow()
@@ -17,8 +18,9 @@ MainWindow::MainWindow()
 {    
     m_tabWidget->addTab(new TestWidget1, "Model basics");
     m_tabWidget->addTab(new TestWidget2, "ViewModel");
+    m_tabWidget->addTab(new TestWidget3, "Undo/Redo");
 
-    m_tabWidget->setCurrentIndex(1);
+    m_tabWidget->setCurrentIndex(m_tabWidget->count()-1);
     setCentralWidget(m_tabWidget);
     resize(800, 600);
 }
