@@ -8,31 +8,44 @@
 // ************************************************************************** //
 
 #include "testwidget2.h"
+#include "jsonutils.h"
+#include "sessionmodel.h"
+#include "syntaxhighlighter.h"
+#include "toy_includes.h"
 #include "viewitem.h"
 #include "viewmodel.h"
-#include "sessionmodel.h"
-#include "toy_includes.h"
-#include "jsonutils.h"
-#include "syntaxhighlighter.h"
+#include <QDebug>
+#include <QHBoxLayout>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QLabel>
+#include <QMenu>
+#include <QTextEdit>
 #include <QTreeView>
 #include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QTextEdit>
-#include <QJsonObject>
-#include <QJsonDocument>
-#include <QMenu>
-#include <QDebug>
+
+namespace
+{
+const QString text
+    = "SessionModel and ViewModel basics.\n"
+      "SessionModel is exposed to Qt via ViewModel. "
+      "Two tree views are looking to the same ViewModel. Use right mouse button to add/remove "
+      "items.";
+}
+
 using namespace ModelView;
 
 TestWidget2::TestWidget2(QWidget* parent)
-    : QWidget(parent)
-    , m_treeView1(new QTreeView)
-    , m_treeView2(new QTreeView)
-    , m_plainText(new QTextEdit)
-    , m_viewModel(new ViewModel(this))
-    , m_sessionModel(new ToyItems::SampleModel)
+    : QWidget(parent), m_treeView1(new QTreeView), m_treeView2(new QTreeView),
+      m_plainText(new QTextEdit), m_viewModel(new ViewModel(this)),
+      m_sessionModel(new ToyItems::SampleModel)
 {
     auto vlayout = new QVBoxLayout;
+    vlayout->setSpacing(10);
+
+    auto label = new QLabel(this);
+    label->setText(text);
+    vlayout->addWidget(label);
 
     auto hlayout = new QHBoxLayout;
     hlayout->addWidget(m_treeView1);
@@ -45,15 +58,8 @@ TestWidget2::TestWidget2(QWidget* parent)
     init_session_model();
     m_viewModel->setSessionModel(m_sessionModel.get());
 
-    m_treeView1->setModel(m_viewModel);
-    m_treeView2->setModel(m_viewModel);
-
-    m_treeView1->expandAll();
-    m_treeView2->expandAll();
-
-    m_treeView1->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(m_treeView1, &QTreeView::customContextMenuRequested, this,
-            &TestWidget2::onContextMenuRequest);
+    init_tree_view(m_treeView1);
+    init_tree_view(m_treeView2);
 
     m_plainText->setReadOnly(true);
     QFont f("unexistent");
@@ -65,38 +71,28 @@ TestWidget2::TestWidget2(QWidget* parent)
 
 void TestWidget2::onContextMenuRequest(const QPoint& point)
 {
+    QTreeView* treeView = qobject_cast<QTreeView*>(sender());
+
+    auto item = item_from_view(treeView, point);
+    auto taginfo = item->parent()->tagRowFromItem(item);
+
     QMenu menu;
 
     QAction* addItemAction = menu.addAction("Add item");
 
-    connect(addItemAction, &QAction::triggered, [&]()
-    {
-        QModelIndex index = m_treeView1->indexAt(point);
-        auto item = m_viewModel->itemFromIndex(index);
-        auto viewItem = dynamic_cast<ViewItem*>(item);
-        if (viewItem) {
-            auto child = viewItem->item();
-            int index = child->parent()->tagRowFromItem(child).first;
-            m_sessionModel->insertNewItem(child->modelType(), child->parent(), index+1);
-        }
+    // inserting item of same type after given item
+    connect(addItemAction, &QAction::triggered, [&]() {
+        m_sessionModel->insertNewItem(item->modelType(), item->parent(), taginfo.first + 1,
+                                      taginfo.second);
     });
 
     QAction* removeItemAction = menu.addAction("Remove item");
 
-    connect(removeItemAction, &QAction::triggered, [&]()
-    {
-        QModelIndex index = m_treeView1->indexAt(point);
-        auto item = m_viewModel->itemFromIndex(index);
-        auto viewItem = dynamic_cast<ViewItem*>(item);
-        if (viewItem) {
-            auto child = viewItem->item();
-            auto taginfo = child->parent()->tagRowFromItem(child);
-            m_sessionModel->removeItem(child->parent(), taginfo.first, taginfo.second);
-        }
-    });
+    // removing item under the mouse
+    connect(removeItemAction, &QAction::triggered,
+            [&]() { m_sessionModel->removeItem(item->parent(), taginfo.first, taginfo.second); });
 
-
-    menu.exec(m_treeView1->mapToGlobal(point));
+    menu.exec(treeView->mapToGlobal(point));
 }
 
 TestWidget2::~TestWidget2() = default;
@@ -115,4 +111,29 @@ void TestWidget2::init_session_model()
 void TestWidget2::update_json()
 {
     m_plainText->setText(QString::fromStdString(JsonUtils::ModelToJsonString(*m_sessionModel)));
+}
+
+//! Inits QTreeView with ViewModel.
+
+void TestWidget2::init_tree_view(QTreeView* view)
+{
+    view->setModel(m_viewModel);
+
+    view->expandAll();
+    view->resizeColumnToContents(0);
+    view->setContextMenuPolicy(Qt::CustomContextMenu);
+
+    connect(view, &QTreeView::customContextMenuRequested, this, &TestWidget2::onContextMenuRequest);
+}
+
+//! Returns SessionItem corresponding to given coordinate in a view.
+
+SessionItem* TestWidget2::item_from_view(QTreeView* view, const QPoint& point)
+{
+    QModelIndex index = view->indexAt(point);
+    auto item = m_viewModel->itemFromIndex(index);
+    auto viewItem = dynamic_cast<ViewItem*>(item);
+    Q_ASSERT(viewItem);
+
+    return viewItem->item();
 }

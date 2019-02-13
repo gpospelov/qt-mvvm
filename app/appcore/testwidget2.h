@@ -13,11 +13,14 @@
 #include <QWidget>
 #include <memory>
 
-namespace ModelView {
+namespace ModelView
+{
+class SessionItem;
 class ViewModel;
 }
 
-namespace ToyItems {
+namespace ToyItems
+{
 class SampleModel;
 }
 
@@ -41,6 +44,8 @@ private slots:
 private:
     void init_session_model();
     void update_json();
+    void init_tree_view(QTreeView* view);
+    ModelView::SessionItem* item_from_view(QTreeView* view, const QPoint& point);
 
     QTreeView* m_treeView1;
     QTreeView* m_treeView2;
