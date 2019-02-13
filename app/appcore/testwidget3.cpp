@@ -28,8 +28,9 @@ namespace
 {
 const QString text
     = "Undo/Redo basics.\n"
-      "Tree view on the left is looking on our ViewModel. Use right mouse button to add/remove items, or"
-      "just modify values of items. View on the right displays command stack.";
+      "Tree view on the left is looking on our ViewModel. Use right mouse button "
+      "on the left view to add/remove items, "
+      "or just modify values of items. View on the right displays command stack.";
 }
 
 using namespace ModelView;

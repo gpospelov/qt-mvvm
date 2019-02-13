@@ -38,6 +38,15 @@ QList<QStandardItem*> toStandardItemList(const std::vector<ViewItem*>& items)
                    [](ViewItem* item) { return item; });
     return result;
 }
+
+QVector<int> item_role_to_qt(int role) {
+    QVector<int> result;
+    if (role == ItemDataRole::DISPLAY || role == ItemDataRole::DATA)
+        result = {Qt::DisplayRole, Qt::EditRole};
+
+    return result;
+}
+
 }
 
 ViewModel::ViewModel(QObject* parent) : QStandardItemModel(parent), m_sessionModel(nullptr)
@@ -74,12 +83,14 @@ void ViewModel::setSessionModel(SessionModel* model)
 
 void ViewModel::onDataChange(SessionItem* item, int role)
 {
-    qDebug() << "ViewModel::onDataChange" << item << role;
     auto it = m_item_to_view.find(item->identifier());
     if (it != m_item_to_view.end()) {
-        for (auto view : it->second)
-            if (view->item_role() == role)
-                itemChanged(view);
+        for (auto view : it->second) {
+            if (view->item_role() == role) {
+                auto index = indexFromItem(view);
+                dataChanged(index, index, item_role_to_qt(role));
+            }
+        }
     }
 
 }
