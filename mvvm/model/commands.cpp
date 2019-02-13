@@ -24,6 +24,7 @@ SetValueCommand::SetValueCommand(SessionItem* item, QVariant value, int role)
 {
     Q_ASSERT(m_model);
     m_path = m_model->pathFromItem(item);
+    setText(QString("Set value %1").arg(m_value.toString()));
 }
 
 void SetValueCommand::undo()
@@ -61,6 +62,8 @@ InsertNewItemCommand::InsertNewItemCommand(model_type modelType, SessionItem* pa
     , m_result(nullptr)
 {
     m_parent_path = m_model->pathFromItem(parent);
+    setText(QString("New item type:%1 row:%2, tag:%3").arg(
+                QString::fromStdString(m_model_type), QString::number(m_row), QString::fromStdString(m_tag)));
 }
 
 void InsertNewItemCommand::undo()
@@ -96,6 +99,8 @@ RemoveItemCommand::RemoveItemCommand(SessionItem* parent, int row, std::string t
 {
     Q_ASSERT(m_model);
     m_parent_path = m_model->pathFromItem(parent);
+    setText(QString("Remove item row:%2, tag:%3").arg(
+                QString::number(m_row), QString::fromStdString(m_tag)));
 }
 
 RemoveItemCommand::~RemoveItemCommand() = default;
