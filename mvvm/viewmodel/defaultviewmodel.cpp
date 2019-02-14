@@ -95,10 +95,14 @@ void DefaultViewModel::onRowRemoved(SessionItem* parent, int row, std::string id
     // FIXME make more elegant without if
     if (parent == m_sessionModel->rootItem()) {
         invisibleRootItem()->removeRows(0, rowCount());
+        iterate(m_sessionModel->rootItem(), invisibleRootItem());
     } else {
-        for (auto view : findViews(parent)) {
+        auto views = findViews(parent);
+        for (auto view : views) {
             view->removeRows(0, view->rowCount());
         }
+        if (views.size())
+            iterate(parent, views.at(0));
     }
 }
 

@@ -191,3 +191,37 @@ TEST_F(TestDefaultViewModel, removeSingleTopItem)
     EXPECT_EQ(arguments.at(1).toInt(), 0);
     EXPECT_EQ(arguments.at(2).toInt(), 0);
 }
+
+//! Remove one of two top level items
+
+TEST_F(TestDefaultViewModel, removeOneOfTopItems)
+{
+    SessionModel model;
+    const model_type modelType("abc");
+
+    // inserting single item
+    auto child1 = model.insertNewItem(modelType);
+    auto child2 = model.insertNewItem(modelType);
+
+    // constructing viewModel from sample model
+    DefaultViewModel viewModel;
+    viewModel.setSessionModel(&model);
+
+    // root item should have one child
+    EXPECT_EQ(viewModel.rowCount(), 2);
+    EXPECT_EQ(viewModel.columnCount(), 2);
+
+    QSignalSpy spyRemove(&viewModel, &DefaultViewModel::rowsRemoved);
+
+    // removing child
+    model.removeItem(model.rootItem(), 0);
+    EXPECT_EQ(spyRemove.count(), 1);
+    EXPECT_EQ(viewModel.rowCount(), 1);
+    EXPECT_EQ(viewModel.columnCount(), 2);
+
+    QList<QVariant> arguments = spyRemove.takeFirst();
+    EXPECT_EQ(arguments.size(), 3); // QModelIndex &parent, int first, int last
+    EXPECT_EQ(arguments.at(0).value<QModelIndex>(), QModelIndex());
+    EXPECT_EQ(arguments.at(1).toInt(), 0);
+    EXPECT_EQ(arguments.at(2).toInt(), 1);
+}
