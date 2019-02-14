@@ -13,6 +13,7 @@
 #include "sessionitem.h"
 #include "sessionmodel.h"
 #include "viewitems.h"
+#include "rowconstructor.h"
 #include <QDebug>
 #include <algorithm>
 
@@ -49,10 +50,13 @@ QVector<int> item_role_to_qt(int role) {
 
 }
 
-ViewModel::ViewModel(QObject* parent) : QStandardItemModel(parent), m_sessionModel(nullptr)
+ViewModel::ViewModel(QObject* parent) : QStandardItemModel(parent), m_sessionModel(nullptr),
+    m_row_constructor(new DefaultRowConstructor)
 {
     setItemPrototype(new ViewEmptyItem);
 }
+
+ViewModel::~ViewModel() = default;
 
 void ViewModel::setSessionModel(SessionModel* model)
 {

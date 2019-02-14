@@ -14,6 +14,7 @@
 #include <QStandardItemModel>
 #include <vector>
 #include <map>
+#include <memory>
 
 class QStandardItem;
 
@@ -22,12 +23,14 @@ namespace ModelView {
 class SessionModel;
 class SessionItem;
 class ViewItem;
+class RowConstructorInterface;
 
 //! The view model to show content of our SessionModel in Qt views.
 
 class CORE_EXPORT ViewModel : public QStandardItemModel {
 public:
     ViewModel(QObject* parent = nullptr);
+    ~ViewModel();
 
     void setSessionModel(SessionModel* model);
 
@@ -41,6 +44,7 @@ private:
 
     SessionModel* m_sessionModel;
     std::map<std::string, std::vector<ViewItem*>> m_item_to_view;
+    std::unique_ptr<RowConstructorInterface> m_row_constructor;
 };
 
 }  // namespace ModelView

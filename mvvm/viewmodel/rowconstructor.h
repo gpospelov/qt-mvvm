@@ -24,7 +24,7 @@ class SessionItem;
 //! For example, LayerItem will generate single ViewLabelItem, while PropertyItem will
 //! generate ViewLabelItem and ViewDataItem.
 
-class CORE_EXPORT DefaultRowConstructor
+class CORE_EXPORT DefaultRowConstructor : public RowConstructorInterface
 {
 public:
     virtual ~DefaultRowConstructor() = default;
