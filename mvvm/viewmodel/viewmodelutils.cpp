@@ -8,9 +8,10 @@
 // ************************************************************************** //
 
 #include "viewmodelutils.h"
+#include "viewitem.h"
 #include <QStandardItemModel>
 
-void ModelView::iterate_model(const QStandardItemModel* model, const QModelIndex& parent, std::function<void(const QStandardItem*)> fun)
+void ModelView::iterate_model(const QStandardItemModel* model, const QModelIndex& parent, std::function<void(QStandardItem*)> fun)
 {
     if (!model)
         return;
@@ -30,4 +31,18 @@ void ModelView::iterate_model(const QStandardItemModel* model, const QModelIndex
     }
 
 
+}
+
+std::vector<ModelView::ViewItem*> ModelView::findViews(const QStandardItemModel* model, const QModelIndex& parent, ModelView::SessionItem* item)
+{
+    std::vector<ModelView::ViewItem*> result;
+    iterate_model(model, parent, [&](QStandardItem* standard_item)
+    {
+        if (auto view = dynamic_cast<ViewItem*>(standard_item)) {
+            if (view->item() == item)
+                result.push_back(view);
+        }
+    });
+
+    return result;
 }

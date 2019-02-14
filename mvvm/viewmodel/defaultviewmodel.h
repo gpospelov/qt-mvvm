@@ -34,7 +34,7 @@ public:
 
     void setSessionModel(SessionModel* model);
 
-    QList<QStandardItem*> findViews(SessionItem* item);
+    std::vector<ViewItem*> findViews(SessionItem* item);
 
 private:
     void onDataChange(SessionItem* item, int role);

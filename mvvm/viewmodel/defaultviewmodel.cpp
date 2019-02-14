@@ -14,23 +14,11 @@
 #include "sessionmodel.h"
 #include "viewitems.h"
 #include "rowconstructor.h"
+#include "viewmodelutils.h"
 #include <QDebug>
 #include <algorithm>
 
 using namespace ModelView;
-
-namespace
-{
-
-QVector<int> item_role_to_qt(int role) {
-    QVector<int> result;
-    if (role == ItemDataRole::DISPLAY || role == ItemDataRole::DATA)
-        result = {Qt::DisplayRole, Qt::EditRole};
-
-    return result;
-}
-
-}
 
 DefaultViewModel::DefaultViewModel(QObject* parent) : QStandardItemModel(parent),
     m_sessionModel(nullptr),
@@ -69,11 +57,9 @@ void DefaultViewModel::setSessionModel(SessionModel* model)
 
 //! Returns list of ViewItems representing given item.
 
-QList<QStandardItem*> DefaultViewModel::findViews(SessionItem* item)
+std::vector<ViewItem*> DefaultViewModel::findViews(SessionItem* item)
 {
-    QList<QStandardItem*> result;
-
-    return result;
+    return ModelView::findViews(this, QModelIndex(), item);
 }
 
 void DefaultViewModel::onDataChange(SessionItem* item, int role)

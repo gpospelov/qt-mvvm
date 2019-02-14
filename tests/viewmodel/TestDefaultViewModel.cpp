@@ -44,9 +44,9 @@ TEST_F(TestDefaultViewModel, fromMultiLayer)
     EXPECT_EQ(viewItem->item(), multiLayerItem);
 }
 
-//! Find MultiLayer view item.
+//! Find ViewItem corresponding to given MultiLayer item.
 
-TEST_F(TestDefaultViewModel, findMultiLayer)
+TEST_F(TestDefaultViewModel, findMultiLayerView)
 {
     ToyItems::SampleModel model;
     auto multiLayerItem = model.insertNewItem(ToyItems::Constants::MultiLayerType);
@@ -55,7 +55,8 @@ TEST_F(TestDefaultViewModel, findMultiLayer)
     viewModel.setSessionModel(&model);
 
     auto views = viewModel.findViews(multiLayerItem);
-    EXPECT_EQ(views.size(), 0);
+    EXPECT_EQ(views.size(), 1);
+    EXPECT_EQ(views.at(0)->item(), multiLayerItem);
 }
 
 //! Single property item in a model.
@@ -83,4 +84,19 @@ TEST_F(TestDefaultViewModel, fromPropertyItem)
     auto dataItem = dynamic_cast<ViewDataItem*>(viewModel.itemFromIndex(dataIndex));
     EXPECT_TRUE(dataItem != nullptr);
     EXPECT_EQ(dataItem->item(), propertyItem);
+}
+
+//! Find ViewItem's corresponding to given PropertyItem.
+
+TEST_F(TestDefaultViewModel, findPropertyItemView)
+{
+    ToyItems::SampleModel model;
+    auto propertyItem = model.insertNewItem(Constants::PropertyType);
+    propertyItem->setData(42.0, ItemDataRole::DATA);
+
+    DefaultViewModel viewModel;
+    viewModel.setSessionModel(&model);
+
+    auto views = viewModel.findViews(propertyItem);
+    EXPECT_EQ(views.size(), 2);
 }

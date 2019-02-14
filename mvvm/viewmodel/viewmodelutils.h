@@ -12,6 +12,7 @@
 
 #include "global.h"
 #include <functional>
+#include <vector>
 
 class QStandardItemModel;
 class QStandardItem;
@@ -19,8 +20,14 @@ class QModelIndex;
 
 namespace ModelView {
 
+class ViewItem;
+class SessionItem;
+
 //! Iterates through QStandardItem model
-CORE_EXPORT void iterate_model(const QStandardItemModel* model, const QModelIndex& parent, std::function<void(const QStandardItem*)> fun);
+CORE_EXPORT void iterate_model(const QStandardItemModel* model, const QModelIndex& parent, std::function<void(QStandardItem*)> fun);
+
+//! Returns vector of all ViewItems from the model.
+CORE_EXPORT std::vector<ViewItem*> findViews(const QStandardItemModel* model, const QModelIndex& parent, SessionItem* item);
 
 } // VIEWMODELUTILS_H
 
