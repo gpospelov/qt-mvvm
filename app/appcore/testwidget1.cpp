@@ -12,6 +12,7 @@
 #include <QStandardItemModel>
 #include <QTreeView>
 #include <QVBoxLayout>
+#include <QDebug>
 
 namespace
 {
@@ -47,4 +48,12 @@ TestWidget1::TestWidget1(QWidget* parent)
     layout->addWidget(m_treeView);
 
     setLayout(layout);
+
+    connect(m_model, &QStandardItemModel::dataChanged, this, &TestWidget1::onDataChanged);
+}
+
+void TestWidget1::onDataChanged(const QModelIndex& topLeft, const QModelIndex& bottomRight, const QVector<int>& roles)
+{
+    int i = Qt::DisplayRole;
+    qDebug() << topLeft << bottomRight << roles;
 }

@@ -23,6 +23,9 @@ class TestWidget1 : public QWidget
 public:
     TestWidget1(QWidget* parent = nullptr);
 
+public slots:
+    void onDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles);
+
 private:
     QTreeView* m_treeView;
     QStandardItemModel* m_model;

@@ -136,9 +136,9 @@ TEST_F(TestViewModel, fromVector)
 }
 
 //! Constructing ViewModel from a Layer with one "thickness" property.
-//! Change thickness property in SessionItem, control dataChanged signals from ViewModel.
+//! Change thickness property in SessionItem, control itemChanged signals from ViewModel.
 
-TEST_F(TestViewModel, setDataToItem)
+TEST_F(TestViewModel, itemChanged)
 {
     ToyItems::SampleModel model;
     auto layerItem = dynamic_cast<CompoundItem*>(model.insertNewItem(ToyItems::Constants::LayerType));
@@ -151,6 +151,35 @@ TEST_F(TestViewModel, setDataToItem)
 
     layerItem->setItemValue(ToyItems::Layer::P_THICKNESS, 50.0);
     EXPECT_EQ(spyDataChanged.count(), 1);
+}
+
+//! Constructing ViewModel from a Layer with one "thickness" property.
+//! Change thickness property in SessionItem, control dataChanged signals from ViewModel.
+
+TEST_F(TestViewModel, dataChanged)
+{
+    ToyItems::SampleModel model;
+    auto layerItem = dynamic_cast<CompoundItem*>(model.insertNewItem(ToyItems::Constants::LayerType));
+
+    // constructing viewModel from sample model
+    ViewModel viewModel;
+    viewModel.setSessionModel(&model);
+
+    QModelIndex layerIndex = viewModel.index(0, 0);
+    QModelIndex thicknessIndex = viewModel.index(0, 1, layerIndex);
+
+    QSignalSpy spyDataChanged(&viewModel, &ViewModel::dataChanged);
+
+    layerItem->setItemValue(ToyItems::Layer::P_THICKNESS, 50.0);
+    EXPECT_EQ(spyDataChanged.count(), 1);
+
+    // dataChanged should report thicknessIndex and two roles
+    QList<QVariant> arguments = spyDataChanged.takeFirst();
+    EXPECT_EQ(arguments.size(), 3); // QModelIndex left, QModelIndex right, QVector<int> roles
+    EXPECT_EQ(arguments.at(0).value<QModelIndex>(), thicknessIndex);
+    EXPECT_EQ(arguments.at(1).value<QModelIndex>(), thicknessIndex);
+    QVector<int> expectedRoles = {Qt::DisplayRole, Qt::EditRole};
+    EXPECT_EQ(arguments.at(2).value<QVector<int>>(), expectedRoles);
 }
 
 //! Inserting item in parent
