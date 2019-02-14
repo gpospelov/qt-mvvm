@@ -13,6 +13,7 @@
 #include "global.h"
 #include <functional>
 #include <vector>
+#include <QVector>
 
 class QStandardItemModel;
 class QStandardItem;
@@ -28,6 +29,9 @@ CORE_EXPORT void iterate_model(const QStandardItemModel* model, const QModelInde
 
 //! Returns vector of all ViewItems from the model.
 CORE_EXPORT std::vector<ViewItem*> findViews(const QStandardItemModel* model, const QModelIndex& parent, SessionItem* item);
+
+//! Returns vector of Qt roles corresponding to given ItemDataRole.
+CORE_EXPORT QVector<int> item_role_to_qt(int role);
 
 } // VIEWMODELUTILS_H
 

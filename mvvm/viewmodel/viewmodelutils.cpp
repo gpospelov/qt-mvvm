@@ -9,6 +9,7 @@
 
 #include "viewmodelutils.h"
 #include "viewitem.h"
+#include "model_types.h"
 #include <QStandardItemModel>
 
 void ModelView::iterate_model(const QStandardItemModel* model, const QModelIndex& parent, std::function<void(QStandardItem*)> fun)
@@ -43,6 +44,15 @@ std::vector<ModelView::ViewItem*> ModelView::findViews(const QStandardItemModel*
                 result.push_back(view);
         }
     });
+
+    return result;
+}
+
+QVector<int> ModelView::item_role_to_qt(int role)
+{
+    QVector<int> result;
+    if (role == ItemDataRole::DISPLAY || role == ItemDataRole::DATA)
+        result = {Qt::DisplayRole, Qt::EditRole};
 
     return result;
 }

@@ -64,9 +64,14 @@ std::vector<ViewItem*> DefaultViewModel::findViews(SessionItem* item)
 
 void DefaultViewModel::onDataChange(SessionItem* item, int role)
 {
-    Q_UNUSED(item);
-    Q_UNUSED(role);
     qDebug() << "DefaultViewModel::onDataChange";
+
+    for (auto view : findViews(item)) {
+        if (view->item_role() == role) {
+            auto index = indexFromItem(view);
+            dataChanged(index, index, item_role_to_qt(role));
+        }
+    }
 }
 
 void DefaultViewModel::onRowInserted(SessionItem* parent, int row)
