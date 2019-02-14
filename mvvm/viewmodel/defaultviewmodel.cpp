@@ -76,18 +76,30 @@ void DefaultViewModel::onDataChange(SessionItem* item, int role)
 
 void DefaultViewModel::onRowInserted(SessionItem* parent, int row)
 {
+    qDebug() << "DefaultViewModel::onRowInserted";
     Q_UNUSED(parent);
     Q_UNUSED(row);
-    qDebug() << "DefaultViewModel::onRowInserted";
 
 }
+
+//! Removes all children views of given parent.
 
 void DefaultViewModel::onRowRemoved(SessionItem* parent, int row, std::string id)
 {
     Q_UNUSED(parent);
     Q_UNUSED(row);
     Q_UNUSED(id);
-    qDebug() << "DefaultViewModel::onRowRemoved";
+
+    qDebug() << "DefaultViewModel::onRowRemoved" << parent;
+
+    // FIXME make more elegant without if
+    if (parent == m_sessionModel->rootItem()) {
+        invisibleRootItem()->removeRows(0, rowCount());
+    } else {
+        for (auto view : findViews(parent)) {
+            view->removeRows(0, view->rowCount());
+        }
+    }
 }
 
 void DefaultViewModel::update_model()

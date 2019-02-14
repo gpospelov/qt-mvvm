@@ -133,7 +133,7 @@ TEST_F(TestDefaultViewModel, propertyItemDataChanged)
 //! Constructing ViewModel from a Layer with one "thickness" property.
 //! Change thickness property in SessionItem, control dataChanged signals from ViewModel.
 
-TEST_F(TestDefaultViewModel, layerItemdataChanged)
+TEST_F(TestDefaultViewModel, layerItemDataChanged)
 {
     ToyItems::SampleModel model;
     auto layerItem = dynamic_cast<CompoundItem*>(model.insertNewItem(ToyItems::Constants::LayerType));
@@ -157,4 +157,37 @@ TEST_F(TestDefaultViewModel, layerItemdataChanged)
     EXPECT_EQ(arguments.at(1).value<QModelIndex>(), thicknessIndex);
     QVector<int> expectedRoles = {Qt::DisplayRole, Qt::EditRole};
     EXPECT_EQ(arguments.at(2).value<QVector<int>>(), expectedRoles);
+}
+
+//! Removing single top level item.
+
+TEST_F(TestDefaultViewModel, removeSingleTopItem)
+{
+    SessionModel model;
+    const model_type modelType("abc");
+
+    // inserting single item
+    auto parent = model.insertNewItem(modelType);
+
+    // constructing viewModel from sample model
+    DefaultViewModel viewModel;
+    viewModel.setSessionModel(&model);
+
+    // root item should have one child
+    EXPECT_EQ(viewModel.rowCount(), 1);
+    EXPECT_EQ(viewModel.columnCount(), 2);
+
+    QSignalSpy spyRemove(&viewModel, &DefaultViewModel::rowsRemoved);
+
+    // removing child
+    model.removeItem(model.rootItem(), 0);
+    EXPECT_EQ(spyRemove.count(), 1);
+    EXPECT_EQ(viewModel.rowCount(), 0);
+    EXPECT_EQ(viewModel.columnCount(), 2);
+
+    QList<QVariant> arguments = spyRemove.takeFirst();
+    EXPECT_EQ(arguments.size(), 3); // QModelIndex &parent, int first, int last
+    EXPECT_EQ(arguments.at(0).value<QModelIndex>(), QModelIndex());
+    EXPECT_EQ(arguments.at(1).toInt(), 0);
+    EXPECT_EQ(arguments.at(2).toInt(), 0);
 }
