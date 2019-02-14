@@ -54,6 +54,5 @@ TestWidget1::TestWidget1(QWidget* parent)
 
 void TestWidget1::onDataChanged(const QModelIndex& topLeft, const QModelIndex& bottomRight, const QVector<int>& roles)
 {
-    int i = Qt::DisplayRole;
     qDebug() << topLeft << bottomRight << roles;
 }
