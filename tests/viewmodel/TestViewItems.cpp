@@ -15,12 +15,22 @@ public:
 
 TestViewItem::~TestViewItem() = default;
 
-TEST_F(TestViewItem, initialState)
+TEST_F(TestViewItem, initialViewDataItem)
 {
     std::unique_ptr<SessionItem> item(new SessionItem);
 
     ViewDataItem viewItem(item.get());
     EXPECT_EQ(viewItem.item(), item.get());
+    EXPECT_EQ(viewItem.item_role(), ItemDataRole::DATA);
+}
+
+TEST_F(TestViewItem, initialViewLabelItem)
+{
+    std::unique_ptr<SessionItem> item(new SessionItem);
+
+    ViewLabelItem viewItem(item.get());
+    EXPECT_EQ(viewItem.item(), item.get());
+    EXPECT_EQ(viewItem.item_role(), ItemDataRole::DISPLAY);
 }
 
 //! ViewDataItem::data method
