@@ -16,7 +16,7 @@
 namespace ModelView
 {
 class SessionItem;
-class ViewModel;
+class DefaultViewModel;
 }
 
 namespace ToyItems
@@ -49,7 +49,7 @@ private:
 
     QTreeView* m_treeView;
     QUndoView* m_undoView;
-    ModelView::ViewModel* m_viewModel;
+    ModelView::DefaultViewModel* m_viewModel;
     std::unique_ptr<ToyItems::SampleModel> m_sessionModel;
 };
 
