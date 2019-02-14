@@ -140,6 +140,7 @@ void ViewModel::iterate(SessionItem* item, QStandardItem* parent)
             if (row.size())
                 parent->insertRow(insert_index, toStandardItemList(row));
         } else {
+            qDebug() << "WHY";
             row = it->second;
         }
 
