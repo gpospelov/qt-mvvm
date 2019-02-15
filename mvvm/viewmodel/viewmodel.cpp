@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include "viewmodel.h"
+#include "viewmodelutils.h"
 #include "modelmapper.h"
 #include "sessionmodel.h"
 
@@ -44,17 +45,37 @@ void ViewModel::setSessionModel(SessionModel* model)
     init_view_model();
 }
 
-//! Returns root item of the model. Can be different from model's root item, if we are going
-//! to show only part of it.
+//! Returns root item of the model. Can be different from model's root item when the intention is
+//! to show only part of the model.
 
-SessionItem* ViewModel::rootItem()
+SessionItem* ViewModel::rootSessionItem()
 {
     return m_sessionModel->rootItem();
+}
+
+QStandardItem* ViewModel::rootStandardItem()
+{
+    return invisibleRootItem();
 }
 
 SessionModel* ViewModel::sessionModel()
 {
     return m_sessionModel;
+}
+
+//! Returns vector of standard views used to display given SessionItem.
+
+std::vector<QStandardItem*> ViewModel::findStandardViews(SessionItem* item)
+{
+    return Utils::findStandardViews(this, QModelIndex(), item);
+}
+
+// FIXME The only difference with the method above, is that we are not handling invisibleRootItem.
+// Can both methods still be merged?
+
+std::vector<ViewItem*> ViewModel::findViews(SessionItem* item)
+{
+    return Utils::findViews(this, QModelIndex(), item);
 }
 
 void ViewModel::onDataChange(SessionItem* item, int role)

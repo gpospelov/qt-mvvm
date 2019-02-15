@@ -20,6 +20,7 @@ namespace ModelView
 
 class SessionModel;
 class SessionItem;
+class ViewItem;
 
 //! Base class for all view models to show content of  SessionModel in Qt views.
 
@@ -31,9 +32,14 @@ public:
 
     void setSessionModel(SessionModel* model);
 
+    std::vector<ViewItem*> findViews(SessionItem* item);
+
 protected:
-    SessionItem* rootItem();
+    SessionItem* rootSessionItem();
+    QStandardItem* rootStandardItem();
     SessionModel* sessionModel();
+
+    std::vector<QStandardItem*> findStandardViews(SessionItem* item);
 
 private:
     virtual void init_view_model() = 0;

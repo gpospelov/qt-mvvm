@@ -28,13 +28,6 @@ DefaultViewModel::DefaultViewModel(QObject* parent) : ViewModel(parent),
 
 DefaultViewModel::~DefaultViewModel() = default;
 
-//! Returns list of ViewItems representing given item.
-
-std::vector<ViewItem*> DefaultViewModel::findViews(SessionItem* item)
-{
-    return Utils::findViews(this, QModelIndex(), item);
-}
-
 void DefaultViewModel::init_view_model()
 {
     clear();
@@ -73,9 +66,9 @@ void DefaultViewModel::onRowRemoved(SessionItem* parent, int row, std::string id
     qDebug() << "DefaultViewModel::onRowRemoved" << parent;
 
     // FIXME make more elegant without if
-    if (parent == rootItem()) {
-        invisibleRootItem()->removeRows(0, rowCount());
-        iterate(rootItem(), invisibleRootItem());
+    if (parent == rootSessionItem()) {
+        rootStandardItem()->removeRows(0, rowCount());
+        iterate(rootSessionItem(), rootStandardItem());
     } else {
         auto views = findViews(parent);
         for (auto view : views) {
@@ -88,19 +81,15 @@ void DefaultViewModel::onRowRemoved(SessionItem* parent, int row, std::string id
 
 void DefaultViewModel::update_model()
 {
-    qDebug() << "DefaultViewModel::update_model";
-    iterate(rootItem(), invisibleRootItem());
+    iterate(rootSessionItem(), rootStandardItem());
 }
 
 void DefaultViewModel::iterate(SessionItem* item, QStandardItem* parent)
 {
-    qDebug() << "DefaultViewModel::iterate";
-
     QStandardItem* origParent(parent);
     for (auto child : item->children()) {
 
         auto row = m_row_constructor->constructRow(child);
-        qDebug() << "aaa" << row.size();
         parent->appendRow(row);
 
         if (row.size())

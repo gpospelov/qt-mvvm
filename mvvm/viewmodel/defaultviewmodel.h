@@ -36,8 +36,6 @@ public:
     DefaultViewModel(QObject* parent = nullptr);
     ~DefaultViewModel() override;
 
-    std::vector<ViewItem*> findViews(SessionItem* item);
-
 private:
     void init_view_model() override;
     void onDataChange(SessionItem* item, int role) override;
