@@ -31,7 +31,6 @@ public:
     ViewEmptyItem* clone() const override;
 };
 
-
 //! Represents display name of SessionItem in any cell of Qt's trees and tables.
 
 class CORE_EXPORT ViewLabelItem : public ViewItem
@@ -41,7 +40,6 @@ public:
     int type() const override;
 
     QVariant data(int role) const override;
-
 };
 
 //! Represents data role of SessionItem in any cell of Qt's trees and tables.

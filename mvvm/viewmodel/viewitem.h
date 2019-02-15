@@ -27,7 +27,7 @@ class SessionItem;
 class CORE_EXPORT ViewItem : public QStandardItem
 {
 public:
-    ~ViewItem();
+    ~ViewItem() override;
 
     QVariant data(int role) const override;
 
