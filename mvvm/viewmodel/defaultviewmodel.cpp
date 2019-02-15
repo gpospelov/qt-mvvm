@@ -10,18 +10,18 @@
 #include "defaultviewmodel.h"
 #include "itemutils.h"
 #include "modelmapper.h"
+#include "rowconstructor.h"
 #include "sessionitem.h"
 #include "sessionmodel.h"
 #include "viewitems.h"
-#include "rowconstructor.h"
 #include "viewmodelutils.h"
 #include <QDebug>
 #include <algorithm>
 
 using namespace ModelView;
 
-DefaultViewModel::DefaultViewModel(QObject* parent) : ViewModel(parent),
-    m_row_constructor(new DefaultRowConstructor)
+DefaultViewModel::DefaultViewModel(QObject* parent)
+    : ViewModel(parent), m_row_constructor(new DefaultRowConstructor)
 {
     setItemPrototype(new ViewEmptyItem);
 }
@@ -47,15 +47,19 @@ void DefaultViewModel::onDataChange(SessionItem* item, int role)
     }
 }
 
+//! Insert views (QStandardItem's) when given SessionItem gets its new row.
+// Important: simplified approach is used here. All children views are first removed and
+// then whole branch regenerated from the scratch.
+
 void DefaultViewModel::onRowInserted(SessionItem* parent, int row)
 {
     qDebug() << "DefaultViewModel::onRowInserted";
-    Q_UNUSED(parent);
-    Q_UNUSED(row);
-
+    onRowRemoved(parent, row, "");
 }
 
-//! Removes all children views of given parent.
+//! Removes views (QStandardItem's) corresponding to given SessionItem and its row.
+// Important: simplified approach is used here. All children views are removed and
+// then whole branch rebuild from the scratch.
 
 void DefaultViewModel::onRowRemoved(SessionItem* parent, int row, std::string id)
 {
@@ -89,5 +93,4 @@ void DefaultViewModel::iterate(SessionItem* item, QStandardItem* parent)
         iterate(child, parent);
         parent = origParent;
     }
-
 }

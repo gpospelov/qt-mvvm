@@ -101,6 +101,98 @@ TEST_F(TestDefaultViewModel, findPropertyItemView)
     EXPECT_EQ(views.size(), 2);
 }
 
+//! Constructing ViewModel from a Layer with one "thickness" property.
+//! Checking that view items point to correct SessionItem.
+
+TEST_F(TestDefaultViewModel, fromLayer)
+{
+    ToyItems::SampleModel model;
+    auto layerItem = model.insertNewItem(ToyItems::Constants::LayerType);
+
+    // constructing viewModel from sample model
+    DefaultViewModel viewModel;
+    viewModel.setSessionModel(&model);
+
+    // root item should have one child, item looking at our layerItem
+    EXPECT_EQ(viewModel.rowCount(), 1);
+    EXPECT_EQ(viewModel.columnCount(), 2);
+
+    // accessing to viewItem representing layerItem
+    QModelIndex layerIndex = viewModel.index(0, 0);
+    auto viewItem = dynamic_cast<ViewLabelItem*>(viewModel.itemFromIndex(layerIndex));
+    EXPECT_TRUE(viewItem != nullptr);
+    EXPECT_EQ(viewItem->item(), layerItem);
+
+    // it has one row and two columns, corresponding to our "thickness" property
+    EXPECT_EQ(viewModel.rowCount(layerIndex), 1);
+    EXPECT_EQ(viewModel.columnCount(layerIndex), 2);
+
+    // accessing to views representing label and value of thickness property
+    QModelIndex thicknessLabelIndex = viewModel.index(0, 0, layerIndex);
+    auto thicknessLabelView
+        = dynamic_cast<ViewLabelItem*>(viewModel.itemFromIndex(thicknessLabelIndex));
+    EXPECT_TRUE(thicknessLabelView != nullptr);
+
+    QModelIndex thicknessValueIndex = viewModel.index(0, 1, layerIndex);
+    auto thicknessValueView
+        = dynamic_cast<ViewDataItem*>(viewModel.itemFromIndex(thicknessValueIndex));
+    EXPECT_TRUE(thicknessValueView != nullptr);
+
+    // internally, views for label and data should point to single SessionItem corresponding to
+    // thickness property
+    EXPECT_EQ(thicknessLabelView->item(), layerItem->getItem(ToyItems::Layer::P_THICKNESS));
+    EXPECT_EQ(thicknessValueView->item(), layerItem->getItem(ToyItems::Layer::P_THICKNESS));
+}
+
+//! Constructing ViewModel from a VectorItem.
+//! Checking that view items point to correct SessionItem.
+
+TEST_F(TestDefaultViewModel, fromVector)
+{
+    ToyItems::SampleModel model;
+    auto vectorItem = model.insertNewItem(ToyItems::Constants::VectorType);
+
+    // constructing viewModel from sample model
+    DefaultViewModel viewModel;
+    viewModel.setSessionModel(&model);
+
+    // root item should have one child, item looking at our vectorItem
+    EXPECT_EQ(viewModel.rowCount(), 1);
+    EXPECT_EQ(viewModel.columnCount(), 2);
+
+    // accessing to viewItem representing layerItem
+    QModelIndex vectorIndex = viewModel.index(0, 0);
+
+    // it has three rows and two columns, corresponding to our P_X, P_Y, P_Z
+    EXPECT_EQ(viewModel.rowCount(vectorIndex), 3);
+    EXPECT_EQ(viewModel.columnCount(vectorIndex), 2);
+
+    // ViewLabelItem and ViewDataItem correspondint to P_X
+    auto pxLabel
+        = dynamic_cast<ViewLabelItem*>(viewModel.itemFromIndex(viewModel.index(0, 0, vectorIndex)));
+    auto pxData
+        = dynamic_cast<ViewDataItem*>(viewModel.itemFromIndex(viewModel.index(0, 1, vectorIndex)));
+    EXPECT_EQ(pxLabel->item(), vectorItem->getItem(ToyItems::Vector::P_X));
+    EXPECT_EQ(pxData->item(), vectorItem->getItem(ToyItems::Vector::P_X));
+
+    // ViewLabelItem and ViewDataItem correspondint to P_Y
+    pxLabel
+        = dynamic_cast<ViewLabelItem*>(viewModel.itemFromIndex(viewModel.index(1, 0, vectorIndex)));
+    pxData
+        = dynamic_cast<ViewDataItem*>(viewModel.itemFromIndex(viewModel.index(1, 1, vectorIndex)));
+    EXPECT_EQ(pxLabel->item(), vectorItem->getItem(ToyItems::Vector::P_Y));
+    EXPECT_EQ(pxData->item(), vectorItem->getItem(ToyItems::Vector::P_Y));
+
+    // ViewLabelItem and ViewDataItem correspondint to P_Z
+    pxLabel
+        = dynamic_cast<ViewLabelItem*>(viewModel.itemFromIndex(viewModel.index(2, 0, vectorIndex)));
+    pxData
+        = dynamic_cast<ViewDataItem*>(viewModel.itemFromIndex(viewModel.index(2, 1, vectorIndex)));
+    EXPECT_EQ(pxLabel->item(), vectorItem->getItem(ToyItems::Vector::P_Z));
+    EXPECT_EQ(pxData->item(), vectorItem->getItem(ToyItems::Vector::P_Z));
+}
+
+
 //! Constructing ViewModel from single PropertyItem.
 //! Change thickness property in SessionItem, control dataChanged signals from ViewModel.
 
@@ -167,7 +259,7 @@ TEST_F(TestDefaultViewModel, removeSingleTopItem)
     const model_type modelType("abc");
 
     // inserting single item
-    auto parent = model.insertNewItem(modelType);
+    model.insertNewItem(modelType);
 
     // constructing viewModel from sample model
     DefaultViewModel viewModel;
@@ -201,8 +293,8 @@ TEST_F(TestDefaultViewModel, removeOneOfTopItems)
     const model_type modelType("abc");
 
     // inserting single item
-    auto child1 = model.insertNewItem(modelType);
-    auto child2 = model.insertNewItem(modelType);
+    model.insertNewItem(modelType);
+    model.insertNewItem(modelType);
 
     // constructing viewModel from sample model
     DefaultViewModel viewModel;
@@ -237,4 +329,36 @@ TEST_F(TestDefaultViewModel, removeOneOfTopItems)
     EXPECT_EQ(arguments.at(0).value<QModelIndex>(), QModelIndex());
     EXPECT_EQ(arguments.at(1).toInt(), 0);
     EXPECT_EQ(arguments.at(2).toInt(), 0); // one child was inserted back.
+}
+
+//! Removing single top level item.
+
+TEST_F(TestDefaultViewModel, insertSingleTopItem)
+{
+    SessionModel model;
+    const model_type modelType("abc");
+
+    DefaultViewModel viewModel;
+    viewModel.setSessionModel(&model);
+
+    QSignalSpy spyInsert(&viewModel, &DefaultViewModel::rowsInserted);
+
+    // inserting single item
+    model.insertNewItem(modelType);
+
+    // root item should have one child
+    EXPECT_EQ(viewModel.rowCount(), 1);
+    EXPECT_EQ(viewModel.columnCount(), 2);
+
+    // removing child
+    model.removeItem(model.rootItem(), 0);
+    EXPECT_EQ(spyInsert.count(), 1);
+    EXPECT_EQ(viewModel.rowCount(), 0);
+    EXPECT_EQ(viewModel.columnCount(), 2);
+
+    QList<QVariant> arguments = spyInsert.takeFirst();
+    EXPECT_EQ(arguments.size(), 3); // QModelIndex &parent, int first, int last
+    EXPECT_EQ(arguments.at(0).value<QModelIndex>(), QModelIndex());
+    EXPECT_EQ(arguments.at(1).toInt(), 0);
+    EXPECT_EQ(arguments.at(2).toInt(), 0);
 }
