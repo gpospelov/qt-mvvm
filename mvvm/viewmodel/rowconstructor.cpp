@@ -23,5 +23,7 @@ QList<QStandardItem*> DefaultRowConstructor::constructRow(SessionItem* item)
     result.push_back(new ViewLabelItem(item));
     if (item->data(ItemDataRole::DATA).isValid())
         result.push_back(new ViewDataItem(item));
+    else
+        result.push_back(new ViewEmptyItem);
     return result;
 }

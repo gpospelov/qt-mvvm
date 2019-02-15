@@ -26,7 +26,7 @@ TEST_F(TestRowConstructor, topLevelItem)
 
     DefaultRowConstructor constructor;
     auto items = constructor.constructRow(item.get());
-    EXPECT_EQ(items.size(), 1);
+    EXPECT_EQ(items.size(), 2); // label and empty items
 }
 
 //! Checks row construction for property item.
