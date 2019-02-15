@@ -44,7 +44,7 @@ TEST_F(TestViewModelUtils, iterate)
     std::vector<int> expected = {1, 2, 3, 4, 10, 20};
     std::vector<int> result;
 
-    ModelView::iterate_model(&model, QModelIndex(), [&](const QStandardItem* item){
+    Utils::iterate_model(&model, QModelIndex(), [&](const QStandardItem* item){
         result.push_back(item->data(Qt::EditRole).toInt());
     });
 
@@ -54,7 +54,7 @@ TEST_F(TestViewModelUtils, iterate)
 
 TEST_F(TestViewModelUtils, itemRoleToQtRole)
 {
-    auto roles = item_role_to_qt(ItemDataRole::DATA);
+    auto roles = Utils::item_role_to_qt(ItemDataRole::DATA);
     QVector<int> expected = {Qt::DisplayRole, Qt::EditRole};
     EXPECT_EQ(roles, expected);
 }

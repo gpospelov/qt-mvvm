@@ -9,10 +9,14 @@
 
 #include "viewmodelutils.h"
 #include "viewitem.h"
+#include "sessionitem.h"
+#include "sessionmodel.h"
 #include "model_types.h"
 #include <QStandardItemModel>
 
-void ModelView::iterate_model(const QStandardItemModel* model, const QModelIndex& parent, std::function<void(QStandardItem*)> fun)
+using namespace ModelView;
+
+void Utils::iterate_model(const QStandardItemModel* model, const QModelIndex& parent, std::function<void(QStandardItem*)> fun)
 {
     if (!model)
         return;
@@ -26,7 +30,7 @@ void ModelView::iterate_model(const QStandardItemModel* model, const QModelIndex
         }
         for(int col = 0; col<model->columnCount(parent); ++col) {
             auto index = model->index(row, col, parent);
-            ModelView::iterate_model(model, index, fun);
+            iterate_model(model, index, fun);
         }
 
     }
@@ -34,7 +38,7 @@ void ModelView::iterate_model(const QStandardItemModel* model, const QModelIndex
 
 }
 
-std::vector<ModelView::ViewItem*> ModelView::findViews(const QStandardItemModel* model, const QModelIndex& parent, ModelView::SessionItem* item)
+std::vector<ViewItem*> Utils::findViews(const QStandardItemModel* model, const QModelIndex& parent, ModelView::SessionItem* item)
 {
     std::vector<ModelView::ViewItem*> result;
     iterate_model(model, parent, [&](QStandardItem* standard_item)
@@ -48,11 +52,32 @@ std::vector<ModelView::ViewItem*> ModelView::findViews(const QStandardItemModel*
     return result;
 }
 
-QVector<int> ModelView::item_role_to_qt(int role)
+std::vector<QStandardItem*> Utils::findStandardViews(const QStandardItemModel* model, const QModelIndex& parent, ModelView::SessionItem* item)
+{
+    std::vector<QStandardItem*> result;
+
+    if (!item || !model)
+        return result;
+
+    // special case when given item is root item, so it corresponds to QStandardItem and n
+    if (item->model()->rootItem() == item) {
+        result.push_back(model->invisibleRootItem());
+    } else {
+        for (auto view : findViews(model, parent, item))
+            result.push_back(view);
+    }
+
+    return result;
+}
+
+
+QVector<int> Utils::item_role_to_qt(int role)
 {
     QVector<int> result;
     if (role == ItemDataRole::DISPLAY || role == ItemDataRole::DATA)
         result = {Qt::DisplayRole, Qt::EditRole};
 
     return result;
+
 }
+

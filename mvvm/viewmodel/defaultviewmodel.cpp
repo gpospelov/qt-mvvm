@@ -59,7 +59,7 @@ void DefaultViewModel::setSessionModel(SessionModel* model)
 
 std::vector<ViewItem*> DefaultViewModel::findViews(SessionItem* item)
 {
-    return ModelView::findViews(this, QModelIndex(), item);
+    return Utils::findViews(this, QModelIndex(), item);
 }
 
 void DefaultViewModel::onDataChange(SessionItem* item, int role)
@@ -69,7 +69,7 @@ void DefaultViewModel::onDataChange(SessionItem* item, int role)
     for (auto view : findViews(item)) {
         if (view->item_role() == role) {
             auto index = indexFromItem(view);
-            dataChanged(index, index, item_role_to_qt(role));
+            dataChanged(index, index, Utils::item_role_to_qt(role));
         }
     }
 }
