@@ -37,7 +37,7 @@ using namespace ModelView;
 
 TestWidget2::TestWidget2(QWidget* parent)
     : QWidget(parent), m_treeView1(new QTreeView), m_treeView2(new QTreeView),
-      m_plainText(new QTextEdit), m_viewModel(new ViewModel(this)),
+      m_plainText(new QTextEdit), m_viewModel(new ObsoleteViewModel(this)),
       m_sessionModel(new ToyItems::SampleModel)
 {
     auto vlayout = new QVBoxLayout;

@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef VIEWMODEL_H
-#define VIEWMODEL_H
+#ifndef OBSOLETEVIEWMODEL_H
+#define OBSOLETEVIEWMODEL_H
 
 #include "global.h"
 #include <QStandardItemModel>
@@ -27,10 +27,10 @@ class RowConstructorInterface;
 
 //! The view model to show content of our SessionModel in Qt views.
 
-class CORE_EXPORT ViewModel : public QStandardItemModel {
+class CORE_EXPORT ObsoleteViewModel : public QStandardItemModel {
 public:
-    ViewModel(QObject* parent = nullptr);
-    ~ViewModel();
+    ObsoleteViewModel(QObject* parent = nullptr);
+    ~ObsoleteViewModel();
 
     void setSessionModel(SessionModel* model);
 
@@ -49,4 +49,4 @@ private:
 
 }  // namespace ModelView
 
-#endif // VIEWMODEL_H
+#endif // OBSOLETEVIEWMODEL_H

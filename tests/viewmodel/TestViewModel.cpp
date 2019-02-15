@@ -17,7 +17,7 @@ TestViewModel::~TestViewModel() = default;
 
 TEST_F(TestViewModel, initialState)
 {
-    ViewModel viewModel;
+    ObsoleteViewModel viewModel;
     EXPECT_EQ(viewModel.rowCount(), 0);
     EXPECT_EQ(viewModel.columnCount(), 0);
 }
@@ -30,7 +30,7 @@ TEST_F(TestViewModel, fromMultiLayer)
     ToyItems::SampleModel model;
     auto multiLayerItem = model.insertNewItem(ToyItems::Constants::MultiLayerType);
 
-    ViewModel viewModel;
+    ObsoleteViewModel viewModel;
     viewModel.setSessionModel(&model);
     EXPECT_EQ(viewModel.rowCount(), 1);
     EXPECT_EQ(viewModel.columnCount(), 2);
@@ -53,7 +53,7 @@ TEST_F(TestViewModel, fromLayer)
     auto layerItem = model.insertNewItem(ToyItems::Constants::LayerType);
 
     // constructing viewModel from sample model
-    ViewModel viewModel;
+    ObsoleteViewModel viewModel;
     viewModel.setSessionModel(&model);
 
     // root item should have one child, item looking at our layerItem
@@ -96,7 +96,7 @@ TEST_F(TestViewModel, fromVector)
     auto vectorItem = model.insertNewItem(ToyItems::Constants::VectorType);
 
     // constructing viewModel from sample model
-    ViewModel viewModel;
+    ObsoleteViewModel viewModel;
     viewModel.setSessionModel(&model);
 
     // root item should have one child, item looking at our vectorItem
@@ -144,10 +144,10 @@ TEST_F(TestViewModel, itemChanged)
     auto layerItem = dynamic_cast<CompoundItem*>(model.insertNewItem(ToyItems::Constants::LayerType));
 
     // constructing viewModel from sample model
-    ViewModel viewModel;
+    ObsoleteViewModel viewModel;
     viewModel.setSessionModel(&model);
 
-    QSignalSpy spyDataChanged(&viewModel, &ViewModel::itemChanged);
+    QSignalSpy spyDataChanged(&viewModel, &ObsoleteViewModel::itemChanged);
 
     layerItem->setItemValue(ToyItems::Layer::P_THICKNESS, 50.0);
     EXPECT_EQ(spyDataChanged.count(), 1);
@@ -162,13 +162,13 @@ TEST_F(TestViewModel, dataChanged)
     auto layerItem = dynamic_cast<CompoundItem*>(model.insertNewItem(ToyItems::Constants::LayerType));
 
     // constructing viewModel from sample model
-    ViewModel viewModel;
+    ObsoleteViewModel viewModel;
     viewModel.setSessionModel(&model);
 
     QModelIndex layerIndex = viewModel.index(0, 0);
     QModelIndex thicknessIndex = viewModel.index(0, 1, layerIndex);
 
-    QSignalSpy spyDataChanged(&viewModel, &ViewModel::dataChanged);
+    QSignalSpy spyDataChanged(&viewModel, &ObsoleteViewModel::dataChanged);
 
     layerItem->setItemValue(ToyItems::Layer::P_THICKNESS, 50.0);
     EXPECT_EQ(spyDataChanged.count(), 1);
@@ -194,7 +194,7 @@ TEST_F(TestViewModel, insertItem)
     parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/true);
 
     // constructing viewModel from sample model
-    ViewModel viewModel;
+    ObsoleteViewModel viewModel;
     viewModel.setSessionModel(&model);
 
     // root item should have one child
@@ -206,7 +206,7 @@ TEST_F(TestViewModel, insertItem)
     EXPECT_EQ(viewModel.rowCount(parentIndex), 0);
     EXPECT_EQ(viewModel.columnCount(parentIndex), 0);
 
-    QSignalSpy spyInsert(&viewModel, &ViewModel::rowsInserted);
+    QSignalSpy spyInsert(&viewModel, &ObsoleteViewModel::rowsInserted);
 
     // adding child
     model.insertNewItem(modelType, parent);
@@ -245,7 +245,7 @@ TEST_F(TestViewModel, removeRow)
     model.insertNewItem(modelType, parent);
 
     // constructing viewModel from sample model
-    ViewModel viewModel;
+    ObsoleteViewModel viewModel;
     viewModel.setSessionModel(&model);
 
     // root item should have one child
@@ -257,7 +257,7 @@ TEST_F(TestViewModel, removeRow)
     EXPECT_EQ(viewModel.rowCount(parentIndex), 1);
     EXPECT_EQ(viewModel.columnCount(parentIndex), 1); // no data in item
 
-    QSignalSpy spyRemove(&viewModel, &ViewModel::rowsRemoved);
+    QSignalSpy spyRemove(&viewModel, &ObsoleteViewModel::rowsRemoved);
 
     // removing child
     model.removeItem(parent, 0);

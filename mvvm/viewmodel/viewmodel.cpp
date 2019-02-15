@@ -50,15 +50,15 @@ QVector<int> item_role_to_qt(int role) {
 
 }
 
-ViewModel::ViewModel(QObject* parent) : QStandardItemModel(parent), m_sessionModel(nullptr),
+ObsoleteViewModel::ObsoleteViewModel(QObject* parent) : QStandardItemModel(parent), m_sessionModel(nullptr),
     m_row_constructor(new DefaultRowConstructor)
 {
     setItemPrototype(new ViewEmptyItem);
 }
 
-ViewModel::~ViewModel() = default;
+ObsoleteViewModel::~ObsoleteViewModel() = default;
 
-void ViewModel::setSessionModel(SessionModel* model)
+void ObsoleteViewModel::setSessionModel(SessionModel* model)
 {
     if (m_sessionModel) {
         m_sessionModel->mapper()->unsubscribe(this);
@@ -85,7 +85,7 @@ void ViewModel::setSessionModel(SessionModel* model)
     update_model();
 }
 
-void ViewModel::onDataChange(SessionItem* item, int role)
+void ObsoleteViewModel::onDataChange(SessionItem* item, int role)
 {
     auto it = m_item_to_view.find(item->identifier());
     if (it != m_item_to_view.end()) {
@@ -99,7 +99,7 @@ void ViewModel::onDataChange(SessionItem* item, int role)
 
 }
 
-void ViewModel::onRowInserted(SessionItem* parent, int row)
+void ObsoleteViewModel::onRowInserted(SessionItem* parent, int row)
 {
     (void)row;
     auto it = m_item_to_view.find(parent->identifier());
@@ -107,7 +107,7 @@ void ViewModel::onRowInserted(SessionItem* parent, int row)
     iterate(parent, parentView);
 }
 
-void ViewModel::onRowRemoved(SessionItem* parent, int row, std::string id)
+void ObsoleteViewModel::onRowRemoved(SessionItem* parent, int row, std::string id)
 {
     auto it = m_item_to_view.find(parent->identifier());
     auto parentView = it != m_item_to_view.end() ? it->second.at(0) : invisibleRootItem();
@@ -121,7 +121,7 @@ void ViewModel::onRowRemoved(SessionItem* parent, int row, std::string id)
         delete view;
 }
 
-void ViewModel::update_model()
+void ObsoleteViewModel::update_model()
 {
     if (!m_sessionModel)
         return;
@@ -129,7 +129,7 @@ void ViewModel::update_model()
     iterate(m_sessionModel->rootItem(), invisibleRootItem());
 }
 
-void ViewModel::iterate(SessionItem* item, QStandardItem* parent)
+void ObsoleteViewModel::iterate(SessionItem* item, QStandardItem* parent)
 {
     QStandardItem* origParent(parent);
     int insert_index(0);
