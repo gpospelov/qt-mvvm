@@ -52,25 +52,6 @@ std::vector<ViewItem*> Utils::findViews(const QStandardItemModel* model, const Q
     return result;
 }
 
-std::vector<QStandardItem*> Utils::findStandardViews(const QStandardItemModel* model, const QModelIndex& parent, ModelView::SessionItem* item)
-{
-    std::vector<QStandardItem*> result;
-
-    if (!item || !model)
-        return result;
-
-    // special case when given item is root item, so it corresponds to QStandardItem and n
-    if (item->model()->rootItem() == item) {
-        result.push_back(model->invisibleRootItem());
-    } else {
-        for (auto view : findViews(model, parent, item))
-            result.push_back(view);
-    }
-
-    return result;
-}
-
-
 QVector<int> Utils::item_role_to_qt(int role)
 {
     QVector<int> result;

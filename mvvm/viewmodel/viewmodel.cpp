@@ -9,6 +9,7 @@
 
 #include "viewmodel.h"
 #include "viewmodelutils.h"
+#include "viewitems.h"
 #include "modelmapper.h"
 #include "sessionmodel.h"
 
@@ -53,6 +54,8 @@ SessionItem* ViewModel::rootSessionItem()
     return m_sessionModel->rootItem();
 }
 
+//! Returns QStandardItem associated with top level item (rootSessionItem).
+
 QStandardItem* ViewModel::rootStandardItem()
 {
     return invisibleRootItem();
@@ -67,7 +70,14 @@ SessionModel* ViewModel::sessionModel()
 
 std::vector<QStandardItem*> ViewModel::findStandardViews(SessionItem* item)
 {
-    return Utils::findStandardViews(this, QModelIndex(), item);
+    if (item == rootSessionItem())
+        return {rootStandardItem()};
+
+    std::vector<QStandardItem*> result;
+    for (auto view : findViews(item))
+        result.push_back(view);
+
+    return result;
 }
 
 // FIXME The only difference with the method above, is that we are not handling invisibleRootItem.
