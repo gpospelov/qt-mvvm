@@ -1,21 +1,21 @@
 #include "google_test.h"
 #include "toy_includes.h"
 #include "viewitems.h"
-#include "viewmodel.h"
+#include "obsoleteviewmodel.h"
 #include <QSignalSpy>
 #include <QDebug>
 
 using namespace ModelView;
 
-class TestViewModel : public ::testing::Test
+class TestObsoleteViewModel : public ::testing::Test
 {
 public:
-    ~TestViewModel();
+    ~TestObsoleteViewModel();
 };
 
-TestViewModel::~TestViewModel() = default;
+TestObsoleteViewModel::~TestObsoleteViewModel() = default;
 
-TEST_F(TestViewModel, initialState)
+TEST_F(TestObsoleteViewModel, initialState)
 {
     ObsoleteViewModel viewModel;
     EXPECT_EQ(viewModel.rowCount(), 0);
@@ -25,7 +25,7 @@ TEST_F(TestViewModel, initialState)
 //! Constructing ViewModel from a MultiLayer.
 //! Checking that view items point co correct SessionItem.
 
-TEST_F(TestViewModel, fromMultiLayer)
+TEST_F(TestObsoleteViewModel, fromMultiLayer)
 {
     ToyItems::SampleModel model;
     auto multiLayerItem = model.insertNewItem(ToyItems::Constants::MultiLayerType);
@@ -47,7 +47,7 @@ TEST_F(TestViewModel, fromMultiLayer)
 //! Constructing ViewModel from a Layer with one "thickness" property.
 //! Checking that view items point to correct SessionItem.
 
-TEST_F(TestViewModel, fromLayer)
+TEST_F(TestObsoleteViewModel, fromLayer)
 {
     ToyItems::SampleModel model;
     auto layerItem = model.insertNewItem(ToyItems::Constants::LayerType);
@@ -90,7 +90,7 @@ TEST_F(TestViewModel, fromLayer)
 //! Constructing ViewModel from a VectorItem.
 //! Checking that view items point to correct SessionItem.
 
-TEST_F(TestViewModel, fromVector)
+TEST_F(TestObsoleteViewModel, fromVector)
 {
     ToyItems::SampleModel model;
     auto vectorItem = model.insertNewItem(ToyItems::Constants::VectorType);
@@ -138,7 +138,7 @@ TEST_F(TestViewModel, fromVector)
 //! Constructing ViewModel from a Layer with one "thickness" property.
 //! Change thickness property in SessionItem, control itemChanged signals from ViewModel.
 
-TEST_F(TestViewModel, itemChanged)
+TEST_F(TestObsoleteViewModel, itemChanged)
 {
     ToyItems::SampleModel model;
     auto layerItem = dynamic_cast<CompoundItem*>(model.insertNewItem(ToyItems::Constants::LayerType));
@@ -156,7 +156,7 @@ TEST_F(TestViewModel, itemChanged)
 //! Constructing ViewModel from a Layer with one "thickness" property.
 //! Change thickness property in SessionItem, control dataChanged signals from ViewModel.
 
-TEST_F(TestViewModel, dataChanged)
+TEST_F(TestObsoleteViewModel, dataChanged)
 {
     ToyItems::SampleModel model;
     auto layerItem = dynamic_cast<CompoundItem*>(model.insertNewItem(ToyItems::Constants::LayerType));
@@ -184,7 +184,7 @@ TEST_F(TestViewModel, dataChanged)
 
 //! Inserting item in parent
 
-TEST_F(TestViewModel, insertItem)
+TEST_F(TestObsoleteViewModel, insertItem)
 {
     SessionModel model;
     const model_type modelType("abc");
@@ -234,7 +234,7 @@ TEST_F(TestViewModel, insertItem)
 
 //! Removing item from parent
 
-TEST_F(TestViewModel, removeRow)
+TEST_F(TestObsoleteViewModel, removeRow)
 {
     SessionModel model;
     const model_type modelType("abc");

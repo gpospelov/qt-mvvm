@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "viewmodel.h"
+#include "obsoleteviewmodel.h"
 #include "itemutils.h"
 #include "modelmapper.h"
 #include "sessionitem.h"

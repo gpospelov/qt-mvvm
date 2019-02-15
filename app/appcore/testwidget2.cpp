@@ -13,7 +13,7 @@
 #include "syntaxhighlighter.h"
 #include "toy_includes.h"
 #include "viewitem.h"
-#include "viewmodel.h"
+#include "obsoleteviewmodel.h"
 #include <QDebug>
 #include <QHBoxLayout>
 #include <QJsonDocument>
