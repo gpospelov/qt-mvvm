@@ -20,8 +20,7 @@
 
 using namespace ModelView;
 
-DefaultViewModel::DefaultViewModel(QObject* parent) : QStandardItemModel(parent),
-    m_sessionModel(nullptr),
+DefaultViewModel::DefaultViewModel(QObject* parent) : ViewModel(parent),
     m_row_constructor(new DefaultRowConstructor)
 {
     setItemPrototype(new ViewEmptyItem);
@@ -29,37 +28,18 @@ DefaultViewModel::DefaultViewModel(QObject* parent) : QStandardItemModel(parent)
 
 DefaultViewModel::~DefaultViewModel() = default;
 
-void DefaultViewModel::setSessionModel(SessionModel* model)
-{
-    if (m_sessionModel) {
-        m_sessionModel->mapper()->unsubscribe(this);
-    }
-
-    m_sessionModel = model;
-
-    if (m_sessionModel) {
-        m_sessionModel->mapper()->setOnDataChange(
-            [this](ModelView::SessionItem* item, int role) { onDataChange(item, role); }, this);
-
-        m_sessionModel->mapper()->setOnRowInserted(
-            [this](ModelView::SessionItem* item, int row) { onRowInserted(item, row); }, this);
-
-        m_sessionModel->mapper()->setOnRowRemoved2(
-            [this](ModelView::SessionItem* item, int row, std::string id) {
-            onRowRemoved(item, row, id); }, this);
-    }
-
-    clear();
-    setColumnCount(2);
-
-    update_model();
-}
-
 //! Returns list of ViewItems representing given item.
 
 std::vector<ViewItem*> DefaultViewModel::findViews(SessionItem* item)
 {
     return Utils::findViews(this, QModelIndex(), item);
+}
+
+void DefaultViewModel::init_view_model()
+{
+    clear();
+    setColumnCount(2);
+    update_model();
 }
 
 void DefaultViewModel::onDataChange(SessionItem* item, int role)
@@ -93,9 +73,9 @@ void DefaultViewModel::onRowRemoved(SessionItem* parent, int row, std::string id
     qDebug() << "DefaultViewModel::onRowRemoved" << parent;
 
     // FIXME make more elegant without if
-    if (parent == m_sessionModel->rootItem()) {
+    if (parent == rootItem()) {
         invisibleRootItem()->removeRows(0, rowCount());
-        iterate(m_sessionModel->rootItem(), invisibleRootItem());
+        iterate(rootItem(), invisibleRootItem());
     } else {
         auto views = findViews(parent);
         for (auto view : views) {
@@ -108,11 +88,8 @@ void DefaultViewModel::onRowRemoved(SessionItem* parent, int row, std::string id
 
 void DefaultViewModel::update_model()
 {
-    if (!m_sessionModel)
-        return;
-
     qDebug() << "DefaultViewModel::update_model";
-    iterate(m_sessionModel->rootItem(), invisibleRootItem());
+    iterate(rootItem(), invisibleRootItem());
 }
 
 void DefaultViewModel::iterate(SessionItem* item, QStandardItem* parent)
