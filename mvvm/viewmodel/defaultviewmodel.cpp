@@ -59,24 +59,15 @@ void DefaultViewModel::onRowInserted(SessionItem* parent, int row)
 
 void DefaultViewModel::onRowRemoved(SessionItem* parent, int row, std::string id)
 {
-    Q_UNUSED(parent);
     Q_UNUSED(row);
     Q_UNUSED(id);
 
-    qDebug() << "DefaultViewModel::onRowRemoved" << parent;
+    auto views = findStandardViews(parent);
+    for (auto view : views)
+        view->removeRows(0, view->rowCount());
 
-    // FIXME make more elegant without if
-    if (parent == rootSessionItem()) {
-        rootStandardItem()->removeRows(0, rowCount());
-        iterate(rootSessionItem(), rootStandardItem());
-    } else {
-        auto views = findViews(parent);
-        for (auto view : views) {
-            view->removeRows(0, view->rowCount());
-        }
-        if (views.size())
-            iterate(parent, views.at(0));
-    }
+    if (views.size())
+        iterate(parent, views.at(0));
 }
 
 void DefaultViewModel::update_model()
