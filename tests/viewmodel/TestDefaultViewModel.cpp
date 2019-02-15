@@ -192,7 +192,8 @@ TEST_F(TestDefaultViewModel, removeSingleTopItem)
     EXPECT_EQ(arguments.at(2).toInt(), 0);
 }
 
-//! Remove one of two top level items
+//! Remove one of two top level items. The pecularity of DefaultViewModel is that it will
+//! remove all children of given parent and then recreate missing.
 
 TEST_F(TestDefaultViewModel, removeOneOfTopItems)
 {
@@ -212,16 +213,28 @@ TEST_F(TestDefaultViewModel, removeOneOfTopItems)
     EXPECT_EQ(viewModel.columnCount(), 2);
 
     QSignalSpy spyRemove(&viewModel, &DefaultViewModel::rowsRemoved);
+    QSignalSpy spyInsert(&viewModel, &DefaultViewModel::rowsInserted);
 
     // removing child
     model.removeItem(model.rootItem(), 0);
+
+    // removal was called once
     EXPECT_EQ(spyRemove.count(), 1);
     EXPECT_EQ(viewModel.rowCount(), 1);
     EXPECT_EQ(viewModel.columnCount(), 2);
 
+    // insert was called once to restore missed items
+    EXPECT_EQ(spyInsert.count(), 1);
+
     QList<QVariant> arguments = spyRemove.takeFirst();
     EXPECT_EQ(arguments.size(), 3); // QModelIndex &parent, int first, int last
     EXPECT_EQ(arguments.at(0).value<QModelIndex>(), QModelIndex());
+    EXPECT_EQ(arguments.at(1).toInt(), 0); //
+    EXPECT_EQ(arguments.at(2).toInt(), 1); // two children was removed
+
+    arguments = spyInsert.takeFirst();
+    EXPECT_EQ(arguments.size(), 3); // QModelIndex &parent, int first, int last
+    EXPECT_EQ(arguments.at(0).value<QModelIndex>(), QModelIndex());
     EXPECT_EQ(arguments.at(1).toInt(), 0);
-    EXPECT_EQ(arguments.at(2).toInt(), 1);
+    EXPECT_EQ(arguments.at(2).toInt(), 0); // one child was inserted back.
 }
