@@ -21,15 +21,13 @@ class SessionItem;
 
 //! Constructs row of QStandardItem's for given SessionItem.
 //!
-//! For example, LayerItem will generate single ViewLabelItem, while PropertyItem will
-//! generate ViewLabelItem and ViewDataItem.
+//! For example, LayerItem will generate two ViewLabelItem and ViewEmptyItem, both uneditable.
+//! PropertyItem will generate ViewLabelItem and ViewDataItem.
 
 class CORE_EXPORT DefaultRowConstructor : public RowConstructorInterface
 {
 public:
-    virtual ~DefaultRowConstructor() = default;
-
-    virtual QList<QStandardItem*> constructRow(SessionItem* item);
+    QList<QStandardItem*> constructRow(SessionItem* item);
 };
 
 } // namespace ModelView

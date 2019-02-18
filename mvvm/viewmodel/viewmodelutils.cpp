@@ -8,41 +8,39 @@
 // ************************************************************************** //
 
 #include "viewmodelutils.h"
-#include "viewitem.h"
+#include "model_types.h"
 #include "sessionitem.h"
 #include "sessionmodel.h"
-#include "model_types.h"
+#include "viewitem.h"
 #include <QStandardItemModel>
 
 using namespace ModelView;
 
-void Utils::iterate_model(const QStandardItemModel* model, const QModelIndex& parent, std::function<void(QStandardItem*)> fun)
+void Utils::iterate_model(const QStandardItemModel* model, const QModelIndex& parent,
+                          std::function<void(QStandardItem*)> fun)
 {
     if (!model)
         return;
 
-    for(int row = 0; row<model->rowCount(parent); ++row) {
-        for(int col = 0; col<model->columnCount(parent); ++col) {
+    for (int row = 0; row < model->rowCount(parent); ++row) {
+        for (int col = 0; col < model->columnCount(parent); ++col) {
             auto index = model->index(row, col, parent);
             auto item = model->itemFromIndex(index);
             if (item)
                 fun(item);
         }
-        for(int col = 0; col<model->columnCount(parent); ++col) {
+        for (int col = 0; col < model->columnCount(parent); ++col) {
             auto index = model->index(row, col, parent);
             iterate_model(model, index, fun);
         }
-
     }
-
-
 }
 
-std::vector<ViewItem*> Utils::findViews(const QStandardItemModel* model, const QModelIndex& parent, ModelView::SessionItem* item)
+std::vector<ViewItem*> Utils::findViews(const QStandardItemModel* model, const QModelIndex& parent,
+                                        ModelView::SessionItem* item)
 {
     std::vector<ModelView::ViewItem*> result;
-    iterate_model(model, parent, [&](QStandardItem* standard_item)
-    {
+    iterate_model(model, parent, [&](QStandardItem* standard_item) {
         if (auto view = dynamic_cast<ViewItem*>(standard_item)) {
             if (view->item() == item)
                 result.push_back(view);
@@ -59,6 +57,4 @@ QVector<int> Utils::item_role_to_qt(int role)
         result = {Qt::DisplayRole, Qt::EditRole};
 
     return result;
-
 }
-

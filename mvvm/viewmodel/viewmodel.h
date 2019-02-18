@@ -37,7 +37,6 @@ public:
 protected:
     SessionItem* rootSessionItem();
     QStandardItem* rootStandardItem();
-    SessionModel* sessionModel();
 
     std::vector<QStandardItem*> findStandardViews(SessionItem* item);
 

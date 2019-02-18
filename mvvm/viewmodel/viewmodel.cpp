@@ -61,11 +61,6 @@ QStandardItem* ViewModel::rootStandardItem()
     return invisibleRootItem();
 }
 
-SessionModel* ViewModel::sessionModel()
-{
-    return m_sessionModel;
-}
-
 //! Returns vector of standard views used to display given SessionItem.
 
 std::vector<QStandardItem*> ViewModel::findStandardViews(SessionItem* item)
