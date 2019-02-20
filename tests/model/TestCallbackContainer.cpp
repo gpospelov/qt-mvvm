@@ -25,9 +25,8 @@ TEST_F(TestCallbackContainer, singleWidget)
     CallbackMockWidget widget;
     CallbackContainer<Callbacks::item_t> container;
 
-    container.add([&](SessionItem* item){
-        widget.onItemDestroy(item);
-    }, &widget);
+    container.add(std::bind(&CallbackMockWidget::onItemDestroy, &widget, std::placeholders::_1),
+                  &widget);
 
     std::unique_ptr<SessionItem> item(new SessionItem);
     EXPECT_CALL(widget, onItemDestroy(item.get())).Times(1);
