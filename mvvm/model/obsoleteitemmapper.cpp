@@ -17,12 +17,12 @@ ObsoleteItemMapper::ObsoleteItemMapper(SessionItem* item)
 
 }
 
-void ObsoleteItemMapper::setOnItemDestroy(Callbacks::item_t f, Callbacks::caller_t caller)
+void ObsoleteItemMapper::setOnItemDestroy(Callbacks::item_t f, Callbacks::client_t caller)
 {
     m_on_item_destroy.push_back(std::make_pair(f, caller));
 }
 
-void ObsoleteItemMapper::setOnDataChange(Callbacks::item_int_t f, Callbacks::caller_t caller)
+void ObsoleteItemMapper::setOnDataChange(Callbacks::item_int_t f, Callbacks::client_t caller)
 {
     m_on_data_change.push_back(std::make_pair(f, caller));
 }
@@ -37,7 +37,7 @@ void ObsoleteItemMapper::setActive(bool value)
 
 //! Removes given caller from all subscriptions.
 
-void ObsoleteItemMapper::unsubscribe(Callbacks::caller_t caller)
+void ObsoleteItemMapper::unsubscribe(Callbacks::client_t caller)
 {
     clean_container(m_on_item_destroy, caller);
     clean_container(m_on_data_change, caller);

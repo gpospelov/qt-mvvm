@@ -35,7 +35,7 @@ const model_type CompoundType = "Compound";
 } // namespace Constants
 
 namespace Callbacks {
-using caller_t = const void*;
+using client_t = const void*;
 using item_t = std::function<void(SessionItem*)>;
 using item_int_t = std::function<void(SessionItem*, int)>;
 using item_int_str_t = std::function<void(SessionItem*, int, std::string)>;

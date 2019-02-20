@@ -34,14 +34,14 @@ class CORE_EXPORT ModelMapper
 public:
     ModelMapper(SessionModel* item);
 
-    void setOnDataChange(Callbacks::item_int_t f, Callbacks::caller_t caller = 0);
-    void setOnRowInserted(Callbacks::item_int_t f, Callbacks::caller_t caller = 0);
-    void setOnRowRemoved(Callbacks::item_int_t f, Callbacks::caller_t caller = 0);
-    void setOnRowRemoved2(Callbacks::item_int_str_t f, Callbacks::caller_t caller = 0);
+    void setOnDataChange(Callbacks::item_int_t f, Callbacks::client_t caller = 0);
+    void setOnRowInserted(Callbacks::item_int_t f, Callbacks::client_t caller = 0);
+    void setOnRowRemoved(Callbacks::item_int_t f, Callbacks::client_t caller = 0);
+    void setOnRowRemoved2(Callbacks::item_int_str_t f, Callbacks::client_t caller = 0);
 
     void setActive(bool value);
 
-    void unsubscribe(Callbacks::caller_t caller);
+    void unsubscribe(Callbacks::client_t caller);
 
 private:
     void callOnDataChange(SessionItem* item, int role);
