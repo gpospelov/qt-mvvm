@@ -1,6 +1,6 @@
 #include "ItemMockWidget.h"
 #include "sessionitem.h"
-#include "itemmapper.h"
+#include "obsoleteitemmapper.h"
 #include "sessionmodel.h"
 #include "modelmapper.h"
 

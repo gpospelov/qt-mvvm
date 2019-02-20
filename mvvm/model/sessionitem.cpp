@@ -10,7 +10,7 @@
 #include "sessionitem.h"
 #include "customvariants.h"
 #include "itemmanager.h"
-#include "itemmapper.h"
+#include "obsoleteitemmapper.h"
 #include "itempool.h"
 #include "itemutils.h"
 #include "sessionitemdata.h"
@@ -256,10 +256,10 @@ std::pair<int, std::string> SessionItem::tagRowFromItem(const SessionItem* item)
     return {-1, ""};
 }
 
-ItemMapper* SessionItem::mapper()
+ObsoleteItemMapper* SessionItem::mapper()
 {
     if (!m_mapper)
-        m_mapper = std::make_unique<ItemMapper>(this);
+        m_mapper = std::make_unique<ObsoleteItemMapper>(this);
     return m_mapper.get();
 }
 

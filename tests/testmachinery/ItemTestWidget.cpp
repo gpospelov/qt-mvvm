@@ -9,7 +9,7 @@
 
 #include "ItemTestWidget.h"
 #include "sessionitem.h"
-#include "itemmapper.h"
+#include "obsoleteitemmapper.h"
 
 TestUtils::ItemTestWidgetInterface::~ItemTestWidgetInterface() = default;
 

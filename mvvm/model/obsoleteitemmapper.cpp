@@ -7,22 +7,22 @@
 //
 // ************************************************************************** //
 
-#include "itemmapper.h"
+#include "obsoleteitemmapper.h"
 
 using namespace ModelView;
 
-ItemMapper::ItemMapper(SessionItem* item)
+ObsoleteItemMapper::ObsoleteItemMapper(SessionItem* item)
     : m_active(true), m_item(item)
 {
 
 }
 
-void ItemMapper::setOnItemDestroy(ItemMapper::func_item_t f, ItemMapper::caller_t caller)
+void ObsoleteItemMapper::setOnItemDestroy(ObsoleteItemMapper::func_item_t f, ObsoleteItemMapper::caller_t caller)
 {
     m_on_item_destroy.push_back(std::make_pair(f, caller));
 }
 
-void ItemMapper::setOnDataChange(ItemMapper::func_item_int_t f, ItemMapper::caller_t caller)
+void ObsoleteItemMapper::setOnDataChange(ObsoleteItemMapper::func_item_int_t f, ObsoleteItemMapper::caller_t caller)
 {
     m_on_data_change.push_back(std::make_pair(f, caller));
 }
@@ -30,14 +30,14 @@ void ItemMapper::setOnDataChange(ItemMapper::func_item_int_t f, ItemMapper::call
 
 //! Sets activity flag to given value. Will disable all callbacks if false.
 
-void ItemMapper::setActive(bool value)
+void ObsoleteItemMapper::setActive(bool value)
 {
     m_active = value;
 }
 
 //! Removes given caller from all subscriptions.
 
-void ItemMapper::unsubscribe(ItemMapper::caller_t caller)
+void ObsoleteItemMapper::unsubscribe(ObsoleteItemMapper::caller_t caller)
 {
     clean_container(m_on_item_destroy, caller);
     clean_container(m_on_data_change, caller);
@@ -45,7 +45,7 @@ void ItemMapper::unsubscribe(ItemMapper::caller_t caller)
 
 //! Calls all callbacks subscribed to "item is destroyed" event.
 
-void ItemMapper::callOnItemDestroy()
+void ObsoleteItemMapper::callOnItemDestroy()
 {
     if (m_active)
         for (auto f : m_on_item_destroy)
@@ -54,7 +54,7 @@ void ItemMapper::callOnItemDestroy()
 
 //! Calls all callbacks subscribed to "item data is changed" event.
 
-void ItemMapper::callOnDataChange(int role)
+void ObsoleteItemMapper::callOnDataChange(int role)
 {
     if (m_active)
         for (auto f : m_on_data_change)

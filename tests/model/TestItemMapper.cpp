@@ -1,5 +1,5 @@
 #include "google_test.h"
-#include "itemmapper.h"
+#include "obsoleteitemmapper.h"
 #include "sessionitem.h"
 #include "ItemMockWidget.h"
 

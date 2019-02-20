@@ -9,7 +9,7 @@
 
 #include "viewitem.h"
 #include "sessionitem.h"
-#include "itemmapper.h"
+#include "obsoleteitemmapper.h"
 #include "customvariants.h"
 #include <QDebug>
 

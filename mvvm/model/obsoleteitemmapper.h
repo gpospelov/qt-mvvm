@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef ITEMMAPPER_H
-#define ITEMMAPPER_H
+#ifndef OBSOLETEITEMMAPPER_H
+#define OBSOLETEITEMMAPPER_H
 
 #include "global.h"
 #include <algorithm>
@@ -23,7 +23,7 @@ class SessionItem;
 
 //! Provides notifications on various SessionItem changes.
 
-class CORE_EXPORT ItemMapper
+class CORE_EXPORT ObsoleteItemMapper
 {
     friend class SessionItem;
 public:
@@ -31,7 +31,7 @@ public:
     using func_item_t = std::function<void(SessionItem*)>;
     using func_item_int_t = std::function<void(SessionItem*, int)>;
 
-    ItemMapper(SessionItem* item);
+    ObsoleteItemMapper(SessionItem* item);
 
     void setOnItemDestroy(func_item_t f, caller_t caller = 0);
     void setOnDataChange(func_item_int_t f, caller_t caller = 0);
@@ -53,7 +53,7 @@ private:
     SessionItem* m_item;
 };
 
-template <class U> inline void ItemMapper::clean_container(U& v, const void* caller)
+template <class U> inline void ObsoleteItemMapper::clean_container(U& v, const void* caller)
 {
     v.erase(std::remove_if(v.begin(), v.end(),
                            [caller](typename U::value_type const& x) -> bool {
@@ -64,4 +64,4 @@ template <class U> inline void ItemMapper::clean_container(U& v, const void* cal
 
 } //
 
-#endif // ITEMMAPPER_H
+#endif // OBSOLETEITEMMAPPER_H
