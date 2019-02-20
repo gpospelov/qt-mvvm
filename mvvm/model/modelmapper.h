@@ -12,6 +12,7 @@
 
 #include "global.h"
 #include "model_types.h"
+#include "callbackcontainer.h"
 #include <algorithm>
 #include <functional>
 #include <string>
@@ -43,30 +44,19 @@ public:
     void unsubscribe(Callbacks::caller_t caller);
 
 private:
-    template <class U> void clean_container(U& v, Callbacks::caller_t caller);
-
     void callOnDataChange(SessionItem* item, int role);
     void callOnRowInserted(SessionItem* parent, int index);
     void callOnRowRemoved(SessionItem* parent, int index);
     void callOnRowRemoved2(SessionItem* parent, int index, std::string id);
 
-    std::vector<std::pair<Callbacks::item_int_t, Callbacks::caller_t>> m_on_data_change;
-    std::vector<std::pair<Callbacks::item_int_t, Callbacks::caller_t>> m_on_row_inserted;
-    std::vector<std::pair<Callbacks::item_int_t, Callbacks::caller_t>> m_on_row_removed;
-    std::vector<std::pair<Callbacks::item_int_str_t, Callbacks::caller_t>> m_on_row_removed2;
+    CallbackContainer<Callbacks::item_int_t> m_on_data_change;
+    CallbackContainer<Callbacks::item_int_t> m_on_row_inserted;
+    CallbackContainer<Callbacks::item_int_t> m_on_row_removed;
+    CallbackContainer<Callbacks::item_int_str_t> m_on_row_removed2;
 
     bool m_active;
     SessionModel* m_model;
 };
-
-template <class U> inline void ModelMapper::clean_container(U& v, const void* caller)
-{
-    v.erase(std::remove_if(v.begin(), v.end(),
-                           [caller](typename U::value_type const& x) -> bool {
-                               return (x.second == caller ? true : false);
-                           }),
-            v.end());
-}
 
 } // ModelView
 

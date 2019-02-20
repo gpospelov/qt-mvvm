@@ -13,6 +13,7 @@
 #include "global.h"
 #include "model_types.h"
 #include <algorithm>
+#include <functional>
 #include <vector>
 
 namespace ModelView
