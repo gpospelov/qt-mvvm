@@ -6,6 +6,7 @@
 #include <memory>
 
 using namespace ModelView;
+using ::testing::_;
 
 //! Testing CallbackContainer class.
 
@@ -17,7 +18,7 @@ public:
 
 TestCallbackContainer::~TestCallbackContainer() = default;
 
-TEST_F(TestCallbackContainer, initialState)
+TEST_F(TestCallbackContainer, singleWidget)
 {
     CallbackMockWidget widget;
     CallbackContainer<Callbacks::item_t> container;
@@ -31,4 +32,10 @@ TEST_F(TestCallbackContainer, initialState)
 
     // perform action
     container.notify(item.get());
+
+    // removing client
+    container.remove_caller(&widget);
+    EXPECT_CALL(widget, onItemDestroy(_)).Times(0);
+    container.notify(item.get());
+
 }

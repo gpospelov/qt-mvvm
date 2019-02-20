@@ -13,6 +13,7 @@
 #include "global.h"
 #include "model_types.h"
 #include <vector>
+#include <algorithm>
 
 namespace ModelView
 {
@@ -32,6 +33,8 @@ public:
 
     template <typename... Args> void notify(Args&&... args);
 
+    void remove_caller(U caller);
+
 private:
     std::vector<std::pair<T, U>> m_callbacks;
 };
@@ -42,12 +45,26 @@ void CallbackBaseContainer<T, U>::add(T callback, U caller)
     m_callbacks.push_back(std::make_pair(callback, caller));
 }
 
+//! Notify clients using given list of arguments.
+
 template<typename T, typename U>
 template<typename... Args>
 void CallbackBaseContainer<T, U>::notify(Args&&... args)
 {
     for (auto f : m_callbacks)
         f.first(std::forward<Args>(args)...);
+}
+
+//! Remove client from the list to call back.
+
+template<typename T, typename U>
+void CallbackBaseContainer<T, U>::remove_caller(U caller)
+{
+    m_callbacks.erase(std::remove_if(m_callbacks.begin(), m_callbacks.end(),
+                           [caller](typename std::vector<std::pair<T, U>>::value_type const& x) -> bool {
+                               return (x.second == caller ? true : false);
+                           }),
+            m_callbacks.end());
 }
 
 //! Callback container for specific caller type.
