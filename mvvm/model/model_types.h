@@ -11,8 +11,11 @@
 #define MODELTYPES_H
 
 #include <string>
+#include <functional>
 
 namespace ModelView {
+
+class SessionItem;
 
 using identifier_type = std::string;
 using model_type = std::string;
@@ -30,6 +33,13 @@ namespace Constants {
 const model_type PropertyType = "Property";
 const model_type CompoundType = "Compound";
 } // namespace Constants
+
+namespace Callbacks {
+using caller_t = const void*;
+using func_item_t = std::function<void(SessionItem*)>;
+using func_item_int_t = std::function<void(SessionItem*, int)>;
+using func_item_int_str_t = std::function<void(SessionItem*, int, std::string)>;
+}
 
 } // namespace ModelView
 

@@ -11,6 +11,7 @@
 #define OBSOLETEITEMMAPPER_H
 
 #include "global.h"
+#include "model_types.h"
 #include <algorithm>
 #include <functional>
 #include <string>
@@ -27,27 +28,23 @@ class CORE_EXPORT ObsoleteItemMapper
 {
     friend class SessionItem;
 public:
-    using caller_t = const void*;
-    using func_item_t = std::function<void(SessionItem*)>;
-    using func_item_int_t = std::function<void(SessionItem*, int)>;
-
     ObsoleteItemMapper(SessionItem* item);
 
-    void setOnItemDestroy(func_item_t f, caller_t caller = 0);
-    void setOnDataChange(func_item_int_t f, caller_t caller = 0);
+    void setOnItemDestroy(Callbacks::func_item_t f, Callbacks::caller_t caller = 0);
+    void setOnDataChange(Callbacks::func_item_int_t f, Callbacks::caller_t caller = 0);
 
     void setActive(bool value);
 
-    void unsubscribe(caller_t caller);
+    void unsubscribe(Callbacks::caller_t caller);
 
 private:
-    template <class U> void clean_container(U& v, caller_t caller);
+    template <class U> void clean_container(U& v, Callbacks::caller_t caller);
 
     void callOnItemDestroy();
     void callOnDataChange(int role);
 
-    std::vector<std::pair<func_item_t, caller_t>> m_on_item_destroy;
-    std::vector<std::pair<func_item_int_t, caller_t>> m_on_data_change;
+    std::vector<std::pair<Callbacks::func_item_t, Callbacks::caller_t>> m_on_item_destroy;
+    std::vector<std::pair<Callbacks::func_item_int_t, Callbacks::caller_t>> m_on_data_change;
 
     bool m_active;
     SessionItem* m_item;

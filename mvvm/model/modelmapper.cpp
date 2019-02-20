@@ -22,7 +22,7 @@ ModelMapper::ModelMapper(SessionModel* item)
 //! Sets callback to be notified on item's data change.
 //! Callback will be called with (SessionItem*, data_role).
 
-void ModelMapper::setOnDataChange(ModelMapper::func_item_int_t f, ModelMapper::caller_t caller)
+void ModelMapper::setOnDataChange(Callbacks::func_item_int_t f, Callbacks::caller_t caller)
 {
     m_on_data_change.push_back(std::make_pair(f, caller));
 }
@@ -31,7 +31,7 @@ void ModelMapper::setOnDataChange(ModelMapper::func_item_int_t f, ModelMapper::c
 //! Callback will be called with (SessionItem* parent, index), where index correspondx
 //! to new item index in children array.
 
-void ModelMapper::setOnRowInserted(ModelMapper::func_item_int_t f, ModelMapper::caller_t caller)
+void ModelMapper::setOnRowInserted(Callbacks::func_item_int_t f, Callbacks::caller_t caller)
 {
     m_on_row_inserted.push_back(std::make_pair(f, caller));
 }
@@ -40,12 +40,12 @@ void ModelMapper::setOnRowInserted(ModelMapper::func_item_int_t f, ModelMapper::
 //! Callback will be called with (SessionItem* parent, index), where index correspondx
 //! to removed index in children array.
 
-void ModelMapper::setOnRowRemoved(func_item_int_t f, ModelMapper::caller_t caller)
+void ModelMapper::setOnRowRemoved(Callbacks::func_item_int_t f, Callbacks::caller_t caller)
 {
     m_on_row_removed.push_back(std::make_pair(f, caller));
 }
 
-void ModelMapper::setOnRowRemoved2(ModelMapper::func_item_int_str_t f, ModelMapper::caller_t caller)
+void ModelMapper::setOnRowRemoved2(Callbacks::func_item_int_str_t f, Callbacks::caller_t caller)
 {
     m_on_row_removed2.push_back(std::make_pair(f, caller));
 }
@@ -59,7 +59,7 @@ void ModelMapper::setActive(bool value)
 
 //! Removes given caller from all subscriptions.
 
-void ModelMapper::unsubscribe(ModelMapper::caller_t caller)
+void ModelMapper::unsubscribe(Callbacks::caller_t caller)
 {
     clean_container(m_on_data_change, caller);
 }
