@@ -1,4 +1,4 @@
-#include "ItemMockWidget.h"
+#include "MockWidgets.h"
 #include "sessionitem.h"
 #include "obsoleteitemmapper.h"
 #include "sessionmodel.h"

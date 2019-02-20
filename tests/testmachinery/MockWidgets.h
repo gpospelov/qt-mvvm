@@ -1,7 +1,7 @@
-#ifndef ITEMMOCKWIDGET_H
-#define ITEMMOCKWIDGET_H
+#ifndef MOCKWIDGETS_H
+#define MOCKWIDGETS_H
 
-#include "ItemTestWidget.h"
+#include "MockInterfaces.h"
 #include <gmock/gmock.h>
 
 namespace ModelView {
@@ -41,4 +41,4 @@ private:
     ModelView::SessionModel* m_model;
 };
 
-#endif //  ITEMMOCKWIDGET_H
+#endif //  MOCKWIDGETS_H

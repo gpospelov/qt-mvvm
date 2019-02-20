@@ -1,7 +1,7 @@
 #include "google_test.h"
 #include "obsoleteitemmapper.h"
 #include "sessionitem.h"
-#include "ItemMockWidget.h"
+#include "MockWidgets.h"
 
 using namespace ModelView;
 using ::testing::_;

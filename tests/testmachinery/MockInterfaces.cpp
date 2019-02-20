@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "ItemTestWidget.h"
+#include "MockInterfaces.h"
 #include "sessionitem.h"
 #include "obsoleteitemmapper.h"
 

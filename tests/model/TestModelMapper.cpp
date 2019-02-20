@@ -2,7 +2,7 @@
 #include "sessionitem.h"
 #include "sessionmodel.h"
 #include "modelmapper.h"
-#include "ItemMockWidget.h"
+#include "MockWidgets.h"
 
 using namespace ModelView;
 using ::testing::_;
