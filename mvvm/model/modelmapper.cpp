@@ -65,7 +65,7 @@ void ModelMapper::unsubscribe(Callbacks::client_t client)
     m_on_row_removed2.remove_client(client);
 }
 
-//! Calls all callbacks subscribed to "item data is changed" event.
+//! Notifies all callbacks subscribed to "item data is changed" event.
 
 void ModelMapper::callOnDataChange(SessionItem* item, int role)
 {
@@ -73,7 +73,7 @@ void ModelMapper::callOnDataChange(SessionItem* item, int role)
         m_on_data_change.notify(item, role);
 }
 
-//! Calls all callbacks subscribed to "item data is changed" event.
+//! Notifies all callbacks subscribed to "item data is changed" event.
 
 void ModelMapper::callOnRowInserted(SessionItem* parent, int index)
 {

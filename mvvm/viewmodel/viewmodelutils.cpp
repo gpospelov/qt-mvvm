@@ -53,6 +53,7 @@ std::vector<ViewItem*> Utils::findViews(const QStandardItemModel* model, const Q
 QVector<int> Utils::item_role_to_qt(int role)
 {
     QVector<int> result;
+    // Seems to be the behavior of QStandardItemModel. When view edits the data two roles are emmited.
     if (role == ItemDataRole::DISPLAY || role == ItemDataRole::DATA)
         result = {Qt::DisplayRole, Qt::EditRole};
 
