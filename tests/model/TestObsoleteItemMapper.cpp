@@ -6,20 +6,20 @@
 using namespace ModelView;
 using ::testing::_;
 
-class TestItemMapper : public ::testing::Test
+class TestObsoleteItemMapper : public ::testing::Test
 {
 public:
-    ~TestItemMapper();
+    ~TestObsoleteItemMapper();
 };
 
-TestItemMapper::~TestItemMapper() = default;
+TestObsoleteItemMapper::~TestObsoleteItemMapper() = default;
 
 //! Destroying item, expecting single call of onItemDestroy in MockWidget.
 
-TEST(TestItemMapper, onItemDestroy)
+TEST(TestObsoleteItemMapper, onItemDestroy)
 {
     std::unique_ptr<SessionItem> item = std::make_unique<SessionItem>();
-    MockWidget widget(item.get());
+    ObsoleteMockWidget widget(item.get());
 
     auto expected_item = item.get();
     EXPECT_CALL(widget, onItemDestroy(expected_item)).Times(1);
@@ -30,10 +30,10 @@ TEST(TestItemMapper, onItemDestroy)
 
 //! Setting data to item, expecting onDataChange callback.
 
-TEST(TestItemMapper, onDataChange)
+TEST(TestObsoleteItemMapper, onDataChange)
 {
     std::unique_ptr<SessionItem> item = std::make_unique<SessionItem>();
-    MockWidget widget(item.get());
+    ObsoleteMockWidget widget(item.get());
 
     auto expected_role = ItemDataRole::DATA;
     auto expected_item = item.get();
@@ -45,10 +45,10 @@ TEST(TestItemMapper, onDataChange)
 
 //! Setting same data to item, expecting no callbacks on onDataChange.
 
-TEST(TestItemMapper, onDataChangeDuplicate)
+TEST(TestObsoleteItemMapper, onDataChangeDuplicate)
 {
     std::unique_ptr<SessionItem> item = std::make_unique<SessionItem>();
-    MockWidget widget(item.get());
+    ObsoleteMockWidget widget(item.get());
 
     EXPECT_CALL(widget, onItemDestroy(_)).Times(0);
     EXPECT_CALL(widget, onDataChange(_, _)).Times(1);
@@ -60,10 +60,10 @@ TEST(TestItemMapper, onDataChangeDuplicate)
 
 //! Setting mapper activity to false, change the data, expect no callbacks.
 
-TEST(TestItemMapper, setActivity)
+TEST(TestObsoleteItemMapper, setActivity)
 {
     std::unique_ptr<SessionItem> item = std::make_unique<SessionItem>();
-    MockWidget widget(item.get());
+    ObsoleteMockWidget widget(item.get());
 
     item->mapper()->setActive(false);
 
@@ -77,11 +77,11 @@ TEST(TestItemMapper, setActivity)
 //! Unsubscribing from item, expecting no callbacks.
 
 
-TEST(TestItemMapper, unsubscribe)
+TEST(TestObsoleteItemMapper, unsubscribe)
 {
     std::unique_ptr<SessionItem> item = std::make_unique<SessionItem>();
-    MockWidget widget1(item.get());
-    MockWidget widget2(item.get());
+    ObsoleteMockWidget widget1(item.get());
+    ObsoleteMockWidget widget2(item.get());
 
     item->mapper()->unsubscribe(&widget1);
 

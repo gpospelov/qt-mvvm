@@ -5,19 +5,19 @@
 #include "modelmapper.h"
 
 
-MockWidget::MockWidget(ModelView::SessionItem* item)
+ObsoleteMockWidget::ObsoleteMockWidget(ModelView::SessionItem* item)
     : m_item(nullptr)
 {
     setItem(item);
 }
 
-MockWidget::~MockWidget()
+ObsoleteMockWidget::~ObsoleteMockWidget()
 {
     if (m_item)
         m_item->mapper()->unsubscribe(this);
 }
 
-void MockWidget::setItem(ModelView::SessionItem* item)
+void ObsoleteMockWidget::setItem(ModelView::SessionItem* item)
 {
     m_item = item;
 

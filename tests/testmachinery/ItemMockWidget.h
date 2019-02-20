@@ -11,10 +11,10 @@ class SessionModel;
 
 //! Mock class to test ItemMapper functionality.
 
-class MockWidget : public TestUtils::ItemTestWidgetInterface {
+class ObsoleteMockWidget : public TestUtils::ItemTestWidgetInterface {
 public:
-    MockWidget(ModelView::SessionItem* item);
-    ~MockWidget();
+    ObsoleteMockWidget(ModelView::SessionItem* item);
+    ~ObsoleteMockWidget();
 
     void setItem(ModelView::SessionItem* item);
 
