@@ -20,32 +20,32 @@ ModelMapper::ModelMapper(SessionModel* item) : m_active(true), m_model(item)
 //! Sets callback to be notified on item's data change.
 //! Callback will be called with (SessionItem*, data_role).
 
-void ModelMapper::setOnDataChange(Callbacks::item_int_t f, Callbacks::client_t caller)
+void ModelMapper::setOnDataChange(Callbacks::item_int_t f, Callbacks::client_t client)
 {
-    m_on_data_change.add(f, caller);
+    m_on_data_change.add(f, client);
 }
 
 //! Sets callback to be notified on item insert.
 //! Callback will be called with (SessionItem* parent, index), where index correspondx
 //! to new item index in children array.
 
-void ModelMapper::setOnRowInserted(Callbacks::item_int_t f, Callbacks::client_t caller)
+void ModelMapper::setOnRowInserted(Callbacks::item_int_t f, Callbacks::client_t client)
 {
-    m_on_row_inserted.add(f, caller);
+    m_on_row_inserted.add(f, client);
 }
 
 //! Sets callback to be notified on removed row.
 //! Callback will be called with (SessionItem* parent, index), where index correspondx
 //! to removed index in children array.
 
-void ModelMapper::setOnRowRemoved(Callbacks::item_int_t f, Callbacks::client_t caller)
+void ModelMapper::setOnRowRemoved(Callbacks::item_int_t f, Callbacks::client_t client)
 {
-    m_on_row_removed.add(f, caller);
+    m_on_row_removed.add(f, client);
 }
 
-void ModelMapper::setOnRowRemoved2(Callbacks::item_int_str_t f, Callbacks::client_t caller)
+void ModelMapper::setOnRowRemoved2(Callbacks::item_int_str_t f, Callbacks::client_t client)
 {
-    m_on_row_removed2.add(f, caller);
+    m_on_row_removed2.add(f, client);
 }
 
 //! Sets activity flag to given value. Will disable all callbacks if false.
@@ -55,11 +55,14 @@ void ModelMapper::setActive(bool value)
     m_active = value;
 }
 
-//! Removes given caller from all subscriptions.
+//! Removes given client from all subscriptions.
 
-void ModelMapper::unsubscribe(Callbacks::client_t caller)
+void ModelMapper::unsubscribe(Callbacks::client_t client)
 {
-    m_on_data_change.remove_caller(caller);
+    m_on_data_change.remove_client(client);
+    m_on_row_inserted.remove_client(client);
+    m_on_row_removed.remove_client(client);
+    m_on_row_removed2.remove_client(client);
 }
 
 //! Calls all callbacks subscribed to "item data is changed" event.

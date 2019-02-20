@@ -29,19 +29,19 @@ template <typename T, typename U> class CallbackBaseContainer
 public:
     CallbackBaseContainer() = default;
 
-    void add(T callback, U caller);
+    void add(T callback, U client);
 
     template <typename... Args> void notify(Args... args);
 
-    void remove_caller(U caller);
+    void remove_client(U client);
 
 private:
     std::vector<std::pair<T, U>> m_callbacks;
 };
 
-template <typename T, typename U> void CallbackBaseContainer<T, U>::add(T callback, U caller)
+template <typename T, typename U> void CallbackBaseContainer<T, U>::add(T callback, U client)
 {
-    m_callbacks.push_back(std::make_pair(callback, caller));
+    m_callbacks.push_back(std::make_pair(callback, client));
 }
 
 //! Notify clients using given list of arguments.
@@ -56,16 +56,16 @@ void CallbackBaseContainer<T, U>::notify(Args... args)
 
 //! Remove client from the list to call back.
 
-template <typename T, typename U> void CallbackBaseContainer<T, U>::remove_caller(U caller)
+template <typename T, typename U> void CallbackBaseContainer<T, U>::remove_client(U client)
 {
     m_callbacks.erase(std::remove_if(m_callbacks.begin(), m_callbacks.end(),
-                                     [caller](const std::pair<T, U>& x) -> bool {
-                                         return (x.second == caller ? true : false);
+                                     [client](const std::pair<T, U>& x) -> bool {
+                                         return (x.second == client ? true : false);
                                      }),
                       m_callbacks.end());
 }
 
-//! Callback container for specific caller type.
+//! Callback container for specific client type.
 
 template <typename T> class CallbackContainer : public CallbackBaseContainer<T, Callbacks::client_t>
 {

@@ -10,13 +10,7 @@
 #ifndef MODELMAPPER_H
 #define MODELMAPPER_H
 
-#include "global.h"
-#include "model_types.h"
 #include "callbackcontainer.h"
-#include <algorithm>
-#include <functional>
-#include <string>
-#include <vector>
 
 namespace ModelView
 {
@@ -25,7 +19,9 @@ class SessionItem;
 class SessionModel;
 
 //! Provides notifications on various SessionModel changes.
-//! Used to notify QAbstractItemModel.
+//!
+//! Used to notify QAbstractItemModel to set the bridge with Qt signal and slots.
+//! Used to notify ItemMapper about activity in relatives of specific item.
 
 class CORE_EXPORT ModelMapper
 {
@@ -34,14 +30,14 @@ class CORE_EXPORT ModelMapper
 public:
     ModelMapper(SessionModel* item);
 
-    void setOnDataChange(Callbacks::item_int_t f, Callbacks::client_t caller = 0);
-    void setOnRowInserted(Callbacks::item_int_t f, Callbacks::client_t caller = 0);
-    void setOnRowRemoved(Callbacks::item_int_t f, Callbacks::client_t caller = 0);
-    void setOnRowRemoved2(Callbacks::item_int_str_t f, Callbacks::client_t caller = 0);
+    void setOnDataChange(Callbacks::item_int_t f, Callbacks::client_t client = {});
+    void setOnRowInserted(Callbacks::item_int_t f, Callbacks::client_t client = {});
+    void setOnRowRemoved(Callbacks::item_int_t f, Callbacks::client_t client = {});
+    void setOnRowRemoved2(Callbacks::item_int_str_t f, Callbacks::client_t client = {});
 
     void setActive(bool value);
 
-    void unsubscribe(Callbacks::client_t caller);
+    void unsubscribe(Callbacks::client_t client);
 
 private:
     void callOnDataChange(SessionItem* item, int role);

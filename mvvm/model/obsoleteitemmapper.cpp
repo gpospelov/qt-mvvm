@@ -17,14 +17,14 @@ ObsoleteItemMapper::ObsoleteItemMapper(SessionItem* item)
 
 }
 
-void ObsoleteItemMapper::setOnItemDestroy(Callbacks::item_t f, Callbacks::client_t caller)
+void ObsoleteItemMapper::setOnItemDestroy(Callbacks::item_t f, Callbacks::client_t client)
 {
-    m_on_item_destroy.push_back(std::make_pair(f, caller));
+    m_on_item_destroy.add(f, client);
 }
 
-void ObsoleteItemMapper::setOnDataChange(Callbacks::item_int_t f, Callbacks::client_t caller)
+void ObsoleteItemMapper::setOnDataChange(Callbacks::item_int_t f, Callbacks::client_t client)
 {
-    m_on_data_change.push_back(std::make_pair(f, caller));
+    m_on_data_change.add(f, client);
 }
 
 
@@ -37,10 +37,10 @@ void ObsoleteItemMapper::setActive(bool value)
 
 //! Removes given caller from all subscriptions.
 
-void ObsoleteItemMapper::unsubscribe(Callbacks::client_t caller)
+void ObsoleteItemMapper::unsubscribe(Callbacks::client_t client)
 {
-    clean_container(m_on_item_destroy, caller);
-    clean_container(m_on_data_change, caller);
+    m_on_item_destroy.remove_client(client);
+    m_on_data_change.remove_client(client);
 }
 
 //! Calls all callbacks subscribed to "item is destroyed" event.
@@ -48,8 +48,7 @@ void ObsoleteItemMapper::unsubscribe(Callbacks::client_t caller)
 void ObsoleteItemMapper::callOnItemDestroy()
 {
     if (m_active)
-        for (auto f : m_on_item_destroy)
-            f.first(m_item);
+        m_on_item_destroy.notify(m_item);
 }
 
 //! Calls all callbacks subscribed to "item data is changed" event.
@@ -57,6 +56,5 @@ void ObsoleteItemMapper::callOnItemDestroy()
 void ObsoleteItemMapper::callOnDataChange(int role)
 {
     if (m_active)
-        for (auto f : m_on_data_change)
-            f.first(m_item, role);
+        m_on_data_change.notify(m_item, role);
 }
