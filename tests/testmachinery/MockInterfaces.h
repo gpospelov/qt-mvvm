@@ -16,9 +16,6 @@ namespace ModelView {
 class SessionItem;
 }
 
-namespace TestUtils
-{
-
 //! Interface for testing callbacks comming from SessionItem within gmock framework.
 
 class ItemTestWidgetInterface {
@@ -40,7 +37,5 @@ public:
     virtual void onRowInserted(ModelView::SessionItem* item, int row) = 0;
 
 };
-
-} // TestUtils
 
 #endif // ITEMTESTWIDGET_H

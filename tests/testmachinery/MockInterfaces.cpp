@@ -11,6 +11,6 @@
 #include "sessionitem.h"
 #include "obsoleteitemmapper.h"
 
-TestUtils::ItemTestWidgetInterface::~ItemTestWidgetInterface() = default;
+ItemTestWidgetInterface::~ItemTestWidgetInterface() = default;
 
-TestUtils::ModelTestWidgetInterface::~ModelTestWidgetInterface() = default;
+ModelTestWidgetInterface::~ModelTestWidgetInterface() = default;
