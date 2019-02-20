@@ -9,6 +9,16 @@ class SessionItem;
 class SessionModel;
 }
 
+
+//! Mock class for CallbackContainer.
+
+class CallbackMockWidget
+{
+public:
+    MOCK_METHOD1(onItemDestroy, void(ModelView::SessionItem* item));
+    MOCK_METHOD2(onDataChange, void(ModelView::SessionItem* item, int role));
+};
+
 //! Mock class to test ItemMapper functionality.
 
 class ObsoleteMockWidget : public ItemTestWidgetInterface {
