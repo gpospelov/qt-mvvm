@@ -59,7 +59,7 @@ public:
     SessionItem* takeAt(int index);
 
     // FIXME revise return type usage
-    bool insertItem(int row, SessionItem* item, const std::string& tag = {});
+    bool insertItem(SessionItem* item, int row, const std::string& tag = {});
 
     SessionItem* takeItem(int row, const std::string& tag = {});
 

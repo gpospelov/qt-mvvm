@@ -87,7 +87,7 @@ TEST_F(TestJsonItem, parentAndChild)
 
     parent->setData(QVariant::fromValue(42), 1);
     auto child = new SessionItem("Layer");
-    parent->insertItem(-1, child);
+    parent->insertItem(child, -1);
 
     QJsonObject object;
     converter.item_to_json(parent.get(), object);

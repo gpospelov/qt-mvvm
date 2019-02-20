@@ -118,7 +118,7 @@ SessionItem* SessionItem::takeAt(int index)
 
 //! Insert item into given tag into given row.
 
-bool SessionItem::insertItem(int row, SessionItem* item, const std::string& tag)
+bool SessionItem::insertItem(SessionItem* item, int row, const std::string& tag)
 {
     if (!item)
         throw std::runtime_error("SessionItem::insertItem() -> Invalid item.");
@@ -148,7 +148,7 @@ bool SessionItem::insertItem(int row, SessionItem* item, const std::string& tag)
     return true;
 }
 
-//! Remove item from given row from given tag.
+//! Removes item from given row from given tag, returns it to the caller.
 
 SessionItem* SessionItem::takeItem(int row, const std::string& tag)
 {

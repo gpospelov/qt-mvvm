@@ -80,7 +80,7 @@ void InsertNewItemCommand::redo()
 {
     auto parent = m_model->itemFromPath(m_parent_path);
     auto child = m_model->manager()->createItem(m_model_type);
-    parent->insertItem(m_row, child, m_tag);
+    parent->insertItem(child, m_row, m_tag);
     m_result = child;
 }
 

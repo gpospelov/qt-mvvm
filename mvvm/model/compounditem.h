@@ -45,7 +45,7 @@ template<typename T> T* CompoundItem::addProperty(const std::string& name, const
     if (variant.isValid())
         property->setData(variant, ItemDataRole::DATA);
 
-    insertItem(0, property, name);
+    insertItem(property, 0, name);
 
     return property;
 }
