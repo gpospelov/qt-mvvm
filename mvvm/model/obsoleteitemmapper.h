@@ -30,8 +30,8 @@ class CORE_EXPORT ObsoleteItemMapper
 public:
     ObsoleteItemMapper(SessionItem* item);
 
-    void setOnItemDestroy(Callbacks::func_item_t f, Callbacks::caller_t caller = 0);
-    void setOnDataChange(Callbacks::func_item_int_t f, Callbacks::caller_t caller = 0);
+    void setOnItemDestroy(Callbacks::item_t f, Callbacks::caller_t caller = 0);
+    void setOnDataChange(Callbacks::item_int_t f, Callbacks::caller_t caller = 0);
 
     void setActive(bool value);
 
@@ -43,8 +43,8 @@ private:
     void callOnItemDestroy();
     void callOnDataChange(int role);
 
-    std::vector<std::pair<Callbacks::func_item_t, Callbacks::caller_t>> m_on_item_destroy;
-    std::vector<std::pair<Callbacks::func_item_int_t, Callbacks::caller_t>> m_on_data_change;
+    std::vector<std::pair<Callbacks::item_t, Callbacks::caller_t>> m_on_item_destroy;
+    std::vector<std::pair<Callbacks::item_int_t, Callbacks::caller_t>> m_on_data_change;
 
     bool m_active;
     SessionItem* m_item;

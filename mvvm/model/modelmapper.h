@@ -33,10 +33,10 @@ class CORE_EXPORT ModelMapper
 public:
     ModelMapper(SessionModel* item);
 
-    void setOnDataChange(Callbacks::func_item_int_t f, Callbacks::caller_t caller = 0);
-    void setOnRowInserted(Callbacks::func_item_int_t f, Callbacks::caller_t caller = 0);
-    void setOnRowRemoved(Callbacks::func_item_int_t f, Callbacks::caller_t caller = 0);
-    void setOnRowRemoved2(Callbacks::func_item_int_str_t f, Callbacks::caller_t caller = 0);
+    void setOnDataChange(Callbacks::item_int_t f, Callbacks::caller_t caller = 0);
+    void setOnRowInserted(Callbacks::item_int_t f, Callbacks::caller_t caller = 0);
+    void setOnRowRemoved(Callbacks::item_int_t f, Callbacks::caller_t caller = 0);
+    void setOnRowRemoved2(Callbacks::item_int_str_t f, Callbacks::caller_t caller = 0);
 
     void setActive(bool value);
 
@@ -50,10 +50,10 @@ private:
     void callOnRowRemoved(SessionItem* parent, int index);
     void callOnRowRemoved2(SessionItem* parent, int index, std::string id);
 
-    std::vector<std::pair<Callbacks::func_item_int_t, Callbacks::caller_t>> m_on_data_change;
-    std::vector<std::pair<Callbacks::func_item_int_t, Callbacks::caller_t>> m_on_row_inserted;
-    std::vector<std::pair<Callbacks::func_item_int_t, Callbacks::caller_t>> m_on_row_removed;
-    std::vector<std::pair<Callbacks::func_item_int_str_t, Callbacks::caller_t>> m_on_row_removed2;
+    std::vector<std::pair<Callbacks::item_int_t, Callbacks::caller_t>> m_on_data_change;
+    std::vector<std::pair<Callbacks::item_int_t, Callbacks::caller_t>> m_on_row_inserted;
+    std::vector<std::pair<Callbacks::item_int_t, Callbacks::caller_t>> m_on_row_removed;
+    std::vector<std::pair<Callbacks::item_int_str_t, Callbacks::caller_t>> m_on_row_removed2;
 
     bool m_active;
     SessionModel* m_model;

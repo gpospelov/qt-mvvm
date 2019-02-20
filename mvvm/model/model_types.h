@@ -36,9 +36,9 @@ const model_type CompoundType = "Compound";
 
 namespace Callbacks {
 using caller_t = const void*;
-using func_item_t = std::function<void(SessionItem*)>;
-using func_item_int_t = std::function<void(SessionItem*, int)>;
-using func_item_int_str_t = std::function<void(SessionItem*, int, std::string)>;
+using item_t = std::function<void(SessionItem*)>;
+using item_int_t = std::function<void(SessionItem*, int)>;
+using item_int_str_t = std::function<void(SessionItem*, int, std::string)>;
 }
 
 } // namespace ModelView
