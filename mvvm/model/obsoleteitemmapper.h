@@ -10,12 +10,7 @@
 #ifndef OBSOLETEITEMMAPPER_H
 #define OBSOLETEITEMMAPPER_H
 
-#include "global.h"
-#include "model_types.h"
-#include <algorithm>
-#include <functional>
-#include <string>
-#include <vector>
+#include "callbackcontainer.h"
 
 namespace ModelView
 {
@@ -30,34 +25,24 @@ class CORE_EXPORT ObsoleteItemMapper
 public:
     ObsoleteItemMapper(SessionItem* item);
 
-    void setOnItemDestroy(Callbacks::item_t f, Callbacks::client_t caller = 0);
-    void setOnDataChange(Callbacks::item_int_t f, Callbacks::client_t caller = 0);
+    void setOnItemDestroy(Callbacks::item_t f, Callbacks::client_t client = {});
+    void setOnDataChange(Callbacks::item_int_t f, Callbacks::client_t client = {});
 
     void setActive(bool value);
 
-    void unsubscribe(Callbacks::client_t caller);
+    void unsubscribe(Callbacks::client_t client);
 
 private:
-    template <class U> void clean_container(U& v, Callbacks::client_t caller);
 
     void callOnItemDestroy();
     void callOnDataChange(int role);
 
-    std::vector<std::pair<Callbacks::item_t, Callbacks::client_t>> m_on_item_destroy;
-    std::vector<std::pair<Callbacks::item_int_t, Callbacks::client_t>> m_on_data_change;
+    CallbackContainer<Callbacks::item_t> m_on_item_destroy;
+    CallbackContainer<Callbacks::item_int_t> m_on_data_change;
 
     bool m_active;
     SessionItem* m_item;
 };
-
-template <class U> inline void ObsoleteItemMapper::clean_container(U& v, const void* caller)
-{
-    v.erase(std::remove_if(v.begin(), v.end(),
-                           [caller](typename U::value_type const& x) -> bool {
-                               return (x.second == caller ? true : false);
-                           }),
-            v.end());
-}
 
 } //
 

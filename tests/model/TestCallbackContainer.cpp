@@ -35,7 +35,7 @@ TEST_F(TestCallbackContainer, singleWidget)
     container.notify(item.get());
 
     // removing client
-    container.remove_caller(&widget);
+    container.remove_client(&widget);
     EXPECT_CALL(widget, onItemDestroy(_)).Times(0);
 
     // perform action
@@ -66,7 +66,7 @@ TEST_F(TestCallbackContainer, twoWidgets)
     container.notify(item.get());
 
     // removing one of client
-    container.remove_caller(&widget1);
+    container.remove_client(&widget1);
     EXPECT_CALL(widget1, onItemDestroy(_)).Times(0);
     EXPECT_CALL(widget2, onItemDestroy(item.get())).Times(1);
 
@@ -98,7 +98,7 @@ TEST_F(TestCallbackContainer, twoParameters)
     container.notify(item.get(), expected_role);
 
     // removing one of client
-    container.remove_caller(&widget1);
+    container.remove_client(&widget1);
     EXPECT_CALL(widget1, onDataChange(_, _)).Times(0);
     EXPECT_CALL(widget2, onDataChange(item.get(), expected_role)).Times(1);
 

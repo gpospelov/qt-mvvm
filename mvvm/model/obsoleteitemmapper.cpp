@@ -35,7 +35,7 @@ void ObsoleteItemMapper::setActive(bool value)
     m_active = value;
 }
 
-//! Removes given caller from all subscriptions.
+//! Removes given client from all subscriptions.
 
 void ObsoleteItemMapper::unsubscribe(Callbacks::client_t client)
 {
