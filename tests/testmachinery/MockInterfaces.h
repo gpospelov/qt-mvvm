@@ -24,7 +24,6 @@ public:
 
     virtual void onItemDestroy(ModelView::SessionItem* item) = 0;
     virtual void onDataChange(ModelView::SessionItem* item, int role) = 0;
-
 };
 
 //! Interface for testing callbacks comming from SessionModel within gmock framework.
@@ -33,9 +32,10 @@ class ModelTestWidgetInterface {
 public:
     virtual ~ModelTestWidgetInterface();
 
+    virtual void onItemDestroy(ModelView::SessionItem* item) = 0;
     virtual void onDataChange(ModelView::SessionItem* item, int role) = 0;
     virtual void onRowInserted(ModelView::SessionItem* item, int row) = 0;
-
+    virtual void onRowRemoved(ModelView::SessionItem* item, int row) = 0;
 };
 
 #endif // ITEMTESTWIDGET_H

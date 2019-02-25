@@ -30,6 +30,7 @@ class CORE_EXPORT ModelMapper
 public:
     ModelMapper(SessionModel* item);
 
+    void setOnItemDestroy(Callbacks::item_t f, Callbacks::client_t client = {});
     void setOnDataChange(Callbacks::item_int_t f, Callbacks::client_t client = {});
     void setOnRowInserted(Callbacks::item_int_t f, Callbacks::client_t client = {});
     void setOnRowRemoved(Callbacks::item_int_t f, Callbacks::client_t client = {});
@@ -40,11 +41,13 @@ public:
     void unsubscribe(Callbacks::client_t client);
 
 private:
+    void callOnItemDestroy(SessionItem* item);
     void callOnDataChange(SessionItem* item, int role);
     void callOnRowInserted(SessionItem* parent, int index);
     void callOnRowRemoved(SessionItem* parent, int index);
     void callOnRowRemoved2(SessionItem* parent, int index, std::string id);
 
+    CallbackContainer<Callbacks::item_t> m_on_item_destroy;
     CallbackContainer<Callbacks::item_int_t> m_on_data_change;
     CallbackContainer<Callbacks::item_int_t> m_on_row_inserted;
     CallbackContainer<Callbacks::item_int_t> m_on_row_removed;

@@ -17,6 +17,13 @@ ModelMapper::ModelMapper(SessionModel* item) : m_active(true), m_model(item)
 {
 }
 
+//! Sets callback to be notified on item's destruction.
+
+void ModelMapper::setOnItemDestroy(Callbacks::item_t f, Callbacks::client_t client)
+{
+    m_on_item_destroy.add(f, client);
+}
+
 //! Sets callback to be notified on item's data change.
 //! Callback will be called with (SessionItem*, data_role).
 
@@ -59,10 +66,19 @@ void ModelMapper::setActive(bool value)
 
 void ModelMapper::unsubscribe(Callbacks::client_t client)
 {
+    m_on_item_destroy.remove_client(client);
     m_on_data_change.remove_client(client);
     m_on_row_inserted.remove_client(client);
     m_on_row_removed.remove_client(client);
     m_on_row_removed2.remove_client(client);
+}
+
+//! Notifies all callbacks subscribed to "item destroyed" event.
+
+void ModelMapper::callOnItemDestroy(SessionItem* item)
+{
+    if (m_active)
+        m_on_item_destroy.notify(item);
 }
 
 //! Notifies all callbacks subscribed to "item data is changed" event.
