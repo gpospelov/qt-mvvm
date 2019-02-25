@@ -56,6 +56,7 @@ private:
 class MockWidgetForModel : public ModelTestWidgetInterface {
 public:
     MockWidgetForModel(ModelView::SessionModel* item);
+    ~MockWidgetForModel();
 
     void setModel(ModelView::SessionModel* model);
 

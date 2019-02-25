@@ -69,6 +69,12 @@ MockWidgetForModel::MockWidgetForModel(ModelView::SessionModel* model)
     setModel(model);
 }
 
+MockWidgetForModel::~MockWidgetForModel()
+{
+    if (m_model)
+        m_model->mapper()->unsubscribe(this);
+}
+
 void MockWidgetForModel::setModel(ModelView::SessionModel* model)
 {
     m_model = model;
