@@ -42,8 +42,8 @@ SessionItem::~SessionItem()
     if (m_obsolete_mapper)
         m_obsolete_mapper->callOnItemDestroy();
 
-//    if (m_model && m_model->mapper())
-//        m_model->mapper()->callOnItemDestroy(this);
+//    if (m_mapper)
+//        m_mapper->callOnItemDestroy(this);
 
     for (auto item : m_children)
         delete item;

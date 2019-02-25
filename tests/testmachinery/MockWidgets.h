@@ -60,7 +60,6 @@ public:
 
     void setModel(ModelView::SessionModel* model);
 
-    MOCK_METHOD1(onItemDestroy, void(ModelView::SessionItem* item));
     MOCK_METHOD2(onDataChange, void(ModelView::SessionItem* item, int role));
     MOCK_METHOD2(onRowInserted, void(ModelView::SessionItem* item, int row));
     MOCK_METHOD2(onRowRemoved, void(ModelView::SessionItem* item, int row));

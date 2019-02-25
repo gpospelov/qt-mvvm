@@ -82,10 +82,6 @@ void MockWidgetForModel::setModel(ModelView::SessionModel* model)
     if (m_model == nullptr)
         return;
 
-    m_model->mapper()->setOnItemDestroy([this](ModelView::SessionItem* item) {
-        onItemDestroy(item);
-    }, this);
-
     m_model->mapper()->setOnDataChange([this](ModelView::SessionItem* item, int role) {
         onDataChange(item, role);
     }, this);
