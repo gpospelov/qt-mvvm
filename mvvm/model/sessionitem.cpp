@@ -38,8 +38,8 @@ SessionItem::SessionItem(model_type modelType)
 
 SessionItem::~SessionItem()
 {
-    if (m_mapper)
-        m_mapper->callOnItemDestroy();
+    if (m_obsolete_mapper)
+        m_obsolete_mapper->callOnItemDestroy();
 
     for (auto item : m_children)
         delete item;
@@ -256,11 +256,11 @@ std::pair<int, std::string> SessionItem::tagRowFromItem(const SessionItem* item)
     return {-1, ""};
 }
 
-ObsoleteItemMapper* SessionItem::mapper()
+ObsoleteItemMapper* SessionItem::obsolete_mapper()
 {
-    if (!m_mapper)
-        m_mapper = std::make_unique<ObsoleteItemMapper>(this);
-    return m_mapper.get();
+    if (!m_obsolete_mapper)
+        m_obsolete_mapper = std::make_unique<ObsoleteItemMapper>(this);
+    return m_obsolete_mapper.get();
 }
 
 void SessionItem::setParent(SessionItem* parent)
@@ -326,8 +326,8 @@ bool SessionItem::setDataIntern(const QVariant& variant, int role)
     }
 
     bool result = m_data->setData(variant, role);
-    if (result && m_mapper)
-        m_mapper->callOnDataChange(role);
+    if (result && m_obsolete_mapper)
+        m_obsolete_mapper->callOnDataChange(role);
 
     if(result && m_model)
         m_model->mapper()->callOnDataChange(this, role);

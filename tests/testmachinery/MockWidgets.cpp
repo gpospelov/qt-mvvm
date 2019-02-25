@@ -14,7 +14,7 @@ ObsoleteMockWidget::ObsoleteMockWidget(ModelView::SessionItem* item)
 ObsoleteMockWidget::~ObsoleteMockWidget()
 {
     if (m_item)
-        m_item->mapper()->unsubscribe(this);
+        m_item->obsolete_mapper()->unsubscribe(this);
 }
 
 void ObsoleteMockWidget::setItem(ModelView::SessionItem* item)
@@ -24,12 +24,38 @@ void ObsoleteMockWidget::setItem(ModelView::SessionItem* item)
     if (m_item == nullptr)
         return;
 
-    m_item->mapper()->setOnItemDestroy([this](ModelView::SessionItem* item) {
+    m_item->obsolete_mapper()->setOnItemDestroy([this](ModelView::SessionItem* item) {
         m_item = nullptr;
         onItemDestroy(item);
     }, this);
 
-    m_item->mapper()->setOnDataChange([this](ModelView::SessionItem* item, int role) {
+    m_item->obsolete_mapper()->setOnDataChange([this](ModelView::SessionItem* item, int role) {
+        onDataChange(item, role);
+    }, this);
+}
+
+// ----------------------------------------------------------------------------
+
+MockWidgetForItem::MockWidgetForItem(ModelView::SessionItem* item)
+    : m_item(nullptr)
+{
+    setItem(item);
+}
+
+MockWidgetForItem::~MockWidgetForItem()
+{
+    if (m_item)
+        m_item->obsolete_mapper()->unsubscribe(this);
+}
+
+void MockWidgetForItem::setItem(ModelView::SessionItem* item)
+{
+    m_item = item;
+
+    if (m_item == nullptr)
+        return;
+
+    m_item->obsolete_mapper()->setOnDataChange([this](ModelView::SessionItem* item, int role) {
         onDataChange(item, role);
     }, this);
 }

@@ -35,6 +35,21 @@ private:
     ModelView::SessionItem* m_item;
 };
 
+//! Mock widget to test ItemMapper functionality.
+
+class MockWidgetForItem : public ItemTestWidgetInterface {
+public:
+    MockWidgetForItem(ModelView::SessionItem* item);
+    ~MockWidgetForItem();
+
+    void setItem(ModelView::SessionItem* item);
+
+    MOCK_METHOD2(onDataChange, void(ModelView::SessionItem* item, int role));
+
+private:
+    ModelView::SessionItem* m_item;
+};
+
 //! Mock class to test ModelMapper functionality.
 
 class MockWidgetForModel : public ModelTestWidgetInterface {

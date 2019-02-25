@@ -83,7 +83,7 @@ public:
     std::string tagFromItem(const SessionItem* item) const;
     std::pair<int, std::string> tagRowFromItem(const SessionItem* item) const;
 
-    ObsoleteItemMapper* mapper();
+    ObsoleteItemMapper* obsolete_mapper();
 
 private:
     void setParent(SessionItem* parent);
@@ -94,7 +94,7 @@ private:
     SessionItem* m_parent;
     SessionModel* m_model;
     std::vector<SessionItem*> m_children;
-    std::unique_ptr<ObsoleteItemMapper> m_mapper;
+    std::unique_ptr<ObsoleteItemMapper> m_obsolete_mapper;
     std::unique_ptr<SessionItemData> m_data;
     std::unique_ptr<SessionItemTags> m_tags;
     model_type m_modelType;

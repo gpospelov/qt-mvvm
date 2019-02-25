@@ -65,7 +65,7 @@ TEST(TestObsoleteItemMapper, setActivity)
     std::unique_ptr<SessionItem> item = std::make_unique<SessionItem>();
     ObsoleteMockWidget widget(item.get());
 
-    item->mapper()->setActive(false);
+    item->obsolete_mapper()->setActive(false);
 
     EXPECT_CALL(widget, onItemDestroy(_)).Times(0);
     EXPECT_CALL(widget, onDataChange(_, _)).Times(0);
@@ -83,7 +83,7 @@ TEST(TestObsoleteItemMapper, unsubscribe)
     ObsoleteMockWidget widget1(item.get());
     ObsoleteMockWidget widget2(item.get());
 
-    item->mapper()->unsubscribe(&widget1);
+    item->obsolete_mapper()->unsubscribe(&widget1);
 
     EXPECT_CALL(widget1, onDataChange(_, _)).Times(0);
     EXPECT_CALL(widget2, onDataChange(_, _)).Times(1);
