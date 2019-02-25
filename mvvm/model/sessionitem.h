@@ -25,6 +25,7 @@ class SessionItemData;
 class SessionItemTags;
 class TagInfo;
 class ObsoleteItemMapper;
+class ItemMapper;
 
 class CORE_EXPORT SessionItem
 {
@@ -84,6 +85,7 @@ public:
     std::pair<int, std::string> tagRowFromItem(const SessionItem* item) const;
 
     ObsoleteItemMapper* obsolete_mapper();
+    ItemMapper* mapper();
 
 private:
     void setParent(SessionItem* parent);
@@ -95,6 +97,7 @@ private:
     SessionModel* m_model;
     std::vector<SessionItem*> m_children;
     std::unique_ptr<ObsoleteItemMapper> m_obsolete_mapper;
+    std::unique_ptr<ItemMapper> m_mapper;
     std::unique_ptr<SessionItemData> m_data;
     std::unique_ptr<SessionItemTags> m_tags;
     model_type m_modelType;

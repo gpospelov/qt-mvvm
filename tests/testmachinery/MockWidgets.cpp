@@ -1,6 +1,7 @@
 #include "MockWidgets.h"
 #include "sessionitem.h"
 #include "obsoleteitemmapper.h"
+#include "itemmapper.h"
 #include "sessionmodel.h"
 #include "modelmapper.h"
 
@@ -45,7 +46,7 @@ MockWidgetForItem::MockWidgetForItem(ModelView::SessionItem* item)
 MockWidgetForItem::~MockWidgetForItem()
 {
     if (m_item)
-        m_item->obsolete_mapper()->unsubscribe(this);
+        m_item->mapper()->unsubscribe(this);
 }
 
 void MockWidgetForItem::setItem(ModelView::SessionItem* item)
@@ -55,7 +56,7 @@ void MockWidgetForItem::setItem(ModelView::SessionItem* item)
     if (m_item == nullptr)
         return;
 
-    m_item->obsolete_mapper()->setOnDataChange([this](ModelView::SessionItem* item, int role) {
+    m_item->mapper()->setOnDataChange([this](ModelView::SessionItem* item, int role) {
         onDataChange(item, role);
     }, this);
 }

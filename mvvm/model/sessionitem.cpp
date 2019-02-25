@@ -11,6 +11,7 @@
 #include "customvariants.h"
 #include "itemmanager.h"
 #include "obsoleteitemmapper.h"
+#include "itemmapper.h"
 #include "itempool.h"
 #include "itemutils.h"
 #include "sessionitemdata.h"
@@ -261,6 +262,13 @@ ObsoleteItemMapper* SessionItem::obsolete_mapper()
     if (!m_obsolete_mapper)
         m_obsolete_mapper = std::make_unique<ObsoleteItemMapper>(this);
     return m_obsolete_mapper.get();
+}
+
+ItemMapper* SessionItem::mapper()
+{
+    if (!m_mapper)
+        m_mapper = std::make_unique<ItemMapper>(this);
+    return m_mapper.get();
 }
 
 void SessionItem::setParent(SessionItem* parent)

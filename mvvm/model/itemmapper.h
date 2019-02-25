@@ -32,6 +32,10 @@ public:
 
     void setOnDataChange(Callbacks::item_int_t f, Callbacks::client_t client = {});
 
+    void setActive(bool value);
+
+    void unsubscribe(Callbacks::client_t client);
+
 private:
     void onModelDataChange(SessionItem* item, int role);
     void subscribe_to_model();

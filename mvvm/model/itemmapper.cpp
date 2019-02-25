@@ -42,6 +42,18 @@ void ItemMapper::setOnDataChange(Callbacks::item_int_t f, Callbacks::client_t cl
     m_on_data_change.add(f, client);
 }
 
+//! Sets activity flag to given value. Will disable all callbacks if false.
+
+void ItemMapper::setActive(bool value)
+{
+    m_active = value;
+}
+
+void ItemMapper::unsubscribe(Callbacks::client_t client)
+{
+    m_on_data_change.remove_client(client);
+}
+
 //! Processes signals from the model when item data changed.
 
 void ItemMapper::onModelDataChange(SessionItem* item, int role)

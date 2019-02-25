@@ -44,6 +44,7 @@ public:
 
     void setItem(ModelView::SessionItem* item);
 
+    MOCK_METHOD1(onItemDestroy, void(ModelView::SessionItem* item));
     MOCK_METHOD2(onDataChange, void(ModelView::SessionItem* item, int role));
 
 private:
