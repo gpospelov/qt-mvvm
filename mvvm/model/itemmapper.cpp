@@ -47,6 +47,15 @@ void ItemMapper::setOnDataChange(Callbacks::item_int_t f, Callbacks::client_t cl
     m_on_data_change.add(f, client);
 }
 
+//! Sets callback to be notified on item's property change.
+//!
+//! Callback will be called with (compound_item, property_name).
+
+void ItemMapper::setOnPropertyChange(Callbacks::item_str_t f, Callbacks::client_t client)
+{
+    m_on_property_change.add(f, client);
+}
+
 //! Sets activity flag to given value. Will disable all callbacks if false.
 
 void ItemMapper::setActive(bool value)
@@ -58,6 +67,7 @@ void ItemMapper::unsubscribe(Callbacks::client_t client)
 {
     m_on_item_destroy.remove_client(client);
     m_on_data_change.remove_client(client);
+    m_on_property_change.remove_client(client);
 }
 
 //! Processes signals from the model when item data changed.
@@ -99,3 +109,10 @@ void ItemMapper::callOnDataChange(SessionItem* item, int role)
     if (m_active)
         m_on_data_change.notify(item, role);
 }
+
+void ItemMapper::callOnPropertyChange(SessionItem* item, std::string property_name)
+{
+    if (m_active)
+        m_on_property_change.notify(item, property_name);
+}
+

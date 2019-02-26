@@ -38,6 +38,7 @@ namespace Callbacks {
 using client_t = const void*;
 using item_t = std::function<void(SessionItem*)>;
 using item_int_t = std::function<void(SessionItem*, int)>;
+using item_str_t = std::function<void(SessionItem*, std::string)>;
 using item_int_str_t = std::function<void(SessionItem*, int, std::string)>;
 }
 
