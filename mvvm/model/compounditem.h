@@ -10,21 +10,23 @@
 #ifndef COMPOUNDITEM_H
 #define COMPOUNDITEM_H
 
+#include "propertyitem.h"
 #include "sessionitem.h"
 #include "taginfo.h"
-#include "propertyitem.h"
 
-namespace ModelView {
+namespace ModelView
+{
 
 //! Complex item holding mixed SessionItem types (single properties and other CompountItems).
 
 class CORE_EXPORT CompoundItem : public SessionItem
 {
 public:
-    CompoundItem(const std::string& modelType={});
+    CompoundItem(const std::string& modelType = {});
 
     //! Registers single property item.
-    template<typename T> T* addProperty(const std::string& name, const QVariant& variant=QVariant());
+    template <typename T>
+    T* addProperty(const std::string& name, const QVariant& variant = QVariant());
 
     std::string displayName() const override;
 
@@ -32,10 +34,9 @@ public:
     QVariant getItemValue(const std::string& tag) const;
 
     void setItemValue(const std::string& tag, const QVariant& variant);
-
 };
 
-template<typename T> T* CompoundItem::addProperty(const std::string& name, const QVariant& variant)
+template <typename T> T* CompoundItem::addProperty(const std::string& name, const QVariant& variant)
 {
     T* property = new T;
 
