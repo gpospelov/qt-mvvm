@@ -32,6 +32,7 @@ const int DEFAULT_TAG = 3;
 namespace Constants {
 const model_type PropertyType = "Property";
 const model_type CompoundType = "Compound";
+const model_type VectorType = "Vector";
 } // namespace Constants
 
 namespace Callbacks {
