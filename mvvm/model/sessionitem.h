@@ -85,6 +85,8 @@ public:
 
     ItemMapper* mapper();
 
+    virtual void activate();
+
 private:
     void setParent(SessionItem* parent);
     void setModel(SessionModel* model);

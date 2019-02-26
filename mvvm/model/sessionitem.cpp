@@ -263,6 +263,11 @@ ItemMapper* SessionItem::mapper()
     return m_mapper.get();
 }
 
+//! Activates all buisiness logic of given item. Should be called after item constructions.
+//! Intended for overload in child classes.
+
+void SessionItem::activate() {}
+
 void SessionItem::setParent(SessionItem* parent)
 {
     m_parent = parent;
