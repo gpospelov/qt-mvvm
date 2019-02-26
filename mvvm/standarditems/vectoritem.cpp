@@ -8,6 +8,10 @@
 // ************************************************************************** //
 
 #include "vectoritem.h"
+#include "itemmapper.h"
+#include "customvariants.h"
+#include <sstream>
+#include <QDebug>
 
 using namespace ModelView;
 
@@ -20,4 +24,23 @@ VectorItem::VectorItem() : CompoundItem(Constants::VectorType)
     addProperty<ModelView::PropertyItem>(P_X, 0.0);
     addProperty<ModelView::PropertyItem>(P_Y, 0.0);
     addProperty<ModelView::PropertyItem>(P_Z, 0.0);
+
+    update_label();
+}
+
+void VectorItem::activate()
+{
+    mapper()->setOnPropertyChange([this](SessionItem*, std::string) { update_label(); });
+}
+
+void VectorItem::update_label()
+{
+    std::ostringstream ostr;
+    ostr << "("
+         << getItemValue(P_X).toDouble() << ", "
+         << getItemValue(P_Y).toDouble() << ", "
+         << getItemValue(P_Z).toDouble()
+         << ")";
+    qDebug() << "xxx XXXX";
+    setData(QVariant::fromValue(ostr.str()), ItemDataRole::DATA);
 }

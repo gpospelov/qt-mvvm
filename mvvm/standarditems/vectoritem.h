@@ -24,6 +24,11 @@ public:
     static const std::string P_Z;
 
     VectorItem();
+
+    void activate() override;
+
+private:
+    void update_label();
 };
 
 } // ModelView

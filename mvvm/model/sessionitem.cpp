@@ -285,6 +285,10 @@ void SessionItem::setModel(SessionModel* model)
         m_model->make_registered(this, true);
     }
 
+    // FIXME find better place for activate logic. ItemMapper ? make_registered ?
+    if (m_model)
+       activate(); // activate buisiness logic
+
     for (auto child : m_children)
         child->setModel(model);
 }

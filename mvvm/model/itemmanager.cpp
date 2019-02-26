@@ -39,7 +39,6 @@ ItemManager::~ItemManager() = default;
 SessionItem* ItemManager::createItem(const model_type& modelType)
 {
     auto result = m_item_factory->createItem(modelType);
-    result->activate();
     return result;
 }
 
