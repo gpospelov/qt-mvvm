@@ -9,7 +9,6 @@
 
 #include "MockInterfaces.h"
 #include "sessionitem.h"
-#include "obsoleteitemmapper.h"
 
 ItemTestWidgetInterface::~ItemTestWidgetInterface() = default;
 

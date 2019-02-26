@@ -10,7 +10,6 @@
 #include "sessionitem.h"
 #include "customvariants.h"
 #include "itemmanager.h"
-#include "obsoleteitemmapper.h"
 #include "itemmapper.h"
 #include "itempool.h"
 #include "itemutils.h"
@@ -39,9 +38,6 @@ SessionItem::SessionItem(model_type modelType)
 
 SessionItem::~SessionItem()
 {
-    if (m_obsolete_mapper)
-        m_obsolete_mapper->callOnItemDestroy();
-
     if (m_mapper)
         m_mapper->callOnItemDestroy();
 
@@ -260,13 +256,6 @@ std::pair<int, std::string> SessionItem::tagRowFromItem(const SessionItem* item)
     return {-1, ""};
 }
 
-ObsoleteItemMapper* SessionItem::obsolete_mapper()
-{
-    if (!m_obsolete_mapper)
-        m_obsolete_mapper = std::make_unique<ObsoleteItemMapper>(this);
-    return m_obsolete_mapper.get();
-}
-
 ItemMapper* SessionItem::mapper()
 {
     if (!m_mapper)
@@ -337,9 +326,6 @@ bool SessionItem::setDataIntern(const QVariant& variant, int role)
     }
 
     bool result = m_data->setData(variant, role);
-    if (result && m_obsolete_mapper)
-        m_obsolete_mapper->callOnDataChange(role);
-
     if(result && m_model)
         m_model->mapper()->callOnDataChange(this, role);
 

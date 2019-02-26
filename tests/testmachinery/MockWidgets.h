@@ -19,22 +19,6 @@ public:
     MOCK_METHOD2(onDataChange, void(ModelView::SessionItem* item, int role));
 };
 
-//! Mock class to test ItemMapper functionality.
-
-class ObsoleteMockWidget : public ItemTestWidgetInterface {
-public:
-    ObsoleteMockWidget(ModelView::SessionItem* item);
-    ~ObsoleteMockWidget();
-
-    void setItem(ModelView::SessionItem* item);
-
-    MOCK_METHOD1(onItemDestroy, void(ModelView::SessionItem* item));
-    MOCK_METHOD2(onDataChange, void(ModelView::SessionItem* item, int role));
-
-private:
-    ModelView::SessionItem* m_item;
-};
-
 //! Mock widget to test ItemMapper functionality.
 
 class MockWidgetForItem : public ItemTestWidgetInterface {
