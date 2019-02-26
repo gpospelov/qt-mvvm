@@ -43,6 +43,7 @@ private:
     void onModelDataChange(SessionItem* item, int role);
     void subscribe_to_model();
     void unsubscribe_from_model();
+    int nestlingDepth(SessionItem* item, int level = 0);
 
     void callOnItemDestroy();
     void callOnDataChange(SessionItem* item, int role);

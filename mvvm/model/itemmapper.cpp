@@ -74,8 +74,12 @@ void ItemMapper::unsubscribe(Callbacks::client_t client)
 
 void ItemMapper::onModelDataChange(SessionItem* item, int role)
 {
-    if (item == m_item)
+    int nestling = nestlingDepth(item);
+
+    if (nestling == 0)
         callOnDataChange(item, role);
+
+
 }
 
 //! Subscribes to model signals.
@@ -92,6 +96,15 @@ void ItemMapper::subscribe_to_model()
 void ItemMapper::unsubscribe_from_model()
 {
     m_model->mapper()->unsubscribe(this);
+}
+
+int ItemMapper::nestlingDepth(SessionItem* item, int level)
+{
+    if (item == nullptr || item == m_model->rootItem())
+        return -1;
+    if (item == m_item)
+        return level;
+    return nestlingDepth(item->parent(), level + 1);
 }
 
 //! Calls all callbacks subscribed to "item is destroyed" event.
