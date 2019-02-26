@@ -11,6 +11,7 @@
 #include "sessionitem.h"
 #include "propertyitem.h"
 #include "compounditem.h"
+#include "vectoritem.h"
 
 using namespace ModelView;
 
@@ -23,6 +24,8 @@ SessionItem* ItemFactory::createItem(const model_type& modelType)
         return new PropertyItem;
     else if (modelType == Constants::CompoundType)
         return new CompoundItem;
+    else if (modelType == Constants::VectorType)
+        return new VectorItem;
     else
         return new SessionItem(modelType);
 }

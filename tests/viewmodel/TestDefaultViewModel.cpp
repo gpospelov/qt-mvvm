@@ -2,6 +2,7 @@
 #include "toy_includes.h"
 #include "viewitems.h"
 #include "defaultviewmodel.h"
+#include "vectoritem.h"
 #include <QSignalSpy>
 #include <QDebug>
 
@@ -150,7 +151,7 @@ TEST_F(TestDefaultViewModel, fromLayer)
 TEST_F(TestDefaultViewModel, fromVector)
 {
     ToyItems::SampleModel model;
-    auto vectorItem = model.insertNewItem(ToyItems::Constants::VectorType);
+    auto vectorItem = model.insertNewItem(Constants::VectorType);
 
     // constructing viewModel from sample model
     DefaultViewModel viewModel;
@@ -172,24 +173,24 @@ TEST_F(TestDefaultViewModel, fromVector)
         = dynamic_cast<ViewLabelItem*>(viewModel.itemFromIndex(viewModel.index(0, 0, vectorIndex)));
     auto pxData
         = dynamic_cast<ViewDataItem*>(viewModel.itemFromIndex(viewModel.index(0, 1, vectorIndex)));
-    EXPECT_EQ(pxLabel->item(), vectorItem->getItem(ToyItems::Vector::P_X));
-    EXPECT_EQ(pxData->item(), vectorItem->getItem(ToyItems::Vector::P_X));
+    EXPECT_EQ(pxLabel->item(), vectorItem->getItem(VectorItem::P_X));
+    EXPECT_EQ(pxData->item(), vectorItem->getItem(VectorItem::P_X));
 
     // ViewLabelItem and ViewDataItem correspondint to P_Y
     pxLabel
         = dynamic_cast<ViewLabelItem*>(viewModel.itemFromIndex(viewModel.index(1, 0, vectorIndex)));
     pxData
         = dynamic_cast<ViewDataItem*>(viewModel.itemFromIndex(viewModel.index(1, 1, vectorIndex)));
-    EXPECT_EQ(pxLabel->item(), vectorItem->getItem(ToyItems::Vector::P_Y));
-    EXPECT_EQ(pxData->item(), vectorItem->getItem(ToyItems::Vector::P_Y));
+    EXPECT_EQ(pxLabel->item(), vectorItem->getItem(VectorItem::P_Y));
+    EXPECT_EQ(pxData->item(), vectorItem->getItem(VectorItem::P_Y));
 
     // ViewLabelItem and ViewDataItem correspondint to P_Z
     pxLabel
         = dynamic_cast<ViewLabelItem*>(viewModel.itemFromIndex(viewModel.index(2, 0, vectorIndex)));
     pxData
         = dynamic_cast<ViewDataItem*>(viewModel.itemFromIndex(viewModel.index(2, 1, vectorIndex)));
-    EXPECT_EQ(pxLabel->item(), vectorItem->getItem(ToyItems::Vector::P_Z));
-    EXPECT_EQ(pxData->item(), vectorItem->getItem(ToyItems::Vector::P_Z));
+    EXPECT_EQ(pxLabel->item(), vectorItem->getItem(VectorItem::P_Z));
+    EXPECT_EQ(pxData->item(), vectorItem->getItem(VectorItem::P_Z));
 }
 
 

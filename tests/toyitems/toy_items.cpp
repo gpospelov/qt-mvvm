@@ -12,6 +12,7 @@
 #include "taginfo.h"
 #include "toy_constants.h"
 #include "toy_factories.h"
+#include "vectoritem.h"
 #include <stdexcept>
 
 using namespace ToyItems;
@@ -36,23 +37,9 @@ Layer::Layer() : CompoundItem(Constants::LayerType)
 
 // ----------------------------------------------------------------------------
 
-const std::string Vector::P_X = "X";
-const std::string Vector::P_Y = "Y";
-const std::string Vector::P_Z = "Z";
-
-Vector::Vector() : CompoundItem(Constants::VectorType)
-{
-    addProperty<ModelView::PropertyItem>(P_X, 0.0);
-    addProperty<ModelView::PropertyItem>(P_Y, 0.0);
-    addProperty<ModelView::PropertyItem>(P_Z, 0.0);
-}
-
-
-// ----------------------------------------------------------------------------
-
 const std::string Particle::P_POSITION = "Position";
 
 Particle::Particle() : CompoundItem(Constants::ParticleType)
 {
-    addProperty<Vector>(P_POSITION);
+    addProperty<ModelView::VectorItem>(P_POSITION);
 }

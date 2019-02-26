@@ -12,6 +12,7 @@
 #include "propertyitem.h"
 #include "toy_constants.h"
 #include "toy_items.h"
+#include "vectoritem.h"
 #include <stdexcept>
 
 using namespace ToyItems;
@@ -29,8 +30,8 @@ ModelView::SessionItem* ItemFactory::createItem(const ModelView::model_type& mod
     else if (modelType == Constants::ParticleType)
         result = new Particle;
 
-    else if (modelType == Constants::VectorType)
-        result = new Vector;
+    else if (modelType == ModelView::Constants::VectorType)
+        result = new ModelView::VectorItem;
 
     else if (modelType == ModelView::Constants::PropertyType)
         result = new ModelView::PropertyItem;

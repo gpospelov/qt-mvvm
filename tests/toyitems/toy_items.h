@@ -39,17 +39,6 @@ public:
 
 // ----------------------------------------------------------------------------
 
-class Vector : public ModelView::CompoundItem
-{
-public:
-    static const std::string P_X;
-    static const std::string P_Y;
-    static const std::string P_Z;
-    Vector();
-};
-
-// ----------------------------------------------------------------------------
-
 class Particle : public ModelView::CompoundItem
 {
 public:
