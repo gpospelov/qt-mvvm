@@ -26,10 +26,12 @@ class SessionModel;
 
 class CORE_EXPORT ItemMapper
 {
+    friend class SessionItem;
 public:
     ItemMapper(SessionItem* item);
     ~ItemMapper();
 
+    void setOnItemDestroy(Callbacks::item_t f, Callbacks::client_t client = {});
     void setOnDataChange(Callbacks::item_int_t f, Callbacks::client_t client = {});
 
     void setActive(bool value);
@@ -41,8 +43,10 @@ private:
     void subscribe_to_model();
     void unsubscribe_from_model();
 
+    void callOnItemDestroy();
     void callOnDataChange(SessionItem* item, int role);
 
+    CallbackContainer<Callbacks::item_t> m_on_item_destroy;
     CallbackContainer<Callbacks::item_int_t> m_on_data_change;
 
     bool m_active;

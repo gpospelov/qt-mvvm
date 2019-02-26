@@ -34,6 +34,11 @@ ItemMapper::~ItemMapper()
     unsubscribe_from_model();
 }
 
+void ItemMapper::setOnItemDestroy(Callbacks::item_t f, Callbacks::client_t client)
+{
+    m_on_item_destroy.add(f, client);
+}
+
 //! Sets callback to be notified on item's data change.
 //! Callback will be called with (SessionItem*, data_role).
 
@@ -51,6 +56,7 @@ void ItemMapper::setActive(bool value)
 
 void ItemMapper::unsubscribe(Callbacks::client_t client)
 {
+    m_on_item_destroy.remove_client(client);
     m_on_data_change.remove_client(client);
 }
 
@@ -76,6 +82,14 @@ void ItemMapper::subscribe_to_model()
 void ItemMapper::unsubscribe_from_model()
 {
     m_model->mapper()->unsubscribe(this);
+}
+
+//! Calls all callbacks subscribed to "item is destroyed" event.
+
+void ItemMapper::callOnItemDestroy()
+{
+    if (m_active)
+        m_on_item_destroy.notify(m_item);
 }
 
 //! Notifies all callbacks subscribed to "item data is changed" event.

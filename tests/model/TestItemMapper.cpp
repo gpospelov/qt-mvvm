@@ -29,6 +29,24 @@ TEST(TestItemMapper, initialState)
     EXPECT_NO_THROW(item2->mapper());
 }
 
+//! Destroying item, expecting single call of onItemDestroy in MockWidget.
+// FIXME Provide onItemDestroy or cleanup
+
+TEST(TestItemMapper, onItemDestroy)
+{
+    SessionModel model;
+    auto item = model.insertNewItem("parent", model.rootItem(), 0, "");
+
+    MockWidgetForItem widget(item);
+
+    auto expected_item = item;
+    EXPECT_CALL(widget, onItemDestroy(expected_item)).Times(1);
+    EXPECT_CALL(widget, onDataChange(_, _)).Times(0);
+
+    // performing action
+    model.removeItem(model.rootItem(), 0);
+}
+
 //! Setting data to item, expecting onDataChange callback.
 
 TEST(TestItemMapper, onDataChange)
