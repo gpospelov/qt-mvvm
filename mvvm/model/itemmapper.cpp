@@ -76,10 +76,13 @@ void ItemMapper::onModelDataChange(SessionItem* item, int role)
 {
     int nestling = nestlingDepth(item);
 
+    // own item data changed
     if (nestling == 0)
         callOnDataChange(item, role);
 
-
+    // data of item's property changed
+    if (nestling == 1)
+        callOnPropertyChange(m_item, m_item->tagFromItem(item));
 }
 
 //! Subscribes to model signals.

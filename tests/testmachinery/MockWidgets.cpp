@@ -25,7 +25,6 @@ void MockWidgetForItem::setItem(ModelView::SessionItem* item)
     if (m_item == nullptr)
         return;
 
-    // FIXME do we need on ItemDestroy ?
     m_item->mapper()->setOnItemDestroy([this](ModelView::SessionItem* item) {
         m_item = nullptr;
         onItemDestroy(item);
@@ -34,6 +33,11 @@ void MockWidgetForItem::setItem(ModelView::SessionItem* item)
     m_item->mapper()->setOnDataChange([this](ModelView::SessionItem* item, int role) {
         onDataChange(item, role);
     }, this);
+
+    m_item->mapper()->setOnPropertyChange([this](ModelView::SessionItem* item, std::string name) {
+        onPropertyChange(item, name);
+    }, this);
+
 }
 
 // ----------------------------------------------------------------------------

@@ -30,6 +30,7 @@ public:
 
     MOCK_METHOD1(onItemDestroy, void(ModelView::SessionItem* item));
     MOCK_METHOD2(onDataChange, void(ModelView::SessionItem* item, int role));
+    MOCK_METHOD2(onPropertyChange, void(ModelView::SessionItem* item, std::string name));
 
 private:
     ModelView::SessionItem* m_item;

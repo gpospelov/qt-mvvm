@@ -3,6 +3,7 @@
 #include "sessionitem.h"
 #include "sessionmodel.h"
 #include "MockWidgets.h"
+#include "compounditem.h"
 
 using namespace ModelView;
 using ::testing::_;
@@ -116,4 +117,26 @@ TEST(TestItemMapper, unsubscribe)
 
     // perform action, only one widget should be triggered
     item->setData(42.0, ItemDataRole::DATA);
+}
+
+//! Changing item property.
+
+TEST(TestItemMapper, onPropertyChange)
+{
+    SessionModel model;
+    auto item = dynamic_cast<CompoundItem*>(model.insertNewItem("Compound"));
+    EXPECT_TRUE(item != nullptr);
+
+    auto property = item->addProperty<PropertyItem>("height", 42.0);
+
+    MockWidgetForItem widget(item);
+
+    EXPECT_CALL(widget, onItemDestroy(_)).Times(0);
+    EXPECT_CALL(widget, onDataChange(_, _)).Times(0);
+    EXPECT_CALL(widget, onPropertyChange(item, "height")).Times(1);
+
+    // perform action
+    item->setItemValue("height", 43.0);
+    EXPECT_EQ(item->getItemValue("height"), 43.0);
+    EXPECT_EQ(property->data(ItemDataRole::DATA).toDouble(), 43.0);
 }
