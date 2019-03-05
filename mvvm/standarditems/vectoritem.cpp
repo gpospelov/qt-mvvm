@@ -11,7 +11,6 @@
 #include "itemmapper.h"
 #include "customvariants.h"
 #include <sstream>
-#include <QDebug>
 
 using namespace ModelView;
 
@@ -24,6 +23,8 @@ VectorItem::VectorItem() : CompoundItem(Constants::VectorType)
     addProperty<ModelView::PropertyItem>(P_X, 0.0);
     addProperty<ModelView::PropertyItem>(P_Y, 0.0);
     addProperty<ModelView::PropertyItem>(P_Z, 0.0);
+
+    setEditable(false);
 
     update_label();
 }
@@ -41,6 +42,5 @@ void VectorItem::update_label()
          << getItemValue(P_Y).toDouble() << ", "
          << getItemValue(P_Z).toDouble()
          << ")";
-    qDebug() << "xxx XXXX";
     setData(QVariant::fromValue(ostr.str()), ItemDataRole::DATA);
 }

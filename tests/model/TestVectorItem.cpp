@@ -19,6 +19,9 @@ TestVectorItem::~TestVectorItem() = default;
 TEST_F(TestVectorItem, initialState)
 {
     VectorItem item;
+
+    EXPECT_FALSE(item.isEditable());
+
     EXPECT_EQ(item.getItemValue(VectorItem::P_X).toDouble(), 0.0);
     EXPECT_EQ(item.getItemValue(VectorItem::P_Y).toDouble(), 0.0);
     EXPECT_EQ(item.getItemValue(VectorItem::P_Z).toDouble(), 0.0);
