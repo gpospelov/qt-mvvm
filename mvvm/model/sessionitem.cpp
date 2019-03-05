@@ -25,6 +25,11 @@
 namespace
 {
 const std::string default_tag_name = "defaultTag";
+int appearance(const ModelView::SessionItem& item)
+{
+    auto value = item.data(ModelView::ItemDataRole::APPEARANCE);
+    return value.isValid() ? value.toInt() : ModelView::Appearance::EDITABLE | ModelView::Appearance::ENABLED;
+}
 }
 
 using namespace ModelView;
@@ -271,24 +276,22 @@ void SessionItem::activate() {}
 
 bool SessionItem::isEditable() const
 {
-    auto value = data(ItemDataRole::APPEARANCE);
-    return value.isValid() ? value.toInt() & !Appearance::READONLY : true;
+    return appearance(*this) & Appearance::EDITABLE;
 }
 
 void SessionItem::setEditable(bool value)
 {
-    Q_UNUSED(value);
+    setAppearanceFlag(Appearance::EDITABLE, value);
 }
 
 bool SessionItem::isEnabled() const
 {
-    auto value = data(ItemDataRole::APPEARANCE);
-    return value.isValid() ? value.toInt() & !Appearance::DISABLED : true;
+    return appearance(*this) & Appearance::ENABLED;
 }
 
 void SessionItem::setEnabled(bool value)
 {
-    Q_UNUSED(value);
+    setAppearanceFlag(Appearance::ENABLED, value);
 }
 
 void SessionItem::setParent(SessionItem* parent)
@@ -341,6 +344,17 @@ std::string SessionItem::ensure(const std::string& tag, const std::string& model
     }
 
     return result;
+}
+
+void SessionItem::setAppearanceFlag(int flag, bool value)
+{
+    int flags = appearance(*this);
+    if (value)
+        flags |= flag;
+    else
+        flags &= ~flag;
+
+    setDataIntern(flags, ItemDataRole::APPEARANCE);
 }
 
 bool SessionItem::setDataIntern(const QVariant& variant, int role)

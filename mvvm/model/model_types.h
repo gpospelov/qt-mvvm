@@ -31,9 +31,9 @@ const int APPEARANCE = 4;
 };
 
 enum Appearance {
-    DEFAULT = 0x000,
-    DISABLED = 0x001,
-    READONLY = 0x002
+    NOFLAGS = 0x000,
+    ENABLED = 0x001,
+    EDITABLE = 0x002
 };
 
 namespace Constants {

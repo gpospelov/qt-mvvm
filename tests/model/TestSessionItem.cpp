@@ -600,3 +600,33 @@ TEST_F(TestSessionItem, tagRowFromItem)
     EXPECT_EQ(parent->tagRowFromItem(child_t2_c).second, "tag2");
 }
 
+//! Checks item appearance (enabled/disabled and editable/readonly).
+
+TEST_F(TestSessionItem, appearance)
+{
+    SessionItem item("Model");
+
+    // there shouldn't be any data
+    auto variant = item.data(ItemDataRole::APPEARANCE);
+    EXPECT_FALSE(variant.isValid());
+
+    // default status
+    EXPECT_TRUE(item.isEnabled());
+    EXPECT_TRUE(item.isEditable());
+
+    // disabling item
+    item.setEnabled(false);
+    EXPECT_FALSE(item.isEnabled());
+    EXPECT_TRUE(item.isEditable());
+
+    // data should be there now
+    variant = item.data(ItemDataRole::APPEARANCE);
+    EXPECT_TRUE(variant.isValid());
+
+    // making it readonly
+    item.setEditable(false);
+    EXPECT_FALSE(item.isEnabled());
+    EXPECT_FALSE(item.isEditable());
+}
+
+

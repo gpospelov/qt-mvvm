@@ -1,4 +1,4 @@
-// ************************************************************************** //
+﻿// ************************************************************************** //
 //
 //  Prototype of mini MVVM framework for bornagainproject.org
 //
@@ -93,12 +93,12 @@ public:
     bool isEnabled() const;
     void setEnabled(bool value);
 
-   
 private:
     void setParent(SessionItem* parent);
     void setModel(SessionModel* model);
     void childDeleted(SessionItem* child);
     std::string ensure(const std::string& tag, const std::string& model_type = {}) const;
+    void setAppearanceFlag(int flag, bool value);
 
     SessionItem* m_parent;
     SessionModel* m_model;
