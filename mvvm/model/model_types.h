@@ -27,6 +27,13 @@ const int IDENTIFIER = 0;
 const int DATA = 1;
 const int DISPLAY = 2;
 const int DEFAULT_TAG = 3;
+const int APPEARANCE = 4;
+};
+
+enum Appearance {
+    DEFAULT = 0x000,
+    DISABLED = 0x001,
+    READONLY = 0x002
 };
 
 namespace Constants {

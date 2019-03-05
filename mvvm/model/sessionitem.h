@@ -87,6 +87,13 @@ public:
 
     virtual void activate();
 
+    bool isEditable() const;
+    void setEditable(bool value);
+
+    bool isEnabled() const;
+    void setEnabled(bool value);
+
+   
 private:
     void setParent(SessionItem* parent);
     void setModel(SessionModel* model);

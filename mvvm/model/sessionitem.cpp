@@ -263,10 +263,33 @@ ItemMapper* SessionItem::mapper()
     return m_mapper.get();
 }
 
+
 //! Activates all buisiness logic of given item. Should be called after item constructions.
 //! Intended for overload in child classes.
 
 void SessionItem::activate() {}
+
+bool SessionItem::isEditable() const
+{
+    auto value = data(ItemDataRole::APPEARANCE);
+    return value.isValid() ? value.toInt() & !Appearance::READONLY : true;
+}
+
+void SessionItem::setEditable(bool value)
+{
+    Q_UNUSED(value);
+}
+
+bool SessionItem::isEnabled() const
+{
+    auto value = data(ItemDataRole::APPEARANCE);
+    return value.isValid() ? value.toInt() & !Appearance::DISABLED : true;
+}
+
+void SessionItem::setEnabled(bool value)
+{
+    Q_UNUSED(value);
+}
 
 void SessionItem::setParent(SessionItem* parent)
 {
