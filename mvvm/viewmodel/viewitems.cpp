@@ -71,6 +71,7 @@ QVariant ViewLabelItem::data(int role) const
 ViewDataItem::ViewDataItem(SessionItem* item)
     : ViewItem(item, ItemDataRole::DATA)
 {
+    setEditable(item->isEditable());
 }
 
 int ViewDataItem::type() const
