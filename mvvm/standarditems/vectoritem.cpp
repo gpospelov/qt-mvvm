@@ -42,5 +42,5 @@ void VectorItem::update_label()
          << getItemValue(P_Y).toDouble() << ", "
          << getItemValue(P_Z).toDouble()
          << ")";
-    setData(QVariant::fromValue(ostr.str()), ItemDataRole::DATA);
+    setDataIntern(QVariant::fromValue(ostr.str()), ItemDataRole::DATA);
 }
