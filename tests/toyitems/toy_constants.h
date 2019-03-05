@@ -25,6 +25,7 @@ namespace Constants
 const ModelView::model_type MultiLayerType = "MultiLayer";
 const ModelView::model_type LayerType = "Layer";
 const ModelView::model_type ParticleType = "Particle";
+const ModelView::model_type InterferenceType = "Interference";
 }
 
 } // ToyItems

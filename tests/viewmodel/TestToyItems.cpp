@@ -49,3 +49,22 @@ TEST_F(TestToyItem, displayName)
     EXPECT_EQ(layer0->displayName(), "Layer0");
     EXPECT_EQ(layer1->displayName(), "Layer1");
 }
+
+//! Interference function (enabled/disabled).
+
+TEST_F(TestToyItem, rotationAngleEnabled)
+{
+    ToyItems::SampleModel model;
+    auto interference = dynamic_cast<ToyItems::InterferenceFunction*>(
+        model.insertNewItem(ToyItems::Constants::InterferenceType));
+
+    // by default integration flag is ON, rotation angle is disabled
+    EXPECT_TRUE(interference->getItemValue(ToyItems::InterferenceFunction::P_INTEGRATION).toBool());
+    EXPECT_FALSE(
+        interference->getItem(ToyItems::InterferenceFunction::P_ROTATION_ANLE)->isEnabled());
+
+    // switching integration OFF, checking that rotation is enabled
+    interference->setItemValue(ToyItems::InterferenceFunction::P_INTEGRATION, false);
+    EXPECT_TRUE(
+        interference->getItem(ToyItems::InterferenceFunction::P_ROTATION_ANLE)->isEnabled());
+}

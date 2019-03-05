@@ -13,6 +13,7 @@
 #include "toy_constants.h"
 #include "toy_factories.h"
 #include "vectoritem.h"
+#include "itemmapper.h"
 #include <stdexcept>
 
 using namespace ToyItems;
@@ -42,4 +43,32 @@ const std::string Particle::P_POSITION = "Position";
 Particle::Particle() : CompoundItem(Constants::ParticleType)
 {
     addProperty<ModelView::VectorItem>(P_POSITION);
+}
+
+// ----------------------------------------------------------------------------
+
+const std::string InterferenceFunction::P_ROTATION_ANLE = "Rotation";
+const std::string InterferenceFunction::P_INTEGRATION = "Integration";
+
+InterferenceFunction::InterferenceFunction()
+    : CompoundItem(Constants::InterferenceType)
+{
+    addProperty<ModelView::PropertyItem>(P_ROTATION_ANLE, 90.0);
+    addProperty<ModelView::PropertyItem>(P_INTEGRATION, true);
+
+    update_appearance();
+}
+
+void InterferenceFunction::activate()
+{
+    mapper()->setOnPropertyChange([this](SessionItem*, std::string property) {
+        if (property == P_INTEGRATION)
+            update_appearance();
+    }, this);
+}
+
+void InterferenceFunction::update_appearance()
+{
+    auto angle_item = getItem(P_ROTATION_ANLE);
+    angle_item->setEnabled(!getItemValue(P_INTEGRATION).toBool());
 }

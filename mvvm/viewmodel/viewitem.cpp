@@ -25,8 +25,13 @@ ViewItem::~ViewItem() = default;
 
 QVariant ViewItem::data(int role) const
 {
-    if (m_item && (role == Qt::DisplayRole || role == Qt::EditRole))
+    if (!m_item)
+        return QStandardItem::data(role);
+
+    if (role == Qt::DisplayRole || role == Qt::EditRole)
         return toQtVariant(m_item->data(m_item_role));
+    else if (role == Qt::TextColorRole && !m_item->isEnabled())
+        return QColor(Qt::gray);
     else
         return QStandardItem::data(role);
 }

@@ -46,6 +46,22 @@ public:
     Particle();
 };
 
+// ----------------------------------------------------------------------------
+
+class InterferenceFunction : public ModelView::CompoundItem
+{
+public:
+    static const std::string P_ROTATION_ANLE;
+    static const std::string P_INTEGRATION;
+
+    InterferenceFunction();
+
+    void activate() override;
+
+private:
+    void update_appearance();
+};
+
 } // ToyItems
 
 #endif // TOYITEMS_H
