@@ -205,3 +205,54 @@ TEST_F(TestDefaultViewModel, insertSingleTopItem)
     EXPECT_EQ(arguments.at(1).toInt(), 0);
     EXPECT_EQ(arguments.at(2).toInt(), 0);
 }
+
+//! Single property item in ViewModel with various appearance flags.
+
+TEST_F(TestDefaultViewModel, propertyItemAppearance)
+{
+    SessionModel model;
+
+    // default item
+    auto item1 = model.insertNewItem(Constants::PropertyType);
+    item1->setData(42.0, ItemDataRole::DATA);
+
+    // disabled item
+    auto item2 = model.insertNewItem(Constants::PropertyType);
+    item2->setData(42.0, ItemDataRole::DATA);
+    item2->setEnabled(false);
+
+    // read only item
+    auto item3 = model.insertNewItem(Constants::PropertyType);
+    item3->setData(42.0, ItemDataRole::DATA);
+    item3->setEditable(false);
+
+    // making view model
+    DefaultViewModel viewModel;
+    viewModel.setSessionModel(&model);
+
+    // In tests below is important that SessionItem::isEnabled==false means that item is
+    // shown in gray color. While QStandardItem::isEnabled means "no interaction".
+    // In our case QStandardItem::isEnabled should be always true.
+
+    // ViewLabel of item1
+    EXPECT_FALSE(viewModel.item(0,0)->isEditable()); // label is alway readonly
+    EXPECT_TRUE(viewModel.item(0,0)->isEnabled()); // QStandardItem is always enabled
+    // ViewData of item1
+    EXPECT_TRUE(viewModel.item(0,1)->isEditable());
+    EXPECT_TRUE(viewModel.item(0,1)->isEnabled());
+
+    // ViewLabel of item2
+    EXPECT_FALSE(viewModel.item(1,0)->isEditable()); // label is alway readonly
+    EXPECT_TRUE(viewModel.item(1,0)->isEnabled()); // QStandardItem is always enabled
+    // ViewData of item2
+    EXPECT_FALSE(viewModel.item(1,1)->isEditable());
+    EXPECT_TRUE(viewModel.item(1,1)->isEnabled());
+
+    // ViewLabel of item3
+    EXPECT_FALSE(viewModel.item(2,0)->isEditable()); // label is alway readonly
+    EXPECT_TRUE(viewModel.item(2,0)->isEnabled()); // QStandardItem is always enabled
+    // ViewData of item3
+    EXPECT_FALSE(viewModel.item(2,1)->isEditable());
+    EXPECT_TRUE(viewModel.item(2,1)->isEnabled());
+}
+

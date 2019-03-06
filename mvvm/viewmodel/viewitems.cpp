@@ -46,7 +46,7 @@ ViewEmptyItem* ViewEmptyItem::clone() const
 ViewLabelItem::ViewLabelItem(SessionItem* item)
     : ViewItem(item, ItemDataRole::DISPLAY)
 {
-    setEditable(false);
+    setEditable(false); // label view is always read only
 }
 
 int ViewLabelItem::type() const
@@ -71,7 +71,11 @@ QVariant ViewLabelItem::data(int role) const
 ViewDataItem::ViewDataItem(SessionItem* item)
     : ViewItem(item, ItemDataRole::DATA)
 {
-    setEditable(item->isEditable());
+    // SessionItem::isEnabled means simply gray color and read only.
+    setEditable(item->isEditable() && item->isEnabled());
+
+    // QStandardItem::isEnabled means something completely different (no interactions).
+    // We leave it by default.
 }
 
 int ViewDataItem::type() const
