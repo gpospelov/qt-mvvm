@@ -56,6 +56,8 @@ QVector<int> Utils::item_role_to_qt(int role)
     // Seems to be the behavior of QStandardItemModel. When view edits the data two roles are emmited.
     if (role == ItemDataRole::DISPLAY || role == ItemDataRole::DATA)
         result = {Qt::DisplayRole, Qt::EditRole};
+    else if (role == ItemDataRole::APPEARANCE)
+        result = {Qt::TextColorRole};
 
     return result;
 }
