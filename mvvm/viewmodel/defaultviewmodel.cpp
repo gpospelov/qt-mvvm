@@ -18,6 +18,20 @@
 #include <QDebug>
 #include <algorithm>
 
+namespace {
+
+//! Returns true if given SessionItem role is valid for view
+bool isValidItemRole(const ModelView::ViewItem* view, int item_role) {
+    if (view->item_role() == item_role)
+        return true;
+
+    if (item_role == ModelView::ItemDataRole::APPEARANCE)
+        return true;
+
+    return false;
+}
+}
+
 using namespace ModelView;
 
 DefaultViewModel::DefaultViewModel(QObject* parent)
@@ -40,7 +54,9 @@ void DefaultViewModel::onDataChange(SessionItem* item, int role)
     qDebug() << "DefaultViewModel::onDataChange";
 
     for (auto view : findViews(item)) {
-        if (view->item_role() == role) {
+
+        // inform corresponding LabelView and DataView
+        if (isValidItemRole(view, role)) {
             auto index = indexFromItem(view);
             dataChanged(index, index, Utils::item_role_to_qt(role));
         }
