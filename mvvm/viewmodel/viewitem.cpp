@@ -10,6 +10,7 @@
 #include "viewitem.h"
 #include "sessionitem.h"
 #include "customvariants.h"
+#include "viewmodelutils.h"
 #include <QDebug>
 
 using namespace ModelView;
@@ -30,8 +31,8 @@ QVariant ViewItem::data(int role) const
 
     if (role == Qt::DisplayRole || role == Qt::EditRole)
         return toQtVariant(m_item->data(m_item_role));
-    else if (role == Qt::TextColorRole && !m_item->isEnabled())
-        return QColor(Qt::gray);
+    else if (role == Qt::TextColorRole)
+        return Utils::TextColorRole(*m_item);
     else
         return QStandardItem::data(role);
 }

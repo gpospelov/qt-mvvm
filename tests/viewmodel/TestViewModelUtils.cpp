@@ -1,7 +1,9 @@
 #include "google_test.h"
 #include "viewmodelutils.h"
 #include "model_types.h"
+#include "sessionitem.h"
 #include <QStandardItemModel>
+#include <QColor>
 
 namespace
 {
@@ -65,4 +67,19 @@ TEST_F(TestViewModelUtils, itemRoleToQtRole)
     roles = Utils::item_role_to_qt(ItemDataRole::APPEARANCE);
     expected = {Qt::TextColorRole};
     EXPECT_EQ(roles, expected);
+}
+
+//! Testing color role of item.
+
+TEST_F(TestViewModelUtils, itemTextColorRole)
+{
+    SessionItem item("Something");
+
+    // no color defined for item by default
+    auto variant = Utils::TextColorRole(item);
+    EXPECT_FALSE(variant.isValid());
+
+    item.setEnabled(false);
+    variant = Utils::TextColorRole(item);
+    EXPECT_EQ(variant.value<QColor>(), QColor(Qt::gray));
 }

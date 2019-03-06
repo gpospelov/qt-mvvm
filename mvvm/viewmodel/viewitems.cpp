@@ -63,7 +63,7 @@ QVariant ViewLabelItem::data(int role) const
     if (role == Qt::DisplayRole || role == Qt::EditRole)
         return QString::fromStdString(m_item->displayName());
 
-    return QStandardItem::data(role);
+    return ViewItem::data(role);
 }
 
 // ----------------------------------------------------------------------------

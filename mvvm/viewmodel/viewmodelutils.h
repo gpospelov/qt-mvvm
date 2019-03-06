@@ -12,6 +12,7 @@
 
 #include "global.h"
 #include <QVector>
+#include <QVariant>
 #include <functional>
 #include <vector>
 
@@ -38,6 +39,9 @@ CORE_EXPORT std::vector<ViewItem*> findViews(const QStandardItemModel* model,
 
 //! Returns vector of Qt roles corresponding to given ItemDataRole.
 CORE_EXPORT QVector<int> item_role_to_qt(int role);
+
+//! Returns text color for given item.
+CORE_EXPORT QVariant TextColorRole(const SessionItem& item);
 
 } // Utils
 
