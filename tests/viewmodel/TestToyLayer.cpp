@@ -18,7 +18,18 @@ public:
 
 TestToyLayer::~TestToyLayer() = default;
 
-TEST_F(TestToyLayer, fromLayer)
+//! Toy layer as prodused by toy SampleModel.
+
+TEST_F(TestToyLayer, inModel)
+{
+    ToyItems::SampleModel model;
+    auto layer = model.insertNewItem(ToyItems::Constants::LayerType);
+
+    EXPECT_FALSE(layer->data(ItemDataRole::DATA).isValid());
+    EXPECT_EQ(layer->displayName(), ToyItems::Constants::LayerType);
+}
+
+TEST_F(TestToyLayer, inViewModel)
 {
     ToyItems::SampleModel model;
     auto layerItem = model.insertNewItem(ToyItems::Constants::LayerType);
@@ -85,4 +96,19 @@ TEST_F(TestToyLayer, layerItemDataChanged)
     EXPECT_EQ(arguments.at(1).value<QModelIndex>(), thicknessIndex);
     QVector<int> expectedRoles = {Qt::DisplayRole, Qt::EditRole};
     EXPECT_EQ(arguments.at(2).value<QVector<int>>(), expectedRoles);
+}
+
+//! Validates display name
+
+TEST_F(TestToyLayer, displayNameInMultiLayer)
+{
+    ToyItems::SampleModel model;
+    auto multiLayer = model.insertNewItem(ToyItems::Constants::MultiLayerType);
+
+    auto layer0 = model.insertNewItem(ToyItems::Constants::LayerType, multiLayer);
+    EXPECT_EQ(layer0->displayName(), "Layer");
+
+    auto layer1 = model.insertNewItem(ToyItems::Constants::LayerType, multiLayer);
+    EXPECT_EQ(layer0->displayName(), "Layer0");
+    EXPECT_EQ(layer1->displayName(), "Layer1");
 }

@@ -16,6 +16,17 @@ public:
 
 TestToyMultilayer::~TestToyMultilayer() = default;
 
+//! Toy multilayer as produced bo toy SampleModel.
+
+TEST_F(TestToyMultilayer, multiLayer)
+{
+    ToyItems::SampleModel model;
+    auto multiLayer = model.insertNewItem(ToyItems::Constants::MultiLayerType);
+
+    EXPECT_FALSE(multiLayer->data(ItemDataRole::DATA).isValid());
+    EXPECT_EQ(multiLayer->displayName(), ToyItems::Constants::MultiLayerType);
+}
+
 //! Constructing ViewModel from a MultiLayer.
 //! Checking that view items point co correct SessionItem.
 
