@@ -45,6 +45,7 @@ TestWidget2::TestWidget2(QWidget* parent)
 
     auto label = new QLabel(this);
     label->setText(text);
+    label->setWordWrap(true);
     vlayout->addWidget(label);
 
     auto hlayout = new QHBoxLayout;
