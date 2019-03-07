@@ -21,7 +21,13 @@ class MainWindow : public QMainWindow
 public:
     MainWindow();
 
+protected:
+    void closeEvent(QCloseEvent* event);
+
 private:
+    void init_application();
+    void write_settings();
+
     QTabWidget* m_tabWidget;
 };
 
