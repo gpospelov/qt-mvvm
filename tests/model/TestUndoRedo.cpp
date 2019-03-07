@@ -186,6 +186,27 @@ TEST_F(TestUndoRedo, setDataThroughItem)
     EXPECT_FALSE(model.data(item, role).isValid());
 }
 
+//! Undo/redo scenario when we set same data. Undo stack should be empty.
+
+TEST_F(TestUndoRedo, setSameData)
+{
+    SessionModel model;
+    auto item = model.insertNewItem(Constants::PropertyType);
+    item->setData(42.0, ItemDataRole::DATA);
+
+    model.setUndoRedoEnabled(true);
+    auto stack = model.undoStack();
+    EXPECT_EQ(stack->index(), 0);
+    EXPECT_FALSE(model.undoStack()->canRedo());
+    EXPECT_FALSE(model.undoStack()->canUndo());
+
+    // setting same data should not lead to appearance of command in a stack
+    item->setData(42.0, ItemDataRole::DATA);
+    EXPECT_EQ(stack->index(), 0);
+    EXPECT_FALSE(model.undoStack()->canRedo());
+    EXPECT_FALSE(model.undoStack()->canUndo());
+}
+
 //! Checks if we insert item, set data and undo everything we can get back to the data.
 
 TEST_F(TestUndoRedo, insertAndSetData)

@@ -32,6 +32,7 @@ void SetValueCommand::undo()
     auto item = m_model->itemFromPath(m_path);
     QVariant old = item->data(m_role);
     m_result = item->setDataIntern(m_value, m_role);
+    setObsolete(!m_result);
     m_value = old;
 }
 
@@ -40,6 +41,7 @@ void SetValueCommand::redo()
     auto item = m_model->itemFromPath(m_path);
     QVariant old = item->data(m_role);
     m_result = item->setDataIntern(m_value, m_role);
+    setObsolete(!m_result);
     m_value = old;
 }
 
