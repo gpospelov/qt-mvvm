@@ -33,7 +33,7 @@ class CORE_EXPORT SessionItem
     friend class JsonModel;
 
 public:
-    SessionItem(model_type modelType = {});
+    SessionItem(model_type modelType = Constants::SessionItemType);
     virtual ~SessionItem();
 
     model_type modelType() const;

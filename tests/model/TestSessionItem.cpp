@@ -26,7 +26,7 @@ TEST_F(TestSessionItem, initialState)
     EXPECT_EQ(item.childrenCount(), 0);
     EXPECT_FALSE(item.data(role).isValid());
     EXPECT_TRUE(item.children().empty());
-    EXPECT_TRUE(item.modelType().empty());
+    EXPECT_EQ(item.modelType(), Constants::SessionItemType);
 
     // Initially item has already an identifier defined.
     std::vector<int> expected_roles = {ItemDataRole::IDENTIFIER};

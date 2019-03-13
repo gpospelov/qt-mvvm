@@ -37,6 +37,7 @@ enum Appearance {
 };
 
 namespace Constants {
+const model_type SessionItemType = "SessionItem";
 const model_type PropertyType = "Property";
 const model_type CompoundType = "Compound";
 const model_type VectorType = "Vector";
