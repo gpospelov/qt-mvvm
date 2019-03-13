@@ -78,7 +78,10 @@ TEST_F(TestItemCatalogue, defaultItemCatalogue)
 {
     ItemCatalogue catalogue = CreateDefaultItemCatalogue();
 
-    auto item = catalogue.create(Constants::PropertyType);
+    auto item = catalogue.create(Constants::SessionItemType);
+    EXPECT_TRUE(dynamic_cast<SessionItem*>(item.get()) != nullptr);
+
+    item = catalogue.create(Constants::PropertyType);
     EXPECT_TRUE(dynamic_cast<PropertyItem*>(item.get()) != nullptr);
 
     item = catalogue.create(Constants::VectorType);

@@ -18,6 +18,7 @@
 ModelView::ItemCatalogue ModelView::CreateDefaultItemCatalogue()
 {
     ModelView::ItemCatalogue result;
+    result.add<ModelView::SessionItem>();
     result.add<ModelView::PropertyItem>();
     result.add<ModelView::CompoundItem>();
     result.add<ModelView::VectorItem>();
