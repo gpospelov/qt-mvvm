@@ -25,6 +25,21 @@ ItemCatalogue::ItemCatalogue()
 
 }
 
+ItemCatalogue::ItemCatalogue(const ItemCatalogue& other)
+{
+    m_data.reset(new ItemCatalogueImpl(*other.m_data.get()));
+
+}
+
+ItemCatalogue& ItemCatalogue::operator=(const ItemCatalogue& other)
+{
+    if (this != &other) {
+        ItemCatalogue tmp(other);
+        std::swap(this->m_data, tmp.m_data);
+    }
+    return *this;
+}
+
 void ItemCatalogue::add(const std::string& model_type, ItemCatalogue::factory_func_t func)
 {
     m_data->factory.add(model_type, func);

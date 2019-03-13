@@ -22,34 +22,26 @@ class SessionItem;
 
 //! Catalogue for item constructions.
 
-class ItemCatalogue
+class CORE_EXPORT ItemCatalogue
 {
 public:
-    using factory_func_t = std::function<SessionItem*()>;
-
     ItemCatalogue();
     ~ItemCatalogue();
 
-//    template<typename T>
-//    void add(const std::string& model_type);
+    ItemCatalogue(const ItemCatalogue& other);
+    ItemCatalogue& operator=(const ItemCatalogue& other);
 
-    template<typename T>
-    void add();
+    template<typename T> void add();
 
     bool contains(const std::string& model_type) const;
 
     std::unique_ptr<SessionItem> create(const std::string& model_type) const;
 
 private:
+    using factory_func_t = std::function<SessionItem*()>;
     void add(const std::string& model_type, factory_func_t func);
     std::unique_ptr<class ItemCatalogueImpl> m_data;
 };
-
-//template <typename T>
-//void ItemCatalogue::add(const std::string& model_type)
-//{
-//    add(model_type, []() { return new T(); });
-//}
 
 template <typename T>
 void ItemCatalogue::add()
@@ -57,7 +49,6 @@ void ItemCatalogue::add()
     T x;
     add(x.modelType(), []() { return new T(); });
 }
-
 
 } // namespace ModelView
 
