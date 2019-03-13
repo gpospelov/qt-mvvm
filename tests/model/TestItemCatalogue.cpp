@@ -24,7 +24,7 @@ TEST_F(TestItemCatalogue, addItem)
     catalogue.add<PropertyItem>();
 
     auto item = catalogue.create(Constants::PropertyType);
-    EXPECT_FALSE(dynamic_cast<PropertyItem*>(item.get()) == nullptr);
+    EXPECT_TRUE(dynamic_cast<PropertyItem*>(item.get()) != nullptr);
 
     // registration of second item is not allowed
     EXPECT_THROW(catalogue.add<PropertyItem>(), std::runtime_error);
@@ -42,16 +42,16 @@ TEST_F(TestItemCatalogue, copyConstructor)
 
     // creation of item using first catalogue
     auto item = catalogue.create(Constants::PropertyType);
-    EXPECT_FALSE(dynamic_cast<PropertyItem*>(item.get()) == nullptr);
+    EXPECT_TRUE(dynamic_cast<PropertyItem*>(item.get()) != nullptr);
 
     // creation of item using catalogue copy
     item = copy.create(Constants::PropertyType);
-    EXPECT_FALSE(dynamic_cast<PropertyItem*>(item.get()) == nullptr);
+    EXPECT_TRUE(dynamic_cast<PropertyItem*>(item.get()) != nullptr);
 
     // adding item to first catalogue but not the second
     catalogue.add<VectorItem>();
     item = catalogue.create(Constants::VectorType);
-    EXPECT_FALSE(dynamic_cast<VectorItem*>(item.get()) == nullptr);
+    EXPECT_TRUE(dynamic_cast<VectorItem*>(item.get()) != nullptr);
 
     // copy of catalogue knows nothing about new VectorType
     EXPECT_THROW(copy.create(Constants::VectorType), std::runtime_error);
@@ -67,11 +67,11 @@ TEST_F(TestItemCatalogue, assignmentOperator)
 
     // creation of item using first catalogue
     auto item = catalogue.create(Constants::PropertyType);
-    EXPECT_FALSE(dynamic_cast<PropertyItem*>(item.get()) == nullptr);
+    EXPECT_TRUE(dynamic_cast<PropertyItem*>(item.get()) != nullptr);
 
     // creation of item using catalogue copy
     item = copy.create(Constants::PropertyType);
-    EXPECT_FALSE(dynamic_cast<PropertyItem*>(item.get()) == nullptr);
+    EXPECT_TRUE(dynamic_cast<PropertyItem*>(item.get()) != nullptr);
 }
 
 TEST_F(TestItemCatalogue, defaultItemCatalogue)
@@ -79,11 +79,11 @@ TEST_F(TestItemCatalogue, defaultItemCatalogue)
     ItemCatalogue catalogue = CreateDefaultItemCatalogue();
 
     auto item = catalogue.create(Constants::PropertyType);
-    EXPECT_FALSE(dynamic_cast<PropertyItem*>(item.get()) == nullptr);
+    EXPECT_TRUE(dynamic_cast<PropertyItem*>(item.get()) != nullptr);
 
     item = catalogue.create(Constants::VectorType);
-    EXPECT_FALSE(dynamic_cast<VectorItem*>(item.get()) == nullptr);
+    EXPECT_TRUE(dynamic_cast<VectorItem*>(item.get()) != nullptr);
 
     item = catalogue.create(Constants::CompoundType);
-    EXPECT_FALSE(dynamic_cast<CompoundItem*>(item.get()) == nullptr);
+    EXPECT_TRUE(dynamic_cast<CompoundItem*>(item.get()) != nullptr);
 }
