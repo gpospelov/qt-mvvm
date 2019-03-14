@@ -15,12 +15,12 @@
 
 //using namespace ModelView;
 
-ModelView::ItemCatalogue ModelView::CreateDefaultItemCatalogue()
+std::unique_ptr<ModelView::ItemCatalogue> ModelView::CreateDefaultItemCatalogue()
 {
-    ModelView::ItemCatalogue result;
-    result.add<ModelView::SessionItem>();
-    result.add<ModelView::PropertyItem>();
-    result.add<ModelView::CompoundItem>();
-    result.add<ModelView::VectorItem>();
+    auto result = std::make_unique<ModelView::ItemCatalogue>();
+    result->add<ModelView::SessionItem>();
+    result->add<ModelView::PropertyItem>();
+    result->add<ModelView::CompoundItem>();
+    result->add<ModelView::VectorItem>();
     return result;
 }

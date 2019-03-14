@@ -15,7 +15,7 @@
 namespace ModelView
 {
 
-CORE_EXPORT ItemCatalogue CreateDefaultItemCatalogue();
+CORE_EXPORT std::unique_ptr<ItemCatalogue> CreateDefaultItemCatalogue();
 
 }
 

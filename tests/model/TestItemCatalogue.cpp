@@ -76,17 +76,17 @@ TEST_F(TestItemCatalogue, assignmentOperator)
 
 TEST_F(TestItemCatalogue, defaultItemCatalogue)
 {
-    ItemCatalogue catalogue = CreateDefaultItemCatalogue();
+    auto catalogue = CreateDefaultItemCatalogue();
 
-    auto item = catalogue.create(Constants::SessionItemType);
+    auto item = catalogue->create(Constants::SessionItemType);
     EXPECT_TRUE(dynamic_cast<SessionItem*>(item.get()) != nullptr);
 
-    item = catalogue.create(Constants::PropertyType);
+    item = catalogue->create(Constants::PropertyType);
     EXPECT_TRUE(dynamic_cast<PropertyItem*>(item.get()) != nullptr);
 
-    item = catalogue.create(Constants::VectorType);
+    item = catalogue->create(Constants::VectorType);
     EXPECT_TRUE(dynamic_cast<VectorItem*>(item.get()) != nullptr);
 
-    item = catalogue.create(Constants::CompoundType);
+    item = catalogue->create(Constants::CompoundType);
     EXPECT_TRUE(dynamic_cast<CompoundItem*>(item.get()) != nullptr);
 }
