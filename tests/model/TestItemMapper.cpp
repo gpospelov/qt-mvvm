@@ -1,9 +1,9 @@
+#include "MockWidgets.h"
+#include "compounditem.h"
 #include "google_test.h"
 #include "itemmapper.h"
 #include "sessionitem.h"
 #include "sessionmodel.h"
-#include "MockWidgets.h"
-#include "compounditem.h"
 
 using namespace ModelView;
 using ::testing::_;
@@ -26,7 +26,7 @@ TEST(TestItemMapper, initialState)
 
     // item in model context does have a mapper
     SessionModel model;
-    auto item2 = model.insertNewItem("parent", model.rootItem(), 0, "");
+    auto item2 = model.insertNewItem(Constants::BaseType, model.rootItem(), 0, "");
     EXPECT_NO_THROW(item2->mapper());
 }
 
@@ -36,7 +36,7 @@ TEST(TestItemMapper, initialState)
 TEST(TestItemMapper, onItemDestroy)
 {
     SessionModel model;
-    auto item = model.insertNewItem("parent", model.rootItem(), 0, "");
+    auto item = model.insertNewItem(Constants::BaseType, model.rootItem(), 0, "");
 
     MockWidgetForItem widget(item);
 
@@ -53,7 +53,7 @@ TEST(TestItemMapper, onItemDestroy)
 TEST(TestItemMapper, onDataChange)
 {
     SessionModel model;
-    auto item = model.insertNewItem("parent", model.rootItem(), 0, "");
+    auto item = model.insertNewItem(Constants::BaseType, model.rootItem(), 0, "");
 
     MockWidgetForItem widget(item);
 
@@ -70,7 +70,7 @@ TEST(TestItemMapper, onDataChange)
 TEST(TestItemMapper, onDataChangeDuplicate)
 {
     SessionModel model;
-    auto item = model.insertNewItem("parent", model.rootItem(), 0, "");
+    auto item = model.insertNewItem(Constants::BaseType, model.rootItem(), 0, "");
 
     MockWidgetForItem widget(item);
 
@@ -87,7 +87,7 @@ TEST(TestItemMapper, onDataChangeDuplicate)
 TEST(TestItemMapper, setActivity)
 {
     SessionModel model;
-    auto item = model.insertNewItem("parent", model.rootItem(), 0, "");
+    auto item = model.insertNewItem(Constants::BaseType, model.rootItem(), 0, "");
 
     MockWidgetForItem widget(item);
 
@@ -105,7 +105,7 @@ TEST(TestItemMapper, setActivity)
 TEST(TestItemMapper, unsubscribe)
 {
     SessionModel model;
-    auto item = model.insertNewItem("parent", model.rootItem(), 0, "");
+    auto item = model.insertNewItem(Constants::BaseType, model.rootItem(), 0, "");
 
     MockWidgetForItem widget1(item);
     MockWidgetForItem widget2(item);
@@ -124,7 +124,7 @@ TEST(TestItemMapper, unsubscribe)
 TEST(TestItemMapper, onPropertyChange)
 {
     SessionModel model;
-    auto item = dynamic_cast<CompoundItem*>(model.insertNewItem("Compound"));
+    auto item = dynamic_cast<CompoundItem*>(model.insertNewItem(Constants::CompoundType));
     EXPECT_TRUE(item != nullptr);
 
     auto property = item->addProperty<PropertyItem>("height", 42.0);

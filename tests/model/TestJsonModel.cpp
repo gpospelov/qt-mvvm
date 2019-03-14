@@ -1,14 +1,14 @@
 #include "google_test.h"
-#include "sessionmodel.h"
-#include "jsonmodel.h"
-#include "jsonitem.h"
-#include "sessionitem.h"
-#include "test_utils.h"
 #include "itemmanager.h"
+#include "jsonitem.h"
+#include "jsonmodel.h"
+#include "sessionitem.h"
+#include "sessionmodel.h"
 #include "taginfo.h"
-#include <QJsonObject>
-#include <QJsonArray>
+#include "test_utils.h"
 #include <QDebug>
+#include <QJsonArray>
+#include <QJsonObject>
 
 using namespace ModelView;
 
@@ -21,10 +21,7 @@ public:
 
     static const QString test_dir;
 
-    static void SetUpTestCase()
-    {
-        TestUtils::CreateTestDirectory(test_dir);
-    }
+    static void SetUpTestCase() { TestUtils::CreateTestDirectory(test_dir); }
 };
 
 TestJsonModel::~TestJsonModel() = default;
@@ -74,7 +71,7 @@ TEST_F(TestJsonModel, singleItemInModel)
     JsonModel converter;
     SessionModel model("TestModel");
 
-    model.insertNewItem("abc", nullptr, -1);
+    model.insertNewItem(Constants::BaseType, nullptr, -1);
 
     QJsonObject object;
     converter.model_to_json(model, object);
@@ -90,11 +87,11 @@ TEST_F(TestJsonModel, parentAndChildInModel)
     JsonModel converter;
     SessionModel model("TestModel");
 
-    auto parent = model.insertNewItem("MultiLayer");
-    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/true);
+    auto parent = model.insertNewItem(Constants::BaseType);
+    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
 
     parent->setData(QVariant::fromValue(42), 1);
-    model.insertNewItem("Layer", parent);
+    model.insertNewItem(Constants::PropertyType, parent);
 
     QJsonObject object;
     converter.model_to_json(model, object);
@@ -123,7 +120,7 @@ TEST_F(TestJsonModel, emptyModelFromJson)
 
     // attempt to reconstruct non-empty model
     SessionModel target2("TestModel");
-    target2.insertNewItem("Layer");
+    target2.insertNewItem(Constants::BaseType);
     EXPECT_THROW(converter.json_to_model(object, target2), std::runtime_error);
 
     // succesfull reconstruction
@@ -140,11 +137,11 @@ TEST_F(TestJsonModel, parentAndChildModelFromJson)
     SessionModel model("TestModel");
 
     // filling original model with content
-    auto parent = model.insertNewItem("MultiLayer");
-    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/true);
+    auto parent = model.insertNewItem(Constants::BaseType);
+    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
 
     parent->setData(QVariant::fromValue(42), 1);
-    model.insertNewItem("Layer", parent);
+    model.insertNewItem(Constants::PropertyType, parent);
 
     // writing model to json
     QJsonObject object;
@@ -158,11 +155,11 @@ TEST_F(TestJsonModel, parentAndChildModelFromJson)
     EXPECT_EQ(target.rootItem()->childrenCount(), 1u);
     auto parent2 = target.rootItem()->childAt(0);
     EXPECT_EQ(parent2->childrenCount(), 1u);
-    EXPECT_EQ(parent2->modelType(), "MultiLayer");
+    EXPECT_EQ(parent2->modelType(), Constants::BaseType);
     EXPECT_EQ(parent2->data(1), 42);
     auto child2 = parent2->childAt(0);
     EXPECT_EQ(child2->childrenCount(), 0u);
-    EXPECT_EQ(child2->modelType(), "Layer");
+    EXPECT_EQ(child2->modelType(), Constants::PropertyType);
 }
 
 //! Item in a model to json and back: how persistent are identifiers.
@@ -171,7 +168,7 @@ TEST_F(TestJsonModel, identifiers)
 {
     // creating model and converting it to json
     SessionModel source("SourceModel");
-    auto parent1 = source.insertNewItem("MultiLayer");
+    auto parent1 = source.insertNewItem(Constants::BaseType);
     QJsonObject json_source;
     source.manager()->converter().model_to_json(source, json_source);
 

@@ -1,8 +1,8 @@
 #include "google_test.h"
 #include "itemmanager.h"
 #include "itempool.h"
-#include "sessionmodel.h"
 #include "sessionitem.h"
+#include "sessionmodel.h"
 #include <memory>
 
 using namespace ModelView;
@@ -37,7 +37,7 @@ TEST_F(TestItemManager, modelContext)
 
     EXPECT_EQ(manager->itemPool()->size(), 1u); // root item already there
 
-    auto item1 = model.insertNewItem("abc");
+    auto item1 = model.insertNewItem(Constants::BaseType);
     EXPECT_EQ(manager->itemPool()->size(), 2u);
     auto key = manager->findIdentifier(item1);
     EXPECT_EQ(manager->findItem(key), item1);
@@ -46,4 +46,3 @@ TEST_F(TestItemManager, modelContext)
     EXPECT_EQ(manager->itemPool()->size(), 1u);
     EXPECT_EQ(manager->findItem(key), nullptr);
 }
-

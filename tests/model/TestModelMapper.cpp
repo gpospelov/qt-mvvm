@@ -1,8 +1,8 @@
+#include "MockWidgets.h"
 #include "google_test.h"
+#include "modelmapper.h"
 #include "sessionitem.h"
 #include "sessionmodel.h"
-#include "modelmapper.h"
-#include "MockWidgets.h"
 
 using namespace ModelView;
 using ::testing::_;
@@ -25,25 +25,25 @@ TEST(TestModelMapper, onDataChange)
     MockWidgetForModel widget(&model);
 
     EXPECT_CALL(widget, onRowInserted(_, _));
-    auto item = model.insertNewItem("parent", model.rootItem(), 0, "");
+    auto item = model.insertNewItem(Constants::BaseType, model.rootItem(), 0, "");
 
     // expecting signal to be called once
     const int role = ItemDataRole::DATA;
     EXPECT_CALL(widget, onDataChange(item, role)).Times(1);
-    EXPECT_CALL(widget, onRowInserted(_,_)).Times(0);
-    EXPECT_CALL(widget, onRowRemoved(_,_)).Times(0);
+    EXPECT_CALL(widget, onRowInserted(_, _)).Times(0);
+    EXPECT_CALL(widget, onRowRemoved(_, _)).Times(0);
     model.setData(item, 42.0, ItemDataRole::DATA); // perform action
 
     // setting same data shouldn't trigger the signal
-    EXPECT_CALL(widget, onDataChange(_,_)).Times(0);
-    EXPECT_CALL(widget, onRowInserted(_,_)).Times(0);
-    EXPECT_CALL(widget, onRowRemoved(_,_)).Times(0);
+    EXPECT_CALL(widget, onDataChange(_, _)).Times(0);
+    EXPECT_CALL(widget, onRowInserted(_, _)).Times(0);
+    EXPECT_CALL(widget, onRowRemoved(_, _)).Times(0);
     model.setData(item, 42.0, ItemDataRole::DATA); // perform action
 
     // setting new data through item
     EXPECT_CALL(widget, onDataChange(item, role)).Times(1);
-    EXPECT_CALL(widget, onRowInserted(_,_)).Times(0);
-    EXPECT_CALL(widget, onRowRemoved(_,_)).Times(0);
+    EXPECT_CALL(widget, onRowInserted(_, _)).Times(0);
+    EXPECT_CALL(widget, onRowRemoved(_, _)).Times(0);
     item->setData(43.0, ItemDataRole::DATA); // perform action
 }
 
@@ -54,13 +54,13 @@ TEST(TestModelMapper, onRowInserted)
     SessionModel model;
     MockWidgetForModel widget(&model);
 
-    EXPECT_CALL(widget, onDataChange(_,_)).Times(0);
+    EXPECT_CALL(widget, onDataChange(_, _)).Times(0);
     const int expected_index(0);
     EXPECT_CALL(widget, onRowInserted(model.rootItem(), expected_index)).Times(1);
-    EXPECT_CALL(widget, onRowRemoved(_,_)).Times(0);
+    EXPECT_CALL(widget, onRowRemoved(_, _)).Times(0);
 
     // perform action
-    model.insertNewItem("parent", model.rootItem(), 0, "");
+    model.insertNewItem(Constants::BaseType, model.rootItem(), 0, "");
 }
 
 //! Inserting item and checking corresponding signals.
@@ -72,9 +72,9 @@ TEST(TestModelMapper, onRowRemoved)
 
     const int expected_index(0);
     EXPECT_CALL(widget, onRowInserted(model.rootItem(), expected_index)).Times(1);
-    model.insertNewItem("parent", model.rootItem(), 0, "");
+    model.insertNewItem(Constants::BaseType, model.rootItem(), 0, "");
 
-    EXPECT_CALL(widget, onDataChange(_,_)).Times(0);
+    EXPECT_CALL(widget, onDataChange(_, _)).Times(0);
     EXPECT_CALL(widget, onRowInserted(_, _)).Times(0);
     EXPECT_CALL(widget, onRowRemoved(model.rootItem(), expected_index)).Times(1);
     // perform action

@@ -1,10 +1,10 @@
-#include "google_test.h"
-#include "viewitems.h"
-#include "sessionmodel.h"
 #include "defaultviewmodel.h"
+#include "google_test.h"
+#include "sessionmodel.h"
 #include "vectoritem.h"
-#include <QSignalSpy>
+#include "viewitems.h"
 #include <QDebug>
+#include <QSignalSpy>
 
 using namespace ModelView;
 
@@ -99,7 +99,7 @@ TEST_F(TestDefaultViewModel, propertyItemDataChanged)
 TEST_F(TestDefaultViewModel, removeSingleTopItem)
 {
     SessionModel model;
-    const model_type modelType("abc");
+    const model_type modelType(Constants::BaseType);
 
     // inserting single item
     model.insertNewItem(modelType);
@@ -133,7 +133,7 @@ TEST_F(TestDefaultViewModel, removeSingleTopItem)
 TEST_F(TestDefaultViewModel, removeOneOfTopItems)
 {
     SessionModel model;
-    const model_type modelType("abc");
+    const model_type modelType(Constants::BaseType);
 
     // inserting single item
     model.insertNewItem(modelType);
@@ -179,7 +179,7 @@ TEST_F(TestDefaultViewModel, removeOneOfTopItems)
 TEST_F(TestDefaultViewModel, insertSingleTopItem)
 {
     SessionModel model;
-    const model_type modelType("abc");
+    const model_type modelType(Constants::BaseType);
 
     DefaultViewModel viewModel;
     viewModel.setSessionModel(&model);
@@ -235,25 +235,25 @@ TEST_F(TestDefaultViewModel, propertyItemAppearance)
     // In our case QStandardItem::isEnabled should be always true.
 
     // ViewLabel of item1
-    EXPECT_FALSE(viewModel.item(0,0)->isEditable()); // label is alway readonly
-    EXPECT_TRUE(viewModel.item(0,0)->isEnabled()); // QStandardItem is always enabled
+    EXPECT_FALSE(viewModel.item(0, 0)->isEditable()); // label is alway readonly
+    EXPECT_TRUE(viewModel.item(0, 0)->isEnabled());   // QStandardItem is always enabled
     // ViewData of item1
-    EXPECT_TRUE(viewModel.item(0,1)->isEditable());
-    EXPECT_TRUE(viewModel.item(0,1)->isEnabled());
+    EXPECT_TRUE(viewModel.item(0, 1)->isEditable());
+    EXPECT_TRUE(viewModel.item(0, 1)->isEnabled());
 
     // ViewLabel of item2
-    EXPECT_FALSE(viewModel.item(1,0)->isEditable()); // label is alway readonly
-    EXPECT_TRUE(viewModel.item(1,0)->isEnabled()); // QStandardItem is always enabled
+    EXPECT_FALSE(viewModel.item(1, 0)->isEditable()); // label is alway readonly
+    EXPECT_TRUE(viewModel.item(1, 0)->isEnabled());   // QStandardItem is always enabled
     // ViewData of item2
-    EXPECT_FALSE(viewModel.item(1,1)->isEditable());
-    EXPECT_TRUE(viewModel.item(1,1)->isEnabled());
+    EXPECT_FALSE(viewModel.item(1, 1)->isEditable());
+    EXPECT_TRUE(viewModel.item(1, 1)->isEnabled());
 
     // ViewLabel of item3
-    EXPECT_FALSE(viewModel.item(2,0)->isEditable()); // label is alway readonly
-    EXPECT_TRUE(viewModel.item(2,0)->isEnabled()); // QStandardItem is always enabled
+    EXPECT_FALSE(viewModel.item(2, 0)->isEditable()); // label is alway readonly
+    EXPECT_TRUE(viewModel.item(2, 0)->isEnabled());   // QStandardItem is always enabled
     // ViewData of item3
-    EXPECT_FALSE(viewModel.item(2,1)->isEditable());
-    EXPECT_TRUE(viewModel.item(2,1)->isEnabled());
+    EXPECT_FALSE(viewModel.item(2, 1)->isEditable());
+    EXPECT_TRUE(viewModel.item(2, 1)->isEnabled());
 }
 
 //! Signals in ViewModel when property item changes its appearance.

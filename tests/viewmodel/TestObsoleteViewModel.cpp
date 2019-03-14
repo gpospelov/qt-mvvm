@@ -1,10 +1,10 @@
 #include "google_test.h"
-#include "toy_includes.h"
-#include "viewitems.h"
 #include "obsoleteviewmodel.h"
+#include "toy_includes.h"
 #include "vectoritem.h"
-#include <QSignalSpy>
+#include "viewitems.h"
 #include <QDebug>
+#include <QSignalSpy>
 
 using namespace ModelView;
 
@@ -73,13 +73,13 @@ TEST_F(TestObsoleteViewModel, fromLayer)
 
     // accessing to views representing label and value of thickness property
     QModelIndex thicknessLabelIndex = viewModel.index(0, 0, layerIndex);
-    auto thicknessLabelView
-        = dynamic_cast<ViewLabelItem*>(viewModel.itemFromIndex(thicknessLabelIndex));
+    auto thicknessLabelView =
+        dynamic_cast<ViewLabelItem*>(viewModel.itemFromIndex(thicknessLabelIndex));
     EXPECT_TRUE(thicknessLabelView != nullptr);
 
     QModelIndex thicknessValueIndex = viewModel.index(0, 1, layerIndex);
-    auto thicknessValueView
-        = dynamic_cast<ViewDataItem*>(viewModel.itemFromIndex(thicknessValueIndex));
+    auto thicknessValueView =
+        dynamic_cast<ViewDataItem*>(viewModel.itemFromIndex(thicknessValueIndex));
     EXPECT_TRUE(thicknessValueView != nullptr);
 
     // internally, views for label and data should point to single SessionItem corresponding to
@@ -112,26 +112,26 @@ TEST_F(TestObsoleteViewModel, fromVector)
     EXPECT_EQ(viewModel.columnCount(vectorIndex), 2);
 
     // ViewLabelItem and ViewDataItem correspondint to P_X
-    auto pxLabel
-        = dynamic_cast<ViewLabelItem*>(viewModel.itemFromIndex(viewModel.index(0, 0, vectorIndex)));
-    auto pxData
-        = dynamic_cast<ViewDataItem*>(viewModel.itemFromIndex(viewModel.index(0, 1, vectorIndex)));
+    auto pxLabel =
+        dynamic_cast<ViewLabelItem*>(viewModel.itemFromIndex(viewModel.index(0, 0, vectorIndex)));
+    auto pxData =
+        dynamic_cast<ViewDataItem*>(viewModel.itemFromIndex(viewModel.index(0, 1, vectorIndex)));
     EXPECT_EQ(pxLabel->item(), vectorItem->getItem(VectorItem::P_X));
     EXPECT_EQ(pxData->item(), vectorItem->getItem(VectorItem::P_X));
 
     // ViewLabelItem and ViewDataItem correspondint to P_Y
-    pxLabel
-        = dynamic_cast<ViewLabelItem*>(viewModel.itemFromIndex(viewModel.index(1, 0, vectorIndex)));
-    pxData
-        = dynamic_cast<ViewDataItem*>(viewModel.itemFromIndex(viewModel.index(1, 1, vectorIndex)));
+    pxLabel =
+        dynamic_cast<ViewLabelItem*>(viewModel.itemFromIndex(viewModel.index(1, 0, vectorIndex)));
+    pxData =
+        dynamic_cast<ViewDataItem*>(viewModel.itemFromIndex(viewModel.index(1, 1, vectorIndex)));
     EXPECT_EQ(pxLabel->item(), vectorItem->getItem(VectorItem::P_Y));
     EXPECT_EQ(pxData->item(), vectorItem->getItem(VectorItem::P_Y));
 
     // ViewLabelItem and ViewDataItem correspondint to P_Z
-    pxLabel
-        = dynamic_cast<ViewLabelItem*>(viewModel.itemFromIndex(viewModel.index(2, 0, vectorIndex)));
-    pxData
-        = dynamic_cast<ViewDataItem*>(viewModel.itemFromIndex(viewModel.index(2, 1, vectorIndex)));
+    pxLabel =
+        dynamic_cast<ViewLabelItem*>(viewModel.itemFromIndex(viewModel.index(2, 0, vectorIndex)));
+    pxData =
+        dynamic_cast<ViewDataItem*>(viewModel.itemFromIndex(viewModel.index(2, 1, vectorIndex)));
     EXPECT_EQ(pxLabel->item(), vectorItem->getItem(VectorItem::P_Z));
     EXPECT_EQ(pxData->item(), vectorItem->getItem(VectorItem::P_Z));
 }
@@ -142,7 +142,8 @@ TEST_F(TestObsoleteViewModel, fromVector)
 TEST_F(TestObsoleteViewModel, itemChanged)
 {
     ToyItems::SampleModel model;
-    auto layerItem = dynamic_cast<CompoundItem*>(model.insertNewItem(ToyItems::Constants::LayerType));
+    auto layerItem =
+        dynamic_cast<CompoundItem*>(model.insertNewItem(ToyItems::Constants::LayerType));
 
     // constructing viewModel from sample model
     ObsoleteViewModel viewModel;
@@ -160,7 +161,8 @@ TEST_F(TestObsoleteViewModel, itemChanged)
 TEST_F(TestObsoleteViewModel, dataChanged)
 {
     ToyItems::SampleModel model;
-    auto layerItem = dynamic_cast<CompoundItem*>(model.insertNewItem(ToyItems::Constants::LayerType));
+    auto layerItem =
+        dynamic_cast<CompoundItem*>(model.insertNewItem(ToyItems::Constants::LayerType));
 
     // constructing viewModel from sample model
     ObsoleteViewModel viewModel;
@@ -188,11 +190,11 @@ TEST_F(TestObsoleteViewModel, dataChanged)
 TEST_F(TestObsoleteViewModel, insertItem)
 {
     SessionModel model;
-    const model_type modelType("abc");
+    const model_type modelType(Constants::BaseType);
 
     // inserting single item
     auto parent = model.insertNewItem(modelType);
-    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/true);
+    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
 
     // constructing viewModel from sample model
     ObsoleteViewModel viewModel;
@@ -238,11 +240,11 @@ TEST_F(TestObsoleteViewModel, insertItem)
 TEST_F(TestObsoleteViewModel, removeRow)
 {
     SessionModel model;
-    const model_type modelType("abc");
+    const model_type modelType(Constants::BaseType);
 
     // inserting single item
     auto parent = model.insertNewItem(modelType);
-    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/true);
+    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
     model.insertNewItem(modelType, parent);
 
     // constructing viewModel from sample model
@@ -264,7 +266,8 @@ TEST_F(TestObsoleteViewModel, removeRow)
     model.removeItem(parent, 0);
     EXPECT_EQ(spyRemove.count(), 1);
     EXPECT_EQ(viewModel.rowCount(parentIndex), 0);
-    EXPECT_EQ(viewModel.columnCount(parentIndex), 1); // for some reason child removal doesn't affect column
+    EXPECT_EQ(viewModel.columnCount(parentIndex),
+              1); // for some reason child removal doesn't affect column
 
     QList<QVariant> arguments = spyRemove.takeFirst();
     EXPECT_EQ(arguments.size(), 3); // QModelIndex &parent, int first, int last

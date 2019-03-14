@@ -1,5 +1,5 @@
-#include "google_test.h"
 #include "commands.h"
+#include "google_test.h"
 #include "sessionitem.h"
 #include "sessionmodel.h"
 #include "taginfo.h"
@@ -24,7 +24,7 @@ TEST_F(TestCommands, setValueCommand)
     const int role = ItemDataRole::DISPLAY;
 
     // inserting single item
-    auto item = model.insertNewItem("abc");
+    auto item = model.insertNewItem(Constants::BaseType);
     EXPECT_FALSE(model.data(item, role).isValid());
 
     QVariant expected(42.0);
@@ -49,7 +49,7 @@ TEST_F(TestCommands, setSameValueCommand)
     const int role = ItemDataRole::DISPLAY;
 
     // inserting single item
-    auto item = model.insertNewItem("abc");
+    auto item = model.insertNewItem(Constants::BaseType);
     QVariant expected(42.0);
     item->setData(expected, role);
 
@@ -74,7 +74,8 @@ TEST_F(TestCommands, insertNewItemCommand)
     SessionModel model;
 
     // command to set same value
-    auto command = std::make_unique<InsertNewItemCommand>("abc", model.rootItem(), 0, "");
+    auto command =
+        std::make_unique<InsertNewItemCommand>(Constants::BaseType, model.rootItem(), 0, "");
 
     // executing command
     command->redo();
@@ -94,15 +95,16 @@ TEST_F(TestCommands, insertNewItemWithTagCommand)
     SessionModel model;
 
     // command to insert parent in the model
-    auto command1 = std::make_unique<InsertNewItemCommand>("parent_model", model.rootItem(), 0, "");
+    auto command1 =
+        std::make_unique<InsertNewItemCommand>(Constants::BaseType, model.rootItem(), 0, "");
     command1->redo(); // insertion
 
     auto parent = command1->result();
-    parent->registerTag(TagInfo::universalTag("tag1"), /*set_as_default*/true);
+    parent->registerTag(TagInfo::universalTag("tag1"), /*set_as_default*/ true);
     EXPECT_EQ(parent->childrenCount(), 0);
 
     // command to insert child
-    auto command2 = std::make_unique<InsertNewItemCommand>("child_model", parent, 0, "tag1");
+    auto command2 = std::make_unique<InsertNewItemCommand>(Constants::BaseType, parent, 0, "tag1");
     command2->redo(); // insertion
 
     EXPECT_EQ(parent->childrenCount(), 1);
@@ -117,7 +119,7 @@ TEST_F(TestCommands, insertNewItemWithTagCommand)
 TEST_F(TestCommands, removeAtCommand)
 {
     SessionModel model;
-    auto item = model.insertNewItem("abc", model.rootItem(), 0, "");
+    auto item = model.insertNewItem(Constants::BaseType, model.rootItem(), 0, "");
 
     auto item_identifier = item->data(ItemDataRole::IDENTIFIER).value<std::string>();
 
@@ -138,12 +140,12 @@ TEST_F(TestCommands, removeAtCommand)
 TEST_F(TestCommands, removeAtCommandChild)
 {
     SessionModel model;
-    auto parent = model.insertNewItem("abc", model.rootItem(), 0, "");
-    parent->registerTag(TagInfo::universalTag("tag1"), /*set_as_default*/true);
+    auto parent = model.insertNewItem(Constants::BaseType, model.rootItem(), 0, "");
+    parent->registerTag(TagInfo::universalTag("tag1"), /*set_as_default*/ true);
 
-    auto child1 = model.insertNewItem("child_model", parent, -1, "tag1");
+    auto child1 = model.insertNewItem(Constants::BaseType, parent, -1, "tag1");
     child1->setData(42.0, ItemDataRole::DATA);
-    model.insertNewItem("child_model", parent, -1, "tag1");
+    model.insertNewItem(Constants::BaseType, parent, -1, "tag1");
 
     auto child1_identifier = child1->data(ItemDataRole::IDENTIFIER).value<std::string>();
 
@@ -168,10 +170,10 @@ TEST_F(TestCommands, removeAtCommandChild)
 TEST_F(TestCommands, removeAtCommandParentWithChild)
 {
     SessionModel model;
-    auto parent = model.insertNewItem("abc", model.rootItem(), 0, "");
-    parent->registerTag(TagInfo::universalTag("tag1"), /*set_as_default*/true);
+    auto parent = model.insertNewItem(Constants::BaseType, model.rootItem(), 0, "");
+    parent->registerTag(TagInfo::universalTag("tag1"), /*set_as_default*/ true);
 
-    auto child1 = model.insertNewItem("child_model", parent, -1, "tag1");
+    auto child1 = model.insertNewItem(Constants::BaseType, parent, -1, "tag1");
     child1->setData(42.0, ItemDataRole::DATA);
 
     auto parent_identifier = parent->data(ItemDataRole::IDENTIFIER).value<std::string>();
@@ -191,8 +193,10 @@ TEST_F(TestCommands, removeAtCommandParentWithChild)
     auto restored_parent = model.rootItem()->childAt(0);
     auto restored_child = restored_parent->childAt(0);
 
-    EXPECT_EQ(restored_parent->data(ItemDataRole::IDENTIFIER).value<std::string>(), parent_identifier);
-    EXPECT_EQ(restored_child->data(ItemDataRole::IDENTIFIER).value<std::string>(), child1_identifier);
+    EXPECT_EQ(restored_parent->data(ItemDataRole::IDENTIFIER).value<std::string>(),
+              parent_identifier);
+    EXPECT_EQ(restored_child->data(ItemDataRole::IDENTIFIER).value<std::string>(),
+              child1_identifier);
 
     // checking the data of restored item
     EXPECT_EQ(restored_child->data(ItemDataRole::DATA).toDouble(), 42.0);
@@ -203,17 +207,17 @@ TEST_F(TestCommands, removeAtCommandParentWithChild)
 TEST_F(TestCommands, removeAtCommandMultitag)
 {
     SessionModel model;
-    auto parent = model.insertNewItem("abc", model.rootItem(), 0, "");
+    auto parent = model.insertNewItem(Constants::BaseType, model.rootItem(), 0, "");
     parent->registerTag(TagInfo::universalTag("tag1"));
     parent->registerTag(TagInfo::universalTag("tag2"));
 
-    auto child1 = model.insertNewItem("child_model", parent, -1, "tag1");
+    auto child1 = model.insertNewItem(Constants::BaseType, parent, -1, "tag1");
     child1->setData(41.0, ItemDataRole::DATA);
 
-    auto child2 = model.insertNewItem("child_model", parent, -1, "tag1");
+    auto child2 = model.insertNewItem(Constants::BaseType, parent, -1, "tag1");
     child2->setData(42.0, ItemDataRole::DATA);
 
-    auto child3 = model.insertNewItem("child_model", parent, -1, "tag2");
+    auto child3 = model.insertNewItem(Constants::BaseType, parent, -1, "tag2");
     child3->setData(43.0, ItemDataRole::DATA);
 
     auto parent_identifier = parent->data(ItemDataRole::IDENTIFIER).value<std::string>();
@@ -235,8 +239,10 @@ TEST_F(TestCommands, removeAtCommandMultitag)
     auto restored_parent = model.rootItem()->childAt(0);
     auto restored_child2 = restored_parent->childAt(1);
 
-    EXPECT_EQ(restored_parent->data(ItemDataRole::IDENTIFIER).value<std::string>(), parent_identifier);
-    EXPECT_EQ(restored_child2->data(ItemDataRole::IDENTIFIER).value<std::string>(), child2_identifier);
+    EXPECT_EQ(restored_parent->data(ItemDataRole::IDENTIFIER).value<std::string>(),
+              parent_identifier);
+    EXPECT_EQ(restored_child2->data(ItemDataRole::IDENTIFIER).value<std::string>(),
+              child2_identifier);
 
     // checking the data of restored item
     EXPECT_EQ(restored_child2->data(ItemDataRole::DATA).toDouble(), 42.0);

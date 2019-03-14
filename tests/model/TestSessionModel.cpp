@@ -1,9 +1,9 @@
 #include "google_test.h"
-#include "sessionmodel.h"
-#include "sessionitem.h"
 #include "itemmanager.h"
-#include "taginfo.h"
 #include "itempool.h"
+#include "sessionitem.h"
+#include "sessionmodel.h"
+#include "taginfo.h"
 #include <memory>
 
 using namespace ModelView;
@@ -27,7 +27,7 @@ TEST_F(TestSessionModel, insertNewItem)
 {
     SessionModel model;
 
-    const model_type modelType("abc");
+    const model_type modelType = Constants::BaseType;
 
     // inserting single item
     auto item = model.insertNewItem(modelType);
@@ -41,7 +41,7 @@ TEST_F(TestSessionModel, insertNewItem)
     EXPECT_EQ(model.manager()->itemPool()->item_for_key(item_key), item);
 
     // registering tag
-    item->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/true);
+    item->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
 
     // adding child to it
     auto child = model.insertNewItem(modelType, item);
@@ -68,21 +68,20 @@ TEST_F(TestSessionModel, insertNewItemWithTag)
 {
     const std::string tag1("tag1");
     SessionModel model;
-    auto parent = model.insertNewItem("parentModel");
+    auto parent = model.insertNewItem(Constants::BaseType);
     parent->registerTag(TagInfo::universalTag(tag1));
-    auto child1 = model.insertNewItem("childModel", parent, -1, tag1);
+    auto child1 = model.insertNewItem(Constants::PropertyType, parent, -1, tag1);
 
     EXPECT_EQ(parent->tagFromItem(child1), tag1);
     EXPECT_EQ(parent->indexOfChild(child1), 0);
 
     // adding second child
-    auto child2 = model.insertNewItem("childModel", parent, 0, tag1);
+    auto child2 = model.insertNewItem(Constants::PropertyType, parent, 0, tag1);
 
     EXPECT_EQ(parent->tagFromItem(child2), tag1);
     EXPECT_EQ(parent->indexOfChild(child1), 1);
     EXPECT_EQ(parent->indexOfChild(child2), 0);
 }
-
 
 TEST_F(TestSessionModel, setData)
 {
@@ -90,7 +89,7 @@ TEST_F(TestSessionModel, setData)
     const int role = ItemDataRole::DISPLAY;
 
     // inserting single item
-    auto item = model.insertNewItem("abc");
+    auto item = model.insertNewItem(Constants::BaseType);
     EXPECT_FALSE(model.data(item, role).isValid());
 
     // setting new data
@@ -106,11 +105,11 @@ TEST_F(TestSessionModel, removeRow)
 {
     SessionModel model;
 
-    auto parent = model.insertNewItem("MultiLayer");
-    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/true);
+    auto parent = model.insertNewItem(Constants::BaseType);
+    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
 
-    auto child1 = model.insertNewItem("Layer1", parent);
-    auto child2 = model.insertNewItem("Layer2", parent, 0); // before child1
+    auto child1 = model.insertNewItem(Constants::BaseType, parent);
+    auto child2 = model.insertNewItem(Constants::PropertyType, parent, 0); // before child1
     Q_UNUSED(child2);
 
     // removing child2
@@ -126,11 +125,11 @@ TEST_F(TestSessionModel, takeRowFromRootItem)
 {
     SessionModel model;
 
-    auto parent = model.insertNewItem("MultiLayer");
-    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/true);
+    auto parent = model.insertNewItem(Constants::BaseType);
+    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
     auto parent_key = parent->data(ItemDataRole::IDENTIFIER).value<std::string>();
 
-    auto child = model.insertNewItem("Layer1", parent);
+    auto child = model.insertNewItem(Constants::PropertyType, parent);
     auto child_key = child->data(ItemDataRole::IDENTIFIER).value<std::string>();
 
     EXPECT_EQ(model.manager()->itemPool()->item_for_key(parent_key), parent);

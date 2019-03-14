@@ -1,7 +1,7 @@
 #include "google_test.h"
-#include "sessionmodel.h"
-#include "sessionitem.h"
 #include "itemmanager.h"
+#include "sessionitem.h"
+#include "sessionmodel.h"
 #include "taginfo.h"
 #include "toy_includes.h"
 #include <QUndoStack>
@@ -37,7 +37,7 @@ TEST_F(TestUndoRedo, initialState)
 
 TEST_F(TestUndoRedo, insertNewItem)
 {
-    const model_type modelType("MultiLayer");
+    const model_type modelType(Constants::BaseType);
     SessionModel model;
     model.setUndoRedoEnabled(true);
     auto stack = model.undoStack();
@@ -85,11 +85,11 @@ TEST_F(TestUndoRedo, insertParentAndChild)
     model.setUndoRedoEnabled(true);
     auto stack = model.undoStack();
 
-    auto parent = model.insertNewItem("MultiLayer1");
-    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/true);
+    auto parent = model.insertNewItem(Constants::BaseType);
+    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
 
-    model.insertNewItem("Layer0", parent);
-    model.insertNewItem("Layer1", parent);
+    model.insertNewItem(Constants::PropertyType, parent);
+    model.insertNewItem(Constants::PropertyType, parent);
 
     // state of the stack after insertion of 3 items
     EXPECT_EQ(stack->count(), 3);
@@ -111,14 +111,14 @@ TEST_F(TestUndoRedo, insertParentAndChild)
     EXPECT_EQ(stack->index(), 2);
     EXPECT_EQ(model.rootItem()->childrenCount(), 1);
     EXPECT_EQ(parent->childrenCount(), 1);
-    EXPECT_EQ(parent->childAt(0)->modelType(), "Layer0");
+    EXPECT_EQ(parent->childAt(0)->modelType(), Constants::PropertyType);
 }
 
 //! Undo/redo scenario when item inserted and data set few times.
 
 TEST_F(TestUndoRedo, setData)
 {
-    const model_type modelType("abc");
+    const model_type modelType(Constants::PropertyType);
 
     const int role = ItemDataRole::DATA;
     SessionModel model;
@@ -169,7 +169,7 @@ TEST_F(TestUndoRedo, setDataThroughItem)
     auto stack = model.undoStack();
 
     // creating item
-    auto item = model.insertNewItem("Layer");
+    auto item = model.insertNewItem(Constants::BaseType);
     EXPECT_FALSE(model.data(item, role).isValid());
 
     // setting new data through item (and not through model)
@@ -211,7 +211,7 @@ TEST_F(TestUndoRedo, setSameData)
 
 TEST_F(TestUndoRedo, insertAndSetData)
 {
-    const model_type modelType("abc");
+    const model_type modelType(Constants::BaseType);
 
     const int role = ItemDataRole::DATA;
     SessionModel model;
@@ -257,7 +257,7 @@ TEST_F(TestUndoRedo, removeRow)
     model.setUndoRedoEnabled(true);
     auto stack = model.undoStack();
 
-    auto item = model.insertNewItem("MultiLayer");
+    auto item = model.insertNewItem(Constants::BaseType);
     item->setData(data, role);
 
     // initial state before removing the row
@@ -281,7 +281,7 @@ TEST_F(TestUndoRedo, removeRow)
     EXPECT_EQ(model.rootItem()->childrenCount(), 1);
     item = model.rootItem()->childAt(0);
     EXPECT_EQ(model.data(item, role).toDouble(), 42.0);
-    EXPECT_EQ(item->modelType(), "MultiLayer");
+    EXPECT_EQ(item->modelType(), Constants::BaseType);
 }
 
 //! Inserting parent and child, setting data to them, removing parent, undoing and checking.
@@ -295,11 +295,11 @@ TEST_F(TestUndoRedo, removeParentAndChild)
     model.setUndoRedoEnabled(true);
     auto stack = model.undoStack();
 
-    auto parent = model.insertNewItem("MultiLayer");
-    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/true);
+    auto parent = model.insertNewItem(Constants::BaseType);
+    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
 
     parent->setData(data1, role1);
-    auto child = model.insertNewItem("Layer", parent);
+    auto child = model.insertNewItem(Constants::PropertyType, parent);
     child->setData(data2, role2);
 
     EXPECT_EQ(stack->count(), 4);
@@ -319,8 +319,8 @@ TEST_F(TestUndoRedo, removeParentAndChild)
     parent = model.rootItem()->childAt(0);
     child = parent->childAt(0);
 
-    EXPECT_EQ(parent->modelType(), "MultiLayer");
-    EXPECT_EQ(child->modelType(), "Layer");
+    EXPECT_EQ(parent->modelType(), Constants::BaseType);
+    EXPECT_EQ(child->modelType(), Constants::PropertyType);
 
     EXPECT_EQ(parent->data(role1), data1);
     EXPECT_EQ(child->data(role2), data2);
@@ -335,11 +335,11 @@ TEST_F(TestUndoRedo, itemIdentifierOnRemove)
     model.setUndoRedoEnabled(true);
     auto stack = model.undoStack();
 
-    auto parent = model.insertNewItem("MultiLayer");
-    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/true);
+    auto parent = model.insertNewItem(Constants::BaseType);
+    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
 
     identifier_type parent_id = parent->data(ItemDataRole::IDENTIFIER).value<std::string>();
-    auto child = model.insertNewItem("Layer", parent);
+    auto child = model.insertNewItem(Constants::PropertyType, parent);
     identifier_type child_id = child->data(ItemDataRole::IDENTIFIER).value<std::string>();
 
     // removing parent
@@ -417,4 +417,3 @@ TEST_F(TestUndoRedo, multiLayer)
     std::vector<SessionItem*> expected = {layer0, layer1};
     EXPECT_EQ(parent->getItems(ToyItems::MultiLayer::T_LAYERS), expected);
 }
-

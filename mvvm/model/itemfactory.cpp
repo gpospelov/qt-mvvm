@@ -26,8 +26,10 @@ SessionItem* ItemFactory::createItem(const model_type& modelType)
         return new CompoundItem;
     else if (modelType == Constants::VectorType)
         return new VectorItem;
+    else if (modelType == Constants::BaseType)
+        return new SessionItem;
     else
-        return new SessionItem(modelType);
+        throw std::runtime_error("ItemFactory::createItem() -> Unknown type '"+modelType+"'");
 }
 
 SessionItem* ItemFactory::createEmptyItem()

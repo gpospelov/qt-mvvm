@@ -1,8 +1,8 @@
-#include "google_test.h"
-#include "sessionmodel.h"
-#include "sessionitem.h"
-#include "itemutils.h"
 #include "customvariants.h"
+#include "google_test.h"
+#include "itemutils.h"
+#include "sessionitem.h"
+#include "sessionmodel.h"
 #include "taginfo.h"
 #include <memory>
 
@@ -22,9 +22,7 @@ TEST_F(TestItemUtils, iterateItem)
 {
     std::vector<const SessionItem*> visited_items;
 
-    auto fun = [&](const SessionItem* item ) {
-        visited_items.push_back(item);
-    };
+    auto fun = [&](const SessionItem* item) { visited_items.push_back(item); };
 
     // iteration over nullptr
     Utils::iterate(nullptr, fun);
@@ -32,7 +30,7 @@ TEST_F(TestItemUtils, iterateItem)
 
     // iteration over lonely parent
     std::unique_ptr<SessionItem> parent(new SessionItem);
-    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/true);
+    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
 
     std::vector<const SessionItem*> expected = {parent.get()};
     Utils::iterate(parent.get(), fun);
@@ -58,14 +56,14 @@ TEST_F(TestItemUtils, iterateIfItem)
     std::vector<const SessionItem*> visited_items;
 
     // function which will not let iterate over children
-    std::function<bool(const SessionItem*)> fun = [&](const SessionItem* item ) {
+    std::function<bool(const SessionItem*)> fun = [&](const SessionItem* item) {
         visited_items.push_back(item);
         return false;
     };
 
     // iteration over lonely parent
     std::unique_ptr<SessionItem> parent(new SessionItem);
-    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/true);
+    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
 
     auto child1 = new SessionItem;
     auto child2 = new SessionItem;
@@ -81,21 +79,19 @@ TEST_F(TestItemUtils, iterateIfItem)
 
 TEST_F(TestItemUtils, iterateModel)
 {
-    const model_type modelType("abc");
+    const model_type modelType = Constants::BaseType;
     SessionModel model;
 
     // building model
     auto parent1 = model.insertNewItem(modelType);
     auto parent2 = model.insertNewItem(modelType);
-    parent1->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/true);
-    parent2->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/true);
+    parent1->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
+    parent2->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
     auto child1 = model.insertNewItem(modelType, parent1);
     auto child2 = model.insertNewItem(modelType, parent1);
 
     std::vector<const SessionItem*> visited_items;
-    auto fun = [&](const SessionItem* item ) {
-        visited_items.push_back(item);
-    };
+    auto fun = [&](const SessionItem* item) { visited_items.push_back(item); };
 
     // iteration
     Utils::iterate(model.rootItem(), fun);
@@ -112,7 +108,7 @@ TEST_F(TestItemUtils, VariantType)
     QVariant intProperty = QVariant::fromValue(1);
     QVariant doubleProperty = QVariant::fromValue(42.0);
     QVariant stringProperty = QVariant::fromValue(std::string("abc"));
-    std::vector<double> vec {1, 2};
+    std::vector<double> vec{1, 2};
     QVariant vectorProperty = QVariant::fromValue(vec);
 
     EXPECT_TRUE(Utils::VariantType(undefined) == Utils::VariantType(QVariant()));
@@ -127,20 +123,23 @@ TEST_F(TestItemUtils, VariantType)
     EXPECT_FALSE(Utils::VariantType(intProperty) == Utils::VariantType(stringProperty));
     EXPECT_FALSE(Utils::VariantType(intProperty) == Utils::VariantType(vectorProperty));
 
-    EXPECT_TRUE(Utils::VariantType(doubleProperty) == Utils::VariantType(QVariant::fromValue(43.0)));
+    EXPECT_TRUE(Utils::VariantType(doubleProperty)
+                == Utils::VariantType(QVariant::fromValue(43.0)));
     EXPECT_FALSE(Utils::VariantType(doubleProperty) == Utils::VariantType(undefined));
     EXPECT_FALSE(Utils::VariantType(doubleProperty) == Utils::VariantType(intProperty));
     EXPECT_FALSE(Utils::VariantType(doubleProperty) == Utils::VariantType(stringProperty));
     EXPECT_FALSE(Utils::VariantType(doubleProperty) == Utils::VariantType(vectorProperty));
 
-    EXPECT_TRUE(Utils::VariantType(stringProperty) == Utils::VariantType(QVariant::fromValue(std::string("cde"))));
+    EXPECT_TRUE(Utils::VariantType(stringProperty)
+                == Utils::VariantType(QVariant::fromValue(std::string("cde"))));
     EXPECT_FALSE(Utils::VariantType(stringProperty) == Utils::VariantType(undefined));
     EXPECT_FALSE(Utils::VariantType(stringProperty) == Utils::VariantType(intProperty));
     EXPECT_FALSE(Utils::VariantType(stringProperty) == Utils::VariantType(doubleProperty));
     EXPECT_FALSE(Utils::VariantType(stringProperty) == Utils::VariantType(vectorProperty));
 
-    std::vector<double> vec2 {1, 2};
-    EXPECT_TRUE(Utils::VariantType(vectorProperty) == Utils::VariantType(QVariant::fromValue(vec2)));
+    std::vector<double> vec2{1, 2};
+    EXPECT_TRUE(Utils::VariantType(vectorProperty)
+                == Utils::VariantType(QVariant::fromValue(vec2)));
     EXPECT_FALSE(Utils::VariantType(vectorProperty) == Utils::VariantType(undefined));
     EXPECT_FALSE(Utils::VariantType(vectorProperty) == Utils::VariantType(intProperty));
     EXPECT_FALSE(Utils::VariantType(vectorProperty) == Utils::VariantType(doubleProperty));
@@ -156,7 +155,7 @@ TEST_F(TestItemUtils, CompatibleVariantTypes)
     QVariant intProperty = QVariant::fromValue(1);
     QVariant doubleProperty = QVariant::fromValue(42.0);
     QVariant stringProperty = QVariant::fromValue(std::string("string"));
-    std::vector<double> vec {1, 2};
+    std::vector<double> vec{1, 2};
     QVariant vectorProperty = QVariant::fromValue(vec);
 
     EXPECT_TRUE(Utils::CompatibleVariantTypes(undefined, intProperty));
@@ -191,7 +190,7 @@ TEST_F(TestItemUtils, IsTheSameVariant)
     QVariant intProperty = QVariant::fromValue(1);
     QVariant doubleProperty = QVariant::fromValue(42.0);
     QVariant stringProperty = QVariant::fromValue(std::string("string"));
-    std::vector<double> vec {1, 2};
+    std::vector<double> vec{1, 2};
     QVariant vectorProperty = QVariant::fromValue(vec);
 
     // undefined variant
@@ -226,7 +225,7 @@ TEST_F(TestItemUtils, IsTheSameVariant)
     EXPECT_FALSE(Utils::IsTheSame(stringProperty, vectorProperty));
 
     // vector variant
-    std::vector<double> vec2 {1, 2, 3}, vec3{1, 1};
+    std::vector<double> vec2{1, 2, 3}, vec3{1, 1};
     EXPECT_TRUE(Utils::IsTheSame(vectorProperty, vectorProperty));
     EXPECT_FALSE(Utils::IsTheSame(vectorProperty, QVariant::fromValue(vec2)));
     EXPECT_FALSE(Utils::IsTheSame(vectorProperty, QVariant::fromValue(vec3)));
@@ -264,11 +263,11 @@ TEST_F(TestItemUtils, itemCopyNumber)
 {
     SessionModel model;
 
-    auto parent = model.insertNewItem("parent");
-    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/true);
+    auto parent = model.insertNewItem(Constants::BaseType);
+    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
 
-    const std::string model_a("model_a");
-    const std::string model_b("model_b");
+    const std::string model_a(Constants::BaseType);
+    const std::string model_b(Constants::PropertyType);
     auto child1 = model.insertNewItem(model_a, parent);
     auto child2 = model.insertNewItem(model_a, parent);
     auto child3 = model.insertNewItem(model_b, parent);
@@ -277,4 +276,3 @@ TEST_F(TestItemUtils, itemCopyNumber)
     EXPECT_EQ(Utils::CopyNumber(child2), 1);
     EXPECT_EQ(Utils::CopyNumber(child3), -1);
 }
-

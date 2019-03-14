@@ -1,7 +1,7 @@
 #include "google_test.h"
 #include "path.h"
-#include "sessionmodel.h"
 #include "sessionitem.h"
+#include "sessionmodel.h"
 #include "taginfo.h"
 #include <memory>
 
@@ -36,7 +36,7 @@ TEST_F(TestPath, append)
 
 TEST_F(TestPath, fromVector)
 {
-    Path path = Path::fromVector({1,2,3});
+    Path path = Path::fromVector({1, 2, 3});
     EXPECT_EQ(path.str(), "1,2,3");
 }
 
@@ -48,7 +48,7 @@ TEST_F(TestPath, fromString)
 
 TEST_F(TestPath, pathFromItem)
 {
-    const model_type modelType("abc");
+    const model_type modelType = Constants::BaseType;
     SessionModel model;
 
     // unexisting path
@@ -59,11 +59,11 @@ TEST_F(TestPath, pathFromItem)
 
     // three children beneeth root item
     SessionItem* item0 = model.insertNewItem(modelType);
-    item0->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/true);
+    item0->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
     SessionItem* item1 = model.insertNewItem(modelType);
-    item1->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/true);
+    item1->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
     SessionItem* item2 = model.insertNewItem(modelType);
-    item2->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/true);
+    item2->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
 
     EXPECT_EQ(model.pathFromItem(item0).str(), "0");
     EXPECT_EQ(model.pathFromItem(item1).str(), "1");
@@ -78,7 +78,7 @@ TEST_F(TestPath, pathFromItem)
 
     // adding grandchildren to item2
     SessionItem* child20 = model.insertNewItem(modelType, item2);
-    child20->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/true);
+    child20->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
 
     SessionItem* child200 = model.insertNewItem(modelType, child20);
     SessionItem* child201 = model.insertNewItem(modelType, child20);
@@ -89,7 +89,7 @@ TEST_F(TestPath, pathFromItem)
 
 TEST_F(TestPath, itemFromPath)
 {
-    const model_type modelType("abc");
+    const model_type modelType = Constants::BaseType;
     SessionModel model;
 
     // access to non-existing item
@@ -98,22 +98,22 @@ TEST_F(TestPath, itemFromPath)
     EXPECT_EQ(model.itemFromPath(non_existing), nullptr);
 
     SessionItem* item0 = model.insertNewItem(modelType);
-    item0->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/true);
+    item0->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
     SessionItem* item1 = model.insertNewItem(modelType);
-    item1->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/true);
+    item1->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
     SessionItem* item2 = model.insertNewItem(modelType);
-    item2->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/true);
+    item2->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
 
     EXPECT_EQ(model.itemFromPath(Path::fromVector({0})), item0);
     EXPECT_EQ(model.itemFromPath(Path::fromVector({1})), item1);
     EXPECT_EQ(model.itemFromPath(Path::fromVector({2})), item2);
 
     SessionItem* child20 = model.insertNewItem(modelType, item2);
-    child20->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/true);
+    child20->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
     SessionItem* child200 = model.insertNewItem(modelType, child20);
     SessionItem* child201 = model.insertNewItem(modelType, child20);
 
-    EXPECT_EQ(model.itemFromPath(Path::fromVector({2,0})), child20);
-    EXPECT_EQ(model.itemFromPath(Path::fromVector({2,0,0})), child200);
-    EXPECT_EQ(model.itemFromPath(Path::fromVector({2,0,1})), child201);
+    EXPECT_EQ(model.itemFromPath(Path::fromVector({2, 0})), child20);
+    EXPECT_EQ(model.itemFromPath(Path::fromVector({2, 0, 0})), child200);
+    EXPECT_EQ(model.itemFromPath(Path::fromVector({2, 0, 1})), child201);
 }
