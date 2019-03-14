@@ -27,9 +27,9 @@ class ItemFactory : public ModelView::ItemFactory
 public:
     ItemFactory(std::unique_ptr<ModelView::ItemCatalogue> catalogue);
 
-    std::unique_ptr<ModelView::SessionItem> createItem(const ModelView::model_type& modelType = {}) override;
+    std::unique_ptr<ModelView::SessionItem> createItem(const ModelView::model_type& modelType = {}) const override;
 
-    std::unique_ptr<ModelView::SessionItem> createEmptyItem() override;
+    std::unique_ptr<ModelView::SessionItem> createEmptyItem() const override;
 };
 
 } // ToyItems
