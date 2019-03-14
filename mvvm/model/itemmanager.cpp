@@ -14,11 +14,20 @@
 #include "jsonconverterinterfaces.h"
 #include "jsonmodel.h"
 #include "customvariants.h"
+#include "defaultitemcatalogue.h"
+
+namespace
+{
+std::unique_ptr<ModelView::ItemFactory> DefaultItemFactory()
+{
+    return std::make_unique<ModelView::ItemFactory>(ModelView::CreateDefaultItemCatalogue());
+}
+}
 
 using namespace ModelView;
 
 ItemManager::ItemManager()
-    : m_item_factory(new ItemFactory)
+    : m_item_factory(DefaultItemFactory())
     , m_converter(new JsonModel)
 {
 

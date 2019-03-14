@@ -21,6 +21,7 @@ class SessionItem;
 class ItemPool;
 class ItemFactoryInterface;
 class JsonModelInterface;
+class ItemCatalogue;
 
 //! Manages item creation/registration for SessionModel.
 
