@@ -23,7 +23,6 @@ class ItemCatalogue;
 class CORE_EXPORT ItemFactory : public ItemFactoryInterface
 {
 public:
-    ItemFactory();
     ItemFactory(std::unique_ptr<ItemCatalogue> catalogue);
     ~ItemFactory();
 

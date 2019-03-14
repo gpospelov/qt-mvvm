@@ -16,8 +16,6 @@
 
 using namespace ModelView;
 
-ItemFactory::ItemFactory() = default;
-
 ItemFactory::ItemFactory(std::unique_ptr<ItemCatalogue> catalogue)
     : m_catalogue(std::move(catalogue))
 {
@@ -29,6 +27,7 @@ ItemFactory::~ItemFactory() = default;
 SessionItem* ItemFactory::createItem(const model_type& modelType)
 {
     auto result = create_intern(modelType);
+//    result->setDisplayName(modelType); FIXME
     return result.release();
 }
 
@@ -39,6 +38,5 @@ SessionItem* ItemFactory::createEmptyItem()
 
 std::unique_ptr<SessionItem> ItemFactory::create_intern(const model_type& modelType) const
 {
-    auto result = m_catalogue->create(modelType);
-    return result;
+    return m_catalogue->create(modelType);
 }

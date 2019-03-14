@@ -25,5 +25,5 @@ std::unique_ptr<ModelView::ItemFactory> ToyItemFactory()
 ToyItems::SampleModel::SampleModel()
     : SessionModel("ToyModel")
 {
-    m_item_manager->setItemFactory(std::make_unique<ToyItems::ItemFactory>());
+    m_item_manager->setItemFactory(std::make_unique<ToyItems::ItemFactory>(ToyItems::CreateToyItemCatalogue()));
 }

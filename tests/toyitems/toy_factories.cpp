@@ -17,6 +17,12 @@
 
 using namespace ToyItems;
 
+ItemFactory::ItemFactory(std::unique_ptr<ModelView::ItemCatalogue> catalogue)
+   : ModelView::ItemFactory(std::move(catalogue))
+{
+
+}
+
 ModelView::SessionItem* ItemFactory::createItem(const ModelView::model_type& modelType)
 {
     ModelView::SessionItem* result(nullptr);
