@@ -47,14 +47,12 @@ ItemManager::~ItemManager() = default;
 
 SessionItem* ItemManager::createItem(const model_type& modelType)
 {
-    auto result = m_item_factory->createItem(modelType);
-    return result;
+    return m_item_factory->createItem(modelType).release();
 }
 
 SessionItem* ItemManager::createRootItem()
 {
-    auto result = m_item_factory->createEmptyItem();
-    return result;
+    return m_item_factory->createEmptyItem().release();
 }
 
 SessionItem* ItemManager::findItem(const identifier_type& id) const

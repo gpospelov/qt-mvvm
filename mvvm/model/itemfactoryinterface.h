@@ -12,6 +12,7 @@
 
 #include "global.h"
 #include "model_types.h"
+#include <memory>
 
 namespace ModelView {
 
@@ -23,9 +24,9 @@ class CORE_EXPORT ItemFactoryInterface {
 public:
     virtual ~ItemFactoryInterface() = default;
 
-    virtual SessionItem* createItem(const model_type& modelType = {}) = 0;
+    virtual std::unique_ptr<SessionItem> createItem(const model_type& modelType = {}) = 0;
 
-    virtual SessionItem* createEmptyItem() = 0;
+    virtual std::unique_ptr<SessionItem> createEmptyItem() = 0;
 
 };
 

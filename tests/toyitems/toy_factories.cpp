@@ -23,15 +23,15 @@ ItemFactory::ItemFactory(std::unique_ptr<ModelView::ItemCatalogue> catalogue)
 
 }
 
-ModelView::SessionItem* ItemFactory::createItem(const ModelView::model_type& modelType)
+std::unique_ptr<ModelView::SessionItem> ItemFactory::createItem(const ModelView::model_type& modelType)
 {
     auto result = create_intern(modelType);
 
     result->setDisplayName(modelType);
-    return result.release();
+    return result;
 }
 
-ModelView::SessionItem* ItemFactory::createEmptyItem()
+std::unique_ptr<ModelView::SessionItem> ItemFactory::createEmptyItem()
 {
-    return new ModelView::SessionItem;
+    return std::make_unique<ModelView::SessionItem>();
 }
