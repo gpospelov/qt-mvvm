@@ -27,12 +27,10 @@ class ItemFactory : public ModelView::ItemFactory
 public:
     ItemFactory(std::unique_ptr<ModelView::ItemCatalogue> catalogue);
 
-    std::unique_ptr<ModelView::SessionItem> createItem(const ModelView::model_type& modelType = {}) const override;
-
-    std::unique_ptr<ModelView::SessionItem> createEmptyItem() const override;
+    std::unique_ptr<ModelView::SessionItem>
+    createItem(const ModelView::model_type& modelType = {}) const override;
 };
 
-} // ToyItems
+} // namespace ToyItems
 
 #endif // TOYFACTORIES_H
-

@@ -8,13 +8,13 @@
 // ************************************************************************** //
 
 #include "itemmanager.h"
-#include "sessionitem.h"
-#include "itempool.h"
-#include "itemfactory.h"
-#include "jsonconverterinterfaces.h"
-#include "jsonmodel.h"
 #include "customvariants.h"
 #include "defaultitemcatalogue.h"
+#include "itemfactory.h"
+#include "itempool.h"
+#include "jsonconverterinterfaces.h"
+#include "jsonmodel.h"
+#include "sessionitem.h"
 
 namespace
 {
@@ -22,16 +22,11 @@ std::unique_ptr<ModelView::ItemFactory> DefaultItemFactory()
 {
     return std::make_unique<ModelView::ItemFactory>(ModelView::CreateDefaultItemCatalogue());
 }
-}
+} // namespace
 
 using namespace ModelView;
 
-ItemManager::ItemManager()
-    : m_item_factory(DefaultItemFactory())
-    , m_converter(new JsonModel)
-{
-
-}
+ItemManager::ItemManager() : m_item_factory(DefaultItemFactory()), m_converter(new JsonModel) {}
 
 void ItemManager::setItemFactory(std::unique_ptr<ItemFactoryInterface> factory)
 {

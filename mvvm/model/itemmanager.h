@@ -12,10 +12,11 @@
 
 #include "global.h"
 #include "model_types.h"
-#include <string>
 #include <memory>
+#include <string>
 
-namespace ModelView {
+namespace ModelView
+{
 
 class SessionItem;
 class ItemPool;
@@ -25,7 +26,8 @@ class ItemCatalogue;
 
 //! Manages item creation/registration for SessionModel.
 
-class CORE_EXPORT ItemManager {
+class CORE_EXPORT ItemManager
+{
 public:
     ItemManager();
     ~ItemManager();
@@ -54,6 +56,6 @@ private:
     std::unique_ptr<JsonModelInterface> m_converter;
 };
 
-}  // namespace ModelView
+} // namespace ModelView
 
 #endif

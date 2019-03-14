@@ -8,18 +8,17 @@
 // ************************************************************************** //
 
 #include "itemfactory.h"
-#include "sessionitem.h"
-#include "propertyitem.h"
 #include "compounditem.h"
-#include "vectoritem.h"
 #include "itemcatalogue.h"
+#include "propertyitem.h"
+#include "sessionitem.h"
+#include "vectoritem.h"
 
 using namespace ModelView;
 
 ItemFactory::ItemFactory(std::unique_ptr<ItemCatalogue> catalogue)
     : m_catalogue(std::move(catalogue))
 {
-
 }
 
 ItemFactory::~ItemFactory() = default;
@@ -27,7 +26,7 @@ ItemFactory::~ItemFactory() = default;
 std::unique_ptr<SessionItem> ItemFactory::createItem(const model_type& modelType) const
 {
     auto result = create_intern(modelType);
-//    result->setDisplayName(modelType); FIXME
+    //    result->setDisplayName(modelType); FIXME
     return result;
 }
 

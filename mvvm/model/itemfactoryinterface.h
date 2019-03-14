@@ -14,22 +14,23 @@
 #include "model_types.h"
 #include <memory>
 
-namespace ModelView {
+namespace ModelView
+{
 
 class SessionItem;
 
 //! Interface class for all factories capable of producing SessionItem's.
 
-class CORE_EXPORT ItemFactoryInterface {
+class CORE_EXPORT ItemFactoryInterface
+{
 public:
     virtual ~ItemFactoryInterface() = default;
 
     virtual std::unique_ptr<SessionItem> createItem(const model_type& modelType = {}) const = 0;
 
     virtual std::unique_ptr<SessionItem> createEmptyItem() const = 0;
-
 };
 
-}  // namespace ModelView
+} // namespace ModelView
 
 #endif

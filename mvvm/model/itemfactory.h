@@ -14,7 +14,8 @@
 #include "itemfactoryinterface.h"
 #include <memory>
 
-namespace ModelView {
+namespace ModelView
+{
 
 class ItemCatalogue;
 
@@ -24,7 +25,7 @@ class CORE_EXPORT ItemFactory : public ItemFactoryInterface
 {
 public:
     ItemFactory(std::unique_ptr<ItemCatalogue> catalogue);
-    ~ItemFactory();
+    ~ItemFactory() override;
 
     std::unique_ptr<SessionItem> createItem(const model_type& modelType = {}) const override;
 
@@ -35,6 +36,6 @@ protected:
     std::unique_ptr<ItemCatalogue> m_catalogue;
 };
 
-}  // namespace ModelView
+} // namespace ModelView
 
 #endif
