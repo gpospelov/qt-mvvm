@@ -140,7 +140,7 @@ ModelMapper* SessionModel::mapper()
 
 void SessionModel::createRootItem()
 {
-    m_root_item = m_item_manager->createRootItem();
+    m_root_item = m_item_manager->createRootItem().release();
     m_root_item->setModel(this);
     m_root_item->registerTag(TagInfo::universalTag("rootTag"), /*set_as_default*/true);
 }

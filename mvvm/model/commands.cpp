@@ -81,7 +81,7 @@ void InsertNewItemCommand::undo()
 void InsertNewItemCommand::redo()
 {
     auto parent = m_model->itemFromPath(m_parent_path);
-    auto child = m_model->manager()->createItem(m_model_type);
+    auto child = m_model->manager()->createItem(m_model_type).release();
     parent->insertItem(child, m_row, m_tag);
     m_result = child;
 }
