@@ -25,32 +25,10 @@ ItemFactory::ItemFactory(std::unique_ptr<ModelView::ItemCatalogue> catalogue)
 
 ModelView::SessionItem* ItemFactory::createItem(const ModelView::model_type& modelType)
 {
-    ModelView::SessionItem* result(nullptr);
-
-    if (modelType == Constants::MultiLayerType)
-        result = new MultiLayer;
-
-    else if (modelType == Constants::LayerType)
-        result = new Layer;
-
-    else if (modelType == Constants::ParticleType)
-        result = new Particle;
-
-    else if (modelType == Constants::InterferenceType)
-        result = new InterferenceFunction;
-
-    else if (modelType == ModelView::Constants::VectorType)
-        result = new ModelView::VectorItem;
-
-    else if (modelType == ModelView::Constants::PropertyType)
-        result = new ModelView::PropertyItem;
-
-    if (!result)
-        throw std::runtime_error("ItemFactory::createItem() -> Error. Unknown model '"+
-                                 modelType+"'");
+    auto result = create_intern(modelType);
 
     result->setDisplayName(modelType);
-    return result;
+    return result.release();
 }
 
 ModelView::SessionItem* ItemFactory::createEmptyItem()
