@@ -12,12 +12,20 @@
 #include "propertyitem.h"
 #include "compounditem.h"
 #include "vectoritem.h"
+#include "itemcatalogue.h"
 
 using namespace ModelView;
 
 ItemFactory::ItemFactory() = default;
 
-// FIXME revise items which default factory should produce
+ItemFactory::ItemFactory(std::unique_ptr<ItemCatalogue> catalogue)
+    : m_catalogue(std::move(catalogue))
+{
+
+}
+
+ItemFactory::~ItemFactory() = default;
+
 SessionItem* ItemFactory::createItem(const model_type& modelType)
 {
     if (modelType == Constants::PropertyType)

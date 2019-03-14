@@ -12,8 +12,11 @@
 
 #include "global.h"
 #include "itemfactoryinterface.h"
+#include <memory>
 
 namespace ModelView {
+
+class ItemCatalogue;
 
 //! Default SessionItem factory.
 
@@ -21,11 +24,15 @@ class CORE_EXPORT ItemFactory : public ItemFactoryInterface
 {
 public:
     ItemFactory();
+    ItemFactory(std::unique_ptr<ItemCatalogue> catalogue);
+    ~ItemFactory();
 
     SessionItem* createItem(const model_type& modelType = {});
 
     SessionItem* createEmptyItem();
 
+private:
+    std::unique_ptr<ItemCatalogue> m_catalogue;
 };
 
 }  // namespace ModelView
