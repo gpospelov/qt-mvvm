@@ -28,19 +28,17 @@ ItemFactory::~ItemFactory() = default;
 
 SessionItem* ItemFactory::createItem(const model_type& modelType)
 {
-    if (modelType == Constants::PropertyType)
-        return new PropertyItem;
-    else if (modelType == Constants::CompoundType)
-        return new CompoundItem;
-    else if (modelType == Constants::VectorType)
-        return new VectorItem;
-    else if (modelType == Constants::BaseType)
-        return new SessionItem;
-    else
-        throw std::runtime_error("ItemFactory::createItem() -> Unknown type '"+modelType+"'");
+    auto result = create_intern(modelType);
+    return result.release();
 }
 
 SessionItem* ItemFactory::createEmptyItem()
 {
     return new SessionItem;
+}
+
+std::unique_ptr<SessionItem> ItemFactory::create_intern(const model_type& modelType) const
+{
+    auto result = m_catalogue->create(modelType);
+    return result;
 }
