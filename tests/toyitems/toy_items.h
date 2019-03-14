@@ -13,6 +13,7 @@
 #include "compounditem.h"
 #include "sessionmodel.h"
 #include "itemfactoryinterface.h"
+#include "defaultitemcatalogue.h"
 #include <string>
 
 //! Collection of toy items and models for testing purposes.
@@ -61,6 +62,9 @@ public:
 private:
     void update_appearance();
 };
+
+//! Returns catalogue of toy items.
+std::unique_ptr<ModelView::ItemCatalogue> CreateToyItemCatalogue();
 
 } // ToyItems
 

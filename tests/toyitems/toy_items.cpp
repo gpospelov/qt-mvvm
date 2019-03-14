@@ -72,3 +72,13 @@ void InterferenceFunction::update_appearance()
     auto angle_item = getItem(P_ROTATION_ANLE);
     angle_item->setEnabled(!getItemValue(P_INTEGRATION).toBool());
 }
+
+std::unique_ptr<ModelView::ItemCatalogue> ToyItems::CreateToyItemCatalogue()
+{
+    auto result = ModelView::CreateDefaultItemCatalogue();
+    result->add<MultiLayer>();
+    result->add<Layer>();
+    result->add<Particle>();
+    result->add<InterferenceFunction>();
+    return result;
+}
