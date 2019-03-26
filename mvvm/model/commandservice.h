@@ -13,8 +13,8 @@
 #include "global.h"
 #include "model_types.h"
 #include <memory>
+#include <QUndoStack>
 
-class QUndoStack;
 class QUndoCommand;
 class QVariant;
 
@@ -62,11 +62,16 @@ typename C::result_t CommandService::process_command(Args&&... args)
 {
     auto command = std::make_unique<C>(std::forward<Args>(args)...);
 
-    bool was_added_to_stack = run_command(command.get());
-    typename C::result_t result = command->result();
-
-    if (was_added_to_stack)
+    typename C::result_t result;
+    if (provideUndo()) {
+        m_commands->push(command.get());
+        if (m_commands->count() && (m_commands->command(m_commands->count()-1) == command.get()))
+            result = command->result();
         command.release();
+    } else {
+        command->redo();
+        result = command->result();
+    }
 
     return result;
 }
