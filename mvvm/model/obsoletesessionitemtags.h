@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef SESSIONITEMTAGS_H
-#define SESSIONITEMTAGS_H
+#ifndef OBSOLETESESSIONITEMTAGS_H
+#define OBSOLETESESSIONITEMTAGS_H
 
 #include "global.h"
 #include "taginfo.h"
@@ -19,7 +19,7 @@ namespace ModelView {
 
 //! Holds all tag info for SessionItem.
 
-class CORE_EXPORT SessionItemTags
+class CORE_EXPORT ObsoleteSessionItemTags
 {
 public:
     using container_type = std::vector<TagInfo>;
@@ -67,4 +67,4 @@ private:
 
 }  // namespace ModelView
 
-#endif //  SESSIONITEMTAGS_H
+#endif //  OBSOLETESESSIONITEMTAGS_H

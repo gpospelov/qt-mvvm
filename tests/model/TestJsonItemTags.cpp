@@ -3,7 +3,7 @@
 #include "test_utils.h"
 #include "jsonvariant.h"
 #include "taginfo.h"
-#include "sessionitemtags.h"
+#include "obsoletesessionitemtags.h"
 #include "customvariants.h"
 #include <QJsonObject>
 #include <QJsonArray>
@@ -61,7 +61,7 @@ TEST_F(TestJsonItemTags, getJson)
     TagInfo tag1("tag1", 0, -1, std::vector<std::string>() = {});
     TagInfo tag2("tag2", 0, -1, std::vector<std::string>() = {"aaa", "bbb"});
 
-    SessionItemTags tags;
+    ObsoleteSessionItemTags tags;
     tags.registerTag(tag1);
     tags.registerTag(tag2);
 
@@ -85,7 +85,7 @@ TEST_F(TestJsonItemTags, fromItemToJsonAndBack)
     TagInfo tag1("tag1", 0, -1, std::vector<std::string>() = {});
     TagInfo tag2("tag2", 0, 42, std::vector<std::string>() = {"aaa", "bbb"});
 
-    SessionItemTags tags;
+    ObsoleteSessionItemTags tags;
     tags.registerTag(tag1);
     tags.registerTag(tag2);
 

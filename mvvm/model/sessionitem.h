@@ -22,7 +22,7 @@ namespace ModelView
 class SessionModel;
 class ItemPool;
 class SessionItemData;
-class SessionItemTags;
+class ObsoleteSessionItemTags;
 class TagInfo;
 class ItemMapper;
 
@@ -105,7 +105,7 @@ private:
     std::vector<SessionItem*> m_children;
     std::unique_ptr<ItemMapper> m_mapper;
     std::unique_ptr<SessionItemData> m_data;
-    std::unique_ptr<SessionItemTags> m_tags;
+    std::unique_ptr<ObsoleteSessionItemTags> m_tags;
     model_type m_modelType;
 };
 

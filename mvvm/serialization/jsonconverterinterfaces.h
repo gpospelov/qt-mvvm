@@ -19,7 +19,7 @@ class QJsonArray;
 
 namespace ModelView {
 
-class SessionItemTags;
+class ObsoleteSessionItemTags;
 class SessionItemData;
 class SessionModel;
 class SessionItem;
@@ -43,9 +43,9 @@ class CORE_EXPORT JsonItemTagsInterface
 public:
     virtual ~JsonItemTagsInterface() = default;
 
-    virtual QJsonArray get_json(const SessionItemTags&) = 0;
+    virtual QJsonArray get_json(const ObsoleteSessionItemTags&) = 0;
 
-    virtual SessionItemTags get_tags(const QJsonArray&) = 0;
+    virtual ObsoleteSessionItemTags get_tags(const QJsonArray&) = 0;
 };
 
 //! Base class for all converters of SessionItemData to/from json object

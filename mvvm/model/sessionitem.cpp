@@ -14,7 +14,7 @@
 #include "itempool.h"
 #include "itemutils.h"
 #include "sessionitemdata.h"
-#include "sessionitemtags.h"
+#include "obsoletesessionitemtags.h"
 #include "sessionmodel.h"
 #include "modelmapper.h"
 #include <cassert>
@@ -35,7 +35,7 @@ int appearance(const ModelView::SessionItem& item)
 using namespace ModelView;
 
 SessionItem::SessionItem(model_type modelType)
-    : m_parent(nullptr), m_model(nullptr), m_data(new SessionItemData), m_tags(new SessionItemTags),
+    : m_parent(nullptr), m_model(nullptr), m_data(new SessionItemData), m_tags(new ObsoleteSessionItemTags),
       m_modelType(std::move(modelType))
 {
     setDataIntern(QVariant::fromValue(ItemPool::generate_key()), ItemDataRole::IDENTIFIER);

@@ -12,7 +12,7 @@
 //
 // ************************************************************************** //
 
-#include "sessionitemtags.h"
+#include "obsoletesessionitemtags.h"
 #include <algorithm>
 #include <stdexcept>
 #include <sstream>
@@ -23,7 +23,7 @@ using namespace ModelView;
 //! Register tag with given parameters. Returns true in case of success. Returns
 //! false if parameters are invalid or such tag was already registered.
 
-bool SessionItemTags::registerTag(const TagInfo& info)
+bool ObsoleteSessionItemTags::registerTag(const TagInfo& info)
 {
     if (isValid(info.name()))
         throw std::runtime_error("SessionItemTags::registerTag() -> Error. Existing name");
@@ -33,7 +33,7 @@ bool SessionItemTags::registerTag(const TagInfo& info)
     return true;
 }
 
-bool SessionItemTags::registerTag(const std::string& name, int min, int max,
+bool ObsoleteSessionItemTags::registerTag(const std::string& name, int min, int max,
                                   const std::vector<std::string>& modelTypes)
 {
     if (name.empty() || isValid(name))
@@ -48,7 +48,7 @@ bool SessionItemTags::registerTag(const std::string& name, int min, int max,
 //! If modelType is not empty, than an additional check is performed if tag is
 //! intended for the given modelType.
 
-bool SessionItemTags::isValid(const std::string& tagName, const std::string& modelType) const
+bool ObsoleteSessionItemTags::isValid(const std::string& tagName, const std::string& modelType) const
 {
     bool result(false);
 
@@ -67,14 +67,14 @@ bool SessionItemTags::isValid(const std::string& tagName, const std::string& mod
 
 //! Returns list of modelTypes the given tagName is intended for.
 
-std::vector<std::string> SessionItemTags::modelTypesForTag(const std::string& tagName) const
+std::vector<std::string> ObsoleteSessionItemTags::modelTypesForTag(const std::string& tagName) const
 {
     return isValid(tagName) ? tagInfo(tagName).modelTypes() : std::vector<std::string>();
 }
 
 //! Returns start index of given tagName corresponding to the index of SessionItem's m_children.
 
-int SessionItemTags::tagStartIndex(const std::string& tagName) const
+int ObsoleteSessionItemTags::tagStartIndex(const std::string& tagName) const
 {
     int index(0);
     for (const auto& tag : m_tags) {
@@ -89,7 +89,7 @@ int SessionItemTags::tagStartIndex(const std::string& tagName) const
 
 //! Returns index in SessionItem's m_children corresponding to given row in tagName.
 
-int SessionItemTags::indexFromTagRow(const std::string& tagName, int row) const
+int ObsoleteSessionItemTags::indexFromTagRow(const std::string& tagName, int row) const
 {
     auto& tag = tagInfo(tagName);
 
@@ -106,7 +106,7 @@ int SessionItemTags::indexFromTagRow(const std::string& tagName, int row) const
 //! Returns index in SessionItem's m_children to insert new item.
 //! If number of items for given tagName exceeds maximum allowed, returns -1;
 
-int SessionItemTags::insertIndexFromTagRow(const std::string& tagName, int row)
+int ObsoleteSessionItemTags::insertIndexFromTagRow(const std::string& tagName, int row)
 {
     if (maximumReached(tagName))
         return -1;
@@ -127,7 +127,7 @@ int SessionItemTags::insertIndexFromTagRow(const std::string& tagName, int row)
     return tagStartIndex(tagName) + row;
 }
 
-std::string SessionItemTags::tagFromIndex(int index) const
+std::string ObsoleteSessionItemTags::tagFromIndex(int index) const
 {
     if (index < 0)
         return {};
@@ -142,32 +142,32 @@ std::string SessionItemTags::tagFromIndex(int index) const
     return {};
 }
 
-int SessionItemTags::childCount(const std::string& tagName)
+int ObsoleteSessionItemTags::childCount(const std::string& tagName)
 {
     return tagInfo(tagName).childCount();
 }
 
-void SessionItemTags::addChild(const std::string& tagName)
+void ObsoleteSessionItemTags::addChild(const std::string& tagName)
 {
     tagInfo(tagName).add();
 }
 
-void SessionItemTags::removeChild(const std::string& tagName)
+void ObsoleteSessionItemTags::removeChild(const std::string& tagName)
 {
     tagInfo(tagName).remove();
 }
 
-bool SessionItemTags::isSingleItemTag(const std::string& tagName)
+bool ObsoleteSessionItemTags::isSingleItemTag(const std::string& tagName)
 {
     return tagInfo(tagName).isSinglePropertyTag();
 }
 
-TagInfo& SessionItemTags::tagInfo(const std::string& tagName)
+TagInfo& ObsoleteSessionItemTags::tagInfo(const std::string& tagName)
 {
-    return const_cast<TagInfo&>(static_cast<const SessionItemTags*>(this)->tagInfo(tagName));
+    return const_cast<TagInfo&>(static_cast<const ObsoleteSessionItemTags*>(this)->tagInfo(tagName));
 }
 
-const TagInfo& SessionItemTags::tagInfo(const std::string& tagName) const
+const TagInfo& ObsoleteSessionItemTags::tagInfo(const std::string& tagName) const
 {
     for (const auto& tag : m_tags)
         if (tag.name() == tagName)
@@ -176,22 +176,22 @@ const TagInfo& SessionItemTags::tagInfo(const std::string& tagName) const
     throw std::runtime_error("SessionItemTags::tagInfo() -> Error. No such tag '" + tagName + "'.");
 }
 
-bool SessionItemTags::maximumReached(const std::string& tagName) const
+bool ObsoleteSessionItemTags::maximumReached(const std::string& tagName) const
 {
     return tagInfo(tagName).maximumReached();
 }
 
-SessionItemTags::const_iterator SessionItemTags::begin() const
+ObsoleteSessionItemTags::const_iterator ObsoleteSessionItemTags::begin() const
 {
     return m_tags.begin();
 }
 
-SessionItemTags::const_iterator SessionItemTags::end() const
+ObsoleteSessionItemTags::const_iterator ObsoleteSessionItemTags::end() const
 {
     return m_tags.end();
 }
 
-std::vector<std::pair<int, std::string> > SessionItemTags::tagsSummary()
+std::vector<std::pair<int, std::string> > ObsoleteSessionItemTags::tagsSummary()
 {
     std::vector<std::pair<int, std::string> > result;
     for (const auto& tag : m_tags) {
@@ -201,7 +201,7 @@ std::vector<std::pair<int, std::string> > SessionItemTags::tagsSummary()
     return result;
 }
 
-void SessionItemTags::resetTags()
+void ObsoleteSessionItemTags::resetTags()
 {
     for (auto& tag : m_tags)
         tag.setCount(0);

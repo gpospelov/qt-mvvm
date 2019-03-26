@@ -17,7 +17,7 @@
 #include "itemmanager.h"
 #include "customvariants.h"
 #include "model_types.h"
-#include "sessionitemtags.h"
+#include "obsoletesessionitemtags.h"
 #include <QSet>
 #include <QJsonObject>
 #include <QJsonArray>

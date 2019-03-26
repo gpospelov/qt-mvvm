@@ -33,9 +33,9 @@ public:
     JsonItemTags();
     ~JsonItemTags() override;
 
-    QJsonArray get_json(const SessionItemTags& itemTags) override;
+    QJsonArray get_json(const ObsoleteSessionItemTags& itemTags) override;
 
-    SessionItemTags get_tags(const QJsonArray& object) override;
+    ObsoleteSessionItemTags get_tags(const QJsonArray& object) override;
 
     bool is_item_tag(const QJsonObject& object);
 };

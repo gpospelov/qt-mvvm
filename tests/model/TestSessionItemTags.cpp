@@ -1,5 +1,5 @@
 #include "google_test.h"
-#include "sessionitemtags.h"
+#include "obsoletesessionitemtags.h"
 
 using namespace ModelView;
 
@@ -16,14 +16,14 @@ TestSessionItemTags::~TestSessionItemTags() = default;
 
 TEST_F(TestSessionItemTags, initialState)
 {
-    SessionItemTags tags;
+    ObsoleteSessionItemTags tags;
     EXPECT_FALSE(tags.isValid(""));
     EXPECT_FALSE(tags.isValid("abc"));
 }
 
 TEST_F(TestSessionItemTags, registerTag)
 {
-    SessionItemTags tags;
+    ObsoleteSessionItemTags tags;
 
     // registering tag
     std::vector<std::string> expected = {ParticleType};
@@ -48,7 +48,7 @@ TEST_F(TestSessionItemTags, registerTag)
 
 TEST_F(TestSessionItemTags, registerTagInfo)
 {
-    SessionItemTags tags;
+    ObsoleteSessionItemTags tags;
 
     TagInfo tag = TagInfo::universalTag("tagname");
     tags.registerTag(tag);
@@ -57,7 +57,7 @@ TEST_F(TestSessionItemTags, registerTagInfo)
 
 TEST_F(TestSessionItemTags, modelTypesForTag)
 {
-    SessionItemTags tags;
+    ObsoleteSessionItemTags tags;
     std::vector<std::string> expected{ParticleType, LayerType};
 
     EXPECT_TRUE(tags.registerTag("tag1", 0, 1, expected));
@@ -70,7 +70,7 @@ TEST_F(TestSessionItemTags, modelTypesForTag)
 
 TEST_F(TestSessionItemTags, tagStartIndex)
 {
-    SessionItemTags tags;
+    ObsoleteSessionItemTags tags;
 
     // registering tags
     EXPECT_TRUE(tags.registerTag("tag1", 0, 2, {ParticleType}));
@@ -107,7 +107,7 @@ TEST_F(TestSessionItemTags, tagStartIndex)
 
 TEST_F(TestSessionItemTags, indexFromTagRow)
 {
-    SessionItemTags tags;
+    ObsoleteSessionItemTags tags;
     tags.registerTag("tag1", 0, -1, {ParticleType});
     tags.registerTag("tag2", 0, 2, {ParticleType});
 
@@ -129,7 +129,7 @@ TEST_F(TestSessionItemTags, indexFromTagRow)
 
 TEST_F(TestSessionItemTags, tagFromIndex)
 {
-    SessionItemTags tags;
+    ObsoleteSessionItemTags tags;
     tags.registerTag("tag1", 0, -1, {ParticleType});
     tags.registerTag("tag2", 0, 2, {ParticleType});
 
@@ -153,7 +153,7 @@ TEST_F(TestSessionItemTags, tagFromIndex)
 
 TEST_F(TestSessionItemTags, insertIndexFromTagRow)
 {
-    SessionItemTags tags;
+    ObsoleteSessionItemTags tags;
     tags.registerTag("tag1", 0, -1, {ParticleType});
     tags.registerTag("tag2", 0, 2, {ParticleType});
 
@@ -178,7 +178,7 @@ TEST_F(TestSessionItemTags, insertIndexFromTagRow)
 
 TEST_F(TestSessionItemTags, tagSummaryInfo)
 {
-    SessionItemTags tags;
+    ObsoleteSessionItemTags tags;
     tags.registerTag("tag1", 0, -1, {ParticleType});
     tags.registerTag("tag2", 0, 2, {ParticleType});
 

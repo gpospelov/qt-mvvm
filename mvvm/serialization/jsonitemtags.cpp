@@ -8,7 +8,7 @@
 // ************************************************************************** //
 
 #include "jsonitemtags.h"
-#include "sessionitemtags.h"
+#include "obsoletesessionitemtags.h"
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QStringList>
@@ -42,7 +42,7 @@ JsonItemTags::~JsonItemTags() = default;
 
 //! Returns array of json objects representing all TagInfo's in SessionItemTags.
 
-QJsonArray JsonItemTags::get_json(const SessionItemTags& itemTags)
+QJsonArray JsonItemTags::get_json(const ObsoleteSessionItemTags& itemTags)
 {
 
     QJsonArray result;
@@ -65,9 +65,9 @@ QJsonArray JsonItemTags::get_json(const SessionItemTags& itemTags)
 
 //! Returns SessionItemTags object reconstructed from its json representation.
 
-SessionItemTags JsonItemTags::get_tags(const QJsonArray& object)
+ObsoleteSessionItemTags JsonItemTags::get_tags(const QJsonArray& object)
 {
-    SessionItemTags result;
+    ObsoleteSessionItemTags result;
 
     for (const auto& json_tag : object) {
         if (!is_item_tag(json_tag.toObject()))

@@ -12,7 +12,7 @@
 #include "jsonitemtags.h"
 #include "sessionitem.h"
 #include "sessionitemdata.h"
-#include "sessionitemtags.h"
+#include "obsoletesessionitemtags.h"
 #include "itemutils.h"
 #include "itemmanager.h"
 #include "customvariants.h"
@@ -75,7 +75,7 @@ void JsonItem::json_to_item(const QJsonObject& json, SessionItem* parent, int ro
 
     auto itemTags = m_itemtags_converter->get_tags(json[itemTagsKey].toArray());
 
-    item->m_tags = std::make_unique<SessionItemTags>(itemTags);
+    item->m_tags = std::make_unique<ObsoleteSessionItemTags>(itemTags);
 
     // FIXME find more elegant way to replace item registration
     identifier_type identifier = itemData.data(ItemDataRole::IDENTIFIER).value<std::string>();
