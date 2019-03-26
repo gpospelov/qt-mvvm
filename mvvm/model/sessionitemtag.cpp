@@ -12,11 +12,7 @@
 
 using namespace ModelView;
 
-SessionItemTag::SessionItemTag(ModelView::TagInfo tag_info)
-    : m_tag_info(std::move(tag_info))
-{
-
-}
+SessionItemTag::SessionItemTag(ModelView::TagInfo tag_info) : m_tag_info(std::move(tag_info)) {}
 
 SessionItemTag::~SessionItemTag()
 {
@@ -32,24 +28,31 @@ int SessionItemTag::childrenCount() const
 }
 
 //! Inserts item in a vector of children at given index, returns true in the case of success.
-//! If index==-1 or index==childrenCount(), will append at the end of the vector.
+//! If index==-1 or index==childrenCount(), item will be appended at the end of the vector.
 //! If item can't be inserted (wrong model type, wrong index or maximum number of items reached),
 //! will return false.
 
-bool SessionItemTag::insertItem(SessionItem *item, int index)
+bool SessionItemTag::insertItem(SessionItem* item, int index)
 {
     int vec_index = insert_index(item, index);
 
     if (vec_index < 0)
         return false;
 
-     m_items.insert(std::next(m_items.begin(), vec_index), item);
-     return true;
+    m_items.insert(std::next(m_items.begin(), vec_index), item);
+    return true;
 }
 
 SessionItem* SessionItemTag::takeItem(int index)
 {
-    return nullptr;
+    if (minimum_reached())
+        return nullptr;
+
+    SessionItem* result = itemAt(index);
+    if (result)
+        m_items.erase(m_items.begin() + index);
+
+    return result;
 }
 
 std::vector<SessionItem*> SessionItemTag::children() const
@@ -64,6 +67,13 @@ int SessionItemTag::indexOfChild(SessionItem* child) const
 {
     auto pos = find(m_items.begin(), m_items.end(), child);
     return pos == m_items.end() ? -1 : static_cast<int>(std::distance(m_items.begin(), pos));
+}
+
+//! Returns item at given index. Returns nullptr if index is invalid.
+
+SessionItem* SessionItemTag::itemAt(int index) const
+{
+    return index >= 0 && index < childrenCount() ? m_items[static_cast<size_t>(index)] : nullptr;
 }
 
 //! Returns the name of SessionItemTag.
@@ -94,10 +104,16 @@ bool SessionItemTag::maximum_reached() const
     return m_tag_info.max() != -1 && m_tag_info.max() == childrenCount();
 }
 
+//! Returns true if less items than now is not allowed.
+
+bool SessionItemTag::minimum_reached() const
+{
+    return m_tag_info.min() != -1 && m_tag_info.min() == childrenCount();
+}
+
 //! Returns true if item's modelType is intended for this tag.
 
 bool SessionItemTag::is_valid_item(const SessionItem* item) const
 {
     return item && m_tag_info.isValidChild(item->modelType()) ? true : false;
 }
-

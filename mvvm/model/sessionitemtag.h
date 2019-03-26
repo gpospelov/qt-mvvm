@@ -39,11 +39,14 @@ public:
 
     int indexOfChild(SessionItem* child) const;
 
+    SessionItem* itemAt(int index) const;
+
     std::string name() const;
 
 private:
     int insert_index(const SessionItem* item, int requested_index) const;
     bool maximum_reached() const;
+    bool minimum_reached() const;
     bool is_valid_item(const SessionItem* item) const;
     TagInfo m_tag_info;
     std::vector<SessionItem*> m_items;

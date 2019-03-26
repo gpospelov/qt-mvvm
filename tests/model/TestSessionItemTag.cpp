@@ -1,7 +1,7 @@
 #include "google_test.h"
-#include "test_utils.h"
-#include "sessionitemtag.h"
 #include "sessionitem.h"
+#include "sessionitemtag.h"
+#include "test_utils.h"
 
 using namespace ModelView;
 
@@ -64,6 +64,12 @@ TEST_F(TestSessionItemTag, insertItem)
     EXPECT_TRUE(tag.insertItem(child5, tag.childrenCount()));
     expected = {child3, child4, child1, child2, child5};
     EXPECT_EQ(tag.children(), expected);
+
+    // insertion with wrong index
+    SessionItem* child6 = new SessionItem;
+    EXPECT_FALSE(tag.insertItem(child6, 42));
+    EXPECT_EQ(tag.children(), expected);
+    delete child6;
 }
 
 //! Checking ::insertItem when item has specific model type.
@@ -134,6 +140,76 @@ TEST_F(TestSessionItemTag, indexOfChild)
     EXPECT_EQ(tag.indexOfChild(child3.get()), -1);
 }
 
+//! Checking ::itemAt.
 
+TEST_F(TestSessionItemTag, itemAt)
+{
+    const std::string tag_name("tag");
+    const std::string model_type("model_a");
 
+    SessionItemTag tag(TagInfo::universalTag(tag_name));
 
+    // items at given indices
+    SessionItem* child1 = new SessionItem(model_type);
+    SessionItem* child2 = new SessionItem(model_type);
+    EXPECT_TRUE(tag.insertItem(child1));
+    EXPECT_TRUE(tag.insertItem(child2));
+    EXPECT_EQ(tag.itemAt(0), child1);
+    EXPECT_EQ(tag.itemAt(1), child2);
+
+    // non-existing indices
+    EXPECT_EQ(tag.itemAt(2), nullptr);
+    EXPECT_EQ(tag.itemAt(3), nullptr);
+    EXPECT_EQ(tag.itemAt(-1), nullptr);
+}
+
+//! Checking ::takeItem.
+
+TEST_F(TestSessionItemTag, takeItem)
+{
+    const std::string tag_name("tag");
+    const std::string model_type("model_a");
+
+    SessionItemTag tag(TagInfo::universalTag(tag_name));
+
+    // taking non existing items
+    EXPECT_EQ(tag.takeItem(0), nullptr);
+
+    // inserting items
+    SessionItem* child1 = new SessionItem(model_type);
+    SessionItem* child2 = new SessionItem(model_type);
+    SessionItem* child3 = new SessionItem(model_type);
+    EXPECT_TRUE(tag.insertItem(child1));
+    EXPECT_TRUE(tag.insertItem(child2));
+    EXPECT_TRUE(tag.insertItem(child3));
+
+    // taking item in between
+    auto taken2 = tag.takeItem(1);
+    EXPECT_EQ(child2, taken2);
+    delete taken2;
+
+    // order of remaining children
+    std::vector<SessionItem*> expected = {child1, child3};
+    EXPECT_EQ(tag.children(), expected);
+
+    // taking non existing items
+    EXPECT_EQ(tag.takeItem(-1), nullptr);
+    EXPECT_EQ(tag.takeItem(tag.childrenCount()), nullptr);
+}
+
+//! Checking ::takeItem when tag is related to property tag.
+
+TEST_F(TestSessionItemTag, takeItemPropertyType)
+{
+    const std::string name("tag");
+    const std::string property_type("Property");
+
+    SessionItemTag tag(TagInfo::propertyTag(name, property_type));
+
+    // insertion of second property item is not allowed (because of reached maximum)
+    SessionItem* child1 = new SessionItem(property_type);
+    EXPECT_TRUE(tag.insertItem(child1));
+
+    // attempt to take property item
+    EXPECT_EQ(tag.takeItem(0), nullptr);
+}
