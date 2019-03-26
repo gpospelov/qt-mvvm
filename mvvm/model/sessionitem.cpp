@@ -170,6 +170,7 @@ SessionItem* SessionItem::takeItem(int row, const std::string& tag)
     }
 
     if (m_model) {
+        // FIXME remove one of methods
         m_model->mapper()->callOnRowRemoved(this, index);
         m_model->mapper()->callOnRowRemoved2(this, index, result->identifier());
     }
