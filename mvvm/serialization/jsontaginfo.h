@@ -22,11 +22,11 @@ public:
     static const QString maxKey;
     static const QString modelsKey;
 
-    QJsonObject get_json(const TagInfo& tag) override;
+    QJsonObject to_json(const TagInfo& tag) override;
 
-    TagInfo get_tag_info(const QJsonObject& object) override;
+    TagInfo from_json(const QJsonObject& object) override;
 
-    bool is_tag_info(const QJsonObject& object);
+    bool isTagInfo(const QJsonObject& object);
 };
 
 }  // namespace ModelView

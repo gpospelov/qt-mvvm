@@ -46,9 +46,9 @@ class CORE_EXPORT JsonTagInfoInterface
 public:
     virtual ~JsonTagInfoInterface() = default;
 
-    virtual QJsonObject get_json(const TagInfo&) = 0;
+    virtual QJsonObject to_json(const TagInfo&) = 0;
 
-    virtual TagInfo get_tag_info(const QJsonObject&) = 0;
+    virtual TagInfo from_json(const QJsonObject&) = 0;
 };
 
 //! Base class for all converters of SessionItemTags to/from json object

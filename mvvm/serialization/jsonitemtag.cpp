@@ -9,6 +9,7 @@
 
 #include "jsonitemtag.h"
 #include "sessionitemtag.h"
+#include "jsontaginfo.h"
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QStringList>
@@ -23,12 +24,20 @@ using namespace ModelView;
 const QString JsonItemTag::tagInfoKey = "tagInfo";
 const QString JsonItemTag::itemsKey = "items";
 
+JsonItemTag::JsonItemTag()
+    : m_taginfo_converter(new JsonTagInfo)
+{
+
+}
+
 
 JsonItemTag::~JsonItemTag() = default;
 
-QJsonObject JsonItemTag::to_json(const SessionItemTag&)
+QJsonObject JsonItemTag::to_json(const SessionItemTag& itemTag)
 {
-    return QJsonObject();
+    QJsonObject result;
+
+    return result;
 }
 
 std::unique_ptr<SessionItemTag> JsonItemTag::from_json(const QJsonObject&)

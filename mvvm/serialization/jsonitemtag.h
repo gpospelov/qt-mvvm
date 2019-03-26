@@ -27,13 +27,17 @@ public:
     static const QString tagInfoKey;
     static const QString itemsKey;
 
+    JsonItemTag();
     ~JsonItemTag() override;
 
-    QJsonObject to_json(const SessionItemTag&) override;
+    QJsonObject to_json(const SessionItemTag& itemTag) override;
 
     std::unique_ptr<SessionItemTag> from_json(const QJsonObject&) override;
 
     bool isSessionItemTag(const QJsonObject& object);
+
+private:
+    std::unique_ptr<JsonTagInfoInterface> m_taginfo_converter;
 };
 
 }  // namespace ModelView

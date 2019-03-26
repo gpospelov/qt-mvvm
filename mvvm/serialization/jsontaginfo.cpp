@@ -25,7 +25,7 @@ const QString JsonTagInfo::minKey = "min";
 const QString JsonTagInfo::maxKey = "max";
 const QString JsonTagInfo::modelsKey = "models";
 
-QJsonObject JsonTagInfo::get_json(const ModelView::TagInfo& tag)
+QJsonObject JsonTagInfo::to_json(const ModelView::TagInfo& tag)
 {
     QJsonObject result;
     result[nameKey] = QString::fromStdString(tag.name());
@@ -39,9 +39,9 @@ QJsonObject JsonTagInfo::get_json(const ModelView::TagInfo& tag)
     return result;
 }
 
-TagInfo JsonTagInfo::get_tag_info(const QJsonObject& object)
+TagInfo JsonTagInfo::from_json(const QJsonObject& object)
 {
-    if (!is_tag_info(object))
+    if (!isTagInfo(object))
         throw std::runtime_error("JsonTagInfo::get_tags() -> Invalid json object.");
 
     auto name = object[nameKey].toString().toStdString();
@@ -56,7 +56,7 @@ TagInfo JsonTagInfo::get_tag_info(const QJsonObject& object)
 
 //! Returns true if given json object represents TagInfo object.
 
-bool JsonTagInfo::is_tag_info(const QJsonObject& object)
+bool JsonTagInfo::isTagInfo(const QJsonObject& object)
 {
     static const QStringList expected = expected_taginfo_keys();
 
