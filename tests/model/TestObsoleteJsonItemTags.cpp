@@ -1,5 +1,5 @@
 #include "google_test.h"
-#include "jsonitemtags.h"
+#include "obsoletejsonitemtags.h"
 #include "test_utils.h"
 #include "jsonvariant.h"
 #include "taginfo.h"
@@ -13,10 +13,10 @@ using namespace ModelView;
 
 //! Test convertion of SessionItemData from/to QJsonObject.
 
-class TestJsonItemTags : public ::testing::Test
+class TestObsoleteJsonItemTags : public ::testing::Test
 {
 public:
-    ~TestJsonItemTags();
+    ~TestObsoleteJsonItemTags();
 
     static const QString test_dir;
 
@@ -26,37 +26,37 @@ public:
     }
 };
 
-const QString TestJsonItemTags::test_dir = "test_JsonItemTags";
+const QString TestObsoleteJsonItemTags::test_dir = "test_JsonItemTags";
 
-TestJsonItemTags::~TestJsonItemTags() = default;
+TestObsoleteJsonItemTags::~TestObsoleteJsonItemTags() = default;
 
 //! Checks if json object is correctly identified as representing TagInfo.
 
-TEST_F(TestJsonItemTags, isItemTag)
+TEST_F(TestObsoleteJsonItemTags, isItemTag)
 {
-    JsonItemTags converter;
+    ObsoleteJsonItemTags converter;
 
     // valid json object representing DataRole
     QJsonObject object;
-    object[JsonItemTags::nameKey] = QString::fromStdString("tag1");
-    object[JsonItemTags::minKey] = 0;
-    object[JsonItemTags::maxKey] = 1;
-    object[JsonItemTags::countKey] = 10;
-    object[JsonItemTags::modelsKey] = QJsonArray();
+    object[ObsoleteJsonItemTags::nameKey] = QString::fromStdString("tag1");
+    object[ObsoleteJsonItemTags::minKey] = 0;
+    object[ObsoleteJsonItemTags::maxKey] = 1;
+    object[ObsoleteJsonItemTags::countKey] = 10;
+    object[ObsoleteJsonItemTags::modelsKey] = QJsonArray();
 
     EXPECT_TRUE(converter.is_item_tag(object));
 
     // invalid (not fuilly constructed) json object which can't represent DataRole
     QJsonObject object2;
-    object2[JsonItemTags::minKey] = 42;
+    object2[ObsoleteJsonItemTags::minKey] = 42;
     EXPECT_FALSE(converter.is_item_tag(object2));
 }
 
 //! Creating QJsonArray from SessionItemData.
 
-TEST_F(TestJsonItemTags, getJson)
+TEST_F(TestObsoleteJsonItemTags, getJson)
 {
-    JsonItemTags converter;
+    ObsoleteJsonItemTags converter;
 
     TagInfo tag1("tag1", 0, -1, std::vector<std::string>() = {});
     TagInfo tag2("tag2", 0, -1, std::vector<std::string>() = {"aaa", "bbb"});
@@ -78,9 +78,9 @@ TEST_F(TestJsonItemTags, getJson)
 
 //! From SessionItemTags to json and back.
 
-TEST_F(TestJsonItemTags, fromItemToJsonAndBack)
+TEST_F(TestObsoleteJsonItemTags, fromItemToJsonAndBack)
 {
-    JsonItemTags converter;
+    ObsoleteJsonItemTags converter;
 
     TagInfo tag1("tag1", 0, -1, std::vector<std::string>() = {});
     TagInfo tag2("tag2", 0, 42, std::vector<std::string>() = {"aaa", "bbb"});

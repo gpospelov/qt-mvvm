@@ -9,7 +9,7 @@
 
 #include "jsonitem.h"
 #include "jsonitemdata.h"
-#include "jsonitemtags.h"
+#include "obsoletejsonitemtags.h"
 #include "sessionitem.h"
 #include "sessionitemdata.h"
 #include "obsoletesessionitemtags.h"
@@ -46,7 +46,7 @@ const QString ModelView::JsonItem::itemsKey = "items";
 
 JsonItem::JsonItem()
     : m_itemdata_converter(new JsonItemData)
-    , m_itemtags_converter(new JsonItemTags)
+    , m_itemtags_converter(new ObsoleteJsonItemTags)
 {
 
 }

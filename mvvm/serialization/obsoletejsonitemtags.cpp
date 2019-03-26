@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "jsonitemtags.h"
+#include "obsoletejsonitemtags.h"
 #include "obsoletesessionitemtags.h"
 #include <QJsonArray>
 #include <QJsonObject>
@@ -19,30 +19,30 @@ namespace
 {
 QStringList expected_tags_keys()
 {
-    QStringList result = QStringList() << JsonItemTags::nameKey << JsonItemTags::minKey
-                                       << JsonItemTags::maxKey
-                                       << JsonItemTags::modelsKey
-                                       << JsonItemTags::countKey;
+    QStringList result = QStringList() << ObsoleteJsonItemTags::nameKey << ObsoleteJsonItemTags::minKey
+                                       << ObsoleteJsonItemTags::maxKey
+                                       << ObsoleteJsonItemTags::modelsKey
+                                       << ObsoleteJsonItemTags::countKey;
     std::sort(result.begin(), result.end());
     return result;
 }
 }
 
-const QString JsonItemTags::nameKey = "name";
-const QString JsonItemTags::minKey = "min";
-const QString JsonItemTags::maxKey = "max";
-const QString JsonItemTags::countKey = "count";
-const QString JsonItemTags::modelsKey = "models";
+const QString ObsoleteJsonItemTags::nameKey = "name";
+const QString ObsoleteJsonItemTags::minKey = "min";
+const QString ObsoleteJsonItemTags::maxKey = "max";
+const QString ObsoleteJsonItemTags::countKey = "count";
+const QString ObsoleteJsonItemTags::modelsKey = "models";
 
-JsonItemTags::JsonItemTags()
+ObsoleteJsonItemTags::ObsoleteJsonItemTags()
 {
 }
 
-JsonItemTags::~JsonItemTags() = default;
+ObsoleteJsonItemTags::~ObsoleteJsonItemTags() = default;
 
 //! Returns array of json objects representing all TagInfo's in SessionItemTags.
 
-QJsonArray JsonItemTags::get_json(const ObsoleteSessionItemTags& itemTags)
+QJsonArray ObsoleteJsonItemTags::get_json(const ObsoleteSessionItemTags& itemTags)
 {
 
     QJsonArray result;
@@ -65,7 +65,7 @@ QJsonArray JsonItemTags::get_json(const ObsoleteSessionItemTags& itemTags)
 
 //! Returns SessionItemTags object reconstructed from its json representation.
 
-ObsoleteSessionItemTags JsonItemTags::get_tags(const QJsonArray& object)
+ObsoleteSessionItemTags ObsoleteJsonItemTags::get_tags(const QJsonArray& object)
 {
     ObsoleteSessionItemTags result;
 
@@ -91,7 +91,7 @@ ObsoleteSessionItemTags JsonItemTags::get_tags(const QJsonArray& object)
 
 //! Returns true if given json objects represents TagInfo.
 
-bool JsonItemTags::is_item_tag(const QJsonObject& object)
+bool ObsoleteJsonItemTags::is_item_tag(const QJsonObject& object)
 {
     static const QStringList expected = expected_tags_keys();
 

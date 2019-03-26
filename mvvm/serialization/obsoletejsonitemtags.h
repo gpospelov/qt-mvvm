@@ -21,7 +21,7 @@ namespace ModelView {
 
 //! Default converter of SessionItemTags to/from json object.
 
-class CORE_EXPORT JsonItemTags : public JsonItemTagsInterface
+class CORE_EXPORT ObsoleteJsonItemTags : public ObsoleteJsonItemTagsInterface
 {
 public:
     static const QString nameKey;
@@ -30,8 +30,8 @@ public:
     static const QString countKey;
     static const QString modelsKey;
 
-    JsonItemTags();
-    ~JsonItemTags() override;
+    ObsoleteJsonItemTags();
+    ~ObsoleteJsonItemTags() override;
 
     QJsonArray get_json(const ObsoleteSessionItemTags& itemTags) override;
 

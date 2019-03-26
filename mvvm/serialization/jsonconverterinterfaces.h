@@ -38,10 +38,10 @@ public:
 
 //! Base class for all converters of SessionItemTags to/from json object
 
-class CORE_EXPORT JsonItemTagsInterface
+class CORE_EXPORT ObsoleteJsonItemTagsInterface
 {
 public:
-    virtual ~JsonItemTagsInterface() = default;
+    virtual ~ObsoleteJsonItemTagsInterface() = default;
 
     virtual QJsonArray get_json(const ObsoleteSessionItemTags&) = 0;
 

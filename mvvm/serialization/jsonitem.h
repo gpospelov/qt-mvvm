@@ -20,7 +20,7 @@ namespace ModelView {
 
 class SessionItem;
 class JsonItemDataInterface;
-class JsonItemTagsInterface;
+class ObsoleteJsonItemTagsInterface;
 
 class CORE_EXPORT JsonItem : public JsonItemInterface
 {
@@ -45,7 +45,7 @@ public:
 
 private:
     std::unique_ptr<JsonItemDataInterface> m_itemdata_converter;
-    std::unique_ptr<JsonItemTagsInterface> m_itemtags_converter;
+    std::unique_ptr<ObsoleteJsonItemTagsInterface> m_itemtags_converter;
 };
 
 }  // namespace ModelView
