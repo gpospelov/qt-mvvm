@@ -24,6 +24,7 @@ class ObsoleteSessionItemTags;
 class SessionItemData;
 class SessionModel;
 class SessionItem;
+class SessionItemTag;
 class TagInfo;
 
 //! Base class for all supported converters of QVariant to/from json object
@@ -73,6 +74,19 @@ public:
 
     virtual std::unique_ptr<SessionItemData> get_data(const QJsonArray&) = 0;
 };
+
+//! Base class for all converters of SessionItemTag to/from json object
+
+class CORE_EXPORT JsonItemTagInterface
+{
+public:
+    virtual ~JsonItemTagInterface() = default;
+
+    virtual QJsonObject to_json(const SessionItemTag&) = 0;
+
+    virtual std::unique_ptr<SessionItemTag> from_json(const QJsonObject&) = 0;
+};
+
 
 //! Base class for all converters of SessionItem to/from json object.
 

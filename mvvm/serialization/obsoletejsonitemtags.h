@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef JSONITEMTAGS_H
-#define JSONITEMTAGS_H
+#ifndef OBSOLETEJSONITEMTAGS_H
+#define OBSOLETEJSONITEMTAGS_H
 
 #include "jsonconverterinterfaces.h"
 #include <QString>
@@ -42,4 +42,4 @@ public:
 
 }  // namespace ModelView
 
-#endif // JSONITEMTAGS_H
+#endif // OBSOLETEJSONITEMTAGS_H
