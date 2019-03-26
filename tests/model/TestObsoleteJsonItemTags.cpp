@@ -26,7 +26,7 @@ public:
     }
 };
 
-const QString TestObsoleteJsonItemTags::test_dir = "test_JsonItemTags";
+const QString TestObsoleteJsonItemTags::test_dir = "test_ObsoleteJsonItemTags";
 
 TestObsoleteJsonItemTags::~TestObsoleteJsonItemTags() = default;
 
