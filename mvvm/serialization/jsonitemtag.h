@@ -19,7 +19,7 @@ class QJsonObject;
 
 namespace ModelView {
 
-//! Default converter of SessionItemTag to/from json object.
+//! Default converter between SessionItemTag and json object.
 
 class CORE_EXPORT JsonItemTag : public JsonItemTagInterface
 {

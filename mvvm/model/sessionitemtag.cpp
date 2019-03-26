@@ -83,6 +83,11 @@ std::string SessionItemTag::name() const
     return m_tag_info.name();
 }
 
+TagInfo SessionItemTag::tagInfo() const
+{
+    return m_tag_info;
+}
+
 //! Calculates insert index from given requested_index.
 //! Returns -1 if item is not suitable for insertion.
 
