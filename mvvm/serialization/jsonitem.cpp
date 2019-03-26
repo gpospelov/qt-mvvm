@@ -70,15 +70,14 @@ void JsonItem::json_to_item(const QJsonObject& json, SessionItem* parent, int ro
 //    auto item = parent->model()->insertNewItem(modelType, parent, row, parentTag);
     auto item = parent->model()->insertNewItem(modelType, parent, row, tag);
 
-    auto itemData = m_itemdata_converter->get_data(json[itemDataKey].toArray());
-    item->m_data = std::make_unique<SessionItemData>(itemData);
+    item->m_data = m_itemdata_converter->get_data(json[itemDataKey].toArray());
 
     auto itemTags = m_itemtags_converter->get_tags(json[itemTagsKey].toArray());
 
     item->m_tags = std::make_unique<ObsoleteSessionItemTags>(itemTags);
 
     // FIXME find more elegant way to replace item registration
-    identifier_type identifier = itemData.data(ItemDataRole::IDENTIFIER).value<std::string>();
+    identifier_type identifier = item->data(ItemDataRole::IDENTIFIER).value<std::string>();
     parent->model()->manager()->fix_registration(item, identifier);
 
     parent = item;

@@ -42,16 +42,16 @@ QJsonArray JsonItemData::get_json(const SessionItemData& data)
     return result;
 }
 
-SessionItemData JsonItemData::get_data(const QJsonArray& object)
+std::unique_ptr<SessionItemData> JsonItemData::get_data(const QJsonArray& object)
 {
-    SessionItemData result;
+    std::unique_ptr<SessionItemData> result = std::make_unique<SessionItemData>();
 
     for (const auto& x : object) {
         if (!is_item_data(x.toObject()))
             throw std::runtime_error("JsonItemData::get_data() -> Invalid json object.");
         auto role = x[roleKey].toInt();
         auto variant = m_variant_converter->get_variant(x[variantKey].toObject());
-        result.setData(variant, role);
+        result->setData(variant, role);
     }
 
     return result;

@@ -32,7 +32,7 @@ public:
 
     QJsonArray get_json(const SessionItemData& data) override;
 
-    SessionItemData get_data(const QJsonArray& object) override;
+    std::unique_ptr<SessionItemData> get_data(const QJsonArray& object) override;
 
     bool is_item_data(const QJsonObject& json);
 

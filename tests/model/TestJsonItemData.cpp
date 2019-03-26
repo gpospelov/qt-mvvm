@@ -88,14 +88,14 @@ TEST_F(TestJsonItemData, fromItemToJsonAndBack)
 
     // initial data
     const std::vector<int> roles = {1, 2, 3};
-    const std::vector<QVariant> variants = {
+    const std::vector<QVariant> expected = {
         QVariant::fromValue(42), QVariant::fromValue(1.23), QVariant::fromValue(std::string("abc"))
     };
 
     // constructing SessionItemData
     SessionItemData data;
     for (size_t i=0; i<roles.size(); ++i)
-        data.setData(variants[i], roles[i]);
+        data.setData(expected[i], roles[i]);
 
     // constructing json array from data
     QJsonArray array = converter.get_json(data);
@@ -104,11 +104,11 @@ TEST_F(TestJsonItemData, fromItemToJsonAndBack)
 
     // constructing data from json array
     auto data2 = converter.get_data(array);
-    EXPECT_EQ(data2.roles().size(), 3u);
+    EXPECT_EQ(data2->roles().size(), 3u);
 
-    EXPECT_EQ(data2.roles(), roles);
+    EXPECT_EQ(data2->roles(), roles);
     for (auto role : roles) {
-        EXPECT_EQ(data2.data(role), variants[role-1]);
+        EXPECT_EQ(data2->data(role), expected[role-1]);
     }
 }
 
@@ -134,8 +134,8 @@ TEST_F(TestJsonItemData, filteredRoles)
 
     // constructing data from json array
     auto data2 = converter.get_data(array);
-    EXPECT_EQ(data2.roles().size(), 1u);
-    EXPECT_EQ(data2.data(2).toDouble(), 1.23);
+    EXPECT_EQ(data2->roles().size(), 1u);
+    EXPECT_EQ(data2->data(2).toDouble(), 1.23);
 }
 
 

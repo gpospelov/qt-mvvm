@@ -12,6 +12,7 @@
 
 #include "global.h"
 #include <string>
+#include <memory>
 
 class QJsonObject;
 class QVariant;
@@ -70,7 +71,7 @@ public:
 
     virtual QJsonArray get_json(const SessionItemData&) = 0;
 
-    virtual SessionItemData get_data(const QJsonArray&) = 0;
+    virtual std::unique_ptr<SessionItemData> get_data(const QJsonArray&) = 0;
 };
 
 //! Base class for all converters of SessionItem to/from json object.
