@@ -3,25 +3,25 @@
 
 using namespace ModelView;
 
-class TestSessionItemTags : public ::testing::Test
+class TestObsoleteSessionItemTags : public ::testing::Test
 {
 public:
-    ~TestSessionItemTags();
+    ~TestObsoleteSessionItemTags();
 
     const std::string ParticleType = "Particle";
     const std::string LayerType = "Layer";
 };
 
-TestSessionItemTags::~TestSessionItemTags() = default;
+TestObsoleteSessionItemTags::~TestObsoleteSessionItemTags() = default;
 
-TEST_F(TestSessionItemTags, initialState)
+TEST_F(TestObsoleteSessionItemTags, initialState)
 {
     ObsoleteSessionItemTags tags;
     EXPECT_FALSE(tags.isValid(""));
     EXPECT_FALSE(tags.isValid("abc"));
 }
 
-TEST_F(TestSessionItemTags, registerTag)
+TEST_F(TestObsoleteSessionItemTags, registerTag)
 {
     ObsoleteSessionItemTags tags;
 
@@ -46,7 +46,7 @@ TEST_F(TestSessionItemTags, registerTag)
 
 //! Registering tag from TagInfo object.
 
-TEST_F(TestSessionItemTags, registerTagInfo)
+TEST_F(TestObsoleteSessionItemTags, registerTagInfo)
 {
     ObsoleteSessionItemTags tags;
 
@@ -55,7 +55,7 @@ TEST_F(TestSessionItemTags, registerTagInfo)
     EXPECT_TRUE(tags.isValid(tag.name()));
 }
 
-TEST_F(TestSessionItemTags, modelTypesForTag)
+TEST_F(TestObsoleteSessionItemTags, modelTypesForTag)
 {
     ObsoleteSessionItemTags tags;
     std::vector<std::string> expected{ParticleType, LayerType};
@@ -68,7 +68,7 @@ TEST_F(TestSessionItemTags, modelTypesForTag)
     EXPECT_EQ(tags.modelTypesForTag("tag3"), std::vector<std::string>());
 }
 
-TEST_F(TestSessionItemTags, tagStartIndex)
+TEST_F(TestObsoleteSessionItemTags, tagStartIndex)
 {
     ObsoleteSessionItemTags tags;
 
@@ -105,7 +105,7 @@ TEST_F(TestSessionItemTags, tagStartIndex)
     EXPECT_EQ(tags.tagStartIndex("tag2"), 0);
 }
 
-TEST_F(TestSessionItemTags, indexFromTagRow)
+TEST_F(TestObsoleteSessionItemTags, indexFromTagRow)
 {
     ObsoleteSessionItemTags tags;
     tags.registerTag("tag1", 0, -1, {ParticleType});
@@ -127,7 +127,7 @@ TEST_F(TestSessionItemTags, indexFromTagRow)
     EXPECT_EQ(tags.indexFromTagRow("tag2", 1), 4);
 }
 
-TEST_F(TestSessionItemTags, tagFromIndex)
+TEST_F(TestObsoleteSessionItemTags, tagFromIndex)
 {
     ObsoleteSessionItemTags tags;
     tags.registerTag("tag1", 0, -1, {ParticleType});
@@ -151,7 +151,7 @@ TEST_F(TestSessionItemTags, tagFromIndex)
 
 //! Testing the method calculating insert index.
 
-TEST_F(TestSessionItemTags, insertIndexFromTagRow)
+TEST_F(TestObsoleteSessionItemTags, insertIndexFromTagRow)
 {
     ObsoleteSessionItemTags tags;
     tags.registerTag("tag1", 0, -1, {ParticleType});
@@ -176,7 +176,7 @@ TEST_F(TestSessionItemTags, insertIndexFromTagRow)
 
 //! Tag summary info
 
-TEST_F(TestSessionItemTags, tagSummaryInfo)
+TEST_F(TestObsoleteSessionItemTags, tagSummaryInfo)
 {
     ObsoleteSessionItemTags tags;
     tags.registerTag("tag1", 0, -1, {ParticleType});
