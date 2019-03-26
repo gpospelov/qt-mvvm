@@ -44,6 +44,8 @@ QString JsonToString(const QJsonObject& object);
 //! Returns string representing serialized json content of the model.
 QString ModelToJsonString(ModelView::SessionModel& model);
 
+QJsonDocument LoadJson(const QString& fileName);
+
 }
 
 #endif

@@ -67,6 +67,15 @@ QString TestUtils::ModelToJsonString(SessionModel& model)
     return JsonToString(json_source);
 }
 
+QJsonDocument TestUtils::LoadJson(const QString& fileName)
+{
+    QFile jsonFile(fileName);
+
+    if (!jsonFile.open(QIODevice::ReadOnly))
+        throw std::runtime_error("TestUtils::LoadJson() -> Can't read file");
+
+    return QJsonDocument().fromJson(jsonFile.readAll());
+}
 
 namespace {
 
@@ -81,5 +90,6 @@ void SaveDocument(const QJsonDocument& document, const QString& fileName)
 }
 
 }
+
 
 

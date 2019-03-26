@@ -99,7 +99,7 @@ TEST_F(TestObsoleteJsonItemTags, fromItemToJsonAndBack)
     EXPECT_TRUE(converter.is_item_tag(array[0].toObject()));
     EXPECT_TRUE(converter.is_item_tag(array[1].toObject()));
 
-    auto fileName = TestUtils::TestFileName(test_dir, "itemtags.json");
+    auto fileName = TestUtils::TestFileName(test_dir, "obsoleteitemtags.json");
     TestUtils::SaveJson(array, fileName);
 
     // constructing from array
