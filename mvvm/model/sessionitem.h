@@ -96,7 +96,7 @@ private:
     void setParent(SessionItem* parent);
     void setModel(SessionModel* model);
     void childDeleted(SessionItem* child);
-    std::string ensure(const std::string& tag, const std::string& model_type = {}) const;
+//    std::string ensure(const std::string& tag, const std::string& model_type = {}) const;
     void setAppearanceFlag(int flag, bool value);
 
     SessionItem* m_parent;

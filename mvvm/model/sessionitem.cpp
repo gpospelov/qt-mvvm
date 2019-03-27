@@ -36,7 +36,7 @@ int appearance(const ModelView::SessionItem& item)
 using namespace ModelView;
 
 SessionItem::SessionItem(model_type modelType)
-    : m_parent(nullptr), m_model(nullptr), m_data(new SessionItemData), m_obsolete_tags(new ObsoleteSessionItemTags), m_tags(new SessionItemTags),
+    : m_parent(nullptr), m_model(nullptr), m_data(new SessionItemData), m_tags(new SessionItemTags),
       m_modelType(std::move(modelType))
 {
     setDataIntern(QVariant::fromValue(ItemPool::generate_key()), ItemDataRole::IDENTIFIER);
@@ -227,63 +227,67 @@ void SessionItem::registerTag(const TagInfo& tagInfo, bool set_as_default)
 {
     m_tags->registerTag(tagInfo, set_as_default);
 
-    m_obsolete_tags->registerTag(tagInfo);
-    if (set_as_default)
-        setDefaultTag(tagInfo.name());
+//    m_obsolete_tags->registerTag(tagInfo);
+//    if (set_as_default)
+//        setDefaultTag(tagInfo.name());
 }
 
 bool SessionItem::isTag(const std::string& name)
 {
-    return m_obsolete_tags->isValid(name);
+    return m_tags->isTag(name);
+//    return m_obsolete_tags->isValid(name);
 }
 
 //! Returns item in given row of given tag.
 
 SessionItem* SessionItem::getItem(const std::string& tag, int row) const
 {
-    int index = m_obsolete_tags->indexFromTagRow(ensure(tag), row);
-    auto container = children();
-    return container[static_cast<size_t>(index)];
+//    int index = m_obsolete_tags->indexFromTagRow(ensure(tag), row);
+//    auto container = children();
+//    return container[static_cast<size_t>(index)];
+    return m_tags->getItem(tag, row);
 }
 
 std::vector<SessionItem*> SessionItem::getItems(const std::string& tag) const
 {
-    auto tagName = ensure(tag);
-    int startIndex = m_obsolete_tags->tagStartIndex(tagName);
-    int endIndex = startIndex + m_obsolete_tags->childCount(tagName);
-    std::vector<SessionItem*> result;
-    auto container = children();
-    std::copy(container.begin() + startIndex, container.begin() + endIndex,
-              std::back_inserter(result));
-    return result;
+//    auto tagName = ensure(tag);
+//    int startIndex = m_obsolete_tags->tagStartIndex(tagName);
+//    int endIndex = startIndex + m_obsolete_tags->childCount(tagName);
+//    std::vector<SessionItem*> result;
+//    auto container = children();
+//    std::copy(container.begin() + startIndex, container.begin() + endIndex,
+//              std::back_inserter(result));
+//    return result;
+    return m_tags->getItems(tag);
 }
 
 std::string SessionItem::tagFromItem(const SessionItem* item) const
 {
-    auto container = children();
-    auto it = std::find(container.begin(), container.end(), item);
-    if (it != container.end()) {
-        int index = static_cast<int>(std::distance(container.begin(), it));
-        return m_obsolete_tags->tagFromIndex(index);
-    }
-
-    return {};
+//    auto container = children();
+//    auto it = std::find(container.begin(), container.end(), item);
+//    if (it != container.end()) {
+//        int index = static_cast<int>(std::distance(container.begin(), it));
+//        return m_obsolete_tags->tagFromIndex(index);
+//    }
+//    return {};
+    return m_tags->tagIndexOfItem(item).first;
 }
 
 //! Returns item's row in its tag.
 
 std::pair<int, std::string> SessionItem::tagRowFromItem(const SessionItem* item) const
 {
-    auto container = children();
+//    auto container = children();
 
-    auto it = std::find(container.begin(), container.end(), item);
-    if (it != container.end()) {
-        int index = static_cast<int>(std::distance(container.begin(), it));
-        auto tag = m_obsolete_tags->tagFromIndex(index);
-        return std::make_pair(index - m_obsolete_tags->tagStartIndex(tag), tag);
-    }
-
-    return {-1, ""};
+//    auto it = std::find(container.begin(), container.end(), item);
+//    if (it != container.end()) {
+//        int index = static_cast<int>(std::distance(container.begin(), it));
+//        auto tag = m_obsolete_tags->tagFromIndex(index);
+//        return std::make_pair(index - m_obsolete_tags->tagStartIndex(tag), tag);
+//    }
+//    return {-1, ""};
+    auto temp = m_tags->tagIndexOfItem(item);
+    return std::make_pair(temp.second, temp.first);
 }
 
 ItemMapper* SessionItem::mapper()
@@ -356,23 +360,23 @@ void SessionItem::childDeleted(SessionItem* child)
 
 //! Check if tag name is registered and returns it back. If tag is empty, returns defaultTag.
 
-std::string SessionItem::ensure(const std::string& tag, const std::string& model_type) const
-{
-    const std::string result = tag.empty() ? defaultTag() : tag;
+//std::string SessionItem::ensure(const std::string& tag, const std::string& model_type) const
+//{
+//    const std::string result = tag.empty() ? defaultTag() : tag;
 
-    if (!m_obsolete_tags->isValid(result, model_type)) {
-        std::ostringstream ostr;
-        ostr << "SessionItem::ensure() -> Invalid tag '" << tag
-             << "' for model '" << model_type << "', "
-             << "defaultTag:'"<< defaultTag() << "', available tags:\n";
-        for(const auto& tag : *m_obsolete_tags)
-            ostr << tag.toString() << "\n";
+//    if (!m_obsolete_tags->isValid(result, model_type)) {
+//        std::ostringstream ostr;
+//        ostr << "SessionItem::ensure() -> Invalid tag '" << tag
+//             << "' for model '" << model_type << "', "
+//             << "defaultTag:'"<< defaultTag() << "', available tags:\n";
+//        for(const auto& tag : *m_obsolete_tags)
+//            ostr << tag.toString() << "\n";
 
-        throw std::runtime_error(ostr.str());
-    }
+//        throw std::runtime_error(ostr.str());
+//    }
 
-    return result;
-}
+//    return result;
+//}
 
 void SessionItem::setAppearanceFlag(int flag, bool value)
 {
