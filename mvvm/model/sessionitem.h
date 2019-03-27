@@ -101,7 +101,6 @@ private:
 
     SessionItem* m_parent;
     SessionModel* m_model;
-    std::vector<SessionItem*> m_children;
     std::unique_ptr<ItemMapper> m_mapper;
     std::unique_ptr<SessionItemData> m_data;
     std::unique_ptr<ObsoleteSessionItemTags> m_obsolete_tags;

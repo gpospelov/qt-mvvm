@@ -47,10 +47,10 @@ SessionItem::~SessionItem()
     if (m_mapper)
         m_mapper->callOnItemDestroy();
 
-    auto container = children();
-    for (auto item : container)
-        delete item;
-//    m_children.clear();
+//    auto container = children();
+//    for (auto item : container)
+//        delete item;
+////    m_children.clear();
 
     if (m_parent)
         m_parent->childDeleted(this);
@@ -126,26 +126,33 @@ bool SessionItem::insertItem(SessionItem* item, int row, const std::string& tag)
     if (item->parent())
         throw std::runtime_error("SessionItem::insertItem() -> Existing parent.");
 
-    auto tagName = ensure(tag, item->modelType());
+//    auto tagName = ensure(tag, item->modelType());
 
-    int index = m_obsolete_tags->insertIndexFromTagRow(tagName, row);
-    if (index < 0) {
-        std::ostringstream ostr;
-        ostr << "SessionItem::insertItem() -> Invalid row, maximum reached. "
-             << "tagName:'"<<tagName<<"', row: " << row << "\n"
-             << m_obsolete_tags->tagInfo(tagName).toString();
-        throw std::runtime_error(ostr.str());
-    }
+//    int index = m_obsolete_tags->insertIndexFromTagRow(tagName, row);
+//    if (index < 0) {
+//        std::ostringstream ostr;
+//        ostr << "SessionItem::insertItem() -> Invalid row, maximum reached. "
+//             << "tagName:'"<<tagName<<"', row: " << row << "\n"
+//             << m_obsolete_tags->tagInfo(tagName).toString();
+//        throw std::runtime_error(ostr.str());
+//    }
+
+//    item->setParent(this);
+//    item->setModel(model());
+//    m_children.insert(std::next(m_children.begin(), index), item);
+//    m_obsolete_tags->addChild(tagName);
+
+//    if(m_model)
+//        m_model->mapper()->callOnRowInserted(this, index);
 
     item->setParent(this);
     item->setModel(model());
-    m_children.insert(std::next(m_children.begin(), index), item);
-    m_obsolete_tags->addChild(tagName);
+    auto result = m_tags->insertItem(item, row, tag);
 
     if(m_model)
-        m_model->mapper()->callOnRowInserted(this, index);
+        m_model->mapper()->callOnRowInserted(this, indexOfChild(item));
 
-    return true;
+    return result;
 }
 
 //! Removes item from given row from given tag, returns it to the caller.
@@ -153,12 +160,24 @@ bool SessionItem::insertItem(SessionItem* item, int row, const std::string& tag)
 SessionItem* SessionItem::takeItem(int row, const std::string& tag)
 {
     SessionItem* result(nullptr);
-    auto tagName = ensure(tag);
-    int index = m_obsolete_tags->indexFromTagRow(tagName, row);
+//    auto tagName = ensure(tag);
+//    int index = m_obsolete_tags->indexFromTagRow(tagName, row);
 
-    result = childAt(index);
-    m_children.erase(m_children.begin() + index);
-    m_obsolete_tags->removeChild(tagName);
+//    result = childAt(index);
+//    m_children.erase(m_children.begin() + index);
+//    m_obsolete_tags->removeChild(tagName);
+//    if (result) {
+//        result->setParent(nullptr);
+//        result->setModel(nullptr);
+//    }
+
+//    if (m_model) {
+//        // FIXME remove one of methods
+//        m_model->mapper()->callOnRowRemoved(this, index);
+//        m_model->mapper()->callOnRowRemoved2(this, index, result->identifier());
+//    }
+
+    result = m_tags->takeItem(row, tag);
     if (result) {
         result->setParent(nullptr);
         result->setModel(nullptr);
@@ -166,8 +185,8 @@ SessionItem* SessionItem::takeItem(int row, const std::string& tag)
 
     if (m_model) {
         // FIXME remove one of methods
-        m_model->mapper()->callOnRowRemoved(this, index);
-        m_model->mapper()->callOnRowRemoved2(this, index, result->identifier());
+        m_model->mapper()->callOnRowRemoved(this, indexOfChild(result));
+        m_model->mapper()->callOnRowRemoved2(this, indexOfChild(result), result->identifier());
     }
 
     return result;
@@ -175,7 +194,8 @@ SessionItem* SessionItem::takeItem(int row, const std::string& tag)
 
 std::vector<SessionItem*> SessionItem::children() const
 {
-    return m_children;
+    return m_tags->allitems();
+//    return m_children;
 }
 
 //! Returns index in children array corresponding to given child. No tags involved.
@@ -328,9 +348,10 @@ void SessionItem::setModel(SessionModel* model)
 
 void SessionItem::childDeleted(SessionItem* child)
 {
-    auto index = indexOfChild(child);
-    assert(index != -1);
-    m_children[static_cast<size_t>(index)] = nullptr;
+    m_tags->itemDeleted(child);
+//    auto index = indexOfChild(child);
+//    assert(index != -1);
+//    m_children[static_cast<size_t>(index)] = nullptr;
 }
 
 //! Check if tag name is registered and returns it back. If tag is empty, returns defaultTag.
