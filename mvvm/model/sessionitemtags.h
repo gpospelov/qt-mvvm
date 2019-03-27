@@ -35,9 +35,11 @@ public:
 
     void registerTag(TagInfo tagInfo, bool set_as_default = false);
 
-    bool exists(const std::string& tag_name) const;
+    bool isTag(const std::string& name) const;
 
     std::string defaultTag() const;
+
+    int itemCount(const std::string& tag_name) const;
 
     // adding and removal
 

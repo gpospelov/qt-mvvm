@@ -23,7 +23,7 @@ SessionItemTags::~SessionItemTags()
 
 void SessionItemTags::registerTag(TagInfo tagInfo, bool set_as_default)
 {
-    if (exists(tagInfo.name()))
+    if (isTag(tagInfo.name()))
         throw std::runtime_error("SessionItemTags::registerTag() -> Error. Existing name '"
                                  + tagInfo.name() + "'");
 
@@ -34,10 +34,10 @@ void SessionItemTags::registerTag(TagInfo tagInfo, bool set_as_default)
 
 //! Returns true if container with such name exists.
 
-bool SessionItemTags::exists(const std::string& tag_name) const
+bool SessionItemTags::isTag(const std::string& name) const
 {
     for (auto tag : m_containers)
-        if (tag->name() == tag_name)
+        if (tag->name() == name)
             return true;
     return false;
 }
@@ -47,6 +47,11 @@ bool SessionItemTags::exists(const std::string& tag_name) const
 std::string SessionItemTags::defaultTag() const
 {
     return m_default_tag;
+}
+
+int SessionItemTags::itemCount(const std::string& tag_name) const
+{
+    return container(tag_name)->itemCount();
 }
 
 //! Inserts item in container with given tag name and at given index.

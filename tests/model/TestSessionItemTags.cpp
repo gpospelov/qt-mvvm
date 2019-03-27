@@ -24,7 +24,7 @@ TEST_F(TestSessionItemTags, initialState)
     SessionItemTags tag;
     EXPECT_EQ(tag.defaultTag(), "");
 
-    EXPECT_FALSE(tag.exists("abc"));
+    EXPECT_FALSE(tag.isTag("abc"));
 }
 
 //! Registering tags.
@@ -35,12 +35,12 @@ TEST_F(TestSessionItemTags, registerTag)
     SessionItemTags tag;
 
     tag.registerTag(TagInfo::universalTag("abc"));
-    EXPECT_TRUE(tag.exists("abc"));
+    EXPECT_TRUE(tag.isTag("abc"));
     EXPECT_EQ(tag.defaultTag(), "");
 
     // registering default tag
     tag.registerTag(TagInfo::universalTag("abc2"), /*set_as_default*/ true);
-    EXPECT_TRUE(tag.exists("abc2"));
+    EXPECT_TRUE(tag.isTag("abc2"));
     EXPECT_EQ(tag.defaultTag(), "abc2");
 
     // registering tag with same name is not allowed
