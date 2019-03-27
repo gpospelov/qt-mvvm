@@ -46,9 +46,10 @@ SessionItem::~SessionItem()
     if (m_mapper)
         m_mapper->callOnItemDestroy();
 
-    for (auto item : m_children)
+    auto container = children();
+    for (auto item : container)
         delete item;
-    m_children.clear();
+//    m_children.clear();
 
     if (m_parent)
         m_parent->childDeleted(this);
@@ -102,14 +103,16 @@ SessionItem* SessionItem::parent() const
 
 int SessionItem::childrenCount() const
 {
-    return static_cast<int>(m_children.size());
+    auto container = children();
+    return static_cast<int>(container.size());
 }
 
 //! Returns child at given index of children array. No tags involved.
 
 SessionItem* SessionItem::childAt(int index) const
 {
-    return index >= 0 && index < childrenCount() ? m_children[static_cast<size_t>(index)] : nullptr;
+    auto container = children();
+    return index >= 0 && index < container.size() ? container[static_cast<size_t>(index)] : nullptr;
 }
 
 //! Insert item into given tag into given row.
@@ -178,8 +181,9 @@ std::vector<SessionItem*> SessionItem::children() const
 
 int SessionItem::indexOfChild(SessionItem* child) const
 {
-    auto pos = find(m_children.begin(), m_children.end(), child);
-    return pos == m_children.end() ? -1 : static_cast<int>(std::distance(m_children.begin(), pos));
+    auto container = children();
+    auto pos = find(container.begin(), container.end(), child);
+    return pos == container.end() ? -1 : static_cast<int>(std::distance(container.begin(), pos));
 }
 
 std::vector<int> SessionItem::roles() const
@@ -214,7 +218,8 @@ bool SessionItem::isTag(const std::string& name)
 SessionItem* SessionItem::getItem(const std::string& tag, int row) const
 {
     int index = m_obsolete_tags->indexFromTagRow(ensure(tag), row);
-    return m_children[static_cast<size_t>(index)];
+    auto container = children();
+    return container[static_cast<size_t>(index)];
 }
 
 std::vector<SessionItem*> SessionItem::getItems(const std::string& tag) const
@@ -223,16 +228,18 @@ std::vector<SessionItem*> SessionItem::getItems(const std::string& tag) const
     int startIndex = m_obsolete_tags->tagStartIndex(tagName);
     int endIndex = startIndex + m_obsolete_tags->childCount(tagName);
     std::vector<SessionItem*> result;
-    std::copy(m_children.begin() + startIndex, m_children.begin() + endIndex,
+    auto container = children();
+    std::copy(container.begin() + startIndex, container.begin() + endIndex,
               std::back_inserter(result));
     return result;
 }
 
 std::string SessionItem::tagFromItem(const SessionItem* item) const
 {
-    auto it = std::find(m_children.begin(), m_children.end(), item);
-    if (it != m_children.end()) {
-        int index = static_cast<int>(std::distance(m_children.begin(), it));
+    auto container = children();
+    auto it = std::find(container.begin(), container.end(), item);
+    if (it != container.end()) {
+        int index = static_cast<int>(std::distance(container.begin(), it));
         return m_obsolete_tags->tagFromIndex(index);
     }
 
@@ -243,9 +250,11 @@ std::string SessionItem::tagFromItem(const SessionItem* item) const
 
 std::pair<int, std::string> SessionItem::tagRowFromItem(const SessionItem* item) const
 {
-    auto it = std::find(m_children.begin(), m_children.end(), item);
-    if (it != m_children.end()) {
-        int index = static_cast<int>(std::distance(m_children.begin(), it));
+    auto container = children();
+
+    auto it = std::find(container.begin(), container.end(), item);
+    if (it != container.end()) {
+        int index = static_cast<int>(std::distance(container.begin(), it));
         auto tag = m_obsolete_tags->tagFromIndex(index);
         return std::make_pair(index - m_obsolete_tags->tagStartIndex(tag), tag);
     }
@@ -308,7 +317,8 @@ void SessionItem::setModel(SessionModel* model)
     if (m_model)
        activate(); // activate buisiness logic
 
-    for (auto child : m_children)
+    auto container = children();
+    for (auto child : container)
         child->setModel(model);
 }
 
