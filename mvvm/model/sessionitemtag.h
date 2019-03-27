@@ -37,13 +37,14 @@ public:
 
     std::vector<SessionItem*> children() const;
 
-    int indexOfChild(SessionItem* child) const;
+    int indexOfItem(SessionItem* item) const;
 
     SessionItem* itemAt(int index) const;
 
     std::string name() const;
 
     TagInfo tagInfo() const;
+
 private:
     int insert_index(const SessionItem* item, int requested_index) const;
     bool maximum_reached() const;

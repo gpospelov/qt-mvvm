@@ -63,9 +63,9 @@ std::vector<SessionItem*> SessionItemTag::children() const
 //! Returns index of item in vector of items.
 //! Returns -1 if item doesn't belong to us.
 
-int SessionItemTag::indexOfChild(SessionItem* child) const
+int SessionItemTag::indexOfItem(SessionItem* item) const
 {
-    auto pos = find(m_items.begin(), m_items.end(), child);
+    auto pos = find(m_items.begin(), m_items.end(), item);
     return pos == m_items.end() ? -1 : static_cast<int>(std::distance(m_items.begin(), pos));
 }
 

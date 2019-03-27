@@ -74,15 +74,15 @@ void JsonItem::json_to_item(const QJsonObject& json, SessionItem* parent, int ro
 
     auto itemTags = m_itemtags_converter->get_tags(json[itemTagsKey].toArray());
 
-    item->m_tags = std::make_unique<ObsoleteSessionItemTags>(itemTags);
+    item->m_obsolete_tags = std::make_unique<ObsoleteSessionItemTags>(itemTags);
 
     // FIXME find more elegant way to replace item registration
     identifier_type identifier = item->data(ItemDataRole::IDENTIFIER).value<std::string>();
     parent->model()->manager()->fix_registration(item, identifier);
 
     parent = item;
-    auto tagSummary = parent->m_tags->tagsSummary();
-    parent->m_tags->resetTags(); // FIXME remove hack
+    auto tagSummary = parent->m_obsolete_tags->tagsSummary();
+    parent->m_obsolete_tags->resetTags(); // FIXME remove hack
 
     if (static_cast<int>(tagSummary.size()) != json[itemsKey].toArray().size()) {
         std::ostringstream ostr;
@@ -109,7 +109,7 @@ void JsonItem::item_to_json(const SessionItem* item, QJsonObject& json) const
     std::string parentTag = item->parent() ? item->parent()->tagFromItem(item) : "";
     json[parentTagKey] = QString::fromStdString(parentTag);
     json[itemDataKey] = m_itemdata_converter->get_json(*item->m_data);
-    json[itemTagsKey] = m_itemtags_converter->get_json(*item->m_tags);
+    json[itemTagsKey] = m_itemtags_converter->get_json(*item->m_obsolete_tags);
 
     QJsonArray itemArray;
     for (auto child : item->children()) {
