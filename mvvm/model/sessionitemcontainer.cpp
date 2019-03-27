@@ -22,7 +22,7 @@ SessionItemContainer::~SessionItemContainer()
 
 //! Returns number of items in given tag.
 
-int SessionItemContainer::childrenCount() const
+int SessionItemContainer::itemCount() const
 {
     return static_cast<int>(m_items.size());
 }
@@ -55,7 +55,7 @@ SessionItem* SessionItemContainer::takeItem(int index)
     return result;
 }
 
-std::vector<SessionItem*> SessionItemContainer::children() const
+std::vector<SessionItem*> SessionItemContainer::items() const
 {
     return m_items;
 }
@@ -73,7 +73,7 @@ int SessionItemContainer::indexOfItem(SessionItem* item) const
 
 SessionItem* SessionItemContainer::itemAt(int index) const
 {
-    return index >= 0 && index < childrenCount() ? m_items[static_cast<size_t>(index)] : nullptr;
+    return index >= 0 && index < itemCount() ? m_items[static_cast<size_t>(index)] : nullptr;
 }
 
 //! Returns the name of SessionItemTag.
@@ -93,11 +93,11 @@ TagInfo SessionItemContainer::tagInfo() const
 
 int SessionItemContainer::insert_index(const SessionItem* item, int requested_index) const
 {
-    if (maximum_reached() || requested_index > childrenCount() || !is_valid_item(item))
+    if (maximum_reached() || requested_index > itemCount() || !is_valid_item(item))
         return -1;
 
     if (requested_index < 0)
-        return childrenCount();
+        return itemCount();
 
     return requested_index;
 }
@@ -106,14 +106,14 @@ int SessionItemContainer::insert_index(const SessionItem* item, int requested_in
 
 bool SessionItemContainer::maximum_reached() const
 {
-    return m_tag_info.max() != -1 && m_tag_info.max() == childrenCount();
+    return m_tag_info.max() != -1 && m_tag_info.max() == itemCount();
 }
 
 //! Returns true if less items than now is not allowed.
 
 bool SessionItemContainer::minimum_reached() const
 {
-    return m_tag_info.min() != -1 && m_tag_info.min() == childrenCount();
+    return m_tag_info.min() != -1 && m_tag_info.min() == itemCount();
 }
 
 //! Returns true if item's modelType is intended for this tag.

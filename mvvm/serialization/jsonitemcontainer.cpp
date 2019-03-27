@@ -40,7 +40,7 @@ QJsonObject JsonItemContainer::to_json(const SessionItemContainer& itemTag)
     result[tagInfoKey] = m_taginfo_converter->to_json(itemTag.tagInfo());
 
     QJsonArray itemArray;
-    for (auto child : itemTag.children()) {
+    for (auto child : itemTag.items()) {
         QJsonObject child_json;
 //        item_to_json(child, child_json);
         itemArray.append(child_json);

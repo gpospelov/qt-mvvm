@@ -32,6 +32,8 @@ void SessionItemTags::registerTag(TagInfo tagInfo, bool set_as_default)
         m_default_tag = tagInfo.name();
 }
 
+//! Returns true if container with such name exists.
+
 bool SessionItemTags::exists(const std::string& tag_name) const
 {
     for (auto tag : m_tags)
@@ -40,7 +42,16 @@ bool SessionItemTags::exists(const std::string& tag_name) const
     return false;
 }
 
-SessionItemContainer* SessionItemTags::itemTag(const std::string& tag_name) const
+//! Returns the name of the tag marked as default.
+
+std::string SessionItemTags::defaultTagName() const
+{
+    return m_default_tag;
+}
+
+//! Returns container corresponding to given tag name.
+
+SessionItemContainer* SessionItemTags::container(const std::string& tag_name) const
 {
     for (auto tag : m_tags)
         if (tag->name() ==tag_name)

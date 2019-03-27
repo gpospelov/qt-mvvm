@@ -34,8 +34,11 @@ public:
 
     bool exists(const std::string& tag_name) const;
 
+    std::string defaultTagName() const;
+
+
 private:
-    SessionItemContainer* itemTag(const std::string& tag_name) const;
+    SessionItemContainer* container(const std::string& tag_name) const;
     std::vector<SessionItemContainer*> m_tags;
     std::string m_default_tag;
 };

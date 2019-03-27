@@ -29,13 +29,13 @@ public:
     SessionItemContainer& operator=(const SessionItemContainer&) = delete;
     ~SessionItemContainer();
 
-    int childrenCount() const;
+    int itemCount() const;
 
     bool insertItem(SessionItem* item, int index = -1);
 
     SessionItem* takeItem(int index);
 
-    std::vector<SessionItem*> children() const;
+    std::vector<SessionItem*> items() const;
 
     int indexOfItem(SessionItem* item) const;
 
