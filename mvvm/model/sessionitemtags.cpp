@@ -49,6 +49,11 @@ std::string SessionItemTags::defaultTag() const
     return m_default_tag;
 }
 
+void SessionItemTags::setDefaultTag(const std::string& name)
+{
+    m_default_tag = name;
+}
+
 int SessionItemTags::itemCount(const std::string& tag_name) const
 {
     return container(tag_name)->itemCount();
@@ -107,6 +112,13 @@ std::pair<std::string, int> SessionItemTags::tagIndexOfItem(const SessionItem* i
     }
 
     return result;
+}
+
+void SessionItemTags::itemDeleted(SessionItem* item)
+{
+    auto info = tagIndexOfItem(item);
+    if (info.second != -1)
+        container(info.first)->itemDeleted(item);
 }
 
 //! Returns container corresponding to given tag name. If name is empty,

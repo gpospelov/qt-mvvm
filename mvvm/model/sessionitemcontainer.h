@@ -52,6 +52,8 @@ public:
 
     const_iterator end() const;
 
+    void itemDeleted(SessionItem* item);
+
 private:
     int insert_index(const SessionItem* item, int requested_index) const;
     bool maximum_reached() const;

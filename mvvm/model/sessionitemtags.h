@@ -39,7 +39,9 @@ public:
 
     std::string defaultTag() const;
 
-    int itemCount(const std::string& tag_name) const;
+    void setDefaultTag(const std::string& name);
+
+    int itemCount(const std::string& tag_name = {}) const;
 
     // adding and removal
 
@@ -55,6 +57,8 @@ public:
     std::vector<SessionItem*> allitems() const;
 
     std::pair<std::string, int> tagIndexOfItem(const SessionItem* item) const;
+
+    void itemDeleted(SessionItem* item);
 
 private:
     SessionItemContainer* container(const std::string& tag_name) const;

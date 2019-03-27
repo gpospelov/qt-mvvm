@@ -102,6 +102,15 @@ SessionItemContainer::const_iterator SessionItemContainer::end() const
     return m_items.end();
 }
 
+//! Replaces item with nullptr.
+
+void SessionItemContainer::itemDeleted(SessionItem* item)
+{
+    int index = indexOfItem(item);
+    if (index != -1)
+        m_items[static_cast<size_t>(index)] = nullptr;
+}
+
 //! Calculates insert index from given requested_index.
 //! Returns -1 if item is not suitable for insertion.
 

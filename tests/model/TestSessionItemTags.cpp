@@ -158,9 +158,7 @@ TEST_F(TestSessionItemTags, takeItem)
 {
     const std::string tag1 = "tag1";
     const std::string tag2 = "tag2";
-
-    const std::string tag_name("tag");
-    const std::string model_type("model_a");
+    const std::string model_type("model");
 
     SessionItemTags tag;
     tag.registerTag(TagInfo::universalTag(tag1), /*set_as_default*/ true);
@@ -192,4 +190,30 @@ TEST_F(TestSessionItemTags, takeItem)
 
     // taking non existing items
     EXPECT_EQ(tag.takeItem(-1), nullptr);
+}
+
+//! Testing itemDeleted.
+
+TEST_F(TestSessionItemTags, itemDeleted)
+{
+    const std::string tag_name = "tag";
+    const std::string model_type("model");
+
+    SessionItemTags tag;
+    tag.registerTag(TagInfo::universalTag(tag_name), /*set_as_default*/ true);
+
+    // inserting items
+    SessionItem* child1 = new SessionItem(model_type);
+    SessionItem* child2 = new SessionItem(model_type);
+    SessionItem* child3 = new SessionItem(model_type);
+    tag.insertItem(child1, -1);
+    tag.insertItem(child2, -1);
+    tag.insertItem(child3, -1);
+
+    tag.itemDeleted(child2);
+    EXPECT_EQ(tag.itemCount(tag_name), 3);
+
+    // order of remaining children
+    std::vector<SessionItem*> expected = {child1, nullptr, child3};
+    EXPECT_EQ(tag.getItems(tag_name), expected);
 }
