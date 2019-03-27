@@ -90,10 +90,10 @@ public:
 
 //! Base class for all converters of SessionItem to/from json object.
 
-class CORE_EXPORT JsonItemInterface
+class CORE_EXPORT ObsoleteJsonItemInterface
 {
 public:
-    virtual ~JsonItemInterface() = default;
+    virtual ~ObsoleteJsonItemInterface() = default;
 
     virtual void json_to_item(const QJsonObject& json, SessionItem* parent, int row = -1, const std::string& tag={})  const = 0;
 

@@ -20,7 +20,7 @@ namespace ModelView {
 
 class SessionModel;
 class SessionItem;
-class JsonItemInterface;
+class ObsoleteJsonItemInterface;
 
 class CORE_EXPORT JsonModel : public JsonModelInterface
 {
@@ -48,7 +48,7 @@ public:
     bool is_model(const QJsonObject& object) const;
 
 private:
-    std::unique_ptr<JsonItemInterface> m_item_converter;
+    std::unique_ptr<ObsoleteJsonItemInterface> m_item_converter;
 };
 
 }  // namespace ModelView

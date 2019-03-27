@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef JSONITEM_H
-#define JSONITEM_H
+#ifndef OBSOLETEJSONITEM_H
+#define OBSOLETEJSONITEM_H
 
 #include "jsonconverterinterfaces.h"
 #include <QString>
@@ -22,7 +22,7 @@ class SessionItem;
 class JsonItemDataInterface;
 class ObsoleteJsonItemTagsInterface;
 
-class CORE_EXPORT JsonItem : public JsonItemInterface
+class CORE_EXPORT ObsoleteJsonItem : public ObsoleteJsonItemInterface
 {
 public:
     static const QString modelKey;
@@ -31,8 +31,8 @@ public:
     static const QString itemTagsKey;
     static const QString itemsKey;
 
-    JsonItem();
-    ~JsonItem() override;
+    ObsoleteJsonItem();
+    ~ObsoleteJsonItem() override;
 
     //! Constructs SessionItem tree from json.
     void json_to_item(const QJsonObject& json, SessionItem* parent, int row = -1, const std::string& tag={}) const override;
@@ -50,4 +50,4 @@ private:
 
 }  // namespace ModelView
 
-#endif
+#endif // OBSOLETEJSONITEM_H

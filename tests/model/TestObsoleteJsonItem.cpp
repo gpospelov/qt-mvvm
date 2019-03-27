@@ -1,6 +1,6 @@
 #include "google_test.h"
 #include "sessionmodel.h"
-#include "jsonitem.h"
+#include "obsoletejsonitem.h"
 #include "sessionitem.h"
 #include "test_utils.h"
 #include "taginfo.h"
@@ -11,10 +11,10 @@ using namespace ModelView;
 
 //! Checks JsonItem class and its ability to convert SessionItems to json and back.
 
-class TestJsonItem : public ::testing::Test
+class TestObsoleteJsonItem : public ::testing::Test
 {
 public:
-    ~TestJsonItem();
+    ~TestObsoleteJsonItem();
 
     static const QString test_dir;
 
@@ -24,31 +24,31 @@ public:
     }
 };
 
-TestJsonItem::~TestJsonItem() = default;
-const QString TestJsonItem::test_dir = "test_JsonModel";
+TestObsoleteJsonItem::~TestObsoleteJsonItem() = default;
+const QString TestObsoleteJsonItem::test_dir = "test_JsonModel";
 
 //! Checks the validity of json object representing item tree.
 
-TEST_F(TestJsonItem, isValidItem)
+TEST_F(TestObsoleteJsonItem, isValidItem)
 {
-    JsonItem converter;
+    ObsoleteJsonItem converter;
 
     // empty json object is not valid
     QJsonObject object;
     EXPECT_FALSE(converter.is_item(object));
 
     // it also should contain array
-    object[JsonItem::modelKey] = "abc";
-    object[JsonItem::parentTagKey] = "tag";
-    object[JsonItem::itemsKey] = 42; // incorrect
-    object[JsonItem::itemDataKey] = QJsonArray();
-    object[JsonItem::itemTagsKey] = QJsonArray();
+    object[ObsoleteJsonItem::modelKey] = "abc";
+    object[ObsoleteJsonItem::parentTagKey] = "tag";
+    object[ObsoleteJsonItem::itemsKey] = 42; // incorrect
+    object[ObsoleteJsonItem::itemDataKey] = QJsonArray();
+    object[ObsoleteJsonItem::itemTagsKey] = QJsonArray();
     EXPECT_FALSE(converter.is_item(object));
 
     // correctly constructed
-    object[JsonItem::itemsKey] = QJsonArray();
-    object[JsonItem::itemDataKey] = QJsonArray();
-    object[JsonItem::itemTagsKey] = QJsonArray();
+    object[ObsoleteJsonItem::itemsKey] = QJsonArray();
+    object[ObsoleteJsonItem::itemDataKey] = QJsonArray();
+    object[ObsoleteJsonItem::itemTagsKey] = QJsonArray();
     EXPECT_TRUE(converter.is_item(object));
 
     // wrong extra key in json
@@ -59,27 +59,27 @@ TEST_F(TestJsonItem, isValidItem)
 
 //! Checks creation of json object: single item (no children) without the data.
 
-TEST_F(TestJsonItem, singleItem)
+TEST_F(TestObsoleteJsonItem, singleItem)
 {
     const QString model_type("MultiLayer");
 
-    JsonItem converter;
+    ObsoleteJsonItem converter;
     std::unique_ptr<SessionItem> parent(new SessionItem(model_type.toStdString()));
 
     QJsonObject object;
     converter.item_to_json(parent.get(), object);
 
-    EXPECT_EQ(object[JsonItem::modelKey], model_type);
-    EXPECT_EQ(object[JsonItem::itemsKey].toArray().size(), 0);
-    EXPECT_EQ(object[JsonItem::itemDataKey].toArray().size(), 1); // item identifier
+    EXPECT_EQ(object[ObsoleteJsonItem::modelKey], model_type);
+    EXPECT_EQ(object[ObsoleteJsonItem::itemsKey].toArray().size(), 0);
+    EXPECT_EQ(object[ObsoleteJsonItem::itemDataKey].toArray().size(), 1); // item identifier
 }
 
 //! Checks creation of json object: parent item with one data variant and one child on board.
 
-TEST_F(TestJsonItem, parentAndChild)
+TEST_F(TestObsoleteJsonItem, parentAndChild)
 {
     const QString model_type("MultiLayer");
-    JsonItem converter;
+    ObsoleteJsonItem converter;
 
     // constructing multilayer
     std::unique_ptr<SessionItem> parent(new SessionItem(model_type.toStdString()));
@@ -92,9 +92,9 @@ TEST_F(TestJsonItem, parentAndChild)
     QJsonObject object;
     converter.item_to_json(parent.get(), object);
 
-    EXPECT_EQ(object[JsonItem::modelKey], model_type);
-    EXPECT_EQ(object[JsonItem::itemsKey].toArray().size(), 1);
-    EXPECT_EQ(object[JsonItem::itemDataKey].toArray().size(), 3);
+    EXPECT_EQ(object[ObsoleteJsonItem::modelKey], model_type);
+    EXPECT_EQ(object[ObsoleteJsonItem::itemsKey].toArray().size(), 1);
+    EXPECT_EQ(object[ObsoleteJsonItem::itemDataKey].toArray().size(), 3);
 
     // saving to file
     auto fileName = TestUtils::TestFileName(test_dir, "items.json");

@@ -161,7 +161,7 @@ bool SessionItem::insertItem(SessionItem* item, int row, const std::string& tag)
 
 SessionItem* SessionItem::takeItem(int row, const std::string& tag)
 {
-    SessionItem* result(nullptr);
+//    SessionItem* result(nullptr);
 //    auto tagName = ensure(tag);
 //    int index = m_obsolete_tags->indexFromTagRow(tagName, row);
 
@@ -179,16 +179,15 @@ SessionItem* SessionItem::takeItem(int row, const std::string& tag)
 //        m_model->mapper()->callOnRowRemoved2(this, index, result->identifier());
 //    }
 
-    result = m_tags->takeItem(row, tag);
+    auto result = m_tags->takeItem(row, tag);
     if (result) {
         result->setParent(nullptr);
         result->setModel(nullptr);
-    }
-
-    if (m_model) {
-        // FIXME remove one of methods
-        m_model->mapper()->callOnRowRemoved(this, indexOfChild(result));
-        m_model->mapper()->callOnRowRemoved2(this, indexOfChild(result), result->identifier());
+        if (m_model) {
+            // FIXME remove one of methods
+            m_model->mapper()->callOnRowRemoved(this, indexOfChild(result));
+            m_model->mapper()->callOnRowRemoved2(this, indexOfChild(result), result->identifier());
+        }
     }
 
     return result;

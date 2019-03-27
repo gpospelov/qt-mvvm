@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "jsonitem.h"
+#include "obsoletejsonitem.h"
 #include "jsonitemdata.h"
 #include "obsoletejsonitemtags.h"
 #include "sessionitem.h"
@@ -28,32 +28,32 @@ using namespace ModelView;
 
 namespace {
 QStringList expected_item_keys() {
-    QStringList result = QStringList() << JsonItem::modelKey << JsonItem::parentTagKey
-                                       << JsonItem::itemDataKey << JsonItem::itemTagsKey
-                                       << JsonItem::itemsKey;
+    QStringList result = QStringList() << ObsoleteJsonItem::modelKey << ObsoleteJsonItem::parentTagKey
+                                       << ObsoleteJsonItem::itemDataKey << ObsoleteJsonItem::itemTagsKey
+                                       << ObsoleteJsonItem::itemsKey;
     std::sort(result.begin(), result.end());
     return result;
 }
 
 }
 
-const QString ModelView::JsonItem::modelKey = "model";
-const QString ModelView::JsonItem::parentTagKey = "parentTag";
-const QString ModelView::JsonItem::itemDataKey = "itemData";
-const QString ModelView::JsonItem::itemTagsKey = "itemTags";
-const QString ModelView::JsonItem::itemsKey = "items";
+const QString ModelView::ObsoleteJsonItem::modelKey = "model";
+const QString ModelView::ObsoleteJsonItem::parentTagKey = "parentTag";
+const QString ModelView::ObsoleteJsonItem::itemDataKey = "itemData";
+const QString ModelView::ObsoleteJsonItem::itemTagsKey = "itemTags";
+const QString ModelView::ObsoleteJsonItem::itemsKey = "items";
 
 
-JsonItem::JsonItem()
+ObsoleteJsonItem::ObsoleteJsonItem()
     : m_itemdata_converter(new JsonItemData)
     , m_itemtags_converter(new ObsoleteJsonItemTags)
 {
 
 }
 
-JsonItem::~JsonItem() = default;
+ObsoleteJsonItem::~ObsoleteJsonItem() = default;
 
-void JsonItem::json_to_item(const QJsonObject& json, SessionItem* parent, int row, const std::string& tag) const
+void ObsoleteJsonItem::json_to_item(const QJsonObject& json, SessionItem* parent, int row, const std::string& tag) const
 {
     if (!parent)
         throw std::runtime_error("JsonModel::json_to_item() -> Non initialized item");
@@ -99,7 +99,7 @@ void JsonItem::json_to_item(const QJsonObject& json, SessionItem* parent, int ro
     }
 }
 
-void JsonItem::item_to_json(const SessionItem* item, QJsonObject& json) const
+void ObsoleteJsonItem::item_to_json(const SessionItem* item, QJsonObject& json) const
 {
     if (!item)
         return;
@@ -120,7 +120,7 @@ void JsonItem::item_to_json(const SessionItem* item, QJsonObject& json) const
     json[itemsKey] = itemArray;
 }
 
-bool JsonItem::is_item(const QJsonObject& object) const
+bool ObsoleteJsonItem::is_item(const QJsonObject& object) const
 {
     static const QStringList expected = expected_item_keys();
 

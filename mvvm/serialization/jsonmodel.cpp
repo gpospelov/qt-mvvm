@@ -9,7 +9,7 @@
 
 #include "jsonmodel.h"
 #include "jsonitemdata.h"
-#include "jsonitem.h"
+#include "obsoletejsonitem.h"
 #include "sessionmodel.h"
 #include "sessionitem.h"
 #include "sessionitemdata.h"
@@ -41,7 +41,7 @@ const QString ModelView::JsonModel::versionKey = "version";
 
 
 JsonModel::JsonModel()
-    : m_item_converter(new JsonItem)
+    : m_item_converter(new ObsoleteJsonItem)
 {
 
 }

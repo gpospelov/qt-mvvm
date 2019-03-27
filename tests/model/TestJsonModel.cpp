@@ -1,6 +1,6 @@
 #include "google_test.h"
 #include "itemmanager.h"
-#include "jsonitem.h"
+#include "obsoletejsonitem.h"
 #include "jsonmodel.h"
 #include "sessionitem.h"
 #include "sessionmodel.h"
@@ -40,7 +40,7 @@ TEST_F(TestJsonModel, isValidModel)
     // json object representing SessionItem can not represent the model
     object[JsonModel::modelKey] = "abc";
     object[JsonModel::itemsKey] = QJsonArray();
-    object[JsonItem::itemDataKey] = QJsonArray();
+    object[ObsoleteJsonItem::itemDataKey] = QJsonArray();
     EXPECT_FALSE(converter.is_model(object));
 
     // json object representing valid SessionModel

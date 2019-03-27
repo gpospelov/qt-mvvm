@@ -30,7 +30,7 @@ class SessionItemTags;
 class CORE_EXPORT SessionItem
 {
     friend class SessionModel;
-    friend class JsonItem;
+    friend class ObsoleteJsonItem;
     friend class JsonModel;
 
 public:
