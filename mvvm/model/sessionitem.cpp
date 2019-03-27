@@ -112,15 +112,6 @@ SessionItem* SessionItem::childAt(int index) const
     return index >= 0 && index < childrenCount() ? m_children[static_cast<size_t>(index)] : nullptr;
 }
 
-//! Takes item from given index, returns item. No tags.
-
-SessionItem* SessionItem::takeAt(int index)
-{
-    SessionItem* item = childAt(index);
-    auto row_tag = tagRowFromItem(item);
-    return takeItem(row_tag.first, row_tag.second);
-}
-
 //! Insert item into given tag into given row.
 
 bool SessionItem::insertItem(SessionItem* item, int row, const std::string& tag)

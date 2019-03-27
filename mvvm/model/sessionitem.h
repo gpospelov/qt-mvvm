@@ -56,8 +56,6 @@ public:
 
     SessionItem* childAt(int index) const;
 
-    SessionItem* takeAt(int index);
-
     // FIXME revise return type usage
     bool insertItem(SessionItem* item, int row, const std::string& tag = {});
 
