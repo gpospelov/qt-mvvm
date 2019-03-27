@@ -31,11 +31,11 @@ public:
 
     int itemCount() const;
 
+    std::vector<SessionItem*> items() const;
+
     bool insertItem(SessionItem* item, int index = -1);
 
     SessionItem* takeItem(int index);
-
-    std::vector<SessionItem*> items() const;
 
     int indexOfItem(SessionItem* item) const;
 

@@ -27,6 +27,13 @@ int SessionItemContainer::itemCount() const
     return static_cast<int>(m_items.size());
 }
 
+//! Returns vector of items in this container.
+
+std::vector<SessionItem*> SessionItemContainer::items() const
+{
+    return m_items;
+}
+
 //! Inserts item in a vector of children at given index, returns true in the case of success.
 //! If index==-1 or index==childrenCount(), item will be appended at the end of the vector.
 //! If item can't be inserted (wrong model type, wrong index or maximum number of items reached),
@@ -53,11 +60,6 @@ SessionItem* SessionItemContainer::takeItem(int index)
         m_items.erase(m_items.begin() + index);
 
     return result;
-}
-
-std::vector<SessionItem*> SessionItemContainer::items() const
-{
-    return m_items;
 }
 
 //! Returns index of item in vector of items.

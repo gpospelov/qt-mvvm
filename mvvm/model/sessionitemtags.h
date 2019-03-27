@@ -19,6 +19,7 @@ namespace ModelView
 
 class SessionItemContainer;
 class TagInfo;
+class SessionItem;
 
 //! Container of SessionItem's stored according to their tags.
 
@@ -34,10 +35,14 @@ public:
 
     bool exists(const std::string& tag_name) const;
 
-    std::string defaultTagName() const;
+    std::string defaultTag() const;
 
+    std::vector<SessionItem*> items(const std::string& tag = {}) const;
+
+    bool insertItem(SessionItem* item, int index, const std::string& tag = {});
 
 private:
+    SessionItemContainer* find_container(const std::string& tag_name) const;
     SessionItemContainer* container(const std::string& tag_name) const;
     std::vector<SessionItemContainer*> m_tags;
     std::string m_default_tag;

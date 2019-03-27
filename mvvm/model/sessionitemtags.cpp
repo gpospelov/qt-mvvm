@@ -42,20 +42,45 @@ bool SessionItemTags::exists(const std::string& tag_name) const
     return false;
 }
 
-//! Returns the name of the tag marked as default.
+//! Returns the name of the default tag.
 
-std::string SessionItemTags::defaultTagName() const
+std::string SessionItemTags::defaultTag() const
 {
     return m_default_tag;
 }
 
+//! Returns vector of items in the container with given name.
+
+std::vector<SessionItem*> SessionItemTags::items(const std::string& tag) const
+{
+    return container(tag)->items();
+}
+
+bool SessionItemTags::insertItem(SessionItem* item, int index, const std::string& tag)
+{
+    return container(tag)->insertItem(item, index);
+}
+
 //! Returns container corresponding to given tag name.
 
-SessionItemContainer* SessionItemTags::container(const std::string& tag_name) const
+SessionItemContainer* SessionItemTags::find_container(const std::string& tag_name) const
 {
     for (auto tag : m_tags)
         if (tag->name() ==tag_name)
             return tag;
 
     return nullptr;
+}
+
+//! Returns container corresponding to given tag name. If name is empty,
+//! default tag will be used. Exception is thrown if no such tag exists.
+
+SessionItemContainer* SessionItemTags::container(const std::string& tag_name) const
+{
+    std::string tagName = tag_name.empty() ? defaultTag() : tag_name;
+    auto container = find_container(tagName);
+    if (!container)
+        throw std::runtime_error("SessionItemTags::container() -> Error. No such container '"+tagName+"'");
+
+    return container;
 }
