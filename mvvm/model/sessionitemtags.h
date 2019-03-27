@@ -17,10 +17,10 @@
 namespace ModelView
 {
 
-class SessionItemTag;
+class SessionItemContainer;
 class TagInfo;
 
-//! Container of SessionItemTag.
+//! Container of SessionItem's stored according to their tags.
 
 class CORE_EXPORT SessionItemTags
 {
@@ -30,13 +30,14 @@ public:
     SessionItemTags(const SessionItemTags&) = delete;
     SessionItemTags& operator=(const SessionItemTags&) = delete;
 
-    void registerTag(TagInfo tagInfo);
+    void registerTag(TagInfo tagInfo, bool set_as_default = false);
 
     bool exists(const std::string& tag_name) const;
 
 private:
-    SessionItemTag* itemTag(const std::string& tag_name) const;
-    std::vector<SessionItemTag*> m_tags;
+    SessionItemContainer* itemTag(const std::string& tag_name) const;
+    std::vector<SessionItemContainer*> m_tags;
+    std::string m_default_tag;
 };
 
 } // namespace ModelView

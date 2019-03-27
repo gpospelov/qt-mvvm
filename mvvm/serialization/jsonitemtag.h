@@ -30,9 +30,9 @@ public:
     JsonItemTag();
     ~JsonItemTag() override;
 
-    QJsonObject to_json(const SessionItemTag& itemTag) override;
+    QJsonObject to_json(const SessionItemContainer& itemTag) override;
 
-    std::unique_ptr<SessionItemTag> from_json(const QJsonObject&) override;
+    std::unique_ptr<SessionItemContainer> from_json(const QJsonObject&) override;
 
     bool isSessionItemTag(const QJsonObject& object);
 

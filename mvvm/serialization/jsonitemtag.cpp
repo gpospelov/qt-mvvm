@@ -8,7 +8,7 @@
 // ************************************************************************** //
 
 #include "jsonitemtag.h"
-#include "sessionitemtag.h"
+#include "sessionitemcontainer.h"
 #include "jsontaginfo.h"
 #include <QJsonObject>
 #include <QJsonArray>
@@ -33,7 +33,7 @@ JsonItemTag::JsonItemTag()
 
 JsonItemTag::~JsonItemTag() = default;
 
-QJsonObject JsonItemTag::to_json(const SessionItemTag& itemTag)
+QJsonObject JsonItemTag::to_json(const SessionItemContainer& itemTag)
 {
     QJsonObject result;
 
@@ -50,7 +50,7 @@ QJsonObject JsonItemTag::to_json(const SessionItemTag& itemTag)
     return result;
 }
 
-std::unique_ptr<SessionItemTag> JsonItemTag::from_json(const QJsonObject&)
+std::unique_ptr<SessionItemContainer> JsonItemTag::from_json(const QJsonObject&)
 {
     return {};
 }

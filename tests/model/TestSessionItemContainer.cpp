@@ -1,26 +1,26 @@
 #include "google_test.h"
 #include "sessionitem.h"
-#include "sessionitemtag.h"
+#include "sessionitemcontainer.h"
 #include "test_utils.h"
 
 using namespace ModelView;
 
 //! Tests for SessionItemTag class.
 
-class TestSessionItemTag : public ::testing::Test
+class TestSessionItemContainer : public ::testing::Test
 {
 public:
-    ~TestSessionItemTag();
+    ~TestSessionItemContainer();
 };
 
-TestSessionItemTag::~TestSessionItemTag() = default;
+TestSessionItemContainer::~TestSessionItemContainer() = default;
 
 //! Initial state of emty SessionItemTag.
 
-TEST_F(TestSessionItemTag, initialState)
+TEST_F(TestSessionItemContainer, initialState)
 {
     const std::string name("tag");
-    SessionItemTag tag(TagInfo::universalTag(name));
+    SessionItemContainer tag(TagInfo::universalTag(name));
 
     EXPECT_EQ(tag.childrenCount(), 0);
     EXPECT_EQ(tag.name(), name);
@@ -29,10 +29,10 @@ TEST_F(TestSessionItemTag, initialState)
 
 //! Checking ::insertItem.
 
-TEST_F(TestSessionItemTag, insertItem)
+TEST_F(TestSessionItemContainer, insertItem)
 {
     const std::string tag_name("tag");
-    SessionItemTag tag(TagInfo::universalTag(tag_name));
+    SessionItemContainer tag(TagInfo::universalTag(tag_name));
 
     // inserting non-existing item is not allowed
     EXPECT_FALSE(tag.insertItem(nullptr));
@@ -74,12 +74,12 @@ TEST_F(TestSessionItemTag, insertItem)
 
 //! Checking ::insertItem when item has specific model type.
 
-TEST_F(TestSessionItemTag, insertItemModelType)
+TEST_F(TestSessionItemContainer, insertItemModelType)
 {
     const std::string tag_name("tag");
     const std::vector<std::string> model_types = {"model_a"};
 
-    SessionItemTag tag(TagInfo::universalTag(tag_name, model_types));
+    SessionItemContainer tag(TagInfo::universalTag(tag_name, model_types));
 
     // insertion of wrong model type is not allowed
     SessionItem* child1 = new SessionItem("model_a");
@@ -94,12 +94,12 @@ TEST_F(TestSessionItemTag, insertItemModelType)
 
 //! Checking ::insertItem when tag is related to property tag.
 
-TEST_F(TestSessionItemTag, insertItemPropertyType)
+TEST_F(TestSessionItemContainer, insertItemPropertyType)
 {
     const std::string name("tag");
     const std::string property_type("Property");
 
-    SessionItemTag tag(TagInfo::propertyTag(name, property_type));
+    SessionItemContainer tag(TagInfo::propertyTag(name, property_type));
 
     // insertion of second property item is not allowed (because of reached maximum)
     SessionItem* child1 = new SessionItem(property_type);
@@ -118,12 +118,12 @@ TEST_F(TestSessionItemTag, insertItemPropertyType)
 
 //! Checking ::indexOfChild.
 
-TEST_F(TestSessionItemTag, indexOfChild)
+TEST_F(TestSessionItemContainer, indexOfChild)
 {
     const std::string tag_name("tag");
     const std::string model_type("model_a");
 
-    SessionItemTag tag(TagInfo::universalTag(tag_name));
+    SessionItemContainer tag(TagInfo::universalTag(tag_name));
 
     // index of two items
     SessionItem* child1 = new SessionItem(model_type);
@@ -142,12 +142,12 @@ TEST_F(TestSessionItemTag, indexOfChild)
 
 //! Checking ::itemAt.
 
-TEST_F(TestSessionItemTag, itemAt)
+TEST_F(TestSessionItemContainer, itemAt)
 {
     const std::string tag_name("tag");
     const std::string model_type("model_a");
 
-    SessionItemTag tag(TagInfo::universalTag(tag_name));
+    SessionItemContainer tag(TagInfo::universalTag(tag_name));
 
     // items at given indices
     SessionItem* child1 = new SessionItem(model_type);
@@ -165,12 +165,12 @@ TEST_F(TestSessionItemTag, itemAt)
 
 //! Checking ::takeItem.
 
-TEST_F(TestSessionItemTag, takeItem)
+TEST_F(TestSessionItemContainer, takeItem)
 {
     const std::string tag_name("tag");
     const std::string model_type("model_a");
 
-    SessionItemTag tag(TagInfo::universalTag(tag_name));
+    SessionItemContainer tag(TagInfo::universalTag(tag_name));
 
     // taking non existing items
     EXPECT_EQ(tag.takeItem(0), nullptr);
@@ -199,12 +199,12 @@ TEST_F(TestSessionItemTag, takeItem)
 
 //! Checking ::takeItem when tag is related to property tag.
 
-TEST_F(TestSessionItemTag, takeItemPropertyType)
+TEST_F(TestSessionItemContainer, takeItemPropertyType)
 {
     const std::string name("tag");
     const std::string property_type("Property");
 
-    SessionItemTag tag(TagInfo::propertyTag(name, property_type));
+    SessionItemContainer tag(TagInfo::propertyTag(name, property_type));
 
     // insertion of second property item is not allowed (because of reached maximum)
     SessionItem* child1 = new SessionItem(property_type);

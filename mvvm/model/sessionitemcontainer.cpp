@@ -7,14 +7,14 @@
 //
 // ************************************************************************** //
 
-#include "sessionitemtag.h"
+#include "sessionitemcontainer.h"
 #include "sessionitem.h"
 
 using namespace ModelView;
 
-SessionItemTag::SessionItemTag(ModelView::TagInfo tag_info) : m_tag_info(std::move(tag_info)) {}
+SessionItemContainer::SessionItemContainer(ModelView::TagInfo tag_info) : m_tag_info(std::move(tag_info)) {}
 
-SessionItemTag::~SessionItemTag()
+SessionItemContainer::~SessionItemContainer()
 {
     for (auto item : m_items)
         delete item;
@@ -22,7 +22,7 @@ SessionItemTag::~SessionItemTag()
 
 //! Returns number of items in given tag.
 
-int SessionItemTag::childrenCount() const
+int SessionItemContainer::childrenCount() const
 {
     return static_cast<int>(m_items.size());
 }
@@ -32,7 +32,7 @@ int SessionItemTag::childrenCount() const
 //! If item can't be inserted (wrong model type, wrong index or maximum number of items reached),
 //! will return false.
 
-bool SessionItemTag::insertItem(SessionItem* item, int index)
+bool SessionItemContainer::insertItem(SessionItem* item, int index)
 {
     int vec_index = insert_index(item, index);
 
@@ -43,7 +43,7 @@ bool SessionItemTag::insertItem(SessionItem* item, int index)
     return true;
 }
 
-SessionItem* SessionItemTag::takeItem(int index)
+SessionItem* SessionItemContainer::takeItem(int index)
 {
     if (minimum_reached())
         return nullptr;
@@ -55,7 +55,7 @@ SessionItem* SessionItemTag::takeItem(int index)
     return result;
 }
 
-std::vector<SessionItem*> SessionItemTag::children() const
+std::vector<SessionItem*> SessionItemContainer::children() const
 {
     return m_items;
 }
@@ -63,7 +63,7 @@ std::vector<SessionItem*> SessionItemTag::children() const
 //! Returns index of item in vector of items.
 //! Returns -1 if item doesn't belong to us.
 
-int SessionItemTag::indexOfItem(SessionItem* item) const
+int SessionItemContainer::indexOfItem(SessionItem* item) const
 {
     auto pos = find(m_items.begin(), m_items.end(), item);
     return pos == m_items.end() ? -1 : static_cast<int>(std::distance(m_items.begin(), pos));
@@ -71,19 +71,19 @@ int SessionItemTag::indexOfItem(SessionItem* item) const
 
 //! Returns item at given index. Returns nullptr if index is invalid.
 
-SessionItem* SessionItemTag::itemAt(int index) const
+SessionItem* SessionItemContainer::itemAt(int index) const
 {
     return index >= 0 && index < childrenCount() ? m_items[static_cast<size_t>(index)] : nullptr;
 }
 
 //! Returns the name of SessionItemTag.
 
-std::string SessionItemTag::name() const
+std::string SessionItemContainer::name() const
 {
     return m_tag_info.name();
 }
 
-TagInfo SessionItemTag::tagInfo() const
+TagInfo SessionItemContainer::tagInfo() const
 {
     return m_tag_info;
 }
@@ -91,7 +91,7 @@ TagInfo SessionItemTag::tagInfo() const
 //! Calculates insert index from given requested_index.
 //! Returns -1 if item is not suitable for insertion.
 
-int SessionItemTag::insert_index(const SessionItem* item, int requested_index) const
+int SessionItemContainer::insert_index(const SessionItem* item, int requested_index) const
 {
     if (maximum_reached() || requested_index > childrenCount() || !is_valid_item(item))
         return -1;
@@ -104,21 +104,21 @@ int SessionItemTag::insert_index(const SessionItem* item, int requested_index) c
 
 //! Returns true if no more items are allowed.
 
-bool SessionItemTag::maximum_reached() const
+bool SessionItemContainer::maximum_reached() const
 {
     return m_tag_info.max() != -1 && m_tag_info.max() == childrenCount();
 }
 
 //! Returns true if less items than now is not allowed.
 
-bool SessionItemTag::minimum_reached() const
+bool SessionItemContainer::minimum_reached() const
 {
     return m_tag_info.min() != -1 && m_tag_info.min() == childrenCount();
 }
 
 //! Returns true if item's modelType is intended for this tag.
 
-bool SessionItemTag::is_valid_item(const SessionItem* item) const
+bool SessionItemContainer::is_valid_item(const SessionItem* item) const
 {
     return item && m_tag_info.isValidChild(item->modelType()) ? true : false;
 }

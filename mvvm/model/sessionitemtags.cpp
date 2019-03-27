@@ -8,7 +8,7 @@
 // ************************************************************************** //
 
 #include "sessionitemtags.h"
-#include "sessionitemtag.h"
+#include "sessionitemcontainer.h"
 #include <stdexcept>
 
 using namespace ModelView;
@@ -21,13 +21,15 @@ SessionItemTags::~SessionItemTags()
         delete tag;
 }
 
-void SessionItemTags::registerTag(TagInfo tagInfo)
+void SessionItemTags::registerTag(TagInfo tagInfo, bool set_as_default)
 {
     if (exists(tagInfo.name()))
         throw std::runtime_error("SessionItemTags::registerTag() -> Error. Existing name '"
                                  + tagInfo.name() + "'");
 
-    m_tags.push_back(new SessionItemTag(tagInfo));
+    m_tags.push_back(new SessionItemContainer(tagInfo));
+    if (set_as_default)
+        m_default_tag = tagInfo.name();
 }
 
 bool SessionItemTags::exists(const std::string& tag_name) const
@@ -38,7 +40,7 @@ bool SessionItemTags::exists(const std::string& tag_name) const
     return false;
 }
 
-SessionItemTag* SessionItemTags::itemTag(const std::string& tag_name) const
+SessionItemContainer* SessionItemTags::itemTag(const std::string& tag_name) const
 {
     for (auto tag : m_tags)
         if (tag->name() ==tag_name)

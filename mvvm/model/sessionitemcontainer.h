@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef SESSIONITEMTAG_H
-#define SESSIONITEMTAG_H
+#ifndef SESSIONITEMCONTAINER_H
+#define SESSIONITEMCONTAINER_H
 
 #include "global.h"
 #include "taginfo.h"
@@ -21,13 +21,13 @@ class SessionItem;
 
 //! Holds collection of SessionItem objects related to the same tag.
 
-class CORE_EXPORT SessionItemTag
+class CORE_EXPORT SessionItemContainer
 {
 public:
-    SessionItemTag(TagInfo tag_info);
-    SessionItemTag(const SessionItemTag&) = delete;
-    SessionItemTag& operator=(const SessionItemTag&) = delete;
-    ~SessionItemTag();
+    SessionItemContainer(TagInfo tag_info);
+    SessionItemContainer(const SessionItemContainer&) = delete;
+    SessionItemContainer& operator=(const SessionItemContainer&) = delete;
+    ~SessionItemContainer();
 
     int childrenCount() const;
 
@@ -56,4 +56,4 @@ private:
 
 } // namespace ModelView
 
-#endif // SESSIONITEMTAG_H
+#endif // SESSIONITEMCONTAINER_H
