@@ -21,11 +21,14 @@ class SessionItemContainer;
 class TagInfo;
 class SessionItem;
 
-//! Container of SessionItem's stored according to their tags.
+//! Collection of SessionItem's containers according to their tags.
 
 class CORE_EXPORT SessionItemTags
 {
 public:
+    using container_t = std::vector<SessionItemContainer*>;
+    using const_iterator = container_t::const_iterator;
+
     SessionItemTags();
     ~SessionItemTags();
     SessionItemTags(const SessionItemTags&) = delete;
@@ -59,6 +62,9 @@ public:
     std::pair<std::string, int> tagIndexOfItem(const SessionItem* item) const;
 
     void itemDeleted(SessionItem* item);
+
+    const_iterator begin() const;
+    const_iterator end() const;
 
 private:
     SessionItemContainer* container(const std::string& tag_name) const;

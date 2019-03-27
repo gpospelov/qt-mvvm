@@ -32,6 +32,7 @@ class CORE_EXPORT SessionItem
     friend class SessionModel;
     friend class ObsoleteJsonItem;
     friend class JsonModel;
+    friend class JsonItem;
 
 public:
     SessionItem(model_type modelType = Constants::BaseType);

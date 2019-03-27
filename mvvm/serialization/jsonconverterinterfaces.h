@@ -88,6 +88,17 @@ public:
 };
 
 
+class CORE_EXPORT JsonItemInterface
+{
+public:
+    virtual ~JsonItemInterface() = default;
+
+    virtual QJsonObject to_json(const SessionItem* item)  const = 0;
+
+    virtual std::unique_ptr<SessionItem> from_json(const QJsonObject&) const = 0;
+};
+
+
 //! Base class for all converters of SessionItem to/from json object.
 
 class CORE_EXPORT ObsoleteJsonItemInterface

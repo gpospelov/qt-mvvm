@@ -121,6 +121,16 @@ void SessionItemTags::itemDeleted(SessionItem* item)
         container(info.first)->itemDeleted(item);
 }
 
+SessionItemTags::const_iterator SessionItemTags::begin() const
+{
+    return m_containers.begin();
+}
+
+SessionItemTags::const_iterator SessionItemTags::end() const
+{
+    return m_containers.end();
+}
+
 //! Returns container corresponding to given tag name. If name is empty,
 //! default tag will be used. Exception is thrown if no such tag exists.
 
