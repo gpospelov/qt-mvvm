@@ -49,7 +49,23 @@ std::string SessionItemTags::defaultTag() const
     return m_default_tag;
 }
 
+//! Inserts item in container with given tag name and at given index.
+//! Returns true in the case of success. If tag name is empty, default tag will be used.
+
+bool SessionItemTags::insertItem(SessionItem* item, int index, const std::string& tag)
+{
+    return container(tag)->insertItem(item, index);
+}
+
+//! Returns item at given index of given tag.
+
+SessionItem* SessionItemTags::getItem(const std::string& tag, int index) const
+{
+    return container(tag)->itemAt(index);
+}
+
 //! Returns vector of items in the container with given name.
+//! If tag name is empty, default tag will be used.
 
 std::vector<SessionItem*> SessionItemTags::items(const std::string& tag) const
 {
@@ -65,14 +81,6 @@ std::vector<SessionItem*> SessionItemTags::allitems() const
     }
 
     return result;
-}
-
-//! Inserts item in container with given tag name and at given index.
-//! Returns true in the case of success.
-
-bool SessionItemTags::insertItem(SessionItem* item, int index, const std::string& tag)
-{
-    return container(tag)->insertItem(item, index);
 }
 
 //! Returns tag name and index of item in container.

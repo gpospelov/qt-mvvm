@@ -55,6 +55,12 @@ TEST_F(TestSessionItemTags, insertItem)
     const std::string tag2 = "tag2";
 
     SessionItemTags tag;
+
+    // inserting items without tags defined
+    auto item = std::make_unique<SessionItem>();
+    EXPECT_THROW(tag.insertItem(item.get(), -1), std::runtime_error);
+
+    // registering tags
     tag.registerTag(TagInfo::universalTag(tag1));
     tag.registerTag(TagInfo::universalTag(tag2));
 
@@ -117,6 +123,34 @@ TEST_F(TestSessionItemTags, tagIndexOfItem)
     // the same for nullptr
     EXPECT_EQ(tag.tagIndexOfItem(nullptr).first, "");
     EXPECT_EQ(tag.tagIndexOfItem(nullptr).second, -1);
+}
+
+
+//! Testing method getItem.
+
+TEST_F(TestSessionItemTags, getItem)
+{
+    const std::string tag1 = "tag1";
+    const std::string tag2 = "tag2";
+
+    // creating parent with one tag
+    SessionItemTags tag;
+    tag.registerTag(TagInfo::universalTag(tag1), /*set_as_default*/ true);
+    tag.registerTag(TagInfo::universalTag(tag2));
+
+    // inserting children
+    auto child_t1_a = new SessionItem;
+    auto child_t1_b = new SessionItem;
+    auto child_t2_a = new SessionItem;
+    tag.insertItem(child_t1_a, -1); // 0
+    tag.insertItem(child_t1_b, -1); // 1
+    tag.insertItem(child_t2_a, 0, tag2); // 0
+
+    EXPECT_EQ(tag.getItem(tag1), child_t1_a);
+    EXPECT_EQ(tag.getItem(tag1, 0), child_t1_a);
+    EXPECT_EQ(tag.getItem(tag1, 1), child_t1_b);
+    EXPECT_EQ(tag.getItem(tag2, 0), child_t2_a);
+    EXPECT_EQ(tag.getItem(tag2, 2), nullptr);
 }
 
 

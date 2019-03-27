@@ -31,17 +31,24 @@ public:
     SessionItemTags(const SessionItemTags&) = delete;
     SessionItemTags& operator=(const SessionItemTags&) = delete;
 
+    // tag
+
     void registerTag(TagInfo tagInfo, bool set_as_default = false);
 
     bool exists(const std::string& tag_name) const;
 
     std::string defaultTag() const;
 
+    // adding and removal
+
+    bool insertItem(SessionItem* item, int index, const std::string& tag = {});
+
+    // item access
+    SessionItem* getItem(const std::string& tag, int index = 0) const;
+
     std::vector<SessionItem*> items(const std::string& tag = {}) const;
 
     std::vector<SessionItem*> allitems() const;
-
-    bool insertItem(SessionItem* item, int index, const std::string& tag = {});
 
     std::pair<std::string, int> tagIndexOfItem(const SessionItem* item) const;
 
