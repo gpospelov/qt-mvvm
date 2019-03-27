@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "jsonitemtag.h"
+#include "jsonitemcontainer.h"
 #include "sessionitemcontainer.h"
 #include "jsontaginfo.h"
 #include <QJsonObject>
@@ -21,19 +21,19 @@ QStringList expected_keys();
 
 using namespace ModelView;
 
-const QString JsonItemTag::tagInfoKey = "tagInfo";
-const QString JsonItemTag::itemsKey = "items";
+const QString JsonItemContainer::tagInfoKey = "tagInfo";
+const QString JsonItemContainer::itemsKey = "items";
 
-JsonItemTag::JsonItemTag()
+JsonItemContainer::JsonItemContainer()
     : m_taginfo_converter(new JsonTagInfo)
 {
 
 }
 
 
-JsonItemTag::~JsonItemTag() = default;
+JsonItemContainer::~JsonItemContainer() = default;
 
-QJsonObject JsonItemTag::to_json(const SessionItemContainer& itemTag)
+QJsonObject JsonItemContainer::to_json(const SessionItemContainer& itemTag)
 {
     QJsonObject result;
 
@@ -50,14 +50,14 @@ QJsonObject JsonItemTag::to_json(const SessionItemContainer& itemTag)
     return result;
 }
 
-std::unique_ptr<SessionItemContainer> JsonItemTag::from_json(const QJsonObject&)
+std::unique_ptr<SessionItemContainer> JsonItemContainer::from_json(const QJsonObject&)
 {
     return {};
 }
 
-//! Returns true if given object represents SessionItemTag.
+//! Returns true if given object represents SessionItemContainer.
 
-bool JsonItemTag::isSessionItemTag(const QJsonObject& object)
+bool JsonItemContainer::isSessionItemContainer(const QJsonObject& object)
 {
     static const QStringList expected = expected_keys();
 
@@ -74,7 +74,7 @@ namespace
 {
 QStringList expected_keys()
 {
-    QStringList result = QStringList() << JsonItemTag::tagInfoKey << JsonItemTag::itemsKey;
+    QStringList result = QStringList() << JsonItemContainer::tagInfoKey << JsonItemContainer::itemsKey;
     std::sort(result.begin(), result.end());
     return result;
 }
