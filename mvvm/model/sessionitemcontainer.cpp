@@ -65,7 +65,7 @@ SessionItem* SessionItemContainer::takeItem(int index)
 //! Returns index of item in vector of items.
 //! Returns -1 if item doesn't belong to us.
 
-int SessionItemContainer::indexOfItem(SessionItem* item) const
+int SessionItemContainer::indexOfItem(const SessionItem* item) const
 {
     auto pos = find(m_items.begin(), m_items.end(), item);
     return pos == m_items.end() ? -1 : static_cast<int>(std::distance(m_items.begin(), pos));
@@ -88,6 +88,16 @@ std::string SessionItemContainer::name() const
 TagInfo SessionItemContainer::tagInfo() const
 {
     return m_tag_info;
+}
+
+SessionItemContainer::const_iterator SessionItemContainer::begin() const
+{
+    return m_items.begin();
+}
+
+SessionItemContainer::const_iterator SessionItemContainer::end() const
+{
+    return m_items.end();
 }
 
 //! Calculates insert index from given requested_index.

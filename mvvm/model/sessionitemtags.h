@@ -39,12 +39,16 @@ public:
 
     std::vector<SessionItem*> items(const std::string& tag = {}) const;
 
+    std::vector<SessionItem*> allitems() const;
+
     bool insertItem(SessionItem* item, int index, const std::string& tag = {});
 
+    std::pair<std::string, int> tagIndexOfItem(const SessionItem* item) const;
+
 private:
-    SessionItemContainer* find_container(const std::string& tag_name) const;
     SessionItemContainer* container(const std::string& tag_name) const;
-    std::vector<SessionItemContainer*> m_tags;
+    SessionItemContainer* find_container(const std::string& tag_name) const;
+    std::vector<SessionItemContainer*> m_containers;
     std::string m_default_tag;
 };
 
