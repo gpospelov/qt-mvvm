@@ -78,9 +78,9 @@ TEST_F(TestSessionItemTags, insertItem)
 
     // checking item order in containers
     std::vector<SessionItem*> expected = {child_t1_a, child_t1_b};
-    EXPECT_EQ(tag.items(tag1), expected);
+    EXPECT_EQ(tag.getItems(tag1), expected);
     expected = {child_t2_a, child_t2_b, child_t2_c};
-    EXPECT_EQ(tag.items(tag2), expected);
+    EXPECT_EQ(tag.getItems(tag2), expected);
 
     // checking allitems order
     expected = {child_t1_a, child_t1_b, child_t2_a, child_t2_b, child_t2_c};

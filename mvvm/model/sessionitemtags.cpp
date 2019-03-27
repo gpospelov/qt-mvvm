@@ -67,7 +67,7 @@ SessionItem* SessionItemTags::getItem(const std::string& tag, int index) const
 //! Returns vector of items in the container with given name.
 //! If tag name is empty, default tag will be used.
 
-std::vector<SessionItem*> SessionItemTags::items(const std::string& tag) const
+std::vector<SessionItem*> SessionItemTags::getItems(const std::string& tag) const
 {
     return container(tag)->items();
 }

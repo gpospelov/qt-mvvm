@@ -46,7 +46,7 @@ public:
     // item access
     SessionItem* getItem(const std::string& tag, int index = 0) const;
 
-    std::vector<SessionItem*> items(const std::string& tag = {}) const;
+    std::vector<SessionItem*> getItems(const std::string& tag = {}) const;
 
     std::vector<SessionItem*> allitems() const;
 
