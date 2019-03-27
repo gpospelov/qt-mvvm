@@ -116,9 +116,9 @@ TEST_F(TestSessionItemContainer, insertItemPropertyType)
     EXPECT_EQ(tag.items(), expected);
 }
 
-//! Checking ::indexOfChild.
+//! Checking ::indexOfItem.
 
-TEST_F(TestSessionItemContainer, indexOfChild)
+TEST_F(TestSessionItemContainer, indexOfItem)
 {
     const std::string tag_name("tag");
     const std::string model_type("model_a");

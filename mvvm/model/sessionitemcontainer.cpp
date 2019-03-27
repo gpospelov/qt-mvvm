@@ -50,6 +50,8 @@ bool SessionItemContainer::insertItem(SessionItem* item, int index)
     return true;
 }
 
+//! Removes item at given index and returns it to the user.
+
 SessionItem* SessionItemContainer::takeItem(int index)
 {
     if (minimum_reached())

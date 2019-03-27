@@ -1,7 +1,7 @@
 #include "google_test.h"
+#include "sessionitem.h"
 #include "sessionitemtags.h"
 #include "taginfo.h"
-#include "sessionitem.h"
 #include "test_utils.h"
 
 using namespace ModelView;
@@ -39,7 +39,7 @@ TEST_F(TestSessionItemTags, registerTag)
     EXPECT_EQ(tag.defaultTag(), "");
 
     // registering default tag
-    tag.registerTag(TagInfo::universalTag("abc2"), /*set_as_default*/true);
+    tag.registerTag(TagInfo::universalTag("abc2"), /*set_as_default*/ true);
     EXPECT_TRUE(tag.exists("abc2"));
     EXPECT_EQ(tag.defaultTag(), "abc2");
 
@@ -103,8 +103,8 @@ TEST_F(TestSessionItemTags, tagIndexOfItem)
     auto child_t1_a = new SessionItem;
     auto child_t1_b = new SessionItem;
     auto child_t2_a = new SessionItem;
-    tag.insertItem(child_t1_a, -1); // 0
-    tag.insertItem(child_t1_b, -1); // 1
+    tag.insertItem(child_t1_a, -1);      // 0
+    tag.insertItem(child_t1_b, -1);      // 1
     tag.insertItem(child_t2_a, 0, tag2); // 0
 
     // checking children tag and index
@@ -125,7 +125,6 @@ TEST_F(TestSessionItemTags, tagIndexOfItem)
     EXPECT_EQ(tag.tagIndexOfItem(nullptr).second, -1);
 }
 
-
 //! Testing method getItem.
 
 TEST_F(TestSessionItemTags, getItem)
@@ -142,8 +141,8 @@ TEST_F(TestSessionItemTags, getItem)
     auto child_t1_a = new SessionItem;
     auto child_t1_b = new SessionItem;
     auto child_t2_a = new SessionItem;
-    tag.insertItem(child_t1_a, -1); // 0
-    tag.insertItem(child_t1_b, -1); // 1
+    tag.insertItem(child_t1_a, -1);      // 0
+    tag.insertItem(child_t1_b, -1);      // 1
     tag.insertItem(child_t2_a, 0, tag2); // 0
 
     EXPECT_EQ(tag.getItem(tag1), child_t1_a);
@@ -153,5 +152,44 @@ TEST_F(TestSessionItemTags, getItem)
     EXPECT_EQ(tag.getItem(tag2, 2), nullptr);
 }
 
+//! Testing method getItem.
 
+TEST_F(TestSessionItemTags, takeItem)
+{
+    const std::string tag1 = "tag1";
+    const std::string tag2 = "tag2";
 
+    const std::string tag_name("tag");
+    const std::string model_type("model_a");
+
+    SessionItemTags tag;
+    tag.registerTag(TagInfo::universalTag(tag1), /*set_as_default*/ true);
+    tag.registerTag(TagInfo::universalTag(tag2));
+
+    // taking non existing items
+    EXPECT_EQ(tag.takeItem(0), nullptr);
+
+    // inserting items
+    SessionItem* child1 = new SessionItem(model_type);
+    SessionItem* child2 = new SessionItem(model_type);
+    SessionItem* child3 = new SessionItem(model_type);
+    SessionItem* child4 = new SessionItem(model_type);
+    EXPECT_TRUE(tag.insertItem(child1, -1));
+    EXPECT_TRUE(tag.insertItem(child2, -1));
+    EXPECT_TRUE(tag.insertItem(child3, -1));
+    EXPECT_TRUE(tag.insertItem(child4, -1, tag2));
+
+    // taking item in between
+    auto taken2 = tag.takeItem(1);
+    EXPECT_EQ(child2, taken2);
+    delete taken2;
+
+    // order of remaining children
+    std::vector<SessionItem*> expected = {child1, child3};
+    EXPECT_EQ(tag.getItems(tag1), expected);
+    expected = {child4};
+    EXPECT_EQ(tag.getItems(tag2), expected);
+
+    // taking non existing items
+    EXPECT_EQ(tag.takeItem(-1), nullptr);
+}

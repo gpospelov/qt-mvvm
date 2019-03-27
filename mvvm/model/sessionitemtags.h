@@ -43,6 +43,8 @@ public:
 
     bool insertItem(SessionItem* item, int index, const std::string& tag = {});
 
+    SessionItem* takeItem(int index, const std::string& tag = {});
+
     // item access
     SessionItem* getItem(const std::string& tag, int index = 0) const;
 
