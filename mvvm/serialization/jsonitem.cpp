@@ -13,6 +13,9 @@
 #include "jsontaginfo.h"
 #include "sessionitemtags.h"
 #include "sessionitemcontainer.h"
+#include "sessionmodel.h"
+#include "itemmanager.h"
+#include "sessionitemdata.h"
 #include <QJsonObject>
 #include <QJsonArray>
 
@@ -51,8 +54,13 @@ QJsonObject JsonItem::to_json(const SessionItem* item) const
 
 std::unique_ptr<SessionItem> JsonItem::from_json(const QJsonObject& json) const
 {
+    auto modelType = json[modelKey].toString().toStdString();
 
-    return {};
+    auto result = m_model->manager()->createItem(modelType);
+    result->m_data = m_itemdata_converter->get_data(json[itemDataKey].toArray());
+    result->m_tags = json_to_tags(json[itemTagsKey].toObject());
+
+    return result;
 }
 
 QJsonObject JsonItem::tags_to_json(const SessionItemTags& tags) const
@@ -77,6 +85,25 @@ QJsonObject JsonItem::container_to_json(const SessionItemContainer& container) c
     for(auto item: container)
         itemArray.append(to_json(item));
     result[itemsKey] = itemArray;
+
+    return result;
+}
+
+std::unique_ptr<SessionItemTags> JsonItem::json_to_tags(const QJsonObject& json) const
+{
+    auto result = std::make_unique<SessionItemTags>();
+
+    result->setDefaultTag(json[defaultTagKey].toString().toStdString());
+
+    for(const auto ref : json[containerKey].toArray()) {
+        QJsonObject json_container = ref.toObject();
+        TagInfo tagInfo = m_taginfo_converter->from_json(json_container[tagInfoKey].toObject());
+        result->registerTag(tagInfo);
+        for(const auto obj : json_container[itemsKey].toArray()) {
+            auto item = from_json(obj.toObject());
+            result->insertItem(item.release(), -1, tagInfo.name());
+        }
+    }
 
     return result;
 }

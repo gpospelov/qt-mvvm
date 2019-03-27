@@ -21,6 +21,8 @@ namespace ModelView {
 class SessionItem;
 class SessionItemTags;
 class SessionItemContainer;
+class SessionModel;
+class SessionItemTags;
 
 class CORE_EXPORT JsonItem : public JsonItemInterface
 {
@@ -44,8 +46,12 @@ private:
     QJsonObject tags_to_json(const SessionItemTags& tags) const;
     QJsonObject container_to_json(const SessionItemContainer& container) const;
 
+    std::unique_ptr<SessionItemTags> json_to_tags(const QJsonObject& json) const;
+
     std::unique_ptr<JsonItemDataInterface> m_itemdata_converter;
     std::unique_ptr<JsonTagInfoInterface> m_taginfo_converter;
+
+    SessionModel* m_model;
 };
 
 }  // namespace ModelView
