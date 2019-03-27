@@ -145,12 +145,14 @@ bool SessionItem::insertItem(SessionItem* item, int row, const std::string& tag)
 //    if(m_model)
 //        m_model->mapper()->callOnRowInserted(this, index);
 
-    item->setParent(this);
-    item->setModel(model());
     auto result = m_tags->insertItem(item, row, tag);
+    if (result) {
+        item->setParent(this);
+        item->setModel(model());
 
-    if(m_model)
-        m_model->mapper()->callOnRowInserted(this, indexOfChild(item));
+        if(m_model)
+            m_model->mapper()->callOnRowInserted(this, indexOfChild(item));
+    }
 
     return result;
 }
@@ -214,7 +216,8 @@ std::vector<int> SessionItem::roles() const
 
 std::string SessionItem::defaultTag() const
 {
-    return data(ItemDataRole::DEFAULT_TAG).value<std::string>();
+    return m_tags->defaultTag();
+//    return data(ItemDataRole::DEFAULT_TAG).value<std::string>();
 }
 
 void SessionItem::setDefaultTag(const std::string& tag)

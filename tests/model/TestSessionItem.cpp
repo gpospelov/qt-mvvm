@@ -242,9 +242,8 @@ TEST_F(TestSessionItem, insertChildren)
     EXPECT_THROW(parent->insertItem(child2, -1), std::runtime_error);
 
     // attempt to insert item using out of scope index
-    auto child5 = new SessionItem;
-    EXPECT_THROW(parent->insertItem(child5, parent->childrenCount()+1), std::runtime_error);
-    delete child5;
+    auto child5 = std::make_unique<SessionItem>();
+    EXPECT_FALSE(parent->insertItem(child5.get(), parent->childrenCount()+1));
 }
 
 //! Removing (taking) item from parent.
@@ -266,8 +265,8 @@ TEST_F(TestSessionItem, takeItem)
     EXPECT_EQ(parent->childrenCount(), 3);
 
     // taking non-existing rows
-    EXPECT_THROW(parent->takeItem(-1), std::runtime_error);
-    EXPECT_THROW(parent->takeItem(parent->childrenCount()), std::runtime_error);
+    EXPECT_EQ(parent->takeItem(-1), nullptr);
+    EXPECT_EQ(parent->takeItem(parent->childrenCount()), nullptr);
 
     // taking first row
     auto taken = parent->takeItem(0);
@@ -306,7 +305,7 @@ TEST_F(TestSessionItem, singleTagAndItems)
     EXPECT_EQ(parent->getItem(tag1), child1);
     EXPECT_EQ(parent->getItem(tag1, 0), child1);
     EXPECT_EQ(parent->getItem(tag1, 1), child2);
-    EXPECT_THROW(parent->getItem(tag1, 2), std::runtime_error); // wrong row
+    EXPECT_EQ(parent->getItem(tag1, 2), nullptr); // wrong row
 
     // access to multiple items via tags interface
     EXPECT_THROW(parent->getItems(), std::runtime_error); // no default tag registered
@@ -320,7 +319,7 @@ TEST_F(TestSessionItem, singleTagAndItems)
     EXPECT_EQ(parent->getItems(tag1), std::vector<SessionItem*>() = {});
 
     // removing from already empty container
-    EXPECT_THROW(parent->takeItem(0, tag1), std::runtime_error);
+    EXPECT_EQ(parent->takeItem(0, tag1), nullptr);
 }
 
 //! Insert and take tagged items when two tags are present.
@@ -365,7 +364,7 @@ TEST_F(TestSessionItem, twoTagsAndItems)
     EXPECT_EQ(parent->getItem(tag2, 0), child_t2_a);
     EXPECT_EQ(parent->getItem(tag2, 1), child_t2_b);
     EXPECT_EQ(parent->getItem(tag2, 2), child_t2_c);
-    EXPECT_THROW(parent->getItem(tag2, 3), std::runtime_error); // no items with such row
+    EXPECT_EQ(parent->getItem(tag2, 3), nullptr); // no items with such row
 
     // access to multiple items via tags interface
     EXPECT_THROW(parent->getItems(), std::runtime_error); // no default tag registered
@@ -402,7 +401,7 @@ TEST_F(TestSessionItem, tagWithLimits)
 
     // no room for extra item
     auto extra = new SessionItem;
-    EXPECT_THROW(parent->insertItem(extra, -1, tag1), std::runtime_error);
+    EXPECT_FALSE(parent->insertItem(extra, -1, tag1));
 
     // removing first element
     delete parent->takeItem(0, tag1);
@@ -435,8 +434,8 @@ TEST_F(TestSessionItem, tagModelTypes)
     auto item3 = new SessionItem(modelType3);
 
     // attempt to add item not intended for tag
-    EXPECT_THROW(parent->insertItem(item1, -1, tag2), std::runtime_error);
-    EXPECT_THROW(parent->insertItem(item3, -1, tag1), std::runtime_error);
+    EXPECT_FALSE(parent->insertItem(item1, -1, tag2));
+    EXPECT_FALSE(parent->insertItem(item3, -1, tag1));
 
     // normal insert to appropriate tag
     parent->insertItem(item3, -1, tag2);
