@@ -17,6 +17,7 @@
 #include "obsoletesessionitemtags.h"
 #include "sessionmodel.h"
 #include "modelmapper.h"
+#include "sessionitemtags.h"
 #include <cassert>
 #include <iterator>
 #include <sstream>
@@ -35,7 +36,7 @@ int appearance(const ModelView::SessionItem& item)
 using namespace ModelView;
 
 SessionItem::SessionItem(model_type modelType)
-    : m_parent(nullptr), m_model(nullptr), m_data(new SessionItemData), m_obsolete_tags(new ObsoleteSessionItemTags),
+    : m_parent(nullptr), m_model(nullptr), m_data(new SessionItemData), m_obsolete_tags(new ObsoleteSessionItemTags), m_tags(new SessionItemTags),
       m_modelType(std::move(modelType))
 {
     setDataIntern(QVariant::fromValue(ItemPool::generate_key()), ItemDataRole::IDENTIFIER);
@@ -199,10 +200,13 @@ std::string SessionItem::defaultTag() const
 void SessionItem::setDefaultTag(const std::string& tag)
 {
     setDataIntern(QVariant::fromValue(tag), ItemDataRole::DEFAULT_TAG);
+    m_tags->setDefaultTag(tag);
 }
 
 void SessionItem::registerTag(const TagInfo& tagInfo, bool set_as_default)
 {
+    m_tags->registerTag(tagInfo, set_as_default);
+
     m_obsolete_tags->registerTag(tagInfo);
     if (set_as_default)
         setDefaultTag(tagInfo.name());
