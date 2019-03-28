@@ -44,8 +44,8 @@ SessionItem::SessionItem(model_type modelType)
 
 SessionItem::~SessionItem()
 {
-    if (m_mapper)
-        m_mapper->callOnItemDestroy();
+    if (m_p->m_mapper)
+        m_p->m_mapper->callOnItemDestroy();
 
     if (m_p->m_parent)
         m_p->m_parent->childDeleted(this);
@@ -221,9 +221,9 @@ std::pair<int, std::string> SessionItem::tagRowFromItem(const SessionItem* item)
 
 ItemMapper* SessionItem::mapper()
 {
-    if (!m_mapper)
-        m_mapper = std::make_unique<ItemMapper>(this);
-    return m_mapper.get();
+    if (!m_p->m_mapper)
+        m_p->m_mapper = std::make_unique<ItemMapper>(this);
+    return m_p->m_mapper.get();
 }
 
 //! Activates all buisiness logic of given item. Should be called after item constructions.
