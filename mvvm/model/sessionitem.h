@@ -104,7 +104,6 @@ private:
     SessionModel* m_model;
     std::unique_ptr<ItemMapper> m_mapper;
     std::unique_ptr<SessionItemData> m_data;
-    std::unique_ptr<ObsoleteSessionItemTags> m_obsolete_tags;
     std::unique_ptr<SessionItemTags> m_tags;
     model_type m_modelType;
 };

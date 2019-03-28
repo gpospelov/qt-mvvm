@@ -9,7 +9,6 @@
 
 #include "jsonmodel.h"
 #include "jsonitemdata.h"
-#include "obsoletejsonitem.h"
 #include "sessionmodel.h"
 #include "sessionitem.h"
 #include "sessionitemdata.h"
@@ -17,7 +16,7 @@
 #include "itemmanager.h"
 #include "customvariants.h"
 #include "model_types.h"
-#include "obsoletesessionitemtags.h"
+#include "jsonitem.h"
 #include <QSet>
 #include <QJsonObject>
 #include <QJsonArray>
@@ -41,7 +40,6 @@ const QString ModelView::JsonModel::versionKey = "version";
 
 
 JsonModel::JsonModel()
-    : m_item_converter(new ObsoleteJsonItem)
 {
 
 }
@@ -57,11 +55,8 @@ void JsonModel::model_to_json(const SessionModel& model, QJsonObject& json) cons
 
     QJsonArray itemArray;
 
-    for(auto item : model.rootItem()->children()) {
-        QJsonObject object;
-        m_item_converter->item_to_json(item, object);
-        itemArray.append(object);
-    }
+    for(auto item : model.rootItem()->children())
+        itemArray.append(m_item_converter->to_json(item));
 
     json[itemsKey] = itemArray;
 }
@@ -80,20 +75,20 @@ void JsonModel::json_to_model(const QJsonObject& json, SessionModel& model) cons
     if (json[modelKey].toString() != QString::fromStdString(model.modelType()))
             throw std::runtime_error("JsonModel::json_to_model() -> Unexpected model type.");
 
-    auto parent = model.rootItem();
-    for(const auto ref : json[itemsKey].toArray())
-        m_item_converter->json_to_item(ref.toObject(), parent);
+//    auto parent = model.rootItem();
+//    for(const auto ref : json[itemsKey].toArray())
+//        m_item_converter->json_to_item(ref.toObject(), parent);
 
 }
 
 void JsonModel::json_to_item(const QJsonObject& json, SessionItem* parent, int row, const std::string& tag) const
 {
-    return m_item_converter->json_to_item(json, parent, row, tag);
+//    return m_item_converter->json_to_item(json, parent, row, tag);
 }
 
 void JsonModel::item_to_json(const SessionItem* item, QJsonObject& json) const
 {
-    return m_item_converter->item_to_json(item, json);
+//    return m_item_converter->item_to_json(item, json);
 }
 
 bool JsonModel::is_model(const QJsonObject& object) const
