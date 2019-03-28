@@ -101,7 +101,6 @@ private:
     std::unique_ptr<ItemMapper> m_mapper;
     std::unique_ptr<SessionItemData> m_data;
     std::unique_ptr<SessionItemTags> m_tags;
-    model_type m_modelType;
     std::unique_ptr<SessionItemPrivate> m_p;
 };
 

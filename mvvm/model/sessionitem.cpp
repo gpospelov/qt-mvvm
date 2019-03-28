@@ -37,8 +37,9 @@ using namespace ModelView;
 
 SessionItem::SessionItem(model_type modelType)
     : m_data(new SessionItemData), m_tags(new SessionItemTags),
-      m_modelType(std::move(modelType)), m_p(std::make_unique<SessionItemPrivate>())
+      m_p(std::make_unique<SessionItemPrivate>())
 {
+    m_p->m_modelType = modelType;
     setDataIntern(QVariant::fromValue(ItemPool::generate_key()), ItemDataRole::IDENTIFIER);
 }
 
@@ -56,7 +57,7 @@ SessionItem::~SessionItem()
 
 model_type SessionItem::modelType() const
 {
-    return m_modelType;
+    return m_p->m_modelType;
 }
 
 std::string SessionItem::displayName() const
