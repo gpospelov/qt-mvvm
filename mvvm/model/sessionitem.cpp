@@ -36,7 +36,7 @@ int appearance(const ModelView::SessionItem& item)
 using namespace ModelView;
 
 SessionItem::SessionItem(model_type modelType)
-    : m_data(new SessionItemData), m_tags(new SessionItemTags),
+    : m_data(new SessionItemData),
       m_p(std::make_unique<SessionItemPrivate>())
 {
     m_p->m_modelType = modelType;
@@ -121,7 +121,7 @@ bool SessionItem::insertItem(SessionItem* item, int row, const std::string& tag)
     if (item->parent())
         throw std::runtime_error("SessionItem::insertItem() -> Existing parent.");
 
-    auto result = m_tags->insertItem(item, row, tag);
+    auto result = m_p->m_tags->insertItem(item, row, tag);
     if (result) {
         item->setParent(this);
         item->setModel(model());
@@ -138,10 +138,10 @@ bool SessionItem::insertItem(SessionItem* item, int row, const std::string& tag)
 SessionItem* SessionItem::takeItem(int row, const std::string& tag)
 {
     // FIXME remove hack
-    auto tmp = m_tags->getItem(tag, row);
+    auto tmp = m_p->m_tags->getItem(tag, row);
     int tmp_index = indexOfChild(tmp);
 
-    auto result = m_tags->takeItem(row, tag);
+    auto result = m_p->m_tags->takeItem(row, tag);
     if (result) {
         result->setParent(nullptr);
         result->setModel(nullptr);
@@ -157,7 +157,7 @@ SessionItem* SessionItem::takeItem(int row, const std::string& tag)
 
 std::vector<SessionItem*> SessionItem::children() const
 {
-    return m_tags->allitems();
+    return m_p->m_tags->allitems();
 }
 
 //! Returns index in children array corresponding to given child. No tags involved.
@@ -176,47 +176,47 @@ std::vector<int> SessionItem::roles() const
 
 std::string SessionItem::defaultTag() const
 {
-    return m_tags->defaultTag();
+    return m_p->m_tags->defaultTag();
 }
 
 void SessionItem::setDefaultTag(const std::string& tag)
 {
     setDataIntern(QVariant::fromValue(tag), ItemDataRole::DEFAULT_TAG);
-    m_tags->setDefaultTag(tag);
+    m_p->m_tags->setDefaultTag(tag);
 }
 
 void SessionItem::registerTag(const TagInfo& tagInfo, bool set_as_default)
 {
-    m_tags->registerTag(tagInfo, set_as_default);
+    m_p->m_tags->registerTag(tagInfo, set_as_default);
 }
 
 bool SessionItem::isTag(const std::string& name)
 {
-    return m_tags->isTag(name);
+    return m_p->m_tags->isTag(name);
 }
 
 //! Returns item in given row of given tag.
 
 SessionItem* SessionItem::getItem(const std::string& tag, int row) const
 {
-    return m_tags->getItem(tag, row);
+    return m_p->m_tags->getItem(tag, row);
 }
 
 std::vector<SessionItem*> SessionItem::getItems(const std::string& tag) const
 {
-    return m_tags->getItems(tag);
+    return m_p->m_tags->getItems(tag);
 }
 
 std::string SessionItem::tagFromItem(const SessionItem* item) const
 {
-    return m_tags->tagIndexOfItem(item).first;
+    return m_p->m_tags->tagIndexOfItem(item).first;
 }
 
 //! Returns item's row in its tag.
 
 std::pair<int, std::string> SessionItem::tagRowFromItem(const SessionItem* item) const
 {
-    auto temp = m_tags->tagIndexOfItem(item);
+    auto temp = m_p->m_tags->tagIndexOfItem(item);
     return std::make_pair(temp.second, temp.first);
 }
 
@@ -281,7 +281,7 @@ void SessionItem::setModel(SessionModel* model)
 
 void SessionItem::childDeleted(SessionItem* child)
 {
-    m_tags->itemDeleted(child);
+    m_p->m_tags->itemDeleted(child);
 }
 
 void SessionItem::setAppearanceFlag(int flag, bool value)

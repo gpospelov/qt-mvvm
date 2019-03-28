@@ -100,7 +100,6 @@ private:
 
     std::unique_ptr<ItemMapper> m_mapper;
     std::unique_ptr<SessionItemData> m_data;
-    std::unique_ptr<SessionItemTags> m_tags;
     std::unique_ptr<SessionItemPrivate> m_p;
 };
 

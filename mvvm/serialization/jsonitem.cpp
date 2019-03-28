@@ -17,6 +17,7 @@
 #include "sessionitemtags.h"
 #include "sessionmodel.h"
 #include "itemfactoryinterface.h"
+#include "sessionitem_p.h"
 #include <QJsonArray>
 #include <QJsonObject>
 
@@ -128,7 +129,7 @@ QJsonObject JsonItem::item_to_json(const SessionItem& item) const
     QJsonObject result;
     result[modelKey] = QString::fromStdString(item.modelType());
     result[itemDataKey] = m_itemdata_converter->get_json(*item.m_data);
-    result[itemTagsKey] = tags_to_json(*item.m_tags.get());
+    result[itemTagsKey] = tags_to_json(*item.m_p->m_tags.get());
 
     return result;
 }
@@ -177,7 +178,7 @@ std::unique_ptr<SessionItem> JsonItem::json_to_item(const QJsonObject& json,
     result->setParent(parent);
 
     result->m_data = m_itemdata_converter->get_data(json[itemDataKey].toArray());
-    result->m_tags = json_to_tags(json[itemTagsKey].toObject(), result.get());
+    result->m_p->m_tags = json_to_tags(json[itemTagsKey].toObject(), result.get());
 
     return result;
 }
