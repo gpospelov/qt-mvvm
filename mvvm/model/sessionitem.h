@@ -25,6 +25,7 @@ class SessionItemData;
 class TagInfo;
 class ItemMapper;
 class SessionItemTags;
+class SessionItemPrivate;
 
 class CORE_EXPORT SessionItem
 {
@@ -103,6 +104,7 @@ private:
     std::unique_ptr<SessionItemData> m_data;
     std::unique_ptr<SessionItemTags> m_tags;
     model_type m_modelType;
+    std::unique_ptr<SessionItemPrivate> m_p;
 };
 
 } // namespace ModelView

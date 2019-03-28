@@ -18,6 +18,7 @@
 #include "sessionmodel.h"
 #include "taginfo.h"
 #include "customvariants.h"
+#include "sessionitem_p.h"
 #include <iterator>
 #include <stdexcept>
 
@@ -36,7 +37,7 @@ using namespace ModelView;
 
 SessionItem::SessionItem(model_type modelType)
     : m_parent(nullptr), m_model(nullptr), m_data(new SessionItemData), m_tags(new SessionItemTags),
-      m_modelType(std::move(modelType))
+      m_modelType(std::move(modelType)), m_p(std::make_unique<SessionItemPrivate>())
 {
     setDataIntern(QVariant::fromValue(ItemPool::generate_key()), ItemDataRole::IDENTIFIER);
 }

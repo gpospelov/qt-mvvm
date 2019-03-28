@@ -84,7 +84,6 @@ void JsonModel::json_to_model(const QJsonObject& json, SessionModel& model) cons
         auto item =converter->from_json(ref.toObject());
         parent->insertItem(item.release(), -1);
     }
-
 }
 
 bool JsonModel::isSessionModel(const QJsonObject& object) const
