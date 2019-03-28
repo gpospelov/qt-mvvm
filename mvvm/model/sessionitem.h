@@ -93,7 +93,6 @@ private:
     friend class JsonItem;
     void setParent(SessionItem* parent);
     void setModel(SessionModel* model);
-    void childDeleted(SessionItem* child);
     void setAppearanceFlag(int flag, bool value);
 
     std::unique_ptr<SessionItemPrivate> m_p;

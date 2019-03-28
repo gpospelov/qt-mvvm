@@ -48,7 +48,7 @@ SessionItem::~SessionItem()
         m_p->m_mapper->callOnItemDestroy();
 
     if (m_p->m_parent)
-        m_p->m_parent->childDeleted(this);
+        m_p->m_parent->m_p->childDeleted(this);
 
     if (m_p->m_model)
         m_p->m_model->make_registered(this, false);
@@ -276,11 +276,6 @@ void SessionItem::setModel(SessionModel* model)
     auto container = children();
     for (auto child : container)
         child->setModel(model);
-}
-
-void SessionItem::childDeleted(SessionItem* child)
-{
-    m_p->m_tags->itemDeleted(child);
 }
 
 void SessionItem::setAppearanceFlag(int flag, bool value)
