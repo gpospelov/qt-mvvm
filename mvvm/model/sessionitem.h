@@ -99,7 +99,6 @@ private:
     void setAppearanceFlag(int flag, bool value);
 
     std::unique_ptr<ItemMapper> m_mapper;
-    std::unique_ptr<SessionItemData> m_data;
     std::unique_ptr<SessionItemPrivate> m_p;
 };
 

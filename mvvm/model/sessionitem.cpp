@@ -36,8 +36,7 @@ int appearance(const ModelView::SessionItem& item)
 using namespace ModelView;
 
 SessionItem::SessionItem(model_type modelType)
-    : m_data(new SessionItemData),
-      m_p(std::make_unique<SessionItemPrivate>())
+    : m_p(std::make_unique<SessionItemPrivate>())
 {
     m_p->m_modelType = modelType;
     setDataIntern(QVariant::fromValue(ItemPool::generate_key()), ItemDataRole::IDENTIFIER);
@@ -85,7 +84,7 @@ bool SessionItem::setData(const QVariant& variant, int role)
 
 QVariant SessionItem::data(int role) const
 {
-    return m_data->data(role);
+    return m_p->m_data->data(role);
 }
 
 SessionModel* SessionItem::model() const
@@ -171,7 +170,7 @@ int SessionItem::indexOfChild(SessionItem* child) const
 
 std::vector<int> SessionItem::roles() const
 {
-    return m_data->roles();
+    return m_p->m_data->roles();
 }
 
 std::string SessionItem::defaultTag() const
@@ -297,7 +296,7 @@ void SessionItem::setAppearanceFlag(int flag, bool value)
 
 bool SessionItem::setDataIntern(const QVariant& variant, int role)
 {
-    bool result = m_data->setData(variant, role);
+    bool result = m_p->m_data->setData(variant, role);
     if (result && m_p->m_model)
         m_p->m_model->mapper()->callOnDataChange(this, role);
     return result;

@@ -128,7 +128,7 @@ QJsonObject JsonItem::item_to_json(const SessionItem& item) const
 {
     QJsonObject result;
     result[modelKey] = QString::fromStdString(item.modelType());
-    result[itemDataKey] = m_itemdata_converter->get_json(*item.m_data);
+    result[itemDataKey] = m_itemdata_converter->get_json(*item.m_p->m_data);
     result[itemTagsKey] = tags_to_json(*item.m_p->m_tags.get());
 
     return result;
@@ -177,7 +177,7 @@ std::unique_ptr<SessionItem> JsonItem::json_to_item(const QJsonObject& json,
     auto result = m_factory->createItem(modelType);
     result->setParent(parent);
 
-    result->m_data = m_itemdata_converter->get_data(json[itemDataKey].toArray());
+    result->m_p->m_data = m_itemdata_converter->get_data(json[itemDataKey].toArray());
     result->m_p->m_tags = json_to_tags(json[itemTagsKey].toObject(), result.get());
 
     return result;
