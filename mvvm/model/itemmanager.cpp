@@ -14,6 +14,7 @@
 #include "itempool.h"
 #include "jsonconverterinterfaces.h"
 #include "jsonmodel.h"
+#include "jsonitem.h"
 #include "sessionitem.h"
 
 namespace
@@ -26,11 +27,15 @@ std::unique_ptr<ModelView::ItemFactory> DefaultItemFactory()
 
 using namespace ModelView;
 
-ItemManager::ItemManager() : m_item_factory(DefaultItemFactory()), m_converter(new JsonModel) {}
+ItemManager::ItemManager() : m_item_factory(DefaultItemFactory()), m_converter(new JsonModel)
+{
+    m_item_converter = std::make_unique<JsonItem>(m_item_factory.get());
+}
 
 void ItemManager::setItemFactory(std::unique_ptr<ItemFactoryInterface> factory)
 {
     m_item_factory = std::move(factory);
+    m_item_converter = std::make_unique<JsonItem>(m_item_factory.get());
 }
 
 void ItemManager::setItemPool(std::shared_ptr<ItemPool> pool)
@@ -75,10 +80,20 @@ const JsonModelInterface& ItemManager::converter() const
     return *m_converter;
 }
 
+const JsonItemInterface&ItemManager::item_converter() const
+{
+    return *m_item_converter;
+}
+
 //! Replacing existing registration in item pool with new id.
 
 void ItemManager::fix_registration(SessionItem* item, const identifier_type& id)
 {
     m_item_pool->deregister_item(item);
     m_item_pool->register_item(item, id);
+}
+
+const ItemFactoryInterface* ItemManager::factory() const
+{
+    return m_item_factory.get();
 }

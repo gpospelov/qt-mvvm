@@ -24,6 +24,7 @@ class SessionItemTags;
 class SessionItemContainer;
 class SessionModel;
 class SessionItemTags;
+class ItemFactoryInterface;
 
 //! Default converter between SessionItem and json object.
 
@@ -38,7 +39,9 @@ public:
     static const QString tagInfoKey;
     static const QString itemsKey;
 
+    // FIXME get rid one of the two constructors
     JsonItem(const SessionModel* model);
+    JsonItem(const ItemFactoryInterface* factory);
     ~JsonItem() override;
 
     QJsonObject to_json(const SessionItem* item) const override;
@@ -61,7 +64,7 @@ private:
 
     std::unique_ptr<JsonItemDataInterface> m_itemdata_converter;
     std::unique_ptr<JsonTagInfoInterface> m_taginfo_converter;
-    const SessionModel* m_model;
+    const ItemFactoryInterface* m_factory;
 };
 
 } // namespace ModelView

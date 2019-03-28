@@ -16,6 +16,7 @@
 #include "sessionitemdata.h"
 #include "sessionitemtags.h"
 #include "sessionmodel.h"
+#include "itemfactoryinterface.h"
 #include <QJsonArray>
 #include <QJsonObject>
 
@@ -40,8 +41,16 @@ const QString JsonItem::itemsKey = "items";
 
 JsonItem::JsonItem(const SessionModel* model)
     : m_itemdata_converter(std::make_unique<JsonItemData>()),
-      m_taginfo_converter(std::make_unique<JsonTagInfo>()), m_model(model)
+      m_taginfo_converter(std::make_unique<JsonTagInfo>()), m_factory(nullptr)
 {
+    m_factory = model->manager()->factory();
+}
+
+JsonItem::JsonItem(const ItemFactoryInterface* factory)
+    : m_itemdata_converter(std::make_unique<JsonItemData>()),
+      m_taginfo_converter(std::make_unique<JsonTagInfo>()), m_factory(factory)
+{
+
 }
 
 JsonItem::~JsonItem() = default;
@@ -164,7 +173,7 @@ std::unique_ptr<SessionItem> JsonItem::json_to_item(const QJsonObject& json,
             "JsonItem::from_json() -> Error. Given json object can't represent an SessionItem.");
 
     auto modelType = json[modelKey].toString().toStdString();
-    auto result = m_model->manager()->createItem(modelType);
+    auto result = m_factory->createItem(modelType);
     result->setParent(parent);
 
     result->m_data = m_itemdata_converter->get_data(json[itemDataKey].toArray());
