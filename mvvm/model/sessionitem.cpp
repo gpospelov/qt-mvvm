@@ -179,14 +179,18 @@ SessionItem* SessionItem::takeItem(int row, const std::string& tag)
 //        m_model->mapper()->callOnRowRemoved2(this, index, result->identifier());
 //    }
 
+    // FIXME remove hack
+    auto tmp = m_tags->getItem(tag, row);
+    int tmp_index = indexOfChild(tmp);
+
     auto result = m_tags->takeItem(row, tag);
     if (result) {
         result->setParent(nullptr);
         result->setModel(nullptr);
         if (m_model) {
             // FIXME remove one of methods
-            m_model->mapper()->callOnRowRemoved(this, indexOfChild(result));
-            m_model->mapper()->callOnRowRemoved2(this, indexOfChild(result), result->identifier());
+            m_model->mapper()->callOnRowRemoved(this, tmp_index);
+            m_model->mapper()->callOnRowRemoved2(this, tmp_index, result->identifier());
         }
     }
 
