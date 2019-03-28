@@ -87,16 +87,6 @@ void JsonModel::json_to_model(const QJsonObject& json, SessionModel& model) cons
 
 }
 
-void JsonModel::json_to_item(const QJsonObject& json, SessionItem* parent, int row, const std::string& tag) const
-{
-//    return m_item_converter->json_to_item(json, parent, row, tag);
-}
-
-void JsonModel::item_to_json(const SessionItem* item, QJsonObject& json) const
-{
-//    return m_item_converter->item_to_json(item, json);
-}
-
 bool JsonModel::isSessionModel(const QJsonObject& object) const
 {
     static const QStringList expected = expected_model_keys();

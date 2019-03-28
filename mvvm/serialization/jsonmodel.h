@@ -38,12 +38,6 @@ public:
     //! Reads json object and build the model.
     void json_to_model(const QJsonObject& json, SessionModel& model) const override;
 
-    //! Constructs SessionItem tree from json.
-    void json_to_item(const QJsonObject& json, SessionItem* parent, int row = -1, const std::string& tag={}) const override;
-
-    //! Writes SessionItem tree to json.
-    void item_to_json(const SessionItem* item, QJsonObject& json) const override;
-
     //! Returns true if given json object represents SessionModel.
     bool isSessionModel(const QJsonObject& object) const;
 

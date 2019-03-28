@@ -51,18 +51,6 @@ public:
     virtual TagInfo from_json(const QJsonObject&) = 0;
 };
 
-//! Base class for all converters of SessionItemTags to/from json object
-
-class CORE_EXPORT ObsoleteJsonItemTagsInterface
-{
-public:
-    virtual ~ObsoleteJsonItemTagsInterface() = default;
-
-    virtual QJsonArray get_json(const ObsoleteSessionItemTags&) = 0;
-
-    virtual ObsoleteSessionItemTags get_tags(const QJsonArray&) = 0;
-};
-
 //! Base class for all converters of SessionItemData to/from json object
 
 class CORE_EXPORT JsonItemDataInterface
@@ -87,19 +75,6 @@ public:
     virtual std::unique_ptr<SessionItem> from_json(const QJsonObject&) const = 0;
 };
 
-
-//! Base class for all converters of SessionItem to/from json object.
-
-class CORE_EXPORT ObsoleteJsonItemInterface
-{
-public:
-    virtual ~ObsoleteJsonItemInterface() = default;
-
-    virtual void json_to_item(const QJsonObject& json, SessionItem* parent, int row = -1, const std::string& tag={})  const = 0;
-
-    virtual void item_to_json(const SessionItem* item, QJsonObject& json) const = 0;
-};
-
 //! Base class for all converters of SessionModel to/from json object.
 
 class CORE_EXPORT JsonModelInterface
@@ -110,10 +85,6 @@ public:
     virtual void model_to_json(const SessionModel&, QJsonObject&) const  = 0;
 
     virtual void json_to_model(const QJsonObject&, SessionModel&) const = 0;
-
-    virtual void json_to_item(const QJsonObject& json, SessionItem* parent, int row = -1, const std::string& tag={})  const = 0;
-
-    virtual void item_to_json(const SessionItem* item, QJsonObject& json) const = 0;
 };
 
 }  // namespace ModelView
