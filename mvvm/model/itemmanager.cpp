@@ -40,12 +40,12 @@ void ItemManager::setItemPool(std::shared_ptr<ItemPool> pool)
 
 ItemManager::~ItemManager() = default;
 
-std::unique_ptr<SessionItem> ItemManager::createItem(const model_type& modelType)
+std::unique_ptr<SessionItem> ItemManager::createItem(const model_type& modelType) const
 {
     return m_item_factory->createItem(modelType);
 }
 
-std::unique_ptr<SessionItem> ItemManager::createRootItem()
+std::unique_ptr<SessionItem> ItemManager::createRootItem() const
 {
     return m_item_factory->createEmptyItem();
 }

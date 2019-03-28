@@ -35,23 +35,28 @@ public:
     static const QString tagInfoKey;
     static const QString itemsKey;
 
-    JsonItem();
-    ~JsonItem();
+    JsonItem(const SessionModel* model);
+    ~JsonItem() override;
 
     QJsonObject to_json(const SessionItem* item)  const override;
 
     std::unique_ptr<SessionItem> from_json(const QJsonObject& json) const override;
 
+    bool isSessionItem(const QJsonObject& json) const;
+    bool isSessionItemTags(const QJsonObject& json) const;
+    bool isSessionItemContainer(const QJsonObject& json) const;
+
 private:
+    QJsonObject item_to_json(const SessionItem& item) const;
     QJsonObject tags_to_json(const SessionItemTags& tags) const;
     QJsonObject container_to_json(const SessionItemContainer& container) const;
 
+    std::unique_ptr<SessionItem> json_to_item(const QJsonObject& json) const;
     std::unique_ptr<SessionItemTags> json_to_tags(const QJsonObject& json) const;
 
     std::unique_ptr<JsonItemDataInterface> m_itemdata_converter;
     std::unique_ptr<JsonTagInfoInterface> m_taginfo_converter;
-
-    SessionModel* m_model;
+    const SessionModel* m_model;
 };
 
 }  // namespace ModelView
