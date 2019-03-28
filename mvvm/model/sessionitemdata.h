@@ -10,12 +10,13 @@
 #ifndef SESSIONITEMDATA_H
 #define SESSIONITEMDATA_H
 
+#include "datarole.h"
 #include "global.h"
 #include <QVariant>
 #include <vector>
-#include "datarole.h"
 
-namespace ModelView {
+namespace ModelView
+{
 
 //! Handles data roles for SessionItem.
 
@@ -35,9 +36,10 @@ public:
     const_iterator end() const;
 
 private:
+    void assure_validity(const QVariant& variant, int role);
     container_type m_values;
 };
 
-}  // namespace ModelView
+} // namespace ModelView
 
 #endif

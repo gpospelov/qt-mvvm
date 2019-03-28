@@ -75,7 +75,7 @@ TEST_F(TestSessionItemData, differentRoles)
     EXPECT_FALSE(data.data(role1) == QVariant::fromValue(std::string("str")));
 }
 
-//! Changing type of variant for role should be allowed.
+//! Changing type of variant for role should not be allowed.
 
 TEST_F(TestSessionItemData, changingRole)
 {
@@ -91,8 +91,7 @@ TEST_F(TestSessionItemData, changingRole)
     EXPECT_TRUE(data.data(role) == variant);
 
     QVariant s = QVariant::fromValue(std::string("str"));
-    EXPECT_TRUE(data.setData(s, role));
-    EXPECT_TRUE(data.data(role) == s);
+    EXPECT_THROW(data.setData(s, role), std::runtime_error);
 }
 
 TEST_F(TestSessionItemData, rangeLoop)

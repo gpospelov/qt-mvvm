@@ -9,6 +9,7 @@
 
 #include "sessionitemdata.h"
 #include "itemutils.h"
+#include <sstream>
 
 using namespace ModelView;
 
@@ -30,9 +31,12 @@ QVariant SessionItemData::data(int role) const
 }
 
 //! Sets the data for given role. Returns true if data was changed.
+//! If variant is invalid, corresponding role will be removed.
 
 bool SessionItemData::setData(const QVariant& value, int role)
 {
+    assure_validity(value, role);
+
     for (auto it = m_values.begin(); it != m_values.end(); ++it) {
         if (it->m_role == role) {
             if (value.isValid()) {
@@ -57,4 +61,21 @@ SessionItemData::const_iterator SessionItemData::begin() const
 SessionItemData::const_iterator SessionItemData::end() const
 {
     return m_values.end();
+}
+
+//! Check if variant is compatible
+
+void SessionItemData::assure_validity(const QVariant& variant, int role)
+{
+    // FIXME remove temporary check
+    if (variant.typeName() == QStringLiteral("QString"))
+        throw std::runtime_error("Attempt to set QString based variant");
+
+    if (!Utils::CompatibleVariantTypes(data(role), variant)) {
+        std::ostringstream ostr;
+        ostr << "SessionItemData::assure_validity() -> Error. Variant types mismatch. "
+             << "Old variant type '" << data(role).typeName() << "' "
+             << "new variant type '" << variant.typeName() << "\n";
+        throw std::runtime_error(ostr.str());
+    }
 }
