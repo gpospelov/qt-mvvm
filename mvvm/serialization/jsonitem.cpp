@@ -39,7 +39,8 @@ const QString JsonItem::tagInfoKey = "tagInfo";
 const QString JsonItem::itemsKey = "items";
 
 JsonItem::JsonItem(const SessionModel* model)
-    : m_itemdata_converter(std::make_unique<JsonItemData>()), m_taginfo_converter(std::make_unique<JsonTagInfo>()), m_model(model)
+    : m_itemdata_converter(std::make_unique<JsonItemData>()),
+      m_taginfo_converter(std::make_unique<JsonTagInfo>()), m_model(model)
 {
 }
 
@@ -155,7 +156,8 @@ QJsonObject JsonItem::container_to_json(const SessionItemContainer& container) c
 
 // --- from json --------------------------------------------------------------
 
-std::unique_ptr<SessionItem> JsonItem::json_to_item(const QJsonObject& json) const
+std::unique_ptr<SessionItem> JsonItem::json_to_item(const QJsonObject& json,
+                                                    SessionItem* parent) const
 {
     if (!isSessionItem(json))
         throw std::runtime_error(
@@ -163,14 +165,16 @@ std::unique_ptr<SessionItem> JsonItem::json_to_item(const QJsonObject& json) con
 
     auto modelType = json[modelKey].toString().toStdString();
     auto result = m_model->manager()->createItem(modelType);
+    result->setParent(parent);
 
     result->m_data = m_itemdata_converter->get_data(json[itemDataKey].toArray());
-    result->m_tags = json_to_tags(json[itemTagsKey].toObject());
+    result->m_tags = json_to_tags(json[itemTagsKey].toObject(), result.get());
 
     return result;
 }
 
-std::unique_ptr<SessionItemTags> JsonItem::json_to_tags(const QJsonObject& json) const
+std::unique_ptr<SessionItemTags> JsonItem::json_to_tags(const QJsonObject& json,
+                                                        SessionItem* parent) const
 {
     if (!isSessionItemTags(json))
         throw std::runtime_error("JsonItem::json_to_tags() -> Error. Given json object can't "
@@ -184,7 +188,7 @@ std::unique_ptr<SessionItemTags> JsonItem::json_to_tags(const QJsonObject& json)
         TagInfo tagInfo = m_taginfo_converter->from_json(json_container[tagInfoKey].toObject());
         result->registerTag(tagInfo);
         for (const auto obj : json_container[itemsKey].toArray()) {
-            auto item = json_to_item(obj.toObject());
+            auto item = json_to_item(obj.toObject(), parent);
             result->insertItem(item.release(), -1, tagInfo.name());
         }
     }

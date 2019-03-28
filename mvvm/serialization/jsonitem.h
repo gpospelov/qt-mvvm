@@ -16,13 +16,16 @@
 
 class QJsonObject;
 
-namespace ModelView {
+namespace ModelView
+{
 
 class SessionItem;
 class SessionItemTags;
 class SessionItemContainer;
 class SessionModel;
 class SessionItemTags;
+
+//! Default converter between SessionItem and json object.
 
 class CORE_EXPORT JsonItem : public JsonItemInterface
 {
@@ -38,7 +41,7 @@ public:
     JsonItem(const SessionModel* model);
     ~JsonItem() override;
 
-    QJsonObject to_json(const SessionItem* item)  const override;
+    QJsonObject to_json(const SessionItem* item) const override;
 
     std::unique_ptr<SessionItem> from_json(const QJsonObject& json) const override;
 
@@ -51,14 +54,16 @@ private:
     QJsonObject tags_to_json(const SessionItemTags& tags) const;
     QJsonObject container_to_json(const SessionItemContainer& container) const;
 
-    std::unique_ptr<SessionItem> json_to_item(const QJsonObject& json) const;
-    std::unique_ptr<SessionItemTags> json_to_tags(const QJsonObject& json) const;
+    std::unique_ptr<SessionItem> json_to_item(const QJsonObject& json,
+                                              SessionItem* parent = nullptr) const;
+    std::unique_ptr<SessionItemTags> json_to_tags(const QJsonObject& json,
+                                                  SessionItem* parent) const;
 
     std::unique_ptr<JsonItemDataInterface> m_itemdata_converter;
     std::unique_ptr<JsonTagInfoInterface> m_taginfo_converter;
     const SessionModel* m_model;
 };
 
-}  // namespace ModelView
+} // namespace ModelView
 
 #endif // JSONITEM_H
