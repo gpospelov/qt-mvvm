@@ -36,7 +36,7 @@ int appearance(const ModelView::SessionItem& item)
 using namespace ModelView;
 
 SessionItem::SessionItem(model_type modelType)
-    : m_parent(nullptr), m_model(nullptr), m_data(new SessionItemData), m_tags(new SessionItemTags),
+    : m_model(nullptr), m_data(new SessionItemData), m_tags(new SessionItemTags),
       m_modelType(std::move(modelType)), m_p(std::make_unique<SessionItemPrivate>())
 {
     setDataIntern(QVariant::fromValue(ItemPool::generate_key()), ItemDataRole::IDENTIFIER);
@@ -47,8 +47,8 @@ SessionItem::~SessionItem()
     if (m_mapper)
         m_mapper->callOnItemDestroy();
 
-    if (m_parent)
-        m_parent->childDeleted(this);
+    if (m_p->m_parent)
+        m_p->m_parent->childDeleted(this);
 
     if (m_model)
         m_model->make_registered(this, false);
@@ -94,7 +94,7 @@ SessionModel* SessionItem::model() const
 
 SessionItem* SessionItem::parent() const
 {
-    return m_parent;
+    return m_p->m_parent;
 }
 
 int SessionItem::childrenCount() const
@@ -253,7 +253,7 @@ void SessionItem::setEnabled(bool value)
 
 void SessionItem::setParent(SessionItem* parent)
 {
-    m_parent = parent;
+    m_p->setParent(parent);
 }
 
 void SessionItem::setModel(SessionModel* model)

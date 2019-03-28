@@ -98,7 +98,6 @@ private:
     void childDeleted(SessionItem* child);
     void setAppearanceFlag(int flag, bool value);
 
-    SessionItem* m_parent;
     SessionModel* m_model;
     std::unique_ptr<ItemMapper> m_mapper;
     std::unique_ptr<SessionItemData> m_data;
