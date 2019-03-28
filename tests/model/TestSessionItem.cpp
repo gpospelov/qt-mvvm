@@ -505,17 +505,17 @@ TEST_F(TestSessionItem, tagRowFromItem)
     parent->insertItem(child_t1_b, -1, tag1); // 1
     parent->insertItem(child_t2_b, 1, tag2); // 1 between child_t2_a and child_t2_c
 
-    EXPECT_EQ(parent->tagRowFromItem(child_t1_a).first, 0);
-    EXPECT_EQ(parent->tagRowFromItem(child_t1_b).first, 1);
-    EXPECT_EQ(parent->tagRowFromItem(child_t2_a).first, 0);
-    EXPECT_EQ(parent->tagRowFromItem(child_t2_b).first, 1);
-    EXPECT_EQ(parent->tagRowFromItem(child_t2_c).first, 2);
+    EXPECT_EQ(parent->tagRowFromItem(child_t1_a).second, 0);
+    EXPECT_EQ(parent->tagRowFromItem(child_t1_b).second, 1);
+    EXPECT_EQ(parent->tagRowFromItem(child_t2_a).second, 0);
+    EXPECT_EQ(parent->tagRowFromItem(child_t2_b).second, 1);
+    EXPECT_EQ(parent->tagRowFromItem(child_t2_c).second, 2);
 
-    EXPECT_EQ(parent->tagRowFromItem(child_t1_a).second, "tag1");
-    EXPECT_EQ(parent->tagRowFromItem(child_t1_b).second, "tag1");
-    EXPECT_EQ(parent->tagRowFromItem(child_t2_a).second, "tag2");
-    EXPECT_EQ(parent->tagRowFromItem(child_t2_b).second, "tag2");
-    EXPECT_EQ(parent->tagRowFromItem(child_t2_c).second, "tag2");
+    EXPECT_EQ(parent->tagRowFromItem(child_t1_a).first, "tag1");
+    EXPECT_EQ(parent->tagRowFromItem(child_t1_b).first, "tag1");
+    EXPECT_EQ(parent->tagRowFromItem(child_t2_a).first, "tag2");
+    EXPECT_EQ(parent->tagRowFromItem(child_t2_b).first, "tag2");
+    EXPECT_EQ(parent->tagRowFromItem(child_t2_c).first, "tag2");
 }
 
 //! Checks item appearance (enabled/disabled and editable/readonly).

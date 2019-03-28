@@ -72,7 +72,7 @@ public:
     SessionItem* getItem(const std::string& tag = {}, int row = 0) const;
     std::vector<SessionItem*> getItems(const std::string& tag = {}) const;
     std::string tagFromItem(const SessionItem* item) const;
-    std::pair<int, std::string> tagRowFromItem(const SessionItem* item) const;
+    std::pair<std::string, int> tagRowFromItem(const SessionItem* item) const;
 
     ItemMapper* mapper();
 

@@ -213,10 +213,9 @@ std::string SessionItem::tagFromItem(const SessionItem* item) const
 
 //! Returns item's row in its tag.
 
-std::pair<int, std::string> SessionItem::tagRowFromItem(const SessionItem* item) const
+std::pair<std::string, int> SessionItem::tagRowFromItem(const SessionItem* item) const
 {
-    auto temp = m_p->m_tags->tagIndexOfItem(item);
-    return std::make_pair(temp.second, temp.first);
+    return m_p->m_tags->tagIndexOfItem(item);
 }
 
 ItemMapper* SessionItem::mapper()
