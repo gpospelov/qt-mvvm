@@ -10,7 +10,7 @@
 #include "commands.h"
 #include "sessionmodel.h"
 #include "sessionitem.h"
-#include "jsonmodel.h"
+#include "jsonitem.h"
 #include "itemmanager.h"
 #include <QJsonObject>
 
@@ -111,10 +111,12 @@ void RemoveItemCommand::undo()
 {
     m_model->setCommandRecordPause(true);
 
-    const auto& converter = m_model->manager()->converter();
+    const auto& converter = m_model->manager()->item_converter();
 
     auto parent = m_model->itemFromPath(m_parent_path);
-    converter.json_to_item(*m_child_backup, parent, m_row, m_tag);
+
+    auto reco_item = converter.from_json(*m_child_backup);
+    parent->insertItem(reco_item.release(), m_row, m_tag);
 
     m_model->setCommandRecordPause(false);
 }
@@ -123,12 +125,13 @@ void RemoveItemCommand::redo()
 {
     m_model->setCommandRecordPause(true);
 
-    const auto& converter = m_model->manager()->converter();
-    m_child_backup = std::make_unique<QJsonObject>();
+    const auto& converter = m_model->manager()->item_converter();
 
     auto parent = m_model->itemFromPath(m_parent_path);
     auto child = parent->takeItem(m_row, m_tag);
-    converter.item_to_json(child, *m_child_backup);
+
+    m_child_backup = std::make_unique<QJsonObject>(converter.to_json(child));
+
     delete child;
 
     m_model->setCommandRecordPause(false);
