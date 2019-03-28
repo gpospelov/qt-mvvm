@@ -36,27 +36,27 @@ int appearance(const ModelView::SessionItem& item)
 using namespace ModelView;
 
 SessionItem::SessionItem(model_type modelType)
-    : m_p(std::make_unique<SessionItemPrivate>())
+    : pimpl(std::make_unique<SessionItemPrivate>())
 {
-    m_p->m_modelType = modelType;
+    pimpl->m_modelType = modelType;
     setDataIntern(QVariant::fromValue(ItemPool::generate_key()), ItemDataRole::IDENTIFIER);
 }
 
 SessionItem::~SessionItem()
 {
-    if (m_p->m_mapper)
-        m_p->m_mapper->callOnItemDestroy();
+    if (pimpl->m_mapper)
+        pimpl->m_mapper->callOnItemDestroy();
 
-    if (m_p->m_parent)
-        m_p->m_parent->m_p->childDeleted(this);
+    if (pimpl->m_parent)
+        pimpl->m_parent->pimpl->childDeleted(this);
 
-    if (m_p->m_model)
-        m_p->m_model->make_registered(this, false);
+    if (pimpl->m_model)
+        pimpl->m_model->make_registered(this, false);
 }
 
 model_type SessionItem::modelType() const
 {
-    return m_p->m_modelType;
+    return pimpl->m_modelType;
 }
 
 std::string SessionItem::displayName() const
@@ -76,25 +76,25 @@ std::string SessionItem::identifier() const
 
 bool SessionItem::setData(const QVariant& variant, int role)
 {
-    if (m_p->m_model)
-        return m_p->m_model->setData(this, variant, role); // to use undo/redo
+    if (pimpl->m_model)
+        return pimpl->m_model->setData(this, variant, role); // to use undo/redo
     else
         return setDataIntern(variant, role);
 }
 
 QVariant SessionItem::data(int role) const
 {
-    return m_p->m_data->data(role);
+    return pimpl->m_data->data(role);
 }
 
 SessionModel* SessionItem::model() const
 {
-    return m_p->m_model;
+    return pimpl->m_model;
 }
 
 SessionItem* SessionItem::parent() const
 {
-    return m_p->m_parent;
+    return pimpl->m_parent;
 }
 
 int SessionItem::childrenCount() const
@@ -120,13 +120,13 @@ bool SessionItem::insertItem(SessionItem* item, int row, const std::string& tag)
     if (item->parent())
         throw std::runtime_error("SessionItem::insertItem() -> Existing parent.");
 
-    auto result = m_p->m_tags->insertItem(item, row, tag);
+    auto result = pimpl->m_tags->insertItem(item, row, tag);
     if (result) {
         item->setParent(this);
         item->setModel(model());
 
-        if (m_p->m_model)
-            m_p->m_model->mapper()->callOnRowInserted(this, indexOfChild(item));
+        if (pimpl->m_model)
+            pimpl->m_model->mapper()->callOnRowInserted(this, indexOfChild(item));
     }
 
     return result;
@@ -137,17 +137,17 @@ bool SessionItem::insertItem(SessionItem* item, int row, const std::string& tag)
 SessionItem* SessionItem::takeItem(int row, const std::string& tag)
 {
     // FIXME remove hack
-    auto tmp = m_p->m_tags->getItem(tag, row);
+    auto tmp = pimpl->m_tags->getItem(tag, row);
     int tmp_index = indexOfChild(tmp);
 
-    auto result = m_p->m_tags->takeItem(row, tag);
+    auto result = pimpl->m_tags->takeItem(row, tag);
     if (result) {
         result->setParent(nullptr);
         result->setModel(nullptr);
-        if (m_p->m_model) {
+        if (pimpl->m_model) {
             // FIXME remove one of methods
-            m_p->m_model->mapper()->callOnRowRemoved(this, tmp_index);
-            m_p->m_model->mapper()->callOnRowRemoved2(this, tmp_index, result->identifier());
+            pimpl->m_model->mapper()->callOnRowRemoved(this, tmp_index);
+            pimpl->m_model->mapper()->callOnRowRemoved2(this, tmp_index, result->identifier());
         }
     }
 
@@ -156,7 +156,7 @@ SessionItem* SessionItem::takeItem(int row, const std::string& tag)
 
 std::vector<SessionItem*> SessionItem::children() const
 {
-    return m_p->m_tags->allitems();
+    return pimpl->m_tags->allitems();
 }
 
 //! Returns index in children array corresponding to given child. No tags involved.
@@ -170,59 +170,59 @@ int SessionItem::indexOfChild(SessionItem* child) const
 
 std::vector<int> SessionItem::roles() const
 {
-    return m_p->m_data->roles();
+    return pimpl->m_data->roles();
 }
 
 std::string SessionItem::defaultTag() const
 {
-    return m_p->m_tags->defaultTag();
+    return pimpl->m_tags->defaultTag();
 }
 
 void SessionItem::setDefaultTag(const std::string& tag)
 {
     setDataIntern(QVariant::fromValue(tag), ItemDataRole::DEFAULT_TAG);
-    m_p->m_tags->setDefaultTag(tag);
+    pimpl->m_tags->setDefaultTag(tag);
 }
 
 void SessionItem::registerTag(const TagInfo& tagInfo, bool set_as_default)
 {
-    m_p->m_tags->registerTag(tagInfo, set_as_default);
+    pimpl->m_tags->registerTag(tagInfo, set_as_default);
 }
 
 bool SessionItem::isTag(const std::string& name)
 {
-    return m_p->m_tags->isTag(name);
+    return pimpl->m_tags->isTag(name);
 }
 
 //! Returns item in given row of given tag.
 
 SessionItem* SessionItem::getItem(const std::string& tag, int row) const
 {
-    return m_p->m_tags->getItem(tag, row);
+    return pimpl->m_tags->getItem(tag, row);
 }
 
 std::vector<SessionItem*> SessionItem::getItems(const std::string& tag) const
 {
-    return m_p->m_tags->getItems(tag);
+    return pimpl->m_tags->getItems(tag);
 }
 
 std::string SessionItem::tagFromItem(const SessionItem* item) const
 {
-    return m_p->m_tags->tagIndexOfItem(item).first;
+    return pimpl->m_tags->tagIndexOfItem(item).first;
 }
 
 //! Returns item's row in its tag.
 
 std::pair<std::string, int> SessionItem::tagIndexOfItem(const SessionItem* item) const
 {
-    return m_p->m_tags->tagIndexOfItem(item);
+    return pimpl->m_tags->tagIndexOfItem(item);
 }
 
 ItemMapper* SessionItem::mapper()
 {
-    if (!m_p->m_mapper)
-        m_p->m_mapper = std::make_unique<ItemMapper>(this);
-    return m_p->m_mapper.get();
+    if (!pimpl->m_mapper)
+        pimpl->m_mapper = std::make_unique<ItemMapper>(this);
+    return pimpl->m_mapper.get();
 }
 
 //! Activates all buisiness logic of given item. Should be called after item constructions.
@@ -252,24 +252,24 @@ void SessionItem::setEnabled(bool value)
 
 void SessionItem::setParent(SessionItem* parent)
 {
-    m_p->m_parent = parent;
+    pimpl->m_parent = parent;
 }
 
 void SessionItem::setModel(SessionModel* model)
 {
-    if (m_p->m_model) {
+    if (pimpl->m_model) {
         // FIXME throw here if it is the case
-        m_p->m_model->make_registered(this, false);
+        pimpl->m_model->make_registered(this, false);
     }
 
-    m_p->m_model = model;
+    pimpl->m_model = model;
 
-    if (m_p->m_model) {
-        m_p->m_model->make_registered(this, true);
+    if (pimpl->m_model) {
+        pimpl->m_model->make_registered(this, true);
     }
 
     // FIXME find better place for activate logic. ItemMapper ? make_registered ?
-    if (m_p->m_model)
+    if (pimpl->m_model)
         activate(); // activate buisiness logic
 
     auto container = children();
@@ -290,8 +290,8 @@ void SessionItem::setAppearanceFlag(int flag, bool value)
 
 bool SessionItem::setDataIntern(const QVariant& variant, int role)
 {
-    bool result = m_p->m_data->setData(variant, role);
-    if (result && m_p->m_model)
-        m_p->m_model->mapper()->callOnDataChange(this, role);
+    bool result = pimpl->m_data->setData(variant, role);
+    if (result && pimpl->m_model)
+        pimpl->m_model->mapper()->callOnDataChange(this, role);
     return result;
 }
