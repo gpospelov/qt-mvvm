@@ -213,7 +213,7 @@ std::string SessionItem::tagFromItem(const SessionItem* item) const
 
 //! Returns item's row in its tag.
 
-std::pair<std::string, int> SessionItem::tagRowFromItem(const SessionItem* item) const
+std::pair<std::string, int> SessionItem::tagIndexOfItem(const SessionItem* item) const
 {
     return m_p->m_tags->tagIndexOfItem(item);
 }
