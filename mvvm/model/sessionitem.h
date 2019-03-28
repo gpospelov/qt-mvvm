@@ -29,10 +29,6 @@ class SessionItemPrivate;
 
 class CORE_EXPORT SessionItem
 {
-    friend class SessionModel;
-    friend class JsonModel;
-    friend class JsonItem;
-
 public:
     SessionItem(model_type modelType = Constants::BaseType);
     virtual ~SessionItem();
@@ -93,6 +89,8 @@ public:
     void setEnabled(bool value);
 
 private:
+    friend class SessionModel;
+    friend class JsonItem;
     void setParent(SessionItem* parent);
     void setModel(SessionModel* model);
     void childDeleted(SessionItem* child);
