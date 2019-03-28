@@ -75,18 +75,6 @@ public:
     virtual std::unique_ptr<SessionItemData> get_data(const QJsonArray&) = 0;
 };
 
-//! Base class for all converters of SessionItemContainer to/from json object
-
-class CORE_EXPORT JsonItemContainerInterface
-{
-public:
-    virtual ~JsonItemContainerInterface() = default;
-
-    virtual QJsonObject to_json(const SessionItemContainer&) = 0;
-
-    virtual std::unique_ptr<SessionItemContainer> from_json(const QJsonObject&) = 0;
-};
-
 //! Base class for all converters of SessionItem to/from json object.
 
 class CORE_EXPORT JsonItemInterface
