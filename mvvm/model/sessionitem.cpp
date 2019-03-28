@@ -36,7 +36,7 @@ int appearance(const ModelView::SessionItem& item)
 using namespace ModelView;
 
 SessionItem::SessionItem(model_type modelType)
-    : m_model(nullptr), m_data(new SessionItemData), m_tags(new SessionItemTags),
+    : m_data(new SessionItemData), m_tags(new SessionItemTags),
       m_modelType(std::move(modelType)), m_p(std::make_unique<SessionItemPrivate>())
 {
     setDataIntern(QVariant::fromValue(ItemPool::generate_key()), ItemDataRole::IDENTIFIER);
@@ -50,8 +50,8 @@ SessionItem::~SessionItem()
     if (m_p->m_parent)
         m_p->m_parent->childDeleted(this);
 
-    if (m_model)
-        m_model->make_registered(this, false);
+    if (m_p->m_model)
+        m_p->m_model->make_registered(this, false);
 }
 
 model_type SessionItem::modelType() const
@@ -76,8 +76,8 @@ std::string SessionItem::identifier() const
 
 bool SessionItem::setData(const QVariant& variant, int role)
 {
-    if (m_model)
-        return m_model->setData(this, variant, role); // to use undo/redo
+    if (m_p->m_model)
+        return m_p->m_model->setData(this, variant, role); // to use undo/redo
     else
         return setDataIntern(variant, role);
 }
@@ -89,7 +89,7 @@ QVariant SessionItem::data(int role) const
 
 SessionModel* SessionItem::model() const
 {
-    return m_model;
+    return m_p->m_model;
 }
 
 SessionItem* SessionItem::parent() const
@@ -125,8 +125,8 @@ bool SessionItem::insertItem(SessionItem* item, int row, const std::string& tag)
         item->setParent(this);
         item->setModel(model());
 
-        if (m_model)
-            m_model->mapper()->callOnRowInserted(this, indexOfChild(item));
+        if (m_p->m_model)
+            m_p->m_model->mapper()->callOnRowInserted(this, indexOfChild(item));
     }
 
     return result;
@@ -144,10 +144,10 @@ SessionItem* SessionItem::takeItem(int row, const std::string& tag)
     if (result) {
         result->setParent(nullptr);
         result->setModel(nullptr);
-        if (m_model) {
+        if (m_p->m_model) {
             // FIXME remove one of methods
-            m_model->mapper()->callOnRowRemoved(this, tmp_index);
-            m_model->mapper()->callOnRowRemoved2(this, tmp_index, result->identifier());
+            m_p->m_model->mapper()->callOnRowRemoved(this, tmp_index);
+            m_p->m_model->mapper()->callOnRowRemoved2(this, tmp_index, result->identifier());
         }
     }
 
@@ -258,19 +258,19 @@ void SessionItem::setParent(SessionItem* parent)
 
 void SessionItem::setModel(SessionModel* model)
 {
-    if (m_model) {
+    if (m_p->m_model) {
         // FIXME throw here if it is the case
-        m_model->make_registered(this, false);
+        m_p->m_model->make_registered(this, false);
     }
 
-    m_model = model;
+    m_p->m_model = model;
 
-    if (m_model) {
-        m_model->make_registered(this, true);
+    if (m_p->m_model) {
+        m_p->m_model->make_registered(this, true);
     }
 
     // FIXME find better place for activate logic. ItemMapper ? make_registered ?
-    if (m_model)
+    if (m_p->m_model)
         activate(); // activate buisiness logic
 
     auto container = children();
@@ -297,7 +297,7 @@ void SessionItem::setAppearanceFlag(int flag, bool value)
 bool SessionItem::setDataIntern(const QVariant& variant, int role)
 {
     bool result = m_data->setData(variant, role);
-    if (result && m_model)
-        m_model->mapper()->callOnDataChange(this, role);
+    if (result && m_p->m_model)
+        m_p->m_model->mapper()->callOnDataChange(this, role);
     return result;
 }
