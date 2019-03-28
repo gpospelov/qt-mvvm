@@ -8,6 +8,7 @@
 #include <QDebug>
 #include <QJsonArray>
 #include <QJsonObject>
+#include <QJsonDocument>
 
 using namespace ModelView;
 
@@ -28,167 +29,213 @@ const QString TestJsonModel::test_dir = "test_JsonModel";
 
 //! Validity of json object representing SessionModel.
 
-//TEST_F(TestJsonModel, isValidModel)
-//{
-//    JsonModel converter;
+TEST_F(TestJsonModel, isValidModel)
+{
+    JsonModel converter;
 
-//    // empty json object is not valid
-//    QJsonObject object;
-//    EXPECT_FALSE(converter.is_model(object));
+    // empty json object is not valid
+    QJsonObject object;
+    EXPECT_FALSE(converter.isSessionModel(object));
 
-//    // json object representing SessionItem can not represent the model
-//    object[JsonModel::modelKey] = "abc";
-//    object[JsonModel::itemsKey] = QJsonArray();
-//    object[ObsoleteJsonItem::itemDataKey] = QJsonArray();
-//    EXPECT_FALSE(converter.is_model(object));
+    // json object representing valid SessionModel
+    QJsonObject object2;
+    object2[JsonModel::modelKey] = "abc";
+    object2[JsonModel::itemsKey] = QJsonArray();
+    EXPECT_TRUE(converter.isSessionModel(object2));
+}
 
-//    // json object representing valid SessionModel
-//    QJsonObject object2;
-//    object2[JsonModel::modelKey] = "abc";
-//    object2[JsonModel::itemsKey] = QJsonArray();
-//    EXPECT_TRUE(converter.is_model(object2));
-//}
+//! Creation of json object: empty model.
 
-////! Creation of json object: empty model.
+TEST_F(TestJsonModel, emptyModel)
+{
+    JsonModel converter;
+    SessionModel model("TestModel");
 
-//TEST_F(TestJsonModel, emptyModel)
-//{
-//    JsonModel converter;
-//    SessionModel model("TestModel");
+    QJsonObject object;
+    converter.model_to_json(model, object);
 
-//    QJsonObject object;
-//    converter.model_to_json(model, object);
+    EXPECT_EQ(object[JsonModel::modelKey], "TestModel");
+    EXPECT_EQ(object[JsonModel::itemsKey].toArray().size(), 0);
 
-//    EXPECT_EQ(object[JsonModel::modelKey], "TestModel");
-//    EXPECT_EQ(object[JsonModel::itemsKey].toArray().size(), 0);
-//}
+    EXPECT_TRUE(converter.isSessionModel(object));
+}
 
-////! Creation of json object: single item in a model.
+//! Empty model to json and back.
 
-//TEST_F(TestJsonModel, singleItemInModel)
-//{
-//    JsonModel converter;
-//    SessionModel model("TestModel");
+TEST_F(TestJsonModel, emptyModelToJsonAndBack)
+{
+    JsonModel converter;
+    SessionModel model("TestModel");
 
-//    model.insertNewItem(Constants::BaseType, nullptr, -1);
+    QJsonObject object;
+    converter.model_to_json(model, object);
 
-//    QJsonObject object;
-//    converter.model_to_json(model, object);
+    // attempt to reconstruct model of different type.
+    SessionModel target1("NewModel");
+    EXPECT_THROW(converter.json_to_model(object, target1), std::runtime_error);
 
-//    EXPECT_EQ(object[JsonModel::modelKey], QString::fromStdString(model.modelType()));
-//    EXPECT_EQ(object[JsonModel::itemsKey].toArray().size(), 1);
-//}
+    // attempt to reconstruct non-empty model
+    SessionModel target2("TestModel");
+    target2.insertNewItem(Constants::BaseType);
+    EXPECT_THROW(converter.json_to_model(object, target2), std::runtime_error);
 
-////! Creation of json object: parent and child in a model.
+    // succesfull reconstruction
+    SessionModel target3("TestModel");
+    EXPECT_NO_THROW(converter.json_to_model(object, target3));
+    EXPECT_EQ(target3.rootItem()->childrenCount(), 0u);
+}
 
-//TEST_F(TestJsonModel, parentAndChildInModel)
-//{
-//    JsonModel converter;
-//    SessionModel model("TestModel");
+//! Creation of json object: single item in a model.
 
-//    auto parent = model.insertNewItem(Constants::BaseType);
-//    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
+TEST_F(TestJsonModel, singleItemToJsonAndBack)
+{
+    JsonModel converter;
+    SessionModel model("TestModel");
 
-//    parent->setData(QVariant::fromValue(42), 1);
-//    model.insertNewItem(Constants::PropertyType, parent);
+    auto item = model.insertNewItem(Constants::BaseType, nullptr, -1);
 
-//    QJsonObject object;
-//    converter.model_to_json(model, object);
+    QJsonObject object;
+    converter.model_to_json(model, object);
 
-//    EXPECT_EQ(object[JsonModel::modelKey], QString::fromStdString(model.modelType()));
-//    EXPECT_EQ(object[JsonModel::itemsKey].toArray().size(), 1);
+    // filling new model
+    SessionModel target("TestModel");
+    converter.json_to_model(object, target);
+    EXPECT_EQ(target.rootItem()->childrenCount(), 1u);
+    auto reco_item = target.rootItem()->childAt(0);
+    EXPECT_EQ(reco_item->parent(), target.rootItem());
+    EXPECT_EQ(reco_item->modelType(), item->modelType());
+}
 
-//    // saving to file
-//    auto fileName = TestUtils::TestFileName(test_dir, "model.json");
-//    TestUtils::SaveJson(object, fileName);
-//}
+//! Filling model from json: parent and child in a model to json and back.
 
-////! Filling model from json: empty model to json and then back.
+TEST_F(TestJsonModel, parentAndChildToJsonAndBack)
+{
+    JsonModel converter;
+    SessionModel model("TestModel");
 
-//TEST_F(TestJsonModel, emptyModelFromJson)
-//{
-//    JsonModel converter;
-//    SessionModel model("TestModel");
+    // filling original model with content
+    auto parent = model.insertNewItem(Constants::BaseType);
+    parent->setDisplayName("parent_name");
+    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
 
-//    QJsonObject object;
-//    converter.model_to_json(model, object);
+    parent->setData(QVariant::fromValue(42), ItemDataRole::DATA);
+    auto child = model.insertNewItem(Constants::PropertyType, parent);
+    child->setDisplayName("child_name");
 
-//    // attempt to reconstruct model of different type.
-//    SessionModel target1("NewModel");
-//    EXPECT_THROW(converter.json_to_model(object, target1), std::runtime_error);
+    // writing model to json
+    QJsonObject object;
+    converter.model_to_json(model, object);
 
-//    // attempt to reconstruct non-empty model
-//    SessionModel target2("TestModel");
-//    target2.insertNewItem(Constants::BaseType);
-//    EXPECT_THROW(converter.json_to_model(object, target2), std::runtime_error);
+    // reading model from json
+    SessionModel target("TestModel");
+    converter.json_to_model(object, target);
 
-//    // succesfull reconstruction
-//    SessionModel target3("TestModel");
-//    EXPECT_NO_THROW(converter.json_to_model(object, target3));
-//    EXPECT_EQ(target3.rootItem()->childrenCount(), 0u);
-//}
+    // accessing reconstructed parent and child
+    auto reco_parent = target.rootItem()->childAt(0);
+    auto reco_child = reco_parent->childAt(0);
 
-////! Filling model from json: parent and child in a model to json and back.
+    // checking parent reconstruction
+    EXPECT_EQ(reco_parent->model(), &target);
+    EXPECT_EQ(reco_parent->modelType(), Constants::BaseType);
+    EXPECT_EQ(reco_parent->parent(), target.rootItem());
+    EXPECT_EQ(reco_parent->displayName(), "parent_name");
+    EXPECT_EQ(reco_parent->childrenCount(), 1);
+    EXPECT_EQ(reco_parent->identifier(), parent->identifier());
+    EXPECT_EQ(reco_parent->defaultTag(), "defaultTag");
+    EXPECT_EQ(reco_parent->data(ItemDataRole::DATA), 42);
 
-//TEST_F(TestJsonModel, parentAndChildModelFromJson)
-//{
-//    JsonModel converter;
-//    SessionModel model("TestModel");
+    // checking child reconstruction
+    EXPECT_EQ(reco_child->model(), &target);
+    EXPECT_EQ(reco_child->modelType(), Constants::PropertyType);
+    EXPECT_EQ(reco_child->parent(), reco_parent);
+    EXPECT_EQ(reco_child->displayName(), "child_name");
+    EXPECT_EQ(reco_child->childrenCount(), 0);
+    EXPECT_EQ(reco_child->identifier(), child->identifier());
+    EXPECT_EQ(reco_child->defaultTag(), "");
+}
 
-//    // filling original model with content
-//    auto parent = model.insertNewItem(Constants::BaseType);
-//    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
+//! Item in a model to json and back: how persistent are identifiers.
 
-//    parent->setData(QVariant::fromValue(42), 1);
-//    model.insertNewItem(Constants::PropertyType, parent);
+TEST_F(TestJsonModel, identifiers)
+{
+    // creating model and converting it to json
+    SessionModel source("SourceModel");
+    auto parent1 = source.insertNewItem(Constants::BaseType);
+    QJsonObject json_source;
+    source.manager()->converter().model_to_json(source, json_source);
 
-//    // writing model to json
-//    QJsonObject object;
-//    converter.model_to_json(model, object);
+    // creating source and filling it from json
+    SessionModel target("SourceModel");
+    target.manager()->converter().json_to_model(json_source, target);
+    auto reco_parent = target.rootItem()->childAt(0);
 
-//    // reading model from json
-//    SessionModel target("TestModel");
-//    converter.json_to_model(object, target);
+    // comparing identifiers of two items from different models
+    auto id1 = parent1->data(ItemDataRole::IDENTIFIER).value<std::string>();
+    auto id2 = reco_parent->data(ItemDataRole::IDENTIFIER).value<std::string>();
+    EXPECT_EQ(id1, id2);
 
-//    // checking target model
-//    EXPECT_EQ(target.rootItem()->childrenCount(), 1u);
-//    auto parent2 = target.rootItem()->childAt(0);
-//    EXPECT_EQ(parent2->childrenCount(), 1u);
-//    EXPECT_EQ(parent2->modelType(), Constants::BaseType);
-//    EXPECT_EQ(parent2->data(1), 42);
-//    auto child2 = parent2->childAt(0);
-//    EXPECT_EQ(child2->childrenCount(), 0u);
-//    EXPECT_EQ(child2->modelType(), Constants::PropertyType);
-//}
+    // saving target in its own json
+    QJsonObject json_target;
+    target.manager()->converter().model_to_json(target, json_target);
 
-////! Item in a model to json and back: how persistent are identifiers.
+    // comparing text representations of two json
+    EXPECT_EQ(TestUtils::JsonToString(json_source), TestUtils::JsonToString(json_target));
 
-//TEST_F(TestJsonModel, identifiers)
-//{
-//    // creating model and converting it to json
-//    SessionModel source("SourceModel");
-//    auto parent1 = source.insertNewItem(Constants::BaseType);
-//    QJsonObject json_source;
-//    source.manager()->converter().model_to_json(source, json_source);
+    // checking item registrations
+    EXPECT_EQ(source.manager()->findItem(id1), parent1);
+    EXPECT_EQ(target.manager()->findItem(id2), reco_parent);
+}
 
-//    // creating source and filling it from json
-//    SessionModel target("SourceModel");
-//    target.manager()->converter().json_to_model(json_source, target);
-//    auto parent2 = target.rootItem()->childAt(0);
+//! Filling model from json: parent and child in a model to json and back.
 
-//    // comparing identifiers of two items from different models
-//    auto id1 = parent1->data(ItemDataRole::IDENTIFIER).value<std::string>();
-//    auto id2 = parent2->data(ItemDataRole::IDENTIFIER).value<std::string>();
-//    EXPECT_EQ(id1, id2);
+TEST_F(TestJsonModel, parentAndChildToFileAndBack)
+{
+    JsonModel converter;
+    SessionModel model("TestModel");
 
-//    // saving target in its own json
-//    QJsonObject json_target;
-//    target.manager()->converter().model_to_json(target, json_target);
+    // filling original model with content
+    auto parent = model.insertNewItem(Constants::BaseType);
+    parent->setDisplayName("parent_name");
+    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
 
-//    // comparing text representations of two json
-//    EXPECT_EQ(TestUtils::JsonToString(json_source), TestUtils::JsonToString(json_target));
+    parent->setData(QVariant::fromValue(42), ItemDataRole::DATA);
+    auto child = model.insertNewItem(Constants::PropertyType, parent);
+    child->setDisplayName("child_name");
 
-//    // checking item registrations
-//    EXPECT_EQ(source.manager()->findItem(id1), parent1);
-//    EXPECT_EQ(target.manager()->findItem(id2), parent2);
-//}
+    // writing model to json
+    auto object = std::make_unique<QJsonObject>();
+    converter.model_to_json(model, *object);
+
+    // saving object to file
+    auto fileName = TestUtils::TestFileName(test_dir, "model.json");
+    TestUtils::SaveJson(*object, fileName);
+    object.reset();
+
+    // converting document back to item
+    auto document = TestUtils::LoadJson(fileName);
+    SessionModel target("TestModel");
+    converter.json_to_model(document.object(), target);
+
+    // accessing reconstructed parent and child
+    auto reco_parent = target.rootItem()->childAt(0);
+    auto reco_child = reco_parent->childAt(0);
+
+    // checking parent reconstruction
+    EXPECT_EQ(reco_parent->model(), &target);
+    EXPECT_EQ(reco_parent->modelType(), Constants::BaseType);
+    EXPECT_EQ(reco_parent->parent(), target.rootItem());
+    EXPECT_EQ(reco_parent->displayName(), "parent_name");
+    EXPECT_EQ(reco_parent->childrenCount(), 1);
+    EXPECT_EQ(reco_parent->identifier(), parent->identifier());
+    EXPECT_EQ(reco_parent->defaultTag(), "defaultTag");
+    EXPECT_EQ(reco_parent->data(ItemDataRole::DATA), 42);
+
+    // checking child reconstruction
+    EXPECT_EQ(reco_child->model(), &target);
+    EXPECT_EQ(reco_child->modelType(), Constants::PropertyType);
+    EXPECT_EQ(reco_child->parent(), reco_parent);
+    EXPECT_EQ(reco_child->displayName(), "child_name");
+    EXPECT_EQ(reco_child->childrenCount(), 0);
+    EXPECT_EQ(reco_child->identifier(), child->identifier());
+    EXPECT_EQ(reco_child->defaultTag(), "");
+}

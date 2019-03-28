@@ -55,8 +55,10 @@ void JsonModel::model_to_json(const SessionModel& model, QJsonObject& json) cons
 
     QJsonArray itemArray;
 
+    auto converter = std::make_unique<JsonItem>(&model);
+
     for(auto item : model.rootItem()->children())
-        itemArray.append(m_item_converter->to_json(item));
+        itemArray.append(converter->to_json(item));
 
     json[itemsKey] = itemArray;
 }
@@ -69,15 +71,19 @@ void JsonModel::json_to_model(const QJsonObject& json, SessionModel& model) cons
     if (model.rootItem()->childrenCount())
         throw std::runtime_error("JsonModel::json_to_model() -> Error. Model is not empty.");
 
-    if (!is_model(json))
+    if (!isSessionModel(json))
         throw std::runtime_error("JsonModel::json_to_model() -> Error. Invalid json object.");
 
     if (json[modelKey].toString() != QString::fromStdString(model.modelType()))
             throw std::runtime_error("JsonModel::json_to_model() -> Unexpected model type.");
 
-//    auto parent = model.rootItem();
-//    for(const auto ref : json[itemsKey].toArray())
-//        m_item_converter->json_to_item(ref.toObject(), parent);
+    auto converter = std::make_unique<JsonItem>(&model);
+
+    auto parent = model.rootItem();
+    for(const auto ref : json[itemsKey].toArray()) {
+        auto item =converter->from_json(ref.toObject());
+        parent->insertItem(item.release(), -1);
+    }
 
 }
 
@@ -91,7 +97,7 @@ void JsonModel::item_to_json(const SessionItem* item, QJsonObject& json) const
 //    return m_item_converter->item_to_json(item, json);
 }
 
-bool JsonModel::is_model(const QJsonObject& object) const
+bool JsonModel::isSessionModel(const QJsonObject& object) const
 {
     static const QStringList expected = expected_model_keys();
 

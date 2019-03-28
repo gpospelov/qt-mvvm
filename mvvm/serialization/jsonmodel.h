@@ -45,10 +45,8 @@ public:
     void item_to_json(const SessionItem* item, QJsonObject& json) const override;
 
     //! Returns true if given json object represents SessionModel.
-    bool is_model(const QJsonObject& object) const;
+    bool isSessionModel(const QJsonObject& object) const;
 
-private:
-    std::unique_ptr<JsonItemInterface> m_item_converter;
 };
 
 }  // namespace ModelView
