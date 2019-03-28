@@ -30,7 +30,6 @@ public:
     SessionItemPrivate();
     ~SessionItemPrivate();
 
-    void setParent(SessionItem* parent);
     void childDeleted(SessionItem* child);
 
     SessionItem* m_parent;

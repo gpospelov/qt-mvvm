@@ -253,7 +253,7 @@ void SessionItem::setEnabled(bool value)
 
 void SessionItem::setParent(SessionItem* parent)
 {
-    m_p->setParent(parent);
+    m_p->m_parent = parent;
 }
 
 void SessionItem::setModel(SessionModel* model)

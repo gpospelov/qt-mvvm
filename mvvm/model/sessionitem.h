@@ -20,12 +20,9 @@ namespace ModelView
 {
 
 class SessionModel;
-class ItemPool;
-class SessionItemData;
+class SessionItemPrivate;
 class TagInfo;
 class ItemMapper;
-class SessionItemTags;
-class SessionItemPrivate;
 
 class CORE_EXPORT SessionItem
 {
@@ -53,7 +50,6 @@ public:
 
     SessionItem* childAt(int index) const;
 
-    // FIXME revise return type usage
     bool insertItem(SessionItem* item, int row, const std::string& tag = {});
 
     SessionItem* takeItem(int row, const std::string& tag = {});
