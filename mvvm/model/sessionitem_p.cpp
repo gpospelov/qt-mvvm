@@ -8,16 +8,16 @@
 // ************************************************************************** //
 
 #include "sessionitem_p.h"
-#include "sessionitemtags.h"
-#include "sessionitemdata.h"
 #include "itemmapper.h"
+#include "sessionitemdata.h"
+#include "sessionitemtags.h"
 
 using namespace ModelView;
 
 SessionItemPrivate::SessionItemPrivate()
-    : m_parent(nullptr), m_model(nullptr), m_data(std::make_unique<SessionItemData>()), m_tags(std::make_unique<SessionItemTags>())
+    : m_parent(nullptr), m_model(nullptr), m_data(std::make_unique<SessionItemData>()),
+      m_tags(std::make_unique<SessionItemTags>())
 {
-
 }
 
 SessionItemPrivate::~SessionItemPrivate() = default;

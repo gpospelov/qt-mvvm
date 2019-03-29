@@ -8,23 +8,21 @@
 // ************************************************************************** //
 
 #include "sessionmodel.h"
-#include "sessionitem.h"
 #include "commands.h"
-#include "itemmanager.h"
 #include "commandservice.h"
-#include "itempool.h"
-#include "taginfo.h"
 #include "customvariants.h"
+#include "itemmanager.h"
+#include "itempool.h"
 #include "itemutils.h"
 #include "modelmapper.h"
+#include "sessionitem.h"
+#include "taginfo.h"
 
 using namespace ModelView;
 
 SessionModel::SessionModel(std::string model_type)
-    : m_item_manager(new ItemManager)
-    , m_commands(new CommandService(this))
-    , m_model_type(std::move(model_type))
-    , m_mapper(new ModelMapper(this))
+    : m_item_manager(new ItemManager), m_commands(std::make_unique<CommandService>(this)),
+      m_model_type(std::move(model_type)), m_mapper(std::make_unique<ModelMapper>(this))
 {
     m_item_manager->setItemPool(std::make_shared<ItemPool>());
     createRootItem();
@@ -37,7 +35,8 @@ std::string SessionModel::modelType() const
     return m_model_type;
 }
 
-SessionItem* SessionModel::insertNewItem(const model_type& modelType, SessionItem* parent, const std::string& tag, int index)
+SessionItem* SessionModel::insertNewItem(const model_type& modelType, SessionItem* parent,
+                                         const std::string& tag, int index)
 {
     return m_commands->insertNewItem(modelType, parent, tag, index);
 }
@@ -77,7 +76,7 @@ Path SessionModel::pathFromItem(SessionItem* item)
 SessionItem* SessionModel::itemFromPath(Path path)
 {
     SessionItem* result(rootItem());
-    for(const auto& x : path) {
+    for (const auto& x : path) {
         result = Utils::ChildAt(result, x);
         if (!result)
             break;
@@ -138,5 +137,5 @@ void SessionModel::createRootItem()
 {
     m_root_item = m_item_manager->createRootItem();
     m_root_item->setModel(this);
-    m_root_item->registerTag(TagInfo::universalTag("rootTag"), /*set_as_default*/true);
+    m_root_item->registerTag(TagInfo::universalTag("rootTag"), /*set_as_default*/ true);
 }

@@ -19,7 +19,8 @@
 
 class QUndoStack;
 
-namespace ModelView {
+namespace ModelView
+{
 
 class SessionItem;
 class ItemManager;
@@ -35,7 +36,7 @@ public:
     std::string modelType() const;
 
     SessionItem* insertNewItem(const model_type& modelType, SessionItem* parent = nullptr,
-                               const std::string& tag={}, int index = -1);
+                               const std::string& tag = {}, int index = -1);
 
     SessionItem* rootItem() const;
 
@@ -73,6 +74,6 @@ private:
     std::unique_ptr<SessionItem> m_root_item;
 };
 
-}  // namespace ModelView
+} // namespace ModelView
 
 #endif
