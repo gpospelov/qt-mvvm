@@ -21,7 +21,6 @@ using namespace ModelView;
 
 SessionModel::SessionModel(std::string model_type)
     : m_item_manager(new ItemManager)
-    , m_root_item(nullptr)
     , m_commands(new CommandService(this))
     , m_model_type(std::move(model_type))
     , m_mapper(new ModelMapper(this))
@@ -30,10 +29,7 @@ SessionModel::SessionModel(std::string model_type)
     createRootItem();
 }
 
-SessionModel::~SessionModel()
-{
-    delete m_root_item;
-}
+SessionModel::~SessionModel() = default;
 
 std::string SessionModel::modelType() const
 {
@@ -47,7 +43,7 @@ SessionItem* SessionModel::insertNewItem(const model_type& modelType, SessionIte
 
 SessionItem* SessionModel::rootItem() const
 {
-    return m_root_item;
+    return m_root_item.get();
 }
 
 QVariant SessionModel::data(SessionItem* item, int role) const
@@ -140,7 +136,7 @@ ModelMapper* SessionModel::mapper()
 
 void SessionModel::createRootItem()
 {
-    m_root_item = m_item_manager->createRootItem().release();
+    m_root_item = m_item_manager->createRootItem();
     m_root_item->setModel(this);
     m_root_item->registerTag(TagInfo::universalTag("rootTag"), /*set_as_default*/true);
 }

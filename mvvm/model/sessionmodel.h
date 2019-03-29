@@ -66,10 +66,10 @@ protected:
 private:
     void createRootItem();
 
-    SessionItem* m_root_item;
     std::unique_ptr<CommandService> m_commands;
     std::string m_model_type;
     std::unique_ptr<ModelMapper> m_mapper;
+    std::unique_ptr<SessionItem> m_root_item;
 };
 
 }  // namespace ModelView
