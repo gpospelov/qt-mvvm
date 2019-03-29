@@ -121,6 +121,7 @@ void SessionModel::removeItem(SessionItem* parent, const std::string& tag, int r
 void SessionModel::register_item(SessionItem* item)
 {
     m_item_manager->register_item(item);
+    item->activate(); // activates buisiness logic
 }
 
 void SessionModel::unregister_item(SessionItem* item)
