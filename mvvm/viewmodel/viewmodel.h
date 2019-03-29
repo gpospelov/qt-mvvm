@@ -44,7 +44,7 @@ private:
     virtual void init_view_model() = 0;
     virtual void onDataChange(SessionItem* item, int role);
     virtual void onRowInserted(SessionItem* parent, int row);
-    virtual void onRowRemoved(SessionItem* parent, int row);
+    virtual void onRowRemoved(SessionItem* parent, std::string tag, int row);
 
     SessionModel* m_sessionModel;
 };

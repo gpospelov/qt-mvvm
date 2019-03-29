@@ -47,7 +47,7 @@ public:
 
     MOCK_METHOD2(onDataChange, void(ModelView::SessionItem* item, int role));
     MOCK_METHOD2(onRowInserted, void(ModelView::SessionItem* item, int row));
-    MOCK_METHOD2(onRowRemoved, void(ModelView::SessionItem* item, int row));
+    MOCK_METHOD3(onRowRemoved, void(ModelView::SessionItem* item, std::string tag, int row));
 
 private:
     ModelView::SessionModel* m_model;

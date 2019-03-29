@@ -32,7 +32,7 @@ public:
 
     void setOnDataChange(Callbacks::item_int_t f, Callbacks::client_t client = {});
     void setOnRowInserted(Callbacks::item_int_t f, Callbacks::client_t client = {});
-    void setOnRowRemoved(Callbacks::item_int_t f, Callbacks::client_t client = {});
+    void setOnRowRemoved(Callbacks::item_str_int_t f, Callbacks::client_t client = {});
 
     void setActive(bool value);
 
@@ -41,11 +41,11 @@ public:
 private:
     void callOnDataChange(SessionItem* item, int role);
     void callOnRowInserted(SessionItem* parent, int index);
-    void callOnRowRemoved(SessionItem* parent, int index);
+    void callOnRowRemoved(SessionItem* parent, std::string tag, int index);
 
     CallbackContainer<Callbacks::item_int_t> m_on_data_change;
     CallbackContainer<Callbacks::item_int_t> m_on_row_inserted;
-    CallbackContainer<Callbacks::item_int_t> m_on_row_removed;
+    CallbackContainer<Callbacks::item_str_int_t> m_on_row_removed;
 
     bool m_active;
     SessionModel* m_model;

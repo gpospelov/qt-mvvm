@@ -128,18 +128,12 @@ bool SessionItem::insertItem(SessionItem* item, const std::string& tag, int inde
 
 SessionItem* SessionItem::takeItem(const std::string& tag, int index)
 {
-    // FIXME remove hack
-    auto tmp = p_impl->m_tags->getItem(tag, index);
-    int tmp_index = Utils::IndexOfChild(this, tmp);
-
     auto result = p_impl->m_tags->takeItem(tag, index);
     if (result) {
         result->setParent(nullptr);
         result->setModel(nullptr);
-        if (p_impl->m_model) {
-            // FIXME remove one of methods
-            p_impl->m_model->mapper()->callOnRowRemoved(this, tmp_index);
-        }
+        if (p_impl->m_model)
+            p_impl->m_model->mapper()->callOnRowRemoved(this, tag, index);
     }
 
     return result;

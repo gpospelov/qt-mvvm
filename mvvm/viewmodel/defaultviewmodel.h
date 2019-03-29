@@ -40,7 +40,7 @@ private:
     void init_view_model() override;
     void onDataChange(SessionItem* item, int role) override;
     void onRowInserted(SessionItem* parent, int row) override;
-    void onRowRemoved(SessionItem* parent, int row) override;
+    void onRowRemoved(SessionItem* parent, std::string tag, int row) override;
 
     void update_model();
     void iterate(SessionItem* item, QStandardItem* parent);

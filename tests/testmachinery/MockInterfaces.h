@@ -37,7 +37,7 @@ public:
 
     virtual void onDataChange(ModelView::SessionItem* item, int role) = 0;
     virtual void onRowInserted(ModelView::SessionItem* item, int row) = 0;
-    virtual void onRowRemoved(ModelView::SessionItem* item, int row) = 0;
+    virtual void onRowRemoved(ModelView::SessionItem* item, std::string tag, int row) = 0;
 };
 
 #endif // ITEMTESTWIDGET_H
