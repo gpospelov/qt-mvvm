@@ -55,10 +55,9 @@ SetValueCommand::result_t SetValueCommand::result() const
 
 // ----------------------------------------------------------------------------
 
-InsertNewItemCommand::InsertNewItemCommand(model_type modelType, SessionItem* parent, int row,
-                                           std::string tag)
-    : m_row(row)
-    , m_tag(std::move(tag))
+InsertNewItemCommand::InsertNewItemCommand(model_type modelType, SessionItem* parent,
+                                           std::string tag, int row)
+    : m_tag(std::move(tag)), m_row(row)
     , m_model_type(std::move(modelType))
     , m_model(parent->model())
     , m_result(nullptr)

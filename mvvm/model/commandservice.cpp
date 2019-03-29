@@ -33,7 +33,7 @@ SessionItem* CommandService::insertNewItem(const model_type& modelType, SessionI
     if (!parent)
         parent = m_model->rootItem();
 
-    return process_command<InsertNewItemCommand>(modelType, parent, row, tag);
+    return process_command<InsertNewItemCommand>(modelType, parent, tag, row);
 }
 
 bool CommandService::setData(SessionItem* item, const QVariant& value, int role)

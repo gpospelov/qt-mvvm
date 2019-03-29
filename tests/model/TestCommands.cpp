@@ -76,7 +76,7 @@ TEST_F(TestCommands, insertNewItemCommand)
 
     // command to set same value
     auto command =
-        std::make_unique<InsertNewItemCommand>(Constants::BaseType, model.rootItem(), 0, "");
+        std::make_unique<InsertNewItemCommand>(Constants::BaseType, model.rootItem(), "", 0);
 
     // executing command
     command->redo();
@@ -97,7 +97,7 @@ TEST_F(TestCommands, insertNewItemWithTagCommand)
 
     // command to insert parent in the model
     auto command1 =
-        std::make_unique<InsertNewItemCommand>(Constants::BaseType, model.rootItem(), 0, "");
+        std::make_unique<InsertNewItemCommand>(Constants::BaseType, model.rootItem(), "", 0);
     command1->redo(); // insertion
 
     auto parent = command1->result();
@@ -105,7 +105,7 @@ TEST_F(TestCommands, insertNewItemWithTagCommand)
     EXPECT_EQ(parent->childrenCount(), 0);
 
     // command to insert child
-    auto command2 = std::make_unique<InsertNewItemCommand>(Constants::BaseType, parent, 0, "tag1");
+    auto command2 = std::make_unique<InsertNewItemCommand>(Constants::BaseType, parent, "tag1", 0);
     command2->redo(); // insertion
 
     EXPECT_EQ(parent->childrenCount(), 1);
