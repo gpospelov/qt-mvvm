@@ -78,5 +78,5 @@ TEST(TestModelMapper, onRowRemoved)
     EXPECT_CALL(widget, onRowInserted(_, _)).Times(0);
     EXPECT_CALL(widget, onRowRemoved(model.rootItem(), expected_index)).Times(1);
     // perform action
-    model.removeItem(model.rootItem(), 0);
+    model.removeItem(model.rootItem(), "", 0);
 }

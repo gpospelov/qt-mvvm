@@ -45,7 +45,7 @@ TEST(TestItemMapper, onItemDestroy)
     EXPECT_CALL(widget, onDataChange(_, _)).Times(0);
 
     // performing action
-    model.removeItem(model.rootItem(), 0);
+    model.removeItem(model.rootItem(), "",  0);
 }
 
 //! Setting data to item, expecting onDataChange callback.

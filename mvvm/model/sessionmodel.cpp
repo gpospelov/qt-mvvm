@@ -113,7 +113,7 @@ const ItemManager* SessionModel::manager() const
 
 //! Removes given row from parent.
 
-void SessionModel::removeItem(SessionItem* parent, int row, const std::string& tag)
+void SessionModel::removeItem(SessionItem* parent, const std::string& tag, int row)
 {
     m_commands->removeItem(parent, row, tag);
 }

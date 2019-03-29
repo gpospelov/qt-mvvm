@@ -270,7 +270,7 @@ TEST_F(TestUndoRedo, removeRow)
     EXPECT_EQ(model.rootItem()->childrenCount(), 1);
 
     // removing the row
-    model.removeItem(model.rootItem(), 0);
+    model.removeItem(model.rootItem(), "", 0);
     EXPECT_EQ(stack->count(), 3);
     EXPECT_EQ(stack->index(), 3);
     EXPECT_EQ(model.rootItem()->childrenCount(), 0);
@@ -308,7 +308,7 @@ TEST_F(TestUndoRedo, removeParentAndChild)
     EXPECT_EQ(stack->index(), 4);
 
     // removing parent
-    model.removeItem(model.rootItem(), 0);
+    model.removeItem(model.rootItem(), "", 0);
     EXPECT_EQ(stack->count(), 5);
     EXPECT_EQ(stack->index(), 5);
     EXPECT_EQ(model.rootItem()->childrenCount(), 0);
@@ -345,7 +345,7 @@ TEST_F(TestUndoRedo, itemIdentifierOnRemove)
     identifier_type child_id = child->data(ItemDataRole::IDENTIFIER).value<std::string>();
 
     // removing parent
-    model.removeItem(model.rootItem(), 0);
+    model.removeItem(model.rootItem(), "", 0);
     EXPECT_EQ(stack->count(), 3);
     EXPECT_EQ(stack->index(), 3);
     EXPECT_EQ(model.rootItem()->childrenCount(), 0);
@@ -388,7 +388,7 @@ TEST_F(TestUndoRedo, multiLayer)
     EXPECT_EQ(stack->index(), 3);
 
     // removing multi layer completely
-    model.removeItem(model.rootItem(), 0);
+    model.removeItem(model.rootItem(), "", 0);
     EXPECT_EQ(stack->count(), 4);
     EXPECT_EQ(stack->index(), 4);
     EXPECT_EQ(model.rootItem()->childrenCount(), 0);

@@ -116,7 +116,7 @@ TEST_F(TestSessionModel, removeRow)
     Q_UNUSED(child2);
 
     // removing child2
-    model.removeItem(parent, 0); // removing child2
+    model.removeItem(parent, "", 0); // removing child2
     EXPECT_EQ(parent->childrenCount(), 1);
     EXPECT_EQ(Utils::ChildAt(parent, 0), child1);
 

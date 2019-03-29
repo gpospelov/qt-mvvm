@@ -82,7 +82,7 @@ void TestWidget3::onContextMenuRequest(const QPoint& point)
 
     // removing item under the mouse
     connect(removeItemAction, &QAction::triggered,
-            [&]() { m_sessionModel->removeItem(item->parent(), taginfo.second, taginfo.first); });
+            [&]() { m_sessionModel->removeItem(item->parent(), taginfo.first, taginfo.second); });
 
     menu.exec(treeView->mapToGlobal(point));
 }
