@@ -67,7 +67,6 @@ SessionItemData::const_iterator SessionItemData::end() const
 
 void SessionItemData::assure_validity(const QVariant& variant, int role)
 {
-    // FIXME remove temporary check
     if (variant.typeName() == QStringLiteral("QString"))
         throw std::runtime_error("Attempt to set QString based variant");
 

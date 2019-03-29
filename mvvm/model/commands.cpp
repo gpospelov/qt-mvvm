@@ -70,10 +70,8 @@ InsertNewItemCommand::InsertNewItemCommand(model_type modelType, SessionItem* pa
 void InsertNewItemCommand::undo()
 {
     auto parent = m_model->itemFromPath(m_parent_path);
-
     int row = m_row < 0 ? static_cast<int>(parent->getItems(m_tag).size())-1 : m_row;
-
-    delete parent->takeItem(m_tag, row); // FIXME revise negative row
+    delete parent->takeItem(m_tag, row);
     m_result = nullptr;
 }
 

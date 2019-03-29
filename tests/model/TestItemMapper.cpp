@@ -31,7 +31,6 @@ TEST(TestItemMapper, initialState)
 }
 
 //! Destroying item, expecting single call of onItemDestroy in MockWidget.
-// FIXME Provide onItemDestroy or cleanup
 
 TEST(TestItemMapper, onItemDestroy)
 {

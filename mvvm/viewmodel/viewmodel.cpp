@@ -75,9 +75,6 @@ std::vector<QStandardItem*> ViewModel::findStandardViews(SessionItem* item)
     return result;
 }
 
-// FIXME The only difference with the method above, is that we are not handling invisibleRootItem.
-// Can both methods still be merged?
-
 std::vector<ViewItem*> ViewModel::findViews(SessionItem* item)
 {
     return Utils::findViews(this, QModelIndex(), item);

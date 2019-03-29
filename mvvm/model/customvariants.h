@@ -22,8 +22,6 @@
 namespace ModelView
 {
 
-//! FIXME: temporary solution before we have our custom delegates.
-
 //! Converts custom variant to standard variant which Qt views will understand.
 CORE_EXPORT QVariant toQtVariant(const QVariant& custom);
 
