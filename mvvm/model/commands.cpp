@@ -109,22 +109,16 @@ RemoveItemCommand::~RemoveItemCommand() = default;
 
 void RemoveItemCommand::undo()
 {
-    m_model->setCommandRecordPause(true);
-
     const auto& converter = m_model->manager()->item_converter();
 
     auto parent = m_model->itemFromPath(m_parent_path);
 
     auto reco_item = converter.from_json(*m_child_backup);
     parent->insertItem(reco_item.release(), m_row, m_tag);
-
-    m_model->setCommandRecordPause(false);
 }
 
 void RemoveItemCommand::redo()
 {
-    m_model->setCommandRecordPause(true);
-
     const auto& converter = m_model->manager()->item_converter();
 
     auto parent = m_model->itemFromPath(m_parent_path);
@@ -133,8 +127,6 @@ void RemoveItemCommand::redo()
     m_child_backup = std::make_unique<QJsonObject>(converter.to_json(child));
 
     delete child;
-
-    m_model->setCommandRecordPause(false);
 }
 
 RemoveItemCommand::result_t RemoveItemCommand::result() const
