@@ -50,7 +50,7 @@ void CommandService::removeItem(SessionItem* parent, int row, const std::string&
         throw std::runtime_error(
             "CommandService::removeRow() -> Item doesn't belong to given model");
 
-    process_command<RemoveItemCommand>(parent, row, tag);
+    process_command<RemoveItemCommand>(parent, tag, row);
 }
 
 QUndoStack* CommandService::undoStack() const

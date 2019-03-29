@@ -93,9 +93,9 @@ InsertNewItemCommand::result_t InsertNewItemCommand::result() const
 
 // ----------------------------------------------------------------------------
 
-RemoveItemCommand::RemoveItemCommand(SessionItem* parent, int row, std::string tag)
-    : m_row(row)
-    , m_tag(std::move(tag))
+RemoveItemCommand::RemoveItemCommand(SessionItem* parent, std::string tag, int row)
+    : m_tag(std::move(tag))
+    ,m_row(row)
     , m_model(parent->model())
     , m_result(true)
 {
