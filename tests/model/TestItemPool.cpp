@@ -39,7 +39,7 @@ TEST_F(TestItemPool, registerItem)
 
     // checking unexisting registration
     std::unique_ptr<SessionItem> item2(new SessionItem);
-    EXPECT_EQ(ItemPool::key_type(), pool->key_for_item(item2.get()));
+    EXPECT_EQ(identifier_type(), pool->key_for_item(item2.get()));
     EXPECT_EQ(nullptr, pool->item_for_key("ABC"));
 
     // registering second item
@@ -68,16 +68,16 @@ TEST_F(TestItemPool, deregisterItem)
     EXPECT_EQ(item2.get(), pool->item_for_key(key2));
 
     // deregistering item
-    pool->deregister_item(item1.get());
+    pool->unregister_item(item1.get());
     EXPECT_EQ(pool->size(), 1u);
     EXPECT_EQ(nullptr, pool->item_for_key(key1));
     EXPECT_EQ(item2.get(), pool->item_for_key(key2));
 
     // attempt to deregister twice
-    EXPECT_THROW(pool->deregister_item(item1.get()), std::runtime_error);
+    EXPECT_THROW(pool->unregister_item(item1.get()), std::runtime_error);
 
     // deregistering last remaining item
-    pool->deregister_item(item2.get());
+    pool->unregister_item(item2.get());
     EXPECT_EQ(pool->size(), 0u);
 }
 

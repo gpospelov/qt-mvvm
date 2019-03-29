@@ -14,7 +14,7 @@
 
 using namespace ModelView;
 
-ItemPool::key_type ItemPool::generate_key()
+identifier_type ItemPool::generate_key()
 {
     return  QUuid::createUuid().toString().toStdString();
 }
@@ -25,7 +25,7 @@ size_t ItemPool::size() const
     return m_key_to_item.size();
 }
 
-ItemPool::key_type ItemPool::register_item(SessionItem* item, key_type key)
+identifier_type ItemPool::register_item(SessionItem* item, identifier_type key)
 
 {
     if (m_item_to_key.find(item) != m_item_to_key.end())
@@ -47,7 +47,7 @@ ItemPool::key_type ItemPool::register_item(SessionItem* item, key_type key)
     return key;
 }
 
-void ItemPool::deregister_item(SessionItem* item)
+void ItemPool::unregister_item(SessionItem* item)
 {
     auto it = m_item_to_key.find(item);
     if ( it == m_item_to_key.end())
@@ -60,7 +60,7 @@ void ItemPool::deregister_item(SessionItem* item)
     m_key_to_item.erase(it2);
 }
 
-ItemPool::key_type ItemPool::key_for_item(SessionItem* item) const
+identifier_type ItemPool::key_for_item(SessionItem* item) const
 {
     auto it = m_item_to_key.find(item);
     if (it != m_item_to_key.end())
@@ -69,7 +69,7 @@ ItemPool::key_type ItemPool::key_for_item(SessionItem* item) const
     return {};
 }
 
-SessionItem* ItemPool::item_for_key(const key_type& key) const
+SessionItem* ItemPool::item_for_key(const identifier_type& key) const
 {
     auto it = m_key_to_item.find(key);
     if (it != m_key_to_item.end())
