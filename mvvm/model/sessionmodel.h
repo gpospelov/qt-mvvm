@@ -56,7 +56,8 @@ public:
 
     void removeItem(SessionItem* parent, const std::string& tag, int row);
 
-    void make_registered(SessionItem* item, bool flag = true);
+    void register_item(SessionItem* item);
+    void unregister_item(SessionItem* item);
 
     ModelMapper* mapper();
 

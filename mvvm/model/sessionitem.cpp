@@ -47,7 +47,7 @@ SessionItem::~SessionItem()
         p_impl->m_mapper->callOnItemDestroy();
 
     if (p_impl->m_model)
-        p_impl->m_model->make_registered(this, false);
+        p_impl->m_model->unregister_item(this);
 }
 
 model_type SessionItem::modelType() const
@@ -245,12 +245,12 @@ void SessionItem::setParent(SessionItem* parent)
 void SessionItem::setModel(SessionModel* model)
 {
     if (p_impl->m_model)
-        p_impl->m_model->make_registered(this, false);
+        p_impl->m_model->unregister_item(this);
 
     p_impl->m_model = model;
 
     if (p_impl->m_model)
-        p_impl->m_model->make_registered(this, true);
+        p_impl->m_model->register_item(this);
 
     // FIXME find better place for activate logic. ItemMapper ? make_registered ?
     if (p_impl->m_model)

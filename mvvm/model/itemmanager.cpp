@@ -80,16 +80,28 @@ const JsonModelInterface& ItemManager::converter() const
     return *m_converter;
 }
 
-const JsonItemInterface&ItemManager::item_converter() const
+const JsonItemInterface& ItemManager::item_converter() const
 {
     return *m_item_converter;
+}
+
+void ItemManager::register_item(SessionItem* item)
+{
+    if (m_item_pool)
+        m_item_pool->register_item(item, item->data(ItemDataRole::IDENTIFIER).value<std::string>());
+}
+
+void ItemManager::unregister_item(SessionItem* item)
+{
+    if (m_item_pool)
+        m_item_pool->unregister_item(item);
 }
 
 //! Replacing existing registration in item pool with new id.
 
 void ItemManager::fix_registration(SessionItem* item, const identifier_type& id)
 {
-    m_item_pool->deregister_item(item);
+    m_item_pool->unregister_item(item);
     m_item_pool->register_item(item, id);
 }
 

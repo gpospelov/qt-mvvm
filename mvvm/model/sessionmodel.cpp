@@ -118,16 +118,14 @@ void SessionModel::removeItem(SessionItem* parent, const std::string& tag, int r
     m_commands->removeItem(parent, tag, row);
 }
 
-void SessionModel::make_registered(SessionItem* item, bool flag)
+void SessionModel::register_item(SessionItem* item)
 {
-    if (!m_item_manager->itemPool())
-        return;
+    m_item_manager->register_item(item);
+}
 
-    if (flag) {
-        m_item_manager->itemPool()->register_item(item, item->data(ItemDataRole::IDENTIFIER).value<std::string>());
-    } else {
-        m_item_manager->itemPool()->deregister_item(item);
-    }
+void SessionModel::unregister_item(SessionItem* item)
+{
+    m_item_manager->unregister_item(item);
 }
 
 ModelMapper* SessionModel::mapper()
