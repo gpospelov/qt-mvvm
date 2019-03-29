@@ -50,7 +50,7 @@ public:
 
     bool insertItem(SessionItem* item, const std::string& tag, int index);
 
-    SessionItem* takeItem(int index, const std::string& tag = {});
+    SessionItem* takeItem(const std::string& tag, int index);
 
     // item access
     SessionItem* getItem(const std::string& tag, int index = 0) const;

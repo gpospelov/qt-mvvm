@@ -132,7 +132,7 @@ SessionItem* SessionItem::takeItem(const std::string& tag, int index)
     auto tmp = p_impl->m_tags->getItem(tag, index);
     int tmp_index = Utils::IndexOfChild(this, tmp);
 
-    auto result = p_impl->m_tags->takeItem(index, tag);
+    auto result = p_impl->m_tags->takeItem(tag, index);
     if (result) {
         result->setParent(nullptr);
         result->setModel(nullptr);

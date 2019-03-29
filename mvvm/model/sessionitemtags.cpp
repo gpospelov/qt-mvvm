@@ -69,7 +69,7 @@ bool SessionItemTags::insertItem(SessionItem* item, const std::string& tag, int 
 
 //! Removes item at given index and for given tag, returns it to the user.
 
-SessionItem* SessionItemTags::takeItem(int index, const std::string& tag)
+SessionItem* SessionItemTags::takeItem(const std::string& tag, int index)
 {
     return container(tag)->takeItem(index);
 }

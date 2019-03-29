@@ -165,7 +165,7 @@ TEST_F(TestSessionItemTags, takeItem)
     tag.registerTag(TagInfo::universalTag(tag2));
 
     // taking non existing items
-    EXPECT_EQ(tag.takeItem(0), nullptr);
+    EXPECT_EQ(tag.takeItem("", 0), nullptr);
 
     // inserting items
     SessionItem* child1 = new SessionItem(model_type);
@@ -178,7 +178,7 @@ TEST_F(TestSessionItemTags, takeItem)
     EXPECT_TRUE(tag.insertItem(child4, tag2, -1));
 
     // taking item in between
-    auto taken2 = tag.takeItem(1);
+    auto taken2 = tag.takeItem("", 1);
     EXPECT_EQ(child2, taken2);
     delete taken2;
 
@@ -189,7 +189,7 @@ TEST_F(TestSessionItemTags, takeItem)
     EXPECT_EQ(tag.getItems(tag2), expected);
 
     // taking non existing items
-    EXPECT_EQ(tag.takeItem(-1), nullptr);
+    EXPECT_EQ(tag.takeItem("", -1), nullptr);
 }
 
 //! Testing itemDeleted.
