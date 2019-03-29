@@ -19,7 +19,6 @@
 #include "taginfo.h"
 #include "customvariants.h"
 #include "sessionitem_p.h"
-#include "itemutils.h" // FIXME remove dependency
 #include <stdexcept>
 
 namespace
@@ -118,7 +117,7 @@ bool SessionItem::insertItem(SessionItem* item, const std::string& tag, int inde
         item->setModel(model());
 
         if (p_impl->m_model)
-            p_impl->m_model->mapper()->callOnRowInserted(this, Utils::IndexOfChild(this, item));
+            p_impl->m_model->mapper()->callOnRowInserted(this, tag, index);
     }
 
     return result;

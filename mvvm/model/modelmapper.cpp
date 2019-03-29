@@ -29,7 +29,7 @@ void ModelMapper::setOnDataChange(Callbacks::item_int_t f, Callbacks::client_t c
 //! Callback will be called with (SessionItem* parent, index), where index correspondx
 //! to new item index in children array.
 
-void ModelMapper::setOnRowInserted(Callbacks::item_int_t f, Callbacks::client_t client)
+void ModelMapper::setOnRowInserted(Callbacks::item_str_int_t f, Callbacks::client_t client)
 {
     m_on_row_inserted.add(f, client);
 }
@@ -69,10 +69,10 @@ void ModelMapper::callOnDataChange(SessionItem* item, int role)
 
 //! Notifies all callbacks subscribed to "item data is changed" event.
 
-void ModelMapper::callOnRowInserted(SessionItem* parent, int index)
+void ModelMapper::callOnRowInserted(SessionItem* parent, std::string tag, int index)
 {
     if (m_active)
-        m_on_row_inserted.notify(parent, index);
+        m_on_row_inserted.notify(parent, tag, index);
 }
 
 void ModelMapper::callOnRowRemoved(SessionItem* parent, std::string tag, int index)

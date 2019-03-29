@@ -67,10 +67,10 @@ void DefaultViewModel::onDataChange(SessionItem* item, int role)
 // Important: simplified approach is used here. All children views are first removed and
 // then whole branch regenerated from the scratch.
 
-void DefaultViewModel::onRowInserted(SessionItem* parent, int row)
+void DefaultViewModel::onRowInserted(SessionItem* parent, std::string tag, int row)
 {
     qDebug() << "DefaultViewModel::onRowInserted";
-    onRowRemoved(parent, "", row);
+    onRowRemoved(parent, tag, row);
 }
 
 //! Removes views (QStandardItem's) corresponding to given SessionItem and its row.
