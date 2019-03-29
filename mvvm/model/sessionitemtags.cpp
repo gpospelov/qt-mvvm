@@ -62,7 +62,7 @@ int SessionItemTags::itemCount(const std::string& tag_name) const
 //! Inserts item in container with given tag name and at given index.
 //! Returns true in the case of success. If tag name is empty, default tag will be used.
 
-bool SessionItemTags::insertItem(SessionItem* item, int index, const std::string& tag)
+bool SessionItemTags::insertItem(SessionItem* item, const std::string& tag, int index)
 {
     return container(tag)->insertItem(item, index);
 }

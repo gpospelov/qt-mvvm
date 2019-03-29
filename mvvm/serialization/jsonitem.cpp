@@ -199,7 +199,7 @@ std::unique_ptr<SessionItemTags> JsonItem::json_to_tags(const QJsonObject& json,
         result->registerTag(tagInfo);
         for (const auto obj : json_container[itemsKey].toArray()) {
             auto item = json_to_item(obj.toObject(), parent);
-            result->insertItem(item.release(), -1, tagInfo.name());
+            result->insertItem(item.release(), tagInfo.name(), -1);
         }
     }
 

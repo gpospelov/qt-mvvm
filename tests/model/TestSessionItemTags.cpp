@@ -58,7 +58,7 @@ TEST_F(TestSessionItemTags, insertItem)
 
     // inserting items without tags defined
     auto item = std::make_unique<SessionItem>();
-    EXPECT_THROW(tag.insertItem(item.get(), -1), std::runtime_error);
+    EXPECT_THROW(tag.insertItem(item.get(), "", -1), std::runtime_error);
 
     // registering tags
     tag.registerTag(TagInfo::universalTag(tag1));
@@ -70,11 +70,11 @@ TEST_F(TestSessionItemTags, insertItem)
     auto child_t2_a = new SessionItem;
     auto child_t2_b = new SessionItem;
     auto child_t2_c = new SessionItem;
-    EXPECT_TRUE(tag.insertItem(child_t2_a, -1, tag2));
-    EXPECT_TRUE(tag.insertItem(child_t2_c, -1, tag2));
-    EXPECT_TRUE(tag.insertItem(child_t1_a, -1, tag1));
-    EXPECT_TRUE(tag.insertItem(child_t1_b, -1, tag1));
-    EXPECT_TRUE(tag.insertItem(child_t2_b, 1, tag2)); // between child_t2_a and child_t2_c
+    EXPECT_TRUE(tag.insertItem(child_t2_a, tag2, -1));
+    EXPECT_TRUE(tag.insertItem(child_t2_c, tag2, -1));
+    EXPECT_TRUE(tag.insertItem(child_t1_a, tag1, -1));
+    EXPECT_TRUE(tag.insertItem(child_t1_b, tag1, -1));
+    EXPECT_TRUE(tag.insertItem(child_t2_b, tag2, 1)); // between child_t2_a and child_t2_c
 
     // checking item order in containers
     std::vector<SessionItem*> expected = {child_t1_a, child_t1_b};
@@ -103,9 +103,9 @@ TEST_F(TestSessionItemTags, tagIndexOfItem)
     auto child_t1_a = new SessionItem;
     auto child_t1_b = new SessionItem;
     auto child_t2_a = new SessionItem;
-    tag.insertItem(child_t1_a, -1);      // 0
-    tag.insertItem(child_t1_b, -1);      // 1
-    tag.insertItem(child_t2_a, 0, tag2); // 0
+    tag.insertItem(child_t1_a, "", -1);      // 0
+    tag.insertItem(child_t1_b, "", -1);      // 1
+    tag.insertItem(child_t2_a, tag2, 0); // 0
 
     // checking children tag and index
     EXPECT_EQ(tag.tagIndexOfItem(child_t1_a).first, tag1);
@@ -141,9 +141,9 @@ TEST_F(TestSessionItemTags, getItem)
     auto child_t1_a = new SessionItem;
     auto child_t1_b = new SessionItem;
     auto child_t2_a = new SessionItem;
-    tag.insertItem(child_t1_a, -1);      // 0
-    tag.insertItem(child_t1_b, -1);      // 1
-    tag.insertItem(child_t2_a, 0, tag2); // 0
+    tag.insertItem(child_t1_a, "", -1);      // 0
+    tag.insertItem(child_t1_b, "", -1);      // 1
+    tag.insertItem(child_t2_a, tag2, 0); // 0
 
     EXPECT_EQ(tag.getItem(tag1), child_t1_a);
     EXPECT_EQ(tag.getItem(tag1, 0), child_t1_a);
@@ -172,10 +172,10 @@ TEST_F(TestSessionItemTags, takeItem)
     SessionItem* child2 = new SessionItem(model_type);
     SessionItem* child3 = new SessionItem(model_type);
     SessionItem* child4 = new SessionItem(model_type);
-    EXPECT_TRUE(tag.insertItem(child1, -1));
-    EXPECT_TRUE(tag.insertItem(child2, -1));
-    EXPECT_TRUE(tag.insertItem(child3, -1));
-    EXPECT_TRUE(tag.insertItem(child4, -1, tag2));
+    EXPECT_TRUE(tag.insertItem(child1, "", -1));
+    EXPECT_TRUE(tag.insertItem(child2, "", -1));
+    EXPECT_TRUE(tag.insertItem(child3, "", -1));
+    EXPECT_TRUE(tag.insertItem(child4, tag2, -1));
 
     // taking item in between
     auto taken2 = tag.takeItem(1);
@@ -206,9 +206,9 @@ TEST_F(TestSessionItemTags, itemDeleted)
     SessionItem* child1 = new SessionItem(model_type);
     SessionItem* child2 = new SessionItem(model_type);
     SessionItem* child3 = new SessionItem(model_type);
-    tag.insertItem(child1, -1);
-    tag.insertItem(child2, -1);
-    tag.insertItem(child3, -1);
+    tag.insertItem(child1, "", -1);
+    tag.insertItem(child2, "", -1);
+    tag.insertItem(child3, "", -1);
 
     tag.itemDeleted(child2);
     delete child2;

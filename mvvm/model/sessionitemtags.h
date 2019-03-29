@@ -48,7 +48,7 @@ public:
 
     // adding and removal
 
-    bool insertItem(SessionItem* item, int index, const std::string& tag = {});
+    bool insertItem(SessionItem* item, const std::string& tag, int index);
 
     SessionItem* takeItem(int index, const std::string& tag = {});
 
