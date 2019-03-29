@@ -151,7 +151,7 @@ TEST_F(TestJsonItem, parentAndChildToJsonAndBack)
     parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
     auto child = new SessionItem(model);
     child->setDisplayName("child_name");
-    parent->insertItem(child, -1);
+    parent->insertItem(child, "", -1);
 
     // converting to json
     auto object = converter->to_json(parent.get());
@@ -190,7 +190,7 @@ TEST_F(TestJsonItem, parentAndChildToFileAndBack)
     parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
     auto child = new SessionItem(model);
     child->setDisplayName("child_name");
-    parent->insertItem(child, -1);
+    parent->insertItem(child, "", -1);
 
     // converting to json
     auto object = converter->to_json(parent.get());

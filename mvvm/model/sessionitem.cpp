@@ -101,7 +101,7 @@ int SessionItem::childrenCount() const
 
 //! Insert item into given tag under the given index.
 
-bool SessionItem::insertItem(SessionItem* item, int index, const std::string& tag)
+bool SessionItem::insertItem(SessionItem* item, const std::string& tag, int index)
 {
     if (!item)
         throw std::runtime_error("SessionItem::insertItem() -> Invalid item.");

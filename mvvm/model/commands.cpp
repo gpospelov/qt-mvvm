@@ -82,7 +82,7 @@ void InsertNewItemCommand::redo()
 {
     auto parent = m_model->itemFromPath(m_parent_path);
     auto child = m_model->manager()->createItem(m_model_type).release();
-    parent->insertItem(child, m_row, m_tag);
+    parent->insertItem(child, m_tag, m_row);
     m_result = child;
 }
 
@@ -114,7 +114,7 @@ void RemoveItemCommand::undo()
     auto parent = m_model->itemFromPath(m_parent_path);
 
     auto reco_item = converter.from_json(*m_child_backup);
-    parent->insertItem(reco_item.release(), m_row, m_tag);
+    parent->insertItem(reco_item.release(), m_tag, m_row);
 }
 
 void RemoveItemCommand::redo()
