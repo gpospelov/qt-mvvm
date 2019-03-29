@@ -27,9 +27,8 @@ std::unique_ptr<ModelView::ItemFactory> DefaultItemFactory()
 
 using namespace ModelView;
 
-ItemManager::ItemManager() : m_item_factory(DefaultItemFactory()), m_converter(new JsonModel)
+ItemManager::ItemManager() : m_item_factory(DefaultItemFactory()), m_item_converter(std::make_unique<JsonItem>(m_item_factory.get()))
 {
-    m_item_converter = std::make_unique<JsonItem>(m_item_factory.get());
 }
 
 void ItemManager::setItemFactory(std::unique_ptr<ItemFactoryInterface> factory)
@@ -73,11 +72,6 @@ const ItemPool* ItemManager::itemPool() const
 ItemPool* ItemManager::itemPool()
 {
     return m_item_pool.get();
-}
-
-const JsonModelInterface& ItemManager::converter() const
-{
-    return *m_converter;
 }
 
 const JsonItemInterface& ItemManager::item_converter() const

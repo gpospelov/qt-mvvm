@@ -13,6 +13,7 @@
 #include "sessionmodel.h"
 #include "itemmanager.h"
 #include "jsonconverterinterfaces.h"
+#include "jsonutils.h"
 #include <QFile>
 #include <QString>
 #include <QJsonDocument>
@@ -62,9 +63,7 @@ QString TestUtils::JsonToString(const QJsonObject& object)
 
 QString TestUtils::ModelToJsonString(SessionModel& model)
 {
-    QJsonObject json_source;
-    model.manager()->converter().model_to_json(model, json_source);
-    return JsonToString(json_source);
+    return QString::fromStdString(JsonUtils::ModelToJsonString(model));
 }
 
 QJsonDocument TestUtils::LoadJson(const QString& fileName)

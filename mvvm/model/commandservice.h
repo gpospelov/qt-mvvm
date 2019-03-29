@@ -61,6 +61,7 @@ typename C::result_t CommandService::process_command(Args&&... args)
 {
     auto command = std::make_unique<C>(std::forward<Args>(args)...);
 
+    // FIXME replace logic below with shared_ptr
     typename C::result_t result;
     if (provideUndo()) {
         m_commands->push(command.get());

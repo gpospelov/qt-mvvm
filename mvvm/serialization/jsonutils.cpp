@@ -11,13 +11,15 @@
 #include "sessionmodel.h"
 #include "itemmanager.h"
 #include "jsonconverterinterfaces.h"
+#include "jsonmodel.h"
 #include <QJsonDocument>
 #include <QJsonObject>
 
 std::string ModelView::JsonUtils::ModelToJsonString(const ModelView::SessionModel& model)
 {
     QJsonObject json_source;
-    model.manager()->converter().model_to_json(model, json_source);
+    JsonModel converter;
+    converter.model_to_json(model, json_source);
     QJsonDocument document(json_source);
     return QString(document.toJson(QJsonDocument::Indented)).toStdString();
 

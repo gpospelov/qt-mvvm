@@ -47,7 +47,6 @@ public:
     const ItemPool* itemPool() const;
     ItemPool* itemPool();
 
-    const JsonModelInterface& converter() const;
     const JsonItemInterface& item_converter() const;
 
     void register_item(SessionItem* item);
@@ -60,7 +59,6 @@ public:
 private:
     std::shared_ptr<ItemPool> m_item_pool;
     std::unique_ptr<ItemFactoryInterface> m_item_factory;
-    std::unique_ptr<JsonModelInterface> m_converter;
     std::unique_ptr<JsonItemInterface> m_item_converter;
 };
 

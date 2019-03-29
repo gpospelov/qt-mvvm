@@ -131,6 +131,7 @@ SessionItem* SessionItem::takeItem(const std::string& tag, int index)
     if (result) {
         result->setParent(nullptr);
         result->setModel(nullptr);
+        // FIXME remaining problem is that ItemMapper still looking to the model
         if (p_impl->m_model)
             p_impl->m_model->mapper()->callOnRowRemoved(this, tag, index);
     }
