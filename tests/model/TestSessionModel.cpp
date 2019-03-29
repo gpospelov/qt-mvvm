@@ -87,19 +87,21 @@ TEST_F(TestSessionModel, insertNewItemWithTag)
 TEST_F(TestSessionModel, setData)
 {
     SessionModel model;
-    const int role = ItemDataRole::DISPLAY;
 
     // inserting single item
     auto item = model.insertNewItem(Constants::BaseType);
-    EXPECT_FALSE(model.data(item, role).isValid());
+    EXPECT_TRUE(model.data(item, ItemDataRole::DISPLAY).isValid());
+
+    // setting wrong type of data
+    QVariant value(42.0);
+    EXPECT_THROW(model.setData(item, value, ItemDataRole::DISPLAY), std::runtime_error);
 
     // setting new data
-    QVariant value(42.0);
-    EXPECT_TRUE(model.setData(item, value, role));
-    EXPECT_EQ(model.data(item, role), value);
+    EXPECT_TRUE(model.setData(item, value, ItemDataRole::DATA));
+    EXPECT_EQ(model.data(item, ItemDataRole::DATA), value);
 
     // setting same data twice should return false
-    EXPECT_FALSE(model.setData(item, value, role));
+    EXPECT_FALSE(model.setData(item, value, ItemDataRole::DATA));
 }
 
 TEST_F(TestSessionModel, removeRow)

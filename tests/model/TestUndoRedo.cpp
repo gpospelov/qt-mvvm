@@ -290,7 +290,8 @@ TEST_F(TestUndoRedo, removeRow)
 TEST_F(TestUndoRedo, removeParentAndChild)
 {
     const int role1(ItemDataRole::DATA), role2(ItemDataRole::DISPLAY);
-    const QVariant data1(42), data2(43);
+    const QVariant data1(42);
+    const QVariant data2 = QVariant::fromValue(std::string("abc"));
 
     SessionModel model;
     model.setUndoRedoEnabled(true);

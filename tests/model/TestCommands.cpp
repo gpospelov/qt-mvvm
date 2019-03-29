@@ -22,7 +22,7 @@ TestCommands::~TestCommands() = default;
 TEST_F(TestCommands, setValueCommand)
 {
     SessionModel model;
-    const int role = ItemDataRole::DISPLAY;
+    const int role = ItemDataRole::DATA;
 
     // inserting single item
     auto item = model.insertNewItem(Constants::BaseType);
@@ -47,7 +47,7 @@ TEST_F(TestCommands, setValueCommand)
 TEST_F(TestCommands, setSameValueCommand)
 {
     SessionModel model;
-    const int role = ItemDataRole::DISPLAY;
+    const int role = ItemDataRole::DATA;
 
     // inserting single item
     auto item = model.insertNewItem(Constants::BaseType);

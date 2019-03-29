@@ -40,6 +40,7 @@ SessionItem::SessionItem(model_type modelType)
 {
     p_impl->m_modelType = modelType;
     setDataIntern(QVariant::fromValue(ItemPool::generate_key()), ItemDataRole::IDENTIFIER);
+    setDataIntern(QVariant::fromValue(modelType), ItemDataRole::DISPLAY);
 }
 
 SessionItem::~SessionItem()
