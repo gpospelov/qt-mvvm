@@ -23,15 +23,23 @@ ItemMapper::ItemMapper(SessionItem* item)
     if (!m_item->model())
         throw std::runtime_error("ItemMapper::ItemMapper() -> Item doesn't have model");
 
-    // FIXME consider m_model removal. But what to do then, when item changes the model?
-    m_model = m_item->model();
-
-    subscribe_to_model();
+    setModel(item->model());
 }
 
 ItemMapper::~ItemMapper()
 {
     unsubscribe_from_model();
+}
+
+void ItemMapper::setModel(SessionModel* model)
+{
+    if (m_model)
+        unsubscribe_from_model();
+
+    m_model = model;
+
+    if (m_model)
+        subscribe_to_model();
 }
 
 void ItemMapper::setOnItemDestroy(Callbacks::item_t f, Callbacks::client_t client)

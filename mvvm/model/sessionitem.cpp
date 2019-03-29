@@ -212,11 +212,6 @@ ItemMapper* SessionItem::mapper()
     return p_impl->m_mapper.get();
 }
 
-//! Activates all buisiness logic of given item. Should be called after item constructions.
-//! Intended for overload in child classes.
-
-void SessionItem::activate() {}
-
 bool SessionItem::isEditable() const
 {
     return appearance(*this) & Appearance::EDITABLE;

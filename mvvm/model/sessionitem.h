@@ -74,8 +74,6 @@ public:
 
     ItemMapper* mapper();
 
-    virtual void activate();
-
     bool isEditable() const;
     void setEditable(bool value);
 
@@ -85,6 +83,7 @@ public:
 private:
     friend class SessionModel;
     friend class JsonItem;
+    virtual void activate(){}
     void setParent(SessionItem* parent);
     void setModel(SessionModel* model);
     void setAppearanceFlag(int flag, bool value);

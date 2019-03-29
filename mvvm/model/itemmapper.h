@@ -31,6 +31,8 @@ public:
     ItemMapper(SessionItem* item);
     ~ItemMapper();
 
+    void setModel(SessionModel* model);
+
     void setOnItemDestroy(Callbacks::item_t f, Callbacks::client_t client = {});
     void setOnDataChange(Callbacks::item_int_t f, Callbacks::client_t client = {});
     void setOnPropertyChange(Callbacks::item_str_t f, Callbacks::client_t client = {});
