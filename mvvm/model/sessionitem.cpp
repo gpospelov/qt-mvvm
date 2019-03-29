@@ -47,9 +47,6 @@ SessionItem::~SessionItem()
     if (pimpl->m_mapper)
         pimpl->m_mapper->callOnItemDestroy();
 
-    if (pimpl->m_parent)
-        pimpl->m_parent->pimpl->childDeleted(this);
-
     if (pimpl->m_model)
         pimpl->m_model->make_registered(this, false);
 }

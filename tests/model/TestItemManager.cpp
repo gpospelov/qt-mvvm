@@ -28,7 +28,7 @@ TEST_F(TestItemManager, initialState)
     EXPECT_EQ(manager.itemPool()->size(), 0);
 }
 
-//! Item factory should forget the item on item deletion (in the model context).
+//!FIXME Purpose of test?
 
 TEST_F(TestItemManager, modelContext)
 {
@@ -41,8 +41,4 @@ TEST_F(TestItemManager, modelContext)
     EXPECT_EQ(manager->itemPool()->size(), 2u);
     auto key = manager->findIdentifier(item1);
     EXPECT_EQ(manager->findItem(key), item1);
-
-    delete item1;
-    EXPECT_EQ(manager->itemPool()->size(), 1u);
-    EXPECT_EQ(manager->findItem(key), nullptr);
 }

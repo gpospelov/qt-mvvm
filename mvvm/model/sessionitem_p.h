@@ -30,8 +30,6 @@ public:
     SessionItemPrivate();
     ~SessionItemPrivate();
 
-    void childDeleted(SessionItem* child);
-
     SessionItem* m_parent;
     SessionModel* m_model;
     std::unique_ptr<ItemMapper> m_mapper;

@@ -211,6 +211,7 @@ TEST_F(TestSessionItemTags, itemDeleted)
     tag.insertItem(child3, -1);
 
     tag.itemDeleted(child2);
+    delete child2;
     EXPECT_EQ(tag.itemCount(tag_name), 3);
 
     // order of remaining children

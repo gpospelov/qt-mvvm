@@ -21,8 +21,3 @@ SessionItemPrivate::SessionItemPrivate()
 }
 
 SessionItemPrivate::~SessionItemPrivate() = default;
-
-void SessionItemPrivate::childDeleted(SessionItem* child)
-{
-    m_tags->itemDeleted(child);
-}
