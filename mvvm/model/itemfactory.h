@@ -32,7 +32,6 @@ public:
     std::unique_ptr<SessionItem> createEmptyItem() const override;
 
 protected:
-    std::unique_ptr<SessionItem> create_intern(const model_type& modelType) const;
     std::unique_ptr<ItemCatalogue> m_catalogue;
 };
 

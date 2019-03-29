@@ -11,7 +11,6 @@
 #include "itemmanager.h"
 #include "taginfo.h"
 #include "toy_constants.h"
-#include "toy_factories.h"
 #include "vectoritem.h"
 #include "itemmapper.h"
 #include <stdexcept>

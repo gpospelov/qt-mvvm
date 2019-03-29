@@ -8,22 +8,12 @@
 // ************************************************************************** //
 
 #include "toy_models.h"
-#include "toy_factories.h"
-#include "toy_items.h"
-#include "itemmanager.h"
 #include "itemfactory.h"
+#include "itemmanager.h"
+#include "toy_items.h"
 
-namespace
+ToyItems::SampleModel::SampleModel() : SessionModel("ToyModel")
 {
-std::unique_ptr<ModelView::ItemFactory> ToyItemFactory()
-{
-    return std::make_unique<ModelView::ItemFactory>(ToyItems::CreateToyItemCatalogue());
-}
-}
-
-
-ToyItems::SampleModel::SampleModel()
-    : SessionModel("ToyModel")
-{
-    m_item_manager->setItemFactory(std::make_unique<ToyItems::ItemFactory>(ToyItems::CreateToyItemCatalogue()));
+    m_item_manager->setItemFactory(
+        std::make_unique<ModelView::ItemFactory>(ToyItems::CreateToyItemCatalogue()));
 }

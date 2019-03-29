@@ -21,10 +21,8 @@ class SampleModel : public ModelView::SessionModel
 {
 public:
     SampleModel();
-
 };
 
-} // ToyItems
+} // namespace ToyItems
 
 #endif // TOYMODELS_H
-

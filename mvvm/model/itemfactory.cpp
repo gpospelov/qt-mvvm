@@ -25,17 +25,10 @@ ItemFactory::~ItemFactory() = default;
 
 std::unique_ptr<SessionItem> ItemFactory::createItem(const model_type& modelType) const
 {
-    auto result = create_intern(modelType);
-    //    result->setDisplayName(modelType); FIXME
-    return result;
+    return m_catalogue->create(modelType);
 }
 
 std::unique_ptr<SessionItem> ItemFactory::createEmptyItem() const
 {
     return std::make_unique<SessionItem>();
-}
-
-std::unique_ptr<SessionItem> ItemFactory::create_intern(const model_type& modelType) const
-{
-    return m_catalogue->create(modelType);
 }

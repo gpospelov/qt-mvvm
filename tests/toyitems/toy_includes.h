@@ -14,7 +14,6 @@
 
 #include "toy_constants.h"
 #include "toy_items.h"
-#include "toy_factories.h"
 #include "toy_models.h"
 
 #endif // TOYFACTORIES_H
