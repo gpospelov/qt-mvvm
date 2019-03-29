@@ -24,7 +24,6 @@
 
 namespace
 {
-const std::string default_tag_name = "defaultTag";
 int appearance(const ModelView::SessionItem& item)
 {
     auto value = item.data(ModelView::ItemDataRole::APPEARANCE);
@@ -137,27 +136,34 @@ SessionItem* SessionItem::takeItem(int row, const std::string& tag)
         if (p_impl->m_model) {
             // FIXME remove one of methods
             p_impl->m_model->mapper()->callOnRowRemoved(this, tmp_index);
-            p_impl->m_model->mapper()->callOnRowRemoved2(this, tmp_index, result->identifier());
         }
     }
 
     return result;
 }
 
+//! Returns vector of children formed from all chidlren from all tags.
+
 std::vector<SessionItem*> SessionItem::children() const
 {
     return p_impl->m_tags->allitems();
 }
+
+//! Return vector of data roles which this item currently holds.
 
 std::vector<int> SessionItem::roles() const
 {
     return p_impl->m_data->roles();
 }
 
+//! Returns the name of the default tag.
+
 std::string SessionItem::defaultTag() const
 {
     return p_impl->m_tags->defaultTag();
 }
+
+//! Sets the default tag.
 
 void SessionItem::setDefaultTag(const std::string& tag)
 {
@@ -165,10 +171,14 @@ void SessionItem::setDefaultTag(const std::string& tag)
     p_impl->m_tags->setDefaultTag(tag);
 }
 
+//! Registers tag to hold items under given name.
+
 void SessionItem::registerTag(const TagInfo& tagInfo, bool set_as_default)
 {
     p_impl->m_tags->registerTag(tagInfo, set_as_default);
 }
+
+//! Returns true if tag with given name exists.
 
 bool SessionItem::isTag(const std::string& name)
 {

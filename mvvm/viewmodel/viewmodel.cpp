@@ -36,9 +36,9 @@ void ViewModel::setSessionModel(SessionModel* model)
         m_sessionModel->mapper()->setOnRowInserted(
             [this](ModelView::SessionItem* item, int row) { onRowInserted(item, row); }, this);
 
-        m_sessionModel->mapper()->setOnRowRemoved2(
-            [this](ModelView::SessionItem* item, int row, std::string id) {
-                onRowRemoved(item, row, id);
+        m_sessionModel->mapper()->setOnRowRemoved(
+            [this](ModelView::SessionItem* item, int row) {
+                onRowRemoved(item, row);
             },
             this);
     }
@@ -95,9 +95,8 @@ void ViewModel::onRowInserted(SessionItem* parent, int row)
     Q_UNUSED(row);
 }
 
-void ViewModel::onRowRemoved(SessionItem* parent, int row, std::string id)
+void ViewModel::onRowRemoved(SessionItem* parent, int row)
 {
     Q_UNUSED(parent);
     Q_UNUSED(row);
-    Q_UNUSED(id);
 }

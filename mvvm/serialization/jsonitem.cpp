@@ -158,7 +158,7 @@ QJsonObject JsonItem::container_to_json(const SessionItemContainer& container) c
 
     QJsonArray itemArray;
     for (auto item : container)
-        itemArray.append(to_json(item));
+        itemArray.append(item_to_json(*item));
     result[itemsKey] = itemArray;
 
     return result;

@@ -116,12 +116,12 @@ TEST_F(TestDefaultViewModel, removeSingleTopItem)
 
     // removing child
     model.removeItem(model.rootItem(), 0);
-    EXPECT_EQ(spyRemove.count(), 1);
+    ASSERT_EQ(spyRemove.count(), 1);
     EXPECT_EQ(viewModel.rowCount(), 0);
     EXPECT_EQ(viewModel.columnCount(), 2);
 
     QList<QVariant> arguments = spyRemove.takeFirst();
-    EXPECT_EQ(arguments.size(), 3); // QModelIndex &parent, int first, int last
+    ASSERT_EQ(arguments.size(), 3); // QModelIndex &parent, int first, int last
     EXPECT_EQ(arguments.at(0).value<QModelIndex>(), QModelIndex());
     EXPECT_EQ(arguments.at(1).toInt(), 0);
     EXPECT_EQ(arguments.at(2).toInt(), 0);

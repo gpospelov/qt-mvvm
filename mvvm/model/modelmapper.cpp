@@ -43,11 +43,6 @@ void ModelMapper::setOnRowRemoved(Callbacks::item_int_t f, Callbacks::client_t c
     m_on_row_removed.add(f, client);
 }
 
-void ModelMapper::setOnRowRemoved2(Callbacks::item_int_str_t f, Callbacks::client_t client)
-{
-    m_on_row_removed2.add(f, client);
-}
-
 //! Sets activity flag to given value. Will disable all callbacks if false.
 
 void ModelMapper::setActive(bool value)
@@ -62,7 +57,6 @@ void ModelMapper::unsubscribe(Callbacks::client_t client)
     m_on_data_change.remove_client(client);
     m_on_row_inserted.remove_client(client);
     m_on_row_removed.remove_client(client);
-    m_on_row_removed2.remove_client(client);
 }
 
 //! Notifies all callbacks subscribed to "item data is changed" event.
@@ -85,10 +79,4 @@ void ModelMapper::callOnRowRemoved(SessionItem* parent, int index)
 {
     if (m_active)
         m_on_row_removed.notify(parent, index);
-}
-
-void ModelMapper::callOnRowRemoved2(SessionItem* parent, int index, std::string id)
-{
-    if (m_active)
-        m_on_row_removed2.notify(parent, index, id);
 }
