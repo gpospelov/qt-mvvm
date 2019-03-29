@@ -27,8 +27,10 @@ class ItemMapper;
 class CORE_EXPORT SessionItem
 {
 public:
-    SessionItem(model_type modelType = Constants::BaseType);
+    explicit SessionItem(model_type modelType = Constants::BaseType);
     virtual ~SessionItem();
+    SessionItem(const SessionItem&) = delete;
+    SessionItem& operator=(const SessionItem&) = delete;
 
     model_type modelType() const;
 
