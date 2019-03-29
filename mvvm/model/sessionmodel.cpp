@@ -39,7 +39,7 @@ std::string SessionModel::modelType() const
 
 SessionItem* SessionModel::insertNewItem(const model_type& modelType, SessionItem* parent, const std::string& tag, int index)
 {
-    return m_commands->insertNewItem(modelType, parent, index, tag);
+    return m_commands->insertNewItem(modelType, parent, tag, index);
 }
 
 SessionItem* SessionModel::rootItem() const
@@ -115,7 +115,7 @@ const ItemManager* SessionModel::manager() const
 
 void SessionModel::removeItem(SessionItem* parent, const std::string& tag, int row)
 {
-    m_commands->removeItem(parent, row, tag);
+    m_commands->removeItem(parent, tag, row);
 }
 
 void SessionModel::make_registered(SessionItem* item, bool flag)

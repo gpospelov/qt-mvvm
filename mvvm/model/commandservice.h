@@ -33,12 +33,11 @@ public:
 
     void setUndoRedoEnabled(bool value);
 
-    SessionItem* insertNewItem(const model_type& modelType, SessionItem* parent, int row,
-                               std::string tag);
+    SessionItem* insertNewItem(const model_type& modelType, SessionItem* parent, std::string tag, int row);
 
     bool setData(SessionItem* item, const QVariant& value, int role);
 
-    void removeItem(SessionItem* parent, int row, const std::string& tag = {});
+    void removeItem(SessionItem* parent, const std::string& tag, int row);
 
     QUndoStack* undoStack() const;
 

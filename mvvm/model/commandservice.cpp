@@ -28,7 +28,7 @@ void CommandService::setUndoRedoEnabled(bool value)
 }
 
 SessionItem* CommandService::insertNewItem(const model_type& modelType, SessionItem* parent,
-                                           int row, std::string tag)
+                                           std::string tag, int row)
 {
     if (!parent)
         parent = m_model->rootItem();
@@ -44,7 +44,7 @@ bool CommandService::setData(SessionItem* item, const QVariant& value, int role)
     return process_command<SetValueCommand>(item, value, role);
 }
 
-void CommandService::removeItem(SessionItem* parent, int row, const std::string& tag)
+void CommandService::removeItem(SessionItem* parent, const std::string& tag, int row)
 {
     if (parent->model() != m_model)
         throw std::runtime_error(
