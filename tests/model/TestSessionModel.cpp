@@ -4,6 +4,7 @@
 #include "sessionitem.h"
 #include "sessionmodel.h"
 #include "taginfo.h"
+#include "itemutils.h"
 #include <memory>
 
 using namespace ModelView;
@@ -115,7 +116,7 @@ TEST_F(TestSessionModel, removeRow)
     // removing child2
     model.removeItem(parent, 0); // removing child2
     EXPECT_EQ(parent->childrenCount(), 1);
-    EXPECT_EQ(parent->childAt(0), child1);
+    EXPECT_EQ(Utils::ChildAt(parent, 0), child1);
 
     // child2 shouldn't be registered anymore
     EXPECT_EQ(model.manager()->itemPool()->key_for_item(child2), "");

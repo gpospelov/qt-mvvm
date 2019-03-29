@@ -4,6 +4,7 @@
 #include "sessionmodel.h"
 #include "taginfo.h"
 #include "test_utils.h"
+#include "itemutils.h"
 #include <QDebug>
 
 using namespace ModelView;
@@ -80,7 +81,7 @@ TEST_F(TestCommands, insertNewItemCommand)
     // executing command
     command->redo();
     EXPECT_EQ(model.rootItem()->childrenCount(), 1);
-    EXPECT_EQ(command->result(), model.rootItem()->childAt(0));
+    EXPECT_EQ(command->result(), model.rootItem()->getItem("", 0));
 
     // undoing command
     command->undo();
@@ -108,7 +109,7 @@ TEST_F(TestCommands, insertNewItemWithTagCommand)
     command2->redo(); // insertion
 
     EXPECT_EQ(parent->childrenCount(), 1);
-    EXPECT_EQ(parent->childAt(0), command2->result());
+    EXPECT_EQ(Utils::ChildAt(parent, 0), command2->result());
 
     // undoing command
     command2->undo();
@@ -133,7 +134,7 @@ TEST_F(TestCommands, removeAtCommand)
     // undo command
     command->undo();
     EXPECT_EQ(model.rootItem()->childrenCount(), 1);
-    auto restored = model.rootItem()->childAt(0);
+    auto restored = Utils::ChildAt(model.rootItem(), 0);
     EXPECT_EQ(restored->data(ItemDataRole::IDENTIFIER).value<std::string>(), item_identifier);
 }
 
@@ -160,7 +161,7 @@ TEST_F(TestCommands, removeAtCommandChild)
     // undo command
     command->undo();
     EXPECT_EQ(parent->childrenCount(), 2);
-    auto restored = parent->childAt(0);
+    auto restored = Utils::ChildAt(parent, 0);;
     EXPECT_EQ(restored->data(ItemDataRole::IDENTIFIER).value<std::string>(), child1_identifier);
 
     // checking the data of restored item
@@ -190,8 +191,8 @@ TEST_F(TestCommands, removeAtCommandParentWithChild)
     // undo command
     command->undo();
     EXPECT_EQ(model.rootItem()->childrenCount(), 1);
-    auto restored_parent = model.rootItem()->childAt(0);
-    auto restored_child = restored_parent->childAt(0);
+    auto restored_parent = Utils::ChildAt(model.rootItem(), 0);
+    auto restored_child = Utils::ChildAt(restored_parent, 0);
 
     EXPECT_EQ(restored_parent->data(ItemDataRole::IDENTIFIER).value<std::string>(),
               parent_identifier);
@@ -236,8 +237,8 @@ TEST_F(TestCommands, removeAtCommandMultitag)
     // undo command
     command->undo();
     EXPECT_EQ(parent->childrenCount(), 3);
-    auto restored_parent = model.rootItem()->childAt(0);
-    auto restored_child2 = restored_parent->childAt(1);
+    auto restored_parent = Utils::ChildAt(model.rootItem(), 0);
+    auto restored_child2 = Utils::ChildAt(restored_parent, 1);
 
     EXPECT_EQ(restored_parent->data(ItemDataRole::IDENTIFIER).value<std::string>(),
               parent_identifier);

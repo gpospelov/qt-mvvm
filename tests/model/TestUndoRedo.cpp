@@ -3,6 +3,7 @@
 #include "sessionitem.h"
 #include "sessionmodel.h"
 #include "taginfo.h"
+#include "itemutils.h"
 #include "toy_includes.h"
 #include <QUndoStack>
 
@@ -63,7 +64,7 @@ TEST_F(TestUndoRedo, insertNewItem)
     // redoing item insertion
     stack->redo();
     EXPECT_EQ(model.rootItem()->childrenCount(), 1);
-    EXPECT_EQ(model.rootItem()->childAt(0)->modelType(), modelType);
+    EXPECT_EQ(Utils::ChildAt(model.rootItem(), 0)->modelType(), modelType);
     EXPECT_EQ(stack->index(), 1);
     EXPECT_FALSE(stack->canRedo());
     EXPECT_TRUE(stack->canUndo());
@@ -74,7 +75,7 @@ TEST_F(TestUndoRedo, insertNewItem)
     EXPECT_FALSE(stack->canRedo());
     EXPECT_FALSE(stack->canUndo());
     EXPECT_EQ(model.rootItem()->childrenCount(), 1);
-    EXPECT_EQ(model.rootItem()->childAt(0)->modelType(), modelType);
+    EXPECT_EQ(Utils::ChildAt(model.rootItem(), 0)->modelType(), modelType);
 }
 
 //! Undo/redo scenario when few items inserted.
@@ -111,7 +112,7 @@ TEST_F(TestUndoRedo, insertParentAndChild)
     EXPECT_EQ(stack->index(), 2);
     EXPECT_EQ(model.rootItem()->childrenCount(), 1);
     EXPECT_EQ(parent->childrenCount(), 1);
-    EXPECT_EQ(parent->childAt(0)->modelType(), Constants::PropertyType);
+    EXPECT_EQ(Utils::ChildAt(parent, 0)->modelType(), Constants::PropertyType);
 }
 
 //! Undo/redo scenario when item inserted and data set few times.
@@ -242,7 +243,7 @@ TEST_F(TestUndoRedo, insertAndSetData)
     stack->redo();
     EXPECT_EQ(stack->index(), 2);
     EXPECT_EQ(model.rootItem()->childrenCount(), 1);
-    item = model.rootItem()->childAt(0);
+    item = Utils::ChildAt(model.rootItem(), 0);
     EXPECT_EQ(model.data(item, role).toDouble(), 42.0);
 }
 
@@ -279,7 +280,7 @@ TEST_F(TestUndoRedo, removeRow)
     EXPECT_EQ(stack->count(), 3);
     EXPECT_EQ(stack->index(), 2);
     EXPECT_EQ(model.rootItem()->childrenCount(), 1);
-    item = model.rootItem()->childAt(0);
+    item = Utils::ChildAt(model.rootItem(), 0);
     EXPECT_EQ(model.data(item, role).toDouble(), 42.0);
     EXPECT_EQ(item->modelType(), Constants::BaseType);
 }
@@ -316,8 +317,8 @@ TEST_F(TestUndoRedo, removeParentAndChild)
     EXPECT_EQ(stack->count(), 5);
     EXPECT_EQ(stack->index(), 4);
     EXPECT_EQ(model.rootItem()->childrenCount(), 1);
-    parent = model.rootItem()->childAt(0);
-    child = parent->childAt(0);
+    parent = Utils::ChildAt(model.rootItem(), 0);
+    child = Utils::ChildAt(parent, 0);
 
     EXPECT_EQ(parent->modelType(), Constants::BaseType);
     EXPECT_EQ(child->modelType(), Constants::PropertyType);
@@ -349,8 +350,8 @@ TEST_F(TestUndoRedo, itemIdentifierOnRemove)
     EXPECT_EQ(model.rootItem()->childrenCount(), 0);
 
     stack->undo();
-    parent = model.rootItem()->childAt(0);
-    child = parent->childAt(0);
+    parent = Utils::ChildAt(model.rootItem(), 0);
+    child = Utils::ChildAt(parent, 0);
     identifier_type parent_id2 = parent->data(ItemDataRole::IDENTIFIER).value<std::string>();
     identifier_type child_id2 = child->data(ItemDataRole::IDENTIFIER).value<std::string>();
 
@@ -402,9 +403,9 @@ TEST_F(TestUndoRedo, multiLayer)
     EXPECT_EQ(stack->index(), 3);
 
     // restoring pointers back
-    parent = model.rootItem()->childAt(0);
-    layer0 = parent->childAt(0);
-    layer1 = parent->childAt(1);
+    parent = Utils::ChildAt(model.rootItem(), 0);
+    layer0 = Utils::ChildAt(parent, 0);
+    layer1 = Utils::ChildAt(parent, 1);
 
     // checking that restored item has corrrect identifiers
     EXPECT_EQ(parent->data(ItemDataRole::IDENTIFIER).value<std::string>(), id_parent);

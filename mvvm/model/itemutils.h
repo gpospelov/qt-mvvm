@@ -42,6 +42,10 @@ CORE_EXPORT bool IsTheSame(const QVariant& var1, const QVariant& var2);
 //! same modelType.
 CORE_EXPORT int CopyNumber(const SessionItem* item);
 
+//! Returns child at given index of parent. No tags are involved, index is concidered
+//! as global index in the array with all children.
+CORE_EXPORT SessionItem* ChildAt(const ModelView::SessionItem* parent, int index);
+
 }  // namespace Utils
 
 }  // namespace ModelView

@@ -15,6 +15,7 @@
 #include "itempool.h"
 #include "taginfo.h"
 #include "customvariants.h"
+#include "itemutils.h"
 #include "modelmapper.h"
 
 using namespace ModelView;
@@ -77,7 +78,7 @@ SessionItem* SessionModel::itemFromPath(Path path)
 {
     SessionItem* result(rootItem());
     for(const auto& x : path) {
-        result = result->childAt(x);
+        result = Utils::ChildAt(result, x);
         if (!result)
             break;
     }

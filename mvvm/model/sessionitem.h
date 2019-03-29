@@ -50,8 +50,6 @@ public:
 
     int childrenCount() const;
 
-    SessionItem* childAt(int index) const;
-
     bool insertItem(SessionItem* item, int row, const std::string& tag = {});
 
     SessionItem* takeItem(int row, const std::string& tag = {});

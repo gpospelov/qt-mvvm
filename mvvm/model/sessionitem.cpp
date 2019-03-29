@@ -99,14 +99,6 @@ int SessionItem::childrenCount() const
     return static_cast<int>(children().size());
 }
 
-//! Returns child at given index of children array. No tags involved.
-
-SessionItem* SessionItem::childAt(int index) const
-{
-    auto container = children();
-    return index >= 0 && index < container.size() ? container[static_cast<size_t>(index)] : nullptr;
-}
-
 //! Insert item into given tag into given row.
 
 bool SessionItem::insertItem(SessionItem* item, int row, const std::string& tag)

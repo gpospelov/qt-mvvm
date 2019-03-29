@@ -3,6 +3,7 @@
 #include "sessionitem.h"
 #include "itempool.h"
 #include "taginfo.h"
+#include "itemutils.h"
 #include <memory>
 #include <QDebug>
 
@@ -176,9 +177,9 @@ TEST_F(TestSessionItem, insertItem)
     EXPECT_EQ(parent->childrenCount(), 0);
     EXPECT_EQ(parent->indexOfChild(nullptr), -1);
     EXPECT_EQ(parent->indexOfChild(child.get()), -1);
-    EXPECT_EQ(parent->childAt(0), nullptr);
-    EXPECT_EQ(parent->childAt(-1), nullptr);
-    EXPECT_EQ(parent->childAt(10), nullptr);
+    EXPECT_EQ(parent->getItem("", 0), nullptr);
+    EXPECT_EQ(parent->getItem("", -1), nullptr);
+    EXPECT_EQ(parent->getItem("", 10), nullptr);
 
     // inserting child
     auto p_child = child.release();
@@ -186,7 +187,7 @@ TEST_F(TestSessionItem, insertItem)
     EXPECT_EQ(parent->childrenCount(), 1);
     EXPECT_EQ(parent->indexOfChild(p_child), 0);
     EXPECT_EQ(parent->children()[0], p_child);
-    EXPECT_EQ(parent->childAt(0), p_child);
+    EXPECT_EQ(parent->getItem("", 0), p_child);
     EXPECT_EQ(p_child->parent(), parent.get());
 
     // deleting child, pointer in parent should become zero
@@ -212,8 +213,8 @@ TEST_F(TestSessionItem, insertChildren)
     parent->insertItem(child2, -1);
     EXPECT_EQ(parent->indexOfChild(child1), 0);
     EXPECT_EQ(parent->indexOfChild(child2), 1);
-    EXPECT_EQ(parent->childAt(0), child1);
-    EXPECT_EQ(parent->childAt(1), child2);
+    EXPECT_EQ(parent->getItem("", 0), child1);
+    EXPECT_EQ(parent->getItem("", 1), child2);
     std::vector<SessionItem*> expected = {child1, child2};
     EXPECT_EQ(parent->children(), expected);
 
@@ -224,10 +225,10 @@ TEST_F(TestSessionItem, insertChildren)
     EXPECT_EQ(parent->indexOfChild(child1), 0);
     EXPECT_EQ(parent->indexOfChild(child2), 2);
     EXPECT_EQ(parent->indexOfChild(child3), 1);
-    EXPECT_EQ(parent->childAt(0), child1);
-    EXPECT_EQ(parent->childAt(1), child3);
-    EXPECT_EQ(parent->childAt(2), child2);
-    EXPECT_EQ(parent->childAt(3), nullptr);
+    EXPECT_EQ(parent->getItem("", 0), child1);
+    EXPECT_EQ(parent->getItem("", 1), child3);
+    EXPECT_EQ(parent->getItem("", 2), child2);
+    EXPECT_EQ(parent->getItem("", 3), nullptr);
 
     // inserting forth item using index equal to number of items
     parent->insertItem(child4, parent->childrenCount());

@@ -101,7 +101,7 @@ TEST_F(TestJsonModel, singleItemToJsonAndBack)
     SessionModel target("TestModel");
     converter.json_to_model(object, target);
     EXPECT_EQ(target.rootItem()->childrenCount(), 1u);
-    auto reco_item = target.rootItem()->childAt(0);
+    auto reco_item = target.rootItem()->getItem("", 0);
     EXPECT_EQ(reco_item->parent(), target.rootItem());
     EXPECT_EQ(reco_item->modelType(), item->modelType());
 }
@@ -131,8 +131,8 @@ TEST_F(TestJsonModel, parentAndChildToJsonAndBack)
     converter.json_to_model(object, target);
 
     // accessing reconstructed parent and child
-    auto reco_parent = target.rootItem()->childAt(0);
-    auto reco_child = reco_parent->childAt(0);
+    auto reco_parent = target.rootItem()->getItem("", 0);
+    auto reco_child = reco_parent->getItem("", 0);
 
     // checking parent reconstruction
     EXPECT_EQ(reco_parent->model(), &target);
@@ -167,7 +167,7 @@ TEST_F(TestJsonModel, identifiers)
     // creating source and filling it from json
     SessionModel target("SourceModel");
     target.manager()->converter().json_to_model(json_source, target);
-    auto reco_parent = target.rootItem()->childAt(0);
+    auto reco_parent = target.rootItem()->getItem("", 0);
 
     // comparing identifiers of two items from different models
     auto id1 = parent1->data(ItemDataRole::IDENTIFIER).value<std::string>();
@@ -217,8 +217,8 @@ TEST_F(TestJsonModel, parentAndChildToFileAndBack)
     converter.json_to_model(document.object(), target);
 
     // accessing reconstructed parent and child
-    auto reco_parent = target.rootItem()->childAt(0);
-    auto reco_child = reco_parent->childAt(0);
+    auto reco_parent = target.rootItem()->getItem("", 0);
+    auto reco_child = reco_parent->getItem("", 0);
 
     // checking parent reconstruction
     EXPECT_EQ(reco_parent->model(), &target);

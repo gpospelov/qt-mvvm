@@ -89,3 +89,14 @@ int Utils::CopyNumber(const SessionItem* item)
 
     return count >1 ? result : -1;
 }
+
+SessionItem* Utils::ChildAt(const SessionItem* parent, int index)
+{
+    if (!parent)
+        return nullptr;
+
+    auto container = parent->children();
+    return index >= 0 && static_cast<size_t>(index) < container.size()
+               ? container[static_cast<size_t>(index)]
+               : nullptr;
+}
