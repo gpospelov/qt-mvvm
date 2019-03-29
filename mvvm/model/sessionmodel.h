@@ -35,7 +35,7 @@ public:
     std::string modelType() const;
 
     SessionItem* insertNewItem(const model_type& modelType, SessionItem* parent = nullptr,
-                               int row = -1, const std::string& tag={});
+                               const std::string& tag={}, int index = -1);
 
     SessionItem* rootItem() const;
 

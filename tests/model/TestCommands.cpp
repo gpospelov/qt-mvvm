@@ -120,7 +120,7 @@ TEST_F(TestCommands, insertNewItemWithTagCommand)
 TEST_F(TestCommands, removeAtCommand)
 {
     SessionModel model;
-    auto item = model.insertNewItem(Constants::BaseType, model.rootItem(), 0, "");
+    auto item = model.insertNewItem(Constants::BaseType, model.rootItem(), "", 0);
 
     auto item_identifier = item->data(ItemDataRole::IDENTIFIER).value<std::string>();
 
@@ -141,12 +141,12 @@ TEST_F(TestCommands, removeAtCommand)
 TEST_F(TestCommands, removeAtCommandChild)
 {
     SessionModel model;
-    auto parent = model.insertNewItem(Constants::BaseType, model.rootItem(), 0, "");
+    auto parent = model.insertNewItem(Constants::BaseType, model.rootItem(), "", 0);
     parent->registerTag(TagInfo::universalTag("tag1"), /*set_as_default*/ true);
 
-    auto child1 = model.insertNewItem(Constants::BaseType, parent, -1, "tag1");
+    auto child1 = model.insertNewItem(Constants::BaseType, parent, "tag1", -1);
     child1->setData(42.0, ItemDataRole::DATA);
-    model.insertNewItem(Constants::BaseType, parent, -1, "tag1");
+    model.insertNewItem(Constants::BaseType, parent, "tag1", -1);
 
     auto child1_identifier = child1->data(ItemDataRole::IDENTIFIER).value<std::string>();
 
@@ -171,10 +171,10 @@ TEST_F(TestCommands, removeAtCommandChild)
 TEST_F(TestCommands, removeAtCommandParentWithChild)
 {
     SessionModel model;
-    auto parent = model.insertNewItem(Constants::BaseType, model.rootItem(), 0, "");
+    auto parent = model.insertNewItem(Constants::BaseType, model.rootItem(), "", 0);
     parent->registerTag(TagInfo::universalTag("tag1"), /*set_as_default*/ true);
 
-    auto child1 = model.insertNewItem(Constants::BaseType, parent, -1, "tag1");
+    auto child1 = model.insertNewItem(Constants::BaseType, parent, "tag1", -1);
     child1->setData(42.0, ItemDataRole::DATA);
 
     auto parent_identifier = parent->data(ItemDataRole::IDENTIFIER).value<std::string>();
@@ -208,17 +208,17 @@ TEST_F(TestCommands, removeAtCommandParentWithChild)
 TEST_F(TestCommands, removeAtCommandMultitag)
 {
     SessionModel model;
-    auto parent = model.insertNewItem(Constants::BaseType, model.rootItem(), 0, "");
+    auto parent = model.insertNewItem(Constants::BaseType, model.rootItem(), "", 0);
     parent->registerTag(TagInfo::universalTag("tag1"));
     parent->registerTag(TagInfo::universalTag("tag2"));
 
-    auto child1 = model.insertNewItem(Constants::BaseType, parent, -1, "tag1");
+    auto child1 = model.insertNewItem(Constants::BaseType, parent, "tag1", -1);
     child1->setData(41.0, ItemDataRole::DATA);
 
-    auto child2 = model.insertNewItem(Constants::BaseType, parent, -1, "tag1");
+    auto child2 = model.insertNewItem(Constants::BaseType, parent, "tag1", -1);
     child2->setData(42.0, ItemDataRole::DATA);
 
-    auto child3 = model.insertNewItem(Constants::BaseType, parent, -1, "tag2");
+    auto child3 = model.insertNewItem(Constants::BaseType, parent, "tag2", -1);
     child3->setData(43.0, ItemDataRole::DATA);
 
     auto parent_identifier = parent->data(ItemDataRole::IDENTIFIER).value<std::string>();

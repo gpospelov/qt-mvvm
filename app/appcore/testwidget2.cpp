@@ -83,8 +83,7 @@ void TestWidget2::onContextMenuRequest(const QPoint& point)
 
     // inserting item of same type after given item
     connect(addItemAction, &QAction::triggered, [&]() {
-        m_sessionModel->insertNewItem(item->modelType(), item->parent(), taginfo.second + 1,
-                                      taginfo.first);
+        m_sessionModel->insertNewItem(item->modelType(), item->parent(),  taginfo.first, taginfo.second + 1);
     });
 
     QAction* removeItemAction = menu.addAction("Remove item");

@@ -92,7 +92,7 @@ TEST_F(TestJsonModel, singleItemToJsonAndBack)
     JsonModel converter;
     SessionModel model("TestModel");
 
-    auto item = model.insertNewItem(Constants::BaseType, nullptr, -1);
+    auto item = model.insertNewItem(Constants::BaseType, nullptr, "", -1);
 
     QJsonObject object;
     converter.model_to_json(model, object);

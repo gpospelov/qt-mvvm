@@ -25,7 +25,7 @@ TEST(TestModelMapper, onDataChange)
     MockWidgetForModel widget(&model);
 
     EXPECT_CALL(widget, onRowInserted(_, _));
-    auto item = model.insertNewItem(Constants::BaseType, model.rootItem(), 0, "");
+    auto item = model.insertNewItem(Constants::BaseType, model.rootItem(), "", 0);
 
     // expecting signal to be called once
     const int role = ItemDataRole::DATA;
@@ -60,7 +60,7 @@ TEST(TestModelMapper, onRowInserted)
     EXPECT_CALL(widget, onRowRemoved(_, _)).Times(0);
 
     // perform action
-    model.insertNewItem(Constants::BaseType, model.rootItem(), 0, "");
+    model.insertNewItem(Constants::BaseType, model.rootItem(), "", 0);
 }
 
 //! Inserting item and checking corresponding signals.
@@ -72,7 +72,7 @@ TEST(TestModelMapper, onRowRemoved)
 
     const int expected_index(0);
     EXPECT_CALL(widget, onRowInserted(model.rootItem(), expected_index)).Times(1);
-    model.insertNewItem(Constants::BaseType, model.rootItem(), 0, "");
+    model.insertNewItem(Constants::BaseType, model.rootItem(), "", 0);
 
     EXPECT_CALL(widget, onDataChange(_, _)).Times(0);
     EXPECT_CALL(widget, onRowInserted(_, _)).Times(0);

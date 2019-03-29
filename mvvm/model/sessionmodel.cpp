@@ -37,9 +37,9 @@ std::string SessionModel::modelType() const
     return m_model_type;
 }
 
-SessionItem* SessionModel::insertNewItem(const model_type& modelType, SessionItem* parent, int row, const std::string& tag)
+SessionItem* SessionModel::insertNewItem(const model_type& modelType, SessionItem* parent, const std::string& tag, int index)
 {
-    return m_commands->insertNewItem(modelType, parent, row, tag);
+    return m_commands->insertNewItem(modelType, parent, index, tag);
 }
 
 SessionItem* SessionModel::rootItem() const
