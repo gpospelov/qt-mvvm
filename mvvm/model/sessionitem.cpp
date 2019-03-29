@@ -126,7 +126,7 @@ bool SessionItem::insertItem(SessionItem* item, const std::string& tag, int inde
 
 //! Removes item from given row from given tag, returns it to the caller.
 
-SessionItem* SessionItem::takeItem(int index, const std::string& tag)
+SessionItem* SessionItem::takeItem(const std::string& tag, int index)
 {
     // FIXME remove hack
     auto tmp = p_impl->m_tags->getItem(tag, index);

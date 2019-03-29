@@ -74,7 +74,7 @@ void InsertNewItemCommand::undo()
 
     int row = m_row < 0 ? static_cast<int>(parent->getItems(m_tag).size())-1 : m_row;
 
-    delete parent->takeItem(row, m_tag); // FIXME revise negative row
+    delete parent->takeItem(m_tag, row); // FIXME revise negative row
     m_result = nullptr;
 }
 
@@ -122,7 +122,7 @@ void RemoveItemCommand::redo()
     const auto& converter = m_model->manager()->item_converter();
 
     auto parent = m_model->itemFromPath(m_parent_path);
-    auto child = parent->takeItem(m_row, m_tag);
+    auto child = parent->takeItem(m_tag, m_row);
 
     m_child_backup = std::make_unique<QJsonObject>(converter.to_json(child));
 

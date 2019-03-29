@@ -267,11 +267,11 @@ TEST_F(TestSessionItem, takeItem)
     EXPECT_EQ(parent->childrenCount(), 3);
 
     // taking non-existing rows
-    EXPECT_EQ(parent->takeItem(-1), nullptr);
-    EXPECT_EQ(parent->takeItem(parent->childrenCount()), nullptr);
+    EXPECT_EQ(parent->takeItem("", -1), nullptr);
+    EXPECT_EQ(parent->takeItem("", parent->childrenCount()), nullptr);
 
     // taking first row
-    auto taken = parent->takeItem(0);
+    auto taken = parent->takeItem("", 0);
     EXPECT_EQ(taken->parent(), nullptr);
     std::vector<SessionItem*> expected = {child2, child3};
     EXPECT_EQ(parent->children(), expected);
@@ -314,14 +314,14 @@ TEST_F(TestSessionItem, singleTagAndItems)
     EXPECT_EQ(parent->getItems(tag1), expected);
 
     // removing first item
-    delete parent->takeItem(0, tag1);
+    delete parent->takeItem(tag1, 0);
     EXPECT_EQ(parent->getItems(tag1), std::vector<SessionItem*>() = {child2});
     // removing second item
-    delete parent->takeItem(0, tag1);
+    delete parent->takeItem(tag1, 0);
     EXPECT_EQ(parent->getItems(tag1), std::vector<SessionItem*>() = {});
 
     // removing from already empty container
-    EXPECT_EQ(parent->takeItem(0, tag1), nullptr);
+    EXPECT_EQ(parent->takeItem(tag1, 0), nullptr);
 }
 
 //! Insert and take tagged items when two tags are present.
@@ -376,7 +376,7 @@ TEST_F(TestSessionItem, twoTagsAndItems)
     EXPECT_EQ(parent->getItems(tag2), expected);
 
     // removing item from the middle of tag2
-    delete parent->takeItem(1, tag2);
+    delete parent->takeItem(tag2, 1);
     expected = {child_t1_a, child_t1_b};
     EXPECT_EQ(parent->getItems(tag1), expected);
     expected = {child_t2_a, child_t2_c};
@@ -406,7 +406,7 @@ TEST_F(TestSessionItem, tagWithLimits)
     EXPECT_FALSE(parent->insertItem(extra, tag1));
 
     // removing first element
-    delete parent->takeItem(0, tag1);
+    delete parent->takeItem(tag1, 0);
     expected.erase(expected.begin());
     EXPECT_EQ(parent->getItems(tag1), expected);
 

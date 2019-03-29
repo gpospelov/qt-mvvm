@@ -55,7 +55,7 @@ TEST_F(TestSessionModel, insertNewItem)
     EXPECT_EQ(child->modelType(), modelType);
 
     // taking child back
-    auto taken = item->takeItem(0);
+    auto taken = item->takeItem("", 0);
     EXPECT_EQ(taken, child);
     EXPECT_EQ(child->model(), nullptr);
 
@@ -139,7 +139,7 @@ TEST_F(TestSessionModel, takeRowFromRootItem)
     EXPECT_EQ(model.manager()->itemPool()->item_for_key(child_key), child);
 
     // taking parent
-    auto taken = model.rootItem()->takeItem(0);
+    auto taken = model.rootItem()->takeItem("", 0);
     EXPECT_EQ(model.manager()->itemPool()->item_for_key(parent_key), nullptr);
     EXPECT_EQ(model.manager()->itemPool()->item_for_key(child_key), nullptr);
     delete taken;
