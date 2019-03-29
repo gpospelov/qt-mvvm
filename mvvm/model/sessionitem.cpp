@@ -164,7 +164,6 @@ std::string SessionItem::defaultTag() const
 
 void SessionItem::setDefaultTag(const std::string& tag)
 {
-    setDataIntern(QVariant::fromValue(tag), ItemDataRole::DEFAULT_TAG);
     p_impl->m_tags->setDefaultTag(tag);
 }
 
