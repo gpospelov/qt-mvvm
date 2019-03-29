@@ -55,7 +55,7 @@ void JsonModel::model_to_json(const SessionModel& model, QJsonObject& json) cons
 
     QJsonArray itemArray;
 
-    auto converter = std::make_unique<JsonItem>(&model);
+    auto converter = std::make_unique<JsonItem>(model.manager()->factory());
 
     for(auto item : model.rootItem()->children())
         itemArray.append(converter->to_json(item));
@@ -77,7 +77,7 @@ void JsonModel::json_to_model(const QJsonObject& json, SessionModel& model) cons
     if (json[modelKey].toString() != QString::fromStdString(model.modelType()))
             throw std::runtime_error("JsonModel::json_to_model() -> Unexpected model type.");
 
-    auto converter = std::make_unique<JsonItem>(&model);
+    auto converter = std::make_unique<JsonItem>(model.manager()->factory());
 
     auto parent = model.rootItem();
     for(const auto ref : json[itemsKey].toArray()) {

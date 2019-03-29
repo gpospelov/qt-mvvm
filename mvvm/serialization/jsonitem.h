@@ -39,8 +39,6 @@ public:
     static const QString tagInfoKey;
     static const QString itemsKey;
 
-    // FIXME get rid one of the two constructors
-    JsonItem(const SessionModel* model);
     JsonItem(const ItemFactoryInterface* factory);
     ~JsonItem() override;
 

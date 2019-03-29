@@ -13,7 +13,6 @@
 #include "itemfactory.h"
 #include "itempool.h"
 #include "jsonconverterinterfaces.h"
-#include "jsonmodel.h"
 #include "jsonitem.h"
 #include "sessionitem.h"
 
@@ -27,7 +26,9 @@ std::unique_ptr<ModelView::ItemFactory> DefaultItemFactory()
 
 using namespace ModelView;
 
-ItemManager::ItemManager() : m_item_factory(DefaultItemFactory()), m_item_converter(std::make_unique<JsonItem>(m_item_factory.get()))
+ItemManager::ItemManager()
+    : m_item_factory(DefaultItemFactory()),
+      m_item_converter(std::make_unique<JsonItem>(m_item_factory.get()))
 {
 }
 

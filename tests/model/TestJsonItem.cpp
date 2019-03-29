@@ -5,6 +5,7 @@
 #include "sessionmodel.h"
 #include "taginfo.h"
 #include "test_utils.h"
+#include "itemmanager.h"
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -25,7 +26,7 @@ public:
 
     std::unique_ptr<JsonItem> createConverter()
     {
-        return std::make_unique<JsonItem>(m_model.get());
+        return std::make_unique<JsonItem>(m_model->manager()->factory());
     }
 
 private:

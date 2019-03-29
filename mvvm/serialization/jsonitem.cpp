@@ -40,13 +40,6 @@ const QString JsonItem::containerKey = "containers";
 const QString JsonItem::tagInfoKey = "tagInfo";
 const QString JsonItem::itemsKey = "items";
 
-JsonItem::JsonItem(const SessionModel* model)
-    : m_itemdata_converter(std::make_unique<JsonItemData>()),
-      m_taginfo_converter(std::make_unique<JsonTagInfo>()), m_factory(nullptr)
-{
-    m_factory = model->manager()->factory();
-}
-
 JsonItem::JsonItem(const ItemFactoryInterface* factory)
     : m_itemdata_converter(std::make_unique<JsonItemData>()),
       m_taginfo_converter(std::make_unique<JsonTagInfo>()), m_factory(factory)

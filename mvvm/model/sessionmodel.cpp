@@ -21,7 +21,7 @@
 using namespace ModelView;
 
 SessionModel::SessionModel(std::string model_type)
-    : m_item_manager(new ItemManager), m_commands(std::make_unique<CommandService>(this)),
+    : m_item_manager(std::make_unique<ItemManager>()), m_commands(std::make_unique<CommandService>(this)),
       m_model_type(std::move(model_type)), m_mapper(std::make_unique<ModelMapper>(this))
 {
     m_item_manager->setItemPool(std::make_shared<ItemPool>());
@@ -61,13 +61,11 @@ bool SessionModel::setData(SessionItem* item, const QVariant& value, int role)
 Path SessionModel::pathFromItem(SessionItem* item)
 {
     Path result;
-
     SessionItem* current(item);
     while (current && current->parent()) {
         result.prepend(Utils::IndexOfChild(current->parent(), current));
         current = current->parent();
     }
-
     return result;
 }
 
@@ -81,7 +79,6 @@ SessionItem* SessionModel::itemFromPath(Path path)
         if (!result)
             break;
     }
-
     return result;
 }
 
