@@ -91,7 +91,7 @@ private:
     void setModel(SessionModel* model);
     void setAppearanceFlag(int flag, bool value);
 
-    std::unique_ptr<SessionItemPrivate> pimpl;
+    std::unique_ptr<SessionItemPrivate> p_impl;
 };
 
 } // namespace ModelView
