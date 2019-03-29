@@ -13,7 +13,7 @@
 #include "syntaxhighlighter.h"
 #include "toy_includes.h"
 #include "viewitem.h"
-#include "obsoleteviewmodel.h"
+#include "defaultviewmodel.h"
 #include <QDebug>
 #include <QHBoxLayout>
 #include <QJsonDocument>
@@ -37,7 +37,7 @@ using namespace ModelView;
 
 TestWidget2::TestWidget2(QWidget* parent)
     : QWidget(parent), m_treeView1(new QTreeView), m_treeView2(new QTreeView),
-      m_plainText(new QTextEdit), m_viewModel(new ObsoleteViewModel(this)),
+      m_plainText(new QTextEdit), m_viewModel(new DefaultViewModel(this)),
       m_sessionModel(new ToyItems::SampleModel)
 {
     auto vlayout = new QVBoxLayout;
