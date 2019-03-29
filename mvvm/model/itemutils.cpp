@@ -9,6 +9,7 @@
 
 #include "itemutils.h"
 #include "sessionitem.h"
+#include <iterator>
 
 using namespace ModelView;
 
@@ -67,13 +68,11 @@ bool Utils::IsTheSame(const QVariant& var1, const QVariant& var2)
     return var1 == var2;
 }
 
-
-
 int Utils::CopyNumber(const SessionItem* item)
 {
     int result(-1);
 
-    if(!item)
+    if (!item)
         return result;
 
     int count(0);
@@ -87,7 +86,7 @@ int Utils::CopyNumber(const SessionItem* item)
         }
     }
 
-    return count >1 ? result : -1;
+    return count > 1 ? result : -1;
 }
 
 SessionItem* Utils::ChildAt(const SessionItem* parent, int index)
@@ -99,4 +98,11 @@ SessionItem* Utils::ChildAt(const SessionItem* parent, int index)
     return index >= 0 && static_cast<size_t>(index) < container.size()
                ? container[static_cast<size_t>(index)]
                : nullptr;
+}
+
+int Utils::IndexOfChild(const SessionItem* parent, SessionItem* child)
+{
+    auto container = parent->children();
+    auto pos = find(container.begin(), container.end(), child);
+    return pos == container.end() ? -1 : static_cast<int>(std::distance(container.begin(), pos));
 }

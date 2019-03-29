@@ -19,7 +19,7 @@
 #include "taginfo.h"
 #include "customvariants.h"
 #include "sessionitem_p.h"
-#include <iterator>
+#include "itemutils.h" // FIXME remove dependency
 #include <stdexcept>
 
 namespace
@@ -115,7 +115,7 @@ bool SessionItem::insertItem(SessionItem* item, int row, const std::string& tag)
         item->setModel(model());
 
         if (p_impl->m_model)
-            p_impl->m_model->mapper()->callOnRowInserted(this, indexOfChild(item));
+            p_impl->m_model->mapper()->callOnRowInserted(this, Utils::IndexOfChild(this, item));
     }
 
     return result;
@@ -127,7 +127,7 @@ SessionItem* SessionItem::takeItem(int row, const std::string& tag)
 {
     // FIXME remove hack
     auto tmp = p_impl->m_tags->getItem(tag, row);
-    int tmp_index = indexOfChild(tmp);
+    int tmp_index = Utils::IndexOfChild(this, tmp);
 
     auto result = p_impl->m_tags->takeItem(row, tag);
     if (result) {
@@ -146,15 +146,6 @@ SessionItem* SessionItem::takeItem(int row, const std::string& tag)
 std::vector<SessionItem*> SessionItem::children() const
 {
     return p_impl->m_tags->allitems();
-}
-
-//! Returns index in children array corresponding to given child. No tags involved.
-
-int SessionItem::indexOfChild(SessionItem* child) const
-{
-    auto container = children();
-    auto pos = find(container.begin(), container.end(), child);
-    return pos == container.end() ? -1 : static_cast<int>(std::distance(container.begin(), pos));
 }
 
 std::vector<int> SessionItem::roles() const

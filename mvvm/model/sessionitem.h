@@ -56,8 +56,6 @@ public:
 
     std::vector<SessionItem*> children() const;
 
-    int indexOfChild(SessionItem* child) const;
-
     std::vector<int> roles() const;
 
     // tags

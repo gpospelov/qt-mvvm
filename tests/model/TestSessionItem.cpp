@@ -175,8 +175,8 @@ TEST_F(TestSessionItem, insertItem)
 
     // empty parent
     EXPECT_EQ(parent->childrenCount(), 0);
-    EXPECT_EQ(parent->indexOfChild(nullptr), -1);
-    EXPECT_EQ(parent->indexOfChild(child.get()), -1);
+    EXPECT_EQ(Utils::IndexOfChild(parent.get(), nullptr), -1);
+    EXPECT_EQ(Utils::IndexOfChild(parent.get(), child.get()), -1);
     EXPECT_EQ(parent->getItem("", 0), nullptr);
     EXPECT_EQ(parent->getItem("", -1), nullptr);
     EXPECT_EQ(parent->getItem("", 10), nullptr);
@@ -185,7 +185,7 @@ TEST_F(TestSessionItem, insertItem)
     auto p_child = child.release();
     parent->insertItem(p_child, 0);
     EXPECT_EQ(parent->childrenCount(), 1);
-    EXPECT_EQ(parent->indexOfChild(p_child), 0);
+    EXPECT_EQ(Utils::IndexOfChild(parent.get(), p_child), 0);
     EXPECT_EQ(parent->children()[0], p_child);
     EXPECT_EQ(parent->getItem("", 0), p_child);
     EXPECT_EQ(p_child->parent(), parent.get());
@@ -211,8 +211,8 @@ TEST_F(TestSessionItem, insertChildren)
     // inserting two items
     parent->insertItem(child1, -1);
     parent->insertItem(child2, -1);
-    EXPECT_EQ(parent->indexOfChild(child1), 0);
-    EXPECT_EQ(parent->indexOfChild(child2), 1);
+    EXPECT_EQ(Utils::IndexOfChild(parent.get(), child1), 0);
+    EXPECT_EQ(Utils::IndexOfChild(parent.get(), child2), 1);
     EXPECT_EQ(parent->getItem("", 0), child1);
     EXPECT_EQ(parent->getItem("", 1), child2);
     std::vector<SessionItem*> expected = {child1, child2};
@@ -222,9 +222,9 @@ TEST_F(TestSessionItem, insertChildren)
     parent->insertItem(child3, 1);
     expected = {child1, child3, child2};
     EXPECT_EQ(parent->children(), expected);
-    EXPECT_EQ(parent->indexOfChild(child1), 0);
-    EXPECT_EQ(parent->indexOfChild(child2), 2);
-    EXPECT_EQ(parent->indexOfChild(child3), 1);
+    EXPECT_EQ(Utils::IndexOfChild(parent.get(), child1), 0);
+    EXPECT_EQ(Utils::IndexOfChild(parent.get(), child2), 2);
+    EXPECT_EQ(Utils::IndexOfChild(parent.get(), child3), 1);
     EXPECT_EQ(parent->getItem("", 0), child1);
     EXPECT_EQ(parent->getItem("", 1), child3);
     EXPECT_EQ(parent->getItem("", 2), child2);
@@ -298,8 +298,8 @@ TEST_F(TestSessionItem, singleTagAndItems)
     // testing result of insertion via non-tag interface
     std::vector<SessionItem*> expected = {child1, child2};
     EXPECT_EQ(parent->children(), expected);
-    EXPECT_EQ(parent->indexOfChild(child1), 0);
-    EXPECT_EQ(parent->indexOfChild(child2), 1);
+    EXPECT_EQ(Utils::IndexOfChild(parent.get(), child1), 0);
+    EXPECT_EQ(Utils::IndexOfChild(parent.get(), child2), 1);
 
     // testing single item access via tag interface
     EXPECT_THROW(parent->getItem(), std::runtime_error); // no items in default tag
@@ -354,8 +354,8 @@ TEST_F(TestSessionItem, twoTagsAndItems)
     // testing item access via non-tag interface
     std::vector<SessionItem*> expected = {child_t1_a, child_t1_b, child_t2_a, child_t2_b, child_t2_c};
     EXPECT_EQ(parent->children(), expected);
-    EXPECT_EQ(parent->indexOfChild(child_t1_a), 0);
-    EXPECT_EQ(parent->indexOfChild(child_t2_c), 4);
+    EXPECT_EQ(Utils::IndexOfChild(parent.get(), child_t1_a), 0);
+    EXPECT_EQ(Utils::IndexOfChild(parent.get(), child_t2_c), 4);
 
     // testing single item access via tag interface
     EXPECT_THROW(parent->getItem(), std::runtime_error); // no default tag registered

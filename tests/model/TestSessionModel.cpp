@@ -74,14 +74,14 @@ TEST_F(TestSessionModel, insertNewItemWithTag)
     auto child1 = model.insertNewItem(Constants::PropertyType, parent, -1, tag1);
 
     EXPECT_EQ(parent->tagFromItem(child1), tag1);
-    EXPECT_EQ(parent->indexOfChild(child1), 0);
+    EXPECT_EQ(Utils::IndexOfChild(parent, child1), 0);
 
     // adding second child
     auto child2 = model.insertNewItem(Constants::PropertyType, parent, 0, tag1);
 
     EXPECT_EQ(parent->tagFromItem(child2), tag1);
-    EXPECT_EQ(parent->indexOfChild(child1), 1);
-    EXPECT_EQ(parent->indexOfChild(child2), 0);
+    EXPECT_EQ(Utils::IndexOfChild(parent, child1), 1);
+    EXPECT_EQ(Utils::IndexOfChild(parent, child2), 0);
 }
 
 TEST_F(TestSessionModel, setData)

@@ -44,7 +44,10 @@ CORE_EXPORT int CopyNumber(const SessionItem* item);
 
 //! Returns child at given index of parent. No tags are involved, index is concidered
 //! as global index in the array with all children.
-CORE_EXPORT SessionItem* ChildAt(const ModelView::SessionItem* parent, int index);
+CORE_EXPORT SessionItem* ChildAt(const SessionItem* parent, int index);
+
+//! Returns index in children array corresponding to given child. No tags involved.
+CORE_EXPORT int IndexOfChild(const SessionItem* parent, SessionItem* child);
 
 }  // namespace Utils
 

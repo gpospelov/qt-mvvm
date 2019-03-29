@@ -65,7 +65,7 @@ Path SessionModel::pathFromItem(SessionItem* item)
 
     SessionItem* current(item);
     while (current && current->parent()) {
-        result.prepend(current->parent()->indexOfChild(current));
+        result.prepend(Utils::IndexOfChild(current->parent(), current));
         current = current->parent();
     }
 
