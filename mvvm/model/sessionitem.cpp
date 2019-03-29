@@ -99,9 +99,9 @@ int SessionItem::childrenCount() const
     return static_cast<int>(children().size());
 }
 
-//! Insert item into given tag into given row.
+//! Insert item into given tag under the given index.
 
-bool SessionItem::insertItem(SessionItem* item, int row, const std::string& tag)
+bool SessionItem::insertItem(SessionItem* item, int index, const std::string& tag)
 {
     if (!item)
         throw std::runtime_error("SessionItem::insertItem() -> Invalid item.");
@@ -112,7 +112,7 @@ bool SessionItem::insertItem(SessionItem* item, int row, const std::string& tag)
     if (item->model())
         throw std::runtime_error("SessionItem::insertItem() -> Existing model.");
 
-    auto result = p_impl->m_tags->insertItem(item, row, tag);
+    auto result = p_impl->m_tags->insertItem(item, index, tag);
     if (result) {
         item->setParent(this);
         item->setModel(model());
@@ -126,13 +126,13 @@ bool SessionItem::insertItem(SessionItem* item, int row, const std::string& tag)
 
 //! Removes item from given row from given tag, returns it to the caller.
 
-SessionItem* SessionItem::takeItem(int row, const std::string& tag)
+SessionItem* SessionItem::takeItem(int index, const std::string& tag)
 {
     // FIXME remove hack
-    auto tmp = p_impl->m_tags->getItem(tag, row);
+    auto tmp = p_impl->m_tags->getItem(tag, index);
     int tmp_index = Utils::IndexOfChild(this, tmp);
 
-    auto result = p_impl->m_tags->takeItem(row, tag);
+    auto result = p_impl->m_tags->takeItem(index, tag);
     if (result) {
         result->setParent(nullptr);
         result->setModel(nullptr);
@@ -188,11 +188,11 @@ bool SessionItem::isTag(const std::string& name)
     return p_impl->m_tags->isTag(name);
 }
 
-//! Returns item in given row of given tag.
+//! Returns item at given index of given tag.
 
-SessionItem* SessionItem::getItem(const std::string& tag, int row) const
+SessionItem* SessionItem::getItem(const std::string& tag, int index) const
 {
-    return p_impl->m_tags->getItem(tag, row);
+    return p_impl->m_tags->getItem(tag, index);
 }
 
 std::vector<SessionItem*> SessionItem::getItems(const std::string& tag) const
@@ -205,7 +205,7 @@ std::string SessionItem::tagFromItem(const SessionItem* item) const
     return p_impl->m_tags->tagIndexOfItem(item).first;
 }
 
-//! Returns item's row in its tag.
+//! Returns pair of tag and index corresponding to given item.
 
 std::pair<std::string, int> SessionItem::tagIndexOfItem(const SessionItem* item) const
 {
