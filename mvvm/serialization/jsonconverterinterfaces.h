@@ -11,14 +11,15 @@
 #define JSONCONVERTERINTERFACES_H
 
 #include "global.h"
-#include <string>
 #include <memory>
+#include <string>
 
 class QJsonObject;
 class QVariant;
 class QJsonArray;
 
-namespace ModelView {
+namespace ModelView
+{
 
 class ObsoleteSessionItemTags;
 class SessionItemData;
@@ -70,7 +71,7 @@ class CORE_EXPORT JsonItemInterface
 public:
     virtual ~JsonItemInterface() = default;
 
-    virtual QJsonObject to_json(const SessionItem* item)  const = 0;
+    virtual QJsonObject to_json(const SessionItem* item) const = 0;
 
     virtual std::unique_ptr<SessionItem> from_json(const QJsonObject&) const = 0;
 };
@@ -82,11 +83,11 @@ class CORE_EXPORT JsonModelInterface
 public:
     virtual ~JsonModelInterface() = default;
 
-    virtual void model_to_json(const SessionModel&, QJsonObject&) const  = 0;
+    virtual void model_to_json(const SessionModel&, QJsonObject&) const = 0;
 
     virtual void json_to_model(const QJsonObject&, SessionModel&) const = 0;
 };
 
-}  // namespace ModelView
+} // namespace ModelView
 
 #endif

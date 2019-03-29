@@ -109,6 +109,9 @@ bool SessionItem::insertItem(SessionItem* item, int row, const std::string& tag)
     if (item->parent())
         throw std::runtime_error("SessionItem::insertItem() -> Existing parent.");
 
+    if (item->model())
+        throw std::runtime_error("SessionItem::insertItem() -> Existing model.");
+
     auto result = p_impl->m_tags->insertItem(item, row, tag);
     if (result) {
         item->setParent(this);
@@ -248,23 +251,19 @@ void SessionItem::setParent(SessionItem* parent)
 
 void SessionItem::setModel(SessionModel* model)
 {
-    if (p_impl->m_model) {
-        // FIXME throw here if it is the case
+    if (p_impl->m_model)
         p_impl->m_model->make_registered(this, false);
-    }
 
     p_impl->m_model = model;
 
-    if (p_impl->m_model) {
+    if (p_impl->m_model)
         p_impl->m_model->make_registered(this, true);
-    }
 
     // FIXME find better place for activate logic. ItemMapper ? make_registered ?
     if (p_impl->m_model)
         activate(); // activate buisiness logic
 
-    auto container = children();
-    for (auto child : container)
+    for (auto child : children())
         child->setModel(model);
 }
 
