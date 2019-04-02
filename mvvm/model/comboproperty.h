@@ -16,9 +16,8 @@
 #define COMBOPROPERTY_H
 
 #include "global.h"
-#include <QString>
-#include <QStringList>
 #include <QVariant>
+#include <string>
 #include <vector>
 
 //! Custom property to define list of string values with multiple selections.
@@ -29,48 +28,48 @@ class CORE_EXPORT ComboProperty
 public:
     ComboProperty();
 
-    static ComboProperty fromList(const QStringList& values,
-                                  const QString& current_value = QString());
+    static ComboProperty fromList(const std::vector<std::string>& values,
+                                  const std::string& current_value = {});
 
-    QString getValue() const;
-    void setValue(const QString& name);
+    std::string getValue() const;
+    void setValue(const std::string& name);
 
-    QStringList getValues() const;
-    void setValues(const QStringList& values);
+    std::vector<std::string> getValues() const;
+    void setValues(const std::vector<std::string>& values);
 
-    QStringList toolTips() const;
-    void setToolTips(const QStringList& tooltips);
+    std::vector<std::string> toolTips() const;
+    void setToolTips(const std::vector<std::string>& tooltips);
 
     int currentIndex() const;
     void setCurrentIndex(int index);
 
-    ComboProperty& operator<<(const QString& str);
-    ComboProperty& operator<<(const QStringList& str);
+    ComboProperty& operator<<(const std::string& str);
+    ComboProperty& operator<<(const std::vector<std::string>& str);
     bool operator==(const ComboProperty& other) const;
     bool operator!=(const ComboProperty& other) const;
     bool operator<(const ComboProperty& other) const;
 
-    QString stringOfValues() const;
-    void setStringOfValues(const QString& values);
+    std::string stringOfValues() const;
+    void setStringOfValues(const std::string& values);
 
     QVariant variant() const;
 
     std::vector<int> selectedIndices() const;
-    QStringList selectedValues() const;
+    std::vector<std::string> selectedValues() const;
 
     void setSelected(int index, bool value = true);
-    void setSelected(const QString& name, bool value = true);
+    void setSelected(const std::string& name, bool value = true);
 
-    QString stringOfSelections() const;
-    void setStringOfSelections(const QString& values);
+    std::string stringOfSelections() const;
+    void setStringOfSelections(const std::string& values);
 
-    QString label() const;
+    std::string label() const;
 
 private:
-    ComboProperty(QStringList values);
+    ComboProperty(std::vector<std::string> values);
 
-    QStringList m_values;
-    QStringList m_tooltips;
+    std::vector<std::string> m_values;
+    std::vector<std::string> m_tooltips;
     std::vector<int> m_selected_indices;
 };
 

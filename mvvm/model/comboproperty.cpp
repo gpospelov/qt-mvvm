@@ -14,65 +14,110 @@
 
 #include "comboproperty.h"
 #include <stdexcept>
+#include <sstream>
 
 namespace {
-const QString value_separator = ";";
-const QString selection_separator = ",";
+const std::string value_separator = ";";
+const std::string selection_separator = ",";
+const std::string multiple_label = "Multiple";
+const std::string none_label = "None";
+
+template<typename C, typename T>
+int indexOfItem(const C& container, const T& item)
+{
+    auto pos = find(container.begin(), container.end(), item);
+    return pos == container.end() ? -1 : static_cast<int>(std::distance(container.begin(), pos));
+}
+
+template<typename C, typename T>
+int contains(const C& container, const T& item)
+{
+    return find(container.begin(), container.end(), item) != container.end();
+}
+
+template<typename C, typename T>
+std::string toString(const C& container, const T& delim)
+{
+    std::stringstream result;
+    for(auto it = container.begin(); it!= container.end(); ++it) {
+        result << *it;
+        if (std::distance(it, container.end()) != 1)
+            result << delim;
+    }
+    return result.str();
+}
+
+std::vector<std::string> tokenize(const std::string& str, const std::string& delimeter){
+    std::vector<std::string> result;
+    size_t start = str.find_first_not_of(delimeter), end=start;
+
+    while (start != std::string::npos){
+        // Find next occurence of delimiter
+        end = str.find(delimeter, start);
+        // Push back the token found into vector
+        result.push_back(str.substr(start, end-start));
+        // Skip all occurences of the delimiter to find new start
+        start = str.find_first_not_of(delimeter, end);
+    }
+    return result;
+}
 }
 
 ComboProperty::ComboProperty() = default;
 
-ComboProperty::ComboProperty(QStringList values)
+ComboProperty::ComboProperty(std::vector<std::string> values)
     : m_values(std::move(values))
 {
 
 }
 
-ComboProperty ComboProperty::fromList(const QStringList& values, const QString& current_value)
+ComboProperty ComboProperty::fromList(const std::vector<std::string>& values, const std::string& current_value)
 {
     ComboProperty result(values);
 
-    if (!current_value.isEmpty())
+    if (!current_value.empty())
         result.setValue(current_value);
 
     return result;
 }
 
-QString ComboProperty::getValue() const
+std::string ComboProperty::getValue() const
 {
-    return currentIndex() < 0 ? QString() : m_values.at(currentIndex());
+    return currentIndex() < 0 ? std::string() : m_values.at(static_cast<size_t>(currentIndex()));
 }
 
-void ComboProperty::setValue(const QString& name)
+void ComboProperty::setValue(const std::string& name)
 {
-    if (!m_values.contains(name))
+    if (!contains(m_values, name))
         throw std::runtime_error("ComboProperty::setValue() -> Error. Combo doesn't contain "
-                                "value " + name.toStdString());
-    setCurrentIndex(m_values.indexOf(name));
+                                "value " + name);
+    setCurrentIndex(indexOfItem(m_values, name));
 }
 
-QStringList ComboProperty::getValues() const
+std::vector<std::string> ComboProperty::getValues() const
 {
     return m_values;
 }
 
 //! Sets new list of values. Current value will be preserved, if exists in a new list.
 
-void ComboProperty::setValues(const QStringList& values)
+void ComboProperty::setValues(const std::vector<std::string>& values)
 {
-    Q_ASSERT(values.size());
-    QString current = getValue();
+    if (values.empty())
+        return;
+
+    auto current = getValue();
     m_values = values;
-   setCurrentIndex(m_values.contains(current) ? m_values.indexOf(current) : 0);
+   setCurrentIndex(contains(m_values, current) ? indexOfItem(m_values, current) : 0);
 }
 
 //! returns list of tool tips for all values
-QStringList ComboProperty::toolTips() const
+std::vector<std::string> ComboProperty::toolTips() const
 {
     return m_tooltips;
 }
 
-void ComboProperty::setToolTips(const QStringList& tooltips)
+void ComboProperty::setToolTips(const std::vector<std::string>& tooltips)
 {
     m_tooltips = tooltips;
 }
@@ -84,24 +129,24 @@ int ComboProperty::currentIndex() const
 
 void ComboProperty::setCurrentIndex(int index)
 {
-    if (index < 0 || index >= m_values.size())
+    if (index < 0 || index >= static_cast<int>(m_values.size()))
         throw std::runtime_error("ComboProperty::setCurrentIndex(int index) -> Error. "
                                 "Invalid index");
     m_selected_indices.clear();
     m_selected_indices.push_back(index);
 }
 
-ComboProperty& ComboProperty::operator<<(const QString& str)
+ComboProperty& ComboProperty::operator<<(const std::string& str)
 {
-    m_values.append(str);
+    m_values.push_back(str);
     if (m_values.size())
         setCurrentIndex(0);
     return *this;
 }
 
-ComboProperty& ComboProperty::operator<<(const QStringList& str)
+ComboProperty& ComboProperty::operator<<(const std::vector<std::string>& str)
 {
-    m_values.append(str);
+    m_values.insert(m_values.end(), str.begin(), str.end());
     if (m_values.size())
         setCurrentIndex(0);
     return *this;
@@ -128,27 +173,25 @@ bool ComboProperty::operator<(const ComboProperty& other) const
 
 //! Returns a single string containing values delimited with ';'.
 
-QString ComboProperty::stringOfValues() const
+std::string ComboProperty::stringOfValues() const
 {
-    return m_values.join(value_separator);
+    return toString(m_values, value_separator);
 }
 
 //! Sets values from the string containing delimeter ';'.
 
-void ComboProperty::setStringOfValues(const QString& values)
+void ComboProperty::setStringOfValues(const std::string& values)
 {
-    QString current = getValue();
-    m_values = values.split(value_separator);
-    setCurrentIndex(m_values.contains(current) ? m_values.indexOf(current) : 0);
+    auto current = getValue();
+    m_values = tokenize(values, value_separator);
+    setCurrentIndex(contains(m_values, current) ? indexOfItem(m_values, current) : 0);
 }
 
 //! Constructs variant enclosing given ComboProperty.
 
 QVariant ComboProperty::variant() const
 {
-    QVariant result;
-    result.setValue(*this);
-    return result;
+    return QVariant::fromValue(*this);
 }
 
 //! Returns vector of selected indices.
@@ -160,11 +203,11 @@ std::vector<int> ComboProperty::selectedIndices() const
 
 //! Returns list of string with selected values;
 
-QStringList ComboProperty::selectedValues() const
+std::vector<std::string> ComboProperty::selectedValues() const
 {
-    QStringList result;
+    std::vector<std::string> result;
     for (auto index : m_selected_indices)
-        result.append(m_values.at(index));
+        result.push_back(m_values.at(static_cast<size_t>(index)));
     return result;
 }
 
@@ -173,7 +216,7 @@ QStringList ComboProperty::selectedValues() const
 
 void ComboProperty::setSelected(int index, bool value)
 {
-    if (index < 0 || index >= m_values.size())
+    if (index < 0 || index >= static_cast<int>(m_values.size()))
         return;
 
     auto pos = find(m_selected_indices.begin(), m_selected_indices.end(), index);
@@ -187,47 +230,45 @@ void ComboProperty::setSelected(int index, bool value)
     std::sort(m_selected_indices.begin(), m_selected_indices.end());
 }
 
-void ComboProperty::setSelected(const QString& name, bool value)
+void ComboProperty::setSelected(const std::string& name, bool value)
 {
-    setSelected(m_values.indexOf(name), value);
+    setSelected(indexOfItem(m_values, name), value);
 }
 
 //! Return string with coma separated list of selected indices.
 
-QString ComboProperty::stringOfSelections() const
+std::string ComboProperty::stringOfSelections() const
 {
-    QStringList text;
+    std::vector<std::string> text;
     for (auto  index : m_selected_indices)
-        text.append(QString::number(index));
-    return text.join(selection_separator);
+        text.push_back(std::to_string(index));
+    return toString(text, selection_separator);
 }
 
 //! Sets selected indices from string.
 
-void ComboProperty::setStringOfSelections(const QString& values)
+void ComboProperty::setStringOfSelections(const std::string& values)
 {
     m_selected_indices.clear();
-    if (values.isEmpty())
+    if (values.empty())
         return;
 
-    for (auto str : values.split(selection_separator)) {
-        bool success(false);
-        int num = str.toInt(&success);
-        if (success)
-            setSelected(num, true);
+    for (auto str : tokenize(values, selection_separator)) {
+        int num = std::stoi(str);
+        setSelected(num, true);
     }
 }
 
-//! Returns the label to show
+//! Returns the label to show.
 
-QString ComboProperty::label() const
+std::string ComboProperty::label() const
 {
     if (m_selected_indices.size() >1) {
-        return QStringLiteral("Multiple");
+        return multiple_label;
     } else if (m_selected_indices.size() == 1) {
         return getValue();
     } else {
-        return QStringLiteral("None");
+        return none_label;
     }
 }
 
