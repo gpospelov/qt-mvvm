@@ -14,8 +14,8 @@
 
 //! Registrations and translations for custom variants.
 
-#include <QVariant>
 #include <QMetaType>
+#include <QVariant>
 #include <string>
 #include <vector>
 
@@ -28,7 +28,7 @@ CORE_EXPORT QVariant toQtVariant(const QVariant& custom);
 //! Converts Qt variant to custom variant on board of SessionItem.
 CORE_EXPORT QVariant toCustomVariant(const QVariant& standard);
 
-} // ModelView
+} // namespace ModelView
 
 Q_DECLARE_METATYPE(std::string)
 Q_DECLARE_METATYPE(std::vector<double>)
