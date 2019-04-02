@@ -1,6 +1,5 @@
 #include "google_test.h"
 #include "sessionitem.h"
-#include "toy_includes.h"
 #include "viewitems.h"
 #include <QDebug>
 #include <memory>
@@ -39,7 +38,7 @@ TEST_F(TestViewItem, initialViewLabelItem)
 TEST_F(TestViewItem, ViewDataItem_data)
 {
     // create SessionItem with data on board
-    std::unique_ptr<SessionItem> item(new SessionItem);
+    std::unique_ptr<SessionItem> item = std::make_unique<SessionItem>();
     QVariant expected(42.0);
     EXPECT_TRUE(item->setData(expected, ItemDataRole::DATA));
 
@@ -55,7 +54,7 @@ TEST_F(TestViewItem, ViewDataItem_data)
 TEST_F(TestViewItem, ViewLabelItem_data)
 {
     // create SessionItem with data on board
-    std::unique_ptr<SessionItem> item(new SessionItem);
+    std::unique_ptr<SessionItem> item = std::make_unique<SessionItem>();
     QVariant expected = QVariant::fromValue(std::string("Layer"));
     EXPECT_TRUE(item->setData(expected, ItemDataRole::DISPLAY));
 
@@ -71,7 +70,7 @@ TEST_F(TestViewItem, ViewLabelItem_data)
 TEST_F(TestViewItem, ViewDataItem_setData)
 {
     // create SessionItem with data on board
-    std::unique_ptr<SessionItem> item(new SessionItem);
+    std::unique_ptr<SessionItem> item = std::make_unique<SessionItem>();
     QVariant expected(42.0);
     EXPECT_TRUE(item->setData(expected, ItemDataRole::DATA));
 
@@ -96,7 +95,7 @@ TEST_F(TestViewItem, ViewDataItem_setData)
 TEST_F(TestViewItem, ViewLabelItem_setData)
 {
     // create SessionItem with data on board
-    std::unique_ptr<SessionItem> item(new SessionItem);
+    std::unique_ptr<SessionItem> item = std::make_unique<SessionItem>();
     QVariant expected = QVariant::fromValue(std::string("Layer"));
     EXPECT_TRUE(item->setData(expected, ItemDataRole::DISPLAY));
 
@@ -113,17 +112,4 @@ TEST_F(TestViewItem, ViewLabelItem_setData)
     // it is not allowed to set another type of data to ViewLabelItem
     QVariant not_allowed_value(42);
     EXPECT_THROW(viewItem.setData(not_allowed_value, Qt::EditRole), std::runtime_error);
-}
-
-//! How ViewLabelItem sees MultiLayer
-
-TEST_F(TestViewItem, viewItemsForMultiLayer)
-{
-    ToyItems::SampleModel model;
-
-    auto multiLayer = model.insertNewItem(ToyItems::Constants::MultiLayerType);
-
-    ViewLabelItem labelItem(multiLayer);
-    EXPECT_EQ(labelItem.data(Qt::DisplayRole).toString().toStdString(),
-              ToyItems::Constants::MultiLayerType);
 }

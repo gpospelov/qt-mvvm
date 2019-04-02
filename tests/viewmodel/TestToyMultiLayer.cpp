@@ -63,3 +63,16 @@ TEST_F(TestToyMultilayer, findMultiLayerView)
     EXPECT_EQ(views.size(), 1);
     EXPECT_EQ(views.at(0)->item(), multiLayerItem);
 }
+
+//! How ViewLabelItem sees MultiLayer
+
+TEST_F(TestToyMultilayer, viewItemsForMultiLayer)
+{
+    ToyItems::SampleModel model;
+
+    auto multiLayer = model.insertNewItem(ToyItems::Constants::MultiLayerType);
+
+    ViewLabelItem labelItem(multiLayer);
+    EXPECT_EQ(labelItem.data(Qt::DisplayRole).toString().toStdString(),
+              ToyItems::Constants::MultiLayerType);
+}
