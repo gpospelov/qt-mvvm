@@ -158,19 +158,19 @@ TEST_F(TestCustomVariants, variantTranslation)
 {
     // from Variant based on std::string to variant based on QString
     QVariant stdstringVariant = QVariant::fromValue(std::string("abc"));
-    QVariant qstringVariant = ModelView::toQtVariant(stdstringVariant);
+    QVariant qstringVariant = Utils::toQtVariant(stdstringVariant);
     QVariant expected("abc");
     EXPECT_FALSE(qstringVariant == stdstringVariant);
     EXPECT_TRUE(qstringVariant == expected);
 
     // from variant based on QString to variant based on std::string
     qstringVariant = QVariant::fromValue(QString("qwerty"));
-    stdstringVariant = ModelView::toCustomVariant(qstringVariant);
+    stdstringVariant = Utils::toCustomVariant(qstringVariant);
     expected = QVariant::fromValue(std::string("qwerty"));
     EXPECT_TRUE(stdstringVariant == expected);
 
     // Double variant should be unchanged
     QVariant value(42.0);
-    EXPECT_TRUE(ModelView::toCustomVariant(value) == QVariant::fromValue(42.0));
-    EXPECT_TRUE(ModelView::toQtVariant(value) == QVariant::fromValue(42.0));
+    EXPECT_TRUE(Utils::toCustomVariant(value) == QVariant::fromValue(42.0));
+    EXPECT_TRUE(Utils::toQtVariant(value) == QVariant::fromValue(42.0));
 }

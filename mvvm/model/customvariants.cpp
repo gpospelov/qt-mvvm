@@ -10,7 +10,9 @@
 #include "customvariants.h"
 #include "jsonvariant.h"
 
-QVariant ModelView::toQtVariant(const QVariant& custom)
+using namespace ModelView;
+
+QVariant Utils::toQtVariant(const QVariant& custom)
 {
     // converts variant based on std::string to variant based on QString
     if (custom.typeName() == JsonVariant::string_type_name)
@@ -20,7 +22,7 @@ QVariant ModelView::toQtVariant(const QVariant& custom)
     return custom;
 }
 
-QVariant ModelView::toCustomVariant(const QVariant& standard)
+QVariant Utils::toCustomVariant(const QVariant& standard)
 {
     const QString qstring_name = "QString";
 

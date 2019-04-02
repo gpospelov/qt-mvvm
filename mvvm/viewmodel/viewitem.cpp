@@ -30,7 +30,7 @@ QVariant ViewItem::data(int role) const
         return QStandardItem::data(role);
 
     if (role == Qt::DisplayRole || role == Qt::EditRole)
-        return toQtVariant(m_item->data(m_item_role));
+        return Utils::toQtVariant(m_item->data(m_item_role));
     else if (role == Qt::TextColorRole)
         return Utils::TextColorRole(*m_item);
     else
@@ -40,7 +40,7 @@ QVariant ViewItem::data(int role) const
 void ViewItem::setData(const QVariant& value, int role)
 {
     if (m_item && role == Qt::EditRole)
-        m_item->setData(toCustomVariant(value), m_item_role);
+        m_item->setData(Utils::toCustomVariant(value), m_item_role);
     else
         QStandardItem::setData(value, role);
 }

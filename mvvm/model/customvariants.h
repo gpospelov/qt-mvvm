@@ -21,6 +21,8 @@
 
 namespace ModelView
 {
+namespace Utils
+{
 
 //! Converts custom variant to standard variant which Qt views will understand.
 CORE_EXPORT QVariant toQtVariant(const QVariant& custom);
@@ -28,6 +30,7 @@ CORE_EXPORT QVariant toQtVariant(const QVariant& custom);
 //! Converts Qt variant to custom variant on board of SessionItem.
 CORE_EXPORT QVariant toCustomVariant(const QVariant& standard);
 
+} // namespace Utils
 } // namespace ModelView
 
 Q_DECLARE_METATYPE(std::string)
