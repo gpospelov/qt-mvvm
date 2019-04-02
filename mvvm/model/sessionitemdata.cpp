@@ -8,7 +8,7 @@
 // ************************************************************************** //
 
 #include "sessionitemdata.h"
-#include "itemutils.h"
+#include "customvariants.h"
 #include <sstream>
 
 using namespace ModelView;

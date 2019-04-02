@@ -8,7 +8,7 @@
 // ************************************************************************** //
 
 #include "datarole.h"
-#include "itemutils.h"
+#include "customvariants.h"
 
 using namespace ModelView;
 

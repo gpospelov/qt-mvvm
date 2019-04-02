@@ -24,6 +24,15 @@ namespace ModelView
 namespace Utils
 {
 
+//! Returns type of variant (additionally checks for user type).
+CORE_EXPORT int VariantType(const QVariant& variant);
+
+//! Returns true if variants has compatible types.
+CORE_EXPORT bool CompatibleVariantTypes(const QVariant& oldValue, const QVariant& newValue);
+
+//! Returns true if given variants have same type and value.
+CORE_EXPORT bool IsTheSame(const QVariant& var1, const QVariant& var2);
+
 //! Converts custom variant to standard variant which Qt views will understand.
 CORE_EXPORT QVariant toQtVariant(const QVariant& custom);
 

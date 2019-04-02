@@ -29,24 +29,16 @@ CORE_EXPORT void iterate(const SessionItem* item, const std::function<void(const
 //! If function returns false for given index, iteration will not go down to children.
 CORE_EXPORT void iterate_if(const SessionItem* item, const std::function<bool(const SessionItem*)>& fun);
 
-//! Returns type of variant (additionally checks for user type).
-CORE_EXPORT int VariantType(const QVariant& variant);
-
-//! Returns true if variants has compatible types.
-CORE_EXPORT bool CompatibleVariantTypes(const QVariant& oldValue, const QVariant& newValue);
-
-//! Returns true if given variants have same type and value.
-CORE_EXPORT bool IsTheSame(const QVariant& var1, const QVariant& var2);
-
 //! Returns copy number of given item in it's parent hierarchy. Takes into account only items with
 //! same modelType.
 CORE_EXPORT int CopyNumber(const SessionItem* item);
 
-//! Returns child at given index of parent. No tags are involved, index is concidered
-//! as global index in the array with all children.
+//! Returns child at given index of parent. No tags are involved, index is considered
+//! as global index in the combined array of all children.
 CORE_EXPORT SessionItem* ChildAt(const SessionItem* parent, int index);
 
-//! Returns index in children array corresponding to given child. No tags involved.
+//! Returns index in children array corresponding to given child. No tags are involved,
+//! index is considered as global index in the combined array of all children.
 CORE_EXPORT int IndexOfChild(const SessionItem* parent, SessionItem* child);
 
 }  // namespace Utils
