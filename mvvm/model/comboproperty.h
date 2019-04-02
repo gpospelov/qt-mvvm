@@ -19,7 +19,7 @@
 #include <QString>
 #include <QStringList>
 #include <QVariant>
-#include <QVector>
+#include <vector>
 
 //! Custom property to define list of string values with multiple selections.
 //! Intended for QVariant.
@@ -55,7 +55,7 @@ public:
 
     QVariant variant() const;
 
-    QVector<int> selectedIndices() const;
+    std::vector<int> selectedIndices() const;
     QStringList selectedValues() const;
 
     void setSelected(int index, bool value = true);
@@ -71,7 +71,7 @@ private:
 
     QStringList m_values;
     QStringList m_tooltips;
-    QVector<int> m_selected_indices;
+    std::vector<int> m_selected_indices;
 };
 
 Q_DECLARE_METATYPE(ComboProperty)

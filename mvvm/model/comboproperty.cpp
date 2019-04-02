@@ -153,7 +153,7 @@ QVariant ComboProperty::variant() const
 
 //! Returns vector of selected indices.
 
-QVector<int> ComboProperty::selectedIndices() const
+std::vector<int> ComboProperty::selectedIndices() const
 {
     return m_selected_indices;
 }
@@ -176,11 +176,13 @@ void ComboProperty::setSelected(int index, bool value)
     if (index < 0 || index >= m_values.size())
         return;
 
+    auto pos = find(m_selected_indices.begin(), m_selected_indices.end(), index);
     if (value) {
-        if (!m_selected_indices.contains(index))
+        if (pos == m_selected_indices.end())
             m_selected_indices.push_back(index);
     } else {
-        m_selected_indices.removeAll(index);
+        if (pos != m_selected_indices.end())
+            m_selected_indices.erase(pos);
     }
     std::sort(m_selected_indices.begin(), m_selected_indices.end());
 }
