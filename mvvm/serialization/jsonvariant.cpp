@@ -30,8 +30,8 @@ namespace
 
 const QString variantTypeKey = "type";
 const QString variantValueKey = "value";
-const std::string comboValuesKey = "values";
-const std::string comboSelectionKey = "selections";
+const QString comboValuesKey = "values";
+const QString comboSelectionKey = "selections";
 
 QStringList expected_variant_keys();
 
@@ -198,8 +198,8 @@ QJsonObject from_comboproperty(const QVariant& variant)
     auto combo = variant.value<ComboProperty>();
 
     QJsonObject object;
-    object[QString::fromStdString(comboValuesKey)] = QString::fromStdString(combo.stringOfValues());
-    object[QString::fromStdString(comboSelectionKey)] =
+    object[comboValuesKey] = QString::fromStdString(combo.stringOfValues());
+    object[comboSelectionKey] =
         QString::fromStdString(combo.stringOfSelections());
     result[variantValueKey] = object;
     return result;
@@ -210,11 +210,11 @@ QVariant to_comboproperty(const QJsonObject& object)
     ComboProperty combo;
     QJsonObject combo_json_data = object[variantValueKey].toObject();
 
-    auto values = combo_json_data[QString::fromStdString(comboValuesKey)].toString().toStdString();
+    auto values = combo_json_data[comboValuesKey].toString().toStdString();
     combo.setStringOfValues(values);
 
     auto selections =
-        combo_json_data[QString::fromStdString(comboSelectionKey)].toString().toStdString();
+        combo_json_data[comboSelectionKey].toString().toStdString();
     combo.setStringOfSelections(selections);
     return combo.variant();
 }
