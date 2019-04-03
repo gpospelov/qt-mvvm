@@ -10,7 +10,6 @@
 #include "jsonvariant.h"
 #include "comboproperty.h"
 #include "customvariants.h"
-#include <QDebug>
 #include <QJsonArray>
 #include <QJsonObject>
 #include <sstream>
@@ -18,12 +17,12 @@
 
 using namespace ModelView;
 
-const std::string ModelView::JsonVariant::invalid_type_name = "invalid";
-const std::string ModelView::JsonVariant::int_type_name = "int";
-const std::string ModelView::JsonVariant::string_type_name = "std::string";
-const std::string ModelView::JsonVariant::double_type_name = "double";
-const std::string ModelView::JsonVariant::vector_double_type_name = "std::vector<double>";
-const std::string ModelView::JsonVariant::comboproperty_type_name = "ComboProperty";
+const std::string JsonVariant::invalid_type_name = "invalid";
+const std::string JsonVariant::int_type_name = "int";
+const std::string JsonVariant::string_type_name = "std::string";
+const std::string JsonVariant::double_type_name = "double";
+const std::string JsonVariant::vector_double_type_name = "std::vector<double>";
+const std::string JsonVariant::comboproperty_type_name = "ComboProperty";
 
 namespace
 {
@@ -169,9 +168,7 @@ QVariant to_double(const QJsonObject& object)
 QJsonObject from_vector_double(const QVariant& variant)
 {
     QJsonObject result;
-    result[variantTypeKey] =
-        QString::fromStdString(JsonVariant::vector_double_type_name);
-
+    result[variantTypeKey] = QString::fromStdString(JsonVariant::vector_double_type_name);
     QJsonArray array;
     std::vector<double> data = variant.value<std::vector<double>>();
     std::copy(data.begin(), data.end(), std::back_inserter(array));
@@ -192,16 +189,12 @@ QVariant to_vector_double(const QJsonObject& object)
 QJsonObject from_comboproperty(const QVariant& variant)
 {
     QJsonObject result;
-    result[variantTypeKey] =
-        QString::fromStdString(JsonVariant::comboproperty_type_name);
-
+    result[variantTypeKey] = QString::fromStdString(JsonVariant::comboproperty_type_name);
     auto combo = variant.value<ComboProperty>();
-
-    QJsonObject object;
-    object[comboValuesKey] = QString::fromStdString(combo.stringOfValues());
-    object[comboSelectionKey] =
-        QString::fromStdString(combo.stringOfSelections());
-    result[variantValueKey] = object;
+    QJsonObject combo_json_data;
+    combo_json_data[comboValuesKey] = QString::fromStdString(combo.stringOfValues());
+    combo_json_data[comboSelectionKey] = QString::fromStdString(combo.stringOfSelections());
+    result[variantValueKey] = combo_json_data;
     return result;
 }
 
@@ -209,13 +202,8 @@ QVariant to_comboproperty(const QJsonObject& object)
 {
     ComboProperty combo;
     QJsonObject combo_json_data = object[variantValueKey].toObject();
-
-    auto values = combo_json_data[comboValuesKey].toString().toStdString();
-    combo.setStringOfValues(values);
-
-    auto selections =
-        combo_json_data[comboSelectionKey].toString().toStdString();
-    combo.setStringOfSelections(selections);
+    combo.setStringOfValues(combo_json_data[comboValuesKey].toString().toStdString());
+    combo.setStringOfSelections(combo_json_data[comboSelectionKey].toString().toStdString());
     return combo.variant();
 }
 
