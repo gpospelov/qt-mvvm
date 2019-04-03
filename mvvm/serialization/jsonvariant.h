@@ -21,9 +21,6 @@ namespace ModelView
 class CORE_EXPORT JsonVariant : public JsonVariantInterface
 {
 public:
-    using to_json_t = std::function<QJsonObject(const QVariant& variant)>;
-    using from_json_t = std::function<QVariant(const QJsonObject& json)>;
-
     static const QString variantTypeKey;
     static const QString variantValueKey;
 
@@ -42,8 +39,12 @@ public:
     bool isVariant(const QJsonObject& object) const;
 
 private:
-    std::map<std::string, to_json_t> m_to_json;
-    std::map<std::string, from_json_t> m_from_json;
+    struct Converters {
+        std::function<QJsonObject(const QVariant& variant)> variant_to_json;
+        std::function<QVariant(const QJsonObject& json)> json_to_variant;
+    };
+
+    std::map<std::string, Converters> m_converters;
 };
 
 } // namespace ModelView
