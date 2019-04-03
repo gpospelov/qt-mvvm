@@ -28,8 +28,8 @@ class CORE_EXPORT ComboProperty
 public:
     ComboProperty();
 
-    static ComboProperty fromList(const std::vector<std::string>& values,
-                                  const std::string& current_value = {});
+    static ComboProperty createFrom(const std::vector<std::string>& values,
+                                    const std::string& current_value = {});
 
     std::string value() const;
     void setValue(const std::string& name);

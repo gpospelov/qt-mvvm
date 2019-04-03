@@ -66,13 +66,15 @@ ComboProperty::ComboProperty() = default;
 
 ComboProperty::ComboProperty(std::vector<std::string> values) : m_values(std::move(values)) {}
 
-ComboProperty ComboProperty::fromList(const std::vector<std::string>& values,
+ComboProperty ComboProperty::createFrom(const std::vector<std::string>& values,
                                       const std::string& current_value)
 {
     ComboProperty result(values);
 
     if (!current_value.empty())
         result.setValue(current_value);
+    else
+        result.setCurrentIndex(0);
 
     return result;
 }
@@ -136,7 +138,7 @@ void ComboProperty::setCurrentIndex(int index)
 ComboProperty& ComboProperty::operator<<(const std::string& str)
 {
     m_values.push_back(str);
-    if (m_values.size())
+    if (currentIndex() == -1)
         setCurrentIndex(0);
     return *this;
 }
@@ -144,7 +146,7 @@ ComboProperty& ComboProperty::operator<<(const std::string& str)
 ComboProperty& ComboProperty::operator<<(const std::vector<std::string>& str)
 {
     m_values.insert(m_values.end(), str.begin(), str.end());
-    if (m_values.size())
+    if (currentIndex() == -1)
         setCurrentIndex(0);
     return *this;
 }

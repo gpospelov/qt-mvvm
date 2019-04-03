@@ -22,6 +22,7 @@ CORE_EXPORT bool exists(const std::string& fileName);
 
 //! Creates directory in current working directory. If such directory already exists,
 //! it will be removed with all its content.
+// FIXME do not remove existing directory
 CORE_EXPORT void create_dir(const std::string& dir_name);
 
 //! Creates sub directory in given parent directory (should exist).
