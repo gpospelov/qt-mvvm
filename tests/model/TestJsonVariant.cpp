@@ -1,6 +1,8 @@
 #include "google_test.h"
 #include "jsonvariant.h"
 #include "test_utils.h"
+#include <QJsonArray>
+#include <QJsonDocument>
 #include <vector>
 
 using namespace ModelView;
@@ -119,4 +121,37 @@ TEST_F(TestJsonVariant, vectorOfDoubleVariant)
     EXPECT_TRUE(reco_variant.isValid());
     EXPECT_EQ(reco_variant.value<std::vector<double>>(), value);
     EXPECT_EQ(variant, reco_variant);
+}
+
+//! Writing variants to file and reading them back.
+
+TEST_F(TestJsonVariant, toFileAndBack)
+{
+    const int int_value(42);
+    const double double_value(42.3);
+    const std::string string_value("abc");
+    const std::vector<double> vector_value = {42.1, 42.2, 42.3};
+
+    std::vector<QVariant> variants = {QVariant(), QVariant(int_value), QVariant(double_value),
+                                      QVariant::fromValue(string_value),
+                                      QVariant::fromValue(vector_value)};
+
+    // preparing array of json objects
+    JsonVariant converter;
+    QJsonArray json_array;
+    for (auto var : variants)
+        json_array.append(converter.get_json(var));
+
+    // writing to file
+    auto fileName = TestUtils::TestFileName(test_dir, "variants.json");
+    TestUtils::SaveJson(json_array, fileName);
+
+    // reading variants from file
+    auto document = TestUtils::LoadJson(fileName);
+    std::vector<QVariant> reco_variants;
+    for (const auto x : document.array())
+        reco_variants.push_back(converter.get_variant(x.toObject()));
+
+    // comparing initial and reconstructed variants
+    EXPECT_EQ(variants, reco_variants);
 }
