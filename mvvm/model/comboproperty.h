@@ -31,10 +31,10 @@ public:
     static ComboProperty fromList(const std::vector<std::string>& values,
                                   const std::string& current_value = {});
 
-    std::string getValue() const;
+    std::string value() const;
     void setValue(const std::string& name);
 
-    std::vector<std::string> getValues() const;
+    std::vector<std::string> values() const;
     void setValues(const std::vector<std::string>& values);
 
     std::vector<std::string> toolTips() const;

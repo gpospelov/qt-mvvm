@@ -13,33 +13,31 @@
 // ************************************************************************** //
 
 #include "comboproperty.h"
-#include <stdexcept>
 #include <sstream>
+#include <stdexcept>
 
-namespace {
+namespace
+{
 const std::string value_separator = ";";
 const std::string selection_separator = ",";
 const std::string multiple_label = "Multiple";
 const std::string none_label = "None";
 
-template<typename C, typename T>
-int indexOfItem(const C& container, const T& item)
+template <typename C, typename T> int indexOfItem(const C& container, const T& item)
 {
     auto pos = find(container.begin(), container.end(), item);
     return pos == container.end() ? -1 : static_cast<int>(std::distance(container.begin(), pos));
 }
 
-template<typename C, typename T>
-int contains(const C& container, const T& item)
+template <typename C, typename T> int contains(const C& container, const T& item)
 {
     return find(container.begin(), container.end(), item) != container.end();
 }
 
-template<typename C, typename T>
-std::string toString(const C& container, const T& delim)
+template <typename C, typename T> std::string toString(const C& container, const T& delim)
 {
     std::stringstream result;
-    for(auto it = container.begin(); it!= container.end(); ++it) {
+    for (auto it = container.begin(); it != container.end(); ++it) {
         result << *it;
         if (std::distance(it, container.end()) != 1)
             result << delim;
@@ -47,31 +45,29 @@ std::string toString(const C& container, const T& delim)
     return result.str();
 }
 
-std::vector<std::string> tokenize(const std::string& str, const std::string& delimeter){
+std::vector<std::string> tokenize(const std::string& str, const std::string& delimeter)
+{
     std::vector<std::string> result;
-    size_t start = str.find_first_not_of(delimeter), end=start;
+    size_t start = str.find_first_not_of(delimeter), end = start;
 
-    while (start != std::string::npos){
+    while (start != std::string::npos) {
         // Find next occurence of delimiter
         end = str.find(delimeter, start);
         // Push back the token found into vector
-        result.push_back(str.substr(start, end-start));
+        result.push_back(str.substr(start, end - start));
         // Skip all occurences of the delimiter to find new start
         start = str.find_first_not_of(delimeter, end);
     }
     return result;
 }
-}
+} // namespace
 
 ComboProperty::ComboProperty() = default;
 
-ComboProperty::ComboProperty(std::vector<std::string> values)
-    : m_values(std::move(values))
-{
+ComboProperty::ComboProperty(std::vector<std::string> values) : m_values(std::move(values)) {}
 
-}
-
-ComboProperty ComboProperty::fromList(const std::vector<std::string>& values, const std::string& current_value)
+ComboProperty ComboProperty::fromList(const std::vector<std::string>& values,
+                                      const std::string& current_value)
 {
     ComboProperty result(values);
 
@@ -81,7 +77,7 @@ ComboProperty ComboProperty::fromList(const std::vector<std::string>& values, co
     return result;
 }
 
-std::string ComboProperty::getValue() const
+std::string ComboProperty::value() const
 {
     return currentIndex() < 0 ? std::string() : m_values.at(static_cast<size_t>(currentIndex()));
 }
@@ -90,11 +86,12 @@ void ComboProperty::setValue(const std::string& name)
 {
     if (!contains(m_values, name))
         throw std::runtime_error("ComboProperty::setValue() -> Error. Combo doesn't contain "
-                                "value " + name);
+                                 "value "
+                                 + name);
     setCurrentIndex(indexOfItem(m_values, name));
 }
 
-std::vector<std::string> ComboProperty::getValues() const
+std::vector<std::string> ComboProperty::values() const
 {
     return m_values;
 }
@@ -106,9 +103,9 @@ void ComboProperty::setValues(const std::vector<std::string>& values)
     if (values.empty())
         return;
 
-    auto current = getValue();
+    auto current = value();
     m_values = values;
-   setCurrentIndex(contains(m_values, current) ? indexOfItem(m_values, current) : 0);
+    setCurrentIndex(contains(m_values, current) ? indexOfItem(m_values, current) : 0);
 }
 
 //! returns list of tool tips for all values
@@ -131,7 +128,7 @@ void ComboProperty::setCurrentIndex(int index)
 {
     if (index < 0 || index >= static_cast<int>(m_values.size()))
         throw std::runtime_error("ComboProperty::setCurrentIndex(int index) -> Error. "
-                                "Invalid index");
+                                 "Invalid index");
     m_selected_indices.clear();
     m_selected_indices.push_back(index);
 }
@@ -168,7 +165,8 @@ bool ComboProperty::operator!=(const ComboProperty& other) const
 
 bool ComboProperty::operator<(const ComboProperty& other) const
 {
-    return m_selected_indices.size() < other.m_selected_indices.size() && m_values.size() < other.m_values.size();
+    return m_selected_indices.size() < other.m_selected_indices.size()
+           && m_values.size() < other.m_values.size();
 }
 
 //! Returns a single string containing values delimited with ';'.
@@ -182,7 +180,7 @@ std::string ComboProperty::stringOfValues() const
 
 void ComboProperty::setStringOfValues(const std::string& values)
 {
-    auto current = getValue();
+    auto current = value();
     m_values = tokenize(values, value_separator);
     setCurrentIndex(contains(m_values, current) ? indexOfItem(m_values, current) : 0);
 }
@@ -240,7 +238,7 @@ void ComboProperty::setSelected(const std::string& name, bool value)
 std::string ComboProperty::stringOfSelections() const
 {
     std::vector<std::string> text;
-    for (auto  index : m_selected_indices)
+    for (auto index : m_selected_indices)
         text.push_back(std::to_string(index));
     return toString(text, selection_separator);
 }
@@ -263,12 +261,11 @@ void ComboProperty::setStringOfSelections(const std::string& values)
 
 std::string ComboProperty::label() const
 {
-    if (m_selected_indices.size() >1) {
+    if (m_selected_indices.size() > 1) {
         return multiple_label;
     } else if (m_selected_indices.size() == 1) {
-        return getValue();
+        return value();
     } else {
         return none_label;
     }
 }
-

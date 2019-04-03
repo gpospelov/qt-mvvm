@@ -15,8 +15,8 @@ TestComboProperty::~TestComboProperty() = default;
 TEST_F(TestComboProperty, initialState)
 {
     ComboProperty combo;
-    EXPECT_EQ(combo.getValue(), "");
-    EXPECT_EQ(combo.getValues(), std::vector<std::string>());
+    EXPECT_EQ(combo.value(), "");
+    EXPECT_EQ(combo.values(), std::vector<std::string>());
     EXPECT_EQ(combo.toolTips(), std::vector<std::string>());
     EXPECT_EQ(combo.currentIndex(), -1);
     EXPECT_EQ(combo.stringOfValues(), "");
@@ -28,9 +28,9 @@ TEST_F(TestComboProperty, factoryMethods)
     // initialization from list sets values only, no index selected
     std::vector<std::string> expected{"a1", "a2"};
     ComboProperty combo = ComboProperty::fromList(expected);
-    EXPECT_EQ(combo.getValues(), expected);
+    EXPECT_EQ(combo.values(), expected);
     EXPECT_EQ(combo.currentIndex(), -1);
-    EXPECT_EQ(combo.getValue(), "");
+    EXPECT_EQ(combo.value(), "");
     EXPECT_EQ(combo.selectedIndices(), std::vector<int>());
 }
 
@@ -39,24 +39,24 @@ TEST_F(TestComboProperty, setValues)
     // seting values through stream
     std::vector<std::string> expectedValues{"a1", "a2"};
     ComboProperty combo = ComboProperty() << expectedValues;
-    EXPECT_EQ(combo.getValues(), expectedValues);
-    EXPECT_EQ(combo.getValue(), std::string("a1"));
+    EXPECT_EQ(combo.values(), expectedValues);
+    EXPECT_EQ(combo.value(), std::string("a1"));
     EXPECT_EQ(combo.currentIndex(), 0);
     EXPECT_EQ(combo.selectedIndices(), std::vector<int>({0}));
 
     // setting values from setter, old values have to be overriden
     std::vector<std::string> newValues{"b1", "b2", "b3"};
     combo.setValues(newValues);
-    EXPECT_EQ(combo.getValue(), std::string("b1"));
-    EXPECT_EQ(combo.getValues(), newValues);
+    EXPECT_EQ(combo.value(), std::string("b1"));
+    EXPECT_EQ(combo.values(), newValues);
     EXPECT_EQ(combo.currentIndex(), 0);
     EXPECT_EQ(combo.selectedIndices(), std::vector<int>({0}));
 
     // setting new/old values through setter, old value should be preserved
     newValues = {"c1", "b1", "c2"};
     combo.setValues(newValues);
-    EXPECT_EQ(combo.getValue(), std::string("b1"));
-    EXPECT_EQ(combo.getValues(), newValues);
+    EXPECT_EQ(combo.value(), std::string("b1"));
+    EXPECT_EQ(combo.values(), newValues);
     EXPECT_EQ(combo.currentIndex(), 1);
     EXPECT_EQ(combo.selectedIndices(), std::vector<int>({1}));
 }
@@ -70,14 +70,14 @@ TEST_F(TestComboProperty, setCurrentIndex)
           << "c2";
     EXPECT_EQ(combo.currentIndex(), 0);
     EXPECT_EQ(combo.selectedIndices(), std::vector<int>({0}));
-    EXPECT_EQ(combo.getValues(), std::vector<std::string>({"c1", "c2"}));
+    EXPECT_EQ(combo.values(), std::vector<std::string>({"c1", "c2"}));
 
     combo.setValue("c2");
     EXPECT_EQ(combo.currentIndex(), 1);
     EXPECT_EQ(combo.selectedIndices(), std::vector<int>({1}));
 
     combo.setCurrentIndex(0);
-    EXPECT_EQ(combo.getValue(), std::string("c1"));
+    EXPECT_EQ(combo.value(), std::string("c1"));
     EXPECT_EQ(combo.selectedIndices(), std::vector<int>({0}));
 }
 
@@ -87,7 +87,7 @@ TEST_F(TestComboProperty, stringOfValues)
     ComboProperty combo = ComboProperty() << expectedValues;
 
     EXPECT_EQ(combo.stringOfValues(), std::string("a1;a2"));
-    EXPECT_EQ(combo.getValue(), std::string("a1"));
+    EXPECT_EQ(combo.value(), std::string("a1"));
     EXPECT_EQ(combo.currentIndex(), 0);
     EXPECT_EQ(combo.selectedIndices(), std::vector<int>({0}));
 
@@ -95,7 +95,7 @@ TEST_F(TestComboProperty, stringOfValues)
     std::string stringOfValues("b1;b2;b3");
     combo.setStringOfValues(stringOfValues);
     EXPECT_EQ(combo.stringOfValues(), stringOfValues);
-    EXPECT_EQ(combo.getValue(), std::string("b1"));
+    EXPECT_EQ(combo.value(), std::string("b1"));
     EXPECT_EQ(combo.currentIndex(), 0);
     EXPECT_EQ(combo.selectedIndices(), std::vector<int>({0}));
 
@@ -103,7 +103,7 @@ TEST_F(TestComboProperty, stringOfValues)
     stringOfValues = std::string("c1;b1;c3");
     combo.setStringOfValues(stringOfValues);
     EXPECT_EQ(combo.stringOfValues(), stringOfValues);
-    EXPECT_EQ(combo.getValue(), std::string("b1"));
+    EXPECT_EQ(combo.value(), std::string("b1"));
     EXPECT_EQ(combo.currentIndex(), 1);
     EXPECT_EQ(combo.selectedIndices(), std::vector<int>({1}));
 }
@@ -114,21 +114,21 @@ TEST_F(TestComboProperty, selectedIndices)
     ComboProperty combo = ComboProperty() << expectedValues;
 
     EXPECT_EQ(combo.currentIndex(), 0);
-    EXPECT_EQ(combo.getValue(), "a1");
+    EXPECT_EQ(combo.value(), "a1");
     EXPECT_EQ(combo.selectedIndices(), std::vector<int>({0}));
     EXPECT_EQ(combo.selectedValues(), std::vector<std::string>({"a1"}));
 
     // selecting already selected element, nothing should change
     combo.setSelected(0);
     EXPECT_EQ(combo.currentIndex(), 0);
-    EXPECT_EQ(combo.getValue(), "a1");
+    EXPECT_EQ(combo.value(), "a1");
     EXPECT_EQ(combo.selectedIndices(), std::vector<int>({0}));
     EXPECT_EQ(combo.selectedValues(), std::vector<std::string>({"a1"}));
 
     // deselecting index
     combo.setSelected(0, false);
     EXPECT_EQ(combo.currentIndex(), -1);
-    EXPECT_EQ(combo.getValue(), "");
+    EXPECT_EQ(combo.value(), "");
     EXPECT_EQ(combo.selectedIndices(), std::vector<int>());
     EXPECT_EQ(combo.selectedValues(), std::vector<std::string>());
 
@@ -136,7 +136,7 @@ TEST_F(TestComboProperty, selectedIndices)
     combo.setSelected(1, true);
     combo.setSelected(2, true);
     EXPECT_EQ(combo.currentIndex(), 1);
-    EXPECT_EQ(combo.getValue(), "a2");
+    EXPECT_EQ(combo.value(), "a2");
     EXPECT_EQ(combo.selectedIndices(), std::vector<int>({1, 2}));
     EXPECT_EQ(combo.selectedValues(), std::vector<std::string>({"a2", "a3"}));
 
@@ -144,7 +144,7 @@ TEST_F(TestComboProperty, selectedIndices)
     combo.setSelected("a2", false);
     combo.setSelected("a1", true);
     EXPECT_EQ(combo.currentIndex(), 0);
-    EXPECT_EQ(combo.getValue(), "a1");
+    EXPECT_EQ(combo.value(), "a1");
     EXPECT_EQ(combo.selectedIndices(), std::vector<int>({0, 2}));
     EXPECT_EQ(combo.selectedValues(), std::vector<std::string>({"a1", "a3"}));
 }
