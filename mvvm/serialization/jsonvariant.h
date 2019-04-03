@@ -26,11 +26,12 @@ public:
 
     static const QString variantTypeKey;
     static const QString variantValueKey;
-    static const QString invalid_type_name;
-    static const QString int_type_name;
-    static const QString string_type_name;
-    static const QString double_type_name;
-    static const QString vector_double_type_name;
+
+    static const std::string invalid_type_name;
+    static const std::string int_type_name;
+    static const std::string string_type_name;
+    static const std::string double_type_name;
+    static const std::string vector_double_type_name;
 
     JsonVariant();
 

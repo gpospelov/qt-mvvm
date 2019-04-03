@@ -49,12 +49,12 @@ TEST_F(TestJsonVariant, invalidVariant)
     EXPECT_EQ(object.size(), 2);
     QStringList expected = QStringList() << JsonVariant::variantTypeKey << JsonVariant::variantValueKey;
     EXPECT_EQ(object.keys(), expected);
-    EXPECT_EQ(object[JsonVariant::variantTypeKey], JsonVariant::invalid_type_name);
+    EXPECT_EQ(object[JsonVariant::variantTypeKey], QString::fromStdString(JsonVariant::invalid_type_name));
     EXPECT_TRUE(object[JsonVariant::variantValueKey].isNull());
 
     // from json object to variant
     QJsonObject object2{
-        {JsonVariant::variantTypeKey, JsonVariant::invalid_type_name},
+        {JsonVariant::variantTypeKey, QString::fromStdString(JsonVariant::invalid_type_name)},
         {JsonVariant::variantValueKey, QJsonValue()}
     };
     QVariant variant2 = converter.get_variant(object2);
@@ -80,12 +80,12 @@ TEST_F(TestJsonVariant, intVariant)
     EXPECT_EQ(object.size(), 2);
     QStringList expected = QStringList() << JsonVariant::variantTypeKey << JsonVariant::variantValueKey;
     EXPECT_EQ(object.keys(), expected);
-    EXPECT_EQ(object[JsonVariant::variantTypeKey], JsonVariant::int_type_name);
+    EXPECT_EQ(object[JsonVariant::variantTypeKey], QString::fromStdString(JsonVariant::int_type_name));
     EXPECT_EQ(object[JsonVariant::variantValueKey].toInt(), value);
 
     // from json object to variant
     QJsonObject object2{
-        {JsonVariant::variantTypeKey, JsonVariant::int_type_name},
+        {JsonVariant::variantTypeKey, QString::fromStdString(JsonVariant::int_type_name)},
         {JsonVariant::variantValueKey, value}
     };
     QVariant variant2 = converter.get_variant(object2);
@@ -111,7 +111,7 @@ TEST_F(TestJsonVariant, stringVariant)
     EXPECT_EQ(object.size(), 2);
     QStringList expected = QStringList() << JsonVariant::variantTypeKey << JsonVariant::variantValueKey;
     EXPECT_EQ(object.keys(), expected);
-    EXPECT_EQ(object[JsonVariant::variantTypeKey], JsonVariant::string_type_name);
+    EXPECT_EQ(object[JsonVariant::variantTypeKey], QString::fromStdString(JsonVariant::string_type_name));
     QVariant var = object[JsonVariant::variantValueKey].toVariant();
     // variant obtained from json is always based on QString, nave to convert std::string
     // to QString to make comparison
@@ -119,7 +119,7 @@ TEST_F(TestJsonVariant, stringVariant)
 
     // from json object to variant
     QJsonObject object2{
-        {JsonVariant::variantTypeKey, JsonVariant::string_type_name},
+        {JsonVariant::variantTypeKey, QString::fromStdString(JsonVariant::string_type_name)},
         {JsonVariant::variantValueKey, QString::fromStdString(value)}
     };
     QVariant variant2 = converter.get_variant(object2);
@@ -142,12 +142,12 @@ TEST_F(TestJsonVariant, doubleVariant)
     EXPECT_EQ(object.size(), 2);
     QStringList expected = QStringList() << JsonVariant::variantTypeKey << JsonVariant::variantValueKey;
     EXPECT_EQ(object.keys(), expected);
-    EXPECT_EQ(object[JsonVariant::variantTypeKey], JsonVariant::double_type_name);
+    EXPECT_EQ(object[JsonVariant::variantTypeKey], QString::fromStdString(JsonVariant::double_type_name));
     EXPECT_EQ(object[JsonVariant::variantValueKey].toDouble(), value);
 
     // from json object to variant
     QJsonObject object2{
-        {JsonVariant::variantTypeKey, JsonVariant::double_type_name},
+        {JsonVariant::variantTypeKey, QString::fromStdString(JsonVariant::double_type_name)},
         {JsonVariant::variantValueKey, value}
     };
     QVariant variant2 = converter.get_variant(object2);
@@ -173,7 +173,7 @@ TEST_F(TestJsonVariant, vectorOfDoubleVariant)
     EXPECT_EQ(object.size(), 2);
     QStringList expected = QStringList() << JsonVariant::variantTypeKey << JsonVariant::variantValueKey;
     EXPECT_EQ(object.keys(), expected);
-    EXPECT_EQ(object[JsonVariant::variantTypeKey], JsonVariant::vector_double_type_name);
+    EXPECT_EQ(object[JsonVariant::variantTypeKey], QString::fromStdString(JsonVariant::vector_double_type_name));
 
     QJsonArray array = object[JsonVariant::variantValueKey].toArray();
     std::vector<double> vec_expected;

@@ -19,11 +19,12 @@ using namespace ModelView;
 
 const QString ModelView::JsonVariant::variantTypeKey = "type";
 const QString ModelView::JsonVariant::variantValueKey = "value";
-const QString ModelView::JsonVariant::invalid_type_name = "";
-const QString ModelView::JsonVariant::int_type_name = "int";
-const QString ModelView::JsonVariant::string_type_name = "std::string";
-const QString ModelView::JsonVariant::double_type_name = "double";
-const QString ModelView::JsonVariant::vector_double_type_name = "std::vector<double>";
+
+const std::string ModelView::JsonVariant::invalid_type_name = "invalid";
+const std::string ModelView::JsonVariant::int_type_name = "int";
+const std::string ModelView::JsonVariant::string_type_name = "std::string";
+const std::string ModelView::JsonVariant::double_type_name = "double";
+const std::string ModelView::JsonVariant::vector_double_type_name = "std::vector<double>";
 
 namespace
 {
@@ -53,7 +54,7 @@ JsonVariant::JsonVariant()
 QJsonObject JsonVariant::get_json(const QVariant& variant)
 {
     QJsonObject result;
-    const QString type_name = variant.typeName();
+    const std::string type_name = variant.isValid() ? variant.typeName() : invalid_type_name;
 
     if (type_name == JsonVariant::invalid_type_name)
         result = from_invalid(variant);
@@ -84,7 +85,7 @@ QVariant JsonVariant::get_variant(const QJsonObject& object)
     if (!isVariant(object))
         throw std::runtime_error("json::get_variant() -> Error. Invalid json object");
 
-    const auto variant_type = object[JsonVariant::variantTypeKey].toString();
+    const auto variant_type = object[JsonVariant::variantTypeKey].toString().toStdString();
 
     if (variant_type == JsonVariant::invalid_type_name)
         result = to_invalid(object);
@@ -103,7 +104,7 @@ QVariant JsonVariant::get_variant(const QJsonObject& object)
 
     else {
         std::ostringstream ostr;
-        ostr << "json::get_variant() -> Error. Unknown key '" << variant_type.toStdString()
+        ostr << "json::get_variant() -> Error. Unknown key '" << variant_type
              << "' in json object.";
         throw std::runtime_error(ostr.str());
     }
@@ -134,7 +135,7 @@ QJsonObject from_invalid(const QVariant& variant)
 {
     (void)variant;
     QJsonObject result;
-    result[JsonVariant::variantTypeKey] = JsonVariant::invalid_type_name;
+    result[JsonVariant::variantTypeKey] = QString::fromStdString(JsonVariant::invalid_type_name);
     result[JsonVariant::variantValueKey] = QJsonValue();
     return result;
 }
@@ -148,7 +149,7 @@ QVariant to_invalid(const QJsonObject& object)
 QJsonObject from_int(const QVariant& variant)
 {
     QJsonObject result;
-    result[JsonVariant::variantTypeKey] = JsonVariant::int_type_name;
+    result[JsonVariant::variantTypeKey] = QString::fromStdString(JsonVariant::int_type_name);
     result[JsonVariant::variantValueKey] = variant.toInt();
     return result;
 }
@@ -161,7 +162,7 @@ QVariant to_int(const QJsonObject& object)
 QJsonObject from_string(const QVariant& variant)
 {
     QJsonObject result;
-    result[JsonVariant::variantTypeKey] = JsonVariant::string_type_name;
+    result[JsonVariant::variantTypeKey] = QString::fromStdString(JsonVariant::string_type_name);
     result[JsonVariant::variantValueKey] = QString::fromStdString(variant.value<std::string>());
     return result;
 }
@@ -175,7 +176,7 @@ QVariant to_string(const QJsonObject& object)
 QJsonObject from_double(const QVariant& variant)
 {
     QJsonObject result;
-    result[JsonVariant::variantTypeKey] = JsonVariant::double_type_name;
+    result[JsonVariant::variantTypeKey] = QString::fromStdString(JsonVariant::double_type_name);
     result[JsonVariant::variantValueKey] = variant.toDouble();
     return result;
 }
@@ -188,7 +189,7 @@ QVariant to_double(const QJsonObject& object)
 QJsonObject from_vector_double(const QVariant& variant)
 {
     QJsonObject result;
-    result[JsonVariant::variantTypeKey] = JsonVariant::vector_double_type_name;
+    result[JsonVariant::variantTypeKey] = QString::fromStdString(JsonVariant::vector_double_type_name);
 
     QJsonArray array;
     std::vector<double> data = variant.value<std::vector<double>>();
