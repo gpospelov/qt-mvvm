@@ -165,8 +165,7 @@ bool ComboProperty::operator!=(const ComboProperty& other) const
 
 bool ComboProperty::operator<(const ComboProperty& other) const
 {
-    return m_selected_indices.size() < other.m_selected_indices.size()
-           && m_values.size() < other.m_values.size();
+    return m_selected_indices < other.m_selected_indices && m_values < other.m_values;
 }
 
 //! Returns a single string containing values delimited with ';'.
