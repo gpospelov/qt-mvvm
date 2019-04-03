@@ -1,9 +1,6 @@
 #include "google_test.h"
 #include "jsonvariant.h"
 #include "test_utils.h"
-#include <QFile>
-#include <QJsonDocument>
-#include <QJsonArray>
 #include <vector>
 
 using namespace ModelView;
@@ -16,21 +13,11 @@ public:
     ~TestJsonVariant();
 
     static const QString test_dir;
-    static QJsonArray m_array;
 
-    static void SetUpTestCase()
-    {
-        TestUtils::CreateTestDirectory(test_dir);
-    }
-
-    static void TearDownTestCase() {
-        auto fileName = TestUtils::TestFileName(test_dir, "variants.json");
-        TestUtils::SaveJson(m_array, fileName);
-    }
+    static void SetUpTestCase() { TestUtils::CreateTestDirectory(test_dir); }
 };
 
 const QString TestJsonVariant::test_dir = "test_JsonVariant";
-QJsonArray TestJsonVariant::m_array = QJsonArray();
 
 TestJsonVariant::~TestJsonVariant() = default;
 
@@ -44,24 +31,12 @@ TEST_F(TestJsonVariant, invalidVariant)
 
     // from variant to json object
     auto object = converter.get_json(variant);
-    m_array.append(object);
-
-    EXPECT_EQ(object.size(), 2);
-    QStringList expected = QStringList() << JsonVariant::variantTypeKey << JsonVariant::variantValueKey;
-    EXPECT_EQ(object.keys(), expected);
-    EXPECT_EQ(object[JsonVariant::variantTypeKey], QString::fromStdString(JsonVariant::invalid_type_name));
-    EXPECT_TRUE(object[JsonVariant::variantValueKey].isNull());
+    EXPECT_TRUE(converter.isVariant(object));
 
     // from json object to variant
-    QJsonObject object2{
-        {JsonVariant::variantTypeKey, QString::fromStdString(JsonVariant::invalid_type_name)},
-        {JsonVariant::variantValueKey, QJsonValue()}
-    };
-    QVariant variant2 = converter.get_variant(object2);
-    EXPECT_FALSE(variant2.isValid());
-
-    // final comparison
-    EXPECT_EQ(variant, variant2);
+    QVariant reco_variant = converter.get_variant(object);
+    EXPECT_FALSE(reco_variant.isValid());
+    EXPECT_EQ(variant, reco_variant);
 }
 
 //! Int QVariant convertion.
@@ -75,24 +50,14 @@ TEST_F(TestJsonVariant, intVariant)
 
     // from variant to json object
     auto object = converter.get_json(variant);
-    m_array.append(object);
-
-    EXPECT_EQ(object.size(), 2);
-    QStringList expected = QStringList() << JsonVariant::variantTypeKey << JsonVariant::variantValueKey;
-    EXPECT_EQ(object.keys(), expected);
-    EXPECT_EQ(object[JsonVariant::variantTypeKey], QString::fromStdString(JsonVariant::int_type_name));
-    EXPECT_EQ(object[JsonVariant::variantValueKey].toInt(), value);
+    EXPECT_TRUE(converter.isVariant(object));
 
     // from json object to variant
-    QJsonObject object2{
-        {JsonVariant::variantTypeKey, QString::fromStdString(JsonVariant::int_type_name)},
-        {JsonVariant::variantValueKey, value}
-    };
-    QVariant variant2 = converter.get_variant(object2);
-    EXPECT_EQ(variant2.toInt(), value);
+    QVariant reco_variant = converter.get_variant(object);
+    EXPECT_TRUE(reco_variant.isValid());
+    EXPECT_EQ(reco_variant.toInt(), value);
 
-    // final comparison
-    EXPECT_EQ(variant, variant2);
+    EXPECT_EQ(variant, reco_variant);
 }
 
 //! QVariant(std::string) convertion.
@@ -106,24 +71,14 @@ TEST_F(TestJsonVariant, stringVariant)
 
     // from variant to json object
     auto object = converter.get_json(variant);
-    m_array.append(object);
-
-    EXPECT_EQ(object.size(), 2);
-    QStringList expected = QStringList() << JsonVariant::variantTypeKey << JsonVariant::variantValueKey;
-    EXPECT_EQ(object.keys(), expected);
-    EXPECT_EQ(object[JsonVariant::variantTypeKey], QString::fromStdString(JsonVariant::string_type_name));
-    QVariant var = object[JsonVariant::variantValueKey].toVariant();
-    // variant obtained from json is always based on QString, nave to convert std::string
-    // to QString to make comparison
-    EXPECT_EQ(object[JsonVariant::variantValueKey].toString(), QString::fromStdString(value));
+    EXPECT_TRUE(converter.isVariant(object));
 
     // from json object to variant
-    QJsonObject object2{
-        {JsonVariant::variantTypeKey, QString::fromStdString(JsonVariant::string_type_name)},
-        {JsonVariant::variantValueKey, QString::fromStdString(value)}
-    };
-    QVariant variant2 = converter.get_variant(object2);
-    EXPECT_EQ(variant2.value<std::string>(), value);
+    QVariant reco_variant = converter.get_variant(object);
+    EXPECT_TRUE(reco_variant.isValid());
+    EXPECT_EQ(reco_variant.value<std::string>(), value);
+
+    EXPECT_EQ(variant, reco_variant);
 }
 
 //! QVariant(double) convertion.
@@ -137,24 +92,13 @@ TEST_F(TestJsonVariant, doubleVariant)
 
     // from variant to json object
     auto object = converter.get_json(variant);
-    m_array.append(object);
-
-    EXPECT_EQ(object.size(), 2);
-    QStringList expected = QStringList() << JsonVariant::variantTypeKey << JsonVariant::variantValueKey;
-    EXPECT_EQ(object.keys(), expected);
-    EXPECT_EQ(object[JsonVariant::variantTypeKey], QString::fromStdString(JsonVariant::double_type_name));
-    EXPECT_EQ(object[JsonVariant::variantValueKey].toDouble(), value);
+    EXPECT_TRUE(converter.isVariant(object));
 
     // from json object to variant
-    QJsonObject object2{
-        {JsonVariant::variantTypeKey, QString::fromStdString(JsonVariant::double_type_name)},
-        {JsonVariant::variantValueKey, value}
-    };
-    QVariant variant2 = converter.get_variant(object2);
-    EXPECT_EQ(variant2.toDouble(), value);
-
-    // final comparison
-    EXPECT_EQ(variant, variant2);
+    QVariant reco_variant = converter.get_variant(object);
+    EXPECT_TRUE(reco_variant.isValid());
+    EXPECT_EQ(reco_variant.toDouble(), value);
+    EXPECT_EQ(variant, reco_variant);
 }
 
 //! QVariant(std::vector<double>) convertion.
@@ -168,20 +112,11 @@ TEST_F(TestJsonVariant, vectorOfDoubleVariant)
 
     // from variant to json object
     auto object = converter.get_json(variant);
-    m_array.append(object);
+    EXPECT_TRUE(converter.isVariant(object));
 
-    EXPECT_EQ(object.size(), 2);
-    QStringList expected = QStringList() << JsonVariant::variantTypeKey << JsonVariant::variantValueKey;
-    EXPECT_EQ(object.keys(), expected);
-    EXPECT_EQ(object[JsonVariant::variantTypeKey], QString::fromStdString(JsonVariant::vector_double_type_name));
-
-    QJsonArray array = object[JsonVariant::variantValueKey].toArray();
-    std::vector<double> vec_expected;
-    for ( auto x : object[JsonVariant::variantValueKey].toArray()) {
-        vec_expected.push_back(x.toDouble());
-    }
-    EXPECT_EQ(value, vec_expected);
-
-    QVariant variant2 = converter.get_variant(object);
-    EXPECT_EQ(variant2.value<std::vector<double>>(), value);
+    // from json object to variant
+    QVariant reco_variant = converter.get_variant(object);
+    EXPECT_TRUE(reco_variant.isValid());
+    EXPECT_EQ(reco_variant.value<std::vector<double>>(), value);
+    EXPECT_EQ(variant, reco_variant);
 }
