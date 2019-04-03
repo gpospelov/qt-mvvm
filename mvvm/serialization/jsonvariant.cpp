@@ -18,9 +18,6 @@
 
 using namespace ModelView;
 
-const QString ModelView::JsonVariant::variantTypeKey = "type";
-const QString ModelView::JsonVariant::variantValueKey = "value";
-
 const std::string ModelView::JsonVariant::invalid_type_name = "invalid";
 const std::string ModelView::JsonVariant::int_type_name = "int";
 const std::string ModelView::JsonVariant::string_type_name = "std::string";
@@ -31,6 +28,8 @@ const std::string ModelView::JsonVariant::comboproperty_type_name = "ComboProper
 namespace
 {
 
+const QString variantTypeKey = "type";
+const QString variantValueKey = "value";
 const std::string comboValuesKey = "values";
 const std::string comboSelectionKey = "selections";
 
@@ -84,7 +83,7 @@ QVariant JsonVariant::get_variant(const QJsonObject& object)
     if (!isVariant(object))
         throw std::runtime_error("json::get_variant() -> Error. Invalid json object");
 
-    const auto type_name = object[JsonVariant::variantTypeKey].toString().toStdString();
+    const auto type_name = object[variantTypeKey].toString().toStdString();
     if (m_converters.find(type_name) == m_converters.end())
         throw std::runtime_error("json::get_variant() -> Error. Unknown variant type '" + type_name
                                  + "' in json object.");
@@ -105,8 +104,7 @@ namespace
 
 QStringList expected_variant_keys()
 {
-    QStringList result = QStringList()
-                         << JsonVariant::variantTypeKey << JsonVariant::variantValueKey;
+    QStringList result = QStringList() << variantTypeKey << variantValueKey;
     std::sort(result.begin(), result.end());
     return result;
 }
@@ -115,8 +113,8 @@ QJsonObject from_invalid(const QVariant& variant)
 {
     (void)variant;
     QJsonObject result;
-    result[JsonVariant::variantTypeKey] = QString::fromStdString(JsonVariant::invalid_type_name);
-    result[JsonVariant::variantValueKey] = QJsonValue();
+    result[variantTypeKey] = QString::fromStdString(JsonVariant::invalid_type_name);
+    result[variantValueKey] = QJsonValue();
     return result;
 }
 
@@ -129,41 +127,41 @@ QVariant to_invalid(const QJsonObject& object)
 QJsonObject from_int(const QVariant& variant)
 {
     QJsonObject result;
-    result[JsonVariant::variantTypeKey] = QString::fromStdString(JsonVariant::int_type_name);
-    result[JsonVariant::variantValueKey] = variant.toInt();
+    result[variantTypeKey] = QString::fromStdString(JsonVariant::int_type_name);
+    result[variantValueKey] = variant.toInt();
     return result;
 }
 
 QVariant to_int(const QJsonObject& object)
 {
-    return object[JsonVariant::variantValueKey].toVariant();
+    return object[variantValueKey].toVariant();
 }
 
 QJsonObject from_string(const QVariant& variant)
 {
     QJsonObject result;
-    result[JsonVariant::variantTypeKey] = QString::fromStdString(JsonVariant::string_type_name);
-    result[JsonVariant::variantValueKey] = QString::fromStdString(variant.value<std::string>());
+    result[variantTypeKey] = QString::fromStdString(JsonVariant::string_type_name);
+    result[variantValueKey] = QString::fromStdString(variant.value<std::string>());
     return result;
 }
 
 QVariant to_string(const QJsonObject& object)
 {
-    std::string value = object[JsonVariant::variantValueKey].toString().toStdString();
+    std::string value = object[variantValueKey].toString().toStdString();
     return QVariant::fromValue(value);
 }
 
 QJsonObject from_double(const QVariant& variant)
 {
     QJsonObject result;
-    result[JsonVariant::variantTypeKey] = QString::fromStdString(JsonVariant::double_type_name);
-    result[JsonVariant::variantValueKey] = variant.toDouble();
+    result[variantTypeKey] = QString::fromStdString(JsonVariant::double_type_name);
+    result[variantValueKey] = variant.toDouble();
     return result;
 }
 
 QVariant to_double(const QJsonObject& object)
 {
-    return object[JsonVariant::variantValueKey].toVariant();
+    return object[variantValueKey].toVariant();
 }
 
 // --- std::vector<double> ------
@@ -171,20 +169,20 @@ QVariant to_double(const QJsonObject& object)
 QJsonObject from_vector_double(const QVariant& variant)
 {
     QJsonObject result;
-    result[JsonVariant::variantTypeKey] =
+    result[variantTypeKey] =
         QString::fromStdString(JsonVariant::vector_double_type_name);
 
     QJsonArray array;
     std::vector<double> data = variant.value<std::vector<double>>();
     std::copy(data.begin(), data.end(), std::back_inserter(array));
-    result[JsonVariant::variantValueKey] = array;
+    result[variantValueKey] = array;
     return result;
 }
 
 QVariant to_vector_double(const QJsonObject& object)
 {
     std::vector<double> vec;
-    for (auto x : object[JsonVariant::variantValueKey].toArray())
+    for (auto x : object[variantValueKey].toArray())
         vec.push_back(x.toDouble());
     return QVariant::fromValue(vec);
 }
@@ -194,7 +192,7 @@ QVariant to_vector_double(const QJsonObject& object)
 QJsonObject from_comboproperty(const QVariant& variant)
 {
     QJsonObject result;
-    result[JsonVariant::variantTypeKey] =
+    result[variantTypeKey] =
         QString::fromStdString(JsonVariant::comboproperty_type_name);
 
     auto combo = variant.value<ComboProperty>();
@@ -203,14 +201,14 @@ QJsonObject from_comboproperty(const QVariant& variant)
     object[QString::fromStdString(comboValuesKey)] = QString::fromStdString(combo.stringOfValues());
     object[QString::fromStdString(comboSelectionKey)] =
         QString::fromStdString(combo.stringOfSelections());
-    result[JsonVariant::variantValueKey] = object;
+    result[variantValueKey] = object;
     return result;
 }
 
 QVariant to_comboproperty(const QJsonObject& object)
 {
     ComboProperty combo;
-    QJsonObject combo_json_data = object[JsonVariant::variantValueKey].toObject();
+    QJsonObject combo_json_data = object[variantValueKey].toObject();
 
     auto values = combo_json_data[QString::fromStdString(comboValuesKey)].toString().toStdString();
     combo.setStringOfValues(values);

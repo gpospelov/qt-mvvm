@@ -21,9 +21,6 @@ namespace ModelView
 class CORE_EXPORT JsonVariant : public JsonVariantInterface
 {
 public:
-    static const QString variantTypeKey;
-    static const QString variantValueKey;
-
     static const std::string invalid_type_name;
     static const std::string int_type_name;
     static const std::string string_type_name;
