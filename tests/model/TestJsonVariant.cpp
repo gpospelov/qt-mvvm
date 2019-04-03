@@ -1,6 +1,7 @@
 #include "google_test.h"
 #include "jsonvariant.h"
 #include "test_utils.h"
+#include "comboproperty.h"
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <vector>
@@ -23,7 +24,7 @@ const QString TestJsonVariant::test_dir = "test_JsonVariant";
 
 TestJsonVariant::~TestJsonVariant() = default;
 
-//! Invalid QVariant convertion.
+//! Invalid QVariant conversion.
 
 TEST_F(TestJsonVariant, invalidVariant)
 {
@@ -41,7 +42,7 @@ TEST_F(TestJsonVariant, invalidVariant)
     EXPECT_EQ(variant, reco_variant);
 }
 
-//! Int QVariant convertion.
+//! Int QVariant conversion.
 
 TEST_F(TestJsonVariant, intVariant)
 {
@@ -62,7 +63,7 @@ TEST_F(TestJsonVariant, intVariant)
     EXPECT_EQ(variant, reco_variant);
 }
 
-//! QVariant(std::string) convertion.
+//! QVariant(std::string) conversion.
 
 TEST_F(TestJsonVariant, stringVariant)
 {
@@ -83,7 +84,7 @@ TEST_F(TestJsonVariant, stringVariant)
     EXPECT_EQ(variant, reco_variant);
 }
 
-//! QVariant(double) convertion.
+//! QVariant(double) conversion.
 
 TEST_F(TestJsonVariant, doubleVariant)
 {
@@ -103,7 +104,7 @@ TEST_F(TestJsonVariant, doubleVariant)
     EXPECT_EQ(variant, reco_variant);
 }
 
-//! QVariant(std::vector<double>) convertion.
+//! QVariant(std::vector<double>) conversion.
 
 TEST_F(TestJsonVariant, vectorOfDoubleVariant)
 {
@@ -123,6 +124,30 @@ TEST_F(TestJsonVariant, vectorOfDoubleVariant)
     EXPECT_EQ(variant, reco_variant);
 }
 
+//! QVariant(ComboProperty) conversion.
+
+TEST_F(TestJsonVariant, comboPropertyVariant)
+{
+    JsonVariant converter;
+
+    ComboProperty value = ComboProperty::createFrom(std::vector<std::string>({"a1", "a2", "a3"}));
+    value.setSelected("a1", false);
+    value.setSelected("a2", true);
+    value.setSelected("a3", true);
+
+    QVariant variant = value.variant();
+
+    // from variant to json object
+    auto object = converter.get_json(variant);
+    EXPECT_TRUE(converter.isVariant(object));
+
+    // from json object to variant
+    QVariant reco_variant = converter.get_variant(object);
+    EXPECT_TRUE(reco_variant.isValid());
+    EXPECT_EQ(reco_variant.value<ComboProperty>(), value);
+    EXPECT_EQ(variant, reco_variant);
+}
+
 //! Writing variants to file and reading them back.
 
 TEST_F(TestJsonVariant, toFileAndBack)
@@ -131,10 +156,15 @@ TEST_F(TestJsonVariant, toFileAndBack)
     const double double_value(42.3);
     const std::string string_value("abc");
     const std::vector<double> vector_value = {42.1, 42.2, 42.3};
+    ComboProperty combo = ComboProperty::createFrom({"a 1", "a 2", "a/3"});
+    combo.setSelected("a 1", false);
+    combo.setSelected("a 2", true);
+    combo.setSelected("a/3", true);
 
     std::vector<QVariant> variants = {QVariant(), QVariant(int_value), QVariant(double_value),
                                       QVariant::fromValue(string_value),
-                                      QVariant::fromValue(vector_value)};
+                                      QVariant::fromValue(vector_value),
+                                     QVariant::fromValue(combo)};
 
     // preparing array of json objects
     JsonVariant converter;

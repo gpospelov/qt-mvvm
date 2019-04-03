@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include "jsonvariant.h"
+#include "comboproperty.h"
 #include "customvariants.h"
 #include <QDebug>
 #include <QJsonArray>
@@ -25,9 +26,14 @@ const std::string ModelView::JsonVariant::int_type_name = "int";
 const std::string ModelView::JsonVariant::string_type_name = "std::string";
 const std::string ModelView::JsonVariant::double_type_name = "double";
 const std::string ModelView::JsonVariant::vector_double_type_name = "std::vector<double>";
+const std::string ModelView::JsonVariant::comboproperty_type_name = "ComboProperty";
 
 namespace
 {
+
+const std::string comboValuesKey = "values";
+const std::string comboSelectionKey = "selections";
+
 QStringList expected_variant_keys();
 
 QJsonObject from_invalid(const QVariant& variant);
@@ -45,6 +51,9 @@ QVariant to_double(const QJsonObject& object);
 QJsonObject from_vector_double(const QVariant& variant);
 QVariant to_vector_double(const QJsonObject& object);
 
+QJsonObject from_comboproperty(const QVariant& variant);
+QVariant to_comboproperty(const QJsonObject& object);
+
 } // namespace
 
 JsonVariant::JsonVariant()
@@ -54,6 +63,7 @@ JsonVariant::JsonVariant()
     m_converters[string_type_name] = {from_string, to_string};
     m_converters[double_type_name] = {from_double, to_double};
     m_converters[vector_double_type_name] = {from_vector_double, to_vector_double};
+    m_converters[comboproperty_type_name] = {from_comboproperty, to_comboproperty};
 }
 
 QJsonObject JsonVariant::get_json(const QVariant& variant)
@@ -156,6 +166,8 @@ QVariant to_double(const QJsonObject& object)
     return object[JsonVariant::variantValueKey].toVariant();
 }
 
+// --- std::vector<double> ------
+
 QJsonObject from_vector_double(const QVariant& variant)
 {
     QJsonObject result;
@@ -175,6 +187,38 @@ QVariant to_vector_double(const QJsonObject& object)
     for (auto x : object[JsonVariant::variantValueKey].toArray())
         vec.push_back(x.toDouble());
     return QVariant::fromValue(vec);
+}
+
+// --- ComboProperty ------
+
+QJsonObject from_comboproperty(const QVariant& variant)
+{
+    QJsonObject result;
+    result[JsonVariant::variantTypeKey] =
+        QString::fromStdString(JsonVariant::comboproperty_type_name);
+
+    auto combo = variant.value<ComboProperty>();
+
+    QJsonObject object;
+    object[QString::fromStdString(comboValuesKey)] = QString::fromStdString(combo.stringOfValues());
+    object[QString::fromStdString(comboSelectionKey)] =
+        QString::fromStdString(combo.stringOfSelections());
+    result[JsonVariant::variantValueKey] = object;
+    return result;
+}
+
+QVariant to_comboproperty(const QJsonObject& object)
+{
+    ComboProperty combo;
+    QJsonObject combo_json_data = object[JsonVariant::variantValueKey].toObject();
+
+    auto values = combo_json_data[QString::fromStdString(comboValuesKey)].toString().toStdString();
+    combo.setStringOfValues(values);
+
+    auto selections =
+        combo_json_data[QString::fromStdString(comboSelectionKey)].toString().toStdString();
+    combo.setStringOfSelections(selections);
+    return combo.variant();
 }
 
 } // namespace
