@@ -13,6 +13,7 @@
 #include <QJsonObject>
 #include <sstream>
 #include <stdexcept>
+#include <QDebug>
 
 using namespace ModelView;
 
@@ -28,7 +29,8 @@ namespace
 {
 QStringList expected_variant_keys();
 
-QJsonObject from_invalid();
+QJsonObject from_invalid(const QVariant& variant);
+QVariant to_invalid(const QJsonObject& object);
 
 QJsonObject from_int(const QVariant& variant);
 QVariant to_int(const QJsonObject& object);
@@ -44,13 +46,17 @@ QVariant to_vector_double(const QJsonObject& object);
 
 } // namespace
 
+JsonVariant::JsonVariant()
+{
+}
+
 QJsonObject JsonVariant::get_json(const QVariant& variant)
 {
     QJsonObject result;
     const QString type_name = variant.typeName();
 
     if (!variant.isValid())
-        result = from_invalid();
+        result = from_invalid(variant);
 
     else if (type_name == JsonVariant::int_type_name)
         result = from_int(variant);
@@ -81,7 +87,7 @@ QVariant JsonVariant::get_variant(const QJsonObject& object)
     const auto variant_type = object[JsonVariant::variantTypeKey].toString();
 
     if (variant_type == JsonVariant::invalid_type_name)
-        result = QVariant();
+        result = to_invalid(object);
 
     else if (variant_type == JsonVariant::int_type_name)
         result = to_int(object);
@@ -105,6 +111,8 @@ QVariant JsonVariant::get_variant(const QJsonObject& object)
     return result;
 }
 
+//! Returns true if given json object represents variant.
+
 bool JsonVariant::isVariant(const QJsonObject& object) const
 {
     static const QStringList expected = expected_variant_keys();
@@ -122,12 +130,19 @@ QStringList expected_variant_keys()
     return result;
 }
 
-QJsonObject from_invalid()
+QJsonObject from_invalid(const QVariant& variant)
 {
+    (void)variant;
     QJsonObject result;
     result[JsonVariant::variantTypeKey] = JsonVariant::invalid_type_name;
     result[JsonVariant::variantValueKey] = QJsonValue();
     return result;
+}
+
+QVariant to_invalid(const QJsonObject& object)
+{
+    (void)object;
+    return QVariant();
 }
 
 QJsonObject from_int(const QVariant& variant)
