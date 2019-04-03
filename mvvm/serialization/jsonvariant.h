@@ -12,12 +12,14 @@
 
 #include "jsonconverterinterfaces.h"
 #include <QJsonObject>
-#include <QVariant>
 #include <QString>
+#include <QVariant>
 
-namespace ModelView {
+namespace ModelView
+{
 
-class CORE_EXPORT JsonVariant : public JsonVariantInterface {
+class CORE_EXPORT JsonVariant : public JsonVariantInterface
+{
 public:
     static const QString variantTypeKey;
     static const QString variantValueKey;
@@ -30,8 +32,10 @@ public:
     QJsonObject get_json(const QVariant& variant) override;
 
     QVariant get_variant(const QJsonObject& object) override;
+
+    bool isVariant(const QJsonObject& object) const;
 };
 
-}  // namespace ModelView
+} // namespace ModelView
 
 #endif

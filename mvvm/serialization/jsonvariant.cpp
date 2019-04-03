@@ -26,8 +26,8 @@ const QString ModelView::JsonVariant::vector_double_type_name = "std::vector<dou
 
 namespace
 {
+QStringList expected_variant_keys();
 
-bool is_valid(const QJsonObject& json);
 QJsonObject from_invalid();
 
 QJsonObject from_int(const QVariant& variant);
@@ -75,7 +75,7 @@ QVariant JsonVariant::get_variant(const QJsonObject& object)
 {
     QVariant result;
 
-    if (!is_valid(object))
+    if (!isVariant(object))
         throw std::runtime_error("json::get_variant() -> Error. Invalid json object");
 
     const auto variant_type = object[JsonVariant::variantTypeKey].toString();
@@ -105,14 +105,21 @@ QVariant JsonVariant::get_variant(const QJsonObject& object)
     return result;
 }
 
+bool JsonVariant::isVariant(const QJsonObject& object) const
+{
+    static const QStringList expected = expected_variant_keys();
+    return object.keys() == expected ? true : false;
+}
+
 namespace
 {
 
-bool is_valid(const QJsonObject& json)
+QStringList expected_variant_keys()
 {
-    static const QStringList expected = QStringList() << JsonVariant::variantTypeKey
-                                                      << JsonVariant::variantValueKey;
-    return json.keys() == expected;
+    QStringList result = QStringList()
+                         << JsonVariant::variantTypeKey << JsonVariant::variantValueKey;
+    std::sort(result.begin(), result.end());
+    return result;
 }
 
 QJsonObject from_invalid()
