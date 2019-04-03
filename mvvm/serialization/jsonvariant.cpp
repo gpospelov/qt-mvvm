@@ -19,7 +19,7 @@ using namespace ModelView;
 
 const QString ModelView::JsonVariant::variantTypeKey = "type";
 const QString ModelView::JsonVariant::variantValueKey = "value";
-const QString ModelView::JsonVariant::invalid_type_name = "invalid";
+const QString ModelView::JsonVariant::invalid_type_name = "";
 const QString ModelView::JsonVariant::int_type_name = "int";
 const QString ModelView::JsonVariant::string_type_name = "std::string";
 const QString ModelView::JsonVariant::double_type_name = "double";
@@ -55,7 +55,7 @@ QJsonObject JsonVariant::get_json(const QVariant& variant)
     QJsonObject result;
     const QString type_name = variant.typeName();
 
-    if (!variant.isValid())
+    if (type_name == JsonVariant::invalid_type_name)
         result = from_invalid(variant);
 
     else if (type_name == JsonVariant::int_type_name)
@@ -202,7 +202,6 @@ QVariant to_vector_double(const QJsonObject& object)
     std::vector<double> vec;
     for (auto x : object[JsonVariant::variantValueKey].toArray())
         vec.push_back(x.toDouble());
-
     return QVariant::fromValue(vec);
 }
 
