@@ -8,12 +8,13 @@
 // ************************************************************************** //
 
 #include "testwidget3.h"
+#include "defaultviewmodel.h"
 #include "jsonutils.h"
 #include "sessionmodel.h"
 #include "syntaxhighlighter.h"
 #include "toy_includes.h"
 #include "viewitem.h"
-#include "defaultviewmodel.h"
+#include "viewmodeldelegate.h"
 #include <QDebug>
 #include <QHBoxLayout>
 #include <QJsonDocument>
@@ -21,24 +22,23 @@
 #include <QLabel>
 #include <QMenu>
 #include <QTreeView>
-#include <QVBoxLayout>
 #include <QUndoView>
+#include <QVBoxLayout>
 
 namespace
 {
-const QString text
-    = "Undo/Redo basics.\n"
-      "Tree view on the left is looking on our ViewModel. Use right mouse button "
-      "on the left view to add/remove items, "
-      "or just modify values of items. View on the right displays command stack.";
+const QString text = "Undo/Redo basics.\n"
+                     "Tree view on the left is looking on our ViewModel. Use right mouse button "
+                     "on the left view to add/remove items, "
+                     "or just modify values of items. View on the right displays command stack.";
 }
 
 using namespace ModelView;
 
 TestWidget3::TestWidget3(QWidget* parent)
     : QWidget(parent), m_treeView(new QTreeView), m_undoView(new QUndoView),
-      m_viewModel(new DefaultViewModel(this)),
-      m_sessionModel(new ToyItems::SampleModel)
+      m_viewModel(new DefaultViewModel(this)), m_sessionModel(new ToyItems::SampleModel),
+      m_delegate(std::make_unique<ViewModelDelegate>())
 {
     auto vlayout = new QVBoxLayout;
     vlayout->setSpacing(10);
@@ -59,7 +59,6 @@ TestWidget3::TestWidget3(QWidget* parent)
     m_viewModel->setSessionModel(m_sessionModel.get());
 
     init_tree_view(m_treeView);
-
 }
 
 void TestWidget3::onContextMenuRequest(const QPoint& point)
@@ -75,7 +74,8 @@ void TestWidget3::onContextMenuRequest(const QPoint& point)
 
     // inserting item of same type after given item
     connect(addItemAction, &QAction::triggered, [&]() {
-        m_sessionModel->insertNewItem(item->modelType(), item->parent(), taginfo.first, taginfo.second + 1);
+        m_sessionModel->insertNewItem(item->modelType(), item->parent(), taginfo.first,
+                                      taginfo.second + 1);
     });
 
     QAction* removeItemAction = menu.addAction("Remove item");
@@ -114,6 +114,8 @@ void TestWidget3::init_tree_view(QTreeView* view)
     view->expandAll();
     view->resizeColumnToContents(0);
     view->setContextMenuPolicy(Qt::CustomContextMenu);
+
+    view->setItemDelegate(m_delegate.get());
 
     connect(view, &QTreeView::customContextMenuRequested, this, &TestWidget3::onContextMenuRequest);
 }

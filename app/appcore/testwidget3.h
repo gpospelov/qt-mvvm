@@ -17,6 +17,7 @@ namespace ModelView
 {
 class SessionItem;
 class DefaultViewModel;
+class ViewModelDelegate;
 }
 
 namespace ToyItems
@@ -51,6 +52,7 @@ private:
     QUndoView* m_undoView;
     ModelView::DefaultViewModel* m_viewModel;
     std::unique_ptr<ToyItems::SampleModel> m_sessionModel;
+    std::unique_ptr<ModelView::ViewModelDelegate> m_delegate;
 };
 
 #endif // TESTWIDGET3_H

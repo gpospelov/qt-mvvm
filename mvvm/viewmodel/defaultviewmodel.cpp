@@ -51,7 +51,7 @@ void DefaultViewModel::init_view_model()
 
 void DefaultViewModel::onDataChange(SessionItem* item, int role)
 {
-    qDebug() << "DefaultViewModel::onDataChange";
+    qDebug() << "DefaultViewModel::onDataChange" << item << role;
 
     for (auto view : findViews(item)) {
 
