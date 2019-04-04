@@ -12,18 +12,22 @@
 
 #include "global.h"
 #include <QStyledItemDelegate>
+#include <memory>
 
 class QStandardItem;
 
 namespace ModelView
 {
 
-//! Base class for all view models to show content of  SessionModel in Qt views.
+class EditorFactory;
+
+//! Model delegate to provide editing/painting for custom variants.
 
 class CORE_EXPORT ViewModelDelegate : public QStyledItemDelegate
 {
 public:
     explicit ViewModelDelegate(QObject* parent = nullptr);
+    ~ViewModelDelegate();
 
     QWidget* createEditor(QWidget* parent, const QStyleOptionViewItem& option,
                           const QModelIndex& index) const override;
@@ -34,6 +38,9 @@ public:
 
     void updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option,
                               const QModelIndex& index) const override;
+
+private:
+    std::unique_ptr<EditorFactory> m_editor_factory;
 };
 
 } // namespace ModelView
