@@ -35,8 +35,8 @@ ComboPropertyEditor::ComboPropertyEditor(QWidget* parent)
     layout->setMargin(0);
     layout->setSpacing(0);
     layout->addWidget(m_box);
-
     setLayout(layout);
+
     setConnected(true);
 }
 

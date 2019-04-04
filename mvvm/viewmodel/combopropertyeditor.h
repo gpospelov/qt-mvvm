@@ -31,8 +31,8 @@ protected slots:
     virtual void onIndexChanged(int index);
 
 private:
-    virtual std::vector<std::string> internLabels();
-    virtual int internIndex();
+    std::vector<std::string> internLabels();
+    int internIndex();
     void setConnected(bool isConnected);
     void update_components();
     QComboBox* m_box;

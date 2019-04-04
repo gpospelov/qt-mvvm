@@ -18,6 +18,8 @@ class QModelIndex;
 namespace ModelView
 {
 
+class SessionItem;
+
 //! Editor factory for custom variants.
 
 class CORE_EXPORT EditorFactory
@@ -26,6 +28,7 @@ public:
     EditorFactory();
 
     QWidget* createEditor(const QModelIndex& index) const;
+    QWidget* createEditor(const SessionItem* item) const;
 };
 
 } // namespace ModelView
