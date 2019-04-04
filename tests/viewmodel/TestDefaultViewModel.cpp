@@ -21,6 +21,7 @@ TEST_F(TestDefaultViewModel, initialState)
     DefaultViewModel viewModel;
     EXPECT_EQ(viewModel.rowCount(), 0);
     EXPECT_EQ(viewModel.columnCount(), 0);
+    EXPECT_EQ(viewModel.sessionItemFromIndex(QModelIndex()), nullptr);
 }
 
 //! Single property item in a model.
@@ -48,6 +49,28 @@ TEST_F(TestDefaultViewModel, fromPropertyItem)
     auto dataItem = dynamic_cast<ViewDataItem*>(viewModel.itemFromIndex(dataIndex));
     EXPECT_TRUE(dataItem != nullptr);
     EXPECT_EQ(dataItem->item(), propertyItem);
+}
+
+//! Single property item in a model.
+
+TEST_F(TestDefaultViewModel, sessionItemFromIndex)
+{
+    SessionModel model;
+    auto propertyItem = model.insertNewItem(Constants::PropertyType);
+    propertyItem->setData(42.0, ItemDataRole::DATA);
+
+    DefaultViewModel viewModel;
+    viewModel.setSessionModel(&model);
+    EXPECT_EQ(viewModel.rowCount(), 1);
+    EXPECT_EQ(viewModel.columnCount(), 2);
+
+    // accessing first child under the root item
+    QModelIndex labelIndex = viewModel.index(0, 0);
+    QModelIndex dataIndex = viewModel.index(0, 1);
+
+    EXPECT_EQ(viewModel.sessionItemFromIndex(QModelIndex()), model.rootItem());
+    EXPECT_EQ(viewModel.sessionItemFromIndex(labelIndex), propertyItem);
+    EXPECT_EQ(viewModel.sessionItemFromIndex(dataIndex), propertyItem);
 }
 
 //! Find ViewItem's corresponding to given PropertyItem.

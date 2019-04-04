@@ -80,22 +80,38 @@ std::vector<ViewItem*> ViewModel::findViews(SessionItem* item)
     return Utils::findViews(this, QModelIndex(), item);
 }
 
+SessionItem* ViewModel::sessionItemFromIndex(const QModelIndex& index) const
+{
+    SessionItem* result(nullptr);
+    if (!m_sessionModel)
+        return result;
+
+    if (index.isValid()) {
+        if (auto viewItem = dynamic_cast<ViewItem*>(itemFromIndex(index)))
+            result = viewItem->item();
+    } else {
+        result = m_sessionModel->rootItem();
+    }
+
+    return result;
+}
+
 void ViewModel::onDataChange(SessionItem* item, int role)
 {
-    Q_UNUSED(item);
-    Q_UNUSED(role);
+    Q_UNUSED(item)
+    Q_UNUSED(role)
 }
 
 void ViewModel::onRowInserted(SessionItem* parent, std::string tag, int row)
 {
-    Q_UNUSED(parent);
-    Q_UNUSED(tag);
-    Q_UNUSED(row);
+    Q_UNUSED(parent)
+    Q_UNUSED(tag)
+    Q_UNUSED(row)
 }
 
 void ViewModel::onRowRemoved(SessionItem* parent, std::string tag, int row)
 {
-    Q_UNUSED(parent);
-    Q_UNUSED(tag);
-    Q_UNUSED(row);
+    Q_UNUSED(parent)
+    Q_UNUSED(tag)
+    Q_UNUSED(row)
 }

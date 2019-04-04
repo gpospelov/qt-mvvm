@@ -34,6 +34,8 @@ public:
 
     std::vector<ViewItem*> findViews(SessionItem* item);
 
+    SessionItem* sessionItemFromIndex(const QModelIndex &index) const;
+
 protected:
     SessionItem* rootSessionItem();
     QStandardItem* rootStandardItem();
