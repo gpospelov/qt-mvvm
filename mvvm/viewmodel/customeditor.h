@@ -39,7 +39,7 @@ public slots:
 
 signals:
     //! Emmits signal when data was changed in an editor.
-    void dataChanged(const QVariant& data);
+    void dataChanged();
 
 protected:
     void setDataIntern(const QVariant& data);

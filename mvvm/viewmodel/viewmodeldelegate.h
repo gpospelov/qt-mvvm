@@ -39,6 +39,9 @@ public:
     void updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option,
                               const QModelIndex& index) const override;
 
+public slots:
+    void onCustomEditorDataChanged();
+
 private:
     std::unique_ptr<EditorFactory> m_editor_factory;
 };

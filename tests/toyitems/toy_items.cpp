@@ -13,6 +13,7 @@
 #include "toy_constants.h"
 #include "vectoritem.h"
 #include "itemmapper.h"
+#include "comboproperty.h"
 #include <stdexcept>
 
 using namespace ToyItems;
@@ -48,12 +49,16 @@ Particle::Particle() : CompoundItem(Constants::ParticleType)
 
 const std::string InterferenceFunction::P_ROTATION_ANLE = "Rotation";
 const std::string InterferenceFunction::P_INTEGRATION = "Integration";
+const std::string InterferenceFunction::P_LATTICE_TYPE = "Lattice";
 
 InterferenceFunction::InterferenceFunction()
     : CompoundItem(Constants::InterferenceType)
 {
     addProperty<ModelView::PropertyItem>(P_ROTATION_ANLE, 90.0);
     addProperty<ModelView::PropertyItem>(P_INTEGRATION, true);
+
+    ModelView::ComboProperty combo = ModelView::ComboProperty::createFrom({"Default", "Square", "Hexagonal"});
+    addProperty<ModelView::PropertyItem>(P_LATTICE_TYPE, combo.variant());
 
     update_appearance();
 }

@@ -54,6 +54,7 @@ class InterferenceFunction : public ModelView::CompoundItem
 public:
     static const std::string P_ROTATION_ANLE;
     static const std::string P_INTEGRATION;
+    static const std::string P_LATTICE_TYPE;
 
     InterferenceFunction();
 

@@ -37,28 +37,30 @@ EditorFactory::EditorFactory()
 
 }
 
-QWidget* EditorFactory::createEditor(const QModelIndex& index) const
+CustomEditor* EditorFactory::createEditor(const QModelIndex& index, QWidget* parent) const
 {
-    QWidget* result(nullptr);
+    CustomEditor* result(nullptr);
 
     if (auto item = itemFromIndex(index))
-        return createEditor(item);
+        return createEditor(item, parent);
 
     return result;
 }
 
-QWidget* EditorFactory::createEditor(const SessionItem* item) const
+CustomEditor* EditorFactory::createEditor(const SessionItem* item, QWidget* parent) const
 {
     if (!item)
         return nullptr;
 
-    QWidget* result(nullptr);
+    CustomEditor* result(nullptr);
 
     if (isComboProperty(item->data(ItemDataRole::DATA))) {
-        auto editor = new ComboPropertyEditor;
-        result = editor;
-        qDebug() << "EditorFactory::createEditor():" << item << editor;
+        result = new ComboPropertyEditor;
+        qDebug() << "EditorFactory::createEditor():" << item << result;
     }
+
+    if (result)
+        result->setParent(parent);
 
     return result;
 }
