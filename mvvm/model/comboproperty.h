@@ -20,6 +20,9 @@
 #include <string>
 #include <vector>
 
+namespace ModelView
+{
+
 //! Custom property to define list of string values with multiple selections.
 //! Intended for QVariant.
 
@@ -73,6 +76,8 @@ private:
     std::vector<int> m_selected_indices;
 };
 
-Q_DECLARE_METATYPE(ComboProperty)
+} // namespace ModelView
+
+Q_DECLARE_METATYPE(ModelView::ComboProperty)
 
 #endif // COMBOPROPERTY_H

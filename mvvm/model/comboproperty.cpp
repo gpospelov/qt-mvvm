@@ -62,6 +62,8 @@ std::vector<std::string> tokenize(const std::string& str, const std::string& del
 }
 } // namespace
 
+using namespace ModelView;
+
 ComboProperty::ComboProperty() = default;
 
 ComboProperty::ComboProperty(std::vector<std::string> values) : m_values(std::move(values)) {}

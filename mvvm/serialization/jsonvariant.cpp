@@ -22,7 +22,7 @@ const std::string JsonVariant::int_type_name = "int";
 const std::string JsonVariant::string_type_name = "std::string";
 const std::string JsonVariant::double_type_name = "double";
 const std::string JsonVariant::vector_double_type_name = "std::vector<double>";
-const std::string JsonVariant::comboproperty_type_name = "ComboProperty";
+const std::string JsonVariant::comboproperty_type_name = "ModelView::ComboProperty";
 
 namespace
 {
