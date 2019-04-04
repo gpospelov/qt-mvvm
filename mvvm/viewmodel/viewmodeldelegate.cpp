@@ -8,8 +8,10 @@
 // ************************************************************************** //
 
 #include "viewmodeldelegate.h"
-#include "editorfactory.h"
+#include "comboproperty.h"
 #include "customeditor.h"
+#include "editorfactory.h"
+#include <QApplication>
 #include <QDebug>
 
 using namespace ModelView;
@@ -17,6 +19,17 @@ using namespace ModelView;
 ViewModelDelegate::ViewModelDelegate(QObject* parent)
     : QStyledItemDelegate(parent), m_editor_factory(std::make_unique<EditorFactory>())
 {
+}
+
+void ViewModelDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option,
+                              const QModelIndex& index) const
+{
+    if (m_editor_factory->hasStringRepresentation(index)) {
+        QString text = QString::fromStdString(m_editor_factory->toString(index));
+        paintCustomLabel(painter, option, index, text);
+    } else {
+        QStyledItemDelegate::paint(painter, option, index);
+    }
 }
 
 ViewModelDelegate::~ViewModelDelegate() = default;
@@ -76,4 +89,15 @@ void ViewModelDelegate::onCustomEditorDataChanged()
     CustomEditor* editor = qobject_cast<CustomEditor*>(sender());
     emit commitData(editor);
     emit closeEditor(editor);
+}
+
+void ViewModelDelegate::paintCustomLabel(QPainter* painter, const QStyleOptionViewItem& option,
+                                         const QModelIndex& index, const QString& text) const
+{
+    QStyleOptionViewItem opt = option;
+    initStyleOption(&opt, index); // calling original method to take into accounts colors etc
+    opt.text = displayText(text, option.locale); // by overriding text with ours
+    const QWidget* widget = opt.widget;
+    QStyle* style = widget ? widget->style() : QApplication::style();
+    style->drawControl(QStyle::CE_ItemViewItem, &opt, painter, widget);
 }

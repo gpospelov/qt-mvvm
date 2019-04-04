@@ -27,7 +27,10 @@ class CORE_EXPORT ViewModelDelegate : public QStyledItemDelegate
 {
 public:
     explicit ViewModelDelegate(QObject* parent = nullptr);
-    ~ViewModelDelegate();
+    ~ViewModelDelegate() override;
+
+    void paint(QPainter* painter, const QStyleOptionViewItem& option,
+               const QModelIndex& index) const override;
 
     QWidget* createEditor(QWidget* parent, const QStyleOptionViewItem& option,
                           const QModelIndex& index) const override;
@@ -43,6 +46,9 @@ public slots:
     void onCustomEditorDataChanged();
 
 private:
+    void paintCustomLabel(QPainter* painter, const QStyleOptionViewItem& option,
+                          const QModelIndex& index, const QString& text) const;
+
     std::unique_ptr<EditorFactory> m_editor_factory;
 };
 
