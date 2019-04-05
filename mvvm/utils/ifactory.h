@@ -50,6 +50,8 @@ public:
         return m_data.insert(make_pair(key, func)).second;
     }
 
+    size_t size() const { return m_data.size(); }
+
 private:
     map_t m_data;
 };
