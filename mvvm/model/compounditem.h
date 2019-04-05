@@ -51,6 +51,11 @@ template <typename T> T* CompoundItem::addProperty(const std::string& name, cons
     return property;
 }
 
+//template <> PropertyItem* CompoundItem::addProperty(const std::string& name, const QVariant& variant)
+//{
+//    return addProperty<PropertyItem>(name, variant);
+//}
+
 } // namespace ModelView
 
 #endif // COMPOUNDITEM_H

@@ -33,7 +33,9 @@ public:
 
 protected:
     bool is_valid_index() const;
-    template<typename T> void add(const std::string& text, bool set_as_initial=false);
+    template<typename T> void add(const std::string& text, bool make_selected=false);
+    // FIXME how to make sure that init_group() was called in constructor?
+    // Shell we delegate this call to CompoundItem::addProperty ?
     void init_group();
     void update_combo();
     std::unique_ptr<ItemCatalogue> m_catalogue;
@@ -41,10 +43,13 @@ protected:
 };
 
 template <typename T>
-void GroupItem::add(const std::string& text, bool set_as_initial)
+void GroupItem::add(const std::string& text, bool make_selected)
 {
     m_catalogue->add<T>(text);
-    m_current_index = set_as_initial ? m_catalogue->itemCount() - 1 : 0;
+    if (make_selected)
+        m_current_index = m_catalogue->itemCount() - 1;
+    if (!is_valid_index())
+        m_current_index = 0;
 }
 
 } // namespace ModelView
