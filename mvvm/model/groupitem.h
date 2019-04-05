@@ -32,6 +32,7 @@ public:
     void setCurrentType(const std::string& model_type);
 
 protected:
+    bool is_valid_index() const;
     template<typename T> void add(const std::string& text, bool set_as_initial=false);
     void init_group();
     void update_combo();
@@ -43,8 +44,7 @@ template <typename T>
 void GroupItem::add(const std::string& text, bool set_as_initial)
 {
     m_catalogue->add<T>(text);
-    if (set_as_initial)
-        m_current_index = m_catalogue->itemCount() - 1;
+    m_current_index = set_as_initial ? m_catalogue->itemCount() - 1 : 0;
 }
 
 } // namespace ModelView

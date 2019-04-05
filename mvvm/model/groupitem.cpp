@@ -21,7 +21,7 @@ using namespace ModelView;
 GroupItem::~GroupItem() = default;
 
 GroupItem::GroupItem(model_type modelType) :SessionItem(modelType),
-    m_catalogue(std::make_unique<ItemCatalogue>()), m_current_index(0)
+    m_catalogue(std::make_unique<ItemCatalogue>()), m_current_index(-1)
 {
     registerTag(TagInfo::universalTag(tag_name), /*set_as_default*/true);
 }
@@ -35,13 +35,12 @@ int GroupItem::currentIndex() const
 
 SessionItem* GroupItem::currentItem()
 {
-    return getItem("", m_current_index);
+    return is_valid_index() ? getItem("", m_current_index) : nullptr;
 }
 
 std::string GroupItem::currentType() const
 {
-    auto model_types = m_catalogue->modelTypes();
-    return model_types[static_cast<size_t>(m_current_index)];
+    return is_valid_index() ? m_catalogue->modelTypes()[static_cast<size_t>(m_current_index)] : "";
 }
 
 //! Sets item corresponding to given model type.
@@ -56,6 +55,11 @@ void GroupItem::setCurrentType(const std::string& model_type)
 
     m_current_index = index;
     update_combo();
+}
+
+bool GroupItem::is_valid_index() const
+{
+    return m_current_index != -1;
 }
 
 //! Inits group item.
