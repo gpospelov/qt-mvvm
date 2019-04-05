@@ -1,6 +1,6 @@
+#include "comboproperty.h"
 #include "google_test.h"
 #include "toy_includes.h"
-#include "comboproperty.h"
 
 using namespace ModelView;
 
@@ -29,7 +29,8 @@ TEST_F(TestToyShapeGroup, initialState)
     // expected value in combo
     ComboProperty combo = item.data(ItemDataRole::DATA).value<ComboProperty>();
     EXPECT_EQ(combo.currentIndex(), 1);
-    EXPECT_EQ(combo.values(), std::vector<std::string>({"Cylinder", "Full sphere", "Anysotropical piramyd"}));
+    EXPECT_EQ(combo.values(),
+              std::vector<std::string>({"Cylinder", "Full sphere", "Anysotropical piramyd"}));
 }
 
 TEST_F(TestToyShapeGroup, setCurrentType)
@@ -48,5 +49,6 @@ TEST_F(TestToyShapeGroup, setCurrentType)
     // expected value in combo
     ComboProperty combo = item.data(ItemDataRole::DATA).value<ComboProperty>();
     EXPECT_EQ(combo.currentIndex(), 0);
-    EXPECT_EQ(combo.values(), std::vector<std::string>({"Cylinder", "Full sphere", "Anysotropical piramyd"}));
+    EXPECT_EQ(combo.values(),
+              std::vector<std::string>({"Cylinder", "Full sphere", "Anysotropical piramyd"}));
 }
