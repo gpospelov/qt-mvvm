@@ -75,3 +75,8 @@ std::vector<std::string> ItemCatalogue::labels() const
         result.push_back(x.item_label);
     return result;
 }
+
+int ItemCatalogue::itemCount() const
+{
+    return static_cast<int>(m_data->factory.size());
+}

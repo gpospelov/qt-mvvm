@@ -19,6 +19,7 @@ TestItemCatalogue::~TestItemCatalogue() = default;
 TEST_F(TestItemCatalogue, initialState)
 {
     ItemCatalogue catalogue;
+    EXPECT_EQ(catalogue.itemCount(), 0);
     EXPECT_EQ(catalogue.modelTypes(), std::vector<std::string>({}));
     EXPECT_EQ(catalogue.labels(), std::vector<std::string>({}));
 }
@@ -28,6 +29,8 @@ TEST_F(TestItemCatalogue, addItem)
     ItemCatalogue catalogue;
 
     catalogue.add<PropertyItem>();
+
+    EXPECT_EQ(catalogue.itemCount(), 1);
 
     auto item = catalogue.create(Constants::PropertyType);
     EXPECT_TRUE(dynamic_cast<PropertyItem*>(item.get()) != nullptr);

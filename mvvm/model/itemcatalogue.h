@@ -41,6 +41,8 @@ public:
     std::vector<std::string> modelTypes() const;
     std::vector<std::string> labels() const;
 
+    int itemCount() const;
+
 private:
     using factory_func_t = std::function<SessionItem*()>;
     void add(const std::string& model_type, factory_func_t func, const std::string& label);
