@@ -25,6 +25,7 @@ public:
     ~PropertyViewModel() override;
 
 protected:
+    void onDataChange(SessionItem* item, int role) override;
     void iterate(SessionItem* item, QStandardItem* parent) override;
 
 };

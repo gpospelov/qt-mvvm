@@ -78,5 +78,5 @@ void GroupItem::update_combo()
     ComboProperty combo;
     combo.setValues(m_catalogue->labels());
     combo.setCurrentIndex(m_current_index);
-    setDataIntern(combo.variant(), ItemDataRole::DATA);
+    setData(combo.variant(), ItemDataRole::DATA);
 }

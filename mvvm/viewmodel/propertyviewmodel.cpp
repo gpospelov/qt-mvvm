@@ -11,6 +11,9 @@
 #include "sessionitem.h"
 #include "groupitem.h"
 #include "rowconstructor.h"
+#include "viewitem.h"
+#include "viewmodelutils.h"
+#include <QDebug>
 
 using namespace ModelView;
 
@@ -25,11 +28,50 @@ std::vector<SessionItem*> item_children(SessionItem* item) {
     }
     return result;
 }
+
+//! Returns true if given SessionItem role is valid for view
+bool isValidItemRole(const ModelView::ViewItem* view, int item_role) {
+    if (view->item_role() == item_role)
+        return true;
+
+    if (item_role == ModelView::ItemDataRole::APPEARANCE)
+        return true;
+
+    return false;
+}
+
 }
 
 PropertyViewModel::PropertyViewModel(QObject* parent)
     : DefaultViewModel(parent)
 {
+
+}
+
+void PropertyViewModel::onDataChange(SessionItem* item, int role)
+{
+    for (auto view : findViews(item)) {
+
+        // inform corresponding LabelView and DataView
+        if (isValidItemRole(view, role)) {
+            auto index = indexFromItem(view);
+            dataChanged(index, index, Utils::item_role_to_qt(role));
+        }
+    }
+
+    if (auto group = dynamic_cast<GroupItem*>(item)) {
+        qDebug() << "AAAAA" << QString::fromStdString(group->currentType());
+
+        auto views = findStandardViews(group);
+        qDebug() << "AAAAA" << views;
+        for (auto view : views)
+            view->removeRows(0, view->rowCount());
+
+        if (views.size())
+            iterate(group, views.at(0));
+
+
+    }
 
 }
 
