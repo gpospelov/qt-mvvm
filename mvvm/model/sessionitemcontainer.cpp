@@ -9,6 +9,7 @@
 
 #include "sessionitemcontainer.h"
 #include "sessionitem.h"
+#include "containerutils.h"
 
 using namespace ModelView;
 
@@ -69,8 +70,7 @@ SessionItem* SessionItemContainer::takeItem(int index)
 
 int SessionItemContainer::indexOfItem(const SessionItem* item) const
 {
-    auto pos = find(m_items.begin(), m_items.end(), item);
-    return pos == m_items.end() ? -1 : static_cast<int>(std::distance(m_items.begin(), pos));
+    return Utils::IndexOfItem(m_items, item);
 }
 
 //! Returns item at given index. Returns nullptr if index is invalid.
