@@ -79,8 +79,8 @@ void DefaultViewModel::onRowInserted(SessionItem* parent, std::string tag, int r
 
 void DefaultViewModel::onRowRemoved(SessionItem* parent, std::string tag, int row)
 {
-    Q_UNUSED(row);
-    Q_UNUSED(tag);
+    Q_UNUSED(row)
+    Q_UNUSED(tag)
 
     auto views = findStandardViews(parent);
     for (auto view : views)

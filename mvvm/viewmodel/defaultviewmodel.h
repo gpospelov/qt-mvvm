@@ -25,7 +25,7 @@ class RowConstructorInterface;
 //! insert/remove/data change. The data change in a view will be propagated back to SessionModel.
 //!
 //! Important limitation: DefaultViewModel is not intended for insert/remove through
-//! QStandardItemModel interface. Everything should be done throught SessionModel.
+//! QStandardItemModel interface. Everything should be done through SessionModel.
 //!
 //! Important feature: DefaultViewModel doesn't care about correct removal of QStandardItemModel
 //! rows and columns. Every time the row of parent SessionItem is removed, DefaultViewModel

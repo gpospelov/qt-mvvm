@@ -17,6 +17,7 @@ namespace ModelView
 {
 class SessionItem;
 class DefaultViewModel;
+class PropertyViewModel;
 class ViewModelDelegate;
 }
 
@@ -29,6 +30,7 @@ class QTreeView;
 class QStandardItemModel;
 class QPoint;
 class QUndoView;
+class QBoxLayout;
 
 //! Playground to test basics of ViewModel.
 
@@ -48,9 +50,15 @@ private:
     void init_tree_view(QTreeView* view);
     ModelView::SessionItem* item_from_view(QTreeView* view, const QPoint& point);
 
-    QTreeView* m_treeView;
+    QBoxLayout* create_top_layout();
+    QBoxLayout* create_left_layout();
+    QBoxLayout* create_right_layout();
+
+    QTreeView* m_defaultView;
+    QTreeView* m_propertyView;
     QUndoView* m_undoView;
     ModelView::DefaultViewModel* m_viewModel;
+    ModelView::DefaultViewModel* m_propertyViewModel;
     std::unique_ptr<ToyItems::SampleModel> m_sessionModel;
     std::unique_ptr<ModelView::ViewModelDelegate> m_delegate;
 };

@@ -9,6 +9,7 @@
 
 #include "testwidget3.h"
 #include "defaultviewmodel.h"
+#include "propertyviewmodel.h"
 #include "jsonutils.h"
 #include "sessionmodel.h"
 #include "syntaxhighlighter.h"
@@ -36,29 +37,31 @@ const QString text = "Undo/Redo basics.\n"
 using namespace ModelView;
 
 TestWidget3::TestWidget3(QWidget* parent)
-    : QWidget(parent), m_treeView(new QTreeView), m_undoView(new QUndoView),
-      m_viewModel(new DefaultViewModel(this)), m_sessionModel(new ToyItems::SampleModel),
+    : QWidget(parent), m_defaultView(new QTreeView), m_propertyView(new QTreeView), m_undoView(new QUndoView),
+      m_viewModel(new DefaultViewModel(this)), m_propertyViewModel(new PropertyViewModel(this)), m_sessionModel(new ToyItems::SampleModel),
       m_delegate(std::make_unique<ViewModelDelegate>())
 {
-    auto vlayout = new QVBoxLayout;
-    vlayout->setSpacing(10);
+    auto mainLayout = new QVBoxLayout;
+    mainLayout->setSpacing(10);
 
-    auto label = new QLabel(this);
-    label->setText(text);
-    label->setWordWrap(true);
-    vlayout->addWidget(label);
+    mainLayout->addLayout(create_top_layout());
 
     auto hlayout = new QHBoxLayout;
-    hlayout->addWidget(m_treeView);
-    hlayout->addWidget(m_undoView);
+    hlayout->addLayout(create_left_layout());
+    hlayout->addLayout(create_right_layout());
+    mainLayout->addLayout(hlayout);
 
-    vlayout->addLayout(hlayout);
-    setLayout(vlayout);
+    setLayout(mainLayout);
 
     init_session_model();
     m_viewModel->setSessionModel(m_sessionModel.get());
+    m_propertyViewModel->setSessionModel(m_sessionModel.get());
 
-    init_tree_view(m_treeView);
+    init_tree_view(m_defaultView);
+
+    m_propertyView->setModel(m_propertyViewModel);
+    m_propertyView->expandAll();
+
 }
 
 void TestWidget3::onContextMenuRequest(const QPoint& point)
@@ -132,4 +135,29 @@ SessionItem* TestWidget3::item_from_view(QTreeView* view, const QPoint& point)
     Q_ASSERT(viewItem);
 
     return viewItem->item();
+}
+
+QBoxLayout* TestWidget3::create_top_layout()
+{
+    auto result = new QHBoxLayout;
+    auto label = new QLabel(this);
+    label->setText(text);
+    label->setWordWrap(true);
+    result->addWidget(label);
+    return result;
+}
+
+QBoxLayout* TestWidget3::create_left_layout()
+{
+    auto result = new QVBoxLayout;
+    result->addWidget(m_defaultView);
+    return result;
+}
+
+QBoxLayout* TestWidget3::create_right_layout()
+{
+    auto result = new QVBoxLayout;
+    result->addWidget(m_undoView);
+    result->addWidget(m_propertyView);
+    return result;
 }
