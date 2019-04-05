@@ -23,6 +23,10 @@ class CORE_EXPORT PropertyViewModel : public DefaultViewModel {
 public:
     PropertyViewModel(QObject* parent = nullptr);
     ~PropertyViewModel() override;
+
+protected:
+    void iterate(SessionItem* item, QStandardItem* parent) override;
+
 };
 
 }  // namespace ModelView

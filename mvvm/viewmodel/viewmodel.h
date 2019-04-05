@@ -42,7 +42,7 @@ protected:
 
     std::vector<QStandardItem*> findStandardViews(SessionItem* item);
 
-private:
+protected:
     virtual void init_view_model() = 0;
     virtual void onDataChange(SessionItem* item, int role);
     virtual void onRowInserted(SessionItem* parent, std::string tag, int row);

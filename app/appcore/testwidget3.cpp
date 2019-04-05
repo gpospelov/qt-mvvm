@@ -61,6 +61,8 @@ TestWidget3::TestWidget3(QWidget* parent)
 
     m_propertyView->setModel(m_propertyViewModel);
     m_propertyView->expandAll();
+    m_propertyView->resizeColumnToContents(0);
+    m_propertyView->setItemDelegate(m_delegate.get());
 
 }
 

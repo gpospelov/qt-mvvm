@@ -36,14 +36,14 @@ public:
     DefaultViewModel(QObject* parent = nullptr);
     ~DefaultViewModel() override;
 
-private:
+protected:
     void init_view_model() override;
     void onDataChange(SessionItem* item, int role) override;
     void onRowInserted(SessionItem* parent, std::string tag, int row) override;
     void onRowRemoved(SessionItem* parent, std::string tag, int row) override;
 
     void update_model();
-    void iterate(SessionItem* item, QStandardItem* parent);
+    virtual void iterate(SessionItem* item, QStandardItem* parent);
 
     std::unique_ptr<RowConstructorInterface> m_row_constructor;
 };
