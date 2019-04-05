@@ -13,6 +13,7 @@
 // ************************************************************************** //
 
 #include "comboproperty.h"
+#include "containerutils.h"
 #include <sstream>
 #include <stdexcept>
 
@@ -22,12 +23,6 @@ const std::string value_separator = ";";
 const std::string selection_separator = ",";
 const std::string multiple_label = "Multiple";
 const std::string none_label = "None";
-
-template <typename C, typename T> int indexOfItem(const C& container, const T& item)
-{
-    auto pos = find(container.begin(), container.end(), item);
-    return pos == container.end() ? -1 : static_cast<int>(std::distance(container.begin(), pos));
-}
 
 template <typename C, typename T> int contains(const C& container, const T& item)
 {
@@ -92,7 +87,7 @@ void ComboProperty::setValue(const std::string& name)
         throw std::runtime_error("ComboProperty::setValue() -> Error. Combo doesn't contain "
                                  "value "
                                  + name);
-    setCurrentIndex(indexOfItem(m_values, name));
+    setCurrentIndex(Utils::IndexOfItem(m_values, name));
 }
 
 std::vector<std::string> ComboProperty::values() const
@@ -109,7 +104,7 @@ void ComboProperty::setValues(const std::vector<std::string>& values)
 
     auto current = value();
     m_values = values;
-    setCurrentIndex(contains(m_values, current) ? indexOfItem(m_values, current) : 0);
+    setCurrentIndex(contains(m_values, current) ? Utils::IndexOfItem(m_values, current) : 0);
 }
 
 //! returns list of tool tips for all values
@@ -185,7 +180,7 @@ void ComboProperty::setStringOfValues(const std::string& values)
 {
     auto current = value();
     m_values = tokenize(values, value_separator);
-    setCurrentIndex(contains(m_values, current) ? indexOfItem(m_values, current) : 0);
+    setCurrentIndex(contains(m_values, current) ? Utils::IndexOfItem(m_values, current) : 0);
 }
 
 //! Constructs variant enclosing given ComboProperty.
@@ -233,7 +228,7 @@ void ComboProperty::setSelected(int index, bool value)
 
 void ComboProperty::setSelected(const std::string& name, bool value)
 {
-    setSelected(indexOfItem(m_values, name), value);
+    setSelected(Utils::IndexOfItem(m_values, name), value);
 }
 
 //! Return string with coma separated list of selected indices.
