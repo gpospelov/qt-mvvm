@@ -10,7 +10,8 @@
 #include "toy_models.h"
 #include "itemfactory.h"
 #include "itemmanager.h"
-#include "toy_items.h"
+#include "toy_catalogue.h"
+
 
 ToyItems::SampleModel::SampleModel() : SessionModel("ToyModel")
 {

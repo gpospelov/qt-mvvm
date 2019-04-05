@@ -77,12 +77,38 @@ void InterferenceFunction::update_appearance()
     angle_item->setEnabled(!getItemValue(P_INTEGRATION).toBool());
 }
 
-std::unique_ptr<ModelView::ItemCatalogue> ToyItems::CreateToyItemCatalogue()
+// ----------------------------------------------------------------------------
+
+const std::string Cylinder::P_RADIUS = "Radius";
+const std::string Cylinder::P_HEIGHT = "Height";
+
+Cylinder::Cylinder()
 {
-    auto result = ModelView::CreateDefaultItemCatalogue();
-    result->add<MultiLayer>();
-    result->add<Layer>();
-    result->add<Particle>();
-    result->add<InterferenceFunction>();
-    return result;
+    addProperty<ModelView::PropertyItem>(P_RADIUS, 8.0);
+    addProperty<ModelView::PropertyItem>(P_HEIGHT, 10.0);
 }
+
+// ----------------------------------------------------------------------------
+
+const std::string Sphere::P_RADIUS = "Radius";
+
+Sphere::Sphere()
+{
+    addProperty<ModelView::PropertyItem>(P_RADIUS, 8.0);
+}
+
+// ----------------------------------------------------------------------------
+
+const std::string AnysoPyramid::P_LENGTH = "Length";
+const std::string AnysoPyramid::P_WIDTH = "Width";
+const std::string AnysoPyramid::P_HEIGHT = "Height";
+const std::string AnysoPyramid::P_ALPHA = "Alpha";
+
+AnysoPyramid::AnysoPyramid()
+{
+    addProperty<ModelView::PropertyItem>(P_LENGTH, 8.0);
+    addProperty<ModelView::PropertyItem>(P_WIDTH, 8.0);
+    addProperty<ModelView::PropertyItem>(P_HEIGHT, 8.0);
+    addProperty<ModelView::PropertyItem>(P_ALPHA, 8.0);
+}
+

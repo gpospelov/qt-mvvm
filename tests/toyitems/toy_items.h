@@ -64,8 +64,33 @@ private:
     void update_appearance();
 };
 
-//! Returns catalogue of toy items.
-std::unique_ptr<ModelView::ItemCatalogue> CreateToyItemCatalogue();
+// ----------------------------------------------------------------------------
+
+class Cylinder : public ModelView::CompoundItem
+{
+public:
+    static const std::string P_RADIUS;
+    static const std::string P_HEIGHT;
+    Cylinder();
+};
+
+class Sphere : public ModelView::CompoundItem
+{
+public:
+    static const std::string P_RADIUS;
+    Sphere();
+};
+
+
+class AnysoPyramid : public ModelView::CompoundItem
+{
+public:
+    static const std::string P_LENGTH;
+    static const std::string P_WIDTH;
+    static const std::string P_HEIGHT;
+    static const std::string P_ALPHA;
+    AnysoPyramid();
+};
 
 } // ToyItems
 
