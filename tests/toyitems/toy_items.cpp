@@ -8,12 +8,12 @@
 // ************************************************************************** //
 
 #include "toy_items.h"
+#include "comboproperty.h"
 #include "itemmanager.h"
+#include "itemmapper.h"
 #include "taginfo.h"
 #include "toy_constants.h"
 #include "vectoritem.h"
-#include "itemmapper.h"
-#include "comboproperty.h"
 #include <stdexcept>
 
 using namespace ToyItems;
@@ -51,13 +51,13 @@ const std::string InterferenceFunction::P_ROTATION_ANLE = "Rotation";
 const std::string InterferenceFunction::P_INTEGRATION = "Integration";
 const std::string InterferenceFunction::P_LATTICE_TYPE = "Lattice";
 
-InterferenceFunction::InterferenceFunction()
-    : CompoundItem(Constants::InterferenceType)
+InterferenceFunction::InterferenceFunction() : CompoundItem(Constants::InterferenceType)
 {
     addProperty<ModelView::PropertyItem>(P_ROTATION_ANLE, 90.0);
     addProperty<ModelView::PropertyItem>(P_INTEGRATION, true);
 
-    ModelView::ComboProperty combo = ModelView::ComboProperty::createFrom({"Default", "Square", "Hexagonal"});
+    ModelView::ComboProperty combo =
+        ModelView::ComboProperty::createFrom({"Default", "Square", "Hexagonal"});
     addProperty<ModelView::PropertyItem>(P_LATTICE_TYPE, combo.variant());
 
     update_appearance();
@@ -65,10 +65,12 @@ InterferenceFunction::InterferenceFunction()
 
 void InterferenceFunction::activate()
 {
-    mapper()->setOnPropertyChange([this](SessionItem*, std::string property) {
-        if (property == P_INTEGRATION)
-            update_appearance();
-    }, this);
+    mapper()->setOnPropertyChange(
+        [this](SessionItem*, std::string property) {
+            if (property == P_INTEGRATION)
+                update_appearance();
+        },
+        this);
 }
 
 void InterferenceFunction::update_appearance()
@@ -82,7 +84,7 @@ void InterferenceFunction::update_appearance()
 const std::string Cylinder::P_RADIUS = "Radius";
 const std::string Cylinder::P_HEIGHT = "Height";
 
-Cylinder::Cylinder()
+Cylinder::Cylinder() : CompoundItem(Constants::CylinderType)
 {
     addProperty<ModelView::PropertyItem>(P_RADIUS, 8.0);
     addProperty<ModelView::PropertyItem>(P_HEIGHT, 10.0);
@@ -92,7 +94,7 @@ Cylinder::Cylinder()
 
 const std::string Sphere::P_RADIUS = "Radius";
 
-Sphere::Sphere()
+Sphere::Sphere() : CompoundItem(Constants::SphereType)
 {
     addProperty<ModelView::PropertyItem>(P_RADIUS, 8.0);
 }
@@ -104,7 +106,7 @@ const std::string AnysoPyramid::P_WIDTH = "Width";
 const std::string AnysoPyramid::P_HEIGHT = "Height";
 const std::string AnysoPyramid::P_ALPHA = "Alpha";
 
-AnysoPyramid::AnysoPyramid()
+AnysoPyramid::AnysoPyramid() : CompoundItem(Constants::AnysoPyramidType)
 {
     addProperty<ModelView::PropertyItem>(P_LENGTH, 8.0);
     addProperty<ModelView::PropertyItem>(P_WIDTH, 8.0);
@@ -112,3 +114,9 @@ AnysoPyramid::AnysoPyramid()
     addProperty<ModelView::PropertyItem>(P_ALPHA, 8.0);
 }
 
+ShapeGroup::ShapeGroup() : GroupItem(Constants::ShapeGroupType)
+{
+    add<Cylinder>("Cylinder");
+    add<Sphere>("Full sphere");
+    add<AnysoPyramid>("Anysotropical piramyd");
+}

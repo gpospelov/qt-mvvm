@@ -20,5 +20,6 @@ std::unique_ptr<ModelView::ItemCatalogue> ToyItems::CreateToyItemCatalogue()
     result->add<Sphere>();
     result->add<Cylinder>();
     result->add<AnysoPyramid>();
+    result->add<ShapeGroup>();
     return result;
 }

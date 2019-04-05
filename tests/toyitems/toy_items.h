@@ -11,9 +11,10 @@
 #define TOYITEMS_H
 
 #include "compounditem.h"
-#include "sessionmodel.h"
-#include "itemfactoryinterface.h"
 #include "defaultitemcatalogue.h"
+#include "groupitem.h"
+#include "itemfactoryinterface.h"
+#include "sessionmodel.h"
 #include <string>
 
 //! Collection of toy items and models for testing purposes.
@@ -81,7 +82,6 @@ public:
     Sphere();
 };
 
-
 class AnysoPyramid : public ModelView::CompoundItem
 {
 public:
@@ -92,7 +92,12 @@ public:
     AnysoPyramid();
 };
 
-} // ToyItems
+class ShapeGroup : public ModelView::GroupItem
+{
+public:
+    ShapeGroup();
+};
+
+} // namespace ToyItems
 
 #endif // TOYITEMS_H
-
