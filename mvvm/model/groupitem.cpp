@@ -21,26 +21,27 @@ using namespace ModelView;
 GroupItem::~GroupItem() = default;
 
 GroupItem::GroupItem(model_type modelType) :SessionItem(modelType),
-    m_catalogue(std::make_unique<ItemCatalogue>()), m_current_index(-1)
+    m_catalogue(std::make_unique<ItemCatalogue>()), m_default_selected_index(0)
 {
     registerTag(TagInfo::universalTag(tag_name), /*set_as_default*/true);
 }
 
 int GroupItem::currentIndex() const
 {
-    return m_current_index;
+    auto variant = data(ItemDataRole::DATA);
+    return variant.isValid() ? variant.value<ComboProperty>().currentIndex() : -1;
 }
 
 //! Returns currently selected item.
 
 SessionItem* GroupItem::currentItem()
 {
-    return is_valid_index() ? getItem("", m_current_index) : nullptr;
+    return is_valid_index() ? getItem("", currentIndex()) : nullptr;
 }
 
 std::string GroupItem::currentType() const
 {
-    return is_valid_index() ? m_catalogue->modelTypes()[static_cast<size_t>(m_current_index)] : "";
+    return is_valid_index() ? m_catalogue->modelTypes()[static_cast<size_t>(currentIndex())] : "";
 }
 
 //! Sets item corresponding to given model type.
@@ -53,30 +54,32 @@ void GroupItem::setCurrentType(const std::string& model_type)
         throw std::runtime_error("GroupItem::setCurrentType() -> Model type '"+model_type+
                                  "' doesn't belong to the group");
 
-    m_current_index = index;
-    update_combo();
+    setCurrentIndex(index);
+}
+
+void GroupItem::setCurrentIndex(int index)
+{
+    auto variant = data(ItemDataRole::DATA);
+    if (variant.isValid()) {
+        auto combo = variant.value<ComboProperty>();
+        combo.setCurrentIndex(index);
+        setDataIntern(variant, ItemDataRole::DATA);
+    }
 }
 
 bool GroupItem::is_valid_index() const
 {
-    return m_current_index != -1;
+    return currentIndex() != -1;
 }
 
 //! Inits group item.
 
 void GroupItem::init_group()
 {
-    update_combo();
-    for (auto x : m_catalogue->modelTypes())
-        insertItem(m_catalogue->create(x).release(), "", -1);
-}
-
-//! Creates ComboProperty representing the group and sets it as data role.
-
-void GroupItem::update_combo()
-{
     ComboProperty combo;
     combo.setValues(m_catalogue->labels());
-    combo.setCurrentIndex(m_current_index);
-    setData(combo.variant(), ItemDataRole::DATA);
+    combo.setCurrentIndex(m_default_selected_index);
+    setDataIntern(combo.variant(), ItemDataRole::DATA);
+    for (auto x : m_catalogue->modelTypes())
+        insertItem(m_catalogue->create(x).release(), "", -1);
 }
