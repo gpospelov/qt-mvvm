@@ -11,8 +11,8 @@
 #define VIEWMODELUTILS_H
 
 #include "global.h"
-#include <QVector>
 #include <QVariant>
+#include <QVector>
 #include <functional>
 #include <vector>
 
@@ -43,8 +43,8 @@ CORE_EXPORT QVector<int> item_role_to_qt(int role);
 //! Returns text color for given item.
 CORE_EXPORT QVariant TextColorRole(const SessionItem& item);
 
-} // Utils
+} // namespace Utils
 
-} // ModelView
+} // namespace ModelView
 
 #endif // VIEWMODELUTILS_H

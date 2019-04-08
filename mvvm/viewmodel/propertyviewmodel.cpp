@@ -8,39 +8,11 @@
 // ************************************************************************** //
 
 #include "propertyviewmodel.h"
-#include "sessionitem.h"
 #include "groupitem.h"
-#include "rowconstructor.h"
 #include "viewitem.h"
-#include "viewmodelutils.h"
 #include <QDebug>
 
 using namespace ModelView;
-
-namespace  {
-std::vector<SessionItem*> item_children(SessionItem* item) {
-    std::vector<SessionItem*> result;
-    if (auto group = dynamic_cast<GroupItem*>(item)) {
-//        result.push_back(group->currentItem());
-        result = group->currentItem()->children();
-    } else {
-        result = item->children();
-    }
-    return result;
-}
-
-//! Returns true if given SessionItem role is valid for view
-bool isValidItemRole(const ModelView::ViewItem* view, int item_role) {
-    if (view->item_role() == item_role)
-        return true;
-
-    if (item_role == ModelView::ItemDataRole::APPEARANCE)
-        return true;
-
-    return false;
-}
-
-}
 
 PropertyViewModel::PropertyViewModel(QObject* parent)
     : DefaultViewModel(parent)
@@ -48,47 +20,22 @@ PropertyViewModel::PropertyViewModel(QObject* parent)
 
 }
 
+//! Generates necessary notifications on SessionItem's data change.
+//! If data change occured with GrouItem, performs cleanup and regeneration of
+//! ViewItems, corresponding to groupItem's current index.
+
 void PropertyViewModel::onDataChange(SessionItem* item, int role)
 {
-    for (auto view : findViews(item)) {
-
-        // inform corresponding LabelView and DataView
-        if (isValidItemRole(view, role)) {
-            auto index = indexFromItem(view);
-            dataChanged(index, index, Utils::item_role_to_qt(role));
-        }
-    }
-
-    if (auto group = dynamic_cast<GroupItem*>(item)) {
-        qDebug() << "AAAAA" << QString::fromStdString(group->currentType());
-
-        auto views = findStandardViews(group);
-        qDebug() << "AAAAA" << views;
-        for (auto view : views)
-            view->removeRows(0, view->rowCount());
-
-        if (views.size())
-            iterate(group, views.at(0));
-
-
-    }
-
+    DefaultViewModel::onDataChange(item, role);
+    if (auto group = dynamic_cast<GroupItem*>(item))
+        DefaultViewModel::onRowRemoved(group, "", 0);
 }
 
-PropertyViewModel::~PropertyViewModel() = default;
+//! Returns (possibly filtered) vector of children of given item.
+//! In the case of GroupItem, shows only underlying properties of active item.
 
-void PropertyViewModel::iterate(SessionItem* item, QStandardItem* parent)
+std::vector<SessionItem*> PropertyViewModel::item_children(SessionItem* item)
 {
-    QStandardItem* origParent(parent);
-    for (auto child : item_children(item)) {
-
-        auto row = m_row_constructor->constructRow(child);
-        parent->appendRow(row);
-
-        if (row.size())
-            parent = row.at(0); // labelItem
-
-        iterate(child, parent);
-        parent = origParent;
-    }
+    auto group = dynamic_cast<GroupItem*>(item);
+    return group ? group->currentItem()->children() : item->children();
 }

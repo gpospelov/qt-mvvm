@@ -18,10 +18,12 @@
 #include <QDebug>
 #include <algorithm>
 
-namespace {
+namespace
+{
 
 //! Returns true if given SessionItem role is valid for view
-bool isValidItemRole(const ModelView::ViewItem* view, int item_role) {
+bool isValidItemRole(const ModelView::ViewItem* view, int item_role)
+{
     if (view->item_role() == item_role)
         return true;
 
@@ -30,7 +32,7 @@ bool isValidItemRole(const ModelView::ViewItem* view, int item_role) {
 
     return false;
 }
-}
+} // namespace
 
 using namespace ModelView;
 
@@ -48,6 +50,8 @@ void DefaultViewModel::init_view_model()
     setColumnCount(2);
     update_model();
 }
+
+//! Generates necessary notifications on SessionItem's data change.
 
 void DefaultViewModel::onDataChange(SessionItem* item, int role)
 {
@@ -98,7 +102,7 @@ void DefaultViewModel::update_model()
 void DefaultViewModel::iterate(SessionItem* item, QStandardItem* parent)
 {
     QStandardItem* origParent(parent);
-    for (auto child : item->children()) {
+    for (auto child : item_children(item)) {
 
         auto row = m_row_constructor->constructRow(child);
         parent->appendRow(row);
@@ -109,4 +113,11 @@ void DefaultViewModel::iterate(SessionItem* item, QStandardItem* parent)
         iterate(child, parent);
         parent = origParent;
     }
+}
+
+//! Returns (possibly filtered) vector of children of given item.
+
+std::vector<SessionItem*> DefaultViewModel::item_children(SessionItem* item)
+{
+    return item->children();
 }

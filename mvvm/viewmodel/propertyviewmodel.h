@@ -22,11 +22,10 @@ namespace ModelView {
 class CORE_EXPORT PropertyViewModel : public DefaultViewModel {
 public:
     PropertyViewModel(QObject* parent = nullptr);
-    ~PropertyViewModel() override;
 
 protected:
     void onDataChange(SessionItem* item, int role) override;
-    void iterate(SessionItem* item, QStandardItem* parent) override;
+    std::vector<SessionItem*> item_children(SessionItem* item) override;
 
 };
 

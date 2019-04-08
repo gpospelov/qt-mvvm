@@ -11,10 +11,11 @@
 #define DEFAULTVIEWMODEL_H
 
 #include "viewmodel.h"
-#include <vector>
 #include <memory>
+#include <vector>
 
-namespace ModelView {
+namespace ModelView
+{
 
 class ViewItem;
 class RowConstructorInterface;
@@ -31,7 +32,8 @@ class RowConstructorInterface;
 //! rows and columns. Every time the row of parent SessionItem is removed, DefaultViewModel
 //! removes _all_ children of corresponding ViewItem and then rebuild whole branch.
 
-class CORE_EXPORT DefaultViewModel : public ViewModel {
+class CORE_EXPORT DefaultViewModel : public ViewModel
+{
 public:
     DefaultViewModel(QObject* parent = nullptr);
     ~DefaultViewModel() override;
@@ -43,11 +45,12 @@ protected:
     void onRowRemoved(SessionItem* parent, std::string tag, int row) override;
 
     void update_model();
-    virtual void iterate(SessionItem* item, QStandardItem* parent);
+    virtual void iterate(SessionItem* item, QStandardItem* parent);    
+    virtual std::vector<SessionItem*> item_children(SessionItem* item);
 
     std::unique_ptr<RowConstructorInterface> m_row_constructor;
 };
 
-}  // namespace ModelView
+} // namespace ModelView
 
 #endif // VIEWMODEL_H

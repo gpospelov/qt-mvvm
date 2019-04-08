@@ -118,6 +118,6 @@ ShapeGroup::ShapeGroup() : GroupItem(Constants::ShapeGroupType)
 {
     add<Cylinder>("Cylinder");
     add<Sphere>("Full sphere", /*make_selected*/true);
-    add<AnysoPyramid>("Anysotropical piramyd");
+    add<AnysoPyramid>("Anysotropical pyramid");
     init_group();
 }

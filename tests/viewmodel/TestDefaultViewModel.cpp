@@ -197,7 +197,7 @@ TEST_F(TestDefaultViewModel, removeOneOfTopItems)
     EXPECT_EQ(arguments.at(2).toInt(), 0); // one child was inserted back.
 }
 
-//! Removing single top level item.
+//! Inserting single top level item.
 
 TEST_F(TestDefaultViewModel, insertSingleTopItem)
 {
@@ -258,21 +258,21 @@ TEST_F(TestDefaultViewModel, propertyItemAppearance)
     // In our case QStandardItem::isEnabled should be always true.
 
     // ViewLabel of item1
-    EXPECT_FALSE(viewModel.item(0, 0)->isEditable()); // label is alway readonly
+    EXPECT_FALSE(viewModel.item(0, 0)->isEditable()); // label is always readonly
     EXPECT_TRUE(viewModel.item(0, 0)->isEnabled());   // QStandardItem is always enabled
     // ViewData of item1
     EXPECT_TRUE(viewModel.item(0, 1)->isEditable());
     EXPECT_TRUE(viewModel.item(0, 1)->isEnabled());
 
     // ViewLabel of item2
-    EXPECT_FALSE(viewModel.item(1, 0)->isEditable()); // label is alway readonly
+    EXPECT_FALSE(viewModel.item(1, 0)->isEditable()); // label is always readonly
     EXPECT_TRUE(viewModel.item(1, 0)->isEnabled());   // QStandardItem is always enabled
     // ViewData of item2
     EXPECT_FALSE(viewModel.item(1, 1)->isEditable());
     EXPECT_TRUE(viewModel.item(1, 1)->isEnabled());
 
     // ViewLabel of item3
-    EXPECT_FALSE(viewModel.item(2, 0)->isEditable()); // label is alway readonly
+    EXPECT_FALSE(viewModel.item(2, 0)->isEditable()); // label is always readonly
     EXPECT_TRUE(viewModel.item(2, 0)->isEnabled());   // QStandardItem is always enabled
     // ViewData of item3
     EXPECT_FALSE(viewModel.item(2, 1)->isEditable());
