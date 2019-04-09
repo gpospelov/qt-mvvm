@@ -5,7 +5,8 @@ set(include_dirs
     ${CMAKE_CURRENT_SOURCE_DIR}/viewmodel
     ${CMAKE_CURRENT_SOURCE_DIR}/utils
     ${CMAKE_CURRENT_SOURCE_DIR}/standarditems
-    ${CMAKE_CURRENT_SOURCE_DIR}/serialization)
+    ${CMAKE_CURRENT_SOURCE_DIR}/serialization
+    ${CMAKE_CURRENT_SOURCE_DIR}/widgets)
 
 set(source_files)
 set(include_files)
@@ -30,6 +31,7 @@ target_include_directories(${library_name}
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/utils>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/serialization>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/standarditems>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/widgets>
 )
 
 target_link_libraries(${library_name} Qt5::Widgets)

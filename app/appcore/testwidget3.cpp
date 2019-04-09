@@ -16,6 +16,7 @@
 #include "toy_includes.h"
 #include "viewitem.h"
 #include "viewmodeldelegate.h"
+#include "propertyeditor.h"
 #include <QDebug>
 #include <QHBoxLayout>
 #include <QJsonDocument>
@@ -38,9 +39,9 @@ const QString text = "Undo/Redo basics.\n"
 using namespace ModelView;
 
 TestWidget3::TestWidget3(QWidget* parent)
-    : QWidget(parent), m_defaultView(new QTreeView), m_topItemView(new QTreeView), m_subsetTreeView(new QTreeView), m_propertyView(new QTreeView),
+    : QWidget(parent), m_defaultView(new QTreeView), m_topItemView(new QTreeView), m_subsetTreeView(new QTreeView),
       m_undoView(new QUndoView), m_viewModel(new DefaultViewModel(this)), m_subsetViewModel(new DefaultViewModel(this)),
-      m_propertyViewModel(new PropertyViewModel(this)), m_sessionModel(new ToyItems::SampleModel),
+      m_propertyEditor(new PropertyEditor), m_sessionModel(new ToyItems::SampleModel),
       m_delegate(std::make_unique<ViewModelDelegate>())
 {
     auto mainLayout = new QVBoxLayout;
@@ -60,11 +61,11 @@ TestWidget3::TestWidget3(QWidget* parent)
     init_default_view();
     init_subset_view();
 
-    m_propertyViewModel->setSessionModel(m_sessionModel.get());
-    m_propertyView->setModel(m_propertyViewModel);
-    m_propertyView->expandAll();
-    m_propertyView->resizeColumnToContents(0);
-    m_propertyView->setItemDelegate(m_delegate.get());
+//    m_propertyEditor->setSessionModel(m_sessionModel.get());
+//    m_propertyView->setModel(m_propertyEditor);
+//    m_propertyView->expandAll();
+//    m_propertyView->resizeColumnToContents(0);
+//    m_propertyView->setItemDelegate(m_delegate.get());
 }
 
 void TestWidget3::onContextMenuRequest(const QPoint& point)
@@ -104,6 +105,7 @@ void TestWidget3::onDefaultViewSelectionChanged(const QItemSelection& selected, 
         qDebug() << indexes << QString::fromStdString(item->modelType());
 //        auto index = m_subsetViewModel->indexOfSessionItem(item);
         m_subsetViewModel->setRootSessionItem(item);
+//        m_propertyEditor->setItem(item);
     }
 
 }
@@ -195,6 +197,6 @@ QBoxLayout* TestWidget3::create_right_layout()
 {
     auto result = new QVBoxLayout;
     result->addWidget(m_undoView);
-    result->addWidget(m_propertyView);
+    result->addWidget(m_propertyEditor);
     return result;
 }
