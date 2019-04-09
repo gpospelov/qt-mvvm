@@ -99,7 +99,7 @@ void DefaultViewModel::update_model()
     iterate(rootSessionItem(), rootStandardItem());
 }
 
-void DefaultViewModel::iterate(SessionItem* item, QStandardItem* parent)
+void DefaultViewModel::iterate(const SessionItem* item, QStandardItem* parent)
 {
     QStandardItem* origParent(parent);
     for (auto child : item_children(item)) {
@@ -117,7 +117,7 @@ void DefaultViewModel::iterate(SessionItem* item, QStandardItem* parent)
 
 //! Returns (possibly filtered) vector of children of given item.
 
-std::vector<SessionItem*> DefaultViewModel::item_children(SessionItem* item)
+std::vector<SessionItem*> DefaultViewModel::item_children(const SessionItem* item) const
 {
     return item->children();
 }

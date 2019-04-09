@@ -12,10 +12,11 @@
 #include "viewitems.h"
 #include "modelmapper.h"
 #include "sessionmodel.h"
+#include "sessionitem.h"
 
 using namespace ModelView;
 
-ViewModel::ViewModel(QObject* parent) : QStandardItemModel(parent), m_sessionModel(nullptr)
+ViewModel::ViewModel(QObject* parent) : QStandardItemModel(parent), m_sessionModel(nullptr), m_rootItem(nullptr)
 {
 }
 
@@ -41,6 +42,8 @@ void ViewModel::setSessionModel(SessionModel* model)
                 onRowRemoved(item, tag, row);
             },
             this);
+
+        m_rootItem = model->rootItem();
     }
 
     init_view_model();
@@ -49,9 +52,9 @@ void ViewModel::setSessionModel(SessionModel* model)
 //! Returns root item of the model. Can be different from model's root item when the intention is
 //! to show only part of the model.
 
-SessionItem* ViewModel::rootSessionItem()
+const SessionItem* ViewModel::rootSessionItem() const
 {
-    return m_sessionModel->rootItem();
+    return m_rootItem;
 }
 
 //! Returns QStandardItem associated with top level item (rootSessionItem).
@@ -80,9 +83,9 @@ std::vector<ViewItem*> ViewModel::findViews(SessionItem* item)
     return Utils::findViews(this, QModelIndex(), item);
 }
 
-SessionItem* ViewModel::sessionItemFromIndex(const QModelIndex& index) const
+const SessionItem* ViewModel::sessionItemFromIndex(const QModelIndex& index) const
 {
-    SessionItem* result(nullptr);
+    const SessionItem* result(nullptr);
     if (!m_sessionModel)
         return result;
 
@@ -90,10 +93,19 @@ SessionItem* ViewModel::sessionItemFromIndex(const QModelIndex& index) const
         if (auto viewItem = dynamic_cast<ViewItem*>(itemFromIndex(index)))
             result = viewItem->item();
     } else {
-        result = m_sessionModel->rootItem();
+        result = rootSessionItem();
     }
 
     return result;
+}
+
+void ViewModel::setRootSessionItem(const SessionItem* item)
+{
+    if (item->model() != m_sessionModel)
+        throw std::runtime_error("ViewModel::setRootSessionItem()->Error. Item doesn't belong to a model.");
+
+    m_rootItem = item;
+    init_view_model();
 }
 
 void ViewModel::onDataChange(SessionItem* item, int role)

@@ -34,7 +34,7 @@ int GroupItem::currentIndex() const
 
 //! Returns currently selected item.
 
-SessionItem* GroupItem::currentItem()
+const SessionItem* GroupItem::currentItem() const
 {
     return is_valid_index() ? getItem("", currentIndex()) : nullptr;
 }

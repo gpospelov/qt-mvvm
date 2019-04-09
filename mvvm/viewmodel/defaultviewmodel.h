@@ -45,8 +45,8 @@ protected:
     void onRowRemoved(SessionItem* parent, std::string tag, int row) override;
 
     void update_model();
-    virtual void iterate(SessionItem* item, QStandardItem* parent);    
-    virtual std::vector<SessionItem*> item_children(SessionItem* item);
+    virtual void iterate(const SessionItem* item, QStandardItem* parent);
+    virtual std::vector<SessionItem*> item_children(const SessionItem* item) const;
 
     std::unique_ptr<RowConstructorInterface> m_row_constructor;
 };

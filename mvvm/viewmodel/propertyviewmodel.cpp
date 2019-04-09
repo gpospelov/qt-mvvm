@@ -33,8 +33,8 @@ void PropertyViewModel::onDataChange(SessionItem* item, int role)
 //! Returns (possibly filtered) vector of children of given item.
 //! In the case of GroupItem, shows only underlying properties of active item.
 
-std::vector<SessionItem*> PropertyViewModel::item_children(SessionItem* item)
+std::vector<SessionItem*> PropertyViewModel::item_children(const SessionItem* item) const
 {
-    auto group = dynamic_cast<GroupItem*>(item);
+    auto group = dynamic_cast<const GroupItem*>(item);
     return group ? group->currentItem()->children() : item->children();
 }
