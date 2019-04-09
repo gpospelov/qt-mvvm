@@ -34,14 +34,14 @@ public:
 
     std::vector<ViewItem*> findViews(const SessionItem* item) const;
 
-    const SessionItem* sessionItemFromIndex(const QModelIndex& index) const;
+    SessionItem* sessionItemFromIndex(const QModelIndex& index) const;
 
     QModelIndexList indexOfSessionItem(const SessionItem* item) const;
 
-    void setRootSessionItem(const SessionItem* item);
+    void setRootSessionItem(SessionItem* item);
 
 protected:
-    const SessionItem* rootSessionItem() const;
+    SessionItem* rootSessionItem() const;
     QStandardItem* rootStandardItem() const;
 
     std::vector<QStandardItem*> findStandardViews(const SessionItem* item) const;
@@ -53,7 +53,7 @@ protected:
     virtual void onRowRemoved(SessionItem* parent, std::string tag, int row);
 
     SessionModel* m_sessionModel;
-    const SessionItem* m_rootItem;
+    SessionItem* m_rootItem;
 };
 
 } // namespace ModelView

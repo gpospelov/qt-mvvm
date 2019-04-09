@@ -55,7 +55,7 @@ void ViewModel::setSessionModel(SessionModel* model)
 //! Returns root item of the model. Can be different from model's root item when the intention is
 //! to show only part of the model.
 
-const SessionItem* ViewModel::rootSessionItem() const
+SessionItem* ViewModel::rootSessionItem() const
 {
     return m_rootItem;
 }
@@ -86,9 +86,9 @@ std::vector<ViewItem*> ViewModel::findViews(const SessionItem* item) const
     return Utils::findViews(this, QModelIndex(), item);
 }
 
-const SessionItem* ViewModel::sessionItemFromIndex(const QModelIndex& index) const
+SessionItem* ViewModel::sessionItemFromIndex(const QModelIndex& index) const
 {
-    const SessionItem* result(nullptr);
+    SessionItem* result(nullptr);
     if (!m_sessionModel)
         return result;
 
@@ -110,7 +110,7 @@ QModelIndexList ViewModel::indexOfSessionItem(const SessionItem* item) const
     return result;
 }
 
-void ViewModel::setRootSessionItem(const SessionItem* item)
+void ViewModel::setRootSessionItem(SessionItem* item)
 {
     if (item->model() != m_sessionModel)
         throw std::runtime_error(
