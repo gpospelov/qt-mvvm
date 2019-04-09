@@ -73,6 +73,27 @@ TEST_F(TestDefaultViewModel, sessionItemFromIndex)
     EXPECT_EQ(viewModel.sessionItemFromIndex(dataIndex), propertyItem);
 }
 
+//! Index from single property item.
+
+TEST_F(TestDefaultViewModel, indexFromSessionItem)
+{
+    SessionModel model;
+    auto propertyItem = model.insertNewItem(Constants::PropertyType);
+    propertyItem->setData(42.0, ItemDataRole::DATA);
+
+    DefaultViewModel viewModel;
+    viewModel.setSessionModel(&model);
+    EXPECT_EQ(viewModel.rowCount(), 1);
+    EXPECT_EQ(viewModel.columnCount(), 2);
+
+    // accessing first child under the root item
+    QModelIndex labelIndex = viewModel.index(0, 0);
+    QModelIndex dataIndex = viewModel.index(0, 1);
+
+    QModelIndexList expected {labelIndex, dataIndex};
+    EXPECT_EQ(viewModel.indexOfSessionItem(propertyItem), expected);
+}
+
 //! Find ViewItem's corresponding to given PropertyItem.
 
 TEST_F(TestDefaultViewModel, findPropertyItemView)

@@ -66,7 +66,7 @@ QStandardItem* ViewModel::rootStandardItem()
 
 //! Returns vector of standard views used to display given SessionItem.
 
-std::vector<QStandardItem*> ViewModel::findStandardViews(SessionItem* item)
+std::vector<QStandardItem*> ViewModel::findStandardViews(const SessionItem* item)
 {
     if (item == rootSessionItem())
         return {rootStandardItem()};
@@ -78,7 +78,7 @@ std::vector<QStandardItem*> ViewModel::findStandardViews(SessionItem* item)
     return result;
 }
 
-std::vector<ViewItem*> ViewModel::findViews(SessionItem* item)
+std::vector<ViewItem*> ViewModel::findViews(const SessionItem* item) const
 {
     return Utils::findViews(this, QModelIndex(), item);
 }
@@ -96,6 +96,14 @@ const SessionItem* ViewModel::sessionItemFromIndex(const QModelIndex& index) con
         result = rootSessionItem();
     }
 
+    return result;
+}
+
+QModelIndexList ViewModel::indexOfSessionItem(const SessionItem* item)
+{
+    QModelIndexList result;
+    for (auto view : findStandardViews(item))
+        result.push_back(indexFromItem(view));
     return result;
 }
 

@@ -37,7 +37,7 @@ void Utils::iterate_model(const QStandardItemModel* model, const QModelIndex& pa
 }
 
 std::vector<ViewItem*> Utils::findViews(const QStandardItemModel* model, const QModelIndex& parent,
-                                        ModelView::SessionItem* item)
+                                        const ModelView::SessionItem* item)
 {
     std::vector<ModelView::ViewItem*> result;
     iterate_model(model, parent, [&](QStandardItem* standard_item) {
