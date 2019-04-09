@@ -8,15 +8,16 @@
 // ************************************************************************** //
 
 #include "viewmodel.h"
-#include "viewmodelutils.h"
-#include "viewitems.h"
 #include "modelmapper.h"
-#include "sessionmodel.h"
 #include "sessionitem.h"
+#include "sessionmodel.h"
+#include "viewitems.h"
+#include "viewmodelutils.h"
 
 using namespace ModelView;
 
-ViewModel::ViewModel(QObject* parent) : QStandardItemModel(parent), m_sessionModel(nullptr), m_rootItem(nullptr)
+ViewModel::ViewModel(QObject* parent)
+    : QStandardItemModel(parent), m_sessionModel(nullptr), m_rootItem(nullptr)
 {
 }
 
@@ -35,13 +36,15 @@ void ViewModel::setSessionModel(SessionModel* model)
             [this](ModelView::SessionItem* item, int role) { onDataChange(item, role); }, this);
 
         m_sessionModel->mapper()->setOnRowInserted(
-            [this](ModelView::SessionItem* item, std::string tag, int row) { onRowInserted(item, tag, row); }, this);
-
-        m_sessionModel->mapper()->setOnRowRemoved(
             [this](ModelView::SessionItem* item, std::string tag, int row) {
-                onRowRemoved(item, tag, row);
+                onRowInserted(item, tag, row);
             },
             this);
+
+        m_sessionModel->mapper()->setOnRowRemoved([this](ModelView::SessionItem* item,
+                                                         std::string tag,
+                                                         int row) { onRowRemoved(item, tag, row); },
+                                                  this);
 
         m_rootItem = model->rootItem();
     }
@@ -59,14 +62,14 @@ const SessionItem* ViewModel::rootSessionItem() const
 
 //! Returns QStandardItem associated with top level item (rootSessionItem).
 
-QStandardItem* ViewModel::rootStandardItem()
+QStandardItem* ViewModel::rootStandardItem() const
 {
     return invisibleRootItem();
 }
 
 //! Returns vector of standard views used to display given SessionItem.
 
-std::vector<QStandardItem*> ViewModel::findStandardViews(const SessionItem* item)
+std::vector<QStandardItem*> ViewModel::findStandardViews(const SessionItem* item) const
 {
     if (item == rootSessionItem())
         return {rootStandardItem()};
@@ -99,7 +102,7 @@ const SessionItem* ViewModel::sessionItemFromIndex(const QModelIndex& index) con
     return result;
 }
 
-QModelIndexList ViewModel::indexOfSessionItem(const SessionItem* item)
+QModelIndexList ViewModel::indexOfSessionItem(const SessionItem* item) const
 {
     QModelIndexList result;
     for (auto view : findStandardViews(item))
@@ -110,7 +113,8 @@ QModelIndexList ViewModel::indexOfSessionItem(const SessionItem* item)
 void ViewModel::setRootSessionItem(const SessionItem* item)
 {
     if (item->model() != m_sessionModel)
-        throw std::runtime_error("ViewModel::setRootSessionItem()->Error. Item doesn't belong to a model.");
+        throw std::runtime_error(
+            "ViewModel::setRootSessionItem()->Error. Item doesn't belong to a model.");
 
     m_rootItem = item;
     init_view_model();

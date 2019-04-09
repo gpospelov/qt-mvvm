@@ -34,17 +34,17 @@ public:
 
     std::vector<ViewItem*> findViews(const SessionItem* item) const;
 
-    const SessionItem* sessionItemFromIndex(const QModelIndex &index) const;
+    const SessionItem* sessionItemFromIndex(const QModelIndex& index) const;
 
-    QModelIndexList indexOfSessionItem(const SessionItem* item);
+    QModelIndexList indexOfSessionItem(const SessionItem* item) const;
 
     void setRootSessionItem(const SessionItem* item);
 
 protected:
     const SessionItem* rootSessionItem() const;
-    QStandardItem* rootStandardItem();
+    QStandardItem* rootStandardItem() const;
 
-    std::vector<QStandardItem*> findStandardViews(const SessionItem* item);
+    std::vector<QStandardItem*> findStandardViews(const SessionItem* item) const;
 
 protected:
     virtual void init_view_model() = 0;
