@@ -105,7 +105,8 @@ void TestWidget3::onDefaultViewSelectionChanged(const QItemSelection& selected, 
         qDebug() << indexes << QString::fromStdString(item->modelType());
 //        auto index = m_subsetViewModel->indexOfSessionItem(item);
         m_subsetViewModel->setRootSessionItem(item);
-//        m_propertyEditor->setItem(item);
+        m_subsetTreeView->expandAll();
+        m_propertyEditor->setItem(item);
     }
 
 }

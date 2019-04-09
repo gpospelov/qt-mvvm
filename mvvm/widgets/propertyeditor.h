@@ -23,7 +23,8 @@ class SessionItem;
 class PropertyViewModel;
 class ViewModelDelegate;
 
-//! Editor factory for custom variants.
+//! Standard property editor for SessionItem.
+//! Shows property items, hides top level items and GroupItem internals.
 
 class CORE_EXPORT PropertyEditor : public QWidget
 {
@@ -31,6 +32,8 @@ public:
     explicit PropertyEditor(QWidget* parent = nullptr);
 
     void setItem(SessionItem* item);
+
+    QTreeView* treeView();
 
 private:
     QTreeView* m_treeView;
