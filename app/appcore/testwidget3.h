@@ -19,7 +19,7 @@ class SessionItem;
 class DefaultViewModel;
 class PropertyViewModel;
 class ViewModelDelegate;
-}
+} // namespace ModelView
 
 namespace ToyItems
 {
@@ -52,9 +52,12 @@ private:
 
     QBoxLayout* create_top_layout();
     QBoxLayout* create_left_layout();
+    QBoxLayout* create_middle_layout();
     QBoxLayout* create_right_layout();
 
     QTreeView* m_defaultView;
+    QTreeView* m_topItemView;
+    QTreeView* m_selectedItemView;
     QTreeView* m_propertyView;
     QUndoView* m_undoView;
     ModelView::DefaultViewModel* m_viewModel;

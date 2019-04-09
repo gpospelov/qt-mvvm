@@ -10,7 +10,6 @@
 #include "propertyviewmodel.h"
 #include "groupitem.h"
 #include "viewitem.h"
-#include <QDebug>
 
 using namespace ModelView;
 
@@ -21,7 +20,7 @@ PropertyViewModel::PropertyViewModel(QObject* parent)
 }
 
 //! Generates necessary notifications on SessionItem's data change.
-//! If data change occured with GrouItem, performs cleanup and regeneration of
+//! If data change occured with GroupItem, performs cleanup and regeneration of
 //! ViewItems, corresponding to groupItem's current index.
 
 void PropertyViewModel::onDataChange(SessionItem* item, int role)

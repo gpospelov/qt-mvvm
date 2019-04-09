@@ -9,8 +9,8 @@
 
 #include "testwidget3.h"
 #include "defaultviewmodel.h"
-#include "propertyviewmodel.h"
 #include "jsonutils.h"
+#include "propertyviewmodel.h"
 #include "sessionmodel.h"
 #include "syntaxhighlighter.h"
 #include "toy_includes.h"
@@ -37,8 +37,9 @@ const QString text = "Undo/Redo basics.\n"
 using namespace ModelView;
 
 TestWidget3::TestWidget3(QWidget* parent)
-    : QWidget(parent), m_defaultView(new QTreeView), m_propertyView(new QTreeView), m_undoView(new QUndoView),
-      m_viewModel(new DefaultViewModel(this)), m_propertyViewModel(new PropertyViewModel(this)), m_sessionModel(new ToyItems::SampleModel),
+    : QWidget(parent), m_defaultView(new QTreeView), m_topItemView(new QTreeView), m_selectedItemView(new QTreeView), m_propertyView(new QTreeView),
+      m_undoView(new QUndoView), m_viewModel(new DefaultViewModel(this)),
+      m_propertyViewModel(new PropertyViewModel(this)), m_sessionModel(new ToyItems::SampleModel),
       m_delegate(std::make_unique<ViewModelDelegate>())
 {
     auto mainLayout = new QVBoxLayout;
@@ -48,6 +49,7 @@ TestWidget3::TestWidget3(QWidget* parent)
 
     auto hlayout = new QHBoxLayout;
     hlayout->addLayout(create_left_layout());
+    hlayout->addLayout(create_middle_layout());
     hlayout->addLayout(create_right_layout());
     mainLayout->addLayout(hlayout);
 
@@ -63,7 +65,6 @@ TestWidget3::TestWidget3(QWidget* parent)
     m_propertyView->expandAll();
     m_propertyView->resizeColumnToContents(0);
     m_propertyView->setItemDelegate(m_delegate.get());
-
 }
 
 void TestWidget3::onContextMenuRequest(const QPoint& point)
@@ -153,6 +154,14 @@ QBoxLayout* TestWidget3::create_left_layout()
 {
     auto result = new QVBoxLayout;
     result->addWidget(m_defaultView);
+    return result;
+}
+
+QBoxLayout* TestWidget3::create_middle_layout()
+{
+    auto result = new QVBoxLayout;
+    result->addWidget(m_topItemView);
+    result->addWidget(m_selectedItemView);
     return result;
 }
 
