@@ -21,7 +21,11 @@ ViewModel::ViewModel(QObject* parent)
 {
 }
 
-ViewModel::~ViewModel() = default;
+ViewModel::~ViewModel()
+{
+    if (m_sessionModel)
+        m_sessionModel->mapper()->unsubscribe(this);
+}
 
 void ViewModel::setSessionModel(SessionModel* model)
 {
