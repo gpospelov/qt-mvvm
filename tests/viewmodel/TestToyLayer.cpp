@@ -112,3 +112,21 @@ TEST_F(TestToyLayer, displayNameInMultiLayer)
     EXPECT_EQ(layer0->displayName(), "Layer0");
     EXPECT_EQ(layer1->displayName(), "Layer1");
 }
+
+//! LayerItem as rootItem.
+
+TEST_F(TestToyLayer, setRootItemContext)
+{
+    ToyItems::SampleModel model;
+    auto layer = model.insertNewItem(ToyItems::Constants::LayerType);
+    DefaultViewModel viewModel;
+    viewModel.setSessionModel(&model);
+    viewModel.setRootSessionItem(layer);
+
+    EXPECT_EQ(viewModel.rowCount(QModelIndex()), 1);
+    EXPECT_EQ(viewModel.columnCount(QModelIndex()), 2);
+
+    // index of item representing thickness
+    QModelIndex thicknessIndex = viewModel.index(0, 0, QModelIndex());
+    EXPECT_EQ(viewModel.sessionItemFromIndex(thicknessIndex), layer->getItem(ToyItems::Layer::P_THICKNESS));
+}

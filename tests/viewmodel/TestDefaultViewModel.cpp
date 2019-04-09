@@ -117,6 +117,38 @@ TEST_F(TestDefaultViewModel, propertyItemDataChanged)
     EXPECT_EQ(arguments.at(2).value<QVector<int>>(), expectedRoles);
 }
 
+//! Inserting single top level item.
+
+TEST_F(TestDefaultViewModel, insertSingleTopItem)
+{
+    SessionModel model;
+    const model_type modelType(Constants::BaseType);
+
+    DefaultViewModel viewModel;
+    viewModel.setSessionModel(&model);
+
+    QSignalSpy spyInsert(&viewModel, &DefaultViewModel::rowsInserted);
+
+    // inserting single item
+    model.insertNewItem(modelType);
+
+    // root item should have one child
+    EXPECT_EQ(viewModel.rowCount(), 1);
+    EXPECT_EQ(viewModel.columnCount(), 2);
+
+    // removing child
+    model.removeItem(model.rootItem(), "", 0);
+    EXPECT_EQ(spyInsert.count(), 1);
+    EXPECT_EQ(viewModel.rowCount(), 0);
+    EXPECT_EQ(viewModel.columnCount(), 2);
+
+    QList<QVariant> arguments = spyInsert.takeFirst();
+    EXPECT_EQ(arguments.size(), 3); // QModelIndex &parent, int first, int last
+    EXPECT_EQ(arguments.at(0).value<QModelIndex>(), QModelIndex());
+    EXPECT_EQ(arguments.at(1).toInt(), 0);
+    EXPECT_EQ(arguments.at(2).toInt(), 0);
+}
+
 //! Removing single top level item.
 
 TEST_F(TestDefaultViewModel, removeSingleTopItem)
@@ -195,38 +227,6 @@ TEST_F(TestDefaultViewModel, removeOneOfTopItems)
     EXPECT_EQ(arguments.at(0).value<QModelIndex>(), QModelIndex());
     EXPECT_EQ(arguments.at(1).toInt(), 0);
     EXPECT_EQ(arguments.at(2).toInt(), 0); // one child was inserted back.
-}
-
-//! Inserting single top level item.
-
-TEST_F(TestDefaultViewModel, insertSingleTopItem)
-{
-    SessionModel model;
-    const model_type modelType(Constants::BaseType);
-
-    DefaultViewModel viewModel;
-    viewModel.setSessionModel(&model);
-
-    QSignalSpy spyInsert(&viewModel, &DefaultViewModel::rowsInserted);
-
-    // inserting single item
-    model.insertNewItem(modelType);
-
-    // root item should have one child
-    EXPECT_EQ(viewModel.rowCount(), 1);
-    EXPECT_EQ(viewModel.columnCount(), 2);
-
-    // removing child
-    model.removeItem(model.rootItem(), "", 0);
-    EXPECT_EQ(spyInsert.count(), 1);
-    EXPECT_EQ(viewModel.rowCount(), 0);
-    EXPECT_EQ(viewModel.columnCount(), 2);
-
-    QList<QVariant> arguments = spyInsert.takeFirst();
-    EXPECT_EQ(arguments.size(), 3); // QModelIndex &parent, int first, int last
-    EXPECT_EQ(arguments.at(0).value<QModelIndex>(), QModelIndex());
-    EXPECT_EQ(arguments.at(1).toInt(), 0);
-    EXPECT_EQ(arguments.at(2).toInt(), 0);
 }
 
 //! Single property item in ViewModel with various appearance flags.
@@ -321,4 +321,22 @@ TEST_F(TestDefaultViewModel, propertyItemAppearanceChanged)
     EXPECT_EQ(index2, viewModel.indexFromItem(dataView));
     expected_roles = {Qt::TextColorRole};
     EXPECT_EQ(roles, expected_roles);
+}
+
+//! Setting top level item as ROOT item
+
+TEST_F(TestDefaultViewModel, setRootItem)
+{
+    SessionModel model;
+    const model_type modelType(Constants::BaseType);
+
+    DefaultViewModel viewModel;
+    auto item = model.insertNewItem(modelType);
+
+    viewModel.setSessionModel(&model);
+    viewModel.setRootSessionItem(item);
+
+    // new root item doesn't have children
+    EXPECT_EQ(viewModel.rowCount(), 0);
+    EXPECT_EQ(viewModel.columnCount(), 2);
 }
