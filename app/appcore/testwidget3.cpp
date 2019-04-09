@@ -25,6 +25,7 @@
 #include <QTreeView>
 #include <QUndoView>
 #include <QVBoxLayout>
+#include <QItemSelectionModel>
 
 namespace
 {
@@ -37,8 +38,8 @@ const QString text = "Undo/Redo basics.\n"
 using namespace ModelView;
 
 TestWidget3::TestWidget3(QWidget* parent)
-    : QWidget(parent), m_defaultView(new QTreeView), m_topItemView(new QTreeView), m_selectedItemView(new QTreeView), m_propertyView(new QTreeView),
-      m_undoView(new QUndoView), m_viewModel(new DefaultViewModel(this)),
+    : QWidget(parent), m_defaultView(new QTreeView), m_topItemView(new QTreeView), m_subsetTreeView(new QTreeView), m_propertyView(new QTreeView),
+      m_undoView(new QUndoView), m_viewModel(new DefaultViewModel(this)), m_subsetViewModel(new DefaultViewModel(this)),
       m_propertyViewModel(new PropertyViewModel(this)), m_sessionModel(new ToyItems::SampleModel),
       m_delegate(std::make_unique<ViewModelDelegate>())
 {
@@ -56,11 +57,10 @@ TestWidget3::TestWidget3(QWidget* parent)
     setLayout(mainLayout);
 
     init_session_model();
-    m_viewModel->setSessionModel(m_sessionModel.get());
+    init_default_view();
+    init_subset_view();
+
     m_propertyViewModel->setSessionModel(m_sessionModel.get());
-
-    init_tree_view(m_defaultView);
-
     m_propertyView->setModel(m_propertyViewModel);
     m_propertyView->expandAll();
     m_propertyView->resizeColumnToContents(0);
@@ -93,6 +93,21 @@ void TestWidget3::onContextMenuRequest(const QPoint& point)
     menu.exec(treeView->mapToGlobal(point));
 }
 
+void TestWidget3::onDefaultViewSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected)
+{
+    Q_UNUSED(deselected)
+
+    qDebug() << "TestWidget3::onDefaultViewSelectionChanged" << selected;
+    auto indexes = m_defaultView->selectionModel()->selectedIndexes();
+    if (indexes.size()) {
+        auto item = m_viewModel->sessionItemFromIndex(indexes.at(0));
+        qDebug() << indexes << QString::fromStdString(item->modelType());
+//        auto index = m_subsetViewModel->indexOfSessionItem(item);
+        m_subsetViewModel->setRootSessionItem(item);
+    }
+
+}
+
 TestWidget3::~TestWidget3() = default;
 
 //! Inits session model with some test content.
@@ -113,19 +128,30 @@ void TestWidget3::init_session_model()
     m_undoView->setStack(m_sessionModel->undoStack());
 }
 
-//! Inits QTreeView with ViewModel.
-
-void TestWidget3::init_tree_view(QTreeView* view)
+void TestWidget3::init_default_view()
 {
-    view->setModel(m_viewModel);
+    m_viewModel->setSessionModel(m_sessionModel.get());
+    m_defaultView->setModel(m_viewModel);
+    m_defaultView->expandAll();
+    m_defaultView->resizeColumnToContents(0);
+    m_defaultView->setContextMenuPolicy(Qt::CustomContextMenu);
+    m_defaultView->setItemDelegate(m_delegate.get());
+    connect(m_defaultView, &QTreeView::customContextMenuRequested, this, &TestWidget3::onContextMenuRequest);
 
-    view->expandAll();
-    view->resizeColumnToContents(0);
-    view->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(m_defaultView->selectionModel(), &QItemSelectionModel::selectionChanged,
+            this, &TestWidget3::onDefaultViewSelectionChanged);
 
-    view->setItemDelegate(m_delegate.get());
+}
 
-    connect(view, &QTreeView::customContextMenuRequested, this, &TestWidget3::onContextMenuRequest);
+void TestWidget3::init_subset_view()
+{
+    m_subsetViewModel->setSessionModel(m_sessionModel.get());
+    m_subsetTreeView->setModel(m_subsetViewModel);
+    m_subsetTreeView->expandAll();
+    m_subsetTreeView->resizeColumnToContents(0);
+    m_subsetTreeView->setContextMenuPolicy(Qt::CustomContextMenu);
+    m_subsetTreeView->setItemDelegate(m_delegate.get());
+
 }
 
 //! Returns SessionItem corresponding to given coordinate in a view.
@@ -161,7 +187,7 @@ QBoxLayout* TestWidget3::create_middle_layout()
 {
     auto result = new QVBoxLayout;
     result->addWidget(m_topItemView);
-    result->addWidget(m_selectedItemView);
+    result->addWidget(m_subsetTreeView);
     return result;
 }
 

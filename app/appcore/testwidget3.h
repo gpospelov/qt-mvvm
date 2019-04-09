@@ -31,6 +31,7 @@ class QStandardItemModel;
 class QPoint;
 class QUndoView;
 class QBoxLayout;
+class QItemSelection;
 
 //! Playground to test basics of ViewModel.
 
@@ -43,11 +44,13 @@ public:
 
 private slots:
     void onContextMenuRequest(const QPoint& point);
+    void onDefaultViewSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
 
 private:
     void init_session_model();
     void update_json();
-    void init_tree_view(QTreeView* view);
+    void init_default_view();
+    void init_subset_view();
     ModelView::SessionItem* item_from_view(QTreeView* view, const QPoint& point);
 
     QBoxLayout* create_top_layout();
@@ -57,10 +60,11 @@ private:
 
     QTreeView* m_defaultView;
     QTreeView* m_topItemView;
-    QTreeView* m_selectedItemView;
+    QTreeView* m_subsetTreeView;
     QTreeView* m_propertyView;
     QUndoView* m_undoView;
     ModelView::DefaultViewModel* m_viewModel;
+    ModelView::DefaultViewModel* m_subsetViewModel;
     ModelView::DefaultViewModel* m_propertyViewModel;
     std::unique_ptr<ToyItems::SampleModel> m_sessionModel;
     std::unique_ptr<ModelView::ViewModelDelegate> m_delegate;
