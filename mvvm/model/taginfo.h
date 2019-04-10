@@ -14,7 +14,8 @@
 #include <string>
 #include <vector>
 
-namespace ModelView {
+namespace ModelView
+{
 
 //! Holds info about single tag for SessionItem.
 
@@ -26,7 +27,7 @@ public:
     TagInfo(std::string name, int min, int max, std::vector<std::string> modelTypes);
 
     //! Constructs universal tag intended for unlimited amount of various items.
-    static TagInfo universalTag(std::string name, std::vector<std::string> modelTypes={});
+    static TagInfo universalTag(std::string name, std::vector<std::string> modelTypes = {});
 
     //! Constructs tag intended for single property.
     static TagInfo propertyTag(std::string name, std::string model_type);
@@ -37,32 +38,23 @@ public:
 
     int max() const;
 
-    int childCount() const;
-
     std::vector<std::string> modelTypes() const;
 
     bool maximumReached() const;
 
     bool isValidChild(const std::string& child) const;
 
-    void add();
-
-    void remove();
-
     bool isSinglePropertyTag() const;
 
     std::string toString() const;
 
-    void setCount(int count);
 private:
     std::string m_name;
     int m_min;
     int m_max;
-    int m_childCount;
     std::vector<std::string> m_modelTypes;
 };
 
-}  // namespace ModelView
+} // namespace ModelView
 
 #endif //  TAGINFO_H
-

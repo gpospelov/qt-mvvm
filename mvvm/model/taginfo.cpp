@@ -18,15 +18,12 @@ template <typename A, typename B> bool contains(const A& container, const B& ele
 {
     return std::find(container.begin(), container.end(), element) != container.end();
 }
-}
+} // namespace
 
-ModelView::TagInfo::TagInfo() : m_min(0), m_max(-1), m_childCount(0)
-{
-}
+ModelView::TagInfo::TagInfo() : m_min(0), m_max(-1) {}
 
 ModelView::TagInfo::TagInfo(std::string name, int min, int max, std::vector<std::string> modelTypes)
-    : m_name(std::move(name)), m_min(min), m_max(max), m_childCount(0),
-      m_modelTypes(std::move(modelTypes))
+    : m_name(std::move(name)), m_min(min), m_max(max), m_modelTypes(std::move(modelTypes))
 {
     if (m_min < 0 || (m_min > m_max && m_max >= 0) || m_name.empty()) {
         std::ostringstream ostr;
@@ -62,21 +59,9 @@ int ModelView::TagInfo::max() const
     return m_max;
 }
 
-int ModelView::TagInfo::childCount() const
-{
-    return m_childCount;
-}
-
 std::vector<std::string> ModelView::TagInfo::modelTypes() const
 {
     return m_modelTypes;
-}
-
-//! Returns true if given tag has already maximum number of assigned items.
-
-bool ModelView::TagInfo::maximumReached() const
-{
-    return m_max != -1 && m_max == m_childCount;
 }
 
 bool ModelView::TagInfo::isValidChild(const std::string& child) const
@@ -84,40 +69,19 @@ bool ModelView::TagInfo::isValidChild(const std::string& child) const
     return m_modelTypes.empty() ? true : contains(m_modelTypes, child);
 }
 
-void ModelView::TagInfo::add()
-{
-    if (maximumReached())
-        throw std::runtime_error("TagInfo::add() -> Maximum reached.");
-
-    m_childCount++;
-}
-
-void ModelView::TagInfo::remove()
-{
-    if (childCount() == m_min)
-        throw std::runtime_error("TagInfo::add() -> Minimum reached");
-
-    m_childCount--;
-}
-
 bool ModelView::TagInfo::isSinglePropertyTag() const
 {
-    return m_min == 1 && m_max == 1 && m_childCount == 1;
+    return m_min == 1 && m_max == 1;
 }
 
 std::string ModelView::TagInfo::toString() const
 {
     std::ostringstream ostr;
-    ostr << "TagInfo> name:'" << name()
-         << "', min:"<< min() <<", max:"<<max() << ", modelTypes:{";
-    for(const auto& model_type : modelTypes() ) {
+    ostr << "TagInfo> name:'" << name() << "', min:" << min() << ", max:" << max()
+         << ", modelTypes:{";
+    for (const auto& model_type : modelTypes()) {
         ostr << model_type << " ";
     }
-    ostr << "} childCount:" << childCount();
+    ostr << "}";
     return ostr.str();
-}
-
-void ModelView::TagInfo::setCount(int count)
-{
-    m_childCount = count;
 }
