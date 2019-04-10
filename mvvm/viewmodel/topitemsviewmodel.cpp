@@ -9,15 +9,16 @@
 
 #include "topitemsviewmodel.h"
 #include "sessionitem.h"
+#include "itemutils.h"
 
 using namespace ModelView;
 
-TopItemsViewModel::TopItemsViewModel(QObject* parent) : DefaultViewModel(parent)
+TopItemsViewModel::TopItemsViewModel(SessionModel* model, QObject* parent) : DefaultViewModel(parent)
 {
-
+    setSessionModel(model);
 }
 
 std::vector<SessionItem*> TopItemsViewModel::item_children(const SessionItem* item) const
 {
-    return item->children();
+    return Utils::TopLevelItems(*item);
 }

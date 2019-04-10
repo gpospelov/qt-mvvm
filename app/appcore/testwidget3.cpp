@@ -18,6 +18,7 @@
 #include "viewmodeldelegate.h"
 #include "propertyeditor.h"
 #include "itemstreeview.h"
+#include "topitemsviewmodel.h"
 #include <QDebug>
 #include <QHBoxLayout>
 #include <QJsonDocument>
@@ -40,7 +41,7 @@ const QString text = "Undo/Redo basics.\n"
 using namespace ModelView;
 
 TestWidget3::TestWidget3(QWidget* parent)
-    : QWidget(parent), m_defaultTreeView(new ItemsTreeView), m_topItemView(new QTreeView), m_subsetTreeView(new QTreeView),
+    : QWidget(parent), m_defaultTreeView(new ItemsTreeView), m_topItemView(new ItemsTreeView), m_subsetTreeView(new QTreeView),
       m_undoView(new QUndoView), m_subsetViewModel(new DefaultViewModel(this)),
       m_propertyEditor(new PropertyEditor), m_sessionModel(new ToyItems::SampleModel),
       m_delegate(std::make_unique<ViewModelDelegate>())
@@ -60,8 +61,11 @@ TestWidget3::TestWidget3(QWidget* parent)
 
     init_session_model();
     init_default_view();
+    init_topitems_view();
     init_subset_view();
 }
+
+TestWidget3::~TestWidget3() = default;
 
 void TestWidget3::onContextMenuRequest(const QPoint& point)
 {
@@ -89,8 +93,6 @@ void TestWidget3::onContextMenuRequest(const QPoint& point)
 //    menu.exec(treeView->mapToGlobal(point));
 }
 
-TestWidget3::~TestWidget3() = default;
-
 //! Inits session model with some test content.
 
 void TestWidget3::init_session_model()
@@ -109,6 +111,20 @@ void TestWidget3::init_session_model()
     m_undoView->setStack(m_sessionModel->undoStack());
 }
 
+//! Returns SessionItem corresponding to given coordinate in a view.
+
+SessionItem* TestWidget3::item_from_view(QTreeView* view, const QPoint& point)
+{
+//    QModelIndex index = view->indexAt(point);
+//    auto item = m_viewModel->itemFromIndex(index);
+//    auto viewItem = dynamic_cast<ViewItem*>(item);
+//    Q_ASSERT(viewItem);
+
+//    return viewItem->item();
+
+    return nullptr;
+}
+
 void TestWidget3::init_default_view()
 {
     std::unique_ptr<ModelView::ViewModel> viewModel(new ModelView::DefaultViewModel());
@@ -125,6 +141,19 @@ void TestWidget3::init_default_view()
     connect(m_defaultTreeView->treeView(), &QTreeView::customContextMenuRequested, this, &TestWidget3::onContextMenuRequest);
 }
 
+void TestWidget3::init_topitems_view()
+{
+//    std::unique_ptr<ModelView::ViewModel> viewModel(new ModelView::TopItemsViewModel());
+//    viewModel->setSessionModel(m_sessionModel.get());
+//    m_topItemView->setViewModel(std::move(viewModel));
+    m_topItemView->setViewModel(std::make_unique<TopItemsViewModel>(m_sessionModel.get()));
+
+    connect(m_topItemView, &ItemsTreeView::itemSelected, [this](SessionItem* item) {
+        //
+    });
+
+}
+
 void TestWidget3::init_subset_view()
 {
     m_subsetViewModel->setSessionModel(m_sessionModel.get());
@@ -134,20 +163,6 @@ void TestWidget3::init_subset_view()
     m_subsetTreeView->setContextMenuPolicy(Qt::CustomContextMenu);
     m_subsetTreeView->setItemDelegate(m_delegate.get());
 
-}
-
-//! Returns SessionItem corresponding to given coordinate in a view.
-
-SessionItem* TestWidget3::item_from_view(QTreeView* view, const QPoint& point)
-{
-//    QModelIndex index = view->indexAt(point);
-//    auto item = m_viewModel->itemFromIndex(index);
-//    auto viewItem = dynamic_cast<ViewItem*>(item);
-//    Q_ASSERT(viewItem);
-
-//    return viewItem->item();
-
-    return nullptr;
 }
 
 QBoxLayout* TestWidget3::create_top_layout()

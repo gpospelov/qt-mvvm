@@ -49,9 +49,6 @@ private slots:
 
 private:
     void init_session_model();
-    void update_json();
-    void init_default_view();
-    void init_subset_view();
     ModelView::SessionItem* item_from_view(QTreeView* view, const QPoint& point);
 
     QBoxLayout* create_top_layout();
@@ -59,8 +56,12 @@ private:
     QBoxLayout* create_middle_layout();
     QBoxLayout* create_right_layout();
 
+    void init_default_view();
+    void init_topitems_view();
+    void init_subset_view();
+
     ModelView::ItemsTreeView* m_defaultTreeView;
-    QTreeView* m_topItemView;
+    ModelView::ItemsTreeView* m_topItemView;
     QTreeView* m_subsetTreeView;
     QUndoView* m_undoView;
     ModelView::DefaultViewModel* m_subsetViewModel;

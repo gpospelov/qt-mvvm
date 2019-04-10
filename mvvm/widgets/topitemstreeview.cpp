@@ -34,10 +34,10 @@ TopItemsTreeView::~TopItemsTreeView() = default;
 
 void TopItemsTreeView::setModel(SessionModel* model)
 {
-    m_viewModel = std::make_unique<TopItemsViewModel>();
-    m_viewModel->setSessionModel(model);
-    m_treeView->setModel(m_viewModel.get());
-    m_treeView->expandAll();
+//    m_viewModel = std::make_unique<TopItemsViewModel>();
+//    m_viewModel->setSessionModel(model);
+//    m_treeView->setModel(m_viewModel.get());
+//    m_treeView->expandAll();
 }
 
 //! Make given item selected in QTreeView.

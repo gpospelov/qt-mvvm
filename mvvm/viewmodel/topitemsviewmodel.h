@@ -20,7 +20,7 @@ namespace ModelView {
 
 class CORE_EXPORT TopItemsViewModel : public DefaultViewModel {
 public:
-    TopItemsViewModel(QObject* parent = nullptr);
+    TopItemsViewModel(SessionModel* model, QObject* parent = nullptr);
 
 protected:
     std::vector<SessionItem*> item_children(const SessionItem* item) const override;
