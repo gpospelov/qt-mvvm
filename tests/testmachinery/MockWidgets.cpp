@@ -1,13 +1,12 @@
 #include "MockWidgets.h"
-#include "sessionitem.h"
 #include "itemmapper.h"
-#include "sessionmodel.h"
 #include "modelmapper.h"
+#include "sessionitem.h"
+#include "sessionmodel.h"
 
 // ----------------------------------------------------------------------------
 
-MockWidgetForItem::MockWidgetForItem(ModelView::SessionItem* item)
-    : m_item(nullptr)
+MockWidgetForItem::MockWidgetForItem(ModelView::SessionItem* item) : m_item(nullptr)
 {
     setItem(item);
 }
@@ -25,25 +24,24 @@ void MockWidgetForItem::setItem(ModelView::SessionItem* item)
     if (m_item == nullptr)
         return;
 
-    m_item->mapper()->setOnItemDestroy([this](ModelView::SessionItem* item) {
-        m_item = nullptr;
-        onItemDestroy(item);
-    }, this);
+    m_item->mapper()->setOnItemDestroy(
+        [this](ModelView::SessionItem* item) {
+            m_item = nullptr;
+            onItemDestroy(item);
+        },
+        this);
 
-    m_item->mapper()->setOnDataChange([this](ModelView::SessionItem* item, int role) {
-        onDataChange(item, role);
-    }, this);
+    m_item->mapper()->setOnDataChange(
+        [this](ModelView::SessionItem* item, int role) { onDataChange(item, role); }, this);
 
-    m_item->mapper()->setOnPropertyChange([this](ModelView::SessionItem* item, std::string name) {
-        onPropertyChange(item, name);
-    }, this);
-
+    m_item->mapper()->setOnPropertyChange(
+        [this](ModelView::SessionItem* item, std::string name) { onPropertyChange(item, name); },
+        this);
 }
 
 // ----------------------------------------------------------------------------
 
-MockWidgetForModel::MockWidgetForModel(ModelView::SessionModel* model)
-    : m_model(nullptr)
+MockWidgetForModel::MockWidgetForModel(ModelView::SessionModel* model) : m_model(nullptr)
 {
     setModel(model);
 }
@@ -61,16 +59,17 @@ void MockWidgetForModel::setModel(ModelView::SessionModel* model)
     if (m_model == nullptr)
         return;
 
-    m_model->mapper()->setOnDataChange([this](ModelView::SessionItem* item, int role) {
-        onDataChange(item, role);
-    }, this);
+    m_model->mapper()->setOnDataChange(
+        [this](ModelView::SessionItem* item, int role) { onDataChange(item, role); }, this);
 
-    m_model->mapper()->setOnRowInserted([this](ModelView::SessionItem* item, std::string tag, int row) {
-        onRowInserted(item, tag, row);
-    }, this);
+    m_model->mapper()->setOnRowInserted([this](ModelView::SessionItem* item, std::string tag,
+                                               int row) { onRowInserted(item, tag, row); },
+                                        this);
 
-    m_model->mapper()->setOnRowRemoved([this](ModelView::SessionItem* item, std::string tag, int row) {
-        onRowRemoved(item, tag, row);
-    }, this);
+    m_model->mapper()->setOnRowRemoved([this](ModelView::SessionItem* item, std::string tag,
+                                              int row) { onRowRemoved(item, tag, row); },
+                                       this);
+
+    m_model->mapper()->setOnModelDestroyed(
+        [this](ModelView::SessionModel* model) { onModelDestroyed(model); }, this);
 }
-

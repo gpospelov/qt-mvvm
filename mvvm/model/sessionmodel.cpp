@@ -28,7 +28,10 @@ SessionModel::SessionModel(std::string model_type)
     createRootItem();
 }
 
-SessionModel::~SessionModel() = default;
+SessionModel::~SessionModel()
+{
+    m_mapper->callOnModelDestroyed();
+}
 
 std::string SessionModel::modelType() const
 {

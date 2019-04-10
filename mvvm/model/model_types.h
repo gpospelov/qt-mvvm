@@ -16,6 +16,7 @@
 namespace ModelView {
 
 class SessionItem;
+class SessionModel;
 
 using identifier_type = std::string;
 using model_type = std::string;
@@ -49,6 +50,7 @@ using item_t = std::function<void(SessionItem*)>;
 using item_int_t = std::function<void(SessionItem*, int)>;
 using item_str_t = std::function<void(SessionItem*, std::string)>;
 using item_str_int_t = std::function<void(SessionItem*, std::string, int)>;
+using model_t = std::function<void(SessionModel*)>;
 }
 
 } // namespace ModelView

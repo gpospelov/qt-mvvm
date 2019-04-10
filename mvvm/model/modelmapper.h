@@ -25,32 +25,36 @@ class SessionModel;
 
 class CORE_EXPORT ModelMapper
 {
-    friend class SessionModel;
-    friend class SessionItem;
 public:
     ModelMapper(SessionModel* item);
 
     void setOnDataChange(Callbacks::item_int_t f, Callbacks::client_t client = {});
     void setOnRowInserted(Callbacks::item_str_int_t f, Callbacks::client_t client = {});
     void setOnRowRemoved(Callbacks::item_str_int_t f, Callbacks::client_t client = {});
+    void setOnModelDestroyed(Callbacks::model_t f, Callbacks::client_t client = {});
 
     void setActive(bool value);
 
     void unsubscribe(Callbacks::client_t client);
 
 private:
+    friend class SessionModel;
+    friend class SessionItem;
+
     void callOnDataChange(SessionItem* item, int role);
     void callOnRowInserted(SessionItem* parent, std::string tag, int index);
     void callOnRowRemoved(SessionItem* parent, std::string tag, int index);
+    void callOnModelDestroyed();
 
     CallbackContainer<Callbacks::item_int_t> m_on_data_change;
     CallbackContainer<Callbacks::item_str_int_t> m_on_row_inserted;
     CallbackContainer<Callbacks::item_str_int_t> m_on_row_removed;
+    CallbackContainer<Callbacks::model_t> m_on_model_destroyed;
 
     bool m_active;
     SessionModel* m_model;
 };
 
-} // ModelView
+} // namespace ModelView
 
 #endif // MODELMAPPER_H
