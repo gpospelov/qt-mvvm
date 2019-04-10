@@ -105,8 +105,6 @@ void TestWidget3::init_session_model()
 
     m_sessionModel->insertNewItem(ToyItems::Constants::InterferenceType);
 
-    m_sessionModel->insertNewItem(ToyItems::Constants::ShapeGroupType);
-
     m_sessionModel->setUndoRedoEnabled(true);
     m_undoView->setStack(m_sessionModel->undoStack());
 }

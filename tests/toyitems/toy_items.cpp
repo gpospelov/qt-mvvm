@@ -39,10 +39,12 @@ Layer::Layer() : CompoundItem(Constants::LayerType)
 // ----------------------------------------------------------------------------
 
 const std::string Particle::P_POSITION = "Position";
+const std::string Particle::P_SHAPES = "Shapes";
 
 Particle::Particle() : CompoundItem(Constants::ParticleType)
 {
     addProperty<ModelView::VectorItem>(P_POSITION);
+    addProperty<ShapeGroup>(P_SHAPES);
 }
 
 // ----------------------------------------------------------------------------

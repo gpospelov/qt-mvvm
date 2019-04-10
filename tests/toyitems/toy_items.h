@@ -45,6 +45,7 @@ class Particle : public ModelView::CompoundItem
 {
 public:
     static const std::string P_POSITION;
+    static const std::string P_SHAPES;
     Particle();
 };
 
