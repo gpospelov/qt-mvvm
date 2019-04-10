@@ -20,6 +20,7 @@ class DefaultViewModel;
 class PropertyViewModel;
 class ViewModelDelegate;
 class PropertyEditor;
+class ItemsTreeView;
 } // namespace ModelView
 
 namespace ToyItems
@@ -45,7 +46,6 @@ public:
 
 private slots:
     void onContextMenuRequest(const QPoint& point);
-    void onDefaultViewSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
 
 private:
     void init_session_model();
@@ -59,11 +59,10 @@ private:
     QBoxLayout* create_middle_layout();
     QBoxLayout* create_right_layout();
 
-    QTreeView* m_defaultView;
+    ModelView::ItemsTreeView* m_defaultTreeView;
     QTreeView* m_topItemView;
     QTreeView* m_subsetTreeView;
     QUndoView* m_undoView;
-    ModelView::DefaultViewModel* m_viewModel;
     ModelView::DefaultViewModel* m_subsetViewModel;
     ModelView::PropertyEditor* m_propertyEditor;
     std::unique_ptr<ToyItems::SampleModel> m_sessionModel;

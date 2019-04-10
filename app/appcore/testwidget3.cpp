@@ -17,6 +17,7 @@
 #include "viewitem.h"
 #include "viewmodeldelegate.h"
 #include "propertyeditor.h"
+#include "itemstreeview.h"
 #include <QDebug>
 #include <QHBoxLayout>
 #include <QJsonDocument>
@@ -39,8 +40,8 @@ const QString text = "Undo/Redo basics.\n"
 using namespace ModelView;
 
 TestWidget3::TestWidget3(QWidget* parent)
-    : QWidget(parent), m_defaultView(new QTreeView), m_topItemView(new QTreeView), m_subsetTreeView(new QTreeView),
-      m_undoView(new QUndoView), m_viewModel(new DefaultViewModel(this)), m_subsetViewModel(new DefaultViewModel(this)),
+    : QWidget(parent), m_defaultTreeView(new ItemsTreeView), m_topItemView(new QTreeView), m_subsetTreeView(new QTreeView),
+      m_undoView(new QUndoView), m_subsetViewModel(new DefaultViewModel(this)),
       m_propertyEditor(new PropertyEditor), m_sessionModel(new ToyItems::SampleModel),
       m_delegate(std::make_unique<ViewModelDelegate>())
 {
@@ -60,55 +61,32 @@ TestWidget3::TestWidget3(QWidget* parent)
     init_session_model();
     init_default_view();
     init_subset_view();
-
-//    m_propertyEditor->setSessionModel(m_sessionModel.get());
-//    m_propertyView->setModel(m_propertyEditor);
-//    m_propertyView->expandAll();
-//    m_propertyView->resizeColumnToContents(0);
-//    m_propertyView->setItemDelegate(m_delegate.get());
 }
 
 void TestWidget3::onContextMenuRequest(const QPoint& point)
 {
-    QTreeView* treeView = qobject_cast<QTreeView*>(sender());
+//    QTreeView* treeView = qobject_cast<QTreeView*>(sender());
 
-    auto item = item_from_view(treeView, point);
-    auto taginfo = item->parent()->tagIndexOfItem(item);
+//    auto item = item_from_view(treeView, point);
+//    auto taginfo = item->parent()->tagIndexOfItem(item);
 
-    QMenu menu;
+//    QMenu menu;
 
-    QAction* addItemAction = menu.addAction("Add item");
+//    QAction* addItemAction = menu.addAction("Add item");
 
-    // inserting item of same type after given item
-    connect(addItemAction, &QAction::triggered, [&]() {
-        m_sessionModel->insertNewItem(item->modelType(), item->parent(), taginfo.first,
-                                      taginfo.second + 1);
-    });
+//    // inserting item of same type after given item
+//    connect(addItemAction, &QAction::triggered, [&]() {
+//        m_sessionModel->insertNewItem(item->modelType(), item->parent(), taginfo.first,
+//                                      taginfo.second + 1);
+//    });
 
-    QAction* removeItemAction = menu.addAction("Remove item");
+//    QAction* removeItemAction = menu.addAction("Remove item");
 
-    // removing item under the mouse
-    connect(removeItemAction, &QAction::triggered,
-            [&]() { m_sessionModel->removeItem(item->parent(), taginfo.first, taginfo.second); });
+//    // removing item under the mouse
+//    connect(removeItemAction, &QAction::triggered,
+//            [&]() { m_sessionModel->removeItem(item->parent(), taginfo.first, taginfo.second); });
 
-    menu.exec(treeView->mapToGlobal(point));
-}
-
-void TestWidget3::onDefaultViewSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected)
-{
-    Q_UNUSED(deselected)
-
-    qDebug() << "TestWidget3::onDefaultViewSelectionChanged" << selected;
-    auto indexes = m_defaultView->selectionModel()->selectedIndexes();
-    if (indexes.size()) {
-        auto item = m_viewModel->sessionItemFromIndex(indexes.at(0));
-        qDebug() << indexes << QString::fromStdString(item->modelType());
-//        auto index = m_subsetViewModel->indexOfSessionItem(item);
-        m_subsetViewModel->setRootSessionItem(item);
-        m_subsetTreeView->expandAll();
-        m_propertyEditor->setItem(item);
-    }
-
+//    menu.exec(treeView->mapToGlobal(point));
 }
 
 TestWidget3::~TestWidget3() = default;
@@ -133,17 +111,18 @@ void TestWidget3::init_session_model()
 
 void TestWidget3::init_default_view()
 {
-    m_viewModel->setSessionModel(m_sessionModel.get());
-    m_defaultView->setModel(m_viewModel);
-    m_defaultView->expandAll();
-    m_defaultView->resizeColumnToContents(0);
-    m_defaultView->setContextMenuPolicy(Qt::CustomContextMenu);
-    m_defaultView->setItemDelegate(m_delegate.get());
-    connect(m_defaultView, &QTreeView::customContextMenuRequested, this, &TestWidget3::onContextMenuRequest);
+    std::unique_ptr<ModelView::ViewModel> viewModel(new ModelView::DefaultViewModel());
+    viewModel->setSessionModel(m_sessionModel.get());
+    m_defaultTreeView->setViewModel(std::move(viewModel));
 
-    connect(m_defaultView->selectionModel(), &QItemSelectionModel::selectionChanged,
-            this, &TestWidget3::onDefaultViewSelectionChanged);
+    connect(m_defaultTreeView, &ItemsTreeView::itemSelected, [this](SessionItem* item) {
+        m_subsetViewModel->setRootSessionItem(item);
+        m_subsetTreeView->expandAll();
+        m_propertyEditor->setItem(item);
+    });
 
+    m_defaultTreeView->treeView()->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(m_defaultTreeView->treeView(), &QTreeView::customContextMenuRequested, this, &TestWidget3::onContextMenuRequest);
 }
 
 void TestWidget3::init_subset_view()
@@ -161,12 +140,14 @@ void TestWidget3::init_subset_view()
 
 SessionItem* TestWidget3::item_from_view(QTreeView* view, const QPoint& point)
 {
-    QModelIndex index = view->indexAt(point);
-    auto item = m_viewModel->itemFromIndex(index);
-    auto viewItem = dynamic_cast<ViewItem*>(item);
-    Q_ASSERT(viewItem);
+//    QModelIndex index = view->indexAt(point);
+//    auto item = m_viewModel->itemFromIndex(index);
+//    auto viewItem = dynamic_cast<ViewItem*>(item);
+//    Q_ASSERT(viewItem);
 
-    return viewItem->item();
+//    return viewItem->item();
+
+    return nullptr;
 }
 
 QBoxLayout* TestWidget3::create_top_layout()
@@ -182,7 +163,7 @@ QBoxLayout* TestWidget3::create_top_layout()
 QBoxLayout* TestWidget3::create_left_layout()
 {
     auto result = new QVBoxLayout;
-    result->addWidget(m_defaultView);
+    result->addWidget(m_defaultTreeView);
     return result;
 }
 
