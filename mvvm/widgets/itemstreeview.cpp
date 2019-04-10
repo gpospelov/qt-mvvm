@@ -8,18 +8,19 @@
 // ************************************************************************** //
 
 #include "itemstreeview.h"
-#include "topitemsviewmodel.h"
-#include "viewmodeldelegate.h"
 #include "sessionitem.h"
 #include "sessionmodel.h"
+#include "topitemsviewmodel.h"
 #include "viewmodel.h"
-#include <QVBoxLayout>
+#include "viewmodeldelegate.h"
 #include <QTreeView>
+#include <QVBoxLayout>
 
 using namespace ModelView;
 
 ItemsTreeView::ItemsTreeView(QWidget* parent)
-    : QWidget(parent), m_treeView(new QTreeView), m_delegate(std::make_unique<ViewModelDelegate>())
+    : QWidget(parent), m_treeView(new QTreeView), m_delegate(std::make_unique<ViewModelDelegate>()),
+      m_block_selection(false)
 {
     auto layout = new QVBoxLayout;
     layout->setMargin(0);
@@ -29,7 +30,6 @@ ItemsTreeView::ItemsTreeView(QWidget* parent)
 }
 
 ItemsTreeView::~ItemsTreeView() = default;
-
 
 void ItemsTreeView::setViewModel(std::unique_ptr<ViewModel> viewModel)
 {
@@ -49,11 +49,8 @@ void ItemsTreeView::setSelected(SessionItem* item)
         return;
 
     auto indexes = m_viewModel->indexOfSessionItem(item);
-    if (!indexes.empty()) {
-        set_connected(false);
+    if (!indexes.empty())
         selectionModel()->select(indexes.at(0), QItemSelectionModel::SelectCurrent);
-        set_connected(true);
-    }
 }
 
 void ItemsTreeView::setRootSessionItem(SessionItem* item)
@@ -72,11 +69,15 @@ ViewModel* ItemsTreeView::viewModel() const
 
 void ItemsTreeView::onSelectionChanged(const QItemSelection&, const QItemSelection&)
 {
+    if (m_block_selection)
+        return;
+
     auto indexes = m_treeView->selectionModel()->selectedIndexes();
     if (indexes.size()) {
         auto item = m_viewModel->sessionItemFromIndex(indexes.at(0));
-        Q_ASSERT(item);
+        m_block_selection = true;
         itemSelected(item);
+        m_block_selection = false;
     }
 }
 
@@ -85,11 +86,11 @@ void ItemsTreeView::set_connected(bool flag)
     Q_ASSERT(selectionModel());
 
     if (flag)
-        connect(selectionModel(), &QItemSelectionModel::selectionChanged,
-                this, &ItemsTreeView::onSelectionChanged);
+        connect(selectionModel(), &QItemSelectionModel::selectionChanged, this,
+                &ItemsTreeView::onSelectionChanged);
     else
-        disconnect(selectionModel(), &QItemSelectionModel::selectionChanged,
-                this, &ItemsTreeView::onSelectionChanged);
+        disconnect(selectionModel(), &QItemSelectionModel::selectionChanged, this,
+                   &ItemsTreeView::onSelectionChanged);
 }
 
 QTreeView* ItemsTreeView::treeView()

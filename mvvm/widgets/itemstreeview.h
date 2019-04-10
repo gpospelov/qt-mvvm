@@ -62,6 +62,7 @@ private:
     QTreeView* m_treeView;
     std::unique_ptr<ViewModel> m_viewModel;
     std::unique_ptr<ViewModelDelegate> m_delegate;
+    bool m_block_selection;
 };
 
 } // namespace ModelView
