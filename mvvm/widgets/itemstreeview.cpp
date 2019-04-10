@@ -51,9 +51,20 @@ void ItemsTreeView::setSelected(SessionItem* item)
     auto indexes = m_viewModel->indexOfSessionItem(item);
     if (!indexes.empty()) {
         set_connected(false);
-        selectionModel()->select(indexes.at(0), QItemSelectionModel::ClearAndSelect);
+        selectionModel()->select(indexes.at(0), QItemSelectionModel::SelectCurrent);
         set_connected(true);
     }
+}
+
+void ItemsTreeView::setRootSessionItem(SessionItem* item)
+{
+    m_viewModel->setRootSessionItem(item);
+    m_treeView->expandAll();
+}
+
+ViewModel* ItemsTreeView::viewModel() const
+{
+    return m_viewModel.get();
 }
 
 //! Processes selections in QTreeView. Finds SessionItem corresponding to selected indexes

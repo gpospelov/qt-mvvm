@@ -62,12 +62,10 @@ private:
 
     ModelView::ItemsTreeView* m_defaultTreeView;
     ModelView::ItemsTreeView* m_topItemView;
-    QTreeView* m_subsetTreeView;
+    ModelView::ItemsTreeView* m_subsetTreeView;
     QUndoView* m_undoView;
-    ModelView::DefaultViewModel* m_subsetViewModel;
     ModelView::PropertyEditor* m_propertyEditor;
     std::unique_ptr<ToyItems::SampleModel> m_sessionModel;
-    std::unique_ptr<ModelView::ViewModelDelegate> m_delegate;
 };
 
 #endif // TESTWIDGET3_H

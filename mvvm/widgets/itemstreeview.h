@@ -44,6 +44,10 @@ public:
 
     void setSelected(SessionItem* item);
 
+    void setRootSessionItem(SessionItem* item);
+
+    ViewModel* viewModel() const;
+
 signals:
     void itemSelected(SessionItem*);
 

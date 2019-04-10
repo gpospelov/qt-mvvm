@@ -42,6 +42,12 @@ DefaultViewModel::DefaultViewModel(QObject* parent)
     setItemPrototype(new ViewEmptyItem);
 }
 
+DefaultViewModel::DefaultViewModel(SessionModel* model, QObject* parent)
+    : DefaultViewModel(parent)
+{
+    setSessionModel(model);
+}
+
 DefaultViewModel::~DefaultViewModel() = default;
 
 void DefaultViewModel::init_view_model()

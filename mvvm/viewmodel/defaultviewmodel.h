@@ -36,6 +36,7 @@ class CORE_EXPORT DefaultViewModel : public ViewModel
 {
 public:
     DefaultViewModel(QObject* parent = nullptr);
+    DefaultViewModel(SessionModel* model, QObject* parent = nullptr);
     ~DefaultViewModel() override;
 
 protected:
