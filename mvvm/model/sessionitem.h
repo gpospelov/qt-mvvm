@@ -80,6 +80,7 @@ public:
     bool isEnabled() const;
     void setEnabled(bool value);
 
+    bool isSinglePropertyTag(const std::string& tag) const;
 private:
     friend class SessionModel;
     friend class JsonItem;

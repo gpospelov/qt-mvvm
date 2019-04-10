@@ -131,6 +131,14 @@ SessionItemTags::const_iterator SessionItemTags::end() const
     return m_containers.end();
 }
 
+//! Returns true if given tag corresponds to registered single property tag.
+
+bool SessionItemTags::isSinglePropertyTag(const std::string& tag) const
+{
+    auto cont = find_container(tag);
+    return cont ? cont->tagInfo().isSinglePropertyTag() : false;
+}
+
 //! Returns container corresponding to given tag name. If name is empty,
 //! default tag will be used. Exception is thrown if no such tag exists.
 

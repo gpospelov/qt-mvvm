@@ -66,6 +66,8 @@ public:
     const_iterator begin() const;
     const_iterator end() const;
 
+    bool isSinglePropertyTag(const std::string& tag) const;
+
 private:
     SessionItemContainer* container(const std::string& tag_name) const;
     SessionItemContainer* find_container(const std::string& tag_name) const;

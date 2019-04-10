@@ -232,6 +232,13 @@ void SessionItem::setEnabled(bool value)
     setAppearanceFlag(Appearance::ENABLED, value);
 }
 
+//! Returns true if given tag is related to single property tags.
+
+bool SessionItem::isSinglePropertyTag(const std::string& tag) const
+{
+    return p_impl->m_tags->isSinglePropertyTag(tag);
+}
+
 void SessionItem::setParent(SessionItem* parent)
 {
     p_impl->m_parent = parent;

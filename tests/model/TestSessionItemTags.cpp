@@ -168,10 +168,10 @@ TEST_F(TestSessionItemTags, takeItem)
     EXPECT_EQ(tag.takeItem("", 0), nullptr);
 
     // inserting items
-    SessionItem* child1 = new SessionItem(model_type);
-    SessionItem* child2 = new SessionItem(model_type);
-    SessionItem* child3 = new SessionItem(model_type);
-    SessionItem* child4 = new SessionItem(model_type);
+    auto child1 = new SessionItem(model_type);
+    auto child2 = new SessionItem(model_type);
+    auto child3 = new SessionItem(model_type);
+    auto child4 = new SessionItem(model_type);
     EXPECT_TRUE(tag.insertItem(child1, "", -1));
     EXPECT_TRUE(tag.insertItem(child2, "", -1));
     EXPECT_TRUE(tag.insertItem(child3, "", -1));
@@ -203,9 +203,9 @@ TEST_F(TestSessionItemTags, itemDeleted)
     tag.registerTag(TagInfo::universalTag(tag_name), /*set_as_default*/ true);
 
     // inserting items
-    SessionItem* child1 = new SessionItem(model_type);
-    SessionItem* child2 = new SessionItem(model_type);
-    SessionItem* child3 = new SessionItem(model_type);
+    auto child1 = new SessionItem(model_type);
+    auto child2 = new SessionItem(model_type);
+    auto child3 = new SessionItem(model_type);
     tag.insertItem(child1, "", -1);
     tag.insertItem(child2, "", -1);
     tag.insertItem(child3, "", -1);
@@ -218,3 +218,18 @@ TEST_F(TestSessionItemTags, itemDeleted)
     std::vector<SessionItem*> expected = {child1, nullptr, child3};
     EXPECT_EQ(tag.getItems(tag_name), expected);
 }
+
+//! Testing itemDeleted.
+
+TEST_F(TestSessionItemTags, isSinglePropertyTag)
+{
+    SessionItemTags tag;
+    tag.registerTag(TagInfo::universalTag("universal"), /*set_as_default*/ true);
+    EXPECT_FALSE(tag.isSinglePropertyTag("universal"));
+
+    tag.registerTag(TagInfo::propertyTag("property_tag", "Vector"));
+    EXPECT_TRUE(tag.isSinglePropertyTag("property_tag"));
+
+    EXPECT_FALSE(tag.isSinglePropertyTag("unexisting tag"));
+}
+
