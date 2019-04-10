@@ -119,3 +119,21 @@ TEST_F(TestItemUtils, itemCopyNumber)
     EXPECT_EQ(Utils::CopyNumber(child2), 1);
     EXPECT_EQ(Utils::CopyNumber(child3), -1);
 }
+
+//! Check access to top level and property items.
+
+TEST_F(TestItemUtils, TopLevelAndPropertyItems)
+{
+    SessionModel model;
+
+    auto parent = model.insertNewItem(Constants::BaseType);
+    parent->registerTag(TagInfo::universalTag("default_tag"), /*set_as_default*/ true);
+    parent->registerTag(TagInfo::propertyTag("property_tag", Constants::PropertyType));
+
+    auto child1 = model.insertNewItem(Constants::BaseType, parent, "default_tag", -1);
+    auto child2 = model.insertNewItem(Constants::PropertyType, parent, "property_tag", -1);
+    auto child3 = model.insertNewItem(Constants::BaseType, parent, "default_tag", -1);
+
+    EXPECT_EQ(Utils::TopLevelItems(*parent), std::vector<SessionItem*>({child1, child3}));
+    EXPECT_EQ(Utils::SinglePropertyItems(*parent), std::vector<SessionItem*>({child2}));
+}

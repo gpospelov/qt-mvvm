@@ -76,3 +76,21 @@ int Utils::IndexOfChild(const SessionItem* parent, SessionItem* child)
     auto pos = find(container.begin(), container.end(), child);
     return pos == container.end() ? -1 : static_cast<int>(std::distance(container.begin(), pos));
 }
+
+std::vector<SessionItem*> Utils::TopLevelItems(const SessionItem& item)
+{
+    std::vector<SessionItem*> result;
+    for (auto child : item.children())
+        if (!item.isSinglePropertyTag(item.tagFromItem(child)))
+            result.push_back(child);
+    return result;
+}
+
+std::vector<SessionItem*> Utils::SinglePropertyItems(const SessionItem& item)
+{
+    std::vector<SessionItem*> result;
+    for (auto child : item.children())
+        if (item.isSinglePropertyTag(item.tagFromItem(child)))
+            result.push_back(child);
+    return result;
+}

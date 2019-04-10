@@ -12,6 +12,7 @@
 
 #include "global.h"
 #include <functional>
+#include <vector>
 
 class QVariant;
 
@@ -40,6 +41,14 @@ CORE_EXPORT SessionItem* ChildAt(const SessionItem* parent, int index);
 //! Returns index in children array corresponding to given child. No tags are involved,
 //! index is considered as global index in the combined array of all children.
 CORE_EXPORT int IndexOfChild(const SessionItem* parent, SessionItem* child);
+
+//! Returns vector of children representing top level items.
+
+CORE_EXPORT std::vector<SessionItem*> TopLevelItems(const SessionItem& item);
+
+//! Returns vector of children representing property items.
+
+CORE_EXPORT std::vector<SessionItem*> SinglePropertyItems(const SessionItem& item);
 
 }  // namespace Utils
 
