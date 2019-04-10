@@ -71,5 +71,7 @@ void MockWidgetForModel::setModel(ModelView::SessionModel* model)
                                        this);
 
     m_model->mapper()->setOnModelDestroyed(
-        [this](ModelView::SessionModel* model) { onModelDestroyed(model); }, this);
+        [this](ModelView::SessionModel* model) {
+        m_model = nullptr;
+        onModelDestroyed(model); }, this);
 }
