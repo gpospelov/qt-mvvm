@@ -29,26 +29,27 @@ ViewModel::~ViewModel()
 
 void ViewModel::setSessionModel(SessionModel* model)
 {
-    if (m_sessionModel) {
+    if (m_sessionModel)
         m_sessionModel->mapper()->unsubscribe(this);
-    }
 
     m_sessionModel = model;
 
     if (m_sessionModel) {
-        m_sessionModel->mapper()->setOnDataChange(
-            [this](ModelView::SessionItem* item, int role) { onDataChange(item, role); }, this);
+        auto on_data_change = [this](SessionItem* item, int role) { onDataChange(item, role); };
+        m_sessionModel->mapper()->setOnDataChange(on_data_change, this);
 
-        m_sessionModel->mapper()->setOnRowInserted(
-            [this](ModelView::SessionItem* item, std::string tag, int row) {
-                onRowInserted(item, tag, row);
-            },
-            this);
+        auto on_row_inserted = [this](SessionItem* item, std::string tag, int row) {
+            onRowInserted(item, tag, row);
+        };
+        m_sessionModel->mapper()->setOnRowInserted(on_row_inserted, this);
 
-        m_sessionModel->mapper()->setOnRowRemoved([this](ModelView::SessionItem* item,
-                                                         std::string tag,
-                                                         int row) { onRowRemoved(item, tag, row); },
-                                                  this);
+        auto on_row_removed = [this](SessionItem* item, std::string tag, int row) {
+            onRowRemoved(item, tag, row);
+        };
+        m_sessionModel->mapper()->setOnRowRemoved(on_row_removed, this);
+
+        auto on_model_destroyed = [this](SessionModel*) { m_sessionModel = nullptr; clear();};
+        m_sessionModel->mapper()->setOnModelDestroyed(on_model_destroyed, this);
 
         m_rootItem = model->rootItem();
     }

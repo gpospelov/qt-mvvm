@@ -27,7 +27,7 @@ TEST_F(TestPropertyViewModel, initialState)
 TEST_F(TestPropertyViewModel, baseItem)
 {
     SessionModel model;
-    auto top1 = model.insertNewItem(Constants::BaseType);
+    model.insertNewItem(Constants::BaseType);
 
     PropertyViewModel viewModel;
     viewModel.setSessionModel(&model);

@@ -39,5 +39,4 @@ std::vector<SessionItem*> PropertyViewModel::item_children(const SessionItem* it
     auto group = dynamic_cast<const GroupItem*>(item);
     auto next_item = group ? group->currentItem() : item;
     return Utils::SinglePropertyItems(*next_item);
-//    return group ? group->currentItem()->children() : item->children();
 }

@@ -361,3 +361,22 @@ TEST_F(TestDefaultViewModel, setRootItem)
     EXPECT_EQ(viewModel.rowCount(), 0);
     EXPECT_EQ(viewModel.columnCount(), 2);
 }
+
+//! On model destroyed.
+
+TEST_F(TestDefaultViewModel, onModelDestroyed)
+{
+    std::unique_ptr<SessionModel> model = std::make_unique<SessionModel>();
+    const model_type modelType(Constants::BaseType);
+    model->insertNewItem(modelType);
+
+    DefaultViewModel viewModel;
+    viewModel.setSessionModel(model.get());
+    EXPECT_EQ(viewModel.rowCount(), 1);
+    EXPECT_EQ(viewModel.columnCount(), 2);
+
+    model.reset();
+    EXPECT_EQ(viewModel.rowCount(), 0);
+    EXPECT_EQ(viewModel.columnCount(), 0);
+}
+

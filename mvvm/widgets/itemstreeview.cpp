@@ -37,6 +37,7 @@ void ItemsTreeView::setViewModel(std::unique_ptr<ViewModel> viewModel)
     m_treeView->setItemDelegate(m_delegate.get());
     m_treeView->setModel(m_viewModel.get());
     m_treeView->expandAll();
+    m_treeView->resizeColumnToContents(0);
     set_connected(true);
 }
 
