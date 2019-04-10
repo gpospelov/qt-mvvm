@@ -10,25 +10,15 @@
 #include "testwidget3.h"
 #include "defaultviewmodel.h"
 #include "itemstreeview.h"
-#include "jsonutils.h"
 #include "propertyeditor.h"
-#include "propertyviewmodel.h"
-#include "sessionmodel.h"
-#include "syntaxhighlighter.h"
 #include "topitemsviewmodel.h"
 #include "toy_includes.h"
 #include "viewitem.h"
-#include "viewmodeldelegate.h"
-#include <QDebug>
-#include <QHBoxLayout>
-#include <QItemSelectionModel>
-#include <QJsonDocument>
-#include <QJsonObject>
+#include <QBoxLayout>
 #include <QLabel>
 #include <QMenu>
 #include <QTreeView>
 #include <QUndoView>
-#include <QVBoxLayout>
 
 namespace
 {
@@ -68,29 +58,29 @@ TestWidget3::~TestWidget3() = default;
 
 void TestWidget3::onContextMenuRequest(const QPoint& point)
 {
-        QTreeView* treeView = qobject_cast<QTreeView*>(sender());
+    auto treeView = qobject_cast<QTreeView*>(sender());
 
-        auto item = item_from_view(treeView, point);
-        auto taginfo = item->parent()->tagIndexOfItem(item);
+    auto item = item_from_view(treeView, point);
+    auto taginfo = item->parent()->tagIndexOfItem(item);
 
-        QMenu menu;
+    QMenu menu;
 
-        QAction* addItemAction = menu.addAction("Add item");
+    // inserting item of same type after given item
+    auto addItemAction = menu.addAction("Add item");
+    auto add_item = [&]() {
+        m_sessionModel->insertNewItem(item->modelType(), item->parent(), taginfo.first,
+                                      taginfo.second + 1);
+    };
+    connect(addItemAction, &QAction::triggered, add_item);
 
-        // inserting item of same type after given item
-        connect(addItemAction, &QAction::triggered, [&]() {
-            m_sessionModel->insertNewItem(item->modelType(), item->parent(), taginfo.first,
-                                          taginfo.second + 1);
-        });
+    // removing item under the mouse
+    auto removeItemAction = menu.addAction("Remove item");
+    auto remove_item = [&]() {
+        m_sessionModel->removeItem(item->parent(), taginfo.first, taginfo.second);
+    };
+    connect(removeItemAction, &QAction::triggered, remove_item);
 
-        QAction* removeItemAction = menu.addAction("Remove item");
-
-        // removing item under the mouse
-        connect(removeItemAction, &QAction::triggered,
-                [&]() { m_sessionModel->removeItem(item->parent(), taginfo.first, taginfo.second);
-                });
-
-        menu.exec(treeView->mapToGlobal(point));
+    menu.exec(treeView->mapToGlobal(point));
 }
 
 //! Inits session model with some test content.
@@ -113,12 +103,11 @@ void TestWidget3::init_session_model()
 
 SessionItem* TestWidget3::item_from_view(QTreeView* view, const QPoint& point)
 {
-        QModelIndex index = view->indexAt(point);
-        auto item = m_defaultTreeView->viewModel()->itemFromIndex(index);
-        auto viewItem = dynamic_cast<ViewItem*>(item);
-        Q_ASSERT(viewItem);
-
-        return viewItem->item();
+    QModelIndex index = view->indexAt(point);
+    auto item = m_defaultTreeView->viewModel()->itemFromIndex(index);
+    auto viewItem = dynamic_cast<ViewItem*>(item);
+    Q_ASSERT(viewItem);
+    return viewItem->item();
 }
 
 void TestWidget3::init_default_view()
