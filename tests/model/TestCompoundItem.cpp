@@ -39,7 +39,7 @@ TEST_F(TestCompoundItem, itemValue)
 {
     CompoundItem item;
 
-    auto propertyItem = item.addProperty<PropertyItem>("height", 42.0);
+    auto propertyItem = item.addProperty<>("height", 42.0);
     EXPECT_TRUE(item.isTag("height"));
 
     EXPECT_EQ(propertyItem->modelType(), Constants::PropertyType);

@@ -25,7 +25,7 @@ public:
     CompoundItem(const std::string& modelType = Constants::CompoundType);
 
     //! Registers single property item.
-    template <typename T>
+    template <typename T=PropertyItem>
     T* addProperty(const std::string& name, const QVariant& variant = QVariant());
 
     std::string displayName() const override;
