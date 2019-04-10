@@ -34,7 +34,7 @@ public:
 protected:
     void setCurrentIndex(int index);
     bool is_valid_index() const;
-    template<typename T> void add(const std::string& text, bool make_selected=false);
+    template<typename T> void registerItem(const std::string& text, bool make_selected=false);
     // FIXME how to make sure that init_group() was called in constructor?
     // Shell we delegate this call to CompoundItem::addProperty ?
     void init_group();
@@ -43,7 +43,7 @@ protected:
 };
 
 template <typename T>
-void GroupItem::add(const std::string& text, bool make_selected)
+void GroupItem::registerItem(const std::string& text, bool make_selected)
 {
     m_catalogue->add<T>(text);
     if (make_selected)

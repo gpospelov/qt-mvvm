@@ -118,8 +118,8 @@ AnysoPyramid::AnysoPyramid() : CompoundItem(Constants::AnysoPyramidType)
 
 ShapeGroup::ShapeGroup() : GroupItem(Constants::ShapeGroupType)
 {
-    add<Cylinder>("Cylinder");
-    add<Sphere>("Full sphere", /*make_selected*/true);
-    add<AnysoPyramid>("Anysotropical pyramid");
+    registerItem<Cylinder>("Cylinder");
+    registerItem<Sphere>("Full sphere", /*make_selected*/true);
+    registerItem<AnysoPyramid>("Anysotropical pyramid");
     init_group();
 }
