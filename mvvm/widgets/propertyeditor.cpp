@@ -48,7 +48,7 @@ void PropertyEditor::setItem(SessionItem* item)
     m_viewModel->setHorizontalHeaderLabels(labels);
     m_treeView->setModel(m_viewModel.get());
     m_treeView->expandAll();
-//    m_treeView->setRootIsDecorated(false);
+    m_treeView->setRootIsDecorated(false);
 }
 
 QTreeView* PropertyEditor::treeView()

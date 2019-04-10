@@ -10,6 +10,7 @@
 #include "propertyviewmodel.h"
 #include "groupitem.h"
 #include "viewitem.h"
+#include "itemutils.h"
 
 using namespace ModelView;
 
@@ -36,5 +37,7 @@ void PropertyViewModel::onDataChange(SessionItem* item, int role)
 std::vector<SessionItem*> PropertyViewModel::item_children(const SessionItem* item) const
 {
     auto group = dynamic_cast<const GroupItem*>(item);
-    return group ? group->currentItem()->children() : item->children();
+    auto next_item = group ? group->currentItem() : item;
+    return Utils::SinglePropertyItems(*next_item);
+//    return group ? group->currentItem()->children() : item->children();
 }

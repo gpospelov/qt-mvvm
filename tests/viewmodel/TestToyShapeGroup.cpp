@@ -177,13 +177,17 @@ TEST_F(TestToyShapeGroup, inDefaultViewModelContext)
 TEST_F(TestToyShapeGroup, inPropertyViewModelContext)
 {
     ToyItems::SampleModel model;
-    auto groupItem =
-        dynamic_cast<GroupItem*>(model.insertNewItem(ToyItems::Constants::ShapeGroupType));
+    auto parent = model.insertNewItem(Constants::BaseType);
+    parent->registerTag(TagInfo::propertyTag("property_tag", ToyItems::Constants::ShapeGroupType));
+
+    auto groupItem = dynamic_cast<GroupItem*>(
+        model.insertNewItem(ToyItems::Constants::ShapeGroupType, parent, "property_tag"));
     ASSERT_TRUE(groupItem != nullptr);
 
     // constructing viewModel from sample model
     PropertyViewModel viewModel;
     viewModel.setSessionModel(&model);
+    viewModel.setRootSessionItem(parent);
 
     // root item should have one child, item looking at our groupItem
     EXPECT_EQ(viewModel.rowCount(), 1);
