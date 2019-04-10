@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef PROPERTYVIEWMODEL_H
-#define PROPERTYVIEWMODEL_H
+#ifndef TOPITEMSVIEWMODEL_H
+#define TOPITEMSVIEWMODEL_H
 
 #include "defaultviewmodel.h"
 #include <vector>
@@ -16,18 +16,17 @@
 namespace ModelView {
 
 //! View model to show content of SessionModel in Qt widgets.
-//! Only property items are shown, also hides inactive items of GroupProperty.
+//! Only top level items are shown, all property items are filtered out.
 
-class CORE_EXPORT PropertyViewModel : public DefaultViewModel {
+class CORE_EXPORT TopItemsViewModel : public DefaultViewModel {
 public:
-    PropertyViewModel(QObject* parent = nullptr);
+    TopItemsViewModel(QObject* parent = nullptr);
 
 protected:
-    void onDataChange(SessionItem* item, int role) override;
     std::vector<SessionItem*> item_children(const SessionItem* item) const override;
 
 };
 
 }  // namespace ModelView
 
-#endif // VIEWMODEL_H
+#endif // TOPITEMSVIEWMODEL_H
