@@ -11,6 +11,7 @@
 #include <QStandardItem>
 #include <QStandardItemModel>
 #include <QTreeView>
+#include <QTableView>
 #include <QVBoxLayout>
 #include <QDebug>
 
@@ -28,24 +29,33 @@ QList<QStandardItem*> get_items(int n_items, const QString& prefix)
 }
 
 TestWidget1::TestWidget1(QWidget* parent)
-    : QWidget(parent), m_treeView(new QTreeView), m_model(new QStandardItemModel(this))
+    : QWidget(parent), m_treeView(new QTreeView), m_tableView(new QTableView), m_model(new QStandardItemModel(this))
 {
     auto layout = new QVBoxLayout;
 
 //    m_model->setColumnCount(3);
     QStandardItem* parentItem = m_model->invisibleRootItem();
 
-    auto item_row1 = get_items(1, "aaa");
-    parentItem->appendRow(item_row1);
-    item_row1.at(0)->appendRow(get_items(2, "bbb"));
+//    auto item_row1 = get_items(1, "aaa");
+//    parentItem->appendRow(item_row1);
+//    item_row1.at(0)->appendRow(get_items(2, "bbb"));
 
-    auto item_row2 = get_items(3, "aaa");
-    parentItem->appendRow(item_row2);
-    item_row2.at(0)->appendRow(get_items(2, "ccc"));
+//    auto item_row2 = get_items(3, "aaa");
+//    parentItem->appendRow(item_row2);
+//    item_row2.at(0)->appendRow(get_items(2, "ccc"));
+
+
+    parentItem->appendRow(get_items(5, "aaa"));
+    parentItem->appendRow(get_items(5, "bbb"));
+    parentItem->appendRow(get_items(5, "ccc"));
 
     m_treeView->setModel(m_model);
+    m_tableView->setModel(m_model);
+
+    m_tableView->setSpan(0, 0, 2, 1);
 
     layout->addWidget(m_treeView);
+    layout->addWidget(m_tableView);
 
     setLayout(layout);
 

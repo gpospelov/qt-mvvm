@@ -13,6 +13,7 @@
 #include <QWidget>
 
 class QTreeView;
+class QTableView;
 class QStandardItemModel;
 
 //! Playground to test basics of QStandardItemModel.
@@ -28,6 +29,7 @@ public slots:
 
 private:
     QTreeView* m_treeView;
+    QTableView* m_tableView;
     QStandardItemModel* m_model;
 };
 
