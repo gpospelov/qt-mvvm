@@ -83,3 +83,20 @@ TEST_F(TestViewModelUtils, itemTextColorRole)
     variant = Utils::TextColorRole(item);
     EXPECT_EQ(variant.value<QColor>(), QColor(Qt::gray));
 }
+
+//! Testing check state role of item.
+
+TEST_F(TestViewModelUtils, itemCheckStateRole)
+{
+    SessionItem item("Something");
+
+    // no color defined for item by default
+    auto variant = Utils::CheckStateRole(item);
+    EXPECT_FALSE(variant.isValid());
+
+    item.setData(QVariant::fromValue(true), ItemDataRole::DATA);
+    EXPECT_EQ(Utils::CheckStateRole(item).toInt(), Qt::Checked);
+
+    item.setData(QVariant::fromValue(false), ItemDataRole::DATA);
+    EXPECT_EQ(Utils::CheckStateRole(item).toInt(), Qt::Unchecked);
+}

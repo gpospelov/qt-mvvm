@@ -12,6 +12,7 @@
 #include "sessionitem.h"
 #include "sessionmodel.h"
 #include "viewitem.h"
+#include "customvariants.h"
 #include <QStandardItemModel>
 
 using namespace ModelView;
@@ -67,4 +68,12 @@ QVector<int> Utils::item_role_to_qt(int role)
 QVariant Utils::TextColorRole(const SessionItem& item)
 {
     return item.isEnabled() ? QVariant() : QColor(Qt::gray);
+}
+
+QVariant Utils::CheckStateRole(const SessionItem& item)
+{
+    auto value = item.data(ItemDataRole::DATA);
+    if (Utils::IsBoolVariant(value))
+        return value.toBool() ? Qt::Checked : Qt::Unchecked;
+    return QVariant();
 }
