@@ -10,7 +10,7 @@ include(CTest)
 include(configuration)
 
 add_subdirectory(mvvm)
-add_subdirectory(app)
+add_subdirectory(examples/app)
 add_subdirectory(thirdparty/gtest)
 add_subdirectory(tests)
 
