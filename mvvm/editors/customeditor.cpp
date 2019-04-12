@@ -24,6 +24,13 @@ QVariant CustomEditor::data() const
     return m_data;
 }
 
+//! Returns true if editor should remains alive after editing finished.
+
+bool CustomEditor::is_persistent() const
+{
+    return false;
+}
+
 //! Sets the data from model to editor.
 
 void CustomEditor::setData(const QVariant& data)

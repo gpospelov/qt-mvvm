@@ -24,11 +24,13 @@ class CORE_EXPORT BoolEditor : public CustomEditor
 public:
     explicit BoolEditor(QWidget* parent = nullptr);
 
+    bool is_persistent() const override;
+
 private slots:
     void onCheckBoxChange(bool value);
 
 private:
-    void update_components();
+    void update_components() override;
     QCheckBox* m_checkBox;
 };
 

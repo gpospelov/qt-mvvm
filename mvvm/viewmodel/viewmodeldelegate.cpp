@@ -101,7 +101,8 @@ void ViewModelDelegate::onCustomEditorDataChanged()
     qDebug() << "ViewModelDelegate::onCustomEditorDataChanged";
     CustomEditor* editor = qobject_cast<CustomEditor*>(sender());
     emit commitData(editor);
-    emit closeEditor(editor);
+    if (!editor->is_persistent())
+        emit closeEditor(editor);
 }
 
 void ViewModelDelegate::paintCustomLabel(QPainter* painter, const QStyleOptionViewItem& option,

@@ -24,8 +24,8 @@ class CORE_EXPORT ComboPropertyEditor : public CustomEditor
 public:
     explicit ComboPropertyEditor(QWidget* parent = nullptr);
 
-    QSize sizeHint() const;
-    QSize minimumSizeHint() const;
+    QSize sizeHint() const override;
+    QSize minimumSizeHint() const override;
 
 protected slots:
     virtual void onIndexChanged(int index);
@@ -34,7 +34,7 @@ private:
     std::vector<std::string> internLabels();
     int internIndex();
     void setConnected(bool isConnected);
-    void update_components();
+    void update_components() override;
     QComboBox* m_box;
 };
 

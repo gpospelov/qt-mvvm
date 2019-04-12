@@ -34,6 +34,8 @@ public:
 
     QVariant data() const;
 
+    virtual bool is_persistent() const;
+
 public slots:
     void setData(const QVariant& data);
 
