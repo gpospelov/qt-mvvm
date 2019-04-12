@@ -39,6 +39,25 @@ CORE_EXPORT QVariant toQtVariant(const QVariant& custom);
 //! Converts Qt variant to custom variant on board of SessionItem.
 CORE_EXPORT QVariant toCustomVariant(const QVariant& standard);
 
+//! Returns true in the case of double value based variant.
+CORE_EXPORT bool IsBoolVariant(const QVariant& variant);
+
+//! Returns true in the case of double value based variant.
+CORE_EXPORT bool IsIntVariant(const QVariant& variant);
+
+//! Returns true in the case of double value based variant.
+CORE_EXPORT bool IsDoubleVariant(const QVariant& variant);
+
+//! Returns true in the case of double value based variant.
+CORE_EXPORT bool IsComboVariant(const QVariant& variant);
+
+//! Returns true in the case of double value based variant.
+CORE_EXPORT bool IsStdStringVariant(const QVariant& variant);
+
+//! Returns true in the case of double value based variant.
+CORE_EXPORT bool IsDoubleVectorVariant(const QVariant& variant);
+
+
 } // namespace Utils
 } // namespace ModelView
 

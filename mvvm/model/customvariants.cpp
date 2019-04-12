@@ -9,6 +9,7 @@
 
 #include "customvariants.h"
 #include "jsonvariant.h"
+#include "comboproperty.h"
 
 using namespace ModelView;
 
@@ -62,4 +63,34 @@ QVariant Utils::toCustomVariant(const QVariant& standard)
 
     // in other cases returns unchanged variant
     return standard;
+}
+
+bool Utils::IsBoolVariant(const QVariant& variant)
+{
+    return variant.type() == QVariant::Bool;
+}
+
+bool Utils::IsIntVariant(const QVariant& variant)
+{
+    return variant.type() == QVariant::Int;
+}
+
+bool Utils::IsDoubleVariant(const QVariant& variant)
+{
+    return variant.type() == QVariant::Double;
+}
+
+bool Utils::IsComboVariant(const QVariant& variant)
+{
+    return variant.canConvert<ComboProperty>();
+}
+
+bool Utils::IsStdStringVariant(const QVariant& variant)
+{
+    return variant.canConvert<std::string>();
+}
+
+bool Utils::IsDoubleVectorVariant(const QVariant& variant)
+{
+    return variant.typeName() == JsonVariant::vector_double_type_name;
 }

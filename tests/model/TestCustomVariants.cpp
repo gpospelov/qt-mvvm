@@ -6,6 +6,7 @@
 #include "sessionmodel.h"
 #include "taginfo.h"
 #include <memory>
+#include <functional>
 
 using namespace ModelView;
 
@@ -53,13 +54,16 @@ TEST_F(TestCustomVariants, IsTheSameVariant)
 {
     const std::vector<double> vec1{1, 2};
     const std::vector<double> vec2{1, 2, 3};
+    const ComboProperty combo1 = ComboProperty::createFrom({"a1", "a2"});
+    const ComboProperty combo2 = ComboProperty::createFrom({"b1"});
 
     std::vector<QVariant> variants = {
         QVariant(),
         QVariant::fromValue(1), QVariant::fromValue(2),
         QVariant::fromValue(42.0), QVariant::fromValue(43.0),
         QVariant::fromValue(std::string("string1")), QVariant::fromValue(std::string("string2")),
-        QVariant::fromValue(vec1), QVariant::fromValue(vec2)
+        QVariant::fromValue(vec1), QVariant::fromValue(vec2),
+        combo1.variant(), combo2.variant()
     };
 
     for (size_t i = 0; i < variants.size(); ++i) {
@@ -93,4 +97,33 @@ TEST_F(TestCustomVariants, variantTranslation)
     QVariant value(42.0);
     EXPECT_TRUE(Utils::toCustomVariant(value) == QVariant::fromValue(42.0));
     EXPECT_TRUE(Utils::toQtVariant(value) == QVariant::fromValue(42.0));
+}
+
+//! Checks all functions related to variant types.
+
+// FIXME replace tests in loop with parameterized tests
+
+TEST_F(TestCustomVariants, isVariantType)
+{
+    using is_variant_t = std::function<bool(const QVariant&)>;
+
+    std::vector<std::pair<QVariant, is_variant_t>> data = {
+        {QVariant::fromValue(true), Utils::IsBoolVariant},
+        {QVariant::fromValue(1), Utils::IsIntVariant},
+        {QVariant::fromValue(42.0), Utils::IsDoubleVariant},
+        {QVariant::fromValue(ComboProperty()), Utils::IsComboVariant},
+        {QVariant::fromValue(std::string("string1")), Utils::IsStdStringVariant},
+        {QVariant::fromValue(std::vector<double>({1, 2})), Utils::IsDoubleVectorVariant}
+    };
+
+    for (size_t i = 0; i < data.size(); ++i) {
+        auto is_variant_func = data[i].second;
+        for (size_t j = 0; j < data.size(); ++j) {
+            auto variant = data[j].first;
+            if (i == j)
+                EXPECT_TRUE(is_variant_func(variant));
+            else
+               EXPECT_FALSE(is_variant_func(variant));
+        }
+    }
 }
