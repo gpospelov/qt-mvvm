@@ -76,11 +76,24 @@ void ViewModelDelegate::setModelData(QWidget* editor, QAbstractItemModel* model,
     }
 }
 
+//! Increases height of the row by 20% wrt the default.
+
+QSize ViewModelDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
+{
+    QSize result = QStyledItemDelegate::sizeHint(option, index);
+    result.setHeight(static_cast<int>(result.height() * 1.2));
+    return result;
+}
+
+//! Makes an editor occupying whole available space in a cell. If cell contains an icon
+//! as a decoration (i.e. icon of material property), it will be hidden as soon as editor
+//! up and running.
+
 void ViewModelDelegate::updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option,
                                              const QModelIndex& index) const
 {
-    qDebug() << "ViewModelDelegate::updateEditorGeometry" << editor << option << index;
     QStyledItemDelegate::updateEditorGeometry(editor, option, index);
+    editor->setGeometry(option.rect);
 }
 
 void ViewModelDelegate::onCustomEditorDataChanged()
