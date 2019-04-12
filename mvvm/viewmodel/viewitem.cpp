@@ -33,8 +33,6 @@ QVariant ViewItem::data(int role) const
         return Utils::toQtVariant(m_item->data(m_item_role));
     else if (role == Qt::TextColorRole)
         return Utils::TextColorRole(*m_item);
-    else if (role == Qt::CheckStateRole)
-        return Utils::CheckStateRole(*m_item);
     else
         return QStandardItem::data(role);
 }

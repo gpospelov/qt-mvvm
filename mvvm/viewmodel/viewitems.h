@@ -49,6 +49,8 @@ class CORE_EXPORT ViewDataItem : public ViewItem
 public:
     explicit ViewDataItem(SessionItem* item);
     int type() const override;
+
+    QVariant data(int role) const override;
 };
 
 } // namespace ModelView

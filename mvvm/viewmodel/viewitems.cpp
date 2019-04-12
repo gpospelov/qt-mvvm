@@ -11,6 +11,7 @@
 #include "model_types.h"
 #include "sessionitem.h"
 #include "customvariants.h"
+#include "viewmodelutils.h"
 
 using namespace ModelView;
 
@@ -81,4 +82,15 @@ ViewDataItem::ViewDataItem(SessionItem* item)
 int ViewDataItem::type() const
 {
     return data_item_type;
+}
+
+QVariant ViewDataItem::data(int role) const
+{
+    if (!m_item)
+        return QStandardItem::data(role);
+
+    if (role == Qt::CheckStateRole)
+        return Utils::CheckStateRole(*m_item);
+
+    return ViewItem::data(role);
 }
