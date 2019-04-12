@@ -8,11 +8,13 @@
 // ************************************************************************** //
 
 #include "editorfactory.h"
+#include "customvariants.h"
 #include "comboproperty.h"
 #include "combopropertyeditor.h"
 #include "sessionitem.h"
 #include "viewitem.h"
 #include "viewmodel.h"
+#include "booleditor.h"
 #include <QDebug>
 #include <QModelIndex>
 
@@ -25,11 +27,6 @@ const SessionItem* itemFromIndex(const QModelIndex& index)
 {
     auto model = dynamic_cast<const ViewModel*>(index.model());
     return model ? model->sessionItemFromIndex(index) : nullptr;
-}
-
-bool isComboProperty(const QVariant& variant)
-{
-    return variant.canConvert<ComboProperty>();
 }
 
 } // namespace
@@ -53,10 +50,12 @@ CustomEditor* EditorFactory::createEditor(const SessionItem* item, QWidget* pare
 
     CustomEditor* result(nullptr);
 
-    if (isComboProperty(item->data(ItemDataRole::DATA))) {
+    auto value = item->data(ItemDataRole::DATA);
+
+    if (Utils::IsComboVariant(value)) {
         result = new ComboPropertyEditor;
-        qDebug() << "EditorFactory::createEditor():" << item << result;
-    }
+    } else if (Utils::IsBoolVariant(value))
+        result = new BoolEditor;
 
     if (result)
         result->setParent(parent);
@@ -68,11 +67,7 @@ CustomEditor* EditorFactory::createEditor(const SessionItem* item, QWidget* pare
 
 bool EditorFactory::hasStringRepresentation(const QModelIndex& index)
 {
-    auto variant = index.data();
-    if (isComboProperty(variant))
-        return true;
-
-    return false;
+    return !toString(index).empty();
 }
 
 //! Provides string representation of index data.
@@ -80,8 +75,12 @@ bool EditorFactory::hasStringRepresentation(const QModelIndex& index)
 std::string EditorFactory::toString(const QModelIndex& index)
 {
     auto variant = index.data();
-    if (isComboProperty(variant))
+
+    if (Utils::IsComboVariant(variant))
         return variant.value<ComboProperty>().label();
+
+    else if (Utils::IsBoolVariant(variant))
+        return variant.toBool() ? "True" : "False";
 
     return {};
 }
