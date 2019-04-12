@@ -51,54 +51,25 @@ TEST_F(TestCustomVariants, CompatibleVariantTypes)
 
 TEST_F(TestCustomVariants, IsTheSameVariant)
 {
-    QVariant undefined;
-    QVariant int_variant = QVariant::fromValue(1);
-    QVariant double_variant = QVariant::fromValue(42.0);
-    QVariant string_variant = QVariant::fromValue(std::string("string"));
-    std::vector<double> vec{1, 2};
-    QVariant vector_variant = QVariant::fromValue(vec);
+    const std::vector<double> vec1{1, 2};
+    const std::vector<double> vec2{1, 2, 3};
 
-    // undefined variant
-    EXPECT_TRUE(Utils::IsTheSame(undefined, QVariant()));
-    EXPECT_FALSE(Utils::IsTheSame(undefined, int_variant));
-    EXPECT_FALSE(Utils::IsTheSame(undefined, double_variant));
-    EXPECT_FALSE(Utils::IsTheSame(undefined, string_variant));
-    EXPECT_FALSE(Utils::IsTheSame(undefined, vector_variant));
+    std::vector<QVariant> variants = {
+        QVariant(),
+        QVariant::fromValue(1), QVariant::fromValue(2),
+        QVariant::fromValue(42.0), QVariant::fromValue(43.0),
+        QVariant::fromValue(std::string("string1")), QVariant::fromValue(std::string("string2")),
+        QVariant::fromValue(vec1), QVariant::fromValue(vec2)
+    };
 
-    // int variant
-    EXPECT_TRUE(Utils::IsTheSame(int_variant, int_variant));
-    EXPECT_FALSE(Utils::IsTheSame(int_variant, undefined));
-    EXPECT_FALSE(Utils::IsTheSame(int_variant, QVariant::fromValue(2)));
-    EXPECT_FALSE(Utils::IsTheSame(int_variant, double_variant));
-    EXPECT_FALSE(Utils::IsTheSame(int_variant, string_variant));
-    EXPECT_FALSE(Utils::IsTheSame(int_variant, vector_variant));
-
-    // double variant
-    EXPECT_TRUE(Utils::IsTheSame(double_variant, double_variant));
-    EXPECT_FALSE(Utils::IsTheSame(double_variant, undefined));
-    EXPECT_FALSE(Utils::IsTheSame(double_variant, QVariant::fromValue(43.0)));
-    EXPECT_FALSE(Utils::IsTheSame(double_variant, int_variant));
-    EXPECT_FALSE(Utils::IsTheSame(double_variant, string_variant));
-    EXPECT_FALSE(Utils::IsTheSame(double_variant, vector_variant));
-
-    // string variant
-    EXPECT_TRUE(Utils::IsTheSame(string_variant, string_variant));
-    EXPECT_FALSE(Utils::IsTheSame(string_variant, undefined));
-    EXPECT_FALSE(Utils::IsTheSame(string_variant, QVariant::fromValue(std::string("cde"))));
-    EXPECT_FALSE(Utils::IsTheSame(string_variant, int_variant));
-    EXPECT_FALSE(Utils::IsTheSame(string_variant, double_variant));
-    EXPECT_FALSE(Utils::IsTheSame(string_variant, vector_variant));
-
-    // vector variant
-    std::vector<double> vec2{1, 2, 3}, vec3{1, 1};
-    EXPECT_TRUE(Utils::IsTheSame(vector_variant, vector_variant));
-    EXPECT_FALSE(Utils::IsTheSame(vector_variant, QVariant::fromValue(vec2)));
-    EXPECT_FALSE(Utils::IsTheSame(vector_variant, QVariant::fromValue(vec3)));
-    EXPECT_FALSE(Utils::IsTheSame(vector_variant, undefined));
-    EXPECT_FALSE(Utils::IsTheSame(vector_variant, QVariant::fromValue(43.0)));
-    EXPECT_FALSE(Utils::IsTheSame(vector_variant, int_variant));
-    EXPECT_FALSE(Utils::IsTheSame(vector_variant, double_variant));
-    EXPECT_FALSE(Utils::IsTheSame(vector_variant, string_variant));
+    for (size_t i = 0; i < variants.size(); ++i) {
+        for (size_t j = 0; j < variants.size(); ++j) {
+            if (i == j)
+                EXPECT_TRUE(Utils::IsTheSame(variants[i], variants[j]));
+            else
+                EXPECT_FALSE(Utils::IsTheSame(variants[i], variants[j]));
+        }
+    }
 }
 
 //! Test translation of variants
