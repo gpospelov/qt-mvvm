@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include "mainwindow.h"
+#include "option1.h"
 #include <QTabWidget>
 #include <QCoreApplication>
 #include <QSettings>
@@ -21,8 +22,12 @@ namespace {
 MainWindow::MainWindow()
     : m_tabWidget(new QTabWidget)
 {
-    init_application();
+    m_tabWidget->addTab(new Option1Widget, "Layer editor v.1");
 
+    m_tabWidget->setCurrentIndex(m_tabWidget->count()-1);
+    setCentralWidget(m_tabWidget);
+
+    init_application();
 }
 
 void MainWindow::init_application()
