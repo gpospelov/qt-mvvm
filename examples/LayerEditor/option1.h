@@ -9,6 +9,7 @@ class QTableView;
 class QTreeView;
 class QVBoxLayout;
 class MaterialModel;
+class TreeModel;
 
 class Option1Widget : public QWidget
 {
@@ -26,6 +27,7 @@ private:
 
     // models
     MaterialModel* m_material_model;
+    TreeModel* m_sample_model;
 };
 
 #endif // OPTION1_H

@@ -1,5 +1,6 @@
 #include "option1.h"
 #include "materialmodel.h"
+#include "treemodel.h"
 #include <QComboBox>
 #include <QGridLayout>
 #include <QHBoxLayout>
@@ -15,6 +16,7 @@ Option1Widget::Option1Widget(QWidget* parent)
     , m_tableView(new QTableView)
     , m_treeView(new QTreeView)
     , m_material_model(new MaterialModel)
+    , m_sample_model(new TreeModel)
 {
 auto layout_h = new QHBoxLayout;
 
@@ -72,6 +74,8 @@ QVBoxLayout* Option1Widget::createMultilayerPanel()
     remove_layer->setText("Remove layer");
     layout_h->addWidget(remove_layer);
 
+    m_treeView->setModel(m_sample_model);
+    m_treeView->expandAll();
     layout->addWidget(m_treeView);
     layout->addLayout(layout_h);
     return layout;
