@@ -67,10 +67,16 @@ QVBoxLayout* Option1Widget::createMultilayerPanel()
     layout_h->addStretch();
 
     auto add_layer  = new QPushButton;
+    connect(add_layer, &QPushButton::clicked, [&]() {
+        m_sample_model->insertRow(m_treeView->currentIndex().row(), m_treeView->currentIndex());
+    });
     add_layer->setText("Add layer");
     layout_h->addWidget(add_layer);
 
     auto remove_layer = new QPushButton;
+    connect(remove_layer, &QPushButton::clicked, [&]() {
+        m_sample_model->removeRow(m_treeView->currentIndex().row(), m_treeView->currentIndex());
+    });
     remove_layer->setText("Remove layer");
     layout_h->addWidget(remove_layer);
 
