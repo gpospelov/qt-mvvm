@@ -11,7 +11,7 @@ TreeItem::~TreeItem()
     qDeleteAll(childItems);
 }
 
-TreeItem* TreeItem::parent()
+TreeItem* TreeItem::parent() const
 {
     return parentItem;
 }

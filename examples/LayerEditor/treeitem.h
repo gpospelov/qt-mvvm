@@ -14,7 +14,7 @@ public:
     int columnCount() const;
     QVariant data(int column) const;
     bool insertChildren(int position, int count, int columns);
-    TreeItem* parent();
+    TreeItem* parent() const;
     bool removeChildren(int position, int count);
     bool removeColumns(int position, int columns);
     int childNumber() const;
