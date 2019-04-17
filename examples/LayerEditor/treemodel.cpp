@@ -101,25 +101,20 @@ bool TreeModel::setData(const QModelIndex& index, const QVariant& value, int rol
 
 bool TreeModel::insertRows(int position, int rows, const QModelIndex& parent)
 {
+    if (rows < 1)
+        return false;
     auto item = getItem(parent);
     if (position < 0 || position >= item->childCount())
         position = item->childCount();
-    beginInsertRows(parent, position, position + rows);
-    auto data = defaultLayerData();
-    bool success = item->insertChildren(position, rows, data.size());
-    if (success) {
-        for (int i = position; i < position + rows; ++i) {
-            auto child = item->child(i);
-            child->setData(data);
-        }
-    }
+    beginInsertRows(parent, position, position + rows - 1);
+    bool success = item->insertChildren(position, rows, 0);
     endInsertRows();
     return success;
 }
 
 bool TreeModel::removeRows(int, int rows, const QModelIndex& current_index)
 {
-    if (!current_index.isValid())
+    if (!current_index.isValid() || rows < 1)
         return false;
     auto parent_index = parent(current_index);
 
@@ -128,10 +123,47 @@ bool TreeModel::removeRows(int, int rows, const QModelIndex& current_index)
     auto parent_item = getItem(parent_index);
     if (position + rows > parent_item->childCount())
         rows = parent_item->childCount() - position;
-    beginRemoveRows(parent_index, position, position + rows);
+    beginRemoveRows(parent_index, position, position + rows-1);
     bool success = parent_item->removeChildren(position, rows);
     endRemoveRows();
     return success;
+}
+
+bool TreeModel::insertLayers(int rows, const QModelIndex& current_selection)
+{
+    int position = current_selection.isValid() ? current_selection.row() + 1 : 0;
+    QModelIndex parent = current_selection.isValid() ? current_selection.parent() : QModelIndex();
+
+    if (!insertRows(position, rows, parent))
+        return false;
+
+    auto parent_item = getItem(parent);
+    for(int i = position; i < position + rows; ++i)
+        parent_item->child(i)->setData(defaultLayerData());
+
+    emit dataChanged(index(position, 0, parent), index(position + rows - 1, columnCount(), parent));
+    return true;
+}
+
+bool TreeModel::insertAssemblies(int rows, const QModelIndex& current_selection)
+{
+    int position = current_selection.isValid() ? current_selection.row() + 1 : 0;
+    QModelIndex parent = current_selection.isValid() ? current_selection.parent() : QModelIndex();
+
+    if (!insertRows(position, rows, parent))
+        return false;
+
+    auto parent_item = getItem(parent);
+    for(int i = position; i < position + rows; ++i) {
+        auto item = parent_item->child(i);
+        item->setData(defaultAssemblyData());
+        if (!insertRows(0, 1, index(position, 0, parent)))
+            continue;
+        item->child(0)->setData(defaultLayerData());
+    }
+
+    emit dataChanged(index(position, 0, parent), index(position + rows - 1, columnCount(), parent));
+    return true;
 }
 
 void TreeModel::setupModelData(const QVector<QVariant>& data, TreeItem* parent)

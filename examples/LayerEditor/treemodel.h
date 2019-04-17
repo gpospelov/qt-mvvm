@@ -28,6 +28,9 @@ public:
     bool insertRows(int position, int rows, const QModelIndex& parent = QModelIndex()) override;
     bool removeRows(int position, int rows, const QModelIndex& parent = QModelIndex()) override;
 
+    bool insertLayers(int rows, const QModelIndex& current_selection = QModelIndex());
+    bool insertAssemblies(int rows, const QModelIndex& current_selection = QModelIndex());
+
 private:
     void setupModelData(const QVector<QVariant>& data, TreeItem* parent);
     TreeItem* getItem(const QModelIndex& index) const;

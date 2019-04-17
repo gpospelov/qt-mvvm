@@ -68,26 +68,23 @@ QVBoxLayout* Option1Widget::createMultilayerPanel()
     layout_h->addStretch();
 
     auto add_layer  = new QPushButton;
-    connect(add_layer, &QPushButton::clicked, [&]() {
-        m_sample_model->insertRow(m_treeView->currentIndex().row(), m_treeView->currentIndex());
-    });
+    connect(add_layer, &QPushButton::clicked,
+            [&]() { m_sample_model->insertLayers(1, m_treeView->currentIndex()); });
     add_layer->setText("Add layer");
     layout_h->addWidget(add_layer);
+
+    auto add_assembly = new QPushButton;
+    connect(add_assembly, &QPushButton::clicked,
+            [&]() { m_sample_model->insertAssemblies(1, m_treeView->currentIndex()); });
+    add_assembly->setText("Add assembly");
+    layout_h->addWidget(add_assembly);
 
     auto remove_layer = new QPushButton;
     connect(remove_layer, &QPushButton::clicked, [&]() {
         m_sample_model->removeRow(m_treeView->currentIndex().row(), m_treeView->currentIndex());
     });
-    remove_layer->setText("Remove layer");
+    remove_layer->setText("Remove row");
     layout_h->addWidget(remove_layer);
-
-    auto add_assembly = new QPushButton;
-    add_assembly->setText("Add assembly");
-    layout_h->addWidget(add_assembly);
-
-    auto remove_assembly = new QPushButton;
-    remove_assembly->setText("Remove assembly");
-    layout_h->addWidget(remove_assembly);
 
     m_treeView->setModel(m_sample_model);
     m_treeView->expandAll();
