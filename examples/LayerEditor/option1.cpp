@@ -80,6 +80,14 @@ QVBoxLayout* Option1Widget::createMultilayerPanel()
     remove_layer->setText("Remove layer");
     layout_h->addWidget(remove_layer);
 
+    auto add_assembly = new QPushButton;
+    add_assembly->setText("Add assembly");
+    layout_h->addWidget(add_assembly);
+
+    auto remove_assembly = new QPushButton;
+    remove_assembly->setText("Remove assembly");
+    layout_h->addWidget(remove_assembly);
+
     m_treeView->setModel(m_sample_model);
     m_treeView->expandAll();
     layout->addWidget(m_treeView);
