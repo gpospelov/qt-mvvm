@@ -53,6 +53,12 @@ bool TreeItem::setData(int column, const QVariant& value)
     return true;
 }
 
+bool TreeItem::setData(const QVector<QVariant>& data)
+{
+    itemData = data;
+    return true;
+}
+
 bool TreeItem::insertChildren(int position, int count, int columns)
 {
     if (position < 0 || position > childItems.size())

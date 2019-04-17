@@ -1,11 +1,25 @@
 #include "treemodel.h"
 
+namespace {
+QVector<QVariant> defaultLayerData()
+{
+    /*layer_name, material_name, thickness, roughness*/
+    return {"layer", "default", 0.0, 0.0};
+}
+
+QVector<QVariant> defaultAssemblyData()
+{
+    /*assembly_name, number_of_repetitions*/
+    return {"assembly", 1};
+}
+}
+
 TreeModel::TreeModel(QObject* parent) : QAbstractItemModel(parent)
 {
-    QVector<QVariant> rootData{"Foo", "Bar", "Else"};
+    QVector<QVariant> rootData{"Name", "Material", "Thickness", "Roughness"};
     rootItem = new TreeItem(rootData);
 
-    QVector<QVariant> data{"1", "2", "3"};
+    QVector<QVariant> data = defaultLayerData();
     setupModelData(data, rootItem);
 }
 
@@ -91,12 +105,12 @@ bool TreeModel::insertRows(int position, int rows, const QModelIndex& parent)
     if (position < 0 || position >= item->childCount())
         position = item->childCount();
     beginInsertRows(parent, position, position + rows);
-    bool success = item->insertChildren(position, rows, 3);
+    auto data = defaultLayerData();
+    bool success = item->insertChildren(position, rows, data.size());
     if (success) {
         for (int i = position; i < position + rows; ++i) {
             auto child = item->child(i);
-            for (int j = 0; j < 3; ++j)
-                child->setData(j, "foo");
+            child->setData(data);
         }
     }
     endInsertRows();
@@ -126,8 +140,7 @@ void TreeModel::setupModelData(const QVector<QVariant>& data, TreeItem* parent)
         return;
     parent->insertChildren(0, 1, data.size());
     auto child_item = parent->child(0);
-    for (int i = 0; i < data.size(); ++i)
-        child_item->setData(i, data[i]);
+    child_item->setData(data);
 }
 
 QModelIndex TreeModel::index(int row, int column, const QModelIndex& parent) const
