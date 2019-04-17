@@ -22,8 +22,9 @@ private:
     QVBoxLayout* createMultilayerPanel();
 
     // views
-    QTableView* m_tableView;
-    QTreeView* m_treeView;
+    QTableView* m_material_view;
+    QTableView* m_sample_view;
+    QTreeView* m_sample_model_view;
 
     // models
     MaterialModel* m_material_model;

@@ -35,5 +35,5 @@ void MainWindow::init_application()
     QCoreApplication::setApplicationName("layer-editor");
     QCoreApplication::setApplicationVersion("0.0");
     QCoreApplication::setOrganizationName("qt-mvvm");
-    resize(1600, 1600);
+    resize(2600, 1600);
 }
