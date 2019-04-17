@@ -35,6 +35,7 @@ QVBoxLayout* Option1Widget::createMaterialPanel()
     auto material_filter = new QComboBox;
     material_filter->addItem("Scattering length density  ");
     material_filter->addItem("Refractive index");
+    material_filter->setEnabled(false);
     layout_ht->addWidget(new QLabel("Material description"));
     layout_ht->addWidget(material_filter);
     layout_ht->addStretch();
