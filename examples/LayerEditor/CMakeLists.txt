@@ -17,4 +17,4 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 
 add_executable(${executable_name} ${source_files} ${include_files})
-target_link_libraries(${executable_name} mvvm toyitems Qt5::Core Qt5::Gui Qt5::Widgets)
+target_link_libraries(${executable_name} Qt5::Core Qt5::Gui Qt5::Widgets)
