@@ -2,6 +2,8 @@
 #define TREEITEM_H
 
 #include <QList>
+#include <QVariant>
+#include <QVector>
 
 class TreeItem
 {

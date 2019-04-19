@@ -1,4 +1,5 @@
 #include "treemodel.h"
+#include <QSize>
 
 namespace {
 QVector<QVariant> defaultLayerData()
