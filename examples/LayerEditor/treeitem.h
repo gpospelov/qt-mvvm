@@ -8,25 +8,50 @@
 class TreeItem
 {
 public:
-    explicit TreeItem(const QVector<QVariant>& data, TreeItem* parent = nullptr);
-    ~TreeItem();
+	enum TYPE {Layer, Assembly};
+    TreeItem(TYPE type, const QVector<QVariant>& data, TreeItem* parent = nullptr);
+    virtual ~TreeItem();
 
+	TreeItem* parent() const;
+	TYPE type() const { return m_type; }
+
+	// children
     TreeItem* child(int number);
     int childCount() const;
+	int childNumber() const;
+	virtual bool insertChildren(int position, int count, TYPE type) = 0;
+	bool removeChildren(int position, int count);
+
+	// data
     int columnCount() const;
     QVariant data(int column) const;
-    bool insertChildren(int position, int count, int columns);
-    TreeItem* parent() const;
-    bool removeChildren(int position, int count);
-    bool removeColumns(int position, int columns);
-    int childNumber() const;
     bool setData(int column, const QVariant& value);
-    bool setData(const QVector<QVariant>& data);
+
+protected:
+	QList<TreeItem*> childItems;
 
 private:
-    QList<TreeItem*> childItems;
+	TYPE m_type;
     QVector<QVariant> itemData;
     TreeItem* parentItem;
+};
+
+class LayerItem : public TreeItem
+{
+public:
+	explicit LayerItem(TreeItem* parent = nullptr);
+	~LayerItem() override = default;
+
+	bool insertChildren(int, int, TYPE) override { return false; }
+};
+
+class AssemblyItem : public TreeItem
+{
+public:
+	explicit AssemblyItem(TreeItem* parent = nullptr);
+	~AssemblyItem() override = default;
+
+	bool insertChildren(int position, int count, TYPE type) override;
 };
 
 #endif // TREEITEM_H

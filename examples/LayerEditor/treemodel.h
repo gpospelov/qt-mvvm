@@ -10,7 +10,6 @@ class TreeModel : public QAbstractItemModel
 
 public:
     TreeModel(QObject* parent = nullptr);
-    TreeModel(const QStringList& headers, const QVector<QVariant>& data, QObject* parent = nullptr);
     ~TreeModel() override;
     QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
     QVariant headerData(int section, Qt::Orientation orientation,
@@ -32,7 +31,6 @@ public:
     bool insertAssemblies(int rows, const QModelIndex& current_selection = QModelIndex());
 
 private:
-    void setupModelData(const QVector<QVariant>& data, TreeItem* parent);
     TreeItem* getItem(const QModelIndex& index) const;
 
     TreeItem* rootItem;
