@@ -105,6 +105,14 @@ bool TreeModel::removeRows(int, int rows, const QModelIndex& current_index)
     return success;
 }
 
+QSize TreeModel::span(const QModelIndex& index) const
+{
+    auto item = getItem(index);
+	if (item->type() == TreeItem::Assembly && index.column() == 0)
+		return QSize(columnCount(), 1);
+	return QAbstractItemModel::span(index);
+}
+
 bool TreeModel::insertLayers(int rows, const QModelIndex& current_selection)
 {
 	if (rows < 1)

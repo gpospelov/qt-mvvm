@@ -27,6 +27,8 @@ public:
     bool insertRows(int position, int rows, const QModelIndex& parent = QModelIndex()) override;
     bool removeRows(int position, int rows, const QModelIndex& parent = QModelIndex()) override;
 
+    QSize span(const QModelIndex& index) const override;
+
     bool insertLayers(int rows, const QModelIndex& current_selection = QModelIndex());
     bool insertAssemblies(int rows, const QModelIndex& current_selection = QModelIndex());
 
