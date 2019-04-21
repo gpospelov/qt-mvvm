@@ -1,20 +1,21 @@
 #include "option1.h"
+#include "customtableview.h"
 #include "materialmodel.h"
 #include "treemodel.h"
+#include "tableviewdelegate.h"
 #include <QComboBox>
 #include <QGridLayout>
 #include <QHBoxLayout>
 #include <QHeaderView>
 #include <QLabel>
 #include <QPushButton>
-#include <QTableView>
 #include <QTreeView>
 #include <QVBoxLayout>
 
 Option1Widget::Option1Widget(QWidget* parent)
     : QWidget(parent)
     , m_material_view(new QTableView)
-    , m_sample_view(new QTableView)
+    , m_sample_view(new CustomTableView)
     , m_sample_model_view(new QTreeView)
     , m_material_model(new MaterialModel)
     , m_sample_model(new TreeModel)
@@ -95,6 +96,8 @@ QVBoxLayout* Option1Widget::createMultilayerPanel()
 
     m_sample_view->setModel(m_sample_model);
     m_sample_view->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    m_sample_view->setItemDelegate(new TableViewDelegate(m_sample_view));
+
     layout->addWidget(m_sample_view);
     layout->addLayout(layout_h);
     return layout;
