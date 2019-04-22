@@ -3,20 +3,18 @@
 
 #include <QStyledItemDelegate>
 
+class CustomTableView;
+
 class TableViewDelegate : public QStyledItemDelegate
 {
 public:
-    TableViewDelegate(QObject *parent = nullptr);
+    TableViewDelegate(CustomTableView* parent = nullptr);
 
     QWidget* createEditor(QWidget* parent, const QStyleOptionViewItem& option,
                           const QModelIndex& index) const override;
 
-    /*void setEditorData(QWidget* editor, const QModelIndex& index) const override;
-    void setModelData(QWidget* editor, QAbstractItemModel* model,
-                      const QModelIndex& index) const override;
-
-    void updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option,
-                              const QModelIndex& index) const override;*/
+private:
+	CustomTableView* m_parent_table;
 };
 
 #endif // TABLEVIEWDELEGATE_H

@@ -3,6 +3,7 @@
 
 #include <QWidget>
 
+class CustomTableView;
 class QComboBox;
 class QPushButton;
 class QTableView;
@@ -23,7 +24,7 @@ private:
 
     // views
     QTableView* m_material_view;
-    QTableView* m_sample_view;
+	CustomTableView* m_sample_view;
     QTreeView* m_sample_model_view;
 
     // models
