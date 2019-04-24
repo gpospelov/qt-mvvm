@@ -13,6 +13,9 @@
 #include <QTreeView>
 #include <QTableView>
 #include <QVBoxLayout>
+#include <QItemEditorFactory>
+#include <QStandardItemEditorCreator>
+#include <QColorDialog>
 #include <QDebug>
 
 namespace
@@ -26,6 +29,20 @@ QList<QStandardItem*> get_items(int n_items, const QString& prefix)
 
     return result;
 }
+
+QList<QStandardItem*> color_items(int n_items, const QString& prefix)
+{
+    QList<QStandardItem*> result;
+
+    for (int col = 0; col < n_items; ++col) {
+        auto item = new QStandardItem(QString("%0 %1").arg(prefix).arg(col));
+        item->setData(QColor(Qt::red), Qt::DecorationRole);
+        result.append(item);
+    }
+
+    return result;
+}
+
 }
 
 TestWidget1::TestWidget1(QWidget* parent)
@@ -45,9 +62,20 @@ TestWidget1::TestWidget1(QWidget* parent)
 //    item_row2.at(0)->appendRow(get_items(2, "ccc"));
 
 
+
+    QItemEditorFactory *factory = new QItemEditorFactory;
+
+    QItemEditorCreatorBase *colorListCreator =
+        new QStandardItemEditorCreator<QColorDialog>();
+
+    factory->registerEditor(QVariant::Color, colorListCreator);
+
+//    QItemEditorFactory::setDefaultFactory(factory);
+
+
     parentItem->appendRow(get_items(5, "aaa"));
     parentItem->appendRow(get_items(5, "bbb"));
-    parentItem->appendRow(get_items(5, "ccc"));
+    parentItem->appendRow(color_items(5, "ccc"));
 
     m_treeView->setModel(m_model);
     m_tableView->setModel(m_model);
