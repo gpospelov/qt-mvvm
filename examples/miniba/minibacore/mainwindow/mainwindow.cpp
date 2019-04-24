@@ -38,7 +38,7 @@ void MainWindow::closeEvent(QCloseEvent* event)
 
 void MainWindow::init_application()
 {
-    QCoreApplication::setApplicationName("qt-mvvm-app");
+    QCoreApplication::setApplicationName("qt-mvvm-miniba");
     QCoreApplication::setApplicationVersion("0.1");
     QCoreApplication::setOrganizationName("qt-mvvm");
 

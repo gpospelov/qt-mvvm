@@ -1,7 +1,8 @@
 set(library_name minibacore)
 
 # --- source and include files ---
-set(include_dirs ${CMAKE_CURRENT_SOURCE_DIR})
+set(include_dirs ${CMAKE_CURRENT_SOURCE_DIR}/model
+     ${CMAKE_CURRENT_SOURCE_DIR}/mainwindow)
 
 set(source_files)
 set(include_files)
