@@ -9,6 +9,7 @@ namespace LayerEditorUtils
 QTableWidget* createLayerTable();
 QTableWidget* createShrinkedLayerTable();
 QStandardItemModel* createMaterialModel();
+QStandardItemModel* createTreeLayerModel();
 };
 
 #endif // LAYEREDITORUTILS_H

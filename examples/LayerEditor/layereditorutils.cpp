@@ -4,16 +4,33 @@
 #include <QStandardItemModel>
 #include <QTableWidget>
 
-namespace {
-    QStandardItem* createColorMapItem(Qt::GlobalColor color)
-    {
-        QPixmap color_pixmap(20,20);
-        color_pixmap.fill(QColor(color));
-        QStandardItem* item = new QStandardItem();
-        item->setData(QVariant(color_pixmap), Qt::DecorationRole);
-        return item;
-    }
+namespace
+{
+QStandardItem* createColorMapItem(Qt::GlobalColor color)
+{
+    QPixmap color_pixmap(20, 20);
+    color_pixmap.fill(QColor(color));
+    QStandardItem* item = new QStandardItem();
+    item->setData(QVariant(color_pixmap), Qt::DecorationRole);
+    return item;
 }
+
+QStandardItem* createLayer(const QString& name, const QString& thick, const QString& rough,
+                                  const QString& material)
+{
+    auto layer = new QStandardItem(name);
+
+    layer->setChild(0, 0, new QStandardItem("thickness"));
+    layer->setChild(0, 1, new QStandardItem(thick));
+
+    layer->setChild(1, 0, new QStandardItem("roughness"));
+    layer->setChild(1, 1, new QStandardItem(rough));
+
+    layer->setChild(2, 0, new QStandardItem("material"));
+    layer->setChild(2, 1, new QStandardItem(material));
+    return layer;
+}
+} // namespace
 
 QTableWidget* LayerEditorUtils::createLayerTable()
 {
@@ -132,6 +149,46 @@ QStandardItemModel* LayerEditorUtils::createMaterialModel()
     model->setItem(2, 1, new QStandardItem("0.5"));
     model->setItem(2, 2, new QStandardItem("0.01"));
     model->setItem(2, 3, createColorMapItem(Qt::green));
+
+    return model;
+}
+
+QStandardItemModel *LayerEditorUtils::createTreeLayerModel()
+{
+    auto model = new QStandardItemModel(3, 2);
+
+    // header
+    model->setHeaderData(0, Qt::Horizontal, "Name");
+    model->setHeaderData(1, Qt::Horizontal, "Value");
+
+    QStandardItem* root_item = model->invisibleRootItem();
+
+    // top layer
+    auto top = createLayer("top", "0.0", "0.0", "air");
+
+    auto thick_val = top->child(0, 1);
+    thick_val->setFlags(Qt::ItemIsSelectable);
+
+    auto rough_val = top->child(1, 1);
+    rough_val->setFlags(Qt::ItemIsSelectable);
+
+    root_item->setChild(0, 0, top);
+
+    // assembly
+    auto assembly = new QStandardItem("assembly");
+    assembly->setChild(0, 0, new QStandardItem("Number of repetitions"));
+    assembly->setChild(0, 1, new QStandardItem("10"));
+    assembly->setChild(1, 0, createLayer("layer1", "1.0", "0.1", "mat1"));
+    assembly->setChild(2, 0, createLayer("layer2", "2.0", "0.2", "sub"));
+
+    root_item->setChild(1, 0, assembly);
+
+    // bottom layer
+    auto bottom = createLayer("bottom", "0.0", "0.1", "sub");
+    thick_val = bottom->child(0, 1);
+    thick_val->setFlags(Qt::ItemIsSelectable);
+
+    root_item->setChild(2, 0, bottom);
 
     return model;
 }

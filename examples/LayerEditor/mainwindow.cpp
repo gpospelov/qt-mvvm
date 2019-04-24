@@ -11,6 +11,7 @@
 #include "initiallayereditor.h"
 #include "option1.h"
 #include "splitlayereditor.h"
+#include "treelayereditor.h"
 #include <QTabWidget>
 #include <QCoreApplication>
 #include <QSettings>
@@ -26,6 +27,7 @@ MainWindow::MainWindow()
 {
     m_tabWidget->addTab(new InitialLayerEditor, "Initial layer editor");
     m_tabWidget->addTab(new SplitLayerEditor, "Split layer editor");
+    m_tabWidget->addTab(new TreeLayerEditor, "Tree layer editor");
     m_tabWidget->addTab(new Option1Widget, "Cascade layer editor");
 
     m_tabWidget->setCurrentIndex(0);
