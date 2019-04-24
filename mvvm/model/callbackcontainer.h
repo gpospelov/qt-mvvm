@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef CALLBACKCONTAINER_H
-#define CALLBACKCONTAINER_H
+#ifndef MVVM_CALLBACKCONTAINER_H
+#define MVVM_CALLBACKCONTAINER_H
 
 #include "global.h"
 #include "model_types.h"
@@ -73,4 +73,4 @@ template <typename T> class CallbackContainer : public CallbackBaseContainer<T, 
 
 } // ModelView
 
-#endif
+#endif // MVVM_CALLBACKCONTAINER_H

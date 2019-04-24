@@ -12,8 +12,8 @@
 //
 // ************************************************************************** //
 
-#ifndef COMBOPROPERTY_H
-#define COMBOPROPERTY_H
+#ifndef MVVM_COMBOPROPERTY_H
+#define MVVM_COMBOPROPERTY_H
 
 #include "global.h"
 #include <QVariant>
@@ -80,4 +80,4 @@ private:
 
 Q_DECLARE_METATYPE(ModelView::ComboProperty)
 
-#endif // COMBOPROPERTY_H
+#endif // MVVM_COMBOPROPERTY_H

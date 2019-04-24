@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef ITEMPOOL_H
-#define ITEMPOOL_H
+#ifndef MVVM_ITEMPOOL_H
+#define MVVM_ITEMPOOL_H
 
 #include "global.h"
 #include "model_types.h"
@@ -48,4 +48,5 @@ private:
 
 }  // namespace ModelView
 
-#endif
+#endif // MVVM_ITEMPOOL_H
+

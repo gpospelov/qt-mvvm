@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef JSONVARIANT_H
-#define JSONVARIANT_H
+#ifndef MVVM_JSONVARIANT_H
+#define MVVM_JSONVARIANT_H
 
 #include "jsonconverterinterfaces.h"
 #include <QJsonObject>
@@ -47,4 +47,4 @@ private:
 
 } // namespace ModelView
 
-#endif
+#endif // MVVM_JSONVARIANT_H

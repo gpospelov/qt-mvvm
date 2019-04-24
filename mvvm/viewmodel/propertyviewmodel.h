@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef PROPERTYVIEWMODEL_H
-#define PROPERTYVIEWMODEL_H
+#ifndef MVVM_PROPERTYVIEWMODEL_H
+#define MVVM_PROPERTYVIEWMODEL_H
 
 #include "defaultviewmodel.h"
 #include <vector>
@@ -30,4 +30,4 @@ protected:
 
 }  // namespace ModelView
 
-#endif // VIEWMODEL_H
+#endif // MVVM_PROPERTYVIEWMODEL_H

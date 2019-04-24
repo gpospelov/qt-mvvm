@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef DEFAULTITEMCATALOGUE_H
-#define DEFAULTITEMCATALOGUE_H
+#ifndef MVVM_DEFAULTITEMCATALOGUE_H
+#define MVVM_DEFAULTITEMCATALOGUE_H
 
 #include "itemcatalogue.h"
 
@@ -19,4 +19,4 @@ CORE_EXPORT std::unique_ptr<ItemCatalogue> CreateDefaultItemCatalogue();
 
 }
 
-#endif // DEFAULTITEMCATALOGUE_H
+#endif // MVVM_DEFAULTITEMCATALOGUE_H

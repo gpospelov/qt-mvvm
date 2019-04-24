@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef SESSIONITEMCONTAINER_H
-#define SESSIONITEMCONTAINER_H
+#ifndef MVVM_SESSIONITEMCONTAINER_H
+#define MVVM_SESSIONITEMCONTAINER_H
 
 #include "global.h"
 #include "taginfo.h"
@@ -65,4 +65,4 @@ private:
 
 } // namespace ModelView
 
-#endif // SESSIONITEMCONTAINER_H
+#endif // MVVM_SESSIONITEMCONTAINER_H

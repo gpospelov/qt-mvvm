@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef SESSIONITEMDATA_H
-#define SESSIONITEMDATA_H
+#ifndef MVVM_SESSIONITEMDATA_H
+#define MVVM_SESSIONITEMDATA_H
 
 #include "datarole.h"
 #include "global.h"
@@ -42,4 +42,5 @@ private:
 
 } // namespace ModelView
 
-#endif
+#endif // MVVM_SESSIONITEMDATA_H
+

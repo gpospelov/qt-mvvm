@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef PATH_H
-#define PATH_H
+#ifndef MVVM_PATH_H
+#define MVVM_PATH_H
 
 #include "global.h"
 #include <vector>
@@ -51,4 +51,5 @@ private:
 
 }  // namespace ModelView
 
-#endif
+#endif // MVVM_PATH_H
+

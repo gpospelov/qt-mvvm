@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef DEFAULTVIEWMODEL_H
-#define DEFAULTVIEWMODEL_H
+#ifndef MVVM_DEFAULTVIEWMODEL_H
+#define MVVM_DEFAULTVIEWMODEL_H
 
 #include "viewmodel.h"
 #include <memory>
@@ -54,4 +54,4 @@ protected:
 
 } // namespace ModelView
 
-#endif // VIEWMODEL_H
+#endif // MVVM_DEFAULTVIEWMODEL_H

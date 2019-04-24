@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MODELMAPPER_H
-#define MODELMAPPER_H
+#ifndef MVVM_MODELMAPPER_H
+#define MVVM_MODELMAPPER_H
 
 #include "callbackcontainer.h"
 
@@ -57,4 +57,5 @@ private:
 
 } // namespace ModelView
 
-#endif // MODELMAPPER_H
+#endif // MVVM_MODELMAPPER_H
+

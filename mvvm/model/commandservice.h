@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef COMMANDSERVICE_H
-#define COMMANDSERVICE_H
+#ifndef MVVM_COMMANDSERVICE_H
+#define MVVM_COMMANDSERVICE_H
 
 #include "global.h"
 #include "model_types.h"
@@ -78,4 +78,4 @@ typename C::result_t CommandService::process_command(Args&&... args)
 
 } // namespace ModelView
 
-#endif // COMMANDSERVICE_H
+#endif // MVVM_COMMANDSERVICE_H

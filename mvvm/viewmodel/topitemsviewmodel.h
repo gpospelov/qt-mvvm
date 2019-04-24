@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef TOPITEMSVIEWMODEL_H
-#define TOPITEMSVIEWMODEL_H
+#ifndef MVVM_TOPITEMSVIEWMODEL_H
+#define MVVM_TOPITEMSVIEWMODEL_H
 
 #include "defaultviewmodel.h"
 #include <vector>
@@ -29,4 +29,4 @@ protected:
 
 }  // namespace ModelView
 
-#endif // TOPITEMSVIEWMODEL_H
+#endif // MVVM_TOPITEMSVIEWMODEL_H

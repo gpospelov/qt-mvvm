@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef SESSIONITEMTAGS_H
-#define SESSIONITEMTAGS_H
+#ifndef MVVM_SESSIONITEMTAGS_H
+#define MVVM_SESSIONITEMTAGS_H
 
 #include "global.h"
 #include <vector>
@@ -77,4 +77,4 @@ private:
 
 } // namespace ModelView
 
-#endif // SESSIONITEMTAGS_H
+#endif // MVVM_SESSIONITEMTAGS_H

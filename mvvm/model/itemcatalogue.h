@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef ITEMCATALOGUE_H
-#define ITEMCATALOGUE_H
+#ifndef MVVM_ITEMCATALOGUE_H
+#define MVVM_ITEMCATALOGUE_H
 
 #include "global.h"
 #include <functional>
@@ -57,4 +57,4 @@ template <typename T> void ItemCatalogue::add(const std::string& label)
 
 } // namespace ModelView
 
-#endif // ITEMCATALOGUE_H
+#endif // MVVM_ITEMCATALOGUE_H

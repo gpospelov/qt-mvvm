@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef JSONUTILS_H
-#define JSONUTILS_H
+#ifndef MVVM_JSONUTILS_H
+#define MVVM_JSONUTILS_H
 
 #include "global.h"
 #include <string>
@@ -28,4 +28,4 @@ CORE_EXPORT std::string ModelToJsonString(const SessionModel& model);
 
 } // ModelView
 
-#endif // JSONUTILS_H
+#endif // MVVM_JSONUTILS_H

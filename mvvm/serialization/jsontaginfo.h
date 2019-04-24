@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef JSONTAGINFO_H
-#define JSONTAGINFO_H
+#ifndef MVVM_JSONTAGINFO_H
+#define MVVM_JSONTAGINFO_H
 
 #include "jsonconverterinterfaces.h"
 #include <QJsonObject>
@@ -33,4 +33,4 @@ public:
 
 }  // namespace ModelView
 
-#endif
+#endif // MVVM_JSONTAGINFO_H

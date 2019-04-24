@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef SESSIONITEM_H
-#define SESSIONITEM_H
+#ifndef MVVM_SESSIONITEM_H
+#define MVVM_SESSIONITEM_H
 
 #include "global.h"
 #include "model_types.h"
@@ -94,4 +94,5 @@ private:
 
 } // namespace ModelView
 
-#endif
+#endif // MVVM_SESSIONITEM_H
+

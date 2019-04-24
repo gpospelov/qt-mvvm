@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef IETMMAPPER_H
-#define IETMMAPPER_H
+#ifndef MVVM_ITEMMAPPER_H
+#define MVVM_ITEMMAPPER_H
 
 #include "callbackcontainer.h"
 
@@ -62,4 +62,4 @@ private:
 
 } // ModelView
 
-#endif // IETMMAPPER_H
+#endif // MVVM_ITEMMAPPER_H

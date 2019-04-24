@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef PROPERTYITEM_H
-#define PROPERTYITEM_H
+#ifndef MVVM_PROPERTYITEM_H
+#define MVVM_PROPERTYITEM_H
 
 #include "sessionitem.h"
 
@@ -24,4 +24,4 @@ public:
 
 } // namespace ModelView
 
-#endif // PROPERTYITEM_H
+#endif // MVVM_PROPERTYITEM_H

@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef COMPARATORS_H
-#define COMPARATORS_H
+#ifndef MVVM_COMPARATORS_H
+#define MVVM_COMPARATORS_H
 
 #include "global.h"
 
@@ -28,4 +28,5 @@ private:
 
 }  // namespace ModelView
 
-#endif
+#endif // MVVM_COMPARATORS_H
+

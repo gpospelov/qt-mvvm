@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef ITEMSTREEVIEW_H
-#define ITEMSTREEVIEW_H
+#ifndef MVVM_ITEMSTREEVIEW_H
+#define MVVM_ITEMSTREEVIEW_H
 
 #include "global.h"
 #include <QWidget>
@@ -67,4 +67,4 @@ private:
 
 } // namespace ModelView
 
-#endif // ITEMSTREEVIEW_H
+#endif // MVVM_ITEMSTREEVIEW_H

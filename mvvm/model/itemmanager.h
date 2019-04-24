@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef ITEMMANAGER_H
-#define ITEMMANAGER_H
+#ifndef MVVM_ITEMMANAGER_H
+#define MVVM_ITEMMANAGER_H
 
 #include "global.h"
 #include "model_types.h"
@@ -64,4 +64,4 @@ private:
 
 } // namespace ModelView
 
-#endif
+#endif // MVVM_ITEMMANAGER_H

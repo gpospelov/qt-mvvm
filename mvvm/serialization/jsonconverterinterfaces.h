@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef JSONCONVERTERINTERFACES_H
-#define JSONCONVERTERINTERFACES_H
+#ifndef MVVM_JSONCONVERTERINTERFACES_H
+#define MVVM_JSONCONVERTERINTERFACES_H
 
 #include "global.h"
 #include <memory>
@@ -90,4 +90,4 @@ public:
 
 } // namespace ModelView
 
-#endif
+#endif // MVVM_JSONCONVERTERINTERFACES_H

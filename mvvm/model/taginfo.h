@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef TAGINFO_H
-#define TAGINFO_H
+#ifndef MVVM_TAGINFO_H
+#define MVVM_TAGINFO_H
 
 #include "global.h"
 #include <string>
@@ -57,4 +57,4 @@ private:
 
 } // namespace ModelView
 
-#endif //  TAGINFO_H
+#endif //  MVVM_TAGINFO_H

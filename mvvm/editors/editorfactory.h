@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef EDITORFACTORY_H
-#define EDITORFACTORY_H
+#ifndef MVVM_EDITORFACTORY_H
+#define MVVM_EDITORFACTORY_H
 
 #include "global.h"
 #include <string>
@@ -39,4 +39,4 @@ public:
 
 } // namespace ModelView
 
-#endif // EDITORFACTORY_H
+#endif // MVVM_EDITORFACTORY_H

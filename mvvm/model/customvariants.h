@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef CUSTOMVARIANTS_H
-#define CUSTOMVARIANTS_H
+#ifndef MVVM_CUSTOMVARIANTS_H
+#define MVVM_CUSTOMVARIANTS_H
 
 #include "global.h"
 
@@ -64,4 +64,4 @@ CORE_EXPORT bool IsDoubleVectorVariant(const QVariant& variant);
 Q_DECLARE_METATYPE(std::string)
 Q_DECLARE_METATYPE(std::vector<double>)
 
-#endif
+#endif // MVVM_CUSTOMVARIANTS_H

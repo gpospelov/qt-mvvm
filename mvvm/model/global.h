@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef GLOBAL_H
-#define GLOBAL_H
+#ifndef MVVM_GLOBAL_H
+#define MVVM_GLOBAL_H
 
 #ifdef _WIN32
 
@@ -25,4 +25,4 @@
 #define CORE_EXPORT
 #endif
 
-#endif
+#endif // MVVM_GLOBAL_H

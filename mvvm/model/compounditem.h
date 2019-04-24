@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef COMPOUNDITEM_H
-#define COMPOUNDITEM_H
+#ifndef MVVM_COMPOUNDITEM_H
+#define MVVM_COMPOUNDITEM_H
 
 #include "propertyitem.h"
 #include "sessionitem.h"
@@ -58,4 +58,4 @@ template <typename T> T* CompoundItem::addProperty(const std::string& name, cons
 
 } // namespace ModelView
 
-#endif // COMPOUNDITEM_H
+#endif // MVVM_COMPOUNDITEM_H

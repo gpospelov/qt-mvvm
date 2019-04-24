@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef VIEWMODELINTERFACES_H
-#define VIEWMODELINTERFACES_H
+#ifndef MVVM_VIEWMODELINTERFACES_H
+#define MVVM_VIEWMODELINTERFACES_H
 
 #include "global.h"
 #include <QList>
@@ -31,4 +31,4 @@ public:
 
 }  // namespace ModelView
 
-#endif // VIEWMODELINTERFACES_H
+#endif // MVVM_VIEWMODELINTERFACES_H

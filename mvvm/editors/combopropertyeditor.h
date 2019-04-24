@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef COMBOPROPERTYEDITOR_H
-#define COMBOPROPERTYEDITOR_H
+#ifndef MVVM_COMBOPROPERTYEDITOR_H
+#define MVVM_COMBOPROPERTYEDITOR_H
 
 #include "customeditor.h"
 
@@ -40,4 +40,4 @@ private:
 
 } // namespace ModelView
 
-#endif // COMBOPROPERTYEDITOR_H
+#endif // MVVM_COMBOPROPERTYEDITOR_H

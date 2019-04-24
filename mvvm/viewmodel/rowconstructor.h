@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef ROWCONSTRUCTOR_H
-#define ROWCONSTRUCTOR_H
+#ifndef MVVM_ROWCONSTRUCTOR_H
+#define MVVM_ROWCONSTRUCTOR_H
 
 #include "viewmodelinterfaces.h"
 
@@ -32,4 +32,4 @@ public:
 
 } // namespace ModelView
 
-#endif // ROWCONSTRUCTOR_H
+#endif // MVVM_ROWCONSTRUCTOR_H

@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef VIEWMODELUTILS_H
-#define VIEWMODELUTILS_H
+#ifndef MVVM_VIEWMODELUTILS_H
+#define MVVM_VIEWMODELUTILS_H
 
 #include "global.h"
 #include <QVariant>
@@ -50,4 +50,4 @@ CORE_EXPORT QVariant CheckStateRole(const SessionItem& item);
 
 } // namespace ModelView
 
-#endif // VIEWMODELUTILS_H
+#endif // MVVM_VIEWMODELUTILS_H

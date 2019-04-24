@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef SESSIONITEM_P_H
-#define SESSIONITEM_P_H
+#ifndef MVVM_SESSIONITEM_P_H
+#define MVVM_SESSIONITEM_P_H
 
 #include "model_types.h"
 #include <memory>
@@ -40,4 +40,4 @@ public:
 
 } // namespace ModelView
 
-#endif // SESSIONITEM_P_H
+#endif // MVVM_SESSIONITEM_P_H

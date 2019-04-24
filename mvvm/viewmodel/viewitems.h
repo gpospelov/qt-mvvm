@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef VIEWITEMS_H
-#define VIEWITEMS_H
+#ifndef MVVM_VIEWITEMS_H
+#define MVVM_VIEWITEMS_H
 
 #include "viewitem.h"
 
@@ -55,4 +55,4 @@ public:
 
 } // namespace ModelView
 
-#endif // VIEWITEMS_H
+#endif // MVVM_VIEWITEMS_H

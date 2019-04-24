@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef COMMANDS_H
-#define COMMANDS_H
+#ifndef MVVM_COMMANDS_H
+#define MVVM_COMMANDS_H
 
 #include "global.h"
 #include "model_types.h"
@@ -94,4 +94,4 @@ private:
 
 }  // namespace ModelView
 
-#endif
+#endif // MVVM_COMMANDS_H
