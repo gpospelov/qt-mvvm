@@ -13,6 +13,6 @@
 #include "itemcatalogue.h"
 
 //! Returns catalogue of toy items.
-std::unique_ptr<ModelView::ItemCatalogue> CreateToyItemCatalogue();
+std::unique_ptr<ModelView::ItemCatalogue> CreateItemCatalogue();
 
 #endif //  ITEMCATALOGUE2_H

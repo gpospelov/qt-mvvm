@@ -12,7 +12,7 @@
 #include "MultiLayerItem.h"
 #include "LayerItem.h"
 
-std::unique_ptr<ModelView::ItemCatalogue> CreateToyItemCatalogue()
+std::unique_ptr<ModelView::ItemCatalogue> CreateItemCatalogue()
 {
     auto result = ModelView::CreateDefaultItemCatalogue();
     result->add<MultiLayerItem>();
