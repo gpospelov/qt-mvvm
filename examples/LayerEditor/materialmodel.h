@@ -4,7 +4,13 @@
 #include "materialitem.h"
 #include <QAbstractItemModel>
 
-class MaterialModel : public QAbstractTableModel
+class QStandardItemModel;
+
+namespace MaterialModel {
+    QStandardItemModel* create();
+}
+
+/*class MaterialModel : public QAbstractTableModel
 {
     Q_OBJECT
 public:
@@ -20,6 +26,6 @@ public:
 private:
     QList<MaterialItem> m_data;
     MaterialItem::DATA_TYPE m_type_filter;
-};
+};*/
 
 #endif // MATERIALMODEL_H

@@ -6,10 +6,10 @@
 class CustomTableView;
 class QComboBox;
 class QPushButton;
+class QStandardItemModel;
 class QTableView;
 class QTreeView;
 class QVBoxLayout;
-class MaterialModel;
 class TreeModel;
 
 class Option1Widget : public QWidget
@@ -24,11 +24,11 @@ private:
 
     // views
     QTableView* m_material_view;
-	CustomTableView* m_sample_view;
+    CustomTableView* m_sample_view;
     QTreeView* m_sample_model_view;
 
     // models
-    MaterialModel* m_material_model;
+    QStandardItemModel* m_material_model;
     TreeModel* m_sample_model;
 };
 

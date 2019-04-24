@@ -9,6 +9,7 @@
 #include <QHeaderView>
 #include <QLabel>
 #include <QPushButton>
+#include <QStandardItemModel>
 #include <QTreeView>
 #include <QVBoxLayout>
 
@@ -17,7 +18,7 @@ Option1Widget::Option1Widget(QWidget* parent)
     , m_material_view(new QTableView)
     , m_sample_view(new CustomTableView)
     , m_sample_model_view(new QTreeView)
-    , m_material_model(new MaterialModel)
+    , m_material_model(MaterialModel::create())
     , m_sample_model(new TreeModel)
 {
     auto layout_h = new QHBoxLayout;
@@ -57,9 +58,8 @@ QVBoxLayout* Option1Widget::createMaterialPanel()
     layout_hb->addStretch();
 
     m_material_view->setModel(m_material_model);
-    m_material_view->setColumnHidden(m_material_model->columnCount() - 1,
-                                     true); // hiding material type
     m_material_view->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    m_material_view->verticalHeader()->setVisible(false);
 
     layout->addLayout(layout_ht);
     layout->addWidget(m_material_view);
