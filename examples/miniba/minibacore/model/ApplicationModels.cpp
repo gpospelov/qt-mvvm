@@ -7,12 +7,11 @@
 //
 // ************************************************************************** //
 
-#ifndef ITEMCATALOGUE_H
-#define ITEMCATALOGUE_H
+#include "ApplicationModels.h"
+#include "SampleModel.h"
 
-#include "itemcatalogue.h"
+ApplicationModels::ApplicationModels()
+    : m_sample_model(std::make_unique<SampleModel>())
+{
 
-//! Returns catalogue of toy items.
-CORE_EXPORT std::unique_ptr<ModelView::ItemCatalogue> CreateItemCatalogue();
-
-#endif //  ITEMCATALOGUE_H
+}

@@ -7,31 +7,22 @@
 //
 // ************************************************************************** //
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef APPLICATIONMODELS_H
+#define APPLICATIONMODELS_H
 
 #include "global.h"
-#include <QMainWindow>
 #include <memory>
 
-class ApplicationModels;
-class QTabWidget;
+class SampleModel;
 
-class MainWindow : public QMainWindow
+class CORE_EXPORT ApplicationModels
 {
-    Q_OBJECT
 public:
-    MainWindow();
-
-protected:
-    void closeEvent(QCloseEvent* event);
+    ApplicationModels();
 
 private:
-    void init_application();
-    void write_settings();
-
-    QTabWidget* m_tabWidget;
-    std::unique_ptr<ApplicationModels> m_models;
+    std::unique_ptr<SampleModel> m_sample_model;
 };
 
-#endif //  MAINWINDOW_H
+#endif //  APPLICATIONMODELS_H
+

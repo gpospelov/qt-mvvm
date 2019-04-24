@@ -9,6 +9,7 @@
 
 #include "mainwindow.h"
 #include "testwidget1.h"
+#include "ApplicationModels.h"
 #include <QTabWidget>
 #include <QCoreApplication>
 #include <QSettings>
@@ -20,7 +21,7 @@ namespace {
 }
 
 MainWindow::MainWindow()
-    : m_tabWidget(new QTabWidget)
+    : m_tabWidget(new QTabWidget), m_models(std::make_unique<ApplicationModels>())
 {    
     m_tabWidget->addTab(new TestWidget1, "Model basics");
 
