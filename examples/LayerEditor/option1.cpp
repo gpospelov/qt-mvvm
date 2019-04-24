@@ -1,6 +1,6 @@
 #include "option1.h"
 #include "customtableview.h"
-#include "materialmodel.h"
+#include "layereditorutils.h"
 #include "treemodel.h"
 #include "tableviewdelegate.h"
 #include <QComboBox>
@@ -18,7 +18,7 @@ Option1Widget::Option1Widget(QWidget* parent)
     , m_material_view(new QTableView)
     , m_sample_view(new CustomTableView)
     , m_sample_model_view(new QTreeView)
-    , m_material_model(MaterialModel::create())
+    , m_material_model(LayerEditorUtils::createMaterialModel())
     , m_sample_model(new TreeModel)
 {
     auto layout_h = new QHBoxLayout;
