@@ -19,6 +19,7 @@ class CORE_EXPORT ApplicationModels
 {
 public:
     ApplicationModels();
+    ~ApplicationModels();
 
 private:
     std::unique_ptr<SampleModel> m_sample_model;

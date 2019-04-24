@@ -15,3 +15,5 @@ ApplicationModels::ApplicationModels()
 {
 
 }
+
+ApplicationModels::~ApplicationModels() = default;

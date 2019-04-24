@@ -23,13 +23,15 @@ namespace {
 MainWindow::MainWindow()
     : m_tabWidget(new QTabWidget), m_models(std::make_unique<ApplicationModels>())
 {    
-    m_tabWidget->addTab(new TestWidget1, "Model basics");
+    m_tabWidget->addTab(new TestWidget1(m_models.get()), "Model basics");
 
     m_tabWidget->setCurrentIndex(m_tabWidget->count()-1);
     setCentralWidget(m_tabWidget);
 
     init_application();
 }
+
+MainWindow::~MainWindow() = default;
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {

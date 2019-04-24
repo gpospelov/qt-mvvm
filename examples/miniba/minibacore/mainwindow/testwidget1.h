@@ -12,25 +12,16 @@
 
 #include <QWidget>
 
-class QTreeView;
-class QTableView;
-class QStandardItemModel;
-
-//! Playground to test basics of QStandardItemModel.
+class ApplicationModels;
 
 class TestWidget1 : public QWidget
 {
     Q_OBJECT
 public:
-    TestWidget1(QWidget* parent = nullptr);
-
-public slots:
-    void onDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles);
+    TestWidget1(ApplicationModels* models, QWidget* parent = nullptr);
 
 private:
-    QTreeView* m_treeView;
-    QTableView* m_tableView;
-    QStandardItemModel* m_model;
+    ApplicationModels* m_models;
 };
 
 #endif // TESTWIDGET1_H

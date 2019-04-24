@@ -22,6 +22,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 public:
     MainWindow();
+    ~MainWindow();
 
 protected:
     void closeEvent(QCloseEvent* event);
