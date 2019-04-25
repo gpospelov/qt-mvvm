@@ -25,8 +25,11 @@ public:
     CompoundItem(const std::string& modelType = Constants::CompoundType);
 
     //! Registers single property item.
-    template <typename T=PropertyItem>
+    template <typename T = PropertyItem>
     T* addProperty(const std::string& name, const QVariant& variant = QVariant());
+
+    //! Register char property as variant based on std::string.
+    template <typename T = PropertyItem> T* addProperty(const std::string& name, const char* str);
 
     std::string displayName() const override;
 
@@ -51,10 +54,10 @@ template <typename T> T* CompoundItem::addProperty(const std::string& name, cons
     return property;
 }
 
-//template <> PropertyItem* CompoundItem::addProperty(const std::string& name, const QVariant& variant)
-//{
-//    return addProperty<PropertyItem>(name, variant);
-//}
+template <typename T> T* CompoundItem::addProperty(const std::string& name, const char* str)
+{
+    return addProperty<T>(name, QVariant::fromValue(std::string(str)));
+}
 
 } // namespace ModelView
 

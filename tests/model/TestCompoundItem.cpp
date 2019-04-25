@@ -2,6 +2,7 @@
 #include "test_utils.h"
 #include "compounditem.h"
 #include "sessionmodel.h"
+#include "customvariants.h"
 #include <memory>
 #include <stdexcept>
 
@@ -33,6 +34,18 @@ TEST_F(TestCompoundItem, addProperty)
     EXPECT_EQ(propertyItem->modelType(), Constants::PropertyType);
     EXPECT_EQ(propertyItem->displayName(), "height");
     EXPECT_EQ(propertyItem->data(ItemDataRole::DATA).toDouble(), 42.0);
+}
+
+TEST_F(TestCompoundItem, addCharProperty)
+{
+    CompoundItem item;
+
+    auto propertyItem = item.addProperty<PropertyItem>("name", "abc");
+    EXPECT_TRUE(item.isTag("name"));
+
+    EXPECT_EQ(propertyItem->modelType(), Constants::PropertyType);
+    EXPECT_TRUE(Utils::IsStdStringVariant(propertyItem->data(ItemDataRole::DATA)));
+    EXPECT_EQ(propertyItem->data(ItemDataRole::DATA).value<std::string>(), std::string("abc"));
 }
 
 TEST_F(TestCompoundItem, itemValue)
