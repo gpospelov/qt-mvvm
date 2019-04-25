@@ -27,7 +27,7 @@ public:
     ItemFactory(std::unique_ptr<ItemCatalogue> catalogue);
     ~ItemFactory() override;
 
-    std::unique_ptr<SessionItem> createItem(const model_type& modelType = {}) const override;
+    std::unique_ptr<SessionItem> createItem(const model_type& modelType) const override;
 
     std::unique_ptr<SessionItem> createEmptyItem() const override;
 

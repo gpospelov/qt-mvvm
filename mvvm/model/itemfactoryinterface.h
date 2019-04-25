@@ -26,7 +26,7 @@ class CORE_EXPORT ItemFactoryInterface
 public:
     virtual ~ItemFactoryInterface() = default;
 
-    virtual std::unique_ptr<SessionItem> createItem(const model_type& modelType = {}) const = 0;
+    virtual std::unique_ptr<SessionItem> createItem(const model_type& modelType) const = 0;
 
     virtual std::unique_ptr<SessionItem> createEmptyItem() const = 0;
 };
