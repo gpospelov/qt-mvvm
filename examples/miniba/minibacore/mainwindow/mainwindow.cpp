@@ -8,7 +8,7 @@
 // ************************************************************************** //
 
 #include "mainwindow.h"
-#include "testwidget1.h"
+#include "SampleWidget.h"
 #include "ApplicationModels.h"
 #include <QTabWidget>
 #include <QCoreApplication>
@@ -23,7 +23,7 @@ namespace {
 MainWindow::MainWindow()
     : m_tabWidget(new QTabWidget), m_models(std::make_unique<ApplicationModels>())
 {    
-    m_tabWidget->addTab(new TestWidget1(m_models.get()), "Model basics");
+    m_tabWidget->addTab(new SampleWidget(m_models.get()), "Model basics");
 
     m_tabWidget->setCurrentIndex(m_tabWidget->count()-1);
     setCentralWidget(m_tabWidget);

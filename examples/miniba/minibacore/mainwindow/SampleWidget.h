@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef TESTWIDGET1_H
-#define TESTWIDGET1_H
+#ifndef SAMPLEWIDGET_H
+#define SAMPLEWIDGET_H
 
 #include <QWidget>
 
@@ -20,11 +20,11 @@ namespace ModelView
 class ItemsTreeView;
 }
 
-class TestWidget1 : public QWidget
+class SampleWidget : public QWidget
 {
     Q_OBJECT
 public:
-    TestWidget1(ApplicationModels* models, QWidget* parent = nullptr);
+    SampleWidget(ApplicationModels* models, QWidget* parent = nullptr);
 
 private:
     QBoxLayout* create_top_layout();
@@ -36,4 +36,4 @@ private:
     ApplicationModels* m_models;
 };
 
-#endif // TESTWIDGET1_H
+#endif // SAMPLEWIDGET_H

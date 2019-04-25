@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "testwidget1.h"
+#include "SampleWidget.h"
 #include "ApplicationModels.h"
 #include "SampleModel.h"
 #include "itemstreeview.h"
@@ -17,7 +17,7 @@
 
 using namespace ModelView;
 
-TestWidget1::TestWidget1(ApplicationModels* models, QWidget* parent)
+SampleWidget::SampleWidget(ApplicationModels* models, QWidget* parent)
     : QWidget(parent), m_materialTree(new ItemsTreeView), m_sampleTree(new ItemsTreeView), m_models(models)
 {
     auto mainLayout = new QVBoxLayout;
@@ -29,7 +29,7 @@ TestWidget1::TestWidget1(ApplicationModels* models, QWidget* parent)
     setLayout(mainLayout);
 }
 
-QBoxLayout* TestWidget1::create_top_layout()
+QBoxLayout* SampleWidget::create_top_layout()
 {
     auto result = new QHBoxLayout;
 
@@ -43,7 +43,7 @@ QBoxLayout* TestWidget1::create_top_layout()
     return result;
 }
 
-QBoxLayout* TestWidget1::create_bottom_layout()
+QBoxLayout* SampleWidget::create_bottom_layout()
 {
     auto result = new QHBoxLayout;
     result->addWidget(new QTreeView);
