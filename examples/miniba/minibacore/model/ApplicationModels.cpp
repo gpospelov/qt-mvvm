@@ -10,6 +10,7 @@
 #include "ApplicationModels.h"
 #include "MaterialModel.h"
 #include "SampleModel.h"
+#include "item_constants.h"
 
 class ApplicationModels::ApplicationModelsPrivate
 {
@@ -23,7 +24,9 @@ public:
     std::unique_ptr<SampleModel> m_sample_model;
 };
 
-ApplicationModels::ApplicationModels() : p_impl(std::make_unique<ApplicationModelsPrivate>()) {}
+ApplicationModels::ApplicationModels() : p_impl(std::make_unique<ApplicationModelsPrivate>())
+{
+}
 
 ApplicationModels::~ApplicationModels() = default;
 

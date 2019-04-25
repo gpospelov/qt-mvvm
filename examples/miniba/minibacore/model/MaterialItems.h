@@ -15,12 +15,15 @@
 class CORE_EXPORT MaterialBaseItem : public ModelView::CompoundItem
 {
 public:
+    static const std::string P_NAME;
     MaterialBaseItem(const std::string& model_type);
+protected:
+    void register_name();
 };
 
 class CORE_EXPORT SLDMaterialItem : public MaterialBaseItem
 {
-public:
+public:    
     static const std::string P_SLD_REAL;
     static const std::string P_SLD_IMAG;
 

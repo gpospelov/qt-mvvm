@@ -10,6 +10,7 @@
 #ifndef MVVM_COMPOUNDITEM_H
 #define MVVM_COMPOUNDITEM_H
 
+#include "customvariants.h"
 #include "propertyitem.h"
 #include "sessionitem.h"
 #include "taginfo.h"
