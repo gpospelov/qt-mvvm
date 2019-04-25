@@ -10,6 +10,7 @@
 #include "SampleWidget.h"
 #include "ApplicationModels.h"
 #include "SampleModel.h"
+#include "MaterialModel.h"
 #include "itemstreeview.h"
 #include "standardviewmodels.h"
 #include <QVBoxLayout>
@@ -32,7 +33,10 @@ SampleWidget::SampleWidget(ApplicationModels* models, QWidget* parent)
 QBoxLayout* SampleWidget::create_top_layout()
 {
     auto result = new QHBoxLayout;
+
+    m_materialTree->setViewModel(Utils::CreateDefaultViewModel(m_models->materialModel()));
     m_sampleTree->setViewModel(Utils::CreateDefaultViewModel(m_models->sampleModel()));
+
     result->addWidget(m_materialTree);
     result->addWidget(m_sampleTree);
     return result;

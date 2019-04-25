@@ -14,6 +14,7 @@
 #include <memory>
 
 class SampleModel;
+class MaterialModel;
 
 class CORE_EXPORT ApplicationModels
 {
@@ -22,8 +23,10 @@ public:
     ~ApplicationModels();
 
     SampleModel* sampleModel();
+    MaterialModel* materialModel();
 
 private:
+    std::unique_ptr<MaterialModel> m_material_model;
     std::unique_ptr<SampleModel> m_sample_model;
 };
 

@@ -9,16 +9,22 @@
 
 #include "ApplicationModels.h"
 #include "SampleModel.h"
+#include "MaterialModel.h"
 
 ApplicationModels::ApplicationModels()
-    : m_sample_model(std::make_unique<SampleModel>())
+    : m_material_model(new MaterialModel), m_sample_model(new SampleModel)
 {
 
 }
+
+ApplicationModels::~ApplicationModels() = default;
 
 SampleModel* ApplicationModels::sampleModel()
 {
     return m_sample_model.get();
 }
 
-ApplicationModels::~ApplicationModels() = default;
+MaterialModel* ApplicationModels::materialModel()
+{
+    return m_material_model.get();
+}
