@@ -13,7 +13,7 @@
 #include "combopropertyeditor.h"
 #include "sessionitem.h"
 #include "viewitem.h"
-#include "viewmodel.h"
+#include "abstractviewmodel.h"
 #include "booleditor.h"
 #include <QDebug>
 #include <QModelIndex>
@@ -25,7 +25,7 @@ namespace
 
 const SessionItem* itemFromIndex(const QModelIndex& index)
 {
-    auto model = dynamic_cast<const ViewModel*>(index.model());
+    auto model = dynamic_cast<const AbstractViewModel*>(index.model());
     return model ? model->sessionItemFromIndex(index) : nullptr;
 }
 

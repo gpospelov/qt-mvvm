@@ -23,7 +23,7 @@ namespace ModelView
 
 class SessionModel;
 class SessionItem;
-class ViewModel;
+class AbstractViewModel;
 class TopItemsViewModel;
 class ViewModelDelegate;
 
@@ -41,13 +41,13 @@ public:
 
     QTreeView* treeView();
 
-    void setViewModel(std::unique_ptr<ViewModel> viewModel);
+    void setViewModel(std::unique_ptr<AbstractViewModel> viewModel);
 
     void setSelected(SessionItem* item);
 
     void setRootSessionItem(SessionItem* item);
 
-    ViewModel* viewModel() const;
+    AbstractViewModel* viewModel() const;
 
 signals:
     void itemSelected(SessionItem*);
@@ -61,7 +61,7 @@ private:
     void set_connected(bool flag);
 
     QTreeView* m_treeView;
-    std::unique_ptr<ViewModel> m_viewModel;
+    std::unique_ptr<AbstractViewModel> m_viewModel;
     std::unique_ptr<ViewModelDelegate> m_delegate;
     bool m_block_selection;
 };

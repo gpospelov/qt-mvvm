@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_VIEWMODEL_H
-#define MVVM_VIEWMODEL_H
+#ifndef MVVM_ABSTRACTVIEWMODEL_H
+#define MVVM_ABSTRACTVIEWMODEL_H
 
 #include "global.h"
 #include <QStandardItemModel>
@@ -24,11 +24,11 @@ class ViewItem;
 
 //! Base class for all view models to show content of  SessionModel in Qt views.
 
-class CORE_EXPORT ViewModel : public QStandardItemModel
+class CORE_EXPORT AbstractViewModel : public QStandardItemModel
 {
 public:
-    ViewModel(QObject* parent = nullptr);
-    virtual ~ViewModel();
+    AbstractViewModel(QObject* parent = nullptr);
+    virtual ~AbstractViewModel();
 
     void setSessionModel(SessionModel* model);
 
@@ -58,4 +58,4 @@ protected:
 
 } // namespace ModelView
 
-#endif // MVVM_VIEWMODEL_H
+#endif // MVVM_ABSTRACTVIEWMODEL_H

@@ -33,7 +33,7 @@ QBoxLayout* SampleWidget::create_top_layout()
 {
     auto result = new QHBoxLayout;
 
-    std::unique_ptr<ModelView::ViewModel> viewModel(new ModelView::DefaultViewModel());
+    std::unique_ptr<ModelView::AbstractViewModel> viewModel(new ModelView::DefaultViewModel());
     viewModel->setSessionModel(m_models->sampleModel());
     m_sampleTree->setViewModel(std::move(viewModel));
 

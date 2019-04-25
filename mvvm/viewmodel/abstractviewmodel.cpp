@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "viewmodel.h"
+#include "abstractviewmodel.h"
 #include "modelmapper.h"
 #include "sessionitem.h"
 #include "sessionmodel.h"
@@ -16,18 +16,18 @@
 
 using namespace ModelView;
 
-ViewModel::ViewModel(QObject* parent)
+AbstractViewModel::AbstractViewModel(QObject* parent)
     : QStandardItemModel(parent), m_sessionModel(nullptr), m_rootItem(nullptr)
 {
 }
 
-ViewModel::~ViewModel()
+AbstractViewModel::~AbstractViewModel()
 {
     if (m_sessionModel)
         m_sessionModel->mapper()->unsubscribe(this);
 }
 
-void ViewModel::setSessionModel(SessionModel* model)
+void AbstractViewModel::setSessionModel(SessionModel* model)
 {
     if (m_sessionModel)
         m_sessionModel->mapper()->unsubscribe(this);
@@ -60,21 +60,21 @@ void ViewModel::setSessionModel(SessionModel* model)
 //! Returns root item of the model. Can be different from model's root item when the intention is
 //! to show only part of the model.
 
-SessionItem* ViewModel::rootSessionItem() const
+SessionItem* AbstractViewModel::rootSessionItem() const
 {
     return m_rootItem;
 }
 
 //! Returns QStandardItem associated with top level item (rootSessionItem).
 
-QStandardItem* ViewModel::rootStandardItem() const
+QStandardItem* AbstractViewModel::rootStandardItem() const
 {
     return invisibleRootItem();
 }
 
 //! Returns vector of standard views used to display given SessionItem.
 
-std::vector<QStandardItem*> ViewModel::findStandardViews(const SessionItem* item) const
+std::vector<QStandardItem*> AbstractViewModel::findStandardViews(const SessionItem* item) const
 {
     if (item == rootSessionItem())
         return {rootStandardItem()};
@@ -86,12 +86,12 @@ std::vector<QStandardItem*> ViewModel::findStandardViews(const SessionItem* item
     return result;
 }
 
-std::vector<ViewItem*> ViewModel::findViews(const SessionItem* item) const
+std::vector<ViewItem*> AbstractViewModel::findViews(const SessionItem* item) const
 {
     return Utils::findViews(this, QModelIndex(), item);
 }
 
-SessionItem* ViewModel::sessionItemFromIndex(const QModelIndex& index) const
+SessionItem* AbstractViewModel::sessionItemFromIndex(const QModelIndex& index) const
 {
     SessionItem* result(nullptr);
     if (!m_sessionModel)
@@ -107,7 +107,7 @@ SessionItem* ViewModel::sessionItemFromIndex(const QModelIndex& index) const
     return result;
 }
 
-QModelIndexList ViewModel::indexOfSessionItem(const SessionItem* item) const
+QModelIndexList AbstractViewModel::indexOfSessionItem(const SessionItem* item) const
 {
     QModelIndexList result;
     for (auto view : findStandardViews(item))
@@ -115,7 +115,7 @@ QModelIndexList ViewModel::indexOfSessionItem(const SessionItem* item) const
     return result;
 }
 
-void ViewModel::setRootSessionItem(SessionItem* item)
+void AbstractViewModel::setRootSessionItem(SessionItem* item)
 {
     if (item->model() != m_sessionModel)
         throw std::runtime_error(
@@ -125,20 +125,20 @@ void ViewModel::setRootSessionItem(SessionItem* item)
     init_view_model();
 }
 
-void ViewModel::onDataChange(SessionItem* item, int role)
+void AbstractViewModel::onDataChange(SessionItem* item, int role)
 {
     Q_UNUSED(item)
     Q_UNUSED(role)
 }
 
-void ViewModel::onRowInserted(SessionItem* parent, std::string tag, int row)
+void AbstractViewModel::onRowInserted(SessionItem* parent, std::string tag, int row)
 {
     Q_UNUSED(parent)
     Q_UNUSED(tag)
     Q_UNUSED(row)
 }
 
-void ViewModel::onRowRemoved(SessionItem* parent, std::string tag, int row)
+void AbstractViewModel::onRowRemoved(SessionItem* parent, std::string tag, int row)
 {
     Q_UNUSED(parent)
     Q_UNUSED(tag)

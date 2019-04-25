@@ -10,7 +10,7 @@
 #ifndef MVVM_DEFAULTVIEWMODEL_H
 #define MVVM_DEFAULTVIEWMODEL_H
 
-#include "viewmodel.h"
+#include "abstractviewmodel.h"
 #include <memory>
 #include <vector>
 
@@ -32,7 +32,7 @@ class RowConstructorInterface;
 //! rows and columns. Every time the row of parent SessionItem is removed, DefaultViewModel
 //! removes _all_ children of corresponding ViewItem and then rebuild whole branch.
 
-class CORE_EXPORT DefaultViewModel : public ViewModel
+class CORE_EXPORT DefaultViewModel : public AbstractViewModel
 {
 public:
     DefaultViewModel(QObject* parent = nullptr);

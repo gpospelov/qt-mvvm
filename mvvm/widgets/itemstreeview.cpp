@@ -11,7 +11,7 @@
 #include "sessionitem.h"
 #include "sessionmodel.h"
 #include "topitemsviewmodel.h"
-#include "viewmodel.h"
+#include "abstractviewmodel.h"
 #include "viewmodeldelegate.h"
 #include <QTreeView>
 #include <QVBoxLayout>
@@ -31,7 +31,7 @@ ItemsTreeView::ItemsTreeView(QWidget* parent)
 
 ItemsTreeView::~ItemsTreeView() = default;
 
-void ItemsTreeView::setViewModel(std::unique_ptr<ViewModel> viewModel)
+void ItemsTreeView::setViewModel(std::unique_ptr<AbstractViewModel> viewModel)
 {
     m_viewModel = std::move(viewModel);
     m_treeView->setItemDelegate(m_delegate.get());
@@ -59,7 +59,7 @@ void ItemsTreeView::setRootSessionItem(SessionItem* item)
     m_treeView->expandAll();
 }
 
-ViewModel* ItemsTreeView::viewModel() const
+AbstractViewModel* ItemsTreeView::viewModel() const
 {
     return m_viewModel.get();
 }

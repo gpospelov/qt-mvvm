@@ -37,7 +37,7 @@ bool isValidItemRole(const ModelView::ViewItem* view, int item_role)
 using namespace ModelView;
 
 DefaultViewModel::DefaultViewModel(QObject* parent)
-    : ViewModel(parent), m_row_constructor(new DefaultRowConstructor)
+    : AbstractViewModel(parent), m_row_constructor(new DefaultRowConstructor)
 {
     setItemPrototype(new ViewEmptyItem);
 }

@@ -112,7 +112,7 @@ SessionItem* TestWidget3::item_from_view(QTreeView* view, const QPoint& point)
 
 void TestWidget3::init_default_view()
 {
-    std::unique_ptr<ModelView::ViewModel> viewModel(new ModelView::DefaultViewModel());
+    std::unique_ptr<ModelView::AbstractViewModel> viewModel(new ModelView::DefaultViewModel());
     viewModel->setSessionModel(m_sessionModel.get());
     m_defaultTreeView->setViewModel(std::move(viewModel));
 
