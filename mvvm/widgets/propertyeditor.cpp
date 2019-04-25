@@ -8,7 +8,7 @@
 // ************************************************************************** //
 
 #include "propertyeditor.h"
-#include "propertyviewmodel.h"
+#include "standardviewmodels.h"
 #include "viewmodeldelegate.h"
 #include "sessionitem.h"
 #include "sessionmodel.h"
@@ -42,7 +42,7 @@ PropertyEditor::PropertyEditor(QWidget* parent)
 
 void PropertyEditor::setItem(SessionItem* item)
 {
-    m_viewModel = std::make_unique<PropertyViewModel>(item->model());
+    m_viewModel = Utils::CreatePropertyViewModel(item->model());
     m_viewModel->setRootSessionItem(item);
     m_viewModel->setHorizontalHeaderLabels(labels);
     m_treeView->setModel(m_viewModel.get());

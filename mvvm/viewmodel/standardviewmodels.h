@@ -10,13 +10,12 @@
 #ifndef MVVM_STANDARDVIEWMODELS_H
 #define MVVM_STANDARDVIEWMODELS_H
 
-#include "global.h"
+#include "abstractviewmodel.h"
 #include <memory>
 
 namespace ModelView
 {
 class SessionModel;
-class AbstractViewModel;
 
 namespace Utils
 {

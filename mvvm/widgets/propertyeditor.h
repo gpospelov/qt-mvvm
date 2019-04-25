@@ -20,7 +20,7 @@ namespace ModelView
 {
 
 class SessionItem;
-class PropertyViewModel;
+class AbstractViewModel;
 class ViewModelDelegate;
 
 //! Standard property editor for SessionItem.
@@ -37,7 +37,7 @@ public:
 
 private:
     QTreeView* m_treeView;
-    std::unique_ptr<PropertyViewModel> m_viewModel;
+    std::unique_ptr<AbstractViewModel> m_viewModel;
     std::unique_ptr<ViewModelDelegate> m_delegate;
 };
 

@@ -8,10 +8,9 @@
 // ************************************************************************** //
 
 #include "testwidget3.h"
-#include "defaultviewmodel.h"
+#include "standardviewmodels.h"
 #include "itemstreeview.h"
 #include "propertyeditor.h"
-#include "topitemsviewmodel.h"
 #include "toy_includes.h"
 #include "viewitem.h"
 #include <QBoxLayout>
@@ -112,9 +111,7 @@ SessionItem* TestWidget3::item_from_view(QTreeView* view, const QPoint& point)
 
 void TestWidget3::init_default_view()
 {
-    std::unique_ptr<ModelView::AbstractViewModel> viewModel(new ModelView::DefaultViewModel());
-    viewModel->setSessionModel(m_sessionModel.get());
-    m_defaultTreeView->setViewModel(std::move(viewModel));
+    m_defaultTreeView->setViewModel(Utils::CreateDefaultViewModel(m_sessionModel.get()));
 
     connect(m_defaultTreeView, &ItemsTreeView::itemSelected, [this](SessionItem* item) {
         m_subsetTreeView->setRootSessionItem(item);
@@ -129,14 +126,14 @@ void TestWidget3::init_default_view()
 
 void TestWidget3::init_topitems_view()
 {
-    m_topItemView->setViewModel(std::make_unique<TopItemsViewModel>(m_sessionModel.get()));
+    m_topItemView->setViewModel(Utils::CreateTopItemsViewModel(m_sessionModel.get()));
     connect(m_topItemView, &ItemsTreeView::itemSelected,
             [this](SessionItem* item) { m_defaultTreeView->setSelected(item); });
 }
 
 void TestWidget3::init_subset_view()
 {
-    m_subsetTreeView->setViewModel(std::make_unique<DefaultViewModel>(m_sessionModel.get()));
+    m_subsetTreeView->setViewModel(Utils::CreateDefaultViewModel(m_sessionModel.get()));
 }
 
 QBoxLayout* TestWidget3::create_top_layout()
