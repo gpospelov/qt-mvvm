@@ -11,13 +11,13 @@
 #include "defaultitemcatalogue.h"
 #include "MultiLayerItem.h"
 #include "LayerItem.h"
-#include "MaterialItem.h"
+#include "MaterialItems.h"
 
 std::unique_ptr<ModelView::ItemCatalogue> CreateItemCatalogue()
 {
     auto result = ModelView::CreateDefaultItemCatalogue();
     result->add<MultiLayerItem>();
     result->add<LayerItem>();
-    result->add<MaterialItem>();
+    result->add<SLDMaterialItem>();
     return result;
 }

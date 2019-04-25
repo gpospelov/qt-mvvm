@@ -13,7 +13,8 @@
 #include "global.h"
 #include <memory>
 
-namespace ModelView {
+namespace ModelView
+{
 class SessionModel;
 }
 
@@ -23,8 +24,8 @@ public:
     ApplicationModels();
     ~ApplicationModels();
 
-    ModelView::SessionModel* sampleModel();
     ModelView::SessionModel* materialModel();
+    ModelView::SessionModel* sampleModel();
 
 private:
     class ApplicationModelsPrivate;
@@ -32,4 +33,3 @@ private:
 };
 
 #endif //  APPLICATIONMODELS_H
-
