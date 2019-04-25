@@ -7,16 +7,7 @@
 //
 // ************************************************************************** //
 
-#ifndef LAYERITEM_H
-#define LAYERITEM_H
+#include "MaterialItem.h"
+#include "item_constants.h"
 
-#include "sessionitem.h"
-
-class CORE_EXPORT LayerItem : public ModelView::SessionItem
-{
-public:
-    LayerItem();
-};
-
-#endif // LAYERITEM_H
-
+MaterialItem::MaterialItem() : ModelView::SessionItem(Constants::MaterialType) {}

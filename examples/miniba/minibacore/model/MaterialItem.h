@@ -7,16 +7,16 @@
 //
 // ************************************************************************** //
 
-#ifndef LAYERITEM_H
-#define LAYERITEM_H
+#ifndef MATERIALITEM_H
+#define MATERIALITEM_H
 
 #include "sessionitem.h"
 
-class CORE_EXPORT LayerItem : public ModelView::SessionItem
+class CORE_EXPORT MaterialItem : public ModelView::SessionItem
 {
 public:
-    LayerItem();
+    MaterialItem();
 };
 
-#endif // LAYERITEM_H
+#endif // MATERIALITEM_H
 

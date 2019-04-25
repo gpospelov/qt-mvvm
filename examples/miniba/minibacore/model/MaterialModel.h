@@ -7,16 +7,17 @@
 //
 // ************************************************************************** //
 
-#ifndef LAYERITEM_H
-#define LAYERITEM_H
+#ifndef MATERIALMODEL_H
+#define MATERIALMODEL_H
 
-#include "sessionitem.h"
+#include "sessionmodel.h"
 
-class CORE_EXPORT LayerItem : public ModelView::SessionItem
+//! Model to hold MaterialItems.
+
+class CORE_EXPORT MaterialModel : public ModelView::SessionModel
 {
 public:
-    LayerItem();
+    MaterialModel();
 };
 
-#endif // LAYERITEM_H
-
+#endif //  MATERIALMODEL_H

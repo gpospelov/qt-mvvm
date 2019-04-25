@@ -7,16 +7,13 @@
 //
 // ************************************************************************** //
 
-#ifndef LAYERITEM_H
-#define LAYERITEM_H
+#include "MaterialModel.h"
+#include "ItemCatalogue.h"
+#include "itemmanager.h"
+#include "itemfactory.h"
 
-#include "sessionitem.h"
-
-class CORE_EXPORT LayerItem : public ModelView::SessionItem
+MaterialModel::MaterialModel() : SessionModel("MaterialModel")
 {
-public:
-    LayerItem();
-};
-
-#endif // LAYERITEM_H
-
+    m_item_manager->setItemFactory(
+        std::make_unique<ModelView::ItemFactory>(CreateItemCatalogue()));
+}
