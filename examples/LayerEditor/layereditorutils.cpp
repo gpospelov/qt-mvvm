@@ -1,4 +1,5 @@
 #include "layereditorutils.h"
+#include "treemodel.h"
 #include <QHeaderView>
 #include <QPixmap>
 #include <QStandardItemModel>
@@ -246,5 +247,60 @@ QStandardItemModel *LayerEditorUtils::createTreeLayerModel()
 
     root_item->setChild(2, 0, bottom);
 
+    return model;
+}
+
+TreeModel *LayerEditorUtils::createCascadeLayerModel()
+{
+    // creating root item
+    auto root_item = new AssemblyItem();
+    root_item->setData(0, "root");
+    root_item->setData(1, 1);
+
+    // top layer
+    auto top = new LayerItem();
+    top->setData(0, "top");
+    top->setData(1, "air");
+    top->setData(2, "0.0");
+    top->setData(3, "0.0");
+
+    root_item->insertChild(0, top);
+
+    // assembly
+    auto assembly = new AssemblyItem();
+    assembly->setData(0, "assembly");
+    assembly->setData(1, 10);
+
+    // assembly - layer 1
+    auto layer1 = new LayerItem();
+    layer1->setData(0, "layer1");
+    layer1->setData(1, "mat1");
+    layer1->setData(2, 1.0);
+    layer1->setData(3, 0.1);
+
+    assembly->insertChild(0, layer1);
+
+    // assembly - layer 2
+    auto layer2 = new LayerItem();
+    layer2->setData(0, "layer2");
+    layer2->setData(1, "sub");
+    layer2->setData(2, 2.0);
+    layer2->setData(3, 0.2);
+
+    assembly->insertChild(1, layer2);
+
+    root_item->insertChild(1, assembly);
+
+    // bottom
+    auto bottom = new LayerItem();
+    bottom->setData(0, "bottom");
+    bottom->setData(1, "sub");
+    bottom->setData(2, 0.0);
+    bottom->setData(3, 0.1);
+
+    root_item->insertChild(2, bottom);
+
+    // creating a model
+    auto model = new TreeModel(root_item);
     return model;
 }

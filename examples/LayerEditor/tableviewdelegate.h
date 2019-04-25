@@ -14,7 +14,7 @@ public:
                           const QModelIndex& index) const override;
 
 private:
-	CustomTableView* m_parent_table;
+    CustomTableView* m_parent_table;
 };
 
 #endif // TABLEVIEWDELEGATE_H
