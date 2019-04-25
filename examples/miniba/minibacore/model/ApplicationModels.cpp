@@ -16,4 +16,9 @@ ApplicationModels::ApplicationModels()
 
 }
 
+SampleModel* ApplicationModels::sampleModel()
+{
+    return m_sample_model.get();
+}
+
 ApplicationModels::~ApplicationModels() = default;

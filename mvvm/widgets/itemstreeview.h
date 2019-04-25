@@ -27,8 +27,9 @@ class ViewModel;
 class TopItemsViewModel;
 class ViewModelDelegate;
 
-//! Tree view to show top level items of SessionModel.
-//! All property items are filtered out. Provides selection mechanism.
+//! Tree view to show items of SessionModel via ViewModel mechanism.
+//!
+//! Provides notification mechanism for SessionItem selections, use custom delegate.
 
 class CORE_EXPORT ItemsTreeView : public QWidget
 {

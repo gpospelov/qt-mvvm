@@ -21,6 +21,8 @@ public:
     ApplicationModels();
     ~ApplicationModels();
 
+    SampleModel* sampleModel();
+
 private:
     std::unique_ptr<SampleModel> m_sample_model;
 };

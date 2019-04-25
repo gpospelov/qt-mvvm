@@ -13,6 +13,12 @@
 #include <QWidget>
 
 class ApplicationModels;
+class QBoxLayout;
+
+namespace ModelView
+{
+class ItemsTreeView;
+}
 
 class TestWidget1 : public QWidget
 {
@@ -21,6 +27,12 @@ public:
     TestWidget1(ApplicationModels* models, QWidget* parent = nullptr);
 
 private:
+    QBoxLayout* create_top_layout();
+    QBoxLayout* create_bottom_layout();
+
+    ModelView::ItemsTreeView* m_materialTree;
+    ModelView::ItemsTreeView* m_sampleTree;
+
     ApplicationModels* m_models;
 };
 
