@@ -42,8 +42,7 @@ PropertyEditor::PropertyEditor(QWidget* parent)
 
 void PropertyEditor::setItem(SessionItem* item)
 {
-    m_viewModel = std::make_unique<PropertyViewModel>();
-    m_viewModel->setSessionModel(item->model());
+    m_viewModel = std::make_unique<PropertyViewModel>(item->model());
     m_viewModel->setRootSessionItem(item);
     m_viewModel->setHorizontalHeaderLabels(labels);
     m_treeView->setModel(m_viewModel.get());

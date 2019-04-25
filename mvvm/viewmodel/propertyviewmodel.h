@@ -20,7 +20,7 @@ namespace ModelView {
 
 class CORE_EXPORT PropertyViewModel : public DefaultViewModel {
 public:
-    PropertyViewModel(QObject* parent = nullptr);
+    PropertyViewModel(SessionModel* model = nullptr, QObject* parent = nullptr);
 
 protected:
     void onDataChange(SessionItem* item, int role) override;

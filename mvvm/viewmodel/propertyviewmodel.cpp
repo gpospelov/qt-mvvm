@@ -14,8 +14,8 @@
 
 using namespace ModelView;
 
-PropertyViewModel::PropertyViewModel(QObject* parent)
-    : DefaultViewModel(parent)
+PropertyViewModel::PropertyViewModel(SessionModel* model, QObject* parent)
+    : DefaultViewModel(model, parent)
 {
 
 }

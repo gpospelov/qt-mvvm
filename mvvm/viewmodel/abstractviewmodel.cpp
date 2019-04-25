@@ -52,9 +52,9 @@ void AbstractViewModel::setSessionModel(SessionModel* model)
         m_sessionModel->mapper()->setOnModelDestroyed(on_model_destroyed, this);
 
         m_rootItem = model->rootItem();
-    }
 
-    init_view_model();
+        init_view_model();
+    }
 }
 
 //! Returns root item of the model. Can be different from model's root item when the intention is
