@@ -8,6 +8,7 @@ namespace LayerEditorUtils
 {
 QTableWidget* createLayerTable();
 QTableWidget* createShrinkedLayerTable();
+QTableWidget* createRepetitiveLayerTable();
 QStandardItemModel* createMaterialModel();
 QStandardItemModel* createTreeLayerModel();
 };

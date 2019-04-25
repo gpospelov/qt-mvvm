@@ -122,6 +122,62 @@ QTableWidget* LayerEditorUtils::createShrinkedLayerTable()
     return table;
 }
 
+QTableWidget *LayerEditorUtils::createRepetitiveLayerTable()
+{
+    auto table = new QTableWidget();
+    table->setRowCount(4);
+    table->setColumnCount(5);
+
+    table->setHorizontalHeaderItem(0, new QTableWidgetItem("Repetitions"));
+    table->setHorizontalHeaderItem(1, new QTableWidgetItem("Name"));
+    table->setHorizontalHeaderItem(2, new QTableWidgetItem("Material"));
+    table->setHorizontalHeaderItem(3, new QTableWidgetItem("Thickness"));
+    table->setHorizontalHeaderItem(4, new QTableWidgetItem("Roughness"));
+
+    // top
+    auto default_repertions = new QTableWidgetItem("1");
+    default_repertions->setFlags(Qt::ItemIsSelectable);
+    table->setItem(0, 0, default_repertions);
+
+    table->setItem(0, 1, new QTableWidgetItem("top"));
+    table->setItem(0, 2, new QTableWidgetItem("air"));
+
+    auto default_val = new QTableWidgetItem("0.0");
+    default_val->setFlags(Qt::ItemIsSelectable);
+    table->setItem(0, 3, default_val);
+    table->setItem(0, 4, default_val->clone());
+
+    // assembly
+    // assembly - layer 1
+
+    table->setItem(1, 0, new QTableWidgetItem("10"));
+    table->setItem(1, 1, new QTableWidgetItem("layer1"));
+    table->setItem(1, 2, new QTableWidgetItem("mat1"));
+    table->setItem(1, 3, new QTableWidgetItem("1.0"));
+    table->setItem(1, 4, new QTableWidgetItem("0.1"));
+
+    // assembly - layer 2
+
+    table->setItem(2, 0, new QTableWidgetItem("10"));
+    table->setItem(2, 1, new QTableWidgetItem("layer2"));
+    table->setItem(2, 2, new QTableWidgetItem("sub"));
+    table->setItem(2, 3, new QTableWidgetItem("2.0"));
+    table->setItem(2, 4, new QTableWidgetItem("0.2"));
+
+    // bottom
+
+    table->setItem(3, 0, default_repertions->clone());
+    table->setItem(3, 1, new QTableWidgetItem("bottom"));
+    table->setItem(3, 2, new QTableWidgetItem("sub"));
+    table->setItem(3, 3, default_val->clone());
+    table->setItem(3, 4, new QTableWidgetItem("0.1"));
+
+    table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    table->verticalHeader()->setVisible(false);
+    table->setSpan(1, 0, 2, 1);
+    return table;
+}
+
 QStandardItemModel* LayerEditorUtils::createMaterialModel()
 {
     auto model = new QStandardItemModel(3, 4);
