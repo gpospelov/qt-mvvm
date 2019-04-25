@@ -1,5 +1,5 @@
-#ifndef OPTION1_H
-#define OPTION1_H
+#ifndef CASCADELAYEREDITOR_H
+#define CASCADELAYEREDITOR_H
 
 #include <QWidget>
 
@@ -12,11 +12,11 @@ class QTreeView;
 class QVBoxLayout;
 class TreeModel;
 
-class Option1Widget : public QWidget
+class CascadeLayerEditor : public QWidget
 {
     Q_OBJECT
 public:
-    Option1Widget(QWidget* parent = nullptr);
+    CascadeLayerEditor(QWidget* parent = nullptr);
 
 private:
     QVBoxLayout* createMaterialPanel();
@@ -25,11 +25,10 @@ private:
     // views
     QTableView* m_material_view;
     CustomTableView* m_sample_view;
-    QTreeView* m_sample_model_view;
 
     // models
     QStandardItemModel* m_material_model;
     TreeModel* m_sample_model;
 };
 
-#endif // OPTION1_H
+#endif // CASCADELAYEREDITOR_H

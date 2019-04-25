@@ -9,6 +9,7 @@ class TreeModel : public QAbstractItemModel
     Q_OBJECT
 
 public:
+    TreeModel(TreeItem* root_item, QObject* parent = nullptr);
     TreeModel(QObject* parent = nullptr);
     ~TreeModel() override;
     QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
@@ -34,6 +35,7 @@ public:
 
 private:
     TreeItem* getItem(const QModelIndex& index) const;
+    void insertDefaultLayerIntoAssembly(const QModelIndex& current_selection);
 
     TreeItem* rootItem;
 };

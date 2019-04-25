@@ -1,39 +1,30 @@
-#include "option1.h"
-#include "customtableview.h"
+#include "repetitivelayereditor.h"
 #include "layereditorutils.h"
-#include "treemodel.h"
-#include "tableviewdelegate.h"
 #include <QComboBox>
-#include <QGridLayout>
 #include <QHBoxLayout>
 #include <QHeaderView>
 #include <QLabel>
 #include <QPushButton>
 #include <QStandardItemModel>
-#include <QTreeView>
+#include <QTableView>
+#include <QTableWidget>
 #include <QVBoxLayout>
 
-Option1Widget::Option1Widget(QWidget* parent)
+RepetitiveLayerEditor::RepetitiveLayerEditor(QWidget* parent)
     : QWidget(parent)
     , m_material_view(new QTableView)
-    , m_sample_view(new CustomTableView)
-    , m_sample_model_view(new QTreeView)
+    , m_sample_table(LayerEditorUtils::createRepetitiveLayerTable())
     , m_material_model(LayerEditorUtils::createMaterialModel())
-    , m_sample_model(new TreeModel)
 {
     auto layout_h = new QHBoxLayout;
 
-    layout_h->addLayout(createMaterialPanel(), 3);
-    layout_h->addLayout(createMultilayerPanel(), 3);
-
-    m_sample_model_view->setModel(m_sample_model);
-    m_sample_model_view->expandAll();
-    layout_h->addWidget(m_sample_model_view, 2);
+    layout_h->addLayout(createMaterialPanel());
+    layout_h->addLayout(createMultilayerPanel());
 
     setLayout(layout_h);
 }
 
-QVBoxLayout* Option1Widget::createMaterialPanel()
+QVBoxLayout* RepetitiveLayerEditor::createMaterialPanel()
 {
     auto layout = new QVBoxLayout;
     auto layout_ht = new QHBoxLayout;
@@ -42,7 +33,7 @@ QVBoxLayout* Option1Widget::createMaterialPanel()
     auto material_filter = new QComboBox;
     material_filter->addItem("Scattering length density  ");
     material_filter->addItem("Refractive index");
-    material_filter->setEnabled(false);
+
     layout_ht->addWidget(new QLabel("Material description"));
     layout_ht->addWidget(material_filter);
     layout_ht->addStretch();
@@ -67,7 +58,7 @@ QVBoxLayout* Option1Widget::createMaterialPanel()
     return layout;
 }
 
-QVBoxLayout* Option1Widget::createMultilayerPanel()
+QVBoxLayout* RepetitiveLayerEditor::createMultilayerPanel()
 {
     auto layout = new QVBoxLayout;
     auto layout_h = new QHBoxLayout;
@@ -75,30 +66,14 @@ QVBoxLayout* Option1Widget::createMultilayerPanel()
     layout_h->addStretch();
 
     auto add_layer = new QPushButton;
-    connect(add_layer, &QPushButton::clicked,
-            [&]() { m_sample_model->insertLayers(1, m_sample_view->currentIndex()); });
     add_layer->setText("Add layer");
     layout_h->addWidget(add_layer);
 
-    auto add_assembly = new QPushButton;
-    connect(add_assembly, &QPushButton::clicked,
-            [&]() { m_sample_model->insertAssemblies(1, m_sample_view->currentIndex()); });
-    add_assembly->setText("Add assembly");
-    layout_h->addWidget(add_assembly);
-
     auto remove_layer = new QPushButton;
-    connect(remove_layer, &QPushButton::clicked, [&]() {
-        m_sample_model->removeRow(m_sample_view->currentIndex().row(),
-                                  m_sample_view->currentIndex());
-    });
-    remove_layer->setText("Remove row");
+    remove_layer->setText("Remove layer");
     layout_h->addWidget(remove_layer);
 
-    m_sample_view->setModel(m_sample_model);
-    m_sample_view->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    m_sample_view->setItemDelegate(new TableViewDelegate(m_sample_view));
-
-    layout->addWidget(m_sample_view);
+    layout->addWidget(m_sample_table);
     layout->addLayout(layout_h);
     return layout;
 }

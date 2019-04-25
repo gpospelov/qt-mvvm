@@ -1,24 +1,24 @@
 #include "treeitem.h"
 
-namespace {
-	QVector<QVariant> defaultLayerData()
-	{
-		/*layer_name, material_name, thickness, roughness*/
-		return { "layer", "default", 0.0, 0.0 };
-	}
-
-	QVector<QVariant> defaultAssemblyData()
-	{
-		/*assembly_name, number_of_repetitions*/
-		return { "assembly", 1 };
-	}
+namespace
+{
+QVector<QVariant> defaultLayerData()
+{
+    /*layer_name, material_name, thickness, roughness*/
+    return {"layer", "default", 0.0, 0.0};
 }
 
+QVector<QVariant> defaultAssemblyData()
+{
+    /*assembly_name, number_of_repetitions*/
+    return {"assembly", 1};
+}
+} // namespace
+
 TreeItem::TreeItem(TYPE type, const QVector<QVariant>& data, TreeItem* parent)
-	: m_type(type)
-	, itemData(data)
-	, parentItem(parent)
-{}
+    : m_type(type), itemData(data), parentItem(parent)
+{
+}
 
 TreeItem::~TreeItem()
 {
@@ -46,6 +46,16 @@ int TreeItem::childNumber() const
         return parentItem->childItems.indexOf(const_cast<TreeItem*>(this));
 
     return 0;
+}
+
+bool TreeItem::insertChild(int position, TreeItem* child)
+{
+    if (position < 0 || position > childItems.size() || !child)
+        return false;
+
+    child->setParent(this);
+    childItems.insert(position, child);
+    return true;
 }
 
 int TreeItem::columnCount() const
@@ -78,33 +88,32 @@ bool TreeItem::removeChildren(int position, int count)
     return true;
 }
 
-LayerItem::LayerItem(TreeItem* parent)
-	: TreeItem(TYPE::Layer, defaultLayerData(), parent)
-{}
+LayerItem::LayerItem(TreeItem* parent) : TreeItem(TYPE::Layer, defaultLayerData(), parent) {}
 
 AssemblyItem::AssemblyItem(TreeItem* parent)
-	: TreeItem(TYPE::Assembly, defaultAssemblyData(), parent)
-{}
+    : TreeItem(TYPE::Assembly, defaultAssemblyData(), parent)
+{
+}
 
 bool AssemblyItem::insertChildren(int position, int count, TYPE type)
 {
-	if (position < 0 || position > childItems.size())
-		return false;
+    if (position < 0 || position > childItems.size())
+        return false;
 
-	for (int row = 0; row < count; ++row) {
-		TreeItem* item = nullptr;
-		switch (type) {
-		case TYPE::Layer:
-			item = new LayerItem(this);
-			break;
-		case TYPE::Assembly:
-			item = new AssemblyItem(this);
-			break;
-		default:
-			throw std::runtime_error("TreeItem::insertChildren: unexpected item type.");
-		}
-		childItems.insert(position, item);
-	}
+    for (int row = 0; row < count; ++row) {
+        TreeItem* item = nullptr;
+        switch (type) {
+        case TYPE::Layer:
+            item = new LayerItem(this);
+            break;
+        case TYPE::Assembly:
+            item = new AssemblyItem(this);
+            break;
+        default:
+            throw std::runtime_error("TreeItem::insertChildren: unexpected item type.");
+        }
+        childItems.insert(position, item);
+    }
 
-	return true;
+    return true;
 }

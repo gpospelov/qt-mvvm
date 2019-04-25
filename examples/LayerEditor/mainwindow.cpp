@@ -8,7 +8,11 @@
 // ************************************************************************** //
 
 #include "mainwindow.h"
-#include "option1.h"
+#include "cascadelayereditor.h"
+#include "initiallayereditor.h"
+#include "repetitivelayereditor.h"
+#include "splitlayereditor.h"
+#include "treelayereditor.h"
 #include <QTabWidget>
 #include <QCoreApplication>
 #include <QSettings>
@@ -22,9 +26,13 @@ namespace {
 MainWindow::MainWindow()
     : m_tabWidget(new QTabWidget)
 {
-    m_tabWidget->addTab(new Option1Widget, "Layer editor v.1");
+    m_tabWidget->addTab(new InitialLayerEditor, "Initial layer editor");
+    m_tabWidget->addTab(new SplitLayerEditor, "Split layer editor");
+    m_tabWidget->addTab(new TreeLayerEditor, "Tree layer editor");
+    m_tabWidget->addTab(new CascadeLayerEditor, "Cascade layer editor");
+    m_tabWidget->addTab(new RepetitiveLayerEditor, "Repetitive layer editor");
 
-    m_tabWidget->setCurrentIndex(m_tabWidget->count()-1);
+    m_tabWidget->setCurrentIndex(0);
     setCentralWidget(m_tabWidget);
 
     init_application();

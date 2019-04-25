@@ -1,16 +1,20 @@
 #include "treemodel.h"
 #include <QSize>
 
-namespace {
-	const QVector<QVariant> header_data { "Name", "Material", "Thickness", "Roughness" };
-	const int n_cols = 4;
-}
-
-TreeModel::TreeModel(QObject* parent)
-	: QAbstractItemModel(parent)
-	, rootItem(new AssemblyItem())
+namespace
 {
-	rootItem->insertChildren(0, 1, TreeItem::Layer);
+const QVector<QVariant> header_data{"Name", "Material", "Thickness", "Roughness"};
+const int n_cols = 4;
+} // namespace
+
+TreeModel::TreeModel(TreeItem* root_item, QObject* parent)
+    : QAbstractItemModel(parent)
+    , rootItem(root_item)
+{}
+
+TreeModel::TreeModel(QObject* parent) : QAbstractItemModel(parent), rootItem(new AssemblyItem())
+{
+    rootItem->insertChildren(0, 1, TreeItem::Layer);
 }
 
 TreeModel::~TreeModel()
@@ -23,11 +27,11 @@ QVariant TreeModel::data(const QModelIndex& index, int role) const
     if (!index.isValid())
         return QVariant();
 
-	if (role == Qt::UserRole)
-		return getItem(index)->type();
-	if (role == Qt::DisplayRole)
-		return getItem(index)->data(index.column());
-	return QVariant();
+    if (role == Qt::UserRole)
+        return getItem(index)->type();
+    if (role == Qt::DisplayRole)
+        return getItem(index)->data(index.column());
+    return QVariant();
 }
 
 QVariant TreeModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -35,8 +39,8 @@ QVariant TreeModel::headerData(int section, Qt::Orientation orientation, int rol
     if (orientation != Qt::Horizontal || role != Qt::DisplayRole)
         return QVariant();
 
-	if (section < 0 || section >= n_cols)
-		return QVariant();
+    if (section < 0 || section >= n_cols)
+        return QVariant();
 
     return header_data[section];
 }
@@ -49,6 +53,18 @@ TreeItem* TreeModel::getItem(const QModelIndex& index) const
             return item;
     }
     return rootItem;
+}
+
+void TreeModel::insertDefaultLayerIntoAssembly(const QModelIndex& current_selection)
+{
+    if (!current_selection.isValid())
+        return;
+
+    int position = 0;
+    auto item = getItem(current_selection);
+    beginInsertRows(current_selection, position, position);
+    item->insertChildren(position, 1, TreeItem::Layer);
+    endInsertRows();
 }
 
 int TreeModel::rowCount(const QModelIndex& parent) const
@@ -85,7 +101,7 @@ bool TreeModel::setData(const QModelIndex& index, const QVariant& value, int rol
 
 bool TreeModel::insertRows(int position, int rows, const QModelIndex& parent)
 {
-	throw std::runtime_error("Error in TreeModel::insertRows: method should not be called.");
+    throw std::runtime_error("Error in TreeModel::insertRows: method should not be called.");
 }
 
 bool TreeModel::removeRows(int, int rows, const QModelIndex& current_index)
@@ -99,7 +115,7 @@ bool TreeModel::removeRows(int, int rows, const QModelIndex& current_index)
     auto parent_item = getItem(parent_index);
     if (position + rows > parent_item->childCount())
         rows = parent_item->childCount() - position;
-    beginRemoveRows(parent_index, position, position + rows-1);
+    beginRemoveRows(parent_index, position, position + rows - 1);
     bool success = parent_item->removeChildren(position, rows);
     endRemoveRows();
     return success;
@@ -108,43 +124,46 @@ bool TreeModel::removeRows(int, int rows, const QModelIndex& current_index)
 QSize TreeModel::span(const QModelIndex& index) const
 {
     auto item = getItem(index);
-	if (item->type() == TreeItem::Assembly && index.column() == 0)
-		return QSize(columnCount(), 1);
-	return QAbstractItemModel::span(index);
+    if (item->type() == TreeItem::Assembly && index.column() == 0)
+        return QSize(columnCount(), 1);
+    return QAbstractItemModel::span(index);
 }
 
 bool TreeModel::insertLayers(int rows, const QModelIndex& current_selection)
 {
-	if (rows < 1)
-		return false;
+    if (rows < 1)
+        return false;
 
     int position = current_selection.isValid() ? current_selection.row() + 1 : 0;
     QModelIndex parent = current_selection.isValid() ? current_selection.parent() : QModelIndex();
 
-	auto item = getItem(parent);
-	if (position > item->childCount())
-		position = item->childCount();
-	beginInsertRows(parent, position, position + rows - 1);
-	bool success = item->insertChildren(position, rows, TreeItem::Layer);
-	endInsertRows();
+    auto item = getItem(parent);
+    if (position > item->childCount())
+        position = item->childCount();
+    beginInsertRows(parent, position, position + rows - 1);
+    bool success = item->insertChildren(position, rows, TreeItem::Layer);
+    endInsertRows();
 
     return success;
 }
 
 bool TreeModel::insertAssemblies(int rows, const QModelIndex& current_selection)
 {
-	if (rows < 1)
-		return false;
+    if (rows < 1)
+        return false;
 
     int position = current_selection.isValid() ? current_selection.row() + 1 : 0;
     QModelIndex parent = current_selection.isValid() ? current_selection.parent() : QModelIndex();
 
-	auto item = getItem(parent);
-	if (position > item->childCount())
-		position = item->childCount();
-	beginInsertRows(parent, position, position + rows - 1);
-	bool success = item->insertChildren(position, rows, TreeItem::Assembly);
-	endInsertRows();
+    auto item = getItem(parent);
+    if (position > item->childCount())
+        position = item->childCount();
+    beginInsertRows(parent, position, position + rows - 1);
+    bool success = item->insertChildren(position, rows, TreeItem::Assembly);
+    endInsertRows();
+
+    //for (int i = position; i < position + rows; ++i)
+    //     insertDefaultLayerIntoAssembly(index(position, 0, parent));
 
     return success;
 }
