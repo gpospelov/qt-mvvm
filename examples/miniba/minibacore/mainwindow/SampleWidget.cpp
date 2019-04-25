@@ -9,8 +9,6 @@
 
 #include "SampleWidget.h"
 #include "ApplicationModels.h"
-#include "SampleModel.h"
-#include "MaterialModel.h"
 #include "itemstreeview.h"
 #include "standardviewmodels.h"
 #include <QVBoxLayout>

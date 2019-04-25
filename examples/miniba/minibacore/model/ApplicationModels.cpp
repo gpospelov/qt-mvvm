@@ -11,20 +11,31 @@
 #include "SampleModel.h"
 #include "MaterialModel.h"
 
+class ApplicationModels::ApplicationModelsPrivate
+{
+public:
+    ApplicationModelsPrivate() : m_material_model(std::make_unique<MaterialModel>()), m_sample_model(std::make_unique<SampleModel>())
+    {
+
+    }
+    std::unique_ptr<MaterialModel> m_material_model;
+    std::unique_ptr<SampleModel> m_sample_model;
+};
+
 ApplicationModels::ApplicationModels()
-    : m_material_model(new MaterialModel), m_sample_model(new SampleModel)
+    : p_impl(std::make_unique<ApplicationModelsPrivate>())
 {
 
 }
 
 ApplicationModels::~ApplicationModels() = default;
 
-SampleModel* ApplicationModels::sampleModel()
+ModelView::SessionModel* ApplicationModels::sampleModel()
 {
-    return m_sample_model.get();
+    return p_impl->m_sample_model.get();
 }
 
-MaterialModel* ApplicationModels::materialModel()
+ModelView::SessionModel* ApplicationModels::materialModel()
 {
-    return m_material_model.get();
+    return nullptr;
 }

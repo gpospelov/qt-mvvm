@@ -13,8 +13,9 @@
 #include "global.h"
 #include <memory>
 
-class SampleModel;
-class MaterialModel;
+namespace ModelView {
+class SessionModel;
+}
 
 class CORE_EXPORT ApplicationModels
 {
@@ -22,12 +23,12 @@ public:
     ApplicationModels();
     ~ApplicationModels();
 
-    SampleModel* sampleModel();
-    MaterialModel* materialModel();
+    ModelView::SessionModel* sampleModel();
+    ModelView::SessionModel* materialModel();
 
 private:
-    std::unique_ptr<MaterialModel> m_material_model;
-    std::unique_ptr<SampleModel> m_sample_model;
+    class ApplicationModelsPrivate;
+    std::unique_ptr<ApplicationModelsPrivate> p_impl;
 };
 
 #endif //  APPLICATIONMODELS_H
