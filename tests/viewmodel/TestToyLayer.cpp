@@ -48,8 +48,8 @@ TEST_F(TestToyLayer, inViewModel)
     EXPECT_TRUE(viewItem != nullptr);
     EXPECT_EQ(viewItem->item(), layerItem);
 
-    // it has one row and two columns, corresponding to our "thickness" property
-    EXPECT_EQ(viewModel.rowCount(layerIndex), 1);
+    // it has two rows and two columns, corresponding to our "thickness" and "color" properties
+    EXPECT_EQ(viewModel.rowCount(layerIndex), 2);
     EXPECT_EQ(viewModel.columnCount(layerIndex), 2);
 
     // accessing to views representing label and value of thickness property
@@ -123,7 +123,7 @@ TEST_F(TestToyLayer, setRootItemContext)
     viewModel.setSessionModel(&model);
     viewModel.setRootSessionItem(layer);
 
-    EXPECT_EQ(viewModel.rowCount(QModelIndex()), 1);
+    EXPECT_EQ(viewModel.rowCount(QModelIndex()), 2);
     EXPECT_EQ(viewModel.columnCount(QModelIndex()), 2);
 
     // index of item representing thickness

@@ -14,6 +14,7 @@
 #include "taginfo.h"
 #include "toy_constants.h"
 #include "vectoritem.h"
+#include <QColor>
 #include <stdexcept>
 
 using namespace ToyItems;
@@ -27,11 +28,13 @@ MultiLayer::MultiLayer() : CompoundItem(Constants::MultiLayerType)
 }
 
 const std::string Layer::P_THICKNESS = "Thickness";
+const std::string Layer::P_COLOR = "Color";
 const std::string Layer::T_PARTICLES = "Particles";
 
 Layer::Layer() : CompoundItem(Constants::LayerType)
 {
     addProperty<ModelView::PropertyItem>(P_THICKNESS, 42.0);
+    addProperty<ModelView::PropertyItem>(P_COLOR, QColor(Qt::green));
     registerTag(ModelView::TagInfo::universalTag(T_PARTICLES, {Constants::ParticleType}),
                 /*set_as_default*/ true);
 }

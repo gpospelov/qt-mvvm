@@ -31,9 +31,10 @@ TEST_F(TestCustomVariants, CompatibleVariantTypes)
     QVariant vector_variant = QVariant::fromValue(vec);
     ComboProperty combo = ComboProperty::createFrom({"a1", "a2", "s3"});
     QVariant combo_variant = combo.variant();
+    QVariant color_variant = QVariant::fromValue(QColor(Qt::red));
 
     std::vector<QVariant> variants = {int_variant, double_variant, string_variant, vector_variant,
-                                      combo_variant};
+                                      combo_variant, color_variant};
     for (size_t i = 0; i < variants.size(); ++i) {
         EXPECT_TRUE(Utils::CompatibleVariantTypes(undefined, variants[i]));
         EXPECT_FALSE(Utils::VariantType(undefined) == Utils::VariantType(variants[i]));
@@ -64,7 +65,8 @@ TEST_F(TestCustomVariants, IsTheSameVariant)
         QVariant::fromValue(42.0), QVariant::fromValue(43.0),
         QVariant::fromValue(std::string("string1")), QVariant::fromValue(std::string("string2")),
         QVariant::fromValue(vec1), QVariant::fromValue(vec2),
-        combo1.variant(), combo2.variant()
+        combo1.variant(), combo2.variant(),
+        QVariant::fromValue(QColor(Qt::red)), QVariant::fromValue(QColor(Qt::green))
     };
 
     for (size_t i = 0; i < variants.size(); ++i) {

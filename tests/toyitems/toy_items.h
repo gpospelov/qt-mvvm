@@ -32,6 +32,7 @@ class Layer : public ModelView::CompoundItem
 {
 public:
     static const std::string P_THICKNESS;
+    static const std::string P_COLOR;
     static const std::string T_PARTICLES;
     Layer();
 };
