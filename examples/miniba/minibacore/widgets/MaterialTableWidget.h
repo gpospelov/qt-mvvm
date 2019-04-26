@@ -20,6 +20,7 @@ namespace ModelView
 {
 class AbstractViewModel;
 class ViewModelDelegate;
+class SessionItem;
 } // namespace ModelView
 
 class CORE_EXPORT MaterialTableWidget : public QWidget
@@ -27,6 +28,8 @@ class CORE_EXPORT MaterialTableWidget : public QWidget
 public:
     explicit MaterialTableWidget(QWidget* parent = nullptr);
     ~MaterialTableWidget();
+
+    void setItem(ModelView::SessionItem* container);
 
     QTreeView* treeView();
 

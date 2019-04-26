@@ -10,6 +10,10 @@
 #include "MaterialTableWidget.h"
 #include "abstractviewmodel.h"
 #include "viewmodeldelegate.h"
+#include "viewmodels.h"
+#include "sessionitem.h"
+#include "MaterialTableModel.h"
+
 #include <QTreeView>
 #include <QVBoxLayout>
 
@@ -27,6 +31,15 @@ MaterialTableWidget::MaterialTableWidget(QWidget* parent)
     // provide one click editing
     m_treeView->setEditTriggers(QAbstractItemView::AllEditTriggers);
     m_treeView->setAlternatingRowColors(true);
+}
+
+void MaterialTableWidget::setItem(ModelView::SessionItem* container)
+{
+    m_viewModel = Utils::CreateMaterialTableModel(container->model());
+    m_viewModel->setRootSessionItem(container);
+    m_treeView->setModel(m_viewModel.get());
+    m_treeView->expandAll();
+    m_treeView->setRootIsDecorated(false);
 }
 
 MaterialTableWidget::~MaterialTableWidget() = default;
