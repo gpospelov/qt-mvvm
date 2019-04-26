@@ -27,3 +27,9 @@ QList<QStandardItem*> DefaultRowConstructor::constructRow(SessionItem* item)
         result.push_back(new ViewEmptyItem);
     return result;
 }
+
+int DefaultRowConstructor::columnCount() const
+{
+    const int fixed_column_count(2);
+    return fixed_column_count;
+}

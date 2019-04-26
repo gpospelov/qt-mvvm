@@ -53,7 +53,7 @@ DefaultViewModel::~DefaultViewModel() = default;
 void DefaultViewModel::init_view_model()
 {
     clear();
-    setColumnCount(2);
+    setColumnCount(m_row_constructor->columnCount());
     update_model();
 }
 
