@@ -10,6 +10,17 @@
 #include "MaterialItems.h"
 #include "item_constants.h"
 
+// ----------------------------------------------------------------------------
+
+MaterialContainerItem::MaterialContainerItem()
+    : ModelView::CompoundItem(Constants::MaterialContainerType)
+{
+    registerTag(ModelView::TagInfo::universalTag("materials", {Constants::SLDMaterialType}),
+                /*set_as_default*/true);
+}
+
+// ----------------------------------------------------------------------------
+
 const std::string MaterialBaseItem::P_NAME = "P_NAME";
 
 MaterialBaseItem::MaterialBaseItem(const std::string& model_type)
@@ -23,6 +34,7 @@ void MaterialBaseItem::register_name()
     addProperty<ModelView::PropertyItem>(P_NAME, "Unnamed")->setDisplayName("Name");
 }
 
+// ----------------------------------------------------------------------------
 
 const std::string SLDMaterialItem::P_SLD_REAL = "P_SLD_REAL";
 const std::string SLDMaterialItem::P_SLD_IMAG = "P_SLD_IMAG";

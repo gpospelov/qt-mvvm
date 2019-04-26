@@ -18,6 +18,7 @@ std::unique_ptr<ModelView::ItemCatalogue> CreateItemCatalogue()
     auto result = ModelView::CreateDefaultItemCatalogue();
     result->add<MultiLayerItem>();
     result->add<LayerItem>();
+    result->add<MaterialContainerItem>();
     result->add<SLDMaterialItem>();
     return result;
 }

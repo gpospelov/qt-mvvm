@@ -12,6 +12,14 @@
 
 #include "compounditem.h"
 
+class CORE_EXPORT MaterialContainerItem : public ModelView::CompoundItem
+{
+public:
+    MaterialContainerItem();
+};
+
+// ----------------------------------------------------------------------------
+
 class CORE_EXPORT MaterialBaseItem : public ModelView::CompoundItem
 {
 public:
@@ -20,6 +28,8 @@ public:
 protected:
     void register_name();
 };
+
+// ----------------------------------------------------------------------------
 
 class CORE_EXPORT SLDMaterialItem : public MaterialBaseItem
 {

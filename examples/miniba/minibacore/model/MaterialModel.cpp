@@ -19,11 +19,8 @@ MaterialModel::MaterialModel() : SessionModel("MaterialModel")
     m_item_manager->setItemFactory(
         std::make_unique<ModelView::ItemFactory>(CreateItemCatalogue()));
 
-
-    auto item = insertNewItem(Constants::SLDMaterialType);
-
-    item = insertNewItem(Constants::SLDMaterialType);
-
-    item = insertNewItem(Constants::SLDMaterialType);
+    auto container = insertNewItem(Constants::MaterialContainerType);
+    auto material = insertNewItem(Constants::SLDMaterialType, container);
+    material = insertNewItem(Constants::SLDMaterialType, container);
 }
 
