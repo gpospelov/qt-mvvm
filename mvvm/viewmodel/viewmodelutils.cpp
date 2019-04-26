@@ -77,3 +77,11 @@ QVariant Utils::CheckStateRole(const SessionItem& item)
         return value.toBool() ? Qt::Checked : Qt::Unchecked;
     return QVariant();
 }
+
+QVariant Utils::DecorationRole(const SessionItem& item)
+{
+    auto value = item.data(ItemDataRole::DATA);
+    if (Utils::IsColorVariant(value))
+        return value;
+    return QVariant();
+}

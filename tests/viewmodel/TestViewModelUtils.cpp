@@ -100,3 +100,18 @@ TEST_F(TestViewModelUtils, itemCheckStateRole)
     item.setData(QVariant::fromValue(false), ItemDataRole::DATA);
     EXPECT_EQ(Utils::CheckStateRole(item).toInt(), Qt::Unchecked);
 }
+
+//! Testing decoration role of the item.
+
+TEST_F(TestViewModelUtils, itemDecorationRole)
+{
+    SessionItem item("Something");
+
+    // no color defined for item by default
+    auto variant = Utils::DecorationRole(item);
+    EXPECT_FALSE(variant.isValid());
+
+    QColor expected(Qt::green);
+    item.setData(expected, ItemDataRole::DATA);
+    EXPECT_EQ(Utils::DecorationRole(item).value<QColor>(), expected);
+}

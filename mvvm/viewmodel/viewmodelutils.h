@@ -46,6 +46,9 @@ CORE_EXPORT QVariant TextColorRole(const SessionItem& item);
 //! Returns check state role of given item.
 CORE_EXPORT QVariant CheckStateRole(const SessionItem& item);
 
+//! Returns decoration role for given item.
+CORE_EXPORT QVariant DecorationRole(const SessionItem& item);
+
 } // namespace Utils
 
 } // namespace ModelView

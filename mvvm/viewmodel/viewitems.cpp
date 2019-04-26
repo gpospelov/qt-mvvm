@@ -92,5 +92,8 @@ QVariant ViewDataItem::data(int role) const
     if (role == Qt::CheckStateRole)
         return Utils::CheckStateRole(*m_item);
 
+    else if (role == Qt::DecorationRole)
+        return Utils::DecorationRole(*m_item);
+
     return ViewItem::data(role);
 }
