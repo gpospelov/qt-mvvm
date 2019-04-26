@@ -40,6 +40,7 @@ public:
     ~DefaultViewModel() override;
 
 protected:
+    void setRowConstructor(std::unique_ptr<RowConstructorInterface> row_constructor);
     void init_view_model() override;
     void onDataChange(SessionItem* item, int role) override;
     void onRowInserted(SessionItem* parent, std::string tag, int row) override;

@@ -37,7 +37,7 @@ bool isValidItemRole(const ModelView::ViewItem* view, int item_role)
 using namespace ModelView;
 
 DefaultViewModel::DefaultViewModel(QObject* parent)
-    : AbstractViewModel(parent), m_row_constructor(new DefaultRowConstructor)
+    : AbstractViewModel(parent), m_row_constructor(std::make_unique<DefaultRowConstructor>())
 {
     setItemPrototype(new ViewEmptyItem);
 }
@@ -46,6 +46,11 @@ DefaultViewModel::DefaultViewModel(SessionModel* model, QObject* parent)
     : DefaultViewModel(parent)
 {
     setSessionModel(model);
+}
+
+void DefaultViewModel::setRowConstructor(std::unique_ptr<RowConstructorInterface> row_constructor)
+{
+    m_row_constructor = std::move(row_constructor);
 }
 
 DefaultViewModel::~DefaultViewModel() = default;

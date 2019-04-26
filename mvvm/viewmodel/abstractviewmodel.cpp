@@ -91,6 +91,8 @@ std::vector<ViewItem*> AbstractViewModel::findViews(const SessionItem* item) con
     return Utils::findViews(this, QModelIndex(), item);
 }
 
+//! Returns SessionItem corresponding to givem QModelIndex.
+
 SessionItem* AbstractViewModel::sessionItemFromIndex(const QModelIndex& index) const
 {
     SessionItem* result(nullptr);
@@ -106,6 +108,8 @@ SessionItem* AbstractViewModel::sessionItemFromIndex(const QModelIndex& index) c
 
     return result;
 }
+
+//! Returns list of QModelIndex'es related to given SessionItem.
 
 QModelIndexList AbstractViewModel::indexOfSessionItem(const SessionItem* item) const
 {

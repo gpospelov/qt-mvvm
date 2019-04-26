@@ -10,10 +10,12 @@
 #include "MaterialTableModel.h"
 #include "item_constants.h"
 #include "sessionitem.h"
+#include "MaterialTableRowConstructor.h"
 
 MaterialTableModel::MaterialTableModel(ModelView::SessionModel* model, QObject* parent)
     : ModelView::DefaultViewModel(model, parent)
 {
+    setRowConstructor(std::make_unique<MaterialTableRowConstructor>());
 }
 
 //! Returns (possibly filtered) vector of children of given item.

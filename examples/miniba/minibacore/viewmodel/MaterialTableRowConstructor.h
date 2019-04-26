@@ -7,27 +7,20 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_ROWCONSTRUCTOR_H
-#define MVVM_ROWCONSTRUCTOR_H
+#ifndef MATERIALTABLEROWCONSTRUCTOR_H
+#define MATERIALTABLEROWCONSTRUCTOR_H
 
 #include "rowconstructorinterface.h"
 
-class QStandardItem;
+//! Constructs row of QStandardItem's for MaterialItem.
 
-namespace ModelView
-{
-
-class SessionItem;
-
-//! Constructs row of QStandardItem's for given SessionItem.
-
-class CORE_EXPORT DefaultRowConstructor : public RowConstructorInterface
+class CORE_EXPORT MaterialTableRowConstructor : public ModelView::RowConstructorInterface
 {
 public:
-    QList<QStandardItem*> constructRow(SessionItem* item);
+    QList<QStandardItem*> constructRow(ModelView::SessionItem* item);
     int columnCount() const;
 };
 
-} // namespace ModelView
 
-#endif // MVVM_ROWCONSTRUCTOR_H
+#endif // MATERIALTABLEROWCONSTRUCTOR_H
+
