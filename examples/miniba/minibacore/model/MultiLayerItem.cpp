@@ -15,7 +15,7 @@ const std::string MultiLayerItem::P_NREPETITIONS = "P_NREPETITIONS";
 
 MultiLayerItem::MultiLayerItem() : ModelView::CompoundItem(Constants::MultiLayerType)
 {
-//    addProperty<ModelView::PropertyItem>(P_NREPETITIONS, 1)->setDisplayName("Nr.");
+    addProperty<ModelView::PropertyItem>(P_NREPETITIONS, 1)->setDisplayName("Nr.");
     registerTag(ModelView::TagInfo::universalTag(T_LAYERS,
                                                  {Constants::MultiLayerType, Constants::LayerType}),
                 /*set_as_default*/ true);

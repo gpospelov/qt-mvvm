@@ -27,11 +27,20 @@ LayerTableModel::LayerTableModel(ModelView::SessionModel* model, QObject* parent
 std::vector<ModelView::SessionItem*>
 LayerTableModel::item_children(const ModelView::SessionItem* item) const
 {
+    // FIXME temporary hell
     std::vector<ModelView::SessionItem*> result;
     if (item->modelType() == Constants::MultiLayerType) {
         for (auto it : ModelView::Utils::TopLevelItems(*item)) {
-            if (it->modelType() == Constants::LayerType)
+            if (it->modelType() == Constants::LayerType) {
                 result.push_back(it);
+            } else {
+                for (auto it2 : ModelView::Utils::TopLevelItems(*it)) {
+                    if (it2->modelType() == Constants::LayerType)
+                        result.push_back(it2);
+                }
+
+            }
+
         }
     }
     return result;

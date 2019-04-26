@@ -9,6 +9,7 @@
 
 #include "MaterialItems.h"
 #include "item_constants.h"
+#include "vectoritem.h"
 
 // ----------------------------------------------------------------------------
 
@@ -45,4 +46,5 @@ SLDMaterialItem::SLDMaterialItem()
     register_name();
     addProperty<ModelView::PropertyItem>(P_SLD_REAL, 1e-06)->setDisplayName("SLD, real");
     addProperty<ModelView::PropertyItem>(P_SLD_IMAG, 1e-08)->setDisplayName("SLD, imag");
+    addProperty<ModelView::VectorItem>("magnetization");
 }

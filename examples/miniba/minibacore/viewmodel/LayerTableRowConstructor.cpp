@@ -11,6 +11,7 @@
 #include "item_constants.h"
 #include "sessionitem.h"
 #include "LayerItem.h"
+#include "MultiLayerItem.h"
 #include "viewitems.h"
 #include <stdexcept>
 
@@ -20,12 +21,14 @@ QList<QStandardItem*> LayerTableRowConstructor::constructRow(ModelView::SessionI
         throw std::runtime_error("LayerTableRowConstructor::constructRow() -> Not layer item '"+item->modelType()+"'");
 
     QList<QStandardItem*> result;
+    result.push_back(new ModelView::ViewDataItem(item->parent()->getItem(MultiLayerItem::P_NREPETITIONS)));
+    result.push_back(new ModelView::ViewDataItem(item->getItem(LayerItem::P_NAME)));
     result.push_back(new ModelView::ViewDataItem(item->getItem(LayerItem::P_THICKNESS)));
     return result;
 }
 
 int LayerTableRowConstructor::columnCount() const
 {
-    const int fixed_number_of_row_elements(1); // Thickness
+    const int fixed_number_of_row_elements(3); // Nr, Name, Thickness
     return fixed_number_of_row_elements;
 }
