@@ -11,13 +11,14 @@
 #include "ApplicationModels.h"
 #include "itemstreeview.h"
 #include "standardviewmodels.h"
+#include "MaterialTableWidget.h"
 #include <QVBoxLayout>
 #include <QTreeView>
 
 using namespace ModelView;
 
 SampleWidget::SampleWidget(ApplicationModels* models, QWidget* parent)
-    : QWidget(parent), m_materialTree(new ItemsTreeView), m_sampleTree(new ItemsTreeView), m_models(models)
+    : QWidget(parent), m_materialTree(new ItemsTreeView), m_sampleTree(new ItemsTreeView), m_models(models), m_materialTableWidget(new MaterialTableWidget)
 {
     auto mainLayout = new QVBoxLayout;
     mainLayout->setSpacing(10);
@@ -43,7 +44,7 @@ QBoxLayout* SampleWidget::create_top_layout()
 QBoxLayout* SampleWidget::create_bottom_layout()
 {
     auto result = new QHBoxLayout;
-    result->addWidget(new QTreeView);
+    result->addWidget(m_materialTableWidget);
     result->addWidget(new QTreeView);
     return result;
 }

@@ -10,19 +10,17 @@
 #ifndef VIEWMODELS_H
 #define VIEWMODELS_H
 
-#include "mvvm_global.h"
 #include "abstractviewmodel.h"
+#include "mvvm_global.h"
 #include <memory>
 
 namespace Utils
 {
 
-//!
+//! Creates view model to represent content of MaterialModel in table like views.
+CORE_EXPORT std::unique_ptr<ModelView::AbstractViewModel>
+CreateMaterialTableModel(ModelView::SessionModel* model);
 
-CORE_EXPORT std::unique_ptr<ModelView::AbstractViewModel> CreateMaterialTableModel(ModelView::SessionModel* model);
-
-} // Utils
-
+} // namespace Utils
 
 #endif
-

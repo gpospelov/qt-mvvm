@@ -10,8 +10,8 @@
 #include "viewmodels.h"
 #include "MaterialTableModel.h"
 
-
-std::unique_ptr<ModelView::AbstractViewModel> Utils::CreateMaterialTableModel(ModelView::SessionModel* model)
+std::unique_ptr<ModelView::AbstractViewModel>
+Utils::CreateMaterialTableModel(ModelView::SessionModel* model)
 {
     return std::make_unique<MaterialTableModel>(model);
 }
