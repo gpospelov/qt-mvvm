@@ -8,20 +8,21 @@
 // ************************************************************************** //
 
 #include "coloreditor.h"
+#include "customeventfilters.h"
 #include "customvariants.h"
 #include "styleutils.h"
-#include <QLabel>
 #include <QColor>
-#include <QHBoxLayout>
 #include <QColorDialog>
 #include <QDebug>
+#include <QHBoxLayout>
+#include <QLabel>
 
 using namespace ModelView;
 
 ColorEditor::ColorEditor(QWidget* parent)
-    : CustomEditor(parent)
-    , m_textLabel(new QLabel)
-    , m_pixmapLabel(new QLabel)
+    : CustomEditor(parent), m_textLabel(new QLabel), m_pixmapLabel(new QLabel),
+      m_focusFilter(new LostFocusFilter(this))
+
 {
     setMouseTracking(true);
     setAutoFillBackground(true);
@@ -40,12 +41,18 @@ ColorEditor::ColorEditor(QWidget* parent)
 
 void ColorEditor::mousePressEvent(QMouseEvent* event)
 {
+    // temporarily installing filter to prevent loss of focus caused by too insistent dialog
+    installEventFilter(m_focusFilter);
+
     bool ok = false;
     QRgb oldRgba = currentColor().rgba();
     QRgb newRgba = QColorDialog::getRgba(oldRgba, &ok, nullptr);
+
+    removeEventFilter(m_focusFilter);
+
     if (ok && newRgba != oldRgba) {
         setDataIntern(QColor::fromRgba(newRgba));
-        //update_components();
+        update_components();
     }
 }
 

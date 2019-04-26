@@ -17,6 +17,8 @@ class QLabel;
 namespace ModelView
 {
 
+class LostFocusFilter;
+
 //! Custom editor for QVariant based on QColor.
 
 class CORE_EXPORT ColorEditor : public CustomEditor
@@ -25,7 +27,7 @@ public:
     explicit ColorEditor(QWidget* parent = nullptr);
 
 protected:
-    virtual void mousePressEvent(QMouseEvent *event);
+    virtual void mousePressEvent(QMouseEvent* event) override;
 
 private:
     QColor currentColor() const;
@@ -33,6 +35,7 @@ private:
     void update_components() override;
     QLabel* m_textLabel;
     QLabel* m_pixmapLabel;
+    LostFocusFilter* m_focusFilter;
 };
 
 } // namespace ModelView
