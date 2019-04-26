@@ -10,7 +10,7 @@
 #ifndef MVVM_SESSIONITEM_P_H
 #define MVVM_SESSIONITEM_P_H
 
-#include "model_types.h"
+#include "mvvm_types.h"
 #include <memory>
 
 namespace ModelView

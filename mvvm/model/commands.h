@@ -11,7 +11,7 @@
 #define MVVM_COMMANDS_H
 
 #include "mvvm_global.h"
-#include "model_types.h"
+#include "mvvm_types.h"
 #include "path.h"
 #include <QUndoCommand>
 #include <QVariant>

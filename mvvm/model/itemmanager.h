@@ -11,7 +11,7 @@
 #define MVVM_ITEMMANAGER_H
 
 #include "mvvm_global.h"
-#include "model_types.h"
+#include "mvvm_types.h"
 #include <memory>
 #include <string>
 

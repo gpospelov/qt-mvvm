@@ -11,7 +11,7 @@
 #define MVVM_ITEMPOOL_H
 
 #include "mvvm_global.h"
-#include "model_types.h"
+#include "mvvm_types.h"
 #include <map>
 
 namespace ModelView {

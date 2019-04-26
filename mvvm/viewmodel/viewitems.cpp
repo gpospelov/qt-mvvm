@@ -8,7 +8,7 @@
 // ************************************************************************** //
 
 #include "viewitems.h"
-#include "model_types.h"
+#include "mvvm_types.h"
 #include "sessionitem.h"
 #include "customvariants.h"
 #include "viewmodelutils.h"

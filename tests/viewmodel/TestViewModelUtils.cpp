@@ -1,6 +1,6 @@
 #include "google_test.h"
 #include "viewmodelutils.h"
-#include "model_types.h"
+#include "mvvm_types.h"
 #include "sessionitem.h"
 #include <QStandardItemModel>
 #include <QColor>

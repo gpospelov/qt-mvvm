@@ -8,7 +8,7 @@
 // ************************************************************************** //
 
 #include "defaultitemcatalogue.h"
-#include "model_types.h"
+#include "mvvm_types.h"
 #include "vectoritem.h"
 #include "propertyitem.h"
 #include "compounditem.h"
