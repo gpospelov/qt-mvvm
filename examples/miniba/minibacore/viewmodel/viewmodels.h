@@ -17,6 +17,8 @@
 namespace Utils
 {
 
+//!
+
 CORE_EXPORT std::unique_ptr<ModelView::AbstractViewModel> CreateMaterialTableModel(ModelView::SessionModel* model);
 
 } // Utils

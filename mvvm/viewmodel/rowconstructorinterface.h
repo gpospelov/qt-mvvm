@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_VIEWMODELINTERFACES_H
-#define MVVM_VIEWMODELINTERFACES_H
+#ifndef MVVM_ROWCONSTRUCTORINTERFACE_H
+#define MVVM_ROWCONSTRUCTORINTERFACE_H
 
 #include "mvvm_global.h"
 #include <QList>
@@ -31,4 +31,4 @@ public:
 
 }  // namespace ModelView
 
-#endif // MVVM_VIEWMODELINTERFACES_H
+#endif // MVVM_ROWCONSTRUCTORINTERFACE_H

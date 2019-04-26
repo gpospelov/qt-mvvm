@@ -10,7 +10,7 @@
 #ifndef MVVM_ROWCONSTRUCTOR_H
 #define MVVM_ROWCONSTRUCTOR_H
 
-#include "viewmodelinterfaces.h"
+#include "rowconstructorinterface.h"
 
 class QStandardItem;
 
