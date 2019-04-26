@@ -15,6 +15,7 @@
 class ApplicationModels;
 class QBoxLayout;
 class MaterialTableWidget;
+class LayerTableWidget;
 
 namespace ModelView
 {
@@ -34,6 +35,7 @@ private:
     ModelView::ItemsTreeView* m_materialTree;
     ModelView::ItemsTreeView* m_sampleTree;
     MaterialTableWidget* m_materialTableWidget;
+    LayerTableWidget* m_layerTableWidget;
 
     ApplicationModels* m_models;
 };

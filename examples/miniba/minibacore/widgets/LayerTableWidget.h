@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MATERIALTABLEWIDGETS_H
-#define MATERIALTABLEWIDGETS_H
+#ifndef LAYERTABLEWIDGET_H
+#define LAYERTABLEWIDGET_H
 
 #include "mvvm_global.h"
 #include <QWidget>
@@ -23,11 +23,11 @@ class ViewModelDelegate;
 class SessionItem;
 } // namespace ModelView
 
-class CORE_EXPORT MaterialTableWidget : public QWidget
+class CORE_EXPORT LayerTableWidget : public QWidget
 {
 public:
-    explicit MaterialTableWidget(QWidget* parent = nullptr);
-    ~MaterialTableWidget();
+    explicit LayerTableWidget(QWidget* parent = nullptr);
+    ~LayerTableWidget();
 
     void setItem(ModelView::SessionItem* container);
 
@@ -39,4 +39,4 @@ private:
     std::unique_ptr<ModelView::ViewModelDelegate> m_delegate;
 };
 
-#endif // MATERIALTABLEWIDGETS_H
+#endif // LAYERTABLEWIDGET_H
