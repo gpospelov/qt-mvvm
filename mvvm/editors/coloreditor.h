@@ -24,7 +24,12 @@ class CORE_EXPORT ColorEditor : public CustomEditor
 public:
     explicit ColorEditor(QWidget* parent = nullptr);
 
+protected:
+    virtual void mousePressEvent(QMouseEvent *event);
+
 private:
+    QColor currentColor() const;
+
     void update_components() override;
     QLabel* m_textLabel;
     QLabel* m_pixmapLabel;

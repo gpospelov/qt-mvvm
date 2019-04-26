@@ -13,6 +13,8 @@
 #include <QLabel>
 #include <QColor>
 #include <QHBoxLayout>
+#include <QColorDialog>
+#include <QDebug>
 
 using namespace ModelView;
 
@@ -36,15 +38,29 @@ ColorEditor::ColorEditor(QWidget* parent)
     setLayout(layout);
 }
 
+void ColorEditor::mousePressEvent(QMouseEvent* event)
+{
+    bool ok = false;
+    QRgb oldRgba = currentColor().rgba();
+    QRgb newRgba = QColorDialog::getRgba(oldRgba, &ok, nullptr);
+    if (ok && newRgba != oldRgba) {
+        setDataIntern(QColor::fromRgba(newRgba));
+        //update_components();
+    }
+}
+
+QColor ColorEditor::currentColor() const
+{
+    return m_data.value<QColor>();
+}
+
 void ColorEditor::update_components()
 {
     if (!Utils::IsColorVariant(m_data))
         throw std::runtime_error("ColorEditor::update_components() -> Error. Wrong variant type");
 
-    QColor color = m_data.value<QColor>();
     QPixmap pixmap(Style::DefaultPixmapSize(), Style::DefaultPixmapSize());
-    pixmap.fill(color);
-
-    m_textLabel->setText(color.name());
+    pixmap.fill(currentColor());
+    m_textLabel->setText(currentColor().name());
     m_pixmapLabel->setPixmap(pixmap);
 }
