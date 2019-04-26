@@ -21,24 +21,11 @@ class QJsonArray;
 namespace ModelView
 {
 
-class ObsoleteSessionItemTags;
 class SessionItemData;
 class SessionModel;
 class SessionItem;
 class SessionItemContainer;
 class TagInfo;
-
-//! Base class for all supported converters of QVariant to/from json object
-
-class CORE_EXPORT JsonVariantInterface
-{
-public:
-    virtual ~JsonVariantInterface() = default;
-
-    virtual QJsonObject get_json(const QVariant&) = 0;
-
-    virtual QVariant get_variant(const QJsonObject&) = 0;
-};
 
 //! Base class for all converters of TagInfo to/from json object
 

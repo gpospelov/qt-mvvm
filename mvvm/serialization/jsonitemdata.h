@@ -19,6 +19,8 @@ class QJsonObject;
 
 namespace ModelView {
 
+class JsonVariantInterface;
+
 //! Default converter of SessionItemData to/from json object.
 
 class CORE_EXPORT JsonItemData : public JsonItemDataInterface

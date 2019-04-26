@@ -10,7 +10,7 @@
 #ifndef MVVM_JSONVARIANT_H
 #define MVVM_JSONVARIANT_H
 
-#include "jsonconverterinterfaces.h"
+#include "jsonvariantinterface.h"
 #include <QJsonObject>
 #include <QString>
 #include <QVariant>
