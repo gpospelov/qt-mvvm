@@ -42,17 +42,6 @@ public:
     QVariant data(int role) const override;
 };
 
-//! Represents data role of SessionItem in any cell of Qt's trees and tables.
-
-class CORE_EXPORT ViewDataItem : public ViewItem
-{
-public:
-    explicit ViewDataItem(SessionItem* item);
-    int type() const override;
-
-    QVariant data(int role) const override;
-};
-
 } // namespace ModelView
 
 #endif // MVVM_VIEWITEMS_H

@@ -1,6 +1,7 @@
 #include "google_test.h"
 #include "sessionmodel.h"
 #include "viewitems.h"
+#include "viewdataitem.h"
 #include "defaultviewmodel.h"
 #include "vectoritem.h"
 #include <QSignalSpy>

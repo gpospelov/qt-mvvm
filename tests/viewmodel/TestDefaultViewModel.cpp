@@ -3,6 +3,7 @@
 #include "sessionmodel.h"
 #include "vectoritem.h"
 #include "viewitems.h"
+#include "viewdataitem.h"
 #include <QDebug>
 #include <QSignalSpy>
 

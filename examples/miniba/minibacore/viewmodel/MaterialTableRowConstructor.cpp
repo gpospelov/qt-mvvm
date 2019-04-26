@@ -11,6 +11,7 @@
 #include "item_constants.h"
 #include "sessionitem.h"
 #include "MaterialItems.h"
+#include "viewdataitem.h"
 #include "viewitems.h"
 #include <stdexcept>
 

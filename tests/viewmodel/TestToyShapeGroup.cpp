@@ -4,6 +4,7 @@
 #include "propertyviewmodel.h"
 #include "toy_includes.h"
 #include "viewitems.h"
+#include "viewdataitem.h"
 #include <QSignalSpy>
 
 using namespace ModelView;

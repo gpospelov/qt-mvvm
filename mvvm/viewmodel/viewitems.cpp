@@ -18,7 +18,6 @@ using namespace ModelView;
 namespace {
 const int empty_item_type = QStandardItem::UserType+1;
 const int label_item_type = QStandardItem::UserType+2;
-const int data_item_type = QStandardItem::UserType+3;
 }
 
 ViewEmptyItem::ViewEmptyItem()
@@ -67,33 +66,3 @@ QVariant ViewLabelItem::data(int role) const
     return ViewItem::data(role);
 }
 
-// ----------------------------------------------------------------------------
-
-ViewDataItem::ViewDataItem(SessionItem* item)
-    : ViewItem(item, ItemDataRole::DATA)
-{
-    // SessionItem::isEnabled means simply gray color and read only.
-    setEditable(item->isEditable() && item->isEnabled());
-
-    // QStandardItem::isEnabled means something completely different (no interactions).
-    // We leave it by default.
-}
-
-int ViewDataItem::type() const
-{
-    return data_item_type;
-}
-
-QVariant ViewDataItem::data(int role) const
-{
-    if (!m_item)
-        return QStandardItem::data(role);
-
-    if (role == Qt::CheckStateRole)
-        return Utils::CheckStateRole(*m_item);
-
-    else if (role == Qt::DecorationRole)
-        return Utils::DecorationRole(*m_item);
-
-    return ViewItem::data(role);
-}

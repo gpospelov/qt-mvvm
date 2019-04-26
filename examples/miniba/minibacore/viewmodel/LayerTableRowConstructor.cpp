@@ -13,6 +13,7 @@
 #include "LayerItem.h"
 #include "MultiLayerItem.h"
 #include "viewitems.h"
+#include "viewdataitem.h"
 #include <stdexcept>
 
 QList<QStandardItem*> LayerTableRowConstructor::constructRow(ModelView::SessionItem* item)

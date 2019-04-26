@@ -1,6 +1,7 @@
 #include "google_test.h"
 #include "sessionitem.h"
 #include "viewitems.h"
+#include "viewdataitem.h"
 #include <QDebug>
 #include <memory>
 
