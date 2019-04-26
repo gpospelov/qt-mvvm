@@ -7,29 +7,22 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_COLOREDITOR_H
-#define MVVM_COLOREDITOR_H
+#ifndef MVVM_STYLEUTILS_H
+#define MVVM_STYLEUTILS_H
 
-#include "customeditor.h"
-
-class QLabel;
+#include "mvvm_global.h"
 
 namespace ModelView
 {
 
-//! Custom editor for QVariant based on QColor.
-
-class CORE_EXPORT ColorEditor : public CustomEditor
+namespace Style
 {
-public:
-    explicit ColorEditor(QWidget* parent = nullptr);
 
-private:
-    void update_components() override;
-    QLabel* m_textLabel;
-    QLabel* m_pixmapLabel;
-};
+//! Returns int value corresponding to pixmap in standard Qt table/tree decorations.
+CORE_EXPORT int DefaultPixmapSize();
+
+}
 
 } // namespace ModelView
 
-#endif // MVVM_COLOREDITOR_H
+#endif // MVVM_STYLEUTILS_H
