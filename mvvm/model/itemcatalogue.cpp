@@ -13,7 +13,7 @@
 
 using namespace ModelView;
 
-class ModelView::ItemCatalogueImpl
+class ModelView::ItemCataloguePrivate
 {
 public:
     IFactory<std::string, SessionItem> factory;
@@ -25,18 +25,18 @@ public:
     std::vector<TypeAndLabel> m_info;
 };
 
-ItemCatalogue::ItemCatalogue() : m_data(new ItemCatalogueImpl) {}
+ItemCatalogue::ItemCatalogue() : p_impl(std::make_unique<ItemCataloguePrivate>()) {}
 
 ItemCatalogue::ItemCatalogue(const ItemCatalogue& other)
 {
-    m_data.reset(new ItemCatalogueImpl(*other.m_data.get()));
+    p_impl.reset(new ItemCataloguePrivate(*other.p_impl.get()));
 }
 
 ItemCatalogue& ItemCatalogue::operator=(const ItemCatalogue& other)
 {
     if (this != &other) {
         ItemCatalogue tmp(other);
-        std::swap(this->m_data, tmp.m_data);
+        std::swap(this->p_impl, tmp.p_impl);
     }
     return *this;
 }
@@ -44,26 +44,26 @@ ItemCatalogue& ItemCatalogue::operator=(const ItemCatalogue& other)
 void ItemCatalogue::add(const std::string& model_type, ItemCatalogue::factory_func_t func,
                         const std::string& label)
 {
-    m_data->factory.add(model_type, func);
-    m_data->m_info.push_back({model_type, label});
+    p_impl->factory.add(model_type, func);
+    p_impl->m_info.push_back({model_type, label});
 }
 
 ItemCatalogue::~ItemCatalogue() = default;
 
 bool ItemCatalogue::contains(const std::string& model_type) const
 {
-    return m_data->factory.contains(model_type);
+    return p_impl->factory.contains(model_type);
 }
 
 std::unique_ptr<SessionItem> ItemCatalogue::create(const std::string& model_type) const
 {
-    return m_data->factory.create(model_type);
+    return p_impl->factory.create(model_type);
 }
 
 std::vector<std::string> ItemCatalogue::modelTypes() const
 {
     std::vector<std::string> result;
-    for (const auto& x : m_data->m_info)
+    for (const auto& x : p_impl->m_info)
         result.push_back(x.item_type);
     return result;
 }
@@ -71,12 +71,12 @@ std::vector<std::string> ItemCatalogue::modelTypes() const
 std::vector<std::string> ItemCatalogue::labels() const
 {
     std::vector<std::string> result;
-    for (const auto& x : m_data->m_info)
+    for (const auto& x : p_impl->m_info)
         result.push_back(x.item_label);
     return result;
 }
 
 int ItemCatalogue::itemCount() const
 {
-    return static_cast<int>(m_data->factory.size());
+    return static_cast<int>(p_impl->factory.size());
 }

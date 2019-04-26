@@ -46,7 +46,7 @@ public:
 private:
     using factory_func_t = std::function<SessionItem*()>;
     void add(const std::string& model_type, factory_func_t func, const std::string& label);
-    std::unique_ptr<class ItemCatalogueImpl> m_data;
+    std::unique_ptr<class ItemCataloguePrivate> p_impl;
 };
 
 template <typename T> void ItemCatalogue::add(const std::string& label)
