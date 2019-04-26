@@ -27,6 +27,7 @@ public:
     static const std::string double_type_name;
     static const std::string vector_double_type_name;
     static const std::string comboproperty_type_name;
+    static const std::string qcolor_type_name;
 
     JsonVariant();
 

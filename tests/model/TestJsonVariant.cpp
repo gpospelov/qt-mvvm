@@ -4,6 +4,7 @@
 #include "comboproperty.h"
 #include <QJsonArray>
 #include <QJsonDocument>
+#include <QColor>
 #include <vector>
 
 using namespace ModelView;
@@ -148,6 +149,26 @@ TEST_F(TestJsonVariant, comboPropertyVariant)
     EXPECT_EQ(variant, reco_variant);
 }
 
+//! QVariant(ComboProperty) conversion.
+
+TEST_F(TestJsonVariant, colorVariant)
+{
+    JsonVariant converter;
+
+    const QColor value(Qt::red);
+    QVariant variant = QVariant::fromValue(value);
+
+    // from variant to json object
+    auto object = converter.get_json(variant);
+    EXPECT_TRUE(converter.isVariant(object));
+
+    // from json object to variant
+    QVariant reco_variant = converter.get_variant(object);
+    EXPECT_TRUE(reco_variant.isValid());
+    EXPECT_EQ(reco_variant.value<QColor>(), value);
+    EXPECT_EQ(variant, reco_variant);
+}
+
 //! Writing variants to file and reading them back.
 
 TEST_F(TestJsonVariant, toFileAndBack)
@@ -160,11 +181,13 @@ TEST_F(TestJsonVariant, toFileAndBack)
     combo.setSelected("a 1", false);
     combo.setSelected("a 2", true);
     combo.setSelected("a/3", true);
+    QColor color(Qt::red);
 
     std::vector<QVariant> variants = {QVariant(), QVariant(int_value), QVariant(double_value),
                                       QVariant::fromValue(string_value),
                                       QVariant::fromValue(vector_value),
-                                     QVariant::fromValue(combo)};
+                                     QVariant::fromValue(combo),
+                                     QVariant::fromValue(color)};
 
     // preparing array of json objects
     JsonVariant converter;

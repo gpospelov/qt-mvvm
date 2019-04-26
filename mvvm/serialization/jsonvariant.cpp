@@ -12,6 +12,7 @@
 #include "customvariants.h"
 #include <QJsonArray>
 #include <QJsonObject>
+#include <QColor>
 #include <sstream>
 #include <stdexcept>
 
@@ -23,6 +24,7 @@ const std::string JsonVariant::string_type_name = "std::string";
 const std::string JsonVariant::double_type_name = "double";
 const std::string JsonVariant::vector_double_type_name = "std::vector<double>";
 const std::string JsonVariant::comboproperty_type_name = "ModelView::ComboProperty";
+const std::string JsonVariant::qcolor_type_name = "QColor";
 
 namespace
 {
@@ -52,6 +54,9 @@ QVariant to_vector_double(const QJsonObject& object);
 QJsonObject from_comboproperty(const QVariant& variant);
 QVariant to_comboproperty(const QJsonObject& object);
 
+QJsonObject from_qcolor(const QVariant& variant);
+QVariant to_qcolor(const QJsonObject& object);
+
 } // namespace
 
 JsonVariant::JsonVariant()
@@ -62,6 +67,7 @@ JsonVariant::JsonVariant()
     m_converters[double_type_name] = {from_double, to_double};
     m_converters[vector_double_type_name] = {from_vector_double, to_vector_double};
     m_converters[comboproperty_type_name] = {from_comboproperty, to_comboproperty};
+    m_converters[qcolor_type_name] = {from_qcolor, to_qcolor};
 }
 
 QJsonObject JsonVariant::get_json(const QVariant& variant)
@@ -205,6 +211,22 @@ QVariant to_comboproperty(const QJsonObject& object)
     combo.setStringOfValues(combo_json_data[comboValuesKey].toString().toStdString());
     combo.setStringOfSelections(combo_json_data[comboSelectionKey].toString().toStdString());
     return combo.variant();
+}
+
+// --- QColor ------
+
+QJsonObject from_qcolor(const QVariant& variant)
+{
+    QJsonObject result;
+    result[variantTypeKey] = QString::fromStdString(JsonVariant::qcolor_type_name);
+    auto color = variant.value<QColor>();
+    result[variantValueKey] = color.name(QColor::HexArgb);
+    return result;
+}
+
+QVariant to_qcolor(const QJsonObject& object)
+{
+    return QVariant::fromValue(QColor(object[variantValueKey].toString()));
 }
 
 } // namespace
