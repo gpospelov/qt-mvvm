@@ -21,6 +21,10 @@ namespace Utils
 CORE_EXPORT std::unique_ptr<ModelView::AbstractViewModel>
 CreateMaterialTableModel(ModelView::SessionModel* model);
 
+//! Creates view model to represent content of MultiLayer in table like views.
+CORE_EXPORT std::unique_ptr<ModelView::AbstractViewModel>
+CreateLayerTableModel(ModelView::SessionModel* model);
+
 } // namespace Utils
 
 #endif
