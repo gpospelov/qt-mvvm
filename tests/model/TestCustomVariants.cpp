@@ -5,6 +5,7 @@
 #include "sessionitem.h"
 #include "sessionmodel.h"
 #include "taginfo.h"
+#include <QColor>
 #include <memory>
 #include <functional>
 
@@ -113,7 +114,8 @@ TEST_F(TestCustomVariants, isVariantType)
         {QVariant::fromValue(42.0), Utils::IsDoubleVariant},
         {QVariant::fromValue(ComboProperty()), Utils::IsComboVariant},
         {QVariant::fromValue(std::string("string1")), Utils::IsStdStringVariant},
-        {QVariant::fromValue(std::vector<double>({1, 2})), Utils::IsDoubleVectorVariant}
+        {QVariant::fromValue(std::vector<double>({1, 2})), Utils::IsDoubleVectorVariant},
+        {QVariant::fromValue(QColor(Qt::red)), Utils::IsColorVariant}
     };
 
     for (size_t i = 0; i < data.size(); ++i) {

@@ -57,6 +57,9 @@ CORE_EXPORT bool IsStdStringVariant(const QVariant& variant);
 //! Returns true in the case of double value based variant.
 CORE_EXPORT bool IsDoubleVectorVariant(const QVariant& variant);
 
+//! Returns true in the case of QColor based variant.
+CORE_EXPORT bool IsColorVariant(const QVariant& variant);
+
 
 } // namespace Utils
 } // namespace ModelView

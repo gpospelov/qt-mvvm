@@ -94,3 +94,8 @@ bool Utils::IsDoubleVectorVariant(const QVariant& variant)
 {
     return variant.typeName() == JsonVariant::vector_double_type_name;
 }
+
+bool Utils::IsColorVariant(const QVariant& variant)
+{
+    return variant.type() == QVariant::Color;
+}
