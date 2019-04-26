@@ -7,16 +7,16 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_DEFAULTITEMCATALOGUE_H
-#define MVVM_DEFAULTITEMCATALOGUE_H
+#ifndef MVVM_STANDARDITEMCATALOGUE_H
+#define MVVM_STANDARDITEMCATALOGUE_H
 
 #include "itemcatalogue.h"
 
 namespace ModelView
 {
 
-CORE_EXPORT std::unique_ptr<ItemCatalogue> CreateDefaultItemCatalogue();
+CORE_EXPORT std::unique_ptr<ItemCatalogue> CreateStandardItemCatalogue();
 
 }
 
-#endif // MVVM_DEFAULTITEMCATALOGUE_H
+#endif // MVVM_STANDARDITEMCATALOGUE_H

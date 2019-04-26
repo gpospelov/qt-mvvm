@@ -8,14 +8,14 @@
 // ************************************************************************** //
 
 #include "ItemCatalogue.h"
-#include "defaultitemcatalogue.h"
+#include "standarditemcatalogue.h"
 #include "MultiLayerItem.h"
 #include "LayerItem.h"
 #include "MaterialItems.h"
 
 std::unique_ptr<ModelView::ItemCatalogue> CreateItemCatalogue()
 {
-    auto result = ModelView::CreateDefaultItemCatalogue();
+    auto result = ModelView::CreateStandardItemCatalogue();
     result->add<MultiLayerItem>();
     result->add<LayerItem>();
     result->add<MaterialContainerItem>();

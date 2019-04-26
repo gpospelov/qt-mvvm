@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_MODELTYPES_H
-#define MVVM_MODELTYPES_H
+#ifndef MVVM_MVVM_TYPES_H
+#define MVVM_MVVM_TYPES_H
 
 #include <string>
 #include <functional>
@@ -55,5 +55,5 @@ using model_t = std::function<void(SessionModel*)>;
 
 } // namespace ModelView
 
-#endif // MVVM_MODELTYPES_H
+#endif // MVVM_MVVM_TYPES_H
 

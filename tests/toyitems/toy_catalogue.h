@@ -10,7 +10,7 @@
 #ifndef TOYCATALOGUE_H
 #define TOYCATALOGUE_H
 
-#include "defaultitemcatalogue.h"
+#include "itemcatalogue.h"
 
 //! Collection of toy items and models for testing purposes.
 

@@ -9,7 +9,7 @@
 
 #include "itemmanager.h"
 #include "customvariants.h"
-#include "defaultitemcatalogue.h"
+#include "standarditemcatalogue.h"
 #include "itemfactory.h"
 #include "itempool.h"
 #include "jsonconverterinterfaces.h"
@@ -20,7 +20,7 @@ namespace
 {
 std::unique_ptr<ModelView::ItemFactory> DefaultItemFactory()
 {
-    return std::make_unique<ModelView::ItemFactory>(ModelView::CreateDefaultItemCatalogue());
+    return std::make_unique<ModelView::ItemFactory>(ModelView::CreateStandardItemCatalogue());
 }
 } // namespace
 

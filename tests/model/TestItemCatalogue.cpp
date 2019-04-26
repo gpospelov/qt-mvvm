@@ -2,7 +2,7 @@
 #include "itemcatalogue.h"
 #include "propertyitem.h"
 #include "vectoritem.h"
-#include "defaultitemcatalogue.h"
+#include "standarditemcatalogue.h"
 
 using namespace ModelView;
 
@@ -93,7 +93,7 @@ TEST_F(TestItemCatalogue, assignmentOperator)
 
 TEST_F(TestItemCatalogue, defaultItemCatalogue)
 {
-    auto catalogue = CreateDefaultItemCatalogue();
+    auto catalogue = CreateStandardItemCatalogue();
 
     auto item = catalogue->create(Constants::BaseType);
     EXPECT_TRUE(dynamic_cast<SessionItem*>(item.get()) != nullptr);

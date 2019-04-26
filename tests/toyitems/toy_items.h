@@ -11,10 +11,7 @@
 #define TOYITEMS_H
 
 #include "compounditem.h"
-#include "defaultitemcatalogue.h"
 #include "groupitem.h"
-#include "itemfactoryinterface.h"
-#include "sessionmodel.h"
 #include <string>
 
 //! Collection of toy items and models for testing purposes.

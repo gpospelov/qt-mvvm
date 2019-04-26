@@ -9,10 +9,11 @@
 
 #include "toy_catalogue.h"
 #include "toy_items.h"
+#include "standarditemcatalogue.h"
 
 std::unique_ptr<ModelView::ItemCatalogue> ToyItems::CreateToyItemCatalogue()
 {
-    auto result = ModelView::CreateDefaultItemCatalogue();
+    auto result = ModelView::CreateStandardItemCatalogue();
     result->add<MultiLayer>();
     result->add<Layer>();
     result->add<Particle>();
