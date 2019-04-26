@@ -15,6 +15,7 @@
 #include "viewitem.h"
 #include "abstractviewmodel.h"
 #include "booleditor.h"
+#include "coloreditor.h"
 #include <QDebug>
 #include <QModelIndex>
 
@@ -52,10 +53,14 @@ CustomEditor* EditorFactory::createEditor(const SessionItem* item, QWidget* pare
 
     auto value = item->data(ItemDataRole::DATA);
 
-    if (Utils::IsComboVariant(value)) {
+    if (Utils::IsComboVariant(value))
         result = new ComboPropertyEditor;
-    } else if (Utils::IsBoolVariant(value))
+
+    else if (Utils::IsBoolVariant(value))
         result = new BoolEditor;
+
+    else if (Utils::IsColorVariant(value))
+        result = new ColorEditor;
 
     if (result)
         result->setParent(parent);
