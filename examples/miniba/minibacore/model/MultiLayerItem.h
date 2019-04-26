@@ -11,11 +11,13 @@
 #define MULTILAYERITEM_H
 
 #include "global.h"
-#include "sessionitem.h"
+#include "compounditem.h"
 
-class CORE_EXPORT MultiLayerItem : public ModelView::SessionItem
+class CORE_EXPORT MultiLayerItem : public ModelView::CompoundItem
 {
 public:
+    static const std::string T_LAYERS;
+    static const std::string P_NREPETITIONS;
     MultiLayerItem();
 };
 

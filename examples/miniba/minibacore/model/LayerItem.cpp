@@ -10,4 +10,9 @@
 #include "LayerItem.h"
 #include "item_constants.h"
 
-LayerItem::LayerItem() : ModelView::SessionItem(Constants::LayerType) {}
+const std::string LayerItem::P_THICKNESS = "P_THICKNESS";
+
+LayerItem::LayerItem() : ModelView::CompoundItem(Constants::LayerType)
+{
+    addProperty<ModelView::PropertyItem>(P_THICKNESS, 42.0)->setDisplayName("Thickness");
+}

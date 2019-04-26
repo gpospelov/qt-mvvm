@@ -10,11 +10,12 @@
 #ifndef LAYERITEM_H
 #define LAYERITEM_H
 
-#include "sessionitem.h"
+#include "compounditem.h"
 
-class CORE_EXPORT LayerItem : public ModelView::SessionItem
+class CORE_EXPORT LayerItem : public ModelView::CompoundItem
 {
 public:
+    static const std::string P_THICKNESS;
     LayerItem();
 };
 
