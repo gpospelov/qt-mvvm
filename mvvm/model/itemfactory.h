@@ -10,7 +10,7 @@
 #ifndef MVVM_ITEMFACTORY_H
 #define MVVM_ITEMFACTORY_H
 
-#include "global.h"
+#include "mvvm_global.h"
 #include "itemfactoryinterface.h"
 #include <memory>
 

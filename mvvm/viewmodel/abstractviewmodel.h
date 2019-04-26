@@ -10,7 +10,7 @@
 #ifndef MVVM_ABSTRACTVIEWMODEL_H
 #define MVVM_ABSTRACTVIEWMODEL_H
 
-#include "global.h"
+#include "mvvm_global.h"
 #include <QStandardItemModel>
 
 class QStandardItem;

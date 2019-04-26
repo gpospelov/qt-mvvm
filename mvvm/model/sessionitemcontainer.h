@@ -10,7 +10,7 @@
 #ifndef MVVM_SESSIONITEMCONTAINER_H
 #define MVVM_SESSIONITEMCONTAINER_H
 
-#include "global.h"
+#include "mvvm_global.h"
 #include "taginfo.h"
 #include <vector>
 

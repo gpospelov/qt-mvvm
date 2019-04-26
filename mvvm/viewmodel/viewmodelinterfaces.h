@@ -10,7 +10,7 @@
 #ifndef MVVM_VIEWMODELINTERFACES_H
 #define MVVM_VIEWMODELINTERFACES_H
 
-#include "global.h"
+#include "mvvm_global.h"
 #include <QList>
 
 class QStandardItem;

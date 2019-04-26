@@ -10,7 +10,7 @@
 #ifndef MVVM_CONTAINERUTILS_H
 #define MVVM_CONTAINERUTILS_H
 
-#include "global.h"
+#include "mvvm_global.h"
 #include <string>
 #include <iterator>
 

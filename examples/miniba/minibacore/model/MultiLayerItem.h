@@ -10,7 +10,7 @@
 #ifndef MULTILAYERITEM_H
 #define MULTILAYERITEM_H
 
-#include "global.h"
+#include "mvvm_global.h"
 #include "compounditem.h"
 
 class CORE_EXPORT MultiLayerItem : public ModelView::CompoundItem

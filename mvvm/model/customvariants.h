@@ -10,7 +10,7 @@
 #ifndef MVVM_CUSTOMVARIANTS_H
 #define MVVM_CUSTOMVARIANTS_H
 
-#include "global.h"
+#include "mvvm_global.h"
 
 //! Registrations and translations for custom variants.
 

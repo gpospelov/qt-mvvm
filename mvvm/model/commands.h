@@ -10,7 +10,7 @@
 #ifndef MVVM_COMMANDS_H
 #define MVVM_COMMANDS_H
 
-#include "global.h"
+#include "mvvm_global.h"
 #include "model_types.h"
 #include "path.h"
 #include <QUndoCommand>

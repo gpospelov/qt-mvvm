@@ -10,7 +10,7 @@
 #ifndef MVVM_VIEWITEM_H
 #define MVVM_VIEWITEM_H
 
-#include "global.h"
+#include "mvvm_global.h"
 #include <QStandardItem>
 
 namespace ModelView

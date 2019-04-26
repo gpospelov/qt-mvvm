@@ -10,7 +10,7 @@
 #ifndef MVVM_CALLBACKCONTAINER_H
 #define MVVM_CALLBACKCONTAINER_H
 
-#include "global.h"
+#include "mvvm_global.h"
 #include "model_types.h"
 #include <algorithm>
 #include <functional>

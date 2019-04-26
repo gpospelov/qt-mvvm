@@ -10,7 +10,7 @@
 #ifndef MVVM_VIEWMODELUTILS_H
 #define MVVM_VIEWMODELUTILS_H
 
-#include "global.h"
+#include "mvvm_global.h"
 #include <QVariant>
 #include <QVector>
 #include <functional>

@@ -11,7 +11,7 @@
 #define MVVM_SESSIONITEMDATA_H
 
 #include "datarole.h"
-#include "global.h"
+#include "mvvm_global.h"
 #include <QVariant>
 #include <vector>
 

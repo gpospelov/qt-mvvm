@@ -10,7 +10,7 @@
 #ifndef MVVM_EDITORFACTORY_H
 #define MVVM_EDITORFACTORY_H
 
-#include "global.h"
+#include "mvvm_global.h"
 #include <string>
 
 class QWidget;

@@ -10,7 +10,7 @@
 #ifndef MVVM_ITEMFACTORYINTERFACE_H
 #define MVVM_ITEMFACTORYINTERFACE_H
 
-#include "global.h"
+#include "mvvm_global.h"
 #include "model_types.h"
 #include <memory>
 

@@ -10,7 +10,7 @@
 #ifndef MVVM_JSONUTILS_H
 #define MVVM_JSONUTILS_H
 
-#include "global.h"
+#include "mvvm_global.h"
 #include <string>
 
 class QJsonObject;

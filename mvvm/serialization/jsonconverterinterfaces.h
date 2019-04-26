@@ -10,7 +10,7 @@
 #ifndef MVVM_JSONCONVERTERINTERFACES_H
 #define MVVM_JSONCONVERTERINTERFACES_H
 
-#include "global.h"
+#include "mvvm_global.h"
 #include <memory>
 #include <string>
 
