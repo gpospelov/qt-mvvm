@@ -10,15 +10,16 @@
 #include "viewmodeldelegate.h"
 #include "comboproperty.h"
 #include "customeditor.h"
-#include "defaulteditorfactory.h"
 #include "defaultcelldecoration.h"
+#include "defaulteditorfactory.h"
 #include <QApplication>
 #include <QDebug>
 
 using namespace ModelView;
 
 ViewModelDelegate::ViewModelDelegate(QObject* parent)
-    : QStyledItemDelegate(parent), m_editor_factory(std::make_unique<DefaultEditorFactory>()), m_cell_decoration(std::make_unique<DefaultCellDecoration>())
+    : QStyledItemDelegate(parent), m_editor_factory(std::make_unique<DefaultEditorFactory>()),
+      m_cell_decoration(std::make_unique<DefaultCellDecoration>())
 {
 }
 
@@ -79,7 +80,8 @@ void ViewModelDelegate::setModelData(QWidget* editor, QAbstractItemModel* model,
 
 //! Increases height of the row by 20% wrt the default.
 
-QSize ViewModelDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
+QSize ViewModelDelegate::sizeHint(const QStyleOptionViewItem& option,
+                                  const QModelIndex& index) const
 {
     QSize result = QStyledItemDelegate::sizeHint(option, index);
     result.setHeight(static_cast<int>(result.height() * 1.2));

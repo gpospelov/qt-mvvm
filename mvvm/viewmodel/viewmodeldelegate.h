@@ -19,7 +19,7 @@ class QStandardItem;
 namespace ModelView
 {
 
-class DefaultEditorFactory;
+class EditorFactoryInterface;
 class CellDecorationInterface;
 
 //! Model delegate to provide editing/painting for custom variants.
@@ -52,7 +52,7 @@ private:
     void paintCustomLabel(QPainter* painter, const QStyleOptionViewItem& option,
                           const QModelIndex& index, const QString& text) const;
 
-    std::unique_ptr<DefaultEditorFactory> m_editor_factory;
+    std::unique_ptr<EditorFactoryInterface> m_editor_factory;
     std::unique_ptr<CellDecorationInterface> m_cell_decoration;
 };
 

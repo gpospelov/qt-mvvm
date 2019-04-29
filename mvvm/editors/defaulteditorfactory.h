@@ -26,6 +26,7 @@ public:
 
     CustomEditor* createEditor(const QModelIndex& index, QWidget* parent = nullptr) const;
 
+private:
     CustomEditor* createEditor(const SessionItem* item, QWidget* parent = nullptr) const;
 };
 
