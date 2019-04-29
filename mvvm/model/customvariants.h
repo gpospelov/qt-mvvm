@@ -60,6 +60,9 @@ CORE_EXPORT bool IsDoubleVectorVariant(const QVariant& variant);
 //! Returns true in the case of QColor based variant.
 CORE_EXPORT bool IsColorVariant(const QVariant& variant);
 
+//! Returns true in the case of ExternalProperty based variant.
+CORE_EXPORT bool IsExtPropertyVariant(const QVariant& variant);
+
 
 } // namespace Utils
 } // namespace ModelView

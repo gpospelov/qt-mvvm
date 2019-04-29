@@ -10,6 +10,7 @@
 #include "jsonvariant.h"
 #include "comboproperty.h"
 #include "customvariants.h"
+#include "externalproperty.h"
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QColor>
@@ -25,6 +26,7 @@ const std::string JsonVariant::double_type_name = "double";
 const std::string JsonVariant::vector_double_type_name = "std::vector<double>";
 const std::string JsonVariant::comboproperty_type_name = "ModelView::ComboProperty";
 const std::string JsonVariant::qcolor_type_name = "QColor";
+const std::string JsonVariant::extproperty_type_name = "ModelView::ExternalProperty";
 
 namespace
 {
@@ -33,6 +35,9 @@ const QString variantTypeKey = "type";
 const QString variantValueKey = "value";
 const QString comboValuesKey = "values";
 const QString comboSelectionKey = "selections";
+const QString extPropertyTextKey = "text";
+const QString extPropertyColorKey = "color";
+const QString extPropertyIdKey = "identifier";
 
 QStringList expected_variant_keys();
 
@@ -57,6 +62,9 @@ QVariant to_comboproperty(const QJsonObject& object);
 QJsonObject from_qcolor(const QVariant& variant);
 QVariant to_qcolor(const QJsonObject& object);
 
+QJsonObject from_extproperty(const QVariant& variant);
+QVariant to_extproperty(const QJsonObject& object);
+
 } // namespace
 
 JsonVariant::JsonVariant()
@@ -68,6 +76,7 @@ JsonVariant::JsonVariant()
     m_converters[vector_double_type_name] = {from_vector_double, to_vector_double};
     m_converters[comboproperty_type_name] = {from_comboproperty, to_comboproperty};
     m_converters[qcolor_type_name] = {from_qcolor, to_qcolor};
+    m_converters[extproperty_type_name] = {from_extproperty, to_extproperty};
 }
 
 QJsonObject JsonVariant::get_json(const QVariant& variant)
@@ -227,6 +236,31 @@ QJsonObject from_qcolor(const QVariant& variant)
 QVariant to_qcolor(const QJsonObject& object)
 {
     return QVariant::fromValue(QColor(object[variantValueKey].toString()));
+}
+
+// --- ExternalProperty ------
+
+QJsonObject from_extproperty(const QVariant& variant)
+{
+    QJsonObject result;
+    result[variantTypeKey] = QString::fromStdString(JsonVariant::extproperty_type_name);
+    auto extprop = variant.value<ExternalProperty>();
+    QJsonObject extprop_json_data;
+    extprop_json_data[extPropertyTextKey] = QString::fromStdString(extprop.text());
+    extprop_json_data[extPropertyColorKey] = extprop.color().name(QColor::HexArgb);
+    extprop_json_data[extPropertyIdKey] = QString::fromStdString(extprop.identifier());
+    result[variantValueKey] = extprop_json_data;
+    return result;
+}
+
+QVariant to_extproperty(const QJsonObject& object)
+{
+    QJsonObject combo_json_data = object[variantValueKey].toObject();
+    const std::string text = combo_json_data[extPropertyTextKey].toString().toStdString();
+    const std::string color = combo_json_data[extPropertyColorKey].toString().toStdString();
+    const std::string id = combo_json_data[extPropertyIdKey].toString().toStdString();
+
+    return QVariant::fromValue(ExternalProperty(text, QColor(QString::fromStdString(color)), id));
 }
 
 } // namespace

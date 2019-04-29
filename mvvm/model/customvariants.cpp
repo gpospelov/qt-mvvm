@@ -10,6 +10,7 @@
 #include "customvariants.h"
 #include "jsonvariant.h"
 #include "comboproperty.h"
+#include "externalproperty.h"
 
 using namespace ModelView;
 
@@ -98,4 +99,9 @@ bool Utils::IsDoubleVectorVariant(const QVariant& variant)
 bool Utils::IsColorVariant(const QVariant& variant)
 {
     return variant.type() == QVariant::Color;
+}
+
+bool Utils::IsExtPropertyVariant(const QVariant& variant)
+{
+    return variant.canConvert<ExternalProperty>();
 }

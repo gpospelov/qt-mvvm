@@ -5,6 +5,7 @@
 #include "sessionitem.h"
 #include "sessionmodel.h"
 #include "taginfo.h"
+#include "externalproperty.h"
 #include <QColor>
 #include <memory>
 #include <functional>
@@ -32,9 +33,10 @@ TEST_F(TestCustomVariants, CompatibleVariantTypes)
     ComboProperty combo = ComboProperty::createFrom({"a1", "a2", "s3"});
     QVariant combo_variant = combo.variant();
     QVariant color_variant = QVariant::fromValue(QColor(Qt::red));
+    QVariant extprop_variant = QVariant::fromValue(ExternalProperty());
 
     std::vector<QVariant> variants = {int_variant, double_variant, string_variant, vector_variant,
-                                      combo_variant, color_variant};
+                                      combo_variant, color_variant, extprop_variant};
     for (size_t i = 0; i < variants.size(); ++i) {
         EXPECT_TRUE(Utils::CompatibleVariantTypes(undefined, variants[i]));
         EXPECT_FALSE(Utils::VariantType(undefined) == Utils::VariantType(variants[i]));
@@ -58,6 +60,8 @@ TEST_F(TestCustomVariants, IsTheSameVariant)
     const std::vector<double> vec2{1, 2, 3};
     const ComboProperty combo1 = ComboProperty::createFrom({"a1", "a2"});
     const ComboProperty combo2 = ComboProperty::createFrom({"b1"});
+    const ExternalProperty extprop1;
+    const ExternalProperty extprop2("abc", QColor(Qt::red), "123");
 
     std::vector<QVariant> variants = {
         QVariant(),
@@ -66,7 +70,8 @@ TEST_F(TestCustomVariants, IsTheSameVariant)
         QVariant::fromValue(std::string("string1")), QVariant::fromValue(std::string("string2")),
         QVariant::fromValue(vec1), QVariant::fromValue(vec2),
         combo1.variant(), combo2.variant(),
-        QVariant::fromValue(QColor(Qt::red)), QVariant::fromValue(QColor(Qt::green))
+        QVariant::fromValue(QColor(Qt::red)), QVariant::fromValue(QColor(Qt::green)),
+        QVariant::fromValue(extprop1), QVariant::fromValue(extprop2)
     };
 
     for (size_t i = 0; i < variants.size(); ++i) {
@@ -117,7 +122,8 @@ TEST_F(TestCustomVariants, isVariantType)
         {QVariant::fromValue(ComboProperty()), Utils::IsComboVariant},
         {QVariant::fromValue(std::string("string1")), Utils::IsStdStringVariant},
         {QVariant::fromValue(std::vector<double>({1, 2})), Utils::IsDoubleVectorVariant},
-        {QVariant::fromValue(QColor(Qt::red)), Utils::IsColorVariant}
+        {QVariant::fromValue(QColor(Qt::red)), Utils::IsColorVariant},
+        {QVariant::fromValue(ExternalProperty()), Utils::IsExtPropertyVariant}
     };
 
     for (size_t i = 0; i < data.size(); ++i) {

@@ -2,6 +2,7 @@
 #include "jsonvariant.h"
 #include "test_utils.h"
 #include "comboproperty.h"
+#include "externalproperty.h"
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QColor>
@@ -149,7 +150,7 @@ TEST_F(TestJsonVariant, comboPropertyVariant)
     EXPECT_EQ(variant, reco_variant);
 }
 
-//! QVariant(ComboProperty) conversion.
+//! QVariant(QColor) conversion.
 
 TEST_F(TestJsonVariant, colorVariant)
 {
@@ -169,6 +170,26 @@ TEST_F(TestJsonVariant, colorVariant)
     EXPECT_EQ(variant, reco_variant);
 }
 
+//! QVariant(ExternalProperty) conversion.
+
+TEST_F(TestJsonVariant, extPropVariant)
+{
+    JsonVariant converter;
+
+    const ExternalProperty value("abc", QColor(Qt::green), "123");
+    QVariant variant = QVariant::fromValue(value);
+
+    // from variant to json object
+    auto object = converter.get_json(variant);
+    EXPECT_TRUE(converter.isVariant(object));
+
+    // from json object to variant
+    QVariant reco_variant = converter.get_variant(object);
+    EXPECT_TRUE(reco_variant.isValid());
+    EXPECT_EQ(reco_variant.value<ExternalProperty>(), value);
+    EXPECT_EQ(variant, reco_variant);
+}
+
 //! Writing variants to file and reading them back.
 
 TEST_F(TestJsonVariant, toFileAndBack)
@@ -182,12 +203,13 @@ TEST_F(TestJsonVariant, toFileAndBack)
     combo.setSelected("a 2", true);
     combo.setSelected("a/3", true);
     QColor color(Qt::red);
+    ExternalProperty extprop("abc", QColor(Qt::green), "1-2-3");
 
     std::vector<QVariant> variants = {QVariant(), QVariant(int_value), QVariant(double_value),
                                       QVariant::fromValue(string_value),
                                       QVariant::fromValue(vector_value),
                                      QVariant::fromValue(combo),
-                                     QVariant::fromValue(color)};
+                                     QVariant::fromValue(color), QVariant::fromValue(extprop)};
 
     // preparing array of json objects
     JsonVariant converter;
