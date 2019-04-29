@@ -10,26 +10,22 @@
 #ifndef MVVM_EDITORFACTORY_H
 #define MVVM_EDITORFACTORY_H
 
-#include "mvvm_global.h"
-#include <string>
-
-class QWidget;
-class QModelIndex;
+#include "editorfactoryinterface.h"
 
 namespace ModelView
 {
 
 class SessionItem;
-class CustomEditor;
 
-//! Editor factory for custom variants.
+//! Default wditor factory for custom variants.
 
-class CORE_EXPORT EditorFactory
+class CORE_EXPORT EditorFactory : public EditorFactoryInterface
 {
 public:
     EditorFactory();
 
     CustomEditor* createEditor(const QModelIndex& index, QWidget* parent = nullptr) const;
+
     CustomEditor* createEditor(const SessionItem* item, QWidget* parent = nullptr) const;
 
     // FIXME find better place for label logic

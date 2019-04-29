@@ -36,5 +36,5 @@ int LayerTableRowConstructor::columnCount() const
 
 QStringList LayerTableRowConstructor::horizontalHeaderLabels() const
 {
-    return QStringList() << "Nr" << "Name" << "Thickness";
+    return QStringList() << "Nr." << "Name" << "Thickness";
 }

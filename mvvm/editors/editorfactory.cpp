@@ -87,5 +87,8 @@ std::string EditorFactory::toString(const QModelIndex& index)
     else if (Utils::IsBoolVariant(variant))
         return variant.toBool() ? "True" : "False";
 
+    else if (Utils::IsBoolVariant(variant))
+        return variant.toBool() ? "True" : "False";
+
     return {};
 }
