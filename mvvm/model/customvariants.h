@@ -54,7 +54,7 @@ CORE_EXPORT bool IsComboVariant(const QVariant& variant);
 //! Returns true in the case of double value based variant.
 CORE_EXPORT bool IsStdStringVariant(const QVariant& variant);
 
-//! Returns true in the case of double value based variant.
+//! Returns true in the case of variant based on std::vector<double>.
 CORE_EXPORT bool IsDoubleVectorVariant(const QVariant& variant);
 
 //! Returns true in the case of QColor based variant.
