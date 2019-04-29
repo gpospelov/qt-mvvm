@@ -16,6 +16,7 @@ class CORE_EXPORT LayerItem : public ModelView::CompoundItem
 {
 public:
     static const std::string P_NAME;
+    static const std::string P_MATERIAL;
     static const std::string P_THICKNESS;
     LayerItem();
 };
