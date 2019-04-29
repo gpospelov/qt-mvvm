@@ -13,8 +13,8 @@
 #include "rowconstructor.h"
 #include "sessionitem.h"
 #include "sessionmodel.h"
-#include "viewitems.h"
 #include "viewmodelutils.h"
+#include "viewemptyitem.h"
 #include <QDebug>
 #include <algorithm>
 

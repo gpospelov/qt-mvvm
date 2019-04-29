@@ -13,6 +13,7 @@
 #include "sessionmodel.h"
 #include "viewitem.h"
 #include "customvariants.h"
+#include "externalproperty.h"
 #include <QStandardItemModel>
 
 using namespace ModelView;
@@ -83,5 +84,7 @@ QVariant Utils::DecorationRole(const SessionItem& item)
     auto value = item.data(ItemDataRole::DATA);
     if (Utils::IsColorVariant(value))
         return value;
+    else if(Utils::IsExtPropertyVariant(value))
+        return value.value<ExternalProperty>().color();
     return QVariant();
 }

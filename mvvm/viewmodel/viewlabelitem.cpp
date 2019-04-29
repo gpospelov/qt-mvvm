@@ -7,51 +7,22 @@
 //
 // ************************************************************************** //
 
-#include "viewitems.h"
+#include "viewlabelitem.h"
 #include "mvvm_types.h"
 #include "sessionitem.h"
-#include "customvariants.h"
+#include "viewitemtypes.h"
 #include "viewmodelutils.h"
 
 using namespace ModelView;
 
-namespace {
-const int empty_item_type = QStandardItem::UserType+1;
-const int label_item_type = QStandardItem::UserType+2;
-}
-
-ViewEmptyItem::ViewEmptyItem()
-    : ViewItem(nullptr, ItemDataRole::DISPLAY)
-{
-    setEditable(false);
-}
-
-int ViewEmptyItem::type() const
-{
-    return empty_item_type;
-}
-
-QVariant ViewEmptyItem::data(int role) const
-{
-    return QStandardItem::data(role);
-}
-
-ViewEmptyItem* ViewEmptyItem::clone() const
-{
-    return new ViewEmptyItem;
-}
-
-// ----------------------------------------------------------------------------
-
-ViewLabelItem::ViewLabelItem(SessionItem* item)
-    : ViewItem(item, ItemDataRole::DISPLAY)
+ViewLabelItem::ViewLabelItem(SessionItem* item) : ViewItem(item, ItemDataRole::DISPLAY)
 {
     setEditable(false); // label view is always read only
 }
 
 int ViewLabelItem::type() const
 {
-    return label_item_type;
+    return ViewItemTypes::label_item_type;
 }
 
 QVariant ViewLabelItem::data(int role) const
@@ -65,4 +36,3 @@ QVariant ViewLabelItem::data(int role) const
 
     return ViewItem::data(role);
 }
-

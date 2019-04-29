@@ -10,7 +10,6 @@
 #include "rowconstructor.h"
 #include "sessionitem.h"
 #include "viewitems.h"
-#include "viewdataitem.h"
 
 using namespace ModelView;
 

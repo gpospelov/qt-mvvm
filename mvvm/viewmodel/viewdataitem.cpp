@@ -9,16 +9,12 @@
 
 #include "viewdataitem.h"
 #include "customvariants.h"
+#include "viewitemtypes.h"
 #include "mvvm_types.h"
 #include "sessionitem.h"
 #include "viewmodelutils.h"
 
 using namespace ModelView;
-
-namespace
-{
-const int data_item_type = QStandardItem::UserType + 3;
-}
 
 ViewDataItem::ViewDataItem(SessionItem* item) : ViewItem(item, ItemDataRole::DATA)
 {
@@ -31,7 +27,7 @@ ViewDataItem::ViewDataItem(SessionItem* item) : ViewItem(item, ItemDataRole::DAT
 
 int ViewDataItem::type() const
 {
-    return data_item_type;
+    return ViewItemTypes::data_item_type;
 }
 
 QVariant ViewDataItem::data(int role) const
