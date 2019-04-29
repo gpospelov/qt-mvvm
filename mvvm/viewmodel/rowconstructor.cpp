@@ -37,3 +37,8 @@ int DefaultRowConstructor::columnCount() const
     const int fixed_number_of_row_elements(2);
     return fixed_number_of_row_elements;
 }
+
+QStringList DefaultRowConstructor::horizontalHeaderLabels() const
+{
+    return QStringList() << "Name" << "Value";
+}

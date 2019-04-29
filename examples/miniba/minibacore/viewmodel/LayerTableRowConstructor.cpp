@@ -33,3 +33,8 @@ int LayerTableRowConstructor::columnCount() const
     const int fixed_number_of_row_elements(3); // Nr, Name, Thickness
     return fixed_number_of_row_elements;
 }
+
+QStringList LayerTableRowConstructor::horizontalHeaderLabels() const
+{
+    return QStringList() << "Nr" << "Name" << "Thickness";
+}

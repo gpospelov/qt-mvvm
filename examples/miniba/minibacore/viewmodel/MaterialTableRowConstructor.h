@@ -19,6 +19,7 @@ class CORE_EXPORT MaterialTableRowConstructor : public ModelView::RowConstructor
 public:
     QList<QStandardItem*> constructRow(ModelView::SessionItem* item);
     int columnCount() const;
+    QStringList horizontalHeaderLabels() const;
 };
 
 

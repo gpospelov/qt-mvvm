@@ -31,6 +31,8 @@ public:
 
     //! Returns number of elements in a row.
     virtual int columnCount() const = 0;
+
+    virtual QStringList horizontalHeaderLabels() const = 0;
 };
 
 }  // namespace ModelView

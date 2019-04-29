@@ -26,6 +26,7 @@ class CORE_EXPORT DefaultRowConstructor : public RowConstructorInterface
 public:
     QList<QStandardItem*> constructRow(SessionItem* item);
     int columnCount() const;
+    QStringList horizontalHeaderLabels() const;
 };
 
 } // namespace ModelView

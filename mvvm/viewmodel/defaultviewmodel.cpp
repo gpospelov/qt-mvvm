@@ -59,6 +59,7 @@ void DefaultViewModel::init_view_model()
 {
     clear();
     setColumnCount(m_row_constructor->columnCount());
+    setHorizontalHeaderLabels(m_row_constructor->horizontalHeaderLabels());
     update_model();
 }
 
