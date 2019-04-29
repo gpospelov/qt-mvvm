@@ -11,21 +11,22 @@
 #include "comboproperty.h"
 #include "customeditor.h"
 #include "defaulteditorfactory.h"
+#include "defaultcelldecoration.h"
 #include <QApplication>
 #include <QDebug>
 
 using namespace ModelView;
 
 ViewModelDelegate::ViewModelDelegate(QObject* parent)
-    : QStyledItemDelegate(parent), m_editor_factory(std::make_unique<DefaultEditorFactory>())
+    : QStyledItemDelegate(parent), m_editor_factory(std::make_unique<DefaultEditorFactory>()), m_cell_decoration(std::make_unique<DefaultCellDecoration>())
 {
 }
 
 void ViewModelDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option,
                               const QModelIndex& index) const
 {
-    if (m_editor_factory->hasStringRepresentation(index)) {
-        QString text = QString::fromStdString(m_editor_factory->toString(index));
+    if (m_cell_decoration->hasCustomDecoration(index)) {
+        QString text = QString::fromStdString(m_cell_decoration->cellText(index));
         paintCustomLabel(painter, option, index, text);
     } else {
         QStyledItemDelegate::paint(painter, option, index);

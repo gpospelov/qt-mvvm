@@ -27,10 +27,6 @@ public:
     CustomEditor* createEditor(const QModelIndex& index, QWidget* parent = nullptr) const;
 
     CustomEditor* createEditor(const SessionItem* item, QWidget* parent = nullptr) const;
-
-    // FIXME find better place for label logic
-    bool hasStringRepresentation(const QModelIndex& index);
-    std::string toString(const QModelIndex& index);
 };
 
 } // namespace ModelView

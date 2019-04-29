@@ -67,28 +67,3 @@ CustomEditor* DefaultEditorFactory::createEditor(const SessionItem* item, QWidge
 
     return result;
 }
-
-//! Returns true if the index data has known (custom) convertion to string.
-
-bool DefaultEditorFactory::hasStringRepresentation(const QModelIndex& index)
-{
-    return !toString(index).empty();
-}
-
-//! Provides string representation of index data.
-
-std::string DefaultEditorFactory::toString(const QModelIndex& index)
-{
-    auto variant = index.data();
-
-    if (Utils::IsComboVariant(variant))
-        return variant.value<ComboProperty>().label();
-
-    else if (Utils::IsBoolVariant(variant))
-        return variant.toBool() ? "True" : "False";
-
-    else if (Utils::IsBoolVariant(variant))
-        return variant.toBool() ? "True" : "False";
-
-    return {};
-}
