@@ -10,14 +10,14 @@
 #include "viewmodeldelegate.h"
 #include "comboproperty.h"
 #include "customeditor.h"
-#include "editorfactory.h"
+#include "defaulteditorfactory.h"
 #include <QApplication>
 #include <QDebug>
 
 using namespace ModelView;
 
 ViewModelDelegate::ViewModelDelegate(QObject* parent)
-    : QStyledItemDelegate(parent), m_editor_factory(std::make_unique<EditorFactory>())
+    : QStyledItemDelegate(parent), m_editor_factory(std::make_unique<DefaultEditorFactory>())
 {
 }
 

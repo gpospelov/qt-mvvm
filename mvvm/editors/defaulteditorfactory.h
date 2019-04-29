@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_EDITORFACTORY_H
-#define MVVM_EDITORFACTORY_H
+#ifndef MVVM_DEFAULTEDITORFACTORY_H
+#define MVVM_DEFAULTEDITORFACTORY_H
 
 #include "editorfactoryinterface.h"
 
@@ -19,10 +19,10 @@ class SessionItem;
 
 //! Default wditor factory for custom variants.
 
-class CORE_EXPORT EditorFactory : public EditorFactoryInterface
+class CORE_EXPORT DefaultEditorFactory : public EditorFactoryInterface
 {
 public:
-    EditorFactory();
+    DefaultEditorFactory();
 
     CustomEditor* createEditor(const QModelIndex& index, QWidget* parent = nullptr) const;
 
@@ -35,4 +35,4 @@ public:
 
 } // namespace ModelView
 
-#endif // MVVM_EDITORFACTORY_H
+#endif // MVVM_DEFAULTEDITORFACTORY_H

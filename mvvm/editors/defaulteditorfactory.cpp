@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "editorfactory.h"
+#include "defaulteditorfactory.h"
 #include "customvariants.h"
 #include "comboproperty.h"
 #include "combopropertyeditor.h"
@@ -32,9 +32,9 @@ const SessionItem* itemFromIndex(const QModelIndex& index)
 
 } // namespace
 
-EditorFactory::EditorFactory() {}
+DefaultEditorFactory::DefaultEditorFactory() {}
 
-CustomEditor* EditorFactory::createEditor(const QModelIndex& index, QWidget* parent) const
+CustomEditor* DefaultEditorFactory::createEditor(const QModelIndex& index, QWidget* parent) const
 {
     CustomEditor* result(nullptr);
 
@@ -44,7 +44,7 @@ CustomEditor* EditorFactory::createEditor(const QModelIndex& index, QWidget* par
     return result;
 }
 
-CustomEditor* EditorFactory::createEditor(const SessionItem* item, QWidget* parent) const
+CustomEditor* DefaultEditorFactory::createEditor(const SessionItem* item, QWidget* parent) const
 {
     if (!item)
         return nullptr;
@@ -70,14 +70,14 @@ CustomEditor* EditorFactory::createEditor(const SessionItem* item, QWidget* pare
 
 //! Returns true if the index data has known (custom) convertion to string.
 
-bool EditorFactory::hasStringRepresentation(const QModelIndex& index)
+bool DefaultEditorFactory::hasStringRepresentation(const QModelIndex& index)
 {
     return !toString(index).empty();
 }
 
 //! Provides string representation of index data.
 
-std::string EditorFactory::toString(const QModelIndex& index)
+std::string DefaultEditorFactory::toString(const QModelIndex& index)
 {
     auto variant = index.data();
 

@@ -19,7 +19,7 @@ class QStandardItem;
 namespace ModelView
 {
 
-class EditorFactory;
+class DefaultEditorFactory;
 
 //! Model delegate to provide editing/painting for custom variants.
 
@@ -51,7 +51,7 @@ private:
     void paintCustomLabel(QPainter* painter, const QStyleOptionViewItem& option,
                           const QModelIndex& index, const QString& text) const;
 
-    std::unique_ptr<EditorFactory> m_editor_factory;
+    std::unique_ptr<DefaultEditorFactory> m_editor_factory;
 };
 
 } // namespace ModelView
