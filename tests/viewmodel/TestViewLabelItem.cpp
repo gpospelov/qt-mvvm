@@ -6,15 +6,15 @@
 
 using namespace ModelView;
 
-class TestViewItem : public ::testing::Test
+class TestViewLabelItem : public ::testing::Test
 {
 public:
-    ~TestViewItem();
+    ~TestViewLabelItem();
 };
 
-TestViewItem::~TestViewItem() = default;
+TestViewLabelItem::~TestViewLabelItem() = default;
 
-TEST_F(TestViewItem, initialViewLabelItem)
+TEST_F(TestViewLabelItem, initialViewLabelItem)
 {
     std::unique_ptr<SessionItem> item(new SessionItem);
 
@@ -26,7 +26,7 @@ TEST_F(TestViewItem, initialViewLabelItem)
 //! ViewLabelItem::data method
 //! Checks that the data method is correctly forwarded to underlying SessionItem.
 
-TEST_F(TestViewItem, ViewLabelItem_data)
+TEST_F(TestViewLabelItem, ViewLabelItem_data)
 {
     // create SessionItem with data on board
     std::unique_ptr<SessionItem> item = std::make_unique<SessionItem>();
@@ -42,7 +42,7 @@ TEST_F(TestViewItem, ViewLabelItem_data)
 //! ViewLabelItem::setData
 //! Checks that the setData method is correctly forwarded to underlying SessionItem.
 
-TEST_F(TestViewItem, ViewLabelItem_setData)
+TEST_F(TestViewLabelItem, ViewLabelItem_setData)
 {
     // create SessionItem with data on board
     std::unique_ptr<SessionItem> item = std::make_unique<SessionItem>();
