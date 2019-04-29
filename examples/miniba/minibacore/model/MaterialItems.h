@@ -24,9 +24,11 @@ class CORE_EXPORT MaterialBaseItem : public ModelView::CompoundItem
 {
 public:
     static const std::string P_NAME;
+    static const std::string P_COLOR;
     MaterialBaseItem(const std::string& model_type);
 protected:
     void register_name();
+    void register_color();
 };
 
 // ----------------------------------------------------------------------------

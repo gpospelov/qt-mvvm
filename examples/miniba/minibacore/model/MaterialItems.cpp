@@ -10,6 +10,7 @@
 #include "MaterialItems.h"
 #include "item_constants.h"
 #include "vectoritem.h"
+#include <QColor>
 
 // ----------------------------------------------------------------------------
 
@@ -23,6 +24,7 @@ MaterialContainerItem::MaterialContainerItem()
 // ----------------------------------------------------------------------------
 
 const std::string MaterialBaseItem::P_NAME = "P_NAME";
+const std::string MaterialBaseItem::P_COLOR = "P_COLOR";
 
 MaterialBaseItem::MaterialBaseItem(const std::string& model_type)
     : ModelView::CompoundItem(model_type)
@@ -35,6 +37,11 @@ void MaterialBaseItem::register_name()
     addProperty<ModelView::PropertyItem>(P_NAME, "Unnamed")->setDisplayName("Name");
 }
 
+void MaterialBaseItem::register_color()
+{
+    addProperty<ModelView::PropertyItem>(P_COLOR, QColor(Qt::green))->setDisplayName("Color");
+}
+
 // ----------------------------------------------------------------------------
 
 const std::string SLDMaterialItem::P_SLD_REAL = "P_SLD_REAL";
@@ -44,6 +51,7 @@ SLDMaterialItem::SLDMaterialItem()
     : MaterialBaseItem(Constants::SLDMaterialType)
 {
     register_name();
+    register_color();
     addProperty<ModelView::PropertyItem>(P_SLD_REAL, 1e-06)->setDisplayName("SLD, real");
     addProperty<ModelView::PropertyItem>(P_SLD_IMAG, 1e-08)->setDisplayName("SLD, imag");
     addProperty<ModelView::VectorItem>("magnetization");

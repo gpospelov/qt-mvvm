@@ -22,6 +22,7 @@ QList<QStandardItem*> MaterialTableRowConstructor::constructRow(ModelView::Sessi
 
     QList<QStandardItem*> result;
     result.push_back(new ModelView::ViewDataItem(item->getItem(SLDMaterialItem::P_NAME)));
+    result.push_back(new ModelView::ViewDataItem(item->getItem(SLDMaterialItem::P_COLOR)));
     result.push_back(new ModelView::ViewDataItem(item->getItem(SLDMaterialItem::P_SLD_REAL)));
     result.push_back(new ModelView::ViewDataItem(item->getItem(SLDMaterialItem::P_SLD_IMAG)));
     return result;
@@ -29,6 +30,6 @@ QList<QStandardItem*> MaterialTableRowConstructor::constructRow(ModelView::Sessi
 
 int MaterialTableRowConstructor::columnCount() const
 {
-    const int fixed_number_of_row_elements(3); // name, sld_real, sld_imag
+    const int fixed_number_of_row_elements(4); // name, color, sld_real, sld_imag
     return fixed_number_of_row_elements;
 }
