@@ -1,6 +1,7 @@
 #include "comparators.h"
 #include "customvariants.h"
 #include "comboproperty.h"
+#include "externalproperty.h"
 #include <QMetaType>
 
 using namespace ModelView;
@@ -13,6 +14,7 @@ void Comparators::registerComparators()
         QMetaType::registerComparators<std::string>();
         QMetaType::registerComparators<std::vector<double>>();
         QMetaType::registerComparators<ComboProperty>();
+        QMetaType::registerComparators<ExternalProperty>();
         m_is_registered = true;
     }
 }

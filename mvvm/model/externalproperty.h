@@ -17,42 +17,37 @@
 
 #include "mvvm_global.h"
 #include <QColor>
-#include <QString>
 #include <QVariant>
 #include <string>
-#include <vector>
 
 namespace ModelView
 {
 
+//! Property for QVariant to carry text, color and identifier. Can be used to link items with each
+//! other.
+
 class CORE_EXPORT ExternalProperty
 {
 public:
-    explicit ExternalProperty();
+    ExternalProperty();
+    ExternalProperty(const std::string& text, const QColor& color, const std::string& id = {});
 
-    QString text() const;
-    void setText(const QString& name);
+    std::string text() const;
 
     QColor color() const;
-    void setColor(const QColor& color);
 
-    QString identifier() const;
-    void setIdentifier(const QString& identifier);
-
-    QPixmap pixmap() const;
+    std::string identifier() const;
 
     bool isValid() const;
-
-    QVariant variant() const;
 
     bool operator==(const ExternalProperty& other) const;
     bool operator!=(const ExternalProperty& other) const;
     bool operator<(const ExternalProperty& other) const;
 
 private:
-    QString m_text;
+    std::string m_text;
     QColor m_color;
-    QString m_identifier;
+    std::string m_identifier;
 };
 
 } // namespace ModelView
