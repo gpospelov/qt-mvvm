@@ -22,9 +22,9 @@ class SessionItem;
 class CORE_EXPORT DefaultEditorFactory : public EditorFactoryInterface
 {
 public:
-    DefaultEditorFactory();
+    ~DefaultEditorFactory();
 
-    CustomEditor* createEditor(const QModelIndex& index) const;
+    std::unique_ptr<CustomEditor> createEditor(const QModelIndex& index) const;
 
 private:
     CustomEditor* createEditor(const SessionItem* item) const;

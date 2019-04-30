@@ -43,9 +43,9 @@ QWidget* ViewModelDelegate::createEditor(QWidget* parent, const QStyleOptionView
 
     if (auto editor = m_editor_factory->createEditor(index)) {
         editor->setParent(parent);
-        connect(editor, &CustomEditor::dataChanged, this,
+        connect(editor.get(), &CustomEditor::dataChanged, this,
                 &ViewModelDelegate::onCustomEditorDataChanged);
-        return editor;
+        return editor.release();
     } else {
         return QStyledItemDelegate::createEditor(parent, option, index);
     }

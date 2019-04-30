@@ -33,16 +33,12 @@ const SessionItem* itemFromIndex(const QModelIndex& index)
 
 } // namespace
 
-DefaultEditorFactory::DefaultEditorFactory() {}
 
-CustomEditor* DefaultEditorFactory::createEditor(const QModelIndex& index) const
+DefaultEditorFactory::~DefaultEditorFactory() = default;
+
+std::unique_ptr<CustomEditor> DefaultEditorFactory::createEditor(const QModelIndex& index) const
 {
-    CustomEditor* result(nullptr);
-
-    if (auto item = itemFromIndex(index))
-        return createEditor(item);
-
-    return result;
+    return std::unique_ptr<CustomEditor>(createEditor(itemFromIndex(index)));
 }
 
 CustomEditor* DefaultEditorFactory::createEditor(const SessionItem* item) const

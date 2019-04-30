@@ -12,6 +12,7 @@
 
 #include "mvvm_global.h"
 #include <string>
+#include <memory>
 
 class QModelIndex;
 class QWidget;
@@ -28,7 +29,7 @@ class CORE_EXPORT EditorFactoryInterface
 public:
     virtual ~EditorFactoryInterface() = default;
 
-    virtual CustomEditor* createEditor(const QModelIndex& index) const = 0;
+    virtual std::unique_ptr<CustomEditor> createEditor(const QModelIndex& index) const = 0;
 };
 
 } // namespace ModelView
