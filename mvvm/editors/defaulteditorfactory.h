@@ -24,10 +24,10 @@ class CORE_EXPORT DefaultEditorFactory : public EditorFactoryInterface
 public:
     DefaultEditorFactory();
 
-    CustomEditor* createEditor(const QModelIndex& index, QWidget* parent = nullptr) const;
+    CustomEditor* createEditor(const QModelIndex& index) const;
 
 private:
-    CustomEditor* createEditor(const SessionItem* item, QWidget* parent = nullptr) const;
+    CustomEditor* createEditor(const SessionItem* item) const;
 };
 
 } // namespace ModelView

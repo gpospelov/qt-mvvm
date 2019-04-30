@@ -35,17 +35,17 @@ const SessionItem* itemFromIndex(const QModelIndex& index)
 
 DefaultEditorFactory::DefaultEditorFactory() {}
 
-CustomEditor* DefaultEditorFactory::createEditor(const QModelIndex& index, QWidget* parent) const
+CustomEditor* DefaultEditorFactory::createEditor(const QModelIndex& index) const
 {
     CustomEditor* result(nullptr);
 
     if (auto item = itemFromIndex(index))
-        return createEditor(item, parent);
+        return createEditor(item);
 
     return result;
 }
 
-CustomEditor* DefaultEditorFactory::createEditor(const SessionItem* item, QWidget* parent) const
+CustomEditor* DefaultEditorFactory::createEditor(const SessionItem* item) const
 {
     if (!item)
         return nullptr;
@@ -65,9 +65,6 @@ CustomEditor* DefaultEditorFactory::createEditor(const SessionItem* item, QWidge
 
     else if (Utils::IsExtPropertyVariant(value))
         result = new ExternalPropertyEditor;
-
-    if (result)
-        result->setParent(parent);
 
     return result;
 }

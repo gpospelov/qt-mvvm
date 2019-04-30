@@ -28,8 +28,7 @@ class CORE_EXPORT EditorFactoryInterface
 public:
     virtual ~EditorFactoryInterface() = default;
 
-    virtual CustomEditor* createEditor(const QModelIndex& index,
-                                       QWidget* parent = nullptr) const = 0;
+    virtual CustomEditor* createEditor(const QModelIndex& index) const = 0;
 };
 
 } // namespace ModelView
