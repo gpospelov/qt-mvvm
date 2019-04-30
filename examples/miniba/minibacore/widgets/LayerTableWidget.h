@@ -14,7 +14,7 @@
 #include <QWidget>
 #include <memory>
 
-class QTreeView;
+class QTableView;
 class CustomModelDelegate;
 class ApplicationModels;
 
@@ -32,10 +32,8 @@ public:
 
     void setItem(ModelView::SessionItem* container);
 
-    QTreeView* treeView();
-
 private:
-    QTreeView* m_treeView;
+    QTableView* m_view;
     std::unique_ptr<ModelView::AbstractViewModel> m_viewModel;
     std::unique_ptr<CustomModelDelegate> m_delegate;
 };
