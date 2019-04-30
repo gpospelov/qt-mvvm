@@ -12,12 +12,17 @@
 
 #include "sessionmodel.h"
 
+class MaterialContainerItem;
+
 //! Model to hold MaterialItems.
 
 class CORE_EXPORT MaterialModel : public ModelView::SessionModel
 {
 public:
     MaterialModel();
+
+    void add_sld_material(ModelView::SessionItem* container, const std::string& name,
+                          const QColor& color, double real, double imag);
 };
 
 #endif //  MATERIALMODEL_H
