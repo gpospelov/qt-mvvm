@@ -8,10 +8,11 @@
 // ************************************************************************** //
 
 #include "CustomModelDelegate.h"
+#include "CustomEditorFactory.h"
 
 
 CustomModelDelegate::CustomModelDelegate(QObject* parent)
     : ModelView::ViewModelDelegate(parent)
 {
-
+    setEditorFactory(std::make_unique<CustomEditorFactory>());
 }

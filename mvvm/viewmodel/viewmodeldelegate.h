@@ -30,6 +30,8 @@ public:
     explicit ViewModelDelegate(QObject* parent = nullptr);
     ~ViewModelDelegate() override;
 
+    void setEditorFactory(std::unique_ptr<EditorFactoryInterface> editor_factory);
+
     void paint(QPainter* painter, const QStyleOptionViewItem& option,
                const QModelIndex& index) const override;
 

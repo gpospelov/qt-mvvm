@@ -23,6 +23,13 @@ ViewModelDelegate::ViewModelDelegate(QObject* parent)
 {
 }
 
+ViewModelDelegate::~ViewModelDelegate() = default;
+
+void ViewModelDelegate::setEditorFactory(std::unique_ptr<EditorFactoryInterface> editor_factory)
+{
+    m_editor_factory = std::move(editor_factory);
+}
+
 void ViewModelDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option,
                               const QModelIndex& index) const
 {
@@ -33,8 +40,6 @@ void ViewModelDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opt
         QStyledItemDelegate::paint(painter, option, index);
     }
 }
-
-ViewModelDelegate::~ViewModelDelegate() = default;
 
 QWidget* ViewModelDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& option,
                                          const QModelIndex& index) const
