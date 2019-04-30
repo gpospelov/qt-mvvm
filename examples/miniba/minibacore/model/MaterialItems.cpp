@@ -54,5 +54,5 @@ SLDMaterialItem::SLDMaterialItem()
     register_color();
     addProperty<ModelView::PropertyItem>(P_SLD_REAL, 1e-06)->setDisplayName("SLD, real");
     addProperty<ModelView::PropertyItem>(P_SLD_IMAG, 1e-08)->setDisplayName("SLD, imag");
-    addProperty<ModelView::VectorItem>("magnetization");
+    addProperty<ModelView::VectorItem>("Magnetization");
 }

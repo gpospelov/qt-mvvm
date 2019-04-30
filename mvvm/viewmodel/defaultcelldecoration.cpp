@@ -10,6 +10,7 @@
 #include "defaultcelldecoration.h"
 #include "comboproperty.h"
 #include "customvariants.h"
+#include "externalproperty.h"
 #include <QModelIndex>
 
 using namespace ModelView;
@@ -29,8 +30,9 @@ std::string DefaultCellDecoration::cellText(const QModelIndex& index) const
     else if (Utils::IsBoolVariant(variant))
         return variant.toBool() ? "True" : "False";
 
-    else if (Utils::IsBoolVariant(variant))
-        return variant.toBool() ? "True" : "False";
+    else if (Utils::IsExtPropertyVariant(variant))
+        return variant.value<ExternalProperty>().text();
 
     return {};
 }
+

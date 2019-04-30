@@ -16,6 +16,7 @@
 #include "abstractviewmodel.h"
 #include "booleditor.h"
 #include "coloreditor.h"
+#include "externalpropertyeditor.h"
 #include <QDebug>
 #include <QModelIndex>
 
@@ -61,6 +62,9 @@ CustomEditor* DefaultEditorFactory::createEditor(const SessionItem* item, QWidge
 
     else if (Utils::IsColorVariant(value))
         result = new ColorEditor;
+
+    else if (Utils::IsExtPropertyVariant(value))
+        result = new ExternalPropertyEditor;
 
     if (result)
         result->setParent(parent);
