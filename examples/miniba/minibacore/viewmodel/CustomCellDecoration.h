@@ -7,25 +7,20 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_DEFAULTCELLDECORATION_H
-#define MVVM_DEFAULTCELLDECORATION_H
+#ifndef CUSTOMCELLDECORATION_H
+#define CUSTOMCELLDECORATION_H
 
-#include "celldecorationinterface.h"
+#include "defaultcelldecoration.h"
 
 class QModelIndex;
 
-namespace ModelView
-{
+//! Generates cell decorations for MaterialEditor.
 
-//! Generates default cell decorations for Qt trees and tables.
-
-class CORE_EXPORT DefaultCellDecoration : public CellDecorationInterface
+class CORE_EXPORT CustomCellDecoration : public ModelView::DefaultCellDecoration
 {
 public:
     bool hasCustomDecoration(const QModelIndex& index) const;
     std::string cellText(const QModelIndex& index) const;
 };
 
-} // namespace ModelView
-
-#endif // MVVM_DEFAULTCELLDECORATION_H
+#endif //  CUSTOMCELLDECORATION_H

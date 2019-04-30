@@ -7,13 +7,15 @@
 //
 // ************************************************************************** //
 
-#include "CustomModelDelegate.h"
-#include "CustomEditorFactory.h"
 #include "CustomCellDecoration.h"
 
-CustomModelDelegate::CustomModelDelegate(ApplicationModels* models, QObject* parent)
-    : ModelView::ViewModelDelegate(parent)
+
+bool CustomCellDecoration::hasCustomDecoration(const QModelIndex& index) const
 {
-    setEditorFactory(std::make_unique<CustomEditorFactory>(models));
-    setCellDecoration(std::make_unique<CustomCellDecoration>());
+    return DefaultCellDecoration::hasCustomDecoration(index);
+}
+
+std::string CustomCellDecoration::cellText(const QModelIndex& index) const
+{
+    return DefaultCellDecoration::cellText(index);
 }

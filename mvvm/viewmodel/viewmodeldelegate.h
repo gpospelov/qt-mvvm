@@ -31,6 +31,7 @@ public:
     ~ViewModelDelegate() override;
 
     void setEditorFactory(std::unique_ptr<EditorFactoryInterface> editor_factory);
+    void setCellDecoration(std::unique_ptr<CellDecorationInterface> cell_decoration);
 
     void paint(QPainter* painter, const QStyleOptionViewItem& option,
                const QModelIndex& index) const override;

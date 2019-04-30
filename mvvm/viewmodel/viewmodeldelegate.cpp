@@ -30,6 +30,11 @@ void ViewModelDelegate::setEditorFactory(std::unique_ptr<EditorFactoryInterface>
     m_editor_factory = std::move(editor_factory);
 }
 
+void ViewModelDelegate::setCellDecoration(std::unique_ptr<CellDecorationInterface> cell_decoration)
+{
+    m_cell_decoration = std::move(cell_decoration);
+}
+
 void ViewModelDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option,
                               const QModelIndex& index) const
 {
