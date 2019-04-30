@@ -13,10 +13,8 @@
 #include "mvvm_global.h"
 #include <memory>
 
-namespace ModelView
-{
-class SessionModel;
-}
+class MaterialModel;
+class SampleModel;
 
 class CORE_EXPORT ApplicationModels
 {
@@ -24,11 +22,11 @@ public:
     ApplicationModels();
     ~ApplicationModels();
 
-    ModelView::SessionModel* materialModel();
-    ModelView::SessionModel* sampleModel();
+    MaterialModel* materialModel();
+    SampleModel* sampleModel();
 
 private:
-    class ApplicationModelsPrivate;
+    struct ApplicationModelsPrivate;
     std::unique_ptr<ApplicationModelsPrivate> p_impl;
 };
 

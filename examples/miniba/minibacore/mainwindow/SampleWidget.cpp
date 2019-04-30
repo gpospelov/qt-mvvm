@@ -13,6 +13,7 @@
 #include "standardviewmodels.h"
 #include "MaterialTableWidget.h"
 #include "LayerTableWidget.h"
+#include "SampleModel.h"
 #include "MaterialModel.h"
 #include "sessionitem.h"
 #include <QVBoxLayout>
