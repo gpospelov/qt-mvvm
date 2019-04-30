@@ -15,5 +15,4 @@ CustomModelDelegate::CustomModelDelegate(ApplicationModels* models, QObject* par
     : ModelView::ViewModelDelegate(parent)
 {
     setEditorFactory(std::make_unique<CustomEditorFactory>(models));
-    setCellDecoration(std::make_unique<CustomCellDecoration>());
 }

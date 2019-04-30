@@ -13,13 +13,15 @@
 #include "viewmodels.h"
 #include "sessionitem.h"
 #include "MaterialTableModel.h"
-
+#include "CustomCellDecoration.h"
 #include <QTreeView>
 #include <QVBoxLayout>
 
 MaterialTableWidget::MaterialTableWidget(QWidget* parent)
     : QWidget(parent), m_treeView(new QTreeView), m_delegate(std::make_unique<ModelView::ViewModelDelegate>())
 {
+    m_delegate->setCellDecoration(std::make_unique<CustomCellDecoration>());
+
     auto layout = new QVBoxLayout;
     layout->setMargin(0);
     layout->setSpacing(0);
@@ -40,6 +42,7 @@ void MaterialTableWidget::setItem(ModelView::SessionItem* container)
     m_treeView->setModel(m_viewModel.get());
     m_treeView->expandAll();
     m_treeView->setRootIsDecorated(false);
+    m_treeView->resizeColumnToContents(1);
 }
 
 MaterialTableWidget::~MaterialTableWidget() = default;
