@@ -13,10 +13,10 @@
 #include "externalproperty.h"
 #include "styleutils.h"
 #include <QColor>
-#include <QDebug>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QToolButton>
+#include <QMessageBox>
 
 using namespace ModelView;
 
@@ -46,12 +46,18 @@ ExternalPropertyEditor::ExternalPropertyEditor(QWidget* parent)
     setLayout(layout);
 }
 
-void ExternalPropertyEditor::buttonClicked() {}
+void ExternalPropertyEditor::buttonClicked()
+{
+    if (m_callback)
+        m_callback(m_data);
+    else
+        QMessageBox::warning(nullptr, "Not configured", "No external dialog configured");
+}
 
 void ExternalPropertyEditor::update_components()
 {
     if (!Utils::IsExtPropertyVariant(m_data))
-        throw std::runtime_error("ColorEditor::update_components() -> Error. Wrong variant type");
+        throw std::runtime_error("Error. Wrong variant type (ExternalProperty is required).");
 
     ExternalProperty prop = m_data.value<ExternalProperty>();
     QPixmap pixmap(Style::DefaultPixmapSize(), Style::DefaultPixmapSize());

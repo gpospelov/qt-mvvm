@@ -11,6 +11,7 @@
 #define MVVM_EXTERNALPROPERTYEDITOR_H
 
 #include "customeditor.h"
+#include <functional>
 
 class QLabel;
 
@@ -34,6 +35,7 @@ private:
     QLabel* m_textLabel;
     QLabel* m_pixmapLabel;
     LostFocusFilter* m_focusFilter;
+    std::function<void(const QVariant&)> m_callback; //! actions to take on clicked button
 };
 
 } // namespace ModelView
