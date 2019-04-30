@@ -15,11 +15,11 @@
 #include <memory>
 
 class QTreeView;
+class CustomModelDelegate;
 
 namespace ModelView
 {
 class AbstractViewModel;
-class ViewModelDelegate;
 class SessionItem;
 } // namespace ModelView
 
@@ -36,7 +36,7 @@ public:
 private:
     QTreeView* m_treeView;
     std::unique_ptr<ModelView::AbstractViewModel> m_viewModel;
-    std::unique_ptr<ModelView::ViewModelDelegate> m_delegate;
+    std::unique_ptr<CustomModelDelegate> m_delegate;
 };
 
 #endif // LAYERTABLEWIDGET_H

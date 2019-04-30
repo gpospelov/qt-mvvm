@@ -9,7 +9,7 @@
 
 #include "LayerTableWidget.h"
 #include "abstractviewmodel.h"
-#include "viewmodeldelegate.h"
+#include "CustomModelDelegate.h"
 #include "viewmodels.h"
 #include "sessionitem.h"
 #include "LayerTableModel.h"
@@ -17,7 +17,7 @@
 #include <QVBoxLayout>
 
 LayerTableWidget::LayerTableWidget(QWidget* parent)
-    : QWidget(parent), m_treeView(new QTreeView), m_delegate(std::make_unique<ModelView::ViewModelDelegate>())
+    : QWidget(parent), m_treeView(new QTreeView), m_delegate(std::make_unique<CustomModelDelegate>())
 {
     auto layout = new QVBoxLayout;
     layout->setMargin(0);
