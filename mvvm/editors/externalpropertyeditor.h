@@ -20,12 +20,15 @@ namespace ModelView
 
 class LostFocusFilter;
 
-//! Custom editor for QVariant based on QColor.
+//! Custom editor for QVariant based on ExternalProperty.
+//! Contains icon, label and button to call external dialog via callback mechanism.
 
 class CORE_EXPORT ExternalPropertyEditor : public CustomEditor
 {
 public:
     explicit ExternalPropertyEditor(QWidget* parent = nullptr);
+
+    void setCallback(std::function<void(const QVariant&)> callback);
 
 private slots:
     void buttonClicked();

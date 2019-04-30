@@ -8,7 +8,6 @@
 // ************************************************************************** //
 
 #include "customeditor.h"
-#include <QDebug>
 
 using namespace ModelView;
 
@@ -20,7 +19,6 @@ CustomEditor::CustomEditor(QWidget* parent)
 
 QVariant CustomEditor::data() const
 {
-    qDebug() << "CustomEditor::data()";
     return m_data;
 }
 
@@ -35,10 +33,11 @@ bool CustomEditor::is_persistent() const
 
 void CustomEditor::setData(const QVariant& data)
 {
-    qDebug() << "CustomEditor::setData()";
     m_data = data;
     update_components();
 }
+
+//! Saves the data as given by editor's internal components and notifies the model.
 
 void CustomEditor::setDataIntern(const QVariant& data)
 {

@@ -45,7 +45,7 @@ signals:
 
 protected:
     void setDataIntern(const QVariant& data);
-    //! Should update editor components from m_data, if necessary.
+    //! Should update widget components from m_data, if necessary.
     virtual void update_components() = 0;
     QVariant m_data;
 };

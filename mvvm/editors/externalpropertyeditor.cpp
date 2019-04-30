@@ -46,12 +46,17 @@ ExternalPropertyEditor::ExternalPropertyEditor(QWidget* parent)
     setLayout(layout);
 }
 
+void ExternalPropertyEditor::setCallback(std::function<void (const QVariant&)> callback)
+{
+    m_callback = callback;
+}
+
 void ExternalPropertyEditor::buttonClicked()
 {
     if (m_callback)
         m_callback(m_data);
     else
-        QMessageBox::warning(nullptr, "Not configured", "No external dialog configured");
+        QMessageBox::warning(nullptr, "Not configured", "No external dialog configured.");
 }
 
 void ExternalPropertyEditor::update_components()
