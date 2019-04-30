@@ -9,11 +9,18 @@
 
 #include "CustomEditorFactory.h"
 #include "customeditor.h"
+#include "MaterialSelectorCellEditor.h"
+#include "customvariants.h"
+#include <QModelIndex>
 
 CustomEditorFactory::~CustomEditorFactory() = default;
 
 std::unique_ptr<ModelView::CustomEditor>
 CustomEditorFactory::createEditor(const QModelIndex& index) const
 {
-    return DefaultEditorFactory::createEditor(index);
+    auto value = index.data(Qt::EditRole);
+    if (ModelView::Utils::IsExtPropertyVariant(value))
+        return std::make_unique<MaterialSelectorCellEditor>();
+    else
+        return DefaultEditorFactory::createEditor(index);
 }
