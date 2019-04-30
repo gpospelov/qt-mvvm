@@ -16,8 +16,8 @@
 #include <QTreeView>
 #include <QVBoxLayout>
 
-LayerTableWidget::LayerTableWidget(QWidget* parent)
-    : QWidget(parent), m_treeView(new QTreeView), m_delegate(std::make_unique<CustomModelDelegate>())
+LayerTableWidget::LayerTableWidget(ApplicationModels* models, QWidget* parent)
+    : QWidget(parent), m_treeView(new QTreeView), m_delegate(std::make_unique<CustomModelDelegate>(models))
 {
     auto layout = new QVBoxLayout;
     layout->setMargin(0);

@@ -11,8 +11,8 @@
 #include "CustomEditorFactory.h"
 
 
-CustomModelDelegate::CustomModelDelegate(QObject* parent)
+CustomModelDelegate::CustomModelDelegate(ApplicationModels* models, QObject* parent)
     : ModelView::ViewModelDelegate(parent)
 {
-    setEditorFactory(std::make_unique<CustomEditorFactory>());
+    setEditorFactory(std::make_unique<CustomEditorFactory>(models));
 }

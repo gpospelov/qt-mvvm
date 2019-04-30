@@ -26,8 +26,8 @@ QStringList toList(const std::vector<std::string>& container)
 
 using namespace ModelView;
 
-MaterialSelectorCellEditor::MaterialSelectorCellEditor(QWidget* parent)
-    : CustomEditor(parent), m_box(new QComboBox)
+MaterialSelectorCellEditor::MaterialSelectorCellEditor(SessionModel* model, QWidget* parent)
+    : CustomEditor(parent), m_box(new QComboBox), m_model(model)
 {
     setAutoFillBackground(true);
     setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);

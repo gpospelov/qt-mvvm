@@ -16,6 +16,7 @@
 
 class QTreeView;
 class CustomModelDelegate;
+class ApplicationModels;
 
 namespace ModelView
 {
@@ -26,7 +27,7 @@ class SessionItem;
 class CORE_EXPORT LayerTableWidget : public QWidget
 {
 public:
-    explicit LayerTableWidget(QWidget* parent = nullptr);
+    explicit LayerTableWidget(ApplicationModels* models, QWidget* parent = nullptr);
     ~LayerTableWidget();
 
     void setItem(ModelView::SessionItem* container);

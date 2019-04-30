@@ -23,7 +23,7 @@ using namespace ModelView;
 SampleWidget::SampleWidget(ApplicationModels* models, QWidget* parent)
     : QWidget(parent), m_materialTree(new ItemsTreeView), m_sampleTree(new ItemsTreeView)
     , m_materialTableWidget(new MaterialTableWidget)
-    , m_layerTableWidget(new LayerTableWidget)
+    , m_layerTableWidget(new LayerTableWidget(models))
     , m_models(models)
 {
     auto mainLayout = new QVBoxLayout;

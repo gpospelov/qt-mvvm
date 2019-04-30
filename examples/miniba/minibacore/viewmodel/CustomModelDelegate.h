@@ -12,10 +12,12 @@
 
 #include "viewmodeldelegate.h"
 
+class ApplicationModels;
+
 class CORE_EXPORT CustomModelDelegate : public ModelView::ViewModelDelegate
 {
 public:
-    explicit CustomModelDelegate(QObject* parent = nullptr);
+    explicit CustomModelDelegate(ApplicationModels* models, QObject* parent = nullptr);
 
 };
 

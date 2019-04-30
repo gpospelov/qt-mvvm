@@ -14,12 +14,17 @@
 
 class QComboBox;
 
+namespace ModelView
+{
+class SessionModel;
+}
+
 //! Custom editor for table cells to select material from the list of existing materials.
 
 class CORE_EXPORT MaterialSelectorCellEditor : public ModelView::CustomEditor
 {
 public:
-    explicit MaterialSelectorCellEditor(QWidget* parent = nullptr);
+    explicit MaterialSelectorCellEditor(ModelView::SessionModel* model, QWidget* parent = nullptr);
 
     QSize sizeHint() const override;
     QSize minimumSizeHint() const override;
@@ -33,6 +38,7 @@ private:
     void setConnected(bool isConnected);
     void update_components() override;
     QComboBox* m_box;
+    ModelView::SessionModel* m_model;
 };
 
 #endif // MATERIALSELECTORCELLEDITOR_H
