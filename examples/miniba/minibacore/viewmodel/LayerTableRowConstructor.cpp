@@ -24,17 +24,18 @@ QList<QStandardItem*> LayerTableRowConstructor::constructRow(ModelView::SessionI
     QList<QStandardItem*> result;
     result.push_back(new ModelView::ViewDataItem(item->parent()->getItem(MultiLayerItem::P_NREPETITIONS)));
     result.push_back(new ModelView::ViewDataItem(item->getItem(LayerItem::P_NAME)));
+    result.push_back(new ModelView::ViewDataItem(item->getItem(LayerItem::P_MATERIAL)));
     result.push_back(new ModelView::ViewDataItem(item->getItem(LayerItem::P_THICKNESS)));
     return result;
 }
 
 int LayerTableRowConstructor::columnCount() const
 {
-    const int fixed_number_of_row_elements(3); // Nr, Name, Thickness
+    const int fixed_number_of_row_elements(4); // Nr, Name, Material, Thickness
     return fixed_number_of_row_elements;
 }
 
 QStringList LayerTableRowConstructor::horizontalHeaderLabels() const
 {
-    return QStringList() << "Nr." << "Name" << "Thickness";
+    return QStringList() << "Nr." << "Name" << "Material" << "Thickness";
 }

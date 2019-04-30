@@ -25,7 +25,7 @@ const std::string LayerItem::P_THICKNESS = "P_THICKNESS";
 
 LayerItem::LayerItem() : ModelView::CompoundItem(Constants::LayerType)
 {
-    addProperty<ModelView::PropertyItem>(P_NAME, "Unnamed layer")->setDisplayName("Name");
+    addProperty<ModelView::PropertyItem>(P_NAME, "Layer")->setDisplayName("Name");
     addProperty<ModelView::PropertyItem>(P_MATERIAL, material_link())->setDisplayName("Material");
     addProperty<ModelView::PropertyItem>(P_THICKNESS, 42.0)->setDisplayName("Thickness");
 }
