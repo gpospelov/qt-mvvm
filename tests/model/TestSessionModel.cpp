@@ -144,3 +144,16 @@ TEST_F(TestSessionModel, takeRowFromRootItem)
     EXPECT_EQ(model.manager()->itemPool()->item_for_key(child_key), nullptr);
     delete taken;
 }
+
+TEST_F(TestSessionModel, resetModel)
+{
+    SessionModel model;
+
+    EXPECT_EQ(model.rootItem()->childrenCount(), 0);
+    model.insertNewItem(Constants::BaseType);
+    model.insertNewItem(Constants::BaseType);
+    EXPECT_EQ(model.rootItem()->childrenCount(), 2);
+
+    model.reset();
+    EXPECT_EQ(model.rootItem()->childrenCount(), 0);
+}

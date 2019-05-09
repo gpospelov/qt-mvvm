@@ -62,6 +62,8 @@ public:
 
     ModelMapper* mapper();
 
+    void reset();
+
 protected:
     std::unique_ptr<ItemManager> m_item_manager;
 

@@ -133,6 +133,16 @@ ModelMapper* SessionModel::mapper()
     return m_mapper.get();
 }
 
+//! Reset model content
+
+void SessionModel::reset()
+{
+    // FIXME Is it not better to just recreate root item.
+    // But Which kind of signals should be emitted then?
+    while(rootItem()->childrenCount())
+        removeItem(rootItem(), "", 0);
+}
+
 void SessionModel::createRootItem()
 {
     m_root_item = m_item_manager->createRootItem();
