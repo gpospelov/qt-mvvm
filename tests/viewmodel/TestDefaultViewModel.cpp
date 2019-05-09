@@ -365,6 +365,25 @@ TEST_F(TestDefaultViewModel, setRootItem)
 
 //! On model destroyed.
 
+TEST_F(TestDefaultViewModel, onModelReset)
+{
+    std::unique_ptr<SessionModel> model = std::make_unique<SessionModel>();
+    const model_type modelType(Constants::BaseType);
+    model->insertNewItem(modelType);
+    model->insertNewItem(modelType);
+    model->insertNewItem(modelType);
+
+    DefaultViewModel viewModel;
+    viewModel.setSessionModel(model.get());
+
+    model->clear();
+    EXPECT_EQ(viewModel.rowCount(), 0);
+    EXPECT_EQ(viewModel.columnCount(), 0);
+}
+
+
+//! On model destroyed.
+
 TEST_F(TestDefaultViewModel, onModelDestroyed)
 {
     std::unique_ptr<SessionModel> model = std::make_unique<SessionModel>();

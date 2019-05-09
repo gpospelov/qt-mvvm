@@ -24,19 +24,21 @@ void MockWidgetForItem::setItem(ModelView::SessionItem* item)
     if (m_item == nullptr)
         return;
 
-    auto itemDestroy = [this](ModelView::SessionItem* item) {
+    auto on_item_destroy = [this](ModelView::SessionItem* item) {
         m_item = nullptr;
         onItemDestroy(item);
     };
-    m_item->mapper()->setOnItemDestroy(itemDestroy, this);
+    m_item->mapper()->setOnItemDestroy(on_item_destroy, this);
 
-    auto dataChange = [this](ModelView::SessionItem* item, int role) { onDataChange(item, role); };
-    m_item->mapper()->setOnDataChange(dataChange, this);
+    auto on_data_change = [this](ModelView::SessionItem* item, int role) {
+        onDataChange(item, role);
+    };
+    m_item->mapper()->setOnDataChange(on_data_change, this);
 
-    auto propertyChange = [this](ModelView::SessionItem* item, std::string name) {
+    auto on_property_change = [this](ModelView::SessionItem* item, std::string name) {
         onPropertyChange(item, name);
     };
-    m_item->mapper()->setOnPropertyChange(propertyChange, this);
+    m_item->mapper()->setOnPropertyChange(on_property_change, this);
 }
 
 // ----------------------------------------------------------------------------
@@ -59,25 +61,27 @@ void MockWidgetForModel::setModel(ModelView::SessionModel* model)
     if (m_model == nullptr)
         return;
 
-    auto dataChange = [this](ModelView::SessionItem* item, int role) { onDataChange(item, role); };
-    m_model->mapper()->setOnDataChange(dataChange, this);
+    auto on_data_change = [this](ModelView::SessionItem* item, int role) {
+        onDataChange(item, role);
+    };
+    m_model->mapper()->setOnDataChange(on_data_change, this);
 
-    auto rowInserted = [this](ModelView::SessionItem* item, std::string tag, int row) {
+    auto on_row_inserted = [this](ModelView::SessionItem* item, std::string tag, int row) {
         onRowInserted(item, tag, row);
     };
-    m_model->mapper()->setOnRowInserted(rowInserted, this);
+    m_model->mapper()->setOnRowInserted(on_row_inserted, this);
 
-    auto rowRemoved = [this](ModelView::SessionItem* item, std::string tag, int row) {
+    auto on_row_removed = [this](ModelView::SessionItem* item, std::string tag, int row) {
         onRowRemoved(item, tag, row);
     };
-    m_model->mapper()->setOnRowRemoved(rowRemoved, this);
+    m_model->mapper()->setOnRowRemoved(on_row_removed, this);
 
-    auto modelDestroyed = [this](ModelView::SessionModel* model) {
+    auto on_model_destroyed = [this](ModelView::SessionModel* model) {
         m_model = nullptr;
         onModelDestroyed(model);
     };
-    m_model->mapper()->setOnModelDestroyed(modelDestroyed, this);
+    m_model->mapper()->setOnModelDestroyed(on_model_destroyed, this);
 
-    auto modelReset = [this](ModelView::SessionModel* model) { onModelReset(model); };
-    m_model->mapper()->setOnModelReset(modelReset, this);
+    auto on_model_reset = [this](ModelView::SessionModel* model) { onModelReset(model); };
+    m_model->mapper()->setOnModelReset(on_model_reset, this);
 }

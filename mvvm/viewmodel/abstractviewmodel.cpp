@@ -51,6 +51,9 @@ void AbstractViewModel::setSessionModel(SessionModel* model)
         auto on_model_destroyed = [this](SessionModel*) { m_sessionModel = nullptr; clear();};
         m_sessionModel->mapper()->setOnModelDestroyed(on_model_destroyed, this);
 
+        auto on_model_reset = [this](SessionModel*) { clear();};
+        m_sessionModel->mapper()->setOnModelReset(on_model_reset, this);
+
         m_rootItem = model->rootItem();
 
         init_view_model();
