@@ -148,7 +148,8 @@ QJsonObject from_int(const QVariant& variant)
 
 QVariant to_int(const QJsonObject& object)
 {
-    return object[variantValueKey].toVariant();
+    // deliberately recreating variant, otherwise it is changing type to QVariant::Double
+    return QVariant::fromValue(object[variantValueKey].toVariant().toInt());
 }
 
 QJsonObject from_string(const QVariant& variant)

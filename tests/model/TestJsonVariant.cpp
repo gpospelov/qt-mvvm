@@ -3,6 +3,7 @@
 #include "test_utils.h"
 #include "comboproperty.h"
 #include "externalproperty.h"
+#include "customvariants.h"
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QColor>
@@ -59,9 +60,8 @@ TEST_F(TestJsonVariant, intVariant)
 
     // from json object to variant
     QVariant reco_variant = converter.get_variant(object);
-    EXPECT_TRUE(reco_variant.isValid());
+    EXPECT_TRUE(Utils::IsIntVariant(reco_variant));
     EXPECT_EQ(reco_variant.toInt(), value);
-
     EXPECT_EQ(variant, reco_variant);
 }
 
@@ -80,7 +80,7 @@ TEST_F(TestJsonVariant, stringVariant)
 
     // from json object to variant
     QVariant reco_variant = converter.get_variant(object);
-    EXPECT_TRUE(reco_variant.isValid());
+    EXPECT_TRUE(Utils::IsStdStringVariant(reco_variant));
     EXPECT_EQ(reco_variant.value<std::string>(), value);
 
     EXPECT_EQ(variant, reco_variant);
@@ -101,7 +101,7 @@ TEST_F(TestJsonVariant, doubleVariant)
 
     // from json object to variant
     QVariant reco_variant = converter.get_variant(object);
-    EXPECT_TRUE(reco_variant.isValid());
+    EXPECT_TRUE(Utils::IsDoubleVariant(reco_variant));
     EXPECT_EQ(reco_variant.toDouble(), value);
     EXPECT_EQ(variant, reco_variant);
 }
@@ -121,7 +121,7 @@ TEST_F(TestJsonVariant, vectorOfDoubleVariant)
 
     // from json object to variant
     QVariant reco_variant = converter.get_variant(object);
-    EXPECT_TRUE(reco_variant.isValid());
+    EXPECT_TRUE(Utils::IsDoubleVectorVariant(reco_variant));
     EXPECT_EQ(reco_variant.value<std::vector<double>>(), value);
     EXPECT_EQ(variant, reco_variant);
 }
@@ -145,7 +145,7 @@ TEST_F(TestJsonVariant, comboPropertyVariant)
 
     // from json object to variant
     QVariant reco_variant = converter.get_variant(object);
-    EXPECT_TRUE(reco_variant.isValid());
+    EXPECT_TRUE(Utils::IsComboVariant(reco_variant));
     EXPECT_EQ(reco_variant.value<ComboProperty>(), value);
     EXPECT_EQ(variant, reco_variant);
 }
@@ -165,7 +165,7 @@ TEST_F(TestJsonVariant, colorVariant)
 
     // from json object to variant
     QVariant reco_variant = converter.get_variant(object);
-    EXPECT_TRUE(reco_variant.isValid());
+    EXPECT_TRUE(Utils::IsColorVariant(reco_variant));
     EXPECT_EQ(reco_variant.value<QColor>(), value);
     EXPECT_EQ(variant, reco_variant);
 }
@@ -185,7 +185,7 @@ TEST_F(TestJsonVariant, extPropVariant)
 
     // from json object to variant
     QVariant reco_variant = converter.get_variant(object);
-    EXPECT_TRUE(reco_variant.isValid());
+    EXPECT_TRUE(Utils::IsExtPropertyVariant(reco_variant));
     EXPECT_EQ(reco_variant.value<ExternalProperty>(), value);
     EXPECT_EQ(variant, reco_variant);
 }
