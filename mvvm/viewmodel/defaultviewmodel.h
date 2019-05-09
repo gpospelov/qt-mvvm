@@ -46,6 +46,8 @@ protected:
     void onRowInserted(SessionItem* parent, std::string tag, int row) override;
     void onRowRemoved(SessionItem* parent, std::string tag, int row) override;
 
+    void generate_children_views(SessionItem* parent);
+
     void update_model();
     virtual void iterate(const SessionItem* item, QStandardItem* parent);
     virtual std::vector<SessionItem*> item_children(const SessionItem* item) const;

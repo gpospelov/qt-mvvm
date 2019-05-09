@@ -85,8 +85,9 @@ void DefaultViewModel::onDataChange(SessionItem* item, int role)
 
 void DefaultViewModel::onRowInserted(SessionItem* parent, std::string tag, int row)
 {
-    qDebug() << "DefaultViewModel::onRowInserted";
-    onRowRemoved(parent, tag, row);
+    Q_UNUSED(row)
+    Q_UNUSED(tag)
+    generate_children_views(parent);
 }
 
 //! Removes views (QStandardItem's) corresponding to given SessionItem and its row.
@@ -97,7 +98,13 @@ void DefaultViewModel::onRowRemoved(SessionItem* parent, std::string tag, int ro
 {
     Q_UNUSED(row)
     Q_UNUSED(tag)
+    generate_children_views(parent);
+}
 
+//! Regenerate all views of given parent.
+
+void DefaultViewModel::generate_children_views(SessionItem* parent)
+{
     auto views = findStandardViews(parent);
     for (auto view : views)
         view->removeRows(0, view->rowCount());
