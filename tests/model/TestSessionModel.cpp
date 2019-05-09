@@ -145,7 +145,7 @@ TEST_F(TestSessionModel, takeRowFromRootItem)
     delete taken;
 }
 
-TEST_F(TestSessionModel, resetModel)
+TEST_F(TestSessionModel, clearModel)
 {
     SessionModel model;
 
@@ -154,6 +154,6 @@ TEST_F(TestSessionModel, resetModel)
     model.insertNewItem(Constants::BaseType);
     EXPECT_EQ(model.rootItem()->childrenCount(), 2);
 
-    model.reset();
+    model.clear();
     EXPECT_EQ(model.rootItem()->childrenCount(), 0);
 }
