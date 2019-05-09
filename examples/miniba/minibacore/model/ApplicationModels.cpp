@@ -17,7 +17,6 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QFile>
-#include <QDebug>
 
 struct ApplicationModels::ApplicationModelsPrivate
 {
@@ -57,10 +56,12 @@ void ApplicationModels::readFromFile(const QString& name)
         throw std::runtime_error("readFromFile() -> Unexpected amount of files");
 
     ModelView::JsonModel converter;
+
     p_impl->m_material_model->clear();
     converter.json_to_model(array.at(0).toObject(), *p_impl->m_material_model);
 
-    qDebug() << "AAA" << p_impl->m_material_model->rootItem()->childrenCount();
+    p_impl->m_sample_model->clear();
+    converter.json_to_model(array.at(1).toObject(), *p_impl->m_sample_model);
 }
 
 void ApplicationModels::writeToFile(const QString& name)
