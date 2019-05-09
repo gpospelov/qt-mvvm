@@ -51,10 +51,9 @@ void AbstractViewModel::setSessionModel(SessionModel* model)
         auto on_model_destroyed = [this](SessionModel*) { m_sessionModel = nullptr; clear();};
         m_sessionModel->mapper()->setOnModelDestroyed(on_model_destroyed, this);
 
-        auto on_model_reset = [this](SessionModel*) { clear();};
+        // FIXME how get number of columns back?
+        auto on_model_reset = [this](SessionModel*) { clear(); m_rootItem = nullptr;};
         m_sessionModel->mapper()->setOnModelReset(on_model_reset, this);
-
-        m_rootItem = model->rootItem();
 
         init_view_model();
     }
@@ -65,7 +64,7 @@ void AbstractViewModel::setSessionModel(SessionModel* model)
 
 SessionItem* AbstractViewModel::rootSessionItem() const
 {
-    return m_rootItem;
+    return m_rootItem ? m_rootItem : m_sessionModel->rootItem();
 }
 
 //! Returns QStandardItem associated with top level item (rootSessionItem).

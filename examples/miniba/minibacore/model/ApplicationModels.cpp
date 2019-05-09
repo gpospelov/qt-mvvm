@@ -12,10 +12,12 @@
 #include "SampleModel.h"
 #include "item_constants.h"
 #include "jsonmodel.h"
+#include "sessionitem.h"
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QFile>
+#include <QDebug>
 
 struct ApplicationModels::ApplicationModelsPrivate
 {
@@ -43,7 +45,22 @@ SampleModel* ApplicationModels::sampleModel()
 
 void ApplicationModels::readFromFile(const QString& name)
 {
-    Q_UNUSED(name)
+    QFile jsonFile(name);
+
+    if (!jsonFile.open(QIODevice::ReadOnly))
+        throw std::runtime_error("readFromFile() -> Can't read file");
+
+    auto document = QJsonDocument::fromJson(jsonFile.readAll());
+
+    auto array = document.array();
+    if (array.size() != 2)
+        throw std::runtime_error("readFromFile() -> Unexpected amount of files");
+
+    ModelView::JsonModel converter;
+    p_impl->m_material_model->clear();
+    converter.json_to_model(array.at(0).toObject(), *p_impl->m_material_model);
+
+    qDebug() << "AAA" << p_impl->m_material_model->rootItem()->childrenCount();
 }
 
 void ApplicationModels::writeToFile(const QString& name)
