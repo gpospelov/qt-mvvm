@@ -13,6 +13,9 @@
 #include <QTabWidget>
 #include <QCoreApplication>
 #include <QSettings>
+#include <QMenuBar>
+#include <QAction>
+#include <QFileDialog>
 
 namespace {
     const QString main_window_group = "MainWindow";
@@ -23,11 +26,12 @@ namespace {
 MainWindow::MainWindow()
     : m_tabWidget(new QTabWidget), m_models(std::make_unique<ApplicationModels>())
 {    
-    m_tabWidget->addTab(new SampleWidget(m_models.get()), "Model basics");
+    m_tabWidget->addTab(new SampleWidget(m_models.get()), "Materials and Layers");
 
     m_tabWidget->setCurrentIndex(m_tabWidget->count()-1);
     setCentralWidget(m_tabWidget);
 
+    create_menus();
     init_application();
 }
 
@@ -61,4 +65,33 @@ void MainWindow::write_settings()
     settings.setValue(size_key, size());
     settings.setValue(pos_key, pos());
     settings.endGroup();
+}
+
+//! Creates application file menu.
+
+void MainWindow::create_menus()
+{
+    auto fileMenu = menuBar()->addMenu("&File");
+
+    // open file
+    auto openAction = new QAction("&Open...", this);
+    fileMenu->addAction(openAction);
+    auto onOpenAction = [&]() {
+        QString fileName = QFileDialog::getOpenFileName(this);
+        if (!fileName.isEmpty())
+            m_models->readFromFile(fileName);
+    };
+    connect(openAction, &QAction::triggered, onOpenAction);
+
+    // save file
+    auto saveAction = new QAction("&Save As...", this);
+    fileMenu->addAction(saveAction);
+
+    auto onSaveAction = [&]() {
+        QString fileName = QFileDialog::getSaveFileName(this);
+        if (!fileName.isEmpty())
+            m_models->writeToFile(fileName);
+    };
+    connect(saveAction, &QAction::triggered, onSaveAction);
+
 }

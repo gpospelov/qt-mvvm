@@ -17,7 +17,9 @@
 class ApplicationModels;
 class QTabWidget;
 
-class MainWindow : public QMainWindow
+//! Application main window.
+
+class CORE_EXPORT MainWindow : public QMainWindow
 {
     Q_OBJECT
 public:
@@ -30,6 +32,7 @@ protected:
 private:
     void init_application();
     void write_settings();
+    void create_menus();
 
     QTabWidget* m_tabWidget;
     std::unique_ptr<ApplicationModels> m_models;

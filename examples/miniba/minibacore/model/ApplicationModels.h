@@ -11,6 +11,7 @@
 #define APPLICATIONMODELS_H
 
 #include "mvvm_global.h"
+#include <QString>
 #include <memory>
 
 class MaterialModel;
@@ -24,6 +25,10 @@ public:
 
     MaterialModel* materialModel();
     SampleModel* sampleModel();
+
+    void readFromFile(const QString& name);
+
+    void writeToFile(const QString& name);
 
 private:
     struct ApplicationModelsPrivate;

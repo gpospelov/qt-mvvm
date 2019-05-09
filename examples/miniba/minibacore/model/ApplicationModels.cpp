@@ -35,3 +35,13 @@ SampleModel* ApplicationModels::sampleModel()
 {
     return p_impl->m_sample_model.get();
 }
+
+void ApplicationModels::readFromFile(const QString& name)
+{
+    Q_UNUSED(name)
+}
+
+void ApplicationModels::writeToFile(const QString& name)
+{
+
+}
