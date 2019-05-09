@@ -11,6 +11,11 @@
 #include "MaterialModel.h"
 #include "SampleModel.h"
 #include "item_constants.h"
+#include "jsonmodel.h"
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QFile>
 
 struct ApplicationModels::ApplicationModelsPrivate
 {
@@ -43,5 +48,24 @@ void ApplicationModels::readFromFile(const QString& name)
 
 void ApplicationModels::writeToFile(const QString& name)
 {
+    ModelView::JsonModel converter;
 
+    auto object = std::make_unique<QJsonObject>();
+    converter.model_to_json(*p_impl->m_material_model, *object);
+
+    QJsonArray array;
+    array.push_back(*object);
+
+    object = std::make_unique<QJsonObject>();
+    converter.model_to_json(*p_impl->m_sample_model, *object);
+    array.push_back(*object);
+
+    QJsonDocument document(array);
+
+    QFile saveFile(name);
+
+    if (!saveFile.open(QIODevice::WriteOnly))
+        throw std::runtime_error("writeToFile -> Can't save file");
+
+    saveFile.write(document.toJson());
 }
