@@ -139,6 +139,7 @@ void SessionModel::clear()
 {
     // FIXME Is it not better to just recreate root item.
     // But Which kind of signals should be emitted then?
+    mapper()->callOnModelReset();
     while(rootItem()->childrenCount())
         removeItem(rootItem(), "", 0);
 }
