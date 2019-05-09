@@ -48,6 +48,11 @@ void ModelMapper::setOnModelDestroyed(Callbacks::model_t f, Callbacks::client_t 
     m_on_model_destroyed.add(f, client);
 }
 
+void ModelMapper::setOnModelReset(Callbacks::model_t f, Callbacks::client_t client)
+{
+    m_on_model_reset.add(f, client);
+}
+
 //! Sets activity flag to given value. Will disable all callbacks if false.
 
 void ModelMapper::setActive(bool value)
@@ -63,6 +68,7 @@ void ModelMapper::unsubscribe(Callbacks::client_t client)
     m_on_row_inserted.remove_client(client);
     m_on_row_removed.remove_client(client);
     m_on_model_destroyed.remove_client(client);
+    m_on_model_reset.remove_client(client);
 }
 
 //! Notifies all callbacks subscribed to "item data is changed" event.
@@ -90,4 +96,9 @@ void ModelMapper::callOnRowRemoved(SessionItem* parent, std::string tag, int ind
 void ModelMapper::callOnModelDestroyed()
 {
     m_on_model_destroyed.notify(m_model);
+}
+
+void ModelMapper::callOnModelReset()
+{
+    m_on_model_reset.notify(m_model);
 }
