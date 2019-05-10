@@ -10,13 +10,9 @@
 #ifndef MVVM_SETVALUECOMMAND_H
 #define MVVM_SETVALUECOMMAND_H
 
-#include "mvvm_global.h"
+#include "abstractitemcommand.h"
 #include "path.h"
-#include <QUndoCommand>
 #include <QVariant>
-#include <memory>
-
-class QJsonObject;
 
 namespace ModelView {
 
@@ -25,7 +21,7 @@ class SessionItem;
 
 //! Command for unddo/redo framework to set the data of SessionItem.
 
-class CORE_EXPORT SetValueCommand : public QUndoCommand
+class CORE_EXPORT SetValueCommand : public AbstractItemCommand
 {
 public:
     using result_t = bool;

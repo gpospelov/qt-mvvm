@@ -10,12 +10,9 @@
 #ifndef MVVM_INSERTNEWITEMCOMMAND_H
 #define MVVM_INSERTNEWITEMCOMMAND_H
 
-#include "mvvm_global.h"
+#include "abstractitemcommand.h"
 #include "mvvm_types.h"
 #include "path.h"
-#include <QUndoCommand>
-
-class QJsonObject;
 
 namespace ModelView {
 
@@ -24,7 +21,7 @@ class SessionItem;
 
 //! Command for unddo/redo to insert new item.
 
-class CORE_EXPORT InsertNewItemCommand : public QUndoCommand
+class CORE_EXPORT InsertNewItemCommand : public AbstractItemCommand
 {
 public:
     using result_t = SessionItem*;
