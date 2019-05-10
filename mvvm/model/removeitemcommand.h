@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_COMMANDS_H
-#define MVVM_COMMANDS_H
+#ifndef MVVM_REMOVEITEMCOMMAND_H
+#define MVVM_REMOVEITEMCOMMAND_H
 
 #include "mvvm_global.h"
 #include "mvvm_types.h"
@@ -24,35 +24,15 @@ namespace ModelView {
 class SessionModel;
 class SessionItem;
 
-//! Command for unddo/redo framework to set the data of SessionItem.
+//! Command for unddo/redo framework to remove item from a model using given child index.
 
-class CORE_EXPORT SetValueCommand : public QUndoCommand
+class CORE_EXPORT RemoveItemCommand : public QUndoCommand
 {
 public:
     using result_t = bool;
-    SetValueCommand(SessionItem* item, QVariant value, int role);
 
-    void undo() override;
-    void redo() override;
-
-    result_t result() const;
-
-private:
-    QVariant m_value;
-    int m_role;
-    Path m_path;
-    SessionModel* m_model;
-    result_t m_result;
-};
-
-//! Command for unddo/redo to insert new item.
-
-class CORE_EXPORT InsertNewItemCommand : public QUndoCommand
-{
-public:
-    using result_t = SessionItem*;
-
-    InsertNewItemCommand(model_type modelType, SessionItem* parent, std::string tag, int row);
+    RemoveItemCommand(SessionItem* parent, std::string tag, int row);
+    ~RemoveItemCommand() override;
 
     void undo() override;
     void redo() override;
@@ -63,11 +43,11 @@ private:
     Path m_parent_path;
     std::string m_tag;
     int m_row;
-    model_type m_model_type;
+    std::unique_ptr<QJsonObject> m_child_backup;
     SessionModel* m_model;
     result_t m_result;
 };
 
 }  // namespace ModelView
 
-#endif // MVVM_COMMANDS_H
+#endif // MVVM_REMOVEITEMCOMMAND_H
