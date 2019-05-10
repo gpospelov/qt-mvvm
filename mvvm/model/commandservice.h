@@ -12,6 +12,7 @@
 
 #include "mvvm_global.h"
 #include "mvvm_types.h"
+#include "commandadapter.h"
 #include <memory>
 #include <QUndoStack>
 
@@ -59,16 +60,15 @@ private:
 template <typename C, typename... Args>
 typename C::result_t CommandService::process_command(Args&&... args)
 {
-    auto command = std::make_unique<C>(std::forward<Args>(args)...);
-
-    // FIXME replace logic below with shared_ptr
     typename C::result_t result;
+
     if (provideUndo()) {
-        m_commands->push(command.get());
-        if (m_commands->count() && (m_commands->command(m_commands->count()-1) == command.get()))
-            result = command->result();
-        command.release();
+        auto command = std::make_shared<C>(std::forward<Args>(args)...);
+        auto adapter = new CommandAdapter(command);
+        m_commands->push(adapter);
+        result = command->result();
     } else {
+        auto command = std::make_unique<C>(std::forward<Args>(args)...);
         command->redo();
         result = command->result();
     }

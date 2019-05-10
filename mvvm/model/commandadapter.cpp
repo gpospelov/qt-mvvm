@@ -12,6 +12,14 @@
 
 using namespace ModelView;
 
+CommandAdapter::CommandAdapter(std::shared_ptr<AbstractItemCommand> command)
+    : m_command(std::move(command))
+{
+
+}
+
+CommandAdapter::~CommandAdapter() = default;
+
 void CommandAdapter::undo()
 {
     m_command->undo();
@@ -20,4 +28,5 @@ void CommandAdapter::undo()
 void CommandAdapter::redo()
 {
     m_command->redo();
+    setObsolete(m_command->isObsolete());
 }

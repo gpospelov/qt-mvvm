@@ -24,6 +24,7 @@ class AbstractItemCommand;
 class CORE_EXPORT CommandAdapter : public QUndoCommand
 {
 public:
+    CommandAdapter(std::shared_ptr<AbstractItemCommand> command);
     ~CommandAdapter() override;
 
     void undo() override;
