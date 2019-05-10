@@ -1,5 +1,5 @@
 #include "commands.h"
-#include "removeitemcommand.h"
+#include "setvaluecommand.h"
 #include "google_test.h"
 #include "sessionitem.h"
 #include "sessionmodel.h"
