@@ -27,12 +27,12 @@ bool AbstractItemCommand::isObsolete() const
     return m_is_obsolete;
 }
 
-QString AbstractItemCommand::text() const
+std::string AbstractItemCommand::text() const
 {
     return m_text;
 }
 
-void AbstractItemCommand::setText(const QString& text)
+void AbstractItemCommand::setText(const std::string& text)
 {
     m_text = text;
 }

@@ -10,6 +10,16 @@
 #include "setvaluecommand.h"
 #include "sessionmodel.h"
 #include "sessionitem.h"
+#include <sstream>
+
+namespace  {
+std::string description(const std::string& str) {
+    std::ostringstream ostr;
+    ostr << "Set value " << str;
+    return ostr.str();
+}
+}
+
 
 using namespace ModelView;
 
@@ -21,7 +31,7 @@ SetValueCommand::SetValueCommand(SessionItem* item, QVariant value, int role)
 {
     Q_ASSERT(m_model);
     m_path = m_model->pathFromItem(item);
-    setText(QString("Set value %1").arg(m_value.toString()));
+    setText(description(m_value.toString().toStdString()));
 }
 
 void SetValueCommand::undo()

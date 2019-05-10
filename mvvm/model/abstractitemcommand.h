@@ -11,7 +11,7 @@
 #define MVVM_ABSTRACTITEMCOMMAND_H
 
 #include "mvvm_global.h"
-#include <QString>
+#include <string>
 
 namespace ModelView
 {
@@ -31,13 +31,13 @@ public:
     void setObsolete(bool flag);
     bool isObsolete() const;
 
-    QString text() const;
+    std::string text() const;
 
-    void setText(const QString& text);
+    void setText(const std::string& text);
 
 private:
     bool m_is_obsolete;
-    QString m_text;
+    std::string m_text;
 };
 
 } // namespace ModelView

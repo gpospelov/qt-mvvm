@@ -47,7 +47,6 @@ public:
 private:
     template <typename C, typename... Args> typename C::result_t process_command(Args&&... args);
 
-    bool run_command(QUndoCommand* command);
     bool provideUndo() const;
 
     SessionModel* m_model;

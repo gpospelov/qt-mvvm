@@ -12,7 +12,16 @@
 #include "sessionitem.h"
 #include "jsonitem.h"
 #include "itemmanager.h"
+#include <sstream>
 #include <QJsonObject>
+
+namespace  {
+std::string description(const std::string& tag, int row) {
+    std::ostringstream ostr;
+    ostr << "Remove item from tag '" << tag << "', row " << row;
+    return ostr.str();
+}
+}
 
 using namespace ModelView;
 
@@ -22,10 +31,8 @@ RemoveItemCommand::RemoveItemCommand(SessionItem* parent, std::string tag, int r
     , m_model(parent->model())
     , m_result(true)
 {
-    Q_ASSERT(m_model);
     m_parent_path = m_model->pathFromItem(parent);
-    setText(QString("Remove item row:%2, tag:%3").arg(
-                QString::number(m_row), QString::fromStdString(m_tag)));
+    setText(description(tag, row));
 }
 
 RemoveItemCommand::~RemoveItemCommand() = default;

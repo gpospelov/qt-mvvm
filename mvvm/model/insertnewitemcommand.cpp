@@ -11,6 +11,15 @@
 #include "itemmanager.h"
 #include "sessionitem.h"
 #include "sessionmodel.h"
+#include <sstream>
+
+namespace  {
+std::string description(const std::string& modelType, const std::string& tag, int row) {
+    std::ostringstream ostr;
+    ostr << "New item type '" << modelType << "' tag:'" << tag << "', row:" << row;
+    return ostr.str();
+}
+}
 
 using namespace ModelView;
 
@@ -20,9 +29,7 @@ InsertNewItemCommand::InsertNewItemCommand(model_type modelType, SessionItem* pa
       m_model(parent->model()), m_result(nullptr)
 {
     m_parent_path = m_model->pathFromItem(parent);
-    setText(QString("New item type:%1 row:%2, tag:%3")
-                .arg(QString::fromStdString(m_model_type), QString::number(m_row),
-                     QString::fromStdString(m_tag)));
+    setText(description(m_model_type, tag, row));
 }
 
 void InsertNewItemCommand::undo()
