@@ -51,8 +51,7 @@ void AbstractViewModel::setSessionModel(SessionModel* model)
         auto on_model_destroyed = [this](SessionModel*) { m_sessionModel = nullptr; clear();};
         m_sessionModel->mapper()->setOnModelDestroyed(on_model_destroyed, this);
 
-        // FIXME how get number of columns back?
-        auto on_model_reset = [this](SessionModel*) { clear(); m_rootItem = nullptr;};
+        auto on_model_reset = [this](SessionModel*) { clear(); m_rootItem = nullptr; onModelReset(); };
         m_sessionModel->mapper()->setOnModelReset(on_model_reset, this);
 
         init_view_model();
@@ -149,4 +148,9 @@ void AbstractViewModel::onRowRemoved(SessionItem* parent, std::string tag, int r
     Q_UNUSED(parent)
     Q_UNUSED(tag)
     Q_UNUSED(row)
+}
+
+void AbstractViewModel::onModelReset()
+{
+
 }

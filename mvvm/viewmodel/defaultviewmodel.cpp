@@ -101,6 +101,12 @@ void DefaultViewModel::onRowRemoved(SessionItem* parent, std::string tag, int ro
     generate_children_views(parent);
 }
 
+void DefaultViewModel::onModelReset()
+{
+    setColumnCount(m_row_constructor->columnCount());
+    setHorizontalHeaderLabels(m_row_constructor->horizontalHeaderLabels());
+}
+
 //! Regenerate all views of given parent.
 
 void DefaultViewModel::generate_children_views(SessionItem* parent)

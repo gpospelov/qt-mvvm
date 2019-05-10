@@ -378,7 +378,7 @@ TEST_F(TestDefaultViewModel, onModelReset)
 
     model->clear();
     EXPECT_EQ(viewModel.rowCount(), 0);
-//    EXPECT_EQ(viewModel.columnCount(), 2);
+    EXPECT_EQ(viewModel.columnCount(), 2);
 }
 
 
