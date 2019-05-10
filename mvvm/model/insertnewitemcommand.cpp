@@ -33,7 +33,7 @@ void InsertNewItemCommand::undo()
     m_result = nullptr;
 }
 
-void InsertNewItemCommand::redo()
+void InsertNewItemCommand::execute()
 {
     auto parent = m_model->itemFromPath(m_parent_path);
     auto child = m_model->manager()->createItem(m_model_type).release();

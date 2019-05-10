@@ -26,7 +26,7 @@ TEST_F(TestInsertNewItemCommand, insertNewItemCommand)
         std::make_unique<InsertNewItemCommand>(Constants::BaseType, model.rootItem(), "", 0);
 
     // executing command
-    command->redo();
+    command->execute();
     EXPECT_EQ(model.rootItem()->childrenCount(), 1);
     EXPECT_EQ(command->result(), model.rootItem()->getItem("", 0));
 
@@ -45,7 +45,7 @@ TEST_F(TestInsertNewItemCommand, insertNewItemWithTagCommand)
     // command to insert parent in the model
     auto command1 =
         std::make_unique<InsertNewItemCommand>(Constants::BaseType, model.rootItem(), "", 0);
-    command1->redo(); // insertion
+    command1->execute(); // insertion
 
     auto parent = command1->result();
     parent->registerTag(TagInfo::universalTag("tag1"), /*set_as_default*/ true);
@@ -53,7 +53,7 @@ TEST_F(TestInsertNewItemCommand, insertNewItemWithTagCommand)
 
     // command to insert child
     auto command2 = std::make_unique<InsertNewItemCommand>(Constants::BaseType, parent, "tag1", 0);
-    command2->redo(); // insertion
+    command2->execute(); // insertion
 
     EXPECT_EQ(parent->childrenCount(), 1);
     EXPECT_EQ(Utils::ChildAt(parent, 0), command2->result());

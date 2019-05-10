@@ -40,7 +40,7 @@ void RemoveItemCommand::undo()
     parent->insertItem(reco_item.release(), m_tag, m_row);
 }
 
-void RemoveItemCommand::redo()
+void RemoveItemCommand::execute()
 {
     const auto& converter = m_model->manager()->item_converter();
 

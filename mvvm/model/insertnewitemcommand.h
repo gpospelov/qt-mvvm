@@ -29,7 +29,7 @@ public:
     InsertNewItemCommand(model_type modelType, SessionItem* parent, std::string tag, int row);
 
     void undo() override;
-    void redo() override;
+    void execute() override;
 
     result_t result() const;
 

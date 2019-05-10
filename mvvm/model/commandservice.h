@@ -69,7 +69,7 @@ typename C::result_t CommandService::process_command(Args&&... args)
         result = command->result();
     } else {
         auto command = std::make_unique<C>(std::forward<Args>(args)...);
-        command->redo();
+        command->execute();
         result = command->result();
     }
 

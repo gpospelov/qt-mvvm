@@ -28,7 +28,7 @@ public:
     SetValueCommand(SessionItem* item, QVariant value, int role);
 
     void undo() override;
-    void redo() override;
+    void execute() override;
 
     result_t result() const;
 

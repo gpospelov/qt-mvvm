@@ -33,7 +33,7 @@ public:
     ~RemoveItemCommand() override;
 
     void undo() override;
-    void redo() override;
+    void execute() override;
 
     result_t result() const;
 

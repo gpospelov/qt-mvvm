@@ -33,7 +33,7 @@ void SetValueCommand::undo()
     m_value = old;
 }
 
-void SetValueCommand::redo()
+void SetValueCommand::execute()
 {
     auto item = m_model->itemFromPath(m_path);
     QVariant old = item->data(m_role);

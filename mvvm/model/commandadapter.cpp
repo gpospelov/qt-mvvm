@@ -27,6 +27,7 @@ void CommandAdapter::undo()
 
 void CommandAdapter::redo()
 {
-    m_command->redo();
+    m_command->execute();
     setObsolete(m_command->isObsolete());
+    setText(m_command->text());
 }

@@ -28,7 +28,7 @@ TEST_F(TestSetValueCommand, setValueCommand)
     auto command = std::make_unique<SetValueCommand>(item, expected, role);
 
     // executing command
-    command->redo();
+    command->execute();
     EXPECT_TRUE(command->result()); // value was changed
     EXPECT_EQ(model.data(item, role), expected);
 
@@ -54,7 +54,7 @@ TEST_F(TestSetValueCommand, setSameValueCommand)
     auto command = std::make_unique<SetValueCommand>(item, expected, role);
 
     // executing command
-    command->redo();
+    command->execute();
     EXPECT_FALSE(command->result()); // value wasn't changed
     EXPECT_EQ(model.data(item, role), expected);
 
