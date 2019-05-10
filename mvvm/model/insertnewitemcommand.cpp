@@ -13,21 +13,24 @@
 #include "sessionmodel.h"
 #include <sstream>
 
-namespace  {
-std::string description(const std::string& modelType, const std::string& tag, int row) {
+namespace
+{
+std::string description(const std::string& modelType, const std::string& tag, int row)
+{
     std::ostringstream ostr;
     ostr << "New item type '" << modelType << "' tag:'" << tag << "', row:" << row;
     return ostr.str();
 }
-}
+} // namespace
 
 using namespace ModelView;
 
 InsertNewItemCommand::InsertNewItemCommand(model_type modelType, SessionItem* parent,
                                            std::string tag, int row)
-    :  AbstractItemCommand(parent), m_tag(std::move(tag)), m_row(row), m_model_type(std::move(modelType))
+    : AbstractItemCommand(parent), m_tag(std::move(tag)), m_row(row),
+      m_model_type(std::move(modelType))
 {
-    setText(description(m_model_type, tag, row));
+    setDescription(description(m_model_type, tag, row));
 }
 
 void InsertNewItemCommand::undo()

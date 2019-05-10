@@ -8,29 +8,29 @@
 // ************************************************************************** //
 
 #include "removeitemcommand.h"
-#include "sessionmodel.h"
-#include "sessionitem.h"
-#include "jsonitem.h"
 #include "itemmanager.h"
-#include <sstream>
+#include "jsonitem.h"
+#include "sessionitem.h"
+#include "sessionmodel.h"
 #include <QJsonObject>
+#include <sstream>
 
-namespace  {
-std::string description(const std::string& tag, int row) {
+namespace
+{
+std::string description(const std::string& tag, int row)
+{
     std::ostringstream ostr;
     ostr << "Remove item from tag '" << tag << "', row " << row;
     return ostr.str();
 }
-}
+} // namespace
 
 using namespace ModelView;
 
 RemoveItemCommand::RemoveItemCommand(SessionItem* parent, std::string tag, int row)
-    :  AbstractItemCommand(parent), m_tag(std::move(tag))
-    ,m_row(row)
-    , m_result(true)
+    : AbstractItemCommand(parent), m_tag(std::move(tag)), m_row(row), m_result(true)
 {
-    setText(description(tag, row));
+    setDescription(description(tag, row));
 }
 
 RemoveItemCommand::~RemoveItemCommand() = default;

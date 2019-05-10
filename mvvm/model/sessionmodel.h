@@ -48,7 +48,6 @@ public:
     SessionItem* itemFromPath(Path path);
 
     void setUndoRedoEnabled(bool value);
-    void setCommandRecordPause(bool value);
 
     QUndoStack* undoStack() const;
 

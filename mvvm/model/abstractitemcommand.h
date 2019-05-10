@@ -35,9 +35,9 @@ public:
     void setObsolete(bool flag);
     bool isObsolete() const;
 
-    std::string text() const;
+    std::string description() const;
 
-    void setText(const std::string& text);
+    void setDescription(const std::string& description);
 
     SessionItem* findReceiver() const;
 

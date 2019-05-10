@@ -89,11 +89,6 @@ void SessionModel::setUndoRedoEnabled(bool value)
     m_commands->setUndoRedoEnabled(value);
 }
 
-void SessionModel::setCommandRecordPause(bool value)
-{
-    m_commands->setCommandRecordPause(value);
-}
-
 QUndoStack* SessionModel::undoStack() const
 {
     return m_commands->undoStack();

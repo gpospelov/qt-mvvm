@@ -29,7 +29,7 @@ SetValueCommand::SetValueCommand(SessionItem* item, QVariant value, int role)
     , m_role(role)
     , m_result(false)
 {
-    setText(description(m_value.toString().toStdString()));
+    setDescription(description(m_value.toString().toStdString()));
 }
 
 void SetValueCommand::undo()
