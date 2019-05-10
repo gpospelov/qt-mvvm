@@ -11,20 +11,19 @@
 #define MVVM_REMOVEITEMCOMMAND_H
 
 #include "mvvm_global.h"
-#include "mvvm_types.h"
 #include "path.h"
 #include <QUndoCommand>
-#include <QVariant>
 #include <memory>
 
 class QJsonObject;
 
-namespace ModelView {
+namespace ModelView
+{
 
 class SessionModel;
 class SessionItem;
 
-//! Command for unddo/redo framework to remove item from a model using given child index.
+//! Command for unddo/redo framework to remove item from a model using child's tag and row.
 
 class CORE_EXPORT RemoveItemCommand : public QUndoCommand
 {
@@ -48,6 +47,6 @@ private:
     result_t m_result;
 };
 
-}  // namespace ModelView
+} // namespace ModelView
 
 #endif // MVVM_REMOVEITEMCOMMAND_H
