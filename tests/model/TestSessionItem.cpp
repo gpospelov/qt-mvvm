@@ -190,11 +190,6 @@ TEST_F(TestSessionItem, insertItem)
     EXPECT_EQ(parent->children()[0], p_child);
     EXPECT_EQ(parent->getItem("", 0), p_child);
     EXPECT_EQ(p_child->parent(), parent.get());
-
-    // deleting child, pointer in parent should become zero
-//    delete p_child;
-//    EXPECT_EQ(parent->childrenCount(), 1);
-//    EXPECT_EQ(parent->children()[0], nullptr);
 }
 
 //! Simple children insert.

@@ -5,7 +5,6 @@
 #include "sessionmodel.h"
 #include "taginfo.h"
 #include "test_utils.h"
-#include <QDebug>
 
 using namespace ModelView;
 
