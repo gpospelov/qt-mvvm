@@ -1,0 +1,66 @@
+#include "setvaluecommand.h"
+#include "google_test.h"
+#include "sessionitem.h"
+#include "sessionmodel.h"
+
+using namespace ModelView;
+
+class TestSetValueCommand : public ::testing::Test
+{
+public:
+    ~TestSetValueCommand();
+};
+
+TestSetValueCommand::~TestSetValueCommand() = default;
+
+//! Set item value through SetValueCommand command.
+
+TEST_F(TestSetValueCommand, setValueCommand)
+{
+    SessionModel model;
+    const int role = ItemDataRole::DATA;
+
+    // inserting single item
+    auto item = model.insertNewItem(Constants::BaseType);
+    EXPECT_FALSE(model.data(item, role).isValid());
+
+    QVariant expected(42.0);
+    auto command = std::make_unique<SetValueCommand>(item, expected, role);
+
+    // executing command
+    command->redo();
+    EXPECT_TRUE(command->result()); // value was changed
+    EXPECT_EQ(model.data(item, role), expected);
+
+    // undoing command
+    command->undo();
+    EXPECT_TRUE(command->result()); // value was changed
+    EXPECT_FALSE(model.data(item, role).isValid());
+}
+
+//! Set same item value through SetValueCommand command.
+
+TEST_F(TestSetValueCommand, setSameValueCommand)
+{
+    SessionModel model;
+    const int role = ItemDataRole::DATA;
+
+    // inserting single item
+    auto item = model.insertNewItem(Constants::BaseType);
+    QVariant expected(42.0);
+    item->setData(expected, role);
+
+    // command to set same value
+    auto command = std::make_unique<SetValueCommand>(item, expected, role);
+
+    // executing command
+    command->redo();
+    EXPECT_FALSE(command->result()); // value wasn't changed
+    EXPECT_EQ(model.data(item, role), expected);
+
+    // undoing command
+    command->undo();
+    EXPECT_FALSE(command->result()); // value wasn't changed
+    EXPECT_EQ(model.data(item, role), expected);
+}
+

@@ -8,7 +8,6 @@
 // ************************************************************************** //
 
 #include "sessionmodel.h"
-#include "commands.h"
 #include "commandservice.h"
 #include "customvariants.h"
 #include "itemmanager.h"

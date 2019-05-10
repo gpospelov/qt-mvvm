@@ -8,7 +8,7 @@
 // ************************************************************************** //
 
 #include "commandservice.h"
-#include "commands.h"
+#include "insertnewitemcommand.h"
 #include "removeitemcommand.h"
 #include "setvaluecommand.h"
 #include "sessionitem.h"

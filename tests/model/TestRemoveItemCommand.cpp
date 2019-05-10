@@ -4,7 +4,6 @@
 #include "sessionitem.h"
 #include "sessionmodel.h"
 #include "taginfo.h"
-#include "test_utils.h"
 
 using namespace ModelView;
 

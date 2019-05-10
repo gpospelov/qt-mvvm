@@ -7,31 +7,28 @@
 //
 // ************************************************************************** //
 
-#include "commands.h"
-#include "sessionmodel.h"
-#include "sessionitem.h"
-#include "jsonitem.h"
+#include "insertnewitemcommand.h"
 #include "itemmanager.h"
-#include <QJsonObject>
+#include "sessionitem.h"
+#include "sessionmodel.h"
 
 using namespace ModelView;
 
 InsertNewItemCommand::InsertNewItemCommand(model_type modelType, SessionItem* parent,
                                            std::string tag, int row)
-    : m_tag(std::move(tag)), m_row(row)
-    , m_model_type(std::move(modelType))
-    , m_model(parent->model())
-    , m_result(nullptr)
+    : m_tag(std::move(tag)), m_row(row), m_model_type(std::move(modelType)),
+      m_model(parent->model()), m_result(nullptr)
 {
     m_parent_path = m_model->pathFromItem(parent);
-    setText(QString("New item type:%1 row:%2, tag:%3").arg(
-                QString::fromStdString(m_model_type), QString::number(m_row), QString::fromStdString(m_tag)));
+    setText(QString("New item type:%1 row:%2, tag:%3")
+                .arg(QString::fromStdString(m_model_type), QString::number(m_row),
+                     QString::fromStdString(m_tag)));
 }
 
 void InsertNewItemCommand::undo()
 {
     auto parent = m_model->itemFromPath(m_parent_path);
-    int row = m_row < 0 ? static_cast<int>(parent->getItems(m_tag).size())-1 : m_row;
+    int row = m_row < 0 ? static_cast<int>(parent->getItems(m_tag).size()) - 1 : m_row;
     delete parent->takeItem(m_tag, row);
     m_result = nullptr;
 }

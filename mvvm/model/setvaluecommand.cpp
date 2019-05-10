@@ -10,9 +10,6 @@
 #include "setvaluecommand.h"
 #include "sessionmodel.h"
 #include "sessionitem.h"
-#include "jsonitem.h"
-#include "itemmanager.h"
-#include <QJsonObject>
 
 using namespace ModelView;
 

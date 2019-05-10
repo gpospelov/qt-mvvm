@@ -7,15 +7,13 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_COMMANDS_H
-#define MVVM_COMMANDS_H
+#ifndef MVVM_INSERTNEWITEMCOMMAND_H
+#define MVVM_INSERTNEWITEMCOMMAND_H
 
 #include "mvvm_global.h"
 #include "mvvm_types.h"
 #include "path.h"
 #include <QUndoCommand>
-#include <QVariant>
-#include <memory>
 
 class QJsonObject;
 
@@ -49,4 +47,4 @@ private:
 
 }  // namespace ModelView
 
-#endif // MVVM_COMMANDS_H
+#endif // MVVM_INSERTNEWITEMCOMMAND_H
