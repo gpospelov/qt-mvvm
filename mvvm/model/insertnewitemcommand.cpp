@@ -15,7 +15,7 @@
 
 namespace
 {
-std::string description(const std::string& modelType, const std::string& tag, int row)
+std::string generate_description(const std::string& modelType, const std::string& tag, int row)
 {
     std::ostringstream ostr;
     ostr << "New item type '" << modelType << "' tag:'" << tag << "', row:" << row;
@@ -30,7 +30,7 @@ InsertNewItemCommand::InsertNewItemCommand(model_type modelType, SessionItem* pa
     : AbstractItemCommand(parent), m_tag(std::move(tag)), m_row(row),
       m_model_type(std::move(modelType))
 {
-    setDescription(description(m_model_type, tag, row));
+    setDescription(generate_description(m_model_type, tag, row));
 }
 
 void InsertNewItemCommand::undo()

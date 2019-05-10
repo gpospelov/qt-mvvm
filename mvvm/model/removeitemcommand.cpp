@@ -17,7 +17,7 @@
 
 namespace
 {
-std::string description(const std::string& tag, int row)
+std::string generate_description(const std::string& tag, int row)
 {
     std::ostringstream ostr;
     ostr << "Remove item from tag '" << tag << "', row " << row;
@@ -30,7 +30,7 @@ using namespace ModelView;
 RemoveItemCommand::RemoveItemCommand(SessionItem* parent, std::string tag, int row)
     : AbstractItemCommand(parent), m_tag(std::move(tag)), m_row(row), m_result(true)
 {
-    setDescription(description(tag, row));
+    setDescription(generate_description(tag, row));
 }
 
 RemoveItemCommand::~RemoveItemCommand() = default;

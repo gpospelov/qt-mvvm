@@ -13,7 +13,7 @@
 #include <sstream>
 
 namespace  {
-std::string description(const std::string& str) {
+std::string generate_description(const std::string& str) {
     std::ostringstream ostr;
     ostr << "Set value " << str;
     return ostr.str();
@@ -29,7 +29,7 @@ SetValueCommand::SetValueCommand(SessionItem* item, QVariant value, int role)
     , m_role(role)
     , m_result(false)
 {
-    setDescription(description(m_value.toString().toStdString()));
+    setDescription(generate_description(m_value.toString().toStdString()));
 }
 
 void SetValueCommand::undo()
