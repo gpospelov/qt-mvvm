@@ -11,7 +11,6 @@
 #define MVVM_SETVALUECOMMAND_H
 
 #include "abstractitemcommand.h"
-#include "path.h"
 #include <QVariant>
 
 namespace ModelView {
@@ -35,8 +34,6 @@ public:
 private:
     QVariant m_value;
     int m_role;
-    Path m_path;
-    SessionModel* m_model;
     result_t m_result;
 };
 

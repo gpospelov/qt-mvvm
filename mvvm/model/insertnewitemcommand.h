@@ -12,7 +12,6 @@
 
 #include "abstractitemcommand.h"
 #include "mvvm_types.h"
-#include "path.h"
 
 namespace ModelView {
 
@@ -34,11 +33,9 @@ public:
     result_t result() const;
 
 private:
-    Path m_parent_path;
     std::string m_tag;
     int m_row;
     model_type m_model_type;
-    SessionModel* m_model;
     result_t m_result;
 };
 

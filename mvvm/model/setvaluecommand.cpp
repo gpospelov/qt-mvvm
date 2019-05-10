@@ -27,17 +27,15 @@ SetValueCommand::SetValueCommand(SessionItem* item, QVariant value, int role)
     : AbstractItemCommand(item)
     , m_value(std::move(value))
     , m_role(role)
-    , m_model(item->model())
     , m_result(false)
 {
     Q_ASSERT(m_model);
-    m_path = m_model->pathFromItem(item);
     setText(description(m_value.toString().toStdString()));
 }
 
 void SetValueCommand::undo()
 {
-    auto item = m_model->itemFromPath(m_path);
+    auto item = m_model->itemFromPath(m_item_path);
     QVariant old = item->data(m_role);
     m_result = item->setDataIntern(m_value, m_role);
     setObsolete(!m_result);
@@ -46,7 +44,7 @@ void SetValueCommand::undo()
 
 void SetValueCommand::execute()
 {
-    auto item = m_model->itemFromPath(m_path);
+    auto item = m_model->itemFromPath(m_item_path);
     QVariant old = item->data(m_role);
     m_result = item->setDataIntern(m_value, m_role);
     setObsolete(!m_result);

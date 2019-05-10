@@ -28,10 +28,8 @@ using namespace ModelView;
 RemoveItemCommand::RemoveItemCommand(SessionItem* parent, std::string tag, int row)
     :  AbstractItemCommand(parent), m_tag(std::move(tag))
     ,m_row(row)
-    , m_model(parent->model())
     , m_result(true)
 {
-    m_parent_path = m_model->pathFromItem(parent);
     setText(description(tag, row));
 }
 
@@ -41,7 +39,7 @@ void RemoveItemCommand::undo()
 {
     const auto& converter = m_model->manager()->item_converter();
 
-    auto parent = m_model->itemFromPath(m_parent_path);
+    auto parent = m_model->itemFromPath(m_item_path);
 
     auto reco_item = converter.from_json(*m_child_backup);
     parent->insertItem(reco_item.release(), m_tag, m_row);
@@ -51,7 +49,7 @@ void RemoveItemCommand::execute()
 {
     const auto& converter = m_model->manager()->item_converter();
 
-    auto parent = m_model->itemFromPath(m_parent_path);
+    auto parent = m_model->itemFromPath(m_item_path);
     auto child = parent->takeItem(m_tag, m_row);
 
     m_child_backup = std::make_unique<QJsonObject>(converter.to_json(child));

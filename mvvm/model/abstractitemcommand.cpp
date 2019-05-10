@@ -14,16 +14,18 @@
 
 using namespace ModelView;
 
-AbstractItemCommand::AbstractItemCommand(SessionItem* context)
+AbstractItemCommand::AbstractItemCommand(SessionItem* receiver)
     : m_is_obsolete(false), m_model(nullptr)
 {
-    if (!context)
+    if (!receiver)
         throw std::runtime_error("Invalid item.");
 
-    if (!context->model())
+    if (!receiver->model())
         throw std::runtime_error("Item doesn't have a model");
 
-    m_model = context->model();
+    m_model = receiver->model();
+    m_item_path = m_model->pathFromItem(receiver);
+
 }
 
 void AbstractItemCommand::setObsolete(bool flag)

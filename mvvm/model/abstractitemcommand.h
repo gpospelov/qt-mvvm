@@ -11,6 +11,7 @@
 #define MVVM_ABSTRACTITEMCOMMAND_H
 
 #include "mvvm_global.h"
+#include "path.h"
 #include <string>
 
 namespace ModelView
@@ -24,7 +25,7 @@ class SessionModel;
 class CORE_EXPORT AbstractItemCommand
 {
 public:
-    AbstractItemCommand(SessionItem* context);
+    explicit AbstractItemCommand(SessionItem* receiver);
     virtual ~AbstractItemCommand() = default;
 
     virtual void execute() = 0;
@@ -38,10 +39,11 @@ public:
 
     void setText(const std::string& text);
 
-private:
+protected:
     bool m_is_obsolete;
     std::string m_text;
     SessionModel* m_model;
+    Path m_item_path; //! Persistent path to the item which is receiver of given command.
 };
 
 } // namespace ModelView

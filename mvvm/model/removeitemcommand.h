@@ -11,7 +11,6 @@
 #define MVVM_REMOVEITEMCOMMAND_H
 
 #include "abstractitemcommand.h"
-#include "path.h"
 #include <memory>
 
 class QJsonObject;
@@ -38,11 +37,9 @@ public:
     result_t result() const;
 
 private:
-    Path m_parent_path;
     std::string m_tag;
     int m_row;
     std::unique_ptr<QJsonObject> m_child_backup;
-    SessionModel* m_model;
     result_t m_result;
 };
 
