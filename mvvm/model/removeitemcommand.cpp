@@ -26,7 +26,7 @@ std::string description(const std::string& tag, int row) {
 using namespace ModelView;
 
 RemoveItemCommand::RemoveItemCommand(SessionItem* parent, std::string tag, int row)
-    : m_tag(std::move(tag))
+    :  AbstractItemCommand(parent), m_tag(std::move(tag))
     ,m_row(row)
     , m_model(parent->model())
     , m_result(true)

@@ -8,13 +8,22 @@
 // ************************************************************************** //
 
 #include "abstractitemcommand.h"
+#include "sessionitem.h"
+#include "sessionmodel.h"
+#include <stdexcept>
 
 using namespace ModelView;
 
-AbstractItemCommand::AbstractItemCommand()
-    : m_is_obsolete(false)
+AbstractItemCommand::AbstractItemCommand(SessionItem* context)
+    : m_is_obsolete(false), m_model(nullptr)
 {
+    if (!context)
+        throw std::runtime_error("Invalid item.");
 
+    if (!context->model())
+        throw std::runtime_error("Item doesn't have a model");
+
+    m_model = context->model();
 }
 
 void AbstractItemCommand::setObsolete(bool flag)

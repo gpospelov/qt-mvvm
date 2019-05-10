@@ -24,7 +24,8 @@ std::string description(const std::string& str) {
 using namespace ModelView;
 
 SetValueCommand::SetValueCommand(SessionItem* item, QVariant value, int role)
-    : m_value(std::move(value))
+    : AbstractItemCommand(item)
+    , m_value(std::move(value))
     , m_role(role)
     , m_model(item->model())
     , m_result(false)

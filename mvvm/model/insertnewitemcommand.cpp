@@ -25,7 +25,7 @@ using namespace ModelView;
 
 InsertNewItemCommand::InsertNewItemCommand(model_type modelType, SessionItem* parent,
                                            std::string tag, int row)
-    : m_tag(std::move(tag)), m_row(row), m_model_type(std::move(modelType)),
+    :  AbstractItemCommand(parent), m_tag(std::move(tag)), m_row(row), m_model_type(std::move(modelType)),
       m_model(parent->model()), m_result(nullptr)
 {
     m_parent_path = m_model->pathFromItem(parent);

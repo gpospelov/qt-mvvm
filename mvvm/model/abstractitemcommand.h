@@ -16,12 +16,15 @@
 namespace ModelView
 {
 
+class SessionItem;
+class SessionModel;
+
 //! Abstract command interface to manipulate SessionItem in model context.
 
 class CORE_EXPORT AbstractItemCommand
 {
 public:
-    AbstractItemCommand();
+    AbstractItemCommand(SessionItem* context);
     virtual ~AbstractItemCommand() = default;
 
     virtual void execute() = 0;
@@ -38,6 +41,7 @@ public:
 private:
     bool m_is_obsolete;
     std::string m_text;
+    SessionModel* m_model;
 };
 
 } // namespace ModelView
