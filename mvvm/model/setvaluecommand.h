@@ -32,7 +32,7 @@ public:
     result_t result() const;
 
 private:
-    QVariant m_value;
+    QVariant m_value; //! Value to set as a result of command execution.
     int m_role;
     result_t m_result;
 };

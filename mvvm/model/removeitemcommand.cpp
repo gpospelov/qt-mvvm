@@ -39,7 +39,7 @@ void RemoveItemCommand::undo()
 {
     const auto& converter = m_model->manager()->item_converter();
 
-    auto parent = m_model->itemFromPath(m_item_path);
+    auto parent = findReceiver();
 
     auto reco_item = converter.from_json(*m_child_backup);
     parent->insertItem(reco_item.release(), m_tag, m_row);
@@ -49,7 +49,7 @@ void RemoveItemCommand::execute()
 {
     const auto& converter = m_model->manager()->item_converter();
 
-    auto parent = m_model->itemFromPath(m_item_path);
+    auto parent = findReceiver();
     auto child = parent->takeItem(m_tag, m_row);
 
     m_child_backup = std::make_unique<QJsonObject>(converter.to_json(child));

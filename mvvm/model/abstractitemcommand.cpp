@@ -47,3 +47,10 @@ void AbstractItemCommand::setText(const std::string& text)
 {
     m_text = text;
 }
+
+//! Finds the item which is the receiver of given command.
+
+SessionItem* AbstractItemCommand::findReceiver() const
+{
+    return m_model->itemFromPath(m_item_path);
+}

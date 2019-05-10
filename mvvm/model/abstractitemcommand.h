@@ -39,10 +39,14 @@ public:
 
     void setText(const std::string& text);
 
+    SessionItem* findReceiver() const;
+
 protected:
     bool m_is_obsolete;
     std::string m_text;
     SessionModel* m_model;
+
+private:
     Path m_item_path; //! Persistent path to the item which is receiver of given command.
 };
 

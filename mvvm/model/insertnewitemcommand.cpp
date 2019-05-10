@@ -32,7 +32,7 @@ InsertNewItemCommand::InsertNewItemCommand(model_type modelType, SessionItem* pa
 
 void InsertNewItemCommand::undo()
 {
-    auto parent = m_model->itemFromPath(m_item_path);
+    auto parent = findReceiver();
     int row = m_row < 0 ? static_cast<int>(parent->getItems(m_tag).size()) - 1 : m_row;
     delete parent->takeItem(m_tag, row);
     m_result = nullptr;
@@ -40,7 +40,7 @@ void InsertNewItemCommand::undo()
 
 void InsertNewItemCommand::execute()
 {
-    auto parent = m_model->itemFromPath(m_item_path);
+    auto parent = findReceiver();
     auto child = m_model->manager()->createItem(m_model_type).release();
     parent->insertItem(child, m_tag, m_row);
     m_result = child;
