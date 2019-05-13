@@ -43,6 +43,8 @@ public:
 
     int itemCount() const;
 
+    void add(const ItemCatalogue& other);
+
 private:
     using factory_func_t = std::function<SessionItem*()>;
     void add(const std::string& model_type, factory_func_t func, const std::string& label);

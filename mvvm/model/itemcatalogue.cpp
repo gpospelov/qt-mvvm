@@ -80,3 +80,17 @@ int ItemCatalogue::itemCount() const
 {
     return static_cast<int>(p_impl->factory.size());
 }
+
+//! Adds content of other catalogue to this.
+
+void ItemCatalogue::add(const ItemCatalogue& other)
+{
+    size_t index(0);
+    for (auto it : other.p_impl->factory) {
+        if (contains(it.first))
+            throw std::runtime_error("ItemCatalogue::add() -> Catalogue contains duplicated records");
+
+        add(it.first, it.second, other.p_impl->m_info[index].item_label);
+        ++index;
+    }
+}

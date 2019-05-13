@@ -1,8 +1,8 @@
 #include "google_test.h"
 #include "itemcatalogue.h"
 #include "propertyitem.h"
-#include "vectoritem.h"
 #include "standarditemcatalogue.h"
+#include "vectoritem.h"
 
 using namespace ModelView;
 
@@ -91,6 +91,15 @@ TEST_F(TestItemCatalogue, assignmentOperator)
     EXPECT_TRUE(dynamic_cast<PropertyItem*>(item.get()) != nullptr);
 }
 
+TEST_F(TestItemCatalogue, contains)
+{
+    ItemCatalogue catalogue;
+    catalogue.add<PropertyItem>();
+
+    EXPECT_TRUE(catalogue.contains(Constants::PropertyType));
+    EXPECT_FALSE(catalogue.contains(Constants::VectorType));
+}
+
 TEST_F(TestItemCatalogue, defaultItemCatalogue)
 {
     auto catalogue = CreateStandardItemCatalogue();
@@ -117,4 +126,30 @@ TEST_F(TestItemCatalogue, addLabeledItem)
     // checking model types and labels
     EXPECT_EQ(catalogue.modelTypes(), std::vector<std::string>({"Property", "Vector"}));
     EXPECT_EQ(catalogue.labels(), std::vector<std::string>({"property", "vector item"}));
+}
+
+TEST_F(TestItemCatalogue, addCatalogue)
+{
+    ItemCatalogue catalogue1;
+    catalogue1.add<PropertyItem>("property");
+    catalogue1.add<VectorItem>("vector");
+
+    ItemCatalogue catalogue2;
+    catalogue2.add<CompoundItem>("compound");
+
+    // adding two catalogue together
+    catalogue1.add(catalogue2);
+
+    std::vector<std::string> expected_models = {Constants::PropertyType, Constants::VectorType,
+                                                Constants::CompoundType};
+    std::vector<std::string> expected_labels = {"property", "vector", "compound"};
+
+    EXPECT_EQ(catalogue1.modelTypes(), expected_models);
+    EXPECT_EQ(catalogue1.labels(), expected_labels);
+
+    auto item = catalogue1.create(Constants::VectorType);
+    EXPECT_TRUE(dynamic_cast<VectorItem*>(item.get()) != nullptr);
+
+    // duplications is not allowed
+    EXPECT_THROW(catalogue1.add(catalogue2), std::runtime_error);
 }
