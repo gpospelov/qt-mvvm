@@ -8,15 +8,24 @@
 // ************************************************************************** //
 
 #include "SampleModel.h"
-#include "ItemCatalogue.h"
-#include "itemmanager.h"
-#include "itemfactory.h"
+#include "LayerItems.h"
 #include "item_constants.h"
+#include "itemcatalogue.h"
+
+namespace
+{
+std::unique_ptr<ModelView::ItemCatalogue> CreateItemCatalogue()
+{
+    std::unique_ptr<ModelView::ItemCatalogue> result = std::make_unique<ModelView::ItemCatalogue>();
+    result->add<MultiLayerItem>();
+    result->add<LayerItem>();
+    return result;
+}
+} // namespace
 
 SampleModel::SampleModel() : SessionModel("SampleModel")
 {
-    m_item_manager->setItemFactory(
-        std::make_unique<ModelView::ItemFactory>(CreateItemCatalogue()));
+    setItemCatalogue(CreateItemCatalogue());
 
     auto multilayer = insertNewItem(Constants::MultiLayerType);
     auto layer = insertNewItem(Constants::LayerType, multilayer);

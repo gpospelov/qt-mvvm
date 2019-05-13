@@ -8,17 +8,26 @@
 // ************************************************************************** //
 
 #include "MaterialModel.h"
-#include "ItemCatalogue.h"
 #include "MaterialItems.h"
 #include "item_constants.h"
-#include "itemfactory.h"
-#include "itemmanager.h"
+#include "itemcatalogue.h"
 #include "sessionitem.h"
 #include <QColor>
 
+namespace
+{
+std::unique_ptr<ModelView::ItemCatalogue> CreateItemCatalogue()
+{
+    std::unique_ptr<ModelView::ItemCatalogue> result = std::make_unique<ModelView::ItemCatalogue>();
+    result->add<MaterialContainerItem>();
+    result->add<SLDMaterialItem>();
+    return result;
+}
+} // namespace
+
 MaterialModel::MaterialModel() : SessionModel("MaterialModel")
 {
-    m_item_manager->setItemFactory(std::make_unique<ModelView::ItemFactory>(CreateItemCatalogue()));
+    setItemCatalogue(CreateItemCatalogue());
 
     auto container = insertNewItem(Constants::MaterialContainerType);
     add_sld_material(container, "Air", QColor(Qt::blue), 1e-06, 1e-07);
