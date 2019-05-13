@@ -8,7 +8,7 @@
 // ************************************************************************** //
 
 #include "mainwindow.h"
-#include "testwidget3.h"
+#include "testwidget.h"
 #include <QTabWidget>
 #include <QCoreApplication>
 #include <QSettings>
@@ -22,7 +22,7 @@ namespace {
 MainWindow::MainWindow()
     : m_tabWidget(new QTabWidget)
 {    
-    m_tabWidget->addTab(new TestWidget3, "Undo/Redo");
+    m_tabWidget->addTab(new TestWidget, "Undo/Redo");
 
     m_tabWidget->setCurrentIndex(m_tabWidget->count()-1);
     setCentralWidget(m_tabWidget);

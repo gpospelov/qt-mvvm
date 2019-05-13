@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "testwidget3.h"
+#include "testwidget.h"
 #include "standardviewmodels.h"
 #include "itemstreeview.h"
 #include "propertyeditor.h"
@@ -29,7 +29,7 @@ const QString text = "Undo/Redo basics.\n"
 
 using namespace ModelView;
 
-TestWidget3::TestWidget3(QWidget* parent)
+TestWidget::TestWidget(QWidget* parent)
     : QWidget(parent), m_defaultTreeView(new ItemsTreeView), m_topItemView(new ItemsTreeView),
       m_subsetTreeView(new ItemsTreeView), m_undoView(new QUndoView),
       m_propertyEditor(new PropertyEditor), m_sessionModel(new ToyItems::SampleModel)
@@ -53,9 +53,9 @@ TestWidget3::TestWidget3(QWidget* parent)
     setLayout(mainLayout);
 }
 
-TestWidget3::~TestWidget3() = default;
+TestWidget::~TestWidget() = default;
 
-void TestWidget3::onContextMenuRequest(const QPoint& point)
+void TestWidget::onContextMenuRequest(const QPoint& point)
 {
     auto treeView = qobject_cast<QTreeView*>(sender());
 
@@ -84,7 +84,7 @@ void TestWidget3::onContextMenuRequest(const QPoint& point)
 
 //! Inits session model with some test content.
 
-void TestWidget3::init_session_model()
+void TestWidget::init_session_model()
 {
     auto multi_layer = m_sessionModel->insertNewItem(ToyItems::Constants::MultiLayerType);
     auto layer = m_sessionModel->insertNewItem(ToyItems::Constants::LayerType, multi_layer);
@@ -100,7 +100,7 @@ void TestWidget3::init_session_model()
 
 //! Returns SessionItem corresponding to given coordinate in a view.
 
-SessionItem* TestWidget3::item_from_view(QTreeView* view, const QPoint& point)
+SessionItem* TestWidget::item_from_view(QTreeView* view, const QPoint& point)
 {
     QModelIndex index = view->indexAt(point);
     auto item = m_defaultTreeView->viewModel()->itemFromIndex(index);
@@ -109,7 +109,7 @@ SessionItem* TestWidget3::item_from_view(QTreeView* view, const QPoint& point)
     return viewItem->item();
 }
 
-void TestWidget3::init_default_view()
+void TestWidget::init_default_view()
 {
     m_defaultTreeView->setViewModel(Utils::CreateDefaultViewModel(m_sessionModel.get()));
 
@@ -121,22 +121,22 @@ void TestWidget3::init_default_view()
 
     m_defaultTreeView->treeView()->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(m_defaultTreeView->treeView(), &QTreeView::customContextMenuRequested, this,
-            &TestWidget3::onContextMenuRequest);
+            &TestWidget::onContextMenuRequest);
 }
 
-void TestWidget3::init_topitems_view()
+void TestWidget::init_topitems_view()
 {
     m_topItemView->setViewModel(Utils::CreateTopItemsViewModel(m_sessionModel.get()));
     connect(m_topItemView, &ItemsTreeView::itemSelected,
             [this](SessionItem* item) { m_defaultTreeView->setSelected(item); });
 }
 
-void TestWidget3::init_subset_view()
+void TestWidget::init_subset_view()
 {
     m_subsetTreeView->setViewModel(Utils::CreateDefaultViewModel(m_sessionModel.get()));
 }
 
-QBoxLayout* TestWidget3::create_top_layout()
+QBoxLayout* TestWidget::create_top_layout()
 {
     auto result = new QHBoxLayout;
     auto label = new QLabel(this);
@@ -146,14 +146,14 @@ QBoxLayout* TestWidget3::create_top_layout()
     return result;
 }
 
-QBoxLayout* TestWidget3::create_left_layout()
+QBoxLayout* TestWidget::create_left_layout()
 {
     auto result = new QVBoxLayout;
     result->addWidget(m_defaultTreeView);
     return result;
 }
 
-QBoxLayout* TestWidget3::create_middle_layout()
+QBoxLayout* TestWidget::create_middle_layout()
 {
     auto result = new QVBoxLayout;
     result->addWidget(m_topItemView);
@@ -161,7 +161,7 @@ QBoxLayout* TestWidget3::create_middle_layout()
     return result;
 }
 
-QBoxLayout* TestWidget3::create_right_layout()
+QBoxLayout* TestWidget::create_right_layout()
 {
     auto result = new QVBoxLayout;
     result->addWidget(m_undoView);

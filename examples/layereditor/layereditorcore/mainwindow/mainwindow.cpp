@@ -28,7 +28,6 @@ MainWindow::MainWindow()
 {    
     m_tabWidget->addTab(new SampleWidget(m_models.get()), "Materials and Layers");
 
-    m_tabWidget->setCurrentIndex(m_tabWidget->count()-1);
     setCentralWidget(m_tabWidget);
 
     create_menus();

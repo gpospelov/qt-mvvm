@@ -37,12 +37,12 @@ class QItemSelection;
 
 //! Playground to test basics of ViewModel.
 
-class TestWidget3 : public QWidget
+class TestWidget : public QWidget
 {
     Q_OBJECT
 public:
-    TestWidget3(QWidget* parent = nullptr);
-    ~TestWidget3();
+    TestWidget(QWidget* parent = nullptr);
+    ~TestWidget();
 
 private slots:
     void onContextMenuRequest(const QPoint& point);
