@@ -70,12 +70,11 @@ InterferenceFunction::InterferenceFunction() : CompoundItem(Constants::Interfere
 
 void InterferenceFunction::activate()
 {
-    mapper()->setOnPropertyChange(
-        [this](SessionItem*, std::string property) {
-            if (property == P_INTEGRATION)
-                update_appearance();
-        },
-        this);
+    auto onIntegrationFlagChange = [this](SessionItem*, std::string property) {
+        if (property == P_INTEGRATION)
+            update_appearance();
+    };
+    mapper()->setOnPropertyChange(onIntegrationFlagChange, this);
 }
 
 void InterferenceFunction::update_appearance()
