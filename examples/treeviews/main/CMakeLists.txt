@@ -1,4 +1,4 @@
-set(executable_name app)
+set(executable_name treeviews)
 
 set(include_dirs ${CMAKE_CURRENT_SOURCE_DIR})
 
@@ -13,4 +13,4 @@ foreach(dir ${include_dirs})
 endforeach()
 
 add_executable(${executable_name} ${source_files} ${include_files})
-target_link_libraries(${executable_name} appcore)
+target_link_libraries(${executable_name} treeviewscore)

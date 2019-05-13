@@ -1,4 +1,4 @@
-set(library_name appcore)
+set(library_name treeviewscore)
 
 # --- source and include files ---
 set(include_dirs ${CMAKE_CURRENT_SOURCE_DIR})
@@ -16,11 +16,7 @@ endforeach()
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 
-if(WIN32)
-    add_definitions(-DCORE_BUILD_DLL)
-endif()
-
-add_library(${library_name} SHARED ${source_files} ${include_files})
+add_library(${library_name} STATIC ${source_files} ${include_files})
 
 target_include_directories(${library_name} PUBLIC ${include_dirs})
 
