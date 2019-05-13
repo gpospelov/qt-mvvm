@@ -15,6 +15,9 @@
 #include "itemutils.h"
 #include "modelmapper.h"
 #include "sessionitem.h"
+#include "standarditemcatalogue.h"
+#include "itemcatalogue.h"
+#include "itemfactory.h"
 #include "taginfo.h"
 
 using namespace ModelView;
@@ -30,6 +33,14 @@ SessionModel::SessionModel(std::string model_type)
 SessionModel::~SessionModel()
 {
     m_mapper->callOnModelDestroyed();
+}
+
+void SessionModel::setItemCatalogue(std::unique_ptr<ItemCatalogue> catalogue)
+{
+    // adding standard items to the user catalogue
+    std::unique_ptr<ItemCatalogue> full_catalogue = std::move(catalogue);
+    full_catalogue->merge(*CreateStandardItemCatalogue());
+    m_item_manager->setItemFactory(std::make_unique<ItemFactory>(std::move(full_catalogue)));
 }
 
 std::string SessionModel::modelType() const
