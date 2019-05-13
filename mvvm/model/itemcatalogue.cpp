@@ -83,7 +83,7 @@ int ItemCatalogue::itemCount() const
 
 //! Adds content of other catalogue to this.
 
-void ItemCatalogue::add(const ItemCatalogue& other)
+void ItemCatalogue::merge(const ItemCatalogue& other)
 {
     size_t index(0);
     for (auto it : other.p_impl->factory) {

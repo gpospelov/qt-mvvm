@@ -128,7 +128,7 @@ TEST_F(TestItemCatalogue, addLabeledItem)
     EXPECT_EQ(catalogue.labels(), std::vector<std::string>({"property", "vector item"}));
 }
 
-TEST_F(TestItemCatalogue, addCatalogue)
+TEST_F(TestItemCatalogue, merge)
 {
     ItemCatalogue catalogue1;
     catalogue1.add<PropertyItem>("property");
@@ -138,7 +138,7 @@ TEST_F(TestItemCatalogue, addCatalogue)
     catalogue2.add<CompoundItem>("compound");
 
     // adding two catalogue together
-    catalogue1.add(catalogue2);
+    catalogue1.merge(catalogue2);
 
     std::vector<std::string> expected_models = {Constants::PropertyType, Constants::VectorType,
                                                 Constants::CompoundType};
@@ -151,5 +151,5 @@ TEST_F(TestItemCatalogue, addCatalogue)
     EXPECT_TRUE(dynamic_cast<VectorItem*>(item.get()) != nullptr);
 
     // duplications is not allowed
-    EXPECT_THROW(catalogue1.add(catalogue2), std::runtime_error);
+    EXPECT_THROW(catalogue1.merge(catalogue2), std::runtime_error);
 }

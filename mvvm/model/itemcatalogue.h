@@ -43,7 +43,7 @@ public:
 
     int itemCount() const;
 
-    void add(const ItemCatalogue& other);
+    void merge(const ItemCatalogue& other);
 
 private:
     using factory_func_t = std::function<SessionItem*()>;
