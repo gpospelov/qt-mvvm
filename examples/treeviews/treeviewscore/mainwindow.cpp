@@ -8,8 +8,6 @@
 // ************************************************************************** //
 
 #include "mainwindow.h"
-#include "testwidget1.h"
-#include "testwidget2.h"
 #include "testwidget3.h"
 #include <QTabWidget>
 #include <QCoreApplication>
@@ -24,8 +22,6 @@ namespace {
 MainWindow::MainWindow()
     : m_tabWidget(new QTabWidget)
 {    
-    m_tabWidget->addTab(new TestWidget1, "Model basics");
-    m_tabWidget->addTab(new TestWidget2, "ViewModel");
     m_tabWidget->addTab(new TestWidget3, "Undo/Redo");
 
     m_tabWidget->setCurrentIndex(m_tabWidget->count()-1);
@@ -42,7 +38,7 @@ void MainWindow::closeEvent(QCloseEvent* event)
 
 void MainWindow::init_application()
 {
-    QCoreApplication::setApplicationName("qt-mvvm-app");
+    QCoreApplication::setApplicationName("qt-mvvm-example");
     QCoreApplication::setApplicationVersion("0.1");
     QCoreApplication::setOrganizationName("qt-mvvm");
 
