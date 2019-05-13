@@ -7,11 +7,26 @@
 //
 // ************************************************************************** //
 
-#ifndef MULTILAYERITEM_H
-#define MULTILAYERITEM_H
+#ifndef LAYERITEMS_H
+#define LAYERITEMS_H
 
-#include "mvvm_global.h"
 #include "compounditem.h"
+
+//! @file LayerItems.h
+//! Collection of layer and multi-layer items to populate SampleModel.
+
+//! Layer with name, thickness and reference to material.
+
+class CORE_EXPORT LayerItem : public ModelView::CompoundItem
+{
+public:
+    static const std::string P_NAME;
+    static const std::string P_MATERIAL;
+    static const std::string P_THICKNESS;
+    LayerItem();
+};
+
+//! Multi layer capable of holding layers and other multi-layers.
 
 class CORE_EXPORT MultiLayerItem : public ModelView::CompoundItem
 {
@@ -21,5 +36,4 @@ public:
     MultiLayerItem();
 };
 
-#endif // MULTILAYERITEM_H
-
+#endif // LAYERITEM_H

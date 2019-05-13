@@ -7,8 +7,31 @@
 //
 // ************************************************************************** //
 
-#include "MultiLayerItem.h"
+#include "LayerItems.h"
+#include "externalproperty.h"
 #include "item_constants.h"
+#include <QVariant>
+
+namespace
+{
+QVariant material_link()
+{
+    return QVariant::fromValue(ModelView::ExternalProperty("Undefined", QColor(Qt::red)));
+}
+} // namespace
+
+const std::string LayerItem::P_NAME = "P_NAME";
+const std::string LayerItem::P_MATERIAL = "P_MATERIAL";
+const std::string LayerItem::P_THICKNESS = "P_THICKNESS";
+
+LayerItem::LayerItem() : ModelView::CompoundItem(Constants::LayerType)
+{
+    addProperty<ModelView::PropertyItem>(P_NAME, "Layer")->setDisplayName("Name");
+    addProperty<ModelView::PropertyItem>(P_MATERIAL, material_link())->setDisplayName("Material");
+    addProperty<ModelView::PropertyItem>(P_THICKNESS, 42.0)->setDisplayName("Thickness");
+}
+
+// ----------------------------------------------------------------------------
 
 const std::string MultiLayerItem::T_LAYERS = "T_LAYERS";
 const std::string MultiLayerItem::P_NREPETITIONS = "P_NREPETITIONS";

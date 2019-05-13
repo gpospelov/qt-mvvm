@@ -10,8 +10,7 @@
 #include "LayerTableRowConstructor.h"
 #include "item_constants.h"
 #include "sessionitem.h"
-#include "LayerItem.h"
-#include "MultiLayerItem.h"
+#include "LayerItems.h"
 #include "viewitems.h"
 #include "viewdataitem.h"
 #include <stdexcept>

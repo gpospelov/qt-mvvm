@@ -9,8 +9,7 @@
 
 #include "ItemCatalogue.h"
 #include "standarditemcatalogue.h"
-#include "MultiLayerItem.h"
-#include "LayerItem.h"
+#include "LayerItems.h"
 #include "MaterialItems.h"
 
 std::unique_ptr<ModelView::ItemCatalogue> CreateItemCatalogue()
