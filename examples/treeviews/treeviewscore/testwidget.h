@@ -23,17 +23,14 @@ class PropertyEditor;
 class ItemsTreeView;
 } // namespace ModelView
 
-namespace ToyItems
-{
-class SampleModel;
-}
-
 class QTreeView;
 class QStandardItemModel;
 class QPoint;
 class QUndoView;
 class QBoxLayout;
 class QItemSelection;
+
+class SampleModel;
 
 //! Playground to test basics of ViewModel.
 
@@ -65,7 +62,7 @@ private:
     ModelView::ItemsTreeView* m_subsetTreeView;
     QUndoView* m_undoView;
     ModelView::PropertyEditor* m_propertyEditor;
-    std::unique_ptr<ToyItems::SampleModel> m_sessionModel;
+    std::unique_ptr<SampleModel> m_sessionModel;
 };
 
 #endif // TESTWIDGET3_H

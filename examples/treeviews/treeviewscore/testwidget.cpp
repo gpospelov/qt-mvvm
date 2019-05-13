@@ -11,8 +11,10 @@
 #include "standardviewmodels.h"
 #include "itemstreeview.h"
 #include "propertyeditor.h"
-#include "toy_includes.h"
 #include "viewitem.h"
+#include "samplemodel.h"
+#include "sessionitem.h"
+#include "item_constants.h"
 #include <QBoxLayout>
 #include <QLabel>
 #include <QMenu>
@@ -27,12 +29,10 @@ const QString text = "Undo/Redo basics.\n"
                      "or just modify values of items. View on the right displays command stack.";
 }
 
-using namespace ModelView;
-
 TestWidget::TestWidget(QWidget* parent)
-    : QWidget(parent), m_defaultTreeView(new ItemsTreeView), m_topItemView(new ItemsTreeView),
-      m_subsetTreeView(new ItemsTreeView), m_undoView(new QUndoView),
-      m_propertyEditor(new PropertyEditor), m_sessionModel(new ToyItems::SampleModel)
+    : QWidget(parent), m_defaultTreeView(new ModelView::ItemsTreeView), m_topItemView(new ModelView::ItemsTreeView),
+      m_subsetTreeView(new ModelView::ItemsTreeView), m_undoView(new QUndoView),
+      m_propertyEditor(new ModelView::PropertyEditor), m_sessionModel(new SampleModel)
 {
     auto mainLayout = new QVBoxLayout;
     mainLayout->setSpacing(10);
@@ -86,13 +86,13 @@ void TestWidget::onContextMenuRequest(const QPoint& point)
 
 void TestWidget::init_session_model()
 {
-    auto multi_layer = m_sessionModel->insertNewItem(ToyItems::Constants::MultiLayerType);
-    auto layer = m_sessionModel->insertNewItem(ToyItems::Constants::LayerType, multi_layer);
-    m_sessionModel->insertNewItem(ToyItems::Constants::ParticleType, layer);
+    auto multi_layer = m_sessionModel->insertNewItem(Constants::MultiLayerType);
+    auto layer = m_sessionModel->insertNewItem(Constants::LayerType, multi_layer);
+    m_sessionModel->insertNewItem(Constants::ParticleType, layer);
 
-    m_sessionModel->insertNewItem(ToyItems::Constants::LayerType, multi_layer);
+    m_sessionModel->insertNewItem(Constants::LayerType, multi_layer);
 
-    m_sessionModel->insertNewItem(ToyItems::Constants::InterferenceType);
+    m_sessionModel->insertNewItem(Constants::InterferenceType);
 
     m_sessionModel->setUndoRedoEnabled(true);
     m_undoView->setStack(m_sessionModel->undoStack());
@@ -100,20 +100,20 @@ void TestWidget::init_session_model()
 
 //! Returns SessionItem corresponding to given coordinate in a view.
 
-SessionItem* TestWidget::item_from_view(QTreeView* view, const QPoint& point)
+ModelView::SessionItem* TestWidget::item_from_view(QTreeView* view, const QPoint& point)
 {
     QModelIndex index = view->indexAt(point);
     auto item = m_defaultTreeView->viewModel()->itemFromIndex(index);
-    auto viewItem = dynamic_cast<ViewItem*>(item);
+    auto viewItem = dynamic_cast<ModelView::ViewItem*>(item);
     Q_ASSERT(viewItem);
     return viewItem->item();
 }
 
 void TestWidget::init_default_view()
 {
-    m_defaultTreeView->setViewModel(Utils::CreateDefaultViewModel(m_sessionModel.get()));
+    m_defaultTreeView->setViewModel(ModelView::Utils::CreateDefaultViewModel(m_sessionModel.get()));
 
-    connect(m_defaultTreeView, &ItemsTreeView::itemSelected, [this](SessionItem* item) {
+    connect(m_defaultTreeView, &ModelView::ItemsTreeView::itemSelected, [this](ModelView::SessionItem* item) {
         m_subsetTreeView->setRootSessionItem(item);
         m_propertyEditor->setItem(item);
         m_topItemView->setSelected(item);
@@ -126,14 +126,14 @@ void TestWidget::init_default_view()
 
 void TestWidget::init_topitems_view()
 {
-    m_topItemView->setViewModel(Utils::CreateTopItemsViewModel(m_sessionModel.get()));
-    connect(m_topItemView, &ItemsTreeView::itemSelected,
-            [this](SessionItem* item) { m_defaultTreeView->setSelected(item); });
+    m_topItemView->setViewModel(ModelView::Utils::CreateTopItemsViewModel(m_sessionModel.get()));
+    connect(m_topItemView, &ModelView::ItemsTreeView::itemSelected,
+            [this](ModelView::SessionItem* item) { m_defaultTreeView->setSelected(item); });
 }
 
 void TestWidget::init_subset_view()
 {
-    m_subsetTreeView->setViewModel(Utils::CreateDefaultViewModel(m_sessionModel.get()));
+    m_subsetTreeView->setViewModel(ModelView::Utils::CreateDefaultViewModel(m_sessionModel.get()));
 }
 
 QBoxLayout* TestWidget::create_top_layout()
