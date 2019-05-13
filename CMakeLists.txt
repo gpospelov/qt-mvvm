@@ -10,9 +10,7 @@ include(CTest)
 include(configuration)
 
 add_subdirectory(mvvm)
-add_subdirectory(examples/app)
-add_subdirectory(examples/LayerEditor)
-add_subdirectory(examples/miniba)
+add_subdirectory(examples)
 add_subdirectory(thirdparty/gtest)
 add_subdirectory(tests)
 
