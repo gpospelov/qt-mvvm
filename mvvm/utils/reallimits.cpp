@@ -14,10 +14,16 @@
 #include <limits>
 #include <sstream>
 
+namespace  {
+const double lmin = std::numeric_limits<double>::lowest();
+const double lmax = std::numeric_limits<double>::max();
+const double poszero = std::numeric_limits<double>::min();
+}
+
 using namespace ModelView;
 
 RealLimits::RealLimits()
-    : m_has_lower_limit(false), m_has_upper_limit(false), m_lower_limit(0.), m_upper_limit(0.)
+    : m_has_lower_limit(false), m_has_upper_limit(false), m_lower_limit(lmin), m_upper_limit(lmax)
 {
 }
 
@@ -30,12 +36,12 @@ RealLimits::RealLimits(bool has_lower_limit, bool has_upper_limit, double lower_
 
 RealLimits RealLimits::lowerLimited(double bound_value)
 {
-    return RealLimits(true, false, bound_value, 0.);
+    return RealLimits(true, false, bound_value, lmax);
 }
 
 RealLimits RealLimits::positive()
 {
-    return lowerLimited(std::numeric_limits<double>::min());
+    return lowerLimited(poszero);
 }
 
 RealLimits RealLimits::nonnegative()
@@ -45,7 +51,7 @@ RealLimits RealLimits::nonnegative()
 
 RealLimits RealLimits::upperLimited(double bound_value)
 {
-    return RealLimits(false, true, 0., bound_value);
+    return RealLimits(false, true, lmin, bound_value);
 }
 
 RealLimits RealLimits::limited(double left_bound_value, double right_bound_value)
@@ -117,13 +123,12 @@ bool RealLimits::isLimitless() const
 
 bool RealLimits::isPositive() const
 {
-    return hasLowerLimit() && !hasUpperLimit()
-           && lowerLimit() == std::numeric_limits<double>::min();
+    return hasLowerLimit() && !hasUpperLimit() && Utils::AreAlmostEqual(lowerLimit(), poszero);
 }
 
 bool RealLimits::isNonnegative() const
 {
-    return hasLowerLimit() && !hasUpperLimit() && lowerLimit() == 0.0;
+    return hasLowerLimit() && !hasUpperLimit() && Utils::AreAlmostEqual(lowerLimit(), 0.0);
 }
 
 bool RealLimits::isLowerLimited() const

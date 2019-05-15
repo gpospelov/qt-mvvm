@@ -32,13 +32,14 @@ TEST_F(RealLimitsTest, initialState)
 
 TEST_F(RealLimitsTest, lowerLimited)
 {
+    // [5.0, inf[
     RealLimits limits = RealLimits::lowerLimited(5.0);
     EXPECT_TRUE(limits.hasLowerLimit());
     EXPECT_FALSE(limits.hasUpperLimit());
     EXPECT_FALSE(limits.hasLowerAndUpperLimits());
 
-    EXPECT_EQ(5.0, limits.lowerLimit());
-    EXPECT_EQ(0.0, limits.upperLimit());
+    EXPECT_EQ(limits.lowerLimit(), 5.0);
+    EXPECT_DOUBLE_EQ(limits.upperLimit(), std::numeric_limits<double>::max());
 
     EXPECT_FALSE(limits.isPositive());
     EXPECT_FALSE(limits.isNonnegative());
@@ -55,7 +56,7 @@ TEST_F(RealLimitsTest, upperLimited)
     EXPECT_TRUE(limits.hasUpperLimit());
     EXPECT_FALSE(limits.hasLowerAndUpperLimits());
 
-    EXPECT_EQ(0.0, limits.lowerLimit()); // FIXME
+    EXPECT_DOUBLE_EQ(limits.lowerLimit(), std::numeric_limits<double>::lowest());
     EXPECT_EQ(5.0, limits.upperLimit());
 
     EXPECT_TRUE(limits.isInRange(-std::numeric_limits<double>::infinity()));
@@ -78,8 +79,8 @@ TEST_F(RealLimitsTest, limited)
     EXPECT_TRUE(limits.hasUpperLimit());
     EXPECT_TRUE(limits.hasLowerAndUpperLimits());
 
-    EXPECT_EQ(-10.0, limits.lowerLimit());
-    EXPECT_EQ(2.0, limits.upperLimit());
+    EXPECT_EQ(limits.lowerLimit(), -10.0);
+    EXPECT_EQ(limits.upperLimit(), 2.0);
 
     EXPECT_FALSE(limits.isInRange(-11.0));
     EXPECT_TRUE(limits.isInRange(-9.0));
@@ -102,6 +103,10 @@ TEST_F(RealLimitsTest, limitless)
     EXPECT_FALSE(limits.hasLowerLimit());
     EXPECT_FALSE(limits.hasUpperLimit());
     EXPECT_FALSE(limits.hasLowerAndUpperLimits());
+
+    EXPECT_EQ(limits.lowerLimit(), std::numeric_limits<double>::lowest());
+    EXPECT_EQ(limits.upperLimit(), std::numeric_limits<double>::max());
+
     EXPECT_TRUE(limits.isInRange(-std::numeric_limits<double>::infinity()));
     EXPECT_TRUE(limits.isInRange(0.0));
     EXPECT_TRUE(limits.isInRange(std::numeric_limits<double>::infinity()));
