@@ -127,32 +127,6 @@ RealLimits RealLimits::limitless()
     return RealLimits();
 }
 
-std::string RealLimits::toString() const
-{
-    std::ostringstream result;
-
-    if (isLimitless())
-        result << "unlimited";
-
-    else if (isPositive())
-        result << "positive";
-
-    else if (isNonnegative())
-        result << "nonnegative";
-
-    else if (isLowerLimited())
-        result << "lowerLimited(" << std::fixed << std::setprecision(2) << lowerLimit() << ")";
-
-    else if (isUpperLimited())
-        result << "upperLimited(" << std::fixed << std::setprecision(2) << upperLimit() << ")";
-
-    else if (isLimited())
-        result << "limited(" << std::fixed << std::setprecision(2) << lowerLimit() << ","
-               << std::fixed << std::setprecision(2) << upperLimit() << ")";
-
-    return result.str();
-}
-
 bool RealLimits::operator==(const RealLimits& other) const
 {
     return (m_has_lower_limit == other.m_has_lower_limit)

@@ -79,15 +79,6 @@ public:
     //! Creates an object withoud bounds (default)
     static RealLimits limitless();
 
-    std::string toString() const;
-
-    //! Prints class
-    friend std::ostream& operator<<(std::ostream& ostr, const RealLimits& m)
-    {
-        ostr << m.toString();
-        return ostr;
-    }
-
     bool operator==(const RealLimits& other) const;
     bool operator!=(const RealLimits& other) const;
     bool operator<(const RealLimits& other) const;
