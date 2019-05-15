@@ -31,32 +31,14 @@ public:
     //! Returns lower limit
     double lowerLimit() const;
 
-    //! Sets lower limit
-    void setLowerLimit(double value);
-
-    //! remove lower limit
-    void removeLowerLimit();
-
     //! if has upper limit
     bool hasUpperLimit() const;
 
     //! Returns upper limit
     double upperLimit() const;
 
-    //! Sets upper limit
-    void setUpperLimit(double value);
-
-    //! remove upper limit
-    void removeUpperLimit();
-
     //! if has lower and upper limit
     bool hasLowerAndUpperLimits() const;
-
-    //! Sets lower and upper limits
-    void setLimits(double xmin, double xmax);
-
-    //! remove limits
-    void removeLimits();
 
     //! returns true if proposed value is in limits range
     bool isInRange(double value) const;

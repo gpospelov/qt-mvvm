@@ -37,18 +37,6 @@ double RealLimits::lowerLimit() const
     return m_lower_limit;
 }
 
-void RealLimits::setLowerLimit(double value)
-{
-    m_lower_limit = value;
-    m_has_lower_limit = true;
-}
-
-void RealLimits::removeLowerLimit()
-{
-    m_lower_limit = 0.;
-    m_has_lower_limit = false;
-}
-
 bool RealLimits::hasUpperLimit() const
 {
     return m_has_upper_limit;
@@ -59,33 +47,9 @@ double RealLimits::upperLimit() const
     return m_upper_limit;
 }
 
-void RealLimits::setUpperLimit(double value)
-{
-    m_upper_limit = value;
-    m_has_upper_limit = true;
-}
-
-void RealLimits::removeUpperLimit()
-{
-    m_upper_limit = 0.;
-    m_has_upper_limit = false;
-}
-
 bool RealLimits::hasLowerAndUpperLimits() const
 {
     return (m_has_lower_limit && m_has_upper_limit);
-}
-
-void RealLimits::setLimits(double xmin, double xmax)
-{
-    setLowerLimit(xmin);
-    setUpperLimit(xmax);
-}
-
-void RealLimits::removeLimits()
-{
-    removeLowerLimit();
-    removeUpperLimit();
 }
 
 bool RealLimits::isInRange(double value) const
