@@ -27,6 +27,36 @@ RealLimits::RealLimits(bool has_lower_limit, bool has_upper_limit, double lower_
 {
 }
 
+RealLimits RealLimits::lowerLimited(double bound_value)
+{
+    return RealLimits(true, false, bound_value, 0.);
+}
+
+RealLimits RealLimits::positive()
+{
+    return lowerLimited(std::numeric_limits<double>::min());
+}
+
+RealLimits RealLimits::nonnegative()
+{
+    return lowerLimited(0.);
+}
+
+RealLimits RealLimits::upperLimited(double bound_value)
+{
+    return RealLimits(false, true, 0., bound_value);
+}
+
+RealLimits RealLimits::limited(double left_bound_value, double right_bound_value)
+{
+    return RealLimits(true, true, left_bound_value, right_bound_value);
+}
+
+RealLimits RealLimits::limitless()
+{
+    return RealLimits();
+}
+
 bool RealLimits::hasLowerLimit() const
 {
     return m_has_lower_limit;
@@ -59,36 +89,6 @@ bool RealLimits::isInRange(double value) const
     if (hasUpperLimit() && value >= m_upper_limit)
         return false;
     return true;
-}
-
-RealLimits RealLimits::lowerLimited(double bound_value)
-{
-    return RealLimits(true, false, bound_value, 0.);
-}
-
-RealLimits RealLimits::positive()
-{
-    return lowerLimited(std::numeric_limits<double>::min());
-}
-
-RealLimits RealLimits::nonnegative()
-{
-    return lowerLimited(0.);
-}
-
-RealLimits RealLimits::upperLimited(double bound_value)
-{
-    return RealLimits(false, true, 0., bound_value);
-}
-
-RealLimits RealLimits::limited(double left_bound_value, double right_bound_value)
-{
-    return RealLimits(true, true, left_bound_value, right_bound_value);
-}
-
-RealLimits RealLimits::limitless()
-{
-    return RealLimits();
 }
 
 bool RealLimits::operator==(const RealLimits& other) const

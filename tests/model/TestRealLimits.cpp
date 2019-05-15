@@ -22,6 +22,12 @@ TEST_F(RealLimitsTest, initialState)
     EXPECT_TRUE(limits.isInRange(-std::numeric_limits<double>::infinity()));
     EXPECT_TRUE(limits.isInRange(0.0));
     EXPECT_TRUE(limits.isInRange(std::numeric_limits<double>::infinity()));
+
+    EXPECT_FALSE(limits.isPositive());
+    EXPECT_FALSE(limits.isNonnegative());
+    EXPECT_FALSE(limits.isLowerLimited());
+    EXPECT_FALSE(limits.isUpperLimited());
+    EXPECT_FALSE(limits.isLimited());
 }
 
 TEST_F(RealLimitsTest, lowerLimited)
@@ -33,6 +39,12 @@ TEST_F(RealLimitsTest, lowerLimited)
 
     EXPECT_EQ(5.0, limits.lowerLimit());
     EXPECT_EQ(0.0, limits.upperLimit());
+
+    EXPECT_FALSE(limits.isPositive());
+    EXPECT_FALSE(limits.isNonnegative());
+    EXPECT_TRUE(limits.isLowerLimited());
+    EXPECT_FALSE(limits.isUpperLimited());
+    EXPECT_FALSE(limits.isLimited());
 }
 
 TEST_F(RealLimitsTest, upperLimited)
@@ -50,6 +62,12 @@ TEST_F(RealLimitsTest, upperLimited)
     EXPECT_TRUE(limits.isInRange(-2.0));
     EXPECT_FALSE(limits.isInRange(5.0));
     EXPECT_FALSE(limits.isInRange(std::numeric_limits<double>::infinity()));
+
+    EXPECT_FALSE(limits.isPositive());
+    EXPECT_FALSE(limits.isNonnegative());
+    EXPECT_FALSE(limits.isLowerLimited());
+    EXPECT_TRUE(limits.isUpperLimited());
+    EXPECT_FALSE(limits.isLimited());
 }
 
 TEST_F(RealLimitsTest, limited)
@@ -69,6 +87,12 @@ TEST_F(RealLimitsTest, limited)
     EXPECT_TRUE(limits.isInRange(1.0));
     EXPECT_FALSE(limits.isInRange(2.0));
     EXPECT_FALSE(limits.isInRange(3.0));
+
+    EXPECT_FALSE(limits.isPositive());
+    EXPECT_FALSE(limits.isNonnegative());
+    EXPECT_FALSE(limits.isLowerLimited());
+    EXPECT_FALSE(limits.isUpperLimited());
+    EXPECT_TRUE(limits.isLimited());
 }
 
 TEST_F(RealLimitsTest, limitless)
@@ -81,6 +105,12 @@ TEST_F(RealLimitsTest, limitless)
     EXPECT_TRUE(limits.isInRange(-std::numeric_limits<double>::infinity()));
     EXPECT_TRUE(limits.isInRange(0.0));
     EXPECT_TRUE(limits.isInRange(std::numeric_limits<double>::infinity()));
+
+    EXPECT_FALSE(limits.isPositive());
+    EXPECT_FALSE(limits.isNonnegative());
+    EXPECT_FALSE(limits.isLowerLimited());
+    EXPECT_FALSE(limits.isUpperLimited());
+    EXPECT_FALSE(limits.isLimited());
 }
 
 TEST_F(RealLimitsTest, comparisonOperators)
