@@ -34,9 +34,10 @@ TEST_F(TestCustomVariants, CompatibleVariantTypes)
     QVariant combo_variant = combo.variant();
     QVariant color_variant = QVariant::fromValue(QColor(Qt::red));
     QVariant extprop_variant = QVariant::fromValue(ExternalProperty());
+    QVariant limits_variant = QVariant::fromValue(RealLimits());
 
     std::vector<QVariant> variants = {int_variant, double_variant, string_variant, vector_variant,
-                                      combo_variant, color_variant, extprop_variant};
+                                      combo_variant, color_variant, extprop_variant, limits_variant};
     for (size_t i = 0; i < variants.size(); ++i) {
         EXPECT_TRUE(Utils::CompatibleVariantTypes(undefined, variants[i]));
         EXPECT_FALSE(Utils::VariantType(undefined) == Utils::VariantType(variants[i]));
@@ -62,6 +63,8 @@ TEST_F(TestCustomVariants, IsTheSameVariant)
     const ComboProperty combo2 = ComboProperty::createFrom({"b1"});
     const ExternalProperty extprop1;
     const ExternalProperty extprop2("abc", QColor(Qt::red), "123");
+    const RealLimits lim1;
+    const RealLimits lim2 = RealLimits::limited(1.0, 2.0);
 
     std::vector<QVariant> variants = {
         QVariant(),
@@ -71,7 +74,8 @@ TEST_F(TestCustomVariants, IsTheSameVariant)
         QVariant::fromValue(vec1), QVariant::fromValue(vec2),
         combo1.variant(), combo2.variant(),
         QVariant::fromValue(QColor(Qt::red)), QVariant::fromValue(QColor(Qt::green)),
-        QVariant::fromValue(extprop1), QVariant::fromValue(extprop2)
+        QVariant::fromValue(extprop1), QVariant::fromValue(extprop2).
+        QVariant::fromValue(lim1), QVariant::fromValue(lim2)
     };
 
     for (size_t i = 0; i < variants.size(); ++i) {
@@ -123,7 +127,8 @@ TEST_F(TestCustomVariants, isVariantType)
         {QVariant::fromValue(std::string("string1")), Utils::IsStdStringVariant},
         {QVariant::fromValue(std::vector<double>({1, 2})), Utils::IsDoubleVectorVariant},
         {QVariant::fromValue(QColor(Qt::red)), Utils::IsColorVariant},
-        {QVariant::fromValue(ExternalProperty()), Utils::IsExtPropertyVariant}
+        {QVariant::fromValue(ExternalProperty()), Utils::IsExtPropertyVariant},
+        {QVariant::fromValue(RealLimits()), Utils::IsRealLimitsVariant}
     };
 
     for (size_t i = 0; i < data.size(); ++i) {

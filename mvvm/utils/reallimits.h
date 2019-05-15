@@ -90,6 +90,7 @@ public:
 
     bool operator==(const RealLimits& other) const;
     bool operator!=(const RealLimits& other) const;
+    bool operator<(const RealLimits& other) const;
 
     bool isLimitless() const;
     bool isPositive() const;

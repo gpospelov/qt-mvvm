@@ -10,10 +10,11 @@
 #ifndef MVVM_CUSTOMVARIANTS_H
 #define MVVM_CUSTOMVARIANTS_H
 
-#include "mvvm_global.h"
-
+//! @file customvariants.h
 //! Registrations and translations for custom variants.
 
+#include "mvvm_global.h"
+#include "reallimits.h"
 #include <QMetaType>
 #include <QVariant>
 #include <string>
@@ -63,11 +64,14 @@ CORE_EXPORT bool IsColorVariant(const QVariant& variant);
 //! Returns true in the case of ExternalProperty based variant.
 CORE_EXPORT bool IsExtPropertyVariant(const QVariant& variant);
 
+//! Returns true in the case of RealLimits based variant.
+CORE_EXPORT bool IsRealLimitsVariant(const QVariant& variant);
 
 } // namespace Utils
 } // namespace ModelView
 
 Q_DECLARE_METATYPE(std::string)
 Q_DECLARE_METATYPE(std::vector<double>)
+Q_DECLARE_METATYPE(ModelView::RealLimits)
 
 #endif // MVVM_CUSTOMVARIANTS_H

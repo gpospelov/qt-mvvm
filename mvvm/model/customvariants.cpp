@@ -105,3 +105,8 @@ bool Utils::IsExtPropertyVariant(const QVariant& variant)
 {
     return variant.canConvert<ExternalProperty>();
 }
+
+bool Utils::IsRealLimitsVariant(const QVariant& variant)
+{
+    return variant.canConvert<RealLimits>();
+}

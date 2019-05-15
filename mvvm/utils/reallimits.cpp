@@ -165,6 +165,11 @@ bool RealLimits::operator!=(const RealLimits& other) const
     return !(*this == other);
 }
 
+bool RealLimits::operator<(const RealLimits& other) const
+{
+    return m_lower_limit < other.m_lower_limit && m_upper_limit < other.m_upper_limit;
+}
+
 bool RealLimits::isLimitless() const
 {
     return !hasLowerLimit() && !hasUpperLimit();

@@ -168,3 +168,27 @@ TEST_F(RealLimitsTest, CopyConstructor)
     EXPECT_TRUE(lim1 == lim3);
     EXPECT_FALSE(lim1 != lim3);
 }
+
+TEST_F(RealLimitsTest, toVariant)
+{
+    RealLimits limit = RealLimits::limited(1.0, 2.0);
+    QVariant variant = QVariant::fromValue(limit);
+
+    EXPECT_EQ(variant.value<RealLimits>().isLimited(), limit.isLimited());
+    EXPECT_EQ(variant.value<RealLimits>().lowerLimit(), limit.lowerLimit());
+    EXPECT_EQ(variant.value<RealLimits>().upperLimit(), limit.upperLimit());
+}
+
+TEST_F(RealLimitsTest, variantEquality)
+{
+    if (ModelView::Comparators::registered()) {
+        QVariant var1a = QVariant::fromValue(RealLimits::limited(1.0, 2.0));
+        QVariant var1b = QVariant::fromValue(RealLimits::limited(1.0, 2.0));
+        QVariant var2 = QVariant::fromValue(RealLimits::lowerLimited(1.0));
+
+        EXPECT_TRUE(var1a == var1b);
+        EXPECT_FALSE(var1a == var2);
+        EXPECT_FALSE(var1a != var1b);
+        EXPECT_TRUE(var1a != var2);
+    }
+}
