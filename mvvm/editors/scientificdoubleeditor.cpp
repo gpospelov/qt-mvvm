@@ -9,12 +9,18 @@
 
 #include "scientificdoubleeditor.h"
 #include "numericutils.h"
+#include "reallimits.h"
 #include <QDoubleValidator>
 #include <QVBoxLayout>
 #include <QLineEdit>
 #include <cmath>
 #include <limits>
 #include <stdexcept>
+#include <numeric>
+
+namespace {
+const int max_digits = 1000;
+}
 
 using namespace ModelView;
 
@@ -30,7 +36,7 @@ ScientificDoubleEditor::ScientificDoubleEditor(QWidget* parent)
 
     layout->addWidget(m_lineEdit);
 
-    m_validator = new QDoubleValidator(0.0, 1e+200, 1000, this);
+    m_validator = new QDoubleValidator(0.0, std::numeric_limits<double>::max(), max_digits, this);
     m_validator->setNotation(QDoubleValidator::ScientificNotation);
     m_lineEdit->setValidator(m_validator);
 
@@ -40,7 +46,10 @@ ScientificDoubleEditor::ScientificDoubleEditor(QWidget* parent)
     setLayout(layout);
 }
 
-void ScientificDoubleEditor::setLimits(const RealLimits&) {}
+void ScientificDoubleEditor::setLimits(const RealLimits& limits)
+{
+    m_validator->setRange(limits.lowerLimit(), limits.upperLimit(), max_digits);
+}
 
 void ScientificDoubleEditor::onEditingFinished()
 {

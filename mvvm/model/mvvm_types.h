@@ -28,6 +28,7 @@ const int IDENTIFIER = 0;
 const int DATA = 1;
 const int DISPLAY = 2;
 const int APPEARANCE = 3;
+const int LIMITS = 4;
 };
 
 enum Appearance {

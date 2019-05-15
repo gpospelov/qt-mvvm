@@ -14,12 +14,17 @@
 
 namespace ModelView {
 
+class RealLimits;
+
 //! Holds single data property for complex SessionItems.
 
 class CORE_EXPORT PropertyItem : public SessionItem
 {
 public:
     PropertyItem();
+
+    SessionItem& setLimits(const RealLimits& value);
+
 };
 
 } // namespace ModelView
