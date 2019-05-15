@@ -25,24 +25,6 @@ class CORE_EXPORT RealLimits
 public:
     RealLimits();
 
-    //! if has lower limit
-    bool hasLowerLimit() const;
-
-    //! Returns lower limit
-    double lowerLimit() const;
-
-    //! if has upper limit
-    bool hasUpperLimit() const;
-
-    //! Returns upper limit
-    double upperLimit() const;
-
-    //! if has lower and upper limit
-    bool hasLowerAndUpperLimits() const;
-
-    //! returns true if proposed value is in limits range
-    bool isInRange(double value) const;
-
     //! Creates an object bounded from the left
     static RealLimits lowerLimited(double bound_value);
 
@@ -60,6 +42,25 @@ public:
 
     //! Creates an object withoud bounds (default)
     static RealLimits limitless();
+
+
+    //! if has lower limit
+    bool hasLowerLimit() const;
+
+    //! Returns lower limit
+    double lowerLimit() const;
+
+    //! if has upper limit
+    bool hasUpperLimit() const;
+
+    //! Returns upper limit
+    double upperLimit() const;
+
+    //! if has lower and upper limit
+    bool hasLowerAndUpperLimits() const;
+
+    //! returns true if proposed value is in limits range
+    bool isInRange(double value) const;
 
     bool operator==(const RealLimits& other) const;
     bool operator!=(const RealLimits& other) const;

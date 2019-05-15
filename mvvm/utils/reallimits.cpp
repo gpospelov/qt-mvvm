@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include "reallimits.h"
+#include "numericutils.h"
 #include <iomanip>
 #include <iostream>
 #include <limits>
@@ -95,7 +96,8 @@ bool RealLimits::operator==(const RealLimits& other) const
 {
     return (m_has_lower_limit == other.m_has_lower_limit)
            && (m_has_upper_limit == other.m_has_upper_limit)
-           && (m_lower_limit == other.m_lower_limit) && (m_upper_limit == other.m_upper_limit);
+           && Utils::AreAlmostEqual(m_lower_limit, other.m_lower_limit)
+           && Utils::AreAlmostEqual(m_upper_limit, other.m_upper_limit);
 }
 
 bool RealLimits::operator!=(const RealLimits& other) const
