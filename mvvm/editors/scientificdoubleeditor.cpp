@@ -8,8 +8,9 @@
 // ************************************************************************** //
 
 #include "scientificdoubleeditor.h"
+#include "numericutils.h"
 #include <QDoubleValidator>
-#include <QHBoxLayout>
+#include <QVBoxLayout>
 #include <QLineEdit>
 #include <cmath>
 #include <limits>
@@ -45,7 +46,7 @@ void ScientificDoubleEditor::onEditingFinished()
 {
     double new_value = m_lineEdit->text().toDouble();
 
-    if (std::fabs(new_value - m_data.toDouble()) < std::numeric_limits<double>::epsilon())
+    if (!Utils::AreAlmostEqual(new_value, m_data.toDouble()))
         setDataIntern(QVariant::fromValue(new_value));
 }
 
