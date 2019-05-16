@@ -14,6 +14,7 @@
 #include "propertyitem.h"
 #include "sessionitem.h"
 #include "taginfo.h"
+#include "reallimits.h"
 
 namespace ModelView
 {
@@ -31,6 +32,9 @@ public:
 
     //! Register char property as variant based on std::string.
     template <typename T = PropertyItem> T* addProperty(const std::string& name, const char* str);
+
+    //! Register char property as variant based on std::string.
+//    template <typename T = PropertyItem> T* addProperty(const std::string& name, double value, const RealLimits& limits = RealLimits::positive());
 
     std::string displayName() const override;
 

@@ -48,6 +48,21 @@ TEST_F(TestCompoundItem, addCharProperty)
     EXPECT_EQ(propertyItem->data(ItemDataRole::DATA).value<std::string>(), std::string("abc"));
 }
 
+TEST_F(TestCompoundItem, addDoubleProperty)
+{
+    CompoundItem item;
+
+    const double expected(42.1);
+    auto propertyItem = item.addProperty<PropertyItem>("name", expected);
+    EXPECT_TRUE(item.isTag("name"));
+
+    EXPECT_EQ(propertyItem->modelType(), Constants::PropertyType);
+    EXPECT_TRUE(Utils::IsDoubleVariant(propertyItem->data(ItemDataRole::DATA)));
+    EXPECT_EQ(propertyItem->data(ItemDataRole::DATA).toDouble(), expected);
+
+//    EXPECT_TRUE(propertyItem->data(ItemDataRole::LIMITS).isValid());
+}
+
 TEST_F(TestCompoundItem, itemValue)
 {
     CompoundItem item;
