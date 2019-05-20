@@ -14,11 +14,19 @@
 #include <limits>
 #include <sstream>
 
-namespace  {
+namespace
+{
 const double lmin = std::numeric_limits<double>::lowest();
 const double lmax = std::numeric_limits<double>::max();
 const double poszero = std::numeric_limits<double>::min();
-}
+const std::string text_limitless = "limitless";
+const std::string text_positive = "positive";
+const std::string text_nonnegative = "nonnegative";
+const std::string text_lowerlimited = "lowerlimited";
+const std::string text_upperlimited = "upperlimited";
+const std::string text_limited = "limited";
+const std::string separator = " ";
+} // namespace
 
 using namespace ModelView;
 
@@ -123,7 +131,7 @@ bool RealLimits::isLimitless() const
 
 bool RealLimits::isPositive() const
 {
-    return hasLowerLimit() && !hasUpperLimit() && Utils::AreAlmostEqual(lowerLimit(), poszero);
+    return hasLowerLimit() && !hasUpperLimit() && Utils::AreAlmostEqual(lowerLimit(), poszero) && lowerLimit() > 0.0;
 }
 
 bool RealLimits::isNonnegative() const
@@ -145,3 +153,58 @@ bool RealLimits::isLimited() const
 {
     return hasLowerLimit() && hasUpperLimit();
 }
+
+//! Returns text representing RealLimits.
+
+std::string RealLimits::text() const
+{
+    std::stringstream sstr;
+
+    if (isLimitless())
+        sstr << text_limitless;
+    else if (isPositive())
+        sstr << text_positive;
+    else if (isNonnegative())
+        sstr << text_nonnegative;
+    else if(isLowerLimited())
+        sstr << text_lowerlimited << separator << m_lower_limit;
+    else if(isUpperLimited())
+        sstr << text_upperlimited << separator << m_upper_limit;
+    else if(isLimited())
+        sstr << text_limited << separator << m_lower_limit << separator << m_upper_limit;
+    else
+        throw std::runtime_error("RealLimits::text() -> Unknown type");
+
+    return sstr.str();
+}
+
+//! Constructs RealLimits from its text representation.
+
+RealLimits RealLimits::fromText(const std::string& text)
+{
+    std::string kind;
+    double val1(0), val2(0);
+
+    std::stringstream sstr(text);
+    sstr >> kind >> val1 >> val2;
+
+    if (kind == text_limitless)
+        return RealLimits();
+    else if (kind == text_positive)
+        return RealLimits::positive();
+    else if (kind == text_nonnegative)
+        return RealLimits::nonnegative();
+    else if(kind == text_lowerlimited)
+        return RealLimits::lowerLimited(val1);
+    else if(kind == text_upperlimited)
+        return RealLimits::upperLimited(val1);
+    else if(kind == text_limited)
+        return RealLimits::limited(val1, val2);
+    else
+        throw std::runtime_error("RealLimits::fromText() -> Unknown type");
+}
+
+
+
+
+

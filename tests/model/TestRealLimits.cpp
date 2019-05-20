@@ -176,3 +176,20 @@ TEST_F(RealLimitsTest, variantEquality)
         EXPECT_TRUE(var1a != var2);
     }
 }
+
+TEST_F(RealLimitsTest, text)
+{
+    EXPECT_EQ(RealLimits::limitless().text(), "limitless");
+    EXPECT_EQ(RealLimits::positive().text(), "positive");
+    EXPECT_EQ(RealLimits::nonnegative().text(), "nonnegative");
+    EXPECT_EQ(RealLimits::lowerLimited(1.0).text(), "lowerlimited 1");
+    EXPECT_EQ(RealLimits::lowerLimited(1.042).text(), "lowerlimited 1.042");
+    EXPECT_EQ(RealLimits::lowerLimited(-0.99).text(), "lowerlimited -0.99");
+
+    EXPECT_EQ(RealLimits::upperLimited(1.0).text(), "upperlimited 1");
+    EXPECT_EQ(RealLimits::upperLimited(1.042).text(), "upperlimited 1.042");
+    EXPECT_EQ(RealLimits::upperLimited(-0.99).text(), "upperlimited -0.99");
+
+    EXPECT_EQ(RealLimits::limited(-1.0, 2.0).text(), "limited -1 2");
+}
+
