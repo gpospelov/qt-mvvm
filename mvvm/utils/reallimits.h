@@ -72,9 +72,6 @@ public:
     bool isUpperLimited() const;
     bool isLimited() const;
 
-    std::string text() const;
-    static RealLimits fromText(const std::string& text);
-
 protected:
     RealLimits(bool has_lower_limit, bool has_upper_limit, double lower_limit, double upper_limit);
 
