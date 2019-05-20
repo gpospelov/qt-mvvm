@@ -12,11 +12,7 @@
 #include "reallimits.h"
 #include "scientificspinbox.h"
 #include <QVBoxLayout>
-#include <QLineEdit>
 #include <cmath>
-#include <limits>
-#include <stdexcept>
-#include <numeric>
 
 namespace {
 //! Single step for QDoubleSpinBox.
@@ -88,7 +84,7 @@ void ScientificSpinBoxEditor::update_components()
 {
     if (m_data.type() != QVariant::Double)
         throw std::runtime_error(
-            "ScientificDoubleEditor::update_components() -> Error. Wrong variant type");
+            "ScientificSpinBoxEditor::update_components() -> Error. Wrong variant type");
 
     m_doubleEditor->setValue(m_data.toDouble());
 }
