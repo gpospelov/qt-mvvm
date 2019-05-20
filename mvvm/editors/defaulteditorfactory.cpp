@@ -18,6 +18,7 @@
 #include "coloreditor.h"
 #include "externalpropertyeditor.h"
 #include "scientificdoubleeditor.h"
+#include "scientificspinboxeditor.h"
 #include <QDebug>
 #include <QModelIndex>
 
@@ -30,6 +31,11 @@ const SessionItem* itemFromIndex(const QModelIndex& index)
 {
     auto model = dynamic_cast<const AbstractViewModel*>(index.model());
     return model ? model->sessionItemFromIndex(index) : nullptr;
+}
+
+double getStep(double val)
+{
+    return val == 0.0 ? 1.0 : val / 100.;
 }
 
 } // namespace
@@ -52,11 +58,19 @@ CustomEditor* DefaultEditorFactory::createEditor(const SessionItem* item) const
     auto value = item->data(ItemDataRole::DATA);
 
     if (Utils::IsDoubleVariant(value)) {
-        auto editor = new ScientificDoubleEditor;
+//        auto editor = new ScientificDoubleEditor;
+//        auto limits = item->data(ItemDataRole::LIMITS);
+//        if (limits.isValid())
+//            editor->setLimits(limits.value<RealLimits>());
+//        result = editor;
+        auto editor = new ScientificSpinBoxEditor;
         auto limits = item->data(ItemDataRole::LIMITS);
         if (limits.isValid())
             editor->setLimits(limits.value<RealLimits>());
+        editor->setSingleStep(getStep(item->data(ItemDataRole::DATA).toDouble()));
+        editor->setDecimals(2);
         result = editor;
+
     } else if (Utils::IsComboVariant(value))
         result = new ComboPropertyEditor;
 

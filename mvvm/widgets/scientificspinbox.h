@@ -13,6 +13,9 @@
 #include "mvvm_global.h"
 #include <QAbstractSpinBox>
 
+namespace ModelView
+{
+
 class CORE_EXPORT ScientificSpinBox : public QAbstractSpinBox
 {
     Q_OBJECT
@@ -62,5 +65,7 @@ private:
     int m_decimals;
     QDoubleValidator m_validator;
 };
+
+} // namespace ModelView
 
 #endif // MVVM_SCIENTIFICSPINBOX_H

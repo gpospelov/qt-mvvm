@@ -2,6 +2,8 @@
 #include "scientificspinbox.h"
 #include <limits>
 
+using namespace ModelView;
+
 class TestScientificSpinBox : public ::testing::Test
 {
 public:

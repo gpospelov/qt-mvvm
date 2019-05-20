@@ -21,6 +21,8 @@ const double max_val = std::numeric_limits<double>::max();
 bool useExponentialNotation(double val);
 } // namespace
 
+using namespace ModelView;
+
 ScientificSpinBox::ScientificSpinBox(QWidget* parent)
     : QAbstractSpinBox(parent), m_value(0.0), m_min(-max_val), m_max(max_val), m_step(1.0),
       m_decimals(3)
