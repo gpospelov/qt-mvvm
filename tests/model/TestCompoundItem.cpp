@@ -60,7 +60,7 @@ TEST_F(TestCompoundItem, addDoubleProperty)
     EXPECT_TRUE(Utils::IsDoubleVariant(propertyItem->data(ItemDataRole::DATA)));
     EXPECT_EQ(propertyItem->data(ItemDataRole::DATA).toDouble(), expected);
 
-//    EXPECT_TRUE(propertyItem->data(ItemDataRole::LIMITS).isValid());
+    EXPECT_TRUE(propertyItem->data(ItemDataRole::LIMITS).isValid());
 }
 
 TEST_F(TestCompoundItem, itemValue)

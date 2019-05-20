@@ -33,9 +33,6 @@ public:
     //! Register char property as variant based on std::string.
     template <typename T = PropertyItem> T* addProperty(const std::string& name, const char* str);
 
-    //! Register char property as variant based on std::string.
-//    template <typename T = PropertyItem> T* addProperty(const std::string& name, double value, const RealLimits& limits = RealLimits::positive());
-
     std::string displayName() const override;
 
     // tag specifics
@@ -53,6 +50,9 @@ template <typename T> T* CompoundItem::addProperty(const std::string& name, cons
     property->setDisplayName(name);
     if (variant.isValid())
         property->setData(variant, ItemDataRole::DATA);
+
+    if (variant.type() == QVariant::Double)
+        property->setData(QVariant::fromValue<RealLimits>(RealLimits::positive()), ItemDataRole::LIMITS);
 
     insertItem(property, name, 0);
 
