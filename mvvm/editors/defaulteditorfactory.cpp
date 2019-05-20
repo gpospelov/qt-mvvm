@@ -17,6 +17,7 @@
 #include "booleditor.h"
 #include "coloreditor.h"
 #include "externalpropertyeditor.h"
+#include "scientificdoubleeditor.h"
 #include <QDebug>
 #include <QModelIndex>
 
@@ -50,7 +51,13 @@ CustomEditor* DefaultEditorFactory::createEditor(const SessionItem* item) const
 
     auto value = item->data(ItemDataRole::DATA);
 
-    if (Utils::IsComboVariant(value))
+    if (Utils::IsDoubleVariant(value)) {
+        auto editor = new ScientificDoubleEditor;
+        auto limits = item->data(ItemDataRole::LIMITS);
+        if (limits.isValid())
+            editor->setLimits(limits.value<RealLimits>());
+        result = editor;
+    } else if (Utils::IsComboVariant(value))
         result = new ComboPropertyEditor;
 
     else if (Utils::IsBoolVariant(value))
