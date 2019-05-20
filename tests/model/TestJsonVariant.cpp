@@ -3,6 +3,7 @@
 #include "externalproperty.h"
 #include "google_test.h"
 #include "jsonvariant.h"
+#include "reallimits.h"
 #include "test_utils.h"
 #include <QColor>
 #include <QJsonArray>
@@ -21,6 +22,13 @@ public:
     static const QString test_dir;
 
     static void SetUpTestCase() { TestUtils::CreateTestDirectory(test_dir); }
+
+    static QVariant ToJsonAndBack(const QVariant& variant)
+    {
+        JsonVariant converter;
+        auto json = converter.get_json(variant);
+        return converter.get_variant(json);
+    }
 };
 
 const QString TestJsonVariant::test_dir = "test_JsonVariant";
@@ -107,11 +115,11 @@ TEST_F(TestJsonVariant, doubleVariant)
 
     // more numbers
     value = 1e-03;
-    EXPECT_DOUBLE_EQ(converter.get_variant(converter.get_json(value)).toDouble(), value);
+    EXPECT_DOUBLE_EQ(ToJsonAndBack(value).toDouble(), value);
     value = 0.99e-7;
-    EXPECT_DOUBLE_EQ(converter.get_variant(converter.get_json(value)).toDouble(), value);
+    EXPECT_DOUBLE_EQ(ToJsonAndBack(value).toDouble(), value);
     value = 3.14159265359;
-    EXPECT_DOUBLE_EQ(converter.get_variant(converter.get_json(value)).toDouble(), value);
+    EXPECT_DOUBLE_EQ(ToJsonAndBack(value).toDouble(), value);
 }
 
 //! QVariant(std::vector<double>) conversion.
@@ -198,6 +206,34 @@ TEST_F(TestJsonVariant, extPropVariant)
     EXPECT_EQ(variant, reco_variant);
 }
 
+//! QVariant(RealLimits) convertion.
+
+TEST_F(TestJsonVariant, realLimitsVariant)
+{
+    JsonVariant converter;
+
+    RealLimits value = RealLimits::limited(1.0, 2.0);
+    QVariant variant = QVariant::fromValue(value);
+
+    // from variant to json object
+    auto object = converter.get_json(variant);
+    EXPECT_TRUE(converter.isVariant(object));
+
+    // from json object to variant
+    QVariant reco_variant = converter.get_variant(object);
+    EXPECT_TRUE(Utils::IsRealLimitsVariant(reco_variant));
+    EXPECT_EQ(reco_variant.value<RealLimits>(), value);
+    EXPECT_EQ(variant, reco_variant);
+
+    // more values
+    value = RealLimits::positive();
+    EXPECT_EQ(ToJsonAndBack(QVariant::fromValue(value)).value<RealLimits>(), value);
+    value = RealLimits::nonnegative();
+    EXPECT_EQ(ToJsonAndBack(QVariant::fromValue(value)).value<RealLimits>(), value);
+    value = RealLimits::limited(0.123, 0.124);
+    EXPECT_EQ(ToJsonAndBack(QVariant::fromValue(value)).value<RealLimits>(), value);
+}
+
 //! Writing variants to file and reading them back.
 
 TEST_F(TestJsonVariant, toFileAndBack)
@@ -221,7 +257,9 @@ TEST_F(TestJsonVariant, toFileAndBack)
                                       QVariant::fromValue(vector_value),
                                       QVariant::fromValue(combo),
                                       QVariant::fromValue(color),
-                                      QVariant::fromValue(extprop)};
+                                      QVariant::fromValue(extprop),
+                                      QVariant::fromValue(RealLimits::positive()),
+                                      QVariant::fromValue(RealLimits::limited(1.12, 2.32))};
 
     // preparing array of json objects
     JsonVariant converter;

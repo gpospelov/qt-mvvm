@@ -11,9 +11,11 @@
 #include "comboproperty.h"
 #include "customvariants.h"
 #include "externalproperty.h"
+#include "jsonutils.h"
+#include "reallimits.h"
+#include <QColor>
 #include <QJsonArray>
 #include <QJsonObject>
-#include <QColor>
 #include <sstream>
 #include <stdexcept>
 
@@ -27,6 +29,7 @@ const std::string JsonVariant::vector_double_type_name = "std::vector<double>";
 const std::string JsonVariant::comboproperty_type_name = "ModelView::ComboProperty";
 const std::string JsonVariant::qcolor_type_name = "QColor";
 const std::string JsonVariant::extproperty_type_name = "ModelView::ExternalProperty";
+const std::string JsonVariant::reallimits_type_name = "ModelView::RealLimits";
 
 namespace
 {
@@ -38,6 +41,9 @@ const QString comboSelectionKey = "selections";
 const QString extPropertyTextKey = "text";
 const QString extPropertyColorKey = "color";
 const QString extPropertyIdKey = "identifier";
+const QString realLimitsTextKey = "text";
+const QString realLimitsMinKey = "min";
+const QString realLimitsMaxKey = "max";
 
 QStringList expected_variant_keys();
 
@@ -65,6 +71,9 @@ QVariant to_qcolor(const QJsonObject& object);
 QJsonObject from_extproperty(const QVariant& variant);
 QVariant to_extproperty(const QJsonObject& object);
 
+QJsonObject from_reallimits(const QVariant& variant);
+QVariant to_reallimits(const QJsonObject& object);
+
 } // namespace
 
 JsonVariant::JsonVariant()
@@ -77,6 +86,7 @@ JsonVariant::JsonVariant()
     m_converters[comboproperty_type_name] = {from_comboproperty, to_comboproperty};
     m_converters[qcolor_type_name] = {from_qcolor, to_qcolor};
     m_converters[extproperty_type_name] = {from_extproperty, to_extproperty};
+    m_converters[reallimits_type_name] = {from_reallimits, to_reallimits};
 }
 
 QJsonObject JsonVariant::get_json(const QVariant& variant)
@@ -207,19 +217,19 @@ QJsonObject from_comboproperty(const QVariant& variant)
     QJsonObject result;
     result[variantTypeKey] = QString::fromStdString(JsonVariant::comboproperty_type_name);
     auto combo = variant.value<ComboProperty>();
-    QJsonObject combo_json_data;
-    combo_json_data[comboValuesKey] = QString::fromStdString(combo.stringOfValues());
-    combo_json_data[comboSelectionKey] = QString::fromStdString(combo.stringOfSelections());
-    result[variantValueKey] = combo_json_data;
+    QJsonObject json_data;
+    json_data[comboValuesKey] = QString::fromStdString(combo.stringOfValues());
+    json_data[comboSelectionKey] = QString::fromStdString(combo.stringOfSelections());
+    result[variantValueKey] = json_data;
     return result;
 }
 
 QVariant to_comboproperty(const QJsonObject& object)
 {
     ComboProperty combo;
-    QJsonObject combo_json_data = object[variantValueKey].toObject();
-    combo.setStringOfValues(combo_json_data[comboValuesKey].toString().toStdString());
-    combo.setStringOfSelections(combo_json_data[comboSelectionKey].toString().toStdString());
+    QJsonObject json_data = object[variantValueKey].toObject();
+    combo.setStringOfValues(json_data[comboValuesKey].toString().toStdString());
+    combo.setStringOfSelections(json_data[comboSelectionKey].toString().toStdString());
     return combo.variant();
 }
 
@@ -246,22 +256,49 @@ QJsonObject from_extproperty(const QVariant& variant)
     QJsonObject result;
     result[variantTypeKey] = QString::fromStdString(JsonVariant::extproperty_type_name);
     auto extprop = variant.value<ExternalProperty>();
-    QJsonObject extprop_json_data;
-    extprop_json_data[extPropertyTextKey] = QString::fromStdString(extprop.text());
-    extprop_json_data[extPropertyColorKey] = extprop.color().name(QColor::HexArgb);
-    extprop_json_data[extPropertyIdKey] = QString::fromStdString(extprop.identifier());
-    result[variantValueKey] = extprop_json_data;
+    QJsonObject json_data;
+    json_data[extPropertyTextKey] = QString::fromStdString(extprop.text());
+    json_data[extPropertyColorKey] = extprop.color().name(QColor::HexArgb);
+    json_data[extPropertyIdKey] = QString::fromStdString(extprop.identifier());
+    result[variantValueKey] = json_data;
     return result;
 }
 
 QVariant to_extproperty(const QJsonObject& object)
 {
-    QJsonObject combo_json_data = object[variantValueKey].toObject();
-    const std::string text = combo_json_data[extPropertyTextKey].toString().toStdString();
-    const std::string color = combo_json_data[extPropertyColorKey].toString().toStdString();
-    const std::string id = combo_json_data[extPropertyIdKey].toString().toStdString();
+    QJsonObject json_data = object[variantValueKey].toObject();
+    const std::string text = json_data[extPropertyTextKey].toString().toStdString();
+    const std::string color = json_data[extPropertyColorKey].toString().toStdString();
+    const std::string id = json_data[extPropertyIdKey].toString().toStdString();
 
     return QVariant::fromValue(ExternalProperty(text, QColor(QString::fromStdString(color)), id));
+}
+
+// --- RealLimits ------
+
+QJsonObject from_reallimits(const QVariant& variant)
+{
+    QJsonObject result;
+    result[variantTypeKey] = QString::fromStdString(JsonVariant::reallimits_type_name);
+    auto limits = variant.value<RealLimits>();
+    QJsonObject json_data;
+
+    json_data[realLimitsTextKey] = QString::fromStdString(JsonUtils::ToString(limits));
+    json_data[realLimitsMinKey] = limits.lowerLimit();
+    json_data[realLimitsMaxKey] = limits.upperLimit();
+
+    result[variantValueKey] = json_data;
+    return result;
+}
+
+QVariant to_reallimits(const QJsonObject& object)
+{
+    QJsonObject json_data = object[variantValueKey].toObject();
+    const std::string text = json_data[realLimitsTextKey].toString().toStdString();
+    const double min = json_data[realLimitsMinKey].toDouble();
+    const double max = json_data[realLimitsMaxKey].toDouble();
+
+    return QVariant::fromValue(JsonUtils::CreateLimits(text, min, max));
 }
 
 } // namespace

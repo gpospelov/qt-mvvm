@@ -29,6 +29,7 @@ public:
     static const std::string comboproperty_type_name;
     static const std::string qcolor_type_name;
     static const std::string extproperty_type_name;
+    static const std::string reallimits_type_name;
 
     JsonVariant();
 
