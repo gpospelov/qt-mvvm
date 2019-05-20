@@ -1,20 +1,15 @@
 // ************************************************************************** //
 //
-//  BornAgain: simulate and fit scattering at grazing incidence
+//  Prototype of mini MVVM framework for bornagainproject.org
 //
-//! @file      GUI/coregui/Views/JobWidgets/ScientificSpinBox.cpp
-//! @brief     Implements class ScientificSpinBox
-//!
 //! @homepage  http://www.bornagainproject.org
-//! @license   GNU General Public License v3 or higher (see COPYING)
-//! @copyright Forschungszentrum Jülich GmbH 2018
-//! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
+//! @license   GNU General Public License v3 or higher
 //
 // ************************************************************************** //
 
-#include "ScientificSpinBox.h"
-#include <cmath>
+#include "scientificspinbox.h"
 #include <QLineEdit>
+#include <cmath>
 
 namespace
 {
@@ -27,12 +22,8 @@ bool useExponentialNotation(double val);
 } // namespace
 
 ScientificSpinBox::ScientificSpinBox(QWidget* parent)
-    : QAbstractSpinBox(parent)
-    , m_value(0.0)
-    , m_min(-max_val)
-    , m_max(max_val)
-    , m_step(1.0)
-    , m_decimals(3)
+    : QAbstractSpinBox(parent), m_value(0.0), m_min(-max_val), m_max(max_val), m_step(1.0),
+      m_decimals(3)
 {
     QLocale locale;
     locale.setNumberOptions(QLocale::RejectGroupSeparator);
@@ -54,7 +45,7 @@ void ScientificSpinBox::setValue(double val)
     double old_val = m_value;
     m_value = round(val, m_decimals);
     updateText();
-    if(std::abs(old_val - m_value) > min_val)
+    if (std::abs(old_val - m_value) > min_val)
         emit valueChanged(m_value);
 }
 
@@ -126,8 +117,8 @@ QString ScientificSpinBox::toString(double val, int decimal_points)
     return result.replace(QRegExp("(\\.?0+)?((e{1}[\\+|-]{1})(0+)?([1-9]{1}.*))?$"), "\\3\\5");
 }
 
-double ScientificSpinBox::toDouble(QString text, const QDoubleValidator& validator,
-                                   double min, double max, double default_value)
+double ScientificSpinBox::toDouble(QString text, const QDoubleValidator& validator, double min,
+                                   double max, double default_value)
 {
     int pos = 0;
     if (validator.validate(text, pos) == QValidator::Acceptable) {

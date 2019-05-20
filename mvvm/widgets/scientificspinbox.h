@@ -1,24 +1,19 @@
 // ************************************************************************** //
 //
-//  BornAgain: simulate and fit scattering at grazing incidence
+//  Prototype of mini MVVM framework for bornagainproject.org
 //
-//! @file      GUI/coregui/Views/JobWidgets/ScientificSpinBox.h
-//! @brief     Defines class ScientificSpinBox
-//!
 //! @homepage  http://www.bornagainproject.org
-//! @license   GNU General Public License v3 or higher (see COPYING)
-//! @copyright Forschungszentrum Jülich GmbH 2018
-//! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
+//! @license   GNU General Public License v3 or higher
 //
 // ************************************************************************** //
 
-#ifndef SCIENTIFICSPINBOX_H
-#define SCIENTIFICSPINBOX_H
+#ifndef MVVM_SCIENTIFICSPINBOX_H
+#define MVVM_SCIENTIFICSPINBOX_H
 
-#include "WinDllMacros.h"
+#include "mvvm_global.h"
 #include <QAbstractSpinBox>
 
-class BA_CORE_API_ ScientificSpinBox : public QAbstractSpinBox
+class CORE_EXPORT ScientificSpinBox : public QAbstractSpinBox
 {
     Q_OBJECT
 
@@ -43,13 +38,12 @@ public:
     int decimals() const;
 
     void stepBy(int steps) override;
-    QValidator::State validate(QString&, int&) const override {return QValidator::Acceptable;}
+    QValidator::State validate(QString&, int&) const override { return QValidator::Acceptable; }
     void fixup(QString&) const override {}
 
-
     static QString toString(double val, int decimal_points);
-    static double toDouble(QString text, const QDoubleValidator& validator,
-                           double min, double max, double default_value);
+    static double toDouble(QString text, const QDoubleValidator& validator, double min, double max,
+                           double default_value);
     static double round(double val, int decimals);
 
 signals:
@@ -69,4 +63,4 @@ private:
     QDoubleValidator m_validator;
 };
 
-#endif // SCIENTIFICSPINBOX_H
+#endif // MVVM_SCIENTIFICSPINBOX_H
