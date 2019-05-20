@@ -1,12 +1,12 @@
+#include "comboproperty.h"
+#include "customvariants.h"
+#include "externalproperty.h"
 #include "google_test.h"
 #include "jsonvariant.h"
 #include "test_utils.h"
-#include "comboproperty.h"
-#include "externalproperty.h"
-#include "customvariants.h"
+#include <QColor>
 #include <QJsonArray>
 #include <QJsonDocument>
-#include <QColor>
 #include <vector>
 
 using namespace ModelView;
@@ -92,7 +92,7 @@ TEST_F(TestJsonVariant, doubleVariant)
 {
     JsonVariant converter;
 
-    const double value(42.3);
+    double value(42.3);
     QVariant variant = QVariant::fromValue(value);
 
     // from variant to json object
@@ -104,6 +104,14 @@ TEST_F(TestJsonVariant, doubleVariant)
     EXPECT_TRUE(Utils::IsDoubleVariant(reco_variant));
     EXPECT_EQ(reco_variant.toDouble(), value);
     EXPECT_EQ(variant, reco_variant);
+
+    // more numbers
+    value = 1e-03;
+    EXPECT_DOUBLE_EQ(converter.get_variant(converter.get_json(value)).toDouble(), value);
+    value = 0.99e-7;
+    EXPECT_DOUBLE_EQ(converter.get_variant(converter.get_json(value)).toDouble(), value);
+    value = 3.14159265359;
+    EXPECT_DOUBLE_EQ(converter.get_variant(converter.get_json(value)).toDouble(), value);
 }
 
 //! QVariant(std::vector<double>) conversion.
@@ -195,7 +203,6 @@ TEST_F(TestJsonVariant, extPropVariant)
 TEST_F(TestJsonVariant, toFileAndBack)
 {
     const int int_value(42);
-    const double double_value(42.3);
     const std::string string_value("abc");
     const std::vector<double> vector_value = {42.1, 42.2, 42.3};
     ComboProperty combo = ComboProperty::createFrom({"a 1", "a 2", "a/3"});
@@ -205,11 +212,16 @@ TEST_F(TestJsonVariant, toFileAndBack)
     QColor color(Qt::red);
     ExternalProperty extprop("abc", QColor(Qt::green), "1-2-3");
 
-    std::vector<QVariant> variants = {QVariant(), QVariant(int_value), QVariant(double_value),
+    std::vector<QVariant> variants = {QVariant(),
+                                      QVariant(int_value),
+                                      QVariant(42.3),
+                                      QVariant(0.99e-7),
+                                      QVariant(3.14159265359),
                                       QVariant::fromValue(string_value),
                                       QVariant::fromValue(vector_value),
-                                     QVariant::fromValue(combo),
-                                     QVariant::fromValue(color), QVariant::fromValue(extprop)};
+                                      QVariant::fromValue(combo),
+                                      QVariant::fromValue(color),
+                                      QVariant::fromValue(extprop)};
 
     // preparing array of json objects
     JsonVariant converter;
