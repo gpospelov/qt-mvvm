@@ -18,11 +18,17 @@ class QJsonObject;
 namespace ModelView {
 
 class SessionModel;
+class RealLimits;
 
 namespace JsonUtils {
 
 //! Returns multiline string representing model content as json.
 CORE_EXPORT std::string ModelToJsonString(const SessionModel& model);
+
+//! Returns string representation of RealLimits.
+CORE_EXPORT std::string ToString(const RealLimits& limits);
+
+CORE_EXPORT RealLimits CreateLimits(const std::string& text, double min = 0.0, double max = 0.0);
 
 } // JsonUtils
 
