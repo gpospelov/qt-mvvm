@@ -4,15 +4,15 @@
 
 using namespace ModelView;
 
-class RealLimitsTest : public ::testing::Test
+class TestRealLimits : public ::testing::Test
 {
 protected:
-    ~RealLimitsTest();
+    ~TestRealLimits();
 };
 
-RealLimitsTest::~RealLimitsTest() = default;
+TestRealLimits::~TestRealLimits() = default;
 
-TEST_F(RealLimitsTest, initialState)
+TEST_F(TestRealLimits, initialState)
 {
     RealLimits limits;
 
@@ -30,7 +30,7 @@ TEST_F(RealLimitsTest, initialState)
     EXPECT_FALSE(limits.isLimited());
 }
 
-TEST_F(RealLimitsTest, lowerLimited)
+TEST_F(TestRealLimits, lowerLimited)
 {
     // [5.0, inf[
     RealLimits limits = RealLimits::lowerLimited(5.0);
@@ -48,7 +48,7 @@ TEST_F(RealLimitsTest, lowerLimited)
     EXPECT_FALSE(limits.isLimited());
 }
 
-TEST_F(RealLimitsTest, upperLimited)
+TEST_F(TestRealLimits, upperLimited)
 {
     // [-inf, 5.0[
     RealLimits limits = RealLimits::upperLimited(5.0);
@@ -71,7 +71,7 @@ TEST_F(RealLimitsTest, upperLimited)
     EXPECT_FALSE(limits.isLimited());
 }
 
-TEST_F(RealLimitsTest, limited)
+TEST_F(TestRealLimits, limited)
 {
     // [-10.0, 2.0[
     RealLimits limits = RealLimits::limited(-10.0, 2.0);
@@ -96,7 +96,7 @@ TEST_F(RealLimitsTest, limited)
     EXPECT_TRUE(limits.isLimited());
 }
 
-TEST_F(RealLimitsTest, limitless)
+TEST_F(TestRealLimits, limitless)
 {
     RealLimits limits = RealLimits::limitless();
 
@@ -118,7 +118,7 @@ TEST_F(RealLimitsTest, limitless)
     EXPECT_FALSE(limits.isLimited());
 }
 
-TEST_F(RealLimitsTest, comparisonOperators)
+TEST_F(TestRealLimits, comparisonOperators)
 {
     RealLimits lim1 = RealLimits::limited(1.0, 2.0);
     RealLimits lim2 = RealLimits::limited(1.0, 2.0);
@@ -141,7 +141,7 @@ TEST_F(RealLimitsTest, comparisonOperators)
     EXPECT_FALSE(lim7 != lim8);
 }
 
-TEST_F(RealLimitsTest, copyConstructor)
+TEST_F(TestRealLimits, copyConstructor)
 {
     RealLimits lim1 = RealLimits::limited(1.0, 2.0);
     RealLimits lim2 = lim1;
@@ -153,7 +153,7 @@ TEST_F(RealLimitsTest, copyConstructor)
     EXPECT_FALSE(lim1 != lim3);
 }
 
-TEST_F(RealLimitsTest, toVariant)
+TEST_F(TestRealLimits, toVariant)
 {
     RealLimits limit = RealLimits::limited(1.0, 2.0);
     QVariant variant = QVariant::fromValue(limit);
@@ -163,7 +163,7 @@ TEST_F(RealLimitsTest, toVariant)
     EXPECT_EQ(variant.value<RealLimits>().upperLimit(), limit.upperLimit());
 }
 
-TEST_F(RealLimitsTest, variantEquality)
+TEST_F(TestRealLimits, variantEquality)
 {
     if (ModelView::Comparators::registered()) {
         QVariant var1a = QVariant::fromValue(RealLimits::limited(1.0, 2.0));
@@ -177,7 +177,7 @@ TEST_F(RealLimitsTest, variantEquality)
     }
 }
 
-TEST_F(RealLimitsTest, text)
+TEST_F(TestRealLimits, text)
 {
     EXPECT_EQ(RealLimits::limitless().text(), "limitless");
     EXPECT_EQ(RealLimits::positive().text(), "positive");
