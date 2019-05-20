@@ -101,10 +101,13 @@ bool RealLimits::isInRange(double value) const
 
 bool RealLimits::operator==(const RealLimits& other) const
 {
+    // Intenional 'unsafe' double comparison to have RealLimits::positive and
+    // RealLimits::nonnegative different.
+    // FIXME Is there better solution? Can we drop either positive or non-negative?
     return (m_has_lower_limit == other.m_has_lower_limit)
            && (m_has_upper_limit == other.m_has_upper_limit)
-           && Utils::AreAlmostEqual(m_lower_limit, other.m_lower_limit)
-           && Utils::AreAlmostEqual(m_upper_limit, other.m_upper_limit);
+           && m_lower_limit == other.m_lower_limit
+           && m_upper_limit == other.m_upper_limit;
 }
 
 bool RealLimits::operator!=(const RealLimits& other) const
@@ -124,17 +127,18 @@ bool RealLimits::isLimitless() const
 
 bool RealLimits::isPositive() const
 {
-    return hasLowerLimit() && !hasUpperLimit() && Utils::AreAlmostEqual(lowerLimit(), poszero) && lowerLimit() > 0.0;
+    // intenional 'unsafe' double comparison
+    return hasLowerLimit() && !hasUpperLimit() && lowerLimit() == poszero;
 }
 
 bool RealLimits::isNonnegative() const
 {
-    return hasLowerLimit() && !hasUpperLimit() && Utils::AreAlmostEqual(lowerLimit(), 0.0);
+    return hasLowerLimit() && !hasUpperLimit() && lowerLimit() == 0.0;
 }
 
 bool RealLimits::isLowerLimited() const
 {
-    return hasLowerLimit() && !hasUpperLimit();
+    return !isPositive() && !isNonnegative() && hasLowerLimit() && !hasUpperLimit();
 }
 
 bool RealLimits::isUpperLimited() const

@@ -96,6 +96,52 @@ TEST_F(TestRealLimits, limited)
     EXPECT_TRUE(limits.isLimited());
 }
 
+TEST_F(TestRealLimits, positive)
+{
+    // ]0.0, 2.0[
+    RealLimits limits = RealLimits::positive();
+    EXPECT_TRUE(limits.hasLowerLimit());
+    EXPECT_FALSE(limits.hasUpperLimit());
+    EXPECT_FALSE(limits.hasLowerAndUpperLimits());
+
+    EXPECT_EQ(limits.lowerLimit(), std::numeric_limits<double>::min());
+    EXPECT_EQ(limits.upperLimit(), std::numeric_limits<double>::max());
+
+    EXPECT_FALSE(limits.isInRange(-11.0));
+    EXPECT_FALSE(limits.isInRange(0.0));
+    EXPECT_TRUE(limits.isInRange(std::numeric_limits<double>::min()));
+    EXPECT_TRUE(limits.isInRange(1.0));
+
+    EXPECT_TRUE(limits.isPositive());
+    EXPECT_FALSE(limits.isNonnegative());
+    EXPECT_FALSE(limits.isLowerLimited());
+    EXPECT_FALSE(limits.isUpperLimited());
+    EXPECT_FALSE(limits.isLimited());
+}
+
+TEST_F(TestRealLimits, nonnegative)
+{
+    // [0.0, 2.0[
+    RealLimits limits = RealLimits::nonnegative();
+    EXPECT_TRUE(limits.hasLowerLimit());
+    EXPECT_FALSE(limits.hasUpperLimit());
+    EXPECT_FALSE(limits.hasLowerAndUpperLimits());
+
+    EXPECT_EQ(limits.lowerLimit(), 0.0);
+    EXPECT_EQ(limits.upperLimit(), std::numeric_limits<double>::max());
+
+    EXPECT_FALSE(limits.isInRange(-11.0));
+    EXPECT_TRUE(limits.isInRange(0.0));
+    EXPECT_TRUE(limits.isInRange(std::numeric_limits<double>::min()));
+    EXPECT_TRUE(limits.isInRange(1.0));
+
+    EXPECT_FALSE(limits.isPositive());
+    EXPECT_TRUE(limits.isNonnegative());
+    EXPECT_FALSE(limits.isLowerLimited());
+    EXPECT_FALSE(limits.isUpperLimited());
+    EXPECT_FALSE(limits.isLimited());
+}
+
 TEST_F(TestRealLimits, limitless)
 {
     RealLimits limits = RealLimits::limitless();
@@ -139,6 +185,11 @@ TEST_F(TestRealLimits, comparisonOperators)
     RealLimits lim8 = RealLimits::upperLimited(1.0);
     EXPECT_TRUE(lim7 == lim8);
     EXPECT_FALSE(lim7 != lim8);
+
+    EXPECT_TRUE(RealLimits::positive() == RealLimits::positive());
+    EXPECT_TRUE(RealLimits::nonnegative() == RealLimits::nonnegative());
+
+    EXPECT_FALSE(RealLimits::positive() == RealLimits::nonnegative());
 }
 
 TEST_F(TestRealLimits, copyConstructor)
