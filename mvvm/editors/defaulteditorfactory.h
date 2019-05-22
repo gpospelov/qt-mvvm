@@ -17,7 +17,8 @@ namespace ModelView
 
 class SessionItem;
 
-//! Default wditor factory for custom variants.
+//! Default editor factory for custom variants.
+//! Used in context of trees and tables via ViewModelDelegate.
 
 class CORE_EXPORT DefaultEditorFactory : public EditorFactoryInterface
 {
