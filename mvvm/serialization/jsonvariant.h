@@ -21,16 +21,6 @@ namespace ModelView
 class CORE_EXPORT JsonVariant : public JsonVariantInterface
 {
 public:
-    static const std::string invalid_type_name;
-    static const std::string int_type_name;
-    static const std::string string_type_name;
-    static const std::string double_type_name;
-    static const std::string vector_double_type_name;
-    static const std::string comboproperty_type_name;
-    static const std::string qcolor_type_name;
-    static const std::string extproperty_type_name;
-    static const std::string reallimits_type_name;
-
     JsonVariant();
 
     QJsonObject get_json(const QVariant& variant) override;

@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include "customvariants.h"
+#include "variant-constants.h"
 #include "jsonvariant.h"
 #include "comboproperty.h"
 #include "externalproperty.h"
@@ -47,7 +48,7 @@ bool Utils::IsTheSame(const QVariant& var1, const QVariant& var2)
 QVariant Utils::toQtVariant(const QVariant& custom)
 {
     // converts variant based on std::string to variant based on QString
-    if (custom.typeName() == JsonVariant::string_type_name)
+    if (custom.typeName() == Constants::string_type_name)
         return QVariant(QString::fromStdString(custom.value<std::string>()));
 
     // in other cases returns unchanged variant
@@ -93,7 +94,7 @@ bool Utils::IsStdStringVariant(const QVariant& variant)
 
 bool Utils::IsDoubleVectorVariant(const QVariant& variant)
 {
-    return variant.typeName() == JsonVariant::vector_double_type_name;
+    return variant.typeName() == Constants::vector_double_type_name;
 }
 
 bool Utils::IsColorVariant(const QVariant& variant)
