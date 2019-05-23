@@ -25,6 +25,9 @@ namespace ModelView
 namespace Utils
 {
 
+//! Returns name of variant.
+CORE_EXPORT std::string VariantName(const QVariant& variant);
+
 //! Returns type of variant (additionally checks for user type).
 CORE_EXPORT int VariantType(const QVariant& variant);
 

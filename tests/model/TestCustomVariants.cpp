@@ -6,6 +6,7 @@
 #include "sessionmodel.h"
 #include "taginfo.h"
 #include "externalproperty.h"
+#include "variant-constants.h"
 #include <QColor>
 #include <memory>
 #include <functional>
@@ -19,6 +20,23 @@ public:
 };
 
 TestCustomVariants::~TestCustomVariants() = default;
+
+//! Variant compatibility.
+
+TEST_F(TestCustomVariants, VariantName)
+{
+    const std::vector<double> vec{1, 2};
+    const ComboProperty combo = ComboProperty::createFrom({"a1", "a2", "s3"});
+    EXPECT_EQ(Utils::VariantName(QVariant()), Constants::invalid_type_name);
+    EXPECT_EQ(Utils::VariantName(QVariant::fromValue(1)), Constants::int_type_name);
+    EXPECT_EQ(Utils::VariantName(QVariant::fromValue(42.0)), Constants::double_type_name);
+    EXPECT_EQ(Utils::VariantName(QVariant::fromValue(std::string("string"))), Constants::string_type_name);
+    EXPECT_EQ(Utils::VariantName(QVariant::fromValue(vec)), Constants::vector_double_type_name);
+    EXPECT_EQ(Utils::VariantName(QVariant::fromValue(combo)), Constants::comboproperty_type_name);
+    EXPECT_EQ(Utils::VariantName(QVariant::fromValue(QColor(Qt::red))), Constants::qcolor_type_name);
+    EXPECT_EQ(Utils::VariantName(QVariant::fromValue(ExternalProperty())), Constants::extproperty_type_name);
+    EXPECT_EQ(Utils::VariantName(QVariant::fromValue(RealLimits())), Constants::reallimits_type_name);
+}
 
 //! Variant compatibility.
 

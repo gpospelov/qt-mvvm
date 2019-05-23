@@ -15,6 +15,11 @@
 
 using namespace ModelView;
 
+std::string Utils::VariantName(const QVariant& variant)
+{
+    return variant.isValid() ? variant.typeName() : Constants::invalid_type_name;
+}
+
 int Utils::VariantType(const QVariant& variant)
 {
     auto result = static_cast<int>(variant.type());

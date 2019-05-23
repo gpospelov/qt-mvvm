@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_MVVM_TYPES_H
-#define MVVM_MVVM_TYPES_H
+#ifndef MVVM_VARIANT_CONSTANTS_H
+#define MVVM_VARIANT_CONSTANTS_H
 
 #include <string>
 
@@ -34,4 +34,4 @@ const std::string reallimits_type_name = "ModelView::RealLimits";
 
 } // namespace ModelView
 
-#endif // MVVM_MVVM_TYPES_H
+#endif // MVVM_VARIANT_CONSTANTS_H

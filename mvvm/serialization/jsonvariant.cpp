@@ -82,7 +82,7 @@ JsonVariant::JsonVariant()
 
 QJsonObject JsonVariant::get_json(const QVariant& variant)
 {
-    const std::string type_name = variant.isValid() ? variant.typeName() : Constants::invalid_type_name;
+    const std::string type_name = Utils::VariantName(variant);
 
     if (m_converters.find(type_name) == m_converters.end())
         throw std::runtime_error("json::get_json() -> Error. Unknown variant type '" + type_name
