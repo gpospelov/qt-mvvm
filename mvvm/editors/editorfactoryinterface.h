@@ -22,7 +22,8 @@ namespace ModelView
 
 class CustomEditor;
 
-//! Interface for for custom editor factory.
+//! Interface for custom editor factory.
+//! Intended for editor construction in cells of tables and trees in the context of delegate.
 
 class CORE_EXPORT EditorFactoryInterface
 {

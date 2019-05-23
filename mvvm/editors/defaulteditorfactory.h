@@ -11,6 +11,8 @@
 #define MVVM_DEFAULTEDITORFACTORY_H
 
 #include "editorfactoryinterface.h"
+#include "editorconstructorstrategy.h"
+#include <map>
 
 namespace ModelView
 {
@@ -23,12 +25,16 @@ class SessionItem;
 class CORE_EXPORT DefaultEditorFactory : public EditorFactoryInterface
 {
 public:
+    DefaultEditorFactory();
     ~DefaultEditorFactory();
 
     std::unique_ptr<CustomEditor> createEditor(const QModelIndex& index) const;
 
 private:
+    void registerStrategy(const std::string& name, EditorConstructorStrategy::strategy_t strategy);
     CustomEditor* createEditor(const SessionItem* item) const;
+
+    std::map<std::string, EditorConstructorStrategy::strategy_t> m_editor_constructors;
 };
 
 } // namespace ModelView

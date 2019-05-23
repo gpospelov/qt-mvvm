@@ -19,6 +19,7 @@
 #include "externalpropertyeditor.h"
 #include "scientificdoubleeditor.h"
 #include "scientificspinboxeditor.h"
+#include "variant-constants.h"
 #include <QDebug>
 #include <QModelIndex>
 
@@ -43,9 +44,20 @@ double getStep(double val)
 
 DefaultEditorFactory::~DefaultEditorFactory() = default;
 
+DefaultEditorFactory::DefaultEditorFactory()
+{
+    registerStrategy(Constants::double_type_name, EditorConstructorStrategy::ScientificDoubleEditorConstructor());
+}
+
 std::unique_ptr<CustomEditor> DefaultEditorFactory::createEditor(const QModelIndex& index) const
 {
     return std::unique_ptr<CustomEditor>(createEditor(itemFromIndex(index)));
+}
+
+void DefaultEditorFactory::registerStrategy(const std::string& name, EditorConstructorStrategy::strategy_t strategy)
+{
+    // intentional replacement
+    m_editor_constructors[name] = strategy;
 }
 
 CustomEditor* DefaultEditorFactory::createEditor(const SessionItem* item) const
