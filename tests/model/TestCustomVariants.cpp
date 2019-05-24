@@ -28,6 +28,7 @@ TEST_F(TestCustomVariants, VariantName)
     const std::vector<double> vec{1, 2};
     const ComboProperty combo = ComboProperty::createFrom({"a1", "a2", "s3"});
     EXPECT_EQ(Utils::VariantName(QVariant()), Constants::invalid_type_name);
+    EXPECT_EQ(Utils::VariantName(QVariant::fromValue(true)), Constants::bool_type_name);
     EXPECT_EQ(Utils::VariantName(QVariant::fromValue(1)), Constants::int_type_name);
     EXPECT_EQ(Utils::VariantName(QVariant::fromValue(42.0)), Constants::double_type_name);
     EXPECT_EQ(Utils::VariantName(QVariant::fromValue(std::string("string"))), Constants::string_type_name);
@@ -43,6 +44,7 @@ TEST_F(TestCustomVariants, VariantName)
 TEST_F(TestCustomVariants, CompatibleVariantTypes)
 {
     QVariant undefined;
+    QVariant bool_variant = QVariant::fromValue(true);
     QVariant int_variant = QVariant::fromValue(1);
     QVariant double_variant = QVariant::fromValue(42.0);
     QVariant string_variant = QVariant::fromValue(std::string("string"));
@@ -54,7 +56,7 @@ TEST_F(TestCustomVariants, CompatibleVariantTypes)
     QVariant extprop_variant = QVariant::fromValue(ExternalProperty());
     QVariant limits_variant = QVariant::fromValue(RealLimits());
 
-    std::vector<QVariant> variants = {int_variant, double_variant, string_variant, vector_variant,
+    std::vector<QVariant> variants = {bool_variant, int_variant, double_variant, string_variant, vector_variant,
                                       combo_variant, color_variant, extprop_variant, limits_variant};
     for (size_t i = 0; i < variants.size(); ++i) {
         EXPECT_TRUE(Utils::CompatibleVariantTypes(undefined, variants[i]));
@@ -86,6 +88,7 @@ TEST_F(TestCustomVariants, IsTheSameVariant)
 
     std::vector<QVariant> variants = {
         QVariant(),
+        QVariant::fromValue(true), QVariant::fromValue(false),
         QVariant::fromValue(1), QVariant::fromValue(2),
         QVariant::fromValue(42.0), QVariant::fromValue(43.0),
         QVariant::fromValue(std::string("string1")), QVariant::fromValue(std::string("string2")),
