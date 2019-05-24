@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "editorconstructorstrategy.h"
+#include "editorbuilders.h"
 #include "scientificdoubleeditor.h"
 #include "sessionitem.h"
 #include "reallimits.h"
@@ -15,7 +15,7 @@
 #include <QDoubleSpinBox>
 
 namespace ModelView {
-namespace EditorConstructorStrategy {
+namespace EditorBuilders {
 
 //strategy_t DefaultDoubleEditorConstructor()
 //{
@@ -31,16 +31,16 @@ namespace EditorConstructorStrategy {
 //    return creator;
 //}
 
-strategy_t ScientificDoubleEditorConstructor()
+builder_t ScientificDoubleEditorBuilder()
 {
-    auto creator = [](const SessionItem* item) -> std::unique_ptr<CustomEditor> {
+    auto builder = [](const SessionItem* item) -> std::unique_ptr<CustomEditor> {
         auto editor = std::make_unique<ScientificDoubleEditor>();
         auto limits = item->data(ItemDataRole::LIMITS);
         if (limits.isValid())
             editor->setLimits(limits.value<RealLimits>());
         return std::move(editor);
     };
-    return creator;
+    return builder;
 }
 
 }

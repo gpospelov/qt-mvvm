@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_EDITORCONSTRUCTORSTRATEGY_H
-#define MVVM_EDITORCONSTRUCTORSTRATEGY_H
+#ifndef MVVM_EDITORBUILDERSTRATEGY_H
+#define MVVM_EDITORBUILDERSTRATEGY_H
 
 #include "editorfactoryinterface.h"
 #include <memory>
@@ -20,20 +20,20 @@ namespace ModelView
 class CustomEditor;
 class SessionItem;
 
-//! Collection of methods to construct custom editors for trees/tables cells.
+//! Collection of methods to build custom editors for trees/tables cells.
 //! Used to edit SessionItem data in the context of DefaultEditorFactory.
-namespace EditorConstructorStrategy {
+namespace EditorBuilders {
 
-using strategy_t = std::function<std::unique_ptr<CustomEditor>(const SessionItem*)>;
+using builder_t = std::function<std::unique_ptr<CustomEditor>(const SessionItem*)>;
 
 //! Constructor for simple double editor based on usual spin box with limits.
 //CORE_EXPORT strategy_t DefaultDoubleEditorConstructor();
 
 //! Constructor for double editor with scientific notation.
-CORE_EXPORT strategy_t ScientificDoubleEditorConstructor();
+CORE_EXPORT builder_t ScientificDoubleEditorBuilder();
 
 }
 
 } // namespace ModelView
 
-#endif // MVVM_EDITORCONSTRUCTORSTRATEGY_H
+#endif // MVVM_EDITORBUILDERSTRATEGY_H

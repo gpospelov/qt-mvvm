@@ -46,7 +46,7 @@ DefaultEditorFactory::~DefaultEditorFactory() = default;
 
 DefaultEditorFactory::DefaultEditorFactory()
 {
-    registerStrategy(Constants::double_type_name, EditorConstructorStrategy::ScientificDoubleEditorConstructor());
+    registerStrategy(Constants::double_type_name, EditorBuilders::ScientificDoubleEditorBuilder());
 }
 
 std::unique_ptr<CustomEditor> DefaultEditorFactory::createEditor(const QModelIndex& index) const
@@ -54,10 +54,10 @@ std::unique_ptr<CustomEditor> DefaultEditorFactory::createEditor(const QModelInd
     return std::unique_ptr<CustomEditor>(createEditor(itemFromIndex(index)));
 }
 
-void DefaultEditorFactory::registerStrategy(const std::string& name, EditorConstructorStrategy::strategy_t strategy)
+void DefaultEditorFactory::registerStrategy(const std::string& name, EditorBuilders::builder_t strategy)
 {
     // intentional replacement
-    m_editor_constructors[name] = strategy;
+    m_editor_builders[name] = strategy;
 }
 
 CustomEditor* DefaultEditorFactory::createEditor(const SessionItem* item) const
