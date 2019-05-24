@@ -53,6 +53,29 @@ TEST_F(TestJsonVariant, invalidVariant)
     EXPECT_EQ(variant, reco_variant);
 }
 
+//! Bool QVariant conversion.
+
+TEST_F(TestJsonVariant, boolVariant)
+{
+    JsonVariant converter;
+
+    const bool value(true);
+    QVariant variant(value);
+
+    // from variant to json object
+    auto object = converter.get_json(variant);
+    EXPECT_TRUE(converter.isVariant(object));
+
+    // from json object to variant
+    QVariant reco_variant = converter.get_variant(object);
+    EXPECT_TRUE(Utils::IsBoolVariant(reco_variant));
+    EXPECT_EQ(reco_variant.toBool(), value);
+    EXPECT_EQ(variant, reco_variant);
+
+    EXPECT_EQ(ToJsonAndBack(true).toBool(), true);
+    EXPECT_EQ(ToJsonAndBack(false).toBool(), false);
+}
+
 //! Int QVariant conversion.
 
 TEST_F(TestJsonVariant, intVariant)
@@ -238,7 +261,6 @@ TEST_F(TestJsonVariant, realLimitsVariant)
 
 TEST_F(TestJsonVariant, toFileAndBack)
 {
-    const int int_value(42);
     const std::string string_value("abc");
     const std::vector<double> vector_value = {42.1, 42.2, 42.3};
     ComboProperty combo = ComboProperty::createFrom({"a 1", "a 2", "a/3"});
@@ -249,7 +271,8 @@ TEST_F(TestJsonVariant, toFileAndBack)
     ExternalProperty extprop("abc", QColor(Qt::green), "1-2-3");
 
     std::vector<QVariant> variants = {QVariant(),
-                                      QVariant(int_value),
+                                      QVariant(true),
+                                      QVariant(42),
                                       QVariant(42.3),
                                       QVariant(0.99e-7),
                                       QVariant(3.14159265359),

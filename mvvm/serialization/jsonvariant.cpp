@@ -41,6 +41,9 @@ QStringList expected_variant_keys();
 QJsonObject from_invalid(const QVariant& variant);
 QVariant to_invalid(const QJsonObject& object);
 
+QJsonObject from_bool(const QVariant& variant);
+QVariant to_bool(const QJsonObject& object);
+
 QJsonObject from_int(const QVariant& variant);
 QVariant to_int(const QJsonObject& object);
 
@@ -70,6 +73,7 @@ QVariant to_reallimits(const QJsonObject& object);
 JsonVariant::JsonVariant()
 {
     m_converters[Constants::invalid_type_name] = {from_invalid, to_invalid};
+    m_converters[Constants::bool_type_name] = {from_bool, to_bool};
     m_converters[Constants::int_type_name] = {from_int, to_int};
     m_converters[Constants::string_type_name] = {from_string, to_string};
     m_converters[Constants::double_type_name] = {from_double, to_double};
@@ -137,6 +141,19 @@ QVariant to_invalid(const QJsonObject& object)
 {
     (void)object;
     return QVariant();
+}
+
+QJsonObject from_bool(const QVariant& variant)
+{
+    QJsonObject result;
+    result[variantTypeKey] = QString::fromStdString(Constants::bool_type_name);
+    result[variantValueKey] = variant.toBool();
+    return result;
+}
+
+QVariant to_bool(const QJsonObject& object)
+{
+    return object[variantValueKey].toVariant();
 }
 
 QJsonObject from_int(const QVariant& variant)
