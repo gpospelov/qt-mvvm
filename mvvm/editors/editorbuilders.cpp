@@ -12,24 +12,22 @@
 #include "sessionitem.h"
 #include "reallimits.h"
 #include "customvariants.h"
+#include "combopropertyeditor.h"
+#include "booleditor.h"
+#include "coloreditor.h"
+#include "externalpropertyeditor.h"
+#include "scientificspinboxeditor.h"
 #include <QDoubleSpinBox>
+
+namespace {
+double getStep(double val)
+{
+    return val == 0.0 ? 1.0 : val / 100.;
+}
+}
 
 namespace ModelView {
 namespace EditorBuilders {
-
-//strategy_t DefaultDoubleEditorConstructor()
-//{
-//    auto creator = [](const SessionItem* item) -> std::unique_ptr<CustomEditor> {
-//        auto editor = std::make_unique<QDoubleSpinBox>();
-//        auto limits = item->data(ItemDataRole::LIMITS);
-//        if (limits.isValid()) {
-//            auto real_limits = limits.value<RealLimits>();
-//            editor->setRange(real_limits.lowerLimit(), real_limits.upperLimit());
-//        }
-//        return std::move(editor);
-//    };
-//    return creator;
-//}
 
 builder_t ScientificDoubleEditorBuilder()
 {
@@ -43,5 +41,52 @@ builder_t ScientificDoubleEditorBuilder()
     return builder;
 }
 
+builder_t ScientificSpinBoxEditorBuilder()
+{
+    auto builder = [](const SessionItem* item) -> std::unique_ptr<CustomEditor> {
+        auto editor = std::make_unique<ScientificSpinBoxEditor>();
+        auto limits = item->data(ItemDataRole::LIMITS);
+        if (limits.isValid())
+            editor->setLimits(limits.value<RealLimits>());
+        editor->setSingleStep(getStep(item->data(ItemDataRole::DATA).toDouble()));
+        editor->setDecimals(2);
+        return std::move(editor);
+    };
+    return builder;
 }
+
+builder_t ComboPropertyEditorBuilder()
+{
+    auto builder = [](const SessionItem*) -> std::unique_ptr<CustomEditor> {
+        return std::make_unique<ComboPropertyEditor>();
+    };
+    return builder;
 }
+
+builder_t BoolEditorBuilder()
+{
+    auto builder = [](const SessionItem*) -> std::unique_ptr<CustomEditor> {
+        return std::make_unique<BoolEditor>();
+    };
+    return builder;
+}
+
+builder_t ColorEditorBuilder()
+{
+    auto builder = [](const SessionItem*) -> std::unique_ptr<CustomEditor> {
+        return std::make_unique<ColorEditor>();
+    };
+    return builder;
+}
+
+builder_t ExternalPropertyEditorBuilder()
+{
+    auto builder = [](const SessionItem*) -> std::unique_ptr<CustomEditor> {
+        return std::make_unique<ExternalPropertyEditor>();
+    };
+    return builder;
+}
+
+
+} // namespace EditorBuilders
+} // namespace ModelView

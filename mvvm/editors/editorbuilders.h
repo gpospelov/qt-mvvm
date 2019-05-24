@@ -26,11 +26,23 @@ namespace EditorBuilders {
 
 using builder_t = std::function<std::unique_ptr<CustomEditor>(const SessionItem*)>;
 
-//! Constructor for simple double editor based on usual spin box with limits.
-//CORE_EXPORT strategy_t DefaultDoubleEditorConstructor();
-
-//! Constructor for double editor with scientific notation.
+//! Builder for double editor with scientific notation based on simple text field.
 CORE_EXPORT builder_t ScientificDoubleEditorBuilder();
+
+//! Builder for double editor with scientific notation and spinbox functionality.
+CORE_EXPORT builder_t ScientificSpinBoxEditorBuilder();
+
+//! Builder for ComboProperty editor.
+CORE_EXPORT builder_t ComboPropertyEditorBuilder();
+
+//! Builder for boolean property editor.
+CORE_EXPORT builder_t BoolEditorBuilder();
+
+//! Builder for color property editor.
+CORE_EXPORT builder_t ColorEditorBuilder();
+
+//! Builder for external property editor.
+CORE_EXPORT builder_t ExternalPropertyEditorBuilder();
 
 }
 

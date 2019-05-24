@@ -46,7 +46,11 @@ DefaultEditorFactory::~DefaultEditorFactory() = default;
 
 DefaultEditorFactory::DefaultEditorFactory()
 {
-    registerStrategy(Constants::double_type_name, EditorBuilders::ScientificDoubleEditorBuilder());
+//    registerBuilder(Constants::double_type_name, EditorBuilders::ScientificSpinBoxEditorBuilder());
+    registerBuilder(Constants::double_type_name, EditorBuilders::ScientificDoubleEditorBuilder());
+    registerBuilder(Constants::comboproperty_type_name, EditorBuilders::ComboPropertyEditorBuilder());
+    registerBuilder(Constants::bool_type_name, EditorBuilders::BoolEditorBuilder());
+    registerBuilder(Constants::extproperty_type_name, EditorBuilders::ExternalPropertyEditorBuilder());
 }
 
 std::unique_ptr<CustomEditor> DefaultEditorFactory::createEditor(const QModelIndex& index) const
@@ -54,7 +58,7 @@ std::unique_ptr<CustomEditor> DefaultEditorFactory::createEditor(const QModelInd
     return std::unique_ptr<CustomEditor>(createEditor(itemFromIndex(index)));
 }
 
-void DefaultEditorFactory::registerStrategy(const std::string& name, EditorBuilders::builder_t strategy)
+void DefaultEditorFactory::registerBuilder(const std::string& name, EditorBuilders::builder_t strategy)
 {
     // intentional replacement
     m_editor_builders[name] = strategy;

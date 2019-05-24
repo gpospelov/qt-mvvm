@@ -31,7 +31,7 @@ public:
     std::unique_ptr<CustomEditor> createEditor(const QModelIndex& index) const;
 
 private:
-    void registerStrategy(const std::string& name, EditorBuilders::builder_t strategy);
+    void registerBuilder(const std::string& name, EditorBuilders::builder_t strategy);
     CustomEditor* createEditor(const SessionItem* item) const;
 
     std::map<std::string, EditorBuilders::builder_t> m_editor_builders;
