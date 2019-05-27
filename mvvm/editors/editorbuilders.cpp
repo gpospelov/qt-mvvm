@@ -41,9 +41,11 @@ builder_t ScientificDoubleEditorBuilder()
 {
     auto builder = [](const SessionItem* item) -> std::unique_ptr<CustomEditor> {
         auto editor = std::make_unique<ScientificDoubleEditor>();
-        auto limits = item->data(ItemDataRole::LIMITS);
-        if (limits.isValid())
-            editor->setLimits(limits.value<RealLimits>());
+        auto variant = item->data(ItemDataRole::LIMITS);
+        if (variant.isValid()) {
+            auto limits = variant.value<RealLimits>();
+            editor->setRange(limits.lowerLimit(), limits.upperLimit());
+        }
         return std::move(editor);
     };
     return builder;

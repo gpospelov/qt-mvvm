@@ -18,8 +18,6 @@ class QDoubleValidator;
 namespace ModelView
 {
 
-class RealLimits;
-
 //! Custom editor for QVariant based on double with scientific notation support.
 
 class CORE_EXPORT ScientificDoubleEditor : public CustomEditor
@@ -27,7 +25,7 @@ class CORE_EXPORT ScientificDoubleEditor : public CustomEditor
 public:
     explicit ScientificDoubleEditor(QWidget* parent = nullptr);
 
-    void setLimits(const RealLimits& limits);
+    void setRange(double minimum, double maximum);
 
 private slots:
     void onEditingFinished();
