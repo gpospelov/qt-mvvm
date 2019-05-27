@@ -10,10 +10,11 @@
 #include "scientificdoubleeditor.h"
 #include "numericutils.h"
 #include <QDoubleValidator>
-#include <QVBoxLayout>
 #include <QLineEdit>
+#include <QVBoxLayout>
 
-namespace {
+namespace
+{
 const int max_digits = 1000;
 }
 

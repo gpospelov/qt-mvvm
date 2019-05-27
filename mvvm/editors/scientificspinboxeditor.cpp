@@ -9,20 +9,8 @@
 
 #include "scientificspinboxeditor.h"
 #include "numericutils.h"
-#include "reallimits.h"
 #include "scientificspinbox.h"
 #include <QVBoxLayout>
-#include <cmath>
-
-namespace {
-//! Single step for QDoubleSpinBox.
-
-double singleStep(int decimals) {
-    // For item with decimals=3 (i.e. 0.001) single step will be 0.1
-    return 1. / std::pow(10., decimals - 1);
-}
-
-}
 
 using namespace ModelView;
 
@@ -50,21 +38,16 @@ ScientificSpinBoxEditor::ScientificSpinBoxEditor(QWidget* parent)
     setFocusProxy(m_doubleEditor);
 }
 
-
-void ScientificSpinBoxEditor::setLimits(const RealLimits& limits)
+void ScientificSpinBoxEditor::setRange(double minimum, double maximum)
 {
-//    m_validator->setRange(limits.lowerLimit(), limits.upperLimit(), max_digits);
-
-    m_doubleEditor->setMinimum(limits.hasLowerLimit() ? limits.lowerLimit()
-                                                      : std::numeric_limits<double>::lowest());
-    m_doubleEditor->setMaximum(limits.hasUpperLimit() ? limits.upperLimit()
-                                                      : std::numeric_limits<double>::max());
+    m_doubleEditor->setMinimum(minimum);
+    m_doubleEditor->setMaximum(maximum);
 }
+
 
 void ScientificSpinBoxEditor::setDecimals(int decimals)
 {
     m_doubleEditor->setDecimals(decimals);
-    m_doubleEditor->setSingleStep(singleStep(decimals));
 }
 
 void ScientificSpinBoxEditor::setSingleStep(double step)

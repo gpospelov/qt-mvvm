@@ -18,7 +18,6 @@ class QDoubleValidator;
 namespace ModelView
 {
 
-class RealLimits;
 class ScientificSpinBox;
 
 //! Custom editor for QVariant based on double with scientific notation support.
@@ -28,7 +27,7 @@ class CORE_EXPORT ScientificSpinBoxEditor : public CustomEditor
 public:
     explicit ScientificSpinBoxEditor(QWidget* parent = nullptr);
 
-    void setLimits(const RealLimits& limits);
+    void setRange(double minimum, double maximum);
     void setDecimals(int decimals);
     void setSingleStep(double step);
 
