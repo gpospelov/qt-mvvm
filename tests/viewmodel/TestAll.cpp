@@ -1,12 +1,14 @@
 #include "google_test.h"
 #include <QStandardItem>
+#include <QApplication>
 
 int main(int argc, char** argv) {
-    ::testing::InitGoogleTest(&argc, argv);
+    QApplication app(argc, argv);
+    Q_UNUSED(app)
 
     ModelView::Comparators::registerComparators();
     qRegisterMetaType<QStandardItem*>("QStandardItem*");
 
-    // run all google tests
+    ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }
