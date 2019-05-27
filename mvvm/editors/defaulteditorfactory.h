@@ -10,8 +10,8 @@
 #ifndef MVVM_DEFAULTEDITORFACTORY_H
 #define MVVM_DEFAULTEDITORFACTORY_H
 
-#include "editorfactoryinterface.h"
 #include "editorbuilders.h"
+#include "editorfactoryinterface.h"
 #include <map>
 
 namespace ModelView
@@ -30,10 +30,9 @@ public:
 
     std::unique_ptr<CustomEditor> createEditor(const QModelIndex& index) const;
 
-private:
+protected:
     void registerBuilder(const std::string& name, EditorBuilders::builder_t strategy);
-    CustomEditor* createEditor(const SessionItem* item) const;
-
+    EditorBuilders::builder_t findBuilder(const std::string& name) const;
     std::map<std::string, EditorBuilders::builder_t> m_editor_builders;
 };
 
