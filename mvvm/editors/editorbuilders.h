@@ -33,6 +33,9 @@ CORE_EXPORT builder_t BoolEditorBuilder();
 //! Builder for integer property editor.
 CORE_EXPORT builder_t IntegerEditorBuilder();
 
+//! Builder for double editor with limits support.
+CORE_EXPORT builder_t DoubleEditorBuilder();
+
 //! Builder for double editor with scientific notation based on simple text field.
 CORE_EXPORT builder_t ScientificDoubleEditorBuilder();
 

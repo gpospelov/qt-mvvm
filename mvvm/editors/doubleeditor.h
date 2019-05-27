@@ -7,33 +7,37 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_INTEGEREDITOR_H
-#define MVVM_INTEGEREDITOR_H
+#ifndef MVVM_DOUBLEEDITOR_H
+#define MVVM_DOUBLEEDITOR_H
 
 #include "customeditor.h"
 
-class QSpinBox;
+class QDoubleSpinBox;
 
 namespace ModelView
 {
 
-//! Custom editor for QVariant based on integer with possibility to set limits.
+//! Custom editor for QVariant based on double with possibility to set limits.
 
-class CORE_EXPORT IntegerEditor : public CustomEditor
+class CORE_EXPORT DoubleEditor : public CustomEditor
 {
 public:
-    explicit IntegerEditor(QWidget* parent = nullptr);
+    explicit DoubleEditor(QWidget* parent = nullptr);
 
-    void setRange(int minimum, int maximum);
+    void setRange(double minimum, double maximum);
+
+    void setDecimals(int decimals);
+
+    void setSingleStep(double value);
 
 private slots:
     void onEditingFinished();
 
 private:
     void update_components() override;
-    QSpinBox* m_intEditor;
+    QDoubleSpinBox* m_doubleEditor;
 };
 
 } // namespace ModelView
 
-#endif // MVVM_INTEGEREDITOR_H
+#endif // MVVM_DOUBLEEDITOR_H
