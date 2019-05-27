@@ -32,6 +32,7 @@ DefaultEditorFactory::~DefaultEditorFactory() = default;
 DefaultEditorFactory::DefaultEditorFactory()
 {
     registerBuilder(Constants::bool_type_name, EditorBuilders::BoolEditorBuilder());
+    registerBuilder(Constants::int_type_name, EditorBuilders::IntegerEditorBuilder());
     registerBuilder(Constants::double_type_name, EditorBuilders::ScientificSpinBoxEditorBuilder());
     //    registerBuilder(Constants::double_type_name,
     //    EditorBuilders::ScientificDoubleEditorBuilder());

@@ -17,6 +17,7 @@
 #include "scientificdoubleeditor.h"
 #include "scientificspinboxeditor.h"
 #include "sessionitem.h"
+#include "integereditor.h"
 #include <QDoubleSpinBox>
 #include <cmath>
 
@@ -97,6 +98,21 @@ builder_t ExternalPropertyEditorBuilder()
 {
     auto builder = [](const SessionItem*) -> std::unique_ptr<CustomEditor> {
         return std::make_unique<ExternalPropertyEditor>();
+    };
+    return builder;
+}
+
+builder_t IntegerEditorBuilder()
+{
+    auto builder = [](const SessionItem* item) -> std::unique_ptr<CustomEditor> {
+        auto editor = std::make_unique<IntegerEditor>();
+        auto variant = item->data(ItemDataRole::LIMITS);
+        if (variant.isValid()) {
+            auto limits = variant.value<RealLimits>();
+            editor->setRange(static_cast<int>(limits.lowerLimit()),
+                             static_cast<int>(limits.upperLimit()));
+        }
+        return std::move(editor);
     };
     return builder;
 }

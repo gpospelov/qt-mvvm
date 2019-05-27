@@ -30,6 +30,9 @@ using builder_t = std::function<std::unique_ptr<CustomEditor>(const SessionItem*
 //! Builder for boolean property editor.
 CORE_EXPORT builder_t BoolEditorBuilder();
 
+//! Builder for integer property editor.
+CORE_EXPORT builder_t IntegerEditorBuilder();
+
 //! Builder for double editor with scientific notation based on simple text field.
 CORE_EXPORT builder_t ScientificDoubleEditorBuilder();
 

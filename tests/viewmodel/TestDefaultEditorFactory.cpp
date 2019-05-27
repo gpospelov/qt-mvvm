@@ -13,6 +13,7 @@
 #include "sessionitem.h"
 #include "externalproperty.h"
 #include "reallimits.h"
+#include "integereditor.h"
 
 using namespace ModelView;
 
@@ -48,6 +49,14 @@ TEST_F(TestDefaultEditorFactory, boolProperty)
 {
     auto editor = createEditor(QVariant::fromValue(true));
     EXPECT_TRUE(dynamic_cast<BoolEditor*>(editor.get()));
+}
+
+//! Tests editor creation on integer property.
+
+TEST_F(TestDefaultEditorFactory, integerProperty)
+{
+    auto editor = createEditor(QVariant::fromValue(42));
+    EXPECT_TRUE(dynamic_cast<IntegerEditor*>(editor.get()));
 }
 
 //! Tests editor creation on double property.
