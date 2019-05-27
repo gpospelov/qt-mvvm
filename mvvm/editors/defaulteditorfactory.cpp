@@ -20,6 +20,7 @@
 #include "scientificdoubleeditor.h"
 #include "scientificspinboxeditor.h"
 #include "variant-constants.h"
+#include "coloreditor.h"
 #include <QDebug>
 #include <QModelIndex>
 
@@ -49,6 +50,7 @@ DefaultEditorFactory::DefaultEditorFactory()
     registerBuilder(Constants::bool_type_name, EditorBuilders::BoolEditorBuilder());
 //    registerBuilder(Constants::double_type_name, EditorBuilders::ScientificSpinBoxEditorBuilder());
     registerBuilder(Constants::double_type_name, EditorBuilders::ScientificDoubleEditorBuilder());
+    registerBuilder(Constants::qcolor_type_name, EditorBuilders::ColorEditorBuilder());
     registerBuilder(Constants::comboproperty_type_name, EditorBuilders::ComboPropertyEditorBuilder());
     registerBuilder(Constants::extproperty_type_name, EditorBuilders::ExternalPropertyEditorBuilder());
 }

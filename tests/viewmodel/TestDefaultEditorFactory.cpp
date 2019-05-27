@@ -12,6 +12,7 @@
 #include "comboproperty.h"
 #include "sessionitem.h"
 #include "externalproperty.h"
+#include "reallimits.h"
 
 using namespace ModelView;
 
@@ -35,7 +36,7 @@ public:
         return m_factory->createEditor(viewModel.index(0, 1));
     }
 
-private:
+protected:
     std::unique_ptr<DefaultEditorFactory> m_factory;
 };
 
@@ -85,6 +86,18 @@ TEST_F(TestDefaultEditorFactory, externalProperty)
 
 TEST_F(TestDefaultEditorFactory, unsupportedProperty)
 {
+    // no dedicated editor for std::string yet
     auto editor = createEditor(QVariant::fromValue(std::string("text")));
     EXPECT_EQ(editor.get(), nullptr);
+
+    // no editor for RealLimits
+    editor = createEditor(QVariant::fromValue(RealLimits::limited(1.0, 2.0)));
+    EXPECT_EQ(editor.get(), nullptr);
+
+    // no editor for invalid variant
+    editor = createEditor(QVariant());
+    EXPECT_EQ(editor.get(), nullptr);
+
+    // special case of invalid index
+    EXPECT_EQ(m_factory->createEditor(QModelIndex()), nullptr);
 }
