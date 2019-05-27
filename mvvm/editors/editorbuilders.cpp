@@ -29,6 +29,14 @@ double getStep(double val)
 namespace ModelView {
 namespace EditorBuilders {
 
+builder_t BoolEditorBuilder()
+{
+    auto builder = [](const SessionItem*) -> std::unique_ptr<CustomEditor> {
+        return std::make_unique<BoolEditor>();
+    };
+    return builder;
+}
+
 builder_t ScientificDoubleEditorBuilder()
 {
     auto builder = [](const SessionItem* item) -> std::unique_ptr<CustomEditor> {
@@ -55,26 +63,18 @@ builder_t ScientificSpinBoxEditorBuilder()
     return builder;
 }
 
-builder_t ComboPropertyEditorBuilder()
-{
-    auto builder = [](const SessionItem*) -> std::unique_ptr<CustomEditor> {
-        return std::make_unique<ComboPropertyEditor>();
-    };
-    return builder;
-}
-
-builder_t BoolEditorBuilder()
-{
-    auto builder = [](const SessionItem*) -> std::unique_ptr<CustomEditor> {
-        return std::make_unique<BoolEditor>();
-    };
-    return builder;
-}
-
 builder_t ColorEditorBuilder()
 {
     auto builder = [](const SessionItem*) -> std::unique_ptr<CustomEditor> {
         return std::make_unique<ColorEditor>();
+    };
+    return builder;
+}
+
+builder_t ComboPropertyEditorBuilder()
+{
+    auto builder = [](const SessionItem*) -> std::unique_ptr<CustomEditor> {
+        return std::make_unique<ComboPropertyEditor>();
     };
     return builder;
 }

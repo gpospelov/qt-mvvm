@@ -46,10 +46,10 @@ DefaultEditorFactory::~DefaultEditorFactory() = default;
 
 DefaultEditorFactory::DefaultEditorFactory()
 {
+    registerBuilder(Constants::bool_type_name, EditorBuilders::BoolEditorBuilder());
 //    registerBuilder(Constants::double_type_name, EditorBuilders::ScientificSpinBoxEditorBuilder());
     registerBuilder(Constants::double_type_name, EditorBuilders::ScientificDoubleEditorBuilder());
     registerBuilder(Constants::comboproperty_type_name, EditorBuilders::ComboPropertyEditorBuilder());
-    registerBuilder(Constants::bool_type_name, EditorBuilders::BoolEditorBuilder());
     registerBuilder(Constants::extproperty_type_name, EditorBuilders::ExternalPropertyEditorBuilder());
 }
 

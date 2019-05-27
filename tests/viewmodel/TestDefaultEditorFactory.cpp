@@ -9,7 +9,9 @@
 #include "booleditor.h"
 #include "coloreditor.h"
 #include "externalpropertyeditor.h"
+#include "comboproperty.h"
 #include "sessionitem.h"
+#include "externalproperty.h"
 
 using namespace ModelView;
 
@@ -39,10 +41,50 @@ private:
 
 TestDefaultEditorFactory::~TestDefaultEditorFactory() = default;
 
+//! Tests editor creation on bool property.
+
+TEST_F(TestDefaultEditorFactory, boolProperty)
+{
+    auto editor = createEditor(QVariant::fromValue(true));
+    EXPECT_TRUE(dynamic_cast<BoolEditor*>(editor.get()));
+}
+
 //! Tests editor creation on double property.
 
 TEST_F(TestDefaultEditorFactory, doubleProperty)
 {
     auto editor = createEditor(QVariant::fromValue(42.42));
-//    EXPECT_TRUE(dynamic_cast<ScientificSpinBoxEditor*>(editor.get()));
+    EXPECT_TRUE(dynamic_cast<ScientificSpinBoxEditor*>(editor.get()));
+}
+
+//! Tests editor creation on color property.
+
+TEST_F(TestDefaultEditorFactory, colorProperty)
+{
+    auto editor = createEditor(QVariant::fromValue(QColor(Qt::green)));
+    EXPECT_TRUE(dynamic_cast<ColorEditor*>(editor.get()));
+}
+
+//! Tests editor creation on combo property.
+
+TEST_F(TestDefaultEditorFactory, comboProperty)
+{
+    auto editor = createEditor(QVariant::fromValue(ComboProperty()));
+    EXPECT_TRUE(dynamic_cast<ComboPropertyEditor*>(editor.get()));
+}
+
+//! Tests editor creation on combo property.
+
+TEST_F(TestDefaultEditorFactory, externalProperty)
+{
+    auto editor = createEditor(QVariant::fromValue(ExternalProperty()));
+    EXPECT_TRUE(dynamic_cast<ExternalPropertyEditor*>(editor.get()));
+}
+
+//! Tests editor creation on some unsupported property.
+
+TEST_F(TestDefaultEditorFactory, unsupportedProperty)
+{
+    auto editor = createEditor(QVariant::fromValue(std::string("text")));
+    EXPECT_EQ(editor.get(), nullptr);
 }
