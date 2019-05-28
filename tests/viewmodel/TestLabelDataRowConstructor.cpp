@@ -46,7 +46,7 @@ TEST_F(TestLabelDataRowConstructor, topLevelItem)
     ASSERT_TRUE(labelItem != nullptr);
     EXPECT_EQ(labelItem->item(), item.get());
     ASSERT_TRUE(emptyItem != nullptr);
-    EXPECT_EQ(emptyItem->item(), item.get());
+    EXPECT_EQ(emptyItem->item(), nullptr);
 }
 
 //! Checks row construction for property item.
@@ -64,7 +64,7 @@ TEST_F(TestLabelDataRowConstructor, propertyItem)
 
     // checking that it is label and data
     auto labelItem = dynamic_cast<ViewLabelItem*>(items.at(0));
-    auto dataItem = dynamic_cast<ViewEmptyItem*>(items.at(1));
+    auto dataItem = dynamic_cast<ViewDataItem*>(items.at(1));
     ASSERT_TRUE(labelItem != nullptr);
     EXPECT_EQ(labelItem->item(), item.get());
     ASSERT_TRUE(dataItem != nullptr);
