@@ -1,10 +1,10 @@
 #include "google_test.h"
 #include "childrenstrategies.h"
-#include "sessionitem.h"
-#include "vectoritem.h"
-#include "propertyitem.h"
 #include "compounditem.h"
+#include "propertyitem.h"
+#include "sessionitem.h"
 #include "taginfo.h"
+#include "vectoritem.h"
 
 using namespace ModelView;
 
@@ -14,7 +14,8 @@ public:
     ~TestChildrenStrategies();
 
     //! Helper class with two properties and one top level item on board.
-    class TestItem : public CompoundItem {
+    class TestItem : public CompoundItem
+    {
     public:
         TestItem() : CompoundItem("test")
         {
