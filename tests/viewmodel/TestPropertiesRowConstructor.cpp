@@ -26,10 +26,10 @@ TEST_F(TestPropertiesRowConstructor, initialState)
 
 TEST_F(TestPropertiesRowConstructor, topLevelItem)
 {
-    std::unique_ptr<SessionItem> item(new SessionItem("model_type"));
+    SessionItem item("model_type");
 
     PropertiesRowConstructor constructor({});
-    auto items = constructor.constructRow(item.get());
+    auto items = constructor.constructRow(&item);
     EXPECT_EQ(items.size(), 0);
     EXPECT_EQ(constructor.columnCount(), 0);
     EXPECT_EQ(constructor.horizontalHeaderLabels(), QStringList());
@@ -39,11 +39,11 @@ TEST_F(TestPropertiesRowConstructor, topLevelItem)
 
 TEST_F(TestPropertiesRowConstructor, propertyItem)
 {
-    std::unique_ptr<SessionItem> item(new SessionItem("model_type"));
-    item->setData(42.0, ItemDataRole::DATA);
+    SessionItem item("model_type");
+    item.setData(42.0, ItemDataRole::DATA);
 
     PropertiesRowConstructor constructor({});
-    auto items = constructor.constructRow(item.get());
+    auto items = constructor.constructRow(&item);
     EXPECT_EQ(items.size(), 0);
     EXPECT_EQ(constructor.columnCount(), 0);
     EXPECT_EQ(constructor.horizontalHeaderLabels(), QStringList());

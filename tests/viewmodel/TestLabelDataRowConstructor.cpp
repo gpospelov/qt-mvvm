@@ -32,10 +32,10 @@ TEST_F(TestLabelDataRowConstructor, initialState)
 
 TEST_F(TestLabelDataRowConstructor, topLevelItem)
 {
-    std::unique_ptr<SessionItem> item(new SessionItem("model_type"));
+    SessionItem item("model_type");
 
     LabelDataRowConstructor constructor;
-    auto items = constructor.constructRow(item.get());
+    auto items = constructor.constructRow(&item);
     EXPECT_EQ(items.size(), expected_column_count); // label and empty items
     EXPECT_EQ(constructor.columnCount(), expected_column_count);
     EXPECT_EQ(constructor.horizontalHeaderLabels(), expected_labels);
@@ -44,7 +44,7 @@ TEST_F(TestLabelDataRowConstructor, topLevelItem)
     auto labelItem = dynamic_cast<ViewLabelItem*>(items.at(0));
     auto emptyItem = dynamic_cast<ViewEmptyItem*>(items.at(1));
     ASSERT_TRUE(labelItem != nullptr);
-    EXPECT_EQ(labelItem->item(), item.get());
+    EXPECT_EQ(labelItem->item(), &item);
     ASSERT_TRUE(emptyItem != nullptr);
     EXPECT_EQ(emptyItem->item(), nullptr);
 }
@@ -53,11 +53,11 @@ TEST_F(TestLabelDataRowConstructor, topLevelItem)
 
 TEST_F(TestLabelDataRowConstructor, propertyItem)
 {
-    std::unique_ptr<SessionItem> item(new SessionItem("model_type"));
-    item->setData(42.0, ItemDataRole::DATA);
+    SessionItem item("model_type");
+    item.setData(42.0, ItemDataRole::DATA);
 
     LabelDataRowConstructor constructor;
-    auto items = constructor.constructRow(item.get());
+    auto items = constructor.constructRow(&item);
     EXPECT_EQ(items.size(), expected_column_count);
     EXPECT_EQ(constructor.columnCount(), expected_column_count);
     EXPECT_EQ(constructor.horizontalHeaderLabels(), expected_labels);
@@ -66,7 +66,7 @@ TEST_F(TestLabelDataRowConstructor, propertyItem)
     auto labelItem = dynamic_cast<ViewLabelItem*>(items.at(0));
     auto dataItem = dynamic_cast<ViewDataItem*>(items.at(1));
     ASSERT_TRUE(labelItem != nullptr);
-    EXPECT_EQ(labelItem->item(), item.get());
+    EXPECT_EQ(labelItem->item(), &item);
     ASSERT_TRUE(dataItem != nullptr);
-    EXPECT_EQ(dataItem->item(), item.get());
+    EXPECT_EQ(dataItem->item(), &item);
 }
