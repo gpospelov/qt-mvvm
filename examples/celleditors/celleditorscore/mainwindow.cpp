@@ -9,6 +9,8 @@
 
 #include "mainwindow.h"
 #include "modeleditorwidget.h"
+#include "samplemodel.h"
+#include "item_constants.h"
 #include <QTabWidget>
 #include <QCoreApplication>
 #include <QSettings>
@@ -20,9 +22,10 @@ namespace {
 }
 
 MainWindow::MainWindow()
-    : m_tabWidget(new QTabWidget)
+    : m_tabWidget(new QTabWidget), m_model1(std::make_unique<SampleModel>()),
+      m_model2(std::make_unique<SampleModel>())
 {    
-    m_tabWidget->addTab(new ModelEditorWidget, "Undo/Redo");
+    m_tabWidget->addTab(new ModelEditorWidget(m_model1.get()), "Available properties");
 
     m_tabWidget->setCurrentIndex(m_tabWidget->count()-1);
     setCentralWidget(m_tabWidget);
@@ -30,10 +33,21 @@ MainWindow::MainWindow()
     init_application();
 }
 
+MainWindow::~MainWindow() = default;
+
 void MainWindow::closeEvent(QCloseEvent* event)
 {
     write_settings();
     QMainWindow::closeEvent(event);
+}
+
+void MainWindow::write_settings()
+{
+    QSettings settings;
+    settings.beginGroup(main_window_group);
+    settings.setValue(size_key, size());
+    settings.setValue(pos_key, pos());
+    settings.endGroup();
 }
 
 void MainWindow::init_application()
@@ -49,13 +63,19 @@ void MainWindow::init_application()
         move(settings.value(pos_key, QPoint(200, 200)).toPoint());
         settings.endGroup();
     }
+
+    init_models();
 }
 
-void MainWindow::write_settings()
+void MainWindow::init_models()
 {
-    QSettings settings;
-    settings.beginGroup(main_window_group);
-    settings.setValue(size_key, size());
-    settings.setValue(pos_key, pos());
-    settings.endGroup();
+    // populating first model with content
+    m_model1->insertNewItem(Constants::DemoPropertiesType);
+    m_model1->insertNewItem(Constants::DemoPropertiesType);
+    m_model1->insertNewItem(Constants::DemoPropertiesType);
+
+    // populating second model with content
+    m_model2->insertNewItem(Constants::DemoPropertiesType);
+    m_model2->insertNewItem(Constants::DemoPropertiesType);
+    m_model2->insertNewItem(Constants::DemoPropertiesType);
 }

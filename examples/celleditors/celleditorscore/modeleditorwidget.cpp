@@ -17,9 +17,9 @@
 
 using namespace ModelView;
 
-ModelEditorWidget::ModelEditorWidget(QWidget* parent)
+ModelEditorWidget::ModelEditorWidget(SampleModel* model, QWidget* parent)
     : QWidget(parent), m_defaultTreeView(new ModelView::ItemsTreeView),
-      m_treeView(new QTreeView), m_tableView(new QTableView), m_sampleModel(nullptr)
+      m_treeView(new QTreeView), m_tableView(new QTableView)
 {
     auto mainLayout = new QHBoxLayout();
     mainLayout->setSpacing(10);
@@ -28,13 +28,15 @@ ModelEditorWidget::ModelEditorWidget(QWidget* parent)
     mainLayout->addLayout(create_right_layout(), 2);
 
     setLayout(mainLayout);
+    setModel(model);
 }
 
 void ModelEditorWidget::setModel(SampleModel* model)
 {
-    m_sampleModel = model;
+    if (!model)
+        return;
 
-    m_defaultTreeView->setViewModel(Utils::CreateDefaultViewModel(m_sampleModel));
+    m_defaultTreeView->setViewModel(Utils::CreateDefaultViewModel(model));
 
 }
 

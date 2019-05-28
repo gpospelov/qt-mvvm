@@ -11,23 +11,31 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <memory>
 
 class QTabWidget;
+class SampleModel;
+
+//! A main window. Contain two sample models and tabs with two model editors.
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 public:
     MainWindow();
+    ~MainWindow();
 
 protected:
     void closeEvent(QCloseEvent* event);
 
 private:
-    void init_application();
     void write_settings();
+    void init_application();
+    void init_models();
 
     QTabWidget* m_tabWidget;
+    std::unique_ptr<SampleModel> m_model1;
+    std::unique_ptr<SampleModel> m_model2;
 };
 
 #endif //  MAINWINDOW_H

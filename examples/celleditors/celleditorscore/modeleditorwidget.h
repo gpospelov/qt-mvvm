@@ -30,7 +30,7 @@ class ModelEditorWidget : public QWidget
 {
     Q_OBJECT
 public:
-    ModelEditorWidget(QWidget* parent = nullptr);
+    ModelEditorWidget(SampleModel* model, QWidget* parent = nullptr);
     ~ModelEditorWidget();
 
     void setModel(SampleModel* model);
@@ -42,7 +42,6 @@ private:
     ModelView::ItemsTreeView* m_defaultTreeView;
     QTreeView* m_treeView;
     QTableView* m_tableView;
-    SampleModel* m_sampleModel;
 };
 
 #endif // MODELEDITORWIDGET_H
