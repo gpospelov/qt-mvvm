@@ -72,7 +72,8 @@ bool GroupItem::is_valid_index() const
     return currentIndex() != -1;
 }
 
-//! Inits group item.
+//! Inits group item by creating all registered items and constructing combo property
+//! for switching between items.
 
 void GroupItem::init_group()
 {

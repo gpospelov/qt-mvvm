@@ -17,16 +17,7 @@
 namespace Constants
 {
 
-const std::string MultiLayerType = "MultiLayer";
-const std::string LayerType = "Layer";
-const std::string ParticleType = "Particle";
-const std::string InterferenceType = "Interference";
-
-const std::string CylinderType = "Cylinder";
-const std::string SphereType = "Sphere";
-const std::string AnysoPyramidType = "AnysoPyramid";
-
-const std::string ShapeGroupType = "ShapeGroup";
+const std::string DemoPropertiesType = "DemoProperties";
 
 } // namespace Constants
 
