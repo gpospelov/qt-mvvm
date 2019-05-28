@@ -10,7 +10,7 @@
 #include "defaultviewmodel.h"
 #include "itemutils.h"
 #include "modelmapper.h"
-#include "rowconstructor.h"
+#include "labeldatarowconstructor.h"
 #include "sessionitem.h"
 #include "sessionmodel.h"
 #include "viewmodelutils.h"
@@ -37,7 +37,7 @@ bool isValidItemRole(const ModelView::ViewItem* view, int item_role)
 using namespace ModelView;
 
 DefaultViewModel::DefaultViewModel(QObject* parent)
-    : AbstractViewModel(parent), m_row_constructor(std::make_unique<DefaultRowConstructor>())
+    : AbstractViewModel(parent), m_row_constructor(std::make_unique<LabelDataRowConstructor>())
 {
     setItemPrototype(new ViewEmptyItem);
 }

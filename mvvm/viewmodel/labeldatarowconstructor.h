@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_ROWCONSTRUCTOR_H
-#define MVVM_ROWCONSTRUCTOR_H
+#ifndef MVVM_LABELDATAROWCONSTRUCTOR_H
+#define MVVM_LABELDATAROWCONSTRUCTOR_H
 
 #include "rowconstructorinterface.h"
 
@@ -20,8 +20,10 @@ namespace ModelView
 class SessionItem;
 
 //! Constructs row of QStandardItem's for given SessionItem.
+//! Row consists of two columns, ViewLabelItem for SessionItem's display role and
+//! ViewDataItem for Session's item data role.
 
-class CORE_EXPORT DefaultRowConstructor : public RowConstructorInterface
+class CORE_EXPORT LabelDataRowConstructor : public RowConstructorInterface
 {
 public:
     QList<QStandardItem*> constructRow(SessionItem* item);
@@ -31,4 +33,4 @@ public:
 
 } // namespace ModelView
 
-#endif // MVVM_ROWCONSTRUCTOR_H
+#endif // MVVM_LABELDATAROWCONSTRUCTOR_H
