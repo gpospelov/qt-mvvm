@@ -20,6 +20,7 @@ namespace ModelView {
 class SessionItem;
 
 //! Base class to construct row of QStandardItems from given SessionItem.
+//! Used in context of AbstractViewModel while exposing SessionModel to Qt.
 
 class CORE_EXPORT RowConstructorInterface
 {
