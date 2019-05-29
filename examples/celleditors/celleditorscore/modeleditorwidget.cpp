@@ -12,11 +12,28 @@
 #include "standardviewmodels.h"
 #include "samplemodel.h"
 #include "viewmodeldelegate.h"
+#include "childrenstrategies.h"
+#include "labeldatarowconstructor.h"
+#include "propertiesrowconstructor.h"
 #include <QBoxLayout>
 #include <QTreeView>
 #include <QTableView>
 
 using namespace ModelView;
+
+namespace  {
+std::unique_ptr<ModelView::AbstractViewModel> createHorizontalViewModel(SessionModel* model)
+{
+    std::unique_ptr<AbstractViewModel> result = std::make_unique<AbstractViewModel>();
+
+    std::vector<std::string> labels = {"a", "b", "c"};
+    result->setRowConstructor(std::make_unique<PropertiesRowConstructor>(labels));
+    result->setChildrenStrategy(std::make_unique<AllChildrenStrategy>());
+    result->setSessionModel(model);
+
+    return result;
+}
+}
 
 ModelEditorWidget::ModelEditorWidget(SampleModel* model, QWidget* parent)
     : QWidget(parent), m_verticalTree(new QTreeView),
@@ -43,6 +60,13 @@ void ModelEditorWidget::setModel(SampleModel* model)
     m_verticalTree->setItemDelegate(m_delegate.get());
     m_verticalTree->expandAll();
     m_verticalTree->resizeColumnToContents(0);
+
+    m_horizontalViewModel = createHorizontalViewModel(model);
+    m_horizontalTree->setModel(m_horizontalViewModel.get());
+    m_horizontalTree->setItemDelegate(m_delegate.get());
+    m_horizontalTree->expandAll();
+    m_horizontalTree->resizeColumnToContents(0);
+
 }
 
 ModelEditorWidget::~ModelEditorWidget() = default;

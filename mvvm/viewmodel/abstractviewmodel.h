@@ -61,12 +61,12 @@ public:
 
     void setRootSessionItem(SessionItem* item);
 
+    void setRowConstructor(std::unique_ptr<RowConstructorInterface> row_constructor);
+    void setChildrenStrategy(std::unique_ptr<ChildrenStrategyInterface> children_strategy);
+
 protected:
     SessionItem* rootSessionItem() const;
     QStandardItem* rootViewItem() const;
-
-    void setRowConstructor(std::unique_ptr<RowConstructorInterface> row_constructor);
-    void setChildrenStrategy(std::unique_ptr<ChildrenStrategyInterface> children_strategy);
 
     virtual void init_view_model();
     virtual void onDataChange(SessionItem* item, int role);

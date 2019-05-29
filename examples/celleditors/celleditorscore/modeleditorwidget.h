@@ -46,6 +46,7 @@ private:
     QTableView* m_tableView;
 
     std::unique_ptr<ModelView::AbstractViewModel> m_verticalViewModel;
+    std::unique_ptr<ModelView::AbstractViewModel> m_horizontalViewModel;
     std::unique_ptr<ModelView::ViewModelDelegate> m_delegate;
 };
 
