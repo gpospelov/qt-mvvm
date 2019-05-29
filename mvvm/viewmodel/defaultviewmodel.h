@@ -11,31 +11,15 @@
 #define MVVM_DEFAULTVIEWMODEL_H
 
 #include "abstractviewmodel.h"
-#include <vector>
 
 namespace ModelView
 {
-
-class ViewItem;
-
 
 class CORE_EXPORT DefaultViewModel : public AbstractViewModel
 {
 public:
     DefaultViewModel(QObject* parent = nullptr);
     DefaultViewModel(SessionModel* model, QObject* parent = nullptr);
-
-protected:
-    void onDataChange(SessionItem* item, int role) override;
-    void onRowInserted(SessionItem* parent, std::string tag, int row) override;
-    void onRowRemoved(SessionItem* parent, std::string tag, int row) override;
-
-    void generate_children_views(SessionItem* parent);
-
-    void update_model() override;
-    virtual void iterate(const SessionItem* item, QStandardItem* parent);
-    virtual std::vector<SessionItem*> item_children(const SessionItem* item) const;
-
 };
 
 } // namespace ModelView

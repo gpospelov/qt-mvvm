@@ -16,6 +16,22 @@
 #include "childrenstrategyinterface.h"
 #include "rowconstructorinterface.h"
 
+namespace
+{
+
+//! Returns true if given SessionItem role is valid for view
+bool isValidItemRole(const ModelView::ViewItem* view, int item_role)
+{
+    if (view->item_role() == item_role)
+        return true;
+
+    if (item_role == ModelView::ItemDataRole::APPEARANCE)
+        return true;
+
+    return false;
+}
+} // namespace
+
 using namespace ModelView;
 
 AbstractViewModel::AbstractViewModel(QObject* parent)
@@ -133,24 +149,36 @@ void AbstractViewModel::setRootSessionItem(SessionItem* item)
     init_view_model();
 }
 
+//! Generates necessary notifications on SessionItem's data change.
+
 void AbstractViewModel::onDataChange(SessionItem* item, int role)
 {
-    Q_UNUSED(item)
-    Q_UNUSED(role)
+    for (auto view : findViews(item)) {
+
+        // inform corresponding LabelView and DataView
+        if (isValidItemRole(view, role)) {
+            auto index = indexFromItem(view);
+            dataChanged(index, index, Utils::item_role_to_qt(role));
+        }
+    }
 }
 
-void AbstractViewModel::onRowInserted(SessionItem* parent, std::string tag, int row)
+//! Insert views (QStandardItem's) when given SessionItem gets its new row.
+// Important: simplified approach is used here. All children views are first removed and
+// then whole branch regenerated from the scratch.
+
+void AbstractViewModel::onRowInserted(SessionItem* parent, std::string, int)
 {
-    Q_UNUSED(parent)
-    Q_UNUSED(tag)
-    Q_UNUSED(row)
+    generate_children_views(parent);
 }
 
-void AbstractViewModel::onRowRemoved(SessionItem* parent, std::string tag, int row)
+//! Removes views (QStandardItem's) corresponding to given SessionItem and its row.
+// Important: simplified approach is used here. All children views are removed and
+// then whole branch rebuild from the scratch.
+
+void AbstractViewModel::onRowRemoved(SessionItem* parent, std::string, int)
 {
-    Q_UNUSED(parent)
-    Q_UNUSED(tag)
-    Q_UNUSED(row)
+    generate_children_views(parent);
 }
 
 void AbstractViewModel::onModelReset()
@@ -176,3 +204,44 @@ void AbstractViewModel::init_view_model()
     setHorizontalHeaderLabels(m_row_constructor->horizontalHeaderLabels());
     update_model();
 }
+
+//! Regenerate all views of given parent.
+
+void AbstractViewModel::generate_children_views(SessionItem* parent)
+{
+    auto views = findStandardViews(parent);
+    for (auto view : views)
+        view->removeRows(0, view->rowCount());
+
+    if (views.size())
+        iterate(parent, views.at(0));
+}
+
+void AbstractViewModel::update_model()
+{
+    iterate(rootSessionItem(), rootViewItem());
+}
+
+void AbstractViewModel::iterate(const SessionItem* item, QStandardItem* parent)
+{
+    QStandardItem* origParent(parent);
+    for (auto child : item_children(item)) {
+
+        auto row = m_row_constructor->constructRow(child);
+        parent->appendRow(row);
+
+        if (row.size())
+            parent = row.at(0); // labelItem
+
+        iterate(child, parent);
+        parent = origParent;
+    }
+}
+
+//! Returns (possibly filtered) vector of children of given item.
+
+std::vector<SessionItem*> AbstractViewModel::item_children(const SessionItem* item) const
+{
+    return m_children_strategy->children(item);
+}
+

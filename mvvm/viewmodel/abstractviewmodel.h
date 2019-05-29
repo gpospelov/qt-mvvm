@@ -70,7 +70,13 @@ protected:
     virtual void onRowInserted(SessionItem* parent, std::string tag, int row);
     virtual void onRowRemoved(SessionItem* parent, std::string tag, int row);
     virtual void onModelReset();
-    virtual void update_model(){}
+
+    virtual void generate_children_views(SessionItem* parent);
+
+    virtual void update_model();
+    virtual void iterate(const SessionItem* item, QStandardItem* parent);
+    virtual std::vector<SessionItem*> item_children(const SessionItem* item) const;
+
 
     std::unique_ptr<RowConstructorInterface> m_row_constructor;
     std::unique_ptr<ChildrenStrategyInterface> m_children_strategy;
