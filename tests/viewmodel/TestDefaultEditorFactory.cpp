@@ -32,8 +32,7 @@ public:
         propertyItem->setData(variant, ItemDataRole::DATA);
 
         // create view model and use index of data cell to create an editor
-        DefaultViewModel viewModel;
-        viewModel.setSessionModel(&model);
+        DefaultViewModel viewModel(&model);
         return m_factory->createEditor(viewModel.index(0, 1));
     }
 

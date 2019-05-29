@@ -36,8 +36,7 @@ TEST_F(TestToyLayer, inViewModel)
     auto layerItem = model.insertNewItem(ToyItems::Constants::LayerType);
 
     // constructing viewModel from sample model
-    DefaultViewModel viewModel;
-    viewModel.setSessionModel(&model);
+    DefaultViewModel viewModel(&model);
 
     // root item should have one child, item looking at our layerItem
     EXPECT_EQ(viewModel.rowCount(), 1);
@@ -79,8 +78,7 @@ TEST_F(TestToyLayer, layerItemDataChanged)
     auto layerItem = dynamic_cast<CompoundItem*>(model.insertNewItem(ToyItems::Constants::LayerType));
 
     // constructing viewModel from sample model
-    DefaultViewModel viewModel;
-    viewModel.setSessionModel(&model);
+    DefaultViewModel viewModel(&model);
 
     QModelIndex layerIndex = viewModel.index(0, 0);
     QModelIndex thicknessIndex = viewModel.index(0, 1, layerIndex);
@@ -120,8 +118,7 @@ TEST_F(TestToyLayer, setRootItemContext)
 {
     ToyItems::SampleModel model;
     auto layer = model.insertNewItem(ToyItems::Constants::LayerType);
-    DefaultViewModel viewModel;
-    viewModel.setSessionModel(&model);
+    DefaultViewModel viewModel(&model);
     viewModel.setRootSessionItem(layer);
 
     EXPECT_EQ(viewModel.rowCount(QModelIndex()), 2);

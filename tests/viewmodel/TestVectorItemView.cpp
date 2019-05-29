@@ -27,8 +27,7 @@ TEST_F(TestVectorItemView, fromVector)
     auto vectorItem = model.insertNewItem(Constants::VectorType);
 
     // constructing viewModel from sample model
-    DefaultViewModel viewModel;
-    viewModel.setSessionModel(&model);
+    DefaultViewModel viewModel(&model);
 
     // root item should have one child, item looking at our vectorItem
     EXPECT_EQ(viewModel.rowCount(), 1);

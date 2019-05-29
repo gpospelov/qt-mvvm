@@ -35,8 +35,7 @@ TEST_F(TestToyMultilayer, multiLayerView)
     ToyItems::SampleModel model;
     auto multiLayerItem = model.insertNewItem(ToyItems::Constants::MultiLayerType);
 
-    DefaultViewModel viewModel;
-    viewModel.setSessionModel(&model);
+    DefaultViewModel viewModel(&model);
     EXPECT_EQ(viewModel.rowCount(), 1);
     EXPECT_EQ(viewModel.columnCount(), 2);
 
@@ -56,8 +55,7 @@ TEST_F(TestToyMultilayer, findMultiLayerView)
     ToyItems::SampleModel model;
     auto multiLayerItem = model.insertNewItem(ToyItems::Constants::MultiLayerType);
 
-    DefaultViewModel viewModel;
-    viewModel.setSessionModel(&model);
+    DefaultViewModel viewModel(&model);
 
     auto views = viewModel.findViews(multiLayerItem);
     EXPECT_EQ(views.size(), 1);

@@ -129,8 +129,7 @@ TEST_F(TestToyShapeGroup, inDefaultViewModelContext)
     auto groupItem = model.insertNewItem(ToyItems::Constants::ShapeGroupType);
 
     // constructing viewModel from sample model
-    DefaultViewModel viewModel;
-    viewModel.setSessionModel(&model);
+    DefaultViewModel viewModel(&model);
 
     // root item should have one child, item looking at our groupItem
     EXPECT_EQ(viewModel.rowCount(), 1);

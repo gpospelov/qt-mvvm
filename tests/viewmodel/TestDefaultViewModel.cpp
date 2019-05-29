@@ -19,7 +19,8 @@ TestDefaultViewModel::~TestDefaultViewModel() = default;
 
 TEST_F(TestDefaultViewModel, initialState)
 {
-    DefaultViewModel viewModel;
+    SessionModel model;
+    DefaultViewModel viewModel(&model);
     EXPECT_EQ(viewModel.rowCount(), 0);
     EXPECT_EQ(viewModel.columnCount(), 0);
     EXPECT_EQ(viewModel.sessionItemFromIndex(QModelIndex()), nullptr);
@@ -33,8 +34,7 @@ TEST_F(TestDefaultViewModel, fromPropertyItem)
     auto propertyItem = model.insertNewItem(Constants::PropertyType);
     propertyItem->setData(42.0, ItemDataRole::DATA);
 
-    DefaultViewModel viewModel;
-    viewModel.setSessionModel(&model);
+    DefaultViewModel viewModel(&model);
     EXPECT_EQ(viewModel.rowCount(), 1);
     EXPECT_EQ(viewModel.columnCount(), 2);
 
@@ -60,8 +60,7 @@ TEST_F(TestDefaultViewModel, sessionItemFromIndex)
     auto propertyItem = model.insertNewItem(Constants::PropertyType);
     propertyItem->setData(42.0, ItemDataRole::DATA);
 
-    DefaultViewModel viewModel;
-    viewModel.setSessionModel(&model);
+    DefaultViewModel viewModel(&model);
     EXPECT_EQ(viewModel.rowCount(), 1);
     EXPECT_EQ(viewModel.columnCount(), 2);
 
@@ -82,8 +81,7 @@ TEST_F(TestDefaultViewModel, indexFromSessionItem)
     auto propertyItem = model.insertNewItem(Constants::PropertyType);
     propertyItem->setData(42.0, ItemDataRole::DATA);
 
-    DefaultViewModel viewModel;
-    viewModel.setSessionModel(&model);
+    DefaultViewModel viewModel(&model);
     EXPECT_EQ(viewModel.rowCount(), 1);
     EXPECT_EQ(viewModel.columnCount(), 2);
 
@@ -103,8 +101,7 @@ TEST_F(TestDefaultViewModel, findPropertyItemView)
     auto propertyItem = model.insertNewItem(Constants::PropertyType);
     propertyItem->setData(42.0, ItemDataRole::DATA);
 
-    DefaultViewModel viewModel;
-    viewModel.setSessionModel(&model);
+    DefaultViewModel viewModel(&model);
 
     auto views = viewModel.findViews(propertyItem);
     EXPECT_EQ(views.size(), 2);
@@ -120,8 +117,7 @@ TEST_F(TestDefaultViewModel, propertyItemDataChanged)
     propertyItem->setData(42.0, ItemDataRole::DATA);
 
     // constructing viewModel from sample model
-    DefaultViewModel viewModel;
-    viewModel.setSessionModel(&model);
+    DefaultViewModel viewModel(&model);
 
     QModelIndex dataIndex = viewModel.index(0, 1);
 
@@ -146,8 +142,7 @@ TEST_F(TestDefaultViewModel, insertSingleTopItem)
     SessionModel model;
     const model_type modelType(Constants::BaseType);
 
-    DefaultViewModel viewModel;
-    viewModel.setSessionModel(&model);
+    DefaultViewModel viewModel(&model);
 
     QSignalSpy spyInsert(&viewModel, &DefaultViewModel::rowsInserted);
 
@@ -182,8 +177,7 @@ TEST_F(TestDefaultViewModel, removeSingleTopItem)
     model.insertNewItem(modelType);
 
     // constructing viewModel from sample model
-    DefaultViewModel viewModel;
-    viewModel.setSessionModel(&model);
+    DefaultViewModel viewModel(&model);
 
     // root item should have one child
     EXPECT_EQ(viewModel.rowCount(), 1);
@@ -217,8 +211,7 @@ TEST_F(TestDefaultViewModel, removeOneOfTopItems)
     model.insertNewItem(modelType);
 
     // constructing viewModel from sample model
-    DefaultViewModel viewModel;
-    viewModel.setSessionModel(&model);
+    DefaultViewModel viewModel(&model);
 
     // root item should have one child
     EXPECT_EQ(viewModel.rowCount(), 2);
@@ -272,8 +265,7 @@ TEST_F(TestDefaultViewModel, propertyItemAppearance)
     item3->setEditable(false);
 
     // making view model
-    DefaultViewModel viewModel;
-    viewModel.setSessionModel(&model);
+    DefaultViewModel viewModel(&model);
 
     // In tests below is important that SessionItem::isEnabled==false means that item is
     // shown in gray color. While QStandardItem::isEnabled means "no interaction".
@@ -312,8 +304,7 @@ TEST_F(TestDefaultViewModel, propertyItemAppearanceChanged)
     item->setData(42.0, ItemDataRole::DATA);
 
     // setting up ViewModel and spying it's dataChanged signals
-    DefaultViewModel viewModel;
-    viewModel.setSessionModel(&model);
+    DefaultViewModel viewModel(&model);
     auto labelView = viewModel.item(0, 0);
     auto dataView = viewModel.item(0, 1);
     QSignalSpy spyDataChanged(&viewModel, &DefaultViewModel::dataChanged);
@@ -352,7 +343,7 @@ TEST_F(TestDefaultViewModel, setRootItem)
     SessionModel model;
     const model_type modelType(Constants::BaseType);
 
-    DefaultViewModel viewModel;
+    DefaultViewModel viewModel(&model);
     auto item = model.insertNewItem(modelType);
 
     viewModel.setSessionModel(&model);
@@ -373,9 +364,7 @@ TEST_F(TestDefaultViewModel, onModelReset)
     model->insertNewItem(modelType);
     model->insertNewItem(modelType);
 
-    DefaultViewModel viewModel;
-    viewModel.setSessionModel(model.get());
-
+    DefaultViewModel viewModel(model.get());
     model->clear();
     EXPECT_EQ(viewModel.rowCount(), 0);
     EXPECT_EQ(viewModel.columnCount(), 2);
@@ -390,8 +379,7 @@ TEST_F(TestDefaultViewModel, onModelDestroyed)
     const model_type modelType(Constants::BaseType);
     model->insertNewItem(modelType);
 
-    DefaultViewModel viewModel;
-    viewModel.setSessionModel(model.get());
+    DefaultViewModel viewModel(model.get());
     EXPECT_EQ(viewModel.rowCount(), 1);
     EXPECT_EQ(viewModel.columnCount(), 2);
 
