@@ -28,7 +28,7 @@ TEST_F(TestItemCatalogue, addItem)
 {
     ItemCatalogue catalogue;
 
-    catalogue.add<PropertyItem>();
+    catalogue.registerItem<PropertyItem>();
 
     EXPECT_EQ(catalogue.itemCount(), 1);
 
@@ -36,7 +36,7 @@ TEST_F(TestItemCatalogue, addItem)
     EXPECT_TRUE(dynamic_cast<PropertyItem*>(item.get()) != nullptr);
 
     // registration of second item is not allowed
-    EXPECT_THROW(catalogue.add<PropertyItem>(), std::runtime_error);
+    EXPECT_THROW(catalogue.registerItem<PropertyItem>(), std::runtime_error);
 
     // item was not registered, creation not allowed
     EXPECT_THROW(catalogue.create("non-registered"), std::runtime_error);
@@ -49,7 +49,7 @@ TEST_F(TestItemCatalogue, addItem)
 TEST_F(TestItemCatalogue, copyConstructor)
 {
     ItemCatalogue catalogue;
-    catalogue.add<PropertyItem>();
+    catalogue.registerItem<PropertyItem>();
 
     ItemCatalogue copy(catalogue);
 
@@ -66,7 +66,7 @@ TEST_F(TestItemCatalogue, copyConstructor)
     EXPECT_EQ(copy.labels(), std::vector<std::string>({""}));
 
     // adding item to first catalogue but not the second
-    catalogue.add<VectorItem>();
+    catalogue.registerItem<VectorItem>();
     item = catalogue.create(Constants::VectorType);
     EXPECT_TRUE(dynamic_cast<VectorItem*>(item.get()) != nullptr);
 
@@ -77,7 +77,7 @@ TEST_F(TestItemCatalogue, copyConstructor)
 TEST_F(TestItemCatalogue, assignmentOperator)
 {
     ItemCatalogue catalogue;
-    catalogue.add<PropertyItem>();
+    catalogue.registerItem<PropertyItem>();
 
     ItemCatalogue copy;
     copy = catalogue;
@@ -94,7 +94,7 @@ TEST_F(TestItemCatalogue, assignmentOperator)
 TEST_F(TestItemCatalogue, contains)
 {
     ItemCatalogue catalogue;
-    catalogue.add<PropertyItem>();
+    catalogue.registerItem<PropertyItem>();
 
     EXPECT_TRUE(catalogue.contains(Constants::PropertyType));
     EXPECT_FALSE(catalogue.contains(Constants::VectorType));
@@ -120,8 +120,8 @@ TEST_F(TestItemCatalogue, defaultItemCatalogue)
 TEST_F(TestItemCatalogue, addLabeledItem)
 {
     ItemCatalogue catalogue;
-    catalogue.add<PropertyItem>("property");
-    catalogue.add<VectorItem>("vector item");
+    catalogue.registerItem<PropertyItem>("property");
+    catalogue.registerItem<VectorItem>("vector item");
 
     // checking model types and labels
     EXPECT_EQ(catalogue.modelTypes(), std::vector<std::string>({"Property", "Vector"}));
@@ -131,11 +131,11 @@ TEST_F(TestItemCatalogue, addLabeledItem)
 TEST_F(TestItemCatalogue, merge)
 {
     ItemCatalogue catalogue1;
-    catalogue1.add<PropertyItem>("property");
-    catalogue1.add<VectorItem>("vector");
+    catalogue1.registerItem<PropertyItem>("property");
+    catalogue1.registerItem<VectorItem>("vector");
 
     ItemCatalogue catalogue2;
-    catalogue2.add<CompoundItem>("compound");
+    catalogue2.registerItem<CompoundItem>("compound");
 
     // adding two catalogue together
     catalogue1.merge(catalogue2);

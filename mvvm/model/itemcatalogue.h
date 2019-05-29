@@ -32,7 +32,7 @@ public:
     ItemCatalogue(const ItemCatalogue& other);
     ItemCatalogue& operator=(const ItemCatalogue& other);
 
-    template <typename T> void add(const std::string& label = {});
+    template <typename T> void registerItem(const std::string& label = {});
 
     bool contains(const std::string& model_type) const;
 
@@ -51,7 +51,7 @@ private:
     std::unique_ptr<class ItemCataloguePrivate> p_impl;
 };
 
-template <typename T> void ItemCatalogue::add(const std::string& label)
+template <typename T> void ItemCatalogue::registerItem(const std::string& label)
 {
     T x;
     add(x.modelType(), []() { return new T(); }, label);

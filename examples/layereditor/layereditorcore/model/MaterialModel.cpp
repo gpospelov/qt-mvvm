@@ -19,8 +19,8 @@ namespace
 std::unique_ptr<ModelView::ItemCatalogue> CreateItemCatalogue()
 {
     std::unique_ptr<ModelView::ItemCatalogue> result = std::make_unique<ModelView::ItemCatalogue>();
-    result->add<MaterialContainerItem>();
-    result->add<SLDMaterialItem>();
+    result->registerItem<MaterialContainerItem>();
+    result->registerItem<SLDMaterialItem>();
     return result;
 }
 } // namespace

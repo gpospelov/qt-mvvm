@@ -17,8 +17,8 @@ namespace
 std::unique_ptr<ModelView::ItemCatalogue> CreateItemCatalogue()
 {
     std::unique_ptr<ModelView::ItemCatalogue> result = std::make_unique<ModelView::ItemCatalogue>();
-    result->add<MultiLayerItem>();
-    result->add<LayerItem>();
+    result->registerItem<MultiLayerItem>();
+    result->registerItem<LayerItem>();
     return result;
 }
 } // namespace
