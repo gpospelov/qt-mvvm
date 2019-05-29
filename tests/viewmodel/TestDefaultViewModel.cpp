@@ -4,6 +4,7 @@
 #include "vectoritem.h"
 #include "viewitems.h"
 #include "viewdataitem.h"
+#include "viewmodelutils.h"
 #include <QDebug>
 #include <QSignalSpy>
 
@@ -102,8 +103,7 @@ TEST_F(TestDefaultViewModel, findPropertyItemView)
     propertyItem->setData(42.0, ItemDataRole::DATA);
 
     DefaultViewModel viewModel(&model);
-
-    auto views = viewModel.findViews(propertyItem);
+    auto views = Utils::findViews(&viewModel, QModelIndex(), propertyItem);
     EXPECT_EQ(views.size(), 2);
 }
 

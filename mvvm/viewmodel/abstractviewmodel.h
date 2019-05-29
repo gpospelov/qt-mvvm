@@ -54,8 +54,6 @@ public:
 
     void setSessionModel(SessionModel* model);
 
-    std::vector<ViewItem*> findViews(const SessionItem* item) const;
-
     SessionItem* sessionItemFromIndex(const QModelIndex& index) const;
 
     QModelIndexList indexOfSessionItem(const SessionItem* item) const;
@@ -65,8 +63,6 @@ public:
 protected:
     SessionItem* rootSessionItem() const;
     QStandardItem* rootViewItem() const;
-
-    std::vector<QStandardItem*> findStandardViews(const SessionItem* item) const;
 
     void setRowConstructor(std::unique_ptr<RowConstructorInterface> row_constructor);
     void setChildrenStrategy(std::unique_ptr<ChildrenStrategyInterface> children_strategy);
@@ -84,6 +80,9 @@ protected:
     virtual std::vector<SessionItem*> item_children(const SessionItem* item) const;
 
 private:
+    std::vector<QStandardItem*> findStandardViews(const SessionItem* item) const;
+    std::vector<ViewItem*> findViews(const SessionItem* item) const;
+
     std::unique_ptr<RowConstructorInterface> m_row_constructor;
     std::unique_ptr<ChildrenStrategyInterface> m_children_strategy;
 
