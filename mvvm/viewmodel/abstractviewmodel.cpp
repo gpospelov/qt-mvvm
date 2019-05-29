@@ -13,6 +13,8 @@
 #include "sessionmodel.h"
 #include "viewitems.h"
 #include "viewmodelutils.h"
+#include "childrenstrategyinterface.h"
+#include "rowconstructorinterface.h"
 
 using namespace ModelView;
 
@@ -153,4 +155,14 @@ void AbstractViewModel::onRowRemoved(SessionItem* parent, std::string tag, int r
 void AbstractViewModel::onModelReset()
 {
 
+}
+
+void AbstractViewModel::setRowConstructor(std::unique_ptr<RowConstructorInterface> row_constructor)
+{
+    m_row_constructor = std::move(row_constructor);
+}
+
+void AbstractViewModel::setChildrenStrategy(std::unique_ptr<ChildrenStrategyInterface> children_strategy)
+{
+    m_children_strategy = std::move(children_strategy);
 }

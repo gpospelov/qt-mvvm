@@ -11,16 +11,12 @@
 #define MVVM_DEFAULTVIEWMODEL_H
 
 #include "abstractviewmodel.h"
-#include <memory>
 #include <vector>
 
 namespace ModelView
 {
 
 class ViewItem;
-class RowConstructorInterface;
-class ChildrenStrategyInterface;
-
 
 //! The view model to show content of SessionModel in Qt views.
 //!
@@ -42,9 +38,6 @@ public:
     ~DefaultViewModel() override;
 
 protected:
-    void setRowConstructor(std::unique_ptr<RowConstructorInterface> row_constructor);
-    void setChildrenStrategy(std::unique_ptr<ChildrenStrategyInterface> children_strategy);
-
     void init_view_model() override;
     void onDataChange(SessionItem* item, int role) override;
     void onRowInserted(SessionItem* parent, std::string tag, int row) override;
@@ -57,8 +50,6 @@ protected:
     virtual void iterate(const SessionItem* item, QStandardItem* parent);
     virtual std::vector<SessionItem*> item_children(const SessionItem* item) const;
 
-    std::unique_ptr<RowConstructorInterface> m_row_constructor;
-    std::unique_ptr<ChildrenStrategyInterface> m_children_strategy;
 };
 
 } // namespace ModelView

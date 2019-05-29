@@ -38,26 +38,17 @@ bool isValidItemRole(const ModelView::ViewItem* view, int item_role)
 using namespace ModelView;
 
 DefaultViewModel::DefaultViewModel(QObject* parent)
-    : AbstractViewModel(parent), m_row_constructor(std::make_unique<LabelDataRowConstructor>())
-    , m_children_strategy(std::make_unique<AllChildrenStrategy>())
+    : AbstractViewModel(parent)
 {
     setItemPrototype(new ViewEmptyItem);
+    setRowConstructor(std::make_unique<LabelDataRowConstructor>());
+    setChildrenStrategy(std::make_unique<AllChildrenStrategy>());
 }
 
 DefaultViewModel::DefaultViewModel(SessionModel* model, QObject* parent)
     : DefaultViewModel(parent)
 {
     setSessionModel(model);
-}
-
-void DefaultViewModel::setRowConstructor(std::unique_ptr<RowConstructorInterface> row_constructor)
-{
-    m_row_constructor = std::move(row_constructor);
-}
-
-void DefaultViewModel::setChildrenStrategy(std::unique_ptr<ChildrenStrategyInterface> children_strategy)
-{
-    m_children_strategy = std::move(children_strategy);
 }
 
 DefaultViewModel::~DefaultViewModel() = default;
