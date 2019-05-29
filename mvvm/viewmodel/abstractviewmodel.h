@@ -24,6 +24,7 @@ class SessionItem;
 class ViewItem;
 class RowConstructorInterface;
 class ChildrenStrategyInterface;
+class ViewModelController;
 
 /*!
 @class AbstractViewModel
@@ -87,6 +88,8 @@ private:
 
     SessionModel* m_sessionModel;
     SessionItem* m_rootItem;
+
+    std::unique_ptr<ViewModelController> m_controller;
 };
 
 } // namespace ModelView

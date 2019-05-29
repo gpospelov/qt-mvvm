@@ -15,6 +15,7 @@
 #include "viewmodelutils.h"
 #include "childrenstrategyinterface.h"
 #include "rowconstructorinterface.h"
+#include "viewmodelcontroller.h"
 
 namespace
 {
@@ -35,7 +36,7 @@ bool isValidItemRole(const ModelView::ViewItem* view, int item_role)
 using namespace ModelView;
 
 AbstractViewModel::AbstractViewModel(QObject* parent)
-    : QStandardItemModel(parent), m_sessionModel(nullptr), m_rootItem(nullptr)
+    : QStandardItemModel(parent), m_sessionModel(nullptr), m_rootItem(nullptr), m_controller(std::make_unique<ViewModelController>(this))
 {
     setItemPrototype(new ViewEmptyItem);
 }

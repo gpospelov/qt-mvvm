@@ -15,6 +15,7 @@
 #include "samplemodel.h"
 #include "sessionitem.h"
 #include "item_constants.h"
+#include "topitemsviewmodel.h"
 #include <QBoxLayout>
 #include <QLabel>
 #include <QMenu>
@@ -126,7 +127,7 @@ void TestWidget::init_default_view()
 
 void TestWidget::init_topitems_view()
 {
-    m_topItemView->setViewModel(ModelView::Utils::CreateTopItemsViewModel(m_sessionModel.get()));
+    m_topItemView->setViewModel( std::make_unique<ModelView::TopItemsViewModel>(m_sessionModel.get()));
     connect(m_topItemView, &ModelView::ItemsTreeView::itemSelected,
             [this](ModelView::SessionItem* item) { m_defaultTreeView->setSelected(item); });
 }
