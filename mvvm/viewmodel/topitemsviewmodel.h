@@ -10,19 +10,20 @@
 #ifndef MVVM_TOPITEMSVIEWMODEL_H
 #define MVVM_TOPITEMSVIEWMODEL_H
 
-#include "defaultviewmodel.h"
-#include <vector>
+#include "abstractviewmodel.h"
 
-namespace ModelView {
+namespace ModelView
+{
 
 //! View model to show content of SessionModel in Qt widgets.
 //! Only top level items are shown, all property items are filtered out.
 
-class CORE_EXPORT TopItemsViewModel : public DefaultViewModel {
+class CORE_EXPORT TopItemsViewModel : public AbstractViewModel
+{
 public:
     TopItemsViewModel(SessionModel* model, QObject* parent = nullptr);
 };
 
-}  // namespace ModelView
+} // namespace ModelView
 
 #endif // MVVM_TOPITEMSVIEWMODEL_H
