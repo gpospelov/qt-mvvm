@@ -22,11 +22,13 @@ MaterialTableModel::MaterialTableModel(ModelView::SessionModel* model, QObject* 
 //! In given case returns only material items in a container. All property items will be handled
 //! via row constructor.
 
-std::vector<ModelView::SessionItem*>
-MaterialTableModel::item_children(const ModelView::SessionItem* item) const
-{
-    std::vector<ModelView::SessionItem*> result;
-    if (item->modelType() == Constants::MaterialContainerType)
-        result = item->children();
-    return result;
-}
+// FIXME repair
+
+//std::vector<ModelView::SessionItem*>
+//MaterialTableModel::item_children(const ModelView::SessionItem* item) const
+//{
+//    std::vector<ModelView::SessionItem*> result;
+//    if (item->modelType() == Constants::MaterialContainerType)
+//        result = item->children();
+//    return result;
+//}

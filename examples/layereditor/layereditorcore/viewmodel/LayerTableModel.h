@@ -25,10 +25,6 @@ class CORE_EXPORT LayerTableModel : public ModelView::DefaultViewModel
 {
 public:
     LayerTableModel(ModelView::SessionModel* model = nullptr, QObject* parent = nullptr);
-
-protected:
-    std::vector<ModelView::SessionItem*>
-    item_children(const ModelView::SessionItem* item) const override;
 };
 
 #endif //  LAYERTABLEMODEL_H

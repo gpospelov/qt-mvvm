@@ -8,14 +8,14 @@
 // ************************************************************************** //
 
 #include "abstractviewmodel.h"
+#include "childrenstrategyinterface.h"
 #include "modelmapper.h"
+#include "rowconstructorinterface.h"
 #include "sessionitem.h"
 #include "sessionmodel.h"
 #include "viewitems.h"
-#include "viewmodelutils.h"
-#include "childrenstrategyinterface.h"
-#include "rowconstructorinterface.h"
 #include "viewmodelcontroller.h"
+#include "viewmodelutils.h"
 #include <utility>
 
 namespace
@@ -36,7 +36,8 @@ bool isValidItemRole(const ModelView::ViewItem* view, int item_role)
 using namespace ModelView;
 
 AbstractViewModel::AbstractViewModel(QObject* parent)
-    : QStandardItemModel(parent), m_sessionModel(nullptr), m_rootItem(nullptr), m_controller(std::make_unique<ViewModelController>(this))
+    : QStandardItemModel(parent), m_sessionModel(nullptr), m_rootItem(nullptr),
+      m_controller(std::make_unique<ViewModelController>(this))
 {
     setItemPrototype(new ViewEmptyItem);
 }
@@ -68,10 +69,16 @@ void AbstractViewModel::setSessionModel(SessionModel* model)
         };
         sessionModel()->mapper()->setOnRowRemoved(on_row_removed, this);
 
-        auto on_model_destroyed = [this](SessionModel*) { m_sessionModel = nullptr; clear();};
+        auto on_model_destroyed = [this](SessionModel*) {
+            m_sessionModel = nullptr;
+            clear();
+        };
         sessionModel()->mapper()->setOnModelDestroyed(on_model_destroyed, this);
 
-        auto on_model_reset = [this](SessionModel*) { m_rootItem = nullptr; onModelReset(); };
+        auto on_model_reset = [this](SessionModel*) {
+            m_rootItem = nullptr;
+            m_controller->reset_view_model();
+        };
         sessionModel()->mapper()->setOnModelReset(on_model_reset, this);
 
         init_view_model();
@@ -188,18 +195,13 @@ void AbstractViewModel::onRowRemoved(SessionItem* parent, std::string, int)
     generate_children_views(parent);
 }
 
-void AbstractViewModel::onModelReset()
-{
-    clear();
-    m_controller->update_layout();
-}
-
 void AbstractViewModel::setRowConstructor(std::unique_ptr<RowConstructorInterface> row_constructor)
 {
     m_controller->setRowConstructor(std::move(row_constructor));
 }
 
-void AbstractViewModel::setChildrenStrategy(std::unique_ptr<ChildrenStrategyInterface> children_strategy)
+void AbstractViewModel::setChildrenStrategy(
+    std::unique_ptr<ChildrenStrategyInterface> children_strategy)
 {
     m_controller->setChildrenStrategy(std::move(children_strategy));
 }
@@ -207,16 +209,18 @@ void AbstractViewModel::setChildrenStrategy(std::unique_ptr<ChildrenStrategyInte
 void AbstractViewModel::init_view_model()
 {
     // FIXME repair check
-//    if (!m_row_constructor)
-//        throw std::runtime_error("AbstractViewModel::init_view_model() -> Error. Row constructor "
-//                                 "is not initialized.");
+    //    if (!m_row_constructor)
+    //        throw std::runtime_error("AbstractViewModel::init_view_model() -> Error. Row
+    //        constructor "
+    //                                 "is not initialized.");
 
     // FIXME repair check
-//    if (!m_children_strategy)
-//        throw std::runtime_error("AbstractViewModel::init_view_model() -> Error. Children strategy "
-//                                 "is not initialized.");
+    //    if (!m_children_strategy)
+    //        throw std::runtime_error("AbstractViewModel::init_view_model() -> Error. Children
+    //        strategy "
+    //                                 "is not initialized.");
 
-    onModelReset();
+    m_controller->reset_view_model();
     m_controller->iterate(rootSessionItem(), rootViewItem());
 }
 
@@ -231,11 +235,3 @@ void AbstractViewModel::generate_children_views(SessionItem* parent)
     if (views.size())
         m_controller->iterate(parent, views.at(0));
 }
-
-//! Returns (possibly filtered) vector of children of given item.
-
-std::vector<SessionItem*> AbstractViewModel::item_children(const SessionItem* item) const
-{
-    return m_controller->item_children(item);
-}
-

@@ -36,11 +36,11 @@ public:
     ViewModelController(AbstractViewModel* view_model);
     virtual ~ViewModelController();
 
-    std::vector<SessionItem*> item_children(const SessionItem* item) const;
-
     void setChildrenStrategy(std::unique_ptr<ChildrenStrategyInterface> children_strategy);
 
     void setRowConstructor(std::unique_ptr<RowConstructorInterface> row_constructor);
+
+    void reset_view_model();
 
     void update_layout();
 

@@ -25,10 +25,6 @@ class CORE_EXPORT MaterialTableModel : public ModelView::DefaultViewModel
 {
 public:
     MaterialTableModel(ModelView::SessionModel* model = nullptr, QObject* parent = nullptr);
-
-protected:
-    std::vector<ModelView::SessionItem*>
-    item_children(const ModelView::SessionItem* item) const override;
 };
 
 #endif //  MATERIALTABLEMODEL_H

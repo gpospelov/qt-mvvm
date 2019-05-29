@@ -72,11 +72,8 @@ protected:
     virtual void onDataChange(SessionItem* item, int role);
     virtual void onRowInserted(SessionItem* parent, std::string tag, int row);
     virtual void onRowRemoved(SessionItem* parent, std::string tag, int row);
-    virtual void onModelReset();
 
     virtual void generate_children_views(SessionItem* parent);
-
-    virtual std::vector<SessionItem*> item_children(const SessionItem* item) const;
 
 private:
     std::vector<QStandardItem*> findStandardViews(const SessionItem* item) const;
