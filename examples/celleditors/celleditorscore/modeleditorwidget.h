@@ -21,6 +21,8 @@ class QTableView;
 namespace ModelView
 {
 class ItemsTreeView;
+class AbstractViewModel;
+class ViewModelDelegate;
 } // namespace ModelView
 
 //! Shows model content in three widgets.
@@ -39,9 +41,12 @@ private:
     QBoxLayout* create_left_layout();
     QBoxLayout* create_right_layout();
 
-    ModelView::ItemsTreeView* m_defaultTreeView;
-    QTreeView* m_treeView;
+    QTreeView* m_verticalTree;
+    QTreeView* m_horizontalTree;
     QTableView* m_tableView;
+
+    std::unique_ptr<ModelView::AbstractViewModel> m_verticalViewModel;
+    std::unique_ptr<ModelView::ViewModelDelegate> m_delegate;
 };
 
 #endif // MODELEDITORWIDGET_H

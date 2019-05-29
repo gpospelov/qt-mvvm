@@ -11,6 +11,7 @@
 #include "itemstreeview.h"
 #include "standardviewmodels.h"
 #include "samplemodel.h"
+#include "viewmodeldelegate.h"
 #include <QBoxLayout>
 #include <QTreeView>
 #include <QTableView>
@@ -18,8 +19,8 @@
 using namespace ModelView;
 
 ModelEditorWidget::ModelEditorWidget(SampleModel* model, QWidget* parent)
-    : QWidget(parent), m_defaultTreeView(new ModelView::ItemsTreeView),
-      m_treeView(new QTreeView), m_tableView(new QTableView)
+    : QWidget(parent), m_verticalTree(new QTreeView),
+      m_horizontalTree(new QTreeView), m_tableView(new QTableView), m_delegate(std::make_unique<ViewModelDelegate>())
 {
     auto mainLayout = new QHBoxLayout();
     mainLayout->setSpacing(10);
@@ -36,8 +37,12 @@ void ModelEditorWidget::setModel(SampleModel* model)
     if (!model)
         return;
 
-    m_defaultTreeView->setViewModel(Utils::CreateDefaultViewModel(model));
-
+    // setting up left tree
+    m_verticalViewModel = Utils::CreateDefaultViewModel(model);
+    m_verticalTree->setModel(m_verticalViewModel.get());
+    m_verticalTree->setItemDelegate(m_delegate.get());
+    m_verticalTree->expandAll();
+    m_verticalTree->resizeColumnToContents(0);
 }
 
 ModelEditorWidget::~ModelEditorWidget() = default;
@@ -45,14 +50,14 @@ ModelEditorWidget::~ModelEditorWidget() = default;
 QBoxLayout* ModelEditorWidget::create_left_layout()
 {
     auto result = new QVBoxLayout;
-    result->addWidget(m_defaultTreeView);
+    result->addWidget(m_verticalTree);
     return result;
 }
 
 QBoxLayout* ModelEditorWidget::create_right_layout()
 {
     auto result = new QVBoxLayout;
-    result->addWidget(m_treeView);
+    result->addWidget(m_horizontalTree);
     result->addWidget(m_tableView);
     return result;
 }
