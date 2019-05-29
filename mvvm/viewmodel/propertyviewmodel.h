@@ -24,8 +24,6 @@ public:
 
 protected:
     void onDataChange(SessionItem* item, int role) override;
-    std::vector<SessionItem*> item_children(const SessionItem* item) const override;
-
 };
 
 }  // namespace ModelView

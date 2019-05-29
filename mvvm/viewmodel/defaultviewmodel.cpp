@@ -55,6 +55,11 @@ void DefaultViewModel::setRowConstructor(std::unique_ptr<RowConstructorInterface
     m_row_constructor = std::move(row_constructor);
 }
 
+void DefaultViewModel::setChildrenStrategy(std::unique_ptr<ChildrenStrategyInterface> children_strategy)
+{
+    m_children_strategy = std::move(children_strategy);
+}
+
 DefaultViewModel::~DefaultViewModel() = default;
 
 void DefaultViewModel::init_view_model()

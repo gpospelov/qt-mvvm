@@ -10,15 +10,11 @@
 #include "topitemsviewmodel.h"
 #include "sessionitem.h"
 #include "itemutils.h"
+#include "childrenstrategies.h"
 
 using namespace ModelView;
 
-TopItemsViewModel::TopItemsViewModel(SessionModel* model, QObject* parent) : DefaultViewModel(parent)
+TopItemsViewModel::TopItemsViewModel(SessionModel* model, QObject* parent) : DefaultViewModel(model, parent)
 {
-    setSessionModel(model);
-}
-
-std::vector<SessionItem*> TopItemsViewModel::item_children(const SessionItem* item) const
-{
-    return Utils::TopLevelItems(*item);
+    setChildrenStrategy(std::make_unique<TopItemsStrategy>());
 }

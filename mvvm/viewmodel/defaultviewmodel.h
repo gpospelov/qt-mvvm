@@ -43,6 +43,7 @@ public:
 
 protected:
     void setRowConstructor(std::unique_ptr<RowConstructorInterface> row_constructor);
+    void setChildrenStrategy(std::unique_ptr<ChildrenStrategyInterface> children_strategy);
 
     void init_view_model() override;
     void onDataChange(SessionItem* item, int role) override;

@@ -11,13 +11,14 @@
 #include "groupitem.h"
 #include "viewitem.h"
 #include "itemutils.h"
+#include "childrenstrategies.h"
 
 using namespace ModelView;
 
 PropertyViewModel::PropertyViewModel(SessionModel* model, QObject* parent)
     : DefaultViewModel(model, parent)
 {
-
+    setChildrenStrategy(std::make_unique<PropertyItemsStrategy>());
 }
 
 //! Generates necessary notifications on SessionItem's data change.
@@ -29,14 +30,4 @@ void PropertyViewModel::onDataChange(SessionItem* item, int role)
     DefaultViewModel::onDataChange(item, role);
     if (auto group = dynamic_cast<GroupItem*>(item))
         DefaultViewModel::onRowRemoved(group, "", 0);
-}
-
-//! Returns (possibly filtered) vector of children of given item.
-//! In the case of GroupItem, shows only underlying properties of active item.
-
-std::vector<SessionItem*> PropertyViewModel::item_children(const SessionItem* item) const
-{
-    auto group = dynamic_cast<const GroupItem*>(item);
-    auto next_item = group ? group->currentItem() : item;
-    return Utils::SinglePropertyItems(*next_item);
 }
