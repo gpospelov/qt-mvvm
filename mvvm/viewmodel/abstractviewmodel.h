@@ -11,8 +11,8 @@
 #define MVVM_ABSTRACTVIEWMODEL_H
 
 #include "mvvm_global.h"
-#include <memory>
 #include <QStandardItemModel>
+#include <memory>
 
 class QStandardItem;
 
@@ -25,19 +25,26 @@ class ViewItem;
 class RowConstructorInterface;
 class ChildrenStrategyInterface;
 
-//! Base class for all view models to show content of  SessionModel in Qt views.
+/*!
+@class AbstractViewModel
+@brief Base class for all view models to show content of SessionModel in Qt views.
 
-//! The view model to show content of SessionModel in Qt views.
-//!
-//! DefaultViewModel is connected with SessionModel and notifies views on SessionItem's
-//! insert/remove/data change. The data change in a view will be propagated back to SessionModel.
-//!
-//! Important limitation: DefaultViewModel is not intended for insert/remove through
-//! QStandardItemModel interface. Everything should be done through SessionModel.
-//!
-//! Important feature: DefaultViewModel doesn't care about correct removal of QStandardItemModel
-//! rows and columns. Every time the row of parent SessionItem is removed, DefaultViewModel
-//! removes _all_ children of corresponding ViewItem and then rebuild whole branch.
+AbstractViewModel is just a QStandardItemModel connected with SessionModel. On every
+insert/remove/data change in original SessionModel, AbstractViewModel gets notified
+and updates its content.
+
+Important details:
+
+AbstractViewModel is made of ViewItems, where each ViewItem represents some concrete data role
+of SessionItem.
+
+AbstractViewModel is not intended for insert/remove through QStandardItemModel interface.
+Everything should be done through SessionModel.
+
+AbstractViewModel uses simplified mechanism of syncronization with SessionModel.
+Every time some item is removed from SessionModel, we remove all siblings as well, and then
+regenerate corresponding parent's branch.
+*/
 
 class CORE_EXPORT AbstractViewModel : public QStandardItemModel
 {
@@ -61,7 +68,6 @@ protected:
 
     std::vector<QStandardItem*> findStandardViews(const SessionItem* item) const;
 
-protected:
     void setRowConstructor(std::unique_ptr<RowConstructorInterface> row_constructor);
     void setChildrenStrategy(std::unique_ptr<ChildrenStrategyInterface> children_strategy);
 
@@ -77,7 +83,7 @@ protected:
     virtual void iterate(const SessionItem* item, QStandardItem* parent);
     virtual std::vector<SessionItem*> item_children(const SessionItem* item) const;
 
-
+private:
     std::unique_ptr<RowConstructorInterface> m_row_constructor;
     std::unique_ptr<ChildrenStrategyInterface> m_children_strategy;
 
