@@ -42,7 +42,7 @@ public:
 
 protected:
     SessionItem* rootSessionItem() const;
-    QStandardItem* rootStandardItem() const;
+    QStandardItem* rootViewItem() const;
 
     std::vector<QStandardItem*> findStandardViews(const SessionItem* item) const;
 

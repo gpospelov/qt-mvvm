@@ -123,7 +123,7 @@ void DefaultViewModel::generate_children_views(SessionItem* parent)
 
 void DefaultViewModel::update_model()
 {
-    iterate(rootSessionItem(), rootStandardItem());
+    iterate(rootSessionItem(), rootViewItem());
 }
 
 void DefaultViewModel::iterate(const SessionItem* item, QStandardItem* parent)

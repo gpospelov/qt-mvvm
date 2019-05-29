@@ -68,7 +68,7 @@ SessionItem* AbstractViewModel::rootSessionItem() const
 
 //! Returns QStandardItem associated with top level item (rootSessionItem).
 
-QStandardItem* AbstractViewModel::rootStandardItem() const
+QStandardItem* AbstractViewModel::rootViewItem() const
 {
     return invisibleRootItem();
 }
@@ -78,7 +78,7 @@ QStandardItem* AbstractViewModel::rootStandardItem() const
 std::vector<QStandardItem*> AbstractViewModel::findStandardViews(const SessionItem* item) const
 {
     if (item == rootSessionItem())
-        return {rootStandardItem()};
+        return {rootViewItem()};
 
     std::vector<QStandardItem*> result;
     for (auto view : findViews(item))
