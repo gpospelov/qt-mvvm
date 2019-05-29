@@ -191,13 +191,15 @@ void AbstractViewModel::onRowRemoved(SessionItem* parent, std::string, int)
 void AbstractViewModel::onModelReset()
 {
     clear();
-    setColumnCount(m_row_constructor->columnCount());
-    setHorizontalHeaderLabels(m_row_constructor->horizontalHeaderLabels());
+    m_controller->update_layout();
+//    setColumnCount(m_row_constructor->columnCount());
+//    setHorizontalHeaderLabels(m_row_constructor->horizontalHeaderLabels());
 }
 
 void AbstractViewModel::setRowConstructor(std::unique_ptr<RowConstructorInterface> row_constructor)
 {
-    m_row_constructor = std::move(row_constructor);
+    m_controller->setRowConstructor(std::move(row_constructor));
+//    m_row_constructor = std::move(row_constructor);
 }
 
 void AbstractViewModel::setChildrenStrategy(std::unique_ptr<ChildrenStrategyInterface> children_strategy)
@@ -208,9 +210,10 @@ void AbstractViewModel::setChildrenStrategy(std::unique_ptr<ChildrenStrategyInte
 
 void AbstractViewModel::init_view_model()
 {
-    if (!m_row_constructor)
-        throw std::runtime_error("AbstractViewModel::init_view_model() -> Error. Row constructor "
-                                 "is not initialized.");
+    // FIXME repair check
+//    if (!m_row_constructor)
+//        throw std::runtime_error("AbstractViewModel::init_view_model() -> Error. Row constructor "
+//                                 "is not initialized.");
 
     // FIXME repair check
 //    if (!m_children_strategy)
@@ -238,7 +241,7 @@ void AbstractViewModel::iterate(const SessionItem* item, QStandardItem* parent)
     QStandardItem* origParent(parent);
     for (auto child : item_children(item)) {
 
-        auto row = m_row_constructor->constructRow(child);
+        auto row = constructRow(child);
         parent->appendRow(row);
 
         if (row.size())
@@ -254,5 +257,10 @@ void AbstractViewModel::iterate(const SessionItem* item, QStandardItem* parent)
 std::vector<SessionItem*> AbstractViewModel::item_children(const SessionItem* item) const
 {
     return m_controller->item_children(item);
+}
+
+QList<QStandardItem*> AbstractViewModel::constructRow(SessionItem* item)
+{
+    return m_controller->constructRow(item);
 }
 

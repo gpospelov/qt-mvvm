@@ -14,12 +14,16 @@
 #include <memory>
 #include <vector>
 
+class QStandardItem;
+#include <QList>
+
 namespace ModelView
 {
 
 class AbstractViewModel;
 class SessionItem;
 class ChildrenStrategyInterface;
+class RowConstructorInterface;
 
 /*!
 @class ViewModelController
@@ -35,6 +39,12 @@ public:
     std::vector<SessionItem*> item_children(const SessionItem* item) const;
 
     void setChildrenStrategy(std::unique_ptr<ChildrenStrategyInterface> children_strategy);
+
+    void setRowConstructor(std::unique_ptr<RowConstructorInterface> row_constructor);
+
+    QList<QStandardItem*> constructRow(SessionItem* item);
+
+    void update_layout();
 
 private:
     class ViewModelControllerPrivate;
