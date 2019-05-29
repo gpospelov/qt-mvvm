@@ -199,6 +199,14 @@ void AbstractViewModel::setChildrenStrategy(std::unique_ptr<ChildrenStrategyInte
 
 void AbstractViewModel::init_view_model()
 {
+    if (!m_row_constructor)
+        throw std::runtime_error("AbstractViewModel::init_view_model() -> Error. Row constructor "
+                                 "is not initialized.");
+
+    if (!m_children_strategy)
+        throw std::runtime_error("AbstractViewModel::init_view_model() -> Error. Children strategy "
+                                 "is not initialized.");
+
     clear();
     setColumnCount(m_row_constructor->columnCount());
     setHorizontalHeaderLabels(m_row_constructor->horizontalHeaderLabels());

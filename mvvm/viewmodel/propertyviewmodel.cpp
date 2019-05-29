@@ -9,25 +9,27 @@
 
 #include "propertyviewmodel.h"
 #include "groupitem.h"
-#include "viewitem.h"
-#include "itemutils.h"
 #include "childrenstrategies.h"
+#include "labeldatarowconstructor.h"
 
 using namespace ModelView;
 
 PropertyViewModel::PropertyViewModel(SessionModel* model, QObject* parent)
-    : DefaultViewModel(model, parent)
+    : AbstractViewModel(parent)
 {
+    setRowConstructor(std::make_unique<LabelDataRowConstructor>());
     setChildrenStrategy(std::make_unique<PropertyItemsStrategy>());
+    setSessionModel(model);
 }
 
 //! Generates necessary notifications on SessionItem's data change.
-//! If data change occured with GroupItem, performs cleanup and regeneration of
-//! ViewItems, corresponding to groupItem's current index.
 
 void PropertyViewModel::onDataChange(SessionItem* item, int role)
 {
-    DefaultViewModel::onDataChange(item, role);
+    AbstractViewModel::onDataChange(item, role);
+
+    // If data change occured with GroupItem, performs cleanup and regeneration of
+    // ViewItems, corresponding to groupItem's current index.
     if (auto group = dynamic_cast<GroupItem*>(item))
-        DefaultViewModel::onRowRemoved(group, "", 0);
+        AbstractViewModel::onRowRemoved(group, "", 0);
 }

@@ -18,7 +18,6 @@ namespace ModelView
 class CORE_EXPORT DefaultViewModel : public AbstractViewModel
 {
 public:
-//    DefaultViewModel(QObject* parent = nullptr);
     DefaultViewModel(SessionModel* model, QObject* parent = nullptr);
 };
 

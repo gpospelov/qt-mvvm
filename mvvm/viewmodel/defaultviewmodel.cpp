@@ -13,12 +13,6 @@
 
 using namespace ModelView;
 
-//DefaultViewModel::DefaultViewModel(QObject* parent) : AbstractViewModel(parent)
-//{
-//    setRowConstructor(std::make_unique<LabelDataRowConstructor>());
-//    setChildrenStrategy(std::make_unique<AllChildrenStrategy>());
-//}
-
 DefaultViewModel::DefaultViewModel(SessionModel* model, QObject* parent) : AbstractViewModel(parent)
 {
     setRowConstructor(std::make_unique<LabelDataRowConstructor>());

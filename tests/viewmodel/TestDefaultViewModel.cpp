@@ -22,8 +22,8 @@ TEST_F(TestDefaultViewModel, initialState)
     SessionModel model;
     DefaultViewModel viewModel(&model);
     EXPECT_EQ(viewModel.rowCount(), 0);
-    EXPECT_EQ(viewModel.columnCount(), 0);
-    EXPECT_EQ(viewModel.sessionItemFromIndex(QModelIndex()), nullptr);
+    EXPECT_EQ(viewModel.columnCount(), 2);
+    EXPECT_EQ(viewModel.sessionItemFromIndex(QModelIndex()), model.rootItem());
 }
 
 //! Single property item in a model.
