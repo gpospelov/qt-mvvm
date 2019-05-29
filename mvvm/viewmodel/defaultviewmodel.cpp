@@ -50,14 +50,6 @@ DefaultViewModel::DefaultViewModel(SessionModel* model, QObject* parent)
     setSessionModel(model);
 }
 
-void DefaultViewModel::init_view_model()
-{
-    clear();
-    setColumnCount(m_row_constructor->columnCount());
-    setHorizontalHeaderLabels(m_row_constructor->horizontalHeaderLabels());
-    update_model();
-}
-
 //! Generates necessary notifications on SessionItem's data change.
 
 void DefaultViewModel::onDataChange(SessionItem* item, int role)

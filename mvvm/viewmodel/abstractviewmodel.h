@@ -65,11 +65,12 @@ protected:
     void setRowConstructor(std::unique_ptr<RowConstructorInterface> row_constructor);
     void setChildrenStrategy(std::unique_ptr<ChildrenStrategyInterface> children_strategy);
 
-    virtual void init_view_model() = 0;
+    virtual void init_view_model();
     virtual void onDataChange(SessionItem* item, int role);
     virtual void onRowInserted(SessionItem* parent, std::string tag, int row);
     virtual void onRowRemoved(SessionItem* parent, std::string tag, int row);
     virtual void onModelReset();
+    virtual void update_model(){}
 
     std::unique_ptr<RowConstructorInterface> m_row_constructor;
     std::unique_ptr<ChildrenStrategyInterface> m_children_strategy;

@@ -168,3 +168,11 @@ void AbstractViewModel::setChildrenStrategy(std::unique_ptr<ChildrenStrategyInte
 {
     m_children_strategy = std::move(children_strategy);
 }
+
+void AbstractViewModel::init_view_model()
+{
+    clear();
+    setColumnCount(m_row_constructor->columnCount());
+    setHorizontalHeaderLabels(m_row_constructor->horizontalHeaderLabels());
+    update_model();
+}
