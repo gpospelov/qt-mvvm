@@ -192,20 +192,16 @@ void AbstractViewModel::onModelReset()
 {
     clear();
     m_controller->update_layout();
-//    setColumnCount(m_row_constructor->columnCount());
-//    setHorizontalHeaderLabels(m_row_constructor->horizontalHeaderLabels());
 }
 
 void AbstractViewModel::setRowConstructor(std::unique_ptr<RowConstructorInterface> row_constructor)
 {
     m_controller->setRowConstructor(std::move(row_constructor));
-//    m_row_constructor = std::move(row_constructor);
 }
 
 void AbstractViewModel::setChildrenStrategy(std::unique_ptr<ChildrenStrategyInterface> children_strategy)
 {
     m_controller->setChildrenStrategy(std::move(children_strategy));
-//    m_children_strategy = std::move(children_strategy);
 }
 
 void AbstractViewModel::init_view_model()
@@ -221,7 +217,7 @@ void AbstractViewModel::init_view_model()
 //                                 "is not initialized.");
 
     onModelReset();
-    iterate(rootSessionItem(), rootViewItem());
+    m_controller->iterate(rootSessionItem(), rootViewItem());
 }
 
 //! Regenerate all views of given parent.
@@ -233,23 +229,7 @@ void AbstractViewModel::generate_children_views(SessionItem* parent)
         view->removeRows(0, view->rowCount());
 
     if (views.size())
-        iterate(parent, views.at(0));
-}
-
-void AbstractViewModel::iterate(const SessionItem* item, QStandardItem* parent)
-{
-    QStandardItem* origParent(parent);
-    for (auto child : item_children(item)) {
-
-        auto row = constructRow(child);
-        parent->appendRow(row);
-
-        if (row.size())
-            parent = row.at(0); // labelItem
-
-        iterate(child, parent);
-        parent = origParent;
-    }
+        m_controller->iterate(parent, views.at(0));
 }
 
 //! Returns (possibly filtered) vector of children of given item.
@@ -257,10 +237,5 @@ void AbstractViewModel::iterate(const SessionItem* item, QStandardItem* parent)
 std::vector<SessionItem*> AbstractViewModel::item_children(const SessionItem* item) const
 {
     return m_controller->item_children(item);
-}
-
-QList<QStandardItem*> AbstractViewModel::constructRow(SessionItem* item)
-{
-    return m_controller->constructRow(item);
 }
 

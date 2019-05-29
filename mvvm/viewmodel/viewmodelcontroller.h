@@ -42,9 +42,9 @@ public:
 
     void setRowConstructor(std::unique_ptr<RowConstructorInterface> row_constructor);
 
-    QList<QStandardItem*> constructRow(SessionItem* item);
-
     void update_layout();
+
+    virtual void iterate(const SessionItem* item, QStandardItem* parent);
 
 private:
     class ViewModelControllerPrivate;

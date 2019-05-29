@@ -76,15 +76,11 @@ protected:
 
     virtual void generate_children_views(SessionItem* parent);
 
-    virtual void iterate(const SessionItem* item, QStandardItem* parent);
     virtual std::vector<SessionItem*> item_children(const SessionItem* item) const;
-    virtual QList<QStandardItem*> constructRow(SessionItem* item);
 
 private:
     std::vector<QStandardItem*> findStandardViews(const SessionItem* item) const;
     std::vector<ViewItem*> findViews(const SessionItem* item) const;
-
-//    std::unique_ptr<RowConstructorInterface> m_row_constructor;
 
     SessionModel* sessionModel();
     const SessionModel* sessionModel() const;

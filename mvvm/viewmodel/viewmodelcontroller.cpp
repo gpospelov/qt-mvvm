@@ -25,6 +25,12 @@ public:
     SessionModel* m_session_model;
     std::unique_ptr<ChildrenStrategyInterface> m_children_strategy;
     std::unique_ptr<RowConstructorInterface> m_row_constructor;
+
+    QList<QStandardItem*> constructRow(SessionItem* item)
+    {
+        return m_row_constructor->constructRow(item);
+    }
+
 };
 
 ViewModelController::ViewModelController(AbstractViewModel* view_model)
@@ -47,15 +53,26 @@ void ViewModelController::setRowConstructor(std::unique_ptr<RowConstructorInterf
     p_impl->m_row_constructor = std::move(row_constructor);
 }
 
-QList<QStandardItem*> ViewModelController::constructRow(SessionItem* item)
-{
-    return p_impl->m_row_constructor->constructRow(item);
-}
-
 void ViewModelController::update_layout()
 {
     p_impl->m_view_model->setColumnCount(p_impl->m_row_constructor->columnCount());
     p_impl->m_view_model->setHorizontalHeaderLabels(p_impl->m_row_constructor->horizontalHeaderLabels());
+}
+
+void ViewModelController::iterate(const SessionItem* item, QStandardItem* parent)
+{
+    QStandardItem* origParent(parent);
+    for (auto child : item_children(item)) {
+
+        auto row = p_impl->constructRow(child);
+        parent->appendRow(row);
+
+        if (row.size())
+            parent = row.at(0); // labelItem
+
+        iterate(child, parent);
+        parent = origParent;
+    }
 }
 
 ViewModelController::~ViewModelController() = default;
