@@ -16,6 +16,7 @@
 #include "childrenstrategyinterface.h"
 #include "rowconstructorinterface.h"
 #include "viewmodelcontroller.h"
+#include <utility>
 
 namespace
 {
@@ -201,7 +202,8 @@ void AbstractViewModel::setRowConstructor(std::unique_ptr<RowConstructorInterfac
 
 void AbstractViewModel::setChildrenStrategy(std::unique_ptr<ChildrenStrategyInterface> children_strategy)
 {
-    m_children_strategy = std::move(children_strategy);
+    m_controller->setChildrenStrategy(std::move(children_strategy));
+//    m_children_strategy = std::move(children_strategy);
 }
 
 void AbstractViewModel::init_view_model()
@@ -210,9 +212,10 @@ void AbstractViewModel::init_view_model()
         throw std::runtime_error("AbstractViewModel::init_view_model() -> Error. Row constructor "
                                  "is not initialized.");
 
-    if (!m_children_strategy)
-        throw std::runtime_error("AbstractViewModel::init_view_model() -> Error. Children strategy "
-                                 "is not initialized.");
+    // FIXME repair check
+//    if (!m_children_strategy)
+//        throw std::runtime_error("AbstractViewModel::init_view_model() -> Error. Children strategy "
+//                                 "is not initialized.");
 
     onModelReset();
     iterate(rootSessionItem(), rootViewItem());
@@ -250,6 +253,6 @@ void AbstractViewModel::iterate(const SessionItem* item, QStandardItem* parent)
 
 std::vector<SessionItem*> AbstractViewModel::item_children(const SessionItem* item) const
 {
-    return m_children_strategy->children(item);
+    return m_controller->item_children(item);
 }
 

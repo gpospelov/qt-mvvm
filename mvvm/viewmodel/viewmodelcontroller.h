@@ -12,11 +12,14 @@
 
 #include "mvvm_global.h"
 #include <memory>
+#include <vector>
 
 namespace ModelView
 {
 
 class AbstractViewModel;
+class SessionItem;
+class ChildrenStrategyInterface;
 
 /*!
 @class ViewModelController
@@ -28,6 +31,10 @@ class CORE_EXPORT ViewModelController
 public:
     ViewModelController(AbstractViewModel* view_model);
     virtual ~ViewModelController();
+
+    std::vector<SessionItem*> item_children(const SessionItem* item) const;
+
+    void setChildrenStrategy(std::unique_ptr<ChildrenStrategyInterface> children_strategy);
 
 private:
     class ViewModelControllerPrivate;
