@@ -15,6 +15,7 @@
 #include "sessionmodel.h"
 #include "viewmodelutils.h"
 #include "viewemptyitem.h"
+#include "childrenstrategies.h"
 #include <QDebug>
 #include <algorithm>
 
@@ -38,6 +39,7 @@ using namespace ModelView;
 
 DefaultViewModel::DefaultViewModel(QObject* parent)
     : AbstractViewModel(parent), m_row_constructor(std::make_unique<LabelDataRowConstructor>())
+    , m_children_strategy(std::make_unique<AllChildrenStrategy>())
 {
     setItemPrototype(new ViewEmptyItem);
 }
@@ -144,5 +146,5 @@ void DefaultViewModel::iterate(const SessionItem* item, QStandardItem* parent)
 
 std::vector<SessionItem*> DefaultViewModel::item_children(const SessionItem* item) const
 {
-    return item->children();
+    return m_children_strategy->children(item);
 }

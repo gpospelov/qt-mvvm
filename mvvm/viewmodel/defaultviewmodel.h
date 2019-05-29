@@ -19,6 +19,8 @@ namespace ModelView
 
 class ViewItem;
 class RowConstructorInterface;
+class ChildrenStrategyInterface;
+
 
 //! The view model to show content of SessionModel in Qt views.
 //!
@@ -41,6 +43,7 @@ public:
 
 protected:
     void setRowConstructor(std::unique_ptr<RowConstructorInterface> row_constructor);
+
     void init_view_model() override;
     void onDataChange(SessionItem* item, int role) override;
     void onRowInserted(SessionItem* parent, std::string tag, int row) override;
@@ -54,6 +57,7 @@ protected:
     virtual std::vector<SessionItem*> item_children(const SessionItem* item) const;
 
     std::unique_ptr<RowConstructorInterface> m_row_constructor;
+    std::unique_ptr<ChildrenStrategyInterface> m_children_strategy;
 };
 
 } // namespace ModelView

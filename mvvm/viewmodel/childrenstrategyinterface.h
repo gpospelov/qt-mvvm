@@ -31,7 +31,7 @@ public:
     virtual ~ChildrenStrategyInterface() = default;
 
     //! Returns vector of children of given item.
-    std::vector<SessionItem*> children(const SessionItem* item) const;
+    virtual std::vector<SessionItem*> children(const SessionItem* item) const = 0;
 };
 
 }  // namespace ModelView

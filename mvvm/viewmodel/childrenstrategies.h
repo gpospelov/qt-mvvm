@@ -13,7 +13,7 @@
 #include "childrenstrategyinterface.h"
 
 //! @file childrenstrategies.h
-//! Collection of strategies to find children, actual of fictional, of given item
+//! Collection of strategies to find children, actual of fictional, of given item.
 
 namespace ModelView {
 
@@ -24,7 +24,7 @@ class SessionItem;
 class CORE_EXPORT AllChildrenStrategy : public ChildrenStrategyInterface
 {
 public:
-    std::vector<SessionItem*> children(const SessionItem* item) const;
+    std::vector<SessionItem*> children(const SessionItem* item) const override;
 };
 
 //! Strategy to find children of given item. Only top level items will be given, all
@@ -33,7 +33,7 @@ public:
 class CORE_EXPORT TopItemsStrategy : public ChildrenStrategyInterface
 {
 public:
-    std::vector<SessionItem*> children(const SessionItem* item) const;
+    std::vector<SessionItem*> children(const SessionItem* item) const override;
 };
 
 //! Strategy to find children of given item. Only property item will be given,
@@ -42,7 +42,7 @@ public:
 class CORE_EXPORT PropertyItemsStrategy : public ChildrenStrategyInterface
 {
 public:
-    std::vector<SessionItem*> children(const SessionItem* item) const;
+    std::vector<SessionItem*> children(const SessionItem* item) const override;
 };
 
 }  // namespace ModelView
