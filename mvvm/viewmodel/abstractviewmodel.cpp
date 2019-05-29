@@ -70,7 +70,7 @@ void AbstractViewModel::setSessionModel(SessionModel* model)
         auto on_model_destroyed = [this](SessionModel*) { m_sessionModel = nullptr; clear();};
         m_sessionModel->mapper()->setOnModelDestroyed(on_model_destroyed, this);
 
-        auto on_model_reset = [this](SessionModel*) { clear(); m_rootItem = nullptr; onModelReset(); };
+        auto on_model_reset = [this](SessionModel*) { m_rootItem = nullptr; onModelReset(); };
         m_sessionModel->mapper()->setOnModelReset(on_model_reset, this);
 
         init_view_model();
@@ -179,6 +179,7 @@ void AbstractViewModel::onRowRemoved(SessionItem* parent, std::string, int)
 
 void AbstractViewModel::onModelReset()
 {
+    clear();
     setColumnCount(m_row_constructor->columnCount());
     setHorizontalHeaderLabels(m_row_constructor->horizontalHeaderLabels());
 }
@@ -203,10 +204,7 @@ void AbstractViewModel::init_view_model()
         throw std::runtime_error("AbstractViewModel::init_view_model() -> Error. Children strategy "
                                  "is not initialized.");
 
-    clear();
-    setColumnCount(m_row_constructor->columnCount());
-    setHorizontalHeaderLabels(m_row_constructor->horizontalHeaderLabels());
-
+    onModelReset();
     iterate(rootSessionItem(), rootViewItem());
 }
 
