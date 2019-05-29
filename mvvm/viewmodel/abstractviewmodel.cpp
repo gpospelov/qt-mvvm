@@ -108,7 +108,7 @@ std::vector<QStandardItem*> AbstractViewModel::findStandardViews(const SessionIt
 
 std::vector<ViewItem*> AbstractViewModel::findViews(const SessionItem* item) const
 {
-    return Utils::findViews(this, QModelIndex(), item);
+    return Utils::findViews(this, item, QModelIndex());
 }
 
 //! Returns SessionItem corresponding to givem QModelIndex.

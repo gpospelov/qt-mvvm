@@ -13,6 +13,7 @@
 #include "mvvm_global.h"
 #include <QVariant>
 #include <QVector>
+#include <QModelIndex>
 #include <functional>
 #include <vector>
 
@@ -33,9 +34,8 @@ namespace Utils
 CORE_EXPORT void iterate_model(const QStandardItemModel* model, const QModelIndex& parent,
                                std::function<void(QStandardItem*)> fun);
 
-//! Returns vector of all ViewItems from the model representing given SessionItem.
-CORE_EXPORT std::vector<ViewItem*> findViews(const QStandardItemModel* model,
-                                             const QModelIndex& parent, const SessionItem* item);
+//! Returns vector of all ViewItems representing given SessionItem.
+CORE_EXPORT std::vector<ViewItem*> findViews(const QStandardItemModel* model, const SessionItem* item, const QModelIndex& parent = QModelIndex());
 
 //! Returns vector of Qt roles corresponding to given ItemDataRole.
 CORE_EXPORT QVector<int> item_role_to_qt(int role);

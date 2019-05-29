@@ -58,7 +58,7 @@ TEST_F(TestToyMultilayer, findMultiLayerView)
 
     DefaultViewModel viewModel(&model);
 
-    auto views = Utils::findViews(&viewModel, QModelIndex(), multiLayerItem);
+    auto views = Utils::findViews(&viewModel, multiLayerItem);
     EXPECT_EQ(views.size(), 1);
     EXPECT_EQ(views.at(0)->item(), multiLayerItem);
 }

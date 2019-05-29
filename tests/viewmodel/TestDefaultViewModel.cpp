@@ -103,7 +103,7 @@ TEST_F(TestDefaultViewModel, findPropertyItemView)
     propertyItem->setData(42.0, ItemDataRole::DATA);
 
     DefaultViewModel viewModel(&model);
-    auto views = Utils::findViews(&viewModel, QModelIndex(), propertyItem);
+    auto views = Utils::findViews(&viewModel, propertyItem);
     EXPECT_EQ(views.size(), 2);
 }
 
