@@ -42,8 +42,8 @@ AbstractViewModel is not intended for insert/remove through QStandardItemModel i
 Everything should be done through SessionModel.
 
 AbstractViewModel uses simplified mechanism of syncronization with SessionModel.
-Every time some item is removed from SessionModel, we remove all siblings as well, and then
-regenerate corresponding parent's branch.
+Every time some SessionItem is removed from SessionModel, in ViewModel we remove corersponding
+ViewItem _together_ with all its siblings, and then regenerate corresponding parent's branch.
 */
 
 class CORE_EXPORT AbstractViewModel : public QStandardItemModel
@@ -75,7 +75,6 @@ protected:
 
     virtual void generate_children_views(SessionItem* parent);
 
-    virtual void update_model();
     virtual void iterate(const SessionItem* item, QStandardItem* parent);
     virtual std::vector<SessionItem*> item_children(const SessionItem* item) const;
 

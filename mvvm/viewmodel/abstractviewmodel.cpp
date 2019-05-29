@@ -164,8 +164,6 @@ void AbstractViewModel::onDataChange(SessionItem* item, int role)
 }
 
 //! Insert views (QStandardItem's) when given SessionItem gets its new row.
-// Important: simplified approach is used here. All children views are first removed and
-// then whole branch regenerated from the scratch.
 
 void AbstractViewModel::onRowInserted(SessionItem* parent, std::string, int)
 {
@@ -173,8 +171,6 @@ void AbstractViewModel::onRowInserted(SessionItem* parent, std::string, int)
 }
 
 //! Removes views (QStandardItem's) corresponding to given SessionItem and its row.
-// Important: simplified approach is used here. All children views are removed and
-// then whole branch rebuild from the scratch.
 
 void AbstractViewModel::onRowRemoved(SessionItem* parent, std::string, int)
 {
@@ -210,7 +206,8 @@ void AbstractViewModel::init_view_model()
     clear();
     setColumnCount(m_row_constructor->columnCount());
     setHorizontalHeaderLabels(m_row_constructor->horizontalHeaderLabels());
-    update_model();
+
+    iterate(rootSessionItem(), rootViewItem());
 }
 
 //! Regenerate all views of given parent.
@@ -223,11 +220,6 @@ void AbstractViewModel::generate_children_views(SessionItem* parent)
 
     if (views.size())
         iterate(parent, views.at(0));
-}
-
-void AbstractViewModel::update_model()
-{
-    iterate(rootSessionItem(), rootViewItem());
 }
 
 void AbstractViewModel::iterate(const SessionItem* item, QStandardItem* parent)
