@@ -86,6 +86,9 @@ private:
     std::unique_ptr<RowConstructorInterface> m_row_constructor;
     std::unique_ptr<ChildrenStrategyInterface> m_children_strategy;
 
+    SessionModel* sessionModel();
+    const SessionModel* sessionModel() const;
+
     SessionModel* m_sessionModel;
     SessionItem* m_rootItem;
 

@@ -15,6 +15,14 @@
 namespace ModelView
 {
 
+/*!
+@class DefaultViewModel
+@brief View model to show content of SessionModel in Qt widgets.
+
+Given view model provides two column tree with label/data, with one-to-one child/parent
+correspondence as in the original SessionModel.
+*/
+
 class CORE_EXPORT DefaultViewModel : public AbstractViewModel
 {
 public:
