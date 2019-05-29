@@ -18,31 +18,18 @@ namespace ModelView
 
 class ViewItem;
 
-//! The view model to show content of SessionModel in Qt views.
-//!
-//! DefaultViewModel is connected with SessionModel and notifies views on SessionItem's
-//! insert/remove/data change. The data change in a view will be propagated back to SessionModel.
-//!
-//! Important limitation: DefaultViewModel is not intended for insert/remove through
-//! QStandardItemModel interface. Everything should be done through SessionModel.
-//!
-//! Important feature: DefaultViewModel doesn't care about correct removal of QStandardItemModel
-//! rows and columns. Every time the row of parent SessionItem is removed, DefaultViewModel
-//! removes _all_ children of corresponding ViewItem and then rebuild whole branch.
 
 class CORE_EXPORT DefaultViewModel : public AbstractViewModel
 {
 public:
     DefaultViewModel(QObject* parent = nullptr);
     DefaultViewModel(SessionModel* model, QObject* parent = nullptr);
-    ~DefaultViewModel() override;
 
 protected:
     void init_view_model() override;
     void onDataChange(SessionItem* item, int role) override;
     void onRowInserted(SessionItem* parent, std::string tag, int row) override;
     void onRowRemoved(SessionItem* parent, std::string tag, int row) override;
-    void onModelReset() override;
 
     void generate_children_views(SessionItem* parent);
 

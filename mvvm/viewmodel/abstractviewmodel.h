@@ -27,6 +27,18 @@ class ChildrenStrategyInterface;
 
 //! Base class for all view models to show content of  SessionModel in Qt views.
 
+//! The view model to show content of SessionModel in Qt views.
+//!
+//! DefaultViewModel is connected with SessionModel and notifies views on SessionItem's
+//! insert/remove/data change. The data change in a view will be propagated back to SessionModel.
+//!
+//! Important limitation: DefaultViewModel is not intended for insert/remove through
+//! QStandardItemModel interface. Everything should be done through SessionModel.
+//!
+//! Important feature: DefaultViewModel doesn't care about correct removal of QStandardItemModel
+//! rows and columns. Every time the row of parent SessionItem is removed, DefaultViewModel
+//! removes _all_ children of corresponding ViewItem and then rebuild whole branch.
+
 class CORE_EXPORT AbstractViewModel : public QStandardItemModel
 {
 public:

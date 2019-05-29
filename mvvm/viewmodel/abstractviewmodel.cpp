@@ -21,6 +21,7 @@ using namespace ModelView;
 AbstractViewModel::AbstractViewModel(QObject* parent)
     : QStandardItemModel(parent), m_sessionModel(nullptr), m_rootItem(nullptr)
 {
+    setItemPrototype(new ViewEmptyItem);
 }
 
 AbstractViewModel::~AbstractViewModel()
@@ -154,7 +155,8 @@ void AbstractViewModel::onRowRemoved(SessionItem* parent, std::string tag, int r
 
 void AbstractViewModel::onModelReset()
 {
-
+    setColumnCount(m_row_constructor->columnCount());
+    setHorizontalHeaderLabels(m_row_constructor->horizontalHeaderLabels());
 }
 
 void AbstractViewModel::setRowConstructor(std::unique_ptr<RowConstructorInterface> row_constructor)

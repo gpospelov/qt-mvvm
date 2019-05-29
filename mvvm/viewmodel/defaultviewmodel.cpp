@@ -40,7 +40,6 @@ using namespace ModelView;
 DefaultViewModel::DefaultViewModel(QObject* parent)
     : AbstractViewModel(parent)
 {
-    setItemPrototype(new ViewEmptyItem);
     setRowConstructor(std::make_unique<LabelDataRowConstructor>());
     setChildrenStrategy(std::make_unique<AllChildrenStrategy>());
 }
@@ -50,8 +49,6 @@ DefaultViewModel::DefaultViewModel(SessionModel* model, QObject* parent)
 {
     setSessionModel(model);
 }
-
-DefaultViewModel::~DefaultViewModel() = default;
 
 void DefaultViewModel::init_view_model()
 {
@@ -97,12 +94,6 @@ void DefaultViewModel::onRowRemoved(SessionItem* parent, std::string tag, int ro
     Q_UNUSED(row)
     Q_UNUSED(tag)
     generate_children_views(parent);
-}
-
-void DefaultViewModel::onModelReset()
-{
-    setColumnCount(m_row_constructor->columnCount());
-    setHorizontalHeaderLabels(m_row_constructor->horizontalHeaderLabels());
 }
 
 //! Regenerate all views of given parent.
