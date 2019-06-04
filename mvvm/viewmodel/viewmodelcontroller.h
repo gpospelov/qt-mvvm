@@ -44,6 +44,8 @@ public:
 
     virtual void iterate(const SessionItem* item, QStandardItem* parent);
 
+    void init_view_model();
+
 private:
     class ViewModelControllerPrivate;
     std::unique_ptr<ViewModelControllerPrivate> p_impl;

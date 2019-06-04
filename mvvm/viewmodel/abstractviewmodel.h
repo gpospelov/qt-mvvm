@@ -50,6 +50,7 @@ ViewItem _together_ with all its siblings, and then regenerate corresponding par
 class CORE_EXPORT AbstractViewModel : public QStandardItemModel
 {
 public:
+    friend class ViewModelController;
     AbstractViewModel(QObject* parent = nullptr);
     virtual ~AbstractViewModel();
 
@@ -68,7 +69,6 @@ protected:
     SessionItem* rootSessionItem() const;
     QStandardItem* rootViewItem() const;
 
-    virtual void init_view_model();
     virtual void onDataChange(SessionItem* item, int role);
     virtual void onRowInserted(SessionItem* parent, std::string tag, int row);
     virtual void onRowRemoved(SessionItem* parent, std::string tag, int row);

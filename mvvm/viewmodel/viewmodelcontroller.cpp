@@ -92,4 +92,18 @@ void ViewModelController::iterate(const SessionItem* item, QStandardItem* parent
     }
 }
 
+void ViewModelController::init_view_model()
+{
+    if (!p_impl->m_row_constructor)
+        throw std::runtime_error("AbstractViewModel::init_view_model() -> Error. Row constructor "
+                                     "is not initialized.");
+
+    if (!p_impl->m_children_strategy)
+        throw std::runtime_error("AbstractViewModel::init_view_model() -> Error. Children strategy "
+                                     "is not initialized.");
+
+    reset_view_model();
+    iterate(p_impl->m_view_model->rootSessionItem(), p_impl->m_view_model->rootViewItem());
+}
+
 ViewModelController::~ViewModelController() = default;

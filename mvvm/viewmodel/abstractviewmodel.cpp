@@ -81,7 +81,7 @@ void AbstractViewModel::setSessionModel(SessionModel* model)
         };
         sessionModel()->mapper()->setOnModelReset(on_model_reset, this);
 
-        init_view_model();
+        m_controller->init_view_model();
     }
 }
 
@@ -164,7 +164,7 @@ void AbstractViewModel::setRootSessionItem(SessionItem* item)
             "ViewModel::setRootSessionItem()->Error. Item doesn't belong to a model.");
 
     m_rootItem = item;
-    init_view_model();
+    m_controller->init_view_model();
 }
 
 //! Generates necessary notifications on SessionItem's data change.
@@ -204,24 +204,6 @@ void AbstractViewModel::setChildrenStrategy(
     std::unique_ptr<ChildrenStrategyInterface> children_strategy)
 {
     m_controller->setChildrenStrategy(std::move(children_strategy));
-}
-
-void AbstractViewModel::init_view_model()
-{
-    // FIXME repair check
-    //    if (!m_row_constructor)
-    //        throw std::runtime_error("AbstractViewModel::init_view_model() -> Error. Row
-    //        constructor "
-    //                                 "is not initialized.");
-
-    // FIXME repair check
-    //    if (!m_children_strategy)
-    //        throw std::runtime_error("AbstractViewModel::init_view_model() -> Error. Children
-    //        strategy "
-    //                                 "is not initialized.");
-
-    m_controller->reset_view_model();
-    m_controller->iterate(rootSessionItem(), rootViewItem());
 }
 
 //! Regenerate all views of given parent.
