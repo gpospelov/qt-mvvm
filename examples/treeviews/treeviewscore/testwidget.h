@@ -17,7 +17,6 @@ namespace ModelView
 {
 class SessionItem;
 class DefaultViewModel;
-class PropertyViewModel;
 class ViewModelDelegate;
 class PropertyEditor;
 class ItemsTreeView;

@@ -42,6 +42,13 @@ AbstractViewModel::AbstractViewModel(QObject* parent)
     setItemPrototype(new ViewEmptyItem);
 }
 
+AbstractViewModel::AbstractViewModel(std::unique_ptr<ViewModelController> controller, QObject* parent)
+    : QStandardItemModel(parent),
+      m_controller(std::move(controller))
+{
+    setItemPrototype(new ViewEmptyItem);
+}
+
 AbstractViewModel::~AbstractViewModel()
 {
 }

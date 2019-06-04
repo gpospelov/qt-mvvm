@@ -52,6 +52,7 @@ class CORE_EXPORT AbstractViewModel : public QStandardItemModel
 public:
     friend class ViewModelController;
     AbstractViewModel(QObject* parent = nullptr);
+    AbstractViewModel(std::unique_ptr<ViewModelController> controller, QObject* parent = nullptr);
     virtual ~AbstractViewModel();
 
     void setSessionModel(SessionModel* model);
