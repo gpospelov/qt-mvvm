@@ -206,11 +206,11 @@ void ViewModelController::generate_children_views(SessionItem* parent)
         iterate(parent, views.at(0));
 }
 
+//! Generates necessary notifications on SessionItem's data change.
+
 void ViewModelController::onDataChange(SessionItem* item, int role)
 {
-//    p_impl->m_view_model->onDataChange(item, role);
     for (auto view : p_impl->m_view_model->findViews(item)) {
-
         // inform corresponding LabelView and DataView
         if (isValidItemRole(view, role)) {
             auto index = p_impl->m_view_model->indexFromItem(view);
@@ -220,10 +220,14 @@ void ViewModelController::onDataChange(SessionItem* item, int role)
 
 }
 
+//! Rebuild view model branch on session model change.
+
 void ViewModelController::onRowInserted(SessionItem* parent, std::string, int)
 {
     generate_children_views(parent);
 }
+
+//! Rebuild view model branch on session model change.
 
 void ViewModelController::onRowRemoved(SessionItem* parent, std::string, int)
 {

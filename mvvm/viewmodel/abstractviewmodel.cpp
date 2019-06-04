@@ -118,27 +118,6 @@ void AbstractViewModel::setRootSessionItem(SessionItem* item)
     m_controller->setRootSessionItem(item);
 }
 
-//! Generates necessary notifications on SessionItem's data change.
-
-void AbstractViewModel::onDataChange(SessionItem* item, int role)
-{
-    m_controller->onDataChange(item, role);
-}
-
-//! Insert views (QStandardItem's) when given SessionItem gets its new row.
-
-void AbstractViewModel::onRowInserted(SessionItem* parent, std::string tag, int row)
-{
-    m_controller->onRowInserted(parent, tag, row);
-}
-
-//! Removes views (QStandardItem's) corresponding to given SessionItem and its row.
-
-void AbstractViewModel::onRowRemoved(SessionItem* parent, std::string tag, int row)
-{
-    m_controller->onRowRemoved(parent, tag, row);
-}
-
 void AbstractViewModel::setRowConstructor(std::unique_ptr<RowConstructorInterface> row_constructor)
 {
     m_controller->setRowConstructor(std::move(row_constructor));
