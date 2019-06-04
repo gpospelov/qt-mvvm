@@ -17,7 +17,21 @@
 Collection of standard controllers for AbstractViewModel.
 */
 
-namespace ModelView {
+namespace ModelView
+{
+
+/*!
+@class TopItemsViewModelController
+@brief Controller for AbstractViewModel to show top level items.
+
+Shows only top level items, property items, group items are hidden.
+*/
+
+class CORE_EXPORT TopItemsViewModelController : public AbstractViewModelController
+{
+public:
+    TopItemsViewModelController(AbstractViewModel* view_model);
+};
 
 /*!
 @class PropertyViewModelController
@@ -35,7 +49,6 @@ protected:
     void onDataChange(SessionItem* item, int role) override;
 };
 
-
-}  // namespace ModelView
+} // namespace ModelView
 
 #endif // MVVM_VIEWMODELCONTROLLERS_H

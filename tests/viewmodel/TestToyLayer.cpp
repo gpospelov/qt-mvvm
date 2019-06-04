@@ -4,6 +4,7 @@
 #include "viewdataitem.h"
 #include "defaultviewmodel.h"
 #include "vectoritem.h"
+#include "topitemsviewmodel.h"
 #include <QSignalSpy>
 #include <QDebug>
 
@@ -127,4 +128,22 @@ TEST_F(TestToyLayer, setRootItemContext)
     // index of item representing thickness
     QModelIndex thicknessIndex = viewModel.index(0, 0, QModelIndex());
     EXPECT_EQ(viewModel.sessionItemFromIndex(thicknessIndex), layer->getItem(ToyItems::Layer::P_THICKNESS));
+}
+
+//! LayerItem as rootItem.
+
+TEST_F(TestToyLayer, inTopItemsViewModelContext)
+{
+    ToyItems::SampleModel model;
+    auto layer = model.insertNewItem(ToyItems::Constants::LayerType);
+
+    TopItemsViewModel viewModel(&model);
+    viewModel.setRootSessionItem(layer);
+
+    EXPECT_EQ(viewModel.rowCount(QModelIndex()), 0);
+    EXPECT_EQ(viewModel.columnCount(QModelIndex()), 2);
+
+    model.insertNewItem(ToyItems::Constants::ParticleType, layer);
+    EXPECT_EQ(viewModel.rowCount(QModelIndex()), 1);
+    EXPECT_EQ(viewModel.columnCount(QModelIndex()), 2);
 }

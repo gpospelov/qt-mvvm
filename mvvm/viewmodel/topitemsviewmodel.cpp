@@ -8,15 +8,12 @@
 // ************************************************************************** //
 
 #include "topitemsviewmodel.h"
-#include "childrenstrategies.h"
-#include "labeldatarowconstructor.h"
+#include "viewmodelcontrollers.h"
 
 using namespace ModelView;
 
 TopItemsViewModel::TopItemsViewModel(SessionModel* model, QObject* parent)
-    : AbstractViewModel(parent)
+    : AbstractViewModel(std::make_unique<TopItemsViewModelController>(this), parent)
 {
-    setRowConstructor(std::make_unique<LabelDataRowConstructor>());
-    setChildrenStrategy(std::make_unique<TopItemsStrategy>());
     setSessionModel(model);
 }
