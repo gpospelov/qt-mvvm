@@ -8,7 +8,6 @@
 // ************************************************************************** //
 
 #include "abstractviewmodel.h"
-#include "modelmapper.h"
 #include "sessionitem.h"
 #include "sessionmodel.h"
 #include "viewitems.h"
@@ -24,15 +23,17 @@ AbstractViewModel::AbstractViewModel(std::unique_ptr<AbstractViewModelController
     setItemPrototype(new ViewEmptyItem);
 }
 
-AbstractViewModel::~AbstractViewModel()
-{
-}
+AbstractViewModel::~AbstractViewModel() = default;
 
 void AbstractViewModel::setSessionModel(SessionModel* model)
 {
     m_controller->setSessionModel(model);
 }
 
+void AbstractViewModel::setRootSessionItem(SessionItem* item)
+{
+    m_controller->setRootSessionItem(item);
+}
 
 //! Returns QStandardItem associated with top level item (rootSessionItem).
 
@@ -86,9 +87,4 @@ QModelIndexList AbstractViewModel::indexOfSessionItem(const SessionItem* item) c
     for (auto view : findStandardViews(item))
         result.push_back(indexFromItem(view));
     return result;
-}
-
-void AbstractViewModel::setRootSessionItem(SessionItem* item)
-{
-    m_controller->setRootSessionItem(item);
 }

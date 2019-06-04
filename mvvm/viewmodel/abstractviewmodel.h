@@ -49,16 +49,17 @@ class CORE_EXPORT AbstractViewModel : public QStandardItemModel
 {
 public:
     friend class AbstractViewModelController;
-    AbstractViewModel(std::unique_ptr<AbstractViewModelController> controller, QObject* parent = nullptr);
+    AbstractViewModel(std::unique_ptr<AbstractViewModelController> controller,
+                      QObject* parent = nullptr);
     virtual ~AbstractViewModel();
 
     void setSessionModel(SessionModel* model);
 
+    void setRootSessionItem(SessionItem* item);
+
     SessionItem* sessionItemFromIndex(const QModelIndex& index) const;
 
     QModelIndexList indexOfSessionItem(const SessionItem* item) const;
-
-    void setRootSessionItem(SessionItem* item);
 
 protected:
     QStandardItem* rootViewItem() const;
