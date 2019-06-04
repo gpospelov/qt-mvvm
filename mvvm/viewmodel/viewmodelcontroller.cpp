@@ -36,7 +36,15 @@ public:
 
     void reset_view_model()
     {
+        m_view_model->clear();
+        update_layout();
+    }
 
+    void update_layout()
+    {
+        m_view_model->setColumnCount(m_row_constructor->columnCount());
+        m_view_model->setHorizontalHeaderLabels(
+        m_row_constructor->horizontalHeaderLabels());
     }
 
     AbstractViewModel* m_view_model;
@@ -65,15 +73,7 @@ void ViewModelController::setRowConstructor(
 
 void ViewModelController::reset_view_model()
 {
-    p_impl->m_view_model->clear();
-    update_layout();
-}
-
-void ViewModelController::update_layout()
-{
-    p_impl->m_view_model->setColumnCount(p_impl->m_row_constructor->columnCount());
-    p_impl->m_view_model->setHorizontalHeaderLabels(
-        p_impl->m_row_constructor->horizontalHeaderLabels());
+    p_impl->reset_view_model();
 }
 
 void ViewModelController::iterate(const SessionItem* item, QStandardItem* parent)

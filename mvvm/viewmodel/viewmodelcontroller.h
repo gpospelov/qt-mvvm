@@ -42,8 +42,6 @@ public:
 
     void reset_view_model();
 
-    void update_layout();
-
     virtual void iterate(const SessionItem* item, QStandardItem* parent);
 
 private:
