@@ -8,14 +8,12 @@
 // ************************************************************************** //
 
 #include "defaultviewmodel.h"
-#include "childrenstrategies.h"
-#include "labeldatarowconstructor.h"
+#include "viewmodelcontrollers.h"
 
 using namespace ModelView;
 
-DefaultViewModel::DefaultViewModel(SessionModel* model, QObject* parent) : AbstractViewModel(parent)
+DefaultViewModel::DefaultViewModel(SessionModel* model, QObject* parent)
+  : AbstractViewModel(std::make_unique<DefaultViewModelController>(this), parent)
 {
-    setRowConstructor(std::make_unique<LabelDataRowConstructor>());
-    setChildrenStrategy(std::make_unique<AllChildrenStrategy>());
     setSessionModel(model);
 }

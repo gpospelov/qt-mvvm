@@ -21,6 +21,19 @@ namespace ModelView
 {
 
 /*!
+@class DefaultViewModelController
+@brief Controller for AbstractViewModel to show all items of SessionModel.
+
+The layout corresponds to original SessionModel, generates standard label/value tree.
+*/
+
+class CORE_EXPORT DefaultViewModelController : public AbstractViewModelController
+{
+public:
+    DefaultViewModelController(AbstractViewModel* view_model);
+};
+
+/*!
 @class TopItemsViewModelController
 @brief Controller for AbstractViewModel to show top level items.
 

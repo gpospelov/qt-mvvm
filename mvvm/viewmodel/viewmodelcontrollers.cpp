@@ -14,6 +14,17 @@
 
 using namespace ModelView;
 
+
+// ----------------------------------------------------------------------------
+
+DefaultViewModelController::DefaultViewModelController(AbstractViewModel* view_model)
+    : AbstractViewModelController(view_model)
+{
+    setRowConstructor(std::make_unique<LabelDataRowConstructor>());
+    setChildrenStrategy(std::make_unique<AllChildrenStrategy>());
+}
+
+
 // ----------------------------------------------------------------------------
 
 TopItemsViewModelController::TopItemsViewModelController(AbstractViewModel* view_model)
