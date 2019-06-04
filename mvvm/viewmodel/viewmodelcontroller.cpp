@@ -13,6 +13,7 @@
 #include "rowconstructorinterface.h"
 #include "sessionitem.h"
 #include "sessionmodel.h"
+#include "modelmapper.h"
 
 using namespace ModelView;
 
@@ -57,6 +58,50 @@ public:
 ViewModelController::ViewModelController(AbstractViewModel* view_model)
     : p_impl(std::make_unique<ViewModelControllerPrivate>(view_model))
 {
+}
+
+ViewModelController::~ViewModelController()
+{
+    if (sessionModel())
+        sessionModel()->mapper()->unsubscribe(this);
+}
+
+void ViewModelController::setSessionModel(SessionModel* model)
+{
+    if (sessionModel())
+        sessionModel()->mapper()->unsubscribe(this);
+
+    p_impl->m_session_model = model;
+
+    if (sessionModel()) {
+        auto on_data_change = [this](SessionItem* item, int role) { p_impl->m_view_model->onDataChange(item, role); };
+        sessionModel()->mapper()->setOnDataChange(on_data_change, this);
+
+        auto on_row_inserted = [this](SessionItem* item, std::string tag, int row) {
+            p_impl->m_view_model->onRowInserted(item, tag, row);
+        };
+        sessionModel()->mapper()->setOnRowInserted(on_row_inserted, this);
+
+        auto on_row_removed = [this](SessionItem* item, std::string tag, int row) {
+            p_impl->m_view_model->onRowRemoved(item, tag, row);
+        };
+        sessionModel()->mapper()->setOnRowRemoved(on_row_removed, this);
+
+        auto on_model_destroyed = [this](SessionModel*) {
+            p_impl->m_session_model = nullptr;
+            p_impl->m_view_model->clear();
+        };
+        sessionModel()->mapper()->setOnModelDestroyed(on_model_destroyed, this);
+
+        auto on_model_reset = [this](SessionModel*) {
+            setRootSessionItem(nullptr);
+            reset_view_model();
+        };
+        sessionModel()->mapper()->setOnModelReset(on_model_reset, this);
+
+        init_view_model();
+    }
+
 }
 
 void ViewModelController::setChildrenStrategy(
@@ -108,7 +153,7 @@ void ViewModelController::init_view_model()
 
 void ViewModelController::setRootSessionItem(SessionItem* item)
 {
-    if (item && item->model() != p_impl->m_view_model->sessionModel())
+    if (item && item->model() != sessionModel())
         throw std::runtime_error(
             "ViewModel::setRootSessionItem()->Error. Item doesn't belong to a model.");
 
@@ -121,7 +166,16 @@ void ViewModelController::setRootSessionItem(SessionItem* item)
 
 SessionItem* ViewModelController::rootSessionItem() const
 {
-    return p_impl->m_root_item ? p_impl->m_root_item : p_impl->m_view_model->sessionModel()->rootItem();
+    return p_impl->m_root_item ? p_impl->m_root_item : sessionModel()->rootItem();
 }
 
-ViewModelController::~ViewModelController() = default;
+SessionModel* ViewModelController::sessionModel()
+{
+    return p_impl->m_session_model;
+}
+
+const SessionModel* ViewModelController::sessionModel() const
+{
+    return p_impl->m_session_model;
+}
+

@@ -36,7 +36,7 @@ bool isValidItemRole(const ModelView::ViewItem* view, int item_role)
 using namespace ModelView;
 
 AbstractViewModel::AbstractViewModel(QObject* parent)
-    : QStandardItemModel(parent), m_sessionModel(nullptr),
+    : QStandardItemModel(parent),
       m_controller(std::make_unique<ViewModelController>(this))
 {
     setItemPrototype(new ViewEmptyItem);
@@ -44,45 +44,11 @@ AbstractViewModel::AbstractViewModel(QObject* parent)
 
 AbstractViewModel::~AbstractViewModel()
 {
-    if (sessionModel())
-        sessionModel()->mapper()->unsubscribe(this);
 }
 
 void AbstractViewModel::setSessionModel(SessionModel* model)
 {
-    if (sessionModel())
-        sessionModel()->mapper()->unsubscribe(this);
-
-    m_sessionModel = model;
-
-    if (sessionModel()) {
-        auto on_data_change = [this](SessionItem* item, int role) { onDataChange(item, role); };
-        sessionModel()->mapper()->setOnDataChange(on_data_change, this);
-
-        auto on_row_inserted = [this](SessionItem* item, std::string tag, int row) {
-            onRowInserted(item, tag, row);
-        };
-        sessionModel()->mapper()->setOnRowInserted(on_row_inserted, this);
-
-        auto on_row_removed = [this](SessionItem* item, std::string tag, int row) {
-            onRowRemoved(item, tag, row);
-        };
-        sessionModel()->mapper()->setOnRowRemoved(on_row_removed, this);
-
-        auto on_model_destroyed = [this](SessionModel*) {
-            m_sessionModel = nullptr;
-            clear();
-        };
-        sessionModel()->mapper()->setOnModelDestroyed(on_model_destroyed, this);
-
-        auto on_model_reset = [this](SessionModel*) {
-            m_controller->setRootSessionItem(nullptr);
-            m_controller->reset_view_model();
-        };
-        sessionModel()->mapper()->setOnModelReset(on_model_reset, this);
-
-        m_controller->init_view_model();
-    }
+    m_controller->setSessionModel(model);
 }
 
 
@@ -112,22 +78,12 @@ std::vector<ViewItem*> AbstractViewModel::findViews(const SessionItem* item) con
     return Utils::findViews(this, item, QModelIndex());
 }
 
-SessionModel* AbstractViewModel::sessionModel()
-{
-    return m_sessionModel;
-}
-
-const SessionModel* AbstractViewModel::sessionModel() const
-{
-    return m_sessionModel;
-}
-
 //! Returns SessionItem corresponding to givem QModelIndex.
 
 SessionItem* AbstractViewModel::sessionItemFromIndex(const QModelIndex& index) const
 {
     SessionItem* result(nullptr);
-    if (!sessionModel())
+    if (!m_controller->sessionModel())
         return result;
 
     if (index.isValid()) {

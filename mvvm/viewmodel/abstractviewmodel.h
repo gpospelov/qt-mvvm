@@ -78,11 +78,6 @@ private:
     std::vector<QStandardItem*> findStandardViews(const SessionItem* item) const;
     std::vector<ViewItem*> findViews(const SessionItem* item) const;
 
-    SessionModel* sessionModel();
-    const SessionModel* sessionModel() const;
-
-    SessionModel* m_sessionModel;
-
     std::unique_ptr<ViewModelController> m_controller;
 };
 

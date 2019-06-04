@@ -24,6 +24,7 @@ class AbstractViewModel;
 class SessionItem;
 class ChildrenStrategyInterface;
 class RowConstructorInterface;
+class SessionModel;
 
 /*!
 @class ViewModelController
@@ -35,6 +36,8 @@ class CORE_EXPORT ViewModelController
 public:
     ViewModelController(AbstractViewModel* view_model);
     virtual ~ViewModelController();
+
+    void setSessionModel(SessionModel* model);
 
     void setChildrenStrategy(std::unique_ptr<ChildrenStrategyInterface> children_strategy);
 
@@ -50,7 +53,11 @@ public:
 
     SessionItem* rootSessionItem() const;
 
+    SessionModel* sessionModel();
+    const SessionModel* sessionModel() const;
+
 private:
+
     class ViewModelControllerPrivate;
     std::unique_ptr<ViewModelControllerPrivate> p_impl;
 };
