@@ -49,7 +49,6 @@ class CORE_EXPORT AbstractViewModel : public QStandardItemModel
 {
 public:
     friend class AbstractViewModelController;
-    AbstractViewModel(QObject* parent = nullptr);
     AbstractViewModel(std::unique_ptr<AbstractViewModelController> controller, QObject* parent = nullptr);
     virtual ~AbstractViewModel();
 

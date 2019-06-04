@@ -17,13 +17,6 @@
 
 using namespace ModelView;
 
-AbstractViewModel::AbstractViewModel(QObject* parent)
-    : QStandardItemModel(parent),
-      m_controller(std::make_unique<AbstractViewModelController>(this))
-{
-    setItemPrototype(new ViewEmptyItem);
-}
-
 AbstractViewModel::AbstractViewModel(std::unique_ptr<AbstractViewModelController> controller, QObject* parent)
     : QStandardItemModel(parent),
       m_controller(std::move(controller))
