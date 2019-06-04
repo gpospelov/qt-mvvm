@@ -58,6 +58,11 @@ public:
 
     virtual void generate_children_views(SessionItem* parent);
 
+protected:
+    virtual void onDataChange(SessionItem* item, int role);
+    virtual void onRowInserted(SessionItem* parent, std::string tag, int row);
+    virtual void onRowRemoved(SessionItem* parent, std::string tag, int row);
+
 private:
 
     class ViewModelControllerPrivate;

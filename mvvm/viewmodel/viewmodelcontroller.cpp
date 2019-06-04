@@ -74,16 +74,16 @@ void ViewModelController::setSessionModel(SessionModel* model)
     p_impl->m_session_model = model;
 
     if (sessionModel()) {
-        auto on_data_change = [this](SessionItem* item, int role) { p_impl->m_view_model->onDataChange(item, role); };
+        auto on_data_change = [this](SessionItem* item, int role) { onDataChange(item, role); };
         sessionModel()->mapper()->setOnDataChange(on_data_change, this);
 
         auto on_row_inserted = [this](SessionItem* item, std::string tag, int row) {
-            p_impl->m_view_model->onRowInserted(item, tag, row);
+            onRowInserted(item, tag, row);
         };
         sessionModel()->mapper()->setOnRowInserted(on_row_inserted, this);
 
         auto on_row_removed = [this](SessionItem* item, std::string tag, int row) {
-            p_impl->m_view_model->onRowRemoved(item, tag, row);
+            onRowRemoved(item, tag, row);
         };
         sessionModel()->mapper()->setOnRowRemoved(on_row_removed, this);
 
@@ -187,5 +187,20 @@ void ViewModelController::generate_children_views(SessionItem* parent)
 
     if (views.size())
         iterate(parent, views.at(0));
+}
+
+void ViewModelController::onDataChange(SessionItem* item, int role)
+{
+    p_impl->m_view_model->onDataChange(item, role);
+}
+
+void ViewModelController::onRowInserted(SessionItem* parent, std::string tag, int row)
+{
+    p_impl->m_view_model->onRowInserted(parent, tag, row);
+}
+
+void ViewModelController::onRowRemoved(SessionItem* parent, std::string tag, int row)
+{
+    p_impl->m_view_model->onRowRemoved(parent, tag, row);
 }
 
