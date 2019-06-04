@@ -14,6 +14,23 @@
 #include "sessionitem.h"
 #include "sessionmodel.h"
 #include "modelmapper.h"
+#include "viewitem.h"
+#include "viewmodelutils.h"
+
+namespace
+{
+
+//! Returns true if given SessionItem role is valid for view
+bool isValidItemRole(const ModelView::ViewItem* view, int item_role)
+{
+    if (view->item_role() == item_role)
+        return true;
+
+    if (item_role == ModelView::ItemDataRole::APPEARANCE)
+        return true;
+    return false;
+}
+} // namespace
 
 using namespace ModelView;
 
@@ -191,16 +208,25 @@ void ViewModelController::generate_children_views(SessionItem* parent)
 
 void ViewModelController::onDataChange(SessionItem* item, int role)
 {
-    p_impl->m_view_model->onDataChange(item, role);
+//    p_impl->m_view_model->onDataChange(item, role);
+    for (auto view : p_impl->m_view_model->findViews(item)) {
+
+        // inform corresponding LabelView and DataView
+        if (isValidItemRole(view, role)) {
+            auto index = p_impl->m_view_model->indexFromItem(view);
+            p_impl->m_view_model->dataChanged(index, index, Utils::item_role_to_qt(role));
+        }
+    }
+
 }
 
-void ViewModelController::onRowInserted(SessionItem* parent, std::string tag, int row)
+void ViewModelController::onRowInserted(SessionItem* parent, std::string, int)
 {
-    p_impl->m_view_model->onRowInserted(parent, tag, row);
+    generate_children_views(parent);
 }
 
-void ViewModelController::onRowRemoved(SessionItem* parent, std::string tag, int row)
+void ViewModelController::onRowRemoved(SessionItem* parent, std::string, int)
 {
-    p_impl->m_view_model->onRowRemoved(parent, tag, row);
+    generate_children_views(parent);
 }
 

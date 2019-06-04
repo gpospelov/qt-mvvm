@@ -18,20 +18,20 @@
 #include "viewmodelutils.h"
 #include <utility>
 
-namespace
-{
+//namespace
+//{
 
-//! Returns true if given SessionItem role is valid for view
-bool isValidItemRole(const ModelView::ViewItem* view, int item_role)
-{
-    if (view->item_role() == item_role)
-        return true;
+////! Returns true if given SessionItem role is valid for view
+//bool isValidItemRole(const ModelView::ViewItem* view, int item_role)
+//{
+//    if (view->item_role() == item_role)
+//        return true;
 
-    if (item_role == ModelView::ItemDataRole::APPEARANCE)
-        return true;
-    return false;
-}
-} // namespace
+//    if (item_role == ModelView::ItemDataRole::APPEARANCE)
+//        return true;
+//    return false;
+//}
+//} // namespace
 
 using namespace ModelView;
 
@@ -115,28 +115,21 @@ void AbstractViewModel::setRootSessionItem(SessionItem* item)
 
 void AbstractViewModel::onDataChange(SessionItem* item, int role)
 {
-    for (auto view : findViews(item)) {
-
-        // inform corresponding LabelView and DataView
-        if (isValidItemRole(view, role)) {
-            auto index = indexFromItem(view);
-            dataChanged(index, index, Utils::item_role_to_qt(role));
-        }
-    }
+    m_controller->onDataChange(item, role);
 }
 
 //! Insert views (QStandardItem's) when given SessionItem gets its new row.
 
-void AbstractViewModel::onRowInserted(SessionItem* parent, std::string, int)
+void AbstractViewModel::onRowInserted(SessionItem* parent, std::string tag, int row)
 {
-    m_controller->generate_children_views(parent);
+    m_controller->onRowInserted(parent, tag, row);
 }
 
 //! Removes views (QStandardItem's) corresponding to given SessionItem and its row.
 
-void AbstractViewModel::onRowRemoved(SessionItem* parent, std::string, int)
+void AbstractViewModel::onRowRemoved(SessionItem* parent, std::string tag, int row)
 {
-    m_controller->generate_children_views(parent);
+    m_controller->onRowRemoved(parent, tag, row);
 }
 
 void AbstractViewModel::setRowConstructor(std::unique_ptr<RowConstructorInterface> row_constructor)
