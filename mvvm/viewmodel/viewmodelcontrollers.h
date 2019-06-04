@@ -11,6 +11,8 @@
 #define MVVM_VIEWMODELCONTROLLERS_H
 
 #include "abstractviewmodelcontroller.h"
+#include <string>
+#include <vector>
 
 /*!
 @file viewmodelcontrollers.h
@@ -60,6 +62,21 @@ public:
 
 protected:
     void onDataChange(SessionItem* item, int role) override;
+};
+
+/*!
+@class PropertyTableViewModelController
+@brief Controller for AbstractViewModel to show item properties in table layout.
+
+Shows all property items and place them in table columns.
+FIXME What to do with group property?
+*/
+
+class CORE_EXPORT PropertyTableViewModelController : public AbstractViewModelController
+{
+public:
+    PropertyTableViewModelController(AbstractViewModel* view_model,
+                                     const std::vector<std::string>& labels);
 };
 
 } // namespace ModelView

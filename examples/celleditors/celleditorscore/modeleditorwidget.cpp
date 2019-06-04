@@ -15,6 +15,7 @@
 #include "childrenstrategies.h"
 #include "labeldatarowconstructor.h"
 #include "propertiesrowconstructor.h"
+#include "viewmodelcontrollers.h"
 #include <QBoxLayout>
 #include <QTreeView>
 #include <QTableView>
@@ -24,9 +25,10 @@ using namespace ModelView;
 namespace  {
 std::unique_ptr<ModelView::AbstractViewModel> createHorizontalViewModel(SessionModel* model)
 {
+    std::vector<std::string> labels = {"a", "b", "c"};
+//    auto controller = std::make_unique<PropertyTableViewModelController>
     std::unique_ptr<AbstractViewModel> result = std::make_unique<AbstractViewModel>();
 
-    std::vector<std::string> labels = {"a", "b", "c"};
     result->setRowConstructor(std::make_unique<PropertiesRowConstructor>(labels));
     result->setChildrenStrategy(std::make_unique<AllChildrenStrategy>());
     result->setSessionModel(model);

@@ -8,12 +8,12 @@
 // ************************************************************************** //
 
 #include "viewmodelcontrollers.h"
-#include "groupitem.h"
 #include "childrenstrategies.h"
+#include "groupitem.h"
 #include "labeldatarowconstructor.h"
+#include "propertiesrowconstructor.h"
 
 using namespace ModelView;
-
 
 // ----------------------------------------------------------------------------
 
@@ -23,7 +23,6 @@ DefaultViewModelController::DefaultViewModelController(AbstractViewModel* view_m
     setRowConstructor(std::make_unique<LabelDataRowConstructor>());
     setChildrenStrategy(std::make_unique<AllChildrenStrategy>());
 }
-
 
 // ----------------------------------------------------------------------------
 
@@ -50,4 +49,14 @@ void PropertyViewModelController::onDataChange(SessionItem* item, int role)
     // ViewItems, corresponding to groupItem's current index.
     if (auto group = dynamic_cast<GroupItem*>(item))
         AbstractViewModelController::onRowRemoved(group, "", 0);
+}
+
+// ----------------------------------------------------------------------------
+
+PropertyTableViewModelController::PropertyTableViewModelController(
+    AbstractViewModel* view_model, const std::vector<std::string>& labels)
+    : AbstractViewModelController(view_model)
+{
+    setRowConstructor(std::make_unique<PropertiesRowConstructor>(labels));
+    setChildrenStrategy(std::make_unique<AllChildrenStrategy>());
 }
