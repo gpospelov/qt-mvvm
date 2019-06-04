@@ -72,8 +72,6 @@ protected:
     virtual void onRowInserted(SessionItem* parent, std::string tag, int row);
     virtual void onRowRemoved(SessionItem* parent, std::string tag, int row);
 
-    virtual void generate_children_views(SessionItem* parent);
-
 private:
     std::vector<QStandardItem*> findStandardViews(const SessionItem* item) const;
     std::vector<ViewItem*> findViews(const SessionItem* item) const;

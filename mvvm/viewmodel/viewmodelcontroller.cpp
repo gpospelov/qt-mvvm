@@ -179,3 +179,13 @@ const SessionModel* ViewModelController::sessionModel() const
     return p_impl->m_session_model;
 }
 
+void ViewModelController::generate_children_views(SessionItem* parent)
+{
+    auto views = p_impl->m_view_model->findStandardViews(parent);
+    for (auto view : views)
+        view->removeRows(0, view->rowCount());
+
+    if (views.size())
+        iterate(parent, views.at(0));
+}
+

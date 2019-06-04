@@ -129,14 +129,14 @@ void AbstractViewModel::onDataChange(SessionItem* item, int role)
 
 void AbstractViewModel::onRowInserted(SessionItem* parent, std::string, int)
 {
-    generate_children_views(parent);
+    m_controller->generate_children_views(parent);
 }
 
 //! Removes views (QStandardItem's) corresponding to given SessionItem and its row.
 
 void AbstractViewModel::onRowRemoved(SessionItem* parent, std::string, int)
 {
-    generate_children_views(parent);
+    m_controller->generate_children_views(parent);
 }
 
 void AbstractViewModel::setRowConstructor(std::unique_ptr<RowConstructorInterface> row_constructor)
@@ -150,14 +150,3 @@ void AbstractViewModel::setChildrenStrategy(
     m_controller->setChildrenStrategy(std::move(children_strategy));
 }
 
-//! Regenerate all views of given parent.
-
-void AbstractViewModel::generate_children_views(SessionItem* parent)
-{
-    auto views = findStandardViews(parent);
-    for (auto view : views)
-        view->removeRows(0, view->rowCount());
-
-    if (views.size())
-        m_controller->iterate(parent, views.at(0));
-}

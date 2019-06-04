@@ -56,6 +56,8 @@ public:
     SessionModel* sessionModel();
     const SessionModel* sessionModel() const;
 
+    virtual void generate_children_views(SessionItem* parent);
+
 private:
 
     class ViewModelControllerPrivate;
