@@ -24,7 +24,7 @@ class SessionItem;
 class ViewItem;
 class RowConstructorInterface;
 class ChildrenStrategyInterface;
-class ViewModelController;
+class AbstractViewModelController;
 
 /*!
 @class AbstractViewModel
@@ -50,9 +50,9 @@ ViewItem _together_ with all its siblings, and then regenerate corresponding par
 class CORE_EXPORT AbstractViewModel : public QStandardItemModel
 {
 public:
-    friend class ViewModelController;
+    friend class AbstractViewModelController;
     AbstractViewModel(QObject* parent = nullptr);
-    AbstractViewModel(std::unique_ptr<ViewModelController> controller, QObject* parent = nullptr);
+    AbstractViewModel(std::unique_ptr<AbstractViewModelController> controller, QObject* parent = nullptr);
     virtual ~AbstractViewModel();
 
     void setSessionModel(SessionModel* model);
@@ -73,7 +73,7 @@ private:
     std::vector<QStandardItem*> findStandardViews(const SessionItem* item) const;
     std::vector<ViewItem*> findViews(const SessionItem* item) const;
 
-    std::unique_ptr<ViewModelController> m_controller;
+    std::unique_ptr<AbstractViewModelController> m_controller;
 };
 
 } // namespace ModelView

@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_VIEWMODELCONTROLLER_H
-#define MVVM_VIEWMODELCONTROLLER_H
+#ifndef MVVM_ABSTRACTVIEWMODELCONTROLLER_H
+#define MVVM_ABSTRACTVIEWMODELCONTROLLER_H
 
 #include "mvvm_global.h"
 #include <memory>
@@ -27,15 +27,15 @@ class RowConstructorInterface;
 class SessionModel;
 
 /*!
-@class ViewModelController
-@brief Syncronizes AbstractViewModel and SessionModel.
+@class AbstractViewModelController
+@brief Propagates changes from SessionModel to its AbstractViewModel.
 */
 
-class CORE_EXPORT ViewModelController
+class CORE_EXPORT AbstractViewModelController
 {
 public:
-    ViewModelController(AbstractViewModel* view_model);
-    virtual ~ViewModelController();
+    AbstractViewModelController(AbstractViewModel* view_model);
+    virtual ~AbstractViewModelController();
 
     void setSessionModel(SessionModel* model);
 
@@ -63,11 +63,10 @@ public:
     virtual void onRowRemoved(SessionItem* parent, std::string tag, int row);
 
 private:
-
-    class ViewModelControllerPrivate;
-    std::unique_ptr<ViewModelControllerPrivate> p_impl;
+    class AbstractViewModelControllerPrivate;
+    std::unique_ptr<AbstractViewModelControllerPrivate> p_impl;
 };
 
 } // namespace ModelView
 
-#endif // MVVM_VIEWMODELCONTROLLER_H
+#endif // MVVM_ABSTRACTVIEWMODELCONTROLLER_H

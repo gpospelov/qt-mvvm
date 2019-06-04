@@ -14,35 +14,19 @@
 #include "sessionitem.h"
 #include "sessionmodel.h"
 #include "viewitems.h"
-#include "viewmodelcontroller.h"
+#include "abstractviewmodelcontroller.h"
 #include "viewmodelutils.h"
-#include <utility>
-
-//namespace
-//{
-
-////! Returns true if given SessionItem role is valid for view
-//bool isValidItemRole(const ModelView::ViewItem* view, int item_role)
-//{
-//    if (view->item_role() == item_role)
-//        return true;
-
-//    if (item_role == ModelView::ItemDataRole::APPEARANCE)
-//        return true;
-//    return false;
-//}
-//} // namespace
 
 using namespace ModelView;
 
 AbstractViewModel::AbstractViewModel(QObject* parent)
     : QStandardItemModel(parent),
-      m_controller(std::make_unique<ViewModelController>(this))
+      m_controller(std::make_unique<AbstractViewModelController>(this))
 {
     setItemPrototype(new ViewEmptyItem);
 }
 
-AbstractViewModel::AbstractViewModel(std::unique_ptr<ViewModelController> controller, QObject* parent)
+AbstractViewModel::AbstractViewModel(std::unique_ptr<AbstractViewModelController> controller, QObject* parent)
     : QStandardItemModel(parent),
       m_controller(std::move(controller))
 {

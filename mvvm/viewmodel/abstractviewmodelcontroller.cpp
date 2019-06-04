@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "viewmodelcontroller.h"
+#include "abstractviewmodelcontroller.h"
 #include "abstractviewmodel.h"
 #include "childrenstrategyinterface.h"
 #include "rowconstructorinterface.h"
@@ -34,10 +34,10 @@ bool isValidItemRole(const ModelView::ViewItem* view, int item_role)
 
 using namespace ModelView;
 
-class ViewModelController::ViewModelControllerPrivate
+class AbstractViewModelController::AbstractViewModelControllerPrivate
 {
 public:
-    ViewModelControllerPrivate(AbstractViewModel* view_model)
+    AbstractViewModelControllerPrivate(AbstractViewModel* view_model)
         : m_view_model(view_model), m_root_item(nullptr), m_session_model(nullptr)
     {
     }
@@ -72,18 +72,18 @@ public:
     std::unique_ptr<RowConstructorInterface> m_row_constructor;
 };
 
-ViewModelController::ViewModelController(AbstractViewModel* view_model)
-    : p_impl(std::make_unique<ViewModelControllerPrivate>(view_model))
+AbstractViewModelController::AbstractViewModelController(AbstractViewModel* view_model)
+    : p_impl(std::make_unique<AbstractViewModelControllerPrivate>(view_model))
 {
 }
 
-ViewModelController::~ViewModelController()
+AbstractViewModelController::~AbstractViewModelController()
 {
     if (sessionModel())
         sessionModel()->mapper()->unsubscribe(this);
 }
 
-void ViewModelController::setSessionModel(SessionModel* model)
+void AbstractViewModelController::setSessionModel(SessionModel* model)
 {
     if (sessionModel())
         sessionModel()->mapper()->unsubscribe(this);
@@ -121,24 +121,24 @@ void ViewModelController::setSessionModel(SessionModel* model)
 
 }
 
-void ViewModelController::setChildrenStrategy(
+void AbstractViewModelController::setChildrenStrategy(
     std::unique_ptr<ChildrenStrategyInterface> children_strategy)
 {
     p_impl->m_children_strategy = std::move(children_strategy);
 }
 
-void ViewModelController::setRowConstructor(
+void AbstractViewModelController::setRowConstructor(
     std::unique_ptr<RowConstructorInterface> row_constructor)
 {
     p_impl->m_row_constructor = std::move(row_constructor);
 }
 
-void ViewModelController::reset_view_model()
+void AbstractViewModelController::reset_view_model()
 {
     p_impl->reset_view_model();
 }
 
-void ViewModelController::iterate(const SessionItem* item, QStandardItem* parent)
+void AbstractViewModelController::iterate(const SessionItem* item, QStandardItem* parent)
 {
     QStandardItem* origParent(parent);
     for (auto child : p_impl->item_children(item)) {
@@ -154,7 +154,7 @@ void ViewModelController::iterate(const SessionItem* item, QStandardItem* parent
     }
 }
 
-void ViewModelController::init_view_model()
+void AbstractViewModelController::init_view_model()
 {
     if (!p_impl->m_row_constructor)
         throw std::runtime_error("AbstractViewModel::init_view_model() -> Error. Row constructor "
@@ -168,7 +168,7 @@ void ViewModelController::init_view_model()
     iterate(rootSessionItem(), p_impl->m_view_model->rootViewItem());
 }
 
-void ViewModelController::setRootSessionItem(SessionItem* item)
+void AbstractViewModelController::setRootSessionItem(SessionItem* item)
 {
     if (item && item->model() != sessionModel())
         throw std::runtime_error(
@@ -181,22 +181,22 @@ void ViewModelController::setRootSessionItem(SessionItem* item)
 //! Returns root item of the model. Can be different from model's root item when the intention is
 //! to show only part of the model.
 
-SessionItem* ViewModelController::rootSessionItem() const
+SessionItem* AbstractViewModelController::rootSessionItem() const
 {
     return p_impl->m_root_item ? p_impl->m_root_item : sessionModel()->rootItem();
 }
 
-SessionModel* ViewModelController::sessionModel()
+SessionModel* AbstractViewModelController::sessionModel()
 {
     return p_impl->m_session_model;
 }
 
-const SessionModel* ViewModelController::sessionModel() const
+const SessionModel* AbstractViewModelController::sessionModel() const
 {
     return p_impl->m_session_model;
 }
 
-void ViewModelController::generate_children_views(SessionItem* parent)
+void AbstractViewModelController::generate_children_views(SessionItem* parent)
 {
     auto views = p_impl->m_view_model->findStandardViews(parent);
     for (auto view : views)
@@ -208,7 +208,7 @@ void ViewModelController::generate_children_views(SessionItem* parent)
 
 //! Generates necessary notifications on SessionItem's data change.
 
-void ViewModelController::onDataChange(SessionItem* item, int role)
+void AbstractViewModelController::onDataChange(SessionItem* item, int role)
 {
     for (auto view : p_impl->m_view_model->findViews(item)) {
         // inform corresponding LabelView and DataView
@@ -222,14 +222,14 @@ void ViewModelController::onDataChange(SessionItem* item, int role)
 
 //! Rebuild view model branch on session model change.
 
-void ViewModelController::onRowInserted(SessionItem* parent, std::string, int)
+void AbstractViewModelController::onRowInserted(SessionItem* parent, std::string, int)
 {
     generate_children_views(parent);
 }
 
 //! Rebuild view model branch on session model change.
 
-void ViewModelController::onRowRemoved(SessionItem* parent, std::string, int)
+void AbstractViewModelController::onRowRemoved(SessionItem* parent, std::string, int)
 {
     generate_children_views(parent);
 }
