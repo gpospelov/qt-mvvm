@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_LABELDATAROWCONSTRUCTOR_H
-#define MVVM_LABELDATAROWCONSTRUCTOR_H
+#ifndef MVVM_LABELDATAROWSTRATEGY_H
+#define MVVM_LABELDATAROWSTRATEGY_H
 
 #include "rowstrategyinterface.h"
 
@@ -23,7 +23,7 @@ class SessionItem;
 //! Row consists of two columns, ViewLabelItem for SessionItem's display role and
 //! ViewDataItem for Session's item data role.
 
-class CORE_EXPORT LabelDataRowConstructor : public RowStrategyInterface
+class CORE_EXPORT LabelDataRowStrategy : public RowStrategyInterface
 {
 public:
     QList<QStandardItem*> constructRow(SessionItem* item);
@@ -33,4 +33,4 @@ public:
 
 } // namespace ModelView
 
-#endif // MVVM_LABELDATAROWCONSTRUCTOR_H
+#endif // MVVM_LABELDATAROWSTRATEGY_H

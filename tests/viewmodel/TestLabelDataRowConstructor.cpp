@@ -1,5 +1,5 @@
 #include "google_test.h"
-#include "labeldatarowconstructor.h"
+#include "labeldatarowstrategy.h"
 #include "sessionitem.h"
 #include "viewlabelitem.h"
 #include "viewdataitem.h"
@@ -12,17 +12,17 @@ const QStringList expected_labels = QStringList() << "Name" << "Value";
 
 using namespace ModelView;
 
-class TestLabelDataRowConstructor : public ::testing::Test
+class TestLabelDataRowStrategy : public ::testing::Test
 {
 public:
-    ~TestLabelDataRowConstructor();
+    ~TestLabelDataRowStrategy();
 };
 
-TestLabelDataRowConstructor::~TestLabelDataRowConstructor() = default;
+TestLabelDataRowStrategy::~TestLabelDataRowStrategy() = default;
 
-TEST_F(TestLabelDataRowConstructor, initialState)
+TEST_F(TestLabelDataRowStrategy, initialState)
 {
-    LabelDataRowConstructor constructor;
+    LabelDataRowStrategy constructor;
     EXPECT_EQ(constructor.constructRow(nullptr).size(), 0);
     EXPECT_EQ(constructor.columnCount(), expected_column_count);
     EXPECT_EQ(constructor.horizontalHeaderLabels(), expected_labels);
@@ -30,11 +30,11 @@ TEST_F(TestLabelDataRowConstructor, initialState)
 
 //! Checks row construction for standard top level item, like Level, MultiLayer etc.
 
-TEST_F(TestLabelDataRowConstructor, topLevelItem)
+TEST_F(TestLabelDataRowStrategy, topLevelItem)
 {
     SessionItem item("model_type");
 
-    LabelDataRowConstructor constructor;
+    LabelDataRowStrategy constructor;
     auto items = constructor.constructRow(&item);
     EXPECT_EQ(items.size(), expected_column_count); // label and empty items
     EXPECT_EQ(constructor.columnCount(), expected_column_count);
@@ -51,12 +51,12 @@ TEST_F(TestLabelDataRowConstructor, topLevelItem)
 
 //! Checks row construction for property item.
 
-TEST_F(TestLabelDataRowConstructor, propertyItem)
+TEST_F(TestLabelDataRowStrategy, propertyItem)
 {
     SessionItem item("model_type");
     item.setData(42.0, ItemDataRole::DATA);
 
-    LabelDataRowConstructor constructor;
+    LabelDataRowStrategy constructor;
     auto items = constructor.constructRow(&item);
     EXPECT_EQ(items.size(), expected_column_count);
     EXPECT_EQ(constructor.columnCount(), expected_column_count);

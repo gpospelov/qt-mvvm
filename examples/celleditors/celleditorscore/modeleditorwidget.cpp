@@ -13,7 +13,7 @@
 #include "samplemodel.h"
 #include "viewmodeldelegate.h"
 #include "childrenstrategies.h"
-#include "labeldatarowconstructor.h"
+#include "labeldatarowstrategy.h"
 #include "propertiesrowconstructor.h"
 #include "viewmodelcontrollers.h"
 #include <QBoxLayout>

@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "labeldatarowconstructor.h"
+#include "labeldatarowstrategy.h"
 #include "sessionitem.h"
 #include "viewitems.h"
 
@@ -21,7 +21,7 @@ using namespace ModelView;
 //! For LayerItem two items will be generated: ViewLabelItem and ViewEmptyItem, both uneditable.
 //! For LayerItem's thickness property, two items will be generated: ViewLabelItem and ViewDataItem.
 
-QList<QStandardItem*> LabelDataRowConstructor::constructRow(SessionItem* item)
+QList<QStandardItem*> LabelDataRowStrategy::constructRow(SessionItem* item)
 {
     QList<QStandardItem*> result;
 
@@ -36,12 +36,12 @@ QList<QStandardItem*> LabelDataRowConstructor::constructRow(SessionItem* item)
     return result;
 }
 
-int LabelDataRowConstructor::columnCount() const
+int LabelDataRowStrategy::columnCount() const
 {
     return fixed_number_of_row_elements;
 }
 
-QStringList LabelDataRowConstructor::horizontalHeaderLabels() const
+QStringList LabelDataRowStrategy::horizontalHeaderLabels() const
 {
     return QStringList() << "Name" << "Value";
 }

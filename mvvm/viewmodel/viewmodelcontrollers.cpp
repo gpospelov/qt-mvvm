@@ -10,7 +10,7 @@
 #include "viewmodelcontrollers.h"
 #include "childrenstrategies.h"
 #include "groupitem.h"
-#include "labeldatarowconstructor.h"
+#include "labeldatarowstrategy.h"
 #include "propertiesrowconstructor.h"
 
 using namespace ModelView;
@@ -20,7 +20,7 @@ using namespace ModelView;
 DefaultViewModelController::DefaultViewModelController(AbstractViewModel* view_model)
     : AbstractViewModelController(view_model)
 {
-    setRowConstructor(std::make_unique<LabelDataRowConstructor>());
+    setRowConstructor(std::make_unique<LabelDataRowStrategy>());
     setChildrenStrategy(std::make_unique<AllChildrenStrategy>());
 }
 
@@ -29,7 +29,7 @@ DefaultViewModelController::DefaultViewModelController(AbstractViewModel* view_m
 TopItemsViewModelController::TopItemsViewModelController(AbstractViewModel* view_model)
     : AbstractViewModelController(view_model)
 {
-    setRowConstructor(std::make_unique<LabelDataRowConstructor>());
+    setRowConstructor(std::make_unique<LabelDataRowStrategy>());
     setChildrenStrategy(std::make_unique<TopItemsStrategy>());
 }
 
@@ -38,7 +38,7 @@ TopItemsViewModelController::TopItemsViewModelController(AbstractViewModel* view
 PropertyViewModelController::PropertyViewModelController(AbstractViewModel* view_model)
     : AbstractViewModelController(view_model)
 {
-    setRowConstructor(std::make_unique<LabelDataRowConstructor>());
+    setRowConstructor(std::make_unique<LabelDataRowStrategy>());
     setChildrenStrategy(std::make_unique<PropertyItemsStrategy>());
 }
 
