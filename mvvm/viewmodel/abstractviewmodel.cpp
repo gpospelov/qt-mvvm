@@ -36,7 +36,7 @@ bool isValidItemRole(const ModelView::ViewItem* view, int item_role)
 using namespace ModelView;
 
 AbstractViewModel::AbstractViewModel(QObject* parent)
-    : QStandardItemModel(parent), m_sessionModel(nullptr), m_rootItem(nullptr),
+    : QStandardItemModel(parent), m_sessionModel(nullptr),
       m_controller(std::make_unique<ViewModelController>(this))
 {
     setItemPrototype(new ViewEmptyItem);
@@ -76,7 +76,7 @@ void AbstractViewModel::setSessionModel(SessionModel* model)
         sessionModel()->mapper()->setOnModelDestroyed(on_model_destroyed, this);
 
         auto on_model_reset = [this](SessionModel*) {
-            m_rootItem = nullptr;
+            m_controller->setRootSessionItem(nullptr);
             m_controller->reset_view_model();
         };
         sessionModel()->mapper()->setOnModelReset(on_model_reset, this);
@@ -85,13 +85,6 @@ void AbstractViewModel::setSessionModel(SessionModel* model)
     }
 }
 
-//! Returns root item of the model. Can be different from model's root item when the intention is
-//! to show only part of the model.
-
-SessionItem* AbstractViewModel::rootSessionItem() const
-{
-    return m_rootItem ? m_rootItem : sessionModel()->rootItem();
-}
 
 //! Returns QStandardItem associated with top level item (rootSessionItem).
 
@@ -104,7 +97,7 @@ QStandardItem* AbstractViewModel::rootViewItem() const
 
 std::vector<QStandardItem*> AbstractViewModel::findStandardViews(const SessionItem* item) const
 {
-    if (item == rootSessionItem())
+    if (item == m_controller->rootSessionItem())
         return {rootViewItem()};
 
     std::vector<QStandardItem*> result;
@@ -141,7 +134,7 @@ SessionItem* AbstractViewModel::sessionItemFromIndex(const QModelIndex& index) c
         if (auto viewItem = dynamic_cast<ViewItem*>(itemFromIndex(index)))
             result = viewItem->item();
     } else {
-        result = rootSessionItem();
+        result = m_controller->rootSessionItem();
     }
 
     return result;
@@ -159,12 +152,7 @@ QModelIndexList AbstractViewModel::indexOfSessionItem(const SessionItem* item) c
 
 void AbstractViewModel::setRootSessionItem(SessionItem* item)
 {
-    if (item->model() != sessionModel())
-        throw std::runtime_error(
-            "ViewModel::setRootSessionItem()->Error. Item doesn't belong to a model.");
-
-    m_rootItem = item;
-    m_controller->init_view_model();
+    m_controller->setRootSessionItem(item);
 }
 
 //! Generates necessary notifications on SessionItem's data change.

@@ -66,7 +66,6 @@ public:
     void setChildrenStrategy(std::unique_ptr<ChildrenStrategyInterface> children_strategy);
 
 protected:
-    SessionItem* rootSessionItem() const;
     QStandardItem* rootViewItem() const;
 
     virtual void onDataChange(SessionItem* item, int role);
@@ -83,7 +82,6 @@ private:
     const SessionModel* sessionModel() const;
 
     SessionModel* m_sessionModel;
-    SessionItem* m_rootItem;
 
     std::unique_ptr<ViewModelController> m_controller;
 };

@@ -103,7 +103,25 @@ void ViewModelController::init_view_model()
                                      "is not initialized.");
 
     reset_view_model();
-    iterate(p_impl->m_view_model->rootSessionItem(), p_impl->m_view_model->rootViewItem());
+    iterate(rootSessionItem(), p_impl->m_view_model->rootViewItem());
+}
+
+void ViewModelController::setRootSessionItem(SessionItem* item)
+{
+    if (item && item->model() != p_impl->m_view_model->sessionModel())
+        throw std::runtime_error(
+            "ViewModel::setRootSessionItem()->Error. Item doesn't belong to a model.");
+
+    p_impl->m_root_item = item;
+    init_view_model();
+}
+
+//! Returns root item of the model. Can be different from model's root item when the intention is
+//! to show only part of the model.
+
+SessionItem* ViewModelController::rootSessionItem() const
+{
+    return p_impl->m_root_item ? p_impl->m_root_item : p_impl->m_view_model->sessionModel()->rootItem();
 }
 
 ViewModelController::~ViewModelController() = default;

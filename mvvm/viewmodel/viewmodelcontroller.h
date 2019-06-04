@@ -46,6 +46,10 @@ public:
 
     void init_view_model();
 
+    void setRootSessionItem(SessionItem* item);
+
+    SessionItem* rootSessionItem() const;
+
 private:
     class ViewModelControllerPrivate;
     std::unique_ptr<ViewModelControllerPrivate> p_impl;
