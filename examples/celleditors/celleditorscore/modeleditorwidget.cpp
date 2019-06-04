@@ -12,9 +12,6 @@
 #include "standardviewmodels.h"
 #include "samplemodel.h"
 #include "viewmodeldelegate.h"
-#include "childrenstrategies.h"
-#include "labeldatarowstrategy.h"
-#include "propertiesrowstrategy.h"
 #include "viewmodelcontrollers.h"
 #include <QBoxLayout>
 #include <QTreeView>
@@ -22,17 +19,24 @@
 
 using namespace ModelView;
 
+class TableViewModel : public AbstractViewModel
+{
+public:
+    TableViewModel(SessionModel* model, std::vector<std::string> labels)
+        : AbstractViewModel(std::make_unique<PropertyTableViewModelController>(this, labels))
+    {
+        setSessionModel(model);
+    }
+    ~TableViewModel();
+};
+
+TableViewModel::~TableViewModel() = default;
+
 namespace  {
 std::unique_ptr<ModelView::AbstractViewModel> createHorizontalViewModel(SessionModel* model)
 {
     std::vector<std::string> labels = {"a", "b", "c"};
-//    auto controller = std::make_unique<PropertyTableViewModelController>
-    std::unique_ptr<AbstractViewModel> result = std::make_unique<AbstractViewModel>();
-
-    result->setRowConstructor(std::make_unique<PropertiesRowStrategy>(labels));
-    result->setChildrenStrategy(std::make_unique<AllChildrenStrategy>());
-    result->setSessionModel(model);
-
+    std::unique_ptr<AbstractViewModel> result = std::make_unique<TableViewModel>(model, labels);
     return result;
 }
 }

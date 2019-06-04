@@ -17,7 +17,7 @@
 LayerTableModel::LayerTableModel(ModelView::SessionModel* model, QObject* parent)
     : ModelView::DefaultViewModel(model, parent)
 {
-    setRowConstructor(std::make_unique<LayerTableRowConstructor>());
+//    setRowConstructor(std::make_unique<LayerTableRowConstructor>());
 }
 
 //! Returns (possibly filtered) vector of children of given item.

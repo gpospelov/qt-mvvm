@@ -8,9 +8,7 @@
 // ************************************************************************** //
 
 #include "abstractviewmodel.h"
-#include "childrenstrategyinterface.h"
 #include "modelmapper.h"
-#include "rowstrategyinterface.h"
 #include "sessionitem.h"
 #include "sessionmodel.h"
 #include "viewitems.h"
@@ -101,15 +99,3 @@ void AbstractViewModel::setRootSessionItem(SessionItem* item)
 {
     m_controller->setRootSessionItem(item);
 }
-
-void AbstractViewModel::setRowConstructor(std::unique_ptr<RowStrategyInterface> row_constructor)
-{
-    m_controller->setRowStrategy(std::move(row_constructor));
-}
-
-void AbstractViewModel::setChildrenStrategy(
-    std::unique_ptr<ChildrenStrategyInterface> children_strategy)
-{
-    m_controller->setChildrenStrategy(std::move(children_strategy));
-}
-

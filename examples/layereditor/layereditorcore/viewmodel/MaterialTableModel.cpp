@@ -15,7 +15,7 @@
 MaterialTableModel::MaterialTableModel(ModelView::SessionModel* model, QObject* parent)
     : ModelView::DefaultViewModel(model, parent)
 {
-    setRowConstructor(std::make_unique<MaterialTableRowConstructor>());
+//    setRowConstructor(std::make_unique<MaterialTableRowConstructor>());
 }
 
 //! Returns (possibly filtered) vector of children of given item.

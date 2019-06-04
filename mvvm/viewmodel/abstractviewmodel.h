@@ -22,8 +22,6 @@ namespace ModelView
 class SessionModel;
 class SessionItem;
 class ViewItem;
-class RowStrategyInterface;
-class ChildrenStrategyInterface;
 class AbstractViewModelController;
 
 /*!
@@ -62,9 +60,6 @@ public:
     QModelIndexList indexOfSessionItem(const SessionItem* item) const;
 
     void setRootSessionItem(SessionItem* item);
-
-    void setRowConstructor(std::unique_ptr<RowStrategyInterface> row_constructor);
-    void setChildrenStrategy(std::unique_ptr<ChildrenStrategyInterface> children_strategy);
 
 protected:
     QStandardItem* rootViewItem() const;
