@@ -104,7 +104,7 @@ void AbstractViewModel::setRootSessionItem(SessionItem* item)
 
 void AbstractViewModel::setRowConstructor(std::unique_ptr<RowStrategyInterface> row_constructor)
 {
-    m_controller->setRowConstructor(std::move(row_constructor));
+    m_controller->setRowStrategy(std::move(row_constructor));
 }
 
 void AbstractViewModel::setChildrenStrategy(

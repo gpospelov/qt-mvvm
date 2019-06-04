@@ -41,7 +41,7 @@ public:
 
     void setChildrenStrategy(std::unique_ptr<ChildrenStrategyInterface> children_strategy);
 
-    void setRowConstructor(std::unique_ptr<RowStrategyInterface> row_constructor);
+    void setRowStrategy(std::unique_ptr<RowStrategyInterface> row_strategy);
 
     void reset_view_model();
 

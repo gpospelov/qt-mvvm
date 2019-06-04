@@ -44,7 +44,7 @@ public:
 
     QList<QStandardItem*> constructRow(SessionItem* item)
     {
-        return m_row_constructor->constructRow(item);
+        return m_row_strategy->constructRow(item);
     }
 
     std::vector<SessionItem*> item_children(const SessionItem* item) const
@@ -60,16 +60,16 @@ public:
 
     void update_layout()
     {
-        m_view_model->setColumnCount(m_row_constructor->columnCount());
+        m_view_model->setColumnCount(m_row_strategy->columnCount());
         m_view_model->setHorizontalHeaderLabels(
-        m_row_constructor->horizontalHeaderLabels());
+        m_row_strategy->horizontalHeaderLabels());
     }
 
     AbstractViewModel* m_view_model;
     SessionItem* m_root_item;
     SessionModel* m_session_model;
     std::unique_ptr<ChildrenStrategyInterface> m_children_strategy;
-    std::unique_ptr<RowStrategyInterface> m_row_constructor;
+    std::unique_ptr<RowStrategyInterface> m_row_strategy;
 };
 
 AbstractViewModelController::AbstractViewModelController(AbstractViewModel* view_model)
@@ -127,10 +127,9 @@ void AbstractViewModelController::setChildrenStrategy(
     p_impl->m_children_strategy = std::move(children_strategy);
 }
 
-void AbstractViewModelController::setRowConstructor(
-    std::unique_ptr<RowStrategyInterface> row_constructor)
+void AbstractViewModelController::setRowStrategy(std::unique_ptr<RowStrategyInterface> row_strategy)
 {
-    p_impl->m_row_constructor = std::move(row_constructor);
+    p_impl->m_row_strategy = std::move(row_strategy);
 }
 
 void AbstractViewModelController::reset_view_model()
@@ -156,8 +155,8 @@ void AbstractViewModelController::iterate(const SessionItem* item, QStandardItem
 
 void AbstractViewModelController::init_view_model()
 {
-    if (!p_impl->m_row_constructor)
-        throw std::runtime_error("AbstractViewModel::init_view_model() -> Error. Row constructor "
+    if (!p_impl->m_row_strategy)
+        throw std::runtime_error("AbstractViewModel::init_view_model() -> Error. Row strategy "
                                      "is not initialized.");
 
     if (!p_impl->m_children_strategy)

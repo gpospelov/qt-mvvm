@@ -20,7 +20,7 @@ using namespace ModelView;
 DefaultViewModelController::DefaultViewModelController(AbstractViewModel* view_model)
     : AbstractViewModelController(view_model)
 {
-    setRowConstructor(std::make_unique<LabelDataRowStrategy>());
+    setRowStrategy(std::make_unique<LabelDataRowStrategy>());
     setChildrenStrategy(std::make_unique<AllChildrenStrategy>());
 }
 
@@ -29,7 +29,7 @@ DefaultViewModelController::DefaultViewModelController(AbstractViewModel* view_m
 TopItemsViewModelController::TopItemsViewModelController(AbstractViewModel* view_model)
     : AbstractViewModelController(view_model)
 {
-    setRowConstructor(std::make_unique<LabelDataRowStrategy>());
+    setRowStrategy(std::make_unique<LabelDataRowStrategy>());
     setChildrenStrategy(std::make_unique<TopItemsStrategy>());
 }
 
@@ -38,7 +38,7 @@ TopItemsViewModelController::TopItemsViewModelController(AbstractViewModel* view
 PropertyViewModelController::PropertyViewModelController(AbstractViewModel* view_model)
     : AbstractViewModelController(view_model)
 {
-    setRowConstructor(std::make_unique<LabelDataRowStrategy>());
+    setRowStrategy(std::make_unique<LabelDataRowStrategy>());
     setChildrenStrategy(std::make_unique<PropertyItemsStrategy>());
 }
 
@@ -57,6 +57,6 @@ PropertyTableViewModelController::PropertyTableViewModelController(
     AbstractViewModel* view_model, const std::vector<std::string>& labels)
     : AbstractViewModelController(view_model)
 {
-    setRowConstructor(std::make_unique<PropertiesRowStrategy>(labels));
+    setRowStrategy(std::make_unique<PropertiesRowStrategy>(labels));
     setChildrenStrategy(std::make_unique<AllChildrenStrategy>());
 }
