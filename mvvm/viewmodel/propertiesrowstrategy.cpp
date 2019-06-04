@@ -7,19 +7,19 @@
 //
 // ************************************************************************** //
 
-#include "propertiesrowconstructor.h"
+#include "propertiesrowstrategy.h"
 #include "itemutils.h"
 #include "sessionitem.h"
 #include "viewitems.h"
 
 using namespace ModelView;
 
-PropertiesRowConstructor::PropertiesRowConstructor(const std::vector<std::string>& labels)
+PropertiesRowStrategy::PropertiesRowStrategy(const std::vector<std::string>& labels)
     : m_column_labels(labels)
 {
 }
 
-QList<QStandardItem*> PropertiesRowConstructor::constructRow(SessionItem* item)
+QList<QStandardItem*> PropertiesRowStrategy::constructRow(SessionItem* item)
 {
     QList<QStandardItem*> result;
 
@@ -35,12 +35,12 @@ QList<QStandardItem*> PropertiesRowConstructor::constructRow(SessionItem* item)
     return result;
 }
 
-int PropertiesRowConstructor::columnCount() const
+int PropertiesRowStrategy::columnCount() const
 {
     return static_cast<int>(m_column_labels.size());
 }
 
-QStringList PropertiesRowConstructor::horizontalHeaderLabels() const
+QStringList PropertiesRowStrategy::horizontalHeaderLabels() const
 {
     QStringList result;
     std::transform(m_column_labels.begin(), m_column_labels.end(), std::back_inserter(result),

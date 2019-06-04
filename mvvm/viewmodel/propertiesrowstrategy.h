@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_PROPERTIESROWCONSTRUCTOR_H
-#define MVVM_PROPERTIESROWCONSTRUCTOR_H
+#ifndef MVVM_PROPERTIESROWSTRATEGY_H
+#define MVVM_PROPERTIESROWSTRATEGY_H
 
 #include "rowstrategyinterface.h"
 
@@ -22,10 +22,10 @@ class SessionItem;
 //! Constructs row of QStandardItem's for given SessionItem.
 //! Row consists of columns with all PropertyItem's of given SessionItem.
 
-class CORE_EXPORT PropertiesRowConstructor : public RowStrategyInterface
+class CORE_EXPORT PropertiesRowStrategy : public RowStrategyInterface
 {
 public:
-    PropertiesRowConstructor(const std::vector<std::string>& labels);
+    PropertiesRowStrategy(const std::vector<std::string>& labels);
 
     QList<QStandardItem*> constructRow(SessionItem* item);
     int columnCount() const;
@@ -37,4 +37,4 @@ private:
 
 } // namespace ModelView
 
-#endif // MVVM_PROPERTIESROWCONSTRUCTOR_H
+#endif // MVVM_PROPERTIESROWSTRATEGY_H

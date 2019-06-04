@@ -14,7 +14,7 @@
 #include "viewmodeldelegate.h"
 #include "childrenstrategies.h"
 #include "labeldatarowstrategy.h"
-#include "propertiesrowconstructor.h"
+#include "propertiesrowstrategy.h"
 #include "viewmodelcontrollers.h"
 #include <QBoxLayout>
 #include <QTreeView>
@@ -29,7 +29,7 @@ std::unique_ptr<ModelView::AbstractViewModel> createHorizontalViewModel(SessionM
 //    auto controller = std::make_unique<PropertyTableViewModelController>
     std::unique_ptr<AbstractViewModel> result = std::make_unique<AbstractViewModel>();
 
-    result->setRowConstructor(std::make_unique<PropertiesRowConstructor>(labels));
+    result->setRowConstructor(std::make_unique<PropertiesRowStrategy>(labels));
     result->setChildrenStrategy(std::make_unique<AllChildrenStrategy>());
     result->setSessionModel(model);
 

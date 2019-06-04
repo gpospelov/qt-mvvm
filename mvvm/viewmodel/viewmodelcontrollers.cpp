@@ -11,7 +11,7 @@
 #include "childrenstrategies.h"
 #include "groupitem.h"
 #include "labeldatarowstrategy.h"
-#include "propertiesrowconstructor.h"
+#include "propertiesrowstrategy.h"
 
 using namespace ModelView;
 
@@ -57,6 +57,6 @@ PropertyTableViewModelController::PropertyTableViewModelController(
     AbstractViewModel* view_model, const std::vector<std::string>& labels)
     : AbstractViewModelController(view_model)
 {
-    setRowConstructor(std::make_unique<PropertiesRowConstructor>(labels));
+    setRowConstructor(std::make_unique<PropertiesRowStrategy>(labels));
     setChildrenStrategy(std::make_unique<AllChildrenStrategy>());
 }
