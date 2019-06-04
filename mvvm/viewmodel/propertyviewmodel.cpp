@@ -8,17 +8,12 @@
 // ************************************************************************** //
 
 #include "propertyviewmodel.h"
-#include "groupitem.h"
-#include "childrenstrategies.h"
-#include "labeldatarowconstructor.h"
-#include "propertyviewmodelcontroller.h"
+#include "viewmodelcontrollers.h"
 
 using namespace ModelView;
 
 PropertyViewModel::PropertyViewModel(SessionModel* model, QObject* parent)
     : AbstractViewModel(std::make_unique<PropertyViewModelController>(this), parent)
 {
-    setRowConstructor(std::make_unique<LabelDataRowConstructor>());
-    setChildrenStrategy(std::make_unique<PropertyItemsStrategy>());
     setSessionModel(model);
 }

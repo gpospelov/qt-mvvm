@@ -7,16 +7,24 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_PROPERTYVIEWMODELCONTROLLER_H
-#define MVVM_PROPERTYVIEWMODELCONTROLLER_H
+#ifndef MVVM_VIEWMODELCONTROLLERS_H
+#define MVVM_VIEWMODELCONTROLLERS_H
 
 #include "abstractviewmodelcontroller.h"
 
-namespace ModelView
-{
+/*!
+@file viewmodelcontrollers.h
+Collection of standard controllers for AbstractViewModel.
+*/
 
-//! View model to show content of SessionModel in Qt widgets.
-//! Only property items are shown, also hides inactive items of GroupProperty.
+namespace ModelView {
+
+/*!
+@class PropertyViewModelController
+@brief Controller for AbstractViewModel to show item properties.
+
+Shows property items, hides top level items, hides inactive items of GroupProperty.
+*/
 
 class CORE_EXPORT PropertyViewModelController : public AbstractViewModelController
 {
@@ -27,6 +35,7 @@ protected:
     void onDataChange(SessionItem* item, int role) override;
 };
 
-} // namespace ModelView
 
-#endif // MVVM_PROPERTYVIEWMODELCONTROLLER_H
+}  // namespace ModelView
+
+#endif // MVVM_VIEWMODELCONTROLLERS_H

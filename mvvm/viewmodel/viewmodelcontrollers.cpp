@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "propertyviewmodelcontroller.h"
+#include "viewmodelcontrollers.h"
 #include "groupitem.h"
 #include "childrenstrategies.h"
 #include "labeldatarowconstructor.h"
@@ -21,12 +21,9 @@ PropertyViewModelController::PropertyViewModelController(AbstractViewModel* view
     setChildrenStrategy(std::make_unique<PropertyItemsStrategy>());
 }
 
-//! Generates necessary notifications on SessionItem's data change.
-
 void PropertyViewModelController::onDataChange(SessionItem* item, int role)
 {
     AbstractViewModelController::onDataChange(item, role);
-
     // If data change occured with GroupItem, performs cleanup and regeneration of
     // ViewItems, corresponding to groupItem's current index.
     if (auto group = dynamic_cast<GroupItem*>(item))
