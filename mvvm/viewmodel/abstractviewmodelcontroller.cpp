@@ -10,7 +10,7 @@
 #include "abstractviewmodelcontroller.h"
 #include "abstractviewmodel.h"
 #include "childrenstrategyinterface.h"
-#include "rowconstructorinterface.h"
+#include "rowstrategyinterface.h"
 #include "sessionitem.h"
 #include "sessionmodel.h"
 #include "modelmapper.h"
@@ -69,7 +69,7 @@ public:
     SessionItem* m_root_item;
     SessionModel* m_session_model;
     std::unique_ptr<ChildrenStrategyInterface> m_children_strategy;
-    std::unique_ptr<RowConstructorInterface> m_row_constructor;
+    std::unique_ptr<RowStrategyInterface> m_row_constructor;
 };
 
 AbstractViewModelController::AbstractViewModelController(AbstractViewModel* view_model)
@@ -128,7 +128,7 @@ void AbstractViewModelController::setChildrenStrategy(
 }
 
 void AbstractViewModelController::setRowConstructor(
-    std::unique_ptr<RowConstructorInterface> row_constructor)
+    std::unique_ptr<RowStrategyInterface> row_constructor)
 {
     p_impl->m_row_constructor = std::move(row_constructor);
 }

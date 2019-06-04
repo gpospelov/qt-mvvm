@@ -10,7 +10,7 @@
 #include "abstractviewmodel.h"
 #include "childrenstrategyinterface.h"
 #include "modelmapper.h"
-#include "rowconstructorinterface.h"
+#include "rowstrategyinterface.h"
 #include "sessionitem.h"
 #include "sessionmodel.h"
 #include "viewitems.h"
@@ -102,7 +102,7 @@ void AbstractViewModel::setRootSessionItem(SessionItem* item)
     m_controller->setRootSessionItem(item);
 }
 
-void AbstractViewModel::setRowConstructor(std::unique_ptr<RowConstructorInterface> row_constructor)
+void AbstractViewModel::setRowConstructor(std::unique_ptr<RowStrategyInterface> row_constructor)
 {
     m_controller->setRowConstructor(std::move(row_constructor));
 }

@@ -23,7 +23,7 @@ namespace ModelView
 class AbstractViewModel;
 class SessionItem;
 class ChildrenStrategyInterface;
-class RowConstructorInterface;
+class RowStrategyInterface;
 class SessionModel;
 
 /*!
@@ -41,7 +41,7 @@ public:
 
     void setChildrenStrategy(std::unique_ptr<ChildrenStrategyInterface> children_strategy);
 
-    void setRowConstructor(std::unique_ptr<RowConstructorInterface> row_constructor);
+    void setRowConstructor(std::unique_ptr<RowStrategyInterface> row_constructor);
 
     void reset_view_model();
 

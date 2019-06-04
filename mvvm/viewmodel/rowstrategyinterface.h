@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_ROWCONSTRUCTORINTERFACE_H
-#define MVVM_ROWCONSTRUCTORINTERFACE_H
+#ifndef MVVM_ROWSTRATEGYINTERFACE_H
+#define MVVM_ROWSTRATEGYINTERFACE_H
 
 #include "mvvm_global.h"
 #include <QList>
@@ -22,10 +22,10 @@ class SessionItem;
 //! Base class to construct row of QStandardItems from given SessionItem.
 //! Used in context of AbstractViewModel while exposing SessionModel to Qt.
 
-class CORE_EXPORT RowConstructorInterface
+class CORE_EXPORT RowStrategyInterface
 {
 public:
-    virtual ~RowConstructorInterface() = default;
+    virtual ~RowStrategyInterface() = default;
 
     //! Construct row of QStandardItems from given SessionItem.
     virtual QList<QStandardItem*> constructRow(SessionItem* item) = 0;
@@ -38,4 +38,4 @@ public:
 
 }  // namespace ModelView
 
-#endif // MVVM_ROWCONSTRUCTORINTERFACE_H
+#endif // MVVM_ROWSTRATEGYINTERFACE_H

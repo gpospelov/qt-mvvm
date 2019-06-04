@@ -10,11 +10,11 @@
 #ifndef MATERIALTABLEROWCONSTRUCTOR_H
 #define MATERIALTABLEROWCONSTRUCTOR_H
 
-#include "rowconstructorinterface.h"
+#include "rowstrategyinterface.h"
 
 //! Constructs row of QStandardItem's for MaterialItem.
 
-class CORE_EXPORT MaterialTableRowConstructor : public ModelView::RowConstructorInterface
+class CORE_EXPORT MaterialTableRowConstructor : public ModelView::RowStrategyInterface
 {
 public:
     QList<QStandardItem*> constructRow(ModelView::SessionItem* item);

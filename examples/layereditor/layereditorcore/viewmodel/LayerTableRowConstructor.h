@@ -10,11 +10,11 @@
 #ifndef LAYERTABLEROWCONSTRUCTOR_H
 #define LAYERTABLEROWCONSTRUCTOR_H
 
-#include "rowconstructorinterface.h"
+#include "rowstrategyinterface.h"
 
 //! Constructs row of QStandardItem's for MaterialItem.
 
-class CORE_EXPORT LayerTableRowConstructor : public ModelView::RowConstructorInterface
+class CORE_EXPORT LayerTableRowConstructor : public ModelView::RowStrategyInterface
 {
 public:
     QList<QStandardItem*> constructRow(ModelView::SessionItem* item);

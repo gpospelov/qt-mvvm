@@ -10,7 +10,7 @@
 #ifndef MVVM_PROPERTIESROWCONSTRUCTOR_H
 #define MVVM_PROPERTIESROWCONSTRUCTOR_H
 
-#include "rowconstructorinterface.h"
+#include "rowstrategyinterface.h"
 
 class QStandardItem;
 
@@ -22,7 +22,7 @@ class SessionItem;
 //! Constructs row of QStandardItem's for given SessionItem.
 //! Row consists of columns with all PropertyItem's of given SessionItem.
 
-class CORE_EXPORT PropertiesRowConstructor : public RowConstructorInterface
+class CORE_EXPORT PropertiesRowConstructor : public RowStrategyInterface
 {
 public:
     PropertiesRowConstructor(const std::vector<std::string>& labels);
