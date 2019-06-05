@@ -15,6 +15,7 @@
 #include <QBoxLayout>
 #include <QTableView>
 #include <QTreeView>
+#include <QHeaderView>
 
 using namespace ModelView;
 
@@ -49,11 +50,12 @@ void ModelEditorWidget::setModel(SampleModel* model)
     m_horizontalTree->setModel(m_horizontalViewModel.get());
     m_horizontalTree->setItemDelegate(m_delegate.get());
     m_horizontalTree->expandAll();
-    m_horizontalTree->resizeColumnToContents(0);
+    m_horizontalTree->header()->setSectionResizeMode(QHeaderView::Stretch);
 
     // setting up right table
     m_tableView->setModel(m_horizontalViewModel.get());
     m_tableView->setItemDelegate(m_delegate.get());
+    m_tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 }
 
 ModelEditorWidget::~ModelEditorWidget() = default;

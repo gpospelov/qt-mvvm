@@ -48,7 +48,7 @@ ViewItem _together_ with all its siblings, and then regenerate corresponding par
 class CORE_EXPORT AbstractViewModel : public QStandardItemModel
 {
 public:
-    friend class AbstractViewModelController;
+    friend class AbstractViewModelController; // FIXME remove friendship
     AbstractViewModel(std::unique_ptr<AbstractViewModelController> controller,
                       QObject* parent = nullptr);
     virtual ~AbstractViewModel();
@@ -65,6 +65,7 @@ protected:
     QStandardItem* rootViewItem() const;
 
 private:
+    // FIXME remove one of methods
     std::vector<QStandardItem*> findStandardViews(const SessionItem* item) const;
     std::vector<ViewItem*> findViews(const SessionItem* item) const;
 
