@@ -7,14 +7,14 @@
 //
 // ************************************************************************** //
 
-#include "LayerTableModel.h"
+#include "LayerTableViewModel.h"
 #include "item_constants.h"
 #include "sessionitem.h"
 #include "LayerTableRowConstructor.h"
 #include "itemutils.h"
 #include <stack>
 
-LayerTableModel::LayerTableModel(ModelView::SessionModel* model, QObject* parent)
+LayerTableViewModel::LayerTableViewModel(ModelView::SessionModel* model, QObject* parent)
     : ModelView::DefaultViewModel(model, parent)
 {
 //    setRowConstructor(std::make_unique<LayerTableRowConstructor>());

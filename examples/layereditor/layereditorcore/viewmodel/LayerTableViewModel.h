@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef LAYERTABLEMODEL_H
-#define LAYERTABLEMODEL_H
+#ifndef LAYERTABLEVIEWMODEL_H
+#define LAYERTABLEVIEWMODEL_H
 
 #include "defaultviewmodel.h"
 #include "mvvm_global.h"
@@ -21,10 +21,10 @@ class SessionItem;
 
 //! View model to display content of MultiLayerItem in table like views.
 
-class CORE_EXPORT LayerTableModel : public ModelView::DefaultViewModel
+class CORE_EXPORT LayerTableViewModel : public ModelView::DefaultViewModel
 {
 public:
-    LayerTableModel(ModelView::SessionModel* model = nullptr, QObject* parent = nullptr);
+    LayerTableViewModel(ModelView::SessionModel* model = nullptr, QObject* parent = nullptr);
 };
 
-#endif //  LAYERTABLEMODEL_H
+#endif //  LAYERTABLEVIEWMODEL_H

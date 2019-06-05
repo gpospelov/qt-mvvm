@@ -12,7 +12,7 @@
 #include "CustomModelDelegate.h"
 #include "viewmodels.h"
 #include "sessionitem.h"
-#include "LayerTableModel.h"
+#include "LayerTableViewModel.h"
 #include <QTableView>
 #include <QVBoxLayout>
 

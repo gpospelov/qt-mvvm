@@ -8,7 +8,7 @@
 // ************************************************************************** //
 
 #include "viewmodels.h"
-#include "LayerTableModel.h"
+#include "LayerTableViewModel.h"
 #include "MaterialTableViewModel.h"
 
 std::unique_ptr<ModelView::AbstractViewModel>
@@ -20,5 +20,5 @@ Utils::CreateMaterialTableModel(ModelView::SessionModel* model)
 std::unique_ptr<ModelView::AbstractViewModel>
 Utils::CreateLayerTableModel(ModelView::SessionModel* model)
 {
-    return std::make_unique<LayerTableModel>(model);
+    return std::make_unique<LayerTableViewModel>(model);
 }
