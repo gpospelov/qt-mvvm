@@ -10,12 +10,17 @@
 #ifndef LAYERITEMS_H
 #define LAYERITEMS_H
 
+/*!
+@file LayerItems.h
+@brief Collection of layer and multi-layer items to populate SampleModel.
+*/
+
 #include "compounditem.h"
 
-//! @file LayerItems.h
-//! Collection of layer and multi-layer items to populate SampleModel.
-
-//! Layer with name, thickness and reference to material.
+/*!
+@class LayerItem
+@brief Layer with name, thickness and reference to material.
+*/
 
 class CORE_EXPORT LayerItem : public ModelView::CompoundItem
 {
@@ -26,7 +31,10 @@ public:
     LayerItem();
 };
 
-//! Multi layer capable of holding layers and other multi-layers.
+/*!
+@class MultiLayerItem
+@brief Multi layer capable of holding layers and other multi-layers.
+*/
 
 class CORE_EXPORT MultiLayerItem : public ModelView::CompoundItem
 {

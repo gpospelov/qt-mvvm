@@ -12,6 +12,11 @@
 
 #include "sessionmodel.h"
 
+/*!
+@class SampleModel
+@brief Model to hold layers and multi-layers.
+*/
+
 class CORE_EXPORT SampleModel : public ModelView::SessionModel
 {
 public:

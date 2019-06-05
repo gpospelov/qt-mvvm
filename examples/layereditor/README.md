@@ -17,4 +17,6 @@ Example demonstrates:
 + How to create tree with custom layout which differs from the layout of the original model.
 + How to serialize model content on disk and load data from it.
 + How to make links between model items (i.e. materials <-> layers) persistent.
++ How to save model on disk and load it after.
+
 

@@ -14,7 +14,10 @@
 
 class MaterialContainerItem;
 
-//! Model to hold MaterialItems.
+/*!
+@class MaterialModel
+@brief Model to hold MaterialItems.
+*/
 
 class CORE_EXPORT MaterialModel : public ModelView::SessionModel
 {

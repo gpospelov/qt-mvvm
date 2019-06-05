@@ -17,6 +17,14 @@
 class MaterialModel;
 class SampleModel;
 
+/*!
+@class ApplicationModels
+@brief Container class to hold all SessionModel's used during GUI session.
+
+Given class holds SampleModel with multilayer structure and MaterialModel with collection
+of materials.
+*/
+
 class CORE_EXPORT ApplicationModels
 {
 public:
