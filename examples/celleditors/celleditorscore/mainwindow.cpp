@@ -25,11 +25,7 @@ MainWindow::MainWindow()
     : m_tabWidget(new QTabWidget), m_model1(std::make_unique<SampleModel>()),
       m_model2(std::make_unique<SampleModel>())
 {    
-    m_tabWidget->addTab(new ModelEditorWidget(m_model1.get()), "Available properties");
-
-    m_tabWidget->setCurrentIndex(m_tabWidget->count()-1);
     setCentralWidget(m_tabWidget);
-
     init_application();
 }
 
@@ -78,4 +74,8 @@ void MainWindow::init_models()
     m_model2->insertNewItem(Constants::DemoPropertiesType);
     m_model2->insertNewItem(Constants::DemoPropertiesType);
     m_model2->insertNewItem(Constants::DemoPropertiesType);
+
+    m_tabWidget->addTab(new ModelEditorWidget(m_model1.get()), "Available properties");
+    m_tabWidget->setCurrentIndex(m_tabWidget->count()-1);
+
 }

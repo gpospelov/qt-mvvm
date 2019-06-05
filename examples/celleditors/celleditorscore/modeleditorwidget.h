@@ -25,14 +25,16 @@ class AbstractViewModel;
 class ViewModelDelegate;
 } // namespace ModelView
 
-//! Shows model content in three widgets.
-//! The left widget shows the model as a default tree
+/*!
+@class ModelEditorWidget
+@brief Shows content of the model as vertical tree, horizontal tree and table.
+*/
 
 class ModelEditorWidget : public QWidget
 {
     Q_OBJECT
 public:
-    ModelEditorWidget(SampleModel* model, QWidget* parent = nullptr);
+    explicit ModelEditorWidget(SampleModel* model = nullptr, QWidget* parent = nullptr);
     ~ModelEditorWidget();
 
     void setModel(SampleModel* model);

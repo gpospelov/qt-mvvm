@@ -8,42 +8,19 @@
 // ************************************************************************** //
 
 #include "modeleditorwidget.h"
-#include "itemstreeview.h"
-#include "standardviewmodels.h"
+#include "defaultviewmodel.h"
+#include "propertytableviewmodel.h"
 #include "samplemodel.h"
 #include "viewmodeldelegate.h"
-#include "standardviewmodelcontrollers.h"
 #include <QBoxLayout>
-#include <QTreeView>
 #include <QTableView>
+#include <QTreeView>
 
 using namespace ModelView;
 
-class TableViewModel : public AbstractViewModel
-{
-public:
-    TableViewModel(SessionModel* model, std::vector<std::string> labels)
-        : AbstractViewModel(std::make_unique<PropertyTableViewModelController>(this, labels))
-    {
-        setSessionModel(model);
-    }
-    ~TableViewModel();
-};
-
-TableViewModel::~TableViewModel() = default;
-
-namespace  {
-std::unique_ptr<ModelView::AbstractViewModel> createHorizontalViewModel(SessionModel* model)
-{
-    std::vector<std::string> labels = {"a", "b", "c"};
-    std::unique_ptr<AbstractViewModel> result = std::make_unique<TableViewModel>(model, labels);
-    return result;
-}
-}
-
 ModelEditorWidget::ModelEditorWidget(SampleModel* model, QWidget* parent)
-    : QWidget(parent), m_verticalTree(new QTreeView),
-      m_horizontalTree(new QTreeView), m_tableView(new QTableView), m_delegate(std::make_unique<ViewModelDelegate>())
+    : QWidget(parent), m_verticalTree(new QTreeView), m_horizontalTree(new QTreeView),
+      m_tableView(new QTableView), m_delegate(std::make_unique<ViewModelDelegate>())
 {
     auto mainLayout = new QHBoxLayout();
     mainLayout->setSpacing(10);
@@ -61,18 +38,22 @@ void ModelEditorWidget::setModel(SampleModel* model)
         return;
 
     // setting up left tree
-    m_verticalViewModel = Utils::CreateDefaultViewModel(model);
+    m_verticalViewModel = std::make_unique<DefaultViewModel>(model);
     m_verticalTree->setModel(m_verticalViewModel.get());
     m_verticalTree->setItemDelegate(m_delegate.get());
     m_verticalTree->expandAll();
     m_verticalTree->resizeColumnToContents(0);
 
-    m_horizontalViewModel = createHorizontalViewModel(model);
+    // setting up right tree
+    m_horizontalViewModel = std::make_unique<PropertyTableViewModel>(model);
     m_horizontalTree->setModel(m_horizontalViewModel.get());
     m_horizontalTree->setItemDelegate(m_delegate.get());
     m_horizontalTree->expandAll();
     m_horizontalTree->resizeColumnToContents(0);
 
+    // setting up right table
+    m_tableView->setModel(m_horizontalViewModel.get());
+    m_tableView->setItemDelegate(m_delegate.get());
 }
 
 ModelEditorWidget::~ModelEditorWidget() = default;
