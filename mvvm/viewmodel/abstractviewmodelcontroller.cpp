@@ -83,6 +83,11 @@ AbstractViewModelController::~AbstractViewModelController()
         sessionModel()->mapper()->unsubscribe(this);
 }
 
+void AbstractViewModelController::setViewModel(AbstractViewModel* view_model)
+{
+    p_impl->m_view_model = view_model;
+}
+
 void AbstractViewModelController::setSessionModel(SessionModel* model)
 {
     if (sessionModel())

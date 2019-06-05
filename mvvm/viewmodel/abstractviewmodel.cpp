@@ -20,6 +20,7 @@ AbstractViewModel::AbstractViewModel(std::unique_ptr<AbstractViewModelController
     : QStandardItemModel(parent),
       m_controller(std::move(controller))
 {
+    m_controller->setViewModel(this);
     setItemPrototype(new ViewEmptyItem);
 }
 
@@ -61,7 +62,7 @@ std::vector<ViewItem*> AbstractViewModel::findViews(const SessionItem* item) con
     return Utils::findViews(this, item, QModelIndex());
 }
 
-//! Returns SessionItem corresponding to givem QModelIndex.
+//! Returns SessionItem corresponding to given QModelIndex.
 
 SessionItem* AbstractViewModel::sessionItemFromIndex(const QModelIndex& index) const
 {

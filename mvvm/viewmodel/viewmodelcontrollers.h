@@ -32,7 +32,7 @@ The layout corresponds to original SessionModel, generates standard label/value 
 class CORE_EXPORT DefaultViewModelController : public AbstractViewModelController
 {
 public:
-    DefaultViewModelController(AbstractViewModel* view_model);
+    explicit DefaultViewModelController(AbstractViewModel* view_model = nullptr);
 };
 
 /*!
@@ -45,7 +45,7 @@ Shows only top level items, property items, group items are hidden.
 class CORE_EXPORT TopItemsViewModelController : public AbstractViewModelController
 {
 public:
-    TopItemsViewModelController(AbstractViewModel* view_model);
+    explicit TopItemsViewModelController(AbstractViewModel* view_model = nullptr);
 };
 
 /*!
@@ -58,7 +58,7 @@ Shows property items, hides top level items, hides inactive items of GroupProper
 class CORE_EXPORT PropertyViewModelController : public AbstractViewModelController
 {
 public:
-    PropertyViewModelController(AbstractViewModel* view_model);
+    explicit PropertyViewModelController(AbstractViewModel* view_model = nullptr);
 
 protected:
     void onDataChange(SessionItem* item, int role) override;

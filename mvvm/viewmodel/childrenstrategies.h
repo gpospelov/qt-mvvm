@@ -14,7 +14,8 @@
 
 /*!
 @file childrenstrategies.h
-Collection of strategies to find children, actual of fictional, of given SessionItem.
+@brief Collection of strategies to find children, actual of fictional, of given SessionItem.
+
 Used for ViewModel generation when underlying SessionModel changes its layout.
 */
 

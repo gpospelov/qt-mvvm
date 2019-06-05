@@ -34,8 +34,10 @@ class SessionModel;
 class CORE_EXPORT AbstractViewModelController
 {
 public:
-    AbstractViewModelController(AbstractViewModel* view_model);
+    explicit AbstractViewModelController(AbstractViewModel* view_model = nullptr);
     virtual ~AbstractViewModelController();
+
+    void setViewModel(AbstractViewModel* view_model);
 
     void setSessionModel(SessionModel* model);
 
