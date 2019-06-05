@@ -12,11 +12,13 @@
 #include "item_constants.h"
 #include "itemcatalogue.h"
 
+using namespace ModelView;
+
 namespace
 {
-std::unique_ptr<ModelView::ItemCatalogue> CreateItemCatalogue()
+std::unique_ptr<ItemCatalogue> CreateItemCatalogue()
 {
-    std::unique_ptr<ModelView::ItemCatalogue> result = std::make_unique<ModelView::ItemCatalogue>();
+    auto result = std::make_unique<ItemCatalogue>();
     result->registerItem<MultiLayerItem>();
     result->registerItem<LayerItem>();
     return result;
@@ -26,13 +28,17 @@ std::unique_ptr<ModelView::ItemCatalogue> CreateItemCatalogue()
 SampleModel::SampleModel() : SessionModel("SampleModel")
 {
     setItemCatalogue(CreateItemCatalogue());
+    init_model();
+}
 
-    auto multilayer = insertNewItem(Constants::MultiLayerType);
-    auto layer = insertNewItem(Constants::LayerType, multilayer);
+//! Populated the model with some default content.
 
-    auto assembly = insertNewItem(Constants::MultiLayerType, multilayer);
-    layer = insertNewItem(Constants::LayerType, assembly);
-    layer = insertNewItem(Constants::LayerType, assembly);
-
-    layer = insertNewItem(Constants::LayerType, multilayer);
+void SampleModel::init_model()
+{
+    auto multilayer = insertNewItem(::Constants::MultiLayerType);
+    auto layer = insertNewItem(::Constants::LayerType, multilayer);
+    auto assembly = insertNewItem(::Constants::MultiLayerType, multilayer);
+    layer = insertNewItem(::Constants::LayerType, assembly);
+    layer = insertNewItem(::Constants::LayerType, assembly);
+    layer = insertNewItem(::Constants::LayerType, multilayer);
 }

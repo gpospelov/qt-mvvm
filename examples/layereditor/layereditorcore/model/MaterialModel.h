@@ -24,8 +24,8 @@ class CORE_EXPORT MaterialModel : public ModelView::SessionModel
 public:
     MaterialModel();
 
-    void add_sld_material(ModelView::SessionItem* container, const std::string& name,
-                          const QColor& color, double real, double imag);
+private:
+    void init_model();
 };
 
 #endif //  MATERIALMODEL_H

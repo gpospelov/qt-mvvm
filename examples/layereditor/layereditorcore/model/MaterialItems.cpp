@@ -18,7 +18,7 @@ MaterialContainerItem::MaterialContainerItem()
     : ModelView::CompoundItem(Constants::MaterialContainerType)
 {
     registerTag(ModelView::TagInfo::universalTag("materials", {Constants::SLDMaterialType}),
-                /*set_as_default*/true);
+                /*set_as_default*/ true);
 }
 
 // ----------------------------------------------------------------------------
@@ -29,7 +29,6 @@ const std::string MaterialBaseItem::P_COLOR = "P_COLOR";
 MaterialBaseItem::MaterialBaseItem(const std::string& model_type)
     : ModelView::CompoundItem(model_type)
 {
-
 }
 
 void MaterialBaseItem::register_name()
@@ -47,12 +46,20 @@ void MaterialBaseItem::register_color()
 const std::string SLDMaterialItem::P_SLD_REAL = "P_SLD_REAL";
 const std::string SLDMaterialItem::P_SLD_IMAG = "P_SLD_IMAG";
 
-SLDMaterialItem::SLDMaterialItem()
-    : MaterialBaseItem(Constants::SLDMaterialType)
+SLDMaterialItem::SLDMaterialItem() : MaterialBaseItem(Constants::SLDMaterialType)
 {
     register_name();
     register_color();
     addProperty<ModelView::PropertyItem>(P_SLD_REAL, 1e-06)->setDisplayName("SLD, real");
     addProperty<ModelView::PropertyItem>(P_SLD_IMAG, 1e-08)->setDisplayName("SLD, imag");
     addProperty<ModelView::VectorItem>("Magnetization");
+}
+
+void SLDMaterialItem::set_properties(const std::string& name, const QColor& color, double real,
+                                     double imag)
+{
+    setItemValue(P_NAME, QVariant::fromValue(name));
+    setItemValue(P_COLOR, QVariant::fromValue(color));
+    setItemValue(P_SLD_REAL, real);
+    setItemValue(P_SLD_IMAG, imag);
 }

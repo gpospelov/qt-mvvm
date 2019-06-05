@@ -21,6 +21,9 @@ class CORE_EXPORT SampleModel : public ModelView::SessionModel
 {
 public:
     SampleModel();
+
+private:
+    void init_model();
 };
 
 #endif //  SAMPLEMODEL_H
