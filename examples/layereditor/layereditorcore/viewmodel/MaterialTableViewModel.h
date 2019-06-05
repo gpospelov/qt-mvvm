@@ -10,18 +10,16 @@
 #ifndef MATERIALTABLEVIEWMODEL_H
 #define MATERIALTABLEVIEWMODEL_H
 
-#include "defaultviewmodel.h"
-#include "mvvm_global.h"
+#include "abstractviewmodel.h"
 
 namespace ModelView
 {
 class SessionModel;
-class SessionItem;
 } // namespace ModelView
 
 //! View model to display content of MaterialModel in table like views.
 
-class CORE_EXPORT MaterialTableViewModel : public ModelView::DefaultViewModel
+class CORE_EXPORT MaterialTableViewModel : public ModelView::AbstractViewModel
 {
 public:
     MaterialTableViewModel(ModelView::SessionModel* model = nullptr, QObject* parent = nullptr);
