@@ -58,5 +58,5 @@ PropertyTableViewModelController::PropertyTableViewModelController(
     : AbstractViewModelController(view_model)
 {
     setRowStrategy(std::make_unique<PropertiesRowStrategy>(labels));
-    setChildrenStrategy(std::make_unique<AllChildrenStrategy>());
+    setChildrenStrategy(std::make_unique<TopItemsStrategy>());
 }

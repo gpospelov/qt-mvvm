@@ -95,7 +95,7 @@ TEST_F(TestChildrenStrategies, TopItemsStrategy)
     EXPECT_EQ(children.size(), 1);
 }
 
-//! Testing AllChildrenStrategy.
+//! Testing PropertyItemsStrategy.
 
 TEST_F(TestChildrenStrategies, PropertyItemsStrategy)
 {
