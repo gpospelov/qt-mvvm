@@ -40,7 +40,7 @@ const std::string MultiLayerItem::P_NREPETITIONS = "P_NREPETITIONS";
 
 MultiLayerItem::MultiLayerItem() : ModelView::CompoundItem(::Constants::MultiLayerType)
 {
-    addProperty<ModelView::PropertyItem>(P_NREPETITIONS, 1)->setDisplayName("Nr.");
+    addProperty<>(P_NREPETITIONS, 1)->setDisplayName("Nr.");
     std::vector<std::string> allowed_child = {::Constants::MultiLayerType, ::Constants::LayerType};
-    registerTag(ModelView::TagInfo::universalTag(T_LAYERS, allowed_child),/*set_default*/true);
+    registerTag(TagInfo::universalTag(T_LAYERS, allowed_child),/*set_default*/true);
 }

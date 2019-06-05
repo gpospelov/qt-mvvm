@@ -12,12 +12,14 @@
 #include "vectoritem.h"
 #include <QColor>
 
+using namespace ModelView;
+
 // ----------------------------------------------------------------------------
 
 MaterialContainerItem::MaterialContainerItem()
-    : ModelView::CompoundItem(Constants::MaterialContainerType)
+    : ModelView::CompoundItem(::Constants::MaterialContainerType)
 {
-    registerTag(ModelView::TagInfo::universalTag("materials", {Constants::SLDMaterialType}),
+    registerTag(TagInfo::universalTag("materials", {::Constants::SLDMaterialType}),
                 /*set_as_default*/ true);
 }
 
@@ -33,12 +35,12 @@ MaterialBaseItem::MaterialBaseItem(const std::string& model_type)
 
 void MaterialBaseItem::register_name()
 {
-    addProperty<ModelView::PropertyItem>(P_NAME, "Unnamed")->setDisplayName("Name");
+    addProperty<>(P_NAME, "Unnamed")->setDisplayName("Name");
 }
 
 void MaterialBaseItem::register_color()
 {
-    addProperty<ModelView::PropertyItem>(P_COLOR, QColor(Qt::green))->setDisplayName("Color");
+    addProperty<>(P_COLOR, QColor(Qt::green))->setDisplayName("Color");
 }
 
 // ----------------------------------------------------------------------------
@@ -46,13 +48,13 @@ void MaterialBaseItem::register_color()
 const std::string SLDMaterialItem::P_SLD_REAL = "P_SLD_REAL";
 const std::string SLDMaterialItem::P_SLD_IMAG = "P_SLD_IMAG";
 
-SLDMaterialItem::SLDMaterialItem() : MaterialBaseItem(Constants::SLDMaterialType)
+SLDMaterialItem::SLDMaterialItem() : MaterialBaseItem(::Constants::SLDMaterialType)
 {
     register_name();
     register_color();
-    addProperty<ModelView::PropertyItem>(P_SLD_REAL, 1e-06)->setDisplayName("SLD, real");
-    addProperty<ModelView::PropertyItem>(P_SLD_IMAG, 1e-08)->setDisplayName("SLD, imag");
-    addProperty<ModelView::VectorItem>("Magnetization");
+    addProperty<>(P_SLD_REAL, 1e-06)->setDisplayName("SLD, real");
+    addProperty<>(P_SLD_IMAG, 1e-08)->setDisplayName("SLD, imag");
+    addProperty<VectorItem>("Magnetization");
 }
 
 void SLDMaterialItem::set_properties(const std::string& name, const QColor& color, double real,
