@@ -59,6 +59,8 @@ public:
     const SessionModel* sessionModel() const;
 
 protected:
+    void check_initialization();
+
     void generate_children_views(SessionItem* parent);
     virtual void onDataChange(SessionItem* item, int role);
     virtual void onRowInserted(SessionItem* parent, std::string tag, int row);

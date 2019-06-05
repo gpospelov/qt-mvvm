@@ -160,14 +160,7 @@ void AbstractViewModelController::iterate(const SessionItem* item, QStandardItem
 
 void AbstractViewModelController::init_view_model()
 {
-    if (!p_impl->m_row_strategy)
-        throw std::runtime_error("AbstractViewModel::init_view_model() -> Error. Row strategy "
-                                     "is not initialized.");
-
-    if (!p_impl->m_children_strategy)
-        throw std::runtime_error("AbstractViewModel::init_view_model() -> Error. Children strategy "
-                                     "is not initialized.");
-
+    check_initialization();
     reset_view_model();
     iterate(rootSessionItem(), p_impl->m_view_model->rootViewItem());
 }
@@ -198,6 +191,24 @@ SessionModel* AbstractViewModelController::sessionModel()
 const SessionModel* AbstractViewModelController::sessionModel() const
 {
     return p_impl->m_session_model;
+}
+
+//! Checks initial conditions for a class.
+
+void AbstractViewModelController::check_initialization()
+{
+    const std::string msg("AbstractViewModelController::check_initialization() -> Error. ");
+    if (!p_impl->m_view_model)
+        throw std::runtime_error(msg+"ViewModel is not defined");
+
+    if (!p_impl->m_session_model)
+        throw std::runtime_error(msg + "SessionModel is not defined");
+
+    if (!p_impl->m_row_strategy)
+        throw std::runtime_error(msg + "RowStrategy is not defined");
+
+    if (!p_impl->m_children_strategy)
+        throw std::runtime_error(msg + "Children is not defined");
 }
 
 void AbstractViewModelController::generate_children_views(SessionItem* parent)
