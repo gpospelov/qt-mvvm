@@ -12,7 +12,7 @@
 #include "standardviewmodels.h"
 #include "samplemodel.h"
 #include "viewmodeldelegate.h"
-#include "viewmodelcontrollers.h"
+#include "standardviewmodelcontrollers.h"
 #include <QBoxLayout>
 #include <QTreeView>
 #include <QTableView>

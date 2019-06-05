@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "viewmodelcontrollers.h"
+#include "standardviewmodelcontrollers.h"
 #include "childrenstrategies.h"
 #include "groupitem.h"
 #include "labeldatarowstrategy.h"

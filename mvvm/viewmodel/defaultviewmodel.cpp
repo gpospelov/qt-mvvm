@@ -8,7 +8,7 @@
 // ************************************************************************** //
 
 #include "defaultviewmodel.h"
-#include "viewmodelcontrollers.h"
+#include "standardviewmodelcontrollers.h"
 
 using namespace ModelView;
 

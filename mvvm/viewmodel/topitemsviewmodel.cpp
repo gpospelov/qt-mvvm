@@ -8,7 +8,7 @@
 // ************************************************************************** //
 
 #include "topitemsviewmodel.h"
-#include "viewmodelcontrollers.h"
+#include "standardviewmodelcontrollers.h"
 
 using namespace ModelView;
 

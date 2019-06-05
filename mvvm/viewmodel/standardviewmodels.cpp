@@ -12,7 +12,7 @@
 #include "propertyviewmodel.h"
 #include "topitemsviewmodel.h"
 #include "viewmodelbuilder.h"
-#include "viewmodelcontrollers.h"
+#include "standardviewmodelcontrollers.h"
 
 using namespace ModelView;
 
