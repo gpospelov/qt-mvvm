@@ -75,8 +75,8 @@ FIXME What to do with group property?
 class CORE_EXPORT PropertyTableViewModelController : public AbstractViewModelController
 {
 public:
-    PropertyTableViewModelController(AbstractViewModel* view_model,
-                                     const std::vector<std::string>& labels);
+    PropertyTableViewModelController(AbstractViewModel* view_model = nullptr,
+                                     const std::vector<std::string>& labels = {});
 };
 
 } // namespace ModelView
