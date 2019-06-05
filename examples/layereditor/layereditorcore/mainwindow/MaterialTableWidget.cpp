@@ -10,7 +10,6 @@
 #include "MaterialTableWidget.h"
 #include "abstractviewmodel.h"
 #include "viewmodeldelegate.h"
-#include "viewmodels.h"
 #include "sessionitem.h"
 #include "MaterialTableViewModel.h"
 #include "CustomCellDecoration.h"
@@ -37,7 +36,7 @@ MaterialTableWidget::MaterialTableWidget(QWidget* parent)
 
 void MaterialTableWidget::setItem(ModelView::SessionItem* container)
 {
-    m_viewModel = Utils::CreateMaterialTableModel(container->model());
+    m_viewModel = std::make_unique<MaterialTableViewModel>(container->model());
     m_viewModel->setRootSessionItem(container);
     m_treeView->setModel(m_viewModel.get());
     m_treeView->expandAll();

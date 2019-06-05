@@ -10,7 +10,6 @@
 #include "LayerTableWidget.h"
 #include "abstractviewmodel.h"
 #include "CustomModelDelegate.h"
-#include "viewmodels.h"
 #include "sessionitem.h"
 #include "LayerTableViewModel.h"
 #include <QTableView>
@@ -31,7 +30,7 @@ LayerTableWidget::LayerTableWidget(ApplicationModels* models, QWidget* parent)
 
 void LayerTableWidget::setItem(ModelView::SessionItem* container)
 {
-    m_viewModel = Utils::CreateLayerTableModel(container->model());
+    m_viewModel = std::make_unique<LayerTableViewModel>(container->model());
     m_viewModel->setRootSessionItem(container);
     m_view->setModel(m_viewModel.get());
     m_view->setSpan(1, 0, 2, 1); // fake span without connection with real MultiLayer
