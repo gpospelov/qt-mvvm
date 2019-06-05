@@ -27,7 +27,7 @@ ModelEditorWidget::ModelEditorWidget(SampleModel* model, QWidget* parent)
     mainLayout->setSpacing(10);
 
     mainLayout->addLayout(create_left_layout(), 1);
-    mainLayout->addLayout(create_right_layout(), 2);
+    mainLayout->addLayout(create_right_layout(), 3);
 
     setLayout(mainLayout);
     setModel(model);

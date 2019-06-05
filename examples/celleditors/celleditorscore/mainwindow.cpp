@@ -8,23 +8,24 @@
 // ************************************************************************** //
 
 #include "mainwindow.h"
+#include "item_constants.h"
 #include "modeleditorwidget.h"
 #include "samplemodel.h"
-#include "item_constants.h"
-#include <QTabWidget>
 #include <QCoreApplication>
 #include <QSettings>
+#include <QTabWidget>
 
-namespace {
-    const QString main_window_group = "MainWindow";
-    const QString size_key = "size";
-    const QString pos_key = "pos";
-}
+namespace
+{
+const QString main_window_group = "MainWindow";
+const QString size_key = "size";
+const QString pos_key = "pos";
+} // namespace
 
 MainWindow::MainWindow()
     : m_tabWidget(new QTabWidget), m_model1(std::make_unique<SampleModel>()),
       m_model2(std::make_unique<SampleModel>())
-{    
+{
     setCentralWidget(m_tabWidget);
     init_application();
 }
@@ -76,6 +77,5 @@ void MainWindow::init_models()
     m_model2->insertNewItem(Constants::DemoPropertiesType);
 
     m_tabWidget->addTab(new ModelEditorWidget(m_model1.get()), "Available properties");
-    m_tabWidget->setCurrentIndex(m_tabWidget->count()-1);
-
+    m_tabWidget->setCurrentIndex(m_tabWidget->count() - 1);
 }
