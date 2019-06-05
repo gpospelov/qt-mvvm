@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MATERIALTABLEMODEL_H
-#define MATERIALTABLEMODEL_H
+#ifndef MATERIALTABLEVIEWMODEL_H
+#define MATERIALTABLEVIEWMODEL_H
 
 #include "defaultviewmodel.h"
 #include "mvvm_global.h"
@@ -21,10 +21,10 @@ class SessionItem;
 
 //! View model to display content of MaterialModel in table like views.
 
-class CORE_EXPORT MaterialTableModel : public ModelView::DefaultViewModel
+class CORE_EXPORT MaterialTableViewModel : public ModelView::DefaultViewModel
 {
 public:
-    MaterialTableModel(ModelView::SessionModel* model = nullptr, QObject* parent = nullptr);
+    MaterialTableViewModel(ModelView::SessionModel* model = nullptr, QObject* parent = nullptr);
 };
 
-#endif //  MATERIALTABLEMODEL_H
+#endif //  MATERIALTABLEVIEWMODEL_H

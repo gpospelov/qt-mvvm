@@ -12,7 +12,7 @@
 #include "viewmodeldelegate.h"
 #include "viewmodels.h"
 #include "sessionitem.h"
-#include "MaterialTableModel.h"
+#include "MaterialTableViewModel.h"
 #include "CustomCellDecoration.h"
 #include <QTreeView>
 #include <QVBoxLayout>

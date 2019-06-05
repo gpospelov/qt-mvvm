@@ -7,12 +7,12 @@
 //
 // ************************************************************************** //
 
-#include "MaterialTableModel.h"
+#include "MaterialTableViewModel.h"
 #include "item_constants.h"
 #include "sessionitem.h"
 #include "MaterialTableRowConstructor.h"
 
-MaterialTableModel::MaterialTableModel(ModelView::SessionModel* model, QObject* parent)
+MaterialTableViewModel::MaterialTableViewModel(ModelView::SessionModel* model, QObject* parent)
     : ModelView::DefaultViewModel(model, parent)
 {
 //    setRowConstructor(std::make_unique<MaterialTableRowConstructor>());
