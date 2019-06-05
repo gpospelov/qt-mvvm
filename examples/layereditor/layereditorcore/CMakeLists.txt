@@ -3,7 +3,6 @@ set(library_name layereditorcore)
 # --- source and include files ---
 set(include_dirs  ${CMAKE_CURRENT_SOURCE_DIR}/model
     ${CMAKE_CURRENT_SOURCE_DIR}/viewmodel
-    ${CMAKE_CURRENT_SOURCE_DIR}/widgets
     ${CMAKE_CURRENT_SOURCE_DIR}/mainwindow)
 
 set(source_files)
