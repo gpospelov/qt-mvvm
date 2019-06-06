@@ -7,13 +7,15 @@
 //
 // ************************************************************************** //
 
-#include "LayerTableViewModel.h"
 #include "LayerTableViewModelController.h"
+#include "standardchildrenstrategies.h"
+#include "labeldatarowstrategy.h"
 
 using namespace ModelView;
 
-LayerTableViewModel::LayerTableViewModel(ModelView::SessionModel* model, QObject* parent)
-    : AbstractViewModel(std::make_unique<LayerTableViewModelController>(this), parent)
+LayerTableViewModelController::LayerTableViewModelController(AbstractViewModel* view_model)
+    : AbstractViewModelController(view_model)
 {
-    setSessionModel(model);
+    setRowStrategy(std::make_unique<LabelDataRowStrategy>());
+    setChildrenStrategy(std::make_unique<AllChildrenStrategy>());
 }

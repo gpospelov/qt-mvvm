@@ -11,8 +11,10 @@
 #include "CustomEditorFactory.h"
 #include "CustomCellDecoration.h"
 
+using namespace ModelView;
+
 CustomModelDelegate::CustomModelDelegate(ApplicationModels* models, QObject* parent)
-    : ModelView::ViewModelDelegate(parent)
+    : ViewModelDelegate(parent)
 {
     setEditorFactory(std::make_unique<CustomEditorFactory>(models));
 }

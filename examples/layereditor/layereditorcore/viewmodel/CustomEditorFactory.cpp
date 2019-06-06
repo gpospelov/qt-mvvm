@@ -24,7 +24,7 @@ std::unique_ptr<CustomEditor>
 CustomEditorFactory::createEditor(const QModelIndex& index) const
 {
     auto value = index.data(Qt::EditRole);
-    if (ModelView::Utils::IsExtPropertyVariant(value))
+    if (Utils::IsExtPropertyVariant(value))
         return std::make_unique<MaterialSelectorCellEditor>(m_models->materialModel());
     else
         return DefaultEditorFactory::createEditor(index);

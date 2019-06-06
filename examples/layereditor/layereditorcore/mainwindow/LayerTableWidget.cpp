@@ -12,28 +12,30 @@
 #include "CustomModelDelegate.h"
 #include "sessionitem.h"
 #include "LayerTableViewModel.h"
-#include <QTableView>
+#include <QTreeView>
 #include <QVBoxLayout>
 
+using namespace ModelView;
+
 LayerTableWidget::LayerTableWidget(ApplicationModels* models, QWidget* parent)
-    : QWidget(parent), m_view(new QTableView), m_delegate(std::make_unique<CustomModelDelegate>(models))
+    : QWidget(parent), m_treeView(new QTreeView), m_delegate(std::make_unique<CustomModelDelegate>(models))
 {
     auto layout = new QVBoxLayout;
     layout->setMargin(0);
     layout->setSpacing(0);
-    layout->addWidget(m_view);
+    layout->addWidget(m_treeView);
     setLayout(layout);
 
-    m_view->setItemDelegate(m_delegate.get());
-    m_view->setEditTriggers(QAbstractItemView::AllEditTriggers);
+    m_treeView->setItemDelegate(m_delegate.get());
+    m_treeView->setEditTriggers(QAbstractItemView::AllEditTriggers);
 }
 
 void LayerTableWidget::setItem(ModelView::SessionItem* container)
 {
     m_viewModel = std::make_unique<LayerTableViewModel>(container->model());
     m_viewModel->setRootSessionItem(container);
-    m_view->setModel(m_viewModel.get());
-    m_view->setSpan(1, 0, 2, 1); // fake span without connection with real MultiLayer
+
+    m_treeView->setModel(m_viewModel.get());
 }
 
 LayerTableWidget::~LayerTableWidget() = default;

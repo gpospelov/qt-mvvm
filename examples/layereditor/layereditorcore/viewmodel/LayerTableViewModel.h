@@ -15,7 +15,6 @@
 namespace ModelView
 {
 class SessionModel;
-class SessionItem;
 } // namespace ModelView
 
 /*!

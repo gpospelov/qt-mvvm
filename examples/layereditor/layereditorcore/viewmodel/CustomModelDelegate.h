@@ -14,6 +14,14 @@
 
 class ApplicationModels;
 
+/*!
+@class CustomModelDelegate
+@brief Custom delegate to adjust display/editing of SampleModel.
+
+Given implementation will invoke custom material selector while editing corresponding
+properties of LayerItem.
+*/
+
 class CORE_EXPORT CustomModelDelegate : public ModelView::ViewModelDelegate
 {
 public:

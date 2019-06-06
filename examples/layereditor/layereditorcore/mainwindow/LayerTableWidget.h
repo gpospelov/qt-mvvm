@@ -14,7 +14,7 @@
 #include <QWidget>
 #include <memory>
 
-class QTableView;
+class QTreeView;
 class CustomModelDelegate;
 class ApplicationModels;
 
@@ -26,7 +26,7 @@ class SessionItem;
 
 /*!
 @class LayerTableWidget
-@brief Shows content of multi layer in table-like view.
+@brief Shows content of multi layer in a tree view in special "flat" form.
 */
 
 class CORE_EXPORT LayerTableWidget : public QWidget
@@ -38,7 +38,7 @@ public:
     void setItem(ModelView::SessionItem* container);
 
 private:
-    QTableView* m_view;
+    QTreeView* m_treeView;
     std::unique_ptr<ModelView::AbstractViewModel> m_viewModel;
     std::unique_ptr<CustomModelDelegate> m_delegate;
 };
