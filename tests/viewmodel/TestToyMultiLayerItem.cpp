@@ -9,17 +9,17 @@ using namespace ModelView;
 
 //! Tests of toy MultiLayer in the context of model and viewmodel.
 
-class TestToyMultilayer : public ::testing::Test
+class TestToyMultilayerItem : public ::testing::Test
 {
 public:
-    ~TestToyMultilayer();
+    ~TestToyMultilayerItem();
 };
 
-TestToyMultilayer::~TestToyMultilayer() = default;
+TestToyMultilayerItem::~TestToyMultilayerItem() = default;
 
 //! Toy multilayer as produced bo toy SampleModel.
 
-TEST_F(TestToyMultilayer, multiLayer)
+TEST_F(TestToyMultilayerItem, multiLayer)
 {
     ToyItems::SampleModel model;
     auto multiLayer = model.insertNewItem(ToyItems::Constants::MultiLayerType);
@@ -31,7 +31,7 @@ TEST_F(TestToyMultilayer, multiLayer)
 //! Constructing ViewModel from a MultiLayer.
 //! Checking that view items point co correct SessionItem.
 
-TEST_F(TestToyMultilayer, multiLayerView)
+TEST_F(TestToyMultilayerItem, multiLayerView)
 {
     ToyItems::SampleModel model;
     auto multiLayerItem = model.insertNewItem(ToyItems::Constants::MultiLayerType);
@@ -51,7 +51,7 @@ TEST_F(TestToyMultilayer, multiLayerView)
 
 //! Find ViewItem corresponding to given MultiLayer item.
 
-TEST_F(TestToyMultilayer, findMultiLayerView)
+TEST_F(TestToyMultilayerItem, findMultiLayerView)
 {
     ToyItems::SampleModel model;
     auto multiLayerItem = model.insertNewItem(ToyItems::Constants::MultiLayerType);
@@ -65,7 +65,7 @@ TEST_F(TestToyMultilayer, findMultiLayerView)
 
 //! How ViewLabelItem sees MultiLayer
 
-TEST_F(TestToyMultilayer, viewItemsForMultiLayer)
+TEST_F(TestToyMultilayerItem, viewItemsForMultiLayer)
 {
     ToyItems::SampleModel model;
 

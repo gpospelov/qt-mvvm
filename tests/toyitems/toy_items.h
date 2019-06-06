@@ -19,44 +19,44 @@
 namespace ToyItems
 {
 
-class MultiLayer : public ModelView::CompoundItem
+class MultiLayerItem : public ModelView::CompoundItem
 {
 public:
     static const std::string T_LAYERS;
-    MultiLayer();
+    MultiLayerItem();
 };
 
 // ----------------------------------------------------------------------------
 
-class Layer : public ModelView::CompoundItem
+class LayerItem : public ModelView::CompoundItem
 {
 public:
     static const std::string P_THICKNESS;
     static const std::string P_COLOR;
     static const std::string T_PARTICLES;
-    Layer();
+    LayerItem();
 };
 
 // ----------------------------------------------------------------------------
 
-class Particle : public ModelView::CompoundItem
+class ParticleItem : public ModelView::CompoundItem
 {
 public:
     static const std::string P_POSITION;
     static const std::string P_SHAPES;
-    Particle();
+    ParticleItem();
 };
 
 // ----------------------------------------------------------------------------
 
-class InterferenceFunction : public ModelView::CompoundItem
+class InterferenceFunctionItem : public ModelView::CompoundItem
 {
 public:
     static const std::string P_ROTATION_ANLE;
     static const std::string P_INTEGRATION;
     static const std::string P_LATTICE_TYPE;
 
-    InterferenceFunction();
+    InterferenceFunctionItem();
 
     void activate() override;
 
@@ -66,35 +66,35 @@ private:
 
 // ----------------------------------------------------------------------------
 
-class Cylinder : public ModelView::CompoundItem
+class CylinderItem : public ModelView::CompoundItem
 {
 public:
     static const std::string P_RADIUS;
     static const std::string P_HEIGHT;
-    Cylinder();
+    CylinderItem();
 };
 
-class Sphere : public ModelView::CompoundItem
+class SphereItem : public ModelView::CompoundItem
 {
 public:
     static const std::string P_RADIUS;
-    Sphere();
+    SphereItem();
 };
 
-class AnysoPyramid : public ModelView::CompoundItem
+class AnysoPyramidItem : public ModelView::CompoundItem
 {
 public:
     static const std::string P_LENGTH;
     static const std::string P_WIDTH;
     static const std::string P_HEIGHT;
     static const std::string P_ALPHA;
-    AnysoPyramid();
+    AnysoPyramidItem();
 };
 
-class ShapeGroup : public ModelView::GroupItem
+class ShapeGroupItem : public ModelView::GroupItem
 {
 public:
-    ShapeGroup();
+    ShapeGroupItem();
 };
 
 } // namespace ToyItems

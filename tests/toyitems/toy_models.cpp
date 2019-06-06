@@ -15,14 +15,14 @@ namespace  {
 std::unique_ptr<ModelView::ItemCatalogue> CreateToyItemCatalogue()
 {
     std::unique_ptr<ModelView::ItemCatalogue> result = std::make_unique<ModelView::ItemCatalogue>();
-    result->registerItem<ToyItems::MultiLayer>();
-    result->registerItem<ToyItems::Layer>();
-    result->registerItem<ToyItems::Particle>();
-    result->registerItem<ToyItems::InterferenceFunction>();
-    result->registerItem<ToyItems::Sphere>();
-    result->registerItem<ToyItems::Cylinder>();
-    result->registerItem<ToyItems::AnysoPyramid>();
-    result->registerItem<ToyItems::ShapeGroup>();
+    result->registerItem<ToyItems::MultiLayerItem>();
+    result->registerItem<ToyItems::LayerItem>();
+    result->registerItem<ToyItems::ParticleItem>();
+    result->registerItem<ToyItems::InterferenceFunctionItem>();
+    result->registerItem<ToyItems::SphereItem>();
+    result->registerItem<ToyItems::CylinderItem>();
+    result->registerItem<ToyItems::AnysoPyramidItem>();
+    result->registerItem<ToyItems::ShapeGroupItem>();
     return result;
 }
 }

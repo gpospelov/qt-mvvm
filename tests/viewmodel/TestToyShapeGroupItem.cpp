@@ -11,19 +11,19 @@ using namespace ModelView;
 
 //! Tests of toy ShapeGroup in the context of model and viewmodel.
 
-class TestToyShapeGroup : public ::testing::Test
+class TestToyShapeGroupItem : public ::testing::Test
 {
 public:
-    ~TestToyShapeGroup();
+    ~TestToyShapeGroupItem();
 };
 
-TestToyShapeGroup::~TestToyShapeGroup() = default;
+TestToyShapeGroupItem::~TestToyShapeGroupItem() = default;
 
 //! Toy multilayer as produced bo toy SampleModel.
 
-TEST_F(TestToyShapeGroup, initialState)
+TEST_F(TestToyShapeGroupItem, initialState)
 {
-    ToyItems::ShapeGroup item;
+    ToyItems::ShapeGroupItem item;
 
     EXPECT_EQ(item.currentIndex(), 1);
     ASSERT_TRUE(item.currentItem() != nullptr);
@@ -43,9 +43,9 @@ TEST_F(TestToyShapeGroup, initialState)
               std::vector<std::string>({"Cylinder", "Full sphere", "Anysotropical pyramid"}));
 }
 
-TEST_F(TestToyShapeGroup, setCurrentType)
+TEST_F(TestToyShapeGroupItem, setCurrentType)
 {
-    ToyItems::ShapeGroup item;
+    ToyItems::ShapeGroupItem item;
     item.setCurrentType(ToyItems::Constants::CylinderType);
 
     EXPECT_EQ(item.currentIndex(), 1);
@@ -62,7 +62,7 @@ TEST_F(TestToyShapeGroup, setCurrentType)
               std::vector<std::string>({"Cylinder", "Full sphere", "Anysotropical pyramid"}));
 }
 
-TEST_F(TestToyShapeGroup, inModelContext)
+TEST_F(TestToyShapeGroupItem, inModelContext)
 {
     ToyItems::SampleModel model;
     auto item = dynamic_cast<GroupItem*>(model.insertNewItem(ToyItems::Constants::ShapeGroupType));
@@ -85,7 +85,7 @@ TEST_F(TestToyShapeGroup, inModelContext)
     EXPECT_EQ(item->children().at(2)->model(), &model);
 }
 
-TEST_F(TestToyShapeGroup, setDataInModelContext)
+TEST_F(TestToyShapeGroupItem, setDataInModelContext)
 {
     ToyItems::SampleModel model;
     auto item = dynamic_cast<GroupItem*>(model.insertNewItem(ToyItems::Constants::ShapeGroupType));
@@ -107,7 +107,7 @@ TEST_F(TestToyShapeGroup, setDataInModelContext)
 
 //! ViewLabelItem and ViewDataItem from ShapeItem.
 
-TEST_F(TestToyShapeGroup, viewItemsFromShapeGroup)
+TEST_F(TestToyShapeGroupItem, viewItemsFromShapeGroup)
 {
     ToyItems::SampleModel model;
 
@@ -123,7 +123,7 @@ TEST_F(TestToyShapeGroup, viewItemsFromShapeGroup)
 
 //! ShapeGroup item in DefaultViewModel.
 
-TEST_F(TestToyShapeGroup, inDefaultViewModelContext)
+TEST_F(TestToyShapeGroupItem, inDefaultViewModelContext)
 {
     ToyItems::SampleModel model;
     auto groupItem = model.insertNewItem(ToyItems::Constants::ShapeGroupType);
@@ -174,7 +174,7 @@ TEST_F(TestToyShapeGroup, inDefaultViewModelContext)
 
 //! ShapeGroup item in PropertyViewModel.
 
-TEST_F(TestToyShapeGroup, inPropertyViewModelContext)
+TEST_F(TestToyShapeGroupItem, inPropertyViewModelContext)
 {
     ToyItems::SampleModel model;
     auto parent = model.insertNewItem(Constants::BaseType);
@@ -208,7 +208,7 @@ TEST_F(TestToyShapeGroup, inPropertyViewModelContext)
         auto radiusLabelItem =
             dynamic_cast<ViewLabelItem*>(viewModel.itemFromIndex(radiusLabelIndex));
         ASSERT_TRUE(radiusLabelItem != nullptr);
-        auto radiusPropertyItem = groupItem->currentItem()->getItem(ToyItems::Sphere::P_RADIUS);
+        auto radiusPropertyItem = groupItem->currentItem()->getItem(ToyItems::SphereItem::P_RADIUS);
         EXPECT_EQ(radiusLabelItem->item(), radiusPropertyItem);
         auto radiusValueItem =
             dynamic_cast<ViewDataItem*>(viewModel.itemFromIndex(radiusValueIndex));
@@ -236,7 +236,7 @@ TEST_F(TestToyShapeGroup, inPropertyViewModelContext)
         auto radiusLabelItem =
             dynamic_cast<ViewLabelItem*>(viewModel.itemFromIndex(radiusLabelIndex));
         ASSERT_TRUE(radiusLabelItem != nullptr);
-        auto radiusPropertyItem = groupItem->currentItem()->getItem(ToyItems::Cylinder::P_RADIUS);
+        auto radiusPropertyItem = groupItem->currentItem()->getItem(ToyItems::CylinderItem::P_RADIUS);
         EXPECT_EQ(radiusLabelItem->item(), radiusPropertyItem);
         auto radiusValueItem =
             dynamic_cast<ViewDataItem*>(viewModel.itemFromIndex(radiusValueIndex));
@@ -251,7 +251,7 @@ TEST_F(TestToyShapeGroup, inPropertyViewModelContext)
         auto heightLabelItem =
             dynamic_cast<ViewLabelItem*>(viewModel.itemFromIndex(heightLabelIndex));
         ASSERT_TRUE(heightLabelItem != nullptr);
-        auto heightPropertyItem = groupItem->currentItem()->getItem(ToyItems::Cylinder::P_HEIGHT);
+        auto heightPropertyItem = groupItem->currentItem()->getItem(ToyItems::CylinderItem::P_HEIGHT);
         EXPECT_EQ(heightLabelItem->item(), heightPropertyItem);
         auto heightValueItem =
             dynamic_cast<ViewDataItem*>(viewModel.itemFromIndex(heightValueIndex));
