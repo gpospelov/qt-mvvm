@@ -9,13 +9,48 @@
 
 #include "LayerTableViewModelController.h"
 #include "standardchildrenstrategies.h"
-#include "labeldatarowstrategy.h"
+#include "rowstrategyinterface.h"
+#include "LayerItems.h"
+#include "item_constants.h"
+#include "viewitems.h"
 
 using namespace ModelView;
+
+//! Custom strategy to form table rows.
+
+class CustomLayerRowStrategy : public RowStrategyInterface
+{
+public:
+    QList<QStandardItem*> constructRow(SessionItem* item)
+    {
+        QList<QStandardItem*> result;
+
+        if (auto multilayer = dynamic_cast<MultiLayerItem*>(item)) {
+            result.push_back(new ViewLabelItem(multilayer));
+            result.push_back(new ViewDataItem(multilayer->getItem(MultiLayerItem::P_NREPETITIONS)));
+            result.push_back(new ViewEmptyItem()); // instead of material
+            result.push_back(new ViewEmptyItem()); // instead of thickness
+        }
+
+        if (auto layer = dynamic_cast<LayerItem*>(item)) {
+            result.push_back(new ViewLabelItem(layer));
+            result.push_back(new ViewEmptyItem()); // insted of N_REPETITIONS
+            result.push_back(new ViewDataItem(layer->getItem(LayerItem::P_MATERIAL)));
+            result.push_back(new ViewDataItem(layer->getItem(LayerItem::P_THICKNESS)));
+        }
+
+        return result;
+    }
+    QStringList horizontalHeaderLabels() const {
+        return QStringList();
+    }
+
+};
+
 
 LayerTableViewModelController::LayerTableViewModelController(AbstractViewModel* view_model)
     : AbstractViewModelController(view_model)
 {
-    setRowStrategy(std::make_unique<LabelDataRowStrategy>());
-    setChildrenStrategy(std::make_unique<AllChildrenStrategy>());
+    setRowStrategy(std::make_unique<CustomLayerRowStrategy>());
+    setChildrenStrategy(std::make_unique<TopItemsStrategy>());
 }
