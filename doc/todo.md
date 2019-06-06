@@ -5,6 +5,8 @@
 + Add tolltips role to SessionItem.
 + Add isVisible property to SessionItem.
 + Get rid of SessionItem::SetDataIntern.
++ Implement SessionItem::clone
++ Implement SessionModel::clone
 
 
 ## Undo/redo
@@ -53,6 +55,7 @@
 + Implement Travis and Appveyor continuous integration.
 + Implement universal flat editor.
 + Implement Data1DItem, Data2DItem, Data1DPresenterItem, Data2DPresenterItem.
+  + Implement qcustom plot based example for plotting
 + Implement SessionItemWidget equivalent.
 + Refactor CMake machinery in the part of public/private interface.
 + Implement back compatibility system.

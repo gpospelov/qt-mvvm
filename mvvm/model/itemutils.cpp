@@ -13,7 +13,7 @@
 
 using namespace ModelView;
 
-void Utils::iterate(const SessionItem* item, const std::function<void(const SessionItem*)>& fun)
+void Utils::iterate(SessionItem* item, const std::function<void(SessionItem*)>& fun)
 {
     if (item)
         fun(item);

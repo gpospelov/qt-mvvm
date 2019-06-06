@@ -24,7 +24,7 @@ namespace Utils
 {
 
 //! Iterates through item and all its children.
-CORE_EXPORT void iterate(const SessionItem* item, const std::function<void(const SessionItem*)>& fun);
+CORE_EXPORT void iterate(SessionItem* item, const std::function<void(SessionItem*)>& fun);
 
 //! Iterates through all model indices and calls user function.
 //! If function returns false for given index, iteration will not go down to children.
