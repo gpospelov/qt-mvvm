@@ -8,10 +8,10 @@
 // ************************************************************************** //
 
 #include "LayerTableViewModelController.h"
-#include "standardchildrenstrategies.h"
-#include "rowstrategyinterface.h"
 #include "LayerItems.h"
 #include "item_constants.h"
+#include "rowstrategyinterface.h"
+#include "standardchildrenstrategies.h"
 #include "viewitems.h"
 
 using namespace ModelView;
@@ -28,25 +28,21 @@ public:
         if (auto multilayer = dynamic_cast<MultiLayerItem*>(item)) {
             result.push_back(new ViewLabelItem(multilayer));
             result.push_back(new ViewDataItem(multilayer->getItem(MultiLayerItem::P_NREPETITIONS)));
-            result.push_back(new ViewEmptyItem()); // instead of material
-            result.push_back(new ViewEmptyItem()); // instead of thickness
+            result.push_back(new ViewEmptyItem()); // instead of P_MATERIAL
+            result.push_back(new ViewEmptyItem()); // instead of P_THICKNESS
         }
 
         if (auto layer = dynamic_cast<LayerItem*>(item)) {
             result.push_back(new ViewLabelItem(layer));
-            result.push_back(new ViewEmptyItem()); // insted of N_REPETITIONS
+            result.push_back(new ViewEmptyItem()); // insted of P_NREPETITIONS
             result.push_back(new ViewDataItem(layer->getItem(LayerItem::P_MATERIAL)));
             result.push_back(new ViewDataItem(layer->getItem(LayerItem::P_THICKNESS)));
         }
 
         return result;
     }
-    QStringList horizontalHeaderLabels() const {
-        return QStringList();
-    }
-
+    QStringList horizontalHeaderLabels() const { return QStringList(); }
 };
-
 
 LayerTableViewModelController::LayerTableViewModelController(AbstractViewModel* view_model)
     : AbstractViewModelController(view_model)

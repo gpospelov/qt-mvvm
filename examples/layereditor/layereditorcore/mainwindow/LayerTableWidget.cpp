@@ -14,6 +14,7 @@
 #include "LayerTableViewModel.h"
 #include <QTreeView>
 #include <QVBoxLayout>
+#include <QHeaderView>
 
 using namespace ModelView;
 
@@ -27,7 +28,8 @@ LayerTableWidget::LayerTableWidget(ApplicationModels* models, QWidget* parent)
     setLayout(layout);
 
     m_treeView->setItemDelegate(m_delegate.get());
-    m_treeView->setEditTriggers(QAbstractItemView::AllEditTriggers);
+    m_treeView->setEditTriggers(QAbstractItemView::AllEditTriggers); // provide one click editing
+    m_treeView->setAlternatingRowColors(true);
 }
 
 void LayerTableWidget::setItem(ModelView::SessionItem* container)
@@ -36,6 +38,8 @@ void LayerTableWidget::setItem(ModelView::SessionItem* container)
     m_viewModel->setRootSessionItem(container);
 
     m_treeView->setModel(m_viewModel.get());
+    m_treeView->expandAll();
+    m_treeView->header()->setSectionResizeMode(QHeaderView::Stretch);
 }
 
 LayerTableWidget::~LayerTableWidget() = default;
