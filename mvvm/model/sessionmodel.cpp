@@ -35,6 +35,11 @@ SessionModel::~SessionModel()
     m_mapper->callOnModelDestroyed();
 }
 
+void SessionModel::setItemPool(std::shared_ptr<ItemPool> pool)
+{
+    m_item_manager->setItemPool(pool);
+}
+
 void SessionModel::setItemCatalogue(std::unique_ptr<ItemCatalogue> catalogue)
 {
     // adding standard items to the user catalogue

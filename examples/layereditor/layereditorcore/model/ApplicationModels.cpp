@@ -13,21 +13,30 @@
 #include "item_constants.h"
 #include "jsonmodel.h"
 #include "sessionitem.h"
+#include "itempool.h"
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QFile>
 
+using namespace ModelView;
+
 struct ApplicationModels::ApplicationModelsPrivate
 {
+    std::shared_ptr<ItemPool> m_item_pool;
     std::unique_ptr<MaterialModel> m_material_model;
     std::unique_ptr<SampleModel> m_sample_model;
 };
 
 ApplicationModels::ApplicationModels() : p_impl(std::make_unique<ApplicationModelsPrivate>())
 {
+    p_impl->m_item_pool = std::make_shared<ItemPool>();
     p_impl->m_material_model = std::make_unique<MaterialModel>();
     p_impl->m_sample_model = std::make_unique<SampleModel>();
+
+    // use common pool for both models
+    p_impl->m_material_model->setItemPool(p_impl->m_item_pool);
+    p_impl->m_sample_model->setItemPool(p_impl->m_item_pool);
 }
 
 ApplicationModels::~ApplicationModels() = default;

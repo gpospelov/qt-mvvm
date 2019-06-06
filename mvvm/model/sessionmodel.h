@@ -27,12 +27,15 @@ class ItemManager;
 class CommandService;
 class ModelMapper;
 class ItemCatalogue;
+class ItemPool;
 
 class CORE_EXPORT SessionModel
 {
 public:
     SessionModel(std::string model_type = {});
     virtual ~SessionModel();
+
+    void setItemPool(std::shared_ptr<ItemPool> pool);
 
     void setItemCatalogue(std::unique_ptr<ItemCatalogue> catalogue);
 
