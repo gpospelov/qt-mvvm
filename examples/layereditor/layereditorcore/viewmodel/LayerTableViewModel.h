@@ -10,8 +10,7 @@
 #ifndef LAYERTABLEVIEWMODEL_H
 #define LAYERTABLEVIEWMODEL_H
 
-#include "defaultviewmodel.h"
-#include "mvvm_global.h"
+#include "abstractviewmodel.h"
 
 namespace ModelView
 {
@@ -19,9 +18,12 @@ class SessionModel;
 class SessionItem;
 } // namespace ModelView
 
-//! View model to display content of MultiLayerItem in table like views.
+/*!
+@class LayerTableViewModel
+@brief View model to display content of MultiLayerItem in table like views.
+*/
 
-class CORE_EXPORT LayerTableViewModel : public ModelView::DefaultViewModel
+class CORE_EXPORT LayerTableViewModel : public ModelView::AbstractViewModel
 {
 public:
     LayerTableViewModel(ModelView::SessionModel* model = nullptr, QObject* parent = nullptr);

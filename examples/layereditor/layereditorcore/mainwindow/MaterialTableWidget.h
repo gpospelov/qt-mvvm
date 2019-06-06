@@ -23,13 +23,18 @@ class ViewModelDelegate;
 class SessionItem;
 } // namespace ModelView
 
+/*!
+@class MaterialTableWidget
+@brief Shows content of MaterialModel in table-like view.
+*/
+
 class CORE_EXPORT MaterialTableWidget : public QWidget
 {
 public:
     explicit MaterialTableWidget(QWidget* parent = nullptr);
     ~MaterialTableWidget();
 
-    void setItem(ModelView::SessionItem* container);
+    void setItem(ModelView::SessionItem* material_container);
 
     QTreeView* treeView();
 

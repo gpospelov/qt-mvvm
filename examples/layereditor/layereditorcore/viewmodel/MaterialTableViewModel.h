@@ -17,7 +17,10 @@ namespace ModelView
 class SessionModel;
 } // namespace ModelView
 
-//! View model to display content of MaterialModel in table like views.
+/*!
+@class MaterialTableViewModel
+@brief View model to display content of MaterialModel in table like views.
+*/
 
 class CORE_EXPORT MaterialTableViewModel : public ModelView::AbstractViewModel
 {

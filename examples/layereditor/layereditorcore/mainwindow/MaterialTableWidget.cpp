@@ -8,16 +8,17 @@
 // ************************************************************************** //
 
 #include "MaterialTableWidget.h"
-#include "abstractviewmodel.h"
-#include "viewmodeldelegate.h"
-#include "sessionitem.h"
-#include "MaterialTableViewModel.h"
 #include "CustomCellDecoration.h"
+#include "MaterialTableViewModel.h"
+#include "sessionitem.h"
+#include "viewmodeldelegate.h"
 #include <QTreeView>
 #include <QVBoxLayout>
 
+using namespace ModelView;
+
 MaterialTableWidget::MaterialTableWidget(QWidget* parent)
-    : QWidget(parent), m_treeView(new QTreeView), m_delegate(std::make_unique<ModelView::ViewModelDelegate>())
+    : QWidget(parent), m_treeView(new QTreeView), m_delegate(std::make_unique<ViewModelDelegate>())
 {
     m_delegate->setCellDecoration(std::make_unique<CustomCellDecoration>());
 
@@ -29,15 +30,14 @@ MaterialTableWidget::MaterialTableWidget(QWidget* parent)
 
     m_treeView->setHeaderHidden(false);
     m_treeView->setItemDelegate(m_delegate.get());
-    // provide one click editing
-    m_treeView->setEditTriggers(QAbstractItemView::AllEditTriggers);
+    m_treeView->setEditTriggers(QAbstractItemView::AllEditTriggers); // provide one click editing
     m_treeView->setAlternatingRowColors(true);
 }
 
-void MaterialTableWidget::setItem(ModelView::SessionItem* container)
+void MaterialTableWidget::setItem(SessionItem* material_container)
 {
-    m_viewModel = std::make_unique<MaterialTableViewModel>(container->model());
-    m_viewModel->setRootSessionItem(container);
+    m_viewModel = std::make_unique<MaterialTableViewModel>(material_container->model());
+    m_viewModel->setRootSessionItem(material_container);
     m_treeView->setModel(m_viewModel.get());
     m_treeView->expandAll();
     m_treeView->setRootIsDecorated(false);
