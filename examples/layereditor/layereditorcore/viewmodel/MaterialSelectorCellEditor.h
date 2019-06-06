@@ -30,9 +30,6 @@ FIXME: move editor itself (which is combo box with colors) to separate widget in
 from model.
 */
 
-//!
-
-
 class CORE_EXPORT MaterialSelectorCellEditor : public ModelView::CustomEditor
 {
 public:

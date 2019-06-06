@@ -25,6 +25,7 @@ public:
     {
         QList<QStandardItem*> result;
 
+        // multilayer row contains its name, repetion and placeholders
         if (auto multilayer = dynamic_cast<MultiLayerItem*>(item)) {
             result.push_back(new ViewLabelItem(multilayer));
             result.push_back(new ViewDataItem(multilayer->getItem(MultiLayerItem::P_NREPETITIONS)));
@@ -32,6 +33,7 @@ public:
             result.push_back(new ViewEmptyItem()); // instead of P_THICKNESS
         }
 
+        // layer row contains its name, placeholder for repetition, layer material and thickness
         if (auto layer = dynamic_cast<LayerItem*>(item)) {
             result.push_back(new ViewLabelItem(layer));
             result.push_back(new ViewEmptyItem()); // insted of P_NREPETITIONS

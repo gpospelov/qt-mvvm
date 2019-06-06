@@ -31,7 +31,7 @@ SampleModel::SampleModel() : SessionModel("SampleModel")
     init_model();
 }
 
-//! Populated the model with some default content.
+//! Populats the model with some default content.
 
 void SampleModel::init_model()
 {
