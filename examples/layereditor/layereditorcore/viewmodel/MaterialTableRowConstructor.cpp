@@ -28,12 +28,6 @@ QList<QStandardItem*> MaterialTableRowConstructor::constructRow(ModelView::Sessi
     return result;
 }
 
-int MaterialTableRowConstructor::columnCount() const
-{
-    const int fixed_number_of_row_elements(4); // name, color, sld_real, sld_imag
-    return fixed_number_of_row_elements;
-}
-
 QStringList MaterialTableRowConstructor::horizontalHeaderLabels() const
 {
     return QStringList() << "Name" << "#" << "SLD, real" << "SLD, imag";

@@ -18,7 +18,6 @@ TEST_F(TestPropertiesRowStrategy, initialState)
 {
     PropertiesRowStrategy strategy({});
     EXPECT_EQ(strategy.constructRow(nullptr).size(), 0);
-    EXPECT_EQ(strategy.columnCount(), 0);
     EXPECT_EQ(strategy.horizontalHeaderLabels(), QStringList());
 }
 
@@ -31,7 +30,6 @@ TEST_F(TestPropertiesRowStrategy, topLevelItem)
     PropertiesRowStrategy strategy({});
     auto items = strategy.constructRow(&item);
     EXPECT_EQ(items.size(), 0);
-    EXPECT_EQ(strategy.columnCount(), 0);
     EXPECT_EQ(strategy.horizontalHeaderLabels(), QStringList());
 }
 
@@ -45,7 +43,6 @@ TEST_F(TestPropertiesRowStrategy, propertyItem)
     PropertiesRowStrategy strategy({});
     auto items = strategy.constructRow(&item);
     EXPECT_EQ(items.size(), 0);
-    EXPECT_EQ(strategy.columnCount(), 0);
     EXPECT_EQ(strategy.horizontalHeaderLabels(), QStringList());
 }
 
@@ -64,7 +61,6 @@ TEST_F(TestPropertiesRowStrategy, vectorItem)
     auto items = strategy.constructRow(&item);
 
     EXPECT_EQ(items.size(), 3);
-    EXPECT_EQ(strategy.columnCount(), 3);
     EXPECT_EQ(strategy.horizontalHeaderLabels(), QStringList() << "a" << "b" << "c");
 
     // views should look at 3 property items

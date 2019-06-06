@@ -30,9 +30,6 @@ public:
     //! Construct row of QStandardItems from given SessionItem.
     virtual QList<QStandardItem*> constructRow(SessionItem* item) = 0;
 
-    //! Returns number of elements in a row.
-    virtual int columnCount() const = 0;
-
     virtual QStringList horizontalHeaderLabels() const = 0;
 };
 

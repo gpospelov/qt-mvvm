@@ -28,12 +28,6 @@ QList<QStandardItem*> LayerTableRowConstructor::constructRow(ModelView::SessionI
     return result;
 }
 
-int LayerTableRowConstructor::columnCount() const
-{
-    const int fixed_number_of_row_elements(4); // Nr, Name, Material, Thickness
-    return fixed_number_of_row_elements;
-}
-
 QStringList LayerTableRowConstructor::horizontalHeaderLabels() const
 {
     return QStringList() << "Nr." << "Name" << "Material" << "Thickness";

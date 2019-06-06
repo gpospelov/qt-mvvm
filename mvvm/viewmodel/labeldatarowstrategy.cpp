@@ -11,10 +11,6 @@
 #include "sessionitem.h"
 #include "viewitems.h"
 
-namespace  {
-const int fixed_number_of_row_elements(2);
-}
-
 using namespace ModelView;
 
 //! Example:
@@ -34,11 +30,6 @@ QList<QStandardItem*> LabelDataRowStrategy::constructRow(SessionItem* item)
     else
         result.push_back(new ViewEmptyItem);
     return result;
-}
-
-int LabelDataRowStrategy::columnCount() const
-{
-    return fixed_number_of_row_elements;
 }
 
 QStringList LabelDataRowStrategy::horizontalHeaderLabels() const

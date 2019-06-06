@@ -27,7 +27,6 @@ class CORE_EXPORT LabelDataRowStrategy : public RowStrategyInterface
 {
 public:
     QList<QStandardItem*> constructRow(SessionItem* item);
-    int columnCount() const;
     QStringList horizontalHeaderLabels() const;
 };
 

@@ -24,7 +24,6 @@ TEST_F(TestLabelDataRowStrategy, initialState)
 {
     LabelDataRowStrategy constructor;
     EXPECT_EQ(constructor.constructRow(nullptr).size(), 0);
-    EXPECT_EQ(constructor.columnCount(), expected_column_count);
     EXPECT_EQ(constructor.horizontalHeaderLabels(), expected_labels);
 }
 
@@ -37,7 +36,6 @@ TEST_F(TestLabelDataRowStrategy, topLevelItem)
     LabelDataRowStrategy constructor;
     auto items = constructor.constructRow(&item);
     EXPECT_EQ(items.size(), expected_column_count); // label and empty items
-    EXPECT_EQ(constructor.columnCount(), expected_column_count);
     EXPECT_EQ(constructor.horizontalHeaderLabels(), expected_labels);
 
     // checking that it is label and data
@@ -59,7 +57,6 @@ TEST_F(TestLabelDataRowStrategy, propertyItem)
     LabelDataRowStrategy constructor;
     auto items = constructor.constructRow(&item);
     EXPECT_EQ(items.size(), expected_column_count);
-    EXPECT_EQ(constructor.columnCount(), expected_column_count);
     EXPECT_EQ(constructor.horizontalHeaderLabels(), expected_labels);
 
     // checking that it is label and data

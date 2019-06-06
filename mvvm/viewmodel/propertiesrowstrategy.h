@@ -28,7 +28,6 @@ public:
     PropertiesRowStrategy(const std::vector<std::string>& labels);
 
     QList<QStandardItem*> constructRow(SessionItem* item);
-    int columnCount() const;
     QStringList horizontalHeaderLabels() const;
 
 private:

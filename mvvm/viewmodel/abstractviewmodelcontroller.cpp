@@ -60,7 +60,6 @@ public:
 
     void update_layout()
     {
-        m_view_model->setColumnCount(m_row_strategy->columnCount());
         m_view_model->setHorizontalHeaderLabels(
         m_row_strategy->horizontalHeaderLabels());
     }

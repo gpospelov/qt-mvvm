@@ -18,7 +18,6 @@ class CORE_EXPORT LayerTableRowConstructor : public ModelView::RowStrategyInterf
 {
 public:
     QList<QStandardItem*> constructRow(ModelView::SessionItem* item);
-    int columnCount() const;
     QStringList horizontalHeaderLabels() const;
 };
 

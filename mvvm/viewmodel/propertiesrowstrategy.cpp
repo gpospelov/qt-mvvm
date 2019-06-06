@@ -35,11 +35,6 @@ QList<QStandardItem*> PropertiesRowStrategy::constructRow(SessionItem* item)
     return result;
 }
 
-int PropertiesRowStrategy::columnCount() const
-{
-    return static_cast<int>(m_column_labels.size());
-}
-
 QStringList PropertiesRowStrategy::horizontalHeaderLabels() const
 {
     QStringList result;
