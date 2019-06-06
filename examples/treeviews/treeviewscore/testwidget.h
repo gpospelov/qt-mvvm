@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef TESTWIDGET3_H
-#define TESTWIDGET3_H
+#ifndef TESTWIDGET_H
+#define TESTWIDGET_H
 
 #include <QWidget>
 #include <memory>
@@ -57,4 +57,4 @@ private:
     ModelView::SessionModel* m_sessionModel;
 };
 
-#endif // TESTWIDGET3_H
+#endif // TESTWIDGET_H
