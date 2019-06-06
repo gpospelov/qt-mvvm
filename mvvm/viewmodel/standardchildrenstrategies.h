@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_CHILDRENSTRATEGIES_H
-#define MVVM_CHILDRENSTRATEGIES_H
+#ifndef MVVM_STANDARDCHILDRENSTRATEGIES_H
+#define MVVM_STANDARDCHILDRENSTRATEGIES_H
 
 /*!
 @file childrenstrategies.h
@@ -61,4 +61,4 @@ public:
 
 }  // namespace ModelView
 
-#endif // MVVM_CHILDRENSTRATEGIES_H
+#endif // MVVM_STANDARDCHILDRENSTRATEGIES_H

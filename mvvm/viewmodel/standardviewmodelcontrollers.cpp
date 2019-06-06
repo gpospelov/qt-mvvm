@@ -8,7 +8,7 @@
 // ************************************************************************** //
 
 #include "standardviewmodelcontrollers.h"
-#include "childrenstrategies.h"
+#include "standardchildrenstrategies.h"
 #include "groupitem.h"
 #include "labeldatarowstrategy.h"
 #include "propertiesrowstrategy.h"

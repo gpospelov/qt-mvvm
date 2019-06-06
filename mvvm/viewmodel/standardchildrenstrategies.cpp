@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "childrenstrategies.h"
+#include "standardchildrenstrategies.h"
 #include "itemutils.h"
 #include "groupitem.h"
 

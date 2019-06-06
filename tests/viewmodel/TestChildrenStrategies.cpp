@@ -1,5 +1,5 @@
 #include "google_test.h"
-#include "childrenstrategies.h"
+#include "standardchildrenstrategies.h"
 #include "compounditem.h"
 #include "propertyitem.h"
 #include "sessionitem.h"
