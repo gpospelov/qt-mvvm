@@ -15,6 +15,7 @@
 #include <memory>
 
 class QTreeView;
+class MaterialModel;
 
 namespace ModelView
 {
@@ -31,7 +32,7 @@ class SessionItem;
 class CORE_EXPORT MaterialTableWidget : public QWidget
 {
 public:
-    explicit MaterialTableWidget(QWidget* parent = nullptr);
+    explicit MaterialTableWidget(MaterialModel* material_model, QWidget* parent = nullptr);
     ~MaterialTableWidget();
 
     void setItem(ModelView::SessionItem* material_container);

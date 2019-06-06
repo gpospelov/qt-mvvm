@@ -23,7 +23,7 @@ using namespace ModelView;
 
 SampleWidget::SampleWidget(ApplicationModels* models, QWidget* parent)
     : QWidget(parent), m_materialTree(new ItemsTreeView), m_sampleTree(new ItemsTreeView)
-    , m_materialTableWidget(new MaterialTableWidget)
+    , m_materialTableWidget(new MaterialTableWidget(models->materialModel()))
     , m_layerTableWidget(new LayerTableWidget(models))
     , m_models(models)
 {
@@ -34,14 +34,6 @@ SampleWidget::SampleWidget(ApplicationModels* models, QWidget* parent)
     mainLayout->addLayout(create_bottom_layout());
 
     setLayout(mainLayout);
-
-    auto items = models->materialModel()->rootItem()->children();
-    if (items.size())
-        m_materialTableWidget->setItem(items.at(0));
-
-    items = models->sampleModel()->rootItem()->children();
-    if (items.size())
-        m_layerTableWidget->setItem(items.at(0));
 }
 
 QBoxLayout* SampleWidget::create_top_layout()

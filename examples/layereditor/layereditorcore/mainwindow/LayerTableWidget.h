@@ -35,7 +35,7 @@ public:
     explicit LayerTableWidget(ApplicationModels* models, QWidget* parent = nullptr);
     ~LayerTableWidget();
 
-    void setItem(ModelView::SessionItem* container);
+    void setItem(ModelView::SessionItem* multilayer);
 
 private:
     QTreeView* m_treeView;

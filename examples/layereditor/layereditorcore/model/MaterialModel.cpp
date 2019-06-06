@@ -32,7 +32,7 @@ MaterialModel::MaterialModel() : SessionModel("MaterialModel")
     init_model();
 }
 
-//! Populats the model with some default content.
+//! Populates the model with some default content.
 
 void MaterialModel::init_model()
 {

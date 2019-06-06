@@ -12,12 +12,13 @@
 #include "MaterialTableViewModel.h"
 #include "sessionitem.h"
 #include "viewmodeldelegate.h"
+#include "MaterialModel.h"
 #include <QTreeView>
 #include <QVBoxLayout>
 
 using namespace ModelView;
 
-MaterialTableWidget::MaterialTableWidget(QWidget* parent)
+MaterialTableWidget::MaterialTableWidget(MaterialModel* material_model, QWidget* parent)
     : QWidget(parent), m_treeView(new QTreeView), m_delegate(std::make_unique<ViewModelDelegate>())
 {
     m_delegate->setCellDecoration(std::make_unique<CustomCellDecoration>());
@@ -32,6 +33,12 @@ MaterialTableWidget::MaterialTableWidget(QWidget* parent)
     m_treeView->setItemDelegate(m_delegate.get());
     m_treeView->setEditTriggers(QAbstractItemView::AllEditTriggers); // provide one click editing
     m_treeView->setAlternatingRowColors(true);
+
+    // Accessing to the material container
+    // FIXME implement equivalent of SessionModel::topItem
+    auto items = material_model->rootItem()->children();
+    if (items.size())
+        setItem(items.at(0));
 }
 
 void MaterialTableWidget::setItem(SessionItem* material_container)
