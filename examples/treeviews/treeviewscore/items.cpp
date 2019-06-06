@@ -10,7 +10,6 @@
 #include "items.h"
 #include "item_constants.h"
 #include "comboproperty.h"
-#include "itemmanager.h"
 #include "itemmapper.h"
 #include "taginfo.h"
 #include "vectoritem.h"
@@ -26,11 +25,13 @@ MultiLayer::MultiLayer() : CompoundItem(Constants::MultiLayerType)
                 /*set_as_default*/ true);
 }
 
-const std::string Layer::P_THICKNESS = "Thickness";
-const std::string Layer::P_COLOR = "Color";
-const std::string Layer::T_PARTICLES = "Particles";
+// ----------------------------------------------------------------------------
 
-Layer::Layer() : CompoundItem(Constants::LayerType)
+const std::string LayerItem::P_THICKNESS = "Thickness";
+const std::string LayerItem::P_COLOR = "Color";
+const std::string LayerItem::T_PARTICLES = "Particles";
+
+LayerItem::LayerItem() : CompoundItem(Constants::LayerType)
 {
     addProperty<ModelView::PropertyItem>(P_THICKNESS, 42.0);
     addProperty<ModelView::PropertyItem>(P_COLOR, QColor(Qt::green));
@@ -40,22 +41,22 @@ Layer::Layer() : CompoundItem(Constants::LayerType)
 
 // ----------------------------------------------------------------------------
 
-const std::string Particle::P_POSITION = "Position";
-const std::string Particle::P_SHAPES = "Shapes";
+const std::string ParticleItem::P_POSITION = "Position";
+const std::string ParticleItem::P_SHAPES = "Shapes";
 
-Particle::Particle() : CompoundItem(Constants::ParticleType)
+ParticleItem::ParticleItem() : CompoundItem(Constants::ParticleType)
 {
     addProperty<ModelView::VectorItem>(P_POSITION);
-    addProperty<ShapeGroup>(P_SHAPES);
+    addProperty<ShapeGroupItem>(P_SHAPES);
 }
 
 // ----------------------------------------------------------------------------
 
-const std::string InterferenceFunction::P_ROTATION_ANLE = "Rotation";
-const std::string InterferenceFunction::P_INTEGRATION = "Integration";
-const std::string InterferenceFunction::P_LATTICE_TYPE = "Lattice";
+const std::string InterferenceFunctionItem::P_ROTATION_ANLE = "Rotation";
+const std::string InterferenceFunctionItem::P_INTEGRATION = "Integration";
+const std::string InterferenceFunctionItem::P_LATTICE_TYPE = "Lattice";
 
-InterferenceFunction::InterferenceFunction() : CompoundItem(Constants::InterferenceType)
+InterferenceFunctionItem::InterferenceFunctionItem() : CompoundItem(Constants::InterferenceType)
 {
     addProperty<ModelView::PropertyItem>(P_ROTATION_ANLE, 90.0);
     addProperty<ModelView::PropertyItem>(P_INTEGRATION, true);
@@ -67,7 +68,7 @@ InterferenceFunction::InterferenceFunction() : CompoundItem(Constants::Interfere
     update_appearance();
 }
 
-void InterferenceFunction::activate()
+void InterferenceFunctionItem::activate()
 {
     auto onIntegrationFlagChange = [this](SessionItem*, std::string property) {
         if (property == P_INTEGRATION)
@@ -77,7 +78,7 @@ void InterferenceFunction::activate()
     mapper()->setOnPropertyChange(onIntegrationFlagChange, this);
 }
 
-void InterferenceFunction::update_appearance()
+void InterferenceFunctionItem::update_appearance()
 {
     auto angle_item = getItem(P_ROTATION_ANLE);
     angle_item->setEnabled(!getItemValue(P_INTEGRATION).toBool());
@@ -85,10 +86,10 @@ void InterferenceFunction::update_appearance()
 
 // ----------------------------------------------------------------------------
 
-const std::string Cylinder::P_RADIUS = "Radius";
-const std::string Cylinder::P_HEIGHT = "Height";
+const std::string CylinderItem::P_RADIUS = "Radius";
+const std::string CylinderItem::P_HEIGHT = "Height";
 
-Cylinder::Cylinder() : CompoundItem(Constants::CylinderType)
+CylinderItem::CylinderItem() : CompoundItem(Constants::CylinderType)
 {
     addProperty<ModelView::PropertyItem>(P_RADIUS, 8.0);
     addProperty<ModelView::PropertyItem>(P_HEIGHT, 10.0);
@@ -96,21 +97,21 @@ Cylinder::Cylinder() : CompoundItem(Constants::CylinderType)
 
 // ----------------------------------------------------------------------------
 
-const std::string Sphere::P_RADIUS = "Radius";
+const std::string SphereItem::P_RADIUS = "Radius";
 
-Sphere::Sphere() : CompoundItem(Constants::SphereType)
+SphereItem::SphereItem() : CompoundItem(Constants::SphereType)
 {
     addProperty<ModelView::PropertyItem>(P_RADIUS, 8.0);
 }
 
 // ----------------------------------------------------------------------------
 
-const std::string AnysoPyramid::P_LENGTH = "Length";
-const std::string AnysoPyramid::P_WIDTH = "Width";
-const std::string AnysoPyramid::P_HEIGHT = "Height";
-const std::string AnysoPyramid::P_ALPHA = "Alpha";
+const std::string AnysoPyramidItem::P_LENGTH = "Length";
+const std::string AnysoPyramidItem::P_WIDTH = "Width";
+const std::string AnysoPyramidItem::P_HEIGHT = "Height";
+const std::string AnysoPyramidItem::P_ALPHA = "Alpha";
 
-AnysoPyramid::AnysoPyramid() : CompoundItem(Constants::AnysoPyramidType)
+AnysoPyramidItem::AnysoPyramidItem() : CompoundItem(Constants::AnysoPyramidType)
 {
     addProperty<ModelView::PropertyItem>(P_LENGTH, 8.0);
     addProperty<ModelView::PropertyItem>(P_WIDTH, 8.0);
@@ -118,10 +119,10 @@ AnysoPyramid::AnysoPyramid() : CompoundItem(Constants::AnysoPyramidType)
     addProperty<ModelView::PropertyItem>(P_ALPHA, 8.0);
 }
 
-ShapeGroup::ShapeGroup() : GroupItem(Constants::ShapeGroupType)
+ShapeGroupItem::ShapeGroupItem() : GroupItem(Constants::ShapeGroupType)
 {
-    registerItem<Cylinder>("Cylinder");
-    registerItem<Sphere>("Full sphere", /*make_selected*/true);
-    registerItem<AnysoPyramid>("Anysotropical pyramid");
+    registerItem<CylinderItem>("Cylinder");
+    registerItem<SphereItem>("Full sphere", /*make_selected*/true);
+    registerItem<AnysoPyramidItem>("Anysotropical pyramid");
     init_group();
 }

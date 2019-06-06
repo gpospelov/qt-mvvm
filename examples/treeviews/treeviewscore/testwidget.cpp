@@ -8,32 +8,33 @@
 // ************************************************************************** //
 
 #include "testwidget.h"
-#include "standardviewmodels.h"
 #include "itemstreeview.h"
 #include "propertyeditor.h"
-#include "viewitem.h"
-#include "samplemodel.h"
+#include "sessionmodel.h"
 #include "sessionitem.h"
-#include "item_constants.h"
 #include "topitemsviewmodel.h"
+#include "defaultviewmodel.h"
+#include "viewitem.h"
 #include <QBoxLayout>
 #include <QLabel>
 #include <QMenu>
 #include <QTreeView>
 #include <QUndoView>
 
+using namespace ModelView;
+
 namespace
 {
-const QString text = "Undo/Redo basics.\n"
+const QString text = "Standard tree views and undo/redo basics.\n"
                      "Tree view on the left is looking on our ViewModel. Use right mouse button "
                      "on the left view to add/remove items, "
                      "or just modify values of items. View on the right displays command stack.";
 }
 
-TestWidget::TestWidget(QWidget* parent)
-    : QWidget(parent), m_defaultTreeView(new ModelView::ItemsTreeView), m_topItemView(new ModelView::ItemsTreeView),
-      m_subsetTreeView(new ModelView::ItemsTreeView), m_undoView(new QUndoView),
-      m_propertyEditor(new ModelView::PropertyEditor), m_sessionModel(new SampleModel)
+TestWidget::TestWidget(SessionModel* model, QWidget* parent)
+    : QWidget(parent), m_defaultTreeView(new ItemsTreeView), m_topItemView(new ItemsTreeView),
+      m_subsetTreeView(new ItemsTreeView), m_undoView(new QUndoView),
+      m_propertyEditor(new PropertyEditor), m_sessionModel(model)
 {
     auto mainLayout = new QVBoxLayout;
     mainLayout->setSpacing(10);
@@ -46,12 +47,14 @@ TestWidget::TestWidget(QWidget* parent)
     hlayout->addLayout(create_right_layout());
     mainLayout->addLayout(hlayout);
 
-    init_session_model();
     init_default_view();
     init_topitems_view();
     init_subset_view();
 
     setLayout(mainLayout);
+
+    m_sessionModel->setUndoRedoEnabled(true);
+    m_undoView->setStack(m_sessionModel->undoStack());
 }
 
 TestWidget::~TestWidget() = default;
@@ -83,42 +86,29 @@ void TestWidget::onContextMenuRequest(const QPoint& point)
     menu.exec(treeView->mapToGlobal(point));
 }
 
-//! Inits session model with some test content.
-
-void TestWidget::init_session_model()
-{
-    auto multi_layer = m_sessionModel->insertNewItem(Constants::MultiLayerType);
-    auto layer = m_sessionModel->insertNewItem(Constants::LayerType, multi_layer);
-    m_sessionModel->insertNewItem(Constants::ParticleType, layer);
-
-    m_sessionModel->insertNewItem(Constants::LayerType, multi_layer);
-
-    m_sessionModel->insertNewItem(Constants::InterferenceType);
-
-    m_sessionModel->setUndoRedoEnabled(true);
-    m_undoView->setStack(m_sessionModel->undoStack());
-}
-
 //! Returns SessionItem corresponding to given coordinate in a view.
 
-ModelView::SessionItem* TestWidget::item_from_view(QTreeView* view, const QPoint& point)
+SessionItem* TestWidget::item_from_view(QTreeView* view, const QPoint& point)
 {
     QModelIndex index = view->indexAt(point);
     auto item = m_defaultTreeView->viewModel()->itemFromIndex(index);
-    auto viewItem = dynamic_cast<ModelView::ViewItem*>(item);
+    auto viewItem = dynamic_cast<ViewItem*>(item);
     Q_ASSERT(viewItem);
     return viewItem->item();
 }
 
 void TestWidget::init_default_view()
 {
-    m_defaultTreeView->setViewModel(ModelView::Utils::CreateDefaultViewModel(m_sessionModel.get()));
+    m_defaultTreeView->setViewModel(std::make_unique<DefaultViewModel>(m_sessionModel));
 
-    connect(m_defaultTreeView, &ModelView::ItemsTreeView::itemSelected, [this](ModelView::SessionItem* item) {
+    // will notify m_topItemView and chose selected item in two other editors
+    auto on_item_selected = [this](SessionItem* item) {
         m_subsetTreeView->setRootSessionItem(item);
         m_propertyEditor->setItem(item);
         m_topItemView->setSelected(item);
-    });
+    };
+
+    connect(m_defaultTreeView, &ItemsTreeView::itemSelected, on_item_selected);
 
     m_defaultTreeView->treeView()->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(m_defaultTreeView->treeView(), &QTreeView::customContextMenuRequested, this,
@@ -127,14 +117,16 @@ void TestWidget::init_default_view()
 
 void TestWidget::init_topitems_view()
 {
-    m_topItemView->setViewModel( std::make_unique<ModelView::TopItemsViewModel>(m_sessionModel.get()));
-    connect(m_topItemView, &ModelView::ItemsTreeView::itemSelected,
-            [this](ModelView::SessionItem* item) { m_defaultTreeView->setSelected(item); });
+    m_topItemView->setViewModel(std::make_unique<TopItemsViewModel>(m_sessionModel));
+
+    // will notify m_defaultTreeView
+    auto on_item_selected = [this](SessionItem* item) { m_defaultTreeView->setSelected(item); };
+    connect(m_topItemView, &ItemsTreeView::itemSelected, on_item_selected);
 }
 
 void TestWidget::init_subset_view()
 {
-    m_subsetTreeView->setViewModel(ModelView::Utils::CreateDefaultViewModel(m_sessionModel.get()));
+    m_subsetTreeView->setViewModel(std::make_unique<DefaultViewModel>(m_sessionModel));
 }
 
 QBoxLayout* TestWidget::create_top_layout()

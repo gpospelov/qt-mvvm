@@ -10,8 +10,10 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <memory>
 #include <QMainWindow>
 
+class SampleModel;
 class QTabWidget;
 
 class MainWindow : public QMainWindow
@@ -19,6 +21,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 public:
     MainWindow();
+    ~MainWindow();
 
 protected:
     void closeEvent(QCloseEvent* event);
@@ -26,8 +29,10 @@ protected:
 private:
     void init_application();
     void write_settings();
+    void init_model();
 
     QTabWidget* m_tabWidget;
+    std::unique_ptr<SampleModel> m_sample_model;
 };
 
 #endif //  MAINWINDOW_H

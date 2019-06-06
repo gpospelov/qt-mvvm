@@ -16,20 +16,14 @@
 namespace ModelView
 {
 class SessionItem;
-class DefaultViewModel;
-class ViewModelDelegate;
+class SessionModel;
 class PropertyEditor;
 class ItemsTreeView;
 } // namespace ModelView
 
 class QTreeView;
-class QStandardItemModel;
-class QPoint;
 class QUndoView;
 class QBoxLayout;
-class QItemSelection;
-
-class SampleModel;
 
 //! Playground to test basics of ViewModel.
 
@@ -37,14 +31,13 @@ class TestWidget : public QWidget
 {
     Q_OBJECT
 public:
-    TestWidget(QWidget* parent = nullptr);
+    TestWidget(ModelView::SessionModel* model, QWidget* parent = nullptr);
     ~TestWidget();
 
 private slots:
     void onContextMenuRequest(const QPoint& point);
 
 private:
-    void init_session_model();
     ModelView::SessionItem* item_from_view(QTreeView* view, const QPoint& point);
 
     QBoxLayout* create_top_layout();
@@ -61,7 +54,7 @@ private:
     ModelView::ItemsTreeView* m_subsetTreeView;
     QUndoView* m_undoView;
     ModelView::PropertyEditor* m_propertyEditor;
-    std::unique_ptr<SampleModel> m_sessionModel;
+    ModelView::SessionModel* m_sessionModel;
 };
 
 #endif // TESTWIDGET3_H

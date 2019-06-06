@@ -12,7 +12,7 @@
 
 #include <string>
 
-//! Collection of toy items and models for testing purposes.
+//! Constants to define toy items.
 
 namespace Constants
 {

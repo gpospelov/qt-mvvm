@@ -10,12 +10,17 @@
 #ifndef ITEMS_H
 #define ITEMS_H
 
+//! @file items.h
+//! Collection of test items for our sample model.
+
 #include "compounditem.h"
 #include "groupitem.h"
 #include <string>
 
-//! @file items.h
-//! Collection of items for our application model.
+/*!
+@class MultiLayer
+@brief A multi layer with possibility to attach layers.
+*/
 
 class MultiLayer : public ModelView::CompoundItem
 {
@@ -24,37 +29,50 @@ public:
     MultiLayer();
 };
 
-// ----------------------------------------------------------------------------
+/*!
+@class LayerItem
+@brief A layer with thickness, color property and possibility to attach particles.
+*/
 
-class Layer : public ModelView::CompoundItem
+class LayerItem : public ModelView::CompoundItem
 {
 public:
     static const std::string P_THICKNESS;
     static const std::string P_COLOR;
     static const std::string T_PARTICLES;
-    Layer();
+    LayerItem();
 };
 
-// ----------------------------------------------------------------------------
+/*!
+@class ParticleItem
+@brief A particle with position and shape group.
 
-class Particle : public ModelView::CompoundItem
+Demonstrates how to create group of properties.
+*/
+
+class ParticleItem : public ModelView::CompoundItem
 {
 public:
     static const std::string P_POSITION;
     static const std::string P_SHAPES;
-    Particle();
+    ParticleItem();
 };
 
-// ----------------------------------------------------------------------------
+/*!
+@class InterferenceFunctionItem
+@brief Interference function with bool, double and combo on board.
 
-class InterferenceFunction : public ModelView::CompoundItem
+Demonstrates how to syncronize properties between each other.
+*/
+
+class InterferenceFunctionItem : public ModelView::CompoundItem
 {
 public:
     static const std::string P_ROTATION_ANLE;
     static const std::string P_INTEGRATION;
     static const std::string P_LATTICE_TYPE;
 
-    InterferenceFunction();
+    InterferenceFunctionItem();
 
     void activate() override;
 
@@ -62,37 +80,55 @@ private:
     void update_appearance();
 };
 
-// ----------------------------------------------------------------------------
+/*!
+@class CylinderItem
+@brief Simple cylinder with radius and height.
+*/
 
-class Cylinder : public ModelView::CompoundItem
+class CylinderItem : public ModelView::CompoundItem
 {
 public:
     static const std::string P_RADIUS;
     static const std::string P_HEIGHT;
-    Cylinder();
+    CylinderItem();
 };
 
-class Sphere : public ModelView::CompoundItem
+/*!
+@class SphereItem
+@brief Simple spherer with radius.
+*/
+
+class SphereItem : public ModelView::CompoundItem
 {
 public:
     static const std::string P_RADIUS;
-    Sphere();
+    SphereItem();
 };
 
-class AnysoPyramid : public ModelView::CompoundItem
+/*!
+@class AnysoPyramidItem
+@brief Pyramid with 4 parameters.
+*/
+
+class AnysoPyramidItem : public ModelView::CompoundItem
 {
 public:
     static const std::string P_LENGTH;
     static const std::string P_WIDTH;
     static const std::string P_HEIGHT;
     static const std::string P_ALPHA;
-    AnysoPyramid();
+    AnysoPyramidItem();
 };
 
-class ShapeGroup : public ModelView::GroupItem
+/*!
+@class AnysoPyramidItem
+@brief Special group of shapes.
+*/
+
+class ShapeGroupItem : public ModelView::GroupItem
 {
 public:
-    ShapeGroup();
+    ShapeGroupItem();
 };
 
 #endif // ITEMS_H

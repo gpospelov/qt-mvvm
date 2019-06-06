@@ -37,7 +37,8 @@
 
 ## User examples
 
-+ Add demo for all possible editors .
++ Add demo for all possible editors in `celleditors` example.
++ Implement drag-and-drop case for `layereditor` example.
 
 
 ## Miscellaneous

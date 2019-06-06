@@ -12,12 +12,18 @@
 
 #include "sessionmodel.h"
 
-//! Main application model.
+/*!
+@class SampleModel
+@brief Main application model.
+*/
 
 class SampleModel : public ModelView::SessionModel
 {
 public:
     SampleModel();
+
+private:
+    void init_model();
 };
 
 #endif

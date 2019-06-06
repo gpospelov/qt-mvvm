@@ -8,27 +8,44 @@
 // ************************************************************************** //
 
 #include "samplemodel.h"
+#include "item_constants.h"
 #include "itemcatalogue.h"
 #include "items.h"
 
-namespace  {
+using namespace ModelView;
+
+namespace
+{
 std::unique_ptr<ModelView::ItemCatalogue> CreateToyItemCatalogue()
 {
-    std::unique_ptr<ModelView::ItemCatalogue> result = std::make_unique<ModelView::ItemCatalogue>();
+    auto result = std::make_unique<ItemCatalogue>();
     result->registerItem<MultiLayer>();
-    result->registerItem<Layer>();
-    result->registerItem<Particle>();
-    result->registerItem<InterferenceFunction>();
-    result->registerItem<Sphere>();
-    result->registerItem<Cylinder>();
-    result->registerItem<AnysoPyramid>();
-    result->registerItem<ShapeGroup>();
+    result->registerItem<LayerItem>();
+    result->registerItem<ParticleItem>();
+    result->registerItem<InterferenceFunctionItem>();
+    result->registerItem<SphereItem>();
+    result->registerItem<CylinderItem>();
+    result->registerItem<AnysoPyramidItem>();
+    result->registerItem<ShapeGroupItem>();
     return result;
 }
-}
-
+} // namespace
 
 SampleModel::SampleModel() : SessionModel("SampleModel")
 {
     setItemCatalogue(CreateToyItemCatalogue());
+    init_model();
+}
+
+//! Provides initial model content.
+
+void SampleModel::init_model()
+{
+    auto multi_layer = insertNewItem(::Constants::MultiLayerType);
+    auto layer = insertNewItem(::Constants::LayerType, multi_layer);
+    insertNewItem(::Constants::ParticleType, layer);
+
+    insertNewItem(::Constants::LayerType, multi_layer);
+
+    insertNewItem(::Constants::InterferenceType);
 }

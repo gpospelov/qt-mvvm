@@ -10,15 +10,18 @@
 #ifndef ITEMS_H
 #define ITEMS_H
 
-#include "compounditem.h"
-#include <string>
-
 /*!
 @file items.h
 @brief Collection of items for our application model.
 */
 
-//! Demo item which demonstrates all supported properties.
+#include "compounditem.h"
+#include <string>
+
+/*!
+@class DemoPropertiesItem
+@brief Demo item which demonstrates all supported properties.
+*/
 
 class DemoPropertiesItem : public ModelView::CompoundItem
 {

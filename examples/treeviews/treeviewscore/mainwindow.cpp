@@ -8,27 +8,31 @@
 // ************************************************************************** //
 
 #include "mainwindow.h"
+#include "samplemodel.h"
 #include "testwidget.h"
-#include <QTabWidget>
 #include <QCoreApplication>
 #include <QSettings>
+#include <QTabWidget>
 
-namespace {
-    const QString main_window_group = "MainWindow";
-    const QString size_key = "size";
-    const QString pos_key = "pos";
-}
+namespace
+{
+const QString main_window_group = "MainWindow";
+const QString size_key = "size";
+const QString pos_key = "pos";
+} // namespace
 
 MainWindow::MainWindow()
-    : m_tabWidget(new QTabWidget)
-{    
-    m_tabWidget->addTab(new TestWidget, "Undo/Redo");
+    : m_tabWidget(new QTabWidget), m_sample_model(std::make_unique<SampleModel>())
+{
+    m_tabWidget->addTab(new TestWidget(m_sample_model.get()), "Tree views");
 
-    m_tabWidget->setCurrentIndex(m_tabWidget->count()-1);
+    m_tabWidget->setCurrentIndex(m_tabWidget->count() - 1);
     setCentralWidget(m_tabWidget);
 
     init_application();
 }
+
+MainWindow::~MainWindow() = default;
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {
