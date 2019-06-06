@@ -22,9 +22,16 @@ class SessionModel;
 class ExternalProperty;
 } // namespace ModelView
 
-//! Custom editor for table cells to select material from the list of existing materials.
+/*!
+@class MaterialSelectorCellEditor
+@brief Custom editor for table cells to select material from the list of existing materials.
 
-// FIXME move editor functionality to separate widget independend from model.
+FIXME: move editor itself (which is combo box with colors) to separate widget independend
+from model.
+*/
+
+//!
+
 
 class CORE_EXPORT MaterialSelectorCellEditor : public ModelView::CustomEditor
 {

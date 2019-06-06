@@ -8,22 +8,19 @@
 // ************************************************************************** //
 
 #include "CustomEditorFactory.h"
-#include "customeditor.h"
-#include "MaterialSelectorCellEditor.h"
-#include "customvariants.h"
 #include "ApplicationModels.h"
 #include "MaterialModel.h"
+#include "MaterialSelectorCellEditor.h"
+#include "customvariants.h"
 #include <QModelIndex>
+
+using namespace ModelView;
 
 CustomEditorFactory::~CustomEditorFactory() = default;
 
-CustomEditorFactory::CustomEditorFactory(ApplicationModels* models)
-    : m_models(models)
-{
+CustomEditorFactory::CustomEditorFactory(ApplicationModels* models) : m_models(models) {}
 
-}
-
-std::unique_ptr<ModelView::CustomEditor>
+std::unique_ptr<CustomEditor>
 CustomEditorFactory::createEditor(const QModelIndex& index) const
 {
     auto value = index.data(Qt::EditRole);

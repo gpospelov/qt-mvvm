@@ -13,24 +13,28 @@
 #include "externalproperty.h"
 #include <QColor>
 #include <QComboBox>
-#include <QDebug>
 #include <QStandardItemModel>
 #include <QVBoxLayout>
 
+using namespace ModelView;
+
 namespace
 {
-std::vector<ModelView::ExternalProperty> material_data(ModelView::SessionModel* model)
-{
-    std::vector<ModelView::ExternalProperty> result;
 
-    result.push_back(ModelView::ExternalProperty("Undefined", QColor(Qt::red)));
+//! Returns vector of ExternalProperty's describing materials stored in a model.
+
+std::vector<ExternalProperty> material_data(ModelView::SessionModel* model)
+{
+    std::vector<ExternalProperty> result;
+
+    result.push_back(ExternalProperty("Undefined", QColor(Qt::red)));
     for (auto container : model->rootItem()->children()) {
         for (auto item : container->children()) {
             if (auto material = dynamic_cast<SLDMaterialItem*>(item)) {
                 auto text = material->getItemValue(SLDMaterialItem::P_NAME).value<std::string>();
                 auto color = material->getItemValue(SLDMaterialItem::P_COLOR).value<QColor>();
                 auto id = material->identifier();
-                result.push_back(ModelView::ExternalProperty(text, color, id));
+                result.push_back(ExternalProperty(text, color, id));
             }
         }
     }
@@ -38,8 +42,6 @@ std::vector<ModelView::ExternalProperty> material_data(ModelView::SessionModel* 
 }
 
 } // namespace
-
-using namespace ModelView;
 
 MaterialSelectorCellEditor::MaterialSelectorCellEditor(SessionModel* model, QWidget* parent)
     : CustomEditor(parent), m_box(new QComboBox), m_model(model),
@@ -71,8 +73,6 @@ QSize MaterialSelectorCellEditor::minimumSizeHint() const
 
 void MaterialSelectorCellEditor::onIndexChanged(int index)
 {
-    qDebug() << "MaterialSelectorCellEditor::onIndexChanged(int index)" << index;
-
     auto property = m_data.value<ModelView::ExternalProperty>();
     auto mdata = material_data(m_model);
 

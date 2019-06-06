@@ -24,6 +24,11 @@ class AbstractViewModel;
 class SessionItem;
 } // namespace ModelView
 
+/*!
+@class LayerTableWidget
+@brief Shows content of multi layer in table-like view.
+*/
+
 class CORE_EXPORT LayerTableWidget : public QWidget
 {
 public:

@@ -19,7 +19,12 @@ class CustomEditor;
 
 class ApplicationModels;
 
-//! Editor factory with custom editors (i.e. MaterialSelector).
+/*!
+@class CustomEditorFactory
+@brief Editor factory with custom editors.
+
+Will create custom material selector for all cells containing ExternalProperty.
+*/
 
 class CORE_EXPORT CustomEditorFactory : public ModelView::DefaultEditorFactory
 {
