@@ -17,13 +17,18 @@ class MaterialModel;
 
 /*!
 @class MaterialPropertyController
-@brief Listens for all changes in material model
+@brief Listens for all changes in material model and updates properties in SampleModel.
 */
 
 class CORE_EXPORT MaterialPropertyController
 {
 public:
-    MaterialPropertyController(){}
+    MaterialPropertyController(MaterialModel* material_model, SampleModel* sample_model);
+
+private:
+    void update_all();
+    MaterialModel* m_material_model;
+    SampleModel* m_sample_model;
 };
 
 #endif //  MATERIALPROPERTYCONTROLLER_H

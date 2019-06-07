@@ -12,7 +12,10 @@
 
 #include "sessionmodel.h"
 
-class MaterialContainerItem;
+namespace ModelView
+{
+class ExternalProperty;
+}
 
 /*!
 @class MaterialModel
@@ -23,6 +26,8 @@ class CORE_EXPORT MaterialModel : public ModelView::SessionModel
 {
 public:
     MaterialModel();
+
+    static ModelView::ExternalProperty undefined_material();
 
 private:
     void init_model();

@@ -10,23 +10,24 @@
 #include "LayerItems.h"
 #include "externalproperty.h"
 #include "item_constants.h"
+#include "MaterialModel.h"
 #include <QVariant>
+
+using namespace ModelView;
 
 namespace
 {
 QVariant material_link()
 {
-    return QVariant::fromValue(ModelView::ExternalProperty("Undefined", QColor(Qt::red)));
+    return QVariant::fromValue(MaterialModel::undefined_material());
 }
 } // namespace
-
-using namespace ModelView;
 
 const std::string LayerItem::P_NAME = "P_NAME";
 const std::string LayerItem::P_MATERIAL = "P_MATERIAL";
 const std::string LayerItem::P_THICKNESS = "P_THICKNESS";
 
-LayerItem::LayerItem() : ModelView::CompoundItem(::Constants::LayerType)
+LayerItem::LayerItem() : CompoundItem(::Constants::LayerType)
 {
     addProperty<>(P_NAME, "Layer")->setDisplayName("Name");
     addProperty<>(P_MATERIAL, material_link())->setDisplayName("Material");
@@ -38,7 +39,7 @@ LayerItem::LayerItem() : ModelView::CompoundItem(::Constants::LayerType)
 const std::string MultiLayerItem::T_LAYERS = "T_LAYERS";
 const std::string MultiLayerItem::P_NREPETITIONS = "P_NREPETITIONS";
 
-MultiLayerItem::MultiLayerItem() : ModelView::CompoundItem(::Constants::MultiLayerType)
+MultiLayerItem::MultiLayerItem() : CompoundItem(::Constants::MultiLayerType)
 {
     addProperty<>(P_NREPETITIONS, 1)->setDisplayName("Nr.");
     std::vector<std::string> allowed_child = {::Constants::MultiLayerType, ::Constants::LayerType};

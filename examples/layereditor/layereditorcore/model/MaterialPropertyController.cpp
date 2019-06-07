@@ -8,3 +8,10 @@
 // ************************************************************************** //
 
 #include "MaterialPropertyController.h"
+
+MaterialPropertyController::MaterialPropertyController(MaterialModel* material_model,
+                                                       SampleModel* sample_model)
+    : m_material_model(material_model), m_sample_model(m_sample_model)
+{
+    update_all();
+}

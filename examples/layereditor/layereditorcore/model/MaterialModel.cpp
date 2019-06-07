@@ -11,6 +11,7 @@
 #include "MaterialItems.h"
 #include "item_constants.h"
 #include "itemcatalogue.h"
+#include "externalproperty.h"
 #include <QColor>
 
 using namespace ModelView;
@@ -30,6 +31,11 @@ MaterialModel::MaterialModel() : SessionModel("MaterialModel")
 {
     setItemCatalogue(CreateItemCatalogue());
     init_model();
+}
+
+ExternalProperty MaterialModel::undefined_material()
+{
+    return ExternalProperty("Undefined", QColor(Qt::red));
 }
 
 //! Populates the model with some default content.

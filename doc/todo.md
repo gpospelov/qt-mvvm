@@ -7,6 +7,7 @@
 + Get rid of SessionItem::SetDataIntern.
 + Implement SessionItem::clone
 + Implement SessionModel::clone
++ Implement item move from one parent to another.
 
 
 ## Undo/redo
