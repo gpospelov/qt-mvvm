@@ -39,6 +39,7 @@ public:
 private:
     std::string m_tag;
     int m_row;
+    // FIXME get rid of Json in the favor of ItemBackupStrategy
     std::unique_ptr<QJsonObject> m_child_backup;
     result_t m_result;
 };

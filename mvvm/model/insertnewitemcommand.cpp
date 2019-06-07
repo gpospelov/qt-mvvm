@@ -44,6 +44,7 @@ void InsertNewItemCommand::undo()
 void InsertNewItemCommand::execute()
 {
     auto parent = findReceiver();
+    // FIXME get rid of manager in the favor of factory function generated in CommandService
     auto child = m_model->manager()->createItem(m_model_type).release();
     parent->insertItem(child, m_tag, m_row);
     m_result = child;

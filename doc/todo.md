@@ -8,6 +8,7 @@
 + Implement SessionItem::clone
 + Implement SessionModel::clone
 + Implement item move from one parent to another.
++ Implement ModelMapper::onModelReload functionality.
 
 
 ## Undo/redo
@@ -59,9 +60,8 @@
   + Implement qcustom plot based example for plotting
 + Implement SessionItemWidget equivalent.
 + Refactor CMake machinery in the part of public/private interface.
+  + Simultaneously take care of directory structure, so examples sees only public interfaces.
 + Implement back compatibility system.
   + Logger to report errors from json converters.
   + Test case demonstrating reading obsolete project files.
 
-
-<hr>

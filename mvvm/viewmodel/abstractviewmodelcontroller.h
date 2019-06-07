@@ -34,6 +34,7 @@ class SessionModel;
 class CORE_EXPORT AbstractViewModelController
 {
 public:
+    // FIXME refactor: make majority of methods private
     explicit AbstractViewModelController(AbstractViewModel* view_model = nullptr);
     virtual ~AbstractViewModelController();
 
