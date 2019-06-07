@@ -9,23 +9,24 @@
 
 #include "ApplicationModels.h"
 #include "MaterialModel.h"
+#include "MaterialPropertyController.h"
 #include "SampleModel.h"
 #include "item_constants.h"
+#include "itempool.h"
 #include "jsonmodel.h"
 #include "sessionitem.h"
-#include "itempool.h"
-#include <QJsonObject>
+#include <QFile>
 #include <QJsonArray>
 #include <QJsonDocument>
-#include <QFile>
+#include <QJsonObject>
 
 using namespace ModelView;
 
-struct ApplicationModels::ApplicationModelsPrivate
-{
+struct ApplicationModels::ApplicationModelsPrivate {
     std::shared_ptr<ItemPool> m_item_pool;
     std::unique_ptr<MaterialModel> m_material_model;
     std::unique_ptr<SampleModel> m_sample_model;
+    std::unique_ptr<MaterialPropertyController> m_property_controller;
 };
 
 ApplicationModels::ApplicationModels() : p_impl(std::make_unique<ApplicationModelsPrivate>())
@@ -33,6 +34,8 @@ ApplicationModels::ApplicationModels() : p_impl(std::make_unique<ApplicationMode
     p_impl->m_item_pool = std::make_shared<ItemPool>();
     p_impl->m_material_model = std::make_unique<MaterialModel>();
     p_impl->m_sample_model = std::make_unique<SampleModel>();
+    p_impl->m_property_controller = std::make_unique<MaterialPropertyController>(
+        p_impl->m_material_model.get(), p_impl->m_sample_model.get());
 
     // use common pool for both models
     p_impl->m_material_model->setItemPool(p_impl->m_item_pool);
@@ -50,6 +53,8 @@ SampleModel* ApplicationModels::sampleModel()
 {
     return p_impl->m_sample_model.get();
 }
+
+// FIXME move read/write to separate class in qt-mvvm basic library. Hide json from user.
 
 void ApplicationModels::readFromFile(const QString& name)
 {

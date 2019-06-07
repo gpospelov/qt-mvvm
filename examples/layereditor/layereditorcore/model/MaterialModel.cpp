@@ -41,6 +41,7 @@ ExternalProperty MaterialModel::undefined_material()
 }
 
 //! Returns vector of properties representing possible choice of materials.
+//! Here we assume that all materials seats in top level material containers.
 
 std::vector<ExternalProperty> MaterialModel::material_data()
 {
@@ -60,6 +61,17 @@ std::vector<ExternalProperty> MaterialModel::material_data()
     return result;
 }
 
+//! Returns property from given material id.
+
+ExternalProperty MaterialModel::material_property(const std::string& id)
+{
+    auto materials = material_data();
+    for (const auto& prop : material_data())
+        if (prop.identifier() == id)
+            return prop;
+
+    return undefined_material();
+}
 
 //! Populates the model with some default content.
 

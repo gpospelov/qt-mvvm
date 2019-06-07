@@ -32,6 +32,7 @@ public:
 
     std::vector<ModelView::ExternalProperty> material_data();
 
+    ModelView::ExternalProperty  material_property(const std::string& id);
 private:
     void init_model();
 };

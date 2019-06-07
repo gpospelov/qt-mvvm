@@ -24,8 +24,10 @@ class CORE_EXPORT MaterialPropertyController
 {
 public:
     MaterialPropertyController(MaterialModel* material_model, SampleModel* sample_model);
+    ~MaterialPropertyController();
 
 private:
+    void connect_material_model();
     void update_all();
     MaterialModel* m_material_model;
     SampleModel* m_sample_model;
