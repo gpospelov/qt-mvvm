@@ -13,6 +13,8 @@
 #include "sessionitem.h"
 #include "viewmodeldelegate.h"
 #include "MaterialModel.h"
+#include "modelutils.h"
+#include "MaterialItems.h"
 #include <QTreeView>
 #include <QVBoxLayout>
 
@@ -34,11 +36,7 @@ MaterialTableWidget::MaterialTableWidget(MaterialModel* material_model, QWidget*
     m_treeView->setEditTriggers(QAbstractItemView::AllEditTriggers); // provide one click editing
     m_treeView->setAlternatingRowColors(true);
 
-    // Accessing to the material container
-    // FIXME implement equivalent of SessionModel::topItem
-    auto items = material_model->rootItem()->children();
-    if (items.size())
-        setItem(items.at(0));
+    setItem(Utils::TopItem<MaterialContainerItem>(material_model));
 }
 
 void MaterialTableWidget::setItem(SessionItem* material_container)

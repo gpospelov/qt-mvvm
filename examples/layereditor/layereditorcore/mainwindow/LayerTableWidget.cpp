@@ -14,6 +14,8 @@
 #include "sessionitem.h"
 #include "LayerTableViewModel.h"
 #include "SampleModel.h"
+#include "modelutils.h"
+#include "LayerItems.h"
 #include <QTreeView>
 #include <QVBoxLayout>
 #include <QHeaderView>
@@ -33,15 +35,14 @@ LayerTableWidget::LayerTableWidget(ApplicationModels* models, QWidget* parent)
     m_treeView->setEditTriggers(QAbstractItemView::AllEditTriggers); // provide one click editing
     m_treeView->setAlternatingRowColors(true);
 
-    // Accessing to the top multilayer
-    // FIXME implement equivalent of SessionModel::topItem
-    auto items = models->sampleModel()->rootItem()->children();
-    if (items.size())
-        setItem(items.at(0));
+    setItem(Utils::TopItem<MultiLayerItem>(models->sampleModel()));
 }
 
 void LayerTableWidget::setItem(ModelView::SessionItem* multilayer)
 {
+    if (!multilayer)
+        return;
+
     m_viewModel = std::make_unique<LayerTableViewModel>(multilayer->model());
     m_viewModel->setRootSessionItem(multilayer);
 
