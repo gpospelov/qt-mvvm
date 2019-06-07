@@ -30,8 +30,32 @@ TEST_F(TestPropertyTableViewModel, baseItem)
     PropertyTableViewModel viewModel;
     viewModel.setSessionModel(&model);
 
+    EXPECT_EQ(viewModel.rowCount(), 0);
+    EXPECT_EQ(viewModel.columnCount(), 0);
+}
+
+TEST_F(TestPropertyTableViewModel, propertyItem)
+{
+    SessionModel model;
+    auto parent = model.insertNewItem(Constants::BaseType);
+
+    parent->registerTag(TagInfo::universalTag("universal_tag"));
+    parent->registerTag(TagInfo::propertyTag("property_tag", Constants::PropertyType));
+
+    model.insertNewItem(Constants::BaseType, parent, "universal_tag");
+    model.insertNewItem(Constants::PropertyType, parent, "property_tag");
+    model.insertNewItem(Constants::BaseType, parent, "universal_tag");
+
+    PropertyTableViewModel viewModel;
+    viewModel.setSessionModel(&model);
+
+    // one cell corresponding to single item at property_tag of our parent
     EXPECT_EQ(viewModel.rowCount(), 1);
-    EXPECT_EQ(viewModel.columnCount(), 0); // FIXME don't understand why is not 1 for ViewEmptyItem
+    EXPECT_EQ(viewModel.columnCount(), 1);
+
+    viewModel.setRootSessionItem(parent);
+    EXPECT_EQ(viewModel.rowCount(), 0);
+    EXPECT_EQ(viewModel.columnCount(), 0);
 }
 
 //! VectorItem in a model.

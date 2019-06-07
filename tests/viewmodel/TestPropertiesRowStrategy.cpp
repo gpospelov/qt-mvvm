@@ -103,6 +103,32 @@ TEST_F(TestPropertiesRowStrategy, baseItemInModelContext)
     TestUtils::clean_items(items);
 }
 
+//! Row construction for rootItem with single item inserted. Shouldn't generate any row.
+
+TEST_F(TestPropertiesRowStrategy, propertyItemTree)
+{
+    SessionModel model;
+    auto parent = model.insertNewItem(Constants::BaseType);
+
+    parent->registerTag(TagInfo::universalTag("universal_tag"));
+    parent->registerTag(TagInfo::propertyTag("property_tag", Constants::PropertyType));
+
+    model.insertNewItem(Constants::BaseType, parent, "universal_tag");
+    model.insertNewItem(Constants::PropertyType, parent, "property_tag");
+
+    PropertiesRowStrategy strategy({});
+    auto items = strategy.constructRow(model.rootItem());
+
+    // root item doesn't have properties
+    EXPECT_EQ(items.size(), 0);
+    TestUtils::clean_items(items);
+
+    // parent has one registered property.
+    items = strategy.constructRow(parent);
+    EXPECT_EQ(items.size(), 1);
+    TestUtils::clean_items(items);
+}
+
 //! Row construction for rootItem when vectorItem is present. Shouldn't generate any row.
 
 TEST_F(TestPropertiesRowStrategy, vectorItemInModelContext)
