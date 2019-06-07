@@ -30,7 +30,7 @@ QList<QStandardItem*> PropertiesRowStrategy::constructRow(SessionItem* item)
         if (child->data(ItemDataRole::DATA).isValid())
             result.push_back(new ViewDataItem(child));
         else
-            result.push_back(new ViewEmptyItem);
+            result.push_back(new ViewLabelItem(child));
     }
     return result;
 }
