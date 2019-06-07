@@ -46,6 +46,14 @@ QString ModelToJsonString(ModelView::SessionModel& model);
 
 QJsonDocument LoadJson(const QString& fileName);
 
+template<typename T>
+void clean_items(T& items) {
+    for (auto item : items)
+        delete item;
+    items.clear();
+}
+
+
 }
 
 #endif

@@ -4,6 +4,7 @@
 #include "viewlabelitem.h"
 #include "viewdataitem.h"
 #include "viewemptyitem.h"
+#include "test_utils.h"
 
 namespace  {
 const int expected_column_count = 2;
@@ -45,6 +46,8 @@ TEST_F(TestLabelDataRowStrategy, topLevelItem)
     EXPECT_EQ(labelItem->item(), &item);
     ASSERT_TRUE(emptyItem != nullptr);
     EXPECT_EQ(emptyItem->item(), nullptr);
+
+    TestUtils::clean_items(items);
 }
 
 //! Checks row construction for property item.
@@ -66,4 +69,6 @@ TEST_F(TestLabelDataRowStrategy, propertyItem)
     EXPECT_EQ(labelItem->item(), &item);
     ASSERT_TRUE(dataItem != nullptr);
     EXPECT_EQ(dataItem->item(), &item);
+
+    TestUtils::clean_items(items);
 }

@@ -58,3 +58,22 @@ TEST_F(TestPropertyViewModel, propertyItem)
     EXPECT_EQ(viewModel.rowCount(), 1);
     EXPECT_EQ(viewModel.columnCount(), 2);
 }
+
+//! VectorItem in a model.
+
+TEST_F(TestPropertyViewModel, vectorItem)
+{
+    SessionModel model;
+    auto parent = model.insertNewItem(Constants::VectorType);
+
+    PropertyViewModel viewModel;
+    viewModel.setSessionModel(&model);
+
+    EXPECT_EQ(viewModel.rowCount(), 0); // root item doesn't have properties
+    EXPECT_EQ(viewModel.columnCount(), 2);
+
+    // switching to vectorItem and checking that it has 3 properties
+    viewModel.setRootSessionItem(parent);
+    EXPECT_EQ(viewModel.rowCount(), 3);
+    EXPECT_EQ(viewModel.columnCount(), 2);
+}

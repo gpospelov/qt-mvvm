@@ -1,8 +1,10 @@
 #include "google_test.h"
 #include "propertiesrowstrategy.h"
 #include "sessionitem.h"
+#include "sessionmodel.h"
 #include "vectoritem.h"
 #include "viewdataitem.h"
+#include "test_utils.h"
 
 using namespace ModelView;
 
@@ -31,6 +33,8 @@ TEST_F(TestPropertiesRowStrategy, topLevelItem)
     auto items = strategy.constructRow(&item);
     EXPECT_EQ(items.size(), 0);
     EXPECT_EQ(strategy.horizontalHeaderLabels(), QStringList());
+
+    TestUtils::clean_items(items);
 }
 
 //! Checks row construction for property item. It shouldn't generate any rows.
@@ -44,6 +48,8 @@ TEST_F(TestPropertiesRowStrategy, propertyItem)
     auto items = strategy.constructRow(&item);
     EXPECT_EQ(items.size(), 0);
     EXPECT_EQ(strategy.horizontalHeaderLabels(), QStringList());
+
+    TestUtils::clean_items(items);
 }
 
 //! Checks row construction for vector item.
@@ -75,4 +81,37 @@ TEST_F(TestPropertiesRowStrategy, vectorItem)
     auto view_z = dynamic_cast<ViewDataItem*>(items.at(2));
     ASSERT_TRUE(view_z != nullptr);
     EXPECT_EQ(view_z->item(), item.getItem(VectorItem::P_Z));
+
+    TestUtils::clean_items(items);
+}
+
+//! Row construction for rootItem with single item inserted. Shouldn't generate any row.
+
+TEST_F(TestPropertiesRowStrategy, baseItemInModelContext)
+{
+    SessionModel model;
+
+    PropertiesRowStrategy strategy({});
+    auto items = strategy.constructRow(model.rootItem());
+    EXPECT_EQ(items.size(), 0);
+    TestUtils::clean_items(items);
+
+    model.insertNewItem(Constants::BaseType);
+    items = strategy.constructRow(model.rootItem());
+    EXPECT_EQ(items.size(), 0);
+
+    TestUtils::clean_items(items);
+}
+
+//! Row construction for rootItem when vectorItem is present. Shouldn't generate any row.
+
+TEST_F(TestPropertiesRowStrategy, vectorItemInModelContext)
+{
+    SessionModel model;
+    model.insertNewItem(Constants::VectorType);
+
+    PropertiesRowStrategy strategy({});
+    auto items = strategy.constructRow(model.rootItem());
+    EXPECT_EQ(items.size(), 0);
+    TestUtils::clean_items(items);
 }
