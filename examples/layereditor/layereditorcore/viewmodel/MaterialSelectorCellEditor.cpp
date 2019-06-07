@@ -18,32 +18,8 @@
 
 using namespace ModelView;
 
-namespace
-{
 
-//! Returns vector of ExternalProperty's describing materials stored in a model.
-
-std::vector<ExternalProperty> material_data(ModelView::SessionModel* model)
-{
-    std::vector<ExternalProperty> result;
-
-    result.push_back(ExternalProperty("Undefined", QColor(Qt::red)));
-    for (auto container : model->rootItem()->children()) {
-        for (auto item : container->children()) {
-            if (auto material = dynamic_cast<SLDMaterialItem*>(item)) {
-                auto text = material->getItemValue(SLDMaterialItem::P_NAME).value<std::string>();
-                auto color = material->getItemValue(SLDMaterialItem::P_COLOR).value<QColor>();
-                auto id = material->identifier();
-                result.push_back(ExternalProperty(text, color, id));
-            }
-        }
-    }
-    return result;
-}
-
-} // namespace
-
-MaterialSelectorCellEditor::MaterialSelectorCellEditor(SessionModel* model, QWidget* parent)
+MaterialSelectorCellEditor::MaterialSelectorCellEditor(MaterialModel* model, QWidget* parent)
     : CustomEditor(parent), m_box(new QComboBox), m_model(model),
       m_combo_model(new QStandardItemModel(this))
 {
@@ -74,7 +50,7 @@ QSize MaterialSelectorCellEditor::minimumSizeHint() const
 void MaterialSelectorCellEditor::onIndexChanged(int index)
 {
     auto property = m_data.value<ModelView::ExternalProperty>();
-    auto mdata = material_data(m_model);
+    auto mdata = m_model->material_data();
 
     if (index >= 0 && index < static_cast<int>(mdata.size())) {
         if (property != mdata[static_cast<size_t>(index)])
@@ -89,7 +65,7 @@ void MaterialSelectorCellEditor::update_components()
     m_combo_model->clear();
 
     QStandardItem* parentItem = m_combo_model->invisibleRootItem();
-    for (auto prop : material_data(m_model)) {
+    for (auto prop : m_model->material_data()) {
         auto item = new QStandardItem(QString::fromStdString(prop.text()));
         parentItem->appendRow(item);
         item->setData(prop.color(), Qt::DecorationRole);
@@ -109,7 +85,7 @@ int MaterialSelectorCellEditor::internIndex()
 
     auto property = m_data.value<ModelView::ExternalProperty>();
     int result(-1);
-    for (auto prop : material_data(m_model)) {
+    for (auto prop : m_model->material_data()) {
         ++result;
         if (property.identifier() == prop.identifier())
             return result;

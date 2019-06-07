@@ -33,10 +33,33 @@ MaterialModel::MaterialModel() : SessionModel("MaterialModel")
     init_model();
 }
 
+//! Returns default property representing non-existent material.
+
 ExternalProperty MaterialModel::undefined_material()
 {
     return ExternalProperty("Undefined", QColor(Qt::red));
 }
+
+//! Returns vector of properties representing possible choice of materials.
+
+std::vector<ExternalProperty> MaterialModel::material_data()
+{
+    std::vector<ExternalProperty> result;
+
+    result.push_back(undefined_material());
+    for (auto container : rootItem()->children()) {
+        for (auto item : container->children()) {
+            if (auto material = dynamic_cast<SLDMaterialItem*>(item)) {
+                auto text = material->getItemValue(SLDMaterialItem::P_NAME).value<std::string>();
+                auto color = material->getItemValue(SLDMaterialItem::P_COLOR).value<QColor>();
+                auto id = material->identifier();
+                result.push_back(ExternalProperty(text, color, id));
+            }
+        }
+    }
+    return result;
+}
+
 
 //! Populates the model with some default content.
 

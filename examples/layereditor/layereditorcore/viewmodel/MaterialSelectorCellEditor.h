@@ -33,7 +33,7 @@ from model.
 class CORE_EXPORT MaterialSelectorCellEditor : public ModelView::CustomEditor
 {
 public:
-    explicit MaterialSelectorCellEditor(ModelView::SessionModel* model, QWidget* parent = nullptr);
+    explicit MaterialSelectorCellEditor(MaterialModel* model, QWidget* parent = nullptr);
 
     QSize sizeHint() const override;
     QSize minimumSizeHint() const override;
@@ -46,7 +46,7 @@ private:
     void setConnected(bool isConnected);
     void update_components() override;
     QComboBox* m_box;
-    ModelView::SessionModel* m_model;
+    MaterialModel* m_model;
     QStandardItemModel* m_combo_model;
 };
 

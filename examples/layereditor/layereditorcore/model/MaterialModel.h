@@ -11,6 +11,7 @@
 #define MATERIALMODEL_H
 
 #include "sessionmodel.h"
+#include <vector>
 
 namespace ModelView
 {
@@ -28,6 +29,8 @@ public:
     MaterialModel();
 
     static ModelView::ExternalProperty undefined_material();
+
+    std::vector<ModelView::ExternalProperty> material_data();
 
 private:
     void init_model();
