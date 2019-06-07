@@ -23,21 +23,21 @@
 using namespace ModelView;
 
 SessionModel::SessionModel(std::string model_type)
+    : SessionModel(model_type, std::make_shared<ItemPool>())
+{
+}
+
+SessionModel::SessionModel(std::string model_type, std::shared_ptr<ItemPool> pool)
     : m_item_manager(std::make_unique<ItemManager>()), m_commands(std::make_unique<CommandService>(this)),
       m_model_type(std::move(model_type)), m_mapper(std::make_unique<ModelMapper>(this))
 {
-    m_item_manager->setItemPool(std::make_shared<ItemPool>());
+    m_item_manager->setItemPool(pool);
     createRootItem();
 }
 
 SessionModel::~SessionModel()
 {
     m_mapper->callOnModelDestroyed();
-}
-
-void SessionModel::setItemPool(std::shared_ptr<ItemPool> pool)
-{
-    m_item_manager->setItemPool(pool);
 }
 
 void SessionModel::setItemCatalogue(std::unique_ptr<ItemCatalogue> catalogue)

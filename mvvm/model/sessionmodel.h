@@ -32,10 +32,10 @@ class ItemPool;
 class CORE_EXPORT SessionModel
 {
 public:
-    SessionModel(std::string model_type = {});
-    virtual ~SessionModel();
+    explicit SessionModel(std::string model_type = {});
+    SessionModel(std::string model_type, std::shared_ptr<ItemPool> pool);
 
-    void setItemPool(std::shared_ptr<ItemPool> pool);
+    virtual ~SessionModel();
 
     void setItemCatalogue(std::unique_ptr<ItemCatalogue> catalogue);
 

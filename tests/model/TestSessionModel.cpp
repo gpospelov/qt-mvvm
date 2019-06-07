@@ -113,7 +113,7 @@ TEST_F(TestSessionModel, removeRow)
 
     auto child1 = model.insertNewItem(Constants::BaseType, parent);
     auto child2 = model.insertNewItem(Constants::PropertyType, parent, "", 0); // before child1
-    Q_UNUSED(child2);
+    Q_UNUSED(child2)
 
     // removing child2
     model.removeItem(parent, "", 0); // removing child2
@@ -147,7 +147,12 @@ TEST_F(TestSessionModel, takeRowFromRootItem)
 
 TEST_F(TestSessionModel, clearModel)
 {
-    SessionModel model;
+    auto pool = std::make_shared<ItemPool>();
+    SessionModel model("test", pool);
+
+    EXPECT_EQ(pool->size(), 1);
+
+    auto first_root = model.rootItem();
 
     EXPECT_EQ(model.rootItem()->childrenCount(), 0);
     model.insertNewItem(Constants::BaseType);
@@ -156,4 +161,7 @@ TEST_F(TestSessionModel, clearModel)
 
     model.clear();
     EXPECT_EQ(model.rootItem()->childrenCount(), 0);
+    EXPECT_FALSE(model.rootItem() == first_root);
+    EXPECT_EQ(pool->key_for_item(first_root), "");
+    EXPECT_EQ(pool->size(), 1);
 }
