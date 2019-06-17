@@ -1,0 +1,65 @@
+// ************************************************************************** //
+//
+//  Prototype of mini MVVM framework for bornagainproject.org
+//
+//! @homepage  http://www.bornagainproject.org
+//! @license   GNU General Public License v3 or higher
+//
+// ************************************************************************** //
+
+#ifndef MATERIALITEMS_H
+#define MATERIALITEMS_H
+
+/*!
+@file MaterialItems.h
+@brief Collection of materials to populate MaterialModel.
+*/
+
+#include "compounditem.h"
+class QColor;
+
+/*!
+@class MaterialContainerItem
+@brief Container to hold MaterialItems.
+*/
+
+class CORE_EXPORT MaterialContainerItem : public ModelView::CompoundItem
+{
+public:
+    MaterialContainerItem();
+};
+
+/*!
+@class MaterialBaseItem
+@brief Base class with all materials with name and color defined.
+*/
+
+class CORE_EXPORT MaterialBaseItem : public ModelView::CompoundItem
+{
+public:
+    static const std::string P_NAME;
+    static const std::string P_COLOR;
+    MaterialBaseItem(const std::string& model_type);
+protected:
+    void register_name();
+    void register_color();
+};
+
+/*!
+@class SLDMaterialItem
+@brief Represents material based on scattering length density.
+*/
+
+class CORE_EXPORT SLDMaterialItem : public MaterialBaseItem
+{
+public:    
+    static const std::string P_SLD_REAL;
+    static const std::string P_SLD_IMAG;
+
+    SLDMaterialItem();
+
+    void set_properties(const std::string& name, const QColor& color, double real, double imag);
+};
+
+#endif // MATERIALITEMS_H
+
