@@ -1,4 +1,4 @@
-set(executable_name layereditor_proto)
+set(executable_name sampleview)
 
 set(include_dirs ${CMAKE_CURRENT_SOURCE_DIR})
 
@@ -13,4 +13,4 @@ foreach(dir ${include_dirs})
 endforeach()
 
 add_executable(${executable_name} ${source_files} ${include_files})
-target_link_libraries(${executable_name} proto_layereditor_core)
+target_link_libraries(${executable_name} sampleview_core)

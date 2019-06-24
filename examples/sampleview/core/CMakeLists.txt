@@ -1,4 +1,4 @@
-set(library_name proto_layereditor_core)
+set(library_name sampleview_core)
 
 # --- source and include files ---
 set(include_dirs ${CMAKE_CURRENT_SOURCE_DIR}/model

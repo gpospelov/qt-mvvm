@@ -3,5 +3,5 @@
 add_subdirectory(celleditors)
 add_subdirectory(treeviews)
 add_subdirectory(layereditor)
-add_subdirectory(layereditor_proto)
+add_subdirectory(sampleview)
 
