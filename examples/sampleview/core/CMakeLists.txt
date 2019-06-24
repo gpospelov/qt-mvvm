@@ -3,7 +3,8 @@ set(library_name sampleview_core)
 # --- source and include files ---
 set(include_dirs ${CMAKE_CURRENT_SOURCE_DIR}/mainwindow
                  ${CMAKE_CURRENT_SOURCE_DIR}/model
-                 ${CMAKE_CURRENT_SOURCE_DIR}/viewmodel)
+                 ${CMAKE_CURRENT_SOURCE_DIR}/viewmodel
+                 ${CMAKE_CURRENT_SOURCE_DIR}/widgets)
 
 set(source_files)
 set(include_files)

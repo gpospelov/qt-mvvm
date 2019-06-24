@@ -9,6 +9,7 @@
 
 #include "mainwindow.h"
 #include "ApplicationModels.h"
+#include "LayerTableWidget.h"
 #include <QAction>
 #include <QCoreApplication>
 #include <QDockWidget>
@@ -75,8 +76,8 @@ void MainWindow::init_sample_editor()
     m_sample_editor->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::BottomDockWidgetArea
                                      | Qt::RightDockWidgetArea);
     m_sample_editor->setWindowTitle(tr("Layer editor"));
-    QTreeView* sample_editor = new QTreeView(m_material_editor);
-    m_sample_editor->setWidget(sample_editor);
+    auto layer_editor = new LayerTableWidget(m_models.get(), m_sample_editor);
+    m_sample_editor->setWidget(layer_editor);
     addDockWidget(Qt::RightDockWidgetArea, m_sample_editor);
 }
 
