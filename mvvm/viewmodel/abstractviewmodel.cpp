@@ -36,6 +36,11 @@ void AbstractViewModel::setRootSessionItem(SessionItem* item)
     m_controller->setRootSessionItem(item);
 }
 
+void AbstractViewModel::update()
+{
+    m_controller->init_view_model();
+}
+
 //! Returns QStandardItem associated with top level item (rootSessionItem).
 
 QStandardItem* AbstractViewModel::rootViewItem() const

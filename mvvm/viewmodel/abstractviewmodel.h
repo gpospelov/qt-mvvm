@@ -57,6 +57,8 @@ public:
 
     void setRootSessionItem(SessionItem* item);
 
+    void update();
+
     SessionItem* sessionItemFromIndex(const QModelIndex& index) const;
 
     QModelIndexList indexOfSessionItem(const SessionItem* item) const;
