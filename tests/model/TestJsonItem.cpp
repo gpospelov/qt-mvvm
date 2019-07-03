@@ -1,5 +1,5 @@
 #include "google_test.h"
-#include "jsonitem.h"
+#include "jsonitemconverter.h"
 #include "propertyitem.h"
 #include "sessionitem.h"
 #include "sessionmodel.h"

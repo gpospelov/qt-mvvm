@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "jsonitem.h"
+#include "jsonitemconverter.h"
 #include "itemmanager.h"
 #include "jsonitemdata.h"
 #include "jsontaginfo.h"

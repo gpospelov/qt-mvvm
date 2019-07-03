@@ -16,7 +16,7 @@
 #include "itemmanager.h"
 #include "customvariants.h"
 #include "mvvm_types.h"
-#include "jsonitem.h"
+#include "jsonitemconverter.h"
 #include <QSet>
 #include <QJsonObject>
 #include <QJsonArray>

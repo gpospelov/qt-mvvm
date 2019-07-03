@@ -13,7 +13,7 @@
 #include "itemfactory.h"
 #include "itempool.h"
 #include "jsonconverterinterfaces.h"
-#include "jsonitem.h"
+#include "jsonitemconverter.h"
 #include "sessionitem.h"
 
 namespace

@@ -9,7 +9,7 @@
 
 #include "removeitemcommand.h"
 #include "itemmanager.h"
-#include "jsonitem.h"
+#include "jsonitemconverter.h"
 #include "sessionitem.h"
 #include "sessionmodel.h"
 #include <QJsonObject>
