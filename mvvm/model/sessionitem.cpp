@@ -19,6 +19,7 @@
 #include "taginfo.h"
 #include "customvariants.h"
 #include "sessionitem_p.h"
+#include "uniqueidgenerator.h"
 #include <stdexcept>
 
 namespace
@@ -37,7 +38,7 @@ SessionItem::SessionItem(model_type modelType)
     : p_impl(std::make_unique<SessionItemPrivate>())
 {
     p_impl->m_modelType = modelType;
-    setDataIntern(QVariant::fromValue(ItemPool::generate_key()), ItemDataRole::IDENTIFIER);
+    setDataIntern(QVariant::fromValue(UniqueIdGenerator::generate()), ItemDataRole::IDENTIFIER);
     setDataIntern(QVariant::fromValue(modelType), ItemDataRole::DISPLAY);
 }
 

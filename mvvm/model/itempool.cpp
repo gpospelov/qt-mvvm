@@ -8,16 +8,11 @@
 // ************************************************************************** //
 
 #include "itempool.h"
-#include <QUuid>
+#include "uniqueidgenerator.h"
 #include <stdexcept>
 #include <cassert>
 
 using namespace ModelView;
-
-identifier_type ItemPool::generate_key()
-{
-    return  QUuid::createUuid().toString().toStdString();
-}
 
 size_t ItemPool::size() const
 {
@@ -33,9 +28,9 @@ identifier_type ItemPool::register_item(SessionItem* item, identifier_type key)
                                  "registered item.");
 
     if (key.empty()) {
-        key = generate_key();
+        key = UniqueIdGenerator::generate();
         while (m_key_to_item.find(key) != m_key_to_item.end())
-            key = generate_key(); // preventing improbable duplicates
+            key = UniqueIdGenerator::generate(); // preventing improbable duplicates
     } else {
         if (m_key_to_item.find(key) != m_key_to_item.end())
             throw std::runtime_error(" ItemPool::register_item() -> Attempt to reuse existing key");

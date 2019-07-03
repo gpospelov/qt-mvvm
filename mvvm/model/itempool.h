@@ -30,8 +30,6 @@ public:
     ItemPool& operator=(const ItemPool&) = delete;
     ItemPool& operator=(ItemPool&&) = delete;
 
-    static identifier_type generate_key();
-
     size_t size() const;
 
     identifier_type register_item(SessionItem* item, identifier_type key = {});
