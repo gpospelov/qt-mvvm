@@ -28,7 +28,7 @@ class ItemFactoryInterface;
 
 //! Default converter between SessionItem and json object.
 
-class CORE_EXPORT JsonItem : public JsonItemInterface
+class CORE_EXPORT JsonItem : public JsonItemConverterInterface
 {
 public:
     static const QString modelKey;

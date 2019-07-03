@@ -22,7 +22,7 @@ class SessionItem;
 class ItemPool;
 class ItemFactoryInterface;
 class JsonModelInterface;
-class JsonItemInterface;
+class JsonItemConverterInterface;
 class ItemCatalogue;
 
 //! Manages item creation/registration for SessionModel.
@@ -47,7 +47,7 @@ public:
     const ItemPool* itemPool() const;
     ItemPool* itemPool();
 
-    const JsonItemInterface& item_converter() const;
+    const JsonItemConverterInterface& item_converter() const;
 
     void register_item(SessionItem* item);
     void unregister_item(SessionItem* item);
@@ -59,7 +59,7 @@ public:
 private:
     std::shared_ptr<ItemPool> m_item_pool;
     std::unique_ptr<ItemFactoryInterface> m_item_factory;
-    std::unique_ptr<JsonItemInterface> m_item_converter;
+    std::unique_ptr<JsonItemConverterInterface> m_item_converter;
 };
 
 } // namespace ModelView

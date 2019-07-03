@@ -20,7 +20,7 @@ namespace ModelView {
 
 class SessionModel;
 class SessionItem;
-class JsonItemInterface;
+class JsonItemConverterInterface;
 
 class CORE_EXPORT JsonModel : public JsonModelInterface
 {

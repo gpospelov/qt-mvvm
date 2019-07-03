@@ -75,7 +75,7 @@ ItemPool* ItemManager::itemPool()
     return m_item_pool.get();
 }
 
-const JsonItemInterface& ItemManager::item_converter() const
+const JsonItemConverterInterface& ItemManager::item_converter() const
 {
     return *m_item_converter;
 }
