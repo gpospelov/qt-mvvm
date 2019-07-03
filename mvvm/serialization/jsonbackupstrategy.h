@@ -19,17 +19,17 @@ namespace ModelView
 class SessionItem;
 class JsonItemConverter;
 
-//! Backup
+//! Provide backup of SessionItem using given JsonItemConverter.
 
 class CORE_EXPORT JsonBackupStrategy : public ItemBackupStrategy
 {
 public:
-    JsonBackupStrategy();
+    JsonBackupStrategy(std::unique_ptr<JsonItemConverter> converter);
     ~JsonBackupStrategy();
 
     std::unique_ptr<SessionItem> restoreItem() const;
 
-    void saveItem(const SessionItem*);
+    void saveItem(const SessionItem* item);
 
 private:
     class JsonBackupStrategyPrivate;
