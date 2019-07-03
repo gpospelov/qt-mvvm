@@ -30,26 +30,26 @@ QStringList expected_itemcontainer_keys();
 
 using namespace ModelView;
 
-const QString JsonItem::modelKey = "model";
-const QString JsonItem::itemDataKey = "itemData";
-const QString JsonItem::itemTagsKey = "itemTags";
+const QString JsonItemConverter::modelKey = "model";
+const QString JsonItemConverter::itemDataKey = "itemData";
+const QString JsonItemConverter::itemTagsKey = "itemTags";
 
-const QString JsonItem::defaultTagKey = "defaultTag";
-const QString JsonItem::containerKey = "containers";
+const QString JsonItemConverter::defaultTagKey = "defaultTag";
+const QString JsonItemConverter::containerKey = "containers";
 
-const QString JsonItem::tagInfoKey = "tagInfo";
-const QString JsonItem::itemsKey = "items";
+const QString JsonItemConverter::tagInfoKey = "tagInfo";
+const QString JsonItemConverter::itemsKey = "items";
 
-JsonItem::JsonItem(const ItemFactoryInterface* factory)
+JsonItemConverter::JsonItemConverter(const ItemFactoryInterface* factory)
     : m_itemdata_converter(std::make_unique<JsonItemData>()),
       m_taginfo_converter(std::make_unique<JsonTagInfo>()), m_factory(factory)
 {
 
 }
 
-JsonItem::~JsonItem() = default;
+JsonItemConverter::~JsonItemConverter() = default;
 
-QJsonObject JsonItem::to_json(const SessionItem* item) const
+QJsonObject JsonItemConverter::to_json(const SessionItem* item) const
 {
     if (!item)
         return QJsonObject();
@@ -57,14 +57,14 @@ QJsonObject JsonItem::to_json(const SessionItem* item) const
     return item_to_json(*item);
 }
 
-std::unique_ptr<SessionItem> JsonItem::from_json(const QJsonObject& json) const
+std::unique_ptr<SessionItem> JsonItemConverter::from_json(const QJsonObject& json) const
 {
     return json_to_item(json);
 }
 
 //! Returns true if given json object represents SessionItem.
 
-bool JsonItem::isSessionItem(const QJsonObject& json) const
+bool JsonItemConverter::isSessionItem(const QJsonObject& json) const
 {
     static const QStringList expected = expected_item_keys();
 
@@ -82,7 +82,7 @@ bool JsonItem::isSessionItem(const QJsonObject& json) const
 
 //! Returns true if given json object represents SessionItemTags.
 
-bool JsonItem::isSessionItemTags(const QJsonObject& json) const
+bool JsonItemConverter::isSessionItemTags(const QJsonObject& json) const
 {
     static const QStringList expected = expected_tags_keys();
 
@@ -97,7 +97,7 @@ bool JsonItem::isSessionItemTags(const QJsonObject& json) const
 
 //! Returns true if given json object represents SessionItemContainer.
 
-bool JsonItem::isSessionItemContainer(const QJsonObject& json) const
+bool JsonItemConverter::isSessionItemContainer(const QJsonObject& json) const
 {
     static const QStringList expected = expected_itemcontainer_keys();
 
@@ -117,7 +117,7 @@ bool JsonItem::isSessionItemContainer(const QJsonObject& json) const
 
 //! Converts SessionItem to json object.
 
-QJsonObject JsonItem::item_to_json(const SessionItem& item) const
+QJsonObject JsonItemConverter::item_to_json(const SessionItem& item) const
 {
     QJsonObject result;
     result[modelKey] = QString::fromStdString(item.modelType());
@@ -129,7 +129,7 @@ QJsonObject JsonItem::item_to_json(const SessionItem& item) const
 
 //! Converts SessionItemTags to json object.
 
-QJsonObject JsonItem::tags_to_json(const SessionItemTags& tags) const
+QJsonObject JsonItemConverter::tags_to_json(const SessionItemTags& tags) const
 {
     QJsonObject result;
     result[defaultTagKey] = QString::fromStdString(tags.defaultTag());
@@ -144,7 +144,7 @@ QJsonObject JsonItem::tags_to_json(const SessionItemTags& tags) const
 
 //! Converts SessionItemContainer to json object.
 
-QJsonObject JsonItem::container_to_json(const SessionItemContainer& container) const
+QJsonObject JsonItemConverter::container_to_json(const SessionItemContainer& container) const
 {
     QJsonObject result;
     result[tagInfoKey] = m_taginfo_converter->to_json(container.tagInfo());
@@ -159,7 +159,7 @@ QJsonObject JsonItem::container_to_json(const SessionItemContainer& container) c
 
 // --- from json --------------------------------------------------------------
 
-std::unique_ptr<SessionItem> JsonItem::json_to_item(const QJsonObject& json,
+std::unique_ptr<SessionItem> JsonItemConverter::json_to_item(const QJsonObject& json,
                                                     SessionItem* parent) const
 {
     if (!isSessionItem(json))
@@ -176,7 +176,7 @@ std::unique_ptr<SessionItem> JsonItem::json_to_item(const QJsonObject& json,
     return result;
 }
 
-std::unique_ptr<SessionItemTags> JsonItem::json_to_tags(const QJsonObject& json,
+std::unique_ptr<SessionItemTags> JsonItemConverter::json_to_tags(const QJsonObject& json,
                                                         SessionItem* parent) const
 {
     if (!isSessionItemTags(json))
@@ -209,7 +209,7 @@ namespace
 QStringList expected_item_keys()
 {
     QStringList result = QStringList()
-                         << JsonItem::modelKey << JsonItem::itemDataKey << JsonItem::itemTagsKey;
+                         << JsonItemConverter::modelKey << JsonItemConverter::itemDataKey << JsonItemConverter::itemTagsKey;
     std::sort(result.begin(), result.end());
     return result;
 }
@@ -218,7 +218,7 @@ QStringList expected_item_keys()
 
 QStringList expected_tags_keys()
 {
-    QStringList result = QStringList() << JsonItem::defaultTagKey << JsonItem::containerKey;
+    QStringList result = QStringList() << JsonItemConverter::defaultTagKey << JsonItemConverter::containerKey;
     std::sort(result.begin(), result.end());
     return result;
 }
@@ -227,7 +227,7 @@ QStringList expected_tags_keys()
 
 QStringList expected_itemcontainer_keys()
 {
-    QStringList result = QStringList() << JsonItem::tagInfoKey << JsonItem::itemsKey;
+    QStringList result = QStringList() << JsonItemConverter::tagInfoKey << JsonItemConverter::itemsKey;
     std::sort(result.begin(), result.end());
     return result;
 }

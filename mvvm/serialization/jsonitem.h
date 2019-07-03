@@ -28,7 +28,7 @@ class ItemFactoryInterface;
 
 //! Default converter between SessionItem and json object.
 
-class CORE_EXPORT JsonItem : public JsonItemConverterInterface
+class CORE_EXPORT JsonItemConverter : public JsonItemConverterInterface
 {
 public:
     static const QString modelKey;
@@ -39,8 +39,8 @@ public:
     static const QString tagInfoKey;
     static const QString itemsKey;
 
-    JsonItem(const ItemFactoryInterface* factory);
-    ~JsonItem() override;
+    JsonItemConverter(const ItemFactoryInterface* factory);
+    ~JsonItemConverter() override;
 
     QJsonObject to_json(const SessionItem* item) const override;
 

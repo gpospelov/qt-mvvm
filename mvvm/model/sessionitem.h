@@ -83,7 +83,7 @@ public:
     bool isSinglePropertyTag(const std::string& tag) const;
 private:
     friend class SessionModel;
-    friend class JsonItem;
+    friend class JsonItemConverter;
     virtual void activate(){}
     void setParent(SessionItem* parent);
     void setModel(SessionModel* model);

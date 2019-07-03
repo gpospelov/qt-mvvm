@@ -17,7 +17,7 @@ namespace ModelView
 {
 
 class SessionItem;
-class JsonItem;
+class JsonItemConverter;
 
 //! Backup
 

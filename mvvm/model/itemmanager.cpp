@@ -28,14 +28,14 @@ using namespace ModelView;
 
 ItemManager::ItemManager()
     : m_item_factory(DefaultItemFactory()),
-      m_item_converter(std::make_unique<JsonItem>(m_item_factory.get()))
+      m_item_converter(std::make_unique<JsonItemConverter>(m_item_factory.get()))
 {
 }
 
 void ItemManager::setItemFactory(std::unique_ptr<ItemFactoryInterface> factory)
 {
     m_item_factory = std::move(factory);
-    m_item_converter = std::make_unique<JsonItem>(m_item_factory.get());
+    m_item_converter = std::make_unique<JsonItemConverter>(m_item_factory.get());
 }
 
 void ItemManager::setItemPool(std::shared_ptr<ItemPool> pool)

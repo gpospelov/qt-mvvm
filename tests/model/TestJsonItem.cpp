@@ -24,9 +24,9 @@ public:
 
     static void SetUpTestCase() { TestUtils::CreateTestDirectory(test_dir); }
 
-    std::unique_ptr<JsonItem> createConverter()
+    std::unique_ptr<JsonItemConverter> createConverter()
     {
-        return std::make_unique<JsonItem>(m_model->manager()->factory());
+        return std::make_unique<JsonItemConverter>(m_model->manager()->factory());
     }
 
 private:
@@ -47,13 +47,13 @@ TEST_F(TestJsonItem, isSessionItem)
     EXPECT_FALSE(converter->isSessionItem(object));
 
     // it also should contain array
-    object[JsonItem::modelKey] = "abc";
-    object[JsonItem::itemDataKey] = QJsonArray();
-    object[JsonItem::itemTagsKey] = 42; // intentionally incorrect
+    object[JsonItemConverter::modelKey] = "abc";
+    object[JsonItemConverter::itemDataKey] = QJsonArray();
+    object[JsonItemConverter::itemTagsKey] = 42; // intentionally incorrect
     EXPECT_FALSE(converter->isSessionItem(object));
 
     // correctly constructed
-    object[JsonItem::itemTagsKey] = QJsonObject();
+    object[JsonItemConverter::itemTagsKey] = QJsonObject();
     EXPECT_TRUE(converter->isSessionItem(object));
 }
 
@@ -68,8 +68,8 @@ TEST_F(TestJsonItem, isSessionItemTags)
     EXPECT_FALSE(converter->isSessionItemTags(object));
 
     // it also should contain array
-    object[JsonItem::defaultTagKey] = "abc";
-    object[JsonItem::containerKey] = QJsonArray();
+    object[JsonItemConverter::defaultTagKey] = "abc";
+    object[JsonItemConverter::containerKey] = QJsonArray();
     EXPECT_TRUE(converter->isSessionItemTags(object));
 }
 
@@ -84,8 +84,8 @@ TEST_F(TestJsonItem, isSessionItemContainer)
     EXPECT_FALSE(converter->isSessionItemContainer(object));
 
     // it also should contain array
-    object[JsonItem::tagInfoKey] = QJsonObject();
-    object[JsonItem::itemsKey] = QJsonArray();
+    object[JsonItemConverter::tagInfoKey] = QJsonObject();
+    object[JsonItemConverter::itemsKey] = QJsonArray();
     EXPECT_TRUE(converter->isSessionItemContainer(object));
 }
 
