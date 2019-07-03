@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_JSONITEM_H
-#define MVVM_JSONITEM_H
+#ifndef MVVM_JSONITEMCONVERTER_H
+#define MVVM_JSONITEMCONVERTER_H
 
 #include "jsonconverterinterfaces.h"
 #include <QString>
@@ -67,4 +67,4 @@ private:
 
 } // namespace ModelView
 
-#endif // MVVM_JSONITEM_H
+#endif // MVVM_JSONITEMCONVERTER_H

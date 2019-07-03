@@ -14,11 +14,11 @@ using namespace ModelView;
 
 //! Checks JsonItem class and its ability to convert SessionItems to json and back.
 
-class TestJsonItem : public ::testing::Test
+class TestJsonItemConverter : public ::testing::Test
 {
 public:
-    TestJsonItem() : m_model(std::make_unique<SessionModel>()) {}
-    ~TestJsonItem();
+    TestJsonItemConverter() : m_model(std::make_unique<SessionModel>()) {}
+    ~TestJsonItemConverter();
 
     static const QString test_dir;
 
@@ -33,12 +33,12 @@ private:
     std::unique_ptr<SessionModel> m_model;
 };
 
-TestJsonItem::~TestJsonItem() = default;
-const QString TestJsonItem::test_dir = "test_JsonItem";
+TestJsonItemConverter::~TestJsonItemConverter() = default;
+const QString TestJsonItemConverter::test_dir = "test_JsonItemConverter";
 
 //! Checks the validity of json object representing SessionItem.
 
-TEST_F(TestJsonItem, isSessionItem)
+TEST_F(TestJsonItemConverter, isSessionItem)
 {
     auto converter = createConverter();
 
@@ -59,7 +59,7 @@ TEST_F(TestJsonItem, isSessionItem)
 
 //! Checks the validity of json object representing SessionItemTags.
 
-TEST_F(TestJsonItem, isSessionItemTags)
+TEST_F(TestJsonItemConverter, isSessionItemTags)
 {
     auto converter = createConverter();
 
@@ -75,7 +75,7 @@ TEST_F(TestJsonItem, isSessionItemTags)
 
 //! Checks the validity of json object representing SessionItemContainer.
 
-TEST_F(TestJsonItem, isSessionItemContainer)
+TEST_F(TestJsonItemConverter, isSessionItemContainer)
 {
     auto converter = createConverter();
 
@@ -91,7 +91,7 @@ TEST_F(TestJsonItem, isSessionItemContainer)
 
 //! PropertyItem to json object.
 
-TEST_F(TestJsonItem, propertyItemToJson)
+TEST_F(TestJsonItemConverter, propertyItemToJson)
 {
     auto converter = createConverter();
 
@@ -104,7 +104,7 @@ TEST_F(TestJsonItem, propertyItemToJson)
 
 //! PropertyItem to json object and back.
 
-TEST_F(TestJsonItem, propertyItemToJsonAndBack)
+TEST_F(TestJsonItemConverter, propertyItemToJsonAndBack)
 {
     auto converter = createConverter();
 
@@ -120,7 +120,7 @@ TEST_F(TestJsonItem, propertyItemToJsonAndBack)
 
 //! PropertyItem to json file and back.
 
-TEST_F(TestJsonItem, propertyItemToFileAndBack)
+TEST_F(TestJsonItemConverter, propertyItemToFileAndBack)
 {
     auto converter = createConverter();
 
@@ -142,7 +142,7 @@ TEST_F(TestJsonItem, propertyItemToFileAndBack)
 
 //! Parent and child to json object.
 
-TEST_F(TestJsonItem, parentAndChildToJsonAndBack)
+TEST_F(TestJsonItemConverter, parentAndChildToJsonAndBack)
 {
     auto converter = createConverter();
     const std::string model(Constants::BaseType);
@@ -181,7 +181,7 @@ TEST_F(TestJsonItem, parentAndChildToJsonAndBack)
 
 //! Parent and child to json file and back.
 
-TEST_F(TestJsonItem, parentAndChildToFileAndBack)
+TEST_F(TestJsonItemConverter, parentAndChildToFileAndBack)
 {
     auto converter = createConverter();
     const std::string model(Constants::BaseType);
