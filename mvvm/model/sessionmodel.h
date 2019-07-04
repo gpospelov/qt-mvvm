@@ -28,6 +28,7 @@ class CommandService;
 class ModelMapper;
 class ItemCatalogue;
 class ItemPool;
+class ItemBackupStrategy;
 
 class CORE_EXPORT SessionModel
 {
@@ -69,6 +70,8 @@ public:
 
     void clear();
 
+    std::unique_ptr<ItemBackupStrategy> backupStrategy() const;
+
 protected:
     std::unique_ptr<ItemManager> m_item_manager;
 
@@ -84,4 +87,3 @@ private:
 } // namespace ModelView
 
 #endif // MVVM_SESSIONMODEL_H
-

@@ -10,14 +10,16 @@
 #include "sessionmodel.h"
 #include "commandservice.h"
 #include "customvariants.h"
+#include "itemcatalogue.h"
+#include "itemfactory.h"
 #include "itemmanager.h"
 #include "itempool.h"
 #include "itemutils.h"
+#include "jsonbackupstrategy.h"
+#include "jsonitemconverter.h"
 #include "modelmapper.h"
 #include "sessionitem.h"
 #include "standarditemcatalogue.h"
-#include "itemcatalogue.h"
-#include "itemfactory.h"
 #include "taginfo.h"
 
 using namespace ModelView;
@@ -28,8 +30,9 @@ SessionModel::SessionModel(std::string model_type)
 }
 
 SessionModel::SessionModel(std::string model_type, std::shared_ptr<ItemPool> pool)
-    : m_item_manager(std::make_unique<ItemManager>()), m_commands(std::make_unique<CommandService>(this)),
-      m_model_type(std::move(model_type)), m_mapper(std::make_unique<ModelMapper>(this))
+    : m_item_manager(std::make_unique<ItemManager>()),
+      m_commands(std::make_unique<CommandService>(this)), m_model_type(std::move(model_type)),
+      m_mapper(std::make_unique<ModelMapper>(this))
 {
     m_item_manager->setItemPool(pool);
     createRootItem();
@@ -150,6 +153,12 @@ void SessionModel::clear()
     mapper()->callOnModelReset();
     m_root_item.reset();
     createRootItem();
+}
+
+std::unique_ptr<ItemBackupStrategy> SessionModel::backupStrategy() const
+{
+    return std::make_unique<JsonBackupStrategy>(
+        std::make_unique<JsonItemConverter>(manager()->factory()));
 }
 
 void SessionModel::createRootItem()
