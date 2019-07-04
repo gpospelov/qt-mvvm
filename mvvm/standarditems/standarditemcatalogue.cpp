@@ -13,12 +13,14 @@
 #include "propertyitem.h"
 #include "compounditem.h"
 
-std::unique_ptr<ModelView::ItemCatalogue> ModelView::CreateStandardItemCatalogue()
+using namespace ModelView;
+
+std::unique_ptr<ItemCatalogue> CreateStandardItemCatalogue()
 {
     auto result = std::make_unique<ModelView::ItemCatalogue>();
-    result->registerItem<ModelView::SessionItem>();
-    result->registerItem<ModelView::PropertyItem>();
-    result->registerItem<ModelView::CompoundItem>();
-    result->registerItem<ModelView::VectorItem>();
+    result->registerItem<SessionItem>();
+    result->registerItem<PropertyItem>();
+    result->registerItem<CompoundItem>();
+    result->registerItem<VectorItem>();
     return result;
 }
