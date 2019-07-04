@@ -15,9 +15,9 @@
 
 using namespace ModelView;
 
-std::unique_ptr<ItemCatalogue> CreateStandardItemCatalogue()
+std::unique_ptr<ItemCatalogue> ModelView::CreateStandardItemCatalogue()
 {
-    auto result = std::make_unique<ModelView::ItemCatalogue>();
+    auto result = std::make_unique<ItemCatalogue>();
     result->registerItem<SessionItem>();
     result->registerItem<PropertyItem>();
     result->registerItem<CompoundItem>();
