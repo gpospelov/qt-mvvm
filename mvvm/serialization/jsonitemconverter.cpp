@@ -18,6 +18,8 @@
 #include "sessionmodel.h"
 #include "itemfactoryinterface.h"
 #include "sessionitem_p.h"
+#include "uniqueidgenerator.h"
+#include "customvariants.h"
 #include <QJsonArray>
 #include <QJsonObject>
 
@@ -40,9 +42,10 @@ const QString JsonItemConverter::containerKey = "containers";
 const QString JsonItemConverter::tagInfoKey = "tagInfo";
 const QString JsonItemConverter::itemsKey = "items";
 
-JsonItemConverter::JsonItemConverter(const ItemFactoryInterface* factory)
+JsonItemConverter::JsonItemConverter(const ItemFactoryInterface* factory, bool new_id_flag)
     : m_itemdata_converter(std::make_unique<JsonItemData>()),
-      m_taginfo_converter(std::make_unique<JsonTagInfo>()), m_factory(factory)
+      m_taginfo_converter(std::make_unique<JsonTagInfo>()), m_factory(factory),
+      m_generate_new_identifiers(new_id_flag)
 {
 
 }
@@ -172,6 +175,9 @@ std::unique_ptr<SessionItem> JsonItemConverter::json_to_item(const QJsonObject& 
 
     result->p_impl->m_data = m_itemdata_converter->get_data(json[itemDataKey].toArray());
     result->p_impl->m_tags = json_to_tags(json[itemTagsKey].toObject(), result.get());
+
+    if (m_generate_new_identifiers)
+        result->setData(QVariant::fromValue(UniqueIdGenerator::generate()), ItemDataRole::IDENTIFIER);
 
     return result;
 }

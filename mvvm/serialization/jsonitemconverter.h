@@ -39,7 +39,7 @@ public:
     static const QString tagInfoKey;
     static const QString itemsKey;
 
-    JsonItemConverter(const ItemFactoryInterface* factory);
+    JsonItemConverter(const ItemFactoryInterface* factory, bool new_id_flag = false);
     ~JsonItemConverter() override;
 
     QJsonObject to_json(const SessionItem* item) const override;
@@ -63,6 +63,7 @@ private:
     std::unique_ptr<JsonItemDataInterface> m_itemdata_converter;
     std::unique_ptr<JsonTagInfoInterface> m_taginfo_converter;
     const ItemFactoryInterface* m_factory;
+    bool m_generate_new_identifiers;
 };
 
 } // namespace ModelView

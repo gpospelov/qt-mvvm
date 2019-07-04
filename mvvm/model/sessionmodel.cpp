@@ -158,7 +158,7 @@ void SessionModel::clear()
 std::unique_ptr<ItemBackupStrategy> SessionModel::backupStrategy() const
 {
     return std::make_unique<JsonBackupStrategy>(
-        std::make_unique<JsonItemConverter>(manager()->factory()));
+        std::make_unique<JsonItemConverter>(m_item_manager->factory()));
 }
 
 void SessionModel::createRootItem()
