@@ -8,11 +8,9 @@
 // ************************************************************************** //
 
 #include "removeitemcommand.h"
-#include "itemmanager.h"
-#include "jsonitemconverter.h"
 #include "sessionitem.h"
 #include "sessionmodel.h"
-#include <QJsonObject>
+#include "itembackupstrategy.h"
 #include <sstream>
 
 namespace
@@ -31,29 +29,23 @@ RemoveItemCommand::RemoveItemCommand(SessionItem* parent, std::string tag, int r
     : AbstractItemCommand(parent), m_tag(std::move(tag)), m_row(row), m_result(true)
 {
     setDescription(generate_description(tag, row));
+    m_backup_strategy = parent->model()->backupStrategy();
 }
 
 RemoveItemCommand::~RemoveItemCommand() = default;
 
 void RemoveItemCommand::undo()
 {
-    const auto& converter = m_model->manager()->item_converter();
-
     auto parent = findReceiver();
-
-    auto reco_item = converter.from_json(*m_child_backup);
+    auto reco_item = m_backup_strategy->restoreItem();
     parent->insertItem(reco_item.release(), m_tag, m_row);
 }
 
 void RemoveItemCommand::execute()
 {
-    const auto& converter = m_model->manager()->item_converter();
-
     auto parent = findReceiver();
     auto child = parent->takeItem(m_tag, m_row);
-
-    m_child_backup = std::make_unique<QJsonObject>(converter.to_json(child));
-
+    m_backup_strategy->saveItem(child);
     delete child;
 }
 

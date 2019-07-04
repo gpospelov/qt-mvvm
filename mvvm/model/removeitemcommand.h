@@ -13,13 +13,12 @@
 #include "abstractitemcommand.h"
 #include <memory>
 
-class QJsonObject;
-
 namespace ModelView
 {
 
 class SessionModel;
 class SessionItem;
+class ItemBackupStrategy;
 
 //! Command for unddo/redo framework to remove item from a model using child's tag and row.
 
@@ -39,9 +38,8 @@ public:
 private:
     std::string m_tag;
     int m_row;
-    // FIXME get rid of Json in the favor of ItemBackupStrategy
-    std::unique_ptr<QJsonObject> m_child_backup;
     result_t m_result;
+    std::unique_ptr<ItemBackupStrategy> m_backup_strategy;
 };
 
 } // namespace ModelView
