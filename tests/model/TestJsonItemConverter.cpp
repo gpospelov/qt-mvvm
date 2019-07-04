@@ -145,12 +145,12 @@ TEST_F(TestJsonItemConverter, propertyItemToFileAndBack)
 TEST_F(TestJsonItemConverter, parentAndChildToJsonAndBack)
 {
     auto converter = createConverter();
-    const std::string model(Constants::BaseType);
+    const std::string model_type(Constants::BaseType);
 
-    auto parent = std::make_unique<SessionItem>(model);
+    auto parent = std::make_unique<SessionItem>(model_type);
     parent->setDisplayName("parent_name");
     parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
-    auto child = new SessionItem(model);
+    auto child = new SessionItem(model_type);
     child->setDisplayName("child_name");
     parent->insertItem(child, "", -1);
 
@@ -163,7 +163,7 @@ TEST_F(TestJsonItemConverter, parentAndChildToJsonAndBack)
 
     // checking parent reconstruction
     EXPECT_EQ(reco_parent->childrenCount(), 1);
-    EXPECT_EQ(reco_parent->modelType(), model);
+    EXPECT_EQ(reco_parent->modelType(), model_type);
     EXPECT_EQ(reco_parent->displayName(), "parent_name");
     EXPECT_EQ(reco_parent->identifier(), parent->identifier());
     EXPECT_EQ(reco_parent->defaultTag(), "defaultTag");
@@ -173,7 +173,7 @@ TEST_F(TestJsonItemConverter, parentAndChildToJsonAndBack)
     auto reco_child = reco_parent->getItem("defaultTag");
     EXPECT_EQ(reco_child->parent(), reco_parent.get());
     EXPECT_EQ(reco_child->childrenCount(), 0);
-    EXPECT_EQ(reco_child->modelType(), model);
+    EXPECT_EQ(reco_child->modelType(), model_type);
     EXPECT_EQ(reco_child->displayName(), "child_name");
     EXPECT_EQ(reco_child->identifier(), child->identifier());
     EXPECT_EQ(reco_child->defaultTag(), "");
@@ -184,12 +184,12 @@ TEST_F(TestJsonItemConverter, parentAndChildToJsonAndBack)
 TEST_F(TestJsonItemConverter, parentAndChildToFileAndBack)
 {
     auto converter = createConverter();
-    const std::string model(Constants::BaseType);
+    const std::string model_type(Constants::BaseType);
 
-    auto parent = std::make_unique<SessionItem>(model);
+    auto parent = std::make_unique<SessionItem>(model_type);
     parent->setDisplayName("parent_name");
     parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
-    auto child = new SessionItem(model);
+    auto child = new SessionItem(model_type);
     child->setDisplayName("child_name");
     parent->insertItem(child, "", -1);
 
@@ -207,7 +207,7 @@ TEST_F(TestJsonItemConverter, parentAndChildToFileAndBack)
 
     // checking parent reconstruction
     EXPECT_EQ(reco_parent->childrenCount(), 1);
-    EXPECT_EQ(reco_parent->modelType(), model);
+    EXPECT_EQ(reco_parent->modelType(), model_type);
     EXPECT_EQ(reco_parent->displayName(), "parent_name");
     EXPECT_EQ(reco_parent->identifier(), parent->identifier());
     EXPECT_EQ(reco_parent->defaultTag(), "defaultTag");
@@ -217,7 +217,7 @@ TEST_F(TestJsonItemConverter, parentAndChildToFileAndBack)
     auto reco_child = reco_parent->getItem("defaultTag");
     EXPECT_EQ(reco_child->parent(), reco_parent.get());
     EXPECT_EQ(reco_child->childrenCount(), 0);
-    EXPECT_EQ(reco_child->modelType(), model);
+    EXPECT_EQ(reco_child->modelType(), model_type);
     EXPECT_EQ(reco_child->displayName(), "child_name");
     EXPECT_EQ(reco_child->identifier(), child->identifier());
     EXPECT_EQ(reco_child->defaultTag(), "");
