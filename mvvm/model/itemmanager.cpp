@@ -9,12 +9,10 @@
 
 #include "itemmanager.h"
 #include "customvariants.h"
-#include "standarditemcatalogue.h"
 #include "itemfactory.h"
 #include "itempool.h"
-#include "jsonconverterinterfaces.h"
-#include "jsonitemconverter.h"
 #include "sessionitem.h"
+#include "standarditemcatalogue.h"
 
 namespace
 {
@@ -26,16 +24,11 @@ std::unique_ptr<ModelView::ItemFactory> DefaultItemFactory()
 
 using namespace ModelView;
 
-ItemManager::ItemManager()
-    : m_item_factory(DefaultItemFactory()),
-      m_item_converter(std::make_unique<JsonItemConverter>(m_item_factory.get()))
-{
-}
+ItemManager::ItemManager() : m_item_factory(DefaultItemFactory()) {}
 
 void ItemManager::setItemFactory(std::unique_ptr<ItemFactoryInterface> factory)
 {
     m_item_factory = std::move(factory);
-    m_item_converter = std::make_unique<JsonItemConverter>(m_item_factory.get());
 }
 
 void ItemManager::setItemPool(std::shared_ptr<ItemPool> pool)
@@ -73,11 +66,6 @@ const ItemPool* ItemManager::itemPool() const
 ItemPool* ItemManager::itemPool()
 {
     return m_item_pool.get();
-}
-
-const JsonItemConverterInterface& ItemManager::item_converter() const
-{
-    return *m_item_converter;
 }
 
 void ItemManager::register_item(SessionItem* item)
