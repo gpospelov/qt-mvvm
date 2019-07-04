@@ -72,6 +72,8 @@ public:
 
     std::unique_ptr<ItemBackupStrategy> backupStrategy() const;
 
+    std::unique_ptr<SessionItem> createCopy(const SessionItem* item);
+
 protected:
     std::unique_ptr<ItemManager> m_item_manager;
 

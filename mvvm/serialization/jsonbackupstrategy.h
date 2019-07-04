@@ -19,7 +19,7 @@ namespace ModelView
 class SessionItem;
 class ItemFactoryInterface;
 
-//! Provide backup of SessionItem using given JsonItemConverter.
+//! Provide backup of SessionItem using json strategy.
 
 class CORE_EXPORT JsonBackupStrategy : public ItemBackupStrategy
 {

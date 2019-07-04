@@ -20,6 +20,7 @@
 #include "sessionitem.h"
 #include "standarditemcatalogue.h"
 #include "taginfo.h"
+#include "jsonitemcopystrategy.h"
 
 using namespace ModelView;
 
@@ -157,6 +158,13 @@ void SessionModel::clear()
 std::unique_ptr<ItemBackupStrategy> SessionModel::backupStrategy() const
 {
     return std::make_unique<JsonBackupStrategy>(m_item_manager->factory());
+}
+
+std::unique_ptr<SessionItem> SessionModel::createCopy(const SessionItem* item)
+{
+    if (item->model() != this)
+        throw std::runtime_error("SessionModel::createCopy() -> Can't copy alien item");
+    return JsonItemCopyStrategy(m_item_manager->factory()).createCopy(item);
 }
 
 void SessionModel::createRootItem()
