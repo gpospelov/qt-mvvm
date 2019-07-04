@@ -16,7 +16,6 @@
 #include "itempool.h"
 #include "itemutils.h"
 #include "jsonbackupstrategy.h"
-#include "jsonitemconverter.h"
 #include "modelmapper.h"
 #include "sessionitem.h"
 #include "standarditemcatalogue.h"
@@ -157,8 +156,7 @@ void SessionModel::clear()
 
 std::unique_ptr<ItemBackupStrategy> SessionModel::backupStrategy() const
 {
-    return std::make_unique<JsonBackupStrategy>(
-        std::make_unique<JsonItemConverter>(m_item_manager->factory()));
+    return std::make_unique<JsonBackupStrategy>(m_item_manager->factory());
 }
 
 void SessionModel::createRootItem()

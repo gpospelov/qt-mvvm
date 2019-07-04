@@ -2,7 +2,6 @@
 #include "google_test.h"
 #include "itemfactory.h"
 #include "jsonbackupstrategy.h"
-#include "jsonitemconverter.h"
 #include "propertyitem.h"
 #include "standarditemcatalogue.h"
 
@@ -19,8 +18,7 @@ public:
 
     std::unique_ptr<JsonBackupStrategy> createBackupStrategy()
     {
-        auto converter = std::make_unique<JsonItemConverter>(m_factory.get());
-        return std::make_unique<JsonBackupStrategy>(std::move(converter));
+        return std::make_unique<JsonBackupStrategy>(m_factory.get());
     }
 
     std::unique_ptr<ItemFactory> m_factory;

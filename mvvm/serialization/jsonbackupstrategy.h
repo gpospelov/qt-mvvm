@@ -17,14 +17,14 @@ namespace ModelView
 {
 
 class SessionItem;
-class JsonItemConverter;
+class ItemFactoryInterface;
 
 //! Provide backup of SessionItem using given JsonItemConverter.
 
 class CORE_EXPORT JsonBackupStrategy : public ItemBackupStrategy
 {
 public:
-    JsonBackupStrategy(std::unique_ptr<JsonItemConverter> converter);
+    JsonBackupStrategy(const ItemFactoryInterface* item_factory);
     ~JsonBackupStrategy();
 
     std::unique_ptr<SessionItem> restoreItem() const;

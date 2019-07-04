@@ -21,10 +21,10 @@ public:
     QJsonObject m_json;
 };
 
-JsonBackupStrategy::JsonBackupStrategy(std::unique_ptr<JsonItemConverter> converter)
+JsonBackupStrategy::JsonBackupStrategy(const ItemFactoryInterface* item_factory)
     : p_impl(std::make_unique<JsonBackupStrategyPrivate>())
 {
-    p_impl->m_converter = std::move(converter);
+    p_impl->m_converter = std::make_unique<JsonItemConverter>(item_factory);
 }
 
 JsonBackupStrategy::~JsonBackupStrategy() = default;
