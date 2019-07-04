@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_ITEMBACKUPSTRATEGY_H
-#define MVVM_ITEMBACKUPSTRATEGY_H
+#ifndef MVVM_ITEMCOPYSTRATEGY_H
+#define MVVM_ITEMCOPYSTRATEGY_H
 
 #include "mvvm_global.h"
 #include <memory>
@@ -18,20 +18,17 @@ namespace ModelView
 
 class SessionItem;
 
-//! Interface to backup items for later restore.
+//! Interface to copy items within context.
 
-class CORE_EXPORT ItemBackupStrategy
+class CORE_EXPORT ItemCopyStrategy
 {
 public:
-    virtual ~ItemBackupStrategy() = default;
+    virtual ~ItemCopyStrategy() = default;
 
-    //! Restore item from saved content.
-    virtual std::unique_ptr<SessionItem> restoreItem() const = 0;
-
-    //! Save item's content.
-    virtual void saveItem(const SessionItem*) = 0;
+    //! Creates item copy by deep copying all children. SessionItem identifiers will be regenerated.
+    virtual std::unique_ptr<SessionItem> createCopy(const SessionItem* item) const = 0;
 };
 
 } // namespace ModelView
 
-#endif // MVVM_ITEMBACKUPSTRATEGY_H
+#endif // MVVM_ITEMCOPYSTRATEGY_H
