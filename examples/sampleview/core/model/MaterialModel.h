@@ -30,9 +30,12 @@ public:
 
     static ModelView::ExternalProperty undefined_material();
 
-    std::vector<ModelView::ExternalProperty> material_data();
+    std::vector<ModelView::ExternalProperty>
+    material_data(std::string container_id = std::string()) const;
 
-    ModelView::ExternalProperty  material_property(const std::string& id);
+    ModelView::ExternalProperty material_property(const std::string& id,
+                                                  std::string container_id = std::string());
+
 private:
     void init_model();
 };
