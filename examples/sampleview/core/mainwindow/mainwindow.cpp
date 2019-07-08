@@ -10,6 +10,7 @@
 #include "mainwindow.h"
 #include "ApplicationModels.h"
 #include "LayerTableWidget.h"
+#include "MaterialTableWidget.h"
 #include <QAction>
 #include <QCoreApplication>
 #include <QDockWidget>
@@ -17,7 +18,6 @@
 #include <QGraphicsView>
 #include <QMenuBar>
 #include <QSettings>
-#include <QTableView>
 #include <QTreeView>
 
 namespace {
@@ -66,7 +66,7 @@ void MainWindow::init_material_editor()
     m_material_editor->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::BottomDockWidgetArea
                                        | Qt::RightDockWidgetArea);
     m_material_editor->setWindowTitle(tr("Material editor"));
-    QTableView* material_view = new QTableView(m_material_editor);
+    auto material_view = new MaterialTableWidget(m_models->materialModel(), m_material_editor);
     m_material_editor->setWidget(material_view);
     addDockWidget(Qt::RightDockWidgetArea, m_material_editor);
 }
