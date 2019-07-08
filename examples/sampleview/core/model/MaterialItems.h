@@ -16,7 +16,6 @@
 */
 
 #include "compounditem.h"
-class QColor;
 
 /*!
 @class MaterialContainerItem
@@ -26,6 +25,7 @@ class QColor;
 class CORE_EXPORT MaterialContainerItem : public ModelView::CompoundItem
 {
 public:
+    static const std::string T_MATERIALS;
     MaterialContainerItem();
 };
 
@@ -37,12 +37,19 @@ public:
 class CORE_EXPORT MaterialBaseItem : public ModelView::CompoundItem
 {
 public:
-    static const std::string P_NAME;
     static const std::string P_COLOR;
-    MaterialBaseItem(const std::string& model_type);
+    static const std::string P_NAME;
+    static const std::string P_H_X;
+    static const std::string P_H_Y;
+    static const std::string P_H_Z;
+
 protected:
-    void register_name();
-    void register_color();
+    MaterialBaseItem(const std::string& model_type);
+
+    //! Creates mag. field-related properties.
+    //! Should be called from descendants' constructors in order
+    //! to preserve view-oriented property sequence.
+    void initMagFields();
 };
 
 /*!
@@ -52,13 +59,29 @@ protected:
 
 class CORE_EXPORT SLDMaterialItem : public MaterialBaseItem
 {
-public:    
+public:
     static const std::string P_SLD_REAL;
     static const std::string P_SLD_IMAG;
 
     SLDMaterialItem();
 
     void set_properties(const std::string& name, const QColor& color, double real, double imag);
+};
+
+/*!
+@class RefIndexMaterialItem
+@brief Represents material based on refractive index.
+*/
+
+class CORE_EXPORT RefIndexMaterialItem : public MaterialBaseItem
+{
+public:
+    static const std::string P_DELTA;
+    static const std::string P_BETA;
+
+    RefIndexMaterialItem();
+
+    void set_properties(const std::string& name, const QColor& color, double delta, double beta);
 };
 
 #endif // MATERIALITEMS_H
