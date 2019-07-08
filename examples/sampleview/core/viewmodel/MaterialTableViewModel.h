@@ -14,8 +14,11 @@
 
 namespace ModelView
 {
+class SessionItem;
 class SessionModel;
 } // namespace ModelView
+
+class MaterialBaseItem;
 
 /*!
 @class MaterialTableViewModel
@@ -26,6 +29,13 @@ class CORE_EXPORT MaterialTableViewModel : public ModelView::AbstractViewModel
 {
 public:
     MaterialTableViewModel(ModelView::SessionModel* model = nullptr, QObject* parent = nullptr);
+    void setMaterialType(const std::string& material_type);
+    std::string materialType() const { return m_material_type; }
+
+    MaterialBaseItem* sessionItemFromRow(int row) const;
+
+private:
+    std::string m_material_type; //!< material type of the shown items
 };
 
 #endif //  MATERIALTABLEVIEWMODEL_H
