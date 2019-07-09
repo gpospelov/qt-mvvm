@@ -9,17 +9,16 @@
 
 #include "commandservice.h"
 #include "insertnewitemcommand.h"
+#include "moveitemcommand.h"
 #include "removeitemcommand.h"
-#include "setvaluecommand.h"
 #include "sessionitem.h"
 #include "sessionmodel.h"
+#include "setvaluecommand.h"
 #include <QUndoStack>
 
 using namespace ModelView;
 
-CommandService::CommandService(SessionModel* model) : m_model(model), m_pause_record(false)
-{
-}
+CommandService::CommandService(SessionModel* model) : m_model(model), m_pause_record(false) {}
 
 void CommandService::setUndoRedoEnabled(bool value)
 {
@@ -53,6 +52,20 @@ void CommandService::removeItem(SessionItem* parent, const std::string& tag, int
             "CommandService::removeRow() -> Item doesn't belong to given model");
 
     process_command<RemoveItemCommand>(parent, tag, row);
+}
+
+void CommandService::moveItem(SessionItem* item, SessionItem* new_parent, const std::string& tag,
+                              int row)
+{
+    if (item->model() != m_model)
+        throw std::runtime_error(
+            "CommandService::removeRow() -> Item doesn't belong to given model");
+
+    if (new_parent->model() != m_model)
+        throw std::runtime_error(
+            "CommandService::removeRow() -> Parent doesn't belong to given model");
+
+    process_command<MoveItemCommand>(item, new_parent, tag, row);
 }
 
 QUndoStack* CommandService::undoStack() const

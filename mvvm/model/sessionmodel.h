@@ -63,6 +63,8 @@ public:
 
     void removeItem(SessionItem* parent, const std::string& tag, int row);
 
+    void moveItem(SessionItem* item, SessionItem* new_parent, const std::string& tag, int row);
+
     void register_item(SessionItem* item);
     void unregister_item(SessionItem* item);
 
