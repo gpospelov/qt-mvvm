@@ -39,7 +39,9 @@ ScientificSpinBox::~ScientificSpinBox() = default;
 
 double ScientificSpinBox::value() const
 {
-    return m_value;
+    // return last acceptable input (required for the proper focus-out behaviour)
+    double val = toDouble(text(), m_validator, m_min, m_max, m_value);
+    return round(val, m_decimals);
 }
 
 void ScientificSpinBox::setValue(double val)
