@@ -8,9 +8,9 @@
 // ************************************************************************** //
 
 #include "removeitemcommand.h"
+#include "itembackupstrategy.h"
 #include "sessionitem.h"
 #include "sessionmodel.h"
-#include "itembackupstrategy.h"
 #include <sstream>
 
 namespace
@@ -33,13 +33,16 @@ public:
     result_t m_result;
     std::unique_ptr<ItemBackupStrategy> m_backup_strategy;
     Path m_item_path;
-    RemoveItemCommandPrivate(std::string tag, int row) : m_tag(std::move(tag)), m_row(row), m_result(true){}
+    RemoveItemCommandPrivate(std::string tag, int row)
+        : m_tag(std::move(tag)), m_row(row), m_result(true)
+    {
+    }
 };
 
 RemoveItemCommand::RemoveItemCommand(SessionItem* parent, std::string tag, int row)
     : AbstractItemCommand(parent), p_impl(std::make_unique<RemoveItemCommandPrivate>(tag, row))
 {
-    setDescription(generate_description(tag, row));
+    setDescription(generate_description(p_impl->m_tag, p_impl->m_row));
     p_impl->m_backup_strategy = parent->model()->backupStrategy();
     p_impl->m_item_path = pathFromItem(parent);
 }

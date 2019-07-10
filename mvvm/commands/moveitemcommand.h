@@ -16,7 +16,6 @@
 namespace ModelView
 {
 
-class SessionModel;
 class SessionItem;
 
 //! Command for unddo/redo framework to move item from one parent to another.

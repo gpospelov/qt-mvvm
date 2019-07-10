@@ -10,6 +10,7 @@
 #include "abstractitemcommand.h"
 #include "sessionitem.h"
 #include "sessionmodel.h"
+#include "path.h"
 #include <stdexcept>
 
 using namespace ModelView;

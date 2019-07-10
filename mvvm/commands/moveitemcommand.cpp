@@ -10,6 +10,7 @@
 #include "moveitemcommand.h"
 #include "sessionitem.h"
 #include "sessionmodel.h"
+#include <sstream>
 #include <stdexcept>
 
 using namespace ModelView;
@@ -17,13 +18,17 @@ using namespace ModelView;
 namespace
 {
 void check_input_data(const SessionItem* item, const SessionItem* parent);
-}
+std::string generate_description(const std::string& tag, int row);
+} // namespace
 
 MoveItemCommand::MoveItemCommand(SessionItem* item, SessionItem* new_parent, const std::string& tag,
                                  int row)
-    : AbstractItemCommand(new_parent), m_target_tag(tag), m_target_row(row), m_original_row(0), m_result(true)
+    : AbstractItemCommand(new_parent), m_target_tag(tag), m_target_row(row), m_original_row(0),
+      m_result(true)
 {
     check_input_data(item, new_parent);
+    setDescription(generate_description(m_target_tag, m_target_row));
+
     m_target_parent_path = pathFromItem(new_parent);
     m_original_parent_path = pathFromItem(item->parent());
     auto tagRow = item->parent()->tagIndexOfItem(item);
@@ -44,7 +49,8 @@ void MoveItemCommand::undo_command()
     auto target_parent = itemFromPath(m_original_parent_path);
 
     // then make manipulations
-    int row = m_target_row < 0 ? static_cast<int>(current_parent->getItems(m_target_tag).size()) - 1 : m_target_row;
+    int row = m_target_row < 0 ? static_cast<int>(current_parent->getItems(m_target_tag).size()) - 1
+                               : m_target_row;
     auto taken = current_parent->takeItem(m_target_tag, row);
     target_parent->insertItem(taken, m_original_tag, m_original_row);
 
@@ -99,5 +105,12 @@ void check_input_data(const SessionItem* item, const SessionItem* parent)
     if (!item->parent())
         throw std::runtime_error(
             "MoveItemCommand::MoveItemCommand() -> Item doesn't have a parent");
+}
+
+std::string generate_description(const std::string& tag, int row)
+{
+    std::ostringstream ostr;
+    ostr << "Move item to tag '" << tag << "', row:" << row;
+    return ostr.str();
 }
 } // namespace

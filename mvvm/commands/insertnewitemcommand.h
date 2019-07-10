@@ -13,9 +13,9 @@
 #include "abstractitemcommand.h"
 #include "mvvm_types.h"
 
-namespace ModelView {
+namespace ModelView
+{
 
-class SessionModel;
 class SessionItem;
 
 //! Command for unddo/redo to insert new item.
@@ -26,21 +26,18 @@ public:
     using result_t = SessionItem*;
 
     InsertNewItemCommand(model_type modelType, SessionItem* parent, std::string tag, int row);
+    ~InsertNewItemCommand() override;
 
     result_t result() const;
-
 
 private:
     void undo_command() override;
     void execute_command() override;
 
-    std::string m_tag;
-    int m_row;
-    model_type m_model_type;
-    result_t m_result;
-    Path m_item_path;
+    class InsertNewItemCommandPrivate;
+    std::unique_ptr<InsertNewItemCommandPrivate> p_impl;
 };
 
-}  // namespace ModelView
+} // namespace ModelView
 
 #endif // MVVM_INSERTNEWITEMCOMMAND_H

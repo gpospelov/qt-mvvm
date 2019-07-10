@@ -15,6 +15,8 @@
 namespace ModelView
 {
 
+class SessionItem;
+
 //! Command for unddo/redo framework to remove item from a model using child's tag and row.
 
 class CORE_EXPORT RemoveItemCommand : public AbstractItemCommand
