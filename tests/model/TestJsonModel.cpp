@@ -1,10 +1,10 @@
 #include "google_test.h"
-#include "itemmanager.h"
 #include "jsonmodel.h"
 #include "sessionitem.h"
 #include "sessionmodel.h"
 #include "taginfo.h"
 #include "test_utils.h"
+#include "itempool.h"
 #include <QDebug>
 #include <QJsonArray>
 #include <QJsonObject>
@@ -159,15 +159,17 @@ TEST_F(TestJsonModel, parentAndChildToJsonAndBack)
 TEST_F(TestJsonModel, identifiers)
 {
     JsonModel converter;
+    auto pool1 = std::make_shared<ItemPool>();
 
     // creating model and converting it to json
-    SessionModel source("SourceModel");
+    SessionModel source("SourceModel", pool1);
     auto parent1 = source.insertNewItem(Constants::BaseType);
     QJsonObject json_source;
     converter.model_to_json(source, json_source);
 
     // creating source and filling it from json
-    SessionModel target("SourceModel");
+    auto pool2 = std::make_shared<ItemPool>();
+    SessionModel target("SourceModel", pool2);
     converter.json_to_model(json_source, target);
     auto reco_parent = target.rootItem()->getItem("", 0);
 
@@ -184,8 +186,8 @@ TEST_F(TestJsonModel, identifiers)
     EXPECT_EQ(TestUtils::JsonToString(json_source), TestUtils::JsonToString(json_target));
 
     // checking item registrations
-    EXPECT_EQ(source.manager()->findItem(id1), parent1);
-    EXPECT_EQ(target.manager()->findItem(id2), reco_parent);
+    EXPECT_EQ(pool1->item_for_key(id1), parent1);
+    EXPECT_EQ(pool2->item_for_key(id2), reco_parent);
 }
 
 //! Filling model from json: parent and child in a model to json and back.

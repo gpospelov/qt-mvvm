@@ -59,9 +59,6 @@ public:
 
     QUndoStack* undoStack() const;
 
-    ItemManager* manager();
-    const ItemManager* manager() const;
-
     void removeItem(SessionItem* parent, const std::string& tag, int row);
 
     void moveItem(SessionItem* item, SessionItem* new_parent, const std::string& tag, int row);

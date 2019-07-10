@@ -11,6 +11,7 @@
 #define TOYMODELS_H
 
 #include "sessionmodel.h"
+#include "itempool.h"
 
 //! Collection of toy items and models for testing purposes.
 
@@ -21,6 +22,7 @@ class SampleModel : public ModelView::SessionModel
 {
 public:
     SampleModel();
+    SampleModel(std::shared_ptr<ModelView::ItemPool> pool);
 };
 
 } // namespace ToyItems

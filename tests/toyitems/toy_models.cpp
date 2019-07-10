@@ -32,3 +32,9 @@ ToyItems::SampleModel::SampleModel() : SessionModel("ToyModel")
 {
     setItemCatalogue(CreateToyItemCatalogue());
 }
+
+ToyItems::SampleModel::SampleModel(std::shared_ptr<ModelView::ItemPool> pool)
+    : SessionModel("ToyModel", pool)
+{
+    setItemCatalogue(CreateToyItemCatalogue());
+}

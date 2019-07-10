@@ -113,16 +113,6 @@ QUndoStack* SessionModel::undoStack() const
     return m_commands->undoStack();
 }
 
-ItemManager* SessionModel::manager()
-{
-    return m_item_manager.get();
-}
-
-const ItemManager* SessionModel::manager() const
-{
-    return m_item_manager.get();
-}
-
 //! Removes given row from parent.
 
 void SessionModel::removeItem(SessionItem* parent, const std::string& tag, int row)

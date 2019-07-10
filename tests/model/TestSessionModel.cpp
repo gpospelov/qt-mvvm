@@ -1,5 +1,4 @@
 #include "google_test.h"
-#include "itemmanager.h"
 #include "itempool.h"
 #include "sessionitem.h"
 #include "sessionmodel.h"
@@ -26,7 +25,8 @@ TEST_F(TestSessionModel, initialState)
 
 TEST_F(TestSessionModel, insertNewItem)
 {
-    SessionModel model;
+    auto pool = std::make_shared<ItemPool>();
+    SessionModel model("Test", pool);
 
     const model_type modelType = Constants::BaseType;
 
@@ -39,7 +39,7 @@ TEST_F(TestSessionModel, insertNewItem)
 
     // checking registration
     auto item_key = item->data(ItemDataRole::IDENTIFIER).value<std::string>();
-    EXPECT_EQ(model.manager()->itemPool()->item_for_key(item_key), item);
+    EXPECT_EQ(pool->item_for_key(item_key), item);
 
     // registering tag
     item->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
@@ -47,7 +47,7 @@ TEST_F(TestSessionModel, insertNewItem)
     // adding child to it
     auto child = model.insertNewItem(modelType, item);
     auto child_key = child->data(ItemDataRole::IDENTIFIER).value<std::string>();
-    EXPECT_EQ(model.manager()->itemPool()->item_for_key(child_key), child);
+    EXPECT_EQ(pool->item_for_key(child_key), child);
 
     EXPECT_TRUE(child != nullptr);
     EXPECT_EQ(child->parent(), item);
@@ -60,7 +60,7 @@ TEST_F(TestSessionModel, insertNewItem)
     EXPECT_EQ(child->model(), nullptr);
 
     // childitem not registered anymore
-    EXPECT_EQ(model.manager()->itemPool()->item_for_key(child_key), nullptr);
+    EXPECT_EQ(pool->item_for_key(child_key), nullptr);
 
     delete taken;
 }
@@ -106,7 +106,8 @@ TEST_F(TestSessionModel, setData)
 
 TEST_F(TestSessionModel, removeRow)
 {
-    SessionModel model;
+    auto pool = std::make_shared<ItemPool>();
+    SessionModel model("Test", pool);
 
     auto parent = model.insertNewItem(Constants::BaseType);
     parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
@@ -121,12 +122,13 @@ TEST_F(TestSessionModel, removeRow)
     EXPECT_EQ(Utils::ChildAt(parent, 0), child1);
 
     // child2 shouldn't be registered anymore
-    EXPECT_EQ(model.manager()->itemPool()->key_for_item(child2), "");
+    EXPECT_EQ(pool->key_for_item(child2), "");
 }
 
 TEST_F(TestSessionModel, takeRowFromRootItem)
 {
-    SessionModel model;
+    auto pool = std::make_shared<ItemPool>();
+    SessionModel model("Test", pool);
 
     auto parent = model.insertNewItem(Constants::BaseType);
     parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
@@ -135,13 +137,13 @@ TEST_F(TestSessionModel, takeRowFromRootItem)
     auto child = model.insertNewItem(Constants::PropertyType, parent);
     auto child_key = child->data(ItemDataRole::IDENTIFIER).value<std::string>();
 
-    EXPECT_EQ(model.manager()->itemPool()->item_for_key(parent_key), parent);
-    EXPECT_EQ(model.manager()->itemPool()->item_for_key(child_key), child);
+    EXPECT_EQ(pool->item_for_key(parent_key), parent);
+    EXPECT_EQ(pool->item_for_key(child_key), child);
 
     // taking parent
     auto taken = model.rootItem()->takeItem("", 0);
-    EXPECT_EQ(model.manager()->itemPool()->item_for_key(parent_key), nullptr);
-    EXPECT_EQ(model.manager()->itemPool()->item_for_key(child_key), nullptr);
+    EXPECT_EQ(pool->item_for_key(parent_key), nullptr);
+    EXPECT_EQ(pool->item_for_key(child_key), nullptr);
     delete taken;
 }
 

@@ -1,5 +1,4 @@
 #include "google_test.h"
-#include "itemmanager.h"
 #include "itemutils.h"
 #include "sessionitem.h"
 #include "sessionmodel.h"
@@ -365,7 +364,9 @@ TEST_F(TestUndoRedo, itemIdentifierOnRemove)
 
 TEST_F(TestUndoRedo, multiLayer)
 {
-    ToyItems::SampleModel model;
+    auto pool = std::make_shared<ItemPool>();
+
+    ToyItems::SampleModel model(pool);
     model.setUndoRedoEnabled(true);
     auto stack = model.undoStack();
 
@@ -394,9 +395,9 @@ TEST_F(TestUndoRedo, multiLayer)
     EXPECT_EQ(model.rootItem()->childrenCount(), 0);
 
     // multilayer and its two layers should gone from registration
-    EXPECT_TRUE(model.manager()->findItem(id_parent) == nullptr);
-    EXPECT_TRUE(model.manager()->findItem(id_layer0) == nullptr);
-    EXPECT_TRUE(model.manager()->findItem(id_layer1) == nullptr);
+    EXPECT_TRUE(pool->item_for_key(id_parent) == nullptr);
+    EXPECT_TRUE(pool->item_for_key(id_layer0) == nullptr);
+    EXPECT_TRUE(pool->item_for_key(id_layer1) == nullptr);
 
     // undoing multilayer removal
     stack->undo();
@@ -424,7 +425,9 @@ TEST_F(TestUndoRedo, multiLayer)
 
 TEST_F(TestUndoRedo, moveLayerFromMultiLayer)
 {
-    ToyItems::SampleModel model;
+    auto pool = std::make_shared<ItemPool>();
+
+    ToyItems::SampleModel model(pool);
     model.setUndoRedoEnabled(true);
     auto stack = model.undoStack();
 
@@ -447,13 +450,13 @@ TEST_F(TestUndoRedo, moveLayerFromMultiLayer)
     std::vector<SessionItem*> expected = {layer0};
     EXPECT_EQ(multilayer0->children().size(), 0);
     EXPECT_EQ(multilayer1->children(), expected);
-    EXPECT_EQ(model.manager()->findItem(id_layer0), layer0);
+    EXPECT_EQ(pool->item_for_key(id_layer0), layer0);
 
     // undoing
     stack->undo();
     EXPECT_EQ(multilayer0->children(), expected);
     EXPECT_EQ(multilayer1->children().size(), 0);
-    EXPECT_EQ(model.manager()->findItem(id_layer0), layer0);
+    EXPECT_EQ(pool->item_for_key(id_layer0), layer0);
 }
 
 //! Move single layer from multilayer to another empty multilayer.
@@ -461,7 +464,9 @@ TEST_F(TestUndoRedo, moveLayerFromMultiLayer)
 
 TEST_F(TestUndoRedo, moveLayerFromMLDeleteSecond)
 {
-    ToyItems::SampleModel model;
+    auto pool = std::make_shared<ItemPool>();
+
+    ToyItems::SampleModel model(pool);
     model.setUndoRedoEnabled(true);
     auto stack = model.undoStack();
 
@@ -484,7 +489,7 @@ TEST_F(TestUndoRedo, moveLayerFromMLDeleteSecond)
     std::vector<SessionItem*> expected = {layer0};
     EXPECT_EQ(multilayer0->children().size(), 0);
     EXPECT_EQ(multilayer1->children(), expected);
-    EXPECT_EQ(model.manager()->findItem(id_layer0), layer0);
+    EXPECT_EQ(pool->item_for_key(id_layer0), layer0);
 
     // deleting second multilayer
     model.removeItem(model.rootItem(), "", 1);
@@ -493,8 +498,8 @@ TEST_F(TestUndoRedo, moveLayerFromMLDeleteSecond)
     stack->undo();
 
     // restoring ponters
-    layer0 = model.manager()->findItem(id_layer0);
-    multilayer1 = model.manager()->findItem(id_multilayer1);
+    layer0 = pool->item_for_key(id_layer0);
+    multilayer1 = pool->item_for_key(id_multilayer1);
 
     expected = {layer0};
     EXPECT_EQ(multilayer0->children().size(), 0);
@@ -512,7 +517,9 @@ TEST_F(TestUndoRedo, moveLayerFromMLDeleteSecond)
 
 TEST_F(TestUndoRedo, moveLayerFromMLDeleteAll)
 {
-    ToyItems::SampleModel model;
+    auto pool = std::make_shared<ItemPool>();
+
+    ToyItems::SampleModel model(pool);
     model.setUndoRedoEnabled(true);
     auto stack = model.undoStack();
 
@@ -563,14 +570,14 @@ TEST_F(TestUndoRedo, moveLayerFromMLDeleteAll)
     stack->undo();
 
     // restoring pointers
-    multilayer0 = model.manager()->findItem(id_multilayer0);
-    layer0 = model.manager()->findItem(id_layer0);
-    layer1 = model.manager()->findItem(id_layer1);
-    layer2 = model.manager()->findItem(id_layer2);
-    multilayer1 = model.manager()->findItem(id_multilayer1);
-    layer3 = model.manager()->findItem(id_layer3);
-    layer4 = model.manager()->findItem(id_layer4);
-    layer5 = model.manager()->findItem(id_layer5);
+    multilayer0 = pool->item_for_key(id_multilayer0);
+    layer0 = pool->item_for_key(id_layer0);
+    layer1 = pool->item_for_key(id_layer1);
+    layer2 = pool->item_for_key(id_layer2);
+    multilayer1 = pool->item_for_key(id_multilayer1);
+    layer3 = pool->item_for_key(id_layer3);
+    layer4 = pool->item_for_key(id_layer4);
+    layer5 = pool->item_for_key(id_layer5);
 
     // checking layers
     std::vector<SessionItem*> expected = {layer0, layer1, layer2};

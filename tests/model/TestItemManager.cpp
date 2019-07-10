@@ -27,18 +27,3 @@ TEST_F(TestItemManager, initialState)
     EXPECT_EQ(manager.itemPool(), pool.get());
     EXPECT_EQ(manager.itemPool()->size(), 0);
 }
-
-//!FIXME Purpose of test?
-
-TEST_F(TestItemManager, modelContext)
-{
-    SessionModel model;
-    auto manager = model.manager();
-
-    EXPECT_EQ(manager->itemPool()->size(), 1u); // root item already there
-
-    auto item1 = model.insertNewItem(Constants::BaseType);
-    EXPECT_EQ(manager->itemPool()->size(), 2u);
-    auto key = manager->findIdentifier(item1);
-    EXPECT_EQ(manager->findItem(key), item1);
-}
