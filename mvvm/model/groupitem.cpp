@@ -20,7 +20,7 @@ using namespace ModelView;
 
 GroupItem::~GroupItem() = default;
 
-GroupItem::GroupItem(model_type modelType) :SessionItem(modelType),
+GroupItem::GroupItem(model_type modelType) :SessionItem(std::move(modelType)),
     m_catalogue(std::make_unique<ItemCatalogue>()), m_default_selected_index(0)
 {
     registerTag(TagInfo::universalTag(tag_name), /*set_as_default*/true);

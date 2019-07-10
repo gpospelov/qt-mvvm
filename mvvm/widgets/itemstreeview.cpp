@@ -73,7 +73,7 @@ void ItemsTreeView::onSelectionChanged(const QItemSelection&, const QItemSelecti
         return;
 
     auto indexes = m_treeView->selectionModel()->selectedIndexes();
-    if (indexes.size()) {
+    if (!indexes.empty()) {
         auto item = m_viewModel->sessionItemFromIndex(indexes.at(0));
         m_block_selection = true;
         itemSelected(item);

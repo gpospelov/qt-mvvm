@@ -30,7 +30,7 @@ class CORE_EXPORT ExternalProperty
 {
 public:
     ExternalProperty();
-    ExternalProperty(const std::string& text, const QColor& color, const std::string& id = {});
+    ExternalProperty(std::string text, QColor color, std::string id = {});
 
     std::string text() const;
 

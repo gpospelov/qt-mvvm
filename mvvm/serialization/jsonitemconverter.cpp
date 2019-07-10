@@ -124,7 +124,7 @@ QJsonObject JsonItemConverter::item_to_json(const SessionItem& item) const
     QJsonObject result;
     result[modelKey] = QString::fromStdString(item.modelType());
     result[itemDataKey] = m_itemdata_converter->get_json(*item.p_impl->m_data);
-    result[itemTagsKey] = tags_to_json(*item.p_impl->m_tags.get());
+    result[itemTagsKey] = tags_to_json(*item.p_impl->m_tags);
 
     return result;
 }

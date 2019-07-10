@@ -36,7 +36,7 @@ ModelView::TagInfo::TagInfo(std::string name, int min, int max, std::vector<std:
 ModelView::TagInfo ModelView::TagInfo::universalTag(std::string name,
                                                     std::vector<std::string> modelTypes)
 {
-    return TagInfo(std::move(name), 0, -1, modelTypes);
+    return TagInfo(std::move(name), 0, -1, std::move(modelTypes));
 }
 
 ModelView::TagInfo ModelView::TagInfo::propertyTag(std::string name, std::string model_type)

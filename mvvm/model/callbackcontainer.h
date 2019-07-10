@@ -50,7 +50,7 @@ template <typename T, typename U>
 template <typename... Args>
 void CallbackBaseContainer<T, U>::notify(Args... args)
 {
-    for (auto f : m_callbacks)
+    for (const auto& f : m_callbacks)
         f.first(args...);
 }
 

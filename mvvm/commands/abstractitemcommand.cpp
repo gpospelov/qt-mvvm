@@ -104,7 +104,7 @@ Path AbstractItemCommand::pathFromItem(SessionItem* item) const
 
 SessionItem* AbstractItemCommand::itemFromPath(Path path) const
 {
-    return p_impl->m_model->itemFromPath(path);
+    return p_impl->m_model->itemFromPath(std::move(path));
 }
 
 SessionModel* AbstractItemCommand::model() const

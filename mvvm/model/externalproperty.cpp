@@ -16,11 +16,11 @@
 
 using namespace ModelView;
 
-ExternalProperty::ExternalProperty() {}
+ExternalProperty::ExternalProperty() = default;
 
-ExternalProperty::ExternalProperty(const std::string& text, const QColor& color,
-                                   const std::string& id)
-    : m_text(text), m_color(color), m_identifier(id)
+ExternalProperty::ExternalProperty(std::string text, QColor color,
+                                   std::string id)
+    : m_text(std::move(text)), m_color(std::move(color)), m_identifier(std::move(id))
 {
 }
 

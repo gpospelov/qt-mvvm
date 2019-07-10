@@ -36,9 +36,9 @@ using namespace ModelView;
 SessionItem::SessionItem(model_type modelType)
     : p_impl(std::make_unique<SessionItemPrivate>())
 {
-    p_impl->m_modelType = modelType;
+    p_impl->m_modelType = std::move(modelType);
     setDataIntern(QVariant::fromValue(UniqueIdGenerator::generate()), ItemDataRole::IDENTIFIER);
-    setDataIntern(QVariant::fromValue(modelType), ItemDataRole::DISPLAY);
+    setDataIntern(QVariant::fromValue(p_impl->m_modelType), ItemDataRole::DISPLAY);
 }
 
 SessionItem::~SessionItem()

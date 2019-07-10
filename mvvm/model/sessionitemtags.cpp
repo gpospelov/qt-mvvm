@@ -13,7 +13,7 @@
 
 using namespace ModelView;
 
-SessionItemTags::SessionItemTags() {}
+SessionItemTags::SessionItemTags() = default;
 
 SessionItemTags::~SessionItemTags()
 {

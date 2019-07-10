@@ -25,11 +25,11 @@ class CORE_EXPORT JsonBackupStrategy : public ItemBackupStrategy
 {
 public:
     JsonBackupStrategy(const ItemFactoryInterface* item_factory);
-    ~JsonBackupStrategy();
+    ~JsonBackupStrategy() override;
 
-    std::unique_ptr<SessionItem> restoreItem() const;
+    std::unique_ptr<SessionItem> restoreItem() const override;
 
-    void saveItem(const SessionItem* item);
+    void saveItem(const SessionItem* item) override;
 
 private:
     class JsonBackupStrategyPrivate;

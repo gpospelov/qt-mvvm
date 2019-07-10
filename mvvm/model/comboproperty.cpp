@@ -249,7 +249,7 @@ void ComboProperty::setStringOfSelections(const std::string& values)
     if (values.empty())
         return;
 
-    for (auto str : tokenize(values, selection_separator)) {
+    for (const auto& str : tokenize(values, selection_separator)) {
         int num = std::stoi(str);
         setSelected(num, true);
     }

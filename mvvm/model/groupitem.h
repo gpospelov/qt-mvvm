@@ -22,7 +22,7 @@ class CORE_EXPORT GroupItem : public SessionItem
 {
 public:
     GroupItem(model_type modelType = Constants::GroupType);
-    ~GroupItem();
+    ~GroupItem() override;
 
     int currentIndex() const;
 

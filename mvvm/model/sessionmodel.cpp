@@ -25,7 +25,7 @@
 using namespace ModelView;
 
 SessionModel::SessionModel(std::string model_type)
-    : SessionModel(model_type, std::make_shared<ItemPool>())
+    : SessionModel(std::move(model_type), std::make_shared<ItemPool>())
 {
 }
 

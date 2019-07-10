@@ -29,7 +29,7 @@ ItemCatalogue::ItemCatalogue() : p_impl(std::make_unique<ItemCataloguePrivate>()
 
 ItemCatalogue::ItemCatalogue(const ItemCatalogue& other)
 {
-    p_impl.reset(new ItemCataloguePrivate(*other.p_impl.get()));
+    p_impl = std::make_unique<ItemCataloguePrivate>(*other.p_impl);
 }
 
 ItemCatalogue& ItemCatalogue::operator=(const ItemCatalogue& other)

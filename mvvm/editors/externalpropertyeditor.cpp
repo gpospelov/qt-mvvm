@@ -48,7 +48,7 @@ ExternalPropertyEditor::ExternalPropertyEditor(QWidget* parent)
 
 void ExternalPropertyEditor::setCallback(std::function<void (const QVariant&)> callback)
 {
-    m_callback = callback;
+    m_callback = std::move(callback);
 }
 
 void ExternalPropertyEditor::buttonClicked()

@@ -17,7 +17,7 @@ namespace
 QStringList toList(const std::vector<std::string>& container)
 {
     QStringList result;
-    for (auto str : container)
+    for (const auto& str : container)
         result.push_back(QString::fromStdString(str));
     return result;
 }

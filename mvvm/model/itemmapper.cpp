@@ -44,7 +44,7 @@ void ItemMapper::setModel(SessionModel* model)
 
 void ItemMapper::setOnItemDestroy(Callbacks::item_t f, Callbacks::client_t client)
 {
-    m_on_item_destroy.add(f, client);
+    m_on_item_destroy.add(std::move(f), client);
 }
 
 //! Sets callback to be notified on item's data change.
@@ -52,7 +52,7 @@ void ItemMapper::setOnItemDestroy(Callbacks::item_t f, Callbacks::client_t clien
 
 void ItemMapper::setOnDataChange(Callbacks::item_int_t f, Callbacks::client_t client)
 {
-    m_on_data_change.add(f, client);
+    m_on_data_change.add(std::move(f), client);
 }
 
 //! Sets callback to be notified on item's property change.
@@ -61,7 +61,7 @@ void ItemMapper::setOnDataChange(Callbacks::item_int_t f, Callbacks::client_t cl
 
 void ItemMapper::setOnPropertyChange(Callbacks::item_str_t f, Callbacks::client_t client)
 {
-    m_on_property_change.add(f, client);
+    m_on_property_change.add(std::move(f), client);
 }
 
 //! Sets activity flag to given value. Will disable all callbacks if false.

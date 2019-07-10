@@ -20,7 +20,7 @@ ModelMapper::ModelMapper(SessionModel* item) : m_active(true), m_model(item) {}
 
 void ModelMapper::setOnDataChange(Callbacks::item_int_t f, Callbacks::client_t client)
 {
-    m_on_data_change.add(f, client);
+    m_on_data_change.add(std::move(f), client);
 }
 
 //! Sets callback to be notified on item insert.
@@ -29,7 +29,7 @@ void ModelMapper::setOnDataChange(Callbacks::item_int_t f, Callbacks::client_t c
 
 void ModelMapper::setOnRowInserted(Callbacks::item_str_int_t f, Callbacks::client_t client)
 {
-    m_on_row_inserted.add(f, client);
+    m_on_row_inserted.add(std::move(f), client);
 }
 
 //! Sets callback to be notified on removed row.
@@ -38,19 +38,19 @@ void ModelMapper::setOnRowInserted(Callbacks::item_str_int_t f, Callbacks::clien
 
 void ModelMapper::setOnRowRemoved(Callbacks::item_str_int_t f, Callbacks::client_t client)
 {
-    m_on_row_removed.add(f, client);
+    m_on_row_removed.add(std::move(f), client);
 }
 
 //! Sets the callback for notifications on model destruction.
 
 void ModelMapper::setOnModelDestroyed(Callbacks::model_t f, Callbacks::client_t client)
 {
-    m_on_model_destroyed.add(f, client);
+    m_on_model_destroyed.add(std::move(f), client);
 }
 
 void ModelMapper::setOnModelReset(Callbacks::model_t f, Callbacks::client_t client)
 {
-    m_on_model_reset.add(f, client);
+    m_on_model_reset.add(std::move(f), client);
 }
 
 //! Sets activity flag to given value. Will disable all callbacks if false.
