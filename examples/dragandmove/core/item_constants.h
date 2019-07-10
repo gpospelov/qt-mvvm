@@ -17,7 +17,8 @@
 namespace Constants
 {
 
-const std::string DemoPropertiesType = "DemoProperties";
+const std::string DemoItemType = "DemoItem";
+const std::string DemoContainerItemType = "DemoItemContainer";
 
 } // namespace Constants
 

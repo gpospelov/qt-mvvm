@@ -15,7 +15,8 @@ namespace  {
 std::unique_ptr<ModelView::ItemCatalogue> CreateToyItemCatalogue()
 {
     std::unique_ptr<ModelView::ItemCatalogue> result = std::make_unique<ModelView::ItemCatalogue>();
-    result->registerItem<DemoPropertiesItem>();
+    result->registerItem<DemoItem>();
+    result->registerItem<DemoContainerItem>();
     return result;
 }
 }

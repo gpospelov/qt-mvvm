@@ -19,11 +19,11 @@
 #include <string>
 
 /*!
-@class DemoPropertiesItem
+@class DemoItem
 @brief Demo item which demonstrates all supported properties.
 */
 
-class DemoPropertiesItem : public ModelView::CompoundItem
+class DemoItem : public ModelView::CompoundItem
 {
 public:
     static const std::string P_BOOL_PROPERTY;
@@ -34,7 +34,20 @@ public:
     static const std::string P_COMBO_PROPERTY;
     static const std::string P_EXTERNAL_PROPERTY;
 
-    DemoPropertiesItem();
+    DemoItem();
+};
+
+/*!
+@class DemoContainerItem
+@brief Container to hold demo items
+*/
+
+class DemoContainerItem : public ModelView::CompoundItem
+{
+public:
+    static const std::string T_ITEMS;
+
+    DemoContainerItem();
 };
 
 #endif // ITEMS_H

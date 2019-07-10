@@ -67,14 +67,14 @@ void MainWindow::init_application()
 void MainWindow::init_models()
 {
     // populating first model with content
-    m_model1->insertNewItem(Constants::DemoPropertiesType);
-    m_model1->insertNewItem(Constants::DemoPropertiesType);
-    m_model1->insertNewItem(Constants::DemoPropertiesType);
+    m_model1->insertNewItem(Constants::DemoItemType);
+    m_model1->insertNewItem(Constants::DemoItemType);
+    m_model1->insertNewItem(Constants::DemoItemType);
 
     // populating second model with content
-    m_model2->insertNewItem(Constants::DemoPropertiesType);
-    m_model2->insertNewItem(Constants::DemoPropertiesType);
-    m_model2->insertNewItem(Constants::DemoPropertiesType);
+    m_model2->insertNewItem(Constants::DemoItemType);
+    m_model2->insertNewItem(Constants::DemoItemType);
+    m_model2->insertNewItem(Constants::DemoItemType);
 
     m_tabWidget->addTab(new ModelEditorWidget(m_model1.get()), "Available properties");
     m_tabWidget->setCurrentIndex(m_tabWidget->count() - 1);

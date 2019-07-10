@@ -15,15 +15,15 @@
 
 using namespace ModelView;
 
-const std::string DemoPropertiesItem::P_BOOL_PROPERTY = "P_BOOL_PROPERTY";
-const std::string DemoPropertiesItem::P_INTEGER_PROPERTY = "P_INTEGER_PROPERTY";
-const std::string DemoPropertiesItem::P_STRING_PROPERTY = "P_STRING_PROPERTY";
-const std::string DemoPropertiesItem::P_DOUBLE_PROPERTY = "P_DOUBLE_PROPERTY";
-const std::string DemoPropertiesItem::P_COLOR_PROPERTY = "P_COLOR_PROPERTY";
-const std::string DemoPropertiesItem::P_COMBO_PROPERTY = "P_COMBO_PROPERTY";
-const std::string DemoPropertiesItem::P_EXTERNAL_PROPERTY = "P_EXTERNAL_PROPERTY";
+const std::string DemoItem::P_BOOL_PROPERTY = "P_BOOL_PROPERTY";
+const std::string DemoItem::P_INTEGER_PROPERTY = "P_INTEGER_PROPERTY";
+const std::string DemoItem::P_STRING_PROPERTY = "P_STRING_PROPERTY";
+const std::string DemoItem::P_DOUBLE_PROPERTY = "P_DOUBLE_PROPERTY";
+const std::string DemoItem::P_COLOR_PROPERTY = "P_COLOR_PROPERTY";
+const std::string DemoItem::P_COMBO_PROPERTY = "P_COMBO_PROPERTY";
+const std::string DemoItem::P_EXTERNAL_PROPERTY = "P_EXTERNAL_PROPERTY";
 
-DemoPropertiesItem::DemoPropertiesItem() : CompoundItem(::Constants::DemoPropertiesType)
+DemoItem::DemoItem() : CompoundItem(::Constants::DemoItemType)
 {
     addProperty<>(P_BOOL_PROPERTY, true)->setDisplayName("Bool");
     addProperty<>(P_INTEGER_PROPERTY, 42)->setDisplayName("Integer");
@@ -36,4 +36,14 @@ DemoPropertiesItem::DemoPropertiesItem() : CompoundItem(::Constants::DemoPropert
 
     ExternalProperty ext_prop = ExternalProperty("Gold", QColor(Qt::darkYellow), "some id");
     addProperty<>(P_EXTERNAL_PROPERTY, QVariant::fromValue(ext_prop))->setDisplayName("External");
+}
+
+// ----------------------------------------------------------------------------
+
+
+const std::string DemoContainerItem::T_ITEMS = "T_ITEMS";
+
+DemoContainerItem::DemoContainerItem() : CompoundItem(::Constants::DemoContainerItemType)
+{
+    registerTag(TagInfo::universalTag(T_ITEMS, {::Constants::DemoItemType}),/*set_default*/true);
 }
