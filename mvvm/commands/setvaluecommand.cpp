@@ -32,7 +32,7 @@ SetValueCommand::SetValueCommand(SessionItem* item, QVariant value, int role)
     setDescription(generate_description(m_value.toString().toStdString()));
 }
 
-void SetValueCommand::undo()
+void SetValueCommand::undo_command()
 {
     auto item = findReceiver();
     QVariant old = item->data(m_role);
@@ -41,7 +41,7 @@ void SetValueCommand::undo()
     m_value = old;
 }
 
-void SetValueCommand::execute()
+void SetValueCommand::execute_command()
 {
     auto item = findReceiver();
     QVariant old = item->data(m_role);

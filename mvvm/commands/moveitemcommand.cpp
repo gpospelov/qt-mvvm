@@ -37,7 +37,7 @@ MoveItemCommand::MoveItemCommand(SessionItem* item, SessionItem* new_parent, con
         throw std::runtime_error("MoveItemCommand::MoveItemCommand() -> Single property tag.");
 }
 
-void MoveItemCommand::undo()
+void MoveItemCommand::undo_command()
 {
     // first find items
     auto current_parent = m_model->itemFromPath(m_target_parent_path);
@@ -53,7 +53,7 @@ void MoveItemCommand::undo()
     m_original_parent_path = m_model->pathFromItem(target_parent);
 }
 
-void MoveItemCommand::execute()
+void MoveItemCommand::execute_command()
 {
     // first find items
     auto original_parent = m_model->itemFromPath(m_original_parent_path);

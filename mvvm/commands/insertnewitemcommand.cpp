@@ -33,7 +33,7 @@ InsertNewItemCommand::InsertNewItemCommand(model_type modelType, SessionItem* pa
     setDescription(generate_description(m_model_type, tag, row));
 }
 
-void InsertNewItemCommand::undo()
+void InsertNewItemCommand::undo_command()
 {
     auto parent = findReceiver();
     int row = m_row < 0 ? static_cast<int>(parent->getItems(m_tag).size()) - 1 : m_row;
@@ -41,7 +41,7 @@ void InsertNewItemCommand::undo()
     m_result = nullptr;
 }
 
-void InsertNewItemCommand::execute()
+void InsertNewItemCommand::execute_command()
 {
     auto parent = findReceiver();
     // FIXME get rid of manager in the favor of factory function generated in CommandService

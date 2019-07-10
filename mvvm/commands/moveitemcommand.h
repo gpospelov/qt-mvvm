@@ -28,12 +28,13 @@ public:
 
     MoveItemCommand(SessionItem* item, SessionItem* new_parent, const std::string& tag, int row);
 
-    void undo() override;
-    void execute() override;
-
     result_t result() const;
 
+
 private:
+    void undo_command() override;
+    void execute_command() override;
+
     std::string m_target_tag;
     int m_target_row;
     Path m_target_parent_path;

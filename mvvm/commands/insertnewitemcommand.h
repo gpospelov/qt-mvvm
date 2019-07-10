@@ -27,12 +27,13 @@ public:
 
     InsertNewItemCommand(model_type modelType, SessionItem* parent, std::string tag, int row);
 
-    void undo() override;
-    void execute() override;
-
     result_t result() const;
 
+
 private:
+    void undo_command() override;
+    void execute_command() override;
+
     std::string m_tag;
     int m_row;
     model_type m_model_type;

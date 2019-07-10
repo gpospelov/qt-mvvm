@@ -28,9 +28,9 @@ public:
     explicit AbstractItemCommand(SessionItem* receiver);
     virtual ~AbstractItemCommand() = default;
 
-    virtual void execute() = 0;
+    void execute();
 
-    virtual void undo() = 0;
+    void undo();
 
     void setObsolete(bool flag);
     bool isObsolete() const;
@@ -41,12 +41,14 @@ public:
 
     SessionItem* findReceiver() const;
 
-protected:
     bool m_is_obsolete;
     std::string m_text;
     SessionModel* m_model;
 
 private:
+    virtual void execute_command() = 0;
+    virtual void undo_command() = 0;
+
     Path m_item_path; //! Persistent path to the item which is receiver of given command.
 };
 

@@ -26,12 +26,12 @@ public:
     using result_t = bool;
     SetValueCommand(SessionItem* item, QVariant value, int role);
 
-    void undo() override;
-    void execute() override;
-
     result_t result() const;
 
 private:
+    void undo_command() override;
+    void execute_command() override;
+
     QVariant m_value; //! Value to set as a result of command execution.
     int m_role;
     result_t m_result;

@@ -34,14 +34,14 @@ RemoveItemCommand::RemoveItemCommand(SessionItem* parent, std::string tag, int r
 
 RemoveItemCommand::~RemoveItemCommand() = default;
 
-void RemoveItemCommand::undo()
+void RemoveItemCommand::undo_command()
 {
     auto parent = findReceiver();
     auto reco_item = m_backup_strategy->restoreItem();
     parent->insertItem(reco_item.release(), m_tag, m_row);
 }
 
-void RemoveItemCommand::execute()
+void RemoveItemCommand::execute_command()
 {
     auto parent = findReceiver();
     auto child = parent->takeItem(m_tag, m_row);

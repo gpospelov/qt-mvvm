@@ -27,6 +27,20 @@ AbstractItemCommand::AbstractItemCommand(SessionItem* receiver)
     m_item_path = m_model->pathFromItem(receiver);
 }
 
+//! Execute command.
+
+void AbstractItemCommand::execute()
+{
+    execute_command();
+}
+
+//! Undo command as it was before execution.
+
+void AbstractItemCommand::undo()
+{
+    undo_command();
+}
+
 //! Sets command obsolete flag.
 
 void AbstractItemCommand::setObsolete(bool flag)
