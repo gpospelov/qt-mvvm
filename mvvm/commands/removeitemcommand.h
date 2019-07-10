@@ -33,7 +33,7 @@ private:
     void undo_command() override;
     void execute_command() override;
 
-    class RemoveItemCommandPrivate;
+    struct RemoveItemCommandPrivate;
     std::unique_ptr<RemoveItemCommandPrivate> p_impl;
 };
 

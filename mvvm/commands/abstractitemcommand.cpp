@@ -8,16 +8,14 @@
 // ************************************************************************** //
 
 #include "abstractitemcommand.h"
+#include "path.h"
 #include "sessionitem.h"
 #include "sessionmodel.h"
-#include "path.h"
 #include <stdexcept>
 
 using namespace ModelView;
 
-class AbstractItemCommand::AbstractItemCommandPrivate
-{
-public:
+struct AbstractItemCommand::AbstractItemCommandPrivate {
     enum EStatus { INITIAL, AFTER_EXECUTE, AFTER_UNDO };
 
     AbstractItemCommandPrivate() : m_is_obsolete(false), m_status(INITIAL), m_model(nullptr) {}

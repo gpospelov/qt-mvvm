@@ -21,9 +21,7 @@ void check_input_data(const SessionItem* item, const SessionItem* parent);
 std::string generate_description(const std::string& tag, int row);
 } // namespace
 
-class MoveItemCommand::MoveItemCommandPrivate
-{
-public:
+struct MoveItemCommand::MoveItemCommandPrivate {
     std::string m_target_tag;
     int m_target_row;
     Path m_target_parent_path;
@@ -37,7 +35,7 @@ public:
     }
 };
 
-MoveItemCommand::MoveItemCommand(SessionItem* item, SessionItem* new_parent, const std::string& tag,
+MoveItemCommand::MoveItemCommand(SessionItem* item, SessionItem* new_parent, std::string tag,
                                  int row)
     : AbstractItemCommand(new_parent), p_impl(std::make_unique<MoveItemCommandPrivate>(tag, row))
 {

@@ -35,7 +35,7 @@ private:
     void execute_command() override;
     void swap_values();
 
-    class SetValueCommandPrivate;
+    struct SetValueCommandPrivate;
     std::unique_ptr<SetValueCommandPrivate> p_impl;
 };
 

@@ -34,7 +34,7 @@ private:
     void undo_command() override;
     void execute_command() override;
 
-    class InsertNewItemCommandPrivate;
+    struct InsertNewItemCommandPrivate;
     std::unique_ptr<InsertNewItemCommandPrivate> p_impl;
 };
 

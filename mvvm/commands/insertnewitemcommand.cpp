@@ -21,9 +21,7 @@ std::string generate_description(const std::string& modelType, const std::string
 
 using namespace ModelView;
 
-class InsertNewItemCommand::InsertNewItemCommandPrivate
-{
-public:
+struct InsertNewItemCommand::InsertNewItemCommandPrivate {
     model_type m_model_type;
     std::string m_tag;
     int m_row;

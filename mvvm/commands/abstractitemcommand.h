@@ -48,7 +48,7 @@ private:
     virtual void execute_command() = 0;
     virtual void undo_command() = 0;
 
-    class AbstractItemCommandPrivate;
+    struct AbstractItemCommandPrivate;
     std::unique_ptr<AbstractItemCommandPrivate> p_impl;
 };
 

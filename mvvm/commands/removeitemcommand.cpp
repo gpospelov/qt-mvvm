@@ -25,9 +25,7 @@ std::string generate_description(const std::string& tag, int row)
 
 using namespace ModelView;
 
-class RemoveItemCommand::RemoveItemCommandPrivate
-{
-public:
+struct RemoveItemCommand::RemoveItemCommandPrivate {
     std::string m_tag;
     int m_row;
     result_t m_result;

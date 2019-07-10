@@ -10,8 +10,8 @@
 #include "setvaluecommand.h"
 #include "sessionitem.h"
 #include "sessionmodel.h"
-#include <sstream>
 #include <QVariant>
+#include <sstream>
 
 namespace
 {
@@ -25,17 +25,15 @@ std::string generate_description(const std::string& str)
 
 using namespace ModelView;
 
-class SetValueCommand::SetValueCommandPrivate
-{
-public:
-    SetValueCommandPrivate(QVariant value, int role)
-        : m_value(std::move(value)), m_role(role), m_result(false)
-    {
-    }
+struct SetValueCommand::SetValueCommandPrivate {
     QVariant m_value; //! Value to set as a result of command execution.
     int m_role;
     result_t m_result;
     Path m_item_path;
+    SetValueCommandPrivate(QVariant value, int role)
+        : m_value(std::move(value)), m_role(role), m_result(false)
+    {
+    }
 };
 
 SetValueCommand::SetValueCommand(SessionItem* item, QVariant value, int role)
