@@ -1,9 +1,9 @@
 #include "google_test.h"
 #include "itemmanager.h"
+#include "itemutils.h"
 #include "sessionitem.h"
 #include "sessionmodel.h"
 #include "taginfo.h"
-#include "itemutils.h"
 #include "toy_includes.h"
 #include <QUndoStack>
 
@@ -418,4 +418,164 @@ TEST_F(TestUndoRedo, multiLayer)
     EXPECT_EQ(parent->tagFromItem(layer1), ToyItems::MultiLayerItem::T_LAYERS);
     std::vector<SessionItem*> expected = {layer0, layer1};
     EXPECT_EQ(parent->getItems(ToyItems::MultiLayerItem::T_LAYERS), expected);
+}
+
+//! Move single layer from multilayer to another empty multilayer.
+
+TEST_F(TestUndoRedo, moveLayerFromMultiLayer)
+{
+    ToyItems::SampleModel model;
+    model.setUndoRedoEnabled(true);
+    auto stack = model.undoStack();
+
+    // creating multi layer with 3 layers
+    auto multilayer0 = model.insertNewItem(ToyItems::Constants::MultiLayerType);
+    auto layer0 = model.insertNewItem(ToyItems::Constants::LayerType, multilayer0);
+    auto multilayer1 = model.insertNewItem(ToyItems::Constants::MultiLayerType);
+
+    // saving identifiers for further reference
+    identifier_type id_multilayer0 =
+        multilayer0->data(ItemDataRole::IDENTIFIER).value<std::string>();
+    identifier_type id_layer0 = layer0->data(ItemDataRole::IDENTIFIER).value<std::string>();
+    identifier_type id_multilayer1 =
+        multilayer1->data(ItemDataRole::IDENTIFIER).value<std::string>();
+
+    // moving layer from multilayer
+    model.moveItem(layer0, multilayer1, "", 0);
+
+    // checking results
+    std::vector<SessionItem*> expected = {layer0};
+    EXPECT_EQ(multilayer0->children().size(), 0);
+    EXPECT_EQ(multilayer1->children(), expected);
+    EXPECT_EQ(model.manager()->findItem(id_layer0), layer0);
+
+    // undoing
+    stack->undo();
+    EXPECT_EQ(multilayer0->children(), expected);
+    EXPECT_EQ(multilayer1->children().size(), 0);
+    EXPECT_EQ(model.manager()->findItem(id_layer0), layer0);
+}
+
+//! Move single layer from multilayer to another empty multilayer.
+//! Delete second multilayer and undo.
+
+TEST_F(TestUndoRedo, moveLayerFromMLDeleteSecond)
+{
+    ToyItems::SampleModel model;
+    model.setUndoRedoEnabled(true);
+    auto stack = model.undoStack();
+
+    // creating multi layer with 3 layers
+    auto multilayer0 = model.insertNewItem(ToyItems::Constants::MultiLayerType);
+    auto layer0 = model.insertNewItem(ToyItems::Constants::LayerType, multilayer0);
+    auto multilayer1 = model.insertNewItem(ToyItems::Constants::MultiLayerType);
+
+    // saving identifiers for further reference
+    identifier_type id_multilayer0 =
+        multilayer0->data(ItemDataRole::IDENTIFIER).value<std::string>();
+    identifier_type id_layer0 = layer0->data(ItemDataRole::IDENTIFIER).value<std::string>();
+    identifier_type id_multilayer1 =
+        multilayer1->data(ItemDataRole::IDENTIFIER).value<std::string>();
+
+    // moving layer from multilayer
+    model.moveItem(layer0, multilayer1, "", 0);
+
+    // checking results
+    std::vector<SessionItem*> expected = {layer0};
+    EXPECT_EQ(multilayer0->children().size(), 0);
+    EXPECT_EQ(multilayer1->children(), expected);
+    EXPECT_EQ(model.manager()->findItem(id_layer0), layer0);
+
+    // deleting second multilayer
+    model.removeItem(model.rootItem(), "", 1);
+
+    // undoing deletion
+    stack->undo();
+
+    // restoring ponters
+    layer0 = model.manager()->findItem(id_layer0);
+    multilayer1 = model.manager()->findItem(id_multilayer1);
+
+    expected = {layer0};
+    EXPECT_EQ(multilayer0->children().size(), 0);
+    EXPECT_EQ(multilayer1->children(), expected);
+
+    // unoing move
+    stack->undo();
+
+    EXPECT_EQ(multilayer0->children(), expected);
+    EXPECT_EQ(multilayer1->children().size(), 0);
+}
+
+//! Create 2 multilayers, 3 layers each. Move layer from one multilayer to another.
+//! Deleting everything and undoing.
+
+TEST_F(TestUndoRedo, moveLayerFromMLDeleteAll)
+{
+    ToyItems::SampleModel model;
+    model.setUndoRedoEnabled(true);
+    auto stack = model.undoStack();
+
+    // creating multi layer with 3 layers
+    auto multilayer0 = model.insertNewItem(ToyItems::Constants::MultiLayerType);
+    auto layer0 = model.insertNewItem(ToyItems::Constants::LayerType, multilayer0);
+    auto layer1 = model.insertNewItem(ToyItems::Constants::LayerType, multilayer0);
+    auto layer2 = model.insertNewItem(ToyItems::Constants::LayerType, multilayer0);
+
+    // saving identifiers for further reference
+    identifier_type id_multilayer0 =
+        multilayer0->data(ItemDataRole::IDENTIFIER).value<std::string>();
+    identifier_type id_layer0 = layer0->data(ItemDataRole::IDENTIFIER).value<std::string>();
+    identifier_type id_layer1 = layer1->data(ItemDataRole::IDENTIFIER).value<std::string>();
+    identifier_type id_layer2 = layer2->data(ItemDataRole::IDENTIFIER).value<std::string>();
+
+    // creating another multi layer with 3 layers
+    auto multilayer1 = model.insertNewItem(ToyItems::Constants::MultiLayerType);
+    auto layer3 = model.insertNewItem(ToyItems::Constants::LayerType, multilayer1);
+    auto layer4 = model.insertNewItem(ToyItems::Constants::LayerType, multilayer1);
+    auto layer5 = model.insertNewItem(ToyItems::Constants::LayerType, multilayer1);
+
+    // saving identifiers for further reference
+    identifier_type id_multilayer1 =
+        multilayer1->data(ItemDataRole::IDENTIFIER).value<std::string>();
+    identifier_type id_layer3 = layer3->data(ItemDataRole::IDENTIFIER).value<std::string>();
+    identifier_type id_layer4 = layer4->data(ItemDataRole::IDENTIFIER).value<std::string>();
+    identifier_type id_layer5 = layer5->data(ItemDataRole::IDENTIFIER).value<std::string>();
+
+    // checking status of unddo stack
+    EXPECT_EQ(stack->count(), 8);
+    EXPECT_EQ(stack->index(), 8);
+
+    // moving  layer1 to second multilayer
+    model.moveItem(layer1, multilayer1, ToyItems::MultiLayerItem::T_LAYERS, 0);
+
+    // removing multilayers
+    model.removeItem(model.rootItem(), "", 1);
+    model.removeItem(model.rootItem(), "", 0);
+
+    // checking status of unddo stack
+    EXPECT_EQ(stack->count(), 11);
+    EXPECT_EQ(stack->index(), 11);
+
+    // undoing thrice
+    stack->undo();
+    stack->undo();
+    stack->undo();
+
+    // restoring pointers
+    multilayer0 = model.manager()->findItem(id_multilayer0);
+    layer0 = model.manager()->findItem(id_layer0);
+    layer1 = model.manager()->findItem(id_layer1);
+    layer2 = model.manager()->findItem(id_layer2);
+    multilayer1 = model.manager()->findItem(id_multilayer1);
+    layer3 = model.manager()->findItem(id_layer3);
+    layer4 = model.manager()->findItem(id_layer4);
+    layer5 = model.manager()->findItem(id_layer5);
+
+    // checking layers
+    std::vector<SessionItem*> expected = {layer0, layer1, layer2};
+    EXPECT_EQ(multilayer0->children(), expected);
+
+    expected = {layer3, layer4, layer5};
+    EXPECT_EQ(multilayer1->children(), expected);
 }
