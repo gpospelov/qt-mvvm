@@ -32,12 +32,12 @@ public:
 
     void undo();
 
-    void setObsolete(bool flag);
     bool isObsolete() const;
 
     std::string description() const;
 
 protected:
+    void setObsolete(bool flag);
     void setDescription(const std::string& description);
     Path pathFromItem(SessionItem* item) const;
     SessionItem* itemFromPath(Path path) const;

@@ -40,13 +40,6 @@ void AbstractItemCommand::undo()
     undo_command();
 }
 
-//! Sets command obsolete flag.
-
-void AbstractItemCommand::setObsolete(bool flag)
-{
-    m_is_obsolete = flag;
-}
-
 //! Returns whether the command is obsolete (which means that it shouldn't be kept in the stack).
 
 bool AbstractItemCommand::isObsolete() const
@@ -59,6 +52,13 @@ bool AbstractItemCommand::isObsolete() const
 std::string AbstractItemCommand::description() const
 {
     return m_text;
+}
+
+//! Sets command obsolete flag.
+
+void AbstractItemCommand::setObsolete(bool flag)
+{
+    m_is_obsolete = flag;
 }
 
 //! Sets command description.
