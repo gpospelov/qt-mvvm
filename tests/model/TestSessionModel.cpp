@@ -145,6 +145,28 @@ TEST_F(TestSessionModel, takeRowFromRootItem)
     delete taken;
 }
 
+TEST_F(TestSessionModel, moveItem)
+{
+    SessionModel model;
+
+    // parent with child
+    auto parent0 = model.insertNewItem(Constants::BaseType);
+    parent0->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
+    auto child0 = model.insertNewItem(Constants::PropertyType, parent0);
+
+    // another parent with child
+    auto parent1 = model.insertNewItem(Constants::BaseType);
+    parent1->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
+    auto child1 = model.insertNewItem(Constants::PropertyType, parent1);
+
+    // moving child0 from parent0 to parent 1
+    model.moveItem(child0, parent1, "", 0);
+
+    std::vector<SessionItem*> expected = {child0, child1};
+    EXPECT_EQ(parent1->children(), expected);
+    EXPECT_EQ(parent0->children().size(), 0);
+}
+
 TEST_F(TestSessionModel, clearModel)
 {
     auto pool = std::make_shared<ItemPool>();
