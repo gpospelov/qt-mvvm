@@ -26,21 +26,16 @@ public:
     using result_t = bool;
 
     MoveItemCommand(SessionItem* item, SessionItem* new_parent, const std::string& tag, int row);
+    ~MoveItemCommand() override;
 
     result_t result() const;
-
 
 private:
     void undo_command() override;
     void execute_command() override;
 
-    std::string m_target_tag;
-    int m_target_row;
-    Path m_target_parent_path;
-    Path m_original_parent_path;
-    std::string m_original_tag;
-    int m_original_row;
-    result_t m_result;
+    class MoveItemCommandPrivate;
+    std::unique_ptr<MoveItemCommandPrivate> p_impl;
 };
 
 } // namespace ModelView

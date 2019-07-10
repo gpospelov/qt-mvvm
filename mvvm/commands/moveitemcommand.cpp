@@ -21,52 +21,70 @@ void check_input_data(const SessionItem* item, const SessionItem* parent);
 std::string generate_description(const std::string& tag, int row);
 } // namespace
 
+class MoveItemCommand::MoveItemCommandPrivate
+{
+public:
+    std::string m_target_tag;
+    int m_target_row;
+    Path m_target_parent_path;
+    Path m_original_parent_path;
+    std::string m_original_tag;
+    int m_original_row;
+    result_t m_result;
+    MoveItemCommandPrivate(std::string tag, int row)
+        : m_target_tag(std::move(tag)), m_target_row(row), m_original_row(0), m_result(true)
+    {
+    }
+};
+
 MoveItemCommand::MoveItemCommand(SessionItem* item, SessionItem* new_parent, const std::string& tag,
                                  int row)
-    : AbstractItemCommand(new_parent), m_target_tag(tag), m_target_row(row), m_original_row(0),
-      m_result(true)
+    : AbstractItemCommand(new_parent), p_impl(std::make_unique<MoveItemCommandPrivate>(tag, row))
 {
     check_input_data(item, new_parent);
-    setDescription(generate_description(m_target_tag, m_target_row));
+    setDescription(generate_description(p_impl->m_target_tag, p_impl->m_target_row));
 
-    m_target_parent_path = pathFromItem(new_parent);
-    m_original_parent_path = pathFromItem(item->parent());
+    p_impl->m_target_parent_path = pathFromItem(new_parent);
+    p_impl->m_original_parent_path = pathFromItem(item->parent());
     auto tagRow = item->parent()->tagIndexOfItem(item);
-    m_original_tag = tagRow.first;
-    m_original_row = tagRow.second;
+    p_impl->m_original_tag = tagRow.first;
+    p_impl->m_original_row = tagRow.second;
 
-    if (item->parent()->isSinglePropertyTag(m_original_tag))
+    if (item->parent()->isSinglePropertyTag(p_impl->m_original_tag))
         throw std::runtime_error("MoveItemCommand::MoveItemCommand() -> Single property tag.");
 
-    if (new_parent->isSinglePropertyTag(m_target_tag))
+    if (new_parent->isSinglePropertyTag(p_impl->m_target_tag))
         throw std::runtime_error("MoveItemCommand::MoveItemCommand() -> Single property tag.");
 }
+
+MoveItemCommand::~MoveItemCommand() = default;
 
 void MoveItemCommand::undo_command()
 {
     // first find items
-    auto current_parent = itemFromPath(m_target_parent_path);
-    auto target_parent = itemFromPath(m_original_parent_path);
+    auto current_parent = itemFromPath(p_impl->m_target_parent_path);
+    auto target_parent = itemFromPath(p_impl->m_original_parent_path);
 
     // then make manipulations
-    int row = m_target_row < 0 ? static_cast<int>(current_parent->getItems(m_target_tag).size()) - 1
-                               : m_target_row;
-    auto taken = current_parent->takeItem(m_target_tag, row);
-    target_parent->insertItem(taken, m_original_tag, m_original_row);
+    int row = p_impl->m_target_row < 0
+                  ? static_cast<int>(current_parent->getItems(p_impl->m_target_tag).size()) - 1
+                  : p_impl->m_target_row;
+    auto taken = current_parent->takeItem(p_impl->m_target_tag, row);
+    target_parent->insertItem(taken, p_impl->m_original_tag, p_impl->m_original_row);
 
     // adjusting new addresses
-    m_target_parent_path = pathFromItem(current_parent);
-    m_original_parent_path = pathFromItem(target_parent);
+    p_impl->m_target_parent_path = pathFromItem(current_parent);
+    p_impl->m_original_parent_path = pathFromItem(target_parent);
 }
 
 void MoveItemCommand::execute_command()
 {
     // first find items
-    auto original_parent = itemFromPath(m_original_parent_path);
-    auto target_parent = itemFromPath(m_target_parent_path);
+    auto original_parent = itemFromPath(p_impl->m_original_parent_path);
+    auto target_parent = itemFromPath(p_impl->m_target_parent_path);
 
     // then make manipulations
-    auto taken = original_parent->takeItem(m_original_tag, m_original_row);
+    auto taken = original_parent->takeItem(p_impl->m_original_tag, p_impl->m_original_row);
 
     // FIXME If something went wrong will throw an exception. Shell we try to proceed instead
     // and try to gently resolve situations maximum/minimum/reached?
@@ -74,18 +92,18 @@ void MoveItemCommand::execute_command()
     if (!taken)
         throw std::runtime_error("MoveItemCommand::execute() -> Can't take an item.");
 
-    bool succeeded = target_parent->insertItem(taken, m_target_tag, m_target_row);
+    bool succeeded = target_parent->insertItem(taken, p_impl->m_target_tag, p_impl->m_target_row);
     if (!succeeded)
         throw std::runtime_error("MoveItemCommand::execute() -> Can't insert item.");
 
     // adjusting new addresses
-    m_target_parent_path = pathFromItem(target_parent);
-    m_original_parent_path = pathFromItem(original_parent);
+    p_impl->m_target_parent_path = pathFromItem(target_parent);
+    p_impl->m_original_parent_path = pathFromItem(original_parent);
 }
 
 MoveItemCommand::result_t MoveItemCommand::result() const
 {
-    return m_result;
+    return p_impl->m_result;
 }
 
 namespace
