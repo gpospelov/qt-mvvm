@@ -31,11 +31,12 @@ InsertNewItemCommand::InsertNewItemCommand(model_type modelType, SessionItem* pa
       m_model_type(std::move(modelType))
 {
     setDescription(generate_description(m_model_type, tag, row));
+    m_item_path = pathFromItem(parent);
 }
 
 void InsertNewItemCommand::undo_command()
 {
-    auto parent = findReceiver();
+    auto parent = itemFromPath(m_item_path);
     int row = m_row < 0 ? static_cast<int>(parent->getItems(m_tag).size()) - 1 : m_row;
     delete parent->takeItem(m_tag, row);
     m_result = nullptr;
@@ -43,7 +44,7 @@ void InsertNewItemCommand::undo_command()
 
 void InsertNewItemCommand::execute_command()
 {
-    auto parent = findReceiver();
+    auto parent = itemFromPath(m_item_path);
     // FIXME get rid of manager in the favor of factory function generated in CommandService
     auto child = model()->manager()->createItem(m_model_type).release();
     parent->insertItem(child, m_tag, m_row);

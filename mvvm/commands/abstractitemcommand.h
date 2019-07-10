@@ -37,8 +37,6 @@ public:
 
     std::string description() const;
 
-    SessionItem* findReceiver() const;
-
 protected:
     void setDescription(const std::string& description);
     Path pathFromItem(SessionItem* item) const;
@@ -49,7 +47,6 @@ private:
     virtual void execute_command() = 0;
     virtual void undo_command() = 0;
 
-    Path m_item_path; //! Persistent path to the item which is receiver of given command.
     bool m_is_obsolete;
     std::string m_text;
     SessionModel* m_model;

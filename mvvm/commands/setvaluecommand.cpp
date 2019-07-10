@@ -30,11 +30,13 @@ SetValueCommand::SetValueCommand(SessionItem* item, QVariant value, int role)
     , m_result(false)
 {
     setDescription(generate_description(m_value.toString().toStdString()));
+
+    m_item_path = pathFromItem(item);
 }
 
 void SetValueCommand::undo_command()
 {
-    auto item = findReceiver();
+    auto item = itemFromPath(m_item_path);
     QVariant old = item->data(m_role);
     m_result = item->setDataIntern(m_value, m_role);
     setObsolete(!m_result);
@@ -43,7 +45,7 @@ void SetValueCommand::undo_command()
 
 void SetValueCommand::execute_command()
 {
-    auto item = findReceiver();
+    auto item = itemFromPath(m_item_path);
     QVariant old = item->data(m_role);
     m_result = item->setDataIntern(m_value, m_role);
     setObsolete(!m_result);

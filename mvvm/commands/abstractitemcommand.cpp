@@ -24,7 +24,6 @@ AbstractItemCommand::AbstractItemCommand(SessionItem* receiver)
         throw std::runtime_error("Item doesn't have a model");
 
     m_model = receiver->model();
-    m_item_path = m_model->pathFromItem(receiver);
 }
 
 //! Execute command.
@@ -84,9 +83,3 @@ SessionModel* AbstractItemCommand::model() const
     return m_model;
 }
 
-//! Finds the item which is the receiver of given command.
-
-SessionItem* AbstractItemCommand::findReceiver() const
-{
-    return m_model->itemFromPath(m_item_path);
-}

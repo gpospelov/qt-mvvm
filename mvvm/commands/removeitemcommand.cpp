@@ -30,20 +30,21 @@ RemoveItemCommand::RemoveItemCommand(SessionItem* parent, std::string tag, int r
 {
     setDescription(generate_description(tag, row));
     m_backup_strategy = parent->model()->backupStrategy();
+    m_item_path = pathFromItem(parent);
 }
 
 RemoveItemCommand::~RemoveItemCommand() = default;
 
 void RemoveItemCommand::undo_command()
 {
-    auto parent = findReceiver();
+    auto parent = itemFromPath(m_item_path);
     auto reco_item = m_backup_strategy->restoreItem();
     parent->insertItem(reco_item.release(), m_tag, m_row);
 }
 
 void RemoveItemCommand::execute_command()
 {
-    auto parent = findReceiver();
+    auto parent = itemFromPath(m_item_path);
     auto child = parent->takeItem(m_tag, m_row);
     m_backup_strategy->saveItem(child);
     delete child;

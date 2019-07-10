@@ -35,6 +35,7 @@ private:
     QVariant m_value; //! Value to set as a result of command execution.
     int m_role;
     result_t m_result;
+    Path m_item_path;
 };
 
 }  // namespace ModelView

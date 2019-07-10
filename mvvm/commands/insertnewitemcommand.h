@@ -38,6 +38,7 @@ private:
     int m_row;
     model_type m_model_type;
     result_t m_result;
+    Path m_item_path;
 };
 
 }  // namespace ModelView

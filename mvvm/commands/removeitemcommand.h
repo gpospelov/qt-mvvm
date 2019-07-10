@@ -40,6 +40,7 @@ private:
     int m_row;
     result_t m_result;
     std::unique_ptr<ItemBackupStrategy> m_backup_strategy;
+    Path m_item_path;
 };
 
 } // namespace ModelView
