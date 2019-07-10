@@ -15,12 +15,7 @@
 
 namespace
 {
-std::string generate_description(const std::string& tag, int row)
-{
-    std::ostringstream ostr;
-    ostr << "Remove item from tag '" << tag << "', row " << row;
-    return ostr.str();
-}
+std::string generate_description(const std::string& tag, int row);
 } // namespace
 
 using namespace ModelView;
@@ -36,6 +31,8 @@ struct RemoveItemCommand::RemoveItemCommandPrivate {
     {
     }
 };
+
+// ----------------------------------------------------------------------------
 
 RemoveItemCommand::RemoveItemCommand(SessionItem* parent, std::string tag, int row)
     : AbstractItemCommand(parent), p_impl(std::make_unique<RemoveItemCommandPrivate>(tag, row))
@@ -66,3 +63,13 @@ RemoveItemCommand::result_t RemoveItemCommand::result() const
 {
     return p_impl->m_result;
 }
+
+namespace
+{
+std::string generate_description(const std::string& tag, int row)
+{
+    std::ostringstream ostr;
+    ostr << "Remove item from tag '" << tag << "', row " << row;
+    return ostr.str();
+}
+} // namespace

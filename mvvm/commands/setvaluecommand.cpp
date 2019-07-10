@@ -15,12 +15,7 @@
 
 namespace
 {
-std::string generate_description(const std::string& str)
-{
-    std::ostringstream ostr;
-    ostr << "Set value " << str;
-    return ostr.str();
-}
+std::string generate_description(const std::string& str);
 } // namespace
 
 using namespace ModelView;
@@ -35,6 +30,8 @@ struct SetValueCommand::SetValueCommandPrivate {
     {
     }
 };
+
+// ----------------------------------------------------------------------------
 
 SetValueCommand::SetValueCommand(SessionItem* item, QVariant value, int role)
     : AbstractItemCommand(item), p_impl(std::make_unique<SetValueCommandPrivate>(value, role))
@@ -71,3 +68,13 @@ SetValueCommand::result_t SetValueCommand::result() const
 {
     return p_impl->m_result;
 }
+
+namespace
+{
+std::string generate_description(const std::string& str)
+{
+    std::ostringstream ostr;
+    ostr << "Set value " << str;
+    return ostr.str();
+}
+} // namespace
