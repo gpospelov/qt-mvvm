@@ -28,7 +28,7 @@ struct InsertNewItemCommand::InsertNewItemCommandPrivate {
     result_t m_result;
     Path m_item_path;
     InsertNewItemCommandPrivate(model_type modelType, std::string tag, int row)
-        : m_model_type(std::move(modelType)), m_tag(std::move(tag)), m_row(row)
+        : m_model_type(std::move(modelType)), m_tag(std::move(tag)), m_row(row), m_result(nullptr)
     {
     }
 };
