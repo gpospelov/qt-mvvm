@@ -43,12 +43,11 @@ private:
     QBoxLayout* create_left_layout();
     QBoxLayout* create_right_layout();
 
-    QTreeView* m_verticalTree;
-    QTreeView* m_horizontalTree;
-    QTableView* m_tableView;
+    QTreeView* m_leftTree;
+    QTreeView* m_rightTree;
 
-    std::unique_ptr<ModelView::AbstractViewModel> m_verticalViewModel;
-    std::unique_ptr<ModelView::AbstractViewModel> m_horizontalViewModel;
+    std::unique_ptr<ModelView::AbstractViewModel> m_leftViewModel;
+    std::unique_ptr<ModelView::AbstractViewModel> m_rightViewModel;
     std::unique_ptr<ModelView::ViewModelDelegate> m_delegate;
 };
 

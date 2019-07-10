@@ -21,7 +21,6 @@ const std::string DemoItem::P_STRING_PROPERTY = "P_STRING_PROPERTY";
 const std::string DemoItem::P_DOUBLE_PROPERTY = "P_DOUBLE_PROPERTY";
 const std::string DemoItem::P_COLOR_PROPERTY = "P_COLOR_PROPERTY";
 const std::string DemoItem::P_COMBO_PROPERTY = "P_COMBO_PROPERTY";
-const std::string DemoItem::P_EXTERNAL_PROPERTY = "P_EXTERNAL_PROPERTY";
 
 DemoItem::DemoItem() : CompoundItem(::Constants::DemoItemType)
 {
@@ -33,9 +32,6 @@ DemoItem::DemoItem() : CompoundItem(::Constants::DemoItemType)
 
     ComboProperty combo = ComboProperty() << "option 1" << "option 2" << "option 3";
     addProperty<>(P_COMBO_PROPERTY, QVariant::fromValue(combo))->setDisplayName("Combo");
-
-    ExternalProperty ext_prop = ExternalProperty("Gold", QColor(Qt::darkYellow), "some id");
-    addProperty<>(P_EXTERNAL_PROPERTY, QVariant::fromValue(ext_prop))->setDisplayName("External");
 }
 
 // ----------------------------------------------------------------------------

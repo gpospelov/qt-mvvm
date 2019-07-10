@@ -11,7 +11,8 @@
 #include "itemcatalogue.h"
 #include "items.h"
 
-namespace  {
+namespace
+{
 std::unique_ptr<ModelView::ItemCatalogue> CreateToyItemCatalogue()
 {
     std::unique_ptr<ModelView::ItemCatalogue> result = std::make_unique<ModelView::ItemCatalogue>();
@@ -19,8 +20,7 @@ std::unique_ptr<ModelView::ItemCatalogue> CreateToyItemCatalogue()
     result->registerItem<DemoContainerItem>();
     return result;
 }
-}
-
+} // namespace
 
 SampleModel::SampleModel() : SessionModel("SampleModel")
 {

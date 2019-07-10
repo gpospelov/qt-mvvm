@@ -32,7 +32,6 @@ public:
     static const std::string P_DOUBLE_PROPERTY;
     static const std::string P_COLOR_PROPERTY;
     static const std::string P_COMBO_PROPERTY;
-    static const std::string P_EXTERNAL_PROPERTY;
 
     DemoItem();
 };

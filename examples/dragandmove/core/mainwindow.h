@@ -34,8 +34,7 @@ private:
     void init_models();
 
     QTabWidget* m_tabWidget;
-    std::unique_ptr<SampleModel> m_model1;
-    std::unique_ptr<SampleModel> m_model2;
+    std::unique_ptr<SampleModel> m_model;
 };
 
 #endif //  MAINWINDOW_H
