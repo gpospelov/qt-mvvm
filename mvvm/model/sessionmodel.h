@@ -51,8 +51,8 @@ public:
 
     bool setData(SessionItem* item, const QVariant& value, int role);
 
-    Path pathFromItem(SessionItem* item);
-    SessionItem* itemFromPath(Path path);
+    Path pathFromItem(const SessionItem* item) const;
+    SessionItem* itemFromPath(Path path) const;
 
     void setUndoRedoEnabled(bool value);
 

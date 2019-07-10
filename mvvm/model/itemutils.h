@@ -40,7 +40,7 @@ CORE_EXPORT SessionItem* ChildAt(const SessionItem* parent, int index);
 
 //! Returns index in children array corresponding to given child. No tags are involved,
 //! index is considered as global index in the combined array of all children.
-CORE_EXPORT int IndexOfChild(const SessionItem* parent, SessionItem* child);
+CORE_EXPORT int IndexOfChild(const SessionItem* parent, const SessionItem* child);
 
 //! Returns vector of children representing top level items.
 

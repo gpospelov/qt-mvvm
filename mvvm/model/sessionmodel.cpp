@@ -79,10 +79,10 @@ bool SessionModel::setData(SessionItem* item, const QVariant& value, int role)
 
 //! Returns path from item.
 
-Path SessionModel::pathFromItem(SessionItem* item)
+Path SessionModel::pathFromItem(const SessionItem* item) const
 {
     Path result;
-    SessionItem* current(item);
+    const SessionItem* current(item);
     while (current && current->parent()) {
         result.prepend(Utils::IndexOfChild(current->parent(), current));
         current = current->parent();
@@ -92,7 +92,7 @@ Path SessionModel::pathFromItem(SessionItem* item)
 
 //! Returns item from path.
 
-SessionItem* SessionModel::itemFromPath(Path path)
+SessionItem* SessionModel::itemFromPath(Path path) const
 {
     SessionItem* result(rootItem());
     for (const auto& x : path) {

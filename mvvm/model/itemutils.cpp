@@ -70,7 +70,7 @@ SessionItem* Utils::ChildAt(const SessionItem* parent, int index)
                : nullptr;
 }
 
-int Utils::IndexOfChild(const SessionItem* parent, SessionItem* child)
+int Utils::IndexOfChild(const SessionItem* parent, const SessionItem* child)
 {
     auto container = parent->children();
     auto pos = find(container.begin(), container.end(), child);
