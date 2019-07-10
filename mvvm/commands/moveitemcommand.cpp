@@ -24,8 +24,8 @@ MoveItemCommand::MoveItemCommand(SessionItem* item, SessionItem* new_parent, con
     : AbstractItemCommand(new_parent), m_target_tag(tag), m_target_row(row), m_original_row(0), m_result(true)
 {
     check_input_data(item, new_parent);
-    m_target_parent_path = m_model->pathFromItem(new_parent);
-    m_original_parent_path = m_model->pathFromItem(item->parent());
+    m_target_parent_path = pathFromItem(new_parent);
+    m_original_parent_path = pathFromItem(item->parent());
     auto tagRow = item->parent()->tagIndexOfItem(item);
     m_original_tag = tagRow.first;
     m_original_row = tagRow.second;
@@ -40,8 +40,8 @@ MoveItemCommand::MoveItemCommand(SessionItem* item, SessionItem* new_parent, con
 void MoveItemCommand::undo_command()
 {
     // first find items
-    auto current_parent = m_model->itemFromPath(m_target_parent_path);
-    auto target_parent = m_model->itemFromPath(m_original_parent_path);
+    auto current_parent = itemFromPath(m_target_parent_path);
+    auto target_parent = itemFromPath(m_original_parent_path);
 
     // then make manipulations
     int row = m_target_row < 0 ? static_cast<int>(current_parent->getItems(m_target_tag).size()) - 1 : m_target_row;
@@ -49,15 +49,15 @@ void MoveItemCommand::undo_command()
     target_parent->insertItem(taken, m_original_tag, m_original_row);
 
     // adjusting new addresses
-    m_target_parent_path = m_model->pathFromItem(current_parent);
-    m_original_parent_path = m_model->pathFromItem(target_parent);
+    m_target_parent_path = pathFromItem(current_parent);
+    m_original_parent_path = pathFromItem(target_parent);
 }
 
 void MoveItemCommand::execute_command()
 {
     // first find items
-    auto original_parent = m_model->itemFromPath(m_original_parent_path);
-    auto target_parent = m_model->itemFromPath(m_target_parent_path);
+    auto original_parent = itemFromPath(m_original_parent_path);
+    auto target_parent = itemFromPath(m_target_parent_path);
 
     // then make manipulations
     auto taken = original_parent->takeItem(m_original_tag, m_original_row);
@@ -73,8 +73,8 @@ void MoveItemCommand::execute_command()
         throw std::runtime_error("MoveItemCommand::execute() -> Can't insert item.");
 
     // adjusting new addresses
-    m_target_parent_path = m_model->pathFromItem(target_parent);
-    m_original_parent_path = m_model->pathFromItem(original_parent);
+    m_target_parent_path = pathFromItem(target_parent);
+    m_original_parent_path = pathFromItem(original_parent);
 }
 
 MoveItemCommand::result_t MoveItemCommand::result() const

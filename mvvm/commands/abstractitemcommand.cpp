@@ -69,6 +69,21 @@ void AbstractItemCommand::setDescription(const std::string& text)
     m_text = text;
 }
 
+Path AbstractItemCommand::pathFromItem(SessionItem* item) const
+{
+    return m_model->pathFromItem(item);
+}
+
+SessionItem* AbstractItemCommand::itemFromPath(Path path) const
+{
+    return m_model->itemFromPath(path);
+}
+
+SessionModel* AbstractItemCommand::model() const
+{
+    return m_model;
+}
+
 //! Finds the item which is the receiver of given command.
 
 SessionItem* AbstractItemCommand::findReceiver() const
