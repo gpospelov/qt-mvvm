@@ -63,3 +63,34 @@ TEST_F(TestInsertNewItemCommand, insertNewItemWithTagCommand)
     EXPECT_EQ(parent->childrenCount(), 0);
     EXPECT_EQ(nullptr, command2->result());
 }
+
+//! Attempt to execute command twice.
+
+TEST_F(TestInsertNewItemCommand, attemptToExecuteTwice)
+{
+    SessionModel model;
+
+    // command to set same value
+    auto command =
+        std::make_unique<InsertNewItemCommand>(Constants::BaseType, model.rootItem(), "", 0);
+
+    // executing command
+    command->execute();
+    EXPECT_THROW(command->execute(), std::runtime_error);
+}
+
+//! Attempt to undo command twice.
+
+TEST_F(TestInsertNewItemCommand, attemptToUndoTwice)
+{
+    SessionModel model;
+
+    // command to set same value
+    auto command =
+        std::make_unique<InsertNewItemCommand>(Constants::BaseType, model.rootItem(), "", 0);
+
+    // executing command
+    command->execute();
+    command->undo();
+    EXPECT_THROW(command->undo(), std::runtime_error);
+}

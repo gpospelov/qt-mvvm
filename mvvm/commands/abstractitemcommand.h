@@ -12,8 +12,8 @@
 
 #include "mvvm_global.h"
 #include "path.h"
-#include <string>
 #include <memory>
+#include <string>
 
 namespace ModelView
 {

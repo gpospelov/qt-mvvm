@@ -14,11 +14,21 @@
 
 using namespace ModelView;
 
-class AbstractItemCommand::AbstractItemCommandPrivate {
+class AbstractItemCommand::AbstractItemCommandPrivate
+{
 public:
-    AbstractItemCommandPrivate() : m_is_obsolete(false), m_model(nullptr){}
+    enum EStatus { INITIAL, AFTER_EXECUTE, AFTER_UNDO };
+
+    AbstractItemCommandPrivate() : m_is_obsolete(false), m_status(INITIAL), m_model(nullptr) {}
+
+    bool can_execute() const { return m_status != AFTER_EXECUTE; }
+    bool can_undo() const { return m_status == AFTER_EXECUTE; }
+    void set_after_execute() { m_status = AFTER_EXECUTE; }
+    void set_after_undo() { m_status = AFTER_UNDO; }
+
     bool m_is_obsolete;
     std::string m_text;
+    EStatus m_status;
     SessionModel* m_model;
 };
 
@@ -40,14 +50,24 @@ AbstractItemCommand::~AbstractItemCommand() = default;
 
 void AbstractItemCommand::execute()
 {
+    if (!p_impl->can_execute())
+        throw std::runtime_error("Can't execute the command. Wrong order.");
+
     execute_command();
+
+    p_impl->set_after_execute();
 }
 
 //! Undo command as it was before execution.
 
 void AbstractItemCommand::undo()
 {
+    if (!p_impl->can_undo())
+        throw std::runtime_error("Can't undo the command. Wrong order.");
+
     undo_command();
+
+    p_impl->set_after_undo();
 }
 
 //! Returns whether the command is obsolete (which means that it shouldn't be kept in the stack).
@@ -92,4 +112,3 @@ SessionModel* AbstractItemCommand::model() const
 {
     return p_impl->m_model;
 }
-
