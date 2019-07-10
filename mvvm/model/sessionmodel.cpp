@@ -62,6 +62,14 @@ SessionItem* SessionModel::insertNewItem(const model_type& modelType, SessionIte
     return m_commands->insertNewItem(modelType, parent, tag, index);
 }
 
+//! Inserts item in parent, into given tag under the given index.
+//! Item shouldn't belong to any model/parent. Parent should be the part of this model.
+
+void SessionModel::insertItem(SessionItem* item, SessionItem* parent, const std::string& tag, int index)
+{
+    m_commands->insertItem(item, parent, tag, index);
+}
+
 SessionItem* SessionModel::rootItem() const
 {
     return m_root_item.get();
@@ -119,6 +127,9 @@ void SessionModel::removeItem(SessionItem* parent, const std::string& tag, int r
 {
     m_commands->removeItem(parent, tag, row);
 }
+
+//! Move item from it's current parent to a new parent under given tag and row.
+//! Old and new parents should belong to this model.
 
 void SessionModel::moveItem(SessionItem* item, SessionItem* new_parent, const std::string& tag, int row)
 {

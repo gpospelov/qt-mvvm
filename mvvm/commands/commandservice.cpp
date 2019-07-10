@@ -37,6 +37,11 @@ SessionItem* CommandService::insertNewItem(const model_type& modelType, SessionI
     return process_command<InsertNewItemCommand>(modelType, parent, tag, row);
 }
 
+void CommandService::insertItem(SessionItem* item, SessionItem* parent, const std::string& tag, int index)
+{
+
+}
+
 bool CommandService::setData(SessionItem* item, const QVariant& value, int role)
 {
     if (!item)
