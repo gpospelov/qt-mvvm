@@ -29,6 +29,12 @@ MoveItemCommand::MoveItemCommand(SessionItem* item, SessionItem* new_parent, con
     auto tagRow = item->parent()->tagIndexOfItem(item);
     m_original_tag = tagRow.first;
     m_original_row = tagRow.second;
+
+    if (item->parent()->isSinglePropertyTag(m_original_tag))
+        throw std::runtime_error("MoveItemCommand::MoveItemCommand() -> Single property tag.");
+
+    if (new_parent->isSinglePropertyTag(m_tag))
+        throw std::runtime_error("MoveItemCommand::MoveItemCommand() -> Single property tag.");
 }
 
 void MoveItemCommand::undo()
@@ -55,7 +61,16 @@ void MoveItemCommand::execute()
 
     // then make manipulations
     auto taken = original_parent->takeItem(m_original_tag, m_original_row);
-    target_parent->insertItem(taken, m_tag, m_row);
+
+    // FIXME If something went wrong will throw an exception. Shell we try to proceed instead
+    // and try to gently resolve situations maximum/minimum/reached?
+
+    if (!taken)
+        throw std::runtime_error("MoveItemCommand::execute() -> Can't take an item.");
+
+    bool succeeded = target_parent->insertItem(taken, m_tag, m_row);
+    if (!succeeded)
+        throw std::runtime_error("MoveItemCommand::execute() -> Can't insert item.");
 
     // adjusting new addresses
     m_target_parent_path = m_model->pathFromItem(target_parent);
@@ -82,7 +97,7 @@ void check_input_data(const SessionItem* item, const SessionItem* parent)
             "MoveItemCommand::MoveItemCommand() -> Items belong to different models");
 
     if (!item->parent())
-        throw std::runtime_error("MoveItemCommand::MoveItemCommand() -> Item doesn't have a parent");
-
+        throw std::runtime_error(
+            "MoveItemCommand::MoveItemCommand() -> Item doesn't have a parent");
 }
 } // namespace

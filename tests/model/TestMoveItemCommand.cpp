@@ -287,8 +287,3 @@ TEST_F(TestMoveItemCommand, betweenParentTags)
     expected = {child2, child3};
     EXPECT_EQ(parent->getItems("tag2"), expected);
 }
-
-
-
-
-
