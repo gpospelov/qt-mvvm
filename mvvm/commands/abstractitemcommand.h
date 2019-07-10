@@ -13,6 +13,7 @@
 #include "mvvm_global.h"
 #include "path.h"
 #include <string>
+#include <memory>
 
 namespace ModelView
 {
@@ -26,7 +27,7 @@ class CORE_EXPORT AbstractItemCommand
 {
 public:
     explicit AbstractItemCommand(SessionItem* receiver);
-    virtual ~AbstractItemCommand() = default;
+    virtual ~AbstractItemCommand();
 
     void execute();
 
@@ -47,9 +48,8 @@ private:
     virtual void execute_command() = 0;
     virtual void undo_command() = 0;
 
-    bool m_is_obsolete;
-    std::string m_text;
-    SessionModel* m_model;
+    class AbstractItemCommandPrivate;
+    std::unique_ptr<AbstractItemCommandPrivate> p_impl;
 };
 
 } // namespace ModelView

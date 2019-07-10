@@ -14,8 +14,16 @@
 
 using namespace ModelView;
 
+class AbstractItemCommand::AbstractItemCommandPrivate {
+public:
+    AbstractItemCommandPrivate() : m_is_obsolete(false), m_model(nullptr){}
+    bool m_is_obsolete;
+    std::string m_text;
+    SessionModel* m_model;
+};
+
 AbstractItemCommand::AbstractItemCommand(SessionItem* receiver)
-    : m_is_obsolete(false), m_model(nullptr)
+    : p_impl(std::make_unique<AbstractItemCommand::AbstractItemCommandPrivate>())
 {
     if (!receiver)
         throw std::runtime_error("Invalid item.");
@@ -23,8 +31,10 @@ AbstractItemCommand::AbstractItemCommand(SessionItem* receiver)
     if (!receiver->model())
         throw std::runtime_error("Item doesn't have a model");
 
-    m_model = receiver->model();
+    p_impl->m_model = receiver->model();
 }
+
+AbstractItemCommand::~AbstractItemCommand() = default;
 
 //! Execute command.
 
@@ -44,42 +54,42 @@ void AbstractItemCommand::undo()
 
 bool AbstractItemCommand::isObsolete() const
 {
-    return m_is_obsolete;
+    return p_impl->m_is_obsolete;
 }
 
 //! Returns command description.
 
 std::string AbstractItemCommand::description() const
 {
-    return m_text;
+    return p_impl->m_text;
 }
 
 //! Sets command obsolete flag.
 
 void AbstractItemCommand::setObsolete(bool flag)
 {
-    m_is_obsolete = flag;
+    p_impl->m_is_obsolete = flag;
 }
 
 //! Sets command description.
 
 void AbstractItemCommand::setDescription(const std::string& text)
 {
-    m_text = text;
+    p_impl->m_text = text;
 }
 
 Path AbstractItemCommand::pathFromItem(SessionItem* item) const
 {
-    return m_model->pathFromItem(item);
+    return p_impl->m_model->pathFromItem(item);
 }
 
 SessionItem* AbstractItemCommand::itemFromPath(Path path) const
 {
-    return m_model->itemFromPath(path);
+    return p_impl->m_model->itemFromPath(path);
 }
 
 SessionModel* AbstractItemCommand::model() const
 {
-    return m_model;
+    return p_impl->m_model;
 }
 
