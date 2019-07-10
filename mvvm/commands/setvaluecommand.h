@@ -11,11 +11,12 @@
 #define MVVM_SETVALUECOMMAND_H
 
 #include "abstractitemcommand.h"
-#include <QVariant>
 
-namespace ModelView {
+class QVariant;
 
-class SessionModel;
+namespace ModelView
+{
+
 class SessionItem;
 
 //! Command for unddo/redo framework to set the data of SessionItem.
@@ -25,19 +26,19 @@ class CORE_EXPORT SetValueCommand : public AbstractItemCommand
 public:
     using result_t = bool;
     SetValueCommand(SessionItem* item, QVariant value, int role);
+    ~SetValueCommand() override;
 
     result_t result() const;
 
 private:
     void undo_command() override;
     void execute_command() override;
+    void swap_values();
 
-    QVariant m_value; //! Value to set as a result of command execution.
-    int m_role;
-    result_t m_result;
-    Path m_item_path;
+    class SetValueCommandPrivate;
+    std::unique_ptr<SetValueCommandPrivate> p_impl;
 };
 
-}  // namespace ModelView
+} // namespace ModelView
 
 #endif // MVVM_SETVALUECOMMAND_H
