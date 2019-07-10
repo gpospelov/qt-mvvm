@@ -188,4 +188,107 @@ TEST_F(TestMoveItemCommand, fromRootToParent)
     EXPECT_EQ(parent->children(), expected);
 }
 
+TEST_F(TestMoveItemCommand, fromParentToRoot)
+{
+    SessionModel model;
+    auto item0 = model.insertNewItem(Constants::BaseType, model.rootItem(), "", -1);
+    auto parent = model.insertNewItem(Constants::BaseType, model.rootItem(), "", -1);
+    parent->registerTag(TagInfo::universalTag("tag1"), /*set_as_default*/ true);
+
+    auto child0 = model.insertNewItem(Constants::BaseType, parent, "tag1", -1);
+    auto child1 = model.insertNewItem(Constants::BaseType, parent, "tag1", -1);
+
+    // expected items for root item
+    std::vector<SessionItem*> expected = {item0, parent};
+    EXPECT_EQ(model.rootItem()->children(), expected);
+
+    // expected items for parent
+    expected = {child0, child1};
+    EXPECT_EQ(parent->children(), expected);
+
+    // moving child0 from parent to root
+    MoveItemCommand command(child0, model.rootItem(), "", 0);
+    command.execute();
+    EXPECT_EQ(command.result(), true);
+    EXPECT_EQ(command.isObsolete(), false);
+
+    // expected items for root item
+    expected = {child0, item0, parent};
+    EXPECT_EQ(model.rootItem()->children(), expected);
+
+    // expected items for parent
+    expected = {child1};
+    EXPECT_EQ(parent->children(), expected);
+
+    // undoing command
+    command.undo();
+    EXPECT_EQ(command.result(), true);
+    EXPECT_EQ(command.isObsolete(), false);
+
+    // expected items for root item
+    expected = {item0, parent};
+    EXPECT_EQ(model.rootItem()->children(), expected);
+
+    // expected items for parent
+    expected = {child0, child1};
+    EXPECT_EQ(parent->children(), expected);
+}
+
+TEST_F(TestMoveItemCommand, betweenParentTags)
+{
+    SessionModel model;
+    auto parent = model.insertNewItem(Constants::BaseType, model.rootItem(), "", -1);
+    parent->registerTag(TagInfo::universalTag("tag1"));
+    parent->registerTag(TagInfo::universalTag("tag2"));
+
+    auto child0 = model.insertNewItem(Constants::BaseType, parent, "tag1", -1);
+    auto child1 = model.insertNewItem(Constants::BaseType, parent, "tag1", -1);
+    auto child2 = model.insertNewItem(Constants::BaseType, parent, "tag2", -1);
+    auto child3 = model.insertNewItem(Constants::BaseType, parent, "tag2", -1);
+
+    // expected items for root item
+    std::vector<SessionItem*> expected = {parent};
+    EXPECT_EQ(model.rootItem()->children(), expected);
+
+    // expected items for parent
+    expected = {child0, child1, child2, child3};
+    EXPECT_EQ(parent->children(), expected);
+
+    // moving child2 to another tag
+    MoveItemCommand command(child2, parent, "tag1", 0);
+    command.execute();
+    EXPECT_EQ(command.result(), true);
+    EXPECT_EQ(command.isObsolete(), false);
+
+    // expected items for root item
+    expected = {parent};
+    EXPECT_EQ(model.rootItem()->children(), expected);
+
+    // expected items for parents tag
+    expected = {child2, child0, child1, child3};
+    EXPECT_EQ(parent->children(), expected);
+    expected = {child2, child0, child1};
+    EXPECT_EQ(parent->getItems("tag1"), expected);
+    expected = {child3};
+    EXPECT_EQ(parent->getItems("tag2"), expected);
+
+    // undoing command
+    command.undo();
+    EXPECT_EQ(command.result(), true);
+    EXPECT_EQ(command.isObsolete(), false);
+
+    // expected items for root item
+    expected = {parent};
+    EXPECT_EQ(model.rootItem()->children(), expected);
+
+    // expected items for parent
+    expected = {child0, child1};
+    EXPECT_EQ(parent->getItems("tag1"), expected);
+    expected = {child2, child3};
+    EXPECT_EQ(parent->getItems("tag2"), expected);
+}
+
+
+
+
 
