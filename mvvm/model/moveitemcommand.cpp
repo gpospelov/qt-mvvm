@@ -33,21 +33,33 @@ MoveItemCommand::MoveItemCommand(SessionItem* item, SessionItem* new_parent, con
 
 void MoveItemCommand::undo()
 {
+    // first find items
     auto current_parent = m_model->itemFromPath(m_target_parent_path);
+    auto target_parent = m_model->itemFromPath(m_original_parent_path);
 
+    // then make manipulations
     int row = m_row < 0 ? static_cast<int>(current_parent->getItems(m_tag).size()) - 1 : m_row;
     auto taken = current_parent->takeItem(m_tag, row);
-    auto target_parent = m_model->itemFromPath(m_original_parent_path);
     target_parent->insertItem(taken, m_original_tag, m_original_row);
+
+    // adjusting new addresses
+    m_target_parent_path = m_model->pathFromItem(current_parent);
+    m_original_parent_path = m_model->pathFromItem(target_parent);
 }
 
 void MoveItemCommand::execute()
 {
+    // first find items
     auto original_parent = m_model->itemFromPath(m_original_parent_path);
-    auto taken = original_parent->takeItem(m_original_tag, m_original_row);
-
     auto target_parent = m_model->itemFromPath(m_target_parent_path);
+
+    // then make manipulations
+    auto taken = original_parent->takeItem(m_original_tag, m_original_row);
     target_parent->insertItem(taken, m_tag, m_row);
+
+    // adjusting new addresses
+    m_target_parent_path = m_model->pathFromItem(target_parent);
+    m_original_parent_path = m_model->pathFromItem(original_parent);
 }
 
 MoveItemCommand::result_t MoveItemCommand::result() const

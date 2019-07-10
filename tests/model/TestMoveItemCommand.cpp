@@ -15,7 +15,7 @@ public:
 
 TestMoveItemCommand::~TestMoveItemCommand() = default;
 
-TEST_F(TestMoveItemCommand, moveAtRootContext)
+TEST_F(TestMoveItemCommand, rootContextNext)
 {
     SessionModel model;
     auto item0 = model.insertNewItem(Constants::BaseType, model.rootItem(), "", -1);
@@ -45,11 +45,13 @@ TEST_F(TestMoveItemCommand, moveAtRootContext)
     // redoing
     command.execute();
     EXPECT_EQ(command.result(), true);
+    EXPECT_EQ(command.isObsolete(), false);
+
     expected = {item0, item2, item1, item3};
     EXPECT_EQ(model.rootItem()->children(), expected);
 }
 
-TEST_F(TestMoveItemCommand, moveAtRootContextSamePos)
+TEST_F(TestMoveItemCommand, rootContextSamePos)
 {
     SessionModel model;
     auto item0 = model.insertNewItem(Constants::BaseType, model.rootItem(), "", -1);
@@ -61,7 +63,7 @@ TEST_F(TestMoveItemCommand, moveAtRootContextSamePos)
     std::vector<SessionItem*> expected = {item0, item1, item2, item3};
     EXPECT_EQ(model.rootItem()->children(), expected);
 
-    // moving item1 to the next position
+    // moving item1 to the same position
     MoveItemCommand command(item1, model.rootItem(), "", 1);
     command.execute();
     EXPECT_EQ(command.result(), true);
@@ -73,11 +75,13 @@ TEST_F(TestMoveItemCommand, moveAtRootContextSamePos)
     // undoing command
     command.undo();
     EXPECT_EQ(command.result(), true);
+    EXPECT_EQ(command.isObsolete(), false);
+
     expected = {item0, item1, item2, item3};
     EXPECT_EQ(model.rootItem()->children(), expected);
 }
 
-TEST_F(TestMoveItemCommand, moveAtRootContextForward)
+TEST_F(TestMoveItemCommand, rootContextBack)
 {
     SessionModel model;
     auto item0 = model.insertNewItem(Constants::BaseType, model.rootItem(), "", -1);
@@ -89,7 +93,7 @@ TEST_F(TestMoveItemCommand, moveAtRootContextForward)
     std::vector<SessionItem*> expected = {item0, item1, item2, item3};
     EXPECT_EQ(model.rootItem()->children(), expected);
 
-    // moving item1 to the next position
+    // moving item2 to item1's place
     MoveItemCommand command(item2, model.rootItem(), "", 1);
     command.execute();
     EXPECT_EQ(command.result(), true);
@@ -101,11 +105,13 @@ TEST_F(TestMoveItemCommand, moveAtRootContextForward)
     // undoing command
     command.undo();
     EXPECT_EQ(command.result(), true);
+    EXPECT_EQ(command.isObsolete(), false);
+
     expected = {item0, item1, item2, item3};
     EXPECT_EQ(model.rootItem()->children(), expected);
 }
 
-TEST_F(TestMoveItemCommand, moveAtRootContextMoveBack)
+TEST_F(TestMoveItemCommand, rootContextLast)
 {
     SessionModel model;
     auto item0 = model.insertNewItem(Constants::BaseType, model.rootItem(), "", -1);
@@ -117,10 +123,11 @@ TEST_F(TestMoveItemCommand, moveAtRootContextMoveBack)
     std::vector<SessionItem*> expected = {item0, item1, item2, item3};
     EXPECT_EQ(model.rootItem()->children(), expected);
 
-    // moving item1 to the next position
+    // moving item0 in the back of the list
     MoveItemCommand command(item0, model.rootItem(), "", -1);
     command.execute();
     EXPECT_EQ(command.result(), true);
+    EXPECT_EQ(command.isObsolete(), false);
 
     // expecting new order of items
     expected = {item1, item2, item3, item0};
@@ -128,6 +135,57 @@ TEST_F(TestMoveItemCommand, moveAtRootContextMoveBack)
 
     // undoing command
     command.undo();
+    EXPECT_EQ(command.result(), true);
+    EXPECT_EQ(command.isObsolete(), false);
+
     expected = {item0, item1, item2, item3};
     EXPECT_EQ(model.rootItem()->children(), expected);
 }
+
+TEST_F(TestMoveItemCommand, fromRootToParent)
+{
+    SessionModel model;
+    auto item0 = model.insertNewItem(Constants::BaseType, model.rootItem(), "", -1);
+    auto parent = model.insertNewItem(Constants::BaseType, model.rootItem(), "", -1);
+    parent->registerTag(TagInfo::universalTag("tag1"), /*set_as_default*/ true);
+
+    auto child0 = model.insertNewItem(Constants::BaseType, parent, "tag1", -1);
+    auto child1 = model.insertNewItem(Constants::BaseType, parent, "tag1", -1);
+
+    // expected items for root item
+    std::vector<SessionItem*> expected = {item0, parent};
+    EXPECT_EQ(model.rootItem()->children(), expected);
+
+    // expected items for parent
+    expected = {child0, child1};
+    EXPECT_EQ(parent->children(), expected);
+
+    // moving item0 from root to parent
+    MoveItemCommand command(item0, parent, "", 1);
+    command.execute();
+    EXPECT_EQ(command.result(), true);
+    EXPECT_EQ(command.isObsolete(), false);
+
+    // expected items for root item
+    expected = {parent};
+    EXPECT_EQ(model.rootItem()->children(), expected);
+
+    // expected items for parent
+    expected = {child0, item0, child1};
+    EXPECT_EQ(parent->children(), expected);
+
+    // undoing command
+    command.undo();
+    EXPECT_EQ(command.result(), true);
+    EXPECT_EQ(command.isObsolete(), false);
+
+    // expected items for root item
+    expected = {item0, parent};
+    EXPECT_EQ(model.rootItem()->children(), expected);
+
+    // expected items for parent
+    expected = {child0, child1};
+    EXPECT_EQ(parent->children(), expected);
+}
+
+
