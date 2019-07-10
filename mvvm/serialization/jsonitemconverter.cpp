@@ -8,7 +8,6 @@
 // ************************************************************************** //
 
 #include "jsonitemconverter.h"
-#include "itemmanager.h"
 #include "jsonitemdata.h"
 #include "jsontaginfo.h"
 #include "sessionitem.h"

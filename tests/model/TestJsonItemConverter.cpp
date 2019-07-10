@@ -5,7 +5,6 @@
 #include "sessionmodel.h"
 #include "taginfo.h"
 #include "test_utils.h"
-#include "itemmanager.h"
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>

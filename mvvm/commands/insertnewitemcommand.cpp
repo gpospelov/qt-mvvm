@@ -8,10 +8,10 @@
 // ************************************************************************** //
 
 #include "insertnewitemcommand.h"
-#include "itemmanager.h"
 #include "path.h"
 #include "sessionitem.h"
 #include "sessionmodel.h"
+#include "itemfactory.h"
 #include <sstream>
 
 namespace
@@ -57,7 +57,7 @@ void InsertNewItemCommand::execute_command()
 {
     auto parent = itemFromPath(p_impl->m_item_path);
     // FIXME get rid of manager in the favor of factory function generated in CommandService
-    auto child = model()->manager()->createItem(p_impl->m_model_type).release();
+    auto child = model()->factory()->createItem(p_impl->m_model_type).release();
     parent->insertItem(child, p_impl->m_tag, p_impl->m_row);
     p_impl->m_result = child;
 }

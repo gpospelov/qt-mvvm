@@ -9,7 +9,6 @@
 
 #include "jsonutils.h"
 #include "sessionmodel.h"
-#include "itemmanager.h"
 #include "jsonconverterinterfaces.h"
 #include "jsonmodel.h"
 #include "reallimits.h"

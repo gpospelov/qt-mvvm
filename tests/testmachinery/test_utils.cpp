@@ -11,7 +11,6 @@
 #include "testconfig.h"
 #include "fileutils.h"
 #include "sessionmodel.h"
-#include "itemmanager.h"
 #include "jsonconverterinterfaces.h"
 #include "jsonutils.h"
 #include <QFile>

@@ -8,7 +8,6 @@
 // ************************************************************************** //
 
 #include "sessionitem.h"
-#include "itemmanager.h"
 #include "itempool.h"
 #include "itemutils.h"
 #include "itemmapper.h"

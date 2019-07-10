@@ -13,7 +13,6 @@
 #include "sessionitem.h"
 #include "sessionitemdata.h"
 #include "itemutils.h"
-#include "itemmanager.h"
 #include "customvariants.h"
 #include "mvvm_types.h"
 #include "jsonitemconverter.h"

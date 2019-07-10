@@ -9,7 +9,6 @@
 
 #include "toy_items.h"
 #include "comboproperty.h"
-#include "itemmanager.h"
 #include "itemmapper.h"
 #include "taginfo.h"
 #include "toy_constants.h"

@@ -8,7 +8,6 @@
 // ************************************************************************** //
 
 #include "compounditem.h"
-#include "itemmanager.h"
 #include "itemutils.h"
 #include "sessionmodel.h"
 #include "taginfo.h"
