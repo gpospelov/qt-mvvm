@@ -162,7 +162,7 @@ void SessionModel::clear()
 
 std::unique_ptr<ItemBackupStrategy> SessionModel::backupStrategy() const
 {
-    return std::make_unique<JsonBackupStrategy>(m_item_manager->factory());
+    return std::make_unique<JsonBackupStrategy>(factory());
 }
 
 std::unique_ptr<SessionItem> SessionModel::createCopy(const SessionItem* item)
@@ -170,6 +170,11 @@ std::unique_ptr<SessionItem> SessionModel::createCopy(const SessionItem* item)
     if (item->model() != this)
         throw std::runtime_error("SessionModel::createCopy() -> Can't copy alien item");
     return JsonItemCopyStrategy(m_item_manager->factory()).createCopy(item);
+}
+
+const ItemFactoryInterface* SessionModel::factory() const
+{
+    return m_item_manager->factory();
 }
 
 void SessionModel::createRootItem()

@@ -26,7 +26,7 @@ public:
 
     std::unique_ptr<JsonItemConverter> createConverter()
     {
-        return std::make_unique<JsonItemConverter>(m_model->manager()->factory());
+        return std::make_unique<JsonItemConverter>(m_model->factory());
     }
 
 private:

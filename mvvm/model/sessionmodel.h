@@ -29,6 +29,7 @@ class ModelMapper;
 class ItemCatalogue;
 class ItemPool;
 class ItemBackupStrategy;
+class ItemFactoryInterface;
 
 class CORE_EXPORT SessionModel
 {
@@ -75,6 +76,8 @@ public:
     std::unique_ptr<ItemBackupStrategy> backupStrategy() const;
 
     std::unique_ptr<SessionItem> createCopy(const SessionItem* item);
+
+    const ItemFactoryInterface* factory() const;
 
 protected:
     std::unique_ptr<ItemManager> m_item_manager;
