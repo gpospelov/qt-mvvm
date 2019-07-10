@@ -25,32 +25,43 @@ std::string generate_description(const std::string& tag, int row)
 
 using namespace ModelView;
 
+class RemoveItemCommand::RemoveItemCommandPrivate
+{
+public:
+    std::string m_tag;
+    int m_row;
+    result_t m_result;
+    std::unique_ptr<ItemBackupStrategy> m_backup_strategy;
+    Path m_item_path;
+    RemoveItemCommandPrivate(std::string tag, int row) : m_tag(std::move(tag)), m_row(row), m_result(true){}
+};
+
 RemoveItemCommand::RemoveItemCommand(SessionItem* parent, std::string tag, int row)
-    : AbstractItemCommand(parent), m_tag(std::move(tag)), m_row(row), m_result(true)
+    : AbstractItemCommand(parent), p_impl(std::make_unique<RemoveItemCommandPrivate>(tag, row))
 {
     setDescription(generate_description(tag, row));
-    m_backup_strategy = parent->model()->backupStrategy();
-    m_item_path = pathFromItem(parent);
+    p_impl->m_backup_strategy = parent->model()->backupStrategy();
+    p_impl->m_item_path = pathFromItem(parent);
 }
 
 RemoveItemCommand::~RemoveItemCommand() = default;
 
 void RemoveItemCommand::undo_command()
 {
-    auto parent = itemFromPath(m_item_path);
-    auto reco_item = m_backup_strategy->restoreItem();
-    parent->insertItem(reco_item.release(), m_tag, m_row);
+    auto parent = itemFromPath(p_impl->m_item_path);
+    auto reco_item = p_impl->m_backup_strategy->restoreItem();
+    parent->insertItem(reco_item.release(), p_impl->m_tag, p_impl->m_row);
 }
 
 void RemoveItemCommand::execute_command()
 {
-    auto parent = itemFromPath(m_item_path);
-    auto child = parent->takeItem(m_tag, m_row);
-    m_backup_strategy->saveItem(child);
+    auto parent = itemFromPath(p_impl->m_item_path);
+    auto child = parent->takeItem(p_impl->m_tag, p_impl->m_row);
+    p_impl->m_backup_strategy->saveItem(child);
     delete child;
 }
 
 RemoveItemCommand::result_t RemoveItemCommand::result() const
 {
-    return m_result;
+    return p_impl->m_result;
 }

@@ -11,14 +11,9 @@
 #define MVVM_REMOVEITEMCOMMAND_H
 
 #include "abstractitemcommand.h"
-#include <memory>
 
 namespace ModelView
 {
-
-class SessionModel;
-class SessionItem;
-class ItemBackupStrategy;
 
 //! Command for unddo/redo framework to remove item from a model using child's tag and row.
 
@@ -36,11 +31,8 @@ private:
     void undo_command() override;
     void execute_command() override;
 
-    std::string m_tag;
-    int m_row;
-    result_t m_result;
-    std::unique_ptr<ItemBackupStrategy> m_backup_strategy;
-    Path m_item_path;
+    class RemoveItemCommandPrivate;
+    std::unique_ptr<RemoveItemCommandPrivate> p_impl;
 };
 
 } // namespace ModelView
