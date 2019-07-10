@@ -34,8 +34,8 @@ public:
     result_t result() const;
 
 private:
-    std::string m_tag;
-    int m_row;
+    std::string m_target_tag;
+    int m_target_row;
     Path m_target_parent_path;
     Path m_original_parent_path;
     std::string m_original_tag;

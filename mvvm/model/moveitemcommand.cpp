@@ -21,7 +21,7 @@ void check_input_data(const SessionItem* item, const SessionItem* parent);
 
 MoveItemCommand::MoveItemCommand(SessionItem* item, SessionItem* new_parent, const std::string& tag,
                                  int row)
-    : AbstractItemCommand(new_parent), m_tag(tag), m_row(row), m_original_row(0), m_result(true)
+    : AbstractItemCommand(new_parent), m_target_tag(tag), m_target_row(row), m_original_row(0), m_result(true)
 {
     check_input_data(item, new_parent);
     m_target_parent_path = m_model->pathFromItem(new_parent);
@@ -33,7 +33,7 @@ MoveItemCommand::MoveItemCommand(SessionItem* item, SessionItem* new_parent, con
     if (item->parent()->isSinglePropertyTag(m_original_tag))
         throw std::runtime_error("MoveItemCommand::MoveItemCommand() -> Single property tag.");
 
-    if (new_parent->isSinglePropertyTag(m_tag))
+    if (new_parent->isSinglePropertyTag(m_target_tag))
         throw std::runtime_error("MoveItemCommand::MoveItemCommand() -> Single property tag.");
 }
 
@@ -44,8 +44,8 @@ void MoveItemCommand::undo()
     auto target_parent = m_model->itemFromPath(m_original_parent_path);
 
     // then make manipulations
-    int row = m_row < 0 ? static_cast<int>(current_parent->getItems(m_tag).size()) - 1 : m_row;
-    auto taken = current_parent->takeItem(m_tag, row);
+    int row = m_target_row < 0 ? static_cast<int>(current_parent->getItems(m_target_tag).size()) - 1 : m_target_row;
+    auto taken = current_parent->takeItem(m_target_tag, row);
     target_parent->insertItem(taken, m_original_tag, m_original_row);
 
     // adjusting new addresses
@@ -68,7 +68,7 @@ void MoveItemCommand::execute()
     if (!taken)
         throw std::runtime_error("MoveItemCommand::execute() -> Can't take an item.");
 
-    bool succeeded = target_parent->insertItem(taken, m_tag, m_row);
+    bool succeeded = target_parent->insertItem(taken, m_target_tag, m_target_row);
     if (!succeeded)
         throw std::runtime_error("MoveItemCommand::execute() -> Can't insert item.");
 
