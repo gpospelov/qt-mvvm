@@ -15,7 +15,7 @@
 #include "itemmanager.h"
 #include "itempool.h"
 #include "itemutils.h"
-#include "jsonbackupstrategy.h"
+#include "jsonitembackupstrategy.h"
 #include "modelmapper.h"
 #include "sessionitem.h"
 #include "standarditemcatalogue.h"
@@ -166,7 +166,7 @@ void SessionModel::clear()
 
 std::unique_ptr<ItemBackupStrategy> SessionModel::itemBackupStrategy() const
 {
-    return std::make_unique<JsonBackupStrategy>(factory());
+    return std::make_unique<JsonItemBackupStrategy>(factory());
 }
 
 //! Returns strategy for copying items.

@@ -1,34 +1,34 @@
 #include "compounditem.h"
 #include "google_test.h"
 #include "itemfactory.h"
-#include "jsonbackupstrategy.h"
+#include "jsonitembackupstrategy.h"
 #include "propertyitem.h"
 #include "standarditemcatalogue.h"
 
 using namespace ModelView;
 
-class TestJsonBackupStrategy : public ::testing::Test
+class TestJsonItemBackupStrategy : public ::testing::Test
 {
 public:
-    TestJsonBackupStrategy()
+    TestJsonItemBackupStrategy()
         : m_factory(std::make_unique<ItemFactory>(CreateStandardItemCatalogue()))
     {
     }
-    ~TestJsonBackupStrategy();
+    ~TestJsonItemBackupStrategy();
 
-    std::unique_ptr<JsonBackupStrategy> createBackupStrategy()
+    std::unique_ptr<JsonItemBackupStrategy> createBackupStrategy()
     {
-        return std::make_unique<JsonBackupStrategy>(m_factory.get());
+        return std::make_unique<JsonItemBackupStrategy>(m_factory.get());
     }
 
     std::unique_ptr<ItemFactory> m_factory;
 };
 
-TestJsonBackupStrategy::~TestJsonBackupStrategy() = default;
+TestJsonItemBackupStrategy::~TestJsonItemBackupStrategy() = default;
 
 //! Saving/restoring PropertyItem.
 
-TEST_F(TestJsonBackupStrategy, propertyItem)
+TEST_F(TestJsonItemBackupStrategy, propertyItem)
 {
     auto strategy = createBackupStrategy();
 
@@ -45,7 +45,7 @@ TEST_F(TestJsonBackupStrategy, propertyItem)
 
 //! Saving/restoring CompoundItem.
 
-TEST_F(TestJsonBackupStrategy, compoundItem)
+TEST_F(TestJsonItemBackupStrategy, compoundItem)
 {
     auto strategy = createBackupStrategy();
 
@@ -64,7 +64,7 @@ TEST_F(TestJsonBackupStrategy, compoundItem)
 
 //! Saving/restoring CustomItem.
 
-TEST_F(TestJsonBackupStrategy, customItem)
+TEST_F(TestJsonItemBackupStrategy, customItem)
 {
     auto strategy = createBackupStrategy();
 

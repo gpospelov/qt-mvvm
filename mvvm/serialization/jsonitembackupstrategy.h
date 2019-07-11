@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_JSONBACKUPSTRATEGY_H
-#define MVVM_JSONBACKUPSTRATEGY_H
+#ifndef MVVM_JSONITEMBACKUPSTRATEGY_H
+#define MVVM_JSONITEMBACKUPSTRATEGY_H
 
 #include "itembackupstrategy.h"
 #include <memory>
@@ -21,21 +21,21 @@ class ItemFactoryInterface;
 
 //! Provide backup of SessionItem using json strategy.
 
-class CORE_EXPORT JsonBackupStrategy : public ItemBackupStrategy
+class CORE_EXPORT JsonItemBackupStrategy : public ItemBackupStrategy
 {
 public:
-    JsonBackupStrategy(const ItemFactoryInterface* item_factory);
-    ~JsonBackupStrategy() override;
+    JsonItemBackupStrategy(const ItemFactoryInterface* item_factory);
+    ~JsonItemBackupStrategy() override;
 
     std::unique_ptr<SessionItem> restoreItem() const override;
 
     void saveItem(const SessionItem* item) override;
 
 private:
-    class JsonBackupStrategyPrivate;
-    std::unique_ptr<JsonBackupStrategyPrivate> p_impl;
+    class JsonItemBackupStrategyPrivate;
+    std::unique_ptr<JsonItemBackupStrategyPrivate> p_impl;
 };
 
 } // namespace ModelView
 
-#endif // MVVM_JSONBACKUPSTRATEGY_H
+#endif // MVVM_JSONITEMBACKUPSTRATEGY_H
