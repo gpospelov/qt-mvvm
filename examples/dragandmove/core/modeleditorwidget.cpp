@@ -31,6 +31,7 @@ ModelEditorWidget::ModelEditorWidget(SampleModel* model, QWidget* parent)
     auto container_layout = new QHBoxLayout();
     container_layout->setSpacing(10);
     container_layout->addWidget(m_leftWidget);
+    container_layout->addSpacing(20);
     container_layout->addWidget(m_rightWidget);
 
     mainLayout->addLayout(top_layout);

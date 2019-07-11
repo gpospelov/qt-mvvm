@@ -15,6 +15,7 @@
 
 class SampleModel;
 class QTreeView;
+class QBoxLayout;
 
 namespace ModelView
 {
@@ -36,7 +37,16 @@ public:
 
     void setModel(SampleModel* model);
 
+private slots:
+    void onAdd();
+    void onCopy();
+    void onRemove();
+    void onDown();
+    void onUp();
+
 private:
+    QBoxLayout* create_button_layout();
+
     QTreeView* m_treeView;
     std::unique_ptr<ModelView::AbstractViewModel> m_viewModel;
     std::unique_ptr<ModelView::ViewModelDelegate> m_delegate;
