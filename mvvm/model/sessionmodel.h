@@ -47,7 +47,7 @@ public:
     SessionItem* insertNewItem(const model_type& modelType, SessionItem* parent = nullptr,
                                const std::string& tag = {}, int row = -1);
 
-    void copyItem(const SessionItem* item, SessionItem* parent, const std::string& tag = {}, int row = -1);
+    SessionItem* copyItem(const SessionItem* item, SessionItem* parent, const std::string& tag = {}, int row = -1);
 
     SessionItem* rootItem() const;
 

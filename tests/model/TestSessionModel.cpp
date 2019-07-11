@@ -4,6 +4,7 @@
 #include "sessionmodel.h"
 #include "taginfo.h"
 #include "itemutils.h"
+#include "propertyitem.h"
 #include <memory>
 
 using namespace ModelView;
@@ -189,3 +190,66 @@ TEST_F(TestSessionModel, clearModel)
     EXPECT_EQ(pool->key_for_item(first_root), "");
     EXPECT_EQ(pool->size(), 1);
 }
+
+TEST_F(TestSessionModel, copyModelItemRootContext)
+{
+    SessionModel model;
+
+    // create single item with value
+    auto item = model.insertNewItem(Constants::BaseType);
+    item->setData(42.0, ItemDataRole::DATA);
+
+    // copying to root item
+    auto copy = model.copyItem(item, model.rootItem());
+
+    // checking copy
+    ASSERT_TRUE(copy != nullptr);
+    ASSERT_TRUE(copy != item);
+    EXPECT_FALSE(copy->identifier().empty());
+    EXPECT_TRUE(copy->identifier() != item->identifier());
+    EXPECT_EQ(copy->data(ItemDataRole::DATA).toDouble(), 42.0);
+    EXPECT_EQ(model.rootItem()->children().size(), 2);
+    EXPECT_TRUE(item!=copy);
+    std::vector<SessionItem*> expected = {item, copy};
+    EXPECT_EQ(model.rootItem()->children(), expected);
+}
+
+TEST_F(TestSessionModel, copyParentWithProperty)
+{
+    SessionModel model;
+
+    // parent with single child and data on ite
+    auto parent0 = model.insertNewItem(Constants::BaseType);
+    parent0->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
+    auto child0 = model.insertNewItem(Constants::PropertyType, parent0);
+    child0->setData(42.0, ItemDataRole::DATA);
+
+    // copying whole parent to root
+    auto copy = model.copyItem(parent0, model.rootItem());
+    auto copy_child = copy->getItem("defaultTag");
+
+    ASSERT_TRUE(copy != nullptr);
+    ASSERT_TRUE(copy_child != nullptr);
+    EXPECT_FALSE(copy->identifier().empty());
+    EXPECT_TRUE(copy->identifier() != parent0->identifier());
+    EXPECT_EQ(copy_child->data(ItemDataRole::DATA).toDouble(), 42.0);
+}
+
+TEST_F(TestSessionModel, copyFreeItem)
+{
+    SessionModel model;
+
+    // single parent in a model
+    auto parent0 = model.insertNewItem(Constants::BaseType);
+    parent0->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
+
+    // free item
+    auto item = std::make_unique<PropertyItem>();
+    item->setData(42.0, ItemDataRole::DATA);
+
+    // copying to parent
+    auto copy = model.copyItem(item.get(), parent0, "", -1);
+    EXPECT_EQ(copy->data(ItemDataRole::DATA).toDouble(), 42.0);
+}
+
+
