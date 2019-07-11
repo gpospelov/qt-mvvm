@@ -39,19 +39,17 @@ ColorEditor::ColorEditor(QWidget* parent)
     setLayout(layout);
 }
 
-void ColorEditor::mousePressEvent(QMouseEvent* event)
+void ColorEditor::mousePressEvent(QMouseEvent*)
 {
     // temporarily installing filter to prevent loss of focus caused by too insistent dialog
     installEventFilter(m_focusFilter);
 
-    bool ok = false;
-    QRgb oldRgba = currentColor().rgba();
-    QRgb newRgba = QColorDialog::getRgba(oldRgba, &ok, nullptr);
+    auto new_color = QColorDialog::getColor(currentColor());
 
     removeEventFilter(m_focusFilter);
 
-    if (ok && newRgba != oldRgba) {
-        setDataIntern(QColor::fromRgba(newRgba));
+    if (new_color.isValid()) {
+        setDataIntern(new_color);
         update_components();
     }
 }

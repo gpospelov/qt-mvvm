@@ -32,7 +32,7 @@ MaterialControlPanel::MaterialControlPanel(MaterialViewController& view_control,
 {
     // setting connections
     m_material_type_selector->addItems(view_control.materialSets());
-    connect(m_material_type_selector, qOverload<const QString&>(&QComboBox::currentIndexChanged),
+    connect(m_material_type_selector, qOverload<const QString&>(&QComboBox::currentTextChanged),
             &view_control, &MaterialViewController::onMaterialSelectionChange);
 
     connect(m_new_button, &QPushButton::clicked, &view_control,
