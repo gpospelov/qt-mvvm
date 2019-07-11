@@ -98,9 +98,9 @@ int SessionItem::childrenCount() const
     return static_cast<int>(children().size());
 }
 
-//! Insert item into given tag under the given index.
+//! Insert item into given tag under the given row.
 
-bool SessionItem::insertItem(SessionItem* item, const std::string& tag, int index)
+bool SessionItem::insertItem(SessionItem* item, const std::string& tag, int row)
 {
     if (!item)
         throw std::runtime_error("SessionItem::insertItem() -> Invalid item.");
@@ -111,13 +111,13 @@ bool SessionItem::insertItem(SessionItem* item, const std::string& tag, int inde
     if (item->model())
         throw std::runtime_error("SessionItem::insertItem() -> Existing model.");
 
-    auto result = p_impl->m_tags->insertItem(item, tag, index);
+    auto result = p_impl->m_tags->insertItem(item, tag, row);
     if (result) {
         item->setParent(this);
         item->setModel(model());
 
         if (p_impl->m_model)
-            p_impl->m_model->mapper()->callOnRowInserted(this, tag, index);
+            p_impl->m_model->mapper()->callOnRowInserted(this, tag, row);
     }
 
     return result;
@@ -125,15 +125,15 @@ bool SessionItem::insertItem(SessionItem* item, const std::string& tag, int inde
 
 //! Removes item from given row from given tag, returns it to the caller.
 
-SessionItem* SessionItem::takeItem(const std::string& tag, int index)
+SessionItem* SessionItem::takeItem(const std::string& tag, int row)
 {
-    auto result = p_impl->m_tags->takeItem(tag, index);
+    auto result = p_impl->m_tags->takeItem(tag, row);
     if (result) {
         result->setParent(nullptr);
         result->setModel(nullptr);
         // FIXME remaining problem is that ItemMapper still looking to the model
         if (p_impl->m_model)
-            p_impl->m_model->mapper()->callOnRowRemoved(this, tag, index);
+            p_impl->m_model->mapper()->callOnRowRemoved(this, tag, row);
     }
 
     return result;
@@ -181,11 +181,11 @@ bool SessionItem::isTag(const std::string& name)
     return p_impl->m_tags->isTag(name);
 }
 
-//! Returns item at given index of given tag.
+//! Returns item at given row of given tag.
 
-SessionItem* SessionItem::getItem(const std::string& tag, int index) const
+SessionItem* SessionItem::getItem(const std::string& tag, int row) const
 {
-    return p_impl->m_tags->getItem(tag, index);
+    return p_impl->m_tags->getItem(tag, row);
 }
 
 std::vector<SessionItem*> SessionItem::getItems(const std::string& tag) const
@@ -198,9 +198,9 @@ std::string SessionItem::tagFromItem(const SessionItem* item) const
     return p_impl->m_tags->tagIndexOfItem(item).first;
 }
 
-//! Returns pair of tag and index corresponding to given item.
+//! Returns pair of tag and row corresponding to given item.
 
-std::pair<std::string, int> SessionItem::tagIndexOfItem(const SessionItem* item) const
+std::pair<std::string, int> SessionItem::tagRowOfItem(const SessionItem* item) const
 {
     return p_impl->m_tags->tagIndexOfItem(item);
 }

@@ -64,7 +64,7 @@ void TestWidget::onContextMenuRequest(const QPoint& point)
     auto treeView = qobject_cast<QTreeView*>(sender());
 
     auto item = item_from_view(treeView, point);
-    auto taginfo = item->parent()->tagIndexOfItem(item);
+    auto taginfo = item->parent()->tagRowOfItem(item);
 
     QMenu menu;
 

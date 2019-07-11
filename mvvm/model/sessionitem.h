@@ -50,9 +50,9 @@ public:
 
     int childrenCount() const;
 
-    bool insertItem(SessionItem* item, const std::string& tag = {}, int index = -1);
+    bool insertItem(SessionItem* item, const std::string& tag = {}, int row = -1);
 
-    SessionItem* takeItem(const std::string& tag, int index);
+    SessionItem* takeItem(const std::string& tag, int row);
 
     std::vector<SessionItem*> children() const;
 
@@ -67,10 +67,10 @@ public:
     bool isTag(const std::string& name);
 
     // access tagged items
-    SessionItem* getItem(const std::string& tag = {}, int index = 0) const;
+    SessionItem* getItem(const std::string& tag = {}, int row = 0) const;
     std::vector<SessionItem*> getItems(const std::string& tag = {}) const;
     std::string tagFromItem(const SessionItem* item) const;
-    std::pair<std::string, int> tagIndexOfItem(const SessionItem* item) const;
+    std::pair<std::string, int> tagRowOfItem(const SessionItem* item) const;
 
     ItemMapper* mapper();
 
