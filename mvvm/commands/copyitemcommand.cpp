@@ -21,24 +21,24 @@ std::string generate_description(const std::string& modelType, const std::string
 
 using namespace ModelView;
 
-struct CopyItemCommand::InsertItemCommandPrivate {
-    model_type m_model_type;
+struct CopyItemCommand::CopyItemCommandPrivate {
     std::string m_tag;
     int m_row;
     result_t m_result;
     Path m_item_path;
-    InsertItemCommandPrivate(model_type modelType, std::string tag, int row)
-        : m_model_type(std::move(modelType)), m_tag(std::move(tag)), m_row(row), m_result(true)
+    CopyItemCommandPrivate(std::string tag, int row)
+        : m_tag(std::move(tag)), m_row(row), m_result(nullptr)
     {
     }
 };
 
-CopyItemCommand::CopyItemCommand(model_type modelType, SessionItem* parent,
-                                           std::string tag, int row)
+CopyItemCommand::CopyItemCommand(const SessionItem* item, SessionItem* parent,
+                                           const std::string& tag, int row)
     : AbstractItemCommand(parent),
-      p_impl(std::make_unique<InsertItemCommandPrivate>(modelType, tag, row))
+      p_impl(std::make_unique<CopyItemCommandPrivate>(tag, row))
 {
-    setDescription(generate_description(p_impl->m_model_type, p_impl->m_tag, p_impl->m_row));
+    setDescription(generate_description(item->modelType(), p_impl->m_tag, p_impl->m_row));
+
     p_impl->m_item_path = pathFromItem(parent);
 }
 
@@ -54,11 +54,11 @@ void CopyItemCommand::undo_command()
 
 void CopyItemCommand::execute_command()
 {
-    auto parent = itemFromPath(p_impl->m_item_path);
-    // FIXME get rid of manager in the favor of factory function generated in CommandService
-    auto child = model()->factory()->createItem(p_impl->m_model_type).release();
-    parent->insertItem(child, p_impl->m_tag, p_impl->m_row);
-    p_impl->m_result = child;
+//    auto parent = itemFromPath(p_impl->m_item_path);
+//    // FIXME get rid of manager in the favor of factory function generated in CommandService
+//    auto child = model()->factory()->createItem(p_impl->m_model_type).release();
+//    parent->insertItem(child, p_impl->m_tag, p_impl->m_row);
+//    p_impl->m_result = child;
 }
 
 CopyItemCommand::result_t CopyItemCommand::result() const
@@ -71,7 +71,7 @@ namespace
 std::string generate_description(const std::string& modelType, const std::string& tag, int row)
 {
     std::ostringstream ostr;
-    ostr << "Insert item'" << modelType << "' tag:'" << tag << "', row:" << row;
+    ostr << "Copy item'" << modelType << "' tag:'" << tag << "', row:" << row;
     return ostr.str();
 }
 } // namespace

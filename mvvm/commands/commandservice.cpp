@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include "commandservice.h"
+#include "copyitemcommand.h"
 #include "insertnewitemcommand.h"
 #include "moveitemcommand.h"
 #include "removeitemcommand.h"
@@ -37,9 +38,17 @@ SessionItem* CommandService::insertNewItem(const model_type& modelType, SessionI
     return process_command<InsertNewItemCommand>(modelType, parent, tag, row);
 }
 
-void CommandService::copyItem(const SessionItem* item, SessionItem* parent, const std::string& tag, int index)
+SessionItem* CommandService::copyItem(const SessionItem* item, SessionItem* parent,
+                                      const std::string& tag, int row)
 {
+    if (!item)
+        return nullptr;
 
+    if (parent->model() != m_model)
+        throw std::runtime_error(
+            "CommandService::copyItem() -> Item doesn't belong to given model");
+
+    return process_command<CopyItemCommand>(item, parent, tag, row);
 }
 
 bool CommandService::setData(SessionItem* item, const QVariant& value, int role)

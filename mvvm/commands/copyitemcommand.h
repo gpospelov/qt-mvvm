@@ -23,9 +23,9 @@ class SessionItem;
 class CORE_EXPORT CopyItemCommand : public AbstractItemCommand
 {
 public:
-    using result_t = bool;
+    using result_t = SessionItem*;
 
-    CopyItemCommand(model_type modelType, SessionItem* parent, std::string tag, int row);
+    CopyItemCommand(const SessionItem* item, SessionItem* parent, const std::string& tag, int row);
     ~CopyItemCommand() override;
 
     result_t result() const;
@@ -34,8 +34,8 @@ private:
     void undo_command() override;
     void execute_command() override;
 
-    struct InsertItemCommandPrivate;
-    std::unique_ptr<InsertItemCommandPrivate> p_impl;
+    struct CopyItemCommandPrivate;
+    std::unique_ptr<CopyItemCommandPrivate> p_impl;
 };
 
 } // namespace ModelView
