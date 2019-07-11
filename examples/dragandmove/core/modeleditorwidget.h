@@ -15,6 +15,7 @@
 
 class SampleModel;
 class ContainerEditorWidget;
+class QToolBar;
 
 /*!
 @class ModelEditorWidget
@@ -29,7 +30,14 @@ public:
 
     void setModel(SampleModel* model);
 
+private slots:
+    void onUndo();
+    void onRedo();
+
 private:
+    void init_toolbar();
+
+    QToolBar* m_toolBar;
     ContainerEditorWidget* m_leftWidget;
     ContainerEditorWidget* m_rightWidget;
 };
