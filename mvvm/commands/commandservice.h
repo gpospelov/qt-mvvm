@@ -36,7 +36,7 @@ public:
 
     SessionItem* insertNewItem(const model_type& modelType, SessionItem* parent, std::string tag, int row);
 
-    void insertItem(SessionItem* item, SessionItem* parent, const std::string& tag, int index);
+    void copyItem(const SessionItem* item, SessionItem* parent, const std::string& tag, int index);
 
     bool setData(SessionItem* item, const QVariant& value, int role);
 

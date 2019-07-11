@@ -37,7 +37,7 @@ SessionItem* CommandService::insertNewItem(const model_type& modelType, SessionI
     return process_command<InsertNewItemCommand>(modelType, parent, tag, row);
 }
 
-void CommandService::insertItem(SessionItem* item, SessionItem* parent, const std::string& tag, int index)
+void CommandService::copyItem(const SessionItem* item, SessionItem* parent, const std::string& tag, int index)
 {
 
 }

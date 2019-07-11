@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_INSERTITEMCOMMAND_H
-#define MVVM_INSERTITEMCOMMAND_H
+#ifndef MVVM_COPYITEMCOMMAND_H
+#define MVVM_COPYITEMCOMMAND_H
 
 #include "abstractitemcommand.h"
 #include "mvvm_types.h"
@@ -18,15 +18,15 @@ namespace ModelView
 
 class SessionItem;
 
-//! Command to insert new item.
+//! Command to copy an item.
 
-class CORE_EXPORT InsertItemCommand : public AbstractItemCommand
+class CORE_EXPORT CopyItemCommand : public AbstractItemCommand
 {
 public:
     using result_t = bool;
 
-    InsertItemCommand(model_type modelType, SessionItem* parent, std::string tag, int row);
-    ~InsertItemCommand() override;
+    CopyItemCommand(model_type modelType, SessionItem* parent, std::string tag, int row);
+    ~CopyItemCommand() override;
 
     result_t result() const;
 
@@ -40,4 +40,4 @@ private:
 
 } // namespace ModelView
 
-#endif // MVVM_INSERTITEMCOMMAND_H
+#endif // MVVM_COPYITEMCOMMAND_H

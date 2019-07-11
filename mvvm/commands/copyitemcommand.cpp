@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "insertitemcommand.h"
+#include "copyitemcommand.h"
 #include "path.h"
 #include "sessionitem.h"
 #include "sessionmodel.h"
@@ -21,7 +21,7 @@ std::string generate_description(const std::string& modelType, const std::string
 
 using namespace ModelView;
 
-struct InsertItemCommand::InsertItemCommandPrivate {
+struct CopyItemCommand::InsertItemCommandPrivate {
     model_type m_model_type;
     std::string m_tag;
     int m_row;
@@ -33,7 +33,7 @@ struct InsertItemCommand::InsertItemCommandPrivate {
     }
 };
 
-InsertItemCommand::InsertItemCommand(model_type modelType, SessionItem* parent,
+CopyItemCommand::CopyItemCommand(model_type modelType, SessionItem* parent,
                                            std::string tag, int row)
     : AbstractItemCommand(parent),
       p_impl(std::make_unique<InsertItemCommandPrivate>(modelType, tag, row))
@@ -42,9 +42,9 @@ InsertItemCommand::InsertItemCommand(model_type modelType, SessionItem* parent,
     p_impl->m_item_path = pathFromItem(parent);
 }
 
-InsertItemCommand::~InsertItemCommand() = default;
+CopyItemCommand::~CopyItemCommand() = default;
 
-void InsertItemCommand::undo_command()
+void CopyItemCommand::undo_command()
 {
     auto parent = itemFromPath(p_impl->m_item_path);
     int row = p_impl->m_row < 0 ? static_cast<int>(parent->getItems(p_impl->m_tag).size()) - 1
@@ -52,7 +52,7 @@ void InsertItemCommand::undo_command()
     delete parent->takeItem(p_impl->m_tag, row);
 }
 
-void InsertItemCommand::execute_command()
+void CopyItemCommand::execute_command()
 {
     auto parent = itemFromPath(p_impl->m_item_path);
     // FIXME get rid of manager in the favor of factory function generated in CommandService
@@ -61,7 +61,7 @@ void InsertItemCommand::execute_command()
     p_impl->m_result = child;
 }
 
-InsertItemCommand::result_t InsertItemCommand::result() const
+CopyItemCommand::result_t CopyItemCommand::result() const
 {
     return p_impl->m_result;
 }
