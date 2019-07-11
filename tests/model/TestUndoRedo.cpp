@@ -586,3 +586,41 @@ TEST_F(TestUndoRedo, moveLayerFromMLDeleteAll)
     expected = {layer3, layer4, layer5};
     EXPECT_EQ(multilayer1->children(), expected);
 }
+
+//! Creating two multilayers. Copying layer from one multilayer to another.
+
+TEST_F(TestUndoRedo, copyLayerFromMultilayer)
+{
+    auto pool = std::make_shared<ItemPool>();
+    ToyItems::SampleModel model(pool);
+    model.setUndoRedoEnabled(true);
+    auto stack = model.undoStack();
+
+    const double expected_thickness = 55.0;
+
+    // creating multi layer with 3 layers
+    auto multilayer0 = model.insertNewItem(ToyItems::Constants::MultiLayerType);
+    auto layer0 = dynamic_cast<ToyItems::LayerItem*>(
+        model.insertNewItem(ToyItems::Constants::LayerType, multilayer0));
+    layer0->setItemValue(ToyItems::LayerItem::P_THICKNESS, expected_thickness);
+    auto multilayer1 = model.insertNewItem(ToyItems::Constants::MultiLayerType);
+
+    // copying layer
+    auto layer_copy = dynamic_cast<ToyItems::LayerItem*>(model.copyItem(layer0, multilayer1));
+    EXPECT_EQ(multilayer1->getItems(ToyItems::MultiLayerItem::T_LAYERS).size(), 1);
+    EXPECT_EQ(layer_copy->getItemValue(ToyItems::LayerItem::P_THICKNESS).toDouble(),
+              expected_thickness);
+    EXPECT_TRUE(layer0->identifier() != layer_copy->identifier());
+
+    auto id = layer_copy->identifier();
+    EXPECT_EQ(pool->item_for_key(layer_copy->identifier()), layer_copy);
+
+    // undoing
+    stack->undo();
+    EXPECT_EQ(multilayer1->getItems(ToyItems::MultiLayerItem::T_LAYERS).size(), 0);
+
+    // redoing
+    stack->redo();
+    EXPECT_EQ(multilayer1->getItems(ToyItems::MultiLayerItem::T_LAYERS).size(), 1);
+    EXPECT_EQ(multilayer1->getItems(ToyItems::MultiLayerItem::T_LAYERS)[0]->identifier(), id);
+}
