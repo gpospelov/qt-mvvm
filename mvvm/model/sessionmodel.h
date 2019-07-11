@@ -30,6 +30,7 @@ class ItemCatalogue;
 class ItemPool;
 class ItemBackupStrategy;
 class ItemFactoryInterface;
+class ItemCopyStrategy;
 
 class CORE_EXPORT SessionModel
 {
@@ -72,9 +73,9 @@ public:
 
     void clear();
 
-    std::unique_ptr<ItemBackupStrategy> backupStrategy() const;
+    std::unique_ptr<ItemBackupStrategy> itemBackupStrategy() const;
 
-    std::unique_ptr<SessionItem> createCopy(const SessionItem* item);
+    std::unique_ptr<ItemCopyStrategy> itemCopyStrategy() const;
 
     const ItemFactoryInterface* factory() const;
 

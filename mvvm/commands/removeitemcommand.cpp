@@ -38,7 +38,7 @@ RemoveItemCommand::RemoveItemCommand(SessionItem* parent, std::string tag, int r
     : AbstractItemCommand(parent), p_impl(std::make_unique<RemoveItemCommandPrivate>(tag, row))
 {
     setDescription(generate_description(p_impl->m_tag, p_impl->m_row));
-    p_impl->m_backup_strategy = parent->model()->backupStrategy();
+    p_impl->m_backup_strategy = parent->model()->itemBackupStrategy();
     p_impl->m_item_path = pathFromItem(parent);
 }
 
