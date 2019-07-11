@@ -177,10 +177,14 @@ std::unique_ptr<ItemCopyStrategy> SessionModel::itemCopyStrategy() const
     return std::make_unique<JsonItemCopyStrategy>(factory());
 }
 
+//! Returns pointer to ItemFactory which can generate all items supported by this model,
+
 const ItemFactoryInterface* SessionModel::factory() const
 {
     return m_item_manager->factory();
 }
+
+//! Creates root item.
 
 void SessionModel::createRootItem()
 {
