@@ -252,4 +252,17 @@ TEST_F(TestSessionModel, copyFreeItem)
     EXPECT_EQ(copy->data(ItemDataRole::DATA).toDouble(), 42.0);
 }
 
+TEST_F(TestSessionModel, forbiddenCopy)
+{
+    SessionModel model;
 
+    // single parent in a model
+    auto parent0 = model.insertNewItem(Constants::BaseType);
+    parent0->registerTag(TagInfo::propertyTag("property", "Property"));
+    auto property = model.insertNewItem(Constants::PropertyType, parent0, "property", -1);
+
+    // copying property to same property tag is not allowed
+    auto copy = model.copyItem(property, parent0, "property", -1);
+    EXPECT_EQ(parent0->childrenCount(), 1);
+    EXPECT_EQ(copy, nullptr);
+}
