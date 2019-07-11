@@ -57,17 +57,17 @@ std::string SessionModel::modelType() const
 }
 
 SessionItem* SessionModel::insertNewItem(const model_type& modelType, SessionItem* parent,
-                                         const std::string& tag, int index)
+                                         const std::string& tag, int row)
 {
-    return m_commands->insertNewItem(modelType, parent, tag, index);
+    return m_commands->insertNewItem(modelType, parent, tag, row);
 }
 
-//! Inserts item in parent, into given tag under the given index.
-//! Item shouldn't belong to any model/parent. Parent should be the part of this model.
+//! Copy item and insert it in parent's tag and row.
+//! Item could belong to any model/parent.
 
-void SessionModel::copyItem(const SessionItem* item, SessionItem* parent, const std::string& tag, int index)
+void SessionModel::copyItem(const SessionItem* item, SessionItem* parent, const std::string& tag, int row)
 {
-    m_commands->copyItem(item, parent, tag, index);
+    m_commands->copyItem(item, parent, tag, row);
 }
 
 SessionItem* SessionModel::rootItem() const
