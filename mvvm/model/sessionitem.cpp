@@ -195,14 +195,14 @@ std::vector<SessionItem*> SessionItem::getItems(const std::string& tag) const
 
 std::string SessionItem::tagFromItem(const SessionItem* item) const
 {
-    return p_impl->m_tags->tagIndexOfItem(item).first;
+    return p_impl->m_tags->tagRowOfItem(item).first;
 }
 
 //! Returns pair of tag and row corresponding to given item.
 
 std::pair<std::string, int> SessionItem::tagRowOfItem(const SessionItem* item) const
 {
-    return p_impl->m_tags->tagIndexOfItem(item);
+    return p_impl->m_tags->tagRowOfItem(item);
 }
 
 ItemMapper* SessionItem::mapper()

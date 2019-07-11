@@ -48,18 +48,18 @@ public:
 
     // adding and removal
 
-    bool insertItem(SessionItem* item, const std::string& tag, int index);
+    bool insertItem(SessionItem* item, const std::string& tag, int row);
 
-    SessionItem* takeItem(const std::string& tag, int index);
+    SessionItem* takeItem(const std::string& tag, int row);
 
     // item access
-    SessionItem* getItem(const std::string& tag, int index = 0) const;
+    SessionItem* getItem(const std::string& tag, int row = 0) const;
 
     std::vector<SessionItem*> getItems(const std::string& tag = {}) const;
 
     std::vector<SessionItem*> allitems() const;
 
-    std::pair<std::string, int> tagIndexOfItem(const SessionItem* item) const;
+    std::pair<std::string, int> tagRowOfItem(const SessionItem* item) const;
 
     void itemDeleted(SessionItem* item);
 

@@ -59,26 +59,26 @@ int SessionItemTags::itemCount(const std::string& tag_name) const
     return container(tag_name)->itemCount();
 }
 
-//! Inserts item in container with given tag name and at given index.
+//! Inserts item in container with given tag name and at given row.
 //! Returns true in the case of success. If tag name is empty, default tag will be used.
 
-bool SessionItemTags::insertItem(SessionItem* item, const std::string& tag, int index)
+bool SessionItemTags::insertItem(SessionItem* item, const std::string& tag, int row)
 {
-    return container(tag)->insertItem(item, index);
+    return container(tag)->insertItem(item, row);
 }
 
-//! Removes item at given index and for given tag, returns it to the user.
+//! Removes item at given row and for given tag, returns it to the user.
 
-SessionItem* SessionItemTags::takeItem(const std::string& tag, int index)
+SessionItem* SessionItemTags::takeItem(const std::string& tag, int row)
 {
-    return container(tag)->takeItem(index);
+    return container(tag)->takeItem(row);
 }
 
-//! Returns item at given index of given tag.
+//! Returns item at given row of given tag.
 
-SessionItem* SessionItemTags::getItem(const std::string& tag, int index) const
+SessionItem* SessionItemTags::getItem(const std::string& tag, int row) const
 {
-    return container(tag)->itemAt(index);
+    return container(tag)->itemAt(row);
 }
 
 //! Returns vector of items in the container with given name.
@@ -100,15 +100,15 @@ std::vector<SessionItem*> SessionItemTags::allitems() const
     return result;
 }
 
-//! Returns tag name and index of item in container.
+//! Returns tag name and row of item in container.
 
-std::pair<std::string, int> SessionItemTags::tagIndexOfItem(const SessionItem* item) const
+std::pair<std::string, int> SessionItemTags::tagRowOfItem(const SessionItem* item) const
 {
     std::pair<std::string, int> result = std::make_pair("", -1);
     for (auto cont : m_containers) {
-        int index = cont->indexOfItem(item);
-        if (index != -1)
-            return std::make_pair(cont->name(), index);
+        int row = cont->indexOfItem(item);
+        if (row != -1)
+            return std::make_pair(cont->name(), row);
     }
 
     return result;
@@ -116,7 +116,7 @@ std::pair<std::string, int> SessionItemTags::tagIndexOfItem(const SessionItem* i
 
 void SessionItemTags::itemDeleted(SessionItem* item)
 {
-    auto info = tagIndexOfItem(item);
+    auto info = tagRowOfItem(item);
     if (info.second != -1)
         container(info.first)->itemDeleted(item);
 }
