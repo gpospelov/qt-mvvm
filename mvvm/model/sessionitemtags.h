@@ -61,8 +61,6 @@ public:
 
     std::pair<std::string, int> tagRowOfItem(const SessionItem* item) const;
 
-    void itemDeleted(SessionItem* item);
-
     const_iterator begin() const;
     const_iterator end() const;
 

@@ -114,13 +114,6 @@ std::pair<std::string, int> SessionItemTags::tagRowOfItem(const SessionItem* ite
     return result;
 }
 
-void SessionItemTags::itemDeleted(SessionItem* item)
-{
-    auto info = tagRowOfItem(item);
-    if (info.second != -1)
-        container(info.first)->itemDeleted(item);
-}
-
 SessionItemTags::const_iterator SessionItemTags::begin() const
 {
     return m_containers.begin();

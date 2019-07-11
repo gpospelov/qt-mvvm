@@ -192,34 +192,7 @@ TEST_F(TestSessionItemTags, takeItem)
     EXPECT_EQ(tag.takeItem("", -1), nullptr);
 }
 
-//! Testing itemDeleted.
-
-TEST_F(TestSessionItemTags, itemDeleted)
-{
-    const std::string tag_name = "tag";
-    const std::string model_type("model");
-
-    SessionItemTags tag;
-    tag.registerTag(TagInfo::universalTag(tag_name), /*set_as_default*/ true);
-
-    // inserting items
-    auto child1 = new SessionItem(model_type);
-    auto child2 = new SessionItem(model_type);
-    auto child3 = new SessionItem(model_type);
-    tag.insertItem(child1, "", -1);
-    tag.insertItem(child2, "", -1);
-    tag.insertItem(child3, "", -1);
-
-    tag.itemDeleted(child2);
-    delete child2;
-    EXPECT_EQ(tag.itemCount(tag_name), 3);
-
-    // order of remaining children
-    std::vector<SessionItem*> expected = {child1, nullptr, child3};
-    EXPECT_EQ(tag.getItems(tag_name), expected);
-}
-
-//! Testing itemDeleted.
+//! Testing isSinglePropertyTag.
 
 TEST_F(TestSessionItemTags, isSinglePropertyTag)
 {
