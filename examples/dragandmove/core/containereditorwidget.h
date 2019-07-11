@@ -31,7 +31,7 @@ class ContainerEditorWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit ContainerEditorWidget(SampleModel* model = nullptr, QWidget* parent = nullptr);
+    explicit ContainerEditorWidget(QWidget* parent = nullptr);
     ~ContainerEditorWidget();
 
     void setModel(SampleModel* model);

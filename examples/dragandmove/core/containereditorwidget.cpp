@@ -20,18 +20,16 @@
 
 using namespace ModelView;
 
-ContainerEditorWidget::ContainerEditorWidget(SampleModel* model, QWidget* parent)
+ContainerEditorWidget::ContainerEditorWidget(QWidget* parent)
     : QWidget(parent), m_treeView(new QTreeView),
      m_delegate(std::make_unique<ViewModelDelegate>())
 {
     auto mainLayout = new QHBoxLayout();
     mainLayout->setSpacing(10);
 
-    auto layout = new QVBoxLayout;
-    layout->addWidget(m_treeView);
+    mainLayout->addWidget(m_treeView);
 
     setLayout(mainLayout);
-    setModel(model);
 }
 
 void ContainerEditorWidget::setModel(SampleModel* model)

@@ -13,17 +13,8 @@
 #include <QWidget>
 #include <memory>
 
-class QBoxLayout;
 class SampleModel;
-class QTreeView;
-class QTableView;
-
-namespace ModelView
-{
-class ItemsTreeView;
-class AbstractViewModel;
-class ViewModelDelegate;
-} // namespace ModelView
+class ContainerEditorWidget;
 
 /*!
 @class ModelEditorWidget
@@ -35,20 +26,12 @@ class ModelEditorWidget : public QWidget
     Q_OBJECT
 public:
     explicit ModelEditorWidget(SampleModel* model = nullptr, QWidget* parent = nullptr);
-    ~ModelEditorWidget();
 
     void setModel(SampleModel* model);
 
 private:
-    QBoxLayout* create_left_layout();
-    QBoxLayout* create_right_layout();
-
-    QTreeView* m_leftTree;
-    QTreeView* m_rightTree;
-
-    std::unique_ptr<ModelView::AbstractViewModel> m_leftViewModel;
-    std::unique_ptr<ModelView::AbstractViewModel> m_rightViewModel;
-    std::unique_ptr<ModelView::ViewModelDelegate> m_delegate;
+    ContainerEditorWidget* m_leftWidget;
+    ContainerEditorWidget* m_rightWidget;
 };
 
 #endif // MODELEDITORWIDGET_H
