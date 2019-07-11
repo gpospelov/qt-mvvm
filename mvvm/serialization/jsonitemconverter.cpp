@@ -8,17 +8,17 @@
 // ************************************************************************** //
 
 #include "jsonitemconverter.h"
+#include "customvariants.h"
+#include "itemfactoryinterface.h"
 #include "jsonitemdata.h"
 #include "jsontaginfo.h"
 #include "sessionitem.h"
+#include "sessionitem_p.h"
 #include "sessionitemcontainer.h"
 #include "sessionitemdata.h"
 #include "sessionitemtags.h"
 #include "sessionmodel.h"
-#include "itemfactoryinterface.h"
-#include "sessionitem_p.h"
 #include "uniqueidgenerator.h"
-#include "customvariants.h"
 #include <QJsonArray>
 #include <QJsonObject>
 
@@ -41,12 +41,16 @@ const QString JsonItemConverter::containerKey = "containers";
 const QString JsonItemConverter::tagInfoKey = "tagInfo";
 const QString JsonItemConverter::itemsKey = "items";
 
+//! Constructor of item/json converter.
+//! @param factory: SessionItem factory.
+//! @param new_id_flag: generates exact item clones if false, generates new item's unique
+//! identifiers if true.
+
 JsonItemConverter::JsonItemConverter(const ItemFactoryInterface* factory, bool new_id_flag)
     : m_itemdata_converter(std::make_unique<JsonItemData>()),
       m_taginfo_converter(std::make_unique<JsonTagInfo>()), m_factory(factory),
       m_generate_new_identifiers(new_id_flag)
 {
-
 }
 
 JsonItemConverter::~JsonItemConverter() = default;
@@ -162,7 +166,7 @@ QJsonObject JsonItemConverter::container_to_json(const SessionItemContainer& con
 // --- from json --------------------------------------------------------------
 
 std::unique_ptr<SessionItem> JsonItemConverter::json_to_item(const QJsonObject& json,
-                                                    SessionItem* parent) const
+                                                             SessionItem* parent) const
 {
     if (!isSessionItem(json))
         throw std::runtime_error(
@@ -176,13 +180,14 @@ std::unique_ptr<SessionItem> JsonItemConverter::json_to_item(const QJsonObject& 
     result->p_impl->m_tags = json_to_tags(json[itemTagsKey].toObject(), result.get());
 
     if (m_generate_new_identifiers)
-        result->setData(QVariant::fromValue(UniqueIdGenerator::generate()), ItemDataRole::IDENTIFIER);
+        result->setData(QVariant::fromValue(UniqueIdGenerator::generate()),
+                        ItemDataRole::IDENTIFIER);
 
     return result;
 }
 
 std::unique_ptr<SessionItemTags> JsonItemConverter::json_to_tags(const QJsonObject& json,
-                                                        SessionItem* parent) const
+                                                                 SessionItem* parent) const
 {
     if (!isSessionItemTags(json))
         throw std::runtime_error("JsonItem::json_to_tags() -> Error. Given json object can't "
@@ -214,7 +219,8 @@ namespace
 QStringList expected_item_keys()
 {
     QStringList result = QStringList()
-                         << JsonItemConverter::modelKey << JsonItemConverter::itemDataKey << JsonItemConverter::itemTagsKey;
+                         << JsonItemConverter::modelKey << JsonItemConverter::itemDataKey
+                         << JsonItemConverter::itemTagsKey;
     std::sort(result.begin(), result.end());
     return result;
 }
@@ -223,7 +229,8 @@ QStringList expected_item_keys()
 
 QStringList expected_tags_keys()
 {
-    QStringList result = QStringList() << JsonItemConverter::defaultTagKey << JsonItemConverter::containerKey;
+    QStringList result = QStringList()
+                         << JsonItemConverter::defaultTagKey << JsonItemConverter::containerKey;
     std::sort(result.begin(), result.end());
     return result;
 }
@@ -232,7 +239,8 @@ QStringList expected_tags_keys()
 
 QStringList expected_itemcontainer_keys()
 {
-    QStringList result = QStringList() << JsonItemConverter::tagInfoKey << JsonItemConverter::itemsKey;
+    QStringList result = QStringList()
+                         << JsonItemConverter::tagInfoKey << JsonItemConverter::itemsKey;
     std::sort(result.begin(), result.end());
     return result;
 }
