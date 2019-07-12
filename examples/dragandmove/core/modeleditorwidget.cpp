@@ -9,19 +9,21 @@
 
 #include "modeleditorwidget.h"
 #include "containereditorwidget.h"
-#include "samplemodel.h"
 #include "modelutils.h"
+#include "samplemodel.h"
+#include <QAction>
+#include <QDebug>
 #include <QHBoxLayout>
 #include <QToolBar>
-#include <QAction>
 #include <QToolButton>
-#include <QDebug>
+#include <QUndoStack>
 
 using namespace ModelView;
 
 ModelEditorWidget::ModelEditorWidget(SampleModel* model, QWidget* parent)
     : QWidget(parent), m_toolBar(new QToolBar), m_leftWidget(new ContainerEditorWidget),
-      m_rightWidget(new ContainerEditorWidget)
+      m_rightWidget(new ContainerEditorWidget), m_undoAction(nullptr), m_redoAction(nullptr),
+      m_model(nullptr)
 {
     auto mainLayout = new QVBoxLayout();
     mainLayout->setSpacing(10);
@@ -41,7 +43,7 @@ ModelEditorWidget::ModelEditorWidget(SampleModel* model, QWidget* parent)
     setLayout(mainLayout);
     setModel(model);
 
-    init_toolbar();
+    init_actions();
 }
 
 void ModelEditorWidget::setModel(SampleModel* model)
@@ -49,33 +51,54 @@ void ModelEditorWidget::setModel(SampleModel* model)
     if (!model)
         return;
 
-    auto containers = Utils::TopItems(model);
+    m_model = model;
+
+    auto containers = Utils::TopItems(m_model);
     assert(containers.size() == 2);
 
-    m_leftWidget->setModel(model, containers[0]);
-    m_rightWidget->setModel(model, containers[1]);
+    m_leftWidget->setModel(m_model, containers[0]);
+    m_rightWidget->setModel(m_model, containers[1]);
 }
 
 void ModelEditorWidget::onUndo()
 {
-    qDebug() << "onUndo";
+    if (!m_model->undoStack())
+        return;
+
+    m_model->undoStack()->undo();
 }
 
 void ModelEditorWidget::onRedo()
 {
-    qDebug() << "onRedo";
+    if (!m_model->undoStack())
+        return;
+
+    m_model->undoStack()->redo();
 }
 
-void ModelEditorWidget::init_toolbar()
+void ModelEditorWidget::init_actions()
 {
     const int toolbar_icon_size = 24;
     m_toolBar->setIconSize(QSize(toolbar_icon_size, toolbar_icon_size));
 
-    auto undoAction = new QAction("Undo", this);
-    connect(undoAction, &QAction::triggered, this, &ModelEditorWidget::onUndo);
-    m_toolBar->addAction(undoAction);
+    m_undoAction = new QAction("Undo", this);
+    connect(m_undoAction, &QAction::triggered, this, &ModelEditorWidget::onUndo);
+    m_undoAction->setDisabled(true);
+    m_toolBar->addAction(m_undoAction);
 
-    auto redoAction = new QAction("Redo", this);
-    connect(redoAction, &QAction::triggered, this, &ModelEditorWidget::onUndo);
-    m_toolBar->addAction(redoAction);
+    m_redoAction = new QAction("Redo", this);
+    connect(m_redoAction, &QAction::triggered, this, &ModelEditorWidget::onRedo);
+    m_redoAction->setDisabled(true);
+    m_toolBar->addAction(m_redoAction);
+
+    if (m_model && m_model->undoStack()) {
+        auto can_undo_changed = [this]() {
+            m_undoAction->setEnabled(m_model->undoStack()->canUndo());
+        };
+        connect(m_model->undoStack(), &QUndoStack::canUndoChanged, can_undo_changed);
+        auto can_redo_changed = [this]() {
+            m_redoAction->setEnabled(m_model->undoStack()->canRedo());
+        };
+        connect(m_model->undoStack(), &QUndoStack::canUndoChanged, can_redo_changed);
+    }
 }

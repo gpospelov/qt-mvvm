@@ -8,9 +8,9 @@
 // ************************************************************************** //
 
 #include "samplemodel.h"
+#include "item_constants.h"
 #include "itemcatalogue.h"
 #include "items.h"
-#include "item_constants.h"
 #include <QColor>
 #include <random>
 
@@ -24,26 +24,29 @@ std::unique_ptr<ModelView::ItemCatalogue> CreateToyItemCatalogue()
     return result;
 }
 
-int random_int(int min, int max) {
+int random_int(int min, int max)
+{
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<int> uniform_int(min, max);
     return uniform_int(gen);
 }
 
-
-QColor random_color() {
-    auto rndm = []() -> int {return random_int(0, 255);};
+QColor random_color()
+{
+    auto rndm = []() -> int { return random_int(0, 255); };
     return QColor(rndm(), rndm(), rndm());
 }
 
-std::string random_name() {
+std::string random_name()
+{
     static const std::string alphabet = "abcdefgh";
     const size_t len(3);
 
     std::string result;
-    for(size_t i=0; i<len; ++i) {
-        size_t random_index = static_cast<size_t>(random_int(0, static_cast<int>(alphabet.size()-1)));
+    for (size_t i = 0; i < len; ++i) {
+        size_t random_index =
+            static_cast<size_t>(random_int(0, static_cast<int>(alphabet.size() - 1)));
         result.push_back(alphabet[random_index]);
     }
 
@@ -55,6 +58,7 @@ SampleModel::SampleModel() : SessionModel("SampleModel")
 {
     setItemCatalogue(CreateToyItemCatalogue());
     init_model_content();
+    setUndoRedoEnabled(true);
 }
 
 void SampleModel::append_random_item(ModelView::SessionItem* container)

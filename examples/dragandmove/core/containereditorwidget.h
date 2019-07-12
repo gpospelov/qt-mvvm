@@ -11,8 +11,8 @@
 #define CONTAINEREDITORWIDGET_H
 
 #include <QWidget>
-#include <vector>
 #include <memory>
+#include <vector>
 
 class SampleModel;
 class QTreeView;

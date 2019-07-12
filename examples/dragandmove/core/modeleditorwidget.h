@@ -16,6 +16,7 @@
 class SampleModel;
 class ContainerEditorWidget;
 class QToolBar;
+class QAction;
 
 /*!
 @class ModelEditorWidget
@@ -38,11 +39,14 @@ private slots:
     void onRedo();
 
 private:
-    void init_toolbar();
+    void init_actions();
 
     QToolBar* m_toolBar;
     ContainerEditorWidget* m_leftWidget;
     ContainerEditorWidget* m_rightWidget;
+    QAction* m_undoAction;
+    QAction* m_redoAction;
+    SampleModel* m_model;
 };
 
 #endif // MODELEDITORWIDGET_H
