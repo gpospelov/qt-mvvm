@@ -12,6 +12,7 @@
 #include "sessionmodel.h"
 #include <sstream>
 #include <stdexcept>
+#include <iostream>
 
 using namespace ModelView;
 
@@ -53,6 +54,11 @@ MoveItemCommand::MoveItemCommand(SessionItem* item, SessionItem* new_parent, std
 
     if (new_parent->isSinglePropertyTag(p_impl->m_target_tag))
         throw std::runtime_error("MoveItemCommand::MoveItemCommand() -> Single property tag.");
+
+    if (item->parent() == new_parent) {
+        if (p_impl->m_target_row >= static_cast<int>(new_parent->getItems(p_impl->m_target_tag).size()))
+            throw std::runtime_error("MoveCommand::MoveCommand() -> move index exceeds number of items in a tag");
+    }
 }
 
 MoveItemCommand::~MoveItemCommand() = default;
@@ -89,6 +95,8 @@ void MoveItemCommand::execute_command()
 
     if (!taken)
         throw std::runtime_error("MoveItemCommand::execute() -> Can't take an item.");
+
+    std::cout << "'" << p_impl->m_target_tag << "' " << p_impl->m_target_row << std::endl;
 
     bool succeeded = target_parent->insertItem(taken, p_impl->m_target_tag, p_impl->m_target_row);
     if (!succeeded)

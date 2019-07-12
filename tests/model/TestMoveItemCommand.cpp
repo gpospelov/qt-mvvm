@@ -18,10 +18,10 @@ TestMoveItemCommand::~TestMoveItemCommand() = default;
 TEST_F(TestMoveItemCommand, rootContextNext)
 {
     SessionModel model;
-    auto item0 = model.insertNewItem(Constants::BaseType, model.rootItem(), "", -1);
-    auto item1 = model.insertNewItem(Constants::BaseType, model.rootItem(), "", -1);
-    auto item2 = model.insertNewItem(Constants::BaseType, model.rootItem(), "", -1);
-    auto item3 = model.insertNewItem(Constants::BaseType, model.rootItem(), "", -1);
+    auto item0 = model.insertNewItem(Constants::BaseType, model.rootItem(), "", -1); // 0
+    auto item1 = model.insertNewItem(Constants::BaseType, model.rootItem(), "", -1); // 1
+    auto item2 = model.insertNewItem(Constants::BaseType, model.rootItem(), "", -1); // 2
+    auto item3 = model.insertNewItem(Constants::BaseType, model.rootItem(), "", -1); // 3
 
     // expecting 4 items in the order of insertion
     std::vector<SessionItem*> expected = {item0, item1, item2, item3};
@@ -81,7 +81,7 @@ TEST_F(TestMoveItemCommand, rootContextSamePos)
     EXPECT_EQ(model.rootItem()->children(), expected);
 }
 
-TEST_F(TestMoveItemCommand, rootContextBack)
+TEST_F(TestMoveItemCommand, rootContextPrev)
 {
     SessionModel model;
     auto item0 = model.insertNewItem(Constants::BaseType, model.rootItem(), "", -1);
@@ -125,6 +125,37 @@ TEST_F(TestMoveItemCommand, rootContextLast)
 
     // moving item0 in the back of the list
     MoveItemCommand command(item0, model.rootItem(), "", -1);
+    command.execute();
+    EXPECT_EQ(command.result(), true);
+    EXPECT_EQ(command.isObsolete(), false);
+
+    // expecting new order of items
+    expected = {item1, item2, item3, item0};
+    EXPECT_EQ(model.rootItem()->children(), expected);
+
+    // undoing command
+    command.undo();
+    EXPECT_EQ(command.result(), true);
+    EXPECT_EQ(command.isObsolete(), false);
+
+    expected = {item0, item1, item2, item3};
+    EXPECT_EQ(model.rootItem()->children(), expected);
+}
+
+TEST_F(TestMoveItemCommand, rootContextLast2)
+{
+    SessionModel model;
+    auto item0 = model.insertNewItem(Constants::BaseType, model.rootItem(), "", -1);
+    auto item1 = model.insertNewItem(Constants::BaseType, model.rootItem(), "", -1);
+    auto item2 = model.insertNewItem(Constants::BaseType, model.rootItem(), "", -1);
+    auto item3 = model.insertNewItem(Constants::BaseType, model.rootItem(), "", -1);
+
+    // expecting 4 items in the order of insertion
+    std::vector<SessionItem*> expected = {item0, item1, item2, item3};
+    EXPECT_EQ(model.rootItem()->children(), expected);
+
+    // moving item0 in the back of the list
+    MoveItemCommand command(item0, model.rootItem(), "", 3);
     command.execute();
     EXPECT_EQ(command.result(), true);
     EXPECT_EQ(command.isObsolete(), false);
