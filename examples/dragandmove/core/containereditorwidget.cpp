@@ -63,7 +63,8 @@ void ContainerEditorWidget::onAdd()
 
 void ContainerEditorWidget::onCopy()
 {
-    qDebug() << "onCopy";
+    for (auto item: selected_items())
+        m_model->copyItem(item, m_container);
 }
 
 void ContainerEditorWidget::onRemove()
