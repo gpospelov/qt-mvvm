@@ -79,6 +79,8 @@ public:
 
     const ItemFactoryInterface* factory() const;
 
+    SessionItem* findItem(identifier_type id);
+
 protected:
     std::unique_ptr<ItemManager> m_item_manager;
 

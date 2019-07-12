@@ -191,6 +191,8 @@ TEST_F(TestSessionModel, clearModel)
     EXPECT_EQ(pool->size(), 1);
 }
 
+//! Tests item copy when from root item to root item.
+
 TEST_F(TestSessionModel, copyModelItemRootContext)
 {
     SessionModel model;
@@ -214,6 +216,8 @@ TEST_F(TestSessionModel, copyModelItemRootContext)
     EXPECT_EQ(model.rootItem()->children(), expected);
 }
 
+//! Tests item copy from parent to root item.
+
 TEST_F(TestSessionModel, copyParentWithProperty)
 {
     SessionModel model;
@@ -235,6 +239,8 @@ TEST_F(TestSessionModel, copyParentWithProperty)
     EXPECT_EQ(copy_child->data(ItemDataRole::DATA).toDouble(), 42.0);
 }
 
+//! Tests item copy for property item.
+
 TEST_F(TestSessionModel, copyFreeItem)
 {
     SessionModel model;
@@ -252,6 +258,8 @@ TEST_F(TestSessionModel, copyFreeItem)
     EXPECT_EQ(copy->data(ItemDataRole::DATA).toDouble(), 42.0);
 }
 
+//! Attempt to copy property item into the same tag.
+
 TEST_F(TestSessionModel, forbiddenCopy)
 {
     SessionModel model;
@@ -265,4 +273,49 @@ TEST_F(TestSessionModel, forbiddenCopy)
     auto copy = model.copyItem(property, parent0, "property", -1);
     EXPECT_EQ(parent0->childrenCount(), 1);
     EXPECT_EQ(copy, nullptr);
+}
+
+//! Test item find using identifier.
+
+TEST_F(TestSessionModel, findItem)
+{
+    SessionModel model;
+    auto parent = model.insertNewItem(Constants::BaseType);
+
+    // check that we can find item using its own identofoer
+    const identifier_type id = parent->identifier();
+    EXPECT_EQ(model.findItem(id), parent);
+
+    // check that we can't find deleted item.
+    model.removeItem(model.rootItem(), "", 0);
+    EXPECT_EQ(model.findItem(id), nullptr);
+}
+
+//! Test items in different models.
+
+TEST_F(TestSessionModel, findItemInAlienModel)
+{
+    // two models with common pool
+    auto pool = std::make_shared<ItemPool>();
+    SessionModel model1("Test1", pool);
+    SessionModel model2("Test2", pool);
+
+    // inserting items in both models
+    auto parent1 = model1.insertNewItem(Constants::BaseType);
+    auto parent2 = model2.insertNewItem(Constants::BaseType);
+    const identifier_type id1 = parent1->identifier();
+    const identifier_type id2 = parent2->identifier();
+
+    // checking that we can access items from both models
+    EXPECT_EQ(model1.findItem(id1), parent1);
+    EXPECT_EQ(model2.findItem(id1), parent1);
+    EXPECT_EQ(model1.findItem(id2), parent2);
+    EXPECT_EQ(model2.findItem(id2), parent2);
+
+    // check that we can't find deleted item.
+    model1.removeItem(model1.rootItem(), "", 0);
+    EXPECT_EQ(model1.findItem(id1), nullptr);
+    EXPECT_EQ(model2.findItem(id1), nullptr);
+    EXPECT_EQ(model1.findItem(id2), parent2);
+    EXPECT_EQ(model2.findItem(id2), parent2);
 }

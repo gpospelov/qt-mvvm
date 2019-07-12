@@ -184,6 +184,13 @@ const ItemFactoryInterface* SessionModel::factory() const
     return m_item_manager->factory();
 }
 
+//!  Returns SessionItem for given identifier.
+
+SessionItem* SessionModel::findItem(identifier_type id)
+{
+    return m_item_manager->findItem(id);
+}
+
 //! Creates root item.
 
 void SessionModel::createRootItem()
