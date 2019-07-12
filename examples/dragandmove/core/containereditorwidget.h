@@ -51,6 +51,8 @@ private:
     QTreeView* m_treeView;
     std::unique_ptr<ModelView::AbstractViewModel> m_viewModel;
     std::unique_ptr<ModelView::ViewModelDelegate> m_delegate;
+    ModelView::SessionItem* m_container;
+    SampleModel* m_model;
 };
 
 #endif // CONTAINEREDITORWIDGET_H

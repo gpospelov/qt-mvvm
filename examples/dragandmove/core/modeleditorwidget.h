@@ -19,7 +19,10 @@ class QToolBar;
 
 /*!
 @class ModelEditorWidget
-@brief Shows content of the model as vertical tree, horizontal tree and table.
+@brief Shows model content as two table-like trees.
+
+It is expected that model has two containers with demo items, left tree shows first container,
+right tree the second. It is possible to drag-and-drop items between two containers.
 */
 
 class ModelEditorWidget : public QWidget
