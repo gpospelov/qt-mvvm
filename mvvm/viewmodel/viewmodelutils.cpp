@@ -8,13 +8,15 @@
 // ************************************************************************** //
 
 #include "viewmodelutils.h"
+#include "abstractviewmodel.h"
+#include "customvariants.h"
+#include "externalproperty.h"
 #include "mvvm_types.h"
 #include "sessionitem.h"
 #include "sessionmodel.h"
 #include "viewitem.h"
-#include "customvariants.h"
-#include "externalproperty.h"
 #include <QStandardItemModel>
+#include <set>
 
 using namespace ModelView;
 
@@ -39,9 +41,10 @@ void Utils::iterate_model(const QStandardItemModel* model, const QModelIndex& pa
 }
 
 std::vector<ViewItem*> Utils::findViews(const QStandardItemModel* model,
-                                        const ModelView::SessionItem* item, const QModelIndex& parent)
+                                        const ModelView::SessionItem* item,
+                                        const QModelIndex& parent)
 {
-    std::vector<ModelView::ViewItem*> result;
+    std::vector<ViewItem*> result;
     iterate_model(model, parent, [&](QStandardItem* standard_item) {
         if (auto view = dynamic_cast<ViewItem*>(standard_item)) {
             if (view->item() == item)
@@ -84,7 +87,27 @@ QVariant Utils::DecorationRole(const SessionItem& item)
     auto value = item.data(ItemDataRole::DATA);
     if (Utils::IsColorVariant(value))
         return value;
-    else if(Utils::IsExtPropertyVariant(value))
+    else if (Utils::IsExtPropertyVariant(value))
         return value.value<ExternalProperty>().color();
     return QVariant();
+}
+
+std::vector<SessionItem*> Utils::SelectedParentItems(const QModelIndexList& index_list)
+{
+    if (index_list.empty())
+        return {};
+
+    std::vector<SessionItem*> result;
+
+    if (auto model = dynamic_cast<const AbstractViewModel*>(index_list.front().model())) {
+        std::set<SessionItem*> unique_parents;
+        for (auto index : index_list) {
+            auto property_item = model->sessionItemFromIndex(index);
+            unique_parents.insert(property_item->parent());
+        }
+
+        std::copy(unique_parents.begin(), unique_parents.end(), std::back_inserter(result));
+    }
+
+    return result;
 }

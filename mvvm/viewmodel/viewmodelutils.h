@@ -11,9 +11,10 @@
 #define MVVM_VIEWMODELUTILS_H
 
 #include "mvvm_global.h"
+#include <QModelIndex>
+#include <QModelIndexList>
 #include <QVariant>
 #include <QVector>
-#include <QModelIndex>
 #include <functional>
 #include <vector>
 
@@ -35,7 +36,9 @@ CORE_EXPORT void iterate_model(const QStandardItemModel* model, const QModelInde
                                std::function<void(QStandardItem*)> fun);
 
 //! Returns vector of all ViewItems representing given SessionItem.
-CORE_EXPORT std::vector<ViewItem*> findViews(const QStandardItemModel* model, const SessionItem* item, const QModelIndex& parent = QModelIndex());
+CORE_EXPORT std::vector<ViewItem*> findViews(const QStandardItemModel* model,
+                                             const SessionItem* item,
+                                             const QModelIndex& parent = QModelIndex());
 
 //! Returns vector of Qt roles corresponding to given ItemDataRole.
 CORE_EXPORT QVector<int> item_role_to_qt(int role);
@@ -48,6 +51,12 @@ CORE_EXPORT QVariant CheckStateRole(const SessionItem& item);
 
 //! Returns decoration role for given item.
 CORE_EXPORT QVariant DecorationRole(const SessionItem& item);
+
+//! Returns vector of parent items from given index list.
+//! Finds all SessionItems corresponding to given index list and collect their parents.
+//! Function is usefull in the context of table-like views when we want to find compound items
+//! (i.e. Layers) from table cells containing LayerItem's properties (i.e. thickness).
+CORE_EXPORT std::vector<SessionItem*> SelectedParentItems(const QModelIndexList& index_list);
 
 } // namespace Utils
 

@@ -2,8 +2,11 @@
 #include "viewmodelutils.h"
 #include "mvvm_types.h"
 #include "sessionitem.h"
+#include "sessionmodel.h"
+#include "propertytableviewmodel.h"
 #include <QStandardItemModel>
 #include <QColor>
+#include <QModelIndexList>
 
 namespace
 {
@@ -114,4 +117,45 @@ TEST_F(TestViewModelUtils, itemDecorationRole)
     QColor expected(Qt::green);
     item.setData(expected, ItemDataRole::DATA);
     EXPECT_EQ(Utils::DecorationRole(item).value<QColor>(), expected);
+}
+
+//! Check SelectedParentItems in PropertyTableViewModel context.
+//! ViewItem with its three property x, y, z forms one row
+
+TEST_F(TestViewModelUtils, selectedParentItems)
+{
+    // creating VectorItem and viewModel to see it as a table
+    SessionModel model;
+    auto parent = model.insertNewItem(Constants::VectorType);
+    PropertyTableViewModel viewModel;
+    viewModel.setSessionModel(&model);
+
+    // it's a table with one row and x,y,z columns
+    EXPECT_EQ(viewModel.rowCount(), 1);
+    EXPECT_EQ(viewModel.columnCount(), 3);
+
+    // empty index list doesn't lead to SessionItem's
+    QModelIndexList index_list;
+    EXPECT_EQ(Utils::SelectedParentItems(index_list).size(), 0);
+
+    std::vector<SessionItem*> expected = {parent};
+
+    // one cell in a list should give us pointer to original VectorItem
+    index_list.push_back(viewModel.index(0,1));
+    EXPECT_EQ(Utils::SelectedParentItems(index_list), expected);
+
+    index_list.clear();
+    index_list.push_back(viewModel.index(0,1));
+    EXPECT_EQ(Utils::SelectedParentItems(index_list), expected);
+
+    index_list.clear();
+    index_list.push_back(viewModel.index(0,2));
+    EXPECT_EQ(Utils::SelectedParentItems(index_list), expected);
+
+    // tthree cells (x, y, z) in a list should give us pointer to original VectorItem
+    index_list.clear();
+    index_list.push_back(viewModel.index(0,0));
+    index_list.push_back(viewModel.index(0,1));
+    index_list.push_back(viewModel.index(0,2));
+    EXPECT_EQ(Utils::SelectedParentItems(index_list), expected);
 }
