@@ -31,7 +31,6 @@ protected:
 private:
     void write_settings();
     void init_application();
-    void init_models();
 
     QTabWidget* m_tabWidget;
     std::unique_ptr<SampleModel> m_model;

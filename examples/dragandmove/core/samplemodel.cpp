@@ -10,6 +10,7 @@
 #include "samplemodel.h"
 #include "itemcatalogue.h"
 #include "items.h"
+#include "item_constants.h"
 
 namespace
 {
@@ -25,4 +26,19 @@ std::unique_ptr<ModelView::ItemCatalogue> CreateToyItemCatalogue()
 SampleModel::SampleModel() : SessionModel("SampleModel")
 {
     setItemCatalogue(CreateToyItemCatalogue());
+    init_model_content();
+}
+
+//! Generates initial model content.
+
+void SampleModel::init_model_content()
+{
+    auto container = insertNewItem(Constants::DemoContainerItemType);
+    insertNewItem(Constants::DemoItemType, container);
+    insertNewItem(Constants::DemoItemType, container);
+
+    container = insertNewItem(Constants::DemoContainerItemType);
+    insertNewItem(Constants::DemoItemType, container);
+    insertNewItem(Constants::DemoItemType, container);
+    insertNewItem(Constants::DemoItemType, container);
 }

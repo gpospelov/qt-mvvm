@@ -22,11 +22,13 @@ const QString size_key = "size";
 const QString pos_key = "pos";
 } // namespace
 
-MainWindow::MainWindow()
-    : m_tabWidget(new QTabWidget), m_model(std::make_unique<SampleModel>())
+MainWindow::MainWindow() : m_tabWidget(new QTabWidget), m_model(std::make_unique<SampleModel>())
 {
     setCentralWidget(m_tabWidget);
     init_application();
+
+    m_tabWidget->addTab(new ModelEditorWidget(m_model.get()), "Available properties");
+    m_tabWidget->setCurrentIndex(m_tabWidget->count() - 1);
 }
 
 MainWindow::~MainWindow() = default;
@@ -59,17 +61,4 @@ void MainWindow::init_application()
         move(settings.value(pos_key, QPoint(200, 200)).toPoint());
         settings.endGroup();
     }
-
-    init_models();
-}
-
-void MainWindow::init_models()
-{
-    // populating first model with content
-    m_model->insertNewItem(Constants::DemoItemType);
-    m_model->insertNewItem(Constants::DemoItemType);
-    m_model->insertNewItem(Constants::DemoItemType);
-
-    m_tabWidget->addTab(new ModelEditorWidget(m_model.get()), "Available properties");
-    m_tabWidget->setCurrentIndex(m_tabWidget->count() - 1);
 }

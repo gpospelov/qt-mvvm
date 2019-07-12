@@ -18,6 +18,9 @@ class SampleModel : public ModelView::SessionModel
 {
 public:
     SampleModel();
+
+private:
+    void init_model_content();
 };
 
 #endif
