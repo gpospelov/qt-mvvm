@@ -12,12 +12,18 @@
 
 #include "sessionmodel.h"
 
+namespace ModelView {
+class SessionItem;
+}
+
 //! Main application model.
 
 class SampleModel : public ModelView::SessionModel
 {
 public:
     SampleModel();
+
+    void append_random_item(ModelView::SessionItem* container);
 
 private:
     void init_model_content();
