@@ -12,7 +12,6 @@
 
 #include "propertytableviewmodel.h"
 
-
 namespace ModelView
 {
 class SessionModel;
@@ -26,15 +25,14 @@ class DragViewModel : public ModelView::PropertyTableViewModel
 public:
     DragViewModel(ModelView::SessionModel* model = nullptr, QObject* parent = nullptr);
 
-    Qt::ItemFlags flags(const QModelIndex &index) const override;
-    QMimeData *mimeData(const QModelIndexList &index_list) const override;
+    Qt::ItemFlags flags(const QModelIndex& index) const override;
+    QMimeData* mimeData(const QModelIndexList& index_list) const override;
     Qt::DropActions supportedDragActions() const override;
     Qt::DropActions supportedDropActions() const override;
-    bool canDropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column,
-                             const QModelIndex &parent) const override;
-    bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column,
-                        const QModelIndex &parent) override;
-
+    bool canDropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column,
+                         const QModelIndex& parent) const override;
+    bool dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column,
+                      const QModelIndex& parent) override;
 };
 
 #endif // DRAGVIEWMODEL_H

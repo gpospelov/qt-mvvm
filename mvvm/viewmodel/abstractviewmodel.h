@@ -66,6 +66,7 @@ public:
 protected:
     QStandardItem* rootViewItem() const;
     SessionModel* sessionModel() const;
+    SessionItem* rootSessionItem() const;
 
 private:
     // FIXME remove one of methods
