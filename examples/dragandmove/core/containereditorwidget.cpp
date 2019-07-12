@@ -14,12 +14,14 @@
 #include "propertytableviewmodel.h"
 #include "samplemodel.h"
 #include "sessionitem.h"
+#include "modelutils.h"
 #include "viewmodeldelegate.h"
 #include <QBoxLayout>
 #include <QTreeView>
 #include <QHeaderView>
 #include <QPushButton>
 #include <QDebug>
+#include <set>
 
 using namespace ModelView;
 
@@ -51,6 +53,7 @@ void ContainerEditorWidget::setModel(SampleModel* model, ModelView::SessionItem*
     m_treeView->setItemDelegate(m_delegate.get());
     m_treeView->expandAll();
     m_treeView->header()->setSectionResizeMode(QHeaderView::Stretch);
+    m_treeView->setSelectionMode(QAbstractItemView::ContiguousSelection);
 }
 
 void ContainerEditorWidget::onAdd()
@@ -65,7 +68,8 @@ void ContainerEditorWidget::onCopy()
 
 void ContainerEditorWidget::onRemove()
 {
-    qDebug() << "onRemove";
+    for (auto item: selected_items())
+        Utils::DeleteItemFromModel(item);
 }
 
 void ContainerEditorWidget::onDown()
@@ -76,6 +80,23 @@ void ContainerEditorWidget::onDown()
 void ContainerEditorWidget::onUp()
 {
     qDebug() << "onUp";
+}
+
+QItemSelectionModel* ContainerEditorWidget::selectionModel() const
+{
+    return m_treeView->selectionModel();
+}
+
+//! Returns set of selected DemoItem's.
+
+std::set<SessionItem*> ContainerEditorWidget::selected_items() const
+{
+    std::set<SessionItem*> result;
+    for(auto index : selectionModel()->selectedIndexes()) {
+        auto property_item = m_viewModel->sessionItemFromIndex(index);
+        result.insert(property_item->parent());
+    }
+    return result;
 }
 
 QBoxLayout* ContainerEditorWidget::create_button_layout()

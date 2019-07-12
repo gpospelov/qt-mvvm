@@ -74,3 +74,13 @@ TEST_F(TestModelUtils, findItems)
     std::vector<ToyItems::LayerItem*> expected3 = {layer1, layer2};
     EXPECT_EQ(Utils::FindItems<ToyItems::LayerItem>(&model), expected3);
 }
+
+TEST_F(TestModelUtils, DeleteItemFromModel)
+{
+    ToyItems::SampleModel model;
+
+    auto item = model.insertNewItem(Constants::BaseType);
+    EXPECT_EQ(model.rootItem()->childrenCount(), 1);
+    Utils::DeleteItemFromModel(item);
+    EXPECT_EQ(model.rootItem()->childrenCount(), 0);
+}

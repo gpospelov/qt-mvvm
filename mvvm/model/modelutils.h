@@ -62,6 +62,10 @@ template <typename T = SessionItem> std::vector<T*> FindItems(const SessionModel
     return result;
 }
 
+//! Removes and deletes item from its model.
+
+void DeleteItemFromModel(SessionItem* item);
+
 } // namespace Utils
 } // namespace ModelView
 

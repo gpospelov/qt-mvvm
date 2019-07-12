@@ -11,11 +11,13 @@
 #define CONTAINEREDITORWIDGET_H
 
 #include <QWidget>
+#include <set>
 #include <memory>
 
 class SampleModel;
 class QTreeView;
 class QBoxLayout;
+class QItemSelectionModel;
 
 namespace ModelView
 {
@@ -45,7 +47,10 @@ private slots:
     void onDown();
     void onUp();
 
+    QItemSelectionModel* selectionModel() const;
+
 private:
+    std::set<ModelView::SessionItem*> selected_items() const;
     QBoxLayout* create_button_layout();
 
     QTreeView* m_treeView;
