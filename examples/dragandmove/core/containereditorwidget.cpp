@@ -8,22 +8,15 @@
 // ************************************************************************** //
 
 #include "containereditorwidget.h"
-
-#include "defaultviewmodel.h"
 #include "dragviewmodel.h"
-#include "items.h"
-#include "modeleditorwidget.h"
 #include "modelutils.h"
 #include "samplemodel.h"
-#include "sessionitem.h"
 #include "viewmodeldelegate.h"
 #include "viewmodelutils.h"
 #include <QBoxLayout>
-#include <QDebug>
 #include <QHeaderView>
 #include <QPushButton>
 #include <QTreeView>
-#include <set>
 
 using namespace ModelView;
 
@@ -42,7 +35,7 @@ ContainerEditorWidget::ContainerEditorWidget(QWidget* parent)
 
 ContainerEditorWidget::~ContainerEditorWidget() = default;
 
-void ContainerEditorWidget::setModel(SampleModel* model, ModelView::SessionItem* root_item)
+void ContainerEditorWidget::setModel(SampleModel* model, SessionItem* root_item)
 {
     if (!model)
         return;
