@@ -12,7 +12,6 @@
 #include "sessionmodel.h"
 #include <sstream>
 #include <stdexcept>
-#include <iostream>
 
 using namespace ModelView;
 
@@ -56,8 +55,9 @@ MoveItemCommand::MoveItemCommand(SessionItem* item, SessionItem* new_parent, std
         throw std::runtime_error("MoveItemCommand::MoveItemCommand() -> Single property tag.");
 
     if (item->parent() == new_parent) {
-        if (p_impl->m_target_row >= static_cast<int>(new_parent->getItems(p_impl->m_target_tag).size()))
-            throw std::runtime_error("MoveCommand::MoveCommand() -> move index exceeds number of items in a tag");
+        if (p_impl->m_target_row >= new_parent->itemCount(p_impl->m_target_tag))
+            throw std::runtime_error(
+                "MoveCommand::MoveCommand() -> move index exceeds number of items in a tag");
     }
 }
 
@@ -70,9 +70,8 @@ void MoveItemCommand::undo_command()
     auto target_parent = itemFromPath(p_impl->m_original_parent_path);
 
     // then make manipulations
-    int row = p_impl->m_target_row < 0
-                  ? static_cast<int>(current_parent->getItems(p_impl->m_target_tag).size()) - 1
-                  : p_impl->m_target_row;
+    int row = p_impl->m_target_row < 0 ? current_parent->itemCount(p_impl->m_target_tag) - 1
+                                       : p_impl->m_target_row;
     auto taken = current_parent->takeItem(p_impl->m_target_tag, row);
     target_parent->insertItem(taken, p_impl->m_original_tag, p_impl->m_original_row);
 
@@ -95,8 +94,6 @@ void MoveItemCommand::execute_command()
 
     if (!taken)
         throw std::runtime_error("MoveItemCommand::execute() -> Can't take an item.");
-
-    std::cout << "'" << p_impl->m_target_tag << "' " << p_impl->m_target_row << std::endl;
 
     bool succeeded = target_parent->insertItem(taken, p_impl->m_target_tag, p_impl->m_target_row);
     if (!succeeded)
