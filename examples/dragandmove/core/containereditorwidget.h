@@ -47,8 +47,6 @@ private slots:
     void onMoveDown();
     void onMoveUp();
 
-    QItemSelectionModel* selectionModel() const;
-
 private:
     std::vector<ModelView::SessionItem*> selected_items() const;
     QBoxLayout* create_button_layout();

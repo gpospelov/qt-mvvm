@@ -9,26 +9,27 @@
 
 #include "containereditorwidget.h"
 
-#include "modeleditorwidget.h"
 #include "defaultviewmodel.h"
+#include "dragviewmodel.h"
+#include "items.h"
+#include "modeleditorwidget.h"
+#include "modelutils.h"
 #include "samplemodel.h"
 #include "sessionitem.h"
-#include "modelutils.h"
 #include "viewmodeldelegate.h"
-#include "items.h"
-#include "dragviewmodel.h"
+#include "viewmodelutils.h"
 #include <QBoxLayout>
-#include <QTreeView>
+#include <QDebug>
 #include <QHeaderView>
 #include <QPushButton>
-#include <QDebug>
+#include <QTreeView>
 #include <set>
 
 using namespace ModelView;
 
 ContainerEditorWidget::ContainerEditorWidget(QWidget* parent)
-    : QWidget(parent), m_treeView(new QTreeView),
-     m_delegate(std::make_unique<ViewModelDelegate>()), m_container(nullptr), m_model(nullptr)
+    : QWidget(parent), m_treeView(new QTreeView), m_delegate(std::make_unique<ViewModelDelegate>()),
+      m_container(nullptr), m_model(nullptr)
 {
     auto mainLayout = new QVBoxLayout;
     mainLayout->setSpacing(10);
@@ -71,13 +72,13 @@ void ContainerEditorWidget::onAdd()
 
 void ContainerEditorWidget::onCopy()
 {
-    for (auto item: selected_items())
+    for (auto item : selected_items())
         m_model->copyItem(item, m_container);
 }
 
 void ContainerEditorWidget::onRemove()
 {
-    for (auto item: selected_items())
+    for (auto item : selected_items())
         Utils::DeleteItemFromModel(item);
 }
 
@@ -90,10 +91,10 @@ void ContainerEditorWidget::onMoveDown()
         auto tag_row = item->parent()->tagRowOfItem(item);
 
         // item already at the buttom
-        if(tag_row.second == item->parent()->childrenCount()-1)
+        if (tag_row.second == item->parent()->childrenCount() - 1)
             return;
 
-        m_model->moveItem(item, item->parent(), tag_row.first, tag_row.second+1);
+        m_model->moveItem(item, item->parent(), tag_row.first, tag_row.second + 1);
     }
 }
 
@@ -103,31 +104,16 @@ void ContainerEditorWidget::onMoveUp()
         auto tag_row = item->parent()->tagRowOfItem(item);
 
         // item already at the top
-        if(tag_row.second == 0)
+        if (tag_row.second == 0)
             return;
 
-        m_model->moveItem(item, item->parent(), tag_row.first, tag_row.second-1);
+        m_model->moveItem(item, item->parent(), tag_row.first, tag_row.second - 1);
     }
 }
-
-QItemSelectionModel* ContainerEditorWidget::selectionModel() const
-{
-    return m_treeView->selectionModel();
-}
-
-//! Returns vector of selected DemoItem's.
 
 std::vector<SessionItem*> ContainerEditorWidget::selected_items() const
 {
-    std::set<SessionItem*> demo_items;
-    for(auto index : selectionModel()->selectedIndexes()) {
-        auto property_item = m_viewModel->sessionItemFromIndex(index);
-        demo_items.insert(property_item->parent());
-    }
-
-    std::vector<SessionItem*> result;
-    std::copy(demo_items.begin(), demo_items.end(), std::back_inserter(result));
-    return result;
+    return Utils::SelectedParentItems(m_treeView->selectionModel()->selectedIndexes());
 }
 
 QBoxLayout* ContainerEditorWidget::create_button_layout()

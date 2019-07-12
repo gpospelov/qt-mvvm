@@ -1,12 +1,12 @@
 #include "google_test.h"
-#include "viewmodelutils.h"
 #include "mvvm_types.h"
+#include "propertytableviewmodel.h"
 #include "sessionitem.h"
 #include "sessionmodel.h"
-#include "propertytableviewmodel.h"
-#include <QStandardItemModel>
+#include "viewmodelutils.h"
 #include <QColor>
 #include <QModelIndexList>
+#include <QStandardItemModel>
 
 namespace
 {
@@ -19,8 +19,7 @@ QList<QStandardItem*> get_items(std::vector<int> data)
 
     return result;
 }
-}
-
+} // namespace
 
 using namespace ModelView;
 
@@ -49,12 +48,11 @@ TEST_F(TestViewModelUtils, iterate)
     std::vector<int> expected = {1, 2, 3, 4, 10, 20};
     std::vector<int> result;
 
-    Utils::iterate_model(&model, QModelIndex(), [&](const QStandardItem* item){
+    Utils::iterate_model(&model, QModelIndex(), [&](const QStandardItem* item) {
         result.push_back(item->data(Qt::EditRole).toInt());
     });
 
     EXPECT_EQ(result, expected);
-
 }
 
 //! Translation of item role to Qt roles.
@@ -141,21 +139,21 @@ TEST_F(TestViewModelUtils, selectedParentItems)
     std::vector<SessionItem*> expected = {parent};
 
     // one cell in a list should give us pointer to original VectorItem
-    index_list.push_back(viewModel.index(0,1));
+    index_list.push_back(viewModel.index(0, 1));
     EXPECT_EQ(Utils::SelectedParentItems(index_list), expected);
 
     index_list.clear();
-    index_list.push_back(viewModel.index(0,1));
+    index_list.push_back(viewModel.index(0, 1));
     EXPECT_EQ(Utils::SelectedParentItems(index_list), expected);
 
     index_list.clear();
-    index_list.push_back(viewModel.index(0,2));
+    index_list.push_back(viewModel.index(0, 2));
     EXPECT_EQ(Utils::SelectedParentItems(index_list), expected);
 
     // tthree cells (x, y, z) in a list should give us pointer to original VectorItem
     index_list.clear();
-    index_list.push_back(viewModel.index(0,0));
-    index_list.push_back(viewModel.index(0,1));
-    index_list.push_back(viewModel.index(0,2));
+    index_list.push_back(viewModel.index(0, 0));
+    index_list.push_back(viewModel.index(0, 1));
+    index_list.push_back(viewModel.index(0, 2));
     EXPECT_EQ(Utils::SelectedParentItems(index_list), expected);
 }
