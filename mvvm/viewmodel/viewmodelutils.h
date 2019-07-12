@@ -56,7 +56,7 @@ CORE_EXPORT QVariant DecorationRole(const SessionItem& item);
 //! Finds all SessionItems corresponding to given index list and collect their parents.
 //! Function is usefull in the context of table-like views when we want to find compound items
 //! (i.e. Layers) from table cells containing LayerItem's properties (i.e. thickness).
-CORE_EXPORT std::vector<SessionItem*> SelectedParentItems(const QModelIndexList& index_list);
+CORE_EXPORT std::vector<SessionItem*> ParentItemsFromIndex(const QModelIndexList& index_list);
 
 } // namespace Utils
 

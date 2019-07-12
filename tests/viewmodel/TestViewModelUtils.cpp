@@ -117,10 +117,11 @@ TEST_F(TestViewModelUtils, itemDecorationRole)
     EXPECT_EQ(Utils::DecorationRole(item).value<QColor>(), expected);
 }
 
-//! Check SelectedParentItems in PropertyTableViewModel context.
-//! ViewItem with its three property x, y, z forms one row
+//! Check ParentItemsFromIndex in PropertyTableViewModel context.
+//! ViewItem with its three property x, y, z forms one row. All corresponding
+//! indices of (x,y,z) should give us pointer to VectorItem.
 
-TEST_F(TestViewModelUtils, selectedParentItems)
+TEST_F(TestViewModelUtils, parentItemsFromIndex)
 {
     // creating VectorItem and viewModel to see it as a table
     SessionModel model;
@@ -134,26 +135,26 @@ TEST_F(TestViewModelUtils, selectedParentItems)
 
     // empty index list doesn't lead to SessionItem's
     QModelIndexList index_list;
-    EXPECT_EQ(Utils::SelectedParentItems(index_list).size(), 0);
+    EXPECT_EQ(Utils::ParentItemsFromIndex(index_list).size(), 0);
 
     std::vector<SessionItem*> expected = {parent};
 
     // one cell in a list should give us pointer to original VectorItem
     index_list.push_back(viewModel.index(0, 1));
-    EXPECT_EQ(Utils::SelectedParentItems(index_list), expected);
+    EXPECT_EQ(Utils::ParentItemsFromIndex(index_list), expected);
 
     index_list.clear();
     index_list.push_back(viewModel.index(0, 1));
-    EXPECT_EQ(Utils::SelectedParentItems(index_list), expected);
+    EXPECT_EQ(Utils::ParentItemsFromIndex(index_list), expected);
 
     index_list.clear();
     index_list.push_back(viewModel.index(0, 2));
-    EXPECT_EQ(Utils::SelectedParentItems(index_list), expected);
+    EXPECT_EQ(Utils::ParentItemsFromIndex(index_list), expected);
 
     // tthree cells (x, y, z) in a list should give us pointer to original VectorItem
     index_list.clear();
     index_list.push_back(viewModel.index(0, 0));
     index_list.push_back(viewModel.index(0, 1));
     index_list.push_back(viewModel.index(0, 2));
-    EXPECT_EQ(Utils::SelectedParentItems(index_list), expected);
+    EXPECT_EQ(Utils::ParentItemsFromIndex(index_list), expected);
 }

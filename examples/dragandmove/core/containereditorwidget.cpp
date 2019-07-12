@@ -106,7 +106,7 @@ void ContainerEditorWidget::onMoveUp()
 
 std::vector<SessionItem*> ContainerEditorWidget::selected_items() const
 {
-    return Utils::SelectedParentItems(m_treeView->selectionModel()->selectedIndexes());
+    return Utils::ParentItemsFromIndex(m_treeView->selectionModel()->selectedIndexes());
 }
 
 QBoxLayout* ContainerEditorWidget::create_button_layout()

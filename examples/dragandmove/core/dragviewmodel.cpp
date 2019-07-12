@@ -59,12 +59,12 @@ Qt::ItemFlags DragViewModel::flags(const QModelIndex& index) const
 QMimeData* DragViewModel::mimeData(const QModelIndexList& index_list) const
 {
     auto mimeData = new QMimeData;
-    auto items = Utils::SelectedParentItems(index_list);
+    auto items = Utils::ParentItemsFromIndex(index_list);
 
     // Saving list of SessionItem's identifiers related to all DemoItem
 
     QStringList identifiers;
-    for (auto item : Utils::SelectedParentItems(index_list))
+    for (auto item : Utils::ParentItemsFromIndex(index_list))
         identifiers.append(QString::fromStdString(item->identifier()));
 
     mimeData->setData(QString::fromStdString(::Constants::AppMimeType), serialize(identifiers));
@@ -101,6 +101,7 @@ bool DragViewModel::dropMimeData(const QMimeData* data, Qt::DropAction action, i
 
     int requested_row = parent.isValid() ? parent.row() : row;
 
+    // retrieving list of item identifiers and accessing items
     auto identifiers = deserialize(data->data(QString::fromStdString(::Constants::AppMimeType)));
     for (auto id : identifiers) {
         auto item = sessionModel()->findItem(id.toStdString());

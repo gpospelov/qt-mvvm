@@ -92,7 +92,7 @@ QVariant Utils::DecorationRole(const SessionItem& item)
     return QVariant();
 }
 
-std::vector<SessionItem*> Utils::SelectedParentItems(const QModelIndexList& index_list)
+std::vector<SessionItem*> Utils::ParentItemsFromIndex(const QModelIndexList& index_list)
 {
     if (index_list.empty())
         return {};
