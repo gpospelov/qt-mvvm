@@ -48,6 +48,11 @@ QStandardItem* AbstractViewModel::rootViewItem() const
     return invisibleRootItem();
 }
 
+SessionModel* AbstractViewModel::sessionModel() const
+{
+    return m_controller->sessionModel();
+}
+
 //! Returns vector of standard views used to display given SessionItem.
 
 std::vector<QStandardItem*> AbstractViewModel::findStandardViews(const SessionItem* item) const
