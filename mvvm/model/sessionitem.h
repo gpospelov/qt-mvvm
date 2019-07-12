@@ -67,6 +67,7 @@ public:
     bool isTag(const std::string& name);
 
     // access tagged items
+    int itemCount(const std::string& tag = {}) const;
     SessionItem* getItem(const std::string& tag = {}, int row = 0) const;
     std::vector<SessionItem*> getItems(const std::string& tag = {}) const;
     std::string tagFromItem(const SessionItem* item) const;

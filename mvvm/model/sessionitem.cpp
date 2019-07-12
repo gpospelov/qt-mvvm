@@ -181,6 +181,13 @@ bool SessionItem::isTag(const std::string& name)
     return p_impl->m_tags->isTag(name);
 }
 
+//! Returns number of items in given tag.
+
+int SessionItem::itemCount(const std::string& tag) const
+{
+    return p_impl->m_tags->itemCount(tag);
+}
+
 //! Returns item at given row of given tag.
 
 SessionItem* SessionItem::getItem(const std::string& tag, int row) const

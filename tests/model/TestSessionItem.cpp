@@ -545,3 +545,24 @@ TEST_F(TestSessionItem, appearance)
 }
 
 
+TEST_F(TestSessionItem, itemsInTag)
+{
+    const std::string tag1 = "tag1";
+    const std::string tag2 = "tag2";
+
+    // creating parent with one tag
+    std::unique_ptr<SessionItem> parent(new SessionItem);
+    parent->registerTag(TagInfo::universalTag(tag1));
+    parent->registerTag(TagInfo::universalTag(tag2));
+
+    // inserting two children
+    auto child_t1_a = new SessionItem;
+    auto child_t2_a = new SessionItem;
+    auto child_t2_b = new SessionItem;
+    parent->insertItem(child_t1_a, tag1);
+    parent->insertItem(child_t2_a, tag2);
+    parent->insertItem(child_t2_b, tag2);
+
+    EXPECT_EQ(parent->itemCount(tag1), 1);
+    EXPECT_EQ(parent->itemCount(tag2), 2);
+}
