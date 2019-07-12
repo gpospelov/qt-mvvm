@@ -58,6 +58,7 @@ void ContainerEditorWidget::setModel(SampleModel* model, ModelView::SessionItem*
     m_treeView->header()->setSectionResizeMode(QHeaderView::Stretch);
     m_treeView->setSelectionMode(QAbstractItemView::ContiguousSelection);
 
+    setAcceptDrops(true);
     m_treeView->setDragEnabled(true);
     m_treeView->viewport()->setAcceptDrops(true);
     m_treeView->setDropIndicatorShown(true);
@@ -80,7 +81,7 @@ void ContainerEditorWidget::onRemove()
         Utils::DeleteItemFromModel(item);
 }
 
-void ContainerEditorWidget::onDown()
+void ContainerEditorWidget::onMoveDown()
 {
     auto items = selected_items();
     std::reverse(items.begin(), items.end()); // to correctly move multiple selections
@@ -96,7 +97,7 @@ void ContainerEditorWidget::onDown()
     }
 }
 
-void ContainerEditorWidget::onUp()
+void ContainerEditorWidget::onMoveUp()
 {
     for (auto item : selected_items()) {
         auto tag_row = item->parent()->tagRowOfItem(item);
@@ -114,7 +115,7 @@ QItemSelectionModel* ContainerEditorWidget::selectionModel() const
     return m_treeView->selectionModel();
 }
 
-//! Returns set of selected DemoItem's.
+//! Returns vector of selected DemoItem's.
 
 std::vector<SessionItem*> ContainerEditorWidget::selected_items() const
 {
@@ -151,12 +152,12 @@ QBoxLayout* ContainerEditorWidget::create_button_layout()
 
     button = new QPushButton("Down");
     button->setToolTip("Move selected item down");
-    connect(button, &QPushButton::clicked, this, &ContainerEditorWidget::onDown);
+    connect(button, &QPushButton::clicked, this, &ContainerEditorWidget::onMoveDown);
     result->addWidget(button);
 
     button = new QPushButton("Up");
     button->setToolTip("Move selected item up");
-    connect(button, &QPushButton::clicked, this, &ContainerEditorWidget::onUp);
+    connect(button, &QPushButton::clicked, this, &ContainerEditorWidget::onMoveUp);
     result->addWidget(button);
 
     return result;

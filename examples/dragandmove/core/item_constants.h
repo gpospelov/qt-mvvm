@@ -20,6 +20,8 @@ namespace Constants
 const std::string DemoItemType = "DemoItem";
 const std::string DemoContainerItemType = "DemoItemContainer";
 
+const std::string AppMimeType = "application/org.bornagainproject.moveitem";
+
 } // namespace Constants
 
 #endif // ITEM_CONSTANTS_H

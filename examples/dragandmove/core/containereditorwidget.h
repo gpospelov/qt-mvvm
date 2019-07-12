@@ -44,8 +44,8 @@ private slots:
     void onAdd();
     void onCopy();
     void onRemove();
-    void onDown();
-    void onUp();
+    void onMoveDown();
+    void onMoveUp();
 
     QItemSelectionModel* selectionModel() const;
 
