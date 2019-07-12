@@ -21,6 +21,7 @@ namespace ModelView
 {
 class AbstractViewModel;
 class ViewModelDelegate;
+class SessionItem;
 } // namespace ModelView
 
 /*!
@@ -35,7 +36,7 @@ public:
     explicit ContainerEditorWidget(QWidget* parent = nullptr);
     ~ContainerEditorWidget();
 
-    void setModel(SampleModel* model);
+    void setModel(SampleModel* model, ModelView::SessionItem* root_item = nullptr);
 
 private slots:
     void onAdd();

@@ -10,6 +10,7 @@
 #include "modeleditorwidget.h"
 #include "containereditorwidget.h"
 #include "samplemodel.h"
+#include "modelutils.h"
 #include <QHBoxLayout>
 #include <QToolBar>
 #include <QAction>
@@ -48,8 +49,11 @@ void ModelEditorWidget::setModel(SampleModel* model)
     if (!model)
         return;
 
-    m_leftWidget->setModel(model);
-    m_rightWidget->setModel(model);
+    auto containers = Utils::TopItems(model);
+    assert(containers.size() == 2);
+
+    m_leftWidget->setModel(model, containers[0]);
+    m_rightWidget->setModel(model, containers[1]);
 }
 
 void ModelEditorWidget::onUndo()

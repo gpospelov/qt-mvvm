@@ -35,13 +35,14 @@ ContainerEditorWidget::ContainerEditorWidget(QWidget* parent)
     setLayout(mainLayout);
 }
 
-void ContainerEditorWidget::setModel(SampleModel* model)
+void ContainerEditorWidget::setModel(SampleModel* model, ModelView::SessionItem* root_item)
 {
     if (!model)
         return;
 
     // setting up left tree
     m_viewModel = std::make_unique<PropertyTableViewModel>(model);
+    m_viewModel->setRootSessionItem(root_item);
     m_treeView->setModel(m_viewModel.get());
     m_treeView->setItemDelegate(m_delegate.get());
     m_treeView->expandAll();
