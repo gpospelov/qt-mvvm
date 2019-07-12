@@ -11,7 +11,7 @@
 #define CONTAINEREDITORWIDGET_H
 
 #include <QWidget>
-#include <set>
+#include <vector>
 #include <memory>
 
 class SampleModel;
@@ -50,7 +50,7 @@ private slots:
     QItemSelectionModel* selectionModel() const;
 
 private:
-    std::set<ModelView::SessionItem*> selected_items() const;
+    std::vector<ModelView::SessionItem*> selected_items() const;
     QBoxLayout* create_button_layout();
 
     QTreeView* m_treeView;

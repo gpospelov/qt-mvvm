@@ -16,6 +16,7 @@
 #include "sessionitem.h"
 #include "modelutils.h"
 #include "viewmodeldelegate.h"
+#include "items.h"
 #include <QBoxLayout>
 #include <QTreeView>
 #include <QHeaderView>
@@ -75,12 +76,31 @@ void ContainerEditorWidget::onRemove()
 
 void ContainerEditorWidget::onDown()
 {
-    qDebug() << "onDown";
+    auto items = selected_items();
+    std::reverse(items.begin(), items.end()); // to correctly move multiple selections
+
+    for (auto item : items) {
+        auto tag_row = item->parent()->tagRowOfItem(item);
+
+        // item already at the buttom
+        if(tag_row.second == item->parent()->childrenCount()-1)
+            return;
+
+        m_model->moveItem(item, item->parent(), tag_row.first, tag_row.second+1);
+    }
 }
 
 void ContainerEditorWidget::onUp()
 {
-    qDebug() << "onUp";
+    for (auto item : selected_items()) {
+        auto tag_row = item->parent()->tagRowOfItem(item);
+
+        // item already at the top
+        if(tag_row.second == 0)
+            return;
+
+        m_model->moveItem(item, item->parent(), tag_row.first, tag_row.second-1);
+    }
 }
 
 QItemSelectionModel* ContainerEditorWidget::selectionModel() const
@@ -90,13 +110,16 @@ QItemSelectionModel* ContainerEditorWidget::selectionModel() const
 
 //! Returns set of selected DemoItem's.
 
-std::set<SessionItem*> ContainerEditorWidget::selected_items() const
+std::vector<SessionItem*> ContainerEditorWidget::selected_items() const
 {
-    std::set<SessionItem*> result;
+    std::set<SessionItem*> demo_items;
     for(auto index : selectionModel()->selectedIndexes()) {
         auto property_item = m_viewModel->sessionItemFromIndex(index);
-        result.insert(property_item->parent());
+        demo_items.insert(property_item->parent());
     }
+
+    std::vector<SessionItem*> result;
+    std::copy(demo_items.begin(), demo_items.end(), std::back_inserter(result));
     return result;
 }
 
