@@ -11,12 +11,12 @@
 
 #include "modeleditorwidget.h"
 #include "defaultviewmodel.h"
-#include "propertytableviewmodel.h"
 #include "samplemodel.h"
 #include "sessionitem.h"
 #include "modelutils.h"
 #include "viewmodeldelegate.h"
 #include "items.h"
+#include "dragviewmodel.h"
 #include <QBoxLayout>
 #include <QTreeView>
 #include <QHeaderView>
@@ -39,6 +39,8 @@ ContainerEditorWidget::ContainerEditorWidget(QWidget* parent)
     setLayout(mainLayout);
 }
 
+ContainerEditorWidget::~ContainerEditorWidget() = default;
+
 void ContainerEditorWidget::setModel(SampleModel* model, ModelView::SessionItem* root_item)
 {
     if (!model)
@@ -47,14 +49,18 @@ void ContainerEditorWidget::setModel(SampleModel* model, ModelView::SessionItem*
     m_model = model;
     m_container = root_item;
 
-    // setting up left tree
-    m_viewModel = std::make_unique<PropertyTableViewModel>(model);
+    // setting up the tree
+    m_viewModel = std::make_unique<DragViewModel>(model);
     m_viewModel->setRootSessionItem(m_container);
     m_treeView->setModel(m_viewModel.get());
     m_treeView->setItemDelegate(m_delegate.get());
     m_treeView->expandAll();
     m_treeView->header()->setSectionResizeMode(QHeaderView::Stretch);
     m_treeView->setSelectionMode(QAbstractItemView::ContiguousSelection);
+
+    m_treeView->setDragEnabled(true);
+    m_treeView->viewport()->setAcceptDrops(true);
+    m_treeView->setDropIndicatorShown(true);
 }
 
 void ContainerEditorWidget::onAdd()
@@ -155,5 +161,3 @@ QBoxLayout* ContainerEditorWidget::create_button_layout()
 
     return result;
 }
-
-ContainerEditorWidget::~ContainerEditorWidget() = default;
