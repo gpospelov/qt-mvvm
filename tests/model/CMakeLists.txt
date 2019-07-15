@@ -10,6 +10,10 @@ find_package(Qt5Test REQUIRED)
 
 include_directories(${BUILD_INC_DIR} ${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
+if(WIN32)
+    add_definitions(-DGTEST_LINKED_AS_SHARED_LIBRARY)
+endif()
+
 set(CMAKE_AUTOMOC ON)
 add_executable(${test} ${source_files} ${include_files})
 target_link_libraries(${test} gtest gmock Qt5::Core Qt5::Test mvvm toyitems testmachinery)
