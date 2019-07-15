@@ -30,6 +30,7 @@ class CORE_EXPORT PropertyEditor : public QWidget
 {
 public:
     explicit PropertyEditor(QWidget* parent = nullptr);
+	~PropertyEditor() override;
 
     void setItem(SessionItem* item);
 

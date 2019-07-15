@@ -40,6 +40,8 @@ PropertyEditor::PropertyEditor(QWidget* parent)
     // displayed on emptry tree.
 }
 
+PropertyEditor::~PropertyEditor() = default;
+
 void PropertyEditor::setItem(SessionItem* item)
 {
     m_viewModel = Utils::CreatePropertyViewModel(item->model());
