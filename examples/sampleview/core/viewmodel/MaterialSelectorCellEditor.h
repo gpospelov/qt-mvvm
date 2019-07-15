@@ -30,7 +30,7 @@ FIXME: move editor itself (which is combo box with colors) to separate widget in
 from model.
 */
 
-class CORE_EXPORT MaterialSelectorCellEditor : public ModelView::CustomEditor
+class MaterialSelectorCellEditor : public ModelView::CustomEditor
 {
 public:
     explicit MaterialSelectorCellEditor(MaterialModel* model, QWidget* parent = nullptr);

@@ -25,7 +25,7 @@ class MaterialBaseItem;
 @brief View model to display content of MaterialModel in table like views.
 */
 
-class CORE_EXPORT MaterialTableViewModel : public ModelView::AbstractViewModel
+class MaterialTableViewModel : public ModelView::AbstractViewModel
 {
 public:
     MaterialTableViewModel(ModelView::SessionModel* model = nullptr, QObject* parent = nullptr);

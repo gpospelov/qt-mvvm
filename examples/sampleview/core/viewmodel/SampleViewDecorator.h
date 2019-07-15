@@ -17,7 +17,7 @@
 @brief Default decorator for SampleViewDelegate. Features decoration for double-valued items.
 */
 
-class CORE_EXPORT SampleViewDecorator : public CellDecoratorInterface
+class SampleViewDecorator : public CellDecoratorInterface
 {
 public:
     using CellDecoratorInterface::CellDecoratorInterface;

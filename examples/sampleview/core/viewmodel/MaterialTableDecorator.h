@@ -17,7 +17,7 @@
 @brief A decorator for MaterialTableDelegate. Features text removal from decorated items.
 */
 
-class CORE_EXPORT MaterialTableDecorator : public SampleViewDecorator
+class MaterialTableDecorator : public SampleViewDecorator
 {
 public:
     using SampleViewDecorator::SampleViewDecorator;

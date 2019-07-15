@@ -20,7 +20,7 @@
 */
 
 namespace SampleEditorFactory {
-CORE_EXPORT std::unique_ptr<QItemEditorFactory> createStandardSampleEditorFactory();
+std::unique_ptr<QItemEditorFactory> createStandardSampleEditorFactory();
 }
 
 #endif // SAMPLEEDITORFACTORY_H

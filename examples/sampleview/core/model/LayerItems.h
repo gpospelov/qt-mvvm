@@ -22,7 +22,7 @@
 @brief Layer with name, thickness and reference to material.
 */
 
-class CORE_EXPORT LayerItem : public ModelView::CompoundItem
+class LayerItem : public ModelView::CompoundItem
 {
 public:
     static const std::string P_NAME;
@@ -36,7 +36,7 @@ public:
 @brief Multi layer capable of holding layers and other multi-layers.
 */
 
-class CORE_EXPORT MultiLayerItem : public ModelView::CompoundItem
+class MultiLayerItem : public ModelView::CompoundItem
 {
 public:
     static const std::string T_LAYERS;
