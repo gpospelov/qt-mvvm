@@ -22,7 +22,7 @@ Given implementation will invoke custom material selector while editing correspo
 properties of LayerItem.
 */
 
-class CORE_EXPORT CustomModelDelegate : public ModelView::ViewModelDelegate
+class CustomModelDelegate : public ModelView::ViewModelDelegate
 {
 public:
     explicit CustomModelDelegate(ApplicationModels* models, QObject* parent = nullptr);

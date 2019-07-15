@@ -29,7 +29,7 @@ class SessionItem;
 @brief Shows content of multi layer in a tree view in special "flat" form.
 */
 
-class CORE_EXPORT LayerTableWidget : public QWidget
+class LayerTableWidget : public QWidget
 {
 public:
     explicit LayerTableWidget(ApplicationModels* models, QWidget* parent = nullptr);

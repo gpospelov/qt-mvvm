@@ -17,7 +17,7 @@
 @brief Model to hold layers and multi-layers.
 */
 
-class CORE_EXPORT SampleModel : public ModelView::SessionModel
+class SampleModel : public ModelView::SessionModel
 {
 public:
     SampleModel();
