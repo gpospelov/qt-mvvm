@@ -15,14 +15,15 @@
 @brief Collection of layer and multi-layer items to populate SampleModel.
 */
 
-#include "compounditem.h"
+#include "LocatedItem.h"
 
 /*!
 @class LayerItem
 @brief Layer with name, thickness and reference to material.
 */
 
-class LayerItem : public ModelView::CompoundItem
+// TODO: disentangle from LocatedItem
+class LayerItem : public LocatedItem
 {
 public:
     static const std::string P_NAME;
@@ -36,7 +37,8 @@ public:
 @brief Multi layer capable of holding layers and other multi-layers.
 */
 
-class MultiLayerItem : public ModelView::CompoundItem
+// TODO: disentangle from LocatedItem
+class MultiLayerItem : public LocatedItem
 {
 public:
     static const std::string T_LAYERS;
