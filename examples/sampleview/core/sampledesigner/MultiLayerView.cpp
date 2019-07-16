@@ -18,10 +18,15 @@
 #include "DesignerScene.h"
 #include "LayerView.h"
 #include "SampleModel.h"
-#include "SessionItem.h"
+#include "item_constants.h"
+#include "sessionitem.h"
 #include <QGraphicsSceneMouseEvent>
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
+
+namespace {
+    bool acceptsModel(const ModelView::SessionItem* item, const std::string& model_type);
+}
 
 
 MultiLayerView::MultiLayerView(QGraphicsItem* parent)
@@ -29,7 +34,7 @@ MultiLayerView::MultiLayerView(QGraphicsItem* parent)
 {
     setColor(QColor(Qt::blue));
 
-    setRectangle(DesignerHelper::getDefaultBoundingRect(Constants::MultiLayerType));
+    setRectangle(DesignerHelper::getDefaultBoundingRect(::Constants::MultiLayerType));
     setAcceptHoverEvents(false);
     setAcceptDrops(true);
     connect(this, SIGNAL(childrenChanged()), this, SLOT(updateHeight()));
@@ -215,11 +220,7 @@ void MultiLayerView::dropEvent(QGraphicsSceneDragDropEvent* event)
         if(designerScene) {
             SampleModel* sampleModel = designerScene->getSampleModel();
 
-            sampleModel->insertNewItem(
-                        mimeData->getClassName(),
-                        sampleModel->indexOfItem(this->getItem()),
-                        getDropArea(event->pos())
-                        );
+            sampleModel->insertNewItem(mimeData->getClassName(), getItem(), {}, getDropArea(event->pos()));
         }
     }
 }
@@ -229,21 +230,24 @@ const DesignerMimeData *MultiLayerView::checkDragEvent(QGraphicsSceneDragDropEve
     const DesignerMimeData* mimeData = qobject_cast<const DesignerMimeData*>(event->mimeData());
     if (!mimeData) {
         event->ignore();
-        return 0;
+        return nullptr;
     }
     int row = getDropArea(event->pos());
-    if(mimeData->hasFormat("bornagain/widget")
-            && getItem()->acceptsAsDefaultItem(mimeData->getClassName())
-            && row!=-1 ) {
-
-        event->setAccepted(true);
-    } else {
-        event->setAccepted(false);
-    }
+    event->setAccepted(mimeData->hasFormat("bornagain/widget")
+        && acceptsModel(getItem(), mimeData->getClassName())
+        && row != -1);
     return mimeData;
 }
 
 QVariant MultiLayerView::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant& value)
 {
     return QGraphicsItem::itemChange(change, value);
+}
+
+namespace {
+    bool acceptsModel(const ModelView::SessionItem* item, const std::string& model_type)
+    {
+        // TODO: implement this function
+        return false;
+    }
 }

@@ -15,7 +15,6 @@
 #ifndef MULTILAYERVIEW_H
 #define MULTILAYERVIEW_H
 
-
 #include "ILayerView.h"
 
 class DesignerMimeData;
@@ -30,7 +29,7 @@ class MultiLayerView : public ILayerView
 public:
     enum { TYPE = DesignerHelper::MULTILAYER };
 
-    MultiLayerView(QGraphicsItem* parent = 0);
+    MultiLayerView(QGraphicsItem* parent = nullptr);
 
     int type() const override { return TYPE; }
 
@@ -47,7 +46,7 @@ public:
     QRectF getDropAreaRectangle(int row);
     QLineF getInterfaceLine(int row);
 
-public slots:
+    // slots:
     void updateGeometry();
     void updateHeight();
     void updateWidth();
