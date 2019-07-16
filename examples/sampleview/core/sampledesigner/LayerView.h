@@ -24,13 +24,13 @@ class LayerView : public ILayerView
 public:
     enum { TYPE = DesignerHelper::LAYER };
 
-    LayerView(QGraphicsItem *parent = 0);
+    LayerView(QGraphicsItem *parent = nullptr);
 
-    virtual int type() const { return TYPE; }
+    int type() const override { return TYPE; }
 
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
-    virtual void addView(IView *childView, int row = 0); // to add ParticleLayout
+    //virtual void addView(IView *childView, int row = 0); // to add ParticleLayout
 };
 
 #endif // LAYERVIEW_H

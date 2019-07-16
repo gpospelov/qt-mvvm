@@ -13,21 +13,14 @@
 // ************************************************************************** //
 
 #include "LayerView.h"
-#include "LayerItem.h"
-#include "MultiLayerView.h"
-#include "ParticleLayoutView.h"
-#include "SessionItem.h"
-#include "tooltipdatabase.h"
+#include "item_constants.h"
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
-
-
 
 LayerView::LayerView(QGraphicsItem *parent)
     : ILayerView(parent)
 {
     setColor(QColor(qrand() % 256, qrand() % 256, qrand() % 256) );
-    setName(Constants::LayerType);
     setRectangle(DesignerHelper::getDefaultBoundingRect(Constants::LayerType));
     setAcceptDrops(false);
     addPort(QString(), NodeEditorPort::INPUT, NodeEditorPort::PARTICLE_LAYOUT);
@@ -47,10 +40,10 @@ void LayerView::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
 }
 
 
-void LayerView::addView(IView *childView, int /* row */)
+/*void LayerView::addView(IView *childView, int)
 {
     ParticleLayoutView *layout = dynamic_cast<ParticleLayoutView *>(childView);
     Q_ASSERT(layout);
     connectInputPort(layout, 0);
-}
+}*/
 
