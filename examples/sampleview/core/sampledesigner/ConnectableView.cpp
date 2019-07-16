@@ -1,36 +1,30 @@
 // ************************************************************************** //
 //
-//  BornAgain: simulate and fit scattering at grazing incidence
+//  Prototype of mini MVVM framework for bornagainproject.org
 //
-//! @file      GUI/coregui/Views/SampleDesigner/ConnectableView.cpp
-//! @brief     Implements class ConnectableView
-//!
 //! @homepage  http://www.bornagainproject.org
-//! @license   GNU General Public License v3 or higher (see COPYING)
-//! @copyright Forschungszentrum Jülich GmbH 2018
-//! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
+//! @license   GNU General Public License v3 or higher
 //
 // ************************************************************************** //
 
 #include "ConnectableView.h"
 #include "DesignerHelper.h"
-#include "GUIHelpers.h"
 #include "NodeEditorConnection.h"
-#include "NodeEditorPort.h"
-#include "SessionItem.h"
+#include "sessionitem.h"
 #include <QObject>
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
-#include <iostream>
 
 ConnectableView::ConnectableView(QGraphicsItem *parent, QRectF rect)
-    : IView(parent), m_name("Unnamed"), m_color(Qt::gray), m_rect(rect), m_roundpar(3),
+    : IView(parent), m_color(Qt::gray), m_rect(rect), m_roundpar(3),
       m_label_vspace(35)
 {
     setFlag(QGraphicsItem::ItemIsMovable, true);
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     setFlag(QGraphicsItem::ItemSendsGeometryChanges);
 }
+
+ConnectableView::~ConnectableView() = default;
 
 void ConnectableView::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                             QWidget *widget)
@@ -69,7 +63,7 @@ NodeEditorPort *ConnectableView::addPort(const QString &name,
     } else if (direction == NodeEditorPort::OUTPUT) {
         m_output_ports.append(port);
     } else {
-        throw GUIHelpers::Error("ConnectableView::addPort() -> Unknown port type");
+        throw std::runtime_error("ConnectableView::addPort() -> Unknown port type");
     }
     setPortCoordinates();
     return port;
@@ -86,10 +80,10 @@ void ConnectableView::connectInputPort(ConnectableView *other, int port_number)
     Q_ASSERT(other);
 
     if (port_number >= m_input_ports.size())
-        throw GUIHelpers::Error("ConnectableView::connectInputPort() -> Wrong input port number");
+        throw std::runtime_error("ConnectableView::connectInputPort() -> Wrong input port number");
 
     if (other->getOutputPorts().size() != 1)
-        throw GUIHelpers::Error("ConnectableView::connectInputPort() -> Wrong output port number");
+        throw std::runtime_error("ConnectableView::connectInputPort() -> Wrong output port number");
 
     if (port_number < 0)
         return;
@@ -98,7 +92,7 @@ void ConnectableView::connectInputPort(ConnectableView *other, int port_number)
     NodeEditorPort *output = other->getOutputPorts().at(0);
 
     if (!input->isConnected(output)) {
-        NodeEditorConnection *conn = new NodeEditorConnection(0, scene());
+        NodeEditorConnection *conn = new NodeEditorConnection(nullptr, scene());
         conn->setPort2(input);
         conn->setPort1(output);
         conn->updatePath();
@@ -166,7 +160,7 @@ int ConnectableView::getNumberOfInputPorts()
 
 void ConnectableView::update_appearance()
 {
-    setLabel( hyphenate(m_item->displayName()) );
+    setLabel(hyphenate(QString::fromStdString(getItem()->displayName())));
     IView::update_appearance();
 }
 
