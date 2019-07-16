@@ -1,14 +1,9 @@
 // ************************************************************************** //
 //
-//  BornAgain: simulate and fit scattering at grazing incidence
+//  Prototype of mini MVVM framework for bornagainproject.org
 //
-//! @file      GUI/coregui/Views/SampleDesigner/IView.h
-//! @brief     Defines class IView
-//!
 //! @homepage  http://www.bornagainproject.org
-//! @license   GNU General Public License v3 or higher (see COPYING)
-//! @copyright Forschungszentrum Jülich GmbH 2018
-//! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
+//! @license   GNU General Public License v3 or higher
 //
 // ************************************************************************** //
 
@@ -19,7 +14,9 @@
 #include <QGraphicsObject>
 #include <memory>
 
-class SessionItem;
+namespace ModelView {
+    class SessionItem;
+}
 
 //! parent class for graphic representation of all ISample's
 class IView : public QGraphicsObject
@@ -28,40 +25,30 @@ class IView : public QGraphicsObject
 public:
     enum { TYPE = DesignerHelper::IVIEW };
 
-    IView(QGraphicsItem *parent = 0);
-    virtual ~IView();
+    IView(QGraphicsItem *parent = nullptr);
+    ~IView() override;
 
-    int type() const;
+    int type() const override { return TYPE; }
 
-    virtual void setParameterizedItem(SessionItem *item);
+    virtual void setParameterizedItem(ModelView::SessionItem* item);
 
-    virtual SessionItem *getItem();
+    ModelView::SessionItem* getItem() { return m_item; }
 
     virtual void addView(IView *childView, int row = 0);
+
+    // slots:
+    void onChangedX();
+    void onChangedY();
 
 signals:
     void aboutToBeDeleted();
 
-public slots:
-    virtual void onChangedX();
-    virtual void onChangedY();
-
 protected:
     virtual void update_appearance();
-    virtual void onPropertyChange(const QString &propertyName);
-    virtual void onSiblingsChange();
+    virtual void onPropertyChange(const std::string& propertyName);
 
-    SessionItem *m_item;
+private:
+    ModelView::SessionItem* m_item;
 };
-
-inline int IView::type() const
-{
-    return TYPE;
-}
-
-inline SessionItem *IView::getItem()
-{
-    return m_item;
-}
 
 #endif // IVIEW_H
