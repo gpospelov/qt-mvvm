@@ -22,7 +22,7 @@
 @brief Container to hold MaterialItems.
 */
 
-class CORE_EXPORT MaterialContainerItem : public ModelView::CompoundItem
+class MaterialContainerItem : public ModelView::CompoundItem
 {
 public:
     static const std::string T_MATERIALS;
@@ -34,7 +34,7 @@ public:
 @brief Base class with all materials with name and color defined.
 */
 
-class CORE_EXPORT MaterialBaseItem : public ModelView::CompoundItem
+class MaterialBaseItem : public ModelView::CompoundItem
 {
 public:
     static const std::string P_COLOR;
@@ -57,7 +57,7 @@ protected:
 @brief Represents material based on scattering length density.
 */
 
-class CORE_EXPORT SLDMaterialItem : public MaterialBaseItem
+class SLDMaterialItem : public MaterialBaseItem
 {
 public:
     static const std::string P_SLD_REAL;
@@ -73,7 +73,7 @@ public:
 @brief Represents material based on refractive index.
 */
 
-class CORE_EXPORT RefIndexMaterialItem : public MaterialBaseItem
+class RefIndexMaterialItem : public MaterialBaseItem
 {
 public:
     static const std::string P_DELTA;

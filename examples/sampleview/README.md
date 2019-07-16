@@ -32,5 +32,7 @@ Required fixes/features (sampleview):
 + MaterialEditor: Centering checkboxes and pixmaps
 + MaterialEditor: Allow sorting by material name
 + MaterialEditor: Tooltips on control panel
++ MaterialEditor: color editor is not opened on double click (win, qt 5.12.0)
++ MaterialEditor: forbid editing checkbox on double click (win, qt 5.12.0)
 + Automatically select all the text in ScientificSpinBox on focus-in event.
 + Setting limits and step for ScientificSpinBox as an editor in SampleViewDelegate

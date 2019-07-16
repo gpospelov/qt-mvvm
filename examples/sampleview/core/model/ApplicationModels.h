@@ -25,7 +25,7 @@ Given class holds SampleModel with multilayer structure and MaterialModel with c
 of materials.
 */
 
-class CORE_EXPORT ApplicationModels
+class ApplicationModels
 {
 public:
     ApplicationModels();

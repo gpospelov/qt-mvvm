@@ -23,7 +23,7 @@ class QColor;
 @brief Container to hold MaterialItems.
 */
 
-class CORE_EXPORT MaterialContainerItem : public ModelView::CompoundItem
+class MaterialContainerItem : public ModelView::CompoundItem
 {
 public:
     MaterialContainerItem();
@@ -34,7 +34,7 @@ public:
 @brief Base class with all materials with name and color defined.
 */
 
-class CORE_EXPORT MaterialBaseItem : public ModelView::CompoundItem
+class MaterialBaseItem : public ModelView::CompoundItem
 {
 public:
     static const std::string P_NAME;
@@ -50,7 +50,7 @@ protected:
 @brief Represents material based on scattering length density.
 */
 
-class CORE_EXPORT SLDMaterialItem : public MaterialBaseItem
+class SLDMaterialItem : public MaterialBaseItem
 {
 public:    
     static const std::string P_SLD_REAL;

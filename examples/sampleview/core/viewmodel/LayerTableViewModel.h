@@ -22,7 +22,7 @@ class SessionModel;
 @brief View model to display content of MultiLayerItem in table like views.
 */
 
-class CORE_EXPORT LayerTableViewModel : public ModelView::AbstractViewModel
+class LayerTableViewModel : public ModelView::AbstractViewModel
 {
 public:
     LayerTableViewModel(ModelView::SessionModel* model = nullptr, QObject* parent = nullptr);

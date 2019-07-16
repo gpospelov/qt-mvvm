@@ -26,7 +26,7 @@ class ApplicationModels;
 Will create custom material selector for all cells containing ExternalProperty.
 */
 
-class CORE_EXPORT CustomEditorFactory : public ModelView::DefaultEditorFactory
+class CustomEditorFactory : public ModelView::DefaultEditorFactory
 {
 public:
     CustomEditorFactory(ApplicationModels* models);

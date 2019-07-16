@@ -18,7 +18,7 @@
 @brief QColorDialog with additional functionality for QStyledItemDelegate.
 */
 
-class CORE_EXPORT CustomColorEditor : public QColorDialog
+class CustomColorEditor : public QColorDialog
 {
     Q_OBJECT
     Q_PROPERTY(QColor userColor READ userColor WRITE setUserColor NOTIFY userColorChanged USER true)

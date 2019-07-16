@@ -23,7 +23,7 @@ class ExternalProperty;
 @brief Model to hold MaterialItems.
 */
 
-class CORE_EXPORT MaterialModel : public ModelView::SessionModel
+class MaterialModel : public ModelView::SessionModel
 {
 public:
     MaterialModel();

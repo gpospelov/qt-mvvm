@@ -20,7 +20,7 @@ class MaterialModel;
 @brief Listens for all changes in material model and updates properties in SampleModel.
 */
 
-class CORE_EXPORT MaterialPropertyController
+class MaterialPropertyController
 {
 public:
     MaterialPropertyController(MaterialModel* material_model, SampleModel* sample_model);

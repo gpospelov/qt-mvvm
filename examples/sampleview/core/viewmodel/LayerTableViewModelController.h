@@ -24,7 +24,7 @@ class AbstractViewModel;
 Will iterate through all top level items and creates rows with layer properties.
 */
 
-class CORE_EXPORT LayerTableViewModelController : public ModelView::AbstractViewModelController
+class LayerTableViewModelController : public ModelView::AbstractViewModelController
 {
 public:
     explicit LayerTableViewModelController(ModelView::AbstractViewModel* view_model = nullptr);

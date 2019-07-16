@@ -29,7 +29,7 @@ class SessionItem;
 @brief Shows content of material container in table-like view.
 */
 
-class CORE_EXPORT MaterialTableWidget : public QWidget
+class MaterialTableWidget : public QWidget
 {
 public:
     explicit MaterialTableWidget(MaterialModel* material_model, QWidget* parent = nullptr);

@@ -19,7 +19,7 @@ class QTabWidget;
 
 //! Application main window.
 
-class CORE_EXPORT MainWindow : public QMainWindow
+class MainWindow : public QMainWindow
 {
     Q_OBJECT
 public:
