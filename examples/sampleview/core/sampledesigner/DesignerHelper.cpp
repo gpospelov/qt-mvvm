@@ -1,14 +1,9 @@
 // ************************************************************************** //
 //
-//  BornAgain: simulate and fit scattering at grazing incidence
+//  Prototype of mini MVVM framework for bornagainproject.org
 //
-//! @file      GUI/coregui/Views/SampleDesigner/DesignerHelper.cpp
-//! @brief     Implements class DesignerHelper
-//!
 //! @homepage  http://www.bornagainproject.org
-//! @license   GNU General Public License v3 or higher (see COPYING)
-//! @copyright Forschungszentrum Jülich GmbH 2018
-//! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
+//! @license   GNU General Public License v3 or higher
 //
 // ************************************************************************** //
 
@@ -17,7 +12,6 @@
 #include <QPainter>
 #include <QtGlobal>
 #include <cmath>
-#include <iostream>
 
 int DesignerHelper::m_default_layer_height = 30;
 int DesignerHelper::m_default_layer_width = 200;
@@ -145,29 +139,18 @@ int DesignerHelper::nanometerToScreen(double nanometer)
     return result;
 }
 
-QRectF DesignerHelper::getDefaultBoundingRect(const QString &name)
+QRectF DesignerHelper::getDefaultBoundingRect(const std::string& name)
 {
     if (name == Constants::MultiLayerType) {
         return QRectF(0, 0, getDefaultMultiLayerWidth(), getDefaultMultiLayerHeight());
     } else if (name == Constants::LayerType) {
         return QRectF(0, 0, getDefaultLayerWidth(), getDefaultLayerHeight());
-    } else if (name == Constants::ParticleLayoutType) {
-        return QRectF(0, 0, getDefaultParticleLayoutWidth(), getDefaultParticleLayoutHeight());
-    } else if (name == Constants::RotationType) {
-        return QRectF(0, 0, getDefaultTransformationWidth(), getDefaultTransformationHeight());
-    } else if (name.startsWith(Constants::FormFactorType) || name == Constants::ParticleType
-               || name == Constants::ParticleCoreShellType
-               || name == Constants::ParticleDistributionType) {
-        return QRectF(0, 0, getDefaultParticleWidth(), getDefaultParticleHeight());
-    } else if (name.startsWith("Interference")) {
-        return QRectF(0, 0, getDefaultInterferenceFunctionWidth(),
-                      getDefaultInterferenceFunctionHeight());
     } else {
         return QRectF(0, 0, 50, 50);
     }
 }
 
-QColor DesignerHelper::getDefaultColor(const QString &name)
+QColor DesignerHelper::getDefaultColor(const std::string& name)
 {
     if (name == Constants::MultiLayerType) {
         // return QColor(Qt::blue);
@@ -175,13 +158,6 @@ QColor DesignerHelper::getDefaultColor(const QString &name)
     } else if (name == Constants::LayerType) {
         // return QColor(Qt::green);
         return QColor(26, 156, 9);
-    } else if (name == Constants::ParticleLayoutType) {
-        return QColor(135, 206, 50);
-    } else if (name.startsWith(Constants::FormFactorType) || name == Constants::ParticleType
-               || name == Constants::ParticleCoreShellType) {
-        return QColor(210, 223, 237);
-    } else if (name.startsWith("InterferenceFunction")) {
-        return QColor(255, 236, 139);
     }
     else if(name == "Transparant red") {
         return QColor(0xFF, 0, 0, 0x80);
@@ -194,7 +170,7 @@ QColor DesignerHelper::getDefaultColor(const QString &name)
     }
 }
 
-QPixmap DesignerHelper::getMimePixmap(const QString &name)
+QPixmap DesignerHelper::getMimePixmap(const std::string& name)
 {
     QRectF default_rect = getDefaultBoundingRect(name);
     QRectF mime_rect(0, 0, default_rect.width() * m_current_zoom_level,

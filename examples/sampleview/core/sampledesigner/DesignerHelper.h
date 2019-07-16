@@ -1,14 +1,9 @@
 // ************************************************************************** //
 //
-//  BornAgain: simulate and fit scattering at grazing incidence
+//  Prototype of mini MVVM framework for bornagainproject.org
 //
-//! @file      GUI/coregui/Views/SampleDesigner/DesignerHelper.h
-//! @brief     Defines class DesignerHelper
-//!
 //! @homepage  http://www.bornagainproject.org
-//! @license   GNU General Public License v3 or higher (see COPYING)
-//! @copyright Forschungszentrum Jülich GmbH 2018
-//! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
+//! @license   GNU General Public License v3 or higher
 //
 // ************************************************************************** //
 
@@ -92,14 +87,14 @@ public:
     //! to have reasonable graphics representation of layer in the form of QRect
     static int nanometerToScreen(double nanometer);
 
-    //! returns default bounding rectangle for given IvView name
-    static QRectF getDefaultBoundingRect(const QString &name);
+    //! returns default bounding rectangle for given IView name
+    static QRectF getDefaultBoundingRect(const std::string& name);
 
     //! returns default color for IView with given name
-    static QColor getDefaultColor(const QString &name);
+    static QColor getDefaultColor(const std::string& name);
 
     //! returns Mime pixmap for givew IView name
-    static QPixmap getMimePixmap(const QString &name);
+    static QPixmap getMimePixmap(const std::string& name);
 
     //! returns system dependent font size
     static int getHeaderFontSize();
@@ -116,7 +111,7 @@ private:
     static double m_current_zoom_level;
 };
 
-typedef std::complex<double> complex_t;
+using complex_t = std::complex<double>;
 Q_DECLARE_METATYPE(complex_t)
 
 #endif // DESIGNERHELPER_H
