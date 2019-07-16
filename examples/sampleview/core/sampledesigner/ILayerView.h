@@ -1,14 +1,9 @@
 // ************************************************************************** //
 //
-//  BornAgain: simulate and fit scattering at grazing incidence
+//  Prototype of mini MVVM framework for bornagainproject.org
 //
-//! @file      GUI/coregui/Views/SampleDesigner/ILayerView.h
-//! @brief     Defines class ILayerView
-//!
 //! @homepage  http://www.bornagainproject.org
-//! @license   GNU General Public License v3 or higher (see COPYING)
-//! @copyright Forschungszentrum Jülich GmbH 2018
-//! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
+//! @license   GNU General Public License v3 or higher
 //
 // ************************************************************************** //
 
@@ -27,7 +22,7 @@ class ILayerView : public ConnectableView
     Q_OBJECT
 
 public:
-    ILayerView(QGraphicsItem *parent = 0);
+    ILayerView(QGraphicsItem *parent = nullptr);
 
     enum { TYPE = DesignerHelper::LAYER };
 
@@ -43,8 +38,8 @@ protected:
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
     void update_appearance();
 
-public slots:
-    void onPropertyChange(const QString &propertyName);
+    // slots:
+    void onPropertyChange(const std::string& propertyName) override;
 
 private:
     void updateHeight();

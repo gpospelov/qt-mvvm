@@ -1,27 +1,22 @@
 // ************************************************************************** //
 //
-//  BornAgain: simulate and fit scattering at grazing incidence
+//  Prototype of mini MVVM framework for bornagainproject.org
 //
-//! @file      GUI/coregui/Views/SampleDesigner/ILayerView.cpp
-//! @brief     Implements class ILayerView
-//!
 //! @homepage  http://www.bornagainproject.org
-//! @license   GNU General Public License v3 or higher (see COPYING)
-//! @copyright Forschungszentrum Jülich GmbH 2018
-//! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
+//! @license   GNU General Public License v3 or higher
 //
 // ************************************************************************** //
 
 #include "ILayerView.h"
 #include "DesignerHelper.h"
 #include "DesignerScene.h"
-#include "GUIHelpers.h"
-#include "LayerItem.h"
-#include "ExternalProperty.h"
+#include "LayerItems.h"
 #include "MultiLayerView.h"
 #include "SampleModel.h"
-#include "SessionItem.h"
+#include "externalproperty.h"
 #include <QGraphicsSceneMouseEvent>
+
+using namespace ModelView;
 
 QLineF MultiLayerCandidate::getInterfaceToScene()
 {
@@ -50,7 +45,7 @@ ILayerView::ILayerView(QGraphicsItem *parent) : ConnectableView(parent)
 }
 
 //! Propagates change of 'Thickness' dynamic property to screen thickness of ILayerView.
-void ILayerView::onPropertyChange(const QString &propertyName)
+void ILayerView::onPropertyChange(const std::string& propertyName)
 {
     if (propertyName == LayerItem::P_THICKNESS) {
         updateHeight();
@@ -64,9 +59,9 @@ void ILayerView::onPropertyChange(const QString &propertyName)
 
 void ILayerView::updateHeight()
 {
-    if(m_item->isTag(LayerItem::P_THICKNESS)) {
+    if(getItem()->isTag(LayerItem::P_THICKNESS)) {
         m_rect.setHeight(DesignerHelper::nanometerToScreen(
-            m_item->getItemValue(LayerItem::P_THICKNESS).toDouble()));
+            getItem()->getItem(LayerItem::P_THICKNESS)->data(ItemDataRole::DATA).toDouble()));
         setPortCoordinates();
         update();
         emit heightChanged();
@@ -75,8 +70,8 @@ void ILayerView::updateHeight()
 
 void ILayerView::updateColor()
 {
-    if(m_item->isTag(LayerItem::P_MATERIAL)) {
-        QVariant v = m_item->getItemValue(LayerItem::P_MATERIAL);
+    if(getItem()->isTag(LayerItem::P_MATERIAL)) {
+        QVariant v = getItem()->getItem(LayerItem::P_MATERIAL)->data(ItemDataRole::DATA);
         if (v.isValid()) {
             ExternalProperty mp = v.value<ExternalProperty>();
             setColor(mp.color());
@@ -95,11 +90,11 @@ void ILayerView::updateLabel()
     NodeEditorPort *port = getInputPorts()[0];
 
     QString material = "" ;
-    if(m_item->isTag(LayerItem::P_MATERIAL)){
-        QVariant v = m_item->getItemValue(LayerItem::P_MATERIAL);
+    if(getItem()->isTag(LayerItem::P_MATERIAL)){
+        QVariant v = getItem()->getItem(LayerItem::P_MATERIAL)->data(ItemDataRole::DATA);
         if (v.isValid()) {
             ExternalProperty mp = v.value<ExternalProperty>();
-            material = mp.text();
+            material = QString::fromStdString(mp.text());
         }
     }
 
@@ -179,7 +174,7 @@ void ILayerView::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
     // Layer was moved only slightly, to the same row of his own MultiLayer: returning back.
     if (requested_parent == parentItem()
-        && requested_row == getItem()->parent()->getItems().indexOf(getItem())) {
+        && requested_row == getItem()->parent()->tagRowOfItem(getItem()).second) {
         setPos(m_drag_start_position);
         QGraphicsItem::mouseReleaseEvent(event);
         return;
@@ -189,10 +184,10 @@ void ILayerView::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     // the scene: changing ownership.
     if (parentItem() && !requested_parent) {
         QPointF newPos = mapToScene(event->pos()) - event->pos();
-        this->getItem()->setItemValue(SessionGraphicsItem::P_XPOS, newPos.x());
-        this->getItem()->setItemValue(SessionGraphicsItem::P_YPOS, newPos.y());
+        getItem()->getItem(LocatedItem::P_X_POS)->setData(newPos.x(), ItemDataRole::DATA);
+        getItem()->getItem(LocatedItem::P_Y_POS)->setData(newPos.y(), ItemDataRole::DATA);
 
-        model->moveItem(this->getItem(), 0);
+        model->moveItem(this->getItem(), nullptr, {}, -1);
         QGraphicsItem::mouseReleaseEvent(event);
         return;
     }
@@ -200,14 +195,13 @@ void ILayerView::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     // Layer was moved either from one MultiLayer to another, or is moved inside
     // one multilayer: changing ownership or row within same ownership.
     if (requested_parent) {
-        model->moveItem(this->getItem(),
-                                     requested_parent->getItem(), requested_row);
+        model->moveItem(this->getItem(), requested_parent->getItem(), MultiLayerItem::T_LAYERS, requested_row);
         QGraphicsItem::mouseReleaseEvent(event);
         return;
     }
 
     // throw only happens when not all cases were considered previously
-    throw GUIHelpers::Error("LayerView::mouseReleaseEvent() -> Loggic error.");
+    throw std::runtime_error("LayerView::mouseReleaseEvent() -> Loggic error.");
 }
 
 void ILayerView::update_appearance()
