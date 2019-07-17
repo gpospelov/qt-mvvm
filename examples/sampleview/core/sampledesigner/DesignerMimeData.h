@@ -1,14 +1,9 @@
 // ************************************************************************** //
 //
-//  BornAgain: simulate and fit scattering at grazing incidence
+//  Prototype of mini MVVM framework for bornagainproject.org
 //
-//! @file      GUI/coregui/Views/SampleDesigner/DesignerMimeData.h
-//! @brief     Defines class DesignerMimeData
-//!
 //! @homepage  http://www.bornagainproject.org
-//! @license   GNU General Public License v3 or higher (see COPYING)
-//! @copyright Forschungszentrum Jülich GmbH 2018
-//! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
+//! @license   GNU General Public License v3 or higher
 //
 // ************************************************************************** //
 
@@ -25,22 +20,19 @@ class DesignerMimeData : public QMimeData
 {
     Q_OBJECT
 public:
-    DesignerMimeData(const QString &name, const QString &xmldescr, QDrag *drag);
-    virtual ~DesignerMimeData(){}
+    DesignerMimeData(const std::string& name, const QString &xmldescr, QDrag *drag);
+    ~DesignerMimeData() override;
 
     //! Execute a drag and drop operation.
-    static Qt::DropAction execDrag(const QString &name, const QString &xmldescr, QWidget * dragSource);
+    static Qt::DropAction execDrag(const std::string& name, const QString &xmldescr, QWidget * dragSource);
 
-    QString getClassName() const { return m_classname; }
+    std::string getClassName() const { return m_classname; }
 private:
     void read_xmldescr(const QString &xmldescr);
     void read_widget(QXmlStreamReader &reader);
 
-    QPixmap getPixmap(const QString &name);
-
-    QString m_entryname;
-    QString m_xmldescr;
-    QString m_classname;
+    std::string m_entryname;
+    std::string m_classname;
 
 };
 
