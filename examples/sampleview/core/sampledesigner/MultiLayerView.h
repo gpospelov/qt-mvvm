@@ -48,7 +48,7 @@ public:
 
     // slots:
     void updateGeometry();
-    void updateHeight();
+    void updateHeight() override;
     void updateWidth();
     void onLayerAboutToBeDeleted();
 

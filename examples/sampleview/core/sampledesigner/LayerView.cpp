@@ -13,9 +13,17 @@
 // ************************************************************************** //
 
 #include "LayerView.h"
+#include "LayerItems.h"
 #include "item_constants.h"
+#include "mvvm_types.h"
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
+
+namespace {
+// non-linear conversion of layer's thickness in nanometers to screen size to have reasonable
+// graphics representation
+int nanometerToScreen(double nanometer);
+}
 
 LayerView::LayerView(QGraphicsItem *parent)
     : ILayerView(parent)
@@ -46,3 +54,27 @@ void LayerView::addView(IView*)
     connectInputPort(layout, 0);*/
 }
 
+void LayerView::updateHeight()
+{
+    if (!getItem()->isTag(LayerItem::P_THICKNESS))
+        return;
+
+    const double thickness =
+        getItem()->getItem(LayerItem::P_THICKNESS)->data(ModelView::ItemDataRole::DATA).toDouble();
+    m_rect.setHeight(nanometerToScreen(thickness));
+    setPortCoordinates();
+    update();
+    emit heightChanged();
+}
+
+namespace {
+int nanometerToScreen(double nanometer)
+{
+    const int ymin(DesignerHelper::getDefaultLayerHeight());
+    const int ymax(500);
+    int result(ymin);
+    if (nanometer > 0)
+        result = qBound(ymin, ymin + (int)std::pow(nanometer, 0.9), ymax);
+    return result;
+}
+}

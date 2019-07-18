@@ -127,18 +127,6 @@ QPixmap DesignerHelper::getPixmapParticle()
     return pixmap;
 }
 
-// non-linear conversion of layer's thickness in nanometers to screen size to have reasonable
-// graphics representation
-int DesignerHelper::nanometerToScreen(double nanometer)
-{
-    const int ymin(m_default_layer_height);
-    const int ymax(500);
-    int result(ymin);
-    if (nanometer > 0)
-        result = qBound(ymin, ymin + (int)std::pow(nanometer, 0.9), ymax);
-    return result;
-}
-
 QRectF DesignerHelper::getDefaultBoundingRect(const std::string& name)
 {
     if (name == Constants::MultiLayerType) {

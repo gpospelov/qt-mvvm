@@ -57,17 +57,6 @@ void ILayerView::onPropertyChange(const std::string& propertyName)
     IView::onPropertyChange(propertyName);
 }
 
-void ILayerView::updateHeight()
-{
-    if(getItem()->isTag(LayerItem::P_THICKNESS)) {
-        m_rect.setHeight(DesignerHelper::nanometerToScreen(
-            getItem()->getItem(LayerItem::P_THICKNESS)->data(ItemDataRole::DATA).toDouble()));
-        setPortCoordinates();
-        update();
-        emit heightChanged();
-    }
-}
-
 void ILayerView::updateColor()
 {
     if(getItem()->isTag(LayerItem::P_MATERIAL)) {

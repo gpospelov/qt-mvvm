@@ -83,10 +83,6 @@ public:
         return left->y() < right->y();
     }
 
-    //! non-linear conversion of layer's thickness in nanometers to screen size
-    //! to have reasonable graphics representation of layer in the form of QRect
-    static int nanometerToScreen(double nanometer);
-
     //! returns default bounding rectangle for given IView name
     static QRectF getDefaultBoundingRect(const std::string& name);
 

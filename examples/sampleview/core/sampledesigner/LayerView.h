@@ -31,6 +31,9 @@ public:
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
 
     void addView(IView* childView) override; // to add ParticleLayout
+
+private:
+    void updateHeight() override;
 };
 
 #endif // LAYERVIEW_H

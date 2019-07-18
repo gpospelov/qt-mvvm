@@ -42,7 +42,7 @@ protected:
     void onPropertyChange(const std::string& propertyName) override;
 
 private:
-    void updateHeight();
+    virtual void updateHeight() = 0;
     void updateColor();
 
     MultiLayerCandidate getMultiLayerCandidate();
