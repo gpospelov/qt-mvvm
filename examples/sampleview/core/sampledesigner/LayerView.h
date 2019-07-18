@@ -28,9 +28,9 @@ public:
 
     int type() const override { return TYPE; }
 
-    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
 
-    //virtual void addView(IView *childView, int row = 0); // to add ParticleLayout
+    void addView(IView* childView) override; // to add ParticleLayout
 };
 
 #endif // LAYERVIEW_H

@@ -52,10 +52,6 @@ void IView::setParameterizedItem(SessionItem *item)
     update_appearance();
 }
 
-void IView::addView(IView *, int )
-{
-}
-
 void IView::onChangedX()
 {
     if(!m_item)

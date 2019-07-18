@@ -39,11 +39,10 @@ void LayerView::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
     painter->drawRect(getRectangle());
 }
 
-
-/*void LayerView::addView(IView *childView, int)
+void LayerView::addView(IView*)
 {
-    ParticleLayoutView *layout = dynamic_cast<ParticleLayoutView *>(childView);
+    /*ParticleLayoutView *layout = dynamic_cast<ParticleLayoutView *>(childView);
     Q_ASSERT(layout);
-    connectInputPort(layout, 0);
-}*/
+    connectInputPort(layout, 0);*/
+}
 

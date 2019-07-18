@@ -37,7 +37,7 @@ public:
 
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
 
-    void addView(IView* childView, int row = 0) override;
+    void addView(IView* childView) override;
 
     virtual void addNewLayer(ILayerView* layer, int row);
     virtual void removeLayer(ILayerView* layer);

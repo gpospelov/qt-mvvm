@@ -34,7 +34,7 @@ public:
 
     ModelView::SessionItem* getItem() { return m_item; }
 
-    virtual void addView(IView *childView, int row = 0);
+    virtual void addView(IView* childView) = 0;
 
     // slots:
     void onChangedX();

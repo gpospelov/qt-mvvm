@@ -26,17 +26,17 @@ public:
 
     enum { TYPE = DesignerHelper::LAYER };
 
-    int type() const { return TYPE; }
+    int type() const override { return TYPE; }
 
-    virtual QString getLabel() const { return QString(); }
+    QString getLabel() const override { return QString(); }
 
     void updateLabel();
 
 protected:
-    QVariant itemChange(GraphicsItemChange change, const QVariant &value);
-    void mousePressEvent(QGraphicsSceneMouseEvent *event);
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
-    void update_appearance();
+    QVariant itemChange(GraphicsItemChange change, const QVariant& value) override;
+    void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
+    void update_appearance() override;
 
     // slots:
     void onPropertyChange(const std::string& propertyName) override;

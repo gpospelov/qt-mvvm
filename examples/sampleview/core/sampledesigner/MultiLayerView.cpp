@@ -65,19 +65,16 @@ void MultiLayerView::paint(QPainter* painter, const QStyleOptionGraphicsItem* op
     painter->drawRect(getRectangle());
 }
 
-void MultiLayerView::addView(IView* childView, int row)
+void MultiLayerView::addView(IView* childView)
 {
     ILayerView* layer = dynamic_cast<ILayerView*>(childView);
-    Q_ASSERT(layer);
-
-    if(!childItems().contains(layer)) {
-        addNewLayer(layer, row);
-    } else {
-        int previous_row = m_layers.indexOf(layer);
-        if(previous_row != row) {
-            m_layers.swap(previous_row, row);
-        }
+    if (!layer) {
+        Q_ASSERT(layer);
+        return;
     }
+
+    if(!childItems().contains(layer))
+        addNewLayer(layer, m_layers.size());
     updateGeometry();
 }
 
