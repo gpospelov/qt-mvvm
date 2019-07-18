@@ -2,11 +2,11 @@
 #define MAINWINDOW_H
 
 #include "mvvm_global.h"
+#include "SampleViewController.h"
 #include <QMainWindow>
 #include <memory>
 
 class ApplicationModels;
-class QGraphicsView;
 
 //! Application main window.
 
@@ -26,10 +26,10 @@ private:
     void init_sample_editor();
     void write_settings();
 
-    QGraphicsView* m_sample_view;
+    std::unique_ptr<ApplicationModels> m_models;
+    SampleViewController m_scene_controller;
     QDockWidget* m_material_editor;
     QDockWidget* m_sample_editor;
-    std::unique_ptr<ApplicationModels> m_models;
 };
 
 #endif // MAINWINDOW_H

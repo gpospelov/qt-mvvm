@@ -27,12 +27,12 @@ namespace {
 }
 
 MainWindow::MainWindow()
-    : m_sample_view(new QGraphicsView(this))
+    : m_models(std::make_unique<ApplicationModels>())
+    , m_scene_controller(m_models.get())
     , m_material_editor(new QDockWidget(this))
     , m_sample_editor(new QDockWidget(this))
-    , m_models(std::make_unique<ApplicationModels>())
 {
-    setCentralWidget(m_sample_view);
+    setCentralWidget(&m_scene_controller.getView());
     init_material_editor();
     init_sample_editor();
     init_application();
