@@ -37,14 +37,14 @@ MultiLayerView::MultiLayerView(QGraphicsItem* parent)
     setRectangle(DesignerHelper::getDefaultBoundingRect(::Constants::MultiLayerType));
     setAcceptHoverEvents(false);
     setAcceptDrops(true);
-    connect(this, SIGNAL(childrenChanged()), this, SLOT(updateHeight()));
+    connect(this, &MultiLayerView::childrenChanged, this, &MultiLayerView::updateHeight);
     updateGeometry();
 }
 
 QRectF MultiLayerView::boundingRect() const
 {
     QRectF result = m_rect;
-    if (m_layers.size()) {
+    if (m_layers.size() && !parentObject()) {
         qreal toplayer_height = m_layers.front()->boundingRect().height();
         qreal bottomlayer_height = m_layers.back()->boundingRect().height();
         result.setTop(-toplayer_height/2.);
@@ -73,16 +73,19 @@ void MultiLayerView::addView(IView* childView)
         return;
     }
 
-    if(!childItems().contains(layer))
-        addNewLayer(layer, m_layers.size());
+    if(childItems().contains(layer))
+        return;
+
+    addNewLayer(layer, m_layers.size());
     updateGeometry();
 }
 
 void MultiLayerView::addNewLayer(ILayerView* layer, int row)
 {
     m_layers.insert(row, layer);
-    connect(layer, SIGNAL(heightChanged()), this, SLOT(updateHeight()), Qt::UniqueConnection);
-    connect(layer, SIGNAL(aboutToBeDeleted()), this, SLOT(onLayerAboutToBeDeleted()),
+    connect(layer, &ILayerView::heightChanged, this, &MultiLayerView::updateHeight,
+            Qt::UniqueConnection);
+    connect(layer, &ILayerView::aboutToBeDeleted, this, &MultiLayerView::onLayerAboutToBeDeleted,
             Qt::UniqueConnection);
     layer->setParentItem(this);
 }
@@ -97,8 +100,9 @@ void MultiLayerView::onLayerAboutToBeDeleted()
 void MultiLayerView::removeLayer(ILayerView* layer)
 {
     Q_ASSERT(m_layers.contains(layer));
-    disconnect(layer, SIGNAL(heightChanged()), this, SLOT(updateHeight()) );
-    disconnect(layer, SIGNAL(aboutToBeDeleted()), this, SLOT(onLayerAboutToBeDeleted()) );
+    disconnect(layer, &ILayerView::heightChanged, this, &MultiLayerView::updateHeight );
+    disconnect(layer, &ILayerView::aboutToBeDeleted, this,
+               &MultiLayerView::onLayerAboutToBeDeleted);
     m_layers.removeOne(layer);
     updateGeometry();
 }
@@ -217,7 +221,8 @@ void MultiLayerView::dropEvent(QGraphicsSceneDragDropEvent* event)
         if(designerScene) {
             SampleModel* sampleModel = designerScene->getSampleModel();
 
-            sampleModel->insertNewItem(mimeData->getClassName(), getItem(), {}, getDropArea(event->pos()));
+            sampleModel->insertNewItem(mimeData->getClassName(), getItem(), {},
+                                       getDropArea(event->pos()));
         }
     }
 }
