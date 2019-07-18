@@ -91,13 +91,10 @@ void DesignerScene::setSelectionModel(QItemSelectionModel *model, FilterProperty
     }
 }
 
-IView *DesignerScene::getViewForItem(SessionItem *item)
+IView* DesignerScene::getViewForItem(const SessionItem* item)
 {
     auto it = m_ItemToView.find(item);
-    if(it != m_ItemToView.end()) {
-        return it.value();
-    }
-    return nullptr;
+    return it != m_ItemToView.end() ? it.value() : nullptr;
 }
 
 void DesignerScene::resetScene()
@@ -181,30 +178,34 @@ void DesignerScene::onSceneSelectionChanged()
 }
 
 //! runs through all items recursively and updates corresponding views
-void DesignerScene::updateViews(const QModelIndex &parentIndex, IView *parentView)
+void DesignerScene::updateViews()
 {
-   /* Q_ASSERT(m_sampleModel);
+    if (!m_sampleModel) {
+        Q_ASSERT(m_sampleModel);
+        return;
+    }
 
-    IView *childView(0);
-    int childCount = 0;
-    for (int i_row = 0; i_row < m_sampleModel->rowCount(parentIndex); ++i_row) {
-        QModelIndex itemIndex = m_sampleModel->index(i_row, 0, parentIndex);
+    QList<SessionItem*> to_process;
+    for (auto item : m_sampleModel->rootItem()->children())
+        to_process.append(item);
 
-        if (SessionItem *item = m_sampleModel->itemForIndex(itemIndex)) {
+    while (!to_process.empty()) {
+        auto item = to_process.takeFirst();
+        const auto children = item->children();
+        std::for_each(children.rbegin(), children.rend(), [&to_process](auto item) {
+            if (item && SampleViewFactory::isValidType(item->modelType()))
+                to_process.push_front(item);
+        });
 
-            if(item && !SampleViewFactory::isValidType(item->modelType()))
-                    continue;
+        auto view = addViewForItem(item);
 
-            childView = addViewForItem(item);
-            if (childView) {
-                if (parentView)
-                    parentView->addView(childView, childCount++);
-            }
+        if (!view)
+            continue;
 
-        }
-
-        updateViews(itemIndex, childView);
-    }*/
+        if (item->parent())
+            if (auto parent_view = getViewForItem(item->parent()))
+                parent_view->addView(view);
+    }
 }
 
 //! adds view for item, if it doesn't exists
@@ -212,18 +213,15 @@ IView *DesignerScene::addViewForItem(SessionItem *item)
 {
     Q_ASSERT(item);
 
-    IView *view = getViewForItem(item);
+    IView* view = getViewForItem(item);
+    if (view) // view for the item already exists
+        return view;
 
-    if (!view) {
-        view = SampleViewFactory::createSampleView(item->modelType());
-        if (view) {
-            m_ItemToView[item] = view;
-            view->setParameterizedItem(item);
-            addItem(view);
-            return view;
-        }
-    } else {
-        // view for item exists
+    view = SampleViewFactory::createSampleView(item->modelType());
+    if (view) {
+        m_ItemToView[item] = view;
+        view->setParameterizedItem(item);
+        addItem(view);
     }
     return view;
 }
@@ -256,15 +254,15 @@ void DesignerScene::removeItemViewFromScene(SessionItem *item)
 {
     Q_ASSERT(item);
 
-    for (QMap<SessionItem *, IView *>::iterator it = m_ItemToView.begin();
+    for (QMap<const SessionItem*, IView*>::iterator it = m_ItemToView.begin();
          it != m_ItemToView.end(); ++it) {
         if (it.key() == item) {
-            IView *view = it.value();
+            IView* view = it.value();
             view->setSelected(false);
             m_ItemToView.erase(it);
             emit view->aboutToBeDeleted();
             view->deleteLater();
-//            delete view;
+            //            delete view;
             update();
             break;
         }

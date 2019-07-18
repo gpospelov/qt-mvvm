@@ -44,7 +44,7 @@ class DesignerScene : public QGraphicsScene
     Q_OBJECT
 
 public:
-    explicit DesignerScene(QObject *parent = 0);
+    explicit DesignerScene(QObject *parent = nullptr);
     virtual ~DesignerScene();
 
     void setSampleModel(SampleModel *sampleModel);
@@ -52,7 +52,7 @@ public:
 
     SampleModel *getSampleModel() { return m_sampleModel; }
 
-    IView *getViewForItem(ModelView::SessionItem *item);
+    IView* getViewForItem(const ModelView::SessionItem* item);
 
     NodeEditor *getNodeEditor() { return m_nodeEditor;}
 
@@ -88,9 +88,8 @@ protected:
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 
 private:
-
-    IView *addViewForItem(ModelView::SessionItem *item);
-    void updateViews(const QModelIndex &parentIndex = QModelIndex(), IView *parentView = 0);
+    IView* addViewForItem(ModelView::SessionItem* item);
+    void updateViews();
     void deleteViews(const QModelIndex & parentIndex);
     void alignViews();
     void removeItemViewFromScene(ModelView::SessionItem *item);
@@ -104,7 +103,7 @@ private:
     FilterPropertyProxy *m_proxy;
     bool m_block_selection;
 
-    QMap<ModelView::SessionItem *, IView *> m_ItemToView;
+    QMap<const ModelView::SessionItem*, IView*> m_ItemToView;
     //!< Correspondance of model's item and scene's view
 
     QLineF m_layer_interface_line;
