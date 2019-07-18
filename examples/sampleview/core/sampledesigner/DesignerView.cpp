@@ -16,7 +16,6 @@
 #include "DesignerHelper.h"
 #include "DesignerMimeData.h"
 #include "DesignerScene.h"
-#include "GUIHelpers.h"
 #include <QDragEnterEvent>
 #include <QGraphicsScene>
 #include <QGraphicsView>
@@ -41,7 +40,7 @@ int DesignerView::getSelectionMode() const
     } else if (dragMode() == QGraphicsView::ScrollHandDrag) {
         return HAND_DRAG;
     } else {
-        throw GUIHelpers::Error("DesignerView::getSelectionMode() -> Error.");
+        throw std::runtime_error("DesignerView::getSelectionMode() -> Error.");
     }
 }
 
