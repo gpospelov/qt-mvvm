@@ -18,9 +18,14 @@
 #include <QMap>
 #include <QModelIndex>
 #include <QPointF>
+
 class DesignerScene;
 class IView;
-class SessionItem;
+
+namespace ModelView
+{
+    class SessionItem;
+}
 
 
 //! Makes alignment of sample droped on graphics scene.
@@ -30,7 +35,7 @@ class SampleViewAligner
 public:
     SampleViewAligner(DesignerScene *scene);
 
-    void alignSample(SessionItem *item, QPointF reference = QPointF(), bool force_alignment = false);
+    void alignSample(ModelView::SessionItem *item, QPointF reference = QPointF(), bool force_alignment = false);
     void alignSample(const QModelIndex & parentIndex, QPointF reference = QPointF(), bool force_alignment = false);
 
     void smartAlign();

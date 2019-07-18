@@ -16,7 +16,11 @@
 #include "DesignerScene.h"
 #include "IView.h"
 #include "SampleModel.h"
+#include "item_constants.h"
+#include "sessionitem.h"
 #include <QModelIndex>
+
+using namespace ModelView;
 
 SampleViewAligner::SampleViewAligner(DesignerScene *scene)
     : m_scene(scene)
@@ -39,7 +43,7 @@ void SampleViewAligner::smartAlign()
 //! which do not have parent view)
 void SampleViewAligner::updateViews(const QModelIndex & parentIndex)
 {
-    SampleModel *sampleModel = m_scene->getSampleModel();
+    /*SampleModel *sampleModel = m_scene->getSampleModel();
     for( int i_row = 0; i_row < sampleModel->rowCount( parentIndex ); ++i_row) {
          QModelIndex itemIndex = sampleModel->index( i_row, 0, parentIndex );
          IView *view = getViewForIndex(itemIndex);
@@ -47,7 +51,7 @@ void SampleViewAligner::updateViews(const QModelIndex & parentIndex)
             m_views.append(view);
          }
          updateViews( itemIndex);
-     }
+     }*/
 }
 
 
@@ -117,19 +121,23 @@ QList<IView *> SampleViewAligner::getConnectedViews(IView *view)
 
     QList<SessionItem *> connected_items;
 
-    if(itemOfView->parent()->modelType() == Constants::LayerType) {
+    if(itemOfView->parent()->modelType() == ::Constants::LayerType) {
         // e.g. we are dealing here with ParticleLayout, so we will use directly MultiLayer to interact with
         connected_items.append(itemOfView->parent()->parent());
     } else {
         connected_items.append(itemOfView->parent());
     }
-    if(itemOfView->modelType() == Constants::MultiLayerType) {
+    if(itemOfView->modelType() == ::Constants::MultiLayerType) {
         // MultiLayer will not interact with its Layers, but with they children, e.g. with ParticleLayouts
         for(auto child : itemOfView->children()) {
-            connected_items.append(child->children().toList());
+            auto grand_children = child->children();
+            std::for_each(grand_children.begin(), grand_children.end(),
+                [&connected_items](auto child) { connected_items.append(child); });
         }
     } else {
-        connected_items.append(itemOfView->children().toList());
+        auto children = itemOfView->children();
+        std::for_each(children.begin(), children.end(),
+            [&connected_items](auto child) { connected_items.append(child); });
     }
     for(auto item : connected_items) {
         IView *view = m_scene->getViewForItem(item);
@@ -144,8 +152,8 @@ QList<IView *> SampleViewAligner::getConnectedViews(IView *view)
 //! Aligns sample starting from
 void SampleViewAligner::alignSample(SessionItem *item, QPointF reference, bool force_alignment)
 {
-    Q_ASSERT(item);
-    alignSample(m_scene->getSampleModel()->indexOfItem(item), reference, force_alignment);
+    /*Q_ASSERT(item);
+    alignSample(m_scene->getSampleModel()->indexOfItem(item), reference, force_alignment);*/
 }
 
 
@@ -155,7 +163,7 @@ void SampleViewAligner::alignSample(SessionItem *item, QPointF reference, bool f
 //! Position of View which has parent item (like Layer) will remain unchainged.
 void SampleViewAligner::alignSample(const QModelIndex & parentIndex, QPointF reference, bool force_alignment)
 {
-    SampleModel *sampleModel = m_scene->getSampleModel();
+    /*SampleModel *sampleModel = m_scene->getSampleModel();
 
     if(IView *view = getViewForIndex(parentIndex)) {
         if( (force_alignment || view->pos().isNull()) && !view->parentObject())
@@ -173,16 +181,14 @@ void SampleViewAligner::alignSample(const QModelIndex & parentIndex, QPointF ref
          if(!getViewForIndex(itemIndex)) continue;
          QPointF child_reference = reference + QPointF(-150, 150*child_counter++);
          alignSample(itemIndex, child_reference, force_alignment);
-    }
+    }*/
 }
 
 
 IView *SampleViewAligner::getViewForIndex(const QModelIndex &index)
 {
-    SampleModel *sampleModel = m_scene->getSampleModel();
+    /*SampleModel *sampleModel = m_scene->getSampleModel();
     SessionItem *item = sampleModel->itemForIndex(index);
-    return m_scene->getViewForItem(item);
+    return m_scene->getViewForItem(item);*/
+    return nullptr;
 }
-
-
-
