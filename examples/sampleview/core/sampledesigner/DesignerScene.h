@@ -19,10 +19,14 @@
 #include <QMap>
 #include <QModelIndex>
 
+namespace ModelView
+{
+    class SessionItem;
+    class SessionModel;
+}
+
 class InstrumentModel;
 class SampleModel;
-class SessionItem;
-class SessionGraphicsItem;
 class QItemSelectionModel;
 class IView;
 class QItemSelection;
@@ -44,24 +48,19 @@ public:
     virtual ~DesignerScene();
 
     void setSampleModel(SampleModel *sampleModel);
-    void setInstrumentModel(InstrumentModel *instrumentModel);
-    void setMaterialModel(MaterialModel* materialModel);
     void setSelectionModel(QItemSelectionModel *model, FilterPropertyProxy *proxy);
 
     SampleModel *getSampleModel() { return m_sampleModel; }
 
-    IView *getViewForItem(SessionItem *item);
+    IView *getViewForItem(ModelView::SessionItem *item);
 
     NodeEditor *getNodeEditor() { return m_nodeEditor;}
 
-signals:
-    void selectionModeChangeRequest(int);
-
-public slots:
+    // slots:
     void onSceneSelectionChanged();
     void onSessionSelectionChanged(const QItemSelection &, const QItemSelection &);
     void resetScene();
-    void updateScene();
+    void updateScene(ModelView::SessionModel* model);
 
     void onRowsInserted(const QModelIndex &parent, int first, int last);
     void onRowsAboutToBeRemoved(const QModelIndex &parent, int first, int last);
@@ -80,6 +79,8 @@ public slots:
 
     void onSmartAlign();
 
+signals:
+    void selectionModeChangeRequest(int);
 
 protected:
     void drawForeground(QPainter* painter, const QRectF& rect);
@@ -88,24 +89,22 @@ protected:
 
 private:
 
-    IView *addViewForItem(SessionItem *item);
+    IView *addViewForItem(ModelView::SessionItem *item);
     void updateViews(const QModelIndex &parentIndex = QModelIndex(), IView *parentView = 0);
     void deleteViews(const QModelIndex & parentIndex);
     void alignViews();
-    void removeItemViewFromScene(SessionItem *item);
+    void removeItemViewFromScene(ModelView::SessionItem *item);
     bool isMultiLayerNearby(QGraphicsSceneDragDropEvent *event);
     void adjustSceneRect();
     bool isAcceptedByMultiLayer(const DesignerMimeData *mimeData, QGraphicsSceneDragDropEvent *event);
     bool isLayerDragged() const;
 
     SampleModel *m_sampleModel;
-    InstrumentModel *m_instrumentModel;
-    MaterialModel* m_materialModel;
     QItemSelectionModel *m_selectionModel;
     FilterPropertyProxy *m_proxy;
     bool m_block_selection;
 
-    QMap<SessionItem *, IView *> m_ItemToView;
+    QMap<ModelView::SessionItem *, IView *> m_ItemToView;
     //!< Correspondance of model's item and scene's view
 
     QLineF m_layer_interface_line;
