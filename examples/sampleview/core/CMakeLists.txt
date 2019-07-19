@@ -9,7 +9,7 @@ set(include_dirs ${CMAKE_CURRENT_SOURCE_DIR}/mainwindow
                  ${CMAKE_CURRENT_SOURCE_DIR}/widgets)
 
 # --- resource files ---
-set (resource_files ${CMAKE_CURRENT_SOURCE_DIR}/resource/MaterialTable.qrc)
+set (resource_files ${CMAKE_CURRENT_SOURCE_DIR}/resource/SampleView.qrc)
 
 set(source_files)
 set(include_files)
