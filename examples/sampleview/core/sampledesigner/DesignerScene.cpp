@@ -66,10 +66,12 @@ void DesignerScene::setSampleModel(SampleModel *sampleModel)
     m_sampleModel = sampleModel;
     m_sampleModel->mapper()->setOnModelReset([this](SessionModel*) { resetScene(); }, this);
     m_sampleModel->mapper()->setOnRowInserted([this](SessionItem*, std::string, int) { }, this);
-    m_sampleModel->mapper()->setOnRowRemoved([this](SessionItem*, std::string, int) {}, this);
+
+    m_sampleModel->mapper()->setOnRowRemoved(
+        [this](SessionItem*, std::string, int) { onRowsRemoved(); }, this);
 
     resetScene();
-    updateScene(m_sampleModel);
+    updateScene();
 }
 
 void DesignerScene::setSelectionModel(QItemSelectionModel *model, FilterPropertyProxy *proxy)
@@ -104,10 +106,8 @@ void DesignerScene::resetScene()
     m_layer_interface_line = QLineF();
 }
 
-void DesignerScene::updateScene(SessionModel* model)
+void DesignerScene::updateScene()
 {
-    if (model != m_sampleModel)
-        throw std::runtime_error("Error in DesignerScene::updateScene: wrong session model passed.");
     updateViews();
     alignViews();
 }
@@ -115,22 +115,13 @@ void DesignerScene::updateScene(SessionModel* model)
 void DesignerScene::onRowsInserted(const QModelIndex & /* parent */, int /* first */,
                                    int /* last */)
 {
-    updateScene(m_sampleModel);
+    updateScene();
 }
 
-void DesignerScene::onRowsRemoved(const QModelIndex & /* parent */, int /* first */, int /* last */)
+void DesignerScene::onRowsRemoved()
 {
-    updateScene(m_sampleModel);
-}
-
-void DesignerScene::onRowsAboutToBeRemoved(const QModelIndex& parent, int first, int last)
-{
-    /*m_block_selection = true;
-    for (int irow = first; irow <= last; ++irow) {
-        QModelIndex itemIndex = m_sampleModel->index(irow, 0, parent);
-        deleteViews(itemIndex); // deleting all child items
-    }
-    m_block_selection = false;*/
+    resetScene();
+    updateScene();
 }
 
 //! propagate selection from model to scene

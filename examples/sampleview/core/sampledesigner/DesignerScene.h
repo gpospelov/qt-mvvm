@@ -60,11 +60,10 @@ public:
     void onSceneSelectionChanged();
     void onSessionSelectionChanged(const QItemSelection &, const QItemSelection &);
     void resetScene();
-    void updateScene(ModelView::SessionModel* model);
+    void updateScene();
 
     void onRowsInserted(const QModelIndex &parent, int first, int last);
-    void onRowsAboutToBeRemoved(const QModelIndex &parent, int first, int last);
-    void onRowsRemoved(const QModelIndex &parent, int first, int last);
+    void onRowsRemoved();
 
     void setLayerInterfaceLine(const QLineF &line=QLineF()) { m_layer_interface_line = line;
                                                               invalidate(); }
