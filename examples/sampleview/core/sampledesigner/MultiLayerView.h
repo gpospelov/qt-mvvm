@@ -30,6 +30,7 @@ public:
     enum { TYPE = DesignerHelper::MULTILAYER };
 
     MultiLayerView(QGraphicsItem* parent = nullptr);
+    ~MultiLayerView() override;
 
     int type() const override { return TYPE; }
 

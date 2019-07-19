@@ -41,6 +41,12 @@ MultiLayerView::MultiLayerView(QGraphicsItem* parent)
     updateGeometry();
 }
 
+MultiLayerView::~MultiLayerView()
+{
+    // manually disconnecting the signal because of multiple inheritance
+    disconnect(this, &MultiLayerView::childrenChanged, this, &MultiLayerView::updateHeight);
+}
+
 QRectF MultiLayerView::boundingRect() const
 {
     QRectF result = m_rect;
