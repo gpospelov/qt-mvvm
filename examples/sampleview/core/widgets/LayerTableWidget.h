@@ -10,19 +10,13 @@
 #ifndef LAYERTABLEWIDGET_H
 #define LAYERTABLEWIDGET_H
 
-#include "mvvm_global.h"
+#include "SampleTreeController.h"
 #include <QWidget>
 #include <memory>
 
 class QTreeView;
 class CustomModelDelegate;
 class ApplicationModels;
-
-namespace ModelView
-{
-class AbstractViewModel;
-class SessionItem;
-} // namespace ModelView
 
 /*!
 @class LayerTableWidget
@@ -36,9 +30,9 @@ public:
     ~LayerTableWidget() override;
 
 private:
-    std::unique_ptr<ModelView::AbstractViewModel> m_view_model;
+    SampleTreeController m_controller;
     std::unique_ptr<CustomModelDelegate> m_delegate;
-    QTreeView* m_tree_view;
+    QTreeView* m_sample_table;
 };
 
 #endif // LAYERTABLEWIDGET_H
