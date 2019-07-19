@@ -1,16 +1,27 @@
 #include "SampleControlPanel.h"
+#include "QRCInitializer.h"
 #include "SampleTreeController.h"
 #include <QHBoxLayout>
 #include <QPushButton>
 
-using namespace ModelView;
+const auto init = QRCInitializer::initSampleViewResources();
+
+namespace {
+QPushButton* createButton(QWidget* parent, QIcon icon)
+{
+    QPushButton* result = new QPushButton(parent);
+    result->setFlat(true);
+    result->setIcon(icon);
+    return result;
+}
+}
 
 SampleControlPanel::SampleControlPanel(SampleTreeController& sample_controller, QWidget* parent)
     : QWidget(parent)
-    , m_new_multilayer_button(new QPushButton(this))
-    , m_new_layer_button(new QPushButton(this))
-    , m_clone_button(new QPushButton(this))
-    , m_remove_button(new QPushButton(this))
+    , m_new_multilayer_button(createButton(this, QIcon(":/icons/toolbar16dark_newitem.svg")))
+    , m_new_layer_button(createButton(this, QIcon(":/icons/toolbar16dark_newitem.svg")))
+    , m_clone_button(createButton(this, QIcon(":/icons/toolbar16dark_cloneitem.svg")))
+    , m_remove_button(createButton(this, QIcon(":/icons/toolbar16dark_recycle.svg")))
 {
     // setting connections
     connect(m_new_multilayer_button, &QPushButton::clicked, &sample_controller,
