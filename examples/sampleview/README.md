@@ -7,9 +7,6 @@ Remarks:
 
 + Separate method to get current root session item from AbstractViewModel would be helpful. Now
   it can be done through sessionItemFromIndex method, but it is rather inobvious.
-+ Default tags complicate understanding of the code and later IDE navigation.
-+ It is possible to make a simple overload for removing item from the model, like
-  SessionModel::removeItem(SessionItem* item)
 + It would be convenient to have some sort of PlaceholderViewItem, which holds a pointer
   to a session item, but otherwise behaves exactly like a QStandardItem
 + allow overloading SessionModel::insertNewItem in the descendant classes
@@ -18,9 +15,6 @@ Remarks:
   can be done through QStyledItemDelegate::createEditor overloads.
 + CellDecorationInterface and its usage in ViewModelDelegate::paint can be done differently:
   see CellDecoratorInterface and SampleViewDelegate::initStyleOption in sampleview.
-+ SessionModel::createCopy copies an item, but there is no obvious way to insert an existing item
-  into a session model. I would even prefer to have the copy method (aka clone)
-  in the SessionItem class.
 
 Required fixes/features (sampleview):
 
@@ -34,5 +28,23 @@ Required fixes/features (sampleview):
 + MaterialEditor: Tooltips on control panel
 + MaterialEditor: color editor is not opened on double click (win, qt 5.12.0)
 + MaterialEditor: forbid editing checkbox on double click (win, qt 5.12.0)
++ SampleDesigner: replace QGraphicObject with QGraphicItem as the base class
+  for ConnectableView and move all signals/slots to a separate controller.
++ SampleDesigner: drag-n-drop operations cause immediate deleteion of graphic objects.
+  Since the move itself happens inside a graphics object, one need to use awkward delayed deletion.
++ SampleDesigner: replace the messy way of assigning material name to layers.
++ SampleDesigner: move scene-model interaction to a separate controller.
++ SampleDesigner: enable keyboard-based deletion of selected graphic items
+  and enable scroll-rescaling
++ SampleDesigner: improve multilayer drag-n-drop.
++ SampleEditor: improve drag-n-drop or remove it completely. Improvement will require inheriting
+  QTreeView.
++ SampleEditor: implement tab-based editing like in MaterialEditor.
++ SampleEditor: provide only the materials available from the MaterialEditor
++ SampleEditor: add icons for (multi)layer insertion.
++ SampleEditor/MaterialEditor: enable post-button press selection. Requires focus return to
+  the corresponding table/tree view.
 + Automatically select all the text in ScientificSpinBox on focus-in event.
 + Setting limits and step for ScientificSpinBox as an editor in SampleViewDelegate
++ Find the canonical way to initialize qrc files in a library
++ Put LocatedItem in a separate session model associated with DesignerScene only.
