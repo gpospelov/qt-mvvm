@@ -30,7 +30,7 @@ public:
 
     int type() const override { return TYPE; }
 
-    virtual void setParameterizedItem(ModelView::SessionItem* item);
+    void setParameterizedItem(ModelView::SessionItem* item);
 
     ModelView::SessionItem* getItem() { return m_item; }
 

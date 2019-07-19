@@ -44,67 +44,6 @@ ILayerView::ILayerView(QGraphicsItem *parent) : ConnectableView(parent)
     setFlag(QGraphicsItem::ItemSendsGeometryChanges);
 }
 
-//! Propagates change of 'Thickness' dynamic property to screen thickness of ILayerView.
-void ILayerView::onPropertyChange(const std::string& propertyName)
-{
-    if (propertyName == LayerItem::P_THICKNESS) {
-        updateHeight();
-    } else if (propertyName == LayerItem::P_MATERIAL) {
-        updateColor();
-        updateLabel();
-    }
-
-    IView::onPropertyChange(propertyName);
-}
-
-void ILayerView::updateColor()
-{
-    if(getItem()->isTag(LayerItem::P_MATERIAL)) {
-        QVariant v = getItem()->getItem(LayerItem::P_MATERIAL)->data(ItemDataRole::DATA);
-        if (v.isValid()) {
-            ExternalProperty mp = v.value<ExternalProperty>();
-            setColor(mp.color());
-            update();
-        } else {
-            Q_ASSERT(0);
-        }
-    }
-}
-
-void ILayerView::updateLabel()
-{
-    if(getInputPorts().size() < 1)
-        return;
-
-    NodeEditorPort *port = getInputPorts()[0];
-
-    QString material = "" ;
-    if(getItem()->isTag(LayerItem::P_MATERIAL)){
-        QVariant v = getItem()->getItem(LayerItem::P_MATERIAL)->data(ItemDataRole::DATA);
-        if (v.isValid()) {
-            ExternalProperty mp = v.value<ExternalProperty>();
-            material = QString::fromStdString(mp.text());
-        }
-    }
-
-/* Thickness and roughness can be added, but the length of the string
- * becomes prohibitive.
-    QString thickness = "" ;
-    if(m_item->isTag(LayerItem::P_THICKNESS))
-        thickness = m_item->getItemValue(LayerItem::P_THICKNESS).toString();
-
-    QString roughness = "" ;
-    if(m_item->isTag(LayerItem::P_ROUGHNESS)){
-        QVariant x = m_item->getItemValue(LayerItem::P_ROUGHNESS);
-        {...}
-    }
-*/
-    QString infoToDisplay = material;
-    port->setLabel(infoToDisplay);
-}
-
-
-
 //! Detects movement of the ILayerView and sends possible drop areas to GraphicsScene
 //! for visualization.
 QVariant ILayerView::itemChange(GraphicsItemChange change, const QVariant &value)
@@ -191,14 +130,6 @@ void ILayerView::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
     // throw only happens when not all cases were considered previously
     throw std::runtime_error("LayerView::mouseReleaseEvent() -> Loggic error.");
-}
-
-void ILayerView::update_appearance()
-{
-    updateHeight();
-    updateColor();
-    updateLabel();
-    ConnectableView::update_appearance();
 }
 
 //! Finds candidate (another MultiLayer) into which we will move our ILayerView.

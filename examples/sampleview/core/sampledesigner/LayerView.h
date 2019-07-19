@@ -32,8 +32,13 @@ public:
 
     void addView(IView* childView) override; // to add ParticleLayout
 
+    void onPropertyChange(const std::string& propertyName) override;
+
 private:
-    void updateHeight() override;
+    void update_appearance() override;
+    void updateColor();
+    void updateHeight();
+    void updateLabel();
 };
 
 #endif // LAYERVIEW_H

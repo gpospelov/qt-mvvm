@@ -14,6 +14,7 @@
 
 #include "LayerView.h"
 #include "LayerItems.h"
+#include "externalproperty.h"
 #include "item_constants.h"
 #include "mvvm_types.h"
 #include <QPainter>
@@ -25,11 +26,13 @@ namespace {
 int nanometerToScreen(double nanometer);
 }
 
+using namespace ModelView;
+
 LayerView::LayerView(QGraphicsItem *parent)
     : ILayerView(parent)
 {
     setColor(QColor(qrand() % 256, qrand() % 256, qrand() % 256) );
-    setRectangle(DesignerHelper::getDefaultBoundingRect(Constants::LayerType));
+    setRectangle(DesignerHelper::getDefaultBoundingRect(::Constants::LayerType));
     setAcceptDrops(false);
     addPort(QString(), NodeEditorPort::INPUT, NodeEditorPort::PARTICLE_LAYOUT);
 }
@@ -54,6 +57,26 @@ void LayerView::addView(IView*)
     connectInputPort(layout, 0);*/
 }
 
+void LayerView::onPropertyChange(const std::string& propertyName)
+{
+    if (propertyName == LayerItem::P_THICKNESS) {
+        updateHeight();
+    } else if (propertyName == LayerItem::P_MATERIAL) {
+        updateColor();
+        updateLabel();
+    }
+
+    ILayerView::onPropertyChange(propertyName);
+}
+
+void LayerView::update_appearance()
+{
+    updateHeight();
+    updateColor();
+    updateLabel();
+    ILayerView::update_appearance();
+}
+
 void LayerView::updateHeight()
 {
     if (!getItem()->isTag(LayerItem::P_THICKNESS))
@@ -65,6 +88,41 @@ void LayerView::updateHeight()
     setPortCoordinates();
     update();
     emit heightChanged();
+}
+
+void LayerView::updateColor()
+{
+    if(getItem()->isTag(LayerItem::P_MATERIAL)) {
+        QVariant v = getItem()->getItem(LayerItem::P_MATERIAL)->data(ItemDataRole::DATA);
+        if (v.isValid()) {
+            ExternalProperty mp = v.value<ExternalProperty>();
+            setColor(mp.color());
+            update();
+        } else {
+            Q_ASSERT(0);
+        }
+    }
+}
+
+// FIXME: this method has nothing to do with ports. For unknown reason it uses them to set label.
+void LayerView::updateLabel()
+{
+    if(getInputPorts().size() < 1)
+        return;
+
+    NodeEditorPort *port = getInputPorts()[0];
+
+    QString material = "" ;
+    if(getItem()->isTag(LayerItem::P_MATERIAL)){
+        QVariant v = getItem()->getItem(LayerItem::P_MATERIAL)->data(ItemDataRole::DATA);
+        if (v.isValid()) {
+            ExternalProperty mp = v.value<ExternalProperty>();
+            material = QString::fromStdString(mp.text());
+        }
+    }
+
+    QString infoToDisplay = material;
+    port->setLabel(infoToDisplay);
 }
 
 namespace {

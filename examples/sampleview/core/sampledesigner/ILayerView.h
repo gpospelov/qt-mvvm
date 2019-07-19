@@ -30,21 +30,12 @@ public:
 
     QString getLabel() const override { return QString(); }
 
-    void updateLabel();
-
 protected:
     QVariant itemChange(GraphicsItemChange change, const QVariant& value) override;
     void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
-    void update_appearance() override;
-
-    // slots:
-    void onPropertyChange(const std::string& propertyName) override;
 
 private:
-    virtual void updateHeight() = 0;
-    void updateColor();
-
     MultiLayerCandidate getMultiLayerCandidate();
     QPointF m_drag_start_position;
 };
@@ -54,7 +45,7 @@ private:
 class MultiLayerCandidate
 {
 public:
-    MultiLayerCandidate() : multilayer(0), row(-1), distance(0){}
+    MultiLayerCandidate() : multilayer(nullptr), row(-1), distance(0){}
     MultiLayerView *multilayer; //!< pointer to the candidate
     int row; //!< requested row number to drop in
     int distance; //!< distance from given ILayerView and drop area

@@ -246,6 +246,12 @@ QVariant MultiLayerView::itemChange(QGraphicsItem::GraphicsItemChange change, co
     return QGraphicsItem::itemChange(change, value);
 }
 
+void MultiLayerView::update_appearance()
+{
+    updateHeight();
+    ILayerView::update_appearance();
+}
+
 namespace {
     bool acceptsModel(const ModelView::SessionItem* item, const std::string& model_type)
     {
