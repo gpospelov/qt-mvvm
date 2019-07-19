@@ -1,5 +1,10 @@
 #include "SampleTreeController.h"
 #include "SampleModel.h"
+#include "modelutils.h"
+#include "sessionitem.h"
+#include <set>
+
+using namespace ModelView;
 
 SampleTreeController::SampleTreeController(SampleModel* model)
     : QObject()
@@ -23,4 +28,17 @@ void SampleTreeController::onClone()
 {}
 
 void SampleTreeController::onRemove()
-{}
+{
+    const QModelIndexList& selection = m_selection_model.selectedRows();
+    if (selection.empty())
+        return;
+
+    std::set<SessionItem*> to_delete;
+    for (auto& index : selection) {
+        if (auto item = m_view_model.sessionItemFromIndex(index))
+        to_delete.insert(item);
+    }
+
+    for (auto item: to_delete)
+        Utils::DeleteItemFromModel(item);
+}
