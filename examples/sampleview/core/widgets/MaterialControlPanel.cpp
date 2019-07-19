@@ -1,17 +1,14 @@
 #include "MaterialControlPanel.h"
 #include "MaterialViewController.h"
+#include "QRCInitializer.h"
 #include "abstractviewmodel.h"
 #include <QComboBox>
 #include <QHBoxLayout>
 #include <QPushButton>
 
-struct ResourceInit {
-    ResourceInit() { Q_INIT_RESOURCE(MaterialTable); }
-};
+const auto init = QRCInitializer::initSampleViewResources();
 
 namespace {
-ResourceInit init;
-
 QPushButton* createButton(QWidget* parent, QIcon icon)
 {
     QPushButton* result = new QPushButton(parent);
