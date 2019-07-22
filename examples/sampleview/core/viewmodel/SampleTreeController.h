@@ -7,6 +7,9 @@
 #include <set>
 
 class SampleModel;
+namespace ModelView {
+class SessionItem;
+}
 
 class SampleTreeController : public QObject
 {
@@ -24,6 +27,8 @@ public:
     void onRemove();
 
 private:
+    ModelView::SessionItem* insertSampleElement(const std::string& model_type);
+
     SampleModel* m_sample_model;
     LayerTableViewModel m_view_model;
     QItemSelectionModel m_selection_model;

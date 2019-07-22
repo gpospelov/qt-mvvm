@@ -1,5 +1,7 @@
 #include "SampleTreeController.h"
+#include "LayerItems.h"
 #include "SampleModel.h"
+#include "item_constants.h"
 #include "modelutils.h"
 #include "sessionitem.h"
 #include <set>
@@ -24,10 +26,15 @@ SampleTreeController::SampleTreeController(SampleModel* model)
 SampleTreeController::~SampleTreeController() = default;
 
 void SampleTreeController::onCreateMultiLayer()
-{}
+{
+    auto mlayer = insertSampleElement(::Constants::MultiLayerType);
+    m_sample_model->insertNewItem(::Constants::LayerType, mlayer, MultiLayerItem::T_LAYERS);
+}
 
 void SampleTreeController::onCreateLayer()
-{}
+{
+    insertSampleElement(::Constants::LayerType);
+}
 
 void SampleTreeController::onClone()
 {
@@ -37,7 +44,7 @@ void SampleTreeController::onClone()
 
     auto parent = to_clone->parent();
     const auto tag_row = parent->tagRowOfItem(to_clone);
-    m_sample_model->copyItem(to_clone, parent, tag_row.first, tag_row.second);
+    m_sample_model->copyItem(to_clone, parent, tag_row.first, tag_row.second + 1);
 }
 
 void SampleTreeController::onRemove()
@@ -47,6 +54,16 @@ void SampleTreeController::onRemove()
         return;
 
     Utils::DeleteItemFromModel(item);
+}
+
+ModelView::SessionItem*  SampleTreeController::insertSampleElement(const std::string& model_type)
+{
+    auto selected_item = selectedItem(m_selection_model, m_view_model);
+    SessionItem* parent = selected_item ? selected_item->parent() : nullptr;
+    std::pair<std::string, int> tag_row =
+        selected_item ? parent->tagRowOfItem(selected_item) : std::pair<std::string, int>{{}, -1};
+
+    return m_sample_model->insertNewItem(model_type, parent, tag_row.first, tag_row.second + 1);
 }
 
 namespace {
