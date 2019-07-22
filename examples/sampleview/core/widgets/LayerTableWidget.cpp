@@ -48,6 +48,7 @@ QTreeView* createSampleView(SampleTreeController& controller, QAbstractItemDeleg
     result->setAlternatingRowColors(true);
     result->expandAll();
     result->header()->setSectionResizeMode(QHeaderView::Stretch);
+    result->setDragDropMode(QAbstractItemView::InternalMove);
 
     return result.release();
 }

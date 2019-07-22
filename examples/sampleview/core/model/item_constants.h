@@ -20,6 +20,8 @@ const std::string SLDMaterialType = "SLDMaterial";
 const std::string RefIndexMaterialType = "RefIndexMaterial";
 const std::string MaterialContainerType = "MaterialContainer";
 
+const std::string SampleMimeType = "application/org.bornagainproject.samplemoveitem";
+
 } // namespace Constants
 
 #endif //  ITEM_CONSTANTS_H
