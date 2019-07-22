@@ -4,6 +4,7 @@
 #include <QObject>
 #include "LayerTableViewModel.h"
 #include <QItemSelectionModel>
+#include <set>
 
 class SampleModel;
 
