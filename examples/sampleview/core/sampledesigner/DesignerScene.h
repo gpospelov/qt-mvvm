@@ -87,7 +87,7 @@ protected:
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 
 private:
-    IView* addViewForItem(ModelView::SessionItem* item);
+    void addViewForItem(ModelView::SessionItem* item);
     void updateViews();
     void deleteViews(const QModelIndex & parentIndex);
     void alignViews();

@@ -188,33 +188,33 @@ void DesignerScene::updateViews()
                 to_process.push_front(item);
         });
 
-        auto view = addViewForItem(item);
-
-        if (!view)
-            continue;
-
-        if (item->parent())
-            if (auto parent_view = getViewForItem(item->parent()))
-                parent_view->addView(view);
+        addViewForItem(item);
     }
 }
 
 //! adds view for item, if it doesn't exists
-IView *DesignerScene::addViewForItem(SessionItem *item)
+void DesignerScene::addViewForItem(SessionItem *item)
 {
-    Q_ASSERT(item);
+    if (!item) {
+        Q_ASSERT(item);
+        return;
+    }
 
     IView* view = getViewForItem(item);
     if (view) // view for the item already exists
-        return view;
+        return;
 
     view = SampleViewFactory::createSampleView(item->modelType());
-    if (view) {
-        m_ItemToView[item] = view;
-        view->setParameterizedItem(item);
+    if (!view)
+        return;
+
+    m_ItemToView[item] = view;
+    view->setParameterizedItem(item);
+
+    if (auto parent_view = getViewForItem(item->parent()))
+        parent_view->addView(view);
+    else
         addItem(view);
-    }
-    return view;
 }
 
 //! aligns SampleView's on graphical canvas
