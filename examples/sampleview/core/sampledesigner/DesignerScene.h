@@ -62,7 +62,7 @@ public:
     void resetScene();
     void updateScene();
 
-    void onRowsInserted(const QModelIndex &parent, int first, int last);
+    void onRowsInserted();
     void onRowsRemoved();
 
     void setLayerInterfaceLine(const QLineF &line=QLineF()) { m_layer_interface_line = line;

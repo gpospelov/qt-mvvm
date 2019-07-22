@@ -65,7 +65,9 @@ void DesignerScene::setSampleModel(SampleModel *sampleModel)
 
     m_sampleModel = sampleModel;
     m_sampleModel->mapper()->setOnModelReset([this](SessionModel*) { resetScene(); }, this);
-    m_sampleModel->mapper()->setOnRowInserted([this](SessionItem*, std::string, int) { }, this);
+
+    m_sampleModel->mapper()->setOnRowInserted(
+        [this](SessionItem*, std::string, int) { onRowsInserted(); }, this);
 
     m_sampleModel->mapper()->setOnRowRemoved(
         [this](SessionItem*, std::string, int) { onRowsRemoved(); }, this);
@@ -112,9 +114,9 @@ void DesignerScene::updateScene()
     alignViews();
 }
 
-void DesignerScene::onRowsInserted(const QModelIndex & /* parent */, int /* first */,
-                                   int /* last */)
+void DesignerScene::onRowsInserted()
 {
+    resetScene();
     updateScene();
 }
 
