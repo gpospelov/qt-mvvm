@@ -20,13 +20,17 @@
 
 SampleViewController::SampleViewController(ApplicationModels* models)
     : m_designerScene()
-    , m_designerView(&m_designerScene)
 {
     m_designerScene.setSampleModel(models->sampleModel());
 }
 
 
 SampleViewController::~SampleViewController() = default;
+
+DesignerView* SampleViewController::createDesignerView()
+{
+    return new DesignerView(&m_designerScene);
+}
 
 void SampleViewController::setSelectionModel(QItemSelectionModel *model, FilterPropertyProxy *proxy)
 {

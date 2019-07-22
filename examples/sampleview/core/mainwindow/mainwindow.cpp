@@ -9,6 +9,7 @@
 
 #include "mainwindow.h"
 #include "ApplicationModels.h"
+#include "DesignerView.h"
 #include "LayerTableWidget.h"
 #include "MaterialTableWidget.h"
 #include <QAction>
@@ -32,7 +33,7 @@ MainWindow::MainWindow()
     , m_material_editor(new QDockWidget(this))
     , m_sample_editor(new QDockWidget(this))
 {
-    setCentralWidget(&m_scene_controller.getView());
+    setCentralWidget(m_scene_controller.createDesignerView());
     init_material_editor();
     init_sample_editor();
     init_application();

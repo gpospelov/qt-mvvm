@@ -16,8 +16,8 @@
 #define SAMPLEDESIGNER_H
 
 #include "DesignerScene.h"
-#include "DesignerView.h"
 
+class DesignerView;
 class SampleModel;
 class FilterPropertyProxy;
 class ApplicationModels;
@@ -31,13 +31,13 @@ public:
     ~SampleViewController();
 
     DesignerScene& getScene() { return m_designerScene; }
-    DesignerView& getView() { return m_designerView; }
+
+    DesignerView* createDesignerView();
 
     void setSelectionModel(QItemSelectionModel* model, FilterPropertyProxy* proxy);
 
 private:
     DesignerScene m_designerScene; //! scene which holds all objects
-    DesignerView m_designerView;   //! graphical representation of scene with object
 };
 
 
