@@ -28,6 +28,8 @@ public:
 
 private:
     ModelView::SessionItem* insertSampleElement(const std::string& model_type);
+    ModelView::SessionItem* findNextSibling(ModelView::SessionItem* item);
+    void selectItem(ModelView::SessionItem* item);
 
     SampleModel* m_sample_model;
     LayerTableViewModel m_view_model;
