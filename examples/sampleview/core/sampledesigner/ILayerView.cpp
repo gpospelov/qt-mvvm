@@ -44,6 +44,8 @@ ILayerView::ILayerView(QGraphicsItem *parent) : ConnectableView(parent)
     setFlag(QGraphicsItem::ItemSendsGeometryChanges);
 }
 
+ILayerView::~ILayerView() = default;
+
 //! Detects movement of the ILayerView and sends possible drop areas to GraphicsScene
 //! for visualization.
 QVariant ILayerView::itemChange(GraphicsItemChange change, const QVariant &value)
@@ -85,7 +87,7 @@ void ILayerView::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     int requested_row = candidate.row;
 
     // Simple move of single layer on the scene
-    if (requested_parent == 0 && parentItem() == 0) {
+    if (requested_parent == nullptr && parentItem() == nullptr) {
         QGraphicsItem::mouseReleaseEvent(event);
         return;
     }
@@ -115,7 +117,7 @@ void ILayerView::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
         getItem()->getItem(LocatedItem::P_X_POS)->setData(newPos.x(), ItemDataRole::DATA);
         getItem()->getItem(LocatedItem::P_Y_POS)->setData(newPos.y(), ItemDataRole::DATA);
 
-        model->moveItem(this->getItem(), nullptr, {}, -1);
+        model->moveItem(getItem(), model->rootItem(), {}, -1);
         QGraphicsItem::mouseReleaseEvent(event);
         return;
     }
@@ -123,7 +125,10 @@ void ILayerView::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     // Layer was moved either from one MultiLayer to another, or is moved inside
     // one multilayer: changing ownership or row within same ownership.
     if (requested_parent) {
-        model->moveItem(this->getItem(), requested_parent->getItem(), MultiLayerItem::T_LAYERS, requested_row);
+        SessionItem* new_parent = requested_parent->getItem();
+        const std::string tag = MultiLayerItem::T_LAYERS;
+        int insertion_row = requested_row >= new_parent->itemCount(tag) ? -1 : requested_row;
+        model->moveItem(getItem(), new_parent, tag, insertion_row);
         QGraphicsItem::mouseReleaseEvent(event);
         return;
     }

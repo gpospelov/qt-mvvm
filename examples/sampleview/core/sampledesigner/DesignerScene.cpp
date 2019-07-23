@@ -95,7 +95,7 @@ void DesignerScene::setSelectionModel(QItemSelectionModel *model, FilterProperty
     }
 }
 
-IView* DesignerScene::getViewForItem(const SessionItem* item)
+IView* DesignerScene::getViewForItem(SessionItem* item)
 {
     auto it = m_ItemToView.find(item);
     return it != m_ItemToView.end() ? it.value() : nullptr;
@@ -116,13 +116,13 @@ void DesignerScene::updateScene()
 
 void DesignerScene::onRowsInserted()
 {
-    resetScene();
+    deleteViews();
     updateScene();
 }
 
 void DesignerScene::onRowsRemoved()
 {
-    resetScene();
+    deleteViews();
     updateScene();
 }
 
@@ -226,40 +226,15 @@ void DesignerScene::alignViews()
 }
 
 //! runs recursively through model's item and schedules view removal
-void DesignerScene::deleteViews(const QModelIndex &viewIndex)
+void DesignerScene::deleteViews()
 {
-    /*for (int i_row = 0; i_row < m_sampleModel->rowCount(viewIndex); ++i_row) {
-        QModelIndex itemIndex = m_sampleModel->index(i_row, 0, viewIndex);
-
-        if (SessionItem *item = m_sampleModel->itemForIndex(itemIndex)) {
-            removeItemViewFromScene(item);
-
-        } else {
-            // not a parameterized graphics item
-        }
-        deleteViews(itemIndex);
+    for (auto view: m_ItemToView.values()) {
+        view->setSelected(false);
+        emit view->aboutToBeDeleted();
+        view->deleteLater();
     }
-    removeItemViewFromScene(m_sampleModel->itemForIndex(viewIndex)); // deleting view itself*/
-}
-
-//! removes view from scene corresponding to given item
-void DesignerScene::removeItemViewFromScene(SessionItem *item)
-{
-    Q_ASSERT(item);
-
-    for (QMap<const SessionItem*, IView*>::iterator it = m_ItemToView.begin();
-         it != m_ItemToView.end(); ++it) {
-        if (it.key() == item) {
-            IView* view = it.value();
-            view->setSelected(false);
-            m_ItemToView.erase(it);
-            emit view->aboutToBeDeleted();
-            view->deleteLater();
-            //            delete view;
-            update();
-            break;
-        }
-    }
+    m_ItemToView.clear();
+    update();
 }
 
 //! propagates deletion of views on the scene to the model

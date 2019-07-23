@@ -52,7 +52,7 @@ public:
 
     SampleModel *getSampleModel() { return m_sampleModel; }
 
-    IView* getViewForItem(const ModelView::SessionItem* item);
+    IView* getViewForItem(ModelView::SessionItem *item);
 
     NodeEditor *getNodeEditor() { return m_nodeEditor;}
 
@@ -89,9 +89,8 @@ protected:
 private:
     void addViewForItem(ModelView::SessionItem* item);
     void updateViews();
-    void deleteViews(const QModelIndex & parentIndex);
+    void deleteViews();
     void alignViews();
-    void removeItemViewFromScene(ModelView::SessionItem *item);
     bool isMultiLayerNearby(QGraphicsSceneDragDropEvent *event);
     void adjustSceneRect();
     bool isAcceptedByMultiLayer(const DesignerMimeData *mimeData, QGraphicsSceneDragDropEvent *event);
@@ -102,7 +101,7 @@ private:
     FilterPropertyProxy *m_proxy;
     bool m_block_selection;
 
-    QMap<const ModelView::SessionItem*, IView*> m_ItemToView;
+    QMap<ModelView::SessionItem*, IView*> m_ItemToView;
     //!< Correspondance of model's item and scene's view
 
     QLineF m_layer_interface_line;

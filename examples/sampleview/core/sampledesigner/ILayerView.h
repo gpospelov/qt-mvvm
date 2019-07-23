@@ -23,6 +23,7 @@ class ILayerView : public ConnectableView
 
 public:
     ILayerView(QGraphicsItem *parent = nullptr);
+    ~ILayerView() override ;
 
     enum { TYPE = DesignerHelper::LAYER };
 
