@@ -402,10 +402,7 @@ bool DesignerScene::isAcceptedByMultiLayer(const DesignerMimeData *mimeData, QGr
 bool DesignerScene::isLayerDragged() const
 {
     ILayerView *layer = dynamic_cast<ILayerView *>(mouseGrabberItem());
-    if (layer && !m_layer_interface_line.isNull()) {
-        return true;
-    }
-    return false;
+    return layer && !m_layer_interface_line.isNull();
 }
 
 void DesignerScene::onSmartAlign()
