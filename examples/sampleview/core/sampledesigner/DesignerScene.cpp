@@ -387,10 +387,10 @@ bool DesignerScene::isAcceptedByMultiLayer(const DesignerMimeData *mimeData, QGr
 {
     if(!mimeData) return false;
 
-//    // MultiLayer can be inserted in MultiLayer
-//    if (mimeData->getClassName() == Constants::MultiLayerType && isMultiLayerNearby(event)) {
-//        return true;
-//    }
+    // MultiLayer can be inserted in MultiLayer
+    if (mimeData->getClassName() == ::Constants::MultiLayerType && isMultiLayerNearby(event)) {
+        return true;
+    }
 
     // layer can be inserted in MultiLayer
     if (mimeData->getClassName() == ::Constants::LayerType && isMultiLayerNearby(event)) {
