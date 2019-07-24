@@ -5,10 +5,11 @@ set(include_dirs ${CMAKE_CURRENT_SOURCE_DIR}/mainwindow
                  ${CMAKE_CURRENT_SOURCE_DIR}/model
                  ${CMAKE_CURRENT_SOURCE_DIR}/resource
                  ${CMAKE_CURRENT_SOURCE_DIR}/viewmodel
+                 ${CMAKE_CURRENT_SOURCE_DIR}/sampledesigner
                  ${CMAKE_CURRENT_SOURCE_DIR}/widgets)
 
 # --- resource files ---
-set (resource_files ${CMAKE_CURRENT_SOURCE_DIR}/resource/MaterialTable.qrc)
+set (resource_files ${CMAKE_CURRENT_SOURCE_DIR}/resource/SampleView.qrc)
 
 set(source_files)
 set(include_files)
