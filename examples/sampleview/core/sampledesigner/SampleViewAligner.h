@@ -35,8 +35,8 @@ class SampleViewAligner
 public:
     SampleViewAligner(DesignerScene *scene);
 
-    void alignSample(ModelView::SessionItem *item, QPointF reference = QPointF(), bool force_alignment = false);
-    void alignSample(const QModelIndex & parentIndex, QPointF reference = QPointF(), bool force_alignment = false);
+    void alignSample(ModelView::SessionItem* item, QPointF reference = QPointF(),
+                     bool force_alignment = false);
 
     void smartAlign();
     void updateViews(const QModelIndex & parentIndex = QModelIndex());
@@ -45,7 +45,6 @@ public:
     void advance();
 
 private:
-    IView *getViewForIndex(const QModelIndex &index);
     QList<IView *> getConnectedViews(IView *view);
 
     DesignerScene *m_scene;

@@ -149,46 +149,28 @@ QList<IView *> SampleViewAligner::getConnectedViews(IView *view)
 }
 
 
-//! Aligns sample starting from
-void SampleViewAligner::alignSample(SessionItem *item, QPointF reference, bool force_alignment)
-{
-    /*Q_ASSERT(item);
-    alignSample(m_scene->getSampleModel()->indexOfItem(item), reference, force_alignment);*/
-}
-
-
 //! Aligns sample starting from reference point.
 //! If force_alignment=false, view's position will be changed only if it has Null coordinate,
 //! if force_alignment=true the position will be changed anyway.
 //! Position of View which has parent item (like Layer) will remain unchainged.
-void SampleViewAligner::alignSample(const QModelIndex & parentIndex, QPointF reference, bool force_alignment)
+void SampleViewAligner::alignSample(SessionItem* item, QPointF reference, bool force_alignment)
 {
-    /*SampleModel *sampleModel = m_scene->getSampleModel();
+    if (!item)
+        return;
 
-    if(IView *view = getViewForIndex(parentIndex)) {
-        if( (force_alignment || view->pos().isNull()) && !view->parentObject())
+    if (IView* view = m_scene->getViewForItem(item)) {
+        if ((force_alignment || view->pos().isNull()) && !view->parentObject())
             view->setPos(reference);
 
-        if(view->parentObject()) {
-            reference = view->mapToScene(view->pos());
-        } else {
-            reference = view->pos();
-        }
+        reference = view->parentObject() ? view->mapToScene(view->pos()) : view->pos();
     }
+
     int child_counter = 0;
-    for( int i_row = 0; i_row < sampleModel->rowCount( parentIndex ); ++i_row) {
-         QModelIndex itemIndex = sampleModel->index( i_row, 0, parentIndex );
-         if(!getViewForIndex(itemIndex)) continue;
-         QPointF child_reference = reference + QPointF(-150, 150*child_counter++);
-         alignSample(itemIndex, child_reference, force_alignment);
-    }*/
-}
-
-
-IView *SampleViewAligner::getViewForIndex(const QModelIndex &index)
-{
-    /*SampleModel *sampleModel = m_scene->getSampleModel();
-    SessionItem *item = sampleModel->itemForIndex(index);
-    return m_scene->getViewForItem(item);*/
-    return nullptr;
+    for (auto child: item->children()) {
+        IView* view = m_scene->getViewForItem(child);
+        if (!view)
+            continue;
+        QPointF child_reference = reference + QPointF(-150, 150*child_counter++);
+        alignSample(child, child_reference, force_alignment);
+    }
 }

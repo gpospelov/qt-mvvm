@@ -222,7 +222,7 @@ void DesignerScene::addViewForItem(SessionItem *item)
 //! aligns SampleView's on graphical canvas
 void DesignerScene::alignViews()
 {
-    m_aligner->alignSample(QModelIndex(), QPointF(200, 800));
+    m_aligner->alignSample(m_sampleModel->rootItem(), QPointF(200, 800));
 }
 
 //! runs recursively through model's item and schedules view removal
