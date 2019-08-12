@@ -1,0 +1,54 @@
+set(library_name mvvm)
+
+target_sources(${library_name} PRIVATE
+    abstractviewmodelcontroller.cpp
+    abstractviewmodelcontroller.h
+    abstractviewmodel.cpp
+    abstractviewmodel.h
+    celldecorationinterface.h
+    childrenstrategyinterface.h
+    CMakeLists.txt
+    defaultcelldecoration.cpp
+    defaultcelldecoration.h
+    defaultviewmodel.cpp
+    defaultviewmodel.h
+    labeldatarowstrategy.cpp
+    labeldatarowstrategy.h
+    propertiesrowstrategy.cpp
+    propertiesrowstrategy.h
+    propertytableviewmodel.cpp
+    propertytableviewmodel.h
+    propertyviewmodel.cpp
+    propertyviewmodel.h
+    rowstrategyinterface.h
+    standardchildrenstrategies.cpp
+    standardchildrenstrategies.h
+    standardviewmodelcontrollers.cpp
+    standardviewmodelcontrollers.h
+    standardviewmodels.cpp
+    standardviewmodels.h
+    topitemsviewmodel.cpp
+    topitemsviewmodel.h
+    viewdataitem.cpp
+    viewdataitem.h
+    viewemptyitem.cpp
+    viewemptyitem.h
+    viewitem.cpp
+    viewitem.h
+    viewitems.h
+    viewitemtypes.h
+    viewlabelitem.cpp
+    viewlabelitem.h
+    viewmodelbuilder.cpp
+    viewmodelbuilder.h
+    viewmodeldelegate.cpp
+    viewmodeldelegate.h
+    viewmodelutils.cpp
+    viewmodelutils.h
+)
+
+target_include_directories(${library_name}
+    PUBLIC
+        $<INSTALL_INTERFACE:public>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>
+)

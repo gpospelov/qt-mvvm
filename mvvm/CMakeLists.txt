@@ -1,41 +1,18 @@
 set(library_name mvvm)
 
-set(include_dirs
-    ${CMAKE_CURRENT_SOURCE_DIR}/model
-    ${CMAKE_CURRENT_SOURCE_DIR}/commands
-    ${CMAKE_CURRENT_SOURCE_DIR}/viewmodel
-    ${CMAKE_CURRENT_SOURCE_DIR}/utils
-    ${CMAKE_CURRENT_SOURCE_DIR}/standarditems
-    ${CMAKE_CURRENT_SOURCE_DIR}/serialization
-    ${CMAKE_CURRENT_SOURCE_DIR}/widgets
-    ${CMAKE_CURRENT_SOURCE_DIR}/editors)
-
-set(source_files)
-set(include_files)
-
-foreach(dir ${include_dirs})
-    file(GLOB source ${dir}/*.cpp)
-    file(GLOB include ${dir}/*.h)
-    list(APPEND source_files ${source})
-    list(APPEND include_files ${include})
-endforeach()
-
 if(WIN32)
     add_definitions(-DCORE_BUILD_DLL)
 endif()
 
-add_library(${library_name} SHARED ${source_files} ${include_files})
+add_library(${library_name} SHARED "")
 
-target_include_directories(${library_name}
-    PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/model>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/commands>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/viewmodel>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/utils>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/serialization>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/standarditems>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/widgets>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/editors>
-)
+add_subdirectory(commands)
+add_subdirectory(editors)
+add_subdirectory(model)
+add_subdirectory(serialization)
+add_subdirectory(standarditems)
+add_subdirectory(utils)
+add_subdirectory(viewmodel)
+add_subdirectory(widgets)
 
 target_link_libraries(${library_name} Qt5::Widgets)
