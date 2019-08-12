@@ -8,8 +8,6 @@ file(GLOB include_files "*.h")
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Test REQUIRED)
 
-include_directories(${BUILD_INC_DIR} ${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
-
 if(WIN32)
     add_definitions(-DGTEST_LINKED_AS_SHARED_LIBRARY)
 endif()
