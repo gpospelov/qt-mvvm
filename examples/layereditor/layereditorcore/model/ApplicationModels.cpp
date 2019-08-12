@@ -13,7 +13,7 @@
 #include "SampleModel.h"
 #include "item_constants.h"
 #include "itempool.h"
-#include "jsonmodel.h"
+//#include "jsonmodel.h" // FIXME restore
 #include "sessionitem.h"
 #include <QFile>
 #include <QJsonArray>
@@ -50,48 +50,52 @@ SampleModel* ApplicationModels::sampleModel()
 
 // FIXME move read/write to separate class in qt-mvvm basic library. Hide json from user.
 
-void ApplicationModels::readFromFile(const QString& name)
+void ApplicationModels::readFromFile(const QString& /*name*/)
 {
-    QFile jsonFile(name);
+//    QFile jsonFile(name);
 
-    if (!jsonFile.open(QIODevice::ReadOnly))
-        throw std::runtime_error("readFromFile() -> Can't read file");
+//    if (!jsonFile.open(QIODevice::ReadOnly))
+//        throw std::runtime_error("readFromFile() -> Can't read file");
 
-    auto document = QJsonDocument::fromJson(jsonFile.readAll());
+//    auto document = QJsonDocument::fromJson(jsonFile.readAll());
 
-    auto array = document.array();
-    if (array.size() != 2)
-        throw std::runtime_error("readFromFile() -> Unexpected amount of files");
+//    auto array = document.array();
+//    if (array.size() != 2)
+//        throw std::runtime_error("readFromFile() -> Unexpected amount of files");
 
-    ModelView::JsonModel converter;
+//    ModelView::JsonModel converter;
 
-    p_impl->m_material_model->clear();
-    converter.json_to_model(array.at(0).toObject(), *p_impl->m_material_model);
+//    p_impl->m_material_model->clear();
+//    converter.json_to_model(array.at(0).toObject(), *p_impl->m_material_model);
 
-    p_impl->m_sample_model->clear();
-    converter.json_to_model(array.at(1).toObject(), *p_impl->m_sample_model);
+//    p_impl->m_sample_model->clear();
+//    converter.json_to_model(array.at(1).toObject(), *p_impl->m_sample_model);
+    throw std::runtime_error("Notimplemented");
 }
 
-void ApplicationModels::writeToFile(const QString& name)
+void ApplicationModels::writeToFile(const QString& /*name*/)
 {
-    ModelView::JsonModel converter;
+//    ModelView::JsonModel converter;
 
-    auto object = std::make_unique<QJsonObject>();
-    converter.model_to_json(*p_impl->m_material_model, *object);
+//    auto object = std::make_unique<QJsonObject>();
+//    converter.model_to_json(*p_impl->m_material_model, *object);
 
-    QJsonArray array;
-    array.push_back(*object);
+//    QJsonArray array;
+//    array.push_back(*object);
 
-    object = std::make_unique<QJsonObject>();
-    converter.model_to_json(*p_impl->m_sample_model, *object);
-    array.push_back(*object);
+//    object = std::make_unique<QJsonObject>();
+//    converter.model_to_json(*p_impl->m_sample_model, *object);
+//    array.push_back(*object);
 
-    QJsonDocument document(array);
+//    QJsonDocument document(array);
 
-    QFile saveFile(name);
+//    QFile saveFile(name);
 
-    if (!saveFile.open(QIODevice::WriteOnly))
-        throw std::runtime_error("writeToFile -> Can't save file");
+//    if (!saveFile.open(QIODevice::WriteOnly))
+//        throw std::runtime_error("writeToFile -> Can't save file");
 
-    saveFile.write(document.toJson());
+//    saveFile.write(document.toJson());
+
+    throw std::runtime_error("Notimplemented");
+
 }
