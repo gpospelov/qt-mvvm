@@ -17,4 +17,8 @@ add_subdirectory(widgets)
 
 target_link_libraries(${library_name} Qt5::Widgets)
 
-set(MVVM_PRIVATE_API ${CMAKE_CURRENT_LIST_DIR}/commands CACHE INTERNAL "")
+# Manually composing list of dirs with private API for unit testing.
+set(private_include_dirs
+    ${CMAKE_CURRENT_LIST_DIR}/commands
+    ${CMAKE_CURRENT_LIST_DIR}/serialization)
+set(MVVM_PRIVATE_API ${private_include_dirs} CACHE INTERNAL "")
