@@ -16,3 +16,5 @@ add_subdirectory(viewmodel)
 add_subdirectory(widgets)
 
 target_link_libraries(${library_name} Qt5::Widgets)
+
+set(MVVM_PRIVATE_API ${CMAKE_CURRENT_LIST_DIR}/commands CACHE INTERNAL "")

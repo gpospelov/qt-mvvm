@@ -16,6 +16,10 @@ set(CMAKE_AUTOMOC ON)
 add_executable(${test} ${source_files} ${include_files})
 target_link_libraries(${test} gtest gmock Qt5::Core Qt5::Test mvvm toyitems testmachinery)
 
+# Manually adding directories with private API
+message(INFO "XXX" ${MVVM_PRIVATE_API})
+target_include_directories(${test} PRIVATE ${MVVM_PRIVATE_API})
+
 if (MVVM_TESTS_AUTOEXEC)
     if (MVVM_TESTS_AUTODISCOVERY)
         gtest_discover_tests(${test})
