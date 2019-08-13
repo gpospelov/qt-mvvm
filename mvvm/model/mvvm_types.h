@@ -43,6 +43,7 @@ const model_type PropertyType = "Property";
 const model_type GroupType = "Group";
 const model_type CompoundType = "Compound";
 const model_type VectorType = "Vector";
+const model_type LinkedType = "Linked";
 } // namespace Constants
 
 namespace Callbacks {

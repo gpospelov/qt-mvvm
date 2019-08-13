@@ -12,6 +12,7 @@
 #include "vectoritem.h"
 #include "propertyitem.h"
 #include "compounditem.h"
+#include "linkeditem.h"
 
 using namespace ModelView;
 
@@ -22,5 +23,6 @@ std::unique_ptr<ItemCatalogue> ModelView::CreateStandardItemCatalogue()
     result->registerItem<PropertyItem>();
     result->registerItem<CompoundItem>();
     result->registerItem<VectorItem>();
+    result->registerItem<LinkedItem>();
     return result;
 }
