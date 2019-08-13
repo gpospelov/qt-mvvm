@@ -18,9 +18,10 @@ namespace ModelView
 
 /*!
 @class GraphItem
-@brief Serves as one-dimensional graph representation of Data1DItem.
+@brief One-dimensional graph representation of Data1DItem.
 
-Contains plot properties (i.e. color, line type etc) and link to Data1DItem.
+Contains plot properties (i.e. color, line type etc) and link to Data1DItem, which will provide
+data to plot.
 */
 
 class CORE_EXPORT GraphItem : public CompoundItem
@@ -28,6 +29,8 @@ class CORE_EXPORT GraphItem : public CompoundItem
 public:
     static inline const std::string P_LINK = "P_LINK";
     static inline const std::string P_COLOR = "P_COLOR";
+    static inline const std::string P_GRAPH_TITLE = "P_GRAPH_TITLE";
+    static inline const std::string P_AXIS_TITLE = "P_AXIS_TITLE";
     GraphItem();
 };
 

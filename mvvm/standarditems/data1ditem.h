@@ -18,9 +18,10 @@ namespace ModelView
 
 /*!
 @class Data1DItem
-@brief Represents one-dimensional data (axis and values).
+@brief Represents bare one-dimensional data (axis and values).
 
-Values are stored in Data1DItem itself, axis is attached as a child.
+Values are stored in Data1DItem itself, axis is attached as a child. Corresponding plot
+properties will be served by GraphItem.
 */
 
 class CORE_EXPORT Data1DItem : public CompoundItem

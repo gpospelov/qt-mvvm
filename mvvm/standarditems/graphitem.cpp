@@ -17,4 +17,6 @@ GraphItem::GraphItem() : CompoundItem(Constants::GraphItemType)
 {
     addProperty<LinkedItem>(P_LINK)->setDisplayName("Link");
     addProperty(P_COLOR, QColor(Qt::black))->setDisplayName("Color");
+    addProperty(P_GRAPH_TITLE, "Graph")->setDisplayName("Graph title");
+    addProperty(P_AXIS_TITLE, "x-axis")->setDisplayName("Axis title");
 }

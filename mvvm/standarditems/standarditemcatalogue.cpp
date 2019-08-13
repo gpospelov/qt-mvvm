@@ -16,6 +16,7 @@
 #include "axesitems.h"
 #include "data1ditem.h"
 #include "graphitem.h"
+#include "graphviewportitem.h"
 
 using namespace ModelView;
 
@@ -29,6 +30,6 @@ std::unique_ptr<ItemCatalogue> ModelView::CreateStandardItemCatalogue()
     result->registerItem<LinkedItem>();
     result->registerItem<FixedBinAxisItem>();
     result->registerItem<Data1DItem>();
-    result->registerItem<GraphItem>();
+    result->registerItem<GraphViewportItem>();
     return result;
 }
