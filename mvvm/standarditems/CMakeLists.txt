@@ -11,6 +11,8 @@ target_sources(${library_name} PRIVATE
     graphviewportitem.cpp
     linkeditem.h
     linkeditem.cpp
+    plotitems.h
+    plotitems.cpp
     standarditemcatalogue.cpp
     standarditemcatalogue.h
     vectoritem.cpp

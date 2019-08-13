@@ -7,16 +7,13 @@
 //
 // ************************************************************************** //
 
-#include "graphitem.h"
-#include "linkeditem.h"
 #include "plotitems.h"
-#include <QColor>
 
 using namespace ModelView;
 
-GraphItem::GraphItem() : CompoundItem(Constants::GraphItemType)
+TextItem::TextItem() : CompoundItem(Constants::TextType)
 {
-    addProperty<LinkedItem>(P_LINK)->setDisplayName("Link");
-    addProperty(P_COLOR, QColor(Qt::black))->setDisplayName("Color");
-    addProperty<TextItem>(P_GRAPH_TITLE)->setDisplayName("Graph title");
+    addProperty(P_TEXT, "")->setDisplayName("Text");
+    addProperty(P_FONT, "Helvetica")->setDisplayName("Font");
+    addProperty(P_SIZE, 12)->setDisplayName("Size");
 }

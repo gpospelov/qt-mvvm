@@ -15,7 +15,7 @@
 namespace ModelView
 {
 
-//! Items for axes.
+//! Base class for all axes items.
 
 class CORE_EXPORT BasicAxisItem : public CompoundItem
 {
@@ -34,6 +34,7 @@ protected:
 class CORE_EXPORT ViewportAxisItem : public BasicAxisItem
 {
 public:
+    static inline const std::string P_TITLE = "P_TITLE";
     ViewportAxisItem();
 };
 

@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include "axesitems.h"
+#include "plotitems.h"
 
 using namespace ModelView;
 
@@ -23,6 +24,7 @@ void BasicAxisItem::register_min_max()
 
 ViewportAxisItem::ViewportAxisItem() : BasicAxisItem(Constants::ViewportAxisType)
 {
+    addProperty<TextItem>(P_TITLE);
     register_min_max();
 }
 
