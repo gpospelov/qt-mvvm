@@ -20,7 +20,21 @@ namespace ModelView
 class CORE_EXPORT BasicAxisItem : public CompoundItem
 {
 public:
+    static inline const std::string P_MIN = "P_MIN";
+    static inline const std::string P_MAX = "P_MAX";
+
     explicit BasicAxisItem(std::string model_type);
+
+protected:
+    void register_min_max();
+};
+
+//! Item to represent viewport axis.
+
+class CORE_EXPORT ViewportAxisItem : public BasicAxisItem
+{
+public:
+    ViewportAxisItem();
 };
 
 //! Item to represent fixed bin axis.
@@ -29,8 +43,6 @@ class CORE_EXPORT FixedBinAxisItem : public BasicAxisItem
 {
 public:
     static inline const std::string P_NBINS = "P_NBINS";
-    static inline const std::string P_XMIN = "P_XMIN";
-    static inline const std::string P_XMAX = "P_XMAX";
 
     FixedBinAxisItem();
 };
