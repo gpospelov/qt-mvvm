@@ -22,9 +22,15 @@ QGradient DesignerHelper::getLayerGradient(const QColor &color, const QRectF &re
     QColor c = color;
     c.setAlpha(160);
     QLinearGradient result(rect.topLeft(), rect.bottomRight());
+#if QT_VERSION >= QT_VERSION_CHECK(5, 13, 0)
+    result.setColorAt(0, c.darker(150));
+    result.setColorAt(0.5, c.lighter(200));
+    result.setColorAt(1, c.darker(150));
+#else
     result.setColorAt(0, c.dark(150));
     result.setColorAt(0.5, c.light(200));
     result.setColorAt(1, c.dark(150));
+#endif
     return result;
 }
 

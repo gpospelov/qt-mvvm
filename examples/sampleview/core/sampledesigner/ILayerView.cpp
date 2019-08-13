@@ -169,7 +169,7 @@ MultiLayerCandidate ILayerView::getMultiLayerCandidate()
     }
     // sorting MultiLayerView candidates to find one whose drop area is closer
     if (candidates.size()) {
-        qSort(candidates.begin(), candidates.end());
+        std::sort(candidates.begin(), candidates.end());
         return candidates.back();
     }
     return MultiLayerCandidate();

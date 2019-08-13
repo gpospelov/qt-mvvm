@@ -31,7 +31,11 @@ QVariant ViewItem::data(int role) const
 
     if (role == Qt::DisplayRole || role == Qt::EditRole)
         return Utils::toQtVariant(m_item->data(m_item_role));
+#if QT_VERSION >= QT_VERSION_CHECK(5, 13, 0)
+    else if (role == Qt::ForegroundRole)
+#else
     else if (role == Qt::TextColorRole)
+#endif
         return Utils::TextColorRole(*m_item);
     else
         return QStandardItem::data(role);

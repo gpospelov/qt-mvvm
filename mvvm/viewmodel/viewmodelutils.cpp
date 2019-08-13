@@ -64,7 +64,11 @@ QVector<int> Utils::item_role_to_qt(int role)
     if (role == ItemDataRole::DISPLAY || role == ItemDataRole::DATA)
         result = {Qt::DisplayRole, Qt::EditRole};
     else if (role == ItemDataRole::APPEARANCE)
+#if QT_VERSION >= QT_VERSION_CHECK(5, 13, 0)
+        result = {Qt::ForegroundRole};
+#else
         result = {Qt::TextColorRole};
+#endif
 
     return result;
 }
