@@ -45,7 +45,7 @@ const model_type CompoundType = "Compound";
 const model_type VectorType = "Vector";
 const model_type LinkedType = "Linked";
 const model_type FixedBinAxisType = "FixedBinAxis";
-
+const model_type Data1DItemType = "Data1DItem";
 } // namespace Constants
 
 namespace Callbacks {

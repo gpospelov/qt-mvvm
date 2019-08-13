@@ -14,6 +14,7 @@
 #include "compounditem.h"
 #include "linkeditem.h"
 #include "axesitems.h"
+#include "data1ditem.h"
 
 using namespace ModelView;
 
@@ -26,5 +27,6 @@ std::unique_ptr<ItemCatalogue> ModelView::CreateStandardItemCatalogue()
     result->registerItem<VectorItem>();
     result->registerItem<LinkedItem>();
     result->registerItem<FixedBinAxisItem>();
+    result->registerItem<Data1DItem>();
     return result;
 }
