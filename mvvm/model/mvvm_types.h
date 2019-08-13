@@ -44,6 +44,8 @@ const model_type GroupType = "Group";
 const model_type CompoundType = "Compound";
 const model_type VectorType = "Vector";
 const model_type LinkedType = "Linked";
+const model_type FixedBinAxisType = "FixedBinAxis";
+
 } // namespace Constants
 
 namespace Callbacks {
