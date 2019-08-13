@@ -5,6 +5,8 @@ target_sources(${library_name} PRIVATE
     axesitems.cpp
     data1ditem.h
     data1ditem.cpp
+    graphitem.h
+    graphitem.cpp
     linkeditem.h
     linkeditem.cpp
     standarditemcatalogue.cpp
