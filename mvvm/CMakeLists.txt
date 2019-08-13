@@ -18,6 +18,9 @@ add_subdirectory(widgets)
 
 target_link_libraries(${library_name} Qt5::Widgets)
 
+# to make clang code model in Qt creator happy
+target_compile_features(${library_name} PRIVATE cxx_std_17)
+
 # Manually composing list of dirs with private API for unit testing.
 set(private_include_dirs
     ${CMAKE_CURRENT_LIST_DIR}/commands
