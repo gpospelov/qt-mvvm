@@ -8,10 +8,13 @@
 // ************************************************************************** //
 
 #include "graphviewportitem.h"
+#include "axesitems.h"
 
 using namespace ModelView;
 
 GraphViewportItem::GraphViewportItem() : CompoundItem(Constants::GraphViewportItemType)
 {
-
+    addProperty<ViewportAxisItem>(P_XAXIS)->setDisplayName("X axis");
+    addProperty<ViewportAxisItem>(P_YAXIS)->setDisplayName("Y axis");
+    registerTag(TagInfo::universalTag(T_GRAPHS, {Constants::GraphItemType}), /*set_default*/ true);
 }

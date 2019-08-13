@@ -15,7 +15,6 @@
 namespace ModelView
 {
 
-
 /*!
 @class GraphViewportItem
 @brief Container with viewport and collection of GraphItem's to plot.
