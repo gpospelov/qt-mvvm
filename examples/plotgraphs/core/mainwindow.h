@@ -32,7 +32,7 @@ private:
     void init_model();
 
     QTabWidget* m_tabWidget;
-    std::unique_ptr<GraphModel> m_sample_model;
+    std::unique_ptr<GraphModel> m_graph_model;
 };
 
 #endif //  MAINWINDOW_H

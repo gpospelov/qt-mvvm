@@ -9,6 +9,7 @@
 
 #include "mainwindow.h"
 #include "graphmodel.h"
+#include "graphwidget.h"
 #include <QCoreApplication>
 #include <QSettings>
 #include <QTabWidget>
@@ -21,9 +22,9 @@ const QString pos_key = "pos";
 } // namespace
 
 MainWindow::MainWindow()
-    : m_tabWidget(new QTabWidget), m_sample_model(std::make_unique<GraphModel>())
+    : m_tabWidget(new QTabWidget), m_graph_model(std::make_unique<GraphModel>())
 {
-//    m_tabWidget->addTab(new TestWidget(m_sample_model.get()), "Tree views");
+    m_tabWidget->addTab(new GraphWidget(m_graph_model.get()), "Tree views");
 
     m_tabWidget->setCurrentIndex(m_tabWidget->count() - 1);
     setCentralWidget(m_tabWidget);

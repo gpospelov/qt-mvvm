@@ -11,7 +11,4 @@
 
 using namespace ModelView;
 
-
-GraphModel::GraphModel() : SessionModel("GraphModel")
-{
-}
+GraphModel::GraphModel() : SessionModel("GraphModel") {}
