@@ -16,7 +16,13 @@
 namespace ModelView
 {
 
-//! Item to store a link to other arbitrary item.
+/*!
+@class LinkedItem
+@brief Item to store a link to other arbitrary item.
+
+Identifier of linked item is stored as DataRole on board of LinkedItem and can be used
+to find corresponding item via SessionModel::findItem machinery.
+*/
 
 class CORE_EXPORT LinkedItem : public SessionItem
 {
