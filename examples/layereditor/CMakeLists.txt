@@ -1,2 +1,2 @@
-add_subdirectory(layereditorcore)
+add_subdirectory(core)
 add_subdirectory(main)
