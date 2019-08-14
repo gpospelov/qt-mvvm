@@ -13,7 +13,7 @@
 #include <memory>
 #include <QMainWindow>
 
-class SampleModel;
+class GraphModel;
 class QTabWidget;
 
 class MainWindow : public QMainWindow
@@ -32,7 +32,7 @@ private:
     void init_model();
 
     QTabWidget* m_tabWidget;
-    std::unique_ptr<SampleModel> m_sample_model;
+    std::unique_ptr<GraphModel> m_sample_model;
 };
 
 #endif //  MAINWINDOW_H

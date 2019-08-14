@@ -7,11 +7,21 @@
 //
 // ************************************************************************** //
 
-#include "samplemodel.h"
+#ifndef GRAPHMODEL_H
+#define GRAPHMODEL_H
 
-using namespace ModelView;
+#include "sessionmodel.h"
 
+/*!
+@class GraphModel
+@brief Main application model.
+*/
 
-SampleModel::SampleModel() : SessionModel("SampleModel")
+class GraphModel : public ModelView::SessionModel
 {
-}
+public:
+    GraphModel();
+};
+
+#endif // GRAPHMODEL_H
+
