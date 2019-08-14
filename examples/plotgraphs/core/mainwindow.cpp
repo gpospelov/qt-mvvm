@@ -24,7 +24,7 @@ const QString pos_key = "pos";
 MainWindow::MainWindow()
     : m_tabWidget(new QTabWidget), m_graph_model(std::make_unique<GraphModel>())
 {
-    m_tabWidget->addTab(new GraphWidget(m_graph_model.get()), "Tree views");
+    m_tabWidget->addTab(new GraphWidget(m_graph_model.get()), "Graphs");
 
     m_tabWidget->setCurrentIndex(m_tabWidget->count() - 1);
     setCentralWidget(m_tabWidget);

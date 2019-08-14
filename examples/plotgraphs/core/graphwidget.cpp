@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include "graphwidget.h"
+#include "graphpropertywidget.h"
 #include <QBoxLayout>
 
 using namespace ModelView;
@@ -17,8 +18,8 @@ GraphWidget::GraphWidget(GraphModel* model, QWidget* parent) : QWidget(parent)
     auto mainLayout = new QHBoxLayout();
     mainLayout->setSpacing(10);
 
-    mainLayout->addLayout(create_left_layout(), 1);
-    mainLayout->addLayout(create_right_layout(), 3);
+    mainLayout->addLayout(create_left_layout(), 3);
+    mainLayout->addLayout(create_right_layout(), 1);
 
     setLayout(mainLayout);
     setModel(model);
@@ -42,6 +43,6 @@ QBoxLayout* GraphWidget::create_left_layout()
 QBoxLayout* GraphWidget::create_right_layout()
 {
     auto result = new QVBoxLayout;
-    result->addWidget(new QWidget);
+    result->addWidget(new GraphPropertyWidget);
     return result;
 }
