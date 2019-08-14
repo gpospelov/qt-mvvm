@@ -11,10 +11,10 @@
 #define MVVM_DATA1DITEM_H
 
 #include "compounditem.h"
+#include <vector>
 
 namespace ModelView
 {
-
 
 /*!
 @class Data1DItem
@@ -29,6 +29,14 @@ class CORE_EXPORT Data1DItem : public CompoundItem
 public:
     static inline const std::string T_AXIS = "T_AXIS";
     Data1DItem();
+
+    void setFixedBinAxis(int nbins, double xmin, double xmax);
+
+    void setContent(const std::vector<double>& data);
+
+    std::vector<double> binCenters() const;
+
+    std::vector<double> binValues() const;
 };
 
 } // namespace ModelView

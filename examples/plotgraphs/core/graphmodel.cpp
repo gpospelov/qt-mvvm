@@ -8,7 +8,16 @@
 // ************************************************************************** //
 
 #include "graphmodel.h"
+#include "mvvm_types.h"
 
 using namespace ModelView;
 
-GraphModel::GraphModel() : SessionModel("GraphModel") {}
+GraphModel::GraphModel() : SessionModel("GraphModel")
+{
+    init_model();
+}
+
+void GraphModel::init_model()
+{
+    insertNewItem(Constants::Data1DItemType);
+}

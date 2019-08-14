@@ -21,6 +21,9 @@ class GraphModel : public ModelView::SessionModel
 {
 public:
     GraphModel();
+
+private:
+    void init_model();
 };
 
 #endif // GRAPHMODEL_H
