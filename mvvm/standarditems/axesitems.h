@@ -11,6 +11,7 @@
 #define MVVM_AXESITEMS_H
 
 #include "compounditem.h"
+#include <memory>
 
 namespace ModelView
 {
@@ -46,6 +47,9 @@ public:
     static inline const std::string P_NBINS = "P_NBINS";
 
     FixedBinAxisItem();
+
+    static std::unique_ptr<FixedBinAxisItem> create(int nbins, double xmin, double xmax);
+
 };
 
 } // namespace ModelView

@@ -35,3 +35,12 @@ FixedBinAxisItem::FixedBinAxisItem() : BasicAxisItem(Constants::FixedBinAxisType
     addProperty(P_NBINS, 100)->setDisplayName("Nbins");
     register_min_max();
 }
+
+std::unique_ptr<FixedBinAxisItem> FixedBinAxisItem::create(int nbins, double xmin, double xmax)
+{
+    auto result = std::make_unique<FixedBinAxisItem>();
+    result->setItemValue(P_NBINS, nbins);
+    result->setItemValue(P_MIN, xmin);
+    result->setItemValue(P_MAX, xmax);
+    return result;
+}
