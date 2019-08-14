@@ -12,6 +12,7 @@
 
 #include "compounditem.h"
 #include <memory>
+#include <vector>
 
 namespace ModelView
 {
@@ -50,6 +51,7 @@ public:
 
     static std::unique_ptr<FixedBinAxisItem> create(int nbins, double xmin, double xmax);
 
+    std::vector<double> binCenters() const;
 };
 
 } // namespace ModelView
