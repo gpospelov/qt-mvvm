@@ -14,6 +14,7 @@ include(configuration)
 add_subdirectory(mvvm)
 add_subdirectory(examples)
 add_subdirectory(thirdparty/gtest)
+add_subdirectory(thirdparty/qcustomplot)
 add_subdirectory(tests)
 
 

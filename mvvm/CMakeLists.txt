@@ -16,7 +16,7 @@ add_subdirectory(utils)
 add_subdirectory(viewmodel)
 add_subdirectory(widgets)
 
-target_link_libraries(${library_name} Qt5::Widgets)
+target_link_libraries(${library_name} PUBLIC Qt5::Widgets PRIVATE qcustomplot)
 
 # to make clang code model in Qt creator happy
 target_compile_features(${library_name} PRIVATE cxx_std_17)
