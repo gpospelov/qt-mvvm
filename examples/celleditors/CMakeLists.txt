@@ -1,2 +1,2 @@
-add_subdirectory(celleditorscore)
+add_subdirectory(core)
 add_subdirectory(main)
