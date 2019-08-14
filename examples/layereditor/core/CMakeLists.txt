@@ -1,26 +1,10 @@
 set(library_name layereditorcore)
 
-# --- source and include files ---
-set(include_dirs  ${CMAKE_CURRENT_SOURCE_DIR}/model
-    ${CMAKE_CURRENT_SOURCE_DIR}/viewmodel
-    ${CMAKE_CURRENT_SOURCE_DIR}/mainwindow)
+add_library(${library_name} STATIC "")
 
-set(source_files)
-set(include_files)
+add_subdirectory(mainwindow)
+add_subdirectory(model)
+add_subdirectory(viewmodel)
 
-foreach(dir ${include_dirs})
-    file(GLOB source ${dir}/*.cpp)
-    file(GLOB include ${dir}/*.h)
-    list(APPEND source_files ${source})
-    list(APPEND include_files ${include})
-endforeach()
-
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-set(CMAKE_AUTOMOC ON)
-
-add_library(${library_name} STATIC ${source_files} ${include_files})
-
-target_include_directories(${library_name} PUBLIC ${include_dirs})
-
-target_link_libraries(${library_name} mvvm Qt5::Core Qt5::Gui Qt5::Widgets)
+target_link_libraries(${library_name} PUBLIC mvvm Qt5::Core Qt5::Gui Qt5::Widgets)
 
