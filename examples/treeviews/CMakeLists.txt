@@ -1,2 +1,2 @@
-add_subdirectory(treeviewscore)
+add_subdirectory(core)
 add_subdirectory(main)
