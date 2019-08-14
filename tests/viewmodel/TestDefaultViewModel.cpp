@@ -321,7 +321,11 @@ TEST_F(TestDefaultViewModel, propertyItemAppearanceChanged)
     auto roles = arguments.at(2).value<QVector<int>>();
     EXPECT_EQ(index1, viewModel.indexFromItem(labelView));
     EXPECT_EQ(index2, viewModel.indexFromItem(labelView));
+#if QT_VERSION >= QT_VERSION_CHECK(5, 13, 0)
+    QVector<int> expected_roles = {Qt::ForegroundRole};
+#else
     QVector<int> expected_roles = {Qt::TextColorRole};
+#endif
     EXPECT_EQ(roles, expected_roles);
 
     // second pack of arguments is related to ViewDataItem
@@ -332,7 +336,13 @@ TEST_F(TestDefaultViewModel, propertyItemAppearanceChanged)
     roles = arguments.at(2).value<QVector<int>>();
     EXPECT_EQ(index1, viewModel.indexFromItem(dataView));
     EXPECT_EQ(index2, viewModel.indexFromItem(dataView));
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 13, 0)
+    expected_roles = {Qt::ForegroundRole};
+#else
     expected_roles = {Qt::TextColorRole};
+#endif
+
     EXPECT_EQ(roles, expected_roles);
 }
 
