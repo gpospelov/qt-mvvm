@@ -35,7 +35,7 @@ TEST_F(TestSessionItem, initialState)
     EXPECT_EQ(item.roles(), expected_roles);
 
     // Identifier is not zero
-    EXPECT_FALSE(item.data(ItemDataRole::IDENTIFIER).value<std::string>().empty());
+    EXPECT_FALSE(item.identifier().empty());
 }
 
 TEST_F(TestSessionItem, modelType)
@@ -114,7 +114,7 @@ TEST_F(TestSessionItem, variantMismatch)
 TEST_F(TestSessionItem, registerItem)
 {
     std::unique_ptr<SessionItem> item(new SessionItem);
-    auto item_id = item->data(ItemDataRole::IDENTIFIER).value<std::string>();
+    auto item_id = item->identifier();
     EXPECT_EQ(item->roles().size(), 2u);
 
     std::shared_ptr<ItemPool> pool;
@@ -123,7 +123,7 @@ TEST_F(TestSessionItem, registerItem)
     pool.reset(new ItemPool);
     pool->register_item(item.get(), item_id);
     // registration shouldn't change item identifier
-    EXPECT_EQ(item->data(ItemDataRole::IDENTIFIER).value<std::string>(), item_id);
+    EXPECT_EQ(item->identifier(), item_id);
 
     // registration key should coincide with item identifier
     auto key = pool->key_for_item(item.get());

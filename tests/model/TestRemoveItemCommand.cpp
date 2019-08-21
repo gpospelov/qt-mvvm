@@ -20,7 +20,7 @@ TEST_F(TestRemoveItemCommand, removeAtCommand)
     SessionModel model;
     auto item = model.insertNewItem(Constants::BaseType, model.rootItem(), "", 0);
 
-    auto item_identifier = item->data(ItemDataRole::IDENTIFIER).value<std::string>();
+    auto item_identifier = item->identifier();
 
     // command to insert parent in the model
     auto command = std::make_unique<RemoveItemCommand>(model.rootItem(), "", 0);
@@ -33,7 +33,7 @@ TEST_F(TestRemoveItemCommand, removeAtCommand)
     command->undo();
     EXPECT_EQ(model.rootItem()->childrenCount(), 1);
     auto restored = Utils::ChildAt(model.rootItem(), 0);
-    EXPECT_EQ(restored->data(ItemDataRole::IDENTIFIER).value<std::string>(), item_identifier);
+    EXPECT_EQ(restored->identifier(), item_identifier);
 }
 
 TEST_F(TestRemoveItemCommand, removeAtCommandChild)
@@ -46,7 +46,7 @@ TEST_F(TestRemoveItemCommand, removeAtCommandChild)
     child1->setData(42.0);
     model.insertNewItem(Constants::BaseType, parent, "tag1", -1);
 
-    auto child1_identifier = child1->data(ItemDataRole::IDENTIFIER).value<std::string>();
+    auto child1_identifier = child1->identifier();
 
     // command to remove one child
     auto command = std::make_unique<RemoveItemCommand>(parent, "", 0);
@@ -60,7 +60,7 @@ TEST_F(TestRemoveItemCommand, removeAtCommandChild)
     command->undo();
     EXPECT_EQ(parent->childrenCount(), 2);
     auto restored = Utils::ChildAt(parent, 0);
-    EXPECT_EQ(restored->data(ItemDataRole::IDENTIFIER).value<std::string>(), child1_identifier);
+    EXPECT_EQ(restored->identifier(), child1_identifier);
 
     // checking the data of restored item
     EXPECT_EQ(restored->data().toDouble(), 42.0);
@@ -75,8 +75,8 @@ TEST_F(TestRemoveItemCommand, removeAtCommandParentWithChild)
     auto child1 = model.insertNewItem(Constants::BaseType, parent, "tag1", -1);
     child1->setData(42.0);
 
-    auto parent_identifier = parent->data(ItemDataRole::IDENTIFIER).value<std::string>();
-    auto child1_identifier = child1->data(ItemDataRole::IDENTIFIER).value<std::string>();
+    auto parent_identifier = parent->identifier();
+    auto child1_identifier = child1->identifier();
 
     // command to remove parent
     auto command = std::make_unique<RemoveItemCommand>(model.rootItem(), "", 0);
@@ -92,10 +92,8 @@ TEST_F(TestRemoveItemCommand, removeAtCommandParentWithChild)
     auto restored_parent = Utils::ChildAt(model.rootItem(), 0);
     auto restored_child = Utils::ChildAt(restored_parent, 0);
 
-    EXPECT_EQ(restored_parent->data(ItemDataRole::IDENTIFIER).value<std::string>(),
-              parent_identifier);
-    EXPECT_EQ(restored_child->data(ItemDataRole::IDENTIFIER).value<std::string>(),
-              child1_identifier);
+    EXPECT_EQ(restored_parent->identifier(), parent_identifier);
+    EXPECT_EQ(restored_child->identifier(), child1_identifier);
 
     // checking the data of restored item
     EXPECT_EQ(restored_child->data().toDouble(), 42.0);
@@ -119,10 +117,10 @@ TEST_F(TestRemoveItemCommand, removeAtCommandMultitag)
     auto child3 = model.insertNewItem(Constants::BaseType, parent, "tag2", -1);
     child3->setData(43.0);
 
-    auto parent_identifier = parent->data(ItemDataRole::IDENTIFIER).value<std::string>();
-    auto child1_identifier = child1->data(ItemDataRole::IDENTIFIER).value<std::string>();
-    auto child2_identifier = child2->data(ItemDataRole::IDENTIFIER).value<std::string>();
-    auto child3_identifier = child3->data(ItemDataRole::IDENTIFIER).value<std::string>();
+    auto parent_identifier = parent->identifier();
+    auto child1_identifier = child1->identifier();
+    auto child2_identifier = child2->identifier();
+    auto child3_identifier = child3->identifier();
 
     // command to remove parent
     auto command = std::make_unique<RemoveItemCommand>(parent, "tag1", 1);
@@ -138,10 +136,8 @@ TEST_F(TestRemoveItemCommand, removeAtCommandMultitag)
     auto restored_parent = Utils::ChildAt(model.rootItem(), 0);
     auto restored_child2 = Utils::ChildAt(restored_parent, 1);
 
-    EXPECT_EQ(restored_parent->data(ItemDataRole::IDENTIFIER).value<std::string>(),
-              parent_identifier);
-    EXPECT_EQ(restored_child2->data(ItemDataRole::IDENTIFIER).value<std::string>(),
-              child2_identifier);
+    EXPECT_EQ(restored_parent->identifier(), parent_identifier);
+    EXPECT_EQ(restored_child2->identifier(), child2_identifier);
 
     // checking the data of restored item
     EXPECT_EQ(restored_child2->data().toDouble(), 42.0);

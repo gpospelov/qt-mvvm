@@ -39,7 +39,7 @@ TEST_F(TestSessionModel, insertNewItem)
     EXPECT_EQ(item->modelType(), modelType);
 
     // checking registration
-    auto item_key = item->data(ItemDataRole::IDENTIFIER).value<std::string>();
+    auto item_key = item->identifier();
     EXPECT_EQ(pool->item_for_key(item_key), item);
 
     // registering tag
@@ -47,7 +47,7 @@ TEST_F(TestSessionModel, insertNewItem)
 
     // adding child to it
     auto child = model.insertNewItem(modelType, item);
-    auto child_key = child->data(ItemDataRole::IDENTIFIER).value<std::string>();
+    auto child_key = child->identifier();
     EXPECT_EQ(pool->item_for_key(child_key), child);
 
     EXPECT_TRUE(child != nullptr);
@@ -133,10 +133,10 @@ TEST_F(TestSessionModel, takeRowFromRootItem)
 
     auto parent = model.insertNewItem(Constants::BaseType);
     parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
-    auto parent_key = parent->data(ItemDataRole::IDENTIFIER).value<std::string>();
+    auto parent_key = parent->identifier();
 
     auto child = model.insertNewItem(Constants::PropertyType, parent);
-    auto child_key = child->data(ItemDataRole::IDENTIFIER).value<std::string>();
+    auto child_key = child->identifier();
 
     EXPECT_EQ(pool->item_for_key(parent_key), parent);
     EXPECT_EQ(pool->item_for_key(child_key), child);

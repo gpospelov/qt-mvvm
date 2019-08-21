@@ -71,7 +71,7 @@ ItemPool* ItemManager::itemPool()
 void ItemManager::register_item(SessionItem* item)
 {
     if (m_item_pool)
-        m_item_pool->register_item(item, item->data(ItemDataRole::IDENTIFIER).value<std::string>());
+        m_item_pool->register_item(item, item->identifier());
 }
 
 void ItemManager::unregister_item(SessionItem* item)

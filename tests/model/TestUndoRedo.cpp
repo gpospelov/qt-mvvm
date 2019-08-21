@@ -339,9 +339,9 @@ TEST_F(TestUndoRedo, itemIdentifierOnRemove)
     auto parent = model.insertNewItem(Constants::BaseType);
     parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
 
-    identifier_type parent_id = parent->data(ItemDataRole::IDENTIFIER).value<std::string>();
+    identifier_type parent_id = parent->identifier();
     auto child = model.insertNewItem(Constants::PropertyType, parent);
-    identifier_type child_id = child->data(ItemDataRole::IDENTIFIER).value<std::string>();
+    identifier_type child_id = child->identifier();
 
     // removing parent
     model.removeItem(model.rootItem(), "", 0);
@@ -352,8 +352,8 @@ TEST_F(TestUndoRedo, itemIdentifierOnRemove)
     stack->undo();
     parent = Utils::ChildAt(model.rootItem(), 0);
     child = Utils::ChildAt(parent, 0);
-    identifier_type parent_id2 = parent->data(ItemDataRole::IDENTIFIER).value<std::string>();
-    identifier_type child_id2 = child->data(ItemDataRole::IDENTIFIER).value<std::string>();
+    identifier_type parent_id2 = parent->identifier();
+    identifier_type child_id2 = child->identifier();
 
     EXPECT_EQ(parent_id, parent_id2);
     EXPECT_EQ(child_id, child_id2);
@@ -380,9 +380,9 @@ TEST_F(TestUndoRedo, multiLayer)
     auto layer1 = model.insertNewItem(ToyItems::Constants::LayerType, parent);
 
     // saving identifiers for further reference
-    identifier_type id_parent = parent->data(ItemDataRole::IDENTIFIER).value<std::string>();
-    identifier_type id_layer0 = layer0->data(ItemDataRole::IDENTIFIER).value<std::string>();
-    identifier_type id_layer1 = layer1->data(ItemDataRole::IDENTIFIER).value<std::string>();
+    identifier_type id_parent = parent->identifier();
+    identifier_type id_layer0 = layer0->identifier();
+    identifier_type id_layer1 = layer1->identifier();
 
     // checking status of unddo stack
     EXPECT_EQ(stack->count(), 3);
@@ -410,9 +410,9 @@ TEST_F(TestUndoRedo, multiLayer)
     layer1 = Utils::ChildAt(parent, 1);
 
     // checking that restored item has corrrect identifiers
-    EXPECT_EQ(parent->data(ItemDataRole::IDENTIFIER).value<std::string>(), id_parent);
-    EXPECT_EQ(layer0->data(ItemDataRole::IDENTIFIER).value<std::string>(), id_layer0);
-    EXPECT_EQ(layer1->data(ItemDataRole::IDENTIFIER).value<std::string>(), id_layer1);
+    EXPECT_EQ(parent->identifier(), id_parent);
+    EXPECT_EQ(layer0->identifier(), id_layer0);
+    EXPECT_EQ(layer1->identifier(), id_layer1);
 
     // checking tag
     EXPECT_EQ(parent->tagFromItem(layer0), ToyItems::MultiLayerItem::T_LAYERS);
@@ -437,11 +437,9 @@ TEST_F(TestUndoRedo, moveLayerFromMultiLayer)
     auto multilayer1 = model.insertNewItem(ToyItems::Constants::MultiLayerType);
 
     // saving identifiers for further reference
-    identifier_type id_multilayer0 =
-        multilayer0->data(ItemDataRole::IDENTIFIER).value<std::string>();
-    identifier_type id_layer0 = layer0->data(ItemDataRole::IDENTIFIER).value<std::string>();
-    identifier_type id_multilayer1 =
-        multilayer1->data(ItemDataRole::IDENTIFIER).value<std::string>();
+    identifier_type id_multilayer0 = multilayer0->identifier();
+    identifier_type id_layer0 = layer0->identifier();
+    identifier_type id_multilayer1 = multilayer1->identifier();
 
     // moving layer from multilayer
     model.moveItem(layer0, multilayer1, "", 0);
@@ -476,11 +474,9 @@ TEST_F(TestUndoRedo, moveLayerFromMLDeleteSecond)
     auto multilayer1 = model.insertNewItem(ToyItems::Constants::MultiLayerType);
 
     // saving identifiers for further reference
-    identifier_type id_multilayer0 =
-        multilayer0->data(ItemDataRole::IDENTIFIER).value<std::string>();
-    identifier_type id_layer0 = layer0->data(ItemDataRole::IDENTIFIER).value<std::string>();
-    identifier_type id_multilayer1 =
-        multilayer1->data(ItemDataRole::IDENTIFIER).value<std::string>();
+    identifier_type id_multilayer0 = multilayer0->identifier();
+    identifier_type id_layer0 = layer0->identifier();
+    identifier_type id_multilayer1 = multilayer1->identifier();
 
     // moving layer from multilayer
     model.moveItem(layer0, multilayer1, "", 0);
@@ -530,11 +526,10 @@ TEST_F(TestUndoRedo, moveLayerFromMLDeleteAll)
     auto layer2 = model.insertNewItem(ToyItems::Constants::LayerType, multilayer0);
 
     // saving identifiers for further reference
-    identifier_type id_multilayer0 =
-        multilayer0->data(ItemDataRole::IDENTIFIER).value<std::string>();
-    identifier_type id_layer0 = layer0->data(ItemDataRole::IDENTIFIER).value<std::string>();
-    identifier_type id_layer1 = layer1->data(ItemDataRole::IDENTIFIER).value<std::string>();
-    identifier_type id_layer2 = layer2->data(ItemDataRole::IDENTIFIER).value<std::string>();
+    identifier_type id_multilayer0 = multilayer0->identifier();
+    identifier_type id_layer0 = layer0->identifier();
+    identifier_type id_layer1 = layer1->identifier();
+    identifier_type id_layer2 = layer2->identifier();
 
     // creating another multi layer with 3 layers
     auto multilayer1 = model.insertNewItem(ToyItems::Constants::MultiLayerType);
@@ -543,11 +538,10 @@ TEST_F(TestUndoRedo, moveLayerFromMLDeleteAll)
     auto layer5 = model.insertNewItem(ToyItems::Constants::LayerType, multilayer1);
 
     // saving identifiers for further reference
-    identifier_type id_multilayer1 =
-        multilayer1->data(ItemDataRole::IDENTIFIER).value<std::string>();
-    identifier_type id_layer3 = layer3->data(ItemDataRole::IDENTIFIER).value<std::string>();
-    identifier_type id_layer4 = layer4->data(ItemDataRole::IDENTIFIER).value<std::string>();
-    identifier_type id_layer5 = layer5->data(ItemDataRole::IDENTIFIER).value<std::string>();
+    identifier_type id_multilayer1 = multilayer1->identifier();
+    identifier_type id_layer3 = layer3->identifier();
+    identifier_type id_layer4 = layer4->identifier();
+    identifier_type id_layer5 = layer5->identifier();
 
     // checking status of unddo stack
     EXPECT_EQ(stack->count(), 8);

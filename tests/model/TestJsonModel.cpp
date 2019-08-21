@@ -174,8 +174,8 @@ TEST_F(TestJsonModel, identifiers)
     auto reco_parent = target.rootItem()->getItem("", 0);
 
     // comparing identifiers of two items from different models
-    auto id1 = parent1->data(ItemDataRole::IDENTIFIER).value<std::string>();
-    auto id2 = reco_parent->data(ItemDataRole::IDENTIFIER).value<std::string>();
+    auto id1 = parent1->identifier();
+    auto id2 = reco_parent->identifier();
     EXPECT_EQ(id1, id2);
 
     // saving target in its own json
