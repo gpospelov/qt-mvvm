@@ -1,8 +1,8 @@
-#include "google_test.h"
-#include "test_utils.h"
 #include "compounditem.h"
-#include "sessionmodel.h"
 #include "customvariants.h"
+#include "google_test.h"
+#include "sessionmodel.h"
+#include "test_utils.h"
 #include <memory>
 #include <stdexcept>
 
@@ -63,7 +63,7 @@ TEST_F(TestCompoundItem, addDoubleProperty)
     EXPECT_TRUE(propertyItem->data(ItemDataRole::LIMITS).isValid());
 }
 
-TEST_F(TestCompoundItem, itemValue)
+TEST_F(TestCompoundItem, setProperty)
 {
     CompoundItem item;
 
@@ -80,3 +80,18 @@ TEST_F(TestCompoundItem, itemValue)
     EXPECT_EQ(propertyItem->data().toDouble(), expected);
 }
 
+TEST_F(TestCompoundItem, itemAccess)
+{
+    const std::string tag = "tag";
+
+    // creating parent with one tag
+    SessionItem parent;
+    parent.registerTag(TagInfo::universalTag(tag));
+
+    // inserting two children
+    auto property = new PropertyItem;
+    parent.insertItem(property, tag);
+
+    EXPECT_TRUE(&parent.item<PropertyItem>(tag) == property);
+    EXPECT_THROW(parent.item<CompoundItem>(tag), std::runtime_error);
+}

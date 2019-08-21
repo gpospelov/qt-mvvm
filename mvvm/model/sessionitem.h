@@ -70,6 +70,7 @@ public:
     int itemCount(const std::string& tag = {}) const;
     SessionItem* getItem(const std::string& tag = {}, int row = 0) const;
     std::vector<SessionItem*> getItems(const std::string& tag = {}) const;
+    template <typename T> T& item(const std::string& tag) const;
     std::string tagFromItem(const SessionItem* item) const;
     std::pair<std::string, int> tagRowOfItem(const SessionItem* item) const;
 
@@ -97,6 +98,16 @@ private:
 
     std::unique_ptr<SessionItemPrivate> p_impl;
 };
+
+template <typename T> T& SessionItem::item(const std::string& tag) const
+{
+    T* tag_item = dynamic_cast<T*>(getItem(tag));
+    if (!tag_item)
+        throw std::runtime_error("Can't cast an item to given type");
+
+    return *tag_item;
+}
+
 
 } // namespace ModelView
 

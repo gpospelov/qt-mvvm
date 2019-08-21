@@ -23,5 +23,4 @@ GraphItem::GraphItem() : CompoundItem(Constants::GraphItemType)
 
 void GraphItem::setDataItem(Data1DItem* item)
 {
-
 }
