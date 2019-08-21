@@ -55,6 +55,6 @@ void MaterialPropertyController::update_all()
             layer->property(LayerItem::P_MATERIAL).value<ModelView::ExternalProperty>();
         auto updated = m_material_model->material_property(property.identifier());
         if (property != updated)
-            layer->setItemValue(LayerItem::P_MATERIAL, QVariant::fromValue(updated));
+            layer->setProperty(LayerItem::P_MATERIAL, QVariant::fromValue(updated));
     }
 }

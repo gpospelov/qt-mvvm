@@ -596,7 +596,7 @@ TEST_F(TestUndoRedo, copyLayerFromMultilayer)
     auto multilayer0 = model.insertNewItem(ToyItems::Constants::MultiLayerType);
     auto layer0 = dynamic_cast<ToyItems::LayerItem*>(
         model.insertNewItem(ToyItems::Constants::LayerType, multilayer0));
-    layer0->setItemValue(ToyItems::LayerItem::P_THICKNESS, expected_thickness);
+    layer0->setProperty(ToyItems::LayerItem::P_THICKNESS, expected_thickness);
     auto multilayer1 = model.insertNewItem(ToyItems::Constants::MultiLayerType);
 
     // copying layer

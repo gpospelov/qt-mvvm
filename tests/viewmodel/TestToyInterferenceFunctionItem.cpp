@@ -27,7 +27,7 @@ TEST_F(TestToyInterferenceFunctionItem, rotationAngleEnabled)
         interference->getItem(ToyItems::InterferenceFunctionItem::P_ROTATION_ANLE)->isEnabled());
 
     // switching integration OFF, checking that rotation is enabled
-    interference->setItemValue(ToyItems::InterferenceFunctionItem::P_INTEGRATION, false);
+    interference->setProperty(ToyItems::InterferenceFunctionItem::P_INTEGRATION, false);
     EXPECT_TRUE(
         interference->getItem(ToyItems::InterferenceFunctionItem::P_ROTATION_ANLE)->isEnabled());
 }

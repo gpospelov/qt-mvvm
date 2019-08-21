@@ -135,7 +135,7 @@ TEST(TestItemMapper, onPropertyChange)
     EXPECT_CALL(widget, onPropertyChange(item, "height")).Times(1);
 
     // perform action
-    item->setItemValue("height", 43.0);
+    item->setProperty("height", 43.0);
     EXPECT_EQ(item->property("height"), 43.0);
     EXPECT_EQ(property->data().toDouble(), 43.0);
 }

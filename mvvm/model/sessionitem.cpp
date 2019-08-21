@@ -254,7 +254,10 @@ QVariant SessionItem::property(const std::string& tag) const
     return getItem(tag)->data();
 }
 
-void SessionItem::setItemValue(const std::string& tag, const QVariant& variant)
+//! Sets data to property item.
+//! Property is single item registered under certain tag via CompoundItem::addProperty method.
+
+void SessionItem::setProperty(const std::string& tag, const QVariant& variant)
 {
     getItem(tag)->setData(variant);
 }

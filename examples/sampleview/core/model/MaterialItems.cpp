@@ -70,10 +70,10 @@ SLDMaterialItem::SLDMaterialItem()
 void SLDMaterialItem::set_properties(const std::string& name, const QColor& color, double real,
                                      double imag)
 {
-    setItemValue(P_NAME, QVariant::fromValue(name));
-    setItemValue(P_COLOR, QVariant::fromValue(color));
-    setItemValue(P_SLD_REAL, real);
-    setItemValue(P_SLD_IMAG, imag);
+    setProperty(P_NAME, QVariant::fromValue(name));
+    setProperty(P_COLOR, QVariant::fromValue(color));
+    setProperty(P_SLD_REAL, real);
+    setProperty(P_SLD_IMAG, imag);
 }
 
 // ----------------------------------------------------------------------------
@@ -92,8 +92,8 @@ RefIndexMaterialItem::RefIndexMaterialItem()
 void RefIndexMaterialItem::set_properties(const std::string& name, const QColor& color,
                                           double delta, double beta)
 {
-    setItemValue(P_NAME, QVariant::fromValue(name));
-    setItemValue(P_COLOR, QVariant::fromValue(color));
-    setItemValue(P_DELTA, delta);
-    setItemValue(P_BETA, beta);
+    setProperty(P_NAME, QVariant::fromValue(name));
+    setProperty(P_COLOR, QVariant::fromValue(color));
+    setProperty(P_DELTA, delta);
+    setProperty(P_BETA, beta);
 }

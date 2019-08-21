@@ -114,8 +114,8 @@ void ILayerView::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     // the scene: changing ownership.
     if (parentItem() && !requested_parent) {
         QPointF newPos = mapToScene(event->pos()) - event->pos();
-        getItem()->setItemValue(LocatedItem::P_X_POS, newPos.x());
-        getItem()->setItemValue(LocatedItem::P_Y_POS, newPos.y());
+        getItem()->setProperty(LocatedItem::P_X_POS, newPos.x());
+        getItem()->setProperty(LocatedItem::P_Y_POS, newPos.y());
 
         model->moveItem(getItem(), model->rootItem(), {}, -1);
         QGraphicsItem::mouseReleaseEvent(event);

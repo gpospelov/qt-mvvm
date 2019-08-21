@@ -86,7 +86,7 @@ TEST_F(TestToyLayerItem, layerItemDataChanged)
 
     QSignalSpy spyDataChanged(&viewModel, &DefaultViewModel::dataChanged);
 
-    layerItem->setItemValue(ToyItems::LayerItem::P_THICKNESS, 50.0);
+    layerItem->setProperty(ToyItems::LayerItem::P_THICKNESS, 50.0);
     EXPECT_EQ(spyDataChanged.count(), 1);
 
     // dataChanged should report thicknessIndex and two roles

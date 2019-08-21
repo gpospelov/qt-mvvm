@@ -83,10 +83,9 @@ public:
 
     bool isSinglePropertyTag(const std::string& tag) const;
 
-    // tag specifics
     QVariant property(const std::string& tag) const;
 
-    void setItemValue(const std::string& tag, const QVariant& variant);
+    void setProperty(const std::string& tag, const QVariant& variant);
 
 private:
     friend class SessionModel;

@@ -75,7 +75,7 @@ TEST_F(TestCompoundItem, itemValue)
 
     // setting value
     double expected(442.0);
-    item.setItemValue("height", expected);
+    item.setProperty("height", expected);
     EXPECT_EQ(item.property("height").toDouble(), expected);
     EXPECT_EQ(propertyItem->data().toDouble(), expected);
 }

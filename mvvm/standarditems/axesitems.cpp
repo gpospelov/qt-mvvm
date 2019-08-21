@@ -39,9 +39,9 @@ FixedBinAxisItem::FixedBinAxisItem() : BasicAxisItem(Constants::FixedBinAxisType
 std::unique_ptr<FixedBinAxisItem> FixedBinAxisItem::create(int nbins, double xmin, double xmax)
 {
     auto result = std::make_unique<FixedBinAxisItem>();
-    result->setItemValue(P_NBINS, nbins);
-    result->setItemValue(P_MIN, xmin);
-    result->setItemValue(P_MAX, xmax);
+    result->setProperty(P_NBINS, nbins);
+    result->setProperty(P_MIN, xmin);
+    result->setProperty(P_MAX, xmax);
     return result;
 }
 
