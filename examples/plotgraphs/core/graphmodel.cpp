@@ -9,6 +9,7 @@
 
 #include "graphmodel.h"
 #include "mvvm_types.h"
+#include "data1ditem.h"
 
 using namespace ModelView;
 
@@ -19,5 +20,6 @@ GraphModel::GraphModel() : SessionModel("GraphModel")
 
 void GraphModel::init_model()
 {
-    insertNewItem(Constants::Data1DItemType);
+    auto data = dynamic_cast<Data1DItem*>(insertNewItem(Constants::Data1DItemType));
+    data->setFixedBinAxis(10, 0.0, 10.0);
 }

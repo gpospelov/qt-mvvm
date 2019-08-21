@@ -13,7 +13,8 @@
 
 using namespace ModelView;
 
-GraphWidget::GraphWidget(GraphModel* model, QWidget* parent) : QWidget(parent)
+GraphWidget::GraphWidget(GraphModel* model, QWidget* parent) : QWidget(parent),
+    m_propertyWidget(new GraphPropertyWidget)
 {
     auto mainLayout = new QHBoxLayout();
     mainLayout->setSpacing(10);
@@ -29,6 +30,8 @@ void GraphWidget::setModel(GraphModel* model)
 {
     if (!model)
         return;
+
+    m_propertyWidget->setModel(model);
 }
 
 GraphWidget::~GraphWidget() = default;
@@ -43,6 +46,6 @@ QBoxLayout* GraphWidget::create_left_layout()
 QBoxLayout* GraphWidget::create_right_layout()
 {
     auto result = new QVBoxLayout;
-    result->addWidget(new GraphPropertyWidget);
+    result->addWidget(m_propertyWidget);
     return result;
 }

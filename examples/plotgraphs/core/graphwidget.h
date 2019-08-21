@@ -15,6 +15,7 @@
 
 class QBoxLayout;
 class GraphModel;
+class GraphPropertyWidget;
 
 namespace ModelView
 {
@@ -38,6 +39,7 @@ public:
 private:
     QBoxLayout* create_left_layout();
     QBoxLayout* create_right_layout();
+    GraphPropertyWidget* m_propertyWidget;
 };
 
 #endif // GRAPHWIDGET_H
