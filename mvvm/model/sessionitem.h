@@ -42,7 +42,7 @@ public:
     bool setData(const QVariant& variant, int role = ItemDataRole::DATA);
     bool setDataIntern(const QVariant& variant, int role);
 
-    QVariant data(int role) const;
+    QVariant data(int role = ItemDataRole::DATA) const;
 
     SessionModel* model() const;
 
