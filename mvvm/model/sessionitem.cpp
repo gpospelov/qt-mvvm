@@ -246,6 +246,16 @@ bool SessionItem::isSinglePropertyTag(const std::string& tag) const
     return p_impl->m_tags->isSinglePropertyTag(tag);
 }
 
+QVariant SessionItem::getItemValue(const std::string& tag) const
+{
+    return getItem(tag)->data();
+}
+
+void SessionItem::setItemValue(const std::string& tag, const QVariant& variant)
+{
+    getItem(tag)->setData(variant);
+}
+
 void SessionItem::setParent(SessionItem* parent)
 {
     p_impl->m_parent = parent;

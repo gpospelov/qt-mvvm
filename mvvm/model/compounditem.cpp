@@ -23,13 +23,3 @@ std::string CompoundItem::displayName() const
     return copy_number != -1 ? SessionItem::displayName() + std::to_string(copy_number)
                              : SessionItem::displayName();
 }
-
-QVariant CompoundItem::getItemValue(const std::string& tag) const
-{
-    return getItem(tag)->data();
-}
-
-void CompoundItem::setItemValue(const std::string& tag, const QVariant& variant)
-{
-    getItem(tag)->setData(variant);
-}

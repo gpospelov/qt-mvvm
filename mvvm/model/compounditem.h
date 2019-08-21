@@ -34,11 +34,6 @@ public:
     template <typename T = PropertyItem> T* addProperty(const std::string& name, const char* str);
 
     std::string displayName() const override;
-
-    // tag specifics
-    QVariant getItemValue(const std::string& tag) const;
-
-    void setItemValue(const std::string& tag, const QVariant& variant);
 };
 
 template <typename T> T* CompoundItem::addProperty(const std::string& name, const QVariant& variant)

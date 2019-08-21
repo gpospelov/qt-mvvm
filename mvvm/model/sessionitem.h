@@ -82,6 +82,12 @@ public:
     void setEnabled(bool value);
 
     bool isSinglePropertyTag(const std::string& tag) const;
+
+    // tag specifics
+    QVariant getItemValue(const std::string& tag) const;
+
+    void setItemValue(const std::string& tag, const QVariant& variant);
+
 private:
     friend class SessionModel;
     friend class JsonItemConverter;
