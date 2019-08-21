@@ -35,8 +35,8 @@ void IView::setParameterizedItem(SessionItem *item)
         setToolTip(QString::fromStdString(item->displayName()));
 
     m_item = item;
-    setX(m_item->getItem(LocatedItem::P_X_POS)->data().toReal());
-    setY(m_item->getItem(LocatedItem::P_Y_POS)->data().toReal());
+    setX(m_item->getItemValue(LocatedItem::P_X_POS).toReal());
+    setY(m_item->getItemValue(LocatedItem::P_Y_POS).toReal());
 
     auto on_property_change = [this](SessionItem*, std::string property) {
         onPropertyChange(property);
@@ -56,14 +56,14 @@ void IView::onChangedX()
 {
     if(!m_item)
         return;
-    m_item->getItem(LocatedItem::P_X_POS)->setData(x());
+    m_item->setItemValue(LocatedItem::P_X_POS, x());
 }
 
 void IView::onChangedY()
 {
     if(!m_item)
         return;
-    m_item->getItem(LocatedItem::P_Y_POS)->setData(y());
+    m_item->setItemValue(LocatedItem::P_Y_POS, y());
 }
 
 //! updates visual appearance of the item (color, icons, size etc)
@@ -76,7 +76,7 @@ void IView::onPropertyChange(const std::string& propertyName)
 {
     Q_ASSERT(m_item);
     if (propertyName == LocatedItem::P_X_POS)
-        setX(m_item->getItem(LocatedItem::P_X_POS)->data().toReal());
+        setX(m_item->getItemValue(LocatedItem::P_X_POS).toReal());
     else if (propertyName == LocatedItem::P_Y_POS)
-        setY(m_item->getItem(LocatedItem::P_Y_POS)->data().toReal());
+        setY(m_item->getItemValue(LocatedItem::P_Y_POS).toReal());
 }

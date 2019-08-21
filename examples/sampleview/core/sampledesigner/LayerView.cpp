@@ -82,8 +82,7 @@ void LayerView::updateHeight()
     if (!getItem()->isTag(LayerItem::P_THICKNESS))
         return;
 
-    const double thickness =
-        getItem()->getItem(LayerItem::P_THICKNESS)->data().toDouble();
+    const double thickness = getItem()->getItemValue(LayerItem::P_THICKNESS).toDouble();
     m_rect.setHeight(nanometerToScreen(thickness));
     setPortCoordinates();
     update();
