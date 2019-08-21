@@ -66,7 +66,11 @@ TEST_F(TestViewModelUtils, itemRoleToQtRole)
 
     // APPEARANCE roles of SessionItem on Qt site means color
     roles = Utils::item_role_to_qt(ItemDataRole::APPEARANCE);
+#if QT_VERSION >= QT_VERSION_CHECK(5, 13, 0)
+    expected = {Qt::ForegroundRole};
+#else
     expected = {Qt::TextColorRole};
+#endif
     EXPECT_EQ(roles, expected);
 }
 
