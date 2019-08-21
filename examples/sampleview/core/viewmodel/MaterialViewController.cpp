@@ -51,7 +51,7 @@ void MaterialViewController::onCreateMaterial()
 
     // assign a color to the new material
     QColor current = m_color_queue.front();
-    inserted->getItem(MaterialBaseItem::P_COLOR)->setData(current, ItemDataRole::DATA);
+    inserted->getItem(MaterialBaseItem::P_COLOR)->setData(current);
     m_color_queue.pop_front();
     m_color_queue.push_back(current);
 }

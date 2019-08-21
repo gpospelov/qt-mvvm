@@ -43,7 +43,7 @@ TEST_F(TestRemoveItemCommand, removeAtCommandChild)
     parent->registerTag(TagInfo::universalTag("tag1"), /*set_as_default*/ true);
 
     auto child1 = model.insertNewItem(Constants::BaseType, parent, "tag1", -1);
-    child1->setData(42.0, ItemDataRole::DATA);
+    child1->setData(42.0);
     model.insertNewItem(Constants::BaseType, parent, "tag1", -1);
 
     auto child1_identifier = child1->data(ItemDataRole::IDENTIFIER).value<std::string>();
@@ -73,7 +73,7 @@ TEST_F(TestRemoveItemCommand, removeAtCommandParentWithChild)
     parent->registerTag(TagInfo::universalTag("tag1"), /*set_as_default*/ true);
 
     auto child1 = model.insertNewItem(Constants::BaseType, parent, "tag1", -1);
-    child1->setData(42.0, ItemDataRole::DATA);
+    child1->setData(42.0);
 
     auto parent_identifier = parent->data(ItemDataRole::IDENTIFIER).value<std::string>();
     auto child1_identifier = child1->data(ItemDataRole::IDENTIFIER).value<std::string>();
@@ -111,13 +111,13 @@ TEST_F(TestRemoveItemCommand, removeAtCommandMultitag)
     parent->registerTag(TagInfo::universalTag("tag2"));
 
     auto child1 = model.insertNewItem(Constants::BaseType, parent, "tag1", -1);
-    child1->setData(41.0, ItemDataRole::DATA);
+    child1->setData(41.0);
 
     auto child2 = model.insertNewItem(Constants::BaseType, parent, "tag1", -1);
-    child2->setData(42.0, ItemDataRole::DATA);
+    child2->setData(42.0);
 
     auto child3 = model.insertNewItem(Constants::BaseType, parent, "tag2", -1);
-    child3->setData(43.0, ItemDataRole::DATA);
+    child3->setData(43.0);
 
     auto parent_identifier = parent->data(ItemDataRole::IDENTIFIER).value<std::string>();
     auto child1_identifier = child1->data(ItemDataRole::IDENTIFIER).value<std::string>();

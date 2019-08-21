@@ -56,14 +56,14 @@ void IView::onChangedX()
 {
     if(!m_item)
         return;
-    m_item->getItem(LocatedItem::P_X_POS)->setData(x(), ItemDataRole::DATA);
+    m_item->getItem(LocatedItem::P_X_POS)->setData(x());
 }
 
 void IView::onChangedY()
 {
     if(!m_item)
         return;
-    m_item->getItem(LocatedItem::P_Y_POS)->setData(y(), ItemDataRole::DATA);
+    m_item->getItem(LocatedItem::P_Y_POS)->setData(y());
 }
 
 //! updates visual appearance of the item (color, icons, size etc)

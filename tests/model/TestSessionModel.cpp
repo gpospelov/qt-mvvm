@@ -199,7 +199,7 @@ TEST_F(TestSessionModel, copyModelItemRootContext)
 
     // create single item with value
     auto item = model.insertNewItem(Constants::BaseType);
-    item->setData(42.0, ItemDataRole::DATA);
+    item->setData(42.0);
 
     // copying to root item
     auto copy = model.copyItem(item, model.rootItem());
@@ -226,7 +226,7 @@ TEST_F(TestSessionModel, copyParentWithProperty)
     auto parent0 = model.insertNewItem(Constants::BaseType);
     parent0->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
     auto child0 = model.insertNewItem(Constants::PropertyType, parent0);
-    child0->setData(42.0, ItemDataRole::DATA);
+    child0->setData(42.0);
 
     // copying whole parent to root
     auto copy = model.copyItem(parent0, model.rootItem());
@@ -251,7 +251,7 @@ TEST_F(TestSessionModel, copyFreeItem)
 
     // free item
     auto item = std::make_unique<PropertyItem>();
-    item->setData(42.0, ItemDataRole::DATA);
+    item->setData(42.0);
 
     // copying to parent
     auto copy = model.copyItem(item.get(), parent0, "", -1);

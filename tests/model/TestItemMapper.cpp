@@ -61,7 +61,7 @@ TEST(TestItemMapper, onDataChange)
     EXPECT_CALL(widget, onDataChange(expected_item, expected_role)).Times(1);
 
     // perform action
-    item->setData(42.0, ItemDataRole::DATA);
+    item->setData(42.0);
 }
 
 //! Setting same data to item, expecting no callbacks on onDataChange.
@@ -77,8 +77,8 @@ TEST(TestItemMapper, onDataChangeDuplicate)
     EXPECT_CALL(widget, onDataChange(_, _)).Times(1);
 
     // perform actions, only one call should be triggered
-    item->setData(42.0, ItemDataRole::DATA);
-    item->setData(42.0, ItemDataRole::DATA); // same data
+    item->setData(42.0);
+    item->setData(42.0); // same data
 }
 
 //! Setting mapper activity to false, change the data, expect no callbacks.
@@ -96,7 +96,7 @@ TEST(TestItemMapper, setActivity)
     EXPECT_CALL(widget, onDataChange(_, _)).Times(0);
 
     // perform actions, no calls should be triggered
-    item->setData(42.0, ItemDataRole::DATA);
+    item->setData(42.0);
 }
 
 //! Unsubscribing from item, expecting no callbacks.
@@ -115,7 +115,7 @@ TEST(TestItemMapper, unsubscribe)
     EXPECT_CALL(widget2, onDataChange(_, _)).Times(1);
 
     // perform action, only one widget should be triggered
-    item->setData(42.0, ItemDataRole::DATA);
+    item->setData(42.0);
 }
 
 //! Changing item property.
@@ -137,5 +137,5 @@ TEST(TestItemMapper, onPropertyChange)
     // perform action
     item->setItemValue("height", 43.0);
     EXPECT_EQ(item->getItemValue("height"), 43.0);
-    EXPECT_EQ(property->data(ItemDataRole::DATA).toDouble(), 43.0);
+    EXPECT_EQ(property->data().toDouble(), 43.0);
 }

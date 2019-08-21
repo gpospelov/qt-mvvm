@@ -50,7 +50,7 @@ TEST(TestModelMapper, onDataChange)
     EXPECT_CALL(widget, onRowRemoved(_, _, _)).Times(0);
     EXPECT_CALL(widget, onModelDestroyed(_)).Times(0);
     EXPECT_CALL(widget, onModelReset(_)).Times(0);
-    item->setData(43.0, ItemDataRole::DATA); // perform action
+    item->setData(43.0); // perform action
 }
 
 //! Inserting item and checking corresponding signals.

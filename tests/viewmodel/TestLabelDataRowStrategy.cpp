@@ -55,7 +55,7 @@ TEST_F(TestLabelDataRowStrategy, topLevelItem)
 TEST_F(TestLabelDataRowStrategy, propertyItem)
 {
     SessionItem item("model_type");
-    item.setData(42.0, ItemDataRole::DATA);
+    item.setData(42.0);
 
     LabelDataRowStrategy constructor;
     auto items = constructor.constructRow(&item);

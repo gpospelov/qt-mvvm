@@ -33,12 +33,12 @@ void Data1DItem::setFixedBinAxis(int nbins, double xmin, double xmax)
 
 //! Sets internal data buffer to given data. If size of axis doesn't match the size of the data,
 //! exception will be thrown.
-#include <QDebug>
+
 void Data1DItem::setContent(const std::vector<double>& data)
 {
     if (auto axis = dynamic_cast<FixedBinAxisItem*>(getItem(T_AXIS, 0)); axis) {
         if (axis->binCenters().size() == data.size()) {
-            setData(QVariant::fromValue(data), ItemDataRole::DATA);
+            setData(QVariant::fromValue(data));
             return;
         }
      }

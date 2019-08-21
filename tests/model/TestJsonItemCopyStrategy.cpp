@@ -33,7 +33,7 @@ TEST_F(TestJsonItemCopyStrategy, propertyItem)
     auto strategy = createCopyStrategy();
 
     PropertyItem item;
-    item.setData(42.0, ItemDataRole::DATA);
+    item.setData(42.0);
 
     auto copy = strategy->createCopy(&item);
 

@@ -29,7 +29,7 @@ public:
         // populating model with data
         SessionModel model;
         auto propertyItem = model.insertNewItem(Constants::PropertyType);
-        propertyItem->setData(variant, ItemDataRole::DATA);
+        propertyItem->setData(variant);
 
         // create view model and use index of data cell to create an editor
         DefaultViewModel viewModel(&model);

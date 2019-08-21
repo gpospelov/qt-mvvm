@@ -75,7 +75,7 @@ TEST_F(TestSessionItem, displayName)
 {
     SessionItem item("Property");
     QVariant data(42.0);
-    EXPECT_TRUE(item.setData(data, ItemDataRole::DATA));
+    EXPECT_TRUE(item.setData(data));
 
     // default display name coincide with model type
     EXPECT_EQ(item.displayName(), "Property");

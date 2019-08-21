@@ -332,8 +332,8 @@ void DesignerScene::dropEvent(QGraphicsSceneDragDropEvent *event)
 
                 // propagating drop coordinates to SessionItem
                 QRectF boundingRect = DesignerHelper::getDefaultBoundingRect(new_item->modelType());
-                new_item->getItem(LocatedItem::P_X_POS)->setData(event->scenePos().x() - boundingRect.width() / 2, ItemDataRole::DATA);
-                new_item->getItem(LocatedItem::P_Y_POS)->setData(event->scenePos().y() - boundingRect.height() / 2, ItemDataRole::DATA);
+                new_item->getItem(LocatedItem::P_X_POS)->setData(event->scenePos().x() - boundingRect.width() / 2);
+                new_item->getItem(LocatedItem::P_Y_POS)->setData(event->scenePos().y() - boundingRect.height() / 2);
 
             }
             adjustSceneRect();

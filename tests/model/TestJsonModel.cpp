@@ -118,7 +118,7 @@ TEST_F(TestJsonModel, parentAndChildToJsonAndBack)
     parent->setDisplayName("parent_name");
     parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
 
-    parent->setData(QVariant::fromValue(42), ItemDataRole::DATA);
+    parent->setData(QVariant::fromValue(42));
     auto child = model.insertNewItem(Constants::PropertyType, parent);
     child->setDisplayName("child_name");
 
@@ -202,7 +202,7 @@ TEST_F(TestJsonModel, parentAndChildToFileAndBack)
     parent->setDisplayName("parent_name");
     parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
 
-    parent->setData(QVariant::fromValue(42), ItemDataRole::DATA);
+    parent->setData(QVariant::fromValue(42));
     auto child = model.insertNewItem(Constants::PropertyType, parent);
     child->setDisplayName("child_name");
 

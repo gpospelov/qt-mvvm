@@ -26,10 +26,10 @@ std::string CompoundItem::displayName() const
 
 QVariant CompoundItem::getItemValue(const std::string& tag) const
 {
-    return getItem(tag)->data(ItemDataRole::DATA);
+    return getItem(tag)->data();
 }
 
 void CompoundItem::setItemValue(const std::string& tag, const QVariant& variant)
 {
-    getItem(tag)->setData(variant, ItemDataRole::DATA);
+    getItem(tag)->setData(variant);
 }

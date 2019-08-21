@@ -31,7 +31,7 @@ TEST_F(TestViewDataItem, dataForDouble)
     // create SessionItem with data on board
     std::unique_ptr<SessionItem> item = std::make_unique<SessionItem>();
     QVariant expected(42.0);
-    EXPECT_TRUE(item->setData(expected, ItemDataRole::DATA));
+    EXPECT_TRUE(item->setData(expected));
 
     // initialize viewItem with sessionItem and check the data
     ViewDataItem viewItem(item.get());
@@ -47,7 +47,7 @@ TEST_F(TestViewDataItem, setDataForDouble)
     // create SessionItem with data on board
     std::unique_ptr<SessionItem> item = std::make_unique<SessionItem>();
     QVariant expected(42.0);
-    EXPECT_TRUE(item->setData(expected, ItemDataRole::DATA));
+    EXPECT_TRUE(item->setData(expected));
 
     // initialize viewItem with sessionItem and set the data
     ViewDataItem viewItem(item.get());
@@ -72,7 +72,7 @@ TEST_F(TestViewDataItem, dataForColor)
     // create SessionItem with data on board
     std::unique_ptr<SessionItem> item = std::make_unique<SessionItem>();
     QVariant expected = QVariant::fromValue(QColor(Qt::green));
-    EXPECT_TRUE(item->setData(expected, ItemDataRole::DATA));
+    EXPECT_TRUE(item->setData(expected));
 
     ViewDataItem viewItem(item.get());
     EXPECT_EQ(viewItem.data(Qt::EditRole), expected);
@@ -88,7 +88,7 @@ TEST_F(TestViewDataItem, setDataForColor)
     // create SessionItem with data on board
     std::unique_ptr<SessionItem> item = std::make_unique<SessionItem>();
     QVariant expected = QVariant::fromValue(QColor(Qt::green));
-    EXPECT_TRUE(item->setData(expected, ItemDataRole::DATA));
+    EXPECT_TRUE(item->setData(expected));
 
     // initialize viewItem with sessionItem and set the data
     ViewDataItem viewItem(item.get());

@@ -192,7 +192,7 @@ TEST_F(TestUndoRedo, setSameData)
 {
     SessionModel model;
     auto item = model.insertNewItem(Constants::PropertyType);
-    item->setData(42.0, ItemDataRole::DATA);
+    item->setData(42.0);
 
     model.setUndoRedoEnabled(true);
     auto stack = model.undoStack();
@@ -201,7 +201,7 @@ TEST_F(TestUndoRedo, setSameData)
     EXPECT_FALSE(model.undoStack()->canUndo());
 
     // setting same data should not lead to appearance of command in a stack
-    item->setData(42.0, ItemDataRole::DATA);
+    item->setData(42.0);
     EXPECT_EQ(stack->index(), 0);
     EXPECT_FALSE(model.undoStack()->canRedo());
     EXPECT_FALSE(model.undoStack()->canUndo());

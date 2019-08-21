@@ -33,7 +33,7 @@ TEST_F(TestJsonItemBackupStrategy, propertyItem)
     auto strategy = createBackupStrategy();
 
     PropertyItem item;
-    item.setData(42.0, ItemDataRole::DATA);
+    item.setData(42.0);
 
     strategy->saveItem(&item);
     auto restored = strategy->restoreItem();

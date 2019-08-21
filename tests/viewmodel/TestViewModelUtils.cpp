@@ -95,10 +95,10 @@ TEST_F(TestViewModelUtils, itemCheckStateRole)
     auto variant = Utils::CheckStateRole(item);
     EXPECT_FALSE(variant.isValid());
 
-    item.setData(QVariant::fromValue(true), ItemDataRole::DATA);
+    item.setData(QVariant::fromValue(true));
     EXPECT_EQ(Utils::CheckStateRole(item).toInt(), Qt::Checked);
 
-    item.setData(QVariant::fromValue(false), ItemDataRole::DATA);
+    item.setData(QVariant::fromValue(false));
     EXPECT_EQ(Utils::CheckStateRole(item).toInt(), Qt::Unchecked);
 }
 
@@ -113,7 +113,7 @@ TEST_F(TestViewModelUtils, itemDecorationRole)
     EXPECT_FALSE(variant.isValid());
 
     QColor expected(Qt::green);
-    item.setData(expected, ItemDataRole::DATA);
+    item.setData(expected);
     EXPECT_EQ(Utils::DecorationRole(item).value<QColor>(), expected);
 }
 

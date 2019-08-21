@@ -35,7 +35,7 @@ TEST_F(TestLinkedItem, sameModelContext)
     EXPECT_EQ(linked->linkedItem(), nullptr);
 
     // setting the link
-    linked->setData(QVariant::fromValue(item->identifier()), ItemDataRole::DATA);
+    linked->setData(QVariant::fromValue(item->identifier()));
 
     // now linked
     EXPECT_EQ(linked->linkedItem(), item);
@@ -57,7 +57,7 @@ TEST_F(TestLinkedItem, differentModelContext)
     EXPECT_EQ(linked->linkedItem(), nullptr);
 
     // setting the link
-    linked->setData(QVariant::fromValue(item->identifier()), ItemDataRole::DATA);
+    linked->setData(QVariant::fromValue(item->identifier()));
 
     // now linked
     EXPECT_EQ(linked->linkedItem(), item);

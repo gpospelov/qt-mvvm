@@ -42,7 +42,7 @@ TEST_F(TestPropertiesRowStrategy, topLevelItem)
 TEST_F(TestPropertiesRowStrategy, propertyItem)
 {
     SessionItem item("model_type");
-    item.setData(42.0, ItemDataRole::DATA);
+    item.setData(42.0);
 
     PropertiesRowStrategy strategy({});
     auto items = strategy.constructRow(&item);

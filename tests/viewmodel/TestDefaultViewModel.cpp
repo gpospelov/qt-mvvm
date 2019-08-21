@@ -33,7 +33,7 @@ TEST_F(TestDefaultViewModel, fromPropertyItem)
 {
     SessionModel model;
     auto propertyItem = model.insertNewItem(Constants::PropertyType);
-    propertyItem->setData(42.0, ItemDataRole::DATA);
+    propertyItem->setData(42.0);
 
     DefaultViewModel viewModel(&model);
     EXPECT_EQ(viewModel.rowCount(), 1);
@@ -59,7 +59,7 @@ TEST_F(TestDefaultViewModel, sessionItemFromIndex)
 {
     SessionModel model;
     auto propertyItem = model.insertNewItem(Constants::PropertyType);
-    propertyItem->setData(42.0, ItemDataRole::DATA);
+    propertyItem->setData(42.0);
 
     DefaultViewModel viewModel(&model);
     EXPECT_EQ(viewModel.rowCount(), 1);
@@ -80,7 +80,7 @@ TEST_F(TestDefaultViewModel, indexFromSessionItem)
 {
     SessionModel model;
     auto propertyItem = model.insertNewItem(Constants::PropertyType);
-    propertyItem->setData(42.0, ItemDataRole::DATA);
+    propertyItem->setData(42.0);
 
     DefaultViewModel viewModel(&model);
     EXPECT_EQ(viewModel.rowCount(), 1);
@@ -100,7 +100,7 @@ TEST_F(TestDefaultViewModel, findPropertyItemView)
 {
     SessionModel model;
     auto propertyItem = model.insertNewItem(Constants::PropertyType);
-    propertyItem->setData(42.0, ItemDataRole::DATA);
+    propertyItem->setData(42.0);
 
     DefaultViewModel viewModel(&model);
     auto views = Utils::findViews(&viewModel, propertyItem);
@@ -114,7 +114,7 @@ TEST_F(TestDefaultViewModel, propertyItemDataChanged)
 {
     SessionModel model;
     auto propertyItem = model.insertNewItem(Constants::PropertyType);
-    propertyItem->setData(42.0, ItemDataRole::DATA);
+    propertyItem->setData(42.0);
 
     // constructing viewModel from sample model
     DefaultViewModel viewModel(&model);
@@ -123,7 +123,7 @@ TEST_F(TestDefaultViewModel, propertyItemDataChanged)
 
     QSignalSpy spyDataChanged(&viewModel, &DefaultViewModel::dataChanged);
 
-    propertyItem->setData(50.0, ItemDataRole::DATA);
+    propertyItem->setData(50.0);
     EXPECT_EQ(spyDataChanged.count(), 1);
 
     // dataChanged should report thicknessIndex and two roles
@@ -252,16 +252,16 @@ TEST_F(TestDefaultViewModel, propertyItemAppearance)
 
     // default item
     auto item1 = model.insertNewItem(Constants::PropertyType);
-    item1->setData(42.0, ItemDataRole::DATA);
+    item1->setData(42.0);
 
     // disabled item
     auto item2 = model.insertNewItem(Constants::PropertyType);
-    item2->setData(42.0, ItemDataRole::DATA);
+    item2->setData(42.0);
     item2->setEnabled(false);
 
     // read only item
     auto item3 = model.insertNewItem(Constants::PropertyType);
-    item3->setData(42.0, ItemDataRole::DATA);
+    item3->setData(42.0);
     item3->setEditable(false);
 
     // making view model
@@ -301,7 +301,7 @@ TEST_F(TestDefaultViewModel, propertyItemAppearanceChanged)
 
     // default item
     auto item = model.insertNewItem(Constants::PropertyType);
-    item->setData(42.0, ItemDataRole::DATA);
+    item->setData(42.0);
 
     // setting up ViewModel and spying it's dataChanged signals
     DefaultViewModel viewModel(&model);
