@@ -22,7 +22,7 @@ class Data1DItem;
 @brief One-dimensional graph representation of Data1DItem.
 
 Contains plot properties (i.e. color, line type etc) and link to Data1DItem, which will provide
-data to plot.
+actual data to plot.
 */
 
 class CORE_EXPORT GraphItem : public CompoundItem

@@ -10,6 +10,7 @@
 #include "graphitem.h"
 #include "linkeditem.h"
 #include "plotitems.h"
+#include "data1ditem.h"
 #include <QColor>
 
 using namespace ModelView;
@@ -21,6 +22,8 @@ GraphItem::GraphItem() : CompoundItem(Constants::GraphItemType)
     addProperty<TextItem>(P_GRAPH_TITLE)->setDisplayName("Graph title");
 }
 
-void GraphItem::setDataItem(Data1DItem* item)
+void GraphItem::setDataItem(Data1DItem* data_item)
 {
+    auto& link = item<LinkedItem>(P_LINK);
+    link.setLink(data_item);
 }
