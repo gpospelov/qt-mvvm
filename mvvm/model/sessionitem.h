@@ -39,7 +39,7 @@ public:
 
     std::string identifier() const;
 
-    bool setData(const QVariant& variant, int role);
+    bool setData(const QVariant& variant, int role = ItemDataRole::DATA);
     bool setDataIntern(const QVariant& variant, int role);
 
     QVariant data(int role) const;
