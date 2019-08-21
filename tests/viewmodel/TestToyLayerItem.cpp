@@ -27,7 +27,7 @@ TEST_F(TestToyLayerItem, inModel)
     ToyItems::SampleModel model;
     auto layer = model.insertNewItem(ToyItems::Constants::LayerType);
 
-    EXPECT_FALSE(layer->data(ItemDataRole::DATA).isValid());
+    EXPECT_FALSE(layer->data().isValid());
     EXPECT_EQ(layer->displayName(), ToyItems::Constants::LayerType);
 }
 

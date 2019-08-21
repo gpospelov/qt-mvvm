@@ -25,7 +25,7 @@ QList<QStandardItem*> LabelDataRowStrategy::constructRow(SessionItem* item)
         return result;
 
     result.push_back(new ViewLabelItem(item));
-    if (item->data(ItemDataRole::DATA).isValid())
+    if (item->data().isValid())
         result.push_back(new ViewDataItem(item));
     else
         result.push_back(new ViewEmptyItem);

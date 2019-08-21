@@ -48,9 +48,9 @@ std::unique_ptr<FixedBinAxisItem> FixedBinAxisItem::create(int nbins, double xmi
 std::vector<double> FixedBinAxisItem::binCenters() const
 {
     std::vector<double> result;
-    int nbins = getItem(P_NBINS)->data(ItemDataRole::DATA).toInt();
-    double start = getItem(P_MIN)->data(ItemDataRole::DATA).toDouble();
-    double end = getItem(P_MAX)->data(ItemDataRole::DATA).toDouble();
+    int nbins = getItem(P_NBINS)->data().toInt();
+    double start = getItem(P_MIN)->data().toDouble();
+    double end = getItem(P_MAX)->data().toDouble();
     double step = (end - start)/nbins;
 
     result.resize(static_cast<size_t>(nbins), 0.0);

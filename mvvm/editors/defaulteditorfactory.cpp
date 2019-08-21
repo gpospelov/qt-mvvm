@@ -50,7 +50,7 @@ std::unique_ptr<CustomEditor> DefaultEditorFactory::createEditor(const QModelInd
     if (!item)
         return {};
 
-    auto value = item->data(ItemDataRole::DATA);
+    auto value = item->data();
     auto builder = findBuilder(Utils::VariantName(value));
     return builder ? builder(item) : std::unique_ptr<CustomEditor>();
 }

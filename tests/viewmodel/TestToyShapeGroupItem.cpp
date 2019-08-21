@@ -27,7 +27,7 @@ TEST_F(TestToyShapeGroupItem, initialState)
 
     EXPECT_EQ(item.currentIndex(), 1);
     ASSERT_TRUE(item.currentItem() != nullptr);
-    EXPECT_TRUE(item.data(ItemDataRole::DATA).isValid());
+    EXPECT_TRUE(item.data().isValid());
     EXPECT_EQ(item.currentType(), item.currentItem()->modelType());
     ASSERT_EQ(item.children().size(), 3);
 
@@ -37,7 +37,7 @@ TEST_F(TestToyShapeGroupItem, initialState)
     EXPECT_EQ(item.children().at(2)->parent(), &item);
 
     // expected value in combo
-    ComboProperty combo = item.data(ItemDataRole::DATA).value<ComboProperty>();
+    ComboProperty combo = item.data().value<ComboProperty>();
     EXPECT_EQ(combo.currentIndex(), 1);
     EXPECT_EQ(combo.values(),
               std::vector<std::string>({"Cylinder", "Full sphere", "Anysotropical pyramid"}));
@@ -52,11 +52,11 @@ TEST_F(TestToyShapeGroupItem, setCurrentType)
     ASSERT_TRUE(item.currentItem() != nullptr);
     EXPECT_EQ(item.currentType(), item.currentItem()->modelType());
     EXPECT_EQ(item.currentItem()->modelType(), ToyItems::Constants::SphereType);
-    EXPECT_TRUE(item.data(ItemDataRole::DATA).isValid());
+    EXPECT_TRUE(item.data().isValid());
     EXPECT_EQ(item.children().size(), 3);
 
     // expected value in combo
-    ComboProperty combo = item.data(ItemDataRole::DATA).value<ComboProperty>();
+    ComboProperty combo = item.data().value<ComboProperty>();
     EXPECT_EQ(combo.currentIndex(), 1);
     EXPECT_EQ(combo.values(),
               std::vector<std::string>({"Cylinder", "Full sphere", "Anysotropical pyramid"}));
@@ -70,7 +70,7 @@ TEST_F(TestToyShapeGroupItem, inModelContext)
 
     EXPECT_EQ(item->currentIndex(), 1);
     ASSERT_TRUE(item->currentItem() != nullptr);
-    EXPECT_TRUE(item->data(ItemDataRole::DATA).isValid());
+    EXPECT_TRUE(item->data().isValid());
     EXPECT_EQ(item->currentType(), item->currentItem()->modelType());
     EXPECT_EQ(item->children().size(), 3);
 

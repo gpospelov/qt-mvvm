@@ -35,7 +35,7 @@ public:
 template <typename T> T* LinkedItem::linkedItem() const
 {
     return model()
-               ? dynamic_cast<T*>(model()->findItem(data(ItemDataRole::DATA).value<std::string>()))
+               ? dynamic_cast<T*>(model()->findItem(data().value<std::string>()))
                : nullptr;
 }
 

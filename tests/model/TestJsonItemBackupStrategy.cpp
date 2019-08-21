@@ -40,7 +40,7 @@ TEST_F(TestJsonItemBackupStrategy, propertyItem)
 
     EXPECT_EQ(item.modelType(), restored->modelType());
     EXPECT_EQ(item.identifier(), restored->identifier());
-    EXPECT_EQ(item.data(ItemDataRole::DATA), restored->data(ItemDataRole::DATA));
+    EXPECT_EQ(item.data(), restored->data());
 }
 
 //! Saving/restoring CompoundItem.
@@ -57,8 +57,7 @@ TEST_F(TestJsonItemBackupStrategy, compoundItem)
 
     EXPECT_EQ(item.modelType(), restored->modelType());
     EXPECT_EQ(item.identifier(), restored->identifier());
-    EXPECT_EQ(restored->getItem("thickness")->data(ItemDataRole::DATA),
-              property->data(ItemDataRole::DATA));
+    EXPECT_EQ(restored->getItem("thickness")->data(), property->data());
     EXPECT_EQ(restored->getItem("thickness")->identifier(), property->identifier());
 }
 

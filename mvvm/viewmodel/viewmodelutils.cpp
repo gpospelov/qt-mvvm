@@ -80,7 +80,7 @@ QVariant Utils::TextColorRole(const SessionItem& item)
 
 QVariant Utils::CheckStateRole(const SessionItem& item)
 {
-    auto value = item.data(ItemDataRole::DATA);
+    auto value = item.data();
     if (Utils::IsBoolVariant(value))
         return value.toBool() ? Qt::Checked : Qt::Unchecked;
     return QVariant();
@@ -88,7 +88,7 @@ QVariant Utils::CheckStateRole(const SessionItem& item)
 
 QVariant Utils::DecorationRole(const SessionItem& item)
 {
-    auto value = item.data(ItemDataRole::DATA);
+    auto value = item.data();
     if (Utils::IsColorVariant(value))
         return value;
     else if (Utils::IsExtPropertyVariant(value))

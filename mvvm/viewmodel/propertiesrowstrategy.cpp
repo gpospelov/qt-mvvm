@@ -27,7 +27,7 @@ QList<QStandardItem*> PropertiesRowStrategy::constructRow(SessionItem* item)
         return result;
 
     for (auto child : Utils::SinglePropertyItems(*item)) {
-        if (child->data(ItemDataRole::DATA).isValid())
+        if (child->data().isValid())
             result.push_back(new ViewDataItem(child));
         else
             result.push_back(new ViewLabelItem(child));

@@ -27,7 +27,7 @@ TEST_F(TestVectorItem, initialState)
     EXPECT_EQ(item.getItemValue(VectorItem::P_Z).toDouble(), 0.0);
 
     // default label
-    EXPECT_EQ(item.data(ItemDataRole::DATA).value<std::string>(), "(0, 0, 0)");
+    EXPECT_EQ(item.data().value<std::string>(), "(0, 0, 0)");
 }
 
 //! Initial state of item in model context
@@ -42,9 +42,9 @@ TEST_F(TestVectorItem, initialStateFromModel)
     EXPECT_EQ(item->getItemValue(VectorItem::P_Z).toDouble(), 0.0);
 
     // default label
-    EXPECT_EQ(item->data(ItemDataRole::DATA).value<std::string>(), "(0, 0, 0)");
+    EXPECT_EQ(item->data().value<std::string>(), "(0, 0, 0)");
 
     // changing vector component
     item->setItemValue(VectorItem::P_X, 1.0);
-    EXPECT_EQ(item->data(ItemDataRole::DATA).value<std::string>(), "(1, 0, 0)");
+    EXPECT_EQ(item->data().value<std::string>(), "(1, 0, 0)");
 }

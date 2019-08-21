@@ -19,7 +19,7 @@ TEST_F(TestGroupItem, initialState)
     EXPECT_EQ(item.currentIndex(), -1);
     EXPECT_EQ(item.currentItem(), nullptr);
     EXPECT_EQ(item.currentType(), "");
-    EXPECT_FALSE(item.data(ItemDataRole::DATA).isValid());
+    EXPECT_FALSE(item.data().isValid());
     EXPECT_TRUE(item.children().empty());
 
     EXPECT_THROW(item.setCurrentType("abc"), std::runtime_error);

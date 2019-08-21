@@ -24,7 +24,7 @@ TEST_F(TestToyMultilayerItem, multiLayer)
     ToyItems::SampleModel model;
     auto multiLayer = model.insertNewItem(ToyItems::Constants::MultiLayerType);
 
-    EXPECT_FALSE(multiLayer->data(ItemDataRole::DATA).isValid());
+    EXPECT_FALSE(multiLayer->data().isValid());
     EXPECT_EQ(multiLayer->displayName(), ToyItems::Constants::MultiLayerType);
 }
 

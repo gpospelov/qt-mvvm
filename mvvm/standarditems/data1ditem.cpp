@@ -60,6 +60,6 @@ std::vector<double> Data1DItem::binCenters() const
 
 std::vector<double> Data1DItem::binValues() const
 {
-    auto variant = data(ItemDataRole::DATA);
+    auto variant = data();
     return variant.isValid() ? variant.value<std::vector<double>>() : std::vector<double>();
 }

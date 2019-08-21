@@ -83,7 +83,7 @@ void LayerView::updateHeight()
         return;
 
     const double thickness =
-        getItem()->getItem(LayerItem::P_THICKNESS)->data(ModelView::ItemDataRole::DATA).toDouble();
+        getItem()->getItem(LayerItem::P_THICKNESS)->data().toDouble();
     m_rect.setHeight(nanometerToScreen(thickness));
     setPortCoordinates();
     update();
@@ -93,7 +93,7 @@ void LayerView::updateHeight()
 void LayerView::updateColor()
 {
     if(getItem()->isTag(LayerItem::P_MATERIAL)) {
-        QVariant v = getItem()->getItem(LayerItem::P_MATERIAL)->data(ItemDataRole::DATA);
+        QVariant v = getItem()->getItem(LayerItem::P_MATERIAL)->data();
         if (v.isValid()) {
             ExternalProperty mp = v.value<ExternalProperty>();
             setColor(mp.color());

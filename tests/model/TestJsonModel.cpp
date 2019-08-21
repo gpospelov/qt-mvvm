@@ -142,7 +142,7 @@ TEST_F(TestJsonModel, parentAndChildToJsonAndBack)
     EXPECT_EQ(reco_parent->childrenCount(), 1);
     EXPECT_EQ(reco_parent->identifier(), parent->identifier());
     EXPECT_EQ(reco_parent->defaultTag(), "defaultTag");
-    EXPECT_EQ(reco_parent->data(ItemDataRole::DATA), 42);
+    EXPECT_EQ(reco_parent->data(), 42);
 
     // checking child reconstruction
     EXPECT_EQ(reco_child->model(), &target);
@@ -232,7 +232,7 @@ TEST_F(TestJsonModel, parentAndChildToFileAndBack)
     EXPECT_EQ(reco_parent->childrenCount(), 1);
     EXPECT_EQ(reco_parent->identifier(), parent->identifier());
     EXPECT_EQ(reco_parent->defaultTag(), "defaultTag");
-    EXPECT_EQ(reco_parent->data(ItemDataRole::DATA), 42);
+    EXPECT_EQ(reco_parent->data(), 42);
 
     // checking child reconstruction
     EXPECT_EQ(reco_child->model(), &target);

@@ -67,7 +67,7 @@ void MaterialViewController::onCloneMaterial()
 
         for (auto child: item->children()) {
             auto new_child = new_item->getItem(item->tagFromItem(child));
-            new_child->setData(child->data(ItemDataRole::DATA), ItemDataRole::DATA);
+            new_child->setData(child->data());
         }
     }
 }

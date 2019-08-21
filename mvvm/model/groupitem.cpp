@@ -28,7 +28,7 @@ GroupItem::GroupItem(model_type modelType) :SessionItem(std::move(modelType)),
 
 int GroupItem::currentIndex() const
 {
-    auto variant = data(ItemDataRole::DATA);
+    auto variant = data();
     return variant.isValid() ? variant.value<ComboProperty>().currentIndex() : -1;
 }
 
@@ -59,7 +59,7 @@ void GroupItem::setCurrentType(const std::string& model_type)
 
 void GroupItem::setCurrentIndex(int index)
 {
-    auto variant = data(ItemDataRole::DATA);
+    auto variant = data();
     if (variant.isValid()) {
         auto combo = variant.value<ComboProperty>();
         combo.setCurrentIndex(index);
