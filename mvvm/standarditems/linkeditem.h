@@ -29,8 +29,12 @@ class CORE_EXPORT LinkedItem : public SessionItem
 public:
     LinkedItem();
 
+    void setLink(const SessionItem* item);
+
     template <typename T=SessionItem> T* linkedItem() const;
 };
+
+//! Returns item linked to given item.
 
 template <typename T> T* LinkedItem::linkedItem() const
 {

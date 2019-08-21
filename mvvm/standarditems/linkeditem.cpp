@@ -8,10 +8,18 @@
 // ************************************************************************** //
 
 #include "linkeditem.h"
+#include "customvariants.h"
 
 using namespace ModelView;
 
 LinkedItem::LinkedItem() : SessionItem(Constants::LinkedType)
 {
 
+}
+
+//! Set link to given item.
+
+void LinkedItem::setLink(const SessionItem* item)
+{
+    setData(QVariant::fromValue(item->identifier()));
 }
