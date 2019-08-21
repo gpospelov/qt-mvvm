@@ -10,7 +10,7 @@
 #ifndef CELLDECORATORINTERFACE_H
 #define CELLDECORATORINTERFACE_H
 
-#include "mvvm_global.h"
+#include "mvvm_export.h"
 
 class QModelIndex;
 class QStyleOptionViewItem;
@@ -20,7 +20,7 @@ class QStyleOptionViewItem;
 @brief Generates cell decorations. Intended for use with SampleViewDelegate and its descendants.
 */
 
-class CellDecoratorInterface
+class CORE_EXPORT CellDecoratorInterface
 {
 public:
     virtual ~CellDecoratorInterface();

@@ -10,7 +10,6 @@
 #ifndef APPLICATIONMODELS_H
 #define APPLICATIONMODELS_H
 
-#include "mvvm_global.h"
 #include <QString>
 #include <memory>
 

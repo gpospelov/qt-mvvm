@@ -10,7 +10,7 @@
 #ifndef MVVM_ABSTRACTVIEWMODELCONTROLLER_H
 #define MVVM_ABSTRACTVIEWMODELCONTROLLER_H
 
-#include "mvvm_global.h"
+#include "mvvm_export.h"
 #include <memory>
 #include <vector>
 

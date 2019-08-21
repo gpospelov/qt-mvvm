@@ -10,7 +10,7 @@
 #ifndef MVVM_ITEMBACKUPSTRATEGY_H
 #define MVVM_ITEMBACKUPSTRATEGY_H
 
-#include "mvvm_global.h"
+#include "mvvm_export.h"
 #include <memory>
 
 namespace ModelView

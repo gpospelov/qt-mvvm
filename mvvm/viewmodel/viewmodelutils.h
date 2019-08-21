@@ -10,7 +10,7 @@
 #ifndef MVVM_VIEWMODELUTILS_H
 #define MVVM_VIEWMODELUTILS_H
 
-#include "mvvm_global.h"
+#include "mvvm_export.h"
 #include <QModelIndex>
 #include <QModelIndexList>
 #include <QVariant>

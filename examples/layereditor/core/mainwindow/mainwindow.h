@@ -10,7 +10,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "mvvm_global.h"
 #include <QMainWindow>
 #include <memory>
 

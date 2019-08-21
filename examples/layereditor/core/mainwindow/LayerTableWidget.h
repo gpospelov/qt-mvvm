@@ -10,7 +10,6 @@
 #ifndef LAYERTABLEWIDGET_H
 #define LAYERTABLEWIDGET_H
 
-#include "mvvm_global.h"
 #include <QWidget>
 #include <memory>
 

@@ -33,7 +33,7 @@ target_sources(${library_name} PRIVATE
     modelmapper.h
     modelutils.cpp
     modelutils.h
-    mvvm_global.h
+    mvvm_export.h
     mvvm_types.h
     path.cpp
     path.h

@@ -10,7 +10,7 @@
 #ifndef MVVM_ABSTRACTITEMCOMMAND_H
 #define MVVM_ABSTRACTITEMCOMMAND_H
 
-#include "mvvm_global.h"
+#include "mvvm_export.h"
 #include "path.h"
 #include <memory>
 #include <string>

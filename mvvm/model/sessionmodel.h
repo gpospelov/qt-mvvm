@@ -10,7 +10,7 @@
 #ifndef MVVM_SESSIONMODEL_H
 #define MVVM_SESSIONMODEL_H
 
-#include "mvvm_global.h"
+#include "mvvm_export.h"
 #include "mvvm_types.h"
 #include "path.h"
 #include <QVariant>

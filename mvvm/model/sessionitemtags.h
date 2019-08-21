@@ -10,7 +10,7 @@
 #ifndef MVVM_SESSIONITEMTAGS_H
 #define MVVM_SESSIONITEMTAGS_H
 
-#include "mvvm_global.h"
+#include "mvvm_export.h"
 #include <vector>
 #include <string>
 

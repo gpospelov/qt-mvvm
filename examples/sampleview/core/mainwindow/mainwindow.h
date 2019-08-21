@@ -1,7 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "mvvm_global.h"
 #include "SampleViewController.h"
 #include <QMainWindow>
 #include <memory>

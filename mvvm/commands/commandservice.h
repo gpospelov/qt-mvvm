@@ -10,7 +10,7 @@
 #ifndef MVVM_COMMANDSERVICE_H
 #define MVVM_COMMANDSERVICE_H
 
-#include "mvvm_global.h"
+#include "mvvm_export.h"
 #include "mvvm_types.h"
 #include "commandadapter.h"
 #include <memory>

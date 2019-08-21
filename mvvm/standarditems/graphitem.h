@@ -15,6 +15,8 @@
 namespace ModelView
 {
 
+class Data1DItem;
+
 /*!
 @class GraphItem
 @brief One-dimensional graph representation of Data1DItem.
@@ -30,6 +32,8 @@ public:
     static inline const std::string P_COLOR = "P_COLOR";
     static inline const std::string P_GRAPH_TITLE = "P_GRAPH_TITLE";
     GraphItem();
+
+    void setDataItem(Data1DItem* item);
 };
 
 } // namespace ModelView

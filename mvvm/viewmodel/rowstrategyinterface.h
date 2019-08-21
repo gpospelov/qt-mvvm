@@ -10,7 +10,7 @@
 #ifndef MVVM_ROWSTRATEGYINTERFACE_H
 #define MVVM_ROWSTRATEGYINTERFACE_H
 
-#include "mvvm_global.h"
+#include "mvvm_export.h"
 #include <QList>
 
 class QStandardItem;

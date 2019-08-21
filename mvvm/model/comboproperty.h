@@ -15,7 +15,7 @@
 #ifndef MVVM_COMBOPROPERTY_H
 #define MVVM_COMBOPROPERTY_H
 
-#include "mvvm_global.h"
+#include "mvvm_export.h"
 #include <QVariant>
 #include <string>
 #include <vector>

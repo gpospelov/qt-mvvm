@@ -10,7 +10,7 @@
 #ifndef MVVM_REALLIMITS_H
 #define MVVM_REALLIMITS_H
 
-#include "mvvm_global.h"
+#include "mvvm_export.h"
 #include <sstream>
 #include <string>
 

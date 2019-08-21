@@ -10,7 +10,7 @@
 #ifndef MVVM_SESSIONITEM_H
 #define MVVM_SESSIONITEM_H
 
-#include "mvvm_global.h"
+#include "mvvm_export.h"
 #include "mvvm_types.h"
 #include <QVariant>
 #include <memory>

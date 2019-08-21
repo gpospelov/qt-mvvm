@@ -2,7 +2,6 @@
 #define MATERIALTABLEWIDGET_H
 
 #include "MaterialViewController.h"
-#include "mvvm_global.h"
 #include <QWidget>
 #include <memory>
 

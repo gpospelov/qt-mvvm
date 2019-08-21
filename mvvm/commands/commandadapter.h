@@ -10,7 +10,7 @@
 #ifndef MVVM_COMMANDADAPTER_H
 #define MVVM_COMMANDADAPTER_H
 
-#include "mvvm_global.h"
+#include "mvvm_export.h"
 #include <QUndoCommand>
 #include <memory>
 

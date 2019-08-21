@@ -20,3 +20,8 @@ GraphItem::GraphItem() : CompoundItem(Constants::GraphItemType)
     addProperty(P_COLOR, QColor(Qt::black))->setDisplayName("Color");
     addProperty<TextItem>(P_GRAPH_TITLE)->setDisplayName("Graph title");
 }
+
+void GraphItem::setDataItem(Data1DItem* item)
+{
+
+}

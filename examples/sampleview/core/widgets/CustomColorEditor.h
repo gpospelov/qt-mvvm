@@ -10,7 +10,6 @@
 #ifndef CUSTOMCOLOREDITOR_H
 #define CUSTOMCOLOREDITOR_H
 
-#include "mvvm_global.h"
 #include <QColorDialog>
 
 /*!

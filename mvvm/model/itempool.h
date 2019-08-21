@@ -10,7 +10,7 @@
 #ifndef MVVM_ITEMPOOL_H
 #define MVVM_ITEMPOOL_H
 
-#include "mvvm_global.h"
+#include "mvvm_export.h"
 #include "mvvm_types.h"
 #include <map>
 

@@ -10,7 +10,6 @@
 #ifndef SAMPLEEDITORFACTORY_H
 #define SAMPLEEDITORFACTORY_H
 
-#include "mvvm_global.h"
 #include <QItemEditorFactory>
 #include <memory>
 

@@ -10,7 +10,6 @@
 #ifndef MATERIALTABLEWIDGETS_H
 #define MATERIALTABLEWIDGETS_H
 
-#include "mvvm_global.h"
 #include <QWidget>
 #include <memory>
 

@@ -10,7 +10,7 @@
 #ifndef MVVM_ITEMCATALOGUE_H
 #define MVVM_ITEMCATALOGUE_H
 
-#include "mvvm_global.h"
+#include "mvvm_export.h"
 #include <functional>
 #include <memory>
 #include <string>

@@ -10,8 +10,8 @@
 #ifndef MVVM_SESSIONITEMDATA_H
 #define MVVM_SESSIONITEMDATA_H
 
+#include "mvvm_export.h"
 #include "datarole.h"
-#include "mvvm_global.h"
 #include <QVariant>
 #include <vector>
 

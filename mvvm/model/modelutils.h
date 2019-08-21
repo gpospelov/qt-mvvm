@@ -11,7 +11,7 @@
 #define MVVM_MODELUTILS_H
 
 #include "itemutils.h"
-#include "mvvm_global.h"
+#include "mvvm_export.h"
 #include "sessionitem.h"
 #include "sessionmodel.h"
 #include <vector>

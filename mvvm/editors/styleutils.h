@@ -10,7 +10,7 @@
 #ifndef MVVM_STYLEUTILS_H
 #define MVVM_STYLEUTILS_H
 
-#include "mvvm_global.h"
+#include "mvvm_export.h"
 
 namespace ModelView
 {
