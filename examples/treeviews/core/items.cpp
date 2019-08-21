@@ -80,7 +80,7 @@ void InterferenceFunctionItem::activate()
 void InterferenceFunctionItem::update_appearance()
 {
     auto angle_item = getItem(P_ROTATION_ANLE);
-    angle_item->setEnabled(!getItemValue(P_INTEGRATION).toBool());
+    angle_item->setEnabled(!property(P_INTEGRATION).toBool());
 }
 
 // ----------------------------------------------------------------------------

@@ -602,7 +602,7 @@ TEST_F(TestUndoRedo, copyLayerFromMultilayer)
     // copying layer
     auto layer_copy = dynamic_cast<ToyItems::LayerItem*>(model.copyItem(layer0, multilayer1));
     EXPECT_EQ(multilayer1->itemCount(ToyItems::MultiLayerItem::T_LAYERS), 1);
-    EXPECT_EQ(layer_copy->getItemValue(ToyItems::LayerItem::P_THICKNESS).toDouble(),
+    EXPECT_EQ(layer_copy->property(ToyItems::LayerItem::P_THICKNESS).toDouble(),
               expected_thickness);
     EXPECT_TRUE(layer0->identifier() != layer_copy->identifier());
 

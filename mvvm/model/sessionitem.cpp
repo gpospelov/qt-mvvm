@@ -246,7 +246,10 @@ bool SessionItem::isSinglePropertyTag(const std::string& tag) const
     return p_impl->m_tags->isSinglePropertyTag(tag);
 }
 
-QVariant SessionItem::getItemValue(const std::string& tag) const
+//! Returns data stored in property item.
+//! Property is single item registered under certain tag via CompoundItem::addProperty method.
+
+QVariant SessionItem::property(const std::string& tag) const
 {
     return getItem(tag)->data();
 }

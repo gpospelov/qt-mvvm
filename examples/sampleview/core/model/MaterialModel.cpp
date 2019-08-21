@@ -58,8 +58,8 @@ std::vector<ExternalProperty> MaterialModel::material_data(std::string container
             continue;
         for (auto item : container->children()) {
             if (auto material = dynamic_cast<MaterialBaseItem*>(item)) {
-                auto text = material->getItemValue(MaterialBaseItem::P_NAME).value<std::string>();
-                auto color = material->getItemValue(MaterialBaseItem::P_COLOR).value<QColor>();
+                auto text = material->property(MaterialBaseItem::P_NAME).value<std::string>();
+                auto color = material->property(MaterialBaseItem::P_COLOR).value<QColor>();
                 auto id = material->identifier();
                 result.push_back(ExternalProperty(text, color, id));
             }

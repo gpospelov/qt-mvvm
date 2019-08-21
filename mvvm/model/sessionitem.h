@@ -84,7 +84,7 @@ public:
     bool isSinglePropertyTag(const std::string& tag) const;
 
     // tag specifics
-    QVariant getItemValue(const std::string& tag) const;
+    QVariant property(const std::string& tag) const;
 
     void setItemValue(const std::string& tag, const QVariant& variant);
 

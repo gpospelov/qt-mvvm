@@ -25,5 +25,5 @@ void GraphModel::init_model()
     data->setFixedBinAxis(10, 0.0, 10.0);
 
     auto graph = dynamic_cast<GraphItem*>(insertNewItem(Constants::GraphItemType));
-
+    graph->setDataItem(data);
 }

@@ -136,6 +136,6 @@ TEST(TestItemMapper, onPropertyChange)
 
     // perform action
     item->setItemValue("height", 43.0);
-    EXPECT_EQ(item->getItemValue("height"), 43.0);
+    EXPECT_EQ(item->property("height"), 43.0);
     EXPECT_EQ(property->data().toDouble(), 43.0);
 }
