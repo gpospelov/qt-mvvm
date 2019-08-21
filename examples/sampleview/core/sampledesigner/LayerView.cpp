@@ -114,7 +114,7 @@ void LayerView::updateLabel()
 
     QString material = "" ;
     if(getItem()->isTag(LayerItem::P_MATERIAL)){
-        QVariant v = getItem()->getItem(LayerItem::P_MATERIAL)->data(ItemDataRole::DATA);
+        QVariant v = getItem()->getItem(LayerItem::P_MATERIAL)->data();
         if (v.isValid()) {
             ExternalProperty mp = v.value<ExternalProperty>();
             material = QString::fromStdString(mp.text());

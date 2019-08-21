@@ -49,7 +49,7 @@ template <typename T> T* CompoundItem::addProperty(const std::string& name, cons
 
     property->setDisplayName(name);
     if (variant.isValid())
-        property->setData(variant, ItemDataRole::DATA);
+        property->setData(variant);
 
     if (variant.type() == QVariant::Double)
         property->setData(QVariant::fromValue<RealLimits>(RealLimits::positive()), ItemDataRole::LIMITS);
