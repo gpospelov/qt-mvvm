@@ -19,7 +19,7 @@ add_subdirectory(widgets)
 target_link_libraries(${library_name} PUBLIC Qt5::Widgets PRIVATE qcustomplot)
 
 # to make clang code model in Qt creator happy
-target_compile_features(${library_name} PRIVATE cxx_std_17)
+target_compile_features(${library_name} PUBLIC cxx_std_17)
 
 # Manually composing list of dirs with private API for unit testing.
 set(private_include_dirs
