@@ -1,8 +1,11 @@
 #include "axesitems.h"
 #include "data1ditem.h"
+#include "sessionmodel.h"
 #include "google_test.h"
+#include "MockWidgets.h"
 
 using namespace ModelView;
+using ::testing::_;
 
 //! Testing Data1DItem.
 
@@ -63,4 +66,40 @@ TEST_F(TestData1DItem, setContent)
     item.setFixedBinAxis(3, 0.0, 3.0);
     item.setContent(expected_content);
     EXPECT_EQ(item.binValues(), expected_content);
+}
+
+//! Checking the signals when axes changed.
+
+TEST_F(TestData1DItem, checkSignalsOnAxisChange)
+{
+    SessionModel model;
+    auto item = dynamic_cast<Data1DItem*>(model.insertNewItem(Constants::Data1DItemType));
+
+    MockWidgetForItem widget(item);
+
+    EXPECT_CALL(widget, onDataChange(item, ItemDataRole::DATA)).Times(1); // values should change
+    EXPECT_CALL(widget, onPropertyChange(_, _)).Times(0);
+    EXPECT_CALL(widget, onChildPropertyChange(_, _)).Times(0);
+    // FIXME add signal on children change
+
+    // trigger change
+    item->setFixedBinAxis(3, 0.0, 3.0);
+}
+
+//! Checking the signals when content changed.
+
+TEST_F(TestData1DItem, checkSignalsOnContentChange)
+{
+    SessionModel model;
+    auto item = dynamic_cast<Data1DItem*>(model.insertNewItem(Constants::Data1DItemType));
+    item->setFixedBinAxis(3, 0.0, 3.0);
+
+    MockWidgetForItem widget(item);
+
+    EXPECT_CALL(widget, onDataChange(item, ItemDataRole::DATA)).Times(1); // values should change
+    EXPECT_CALL(widget, onPropertyChange(_, _)).Times(0);
+    EXPECT_CALL(widget, onChildPropertyChange(_, _)).Times(0);
+
+    // trigger change
+    item->setContent(std::vector<double>{1.0, 2.0, 3.0});
 }

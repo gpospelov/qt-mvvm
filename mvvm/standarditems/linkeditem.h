@@ -34,7 +34,7 @@ public:
     template <typename T=SessionItem> T* linkedItem() const;
 };
 
-//! Returns item linked to given item.
+//! Returns item linked to given item. Works only in model context.
 
 template <typename T> T* LinkedItem::linkedItem() const
 {
