@@ -42,6 +42,8 @@ TEST(TestItemMapper, onItemDestroy)
     auto expected_item = item;
     EXPECT_CALL(widget, onItemDestroy(expected_item)).Times(1);
     EXPECT_CALL(widget, onDataChange(_, _)).Times(0);
+    EXPECT_CALL(widget, onPropertyChange(_, _)).Times(0);
+    EXPECT_CALL(widget, onChildPropertyChange(_, _)).Times(0);
 
     // performing action
     model.removeItem(model.rootItem(), "",  0);
@@ -59,6 +61,8 @@ TEST(TestItemMapper, onDataChange)
     auto expected_role = ItemDataRole::DATA;
     auto expected_item = item;
     EXPECT_CALL(widget, onDataChange(expected_item, expected_role)).Times(1);
+    EXPECT_CALL(widget, onPropertyChange(_, _)).Times(0);
+    EXPECT_CALL(widget, onChildPropertyChange(_, _)).Times(0);
 
     // perform action
     item->setData(42.0);
@@ -75,6 +79,8 @@ TEST(TestItemMapper, onDataChangeDuplicate)
 
     EXPECT_CALL(widget, onItemDestroy(_)).Times(0);
     EXPECT_CALL(widget, onDataChange(_, _)).Times(1);
+    EXPECT_CALL(widget, onPropertyChange(_, _)).Times(0);
+    EXPECT_CALL(widget, onChildPropertyChange(_, _)).Times(0);
 
     // perform actions, only one call should be triggered
     item->setData(42.0);
@@ -94,6 +100,8 @@ TEST(TestItemMapper, setActivity)
 
     EXPECT_CALL(widget, onItemDestroy(_)).Times(0);
     EXPECT_CALL(widget, onDataChange(_, _)).Times(0);
+    EXPECT_CALL(widget, onPropertyChange(_, _)).Times(0);
+    EXPECT_CALL(widget, onChildPropertyChange(_, _)).Times(0);
 
     // perform actions, no calls should be triggered
     item->setData(42.0);
@@ -133,9 +141,34 @@ TEST(TestItemMapper, onPropertyChange)
     EXPECT_CALL(widget, onItemDestroy(_)).Times(0);
     EXPECT_CALL(widget, onDataChange(_, _)).Times(0);
     EXPECT_CALL(widget, onPropertyChange(item, "height")).Times(1);
+    EXPECT_CALL(widget, onChildPropertyChange(_, _)).Times(0);
 
     // perform action
     item->setProperty("height", 43.0);
     EXPECT_EQ(item->property("height"), 43.0);
+    EXPECT_EQ(property->data().toDouble(), 43.0);
+}
+
+//! Changing item property.
+
+TEST(TestItemMapper, onChildPropertyChange)
+{
+    SessionModel model;
+    auto compound1 = dynamic_cast<CompoundItem*>(model.insertNewItem(Constants::CompoundType));
+    compound1->registerTag(TagInfo::universalTag("tag1"), /*set_as_default*/true);
+    auto compound2 = dynamic_cast<CompoundItem*>(model.insertNewItem(Constants::CompoundType, compound1));
+
+    auto property = compound2->addProperty<PropertyItem>("height", 42.0);
+
+    MockWidgetForItem widget(compound1);
+
+    EXPECT_CALL(widget, onItemDestroy(_)).Times(0);
+    EXPECT_CALL(widget, onDataChange(_, _)).Times(0);
+    EXPECT_CALL(widget, onPropertyChange(_, _)).Times(0);
+    EXPECT_CALL(widget, onChildPropertyChange(compound2, "height")).Times(1);
+
+    // perform action
+    compound2->setProperty("height", 43.0);
+    EXPECT_EQ(compound2->property("height"), 43.0);
     EXPECT_EQ(property->data().toDouble(), 43.0);
 }

@@ -64,6 +64,18 @@ void ItemMapper::setOnPropertyChange(Callbacks::item_str_t f, Callbacks::client_
     m_on_property_change.add(std::move(f), client);
 }
 
+/*!
+@brief Sets callback to be notified on item's children property change.
+Callback will be called with (compound_item, property_name). For MultiLayer containing the
+layer with "thickness" property, the signal will be triggered on thickness change using
+(layeritem*, "thickness") as callback parameters.
+*/
+
+void ItemMapper::setOnChildPropertyChange(Callbacks::item_str_t f, Callbacks::client_t client)
+{
+    m_on_child_property_change.add(std::move(f), client);
+}
+
 //! Sets activity flag to given value. Will disable all callbacks if false.
 
 void ItemMapper::setActive(bool value)
@@ -76,6 +88,7 @@ void ItemMapper::unsubscribe(Callbacks::client_t client)
     m_on_item_destroy.remove_client(client);
     m_on_data_change.remove_client(client);
     m_on_property_change.remove_client(client);
+    m_on_child_property_change.remove_client(client);
 }
 
 //! Processes signals from the model when item data changed.
@@ -91,6 +104,12 @@ void ItemMapper::onModelDataChange(SessionItem* item, int role)
     // data of item's property changed
     if (nestling == 1)
         callOnPropertyChange(m_item, m_item->tagFromItem(item));
+
+    // child property changed
+    if (nestling == 2) {
+        if(auto parent = item->parent())
+            callOnChildPropertyChange(parent, parent->tagFromItem(item));
+    }
 }
 
 //! Subscribes to model signals.
@@ -138,5 +157,11 @@ void ItemMapper::callOnPropertyChange(SessionItem* item, std::string property_na
 {
     if (m_active)
         m_on_property_change.notify(item, property_name);
+}
+
+void ItemMapper::callOnChildPropertyChange(SessionItem* item, std::string property_name)
+{
+    if (m_active)
+        m_on_child_property_change.notify(item, property_name);
 }
 

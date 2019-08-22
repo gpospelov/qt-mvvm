@@ -36,6 +36,7 @@ public:
     void setOnItemDestroy(Callbacks::item_t f, Callbacks::client_t client = {});
     void setOnDataChange(Callbacks::item_int_t f, Callbacks::client_t client = {});
     void setOnPropertyChange(Callbacks::item_str_t f, Callbacks::client_t client = {});
+    void setOnChildPropertyChange(Callbacks::item_str_t f, Callbacks::client_t client = {});
 
     void setActive(bool value);
 
@@ -50,10 +51,12 @@ private:
     void callOnItemDestroy();
     void callOnDataChange(SessionItem* item, int role);
     void callOnPropertyChange(SessionItem* item, std::string property_name);
+    void callOnChildPropertyChange(SessionItem* item, std::string property_name);
 
     CallbackContainer<Callbacks::item_t> m_on_item_destroy;
     CallbackContainer<Callbacks::item_int_t> m_on_data_change;
     CallbackContainer<Callbacks::item_str_t> m_on_property_change;
+    CallbackContainer<Callbacks::item_str_t> m_on_child_property_change;
 
     bool m_active;
     SessionItem* m_item;

@@ -39,6 +39,11 @@ void MockWidgetForItem::setItem(ModelView::SessionItem* item)
         onPropertyChange(item, name);
     };
     m_item->mapper()->setOnPropertyChange(on_property_change, this);
+
+    auto on_child_property_change = [this](ModelView::SessionItem* item, std::string name) {
+        onChildPropertyChange(item, name);
+    };
+    m_item->mapper()->setOnChildPropertyChange(on_child_property_change, this);
 }
 
 // ----------------------------------------------------------------------------
