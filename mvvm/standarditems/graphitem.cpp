@@ -11,6 +11,7 @@
 #include "linkeditem.h"
 #include "plotitems.h"
 #include "data1ditem.h"
+#include "itemmapper.h"
 #include <QColor>
 
 using namespace ModelView;
@@ -26,4 +27,16 @@ void GraphItem::setDataItem(Data1DItem* data_item)
 {
     auto& link = item<LinkedItem>(P_LINK);
     link.setLink(data_item);
+}
+
+//! Returns dataItem linked to given GraphItem. Will work only in the model context
+//! because of the nature of LinkedItem.
+
+Data1DItem* GraphItem::dataItem() const
+{
+    if (!model())
+        return nullptr;
+
+    auto& link = item<LinkedItem>(P_LINK);
+    return link.linkedItem<Data1DItem>();
 }

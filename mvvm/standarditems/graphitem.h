@@ -34,6 +34,8 @@ public:
     GraphItem();
 
     void setDataItem(Data1DItem* item);
+
+    Data1DItem* dataItem() const;
 };
 
 } // namespace ModelView
