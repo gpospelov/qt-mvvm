@@ -9,13 +9,19 @@
 
 #include "customgraphwidget.h"
 #include "qcustomplot.h"
+#include "axesplotcontroller.h"
 #include <QBoxLayout>
 
 using namespace ModelView;
 
 struct CustomGraphWidget::CustomGraphWidgetPrivate {
     QCustomPlot* m_customPlot{nullptr};
-    CustomGraphWidgetPrivate() : m_customPlot(new QCustomPlot) {}
+    std::unique_ptr<AxesPlotController> m_axesController;
+
+    CustomGraphWidgetPrivate() : m_customPlot(new QCustomPlot)
+    {
+        m_axesController = std::make_unique<AxesPlotController>(m_customPlot);
+    }
 };
 
 CustomGraphWidget::CustomGraphWidget(QWidget* parent)
@@ -27,3 +33,5 @@ CustomGraphWidget::CustomGraphWidget(QWidget* parent)
     layout->addWidget(p_impl->m_customPlot);
     setLayout(layout);
 }
+
+CustomGraphWidget::~CustomGraphWidget() = default;

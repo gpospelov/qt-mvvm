@@ -28,6 +28,7 @@ class CORE_EXPORT CustomGraphWidget : public QWidget
 {
 public:
     explicit CustomGraphWidget(QWidget* parent = nullptr);
+    ~CustomGraphWidget() override;
 
 private:
     struct CustomGraphWidgetPrivate;
