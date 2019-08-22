@@ -10,13 +10,9 @@ file(MAKE_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 file(MAKE_DIRECTORY ${BUILD_INC_DIR})
 file(MAKE_DIRECTORY ${TEST_OUTPUT_DIR})
 
-set(CMAKE_CXX_STANDARD 14)
-
 set(CMAKE_AUTOMOC ON)
 
-find_package(Qt5Widgets REQUIRED)
-find_package(Qt5Core REQUIRED)
-find_package(Qt5Gui REQUIRED)
+find_package(Qt5 COMPONENTS Widgets Core Gui PrintSupport REQUIRED)
 
 get_target_property(Qt5Widgets_location Qt5::Widgets LOCATION_Release)
 message(STATUS "  ${Qt5Widgets_LIBRARIES} ${Qt5Widgets_location}")
