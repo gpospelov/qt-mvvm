@@ -20,6 +20,7 @@ class GraphPropertyWidget;
 namespace ModelView
 {
 class ItemsTreeView;
+class CustomGraphWidget;
 } // namespace ModelView
 
 /*!
@@ -39,6 +40,7 @@ public:
 private:
     QBoxLayout* create_left_layout();
     QBoxLayout* create_right_layout();
+    ModelView::CustomGraphWidget* m_customGraphWidget;
     GraphPropertyWidget* m_propertyWidget;
 };
 

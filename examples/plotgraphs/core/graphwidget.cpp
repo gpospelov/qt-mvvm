@@ -9,11 +9,13 @@
 
 #include "graphwidget.h"
 #include "graphpropertywidget.h"
+#include "customgraphwidget.h"
 #include <QBoxLayout>
 
 using namespace ModelView;
 
 GraphWidget::GraphWidget(GraphModel* model, QWidget* parent) : QWidget(parent),
+    m_customGraphWidget(new CustomGraphWidget),
     m_propertyWidget(new GraphPropertyWidget)
 {
     auto mainLayout = new QHBoxLayout();
@@ -39,7 +41,7 @@ GraphWidget::~GraphWidget() = default;
 QBoxLayout* GraphWidget::create_left_layout()
 {
     auto result = new QVBoxLayout;
-    result->addWidget(new QWidget);
+    result->addWidget(m_customGraphWidget);
     return result;
 }
 
