@@ -53,7 +53,7 @@ TEST_F(TestAxisPlotControllers, setViewportAxisItem)
 
     // creating the model with single ViewportAxisItem
     SessionModel model;
-    auto axisItem = model.insertNewItem(Constants::ViewportAxisType);
+    auto axisItem = dynamic_cast<ViewportAxisItem*>(model.insertNewItem(Constants::ViewportAxisType));
     axisItem->setProperty(ViewportAxisItem::P_MIN, expected_min);
     axisItem->setProperty(ViewportAxisItem::P_MAX, expected_max);
 
@@ -84,7 +84,7 @@ TEST_F(TestAxisPlotControllers, changeQCPAxis)
 {
     // creating the model with single ViewportAxisItem
     SessionModel model;
-    auto axisItem = model.insertNewItem(Constants::ViewportAxisType);
+    auto axisItem = dynamic_cast<ViewportAxisItem*>(model.insertNewItem(Constants::ViewportAxisType));
     axisItem->setProperty(ViewportAxisItem::P_MIN, 42.0);
     axisItem->setProperty(ViewportAxisItem::P_MAX, 42.1);
 
@@ -119,7 +119,7 @@ TEST_F(TestAxisPlotControllers, changeViewportAxisItem)
 {
     // creating the model with single ViewportAxisItem
     SessionModel model;
-    auto axisItem = model.insertNewItem(Constants::ViewportAxisType);
+    auto axisItem = dynamic_cast<ViewportAxisItem*>(model.insertNewItem(Constants::ViewportAxisType));
     axisItem->setProperty(ViewportAxisItem::P_MIN, 42.0);
     axisItem->setProperty(ViewportAxisItem::P_MAX, 42.1);
 
@@ -151,7 +151,7 @@ TEST_F(TestAxisPlotControllers, changeViewportAxisItemYCase)
 {
     // creating the model with single ViewportAxisItem
     SessionModel model;
-    auto axisItem = model.insertNewItem(Constants::ViewportAxisType);
+    auto axisItem = dynamic_cast<ViewportAxisItem*>(model.insertNewItem(Constants::ViewportAxisType));
     axisItem->setProperty(ViewportAxisItem::P_MIN, 42.0);
     axisItem->setProperty(ViewportAxisItem::P_MAX, 42.1);
 

@@ -78,14 +78,9 @@ void AxisPlotController::subscribe()
         if (name == ViewportAxisItem::P_MAX)
             customAxis()->setRangeUpper(item->property(name).toDouble());
     };
-    axisItem()->mapper()->setOnPropertyChange(on_property_change, this);
+    currentItem()->mapper()->setOnPropertyChange(on_property_change, this);
 
     p_impl->setConnected();
-}
-
-ViewportAxisItem* AxisPlotController::axisItem()
-{
-    return dynamic_cast<ViewportAxisItem*>(currentItem());
 }
 
 QCustomPlot* AxisPlotController::customPlot()

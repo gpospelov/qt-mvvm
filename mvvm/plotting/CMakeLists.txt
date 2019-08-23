@@ -1,10 +1,12 @@
 set(library_name mvvm)
 
 target_sources(${library_name} PRIVATE
-    graphcanvas.h
-    graphcanvas.cpp
     axisplotcontrollers.h
     axisplotcontrollers.cpp
+    graphcanvas.h
+    graphcanvas.cpp
+    graphitemcontroller.h
+    graphitemcontroller.cpp
     itemcontroller.h
     itemcontroller.cpp
 )

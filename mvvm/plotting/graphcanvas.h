@@ -34,7 +34,7 @@ public:
     explicit GraphCanvas(QWidget* parent = nullptr);
     ~GraphCanvas() override;
 
-    void setItem(GraphViewportItem* item);
+    void setItem(GraphViewportItem* viewport_item);
 
 private:
     struct GraphCanvasPrivate;

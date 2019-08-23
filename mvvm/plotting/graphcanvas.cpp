@@ -11,6 +11,7 @@
 #include "qcustomplot.h"
 #include "axisplotcontrollers.h"
 #include "graphviewportitem.h"
+#include "axisitems.h"
 #include <QBoxLayout>
 
 using namespace ModelView;
@@ -47,11 +48,10 @@ GraphCanvas::GraphCanvas(QWidget* parent)
     p_impl->customPlot()->axisRect()->setupFullAxesBox(true);
 }
 
-void GraphCanvas::setItem(GraphViewportItem* item)
+void GraphCanvas::setItem(GraphViewportItem* viewport_item)
 {
-    p_impl->m_xAxisController->setItem(item->getItem(GraphViewportItem::P_XAXIS));
-    p_impl->m_yAxisController->setItem(item->getItem(GraphViewportItem::P_YAXIS));
-
+    p_impl->m_xAxisController->setItem(&viewport_item->item<ViewportAxisItem>(GraphViewportItem::P_XAXIS));
+    p_impl->m_yAxisController->setItem(&viewport_item->item<ViewportAxisItem>(GraphViewportItem::P_YAXIS));
 }
 
 GraphCanvas::~GraphCanvas() = default;
