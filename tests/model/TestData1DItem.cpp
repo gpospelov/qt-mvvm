@@ -1,4 +1,4 @@
-#include "axesitems.h"
+#include "axisitems.h"
 #include "data1ditem.h"
 #include "sessionmodel.h"
 #include "google_test.h"

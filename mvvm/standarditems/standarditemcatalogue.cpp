@@ -13,7 +13,7 @@
 #include "propertyitem.h"
 #include "compounditem.h"
 #include "linkeditem.h"
-#include "axesitems.h"
+#include "axisitems.h"
 #include "data1ditem.h"
 #include "graphitem.h"
 #include "graphviewportitem.h"

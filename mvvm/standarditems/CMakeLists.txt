@@ -1,8 +1,8 @@
 set(library_name mvvm)
 
 target_sources(${library_name} PRIVATE
-    axesitems.h
-    axesitems.cpp
+    axisitems.h
+    axisitems.cpp
     data1ditem.h
     data1ditem.cpp
     graphitem.h

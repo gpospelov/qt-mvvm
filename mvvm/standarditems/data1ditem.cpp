@@ -8,7 +8,7 @@
 // ************************************************************************** //
 
 #include "data1ditem.h"
-#include "axesitems.h"
+#include "axisitems.h"
 
 using namespace ModelView;
 

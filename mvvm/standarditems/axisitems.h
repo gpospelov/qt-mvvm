@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_AXESITEMS_H
-#define MVVM_AXESITEMS_H
+#ifndef MVVM_AXISITEMS_H
+#define MVVM_AXISITEMS_H
 
 #include "compounditem.h"
 #include <memory>
@@ -56,4 +56,4 @@ public:
 
 } // namespace ModelView
 
-#endif // MVVM_AXESITEMS_H
+#endif // MVVM_AXISITEMS_H

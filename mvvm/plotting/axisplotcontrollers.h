@@ -36,8 +36,8 @@ public:
     void subscribe() override;
 
 protected:
-    ViewportAxisItem* axisItem();
     virtual QCPAxis* customAxis() = 0;
+    ViewportAxisItem* axisItem();
     QCustomPlot* customPlot();
 
 private:
