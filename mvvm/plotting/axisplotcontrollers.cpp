@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "axesplotcontroller.h"
+#include "axisplotcontrollers.h"
 #include "axesitems.h"
 #include "itemmapper.h"
 #include "qcustomplot.h"

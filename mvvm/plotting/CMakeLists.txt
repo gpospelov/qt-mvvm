@@ -3,8 +3,8 @@ set(library_name mvvm)
 target_sources(${library_name} PRIVATE
     customgraphwidget.h
     customgraphwidget.cpp
-    axesplotcontroller.h
-    axesplotcontroller.cpp
+    axisplotcontrollers.h
+    axisplotcontrollers.cpp
     itemcontroller.h
     itemcontroller.cpp
 )

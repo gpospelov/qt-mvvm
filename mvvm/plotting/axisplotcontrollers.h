@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_AXESPLOTCONTROLLER_H
-#define MVVM_AXESPLOTCONTROLLER_H
+#ifndef MVVM_AXISPLOTCONTROLLERS_H
+#define MVVM_AXISPLOTCONTROLLERS_H
 
 #include "itemcontroller.h"
 
@@ -75,4 +75,4 @@ protected:
 
 } // namespace ModelView
 
-#endif // MVVM_AXESPLOTCONTROLLER_H
+#endif // MVVM_AXISPLOTCONTROLLERS_H

@@ -9,7 +9,7 @@
 
 #include "customgraphwidget.h"
 #include "qcustomplot.h"
-#include "axesplotcontroller.h"
+#include "axisplotcontrollers.h"
 #include "graphviewportitem.h"
 #include <QBoxLayout>
 
