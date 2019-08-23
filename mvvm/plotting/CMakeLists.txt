@@ -1,8 +1,8 @@
 set(library_name mvvm)
 
 target_sources(${library_name} PRIVATE
-    customgraphwidget.h
-    customgraphwidget.cpp
+    graphcanvas.h
+    graphcanvas.cpp
     axisplotcontrollers.h
     axisplotcontrollers.cpp
     itemcontroller.h

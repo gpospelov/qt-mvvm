@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_CUSTOMGRAPHWIDGET_H
-#define MVVM_CUSTOMGRAPHWIDGET_H
+#ifndef MVVM_GRAPHCANVAS_H
+#define MVVM_GRAPHCANVAS_H
 
 #include "mvvm_export.h"
 #include <memory>
@@ -22,25 +22,25 @@ namespace ModelView
 class GraphViewportItem;
 
 /*!
-@class CustomGraphWidget
+@class GraphCanvas
 @brief Widget to show scientific figure with multiple 1D graphs.
 
 Contains embedded QCustomPlot widget, shows content of GraphViewportItem.
 */
 
-class CORE_EXPORT CustomGraphWidget : public QWidget
+class CORE_EXPORT GraphCanvas : public QWidget
 {
 public:
-    explicit CustomGraphWidget(QWidget* parent = nullptr);
-    ~CustomGraphWidget() override;
+    explicit GraphCanvas(QWidget* parent = nullptr);
+    ~GraphCanvas() override;
 
     void setItem(GraphViewportItem* item);
 
 private:
-    struct CustomGraphWidgetPrivate;
-    std::unique_ptr<CustomGraphWidgetPrivate> p_impl;
+    struct GraphCanvasPrivate;
+    std::unique_ptr<GraphCanvasPrivate> p_impl;
 };
 
 } // namespace ModelView
 
-#endif // MVVM_CUSTOMGRAPHWIDGET_H
+#endif // MVVM_GRAPHCANVAS_H

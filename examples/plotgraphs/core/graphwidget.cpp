@@ -9,7 +9,7 @@
 
 #include "graphwidget.h"
 #include "graphpropertywidget.h"
-#include "customgraphwidget.h"
+#include "graphcanvas.h"
 #include "modelutils.h"
 #include "graphviewportitem.h"
 #include "graphmodel.h"
@@ -18,7 +18,7 @@
 using namespace ModelView;
 
 GraphWidget::GraphWidget(GraphModel* model, QWidget* parent) : QWidget(parent),
-    m_customGraphWidget(new CustomGraphWidget),
+    m_graphCanvas(new GraphCanvas),
     m_propertyWidget(new GraphPropertyWidget)
 {
     auto mainLayout = new QHBoxLayout();
@@ -38,7 +38,7 @@ void GraphWidget::setModel(GraphModel* model)
 
     m_propertyWidget->setModel(model);
 
-    m_customGraphWidget->setItem(Utils::TopItem<GraphViewportItem>(model));
+    m_graphCanvas->setItem(Utils::TopItem<GraphViewportItem>(model));
 }
 
 GraphWidget::~GraphWidget() = default;
@@ -46,7 +46,7 @@ GraphWidget::~GraphWidget() = default;
 QBoxLayout* GraphWidget::create_left_layout()
 {
     auto result = new QVBoxLayout;
-    result->addWidget(m_customGraphWidget);
+    result->addWidget(m_graphCanvas);
     return result;
 }
 

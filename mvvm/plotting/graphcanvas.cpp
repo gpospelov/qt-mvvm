@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "customgraphwidget.h"
+#include "graphcanvas.h"
 #include "qcustomplot.h"
 #include "axisplotcontrollers.h"
 #include "graphviewportitem.h"
@@ -15,12 +15,12 @@
 
 using namespace ModelView;
 
-struct CustomGraphWidget::CustomGraphWidgetPrivate {
+struct GraphCanvas::GraphCanvasPrivate {
     QCustomPlot* m_customPlot{nullptr};
     std::unique_ptr<AxisPlotController> m_xAxisController;
     std::unique_ptr<AxisPlotController> m_yAxisController;
 
-    CustomGraphWidgetPrivate() : m_customPlot(new QCustomPlot)
+    GraphCanvasPrivate() : m_customPlot(new QCustomPlot)
     {
         m_xAxisController = std::make_unique<XAxisPlotController>(m_customPlot);
         m_yAxisController = std::make_unique<YAxisPlotController>(m_customPlot);
@@ -32,8 +32,8 @@ struct CustomGraphWidget::CustomGraphWidgetPrivate {
     }
 };
 
-CustomGraphWidget::CustomGraphWidget(QWidget* parent)
-    : QWidget(parent), p_impl(std::make_unique<CustomGraphWidgetPrivate>())
+GraphCanvas::GraphCanvas(QWidget* parent)
+    : QWidget(parent), p_impl(std::make_unique<GraphCanvasPrivate>())
 {
     auto layout = new QVBoxLayout(this);
     layout->setMargin(0);
@@ -47,11 +47,11 @@ CustomGraphWidget::CustomGraphWidget(QWidget* parent)
     p_impl->customPlot()->axisRect()->setupFullAxesBox(true);
 }
 
-void CustomGraphWidget::setItem(GraphViewportItem* item)
+void GraphCanvas::setItem(GraphViewportItem* item)
 {
     p_impl->m_xAxisController->setItem(item->getItem(GraphViewportItem::P_XAXIS));
     p_impl->m_yAxisController->setItem(item->getItem(GraphViewportItem::P_YAXIS));
 
 }
 
-CustomGraphWidget::~CustomGraphWidget() = default;
+GraphCanvas::~GraphCanvas() = default;
