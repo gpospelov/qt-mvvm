@@ -10,6 +10,9 @@
 #include "graphwidget.h"
 #include "graphpropertywidget.h"
 #include "customgraphwidget.h"
+#include "modelutils.h"
+#include "graphviewportitem.h"
+#include "graphmodel.h"
 #include <QBoxLayout>
 
 using namespace ModelView;
@@ -34,6 +37,8 @@ void GraphWidget::setModel(GraphModel* model)
         return;
 
     m_propertyWidget->setModel(model);
+
+    m_customGraphWidget->setItem(Utils::TopItem<GraphViewportItem>(model));
 }
 
 GraphWidget::~GraphWidget() = default;
