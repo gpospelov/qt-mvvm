@@ -14,14 +14,14 @@
 
 using namespace ModelView;
 
-struct AxesPlotController::AxesPlotControllerPrivate {
+struct AxisPlotController::AxesPlotControllerPrivate {
 
-    AxesPlotController* m_controller{nullptr};
+    AxisPlotController* m_controller{nullptr};
     QCustomPlot* m_customPlot{nullptr};
     bool m_block_update{false};
     std::unique_ptr<QMetaObject::Connection> axis_conn;
 
-    AxesPlotControllerPrivate(AxesPlotController* controller, QCustomPlot* plot)
+    AxesPlotControllerPrivate(AxisPlotController* controller, QCustomPlot* plot)
         : m_controller(controller), m_customPlot(plot)
     {
         axis_conn = std::make_unique<QMetaObject::Connection>();
@@ -38,19 +38,20 @@ struct AxesPlotController::AxesPlotControllerPrivate {
             m_block_update = false;
         };
 
-        *axis_conn = connect(m_controller->customAxis(),
+        *axis_conn = connect(
+            m_controller->customAxis(),
             static_cast<void (QCPAxis::*)(const QCPRange&)>(&QCPAxis::rangeChanged), on_axis_range);
     }
 
     void setDisconnected() { QObject::disconnect(*axis_conn); }
 };
 
-AxesPlotController::AxesPlotController(QCustomPlot* custom_plot, QObject* parent)
+AxisPlotController::AxisPlotController(QCustomPlot* custom_plot, QObject* parent)
     : ItemController(parent), p_impl(std::make_unique<AxesPlotControllerPrivate>(this, custom_plot))
 {
 }
 
-void AxesPlotController::subscribe()
+void AxisPlotController::subscribe()
 {
     auto on_property_change = [this](SessionItem* item, std::string name) {
         if (p_impl->m_block_update)
@@ -67,14 +68,38 @@ void AxesPlotController::subscribe()
     p_impl->setConnected();
 }
 
-ViewportAxisItem* AxesPlotController::axisItem()
+ViewportAxisItem* AxisPlotController::axisItem()
 {
     return dynamic_cast<ViewportAxisItem*>(currentItem());
 }
 
-QCPAxis* AxesPlotController::customAxis()
+QCustomPlot* AxisPlotController::customPlot()
 {
-    return p_impl->m_customPlot->xAxis;
+    return p_impl->m_customPlot;
 }
 
-AxesPlotController::~AxesPlotController() = default;
+AxisPlotController::~AxisPlotController() = default;
+
+// ----------------------------------------------------------------------------
+
+XAxisPlotController::XAxisPlotController(QCustomPlot* cusom_plot, QObject* parent)
+    : AxisPlotController(cusom_plot, parent)
+{
+}
+
+QCPAxis* XAxisPlotController::customAxis()
+{
+    return customPlot()->xAxis;
+}
+
+// ----------------------------------------------------------------------------
+
+YAxisPlotController::YAxisPlotController(QCustomPlot* cusom_plot, QObject* parent)
+    : AxisPlotController(cusom_plot, parent)
+{
+}
+
+QCPAxis* YAxisPlotController::customAxis()
+{
+    return customPlot()->yAxis;
+}

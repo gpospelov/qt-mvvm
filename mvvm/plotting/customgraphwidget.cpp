@@ -17,11 +17,13 @@ using namespace ModelView;
 
 struct CustomGraphWidget::CustomGraphWidgetPrivate {
     QCustomPlot* m_customPlot{nullptr};
-    std::unique_ptr<AxesPlotController> m_axesController;
+    std::unique_ptr<AxisPlotController> m_xAxisController;
+    std::unique_ptr<AxisPlotController> m_yAxisController;
 
     CustomGraphWidgetPrivate() : m_customPlot(new QCustomPlot)
     {
-        m_axesController = std::make_unique<AxesPlotController>(m_customPlot);
+        m_xAxisController = std::make_unique<XAxisPlotController>(m_customPlot);
+        m_yAxisController = std::make_unique<YAxisPlotController>(m_customPlot);
     }
 
     QCustomPlot* customPlot()
@@ -47,7 +49,8 @@ CustomGraphWidget::CustomGraphWidget(QWidget* parent)
 
 void CustomGraphWidget::setItem(GraphViewportItem* item)
 {
-    p_impl->m_axesController->setItem(item->getItem(GraphViewportItem::P_XAXIS));
+    p_impl->m_xAxisController->setItem(item->getItem(GraphViewportItem::P_XAXIS));
+    p_impl->m_yAxisController->setItem(item->getItem(GraphViewportItem::P_YAXIS));
 
 }
 
