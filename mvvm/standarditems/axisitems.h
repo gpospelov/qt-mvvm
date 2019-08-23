@@ -11,7 +11,7 @@
 #define MVVM_AXISITEMS_H
 
 //! @file axisitems.h
-//! Collection of axis items for 1D and 2D plotting support.
+//! Collection of axis items for 1D and 2D data/plotting support.
 
 #include "compounditem.h"
 #include <memory>
@@ -20,7 +20,12 @@
 namespace ModelView
 {
 
-//! Base class for all axes items.
+/*!
+@class BasicAxisItem
+@brief Base class for all axes items.
+
+Has min, max defined, but nothing else.
+*/
 
 class CORE_EXPORT BasicAxisItem : public CompoundItem
 {
@@ -34,7 +39,13 @@ protected:
     void register_min_max();
 };
 
-//! Item to represent viewport axis.
+/*!
+@class ViewportAxisItem
+@brief Item to represent viewport axis.
+
+ViewportAxisItem serve as a counterpart of QCPAxis from QCustomPlot.
+Intended to cary title, fonts etc.
+*/
 
 class CORE_EXPORT ViewportAxisItem : public BasicAxisItem
 {
@@ -43,7 +54,15 @@ public:
     ViewportAxisItem();
 };
 
-//! Item to represent fixed bin axis.
+/*!
+@class FixedBinAxisItem
+@brief Item to represent fixed bin axis.
+
+Fixed bin axis is used in Data1DItem. It simply defined how data is stored,
+has now info about, e.g axis title, and desn't intended for plotting.
+*/
+
+//!
 
 class CORE_EXPORT FixedBinAxisItem : public BasicAxisItem
 {
