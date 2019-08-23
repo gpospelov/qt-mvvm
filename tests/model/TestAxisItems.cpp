@@ -3,19 +3,19 @@
 
 using namespace ModelView;
 
-//! Testing AxesItems.
+//! Testing AxisItems.
 
-class TestAxesItems : public ::testing::Test
+class TestAxisItems : public ::testing::Test
 {
 public:
-    ~TestAxesItems();
+    ~TestAxisItems();
 };
 
-TestAxesItems::~TestAxesItems() = default;
+TestAxisItems::~TestAxisItems() = default;
 
 //! Initial state
 
-TEST_F(TestAxesItems, initialState)
+TEST_F(TestAxisItems, initialState)
 {
     FixedBinAxisItem axis;
     std::vector<double> expected{0.5};
@@ -24,7 +24,7 @@ TEST_F(TestAxesItems, initialState)
 
 //! Factory method
 
-TEST_F(TestAxesItems, fixedBinAxisFactory)
+TEST_F(TestAxisItems, fixedBinAxisFactory)
 {
     auto axis = FixedBinAxisItem::create(3, 1.0, 4.0);
 
