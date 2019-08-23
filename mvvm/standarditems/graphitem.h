@@ -22,7 +22,7 @@ class Data1DItem;
 @brief One-dimensional graph representation of Data1DItem.
 
 Contains plot properties (i.e. color, line type etc) and link to Data1DItem, which will provide
-actual data to plot.
+actual data to plot. GraphItem is intended for plotting only via GraphViewportItem.
 */
 
 class CORE_EXPORT GraphItem : public CompoundItem
@@ -36,6 +36,10 @@ public:
     void setDataItem(Data1DItem* item);
 
     Data1DItem* dataItem() const;
+
+    std::vector<double> binCenters() const;
+
+    std::vector<double> binValues() const;
 };
 
 } // namespace ModelView

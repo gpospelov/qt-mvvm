@@ -40,3 +40,13 @@ Data1DItem* GraphItem::dataItem() const
     auto& link = item<LinkedItem>(P_LINK);
     return link.linkedItem<Data1DItem>();
 }
+
+std::vector<double> GraphItem::binCenters() const
+{
+    return dataItem() ? dataItem()->binCenters() : std::vector<double>();
+}
+
+std::vector<double> GraphItem::binValues() const
+{
+    return dataItem() ? dataItem()->binValues() : std::vector<double>();
+}
