@@ -14,8 +14,12 @@
 #include <memory>
 #include <QWidget>
 
+class QCustomPlot;
+
 namespace ModelView
 {
+
+class GraphViewportItem;
 
 /*!
 @class CustomGraphWidget
@@ -29,6 +33,8 @@ class CORE_EXPORT CustomGraphWidget : public QWidget
 public:
     explicit CustomGraphWidget(QWidget* parent = nullptr);
     ~CustomGraphWidget() override;
+
+    void setItem(GraphViewportItem* item);
 
 private:
     struct CustomGraphWidgetPrivate;

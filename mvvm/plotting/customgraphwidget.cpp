@@ -10,6 +10,7 @@
 #include "customgraphwidget.h"
 #include "qcustomplot.h"
 #include "axesplotcontroller.h"
+#include "graphviewportitem.h"
 #include <QBoxLayout>
 
 using namespace ModelView;
@@ -22,6 +23,11 @@ struct CustomGraphWidget::CustomGraphWidgetPrivate {
     {
         m_axesController = std::make_unique<AxesPlotController>(m_customPlot);
     }
+
+    QCustomPlot* customPlot()
+    {
+        return m_customPlot;
+    }
 };
 
 CustomGraphWidget::CustomGraphWidget(QWidget* parent)
@@ -32,6 +38,17 @@ CustomGraphWidget::CustomGraphWidget(QWidget* parent)
     layout->setSpacing(0);
     layout->addWidget(p_impl->m_customPlot);
     setLayout(layout);
+
+    setMouseTracking(true);
+    p_impl->customPlot()->setMouseTracking(true);
+    p_impl->customPlot()->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom);
+    p_impl->customPlot()->axisRect()->setupFullAxesBox(true);
+}
+
+void CustomGraphWidget::setItem(GraphViewportItem* item)
+{
+    p_impl->m_axesController->setItem(item->getItem(GraphViewportItem::P_XAXIS));
+
 }
 
 CustomGraphWidget::~CustomGraphWidget() = default;

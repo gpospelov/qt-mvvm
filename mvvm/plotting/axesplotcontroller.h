@@ -14,16 +14,18 @@
 #include "itemcontroller.h"
 
 class QCustomPlot;
+class QCPAxis;
 
 namespace ModelView
 {
 
-class GraphViewportItem;
+class ViewportAxisItem;
 
 /*!
 @class AxesPlotController
-@brief Establish communication between QCustomPlot and GraphViewportItem related to
-viewport's x/y axes.
+@brief Establish communication between QCPAxis and ViewportAxisItem.
+
+Provide mutual update of axis parameters (min, max, title) for two axes representations.
 */
 
 class CORE_EXPORT AxesPlotController : public ItemController
@@ -32,10 +34,17 @@ public:
     explicit AxesPlotController(QCustomPlot* plot, QObject* parent = nullptr);
     ~AxesPlotController() override;
 
+    void subscribe() override;
+
+protected:
+    ViewportAxisItem* axisItem();
+    QCPAxis* customAxis();
+
 private:
     struct AxesPlotControllerPrivate;
     std::unique_ptr<AxesPlotControllerPrivate> p_impl;
 };
+
 
 } // namespace ModelView
 
