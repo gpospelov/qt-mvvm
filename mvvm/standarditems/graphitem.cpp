@@ -9,7 +9,7 @@
 
 #include "graphitem.h"
 #include "linkeditem.h"
-#include "plotitems.h"
+#include "plottableitems.h"
 #include "data1ditem.h"
 #include "itemmapper.h"
 #include <QColor>

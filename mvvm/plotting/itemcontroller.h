@@ -23,6 +23,7 @@ class SessionItem;
 @brief Controller to track time of life of SessionItem.
 */
 
+
 class CORE_EXPORT ItemController
 {
 public:

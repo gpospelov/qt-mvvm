@@ -17,6 +17,7 @@
 #include "data1ditem.h"
 #include "graphitem.h"
 #include "graphviewportitem.h"
+#include "plottableitems.h"
 
 using namespace ModelView;
 
@@ -33,5 +34,6 @@ std::unique_ptr<ItemCatalogue> ModelView::CreateStandardItemCatalogue()
     result->registerItem<Data1DItem>();
     result->registerItem<GraphItem>();
     result->registerItem<GraphViewportItem>();
+    result->registerItem<TextItem>();
     return result;
 }

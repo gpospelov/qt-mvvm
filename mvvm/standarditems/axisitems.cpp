@@ -8,7 +8,7 @@
 // ************************************************************************** //
 
 #include "axisitems.h"
-#include "plotitems.h"
+#include "plottableitems.h"
 
 using namespace ModelView;
 
