@@ -44,7 +44,10 @@ private:
 template <typename T> class ItemControllerV2
 {
 public:
-    virtual ~ItemControllerV2() = default;
+    virtual ~ItemControllerV2() {
+        if (m_item)
+            m_item->mapper()->unsubscribe(this);
+    }
 
     void setItem(T* item)
     {
@@ -67,6 +70,7 @@ public:
 
     T* currentItem() const { return m_item; }
 
+protected:
     virtual void subscribe() {}
 
 private:

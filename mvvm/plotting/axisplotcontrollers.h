@@ -36,10 +36,9 @@ public:
     explicit AxisPlotController(QCustomPlot* plot);
     ~AxisPlotController() override;
 
-    void subscribe() override;
-
 protected:
     virtual QCPAxis* customAxis() = 0;
+    void subscribe() override;
     QCustomPlot* customPlot();
 
 private:
