@@ -11,7 +11,6 @@
 #define MVVM_ITEMCONTROLLER_H
 
 #include "mvvm_export.h"
-#include <QObject>
 #include <memory>
 
 namespace ModelView
@@ -24,11 +23,11 @@ class SessionItem;
 @brief Controller to track time of life of SessionItem.
 */
 
-class CORE_EXPORT ItemController : public QObject
+class CORE_EXPORT ItemController
 {
 public:
-    explicit ItemController(QObject* parent = nullptr);
-    ~ItemController() override;
+    ItemController();
+    virtual ~ItemController();
 
     void setItem(SessionItem* item);
 

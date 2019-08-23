@@ -11,6 +11,7 @@
 #include "axisitems.h"
 #include "itemmapper.h"
 #include "qcustomplot.h"
+#include <QObject>
 
 using namespace ModelView;
 
@@ -39,7 +40,7 @@ struct AxisPlotController::AxesPlotControllerPrivate {
             m_block_update = false;
         };
 
-        *axis_conn = connect(
+        *axis_conn = QObject::connect(
             m_controller->customAxis(),
             static_cast<void (QCPAxis::*)(const QCPRange&)>(&QCPAxis::rangeChanged), on_axis_range);
     }
@@ -58,8 +59,8 @@ struct AxisPlotController::AxesPlotControllerPrivate {
     }
 };
 
-AxisPlotController::AxisPlotController(QCustomPlot* custom_plot, QObject* parent)
-    : ItemController(parent), p_impl(std::make_unique<AxesPlotControllerPrivate>(this, custom_plot))
+AxisPlotController::AxisPlotController(QCustomPlot* custom_plot)
+    : p_impl(std::make_unique<AxesPlotControllerPrivate>(this, custom_plot))
 {
 }
 
@@ -96,8 +97,8 @@ AxisPlotController::~AxisPlotController() = default;
 
 // ----------------------------------------------------------------------------
 
-XAxisPlotController::XAxisPlotController(QCustomPlot* cusom_plot, QObject* parent)
-    : AxisPlotController(cusom_plot, parent)
+XAxisPlotController::XAxisPlotController(QCustomPlot* cusom_plot)
+    : AxisPlotController(cusom_plot)
 {
 }
 
@@ -108,8 +109,8 @@ QCPAxis* XAxisPlotController::customAxis()
 
 // ----------------------------------------------------------------------------
 
-YAxisPlotController::YAxisPlotController(QCustomPlot* cusom_plot, QObject* parent)
-    : AxisPlotController(cusom_plot, parent)
+YAxisPlotController::YAxisPlotController(QCustomPlot* cusom_plot)
+    : AxisPlotController(cusom_plot)
 {
 }
 

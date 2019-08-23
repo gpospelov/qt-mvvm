@@ -33,7 +33,7 @@ Provide mutual update of axis parameters (min, max, title) for two axes represen
 class CORE_EXPORT AxisPlotController : public ItemController
 {
 public:
-    explicit AxisPlotController(QCustomPlot* plot, QObject* parent = nullptr);
+    explicit AxisPlotController(QCustomPlot* plot);
     ~AxisPlotController() override;
 
     void subscribe() override;
@@ -56,7 +56,7 @@ private:
 class CORE_EXPORT XAxisPlotController : public AxisPlotController
 {
 public:
-    explicit XAxisPlotController(QCustomPlot* cusom_plot, QObject* parent = nullptr);
+    explicit XAxisPlotController(QCustomPlot* cusom_plot);
 
 protected:
     QCPAxis* customAxis() override;
@@ -70,7 +70,7 @@ protected:
 class CORE_EXPORT YAxisPlotController : public AxisPlotController
 {
 public:
-    explicit YAxisPlotController(QCustomPlot* cusom_plot, QObject* parent = nullptr);
+    explicit YAxisPlotController(QCustomPlot* cusom_plot);
 
 protected:
     QCPAxis* customAxis() override;

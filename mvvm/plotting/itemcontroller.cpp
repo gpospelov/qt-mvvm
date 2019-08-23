@@ -17,8 +17,8 @@ struct ItemController::ItemControllerPrivate {
     SessionItem* m_item{nullptr};
 };
 
-ItemController::ItemController(QObject* parent)
-    : QObject(parent), p_impl(std::make_unique<ItemControllerPrivate>())
+ItemController::ItemController()
+    : p_impl(std::make_unique<ItemControllerPrivate>())
 {
 }
 
