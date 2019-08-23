@@ -27,6 +27,7 @@ struct AxisPlotController::AxesPlotControllerPrivate {
         axis_conn = std::make_unique<QMetaObject::Connection>();
     }
 
+    //! Connects QCustomPlot signals with controller methods.
     void setConnected()
     {
 
@@ -43,7 +44,18 @@ struct AxisPlotController::AxesPlotControllerPrivate {
             static_cast<void (QCPAxis::*)(const QCPRange&)>(&QCPAxis::rangeChanged), on_axis_range);
     }
 
+    //! Disonnects QCustomPlot signals.
     void setDisconnected() { QObject::disconnect(*axis_conn); }
+
+    //! Sets axesRange from SessionItem.
+    void setAxisRangeFromItem()
+    {
+        auto axis = m_controller->customAxis();
+        auto item = m_controller->currentItem();
+        QCPRange range(item->property(ViewportAxisItem::P_MIN).toDouble(),
+                       item->property(ViewportAxisItem::P_MAX).toDouble());
+        axis->setRange(range);
+    }
 };
 
 AxisPlotController::AxisPlotController(QCustomPlot* custom_plot, QObject* parent)
@@ -53,6 +65,8 @@ AxisPlotController::AxisPlotController(QCustomPlot* custom_plot, QObject* parent
 
 void AxisPlotController::subscribe()
 {
+    p_impl->setAxisRangeFromItem();
+
     auto on_property_change = [this](SessionItem* item, std::string name) {
         if (p_impl->m_block_update)
             return;
