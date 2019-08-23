@@ -23,7 +23,7 @@ class GraphItem;
 @class GraphItemController
 @brief Establish communication between QCPGraph and GraphItem.
 
-Provide data points update on QCPGraph when GraphItem is changed.
+Provide update on QCPGraph (data points, line style, color, etc) when GraphItem is changed.
 */
 
 class CORE_EXPORT GraphItemController : public ItemControllerV2<GraphItem>
@@ -34,7 +34,6 @@ public:
 
 protected:
     void subscribe() override;
-    QCustomPlot* customPlot();
 
 private:
     struct GraphItemControllerPrivate;
