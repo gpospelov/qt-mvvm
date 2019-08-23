@@ -10,6 +10,9 @@
 #ifndef MVVM_AXISITEMS_H
 #define MVVM_AXISITEMS_H
 
+//! @file axisitems.h
+//! Collection of axis items for 1D and 2D plotting support.
+
 #include "compounditem.h"
 #include <memory>
 #include <vector>

@@ -10,6 +10,9 @@
 #ifndef MVVM_AXISPLOTCONTROLLERS_H
 #define MVVM_AXISPLOTCONTROLLERS_H
 
+//! @file axisplotcontroller.h
+//! Collection of controllers to connect QCustomPlot's axes with our AxisItems.
+
 #include "itemcontroller.h"
 
 class QCustomPlot;
