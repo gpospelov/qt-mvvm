@@ -51,6 +51,8 @@ TEST_F(TestGraphItem, binCenters)
     data_item->setFixedBinAxis(3, 0.0, 3.0);
     data_item->setContent(expected_content);
 
+    graph_item->setDataItem(data_item);
+
     EXPECT_EQ(graph_item->binValues(), expected_content);
     EXPECT_EQ(graph_item->binCenters(), expected_centers);
 }
