@@ -17,6 +17,7 @@
 #include <QToolBar>
 #include <QToolButton>
 #include <QUndoStack>
+#include <cassert>
 
 using namespace ModelView;
 

@@ -19,6 +19,14 @@ using namespace ModelView;
 const QString ModelView::JsonItemData::roleKey = "role";
 const QString ModelView::JsonItemData::variantKey = "variant";
 
+namespace {
+QJsonValue keyValue(const QJsonValue& parent_value, const QString& key)
+{
+    const QJsonObject& parent_object = parent_value.toObject();
+    return parent_object.value(key);
+}
+}
+
 JsonItemData::JsonItemData()
     : m_variant_converter(new JsonVariant)
 {
@@ -49,8 +57,8 @@ std::unique_ptr<SessionItemData> JsonItemData::get_data(const QJsonArray& object
     for (const auto& x : object) {
         if (!is_item_data(x.toObject()))
             throw std::runtime_error("JsonItemData::get_data() -> Invalid json object.");
-        auto role = x[roleKey].toInt();
-        auto variant = m_variant_converter->get_variant(x[variantKey].toObject());
+        auto role = keyValue(x, roleKey).toInt();
+        auto variant = m_variant_converter->get_variant(keyValue(x, variantKey).toObject());
         result->setData(variant, role);
     }
 
