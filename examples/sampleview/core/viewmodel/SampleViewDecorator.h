@@ -20,7 +20,6 @@
 class SampleViewDecorator : public CellDecoratorInterface
 {
 public:
-    using CellDecoratorInterface::CellDecoratorInterface;
     ~SampleViewDecorator() override;
     virtual bool hasCustomDecoration(const QModelIndex& index) const override;
     virtual void initStyleOption(QStyleOptionViewItem* option, const QModelIndex& index) override;

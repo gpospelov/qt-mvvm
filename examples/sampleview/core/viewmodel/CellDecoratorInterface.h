@@ -20,7 +20,7 @@ class QStyleOptionViewItem;
 @brief Generates cell decorations. Intended for use with SampleViewDelegate and its descendants.
 */
 
-class CORE_EXPORT CellDecoratorInterface
+class CellDecoratorInterface
 {
 public:
     virtual ~CellDecoratorInterface();

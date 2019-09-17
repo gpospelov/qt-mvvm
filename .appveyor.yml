@@ -1,0 +1,28 @@
+image: Visual Studio 2017
+
+matrix:
+  fast_finish: true
+
+platform:
+- x64
+
+configuration:
+- Release
+
+# http://www.appveyor.com/docs/installed-software
+environment:
+  QTDIR: "C:\\Qt\\5.13.0\\msvc2017_64"
+  PATH: "%QTDIR%\\bin;%PATH%"
+build:
+  parallel: true
+
+install:
+- echo "qt-mvvm install"
+- git submodule -q update --init --recursive
+
+build_script:
+- mkdir build
+- cd build
+- cmake --version
+- cmake -G "Visual Studio 15 2017 Win64" -DMVVM_TESTS_AUTOEXEC=ON -DMVVM_TESTS_AUTODISCOVERY=OFF ..
+- cmake --build . 

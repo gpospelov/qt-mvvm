@@ -20,7 +20,6 @@
 class MaterialTableDecorator : public SampleViewDecorator
 {
 public:
-    using SampleViewDecorator::SampleViewDecorator;
     ~MaterialTableDecorator() override;
 
     bool hasCustomDecoration(const QModelIndex& index) const override;

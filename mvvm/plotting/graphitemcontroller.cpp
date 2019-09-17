@@ -12,6 +12,7 @@
 #include "itemmapper.h"
 #include "qcustomplot.h"
 #include <QVector>
+#include <cassert>
 
 using namespace ModelView;
 
