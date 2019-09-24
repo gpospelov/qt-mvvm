@@ -57,7 +57,6 @@ protected:
     void dropEvent(QGraphicsSceneDragDropEvent* event) override;
     void dragMoveEvent(QGraphicsSceneDragDropEvent* event) override;
     const DesignerMimeData* checkDragEvent(QGraphicsSceneDragDropEvent* event);
-    QVariant itemChange(GraphicsItemChange change, const QVariant& value) override;
     void update_appearance() override;
 
 private:

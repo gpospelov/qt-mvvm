@@ -250,11 +250,6 @@ const DesignerMimeData *MultiLayerView::checkDragEvent(QGraphicsSceneDragDropEve
     return mimeData;
 }
 
-QVariant MultiLayerView::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant& value)
-{
-    return QGraphicsItem::itemChange(change, value);
-}
-
 void MultiLayerView::update_appearance()
 {
     updateGeometry();
