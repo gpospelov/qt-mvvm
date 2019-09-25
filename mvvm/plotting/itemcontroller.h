@@ -24,23 +24,6 @@ class SessionItem;
 @brief Controller to track time of life of SessionItem.
 */
 
-class CORE_EXPORT ItemController
-{
-public:
-    ItemController();
-    virtual ~ItemController();
-
-    void setItem(SessionItem* item);
-
-    SessionItem* currentItem() const;
-
-    virtual void subscribe();
-
-private:
-    struct ItemControllerPrivate;
-    std::unique_ptr<ItemControllerPrivate> p_impl;
-};
-
 template <typename T> class ItemControllerV2
 {
 public:
