@@ -30,7 +30,7 @@ class ViewportAxisItem;
 Provide mutual update of axis parameters (min, max, title) for two axes representations.
 */
 
-class CORE_EXPORT AxisPlotController : public ItemControllerV2<ViewportAxisItem>
+class CORE_EXPORT AxisPlotController : public ItemController<ViewportAxisItem>
 {
 public:
     explicit AxisPlotController(QCustomPlot* plot);

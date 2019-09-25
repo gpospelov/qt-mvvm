@@ -1,9 +1,8 @@
 #include "google_test.h"
 #include "itemcontroller.h"
 #include "itemmapper.h"
-#include "sessionitem.h"
-#include "sessionmodel.h"
 #include "propertyitem.h"
+#include "sessionmodel.h"
 #include <memory>
 
 using namespace ModelView;
@@ -13,10 +12,11 @@ using namespace ModelView;
 class TestItemController : public ::testing::Test
 {
 public:
-    class TestControllerV2 : public ItemControllerV2<PropertyItem>
+    class TestController : public ItemController<PropertyItem>
     {
     public:
-        int ncount{0};
+        ~TestController();
+        size_t ncount{0};
         void subscribe()
         {
             auto on_data_change = [this](SessionItem*, int) { ncount++; };
@@ -28,12 +28,13 @@ public:
 };
 
 TestItemController::~TestItemController() = default;
+TestItemController::TestController::~TestController() = default;
 
 //! Initial state.
 
 TEST_F(TestItemController, initialStateV2)
 {
-    TestControllerV2 controller;
+    TestController controller;
     EXPECT_EQ(controller.currentItem(), nullptr);
 }
 
@@ -42,7 +43,7 @@ TEST_F(TestItemController, itemBeforeControllerV2)
     SessionModel model;
     auto item = dynamic_cast<PropertyItem*>(model.insertNewItem(Constants::PropertyType));
 
-    std::unique_ptr<TestControllerV2> controller = std::make_unique<TestControllerV2>();
+    auto controller = std::make_unique<TestController>();
     controller->setItem(item);
     item->setData(42.0);
 
@@ -58,7 +59,7 @@ TEST_F(TestItemController, controllerBeforeItemV2)
     SessionModel model;
     auto item = dynamic_cast<PropertyItem*>(model.insertNewItem(Constants::PropertyType));
 
-    std::unique_ptr<TestControllerV2> controller = std::make_unique<TestControllerV2>();
+    auto controller = std::make_unique<TestController>();
     controller->setItem(item);
     EXPECT_EQ(controller->currentItem(), item);
 

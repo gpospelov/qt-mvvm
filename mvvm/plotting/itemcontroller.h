@@ -11,7 +11,6 @@
 #define MVVM_ITEMCONTROLLER_H
 
 #include "itemmapper.h"
-#include "mvvm_export.h"
 #include <memory>
 
 namespace ModelView
@@ -21,13 +20,14 @@ class SessionItem;
 
 /*!
 @class ItemController
-@brief Controller to track time of life of SessionItem.
+@brief Base class for all controllers to track time of life of SessionItem and provide
+user actions on item change.
 */
 
-template <typename T> class ItemControllerV2
+template <typename T> class ItemController
 {
 public:
-    virtual ~ItemControllerV2() {
+    virtual ~ItemController() {
         if (m_item)
             m_item->mapper()->unsubscribe(this);
     }

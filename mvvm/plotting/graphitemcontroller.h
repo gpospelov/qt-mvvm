@@ -26,7 +26,7 @@ class GraphItem;
 Provide update on QCPGraph (data points, line style, color, etc) when GraphItem is changed.
 */
 
-class CORE_EXPORT GraphItemController : public ItemControllerV2<GraphItem>
+class CORE_EXPORT GraphItemController : public ItemController<GraphItem>
 {
 public:
     explicit GraphItemController(QCustomPlot* plot);
