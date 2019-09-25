@@ -13,7 +13,6 @@
 #include "ConnectableView.h"
 
 class MultiLayerView;
-class MultiLayerCandidate;
 
 //! Base class for LayerView and MultiLayerView
 //! Provides functionality for moving view on top of MultiLayer.
@@ -37,23 +36,8 @@ protected:
     void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
 
 private:
-    MultiLayerCandidate getMultiLayerCandidate();
+    auto determineAction(const MultiLayerView* new_parent, int row);
     QPointF m_drag_start_position;
-};
-
-
-//! Class to hold MultiLayer candidate for dropping LayerView.
-class MultiLayerCandidate
-{
-public:
-    MultiLayerCandidate() : multilayer(nullptr), row(-1), distance(0){}
-    MultiLayerView *multilayer; //!< pointer to the candidate
-    int row; //!< requested row number to drop in
-    int distance; //!< distance from given ILayerView and drop area
-    bool operator< (const MultiLayerCandidate& cmp) const;
-    operator bool() const { return bool(multilayer); }
-    //! returns line representing interface of multilayer in scene coordinates
-    QLineF getInterfaceToScene();
 };
 
 
