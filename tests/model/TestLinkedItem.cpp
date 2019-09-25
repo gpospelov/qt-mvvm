@@ -2,8 +2,10 @@
 #include "linkeditem.h"
 #include "sessionmodel.h"
 #include "itempool.h"
+#include "MockWidgets.h"
 
 using namespace ModelView;
+using ::testing::_;
 
 //! LinkedItem tests.
 
@@ -61,4 +63,26 @@ TEST_F(TestLinkedItem, differentModelContext)
 
     // now linked
     EXPECT_EQ(linked->linkedItem(), item);
+}
+
+//! Signals when links is set.
+
+TEST_F(TestLinkedItem, onSetLink)
+{
+    SessionModel model;
+    auto item = model.insertNewItem(Constants::PropertyType);
+    auto linked = dynamic_cast<LinkedItem*>(model.insertNewItem(Constants::LinkedType));
+
+    // no link by default
+    EXPECT_EQ(linked->linkedItem(), nullptr);
+
+    MockWidgetForItem widget(linked);
+
+    auto expected_role = ItemDataRole::DATA;
+    auto expected_item = linked;
+    EXPECT_CALL(widget, onDataChange(expected_item, expected_role)).Times(1);
+    EXPECT_CALL(widget, onPropertyChange(_, _)).Times(0);
+
+    // making action
+    linked->setLink(item);
 }
