@@ -2,8 +2,11 @@
 #include "graphitem.h"
 #include "sessionmodel.h"
 #include "data1ditem.h"
+#include "MockWidgets.h"
+#include "linkeditem.h"
 
 using namespace ModelView;
+using ::testing::_;
 
 //! Testing GraphItem.
 
@@ -55,4 +58,22 @@ TEST_F(TestGraphItem, binCenters)
 
     EXPECT_EQ(graph_item->binValues(), expected_content);
     EXPECT_EQ(graph_item->binCenters(), expected_centers);
+}
+
+//! Check signaling on set data item
+
+TEST_F(TestGraphItem, onSetDataItem)
+{
+    SessionModel model;
+    auto data_item = dynamic_cast<Data1DItem*>(model.insertNewItem(Constants::Data1DItemType));
+    auto graph_item = dynamic_cast<GraphItem*>(model.insertNewItem(Constants::GraphItemType));
+
+    MockWidgetForItem widget(graph_item);
+
+    EXPECT_CALL(widget, onDataChange(_, _)).Times(0);
+    EXPECT_CALL(widget, onPropertyChange(graph_item, GraphItem::P_LINK)).Times(1);
+    EXPECT_CALL(widget, onChildPropertyChange(_, _)).Times(0);
+
+    // performing action
+    graph_item->setDataItem(data_item);
 }
