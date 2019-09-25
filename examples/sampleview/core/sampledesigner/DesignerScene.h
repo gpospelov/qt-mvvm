@@ -42,10 +42,11 @@ class MaterialModel;
 class DesignerScene : public QGraphicsScene
 {
     Q_OBJECT
-
 public:
+    using ModelCommand = std::function<void (ModelView::SessionModel& model)>;
+
     explicit DesignerScene(QObject *parent = nullptr);
-    virtual ~DesignerScene();
+    ~DesignerScene() override;
 
     void setSampleModel(SampleModel *sampleModel);
     void setSelectionModel(QItemSelectionModel *model, FilterPropertyProxy *proxy);
@@ -73,23 +74,25 @@ public:
     void onEstablishedConnection(NodeEditorConnection *); // to process signals from NodeEditor
     void removeConnection(NodeEditorConnection *);
 
-    void dragMoveEvent(QGraphicsSceneDragDropEvent *event);
-    void dropEvent(QGraphicsSceneDragDropEvent *event);
+    void dragMoveEvent(QGraphicsSceneDragDropEvent *event) override;
+    void dropEvent(QGraphicsSceneDragDropEvent *event) override;
 
     void onSmartAlign();
+
+    void setDelayedExecution(ModelCommand func) { delayed_command = std::move(func); }
 
 signals:
     void selectionModeChangeRequest(int);
 
 protected:
-    void drawForeground(QPainter* painter, const QRectF& rect);
     const DesignerMimeData *checkDragEvent(QGraphicsSceneDragDropEvent * event);
-    void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
+    void drawForeground(QPainter* painter, const QRectF& rect) override;
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
 
 private:
     void addViewForItem(ModelView::SessionItem* item);
     void updateViews();
-    void deleteViews();
     void alignViews();
     bool isMultiLayerNearby(QGraphicsSceneDragDropEvent *event);
     void adjustSceneRect();
@@ -110,6 +113,8 @@ private:
     SampleViewAligner *m_aligner;
 
     NodeEditor *m_nodeEditor;
+
+    ModelCommand delayed_command;
 };
 
 

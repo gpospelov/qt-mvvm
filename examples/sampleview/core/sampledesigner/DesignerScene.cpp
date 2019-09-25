@@ -33,6 +33,33 @@
 
 using namespace ModelView;
 
+namespace {
+class ModelCommandExecutor
+{
+public:
+    ModelCommandExecutor(DesignerScene::ModelCommand& command, SessionModel* model)
+        : m_command(command)
+        , m_model(model)
+    {}
+
+    void execute() {
+        if (!m_model)
+            throw std::runtime_error(
+                "Error in ModelCommandExecutor::execute: session model is null.");
+
+        if (!m_command)
+            return;
+        m_command(*m_model);
+    }
+
+    ~ModelCommandExecutor() { m_command = DesignerScene::ModelCommand(); }
+
+private:
+    DesignerScene::ModelCommand& m_command;
+    SessionModel* m_model;
+};
+}
+
 DesignerScene::DesignerScene(QObject *parent)
     : QGraphicsScene(parent), m_sampleModel(nullptr),
       m_selectionModel(nullptr), m_proxy(nullptr),
@@ -116,13 +143,13 @@ void DesignerScene::updateScene()
 
 void DesignerScene::onRowsInserted()
 {
-    deleteViews();
+    resetScene();
     updateScene();
 }
 
 void DesignerScene::onRowsRemoved()
 {
-    deleteViews();
+    resetScene();
     updateScene();
 }
 
@@ -211,7 +238,7 @@ void DesignerScene::addViewForItem(SessionItem *item)
         return;
 
     m_ItemToView[item] = view;
-    view->setParameterizedItem(item);
+    view->subscribe(item);
 
     if (auto parent_view = getViewForItem(item->parent()))
         parent_view->addView(view);
@@ -223,18 +250,6 @@ void DesignerScene::addViewForItem(SessionItem *item)
 void DesignerScene::alignViews()
 {
     m_aligner->alignSample(m_sampleModel->rootItem(), QPointF(200, 800));
-}
-
-//! runs recursively through model's item and schedules view removal
-void DesignerScene::deleteViews()
-{
-    for (auto view: m_ItemToView.values()) {
-        view->setSelected(false);
-        emit view->aboutToBeDeleted();
-        view->deleteLater();
-    }
-    m_ItemToView.clear();
-    update();
 }
 
 //! propagates deletion of views on the scene to the model
@@ -315,11 +330,6 @@ void DesignerScene::dropEvent(QGraphicsSceneDragDropEvent *event)
     const DesignerMimeData *mimeData = checkDragEvent(event);
     if (mimeData) {
 
-        // to have possibility to drop MultiLayer on another MultiLayer
-        // * edit function DesignerScene::isAcceptedByMultiLayer
-        // * edit MultiLayerItem for addToValidChildren
-        // * remove method MultiLayerView::itemChange
-
         if(isAcceptedByMultiLayer(mimeData, event)) {
             // certain views can be dropped on MultiLayer and so will be processed there
             QGraphicsScene::dropEvent(event);
@@ -359,6 +369,12 @@ void DesignerScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
         invalidate(); // to redraw vertical dashed line which denotes where to drag the layer
     }
     QGraphicsScene::mouseMoveEvent(event);
+}
+
+void DesignerScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
+{
+    QGraphicsScene::mouseReleaseEvent(event);
+    ModelCommandExecutor(delayed_command, m_sampleModel).execute();
 }
 
 //! Returns true if there is MultiLayerView nearby during drag event.
