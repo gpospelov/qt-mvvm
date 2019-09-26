@@ -41,6 +41,7 @@ TEST_F(TestLinkedItem, sameModelContext)
 
     // now linked
     EXPECT_EQ(linked->linkedItem(), item);
+    EXPECT_EQ(linked->data().value<std::string>(), item->identifier());
 }
 
 //! Link in different model context.
@@ -85,4 +86,27 @@ TEST_F(TestLinkedItem, onSetLink)
 
     // making action
     linked->setLink(item);
+}
+
+//! Link in different model context.
+
+TEST_F(TestLinkedItem, setNullAsLink)
+{
+    auto pool = std::make_shared<ItemPool>();
+
+    SessionModel model("TestModel", pool);
+    auto linked = dynamic_cast<LinkedItem*>(model.insertNewItem(Constants::LinkedType));
+    auto item = model.insertNewItem(Constants::PropertyType);
+
+    // no link by default
+    EXPECT_EQ(linked->linkedItem(), nullptr);
+
+    // setting link
+    linked->setLink(item);
+    EXPECT_EQ(linked->linkedItem(), item);
+
+    // still null link
+    linked->setLink(nullptr);
+    EXPECT_EQ(linked->linkedItem(), nullptr);
+    EXPECT_FALSE(linked->data().isValid());
 }

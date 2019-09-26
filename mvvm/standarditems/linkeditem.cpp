@@ -21,5 +21,9 @@ LinkedItem::LinkedItem() : SessionItem(Constants::LinkedType)
 
 void LinkedItem::setLink(const SessionItem* item)
 {
-    setData(QVariant::fromValue(item->identifier()));
+
+    if (item)
+        setData(QVariant::fromValue(item->identifier()));
+    else
+        setData(QVariant());
 }
