@@ -20,13 +20,12 @@ using namespace ModelView;
 
 struct GraphItemController::GraphItemControllerPrivate {
     GraphItemController* master{nullptr};
-    QCustomPlot* m_customPlot{nullptr};
-    bool m_block_update{false};
-    QCPGraph* m_graph{nullptr};
+    QCustomPlot* custom_plot{nullptr};
+    QCPGraph* graph{nullptr};
     std::unique_ptr<Data1DPlotController> data_controller;
 
     GraphItemControllerPrivate(GraphItemController* master, QCustomPlot* plot)
-        : master(master), m_customPlot(plot)
+        : master(master), custom_plot(plot)
     {
     }
 
@@ -35,31 +34,31 @@ struct GraphItemController::GraphItemControllerPrivate {
     //! Removes graph from customPlot.
     void remove_graph()
     {
-        if (!m_graph)
+        if (!graph)
             return;
 
         data_controller.reset();
-        m_customPlot->removePlottable(m_graph);
-        m_graph = nullptr;
+        custom_plot->removePlottable(graph);
+        graph = nullptr;
     }
 
     //! Creates graph on canvas and setups data controller.
     void create_graph()
     {
-        m_graph = m_customPlot->addGraph();
-        data_controller = std::make_unique<Data1DPlotController>(m_graph);
+        graph = custom_plot->addGraph();
+        data_controller = std::make_unique<Data1DPlotController>(graph);
         data_controller->setItem(graph_item()->dataItem());
     }
 
     //! Updates graph pen from GraphItem.
     void update_graph_pen()
     {
-        if (!m_graph)
+        if (!graph)
             return;
 
         auto color = graph_item()->property(GraphItem::P_COLOR).value<QColor>();
-        m_customPlot->graph()->setPen(QPen(color));
-        m_customPlot->replot();
+        custom_plot->graph()->setPen(QPen(color));
+        custom_plot->replot();
     }
 
     //! Creates graph for current GraphItem.
