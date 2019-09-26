@@ -28,6 +28,7 @@ public:
     virtual void onDataChange(ModelView::SessionItem* item, int role) = 0;
     virtual void onPropertyChange(ModelView::SessionItem* item, std::string name) = 0;
     virtual void onRowInserted(ModelView::SessionItem* item, std::string tag, int row) = 0;
+    virtual void onRowAboutToBeRemoved(ModelView::SessionItem* item, std::string tag, int row) = 0;
 };
 
 //! Interface for testing callbacks comming from SessionModel within gmock framework.

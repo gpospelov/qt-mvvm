@@ -90,6 +90,19 @@ void ItemMapper::setOnRowInserted(Callbacks::item_str_int_t f, Callbacks::client
     m_on_row_inserted.add(std::move(f), client);
 }
 
+/*!
+@brief Sets callback to be notified when row is about to be removed.
+
+Callback will be called with (compound_item, tag, row). For MultiLayer containing the T_LAYERS
+tag, the signal will be triggered on layer deletion with
+(multilayer*, T_LAYER, row) as callback parameters.
+*/
+
+void ItemMapper::setOnRowAboutToBeRemoved(Callbacks::item_str_int_t f, Callbacks::client_t client)
+{
+    m_on_row_about_removed.add(std::move(f), client);
+}
+
 //! Sets activity flag to given value. Will disable all callbacks if false.
 
 void ItemMapper::setActive(bool value)
@@ -104,6 +117,7 @@ void ItemMapper::unsubscribe(Callbacks::client_t client)
     m_on_property_change.remove_client(client);
     m_on_child_property_change.remove_client(client);
     m_on_row_inserted.remove_client(client);
+    m_on_row_about_removed.remove_client(client);
 }
 
 //! Processes signals from the model when item data changed.
@@ -133,6 +147,12 @@ void ItemMapper::onModelRowInserted(SessionItem* parent, std::string tag, int ro
         callOnRowInserted(m_item, tag, row);
 }
 
+void ItemMapper::onModelRowAboutToBeRemoved(SessionItem* parent, std::string tag, int row)
+{
+    if (parent == m_item)
+        callOnRowAboutToBeRemoved(m_item, tag, row);
+}
+
 //! Subscribes to model signals.
 
 void ItemMapper::subscribe_to_model()
@@ -144,6 +164,11 @@ void ItemMapper::subscribe_to_model()
         onModelRowInserted(item, tag, row);
     };
     m_model->mapper()->setOnRowInserted(on_row_inserted, this);
+
+    auto on_row_about_removed = [this](ModelView::SessionItem* item, std::string tag, int row) {
+        onModelRowAboutToBeRemoved(item, tag, row);
+    };
+    m_model->mapper()->setOnRowAboutToBeRemoved(on_row_about_removed, this);
 }
 
 //! Unsubscribes from model signals.
@@ -200,5 +225,13 @@ void ItemMapper::callOnRowInserted(SessionItem* parent, std::string tag, int row
 {
     if (m_active)
         m_on_row_inserted.notify(parent, tag, row);
+}
+
+//! Notifies all callbacks subscribed to "on row about to be removed".
+
+void ItemMapper::callOnRowAboutToBeRemoved(SessionItem* parent, std::string tag, int row)
+{
+    if (m_active)
+        m_on_row_about_removed.notify(parent, tag, row);
 }
 

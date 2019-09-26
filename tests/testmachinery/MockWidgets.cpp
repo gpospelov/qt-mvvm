@@ -49,6 +49,11 @@ void MockWidgetForItem::setItem(ModelView::SessionItem* item)
         onRowInserted(item, tag, row);
     };
     m_item->mapper()->setOnRowInserted(on_row_inserted, this);
+
+    auto on_row_about_removed = [this](ModelView::SessionItem* item, std::string tag, int row) {
+        onRowAboutToBeRemoved(item, tag, row);
+    };
+    m_item->mapper()->setOnRowAboutToBeRemoved(on_row_about_removed, this);
 }
 
 // ----------------------------------------------------------------------------

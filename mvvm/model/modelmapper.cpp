@@ -41,7 +41,7 @@ void ModelMapper::setOnRowRemoved(Callbacks::item_str_int_t f, Callbacks::client
     m_on_row_removed.add(std::move(f), client);
 }
 
-//! Sets callback to be notified when row is about to be removed..
+//! Sets callback to be notified when row is about to be removed.
 //! Callback will be called with (SessionItem* parent, tag, row), where tag,row corresponds
 //! to the child which going to be removed.
 
