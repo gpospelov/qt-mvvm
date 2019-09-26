@@ -60,7 +60,31 @@ TEST_F(TestGraphItem, binCenters)
     EXPECT_EQ(graph_item->binCenters(), expected_centers);
 }
 
-//! Check signaling on set data item
+//! Check unlinking when nullptr is set as Data1DItem.
+
+TEST_F(TestGraphItem, setNullData)
+{
+    SessionModel model;
+    auto data_item = dynamic_cast<Data1DItem*>(model.insertNewItem(Constants::Data1DItemType));
+    auto graph_item = dynamic_cast<GraphItem*>(model.insertNewItem(Constants::GraphItemType));
+
+    // preparing data item
+    std::vector<double> expected_content = {1.0, 2.0, 3.0};
+    std::vector<double> expected_centers = {0.5, 1.5, 2.5};
+    data_item->setFixedBinAxis(3, 0.0, 3.0);
+    data_item->setContent(expected_content);
+
+    graph_item->setDataItem(data_item);
+    EXPECT_EQ(graph_item->dataItem(), data_item);
+
+    // setting null as data item
+    graph_item->setDataItem(nullptr);
+    EXPECT_TRUE(graph_item->dataItem() == nullptr);
+    EXPECT_EQ(graph_item->binCenters(), std::vector<double>{});
+    EXPECT_EQ(graph_item->binValues(), std::vector<double>{});
+}
+
+//! Check signaling on set data item.
 
 TEST_F(TestGraphItem, onSetDataItem)
 {

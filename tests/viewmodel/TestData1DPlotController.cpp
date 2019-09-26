@@ -50,7 +50,8 @@ TEST_F(TestData1DPlotController, dataPoints)
     EXPECT_EQ(data_item->binCenters(), TestUtils::binCenters(graph));
     EXPECT_EQ(data_item->binValues(), TestUtils::binValues(graph));
 
-    // setting item to nullptr, points on graph should disappear
+    // Setting item to nullptr.
+    // FIXME Current convention is that graph stays intact, but points disappear. Is it the right thing?
     controller.setItem(nullptr);
     EXPECT_EQ(std::vector<double>(), TestUtils::binCenters(graph));
     EXPECT_EQ(std::vector<double>(), TestUtils::binValues(graph));
