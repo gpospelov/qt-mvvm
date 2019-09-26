@@ -42,4 +42,4 @@ private:
 
 } // namespace ModelView
 
-#endif // MVVM_AXISPLOTCONTROLLERS_H
+#endif // MVVM_GRAPHITEMCONTROLLER_H

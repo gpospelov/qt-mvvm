@@ -20,5 +20,7 @@ TestGraphItemController::~TestGraphItemController() = default;
 
 TEST_F(TestGraphItemController, initialState)
 {
+    auto custom_plot = std::make_unique<QCustomPlot>();
+    GraphItemController controller(custom_plot.get());
     EXPECT_EQ(1, 1);
 }

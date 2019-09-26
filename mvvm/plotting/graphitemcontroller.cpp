@@ -11,6 +11,7 @@
 #include "graphitem.h"
 #include "itemmapper.h"
 #include "qcustomplot.h"
+#include "data1ditem.h"
 #include <QVector>
 #include <cassert>
 
@@ -22,6 +23,8 @@ struct GraphItemController::GraphItemControllerPrivate {
     QCustomPlot* m_customPlot{nullptr};
     bool m_block_update{false};
     QCPGraph* m_graph{nullptr};
+    Data1DItem* m_data_item{nullptr};
+
 
     GraphItemControllerPrivate(GraphItemController* controller, QCustomPlot* plot)
         : m_controller(controller), m_customPlot(plot)
@@ -48,6 +51,7 @@ GraphItemController::GraphItemController(QCustomPlot* custom_plot)
 void GraphItemController::subscribe()
 {
     p_impl->setGraphFromItem();
+
 }
 
 GraphItemController::~GraphItemController() = default;
