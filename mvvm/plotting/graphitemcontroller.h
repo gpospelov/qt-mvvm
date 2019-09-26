@@ -34,6 +34,7 @@ public:
 
 protected:
     void subscribe() override;
+    void unsubscribe() override;
 
 private:
     struct GraphItemControllerPrivate;
