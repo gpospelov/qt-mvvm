@@ -19,6 +19,15 @@ struct Data1DPlotController::Data1DPlotControllerPrivate {
 
     }
 
+    void update_graph_points(Data1DPlotController* controller) {
+        if(!m_graph)
+                return;
+        auto graph_item = controller->currentItem();
+        m_graph->setData(QVector<double>::fromStdVector(graph_item->binCenters()),
+                       QVector<double>::fromStdVector(graph_item->binValues()));
+
+    }
+
 };
 
 Data1DPlotController::Data1DPlotController(QCPGraph* graph)
@@ -26,9 +35,14 @@ Data1DPlotController::Data1DPlotController(QCPGraph* graph)
 {
 }
 
+Data1DPlotController::~Data1DPlotController() = default;
+
 void Data1DPlotController::subscribe()
 {
+    auto on_data_change = [this](SessionItem*, int) {
+        p_impl->update_graph_points(this);
+    };
+    currentItem()->mapper()->setOnDataChange(on_data_change, this);
 
+    p_impl->update_graph_points(this);
 }
-
-Data1DPlotController::~Data1DPlotController() = default;

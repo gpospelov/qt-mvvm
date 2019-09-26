@@ -25,7 +25,7 @@ class ViewportAxisItem;
 
 /*!
 @class AxisPlotController
-@brief Establish communication between QCPAxis and ViewportAxisItem.
+@brief Abstract base to establish communication between QCPAxis and ViewportAxisItem.
 
 Provide mutual update of axis parameters (min, max, title) for two axes representations.
 */
