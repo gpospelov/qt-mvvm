@@ -11,6 +11,8 @@ target_sources(${library_name} PRIVATE
     itemcontroller.cpp
     data1dplotcontroller.h
     data1dplotcontroller.cpp
+    graphcollectionplotcontroller.h
+    graphcollectionplotcontroller.cpp
 )
 
 target_include_directories(${library_name}
