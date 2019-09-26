@@ -43,8 +43,8 @@ private:
     friend class SessionItem;
 
     void callOnDataChange(SessionItem* item, int role);
-    void callOnRowInserted(SessionItem* parent, std::string tag, int index);
-    void callOnRowRemoved(SessionItem* parent, std::string tag, int index);
+    void callOnRowInserted(SessionItem* parent, std::string tag, int row);
+    void callOnRowRemoved(SessionItem* parent, std::string tag, int row);
     void callOnModelDestroyed();
     void callOnModelReset();
 
@@ -61,4 +61,3 @@ private:
 } // namespace ModelView
 
 #endif // MVVM_MODELMAPPER_H
-
