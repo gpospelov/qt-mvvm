@@ -31,6 +31,7 @@ TEST(TestModelMapper, onDataChange)
     const int role = ItemDataRole::DATA;
     EXPECT_CALL(widget, onDataChange(item, role)).Times(1);
     EXPECT_CALL(widget, onRowInserted(_, _, _)).Times(0);
+    EXPECT_CALL(widget, onRowAboutToBeRemoved(_, _, _)).Times(0);
     EXPECT_CALL(widget, onRowRemoved(_, _, _)).Times(0);
     EXPECT_CALL(widget, onModelDestroyed(_)).Times(0);
     EXPECT_CALL(widget, onModelReset(_)).Times(0);
@@ -40,6 +41,7 @@ TEST(TestModelMapper, onDataChange)
     EXPECT_CALL(widget, onDataChange(_, _)).Times(0);
     EXPECT_CALL(widget, onRowInserted(_, _, _)).Times(0);
     EXPECT_CALL(widget, onRowRemoved(_, _, _)).Times(0);
+    EXPECT_CALL(widget, onRowAboutToBeRemoved(_, _, _)).Times(0);
     EXPECT_CALL(widget, onModelDestroyed(_)).Times(0);
     EXPECT_CALL(widget, onModelReset(_)).Times(0);
     model.setData(item, 42.0, ItemDataRole::DATA); // perform action
@@ -48,6 +50,7 @@ TEST(TestModelMapper, onDataChange)
     EXPECT_CALL(widget, onDataChange(item, role)).Times(1);
     EXPECT_CALL(widget, onRowInserted(_, _, _)).Times(0);
     EXPECT_CALL(widget, onRowRemoved(_, _, _)).Times(0);
+    EXPECT_CALL(widget, onRowAboutToBeRemoved(_, _, _)).Times(0);
     EXPECT_CALL(widget, onModelDestroyed(_)).Times(0);
     EXPECT_CALL(widget, onModelReset(_)).Times(0);
     item->setData(43.0); // perform action
@@ -65,6 +68,7 @@ TEST(TestModelMapper, onRowInserted)
     const std::string expected_tag("");
     EXPECT_CALL(widget, onRowInserted(model.rootItem(), expected_tag, expected_index)).Times(1);
     EXPECT_CALL(widget, onRowRemoved(_, _, _)).Times(0);
+    EXPECT_CALL(widget, onRowAboutToBeRemoved(_, _, _)).Times(0);
     EXPECT_CALL(widget, onModelDestroyed(_)).Times(0);
     EXPECT_CALL(widget, onModelReset(_)).Times(0);
 
@@ -87,6 +91,7 @@ TEST(TestModelMapper, onRowRemoved)
     EXPECT_CALL(widget, onDataChange(_, _)).Times(0);
     EXPECT_CALL(widget, onRowInserted(_, _, _)).Times(0);
     EXPECT_CALL(widget, onRowRemoved(model.rootItem(), expected_tag, expected_index)).Times(1);
+    EXPECT_CALL(widget, onRowAboutToBeRemoved(model.rootItem(), expected_tag, expected_index)).Times(1);
     EXPECT_CALL(widget, onModelDestroyed(_)).Times(0);
     EXPECT_CALL(widget, onModelReset(_)).Times(0);
     // perform action
@@ -103,6 +108,7 @@ TEST(TestModelMapper, onModelDestroyed)
     EXPECT_CALL(*widget, onDataChange(_, _)).Times(0);
     EXPECT_CALL(*widget, onRowInserted(_, _, _)).Times(0);
     EXPECT_CALL(*widget, onRowRemoved(_, _, _)).Times(0);
+    EXPECT_CALL(*widget, onRowAboutToBeRemoved(_, _, _)).Times(0);
     EXPECT_CALL(*widget, onModelReset(_)).Times(0);
     EXPECT_CALL(*widget, onModelDestroyed(model.get())).Times(1);
 
@@ -120,6 +126,7 @@ TEST(TestModelMapper, onModelReset)
     EXPECT_CALL(*widget, onDataChange(_, _)).Times(0);
     EXPECT_CALL(*widget, onRowInserted(_, _, _)).Times(0);
     EXPECT_CALL(*widget, onRowRemoved(_, _, _)).Times(0);
+    EXPECT_CALL(*widget, onRowAboutToBeRemoved(_, _, _)).Times(0);
     EXPECT_CALL(*widget, onModelDestroyed(_)).Times(0);
     EXPECT_CALL(*widget, onModelReset(model.get())).Times(1);
 
