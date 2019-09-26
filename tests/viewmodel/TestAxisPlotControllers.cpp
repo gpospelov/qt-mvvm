@@ -27,7 +27,7 @@ TestAxisPlotControllers::~TestAxisPlotControllers() = default;
 
 TEST_F(TestAxisPlotControllers, xAxisControllerInitialState)
 {
-    std::unique_ptr<QCustomPlot> custom_plot = std::make_unique<QCustomPlot>();
+    auto custom_plot = std::make_unique<QCustomPlot>();
     XAxisPlotController controller(custom_plot.get());
 
     auto xChanged = createSpy(custom_plot->xAxis);
@@ -48,6 +48,7 @@ TEST_F(TestAxisPlotControllers, xAxisControllerInitialState)
 
 TEST_F(TestAxisPlotControllers, setViewportAxisItem)
 {
+    auto custom_plot = std::make_unique<QCustomPlot>();
     const double expected_min = 1.0;
     const double expected_max = 2.0;
 
@@ -58,7 +59,6 @@ TEST_F(TestAxisPlotControllers, setViewportAxisItem)
     axisItem->setProperty(ViewportAxisItem::P_MAX, expected_max);
 
     // setting up QCustomPlot and item controller.
-    std::unique_ptr<QCustomPlot> custom_plot = std::make_unique<QCustomPlot>();
     XAxisPlotController controller(custom_plot.get());
 
     auto prev_y_range = custom_plot->yAxis->range();
@@ -82,6 +82,8 @@ TEST_F(TestAxisPlotControllers, setViewportAxisItem)
 
 TEST_F(TestAxisPlotControllers, changeQCPAxis)
 {
+    auto custom_plot = std::make_unique<QCustomPlot>();
+
     // creating the model with single ViewportAxisItem
     SessionModel model;
     auto axisItem = dynamic_cast<ViewportAxisItem*>(model.insertNewItem(Constants::ViewportAxisType));
@@ -89,7 +91,6 @@ TEST_F(TestAxisPlotControllers, changeQCPAxis)
     axisItem->setProperty(ViewportAxisItem::P_MAX, 42.1);
 
     // setting up QCustomPlot and item controller.
-    std::unique_ptr<QCustomPlot> custom_plot = std::make_unique<QCustomPlot>();
     const double expected_min = 1.0;
     const double expected_max = 2.0;
     auto xChanged = createSpy(custom_plot->xAxis);
@@ -117,6 +118,8 @@ TEST_F(TestAxisPlotControllers, changeQCPAxis)
 
 TEST_F(TestAxisPlotControllers, changeViewportAxisItem)
 {
+    auto custom_plot = std::make_unique<QCustomPlot>();
+
     // creating the model with single ViewportAxisItem
     SessionModel model;
     auto axisItem = dynamic_cast<ViewportAxisItem*>(model.insertNewItem(Constants::ViewportAxisType));
@@ -124,7 +127,6 @@ TEST_F(TestAxisPlotControllers, changeViewportAxisItem)
     axisItem->setProperty(ViewportAxisItem::P_MAX, 42.1);
 
     // setting up QCustomPlot and item controller.
-    std::unique_ptr<QCustomPlot> custom_plot = std::make_unique<QCustomPlot>();
     XAxisPlotController controller(custom_plot.get());
     controller.setItem(axisItem);
     auto xChanged = createSpy(custom_plot->xAxis);
@@ -149,6 +151,8 @@ TEST_F(TestAxisPlotControllers, changeViewportAxisItem)
 
 TEST_F(TestAxisPlotControllers, changeViewportAxisItemYCase)
 {
+    auto custom_plot = std::make_unique<QCustomPlot>();
+
     // creating the model with single ViewportAxisItem
     SessionModel model;
     auto axisItem = dynamic_cast<ViewportAxisItem*>(model.insertNewItem(Constants::ViewportAxisType));
@@ -156,7 +160,6 @@ TEST_F(TestAxisPlotControllers, changeViewportAxisItemYCase)
     axisItem->setProperty(ViewportAxisItem::P_MAX, 42.1);
 
     // setting up QCustomPlot and item controller.
-    std::unique_ptr<QCustomPlot> custom_plot = std::make_unique<QCustomPlot>();
     YAxisPlotController controller(custom_plot.get());
     controller.setItem(axisItem);
     auto xChanged = createSpy(custom_plot->xAxis);

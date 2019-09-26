@@ -8,6 +8,8 @@
 // ************************************************************************** //
 
 #include "graphitemcontroller.h"
+#include "data1ditem.h"
+#include "data1dplotcontroller.h"
 #include "graphitem.h"
 #include "itemmapper.h"
 #include "qcustomplot.h"
@@ -17,26 +19,53 @@
 using namespace ModelView;
 
 struct GraphItemController::GraphItemControllerPrivate {
+    GraphItemController* master{nullptr};
+    QCustomPlot* custom_plot{nullptr};
+    QCPGraph* graph{nullptr};
+    std::unique_ptr<Data1DPlotController> data_controller;
 
-    GraphItemController* m_controller{nullptr};
-    QCustomPlot* m_customPlot{nullptr};
-    bool m_block_update{false};
-    QCPGraph* m_graph{nullptr};
-
-    GraphItemControllerPrivate(GraphItemController* controller, QCustomPlot* plot)
-        : m_controller(controller), m_customPlot(plot)
+    GraphItemControllerPrivate(GraphItemController* master, QCustomPlot* plot)
+        : master(master), custom_plot(plot)
     {
     }
 
-    void setGraphFromItem()
+    GraphItem* graph_item() { return master->currentItem(); }
+
+    //! Removes graph from customPlot.
+    void remove_graph()
     {
-        assert(m_graph == nullptr);
+        if (!graph)
+            return;
 
-        auto graph_item = m_controller->currentItem();
+        data_controller.reset();
+        custom_plot->removePlottable(graph);
+        graph = nullptr;
+    }
 
-        auto graph = m_customPlot->addGraph();
-        graph->setData(QVector<double>::fromStdVector(graph_item->binCenters()),
-                       QVector<double>::fromStdVector(graph_item->binValues()));
+    //! Creates graph on canvas and setups data controller.
+    void create_graph()
+    {
+        graph = custom_plot->addGraph();
+        data_controller = std::make_unique<Data1DPlotController>(graph);
+        data_controller->setItem(graph_item()->dataItem());
+    }
+
+    //! Updates graph pen from GraphItem.
+    void update_graph_pen()
+    {
+        if (!graph)
+            return;
+
+        auto color = graph_item()->property(GraphItem::P_COLOR).value<QColor>();
+        custom_plot->graph()->setPen(QPen(color));
+        custom_plot->replot();
+    }
+
+    //! Creates graph for current GraphItem.
+    void setup_graph() {
+        remove_graph();
+        create_graph();
+        update_graph_pen();
     }
 };
 
@@ -47,7 +76,22 @@ GraphItemController::GraphItemController(QCustomPlot* custom_plot)
 
 void GraphItemController::subscribe()
 {
-    p_impl->setGraphFromItem();
+    auto on_property_change = [this](SessionItem* item, std::string property_name) {
+        Q_UNUSED(item)
+        if (property_name == GraphItem::P_COLOR)
+            p_impl->update_graph_pen();
+
+        if (property_name == GraphItem::P_LINK)
+            p_impl->setup_graph();
+    };
+    currentItem()->mapper()->setOnPropertyChange(on_property_change, this);
+
+    p_impl->setup_graph();
+}
+
+void GraphItemController::unsubscribe()
+{
+    p_impl->remove_graph();
 }
 
 GraphItemController::~GraphItemController() = default;

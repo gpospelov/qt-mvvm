@@ -7,23 +7,16 @@
 //
 // ************************************************************************** //
 
-#include "linkeditem.h"
-#include "customvariants.h"
+#include "customplot_test_utils.h"
+#include <qcustomplot.h>
 
-using namespace ModelView;
 
-LinkedItem::LinkedItem() : SessionItem(Constants::LinkedType)
+std::vector<double> TestUtils::binCenters(const QCPGraph* graph)
 {
-
+    return get_values(graph, [](auto x) { return x.key; });
 }
 
-//! Set link to given item.
-
-void LinkedItem::setLink(const SessionItem* item)
+std::vector<double> TestUtils::binValues(const QCPGraph* graph)
 {
-
-    if (item)
-        setData(QVariant::fromValue(item->identifier()));
-    else
-        setData(QVariant());
+    return get_values(graph, [](auto x) { return x.value; });
 }
