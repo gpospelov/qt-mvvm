@@ -74,6 +74,13 @@ SessionItem* SessionItemTags::takeItem(const std::string& tag, int row)
     return container(tag)->takeItem(row);
 }
 
+//! Returns true if item can be taken.
+
+bool SessionItemTags::canTakeItem(const std::string& tag, int row) const
+{
+    return container(tag)->canTakeItem(row);
+}
+
 //! Returns item at given row of given tag.
 
 SessionItem* SessionItemTags::getItem(const std::string& tag, int row) const

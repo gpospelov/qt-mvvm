@@ -178,6 +178,7 @@ TEST_F(TestSessionItemTags, takeItem)
     EXPECT_TRUE(tag.insertItem(child4, tag2, -1));
 
     // taking item in between
+    EXPECT_TRUE(tag.canTakeItem("", 1));
     auto taken2 = tag.takeItem("", 1);
     EXPECT_EQ(child2, taken2);
     delete taken2;
@@ -189,6 +190,7 @@ TEST_F(TestSessionItemTags, takeItem)
     EXPECT_EQ(tag.getItems(tag2), expected);
 
     // taking non existing items
+    EXPECT_FALSE(tag.canTakeItem("", -1));
     EXPECT_EQ(tag.takeItem("", -1), nullptr);
 }
 
