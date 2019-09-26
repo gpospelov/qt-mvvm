@@ -31,6 +31,7 @@ public:
     void setOnDataChange(Callbacks::item_int_t f, Callbacks::client_t client = {});
     void setOnRowInserted(Callbacks::item_str_int_t f, Callbacks::client_t client = {});
     void setOnRowRemoved(Callbacks::item_str_int_t f, Callbacks::client_t client = {});
+    void setOnRowAboutToBeRemoved(Callbacks::item_str_int_t f, Callbacks::client_t client = {});
     void setOnModelDestroyed(Callbacks::model_t f, Callbacks::client_t client = {});
     void setOnModelReset(Callbacks::model_t f, Callbacks::client_t client = {});
 
@@ -45,12 +46,14 @@ private:
     void callOnDataChange(SessionItem* item, int role);
     void callOnRowInserted(SessionItem* parent, std::string tag, int row);
     void callOnRowRemoved(SessionItem* parent, std::string tag, int row);
+    void callOnRowAboutToBeRemoved(SessionItem* parent, std::string tag, int row);
     void callOnModelDestroyed();
     void callOnModelReset();
 
     CallbackContainer<Callbacks::item_int_t> m_on_data_change;
     CallbackContainer<Callbacks::item_str_int_t> m_on_row_inserted;
     CallbackContainer<Callbacks::item_str_int_t> m_on_row_removed;
+    CallbackContainer<Callbacks::item_str_int_t> m_on_row_about_removed;
     CallbackContainer<Callbacks::model_t> m_on_model_destroyed;
     CallbackContainer<Callbacks::model_t> m_on_model_reset;
 

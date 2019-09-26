@@ -41,6 +41,15 @@ void ModelMapper::setOnRowRemoved(Callbacks::item_str_int_t f, Callbacks::client
     m_on_row_removed.add(std::move(f), client);
 }
 
+//! Sets callback to be notified when row is about to be removed..
+//! Callback will be called with (SessionItem* parent, tag, row), where tag,row corresponds
+//! to the child which going to be removed.
+
+void ModelMapper::setOnRowAboutToBeRemoved(Callbacks::item_str_int_t f, Callbacks::client_t client)
+{
+    m_on_row_about_removed.add(std::move(f), client);
+}
+
 //! Sets the callback for notifications on model destruction.
 
 void ModelMapper::setOnModelDestroyed(Callbacks::model_t f, Callbacks::client_t client)
@@ -67,6 +76,7 @@ void ModelMapper::unsubscribe(Callbacks::client_t client)
     m_on_data_change.remove_client(client);
     m_on_row_inserted.remove_client(client);
     m_on_row_removed.remove_client(client);
+    m_on_row_about_removed.remove_client(client);
     m_on_model_destroyed.remove_client(client);
     m_on_model_reset.remove_client(client);
 }
@@ -91,6 +101,12 @@ void ModelMapper::callOnRowRemoved(SessionItem* parent, std::string tag, int row
 {
     if (m_active)
         m_on_row_removed.notify(parent, tag, row);
+}
+
+void ModelMapper::callOnRowAboutToBeRemoved(SessionItem* parent, std::string tag, int row)
+{
+    if (m_active)
+        m_on_row_about_removed.notify(parent, tag, row);
 }
 
 void ModelMapper::callOnModelDestroyed()
