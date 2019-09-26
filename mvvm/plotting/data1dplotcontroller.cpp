@@ -28,6 +28,12 @@ struct Data1DPlotController::Data1DPlotControllerPrivate {
 
     }
 
+    void reset_graph() {
+        if(!m_graph)
+                return;
+        m_graph->setData(QVector<double>{}, QVector<double>{});
+    }
+
 };
 
 Data1DPlotController::Data1DPlotController(QCPGraph* graph)
@@ -45,4 +51,9 @@ void Data1DPlotController::subscribe()
     currentItem()->mapper()->setOnDataChange(on_data_change, this);
 
     p_impl->update_graph_points(this);
+}
+
+void Data1DPlotController::unsubscribe()
+{
+    p_impl->reset_graph();
 }

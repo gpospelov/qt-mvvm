@@ -75,4 +75,38 @@ TEST_F(TestData1DPlotController, dataPoints)
     // checking that QCPGraph now has data points as in Data1DItem
     EXPECT_EQ(data_item->binCenters(), binCenters(graph));
     EXPECT_EQ(data_item->binValues(), binValues(graph));
+
+    // setting item to nullptr, points on graph should disappear
+    controller.setItem(nullptr);
+    EXPECT_EQ(std::vector<double>(), binCenters(graph));
+    EXPECT_EQ(std::vector<double>(), binValues(graph));
+}
+
+//! Testing two graph scenario.
+
+TEST_F(TestData1DPlotController, twoDataItems)
+{
+    // creating custom plot and empty graph on it
+    auto custom_plot = std::make_unique<QCustomPlot>();
+    auto graph = custom_plot->addGraph();
+
+    // creating data item with single point
+    SessionModel model;
+    auto data_item1 = dynamic_cast<Data1DItem*>(model.insertNewItem(Constants::Data1DItemType));
+    data_item1->setFixedBinAxis(1, 1.0, 2.0);
+    auto data_item2 = dynamic_cast<Data1DItem*>(model.insertNewItem(Constants::Data1DItemType));
+    data_item2->setFixedBinAxis(2, 0.0, 2.0);
+
+    // creating controller and point it to Data1DItem
+    Data1DPlotController controller(graph);
+    controller.setItem(data_item1);
+
+    // checking that QCPGraph now has data points as in Data1DItem
+    EXPECT_EQ(data_item1->binCenters(), binCenters(graph));
+    EXPECT_EQ(data_item1->binValues(), binValues(graph));
+
+    // setting item to nullptr, points on graph should disappear
+    controller.setItem(data_item2);
+    EXPECT_EQ(data_item2->binCenters(), binCenters(graph));
+    EXPECT_EQ(data_item2->binValues(), binValues(graph));
 }
