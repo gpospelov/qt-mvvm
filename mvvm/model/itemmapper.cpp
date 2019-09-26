@@ -66,6 +66,7 @@ void ItemMapper::setOnPropertyChange(Callbacks::item_str_t f, Callbacks::client_
 
 /*!
 @brief Sets callback to be notified on item's children property change.
+
 Callback will be called with (compound_item, property_name). For MultiLayer containing the
 layer with "thickness" property, the signal will be triggered on thickness change using
 (layeritem*, "thickness") as callback parameters.
@@ -74,6 +75,19 @@ layer with "thickness" property, the signal will be triggered on thickness chang
 void ItemMapper::setOnChildPropertyChange(Callbacks::item_str_t f, Callbacks::client_t client)
 {
     m_on_child_property_change.add(std::move(f), client);
+}
+
+/*!
+@brief Sets callback to be notified on child insertion.
+
+Callback will be called with (compound_item, tag, row). For MultiLayer containing the T_LAYERS
+tag, the signal will be triggered on layer insertion with
+(multilayer*, T_LAYER, row) as callback parameters.
+*/
+
+void ItemMapper::setOnRowInserted(Callbacks::item_str_int_t f, Callbacks::client_t client)
+{
+    m_on_row_inserted.add(std::move(f), client);
 }
 
 //! Sets activity flag to given value. Will disable all callbacks if false.
@@ -89,6 +103,7 @@ void ItemMapper::unsubscribe(Callbacks::client_t client)
     m_on_data_change.remove_client(client);
     m_on_property_change.remove_client(client);
     m_on_child_property_change.remove_client(client);
+    m_on_row_inserted.remove_client(client);
 }
 
 //! Processes signals from the model when item data changed.
@@ -112,13 +127,23 @@ void ItemMapper::onModelDataChange(SessionItem* item, int role)
     }
 }
 
+void ItemMapper::onModelRowInserted(SessionItem* parent, std::string tag, int row)
+{
+    if (parent == m_item)
+        callOnRowInserted(m_item, tag, row);
+}
+
 //! Subscribes to model signals.
 
 void ItemMapper::subscribe_to_model()
 {
-    m_model->mapper()->setOnDataChange([this](ModelView::SessionItem* item, int role) {
-        onModelDataChange(item, role);
-    }, this);
+    auto on_data_change = [this](ModelView::SessionItem* item, int role) {onModelDataChange(item, role);};
+    m_model->mapper()->setOnDataChange(on_data_change, this);
+
+    auto on_row_inserted = [this](ModelView::SessionItem* item, std::string tag, int row) {
+        onModelRowInserted(item, tag, row);
+    };
+    m_model->mapper()->setOnRowInserted(on_row_inserted, this);
 }
 
 //! Unsubscribes from model signals.
@@ -153,15 +178,27 @@ void ItemMapper::callOnDataChange(SessionItem* item, int role)
         m_on_data_change.notify(item, role);
 }
 
+//! Notifies all callbacks subscribed to "item property is changed" event.
+
 void ItemMapper::callOnPropertyChange(SessionItem* item, std::string property_name)
 {
     if (m_active)
         m_on_property_change.notify(item, property_name);
 }
 
+//! Notifies all callbacks subscribed to "child property changed" event.
+
 void ItemMapper::callOnChildPropertyChange(SessionItem* item, std::string property_name)
 {
     if (m_active)
         m_on_child_property_change.notify(item, property_name);
+}
+
+//! Notifies all callbacks subscribed to "on row inserted" event.
+
+void ItemMapper::callOnRowInserted(SessionItem* parent, std::string tag, int row)
+{
+    if (m_active)
+        m_on_row_inserted.notify(parent, tag, row);
 }
 

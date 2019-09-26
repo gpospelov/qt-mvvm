@@ -33,6 +33,7 @@ public:
     MOCK_METHOD2(onDataChange, void(ModelView::SessionItem* item, int role));
     MOCK_METHOD2(onPropertyChange, void(ModelView::SessionItem* item, std::string name));
     MOCK_METHOD2(onChildPropertyChange, void(ModelView::SessionItem* item, std::string name));
+    MOCK_METHOD3(onRowInserted, void(ModelView::SessionItem* item, std::string tag, int row));
 
 private:
     ModelView::SessionItem* m_item;

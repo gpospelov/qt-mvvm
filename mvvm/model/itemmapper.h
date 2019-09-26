@@ -37,6 +37,7 @@ public:
     void setOnDataChange(Callbacks::item_int_t f, Callbacks::client_t client = {});
     void setOnPropertyChange(Callbacks::item_str_t f, Callbacks::client_t client = {});
     void setOnChildPropertyChange(Callbacks::item_str_t f, Callbacks::client_t client = {});
+    void setOnRowInserted(Callbacks::item_str_int_t f, Callbacks::client_t client = {});
 
     void setActive(bool value);
 
@@ -44,6 +45,7 @@ public:
 
 private:
     void onModelDataChange(SessionItem* item, int role);
+    void onModelRowInserted(SessionItem* parent, std::string tag, int row);
     void subscribe_to_model();
     void unsubscribe_from_model();
     int nestlingDepth(SessionItem* item, int level = 0);
@@ -52,11 +54,13 @@ private:
     void callOnDataChange(SessionItem* item, int role);
     void callOnPropertyChange(SessionItem* item, std::string property_name);
     void callOnChildPropertyChange(SessionItem* item, std::string property_name);
+    void callOnRowInserted(SessionItem* parent, std::string tag, int row);
 
     CallbackContainer<Callbacks::item_t> m_on_item_destroy;
     CallbackContainer<Callbacks::item_int_t> m_on_data_change;
     CallbackContainer<Callbacks::item_str_t> m_on_property_change;
     CallbackContainer<Callbacks::item_str_t> m_on_child_property_change;
+    CallbackContainer<Callbacks::item_str_int_t> m_on_row_inserted;
 
     bool m_active;
     SessionItem* m_item;
