@@ -1,3 +1,4 @@
+#include "customplot_test_utils.h"
 #include "data1ditem.h"
 #include "data1dplotcontroller.h"
 #include "google_test.h"
@@ -7,39 +8,12 @@
 
 using namespace ModelView;
 
-namespace
-{
-
-//! Returns vector representing either bin centers or values on QCPGraph.
-template <typename T> std::vector<double> get_values(const QCPGraph* graph, T operand)
-{
-    std::vector<double> result;
-    auto graph_data = *graph->data();
-    std::transform(std::begin(graph_data), std::end(graph_data), std::back_inserter(result),
-                   [operand](const auto& point) { return operand(point); });
-    return result;
-}
-
-} // namespace
-
 //! Testing Data1DPlotController.
 
 class TestData1DPlotController : public ::testing::Test
 {
 public:
     ~TestData1DPlotController();
-
-    //! Returns vector representing bin centers on QCPgraph.
-    std::vector<double> binCenters(const QCPGraph* graph)
-    {
-        return get_values(graph, [](auto x) { return x.key; });
-    }
-
-    //! Returns vector representing y-values on QCPgraph.
-    std::vector<double> binValues(const QCPGraph* graph)
-    {
-        return get_values(graph, [](auto x) { return x.value; });
-    }
 };
 
 TestData1DPlotController::~TestData1DPlotController() = default;
@@ -73,13 +47,13 @@ TEST_F(TestData1DPlotController, dataPoints)
     controller.setItem(data_item);
 
     // checking that QCPGraph now has data points as in Data1DItem
-    EXPECT_EQ(data_item->binCenters(), binCenters(graph));
-    EXPECT_EQ(data_item->binValues(), binValues(graph));
+    EXPECT_EQ(data_item->binCenters(), TestUtils::binCenters(graph));
+    EXPECT_EQ(data_item->binValues(), TestUtils::binValues(graph));
 
     // setting item to nullptr, points on graph should disappear
     controller.setItem(nullptr);
-    EXPECT_EQ(std::vector<double>(), binCenters(graph));
-    EXPECT_EQ(std::vector<double>(), binValues(graph));
+    EXPECT_EQ(std::vector<double>(), TestUtils::binCenters(graph));
+    EXPECT_EQ(std::vector<double>(), TestUtils::binValues(graph));
 }
 
 //! Testing two graph scenario.
@@ -102,11 +76,11 @@ TEST_F(TestData1DPlotController, twoDataItems)
     controller.setItem(data_item1);
 
     // checking that QCPGraph now has data points as in Data1DItem
-    EXPECT_EQ(data_item1->binCenters(), binCenters(graph));
-    EXPECT_EQ(data_item1->binValues(), binValues(graph));
+    EXPECT_EQ(data_item1->binCenters(), TestUtils::binCenters(graph));
+    EXPECT_EQ(data_item1->binValues(), TestUtils::binValues(graph));
 
     // setting item to nullptr, points on graph should disappear
     controller.setItem(data_item2);
-    EXPECT_EQ(data_item2->binCenters(), binCenters(graph));
-    EXPECT_EQ(data_item2->binValues(), binValues(graph));
+    EXPECT_EQ(data_item2->binCenters(), TestUtils::binCenters(graph));
+    EXPECT_EQ(data_item2->binValues(), TestUtils::binValues(graph));
 }
