@@ -37,8 +37,7 @@ public:
         if (m_item == item)
             return;
 
-        if (m_item)
-            m_item->mapper()->unsubscribe(this);
+        unsubscribe_from_current();
 
         m_item = item;
 
@@ -55,8 +54,17 @@ public:
 
 protected:
     virtual void subscribe() {}
+    virtual void unsubscribe() {}
 
 private:
+    void unsubscribe_from_current() {
+        if (!m_item)
+            return;
+
+        unsubscribe();
+
+        m_item->mapper()->unsubscribe(this);
+    }
     T* m_item{nullptr};
 };
 
