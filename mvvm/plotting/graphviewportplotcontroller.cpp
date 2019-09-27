@@ -8,11 +8,11 @@
 // ************************************************************************** //
 
 #include "graphviewportplotcontroller.h"
-#include "graphviewportitem.h"
-#include "graphplotcontroller.h"
-#include "graphitem.h"
-#include "axisplotcontrollers.h"
 #include "axisitems.h"
+#include "axisplotcontrollers.h"
+#include "graphitem.h"
+#include "graphplotcontroller.h"
+#include "graphviewportitem.h"
 
 using namespace ModelView;
 
@@ -31,13 +31,16 @@ struct GraphViewportPlotController::GraphCollectionPlotControllerPrivate {
     GraphViewportItem* viewport_item() { return master->currentItem(); }
 
     //! Setup controller components.
-    void setup_components() {
+    void setup_components()
+    {
         create_axis_controllers();
         create_graph_controllers();
     }
 
     //! Creates axes controllers.
-    void create_axis_controllers() {
+
+    void create_axis_controllers()
+    {
         auto viewport = viewport_item();
 
         xAxisController = std::make_unique<XAxisPlotController>(custom_plot);
@@ -48,7 +51,9 @@ struct GraphViewportPlotController::GraphCollectionPlotControllerPrivate {
     }
 
     //! Run through all GraphItem's and create graph controllers for QCustomPlot.
-    void create_graph_controllers() {
+
+    void create_graph_controllers()
+    {
         auto viewport = viewport_item();
         for (auto graph_item : viewport->items<GraphItem>(GraphViewportItem::T_GRAPHS)) {
             auto controller = std::make_unique<GraphPlotController>(custom_plot);
