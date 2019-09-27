@@ -60,6 +60,7 @@ struct GraphViewportPlotController::GraphCollectionPlotControllerPrivate {
             controller->setItem(graph_item);
             graph_controllers.emplace_back(std::move(controller));
         }
+        viewport->update_viewport();
     }
 };
 

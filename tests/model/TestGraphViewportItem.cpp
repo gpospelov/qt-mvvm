@@ -60,5 +60,5 @@ TEST_F(TestGraphViewportItem, addItem)
     auto [expected_amin, expected_amax] =
         std::minmax_element(std::begin(expected_content), std::end(expected_content));
     EXPECT_DOUBLE_EQ(yaxis.property(ViewportAxisItem::P_MIN).toDouble(), *expected_amin);
-    EXPECT_DOUBLE_EQ(yaxis.property(ViewportAxisItem::P_MAX).toDouble(), *expected_amax * 1.1);
+    EXPECT_DOUBLE_EQ(yaxis.property(ViewportAxisItem::P_MAX).toDouble(), *expected_amax);
 }

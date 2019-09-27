@@ -20,7 +20,6 @@ namespace
 
 const double failback_min = 0.0;
 const double failback_max = 1.0;
-const double ymax_factor = 1.1;
 
 //! Find min and max values along all data points in all graphs.
 //! Function 'func' is used to run either through binCenters or binValues.
@@ -71,5 +70,5 @@ void GraphViewportItem::update_yaxis_range()
     const auto [ymin, ymax] = get_min_max(items<GraphItem>(T_GRAPHS),
                                           [](GraphItem* graph) { return graph->binValues(); });
     item<ViewportAxisItem>(P_YAXIS).setProperty(ViewportAxisItem::P_MIN, ymin);
-    item<ViewportAxisItem>(P_YAXIS).setProperty(ViewportAxisItem::P_MAX, ymax * ymax_factor);
+    item<ViewportAxisItem>(P_YAXIS).setProperty(ViewportAxisItem::P_MAX, ymax);
 }

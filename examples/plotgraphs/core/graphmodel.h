@@ -12,9 +12,15 @@
 
 #include "sessionmodel.h"
 
+namespace ModelView {
+class GraphViewportItem;
+}
+
 /*!
 @class GraphModel
 @brief Main application model.
+
+Contains few Data1DItem's, GraphItem's and ViewPortItem.
 */
 
 class GraphModel : public ModelView::SessionModel
@@ -22,7 +28,12 @@ class GraphModel : public ModelView::SessionModel
 public:
     GraphModel();
 
+    void add_graph();
+
+    void update_graphs();
+
 private:
+    ModelView::GraphViewportItem* viewport();
     void init_model();
 };
 
