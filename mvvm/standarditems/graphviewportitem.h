@@ -27,6 +27,12 @@ public:
     static inline const std::string P_YAXIS = "P_YAXIS";
     static inline const std::string T_GRAPHS = "T_GRAPHS";
     GraphViewportItem();
+
+    void update_viewport();
+
+    void update_xaxis_range();
+
+    void update_yaxis_range();
 };
 
 } // namespace ModelView
