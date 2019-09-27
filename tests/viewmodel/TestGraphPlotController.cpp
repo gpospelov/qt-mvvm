@@ -9,7 +9,7 @@
 
 using namespace ModelView;
 
-//! Testing AxisPlotControllers.
+//! Testing GraphPlotController.
 
 class TestGraphPlotController : public ::testing::Test
 {
@@ -19,13 +19,21 @@ public:
 
 TestGraphPlotController::~TestGraphPlotController() = default;
 
+//! Initial state.
+
+TEST_F(TestGraphPlotController, initialState)
+{
+    auto custom_plot = std::make_unique<QCustomPlot>();
+    GraphPlotController controller(custom_plot.get());
+    EXPECT_EQ(custom_plot->graphCount(), 0);
+}
+
 //! Setting GraphItem with data and checking that plottable contains correct data.
 
 TEST_F(TestGraphPlotController, setItem)
 {
     auto custom_plot = std::make_unique<QCustomPlot>();
     GraphPlotController controller(custom_plot.get());
-    EXPECT_EQ(custom_plot->graphCount(), 0);
 
     // setup model and single data item in it
     SessionModel model;

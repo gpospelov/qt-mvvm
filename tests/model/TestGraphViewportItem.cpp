@@ -13,9 +13,12 @@ public:
 
 TestGraphViewportItem::~TestGraphViewportItem() = default;
 
-//! Initial state
+//! Initial state.
 
 TEST_F(TestGraphViewportItem, initialState)
 {
-    EXPECT_EQ(1,1);
+    GraphViewportItem item;
+    EXPECT_TRUE(item.getItem(GraphViewportItem::P_XAXIS) != nullptr);
+    EXPECT_TRUE(item.getItem(GraphViewportItem::P_YAXIS) != nullptr);
+    EXPECT_EQ(item.getItems(GraphViewportItem::T_GRAPHS).size(), 0);
 }

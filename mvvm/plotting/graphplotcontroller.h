@@ -23,6 +23,7 @@ class GraphItem;
 @class GraphPlotController
 @brief Establish communication between QCPGraph and GraphItem.
 
+This is a part of machinery to plot
 Provide update on QCPGraph (data points, line style, color, etc) when GraphItem is changed.
 */
 
