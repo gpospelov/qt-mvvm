@@ -77,6 +77,8 @@ void AxisPlotController::subscribe()
 
         if (name == ViewportAxisItem::P_MAX)
             customAxis()->setRangeUpper(item->property(name).toDouble());
+
+        p_impl->custom_plot->replot();
     };
     currentItem()->mapper()->setOnPropertyChange(on_property_change, this);
 
