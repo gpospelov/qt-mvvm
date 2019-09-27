@@ -7,18 +7,19 @@
 //
 // ************************************************************************** //
 
-#include "graphcollectionplotcontroller.h"
+#include "graphviewportplotcontroller.h"
 #include "graphviewportitem.h"
 #include "graphplotcontroller.h"
+#include "graphitem.h"
 
 using namespace ModelView;
 
-struct GraphCollectionPlotController::GraphCollectionPlotControllerPrivate {
-    GraphCollectionPlotController* master{nullptr};
+struct GraphViewportPlotController::GraphCollectionPlotControllerPrivate {
+    GraphViewportPlotController* master{nullptr};
     QCustomPlot* custom_plot{nullptr};
     std::vector<std::unique_ptr<GraphPlotController>> graph_controllers;
 
-    GraphCollectionPlotControllerPrivate(GraphCollectionPlotController* master, QCustomPlot* plot)
+    GraphCollectionPlotControllerPrivate(GraphViewportPlotController* master, QCustomPlot* plot)
         : master(master), custom_plot(plot)
     {
     }
@@ -35,14 +36,14 @@ struct GraphCollectionPlotController::GraphCollectionPlotControllerPrivate {
     }
 };
 
-GraphCollectionPlotController::GraphCollectionPlotController(QCustomPlot* custom_plot)
+GraphViewportPlotController::GraphViewportPlotController(QCustomPlot* custom_plot)
     : p_impl(std::make_unique<GraphCollectionPlotControllerPrivate>(this, custom_plot))
 {
 }
 
-void GraphCollectionPlotController::subscribe()
+void GraphViewportPlotController::subscribe()
 {
     p_impl->setup_graphs();
 }
 
-GraphCollectionPlotController::~GraphCollectionPlotController() = default;
+GraphViewportPlotController::~GraphViewportPlotController() = default;

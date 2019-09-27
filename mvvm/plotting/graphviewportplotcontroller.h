@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_GRAPHCOLLECTIONPLOTCONTROLLER_H
-#define MVVM_GRAPHCOLLECTIONPLOTCONTROLLER_H
+#ifndef MVVM_GRAPHVIEWPORTPLOTCONTROLLER_H
+#define MVVM_GRAPHVIEWPORTPLOTCONTROLLER_H
 
 #include "itemcontroller.h"
 
@@ -20,15 +20,15 @@ namespace ModelView
 class GraphViewportItem;
 
 /*!
-@class GraphCollectionPlotController
+@class GraphViewportPlotController
 @brief Populates custom plot with all graphs found in GraphViewportItem.
 */
 
-class CORE_EXPORT GraphCollectionPlotController : public ItemController<GraphViewportItem>
+class CORE_EXPORT GraphViewportPlotController : public ItemController<GraphViewportItem>
 {
 public:
-    explicit GraphCollectionPlotController(QCustomPlot* plot);
-    ~GraphCollectionPlotController() override;
+    explicit GraphViewportPlotController(QCustomPlot* plot);
+    ~GraphViewportPlotController() override;
 
 protected:
     void subscribe() override;
@@ -40,4 +40,4 @@ private:
 
 } // namespace ModelView
 
-#endif // MVVM_GRAPHCOLLECTIONPLOTCONTROLLER_H
+#endif // MVVM_GRAPHVIEWPORTPLOTCONTROLLER_H
