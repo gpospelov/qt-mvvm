@@ -18,7 +18,7 @@
 namespace {
 
 constexpr double pi = 3.14159265358979323846;
-constexpr int npoints = 200;
+constexpr int npoints = 400;
 constexpr double xmin = 0.0;
 constexpr double xmax = 5.0;
 constexpr double dx = (xmax-xmin)/npoints;
@@ -27,7 +27,7 @@ std::vector<double> bin_values() {
     std::vector<double> result;
     for(int i=0; i<npoints; ++i) {
         double x = xmin + i * dx;
-        double value = 10.0*std::sin(2.0*pi*4*x) + 5.0*std::sin(2*pi*4.25*x);
+        double value = 10.0*std::sin(2.0*pi*2*x) + 5.0*std::sin(2*pi*2.25*x);
         result.push_back(value);
     }
     return result;
