@@ -17,13 +17,13 @@ using namespace ModelView;
 
 struct AxisPlotController::AxesPlotControllerPrivate {
 
-    AxisPlotController* m_controller{nullptr};
-    QCustomPlot* m_customPlot{nullptr};
-    bool m_block_update{false};
+    AxisPlotController* controller{nullptr};
+    QCustomPlot* custom_plot{nullptr};
+    bool block_update{false};
     std::unique_ptr<QMetaObject::Connection> axis_conn;
 
     AxesPlotControllerPrivate(AxisPlotController* controller, QCustomPlot* plot)
-        : m_controller(controller), m_customPlot(plot)
+        : controller(controller), custom_plot(plot)
     {
         axis_conn = std::make_unique<QMetaObject::Connection>();
     }
@@ -33,15 +33,15 @@ struct AxisPlotController::AxesPlotControllerPrivate {
     {
 
         auto on_axis_range = [this](const QCPRange& newRange) {
-            m_block_update = true;
-            auto item = m_controller->currentItem();
+            block_update = true;
+            auto item = controller->currentItem();
             item->setProperty(ViewportAxisItem::P_MIN, newRange.lower);
             item->setProperty(ViewportAxisItem::P_MAX, newRange.upper);
-            m_block_update = false;
+            block_update = false;
         };
 
         *axis_conn = QObject::connect(
-            m_controller->customAxis(),
+            controller->customAxis(),
             static_cast<void (QCPAxis::*)(const QCPRange&)>(&QCPAxis::rangeChanged), on_axis_range);
     }
 
@@ -51,8 +51,8 @@ struct AxisPlotController::AxesPlotControllerPrivate {
     //! Sets axesRange from SessionItem.
     void setAxisRangeFromItem()
     {
-        auto axis = m_controller->customAxis();
-        auto item = m_controller->currentItem();
+        auto axis = controller->customAxis();
+        auto item = controller->currentItem();
         QCPRange range(item->property(ViewportAxisItem::P_MIN).toDouble(),
                        item->property(ViewportAxisItem::P_MAX).toDouble());
         axis->setRange(range);
@@ -69,7 +69,7 @@ void AxisPlotController::subscribe()
     p_impl->setAxisRangeFromItem();
 
     auto on_property_change = [this](SessionItem* item, std::string name) {
-        if (p_impl->m_block_update)
+        if (p_impl->block_update)
             return;
 
         if (name == ViewportAxisItem::P_MIN)
@@ -85,15 +85,14 @@ void AxisPlotController::subscribe()
 
 QCustomPlot* AxisPlotController::customPlot()
 {
-    return p_impl->m_customPlot;
+    return p_impl->custom_plot;
 }
 
 AxisPlotController::~AxisPlotController() = default;
 
 // ----------------------------------------------------------------------------
 
-XAxisPlotController::XAxisPlotController(QCustomPlot* cusom_plot)
-    : AxisPlotController(cusom_plot)
+XAxisPlotController::XAxisPlotController(QCustomPlot* cusom_plot) : AxisPlotController(cusom_plot)
 {
 }
 
@@ -104,8 +103,7 @@ QCPAxis* XAxisPlotController::customAxis()
 
 // ----------------------------------------------------------------------------
 
-YAxisPlotController::YAxisPlotController(QCustomPlot* cusom_plot)
-    : AxisPlotController(cusom_plot)
+YAxisPlotController::YAxisPlotController(QCustomPlot* cusom_plot) : AxisPlotController(cusom_plot)
 {
 }
 
