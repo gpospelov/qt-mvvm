@@ -1,6 +1,6 @@
 #include "google_test.h"
 #include "qcustomplot.h"
-#include "graphitemcontroller.h"
+#include "graphplotcontroller.h"
 #include "graphitem.h"
 #include "sessionmodel.h"
 #include "data1ditem.h"
@@ -11,20 +11,20 @@ using namespace ModelView;
 
 //! Testing AxisPlotControllers.
 
-class TestGraphItemController : public ::testing::Test
+class TestGraphPlotController : public ::testing::Test
 {
 public:
-    ~TestGraphItemController();
+    ~TestGraphPlotController();
 };
 
-TestGraphItemController::~TestGraphItemController() = default;
+TestGraphPlotController::~TestGraphPlotController() = default;
 
 //! Setting GraphItem with data and checking that plottable contains correct data.
 
-TEST_F(TestGraphItemController, setItem)
+TEST_F(TestGraphPlotController, setItem)
 {
     auto custom_plot = std::make_unique<QCustomPlot>();
-    GraphItemController controller(custom_plot.get());
+    GraphPlotController controller(custom_plot.get());
     EXPECT_EQ(custom_plot->graphCount(), 0);
 
     // setup model and single data item in it
@@ -53,10 +53,10 @@ TEST_F(TestGraphItemController, setItem)
 
 //!Unlinking from data item
 
-TEST_F(TestGraphItemController, unlinkFromDataItem)
+TEST_F(TestGraphPlotController, unlinkFromDataItem)
 {
     auto custom_plot = std::make_unique<QCustomPlot>();
-    GraphItemController controller(custom_plot.get());
+    GraphPlotController controller(custom_plot.get());
 
     // setup model and single data item in it
     SessionModel model;

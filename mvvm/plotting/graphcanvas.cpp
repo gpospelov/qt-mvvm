@@ -12,7 +12,7 @@
 #include "axisplotcontrollers.h"
 #include "graphviewportitem.h"
 #include "axisitems.h"
-#include "graphitemcontroller.h"
+#include "graphplotcontroller.h"
 #include "graphitem.h"
 #include <QBoxLayout>
 
@@ -22,13 +22,13 @@ struct GraphCanvas::GraphCanvasPrivate {
     QCustomPlot* m_customPlot{nullptr};
     std::unique_ptr<AxisPlotController> m_xAxisController;
     std::unique_ptr<AxisPlotController> m_yAxisController;
-    std::unique_ptr<GraphItemController> m_graphController;
+    std::unique_ptr<GraphPlotController> m_graphController;
 
     GraphCanvasPrivate() : m_customPlot(new QCustomPlot)
     {
         m_xAxisController = std::make_unique<XAxisPlotController>(m_customPlot);
         m_yAxisController = std::make_unique<YAxisPlotController>(m_customPlot);
-        m_graphController = std::make_unique<GraphItemController>(m_customPlot);
+        m_graphController = std::make_unique<GraphPlotController>(m_customPlot);
     }
 
     QCustomPlot* customPlot()
