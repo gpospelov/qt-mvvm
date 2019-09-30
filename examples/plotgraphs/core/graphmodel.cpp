@@ -72,7 +72,10 @@ ContainerItem* GraphModel::data_container()
 
 void GraphModel::init_model()
 {
-    insertNewItem(Constants::ContainerType);
-    insertNewItem(Constants::GraphViewportItemType);
+    auto container = insertNewItem(Constants::ContainerType);
+    container->setDisplayName("Data container");
+
+    auto viewport = insertNewItem(Constants::GraphViewportItemType);
+    viewport->setDisplayName("Graph container");
     add_graph();
 }

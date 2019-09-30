@@ -44,8 +44,12 @@ private:
 
     QBoxLayout* create_left_layout();
     QBoxLayout* create_right_layout();
+
     QToolBar* m_toolBar;
     QAction* m_resetViewportAction;
+    QAction* m_addGraphAction;
+    QAction* m_removeGraphAction;
+
     ModelView::GraphCanvas* m_graphCanvas;
     GraphPropertyWidget* m_propertyWidget;
     GraphModel* m_model;

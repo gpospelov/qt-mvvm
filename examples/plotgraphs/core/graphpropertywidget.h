@@ -15,6 +15,7 @@
 
 class QBoxLayout;
 class GraphModel;
+class QBoxLayout;
 
 namespace ModelView
 {
@@ -34,7 +35,11 @@ public:
 
     void setModel(GraphModel* model);
 
+private slots:
+    void onRunMeasurement();
+
 private:
+    QBoxLayout* create_button_layout();
     ModelView::ItemsTreeView* m_treeView;
 };
 

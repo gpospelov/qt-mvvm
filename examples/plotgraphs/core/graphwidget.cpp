@@ -22,6 +22,7 @@ using namespace ModelView;
 
 GraphWidget::GraphWidget(GraphModel* model, QWidget* parent)
     : QWidget(parent), m_toolBar(new QToolBar), m_resetViewportAction(nullptr),
+      m_addGraphAction(nullptr), m_removeGraphAction(nullptr),
       m_graphCanvas(new GraphCanvas), m_propertyWidget(new GraphPropertyWidget), m_model(nullptr)
 {
     auto mainLayout = new QVBoxLayout;
@@ -58,15 +59,19 @@ void GraphWidget::init_actions()
     const int toolbar_icon_size = 24;
     m_toolBar->setIconSize(QSize(toolbar_icon_size, toolbar_icon_size));
 
-    m_resetViewportAction = new QAction("Reset", this);
-
+    m_resetViewportAction = new QAction("Reset view", this);
     auto on_reset = [this]() {
         auto viewport = Utils::TopItem<GraphViewportItem>(m_model);
         viewport->update_viewport();
     };
     connect(m_resetViewportAction, &QAction::triggered, on_reset);
 
+    m_addGraphAction = new QAction("Add graph", this);
+    m_removeGraphAction = new QAction("Remove graph", this);
+
     m_toolBar->addAction(m_resetViewportAction);
+    m_toolBar->addAction(m_addGraphAction);
+    m_toolBar->addAction(m_removeGraphAction);
 }
 
 GraphWidget::~GraphWidget() = default;
