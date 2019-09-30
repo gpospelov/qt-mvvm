@@ -1,0 +1,17 @@
+// ************************************************************************** //
+//
+//  Prototype of mini MVVM framework for bornagainproject.org
+//
+//! @homepage  http://www.bornagainproject.org
+//! @license   GNU General Public License v3 or higher
+//
+// ************************************************************************** //
+
+#include "containeritem.h"
+
+using namespace ModelView;
+
+ContainerItem::ContainerItem() : CompoundItem(Constants::ContainerType)
+{
+    registerTag(ModelView::TagInfo::universalTag(T_ITEMS), /*set_as_default*/ true);
+}
