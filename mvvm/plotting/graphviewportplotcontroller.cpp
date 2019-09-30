@@ -44,10 +44,10 @@ struct GraphViewportPlotController::GraphCollectionPlotControllerPrivate {
         auto viewport = viewport_item();
 
         xAxisController = std::make_unique<XAxisPlotController>(custom_plot);
-        xAxisController->setItem(&viewport->item<ViewportAxisItem>(GraphViewportItem::P_XAXIS));
+        xAxisController->setItem(viewport->xAxis());
 
         yAxisController = std::make_unique<YAxisPlotController>(custom_plot);
-        yAxisController->setItem(&viewport->item<ViewportAxisItem>(GraphViewportItem::P_YAXIS));
+        yAxisController->setItem(viewport->yAxis());
     }
 
     //! Run through all GraphItem's and create graph controllers for QCustomPlot.

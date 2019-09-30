@@ -16,6 +16,7 @@ namespace ModelView
 {
 
 class GraphItem;
+class ViewportAxisItem;
 
 /*!
 @class GraphViewportItem
@@ -31,6 +32,10 @@ public:
     GraphViewportItem();
 
     std::vector<GraphItem*> graphItems() const;
+
+    ViewportAxisItem* xAxis() const;
+
+    ViewportAxisItem* yAxis() const;
 
     void update_viewport();
 

@@ -47,7 +47,17 @@ GraphViewportItem::GraphViewportItem() : CompoundItem(Constants::GraphViewportIt
 
 std::vector<GraphItem*> GraphViewportItem::graphItems() const
 {
-    return items<GraphItem>(GraphViewportItem::T_GRAPHS);
+    return items<GraphItem>(T_GRAPHS);
+}
+
+ViewportAxisItem* GraphViewportItem::xAxis() const
+{
+    return &item<ViewportAxisItem>(P_XAXIS);
+}
+
+ViewportAxisItem* GraphViewportItem::yAxis() const
+{
+    return &item<ViewportAxisItem>(P_YAXIS);
 }
 
 //! Updates viewport axes depending on data points.
