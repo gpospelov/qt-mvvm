@@ -21,9 +21,14 @@
 #include <QStyleOptionGraphicsItem>
 
 namespace {
-// non-linear conversion of layer's thickness in nanometers to screen size to have reasonable
+constexpr qreal basic_layer_width = IView::basic_width;
+constexpr qreal basic_layer_height = IView::basic_height;
+constexpr qreal max_layer_height = 500.0;
+
+constexpr QRectF defaultShape();
+// linear conversion of layer's thickness in nanometers to screen size to have reasonable
 // graphics representation
-int nanometerToScreen(double nanometer);
+qreal thicknessToHeight(double nm);
 }
 
 using namespace ModelView;
@@ -32,16 +37,13 @@ LayerView::LayerView(QGraphicsItem *parent)
     : ILayerView(parent)
 {
     setColor(QColor(qrand() % 256, qrand() % 256, qrand() % 256) );
-    setRectangle(DesignerHelper::getDefaultBoundingRect(::Constants::LayerType));
+    setRectangle(defaultShape());
     setAcceptDrops(false);
     addPort(QString(), NodeEditorPort::INPUT, NodeEditorPort::PARTICLE_LAYOUT);
 }
 
-
-void LayerView::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void LayerView::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget*)
 {
-    Q_UNUSED(widget);
-
     painter->setPen(Qt::black);
     if (option->state & (QStyle::State_Selected | QStyle::State_HasFocus)) {
         painter->setPen(Qt::DashLine);
@@ -83,7 +85,9 @@ void LayerView::updateHeight()
         return;
 
     const double thickness = getItem()->property(LayerItem::P_THICKNESS).toDouble();
-    m_rect.setHeight(nanometerToScreen(thickness));
+    const qreal height = thicknessToHeight(thickness);
+    m_rect.setTop(-height / 2.0);
+    m_rect.setHeight(height);
     setPortCoordinates();
     update();
     emit heightChanged();
@@ -125,13 +129,14 @@ void LayerView::updateLabel()
 }
 
 namespace {
-int nanometerToScreen(double nanometer)
+constexpr QRectF defaultShape()
 {
-    const int ymin(DesignerHelper::getDefaultLayerHeight());
-    const int ymax(500);
-    int result(ymin);
-    if (nanometer > 0)
-        result = qBound(ymin, ymin + (int)std::pow(nanometer, 0.9), ymax);
-    return result;
+    return QRectF(-basic_layer_width / 2.0, -basic_layer_height / 2.0, basic_layer_width,
+                  basic_layer_height);
+}
+
+qreal thicknessToHeight(double nm)
+{
+    return nm > 0 ? std::min(basic_layer_height + nm, max_layer_height) : basic_layer_height;
 }
 }
