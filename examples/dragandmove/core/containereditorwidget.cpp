@@ -111,7 +111,7 @@ std::vector<SessionItem*> ContainerEditorWidget::selected_items() const
 
 QBoxLayout* ContainerEditorWidget::create_button_layout()
 {
-    auto result = new QHBoxLayout();
+    auto result = new QHBoxLayout;
     result->setContentsMargins(5, 5, 5, 25);
 
     auto button = new QPushButton("Add");

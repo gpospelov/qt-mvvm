@@ -26,13 +26,13 @@ ModelEditorWidget::ModelEditorWidget(SampleModel* model, QWidget* parent)
       m_rightWidget(new ContainerEditorWidget), m_undoAction(nullptr), m_redoAction(nullptr),
       m_model(nullptr)
 {
-    auto mainLayout = new QVBoxLayout();
+    auto mainLayout = new QVBoxLayout;
     mainLayout->setSpacing(10);
 
-    auto top_layout = new QVBoxLayout();
+    auto top_layout = new QVBoxLayout;
     top_layout->addWidget(m_toolBar);
 
-    auto container_layout = new QHBoxLayout();
+    auto container_layout = new QHBoxLayout;
     container_layout->setSpacing(10);
     container_layout->addWidget(m_leftWidget);
     container_layout->addSpacing(20);

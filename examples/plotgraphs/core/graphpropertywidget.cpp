@@ -18,7 +18,7 @@ using namespace ModelView;
 GraphPropertyWidget::GraphPropertyWidget(GraphModel* model, QWidget* parent) : QWidget(parent),
     m_treeView(new ItemsTreeView)
 {
-    auto mainLayout = new QVBoxLayout();
+    auto mainLayout = new QVBoxLayout;
     mainLayout->setSpacing(10);
 
     mainLayout->addWidget(m_treeView);
