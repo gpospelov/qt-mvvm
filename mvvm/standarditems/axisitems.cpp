@@ -24,7 +24,7 @@ void BasicAxisItem::register_min_max()
 
 ViewportAxisItem::ViewportAxisItem() : BasicAxisItem(Constants::ViewportAxisType)
 {
-    addProperty<TextItem>(P_TITLE);
+    addProperty<TextItem>(P_TITLE)->setDisplayName("Title");
     register_min_max();
 }
 

@@ -13,6 +13,7 @@
 #include "graphitem.h"
 #include "graphviewportitem.h"
 #include "modelutils.h"
+#include "containeritem.h"
 #include <cmath>
 
 namespace {
@@ -47,7 +48,7 @@ GraphModel::GraphModel() : SessionModel("GraphModel")
 
 void GraphModel::add_graph()
 {
-    auto data = dynamic_cast<Data1DItem*>(insertNewItem(Constants::Data1DItemType));
+    auto data = dynamic_cast<Data1DItem*>(insertNewItem(Constants::Data1DItemType, data_container()));
     data->setFixedBinAxis(npoints, xmin, xmax);
     data->setContent(bin_values());
 
@@ -55,13 +56,23 @@ void GraphModel::add_graph()
     graph->setDataItem(data);
 }
 
+//! Returns viewport item containig graph items.
+
 GraphViewportItem* GraphModel::viewport()
 {
     return Utils::TopItem<GraphViewportItem>(this);
 }
 
+//! Returns container with data items.
+
+ContainerItem* GraphModel::data_container()
+{
+    return Utils::TopItem<ContainerItem>(this);
+}
+
 void GraphModel::init_model()
 {
+    insertNewItem(Constants::ContainerType);
     insertNewItem(Constants::GraphViewportItemType);
     add_graph();
 }

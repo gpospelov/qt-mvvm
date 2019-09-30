@@ -14,6 +14,7 @@
 
 namespace ModelView {
 class GraphViewportItem;
+class ContainerItem;
 }
 
 /*!
@@ -34,6 +35,8 @@ public:
 
 private:
     ModelView::GraphViewportItem* viewport();
+    ModelView::ContainerItem* data_container();
+
     void init_model();
 };
 
