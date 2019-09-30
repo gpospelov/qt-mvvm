@@ -29,6 +29,11 @@ struct GraphPlotController::GraphItemControllerPrivate {
     {
     }
 
+    ~GraphItemControllerPrivate() {
+        if (graph)
+            custom_plot->removePlottable(graph);
+    }
+
     GraphItem* graph_item() { return master->currentItem(); }
 
     //! Removes graph from customPlot.

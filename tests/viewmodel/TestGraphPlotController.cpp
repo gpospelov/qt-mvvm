@@ -98,3 +98,27 @@ TEST_F(TestGraphPlotController, unlinkFromDataItem)
     EXPECT_EQ(custom_plot->graphCount(), 0);
 }
 
+//! Deletion of controller should lead to graph removal.
+
+TEST_F(TestGraphPlotController, controllerDelete)
+{
+    auto custom_plot = std::make_unique<QCustomPlot>();
+    auto controller = std::make_unique<GraphPlotController>(custom_plot.get());
+
+    // setup model and single data item in it
+    SessionModel model;
+    auto data_item = dynamic_cast<Data1DItem*>(model.insertNewItem(Constants::Data1DItemType));
+
+    // setup graph item
+    auto graph_item = dynamic_cast<GraphItem*>(model.insertNewItem(Constants::GraphItemType));
+    graph_item->setDataItem(data_item);
+
+    // initializing controller
+    controller->setItem(graph_item);
+    EXPECT_EQ(custom_plot->graphCount(), 1);
+
+    // deleting controller should lead to graph removal
+    controller.reset();
+    EXPECT_EQ(custom_plot->graphCount(), 0);
+}
+
