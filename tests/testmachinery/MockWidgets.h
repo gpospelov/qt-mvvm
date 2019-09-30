@@ -33,6 +33,8 @@ public:
     MOCK_METHOD2(onDataChange, void(ModelView::SessionItem* item, int role));
     MOCK_METHOD2(onPropertyChange, void(ModelView::SessionItem* item, std::string name));
     MOCK_METHOD2(onChildPropertyChange, void(ModelView::SessionItem* item, std::string name));
+    MOCK_METHOD3(onRowInserted, void(ModelView::SessionItem* item, std::string tag, int row));
+    MOCK_METHOD3(onRowAboutToBeRemoved, void(ModelView::SessionItem* item, std::string tag, int row));
 
 private:
     ModelView::SessionItem* m_item;
@@ -53,6 +55,7 @@ public:
     MOCK_METHOD2(onDataChange, void(ModelView::SessionItem* item, int role));
     MOCK_METHOD3(onRowInserted, void(ModelView::SessionItem* item, std::string tag, int row));
     MOCK_METHOD3(onRowRemoved, void(ModelView::SessionItem* item, std::string tag, int row));
+    MOCK_METHOD3(onRowAboutToBeRemoved, void(ModelView::SessionItem* item, std::string tag, int row));
 
 private:
     ModelView::SessionModel* m_model;

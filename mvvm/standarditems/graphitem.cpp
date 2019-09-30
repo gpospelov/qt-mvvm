@@ -23,7 +23,7 @@ GraphItem::GraphItem() : CompoundItem(Constants::GraphItemType)
     addProperty<TextItem>(P_GRAPH_TITLE)->setDisplayName("Graph title");
 }
 
-void GraphItem::setDataItem(Data1DItem* data_item)
+void GraphItem::setDataItem(const Data1DItem* data_item)
 {
     auto& link = item<LinkedItem>(P_LINK);
     link.setLink(data_item);

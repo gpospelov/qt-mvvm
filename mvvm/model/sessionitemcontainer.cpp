@@ -65,6 +65,13 @@ SessionItem* SessionItemContainer::takeItem(int index)
     return result;
 }
 
+//! Returns true if item can be taken.
+
+bool SessionItemContainer::canTakeItem(int index) const
+{
+    return itemAt(index) && !minimum_reached();
+}
+
 //! Returns index of item in vector of items.
 //! Returns -1 if item doesn't belong to us.
 

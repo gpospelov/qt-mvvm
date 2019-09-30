@@ -44,6 +44,16 @@ void MockWidgetForItem::setItem(ModelView::SessionItem* item)
         onChildPropertyChange(item, name);
     };
     m_item->mapper()->setOnChildPropertyChange(on_child_property_change, this);
+
+    auto on_row_inserted = [this](ModelView::SessionItem* item, std::string tag, int row) {
+        onRowInserted(item, tag, row);
+    };
+    m_item->mapper()->setOnRowInserted(on_row_inserted, this);
+
+    auto on_row_about_removed = [this](ModelView::SessionItem* item, std::string tag, int row) {
+        onRowAboutToBeRemoved(item, tag, row);
+    };
+    m_item->mapper()->setOnRowAboutToBeRemoved(on_row_about_removed, this);
 }
 
 // ----------------------------------------------------------------------------
@@ -80,6 +90,11 @@ void MockWidgetForModel::setModel(ModelView::SessionModel* model)
         onRowRemoved(item, tag, row);
     };
     m_model->mapper()->setOnRowRemoved(on_row_removed, this);
+
+    auto on_row_about_removed = [this](ModelView::SessionItem* item, std::string tag, int row) {
+        onRowAboutToBeRemoved(item, tag, row);
+    };
+    m_model->mapper()->setOnRowAboutToBeRemoved(on_row_about_removed, this);
 
     auto on_model_destroyed = [this](ModelView::SessionModel* model) {
         m_model = nullptr;

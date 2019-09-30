@@ -127,14 +127,18 @@ bool SessionItem::insertItem(SessionItem* item, const std::string& tag, int row)
 
 SessionItem* SessionItem::takeItem(const std::string& tag, int row)
 {
+    if (!p_impl->m_tags->canTakeItem(tag, row))
+        return nullptr;
+
+    if (p_impl->m_model)
+        p_impl->m_model->mapper()->callOnRowAboutToBeRemoved(this, tag, row);
+
     auto result = p_impl->m_tags->takeItem(tag, row);
-    if (result) {
-        result->setParent(nullptr);
-        result->setModel(nullptr);
-        // FIXME remaining problem is that ItemMapper still looking to the model
-        if (p_impl->m_model)
-            p_impl->m_model->mapper()->callOnRowRemoved(this, tag, row);
-    }
+    result->setParent(nullptr);
+    result->setModel(nullptr);
+    // FIXME remaining problem is that ItemMapper still looking to the model
+    if (p_impl->m_model)
+        p_impl->m_model->mapper()->callOnRowRemoved(this, tag, row);
 
     return result;
 }

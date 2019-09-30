@@ -71,6 +71,7 @@ public:
     SessionItem* getItem(const std::string& tag = {}, int row = 0) const;
     std::vector<SessionItem*> getItems(const std::string& tag = {}) const;
     template <typename T> T& item(const std::string& tag) const;
+    template <typename T> std::vector<T*> items(const std::string& tag) const;
     std::string tagFromItem(const SessionItem* item) const;
     std::pair<std::string, int> tagRowOfItem(const SessionItem* item) const;
 
@@ -99,6 +100,8 @@ private:
     std::unique_ptr<SessionItemPrivate> p_impl;
 };
 
+//! Returns first item under given tag casted to specified type.
+
 template <typename T> T& SessionItem::item(const std::string& tag) const
 {
     T* tag_item = dynamic_cast<T*>(getItem(tag));
@@ -106,6 +109,18 @@ template <typename T> T& SessionItem::item(const std::string& tag) const
         throw std::runtime_error("Can't cast an item to given type");
 
     return *tag_item;
+}
+
+//! Returns all items under given tag casted to specific type.
+
+template <typename T> std::vector<T*> SessionItem::items(const std::string& tag) const
+{
+    std::vector<T*> result;
+    for (auto item : getItems(tag))
+        if (auto casted = dynamic_cast<T*>(item); casted)
+            result.push_back(casted);
+
+    return result;
 }
 
 

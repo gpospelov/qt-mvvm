@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "graphitemcontroller.h"
+#include "graphplotcontroller.h"
 #include "data1ditem.h"
 #include "data1dplotcontroller.h"
 #include "graphitem.h"
@@ -18,13 +18,13 @@
 
 using namespace ModelView;
 
-struct GraphItemController::GraphItemControllerPrivate {
-    GraphItemController* master{nullptr};
+struct GraphPlotController::GraphItemControllerPrivate {
+    GraphPlotController* master{nullptr};
     QCustomPlot* custom_plot{nullptr};
     QCPGraph* graph{nullptr};
     std::unique_ptr<Data1DPlotController> data_controller;
 
-    GraphItemControllerPrivate(GraphItemController* master, QCustomPlot* plot)
+    GraphItemControllerPrivate(GraphPlotController* master, QCustomPlot* plot)
         : master(master), custom_plot(plot)
     {
     }
@@ -69,12 +69,12 @@ struct GraphItemController::GraphItemControllerPrivate {
     }
 };
 
-GraphItemController::GraphItemController(QCustomPlot* custom_plot)
+GraphPlotController::GraphPlotController(QCustomPlot* custom_plot)
     : p_impl(std::make_unique<GraphItemControllerPrivate>(this, custom_plot))
 {
 }
 
-void GraphItemController::subscribe()
+void GraphPlotController::subscribe()
 {
     auto on_property_change = [this](SessionItem* item, std::string property_name) {
         Q_UNUSED(item)
@@ -89,9 +89,9 @@ void GraphItemController::subscribe()
     p_impl->setup_graph();
 }
 
-void GraphItemController::unsubscribe()
+void GraphPlotController::unsubscribe()
 {
     p_impl->remove_graph();
 }
 
-GraphItemController::~GraphItemController() = default;
+GraphPlotController::~GraphPlotController() = default;

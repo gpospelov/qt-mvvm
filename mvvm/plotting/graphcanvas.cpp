@@ -8,33 +8,23 @@
 // ************************************************************************** //
 
 #include "graphcanvas.h"
-#include "qcustomplot.h"
-#include "axisplotcontrollers.h"
+#include "graphviewportplotcontroller.h"
 #include "graphviewportitem.h"
-#include "axisitems.h"
-#include "graphitemcontroller.h"
-#include "graphitem.h"
+#include "qcustomplot.h"
 #include <QBoxLayout>
 
 using namespace ModelView;
 
 struct GraphCanvas::GraphCanvasPrivate {
-    QCustomPlot* m_customPlot{nullptr};
-    std::unique_ptr<AxisPlotController> m_xAxisController;
-    std::unique_ptr<AxisPlotController> m_yAxisController;
-    std::unique_ptr<GraphItemController> m_graphController;
+    QCustomPlot* custom_plot{nullptr};
+    std::unique_ptr<GraphViewportPlotController> viewport_controller;
 
-    GraphCanvasPrivate() : m_customPlot(new QCustomPlot)
+    GraphCanvasPrivate() : custom_plot(new QCustomPlot)
     {
-        m_xAxisController = std::make_unique<XAxisPlotController>(m_customPlot);
-        m_yAxisController = std::make_unique<YAxisPlotController>(m_customPlot);
-        m_graphController = std::make_unique<GraphItemController>(m_customPlot);
+        viewport_controller = std::make_unique<GraphViewportPlotController>(custom_plot);
     }
 
-    QCustomPlot* customPlot()
-    {
-        return m_customPlot;
-    }
+    QCustomPlot* customPlot() { return custom_plot; }
 };
 
 GraphCanvas::GraphCanvas(QWidget* parent)
@@ -43,7 +33,7 @@ GraphCanvas::GraphCanvas(QWidget* parent)
     auto layout = new QVBoxLayout(this);
     layout->setMargin(0);
     layout->setSpacing(0);
-    layout->addWidget(p_impl->m_customPlot);
+    layout->addWidget(p_impl->custom_plot);
     setLayout(layout);
 
     setMouseTracking(true);
@@ -54,9 +44,7 @@ GraphCanvas::GraphCanvas(QWidget* parent)
 
 void GraphCanvas::setItem(GraphViewportItem* viewport_item)
 {
-    p_impl->m_xAxisController->setItem(&viewport_item->item<ViewportAxisItem>(GraphViewportItem::P_XAXIS));
-    p_impl->m_yAxisController->setItem(&viewport_item->item<ViewportAxisItem>(GraphViewportItem::P_YAXIS));
-    p_impl->m_graphController->setItem(&viewport_item->item<GraphItem>(GraphViewportItem::T_GRAPHS));
+    p_impl->viewport_controller->setItem(viewport_item);
 }
 
 GraphCanvas::~GraphCanvas() = default;

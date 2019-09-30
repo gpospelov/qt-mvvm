@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_GRAPHITEMCONTROLLER_H
-#define MVVM_GRAPHITEMCONTROLLER_H
+#ifndef MVVM_GRAPHPLOTCONTROLLER_H
+#define MVVM_GRAPHPLOTCONTROLLER_H
 
 #include "itemcontroller.h"
 
@@ -20,17 +20,18 @@ namespace ModelView
 class GraphItem;
 
 /*!
-@class GraphItemController
+@class GraphPlotController
 @brief Establish communication between QCPGraph and GraphItem.
 
+This is a part of machinery to plot
 Provide update on QCPGraph (data points, line style, color, etc) when GraphItem is changed.
 */
 
-class CORE_EXPORT GraphItemController : public ItemController<GraphItem>
+class CORE_EXPORT GraphPlotController : public ItemController<GraphItem>
 {
 public:
-    explicit GraphItemController(QCustomPlot* plot);
-    ~GraphItemController() override;
+    explicit GraphPlotController(QCustomPlot* plot);
+    ~GraphPlotController() override;
 
 protected:
     void subscribe() override;
@@ -43,4 +44,4 @@ private:
 
 } // namespace ModelView
 
-#endif // MVVM_GRAPHITEMCONTROLLER_H
+#endif // MVVM_GRAPHPLOTCONTROLLER_H

@@ -95,3 +95,23 @@ TEST_F(TestCompoundItem, itemAccess)
     EXPECT_TRUE(&parent.item<PropertyItem>(tag) == property);
     EXPECT_THROW(parent.item<CompoundItem>(tag), std::runtime_error);
 }
+
+TEST_F(TestCompoundItem, itemVectorAccess)
+{
+    const std::string tag = "tag";
+
+    // creating parent with one tag
+    SessionItem parent;
+    parent.registerTag(TagInfo::universalTag(tag));
+
+    // inserting two children
+    auto property1 = new PropertyItem;
+    auto property2 = new PropertyItem;
+    parent.insertItem(property1, tag);
+    parent.insertItem(property2, tag);
+
+    auto items = parent.items<PropertyItem>(tag);
+    std::vector<PropertyItem*> expected = {property1, property2};
+    EXPECT_EQ(items, expected);
+    EXPECT_EQ(parent.items<CompoundItem>(tag).size(), 0);
+}

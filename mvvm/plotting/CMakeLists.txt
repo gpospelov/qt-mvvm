@@ -5,12 +5,14 @@ target_sources(${library_name} PRIVATE
     axisplotcontrollers.cpp
     graphcanvas.h
     graphcanvas.cpp
-    graphitemcontroller.h
-    graphitemcontroller.cpp
+    graphplotcontroller.h
+    graphplotcontroller.cpp
     itemcontroller.h
     itemcontroller.cpp
     data1dplotcontroller.h
     data1dplotcontroller.cpp
+    graphviewportplotcontroller.h
+    graphviewportplotcontroller.cpp
 )
 
 target_include_directories(${library_name}

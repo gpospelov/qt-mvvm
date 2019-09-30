@@ -33,7 +33,7 @@ public:
     static inline const std::string P_GRAPH_TITLE = "P_GRAPH_TITLE";
     GraphItem();
 
-    void setDataItem(Data1DItem* item);
+    void setDataItem(const Data1DItem* item);
 
     Data1DItem* dataItem() const;
 

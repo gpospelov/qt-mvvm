@@ -40,6 +40,8 @@ public:
 
     SessionItem* takeItem(int index);
 
+    bool canTakeItem(int index) const;
+
     int indexOfItem(const SessionItem* item) const;
 
     SessionItem* itemAt(int index) const;

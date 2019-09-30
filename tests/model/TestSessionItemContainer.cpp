@@ -197,6 +197,29 @@ TEST_F(TestSessionItemContainer, takeItem)
     EXPECT_EQ(tag.takeItem(tag.itemCount()), nullptr);
 }
 
+//! Checking ::canTakeItem.
+
+TEST_F(TestSessionItemContainer, canTakeItem)
+{
+    const std::string tag_name("tag");
+    const std::string model_type("model_a");
+
+    SessionItemContainer tag(TagInfo::universalTag(tag_name));
+
+    // taking non existing items
+    EXPECT_FALSE(tag.canTakeItem(0));
+
+    // inserting items
+    SessionItem* child1 = new SessionItem(model_type);
+    EXPECT_TRUE(tag.insertItem(child1));
+    EXPECT_TRUE(tag.canTakeItem(0));
+
+    // taking non existing items
+    EXPECT_FALSE(tag.canTakeItem(-1));
+    EXPECT_FALSE(tag.canTakeItem(tag.itemCount()));
+}
+
+
 //! Checking ::takeItem when tag is related to property tag.
 
 TEST_F(TestSessionItemContainer, takeItemPropertyType)
@@ -211,5 +234,6 @@ TEST_F(TestSessionItemContainer, takeItemPropertyType)
     EXPECT_TRUE(tag.insertItem(child1));
 
     // attempt to take property item
+    EXPECT_FALSE(tag.canTakeItem(0));
     EXPECT_EQ(tag.takeItem(0), nullptr);
 }

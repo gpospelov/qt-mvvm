@@ -52,6 +52,8 @@ public:
 
     SessionItem* takeItem(const std::string& tag, int row);
 
+    bool canTakeItem(const std::string& tag, int row) const;
+
     // item access
     SessionItem* getItem(const std::string& tag, int row = 0) const;
 
