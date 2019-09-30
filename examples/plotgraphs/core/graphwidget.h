@@ -16,6 +16,8 @@
 class QBoxLayout;
 class GraphModel;
 class GraphPropertyWidget;
+class QToolBar;
+class QAction;
 
 namespace ModelView
 {
@@ -38,10 +40,15 @@ public:
     void setModel(GraphModel* model);
 
 private:
+    void init_actions();
+
     QBoxLayout* create_left_layout();
     QBoxLayout* create_right_layout();
+    QToolBar* m_toolBar;
+    QAction* m_resetViewportAction;
     ModelView::GraphCanvas* m_graphCanvas;
     GraphPropertyWidget* m_propertyWidget;
+    GraphModel* m_model;
 };
 
 #endif // GRAPHWIDGET_H
