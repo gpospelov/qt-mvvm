@@ -24,7 +24,7 @@ TEST_F(TestGraphViewportItem, initialState)
     GraphViewportItem item;
     EXPECT_TRUE(item.getItem(GraphViewportItem::P_XAXIS) != nullptr);
     EXPECT_TRUE(item.getItem(GraphViewportItem::P_YAXIS) != nullptr);
-    EXPECT_EQ(item.getItems(GraphViewportItem::T_GRAPHS).size(), 0);
+    EXPECT_EQ(item.graphItems().size(), 0);
 }
 
 //! Add graph to viewport.
@@ -45,7 +45,7 @@ TEST_F(TestGraphViewportItem, addItem)
     data_item->setContent(expected_content);
 
     graph_item->setDataItem(data_item);
-    EXPECT_EQ(viewport_item->getItems(GraphViewportItem::T_GRAPHS).size(), 1);
+    EXPECT_EQ(viewport_item->graphItems().size(), 1);
 
     // updating viewport to graph
     viewport_item->update_viewport();

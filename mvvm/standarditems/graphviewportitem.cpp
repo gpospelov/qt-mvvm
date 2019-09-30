@@ -45,6 +45,11 @@ GraphViewportItem::GraphViewportItem() : CompoundItem(Constants::GraphViewportIt
     registerTag(TagInfo::universalTag(T_GRAPHS, {Constants::GraphItemType}), /*set_default*/ true);
 }
 
+std::vector<GraphItem*> GraphViewportItem::graphItems() const
+{
+    return items<GraphItem>(GraphViewportItem::T_GRAPHS);
+}
+
 //! Updates viewport axes depending on data points.
 
 void GraphViewportItem::update_viewport()

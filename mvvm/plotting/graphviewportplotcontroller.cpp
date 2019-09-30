@@ -55,7 +55,7 @@ struct GraphViewportPlotController::GraphCollectionPlotControllerPrivate {
     void create_graph_controllers()
     {
         auto viewport = viewport_item();
-        for (auto graph_item : viewport->items<GraphItem>(GraphViewportItem::T_GRAPHS)) {
+        for (auto graph_item : viewport->graphItems()) {
             auto controller = std::make_unique<GraphPlotController>(custom_plot);
             controller->setItem(graph_item);
             graph_controllers.emplace_back(std::move(controller));
