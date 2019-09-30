@@ -54,6 +54,8 @@ struct GraphViewportPlotController::GraphCollectionPlotControllerPrivate {
 
     void create_graph_controllers()
     {
+        graph_controllers.clear();
+
         auto viewport = viewport_item();
         for (auto graph_item : viewport->graphItems()) {
             auto controller = std::make_unique<GraphPlotController>(custom_plot);
@@ -61,6 +63,19 @@ struct GraphViewportPlotController::GraphCollectionPlotControllerPrivate {
             graph_controllers.emplace_back(std::move(controller));
         }
         viewport->update_viewport();
+    }
+
+    //! Remove GraphPlotController corresponding to GraphItem.
+
+    void remove_controller_for_item(SessionItem* parent, const std::string& tag, int row)
+    {
+        auto child_about_to_be_removed = parent->getItem(tag, row);
+        auto if_func = [&](const std::unique_ptr<GraphPlotController>& cntrl) -> bool {
+            return cntrl->currentItem() == child_about_to_be_removed;
+        };
+        graph_controllers.erase(
+            std::remove_if(graph_controllers.begin(), graph_controllers.end(), if_func),
+            graph_controllers.end());
     }
 };
 
@@ -71,6 +86,19 @@ GraphViewportPlotController::GraphViewportPlotController(QCustomPlot* custom_plo
 
 void GraphViewportPlotController::subscribe()
 {
+    // regenerate all graph controller on any children insert/removal
+    // FIXME consider creation of only necessary controllers, leaving old controllers intact.
+    auto on_row_inserted = [this](SessionItem*, std::string, int) {
+        p_impl->create_graph_controllers();
+    };
+    currentItem()->mapper()->setOnRowInserted(on_row_inserted, this);
+
+    auto on_row_about_to_be_removed = [this](SessionItem* parent, std::string tag, int row) {
+        p_impl->remove_controller_for_item(parent, tag, row);
+    };
+
+    currentItem()->mapper()->setOnRowAboutToBeRemoved(on_row_about_to_be_removed, this);
+
     p_impl->setup_components();
 }
 
