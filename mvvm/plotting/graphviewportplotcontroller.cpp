@@ -16,14 +16,14 @@
 
 using namespace ModelView;
 
-struct GraphViewportPlotController::GraphCollectionPlotControllerPrivate {
+struct GraphViewportPlotController::GraphViewportPlotControllerPrivate {
     GraphViewportPlotController* master{nullptr};
     QCustomPlot* custom_plot{nullptr};
     std::vector<std::unique_ptr<GraphPlotController>> graph_controllers;
     std::unique_ptr<AxisPlotController> xAxisController;
     std::unique_ptr<AxisPlotController> yAxisController;
 
-    GraphCollectionPlotControllerPrivate(GraphViewportPlotController* master, QCustomPlot* plot)
+    GraphViewportPlotControllerPrivate(GraphViewportPlotController* master, QCustomPlot* plot)
         : master(master), custom_plot(plot)
     {
     }
@@ -77,28 +77,31 @@ struct GraphViewportPlotController::GraphCollectionPlotControllerPrivate {
             std::remove_if(graph_controllers.begin(), graph_controllers.end(), if_func),
             graph_controllers.end());
     }
+
+    void subscribe() {
+        // regenerate all graph controller on any children insert/removal
+        // FIXME consider creation of only necessary controllers, leaving old controllers intact.
+        auto on_row_inserted = [this](SessionItem*, std::string, int) {
+            create_graph_controllers();
+        };
+        master->currentItem()->mapper()->setOnRowInserted(on_row_inserted, this);
+
+        auto on_row_about_to_be_removed = [this](SessionItem* parent, std::string tag, int row) {
+            remove_controller_for_item(parent, tag, row);
+        };
+        master->currentItem()->mapper()->setOnRowAboutToBeRemoved(on_row_about_to_be_removed, this);
+
+    }
 };
 
 GraphViewportPlotController::GraphViewportPlotController(QCustomPlot* custom_plot)
-    : p_impl(std::make_unique<GraphCollectionPlotControllerPrivate>(this, custom_plot))
+    : p_impl(std::make_unique<GraphViewportPlotControllerPrivate>(this, custom_plot))
 {
 }
 
 void GraphViewportPlotController::subscribe()
 {
-    // regenerate all graph controller on any children insert/removal
-    // FIXME consider creation of only necessary controllers, leaving old controllers intact.
-    auto on_row_inserted = [this](SessionItem*, std::string, int) {
-        p_impl->create_graph_controllers();
-    };
-    currentItem()->mapper()->setOnRowInserted(on_row_inserted, this);
-
-    auto on_row_about_to_be_removed = [this](SessionItem* parent, std::string tag, int row) {
-        p_impl->remove_controller_for_item(parent, tag, row);
-    };
-
-    currentItem()->mapper()->setOnRowAboutToBeRemoved(on_row_about_to_be_removed, this);
-
+    p_impl->subscribe();
     p_impl->setup_components();
 }
 

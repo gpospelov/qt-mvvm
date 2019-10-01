@@ -72,6 +72,18 @@ struct GraphPlotController::GraphItemControllerPrivate {
         create_graph();
         update_graph_pen();
     }
+
+    void subscribe() {
+        auto on_property_change = [this](SessionItem* item, std::string property_name) {
+            Q_UNUSED(item)
+            if (property_name == GraphItem::P_COLOR)
+                update_graph_pen();
+
+            if (property_name == GraphItem::P_LINK)
+                setup_graph();
+        };
+        master->currentItem()->mapper()->setOnPropertyChange(on_property_change, this);
+    }
 };
 
 GraphPlotController::GraphPlotController(QCustomPlot* custom_plot)
@@ -81,16 +93,7 @@ GraphPlotController::GraphPlotController(QCustomPlot* custom_plot)
 
 void GraphPlotController::subscribe()
 {
-    auto on_property_change = [this](SessionItem* item, std::string property_name) {
-        Q_UNUSED(item)
-        if (property_name == GraphItem::P_COLOR)
-            p_impl->update_graph_pen();
-
-        if (property_name == GraphItem::P_LINK)
-            p_impl->setup_graph();
-    };
-    currentItem()->mapper()->setOnPropertyChange(on_property_change, this);
-
+    p_impl->subscribe();
     p_impl->setup_graph();
 }
 

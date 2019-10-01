@@ -51,7 +51,7 @@ void GraphWidget::setModel(GraphModel* model)
 
     m_propertyWidget->setModel(model);
 
-//    m_graphCanvas->setItem(Utils::TopItem<GraphViewportItem>(model));
+    m_graphCanvas->setItem(Utils::TopItem<GraphViewportItem>(model));
 }
 
 void GraphWidget::init_actions()

@@ -120,5 +120,9 @@ TEST_F(TestGraphPlotController, controllerDelete)
     // deleting controller should lead to graph removal
     controller.reset();
     EXPECT_EQ(custom_plot->graphCount(), 0);
+
+    //  inserting item again
+    graph_item = dynamic_cast<GraphItem*>(model.insertNewItem(Constants::GraphItemType));
+    graph_item->setDataItem(data_item);
 }
 
