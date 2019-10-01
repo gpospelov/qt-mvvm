@@ -52,7 +52,7 @@ public:
     void setColor(const QColor& color) { m_color = color; }
 
 protected:
-    virtual void setPortCoordinates();
+    void setPortCoordinates();
     virtual int getNumberOfPorts();
     virtual int getNumberOfOutputPorts();
     virtual int getNumberOfInputPorts();
