@@ -67,6 +67,11 @@ void GraphWidget::init_actions()
     connect(m_resetViewportAction, &QAction::triggered, on_reset);
 
     m_addGraphAction = new QAction("Add graph", this);
+    auto on_add_graph = [this]() {
+        m_model->add_graph();
+    };
+    connect(m_resetViewportAction, &QAction::triggered, on_add_graph);
+
     m_removeGraphAction = new QAction("Remove graph", this);
 
     m_toolBar->addAction(m_resetViewportAction);

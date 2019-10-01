@@ -14,7 +14,9 @@
 #include "graphviewportitem.h"
 #include "modelutils.h"
 #include "containeritem.h"
+#include "numericutils.h"
 #include <cmath>
+#include <QColor>
 
 namespace {
 
@@ -24,11 +26,11 @@ constexpr double xmin = 0.0;
 constexpr double xmax = 5.0;
 constexpr double dx = (xmax-xmin)/npoints;
 
-std::vector<double> bin_values() {
+std::vector<double> bin_values(double amp_factor = 1.0) {
     std::vector<double> result;
     for(int i=0; i<npoints; ++i) {
         double x = xmin + i * dx;
-        double value = 10.0*std::sin(2.0*pi*2*x) + 5.0*std::sin(2*pi*2.25*x);
+        double value = amp_factor*10.0*std::sin(2.0*pi*2*x) + amp_factor*5.0*std::sin(2*pi*2.25*x);
         result.push_back(value);
     }
     return result;
@@ -50,10 +52,12 @@ void GraphModel::add_graph()
 {
     auto data = dynamic_cast<Data1DItem*>(insertNewItem(Constants::Data1DItemType, data_container()));
     data->setFixedBinAxis(npoints, xmin, xmax);
-    data->setContent(bin_values());
+    data->setContent(bin_values(ModelView::Utils::RandDouble(0.5, 1.0)));
 
     auto graph = dynamic_cast<GraphItem*>(insertNewItem(Constants::GraphItemType, viewport()));
     graph->setDataItem(data);
+    auto rndm = []() -> int { return ModelView::Utils::RandInt(0, 255); };
+    graph->setProperty(GraphItem::P_COLOR, QVariant::fromValue(QColor(rndm(), rndm(), rndm())));
 }
 
 //! Returns viewport item containig graph items.
