@@ -11,6 +11,8 @@
 #include <cmath>
 #include <limits>
 #include <algorithm>
+#include <random>
+
 
 using namespace ModelView;
 
@@ -18,4 +20,12 @@ bool Utils::AreAlmostEqual(double a, double b, double tolerance)
 {
     constexpr double eps = std::numeric_limits<double>::epsilon();
     return std::abs(a-b) <= eps * std::max( tolerance*eps, std::max(1., tolerance)*std::abs(b) );
+}
+
+int Utils::RandInt(int low, int high)
+{
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<int> uniform_int(low, high);
+    return uniform_int(gen);
 }
