@@ -19,9 +19,10 @@ class ContainerItem;
 
 /*!
 @class GraphModel
-@brief Main application model.
+@brief Main application model to demonstrate how to plot data.
 
-Contains few Data1DItem's, GraphItem's and ViewPortItem.
+Contains few Data1DItem's, GraphItem's and ViewPortItem. Provides functionality to easily
+add and remove graphs.
 */
 
 class GraphModel : public ModelView::SessionModel
@@ -30,6 +31,8 @@ public:
     GraphModel();
 
     void add_graph();
+
+    void remove_graph();
 
     void update_graphs();
 

@@ -1,3 +1,4 @@
+#include "MockWidgets.h"
 #include "axisitems.h"
 #include "data1ditem.h"
 #include "google_test.h"
@@ -6,6 +7,7 @@
 #include "sessionmodel.h"
 
 using namespace ModelView;
+using ::testing::_;
 
 //! Testing AxesItems.
 
@@ -61,4 +63,56 @@ TEST_F(TestGraphViewportItem, addItem)
         std::minmax_element(std::begin(expected_content), std::end(expected_content));
     EXPECT_DOUBLE_EQ(yaxis->property(ViewportAxisItem::P_MIN).toDouble(), *expected_amin);
     EXPECT_DOUBLE_EQ(yaxis->property(ViewportAxisItem::P_MAX).toDouble(), *expected_amax);
+}
+
+//! Check signaling on set data item.
+
+TEST_F(TestGraphViewportItem, onAddItem)
+{
+    SessionModel model;
+    auto viewport_item =
+        dynamic_cast<GraphViewportItem*>(model.insertNewItem(Constants::GraphViewportItemType));
+
+    MockWidgetForItem widget(viewport_item);
+
+    EXPECT_CALL(widget, onDataChange(_, _)).Times(0);
+    EXPECT_CALL(widget, onPropertyChange(_, _)).Times(0);
+    EXPECT_CALL(widget, onChildPropertyChange(_, _)).Times(0);
+    // FIXME make signaling reporting actual tag and row
+    EXPECT_CALL(widget, onRowInserted(viewport_item, "", -1)).Times(1);
+    EXPECT_CALL(widget, onRowAboutToBeRemoved(_, _, _)).Times(0);
+
+    // triggering action
+    model.insertNewItem(Constants::GraphItemType, viewport_item);
+}
+
+//! Check signaling on set data item.
+
+TEST_F(TestGraphViewportItem, onSetDataItem)
+{
+    SessionModel model;
+    auto viewport_item =
+        dynamic_cast<GraphViewportItem*>(model.insertNewItem(Constants::GraphViewportItemType));
+
+    // setting upda tata item
+    auto data_item = dynamic_cast<Data1DItem*>(model.insertNewItem(Constants::Data1DItemType));
+    const std::vector<double> expected_content = {1.0, 2.0, 3.0};
+    const std::vector<double> expected_centers = {0.5, 1.5, 2.5};
+    data_item->setFixedBinAxis(3, 0.0, 3.0);
+    data_item->setContent(expected_content);
+
+    // inserting graph item
+    auto graph_item =
+        dynamic_cast<GraphItem*>(model.insertNewItem(Constants::GraphItemType, viewport_item));
+
+    MockWidgetForItem widget(viewport_item);
+
+    EXPECT_CALL(widget, onDataChange(_, _)).Times(0);
+    EXPECT_CALL(widget, onPropertyChange(_, _)).Times(0);
+    EXPECT_CALL(widget, onChildPropertyChange(graph_item, GraphItem::P_LINK)).Times(1);
+    EXPECT_CALL(widget, onRowInserted(_, _, _)).Times(0);
+    EXPECT_CALL(widget, onRowAboutToBeRemoved(_, _, _)).Times(0);
+
+    // triggering action
+    graph_item->setDataItem(data_item);
 }

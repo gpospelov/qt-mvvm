@@ -51,7 +51,7 @@ void GraphWidget::setModel(GraphModel* model)
 
     m_propertyWidget->setModel(model);
 
-    m_graphCanvas->setItem(Utils::TopItem<GraphViewportItem>(model));
+//    m_graphCanvas->setItem(Utils::TopItem<GraphViewportItem>(model));
 }
 
 void GraphWidget::init_actions()
@@ -70,9 +70,13 @@ void GraphWidget::init_actions()
     auto on_add_graph = [this]() {
         m_model->add_graph();
     };
-    connect(m_resetViewportAction, &QAction::triggered, on_add_graph);
+    connect(m_addGraphAction, &QAction::triggered, on_add_graph);
 
     m_removeGraphAction = new QAction("Remove graph", this);
+    auto on_remove_graph = [this]() {
+        m_model->remove_graph();
+    };
+    connect(m_removeGraphAction, &QAction::triggered, on_remove_graph);
 
     m_toolBar->addAction(m_resetViewportAction);
     m_toolBar->addAction(m_addGraphAction);
