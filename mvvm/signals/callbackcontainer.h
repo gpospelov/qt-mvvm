@@ -31,7 +31,7 @@ public:
 
     void add(T callback, U client);
 
-    template <typename... Args> void notify(Args... args);
+    template <typename... Args> void operator()(Args... args);
 
     void remove_client(U client);
 
@@ -48,7 +48,7 @@ template <typename T, typename U> void CallbackBaseContainer<T, U>::add(T callba
 //! Notify clients using given list of arguments.
 template <typename T, typename U>
 template <typename... Args>
-void CallbackBaseContainer<T, U>::notify(Args... args)
+void CallbackBaseContainer<T, U>::operator()(Args... args)
 {
     for (const auto& f : m_callbacks) {
         f.first(args...);

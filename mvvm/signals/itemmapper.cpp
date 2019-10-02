@@ -192,7 +192,7 @@ int ItemMapper::nestlingDepth(SessionItem* item, int level)
 void ItemMapper::callOnItemDestroy()
 {
     if (m_active)
-        m_on_item_destroy.notify(m_item);
+        m_on_item_destroy(m_item);
 }
 
 //! Notifies all callbacks subscribed to "item data is changed" event.
@@ -200,7 +200,7 @@ void ItemMapper::callOnItemDestroy()
 void ItemMapper::callOnDataChange(SessionItem* item, int role)
 {
     if (m_active)
-        m_on_data_change.notify(item, role);
+        m_on_data_change(item, role);
 }
 
 //! Notifies all callbacks subscribed to "item property is changed" event.
@@ -208,7 +208,7 @@ void ItemMapper::callOnDataChange(SessionItem* item, int role)
 void ItemMapper::callOnPropertyChange(SessionItem* item, std::string property_name)
 {
     if (m_active)
-        m_on_property_change.notify(item, property_name);
+        m_on_property_change(item, property_name);
 }
 
 //! Notifies all callbacks subscribed to "child property changed" event.
@@ -216,7 +216,7 @@ void ItemMapper::callOnPropertyChange(SessionItem* item, std::string property_na
 void ItemMapper::callOnChildPropertyChange(SessionItem* item, std::string property_name)
 {
     if (m_active)
-        m_on_child_property_change.notify(item, property_name);
+        m_on_child_property_change(item, property_name);
 }
 
 //! Notifies all callbacks subscribed to "on row inserted" event.
@@ -224,7 +224,7 @@ void ItemMapper::callOnChildPropertyChange(SessionItem* item, std::string proper
 void ItemMapper::callOnRowInserted(SessionItem* parent, std::string tag, int row)
 {
     if (m_active)
-        m_on_row_inserted.notify(parent, tag, row);
+        m_on_row_inserted(parent, tag, row);
 }
 
 //! Notifies all callbacks subscribed to "on row about to be removed".
@@ -232,6 +232,6 @@ void ItemMapper::callOnRowInserted(SessionItem* parent, std::string tag, int row
 void ItemMapper::callOnRowAboutToBeRemoved(SessionItem* parent, std::string tag, int row)
 {
     if (m_active)
-        m_on_row_about_removed.notify(parent, tag, row);
+        m_on_row_about_removed(parent, tag, row);
 }
 

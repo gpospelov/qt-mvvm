@@ -86,7 +86,7 @@ void ModelMapper::unsubscribe(Callbacks::client_t client)
 void ModelMapper::callOnDataChange(SessionItem* item, int role)
 {
     if (m_active)
-        m_on_data_change.notify(item, role);
+        m_on_data_change(item, role);
 }
 
 //! Notifies all callbacks subscribed to "item data is changed" event.
@@ -94,27 +94,27 @@ void ModelMapper::callOnDataChange(SessionItem* item, int role)
 void ModelMapper::callOnRowInserted(SessionItem* parent, std::string tag, int row)
 {
     if (m_active)
-        m_on_row_inserted.notify(parent, tag, row);
+        m_on_row_inserted(parent, tag, row);
 }
 
 void ModelMapper::callOnRowRemoved(SessionItem* parent, std::string tag, int row)
 {
     if (m_active)
-        m_on_row_removed.notify(parent, tag, row);
+        m_on_row_removed(parent, tag, row);
 }
 
 void ModelMapper::callOnRowAboutToBeRemoved(SessionItem* parent, std::string tag, int row)
 {
     if (m_active)
-        m_on_row_about_removed.notify(parent, tag, row);
+        m_on_row_about_removed(parent, tag, row);
 }
 
 void ModelMapper::callOnModelDestroyed()
 {
-    m_on_model_destroyed.notify(m_model);
+    m_on_model_destroyed(m_model);
 }
 
 void ModelMapper::callOnModelReset()
 {
-    m_on_model_reset.notify(m_model);
+    m_on_model_reset(m_model);
 }
