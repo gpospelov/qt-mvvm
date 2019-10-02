@@ -42,26 +42,26 @@ void ItemMapper::setModel(SessionModel* model)
         subscribe_to_model();
 }
 
-void ItemMapper::setOnItemDestroy(Callbacks::item_t f, Callbacks::slot_t client)
+void ItemMapper::setOnItemDestroy(Callbacks::item_t f, Callbacks::slot_t owner)
 {
-    m_on_item_destroy.connect(std::move(f), client);
+    m_on_item_destroy.connect(std::move(f), owner);
 }
 
 //! Sets callback to be notified on item's data change.
 //! Callback will be called with (SessionItem*, data_role).
 
-void ItemMapper::setOnDataChange(Callbacks::item_int_t f, Callbacks::slot_t client)
+void ItemMapper::setOnDataChange(Callbacks::item_int_t f, Callbacks::slot_t owner)
 {
-    m_on_data_change.connect(std::move(f), client);
+    m_on_data_change.connect(std::move(f), owner);
 }
 
 //! Sets callback to be notified on item's property change.
 //!
 //! Callback will be called with (compound_item, property_name).
 
-void ItemMapper::setOnPropertyChange(Callbacks::item_str_t f, Callbacks::slot_t client)
+void ItemMapper::setOnPropertyChange(Callbacks::item_str_t f, Callbacks::slot_t owner)
 {
-    m_on_property_change.connect(std::move(f), client);
+    m_on_property_change.connect(std::move(f), owner);
 }
 
 /*!
@@ -72,9 +72,9 @@ layer with "thickness" property, the signal will be triggered on thickness chang
 (layeritem*, "thickness") as callback parameters.
 */
 
-void ItemMapper::setOnChildPropertyChange(Callbacks::item_str_t f, Callbacks::slot_t client)
+void ItemMapper::setOnChildPropertyChange(Callbacks::item_str_t f, Callbacks::slot_t owner)
 {
-    m_on_child_property_change.connect(std::move(f), client);
+    m_on_child_property_change.connect(std::move(f), owner);
 }
 
 /*!
@@ -85,9 +85,9 @@ tag, the signal will be triggered on layer insertion with
 (multilayer*, T_LAYER, row) as callback parameters.
 */
 
-void ItemMapper::setOnRowInserted(Callbacks::item_str_int_t f, Callbacks::slot_t client)
+void ItemMapper::setOnRowInserted(Callbacks::item_str_int_t f, Callbacks::slot_t owner)
 {
-    m_on_row_inserted.connect(std::move(f), client);
+    m_on_row_inserted.connect(std::move(f), owner);
 }
 
 /*!
@@ -98,9 +98,9 @@ tag, the signal will be triggered on layer deletion with
 (multilayer*, T_LAYER, row) as callback parameters.
 */
 
-void ItemMapper::setOnRowAboutToBeRemoved(Callbacks::item_str_int_t f, Callbacks::slot_t client)
+void ItemMapper::setOnRowAboutToBeRemoved(Callbacks::item_str_int_t f, Callbacks::slot_t owner)
 {
-    m_on_row_about_removed.connect(std::move(f), client);
+    m_on_row_about_removed.connect(std::move(f), owner);
 }
 
 //! Sets activity flag to given value. Will disable all callbacks if false.

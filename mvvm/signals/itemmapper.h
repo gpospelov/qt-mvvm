@@ -33,12 +33,12 @@ public:
 
     void setModel(SessionModel* model);
 
-    void setOnItemDestroy(Callbacks::item_t f, Callbacks::slot_t client);
-    void setOnDataChange(Callbacks::item_int_t f, Callbacks::slot_t client);
-    void setOnPropertyChange(Callbacks::item_str_t f, Callbacks::slot_t client);
-    void setOnChildPropertyChange(Callbacks::item_str_t f, Callbacks::slot_t client);
-    void setOnRowInserted(Callbacks::item_str_int_t f, Callbacks::slot_t client);
-    void setOnRowAboutToBeRemoved(Callbacks::item_str_int_t f, Callbacks::slot_t client);
+    void setOnItemDestroy(Callbacks::item_t f, Callbacks::slot_t owner);
+    void setOnDataChange(Callbacks::item_int_t f, Callbacks::slot_t owner);
+    void setOnPropertyChange(Callbacks::item_str_t f, Callbacks::slot_t owner);
+    void setOnChildPropertyChange(Callbacks::item_str_t f, Callbacks::slot_t owner);
+    void setOnRowInserted(Callbacks::item_str_int_t f, Callbacks::slot_t owner);
+    void setOnRowAboutToBeRemoved(Callbacks::item_str_int_t f, Callbacks::slot_t owner);
 
     void setActive(bool value);
 
