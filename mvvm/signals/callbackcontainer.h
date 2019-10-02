@@ -68,7 +68,7 @@ template <typename T, typename U> void CallbackBaseContainer<T, U>::remove_clien
 
 //! Callback container for specific client type.
 
-template <typename T> class CallbackContainer : public CallbackBaseContainer<T, Callbacks::client_t>
+template <typename T> class CallbackContainer : public CallbackBaseContainer<T, Callbacks::slot_t>
 {
 };
 

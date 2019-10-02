@@ -33,16 +33,16 @@ public:
 
     void setModel(SessionModel* model);
 
-    void setOnItemDestroy(Callbacks::item_t f, Callbacks::client_t client);
-    void setOnDataChange(Callbacks::item_int_t f, Callbacks::client_t client);
-    void setOnPropertyChange(Callbacks::item_str_t f, Callbacks::client_t client);
-    void setOnChildPropertyChange(Callbacks::item_str_t f, Callbacks::client_t client);
-    void setOnRowInserted(Callbacks::item_str_int_t f, Callbacks::client_t client);
-    void setOnRowAboutToBeRemoved(Callbacks::item_str_int_t f, Callbacks::client_t client);
+    void setOnItemDestroy(Callbacks::item_t f, Callbacks::slot_t client);
+    void setOnDataChange(Callbacks::item_int_t f, Callbacks::slot_t client);
+    void setOnPropertyChange(Callbacks::item_str_t f, Callbacks::slot_t client);
+    void setOnChildPropertyChange(Callbacks::item_str_t f, Callbacks::slot_t client);
+    void setOnRowInserted(Callbacks::item_str_int_t f, Callbacks::slot_t client);
+    void setOnRowAboutToBeRemoved(Callbacks::item_str_int_t f, Callbacks::slot_t client);
 
     void setActive(bool value);
 
-    void unsubscribe(Callbacks::client_t client);
+    void unsubscribe(Callbacks::slot_t client);
 
 private:
     void onModelDataChange(SessionItem* item, int role);
