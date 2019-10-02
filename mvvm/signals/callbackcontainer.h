@@ -10,11 +10,11 @@
 #ifndef MVVM_CALLBACKCONTAINER_H
 #define MVVM_CALLBACKCONTAINER_H
 
-#include "mvvm_export.h"
 #include "callback_types.h"
+#include "mvvm_export.h"
 #include <algorithm>
 #include <functional>
-#include <vector>
+#include <list>
 
 namespace ModelView
 {
@@ -36,14 +36,13 @@ public:
     void remove_client(U client);
 
 private:
-    std::vector<std::pair<T, U>> m_callbacks;
+    std::list<std::pair<T, U>> m_callbacks;
 };
 
 template <typename T, typename U> void SignalBase<T, U>::connect(T callback, U client)
 {
     m_callbacks.push_back(std::make_pair(callback, client));
 }
-
 
 //! Notify clients using given list of arguments.
 template <typename T, typename U>
@@ -59,11 +58,8 @@ void SignalBase<T, U>::operator()(Args... args)
 
 template <typename T, typename U> void SignalBase<T, U>::remove_client(U client)
 {
-    m_callbacks.erase(std::remove_if(m_callbacks.begin(), m_callbacks.end(),
-                                     [client](const std::pair<T, U>& x) -> bool {
-                                         return (x.second == client ? true : false);
-                                     }),
-                      m_callbacks.end());
+    m_callbacks.remove_if(
+        [client](const std::pair<T, U>& x) -> bool { return (x.second == client ? true : false); });
 }
 
 //! Callback container for specific client type.
@@ -72,6 +68,6 @@ template <typename T> class Signal : public SignalBase<T, Callbacks::slot_t>
 {
 };
 
-} // ModelView
+} // namespace ModelView
 
 #endif // MVVM_CALLBACKCONTAINER_H
