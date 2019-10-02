@@ -158,10 +158,12 @@ TEST_F(TestGraphViewportPlotController, addMoreGraphs)
     EXPECT_EQ(custom_plot->graphCount(), 0);
 
     // adding graph item to viewport
-//    auto graph_item1 = dynamic_cast<GraphItem*>(model.insertNewItem(Constants::GraphItemType, viewport_item, "", 1));
-//    EXPECT_EQ(custom_plot->graphCount(), 1);
+    // FIXME remove row specification after ItemMapper reporting correct row
+    auto graph_item1 = dynamic_cast<GraphItem*>(model.insertNewItem(Constants::GraphItemType, viewport_item, "", 0));
+    EXPECT_EQ(custom_plot->graphCount(), 1);
 
-//    auto graph_item2 = dynamic_cast<GraphItem*>(model.insertNewItem(Constants::GraphItemType, viewport_item, "", 2));
+    // FIXME PANIC TODO will crash if uncomment
+//    auto graph_item2 = dynamic_cast<GraphItem*>(model.insertNewItem(Constants::GraphItemType, viewport_item, "", 1));
 //    EXPECT_EQ(custom_plot->graphCount(), 2);
 
 //    auto graph_item3 = dynamic_cast<GraphItem*>(model.insertNewItem(Constants::GraphItemType, viewport_item, "", 0));

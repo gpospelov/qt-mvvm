@@ -15,7 +15,6 @@
 #include <algorithm>
 #include <functional>
 #include <vector>
-#include <iostream>
 
 namespace ModelView
 {
@@ -52,7 +51,6 @@ template <typename... Args>
 void CallbackBaseContainer<T, U>::notify(Args... args)
 {
     for (const auto& f : m_callbacks) {
-        std::cout << "xxxxxx" << f.second << std::endl;
         f.first(args...);
     }
 }

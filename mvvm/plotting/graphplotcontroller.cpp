@@ -85,8 +85,6 @@ GraphPlotController::GraphPlotController(QCustomPlot* custom_plot)
 
 void GraphPlotController::subscribe()
 {
-    qDebug() << "GraphPlotController::subscribe()" << currentItem() << currentItem()->mapper();
-
     auto on_property_change = [this](SessionItem* item, std::string property_name) {
         Q_UNUSED(item)
         if (property_name == GraphItem::P_COLOR)

@@ -13,7 +13,6 @@
 #include "graphitem.h"
 #include "graphplotcontroller.h"
 #include "graphviewportitem.h"
-#include <QDebug>
 
 using namespace ModelView;
 
@@ -56,7 +55,6 @@ struct GraphViewportPlotController::GraphViewportPlotControllerPrivate {
 
     void create_graph_controllers()
     {
-        qDebug() << "create_graph_controllers() -> xxx 1.1";
         graph_controllers.clear();
         auto viewport = viewport_item();
         for (auto graph_item : viewport->graphItems()) {
@@ -64,7 +62,6 @@ struct GraphViewportPlotController::GraphViewportPlotControllerPrivate {
             controller->setItem(graph_item);
             graph_controllers.push_back(std::move(controller));
         }
-        qDebug() << "create_graph_controllers() -> xxx 1.2";
         viewport->update_viewport();
     }
 
@@ -72,12 +69,15 @@ struct GraphViewportPlotController::GraphViewportPlotControllerPrivate {
     void add_controller_for_item(SessionItem* parent, const std::string& tag, int row)
     {
         assert(master->currentItem() == parent);
-        qDebug() << "add_controller_for_item() -> xxx 2.1" << QString::fromStdString(tag) << row;
         auto added_child = dynamic_cast<GraphItem*>(parent->getItem(tag, row));
+
+        for(auto& controller : graph_controllers)
+            if (controller->currentItem() == added_child)
+                throw std::runtime_error("Attempt to create second controller");
+
         auto controller = std::make_unique<GraphPlotController>(custom_plot);
         controller->setItem(added_child);
         graph_controllers.push_back(std::move(controller));
-        qDebug() << "add_controller_for_item() -> xxx 2.2";
     }
 
     //! Remove GraphPlotController corresponding to GraphItem.
