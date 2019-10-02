@@ -13,6 +13,7 @@
 #include "graphitem.h"
 #include "graphplotcontroller.h"
 #include "graphviewportitem.h"
+#include <cassert>
 
 using namespace ModelView;
 
