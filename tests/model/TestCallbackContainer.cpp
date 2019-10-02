@@ -25,7 +25,7 @@ TEST_F(TestCallbackContainer, singleWidget)
     CallbackMockWidget widget;
     CallbackContainer<Callbacks::item_t> signal;
 
-    signal.add(std::bind(&CallbackMockWidget::onItemDestroy, &widget, std::placeholders::_1),
+    signal.connect(std::bind(&CallbackMockWidget::onItemDestroy, &widget, std::placeholders::_1),
                   &widget);
 
     std::unique_ptr<SessionItem> item(new SessionItem);
@@ -50,11 +50,11 @@ TEST_F(TestCallbackContainer, twoWidgets)
     CallbackMockWidget widget1, widget2;
     CallbackContainer<Callbacks::item_t> signal;
 
-    signal.add([&](SessionItem* item){
+    signal.connect([&](SessionItem* item){
         widget1.onItemDestroy(item);
     }, &widget1);
 
-    signal.add([&](SessionItem* item){
+    signal.connect([&](SessionItem* item){
         widget2.onItemDestroy(item);
     }, &widget2);
 
@@ -81,11 +81,11 @@ TEST_F(TestCallbackContainer, twoParameters)
     CallbackMockWidget widget1, widget2;
     CallbackContainer<Callbacks::item_int_t> signal;
 
-    signal.add([&](SessionItem* item, int role){
+    signal.connect([&](SessionItem* item, int role){
         widget1.onDataChange(item, role);
     }, &widget1);
 
-    signal.add([&](SessionItem* item, int role){
+    signal.connect([&](SessionItem* item, int role){
         widget2.onDataChange(item, role);
     }, &widget2);
 

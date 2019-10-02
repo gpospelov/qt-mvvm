@@ -44,7 +44,7 @@ void ItemMapper::setModel(SessionModel* model)
 
 void ItemMapper::setOnItemDestroy(Callbacks::item_t f, Callbacks::client_t client)
 {
-    m_on_item_destroy.add(std::move(f), client);
+    m_on_item_destroy.connect(std::move(f), client);
 }
 
 //! Sets callback to be notified on item's data change.
@@ -52,7 +52,7 @@ void ItemMapper::setOnItemDestroy(Callbacks::item_t f, Callbacks::client_t clien
 
 void ItemMapper::setOnDataChange(Callbacks::item_int_t f, Callbacks::client_t client)
 {
-    m_on_data_change.add(std::move(f), client);
+    m_on_data_change.connect(std::move(f), client);
 }
 
 //! Sets callback to be notified on item's property change.
@@ -61,7 +61,7 @@ void ItemMapper::setOnDataChange(Callbacks::item_int_t f, Callbacks::client_t cl
 
 void ItemMapper::setOnPropertyChange(Callbacks::item_str_t f, Callbacks::client_t client)
 {
-    m_on_property_change.add(std::move(f), client);
+    m_on_property_change.connect(std::move(f), client);
 }
 
 /*!
@@ -74,7 +74,7 @@ layer with "thickness" property, the signal will be triggered on thickness chang
 
 void ItemMapper::setOnChildPropertyChange(Callbacks::item_str_t f, Callbacks::client_t client)
 {
-    m_on_child_property_change.add(std::move(f), client);
+    m_on_child_property_change.connect(std::move(f), client);
 }
 
 /*!
@@ -87,7 +87,7 @@ tag, the signal will be triggered on layer insertion with
 
 void ItemMapper::setOnRowInserted(Callbacks::item_str_int_t f, Callbacks::client_t client)
 {
-    m_on_row_inserted.add(std::move(f), client);
+    m_on_row_inserted.connect(std::move(f), client);
 }
 
 /*!
@@ -100,7 +100,7 @@ tag, the signal will be triggered on layer deletion with
 
 void ItemMapper::setOnRowAboutToBeRemoved(Callbacks::item_str_int_t f, Callbacks::client_t client)
 {
-    m_on_row_about_removed.add(std::move(f), client);
+    m_on_row_about_removed.connect(std::move(f), client);
 }
 
 //! Sets activity flag to given value. Will disable all callbacks if false.

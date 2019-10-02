@@ -29,7 +29,7 @@ template <typename T, typename U> class CallbackBaseContainer
 public:
     CallbackBaseContainer() = default;
 
-    void add(T callback, U client);
+    void connect(T callback, U client);
 
     template <typename... Args> void operator()(Args... args);
 
@@ -39,7 +39,7 @@ private:
     std::vector<std::pair<T, U>> m_callbacks;
 };
 
-template <typename T, typename U> void CallbackBaseContainer<T, U>::add(T callback, U client)
+template <typename T, typename U> void CallbackBaseContainer<T, U>::connect(T callback, U client)
 {
     m_callbacks.push_back(std::make_pair(callback, client));
 }
