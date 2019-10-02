@@ -18,7 +18,13 @@ namespace ModelView
 namespace Utils {
 
 //! Returns true if two doubles agree within epsilon*tolerance.
-bool CORE_EXPORT AreAlmostEqual(double a, double b, double tolerance_factor=1.0);
+CORE_EXPORT bool AreAlmostEqual(double a, double b, double tolerance_factor=1.0);
+
+//! Produces random integer values uniformly distributed on the closed interval [low, high].
+CORE_EXPORT int RandInt(int low, int high);
+
+//! Produces random FLOAT values uniformly distributed on the  interval [low, high).
+CORE_EXPORT double RandDouble(double low, double high);
 
 }
 

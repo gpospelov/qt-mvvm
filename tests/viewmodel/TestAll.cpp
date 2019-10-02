@@ -1,4 +1,5 @@
 #include "google_test.h"
+#include "qcustomplot.h"
 #include <QStandardItem>
 #include <QApplication>
 
@@ -10,6 +11,8 @@ int main(int argc, char** argv) {
 
     ModelView::Comparators::registerComparators();
     qRegisterMetaType<QStandardItem*>("QStandardItem*");
+
+    qRegisterMetaType<QCPRange>("QCPRange");
 
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();

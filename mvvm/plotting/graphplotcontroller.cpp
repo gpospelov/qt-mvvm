@@ -29,13 +29,18 @@ struct GraphPlotController::GraphItemControllerPrivate {
     {
     }
 
+    ~GraphItemControllerPrivate() {
+        if (graph)
+            custom_plot->removePlottable(graph);
+    }
+
     GraphItem* graph_item() { return master->currentItem(); }
 
     //! Removes graph from customPlot.
     void remove_graph()
     {
         if (!graph)
-            return;
+            throw std::runtime_error("No grpah defined");
 
         data_controller.reset();
         custom_plot->removePlottable(graph);
@@ -45,8 +50,18 @@ struct GraphPlotController::GraphItemControllerPrivate {
     //! Creates graph on canvas and setups data controller.
     void create_graph()
     {
+        if (graph)
+            throw std::runtime_error("Graph is already defined");
+
         graph = custom_plot->addGraph();
-        data_controller = std::make_unique<Data1DPlotController>(graph);
+        create_data_controller();
+
+        update_graph_pen();
+    }
+
+    void create_data_controller() {
+        if (!data_controller)
+            data_controller = std::make_unique<Data1DPlotController>(graph);
         data_controller->setItem(graph_item()->dataItem());
     }
 
@@ -57,16 +72,10 @@ struct GraphPlotController::GraphItemControllerPrivate {
             return;
 
         auto color = graph_item()->property(GraphItem::P_COLOR).value<QColor>();
-        custom_plot->graph()->setPen(QPen(color));
+        graph->setPen(QPen(color));
         custom_plot->replot();
     }
 
-    //! Creates graph for current GraphItem.
-    void setup_graph() {
-        remove_graph();
-        create_graph();
-        update_graph_pen();
-    }
 };
 
 GraphPlotController::GraphPlotController(QCustomPlot* custom_plot)
@@ -82,11 +91,11 @@ void GraphPlotController::subscribe()
             p_impl->update_graph_pen();
 
         if (property_name == GraphItem::P_LINK)
-            p_impl->setup_graph();
+            p_impl->create_data_controller();
     };
     currentItem()->mapper()->setOnPropertyChange(on_property_change, this);
 
-    p_impl->setup_graph();
+    p_impl->create_graph();
 }
 
 void GraphPlotController::unsubscribe()

@@ -105,7 +105,7 @@ TEST_F(TestSessionModel, setData)
     EXPECT_FALSE(model.setData(item, value, ItemDataRole::DATA));
 }
 
-TEST_F(TestSessionModel, removeRow)
+TEST_F(TestSessionModel, removeItem)
 {
     auto pool = std::make_shared<ItemPool>();
     SessionModel model("Test", pool);
@@ -125,6 +125,19 @@ TEST_F(TestSessionModel, removeRow)
     // child2 shouldn't be registered anymore
     EXPECT_EQ(pool->key_for_item(child2), "");
 }
+
+TEST_F(TestSessionModel, removeNonExistingItem)
+{
+    auto pool = std::make_shared<ItemPool>();
+    SessionModel model("Test", pool);
+
+    auto parent = model.insertNewItem(Constants::BaseType);
+    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
+
+    // removing non existing child
+    EXPECT_NO_THROW(model.removeItem(parent, "", 0));
+}
+
 
 TEST_F(TestSessionModel, takeRowFromRootItem)
 {

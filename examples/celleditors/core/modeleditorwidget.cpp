@@ -23,7 +23,7 @@ ModelEditorWidget::ModelEditorWidget(SampleModel* model, QWidget* parent)
     : QWidget(parent), m_verticalTree(new QTreeView), m_horizontalTree(new QTreeView),
       m_tableView(new QTableView), m_delegate(std::make_unique<ViewModelDelegate>())
 {
-    auto mainLayout = new QHBoxLayout();
+    auto mainLayout = new QHBoxLayout;
     mainLayout->setSpacing(10);
 
     mainLayout->addLayout(create_left_layout(), 1);

@@ -28,12 +28,12 @@ class CORE_EXPORT ModelMapper
 public:
     ModelMapper(SessionModel* item);
 
-    void setOnDataChange(Callbacks::item_int_t f, Callbacks::client_t client = {});
-    void setOnRowInserted(Callbacks::item_str_int_t f, Callbacks::client_t client = {});
-    void setOnRowRemoved(Callbacks::item_str_int_t f, Callbacks::client_t client = {});
-    void setOnRowAboutToBeRemoved(Callbacks::item_str_int_t f, Callbacks::client_t client = {});
-    void setOnModelDestroyed(Callbacks::model_t f, Callbacks::client_t client = {});
-    void setOnModelReset(Callbacks::model_t f, Callbacks::client_t client = {});
+    void setOnDataChange(Callbacks::item_int_t f, Callbacks::client_t client);
+    void setOnRowInserted(Callbacks::item_str_int_t f, Callbacks::client_t client);
+    void setOnRowRemoved(Callbacks::item_str_int_t f, Callbacks::client_t client);
+    void setOnRowAboutToBeRemoved(Callbacks::item_str_int_t f, Callbacks::client_t client);
+    void setOnModelDestroyed(Callbacks::model_t f, Callbacks::client_t client);
+    void setOnModelReset(Callbacks::model_t f, Callbacks::client_t client);
 
     void setActive(bool value);
 

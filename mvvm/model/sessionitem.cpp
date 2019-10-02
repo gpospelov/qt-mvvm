@@ -116,6 +116,7 @@ bool SessionItem::insertItem(SessionItem* item, const std::string& tag, int row)
         item->setParent(this);
         item->setModel(model());
 
+        // FIXME Make returning true tag/row, when special values ""/-1 are used
         if (p_impl->m_model)
             p_impl->m_model->mapper()->callOnRowInserted(this, tag, row);
     }

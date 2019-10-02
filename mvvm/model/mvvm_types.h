@@ -50,6 +50,7 @@ const model_type Data1DItemType = "Data1DItem";
 const model_type GraphItemType = "GraphItem";
 const model_type GraphViewportItemType = "GraphViewportItem";
 const model_type TextType = "Text";
+const model_type ContainerType = "Container";
 } // namespace Constants
 
 namespace Callbacks {

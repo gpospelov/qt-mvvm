@@ -15,6 +15,9 @@
 namespace ModelView
 {
 
+class GraphItem;
+class ViewportAxisItem;
+
 /*!
 @class GraphViewportItem
 @brief Container with viewport and collection of GraphItem's to plot.
@@ -27,6 +30,12 @@ public:
     static inline const std::string P_YAXIS = "P_YAXIS";
     static inline const std::string T_GRAPHS = "T_GRAPHS";
     GraphViewportItem();
+
+    std::vector<GraphItem*> graphItems() const;
+
+    ViewportAxisItem* xAxis() const;
+
+    ViewportAxisItem* yAxis() const;
 
     void update_viewport();
 

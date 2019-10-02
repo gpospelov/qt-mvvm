@@ -32,6 +32,8 @@ public:
     explicit Data1DPlotController(QCPGraph* graph);
     ~Data1DPlotController() override;
 
+    void update_data_points();
+
 protected:
     void subscribe() override;
     void unsubscribe() override;

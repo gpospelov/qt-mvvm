@@ -115,3 +115,30 @@ TEST_F(TestCompoundItem, itemVectorAccess)
     EXPECT_EQ(items, expected);
     EXPECT_EQ(parent.items<CompoundItem>(tag).size(), 0);
 }
+
+//! Tests automatic index addition to default display name.
+
+TEST_F(TestCompoundItem, displayNameIndexAddition)
+{
+    const std::string tag = "tag";
+
+    // creating parent with one tag
+    SessionItem parent;
+    parent.registerTag(TagInfo::universalTag(tag));
+
+    // inserting two children
+    auto child0 = new CompoundItem;
+    parent.insertItem(child0, tag);
+    auto child1 = new CompoundItem;
+    parent.insertItem(child1, tag);
+
+    // Default display names of items of the same type should have indices
+    EXPECT_EQ(child0->displayName(), Constants::CompoundType + "0");
+    EXPECT_EQ(child1->displayName(), Constants::CompoundType + "1");
+
+    // however, if children have custom display name, they should remain intact
+    child0->setDisplayName("Jekyll");
+    child1->setDisplayName("Hyde");
+    EXPECT_EQ(child0->displayName(), "Jekyll");
+    EXPECT_EQ(child1->displayName(), "Hyde");
+}

@@ -44,14 +44,15 @@ template <typename T, typename U> void CallbackBaseContainer<T, U>::add(T callba
     m_callbacks.push_back(std::make_pair(callback, client));
 }
 
-//! Notify clients using given list of arguments.
 
+//! Notify clients using given list of arguments.
 template <typename T, typename U>
 template <typename... Args>
 void CallbackBaseContainer<T, U>::notify(Args... args)
 {
-    for (const auto& f : m_callbacks)
+    for (const auto& f : m_callbacks) {
         f.first(args...);
+    }
 }
 
 //! Remove client from the list to call back.
