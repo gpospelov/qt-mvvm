@@ -16,6 +16,7 @@ add_subdirectory(utils)
 add_subdirectory(viewmodel)
 add_subdirectory(widgets)
 add_subdirectory(plotting)
+add_subdirectory(signals)
 
 target_link_libraries(${library_name} PUBLIC Qt5::Widgets PRIVATE qcustomplot)
 

@@ -1,7 +1,6 @@
 set(library_name mvvm)
 
 target_sources(${library_name} PRIVATE
-    callbackcontainer.h
     comboproperty.cpp
     comboproperty.h
     comparators.cpp
@@ -23,14 +22,10 @@ target_sources(${library_name} PRIVATE
     itemfactoryinterface.h
     itemmanager.cpp
     itemmanager.h
-    itemmapper.cpp
-    itemmapper.h
     itempool.cpp
     itempool.h
     itemutils.cpp
     itemutils.h
-    modelmapper.cpp
-    modelmapper.h
     modelutils.cpp
     modelutils.h
     mvvm_export.h
