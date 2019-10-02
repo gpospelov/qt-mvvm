@@ -13,6 +13,7 @@
 #include "graphitem.h"
 #include "graphplotcontroller.h"
 #include "graphviewportitem.h"
+#include <qcustomplot.h>
 #include <list>
 
 using namespace ModelView;
@@ -77,6 +78,7 @@ struct GraphViewportPlotController::GraphViewportPlotControllerPrivate {
         auto controller = std::make_unique<GraphPlotController>(custom_plot);
         controller->setItem(added_child);
         graph_controllers.push_back(std::move(controller));
+        custom_plot->replot();
     }
 
     //! Remove GraphPlotController corresponding to GraphItem.
@@ -88,6 +90,7 @@ struct GraphViewportPlotController::GraphViewportPlotControllerPrivate {
             return cntrl->currentItem() == child_about_to_be_removed;
         };
         graph_controllers.remove_if(if_func);
+        custom_plot->replot();
     }
 };
 
