@@ -16,7 +16,8 @@ using namespace ModelView;
 struct Data1DPlotController::Data1DPlotControllerPrivate {
     QCPGraph* m_graph{nullptr};
     Data1DPlotControllerPrivate(QCPGraph* graph) : m_graph(graph) {
-
+        if (!m_graph)
+            throw std::runtime_error("Uninitialised graph in Data1DPlotController");
     }
 
     void update_graph_points(Data1DPlotController* controller) {
@@ -39,6 +40,11 @@ struct Data1DPlotController::Data1DPlotControllerPrivate {
 Data1DPlotController::Data1DPlotController(QCPGraph* graph)
     : p_impl(std::make_unique<Data1DPlotControllerPrivate>(graph))
 {
+}
+
+void Data1DPlotController::update_data_points()
+{
+    p_impl->update_graph_points(this);
 }
 
 Data1DPlotController::~Data1DPlotController() = default;

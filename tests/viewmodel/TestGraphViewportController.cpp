@@ -142,3 +142,31 @@ TEST_F(TestGraphViewportPlotController, addAndRemoveGraphs)
 }
 
 
+//! Checks consequitive graph adding/removal
+
+TEST_F(TestGraphViewportPlotController, addMoreGraphs)
+{
+    auto custom_plot = std::make_unique<QCustomPlot>();
+    GraphViewportPlotController controller(custom_plot.get());
+
+    // setting up controller with viewport item
+    SessionModel model;
+    auto viewport_item = dynamic_cast<GraphViewportItem*>(model.insertNewItem(Constants::GraphViewportItemType));
+    controller.setItem(viewport_item);
+
+    // No graphs yet.
+    EXPECT_EQ(custom_plot->graphCount(), 0);
+
+    // adding graph item to viewport
+//    auto graph_item1 = dynamic_cast<GraphItem*>(model.insertNewItem(Constants::GraphItemType, viewport_item, "", 1));
+//    EXPECT_EQ(custom_plot->graphCount(), 1);
+
+//    auto graph_item2 = dynamic_cast<GraphItem*>(model.insertNewItem(Constants::GraphItemType, viewport_item, "", 2));
+//    EXPECT_EQ(custom_plot->graphCount(), 2);
+
+//    auto graph_item3 = dynamic_cast<GraphItem*>(model.insertNewItem(Constants::GraphItemType, viewport_item, "", 0));
+//    EXPECT_EQ(custom_plot->graphCount(), 3);
+}
+
+
+

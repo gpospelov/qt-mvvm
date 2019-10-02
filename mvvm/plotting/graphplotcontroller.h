@@ -33,6 +33,9 @@ public:
     explicit GraphPlotController(QCustomPlot* plot);
     ~GraphPlotController() override;
 
+    GraphPlotController& operator=(const GraphPlotController& other) = delete;
+    GraphPlotController(const GraphPlotController& other) = delete;
+
 protected:
     void subscribe() override;
     void unsubscribe() override;
