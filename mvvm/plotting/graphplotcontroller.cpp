@@ -60,7 +60,8 @@ struct GraphPlotController::GraphItemControllerPrivate {
     }
 
     void create_data_controller() {
-        data_controller = std::make_unique<Data1DPlotController>(graph);
+        if (!data_controller)
+            data_controller = std::make_unique<Data1DPlotController>(graph);
         data_controller->setItem(graph_item()->dataItem());
     }
 

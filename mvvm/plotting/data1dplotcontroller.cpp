@@ -21,17 +21,15 @@ struct Data1DPlotController::Data1DPlotControllerPrivate {
     }
 
     void update_graph_points(Data1DPlotController* controller) {
-        if(!m_graph)
-                return;
-        auto graph_item = controller->currentItem();
-        m_graph->setData(QVector<double>::fromStdVector(graph_item->binCenters()),
-                       QVector<double>::fromStdVector(graph_item->binValues()));
+        auto data_item = controller->currentItem();
+        if (data_item) {
+            m_graph->setData(QVector<double>::fromStdVector(data_item->binCenters()),
+                        QVector<double>::fromStdVector(data_item->binValues()));
 
+        }
     }
 
     void reset_graph() {
-        if(!m_graph)
-                return;
         m_graph->setData(QVector<double>{}, QVector<double>{});
     }
 
