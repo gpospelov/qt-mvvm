@@ -13,21 +13,20 @@
 #include "graphitem.h"
 #include "graphplotcontroller.h"
 #include "graphviewportitem.h"
-#include <cassert>
+#include <list>
 
 using namespace ModelView;
 
 struct GraphViewportPlotController::GraphViewportPlotControllerPrivate {
     GraphViewportPlotController* master{nullptr};
     QCustomPlot* custom_plot{nullptr};
-    std::vector<std::unique_ptr<GraphPlotController>> graph_controllers;
+    std::list<std::unique_ptr<GraphPlotController>> graph_controllers;
     std::unique_ptr<AxisPlotController> xAxisController;
     std::unique_ptr<AxisPlotController> yAxisController;
 
     GraphViewportPlotControllerPrivate(GraphViewportPlotController* master, QCustomPlot* plot)
         : master(master), custom_plot(plot)
     {
-        graph_controllers.reserve(100);
     }
 
     GraphViewportItem* viewport_item() { return master->currentItem(); }
@@ -69,10 +68,9 @@ struct GraphViewportPlotController::GraphViewportPlotControllerPrivate {
     //! Adds controller for item.
     void add_controller_for_item(SessionItem* parent, const std::string& tag, int row)
     {
-        assert(master->currentItem() == parent);
         auto added_child = dynamic_cast<GraphItem*>(parent->getItem(tag, row));
 
-        for(auto& controller : graph_controllers)
+        for (auto& controller : graph_controllers)
             if (controller->currentItem() == added_child)
                 throw std::runtime_error("Attempt to create second controller");
 
@@ -89,11 +87,8 @@ struct GraphViewportPlotController::GraphViewportPlotControllerPrivate {
         auto if_func = [&](const std::unique_ptr<GraphPlotController>& cntrl) -> bool {
             return cntrl->currentItem() == child_about_to_be_removed;
         };
-        graph_controllers.erase(
-            std::remove_if(graph_controllers.begin(), graph_controllers.end(), if_func),
-            graph_controllers.end());
+        graph_controllers.remove_if(if_func);
     }
-
 };
 
 GraphViewportPlotController::GraphViewportPlotController(QCustomPlot* custom_plot)
