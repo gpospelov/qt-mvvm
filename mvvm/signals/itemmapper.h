@@ -59,12 +59,12 @@ private:
     void callOnRowInserted(SessionItem* parent, std::string tag, int row);
     void callOnRowAboutToBeRemoved(SessionItem* parent, std::string tag, int row);
 
-    CallbackContainer<Callbacks::item_t> m_on_item_destroy;
-    CallbackContainer<Callbacks::item_int_t> m_on_data_change;
-    CallbackContainer<Callbacks::item_str_t> m_on_property_change;
-    CallbackContainer<Callbacks::item_str_t> m_on_child_property_change;
-    CallbackContainer<Callbacks::item_str_int_t> m_on_row_inserted;
-    CallbackContainer<Callbacks::item_str_int_t> m_on_row_about_removed;
+    Signal<Callbacks::item_t> m_on_item_destroy;
+    Signal<Callbacks::item_int_t> m_on_data_change;
+    Signal<Callbacks::item_str_t> m_on_property_change;
+    Signal<Callbacks::item_str_t> m_on_child_property_change;
+    Signal<Callbacks::item_str_int_t> m_on_row_inserted;
+    Signal<Callbacks::item_str_int_t> m_on_row_about_removed;
 
     bool m_active;
     SessionItem* m_item;

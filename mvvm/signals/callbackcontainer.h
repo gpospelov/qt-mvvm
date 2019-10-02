@@ -24,10 +24,10 @@ class SessionModel;
 
 //! Container to hold callbacks in the context of ModelMapper.
 
-template <typename T, typename U> class CallbackBaseContainer
+template <typename T, typename U> class SignalBase
 {
 public:
-    CallbackBaseContainer() = default;
+    SignalBase() = default;
 
     void connect(T callback, U client);
 
@@ -39,7 +39,7 @@ private:
     std::vector<std::pair<T, U>> m_callbacks;
 };
 
-template <typename T, typename U> void CallbackBaseContainer<T, U>::connect(T callback, U client)
+template <typename T, typename U> void SignalBase<T, U>::connect(T callback, U client)
 {
     m_callbacks.push_back(std::make_pair(callback, client));
 }
@@ -48,7 +48,7 @@ template <typename T, typename U> void CallbackBaseContainer<T, U>::connect(T ca
 //! Notify clients using given list of arguments.
 template <typename T, typename U>
 template <typename... Args>
-void CallbackBaseContainer<T, U>::operator()(Args... args)
+void SignalBase<T, U>::operator()(Args... args)
 {
     for (const auto& f : m_callbacks) {
         f.first(args...);
@@ -57,7 +57,7 @@ void CallbackBaseContainer<T, U>::operator()(Args... args)
 
 //! Remove client from the list to call back.
 
-template <typename T, typename U> void CallbackBaseContainer<T, U>::remove_client(U client)
+template <typename T, typename U> void SignalBase<T, U>::remove_client(U client)
 {
     m_callbacks.erase(std::remove_if(m_callbacks.begin(), m_callbacks.end(),
                                      [client](const std::pair<T, U>& x) -> bool {
@@ -68,7 +68,7 @@ template <typename T, typename U> void CallbackBaseContainer<T, U>::remove_clien
 
 //! Callback container for specific client type.
 
-template <typename T> class CallbackContainer : public CallbackBaseContainer<T, Callbacks::slot_t>
+template <typename T> class Signal : public SignalBase<T, Callbacks::slot_t>
 {
 };
 
