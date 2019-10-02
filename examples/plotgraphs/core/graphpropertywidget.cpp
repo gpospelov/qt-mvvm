@@ -17,7 +17,7 @@
 using namespace ModelView;
 
 GraphPropertyWidget::GraphPropertyWidget(GraphModel* model, QWidget* parent) : QWidget(parent),
-    m_treeView(new ItemsTreeView)
+    m_treeView(new ItemsTreeView), m_model(model)
 {
     auto mainLayout = new QVBoxLayout;
 
@@ -33,12 +33,9 @@ void GraphPropertyWidget::setModel(GraphModel* model)
     if (!model)
         return;
 
+    m_model = model;
+
     m_treeView->setViewModel(Utils::CreateDefaultViewModel(model));
-}
-
-void GraphPropertyWidget::onRunMeasurement()
-{
-
 }
 
 QBoxLayout* GraphPropertyWidget::create_button_layout()
@@ -46,9 +43,14 @@ QBoxLayout* GraphPropertyWidget::create_button_layout()
     auto result = new QHBoxLayout;
     result->setContentsMargins(0, 0, 0, 0);
 
-    auto button = new QPushButton("Start measurements");
-    button->setToolTip("Mimick signal measurements");
-    connect(button, &QPushButton::clicked, this, &GraphPropertyWidget::onRunMeasurement);
+    auto button = new QPushButton("Randomize");
+    button->setToolTip("Randomize data");
+
+    auto on_randomize_data = [this]() {
+        if (m_model)
+            m_model->randomize_graphs();
+    };
+    connect(button, &QPushButton::clicked, on_randomize_data);
     result->addWidget(button);
 
     return result;

@@ -35,12 +35,10 @@ public:
 
     void setModel(GraphModel* model);
 
-private slots:
-    void onRunMeasurement();
-
 private:
     QBoxLayout* create_button_layout();
     ModelView::ItemsTreeView* m_treeView;
+    GraphModel* m_model;
 };
 
 #endif // GRAPHPROPERTYWIDGET_H
