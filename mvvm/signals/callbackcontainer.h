@@ -10,11 +10,11 @@
 #ifndef MVVM_CALLBACKCONTAINER_H
 #define MVVM_CALLBACKCONTAINER_H
 
+#include "callback_types.h"
 #include "mvvm_export.h"
-#include "mvvm_types.h"
 #include <algorithm>
 #include <functional>
-#include <vector>
+#include <list>
 
 namespace ModelView
 {
@@ -24,31 +24,30 @@ class SessionModel;
 
 //! Container to hold callbacks in the context of ModelMapper.
 
-template <typename T, typename U> class CallbackBaseContainer
+template <typename T, typename U> class SignalBase
 {
 public:
-    CallbackBaseContainer() = default;
+    SignalBase() = default;
 
-    void add(T callback, U client);
+    void connect(T callback, U client);
 
-    template <typename... Args> void notify(Args... args);
+    template <typename... Args> void operator()(Args... args);
 
     void remove_client(U client);
 
 private:
-    std::vector<std::pair<T, U>> m_callbacks;
+    std::list<std::pair<T, U>> m_callbacks;
 };
 
-template <typename T, typename U> void CallbackBaseContainer<T, U>::add(T callback, U client)
+template <typename T, typename U> void SignalBase<T, U>::connect(T callback, U client)
 {
     m_callbacks.push_back(std::make_pair(callback, client));
 }
 
-
 //! Notify clients using given list of arguments.
 template <typename T, typename U>
 template <typename... Args>
-void CallbackBaseContainer<T, U>::notify(Args... args)
+void SignalBase<T, U>::operator()(Args... args)
 {
     for (const auto& f : m_callbacks) {
         f.first(args...);
@@ -57,21 +56,18 @@ void CallbackBaseContainer<T, U>::notify(Args... args)
 
 //! Remove client from the list to call back.
 
-template <typename T, typename U> void CallbackBaseContainer<T, U>::remove_client(U client)
+template <typename T, typename U> void SignalBase<T, U>::remove_client(U client)
 {
-    m_callbacks.erase(std::remove_if(m_callbacks.begin(), m_callbacks.end(),
-                                     [client](const std::pair<T, U>& x) -> bool {
-                                         return (x.second == client ? true : false);
-                                     }),
-                      m_callbacks.end());
+    m_callbacks.remove_if(
+        [client](const std::pair<T, U>& x) -> bool { return (x.second == client ? true : false); });
 }
 
 //! Callback container for specific client type.
 
-template <typename T> class CallbackContainer : public CallbackBaseContainer<T, Callbacks::client_t>
+template <typename T> class Signal : public SignalBase<T, Callbacks::slot_t>
 {
 };
 
-} // ModelView
+} // namespace ModelView
 
 #endif // MVVM_CALLBACKCONTAINER_H

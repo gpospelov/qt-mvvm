@@ -23,23 +23,23 @@ TestCallbackContainer::~TestCallbackContainer() = default;
 TEST_F(TestCallbackContainer, singleWidget)
 {
     CallbackMockWidget widget;
-    CallbackContainer<Callbacks::item_t> container;
+    Signal<Callbacks::item_t> signal;
 
-    container.add(std::bind(&CallbackMockWidget::onItemDestroy, &widget, std::placeholders::_1),
+    signal.connect(std::bind(&CallbackMockWidget::onItemDestroy, &widget, std::placeholders::_1),
                   &widget);
 
     std::unique_ptr<SessionItem> item(new SessionItem);
     EXPECT_CALL(widget, onItemDestroy(item.get())).Times(1);
 
     // perform action
-    container.notify(item.get());
+    signal(item.get());
 
     // removing client
-    container.remove_client(&widget);
+    signal.remove_client(&widget);
     EXPECT_CALL(widget, onItemDestroy(_)).Times(0);
 
     // perform action
-    container.notify(item.get());
+    signal(item.get());
 }
 
 //! Callback container notifies two widgets. Check if one widget is removed,
@@ -48,13 +48,13 @@ TEST_F(TestCallbackContainer, singleWidget)
 TEST_F(TestCallbackContainer, twoWidgets)
 {
     CallbackMockWidget widget1, widget2;
-    CallbackContainer<Callbacks::item_t> container;
+    Signal<Callbacks::item_t> signal;
 
-    container.add([&](SessionItem* item){
+    signal.connect([&](SessionItem* item){
         widget1.onItemDestroy(item);
     }, &widget1);
 
-    container.add([&](SessionItem* item){
+    signal.connect([&](SessionItem* item){
         widget2.onItemDestroy(item);
     }, &widget2);
 
@@ -63,15 +63,15 @@ TEST_F(TestCallbackContainer, twoWidgets)
     EXPECT_CALL(widget2, onItemDestroy(item.get())).Times(1);
 
     // perform action
-    container.notify(item.get());
+    signal(item.get());
 
     // removing one of client
-    container.remove_client(&widget1);
+    signal.remove_client(&widget1);
     EXPECT_CALL(widget1, onItemDestroy(_)).Times(0);
     EXPECT_CALL(widget2, onItemDestroy(item.get())).Times(1);
 
     // perform action
-    container.notify(item.get());
+    signal(item.get());
 }
 
 //! Callback function with two parameters.
@@ -79,13 +79,13 @@ TEST_F(TestCallbackContainer, twoWidgets)
 TEST_F(TestCallbackContainer, twoParameters)
 {
     CallbackMockWidget widget1, widget2;
-    CallbackContainer<Callbacks::item_int_t> container;
+    Signal<Callbacks::item_int_t> signal;
 
-    container.add([&](SessionItem* item, int role){
+    signal.connect([&](SessionItem* item, int role){
         widget1.onDataChange(item, role);
     }, &widget1);
 
-    container.add([&](SessionItem* item, int role){
+    signal.connect([&](SessionItem* item, int role){
         widget2.onDataChange(item, role);
     }, &widget2);
 
@@ -95,13 +95,13 @@ TEST_F(TestCallbackContainer, twoParameters)
     EXPECT_CALL(widget2, onDataChange(item.get(), expected_role)).Times(1);
 
     // perform action
-    container.notify(item.get(), expected_role);
+    signal(item.get(), expected_role);
 
     // removing one of client
-    container.remove_client(&widget1);
+    signal.remove_client(&widget1);
     EXPECT_CALL(widget1, onDataChange(_, _)).Times(0);
     EXPECT_CALL(widget2, onDataChange(item.get(), expected_role)).Times(1);
 
     // perform action
-    container.notify(item.get(), expected_role);
+    signal(item.get(), expected_role);
 }

@@ -34,7 +34,8 @@ public:
 
     void remove_graph();
 
-    void update_graphs();
+    void randomize_graphs();
+
 
 private:
     ModelView::GraphViewportItem* viewport();

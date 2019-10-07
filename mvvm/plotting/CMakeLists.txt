@@ -7,8 +7,6 @@ target_sources(${library_name} PRIVATE
     graphcanvas.cpp
     graphplotcontroller.h
     graphplotcontroller.cpp
-    itemcontroller.h
-    itemcontroller.cpp
     data1dplotcontroller.h
     data1dplotcontroller.cpp
     graphviewportplotcontroller.h

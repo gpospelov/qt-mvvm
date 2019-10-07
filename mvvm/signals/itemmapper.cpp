@@ -42,26 +42,26 @@ void ItemMapper::setModel(SessionModel* model)
         subscribe_to_model();
 }
 
-void ItemMapper::setOnItemDestroy(Callbacks::item_t f, Callbacks::client_t client)
+void ItemMapper::setOnItemDestroy(Callbacks::item_t f, Callbacks::slot_t owner)
 {
-    m_on_item_destroy.add(std::move(f), client);
+    m_on_item_destroy.connect(std::move(f), owner);
 }
 
 //! Sets callback to be notified on item's data change.
 //! Callback will be called with (SessionItem*, data_role).
 
-void ItemMapper::setOnDataChange(Callbacks::item_int_t f, Callbacks::client_t client)
+void ItemMapper::setOnDataChange(Callbacks::item_int_t f, Callbacks::slot_t owner)
 {
-    m_on_data_change.add(std::move(f), client);
+    m_on_data_change.connect(std::move(f), owner);
 }
 
 //! Sets callback to be notified on item's property change.
 //!
 //! Callback will be called with (compound_item, property_name).
 
-void ItemMapper::setOnPropertyChange(Callbacks::item_str_t f, Callbacks::client_t client)
+void ItemMapper::setOnPropertyChange(Callbacks::item_str_t f, Callbacks::slot_t owner)
 {
-    m_on_property_change.add(std::move(f), client);
+    m_on_property_change.connect(std::move(f), owner);
 }
 
 /*!
@@ -72,9 +72,9 @@ layer with "thickness" property, the signal will be triggered on thickness chang
 (layeritem*, "thickness") as callback parameters.
 */
 
-void ItemMapper::setOnChildPropertyChange(Callbacks::item_str_t f, Callbacks::client_t client)
+void ItemMapper::setOnChildPropertyChange(Callbacks::item_str_t f, Callbacks::slot_t owner)
 {
-    m_on_child_property_change.add(std::move(f), client);
+    m_on_child_property_change.connect(std::move(f), owner);
 }
 
 /*!
@@ -85,9 +85,9 @@ tag, the signal will be triggered on layer insertion with
 (multilayer*, T_LAYER, row) as callback parameters.
 */
 
-void ItemMapper::setOnRowInserted(Callbacks::item_str_int_t f, Callbacks::client_t client)
+void ItemMapper::setOnRowInserted(Callbacks::item_str_int_t f, Callbacks::slot_t owner)
 {
-    m_on_row_inserted.add(std::move(f), client);
+    m_on_row_inserted.connect(std::move(f), owner);
 }
 
 /*!
@@ -98,9 +98,9 @@ tag, the signal will be triggered on layer deletion with
 (multilayer*, T_LAYER, row) as callback parameters.
 */
 
-void ItemMapper::setOnRowAboutToBeRemoved(Callbacks::item_str_int_t f, Callbacks::client_t client)
+void ItemMapper::setOnRowAboutToBeRemoved(Callbacks::item_str_int_t f, Callbacks::slot_t owner)
 {
-    m_on_row_about_removed.add(std::move(f), client);
+    m_on_row_about_removed.connect(std::move(f), owner);
 }
 
 //! Sets activity flag to given value. Will disable all callbacks if false.
@@ -110,7 +110,7 @@ void ItemMapper::setActive(bool value)
     m_active = value;
 }
 
-void ItemMapper::unsubscribe(Callbacks::client_t client)
+void ItemMapper::unsubscribe(Callbacks::slot_t client)
 {
     m_on_item_destroy.remove_client(client);
     m_on_data_change.remove_client(client);
@@ -192,7 +192,7 @@ int ItemMapper::nestlingDepth(SessionItem* item, int level)
 void ItemMapper::callOnItemDestroy()
 {
     if (m_active)
-        m_on_item_destroy.notify(m_item);
+        m_on_item_destroy(m_item);
 }
 
 //! Notifies all callbacks subscribed to "item data is changed" event.
@@ -200,7 +200,7 @@ void ItemMapper::callOnItemDestroy()
 void ItemMapper::callOnDataChange(SessionItem* item, int role)
 {
     if (m_active)
-        m_on_data_change.notify(item, role);
+        m_on_data_change(item, role);
 }
 
 //! Notifies all callbacks subscribed to "item property is changed" event.
@@ -208,7 +208,7 @@ void ItemMapper::callOnDataChange(SessionItem* item, int role)
 void ItemMapper::callOnPropertyChange(SessionItem* item, std::string property_name)
 {
     if (m_active)
-        m_on_property_change.notify(item, property_name);
+        m_on_property_change(item, property_name);
 }
 
 //! Notifies all callbacks subscribed to "child property changed" event.
@@ -216,7 +216,7 @@ void ItemMapper::callOnPropertyChange(SessionItem* item, std::string property_na
 void ItemMapper::callOnChildPropertyChange(SessionItem* item, std::string property_name)
 {
     if (m_active)
-        m_on_child_property_change.notify(item, property_name);
+        m_on_child_property_change(item, property_name);
 }
 
 //! Notifies all callbacks subscribed to "on row inserted" event.
@@ -224,7 +224,7 @@ void ItemMapper::callOnChildPropertyChange(SessionItem* item, std::string proper
 void ItemMapper::callOnRowInserted(SessionItem* parent, std::string tag, int row)
 {
     if (m_active)
-        m_on_row_inserted.notify(parent, tag, row);
+        m_on_row_inserted(parent, tag, row);
 }
 
 //! Notifies all callbacks subscribed to "on row about to be removed".
@@ -232,6 +232,6 @@ void ItemMapper::callOnRowInserted(SessionItem* parent, std::string tag, int row
 void ItemMapper::callOnRowAboutToBeRemoved(SessionItem* parent, std::string tag, int row)
 {
     if (m_active)
-        m_on_row_about_removed.notify(parent, tag, row);
+        m_on_row_about_removed(parent, tag, row);
 }
 

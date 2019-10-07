@@ -33,16 +33,16 @@ public:
 
     void setModel(SessionModel* model);
 
-    void setOnItemDestroy(Callbacks::item_t f, Callbacks::client_t client);
-    void setOnDataChange(Callbacks::item_int_t f, Callbacks::client_t client);
-    void setOnPropertyChange(Callbacks::item_str_t f, Callbacks::client_t client);
-    void setOnChildPropertyChange(Callbacks::item_str_t f, Callbacks::client_t client);
-    void setOnRowInserted(Callbacks::item_str_int_t f, Callbacks::client_t client);
-    void setOnRowAboutToBeRemoved(Callbacks::item_str_int_t f, Callbacks::client_t client);
+    void setOnItemDestroy(Callbacks::item_t f, Callbacks::slot_t owner);
+    void setOnDataChange(Callbacks::item_int_t f, Callbacks::slot_t owner);
+    void setOnPropertyChange(Callbacks::item_str_t f, Callbacks::slot_t owner);
+    void setOnChildPropertyChange(Callbacks::item_str_t f, Callbacks::slot_t owner);
+    void setOnRowInserted(Callbacks::item_str_int_t f, Callbacks::slot_t owner);
+    void setOnRowAboutToBeRemoved(Callbacks::item_str_int_t f, Callbacks::slot_t owner);
 
     void setActive(bool value);
 
-    void unsubscribe(Callbacks::client_t client);
+    void unsubscribe(Callbacks::slot_t client);
 
 private:
     void onModelDataChange(SessionItem* item, int role);
@@ -59,12 +59,12 @@ private:
     void callOnRowInserted(SessionItem* parent, std::string tag, int row);
     void callOnRowAboutToBeRemoved(SessionItem* parent, std::string tag, int row);
 
-    CallbackContainer<Callbacks::item_t> m_on_item_destroy;
-    CallbackContainer<Callbacks::item_int_t> m_on_data_change;
-    CallbackContainer<Callbacks::item_str_t> m_on_property_change;
-    CallbackContainer<Callbacks::item_str_t> m_on_child_property_change;
-    CallbackContainer<Callbacks::item_str_int_t> m_on_row_inserted;
-    CallbackContainer<Callbacks::item_str_int_t> m_on_row_about_removed;
+    Signal<Callbacks::item_t> m_on_item_destroy;
+    Signal<Callbacks::item_int_t> m_on_data_change;
+    Signal<Callbacks::item_str_t> m_on_property_change;
+    Signal<Callbacks::item_str_t> m_on_child_property_change;
+    Signal<Callbacks::item_str_int_t> m_on_row_inserted;
+    Signal<Callbacks::item_str_int_t> m_on_row_about_removed;
 
     bool m_active;
     SessionItem* m_item;

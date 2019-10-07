@@ -18,48 +18,48 @@ ModelMapper::ModelMapper(SessionModel* item) : m_active(true), m_model(item) {}
 //! Sets callback to be notified on item's data change.
 //! Callback will be called with (SessionItem*, data_role).
 
-void ModelMapper::setOnDataChange(Callbacks::item_int_t f, Callbacks::client_t client)
+void ModelMapper::setOnDataChange(Callbacks::item_int_t f, Callbacks::slot_t owner)
 {
-    m_on_data_change.add(std::move(f), client);
+    m_on_data_change.connect(std::move(f), owner);
 }
 
 //! Sets callback to be notified on item insert.
 //! Callback will be called with (SessionItem* parent, tag, row), where tag,row corresponds
 //! to inserted child.
 
-void ModelMapper::setOnRowInserted(Callbacks::item_str_int_t f, Callbacks::client_t client)
+void ModelMapper::setOnRowInserted(Callbacks::item_str_int_t f, Callbacks::slot_t owner)
 {
-    m_on_row_inserted.add(std::move(f), client);
+    m_on_row_inserted.connect(std::move(f), owner);
 }
 
 //! Sets callback to be notified on removed row.
 //! Callback will be called with (SessionItem* parent, tag, row), where tag,row corresponds
 //! to removed child.
 
-void ModelMapper::setOnRowRemoved(Callbacks::item_str_int_t f, Callbacks::client_t client)
+void ModelMapper::setOnRowRemoved(Callbacks::item_str_int_t f, Callbacks::slot_t owner)
 {
-    m_on_row_removed.add(std::move(f), client);
+    m_on_row_removed.connect(std::move(f), owner);
 }
 
 //! Sets callback to be notified when row is about to be removed.
 //! Callback will be called with (SessionItem* parent, tag, row), where tag,row corresponds
 //! to the child which going to be removed.
 
-void ModelMapper::setOnRowAboutToBeRemoved(Callbacks::item_str_int_t f, Callbacks::client_t client)
+void ModelMapper::setOnRowAboutToBeRemoved(Callbacks::item_str_int_t f, Callbacks::slot_t owner)
 {
-    m_on_row_about_removed.add(std::move(f), client);
+    m_on_row_about_removed.connect(std::move(f), owner);
 }
 
 //! Sets the callback for notifications on model destruction.
 
-void ModelMapper::setOnModelDestroyed(Callbacks::model_t f, Callbacks::client_t client)
+void ModelMapper::setOnModelDestroyed(Callbacks::model_t f, Callbacks::slot_t owner)
 {
-    m_on_model_destroyed.add(std::move(f), client);
+    m_on_model_destroyed.connect(std::move(f), owner);
 }
 
-void ModelMapper::setOnModelReset(Callbacks::model_t f, Callbacks::client_t client)
+void ModelMapper::setOnModelReset(Callbacks::model_t f, Callbacks::slot_t owner)
 {
-    m_on_model_reset.add(std::move(f), client);
+    m_on_model_reset.connect(std::move(f), owner);
 }
 
 //! Sets activity flag to given value. Will disable all callbacks if false.
@@ -71,7 +71,7 @@ void ModelMapper::setActive(bool value)
 
 //! Removes given client from all subscriptions.
 
-void ModelMapper::unsubscribe(Callbacks::client_t client)
+void ModelMapper::unsubscribe(Callbacks::slot_t client)
 {
     m_on_data_change.remove_client(client);
     m_on_row_inserted.remove_client(client);
@@ -86,7 +86,7 @@ void ModelMapper::unsubscribe(Callbacks::client_t client)
 void ModelMapper::callOnDataChange(SessionItem* item, int role)
 {
     if (m_active)
-        m_on_data_change.notify(item, role);
+        m_on_data_change(item, role);
 }
 
 //! Notifies all callbacks subscribed to "item data is changed" event.
@@ -94,27 +94,27 @@ void ModelMapper::callOnDataChange(SessionItem* item, int role)
 void ModelMapper::callOnRowInserted(SessionItem* parent, std::string tag, int row)
 {
     if (m_active)
-        m_on_row_inserted.notify(parent, tag, row);
+        m_on_row_inserted(parent, tag, row);
 }
 
 void ModelMapper::callOnRowRemoved(SessionItem* parent, std::string tag, int row)
 {
     if (m_active)
-        m_on_row_removed.notify(parent, tag, row);
+        m_on_row_removed(parent, tag, row);
 }
 
 void ModelMapper::callOnRowAboutToBeRemoved(SessionItem* parent, std::string tag, int row)
 {
     if (m_active)
-        m_on_row_about_removed.notify(parent, tag, row);
+        m_on_row_about_removed(parent, tag, row);
 }
 
 void ModelMapper::callOnModelDestroyed()
 {
-    m_on_model_destroyed.notify(m_model);
+    m_on_model_destroyed(m_model);
 }
 
 void ModelMapper::callOnModelReset()
 {
-    m_on_model_reset.notify(m_model);
+    m_on_model_reset(m_model);
 }

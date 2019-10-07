@@ -85,6 +85,17 @@ void GraphModel::remove_graph()
         removeItem(data_container(), "", data_count - 1);
 }
 
+//! Put random noise to graph.
+
+void GraphModel::randomize_graphs()
+{
+    for (auto item : data_container()->items<Data1DItem>(ContainerItem::T_ITEMS)) {
+        auto values = item->binValues();
+        std::transform(std::begin(values), std::end(values), std::begin(values), [](auto x) { return x*ModelView::Utils::RandDouble(0.8, 1.2);});
+        item->setContent(values);
+    }
+}
+
 //! Returns viewport item containig graph items.
 
 GraphViewportItem* GraphModel::viewport()

@@ -25,12 +25,13 @@ struct Data1DPlotController::Data1DPlotControllerPrivate {
         if (data_item) {
             m_graph->setData(QVector<double>::fromStdVector(data_item->binCenters()),
                         QVector<double>::fromStdVector(data_item->binValues()));
-
+            m_graph->parentPlot()->replot();
         }
     }
 
     void reset_graph() {
         m_graph->setData(QVector<double>{}, QVector<double>{});
+        m_graph->parentPlot()->replot();
     }
 
 };
