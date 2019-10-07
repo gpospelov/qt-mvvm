@@ -47,6 +47,9 @@ public:
     SessionItem* insertNewItem(const model_type& modelType, SessionItem* parent = nullptr,
                                const std::string& tag = {}, int row = -1);
 
+    template<typename T>
+    T* insertItem(SessionItem* parent = nullptr, const std::string& tag = {}, int row = -1);
+
     SessionItem* copyItem(const SessionItem* item, SessionItem* parent, const std::string& tag = {}, int row = -1);
 
     SessionItem* rootItem() const;
@@ -92,6 +95,13 @@ private:
     std::unique_ptr<ModelMapper> m_mapper;
     std::unique_ptr<SessionItem> m_root_item;
 };
+
+template<typename T>
+T* SessionModel::insertItem(SessionItem* parent, const std::string& tag, int row)
+{
+    T x;
+    return dynamic_cast<T*>(insertNewItem(x.modelType(), parent, tag, row));
+}
 
 } // namespace ModelView
 
