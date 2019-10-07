@@ -24,6 +24,8 @@ class IView : public QGraphicsObject
     Q_OBJECT
 public:
     enum { TYPE = DesignerHelper::IVIEW };
+    static constexpr qreal basic_width = 200.0;
+    static constexpr qreal basic_height = 30.0;
 
     IView(QGraphicsItem *parent = nullptr);
     ~IView() override;
