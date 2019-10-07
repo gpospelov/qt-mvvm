@@ -19,9 +19,12 @@ namespace {
 void setPortPositions(const QRectF frame, qreal x_pos, const QList<NodeEditorPort*>& nodes);
 }
 
-ConnectableView::ConnectableView(QGraphicsItem *parent, QRectF rect)
-    : IView(parent), m_color(Qt::gray), m_rect(rect), m_roundpar(3),
-      m_label_vspace(35)
+ConnectableView::ConnectableView(QGraphicsItem *parent, int view_type, QRectF rect)
+    : IView(parent, view_type)
+    , m_color(Qt::gray)
+    , m_rect(rect)
+    , m_roundpar(3)
+    , m_label_vspace(35)
 {
     setFlag(QGraphicsItem::ItemIsMovable, true);
     setFlag(QGraphicsItem::ItemIsSelectable, true);

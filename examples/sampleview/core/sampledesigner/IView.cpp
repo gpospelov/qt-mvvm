@@ -14,7 +14,10 @@
 
 using namespace ModelView;
 
-IView::IView(QGraphicsItem *parent) : QGraphicsObject(parent), m_item(nullptr)
+IView::IView(QGraphicsItem *parent, int view_type)
+    : QGraphicsObject(parent)
+    , m_item(nullptr)
+    , m_view_type(view_type)
 {
     connect(this, &IView::xChanged, this, &IView::onChangedX);
     connect(this, &IView::yChanged, this, &IView::onChangedY);

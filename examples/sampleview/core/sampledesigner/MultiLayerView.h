@@ -27,12 +27,8 @@ class MultiLayerView : public ILayerView
     Q_OBJECT
 
 public:
-    enum { TYPE = DesignerHelper::MULTILAYER };
-
     MultiLayerView(QGraphicsItem* parent = nullptr);
     ~MultiLayerView() override;
-
-    int type() const override { return TYPE; }
 
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
 

@@ -23,10 +23,8 @@ class ConnectableView : public IView
 {
     Q_OBJECT
 public:
-    enum { TYPE = DesignerHelper::ISAMPLE_RECT };
-    ConnectableView(QGraphicsItem* parent = nullptr, QRectF rect = QRectF(0, 0, 50, 50));
+    ConnectableView(QGraphicsItem* parent, int view_type, QRectF rect = QRectF(0, 0, 50, 50));
     ~ConnectableView() override;
-    int type() const override { return TYPE; }
 
     QRectF boundingRect() const override { return getRectangle(); }
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;

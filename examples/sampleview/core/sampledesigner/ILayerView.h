@@ -21,12 +21,8 @@ class ILayerView : public ConnectableView
     Q_OBJECT
 
 public:
-    ILayerView(QGraphicsItem *parent = nullptr);
+    ILayerView(QGraphicsItem* parent, int view_type);
     ~ILayerView() override ;
-
-    enum { TYPE = DesignerHelper::LAYER };
-
-    int type() const override { return TYPE; }
 
     QString getLabel() const override { return QString(); }
 

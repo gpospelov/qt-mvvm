@@ -34,7 +34,7 @@ qreal thicknessToHeight(double nm);
 using namespace ModelView;
 
 LayerView::LayerView(QGraphicsItem *parent)
-    : ILayerView(parent)
+    : ILayerView(parent, DesignerHelper::LAYER)
 {
     setColor(QColor(qrand() % 256, qrand() % 256, qrand() % 256) );
     setRectangle(defaultShape());

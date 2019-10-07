@@ -23,7 +23,8 @@ enum class MouseReleaseAction {NO_CHANGE, CHANGE_OWNER, CHANGE_POSITION, RELEASE
 int adjustInsertionRow(const ILayerView* child, const ILayerView* new_parent, int insertion_row);
 } // namespace
 
-ILayerView::ILayerView(QGraphicsItem *parent) : ConnectableView(parent)
+ILayerView::ILayerView(QGraphicsItem* parent, int view_type)
+    : ConnectableView(parent, view_type)
 {
     setFlag(QGraphicsItem::ItemIsMovable, true);
     setFlag(QGraphicsItem::ItemIsSelectable, true);

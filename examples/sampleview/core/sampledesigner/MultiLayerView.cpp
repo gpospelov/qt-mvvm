@@ -35,7 +35,7 @@ namespace {
 
 
 MultiLayerView::MultiLayerView(QGraphicsItem* parent)
-    : ILayerView(parent)
+    : ILayerView(parent, DesignerHelper::MULTILAYER)
 {
     setColor(QColor(Qt::blue));
 
