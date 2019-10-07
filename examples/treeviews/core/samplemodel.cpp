@@ -41,11 +41,11 @@ SampleModel::SampleModel() : SessionModel("SampleModel")
 
 void SampleModel::init_model()
 {
-    auto multi_layer = insertNewItem(::Constants::MultiLayerType);
-    auto layer = insertNewItem(::Constants::LayerType, multi_layer);
-    insertNewItem(::Constants::ParticleType, layer);
+    auto multi_layer = insertItem<MultiLayer>();
+    auto layer = insertItem<LayerItem>(multi_layer);
+    insertItem<ParticleItem>(layer);
 
-    insertNewItem(::Constants::LayerType, multi_layer);
+    insertItem<LayerItem>(multi_layer);
 
-    insertNewItem(::Constants::InterferenceType);
+    insertItem<InterferenceFunctionItem>();
 }

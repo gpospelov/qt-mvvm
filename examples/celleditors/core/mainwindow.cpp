@@ -11,6 +11,7 @@
 #include "item_constants.h"
 #include "modeleditorwidget.h"
 #include "samplemodel.h"
+#include "items.h"
 #include <QCoreApplication>
 #include <QSettings>
 #include <QTabWidget>
@@ -66,9 +67,9 @@ void MainWindow::init_application()
 void MainWindow::init_models()
 {
     // populating first model with content
-    m_model->insertNewItem(Constants::DemoPropertiesType);
-    m_model->insertNewItem(Constants::DemoPropertiesType);
-    m_model->insertNewItem(Constants::DemoPropertiesType);
+    m_model->insertItem<DemoPropertiesItem>();
+    m_model->insertItem<DemoPropertiesItem>();
+    m_model->insertItem<DemoPropertiesItem>();
 
     m_tabWidget->addTab(new ModelEditorWidget(m_model.get()), "Available properties");
     m_tabWidget->setCurrentIndex(m_tabWidget->count() - 1);

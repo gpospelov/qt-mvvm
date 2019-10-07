@@ -2,6 +2,7 @@
 #include "linkeditem.h"
 #include "sessionmodel.h"
 #include "itempool.h"
+#include "propertyitem.h"
 #include "MockWidgets.h"
 
 using namespace ModelView;
@@ -30,8 +31,8 @@ TEST_F(TestLinkedItem, initialState)
 TEST_F(TestLinkedItem, sameModelContext)
 {
     SessionModel model;
-    auto item = model.insertNewItem(Constants::PropertyType);
-    auto linked = dynamic_cast<LinkedItem*>(model.insertNewItem(Constants::LinkedType));
+    auto item = model.insertItem<PropertyItem>();
+    auto linked = model.insertItem<LinkedItem>();
 
     // no link by default
     EXPECT_EQ(linked->linkedItem(), nullptr);
@@ -53,8 +54,8 @@ TEST_F(TestLinkedItem, differentModelContext)
     SessionModel model1("TestModel1", pool);
     SessionModel model2("TestModel2", pool);
 
-    auto item = model1.insertNewItem(Constants::PropertyType);
-    auto linked = dynamic_cast<LinkedItem*>(model2.insertNewItem(Constants::LinkedType));
+    auto item = model1.insertItem<PropertyItem>();
+    auto linked = model2.insertItem<LinkedItem>();
 
     // no link by default
     EXPECT_EQ(linked->linkedItem(), nullptr);
@@ -71,8 +72,8 @@ TEST_F(TestLinkedItem, differentModelContext)
 TEST_F(TestLinkedItem, onSetLink)
 {
     SessionModel model;
-    auto item = model.insertNewItem(Constants::PropertyType);
-    auto linked = dynamic_cast<LinkedItem*>(model.insertNewItem(Constants::LinkedType));
+    auto item = model.insertItem<PropertyItem>();
+    auto linked = model.insertItem<LinkedItem>();
 
     // no link by default
     EXPECT_EQ(linked->linkedItem(), nullptr);
@@ -95,8 +96,8 @@ TEST_F(TestLinkedItem, setNullAsLink)
     auto pool = std::make_shared<ItemPool>();
 
     SessionModel model("TestModel", pool);
-    auto linked = dynamic_cast<LinkedItem*>(model.insertNewItem(Constants::LinkedType));
-    auto item = model.insertNewItem(Constants::PropertyType);
+    auto linked = model.insertItem<LinkedItem>();
+    auto item = model.insertItem<PropertyItem>();
 
     // no link by default
     EXPECT_EQ(linked->linkedItem(), nullptr);

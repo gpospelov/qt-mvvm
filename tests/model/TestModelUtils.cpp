@@ -21,8 +21,8 @@ TEST_F(TestModelUtils, topItem)
     EXPECT_EQ(Utils::TopItem<SessionItem>(&model), nullptr);
     EXPECT_EQ(Utils::TopItem<ToyItems::MultiLayerItem>(&model), nullptr);
 
-    auto multilayer1 = model.insertNewItem(ToyItems::Constants::MultiLayerType);
-    model.insertNewItem(ToyItems::Constants::MultiLayerType);
+    auto multilayer1 = model.insertItem<ToyItems::MultiLayerItem>();
+    model.insertItem<ToyItems::MultiLayerItem>();
 
     EXPECT_EQ(Utils::TopItem<>(&model), multilayer1);
     EXPECT_EQ(Utils::TopItem<SessionItem>(&model), multilayer1);
@@ -36,11 +36,9 @@ TEST_F(TestModelUtils, topItems)
     EXPECT_EQ(Utils::TopItems<SessionItem>(&model).size(), 0);
     EXPECT_EQ(Utils::TopItems<ToyItems::MultiLayerItem>(&model).size(), 0);
 
-    auto multilayer1 = dynamic_cast<ToyItems::MultiLayerItem*>(
-        model.insertNewItem(ToyItems::Constants::MultiLayerType));
-    auto particle = model.insertNewItem(ToyItems::Constants::ParticleType);
-    auto multilayer2 = dynamic_cast<ToyItems::MultiLayerItem*>(
-        model.insertNewItem(ToyItems::Constants::MultiLayerType));
+    auto multilayer1 = model.insertItem<ToyItems::MultiLayerItem>();
+    auto particle = model.insertItem<ToyItems::ParticleItem>();
+    auto multilayer2 = model.insertItem<ToyItems::MultiLayerItem>();
 
     std::vector<SessionItem*> expected1 = {multilayer1, particle, multilayer2};
     EXPECT_EQ(Utils::TopItems<SessionItem>(&model), expected1);

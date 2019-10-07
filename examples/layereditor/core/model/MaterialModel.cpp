@@ -77,16 +77,13 @@ ExternalProperty MaterialModel::material_property(const std::string& id)
 
 void MaterialModel::init_model()
 {
-    auto container = insertNewItem(::Constants::MaterialContainerType);
-    auto material =
-        dynamic_cast<SLDMaterialItem*>(insertNewItem(::Constants::SLDMaterialType, container));
+    auto container = insertItem<MaterialContainerItem>();
+    auto material = insertItem<SLDMaterialItem>(container);
     material->set_properties("Air", QColor(Qt::blue), 1e-06, 1e-07);
 
-    material =
-        dynamic_cast<SLDMaterialItem*>(insertNewItem(::Constants::SLDMaterialType, container));
+    material = insertItem<SLDMaterialItem>(container);
     material->set_properties("Au", QColor(Qt::yellow), 2.4e-06, 5.6e-07);
 
-    material =
-        dynamic_cast<SLDMaterialItem*>(insertNewItem(::Constants::SLDMaterialType, container));
+    material = insertItem<SLDMaterialItem>(container);
     material->set_properties("Si2O3", QColor(Qt::darkCyan), 3.4e-06, 3.6e-07);
 }
