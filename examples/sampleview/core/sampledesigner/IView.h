@@ -35,7 +35,7 @@ public:
     virtual void subscribe(ModelView::SessionItem* item);
     void unsubscribe();
 
-    ModelView::SessionItem* getItem() { return m_item; }
+    ModelView::SessionItem* getItem() const { return m_item; }
 
     virtual void addView(IView* childView) = 0;
 
