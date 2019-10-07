@@ -26,7 +26,7 @@ TEST(TestItemMapper, initialState)
 
     // item in model context does have a mapper
     SessionModel model;
-    auto item2 = model.insertNewItem(Constants::BaseType, model.rootItem(), "", 0);
+    auto item2 = model.insertItem<SessionItem>(model.rootItem(), "", 0);
     EXPECT_NO_THROW(item2->mapper());
 }
 
@@ -35,7 +35,7 @@ TEST(TestItemMapper, initialState)
 TEST(TestItemMapper, onItemDestroy)
 {
     SessionModel model;
-    auto item = model.insertNewItem(Constants::BaseType, model.rootItem(), "", 0);
+    auto item = model.insertItem<SessionItem>(model.rootItem(), "", 0);
 
     MockWidgetForItem widget(item);
 
@@ -56,7 +56,7 @@ TEST(TestItemMapper, onItemDestroy)
 TEST(TestItemMapper, onDataChange)
 {
     SessionModel model;
-    auto item = model.insertNewItem(Constants::BaseType, model.rootItem(), "", 0);
+    auto item = model.insertItem<SessionItem>(model.rootItem(), "", 0);
 
     MockWidgetForItem widget(item);
 
@@ -77,7 +77,7 @@ TEST(TestItemMapper, onDataChange)
 TEST(TestItemMapper, onDataChangeDuplicate)
 {
     SessionModel model;
-    auto item = model.insertNewItem(Constants::BaseType, model.rootItem(), "", 0);
+    auto item = model.insertItem<SessionItem>(model.rootItem(), "", 0);
 
     MockWidgetForItem widget(item);
 
@@ -98,7 +98,7 @@ TEST(TestItemMapper, onDataChangeDuplicate)
 TEST(TestItemMapper, setActivity)
 {
     SessionModel model;
-    auto item = model.insertNewItem(Constants::BaseType, model.rootItem(), "", 0);
+    auto item = model.insertItem<SessionItem>(model.rootItem(), "", 0);
 
     MockWidgetForItem widget(item);
 
@@ -120,7 +120,7 @@ TEST(TestItemMapper, setActivity)
 TEST(TestItemMapper, unsubscribe)
 {
     SessionModel model;
-    auto item = model.insertNewItem(Constants::BaseType, model.rootItem(), "", 0);
+    auto item = model.insertItem<SessionItem>(model.rootItem(), "", 0);
 
     MockWidgetForItem widget1(item);
     MockWidgetForItem widget2(item);
@@ -139,7 +139,7 @@ TEST(TestItemMapper, unsubscribe)
 TEST(TestItemMapper, onPropertyChange)
 {
     SessionModel model;
-    auto item = dynamic_cast<CompoundItem*>(model.insertNewItem(Constants::CompoundType));
+    auto item = model.insertItem<CompoundItem>();
     EXPECT_TRUE(item != nullptr);
 
     auto property = item->addProperty<PropertyItem>("height", 42.0);
@@ -164,9 +164,9 @@ TEST(TestItemMapper, onPropertyChange)
 TEST(TestItemMapper, onChildPropertyChange)
 {
     SessionModel model;
-    auto compound1 = dynamic_cast<CompoundItem*>(model.insertNewItem(Constants::CompoundType));
+    auto compound1 = model.insertItem<CompoundItem>();
     compound1->registerTag(TagInfo::universalTag("tag1"), /*set_as_default*/true);
-    auto compound2 = dynamic_cast<CompoundItem*>(model.insertNewItem(Constants::CompoundType, compound1));
+    auto compound2 = model.insertItem<CompoundItem>(compound1);
 
     auto property = compound2->addProperty<PropertyItem>("height", 42.0);
 
@@ -190,7 +190,7 @@ TEST(TestItemMapper, onChildPropertyChange)
 TEST(TestItemMapper, onRowInsert)
 {
     SessionModel model;
-    auto compound1 = dynamic_cast<CompoundItem*>(model.insertNewItem(Constants::CompoundType));
+    auto compound1 = model.insertItem<CompoundItem>();
     compound1->registerTag(TagInfo::universalTag("tag1"), /*set_as_default*/true);
 
     MockWidgetForItem widget(compound1);
@@ -205,7 +205,7 @@ TEST(TestItemMapper, onRowInsert)
     EXPECT_CALL(widget, onRowAboutToBeRemoved(_, _, _)).Times(0);
 
     // perform action
-    model.insertNewItem(Constants::CompoundType, compound1, expected_tag, expected_row);
+    model.insertItem<CompoundItem>(compound1, expected_tag, expected_row);
 }
 
 //! Inserting item to item.
@@ -216,9 +216,9 @@ TEST(TestItemMapper, onRowAboutToRemove)
     std::string expected_tag = "tag1";
 
     SessionModel model;
-    auto compound1 = dynamic_cast<CompoundItem*>(model.insertNewItem(Constants::CompoundType));
+    auto compound1 = model.insertItem<CompoundItem>();
     compound1->registerTag(TagInfo::universalTag("tag1"), /*set_as_default*/true);
-    model.insertNewItem(Constants::CompoundType, compound1, expected_tag, expected_row);
+    model.insertItem<CompoundItem>(compound1, expected_tag, expected_row);
 
     MockWidgetForItem widget(compound1);
 

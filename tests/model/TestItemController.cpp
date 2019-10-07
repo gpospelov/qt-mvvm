@@ -50,7 +50,7 @@ TEST_F(TestItemController, initialState)
 TEST_F(TestItemController, itemDeletedBeforeController)
 {
     SessionModel model;
-    auto item = dynamic_cast<PropertyItem*>(model.insertNewItem(Constants::PropertyType));
+    auto item = model.insertItem<PropertyItem>();
 
     auto controller = std::make_unique<TestController>();
     controller->setItem(item);
@@ -68,7 +68,7 @@ TEST_F(TestItemController, itemDeletedBeforeController)
 TEST_F(TestItemController, unsubscribeScenario)
 {
     SessionModel model;
-    auto item = dynamic_cast<PropertyItem*>(model.insertNewItem(Constants::PropertyType));
+    auto item = model.insertItem<PropertyItem>();
 
     auto controller = std::make_unique<TestController>();
     controller->setItem(item);
@@ -93,7 +93,7 @@ TEST_F(TestItemController, unsubscribeScenario)
 TEST_F(TestItemController, controllerDeletedBeforeItem)
 {
     SessionModel model;
-    auto item = dynamic_cast<PropertyItem*>(model.insertNewItem(Constants::PropertyType));
+    auto item = model.insertItem<PropertyItem>();
 
     auto controller = std::make_unique<TestController>();
     controller->setItem(item);

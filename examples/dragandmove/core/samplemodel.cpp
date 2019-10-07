@@ -55,7 +55,7 @@ SampleModel::SampleModel() : SessionModel("SampleModel")
 
 void SampleModel::append_random_item(ModelView::SessionItem* container)
 {
-    auto item = dynamic_cast<DemoItem*>(insertNewItem(Constants::DemoItemType, container));
+    auto item = insertItem<DemoItem>(container);
     item->setProperty(DemoItem::P_COLOR_PROPERTY, random_color());
     item->setProperty(DemoItem::P_STRING_PROPERTY, QVariant::fromValue(random_name()));
     item->setProperty(DemoItem::P_INTEGER_PROPERTY, ModelView::Utils::RandInt(0, 10));
@@ -65,12 +65,12 @@ void SampleModel::append_random_item(ModelView::SessionItem* container)
 
 void SampleModel::init_model_content()
 {
-    auto container = insertNewItem(Constants::DemoContainerItemType);
+    auto container = insertItem<DemoContainerItem>();
     append_random_item(container);
     append_random_item(container);
     append_random_item(container);
 
-    container = insertNewItem(Constants::DemoContainerItemType);
+    container = insertItem<DemoContainerItem>();
     append_random_item(container);
     append_random_item(container);
 }

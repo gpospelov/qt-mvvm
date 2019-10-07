@@ -15,6 +15,7 @@
 #include "modelutils.h"
 #include "mvvm_types.h"
 #include "numericutils.h"
+#include "containeritem.h"
 #include <QColor>
 #include <cmath>
 
@@ -57,12 +58,11 @@ void GraphModel::add_graph()
 
     // FIXME remove graph_count and data_count when mapper will report true items
 
-    auto data =
-        dynamic_cast<Data1DItem*>(insertNewItem(Constants::Data1DItemType, data_container(), "", data_count));
+    auto data = insertItem<Data1DItem>(data_container(), "", data_count);
     data->setFixedBinAxis(npoints, xmin, xmax);
     data->setContent(bin_values(ModelView::Utils::RandDouble(0.5, 1.0)));
 
-    auto graph = dynamic_cast<GraphItem*>(insertNewItem(Constants::GraphItemType, viewport(), "", graph_count));
+    auto graph = insertItem<GraphItem>(viewport(), "", graph_count);
     graph->setDataItem(data);
     auto rndm = []() -> int { return ModelView::Utils::RandInt(0, 255); };
     graph->setProperty(GraphItem::P_COLOR, QVariant::fromValue(QColor(rndm(), rndm(), rndm())));
@@ -112,10 +112,10 @@ ContainerItem* GraphModel::data_container()
 
 void GraphModel::init_model()
 {
-    auto container = insertNewItem(Constants::ContainerType);
+    auto container = insertItem<ContainerItem>();
     container->setDisplayName("Data container");
 
-    auto viewport = insertNewItem(Constants::GraphViewportItemType);
+    auto viewport = insertItem<GraphViewportItem>();
     viewport->setDisplayName("Graph container");
     add_graph();
 }

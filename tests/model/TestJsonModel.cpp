@@ -5,6 +5,7 @@
 #include "taginfo.h"
 #include "test_utils.h"
 #include "itempool.h"
+#include "propertyitem.h"
 #include <QDebug>
 #include <QJsonArray>
 #include <QJsonObject>
@@ -76,7 +77,7 @@ TEST_F(TestJsonModel, emptyModelToJsonAndBack)
 
     // attempt to reconstruct non-empty model
     SessionModel target2("TestModel");
-    target2.insertNewItem(Constants::BaseType);
+    target2.insertItem<SessionItem>();
     EXPECT_THROW(converter.json_to_model(object, target2), std::runtime_error);
 
     // succesfull reconstruction
@@ -92,7 +93,7 @@ TEST_F(TestJsonModel, singleItemToJsonAndBack)
     JsonModel converter;
     SessionModel model("TestModel");
 
-    auto item = model.insertNewItem(Constants::BaseType, nullptr, "", -1);
+    auto item = model.insertItem<SessionItem>(nullptr, "", -1);
 
     QJsonObject object;
     converter.model_to_json(model, object);
@@ -114,12 +115,12 @@ TEST_F(TestJsonModel, parentAndChildToJsonAndBack)
     SessionModel model("TestModel");
 
     // filling original model with content
-    auto parent = model.insertNewItem(Constants::BaseType);
+    auto parent = model.insertItem<SessionItem>();
     parent->setDisplayName("parent_name");
     parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
 
     parent->setData(QVariant::fromValue(42));
-    auto child = model.insertNewItem(Constants::PropertyType, parent);
+    auto child = model.insertItem<PropertyItem>(parent);
     child->setDisplayName("child_name");
 
     // writing model to json
@@ -163,7 +164,7 @@ TEST_F(TestJsonModel, identifiers)
 
     // creating model and converting it to json
     SessionModel source("SourceModel", pool1);
-    auto parent1 = source.insertNewItem(Constants::BaseType);
+    auto parent1 = source.insertItem<SessionItem>();
     QJsonObject json_source;
     converter.model_to_json(source, json_source);
 
@@ -198,12 +199,12 @@ TEST_F(TestJsonModel, parentAndChildToFileAndBack)
     SessionModel model("TestModel");
 
     // filling original model with content
-    auto parent = model.insertNewItem(Constants::BaseType);
+    auto parent = model.insertItem<SessionItem>();
     parent->setDisplayName("parent_name");
     parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
 
     parent->setData(QVariant::fromValue(42));
-    auto child = model.insertNewItem(Constants::PropertyType, parent);
+    auto child = model.insertItem<PropertyItem>(parent);
     child->setDisplayName("child_name");
 
     // writing model to json
