@@ -32,7 +32,8 @@ public:
 
     int type() const override { return TYPE; }
 
-    void setParameterizedItem(ModelView::SessionItem* item);
+    virtual void subscribe(ModelView::SessionItem* item);
+    void unsubscribe();
 
     ModelView::SessionItem* getItem() { return m_item; }
 
