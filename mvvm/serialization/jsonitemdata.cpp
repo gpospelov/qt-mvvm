@@ -52,7 +52,7 @@ QJsonArray JsonItemData::get_json(const SessionItemData& data)
 
 std::unique_ptr<SessionItemData> JsonItemData::get_data(const QJsonArray& object)
 {
-    std::unique_ptr<SessionItemData> result = std::make_unique<SessionItemData>();
+    auto result = std::make_unique<SessionItemData>();
 
     for (const auto& x : object) {
         if (!is_item_data(x.toObject()))

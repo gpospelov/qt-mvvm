@@ -29,7 +29,7 @@ TEST_F(TestViewDataItem, initialState)
 TEST_F(TestViewDataItem, dataForDouble)
 {
     // create SessionItem with data on board
-    std::unique_ptr<SessionItem> item = std::make_unique<SessionItem>();
+    auto item = std::make_unique<SessionItem>();
     QVariant expected(42.0);
     EXPECT_TRUE(item->setData(expected));
 
@@ -45,7 +45,7 @@ TEST_F(TestViewDataItem, dataForDouble)
 TEST_F(TestViewDataItem, setDataForDouble)
 {
     // create SessionItem with data on board
-    std::unique_ptr<SessionItem> item = std::make_unique<SessionItem>();
+    auto item = std::make_unique<SessionItem>();
     QVariant expected(42.0);
     EXPECT_TRUE(item->setData(expected));
 
@@ -70,7 +70,7 @@ TEST_F(TestViewDataItem, setDataForDouble)
 TEST_F(TestViewDataItem, dataForColor)
 {
     // create SessionItem with data on board
-    std::unique_ptr<SessionItem> item = std::make_unique<SessionItem>();
+    auto item = std::make_unique<SessionItem>();
     QVariant expected = QVariant::fromValue(QColor(Qt::green));
     EXPECT_TRUE(item->setData(expected));
 
@@ -86,7 +86,7 @@ TEST_F(TestViewDataItem, dataForColor)
 TEST_F(TestViewDataItem, setDataForColor)
 {
     // create SessionItem with data on board
-    std::unique_ptr<SessionItem> item = std::make_unique<SessionItem>();
+    auto item = std::make_unique<SessionItem>();
     QVariant expected = QVariant::fromValue(QColor(Qt::green));
     EXPECT_TRUE(item->setData(expected));
 

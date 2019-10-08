@@ -102,8 +102,8 @@ TEST(TestModelMapper, onRowRemoved)
 
 TEST(TestModelMapper, onModelDestroyed)
 {
-    std::unique_ptr<SessionModel> model = std::make_unique<SessionModel>();
-    std::unique_ptr<MockWidgetForModel> widget = std::make_unique<MockWidgetForModel>(model.get());
+    auto model = std::make_unique<SessionModel>();
+    auto widget = std::make_unique<MockWidgetForModel>(model.get());
 
     EXPECT_CALL(*widget, onDataChange(_, _)).Times(0);
     EXPECT_CALL(*widget, onRowInserted(_, _, _)).Times(0);
@@ -120,8 +120,8 @@ TEST(TestModelMapper, onModelDestroyed)
 
 TEST(TestModelMapper, onModelReset)
 {
-    std::unique_ptr<SessionModel> model = std::make_unique<SessionModel>();
-    std::unique_ptr<MockWidgetForModel> widget = std::make_unique<MockWidgetForModel>(model.get());
+    auto model = std::make_unique<SessionModel>();
+    auto widget = std::make_unique<MockWidgetForModel>(model.get());
 
     EXPECT_CALL(*widget, onDataChange(_, _)).Times(0);
     EXPECT_CALL(*widget, onRowInserted(_, _, _)).Times(0);

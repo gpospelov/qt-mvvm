@@ -379,7 +379,7 @@ TEST_F(TestDefaultViewModel, onModelReset)
 
 TEST_F(TestDefaultViewModel, onModelDestroyed)
 {
-    std::unique_ptr<SessionModel> model = std::make_unique<SessionModel>();
+    auto model = std::make_unique<SessionModel>();
     model->insertItem<SessionItem>();
 
     DefaultViewModel viewModel(model.get());

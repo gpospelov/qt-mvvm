@@ -29,7 +29,7 @@ TEST_F(TestViewLabelItem, initialViewLabelItem)
 TEST_F(TestViewLabelItem, ViewLabelItem_data)
 {
     // create SessionItem with data on board
-    std::unique_ptr<SessionItem> item = std::make_unique<SessionItem>();
+    auto item = std::make_unique<SessionItem>();
     QVariant expected = QVariant::fromValue(std::string("Layer"));
     EXPECT_TRUE(item->setData(expected, ItemDataRole::DISPLAY));
 
@@ -45,7 +45,7 @@ TEST_F(TestViewLabelItem, ViewLabelItem_data)
 TEST_F(TestViewLabelItem, ViewLabelItem_setData)
 {
     // create SessionItem with data on board
-    std::unique_ptr<SessionItem> item = std::make_unique<SessionItem>();
+    auto item = std::make_unique<SessionItem>();
     QVariant expected = QVariant::fromValue(std::string("Layer"));
     EXPECT_TRUE(item->setData(expected, ItemDataRole::DISPLAY));
 
