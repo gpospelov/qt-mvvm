@@ -25,7 +25,7 @@ TestToyLayerItem::~TestToyLayerItem() = default;
 TEST_F(TestToyLayerItem, inModel)
 {
     ToyItems::SampleModel model;
-    auto layer = model.insertNewItem(ToyItems::Constants::LayerType);
+    auto layer = model.insertItem<ToyItems::LayerItem>();
 
     EXPECT_FALSE(layer->data().isValid());
     EXPECT_EQ(layer->displayName(), ToyItems::Constants::LayerType);
@@ -34,7 +34,7 @@ TEST_F(TestToyLayerItem, inModel)
 TEST_F(TestToyLayerItem, inViewModel)
 {
     ToyItems::SampleModel model;
-    auto layerItem = model.insertNewItem(ToyItems::Constants::LayerType);
+    auto layerItem = model.insertItem<ToyItems::LayerItem>();
 
     // constructing viewModel from sample model
     DefaultViewModel viewModel(&model);
@@ -76,7 +76,7 @@ TEST_F(TestToyLayerItem, inViewModel)
 TEST_F(TestToyLayerItem, layerItemDataChanged)
 {
     ToyItems::SampleModel model;
-    auto layerItem = dynamic_cast<CompoundItem*>(model.insertNewItem(ToyItems::Constants::LayerType));
+    auto layerItem = model.insertItem<ToyItems::LayerItem>();
 
     // constructing viewModel from sample model
     DefaultViewModel viewModel(&model);
@@ -103,12 +103,12 @@ TEST_F(TestToyLayerItem, layerItemDataChanged)
 TEST_F(TestToyLayerItem, displayNameInMultiLayer)
 {
     ToyItems::SampleModel model;
-    auto multiLayer = model.insertNewItem(ToyItems::Constants::MultiLayerType);
+    auto multiLayer = model.insertItem<ToyItems::MultiLayerItem>();
 
-    auto layer0 = model.insertNewItem(ToyItems::Constants::LayerType, multiLayer);
+    auto layer0 = model.insertItem<ToyItems::LayerItem>(multiLayer);
     EXPECT_EQ(layer0->displayName(), "Layer");
 
-    auto layer1 = model.insertNewItem(ToyItems::Constants::LayerType, multiLayer);
+    auto layer1 = model.insertItem<ToyItems::LayerItem>(multiLayer);
     EXPECT_EQ(layer0->displayName(), "Layer0");
     EXPECT_EQ(layer1->displayName(), "Layer1");
 }
@@ -118,7 +118,7 @@ TEST_F(TestToyLayerItem, displayNameInMultiLayer)
 TEST_F(TestToyLayerItem, setRootItemContext)
 {
     ToyItems::SampleModel model;
-    auto layer = model.insertNewItem(ToyItems::Constants::LayerType);
+    auto layer = model.insertItem<ToyItems::LayerItem>();
     DefaultViewModel viewModel(&model);
     viewModel.setRootSessionItem(layer);
 
@@ -135,7 +135,7 @@ TEST_F(TestToyLayerItem, setRootItemContext)
 TEST_F(TestToyLayerItem, inTopItemsViewModelContext)
 {
     ToyItems::SampleModel model;
-    auto layer = model.insertNewItem(ToyItems::Constants::LayerType);
+    auto layer = model.insertItem<ToyItems::LayerItem>();
 
     TopItemsViewModel viewModel(&model);
     viewModel.setRootSessionItem(layer);
@@ -143,7 +143,7 @@ TEST_F(TestToyLayerItem, inTopItemsViewModelContext)
     EXPECT_EQ(viewModel.rowCount(QModelIndex()), 0);
     EXPECT_EQ(viewModel.columnCount(QModelIndex()), 2);
 
-    model.insertNewItem(ToyItems::Constants::ParticleType, layer);
+    model.insertItem<ToyItems::ParticleItem>(layer);
     EXPECT_EQ(viewModel.rowCount(QModelIndex()), 1);
     EXPECT_EQ(viewModel.columnCount(QModelIndex()), 2);
 }

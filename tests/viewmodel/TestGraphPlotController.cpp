@@ -37,14 +37,14 @@ TEST_F(TestGraphPlotController, setItem)
 
     // setup model and single data item in it
     SessionModel model;
-    auto data_item = dynamic_cast<Data1DItem*>(model.insertNewItem(Constants::Data1DItemType));
+    auto data_item = model.insertItem<Data1DItem>();
     data_item->setFixedBinAxis(2, 0.0, 2.0);
     std::vector<double> expected_centers = {0.5, 1.5};
     std::vector<double> expected_values = {42.0, 43.0};
     data_item->setContent(expected_values);
 
     // setup graph item
-    auto graph_item = dynamic_cast<GraphItem*>(model.insertNewItem(Constants::GraphItemType));
+    auto graph_item = model.insertItem<GraphItem>();
     graph_item->setProperty(GraphItem::P_COLOR, QColor(Qt::red));
     graph_item->setDataItem(data_item);
 
@@ -67,7 +67,7 @@ TEST_F(TestGraphPlotController, setDataAfter)
     GraphPlotController controller(custom_plot.get());
 
     SessionModel model;
-    auto graph_item = dynamic_cast<GraphItem*>(model.insertNewItem(Constants::GraphItemType));
+    auto graph_item = model.insertItem<GraphItem>();
 
     controller.setItem(graph_item);
 
@@ -78,7 +78,7 @@ TEST_F(TestGraphPlotController, setDataAfter)
     EXPECT_EQ(TestUtils::binValues(graph), std::vector<double>());
 
     // setup data after and single data item in it
-    auto data_item = dynamic_cast<Data1DItem*>(model.insertNewItem(Constants::Data1DItemType));
+    auto data_item = model.insertItem<Data1DItem>();
     data_item->setFixedBinAxis(2, 0.0, 2.0);
     std::vector<double> expected_centers = {0.5, 1.5};
     std::vector<double> expected_values = {42.0, 43.0};
@@ -101,14 +101,14 @@ TEST_F(TestGraphPlotController, unlinkFromDataItem)
 
     // setup model and single data item in it
     SessionModel model;
-    auto data_item = dynamic_cast<Data1DItem*>(model.insertNewItem(Constants::Data1DItemType));
+    auto data_item = model.insertItem<Data1DItem>();
     data_item->setFixedBinAxis(2, 0.0, 2.0);
     std::vector<double> expected_centers = {0.5, 1.5};
     std::vector<double> expected_values = {42.0, 43.0};
     data_item->setContent(expected_values);
 
     // setup graph item
-    auto graph_item = dynamic_cast<GraphItem*>(model.insertNewItem(Constants::GraphItemType));
+    auto graph_item = model.insertItem<GraphItem>();
     graph_item->setProperty(GraphItem::P_COLOR, QColor(Qt::red));
     graph_item->setDataItem(data_item);
 
@@ -140,10 +140,10 @@ TEST_F(TestGraphPlotController, controllerDelete)
 
     // setup model and single data item in it
     SessionModel model;
-    auto data_item = dynamic_cast<Data1DItem*>(model.insertNewItem(Constants::Data1DItemType));
+    auto data_item = model.insertItem<Data1DItem>();
 
     // setup graph item
-    auto graph_item = dynamic_cast<GraphItem*>(model.insertNewItem(Constants::GraphItemType));
+    auto graph_item = model.insertItem<GraphItem>();
     graph_item->setDataItem(data_item);
 
     // initializing controller
@@ -155,7 +155,7 @@ TEST_F(TestGraphPlotController, controllerDelete)
     EXPECT_EQ(custom_plot->graphCount(), 0);
 
     //  inserting item again
-    graph_item = dynamic_cast<GraphItem*>(model.insertNewItem(Constants::GraphItemType));
+    graph_item = model.insertItem<GraphItem>();
     graph_item->setDataItem(data_item);
 }
 

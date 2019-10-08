@@ -80,7 +80,7 @@ TEST_F(TestGraphViewportItem, onAddItem)
     EXPECT_CALL(widget, onRowAboutToBeRemoved(_, _, _)).Times(0);
 
     // triggering action
-    model.insertNewItem(Constants::GraphItemType, viewport_item);
+    model.insertItem<GraphItem>(viewport_item);
 }
 
 //! Check signaling on set data item.

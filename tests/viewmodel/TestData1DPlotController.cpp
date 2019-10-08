@@ -39,7 +39,7 @@ TEST_F(TestData1DPlotController, dataPoints)
 
     // creating data item with single point
     SessionModel model;
-    auto data_item = dynamic_cast<Data1DItem*>(model.insertNewItem(Constants::Data1DItemType));
+    auto data_item = model.insertItem<Data1DItem>();
     data_item->setFixedBinAxis(1, 1.0, 2.0);
 
     // creating controller and point it to Data1DItem
@@ -67,9 +67,9 @@ TEST_F(TestData1DPlotController, twoDataItems)
 
     // creating data item with single point
     SessionModel model;
-    auto data_item1 = dynamic_cast<Data1DItem*>(model.insertNewItem(Constants::Data1DItemType));
+    auto data_item1 = model.insertItem<Data1DItem>();
     data_item1->setFixedBinAxis(1, 1.0, 2.0);
-    auto data_item2 = dynamic_cast<Data1DItem*>(model.insertNewItem(Constants::Data1DItemType));
+    auto data_item2 = model.insertItem<Data1DItem>();
     data_item2->setFixedBinAxis(2, 0.0, 2.0);
 
     // creating controller and point it to Data1DItem

@@ -22,7 +22,7 @@ TestToyMultilayerItem::~TestToyMultilayerItem() = default;
 TEST_F(TestToyMultilayerItem, multiLayer)
 {
     ToyItems::SampleModel model;
-    auto multiLayer = model.insertNewItem(ToyItems::Constants::MultiLayerType);
+    auto multiLayer = model.insertItem<ToyItems::MultiLayerItem>();
 
     EXPECT_FALSE(multiLayer->data().isValid());
     EXPECT_EQ(multiLayer->displayName(), ToyItems::Constants::MultiLayerType);
@@ -34,7 +34,7 @@ TEST_F(TestToyMultilayerItem, multiLayer)
 TEST_F(TestToyMultilayerItem, multiLayerView)
 {
     ToyItems::SampleModel model;
-    auto multiLayerItem = model.insertNewItem(ToyItems::Constants::MultiLayerType);
+    auto multiLayerItem = model.insertItem<ToyItems::MultiLayerItem>();
 
     DefaultViewModel viewModel(&model);
     EXPECT_EQ(viewModel.rowCount(), 1);
@@ -54,7 +54,7 @@ TEST_F(TestToyMultilayerItem, multiLayerView)
 TEST_F(TestToyMultilayerItem, findMultiLayerView)
 {
     ToyItems::SampleModel model;
-    auto multiLayerItem = model.insertNewItem(ToyItems::Constants::MultiLayerType);
+    auto multiLayerItem = model.insertItem<ToyItems::MultiLayerItem>();
 
     DefaultViewModel viewModel(&model);
 
@@ -69,7 +69,7 @@ TEST_F(TestToyMultilayerItem, viewItemsForMultiLayer)
 {
     ToyItems::SampleModel model;
 
-    auto multiLayer = model.insertNewItem(ToyItems::Constants::MultiLayerType);
+    auto multiLayer = model.insertItem<ToyItems::MultiLayerItem>();
 
     ViewLabelItem labelItem(multiLayer);
     EXPECT_EQ(labelItem.data(Qt::DisplayRole).toString().toStdString(),

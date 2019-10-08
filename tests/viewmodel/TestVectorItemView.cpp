@@ -24,7 +24,7 @@ TestVectorItemView::~TestVectorItemView() = default;
 TEST_F(TestVectorItemView, fromVector)
 {
     SessionModel model;
-    auto vectorItem = model.insertNewItem(Constants::VectorType);
+    auto vectorItem = model.insertItem<VectorItem>();
 
     // constructing viewModel from sample model
     DefaultViewModel viewModel(&model);
