@@ -22,11 +22,7 @@ class LayerView : public ILayerView
 {
     Q_OBJECT
 public:
-    enum { TYPE = DesignerHelper::LAYER };
-
     LayerView(QGraphicsItem *parent = nullptr);
-
-    int type() const override { return TYPE; }
 
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
 

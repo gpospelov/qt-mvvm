@@ -27,40 +27,34 @@ class MultiLayerView : public ILayerView
     Q_OBJECT
 
 public:
-    enum { TYPE = DesignerHelper::MULTILAYER };
-
     MultiLayerView(QGraphicsItem* parent = nullptr);
     ~MultiLayerView() override;
-
-    int type() const override { return TYPE; }
-
-    QRectF boundingRect() const override;
 
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
 
     void addView(IView* childView) override;
 
-    virtual void addNewLayer(ILayerView* layer, int row);
-    virtual void removeLayer(ILayerView* layer);
-
     int getDropArea(QPointF pos);
     QRectF getDropAreaRectangle(int row);
-    QLineF getInterfaceLine(int row);
+    QLineF getInterfaceLine(int row) const;
 
     // slots:
     void updateGeometry();
-    void updateHeight();
-    void updateWidth();
     void onLayerAboutToBeDeleted();
 
 protected:
     void dropEvent(QGraphicsSceneDragDropEvent* event) override;
     void dragMoveEvent(QGraphicsSceneDragDropEvent* event) override;
     const DesignerMimeData* checkDragEvent(QGraphicsSceneDragDropEvent* event);
-    QVariant itemChange(GraphicsItemChange change, const QVariant& value) override;
     void update_appearance() override;
 
 private:
+    void addNewLayer(ILayerView* layer, int row);
+    void removeLayer(ILayerView* layer);
+    void updateHeight();
+    void updateWidth();
+    void alignChildren();
+
     QList<ILayerView*> m_layers;
     QList<QRectF> m_drop_areas;
     QList<QLineF> m_interfaces;

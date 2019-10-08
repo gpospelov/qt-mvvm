@@ -23,16 +23,18 @@ class IView : public QGraphicsObject
 {
     Q_OBJECT
 public:
-    enum { TYPE = DesignerHelper::IVIEW };
+    static constexpr qreal basic_width = 200.0;
+    static constexpr qreal basic_height = 30.0;
 
-    IView(QGraphicsItem *parent = nullptr);
+    IView(QGraphicsItem *parent, int view_type);
     ~IView() override;
 
-    int type() const override { return TYPE; }
+    int type() const override final { return m_view_type; }
 
-    void setParameterizedItem(ModelView::SessionItem* item);
+    virtual void subscribe(ModelView::SessionItem* item);
+    void unsubscribe();
 
-    ModelView::SessionItem* getItem() { return m_item; }
+    ModelView::SessionItem* getItem() const { return m_item; }
 
     virtual void addView(IView* childView) = 0;
 
@@ -49,6 +51,7 @@ protected:
 
 private:
     ModelView::SessionItem* m_item;
+    int m_view_type;
 };
 
 #endif // IVIEW_H

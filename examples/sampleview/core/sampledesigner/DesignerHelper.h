@@ -22,9 +22,7 @@ class DesignerHelper
 public:
 
     enum EWidgetTypes {
-        IVIEW = QGraphicsItem::UserType+1, // = 65537
-        ISAMPLE_RECT,
-        NODE_EDITOR_PORT,
+        NODE_EDITOR_PORT = QGraphicsItem::UserType+1,
         NODE_EDITOR_CONNECTION,
         MULTILAYER,
         LAYER,

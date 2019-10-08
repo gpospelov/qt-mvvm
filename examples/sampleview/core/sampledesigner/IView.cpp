@@ -14,7 +14,10 @@
 
 using namespace ModelView;
 
-IView::IView(QGraphicsItem *parent) : QGraphicsObject(parent), m_item(nullptr)
+IView::IView(QGraphicsItem *parent, int view_type)
+    : QGraphicsObject(parent)
+    , m_item(nullptr)
+    , m_view_type(view_type)
 {
     connect(this, &IView::xChanged, this, &IView::onChangedX);
     connect(this, &IView::yChanged, this, &IView::onChangedY);
@@ -22,19 +25,21 @@ IView::IView(QGraphicsItem *parent) : QGraphicsObject(parent), m_item(nullptr)
 
 IView::~IView()
 {
-    if(m_item)
-        m_item->mapper()->unsubscribe(this);
+    unsubscribe();
 }
 
-void IView::setParameterizedItem(SessionItem *item)
+void IView::subscribe(SessionItem *item)
 {
-    Q_ASSERT(item);
-    Q_ASSERT(m_item == nullptr);
+    if (m_item)
+        unsubscribe();
+    if (!item)
+        return;
+
+    m_item = item;
 
     if(toolTip().isEmpty())
         setToolTip(QString::fromStdString(item->displayName()));
 
-    m_item = item;
     setX(m_item->property(LocatedItem::P_X_POS).toReal());
     setY(m_item->property(LocatedItem::P_Y_POS).toReal());
 
@@ -42,14 +47,15 @@ void IView::setParameterizedItem(SessionItem *item)
         onPropertyChange(property);
     };
     m_item->mapper()->setOnPropertyChange(on_property_change, this);
-
-    m_item->mapper()->setOnItemDestroy(
-                [this](SessionItem *) {
-        m_item = nullptr;
-    }, this);
-
+    m_item->mapper()->setOnItemDestroy([this](SessionItem*) { unsubscribe(); }, this);
 
     update_appearance();
+}
+
+void IView::unsubscribe()
+{
+    if (m_item)
+        m_item->mapper()->unsubscribe(this);
 }
 
 void IView::onChangedX()

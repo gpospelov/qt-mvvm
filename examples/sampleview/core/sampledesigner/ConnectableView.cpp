@@ -15,9 +15,16 @@
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
 
-ConnectableView::ConnectableView(QGraphicsItem *parent, QRectF rect)
-    : IView(parent), m_color(Qt::gray), m_rect(rect), m_roundpar(3),
-      m_label_vspace(35)
+namespace {
+void setPortPositions(const QRectF frame, qreal x_pos, const QList<NodeEditorPort*>& nodes);
+}
+
+ConnectableView::ConnectableView(QGraphicsItem *parent, int view_type, QRectF rect)
+    : IView(parent, view_type)
+    , m_color(Qt::gray)
+    , m_rect(rect)
+    , m_roundpar(3)
+    , m_label_vspace(35)
 {
     setFlag(QGraphicsItem::ItemIsMovable, true);
     setFlag(QGraphicsItem::ItemIsSelectable, true);
@@ -26,11 +33,8 @@ ConnectableView::ConnectableView(QGraphicsItem *parent, QRectF rect)
 
 ConnectableView::~ConnectableView() = default;
 
-void ConnectableView::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
-                            QWidget *widget)
+void ConnectableView::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget*)
 {
-    Q_UNUSED(widget);
-
     painter->setPen(Qt::gray);
     if (option->state & (QStyle::State_Selected | QStyle::State_HasFocus)) {
         painter->setPen(Qt::DashLine);
@@ -107,40 +111,9 @@ int ConnectableView::getInputPortIndex(NodeEditorPort *port)
 // calculation of y-pos for ports
 void ConnectableView::setPortCoordinates()
 {
-    if (!getNumberOfPorts())
-        return;
-
-    // without main label ports can be placed over all rectangle vertical space
-    double hspace = getRectangle().height();
-    if (!getLabel().isEmpty())
-        hspace -= m_label_vspace;
-
-    double nintervals = getNumberOfPorts()
-                     + 2; // one spare interval for margin between input/output ports
-
-    double dy = hspace / double(nintervals);
-    double ypos = getRectangle().height() - hspace + dy;
-
-    if (getNumberOfPorts() == 1) {
-        // if total number of ports is 1, place it in the middle
-        ypos = getRectangle().height() - hspace + hspace / 2;
-    }
-    int nOutPorts = getNumberOfOutputPorts();
-    int nport(0);
-    for(QGraphicsItem *item : childItems()) {
-        NodeEditorPort *port = dynamic_cast<NodeEditorPort *>(item);
-        if (!port)
-            continue;
-        if (port->isOutput()) {
-            port->setPos(getRectangle().width(), ypos);
-        } else {
-            if (nport == nOutPorts && nOutPorts != 0)
-                ypos += dy; // additional margin between output and input ports
-            port->setPos(0.0, ypos);
-        }
-        ypos += dy;
-        nport++;
-    }
+    const QRectF rect = getRectangle();
+    ::setPortPositions(rect, rect.left(), m_input_ports);
+    ::setPortPositions(rect, rect.right(), m_output_ports);
 }
 
 int ConnectableView::getNumberOfPorts()
@@ -179,4 +152,19 @@ QString ConnectableView::hyphenate(const QString &name) const
         return result;
     }
     return name;
+}
+
+namespace {
+void setPortPositions(const QRectF frame, qreal x_pos, const QList<NodeEditorPort*>& nodes)
+{
+    if (nodes.empty())
+        return;
+
+    const qreal dy = frame.height() / (nodes.size() + 1);
+    qreal y_pos = nodes.size() == 1 ? (frame.top() + frame.bottom()) / 2.0 : frame.top() + dy;
+    std::for_each(nodes.begin(), nodes.end(), [&y_pos, x_pos, dy](NodeEditorPort* port) {
+        port->setPos(x_pos, y_pos);
+        y_pos += dy;
+    });
+}
 }

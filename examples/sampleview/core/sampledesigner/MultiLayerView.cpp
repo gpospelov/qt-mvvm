@@ -25,16 +25,21 @@
 #include <QStyleOptionGraphicsItem>
 
 namespace {
+    constexpr qreal width_multiplier = 1.15;
+    constexpr qreal multilayer_height = IView::basic_height;
+    constexpr qreal multilayer_width = IView::basic_width * width_multiplier;
+
+    constexpr QRectF defaultShape();
     bool acceptsModel(const ModelView::SessionItem* item, const std::string& model_type);
 }
 
 
 MultiLayerView::MultiLayerView(QGraphicsItem* parent)
-    : ILayerView(parent)
+    : ILayerView(parent, DesignerHelper::MULTILAYER)
 {
     setColor(QColor(Qt::blue));
 
-    setRectangle(DesignerHelper::getDefaultBoundingRect(::Constants::MultiLayerType));
+    setRectangle(defaultShape());
     setAcceptHoverEvents(false);
     setAcceptDrops(true);
     connect(this, &MultiLayerView::childrenChanged, this, &MultiLayerView::updateGeometry);
@@ -47,22 +52,8 @@ MultiLayerView::~MultiLayerView()
     disconnect(this, &MultiLayerView::childrenChanged, this, &MultiLayerView::updateGeometry);
 }
 
-QRectF MultiLayerView::boundingRect() const
+void MultiLayerView::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget*)
 {
-    QRectF result = m_rect;
-    if (m_layers.size() && !parentObject()) {
-        qreal toplayer_height = m_layers.front()->boundingRect().height();
-        qreal bottomlayer_height = m_layers.back()->boundingRect().height();
-        result.setTop(-toplayer_height/2.);
-        result.setHeight( m_rect.height() + (toplayer_height+bottomlayer_height)/2. );
-    }
-    return result;
-}
-
-void MultiLayerView::paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
-                           QWidget* widget)
-{
-    Q_UNUSED(widget);
     painter->setPen(m_color);
     if (option->state & (QStyle::State_Selected | QStyle::State_HasFocus)) {
         painter->setPen(Qt::DashLine);
@@ -89,9 +80,9 @@ void MultiLayerView::addView(IView* childView)
 void MultiLayerView::addNewLayer(ILayerView* layer, int row)
 {
     m_layers.insert(row, layer);
-    connect(layer, &ILayerView::heightChanged, this, &MultiLayerView::updateHeight,
+    connect(layer, &ILayerView::heightChanged, this, &MultiLayerView::updateGeometry,
             Qt::UniqueConnection);
-    connect(layer, &ILayerView::widthChanged, this, &MultiLayerView::updateWidth,
+    connect(layer, &ILayerView::widthChanged, this, &MultiLayerView::updateGeometry,
             Qt::UniqueConnection);
     connect(layer, &ILayerView::aboutToBeDeleted, this, &MultiLayerView::onLayerAboutToBeDeleted,
             Qt::UniqueConnection);
@@ -108,10 +99,6 @@ void MultiLayerView::onLayerAboutToBeDeleted()
 void MultiLayerView::removeLayer(ILayerView* layer)
 {
     Q_ASSERT(m_layers.contains(layer));
-    disconnect(layer, &ILayerView::heightChanged, this, &MultiLayerView::updateHeight );
-    disconnect(layer, &ILayerView::widthChanged, this, &MultiLayerView::updateWidth);
-    disconnect(layer, &ILayerView::aboutToBeDeleted, this,
-               &MultiLayerView::onLayerAboutToBeDeleted);
     m_layers.removeOne(layer);
     updateGeometry();
 }
@@ -121,66 +108,8 @@ void MultiLayerView::updateGeometry()
 {
     updateHeight();
     updateWidth();
-}
-
-//! Updates MultiLayer height, sets y-positions of children, defines new drop areas.
-void MultiLayerView::updateHeight()
-{
-    // drop areas are rectangles covering the area of layer interfaces
-    m_drop_areas.clear();
-    m_interfaces.clear();
-
-    int total_height = 0;
-    if(m_layers.size()) {
-        for(ILayerView* layer : m_layers) {
-            layer->setY(total_height);
-            layer->update();
-            qreal drop_area_height = layer->boundingRect().height();
-            qreal drop_area_ypos = total_height - drop_area_height/2.;
-            m_drop_areas.append(QRectF(0, drop_area_ypos,
-                                       boundingRect().width(), drop_area_height));
-            m_interfaces.append(QLineF(m_rect.left(), total_height, m_rect.right(), total_height));
-            total_height += layer->boundingRect().height();
-        }
-        qreal drop_area_height = m_layers.back()->boundingRect().height();
-        qreal drop_area_ypos = total_height - drop_area_height/2.;
-        m_drop_areas.append(QRectF(0, drop_area_ypos, boundingRect().width(), drop_area_height));
-        m_interfaces.append(QLineF(m_rect.left(), total_height, m_rect.right(), total_height));
-    } else {
-        total_height = DesignerHelper::getDefaultMultiLayerHeight();
-        m_drop_areas.append(boundingRect());
-        m_interfaces.append(QLineF(m_rect.left(), m_rect.center().y(),
-                                   m_rect.right(), m_rect.center().y()));
-    }
-    m_rect.setHeight(total_height);
+    alignChildren();
     update();
-    emit heightChanged();
-}
-
-//! Updates MultiLayerView width, sets x-positions of children.
-//! If list of children contains another MultiLayer, then width of given MultiLayer
-//! will be increased by 12%
-void MultiLayerView::updateWidth()
-{
-    const double wider_than_children(1.15);
-    double max_width(0);
-    for(ILayerView* layer : m_layers) {
-        if(layer->boundingRect().width() > max_width)
-            max_width = layer->boundingRect().width();
-    }
-    max_width *= wider_than_children;
-    if(max_width == 0) {
-        max_width = DesignerHelper::getDefaultMultiLayerWidth();
-    }
-    m_rect.setWidth(max_width);
-    update();
-
-    for(ILayerView* layer : m_layers) {
-        int xpos = ((boundingRect().width() - layer->boundingRect().width()))/2.;
-        layer->setX(xpos);
-        layer->update();
-    }
-    emit widthChanged();
 }
 
 //! Returns index of drop area for given coordinate.
@@ -207,7 +136,7 @@ QRectF MultiLayerView::getDropAreaRectangle(int row)
 }
 
 //! Returns line representing interface
-QLineF MultiLayerView::getInterfaceLine(int row)
+QLineF MultiLayerView::getInterfaceLine(int row) const
 {
     if(row>=0 && row < m_interfaces.size()) {
         return m_interfaces[row];
@@ -250,18 +179,77 @@ const DesignerMimeData *MultiLayerView::checkDragEvent(QGraphicsSceneDragDropEve
     return mimeData;
 }
 
-QVariant MultiLayerView::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant& value)
-{
-    return QGraphicsItem::itemChange(change, value);
-}
-
 void MultiLayerView::update_appearance()
 {
     updateGeometry();
     ILayerView::update_appearance();
 }
 
+//! Updates MultiLayer height, sets y-positions of children, defines new drop areas.
+void MultiLayerView::updateHeight()
+{
+    // drop areas are rectangles covering the area of layer interfaces
+    m_drop_areas.clear();
+    m_interfaces.clear();
+
+    qreal height =
+        std::accumulate(m_layers.begin(), m_layers.end(), 0.0, [](qreal sum, ILayerView* child) {
+            return sum + child->boundingRect().height();
+        });
+    height += multilayer_height;
+
+    m_rect.setTop(-height / 2.0);
+    m_rect.setHeight(height);
+
+    emit heightChanged();
+}
+
+//! Updates MultiLayerView width, sets x-positions of children.
+void MultiLayerView::updateWidth()
+{
+    qreal max_width = 0.0;
+    for(ILayerView* layer : m_layers)
+        if(layer->boundingRect().width() > max_width)
+            max_width = layer->boundingRect().width();
+
+    const qreal mlayer_width = max_width > 0 ? max_width * width_multiplier : multilayer_width;
+    m_rect.setLeft(-mlayer_width / 2.0);
+    m_rect.setWidth(mlayer_width);
+
+    emit widthChanged();
+}
+
+void MultiLayerView::alignChildren()
+{
+    if (m_layers.empty()) {
+        m_drop_areas.append(boundingRect());
+        const qreal center_y = m_rect.center().y();
+        m_interfaces.append({{m_rect.left(), center_y}, {m_rect.right(), center_y}});
+        return;
+    }
+
+    qreal y_pos = m_rect.top() + multilayer_height / 2.0;
+    for(ILayerView* layer : m_layers) {
+        const qreal l_height = layer->boundingRect().height();
+        layer->setPos({0.0, y_pos + l_height / 2.0});
+        m_drop_areas.append(QRectF(m_rect.left(), y_pos - l_height / 2.0,
+                                   m_rect.width(), l_height));
+        m_interfaces.append({{m_rect.left(), y_pos}, {m_rect.right(), y_pos}});
+        y_pos += l_height;
+    }
+    const qreal l_height = m_layers.back()->boundingRect().height();
+    m_drop_areas.append(QRectF(m_rect.left(), y_pos - l_height / 2.0,
+                               m_rect.width(), l_height));
+    m_interfaces.append({{m_rect.left(), y_pos}, {m_rect.right(), y_pos}});
+}
+
 namespace {
+    constexpr QRectF defaultShape()
+    {
+        return QRectF(-multilayer_width / 2.0, -multilayer_height / 2.0, multilayer_width,
+                      multilayer_height);
+    }
+
     bool acceptsModel(const ModelView::SessionItem* item, const std::string& model_type)
     {
         // TODO: implement this function
