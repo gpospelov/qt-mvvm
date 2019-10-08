@@ -387,6 +387,7 @@ void DesignerScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 void DesignerScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
     QGraphicsScene::mouseReleaseEvent(event);
+    setLayerInterfaceLine(); // removing drop area hint from the scene
     ModelCommandExecutor(delayed_command, m_sampleModel).execute();
 }
 
