@@ -26,6 +26,7 @@
 #include "SampleViewFactory.h"
 #include "item_constants.h"
 #include "modelmapper.h"
+#include "modelutils.h"
 #include "sessionitem.h"
 #include <QGraphicsSceneMouseEvent>
 #include <QItemSelection>
@@ -255,13 +256,25 @@ void DesignerScene::alignViews()
 //! propagates deletion of views on the scene to the model
 void DesignerScene::deleteSelectedItems()
 {
-    /*QModelIndexList indexes = m_selectionModel->selectedIndexes();
-
-    QList<IView *> views_which_will_be_deleted;
-    for(auto index : indexes) {
-        views_which_will_be_deleted.append(m_ItemToView[m_sampleModel->itemForIndex(m_proxy->mapToSource(index))]);
+    const QList<QGraphicsItem*> selected_views = selectedItems();
+    QList<SessionItem*> to_delete;
+    for (const QGraphicsItem* view: selected_views) {
+        auto iview = dynamic_cast<const IView*>(view);
+        if (!iview || !iview->getItem())
+            continue;
+        const bool has_ancestors =
+            std::accumulate(selected_views.begin(), selected_views.end(), false,
+                            [view](bool result, QGraphicsItem* pview) {
+                                return result || pview->isAncestorOf(view);
+                            });
+        if (!has_ancestors)
+            to_delete.append(iview->getItem());
     }
-    // deleting selected items on model side, corresponding views will be deleted automatically
+
+    for (auto item: to_delete)
+        Utils::DeleteItemFromModel(item);
+
+    /*// deleting selected items on model side, corresponding views will be deleted automatically
     // Since we don't know the order of items and their parent/child relationship, we need this
     while (indexes.size()) {
         QModelIndex current = m_proxy->mapToSource(indexes.back());
@@ -273,8 +286,8 @@ void DesignerScene::deleteSelectedItems()
     // views scheduled for deletion.
     for(auto graphicsItem : selectedItems()) {
         if (NodeEditorConnection *connection = dynamic_cast<NodeEditorConnection *>(graphicsItem)) {
-            if (views_which_will_be_deleted.contains(connection->getParentView())
-                || views_which_will_be_deleted.contains(connection->getChildView()))
+            if (to_delete.contains(connection->getParentView())
+                || to_delete.contains(connection->getChildView()))
                 continue;
             removeConnection(connection);
         }
