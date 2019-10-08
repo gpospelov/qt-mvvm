@@ -4,6 +4,7 @@
 #include "sessionmodel.h"
 #include "taginfo.h"
 #include "toy_includes.h"
+#include "toy_items.h"
 #include <QUndoStack>
 
 using namespace ModelView;
@@ -43,9 +44,9 @@ TEST_F(TestUndoRedo, insertNewItem)
     auto stack = model.undoStack();
 
     // inserting single item
-    auto item = model.insertNewItem(modelType);
+    auto item = model.insertItem<SessionItem>();
     EXPECT_TRUE(item != nullptr);
-    EXPECT_EQ(item->modelType(), modelType);
+    EXPECT_EQ(item->modelType(), Constants::BaseType);
     EXPECT_EQ(model.rootItem()->childrenCount(), 1);
     EXPECT_EQ(stack->index(), 1);
     EXPECT_EQ(stack->count(), 1);
@@ -85,11 +86,11 @@ TEST_F(TestUndoRedo, insertParentAndChild)
     model.setUndoRedoEnabled(true);
     auto stack = model.undoStack();
 
-    auto parent = model.insertNewItem(Constants::BaseType);
+    auto parent = model.insertItem<SessionItem>();
     parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
 
-    model.insertNewItem(Constants::PropertyType, parent);
-    model.insertNewItem(Constants::PropertyType, parent);
+    model.insertItem<PropertyItem>(parent);
+    model.insertItem<PropertyItem>(parent);
 
     // state of the stack after insertion of 3 items
     EXPECT_EQ(stack->count(), 3);
@@ -118,15 +119,13 @@ TEST_F(TestUndoRedo, insertParentAndChild)
 
 TEST_F(TestUndoRedo, setData)
 {
-    const model_type modelType(Constants::PropertyType);
-
     const int role = ItemDataRole::DATA;
     SessionModel model;
     model.setUndoRedoEnabled(true);
     auto stack = model.undoStack();
 
     // creating item
-    auto item = model.insertNewItem(modelType);
+    auto item = model.insertItem<SessionItem>();
     EXPECT_FALSE(model.data(item, role).isValid());
 
     // setting new data
@@ -169,7 +168,7 @@ TEST_F(TestUndoRedo, setDataThroughItem)
     auto stack = model.undoStack();
 
     // creating item
-    auto item = model.insertNewItem(Constants::BaseType);
+    auto item = model.insertItem<SessionItem>();
     EXPECT_FALSE(model.data(item, role).isValid());
 
     // setting new data through item (and not through model)
@@ -191,7 +190,7 @@ TEST_F(TestUndoRedo, setDataThroughItem)
 TEST_F(TestUndoRedo, setSameData)
 {
     SessionModel model;
-    auto item = model.insertNewItem(Constants::PropertyType);
+    auto item = model.insertItem<PropertyItem>();
     item->setData(42.0);
 
     model.setUndoRedoEnabled(true);
@@ -211,15 +210,13 @@ TEST_F(TestUndoRedo, setSameData)
 
 TEST_F(TestUndoRedo, insertAndSetData)
 {
-    const model_type modelType(Constants::BaseType);
-
     const int role = ItemDataRole::DATA;
     SessionModel model;
     model.setUndoRedoEnabled(true);
     auto stack = model.undoStack();
 
     // creating item
-    auto item = model.insertNewItem(modelType);
+    auto item = model.insertItem<SessionItem>();
     EXPECT_FALSE(model.data(item, role).isValid());
 
     // setting new data
@@ -257,7 +254,7 @@ TEST_F(TestUndoRedo, removeRow)
     model.setUndoRedoEnabled(true);
     auto stack = model.undoStack();
 
-    auto item = model.insertNewItem(Constants::BaseType);
+    auto item = model.insertItem<SessionItem>();
     item->setData(data, role);
 
     // initial state before removing the row
@@ -296,11 +293,11 @@ TEST_F(TestUndoRedo, removeParentAndChild)
     model.setUndoRedoEnabled(true);
     auto stack = model.undoStack();
 
-    auto parent = model.insertNewItem(Constants::BaseType);
+    auto parent = model.insertItem<SessionItem>();
     parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
 
     parent->setData(data1, role1);
-    auto child = model.insertNewItem(Constants::PropertyType, parent);
+    auto child = model.insertItem<PropertyItem>(parent);
     child->setData(data2, role2);
 
     EXPECT_EQ(stack->count(), 4);
@@ -317,14 +314,14 @@ TEST_F(TestUndoRedo, removeParentAndChild)
     EXPECT_EQ(stack->count(), 5);
     EXPECT_EQ(stack->index(), 4);
     EXPECT_EQ(model.rootItem()->childrenCount(), 1);
-    parent = Utils::ChildAt(model.rootItem(), 0);
-    child = Utils::ChildAt(parent, 0);
+    auto parent_at = Utils::ChildAt(model.rootItem(), 0);
+    auto child_at = Utils::ChildAt(parent_at, 0);
 
-    EXPECT_EQ(parent->modelType(), Constants::BaseType);
-    EXPECT_EQ(child->modelType(), Constants::PropertyType);
+    EXPECT_EQ(parent_at->modelType(), Constants::BaseType);
+    EXPECT_EQ(child_at->modelType(), Constants::PropertyType);
 
-    EXPECT_EQ(parent->data(role1), data1);
-    EXPECT_EQ(child->data(role2), data2);
+    EXPECT_EQ(parent_at->data(role1), data1);
+    EXPECT_EQ(child_at->data(role2), data2);
 }
 
 //! Insert item, remove row, undo and check item id.
@@ -336,11 +333,11 @@ TEST_F(TestUndoRedo, itemIdentifierOnRemove)
     model.setUndoRedoEnabled(true);
     auto stack = model.undoStack();
 
-    auto parent = model.insertNewItem(Constants::BaseType);
+    auto parent = model.insertItem<SessionItem>();
     parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
 
     identifier_type parent_id = parent->identifier();
-    auto child = model.insertNewItem(Constants::PropertyType, parent);
+    auto child = model.insertItem<PropertyItem>(parent);
     identifier_type child_id = child->identifier();
 
     // removing parent
@@ -350,10 +347,10 @@ TEST_F(TestUndoRedo, itemIdentifierOnRemove)
     EXPECT_EQ(model.rootItem()->childrenCount(), 0);
 
     stack->undo();
-    parent = Utils::ChildAt(model.rootItem(), 0);
-    child = Utils::ChildAt(parent, 0);
-    identifier_type parent_id2 = parent->identifier();
-    identifier_type child_id2 = child->identifier();
+    auto parent_at = Utils::ChildAt(model.rootItem(), 0);
+    auto child_at = Utils::ChildAt(parent_at, 0);
+    identifier_type parent_id2 = parent_at->identifier();
+    identifier_type child_id2 = child_at->identifier();
 
     EXPECT_EQ(parent_id, parent_id2);
     EXPECT_EQ(child_id, child_id2);
@@ -371,13 +368,13 @@ TEST_F(TestUndoRedo, multiLayer)
     auto stack = model.undoStack();
 
     // creating multi layer
-    auto parent = model.insertNewItem(ToyItems::Constants::MultiLayerType);
+    auto parent = model.insertItem<ToyItems::MultiLayerItem>();
     EXPECT_TRUE(dynamic_cast<ToyItems::MultiLayerItem*>(parent) != nullptr);
     EXPECT_EQ(parent->modelType(), ToyItems::Constants::MultiLayerType);
 
     // inserting two layers
-    auto layer0 = model.insertNewItem(ToyItems::Constants::LayerType, parent);
-    auto layer1 = model.insertNewItem(ToyItems::Constants::LayerType, parent);
+    auto layer0 = model.insertItem<ToyItems::LayerItem>(parent);
+    auto layer1 = model.insertItem<ToyItems::LayerItem>(parent);
 
     // saving identifiers for further reference
     identifier_type id_parent = parent->identifier();
@@ -405,20 +402,20 @@ TEST_F(TestUndoRedo, multiLayer)
     EXPECT_EQ(stack->index(), 3);
 
     // restoring pointers back
-    parent = Utils::ChildAt(model.rootItem(), 0);
-    layer0 = Utils::ChildAt(parent, 0);
-    layer1 = Utils::ChildAt(parent, 1);
+    auto parent_at = Utils::ChildAt(model.rootItem(), 0);
+    auto layer0_at = Utils::ChildAt(parent_at, 0);
+    auto layer1_at = Utils::ChildAt(parent_at, 1);
 
     // checking that restored item has corrrect identifiers
-    EXPECT_EQ(parent->identifier(), id_parent);
-    EXPECT_EQ(layer0->identifier(), id_layer0);
-    EXPECT_EQ(layer1->identifier(), id_layer1);
+    EXPECT_EQ(parent_at->identifier(), id_parent);
+    EXPECT_EQ(layer0_at->identifier(), id_layer0);
+    EXPECT_EQ(layer1_at->identifier(), id_layer1);
 
     // checking tag
-    EXPECT_EQ(parent->tagFromItem(layer0), ToyItems::MultiLayerItem::T_LAYERS);
-    EXPECT_EQ(parent->tagFromItem(layer1), ToyItems::MultiLayerItem::T_LAYERS);
-    std::vector<SessionItem*> expected = {layer0, layer1};
-    EXPECT_EQ(parent->getItems(ToyItems::MultiLayerItem::T_LAYERS), expected);
+    EXPECT_EQ(parent_at->tagFromItem(layer0_at), ToyItems::MultiLayerItem::T_LAYERS);
+    EXPECT_EQ(parent_at->tagFromItem(layer1_at), ToyItems::MultiLayerItem::T_LAYERS);
+    std::vector<SessionItem*> expected = {layer0_at, layer1_at};
+    EXPECT_EQ(parent_at->getItems(ToyItems::MultiLayerItem::T_LAYERS), expected);
 }
 
 //! Move single layer from multilayer to another empty multilayer.
@@ -432,9 +429,9 @@ TEST_F(TestUndoRedo, moveLayerFromMultiLayer)
     auto stack = model.undoStack();
 
     // creating multi layer with 3 layers
-    auto multilayer0 = model.insertNewItem(ToyItems::Constants::MultiLayerType);
-    auto layer0 = model.insertNewItem(ToyItems::Constants::LayerType, multilayer0);
-    auto multilayer1 = model.insertNewItem(ToyItems::Constants::MultiLayerType);
+    auto multilayer0 = model.insertItem<ToyItems::MultiLayerItem>();
+    auto layer0 = model.insertItem<ToyItems::LayerItem>(multilayer0);
+    auto multilayer1 = model.insertItem<ToyItems::MultiLayerItem>();
 
     // saving identifiers for further reference
     identifier_type id_multilayer0 = multilayer0->identifier();
@@ -469,9 +466,9 @@ TEST_F(TestUndoRedo, moveLayerFromMLDeleteSecond)
     auto stack = model.undoStack();
 
     // creating multi layer with 3 layers
-    auto multilayer0 = model.insertNewItem(ToyItems::Constants::MultiLayerType);
-    auto layer0 = model.insertNewItem(ToyItems::Constants::LayerType, multilayer0);
-    auto multilayer1 = model.insertNewItem(ToyItems::Constants::MultiLayerType);
+    auto multilayer0 = model.insertItem<ToyItems::MultiLayerItem>();
+    auto layer0 = model.insertItem<ToyItems::LayerItem>(multilayer0);
+    auto multilayer1 = model.insertItem<ToyItems::MultiLayerItem>();
 
     // saving identifiers for further reference
     identifier_type id_multilayer0 = multilayer0->identifier();
@@ -494,18 +491,18 @@ TEST_F(TestUndoRedo, moveLayerFromMLDeleteSecond)
     stack->undo();
 
     // restoring ponters
-    layer0 = pool->item_for_key(id_layer0);
-    multilayer1 = pool->item_for_key(id_multilayer1);
+    auto layer0_at = pool->item_for_key(id_layer0);
+    auto multilayer1_at = pool->item_for_key(id_multilayer1);
 
-    expected = {layer0};
+    expected = {layer0_at};
     EXPECT_EQ(multilayer0->children().size(), 0);
-    EXPECT_EQ(multilayer1->children(), expected);
+    EXPECT_EQ(multilayer1_at->children(), expected);
 
     // unoing move
     stack->undo();
 
     EXPECT_EQ(multilayer0->children(), expected);
-    EXPECT_EQ(multilayer1->children().size(), 0);
+    EXPECT_EQ(multilayer1_at->children().size(), 0);
 }
 
 //! Create 2 multilayers, 3 layers each. Move layer from one multilayer to another.
@@ -520,10 +517,10 @@ TEST_F(TestUndoRedo, moveLayerFromMLDeleteAll)
     auto stack = model.undoStack();
 
     // creating multi layer with 3 layers
-    auto multilayer0 = model.insertNewItem(ToyItems::Constants::MultiLayerType);
-    auto layer0 = model.insertNewItem(ToyItems::Constants::LayerType, multilayer0);
-    auto layer1 = model.insertNewItem(ToyItems::Constants::LayerType, multilayer0);
-    auto layer2 = model.insertNewItem(ToyItems::Constants::LayerType, multilayer0);
+    auto multilayer0 = model.insertItem<ToyItems::MultiLayerItem>();
+    auto layer0 = model.insertItem<ToyItems::LayerItem>(multilayer0);
+    auto layer1 = model.insertItem<ToyItems::LayerItem>(multilayer0);
+    auto layer2 = model.insertItem<ToyItems::LayerItem>(multilayer0);
 
     // saving identifiers for further reference
     identifier_type id_multilayer0 = multilayer0->identifier();
@@ -532,10 +529,10 @@ TEST_F(TestUndoRedo, moveLayerFromMLDeleteAll)
     identifier_type id_layer2 = layer2->identifier();
 
     // creating another multi layer with 3 layers
-    auto multilayer1 = model.insertNewItem(ToyItems::Constants::MultiLayerType);
-    auto layer3 = model.insertNewItem(ToyItems::Constants::LayerType, multilayer1);
-    auto layer4 = model.insertNewItem(ToyItems::Constants::LayerType, multilayer1);
-    auto layer5 = model.insertNewItem(ToyItems::Constants::LayerType, multilayer1);
+    auto multilayer1 = model.insertItem<ToyItems::MultiLayerItem>();
+    auto layer3 = model.insertItem<ToyItems::LayerItem>(multilayer1);
+    auto layer4 = model.insertItem<ToyItems::LayerItem>(multilayer1);
+    auto layer5 = model.insertItem<ToyItems::LayerItem>(multilayer1);
 
     // saving identifiers for further reference
     identifier_type id_multilayer1 = multilayer1->identifier();
@@ -564,21 +561,21 @@ TEST_F(TestUndoRedo, moveLayerFromMLDeleteAll)
     stack->undo();
 
     // restoring pointers
-    multilayer0 = pool->item_for_key(id_multilayer0);
-    layer0 = pool->item_for_key(id_layer0);
-    layer1 = pool->item_for_key(id_layer1);
-    layer2 = pool->item_for_key(id_layer2);
-    multilayer1 = pool->item_for_key(id_multilayer1);
-    layer3 = pool->item_for_key(id_layer3);
-    layer4 = pool->item_for_key(id_layer4);
-    layer5 = pool->item_for_key(id_layer5);
+    auto multilayer0_r = pool->item_for_key(id_multilayer0);
+    auto layer0_r = pool->item_for_key(id_layer0);
+    auto layer1_r = pool->item_for_key(id_layer1);
+    auto layer2_r = pool->item_for_key(id_layer2);
+    auto multilayer1_r = pool->item_for_key(id_multilayer1);
+    auto layer3_r = pool->item_for_key(id_layer3);
+    auto layer4_r = pool->item_for_key(id_layer4);
+    auto layer5_r = pool->item_for_key(id_layer5);
 
     // checking layers
-    std::vector<SessionItem*> expected = {layer0, layer1, layer2};
-    EXPECT_EQ(multilayer0->children(), expected);
+    std::vector<SessionItem*> expected = {layer0_r, layer1_r, layer2_r};
+    EXPECT_EQ(multilayer0_r->children(), expected);
 
-    expected = {layer3, layer4, layer5};
-    EXPECT_EQ(multilayer1->children(), expected);
+    expected = {layer3_r, layer4_r, layer5_r};
+    EXPECT_EQ(multilayer1_r->children(), expected);
 }
 
 //! Creating two multilayers. Copying layer from one multilayer to another.
@@ -593,11 +590,10 @@ TEST_F(TestUndoRedo, copyLayerFromMultilayer)
     const double expected_thickness = 55.0;
 
     // creating multi layer with 3 layers
-    auto multilayer0 = model.insertNewItem(ToyItems::Constants::MultiLayerType);
-    auto layer0 = dynamic_cast<ToyItems::LayerItem*>(
-        model.insertNewItem(ToyItems::Constants::LayerType, multilayer0));
+    auto multilayer0 = model.insertItem<ToyItems::MultiLayerItem>();
+    auto layer0 = model.insertItem<ToyItems::LayerItem>(multilayer0);
     layer0->setProperty(ToyItems::LayerItem::P_THICKNESS, expected_thickness);
-    auto multilayer1 = model.insertNewItem(ToyItems::Constants::MultiLayerType);
+    auto multilayer1 = model.insertItem<ToyItems::MultiLayerItem>();
 
     // copying layer
     auto layer_copy = dynamic_cast<ToyItems::LayerItem*>(model.copyItem(layer0, multilayer1));

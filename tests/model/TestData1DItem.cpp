@@ -73,7 +73,7 @@ TEST_F(TestData1DItem, setContent)
 TEST_F(TestData1DItem, checkSignalsOnAxisChange)
 {
     SessionModel model;
-    auto item = dynamic_cast<Data1DItem*>(model.insertNewItem(Constants::Data1DItemType));
+    auto item = model.insertItem<Data1DItem>();
 
     MockWidgetForItem widget(item);
 
@@ -91,7 +91,7 @@ TEST_F(TestData1DItem, checkSignalsOnAxisChange)
 TEST_F(TestData1DItem, checkSignalsOnContentChange)
 {
     SessionModel model;
-    auto item = dynamic_cast<Data1DItem*>(model.insertNewItem(Constants::Data1DItemType));
+    auto item = model.insertItem<Data1DItem>();
     item->setFixedBinAxis(3, 0.0, 3.0);
 
     MockWidgetForItem widget(item);

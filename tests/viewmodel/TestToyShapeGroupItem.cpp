@@ -65,7 +65,7 @@ TEST_F(TestToyShapeGroupItem, setCurrentType)
 TEST_F(TestToyShapeGroupItem, inModelContext)
 {
     ToyItems::SampleModel model;
-    auto item = dynamic_cast<GroupItem*>(model.insertNewItem(ToyItems::Constants::ShapeGroupType));
+    auto item = model.insertItem<ToyItems::ShapeGroupItem>();
     ASSERT_TRUE(item != nullptr);
 
     EXPECT_EQ(item->currentIndex(), 1);
@@ -88,7 +88,7 @@ TEST_F(TestToyShapeGroupItem, inModelContext)
 TEST_F(TestToyShapeGroupItem, setDataInModelContext)
 {
     ToyItems::SampleModel model;
-    auto item = dynamic_cast<GroupItem*>(model.insertNewItem(ToyItems::Constants::ShapeGroupType));
+    auto item = model.insertItem<ToyItems::ShapeGroupItem>();
     ASSERT_TRUE(item != nullptr);
 
     // initial status
@@ -111,7 +111,7 @@ TEST_F(TestToyShapeGroupItem, viewItemsFromShapeGroup)
 {
     ToyItems::SampleModel model;
 
-    auto groupItem = model.insertNewItem(ToyItems::Constants::ShapeGroupType);
+    auto groupItem = model.insertItem<ToyItems::ShapeGroupItem>();
 
     ViewLabelItem labelItem(groupItem);
     EXPECT_EQ(labelItem.data(Qt::DisplayRole).toString().toStdString(),
@@ -126,7 +126,7 @@ TEST_F(TestToyShapeGroupItem, viewItemsFromShapeGroup)
 TEST_F(TestToyShapeGroupItem, inDefaultViewModelContext)
 {
     ToyItems::SampleModel model;
-    auto groupItem = model.insertNewItem(ToyItems::Constants::ShapeGroupType);
+    auto groupItem = model.insertItem<ToyItems::ShapeGroupItem>();
 
     // constructing viewModel from sample model
     DefaultViewModel viewModel(&model);
@@ -177,11 +177,10 @@ TEST_F(TestToyShapeGroupItem, inDefaultViewModelContext)
 TEST_F(TestToyShapeGroupItem, inPropertyViewModelContext)
 {
     ToyItems::SampleModel model;
-    auto parent = model.insertNewItem(Constants::BaseType);
+    auto parent = model.insertItem<SessionItem>();
     parent->registerTag(TagInfo::propertyTag("property_tag", ToyItems::Constants::ShapeGroupType));
 
-    auto groupItem = dynamic_cast<GroupItem*>(
-        model.insertNewItem(ToyItems::Constants::ShapeGroupType, parent, "property_tag"));
+    auto groupItem = model.insertItem<ToyItems::ShapeGroupItem>(parent, "property_tag");
     ASSERT_TRUE(groupItem != nullptr);
 
     // constructing viewModel from sample model

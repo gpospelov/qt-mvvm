@@ -25,7 +25,7 @@ TEST(TestModelMapper, onDataChange)
     MockWidgetForModel widget(&model);
 
     EXPECT_CALL(widget, onRowInserted(_, _, _));
-    auto item = model.insertNewItem(Constants::BaseType, model.rootItem(), "", 0);
+    auto item = model.insertItem<SessionItem>(model.rootItem(), "", 0);
 
     // expecting signal to be called once
     const int role = ItemDataRole::DATA;
@@ -73,7 +73,7 @@ TEST(TestModelMapper, onRowInserted)
     EXPECT_CALL(widget, onModelReset(_)).Times(0);
 
     // perform action
-    model.insertNewItem(Constants::BaseType, model.rootItem(), expected_tag, 0);
+    model.insertItem<SessionItem>(model.rootItem(), expected_tag, 0);
 }
 
 //! Inserting item and checking corresponding signals.
@@ -86,7 +86,7 @@ TEST(TestModelMapper, onRowRemoved)
     const int expected_index(0);
     const std::string expected_tag("");
     EXPECT_CALL(widget, onRowInserted(model.rootItem(), expected_tag, expected_index)).Times(1);
-    model.insertNewItem(Constants::BaseType, model.rootItem(), expected_tag, expected_index);
+    model.insertItem<SessionItem>(model.rootItem(), expected_tag, expected_index);
 
     EXPECT_CALL(widget, onDataChange(_, _)).Times(0);
     EXPECT_CALL(widget, onRowInserted(_, _, _)).Times(0);
@@ -102,8 +102,8 @@ TEST(TestModelMapper, onRowRemoved)
 
 TEST(TestModelMapper, onModelDestroyed)
 {
-    std::unique_ptr<SessionModel> model = std::make_unique<SessionModel>();
-    std::unique_ptr<MockWidgetForModel> widget = std::make_unique<MockWidgetForModel>(model.get());
+    auto model = std::make_unique<SessionModel>();
+    auto widget = std::make_unique<MockWidgetForModel>(model.get());
 
     EXPECT_CALL(*widget, onDataChange(_, _)).Times(0);
     EXPECT_CALL(*widget, onRowInserted(_, _, _)).Times(0);
@@ -120,8 +120,8 @@ TEST(TestModelMapper, onModelDestroyed)
 
 TEST(TestModelMapper, onModelReset)
 {
-    std::unique_ptr<SessionModel> model = std::make_unique<SessionModel>();
-    std::unique_ptr<MockWidgetForModel> widget = std::make_unique<MockWidgetForModel>(model.get());
+    auto model = std::make_unique<SessionModel>();
+    auto widget = std::make_unique<MockWidgetForModel>(model.get());
 
     EXPECT_CALL(*widget, onDataChange(_, _)).Times(0);
     EXPECT_CALL(*widget, onRowInserted(_, _, _)).Times(0);

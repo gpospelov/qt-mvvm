@@ -35,11 +35,9 @@ TEST_F(TestGraphViewportItem, addItem)
 {
     SessionModel model;
 
-    auto viewport_item =
-        dynamic_cast<GraphViewportItem*>(model.insertNewItem(Constants::GraphViewportItemType));
-    auto graph_item =
-        dynamic_cast<GraphItem*>(model.insertNewItem(Constants::GraphItemType, viewport_item));
-    auto data_item = dynamic_cast<Data1DItem*>(model.insertNewItem(Constants::Data1DItemType));
+    auto viewport_item = model.insertItem<GraphViewportItem>();
+    auto graph_item = model.insertItem<GraphItem>(viewport_item);
+    auto data_item = model.insertItem<Data1DItem>();
 
     const std::vector<double> expected_content = {1.0, 2.0, 3.0};
     const std::vector<double> expected_centers = {0.5, 1.5, 2.5};
@@ -70,8 +68,7 @@ TEST_F(TestGraphViewportItem, addItem)
 TEST_F(TestGraphViewportItem, onAddItem)
 {
     SessionModel model;
-    auto viewport_item =
-        dynamic_cast<GraphViewportItem*>(model.insertNewItem(Constants::GraphViewportItemType));
+    auto viewport_item = model.insertItem<GraphViewportItem>();
 
     MockWidgetForItem widget(viewport_item);
 
@@ -83,7 +80,7 @@ TEST_F(TestGraphViewportItem, onAddItem)
     EXPECT_CALL(widget, onRowAboutToBeRemoved(_, _, _)).Times(0);
 
     // triggering action
-    model.insertNewItem(Constants::GraphItemType, viewport_item);
+    model.insertItem<GraphItem>(viewport_item);
 }
 
 //! Check signaling on set data item.
@@ -91,19 +88,17 @@ TEST_F(TestGraphViewportItem, onAddItem)
 TEST_F(TestGraphViewportItem, onSetDataItem)
 {
     SessionModel model;
-    auto viewport_item =
-        dynamic_cast<GraphViewportItem*>(model.insertNewItem(Constants::GraphViewportItemType));
+    auto viewport_item = model.insertItem<GraphViewportItem>();
 
     // setting upda tata item
-    auto data_item = dynamic_cast<Data1DItem*>(model.insertNewItem(Constants::Data1DItemType));
+    auto data_item = model.insertItem<Data1DItem>();
     const std::vector<double> expected_content = {1.0, 2.0, 3.0};
     const std::vector<double> expected_centers = {0.5, 1.5, 2.5};
     data_item->setFixedBinAxis(3, 0.0, 3.0);
     data_item->setContent(expected_content);
 
     // inserting graph item
-    auto graph_item =
-        dynamic_cast<GraphItem*>(model.insertNewItem(Constants::GraphItemType, viewport_item));
+    auto graph_item = model.insertItem<GraphItem>(viewport_item);
 
     MockWidgetForItem widget(viewport_item);
 

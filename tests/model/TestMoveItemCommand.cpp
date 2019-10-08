@@ -18,10 +18,10 @@ TestMoveItemCommand::~TestMoveItemCommand() = default;
 TEST_F(TestMoveItemCommand, rootContextNext)
 {
     SessionModel model;
-    auto item0 = model.insertNewItem(Constants::BaseType, model.rootItem(), "", -1); // 0
-    auto item1 = model.insertNewItem(Constants::BaseType, model.rootItem(), "", -1); // 1
-    auto item2 = model.insertNewItem(Constants::BaseType, model.rootItem(), "", -1); // 2
-    auto item3 = model.insertNewItem(Constants::BaseType, model.rootItem(), "", -1); // 3
+    auto item0 = model.insertItem<SessionItem>(model.rootItem(), "", -1); // 0
+    auto item1 = model.insertItem<SessionItem>(model.rootItem(), "", -1); // 1
+    auto item2 = model.insertItem<SessionItem>(model.rootItem(), "", -1); // 2
+    auto item3 = model.insertItem<SessionItem>(model.rootItem(), "", -1); // 3
 
     // expecting 4 items in the order of insertion
     std::vector<SessionItem*> expected = {item0, item1, item2, item3};
@@ -54,10 +54,10 @@ TEST_F(TestMoveItemCommand, rootContextNext)
 TEST_F(TestMoveItemCommand, rootContextSamePos)
 {
     SessionModel model;
-    auto item0 = model.insertNewItem(Constants::BaseType, model.rootItem(), "", -1);
-    auto item1 = model.insertNewItem(Constants::BaseType, model.rootItem(), "", -1);
-    auto item2 = model.insertNewItem(Constants::BaseType, model.rootItem(), "", -1);
-    auto item3 = model.insertNewItem(Constants::BaseType, model.rootItem(), "", -1);
+    auto item0 = model.insertItem<SessionItem>(model.rootItem(), "", -1);
+    auto item1 = model.insertItem<SessionItem>(model.rootItem(), "", -1);
+    auto item2 = model.insertItem<SessionItem>(model.rootItem(), "", -1);
+    auto item3 = model.insertItem<SessionItem>(model.rootItem(), "", -1);
 
     // expecting 4 items in the order of insertion
     std::vector<SessionItem*> expected = {item0, item1, item2, item3};
@@ -84,10 +84,10 @@ TEST_F(TestMoveItemCommand, rootContextSamePos)
 TEST_F(TestMoveItemCommand, rootContextPrev)
 {
     SessionModel model;
-    auto item0 = model.insertNewItem(Constants::BaseType, model.rootItem(), "", -1);
-    auto item1 = model.insertNewItem(Constants::BaseType, model.rootItem(), "", -1);
-    auto item2 = model.insertNewItem(Constants::BaseType, model.rootItem(), "", -1);
-    auto item3 = model.insertNewItem(Constants::BaseType, model.rootItem(), "", -1);
+    auto item0 = model.insertItem<SessionItem>(model.rootItem(), "", -1);
+    auto item1 = model.insertItem<SessionItem>(model.rootItem(), "", -1);
+    auto item2 = model.insertItem<SessionItem>(model.rootItem(), "", -1);
+    auto item3 = model.insertItem<SessionItem>(model.rootItem(), "", -1);
 
     // expecting 4 items in the order of insertion
     std::vector<SessionItem*> expected = {item0, item1, item2, item3};
@@ -114,10 +114,10 @@ TEST_F(TestMoveItemCommand, rootContextPrev)
 TEST_F(TestMoveItemCommand, rootContextLast)
 {
     SessionModel model;
-    auto item0 = model.insertNewItem(Constants::BaseType, model.rootItem(), "", -1);
-    auto item1 = model.insertNewItem(Constants::BaseType, model.rootItem(), "", -1);
-    auto item2 = model.insertNewItem(Constants::BaseType, model.rootItem(), "", -1);
-    auto item3 = model.insertNewItem(Constants::BaseType, model.rootItem(), "", -1);
+    auto item0 = model.insertItem<SessionItem>(model.rootItem(), "", -1);
+    auto item1 = model.insertItem<SessionItem>(model.rootItem(), "", -1);
+    auto item2 = model.insertItem<SessionItem>(model.rootItem(), "", -1);
+    auto item3 = model.insertItem<SessionItem>(model.rootItem(), "", -1);
 
     // expecting 4 items in the order of insertion
     std::vector<SessionItem*> expected = {item0, item1, item2, item3};
@@ -145,10 +145,10 @@ TEST_F(TestMoveItemCommand, rootContextLast)
 TEST_F(TestMoveItemCommand, rootContextLast2)
 {
     SessionModel model;
-    auto item0 = model.insertNewItem(Constants::BaseType, model.rootItem(), "", -1);
-    auto item1 = model.insertNewItem(Constants::BaseType, model.rootItem(), "", -1);
-    auto item2 = model.insertNewItem(Constants::BaseType, model.rootItem(), "", -1);
-    auto item3 = model.insertNewItem(Constants::BaseType, model.rootItem(), "", -1);
+    auto item0 = model.insertItem<SessionItem>(model.rootItem(), "", -1);
+    auto item1 = model.insertItem<SessionItem>(model.rootItem(), "", -1);
+    auto item2 = model.insertItem<SessionItem>(model.rootItem(), "", -1);
+    auto item3 = model.insertItem<SessionItem>(model.rootItem(), "", -1);
 
     // expecting 4 items in the order of insertion
     std::vector<SessionItem*> expected = {item0, item1, item2, item3};
@@ -176,12 +176,12 @@ TEST_F(TestMoveItemCommand, rootContextLast2)
 TEST_F(TestMoveItemCommand, fromRootToParent)
 {
     SessionModel model;
-    auto item0 = model.insertNewItem(Constants::BaseType, model.rootItem(), "", -1);
-    auto parent = model.insertNewItem(Constants::BaseType, model.rootItem(), "", -1);
+    auto item0 = model.insertItem<SessionItem>(model.rootItem(), "", -1);
+    auto parent = model.insertItem<SessionItem>(model.rootItem(), "", -1);
     parent->registerTag(TagInfo::universalTag("tag1"), /*set_as_default*/ true);
 
-    auto child0 = model.insertNewItem(Constants::BaseType, parent, "tag1", -1);
-    auto child1 = model.insertNewItem(Constants::BaseType, parent, "tag1", -1);
+    auto child0 = model.insertItem<SessionItem>(parent, "tag1", -1);
+    auto child1 = model.insertItem<SessionItem>(parent, "tag1", -1);
 
     // expected items for root item
     std::vector<SessionItem*> expected = {item0, parent};
@@ -222,12 +222,12 @@ TEST_F(TestMoveItemCommand, fromRootToParent)
 TEST_F(TestMoveItemCommand, fromParentToRoot)
 {
     SessionModel model;
-    auto item0 = model.insertNewItem(Constants::BaseType, model.rootItem(), "", -1);
-    auto parent = model.insertNewItem(Constants::BaseType, model.rootItem(), "", -1);
+    auto item0 = model.insertItem<SessionItem>(model.rootItem(), "", -1);
+    auto parent = model.insertItem<SessionItem>(model.rootItem(), "", -1);
     parent->registerTag(TagInfo::universalTag("tag1"), /*set_as_default*/ true);
 
-    auto child0 = model.insertNewItem(Constants::BaseType, parent, "tag1", -1);
-    auto child1 = model.insertNewItem(Constants::BaseType, parent, "tag1", -1);
+    auto child0 = model.insertItem<SessionItem>(parent, "tag1", -1);
+    auto child1 = model.insertItem<SessionItem>(parent, "tag1", -1);
 
     // expected items for root item
     std::vector<SessionItem*> expected = {item0, parent};
@@ -268,14 +268,14 @@ TEST_F(TestMoveItemCommand, fromParentToRoot)
 TEST_F(TestMoveItemCommand, betweenParentTags)
 {
     SessionModel model;
-    auto parent = model.insertNewItem(Constants::BaseType, model.rootItem(), "", -1);
+    auto parent = model.insertItem<SessionItem>(model.rootItem(), "", -1);
     parent->registerTag(TagInfo::universalTag("tag1"));
     parent->registerTag(TagInfo::universalTag("tag2"));
 
-    auto child0 = model.insertNewItem(Constants::BaseType, parent, "tag1", -1);
-    auto child1 = model.insertNewItem(Constants::BaseType, parent, "tag1", -1);
-    auto child2 = model.insertNewItem(Constants::BaseType, parent, "tag2", -1);
-    auto child3 = model.insertNewItem(Constants::BaseType, parent, "tag2", -1);
+    auto child0 = model.insertItem<SessionItem>(parent, "tag1", -1);
+    auto child1 = model.insertItem<SessionItem>(parent, "tag1", -1);
+    auto child2 = model.insertItem<SessionItem>(parent, "tag2", -1);
+    auto child3 = model.insertItem<SessionItem>(parent, "tag2", -1);
 
     // expected items for root item
     std::vector<SessionItem*> expected = {parent};

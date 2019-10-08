@@ -21,7 +21,7 @@ TEST_F(TestSetValueCommand, setValueCommand)
     const int role = ItemDataRole::DATA;
 
     // inserting single item
-    auto item = model.insertNewItem(Constants::BaseType);
+    auto item = model.insertItem<SessionItem>();
     EXPECT_FALSE(model.data(item, role).isValid());
 
     QVariant expected(42.0);
@@ -46,7 +46,7 @@ TEST_F(TestSetValueCommand, setSameValueCommand)
     const int role = ItemDataRole::DATA;
 
     // inserting single item
-    auto item = model.insertNewItem(Constants::BaseType);
+    auto item = model.insertItem<SessionItem>();
     QVariant expected(42.0);
     item->setData(expected, role);
 

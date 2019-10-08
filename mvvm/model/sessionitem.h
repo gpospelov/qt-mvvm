@@ -113,7 +113,7 @@ template <typename T> T& SessionItem::item(const std::string& tag) const
 
 //! Returns all items under given tag casted to specific type.
 
-template <typename T> std::vector<T*> SessionItem::items(const std::string& tag) const
+template <typename T=SessionItem> std::vector<T*> SessionItem::items(const std::string& tag) const
 {
     std::vector<T*> result;
     for (auto item : getItems(tag))

@@ -4,6 +4,7 @@
 #include "sessionitem.h"
 #include "sessionmodel.h"
 #include "viewmodelutils.h"
+#include "vectoritem.h"
 #include <QColor>
 #include <QModelIndexList>
 #include <QStandardItemModel>
@@ -129,7 +130,7 @@ TEST_F(TestViewModelUtils, parentItemsFromIndex)
 {
     // creating VectorItem and viewModel to see it as a table
     SessionModel model;
-    auto parent = model.insertNewItem(Constants::VectorType);
+    auto parent = model.insertItem<VectorItem>();
     PropertyTableViewModel viewModel;
     viewModel.setSessionModel(&model);
 

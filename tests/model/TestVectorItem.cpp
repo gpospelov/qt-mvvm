@@ -35,7 +35,7 @@ TEST_F(TestVectorItem, initialState)
 TEST_F(TestVectorItem, initialStateFromModel)
 {
     SessionModel model;
-    auto item = dynamic_cast<VectorItem*>(model.insertNewItem(Constants::VectorType));
+    auto item = model.insertItem<VectorItem>();
 
     EXPECT_EQ(item->property(VectorItem::P_X).toDouble(), 0.0);
     EXPECT_EQ(item->property(VectorItem::P_Y).toDouble(), 0.0);

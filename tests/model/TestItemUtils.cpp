@@ -3,6 +3,7 @@
 #include "itemutils.h"
 #include "sessionitem.h"
 #include "sessionmodel.h"
+#include "propertyitem.h"
 #include "taginfo.h"
 #include <memory>
 
@@ -79,16 +80,15 @@ TEST_F(TestItemUtils, iterateIfItem)
 
 TEST_F(TestItemUtils, iterateModel)
 {
-    const model_type modelType = Constants::BaseType;
     SessionModel model;
 
     // building model
-    auto parent1 = model.insertNewItem(modelType);
-    auto parent2 = model.insertNewItem(modelType);
+    auto parent1 = model.insertItem<SessionItem>();
+    auto parent2 = model.insertItem<SessionItem>();
     parent1->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
     parent2->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
-    auto child1 = model.insertNewItem(modelType, parent1);
-    auto child2 = model.insertNewItem(modelType, parent1);
+    auto child1 = model.insertItem<SessionItem>(parent1);
+    auto child2 = model.insertItem<SessionItem>(parent1);
 
     std::vector<const SessionItem*> visited_items;
     auto fun = [&](const SessionItem* item) { visited_items.push_back(item); };
@@ -106,14 +106,12 @@ TEST_F(TestItemUtils, itemCopyNumber)
 {
     SessionModel model;
 
-    auto parent = model.insertNewItem(Constants::BaseType);
+    auto parent = model.insertItem<SessionItem>();
     parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
 
-    const std::string model_a(Constants::BaseType);
-    const std::string model_b(Constants::PropertyType);
-    auto child1 = model.insertNewItem(model_a, parent);
-    auto child2 = model.insertNewItem(model_a, parent);
-    auto child3 = model.insertNewItem(model_b, parent);
+    auto child1 = model.insertItem<SessionItem>(parent);
+    auto child2 = model.insertItem<SessionItem>(parent);
+    auto child3 = model.insertItem<PropertyItem>(parent);
 
     EXPECT_EQ(Utils::CopyNumber(child1), 0);
     EXPECT_EQ(Utils::CopyNumber(child2), 1);
@@ -126,13 +124,13 @@ TEST_F(TestItemUtils, TopLevelAndPropertyItems)
 {
     SessionModel model;
 
-    auto parent = model.insertNewItem(Constants::BaseType);
+    auto parent = model.insertItem<SessionItem>();
     parent->registerTag(TagInfo::universalTag("default_tag"), /*set_as_default*/ true);
     parent->registerTag(TagInfo::propertyTag("property_tag", Constants::PropertyType));
 
-    auto child1 = model.insertNewItem(Constants::BaseType, parent, "default_tag", -1);
-    auto child2 = model.insertNewItem(Constants::PropertyType, parent, "property_tag", -1);
-    auto child3 = model.insertNewItem(Constants::BaseType, parent, "default_tag", -1);
+    auto child1 = model.insertItem<SessionItem>(parent, "default_tag", -1);
+    auto child2 = model.insertItem<PropertyItem>(parent, "property_tag", -1);
+    auto child3 = model.insertItem<SessionItem>(parent, "default_tag", -1);
 
     EXPECT_EQ(Utils::TopLevelItems(*parent), std::vector<SessionItem*>({child1, child3}));
     EXPECT_EQ(Utils::SinglePropertyItems(*parent), std::vector<SessionItem*>({child2}));

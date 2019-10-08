@@ -96,7 +96,7 @@ TEST_F(TestPropertiesRowStrategy, baseItemInModelContext)
     EXPECT_EQ(items.size(), 0);
     TestUtils::clean_items(items);
 
-    model.insertNewItem(Constants::BaseType);
+    model.insertItem<SessionItem>();
     items = strategy.constructRow(model.rootItem());
     EXPECT_EQ(items.size(), 0);
 
@@ -108,13 +108,13 @@ TEST_F(TestPropertiesRowStrategy, baseItemInModelContext)
 TEST_F(TestPropertiesRowStrategy, propertyItemTree)
 {
     SessionModel model;
-    auto parent = model.insertNewItem(Constants::BaseType);
+    auto parent = model.insertItem<SessionItem>();
 
     parent->registerTag(TagInfo::universalTag("universal_tag"));
     parent->registerTag(TagInfo::propertyTag("property_tag", Constants::PropertyType));
 
-    model.insertNewItem(Constants::BaseType, parent, "universal_tag");
-    model.insertNewItem(Constants::PropertyType, parent, "property_tag");
+    model.insertItem<SessionItem>(parent, "universal_tag");
+    model.insertItem<PropertyItem>(parent, "property_tag");
 
     PropertiesRowStrategy strategy({});
     auto items = strategy.constructRow(model.rootItem());
@@ -134,7 +134,7 @@ TEST_F(TestPropertiesRowStrategy, propertyItemTree)
 TEST_F(TestPropertiesRowStrategy, vectorItemInModelContext)
 {
     SessionModel model;
-    model.insertNewItem(Constants::VectorType);
+    model.insertItem<VectorItem>();
 
     PropertiesRowStrategy strategy({});
     auto items = strategy.constructRow(model.rootItem());

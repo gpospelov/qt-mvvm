@@ -136,7 +136,7 @@ TEST_F(TestSessionItemContainer, indexOfItem)
 
     // not existing items
     EXPECT_EQ(tag.indexOfItem(nullptr), -1);
-    std::unique_ptr<SessionItem> child3 = std::make_unique<SessionItem>(model_type);
+    auto child3 = std::make_unique<SessionItem>(model_type);
     EXPECT_EQ(tag.indexOfItem(child3.get()), -1);
 }
 

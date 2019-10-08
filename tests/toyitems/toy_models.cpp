@@ -14,7 +14,7 @@
 namespace  {
 std::unique_ptr<ModelView::ItemCatalogue> CreateToyItemCatalogue()
 {
-    std::unique_ptr<ModelView::ItemCatalogue> result = std::make_unique<ModelView::ItemCatalogue>();
+    auto result = std::make_unique<ModelView::ItemCatalogue>();
     result->registerItem<ToyItems::MultiLayerItem>();
     result->registerItem<ToyItems::LayerItem>();
     result->registerItem<ToyItems::ParticleItem>();

@@ -24,6 +24,49 @@ TEST_F(TestSessionModel, initialState)
     EXPECT_EQ(model.rootItem()->parent(), nullptr);
 }
 
+TEST_F(TestSessionModel, insertItem)
+{
+    auto pool = std::make_shared<ItemPool>();
+    SessionModel model("Test", pool);
+
+    const model_type modelType = Constants::BaseType;
+
+    // inserting single item
+    auto item = model.insertItem<SessionItem>();
+    EXPECT_TRUE(item != nullptr);
+    EXPECT_EQ(item->parent(), model.rootItem());
+    EXPECT_EQ(item->model(), &model);
+    EXPECT_EQ(item->modelType(), modelType);
+
+    // checking registration
+    auto item_key = item->identifier();
+    EXPECT_EQ(pool->item_for_key(item_key), item);
+
+    // registering tag
+    item->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
+
+    // adding child to it
+    auto child = model.insertItem<SessionItem>(item);
+    auto child_key = child->identifier();
+    EXPECT_EQ(pool->item_for_key(child_key), child);
+
+    EXPECT_TRUE(child != nullptr);
+    EXPECT_EQ(child->parent(), item);
+    EXPECT_EQ(child->model(), &model);
+    EXPECT_EQ(child->modelType(), modelType);
+
+    // taking child back
+    auto taken = item->takeItem("", 0);
+    EXPECT_EQ(taken, child);
+    EXPECT_EQ(child->model(), nullptr);
+
+    // childitem not registered anymore
+    EXPECT_EQ(pool->item_for_key(child_key), nullptr);
+
+    delete taken;
+}
+
+
 TEST_F(TestSessionModel, insertNewItem)
 {
     auto pool = std::make_shared<ItemPool>();
@@ -70,15 +113,15 @@ TEST_F(TestSessionModel, insertNewItemWithTag)
 {
     const std::string tag1("tag1");
     SessionModel model;
-    auto parent = model.insertNewItem(Constants::BaseType);
+    auto parent = model.insertItem<SessionItem>();
     parent->registerTag(TagInfo::universalTag(tag1));
-    auto child1 = model.insertNewItem(Constants::PropertyType, parent, tag1, -1);
+    auto child1 = model.insertItem<PropertyItem>(parent, tag1, -1);
 
     EXPECT_EQ(parent->tagFromItem(child1), tag1);
     EXPECT_EQ(Utils::IndexOfChild(parent, child1), 0);
 
     // adding second child
-    auto child2 = model.insertNewItem(Constants::PropertyType, parent, tag1, 0);
+    auto child2 = model.insertItem<PropertyItem>(parent, tag1, 0);
 
     EXPECT_EQ(parent->tagFromItem(child2), tag1);
     EXPECT_EQ(Utils::IndexOfChild(parent, child1), 1);
@@ -90,7 +133,7 @@ TEST_F(TestSessionModel, setData)
     SessionModel model;
 
     // inserting single item
-    auto item = model.insertNewItem(Constants::BaseType);
+    auto item = model.insertItem<SessionItem>();
     EXPECT_TRUE(model.data(item, ItemDataRole::DISPLAY).isValid());
 
     // setting wrong type of data
@@ -110,11 +153,11 @@ TEST_F(TestSessionModel, removeItem)
     auto pool = std::make_shared<ItemPool>();
     SessionModel model("Test", pool);
 
-    auto parent = model.insertNewItem(Constants::BaseType);
+    auto parent = model.insertItem<SessionItem>();
     parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
 
-    auto child1 = model.insertNewItem(Constants::BaseType, parent);
-    auto child2 = model.insertNewItem(Constants::PropertyType, parent, "", 0); // before child1
+    auto child1 = model.insertItem<SessionItem>(parent);
+    auto child2 = model.insertItem<SessionItem>(parent, "", 0); // before child1
     Q_UNUSED(child2)
 
     // removing child2
@@ -131,7 +174,7 @@ TEST_F(TestSessionModel, removeNonExistingItem)
     auto pool = std::make_shared<ItemPool>();
     SessionModel model("Test", pool);
 
-    auto parent = model.insertNewItem(Constants::BaseType);
+    auto parent = model.insertItem<SessionItem>();
     parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
 
     // removing non existing child
@@ -144,11 +187,11 @@ TEST_F(TestSessionModel, takeRowFromRootItem)
     auto pool = std::make_shared<ItemPool>();
     SessionModel model("Test", pool);
 
-    auto parent = model.insertNewItem(Constants::BaseType);
+    auto parent = model.insertItem<SessionItem>();
     parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
     auto parent_key = parent->identifier();
 
-    auto child = model.insertNewItem(Constants::PropertyType, parent);
+    auto child = model.insertItem<SessionItem>(parent);
     auto child_key = child->identifier();
 
     EXPECT_EQ(pool->item_for_key(parent_key), parent);
@@ -166,14 +209,14 @@ TEST_F(TestSessionModel, moveItem)
     SessionModel model;
 
     // parent with child
-    auto parent0 = model.insertNewItem(Constants::BaseType);
+    auto parent0 = model.insertItem<SessionItem>();
     parent0->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
-    auto child0 = model.insertNewItem(Constants::PropertyType, parent0);
+    auto child0 = model.insertItem<PropertyItem>(parent0);
 
     // another parent with child
-    auto parent1 = model.insertNewItem(Constants::BaseType);
+    auto parent1 = model.insertItem<SessionItem>();
     parent1->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
-    auto child1 = model.insertNewItem(Constants::PropertyType, parent1);
+    auto child1 = model.insertItem<PropertyItem>(parent1);
 
     // moving child0 from parent0 to parent 1
     model.moveItem(child0, parent1, "", 0);
@@ -193,8 +236,8 @@ TEST_F(TestSessionModel, clearModel)
     auto first_root = model.rootItem();
 
     EXPECT_EQ(model.rootItem()->childrenCount(), 0);
-    model.insertNewItem(Constants::BaseType);
-    model.insertNewItem(Constants::BaseType);
+    model.insertItem<SessionItem>();
+    model.insertItem<SessionItem>();
     EXPECT_EQ(model.rootItem()->childrenCount(), 2);
 
     model.clear();
@@ -211,7 +254,7 @@ TEST_F(TestSessionModel, copyModelItemRootContext)
     SessionModel model;
 
     // create single item with value
-    auto item = model.insertNewItem(Constants::BaseType);
+    auto item = model.insertItem<SessionItem>();
     item->setData(42.0);
 
     // copying to root item
@@ -236,9 +279,9 @@ TEST_F(TestSessionModel, copyParentWithProperty)
     SessionModel model;
 
     // parent with single child and data on ite
-    auto parent0 = model.insertNewItem(Constants::BaseType);
+    auto parent0 = model.insertItem<SessionItem>();
     parent0->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
-    auto child0 = model.insertNewItem(Constants::PropertyType, parent0);
+    auto child0 = model.insertItem<SessionItem>(parent0);
     child0->setData(42.0);
 
     // copying whole parent to root
@@ -259,7 +302,7 @@ TEST_F(TestSessionModel, copyFreeItem)
     SessionModel model;
 
     // single parent in a model
-    auto parent0 = model.insertNewItem(Constants::BaseType);
+    auto parent0 = model.insertItem<SessionItem>();
     parent0->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
 
     // free item
@@ -278,9 +321,9 @@ TEST_F(TestSessionModel, forbiddenCopy)
     SessionModel model;
 
     // single parent in a model
-    auto parent0 = model.insertNewItem(Constants::BaseType);
+    auto parent0 = model.insertItem<SessionItem>();
     parent0->registerTag(TagInfo::propertyTag("property", "Property"));
-    auto property = model.insertNewItem(Constants::PropertyType, parent0, "property", -1);
+    auto property = model.insertItem<PropertyItem>(parent0, "property", -1);
 
     // copying property to same property tag is not allowed
     auto copy = model.copyItem(property, parent0, "property", -1);
@@ -293,7 +336,7 @@ TEST_F(TestSessionModel, forbiddenCopy)
 TEST_F(TestSessionModel, findItem)
 {
     SessionModel model;
-    auto parent = model.insertNewItem(Constants::BaseType);
+    auto parent = model.insertItem<SessionItem>();
 
     // check that we can find item using its own identofoer
     const identifier_type id = parent->identifier();
@@ -314,8 +357,8 @@ TEST_F(TestSessionModel, findItemInAlienModel)
     SessionModel model2("Test2", pool);
 
     // inserting items in both models
-    auto parent1 = model1.insertNewItem(Constants::BaseType);
-    auto parent2 = model2.insertNewItem(Constants::BaseType);
+    auto parent1 = model1.insertItem<SessionItem>();
+    auto parent2 = model2.insertItem<SessionItem>();
     const identifier_type id1 = parent1->identifier();
     const identifier_type id2 = parent2->identifier();
 

@@ -32,7 +32,7 @@ TEST_F(TestDefaultViewModel, initialState)
 TEST_F(TestDefaultViewModel, fromPropertyItem)
 {
     SessionModel model;
-    auto propertyItem = model.insertNewItem(Constants::PropertyType);
+    auto propertyItem = model.insertItem<PropertyItem>();
     propertyItem->setData(42.0);
 
     DefaultViewModel viewModel(&model);
@@ -58,7 +58,7 @@ TEST_F(TestDefaultViewModel, fromPropertyItem)
 TEST_F(TestDefaultViewModel, sessionItemFromIndex)
 {
     SessionModel model;
-    auto propertyItem = model.insertNewItem(Constants::PropertyType);
+    auto propertyItem = model.insertItem<PropertyItem>();
     propertyItem->setData(42.0);
 
     DefaultViewModel viewModel(&model);
@@ -79,7 +79,7 @@ TEST_F(TestDefaultViewModel, sessionItemFromIndex)
 TEST_F(TestDefaultViewModel, indexFromSessionItem)
 {
     SessionModel model;
-    auto propertyItem = model.insertNewItem(Constants::PropertyType);
+    auto propertyItem = model.insertItem<PropertyItem>();
     propertyItem->setData(42.0);
 
     DefaultViewModel viewModel(&model);
@@ -99,7 +99,7 @@ TEST_F(TestDefaultViewModel, indexFromSessionItem)
 TEST_F(TestDefaultViewModel, findPropertyItemView)
 {
     SessionModel model;
-    auto propertyItem = model.insertNewItem(Constants::PropertyType);
+    auto propertyItem = model.insertItem<PropertyItem>();
     propertyItem->setData(42.0);
 
     DefaultViewModel viewModel(&model);
@@ -113,7 +113,7 @@ TEST_F(TestDefaultViewModel, findPropertyItemView)
 TEST_F(TestDefaultViewModel, propertyItemDataChanged)
 {
     SessionModel model;
-    auto propertyItem = model.insertNewItem(Constants::PropertyType);
+    auto propertyItem = model.insertItem<PropertyItem>();
     propertyItem->setData(42.0);
 
     // constructing viewModel from sample model
@@ -140,14 +140,12 @@ TEST_F(TestDefaultViewModel, propertyItemDataChanged)
 TEST_F(TestDefaultViewModel, insertSingleTopItem)
 {
     SessionModel model;
-    const model_type modelType(Constants::BaseType);
-
     DefaultViewModel viewModel(&model);
 
     QSignalSpy spyInsert(&viewModel, &DefaultViewModel::rowsInserted);
 
     // inserting single item
-    model.insertNewItem(modelType);
+    model.insertItem<SessionItem>();
 
     // root item should have one child
     EXPECT_EQ(viewModel.rowCount(), 1);
@@ -171,10 +169,9 @@ TEST_F(TestDefaultViewModel, insertSingleTopItem)
 TEST_F(TestDefaultViewModel, removeSingleTopItem)
 {
     SessionModel model;
-    const model_type modelType(Constants::BaseType);
 
     // inserting single item
-    model.insertNewItem(modelType);
+    model.insertItem<SessionItem>();
 
     // constructing viewModel from sample model
     DefaultViewModel viewModel(&model);
@@ -204,11 +201,10 @@ TEST_F(TestDefaultViewModel, removeSingleTopItem)
 TEST_F(TestDefaultViewModel, removeOneOfTopItems)
 {
     SessionModel model;
-    const model_type modelType(Constants::BaseType);
 
     // inserting single item
-    model.insertNewItem(modelType);
-    model.insertNewItem(modelType);
+    model.insertItem<SessionItem>();
+    model.insertItem<SessionItem>();
 
     // constructing viewModel from sample model
     DefaultViewModel viewModel(&model);
@@ -251,16 +247,16 @@ TEST_F(TestDefaultViewModel, propertyItemAppearance)
     SessionModel model;
 
     // default item
-    auto item1 = model.insertNewItem(Constants::PropertyType);
+    auto item1 = model.insertItem<PropertyItem>();
     item1->setData(42.0);
 
     // disabled item
-    auto item2 = model.insertNewItem(Constants::PropertyType);
+    auto item2 = model.insertItem<PropertyItem>();
     item2->setData(42.0);
     item2->setEnabled(false);
 
     // read only item
-    auto item3 = model.insertNewItem(Constants::PropertyType);
+    auto item3 = model.insertItem<PropertyItem>();
     item3->setData(42.0);
     item3->setEditable(false);
 
@@ -300,7 +296,7 @@ TEST_F(TestDefaultViewModel, propertyItemAppearanceChanged)
     SessionModel model;
 
     // default item
-    auto item = model.insertNewItem(Constants::PropertyType);
+    auto item = model.insertItem<PropertyItem>();
     item->setData(42.0);
 
     // setting up ViewModel and spying it's dataChanged signals
@@ -351,10 +347,9 @@ TEST_F(TestDefaultViewModel, propertyItemAppearanceChanged)
 TEST_F(TestDefaultViewModel, setRootItem)
 {
     SessionModel model;
-    const model_type modelType(Constants::BaseType);
-
     DefaultViewModel viewModel(&model);
-    auto item = model.insertNewItem(modelType);
+
+    auto item = model.insertItem<PropertyItem>();
 
     viewModel.setSessionModel(&model);
     viewModel.setRootSessionItem(item);
@@ -368,11 +363,10 @@ TEST_F(TestDefaultViewModel, setRootItem)
 
 TEST_F(TestDefaultViewModel, onModelReset)
 {
-    std::unique_ptr<SessionModel> model = std::make_unique<SessionModel>();
-    const model_type modelType(Constants::BaseType);
-    model->insertNewItem(modelType);
-    model->insertNewItem(modelType);
-    model->insertNewItem(modelType);
+    auto model = std::make_unique<SessionModel>();
+    model->insertItem<SessionItem>();
+    model->insertItem<SessionItem>();
+    model->insertItem<SessionItem>();
 
     DefaultViewModel viewModel(model.get());
     model->clear();
@@ -385,9 +379,8 @@ TEST_F(TestDefaultViewModel, onModelReset)
 
 TEST_F(TestDefaultViewModel, onModelDestroyed)
 {
-    std::unique_ptr<SessionModel> model = std::make_unique<SessionModel>();
-    const model_type modelType(Constants::BaseType);
-    model->insertNewItem(modelType);
+    auto model = std::make_unique<SessionModel>();
+    model->insertItem<SessionItem>();
 
     DefaultViewModel viewModel(model.get());
     EXPECT_EQ(viewModel.rowCount(), 1);

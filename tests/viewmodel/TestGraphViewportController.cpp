@@ -36,8 +36,7 @@ TEST_F(TestGraphViewportPlotController, setItem)
 
     // setting up controller with viewport item
     SessionModel model;
-    auto item =
-        dynamic_cast<GraphViewportItem*>(model.insertNewItem(Constants::GraphViewportItemType));
+    auto item = model.insertItem<GraphViewportItem>();
     controller.setItem(item);
 
     // no graphs in empty GraphViewportItem
@@ -59,17 +58,15 @@ TEST_F(TestGraphViewportPlotController, addGraphAndSetItem)
 
     // setting up controller with viewport item
     SessionModel model;
-    auto viewport_item =
-        dynamic_cast<GraphViewportItem*>(model.insertNewItem(Constants::GraphViewportItemType));
+    auto viewport_item = model.insertItem<GraphViewportItem>();
 
-    auto data_item = dynamic_cast<Data1DItem*>(model.insertNewItem(Constants::Data1DItemType));
+    auto data_item = model.insertItem<Data1DItem>();
     const std::vector<double> expected_content = {1.0, 2.0, 3.0};
     const std::vector<double> expected_centers = {0.5, 1.5, 2.5};
     data_item->setFixedBinAxis(3, 0.0, 3.0);
     data_item->setContent(expected_content);
 
-    auto graph_item =
-        dynamic_cast<GraphItem*>(model.insertNewItem(Constants::GraphItemType, viewport_item));
+    auto graph_item = model.insertItem<GraphItem>(viewport_item);
     graph_item->setDataItem(data_item);
     controller.setItem(viewport_item);
 
@@ -92,28 +89,26 @@ TEST_F(TestGraphViewportPlotController, addAndRemoveGraphs)
 
     // setting up controller with viewport item
     SessionModel model;
-    auto viewport_item =
-        dynamic_cast<GraphViewportItem*>(model.insertNewItem(Constants::GraphViewportItemType));
+    auto viewport_item = model.insertItem<GraphViewportItem>();
     controller.setItem(viewport_item);
 
     // No graphs yet.
     EXPECT_EQ(custom_plot->graphCount(), 0);
 
     // Populating with data items
-    auto data1 = dynamic_cast<Data1DItem*>(model.insertNewItem(Constants::Data1DItemType));
+    auto data1 = model.insertItem<Data1DItem>();
     const std::vector<double> expected_content1 = {1.0, 2.0, 3.0};
     const std::vector<double> expected_centers = {0.5, 1.5, 2.5};
     data1->setFixedBinAxis(3, 0.0, 3.0);
     data1->setContent(expected_content1);
 
-    auto data2 = dynamic_cast<Data1DItem*>(model.insertNewItem(Constants::Data1DItemType));
+    auto data2 = model.insertItem<Data1DItem>();
     const std::vector<double> expected_content2 = {4.0, 5.0, 6.0};
     data2->setFixedBinAxis(3, 0.0, 3.0);
     data2->setContent(expected_content2);
 
     // adding graph item to viewport
-    auto graph_item1 = dynamic_cast<GraphItem*>(
-        model.insertNewItem(Constants::GraphItemType, viewport_item, "", 0));
+    auto graph_item1 = model.insertItem<GraphItem>(viewport_item, "", 0);
 
     // check that QCustomPlot knows about graph
     EXPECT_EQ(custom_plot->graphCount(), 1);
@@ -124,8 +119,7 @@ TEST_F(TestGraphViewportPlotController, addAndRemoveGraphs)
     EXPECT_EQ(custom_plot->graphCount(), 1);
 
     // adding secong graph
-    auto graph_item2 = dynamic_cast<GraphItem*>(
-        model.insertNewItem(Constants::GraphItemType, viewport_item, "", 1));
+    auto graph_item2 = model.insertItem<GraphItem>(viewport_item, "", 1);
     graph_item2->setDataItem(data2);
 
     // check that QCustomPlot knows about two graph
@@ -156,8 +150,7 @@ TEST_F(TestGraphViewportPlotController, addMoreGraphs)
 
     // setting up controller with viewport item
     SessionModel model;
-    auto viewport_item =
-        dynamic_cast<GraphViewportItem*>(model.insertNewItem(Constants::GraphViewportItemType));
+    auto viewport_item = model.insertItem<GraphViewportItem>();
     controller.setItem(viewport_item);
 
     // No graphs yet.
@@ -165,12 +158,12 @@ TEST_F(TestGraphViewportPlotController, addMoreGraphs)
 
     // adding graph item to viewport
     // FIXME remove row specification after ItemMapper reporting correct row
-    model.insertNewItem(Constants::GraphItemType, viewport_item, "", 0);
+    model.insertItem<GraphItem>(viewport_item, "", 0);
     EXPECT_EQ(custom_plot->graphCount(), 1);
 
-    model.insertNewItem(Constants::GraphItemType, viewport_item, "", 1);
+    model.insertItem<GraphItem>(viewport_item, "", 1);
     EXPECT_EQ(custom_plot->graphCount(), 2);
 
-    model.insertNewItem(Constants::GraphItemType, viewport_item, "", 0);
+    model.insertItem<GraphItem>(viewport_item, "", 0);
     EXPECT_EQ(custom_plot->graphCount(), 3);
 }

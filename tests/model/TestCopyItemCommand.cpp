@@ -20,11 +20,12 @@ TEST_F(TestCopyItemCommand, copyChild)
     SessionModel model;
 
     // parent with children and data
-    auto parent = model.insertNewItem(Constants::BaseType, model.rootItem(), "", 0);
+    auto parent = model.insertItem<SessionItem>(model.rootItem(), "", 0);
     parent->registerTag(TagInfo::universalTag("tag1"), /*set_as_default*/ true);
-    auto child0 = model.insertNewItem(Constants::BaseType, parent, "tag1", -1);
+
+    auto child0 = model.insertItem<SessionItem>(parent, "tag1", -1);
     child0->setData(42.0);
-    auto child1 = model.insertNewItem(Constants::BaseType, parent, "tag1", -1);
+    auto child1 = model.insertItem<SessionItem>(parent, "tag1", -1);
     child1->setData(43.0);
 
     // making copy of child

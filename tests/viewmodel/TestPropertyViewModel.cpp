@@ -2,6 +2,8 @@
 #include "sessionitem.h"
 #include "sessionmodel.h"
 #include "taginfo.h"
+#include "propertyitem.h"
+#include "vectoritem.h"
 #include "google_test.h"
 
 using namespace ModelView;
@@ -27,7 +29,7 @@ TEST_F(TestPropertyViewModel, initialState)
 TEST_F(TestPropertyViewModel, baseItem)
 {
     SessionModel model;
-    model.insertNewItem(Constants::BaseType);
+    model.insertItem<SessionItem>();
 
     PropertyViewModel viewModel;
     viewModel.setSessionModel(&model);
@@ -41,14 +43,14 @@ TEST_F(TestPropertyViewModel, baseItem)
 TEST_F(TestPropertyViewModel, propertyItem)
 {
     SessionModel model;
-    auto parent = model.insertNewItem(Constants::BaseType);
+    auto parent = model.insertItem<SessionItem>();
 
     parent->registerTag(TagInfo::universalTag("universal_tag"));
     parent->registerTag(TagInfo::propertyTag("property_tag", Constants::PropertyType));
 
-    model.insertNewItem(Constants::BaseType, parent, "universal_tag");
-    model.insertNewItem(Constants::PropertyType, parent, "property_tag");
-    model.insertNewItem(Constants::BaseType, parent, "universal_tag");
+    model.insertItem<SessionItem>(parent, "universal_tag");
+    model.insertItem<PropertyItem>(parent, "property_tag");
+    model.insertItem<SessionItem>(parent, "universal_tag");
 
     PropertyViewModel viewModel;
     viewModel.setSessionModel(&model);
@@ -64,7 +66,7 @@ TEST_F(TestPropertyViewModel, propertyItem)
 TEST_F(TestPropertyViewModel, vectorItem)
 {
     SessionModel model;
-    auto parent = model.insertNewItem(Constants::VectorType);
+    auto parent = model.insertItem<VectorItem>();
 
     PropertyViewModel viewModel;
     viewModel.setSessionModel(&model);

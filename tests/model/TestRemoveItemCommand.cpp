@@ -18,7 +18,7 @@ TestRemoveItemCommand::~TestRemoveItemCommand() = default;
 TEST_F(TestRemoveItemCommand, removeAtCommand)
 {
     SessionModel model;
-    auto item = model.insertNewItem(Constants::BaseType, model.rootItem(), "", 0);
+    auto item = model.insertItem<SessionItem>(model.rootItem(), "", 0);
 
     auto item_identifier = item->identifier();
 
@@ -39,12 +39,12 @@ TEST_F(TestRemoveItemCommand, removeAtCommand)
 TEST_F(TestRemoveItemCommand, removeAtCommandChild)
 {
     SessionModel model;
-    auto parent = model.insertNewItem(Constants::BaseType, model.rootItem(), "", 0);
+    auto parent = model.insertItem<SessionItem>(model.rootItem(), "", 0);
     parent->registerTag(TagInfo::universalTag("tag1"), /*set_as_default*/ true);
 
-    auto child1 = model.insertNewItem(Constants::BaseType, parent, "tag1", -1);
+    auto child1 = model.insertItem<SessionItem>(parent, "tag1", -1);
     child1->setData(42.0);
-    model.insertNewItem(Constants::BaseType, parent, "tag1", -1);
+    model.insertItem<SessionItem>(parent, "tag1", -1);
 
     auto child1_identifier = child1->identifier();
 
@@ -69,10 +69,10 @@ TEST_F(TestRemoveItemCommand, removeAtCommandChild)
 TEST_F(TestRemoveItemCommand, removeAtCommandParentWithChild)
 {
     SessionModel model;
-    auto parent = model.insertNewItem(Constants::BaseType, model.rootItem(), "", 0);
+    auto parent = model.insertItem<SessionItem>(model.rootItem(), "", 0);
     parent->registerTag(TagInfo::universalTag("tag1"), /*set_as_default*/ true);
 
-    auto child1 = model.insertNewItem(Constants::BaseType, parent, "tag1", -1);
+    auto child1 = model.insertItem<SessionItem>(parent, "tag1", -1);
     child1->setData(42.0);
 
     auto parent_identifier = parent->identifier();
@@ -104,17 +104,17 @@ TEST_F(TestRemoveItemCommand, removeAtCommandParentWithChild)
 TEST_F(TestRemoveItemCommand, removeAtCommandMultitag)
 {
     SessionModel model;
-    auto parent = model.insertNewItem(Constants::BaseType, model.rootItem(), "", 0);
+    auto parent = model.insertItem<SessionItem>(model.rootItem(), "", 0);
     parent->registerTag(TagInfo::universalTag("tag1"));
     parent->registerTag(TagInfo::universalTag("tag2"));
 
-    auto child1 = model.insertNewItem(Constants::BaseType, parent, "tag1", -1);
+    auto child1 = model.insertItem<SessionItem>(parent, "tag1", -1);
     child1->setData(41.0);
 
-    auto child2 = model.insertNewItem(Constants::BaseType, parent, "tag1", -1);
+    auto child2 = model.insertItem<SessionItem>(parent, "tag1", -1);
     child2->setData(42.0);
 
-    auto child3 = model.insertNewItem(Constants::BaseType, parent, "tag2", -1);
+    auto child3 = model.insertItem<SessionItem>(parent, "tag2", -1);
     child3->setData(43.0);
 
     auto parent_identifier = parent->identifier();

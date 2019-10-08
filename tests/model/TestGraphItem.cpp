@@ -33,8 +33,8 @@ TEST_F(TestGraphItem, initialState)
 TEST_F(TestGraphItem, setDataItem)
 {
     SessionModel model;
-    auto data_item = dynamic_cast<Data1DItem*>(model.insertNewItem(Constants::Data1DItemType));
-    auto graph_item = dynamic_cast<GraphItem*>(model.insertNewItem(Constants::GraphItemType));
+    auto data_item = model.insertItem<Data1DItem>();
+    auto graph_item = model.insertItem<GraphItem>();
 
     graph_item->setDataItem(data_item);
 
@@ -46,8 +46,8 @@ TEST_F(TestGraphItem, setDataItem)
 TEST_F(TestGraphItem, binCenters)
 {
     SessionModel model;
-    auto data_item = dynamic_cast<Data1DItem*>(model.insertNewItem(Constants::Data1DItemType));
-    auto graph_item = dynamic_cast<GraphItem*>(model.insertNewItem(Constants::GraphItemType));
+    auto data_item = model.insertItem<Data1DItem>();
+    auto graph_item = model.insertItem<GraphItem>();
 
     std::vector<double> expected_content = {1.0, 2.0, 3.0};
     std::vector<double> expected_centers = {0.5, 1.5, 2.5};
@@ -65,8 +65,8 @@ TEST_F(TestGraphItem, binCenters)
 TEST_F(TestGraphItem, setNullData)
 {
     SessionModel model;
-    auto data_item = dynamic_cast<Data1DItem*>(model.insertNewItem(Constants::Data1DItemType));
-    auto graph_item = dynamic_cast<GraphItem*>(model.insertNewItem(Constants::GraphItemType));
+    auto data_item = model.insertItem<Data1DItem>();
+    auto graph_item = model.insertItem<GraphItem>();
 
     // preparing data item
     std::vector<double> expected_content = {1.0, 2.0, 3.0};
@@ -89,8 +89,8 @@ TEST_F(TestGraphItem, setNullData)
 TEST_F(TestGraphItem, onSetDataItem)
 {
     SessionModel model;
-    auto data_item = dynamic_cast<Data1DItem*>(model.insertNewItem(Constants::Data1DItemType));
-    auto graph_item = dynamic_cast<GraphItem*>(model.insertNewItem(Constants::GraphItemType));
+    auto data_item = model.insertItem<Data1DItem>();
+    auto graph_item = model.insertItem<GraphItem>();
 
     MockWidgetForItem widget(graph_item);
 

@@ -13,6 +13,7 @@
 #include "sessionitem.h"
 #include "externalproperty.h"
 #include "reallimits.h"
+#include "propertyitem.h"
 #include "integereditor.h"
 
 using namespace ModelView;
@@ -28,7 +29,7 @@ public:
     {
         // populating model with data
         SessionModel model;
-        auto propertyItem = model.insertNewItem(Constants::PropertyType);
+        auto propertyItem = model.insertItem<PropertyItem>();
         propertyItem->setData(variant);
 
         // create view model and use index of data cell to create an editor
