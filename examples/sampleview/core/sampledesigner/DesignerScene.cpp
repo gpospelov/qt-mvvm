@@ -66,7 +66,7 @@ DesignerScene::DesignerScene(QObject *parent)
       m_selectionModel(nullptr), m_proxy(nullptr),
       m_block_selection(false), m_aligner(new SampleViewAligner(this))
 {
-    setSceneRect(QRectF(-800, 0, 1600, 1600));
+    setSceneRect(QRectF(-800, -800, 1600, 1600));
     setBackgroundBrush(DesignerHelper::getSceneBackground());
 
     m_nodeEditor = new NodeEditor(parent);
@@ -250,7 +250,7 @@ void DesignerScene::addViewForItem(SessionItem *item)
 //! aligns SampleView's on graphical canvas
 void DesignerScene::alignViews()
 {
-    m_aligner->alignSample(m_sampleModel->rootItem(), QPointF(200, 800));
+    //m_aligner->alignSample(m_sampleModel->rootItem(), QPointF(200, 800));
 }
 
 //! propagates deletion of views on the scene to the model
