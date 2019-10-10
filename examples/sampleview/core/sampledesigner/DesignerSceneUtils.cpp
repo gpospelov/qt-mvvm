@@ -24,9 +24,11 @@ QList<QGraphicsItem*> intersectingItems(const ILayerView& view)
     QList<QGraphicsItem*> in_items = scene->items(intersect_bound, Qt::ContainsItemBoundingRect);
     QList<QGraphicsItem*> result;
 
-    // copy_if is not the most efficient way of doing things, but definitely the most elegant
-    std::copy_if(all_items.begin(), all_items.end(), std::back_inserter(result),
-                 [&in_items](QGraphicsItem* item) { return !in_items.contains(item); });
+    std::copy_if(
+        all_items.begin(), all_items.end(), std::back_inserter(result),
+        [&in_items, view_item = dynamic_cast<const QGraphicsItem*>(&view)](QGraphicsItem* item) {
+            return !in_items.contains(item) && item != view_item;
+        });
 
     return result;
 }
