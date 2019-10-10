@@ -29,6 +29,7 @@ public:
     static const std::string P_NAME;
     static const std::string P_MATERIAL;
     static const std::string P_THICKNESS;
+    static const std::string T_LAYOUTS;
     LayerItem();
 };
 

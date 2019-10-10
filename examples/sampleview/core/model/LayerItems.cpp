@@ -26,12 +26,14 @@ QVariant material_link()
 const std::string LayerItem::P_NAME = "P_NAME";
 const std::string LayerItem::P_MATERIAL = "P_MATERIAL";
 const std::string LayerItem::P_THICKNESS = "P_THICKNESS";
+const std::string LayerItem::T_LAYOUTS = "T_LAYOUTS";
 
 LayerItem::LayerItem() : LocatedItem(::Constants::LayerType)
 {
     addProperty<>(P_NAME, "Layer")->setDisplayName("Name");
     addProperty<>(P_MATERIAL, material_link())->setDisplayName("Material");
     addProperty<>(P_THICKNESS, 42.0)->setDisplayName("Thickness");
+    registerTag(TagInfo::universalTag(T_LAYOUTS, {::Constants::ParticleLayoutType}));
 }
 
 // ----------------------------------------------------------------------------
