@@ -9,6 +9,7 @@
 
 #include "SampleModel.h"
 #include "LayerItems.h"
+#include "ParticleLayoutItem.h"
 #include "item_constants.h"
 #include "itemcatalogue.h"
 
@@ -21,6 +22,7 @@ std::unique_ptr<ItemCatalogue> CreateItemCatalogue()
     auto result = std::make_unique<ItemCatalogue>();
     result->registerItem<MultiLayerItem>();
     result->registerItem<LayerItem>();
+    result->registerItem<ParticleLayoutItem>();
     return result;
 }
 } // namespace
@@ -36,9 +38,10 @@ SampleModel::SampleModel() : SessionModel("SampleModel")
 void SampleModel::init_model()
 {
     auto multilayer = insertItem<MultiLayerItem>();
-    auto layer = insertItem<LayerItem>(multilayer);
+    insertItem<LayerItem>(multilayer);
     auto assembly = insertItem<MultiLayerItem>(multilayer);
-    layer = insertItem<LayerItem>(assembly);
-    layer = insertItem<LayerItem>(assembly);
-    layer = insertItem<LayerItem>(multilayer);
+    insertItem<LayerItem>(assembly);
+    auto layer = insertItem<LayerItem>(assembly);
+    insertItem<ParticleLayoutItem>(layer, LayerItem::T_LAYOUTS);
+    insertItem<LayerItem>(multilayer);
 }
