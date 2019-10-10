@@ -16,6 +16,8 @@ namespace Constants {
 
 const std::string MultiLayerType = "MultiLayer";
 const std::string LayerType = "Layer";
+const std::string ParticleLayoutType = "ParticleLayout";
+
 const std::string SLDMaterialType = "SLDMaterial";
 const std::string RefIndexMaterialType = "RefIndexMaterial";
 const std::string MaterialContainerType = "MaterialContainer";
