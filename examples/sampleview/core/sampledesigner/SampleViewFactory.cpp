@@ -10,10 +10,12 @@
 #include "SampleViewFactory.h"
 #include "LayerView.h"
 #include "MultiLayerView.h"
+#include "ParticleLayoutView.h"
 #include "item_constants.h"
 
 namespace {
-    const QList<std::string> m_valid_item_names = { Constants::MultiLayerType, Constants::LayerType };
+const QList<std::string> m_valid_item_names = {Constants::MultiLayerType, Constants::LayerType,
+                                               Constants::ParticleLayoutType};
 }
 
 bool SampleViewFactory::isValidType(const std::string& name)
@@ -28,5 +30,7 @@ IView* SampleViewFactory::createSampleView(const std::string& name)
         return new MultiLayerView();
     else if (name == Constants::LayerType)
         return new LayerView();
+    else if (name == Constants::ParticleLayoutType)
+        return new ParticleLayoutView();
     return nullptr;
 }
