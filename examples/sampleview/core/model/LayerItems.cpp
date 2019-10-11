@@ -33,7 +33,8 @@ LayerItem::LayerItem() : LocatedItem(::Constants::LayerType)
     addProperty<>(P_NAME, "Layer")->setDisplayName("Name");
     addProperty<>(P_MATERIAL, material_link())->setDisplayName("Material");
     addProperty<>(P_THICKNESS, 42.0)->setDisplayName("Thickness");
-    registerTag(TagInfo::universalTag(T_LAYOUTS, {::Constants::ParticleLayoutType}));
+    registerTag(TagInfo::universalTag(T_LAYOUTS, {::Constants::ParticleLayoutType}),
+                /*set_default*/ true);
 }
 
 // ----------------------------------------------------------------------------
