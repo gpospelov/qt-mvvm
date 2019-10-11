@@ -1,10 +1,10 @@
-#include "insertnewitemcommand.h"
 #include "google_test.h"
+#include "insertnewitemcommand.h"
+#include "itemfactoryinterface.h"
+#include "itemutils.h"
 #include "sessionitem.h"
 #include "sessionmodel.h"
 #include "taginfo.h"
-#include "itemutils.h"
-#include "itemfactoryinterface.h"
 
 using namespace ModelView;
 
@@ -22,11 +22,10 @@ TEST_F(TestInsertNewItemCommand, insertNewItemCommand)
 {
     SessionModel model;
 
-    auto create_func = [&model](){return model.factory()->createItem(Constants::BaseType);};
+    auto factory_func = [&model]() { return model.factory()->createItem(Constants::BaseType); };
 
     // command to set same value
-    auto command =
-        std::make_unique<InsertNewItemCommand>(Constants::BaseType, create_func, model.rootItem(), "", 0);
+    auto command = std::make_unique<InsertNewItemCommand>(factory_func, model.rootItem(), "", 0);
 
     // executing command
     command->execute();
@@ -44,11 +43,10 @@ TEST_F(TestInsertNewItemCommand, insertNewItemCommand)
 TEST_F(TestInsertNewItemCommand, insertNewItemWithTagCommand)
 {
     SessionModel model;
-    auto create_func = [&model](){return model.factory()->createItem(Constants::BaseType);};
+    auto factory_func = [&model]() { return model.factory()->createItem(Constants::BaseType); };
 
     // command to insert parent in the model
-    auto command1 =
-        std::make_unique<InsertNewItemCommand>(Constants::BaseType, create_func, model.rootItem(), "", 0);
+    auto command1 = std::make_unique<InsertNewItemCommand>(factory_func, model.rootItem(), "", 0);
     command1->execute(); // insertion
 
     auto parent = command1->result();
@@ -56,7 +54,7 @@ TEST_F(TestInsertNewItemCommand, insertNewItemWithTagCommand)
     EXPECT_EQ(parent->childrenCount(), 0);
 
     // command to insert child
-    auto command2 = std::make_unique<InsertNewItemCommand>(Constants::BaseType, create_func, parent, "tag1", 0);
+    auto command2 = std::make_unique<InsertNewItemCommand>(factory_func, parent, "tag1", 0);
     command2->execute(); // insertion
 
     EXPECT_EQ(parent->childrenCount(), 1);
@@ -73,11 +71,10 @@ TEST_F(TestInsertNewItemCommand, insertNewItemWithTagCommand)
 TEST_F(TestInsertNewItemCommand, attemptToExecuteTwice)
 {
     SessionModel model;
-    auto create_func = [&model](){return model.factory()->createItem(Constants::BaseType);};
+    auto factory_func = [&model]() { return model.factory()->createItem(Constants::BaseType); };
 
     // command to set same value
-    auto command =
-        std::make_unique<InsertNewItemCommand>(Constants::BaseType, create_func, model.rootItem(), "", 0);
+    auto command = std::make_unique<InsertNewItemCommand>(factory_func, model.rootItem(), "", 0);
 
     // executing command
     command->execute();
@@ -89,11 +86,10 @@ TEST_F(TestInsertNewItemCommand, attemptToExecuteTwice)
 TEST_F(TestInsertNewItemCommand, attemptToUndoTwice)
 {
     SessionModel model;
-    auto create_func = [&model](){return model.factory()->createItem(Constants::BaseType);};
+    auto create_func = [&model]() { return model.factory()->createItem(Constants::BaseType); };
 
     // command to set same value
-    auto command =
-        std::make_unique<InsertNewItemCommand>(Constants::BaseType, create_func, model.rootItem(), "", 0);
+    auto command = std::make_unique<InsertNewItemCommand>(create_func, model.rootItem(), "", 0);
 
     // executing command
     command->execute();

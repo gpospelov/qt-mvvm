@@ -35,7 +35,7 @@ public:
 
     void setUndoRedoEnabled(bool value);
 
-    SessionItem* insertNewItem(const model_type& modelType, item_factory_func_t func, SessionItem* parent, std::string tag, int row);
+    SessionItem* insertNewItem(item_factory_func_t func, SessionItem* parent, std::string tag, int row);
 
     SessionItem* copyItem(const SessionItem* item, SessionItem* parent, const std::string& tag, int row);
 

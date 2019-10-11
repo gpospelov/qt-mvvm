@@ -29,13 +29,13 @@ void CommandService::setUndoRedoEnabled(bool value)
         m_commands.reset();
 }
 
-SessionItem* CommandService::insertNewItem(const model_type& modelType, item_factory_func_t func, SessionItem* parent,
+SessionItem* CommandService::insertNewItem(item_factory_func_t func, SessionItem* parent,
                                            std::string tag, int row)
 {
     if (!parent)
         parent = m_model->rootItem();
 
-    return process_command<InsertNewItemCommand>(modelType, func, parent, tag, row);
+    return process_command<InsertNewItemCommand>(func, parent, tag, row);
 }
 
 SessionItem* CommandService::copyItem(const SessionItem* item, SessionItem* parent,

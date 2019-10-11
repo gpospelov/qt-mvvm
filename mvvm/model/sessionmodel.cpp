@@ -60,7 +60,7 @@ SessionItem* SessionModel::insertNewItem(const model_type& modelType, SessionIte
                                          const std::string& tag, int row)
 {
     auto create_func = [this, &modelType](){ return factory()->createItem(modelType);};
-    return m_commands->insertNewItem(modelType, create_func, parent, tag, row);
+    return m_commands->insertNewItem(create_func, parent, tag, row);
 }
 
 //! Copy item and insert it in parent's tag and row.
@@ -202,5 +202,5 @@ void SessionModel::createRootItem()
 
 SessionItem* SessionModel::insertItem(item_factory_func_t func, SessionItem* parent, const std::string& tag, int row)
 {
-    return m_commands->insertNewItem("unused", func, parent, tag, row);
+    return m_commands->insertNewItem(func, parent, tag, row);
 }

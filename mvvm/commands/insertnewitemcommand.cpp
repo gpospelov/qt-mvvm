@@ -10,8 +10,6 @@
 #include "insertnewitemcommand.h"
 #include "path.h"
 #include "sessionitem.h"
-#include "sessionmodel.h"
-#include "itemfactory.h"
 #include <sstream>
 
 namespace
@@ -22,24 +20,22 @@ std::string generate_description(const std::string& modelType, const std::string
 using namespace ModelView;
 
 struct InsertNewItemCommand::InsertNewItemCommandPrivate {
-    model_type m_model_type;
     item_factory_func_t factory_func;
     std::string m_tag;
     int m_row;
     result_t m_result;
     Path m_item_path;
-    InsertNewItemCommandPrivate(model_type modelType, item_factory_func_t func, std::string tag, int row)
-        : m_model_type(std::move(modelType)), factory_func(func), m_tag(std::move(tag)), m_row(row), m_result(nullptr)
+    InsertNewItemCommandPrivate(item_factory_func_t func, std::string tag, int row)
+        : factory_func(func), m_tag(std::move(tag)), m_row(row), m_result(nullptr)
     {
     }
 };
 
-InsertNewItemCommand::InsertNewItemCommand(model_type modelType, item_factory_func_t func, SessionItem* parent,
+InsertNewItemCommand::InsertNewItemCommand(item_factory_func_t func, SessionItem* parent,
                                            std::string tag, int row)
     : AbstractItemCommand(parent),
-      p_impl(std::make_unique<InsertNewItemCommandPrivate>(modelType, func, tag, row))
+      p_impl(std::make_unique<InsertNewItemCommandPrivate>(func, tag, row))
 {
-    setDescription(generate_description(p_impl->m_model_type, p_impl->m_tag, p_impl->m_row));
     p_impl->m_item_path = pathFromItem(parent);
 }
 
@@ -56,9 +52,8 @@ void InsertNewItemCommand::undo_command()
 void InsertNewItemCommand::execute_command()
 {
     auto parent = itemFromPath(p_impl->m_item_path);
-    // FIXME get rid of manager in the favor of factory function generated in CommandService
-//    auto child = model()->factory()->createItem(p_impl->m_model_type).release();
     auto child = p_impl->factory_func().release();
+    setDescription(generate_description(child->modelType(), p_impl->m_tag, p_impl->m_row));
     parent->insertItem(child, p_impl->m_tag, p_impl->m_row);
     p_impl->m_result = child;
 }

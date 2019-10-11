@@ -26,7 +26,7 @@ class CORE_EXPORT InsertNewItemCommand : public AbstractItemCommand
 public:
     using result_t = SessionItem*;
 
-    InsertNewItemCommand(model_type modelType, item_factory_func_t func, SessionItem* parent, std::string tag, int row);
+    InsertNewItemCommand(item_factory_func_t func, SessionItem* parent, std::string tag, int row);
     ~InsertNewItemCommand() override;
 
     result_t result() const;
