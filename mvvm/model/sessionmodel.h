@@ -91,7 +91,7 @@ protected:
 
 private:
     void createRootItem();
-    SessionItem* insertItem(item_factory_func_t func, SessionItem* parent = nullptr,
+    SessionItem* intern_insert(item_factory_func_t func, SessionItem* parent = nullptr,
                             const std::string& tag = {}, int row = -1);
 
     std::unique_ptr<CommandService> m_commands;
@@ -103,7 +103,7 @@ private:
 template <typename T>
 T* SessionModel::insertItem(SessionItem* parent, const std::string& tag, int row)
 {
-    return static_cast<T*>(insertItem([]() { return std::make_unique<T>(); }, parent, tag, row));
+    return static_cast<T*>(intern_insert([]() { return std::make_unique<T>(); }, parent, tag, row));
 }
 
 } // namespace ModelView
