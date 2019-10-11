@@ -13,6 +13,7 @@ target_sources(${library_name} PRIVATE
     datarole.h
     externalproperty.cpp
     externalproperty.h
+    function_types.h
     groupitem.cpp
     groupitem.h
     itemcatalogue.cpp

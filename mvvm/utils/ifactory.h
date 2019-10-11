@@ -24,7 +24,7 @@ namespace ModelView
 template <class Key, class Value> class IFactory
 {
 public:
-    using function_t = std::function<Value*()>;
+    using function_t = std::function<std::unique_ptr<Value>()>;
     using map_t = std::map<Key, function_t>;
 
     bool contains(const Key& item_key) const { return m_data.find(item_key) != m_data.end(); }
@@ -37,7 +37,7 @@ public:
             message << "IFactory::createItem() -> Error. Unknown item key '" << item_key << "'";
             throw std::runtime_error(message.str());
         }
-        return std::unique_ptr<Value>((it->second)());
+        return it->second();
     }
 
     bool add(const Key& key, function_t func)

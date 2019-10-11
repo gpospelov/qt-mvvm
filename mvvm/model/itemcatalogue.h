@@ -11,8 +11,7 @@
 #define MVVM_ITEMCATALOGUE_H
 
 #include "mvvm_export.h"
-#include <functional>
-#include <memory>
+#include "function_types.h"
 #include <string>
 #include <vector>
 
@@ -46,15 +45,14 @@ public:
     void merge(const ItemCatalogue& other);
 
 private:
-    using factory_func_t = std::function<SessionItem*()>;
-    void add(const std::string& model_type, factory_func_t func, const std::string& label);
+    void add(const std::string& model_type, item_factory_func_t func, const std::string& label);
     std::unique_ptr<class ItemCataloguePrivate> p_impl;
 };
 
 template <typename T> void ItemCatalogue::registerItem(const std::string& label)
 {
     T x;
-    add(x.modelType(), []() { return new T(); }, label);
+    add(x.modelType(), []() { return std::make_unique<T>(); }, label);
 }
 
 } // namespace ModelView

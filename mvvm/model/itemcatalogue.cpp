@@ -41,7 +41,7 @@ ItemCatalogue& ItemCatalogue::operator=(const ItemCatalogue& other)
     return *this;
 }
 
-void ItemCatalogue::add(const std::string& model_type, ItemCatalogue::factory_func_t func,
+void ItemCatalogue::add(const std::string& model_type, item_factory_func_t func,
                         const std::string& label)
 {
     p_impl->factory.add(model_type, func);
