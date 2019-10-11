@@ -199,3 +199,8 @@ void SessionModel::createRootItem()
     m_root_item->setModel(this);
     m_root_item->registerTag(TagInfo::universalTag("rootTag"), /*set_as_default*/ true);
 }
+
+SessionItem* SessionModel::insertItem(item_factory_func_t func, SessionItem* parent, const std::string& tag, int row)
+{
+    return m_commands->insertNewItem("unused", func, parent, tag, row);
+}

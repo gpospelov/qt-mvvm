@@ -57,7 +57,8 @@ void InsertNewItemCommand::execute_command()
 {
     auto parent = itemFromPath(p_impl->m_item_path);
     // FIXME get rid of manager in the favor of factory function generated in CommandService
-    auto child = model()->factory()->createItem(p_impl->m_model_type).release();
+//    auto child = model()->factory()->createItem(p_impl->m_model_type).release();
+    auto child = p_impl->factory_func().release();
     parent->insertItem(child, p_impl->m_tag, p_impl->m_row);
     p_impl->m_result = child;
 }

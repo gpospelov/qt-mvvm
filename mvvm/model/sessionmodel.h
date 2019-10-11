@@ -12,6 +12,7 @@
 
 #include "mvvm_export.h"
 #include "mvvm_types.h"
+#include "function_types.h"
 #include "path.h"
 #include <QVariant>
 #include <memory>
@@ -89,6 +90,9 @@ protected:
 
 private:
     void createRootItem();
+    SessionItem* insertItem(item_factory_func_t func, SessionItem* parent = nullptr,
+                               const std::string& tag = {}, int row = -1);
+
 
     std::unique_ptr<CommandService> m_commands;
     std::string m_model_type;
@@ -99,8 +103,7 @@ private:
 template<typename T>
 T* SessionModel::insertItem(SessionItem* parent, const std::string& tag, int row)
 {
-    T x;
-    return dynamic_cast<T*>(insertNewItem(x.modelType(), parent, tag, row));
+    return static_cast<T*>(insertItem( []() { return std::make_unique<T>(); }, parent, tag, row));
 }
 
 } // namespace ModelView
