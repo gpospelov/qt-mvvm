@@ -11,7 +11,6 @@
 #define MVVM_INSERTNEWITEMCOMMAND_H
 
 #include "abstractitemcommand.h"
-#include "mvvm_types.h"
 #include "function_types.h"
 
 namespace ModelView

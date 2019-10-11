@@ -11,7 +11,6 @@
 #include "path.h"
 #include "sessionitem.h"
 #include "sessionmodel.h"
-#include "itemfactory.h"
 #include "itemcopystrategy.h"
 #include "itembackupstrategy.h"
 #include <sstream>

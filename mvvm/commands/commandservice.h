@@ -10,12 +10,11 @@
 #ifndef MVVM_COMMANDSERVICE_H
 #define MVVM_COMMANDSERVICE_H
 
-#include "mvvm_export.h"
-#include "mvvm_types.h"
-#include "function_types.h"
 #include "commandadapter.h"
-#include <memory>
+#include "function_types.h"
+#include "mvvm_export.h"
 #include <QUndoStack>
+#include <memory>
 
 class QUndoCommand;
 class QVariant;
@@ -35,9 +34,11 @@ public:
 
     void setUndoRedoEnabled(bool value);
 
-    SessionItem* insertNewItem(item_factory_func_t func, SessionItem* parent, std::string tag, int row);
+    SessionItem* insertNewItem(item_factory_func_t func, SessionItem* parent, std::string tag,
+                               int row);
 
-    SessionItem* copyItem(const SessionItem* item, SessionItem* parent, const std::string& tag, int row);
+    SessionItem* copyItem(const SessionItem* item, SessionItem* parent, const std::string& tag,
+                          int row);
 
     bool setData(SessionItem* item, const QVariant& value, int role);
 

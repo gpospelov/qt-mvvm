@@ -16,11 +16,11 @@
 #include "itempool.h"
 #include "itemutils.h"
 #include "jsonitembackupstrategy.h"
+#include "jsonitemcopystrategy.h"
 #include "modelmapper.h"
 #include "sessionitem.h"
 #include "standarditemcatalogue.h"
 #include "taginfo.h"
-#include "jsonitemcopystrategy.h"
 
 using namespace ModelView;
 
@@ -59,14 +59,15 @@ std::string SessionModel::modelType() const
 SessionItem* SessionModel::insertNewItem(const model_type& modelType, SessionItem* parent,
                                          const std::string& tag, int row)
 {
-    auto create_func = [this, &modelType](){ return factory()->createItem(modelType);};
+    auto create_func = [this, &modelType]() { return factory()->createItem(modelType); };
     return m_commands->insertNewItem(create_func, parent, tag, row);
 }
 
 //! Copy item and insert it in parent's tag and row.
 //! Item could belong to any model/parent.
 
-SessionItem* SessionModel::copyItem(const SessionItem* item, SessionItem* parent, const std::string& tag, int row)
+SessionItem* SessionModel::copyItem(const SessionItem* item, SessionItem* parent,
+                                    const std::string& tag, int row)
 {
     return m_commands->copyItem(item, parent, tag, row);
 }
@@ -132,7 +133,8 @@ void SessionModel::removeItem(SessionItem* parent, const std::string& tag, int r
 //! Move item from it's current parent to a new parent under given tag and row.
 //! Old and new parents should belong to this model.
 
-void SessionModel::moveItem(SessionItem* item, SessionItem* new_parent, const std::string& tag, int row)
+void SessionModel::moveItem(SessionItem* item, SessionItem* new_parent, const std::string& tag,
+                            int row)
 {
     m_commands->moveItem(item, new_parent, tag, row);
 }
@@ -200,7 +202,8 @@ void SessionModel::createRootItem()
     m_root_item->registerTag(TagInfo::universalTag("rootTag"), /*set_as_default*/ true);
 }
 
-SessionItem* SessionModel::insertItem(item_factory_func_t func, SessionItem* parent, const std::string& tag, int row)
+SessionItem* SessionModel::insertItem(item_factory_func_t func, SessionItem* parent,
+                                      const std::string& tag, int row)
 {
     return m_commands->insertNewItem(func, parent, tag, row);
 }

@@ -10,9 +10,9 @@
 #ifndef MVVM_SESSIONMODEL_H
 #define MVVM_SESSIONMODEL_H
 
+#include "function_types.h"
 #include "mvvm_export.h"
 #include "mvvm_types.h"
-#include "function_types.h"
 #include "path.h"
 #include <QVariant>
 #include <memory>
@@ -48,10 +48,11 @@ public:
     SessionItem* insertNewItem(const model_type& modelType, SessionItem* parent = nullptr,
                                const std::string& tag = {}, int row = -1);
 
-    template<typename T>
+    template <typename T>
     T* insertItem(SessionItem* parent = nullptr, const std::string& tag = {}, int row = -1);
 
-    SessionItem* copyItem(const SessionItem* item, SessionItem* parent, const std::string& tag = {}, int row = -1);
+    SessionItem* copyItem(const SessionItem* item, SessionItem* parent, const std::string& tag = {},
+                          int row = -1);
 
     SessionItem* rootItem() const;
 
@@ -91,8 +92,7 @@ protected:
 private:
     void createRootItem();
     SessionItem* insertItem(item_factory_func_t func, SessionItem* parent = nullptr,
-                               const std::string& tag = {}, int row = -1);
-
+                            const std::string& tag = {}, int row = -1);
 
     std::unique_ptr<CommandService> m_commands;
     std::string m_model_type;
@@ -100,10 +100,10 @@ private:
     std::unique_ptr<SessionItem> m_root_item;
 };
 
-template<typename T>
+template <typename T>
 T* SessionModel::insertItem(SessionItem* parent, const std::string& tag, int row)
 {
-    return static_cast<T*>(insertItem( []() { return std::make_unique<T>(); }, parent, tag, row));
+    return static_cast<T*>(insertItem([]() { return std::make_unique<T>(); }, parent, tag, row));
 }
 
 } // namespace ModelView
