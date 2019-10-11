@@ -35,10 +35,10 @@ SampleModel::SampleModel() : SessionModel("SampleModel")
 
 void SampleModel::init_model()
 {
-    auto multilayer = insertNewItem(::Constants::MultiLayerType);
-    auto layer = insertNewItem(::Constants::LayerType, multilayer);
-    auto assembly = insertNewItem(::Constants::MultiLayerType, multilayer);
-    layer = insertNewItem(::Constants::LayerType, assembly);
-    layer = insertNewItem(::Constants::LayerType, assembly);
-    layer = insertNewItem(::Constants::LayerType, multilayer);
+    auto multilayer = insertItem<MultiLayerItem>();
+    auto layer = insertItem<LayerItem>(multilayer);
+    auto assembly = insertItem<MultiLayerItem>(multilayer);
+    layer = insertItem<LayerItem>(assembly);
+    layer = insertItem<LayerItem>(assembly);
+    layer = insertItem<LayerItem>(multilayer);
 }
