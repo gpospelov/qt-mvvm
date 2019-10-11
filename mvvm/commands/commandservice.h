@@ -12,6 +12,7 @@
 
 #include "mvvm_export.h"
 #include "mvvm_types.h"
+#include "function_types.h"
 #include "commandadapter.h"
 #include <memory>
 #include <QUndoStack>
@@ -34,7 +35,7 @@ public:
 
     void setUndoRedoEnabled(bool value);
 
-    SessionItem* insertNewItem(const model_type& modelType, SessionItem* parent, std::string tag, int row);
+    SessionItem* insertNewItem(const model_type& modelType, item_factory_func_t func, SessionItem* parent, std::string tag, int row);
 
     SessionItem* copyItem(const SessionItem* item, SessionItem* parent, const std::string& tag, int row);
 

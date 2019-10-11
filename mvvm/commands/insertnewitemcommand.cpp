@@ -23,20 +23,21 @@ using namespace ModelView;
 
 struct InsertNewItemCommand::InsertNewItemCommandPrivate {
     model_type m_model_type;
+    item_factory_func_t factory_func;
     std::string m_tag;
     int m_row;
     result_t m_result;
     Path m_item_path;
-    InsertNewItemCommandPrivate(model_type modelType, std::string tag, int row)
-        : m_model_type(std::move(modelType)), m_tag(std::move(tag)), m_row(row), m_result(nullptr)
+    InsertNewItemCommandPrivate(model_type modelType, item_factory_func_t func, std::string tag, int row)
+        : m_model_type(std::move(modelType)), factory_func(func), m_tag(std::move(tag)), m_row(row), m_result(nullptr)
     {
     }
 };
 
-InsertNewItemCommand::InsertNewItemCommand(model_type modelType, SessionItem* parent,
+InsertNewItemCommand::InsertNewItemCommand(model_type modelType, item_factory_func_t func, SessionItem* parent,
                                            std::string tag, int row)
     : AbstractItemCommand(parent),
-      p_impl(std::make_unique<InsertNewItemCommandPrivate>(modelType, tag, row))
+      p_impl(std::make_unique<InsertNewItemCommandPrivate>(modelType, func, tag, row))
 {
     setDescription(generate_description(p_impl->m_model_type, p_impl->m_tag, p_impl->m_row));
     p_impl->m_item_path = pathFromItem(parent);

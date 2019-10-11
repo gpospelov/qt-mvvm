@@ -59,7 +59,8 @@ std::string SessionModel::modelType() const
 SessionItem* SessionModel::insertNewItem(const model_type& modelType, SessionItem* parent,
                                          const std::string& tag, int row)
 {
-    return m_commands->insertNewItem(modelType, parent, tag, row);
+    auto create_func = [this, &modelType](){ return factory()->createItem(modelType);};
+    return m_commands->insertNewItem(modelType, create_func, parent, tag, row);
 }
 
 //! Copy item and insert it in parent's tag and row.

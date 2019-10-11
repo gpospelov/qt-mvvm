@@ -12,6 +12,7 @@
 
 #include "abstractitemcommand.h"
 #include "mvvm_types.h"
+#include "function_types.h"
 
 namespace ModelView
 {
@@ -25,7 +26,7 @@ class CORE_EXPORT InsertNewItemCommand : public AbstractItemCommand
 public:
     using result_t = SessionItem*;
 
-    InsertNewItemCommand(model_type modelType, SessionItem* parent, std::string tag, int row);
+    InsertNewItemCommand(model_type modelType, item_factory_func_t func, SessionItem* parent, std::string tag, int row);
     ~InsertNewItemCommand() override;
 
     result_t result() const;
