@@ -304,23 +304,19 @@ void DesignerScene::drawForeground(QPainter *painter, const QRectF & /* rect */)
 }
 
 //! propagates connection established by NodeEditor to the model
-void DesignerScene::onEstablishedConnection(NodeEditorConnection *connection)
+void DesignerScene::onEstablishedConnection(NodeEditorConnection* connection)
 {
-    /*ConnectableView *parentView = connection->getParentView();
-    ConnectableView *childView = connection->getChildView();
+    ConnectableView* parentView = connection->getParentView();
+    ConnectableView* childView = connection->getChildView();
 
-    QString tag;
-    delete connection; // deleting just created connection because it will be recreated from the
-                       // model
-    m_sampleModel->moveItem(childView->getItem(),
-                                         parentView->getItem(), -1, tag);*/
+    m_sampleModel->moveItem(childView->getItem(), parentView->getItem(), {}, -1);
 }
 
 //! propagates break of connection between views on scene to the model
 void DesignerScene::removeConnection(NodeEditorConnection *connection)
 {
-    /*IView *childView = dynamic_cast<IView *>(connection->outputPort()->parentItem());
-    m_sampleModel->moveItem(childView->getItem(), 0);*/
+    IView *childView = dynamic_cast<IView *>(connection->outputPort()->parentItem());
+    m_sampleModel->moveItem(childView->getItem(), m_sampleModel->rootItem(), {}, -1);
 }
 
 //! handles drag event
