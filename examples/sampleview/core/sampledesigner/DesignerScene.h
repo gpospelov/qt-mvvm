@@ -71,8 +71,9 @@ public:
 
     void deleteSelectedItems();
 
-    void onEstablishedConnection(NodeEditorConnection *); // to process signals from NodeEditor
-    void removeConnection(NodeEditorConnection *);
+    // to process signals from NodeEditor
+    void onEstablishedConnection(NodeEditorConnection* connection);
+    void removeConnection(NodeEditorConnection* connection);
 
     void dragMoveEvent(QGraphicsSceneDragDropEvent *event) override;
     void dropEvent(QGraphicsSceneDragDropEvent *event) override;

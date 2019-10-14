@@ -96,7 +96,7 @@ void ConnectableView::connectInputPort(ConnectableView *other, int port_number)
     NodeEditorPort *output = other->getOutputPorts().at(0);
 
     if (!input->isConnected(output)) {
-        NodeEditorConnection *conn = new NodeEditorConnection(nullptr, scene());
+        NodeEditorConnection* conn = new NodeEditorConnection(scene());
         conn->setPort2(input);
         conn->setPort1(output);
         conn->updatePath();

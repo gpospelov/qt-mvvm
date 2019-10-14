@@ -30,10 +30,8 @@ class ConnectableView;
 class NodeEditorConnection : public QGraphicsPathItem
 {
 public:
-    enum { TYPE = DesignerHelper::NODE_EDITOR_CONNECTION };
-
-    NodeEditorConnection(QGraphicsItem *parent = 0, QGraphicsScene *scene = 0);
-    virtual ~NodeEditorConnection();
+    NodeEditorConnection(QGraphicsScene* scene);
+    ~NodeEditorConnection() override;
 
     void setPos1(const QPointF &p);
     void setPos2(const QPointF &p);
@@ -48,9 +46,9 @@ public:
     NodeEditorPort *inputPort();
     NodeEditorPort *outputPort();
 
-    int type() const { return TYPE; }
+    int type() const override { return DesignerHelper::NODE_EDITOR_CONNECTION; }
 
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    void paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*) override;
 
     //! returns parent view, i.e. the view which owns input port of given connection
     ConnectableView *getParentView();

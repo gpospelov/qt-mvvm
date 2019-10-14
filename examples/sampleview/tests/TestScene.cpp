@@ -75,7 +75,7 @@ TEST_F(TestScene, testAddingConnection)
 
     EXPECT_TRUE(layout->parent() == model.rootItem());
 
-    auto connection = new NodeEditorConnection;
+    auto connection = new NodeEditorConnection(scene.get());
     scene->addItem(connection);
     connection->setPort1(
         dynamic_cast<ConnectableView*>(scene->getViewForItem(layout))->getOutputPorts()[0]);
