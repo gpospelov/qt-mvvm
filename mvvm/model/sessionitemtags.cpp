@@ -76,9 +76,9 @@ SessionItem* SessionItemTags::takeItem(const TagRow& tagrow)
 
 //! Returns true if item can be taken.
 
-bool SessionItemTags::canTakeItem(const std::string& tag, int row) const
+bool SessionItemTags::canTakeItem(const TagRow& tagrow) const
 {
-    return container(tag)->canTakeItem(row);
+    return container(tagrow.tag)->canTakeItem(tagrow.row);
 }
 
 //! Returns item at given row of given tag.

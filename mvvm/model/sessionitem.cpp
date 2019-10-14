@@ -128,7 +128,7 @@ bool SessionItem::insertItem(SessionItem* item, const std::string& tag, int row)
 
 SessionItem* SessionItem::takeItem(const std::string& tag, int row)
 {
-    if (!p_impl->m_tags->canTakeItem(tag, row))
+    if (!p_impl->m_tags->canTakeItem({tag, row}))
         return nullptr;
 
     if (p_impl->m_model)
