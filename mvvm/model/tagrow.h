@@ -22,6 +22,13 @@ struct CORE_EXPORT TagRow
 {
     std::string tag = {};
     int row = -1;
+
+    static TagRow defaultAppend();
+
+    static TagRow append(const std::string& tag_name);
+
+    bool operator==(const TagRow& other) const;
+    bool operator!=(const TagRow& other) const;
 };
 
 } // namespace ModelView
