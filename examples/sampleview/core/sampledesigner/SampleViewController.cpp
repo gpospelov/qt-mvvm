@@ -19,10 +19,8 @@
 #include "ApplicationModels.h"
 
 SampleViewController::SampleViewController(ApplicationModels* models)
-    : m_designerScene()
-{
-    m_designerScene.setSampleModel(models->sampleModel());
-}
+    : m_designerScene(models ? models->sampleModel() : nullptr)
+{}
 
 
 SampleViewController::~SampleViewController() = default;

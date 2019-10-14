@@ -116,7 +116,7 @@ void ILayerView::onRelease(const QPointF& pos)
     getItem()->setProperty(LocatedItem::P_X_POS, newPos.x());
     getItem()->setProperty(LocatedItem::P_Y_POS, newPos.y());
 
-    dynamic_cast<DesignerScene*>(scene())->setDelayedExecution(
+    dynamic_cast<DesignerScene*>(scene())->sendModelCommand(
         [item = getItem()](ModelView::SessionModel& model) {
             model.moveItem(item, model.rootItem(), {}, -1);
         });
@@ -125,7 +125,7 @@ void ILayerView::onRelease(const QPointF& pos)
 void ILayerView::onChangeOwner(const ILayerView* requested_parent, int requested_row)
 {
     const int insertion_row = insertionRow(requested_parent, requested_row);
-    dynamic_cast<DesignerScene*>(scene())->setDelayedExecution([item = getItem(),
+    dynamic_cast<DesignerScene*>(scene())->sendModelCommand([item = getItem(),
                                         new_parent = requested_parent->getItem(),
                                         insertion_row](ModelView::SessionModel& model) {
         model.moveItem(item, new_parent, MultiLayerItem::T_LAYERS, insertion_row);

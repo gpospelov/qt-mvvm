@@ -25,10 +25,9 @@ protected:
 };
 
 TestScene::TestScene()
-    : scene(std::make_unique<DesignerScene>())
+    : scene(std::make_unique<DesignerScene>(&model))
 {
     model.clear();
-    scene->setSampleModel(&model);
 }
 
 TestScene::~TestScene() = default;
@@ -82,7 +81,7 @@ TEST_F(TestScene, testAddingConnection)
     connection->setPort2(
         dynamic_cast<ConnectableView*>(scene->getViewForItem(layer))->getInputPorts()[0]);
 
-    scene->onEstablishedConnection(connection);
+    scene->onConnect(connection);
 
     EXPECT_TRUE(layout->parent() == layer);
     EXPECT_TRUE(scene->getViewForItem(layout)->parentObject() != scene->getViewForItem(layer));

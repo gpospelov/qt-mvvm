@@ -16,6 +16,7 @@
 #include "ConnectableView.h"
 #include "DesignerHelper.h"
 #include "DesignerMimeData.h"
+#include "GraphicsObjectController.h"
 #include "IView.h"
 #include "LayerView.h"
 #include "LocatedItem.h"
@@ -34,74 +35,30 @@
 
 using namespace ModelView;
 
-namespace {
-class ModelCommandExecutor
-{
-public:
-    ModelCommandExecutor(DesignerScene::ModelCommand& command, SessionModel* model)
-        : m_command(command)
-        , m_model(model)
-    {}
-
-    void execute() {
-        if (!m_model)
-            throw std::runtime_error(
-                "Error in ModelCommandExecutor::execute: session model is null.");
-
-        if (!m_command)
-            return;
-        m_command(*m_model);
-    }
-
-    ~ModelCommandExecutor() { m_command = DesignerScene::ModelCommand(); }
-
-private:
-    DesignerScene::ModelCommand& m_command;
-    SessionModel* m_model;
-};
-}
-
-DesignerScene::DesignerScene(QObject *parent)
-    : QGraphicsScene(parent), m_sampleModel(nullptr),
-      m_selectionModel(nullptr), m_proxy(nullptr),
-      m_block_selection(false), m_aligner(new SampleViewAligner(this))
+DesignerScene::DesignerScene(SampleModel* sample_model, QObject* parent)
+    : QGraphicsScene(parent)
+    , m_controller(*this, sample_model)
+    , m_selectionModel(nullptr)
+    , m_proxy(nullptr)
+    , m_block_selection(false)
+    , m_aligner(new SampleViewAligner(this))
+    , m_nodeEditor(new NodeEditor(parent))
 {
     setSceneRect(QRectF(-800, -800, 1600, 1600));
     setBackgroundBrush(DesignerHelper::getSceneBackground());
 
-    m_nodeEditor = new NodeEditor(parent);
     m_nodeEditor->install(this);
-    connect(m_nodeEditor, &NodeEditor::connectionIsEstablished, this, &DesignerScene::onEstablishedConnection);
-    connect(m_nodeEditor, &NodeEditor::selectionModeChangeRequest, this, &DesignerScene::selectionModeChangeRequest);
+    connect(m_nodeEditor, &NodeEditor::connectionIsEstablished, this, &DesignerScene::onConnect);
+    connect(m_nodeEditor, &NodeEditor::selectionModeChangeRequest, this,
+            &DesignerScene::selectionModeChangeRequest);
     connect(this, &DesignerScene::selectionChanged, this, &DesignerScene::onSceneSelectionChanged);
+
+    updateScene();
 }
 
 DesignerScene::~DesignerScene()
 {
     delete m_aligner;
-}
-
-void DesignerScene::setSampleModel(SampleModel *sampleModel)
-{
-    Q_ASSERT(sampleModel);
-
-    if (sampleModel == m_sampleModel)
-        return;
-
-    if (m_sampleModel)
-        m_sampleModel->mapper()->unsubscribe(this);
-
-    m_sampleModel = sampleModel;
-    m_sampleModel->mapper()->setOnModelReset([this](SessionModel*) { resetScene(); }, this);
-
-    m_sampleModel->mapper()->setOnRowInserted(
-        [this](SessionItem*, std::string, int) { onRowsInserted(); }, this);
-
-    m_sampleModel->mapper()->setOnRowRemoved(
-        [this](SessionItem*, std::string, int) { onRowsRemoved(); }, this);
-
-    resetScene();
-    updateScene();
 }
 
 void DesignerScene::setSelectionModel(QItemSelectionModel *model, FilterPropertyProxy *proxy)
@@ -142,16 +99,20 @@ void DesignerScene::updateScene()
     alignViews();
 }
 
-void DesignerScene::onRowsInserted()
+void DesignerScene::onModelChanged()
 {
     resetScene();
     updateScene();
 }
 
-void DesignerScene::onRowsRemoved()
+void DesignerScene::onModelDestroyed()
 {
     resetScene();
-    updateScene();
+}
+
+void DesignerScene::onConnect(NodeEditorConnection* connection)
+{
+    m_controller.onConnect(connection);
 }
 
 //! propagate selection from model to scene
@@ -201,13 +162,8 @@ void DesignerScene::onSceneSelectionChanged()
 //! runs through all items recursively and updates corresponding views
 void DesignerScene::updateViews()
 {
-    if (!m_sampleModel) {
-        Q_ASSERT(m_sampleModel);
-        return;
-    }
-
     QList<SessionItem*> to_process;
-    for (auto item : m_sampleModel->rootItem()->children())
+    for (auto item : m_controller.model()->rootItem()->children())
         to_process.append(item);
 
     while (!to_process.empty()) {
@@ -256,42 +212,7 @@ void DesignerScene::alignViews()
 //! propagates deletion of views on the scene to the model
 void DesignerScene::deleteSelectedItems()
 {
-    const QList<QGraphicsItem*> selected_views = selectedItems();
-    QList<SessionItem*> to_delete;
-    for (const QGraphicsItem* view: selected_views) {
-        auto iview = dynamic_cast<const IView*>(view);
-        if (!iview || !iview->getItem())
-            continue;
-        const bool has_ancestors =
-            std::accumulate(selected_views.begin(), selected_views.end(), false,
-                            [view](bool result, QGraphicsItem* pview) {
-                                return result || pview->isAncestorOf(view);
-                            });
-        if (!has_ancestors)
-            to_delete.append(iview->getItem());
-    }
-
-    for (auto item: to_delete)
-        Utils::DeleteItemFromModel(item);
-
-    /*// deleting selected items on model side, corresponding views will be deleted automatically
-    // Since we don't know the order of items and their parent/child relationship, we need this
-    while (indexes.size()) {
-        QModelIndex current = m_proxy->mapToSource(indexes.back());
-        m_sampleModel->removeRows(current.row(), 1, current.parent());
-        indexes = m_selectionModel->selectedIndexes();
-    }
-    // Connections will be deleted automatically if one of connected views has been deleted.
-    // For the moment, we have to delete connections which are: 1) were selected 2) Do not connect
-    // views scheduled for deletion.
-    for(auto graphicsItem : selectedItems()) {
-        if (NodeEditorConnection *connection = dynamic_cast<NodeEditorConnection *>(graphicsItem)) {
-            if (to_delete.contains(connection->getParentView())
-                || to_delete.contains(connection->getChildView()))
-                continue;
-            removeConnection(connection);
-        }
-    }*/
+    m_controller.onDelete(selectedItems());
 }
 
 //! shows appropriate layer interface to drop while moving ILayerView
@@ -301,22 +222,6 @@ void DesignerScene::drawForeground(QPainter *painter, const QRectF & /* rect */)
         painter->setPen(QPen(Qt::darkBlue, 2, Qt::DashLine));
         painter->drawLine(m_layer_interface_line);
     }
-}
-
-//! propagates connection established by NodeEditor to the model
-void DesignerScene::onEstablishedConnection(NodeEditorConnection* connection)
-{
-    ConnectableView* parentView = connection->getParentView();
-    ConnectableView* childView = connection->getChildView();
-
-    m_sampleModel->moveItem(childView->getItem(), parentView->getItem(), {}, -1);
-}
-
-//! propagates break of connection between views on scene to the model
-void DesignerScene::removeConnection(NodeEditorConnection *connection)
-{
-    IView *childView = dynamic_cast<IView *>(connection->outputPort()->parentItem());
-    m_sampleModel->moveItem(childView->getItem(), m_sampleModel->rootItem(), {}, -1);
 }
 
 //! handles drag event
@@ -337,27 +242,26 @@ void DesignerScene::dragMoveEvent(QGraphicsSceneDragDropEvent *event)
 void DesignerScene::dropEvent(QGraphicsSceneDragDropEvent *event)
 {
     const DesignerMimeData *mimeData = checkDragEvent(event);
-    if (mimeData) {
+    if (!mimeData)
+        return;
 
-        if(isAcceptedByMultiLayer(mimeData, event)) {
-            // certain views can be dropped on MultiLayer and so will be processed there
-            QGraphicsScene::dropEvent(event);
+    const std::string class_name = mimeData->getClassName();
+    if (isAcceptedByMultiLayer(mimeData, event)) {
+        // certain views can be dropped on MultiLayer and so will be processed there
+        QGraphicsScene::dropEvent(event);
+    } else if (SampleViewFactory::isValidType(class_name)) {
+        // other views can be dropped on canvas anywhere
+        auto command = [pos = event->scenePos(), class_name](SessionModel& model) {
+            SessionItem* new_item = model.insertNewItem(class_name);
 
-        } else {
-            // other views can be dropped on canvas anywhere
-            if (SampleViewFactory::isValidType(mimeData->getClassName())) {
-
-                SessionItem *new_item = m_sampleModel->insertNewItem(mimeData->getClassName());
-
-                // propagating drop coordinates to SessionItem
-                QRectF boundingRect = DesignerHelper::getDefaultBoundingRect(new_item->modelType());
-                new_item->setProperty(LocatedItem::P_X_POS, event->scenePos().x() - boundingRect.width() / 2);
-                new_item->setProperty(LocatedItem::P_Y_POS, event->scenePos().y() - boundingRect.height() / 2);
-
-            }
-            adjustSceneRect();
-        }
+            // propagating drop coordinates to SessionItem
+            new_item->setProperty(LocatedItem::P_X_POS, pos.x());
+            new_item->setProperty(LocatedItem::P_Y_POS, pos.y());
+        };
+        sendModelCommand(command);
     }
+    m_controller.executeDelayedCommand();
+    adjustSceneRect();
 }
 
 //! returns proper MimeData if the object can be hadled by graphics scene
@@ -384,7 +288,7 @@ void DesignerScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
     QGraphicsScene::mouseReleaseEvent(event);
     setLayerInterfaceLine(); // removing drop area hint from the scene
-    ModelCommandExecutor(delayed_command, m_sampleModel).execute();
+    m_controller.executeDelayedCommand();
 }
 
 //! Returns true if there is MultiLayerView nearby during drag event.
@@ -434,4 +338,9 @@ bool DesignerScene::isLayerDragged() const
 void DesignerScene::onSmartAlign()
 {
     m_aligner->smartAlign();
+}
+
+void DesignerScene::sendModelCommand(GraphicsObjectController::ModelCommand command)
+{
+    m_controller.setDelayedCommand(command);
 }

@@ -23,10 +23,9 @@ protected:
 };
 
 TestMultilayerView::TestMultilayerView()
-    : scene(std::make_unique<DesignerScene>())
+    : scene(std::make_unique<DesignerScene>(&model))
 {
     model.clear();
-    scene->setSampleModel(&model);
 }
 
 TestMultilayerView::~TestMultilayerView() = default;

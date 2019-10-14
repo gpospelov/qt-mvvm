@@ -154,15 +154,13 @@ void MultiLayerView::dragMoveEvent(QGraphicsSceneDragDropEvent* event)
 void MultiLayerView::dropEvent(QGraphicsSceneDragDropEvent* event)
 {
     const DesignerMimeData* mimeData = checkDragEvent(event);
-    if (mimeData) {
-        DesignerScene* designerScene = dynamic_cast<DesignerScene*>(scene());
-        if(designerScene) {
-            SampleModel* sampleModel = designerScene->getSampleModel();
-
-            sampleModel->insertNewItem(mimeData->getClassName(), getItem(), {},
-                                       getDropArea(event->pos()));
-        }
-    }
+    DesignerScene* designerScene = dynamic_cast<DesignerScene*>(scene());
+    if (!mimeData || !designerScene)
+        return;
+    designerScene->sendModelCommand([name = mimeData->getClassName(), pos = event->pos(),
+                                     this](ModelView::SessionModel& model) {
+        model.insertNewItem(name, getItem(), {}, getDropArea(pos));
+    });
 }
 
 const DesignerMimeData *MultiLayerView::checkDragEvent(QGraphicsSceneDragDropEvent* event)
