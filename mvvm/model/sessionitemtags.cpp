@@ -109,16 +109,15 @@ std::vector<SessionItem*> SessionItemTags::allitems() const
 
 //! Returns tag name and row of item in container.
 
-std::pair<std::string, int> SessionItemTags::tagRowOfItem(const SessionItem* item) const
+TagRow SessionItemTags::tagRowOfItem(const SessionItem* item) const
 {
-    std::pair<std::string, int> result = std::make_pair("", -1);
     for (auto cont : m_containers) {
         int row = cont->indexOfItem(item);
         if (row != -1)
-            return std::make_pair(cont->name(), row);
+            return {cont->name(), row};
     }
 
-    return result;
+    return {};
 }
 
 SessionItemTags::const_iterator SessionItemTags::begin() const

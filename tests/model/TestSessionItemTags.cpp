@@ -108,21 +108,21 @@ TEST_F(TestSessionItemTags, tagRowOfItem)
     tag.insertItem(child_t2_a, tag2, 0); // 0
 
     // checking children tag and row
-    EXPECT_EQ(tag.tagRowOfItem(child_t1_a).first, tag1);
-    EXPECT_EQ(tag.tagRowOfItem(child_t1_b).first, tag1);
-    EXPECT_EQ(tag.tagRowOfItem(child_t2_a).first, tag2);
-    EXPECT_EQ(tag.tagRowOfItem(child_t1_a).second, 0);
-    EXPECT_EQ(tag.tagRowOfItem(child_t1_b).second, 1);
-    EXPECT_EQ(tag.tagRowOfItem(child_t2_a).second, 0);
+    EXPECT_EQ(tag.tagRowOfItem(child_t1_a).tag, tag1);
+    EXPECT_EQ(tag.tagRowOfItem(child_t1_b).tag, tag1);
+    EXPECT_EQ(tag.tagRowOfItem(child_t2_a).tag, tag2);
+    EXPECT_EQ(tag.tagRowOfItem(child_t1_a).row, 0);
+    EXPECT_EQ(tag.tagRowOfItem(child_t1_b).row, 1);
+    EXPECT_EQ(tag.tagRowOfItem(child_t2_a).row, 0);
 
     // alien item has no tag and -1 row
     auto alien = std::make_unique<SessionItem>();
-    EXPECT_EQ(tag.tagRowOfItem(alien.get()).first, "");
-    EXPECT_EQ(tag.tagRowOfItem(alien.get()).second, -1);
+    EXPECT_EQ(tag.tagRowOfItem(alien.get()).tag, "");
+    EXPECT_EQ(tag.tagRowOfItem(alien.get()).row, -1);
 
     // the same for nullptr
-    EXPECT_EQ(tag.tagRowOfItem(nullptr).first, "");
-    EXPECT_EQ(tag.tagRowOfItem(nullptr).second, -1);
+    EXPECT_EQ(tag.tagRowOfItem(nullptr).tag, "");
+    EXPECT_EQ(tag.tagRowOfItem(nullptr).row, -1);
 }
 
 //! Testing method getItem.

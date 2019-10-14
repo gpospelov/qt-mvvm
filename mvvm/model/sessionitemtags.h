@@ -11,6 +11,7 @@
 #define MVVM_SESSIONITEMTAGS_H
 
 #include "mvvm_export.h"
+#include "tagrow.h"
 #include <vector>
 #include <string>
 
@@ -61,7 +62,7 @@ public:
 
     std::vector<SessionItem*> allitems() const;
 
-    std::pair<std::string, int> tagRowOfItem(const SessionItem* item) const;
+    TagRow tagRowOfItem(const SessionItem* item) const;
 
     const_iterator begin() const;
     const_iterator end() const;
