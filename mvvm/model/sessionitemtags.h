@@ -56,7 +56,7 @@ public:
     bool canTakeItem(const std::string& tag, int row) const;
 
     // item access
-    SessionItem* getItem(const std::string& tag, int row = 0) const;
+    SessionItem* getItem(const std::string& tag, int row) const;
 
     std::vector<SessionItem*> getItems(const std::string& tag = {}) const;
 
