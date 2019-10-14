@@ -197,7 +197,7 @@ int SessionItem::itemCount(const std::string& tag) const
 
 SessionItem* SessionItem::getItem(const std::string& tag, int row) const
 {
-    return p_impl->m_tags->getItem(tag, row);
+    return p_impl->m_tags->getItem({tag, row});
 }
 
 std::vector<SessionItem*> SessionItem::getItems(const std::string& tag) const

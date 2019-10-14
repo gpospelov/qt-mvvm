@@ -145,10 +145,10 @@ TEST_F(TestSessionItemTags, getItem)
     tag.insertItem(child_t1_b, TagRow::append());      // 1
     tag.insertItem(child_t2_a, {tag2, 0}); // 0
 
-    EXPECT_EQ(tag.getItem(tag1, 0), child_t1_a);
-    EXPECT_EQ(tag.getItem(tag1, 1), child_t1_b);
-    EXPECT_EQ(tag.getItem(tag2, 0), child_t2_a);
-    EXPECT_EQ(tag.getItem(tag2, 2), nullptr);
+    EXPECT_EQ(tag.getItem({tag1, 0}), child_t1_a);
+    EXPECT_EQ(tag.getItem({tag1, 1}), child_t1_b);
+    EXPECT_EQ(tag.getItem({tag2, 0}), child_t2_a);
+    EXPECT_EQ(tag.getItem({tag2, 2}), nullptr);
 }
 
 //! Testing method getItem.

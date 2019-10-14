@@ -83,9 +83,9 @@ bool SessionItemTags::canTakeItem(const std::string& tag, int row) const
 
 //! Returns item at given row of given tag.
 
-SessionItem* SessionItemTags::getItem(const std::string& tag, int row) const
+SessionItem* SessionItemTags::getItem(const TagRow& tagrow) const
 {
-    return container(tag)->itemAt(row);
+    return container(tagrow.tag)->itemAt(tagrow.row);
 }
 
 //! Returns vector of items in the container with given name.
