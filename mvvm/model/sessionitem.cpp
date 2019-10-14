@@ -111,7 +111,7 @@ bool SessionItem::insertItem(SessionItem* item, const std::string& tag, int row)
     if (item->model())
         throw std::runtime_error("SessionItem::insertItem() -> Existing model.");
 
-    auto result = p_impl->m_tags->insertItem(item, tag, row);
+    auto result = p_impl->m_tags->insertItem(item, {tag, row});
     if (result) {
         item->setParent(this);
         item->setModel(model());

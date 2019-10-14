@@ -49,7 +49,7 @@ public:
 
     // adding and removal
 
-    bool insertItem(SessionItem* item, const std::string& tag, int row);
+    bool insertItem(SessionItem* item, const TagRow& tagrow);
 
     SessionItem* takeItem(const std::string& tag, int row);
 
