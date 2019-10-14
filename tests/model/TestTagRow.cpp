@@ -80,7 +80,7 @@ TEST_F(TestTagRow, assignmentOperator)
 
 TEST_F(TestTagRow, factoryMethods)
 {
-    auto tagrow = TagRow::defaultAppend();
+    auto tagrow = TagRow::append();
     EXPECT_EQ(tagrow.tag, "");
     EXPECT_EQ(tagrow.row, -1);
 

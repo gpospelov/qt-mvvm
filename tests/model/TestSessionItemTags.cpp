@@ -58,7 +58,7 @@ TEST_F(TestSessionItemTags, insertItem)
 
     // inserting items without tags defined
     auto item = std::make_unique<SessionItem>();
-    EXPECT_THROW(tag.insertItem(item.get(), TagRow::defaultAppend()), std::runtime_error);
+    EXPECT_THROW(tag.insertItem(item.get(), TagRow::append()), std::runtime_error);
 
     // registering tags
     tag.registerTag(TagInfo::universalTag(tag1));
@@ -103,8 +103,8 @@ TEST_F(TestSessionItemTags, tagRowOfItem)
     auto child_t1_a = new SessionItem;
     auto child_t1_b = new SessionItem;
     auto child_t2_a = new SessionItem;
-    tag.insertItem(child_t1_a, TagRow::defaultAppend());      // 0
-    tag.insertItem(child_t1_b, TagRow::defaultAppend());      // 1
+    tag.insertItem(child_t1_a, TagRow::append());      // 0
+    tag.insertItem(child_t1_b, TagRow::append());      // 1
     tag.insertItem(child_t2_a, {tag2, 0}); // 0
 
     // checking children tag and row
@@ -141,8 +141,8 @@ TEST_F(TestSessionItemTags, getItem)
     auto child_t1_a = new SessionItem;
     auto child_t1_b = new SessionItem;
     auto child_t2_a = new SessionItem;
-    tag.insertItem(child_t1_a, TagRow::defaultAppend());      // 0
-    tag.insertItem(child_t1_b, TagRow::defaultAppend());      // 1
+    tag.insertItem(child_t1_a, TagRow::append());      // 0
+    tag.insertItem(child_t1_b, TagRow::append());      // 1
     tag.insertItem(child_t2_a, {tag2, 0}); // 0
 
     EXPECT_EQ(tag.getItem(tag1), child_t1_a);
@@ -172,9 +172,9 @@ TEST_F(TestSessionItemTags, takeItem)
     auto child2 = new SessionItem(model_type);
     auto child3 = new SessionItem(model_type);
     auto child4 = new SessionItem(model_type);
-    EXPECT_TRUE(tag.insertItem(child1, TagRow::defaultAppend()));
-    EXPECT_TRUE(tag.insertItem(child2, TagRow::defaultAppend()));
-    EXPECT_TRUE(tag.insertItem(child3, TagRow::defaultAppend()));
+    EXPECT_TRUE(tag.insertItem(child1, TagRow::append()));
+    EXPECT_TRUE(tag.insertItem(child2, TagRow::append()));
+    EXPECT_TRUE(tag.insertItem(child3, TagRow::append()));
     EXPECT_TRUE(tag.insertItem(child4, TagRow::append(tag2)));
 
     // taking item in between

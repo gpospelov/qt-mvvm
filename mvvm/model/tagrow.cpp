@@ -11,14 +11,8 @@
 
 using namespace ModelView;
 
-//! Returns TagRow corresponding to the append to default tag.
-
-TagRow TagRow::defaultAppend()
-{
-    return {"", -1};
-}
-
 //! Returns TagRow corresponding to the append to tag_name.
+//! If tag_name =="" the default name will be used in SessionItemTags context.
 
 TagRow TagRow::append(const std::string& tag_name)
 {
@@ -26,6 +20,7 @@ TagRow TagRow::append(const std::string& tag_name)
 }
 
 //! Returns TagRow corresponding to prepending to tag_name.
+//! If tag_name =="" the default name will be used in SessionItemTags context.
 
 TagRow TagRow::prepend(const std::string& tag_name)
 {
