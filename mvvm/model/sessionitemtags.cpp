@@ -69,9 +69,9 @@ bool SessionItemTags::insertItem(SessionItem* item, const TagRow& tagrow)
 
 //! Removes item at given row and for given tag, returns it to the user.
 
-SessionItem* SessionItemTags::takeItem(const std::string& tag, int row)
+SessionItem* SessionItemTags::takeItem(const TagRow& tagrow)
 {
-    return container(tag)->takeItem(row);
+    return container(tagrow.tag)->takeItem(tagrow.row);
 }
 
 //! Returns true if item can be taken.

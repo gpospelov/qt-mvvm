@@ -164,7 +164,7 @@ TEST_F(TestSessionItemTags, takeItem)
     tag.registerTag(TagInfo::universalTag(tag2));
 
     // taking non existing items
-    EXPECT_EQ(tag.takeItem("", 0), nullptr);
+    EXPECT_EQ(tag.takeItem({"", 0}), nullptr);
 
     // inserting items
     auto child1 = new SessionItem(model_type);
@@ -178,7 +178,7 @@ TEST_F(TestSessionItemTags, takeItem)
 
     // taking item in between
     EXPECT_TRUE(tag.canTakeItem("", 1));
-    auto taken2 = tag.takeItem("", 1);
+    auto taken2 = tag.takeItem({"", 1});
     EXPECT_EQ(child2, taken2);
     delete taken2;
 
@@ -190,7 +190,7 @@ TEST_F(TestSessionItemTags, takeItem)
 
     // taking non existing items
     EXPECT_FALSE(tag.canTakeItem("", -1));
-    EXPECT_EQ(tag.takeItem("", -1), nullptr);
+    EXPECT_EQ(tag.takeItem({"", -1}), nullptr);
 }
 
 //! Testing isSinglePropertyTag.

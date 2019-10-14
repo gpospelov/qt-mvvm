@@ -51,7 +51,7 @@ public:
 
     bool insertItem(SessionItem* item, const TagRow& tagrow);
 
-    SessionItem* takeItem(const std::string& tag, int row);
+    SessionItem* takeItem(const TagRow& tagrow);
 
     bool canTakeItem(const std::string& tag, int row) const;
 
