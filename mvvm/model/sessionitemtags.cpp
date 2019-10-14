@@ -62,30 +62,30 @@ int SessionItemTags::itemCount(const std::string& tag_name) const
 //! Inserts item in container with given tag name and at given row.
 //! Returns true in the case of success. If tag name is empty, default tag will be used.
 
-bool SessionItemTags::insertItem(SessionItem* item, const std::string& tag, int row)
+bool SessionItemTags::insertItem(SessionItem* item, const TagRow& tagrow)
 {
-    return container(tag)->insertItem(item, row);
+    return container(tagrow.tag)->insertItem(item, tagrow.row);
 }
 
 //! Removes item at given row and for given tag, returns it to the user.
 
-SessionItem* SessionItemTags::takeItem(const std::string& tag, int row)
+SessionItem* SessionItemTags::takeItem(const TagRow& tagrow)
 {
-    return container(tag)->takeItem(row);
+    return container(tagrow.tag)->takeItem(tagrow.row);
 }
 
 //! Returns true if item can be taken.
 
-bool SessionItemTags::canTakeItem(const std::string& tag, int row) const
+bool SessionItemTags::canTakeItem(const TagRow& tagrow) const
 {
-    return container(tag)->canTakeItem(row);
+    return container(tagrow.tag)->canTakeItem(tagrow.row);
 }
 
 //! Returns item at given row of given tag.
 
-SessionItem* SessionItemTags::getItem(const std::string& tag, int row) const
+SessionItem* SessionItemTags::getItem(const TagRow& tagrow) const
 {
-    return container(tag)->itemAt(row);
+    return container(tagrow.tag)->itemAt(tagrow.row);
 }
 
 //! Returns vector of items in the container with given name.
@@ -109,16 +109,15 @@ std::vector<SessionItem*> SessionItemTags::allitems() const
 
 //! Returns tag name and row of item in container.
 
-std::pair<std::string, int> SessionItemTags::tagRowOfItem(const SessionItem* item) const
+TagRow SessionItemTags::tagRowOfItem(const SessionItem* item) const
 {
-    std::pair<std::string, int> result = std::make_pair("", -1);
     for (auto cont : m_containers) {
         int row = cont->indexOfItem(item);
         if (row != -1)
-            return std::make_pair(cont->name(), row);
+            return {cont->name(), row};
     }
 
-    return result;
+    return {};
 }
 
 SessionItemTags::const_iterator SessionItemTags::begin() const

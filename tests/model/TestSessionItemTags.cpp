@@ -58,7 +58,7 @@ TEST_F(TestSessionItemTags, insertItem)
 
     // inserting items without tags defined
     auto item = std::make_unique<SessionItem>();
-    EXPECT_THROW(tag.insertItem(item.get(), "", -1), std::runtime_error);
+    EXPECT_THROW(tag.insertItem(item.get(), TagRow::append()), std::runtime_error);
 
     // registering tags
     tag.registerTag(TagInfo::universalTag(tag1));
@@ -70,11 +70,11 @@ TEST_F(TestSessionItemTags, insertItem)
     auto child_t2_a = new SessionItem;
     auto child_t2_b = new SessionItem;
     auto child_t2_c = new SessionItem;
-    EXPECT_TRUE(tag.insertItem(child_t2_a, tag2, -1));
-    EXPECT_TRUE(tag.insertItem(child_t2_c, tag2, -1));
-    EXPECT_TRUE(tag.insertItem(child_t1_a, tag1, -1));
-    EXPECT_TRUE(tag.insertItem(child_t1_b, tag1, -1));
-    EXPECT_TRUE(tag.insertItem(child_t2_b, tag2, 1)); // between child_t2_a and child_t2_c
+    EXPECT_TRUE(tag.insertItem(child_t2_a, TagRow::append(tag2)));
+    EXPECT_TRUE(tag.insertItem(child_t2_c, TagRow::append(tag2)));
+    EXPECT_TRUE(tag.insertItem(child_t1_a, TagRow::append(tag1)));
+    EXPECT_TRUE(tag.insertItem(child_t1_b, TagRow::append(tag1)));
+    EXPECT_TRUE(tag.insertItem(child_t2_b, {tag2, 1})); // between child_t2_a and child_t2_c
 
     // checking item order in containers
     std::vector<SessionItem*> expected = {child_t1_a, child_t1_b};
@@ -103,26 +103,26 @@ TEST_F(TestSessionItemTags, tagRowOfItem)
     auto child_t1_a = new SessionItem;
     auto child_t1_b = new SessionItem;
     auto child_t2_a = new SessionItem;
-    tag.insertItem(child_t1_a, "", -1);      // 0
-    tag.insertItem(child_t1_b, "", -1);      // 1
-    tag.insertItem(child_t2_a, tag2, 0); // 0
+    tag.insertItem(child_t1_a, TagRow::append());      // 0
+    tag.insertItem(child_t1_b, TagRow::append());      // 1
+    tag.insertItem(child_t2_a, {tag2, 0}); // 0
 
     // checking children tag and row
-    EXPECT_EQ(tag.tagRowOfItem(child_t1_a).first, tag1);
-    EXPECT_EQ(tag.tagRowOfItem(child_t1_b).first, tag1);
-    EXPECT_EQ(tag.tagRowOfItem(child_t2_a).first, tag2);
-    EXPECT_EQ(tag.tagRowOfItem(child_t1_a).second, 0);
-    EXPECT_EQ(tag.tagRowOfItem(child_t1_b).second, 1);
-    EXPECT_EQ(tag.tagRowOfItem(child_t2_a).second, 0);
+    EXPECT_EQ(tag.tagRowOfItem(child_t1_a).tag, tag1);
+    EXPECT_EQ(tag.tagRowOfItem(child_t1_b).tag, tag1);
+    EXPECT_EQ(tag.tagRowOfItem(child_t2_a).tag, tag2);
+    EXPECT_EQ(tag.tagRowOfItem(child_t1_a).row, 0);
+    EXPECT_EQ(tag.tagRowOfItem(child_t1_b).row, 1);
+    EXPECT_EQ(tag.tagRowOfItem(child_t2_a).row, 0);
 
     // alien item has no tag and -1 row
     auto alien = std::make_unique<SessionItem>();
-    EXPECT_EQ(tag.tagRowOfItem(alien.get()).first, "");
-    EXPECT_EQ(tag.tagRowOfItem(alien.get()).second, -1);
+    EXPECT_EQ(tag.tagRowOfItem(alien.get()).tag, "");
+    EXPECT_EQ(tag.tagRowOfItem(alien.get()).row, -1);
 
     // the same for nullptr
-    EXPECT_EQ(tag.tagRowOfItem(nullptr).first, "");
-    EXPECT_EQ(tag.tagRowOfItem(nullptr).second, -1);
+    EXPECT_EQ(tag.tagRowOfItem(nullptr).tag, "");
+    EXPECT_EQ(tag.tagRowOfItem(nullptr).row, -1);
 }
 
 //! Testing method getItem.
@@ -141,15 +141,14 @@ TEST_F(TestSessionItemTags, getItem)
     auto child_t1_a = new SessionItem;
     auto child_t1_b = new SessionItem;
     auto child_t2_a = new SessionItem;
-    tag.insertItem(child_t1_a, "", -1);      // 0
-    tag.insertItem(child_t1_b, "", -1);      // 1
-    tag.insertItem(child_t2_a, tag2, 0); // 0
+    tag.insertItem(child_t1_a, TagRow::append());      // 0
+    tag.insertItem(child_t1_b, TagRow::append());      // 1
+    tag.insertItem(child_t2_a, {tag2, 0}); // 0
 
-    EXPECT_EQ(tag.getItem(tag1), child_t1_a);
-    EXPECT_EQ(tag.getItem(tag1, 0), child_t1_a);
-    EXPECT_EQ(tag.getItem(tag1, 1), child_t1_b);
-    EXPECT_EQ(tag.getItem(tag2, 0), child_t2_a);
-    EXPECT_EQ(tag.getItem(tag2, 2), nullptr);
+    EXPECT_EQ(tag.getItem({tag1, 0}), child_t1_a);
+    EXPECT_EQ(tag.getItem({tag1, 1}), child_t1_b);
+    EXPECT_EQ(tag.getItem({tag2, 0}), child_t2_a);
+    EXPECT_EQ(tag.getItem({tag2, 2}), nullptr);
 }
 
 //! Testing method getItem.
@@ -165,21 +164,21 @@ TEST_F(TestSessionItemTags, takeItem)
     tag.registerTag(TagInfo::universalTag(tag2));
 
     // taking non existing items
-    EXPECT_EQ(tag.takeItem("", 0), nullptr);
+    EXPECT_EQ(tag.takeItem({"", 0}), nullptr);
 
     // inserting items
     auto child1 = new SessionItem(model_type);
     auto child2 = new SessionItem(model_type);
     auto child3 = new SessionItem(model_type);
     auto child4 = new SessionItem(model_type);
-    EXPECT_TRUE(tag.insertItem(child1, "", -1));
-    EXPECT_TRUE(tag.insertItem(child2, "", -1));
-    EXPECT_TRUE(tag.insertItem(child3, "", -1));
-    EXPECT_TRUE(tag.insertItem(child4, tag2, -1));
+    EXPECT_TRUE(tag.insertItem(child1, TagRow::append()));
+    EXPECT_TRUE(tag.insertItem(child2, TagRow::append()));
+    EXPECT_TRUE(tag.insertItem(child3, TagRow::append()));
+    EXPECT_TRUE(tag.insertItem(child4, TagRow::append(tag2)));
 
     // taking item in between
-    EXPECT_TRUE(tag.canTakeItem("", 1));
-    auto taken2 = tag.takeItem("", 1);
+    EXPECT_TRUE(tag.canTakeItem({"", 1}));
+    auto taken2 = tag.takeItem({"", 1});
     EXPECT_EQ(child2, taken2);
     delete taken2;
 
@@ -190,8 +189,8 @@ TEST_F(TestSessionItemTags, takeItem)
     EXPECT_EQ(tag.getItems(tag2), expected);
 
     // taking non existing items
-    EXPECT_FALSE(tag.canTakeItem("", -1));
-    EXPECT_EQ(tag.takeItem("", -1), nullptr);
+    EXPECT_FALSE(tag.canTakeItem({"", -1}));
+    EXPECT_EQ(tag.takeItem({"", -1}), nullptr);
 }
 
 //! Testing isSinglePropertyTag.

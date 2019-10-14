@@ -111,7 +111,7 @@ bool SessionItem::insertItem(SessionItem* item, const std::string& tag, int row)
     if (item->model())
         throw std::runtime_error("SessionItem::insertItem() -> Existing model.");
 
-    auto result = p_impl->m_tags->insertItem(item, tag, row);
+    auto result = p_impl->m_tags->insertItem(item, {tag, row});
     if (result) {
         item->setParent(this);
         item->setModel(model());
@@ -128,13 +128,13 @@ bool SessionItem::insertItem(SessionItem* item, const std::string& tag, int row)
 
 SessionItem* SessionItem::takeItem(const std::string& tag, int row)
 {
-    if (!p_impl->m_tags->canTakeItem(tag, row))
+    if (!p_impl->m_tags->canTakeItem({tag, row}))
         return nullptr;
 
     if (p_impl->m_model)
         p_impl->m_model->mapper()->callOnRowAboutToBeRemoved(this, tag, row);
 
-    auto result = p_impl->m_tags->takeItem(tag, row);
+    auto result = p_impl->m_tags->takeItem({tag, row});
     result->setParent(nullptr);
     result->setModel(nullptr);
     // FIXME remaining problem is that ItemMapper still looking to the model
@@ -197,7 +197,7 @@ int SessionItem::itemCount(const std::string& tag) const
 
 SessionItem* SessionItem::getItem(const std::string& tag, int row) const
 {
-    return p_impl->m_tags->getItem(tag, row);
+    return p_impl->m_tags->getItem({tag, row});
 }
 
 std::vector<SessionItem*> SessionItem::getItems(const std::string& tag) const
@@ -207,14 +207,15 @@ std::vector<SessionItem*> SessionItem::getItems(const std::string& tag) const
 
 std::string SessionItem::tagFromItem(const SessionItem* item) const
 {
-    return p_impl->m_tags->tagRowOfItem(item).first;
+    return p_impl->m_tags->tagRowOfItem(item).tag;
 }
 
 //! Returns pair of tag and row corresponding to given item.
 
 std::pair<std::string, int> SessionItem::tagRowOfItem(const SessionItem* item) const
 {
-    return p_impl->m_tags->tagRowOfItem(item);
+    auto tagrow = p_impl->m_tags->tagRowOfItem(item);
+    return std::make_pair(tagrow.tag, tagrow.row);
 }
 
 ItemMapper* SessionItem::mapper()

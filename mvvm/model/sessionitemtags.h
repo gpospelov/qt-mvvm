@@ -11,6 +11,7 @@
 #define MVVM_SESSIONITEMTAGS_H
 
 #include "mvvm_export.h"
+#include "tagrow.h"
 #include <vector>
 #include <string>
 
@@ -48,20 +49,20 @@ public:
 
     // adding and removal
 
-    bool insertItem(SessionItem* item, const std::string& tag, int row);
+    bool insertItem(SessionItem* item, const TagRow& tagrow);
 
-    SessionItem* takeItem(const std::string& tag, int row);
+    SessionItem* takeItem(const TagRow& tagrow);
 
-    bool canTakeItem(const std::string& tag, int row) const;
+    bool canTakeItem(const TagRow& tagrow) const;
 
     // item access
-    SessionItem* getItem(const std::string& tag, int row = 0) const;
+    SessionItem* getItem(const TagRow& tagrow) const;
 
     std::vector<SessionItem*> getItems(const std::string& tag = {}) const;
 
     std::vector<SessionItem*> allitems() const;
 
-    std::pair<std::string, int> tagRowOfItem(const SessionItem* item) const;
+    TagRow tagRowOfItem(const SessionItem* item) const;
 
     const_iterator begin() const;
     const_iterator end() const;

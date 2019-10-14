@@ -42,6 +42,8 @@ public:
 
     bool canTakeItem(int index) const;
 
+    bool canInsertItem(const SessionItem* item, int index) const;
+
     int indexOfItem(const SessionItem* item) const;
 
     SessionItem* itemAt(int index) const;

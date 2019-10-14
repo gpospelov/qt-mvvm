@@ -49,6 +49,8 @@ target_sources(${library_name} PRIVATE
     sessionmodel.h
     taginfo.cpp
     taginfo.h
+    tagrow.cpp
+    tagrow.h
     uniqueidgenerator.cpp
     uniqueidgenerator.h
     variant-constants.h)
