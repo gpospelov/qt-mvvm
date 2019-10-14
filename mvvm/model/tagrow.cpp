@@ -25,6 +25,13 @@ TagRow TagRow::append(const std::string& tag_name)
     return {tag_name, -1};
 }
 
+//! Returns TagRow corresponding to prepending to tag_name.
+
+TagRow TagRow::prepend(const std::string& tag_name)
+{
+    return {tag_name, 0};
+}
+
 bool TagRow::operator==(const TagRow& other) const
 {
     return row == other.row && tag==other.tag;

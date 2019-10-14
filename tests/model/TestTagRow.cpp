@@ -33,9 +33,14 @@ TEST_F(TestTagRow, braceInitializer)
     tagrow = {};
     EXPECT_EQ(tagrow.tag, "");
     EXPECT_EQ(tagrow.row, -1);
+
+    tagrow = {"cde", 43};
+    EXPECT_EQ(tagrow.tag, "cde");
+    EXPECT_EQ(tagrow.row, 43);
 }
 
 //! Equality operators.
+
 TEST_F(TestTagRow, equalityOperators)
 {
     TagRow tag1;
@@ -55,6 +60,37 @@ TEST_F(TestTagRow, equalityOperators)
 
     TagRow tag7 = {"a", 42};
     TagRow tag8 = {"b", 42};
-    EXPECT_FALSE(tag5 == tag6);
-    EXPECT_TRUE(tag5 != tag6);
+    EXPECT_FALSE(tag7 == tag8);
+    EXPECT_TRUE(tag7 != tag8);
 }
+
+//! Assignment operators.
+
+TEST_F(TestTagRow, assignmentOperator)
+{
+    TagRow tag1;
+    TagRow tag2 {"abc", 42};
+
+    tag1 = tag2;
+    EXPECT_EQ(tag1.row, 42);
+    EXPECT_EQ(tag1.tag, "abc");
+}
+
+//! Factory methods.
+
+TEST_F(TestTagRow, factoryMethods)
+{
+    auto tagrow = TagRow::defaultAppend();
+    EXPECT_EQ(tagrow.tag, "");
+    EXPECT_EQ(tagrow.row, -1);
+
+    const std::string expected_name("tag");
+    tagrow = TagRow::append(expected_name);
+    EXPECT_EQ(tagrow.tag, expected_name);
+    EXPECT_EQ(tagrow.row, -1);
+
+    tagrow = TagRow::prepend(expected_name);
+    EXPECT_EQ(tagrow.tag, expected_name);
+    EXPECT_EQ(tagrow.row, 0);
+}
+

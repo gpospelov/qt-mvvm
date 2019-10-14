@@ -27,6 +27,8 @@ struct CORE_EXPORT TagRow
 
     static TagRow append(const std::string& tag_name);
 
+    static TagRow prepend(const std::string& tag_name);
+
     bool operator==(const TagRow& other) const;
     bool operator!=(const TagRow& other) const;
 };
