@@ -72,6 +72,15 @@ bool SessionItemContainer::canTakeItem(int index) const
     return itemAt(index) && !minimum_reached();
 }
 
+//! Returns true if given item can be inserted under given index.
+
+bool SessionItemContainer::canInsertItem(const SessionItem* item, int index) const
+{
+    const bool valid_index = (index>=0 && index <=itemCount());
+    const bool enough_place = !maximum_reached();
+    return valid_index && enough_place && is_valid_item(item);
+}
+
 //! Returns index of item in vector of items.
 //! Returns -1 if item doesn't belong to us.
 

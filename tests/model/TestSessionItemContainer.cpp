@@ -219,6 +219,57 @@ TEST_F(TestSessionItemContainer, canTakeItem)
     EXPECT_FALSE(tag.canTakeItem(tag.itemCount()));
 }
 
+//! Checking ::canInsertItem.
+
+TEST_F(TestSessionItemContainer, canInsertItem)
+{
+    const std::string tag_name("tag");
+    const std::string model_type("model_a");
+
+    SessionItemContainer tag(TagInfo::universalTag(tag_name));
+
+    // inserting non-existing item
+    EXPECT_FALSE(tag.canInsertItem(nullptr, 0));
+
+    // we should be allowed to insert valid child
+    auto child1 = std::make_unique<SessionItem>(model_type);
+    EXPECT_TRUE(tag.canInsertItem(child1.get(), 0));
+
+    // wrong index is not allowed for insertion
+    EXPECT_FALSE(tag.canInsertItem(child1.get(), 1));
+    EXPECT_FALSE(tag.canInsertItem(child1.get(), -1));
+
+    // inserting child
+    EXPECT_TRUE(tag.insertItem(child1.release()));
+
+    // can we insert second child?
+    auto child2 = std::make_unique<SessionItem>(model_type);
+    EXPECT_TRUE(tag.canInsertItem(child2.get(), 0));
+    EXPECT_TRUE(tag.canInsertItem(child2.get(), 1));
+    EXPECT_FALSE(tag.canInsertItem(child2.get(), 2));
+    EXPECT_FALSE(tag.canInsertItem(child2.get(), -1));
+}
+
+//! Checking ::canInsertItem.
+
+TEST_F(TestSessionItemContainer, canInsertItemForPropertyTag)
+{
+    const std::string name("tag");
+    const std::string property_type("Property");
+
+    SessionItemContainer tag(TagInfo::propertyTag(name, property_type));
+
+    // we should be allowed to insert valid child
+    auto child1 = std::make_unique<SessionItem>(property_type);
+    EXPECT_TRUE(tag.canInsertItem(child1.get(), 0));
+
+    // inserting child
+    EXPECT_TRUE(tag.insertItem(child1.release()));
+
+    // second property shouldn't be posible to insert because of exceeded maximum
+    auto child2 = std::make_unique<SessionItem>(property_type);
+    EXPECT_FALSE(tag.canInsertItem(child2.get(), 0));
+}
 
 //! Checking ::takeItem when tag is related to property tag.
 
