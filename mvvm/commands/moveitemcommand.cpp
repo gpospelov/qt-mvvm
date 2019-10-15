@@ -44,9 +44,9 @@ MoveItemCommand::MoveItemCommand(SessionItem* item, SessionItem* new_parent, std
 
     p_impl->m_target_parent_path = pathFromItem(new_parent);
     p_impl->m_original_parent_path = pathFromItem(item->parent());
-    auto tagRow = item->parent()->tagRowOfItem(item);
-    p_impl->m_original_tag = tagRow.first;
-    p_impl->m_original_row = tagRow.second;
+    auto [original_tag, original_row] = item->parent()->tagRowOfItem(item);
+    p_impl->m_original_tag = original_tag;
+    p_impl->m_original_row = original_row;
 
     if (item->parent()->isSinglePropertyTag(p_impl->m_original_tag))
         throw std::runtime_error("MoveItemCommand::MoveItemCommand() -> Single property tag.");

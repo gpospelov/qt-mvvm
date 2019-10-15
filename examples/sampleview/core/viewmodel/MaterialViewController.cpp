@@ -78,8 +78,8 @@ void MaterialViewController::onRemoveMaterial()
     SessionItem* root = m_view_model.sessionItemFromIndex(QModelIndex());
 
     for (auto item : to_delete) {
-        auto item_info = root->tagRowOfItem(item);
-        m_material_model->removeItem(root, item_info.first, item_info.second);
+        auto tagrow = root->tagRowOfItem(item);
+        m_material_model->removeItem(root, tagrow.tag, tagrow.row);
     }
 }
 
