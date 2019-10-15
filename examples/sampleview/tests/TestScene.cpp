@@ -74,7 +74,7 @@ TEST_F(TestScene, testSelection)
     EXPECT_FALSE(scene->selectedItems().contains(mview));
     EXPECT_FALSE(scene->selectedItems().contains(lview));
 
-    selection_path.clear();
+    selection_path = QPainterPath();
     selection_path.addRect(makeFrame(lview->sceneBoundingRect()));
     scene->setSelectionArea(selection_path, Qt::ContainsItemShape);
 
