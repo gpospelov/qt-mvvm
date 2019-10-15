@@ -25,6 +25,7 @@
 #include "SampleModel.h"
 #include "SampleViewAligner.h"
 #include "SampleViewFactory.h"
+#include "SceneSelectionController.h"
 #include "item_constants.h"
 #include "modelmapper.h"
 #include "modelutils.h"
@@ -38,9 +39,7 @@ using namespace ModelView;
 DesignerScene::DesignerScene(SampleModel* sample_model, QObject* parent)
     : QGraphicsScene(parent)
     , m_controller(*this, sample_model)
-    , m_selectionModel(nullptr)
-    , m_proxy(nullptr)
-    , m_block_selection(false)
+    , m_select_control(nullptr)
     , m_aligner(new SampleViewAligner(this))
     , m_nodeEditor(new NodeEditor(this))
 {
@@ -51,7 +50,6 @@ DesignerScene::DesignerScene(SampleModel* sample_model, QObject* parent)
     connect(m_nodeEditor, &NodeEditor::connectionIsEstablished, this, &DesignerScene::onConnect);
     connect(m_nodeEditor, &NodeEditor::selectionModeChangeRequest, this,
             &DesignerScene::selectionModeChangeRequest);
-    connect(this, &DesignerScene::selectionChanged, this, &DesignerScene::onSceneSelectionChanged);
 
     updateScene();
 }
@@ -61,23 +59,14 @@ DesignerScene::~DesignerScene()
     delete m_aligner;
 }
 
-void DesignerScene::setSelectionModel(QItemSelectionModel *model, FilterPropertyProxy *proxy)
+void DesignerScene::setSelectionModel(QItemSelectionModel* model, FilterPropertyProxy*)
 {
-    Q_ASSERT(model);
-
-    if (model != m_selectionModel) {
-
-        if (m_selectionModel) {
-            disconnect(m_selectionModel, SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
-                       this, SLOT(onSessionSelectionChanged(QItemSelection, QItemSelection)));
-        }
-
-        m_selectionModel = model;
-        m_proxy = proxy;
-
-        connect(m_selectionModel, SIGNAL(selectionChanged(QItemSelection, QItemSelection)), this,
-                SLOT(onSessionSelectionChanged(QItemSelection, QItemSelection)));
-    }
+    m_select_control.reset();
+    if (!model)
+        return;
+    m_select_control = std::make_unique<SceneSelectionController>(this, model);
+    connect(this, &DesignerScene::selectionChanged, m_select_control.get(),
+            &SceneSelectionController::onSceneSelectionChanged);
 }
 
 IView* DesignerScene::getViewForItem(SessionItem* item) const
@@ -113,50 +102,6 @@ void DesignerScene::onModelDestroyed()
 void DesignerScene::onConnect(NodeEditorConnection* connection)
 {
     m_controller.onConnect(connection);
-}
-
-//! propagate selection from model to scene
-void DesignerScene::onSessionSelectionChanged(const QItemSelection & /* selected */,
-                                              const QItemSelection & /* deselected */)
-{
-    /*if (m_block_selection)
-        return;
-
-    m_block_selection = true;
-
-    for (QMap<SessionItem *, IView *>::iterator it = m_ItemToView.begin();
-         it != m_ItemToView.end(); ++it) {
-        QModelIndex index = m_proxy->mapFromSource(m_sampleModel->indexOfItem(it.key()));
-        if (index.isValid()) {
-            it.value()->setSelected(m_selectionModel->isSelected(index));
-        }
-    }
-
-    m_block_selection = false;*/
-}
-
-//! propagate selection from scene to model
-void DesignerScene::onSceneSelectionChanged()
-{
-    /*if (m_block_selection)
-        return;
-
-    m_block_selection = true;
-
-    m_selectionModel->clearSelection();
-    QList<QGraphicsItem *> selected = selectedItems();
-    for (int i = 0; i < selected.size(); ++i) {
-        IView *view = dynamic_cast<IView *>(selected[i]);
-        if (view) {
-            SessionItem *sampleItem = view->getItem();
-            QModelIndex itemIndex = m_sampleModel->indexOfItem(sampleItem);
-            Q_ASSERT(itemIndex.isValid());
-            if (!m_selectionModel->isSelected(m_proxy->mapFromSource(itemIndex)))
-                m_selectionModel->select(m_proxy->mapFromSource(itemIndex), QItemSelectionModel::Select);
-        }
-    }
-
-    m_block_selection = false;*/
 }
 
 //! runs through all items recursively and updates corresponding views

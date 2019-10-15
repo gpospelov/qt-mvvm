@@ -18,7 +18,7 @@
 #include "SceneModelController.h"
 #include <QGraphicsScene>
 #include <QMap>
-#include <QModelIndex>
+#include <memory>
 
 namespace ModelView
 {
@@ -36,6 +36,7 @@ class SampleViewAligner;
 class NodeEditor;
 class FilterPropertyProxy;
 class MaterialModel;
+class SceneSelectionController;
 
 //! Main class which represents SessionModel on graphics scene
 class DesignerScene : public QGraphicsScene
@@ -47,15 +48,13 @@ public:
     explicit DesignerScene(SampleModel* sample_model, QObject* parent = nullptr);
     ~DesignerScene() override;
 
-    void setSelectionModel(QItemSelectionModel *model, FilterPropertyProxy *proxy);
+    void setSelectionModel(QItemSelectionModel* model, FilterPropertyProxy*);
 
     IView* getViewForItem(ModelView::SessionItem* item) const;
 
     NodeEditor *getNodeEditor() { return m_nodeEditor;}
 
     // slots:
-    void onSceneSelectionChanged();
-    void onSessionSelectionChanged(const QItemSelection &, const QItemSelection &);
     void onModelChanged();
     void onModelDestroyed();
     void onConnect(NodeEditorConnection *connection);
@@ -93,9 +92,7 @@ private:
     bool isLayerDragged() const;
 
     SceneModelController m_controller;
-    QItemSelectionModel* m_selectionModel;
-    FilterPropertyProxy* m_proxy;
-    bool m_block_selection;
+    std::unique_ptr<SceneSelectionController> m_select_control;
 
     QMap<ModelView::SessionItem*, IView*> m_ItemToView;
     //!< Correspondance of model's item and scene's view
