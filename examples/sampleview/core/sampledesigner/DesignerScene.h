@@ -91,7 +91,7 @@ private:
     bool isAcceptedByMultiLayer(const DesignerMimeData *mimeData, QGraphicsSceneDragDropEvent *event);
     bool isLayerDragged() const;
 
-    SceneModelController m_controller;
+    SceneModelController m_model_control;
     std::unique_ptr<SceneSelectionController> m_select_control;
 
     QMap<ModelView::SessionItem*, IView*> m_ItemToView;

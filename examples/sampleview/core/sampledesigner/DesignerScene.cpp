@@ -38,7 +38,7 @@ using namespace ModelView;
 
 DesignerScene::DesignerScene(SampleModel* sample_model, QObject* parent)
     : QGraphicsScene(parent)
-    , m_controller(*this, sample_model)
+    , m_model_control(*this, sample_model)
     , m_select_control(nullptr)
     , m_aligner(new SampleViewAligner(this))
     , m_nodeEditor(new NodeEditor(this))
@@ -101,14 +101,14 @@ void DesignerScene::onModelDestroyed()
 
 void DesignerScene::onConnect(NodeEditorConnection* connection)
 {
-    m_controller.onConnect(connection);
+    m_model_control.onConnect(connection);
 }
 
 //! runs through all items recursively and updates corresponding views
 void DesignerScene::updateViews()
 {
     QList<SessionItem*> to_process;
-    for (auto item : m_controller.model()->rootItem()->children())
+    for (auto item : m_model_control.model()->rootItem()->children())
         to_process.append(item);
 
     while (!to_process.empty()) {
@@ -157,7 +157,7 @@ void DesignerScene::alignViews()
 //! propagates deletion of views on the scene to the model
 void DesignerScene::deleteSelectedItems()
 {
-    m_controller.onDelete(selectedItems());
+    m_model_control.onDelete(selectedItems());
 }
 
 //! shows appropriate layer interface to drop while moving ILayerView
@@ -205,7 +205,7 @@ void DesignerScene::dropEvent(QGraphicsSceneDragDropEvent *event)
         };
         sendModelCommand(command);
     }
-    m_controller.executeDelayedCommand();
+    m_model_control.executeDelayedCommand();
     adjustSceneRect();
 }
 
@@ -233,7 +233,7 @@ void DesignerScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
     QGraphicsScene::mouseReleaseEvent(event);
     setLayerInterfaceLine(); // removing drop area hint from the scene
-    m_controller.executeDelayedCommand();
+    m_model_control.executeDelayedCommand();
 }
 
 //! Returns true if there is MultiLayerView nearby during drag event.
@@ -287,5 +287,5 @@ void DesignerScene::onSmartAlign()
 
 void DesignerScene::sendModelCommand(SceneModelController::ModelCommand command)
 {
-    m_controller.setDelayedCommand(command);
+    m_model_control.setDelayedCommand(command);
 }
