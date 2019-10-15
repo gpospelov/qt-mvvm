@@ -19,22 +19,24 @@
 using namespace ModelView;
 
 namespace {
-class BlockMutex
+//! Guard to block controller-model connection
+class BlockGuard
 {
 public:
-    BlockMutex(bool& block) : m_block(block)
+    BlockGuard(bool& block) : m_block(block)
     {
         if (block)
             throw std::runtime_error("Error in BlockMutex: already blocked.");
         m_block = true;
     }
 
-    ~BlockMutex() { m_block = false; }
+    ~BlockGuard() { m_block = false; }
 
 private:
     bool& m_block;
 };
 
+//! Wrapper for execution of an external command to the model.
 class ModelCommandExecutor
 {
 public:
@@ -45,10 +47,12 @@ public:
 
     ~ModelCommandExecutor() { m_command = GraphicsObjectController::ModelCommand(); }
 
-    void execute() {
+    //! Returns true if the command was executed, false otherwise
+    [[nodiscard]] bool execute() {
         if (!m_model || !m_command)
-            return;
+            return false;
         m_command(*m_model);
+        return true;
     }
 
 private:
@@ -82,7 +86,7 @@ void GraphicsObjectController::onDelete(QList<QGraphicsItem *> views)
 {
     if (!m_model)
         return;
-    BlockMutex signal_guard(m_block);
+    BlockGuard signal_guard(m_block);
 
     //! Disconnect dependent items
     const auto connected_views = findConnectedViews(views);
@@ -100,7 +104,7 @@ void GraphicsObjectController::onConnect(NodeEditorConnection *connection)
 {
     if (!m_model)
         return;
-    BlockMutex signal_guard(m_block);
+    BlockGuard signal_guard(m_block);
 
     ConnectableView* parentView = connection->getParentView();
     ConnectableView* childView = connection->getChildView();
@@ -121,8 +125,8 @@ void GraphicsObjectController::setDelayedCommand(GraphicsObjectController::Model
 void GraphicsObjectController::executeDelayedCommand()
 {
     ModelCommandExecutor executor(m_command, m_model);
-    executor.execute();
-    m_scene.onModelChanged();
+    if (executor.execute())
+        m_scene.onModelChanged();
 }
 
 void GraphicsObjectController::onModelChange()
