@@ -17,6 +17,7 @@ namespace ModelView
 {
 
 class SessionItem;
+class TagRow;
 
 //! Command for unddo/redo to insert new item.
 
@@ -25,7 +26,7 @@ class CORE_EXPORT InsertNewItemCommand : public AbstractItemCommand
 public:
     using result_t = SessionItem*;
 
-    InsertNewItemCommand(item_factory_func_t func, SessionItem* parent, std::string tag, int row);
+    InsertNewItemCommand(item_factory_func_t func, SessionItem* parent, TagRow tagrow);
     ~InsertNewItemCommand() override;
 
     result_t result() const;
