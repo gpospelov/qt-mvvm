@@ -136,7 +136,7 @@ int ILayerView::insertionRow(const ILayerView* new_parent, int insertion_row) co
 {
     const SessionItem* child_item = getItem();
     if (new_parent == parentItem()
-        && insertion_row > child_item->parent()->tagRowOfItem(child_item).second)
+        && insertion_row > child_item->parent()->tagRowOfItem(child_item).row)
         return insertion_row - 1;
 
     return insertion_row;
@@ -145,6 +145,6 @@ int ILayerView::insertionRow(const ILayerView* new_parent, int insertion_row) co
 namespace {
 int itemRow(const SessionItem* item)
 {
-    return item->parent()->tagRowOfItem(item).second;
+    return item->parent()->tagRowOfItem(item).row;
 }
 }
