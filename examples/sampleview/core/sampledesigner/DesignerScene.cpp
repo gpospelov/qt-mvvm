@@ -42,7 +42,7 @@ DesignerScene::DesignerScene(SampleModel* sample_model, QObject* parent)
     , m_proxy(nullptr)
     , m_block_selection(false)
     , m_aligner(new SampleViewAligner(this))
-    , m_nodeEditor(new NodeEditor(parent))
+    , m_nodeEditor(new NodeEditor(this))
 {
     setSceneRect(QRectF(-800, -800, 1600, 1600));
     setBackgroundBrush(DesignerHelper::getSceneBackground());
