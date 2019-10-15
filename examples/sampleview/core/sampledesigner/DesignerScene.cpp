@@ -80,7 +80,7 @@ void DesignerScene::setSelectionModel(QItemSelectionModel *model, FilterProperty
     }
 }
 
-IView* DesignerScene::getViewForItem(SessionItem* item)
+IView* DesignerScene::getViewForItem(SessionItem* item) const
 {
     auto it = m_ItemToView.find(item);
     return it != m_ItemToView.end() ? it.value() : nullptr;

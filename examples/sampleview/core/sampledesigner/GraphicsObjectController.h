@@ -10,8 +10,7 @@
 #ifndef GRAPHICSOBJECTCONTROLLER_H
 #define GRAPHICSOBJECTCONTROLLER_H
 
-#include <QList>
-#include <set>
+#include <functional>
 
 namespace ModelView {
 class SessionModel;
@@ -21,6 +20,7 @@ class DesignerScene;
 class IView;
 class NodeEditorConnection;
 class QGraphicsItem;
+template <class T> class QList;
 class SampleModel;
 
 //! Manages scene-model communication.
@@ -33,7 +33,7 @@ public:
     ~GraphicsObjectController();
 
     //! Propagates deletion of views on the scene to the model
-    void onDelete(QList<QGraphicsItem*> views);
+    void onDelete(const QList<QGraphicsItem*>& views);
     //! Propagates view connection to the model
     void onConnect(NodeEditorConnection* connection);
 
@@ -46,11 +46,6 @@ public:
 private:
     void onModelChange();
     void onModelDestroyed();
-
-    //! Finds all the views connected to the passed list
-    std::set<IView*> findConnectedViews(QList<QGraphicsItem*> views) const;
-    //! Finds all the views with no ancestor in the passed list
-    std::set<IView*> findTopViews(QList<QGraphicsItem*> views) const;
 
     DesignerScene& m_scene;
     SampleModel* m_model;

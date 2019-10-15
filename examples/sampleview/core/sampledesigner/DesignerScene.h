@@ -51,7 +51,7 @@ public:
 
     void setSelectionModel(QItemSelectionModel *model, FilterPropertyProxy *proxy);
 
-    IView* getViewForItem(ModelView::SessionItem *item);
+    IView* getViewForItem(ModelView::SessionItem* item) const;
 
     NodeEditor *getNodeEditor() { return m_nodeEditor;}
 

@@ -15,6 +15,7 @@
 #include "modelmapper.h"
 #include "modelutils.h"
 #include "sessionitem.h"
+#include <set>
 
 using namespace ModelView;
 
@@ -59,6 +60,13 @@ private:
     DesignerScene::ModelCommand& m_command;
     SessionModel* m_model;
 };
+
+//! Returns the set of passed views with their child IView instances appended
+std::set<QGraphicsItem*> extendWithChildren(QList<QGraphicsItem*> views);
+//! Finds all the views connected to the passed set
+std::set<IView*> connectedViews(const std::set<QGraphicsItem*>& views, const DesignerScene& scene);
+//! Finds all the views with no ancestor in the passed set
+std::set<IView*> topViews(const QList<QGraphicsItem *> &views);
 }
 
 GraphicsObjectController::GraphicsObjectController(DesignerScene& scene, SampleModel* model)
@@ -82,18 +90,23 @@ GraphicsObjectController::~GraphicsObjectController()
     m_model->mapper()->unsubscribe(this);
 }
 
-void GraphicsObjectController::onDelete(QList<QGraphicsItem *> views)
+void GraphicsObjectController::onDelete(const QList<QGraphicsItem *>& views)
 {
     if (!m_model)
         return;
     BlockGuard signal_guard(m_block);
 
-    //! Disconnect dependent items
-    const auto connected_views = findConnectedViews(views);
+    // Append children of the selected views (e.g. layers of a multilayer)
+    // It is required for proper disconnection
+    const auto all_views = extendWithChildren(views);
+
+    // Disconnect dependent items
+    const auto connected_views = connectedViews(all_views, m_scene);
     for (auto view: connected_views)
         m_model->moveItem(view->getItem(), m_model->rootItem(), {}, -1);
 
-    const auto top_views = findTopViews(views);
+    // find top-level items. Children will be deleted automatically
+    const auto top_views = topViews(views);
     for (auto view: top_views)
         Utils::DeleteItemFromModel(view->getItem());
 
@@ -141,8 +154,23 @@ void GraphicsObjectController::onModelDestroyed()
     m_scene.onModelDestroyed();
 }
 
-std::set<IView*>
-GraphicsObjectController::findConnectedViews(QList<QGraphicsItem*> views) const
+namespace {
+std::set<QGraphicsItem*> extendWithChildren(QList<QGraphicsItem*> views)
+{
+    std::set<QGraphicsItem*> result(views.begin(), views.end());
+    while (!views.empty()) {
+        auto iview = dynamic_cast<IView*>(views.front());
+        views.pop_front();
+        if (!iview)
+            continue;
+        result.insert(iview);
+        const auto children = iview->childItems();
+        views.append(iview->childItems());
+    }
+    return result;
+}
+
+std::set<IView*> connectedViews(const std::set<QGraphicsItem*>& views, const DesignerScene& scene)
 {
     std::set<IView*> connected_views;
 
@@ -158,7 +186,7 @@ GraphicsObjectController::findConnectedViews(QList<QGraphicsItem*> views) const
             continue;
         SessionItem* item = iview->getItem();
         for (auto child : item->children()) {
-            auto child_view = m_scene.getViewForItem(child);
+            auto child_view = scene.getViewForItem(child);
             if (child_view && child_view->parentObject() != iview)
                 connected_views.insert(child_view);
         }
@@ -167,7 +195,7 @@ GraphicsObjectController::findConnectedViews(QList<QGraphicsItem*> views) const
     return connected_views;
 }
 
-std::set<IView*> GraphicsObjectController::findTopViews(QList<QGraphicsItem*> views) const
+std::set<IView*> topViews(const QList<QGraphicsItem*>& views)
 {
     std::set<IView *> result;
     for (QGraphicsItem* view: views) {
@@ -183,4 +211,5 @@ std::set<IView*> GraphicsObjectController::findTopViews(QList<QGraphicsItem*> vi
             result.insert(iview);
     }
     return result;
+}
 }
