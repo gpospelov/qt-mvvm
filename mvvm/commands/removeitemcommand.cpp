@@ -21,14 +21,11 @@ std::string generate_description(const TagRow& tagrow);
 } // namespace
 
 struct RemoveItemCommand::RemoveItemCommandPrivate {
-    TagRow m_tagrow;
-    result_t m_result;
-    std::unique_ptr<ItemBackupStrategy> m_backup_strategy;
-    Path m_item_path;
-    RemoveItemCommandPrivate(TagRow tagrow)
-        : m_tagrow(std::move(tagrow)), m_result(true)
-    {
-    }
+    TagRow tagrow;
+    result_t result;
+    std::unique_ptr<ItemBackupStrategy> backup_strategy;
+    Path item_path;
+    RemoveItemCommandPrivate(TagRow tagrow) : tagrow(std::move(tagrow)), result(true) {}
 };
 
 // ----------------------------------------------------------------------------
@@ -36,31 +33,31 @@ struct RemoveItemCommand::RemoveItemCommandPrivate {
 RemoveItemCommand::RemoveItemCommand(SessionItem* parent, TagRow tagrow)
     : AbstractItemCommand(parent), p_impl(std::make_unique<RemoveItemCommandPrivate>(tagrow))
 {
-    setDescription(generate_description(p_impl->m_tagrow));
-    p_impl->m_backup_strategy = parent->model()->itemBackupStrategy();
-    p_impl->m_item_path = pathFromItem(parent);
+    setDescription(generate_description(p_impl->tagrow));
+    p_impl->backup_strategy = parent->model()->itemBackupStrategy();
+    p_impl->item_path = pathFromItem(parent);
 }
 
 RemoveItemCommand::~RemoveItemCommand() = default;
 
 void RemoveItemCommand::undo_command()
 {
-    auto parent = itemFromPath(p_impl->m_item_path);
-    auto reco_item = p_impl->m_backup_strategy->restoreItem();
-    parent->insertItem(reco_item.release(), p_impl->m_tagrow);
+    auto parent = itemFromPath(p_impl->item_path);
+    auto reco_item = p_impl->backup_strategy->restoreItem();
+    parent->insertItem(reco_item.release(), p_impl->tagrow);
 }
 
 void RemoveItemCommand::execute_command()
 {
-    auto parent = itemFromPath(p_impl->m_item_path);
-    auto child = parent->takeItem(p_impl->m_tagrow);
-    p_impl->m_backup_strategy->saveItem(child);
+    auto parent = itemFromPath(p_impl->item_path);
+    auto child = parent->takeItem(p_impl->tagrow);
+    p_impl->backup_strategy->saveItem(child);
     delete child;
 }
 
 RemoveItemCommand::result_t RemoveItemCommand::result() const
 {
-    return p_impl->m_result;
+    return p_impl->result;
 }
 
 namespace

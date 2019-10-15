@@ -21,11 +21,11 @@ std::string generate_description(const std::string& modelType, const TagRow& tag
 
 struct InsertNewItemCommand::InsertNewItemCommandPrivate {
     item_factory_func_t factory_func;
-    TagRow m_tagrow;
-    result_t m_result;
-    Path m_item_path;
+    TagRow tagrow;
+    result_t result;
+    Path item_path;
     InsertNewItemCommandPrivate(item_factory_func_t func, TagRow tagrow)
-        : factory_func(func), m_tagrow(std::move(tagrow)), m_result(nullptr)
+        : factory_func(func), tagrow(std::move(tagrow)), result(nullptr)
     {
     }
 };
@@ -35,30 +35,30 @@ InsertNewItemCommand::InsertNewItemCommand(item_factory_func_t func, SessionItem
     : AbstractItemCommand(parent),
       p_impl(std::make_unique<InsertNewItemCommandPrivate>(func, tagrow))
 {
-    p_impl->m_item_path = pathFromItem(parent);
+    p_impl->item_path = pathFromItem(parent);
 }
 
 InsertNewItemCommand::~InsertNewItemCommand() = default;
 
 void InsertNewItemCommand::undo_command()
 {
-    auto parent = itemFromPath(p_impl->m_item_path);
-    delete parent->takeItem(p_impl->m_tagrow);
-    p_impl->m_result = nullptr;
+    auto parent = itemFromPath(p_impl->item_path);
+    delete parent->takeItem(p_impl->tagrow);
+    p_impl->result = nullptr;
 }
 
 void InsertNewItemCommand::execute_command()
 {
-    auto parent = itemFromPath(p_impl->m_item_path);
+    auto parent = itemFromPath(p_impl->item_path);
     auto child = p_impl->factory_func().release();
-    setDescription(generate_description(child->modelType(), p_impl->m_tagrow));
-    parent->insertItem(child, p_impl->m_tagrow);
-    p_impl->m_result = child;
+    setDescription(generate_description(child->modelType(), p_impl->tagrow));
+    parent->insertItem(child, p_impl->tagrow);
+    p_impl->result = child;
 }
 
 InsertNewItemCommand::result_t InsertNewItemCommand::result() const
 {
-    return p_impl->m_result;
+    return p_impl->result;
 }
 
 namespace
