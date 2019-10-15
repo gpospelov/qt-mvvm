@@ -51,7 +51,7 @@ public:
 
     int childrenCount() const;
 
-    bool insertItem(SessionItem* item, const std::string& tag = {}, int row = -1);
+    bool insertItem(SessionItem* item, const std::string& tag, int row);
 
     SessionItem* takeItem(const TagRow& tagrow);
 

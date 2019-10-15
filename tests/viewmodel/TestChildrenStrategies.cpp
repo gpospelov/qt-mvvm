@@ -21,7 +21,7 @@ public:
         {
             addProperty<PropertyItem>("length", 8.0);
             registerTag(TagInfo::universalTag("children"), /*set_as_default*/ true);
-            insertItem(new SessionItem);
+            insertItem(new SessionItem, "", -1);
             addProperty<PropertyItem>("height", 12.0);
         }
         ~TestItem();
