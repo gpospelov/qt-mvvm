@@ -298,7 +298,6 @@ TEST_F(TestSessionItem, singleTagAndItems)
     EXPECT_EQ(Utils::IndexOfChild(parent.get(), child2), 1);
 
     // testing single item access via tag interface
-    EXPECT_THROW(parent->getItem(), std::runtime_error); // no items in default tag
     EXPECT_EQ(parent->getItem(tag1), child1);
     EXPECT_EQ(parent->getItem(tag1, 0), child1);
     EXPECT_EQ(parent->getItem(tag1, 1), child2);
@@ -354,7 +353,6 @@ TEST_F(TestSessionItem, twoTagsAndItems)
     EXPECT_EQ(Utils::IndexOfChild(parent.get(), child_t2_c), 4);
 
     // testing single item access via tag interface
-    EXPECT_THROW(parent->getItem(), std::runtime_error); // no default tag registered
     EXPECT_EQ(parent->getItem(tag1), child_t1_a);
     EXPECT_EQ(parent->getItem(tag1, 0), child_t1_a);
     EXPECT_EQ(parent->getItem(tag1, 1), child_t1_b);
