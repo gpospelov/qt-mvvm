@@ -54,7 +54,7 @@ void RemoveItemCommand::undo_command()
 void RemoveItemCommand::execute_command()
 {
     auto parent = itemFromPath(p_impl->m_item_path);
-    auto child = parent->takeItem(p_impl->m_tag, p_impl->m_row);
+    auto child = parent->takeItem({p_impl->m_tag, p_impl->m_row});
     p_impl->m_backup_strategy->saveItem(child);
     delete child;
 }

@@ -53,7 +53,7 @@ public:
 
     bool insertItem(SessionItem* item, const std::string& tag = {}, int row = -1);
 
-    SessionItem* takeItem(const std::string& tag, int row);
+    SessionItem* takeItem(const TagRow& tagrow);
 
     std::vector<SessionItem*> children() const;
 
