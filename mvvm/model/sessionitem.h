@@ -12,6 +12,7 @@
 
 #include "mvvm_export.h"
 #include "mvvm_types.h"
+#include "tagrow.h"
 #include <QVariant>
 #include <memory>
 #include <vector>
@@ -52,7 +53,7 @@ public:
 
     bool insertItem(SessionItem* item, const std::string& tag = {}, int row = -1);
 
-    SessionItem* takeItem(const std::string& tag, int row);
+    SessionItem* takeItem(const TagRow& tagrow);
 
     std::vector<SessionItem*> children() const;
 
@@ -68,12 +69,12 @@ public:
 
     // access tagged items
     int itemCount(const std::string& tag = {}) const;
-    SessionItem* getItem(const std::string& tag = {}, int row = 0) const;
-    std::vector<SessionItem*> getItems(const std::string& tag = {}) const;
+    SessionItem* getItem(const std::string& tag, int row = 0) const;
+    std::vector<SessionItem*> getItems(const std::string& tag) const;
     template <typename T> T& item(const std::string& tag) const;
     template <typename T> std::vector<T*> items(const std::string& tag) const;
     std::string tagFromItem(const SessionItem* item) const;
-    std::pair<std::string, int> tagRowOfItem(const SessionItem* item) const;
+    TagRow tagRowOfItem(const SessionItem* item) const;
 
     ItemMapper* mapper();
 

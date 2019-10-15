@@ -113,9 +113,9 @@ bool LayerTableViewModel::processDirectDrop(SessionItem* to_drop, int row, int,
         sessionModel()->moveItem(to_drop, acceptor, MultiLayerItem::T_LAYERS, 0);
     } else if (acceptor_type == ::Constants::LayerType) { // inserting after the acceptor item
         SessionItem* parent_item = acceptor->parent();
-        auto tag_row = parent_item->tagRowOfItem(acceptor);
-        int insert_row = findInsertionRow(to_drop, parent_item, tag_row.second + 1);
-        sessionModel()->moveItem(to_drop, parent_item, tag_row.first, insert_row);
+        auto tagrow = parent_item->tagRowOfItem(acceptor);
+        int insert_row = findInsertionRow(to_drop, parent_item, tagrow.row + 1);
+        sessionModel()->moveItem(to_drop, parent_item, tagrow.tag, insert_row);
     }
 
     return true;

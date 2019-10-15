@@ -36,7 +36,7 @@ public:
 
     std::vector<SessionItem*> items() const;
 
-    bool insertItem(SessionItem* item, int index = -1);
+    bool insertItem(SessionItem* item, int index);
 
     SessionItem* takeItem(int index);
 
@@ -57,7 +57,6 @@ public:
     const_iterator end() const;
 
 private:
-    int insert_index(const SessionItem* item, int requested_index) const;
     bool maximum_reached() const;
     bool minimum_reached() const;
     bool is_valid_item(const SessionItem* item) const;

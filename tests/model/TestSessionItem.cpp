@@ -262,11 +262,11 @@ TEST_F(TestSessionItem, takeItem)
     EXPECT_EQ(parent->childrenCount(), 3);
 
     // taking non-existing rows
-    EXPECT_EQ(parent->takeItem("", -1), nullptr);
-    EXPECT_EQ(parent->takeItem("", parent->childrenCount()), nullptr);
+    EXPECT_EQ(parent->takeItem({"", -1}), nullptr);
+    EXPECT_EQ(parent->takeItem({"", parent->childrenCount()}), nullptr);
 
     // taking first row
-    auto taken = parent->takeItem("", 0);
+    auto taken = parent->takeItem({"", 0});
     EXPECT_EQ(taken->parent(), nullptr);
     std::vector<SessionItem*> expected = {child2, child3};
     EXPECT_EQ(parent->children(), expected);
@@ -298,25 +298,23 @@ TEST_F(TestSessionItem, singleTagAndItems)
     EXPECT_EQ(Utils::IndexOfChild(parent.get(), child2), 1);
 
     // testing single item access via tag interface
-    EXPECT_THROW(parent->getItem(), std::runtime_error); // no items in default tag
     EXPECT_EQ(parent->getItem(tag1), child1);
     EXPECT_EQ(parent->getItem(tag1, 0), child1);
     EXPECT_EQ(parent->getItem(tag1, 1), child2);
     EXPECT_EQ(parent->getItem(tag1, 2), nullptr); // wrong row
 
     // access to multiple items via tags interface
-    EXPECT_THROW(parent->getItems(), std::runtime_error); // no default tag registered
     EXPECT_EQ(parent->getItems(tag1), expected);
 
     // removing first item
-    delete parent->takeItem(tag1, 0);
+    delete parent->takeItem({tag1, 0});
     EXPECT_EQ(parent->getItems(tag1), std::vector<SessionItem*>() = {child2});
     // removing second item
-    delete parent->takeItem(tag1, 0);
+    delete parent->takeItem({tag1, 0});
     EXPECT_EQ(parent->getItems(tag1), std::vector<SessionItem*>() = {});
 
     // removing from already empty container
-    EXPECT_EQ(parent->takeItem(tag1, 0), nullptr);
+    EXPECT_EQ(parent->takeItem({tag1, 0}), nullptr);
 }
 
 //! Insert and take tagged items when two tags are present.
@@ -354,7 +352,6 @@ TEST_F(TestSessionItem, twoTagsAndItems)
     EXPECT_EQ(Utils::IndexOfChild(parent.get(), child_t2_c), 4);
 
     // testing single item access via tag interface
-    EXPECT_THROW(parent->getItem(), std::runtime_error); // no default tag registered
     EXPECT_EQ(parent->getItem(tag1), child_t1_a);
     EXPECT_EQ(parent->getItem(tag1, 0), child_t1_a);
     EXPECT_EQ(parent->getItem(tag1, 1), child_t1_b);
@@ -364,14 +361,13 @@ TEST_F(TestSessionItem, twoTagsAndItems)
     EXPECT_EQ(parent->getItem(tag2, 3), nullptr); // no items with such row
 
     // access to multiple items via tags interface
-    EXPECT_THROW(parent->getItems(), std::runtime_error); // no default tag registered
     expected = {child_t1_a, child_t1_b};
     EXPECT_EQ(parent->getItems(tag1), expected);
     expected = {child_t2_a, child_t2_b, child_t2_c};
     EXPECT_EQ(parent->getItems(tag2), expected);
 
     // removing item from the middle of tag2
-    delete parent->takeItem(tag2, 1);
+    delete parent->takeItem({tag2, 1});
     expected = {child_t1_a, child_t1_b};
     EXPECT_EQ(parent->getItems(tag1), expected);
     expected = {child_t2_a, child_t2_c};
@@ -401,7 +397,7 @@ TEST_F(TestSessionItem, tagWithLimits)
     EXPECT_FALSE(parent->insertItem(extra, tag1));
 
     // removing first element
-    delete parent->takeItem(tag1, 0);
+    delete parent->takeItem({tag1, 0});
     expected.erase(expected.begin());
     EXPECT_EQ(parent->getItems(tag1), expected);
 
@@ -502,17 +498,17 @@ TEST_F(TestSessionItem, tagRowFromItem)
     parent->insertItem(child_t1_b, tag1); // 1
     parent->insertItem(child_t2_b, tag2, 1); // 1 between child_t2_a and child_t2_c
 
-    EXPECT_EQ(parent->tagRowOfItem(child_t1_a).second, 0);
-    EXPECT_EQ(parent->tagRowOfItem(child_t1_b).second, 1);
-    EXPECT_EQ(parent->tagRowOfItem(child_t2_a).second, 0);
-    EXPECT_EQ(parent->tagRowOfItem(child_t2_b).second, 1);
-    EXPECT_EQ(parent->tagRowOfItem(child_t2_c).second, 2);
+    EXPECT_EQ(parent->tagRowOfItem(child_t1_a).row, 0);
+    EXPECT_EQ(parent->tagRowOfItem(child_t1_b).row, 1);
+    EXPECT_EQ(parent->tagRowOfItem(child_t2_a).row, 0);
+    EXPECT_EQ(parent->tagRowOfItem(child_t2_b).row, 1);
+    EXPECT_EQ(parent->tagRowOfItem(child_t2_c).row, 2);
 
-    EXPECT_EQ(parent->tagRowOfItem(child_t1_a).first, "tag1");
-    EXPECT_EQ(parent->tagRowOfItem(child_t1_b).first, "tag1");
-    EXPECT_EQ(parent->tagRowOfItem(child_t2_a).first, "tag2");
-    EXPECT_EQ(parent->tagRowOfItem(child_t2_b).first, "tag2");
-    EXPECT_EQ(parent->tagRowOfItem(child_t2_c).first, "tag2");
+    EXPECT_EQ(parent->tagRowOfItem(child_t1_a).tag, "tag1");
+    EXPECT_EQ(parent->tagRowOfItem(child_t1_b).tag, "tag1");
+    EXPECT_EQ(parent->tagRowOfItem(child_t2_a).tag, "tag2");
+    EXPECT_EQ(parent->tagRowOfItem(child_t2_b).tag, "tag2");
+    EXPECT_EQ(parent->tagRowOfItem(child_t2_c).tag, "tag2");
 }
 
 //! Checks item appearance (enabled/disabled and editable/readonly).
