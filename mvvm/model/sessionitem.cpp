@@ -126,20 +126,20 @@ bool SessionItem::insertItem(SessionItem* item, const std::string& tag, int row)
 
 //! Removes item from given row from given tag, returns it to the caller.
 
-SessionItem* SessionItem::takeItem(const std::string& tag, int row)
+SessionItem* SessionItem::takeItem(const TagRow& tagrow)
 {
-    if (!p_impl->m_tags->canTakeItem({tag, row}))
+    if (!p_impl->m_tags->canTakeItem(tagrow))
         return nullptr;
 
     if (p_impl->m_model)
-        p_impl->m_model->mapper()->callOnRowAboutToBeRemoved(this, tag, row);
+        p_impl->m_model->mapper()->callOnRowAboutToBeRemoved(this, tagrow.tag, tagrow.row);
 
-    auto result = p_impl->m_tags->takeItem({tag, row});
+    auto result = p_impl->m_tags->takeItem(tagrow);
     result->setParent(nullptr);
     result->setModel(nullptr);
     // FIXME remaining problem is that ItemMapper still looking to the model
     if (p_impl->m_model)
-        p_impl->m_model->mapper()->callOnRowRemoved(this, tag, row);
+        p_impl->m_model->mapper()->callOnRowRemoved(this, tagrow.tag, tagrow.row);
 
     return result;
 }

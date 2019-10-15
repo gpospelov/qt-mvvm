@@ -72,7 +72,7 @@ void MoveItemCommand::undo_command()
     // then make manipulations
     int row = p_impl->m_target_row < 0 ? current_parent->itemCount(p_impl->m_target_tag) - 1
                                        : p_impl->m_target_row;
-    auto taken = current_parent->takeItem(p_impl->m_target_tag, row);
+    auto taken = current_parent->takeItem({p_impl->m_target_tag, row});
     target_parent->insertItem(taken, p_impl->m_original_tag, p_impl->m_original_row);
 
     // adjusting new addresses
@@ -87,7 +87,7 @@ void MoveItemCommand::execute_command()
     auto target_parent = itemFromPath(p_impl->m_target_parent_path);
 
     // then make manipulations
-    auto taken = original_parent->takeItem(p_impl->m_original_tag, p_impl->m_original_row);
+    auto taken = original_parent->takeItem({p_impl->m_original_tag, p_impl->m_original_row});
 
     // FIXME If something went wrong will throw an exception. Shell we try to proceed instead
     // and try to gently resolve situations maximum/minimum/reached?
