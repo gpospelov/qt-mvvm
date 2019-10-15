@@ -32,7 +32,16 @@ protected:
     void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
 
 private:
-    auto determineAction(const MultiLayerView* new_parent, int row);
+    //! Determines the action to undertake as the result of mouse event
+    auto determineAction(const MultiLayerView* new_parent, int row) const;
+
+    void onNoChange();
+    void onRelease(const QPointF& pos);
+    void onChangeOwner(const ILayerView* requested_parent, int requested_row);
+
+    //! Computes the insertion row for undelying session item.
+    int insertionRow(const ILayerView* new_parent, int insertion_row) const;
+
     QPointF m_drag_start_position;
 };
 

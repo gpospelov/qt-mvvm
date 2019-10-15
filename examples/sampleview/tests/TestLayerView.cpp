@@ -22,10 +22,9 @@ protected:
 };
 
 TestlayerView::TestlayerView()
-    : scene(std::make_unique<DesignerScene>())
+    : scene(std::make_unique<DesignerScene>(&model))
 {
     model.clear();
-    scene->setSampleModel(&model);
 }
 
 TestlayerView::~TestlayerView() = default;

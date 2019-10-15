@@ -14,9 +14,11 @@
 
 #include "LayerView.h"
 #include "LayerItems.h"
+#include "ParticleLayoutView.h"
 #include "externalproperty.h"
 #include "item_constants.h"
 #include "mvvm_types.h"
+#include <QGraphicsScene>
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
 
@@ -52,11 +54,13 @@ void LayerView::paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
     painter->drawRect(getRectangle());
 }
 
-void LayerView::addView(IView*)
+void LayerView::addView(IView* view)
 {
-    /*ParticleLayoutView *layout = dynamic_cast<ParticleLayoutView *>(childView);
-    Q_ASSERT(layout);
-    connectInputPort(layout, 0);*/
+    ParticleLayoutView* layout = dynamic_cast<ParticleLayoutView*>(view);
+    if (!layout)
+        return;
+    connectInputPort(layout, 0);
+    scene()->addItem(view);
 }
 
 void LayerView::onPropertyChange(const std::string& propertyName)

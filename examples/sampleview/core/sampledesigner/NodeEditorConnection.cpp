@@ -20,16 +20,19 @@
 #include <QPainter>
 #include <QPen>
 
-NodeEditorConnection::NodeEditorConnection(QGraphicsItem *parent, QGraphicsScene *scene)
-    : QGraphicsPathItem(parent)
-    , m_port1(0)
-    , m_port2(0)
+NodeEditorConnection::NodeEditorConnection(QGraphicsScene* scene)
+    : QGraphicsPathItem()
+    , m_port1(nullptr)
+    , m_port2(nullptr)
 {
+    if (!scene)
+        throw std::runtime_error(
+            "Error in NodeEditorConnection::NodeEditorConnection: passed scene pointer is null.");
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     setPen(QPen(Qt::darkGray, 2));
     setBrush(Qt::NoBrush);
     setZValue(-1);
-    if(scene) scene->addItem(this);
+    scene->addItem(this);
 }
 
 
@@ -106,18 +109,13 @@ NodeEditorPort *NodeEditorConnection::outputPort()
     return (m_port1->isOutput() ? m_port1 : m_port2);
 }
 
-void NodeEditorConnection::paint(QPainter *painter,
-                                 const QStyleOptionGraphicsItem *option, QWidget *widget)
+void NodeEditorConnection::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
 {
-    Q_UNUSED(option)
-    Q_UNUSED(widget)
-
     painter->setPen(QPen(Qt::darkGray, 2));
     painter->setBrush(Qt::NoBrush);
 
-    if (isSelected()) {
+    if (isSelected())
         painter->setPen(Qt::DashLine);
-    }
 
     painter->drawPath(path());
 }

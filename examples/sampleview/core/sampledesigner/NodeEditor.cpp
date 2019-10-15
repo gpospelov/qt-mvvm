@@ -70,7 +70,7 @@ bool NodeEditor::processMousePress(QGraphicsSceneMouseEvent *event)
         QGraphicsItem *item = itemAt(event->scenePos());
         if (item && item->type() == NodeEditorPort::TYPE) {
             emit selectionModeChangeRequest(DesignerView::SIMPLE_SELECTION);
-            m_conn = new NodeEditorConnection(0, m_scene);
+            m_conn = new NodeEditorConnection(m_scene);
             m_conn->setPort1((NodeEditorPort*) item);
             m_conn->setPos1(item->scenePos());
             m_conn->setPos2(event->scenePos());

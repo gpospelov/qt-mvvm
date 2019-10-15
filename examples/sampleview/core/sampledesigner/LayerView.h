@@ -26,7 +26,7 @@ public:
 
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
 
-    void addView(IView* childView) override; // to add ParticleLayout
+    void addView(IView* view) override; // to add ParticleLayout
 
     void onPropertyChange(const std::string& propertyName) override;
 

@@ -47,15 +47,18 @@ void IView::subscribe(SessionItem *item)
         onPropertyChange(property);
     };
     m_item->mapper()->setOnPropertyChange(on_property_change, this);
-    m_item->mapper()->setOnItemDestroy([this](SessionItem*) { unsubscribe(); }, this);
+    m_item->mapper()->setOnItemDestroy([this](SessionItem*) { m_item = nullptr; }, this);
 
     update_appearance();
 }
 
 void IView::unsubscribe()
 {
-    if (m_item)
-        m_item->mapper()->unsubscribe(this);
+    if (!m_item)
+        return;
+
+    m_item->mapper()->unsubscribe(this);
+    m_item = nullptr;
 }
 
 void IView::onChangedX()

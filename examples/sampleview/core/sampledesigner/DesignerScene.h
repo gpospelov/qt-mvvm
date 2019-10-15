@@ -15,6 +15,7 @@
 #ifndef DESIGNERSCENE_H
 #define DESIGNERSCENE_H
 
+#include "SceneModelController.h"
 #include <QGraphicsScene>
 #include <QMap>
 #include <QModelIndex>
@@ -25,7 +26,6 @@ namespace ModelView
     class SessionModel;
 }
 
-class InstrumentModel;
 class SampleModel;
 class QItemSelectionModel;
 class IView;
@@ -37,7 +37,6 @@ class NodeEditor;
 class FilterPropertyProxy;
 class MaterialModel;
 
-
 //! Main class which represents SessionModel on graphics scene
 class DesignerScene : public QGraphicsScene
 {
@@ -45,41 +44,33 @@ class DesignerScene : public QGraphicsScene
 public:
     using ModelCommand = std::function<void (ModelView::SessionModel& model)>;
 
-    explicit DesignerScene(QObject *parent = nullptr);
+    explicit DesignerScene(SampleModel* sample_model, QObject* parent = nullptr);
     ~DesignerScene() override;
 
-    void setSampleModel(SampleModel *sampleModel);
     void setSelectionModel(QItemSelectionModel *model, FilterPropertyProxy *proxy);
 
-    SampleModel *getSampleModel() { return m_sampleModel; }
-
-    IView* getViewForItem(ModelView::SessionItem *item);
+    IView* getViewForItem(ModelView::SessionItem* item) const;
 
     NodeEditor *getNodeEditor() { return m_nodeEditor;}
 
     // slots:
     void onSceneSelectionChanged();
     void onSessionSelectionChanged(const QItemSelection &, const QItemSelection &);
-    void resetScene();
-    void updateScene();
-
-    void onRowsInserted();
-    void onRowsRemoved();
+    void onModelChanged();
+    void onModelDestroyed();
+    void onConnect(NodeEditorConnection *connection);
 
     void setLayerInterfaceLine(const QLineF &line=QLineF()) { m_layer_interface_line = line;
                                                               invalidate(); }
 
     void deleteSelectedItems();
 
-    void onEstablishedConnection(NodeEditorConnection *); // to process signals from NodeEditor
-    void removeConnection(NodeEditorConnection *);
-
     void dragMoveEvent(QGraphicsSceneDragDropEvent *event) override;
     void dropEvent(QGraphicsSceneDragDropEvent *event) override;
 
     void onSmartAlign();
 
-    void setDelayedExecution(ModelCommand func) { delayed_command = std::move(func); }
+    void sendModelCommand(SceneModelController::ModelCommand command);
 
 signals:
     void selectionModeChangeRequest(int);
@@ -92,6 +83,8 @@ protected:
 
 private:
     void addViewForItem(ModelView::SessionItem* item);
+    void resetScene();
+    void updateScene();
     void updateViews();
     void alignViews();
     bool isMultiLayerNearby(QGraphicsSceneDragDropEvent *event);
@@ -99,9 +92,9 @@ private:
     bool isAcceptedByMultiLayer(const DesignerMimeData *mimeData, QGraphicsSceneDragDropEvent *event);
     bool isLayerDragged() const;
 
-    SampleModel *m_sampleModel;
-    QItemSelectionModel *m_selectionModel;
-    FilterPropertyProxy *m_proxy;
+    SceneModelController m_controller;
+    QItemSelectionModel* m_selectionModel;
+    FilterPropertyProxy* m_proxy;
     bool m_block_selection;
 
     QMap<ModelView::SessionItem*, IView*> m_ItemToView;
@@ -113,8 +106,6 @@ private:
     SampleViewAligner *m_aligner;
 
     NodeEditor *m_nodeEditor;
-
-    ModelCommand delayed_command;
 };
 
 

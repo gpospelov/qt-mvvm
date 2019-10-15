@@ -24,10 +24,9 @@ protected:
 };
 
 TestDesignerSceneUtils::TestDesignerSceneUtils()
-    : scene(std::make_unique<DesignerScene>())
+    : scene(std::make_unique<DesignerScene>(&model))
 {
     model.clear();
-    scene->setSampleModel(&model);
 }
 
 TestDesignerSceneUtils::~TestDesignerSceneUtils() = default;
