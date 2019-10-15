@@ -64,7 +64,7 @@ void CopyItemCommand::execute_command()
     auto parent = itemFromPath(p_impl->m_item_path);
     auto item = p_impl->m_backup_strategy->restoreItem();
 
-    bool success = parent->insertItem(item.get(), p_impl->m_tag, p_impl->m_row);
+    bool success = parent->insertItem(item.get(), {p_impl->m_tag, p_impl->m_row});
     p_impl->m_result = success ? item.release() : nullptr;
 }
 

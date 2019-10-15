@@ -48,7 +48,7 @@ void RemoveItemCommand::undo_command()
 {
     auto parent = itemFromPath(p_impl->m_item_path);
     auto reco_item = p_impl->m_backup_strategy->restoreItem();
-    parent->insertItem(reco_item.release(), p_impl->m_tag, p_impl->m_row);
+    parent->insertItem(reco_item.release(), {p_impl->m_tag, p_impl->m_row});
 }
 
 void RemoveItemCommand::execute_command()

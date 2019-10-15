@@ -75,7 +75,7 @@ TEST_F(TestJsonItemBackupStrategy, customItem)
     parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
     auto child = new SessionItem(model_type);
     child->setDisplayName("child_name");
-    parent->insertItem(child, "", -1);
+    parent->insertItem(child, TagRow::append());
 
     // creating copy
     strategy->saveItem(parent.get());

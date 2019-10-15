@@ -73,7 +73,7 @@ void MoveItemCommand::undo_command()
     int row = p_impl->m_target_row < 0 ? current_parent->itemCount(p_impl->m_target_tag) - 1
                                        : p_impl->m_target_row;
     auto taken = current_parent->takeItem({p_impl->m_target_tag, row});
-    target_parent->insertItem(taken, p_impl->m_original_tag, p_impl->m_original_row);
+    target_parent->insertItem(taken, {p_impl->m_original_tag, p_impl->m_original_row});
 
     // adjusting new addresses
     p_impl->m_target_parent_path = pathFromItem(current_parent);
@@ -95,7 +95,7 @@ void MoveItemCommand::execute_command()
     if (!taken)
         throw std::runtime_error("MoveItemCommand::execute() -> Can't take an item.");
 
-    bool succeeded = target_parent->insertItem(taken, p_impl->m_target_tag, p_impl->m_target_row);
+    bool succeeded = target_parent->insertItem(taken, {p_impl->m_target_tag, p_impl->m_target_row});
     if (!succeeded)
         throw std::runtime_error("MoveItemCommand::execute() -> Can't insert item.");
 

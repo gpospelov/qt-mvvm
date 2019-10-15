@@ -81,7 +81,7 @@ void JsonModel::json_to_model(const QJsonObject& json, SessionModel& model) cons
     auto parent = model.rootItem();
     for(const auto ref : json[itemsKey].toArray()) {
         auto item =converter->from_json(ref.toObject());
-        parent->insertItem(item.release(), "", -1);
+        parent->insertItem(item.release(), TagRow::append());
     }
 }
 

@@ -100,7 +100,7 @@ int SessionItem::childrenCount() const
 
 //! Insert item into given tag under the given row.
 
-bool SessionItem::insertItem(SessionItem* item, const std::string& tag, int row)
+bool SessionItem::insertItem(SessionItem* item, const TagRow& tagrow)
 {
     if (!item)
         throw std::runtime_error("SessionItem::insertItem() -> Invalid item.");
@@ -111,7 +111,7 @@ bool SessionItem::insertItem(SessionItem* item, const std::string& tag, int row)
     if (item->model())
         throw std::runtime_error("SessionItem::insertItem() -> Existing model.");
 
-    auto result = p_impl->m_tags->insertItem(item, {tag, row});
+    auto result = p_impl->m_tags->insertItem(item, tagrow);
     if (result) {
         item->setParent(this);
         item->setModel(model());

@@ -53,7 +53,7 @@ void InsertNewItemCommand::execute_command()
     auto parent = itemFromPath(p_impl->m_item_path);
     auto child = p_impl->factory_func().release();
     setDescription(generate_description(child->modelType(), p_impl->m_tag, p_impl->m_row));
-    parent->insertItem(child, p_impl->m_tag, p_impl->m_row);
+    parent->insertItem(child, {p_impl->m_tag, p_impl->m_row});
     p_impl->m_result = child;
 }
 

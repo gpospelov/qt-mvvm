@@ -184,7 +184,7 @@ TEST_F(TestSessionItem, insertItem)
 
     // inserting child
     auto p_child = child.release();
-    parent->insertItem(p_child, "", 0);
+    parent->insertItem(p_child, {"", 0});
     EXPECT_EQ(parent->childrenCount(), 1);
     EXPECT_EQ(Utils::IndexOfChild(parent.get(), p_child), 0);
     EXPECT_EQ(parent->children()[0], p_child);
@@ -205,8 +205,8 @@ TEST_F(TestSessionItem, insertChildren)
     auto child4 = new SessionItem;
 
     // inserting two items
-    parent->insertItem(child1, "", -1);
-    parent->insertItem(child2, "", -1);
+    parent->insertItem(child1, TagRow::append());
+    parent->insertItem(child2, TagRow::append());
     EXPECT_EQ(Utils::IndexOfChild(parent.get(), child1), 0);
     EXPECT_EQ(Utils::IndexOfChild(parent.get(), child2), 1);
     EXPECT_EQ(parent->getItem("", 0), child1);
@@ -215,7 +215,7 @@ TEST_F(TestSessionItem, insertChildren)
     EXPECT_EQ(parent->children(), expected);
 
     // inserting third item between two others
-    parent->insertItem(child3, "", 1);
+    parent->insertItem(child3, {"", 1});
     expected = {child1, child3, child2};
     EXPECT_EQ(parent->children(), expected);
     EXPECT_EQ(Utils::IndexOfChild(parent.get(), child1), 0);
@@ -227,7 +227,7 @@ TEST_F(TestSessionItem, insertChildren)
     EXPECT_EQ(parent->getItem("", 3), nullptr);
 
     // inserting forth item using index equal to number of items
-    parent->insertItem(child4, "", parent->childrenCount());
+    parent->insertItem(child4, {"", parent->childrenCount()});
 
     // checking parents
     EXPECT_EQ(child1->parent(), parent.get());
@@ -236,11 +236,11 @@ TEST_F(TestSessionItem, insertChildren)
     EXPECT_EQ(child4->parent(), parent.get());
 
     // attempt to insert same item twice
-    EXPECT_THROW(parent->insertItem(child2, "", -1), std::runtime_error);
+    EXPECT_THROW(parent->insertItem(child2, TagRow::append()), std::runtime_error);
 
     // attempt to insert item using out of scope index
     auto child5 = std::make_unique<SessionItem>();
-    EXPECT_FALSE(parent->insertItem(child5.get(), "",  parent->childrenCount()+1));
+    EXPECT_FALSE(parent->insertItem(child5.get(), {"",  parent->childrenCount()+1}));
 }
 
 //! Removing (taking) item from parent.
@@ -255,9 +255,9 @@ TEST_F(TestSessionItem, takeItem)
     auto child3 = new SessionItem;
 
     // inserting items
-    parent->insertItem(child1, "", -1);
-    parent->insertItem(child2, "", -1);
-    parent->insertItem(child3, "", -1);
+    parent->insertItem(child1, TagRow::append());
+    parent->insertItem(child2, TagRow::append());
+    parent->insertItem(child3, TagRow::append());
 
     EXPECT_EQ(parent->childrenCount(), 3);
 
@@ -288,8 +288,8 @@ TEST_F(TestSessionItem, singleTagAndItems)
     // inserting two children
     auto child1 = new SessionItem;
     auto child2 = new SessionItem;
-    parent->insertItem(child1, tag1, -1);
-    parent->insertItem(child2, tag1, -1);
+    parent->insertItem(child1, {tag1, -1});
+    parent->insertItem(child2, {tag1, -1});
 
     // testing result of insertion via non-tag interface
     std::vector<SessionItem*> expected = {child1, child2};
@@ -337,13 +337,13 @@ TEST_F(TestSessionItem, twoTagsAndItems)
     auto child_t2_a = new SessionItem;
     auto child_t2_b = new SessionItem;
     auto child_t2_c = new SessionItem;
-    parent->insertItem(child_t2_a, tag2, -1);
-    parent->insertItem(child_t2_c, tag2, -1);
+    parent->insertItem(child_t2_a, {tag2, -1});
+    parent->insertItem(child_t2_c, {tag2, -1});
 
-    parent->insertItem(child_t1_a, tag1, -1);
-    parent->insertItem(child_t1_b, tag1, -1);
+    parent->insertItem(child_t1_a, {tag1, -1});
+    parent->insertItem(child_t1_b, {tag1, -1});
 
-    parent->insertItem(child_t2_b, tag2, 1); // between child_t2_a and child_t2_c
+    parent->insertItem(child_t2_b, {tag2, 1}); // between child_t2_a and child_t2_c
 
     // testing item access via non-tag interface
     std::vector<SessionItem*> expected = {child_t1_a, child_t1_b, child_t2_a, child_t2_b, child_t2_c};
@@ -388,13 +388,13 @@ TEST_F(TestSessionItem, tagWithLimits)
     for (int i = 0; i < maxItems; ++i) {
         auto child = new SessionItem;
         expected.push_back(child);
-        EXPECT_TRUE(parent->insertItem(child, tag1, -1));
+        EXPECT_TRUE(parent->insertItem(child, {tag1, -1}));
     }
     EXPECT_EQ(parent->getItems(tag1), expected);
 
     // no room for extra item
     auto extra = new SessionItem;
-    EXPECT_FALSE(parent->insertItem(extra, tag1, -1));
+    EXPECT_FALSE(parent->insertItem(extra, {tag1, -1}));
 
     // removing first element
     delete parent->takeItem({tag1, 0});
@@ -402,7 +402,7 @@ TEST_F(TestSessionItem, tagWithLimits)
     EXPECT_EQ(parent->getItems(tag1), expected);
 
     // adding extra item
-    parent->insertItem(extra, tag1, -1);
+    parent->insertItem(extra, {tag1, -1});
     expected.push_back(extra);
     EXPECT_EQ(parent->getItems(tag1), expected);
 }
@@ -427,13 +427,13 @@ TEST_F(TestSessionItem, tagModelTypes)
     auto item3 = new SessionItem(modelType3);
 
     // attempt to add item not intended for tag
-    EXPECT_FALSE(parent->insertItem(item1, tag2, -1));
-    EXPECT_FALSE(parent->insertItem(item3, tag1, -1));
+    EXPECT_FALSE(parent->insertItem(item1, {tag2, -1}));
+    EXPECT_FALSE(parent->insertItem(item3, {tag1, -1}));
 
     // normal insert to appropriate tag
-    parent->insertItem(item3, tag2, -1);
-    parent->insertItem(item1, tag1, -1);
-    parent->insertItem(item2, tag1, -1);
+    parent->insertItem(item3, {tag2, -1});
+    parent->insertItem(item1, {tag1, -1});
+    parent->insertItem(item2, {tag1, -1});
 
     std::vector<SessionItem*> expected = {item1, item2};
     EXPECT_EQ(parent->getItems(tag1), expected);
@@ -457,11 +457,11 @@ TEST_F(TestSessionItem, tagFromItem)
     auto child_t2_a = new SessionItem;
     auto child_t2_b = new SessionItem;
     auto child_t2_c = new SessionItem;
-    parent->insertItem(child_t2_a, tag2, -1);
-    parent->insertItem(child_t2_c, tag2, -1);
-    parent->insertItem(child_t1_a, tag1, -1);
-    parent->insertItem(child_t1_b, tag1, -1);
-    parent->insertItem(child_t2_b, tag2, 1); // between child_t2_a and child_t2_c
+    parent->insertItem(child_t2_a, {tag2, -1});
+    parent->insertItem(child_t2_c, {tag2, -1});
+    parent->insertItem(child_t1_a, {tag1, -1});
+    parent->insertItem(child_t1_b, {tag1, -1});
+    parent->insertItem(child_t2_b, {tag2, 1}); // between child_t2_a and child_t2_c
 
     EXPECT_EQ(parent->tagFromItem(child_t1_a), "tag1");
     EXPECT_EQ(parent->tagFromItem(child_t1_b), "tag1");
@@ -492,11 +492,11 @@ TEST_F(TestSessionItem, tagRowFromItem)
     auto child_t2_a = new SessionItem;
     auto child_t2_b = new SessionItem;
     auto child_t2_c = new SessionItem;
-    parent->insertItem(child_t2_a, tag2, -1); // 0
-    parent->insertItem(child_t2_c, tag2, -1); // 2
-    parent->insertItem(child_t1_a, tag1, -1); // 0
-    parent->insertItem(child_t1_b, tag1, -1); // 1
-    parent->insertItem(child_t2_b, tag2, 1); // 1 between child_t2_a and child_t2_c
+    parent->insertItem(child_t2_a, {tag2, -1}); // 0
+    parent->insertItem(child_t2_c, {tag2, -1}); // 2
+    parent->insertItem(child_t1_a, {tag1, -1}); // 0
+    parent->insertItem(child_t1_b, {tag1, -1}); // 1
+    parent->insertItem(child_t2_b, {tag2, 1}); // 1 between child_t2_a and child_t2_c
 
     EXPECT_EQ(parent->tagRowOfItem(child_t1_a).row, 0);
     EXPECT_EQ(parent->tagRowOfItem(child_t1_b).row, 1);
@@ -555,9 +555,9 @@ TEST_F(TestSessionItem, itemsInTag)
     auto child_t1_a = new SessionItem;
     auto child_t2_a = new SessionItem;
     auto child_t2_b = new SessionItem;
-    parent->insertItem(child_t1_a, tag1, -1);
-    parent->insertItem(child_t2_a, tag2, -1);
-    parent->insertItem(child_t2_b, tag2, -1);
+    parent->insertItem(child_t1_a, {tag1, -1});
+    parent->insertItem(child_t2_a, {tag2, -1});
+    parent->insertItem(child_t2_b, {tag2, -1});
 
     EXPECT_EQ(parent->itemCount(tag1), 1);
     EXPECT_EQ(parent->itemCount(tag2), 2);
