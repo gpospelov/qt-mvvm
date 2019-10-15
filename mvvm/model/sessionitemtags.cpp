@@ -64,7 +64,9 @@ int SessionItemTags::itemCount(const std::string& tag_name) const
 
 bool SessionItemTags::insertItem(SessionItem* item, const TagRow& tagrow)
 {
-    return container(tagrow.tag)->insertItem(item, tagrow.row);
+    auto tag_container = container(tagrow.tag);
+    auto row = tagrow.row < 0 ? tag_container->itemCount() : tagrow.row;
+    return container(tagrow.tag)->insertItem(item, row);
 }
 
 //! Removes item at given row and for given tag, returns it to the user.

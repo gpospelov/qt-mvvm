@@ -8,12 +8,15 @@
 // ************************************************************************** //
 
 #include "sessionitemcontainer.h"
-#include "sessionitem.h"
 #include "containerutils.h"
+#include "sessionitem.h"
 
 using namespace ModelView;
 
-SessionItemContainer::SessionItemContainer(ModelView::TagInfo tag_info) : m_tag_info(std::move(tag_info)) {}
+SessionItemContainer::SessionItemContainer(ModelView::TagInfo tag_info)
+    : m_tag_info(std::move(tag_info))
+{
+}
 
 SessionItemContainer::~SessionItemContainer()
 {
@@ -35,19 +38,21 @@ std::vector<SessionItem*> SessionItemContainer::items() const
     return m_items;
 }
 
-//! Inserts item in a vector of children at given index, returns true in the case of success.
-//! If index==-1 or index==childrenCount(), item will be appended at the end of the vector.
-//! If item can't be inserted (wrong model type, wrong index or maximum number of items reached),
-//! will return false.
+/*!
+@brief Inserts item in a vector of children at given index, returns true in the case of success.
+@param item Item to be inserted, ownership will be taken.
+@param index Item insert index in a range [0, itemCount]
+
+Insert index is an index which item will have after insertion. If item can't be inserted
+(wrong model type, wrong index or maximum number of items reached), will return false.
+*/
 
 bool SessionItemContainer::insertItem(SessionItem* item, int index)
 {
-    int vec_index = insert_index(item, index);
-
-    if (vec_index < 0)
+    if (!canInsertItem(item, index))
         return false;
 
-    m_items.insert(std::next(m_items.begin(), vec_index), item);
+    m_items.insert(std::next(m_items.begin(), index), item);
     return true;
 }
 
@@ -76,7 +81,7 @@ bool SessionItemContainer::canTakeItem(int index) const
 
 bool SessionItemContainer::canInsertItem(const SessionItem* item, int index) const
 {
-    const bool valid_index = (index>=0 && index <=itemCount());
+    const bool valid_index = (index >= 0 && index <= itemCount());
     const bool enough_place = !maximum_reached();
     return valid_index && enough_place && is_valid_item(item);
 }
@@ -116,20 +121,6 @@ SessionItemContainer::const_iterator SessionItemContainer::begin() const
 SessionItemContainer::const_iterator SessionItemContainer::end() const
 {
     return m_items.end();
-}
-
-//! Calculates insert index from given requested_index.
-//! Returns -1 if item is not suitable for insertion.
-
-int SessionItemContainer::insert_index(const SessionItem* item, int requested_index) const
-{
-    if (maximum_reached() || requested_index > itemCount() || !is_valid_item(item))
-        return -1;
-
-    if (requested_index < 0)
-        return itemCount();
-
-    return requested_index;
 }
 
 //! Returns true if no more items are allowed.
