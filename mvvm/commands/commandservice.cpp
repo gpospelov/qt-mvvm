@@ -35,7 +35,9 @@ SessionItem* CommandService::insertNewItem(item_factory_func_t func, SessionItem
     if (!parent)
         parent = m_model->rootItem();
 
-    return process_command<InsertNewItemCommand>(func, parent, tag, row);
+    auto corrected_row = row < 0 ? parent->itemCount(tag) : row;
+
+    return process_command<InsertNewItemCommand>(func, parent, tag, corrected_row);
 }
 
 SessionItem* CommandService::copyItem(const SessionItem* item, SessionItem* parent,
