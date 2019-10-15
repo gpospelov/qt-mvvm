@@ -114,7 +114,7 @@ int adjustInsertionRow(const ILayerView* child, const ILayerView* new_parent, in
 {
     const SessionItem* child_item = child->getItem();
     if (new_parent == child->parentItem()
-        && insertion_row > child_item->parent()->tagRowOfItem(child_item).second)
+        && insertion_row > child_item->parent()->tagRowOfItem(child_item).row)
         return insertion_row - 1;
 
     return insertion_row;

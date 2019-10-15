@@ -12,6 +12,7 @@
 
 #include "mvvm_export.h"
 #include "mvvm_types.h"
+#include "tagrow.h"
 #include <QVariant>
 #include <memory>
 #include <vector>
@@ -73,7 +74,7 @@ public:
     template <typename T> T& item(const std::string& tag) const;
     template <typename T> std::vector<T*> items(const std::string& tag) const;
     std::string tagFromItem(const SessionItem* item) const;
-    std::pair<std::string, int> tagRowOfItem(const SessionItem* item) const;
+    TagRow tagRowOfItem(const SessionItem* item) const;
 
     ItemMapper* mapper();
 

@@ -81,26 +81,26 @@ void ContainerEditorWidget::onMoveDown()
     std::reverse(items.begin(), items.end()); // to correctly move multiple selections
 
     for (auto item : items) {
-        auto tag_row = item->parent()->tagRowOfItem(item);
+        auto tagrow = item->parent()->tagRowOfItem(item);
 
         // item already at the buttom
-        if (tag_row.second == item->parent()->childrenCount() - 1)
+        if (tagrow.row == item->parent()->childrenCount() - 1)
             return;
 
-        m_model->moveItem(item, item->parent(), tag_row.first, tag_row.second + 1);
+        m_model->moveItem(item, item->parent(), tagrow.tag, tagrow.row + 1);
     }
 }
 
 void ContainerEditorWidget::onMoveUp()
 {
     for (auto item : selected_items()) {
-        auto tag_row = item->parent()->tagRowOfItem(item);
+        auto tagrow = item->parent()->tagRowOfItem(item);
 
         // item already at the top
-        if (tag_row.second == 0)
+        if (tagrow.row == 0)
             return;
 
-        m_model->moveItem(item, item->parent(), tag_row.first, tag_row.second - 1);
+        m_model->moveItem(item, item->parent(), tagrow.tag, tagrow.row - 1);
     }
 }
 
