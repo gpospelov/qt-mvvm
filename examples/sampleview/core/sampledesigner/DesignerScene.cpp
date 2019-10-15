@@ -16,7 +16,7 @@
 #include "ConnectableView.h"
 #include "DesignerHelper.h"
 #include "DesignerMimeData.h"
-#include "GraphicsObjectController.h"
+#include "SceneModelController.h"
 #include "IView.h"
 #include "LayerView.h"
 #include "LocatedItem.h"
@@ -340,7 +340,7 @@ void DesignerScene::onSmartAlign()
     m_aligner->smartAlign();
 }
 
-void DesignerScene::sendModelCommand(GraphicsObjectController::ModelCommand command)
+void DesignerScene::sendModelCommand(SceneModelController::ModelCommand command)
 {
     m_controller.setDelayedCommand(command);
 }

@@ -15,7 +15,7 @@
 #ifndef DESIGNERSCENE_H
 #define DESIGNERSCENE_H
 
-#include "GraphicsObjectController.h"
+#include "SceneModelController.h"
 #include <QGraphicsScene>
 #include <QMap>
 #include <QModelIndex>
@@ -26,8 +26,6 @@ namespace ModelView
     class SessionModel;
 }
 
-class GraphicsObjectController;
-class InstrumentModel;
 class SampleModel;
 class QItemSelectionModel;
 class IView;
@@ -72,7 +70,7 @@ public:
 
     void onSmartAlign();
 
-    void sendModelCommand(GraphicsObjectController::ModelCommand command);
+    void sendModelCommand(SceneModelController::ModelCommand command);
 
 signals:
     void selectionModeChangeRequest(int);
@@ -94,7 +92,7 @@ private:
     bool isAcceptedByMultiLayer(const DesignerMimeData *mimeData, QGraphicsSceneDragDropEvent *event);
     bool isLayerDragged() const;
 
-    GraphicsObjectController m_controller;
+    SceneModelController m_controller;
     QItemSelectionModel* m_selectionModel;
     FilterPropertyProxy* m_proxy;
     bool m_block_selection;

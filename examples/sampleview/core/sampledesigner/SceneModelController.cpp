@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "GraphicsObjectController.h"
+#include "SceneModelController.h"
 #include "ConnectableView.h"
 #include "DesignerScene.h"
 #include "NodeEditorConnection.h"
@@ -41,12 +41,12 @@ private:
 class ModelCommandExecutor
 {
 public:
-    ModelCommandExecutor(GraphicsObjectController::ModelCommand& command, SessionModel* model)
+    ModelCommandExecutor(SceneModelController::ModelCommand& command, SessionModel* model)
         : m_command(command)
         , m_model(model)
     {}
 
-    ~ModelCommandExecutor() { m_command = GraphicsObjectController::ModelCommand(); }
+    ~ModelCommandExecutor() { m_command = SceneModelController::ModelCommand(); }
 
     //! Returns true if the command was executed, false otherwise
     [[nodiscard]] bool execute() {
@@ -69,7 +69,7 @@ std::set<IView*> connectedViews(const std::set<QGraphicsItem*>& views, const Des
 std::set<IView*> topViews(const QList<QGraphicsItem *> &views);
 }
 
-GraphicsObjectController::GraphicsObjectController(DesignerScene& scene, SampleModel* model)
+SceneModelController::SceneModelController(DesignerScene& scene, SampleModel* model)
     : m_scene(scene)
     , m_model(model)
     , m_block(false)
@@ -85,12 +85,12 @@ GraphicsObjectController::GraphicsObjectController(DesignerScene& scene, SampleM
                                        this);
 }
 
-GraphicsObjectController::~GraphicsObjectController()
+SceneModelController::~SceneModelController()
 {
     m_model->mapper()->unsubscribe(this);
 }
 
-void GraphicsObjectController::onDelete(const QList<QGraphicsItem *>& views)
+void SceneModelController::onDelete(const QList<QGraphicsItem *>& views)
 {
     if (!m_model)
         return;
@@ -113,7 +113,7 @@ void GraphicsObjectController::onDelete(const QList<QGraphicsItem *>& views)
     m_scene.onModelChanged();
 }
 
-void GraphicsObjectController::onConnect(NodeEditorConnection *connection)
+void SceneModelController::onConnect(NodeEditorConnection *connection)
 {
     if (!m_model)
         return;
@@ -126,7 +126,7 @@ void GraphicsObjectController::onConnect(NodeEditorConnection *connection)
     m_scene.onModelChanged();
 }
 
-void GraphicsObjectController::setDelayedCommand(GraphicsObjectController::ModelCommand command)
+void SceneModelController::setDelayedCommand(SceneModelController::ModelCommand command)
 {
     if (m_command)
         throw std::runtime_error(
@@ -135,20 +135,20 @@ void GraphicsObjectController::setDelayedCommand(GraphicsObjectController::Model
     m_command = command;
 }
 
-void GraphicsObjectController::executeDelayedCommand()
+void SceneModelController::executeDelayedCommand()
 {
     ModelCommandExecutor executor(m_command, m_model);
     if (executor.execute())
         m_scene.onModelChanged();
 }
 
-void GraphicsObjectController::onModelChange()
+void SceneModelController::onModelChange()
 {
     if (!m_block)
         m_scene.onModelChanged();
 }
 
-void GraphicsObjectController::onModelDestroyed()
+void SceneModelController::onModelDestroyed()
 {
     m_model = nullptr;
     m_scene.onModelDestroyed();

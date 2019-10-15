@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef GRAPHICSOBJECTCONTROLLER_H
-#define GRAPHICSOBJECTCONTROLLER_H
+#ifndef SCENEMODELCONTROLLER_H
+#define SCENEMODELCONTROLLER_H
 
 #include <functional>
 
@@ -24,13 +24,13 @@ template <class T> class QList;
 class SampleModel;
 
 //! Manages scene-model communication.
-class GraphicsObjectController
+class SceneModelController
 {
 public:
     using ModelCommand = std::function<void (ModelView::SessionModel& model)>;
 
-    explicit GraphicsObjectController(DesignerScene& scene, SampleModel* model);
-    ~GraphicsObjectController();
+    explicit SceneModelController(DesignerScene& scene, SampleModel* model);
+    ~SceneModelController();
 
     //! Propagates deletion of views on the scene to the model
     void onDelete(const QList<QGraphicsItem*>& views);
@@ -53,4 +53,4 @@ private:
     ModelCommand m_command;
 };
 
-#endif // GRAPHICSOBJECTCONTROLLER_H
+#endif // SCENEMODELCONTROLLER_H
