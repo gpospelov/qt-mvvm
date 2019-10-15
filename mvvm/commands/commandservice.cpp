@@ -67,7 +67,7 @@ void CommandService::removeItem(SessionItem* parent, const std::string& tag, int
         throw std::runtime_error(
             "CommandService::removeRow() -> Item doesn't belong to given model");
 
-    process_command<RemoveItemCommand>(parent, tag, row);
+    process_command<RemoveItemCommand>(parent, TagRow{tag, row});
 }
 
 void CommandService::moveItem(SessionItem* item, SessionItem* new_parent, const std::string& tag,
