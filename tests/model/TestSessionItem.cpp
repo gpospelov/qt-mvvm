@@ -304,7 +304,6 @@ TEST_F(TestSessionItem, singleTagAndItems)
     EXPECT_EQ(parent->getItem(tag1, 2), nullptr); // wrong row
 
     // access to multiple items via tags interface
-    EXPECT_THROW(parent->getItems(), std::runtime_error); // no default tag registered
     EXPECT_EQ(parent->getItems(tag1), expected);
 
     // removing first item
@@ -362,7 +361,6 @@ TEST_F(TestSessionItem, twoTagsAndItems)
     EXPECT_EQ(parent->getItem(tag2, 3), nullptr); // no items with such row
 
     // access to multiple items via tags interface
-    EXPECT_THROW(parent->getItems(), std::runtime_error); // no default tag registered
     expected = {child_t1_a, child_t1_b};
     EXPECT_EQ(parent->getItems(tag1), expected);
     expected = {child_t2_a, child_t2_b, child_t2_c};
