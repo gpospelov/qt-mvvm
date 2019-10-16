@@ -127,7 +127,7 @@ QUndoStack* SessionModel::undoStack() const
 
 void SessionModel::removeItem(SessionItem* parent, const std::string& tag, int row)
 {
-    m_commands->removeItem(parent, tag, row);
+    m_commands->removeItem(parent, {tag, row});
 }
 
 //! Move item from it's current parent to a new parent under given tag and row.

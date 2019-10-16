@@ -63,13 +63,13 @@ bool CommandService::setData(SessionItem* item, const QVariant& value, int role)
     return process_command<SetValueCommand>(item, value, role);
 }
 
-void CommandService::removeItem(SessionItem* parent, const std::string& tag, int row)
+void CommandService::removeItem(SessionItem* parent, const TagRow& tagrow)
 {
     if (parent->model() != m_model)
         throw std::runtime_error(
             "CommandService::removeRow() -> Item doesn't belong to given model");
 
-    process_command<RemoveItemCommand>(parent, TagRow{tag, row});
+    process_command<RemoveItemCommand>(parent, tagrow);
 }
 
 void CommandService::moveItem(SessionItem* item, SessionItem* new_parent, const std::string& tag,

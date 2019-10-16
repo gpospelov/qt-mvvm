@@ -41,7 +41,7 @@ public:
 
     bool setData(SessionItem* item, const QVariant& value, int role);
 
-    void removeItem(SessionItem* parent, const std::string& tag, int row);
+    void removeItem(SessionItem* parent, const TagRow& tagrow);
 
     void moveItem(SessionItem* item, SessionItem* new_parent, const std::string& tag, int row);
 
