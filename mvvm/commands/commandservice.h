@@ -37,8 +37,7 @@ public:
 
     SessionItem* insertNewItem(item_factory_func_t func, SessionItem* parent, const TagRow& tagrow);
 
-    SessionItem* copyItem(const SessionItem* item, SessionItem* parent, const std::string& tag,
-                          int row);
+    SessionItem* copyItem(const SessionItem* item, SessionItem* parent, const TagRow& tagrow);
 
     bool setData(SessionItem* item, const QVariant& value, int role);
 

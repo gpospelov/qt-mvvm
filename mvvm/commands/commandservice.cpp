@@ -41,7 +41,7 @@ SessionItem* CommandService::insertNewItem(item_factory_func_t func, SessionItem
 }
 
 SessionItem* CommandService::copyItem(const SessionItem* item, SessionItem* parent,
-                                      const std::string& tag, int row)
+                                      const TagRow& tagrow)
 {
     if (!item)
         return nullptr;
@@ -50,9 +50,9 @@ SessionItem* CommandService::copyItem(const SessionItem* item, SessionItem* pare
         throw std::runtime_error(
             "CommandService::copyItem() -> Item doesn't belong to given model");
 
-    int actual_row = row < 0 ? parent->itemCount(tag) : row;
+    int actual_row = tagrow.row < 0 ? parent->itemCount(tagrow.tag) : tagrow.row;
 
-    return process_command<CopyItemCommand>(item, parent, TagRow{tag, actual_row});
+    return process_command<CopyItemCommand>(item, parent, TagRow{tagrow.tag, actual_row});
 }
 
 bool CommandService::setData(SessionItem* item, const QVariant& value, int role)

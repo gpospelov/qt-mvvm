@@ -69,7 +69,7 @@ SessionItem* SessionModel::insertNewItem(const model_type& modelType, SessionIte
 SessionItem* SessionModel::copyItem(const SessionItem* item, SessionItem* parent,
                                     const std::string& tag, int row)
 {
-    return m_commands->copyItem(item, parent, tag, row);
+    return m_commands->copyItem(item, parent, {tag, row});
 }
 
 SessionItem* SessionModel::rootItem() const
