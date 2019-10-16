@@ -17,6 +17,7 @@ namespace ModelView
 {
 
 class SessionItem;
+class TagRow;
 
 //! Command for unddo/redo framework to move item from one parent to another.
 
@@ -25,7 +26,7 @@ class CORE_EXPORT MoveItemCommand : public AbstractItemCommand
 public:
     using result_t = bool;
 
-    MoveItemCommand(SessionItem* item, SessionItem* new_parent, std::string tag, int row);
+    MoveItemCommand(SessionItem* item, SessionItem* new_parent, TagRow tagrow);
     ~MoveItemCommand() override;
 
     result_t result() const;
