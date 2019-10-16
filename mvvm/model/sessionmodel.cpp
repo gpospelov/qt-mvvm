@@ -203,7 +203,7 @@ void SessionModel::createRootItem()
 }
 
 SessionItem* SessionModel::intern_insert(item_factory_func_t func, SessionItem* parent,
-                                      const std::string& tag, int row)
+                                       const std::string& tag, int row)
 {
-    return m_commands->insertNewItem(func, parent, tag, row);
+    return m_commands->insertNewItem(func, parent, {tag, row});
 }

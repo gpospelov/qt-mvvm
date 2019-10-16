@@ -24,6 +24,7 @@ namespace ModelView
 
 class SessionModel;
 class SessionItem;
+class TagRow;
 
 //! Provides undo/redo for all commands of SessionModel.
 
@@ -34,8 +35,7 @@ public:
 
     void setUndoRedoEnabled(bool value);
 
-    SessionItem* insertNewItem(item_factory_func_t func, SessionItem* parent, std::string tag,
-                               int row);
+    SessionItem* insertNewItem(item_factory_func_t func, SessionItem* parent, const TagRow& tagrow);
 
     SessionItem* copyItem(const SessionItem* item, SessionItem* parent, const std::string& tag,
                           int row);
