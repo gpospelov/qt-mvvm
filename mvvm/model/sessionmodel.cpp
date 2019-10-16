@@ -136,7 +136,7 @@ void SessionModel::removeItem(SessionItem* parent, const std::string& tag, int r
 void SessionModel::moveItem(SessionItem* item, SessionItem* new_parent, const std::string& tag,
                             int row)
 {
-    m_commands->moveItem(item, new_parent, tag, row);
+    m_commands->moveItem(item, new_parent, {tag, row});
 }
 
 void SessionModel::register_item(SessionItem* item)
