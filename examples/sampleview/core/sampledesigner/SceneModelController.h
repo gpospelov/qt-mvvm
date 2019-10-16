@@ -10,18 +10,14 @@
 #ifndef SCENEMODELCONTROLLER_H
 #define SCENEMODELCONTROLLER_H
 
+#include "SampleModel.h"
 #include <functional>
-
-namespace ModelView {
-class SessionModel;
-}
 
 class DesignerScene;
 class IView;
 class NodeEditorConnection;
 class QGraphicsItem;
 template <class T> class QList;
-class SampleModel;
 
 //! Manages scene-model communication.
 class SceneModelController
@@ -29,9 +25,13 @@ class SceneModelController
 public:
     using ModelCommand = std::function<void (ModelView::SessionModel& model)>;
 
-    explicit SceneModelController(DesignerScene& scene, SampleModel* model);
+    SceneModelController(DesignerScene& scene, SampleModel* model);
     ~SceneModelController();
 
+    //! Propagates copying of the views from the scene to the model
+    void onCopy(const QList<QGraphicsItem*>& views);
+    //! Propagates view pasting from the scene to the model
+    void onPaste();
     //! Propagates deletion of views on the scene to the model
     void onDelete(const QList<QGraphicsItem*>& views);
     //! Propagates view connection to the model
@@ -51,6 +51,8 @@ private:
     SampleModel* m_model;
     bool m_block;
     ModelCommand m_command;
+
+    SampleModel m_temp_model; //!< Temporary model to store copied items
 };
 
 #endif // SCENEMODELCONTROLLER_H

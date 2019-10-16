@@ -12,6 +12,7 @@
 #include "DesignerScene.h"
 #include "NodeEditorConnection.h"
 #include "SampleModel.h"
+#include "SampleViewFactory.h"
 #include "modelmapper.h"
 #include "modelutils.h"
 #include "sessionitem.h"
@@ -61,12 +62,29 @@ private:
     SessionModel* m_model;
 };
 
+// utilities for SceneModelController::onCopy
+
+//! Returns the items haveing no parents among the items corresponding to the given view list.
+std::set<const SessionItem*> topItems(const QList<QGraphicsItem*>& views);
+//! Returns the old - new item correspondence table with children added.
+std::map<const SessionItem*, SessionItem*>
+addChildItems(const std::map<const SessionItem*, SessionItem*>& tab);
+//! Finds and returns the items from look-up table having no correspondence in the given view list.
+std::list<const SessionItem*> findUnselectedItems(const std::set<QGraphicsItem*>& views,
+                                                  std::list<const SessionItem*> keys);
+
+// utilities for SceneModelController::onDelete
+
 //! Returns the set of passed views with their child IView instances appended
 std::set<QGraphicsItem*> extendWithChildren(QList<QGraphicsItem*> views);
 //! Finds all the views connected to the passed set
 std::set<IView*> connectedViews(const std::set<QGraphicsItem*>& views, const DesignerScene& scene);
 //! Finds all the views with no ancestor in the passed set
 std::set<IView*> topViews(const QList<QGraphicsItem *> &views);
+
+//! Small utility to retrieve keys from a map
+template<class T, class U>
+std::list<T> keys(const std::map<T, U> input);
 }
 
 SceneModelController::SceneModelController(DesignerScene& scene, SampleModel* model)
@@ -83,11 +101,52 @@ SceneModelController::SceneModelController(DesignerScene& scene, SampleModel* mo
                                         this);
     m_model->mapper()->setOnRowRemoved([this](SessionItem*, std::string, int) { onModelChange(); },
                                        this);
+
+    m_temp_model.clear();
 }
 
 SceneModelController::~SceneModelController()
 {
     m_model->mapper()->unsubscribe(this);
+}
+
+void SceneModelController::onCopy(const QList<QGraphicsItem*>& views)
+{
+    if (!m_model)
+        return;
+    m_temp_model.clear();
+
+    const std::set<const SessionItem*> top_items = topItems(views);
+
+    std::map<const SessionItem*, SessionItem*> lookup_table;
+    for (const SessionItem* item: top_items)
+        lookup_table[item] = m_temp_model.copyItem(item, m_temp_model.rootItem());
+
+    lookup_table = addChildItems(lookup_table);
+    auto remove_keys = findUnselectedItems(extendWithChildren(views), keys(lookup_table));
+
+    // first move all children of unselected items to root
+    for (auto item: remove_keys)
+        for (SessionItem* child: lookup_table[item]->children())
+            if (SampleViewFactory::isValidType(child->modelType()))
+                m_temp_model.moveItem(child, m_temp_model.rootItem(), {}, -1);
+
+    // removing unselected items
+    for (auto item: remove_keys)
+        Utils::DeleteItemFromModel(lookup_table[item]);
+}
+
+void SceneModelController::onPaste()
+{
+    if (!m_model)
+        return;
+    BlockGuard signal_guard(m_block);
+
+    const auto to_copy = Utils::TopItems(&m_temp_model);
+    for (SessionItem* item: to_copy)
+        m_model->copyItem(item, m_model->rootItem());
+
+    m_scene.onModelChanged();
 }
 
 void SceneModelController::onDelete(const QList<QGraphicsItem *>& views)
@@ -155,6 +214,66 @@ void SceneModelController::onModelDestroyed()
 }
 
 namespace {
+std::set<const SessionItem*> topItems(const QList<QGraphicsItem*>& views)
+{
+    std::vector<const SessionItem*> items;
+    for (auto view: views)
+        if (auto iview = dynamic_cast<IView*>(view); iview && iview->getItem())
+            items.push_back(iview->getItem());
+
+    std::set<const SessionItem*> result;
+    for (const SessionItem* item: items) {
+        auto parent = item->parent();
+        bool has_parent = false;
+        while (parent != nullptr) {
+            has_parent = std::find(items.begin(), items.end(), parent) != items.end();
+            if (has_parent)
+                break;
+            parent = parent->parent();
+        }
+        if (!has_parent)
+            result.insert(item);
+    }
+
+    return result;
+}
+
+std::map<const SessionItem*, SessionItem*>
+addChildItems(const std::map<const SessionItem*, SessionItem*>& tab)
+{
+    auto result = tab;
+    auto items = keys(tab);
+    while(!items.empty()) {
+        auto item = items.front();
+        const auto in_children = item->children();
+        const auto out_children = result[item]->children();
+        for(size_t i = 0, size = in_children.size(); i < size; ++i) {
+            const auto child = in_children[i];
+            if (!SampleViewFactory::isValidType(child->modelType()))
+                continue;
+            result.insert({child, out_children[i]});
+            items.push_back(child);
+        }
+        items.pop_front();
+    }
+
+    return result;
+}
+
+std::list<const SessionItem*> findUnselectedItems(const std::set<QGraphicsItem*>& views,
+                                                  std::list<const SessionItem*> keys)
+{
+    std::set<const SessionItem*> selected;
+    for (auto view: views)
+        if (auto iview = dynamic_cast<IView*>(view); iview && iview->getItem())
+            selected.insert(iview->getItem());
+
+    for (auto item: selected)
+        keys.erase(std::find(keys.begin(), keys.end(), item));
+
+    return keys;
+}
+
 std::set<QGraphicsItem*> extendWithChildren(QList<QGraphicsItem*> views)
 {
     std::set<QGraphicsItem*> result(views.begin(), views.end());
@@ -210,6 +329,15 @@ std::set<IView*> topViews(const QList<QGraphicsItem*>& views)
         if (!has_ancestors)
             result.insert(iview);
     }
+    return result;
+}
+
+template<class T, class U>
+std::list<T> keys(const std::map<T, U> input)
+{
+    std::list<T> result;
+    std::transform(input.begin(), input.end(), std::back_inserter(result),
+                   [](const auto& key_value) { return key_value.first; });
     return result;
 }
 }
