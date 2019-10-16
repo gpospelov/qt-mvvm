@@ -17,6 +17,7 @@ namespace ModelView
 {
 
 class SessionItem;
+class TagRow;
 
 //! Command to copy an item.
 
@@ -25,7 +26,7 @@ class CORE_EXPORT CopyItemCommand : public AbstractItemCommand
 public:
     using result_t = SessionItem*;
 
-    CopyItemCommand(const SessionItem* item, SessionItem* parent, const std::string& tag, int row);
+    CopyItemCommand(const SessionItem* item, SessionItem* parent, TagRow tagrow);
     ~CopyItemCommand() override;
 
     result_t result() const;

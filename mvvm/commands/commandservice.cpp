@@ -50,7 +50,9 @@ SessionItem* CommandService::copyItem(const SessionItem* item, SessionItem* pare
         throw std::runtime_error(
             "CommandService::copyItem() -> Item doesn't belong to given model");
 
-    return process_command<CopyItemCommand>(item, parent, tag, row);
+    int actual_row = row < 0 ? parent->itemCount(tag) : row;
+
+    return process_command<CopyItemCommand>(item, parent, TagRow{tag, actual_row});
 }
 
 bool CommandService::setData(SessionItem* item, const QVariant& value, int role)
