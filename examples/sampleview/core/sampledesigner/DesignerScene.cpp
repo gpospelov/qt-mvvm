@@ -160,6 +160,16 @@ void DesignerScene::deleteSelectedItems()
     m_model_control.onDelete(selectedItems());
 }
 
+void DesignerScene::copySelected()
+{
+    m_model_control.onCopy(selectedItems());
+}
+
+void DesignerScene::pasteSelected()
+{
+    m_model_control.onPaste();
+}
+
 //! shows appropriate layer interface to drop while moving ILayerView
 void DesignerScene::drawForeground(QPainter *painter, const QRectF & /* rect */)
 {

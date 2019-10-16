@@ -63,6 +63,8 @@ public:
                                                               invalidate(); }
 
     void deleteSelectedItems();
+    void copySelected();
+    void pasteSelected();
 
     void dragMoveEvent(QGraphicsSceneDragDropEvent *event) override;
     void dropEvent(QGraphicsSceneDragDropEvent *event) override;
