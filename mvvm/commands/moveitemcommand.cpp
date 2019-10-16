@@ -23,15 +23,14 @@ std::string generate_description(const TagRow& tagrow);
 } // namespace
 
 struct MoveItemCommand::MoveItemCommandPrivate {
-    TagRow m_target_tagrow;
-    Path m_target_parent_path;
-    Path m_original_parent_path;
-    TagRow m_original_tagrow;
-    result_t m_result;
-    MoveItemCommandPrivate(TagRow tagrow)
-        : m_target_tagrow(std::move(tagrow)), m_result(true)
+    TagRow target_tagrow;
+    Path target_parent_path;
+    Path original_parent_path;
+    TagRow original_tagrow;
+    result_t result;
+    MoveItemCommandPrivate(TagRow tagrow) : target_tagrow(std::move(tagrow)), result(true)
     {
-        if (m_target_tagrow.row < 0)
+        if (target_tagrow.row < 0)
             throw std::runtime_error("MoveItemCommand() -> Error. Uninitialized target row");
     }
 };
@@ -40,20 +39,20 @@ MoveItemCommand::MoveItemCommand(SessionItem* item, SessionItem* new_parent, Tag
     : AbstractItemCommand(new_parent), p_impl(std::make_unique<MoveItemCommandPrivate>(tagrow))
 {
     check_input_data(item, new_parent);
-    setDescription(generate_description(p_impl->m_target_tagrow));
+    setDescription(generate_description(p_impl->target_tagrow));
 
-    p_impl->m_target_parent_path = pathFromItem(new_parent);
-    p_impl->m_original_parent_path = pathFromItem(item->parent());
-    p_impl->m_original_tagrow = item->parent()->tagRowOfItem(item);
+    p_impl->target_parent_path = pathFromItem(new_parent);
+    p_impl->original_parent_path = pathFromItem(item->parent());
+    p_impl->original_tagrow = item->parent()->tagRowOfItem(item);
 
-    if (item->parent()->isSinglePropertyTag(p_impl->m_original_tagrow.tag))
+    if (item->parent()->isSinglePropertyTag(p_impl->original_tagrow.tag))
         throw std::runtime_error("MoveItemCommand::MoveItemCommand() -> Single property tag.");
 
-    if (new_parent->isSinglePropertyTag(p_impl->m_target_tagrow.tag))
+    if (new_parent->isSinglePropertyTag(p_impl->target_tagrow.tag))
         throw std::runtime_error("MoveItemCommand::MoveItemCommand() -> Single property tag.");
 
     if (item->parent() == new_parent) {
-        if (p_impl->m_target_tagrow.row >= new_parent->itemCount(p_impl->m_target_tagrow.tag))
+        if (p_impl->target_tagrow.row >= new_parent->itemCount(p_impl->target_tagrow.tag))
             throw std::runtime_error(
                 "MoveCommand::MoveCommand() -> move index exceeds number of items in a tag");
     }
@@ -64,42 +63,42 @@ MoveItemCommand::~MoveItemCommand() = default;
 void MoveItemCommand::undo_command()
 {
     // first find items
-    auto current_parent = itemFromPath(p_impl->m_target_parent_path);
-    auto target_parent = itemFromPath(p_impl->m_original_parent_path);
+    auto current_parent = itemFromPath(p_impl->target_parent_path);
+    auto target_parent = itemFromPath(p_impl->original_parent_path);
 
     // then make manipulations
-    auto taken = current_parent->takeItem(p_impl->m_target_tagrow);
-    target_parent->insertItem(taken, p_impl->m_original_tagrow);
+    auto taken = current_parent->takeItem(p_impl->target_tagrow);
+    target_parent->insertItem(taken, p_impl->original_tagrow);
 
     // adjusting new addresses
-    p_impl->m_target_parent_path = pathFromItem(current_parent);
-    p_impl->m_original_parent_path = pathFromItem(target_parent);
+    p_impl->target_parent_path = pathFromItem(current_parent);
+    p_impl->original_parent_path = pathFromItem(target_parent);
 }
 
 void MoveItemCommand::execute_command()
 {
     // first find items
-    auto original_parent = itemFromPath(p_impl->m_original_parent_path);
-    auto target_parent = itemFromPath(p_impl->m_target_parent_path);
+    auto original_parent = itemFromPath(p_impl->original_parent_path);
+    auto target_parent = itemFromPath(p_impl->target_parent_path);
 
     // then make manipulations
-    auto taken = original_parent->takeItem(p_impl->m_original_tagrow);
+    auto taken = original_parent->takeItem(p_impl->original_tagrow);
 
     if (!taken)
         throw std::runtime_error("MoveItemCommand::execute() -> Can't take an item.");
 
-    bool succeeded = target_parent->insertItem(taken, p_impl->m_target_tagrow);
+    bool succeeded = target_parent->insertItem(taken, p_impl->target_tagrow);
     if (!succeeded)
         throw std::runtime_error("MoveItemCommand::execute() -> Can't insert item.");
 
     // adjusting new addresses
-    p_impl->m_target_parent_path = pathFromItem(target_parent);
-    p_impl->m_original_parent_path = pathFromItem(original_parent);
+    p_impl->target_parent_path = pathFromItem(target_parent);
+    p_impl->original_parent_path = pathFromItem(original_parent);
 }
 
 MoveItemCommand::result_t MoveItemCommand::result() const
 {
-    return p_impl->m_result;
+    return p_impl->result;
 }
 
 namespace
