@@ -45,7 +45,7 @@ public:
 
     void setDefaultTag(const std::string& name);
 
-    int itemCount(const std::string& tag_name = {}) const;
+    int itemCount(const std::string& tag_name) const;
 
     // adding and removal
 

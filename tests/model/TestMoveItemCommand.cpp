@@ -28,7 +28,7 @@ TEST_F(TestMoveItemCommand, rootContextNext)
     EXPECT_EQ(model.rootItem()->children(), expected);
 
     // moving item1 to the next position
-    MoveItemCommand command(item1, model.rootItem(), "", 2);
+    MoveItemCommand command(item1, model.rootItem(), {"", 2});
     command.execute();
     EXPECT_EQ(command.result(), true);
 
@@ -64,7 +64,7 @@ TEST_F(TestMoveItemCommand, rootContextSamePos)
     EXPECT_EQ(model.rootItem()->children(), expected);
 
     // moving item1 to the same position
-    MoveItemCommand command(item1, model.rootItem(), "", 1);
+    MoveItemCommand command(item1, model.rootItem(), {"", 1});
     command.execute();
     EXPECT_EQ(command.result(), true);
 
@@ -94,7 +94,7 @@ TEST_F(TestMoveItemCommand, rootContextPrev)
     EXPECT_EQ(model.rootItem()->children(), expected);
 
     // moving item2 to item1's place
-    MoveItemCommand command(item2, model.rootItem(), "", 1);
+    MoveItemCommand command(item2, model.rootItem(), {"", 1});
     command.execute();
     EXPECT_EQ(command.result(), true);
 
@@ -124,7 +124,7 @@ TEST_F(TestMoveItemCommand, rootContextLast)
     EXPECT_EQ(model.rootItem()->children(), expected);
 
     // moving item0 in the back of the list
-    MoveItemCommand command(item0, model.rootItem(), "", -1);
+    MoveItemCommand command(item0, model.rootItem(), {"", model.rootItem()->childrenCount()-1});
     command.execute();
     EXPECT_EQ(command.result(), true);
     EXPECT_EQ(command.isObsolete(), false);
@@ -155,7 +155,7 @@ TEST_F(TestMoveItemCommand, rootContextLast2)
     EXPECT_EQ(model.rootItem()->children(), expected);
 
     // moving item0 in the back of the list
-    MoveItemCommand command(item0, model.rootItem(), "", 3);
+    MoveItemCommand command(item0, model.rootItem(), {"", 3});
     command.execute();
     EXPECT_EQ(command.result(), true);
     EXPECT_EQ(command.isObsolete(), false);
@@ -192,7 +192,7 @@ TEST_F(TestMoveItemCommand, fromRootToParent)
     EXPECT_EQ(parent->children(), expected);
 
     // moving item0 from root to parent
-    MoveItemCommand command(item0, parent, "", 1);
+    MoveItemCommand command(item0, parent, {"", 1});
     command.execute();
     EXPECT_EQ(command.result(), true);
     EXPECT_EQ(command.isObsolete(), false);
@@ -238,7 +238,7 @@ TEST_F(TestMoveItemCommand, fromParentToRoot)
     EXPECT_EQ(parent->children(), expected);
 
     // moving child0 from parent to root
-    MoveItemCommand command(child0, model.rootItem(), "", 0);
+    MoveItemCommand command(child0, model.rootItem(), {"", 0});
     command.execute();
     EXPECT_EQ(command.result(), true);
     EXPECT_EQ(command.isObsolete(), false);
@@ -286,7 +286,7 @@ TEST_F(TestMoveItemCommand, betweenParentTags)
     EXPECT_EQ(parent->children(), expected);
 
     // moving child2 to another tag
-    MoveItemCommand command(child2, parent, "tag1", 0);
+    MoveItemCommand command(child2, parent, {"tag1", 0});
     command.execute();
     EXPECT_EQ(command.result(), true);
     EXPECT_EQ(command.isObsolete(), false);

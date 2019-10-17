@@ -29,7 +29,7 @@ TEST_F(TestCopyItemCommand, copyChild)
     child1->setData(43.0);
 
     // making copy of child
-    auto command = std::make_unique<CopyItemCommand>(child1, parent, "tag1", 1);
+    auto command = std::make_unique<CopyItemCommand>(child1, parent, TagRow{"tag1", 1});
     command->execute();
 
     // checking that parent has now three children

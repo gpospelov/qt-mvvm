@@ -157,13 +157,12 @@ TEST_F(TestGraphViewportPlotController, addMoreGraphs)
     EXPECT_EQ(custom_plot->graphCount(), 0);
 
     // adding graph item to viewport
-    // FIXME remove row specification after ItemMapper reporting correct row
-    model.insertItem<GraphItem>(viewport_item, "", 0);
+    model.insertItem<GraphItem>(viewport_item);
     EXPECT_EQ(custom_plot->graphCount(), 1);
 
-    model.insertItem<GraphItem>(viewport_item, "", 1);
+    model.insertItem<GraphItem>(viewport_item);
     EXPECT_EQ(custom_plot->graphCount(), 2);
 
-    model.insertItem<GraphItem>(viewport_item, "", 0);
+    model.insertItem<GraphItem>(viewport_item);
     EXPECT_EQ(custom_plot->graphCount(), 3);
 }

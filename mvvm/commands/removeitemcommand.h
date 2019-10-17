@@ -16,6 +16,7 @@ namespace ModelView
 {
 
 class SessionItem;
+class TagRow;
 
 //! Command for unddo/redo framework to remove item from a model using child's tag and row.
 
@@ -24,7 +25,7 @@ class CORE_EXPORT RemoveItemCommand : public AbstractItemCommand
 public:
     using result_t = bool;
 
-    RemoveItemCommand(SessionItem* parent, std::string tag, int row);
+    RemoveItemCommand(SessionItem* parent, TagRow tagrow);
     ~RemoveItemCommand() override;
 
     result_t result() const;

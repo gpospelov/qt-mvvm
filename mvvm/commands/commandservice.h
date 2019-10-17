@@ -24,6 +24,7 @@ namespace ModelView
 
 class SessionModel;
 class SessionItem;
+class TagRow;
 
 //! Provides undo/redo for all commands of SessionModel.
 
@@ -34,17 +35,15 @@ public:
 
     void setUndoRedoEnabled(bool value);
 
-    SessionItem* insertNewItem(item_factory_func_t func, SessionItem* parent, std::string tag,
-                               int row);
+    SessionItem* insertNewItem(item_factory_func_t func, SessionItem* parent, const TagRow& tagrow);
 
-    SessionItem* copyItem(const SessionItem* item, SessionItem* parent, const std::string& tag,
-                          int row);
+    SessionItem* copyItem(const SessionItem* item, SessionItem* parent, const TagRow& tagrow);
 
     bool setData(SessionItem* item, const QVariant& value, int role);
 
-    void removeItem(SessionItem* parent, const std::string& tag, int row);
+    void removeItem(SessionItem* parent, const TagRow& tagrow);
 
-    void moveItem(SessionItem* item, SessionItem* new_parent, const std::string& tag, int row);
+    void moveItem(SessionItem* item, SessionItem* new_parent, const TagRow& tagrow);
 
     QUndoStack* undoStack() const;
 

@@ -23,7 +23,7 @@ TEST_F(TestRemoveItemCommand, removeAtCommand)
     auto item_identifier = item->identifier();
 
     // command to insert parent in the model
-    auto command = std::make_unique<RemoveItemCommand>(model.rootItem(), "", 0);
+    auto command = std::make_unique<RemoveItemCommand>(model.rootItem(), TagRow{"", 0});
     command->execute(); // removal
 
     EXPECT_EQ(command->result(), true);
@@ -49,7 +49,7 @@ TEST_F(TestRemoveItemCommand, removeAtCommandChild)
     auto child1_identifier = child1->identifier();
 
     // command to remove one child
-    auto command = std::make_unique<RemoveItemCommand>(parent, "", 0);
+    auto command = std::make_unique<RemoveItemCommand>(parent, TagRow{"", 0});
     command->execute(); // removal
 
     // check that one child was removed
@@ -79,7 +79,7 @@ TEST_F(TestRemoveItemCommand, removeAtCommandParentWithChild)
     auto child1_identifier = child1->identifier();
 
     // command to remove parent
-    auto command = std::make_unique<RemoveItemCommand>(model.rootItem(), "", 0);
+    auto command = std::make_unique<RemoveItemCommand>(model.rootItem(), TagRow{"", 0});
     command->execute(); // removal
 
     // check that one child was removed
@@ -123,7 +123,7 @@ TEST_F(TestRemoveItemCommand, removeAtCommandMultitag)
     auto child3_identifier = child3->identifier();
 
     // command to remove parent
-    auto command = std::make_unique<RemoveItemCommand>(parent, "tag1", 1);
+    auto command = std::make_unique<RemoveItemCommand>(parent, TagRow{"tag1", 1});
     command->execute(); // removal
 
     // check that one child was removed

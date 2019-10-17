@@ -65,7 +65,7 @@ TEST(TestModelMapper, onRowInserted)
 
     EXPECT_CALL(widget, onDataChange(_, _)).Times(0);
     const int expected_index(0);
-    const std::string expected_tag("");
+    const std::string expected_tag(model.rootItem()->defaultTag());
     EXPECT_CALL(widget, onRowInserted(model.rootItem(), expected_tag, expected_index)).Times(1);
     EXPECT_CALL(widget, onRowRemoved(_, _, _)).Times(0);
     EXPECT_CALL(widget, onRowAboutToBeRemoved(_, _, _)).Times(0);
@@ -84,7 +84,7 @@ TEST(TestModelMapper, onRowRemoved)
     MockWidgetForModel widget(&model);
 
     const int expected_index(0);
-    const std::string expected_tag("");
+    const std::string expected_tag(model.rootItem()->defaultTag());
     EXPECT_CALL(widget, onRowInserted(model.rootItem(), expected_tag, expected_index)).Times(1);
     model.insertItem<SessionItem>(model.rootItem(), expected_tag, expected_index);
 

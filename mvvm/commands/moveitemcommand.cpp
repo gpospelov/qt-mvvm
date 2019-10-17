@@ -10,6 +10,7 @@
 #include "moveitemcommand.h"
 #include "sessionitem.h"
 #include "sessionmodel.h"
+#include "tagrow.h"
 #include <sstream>
 #include <stdexcept>
 
@@ -18,44 +19,40 @@ using namespace ModelView;
 namespace
 {
 void check_input_data(const SessionItem* item, const SessionItem* parent);
-std::string generate_description(const std::string& tag, int row);
+std::string generate_description(const TagRow& tagrow);
 } // namespace
 
 struct MoveItemCommand::MoveItemCommandPrivate {
-    std::string m_target_tag;
-    int m_target_row;
-    Path m_target_parent_path;
-    Path m_original_parent_path;
-    std::string m_original_tag;
-    int m_original_row;
-    result_t m_result;
-    MoveItemCommandPrivate(std::string tag, int row)
-        : m_target_tag(std::move(tag)), m_target_row(row), m_original_row(0), m_result(true)
+    TagRow target_tagrow;
+    Path target_parent_path;
+    Path original_parent_path;
+    TagRow original_tagrow;
+    result_t result;
+    MoveItemCommandPrivate(TagRow tagrow) : target_tagrow(std::move(tagrow)), result(true)
     {
+        if (target_tagrow.row < 0)
+            throw std::runtime_error("MoveItemCommand() -> Error. Uninitialized target row");
     }
 };
 
-MoveItemCommand::MoveItemCommand(SessionItem* item, SessionItem* new_parent, std::string tag,
-                                 int row)
-    : AbstractItemCommand(new_parent), p_impl(std::make_unique<MoveItemCommandPrivate>(tag, row))
+MoveItemCommand::MoveItemCommand(SessionItem* item, SessionItem* new_parent, TagRow tagrow)
+    : AbstractItemCommand(new_parent), p_impl(std::make_unique<MoveItemCommandPrivate>(tagrow))
 {
     check_input_data(item, new_parent);
-    setDescription(generate_description(p_impl->m_target_tag, p_impl->m_target_row));
+    setDescription(generate_description(p_impl->target_tagrow));
 
-    p_impl->m_target_parent_path = pathFromItem(new_parent);
-    p_impl->m_original_parent_path = pathFromItem(item->parent());
-    auto [original_tag, original_row] = item->parent()->tagRowOfItem(item);
-    p_impl->m_original_tag = original_tag;
-    p_impl->m_original_row = original_row;
+    p_impl->target_parent_path = pathFromItem(new_parent);
+    p_impl->original_parent_path = pathFromItem(item->parent());
+    p_impl->original_tagrow = item->parent()->tagRowOfItem(item);
 
-    if (item->parent()->isSinglePropertyTag(p_impl->m_original_tag))
+    if (item->parent()->isSinglePropertyTag(p_impl->original_tagrow.tag))
         throw std::runtime_error("MoveItemCommand::MoveItemCommand() -> Single property tag.");
 
-    if (new_parent->isSinglePropertyTag(p_impl->m_target_tag))
+    if (new_parent->isSinglePropertyTag(p_impl->target_tagrow.tag))
         throw std::runtime_error("MoveItemCommand::MoveItemCommand() -> Single property tag.");
 
     if (item->parent() == new_parent) {
-        if (p_impl->m_target_row >= new_parent->itemCount(p_impl->m_target_tag))
+        if (p_impl->target_tagrow.row >= new_parent->itemCount(p_impl->target_tagrow.tag))
             throw std::runtime_error(
                 "MoveCommand::MoveCommand() -> move index exceeds number of items in a tag");
     }
@@ -66,47 +63,42 @@ MoveItemCommand::~MoveItemCommand() = default;
 void MoveItemCommand::undo_command()
 {
     // first find items
-    auto current_parent = itemFromPath(p_impl->m_target_parent_path);
-    auto target_parent = itemFromPath(p_impl->m_original_parent_path);
+    auto current_parent = itemFromPath(p_impl->target_parent_path);
+    auto target_parent = itemFromPath(p_impl->original_parent_path);
 
     // then make manipulations
-    int row = p_impl->m_target_row < 0 ? current_parent->itemCount(p_impl->m_target_tag) - 1
-                                       : p_impl->m_target_row;
-    auto taken = current_parent->takeItem({p_impl->m_target_tag, row});
-    target_parent->insertItem(taken, p_impl->m_original_tag, p_impl->m_original_row);
+    auto taken = current_parent->takeItem(p_impl->target_tagrow);
+    target_parent->insertItem(taken, p_impl->original_tagrow);
 
     // adjusting new addresses
-    p_impl->m_target_parent_path = pathFromItem(current_parent);
-    p_impl->m_original_parent_path = pathFromItem(target_parent);
+    p_impl->target_parent_path = pathFromItem(current_parent);
+    p_impl->original_parent_path = pathFromItem(target_parent);
 }
 
 void MoveItemCommand::execute_command()
 {
     // first find items
-    auto original_parent = itemFromPath(p_impl->m_original_parent_path);
-    auto target_parent = itemFromPath(p_impl->m_target_parent_path);
+    auto original_parent = itemFromPath(p_impl->original_parent_path);
+    auto target_parent = itemFromPath(p_impl->target_parent_path);
 
     // then make manipulations
-    auto taken = original_parent->takeItem({p_impl->m_original_tag, p_impl->m_original_row});
-
-    // FIXME If something went wrong will throw an exception. Shell we try to proceed instead
-    // and try to gently resolve situations maximum/minimum/reached?
+    auto taken = original_parent->takeItem(p_impl->original_tagrow);
 
     if (!taken)
         throw std::runtime_error("MoveItemCommand::execute() -> Can't take an item.");
 
-    bool succeeded = target_parent->insertItem(taken, p_impl->m_target_tag, p_impl->m_target_row);
+    bool succeeded = target_parent->insertItem(taken, p_impl->target_tagrow);
     if (!succeeded)
         throw std::runtime_error("MoveItemCommand::execute() -> Can't insert item.");
 
     // adjusting new addresses
-    p_impl->m_target_parent_path = pathFromItem(target_parent);
-    p_impl->m_original_parent_path = pathFromItem(original_parent);
+    p_impl->target_parent_path = pathFromItem(target_parent);
+    p_impl->original_parent_path = pathFromItem(original_parent);
 }
 
 MoveItemCommand::result_t MoveItemCommand::result() const
 {
-    return p_impl->m_result;
+    return p_impl->result;
 }
 
 namespace
@@ -128,10 +120,10 @@ void check_input_data(const SessionItem* item, const SessionItem* parent)
             "MoveItemCommand::MoveItemCommand() -> Item doesn't have a parent");
 }
 
-std::string generate_description(const std::string& tag, int row)
+std::string generate_description(const TagRow& tagrow)
 {
     std::ostringstream ostr;
-    ostr << "Move item to tag '" << tag << "', row:" << row;
+    ostr << "Move item to tag '" << tagrow.tag << "', row:" << tagrow.row;
     return ostr.str();
 }
 } // namespace

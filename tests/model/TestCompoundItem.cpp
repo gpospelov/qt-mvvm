@@ -90,7 +90,7 @@ TEST_F(TestCompoundItem, itemAccess)
 
     // inserting two children
     auto property = new PropertyItem;
-    parent.insertItem(property, tag);
+    parent.insertItem(property, {tag, 0});
 
     EXPECT_TRUE(&parent.item<PropertyItem>(tag) == property);
     EXPECT_THROW(parent.item<CompoundItem>(tag), std::runtime_error);
@@ -107,8 +107,8 @@ TEST_F(TestCompoundItem, itemVectorAccess)
     // inserting two children
     auto property1 = new PropertyItem;
     auto property2 = new PropertyItem;
-    parent.insertItem(property1, tag);
-    parent.insertItem(property2, tag);
+    parent.insertItem(property1, TagRow::append(tag));
+    parent.insertItem(property2, TagRow::append(tag));
 
     auto items = parent.items<PropertyItem>(tag);
     std::vector<PropertyItem*> expected = {property1, property2};
@@ -128,9 +128,9 @@ TEST_F(TestCompoundItem, displayNameIndexAddition)
 
     // inserting two children
     auto child0 = new CompoundItem;
-    parent.insertItem(child0, tag);
+    parent.insertItem(child0, TagRow::append(tag));
     auto child1 = new CompoundItem;
-    parent.insertItem(child1, tag);
+    parent.insertItem(child1, TagRow::append(tag));
 
     // Default display names of items of the same type should have indices
     EXPECT_EQ(child0->displayName(), Constants::CompoundType + "0");

@@ -51,7 +51,7 @@ public:
 
     int childrenCount() const;
 
-    bool insertItem(SessionItem* item, const std::string& tag = {}, int row = -1);
+    bool insertItem(SessionItem* item, const TagRow& tagrow);
 
     SessionItem* takeItem(const TagRow& tagrow);
 
@@ -68,7 +68,7 @@ public:
     bool isTag(const std::string& name);
 
     // access tagged items
-    int itemCount(const std::string& tag = {}) const;
+    int itemCount(const std::string& tag) const;
     SessionItem* getItem(const std::string& tag, int row = 0) const;
     std::vector<SessionItem*> getItems(const std::string& tag) const;
     template <typename T> T& item(const std::string& tag) const;

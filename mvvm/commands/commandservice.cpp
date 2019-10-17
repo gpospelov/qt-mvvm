@@ -30,16 +30,18 @@ void CommandService::setUndoRedoEnabled(bool value)
 }
 
 SessionItem* CommandService::insertNewItem(item_factory_func_t func, SessionItem* parent,
-                                           std::string tag, int row)
+                                           const TagRow& tagrow)
 {
     if (!parent)
         parent = m_model->rootItem();
 
-    return process_command<InsertNewItemCommand>(func, parent, tag, row);
+    int actual_row = tagrow.row < 0 ? parent->itemCount(tagrow.tag) : tagrow.row;
+
+    return process_command<InsertNewItemCommand>(func, parent, TagRow{tagrow.tag, actual_row});
 }
 
 SessionItem* CommandService::copyItem(const SessionItem* item, SessionItem* parent,
-                                      const std::string& tag, int row)
+                                      const TagRow& tagrow)
 {
     if (!item)
         return nullptr;
@@ -48,7 +50,9 @@ SessionItem* CommandService::copyItem(const SessionItem* item, SessionItem* pare
         throw std::runtime_error(
             "CommandService::copyItem() -> Item doesn't belong to given model");
 
-    return process_command<CopyItemCommand>(item, parent, tag, row);
+    int actual_row = tagrow.row < 0 ? parent->itemCount(tagrow.tag) : tagrow.row;
+
+    return process_command<CopyItemCommand>(item, parent, TagRow{tagrow.tag, actual_row});
 }
 
 bool CommandService::setData(SessionItem* item, const QVariant& value, int role)
@@ -59,17 +63,16 @@ bool CommandService::setData(SessionItem* item, const QVariant& value, int role)
     return process_command<SetValueCommand>(item, value, role);
 }
 
-void CommandService::removeItem(SessionItem* parent, const std::string& tag, int row)
+void CommandService::removeItem(SessionItem* parent, const TagRow& tagrow)
 {
     if (parent->model() != m_model)
         throw std::runtime_error(
             "CommandService::removeRow() -> Item doesn't belong to given model");
 
-    process_command<RemoveItemCommand>(parent, tag, row);
+    process_command<RemoveItemCommand>(parent, tagrow);
 }
 
-void CommandService::moveItem(SessionItem* item, SessionItem* new_parent, const std::string& tag,
-                              int row)
+void CommandService::moveItem(SessionItem* item, SessionItem* new_parent, const TagRow& tagrow)
 {
     if (item->model() != m_model)
         throw std::runtime_error(
@@ -79,7 +82,9 @@ void CommandService::moveItem(SessionItem* item, SessionItem* new_parent, const 
         throw std::runtime_error(
             "CommandService::removeRow() -> Parent doesn't belong to given model");
 
-    process_command<MoveItemCommand>(item, new_parent, tag, row);
+    int actual_row = tagrow.row < 0 ? new_parent->itemCount(tagrow.tag) : tagrow.row;
+
+    process_command<MoveItemCommand>(item, new_parent, TagRow{tagrow.tag, actual_row});
 }
 
 QUndoStack* CommandService::undoStack() const

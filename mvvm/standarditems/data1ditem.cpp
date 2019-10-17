@@ -27,7 +27,7 @@ void Data1DItem::setFixedBinAxis(int nbins, double xmin, double xmax)
     if (auto axis = getItem(T_AXIS, 0))
         delete takeItem({T_AXIS, 0});
 
-    insertItem(FixedBinAxisItem::create(nbins, xmin, xmax).release(), T_AXIS);
+    insertItem(FixedBinAxisItem::create(nbins, xmin, xmax).release(), {T_AXIS, 0});
     setContent(std::vector<double>(static_cast<size_t>(nbins), 0.0));
 }
 

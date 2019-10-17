@@ -69,7 +69,7 @@ SessionItem* SessionModel::insertNewItem(const model_type& modelType, SessionIte
 SessionItem* SessionModel::copyItem(const SessionItem* item, SessionItem* parent,
                                     const std::string& tag, int row)
 {
-    return m_commands->copyItem(item, parent, tag, row);
+    return m_commands->copyItem(item, parent, {tag, row});
 }
 
 SessionItem* SessionModel::rootItem() const
@@ -127,7 +127,7 @@ QUndoStack* SessionModel::undoStack() const
 
 void SessionModel::removeItem(SessionItem* parent, const std::string& tag, int row)
 {
-    m_commands->removeItem(parent, tag, row);
+    m_commands->removeItem(parent, {tag, row});
 }
 
 //! Move item from it's current parent to a new parent under given tag and row.
@@ -136,7 +136,7 @@ void SessionModel::removeItem(SessionItem* parent, const std::string& tag, int r
 void SessionModel::moveItem(SessionItem* item, SessionItem* new_parent, const std::string& tag,
                             int row)
 {
-    m_commands->moveItem(item, new_parent, tag, row);
+    m_commands->moveItem(item, new_parent, {tag, row});
 }
 
 void SessionModel::register_item(SessionItem* item)
@@ -203,7 +203,7 @@ void SessionModel::createRootItem()
 }
 
 SessionItem* SessionModel::intern_insert(item_factory_func_t func, SessionItem* parent,
-                                      const std::string& tag, int row)
+                                       const std::string& tag, int row)
 {
-    return m_commands->insertNewItem(func, parent, tag, row);
+    return m_commands->insertNewItem(func, parent, {tag, row});
 }

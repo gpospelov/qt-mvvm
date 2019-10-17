@@ -53,16 +53,11 @@ GraphModel::GraphModel() : SessionModel("GraphModel")
 
 void GraphModel::add_graph()
 {
-    const int graph_count = viewport()->itemCount(GraphViewportItem::T_GRAPHS);
-    const int data_count = data_container()->itemCount(ContainerItem::T_ITEMS);
-
-    // FIXME remove graph_count and data_count when mapper will report true items
-
-    auto data = insertItem<Data1DItem>(data_container(), "", data_count);
+    auto data = insertItem<Data1DItem>(data_container());
     data->setFixedBinAxis(npoints, xmin, xmax);
     data->setContent(bin_values(ModelView::Utils::RandDouble(0.5, 1.0)));
 
-    auto graph = insertItem<GraphItem>(viewport(), "", graph_count);
+    auto graph = insertItem<GraphItem>(viewport());
     graph->setDataItem(data);
     auto rndm = []() -> int { return ModelView::Utils::RandInt(0, 255); };
     graph->setProperty(GraphItem::P_COLOR, QVariant::fromValue(QColor(rndm(), rndm(), rndm())));

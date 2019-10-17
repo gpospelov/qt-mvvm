@@ -100,7 +100,7 @@ int SessionItem::childrenCount() const
 
 //! Insert item into given tag under the given row.
 
-bool SessionItem::insertItem(SessionItem* item, const std::string& tag, int row)
+bool SessionItem::insertItem(SessionItem* item, const TagRow& tagrow)
 {
     if (!item)
         throw std::runtime_error("SessionItem::insertItem() -> Invalid item.");
@@ -111,14 +111,16 @@ bool SessionItem::insertItem(SessionItem* item, const std::string& tag, int row)
     if (item->model())
         throw std::runtime_error("SessionItem::insertItem() -> Existing model.");
 
-    auto result = p_impl->m_tags->insertItem(item, {tag, row});
+    auto result = p_impl->m_tags->insertItem(item, tagrow);
     if (result) {
         item->setParent(this);
         item->setModel(model());
 
-        // FIXME Make returning true tag/row, when special values ""/-1 are used
-        if (p_impl->m_model)
-            p_impl->m_model->mapper()->callOnRowInserted(this, tag, row);
+        if (p_impl->m_model) {
+            // FIXME think of actual_tagrow removal if input tag,row will be always valid
+            auto actual_tagrow = tagRowOfItem(item);
+            p_impl->m_model->mapper()->callOnRowInserted(this, actual_tagrow.tag, actual_tagrow.row);
+        }
     }
 
     return result;

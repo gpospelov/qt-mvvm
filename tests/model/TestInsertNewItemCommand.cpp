@@ -18,7 +18,7 @@ public:
         auto factory_func = [parent]() {
             return parent->model()->factory()->createItem(Constants::BaseType);
         };
-        return std::make_unique<InsertNewItemCommand>(factory_func, parent, tag, row);
+        return std::make_unique<InsertNewItemCommand>(factory_func, parent, TagRow{tag, row});
     }
 };
 

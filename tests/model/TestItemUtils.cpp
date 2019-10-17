@@ -40,8 +40,8 @@ TEST_F(TestItemUtils, iterateItem)
     // adding children
     auto child1 = new SessionItem;
     auto child2 = new SessionItem;
-    parent->insertItem(child1);
-    parent->insertItem(child2);
+    parent->insertItem(child1, TagRow::append());
+    parent->insertItem(child2, TagRow::append());
 
     visited_items.clear();
     Utils::iterate(parent.get(), fun);
@@ -68,8 +68,8 @@ TEST_F(TestItemUtils, iterateIfItem)
 
     auto child1 = new SessionItem;
     auto child2 = new SessionItem;
-    parent->insertItem(child1);
-    parent->insertItem(child2);
+    parent->insertItem(child1, TagRow::append());
+    parent->insertItem(child2, TagRow::append());
 
     std::vector<const SessionItem*> expected = {parent.get()};
     Utils::iterate_if(parent.get(), fun);
