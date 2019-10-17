@@ -25,8 +25,8 @@ GraphItem::GraphItem() : CompoundItem(Constants::GraphItemType)
 
 void GraphItem::setDataItem(const Data1DItem* data_item)
 {
-    auto& link = item<LinkedItem>(P_LINK);
-    link.setLink(data_item);
+    auto link = item<LinkedItem>(P_LINK);
+    link->setLink(data_item);
 }
 
 //! Returns dataItem linked to given GraphItem. Will work only in the model context
@@ -37,8 +37,8 @@ Data1DItem* GraphItem::dataItem() const
     if (!model())
         return nullptr;
 
-    auto& link = item<LinkedItem>(P_LINK);
-    return link.linkedItem<Data1DItem>();
+    auto link = item<LinkedItem>(P_LINK);
+    return link->linkedItem<Data1DItem>();
 }
 
 std::vector<double> GraphItem::binCenters() const

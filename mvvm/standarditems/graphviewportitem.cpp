@@ -52,12 +52,12 @@ std::vector<GraphItem*> GraphViewportItem::graphItems() const
 
 ViewportAxisItem* GraphViewportItem::xAxis() const
 {
-    return &item<ViewportAxisItem>(P_XAXIS);
+    return item<ViewportAxisItem>(P_XAXIS);
 }
 
 ViewportAxisItem* GraphViewportItem::yAxis() const
 {
-    return &item<ViewportAxisItem>(P_YAXIS);
+    return item<ViewportAxisItem>(P_YAXIS);
 }
 
 //! Updates viewport axes depending on data points.
@@ -74,8 +74,8 @@ void GraphViewportItem::update_xaxis_range()
 {
     const auto [xmin, xmax] = get_min_max(items<GraphItem>(T_GRAPHS),
                                           [](GraphItem* graph) { return graph->binCenters(); });
-    item<ViewportAxisItem>(P_XAXIS).setProperty(ViewportAxisItem::P_MIN, xmin);
-    item<ViewportAxisItem>(P_XAXIS).setProperty(ViewportAxisItem::P_MAX, xmax);
+    item<ViewportAxisItem>(P_XAXIS)->setProperty(ViewportAxisItem::P_MIN, xmin);
+    item<ViewportAxisItem>(P_XAXIS)->setProperty(ViewportAxisItem::P_MAX, xmax);
 }
 
 //! Update y-axis range.
@@ -84,6 +84,6 @@ void GraphViewportItem::update_yaxis_range()
 {
     const auto [ymin, ymax] = get_min_max(items<GraphItem>(T_GRAPHS),
                                           [](GraphItem* graph) { return graph->binValues(); });
-    item<ViewportAxisItem>(P_YAXIS).setProperty(ViewportAxisItem::P_MIN, ymin);
-    item<ViewportAxisItem>(P_YAXIS).setProperty(ViewportAxisItem::P_MAX, ymax);
+    item<ViewportAxisItem>(P_YAXIS)->setProperty(ViewportAxisItem::P_MIN, ymin);
+    item<ViewportAxisItem>(P_YAXIS)->setProperty(ViewportAxisItem::P_MAX, ymax);
 }
