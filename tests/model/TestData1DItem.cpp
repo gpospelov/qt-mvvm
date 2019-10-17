@@ -37,7 +37,7 @@ TEST_F(TestData1DItem, setFixedBinAxis)
     item.setAxis(FixedBinAxisItem::create(5, 0.0, 5.0));
 
     // check type of the axis
-    EXPECT_TRUE(dynamic_cast<FixedBinAxisItem*>(item.getItem(Data1DItem::T_AXIS)) != nullptr);
+    EXPECT_TRUE(item.item<FixedBinAxisItem>(Data1DItem::T_AXIS) != nullptr);
 
     // check bin centers and values
     std::vector<double> expected_centers = {0.5, 1.5, 2.5, 3.5, 4.5};
@@ -80,7 +80,8 @@ TEST_F(TestData1DItem, checkSignalsOnAxisChange)
     EXPECT_CALL(widget, onDataChange(item, ItemDataRole::DATA)).Times(1); // values should change
     EXPECT_CALL(widget, onPropertyChange(_, _)).Times(0);
     EXPECT_CALL(widget, onChildPropertyChange(_, _)).Times(0);
-    // FIXME add signal on children change
+    EXPECT_CALL(widget, onRowInserted(item, Data1DItem::T_AXIS, 0)).Times(1);
+    EXPECT_CALL(widget, onRowAboutToBeRemoved(_, _, _)).Times(0);
 
     // trigger change
     item->setAxis(FixedBinAxisItem::create(3, 0.0, 3.0));
@@ -99,6 +100,8 @@ TEST_F(TestData1DItem, checkSignalsOnContentChange)
     EXPECT_CALL(widget, onDataChange(item, ItemDataRole::DATA)).Times(1); // values should change
     EXPECT_CALL(widget, onPropertyChange(_, _)).Times(0);
     EXPECT_CALL(widget, onChildPropertyChange(_, _)).Times(0);
+    EXPECT_CALL(widget, onRowInserted(_, _, _)).Times(0);
+    EXPECT_CALL(widget, onRowAboutToBeRemoved(_, _, _)).Times(0);
 
     // trigger change
     item->setContent(std::vector<double>{1.0, 2.0, 3.0});
