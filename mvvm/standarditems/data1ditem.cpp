@@ -14,8 +14,7 @@ using namespace ModelView;
 
 Data1DItem::Data1DItem() : CompoundItem(Constants::Data1DItemType)
 {
-    TagInfo tagInfo(T_AXIS, 0, 1, {Constants::FixedBinAxisType});
-    registerTag(tagInfo, /*set_as_default*/ true);
+    registerTag(TagInfo(T_AXIS, 0, 1, {Constants::FixedBinAxisType}));
 }
 
 //! Sets fixed bin axis. If other axis exists, it will be overriden.
