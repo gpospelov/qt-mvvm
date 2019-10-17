@@ -20,7 +20,7 @@ void BasicAxisItem::register_min_max()
     addProperty(P_MAX, 1.0)->setDisplayName("Max");
 }
 
-// --- FixedBinAxisItem ------------------------------------------------------
+// --- ViewportAxisItem ------------------------------------------------------
 
 ViewportAxisItem::ViewportAxisItem() : BasicAxisItem(Constants::ViewportAxisType)
 {
@@ -28,13 +28,17 @@ ViewportAxisItem::ViewportAxisItem() : BasicAxisItem(Constants::ViewportAxisType
     register_min_max();
 }
 
-// --- FixedBinAxisItem ------------------------------------------------------
+// --- BinnedAxisItem ------------------------------------------------------
 
-FixedBinAxisItem::FixedBinAxisItem() : BasicAxisItem(Constants::FixedBinAxisType)
+BinnedAxisItem::BinnedAxisItem(std::string model_type) : BasicAxisItem(model_type)
 {
     addProperty(P_NBINS, 1)->setDisplayName("Nbins");
     register_min_max();
 }
+
+// --- FixedBinAxisItem ------------------------------------------------------
+
+FixedBinAxisItem::FixedBinAxisItem() : BinnedAxisItem(Constants::FixedBinAxisType) {}
 
 std::unique_ptr<FixedBinAxisItem> FixedBinAxisItem::create(int nbins, double xmin, double xmax)
 {
@@ -51,11 +55,11 @@ std::vector<double> FixedBinAxisItem::binCenters() const
     int nbins = property(P_NBINS).toInt();
     double start = property(P_MIN).toDouble();
     double end = property(P_MAX).toDouble();
-    double step = (end - start)/nbins;
+    double step = (end - start) / nbins;
 
     result.resize(static_cast<size_t>(nbins), 0.0);
-    for(size_t i=0; i<static_cast<size_t>(nbins); ++i)
-        result[i] = start + step*(i+0.5);
+    for (size_t i = 0; i < static_cast<size_t>(nbins); ++i)
+        result[i] = start + step * (i + 0.5);
 
     return result;
 }

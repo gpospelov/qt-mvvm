@@ -55,20 +55,38 @@ public:
 };
 
 /*!
-@class FixedBinAxisItem
-@brief Item to represent fixed bin axis.
+@class BinnedAxisItem
+@brief Item to represent an axis with arbitrary binning.
 
-Fixed bin axis is used in Data1DItem. It simply defined how data is stored,
-has now info about, e.g axis title, and desn't intended for plotting.
+Base class to define an axis with specific binning (fixed, variable). Used in Data1DItem and
+Data2Ditem to store 1d and 2d data.  Doesn't carry any appearance info (e.g. axis title, label
+size, etc) and thus not intended for direct plotting.
 */
 
 //!
 
-class CORE_EXPORT FixedBinAxisItem : public BasicAxisItem
+class CORE_EXPORT BinnedAxisItem : public BasicAxisItem
 {
 public:
     static inline const std::string P_NBINS = "P_NBINS";
 
+    explicit BinnedAxisItem(std::string model_type);
+
+    virtual std::vector<double> binCenters() const = 0;
+};
+
+/*!
+@class FixedBinAxisItem
+@brief Item to represent fixed bin axis.
+
+Defines an axis with equidistant binning.
+*/
+
+//!
+
+class CORE_EXPORT FixedBinAxisItem : public BinnedAxisItem
+{
+public:
     FixedBinAxisItem();
 
     static std::unique_ptr<FixedBinAxisItem> create(int nbins, double xmin, double xmax);
