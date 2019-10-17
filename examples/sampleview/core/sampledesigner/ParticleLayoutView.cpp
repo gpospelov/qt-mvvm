@@ -35,12 +35,7 @@ void ParticleLayoutView::addView(IView* childView)
 {
     if (childView->type() == DesignerHelper::PARTICLE) {
         connectInputPort(dynamic_cast<ConnectableView*>(childView), 0);
-    } else if (childView->type() == DesignerHelper::INTERFERENCE_FUNCTION_1D_LATTICE
-               || childView->type() == DesignerHelper::INTERFERENCE_FUNCTION_2D_LATTICE
-               || childView->type() == DesignerHelper::INTERFERENCE_FUNCTION_2D_PARA
-               || childView->type() == DesignerHelper::INTERFERENCE_FUNCTION_FINITE_2D_LATTICE
-               || childView->type() == DesignerHelper::INTERFERENCE_FUNCTION_HARD_DISK
-               || childView->type() == DesignerHelper::INTERFERENCE_FUNCTION_RADIAL_PARA) {
+    } else if (childView->type() == DesignerHelper::INTERFERENCE_FUNCTION) {
         connectInputPort(dynamic_cast<ConnectableView*>(childView), 1);
     } else {
         throw std::runtime_error("ParticleLayoutView::addView() -> Error. Unknown view");
