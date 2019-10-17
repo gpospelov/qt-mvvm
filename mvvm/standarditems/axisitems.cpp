@@ -36,6 +36,11 @@ BinnedAxisItem::BinnedAxisItem(std::string model_type) : BasicAxisItem(model_typ
     register_min_max();
 }
 
+int BinnedAxisItem::size() const
+{
+    return property(P_NBINS).toInt();
+}
+
 // --- FixedBinAxisItem ------------------------------------------------------
 
 FixedBinAxisItem::FixedBinAxisItem() : BinnedAxisItem(Constants::FixedBinAxisType) {}

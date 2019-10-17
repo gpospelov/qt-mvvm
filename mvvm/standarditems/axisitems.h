@@ -72,6 +72,8 @@ public:
 
     explicit BinnedAxisItem(std::string model_type);
 
+    int size() const;
+
     virtual std::vector<double> binCenters() const = 0;
 };
 
