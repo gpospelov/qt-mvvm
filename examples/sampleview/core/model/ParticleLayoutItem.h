@@ -20,6 +20,8 @@
 class ParticleLayoutItem : public LocatedItem
 {
 public:
+    static const std::string T_INTERFERENCE;
+
     ParticleLayoutItem();
     ~ParticleLayoutItem() override;
 };
