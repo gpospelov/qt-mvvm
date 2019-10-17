@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include "SampleViewFactory.h"
+#include "InterferenceFunctionView.h"
 #include "LayerView.h"
 #include "MultiLayerView.h"
 #include "ParticleLayoutView.h"
@@ -15,7 +16,8 @@
 
 namespace {
 const QList<std::string> m_valid_item_names = {Constants::MultiLayerType, Constants::LayerType,
-                                               Constants::ParticleLayoutType};
+                                               Constants::ParticleLayoutType,
+                                               Constants::InterferenceFunctionType};
 }
 
 bool SampleViewFactory::isValidType(const std::string& name)
@@ -32,5 +34,7 @@ IView* SampleViewFactory::createSampleView(const std::string& name)
         return new LayerView();
     else if (name == Constants::ParticleLayoutType)
         return new ParticleLayoutView();
+    else if (name == Constants::InterferenceFunctionType)
+        return new InterferenceFunctionView();
     return nullptr;
 }

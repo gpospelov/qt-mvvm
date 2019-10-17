@@ -9,6 +9,7 @@
 
 #include "ParticleLayoutView.h"
 #include "DesignerHelper.h"
+#include <QGraphicsScene>
 
 namespace {
 constexpr qreal layout_width = IView::basic_width * 1.08;
@@ -40,4 +41,5 @@ void ParticleLayoutView::addView(IView* childView)
     } else {
         throw std::runtime_error("ParticleLayoutView::addView() -> Error. Unknown view");
     }
+    scene()->addItem(childView);
 }
