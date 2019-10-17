@@ -46,6 +46,7 @@ const model_type LinkedType = "Linked";
 const model_type ViewportAxisType = "ViewportAxis";
 const model_type FixedBinAxisType = "FixedBinAxis";
 const model_type Data1DItemType = "Data1DItem";
+const model_type Data2DItemType = "Data2DItem";
 const model_type GraphItemType = "GraphItem";
 const model_type GraphViewportItemType = "GraphViewportItem";
 const model_type TextType = "Text";
