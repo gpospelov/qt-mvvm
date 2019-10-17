@@ -4,6 +4,7 @@
 #include "google_test.h"
 #include "qcustomplot.h"
 #include "sessionmodel.h"
+#include "axisitems.h"
 #include <algorithm>
 
 using namespace ModelView;
@@ -40,7 +41,7 @@ TEST_F(TestData1DPlotController, dataPoints)
     // creating data item with single point
     SessionModel model;
     auto data_item = model.insertItem<Data1DItem>();
-    data_item->setFixedBinAxis(1, 1.0, 2.0);
+    data_item->setAxis(FixedBinAxisItem::create(1, 1.0, 2.0));
 
     // creating controller and point it to Data1DItem
     Data1DPlotController controller(graph);
@@ -68,9 +69,9 @@ TEST_F(TestData1DPlotController, twoDataItems)
     // creating data item with single point
     SessionModel model;
     auto data_item1 = model.insertItem<Data1DItem>();
-    data_item1->setFixedBinAxis(1, 1.0, 2.0);
+    data_item1->setAxis(FixedBinAxisItem::create(1, 1.0, 2.0));
     auto data_item2 = model.insertItem<Data1DItem>();
-    data_item2->setFixedBinAxis(2, 0.0, 2.0);
+    data_item2->setAxis(FixedBinAxisItem::create(2, 0.0, 2.0));
 
     // creating controller and point it to Data1DItem
     Data1DPlotController controller(graph);

@@ -16,6 +16,7 @@
 #include "mvvm_types.h"
 #include "numericutils.h"
 #include "containeritem.h"
+#include "axisitems.h"
 #include <QColor>
 #include <cmath>
 
@@ -54,7 +55,7 @@ GraphModel::GraphModel() : SessionModel("GraphModel")
 void GraphModel::add_graph()
 {
     auto data = insertItem<Data1DItem>(data_container());
-    data->setFixedBinAxis(npoints, xmin, xmax);
+    data->setAxis(FixedBinAxisItem::create(npoints, xmin, xmax));
     data->setContent(bin_values(ModelView::Utils::RandDouble(0.5, 1.0)));
 
     auto graph = insertItem<GraphItem>(viewport());

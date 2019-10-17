@@ -5,6 +5,7 @@
 #include "graphviewportplotcontroller.h"
 #include "qcustomplot.h"
 #include "sessionmodel.h"
+#include "axisitems.h"
 
 using namespace ModelView;
 
@@ -63,7 +64,7 @@ TEST_F(TestGraphViewportPlotController, addGraphAndSetItem)
     auto data_item = model.insertItem<Data1DItem>();
     const std::vector<double> expected_content = {1.0, 2.0, 3.0};
     const std::vector<double> expected_centers = {0.5, 1.5, 2.5};
-    data_item->setFixedBinAxis(3, 0.0, 3.0);
+    data_item->setAxis(FixedBinAxisItem::create(3, 0.0, 3.0));
     data_item->setContent(expected_content);
 
     auto graph_item = model.insertItem<GraphItem>(viewport_item);
@@ -99,12 +100,12 @@ TEST_F(TestGraphViewportPlotController, addAndRemoveGraphs)
     auto data1 = model.insertItem<Data1DItem>();
     const std::vector<double> expected_content1 = {1.0, 2.0, 3.0};
     const std::vector<double> expected_centers = {0.5, 1.5, 2.5};
-    data1->setFixedBinAxis(3, 0.0, 3.0);
+    data1->setAxis(FixedBinAxisItem::create(3, 0.0, 3.0));
     data1->setContent(expected_content1);
 
     auto data2 = model.insertItem<Data1DItem>();
     const std::vector<double> expected_content2 = {4.0, 5.0, 6.0};
-    data2->setFixedBinAxis(3, 0.0, 3.0);
+    data2->setAxis(FixedBinAxisItem::create(3, 0.0, 3.0));
     data2->setContent(expected_content2);
 
     // adding graph item to viewport

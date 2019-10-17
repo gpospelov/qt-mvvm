@@ -34,7 +34,7 @@ TEST_F(TestData1DItem, setFixedBinAxis)
 {
     Data1DItem item;
 
-    item.setFixedBinAxis(5, 0.0, 5.0);
+    item.setAxis(FixedBinAxisItem::create(5, 0.0, 5.0));
 
     // check type of the axis
     EXPECT_TRUE(dynamic_cast<FixedBinAxisItem*>(item.getItem(Data1DItem::T_AXIS)) != nullptr);
@@ -46,7 +46,7 @@ TEST_F(TestData1DItem, setFixedBinAxis)
     EXPECT_EQ(item.binValues(), expected_values);
 
     // setting another axis
-    item.setFixedBinAxis(1, 1.0, 2.0);
+    item.setAxis(FixedBinAxisItem::create(1, 1.0, 2.0));
     expected_centers = {1.5};
     EXPECT_EQ(item.binCenters(), expected_centers);
     expected_values = {0.0};
@@ -63,7 +63,7 @@ TEST_F(TestData1DItem, setContent)
     std::vector<double> expected_content = {1.0, 2.0, 3.0};
     EXPECT_THROW(item.setContent(expected_content), std::runtime_error);
 
-    item.setFixedBinAxis(3, 0.0, 3.0);
+    item.setAxis(FixedBinAxisItem::create(3, 0.0, 3.0));
     item.setContent(expected_content);
     EXPECT_EQ(item.binValues(), expected_content);
 }
@@ -83,7 +83,7 @@ TEST_F(TestData1DItem, checkSignalsOnAxisChange)
     // FIXME add signal on children change
 
     // trigger change
-    item->setFixedBinAxis(3, 0.0, 3.0);
+    item->setAxis(FixedBinAxisItem::create(3, 0.0, 3.0));
 }
 
 //! Checking the signals when content changed.
@@ -92,7 +92,7 @@ TEST_F(TestData1DItem, checkSignalsOnContentChange)
 {
     SessionModel model;
     auto item = model.insertItem<Data1DItem>();
-    item->setFixedBinAxis(3, 0.0, 3.0);
+    item->setAxis(FixedBinAxisItem::create(3, 0.0, 3.0));
 
     MockWidgetForItem widget(item);
 

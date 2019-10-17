@@ -12,22 +12,29 @@
 
 using namespace ModelView;
 
+namespace
+{
+size_t total_bin_count(Data1DItem* item)
+{
+    auto axis = item->item<BinnedAxisItem>(Data1DItem::T_AXIS);
+    return axis ? static_cast<size_t>(axis->size()) : 0;
+}
+} // namespace
+
 Data1DItem::Data1DItem() : CompoundItem(Constants::Data1DItemType)
 {
     registerTag(TagInfo(T_AXIS, 0, 1, {Constants::FixedBinAxisType}));
 }
 
-//! Sets fixed bin axis. If other axis exists, it will be overriden.
-//! Bin content will be set to zero.
+//! Sets axis. Bin content will be set to zero.
 
-void Data1DItem::setFixedBinAxis(int nbins, double xmin, double xmax)
+void Data1DItem::setAxis(std::unique_ptr<BinnedAxisItem> axis)
 {
-    // removing previous axis
     if (auto axis = getItem(T_AXIS, 0))
         delete takeItem({T_AXIS, 0});
 
-    insertItem(FixedBinAxisItem::create(nbins, xmin, xmax).release(), {T_AXIS, 0});
-    setContent(std::vector<double>(static_cast<size_t>(nbins), 0.0));
+    insertItem(axis.release(), {T_AXIS, 0});
+    setContent(std::vector<double>(total_bin_count(this), 0.0));
 }
 
 //! Sets internal data buffer to given data. If size of axis doesn't match the size of the data,
@@ -35,14 +42,10 @@ void Data1DItem::setFixedBinAxis(int nbins, double xmin, double xmax)
 
 void Data1DItem::setContent(const std::vector<double>& data)
 {
-    if (auto axis = item<BinnedAxisItem>(T_AXIS); axis) {
-        if (axis->binCenters().size() == data.size()) {
-            setData(QVariant::fromValue(data));
-            return;
-        }
-     }
+    if (total_bin_count(this) != data.size())
+        throw std::runtime_error("Data1DItem::setContent() -> Data doesn't match size of axis");
 
-    throw std::runtime_error("Data1DItem::setContent() -> Data doesn't match size of axis");
+    setData(QVariant::fromValue(data));
 }
 
 //! Returns coordinates of bin centers.

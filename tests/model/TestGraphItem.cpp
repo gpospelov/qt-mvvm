@@ -3,6 +3,7 @@
 #include "sessionmodel.h"
 #include "data1ditem.h"
 #include "MockWidgets.h"
+#include "axisitems.h"
 #include "linkeditem.h"
 
 using namespace ModelView;
@@ -51,7 +52,7 @@ TEST_F(TestGraphItem, binCenters)
 
     std::vector<double> expected_content = {1.0, 2.0, 3.0};
     std::vector<double> expected_centers = {0.5, 1.5, 2.5};
-    data_item->setFixedBinAxis(3, 0.0, 3.0);
+    data_item->setAxis(FixedBinAxisItem::create(3, 0.0, 3.0));
     data_item->setContent(expected_content);
 
     graph_item->setDataItem(data_item);
@@ -71,7 +72,7 @@ TEST_F(TestGraphItem, setNullData)
     // preparing data item
     std::vector<double> expected_content = {1.0, 2.0, 3.0};
     std::vector<double> expected_centers = {0.5, 1.5, 2.5};
-    data_item->setFixedBinAxis(3, 0.0, 3.0);
+    data_item->setAxis(FixedBinAxisItem::create(3, 0.0, 3.0));
     data_item->setContent(expected_content);
 
     graph_item->setDataItem(data_item);
