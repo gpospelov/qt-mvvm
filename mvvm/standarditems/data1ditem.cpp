@@ -35,7 +35,7 @@ void Data1DItem::setFixedBinAxis(int nbins, double xmin, double xmax)
 
 void Data1DItem::setContent(const std::vector<double>& data)
 {
-    if (auto axis = dynamic_cast<FixedBinAxisItem*>(getItem(T_AXIS, 0)); axis) {
+    if (auto axis = item<BinnedAxisItem>(T_AXIS); axis) {
         if (axis->binCenters().size() == data.size()) {
             setData(QVariant::fromValue(data));
             return;
@@ -49,10 +49,8 @@ void Data1DItem::setContent(const std::vector<double>& data)
 
 std::vector<double> Data1DItem::binCenters() const
 {
-    if (auto axis = dynamic_cast<FixedBinAxisItem*>(getItem(T_AXIS, 0)))
-        return axis->binCenters();
-    else
-        return {};
+    auto axis = item<BinnedAxisItem>(T_AXIS);
+    return axis ? axis->binCenters() : std::vector<double>{};
 }
 
 //! Returns values stored in bins.
