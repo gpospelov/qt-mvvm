@@ -12,58 +12,12 @@
 
 #include "ConnectableView.h"
 
-class InterferenceFunction1DLatticeView : public ConnectableView
+//! Represents all interference functions on the scene
+class InterferenceFunctionView : public ConnectableView
 {
-    Q_OBJECT
 public:
-    enum { TYPE = DesignerHelper::INTERFERENCE_FUNCTION_1D_LATTICE };
-    InterferenceFunction1DLatticeView(QGraphicsItem *parent = nullptr);
-    int type() const { return TYPE; }
-};
-
-class InterferenceFunction2DLatticeView : public ConnectableView
-{
-    Q_OBJECT
-public:
-    enum { TYPE = DesignerHelper::INTERFERENCE_FUNCTION_2D_LATTICE };
-    InterferenceFunction2DLatticeView(QGraphicsItem *parent = nullptr);
-    int type() const { return TYPE; }
-};
-
-class InterferenceFunction2DParaCrystalView : public ConnectableView
-{
-    Q_OBJECT
-public:
-    enum { TYPE = DesignerHelper::INTERFERENCE_FUNCTION_2D_PARA };
-    InterferenceFunction2DParaCrystalView(QGraphicsItem *parent = nullptr);
-    int type() const { return TYPE; }
-};
-
-class InterferenceFunctionFinite2DLatticeView : public ConnectableView
-{
-    Q_OBJECT
-public:
-    enum { TYPE = DesignerHelper::INTERFERENCE_FUNCTION_FINITE_2D_LATTICE };
-    InterferenceFunctionFinite2DLatticeView(QGraphicsItem *parent = nullptr);
-    int type() const { return TYPE; }
-};
-
-class InterferenceFunctionHardDiskView : public ConnectableView
-{
-    Q_OBJECT
-public:
-    enum { TYPE = DesignerHelper::INTERFERENCE_FUNCTION_HARD_DISK };
-    InterferenceFunctionHardDiskView(QGraphicsItem *parent = nullptr);
-    int type() const { return TYPE; }
-};
-
-class InterferenceFunctionRadialParaCrystalView : public ConnectableView
-{
-    Q_OBJECT
-public:
-    enum { TYPE = DesignerHelper::INTERFERENCE_FUNCTION_RADIAL_PARA };
-    InterferenceFunctionRadialParaCrystalView(QGraphicsItem *parent = nullptr);
-    int type() const { return TYPE; }
+    InterferenceFunctionView(QGraphicsItem* parent = nullptr);
+    void addView(IView*) override;
 };
 
 #endif // INTERFERENCEFUNCTIONVIEW_H

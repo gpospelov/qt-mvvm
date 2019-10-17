@@ -9,66 +9,23 @@
 
 #include "InterferenceFunctionView.h"
 #include "DesignerHelper.h"
-#include "item_constants.h"
 
-InterferenceFunction1DLatticeView::InterferenceFunction1DLatticeView(QGraphicsItem* parent)
-    : ConnectableView(parent)
-{
-    setName(Constants::InterferenceFunction1DLatticeType);
-    setColor(QColor(255, 236, 139));
-    setRectangle(DesignerHelper::getDefaultBoundingRect(getName()));
-    addPort("out", NodeEditorPort::OUTPUT, NodeEditorPort::INTERFERENCE);
-    m_roundpar = 3;
+namespace {
+constexpr qreal interference_width = IView::basic_width * 0.7;
+constexpr qreal interference_height = IView::basic_height * 4.0;
+constexpr QRectF interference_shape(-interference_width / 2.0, -interference_height / 2.0,
+                                    interference_width, interference_height);
 }
 
-InterferenceFunction2DLatticeView::InterferenceFunction2DLatticeView(QGraphicsItem* parent)
-    : ConnectableView(parent)
+InterferenceFunctionView::InterferenceFunctionView(QGraphicsItem* parent)
+    : ConnectableView(parent, DesignerHelper::INTERFERENCE_FUNCTION, interference_shape)
 {
-    setName(Constants::InterferenceFunction2DLatticeType);
     setColor(QColor(255, 236, 139));
-    setRectangle(DesignerHelper::getDefaultBoundingRect(getName()));
     addPort("out", NodeEditorPort::OUTPUT, NodeEditorPort::INTERFERENCE);
-    m_roundpar = 3;
 }
 
-InterferenceFunction2DParaCrystalView::InterferenceFunction2DParaCrystalView(QGraphicsItem* parent)
-    : ConnectableView(parent)
+void InterferenceFunctionView::addView(IView*)
 {
-    setName(Constants::InterferenceFunction2DParaCrystalType);
-    setColor(QColor(255, 236, 139));
-    setRectangle(DesignerHelper::getDefaultBoundingRect(getName()));
-    addPort("out", NodeEditorPort::OUTPUT, NodeEditorPort::INTERFERENCE);
-    m_roundpar = 3;
-}
-
-InterferenceFunctionFinite2DLatticeView::InterferenceFunctionFinite2DLatticeView(
-    QGraphicsItem* parent)
-    : ConnectableView(parent)
-{
-    setName(Constants::InterferenceFunctionFinite2DLatticeType);
-    setColor(QColor(255, 236, 139));
-    setRectangle(DesignerHelper::getDefaultBoundingRect(getName()));
-    addPort("out", NodeEditorPort::OUTPUT, NodeEditorPort::INTERFERENCE);
-    m_roundpar = 3;
-}
-
-InterferenceFunctionHardDiskView::InterferenceFunctionHardDiskView(QGraphicsItem* parent)
-    : ConnectableView(parent)
-{
-    setName(Constants::InterferenceFunctionHardDiskType);
-    setColor(QColor(255, 236, 139));
-    setRectangle(DesignerHelper::getDefaultBoundingRect(getName()));
-    addPort("out", NodeEditorPort::OUTPUT, NodeEditorPort::INTERFERENCE);
-    m_roundpar = 3;
-}
-
-InterferenceFunctionRadialParaCrystalView::InterferenceFunctionRadialParaCrystalView(
-    QGraphicsItem* parent)
-    : ConnectableView(parent)
-{
-    setName(Constants::InterferenceFunctionRadialParaCrystalType);
-    setColor(QColor(255, 236, 139));
-    setRectangle(DesignerHelper::getDefaultBoundingRect(getName()));
-    addPort("out", NodeEditorPort::OUTPUT, NodeEditorPort::INTERFERENCE);
-    m_roundpar = 3;
+    throw std::runtime_error("Error in InterferenceFunctionView::addView: this view does not imply "
+                             "the existance of child views.");
 }
