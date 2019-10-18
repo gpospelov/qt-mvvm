@@ -6,6 +6,7 @@
 + layereditor
 + sampleview
 + plotgraphs
++ colormap
 
 See detailed description in corersponding directories.
 
