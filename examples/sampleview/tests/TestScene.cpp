@@ -8,6 +8,7 @@
 #include "modelutils.h"
 #include "MultiLayerView.h"
 #include "SampleModel.h"
+#include "modelutils.h"
 
 using namespace ModelView;
 
@@ -202,4 +203,54 @@ TEST_F(TestScene, testDeleteMultilayer)
     EXPECT_FALSE(scene->getViewForItem(mlayer));
     EXPECT_FALSE(scene->getViewForItem(layer));
     EXPECT_TRUE(scene->getViewForItem(layout));
+}
+
+TEST_F(TestScene, testCopy)
+{
+    const auto mlayer = model.insertItem<MultiLayerItem>();
+    const std::string mid = mlayer->identifier();
+    const auto layer = model.insertItem<LayerItem>(mlayer, MultiLayerItem::T_LAYERS);
+    const std::string lid = layer->identifier();
+    const auto layout = model.insertItem<ParticleLayoutItem>(layer, LayerItem::T_LAYOUTS);
+    const std::string layout_id = layout->identifier();
+
+    auto layout_view = scene->getViewForItem(layout);
+    layout_view->moveBy(-300.0, 0.0); // move layout to make capturing the connection simpler
+
+    auto m_view = scene->getViewForItem(mlayer);
+
+    // selecting the multilayer (layer and layout stay unselected)
+    QPainterPath selection_path;
+    QRectF selection_rect;
+    selection_rect.setX(m_view->sceneBoundingRect().right() - 5.0);
+    selection_rect.setY(m_view->sceneBoundingRect().top() - 5.0);
+    selection_rect.setSize({10.0, 10.0});
+    selection_path.addRect(selection_rect);
+    scene->setSelectionArea(selection_path, Qt::IntersectsItemBoundingRect);
+
+    scene->copySelected();
+    scene->pasteSelected();
+
+    auto multilayers = Utils::TopItems<MultiLayerItem>(&model);
+    EXPECT_EQ(multilayers.size(), 2u);
+    EXPECT_TRUE(std::find(multilayers.begin(), multilayers.end(), mlayer) != multilayers.end());
+    EXPECT_TRUE(layer->parent() == mlayer);
+    EXPECT_TRUE(layout->parent() == layer);
+    EXPECT_EQ(multilayers[0]->childrenCount(), multilayers[1]->childrenCount());
+
+    // selecting the layout (multilayer and its children stay unselected)
+    selection_path = QPainterPath();
+    selection_rect = QRectF (-310.0, -10.0, 20.0, 20.0);
+    selection_path.addRect(selection_rect);
+    scene->setSelectionArea(selection_path, Qt::IntersectsItemBoundingRect);
+
+    scene->copySelected();
+    scene->pasteSelected();
+
+    multilayers = Utils::TopItems<MultiLayerItem>(&model);
+    EXPECT_EQ(multilayers.size(), 2u); // still two multilayers
+    auto top_layouts = Utils::TopItems<ParticleLayoutItem>(&model);
+    EXPECT_EQ(top_layouts.size(), 1u); // only one disconnected layout
+    auto all_layouts = Utils::FindItems<ParticleLayoutItem>(&model);
+    EXPECT_EQ(all_layouts.size(), 2u);
 }

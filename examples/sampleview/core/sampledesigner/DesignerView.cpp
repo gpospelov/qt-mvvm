@@ -89,6 +89,18 @@ void DesignerView::deleteSelectedItems()
     designerScene->deleteSelectedItems();
 }
 
+void DesignerView::copySelected()
+{
+    DesignerScene* designerScene = dynamic_cast<DesignerScene*>(scene());
+    designerScene->copySelected();
+}
+
+void DesignerView::pasteSelected()
+{
+    DesignerScene* designerScene = dynamic_cast<DesignerScene*>(scene());
+    designerScene->pasteSelected();
+}
+
 void DesignerView::zoomIn()
 {
 }
@@ -112,6 +124,14 @@ void DesignerView::keyPressEvent(QKeyEvent *event)
         break;
     case Qt::Key_Backspace:
         deleteSelectedItems();
+        break;
+    case Qt::Key_C:
+        if (event->modifiers() == Qt::ControlModifier)
+            copySelected();
+        break;
+    case Qt::Key_V:
+        if (event->modifiers() == Qt::ControlModifier)
+            pasteSelected();
         break;
     default:
         QWidget::keyPressEvent(event);

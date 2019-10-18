@@ -6,24 +6,18 @@
 //! @license   GNU General Public License v3 or higher
 //
 // ************************************************************************** //
-
-#ifndef PARTICLELAYOUTITEM_H
-#define PARTICLELAYOUTITEM_H
+#ifndef INTERFERENCEFUNCTIONITEM_H
+#define INTERFERENCEFUNCTIONITEM_H
 
 #include "LocatedItem.h"
 
-/*!
-@class ParticleLayoutItem
-@brief Represents particle layout instance in the GUI.
-*/
-
-class ParticleLayoutItem : public LocatedItem
+//! Base class for different (future) types of interference.
+class InterferenceFunctionItem : public LocatedItem
 {
 public:
-    static const std::string T_INTERFERENCE;
+    static const std::string P_POSITION_VARIANCE;
 
-    ParticleLayoutItem();
-    ~ParticleLayoutItem() override;
+    InterferenceFunctionItem();
 };
 
-#endif // PARTICLELAYOUTITEM_H
+#endif // INTERFERENCEFUNCTIONITEM_H

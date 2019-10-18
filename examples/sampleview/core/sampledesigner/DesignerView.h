@@ -47,6 +47,8 @@ public slots:
     void onCenterView();
     void onChangeScale(double);
     void deleteSelectedItems();
+    void copySelected();
+    void pasteSelected();
 
     void zoomIn();
     void zoomOut();

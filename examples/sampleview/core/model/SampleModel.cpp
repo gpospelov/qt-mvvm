@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include "SampleModel.h"
+#include "InterferenceFunctionItem.h"
 #include "LayerItems.h"
 #include "ParticleLayoutItem.h"
 #include "item_constants.h"
@@ -23,6 +24,7 @@ std::unique_ptr<ItemCatalogue> CreateItemCatalogue()
     result->registerItem<MultiLayerItem>();
     result->registerItem<LayerItem>();
     result->registerItem<ParticleLayoutItem>();
+    result->registerItem<InterferenceFunctionItem>();
     return result;
 }
 } // namespace
@@ -42,6 +44,7 @@ void SampleModel::init_model()
     auto assembly = insertItem<MultiLayerItem>(multilayer);
     insertItem<LayerItem>(assembly);
     auto layer = insertItem<LayerItem>(assembly);
-    insertItem<ParticleLayoutItem>(layer, LayerItem::T_LAYOUTS);
+    auto layout = insertItem<ParticleLayoutItem>(layer, LayerItem::T_LAYOUTS);
+    insertItem<InterferenceFunctionItem>(layout, ParticleLayoutItem::T_INTERFERENCE);
     insertItem<LayerItem>(multilayer);
 }
