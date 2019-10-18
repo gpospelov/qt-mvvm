@@ -11,6 +11,7 @@
 #include "colormapmodel.h"
 #include "colormappropertywidget.h"
 #include "modelutils.h"
+#include "colormapcanvas.h"
 #include <QAction>
 #include <QBoxLayout>
 #include <QDebug>
@@ -22,7 +23,7 @@ using namespace ModelView;
 ColorMapWidget::ColorMapWidget(ColorMapModel* model, QWidget* parent)
     : QWidget(parent), m_toolBar(new QToolBar), m_resetViewportAction(nullptr),
       m_addPlotAction(nullptr), m_removePlotAction(nullptr),
-      m_propertyWidget(new ColorMapPropertyWidget), m_model(nullptr)
+      m_propertyWidget(new ColorMapPropertyWidget), m_colorMapCanvas(new ColorMapCanvas), m_model(nullptr)
 {
     auto mainLayout = new QVBoxLayout;
     mainLayout->setSpacing(10);
@@ -78,7 +79,7 @@ ColorMapWidget::~ColorMapWidget() = default;
 QBoxLayout* ColorMapWidget::create_left_layout()
 {
     auto result = new QVBoxLayout;
-    result->addWidget(new QWidget);
+    result->addWidget(m_colorMapCanvas);
     return result;
 }
 

@@ -3,6 +3,8 @@ set(library_name mvvm)
 target_sources(${library_name} PRIVATE
     axisplotcontrollers.h
     axisplotcontrollers.cpp
+    colormapcanvas.h
+    colormapcanvas.cpp
     graphcanvas.h
     graphcanvas.cpp
     graphplotcontroller.h

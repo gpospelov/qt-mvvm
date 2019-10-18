@@ -22,7 +22,7 @@ class QAction;
 namespace ModelView
 {
 class ItemsTreeView;
-class GraphCanvas;
+class ColorMapCanvas;
 } // namespace ModelView
 
 /*!
@@ -51,6 +51,7 @@ private:
     QAction* m_removePlotAction;
 
     ColorMapPropertyWidget* m_propertyWidget;
+    ModelView::ColorMapCanvas* m_colorMapCanvas;
     ColorMapModel* m_model;
 };
 
