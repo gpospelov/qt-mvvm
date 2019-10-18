@@ -11,7 +11,6 @@
 #include "linkeditem.h"
 #include "plottableitems.h"
 #include "data1ditem.h"
-#include "itemmapper.h"
 #include <QColor>
 
 using namespace ModelView;
@@ -19,26 +18,22 @@ using namespace ModelView;
 GraphItem::GraphItem() : CompoundItem(Constants::GraphItemType)
 {
     addProperty<LinkedItem>(P_LINK)->setDisplayName("Link");
-    addProperty(P_COLOR, QColor(Qt::black))->setDisplayName("Color");
     addProperty<TextItem>(P_GRAPH_TITLE)->setDisplayName("Graph title");
+    addProperty(P_COLOR, QColor(Qt::black))->setDisplayName("Color");
 }
+
+//! Sets link to the data item.
 
 void GraphItem::setDataItem(const Data1DItem* data_item)
 {
-    auto link = item<LinkedItem>(P_LINK);
-    link->setLink(data_item);
+    item<LinkedItem>(P_LINK)->setLink(data_item);
 }
 
-//! Returns dataItem linked to given GraphItem. Will work only in the model context
-//! because of the nature of LinkedItem.
+//! Returns data item linked to the given GraphItem.
 
 Data1DItem* GraphItem::dataItem() const
 {
-    if (!model())
-        return nullptr;
-
-    auto link = item<LinkedItem>(P_LINK);
-    return link->linkedItem<Data1DItem>();
+    return item<LinkedItem>(P_LINK)->linkedItem<Data1DItem>();
 }
 
 std::vector<double> GraphItem::binCenters() const
