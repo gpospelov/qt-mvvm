@@ -15,7 +15,7 @@
 
 using namespace ModelView;
 
-ColorMapItem::ColorMapItem() : CompoundItem(Constants::ColorMapType)
+ColorMapItem::ColorMapItem() : CompoundItem(Constants::ColorMapItemType)
 {
     addProperty<LinkedItem>(P_LINK)->setDisplayName("Link");
     addProperty<TextItem>(P_TITLE)->setDisplayName("Title");

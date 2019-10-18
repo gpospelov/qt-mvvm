@@ -12,7 +12,7 @@
 
 using namespace ModelView;
 
-LinkedItem::LinkedItem() : SessionItem(Constants::LinkedType) {}
+LinkedItem::LinkedItem() : SessionItem(Constants::LinkedItemType) {}
 
 //! Set link to given item.
 

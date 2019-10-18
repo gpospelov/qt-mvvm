@@ -133,8 +133,8 @@ TEST_F(TestCompoundItem, displayNameIndexAddition)
     parent.insertItem(child1, TagRow::append(tag));
 
     // Default display names of items of the same type should have indices
-    EXPECT_EQ(child0->displayName(), Constants::CompoundType + "0");
-    EXPECT_EQ(child1->displayName(), Constants::CompoundType + "1");
+    EXPECT_EQ(child0->displayName(), Constants::CompoundItemType + "0");
+    EXPECT_EQ(child1->displayName(), Constants::CompoundItemType + "1");
 
     // however, if children have custom display name, they should remain intact
     child0->setDisplayName("Jekyll");

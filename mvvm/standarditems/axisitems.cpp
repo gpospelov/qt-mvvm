@@ -22,7 +22,7 @@ void BasicAxisItem::register_min_max()
 
 // --- ViewportAxisItem ------------------------------------------------------
 
-ViewportAxisItem::ViewportAxisItem() : BasicAxisItem(Constants::ViewportAxisType)
+ViewportAxisItem::ViewportAxisItem() : BasicAxisItem(Constants::ViewportAxisItemType)
 {
     addProperty<TextItem>(P_TITLE)->setDisplayName("Title");
     register_min_max();
@@ -43,7 +43,7 @@ int BinnedAxisItem::size() const
 
 // --- FixedBinAxisItem ------------------------------------------------------
 
-FixedBinAxisItem::FixedBinAxisItem() : BinnedAxisItem(Constants::FixedBinAxisType) {}
+FixedBinAxisItem::FixedBinAxisItem() : BinnedAxisItem(Constants::FixedBinAxisItemType) {}
 
 std::unique_ptr<FixedBinAxisItem> FixedBinAxisItem::create(int nbins, double xmin, double xmax)
 {

@@ -67,11 +67,11 @@ TEST_F(TestItemCatalogue, copyConstructor)
 
     // adding item to first catalogue but not the second
     catalogue.registerItem<VectorItem>();
-    item = catalogue.create(Constants::VectorType);
+    item = catalogue.create(Constants::VectorItemType);
     EXPECT_TRUE(dynamic_cast<VectorItem*>(item.get()) != nullptr);
 
     // copy of catalogue knows nothing about new VectorType
-    EXPECT_THROW(copy.create(Constants::VectorType), std::runtime_error);
+    EXPECT_THROW(copy.create(Constants::VectorItemType), std::runtime_error);
 }
 
 TEST_F(TestItemCatalogue, assignmentOperator)
@@ -97,7 +97,7 @@ TEST_F(TestItemCatalogue, contains)
     catalogue.registerItem<PropertyItem>();
 
     EXPECT_TRUE(catalogue.contains(Constants::PropertyType));
-    EXPECT_FALSE(catalogue.contains(Constants::VectorType));
+    EXPECT_FALSE(catalogue.contains(Constants::VectorItemType));
 }
 
 TEST_F(TestItemCatalogue, defaultItemCatalogue)
@@ -110,10 +110,10 @@ TEST_F(TestItemCatalogue, defaultItemCatalogue)
     item = catalogue->create(Constants::PropertyType);
     EXPECT_TRUE(dynamic_cast<PropertyItem*>(item.get()) != nullptr);
 
-    item = catalogue->create(Constants::VectorType);
+    item = catalogue->create(Constants::VectorItemType);
     EXPECT_TRUE(dynamic_cast<VectorItem*>(item.get()) != nullptr);
 
-    item = catalogue->create(Constants::CompoundType);
+    item = catalogue->create(Constants::CompoundItemType);
     EXPECT_TRUE(dynamic_cast<CompoundItem*>(item.get()) != nullptr);
 }
 
@@ -140,14 +140,14 @@ TEST_F(TestItemCatalogue, merge)
     // adding two catalogue together
     catalogue1.merge(catalogue2);
 
-    std::vector<std::string> expected_models = {Constants::PropertyType, Constants::VectorType,
-                                                Constants::CompoundType};
+    std::vector<std::string> expected_models = {Constants::PropertyType, Constants::VectorItemType,
+                                                Constants::CompoundItemType};
     std::vector<std::string> expected_labels = {"property", "vector", "compound"};
 
     EXPECT_EQ(catalogue1.modelTypes(), expected_models);
     EXPECT_EQ(catalogue1.labels(), expected_labels);
 
-    auto item = catalogue1.create(Constants::VectorType);
+    auto item = catalogue1.create(Constants::VectorItemType);
     EXPECT_TRUE(dynamic_cast<VectorItem*>(item.get()) != nullptr);
 
     // duplications is not allowed

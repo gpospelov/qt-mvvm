@@ -39,19 +39,19 @@ enum Appearance {
 namespace Constants {
 const model_type BaseType = "SessionItem";
 const model_type PropertyType = "Property";
-const model_type GroupType = "Group";
-const model_type CompoundType = "Compound";
-const model_type VectorType = "Vector";
-const model_type LinkedType = "Linked";
-const model_type ViewportAxisType = "ViewportAxis";
-const model_type FixedBinAxisType = "FixedBinAxis";
-const model_type Data1DItemType = "Data1DItem";
-const model_type Data2DItemType = "Data2DItem";
-const model_type GraphItemType = "GraphItem";
-const model_type GraphViewportItemType = "GraphViewportItem";
-const model_type TextType = "Text";
-const model_type ContainerType = "Container";
-const model_type ColorMapType = "ColorMapType";
+const model_type GroupItemType = "Group";
+const model_type CompoundItemType = "Compound";
+const model_type VectorItemType = "Vector";
+const model_type LinkedItemType = "Linked";
+const model_type ViewportAxisItemType = "ViewportAxis";
+const model_type FixedBinAxisItemType = "FixedBinAxis";
+const model_type Data1DItemType = "Data1D";
+const model_type Data2DItemType = "Data2D";
+const model_type GraphItemType = "Graph";
+const model_type GraphViewportItemType = "GraphViewport";
+const model_type TextItemType = "Text";
+const model_type ContainerItemType = "Container";
+const model_type ColorMapItemType = "ColorMap";
 } // namespace Constants
 
 } // namespace ModelView

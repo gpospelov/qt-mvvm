@@ -24,8 +24,8 @@ TestGraphViewportItem::~TestGraphViewportItem() = default;
 TEST_F(TestGraphViewportItem, initialState)
 {
     GraphViewportItem item;
-    EXPECT_EQ(item.xAxis()->modelType(), Constants::ViewportAxisType);
-    EXPECT_EQ(item.yAxis()->modelType(), Constants::ViewportAxisType);
+    EXPECT_EQ(item.xAxis()->modelType(), Constants::ViewportAxisItemType);
+    EXPECT_EQ(item.yAxis()->modelType(), Constants::ViewportAxisItemType);
     EXPECT_EQ(item.graphItems().size(), 0);
 }
 

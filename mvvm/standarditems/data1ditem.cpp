@@ -23,7 +23,7 @@ size_t total_bin_count(Data1DItem* item)
 
 Data1DItem::Data1DItem() : CompoundItem(Constants::Data1DItemType)
 {
-    registerTag(TagInfo(T_AXIS, 0, 1, {Constants::FixedBinAxisType}));
+    registerTag(TagInfo(T_AXIS, 0, 1, {Constants::FixedBinAxisItemType}));
 }
 
 //! Sets axis. Bin content will be set to zero.
