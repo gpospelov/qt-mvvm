@@ -1,9 +1,9 @@
-#include "google_test.h"
-#include "linkeditem.h"
-#include "sessionmodel.h"
-#include "itempool.h"
-#include "propertyitem.h"
 #include "MockWidgets.h"
+#include "google_test.h"
+#include "itempool.h"
+#include "linkeditem.h"
+#include "propertyitem.h"
+#include "sessionmodel.h"
 
 using namespace ModelView;
 using ::testing::_;
@@ -23,7 +23,7 @@ TestLinkedItem::~TestLinkedItem() = default;
 TEST_F(TestLinkedItem, initialState)
 {
     LinkedItem item;
-    EXPECT_EQ(item.linkedItem(), nullptr);
+    EXPECT_EQ(item.get(), nullptr);
 }
 
 //! Link in single model context.
@@ -32,17 +32,17 @@ TEST_F(TestLinkedItem, sameModelContext)
 {
     SessionModel model;
     auto item = model.insertItem<PropertyItem>();
-    auto linked = model.insertItem<LinkedItem>();
+    auto link = model.insertItem<LinkedItem>();
 
     // no link by default
-    EXPECT_EQ(linked->linkedItem(), nullptr);
+    EXPECT_EQ(link->get(), nullptr);
 
     // setting the link
-    linked->setLink(item);
+    link->setLink(item);
 
     // now linked
-    EXPECT_EQ(linked->linkedItem(), item);
-    EXPECT_EQ(linked->data().value<std::string>(), item->identifier());
+    EXPECT_EQ(link->get(), item);
+    EXPECT_EQ(link->data().value<std::string>(), item->identifier());
 }
 
 //! Link in different model context.
@@ -55,16 +55,16 @@ TEST_F(TestLinkedItem, differentModelContext)
     SessionModel model2("TestModel2", pool);
 
     auto item = model1.insertItem<PropertyItem>();
-    auto linked = model2.insertItem<LinkedItem>();
+    auto link = model2.insertItem<LinkedItem>();
 
     // no link by default
-    EXPECT_EQ(linked->linkedItem(), nullptr);
+    EXPECT_EQ(link->get(), nullptr);
 
     // setting the link
-    linked->setLink(item);
+    link->setLink(item);
 
     // now linked
-    EXPECT_EQ(linked->linkedItem(), item);
+    EXPECT_EQ(link->get(), item);
 }
 
 //! Signals when links is set.
@@ -73,20 +73,20 @@ TEST_F(TestLinkedItem, onSetLink)
 {
     SessionModel model;
     auto item = model.insertItem<PropertyItem>();
-    auto linked = model.insertItem<LinkedItem>();
+    auto link = model.insertItem<LinkedItem>();
 
     // no link by default
-    EXPECT_EQ(linked->linkedItem(), nullptr);
+    EXPECT_EQ(link->get(), nullptr);
 
-    MockWidgetForItem widget(linked);
+    MockWidgetForItem widget(link);
 
     auto expected_role = ItemDataRole::DATA;
-    auto expected_item = linked;
+    auto expected_item = link;
     EXPECT_CALL(widget, onDataChange(expected_item, expected_role)).Times(1);
     EXPECT_CALL(widget, onPropertyChange(_, _)).Times(0);
 
     // making action
-    linked->setLink(item);
+    link->setLink(item);
 }
 
 //! Link in different model context.
@@ -96,18 +96,18 @@ TEST_F(TestLinkedItem, setNullAsLink)
     auto pool = std::make_shared<ItemPool>();
 
     SessionModel model("TestModel", pool);
-    auto linked = model.insertItem<LinkedItem>();
+    auto link = model.insertItem<LinkedItem>();
     auto item = model.insertItem<PropertyItem>();
 
     // no link by default
-    EXPECT_EQ(linked->linkedItem(), nullptr);
+    EXPECT_EQ(link->get(), nullptr);
 
     // setting link
-    linked->setLink(item);
-    EXPECT_EQ(linked->linkedItem(), item);
+    link->setLink(item);
+    EXPECT_EQ(link->get(), item);
 
     // still null link
-    linked->setLink(nullptr);
-    EXPECT_EQ(linked->linkedItem(), nullptr);
-    EXPECT_FALSE(linked->data().isValid());
+    link->setLink(nullptr);
+    EXPECT_EQ(link->get(), nullptr);
+    EXPECT_FALSE(link->data().isValid());
 }

@@ -34,5 +34,5 @@ void ColorMapItem::setDataItem(const Data2DItem* data_item)
 
 Data2DItem* ColorMapItem::dataItem() const
 {
-    return item<LinkedItem>(P_LINK)->linkedItem<Data2DItem>();
+    return item<LinkedItem>(P_LINK)->get<Data2DItem>();
 }

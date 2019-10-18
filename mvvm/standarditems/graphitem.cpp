@@ -33,7 +33,7 @@ void GraphItem::setDataItem(const Data1DItem* data_item)
 
 Data1DItem* GraphItem::dataItem() const
 {
-    return item<LinkedItem>(P_LINK)->linkedItem<Data1DItem>();
+    return item<LinkedItem>(P_LINK)->get<Data1DItem>();
 }
 
 std::vector<double> GraphItem::binCenters() const
