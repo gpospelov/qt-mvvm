@@ -1,5 +1,5 @@
-#include "google_test.h"
 #include "axisitems.h"
+#include "google_test.h"
 
 using namespace ModelView;
 
@@ -20,6 +20,7 @@ TEST_F(TestAxisItems, initialState)
     FixedBinAxisItem axis;
     std::vector<double> expected{0.5};
     EXPECT_EQ(axis.binCenters(), expected);
+    EXPECT_EQ(axis.size(), 1);
 }
 
 //! Factory method
@@ -34,4 +35,5 @@ TEST_F(TestAxisItems, fixedBinAxisFactory)
 
     std::vector<double> expected{1.5, 2.5, 3.5};
     EXPECT_EQ(axis->binCenters(), expected);
+    EXPECT_EQ(axis->size(), 3);
 }

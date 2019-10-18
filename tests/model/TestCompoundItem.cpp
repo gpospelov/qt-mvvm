@@ -92,7 +92,7 @@ TEST_F(TestCompoundItem, itemAccess)
     auto property = new PropertyItem;
     parent.insertItem(property, {tag, 0});
 
-    EXPECT_TRUE(&parent.item<PropertyItem>(tag) == property);
+    EXPECT_TRUE(parent.item<PropertyItem>(tag) == property);
     EXPECT_THROW(parent.item<CompoundItem>(tag), std::runtime_error);
 }
 

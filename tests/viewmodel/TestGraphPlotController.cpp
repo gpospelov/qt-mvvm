@@ -5,6 +5,7 @@
 #include "sessionmodel.h"
 #include "data1ditem.h"
 #include "customplot_test_utils.h"
+#include "axisitems.h"
 #include <QSignalSpy>
 
 using namespace ModelView;
@@ -38,7 +39,7 @@ TEST_F(TestGraphPlotController, setItem)
     // setup model and single data item in it
     SessionModel model;
     auto data_item = model.insertItem<Data1DItem>();
-    data_item->setFixedBinAxis(2, 0.0, 2.0);
+    data_item->setAxis(FixedBinAxisItem::create(2, 0.0, 2.0));
     std::vector<double> expected_centers = {0.5, 1.5};
     std::vector<double> expected_values = {42.0, 43.0};
     data_item->setContent(expected_values);
@@ -79,7 +80,7 @@ TEST_F(TestGraphPlotController, setDataAfter)
 
     // setup data after and single data item in it
     auto data_item = model.insertItem<Data1DItem>();
-    data_item->setFixedBinAxis(2, 0.0, 2.0);
+    data_item->setAxis(FixedBinAxisItem::create(2, 0.0, 2.0));
     std::vector<double> expected_centers = {0.5, 1.5};
     std::vector<double> expected_values = {42.0, 43.0};
     data_item->setContent(expected_values);
@@ -102,7 +103,7 @@ TEST_F(TestGraphPlotController, unlinkFromDataItem)
     // setup model and single data item in it
     SessionModel model;
     auto data_item = model.insertItem<Data1DItem>();
-    data_item->setFixedBinAxis(2, 0.0, 2.0);
+    data_item->setAxis(FixedBinAxisItem::create(2, 0.0, 2.0));
     std::vector<double> expected_centers = {0.5, 1.5};
     std::vector<double> expected_values = {42.0, 43.0};
     data_item->setContent(expected_values);

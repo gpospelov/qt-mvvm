@@ -7,6 +7,8 @@ target_sources(${library_name} PRIVATE
     containeritem.cpp
     data1ditem.h
     data1ditem.cpp
+    data2ditem.h
+    data2ditem.cpp
     graphitem.h
     graphitem.cpp
     graphviewportitem.h

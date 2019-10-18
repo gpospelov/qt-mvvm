@@ -16,6 +16,8 @@
 namespace ModelView
 {
 
+class BinnedAxisItem;
+
 /*!
 @class Data1DItem
 @brief Represents bare one-dimensional data (axis and values).
@@ -30,7 +32,7 @@ public:
     static inline const std::string T_AXIS = "T_AXIS";
     Data1DItem();
 
-    void setFixedBinAxis(int nbins, double xmin, double xmax);
+    void setAxis(std::unique_ptr<BinnedAxisItem> axis);
 
     void setContent(const std::vector<double>& data);
 
