@@ -55,7 +55,7 @@ TEST_F(TestGraphViewportItem, addItem)
     EXPECT_DOUBLE_EQ(xaxis->property(ViewportAxisItem::P_MIN).toDouble(), expected_centers[0]);
     EXPECT_DOUBLE_EQ(xaxis->property(ViewportAxisItem::P_MAX).toDouble(), expected_centers[2]);
 
-    // y-axis of viewport should be set to min/max*1.1 of expected_content
+    // y-axis of viewport should be set to min/max of expected_content
     auto yaxis = viewport_item->yAxis();
     auto [expected_amin, expected_amax] =
         std::minmax_element(std::begin(expected_content), std::end(expected_content));
