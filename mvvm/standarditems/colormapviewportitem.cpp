@@ -17,7 +17,7 @@ using namespace ModelView;
 ColorMapViewportItem::ColorMapViewportItem() : ViewportItem(Constants::ColorMapViewportItemType)
 {
     register_xy_axes();
-    registerTag(TagInfo::universalTag(T_COLORMAP, {Constants::ColorMapItemType}),
+    registerTag(TagInfo::universalTag(T_ITEMS, {Constants::ColorMapItemType}),
                 /*set_default*/ true);
 }
 

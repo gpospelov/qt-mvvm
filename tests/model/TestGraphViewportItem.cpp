@@ -75,7 +75,7 @@ TEST_F(TestGraphViewportItem, onAddItem)
     EXPECT_CALL(widget, onDataChange(_, _)).Times(0);
     EXPECT_CALL(widget, onPropertyChange(_, _)).Times(0);
     EXPECT_CALL(widget, onChildPropertyChange(_, _)).Times(0);
-    EXPECT_CALL(widget, onRowInserted(viewport_item, GraphViewportItem::T_GRAPHS, 0)).Times(1);
+    EXPECT_CALL(widget, onRowInserted(viewport_item, ViewportItem::T_ITEMS, 0)).Times(1);
     EXPECT_CALL(widget, onRowAboutToBeRemoved(_, _, _)).Times(0);
 
     // triggering action

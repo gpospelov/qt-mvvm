@@ -41,24 +41,24 @@ template <typename T> auto get_min_max(std::vector<GraphItem*> graphs, T func)
 GraphViewportItem::GraphViewportItem() : ViewportItem(Constants::GraphViewportItemType)
 {
     register_xy_axes();
-    registerTag(TagInfo::universalTag(T_GRAPHS, {Constants::GraphItemType}), /*set_default*/ true);
+    registerTag(TagInfo::universalTag(T_ITEMS, {Constants::GraphItemType}), /*set_default*/ true);
 }
 
 std::vector<GraphItem*> GraphViewportItem::graphItems() const
 {
-    return items<GraphItem>(T_GRAPHS);
+    return items<GraphItem>(T_ITEMS);
 }
 
 //! Returns lower, upper range on x-axis occupied by all data points of all graphs.
 
 std::pair<double, double> GraphViewportItem::data_xrange() const
 {
-    return get_min_max(items<GraphItem>(T_GRAPHS), [](GraphItem* graph) { return graph->binCenters(); });
+    return get_min_max(graphItems(), [](GraphItem* graph) { return graph->binCenters(); });
 }
 
 //! Returns lower, upper range on y-axis occupied by all data points of all graphs.
 
 std::pair<double, double> GraphViewportItem::data_yrange() const
 {
-    return get_min_max(items<GraphItem>(T_GRAPHS), [](GraphItem* graph) { return graph->binValues(); });
+    return get_min_max(graphItems(), [](GraphItem* graph) { return graph->binValues(); });
 }

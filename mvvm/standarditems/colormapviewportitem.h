@@ -26,9 +26,6 @@ class ViewportAxisItem;
 class CORE_EXPORT ColorMapViewportItem : public ViewportItem
 {
 public:
-    static inline const std::string P_XAXIS = "P_XAXIS";
-    static inline const std::string P_YAXIS = "P_YAXIS";
-    static inline const std::string T_COLORMAP = "T_COLORMAP";
     ColorMapViewportItem();
 
 private:

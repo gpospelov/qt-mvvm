@@ -31,6 +31,7 @@ class CORE_EXPORT ViewportItem : public CompoundItem
 public:
     static inline const std::string P_XAXIS = "P_XAXIS";
     static inline const std::string P_YAXIS = "P_YAXIS";
+    static inline const std::string T_ITEMS = "T_ITEMS";
     ViewportItem(const model_type& model);
 
     ViewportAxisItem* xAxis() const;
