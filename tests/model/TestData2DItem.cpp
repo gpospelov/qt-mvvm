@@ -25,7 +25,7 @@ TEST_F(TestData2DItem, initialState)
 
     EXPECT_EQ(item.xAxis(), nullptr);
     EXPECT_EQ(item.yAxis(), nullptr);
-    EXPECT_EQ(item.binValues(), std::vector<double>());
+    EXPECT_EQ(item.content(), std::vector<double>());
 }
 
 //! Checking the method ::setAxis.
@@ -42,7 +42,7 @@ TEST_F(TestData2DItem, setAxes)
     EXPECT_TRUE(item.item<FixedBinAxisItem>(Data2DItem::T_YAXIS) != nullptr);
 
     // checking bin values
-    auto values = item.binValues();
+    auto values = item.content();
     EXPECT_EQ(values.size(), nx * ny);
     EXPECT_EQ(std::accumulate(values.begin(), values.end(), 0), 0.0);
 }
@@ -61,7 +61,7 @@ TEST_F(TestData2DItem, setContent)
     item.setAxes(FixedBinAxisItem::create(nx, 0.0, 5.0), FixedBinAxisItem::create(ny, 0.0, 3.0));
 
     item.setContent(expected_content);
-    EXPECT_EQ(item.binValues(), expected_content);
+    EXPECT_EQ(item.content(), expected_content);
 }
 
 //! Checking the signals when axes changed.
