@@ -25,9 +25,15 @@ TEST_F(TestAxisItems, initialState)
 
 //! Initial state
 
-TEST_F(TestAxisItems, viewportAxisItem)
+TEST_F(TestAxisItems, viewportAxisItemRange)
 {
     ViewportAxisItem axis;
+
+    // default range
+    auto [lower, upper] = axis.range();
+    EXPECT_EQ(lower, 0.0);
+    EXPECT_EQ(upper, 1.0);
+
     axis.set_range(1.0, 2.0);
     EXPECT_EQ(axis.property(ViewportAxisItem::P_MIN), 1.0);
     EXPECT_EQ(axis.property(ViewportAxisItem::P_MAX), 2.0);

@@ -53,6 +53,8 @@ public:
     static inline const std::string P_TITLE = "P_TITLE";
     ViewportAxisItem();
 
+    std::pair<double, double> range() const;
+
     void set_range(double lower, double upper);
 };
 

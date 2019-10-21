@@ -28,6 +28,15 @@ ViewportAxisItem::ViewportAxisItem() : BasicAxisItem(Constants::ViewportAxisItem
     register_min_max();
 }
 
+//! Returns pair of lower, upper axis range.
+
+std::pair<double, double> ViewportAxisItem::range() const
+{
+    return std::make_pair(property(P_MIN).toDouble(), property(P_MAX).toDouble());
+}
+
+//! Sets lower, uypper range of axis to given values.
+
 void ViewportAxisItem::set_range(double lower, double upper)
 {
     setProperty(P_MIN, lower);
