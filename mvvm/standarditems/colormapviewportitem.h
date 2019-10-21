@@ -30,6 +30,10 @@ public:
     static inline const std::string P_YAXIS = "P_YAXIS";
     static inline const std::string T_COLORMAP = "T_COLORMAP";
     ColorMapViewportItem();
+
+private:
+    virtual std::pair<double, double> data_xrange() const override;
+    virtual std::pair<double, double> data_yrange() const override;
 };
 
 } // namespace ModelView

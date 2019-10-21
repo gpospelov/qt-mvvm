@@ -11,6 +11,7 @@
 #define MVVM_VIEWPORTITEM_H
 
 #include "compounditem.h"
+#include <vector>
 
 namespace ModelView
 {
@@ -36,8 +37,14 @@ public:
 
     ViewportAxisItem* yAxis() const;
 
+    void update_viewport();
+
 protected:
     void register_xy_axes();
+
+private:
+    virtual std::pair<double, double> data_xrange() const = 0;
+    virtual std::pair<double, double> data_yrange() const = 0;
 };
 
 } // namespace ModelView

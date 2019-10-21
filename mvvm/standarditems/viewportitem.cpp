@@ -24,6 +24,15 @@ ViewportAxisItem* ViewportItem::yAxis() const
     return item<ViewportAxisItem>(P_YAXIS);
 }
 
+void ViewportItem::update_viewport()
+{
+    auto [xmin, xmax] = data_xrange();
+    xAxis()->set_range(xmin, xmax);
+
+    auto [ymin, ymax] = data_yrange();
+    yAxis()->set_range(ymin, ymax);
+}
+
 void ViewportItem::register_xy_axes()
 {
     addProperty<ViewportAxisItem>(P_XAXIS)->setDisplayName("X axis");

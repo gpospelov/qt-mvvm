@@ -20,3 +20,13 @@ ColorMapViewportItem::ColorMapViewportItem() : ViewportItem(Constants::ColorMapV
     registerTag(TagInfo::universalTag(T_COLORMAP, {Constants::ColorMapItemType}),
                 /*set_default*/ true);
 }
+
+std::pair<double, double> ColorMapViewportItem::data_xrange() const
+{
+    return xAxis()->range();
+}
+
+std::pair<double, double> ColorMapViewportItem::data_yrange() const
+{
+    return yAxis()->range();
+}

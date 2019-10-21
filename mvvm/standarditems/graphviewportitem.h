@@ -33,11 +33,9 @@ public:
 
     std::vector<GraphItem*> graphItems() const;
 
-    void update_viewport();
-
-    void update_xaxis_range();
-
-    void update_yaxis_range();
+private:
+    std::pair<double, double> data_xrange() const override;
+    std::pair<double, double> data_yrange() const override;
 };
 
 } // namespace ModelView
