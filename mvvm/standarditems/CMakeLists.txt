@@ -25,6 +25,8 @@ target_sources(${library_name} PRIVATE
     standarditemcatalogue.h
     vectoritem.cpp
     vectoritem.h
+    viewportitem.h
+    viewportitem.cpp
 )
 
 target_include_directories(${library_name}
