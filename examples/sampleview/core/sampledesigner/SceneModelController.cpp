@@ -110,7 +110,7 @@ SceneModelController::~SceneModelController()
     m_model->mapper()->unsubscribe(this);
 }
 
-void SceneModelController::onCopy(const QList<QGraphicsItem*>& views)
+void SceneModelController::copy(const QList<QGraphicsItem*>& views)
 {
     if (!m_model)
         return;
@@ -136,7 +136,7 @@ void SceneModelController::onCopy(const QList<QGraphicsItem*>& views)
         Utils::DeleteItemFromModel(lookup_table[item]);
 }
 
-void SceneModelController::onPaste()
+void SceneModelController::paste()
 {
     if (!m_model)
         return;
@@ -149,7 +149,7 @@ void SceneModelController::onPaste()
     m_scene.onModelChanged();
 }
 
-void SceneModelController::onDelete(const QList<QGraphicsItem *>& views)
+void SceneModelController::remove(const QList<QGraphicsItem *>& views)
 {
     if (!m_model)
         return;

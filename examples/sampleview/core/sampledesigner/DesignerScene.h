@@ -53,18 +53,14 @@ public:
     IView* getViewForItem(ModelView::SessionItem* item) const;
 
     NodeEditor *getNodeEditor() { return m_nodeEditor;}
+    SceneModelController& modelController() { return m_model_control; }
 
     // slots:
     void onModelChanged();
     void onModelDestroyed();
-    void onConnect(NodeEditorConnection *connection);
 
     void setLayerInterfaceLine(const QLineF &line=QLineF()) { m_layer_interface_line = line;
                                                               invalidate(); }
-
-    void deleteSelectedItems();
-    void copySelected();
-    void pasteSelected();
 
     void dragMoveEvent(QGraphicsSceneDragDropEvent *event) override;
     void dropEvent(QGraphicsSceneDragDropEvent *event) override;

@@ -29,11 +29,11 @@ public:
     ~SceneModelController();
 
     //! Propagates copying of the views from the scene to the model
-    void onCopy(const QList<QGraphicsItem*>& views);
+    void copy(const QList<QGraphicsItem*>& views);
     //! Propagates view pasting from the scene to the model
-    void onPaste();
+    void paste();
     //! Propagates deletion of views on the scene to the model
-    void onDelete(const QList<QGraphicsItem*>& views);
+    void remove(const QList<QGraphicsItem*>& views);
     //! Propagates view connection to the model
     void onConnect(NodeEditorConnection* connection);
 

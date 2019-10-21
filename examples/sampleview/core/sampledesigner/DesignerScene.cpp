@@ -47,7 +47,8 @@ DesignerScene::DesignerScene(SampleModel* sample_model, QObject* parent)
     setBackgroundBrush(DesignerHelper::getSceneBackground());
 
     m_nodeEditor->install(this);
-    connect(m_nodeEditor, &NodeEditor::connectionIsEstablished, this, &DesignerScene::onConnect);
+    connect(m_nodeEditor, &NodeEditor::connectionIsEstablished, this,
+            [this](auto connection) { m_model_control.onConnect(connection); });
     connect(m_nodeEditor, &NodeEditor::selectionModeChangeRequest, this,
             &DesignerScene::selectionModeChangeRequest);
 
@@ -99,11 +100,6 @@ void DesignerScene::onModelDestroyed()
     resetScene();
 }
 
-void DesignerScene::onConnect(NodeEditorConnection* connection)
-{
-    m_model_control.onConnect(connection);
-}
-
 //! runs through all items recursively and updates corresponding views
 void DesignerScene::updateViews()
 {
@@ -152,22 +148,6 @@ void DesignerScene::addViewForItem(SessionItem *item)
 void DesignerScene::alignViews()
 {
     //m_aligner->alignSample(m_sampleModel->rootItem(), QPointF(200, 800));
-}
-
-//! propagates deletion of views on the scene to the model
-void DesignerScene::deleteSelectedItems()
-{
-    m_model_control.onDelete(selectedItems());
-}
-
-void DesignerScene::copySelected()
-{
-    m_model_control.onCopy(selectedItems());
-}
-
-void DesignerScene::pasteSelected()
-{
-    m_model_control.onPaste();
 }
 
 //! shows appropriate layer interface to drop while moving ILayerView

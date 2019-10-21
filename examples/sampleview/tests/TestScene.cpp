@@ -24,10 +24,12 @@ protected:
 
     SampleModel model;
     std::unique_ptr<DesignerScene> scene;
+    SceneModelController& control;
 };
 
 TestScene::TestScene()
     : scene(std::make_unique<DesignerScene>(&model))
+    , control(scene->modelController())
 {
     model.clear();
 }
@@ -97,7 +99,7 @@ TEST_F(TestScene, testAddConnection)
     connection->setPort2(
         dynamic_cast<ConnectableView*>(scene->getViewForItem(layer))->getInputPorts()[0]);
 
-    scene->onConnect(connection);
+    control.onConnect(connection);
 
     EXPECT_TRUE(layout->parent() == layer);
     EXPECT_TRUE(scene->getViewForItem(layout)->parentObject() != scene->getViewForItem(layer));
@@ -114,7 +116,7 @@ TEST_F(TestScene, testDeleteLayer)
     selection_path.addRect(makeFrame(scene->getViewForItem(layer)->sceneBoundingRect()));
     scene->setSelectionArea(selection_path, Qt::ContainsItemShape);
 
-    scene->deleteSelectedItems();
+    control.remove(scene->selectedItems());
 
     EXPECT_TRUE(model.findItem(mid) == mlayer);
     EXPECT_FALSE(model.findItem(lid));
@@ -148,7 +150,7 @@ TEST_F(TestScene, testDeleteConnection)
         selected.isEmpty() ? nullptr : dynamic_cast<NodeEditorConnection*>(selected.front());
     EXPECT_TRUE(connection);
 
-    scene->deleteSelectedItems();
+    control.remove(scene->selectedItems());
 
     selected = scene->selectedItems();
     EXPECT_TRUE(selected.isEmpty());
@@ -191,7 +193,7 @@ TEST_F(TestScene, testDeleteMultilayer)
         selected.isEmpty() ? nullptr : dynamic_cast<MultiLayerView*>(selected.front());
     EXPECT_TRUE(multilayer_view == m_view);
 
-    scene->deleteSelectedItems();
+    control.remove(scene->selectedItems());
 
     selected = scene->selectedItems();
     EXPECT_TRUE(selected.isEmpty());
@@ -228,8 +230,8 @@ TEST_F(TestScene, testCopy)
     selection_path.addRect(selection_rect);
     scene->setSelectionArea(selection_path, Qt::IntersectsItemBoundingRect);
 
-    scene->copySelected();
-    scene->pasteSelected();
+    control.copy(scene->selectedItems());
+    control.paste();
 
     auto multilayers = Utils::TopItems<MultiLayerItem>(&model);
     EXPECT_EQ(multilayers.size(), 2u);
@@ -244,8 +246,8 @@ TEST_F(TestScene, testCopy)
     selection_path.addRect(selection_rect);
     scene->setSelectionArea(selection_path, Qt::IntersectsItemBoundingRect);
 
-    scene->copySelected();
-    scene->pasteSelected();
+    control.copy(scene->selectedItems());
+    control.paste();
 
     multilayers = Utils::TopItems<MultiLayerItem>(&model);
     EXPECT_EQ(multilayers.size(), 2u); // still two multilayers

@@ -41,7 +41,7 @@ public:
     void onSelectionMode(int);
     void onCenterView();
     void onChangeScale(double);
-    void deleteSelectedItems();
+    void deleteSelected();
     void copySelected();
     void pasteSelected();
 

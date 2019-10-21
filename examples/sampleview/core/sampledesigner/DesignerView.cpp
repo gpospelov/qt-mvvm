@@ -85,19 +85,19 @@ void DesignerView::onChangeScale(double new_scale)
     DesignerHelper::setZoomLevel(new_scale);
 }
 
-void DesignerView::deleteSelectedItems()
+void DesignerView::deleteSelected()
 {
-    designerScene()->deleteSelectedItems();
+    designerScene()->modelController().remove(designerScene()->selectedItems());
 }
 
 void DesignerView::copySelected()
 {
-    designerScene()->copySelected();
+    designerScene()->modelController().copy(designerScene()->selectedItems());
 }
 
 void DesignerView::pasteSelected()
 {
-    designerScene()->pasteSelected();
+    designerScene()->modelController().paste();
 }
 
 void DesignerView::zoomIn()
@@ -120,7 +120,7 @@ void DesignerView::keyPressEvent(QKeyEvent *event)
         break;
     case Qt::Key_Delete:
     case Qt::Key_Backspace:
-        deleteSelectedItems();
+        deleteSelected();
         break;
     case Qt::Key_C:
         if (event->modifiers() == Qt::ControlModifier)
