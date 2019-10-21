@@ -38,7 +38,7 @@ public:
 
     ViewportAxisItem* yAxis() const;
 
-    void update_viewport();
+    virtual void update_viewport();
 
 protected:
     void register_xy_axes();

@@ -24,6 +24,8 @@ ViewportAxisItem* ViewportItem::yAxis() const
     return item<ViewportAxisItem>(P_YAXIS);
 }
 
+//! Updates range of x,y window to show all data.
+
 void ViewportItem::update_viewport()
 {
     auto [xmin, xmax] = data_xrange();
