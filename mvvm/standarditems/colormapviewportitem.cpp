@@ -14,7 +14,7 @@
 
 using namespace ModelView;
 
-ColorMapViewportItem::ColorMapViewportItem() : CompoundItem(Constants::GraphViewportItemType)
+ColorMapViewportItem::ColorMapViewportItem() : CompoundItem(Constants::ColorMapViewportItemType)
 {
     addProperty<ViewportAxisItem>(P_XAXIS)->setDisplayName("X axis");
     addProperty<ViewportAxisItem>(P_YAXIS)->setDisplayName("Y axis");
