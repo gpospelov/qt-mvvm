@@ -17,8 +17,8 @@
 
 #include<QGraphicsView>
 
+class DesignerScene;
 class QGraphicsView;
-class QGraphicsScene;
 class QDragEnterEvent;
 class QWheelEvent;
 class QKeyEvent;
@@ -32,17 +32,12 @@ class DesignerView : public QGraphicsView
     Q_OBJECT
 
 public:
-
-    explicit DesignerView(QGraphicsScene *scene, QWidget *parent = 0);
+    explicit DesignerView(DesignerScene* scene, QWidget* parent = nullptr);
     virtual ~DesignerView(){}
 
     enum ESelectionModes { SIMPLE_SELECTION, RUBBER_SELECTION, HAND_DRAG};
     int getSelectionMode() const;
 
-signals:
-    void selectionModeChanged(int);
-
-public slots:
     void onSelectionMode(int);
     void onCenterView();
     void onChangeScale(double);
@@ -53,6 +48,8 @@ public slots:
     void zoomIn();
     void zoomOut();
 
+signals:
+    void selectionModeChanged(int);
 
 protected:
 //    void wheelEvent(QWheelEvent *event);
@@ -60,7 +57,7 @@ protected:
     void keyPressEvent(QKeyEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
 
-
+    DesignerScene* designerScene() const;
 };
 
 #endif // DESIGNERVIEW_H

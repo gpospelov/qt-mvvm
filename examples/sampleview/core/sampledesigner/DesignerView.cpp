@@ -23,8 +23,11 @@
 #include <QShortcut>
 #include <QVBoxLayout>
 
-DesignerView::DesignerView(QGraphicsScene *scene, QWidget *parent) : QGraphicsView(scene, parent)
+DesignerView::DesignerView(DesignerScene* scene, QWidget* parent)
+    : QGraphicsView(scene, parent)
 {
+    if (!scene)
+        throw std::runtime_error("Error in DesignerView: scene is null.");
     setAcceptDrops(true);
     setRenderHint(QPainter::Antialiasing);
     setMouseTracking(true);
@@ -84,21 +87,17 @@ void DesignerView::onChangeScale(double new_scale)
 
 void DesignerView::deleteSelectedItems()
 {
-    DesignerScene *designerScene = dynamic_cast<DesignerScene *>(scene());
-    Q_ASSERT(designerScene);
-    designerScene->deleteSelectedItems();
+    designerScene()->deleteSelectedItems();
 }
 
 void DesignerView::copySelected()
 {
-    DesignerScene* designerScene = dynamic_cast<DesignerScene*>(scene());
-    designerScene->copySelected();
+    designerScene()->copySelected();
 }
 
 void DesignerView::pasteSelected()
 {
-    DesignerScene* designerScene = dynamic_cast<DesignerScene*>(scene());
-    designerScene->pasteSelected();
+    designerScene()->pasteSelected();
 }
 
 void DesignerView::zoomIn()
@@ -120,8 +119,6 @@ void DesignerView::keyPressEvent(QKeyEvent *event)
         }
         break;
     case Qt::Key_Delete:
-        deleteSelectedItems();
-        break;
     case Qt::Key_Backspace:
         deleteSelectedItems();
         break;
@@ -150,4 +147,9 @@ void DesignerView::keyReleaseEvent(QKeyEvent *event)
     default:
         QWidget::keyPressEvent(event);
     }
+}
+
+DesignerScene *DesignerView::designerScene() const
+{
+    return dynamic_cast<DesignerScene*>(scene());
 }
