@@ -24,7 +24,7 @@ namespace ModelView
 class CORE_EXPORT CompoundItem : public SessionItem
 {
 public:
-    CompoundItem(const std::string& modelType = Constants::CompoundType);
+    CompoundItem(const std::string& modelType = Constants::CompoundItemType);
 
     //! Registers single property item.
     template <typename T = PropertyItem>

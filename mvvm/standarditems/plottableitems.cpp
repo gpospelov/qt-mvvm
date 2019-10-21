@@ -11,7 +11,7 @@
 
 using namespace ModelView;
 
-TextItem::TextItem() : CompoundItem(Constants::TextType)
+TextItem::TextItem() : CompoundItem(Constants::TextItemType)
 {
     addProperty(P_TEXT, "")->setDisplayName("Text");
     addProperty(P_FONT, "Helvetica")->setDisplayName("Font");

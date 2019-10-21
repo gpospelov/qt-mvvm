@@ -35,13 +35,13 @@ public:
 
     void setAxes(std::unique_ptr<BinnedAxisItem> x_axis, std::unique_ptr<BinnedAxisItem> y_axis);
 
-    void setContent(const std::vector<double>& data);
-
     BinnedAxisItem* xAxis() const;
 
     BinnedAxisItem* yAxis() const;
 
-    std::vector<double> binValues() const;
+    void setContent(const std::vector<double>& data);
+
+    std::vector<double> content() const;
 
 private:
     void insert_axis(std::unique_ptr<BinnedAxisItem> axis, const std::string& tag);

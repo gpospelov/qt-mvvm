@@ -15,10 +15,13 @@
 #include "linkeditem.h"
 #include "axisitems.h"
 #include "data1ditem.h"
+#include "data2ditem.h"
 #include "graphitem.h"
 #include "graphviewportitem.h"
 #include "plottableitems.h"
 #include "containeritem.h"
+#include "colormapitem.h"
+#include "colormapviewportitem.h"
 
 using namespace ModelView;
 
@@ -33,8 +36,11 @@ std::unique_ptr<ItemCatalogue> ModelView::CreateStandardItemCatalogue()
     result->registerItem<FixedBinAxisItem>();
     result->registerItem<ViewportAxisItem>();
     result->registerItem<Data1DItem>();
+    result->registerItem<Data2DItem>();
     result->registerItem<GraphItem>();
     result->registerItem<GraphViewportItem>();
+    result->registerItem<ColorMapItem>();
+    result->registerItem<ColorMapViewportItem>();
     result->registerItem<TextItem>();
     result->registerItem<ContainerItem>();
     return result;

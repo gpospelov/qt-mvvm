@@ -22,10 +22,25 @@ void BasicAxisItem::register_min_max()
 
 // --- ViewportAxisItem ------------------------------------------------------
 
-ViewportAxisItem::ViewportAxisItem() : BasicAxisItem(Constants::ViewportAxisType)
+ViewportAxisItem::ViewportAxisItem() : BasicAxisItem(Constants::ViewportAxisItemType)
 {
     addProperty<TextItem>(P_TITLE)->setDisplayName("Title");
     register_min_max();
+}
+
+//! Returns pair of lower, upper axis range.
+
+std::pair<double, double> ViewportAxisItem::range() const
+{
+    return std::make_pair(property(P_MIN).toDouble(), property(P_MAX).toDouble());
+}
+
+//! Sets lower, uypper range of axis to given values.
+
+void ViewportAxisItem::set_range(double lower, double upper)
+{
+    setProperty(P_MIN, lower);
+    setProperty(P_MAX, upper);
 }
 
 // --- BinnedAxisItem ------------------------------------------------------
@@ -43,7 +58,7 @@ int BinnedAxisItem::size() const
 
 // --- FixedBinAxisItem ------------------------------------------------------
 
-FixedBinAxisItem::FixedBinAxisItem() : BinnedAxisItem(Constants::FixedBinAxisType) {}
+FixedBinAxisItem::FixedBinAxisItem() : BinnedAxisItem(Constants::FixedBinAxisItemType) {}
 
 std::unique_ptr<FixedBinAxisItem> FixedBinAxisItem::create(int nbins, double xmin, double xmax)
 {

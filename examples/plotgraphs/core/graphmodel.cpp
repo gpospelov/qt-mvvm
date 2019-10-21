@@ -68,7 +68,7 @@ void GraphModel::add_graph()
 
 void GraphModel::remove_graph()
 {
-    const int graph_count = viewport()->itemCount(GraphViewportItem::T_GRAPHS);
+    const int graph_count = viewport()->itemCount(ViewportItem::T_ITEMS);
     const int data_count = data_container()->itemCount(ContainerItem::T_ITEMS);
 
     if (graph_count != data_count)

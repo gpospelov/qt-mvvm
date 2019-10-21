@@ -10,7 +10,7 @@
 #ifndef MVVM_GRAPHVIEWPORTITEM_H
 #define MVVM_GRAPHVIEWPORTITEM_H
 
-#include "compounditem.h"
+#include "viewportitem.h"
 
 namespace ModelView
 {
@@ -23,25 +23,16 @@ class ViewportAxisItem;
 @brief Container with viewport and collection of GraphItem's to plot.
 */
 
-class CORE_EXPORT GraphViewportItem : public CompoundItem
+class CORE_EXPORT GraphViewportItem : public ViewportItem
 {
 public:
-    static inline const std::string P_XAXIS = "P_XAXIS";
-    static inline const std::string P_YAXIS = "P_YAXIS";
-    static inline const std::string T_GRAPHS = "T_GRAPHS";
     GraphViewportItem();
 
     std::vector<GraphItem*> graphItems() const;
 
-    ViewportAxisItem* xAxis() const;
-
-    ViewportAxisItem* yAxis() const;
-
-    void update_viewport();
-
-    void update_xaxis_range();
-
-    void update_yaxis_range();
+private:
+    std::pair<double, double> xaxis_range() const override;
+    std::pair<double, double> yaxis_range() const override;
 };
 
 } // namespace ModelView

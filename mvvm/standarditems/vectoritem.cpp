@@ -18,7 +18,7 @@ const std::string VectorItem::P_X = "X";
 const std::string VectorItem::P_Y = "Y";
 const std::string VectorItem::P_Z = "Z";
 
-VectorItem::VectorItem() : CompoundItem(Constants::VectorType)
+VectorItem::VectorItem() : CompoundItem(Constants::VectorItemType)
 {
     addProperty<>(P_X, 0.0);
     addProperty<>(P_Y, 0.0);

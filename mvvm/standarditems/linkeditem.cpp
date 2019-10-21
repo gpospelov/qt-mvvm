@@ -12,18 +12,11 @@
 
 using namespace ModelView;
 
-LinkedItem::LinkedItem() : SessionItem(Constants::LinkedType)
-{
-
-}
+LinkedItem::LinkedItem() : SessionItem(Constants::LinkedItemType) {}
 
 //! Set link to given item.
 
 void LinkedItem::setLink(const SessionItem* item)
 {
-
-    if (item)
-        setData(QVariant::fromValue(item->identifier()));
-    else
-        setData(QVariant());
+    setData(item ? QVariant::fromValue(item->identifier()) : QVariant());
 }

@@ -3,6 +3,10 @@ set(library_name mvvm)
 target_sources(${library_name} PRIVATE
     axisitems.h
     axisitems.cpp
+    colormapitem.h
+    colormapitem.cpp
+    colormapviewportitem.h
+    colormapviewportitem.cpp
     containeritem.h
     containeritem.cpp
     data1ditem.h
@@ -21,6 +25,8 @@ target_sources(${library_name} PRIVATE
     standarditemcatalogue.h
     vectoritem.cpp
     vectoritem.h
+    viewportitem.h
+    viewportitem.cpp
 )
 
 target_include_directories(${library_name}
