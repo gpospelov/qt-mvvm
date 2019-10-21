@@ -12,6 +12,11 @@
 
 #include "sessionmodel.h"
 
+namespace ModelView
+{
+class ContainerItem;
+}
+
 /*!
 @class ColorMapModel
 @brief Main application model to demonstrate how to plot data.
@@ -21,6 +26,12 @@ class ColorMapModel : public ModelView::SessionModel
 {
 public:
     ColorMapModel();
+
+    void add_colormap();
+
+private:
+    ModelView::ContainerItem* data_container();
+    void init_model();
 };
 
 #endif // COLORMAPMODEL_H
