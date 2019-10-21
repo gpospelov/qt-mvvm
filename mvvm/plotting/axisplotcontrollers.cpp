@@ -35,8 +35,7 @@ struct AxisPlotController::AxesPlotControllerPrivate {
         auto on_axis_range = [this](const QCPRange& newRange) {
             block_update = true;
             auto item = controller->currentItem();
-            item->setProperty(ViewportAxisItem::P_MIN, newRange.lower);
-            item->setProperty(ViewportAxisItem::P_MAX, newRange.upper);
+            item->set_range(newRange.lower, newRange.upper);
             block_update = false;
         };
 
@@ -53,9 +52,8 @@ struct AxisPlotController::AxesPlotControllerPrivate {
     {
         auto axis = controller->customAxis();
         auto item = controller->currentItem();
-        QCPRange range(item->property(ViewportAxisItem::P_MIN).toDouble(),
-                       item->property(ViewportAxisItem::P_MAX).toDouble());
-        axis->setRange(range);
+        auto [lower, upper] = item->range();
+        axis->setRange(QCPRange(lower, upper));
     }
 };
 
