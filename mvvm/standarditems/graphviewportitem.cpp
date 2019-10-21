@@ -38,21 +38,10 @@ template <typename T> auto get_min_max(std::vector<GraphItem*> graphs, T func)
 
 } // namespace
 
-GraphViewportItem::GraphViewportItem() : CompoundItem(Constants::GraphViewportItemType)
+GraphViewportItem::GraphViewportItem() : ViewportItem(Constants::GraphViewportItemType)
 {
-    addProperty<ViewportAxisItem>(P_XAXIS)->setDisplayName("X axis");
-    addProperty<ViewportAxisItem>(P_YAXIS)->setDisplayName("Y axis");
+    register_xy_axes();
     registerTag(TagInfo::universalTag(T_GRAPHS, {Constants::GraphItemType}), /*set_default*/ true);
-}
-
-ViewportAxisItem* GraphViewportItem::xAxis() const
-{
-    return item<ViewportAxisItem>(P_XAXIS);
-}
-
-ViewportAxisItem* GraphViewportItem::yAxis() const
-{
-    return item<ViewportAxisItem>(P_YAXIS);
 }
 
 std::vector<GraphItem*> GraphViewportItem::graphItems() const

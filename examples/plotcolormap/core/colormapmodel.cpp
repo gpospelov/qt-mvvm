@@ -12,6 +12,8 @@
 #include "containeritem.h"
 #include "data2ditem.h"
 #include "modelutils.h"
+#include "colormapitem.h"
+#include "colormapviewportitem.h"
 #include <cmath>
 
 using namespace ModelView;
@@ -46,8 +48,11 @@ void ColorMapModel::add_colormap()
     auto data_item = insertItem<Data2DItem>(data_container());
     data_item->setAxes(FixedBinAxisItem::create(200, -5.0, 5.0),
                        FixedBinAxisItem::create(100, 0.0, 5.0));
-
     fill_data(data_item);
+
+    auto viewport_item = insertItem<ColorMapViewportItem>();
+    auto colormap_item = insertItem<ColorMapItem>(viewport_item);
+    colormap_item->setDataItem(data_item);
 }
 
 ContainerItem* ColorMapModel::data_container()

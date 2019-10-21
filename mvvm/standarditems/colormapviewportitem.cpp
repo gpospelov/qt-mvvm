@@ -14,20 +14,9 @@
 
 using namespace ModelView;
 
-ColorMapViewportItem::ColorMapViewportItem() : CompoundItem(Constants::ColorMapViewportItemType)
+ColorMapViewportItem::ColorMapViewportItem() : ViewportItem(Constants::ColorMapViewportItemType)
 {
-    addProperty<ViewportAxisItem>(P_XAXIS)->setDisplayName("X axis");
-    addProperty<ViewportAxisItem>(P_YAXIS)->setDisplayName("Y axis");
+    register_xy_axes();
     registerTag(TagInfo::universalTag(T_COLORMAP, {Constants::ColorMapItemType}),
                 /*set_default*/ true);
-}
-
-ViewportAxisItem* ColorMapViewportItem::xAxis() const
-{
-    return item<ViewportAxisItem>(P_XAXIS);
-}
-
-ViewportAxisItem* ColorMapViewportItem::yAxis() const
-{
-    return item<ViewportAxisItem>(P_YAXIS);
 }
