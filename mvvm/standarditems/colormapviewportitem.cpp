@@ -35,12 +35,12 @@ void ColorMapViewportItem::update_viewport()
     update_data_range();
 }
 
-std::pair<double, double> ColorMapViewportItem::data_xrange() const
+std::pair<double, double> ColorMapViewportItem::xaxis_range() const
 {
     return xAxis()->range();
 }
 
-std::pair<double, double> ColorMapViewportItem::data_yrange() const
+std::pair<double, double> ColorMapViewportItem::yaxis_range() const
 {
     return yAxis()->range();
 }

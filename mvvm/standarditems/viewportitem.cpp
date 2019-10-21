@@ -28,10 +28,10 @@ ViewportAxisItem* ViewportItem::yAxis() const
 
 void ViewportItem::update_viewport()
 {
-    auto [xmin, xmax] = data_xrange();
+    auto [xmin, xmax] = xaxis_range();
     xAxis()->set_range(xmin, xmax);
 
-    auto [ymin, ymax] = data_yrange();
+    auto [ymin, ymax] = yaxis_range();
     yAxis()->set_range(ymin, ymax);
 }
 

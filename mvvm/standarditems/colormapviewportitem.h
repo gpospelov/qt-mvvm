@@ -34,8 +34,8 @@ public:
     void update_viewport() override;
 
 private:
-    virtual std::pair<double, double> data_xrange() const override;
-    virtual std::pair<double, double> data_yrange() const override;
+    virtual std::pair<double, double> xaxis_range() const override;
+    virtual std::pair<double, double> yaxis_range() const override;
     void update_data_range();
 };
 
