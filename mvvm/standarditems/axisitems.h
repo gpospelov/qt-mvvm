@@ -52,6 +52,8 @@ class CORE_EXPORT ViewportAxisItem : public BasicAxisItem
 public:
     static inline const std::string P_TITLE = "P_TITLE";
     ViewportAxisItem();
+
+    void set_range(double lower, double upper);
 };
 
 /*!

@@ -28,6 +28,12 @@ ViewportAxisItem::ViewportAxisItem() : BasicAxisItem(Constants::ViewportAxisItem
     register_min_max();
 }
 
+void ViewportAxisItem::set_range(double lower, double upper)
+{
+    setProperty(P_MIN, lower);
+    setProperty(P_MAX, upper);
+}
+
 // --- BinnedAxisItem ------------------------------------------------------
 
 BinnedAxisItem::BinnedAxisItem(std::string model_type) : BasicAxisItem(model_type)
