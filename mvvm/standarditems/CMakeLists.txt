@@ -5,6 +5,8 @@ target_sources(${library_name} PRIVATE
     axisitems.cpp
     colormapitem.h
     colormapitem.cpp
+    colormapviewportitem.h
+    colormapviewportitem.cpp
     containeritem.h
     containeritem.cpp
     data1ditem.h

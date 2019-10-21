@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_GRAPHVIEWPORTITEM_H
-#define MVVM_GRAPHVIEWPORTITEM_H
+#ifndef MVVM_COLORMAPVIEWPORTITEM_H
+#define MVVM_COLORMAPVIEWPORTITEM_H
 
 #include "compounditem.h"
 
@@ -19,31 +19,24 @@ class GraphItem;
 class ViewportAxisItem;
 
 /*!
-@class GraphViewportItem
-@brief Container with viewport and collection of GraphItem's to plot.
+@class ColorMapViewportItem
+@brief Container with viewport and collection of ColorMapItem's to plot.
+
 */
 
-class CORE_EXPORT GraphViewportItem : public CompoundItem
+class CORE_EXPORT ColorMapViewportItem : public CompoundItem
 {
 public:
     static inline const std::string P_XAXIS = "P_XAXIS";
     static inline const std::string P_YAXIS = "P_YAXIS";
-    static inline const std::string T_GRAPHS = "T_GRAPHS";
-    GraphViewportItem();
+    static inline const std::string T_COLORMAP = "T_COLORMAP";
+    ColorMapViewportItem();
 
     ViewportAxisItem* xAxis() const;
 
     ViewportAxisItem* yAxis() const;
-
-    std::vector<GraphItem*> graphItems() const;
-
-    void update_viewport();
-
-    void update_xaxis_range();
-
-    void update_yaxis_range();
 };
 
 } // namespace ModelView
 
-#endif // MVVM_GRAPHVIEWPORTITEM_H
+#endif // MVVM_COLORMAPVIEWPORTITEM_H

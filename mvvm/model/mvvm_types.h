@@ -52,6 +52,7 @@ const model_type GraphViewportItemType = "GraphViewport";
 const model_type TextItemType = "Text";
 const model_type ContainerItemType = "Container";
 const model_type ColorMapItemType = "ColorMap";
+const model_type ColorMapViewportItemType = "ColorMapViewport";
 } // namespace Constants
 
 } // namespace ModelView
