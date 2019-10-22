@@ -37,12 +37,12 @@ void ColorMapViewportItem::update_viewport()
 
 std::pair<double, double> ColorMapViewportItem::xaxis_range() const
 {
-    return xAxis()->range();
+    return item<ColorMapItem>(T_ITEMS)->dataItem()->xAxis()->range();
 }
 
 std::pair<double, double> ColorMapViewportItem::yaxis_range() const
 {
-    return yAxis()->range();
+    return item<ColorMapItem>(T_ITEMS)->dataItem()->yAxis()->range();
 }
 
 //! Updates zAxis to lower, upper values over all data points.
