@@ -5,6 +5,8 @@ target_sources(${library_name} PRIVATE
     axisplotcontrollers.cpp
     colormapcanvas.h
     colormapcanvas.cpp
+    colormapplotcontroller.h
+    colormapplotcontroller.cpp
     colormapviewportplotcontroller.h
     colormapviewportplotcontroller.cpp
     graphcanvas.h
