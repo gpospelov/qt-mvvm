@@ -10,12 +10,14 @@
 #include "SceneModelController.h"
 #include "ConnectableView.h"
 #include "DesignerScene.h"
+#include "DesignerSceneUtils.h"
 #include "NodeEditorConnection.h"
 #include "SampleModel.h"
 #include "SampleViewFactory.h"
 #include "modelmapper.h"
 #include "modelutils.h"
 #include "sessionitem.h"
+#include <QSet>
 #include <set>
 
 using namespace ModelView;
@@ -62,29 +64,19 @@ private:
     SessionModel* m_model;
 };
 
-// utilities for SceneModelController::onCopy
-
-//! Returns the items haveing no parents among the items corresponding to the given view list.
-std::set<const SessionItem*> topItems(const QList<QGraphicsItem*>& views);
-//! Returns the old - new item correspondence table with children added.
-std::map<const SessionItem*, SessionItem*>
-addChildItems(const std::map<const SessionItem*, SessionItem*>& tab);
-//! Finds and returns the items from look-up table having no correspondence in the given view list.
-std::list<const SessionItem*> findUnselectedItems(const std::set<QGraphicsItem*>& views,
-                                                  std::list<const SessionItem*> keys);
-
 // utilities for SceneModelController::onDelete
 
-//! Returns the set of passed views with their child IView instances appended
-std::set<QGraphicsItem*> extendWithChildren(QList<QGraphicsItem*> views);
 //! Finds all the views connected to the passed set
-std::set<IView*> connectedViews(const std::set<QGraphicsItem*>& views, const DesignerScene& scene);
+std::set<IView*> connectedViews(const QSet<QGraphicsItem*>& views, const DesignerScene& scene);
 //! Finds all the views with no ancestor in the passed set
 std::set<IView*> topViews(const QList<QGraphicsItem *> &views);
 
-//! Small utility to retrieve keys from a map
-template<class T, class U>
-std::list<T> keys(const std::map<T, U> input);
+//! Retrieves keys from a map
+QSet<SessionItem*> keys(const std::map<SessionItem*, SessionItem*>& input);
+
+//! Converts a view iterable into the list of corresponding SessionItem pointers.
+template<class T>
+QSet<SessionItem*> viewToItem(const T& views);
 }
 
 SceneModelController::SceneModelController(DesignerScene& scene, SampleModel* model)
@@ -116,23 +108,24 @@ void SceneModelController::copy(const QList<QGraphicsItem*>& views)
         return;
     m_temp_model.clear();
 
-    const std::set<const SessionItem*> top_items = topItems(views);
+    const QSet<SessionItem*> selected_items = viewToItem(DesignerSceneUtils::appendChildren(views));
 
-    std::map<const SessionItem*, SessionItem*> lookup_table;
-    for (const SessionItem* item: top_items)
-        lookup_table[item] = m_temp_model.copyItem(item, m_temp_model.rootItem());
+    std::map<SessionItem*, SessionItem*> lookup_table;
+    for (SessionItem* origin: DesignerSceneUtils::headItems(selected_items)) {
+        SessionItem* copy = m_temp_model.copyItem(origin, m_temp_model.rootItem());
+        const auto to_merge = DesignerSceneUtils::makeLookupTable(origin, copy);
+        lookup_table.insert(to_merge.begin(), to_merge.end());
+    }
 
-    lookup_table = addChildItems(lookup_table);
-    auto remove_keys = findUnselectedItems(extendWithChildren(views), keys(lookup_table));
+    auto to_remove = DesignerSceneUtils::viewableItems(keys(lookup_table) - selected_items);
 
     // first move all children of unselected items to root
-    for (auto item: remove_keys)
-        for (SessionItem* child: lookup_table[item]->children())
-            if (SampleViewFactory::isValidType(child->modelType()))
-                m_temp_model.moveItem(child, m_temp_model.rootItem(), {}, -1);
+    for (auto item: to_remove)
+        for (SessionItem* child : DesignerSceneUtils::viewableItems(lookup_table[item]->children()))
+            m_temp_model.moveItem(child, m_temp_model.rootItem(), {}, -1);
 
     // removing unselected items
-    for (auto item: remove_keys)
+    for (auto item : to_remove)
         Utils::DeleteItemFromModel(lookup_table[item]);
 }
 
@@ -155,12 +148,8 @@ void SceneModelController::remove(const QList<QGraphicsItem *>& views)
         return;
     BlockGuard signal_guard(m_block);
 
-    // Append children of the selected views (e.g. layers of a multilayer)
-    // It is required for proper disconnection
-    const auto all_views = extendWithChildren(views);
-
     // Disconnect dependent items
-    const auto connected_views = connectedViews(all_views, m_scene);
+    const auto connected_views = connectedViews(DesignerSceneUtils::appendChildren(views), m_scene);
     for (auto view: connected_views)
         m_model->moveItem(view->getItem(), m_model->rootItem(), {}, -1);
 
@@ -214,82 +203,7 @@ void SceneModelController::onModelDestroyed()
 }
 
 namespace {
-std::set<const SessionItem*> topItems(const QList<QGraphicsItem*>& views)
-{
-    std::vector<const SessionItem*> items;
-    for (auto view: views)
-        if (auto iview = dynamic_cast<IView*>(view); iview && iview->getItem())
-            items.push_back(iview->getItem());
-
-    std::set<const SessionItem*> result;
-    for (const SessionItem* item: items) {
-        auto parent = item->parent();
-        bool has_parent = false;
-        while (parent != nullptr) {
-            has_parent = std::find(items.begin(), items.end(), parent) != items.end();
-            if (has_parent)
-                break;
-            parent = parent->parent();
-        }
-        if (!has_parent)
-            result.insert(item);
-    }
-
-    return result;
-}
-
-std::map<const SessionItem*, SessionItem*>
-addChildItems(const std::map<const SessionItem*, SessionItem*>& tab)
-{
-    auto result = tab;
-    auto items = keys(tab);
-    while(!items.empty()) {
-        auto item = items.front();
-        const auto in_children = item->children();
-        const auto out_children = result[item]->children();
-        for(size_t i = 0, size = in_children.size(); i < size; ++i) {
-            const auto child = in_children[i];
-            if (!SampleViewFactory::isValidType(child->modelType()))
-                continue;
-            result.insert({child, out_children[i]});
-            items.push_back(child);
-        }
-        items.pop_front();
-    }
-
-    return result;
-}
-
-std::list<const SessionItem*> findUnselectedItems(const std::set<QGraphicsItem*>& views,
-                                                  std::list<const SessionItem*> keys)
-{
-    std::set<const SessionItem*> selected;
-    for (auto view: views)
-        if (auto iview = dynamic_cast<IView*>(view); iview && iview->getItem())
-            selected.insert(iview->getItem());
-
-    for (auto item: selected)
-        keys.erase(std::find(keys.begin(), keys.end(), item));
-
-    return keys;
-}
-
-std::set<QGraphicsItem*> extendWithChildren(QList<QGraphicsItem*> views)
-{
-    std::set<QGraphicsItem*> result(views.begin(), views.end());
-    while (!views.empty()) {
-        auto iview = dynamic_cast<IView*>(views.front());
-        views.pop_front();
-        if (!iview)
-            continue;
-        result.insert(iview);
-        const auto children = iview->childItems();
-        views.append(iview->childItems());
-    }
-    return result;
-}
-
-std::set<IView*> connectedViews(const std::set<QGraphicsItem*>& views, const DesignerScene& scene)
+std::set<IView*> connectedViews(const QSet<QGraphicsItem*>& views, const DesignerScene& scene)
 {
     std::set<IView*> connected_views;
 
@@ -332,12 +246,22 @@ std::set<IView*> topViews(const QList<QGraphicsItem*>& views)
     return result;
 }
 
-template<class T, class U>
-std::list<T> keys(const std::map<T, U> input)
+QSet<SessionItem*> keys(const std::map<SessionItem*, SessionItem*>& input)
 {
-    std::list<T> result;
-    std::transform(input.begin(), input.end(), std::back_inserter(result),
-                   [](const auto& key_value) { return key_value.first; });
+    QSet<SessionItem*> result;
+    std::for_each(input.begin(), input.end(),
+                  [&result](const auto& key_value) { return result.insert(key_value.first); });
     return result;
+}
+
+template<class T>
+QSet<SessionItem *> viewToItem(const T& views)
+{
+    QSet<SessionItem*> items;
+    for (auto view: views)
+        if (auto iview = dynamic_cast<IView*>(view); iview && iview->getItem())
+            items.insert(iview->getItem());
+
+    return items;
 }
 }
