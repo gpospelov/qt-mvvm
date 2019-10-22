@@ -61,6 +61,7 @@ struct ColorMapViewportPlotController::ColorMapViewportPlotControllerPrivate {
         colorMapController = std::make_unique<ColorMapPlotController>(custom_plot);
         auto colormap_item = viewport_item()->item<ColorMapItem>(ColorMapViewportItem::T_ITEMS);
         colorMapController->setItem(colormap_item);
+        viewport_item()->update_viewport();
     }
 };
 

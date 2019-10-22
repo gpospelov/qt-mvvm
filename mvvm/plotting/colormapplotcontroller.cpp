@@ -45,6 +45,8 @@ struct ColorMapPlotController::ColorMapPlotControllerPrivate {
 
         data_controller = std::make_unique<Data2DPlotController>(color_map);
         data_controller->setItem(colormap_item()->dataItem());
+
+        custom_plot->replot();
     }
 
 };

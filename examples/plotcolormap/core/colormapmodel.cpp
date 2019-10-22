@@ -26,8 +26,8 @@ void fill_data(Data2DItem* data_item)
     const auto xAxis = data_item->xAxis();
     const auto yAxis = data_item->yAxis();
     std::vector<double> values;
-    for (auto x : xAxis->binCenters()) {
-        for (auto y : yAxis->binCenters()) {
+    for (auto y : yAxis->binCenters()) {
+        for (auto x : xAxis->binCenters()) {
             double r = 3.0 * std::sqrt(x * x + y * y) + 1e-2;
             double z = 2 * x * (std::cos(r + 2) / r - std::sin(r + 2) / r);
             values.push_back(z);
