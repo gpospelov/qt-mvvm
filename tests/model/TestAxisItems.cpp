@@ -53,3 +53,14 @@ TEST_F(TestAxisItems, fixedBinAxisFactory)
     EXPECT_EQ(axis->binCenters(), expected);
     EXPECT_EQ(axis->size(), 3);
 }
+
+//! Range method.
+
+TEST_F(TestAxisItems, fixedBinAxisRange)
+{
+    auto axis = FixedBinAxisItem::create(3, 1.0, 4.0);
+
+    auto [lower, upper] = axis->range();
+    EXPECT_EQ(lower, 1.0);
+    EXPECT_EQ(upper, 4.0);
+}

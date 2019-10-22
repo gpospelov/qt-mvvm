@@ -51,6 +51,11 @@ BinnedAxisItem::BinnedAxisItem(std::string model_type) : BasicAxisItem(model_typ
     register_min_max();
 }
 
+std::pair<double, double> BinnedAxisItem::range() const
+{
+    return std::make_pair(property(P_MIN).toDouble(), property(P_MAX).toDouble());
+}
+
 int BinnedAxisItem::size() const
 {
     return property(P_NBINS).toInt();
