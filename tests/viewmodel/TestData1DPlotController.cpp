@@ -30,6 +30,27 @@ TEST_F(TestData1DPlotController, initialState)
     EXPECT_EQ(controller.currentItem(), nullptr);
 }
 
+//! Testing controller when Data1DItem is not initialized properly.
+
+TEST_F(TestData1DPlotController, dataItemInInitialState)
+{
+    // creating custom plot and empty graph on it
+    auto custom_plot = std::make_unique<QCustomPlot>();
+    auto graph = custom_plot->addGraph();
+
+    // creating data item with single point
+    SessionModel model;
+    auto data_item = model.insertItem<Data1DItem>();
+
+    // creating controller and point it to Data1DItem
+    Data1DPlotController controller(graph);
+    controller.setItem(data_item);
+
+    EXPECT_EQ(std::vector<double>(), TestUtils::binCenters(graph));
+    EXPECT_EQ(std::vector<double>(), TestUtils::binValues(graph));
+}
+
+
 //! Testing graph points update.
 
 TEST_F(TestData1DPlotController, dataPoints)
@@ -52,7 +73,7 @@ TEST_F(TestData1DPlotController, dataPoints)
     EXPECT_EQ(data_item->binValues(), TestUtils::binValues(graph));
 
     // Setting item to nullptr.
-    // FIXME Current convention is that graph stays intact, but points disappear. Is it the right thing?
+    // Current convention is that graph stays intact, but points disappear. Is it the right thing?
     controller.setItem(nullptr);
     EXPECT_EQ(std::vector<double>(), TestUtils::binCenters(graph));
     EXPECT_EQ(std::vector<double>(), TestUtils::binValues(graph));
