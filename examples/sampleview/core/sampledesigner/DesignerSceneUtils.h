@@ -10,11 +10,19 @@
 #ifndef DESIGNERSCENEUTILS_H
 #define DESIGNERSCENEUTILS_H
 
+#include "SampleViewFactory.h"
 #include <QLineF>
+#include <QSet>
+#include <map>
 #include <tuple>
 
 class ILayerView;
 class MultiLayerView;
+class QGraphicsItem;
+
+namespace ModelView {
+class SessionItem;
+}
 
 namespace DesignerSceneUtils
 {
@@ -23,6 +31,29 @@ QLineF getInterfaceToScene(const MultiLayerView& sample, int row);
 
 //! Finds the multilayer and the row position nearest to the center of the given view
 std::tuple<MultiLayerView*, int> nearestMultilayer(const ILayerView& view);
+
+//! Filters out items if their ancestors (parents, grandparents, etc.) are in the input set.
+QSet<ModelView::SessionItem*> headItems(const QSet<ModelView::SessionItem*>& items);
+
+//! Creates and returns an equivalence table between _origin_ and _copy_. The return table
+//! includes the children of passed arguments. If the second argument is not a full copy of the
+//! first one, function behavior is undefined.
+std::map<ModelView::SessionItem*, ModelView::SessionItem*>
+makeLookupTable(ModelView::SessionItem* origin, ModelView::SessionItem* copy);
+
+//! Appends all the views' children and returns a copy.
+QSet<QGraphicsItem*> appendChildren(QList<QGraphicsItem*> views);
+
+//! Filters session items corresponding to some IView instances and returns them.
+template<class T>
+QList<ModelView::SessionItem*> viewableItems(const T& items)
+{
+    QList<ModelView::SessionItem*> result;
+    std::copy_if(items.begin(), items.end(), std::back_inserter(result), [](const auto& item) {
+        return SampleViewFactory::isValidType(item->modelType());
+    });
+    return result;
+}
 };
 
 #endif // DESIGNERSCENEUTILS_H

@@ -9,8 +9,13 @@
 
 #include "DesignerSceneUtils.h"
 #include "MultiLayerView.h"
+#include "SampleViewFactory.h"
+#include "modelutils.h"
+#include <QGraphicsItem>
 #include <QGraphicsScene>
 #include <limits>
+
+using namespace ModelView;
 
 namespace {
 QList<QGraphicsItem*> intersectingItems(const ILayerView& view)
@@ -30,6 +35,18 @@ QList<QGraphicsItem*> intersectingItems(const ILayerView& view)
             return !in_items.contains(item) && item != view_item;
         });
 
+    return result;
+}
+
+//! Returns all ancestors of the argument
+QSet<SessionItem*> ancestors(const SessionItem* item)
+{
+    QSet<SessionItem*> result;
+    SessionItem* parent = item->parent();
+    while (parent) {
+        result.insert(parent);
+        parent = parent->parent();
+    }
     return result;
 }
 }
@@ -68,6 +85,53 @@ DesignerSceneUtils::nearestMultilayer(const ILayerView& view)
             result = {multilayer, row};
             distance = current_distance;
         }
+    }
+    return result;
+}
+
+QSet<SessionItem*> DesignerSceneUtils::headItems(const QSet<SessionItem*>& items)
+{
+    QSet<SessionItem*> result;
+    for (SessionItem* item: items)
+        if (!items.intersects(ancestors(item)))
+            result.insert(item);
+
+    return result;
+}
+
+std::map<SessionItem*, SessionItem*> DesignerSceneUtils::makeLookupTable(SessionItem* origin,
+                                                                         SessionItem* copy)
+{
+    if (!origin || !copy)
+        throw std::runtime_error(
+            "Error in DesignerSceneUtils::makeLookupTable: one of the input arguments is null.");
+
+    std::vector<SessionItem*> origin_tree;
+    Utils::iterate(origin, [&origin_tree](SessionItem* item) { origin_tree.push_back(item); });
+
+    std::vector<SessionItem*> copy_tree;
+    Utils::iterate(copy, [&copy_tree](SessionItem* item) { copy_tree.push_back(item); });
+
+    if (origin_tree.size() != copy_tree.size())
+        throw std::runtime_error(
+            "Error in DesignerSceneUtils::makeLookupTable: origin and copy tree sizes differ.");
+
+    std::map<SessionItem*, SessionItem*> result;
+    std::transform(origin_tree.begin(), origin_tree.end(), copy_tree.begin(),
+                   std::inserter(result, result.end()), [](auto lhs, auto rhs) {
+                       return std::pair{lhs, rhs};
+                   });
+
+    return result;
+}
+
+QSet<QGraphicsItem*> DesignerSceneUtils::appendChildren(QList<QGraphicsItem*> views)
+{
+    QSet<QGraphicsItem*> result;
+    while (!views.empty()) {
+        QGraphicsItem* view = views.takeFirst();
+        result.insert(view);
+        views.append(view->childItems());
     }
     return result;
 }
