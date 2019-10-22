@@ -9,15 +9,19 @@
 
 #include "colormapcanvas.h"
 #include "qcustomplot.h"
+#include "colormapviewportitem.h"
+#include "colormapviewportplotcontroller.h"
 #include <QBoxLayout>
 
 using namespace ModelView;
 
 struct ColorMapCanvas::ColorMapCanvasPrivate {
     QCustomPlot* custom_plot{nullptr};
+    std::unique_ptr<ColorMapViewportPlotController> viewport_controller;
 
     ColorMapCanvasPrivate() : custom_plot(new QCustomPlot)
     {
+        viewport_controller = std::make_unique<ColorMapViewportPlotController>(custom_plot);
     }
 
     QCustomPlot* customPlot() { return custom_plot; }
@@ -39,3 +43,8 @@ ColorMapCanvas::ColorMapCanvas(QWidget* parent)
 }
 
 ColorMapCanvas::~ColorMapCanvas() = default;
+
+void ColorMapCanvas::setItem(ColorMapViewportItem* viewport_item)
+{
+    p_impl->viewport_controller->setItem(viewport_item);
+}
