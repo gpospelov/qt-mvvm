@@ -207,6 +207,30 @@ TEST_F(TestScene, testDeleteMultilayer)
     EXPECT_TRUE(scene->getViewForItem(layout));
 }
 
+TEST_F(TestScene, testTrivialCopy)
+{
+    const auto mlayer = model.insertItem<MultiLayerItem>();
+    const auto layer = model.insertItem<LayerItem>(mlayer, MultiLayerItem::T_LAYERS);
+    model.insertItem<ParticleLayoutItem>(layer, LayerItem::T_LAYOUTS);
+
+    std::vector<SessionItem*> initial;
+    Utils::iterate(model.rootItem(), [&initial](SessionItem* item) { initial.push_back(item); });
+
+    control.copy({});
+
+    std::vector<SessionItem*> on_copy;
+    Utils::iterate(model.rootItem(), [&on_copy](SessionItem* item) { on_copy.push_back(item); });
+
+    EXPECT_EQ(initial, on_copy);
+
+    control.paste();
+
+    std::vector<SessionItem*> on_paste;
+    Utils::iterate(model.rootItem(), [&on_paste](SessionItem* item) { on_paste.push_back(item); });
+
+    EXPECT_EQ(initial, on_paste);
+}
+
 TEST_F(TestScene, testCopy)
 {
     const auto mlayer = model.insertItem<MultiLayerItem>();
