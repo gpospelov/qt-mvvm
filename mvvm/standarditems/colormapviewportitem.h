@@ -17,6 +17,7 @@ namespace ModelView
 
 class GraphItem;
 class ViewportAxisItem;
+class Data2DItem;
 
 /*!
 @class ColorMapViewportItem
@@ -34,6 +35,7 @@ public:
     void update_viewport() override;
 
 private:
+    Data2DItem* data_item() const;
     virtual std::pair<double, double> xaxis_range() const override;
     virtual std::pair<double, double> yaxis_range() const override;
     void update_data_range();
