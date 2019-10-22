@@ -51,7 +51,7 @@ std::vector<GraphItem*> GraphViewportItem::graphItems() const
 
 //! Returns lower, upper range on x-axis occupied by all data points of all graphs.
 
-std::pair<double, double> GraphViewportItem::xaxis_range() const
+std::pair<double, double> GraphViewportItem::data_xaxis_range() const
 {
     // FIXME think of using P_MIN and P_MAX of axis instead of binCenters
     return get_min_max(graphItems(), [](GraphItem* graph) { return graph->binCenters(); });
@@ -59,7 +59,7 @@ std::pair<double, double> GraphViewportItem::xaxis_range() const
 
 //! Returns lower, upper range on y-axis occupied by all data points of all graphs.
 
-std::pair<double, double> GraphViewportItem::yaxis_range() const
+std::pair<double, double> GraphViewportItem::data_yaxis_range() const
 {
     return get_min_max(graphItems(), [](GraphItem* graph) { return graph->binValues(); });
 }

@@ -49,7 +49,7 @@ Data2DItem* ColorMapViewportItem::data_item() const
 
 //! Returns range of x-axis as defined in underlying Data2DItem.
 
-std::pair<double, double> ColorMapViewportItem::xaxis_range() const
+std::pair<double, double> ColorMapViewportItem::data_xaxis_range() const
 {
     auto dataItem = data_item();
     return dataItem && dataItem->xAxis() ? dataItem->xAxis()->range() : default_axis_range;
@@ -57,7 +57,7 @@ std::pair<double, double> ColorMapViewportItem::xaxis_range() const
 
 //! Returns range of y-axis as defined in underlying Data2DItem.
 
-std::pair<double, double> ColorMapViewportItem::yaxis_range() const
+std::pair<double, double> ColorMapViewportItem::data_yaxis_range() const
 {
     auto dataItem = data_item();
     return dataItem && dataItem->yAxis() ? dataItem->yAxis()->range() : default_axis_range;

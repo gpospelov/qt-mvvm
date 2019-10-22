@@ -31,8 +31,8 @@ public:
     std::vector<GraphItem*> graphItems() const;
 
 private:
-    std::pair<double, double> xaxis_range() const override;
-    std::pair<double, double> yaxis_range() const override;
+    std::pair<double, double> data_xaxis_range() const override;
+    std::pair<double, double> data_yaxis_range() const override;
 };
 
 } // namespace ModelView
