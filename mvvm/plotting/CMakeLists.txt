@@ -14,6 +14,8 @@ target_sources(${library_name} PRIVATE
     graphplotcontroller.h
     graphplotcontroller.cpp
     data1dplotcontroller.h
+    data2dplotcontroller.cpp
+    data2dplotcontroller.h
     data1dplotcontroller.cpp
     graphviewportplotcontroller.h
     graphviewportplotcontroller.cpp
