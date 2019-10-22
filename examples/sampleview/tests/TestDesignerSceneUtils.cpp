@@ -110,8 +110,7 @@ TEST_F(TestDesignerSceneUtils, testViewableItems)
     QSet<SessionItem*> all_items;
     Utils::iterate(mlayer, [&all_items](SessionItem* item) { all_items.insert(item); });
 
-    auto result =
-        QSet<SessionItem*>::fromList(DesignerSceneUtils::viewableItems(all_items.toList()));
+    auto result = QSet<SessionItem*>::fromList(DesignerSceneUtils::visibleItems(all_items));
     EXPECT_EQ(result.size(), 3);
     EXPECT_TRUE(result.find(mlayer) != result.end());
     EXPECT_TRUE(result.find(layer) != result.end());

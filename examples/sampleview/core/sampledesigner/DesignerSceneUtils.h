@@ -10,7 +10,6 @@
 #ifndef DESIGNERSCENEUTILS_H
 #define DESIGNERSCENEUTILS_H
 
-#include "SampleViewFactory.h"
 #include <QLineF>
 #include <QSet>
 #include <map>
@@ -45,15 +44,8 @@ makeLookupTable(ModelView::SessionItem* origin, ModelView::SessionItem* copy);
 QSet<QGraphicsItem*> appendChildren(QList<QGraphicsItem*> views);
 
 //! Filters session items corresponding to some IView instances and returns them.
-template<class T>
-QList<ModelView::SessionItem*> viewableItems(const T& items)
-{
-    QList<ModelView::SessionItem*> result;
-    std::copy_if(items.begin(), items.end(), std::back_inserter(result), [](const auto& item) {
-        return SampleViewFactory::isValidType(item->modelType());
-    });
-    return result;
-}
+QList<ModelView::SessionItem*> visibleItems(const std::vector<ModelView::SessionItem*>& items);
+QList<ModelView::SessionItem*> visibleItems(const QSet<ModelView::SessionItem*>& items);
 };
 
 #endif // DESIGNERSCENEUTILS_H

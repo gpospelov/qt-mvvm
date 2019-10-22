@@ -49,6 +49,16 @@ QSet<SessionItem*> ancestors(const SessionItem* item)
     }
     return result;
 }
+
+template<class InputIterator>
+QList<SessionItem*> visibleItems(const InputIterator& begin, const InputIterator& end)
+{
+    QList<ModelView::SessionItem*> result;
+    std::copy_if(begin, end, std::back_inserter(result), [](const auto& item) {
+        return SampleViewFactory::isValidType(item->modelType());
+    });
+    return result;
+}
 }
 
 QLineF DesignerSceneUtils::getInterfaceToScene(const MultiLayerView& sample, int row)
@@ -134,4 +144,14 @@ QSet<QGraphicsItem*> DesignerSceneUtils::appendChildren(QList<QGraphicsItem*> vi
         views.append(view->childItems());
     }
     return result;
+}
+
+QList<SessionItem*> DesignerSceneUtils::visibleItems(const std::vector<SessionItem*>& items)
+{
+    return ::visibleItems(items.begin(), items.end());
+}
+
+QList<SessionItem*> DesignerSceneUtils::visibleItems(const QSet<SessionItem*>& items)
+{
+    return ::visibleItems(items.begin(), items.end());
 }

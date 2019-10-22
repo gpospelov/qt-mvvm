@@ -117,11 +117,11 @@ void SceneModelController::copy(const QList<QGraphicsItem*>& views)
         lookup_table.insert(to_merge.begin(), to_merge.end());
     }
 
-    auto to_remove = DesignerSceneUtils::viewableItems(keys(lookup_table) - selected_items);
+    auto to_remove = DesignerSceneUtils::visibleItems(keys(lookup_table) - selected_items);
 
     // first move all children of unselected items to root
     for (auto item: to_remove)
-        for (SessionItem* child : DesignerSceneUtils::viewableItems(lookup_table[item]->children()))
+        for (SessionItem* child : DesignerSceneUtils::visibleItems(lookup_table[item]->children()))
             m_temp_model.moveItem(child, m_temp_model.rootItem(), {}, -1);
 
     // removing unselected items
