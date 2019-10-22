@@ -26,6 +26,7 @@ TEST_F(TestGraphPlotController, initialState)
 {
     auto custom_plot = std::make_unique<QCustomPlot>();
     GraphPlotController controller(custom_plot.get());
+    EXPECT_EQ(controller.currentItem(), nullptr);
     EXPECT_EQ(custom_plot->graphCount(), 0);
 }
 
