@@ -41,11 +41,6 @@ Data1DPlotController::Data1DPlotController(QCPGraph* graph)
 {
 }
 
-void Data1DPlotController::update_data_points()
-{
-    p_impl->update_graph_points(this);
-}
-
 Data1DPlotController::~Data1DPlotController() = default;
 
 void Data1DPlotController::subscribe()
