@@ -9,7 +9,7 @@
 
 #include "colormapviewportplotcontroller.h"
 #include "axisitems.h"
-#include "axisplotcontrollers.h"
+#include "viewportaxisplotcontroller.h"
 #include "colormapviewportitem.h"
 #include "colormapplotcontroller.h"
 #include "colormapitem.h"
@@ -22,8 +22,8 @@ struct ColorMapViewportPlotController::ColorMapViewportPlotControllerPrivate {
     ColorMapViewportPlotController* master{nullptr};
     QCustomPlot* custom_plot{nullptr};
     std::unique_ptr<ColorMapPlotController> colorMapController;
-    std::unique_ptr<AxisPlotController> xAxisController;
-    std::unique_ptr<AxisPlotController> yAxisController;
+    std::unique_ptr<ViewportAxisPlotController> xAxisController;
+    std::unique_ptr<ViewportAxisPlotController> yAxisController;
 
     ColorMapViewportPlotControllerPrivate(ColorMapViewportPlotController* master, QCustomPlot* plot)
         : master(master), custom_plot(plot)
@@ -47,10 +47,10 @@ struct ColorMapViewportPlotController::ColorMapViewportPlotControllerPrivate {
     {
         auto viewport = viewport_item();
 
-        xAxisController = std::make_unique<AxisPlotController>(custom_plot->xAxis);
+        xAxisController = std::make_unique<ViewportAxisPlotController>(custom_plot->xAxis);
         xAxisController->setItem(viewport->xAxis());
 
-        yAxisController = std::make_unique<AxisPlotController>(custom_plot->yAxis);
+        yAxisController = std::make_unique<ViewportAxisPlotController>(custom_plot->yAxis);
         yAxisController->setItem(viewport->yAxis());
     }
 

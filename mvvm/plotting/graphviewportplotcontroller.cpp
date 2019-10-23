@@ -9,7 +9,7 @@
 
 #include "graphviewportplotcontroller.h"
 #include "axisitems.h"
-#include "axisplotcontrollers.h"
+#include "viewportaxisplotcontroller.h"
 #include "graphitem.h"
 #include "graphplotcontroller.h"
 #include "graphviewportitem.h"
@@ -22,8 +22,8 @@ struct GraphViewportPlotController::GraphViewportPlotControllerPrivate {
     GraphViewportPlotController* master{nullptr};
     QCustomPlot* custom_plot{nullptr};
     std::list<std::unique_ptr<GraphPlotController>> graph_controllers;
-    std::unique_ptr<AxisPlotController> xAxisController;
-    std::unique_ptr<AxisPlotController> yAxisController;
+    std::unique_ptr<ViewportAxisPlotController> xAxisController;
+    std::unique_ptr<ViewportAxisPlotController> yAxisController;
 
     GraphViewportPlotControllerPrivate(GraphViewportPlotController* master, QCustomPlot* plot)
         : master(master), custom_plot(plot)
@@ -45,10 +45,10 @@ struct GraphViewportPlotController::GraphViewportPlotControllerPrivate {
     {
         auto viewport = viewport_item();
 
-        xAxisController = std::make_unique<AxisPlotController>(custom_plot->xAxis);
+        xAxisController = std::make_unique<ViewportAxisPlotController>(custom_plot->xAxis);
         xAxisController->setItem(viewport->xAxis());
 
-        yAxisController = std::make_unique<AxisPlotController>(custom_plot->yAxis);
+        yAxisController = std::make_unique<ViewportAxisPlotController>(custom_plot->yAxis);
         yAxisController->setItem(viewport->yAxis());
     }
 
