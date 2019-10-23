@@ -66,3 +66,40 @@ TEST_F(TestColorMapPlotController, setItem)
     EXPECT_TRUE(color_map->interpolate());
 }
 
+//! Setting data to graph after.
+
+TEST_F(TestColorMapPlotController, setDataAfter)
+{
+    auto custom_plot = std::make_unique<QCustomPlot>();
+    ColorMapPlotController controller(custom_plot.get());
+
+    SessionModel model;
+    auto colormap_item = model.insertItem<ColorMapItem>();
+
+    controller.setItem(colormap_item);
+
+    // without data QCustomPlot has QCPColorMap without default settings
+    EXPECT_EQ(custom_plot->plottableCount(), 1);
+    auto color_map = TestUtils::GetPlottable<QCPColorMap>(custom_plot.get());
+    ASSERT_TRUE(color_map != nullptr);
+    const int qcpmap_internal_default(10);
+    EXPECT_EQ(color_map->data()->keySize(), qcpmap_internal_default);
+    EXPECT_EQ(color_map->data()->valueSize(), qcpmap_internal_default);
+
+    // setup Data2DItem and assign to ColorMapItem
+    auto data_item = model.insertItem<Data2DItem>();
+    const int nx = 3, ny = 2;
+    data_item->setAxes(FixedBinAxisItem::create(nx, 0.0, 3.0),
+                       FixedBinAxisItem::create(ny, 0.0, 2.0));
+    std::vector<double> expected = {1.0, 2.0, 3.0, 4.0, 5.0, 6.0};
+    data_item->setContent(expected);
+
+    colormap_item->setDataItem(data_item);
+
+    // colormap should get the sahpe of Data2DItem
+    EXPECT_EQ(color_map->data()->keySize(), nx);
+    EXPECT_EQ(color_map->data()->valueSize(), ny);
+    EXPECT_EQ(color_map->data()->cell(0, 0), 1.0);
+    EXPECT_EQ(color_map->data()->cell(nx - 1, ny - 1), 6.0);
+}
+
