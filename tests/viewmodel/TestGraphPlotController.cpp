@@ -79,7 +79,7 @@ TEST_F(TestGraphPlotController, setDataAfter)
     EXPECT_EQ(TestUtils::binCenters(graph), std::vector<double>());
     EXPECT_EQ(TestUtils::binValues(graph), std::vector<double>());
 
-    // setup data after and single data item in it
+    // setup Data1DItem and assign to GraphItem
     auto data_item = model.insertItem<Data1DItem>();
     data_item->setAxis(FixedBinAxisItem::create(2, 0.0, 2.0));
     std::vector<double> expected_centers = {0.5, 1.5};

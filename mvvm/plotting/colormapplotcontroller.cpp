@@ -43,10 +43,7 @@ struct ColorMapPlotController::ColorMapPlotControllerPrivate {
         color_map = new QCPColorMap(custom_plot->xAxis, custom_plot->yAxis);
         color_scale = new QCPColorScale(custom_plot);
 
-        if (colormap_item()->dataItem()) {
-            data_controller = std::make_unique<Data2DPlotController>(color_map);
-            data_controller->setItem(colormap_item()->dataItem());
-        }
+        create_data_controller();
 
         update_interpolation();
     }
@@ -58,6 +55,14 @@ struct ColorMapPlotController::ColorMapPlotControllerPrivate {
         custom_plot->replot();
     }
 
+    void create_data_controller()
+    {
+        if (!colormap_item()->dataItem())
+            return;
+
+        data_controller = std::make_unique<Data2DPlotController>(color_map);
+        data_controller->setItem(colormap_item()->dataItem());
+    }
 };
 
 ColorMapPlotController::ColorMapPlotController(QCustomPlot* custom_plot)
@@ -70,6 +75,9 @@ void ColorMapPlotController::subscribe()
     auto on_property_change = [this](SessionItem*, std::string property_name) {
         if (property_name == ColorMapItem::P_INTERPOLATION)
             p_impl->update_interpolation();
+
+        if (property_name == ColorMapItem::P_LINK)
+            p_impl->create_data_controller();
     };
     currentItem()->mapper()->setOnPropertyChange(on_property_change, this);
 
