@@ -25,7 +25,7 @@ class ViewportAxisItem;
 
 /*!
 @class AxisPlotController
-@brief Abstract base to establish communication between QCPAxis and ViewportAxisItem.
+@brief Establishes communication between QCPAxis and ViewportAxisItem.
 
 Provide mutual update of axis parameters (min, max, title) for two axes representations.
 */
@@ -33,51 +33,17 @@ Provide mutual update of axis parameters (min, max, title) for two axes represen
 class CORE_EXPORT AxisPlotController : public ItemController<ViewportAxisItem>
 {
 public:
-    // FIXME make QCPAxis a constructor parameter and get rid from hierarchy here
-    explicit AxisPlotController(QCustomPlot* plot);
     explicit AxisPlotController(QCPAxis* axis);
-
     ~AxisPlotController() override;
 
 protected:
-    virtual QCPAxis* customAxis();
     void subscribe() override;
-    QCustomPlot* customPlot();
 
-protected:
+public:
     struct AxesPlotControllerPrivate;
     std::unique_ptr<AxesPlotControllerPrivate> p_impl;
 };
 
-/*!
-@class XAxisPlotController
-@brief Establish communication between QCustomPlot->xAxis and ViewportAxisItem.
-*/
-
-class CORE_EXPORT XAxisPlotController : public AxisPlotController
-{
-public:
-    explicit XAxisPlotController(QCustomPlot* cusom_plot);
-    explicit XAxisPlotController(QCPAxis* axis);
-
-protected:
-    QCPAxis* customAxis() override;
-};
-
-/*!
-@class YAxisPlotController
-@brief Establish communication between QCustomPlot->yAxis and ViewportAxisItem.
-*/
-
-class CORE_EXPORT YAxisPlotController : public AxisPlotController
-{
-public:
-    explicit YAxisPlotController(QCustomPlot* cusom_plot);
-    explicit YAxisPlotController(QCPAxis* axis);
-
-protected:
-    QCPAxis* customAxis() override;
-};
 
 } // namespace ModelView
 
