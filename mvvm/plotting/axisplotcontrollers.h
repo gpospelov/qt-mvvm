@@ -35,14 +35,16 @@ class CORE_EXPORT AxisPlotController : public ItemController<ViewportAxisItem>
 public:
     // FIXME make QCPAxis a constructor parameter and get rid from hierarchy here
     explicit AxisPlotController(QCustomPlot* plot);
+    explicit AxisPlotController(QCPAxis* axis);
+
     ~AxisPlotController() override;
 
 protected:
-    virtual QCPAxis* customAxis() = 0;
+    virtual QCPAxis* customAxis();
     void subscribe() override;
     QCustomPlot* customPlot();
 
-private:
+protected:
     struct AxesPlotControllerPrivate;
     std::unique_ptr<AxesPlotControllerPrivate> p_impl;
 };
@@ -56,6 +58,7 @@ class CORE_EXPORT XAxisPlotController : public AxisPlotController
 {
 public:
     explicit XAxisPlotController(QCustomPlot* cusom_plot);
+    explicit XAxisPlotController(QCPAxis* axis);
 
 protected:
     QCPAxis* customAxis() override;
@@ -70,6 +73,7 @@ class CORE_EXPORT YAxisPlotController : public AxisPlotController
 {
 public:
     explicit YAxisPlotController(QCustomPlot* cusom_plot);
+    explicit YAxisPlotController(QCPAxis* axis);
 
 protected:
     QCPAxis* customAxis() override;

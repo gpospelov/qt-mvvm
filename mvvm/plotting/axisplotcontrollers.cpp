@@ -19,11 +19,13 @@ struct AxisPlotController::AxesPlotControllerPrivate {
 
     AxisPlotController* controller{nullptr};
     QCustomPlot* custom_plot{nullptr};
+    QCPAxis* axis{nullptr};
     bool block_update{false};
     std::unique_ptr<QMetaObject::Connection> axis_conn;
 
-    AxesPlotControllerPrivate(AxisPlotController* controller, QCustomPlot* plot)
-        : controller(controller), custom_plot(plot)
+    AxesPlotControllerPrivate(AxisPlotController* controller, QCustomPlot* plot,
+                              QCPAxis* axis = nullptr)
+        : controller(controller), custom_plot(plot), axis(axis)
     {
         axis_conn = std::make_unique<QMetaObject::Connection>();
     }
@@ -51,6 +53,7 @@ struct AxisPlotController::AxesPlotControllerPrivate {
     void setAxisRangeFromItem()
     {
         auto axis = controller->customAxis();
+        assert(axis);
         auto item = controller->currentItem();
         auto [lower, upper] = item->range();
         axis->setRange(QCPRange(lower, upper));
@@ -60,6 +63,14 @@ struct AxisPlotController::AxesPlotControllerPrivate {
 AxisPlotController::AxisPlotController(QCustomPlot* custom_plot)
     : p_impl(std::make_unique<AxesPlotControllerPrivate>(this, custom_plot))
 {
+}
+
+AxisPlotController::AxisPlotController(QCPAxis* axis)
+    : p_impl(std::make_unique<AxesPlotControllerPrivate>(this, nullptr, axis))
+
+{
+    if (!axis)
+        throw std::runtime_error("AxisPlotController: non initialized axis");
 }
 
 void AxisPlotController::subscribe()
@@ -76,11 +87,16 @@ void AxisPlotController::subscribe()
         if (name == ViewportAxisItem::P_MAX)
             customAxis()->setRangeUpper(item->property(name).toDouble());
 
-        p_impl->custom_plot->replot();
+        // p_impl->custom_plot->replot(); FIXME
     };
     currentItem()->mapper()->setOnPropertyChange(on_property_change, this);
 
     p_impl->setConnected();
+}
+
+QCPAxis* AxisPlotController::customAxis()
+{
+    return p_impl->axis;
 }
 
 QCustomPlot* AxisPlotController::customPlot()
@@ -96,9 +112,11 @@ XAxisPlotController::XAxisPlotController(QCustomPlot* cusom_plot) : AxisPlotCont
 {
 }
 
+XAxisPlotController::XAxisPlotController(QCPAxis* axis) : AxisPlotController(axis) {}
+
 QCPAxis* XAxisPlotController::customAxis()
 {
-    return customPlot()->xAxis;
+    return p_impl->axis ? p_impl->axis : customPlot()->xAxis;
 }
 
 // ----------------------------------------------------------------------------
@@ -107,7 +125,9 @@ YAxisPlotController::YAxisPlotController(QCustomPlot* cusom_plot) : AxisPlotCont
 {
 }
 
+YAxisPlotController::YAxisPlotController(QCPAxis* axis) : AxisPlotController(axis) {}
+
 QCPAxis* YAxisPlotController::customAxis()
 {
-    return customPlot()->yAxis;
+    return p_impl->axis ? p_impl->axis : customPlot()->yAxis;
 }
