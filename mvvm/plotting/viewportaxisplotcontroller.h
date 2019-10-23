@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_AXISPLOTCONTROLLERS_H
-#define MVVM_AXISPLOTCONTROLLERS_H
+#ifndef MVVM_VIEWPORTAXISPLOTCONTROLLERS_H
+#define MVVM_VIEWPORTAXISPLOTCONTROLLERS_H
 
 //! @file axisplotcontroller.h
 //! Collection of controllers to connect QCustomPlot's axes with our AxisItems.
@@ -24,17 +24,17 @@ namespace ModelView
 class ViewportAxisItem;
 
 /*!
-@class AxisPlotController
+@class ViewportAxisPlotController
 @brief Establishes communication between QCPAxis and ViewportAxisItem.
 
 Provide mutual update of axis parameters (min, max, title) for two axes representations.
 */
 
-class CORE_EXPORT AxisPlotController : public ItemController<ViewportAxisItem>
+class CORE_EXPORT ViewportAxisPlotController : public ItemController<ViewportAxisItem>
 {
 public:
-    explicit AxisPlotController(QCPAxis* axis);
-    ~AxisPlotController() override;
+    explicit ViewportAxisPlotController(QCPAxis* axis);
+    ~ViewportAxisPlotController() override;
 
 protected:
     void subscribe() override;
@@ -47,4 +47,4 @@ public:
 
 } // namespace ModelView
 
-#endif // MVVM_AXISPLOTCONTROLLERS_H
+#endif // MVVM_VIEWPORTAXISPLOTCONTROLLERS_H

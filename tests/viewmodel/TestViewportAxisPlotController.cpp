@@ -1,5 +1,5 @@
 #include "axisitems.h"
-#include "axisplotcontrollers.h"
+#include "viewportaxisplotcontroller.h"
 #include "google_test.h"
 #include "qcustomplot.h"
 #include "sessionmodel.h"
@@ -9,10 +9,10 @@ using namespace ModelView;
 
 //! Testing AxisPlotControllers.
 
-class TestAxisPlotControllers : public ::testing::Test
+class TestViewportAxisPlotController : public ::testing::Test
 {
 public:
-    ~TestAxisPlotControllers();
+    ~TestViewportAxisPlotController();
 
     std::unique_ptr<QSignalSpy> createSpy(QCPAxis* axis)
     {
@@ -21,14 +21,14 @@ public:
     }
 };
 
-TestAxisPlotControllers::~TestAxisPlotControllers() = default;
+TestViewportAxisPlotController::~TestViewportAxisPlotController() = default;
 
 //! Initial state.
 
-TEST_F(TestAxisPlotControllers, xAxisControllerInitialState)
+TEST_F(TestViewportAxisPlotController, xAxisControllerInitialState)
 {
     auto custom_plot = std::make_unique<QCustomPlot>();
-    AxisPlotController controller(custom_plot->xAxis);
+    ViewportAxisPlotController controller(custom_plot->xAxis);
 
     auto xChanged = createSpy(custom_plot->xAxis);
     auto yChanged = createSpy(custom_plot->yAxis);
@@ -46,7 +46,7 @@ TEST_F(TestAxisPlotControllers, xAxisControllerInitialState)
 //! Controller subscribed to ViewportAxisItem.
 //! Checking that QCPAxis get same parameters as in AxisItem.
 
-TEST_F(TestAxisPlotControllers, setViewportAxisItem)
+TEST_F(TestViewportAxisPlotController, setViewportAxisItem)
 {
     auto custom_plot = std::make_unique<QCustomPlot>();
     const double expected_min = 1.0;
@@ -60,7 +60,7 @@ TEST_F(TestAxisPlotControllers, setViewportAxisItem)
 
     // setting up QCustomPlot and item controller.
     ASSERT_TRUE(custom_plot->xAxis != nullptr);
-    AxisPlotController controller(custom_plot->xAxis);
+    ViewportAxisPlotController controller(custom_plot->xAxis);
 
     auto prev_y_range = custom_plot->yAxis->range();
     auto xChanged = createSpy(custom_plot->xAxis);
@@ -81,7 +81,7 @@ TEST_F(TestAxisPlotControllers, setViewportAxisItem)
 //! Controller subscribed to ViewportAxisItem.
 //! Change QCPAxis and check that ViewportAxisItem got new values.
 
-TEST_F(TestAxisPlotControllers, changeQCPAxis)
+TEST_F(TestViewportAxisPlotController, changeQCPAxis)
 {
     auto custom_plot = std::make_unique<QCustomPlot>();
 
@@ -98,7 +98,7 @@ TEST_F(TestAxisPlotControllers, changeQCPAxis)
     auto yChanged = createSpy(custom_plot->yAxis);
 
     // Setting up controller.
-    AxisPlotController controller(custom_plot->xAxis);
+    ViewportAxisPlotController controller(custom_plot->xAxis);
     controller.setItem(axisItem);
 
     EXPECT_EQ(xChanged->count(), 1);
@@ -117,7 +117,7 @@ TEST_F(TestAxisPlotControllers, changeQCPAxis)
 //! Controller subscribed to ViewportAxisItem.
 //! Change ViewportAxisItem and check that QCPAxis got new values.
 
-TEST_F(TestAxisPlotControllers, changeViewportAxisItem)
+TEST_F(TestViewportAxisPlotController, changeViewportAxisItem)
 {
     auto custom_plot = std::make_unique<QCustomPlot>();
 
@@ -128,7 +128,7 @@ TEST_F(TestAxisPlotControllers, changeViewportAxisItem)
     axisItem->setProperty(ViewportAxisItem::P_MAX, 42.1);
 
     // setting up QCustomPlot and item controller.
-    AxisPlotController controller(custom_plot->xAxis);
+    ViewportAxisPlotController controller(custom_plot->xAxis);
     controller.setItem(axisItem);
     auto xChanged = createSpy(custom_plot->xAxis);
     auto yChanged = createSpy(custom_plot->yAxis);
@@ -150,7 +150,7 @@ TEST_F(TestAxisPlotControllers, changeViewportAxisItem)
 //! Change ViewportAxisItem and check that QCPAxis got new values.
 //! Same text as before, only QCPAxis y-axis checked.
 
-TEST_F(TestAxisPlotControllers, changeViewportAxisItemYCase)
+TEST_F(TestViewportAxisPlotController, changeViewportAxisItemYCase)
 {
     auto custom_plot = std::make_unique<QCustomPlot>();
 
@@ -161,7 +161,7 @@ TEST_F(TestAxisPlotControllers, changeViewportAxisItemYCase)
     axisItem->setProperty(ViewportAxisItem::P_MAX, 42.1);
 
     // setting up QCustomPlot and item controller.
-    AxisPlotController controller(custom_plot->yAxis);
+    ViewportAxisPlotController controller(custom_plot->yAxis);
     controller.setItem(axisItem);
     auto xChanged = createSpy(custom_plot->xAxis);
     auto yChanged = createSpy(custom_plot->yAxis);
