@@ -61,4 +61,8 @@ TEST_F(TestColorMapPlotController, setItem)
     EXPECT_EQ(color_map->data()->valueSize(), ny);
     EXPECT_EQ(color_map->data()->cell(0, 0), 1.0);
     EXPECT_EQ(color_map->data()->cell(nx - 1, ny - 1), 6.0);
+
+    // checking interpolation flag
+    EXPECT_TRUE(color_map->interpolate());
 }
+
