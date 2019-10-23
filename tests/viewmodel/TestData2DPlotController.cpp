@@ -5,6 +5,7 @@
 #include "google_test.h"
 #include "qcustomplot.h"
 #include "sessionmodel.h"
+#include <QSignalSpy>
 
 using namespace ModelView;
 
@@ -160,4 +161,33 @@ TEST_F(TestData2DPlotController, twoDataItems)
     EXPECT_EQ(color_map->data()->valueSize(), ny2);
     EXPECT_EQ(color_map->data()->cell(0, 0), 10.0);
     EXPECT_EQ(color_map->data()->cell(nx2 - 1, ny2 - 1), 20.0);
+}
+
+//! Testing data range.
+
+TEST_F(TestData2DPlotController, dataRange)
+{
+    // creating custom plot and empty graph on it
+    auto custom_plot = std::make_unique<QCustomPlot>();
+    auto color_map = new QCPColorMap(custom_plot->xAxis, custom_plot->yAxis);
+
+    // creating data item with single point
+    SessionModel model;
+    auto data_item = model.insertItem<Data2DItem>();
+    const int nx = 3, ny = 2;
+    data_item->setAxes(FixedBinAxisItem::create(nx, 0.0, 3.0),
+                       FixedBinAxisItem::create(ny, 0.0, 2.0));
+    std::vector<double> expected = {1.0, 2.0, 3.0, 4.0, 5.0, 6.0};
+    data_item->setContent(expected);
+
+    // creating controller and point it to Data2DItem
+    Data2DPlotController controller(color_map);
+    controller.setItem(data_item);
+
+    QSignalSpy spy(color_map, &QCPColorMap::dataRangeChanged);
+
+    auto range = color_map->dataRange();
+    EXPECT_EQ(spy.count(), 0);
+    EXPECT_EQ(range.lower, 1.0);
+    EXPECT_EQ(range.upper, 6.0);
 }

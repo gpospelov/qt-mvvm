@@ -11,6 +11,7 @@
 #include "axisitems.h"
 #include "data2ditem.h"
 #include "qcustomplot.h"
+#include <algorithm>
 
 using namespace ModelView;
 
@@ -56,6 +57,8 @@ struct Data2DPlotController::Data2DPlotControllerPrivate {
                         color_map->data()->setCell(ix, iy,
                                                    values[static_cast<size_t>(ix + iy * nbinsx)]);
 
+                auto [min, max] = std::minmax_element(std::begin(values), std::end(values));
+                color_map->setDataRange(QCPRange(*min, *max));
             }
         }
         color_map->parentPlot()->replot();

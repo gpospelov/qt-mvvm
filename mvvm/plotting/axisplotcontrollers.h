@@ -33,6 +33,7 @@ Provide mutual update of axis parameters (min, max, title) for two axes represen
 class CORE_EXPORT AxisPlotController : public ItemController<ViewportAxisItem>
 {
 public:
+    // FIXME make QCPAxis a constructor parameter and get rid from hierarchy here
     explicit AxisPlotController(QCustomPlot* plot);
     ~AxisPlotController() override;
 
