@@ -10,14 +10,19 @@
 #include "axisitems.h"
 #include "plottableitems.h"
 
+namespace {
+const double default_axis_min = 0.0;
+const double default_axis_max = 1.0;
+}
+
 using namespace ModelView;
 
 BasicAxisItem::BasicAxisItem(std::string model_type) : CompoundItem(model_type) {}
 
 void BasicAxisItem::register_min_max()
 {
-    addProperty(P_MIN, 0.0)->setDisplayName("Min");
-    addProperty(P_MAX, 1.0)->setDisplayName("Max");
+    addProperty(P_MIN, default_axis_min)->setDisplayName("Min");
+    addProperty(P_MAX, default_axis_max)->setDisplayName("Max");
 }
 
 // --- ViewportAxisItem ------------------------------------------------------
@@ -49,6 +54,11 @@ BinnedAxisItem::BinnedAxisItem(std::string model_type) : BasicAxisItem(model_typ
 {
     addProperty(P_NBINS, 1)->setDisplayName("Nbins");
     register_min_max();
+}
+
+std::pair<double, double> BinnedAxisItem::range() const
+{
+    return std::make_pair(property(P_MIN).toDouble(), property(P_MAX).toDouble());
 }
 
 int BinnedAxisItem::size() const

@@ -18,13 +18,15 @@ using namespace ModelView;
 struct AxisPlotController::AxesPlotControllerPrivate {
 
     AxisPlotController* controller{nullptr};
-    QCustomPlot* custom_plot{nullptr};
+    QCPAxis* axis{nullptr};
     bool block_update{false};
     std::unique_ptr<QMetaObject::Connection> axis_conn;
 
-    AxesPlotControllerPrivate(AxisPlotController* controller, QCustomPlot* plot)
-        : controller(controller), custom_plot(plot)
+    AxesPlotControllerPrivate(AxisPlotController* controller, QCPAxis* axis = nullptr)
+        : controller(controller), axis(axis)
     {
+        if (!axis)
+            throw std::runtime_error("AxisPlotController: axis is not initialized.");
         axis_conn = std::make_unique<QMetaObject::Connection>();
     }
 
@@ -40,8 +42,8 @@ struct AxisPlotController::AxesPlotControllerPrivate {
         };
 
         *axis_conn = QObject::connect(
-            controller->customAxis(),
-            static_cast<void (QCPAxis::*)(const QCPRange&)>(&QCPAxis::rangeChanged), on_axis_range);
+            axis, static_cast<void (QCPAxis::*)(const QCPRange&)>(&QCPAxis::rangeChanged),
+            on_axis_range);
     }
 
     //! Disonnects QCustomPlot signals.
@@ -50,17 +52,18 @@ struct AxisPlotController::AxesPlotControllerPrivate {
     //! Sets axesRange from SessionItem.
     void setAxisRangeFromItem()
     {
-        auto axis = controller->customAxis();
-        auto item = controller->currentItem();
-        auto [lower, upper] = item->range();
+        auto [lower, upper] = controller->currentItem()->range();
         axis->setRange(QCPRange(lower, upper));
     }
 };
 
-AxisPlotController::AxisPlotController(QCustomPlot* custom_plot)
-    : p_impl(std::make_unique<AxesPlotControllerPrivate>(this, custom_plot))
+AxisPlotController::AxisPlotController(QCPAxis* axis)
+    : p_impl(std::make_unique<AxesPlotControllerPrivate>(this, axis))
+
 {
 }
+
+AxisPlotController::~AxisPlotController() = default;
 
 void AxisPlotController::subscribe()
 {
@@ -71,43 +74,14 @@ void AxisPlotController::subscribe()
             return;
 
         if (name == ViewportAxisItem::P_MIN)
-            customAxis()->setRangeLower(item->property(name).toDouble());
+            p_impl->axis->setRangeLower(item->property(name).toDouble());
 
         if (name == ViewportAxisItem::P_MAX)
-            customAxis()->setRangeUpper(item->property(name).toDouble());
+            p_impl->axis->setRangeUpper(item->property(name).toDouble());
 
-        p_impl->custom_plot->replot();
+        p_impl->axis->parentPlot()->replot();
     };
     currentItem()->mapper()->setOnPropertyChange(on_property_change, this);
 
     p_impl->setConnected();
-}
-
-QCustomPlot* AxisPlotController::customPlot()
-{
-    return p_impl->custom_plot;
-}
-
-AxisPlotController::~AxisPlotController() = default;
-
-// ----------------------------------------------------------------------------
-
-XAxisPlotController::XAxisPlotController(QCustomPlot* cusom_plot) : AxisPlotController(cusom_plot)
-{
-}
-
-QCPAxis* XAxisPlotController::customAxis()
-{
-    return customPlot()->xAxis;
-}
-
-// ----------------------------------------------------------------------------
-
-YAxisPlotController::YAxisPlotController(QCustomPlot* cusom_plot) : AxisPlotController(cusom_plot)
-{
-}
-
-QCPAxis* YAxisPlotController::customAxis()
-{
-    return customPlot()->yAxis;
 }

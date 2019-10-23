@@ -8,32 +8,34 @@
 // ************************************************************************** //
 
 #include "data1dplotcontroller.h"
-#include "qcustomplot.h"
 #include "data1ditem.h"
+#include "qcustomplot.h"
 
 using namespace ModelView;
 
 struct Data1DPlotController::Data1DPlotControllerPrivate {
     QCPGraph* m_graph{nullptr};
-    Data1DPlotControllerPrivate(QCPGraph* graph) : m_graph(graph) {
+    Data1DPlotControllerPrivate(QCPGraph* graph) : m_graph(graph)
+    {
         if (!m_graph)
             throw std::runtime_error("Uninitialised graph in Data1DPlotController");
     }
 
-    void update_graph_points(Data1DPlotController* controller) {
+    void update_graph_points(Data1DPlotController* controller)
+    {
         auto data_item = controller->currentItem();
         if (data_item) {
             m_graph->setData(QVector<double>::fromStdVector(data_item->binCenters()),
-                        QVector<double>::fromStdVector(data_item->binValues()));
+                             QVector<double>::fromStdVector(data_item->binValues()));
             m_graph->parentPlot()->replot();
         }
     }
 
-    void reset_graph() {
+    void reset_graph()
+    {
         m_graph->setData(QVector<double>{}, QVector<double>{});
         m_graph->parentPlot()->replot();
     }
-
 };
 
 Data1DPlotController::Data1DPlotController(QCPGraph* graph)
@@ -41,18 +43,11 @@ Data1DPlotController::Data1DPlotController(QCPGraph* graph)
 {
 }
 
-void Data1DPlotController::update_data_points()
-{
-    p_impl->update_graph_points(this);
-}
-
 Data1DPlotController::~Data1DPlotController() = default;
 
 void Data1DPlotController::subscribe()
 {
-    auto on_data_change = [this](SessionItem*, int) {
-        p_impl->update_graph_points(this);
-    };
+    auto on_data_change = [this](SessionItem*, int) { p_impl->update_graph_points(this); };
     currentItem()->mapper()->setOnDataChange(on_data_change, this);
 
     p_impl->update_graph_points(this);

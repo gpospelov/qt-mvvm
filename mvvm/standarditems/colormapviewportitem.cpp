@@ -14,6 +14,10 @@
 #include <algorithm>
 #include <vector>
 
+namespace {
+const std::pair<double, double> default_axis_range{0.0, 1.0};
+}
+
 using namespace ModelView;
 
 ColorMapViewportItem::ColorMapViewportItem() : ViewportItem(Constants::ColorMapViewportItemType)
@@ -35,21 +39,37 @@ void ColorMapViewportItem::update_viewport()
     update_data_range();
 }
 
-std::pair<double, double> ColorMapViewportItem::xaxis_range() const
+//! Returns Data2DItem if exists.
+
+Data2DItem* ColorMapViewportItem::data_item() const
 {
-    return xAxis()->range();
+    auto colormap_item = item<ColorMapItem>(T_ITEMS);
+    return colormap_item ? colormap_item->dataItem() : nullptr;
 }
 
-std::pair<double, double> ColorMapViewportItem::yaxis_range() const
+//! Returns range of x-axis as defined in underlying Data2DItem.
+
+std::pair<double, double> ColorMapViewportItem::data_xaxis_range() const
 {
-    return yAxis()->range();
+    auto dataItem = data_item();
+    return dataItem && dataItem->xAxis() ? dataItem->xAxis()->range() : default_axis_range;
+}
+
+//! Returns range of y-axis as defined in underlying Data2DItem.
+
+std::pair<double, double> ColorMapViewportItem::data_yaxis_range() const
+{
+    auto dataItem = data_item();
+    return dataItem && dataItem->yAxis() ? dataItem->yAxis()->range() : default_axis_range;
 }
 
 //! Updates zAxis to lower, upper values over all data points.
 
 void ColorMapViewportItem::update_data_range()
 {
-    auto values = item<ColorMapItem>(T_ITEMS)->dataItem()->content();
-    auto [lower, upper] = std::minmax_element(std::begin(values), std::end(values));
-    zAxis()->set_range(*lower, *upper);
+    if (auto dataItem = data_item(); dataItem) {
+        auto values = dataItem->content();
+        auto [lower, upper] = std::minmax_element(std::begin(values), std::end(values));
+        zAxis()->set_range(*lower, *upper);
+    }
 }

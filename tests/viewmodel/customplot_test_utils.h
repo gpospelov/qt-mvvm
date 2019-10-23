@@ -12,8 +12,7 @@
 
 #include <vector>
 #include <algorithm>
-
-class QCPGraph;
+#include <qcustomplot.h>
 
 //! Various common utils for unit tests.
 
@@ -37,6 +36,16 @@ std::vector<double> binCenters(const QCPGraph* graph);
 //! Returns vector representing y-values on QCPgraph.
 std::vector<double> binValues(const QCPGraph* graph);
 
+//! Finds and returns specific plottable in QCustomPlot canvas.
+template <typename T>
+T* GetPlottable(QCustomPlot* custom_plot)
+{
+    for(int i=0; i<custom_plot->plottableCount(); ++i) {
+        if (auto plottable = dynamic_cast<T*>(custom_plot->plottable()); plottable)
+            return plottable;
+    }
+    return nullptr;
+}
 }
 
 #endif

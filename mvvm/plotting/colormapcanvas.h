@@ -19,6 +19,8 @@ class QCustomPlot;
 namespace ModelView
 {
 
+class ColorMapViewportItem;
+
 /*!
 @class ColorMapCanvas
 @brief Widget to show 2D data as color map.
@@ -32,6 +34,7 @@ public:
     explicit ColorMapCanvas(QWidget* parent = nullptr);
     ~ColorMapCanvas() override;
 
+    void setItem(ColorMapViewportItem* viewport_item);
 
 private:
     struct ColorMapCanvasPrivate;

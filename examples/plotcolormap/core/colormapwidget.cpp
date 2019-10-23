@@ -12,6 +12,7 @@
 #include "colormappropertywidget.h"
 #include "modelutils.h"
 #include "colormapcanvas.h"
+#include "colormapviewportitem.h"
 #include <QAction>
 #include <QBoxLayout>
 #include <QDebug>
@@ -50,6 +51,8 @@ void ColorMapWidget::setModel(ColorMapModel* model)
     m_model = model;
 
     m_propertyWidget->setModel(model);
+
+    m_colorMapCanvas->setItem(Utils::TopItem<ColorMapViewportItem>(model));
 }
 
 void ColorMapWidget::init_actions()

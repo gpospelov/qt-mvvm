@@ -21,7 +21,9 @@ class GraphViewportItem;
 
 /*!
 @class GraphViewportPlotController
-@brief Populates custom plot with all graphs found in GraphViewportItem.
+@brief Establishes communications and mutual updates for GraphViewportItem and QCutomPlot.
+
+Populates custom plot with all graphs found in GraphViewportItem.
 */
 
 class CORE_EXPORT GraphViewportPlotController : public ItemController<GraphViewportItem>

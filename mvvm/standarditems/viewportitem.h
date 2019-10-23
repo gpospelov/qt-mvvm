@@ -44,8 +44,8 @@ protected:
     void register_xy_axes();
 
 private:
-    virtual std::pair<double, double> xaxis_range() const = 0;
-    virtual std::pair<double, double> yaxis_range() const = 0;
+    virtual std::pair<double, double> data_xaxis_range() const = 0;
+    virtual std::pair<double, double> data_yaxis_range() const = 0;
 };
 
 } // namespace ModelView

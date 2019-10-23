@@ -28,7 +28,7 @@ TestAxisPlotControllers::~TestAxisPlotControllers() = default;
 TEST_F(TestAxisPlotControllers, xAxisControllerInitialState)
 {
     auto custom_plot = std::make_unique<QCustomPlot>();
-    XAxisPlotController controller(custom_plot.get());
+    AxisPlotController controller(custom_plot->xAxis);
 
     auto xChanged = createSpy(custom_plot->xAxis);
     auto yChanged = createSpy(custom_plot->yAxis);
@@ -59,7 +59,8 @@ TEST_F(TestAxisPlotControllers, setViewportAxisItem)
     axisItem->setProperty(ViewportAxisItem::P_MAX, expected_max);
 
     // setting up QCustomPlot and item controller.
-    XAxisPlotController controller(custom_plot.get());
+    ASSERT_TRUE(custom_plot->xAxis != nullptr);
+    AxisPlotController controller(custom_plot->xAxis);
 
     auto prev_y_range = custom_plot->yAxis->range();
     auto xChanged = createSpy(custom_plot->xAxis);
@@ -97,7 +98,7 @@ TEST_F(TestAxisPlotControllers, changeQCPAxis)
     auto yChanged = createSpy(custom_plot->yAxis);
 
     // Setting up controller.
-    XAxisPlotController controller(custom_plot.get());
+    AxisPlotController controller(custom_plot->xAxis);
     controller.setItem(axisItem);
 
     EXPECT_EQ(xChanged->count(), 1);
@@ -127,7 +128,7 @@ TEST_F(TestAxisPlotControllers, changeViewportAxisItem)
     axisItem->setProperty(ViewportAxisItem::P_MAX, 42.1);
 
     // setting up QCustomPlot and item controller.
-    XAxisPlotController controller(custom_plot.get());
+    AxisPlotController controller(custom_plot->xAxis);
     controller.setItem(axisItem);
     auto xChanged = createSpy(custom_plot->xAxis);
     auto yChanged = createSpy(custom_plot->yAxis);
@@ -160,7 +161,7 @@ TEST_F(TestAxisPlotControllers, changeViewportAxisItemYCase)
     axisItem->setProperty(ViewportAxisItem::P_MAX, 42.1);
 
     // setting up QCustomPlot and item controller.
-    YAxisPlotController controller(custom_plot.get());
+    AxisPlotController controller(custom_plot->yAxis);
     controller.setItem(axisItem);
     auto xChanged = createSpy(custom_plot->xAxis);
     auto yChanged = createSpy(custom_plot->yAxis);

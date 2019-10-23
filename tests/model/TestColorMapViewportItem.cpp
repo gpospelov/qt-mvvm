@@ -30,6 +30,32 @@ TEST_F(TestColorMapViewportItem, initialState)
     EXPECT_EQ(viewport.items<ColorMapItem>(ColorMapViewportItem::T_ITEMS).size(), 0);
 }
 
+//! Update on unitialized viewport.
+
+TEST_F(TestColorMapViewportItem, uninitializedViewportUpdate)
+{
+    SessionModel model;
+
+    auto viewport_item = model.insertItem<ColorMapViewportItem>();
+
+    viewport_item->update_viewport();
+
+    // x-axis of viewport should be set Data2DItem
+    auto [xmin, xmax] = viewport_item->xAxis()->range();
+    EXPECT_DOUBLE_EQ(xmin, 0.0);
+    EXPECT_DOUBLE_EQ(xmax, 1.0);
+
+    // y-axis of viewport should be set Data2DItem
+    auto [ymin, ymax] = viewport_item->yAxis()->range();
+    EXPECT_DOUBLE_EQ(ymin, 0.0);
+    EXPECT_DOUBLE_EQ(ymax, 1.0);
+
+    // z-axis of viewport should be set to min/max content
+    auto [zmin, zmax] = viewport_item->zAxis()->range();
+    EXPECT_DOUBLE_EQ(zmin, 0.0);
+    EXPECT_DOUBLE_EQ(zmax, 1.0);
+}
+
 //! Add graph to viewport.
 
 TEST_F(TestColorMapViewportItem, addItem)
@@ -51,7 +77,17 @@ TEST_F(TestColorMapViewportItem, addItem)
     // updating viewport to graph
     viewport_item->update_viewport();
 
-    // x-axis of viewport should be set to min/max content
+    // x-axis of viewport should be set Data2DItem
+    auto [xmin, xmax] = viewport_item->xAxis()->range();
+    EXPECT_DOUBLE_EQ(xmin, 0.0);
+    EXPECT_DOUBLE_EQ(xmax, 2.0);
+
+    // y-axis of viewport should be set Data2DItem
+    auto [ymin, ymax] = viewport_item->yAxis()->range();
+    EXPECT_DOUBLE_EQ(ymin, 0.0);
+    EXPECT_DOUBLE_EQ(ymax, 3.0);
+
+    // z-axis of viewport should be set to min/max content
     auto [zmin, zmax] = viewport_item->zAxis()->range();
     EXPECT_DOUBLE_EQ(zmin, 1.0);
     EXPECT_DOUBLE_EQ(zmax, 6.0);

@@ -40,7 +40,7 @@ struct GraphPlotController::GraphItemControllerPrivate {
     void remove_graph()
     {
         if (!graph)
-            throw std::runtime_error("No grpah defined");
+            throw std::runtime_error("No graph defined");
 
         data_controller.reset();
         custom_plot->removePlottable(graph);
