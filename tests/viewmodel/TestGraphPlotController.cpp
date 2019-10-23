@@ -121,7 +121,7 @@ TEST_F(TestGraphPlotController, unlinkFromDataItem)
     graph_item->setDataItem(nullptr);
 
     // Checking resulting plottables
-    // FIXME Current convention is that graph stays intact, but points disappear. Is it the right thing?
+    // Current convention is that graph stays intact, but points disappear.
     EXPECT_EQ(custom_plot->graphCount(), 1);
     auto graph = custom_plot->graph();
     EXPECT_EQ(TestUtils::binCenters(graph), std::vector<double>());
