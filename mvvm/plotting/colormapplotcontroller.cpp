@@ -34,11 +34,11 @@ struct ColorMapPlotController::ColorMapPlotControllerPrivate {
 
     void update_colormap()
     {
-        update_controller();
+        update_data_controller();
         update_interpolation();
     }
 
-    void update_controller() { data_controller->setItem(colormap_item()->dataItem()); }
+    void update_data_controller() { data_controller->setItem(colormap_item()->dataItem()); }
 
     //! Updates QCPColorMap's interpolation when corresponding property of ColorMapItem changed.
 
@@ -62,7 +62,7 @@ void ColorMapPlotController::subscribe()
             p_impl->update_interpolation();
 
         if (property_name == ColorMapItem::P_LINK)
-            p_impl->update_controller();
+            p_impl->update_data_controller();
     };
     currentItem()->mapper()->setOnPropertyChange(on_property_change, this);
 
