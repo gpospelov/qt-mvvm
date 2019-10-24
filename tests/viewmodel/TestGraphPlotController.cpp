@@ -1,11 +1,11 @@
-#include "google_test.h"
-#include "qcustomplot.h"
-#include "graphplotcontroller.h"
-#include "graphitem.h"
-#include "sessionmodel.h"
-#include "data1ditem.h"
-#include "customplot_test_utils.h"
 #include "axisitems.h"
+#include "customplot_test_utils.h"
+#include "data1ditem.h"
+#include "google_test.h"
+#include "graphitem.h"
+#include "graphplotcontroller.h"
+#include "qcustomplot.h"
+#include "sessionmodel.h"
 #include <QSignalSpy>
 
 using namespace ModelView;
@@ -94,9 +94,9 @@ TEST_F(TestGraphPlotController, setDataAfter)
     EXPECT_EQ(TestUtils::binValues(graph), expected_values);
 }
 
-//!Unlinking from data item
+//! Unlinking from Data1DItem or GraphItem.
 
-TEST_F(TestGraphPlotController, unlinkFromDataItem)
+TEST_F(TestGraphPlotController, unlinkFromItem)
 {
     auto custom_plot = std::make_unique<QCustomPlot>();
     GraphPlotController controller(custom_plot.get());
@@ -155,9 +155,4 @@ TEST_F(TestGraphPlotController, controllerDelete)
     // deleting controller should lead to graph removal
     controller.reset();
     EXPECT_EQ(custom_plot->graphCount(), 0);
-
-    //  inserting item again
-    graph_item = model.insertItem<GraphItem>();
-    graph_item->setDataItem(data_item);
 }
-

@@ -36,18 +36,8 @@ struct GraphPlotController::GraphItemControllerPrivate {
 
     GraphItem* graph_item() { return master->currentItem(); }
 
-    //! Removes graph from customPlot.
-    void remove_graph()
-    {
-        if (!graph)
-            throw std::runtime_error("No graph defined");
-
-        data_controller.reset();
-        custom_plot->removePlottable(graph);
-        graph = nullptr;
-    }
-
     //! Creates graph on canvas and setups data controller.
+
     void create_graph()
     {
         if (graph)
@@ -66,6 +56,7 @@ struct GraphPlotController::GraphItemControllerPrivate {
     }
 
     //! Updates graph pen from GraphItem.
+
     void update_graph_pen()
     {
         if (!graph)
@@ -74,6 +65,18 @@ struct GraphPlotController::GraphItemControllerPrivate {
         auto color = graph_item()->property(GraphItem::P_COLOR).value<QColor>();
         graph->setPen(QPen(color));
         custom_plot->replot();
+    }
+
+    //! Removes graph from customPlot.
+
+    void remove_graph()
+    {
+        if (!graph)
+            throw std::runtime_error("No graph defined");
+
+        data_controller.reset();
+        custom_plot->removePlottable(graph);
+        graph = nullptr;
     }
 
 };
