@@ -23,8 +23,9 @@ class GraphItem;
 @class GraphPlotController
 @brief Establish communication between QCPGraph and GraphItem.
 
-This is a part of machinery to plot
 Provide update on QCPGraph (data points, line style, color, etc) when GraphItem is changed.
+QCPGraph is added to QCustomPlot plottables, when controller is created, and removed from
+plottables when controller is destroyed.
 */
 
 class CORE_EXPORT GraphPlotController : public ItemController<GraphItem>

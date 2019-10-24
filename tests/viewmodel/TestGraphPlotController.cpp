@@ -27,7 +27,10 @@ TEST_F(TestGraphPlotController, initialState)
     auto custom_plot = std::make_unique<QCustomPlot>();
     GraphPlotController controller(custom_plot.get());
     EXPECT_EQ(controller.currentItem(), nullptr);
-    EXPECT_EQ(custom_plot->graphCount(), 0);
+    EXPECT_EQ(custom_plot->graphCount(), 1);
+    auto graph = custom_plot->graph();
+    EXPECT_EQ(TestUtils::binCenters(graph), std::vector<double>());
+    EXPECT_EQ(TestUtils::binValues(graph), std::vector<double>());
 }
 
 //! Setting GraphItem with data and checking that plottable contains correct data.
@@ -128,9 +131,9 @@ TEST_F(TestGraphPlotController, unlinkFromItem)
     EXPECT_EQ(TestUtils::binValues(graph), std::vector<double>());
     EXPECT_EQ(graph->pen().color(), QColor(Qt::red));
 
-    // unlinking from graph item
+    // unlinking from graph item should leave GraphItem intact.
     controller.setItem(nullptr);
-    EXPECT_EQ(custom_plot->graphCount(), 0);
+    EXPECT_EQ(custom_plot->graphCount(), 1);
 }
 
 //! Deletion of controller should lead to graph removal.
