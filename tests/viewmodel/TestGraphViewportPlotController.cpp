@@ -126,9 +126,7 @@ TEST_F(TestGraphViewportPlotController, addAndRemoveGraphs)
     // check that QCustomPlot knows about two graph
     EXPECT_EQ(custom_plot->graphCount(), 2);
 
-    // checking that viewport min, max adjusted to both graphs
-    // FIXME for the moment there is now automatic update of ymin, ymax on children change.
-    // One have to call update_viewport manually. Should we provide automatic min, max calculation?
+    // Checking that viewport min, max adjusted to both graphs when manually call update_viewport()
     viewport_item->update_viewport();
     EXPECT_DOUBLE_EQ(custom_plot->xAxis->range().lower, expected_centers[0]);
     EXPECT_DOUBLE_EQ(custom_plot->xAxis->range().upper, expected_centers[2]);
