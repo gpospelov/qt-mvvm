@@ -35,7 +35,7 @@ struct GraphPlotController::GraphItemControllerPrivate {
 
     GraphItem* graph_item() { return master->currentItem(); }
 
-    //! Creates graph on canvas and setups data controller.
+    //! Updates data controller and graph properties.
 
     void update_graph()
     {
