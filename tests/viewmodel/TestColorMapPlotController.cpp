@@ -27,7 +27,10 @@ TEST_F(TestColorMapPlotController, initialState)
     auto custom_plot = std::make_unique<QCustomPlot>();
     ColorMapPlotController controller(custom_plot.get());
     EXPECT_EQ(controller.currentItem(), nullptr);
-    EXPECT_EQ(custom_plot->plottableCount(), 0);
+
+    // creation of controller leads to the creation of QCPColorMap
+    auto color_map = TestUtils::GetPlottable<QCPColorMap>(custom_plot.get());
+    ASSERT_TRUE(color_map != nullptr);
 }
 
 //! Setting ColorMapItem with data and checking that QCPColorMap appeared among plottables.
@@ -138,9 +141,11 @@ TEST_F(TestColorMapPlotController, unlinkFromItem)
     EXPECT_EQ(color_map->data()->keySize(), 0);
     EXPECT_EQ(color_map->data()->valueSize(), 0);
 
-    // unlinking from ColorMapItem should lead to QCPColorMap removal.
+    // unlinking from ColorMapItem leave QCPColorMap intact
     controller.setItem(nullptr);
-    EXPECT_EQ(custom_plot->plottableCount(), 0);
+    EXPECT_EQ(custom_plot->plottableCount(), 1);
+    EXPECT_EQ(color_map->data()->keySize(), 0);
+    EXPECT_EQ(color_map->data()->valueSize(), 0);
 }
 
 //! Deletion of controller should lead to graph removal.
