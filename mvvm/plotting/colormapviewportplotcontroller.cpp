@@ -28,6 +28,9 @@ struct ColorMapViewportPlotController::ColorMapViewportPlotControllerPrivate {
     ColorMapViewportPlotControllerPrivate(ColorMapViewportPlotController* master, QCustomPlot* plot)
         : master(master), custom_plot(plot)
     {
+        xAxisController = std::make_unique<ViewportAxisPlotController>(custom_plot->xAxis);
+        yAxisController = std::make_unique<ViewportAxisPlotController>(custom_plot->yAxis);
+        colorMapController = std::make_unique<ColorMapPlotController>(custom_plot);
     }
 
     ColorMapViewportItem* viewport_item() { return master->currentItem(); }
@@ -36,32 +39,18 @@ struct ColorMapViewportPlotController::ColorMapViewportPlotControllerPrivate {
 
     void setup_components()
     {
-        create_axis_controllers();
-        create_colormap_controller();
-    }
-
-
-    //! Creates x,y axes controllers.
-
-    void create_axis_controllers()
-    {
         auto viewport = viewport_item();
-
-        xAxisController = std::make_unique<ViewportAxisPlotController>(custom_plot->xAxis);
         xAxisController->setItem(viewport->xAxis());
-
-        yAxisController = std::make_unique<ViewportAxisPlotController>(custom_plot->yAxis);
         yAxisController->setItem(viewport->yAxis());
-    }
-
-    //! Creates colormap controller.
-
-    void create_colormap_controller()
-    {
-        colorMapController = std::make_unique<ColorMapPlotController>(custom_plot);
         auto colormap_item = viewport_item()->item<ColorMapItem>(ColorMapViewportItem::T_ITEMS);
         colorMapController->setItem(colormap_item);
         viewport_item()->update_viewport();
+    }
+
+    void unsubscribe_components() {
+        xAxisController->setItem(nullptr);
+        yAxisController->setItem(nullptr);
+        colorMapController->setItem(nullptr);
     }
 };
 
@@ -72,7 +61,18 @@ ColorMapViewportPlotController::ColorMapViewportPlotController(QCustomPlot* cust
 
 void ColorMapViewportPlotController::subscribe()
 {
+    auto on_row_inserted = [this](SessionItem*, std::string, int) {
+        p_impl->setup_components();
+    };
+    currentItem()->mapper()->setOnRowInserted(on_row_inserted, this);
+
+
     p_impl->setup_components();
+}
+
+void ColorMapViewportPlotController::unsubscribe()
+{
+    p_impl->unsubscribe_components();
 }
 
 ColorMapViewportPlotController::~ColorMapViewportPlotController() = default;

@@ -9,7 +9,7 @@
 using namespace ModelView;
 using ::testing::_;
 
-//! Testing AxesItems.
+//! Testing ColorMapViewportItem.
 
 class TestColorMapViewportItem : public ::testing::Test
 {
