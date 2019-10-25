@@ -32,7 +32,7 @@ TEST_F(TestViewportAxisPlotController, initialState)
     auto axis = custom_plot->xAxis;
 
     // checking initial defaults
-    double customplot_default_lower(0.0), customplot_default_upper(5.0);
+    const double customplot_default_lower(0.0), customplot_default_upper(5.0);
     EXPECT_EQ(axis->range().lower, customplot_default_lower);
     EXPECT_EQ(axis->range().upper, customplot_default_upper);
 

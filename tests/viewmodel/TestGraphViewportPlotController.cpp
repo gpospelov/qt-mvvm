@@ -9,7 +9,7 @@
 
 using namespace ModelView;
 
-//! Testing AxisPlotControllers.
+//! Testing GraphViewportPlotController.
 
 class TestGraphViewportPlotController : public ::testing::Test
 {
