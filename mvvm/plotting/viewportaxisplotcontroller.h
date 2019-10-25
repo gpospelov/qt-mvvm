@@ -10,12 +10,8 @@
 #ifndef MVVM_VIEWPORTAXISPLOTCONTROLLERS_H
 #define MVVM_VIEWPORTAXISPLOTCONTROLLERS_H
 
-//! @file axisplotcontroller.h
-//! Collection of controllers to connect QCustomPlot's axes with our AxisItems.
-
 #include "itemcontroller.h"
 
-class QCustomPlot;
 class QCPAxis;
 
 namespace ModelView
@@ -43,7 +39,6 @@ public:
     struct AxesPlotControllerPrivate;
     std::unique_ptr<AxesPlotControllerPrivate> p_impl;
 };
-
 
 } // namespace ModelView
 
