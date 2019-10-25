@@ -44,6 +44,7 @@ const model_type CompoundItemType = "Compound";
 const model_type VectorItemType = "Vector";
 const model_type LinkedItemType = "Linked";
 const model_type ViewportAxisItemType = "ViewportAxis";
+const model_type AmplitudeAxisItemType = "AmplitudeAxis";
 const model_type FixedBinAxisItemType = "FixedBinAxis";
 const model_type Data1DItemType = "Data1D";
 const model_type Data2DItemType = "Data2D";
