@@ -71,6 +71,8 @@ class CORE_EXPORT AmplitudeAxisItem : public ViewportAxisItem
 public:
     static inline const std::string P_IS_LOG = "P_IS_LOG";
     AmplitudeAxisItem();
+
+    bool is_in_log() const;
 };
 
 /*!
