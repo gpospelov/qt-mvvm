@@ -55,6 +55,11 @@ AmplitudeAxisItem::AmplitudeAxisItem() : ViewportAxisItem(Constants::AmplitudeAx
     addProperty(P_IS_LOG, false)->setDisplayName("log10");
 }
 
+bool AmplitudeAxisItem::is_in_log() const
+{
+    return property(P_IS_LOG).toBool();
+}
+
 // --- BinnedAxisItem ------------------------------------------------------
 
 BinnedAxisItem::BinnedAxisItem(std::string model_type) : BasicAxisItem(model_type)
