@@ -21,11 +21,14 @@ struct ColorMapPlotController::ColorMapPlotControllerPrivate {
     QCPColorMap* color_map{nullptr};
     std::unique_ptr<Data2DPlotController> data_controller;
 
-    ColorMapPlotControllerPrivate(ColorMapPlotController* master, QCustomPlot* plot)
+    ColorMapPlotControllerPrivate(ColorMapPlotController* master, QCustomPlot* plot, QCPColorScale* color_scale)
         : master(master), custom_plot(plot)
     {
         color_map = new QCPColorMap(custom_plot->xAxis, custom_plot->yAxis);
         data_controller = std::make_unique<Data2DPlotController>(color_map);
+
+        if (color_scale)
+            color_map->setColorScale(color_scale);
     }
 
     ~ColorMapPlotControllerPrivate() { custom_plot->removePlottable(color_map); }
@@ -50,8 +53,8 @@ struct ColorMapPlotController::ColorMapPlotControllerPrivate {
     }
 };
 
-ColorMapPlotController::ColorMapPlotController(QCustomPlot* custom_plot)
-    : p_impl(std::make_unique<ColorMapPlotControllerPrivate>(this, custom_plot))
+ColorMapPlotController::ColorMapPlotController(QCustomPlot* custom_plot,  QCPColorScale* color_scale)
+    : p_impl(std::make_unique<ColorMapPlotControllerPrivate>(this, custom_plot, color_scale))
 {
 }
 

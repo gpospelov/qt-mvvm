@@ -13,6 +13,7 @@
 #include "itemcontroller.h"
 
 class QCustomPlot;
+class QCPColorScale;
 
 namespace ModelView
 {
@@ -31,7 +32,7 @@ is destroyed.
 class CORE_EXPORT ColorMapPlotController : public ItemController<ColorMapItem>
 {
 public:
-    explicit ColorMapPlotController(QCustomPlot* plot);
+    explicit ColorMapPlotController(QCustomPlot* plot, QCPColorScale* color_scale=nullptr);
     ~ColorMapPlotController() override;
 
 protected:
