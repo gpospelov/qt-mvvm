@@ -26,7 +26,7 @@ TEST_F(TestColorMapViewportItem, initialState)
     ColorMapViewportItem viewport;
     EXPECT_EQ(viewport.xAxis()->modelType(), Constants::ViewportAxisItemType);
     EXPECT_EQ(viewport.yAxis()->modelType(), Constants::ViewportAxisItemType);
-    EXPECT_EQ(viewport.zAxis()->modelType(), Constants::ViewportAxisItemType);
+    EXPECT_EQ(viewport.colorAxis()->modelType(), Constants::AmplitudeAxisItemType);
     EXPECT_EQ(viewport.items<ColorMapItem>(ColorMapViewportItem::T_ITEMS).size(), 0);
 }
 
@@ -51,7 +51,7 @@ TEST_F(TestColorMapViewportItem, uninitializedViewportUpdate)
     EXPECT_DOUBLE_EQ(ymax, 1.0);
 
     // z-axis of viewport should be set to min/max content
-    auto [zmin, zmax] = viewport_item->zAxis()->range();
+    auto [zmin, zmax] = viewport_item->colorAxis()->range();
     EXPECT_DOUBLE_EQ(zmin, 0.0);
     EXPECT_DOUBLE_EQ(zmax, 1.0);
 }
@@ -88,7 +88,7 @@ TEST_F(TestColorMapViewportItem, addItem)
     EXPECT_DOUBLE_EQ(ymax, 3.0);
 
     // z-axis of viewport should be set to min/max content
-    auto [zmin, zmax] = viewport_item->zAxis()->range();
+    auto [zmin, zmax] = viewport_item->colorAxis()->range();
     EXPECT_DOUBLE_EQ(zmin, 1.0);
     EXPECT_DOUBLE_EQ(zmax, 6.0);
 }

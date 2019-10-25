@@ -11,6 +11,7 @@
 #include "axisitems.h"
 #include "qcustomplot.h"
 #include "viewportaxisplotcontroller.h"
+#include "itemmapper.h"
 
 using namespace ModelView;
 
@@ -36,6 +37,13 @@ struct ColorScalePlotController::ColorScalePlotControllerPrivate {
     }
 
     void setup_components() { axisController->setItem(controller->currentItem()); }
+
+    //! Updates color scale for log10.
+
+    void update_log_scale()
+    {
+
+    }
 
     void show_colorscale()
     {
@@ -77,5 +85,13 @@ ColorScalePlotController::~ColorScalePlotController() = default;
 
 void ColorScalePlotController::subscribe()
 {
+    auto on_property_change = [this](SessionItem* item, std::string property_name) {
+        Q_UNUSED(item)
+        if (property_name == AmplitudeAxisItem::P_IS_LOG)
+            p_impl->update_log_scale();
+    };
+    currentItem()->mapper()->setOnPropertyChange(on_property_change, this);
+
+
     p_impl->setup_components();
 }
