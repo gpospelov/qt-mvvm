@@ -10,19 +10,35 @@
 #include "colorscaleplotcontroller.h"
 #include "qcustomplot.h"
 #include "axisitems.h"
+#include "viewportaxisplotcontroller.h"
 
 using namespace ModelView;
 
 struct ColorScalePlotController::ColorScalePlotControllerPrivate {
 
     ColorScalePlotController* controller{nullptr};
-    QCPColorScale* axis{nullptr};
+    QCPColorScale* color_scale{nullptr};
+    QCPLayoutGrid* layout_grid{new  QCPLayoutGrid};
+    std::unique_ptr<ViewportAxisPlotController> axisController;
 
-    ColorScalePlotControllerPrivate(ColorScalePlotController* controller, QCPColorScale* axis)
-        : controller(controller), axis(axis)
+    ColorScalePlotControllerPrivate(ColorScalePlotController* controller, QCPColorScale* color_scale)
+        : controller(controller), color_scale(color_scale)
     {
-        if (!axis)
+        if (!color_scale)
             throw std::runtime_error("ColorScalePlotController: axis is not initialized.");
+
+        axisController = std::make_unique<ViewportAxisPlotController>(color_scale->axis());
+        layout_grid->addElement(0,0, color_scale);
+        customPlot()->plotLayout()->addElement(0, 1, layout_grid);
+    }
+
+    void setup_components()
+    {
+        axisController->setItem(controller->currentItem());
+    }
+
+    QCustomPlot* customPlot() {
+        return color_scale->parentPlot();
     }
 };
 
@@ -34,4 +50,7 @@ ColorScalePlotController::ColorScalePlotController(QCPColorScale* color_scale)
 
 ColorScalePlotController::~ColorScalePlotController() = default;
 
-void ColorScalePlotController::subscribe() {}
+void ColorScalePlotController::subscribe()
+{
+    p_impl->setup_components();
+}

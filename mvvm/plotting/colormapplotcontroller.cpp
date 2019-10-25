@@ -39,6 +39,7 @@ struct ColorMapPlotController::ColorMapPlotControllerPrivate {
     {
         update_data_controller();
         update_interpolation();
+        color_map->setGradient(QCPColorGradient::gpPolar);
     }
 
     void update_data_controller() { data_controller->setItem(colormap_item()->dataItem()); }
