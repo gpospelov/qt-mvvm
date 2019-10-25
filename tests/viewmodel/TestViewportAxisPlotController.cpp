@@ -1,8 +1,8 @@
 #include "axisitems.h"
-#include "viewportaxisplotcontroller.h"
 #include "google_test.h"
 #include "qcustomplot.h"
 #include "sessionmodel.h"
+#include "viewportaxisplotcontroller.h"
 #include <QSignalSpy>
 
 using namespace ModelView;
@@ -25,11 +25,23 @@ TestViewportAxisPlotController::~TestViewportAxisPlotController() = default;
 
 //! Initial state.
 
-TEST_F(TestViewportAxisPlotController, xAxisControllerInitialState)
+TEST_F(TestViewportAxisPlotController, initialState)
 {
     auto custom_plot = std::make_unique<QCustomPlot>();
-    ViewportAxisPlotController controller(custom_plot->xAxis);
 
+    auto axis = custom_plot->xAxis;
+
+    // checking initial defaults
+    double customplot_default_lower(0.0), customplot_default_upper(5.0);
+    EXPECT_EQ(axis->range().lower, customplot_default_lower);
+    EXPECT_EQ(axis->range().upper, customplot_default_upper);
+
+    // controller shouldn''t change axis range
+    ViewportAxisPlotController controller(axis);
+    EXPECT_EQ(axis->range().lower, customplot_default_lower);
+    EXPECT_EQ(axis->range().upper, customplot_default_upper);
+
+    // checking axis signaling
     auto xChanged = createSpy(custom_plot->xAxis);
     auto yChanged = createSpy(custom_plot->yAxis);
 
@@ -39,8 +51,6 @@ TEST_F(TestViewportAxisPlotController, xAxisControllerInitialState)
     // checking that QCPaxis properly emiting signals
     EXPECT_EQ(xChanged->count(), 1);
     EXPECT_EQ(yChanged->count(), 0);
-
-    // controller is not subscribed yet, nothing to check
 }
 
 //! Controller subscribed to ViewportAxisItem.
