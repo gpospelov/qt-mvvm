@@ -32,13 +32,14 @@ struct ColorScalePlotController::ColorScalePlotControllerPrivate {
         axisController = std::make_unique<ViewportAxisPlotController>(color_scale->axis());
 
         show_colorscale();
+        setup_margins();
     }
 
     void setup_components() { axisController->setItem(controller->currentItem()); }
 
     void show_colorscale()
     {
-        if (layout_grid->element(0, 0) != color_scale)
+        if (!layout_grid->hasElement(0, 0))
             layout_grid->addElement(0, 0, color_scale);
 
         layout_grid->setVisible(true);
@@ -50,6 +51,16 @@ struct ColorScalePlotController::ColorScalePlotControllerPrivate {
         layout_grid->setVisible(false);
         customPlot()->plotLayout()->take(layout_grid);
         customPlot()->plotLayout()->simplify();
+    }
+
+    //! Setup margins of color scale to match top/bottom margins of axis rectangle.
+
+    void setup_margins() {
+        if (margin_group)
+            return;
+         margin_group = new QCPMarginGroup(customPlot());
+         customPlot()->axisRect()->setMarginGroup(QCP::msBottom | QCP::msTop, margin_group);
+         color_scale->setMarginGroup(QCP::msBottom | QCP::msTop, margin_group);
     }
 
     QCustomPlot* customPlot() { return color_scale->parentPlot(); }
