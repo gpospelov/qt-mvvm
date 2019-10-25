@@ -55,12 +55,13 @@ struct ColorScalePlotController::ColorScalePlotControllerPrivate {
 
     //! Setup margins of color scale to match top/bottom margins of axis rectangle.
 
-    void setup_margins() {
+    void setup_margins()
+    {
         if (margin_group)
             return;
-         margin_group = new QCPMarginGroup(customPlot());
-         customPlot()->axisRect()->setMarginGroup(QCP::msBottom | QCP::msTop, margin_group);
-         color_scale->setMarginGroup(QCP::msBottom | QCP::msTop, margin_group);
+        margin_group = new QCPMarginGroup(customPlot());
+        customPlot()->axisRect()->setMarginGroup(QCP::msBottom | QCP::msTop, margin_group);
+        color_scale->setMarginGroup(QCP::msBottom | QCP::msTop, margin_group);
     }
 
     QCustomPlot* customPlot() { return color_scale->parentPlot(); }
