@@ -21,16 +21,17 @@ using namespace ModelView;
 struct ColorMapViewportPlotController::ColorMapViewportPlotControllerPrivate {
     ColorMapViewportPlotController* master{nullptr};
     QCustomPlot* custom_plot{nullptr};
+    QCPColorScale* color_scale{nullptr};
     std::unique_ptr<ColorMapPlotController> colorMapController;
     std::unique_ptr<ViewportAxisPlotController> xAxisController;
     std::unique_ptr<ViewportAxisPlotController> yAxisController;
 
     ColorMapViewportPlotControllerPrivate(ColorMapViewportPlotController* master, QCustomPlot* plot)
-        : master(master), custom_plot(plot)
+        : master(master), custom_plot(plot), color_scale(new QCPColorScale(custom_plot))
     {
         xAxisController = std::make_unique<ViewportAxisPlotController>(custom_plot->xAxis);
         yAxisController = std::make_unique<ViewportAxisPlotController>(custom_plot->yAxis);
-        colorMapController = std::make_unique<ColorMapPlotController>(custom_plot);
+        colorMapController = std::make_unique<ColorMapPlotController>(custom_plot, color_scale);
     }
 
     ColorMapViewportItem* viewport_item() { return master->currentItem(); }
