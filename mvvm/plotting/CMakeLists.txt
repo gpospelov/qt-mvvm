@@ -9,6 +9,8 @@ target_sources(${library_name} PRIVATE
     colormapviewportplotcontroller.cpp
     colorscaleplotcontroller.h
     colorscaleplotcontroller.cpp
+    customplotutils.h
+    customplotutils.cpp
     graphcanvas.h
     graphcanvas.cpp
     graphplotcontroller.h
