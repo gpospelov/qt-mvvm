@@ -32,15 +32,14 @@ struct ColorScalePlotController::ColorScalePlotControllerPrivate {
             throw std::runtime_error("ColorScalePlotController: axis is not initialized.");
 
         axisController = std::make_unique<ViewportAxisPlotController>(color_scale->axis());
-
-        show_colorscale();
-        setup_margins();
     }
 
     void setup_components()
     {
         axisController->setItem(controller->currentItem());
         update_log_scale();
+        show_colorscale();
+        setup_margins();
     }
 
     //! Updates color scale for log10.
@@ -71,6 +70,9 @@ struct ColorScalePlotController::ColorScalePlotControllerPrivate {
     void setup_margins()
     {
         if (margin_group)
+            return;
+
+        if (!customPlot()->axisRect())
             return;
         margin_group = new QCPMarginGroup(customPlot());
         customPlot()->axisRect()->setMarginGroup(QCP::msBottom | QCP::msTop, margin_group);
