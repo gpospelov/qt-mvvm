@@ -1,4 +1,4 @@
-image: Visual Studio 2017
+image: Visual Studio 2019
 
 matrix:
   fast_finish: true
@@ -11,7 +11,7 @@ configuration:
 
 # http://www.appveyor.com/docs/installed-software
 environment:
-  QTDIR: "C:\\Qt\\5.13.0\\msvc2017_64"
+  QTDIR: "C:\\Qt\\5.13.1\\msvc2017_64"
   PATH: "%QTDIR%\\bin;%PATH%"
 build:
   parallel: true
@@ -24,5 +24,5 @@ build_script:
 - mkdir build
 - cd build
 - cmake --version
-- cmake -G "Visual Studio 15 2017 Win64" -DMVVM_TESTS_AUTOEXEC=ON -DMVVM_TESTS_AUTODISCOVERY=OFF ..
+- cmake -G "Visual Studio 16 2019 Win64" -DMVVM_TESTS_AUTOEXEC=ON -DMVVM_TESTS_AUTODISCOVERY=OFF ..
 - cmake --build . 
