@@ -52,7 +52,8 @@ void ViewportAxisItem::set_range(double lower, double upper)
 
 AmplitudeAxisItem::AmplitudeAxisItem() : ViewportAxisItem(Constants::AmplitudeAxisItemType)
 {
-    addProperty(P_IS_LOG, false)->setDisplayName("log10");
+    // FIXME remove convertion when will switch to templated method
+    addProperty(P_IS_LOG, QVariant::fromValue(false))->setDisplayName("log10");
 }
 
 bool AmplitudeAxisItem::is_in_log() const
