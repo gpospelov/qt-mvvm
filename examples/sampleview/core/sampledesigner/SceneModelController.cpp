@@ -123,14 +123,7 @@ void SceneModelController::copy(const QList<QGraphicsItem*>& views)
     auto to_remove =
         map(lookup_table, DesignerSceneUtils::visibleItems(keys(lookup_table) - selected_items));
 
-    // first move all children of unselected items to root
-    for (auto item: to_remove)
-        for (SessionItem* child : DesignerSceneUtils::visibleItems(item->children()))
-            m_temp_model.moveItem(child, m_temp_model.rootItem(), {}, -1);
-
-    // removing unselected items
-    for (auto item : DesignerSceneUtils::headItems(to_remove))
-        Utils::DeleteItemFromModel(item);
+    selectivelyRemove(to_remove, &m_temp_model);
 }
 
 void SceneModelController::paste()
@@ -156,14 +149,8 @@ void SceneModelController::remove(const QList<QGraphicsItem *>& views)
     for (auto item : viewToItem(childViews(connections(views))))
         m_model->moveItem(item, m_model->rootItem(), {}, -1);
 
-    const auto to_remove = viewToItem(DesignerSceneUtils::appendChildren(views));
-
-    for (auto item: to_remove)
-        for (SessionItem* child : DesignerSceneUtils::visibleItems(item->children()))
-            m_model->moveItem(child, m_model->rootItem(), {}, -1);
-
-    for (auto item : DesignerSceneUtils::headItems(to_remove))
-        Utils::DeleteItemFromModel(item);
+    // Remove the items of the selected views
+    selectivelyRemove(viewToItem(DesignerSceneUtils::appendChildren(views)), m_model);
 
     m_scene.onModelChanged();
 }
@@ -207,6 +194,17 @@ void SceneModelController::onModelDestroyed()
 {
     m_model = nullptr;
     m_scene.onModelDestroyed();
+}
+
+void SceneModelController::selectivelyRemove(const QSet<ModelView::SessionItem*>& items,
+                                             SampleModel* m_model)
+{
+    for (auto item: items)
+        for (SessionItem* child : DesignerSceneUtils::visibleItems(item->children()))
+            m_model->moveItem(child, m_model->rootItem(), {}, -1);
+
+    for (auto item : DesignerSceneUtils::headItems(items))
+        Utils::DeleteItemFromModel(item);
 }
 
 namespace {

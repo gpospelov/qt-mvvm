@@ -47,6 +47,10 @@ private:
     void onModelChange();
     void onModelDestroyed();
 
+    //! Removes given items from model with preliminary moving their visible children to the model
+    //! root. The items shall belong to the passed sample model.
+    void selectivelyRemove(const QSet<ModelView::SessionItem*>& items, SampleModel* m_model);
+
     DesignerScene& m_scene;
     SampleModel* m_model;
     bool m_block;
