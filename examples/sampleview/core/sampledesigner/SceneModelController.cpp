@@ -76,6 +76,10 @@ QList<NodeEditorConnection*> connections(const QList<QGraphicsItem*>& views);
 
 //! Returns all unique child views of the given connection list.
 QSet<IView*> childViews(const QList<NodeEditorConnection*>& connections);
+
+//! Maps given items with the lookup_table.
+QSet<SessionItem*> map(const std::map<SessionItem*, SessionItem*>& lookup_table,
+                       const QSet<SessionItem*>& items);
 } // namespace
 
 SceneModelController::SceneModelController(DesignerScene& scene, SampleModel* model)
@@ -116,16 +120,17 @@ void SceneModelController::copy(const QList<QGraphicsItem*>& views)
         lookup_table.insert(to_merge.begin(), to_merge.end());
     }
 
-    auto to_remove = DesignerSceneUtils::visibleItems(keys(lookup_table) - selected_items);
+    auto to_remove =
+        map(lookup_table, DesignerSceneUtils::visibleItems(keys(lookup_table) - selected_items));
 
     // first move all children of unselected items to root
     for (auto item: to_remove)
-        for (SessionItem* child : DesignerSceneUtils::visibleItems(lookup_table[item]->children()))
+        for (SessionItem* child : DesignerSceneUtils::visibleItems(item->children()))
             m_temp_model.moveItem(child, m_temp_model.rootItem(), {}, -1);
 
     // removing unselected items
     for (auto item : DesignerSceneUtils::headItems(to_remove))
-        Utils::DeleteItemFromModel(lookup_table[item]);
+        Utils::DeleteItemFromModel(item);
 }
 
 void SceneModelController::paste()
@@ -244,5 +249,14 @@ QSet<IView*> childViews(const QList<NodeEditorConnection*>& connections)
             children.insert(child);
 
     return children;
+}
+
+QSet<SessionItem*> map(const std::map<SessionItem*, SessionItem*>& lookup_table,
+                       const QSet<SessionItem*>& items)
+{
+    QSet<SessionItem*> result;
+    for (auto item: items)
+        result.insert(lookup_table.at(item));
+    return result;
 }
 }
