@@ -1,6 +1,6 @@
 # Model-View-View-Model for Qt
 
-This is a prototype of Model-View-View-Model framework for large Qt applications.
+This is a prototype of Model-View-View-Model framework for large Qt applications
 
 ## CI Status
 
