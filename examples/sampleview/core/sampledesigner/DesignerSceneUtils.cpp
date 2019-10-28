@@ -51,11 +51,12 @@ QSet<SessionItem*> ancestors(const SessionItem* item)
 }
 
 template<class InputIterator>
-QList<SessionItem*> visibleItems(const InputIterator& begin, const InputIterator& end)
+QSet<SessionItem*> visibleItems(const InputIterator& begin, const InputIterator& end)
 {
-    QList<ModelView::SessionItem*> result;
-    std::copy_if(begin, end, std::back_inserter(result), [](const auto& item) {
-        return SampleViewFactory::isValidType(item->modelType());
+    QSet<ModelView::SessionItem*> result;
+    std::for_each(begin, end, [&result](const auto& item) {
+        if (item && SampleViewFactory::isValidType(item->modelType()))
+            result.insert(item);
     });
     return result;
 }
@@ -146,12 +147,12 @@ QSet<QGraphicsItem*> DesignerSceneUtils::appendChildren(QList<QGraphicsItem*> vi
     return result;
 }
 
-QList<SessionItem*> DesignerSceneUtils::visibleItems(const std::vector<SessionItem*>& items)
+QSet<SessionItem*> DesignerSceneUtils::visibleItems(const std::vector<SessionItem*>& items)
 {
     return ::visibleItems(items.begin(), items.end());
 }
 
-QList<SessionItem*> DesignerSceneUtils::visibleItems(const QSet<SessionItem*>& items)
+QSet<SessionItem*> DesignerSceneUtils::visibleItems(const QSet<SessionItem*>& items)
 {
     return ::visibleItems(items.begin(), items.end());
 }

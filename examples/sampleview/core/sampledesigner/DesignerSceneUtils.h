@@ -44,8 +44,8 @@ makeLookupTable(ModelView::SessionItem* origin, ModelView::SessionItem* copy);
 QSet<QGraphicsItem*> appendChildren(QList<QGraphicsItem*> views);
 
 //! Filters session items corresponding to some IView instances and returns them.
-QList<ModelView::SessionItem*> visibleItems(const std::vector<ModelView::SessionItem*>& items);
-QList<ModelView::SessionItem*> visibleItems(const QSet<ModelView::SessionItem*>& items);
+QSet<ModelView::SessionItem*> visibleItems(const std::vector<ModelView::SessionItem*>& items);
+QSet<ModelView::SessionItem*> visibleItems(const QSet<ModelView::SessionItem*>& items);
 };
 
 #endif // DESIGNERSCENEUTILS_H

@@ -124,7 +124,7 @@ void SceneModelController::copy(const QList<QGraphicsItem*>& views)
             m_temp_model.moveItem(child, m_temp_model.rootItem(), {}, -1);
 
     // removing unselected items
-    for (auto item : DesignerSceneUtils::headItems(QSet<SessionItem*>::fromList(to_remove)))
+    for (auto item : DesignerSceneUtils::headItems(to_remove))
         Utils::DeleteItemFromModel(lookup_table[item]);
 }
 
