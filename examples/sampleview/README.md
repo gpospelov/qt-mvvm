@@ -30,13 +30,9 @@ Required fixes/features (sampleview):
 + MaterialEditor: forbid editing checkbox on double click (win, qt 5.12.0)
 + SampleDesigner: replace QGraphicObject with QGraphicItem as the base class
   for ConnectableView and move all signals/slots to a separate controller.
-+ SampleDesigner: drag-n-drop operations cause immediate deleteion of graphic objects.
-  Since the move itself happens inside a graphics object, one need to use awkward delayed deletion.
 + SampleDesigner: replace the messy way of assigning material name to layers.
-+ SampleDesigner: move scene-model interaction to a separate controller.
-+ SampleDesigner: enable keyboard-based deletion of selected graphic items
-  and enable scroll-rescaling
-+ SampleDesigner: improve multilayer drag-n-drop.
++ SampleDesigner: enable scroll-rescaling
++ SampleDesigner: move SceneModelController and SceneSelectionController out of DesignerScene
 + SampleEditor: improve drag-n-drop or remove it completely. Improvement will require inheriting
   QTreeView.
 + SampleEditor: implement tab-based editing like in MaterialEditor.
@@ -47,4 +43,3 @@ Required fixes/features (sampleview):
 + Automatically select all the text in ScientificSpinBox on focus-in event.
 + Setting limits and step for ScientificSpinBox as an editor in SampleViewDelegate
 + Find the canonical way to initialize qrc files in a library
-+ Put LocatedItem in a separate session model associated with DesignerScene only.
