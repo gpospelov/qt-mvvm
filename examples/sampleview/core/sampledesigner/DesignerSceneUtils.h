@@ -14,6 +14,7 @@
 #include <QSet>
 #include <map>
 #include <tuple>
+#include <vector>
 
 class ILayerView;
 class MultiLayerView;
