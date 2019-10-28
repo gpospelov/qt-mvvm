@@ -12,13 +12,10 @@
 #include "DesignerScene.h"
 #include "DesignerSceneUtils.h"
 #include "NodeEditorConnection.h"
-#include "SampleModel.h"
-#include "SampleViewFactory.h"
 #include "modelmapper.h"
 #include "modelutils.h"
 #include "sessionitem.h"
 #include <QSet>
-#include <set>
 
 using namespace ModelView;
 
