@@ -64,20 +64,19 @@ private:
     SessionModel* m_model;
 };
 
-// utilities for SceneModelController::onDelete
-
-//! Finds all the views connected to the passed set
-std::set<IView*> connectedViews(const QSet<QGraphicsItem*>& views, const DesignerScene& scene);
-//! Finds all the views with no ancestor in the passed set
-std::set<IView*> topViews(const QList<QGraphicsItem *> &views);
-
 //! Retrieves keys from a map
 QSet<SessionItem*> keys(const std::map<SessionItem*, SessionItem*>& input);
 
 //! Converts a view iterable into the list of corresponding SessionItem pointers.
 template<class T>
 QSet<SessionItem*> viewToItem(const T& views);
-}
+
+//! Filters and returns all NodeEditorConnection instances from the input list.
+QList<NodeEditorConnection*> connections(const QList<QGraphicsItem*>& views);
+
+//! Returns all unique child views of the given connection list.
+QSet<IView*> childViews(const QList<NodeEditorConnection*>& connections);
+} // namespace
 
 SceneModelController::SceneModelController(DesignerScene& scene, SampleModel* model)
     : m_scene(scene)
@@ -148,15 +147,18 @@ void SceneModelController::remove(const QList<QGraphicsItem *>& views)
         return;
     BlockGuard signal_guard(m_block);
 
-    // Disconnect dependent items
-    const auto connected_views = connectedViews(DesignerSceneUtils::appendChildren(views), m_scene);
-    for (auto view: connected_views)
-        m_model->moveItem(view->getItem(), m_model->rootItem(), {}, -1);
+    // Remove directly selected connections
+    for (auto item : viewToItem(childViews(connections(views))))
+        m_model->moveItem(item, m_model->rootItem(), {}, -1);
 
-    // find top-level items. Children will be deleted automatically
-    const auto top_views = topViews(views);
-    for (auto view: top_views)
-        Utils::DeleteItemFromModel(view->getItem());
+    const auto to_remove = viewToItem(DesignerSceneUtils::appendChildren(views));
+
+    for (auto item: to_remove)
+        for (SessionItem* child : DesignerSceneUtils::visibleItems(item->children()))
+            m_model->moveItem(child, m_model->rootItem(), {}, -1);
+
+    for (auto item : DesignerSceneUtils::headItems(to_remove))
+        Utils::DeleteItemFromModel(item);
 
     m_scene.onModelChanged();
 }
@@ -203,49 +205,6 @@ void SceneModelController::onModelDestroyed()
 }
 
 namespace {
-std::set<IView*> connectedViews(const QSet<QGraphicsItem*>& views, const DesignerScene& scene)
-{
-    std::set<IView*> connected_views;
-
-    // first add child views from the input ports of the selected connections
-    for (auto view : views)
-        if (auto connection = dynamic_cast<NodeEditorConnection*>(view))
-            connected_views.insert(connection->getChildView());
-
-    // now add the views of child session items
-    for (auto view : views) {
-        auto iview = dynamic_cast<IView*>(view);
-        if (!iview || !iview->getItem())
-            continue;
-        SessionItem* item = iview->getItem();
-        for (auto child : item->children()) {
-            auto child_view = scene.getViewForItem(child);
-            if (child_view && child_view->parentObject() != iview)
-                connected_views.insert(child_view);
-        }
-    }
-
-    return connected_views;
-}
-
-std::set<IView*> topViews(const QList<QGraphicsItem*>& views)
-{
-    std::set<IView *> result;
-    for (QGraphicsItem* view: views) {
-        auto iview = dynamic_cast<IView*>(view);
-        if (!iview || !iview->getItem())
-            continue;
-        const bool has_ancestors =
-            std::accumulate(views.begin(), views.end(), false,
-                            [view](bool result, QGraphicsItem* pview) {
-                                return result || pview->isAncestorOf(view);
-                            });
-        if (!has_ancestors)
-            result.insert(iview);
-    }
-    return result;
-}
-
 QSet<SessionItem*> keys(const std::map<SessionItem*, SessionItem*>& input)
 {
     QSet<SessionItem*> result;
@@ -263,5 +222,27 @@ QSet<SessionItem *> viewToItem(const T& views)
             items.insert(iview->getItem());
 
     return items;
+}
+
+QList<NodeEditorConnection*> connections(const QList<QGraphicsItem*>& views)
+{
+    QList<NodeEditorConnection*> connections;
+
+    for (auto view : views)
+        if (auto connection = dynamic_cast<NodeEditorConnection*>(view))
+            connections.push_back(connection);
+
+    return connections;
+}
+
+QSet<IView*> childViews(const QList<NodeEditorConnection*>& connections)
+{
+    QSet<IView*> children;
+
+    for (auto connection : connections)
+        if (auto child = connection->getChildView())
+            children.insert(child);
+
+    return children;
 }
 }
