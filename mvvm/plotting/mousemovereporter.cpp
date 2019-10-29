@@ -56,4 +56,4 @@ MouseMoveReporter::MouseMoveReporter(QCustomPlot* custom_plot, callback_t callba
 {
 }
 
-ModelView::MouseMoveReporter::~MouseMoveReporter() = default;
+MouseMoveReporter::~MouseMoveReporter() = default;
