@@ -25,6 +25,7 @@ target_sources(${library_name} PRIVATE
     graphviewportplotcontroller.cpp
     mousemovereporter.h
     mousemovereporter.cpp
+    mouseposinfo.h
     statusstringreporter.h
     statusstringreporter.cpp
     statusstringformatterinterface.h

@@ -8,8 +8,9 @@
 // ************************************************************************** //
 
 #include "statusstringreporter.h"
-#include "statusstringformatterinterface.h"
 #include "mousemovereporter.h"
+#include "mouseposinfo.h"
+#include "statusstringformatterinterface.h"
 #include <QMouseEvent>
 #include <qcustomplot.h>
 
@@ -23,26 +24,28 @@ struct StatusStringReporter::StatusStringReporterImpl {
     std::unique_ptr<MouseMoveReporter> mouse_reporter;
 
     StatusStringReporterImpl(StatusStringReporter* parent, QCustomPlot* custom_plot,
-                             callback_t callback, std::unique_ptr<StatusStringFormatterInterface> formatter)
+                             callback_t callback,
+                             std::unique_ptr<StatusStringFormatterInterface> formatter)
         : parent(parent), custom_plot(custom_plot), callback(callback), fmt(std::move(formatter))
     {
         if (!custom_plot)
             throw std::runtime_error("StatusStringReporter: not initialized custom plot.");
 
-        auto on_mouse_move = [this](double x, double y) {
-            this->callback(fmt->status_string(this->custom_plot, x, y));
+        auto on_mouse_move = [this](const MousePosInfo& pos) {
+            this->callback(fmt->status_string(this->custom_plot, pos.xpos, pos.ypos));
         };
 
         mouse_reporter = std::make_unique<MouseMoveReporter>(custom_plot, on_mouse_move);
     }
 
-
-
     ~StatusStringReporterImpl() = default;
 };
 
-StatusStringReporter::StatusStringReporter(QCustomPlot* custom_plot, callback_t callback, std::unique_ptr<StatusStringFormatterInterface> formatter)
-    : p_impl(std::make_unique<StatusStringReporterImpl>(this, custom_plot, callback, std::move(formatter)))
+StatusStringReporter::StatusStringReporter(
+    QCustomPlot* custom_plot, callback_t callback,
+    std::unique_ptr<StatusStringFormatterInterface> formatter)
+    : p_impl(std::make_unique<StatusStringReporterImpl>(this, custom_plot, callback,
+                                                        std::move(formatter)))
 {
 }
 

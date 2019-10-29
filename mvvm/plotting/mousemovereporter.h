@@ -19,6 +19,8 @@ class QCustomPlot;
 namespace ModelView
 {
 
+class MousePosInfo;
+
 /*!
 @class MouseMoveReporter
 @brief Tracks mouse moves in QCustomPlot canvas.
@@ -30,7 +32,7 @@ at current zoom level.
 class CORE_EXPORT MouseMoveReporter
 {
 public:
-    using callback_t = std::function<void(double, double)>;
+    using callback_t = std::function<void(const MousePosInfo& pos_info)>;
     MouseMoveReporter(QCustomPlot* custom_plot, callback_t callback);
     ~MouseMoveReporter();
 

@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include "mousemovereporter.h"
+#include "mouseposinfo.h"
 #include <qcustomplot.h>
 #include <QMouseEvent>
 
@@ -33,7 +34,7 @@ struct MouseMoveReporter::MouseMoveReporterImpl {
             double x = pixelToXaxisCoord(event->pos().x());
             double y = pixelToYaxisCoord(event->pos().y());
             if (callback)
-                callback(x, y);
+                callback({x, y, axesRangeContains(x, y)});
         };
 
         QObject::connect(custom_plot, &QCustomPlot::mouseMove, on_mouse_move);
@@ -47,6 +48,11 @@ struct MouseMoveReporter::MouseMoveReporterImpl {
     double pixelToYaxisCoord(double pixel) const
     {
         return custom_plot->yAxis->pixelToCoord(pixel);
+    }
+
+    bool axesRangeContains(double xpos, double ypos) const
+    {
+        return custom_plot->xAxis->range().contains(xpos) && custom_plot->yAxis->range().contains(ypos);
     }
 
 };
