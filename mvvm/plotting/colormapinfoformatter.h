@@ -7,20 +7,15 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_STATUSSTRINGREPORTER_H
-#define MVVM_STATUSSTRINGREPORTER_H
+#ifndef MVVM_COLORMAPINFOFORMATTER_H
+#define MVVM_COLORMAPINFOFORMATTER_H
 
-#include "mvvm_export.h"
-#include <functional>
-#include <memory>
-#include <string>
+#include "statusstringformatterinterface.h"
 
 class QCustomPlot;
 
 namespace ModelView
 {
-
-class StatusStringFormatterInterface;
 
 /*!
 @class StatusStringReporter
@@ -29,18 +24,12 @@ class StatusStringFormatterInterface;
 Doesn't report if cursor is outside of the axes range.
 */
 
-class CORE_EXPORT StatusStringReporter
+class CORE_EXPORT ColorMapInfoFormatter : public StatusStringFormatterInterface
 {
 public:
-    using callback_t = std::function<std::string()>;
-    StatusStringReporter(QCustomPlot* custom_plot, callback_t callback, std::unique_ptr<StatusStringFormatterInterface> formatter);
-    ~StatusStringReporter();
-
-private:
-    struct StatusStringReporterImpl;
-    std::unique_ptr<StatusStringReporterImpl> p_impl;
+    std::string status_string(QCustomPlot* custom_plot, double x, double y) const override;
 };
 
 } // namespace ModelView
 
-#endif // MVVM_STATUSSTRINGREPORTER_H
+#endif // MVVM_COLORMAPINFOFORMATTER_H

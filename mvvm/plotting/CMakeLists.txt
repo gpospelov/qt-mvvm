@@ -7,6 +7,8 @@ target_sources(${library_name} PRIVATE
     colormapplotcontroller.cpp
     colormapviewportplotcontroller.h
     colormapviewportplotcontroller.cpp
+    colormapinfoformatter.h
+    colormapinfoformatter.cpp
     colorscaleplotcontroller.h
     colorscaleplotcontroller.cpp
     customplotutils.h
