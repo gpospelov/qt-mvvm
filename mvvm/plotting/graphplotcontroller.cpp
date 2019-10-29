@@ -27,55 +27,32 @@ struct GraphPlotController::GraphItemControllerPrivate {
     GraphItemControllerPrivate(GraphPlotController* master, QCustomPlot* plot)
         : master(master), custom_plot(plot)
     {
+        graph = custom_plot->addGraph();
+        data_controller = std::make_unique<Data1DPlotController>(graph);
     }
 
-    ~GraphItemControllerPrivate() {
-        if (graph)
-            custom_plot->removePlottable(graph);
-    }
+    ~GraphItemControllerPrivate() { custom_plot->removePlottable(graph); }
 
     GraphItem* graph_item() { return master->currentItem(); }
 
-    //! Removes graph from customPlot.
-    void remove_graph()
+    //! Updates data controller and graph properties.
+
+    void update_graph()
     {
-        if (!graph)
-            throw std::runtime_error("No graph defined");
-
-        data_controller.reset();
-        custom_plot->removePlottable(graph);
-        graph = nullptr;
-    }
-
-    //! Creates graph on canvas and setups data controller.
-    void create_graph()
-    {
-        if (graph)
-            throw std::runtime_error("Graph is already defined");
-
-        graph = custom_plot->addGraph();
-        create_data_controller();
-
+        update_data_controller();
         update_graph_pen();
     }
 
-    void create_data_controller() {
-        if (!data_controller)
-            data_controller = std::make_unique<Data1DPlotController>(graph);
-        data_controller->setItem(graph_item()->dataItem());
-    }
+    void update_data_controller() { data_controller->setItem(graph_item()->dataItem()); }
 
     //! Updates graph pen from GraphItem.
+
     void update_graph_pen()
     {
-        if (!graph)
-            return;
-
         auto color = graph_item()->property(GraphItem::P_COLOR).value<QColor>();
         graph->setPen(QPen(color));
         custom_plot->replot();
     }
-
 };
 
 GraphPlotController::GraphPlotController(QCustomPlot* custom_plot)
@@ -91,16 +68,16 @@ void GraphPlotController::subscribe()
             p_impl->update_graph_pen();
 
         if (property_name == GraphItem::P_LINK)
-            p_impl->create_data_controller();
+            p_impl->update_data_controller();
     };
     currentItem()->mapper()->setOnPropertyChange(on_property_change, this);
 
-    p_impl->create_graph();
+    p_impl->update_graph();
 }
 
 void GraphPlotController::unsubscribe()
 {
-    p_impl->remove_graph();
+    p_impl->data_controller->setItem(nullptr);
 }
 
 GraphPlotController::~GraphPlotController() = default;

@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "axisplotcontrollers.h"
+#include "viewportaxisplotcontroller.h"
 #include "axisitems.h"
 #include "itemmapper.h"
 #include "qcustomplot.h"
@@ -15,14 +15,14 @@
 
 using namespace ModelView;
 
-struct AxisPlotController::AxesPlotControllerPrivate {
+struct ViewportAxisPlotController::AxesPlotControllerPrivate {
 
-    AxisPlotController* controller{nullptr};
+    ViewportAxisPlotController* controller{nullptr};
     QCPAxis* axis{nullptr};
     bool block_update{false};
     std::unique_ptr<QMetaObject::Connection> axis_conn;
 
-    AxesPlotControllerPrivate(AxisPlotController* controller, QCPAxis* axis = nullptr)
+    AxesPlotControllerPrivate(ViewportAxisPlotController* controller, QCPAxis* axis)
         : controller(controller), axis(axis)
     {
         if (!axis)
@@ -57,15 +57,15 @@ struct AxisPlotController::AxesPlotControllerPrivate {
     }
 };
 
-AxisPlotController::AxisPlotController(QCPAxis* axis)
+ViewportAxisPlotController::ViewportAxisPlotController(QCPAxis* axis)
     : p_impl(std::make_unique<AxesPlotControllerPrivate>(this, axis))
 
 {
 }
 
-AxisPlotController::~AxisPlotController() = default;
+ViewportAxisPlotController::~ViewportAxisPlotController() = default;
 
-void AxisPlotController::subscribe()
+void ViewportAxisPlotController::subscribe()
 {
     p_impl->setAxisRangeFromItem();
 

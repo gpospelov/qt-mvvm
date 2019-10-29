@@ -20,7 +20,8 @@ ColorMapItem::ColorMapItem() : CompoundItem(Constants::ColorMapItemType)
     addProperty<LinkedItem>(P_LINK)->setDisplayName("Link");
     addProperty<TextItem>(P_TITLE)->setDisplayName("Title");
     addProperty(P_GRADIENT, "undefined")->setDisplayName("Gradient");
-    addProperty(P_INTERPOLATION, true)->setDisplayName("Interpolation");
+    // FIXME remove convertion when will switch to templated method
+    addProperty(P_INTERPOLATION, QVariant::fromValue(true))->setDisplayName("Interpolation");
 }
 
 //! Sets link to the data item.

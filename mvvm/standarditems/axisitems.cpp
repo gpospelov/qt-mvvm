@@ -27,7 +27,7 @@ void BasicAxisItem::register_min_max()
 
 // --- ViewportAxisItem ------------------------------------------------------
 
-ViewportAxisItem::ViewportAxisItem() : BasicAxisItem(Constants::ViewportAxisItemType)
+ViewportAxisItem::ViewportAxisItem(const std::string model_type) : BasicAxisItem(model_type)
 {
     addProperty<TextItem>(P_TITLE)->setDisplayName("Title");
     register_min_max();
@@ -40,12 +40,25 @@ std::pair<double, double> ViewportAxisItem::range() const
     return std::make_pair(property(P_MIN).toDouble(), property(P_MAX).toDouble());
 }
 
-//! Sets lower, uypper range of axis to given values.
+//! Sets lower, upper range of axis to given values.
 
 void ViewportAxisItem::set_range(double lower, double upper)
 {
     setProperty(P_MIN, lower);
     setProperty(P_MAX, upper);
+}
+
+// --- AmplitudeAxisItem ------------------------------------------------------
+
+AmplitudeAxisItem::AmplitudeAxisItem() : ViewportAxisItem(Constants::AmplitudeAxisItemType)
+{
+    // FIXME remove convertion when will switch to templated method
+    addProperty(P_IS_LOG, QVariant::fromValue(false))->setDisplayName("log10");
+}
+
+bool AmplitudeAxisItem::is_in_log() const
+{
+    return property(P_IS_LOG).toBool();
 }
 
 // --- BinnedAxisItem ------------------------------------------------------
@@ -93,3 +106,4 @@ std::vector<double> FixedBinAxisItem::binCenters() const
 
     return result;
 }
+

@@ -13,6 +13,7 @@
 #include "itemcontroller.h"
 
 class QCustomPlot;
+class QCPColorScale;
 
 namespace ModelView
 {
@@ -23,13 +24,15 @@ class ColorMapItem;
 @class ColorMapPlotController
 @brief Establish communication between QCPColorMap and ColorMapItem.
 
-Provide update on QCPColorMap when ColorMapItem is changed.
+Provide update on QCPColorMap when ColorMapItem is changed. QCPColorMap is added to
+QCustomPlot plottables, when controller is created, and removed from plottables, when controller
+is destroyed.
 */
 
 class CORE_EXPORT ColorMapPlotController : public ItemController<ColorMapItem>
 {
 public:
-    explicit ColorMapPlotController(QCustomPlot* plot);
+    explicit ColorMapPlotController(QCustomPlot* plot, QCPColorScale* color_scale=nullptr);
     ~ColorMapPlotController() override;
 
 protected:

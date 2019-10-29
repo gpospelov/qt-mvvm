@@ -1,14 +1,16 @@
 set(library_name mvvm)
 
 target_sources(${library_name} PRIVATE
-    axisplotcontrollers.h
-    axisplotcontrollers.cpp
     colormapcanvas.h
     colormapcanvas.cpp
     colormapplotcontroller.h
     colormapplotcontroller.cpp
     colormapviewportplotcontroller.h
     colormapviewportplotcontroller.cpp
+    colorscaleplotcontroller.h
+    colorscaleplotcontroller.cpp
+    customplotutils.h
+    customplotutils.cpp
     graphcanvas.h
     graphcanvas.cpp
     graphplotcontroller.h
@@ -19,6 +21,8 @@ target_sources(${library_name} PRIVATE
     data1dplotcontroller.cpp
     graphviewportplotcontroller.h
     graphviewportplotcontroller.cpp
+    viewportaxisplotcontroller.h
+    viewportaxisplotcontroller.cpp
 )
 
 target_include_directories(${library_name}

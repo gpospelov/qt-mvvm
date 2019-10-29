@@ -1,11 +1,11 @@
-#include "google_test.h"
-#include "qcustomplot.h"
-#include "graphplotcontroller.h"
-#include "graphitem.h"
-#include "sessionmodel.h"
-#include "data1ditem.h"
-#include "customplot_test_utils.h"
 #include "axisitems.h"
+#include "customplot_test_utils.h"
+#include "data1ditem.h"
+#include "google_test.h"
+#include "graphitem.h"
+#include "graphplotcontroller.h"
+#include "qcustomplot.h"
+#include "sessionmodel.h"
 #include <QSignalSpy>
 
 using namespace ModelView;
@@ -27,7 +27,10 @@ TEST_F(TestGraphPlotController, initialState)
     auto custom_plot = std::make_unique<QCustomPlot>();
     GraphPlotController controller(custom_plot.get());
     EXPECT_EQ(controller.currentItem(), nullptr);
-    EXPECT_EQ(custom_plot->graphCount(), 0);
+    EXPECT_EQ(custom_plot->graphCount(), 1);
+    auto graph = custom_plot->graph();
+    EXPECT_EQ(TestUtils::binCenters(graph), std::vector<double>());
+    EXPECT_EQ(TestUtils::binValues(graph), std::vector<double>());
 }
 
 //! Setting GraphItem with data and checking that plottable contains correct data.
@@ -79,7 +82,7 @@ TEST_F(TestGraphPlotController, setDataAfter)
     EXPECT_EQ(TestUtils::binCenters(graph), std::vector<double>());
     EXPECT_EQ(TestUtils::binValues(graph), std::vector<double>());
 
-    // setup data after and single data item in it
+    // setup Data1DItem and assign to GraphItem
     auto data_item = model.insertItem<Data1DItem>();
     data_item->setAxis(FixedBinAxisItem::create(2, 0.0, 2.0));
     std::vector<double> expected_centers = {0.5, 1.5};
@@ -94,9 +97,9 @@ TEST_F(TestGraphPlotController, setDataAfter)
     EXPECT_EQ(TestUtils::binValues(graph), expected_values);
 }
 
-//!Unlinking from data item
+//! Unlinking from Data1DItem or GraphItem.
 
-TEST_F(TestGraphPlotController, unlinkFromDataItem)
+TEST_F(TestGraphPlotController, unlinkFromItem)
 {
     auto custom_plot = std::make_unique<QCustomPlot>();
     GraphPlotController controller(custom_plot.get());
@@ -121,16 +124,16 @@ TEST_F(TestGraphPlotController, unlinkFromDataItem)
     graph_item->setDataItem(nullptr);
 
     // Checking resulting plottables
-    // FIXME Current convention is that graph stays intact, but points disappear. Is it the right thing?
+    // Current convention is that graph stays intact, but points disappear.
     EXPECT_EQ(custom_plot->graphCount(), 1);
     auto graph = custom_plot->graph();
     EXPECT_EQ(TestUtils::binCenters(graph), std::vector<double>());
     EXPECT_EQ(TestUtils::binValues(graph), std::vector<double>());
     EXPECT_EQ(graph->pen().color(), QColor(Qt::red));
 
-    // unlinking from graph item
+    // unlinking from graph item should leave GraphItem intact.
     controller.setItem(nullptr);
-    EXPECT_EQ(custom_plot->graphCount(), 0);
+    EXPECT_EQ(custom_plot->graphCount(), 1);
 }
 
 //! Deletion of controller should lead to graph removal.
@@ -155,9 +158,4 @@ TEST_F(TestGraphPlotController, controllerDelete)
     // deleting controller should lead to graph removal
     controller.reset();
     EXPECT_EQ(custom_plot->graphCount(), 0);
-
-    //  inserting item again
-    graph_item = model.insertItem<GraphItem>();
-    graph_item->setDataItem(data_item);
 }
-

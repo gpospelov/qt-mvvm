@@ -51,11 +51,28 @@ class CORE_EXPORT ViewportAxisItem : public BasicAxisItem
 {
 public:
     static inline const std::string P_TITLE = "P_TITLE";
-    ViewportAxisItem();
+    explicit ViewportAxisItem(std::string model_type = Constants::ViewportAxisItemType);
 
     std::pair<double, double> range() const;
 
     void set_range(double lower, double upper);
+};
+
+/*!
+@class AmplitudeAxisItem
+@brief Item to represent amplitude axis.
+
+Amplitude axis represents either y-axis on 1d plot, or color axis on 2d plot. Can be logarithmic.
+Serve as a counterpart of QCPAxis from QCustomPlot.
+*/
+
+class CORE_EXPORT AmplitudeAxisItem : public ViewportAxisItem
+{
+public:
+    static inline const std::string P_IS_LOG = "P_IS_LOG";
+    AmplitudeAxisItem();
+
+    bool is_in_log() const;
 };
 
 /*!

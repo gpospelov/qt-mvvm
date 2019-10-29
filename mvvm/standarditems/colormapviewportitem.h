@@ -16,7 +16,7 @@ namespace ModelView
 {
 
 class GraphItem;
-class ViewportAxisItem;
+class AmplitudeAxisItem;
 class Data2DItem;
 
 /*!
@@ -30,7 +30,7 @@ public:
     static inline const std::string P_ZAXIS = "P_ZAXIS";
     ColorMapViewportItem();
 
-    ViewportAxisItem* zAxis() const;
+    AmplitudeAxisItem* colorAxis() const;
 
     void update_viewport() override;
 
