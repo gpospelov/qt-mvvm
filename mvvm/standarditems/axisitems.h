@@ -51,11 +51,14 @@ class CORE_EXPORT ViewportAxisItem : public BasicAxisItem
 {
 public:
     static inline const std::string P_TITLE = "P_TITLE";
+    static inline const std::string P_IS_LOG = "P_IS_LOG";
     explicit ViewportAxisItem(std::string model_type = Constants::ViewportAxisItemType);
 
     std::pair<double, double> range() const;
 
     void set_range(double lower, double upper);
+
+    bool is_in_log() const;
 };
 
 /*!
@@ -69,10 +72,8 @@ Serve as a counterpart of QCPAxis from QCustomPlot.
 class CORE_EXPORT AmplitudeAxisItem : public ViewportAxisItem
 {
 public:
-    static inline const std::string P_IS_LOG = "P_IS_LOG";
     AmplitudeAxisItem();
 
-    bool is_in_log() const;
 };
 
 /*!

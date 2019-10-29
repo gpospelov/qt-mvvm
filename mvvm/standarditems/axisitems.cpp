@@ -31,6 +31,8 @@ ViewportAxisItem::ViewportAxisItem(const std::string model_type) : BasicAxisItem
 {
     addProperty<TextItem>(P_TITLE)->setDisplayName("Title");
     register_min_max();
+    // FIXME remove convertion when will switch to templated method
+    addProperty(P_IS_LOG, QVariant::fromValue(false))->setDisplayName("log10");
 }
 
 //! Returns pair of lower, upper axis range.
@@ -48,17 +50,15 @@ void ViewportAxisItem::set_range(double lower, double upper)
     setProperty(P_MAX, upper);
 }
 
+bool ViewportAxisItem::is_in_log() const
+{
+    return property(P_IS_LOG).toBool();
+}
+
 // --- AmplitudeAxisItem ------------------------------------------------------
 
 AmplitudeAxisItem::AmplitudeAxisItem() : ViewportAxisItem(Constants::AmplitudeAxisItemType)
 {
-    // FIXME remove convertion when will switch to templated method
-    addProperty(P_IS_LOG, QVariant::fromValue(false))->setDisplayName("log10");
-}
-
-bool AmplitudeAxisItem::is_in_log() const
-{
-    return property(P_IS_LOG).toBool();
 }
 
 // --- BinnedAxisItem ------------------------------------------------------
