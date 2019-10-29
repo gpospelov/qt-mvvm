@@ -21,6 +21,8 @@ target_sources(${library_name} PRIVATE
     data1dplotcontroller.cpp
     graphviewportplotcontroller.h
     graphviewportplotcontroller.cpp
+    mousemovereporter.h
+    mousemovereporter.cpp
     viewportaxisplotcontroller.h
     viewportaxisplotcontroller.cpp
 )
