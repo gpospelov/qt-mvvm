@@ -33,7 +33,8 @@ class CORE_EXPORT StatusStringReporter
 {
 public:
     using callback_t = std::function<void(const std::string&)>;
-    StatusStringReporter(QCustomPlot* custom_plot, callback_t callback, std::unique_ptr<StatusStringFormatterInterface> formatter);
+    StatusStringReporter(QCustomPlot* custom_plot, callback_t callback,
+                         std::unique_ptr<StatusStringFormatterInterface> formatter);
     ~StatusStringReporter();
 
 private:

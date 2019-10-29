@@ -28,7 +28,7 @@ struct ColorMapCanvas::ColorMapCanvasPrivate {
         viewport_controller = std::make_unique<ColorMapViewportPlotController>(custom_plot);
 
         auto on_mouse_move = [](const std::string& str) {
-            qDebug() << QString::fromStdString(str);
+            qDebug() << "canvas " <<  QString::fromStdString(str);
         };
         reporter = std::make_unique<StatusStringReporter>(
             custom_plot, on_mouse_move, std::make_unique<ColorMapInfoFormatter>());
