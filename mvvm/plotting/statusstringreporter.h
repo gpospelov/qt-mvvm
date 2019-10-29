@@ -32,7 +32,7 @@ Doesn't report if cursor is outside of the axes range.
 class CORE_EXPORT StatusStringReporter
 {
 public:
-    using callback_t = std::function<std::string()>;
+    using callback_t = std::function<void(const std::string&)>;
     StatusStringReporter(QCustomPlot* custom_plot, callback_t callback, std::unique_ptr<StatusStringFormatterInterface> formatter);
     ~StatusStringReporter();
 

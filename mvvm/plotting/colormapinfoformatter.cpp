@@ -8,11 +8,14 @@
 // ************************************************************************** //
 
 #include "colormapinfoformatter.h"
+#include <sstream>
 
 using namespace ModelView;
 
-std::string ColorMapInfoFormatter::status_string(QCustomPlot* /*custom_plot*/, double /*x*/,
-                                                 double /*y*/) const
+std::string ColorMapInfoFormatter::status_string(QCustomPlot* /*custom_plot*/, double x,
+                                                 double y) const
 {
-    return {};
+    std::ostringstream ostr;
+    ostr << "xxx " << x << " " << y;
+    return ostr.str();
 }

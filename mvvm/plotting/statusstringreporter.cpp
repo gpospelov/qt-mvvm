@@ -9,24 +9,34 @@
 
 #include "statusstringreporter.h"
 #include "statusstringformatterinterface.h"
+#include "mousemovereporter.h"
 #include <QMouseEvent>
 #include <qcustomplot.h>
 
 using namespace ModelView;
 
 struct StatusStringReporter::StatusStringReporterImpl {
-    StatusStringReporter* reporter{nullptr};
+    StatusStringReporter* parent{nullptr};
     QCustomPlot* custom_plot{nullptr};
     callback_t callback;
     std::unique_ptr<StatusStringFormatterInterface> fmt;
+    std::unique_ptr<MouseMoveReporter> mouse_reporter;
 
-    StatusStringReporterImpl(StatusStringReporter* reporter, QCustomPlot* custom_plot,
+    StatusStringReporterImpl(StatusStringReporter* parent, QCustomPlot* custom_plot,
                              callback_t callback, std::unique_ptr<StatusStringFormatterInterface> formatter)
-        : reporter(reporter), custom_plot(custom_plot), callback(callback), fmt(std::move(formatter))
+        : parent(parent), custom_plot(custom_plot), callback(callback), fmt(std::move(formatter))
     {
         if (!custom_plot)
             throw std::runtime_error("StatusStringReporter: not initialized custom plot.");
+
+        auto on_mouse_move = [this](double x, double y) {
+            this->callback(fmt->status_string(this->custom_plot, x, y));
+        };
+
+        mouse_reporter = std::make_unique<MouseMoveReporter>(custom_plot, on_mouse_move);
     }
+
+
 
     ~StatusStringReporterImpl() = default;
 };

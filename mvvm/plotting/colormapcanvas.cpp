@@ -8,10 +8,11 @@
 // ************************************************************************** //
 
 #include "colormapcanvas.h"
-#include "qcustomplot.h"
+#include "colormapinfoformatter.h"
 #include "colormapviewportitem.h"
 #include "colormapviewportplotcontroller.h"
-#include "mousemovereporter.h"
+#include "qcustomplot.h"
+#include "statusstringreporter.h"
 #include <QBoxLayout>
 #include <QDebug>
 
@@ -20,16 +21,17 @@ using namespace ModelView;
 struct ColorMapCanvas::ColorMapCanvasPrivate {
     QCustomPlot* custom_plot{nullptr};
     std::unique_ptr<ColorMapViewportPlotController> viewport_controller;
-    std::unique_ptr<MouseMoveReporter> mousemove_reporter;
+    std::unique_ptr<StatusStringReporter> reporter;
 
     ColorMapCanvasPrivate() : custom_plot(new QCustomPlot)
     {
         viewport_controller = std::make_unique<ColorMapViewportPlotController>(custom_plot);
 
-        auto on_mouse_move = [](double x, double y) {
-            qDebug() << "mouse move" << x << y;
+        auto on_mouse_move = [](const std::string& str) {
+            qDebug() << QString::fromStdString(str);
         };
-        mousemove_reporter = std::make_unique<MouseMoveReporter>(custom_plot, on_mouse_move);
+        reporter = std::make_unique<StatusStringReporter>(
+            custom_plot, on_mouse_move, std::make_unique<ColorMapInfoFormatter>());
     }
 
     QCustomPlot* customPlot() { return custom_plot; }
