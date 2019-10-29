@@ -17,14 +17,14 @@ class QCPColorScale;
 namespace ModelView
 {
 
-class AmplitudeAxisItem;
+class ViewportAxisItem;
 
 /*!
 @class ColorScalePlotController
 @brief Establishes communication between QCPColorScale and ViewportAxisItem.
 */
 
-class CORE_EXPORT ColorScalePlotController : public ItemController<AmplitudeAxisItem>
+class CORE_EXPORT ColorScalePlotController : public ItemController<ViewportAxisItem>
 {
 public:
     explicit ColorScalePlotController(QCPColorScale* color_scale);

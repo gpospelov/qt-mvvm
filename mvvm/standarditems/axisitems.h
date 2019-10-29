@@ -62,21 +62,6 @@ public:
 };
 
 /*!
-@class AmplitudeAxisItem
-@brief Item to represent amplitude axis.
-
-Amplitude axis represents either y-axis on 1d plot, or color axis on 2d plot. Can be logarithmic.
-Serve as a counterpart of QCPAxis from QCustomPlot.
-*/
-
-class CORE_EXPORT AmplitudeAxisItem : public ViewportAxisItem
-{
-public:
-    AmplitudeAxisItem();
-
-};
-
-/*!
 @class BinnedAxisItem
 @brief Item to represent an axis with arbitrary binning.
 

@@ -55,12 +55,6 @@ bool ViewportAxisItem::is_in_log() const
     return property(P_IS_LOG).toBool();
 }
 
-// --- AmplitudeAxisItem ------------------------------------------------------
-
-AmplitudeAxisItem::AmplitudeAxisItem() : ViewportAxisItem(Constants::AmplitudeAxisItemType)
-{
-}
-
 // --- BinnedAxisItem ------------------------------------------------------
 
 BinnedAxisItem::BinnedAxisItem(std::string model_type) : BasicAxisItem(model_type)
