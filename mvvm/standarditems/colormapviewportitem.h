@@ -29,7 +29,7 @@ public:
     static inline const std::string P_ZAXIS = "P_ZAXIS";
     ColorMapViewportItem();
 
-    ViewportAxisItem* colorAxis() const;
+    ViewportAxisItem* zAxis() const;
 
     void update_viewport() override;
 

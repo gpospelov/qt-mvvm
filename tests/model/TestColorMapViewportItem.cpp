@@ -26,7 +26,7 @@ TEST_F(TestColorMapViewportItem, initialState)
     ColorMapViewportItem viewport;
     EXPECT_EQ(viewport.xAxis()->modelType(), Constants::ViewportAxisItemType);
     EXPECT_EQ(viewport.yAxis()->modelType(), Constants::ViewportAxisItemType);
-    EXPECT_EQ(viewport.colorAxis()->modelType(), Constants::ViewportAxisItemType);
+    EXPECT_EQ(viewport.zAxis()->modelType(), Constants::ViewportAxisItemType);
     EXPECT_EQ(viewport.items<ColorMapItem>(ColorMapViewportItem::T_ITEMS).size(), 0);
 }
 
