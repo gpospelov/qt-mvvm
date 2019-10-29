@@ -11,6 +11,7 @@
 #include "axisitems.h"
 #include "itemmapper.h"
 #include "qcustomplot.h"
+#include "customplotutils.h"
 #include <QObject>
 
 using namespace ModelView;
@@ -55,6 +56,12 @@ struct ViewportAxisPlotController::AxesPlotControllerPrivate {
         auto [lower, upper] = controller->currentItem()->range();
         axis->setRange(QCPRange(lower, upper));
     }
+
+    void update_log_scale()
+    {
+        Utils::SetLogarithmicScale(axis, controller->currentItem()->is_in_log());
+    }
+
 };
 
 ViewportAxisPlotController::ViewportAxisPlotController(QCPAxis* axis)
@@ -78,6 +85,9 @@ void ViewportAxisPlotController::subscribe()
 
         if (name == ViewportAxisItem::P_MAX)
             p_impl->axis->setRangeUpper(item->property(name).toDouble());
+
+        if (name == ViewportAxisItem::P_IS_LOG)
+            p_impl->update_log_scale();
 
         p_impl->axis->parentPlot()->replot();
     };
