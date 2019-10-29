@@ -23,13 +23,15 @@ namespace ModelView
 @class MouseMoveReporter
 @brief Tracks mouse moves in QCustomPlot canvas.
 
-Notifies client about mouse moves and corresponding data in QCustomPlot.
+Notifies client about mouse moves and corresponding pointer coordinates expressed in axes units
+at current zoom level.
 */
 
 class CORE_EXPORT MouseMoveReporter
 {
 public:
-    MouseMoveReporter(QCustomPlot* custom_plot);
+    using callback_t = std::function<void(double, double)>;
+    MouseMoveReporter(QCustomPlot* custom_plot, callback_t callback);
     ~MouseMoveReporter();
 
 private:

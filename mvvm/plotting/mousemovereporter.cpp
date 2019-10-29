@@ -9,22 +9,50 @@
 
 #include "mousemovereporter.h"
 #include <qcustomplot.h>
+#include <QMouseEvent>
 
 using namespace ModelView;
 
 struct MouseMoveReporter::MouseMoveReporterImpl {
     MouseMoveReporter* reporter{nullptr};
     QCustomPlot* custom_plot{nullptr};
-    MouseMoveReporterImpl(MouseMoveReporter* reporter, QCustomPlot* custom_plot)
-        : reporter(reporter), custom_plot(custom_plot)
+    callback_t callback;
+    MouseMoveReporterImpl(MouseMoveReporter* reporter, QCustomPlot* custom_plot, callback_t callback)
+        : reporter(reporter), custom_plot(custom_plot), callback(callback)
     {
         if (!custom_plot)
             throw std::runtime_error("MouseMoveReporter: not initialized custom plot.");
+
+        custom_plot->setMouseTracking(true);
+        set_connected();
     }
+
+    void set_connected()
+    {
+        auto on_mouse_move = [this](QMouseEvent* event) {
+            double x = pixelToXaxisCoord(event->pos().x());
+            double y = pixelToYaxisCoord(event->pos().y());
+            if (callback)
+                callback(x, y);
+        };
+
+        QObject::connect(custom_plot, &QCustomPlot::mouseMove, on_mouse_move);
+    }
+
+    double pixelToXaxisCoord(double pixel) const
+    {
+        return custom_plot->xAxis->pixelToCoord(pixel);
+    }
+
+    double pixelToYaxisCoord(double pixel) const
+    {
+        return custom_plot->yAxis->pixelToCoord(pixel);
+    }
+
 };
 
-MouseMoveReporter::MouseMoveReporter(QCustomPlot* custom_plot)
-    : p_impl(std::make_unique<MouseMoveReporterImpl>(this, custom_plot))
+MouseMoveReporter::MouseMoveReporter(QCustomPlot* custom_plot, callback_t callback)
+    : p_impl(std::make_unique<MouseMoveReporterImpl>(this, custom_plot, callback))
 {
 }
 
