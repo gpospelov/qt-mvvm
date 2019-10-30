@@ -8,9 +8,12 @@
 // ************************************************************************** //
 
 #include "graphcanvas.h"
-#include "graphviewportplotcontroller.h"
 #include "graphviewportitem.h"
+#include "graphviewportplotcontroller.h"
 #include "qcustomplot.h"
+#include "statuslabel.h"
+#include "statusstringreporter.h"
+#include "statusstringreporterfactory.h"
 #include <QBoxLayout>
 
 using namespace ModelView;
@@ -18,10 +21,17 @@ using namespace ModelView;
 struct GraphCanvas::GraphCanvasPrivate {
     QCustomPlot* custom_plot{nullptr};
     std::unique_ptr<GraphViewportPlotController> viewport_controller;
+    std::unique_ptr<StatusStringReporter> reporter;
+    StatusLabel* status_label{nullptr};
 
-    GraphCanvasPrivate() : custom_plot(new QCustomPlot)
+    GraphCanvasPrivate() : custom_plot(new QCustomPlot), status_label(new StatusLabel)
     {
         viewport_controller = std::make_unique<GraphViewportPlotController>(custom_plot);
+
+        auto on_mouse_move = [this](const std::string& str) {
+            status_label->setText(QString::fromStdString(str));
+        };
+        reporter = CreateGraphReporter(custom_plot, on_mouse_move);
     }
 
     QCustomPlot* customPlot() { return custom_plot; }
@@ -34,6 +44,7 @@ GraphCanvas::GraphCanvas(QWidget* parent)
     layout->setMargin(0);
     layout->setSpacing(0);
     layout->addWidget(p_impl->custom_plot);
+    layout->addWidget(p_impl->status_label);
     setLayout(layout);
 
     setMouseTracking(true);

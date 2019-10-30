@@ -7,6 +7,8 @@ target_sources(${library_name} PRIVATE
     propertyeditor.h
     scientificspinbox.cpp
     scientificspinbox.h
+    statuslabel.cpp
+    statuslabel.h
 )
 
 target_include_directories(${library_name}

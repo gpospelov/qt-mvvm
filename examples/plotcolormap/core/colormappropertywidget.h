@@ -16,6 +16,7 @@
 class QBoxLayout;
 class ColorMapModel;
 class QBoxLayout;
+class QSlider;
 
 namespace ModelView
 {
@@ -36,7 +37,10 @@ public:
     void setModel(ColorMapModel* model);
 
 private:
+    void setup_slider();
+
     QBoxLayout* create_button_layout();
+    QSlider* m_slider;
     ModelView::ItemsTreeView* m_treeView;
     ColorMapModel* m_model;
 };

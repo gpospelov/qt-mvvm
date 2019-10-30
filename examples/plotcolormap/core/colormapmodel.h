@@ -27,11 +27,12 @@ class ColorMapModel : public ModelView::SessionModel
 public:
     ColorMapModel();
 
-    void add_colormap();
+    void update_data(double scale);
 
 private:
     ModelView::ContainerItem* data_container();
     void init_model();
+    void add_colormap();
 };
 
 #endif // COLORMAPMODEL_H

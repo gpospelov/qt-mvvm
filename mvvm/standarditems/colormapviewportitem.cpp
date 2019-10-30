@@ -23,14 +23,14 @@ using namespace ModelView;
 ColorMapViewportItem::ColorMapViewportItem() : ViewportItem(Constants::ColorMapViewportItemType)
 {
     register_xy_axes();
-    addProperty<AmplitudeAxisItem>(P_ZAXIS)->setDisplayName("color-axis");
+    addProperty<ViewportAxisItem>(P_ZAXIS)->setDisplayName("color-axis");
     // for the moment allow only one ColorMapItem
     registerTag(TagInfo(T_ITEMS, 0, 1, {Constants::ColorMapItemType}), /*set_default*/ true);
 }
 
-AmplitudeAxisItem* ColorMapViewportItem::colorAxis() const
+ViewportAxisItem* ColorMapViewportItem::zAxis() const
 {
-    return item<AmplitudeAxisItem>(P_ZAXIS);
+    return item<ViewportAxisItem>(P_ZAXIS);
 }
 
 void ColorMapViewportItem::update_viewport()
@@ -70,6 +70,6 @@ void ColorMapViewportItem::update_data_range()
     if (auto dataItem = data_item(); dataItem) {
         auto values = dataItem->content();
         auto [lower, upper] = std::minmax_element(std::begin(values), std::end(values));
-        colorAxis()->set_range(*lower, *upper);
+        zAxis()->set_range(*lower, *upper);
     }
 }

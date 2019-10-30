@@ -10,6 +10,8 @@ target_sources(${library_name} PRIVATE
     numericutils.h
     reallimits.cpp
     reallimits.h
+    stringutils.cpp
+    stringutils.h
 )
 
 target_include_directories(${library_name}

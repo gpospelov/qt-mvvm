@@ -35,7 +35,6 @@ std::unique_ptr<ItemCatalogue> ModelView::CreateStandardItemCatalogue()
     result->registerItem<LinkedItem>();
     result->registerItem<FixedBinAxisItem>();
     result->registerItem<ViewportAxisItem>();
-    result->registerItem<AmplitudeAxisItem>();
     result->registerItem<Data1DItem>();
     result->registerItem<Data2DItem>();
     result->registerItem<GraphItem>();

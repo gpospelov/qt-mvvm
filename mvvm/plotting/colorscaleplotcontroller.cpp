@@ -12,7 +12,6 @@
 #include "qcustomplot.h"
 #include "viewportaxisplotcontroller.h"
 #include "itemmapper.h"
-#include "customplotutils.h"
 
 using namespace ModelView;
 
@@ -46,7 +45,8 @@ struct ColorScalePlotController::ColorScalePlotControllerPrivate {
 
     void update_log_scale()
     {
-        Utils::SetLogarithmicScale(color_scale, controller->currentItem()->is_in_log());
+        const bool is_log = controller->currentItem()->is_in_log();
+        color_scale->setDataScaleType(is_log ? QCPAxis::stLogarithmic : QCPAxis::stLinear);
     }
 
     void show_colorscale()
@@ -93,7 +93,7 @@ ColorScalePlotController::~ColorScalePlotController() = default;
 void ColorScalePlotController::subscribe()
 {
     auto on_property_change = [this](SessionItem*, std::string property_name) {
-        if (property_name == AmplitudeAxisItem::P_IS_LOG)
+        if (property_name == ViewportAxisItem::P_IS_LOG)
             p_impl->update_log_scale();
     };
     currentItem()->mapper()->setOnPropertyChange(on_property_change, this);

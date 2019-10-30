@@ -157,6 +157,33 @@ TEST_F(TestViewportAxisPlotController, changeViewportAxisItem)
 }
 
 //! Controller subscribed to ViewportAxisItem.
+//! Change ViewportAxisItem logz and check that QCPAxis got new values.
+
+TEST_F(TestViewportAxisPlotController, changeViewportLogz)
+{
+    auto custom_plot = std::make_unique<QCustomPlot>();
+
+    // creating the model with single ViewportAxisItem
+    SessionModel model;
+    auto axisItem = model.insertItem<ViewportAxisItem>();
+
+    // setting up QCustomPlot and item controller.
+    auto qcp_axis = custom_plot->xAxis;
+    ViewportAxisPlotController controller(qcp_axis);
+    controller.setItem(axisItem);
+
+    // initial linear scale of axis
+    EXPECT_EQ(qcp_axis->scaleType(), QCPAxis::stLinear);
+
+    // changing scale
+    // FIXME replace ::fromValue with simple 'true' after ::property refactoring
+    axisItem->setProperty(ViewportAxisItem::P_IS_LOG, QVariant::fromValue(true));
+
+    // QCPAxis should switch to logarithmic
+    EXPECT_EQ(qcp_axis->scaleType(), QCPAxis::stLogarithmic);
+}
+
+//! Controller subscribed to ViewportAxisItem.
 //! Change ViewportAxisItem and check that QCPAxis got new values.
 //! Same text as before, only QCPAxis y-axis checked.
 
