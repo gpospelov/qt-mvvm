@@ -18,10 +18,8 @@ namespace ModelView
 {
 
 /*!
-@class StatusStringReporter
-@brief Reports back status string composed for current mouse position in QCustomPlot.
-
-Doesn't report if cursor is outside of the axes range.
+@class ColorMapInfoFormatter
+@brief Formats status string for current mouse position in QCPColorMap.
 */
 
 class CORE_EXPORT ColorMapInfoFormatter : public StatusStringFormatterInterface
