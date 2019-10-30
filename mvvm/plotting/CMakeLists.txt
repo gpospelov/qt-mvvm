@@ -1,36 +1,38 @@
 set(library_name mvvm)
 
 target_sources(${library_name} PRIVATE
-    colormapcanvas.h
     colormapcanvas.cpp
-    colormapplotcontroller.h
-    colormapplotcontroller.cpp
-    colormapviewportplotcontroller.h
-    colormapviewportplotcontroller.cpp
-    colormapinfoformatter.h
+    colormapcanvas.h
     colormapinfoformatter.cpp
-    colorscaleplotcontroller.h
+    colormapinfoformatter.h
+    colormapplotcontroller.cpp
+    colormapplotcontroller.h
+    colormapviewportplotcontroller.cpp
+    colormapviewportplotcontroller.h
     colorscaleplotcontroller.cpp
-    customplotutils.h
+    colorscaleplotcontroller.h
     customplotutils.cpp
-    graphcanvas.h
-    graphcanvas.cpp
-    graphplotcontroller.h
-    graphplotcontroller.cpp
+    customplotutils.h
+    data1dplotcontroller.cpp
     data1dplotcontroller.h
     data2dplotcontroller.cpp
     data2dplotcontroller.h
-    data1dplotcontroller.cpp
-    graphviewportplotcontroller.h
+    graphcanvas.cpp
+    graphcanvas.h
+    graphinfoformatter.cpp
+    graphinfoformatter.h
+    graphplotcontroller.cpp
+    graphplotcontroller.h
     graphviewportplotcontroller.cpp
-    mousemovereporter.h
+    graphviewportplotcontroller.h
     mousemovereporter.cpp
+    mousemovereporter.h
     mouseposinfo.h
-    statusstringreporter.h
-    statusstringreporter.cpp
     statusstringformatterinterface.h
-    viewportaxisplotcontroller.h
+    statusstringreporter.cpp
+    statusstringreporter.h
     viewportaxisplotcontroller.cpp
+    viewportaxisplotcontroller.h
 )
 
 target_include_directories(${library_name}

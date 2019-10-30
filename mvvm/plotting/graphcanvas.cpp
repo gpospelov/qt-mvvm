@@ -10,6 +10,8 @@
 #include "graphcanvas.h"
 #include "graphviewportplotcontroller.h"
 #include "graphviewportitem.h"
+#include "statusstringreporter.h"
+#include "graphinfoformatter.h"
 #include "qcustomplot.h"
 #include <QBoxLayout>
 
@@ -18,10 +20,17 @@ using namespace ModelView;
 struct GraphCanvas::GraphCanvasPrivate {
     QCustomPlot* custom_plot{nullptr};
     std::unique_ptr<GraphViewportPlotController> viewport_controller;
+    std::unique_ptr<StatusStringReporter> reporter;
 
     GraphCanvasPrivate() : custom_plot(new QCustomPlot)
     {
         viewport_controller = std::make_unique<GraphViewportPlotController>(custom_plot);
+
+        auto on_mouse_move = [](const std::string& str) {
+            qDebug() << "canvas " <<  QString::fromStdString(str);
+        };
+        reporter = std::make_unique<StatusStringReporter>(
+            custom_plot, on_mouse_move, std::make_unique<GraphInfoFormatter>());
     }
 
     QCustomPlot* customPlot() { return custom_plot; }
