@@ -10,6 +10,7 @@
 #include "stringutils.h"
 #include <iomanip>
 #include <sstream>
+#include <cmath>
 
 using namespace ModelView;
 
