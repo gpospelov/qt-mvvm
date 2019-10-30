@@ -11,7 +11,6 @@
 #define COLORMAPWIDGET_H
 
 #include <QWidget>
-#include <memory>
 
 class QBoxLayout;
 class ColorMapModel;
@@ -35,7 +34,6 @@ class ColorMapWidget : public QWidget
     Q_OBJECT
 public:
     explicit ColorMapWidget(ColorMapModel* model = nullptr, QWidget* parent = nullptr);
-    ~ColorMapWidget();
 
     void setModel(ColorMapModel* model);
 
@@ -47,8 +45,6 @@ private:
 
     QToolBar* m_toolBar;
     QAction* m_resetViewportAction;
-    QAction* m_addPlotAction;
-    QAction* m_removePlotAction;
 
     ColorMapPropertyWidget* m_propertyWidget;
     ModelView::ColorMapCanvas* m_colorMapCanvas;
