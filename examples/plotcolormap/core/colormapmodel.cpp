@@ -21,14 +21,14 @@ using namespace ModelView;
 namespace
 {
 // fills with data point
-void fill_data(Data2DItem* data_item)
+void fill_data(Data2DItem* data_item, double scale = 1.0)
 {
     const auto xAxis = data_item->xAxis();
     const auto yAxis = data_item->yAxis();
     std::vector<double> values;
     for (auto y : yAxis->binCenters()) {
         for (auto x : xAxis->binCenters()) {
-            double r = 3.0 * std::sqrt(x * x + y * y) + 1e-2;
+            double r = scale*(3.0 * std::sqrt(x * x + y * y) + 1e-2);
             double z = 2 * x * (std::cos(r + 2) / r - std::sin(r + 2) / r);
             values.push_back(z);
         }
@@ -41,6 +41,14 @@ void fill_data(Data2DItem* data_item)
 ColorMapModel::ColorMapModel() : SessionModel("ColorMapModel")
 {
     init_model();
+}
+
+//! Updates data.
+
+void ColorMapModel::update_data(double scale)
+{
+    auto data_item = data_container()->item<Data2DItem>(ContainerItem::T_ITEMS);
+    fill_data(data_item, scale);
 }
 
 void ColorMapModel::add_colormap()
