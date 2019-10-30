@@ -31,6 +31,8 @@ target_sources(${library_name} PRIVATE
     statusstringformatterinterface.h
     statusstringreporter.cpp
     statusstringreporter.h
+    statusstringreporterfactory.cpp
+    statusstringreporterfactory.h
     viewportaxisplotcontroller.cpp
     viewportaxisplotcontroller.h
 )

@@ -8,14 +8,13 @@
 // ************************************************************************** //
 
 #include "colormapcanvas.h"
-#include "colormapinfoformatter.h"
 #include "colormapviewportitem.h"
-#include "colormapviewportplotcontroller.h"
 #include "qcustomplot.h"
 #include "statuslabel.h"
 #include "statusstringreporter.h"
+#include "statusstringreporterfactory.h"
+#include "colormapviewportplotcontroller.h"
 #include <QBoxLayout>
-#include <QDebug>
 
 using namespace ModelView;
 
@@ -33,8 +32,7 @@ struct ColorMapCanvas::ColorMapCanvasPrivate {
         auto on_mouse_move = [this](const std::string& str) {
             status_label->setText(QString::fromStdString(str));
         };
-        reporter = std::make_unique<StatusStringReporter>(
-            custom_plot, on_mouse_move, std::make_unique<ColorMapInfoFormatter>());
+        reporter = CreateColorMapReporter(custom_plot, on_mouse_move);
     }
 
     QCustomPlot* customPlot() { return custom_plot; }
