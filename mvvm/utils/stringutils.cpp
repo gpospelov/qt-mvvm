@@ -9,6 +9,7 @@
 
 #include "stringutils.h"
 #include <iomanip>
+#include <sstream>
 
 using namespace ModelView;
 
