@@ -20,6 +20,9 @@ using namespace ModelView;
 
 namespace
 {
+const int nbinsx = 200;
+const int nbinsy = 100;
+
 // fills with data point
 void fill_data(Data2DItem* data_item, double scale = 1.0)
 {
@@ -54,8 +57,8 @@ void ColorMapModel::update_data(double scale)
 void ColorMapModel::add_colormap()
 {
     auto data_item = insertItem<Data2DItem>(data_container());
-    data_item->setAxes(FixedBinAxisItem::create(200, -5.0, 5.0),
-                       FixedBinAxisItem::create(100, 0.0, 5.0));
+    data_item->setAxes(FixedBinAxisItem::create(nbinsx, -5.0, 5.0),
+                       FixedBinAxisItem::create(nbinsy, 0.0, 5.0));
     fill_data(data_item);
 
     auto viewport_item = insertItem<ColorMapViewportItem>();
