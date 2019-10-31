@@ -18,14 +18,14 @@
 
 using namespace ModelView;
 
-struct GraphViewportPlotController::GraphViewportPlotControllerPrivate {
+struct GraphViewportPlotController::GraphViewportPlotControllerImpl {
     GraphViewportPlotController* master{nullptr};
     QCustomPlot* custom_plot{nullptr};
     std::list<std::unique_ptr<GraphPlotController>> graph_controllers;
     std::unique_ptr<ViewportAxisPlotController> xAxisController;
     std::unique_ptr<ViewportAxisPlotController> yAxisController;
 
-    GraphViewportPlotControllerPrivate(GraphViewportPlotController* master, QCustomPlot* plot)
+    GraphViewportPlotControllerImpl(GraphViewportPlotController* master, QCustomPlot* plot)
         : master(master), custom_plot(plot)
     {
     }
@@ -95,7 +95,7 @@ struct GraphViewportPlotController::GraphViewportPlotControllerPrivate {
 };
 
 GraphViewportPlotController::GraphViewportPlotController(QCustomPlot* custom_plot)
-    : p_impl(std::make_unique<GraphViewportPlotControllerPrivate>(this, custom_plot))
+    : p_impl(std::make_unique<GraphViewportPlotControllerImpl>(this, custom_plot))
 {
 }
 

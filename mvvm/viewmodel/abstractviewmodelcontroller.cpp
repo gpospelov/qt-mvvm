@@ -34,10 +34,9 @@ bool isValidItemRole(const ModelView::ViewItem* view, int item_role)
 
 using namespace ModelView;
 
-class AbstractViewModelController::AbstractViewModelControllerPrivate
+struct AbstractViewModelController::AbstractViewModelControllerImpl
 {
-public:
-    AbstractViewModelControllerPrivate(AbstractViewModel* view_model)
+    AbstractViewModelControllerImpl(AbstractViewModel* view_model)
         : m_view_model(view_model), m_root_item(nullptr), m_session_model(nullptr)
     {
     }
@@ -72,7 +71,7 @@ public:
 };
 
 AbstractViewModelController::AbstractViewModelController(AbstractViewModel* view_model)
-    : p_impl(std::make_unique<AbstractViewModelControllerPrivate>(view_model))
+    : p_impl(std::make_unique<AbstractViewModelControllerImpl>(view_model))
 {
 }
 

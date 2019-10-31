@@ -14,15 +14,14 @@
 
 using namespace ModelView;
 
-class JsonItemBackupStrategy::JsonItemBackupStrategyPrivate
+struct JsonItemBackupStrategy::JsonItemBackupStrategyImpl
 {
-public:
     std::unique_ptr<JsonItemConverter> m_converter;
     QJsonObject m_json;
 };
 
 JsonItemBackupStrategy::JsonItemBackupStrategy(const ItemFactoryInterface* item_factory)
-    : p_impl(std::make_unique<JsonItemBackupStrategyPrivate>())
+    : p_impl(std::make_unique<JsonItemBackupStrategyImpl>())
 {
     p_impl->m_converter = std::make_unique<JsonItemConverter>(item_factory);
 }

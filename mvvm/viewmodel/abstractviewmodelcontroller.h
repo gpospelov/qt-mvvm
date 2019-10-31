@@ -68,8 +68,8 @@ protected:
     virtual void onRowRemoved(SessionItem* parent, std::string tag, int row);
 
 private:
-    class AbstractViewModelControllerPrivate;
-    std::unique_ptr<AbstractViewModelControllerPrivate> p_impl;
+    struct AbstractViewModelControllerImpl;
+    std::unique_ptr<AbstractViewModelControllerImpl> p_impl;
 };
 
 } // namespace ModelView

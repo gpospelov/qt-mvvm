@@ -14,15 +14,14 @@
 
 using namespace ModelView;
 
-class ViewModelBuilder::ViewModelBuilderPrivate
+struct ViewModelBuilder::ViewModelBuilderImpl
 {
-public:
-    ViewModelBuilderPrivate() : m_session_model(nullptr) {}
+    ViewModelBuilderImpl() : m_session_model(nullptr) {}
     std::unique_ptr<AbstractViewModelController> m_controller;
     SessionModel* m_session_model;
 };
 
-ViewModelBuilder::ViewModelBuilder() : p_impl(std::make_unique<ViewModelBuilderPrivate>()) {}
+ViewModelBuilder::ViewModelBuilder() : p_impl(std::make_unique<ViewModelBuilderImpl>()) {}
 
 ViewModelBuilder::~ViewModelBuilder() = default;
 

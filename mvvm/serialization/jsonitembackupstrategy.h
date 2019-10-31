@@ -32,8 +32,8 @@ public:
     void saveItem(const SessionItem* item) override;
 
 private:
-    class JsonItemBackupStrategyPrivate;
-    std::unique_ptr<JsonItemBackupStrategyPrivate> p_impl;
+    struct JsonItemBackupStrategyImpl;
+    std::unique_ptr<JsonItemBackupStrategyImpl> p_impl;
 };
 
 } // namespace ModelView
