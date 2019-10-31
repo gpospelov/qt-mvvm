@@ -25,10 +25,10 @@ QCPRange qcpRange(const BinnedAxisItem* axis)
 }
 } // namespace
 
-struct Data2DPlotController::Data2DPlotControllerPrivate {
+struct Data2DPlotController::Data2DPlotControllerImpl {
     Data2DPlotController* master{nullptr};
     QCPColorMap* color_map{nullptr};
-    Data2DPlotControllerPrivate(Data2DPlotController* master, QCPColorMap* color_map)
+    Data2DPlotControllerImpl(Data2DPlotController* master, QCPColorMap* color_map)
         : master(master), color_map(color_map)
     {
         if (!color_map)
@@ -68,7 +68,7 @@ struct Data2DPlotController::Data2DPlotControllerPrivate {
 };
 
 Data2DPlotController::Data2DPlotController(QCPColorMap* color_map)
-    : p_impl(std::make_unique<Data2DPlotControllerPrivate>(this, color_map))
+    : p_impl(std::make_unique<Data2DPlotControllerImpl>(this, color_map))
 {
 }
 

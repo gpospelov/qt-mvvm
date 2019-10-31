@@ -37,8 +37,8 @@ public:
     void setItem(GraphViewportItem* viewport_item);
 
 private:
-    struct GraphCanvasPrivate;
-    std::unique_ptr<GraphCanvasPrivate> p_impl;
+    struct GraphCanvasImpl;
+    std::unique_ptr<GraphCanvasImpl> p_impl;
 };
 
 } // namespace ModelView

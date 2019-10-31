@@ -42,8 +42,8 @@ protected:
     void unsubscribe() override;
 
 private:
-    struct GraphItemControllerPrivate;
-    std::unique_ptr<GraphItemControllerPrivate> p_impl;
+    struct GraphItemControllerImpl;
+    std::unique_ptr<GraphItemControllerImpl> p_impl;
 };
 
 } // namespace ModelView

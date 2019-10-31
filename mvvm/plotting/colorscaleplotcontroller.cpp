@@ -15,7 +15,7 @@
 
 using namespace ModelView;
 
-struct ColorScalePlotController::ColorScalePlotControllerPrivate {
+struct ColorScalePlotController::ColorScalePlotControllerImpl {
 
     ColorScalePlotController* controller{nullptr};
     QCPColorScale* color_scale{nullptr};
@@ -23,7 +23,7 @@ struct ColorScalePlotController::ColorScalePlotControllerPrivate {
     std::unique_ptr<ViewportAxisPlotController> axisController;
     QCPMarginGroup* margin_group{nullptr};
 
-    ColorScalePlotControllerPrivate(ColorScalePlotController* controller,
+    ColorScalePlotControllerImpl(ColorScalePlotController* controller,
                                     QCPColorScale* color_scale)
         : controller(controller), color_scale(color_scale)
     {
@@ -83,7 +83,7 @@ struct ColorScalePlotController::ColorScalePlotControllerPrivate {
 };
 
 ColorScalePlotController::ColorScalePlotController(QCPColorScale* color_scale)
-    : p_impl(std::make_unique<ColorScalePlotControllerPrivate>(this, color_scale))
+    : p_impl(std::make_unique<ColorScalePlotControllerImpl>(this, color_scale))
 
 {
 }
