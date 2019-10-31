@@ -15,10 +15,10 @@
 
 using namespace ModelView;
 
-struct AbstractItemCommand::AbstractItemCommandPrivate {
+struct AbstractItemCommand::AbstractItemCommandImpl {
     enum EStatus { INITIAL, AFTER_EXECUTE, AFTER_UNDO };
 
-    AbstractItemCommandPrivate() : m_is_obsolete(false), m_status(INITIAL), m_model(nullptr) {}
+    AbstractItemCommandImpl() : m_is_obsolete(false), m_status(INITIAL), m_model(nullptr) {}
 
     bool can_execute() const { return m_status != AFTER_EXECUTE; }
     bool can_undo() const { return m_status == AFTER_EXECUTE; }
@@ -32,7 +32,7 @@ struct AbstractItemCommand::AbstractItemCommandPrivate {
 };
 
 AbstractItemCommand::AbstractItemCommand(SessionItem* receiver)
-    : p_impl(std::make_unique<AbstractItemCommand::AbstractItemCommandPrivate>())
+    : p_impl(std::make_unique<AbstractItemCommand::AbstractItemCommandImpl>())
 {
     if (!receiver)
         throw std::runtime_error("Invalid item.");

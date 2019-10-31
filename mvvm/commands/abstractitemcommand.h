@@ -48,8 +48,8 @@ private:
     virtual void execute_command() = 0;
     virtual void undo_command() = 0;
 
-    struct AbstractItemCommandPrivate;
-    std::unique_ptr<AbstractItemCommandPrivate> p_impl;
+    struct AbstractItemCommandImpl;
+    std::unique_ptr<AbstractItemCommandImpl> p_impl;
 };
 
 } // namespace ModelView
