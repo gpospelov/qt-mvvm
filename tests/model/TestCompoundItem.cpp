@@ -37,6 +37,8 @@ TEST_F(TestCompoundItem, addIntProperty)
     EXPECT_EQ(propertyItem->displayName(), "name");
     EXPECT_EQ(propertyItem->data().toInt(), expected);
     EXPECT_EQ(propertyItem->data().value<int>(), expected);
+
+    EXPECT_FALSE(propertyItem->data(ItemDataRole::LIMITS).isValid());
 }
 
 TEST_F(TestCompoundItem, addDoubleProperty)
@@ -66,6 +68,8 @@ TEST_F(TestCompoundItem, addCharProperty)
     EXPECT_EQ(propertyItem->modelType(), Constants::PropertyType);
     EXPECT_TRUE(Utils::IsStdStringVariant(propertyItem->data()));
     EXPECT_EQ(propertyItem->data().value<std::string>(), std::string("abc"));
+
+    EXPECT_FALSE(propertyItem->data(ItemDataRole::LIMITS).isValid());
 }
 
 TEST_F(TestCompoundItem, addBoolProperty)
@@ -79,7 +83,10 @@ TEST_F(TestCompoundItem, addBoolProperty)
     EXPECT_EQ(propertyItem->modelType(), Constants::PropertyType);
     EXPECT_TRUE(Utils::IsBoolVariant(propertyItem->data()));
     EXPECT_EQ(propertyItem->data().value<bool>(), expected);
+
+    EXPECT_FALSE(propertyItem->data(ItemDataRole::LIMITS).isValid());
 }
+
 
 TEST_F(TestCompoundItem, setProperty)
 {
