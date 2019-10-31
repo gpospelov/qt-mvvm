@@ -24,16 +24,21 @@ TEST_F(TestCompoundItem, initialState)
     EXPECT_EQ(item.childrenCount(), 0);
 }
 
-TEST_F(TestCompoundItem, addProperty)
+TEST_F(TestCompoundItem, addDoubleProperty)
 {
     CompoundItem item;
 
-    auto propertyItem = item.addProperty<PropertyItem>("height", 42.0);
-    EXPECT_TRUE(item.isTag("height"));
+    const double expected(42.1);
+    auto propertyItem = item.addProperty<PropertyItem>("name", expected);
+    EXPECT_TRUE(item.isTag("name"));
 
     EXPECT_EQ(propertyItem->modelType(), Constants::PropertyType);
-    EXPECT_EQ(propertyItem->displayName(), "height");
-    EXPECT_EQ(propertyItem->data().toDouble(), 42.0);
+    EXPECT_TRUE(Utils::IsDoubleVariant(propertyItem->data()));
+    EXPECT_EQ(propertyItem->displayName(), "name");
+    EXPECT_EQ(propertyItem->data().toDouble(), expected);
+    EXPECT_EQ(propertyItem->data().value<double>(), expected);
+
+    EXPECT_TRUE(propertyItem->data(ItemDataRole::LIMITS).isValid());
 }
 
 TEST_F(TestCompoundItem, addCharProperty)
@@ -46,21 +51,6 @@ TEST_F(TestCompoundItem, addCharProperty)
     EXPECT_EQ(propertyItem->modelType(), Constants::PropertyType);
     EXPECT_TRUE(Utils::IsStdStringVariant(propertyItem->data()));
     EXPECT_EQ(propertyItem->data().value<std::string>(), std::string("abc"));
-}
-
-TEST_F(TestCompoundItem, addDoubleProperty)
-{
-    CompoundItem item;
-
-    const double expected(42.1);
-    auto propertyItem = item.addProperty<PropertyItem>("name", expected);
-    EXPECT_TRUE(item.isTag("name"));
-
-    EXPECT_EQ(propertyItem->modelType(), Constants::PropertyType);
-    EXPECT_TRUE(Utils::IsDoubleVariant(propertyItem->data()));
-    EXPECT_EQ(propertyItem->data().toDouble(), expected);
-
-    EXPECT_TRUE(propertyItem->data(ItemDataRole::LIMITS).isValid());
 }
 
 TEST_F(TestCompoundItem, setProperty)
