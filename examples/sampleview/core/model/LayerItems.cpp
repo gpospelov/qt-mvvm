@@ -30,9 +30,9 @@ const std::string LayerItem::T_LAYOUTS = "T_LAYOUTS";
 
 LayerItem::LayerItem() : LocatedItem(::Constants::LayerType)
 {
-    addProperty<>(P_NAME, "Layer")->setDisplayName("Name");
-    addProperty<>(P_MATERIAL, material_link())->setDisplayName("Material");
-    addProperty<>(P_THICKNESS, 42.0)->setDisplayName("Thickness");
+    addProperty(P_NAME, "Layer")->setDisplayName("Name");
+    addProperty(P_MATERIAL, material_link())->setDisplayName("Material");
+    addProperty(P_THICKNESS, 42.0)->setDisplayName("Thickness");
     registerTag(TagInfo::universalTag(T_LAYOUTS, {::Constants::ParticleLayoutType}),
                 /*set_default*/ true);
 }
@@ -44,7 +44,7 @@ const std::string MultiLayerItem::P_NREPETITIONS = "P_NREPETITIONS";
 
 MultiLayerItem::MultiLayerItem() : LocatedItem(::Constants::MultiLayerType)
 {
-    addProperty<>(P_NREPETITIONS, 1)->setDisplayName("Nr.");
+    addProperty(P_NREPETITIONS, 1)->setDisplayName("Nr.");
     std::vector<std::string> allowed_child = {::Constants::MultiLayerType, ::Constants::LayerType};
     registerTag(TagInfo::universalTag(T_LAYERS, allowed_child),/*set_default*/true);
 }

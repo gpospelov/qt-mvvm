@@ -24,11 +24,11 @@ const std::string DemoItem::P_COMBO_PROPERTY = "P_COMBO_PROPERTY";
 
 DemoItem::DemoItem() : CompoundItem(::Constants::DemoItemType)
 {
-    addProperty<>(P_COLOR_PROPERTY, QColor(Qt::green))->setDisplayName("Color");
-    addProperty<>(P_BOOL_PROPERTY, true)->setDisplayName("Bool");
-    addProperty<>(P_INTEGER_PROPERTY, 42)->setDisplayName("Integer");
-    addProperty<>(P_STRING_PROPERTY, "abc")->setDisplayName("String");
-    addProperty<>(P_DOUBLE_PROPERTY, 42.1)->setDisplayName("Double");
+    addProperty(P_COLOR_PROPERTY, QColor(Qt::green))->setDisplayName("Color");
+    addProperty(P_BOOL_PROPERTY, true)->setDisplayName("Bool");
+    addProperty(P_INTEGER_PROPERTY, 42)->setDisplayName("Integer");
+    addProperty(P_STRING_PROPERTY, "abc")->setDisplayName("String");
+    addProperty(P_DOUBLE_PROPERTY, 42.1)->setDisplayName("Double");
 }
 
 // ----------------------------------------------------------------------------

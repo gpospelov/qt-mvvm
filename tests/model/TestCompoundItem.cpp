@@ -29,7 +29,7 @@ TEST_F(TestCompoundItem, addIntProperty)
     CompoundItem item;
 
     const int expected = 42;
-    auto propertyItem = item.addProperty<PropertyItem>("name", expected);
+    auto propertyItem = item.addProperty("name", expected);
     EXPECT_TRUE(item.isTag("name"));
 
     EXPECT_EQ(propertyItem->modelType(), Constants::PropertyType);
@@ -46,7 +46,7 @@ TEST_F(TestCompoundItem, addDoubleProperty)
     CompoundItem item;
 
     const double expected = 42.1;
-    auto propertyItem = item.addProperty<PropertyItem>("name", expected);
+    auto propertyItem = item.addProperty("name", expected);
     EXPECT_TRUE(item.isTag("name"));
 
     EXPECT_EQ(propertyItem->modelType(), Constants::PropertyType);
@@ -62,7 +62,7 @@ TEST_F(TestCompoundItem, addCharProperty)
 {
     CompoundItem item;
 
-    auto propertyItem = item.addProperty<PropertyItem>("name", "abc");
+    auto propertyItem = item.addProperty("name", "abc");
     EXPECT_TRUE(item.isTag("name"));
 
     EXPECT_EQ(propertyItem->modelType(), Constants::PropertyType);
@@ -77,7 +77,7 @@ TEST_F(TestCompoundItem, addBoolProperty)
     CompoundItem item;
 
     const bool expected = true;
-    auto propertyItem = item.addProperty<PropertyItem>("name", expected);
+    auto propertyItem = item.addProperty("name", expected);
     EXPECT_TRUE(item.isTag("name"));
 
     EXPECT_EQ(propertyItem->modelType(), Constants::PropertyType);
@@ -92,7 +92,7 @@ TEST_F(TestCompoundItem, setProperty)
 {
     CompoundItem item;
 
-    auto propertyItem = item.addProperty<>("height", 42.0);
+    auto propertyItem = item.addProperty("height", 42.0);
     EXPECT_TRUE(item.isTag("height"));
 
     EXPECT_EQ(propertyItem->modelType(), Constants::PropertyType);
