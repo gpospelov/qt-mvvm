@@ -25,7 +25,7 @@ namespace
 int appearance(const ModelView::SessionItem& item)
 {
     auto value = item.data(ModelView::ItemDataRole::APPEARANCE);
-    return value.isValid() ? value.toInt()
+    return value.isValid() ? value.value<int>()
                            : ModelView::Appearance::EDITABLE | ModelView::Appearance::ENABLED;
 }
 } // namespace

@@ -160,8 +160,8 @@ TEST_F(TestDefaultViewModel, insertSingleTopItem)
     QList<QVariant> arguments = spyInsert.takeFirst();
     EXPECT_EQ(arguments.size(), 3); // QModelIndex &parent, int first, int last
     EXPECT_EQ(arguments.at(0).value<QModelIndex>(), QModelIndex());
-    EXPECT_EQ(arguments.at(1).toInt(), 0);
-    EXPECT_EQ(arguments.at(2).toInt(), 0);
+    EXPECT_EQ(arguments.at(1).value<int>(), 0);
+    EXPECT_EQ(arguments.at(2).value<int>(), 0);
 }
 
 //! Removing single top level item.
@@ -191,8 +191,8 @@ TEST_F(TestDefaultViewModel, removeSingleTopItem)
     QList<QVariant> arguments = spyRemove.takeFirst();
     ASSERT_EQ(arguments.size(), 3); // QModelIndex &parent, int first, int last
     EXPECT_EQ(arguments.at(0).value<QModelIndex>(), QModelIndex());
-    EXPECT_EQ(arguments.at(1).toInt(), 0);
-    EXPECT_EQ(arguments.at(2).toInt(), 0);
+    EXPECT_EQ(arguments.at(1).value<int>(), 0);
+    EXPECT_EQ(arguments.at(2).value<int>(), 0);
 }
 
 //! Remove one of two top level items. The pecularity of DefaultViewModel is that it will
@@ -230,14 +230,14 @@ TEST_F(TestDefaultViewModel, removeOneOfTopItems)
     QList<QVariant> arguments = spyRemove.takeFirst();
     EXPECT_EQ(arguments.size(), 3); // QModelIndex &parent, int first, int last
     EXPECT_EQ(arguments.at(0).value<QModelIndex>(), QModelIndex());
-    EXPECT_EQ(arguments.at(1).toInt(), 0); //
-    EXPECT_EQ(arguments.at(2).toInt(), 1); // two children was removed
+    EXPECT_EQ(arguments.at(1).value<int>(), 0); //
+    EXPECT_EQ(arguments.at(2).value<int>(), 1); // two children was removed
 
     arguments = spyInsert.takeFirst();
     EXPECT_EQ(arguments.size(), 3); // QModelIndex &parent, int first, int last
     EXPECT_EQ(arguments.at(0).value<QModelIndex>(), QModelIndex());
-    EXPECT_EQ(arguments.at(1).toInt(), 0);
-    EXPECT_EQ(arguments.at(2).toInt(), 0); // one child was inserted back.
+    EXPECT_EQ(arguments.at(1).value<int>(), 0);
+    EXPECT_EQ(arguments.at(2).value<int>(), 0); // one child was inserted back.
 }
 
 //! Single property item in ViewModel with various appearance flags.

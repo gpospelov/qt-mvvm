@@ -82,7 +82,7 @@ QVariant Utils::CheckStateRole(const SessionItem& item)
 {
     auto value = item.data();
     if (Utils::IsBoolVariant(value))
-        return value.toBool() ? Qt::Checked : Qt::Unchecked;
+        return value.value<bool>() ? Qt::Checked : Qt::Unchecked;
     return QVariant();
 }
 

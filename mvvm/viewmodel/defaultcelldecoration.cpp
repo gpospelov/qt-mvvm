@@ -28,7 +28,7 @@ std::string DefaultCellDecoration::cellText(const QModelIndex& index) const
         return variant.value<ComboProperty>().label();
 
     else if (Utils::IsBoolVariant(variant))
-        return variant.toBool() ? "True" : "False";
+        return variant.value<bool>() ? "True" : "False";
 
     else if (Utils::IsExtPropertyVariant(variant))
         return variant.value<ExternalProperty>().text();

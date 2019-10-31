@@ -35,7 +35,6 @@ TEST_F(TestCompoundItem, addIntProperty)
     EXPECT_EQ(propertyItem->modelType(), Constants::PropertyType);
     EXPECT_TRUE(Utils::IsIntVariant(propertyItem->data()));
     EXPECT_EQ(propertyItem->displayName(), "name");
-    EXPECT_EQ(propertyItem->data().toInt(), expected);
     EXPECT_EQ(propertyItem->data().value<int>(), expected);
 
     EXPECT_FALSE(propertyItem->data(ItemDataRole::LIMITS).isValid());

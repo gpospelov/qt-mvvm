@@ -50,7 +50,7 @@ TEST_F(TestViewModelUtils, iterate)
     std::vector<int> result;
 
     Utils::iterate_model(&model, QModelIndex(), [&](const QStandardItem* item) {
-        result.push_back(item->data(Qt::EditRole).toInt());
+        result.push_back(item->data(Qt::EditRole).value<int>());
     });
 
     EXPECT_EQ(result, expected);
@@ -101,10 +101,10 @@ TEST_F(TestViewModelUtils, itemCheckStateRole)
     EXPECT_FALSE(variant.isValid());
 
     item.setData(QVariant::fromValue(true));
-    EXPECT_EQ(Utils::CheckStateRole(item).toInt(), Qt::Checked);
+    EXPECT_EQ(Utils::CheckStateRole(item).value<int>(), Qt::Checked);
 
     item.setData(QVariant::fromValue(false));
-    EXPECT_EQ(Utils::CheckStateRole(item).toInt(), Qt::Unchecked);
+    EXPECT_EQ(Utils::CheckStateRole(item).value<int>(), Qt::Unchecked);
 }
 
 //! Testing decoration role of the item.

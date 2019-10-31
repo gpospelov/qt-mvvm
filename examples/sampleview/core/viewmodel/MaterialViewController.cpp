@@ -96,7 +96,7 @@ void MaterialViewController::toggleRowSelection(const QModelIndex& index)
     disconnect(&m_selection_model, &QItemSelectionModel::selectionChanged, this,
                &MaterialViewController::onSelectionChanged);
 
-    bool current_value = m_view_model.data(index, Qt::CheckStateRole).toBool();
+    bool current_value = m_view_model.data(index, Qt::CheckStateRole).value<bool>();
     m_view_model.setData(index, !current_value, Qt::CheckStateRole);
     updateSelection(index);
 
@@ -111,7 +111,7 @@ void MaterialViewController::toggleRowSpanSelection(const QModelIndex& index)
     disconnect(&m_selection_model, &QItemSelectionModel::selectionChanged, this,
                &MaterialViewController::onSelectionChanged);
 
-    const bool set_value = !m_view_model.data(index, Qt::CheckStateRole).toBool();
+    const bool set_value = !m_view_model.data(index, Qt::CheckStateRole).value<bool>();
     auto selected = m_selection_model.currentIndex();
     int previous = selected.isValid() ? selected.row() : 0;
     int now = index.row();
@@ -134,7 +134,7 @@ void MaterialViewController::toggleRowSpanSelection(const QModelIndex& index)
 void MaterialViewController::updateSelection(const QModelIndex& current)
 {
     auto selection_state = [](const QModelIndex& index) {
-        bool selected = index.data(Qt::CheckStateRole).toBool();
+        bool selected = index.data(Qt::CheckStateRole).value<bool>();
         auto flag = selected ? QItemSelectionModel::Select : QItemSelectionModel::Deselect;
         return flag | QItemSelectionModel::Rows;
     };
@@ -176,7 +176,7 @@ QList<QModelIndex> MaterialViewController::checkedItems() const
     for (int i = 0, count = m_view_model.rowCount(); i < count; ++i)
     {
         QModelIndex index = m_view_model.index(i, 0);
-        if (index.data(Qt::CheckStateRole).toBool())
+        if (index.data(Qt::CheckStateRole).value<bool>())
             result.append(index);
     }
     return result;

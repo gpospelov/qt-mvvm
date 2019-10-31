@@ -69,11 +69,11 @@ TEST_F(TestJsonVariant, boolVariant)
     // from json object to variant
     QVariant reco_variant = converter.get_variant(object);
     EXPECT_TRUE(Utils::IsBoolVariant(reco_variant));
-    EXPECT_EQ(reco_variant.toBool(), value);
+    EXPECT_EQ(reco_variant.value<bool>(), value);
     EXPECT_EQ(variant, reco_variant);
 
-    EXPECT_EQ(ToJsonAndBack(true).toBool(), true);
-    EXPECT_EQ(ToJsonAndBack(false).toBool(), false);
+    EXPECT_EQ(ToJsonAndBack(true).value<bool>(), true);
+    EXPECT_EQ(ToJsonAndBack(false).value<bool>(), false);
 }
 
 //! Int QVariant conversion.
@@ -92,7 +92,7 @@ TEST_F(TestJsonVariant, intVariant)
     // from json object to variant
     QVariant reco_variant = converter.get_variant(object);
     EXPECT_TRUE(Utils::IsIntVariant(reco_variant));
-    EXPECT_EQ(reco_variant.toInt(), value);
+    EXPECT_EQ(reco_variant.value<int>(), value);
     EXPECT_EQ(variant, reco_variant);
 }
 

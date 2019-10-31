@@ -25,7 +25,7 @@ TEST_F(TestColorMapItem, initialState)
 {
     ColorMapItem item;
     EXPECT_TRUE(item.dataItem() == nullptr);
-    EXPECT_TRUE(item.property(ColorMapItem::P_INTERPOLATION).toBool());
+    EXPECT_TRUE(item.property(ColorMapItem::P_INTERPOLATION).value<bool>());
 }
 
 //! Setting dataItem in model context.

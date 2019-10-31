@@ -51,7 +51,7 @@ void ViewportAxisItem::set_range(double lower, double upper)
 
 bool ViewportAxisItem::is_in_log() const
 {
-    return property(P_IS_LOG).toBool();
+    return property(P_IS_LOG).value<bool>();
 }
 
 // --- BinnedAxisItem ------------------------------------------------------
@@ -69,7 +69,7 @@ std::pair<double, double> BinnedAxisItem::range() const
 
 int BinnedAxisItem::size() const
 {
-    return property(P_NBINS).toInt();
+    return property(P_NBINS).value<int>();
 }
 
 // --- FixedBinAxisItem ------------------------------------------------------
@@ -88,7 +88,7 @@ std::unique_ptr<FixedBinAxisItem> FixedBinAxisItem::create(int nbins, double xmi
 std::vector<double> FixedBinAxisItem::binCenters() const
 {
     std::vector<double> result;
-    int nbins = property(P_NBINS).toInt();
+    int nbins = property(P_NBINS).value<int>();
     double start = property(P_MIN).value<double>();
     double end = property(P_MAX).value<double>();
     double step = (end - start) / nbins;

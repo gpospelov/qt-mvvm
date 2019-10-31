@@ -41,7 +41,7 @@ bool BoolEditor::is_persistent() const
 
 void BoolEditor::onCheckBoxChange(bool value)
 {
-    if(value != m_data.toBool())
+    if(value != m_data.value<bool>())
         setDataIntern(QVariant(value));
 }
 
@@ -50,7 +50,7 @@ void BoolEditor::update_components()
     if (m_data.type() != QVariant::Bool)
         throw std::runtime_error("BoolEditor::update_components() -> Error. Wrong variant type");
 
-    bool value = m_data.toBool();
+    bool value = m_data.value<bool>();
     m_checkBox->blockSignals(true);
     m_checkBox->setChecked(value);
     m_checkBox->setText(value ? true_text : false_text);
