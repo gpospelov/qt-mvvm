@@ -1,13 +1,12 @@
 set(library_name mvvm)
 
 target_sources(${library_name} PRIVATE
-    abstractviewmodelcontroller.cpp
-    abstractviewmodelcontroller.h
     abstractviewmodel.cpp
     abstractviewmodel.h
+    abstractviewmodelcontroller.cpp
+    abstractviewmodelcontroller.h
     celldecorationinterface.h
     childrenstrategyinterface.h
-    CMakeLists.txt
     defaultcelldecoration.cpp
     defaultcelldecoration.h
     defaultviewmodel.cpp

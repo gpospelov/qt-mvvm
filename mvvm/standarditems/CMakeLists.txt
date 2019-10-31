@@ -1,32 +1,32 @@
 set(library_name mvvm)
 
 target_sources(${library_name} PRIVATE
-    axisitems.h
     axisitems.cpp
-    colormapitem.h
+    axisitems.h
     colormapitem.cpp
-    colormapviewportitem.h
+    colormapitem.h
     colormapviewportitem.cpp
-    containeritem.h
+    colormapviewportitem.h
     containeritem.cpp
-    data1ditem.h
+    containeritem.h
     data1ditem.cpp
-    data2ditem.h
+    data1ditem.h
     data2ditem.cpp
-    graphitem.h
+    data2ditem.h
     graphitem.cpp
-    graphviewportitem.h
+    graphitem.h
     graphviewportitem.cpp
-    linkeditem.h
+    graphviewportitem.h
     linkeditem.cpp
-    plottableitems.h
+    linkeditem.h
     plottableitems.cpp
+    plottableitems.h
     standarditemcatalogue.cpp
     standarditemcatalogue.h
     vectoritem.cpp
     vectoritem.h
-    viewportitem.h
     viewportitem.cpp
+    viewportitem.h
 )
 
 target_include_directories(${library_name}
