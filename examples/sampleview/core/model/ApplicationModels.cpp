@@ -22,13 +22,13 @@
 
 using namespace ModelView;
 
-struct ApplicationModels::ApplicationModelsPrivate {
+struct ApplicationModels::ApplicationModelsImpl {
     std::unique_ptr<MaterialModel> m_material_model;
     std::unique_ptr<SampleModel> m_sample_model;
     std::unique_ptr<MaterialPropertyController> m_property_controller;
 };
 
-ApplicationModels::ApplicationModels() : p_impl(std::make_unique<ApplicationModelsPrivate>())
+ApplicationModels::ApplicationModels() : p_impl(std::make_unique<ApplicationModelsImpl>())
 {
     p_impl->m_material_model = std::make_unique<MaterialModel>();
     p_impl->m_sample_model = std::make_unique<SampleModel>();
