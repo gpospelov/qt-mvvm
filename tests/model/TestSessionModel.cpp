@@ -265,7 +265,7 @@ TEST_F(TestSessionModel, copyModelItemRootContext)
     ASSERT_TRUE(copy != item);
     EXPECT_FALSE(copy->identifier().empty());
     EXPECT_TRUE(copy->identifier() != item->identifier());
-    EXPECT_EQ(copy->data().toDouble(), 42.0);
+    EXPECT_EQ(copy->data().value<double>(), 42.0);
     EXPECT_EQ(model.rootItem()->children().size(), 2);
     EXPECT_TRUE(item!=copy);
     std::vector<SessionItem*> expected = {item, copy};
@@ -292,7 +292,7 @@ TEST_F(TestSessionModel, copyParentWithProperty)
     ASSERT_TRUE(copy_child != nullptr);
     EXPECT_FALSE(copy->identifier().empty());
     EXPECT_TRUE(copy->identifier() != parent0->identifier());
-    EXPECT_EQ(copy_child->data().toDouble(), 42.0);
+    EXPECT_EQ(copy_child->data().value<double>(), 42.0);
 }
 
 //! Tests item copy for property item.
@@ -311,7 +311,7 @@ TEST_F(TestSessionModel, copyFreeItem)
 
     // copying to parent
     auto copy = model.copyItem(item.get(), parent0, "", -1);
-    EXPECT_EQ(copy->data().toDouble(), 42.0);
+    EXPECT_EQ(copy->data().value<double>(), 42.0);
 }
 
 //! Attempt to copy property item into the same tag.

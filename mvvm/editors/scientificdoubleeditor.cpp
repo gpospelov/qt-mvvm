@@ -51,7 +51,7 @@ void ScientificDoubleEditor::onEditingFinished()
 {
     double new_value = m_lineEdit->text().toDouble();
 
-    if (!Utils::AreAlmostEqual(new_value, m_data.toDouble()))
+    if (!Utils::AreAlmostEqual(new_value, m_data.value<double>()))
         setDataIntern(QVariant::fromValue(new_value));
 }
 
@@ -61,5 +61,5 @@ void ScientificDoubleEditor::update_components()
         throw std::runtime_error(
             "ScientificDoubleEditor::update_components() -> Error. Wrong variant type");
 
-    m_lineEdit->setText(QString::number(m_data.toDouble(), 'g'));
+    m_lineEdit->setText(QString::number(m_data.value<double>(), 'g'));
 }

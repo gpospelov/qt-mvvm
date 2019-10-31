@@ -135,7 +135,7 @@ TEST_F(TestJsonItemData, filteredRoles)
     // constructing data from json array
     auto data2 = converter.get_data(array);
     EXPECT_EQ(data2->roles().size(), 1u);
-    EXPECT_EQ(data2->data(2).toDouble(), 1.23);
+    EXPECT_EQ(data2->data(2).value<double>(), 1.23);
 }
 
 

@@ -59,9 +59,9 @@ TEST_F(TestPropertiesRowStrategy, vectorItem)
 {
     VectorItem item;
 
-    EXPECT_EQ(item.property(VectorItem::P_X).toDouble(), 0.0);
-    EXPECT_EQ(item.property(VectorItem::P_Y).toDouble(), 0.0);
-    EXPECT_EQ(item.property(VectorItem::P_Z).toDouble(), 0.0);
+    EXPECT_EQ(item.property(VectorItem::P_X).value<double>(), 0.0);
+    EXPECT_EQ(item.property(VectorItem::P_Y).value<double>(), 0.0);
+    EXPECT_EQ(item.property(VectorItem::P_Z).value<double>(), 0.0);
 
     PropertiesRowStrategy strategy({"a", "b", "c"});
     auto items = strategy.constructRow(&item);

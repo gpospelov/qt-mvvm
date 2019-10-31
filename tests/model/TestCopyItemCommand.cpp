@@ -38,7 +38,7 @@ TEST_F(TestCopyItemCommand, copyChild)
     EXPECT_EQ(parent->childrenCount(), 3);
     std::vector<SessionItem*> expected = {child0, copy, child1};
     EXPECT_EQ(parent->getItems("tag1"), expected);
-    EXPECT_EQ(copy->data().toDouble(), 43.0);
+    EXPECT_EQ(copy->data().value<double>(), 43.0);
 
     // undoing command
     command->undo();

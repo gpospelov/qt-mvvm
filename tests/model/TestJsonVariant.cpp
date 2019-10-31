@@ -133,16 +133,16 @@ TEST_F(TestJsonVariant, doubleVariant)
     // from json object to variant
     QVariant reco_variant = converter.get_variant(object);
     EXPECT_TRUE(Utils::IsDoubleVariant(reco_variant));
-    EXPECT_EQ(reco_variant.toDouble(), value);
+    EXPECT_EQ(reco_variant.value<double>(), value);
     EXPECT_EQ(variant, reco_variant);
 
     // more numbers
     value = 1e-03;
-    EXPECT_DOUBLE_EQ(ToJsonAndBack(value).toDouble(), value);
+    EXPECT_DOUBLE_EQ(ToJsonAndBack(value).value<double>(), value);
     value = 0.99e-7;
-    EXPECT_DOUBLE_EQ(ToJsonAndBack(value).toDouble(), value);
+    EXPECT_DOUBLE_EQ(ToJsonAndBack(value).value<double>(), value);
     value = 3.14159265359;
-    EXPECT_DOUBLE_EQ(ToJsonAndBack(value).toDouble(), value);
+    EXPECT_DOUBLE_EQ(ToJsonAndBack(value).value<double>(), value);
 }
 
 //! QVariant(std::vector<double>) conversion.

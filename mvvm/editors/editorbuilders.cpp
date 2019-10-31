@@ -103,7 +103,7 @@ builder_t ScientificSpinBoxEditorBuilder()
             auto limits = variant.value<RealLimits>();
             editor->setRange(limits.lowerLimit(), limits.upperLimit());
         }
-        editor->setSingleStep(getStep(item->data().toDouble()));
+        editor->setSingleStep(getStep(item->data().value<double>()));
         editor->setDecimals(default_decimals);
         return std::move(editor);
     };

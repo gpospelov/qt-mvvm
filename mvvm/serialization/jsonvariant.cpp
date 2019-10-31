@@ -188,7 +188,7 @@ QJsonObject from_double(const QVariant& variant)
 {
     QJsonObject result;
     result[variantTypeKey] = QString::fromStdString(Constants::double_type_name);
-    result[variantValueKey] = variant.toDouble();
+    result[variantValueKey] = variant.value<double>();
     return result;
 }
 

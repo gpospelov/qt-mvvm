@@ -120,8 +120,8 @@ TEST_F(TestViewportAxisPlotController, changeQCPAxis)
     EXPECT_EQ(yChanged->count(), 0);
 
     // Check changed properties in ViewportAxisItem
-    EXPECT_EQ(axisItem->property(ViewportAxisItem::P_MIN).toDouble(), expected_min);
-    EXPECT_EQ(axisItem->property(ViewportAxisItem::P_MAX).toDouble(), expected_max);
+    EXPECT_EQ(axisItem->property(ViewportAxisItem::P_MIN).value<double>(), expected_min);
+    EXPECT_EQ(axisItem->property(ViewportAxisItem::P_MAX).value<double>(), expected_max);
 }
 
 //! Controller subscribed to ViewportAxisItem.

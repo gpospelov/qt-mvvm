@@ -63,7 +63,7 @@ TEST_F(TestRemoveItemCommand, removeAtCommandChild)
     EXPECT_EQ(restored->identifier(), child1_identifier);
 
     // checking the data of restored item
-    EXPECT_EQ(restored->data().toDouble(), 42.0);
+    EXPECT_EQ(restored->data().value<double>(), 42.0);
 }
 
 TEST_F(TestRemoveItemCommand, removeAtCommandParentWithChild)
@@ -96,7 +96,7 @@ TEST_F(TestRemoveItemCommand, removeAtCommandParentWithChild)
     EXPECT_EQ(restored_child->identifier(), child1_identifier);
 
     // checking the data of restored item
-    EXPECT_EQ(restored_child->data().toDouble(), 42.0);
+    EXPECT_EQ(restored_child->data().value<double>(), 42.0);
 }
 
 //! RemoveAtCommand in multitag context
@@ -140,5 +140,5 @@ TEST_F(TestRemoveItemCommand, removeAtCommandMultitag)
     EXPECT_EQ(restored_child2->identifier(), child2_identifier);
 
     // checking the data of restored item
-    EXPECT_EQ(restored_child2->data().toDouble(), 42.0);
+    EXPECT_EQ(restored_child2->data().value<double>(), 42.0);
 }

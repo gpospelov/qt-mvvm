@@ -38,7 +38,7 @@ ViewportAxisItem::ViewportAxisItem(const std::string model_type) : BasicAxisItem
 
 std::pair<double, double> ViewportAxisItem::range() const
 {
-    return std::make_pair(property(P_MIN).toDouble(), property(P_MAX).toDouble());
+    return std::make_pair(property(P_MIN).value<double>(), property(P_MAX).value<double>());
 }
 
 //! Sets lower, upper range of axis to given values.
@@ -64,7 +64,7 @@ BinnedAxisItem::BinnedAxisItem(std::string model_type) : BasicAxisItem(model_typ
 
 std::pair<double, double> BinnedAxisItem::range() const
 {
-    return std::make_pair(property(P_MIN).toDouble(), property(P_MAX).toDouble());
+    return std::make_pair(property(P_MIN).value<double>(), property(P_MAX).value<double>());
 }
 
 int BinnedAxisItem::size() const
@@ -89,8 +89,8 @@ std::vector<double> FixedBinAxisItem::binCenters() const
 {
     std::vector<double> result;
     int nbins = property(P_NBINS).toInt();
-    double start = property(P_MIN).toDouble();
-    double end = property(P_MAX).toDouble();
+    double start = property(P_MIN).value<double>();
+    double end = property(P_MAX).value<double>();
     double step = (end - start) / nbins;
 
     result.resize(static_cast<size_t>(nbins), 0.0);
