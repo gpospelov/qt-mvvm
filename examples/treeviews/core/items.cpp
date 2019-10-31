@@ -61,8 +61,8 @@ InterferenceFunctionItem::InterferenceFunctionItem() : CompoundItem(::Constants:
     addProperty<PropertyItem>(P_ROTATION_ANLE, 90.0);
     addProperty<PropertyItem>(P_INTEGRATION, true);
 
-    ComboProperty combo = ComboProperty::createFrom({"Default", "Square", "Hexagonal"});
-    addProperty<PropertyItem>(P_LATTICE_TYPE, combo.variant());
+    auto combo = ComboProperty::createFrom({"Default", "Square", "Hexagonal"});
+    addProperty<PropertyItem>(P_LATTICE_TYPE, combo);
 
     update_appearance();
 }
