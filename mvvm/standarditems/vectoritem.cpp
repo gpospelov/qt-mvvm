@@ -20,9 +20,9 @@ const std::string VectorItem::P_Z = "Z";
 
 VectorItem::VectorItem() : CompoundItem(Constants::VectorItemType)
 {
-    addProperty<>(P_X, 0.0);
-    addProperty<>(P_Y, 0.0);
-    addProperty<>(P_Z, 0.0);
+    addProperty(P_X, 0.0);
+    addProperty(P_Y, 0.0);
+    addProperty(P_Z, 0.0);
 
     setEditable(false);
 

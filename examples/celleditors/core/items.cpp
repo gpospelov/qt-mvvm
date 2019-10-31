@@ -25,15 +25,15 @@ const std::string DemoPropertiesItem::P_EXTERNAL_PROPERTY = "P_EXTERNAL_PROPERTY
 
 DemoPropertiesItem::DemoPropertiesItem() : CompoundItem(::Constants::DemoPropertiesType)
 {
-    addProperty<>(P_BOOL_PROPERTY, true)->setDisplayName("Bool");
-    addProperty<>(P_INTEGER_PROPERTY, 42)->setDisplayName("Integer");
-    addProperty<>(P_STRING_PROPERTY, "abc")->setDisplayName("String");
-    addProperty<>(P_DOUBLE_PROPERTY, 42.1)->setDisplayName("Double");
-    addProperty<>(P_COLOR_PROPERTY, QColor(Qt::green))->setDisplayName("Color");
+    addProperty(P_BOOL_PROPERTY, true)->setDisplayName("Bool");
+    addProperty(P_INTEGER_PROPERTY, 42)->setDisplayName("Integer");
+    addProperty(P_STRING_PROPERTY, "abc")->setDisplayName("String");
+    addProperty(P_DOUBLE_PROPERTY, 42.1)->setDisplayName("Double");
+    addProperty(P_COLOR_PROPERTY, QColor(Qt::green))->setDisplayName("Color");
 
     ComboProperty combo = ComboProperty() << "option 1" << "option 2" << "option 3";
-    addProperty<>(P_COMBO_PROPERTY, QVariant::fromValue(combo))->setDisplayName("Combo");
+    addProperty(P_COMBO_PROPERTY, combo)->setDisplayName("Combo");
 
     ExternalProperty ext_prop = ExternalProperty("Gold", QColor(Qt::darkYellow), "some id");
-    addProperty<>(P_EXTERNAL_PROPERTY, QVariant::fromValue(ext_prop))->setDisplayName("External");
+    addProperty(P_EXTERNAL_PROPERTY, ext_prop)->setDisplayName("External");
 }

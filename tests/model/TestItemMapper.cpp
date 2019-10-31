@@ -142,7 +142,7 @@ TEST(TestItemMapper, onPropertyChange)
     auto item = model.insertItem<CompoundItem>();
     EXPECT_TRUE(item != nullptr);
 
-    auto property = item->addProperty<PropertyItem>("height", 42.0);
+    auto property = item->addProperty("height", 42.0);
 
     MockWidgetForItem widget(item);
 
@@ -168,7 +168,7 @@ TEST(TestItemMapper, onChildPropertyChange)
     compound1->registerTag(TagInfo::universalTag("tag1"), /*set_as_default*/true);
     auto compound2 = model.insertItem<CompoundItem>(compound1);
 
-    auto property = compound2->addProperty<PropertyItem>("height", 42.0);
+    auto property = compound2->addProperty("height", 42.0);
 
     MockWidgetForItem widget(compound1);
 

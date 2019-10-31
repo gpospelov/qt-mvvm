@@ -35,12 +35,12 @@ MaterialBaseItem::MaterialBaseItem(const std::string& model_type)
 
 void MaterialBaseItem::register_name()
 {
-    addProperty<>(P_NAME, "Unnamed")->setDisplayName("Name");
+    addProperty(P_NAME, "Unnamed")->setDisplayName("Name");
 }
 
 void MaterialBaseItem::register_color()
 {
-    addProperty<>(P_COLOR, QColor(Qt::green))->setDisplayName("Color");
+    addProperty(P_COLOR, QColor(Qt::green))->setDisplayName("Color");
 }
 
 // ----------------------------------------------------------------------------
@@ -52,8 +52,8 @@ SLDMaterialItem::SLDMaterialItem() : MaterialBaseItem(::Constants::SLDMaterialTy
 {
     register_name();
     register_color();
-    addProperty<>(P_SLD_REAL, 1e-06)->setDisplayName("SLD, real");
-    addProperty<>(P_SLD_IMAG, 1e-08)->setDisplayName("SLD, imag");
+    addProperty(P_SLD_REAL, 1e-06)->setDisplayName("SLD, real");
+    addProperty(P_SLD_IMAG, 1e-08)->setDisplayName("SLD, imag");
     addProperty<VectorItem>("Magnetization");
 }
 

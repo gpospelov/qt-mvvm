@@ -31,8 +31,7 @@ ViewportAxisItem::ViewportAxisItem(const std::string model_type) : BasicAxisItem
 {
     addProperty<TextItem>(P_TITLE)->setDisplayName("Title");
     register_min_max();
-    // FIXME remove convertion when will switch to templated method
-    addProperty(P_IS_LOG, QVariant::fromValue(false))->setDisplayName("log10");
+    addProperty(P_IS_LOG, false)->setDisplayName("log10");
 }
 
 //! Returns pair of lower, upper axis range.

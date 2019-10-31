@@ -19,10 +19,10 @@ public:
     public:
         TestItem() : CompoundItem("test")
         {
-            addProperty<PropertyItem>("length", 8.0);
+            addProperty("length", 8.0);
             registerTag(TagInfo::universalTag("children"), /*set_as_default*/ true);
             insertItem(new SessionItem, TagRow::append());
-            addProperty<PropertyItem>("height", 12.0);
+            addProperty("height", 12.0);
         }
         ~TestItem();
     };
@@ -53,7 +53,7 @@ TEST_F(TestChildrenStrategies, AllChildrenStrategy)
 
     // CompoundItem
     CompoundItem item3;
-    item3.addProperty<PropertyItem>("height", 42.0);
+    item3.addProperty("height", 42.0);
     children = strategy.children(&item3);
     EXPECT_EQ(children.size(), 1);
 
@@ -85,7 +85,7 @@ TEST_F(TestChildrenStrategies, TopItemsStrategy)
 
     // CompoundItem
     CompoundItem item3;
-    item3.addProperty<PropertyItem>("height", 42.0);
+    item3.addProperty("height", 42.0);
     children = strategy.children(&item3);
     EXPECT_EQ(children.size(), 0);
 
@@ -117,7 +117,7 @@ TEST_F(TestChildrenStrategies, PropertyItemsStrategy)
 
     // CompoundItem
     CompoundItem item3;
-    item3.addProperty<PropertyItem>("height", 42.0);
+    item3.addProperty("height", 42.0);
     children = strategy.children(&item3);
     EXPECT_EQ(children.size(), 1);
 

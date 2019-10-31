@@ -24,50 +24,75 @@ TEST_F(TestCompoundItem, initialState)
     EXPECT_EQ(item.childrenCount(), 0);
 }
 
-TEST_F(TestCompoundItem, addProperty)
+TEST_F(TestCompoundItem, addIntProperty)
 {
     CompoundItem item;
 
-    auto propertyItem = item.addProperty<PropertyItem>("height", 42.0);
-    EXPECT_TRUE(item.isTag("height"));
-
-    EXPECT_EQ(propertyItem->modelType(), Constants::PropertyType);
-    EXPECT_EQ(propertyItem->displayName(), "height");
-    EXPECT_EQ(propertyItem->data().toDouble(), 42.0);
-}
-
-TEST_F(TestCompoundItem, addCharProperty)
-{
-    CompoundItem item;
-
-    auto propertyItem = item.addProperty<PropertyItem>("name", "abc");
+    const int expected = 42;
+    auto propertyItem = item.addProperty("name", expected);
     EXPECT_TRUE(item.isTag("name"));
 
     EXPECT_EQ(propertyItem->modelType(), Constants::PropertyType);
-    EXPECT_TRUE(Utils::IsStdStringVariant(propertyItem->data()));
-    EXPECT_EQ(propertyItem->data().value<std::string>(), std::string("abc"));
+    EXPECT_TRUE(Utils::IsIntVariant(propertyItem->data()));
+    EXPECT_EQ(propertyItem->displayName(), "name");
+    EXPECT_EQ(propertyItem->data().toInt(), expected);
+    EXPECT_EQ(propertyItem->data().value<int>(), expected);
+
+    EXPECT_FALSE(propertyItem->data(ItemDataRole::LIMITS).isValid());
 }
 
 TEST_F(TestCompoundItem, addDoubleProperty)
 {
     CompoundItem item;
 
-    const double expected(42.1);
-    auto propertyItem = item.addProperty<PropertyItem>("name", expected);
+    const double expected = 42.1;
+    auto propertyItem = item.addProperty("name", expected);
     EXPECT_TRUE(item.isTag("name"));
 
     EXPECT_EQ(propertyItem->modelType(), Constants::PropertyType);
     EXPECT_TRUE(Utils::IsDoubleVariant(propertyItem->data()));
+    EXPECT_EQ(propertyItem->displayName(), "name");
     EXPECT_EQ(propertyItem->data().toDouble(), expected);
+    EXPECT_EQ(propertyItem->data().value<double>(), expected);
 
     EXPECT_TRUE(propertyItem->data(ItemDataRole::LIMITS).isValid());
 }
+
+TEST_F(TestCompoundItem, addCharProperty)
+{
+    CompoundItem item;
+
+    auto propertyItem = item.addProperty("name", "abc");
+    EXPECT_TRUE(item.isTag("name"));
+
+    EXPECT_EQ(propertyItem->modelType(), Constants::PropertyType);
+    EXPECT_TRUE(Utils::IsStdStringVariant(propertyItem->data()));
+    EXPECT_EQ(propertyItem->data().value<std::string>(), std::string("abc"));
+
+    EXPECT_FALSE(propertyItem->data(ItemDataRole::LIMITS).isValid());
+}
+
+TEST_F(TestCompoundItem, addBoolProperty)
+{
+    CompoundItem item;
+
+    const bool expected = true;
+    auto propertyItem = item.addProperty("name", expected);
+    EXPECT_TRUE(item.isTag("name"));
+
+    EXPECT_EQ(propertyItem->modelType(), Constants::PropertyType);
+    EXPECT_TRUE(Utils::IsBoolVariant(propertyItem->data()));
+    EXPECT_EQ(propertyItem->data().value<bool>(), expected);
+
+    EXPECT_FALSE(propertyItem->data(ItemDataRole::LIMITS).isValid());
+}
+
 
 TEST_F(TestCompoundItem, setProperty)
 {
     CompoundItem item;
 
-    auto propertyItem = item.addProperty<>("height", 42.0);
+    auto propertyItem = item.addProperty("height", 42.0);
     EXPECT_TRUE(item.isTag("height"));
 
     EXPECT_EQ(propertyItem->modelType(), Constants::PropertyType);

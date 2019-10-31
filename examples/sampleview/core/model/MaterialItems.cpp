@@ -36,8 +36,8 @@ const std::string MaterialBaseItem::P_H_Z = "P_H_Z";
 MaterialBaseItem::MaterialBaseItem(const std::string& model_type)
     : ModelView::CompoundItem(model_type)
 {
-    addProperty<>(P_COLOR, QColor(Qt::green))->setDisplayName("Color");
-    addProperty<>(P_NAME, "Unnamed")->setDisplayName("Name");
+    addProperty(P_COLOR, QColor(Qt::green))->setDisplayName("Color");
+    addProperty(P_NAME, "Unnamed")->setDisplayName("Name");
 }
 
 /*! Creates mag. field-related properties.
@@ -49,9 +49,9 @@ MaterialBaseItem::MaterialBaseItem(const std::string& model_type)
  */
 void MaterialBaseItem::initMagFields()
 {
-    addProperty<>(P_H_X, 0.0)->setDisplayName("H, x");
-    addProperty<>(P_H_Y, 0.0)->setDisplayName("H, y");
-    addProperty<>(P_H_Z, 0.0)->setDisplayName("H, z");
+    addProperty(P_H_X, 0.0)->setDisplayName("H, x");
+    addProperty(P_H_Y, 0.0)->setDisplayName("H, y");
+    addProperty(P_H_Z, 0.0)->setDisplayName("H, z");
 }
 
 // ----------------------------------------------------------------------------
@@ -62,8 +62,8 @@ const std::string SLDMaterialItem::P_SLD_IMAG = "P_SLD_IMAG";
 SLDMaterialItem::SLDMaterialItem()
     : MaterialBaseItem(::Constants::SLDMaterialType)
 {
-    addProperty<>(P_SLD_REAL, 1e-06)->setDisplayName("Re(SLD)");
-    addProperty<>(P_SLD_IMAG, 1e-08)->setDisplayName("Im(SLD)");
+    addProperty(P_SLD_REAL, 1e-06)->setDisplayName("Re(SLD)");
+    addProperty(P_SLD_IMAG, 1e-08)->setDisplayName("Im(SLD)");
     initMagFields();
 }
 
@@ -84,8 +84,8 @@ const std::string RefIndexMaterialItem::P_BETA = "P_BETA";
 RefIndexMaterialItem::RefIndexMaterialItem()
     : MaterialBaseItem(::Constants::RefIndexMaterialType)
 {
-    addProperty<>(P_DELTA, 1e-06)->setDisplayName("Delta");
-    addProperty<>(P_BETA, 1e-08)->setDisplayName("Beta");
+    addProperty(P_DELTA, 1e-06)->setDisplayName("Delta");
+    addProperty(P_BETA, 1e-08)->setDisplayName("Beta");
     initMagFields();
 }
 

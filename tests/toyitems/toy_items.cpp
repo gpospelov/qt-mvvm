@@ -32,8 +32,8 @@ const std::string LayerItem::T_PARTICLES = "Particles";
 
 LayerItem::LayerItem() : CompoundItem(Constants::LayerType)
 {
-    addProperty<ModelView::PropertyItem>(P_THICKNESS, 42.0);
-    addProperty<ModelView::PropertyItem>(P_COLOR, QColor(Qt::green));
+    addProperty(P_THICKNESS, 42.0);
+    addProperty(P_COLOR, QColor(Qt::green));
     registerTag(ModelView::TagInfo::universalTag(T_PARTICLES, {Constants::ParticleType}),
                 /*set_as_default*/ true);
 }
@@ -57,12 +57,11 @@ const std::string InterferenceFunctionItem::P_LATTICE_TYPE = "Lattice";
 
 InterferenceFunctionItem::InterferenceFunctionItem() : CompoundItem(Constants::InterferenceType)
 {
-    addProperty<ModelView::PropertyItem>(P_ROTATION_ANLE, 90.0);
-    addProperty<ModelView::PropertyItem>(P_INTEGRATION, true);
+    addProperty(P_ROTATION_ANLE, 90.0);
+    addProperty(P_INTEGRATION, true);
 
-    ModelView::ComboProperty combo =
-        ModelView::ComboProperty::createFrom({"Default", "Square", "Hexagonal"});
-    addProperty<ModelView::PropertyItem>(P_LATTICE_TYPE, combo.variant());
+    auto combo = ModelView::ComboProperty::createFrom({"Default", "Square", "Hexagonal"});
+    addProperty(P_LATTICE_TYPE, combo);
 
     update_appearance();
 }
@@ -89,8 +88,8 @@ const std::string CylinderItem::P_HEIGHT = "Height";
 
 CylinderItem::CylinderItem() : CompoundItem(Constants::CylinderType)
 {
-    addProperty<ModelView::PropertyItem>(P_RADIUS, 8.0);
-    addProperty<ModelView::PropertyItem>(P_HEIGHT, 10.0);
+    addProperty(P_RADIUS, 8.0);
+    addProperty(P_HEIGHT, 10.0);
 }
 
 // ----------------------------------------------------------------------------
@@ -99,7 +98,7 @@ const std::string SphereItem::P_RADIUS = "Radius";
 
 SphereItem::SphereItem() : CompoundItem(Constants::SphereType)
 {
-    addProperty<ModelView::PropertyItem>(P_RADIUS, 8.0);
+    addProperty(P_RADIUS, 8.0);
 }
 
 // ----------------------------------------------------------------------------
@@ -111,10 +110,10 @@ const std::string AnysoPyramidItem::P_ALPHA = "Alpha";
 
 AnysoPyramidItem::AnysoPyramidItem() : CompoundItem(Constants::AnysoPyramidType)
 {
-    addProperty<ModelView::PropertyItem>(P_LENGTH, 8.0);
-    addProperty<ModelView::PropertyItem>(P_WIDTH, 8.0);
-    addProperty<ModelView::PropertyItem>(P_HEIGHT, 8.0);
-    addProperty<ModelView::PropertyItem>(P_ALPHA, 8.0);
+    addProperty(P_LENGTH, 8.0);
+    addProperty(P_WIDTH, 8.0);
+    addProperty(P_HEIGHT, 8.0);
+    addProperty(P_ALPHA, 8.0);
 }
 
 ShapeGroupItem::ShapeGroupItem() : GroupItem(Constants::ShapeGroupType)
