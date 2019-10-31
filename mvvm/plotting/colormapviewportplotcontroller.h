@@ -37,8 +37,8 @@ protected:
     void unsubscribe() override;
 
 private:
-    struct ColorMapViewportPlotControllerPrivate;
-    std::unique_ptr<ColorMapViewportPlotControllerPrivate> p_impl;
+    struct ColorMapViewportPlotControllerImpl;
+    std::unique_ptr<ColorMapViewportPlotControllerImpl> p_impl;
 };
 
 } // namespace ModelView

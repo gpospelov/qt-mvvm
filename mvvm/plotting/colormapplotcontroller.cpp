@@ -15,13 +15,13 @@
 
 using namespace ModelView;
 
-struct ColorMapPlotController::ColorMapPlotControllerPrivate {
+struct ColorMapPlotController::ColorMapPlotControllerImpl {
     ColorMapPlotController* master{nullptr};
     QCustomPlot* custom_plot{nullptr};
     QCPColorMap* color_map{nullptr};
     std::unique_ptr<Data2DPlotController> data_controller;
 
-    ColorMapPlotControllerPrivate(ColorMapPlotController* master, QCustomPlot* plot, QCPColorScale* color_scale)
+    ColorMapPlotControllerImpl(ColorMapPlotController* master, QCustomPlot* plot, QCPColorScale* color_scale)
         : master(master), custom_plot(plot)
     {
         color_map = new QCPColorMap(custom_plot->xAxis, custom_plot->yAxis);
@@ -31,7 +31,7 @@ struct ColorMapPlotController::ColorMapPlotControllerPrivate {
             color_map->setColorScale(color_scale);
     }
 
-    ~ColorMapPlotControllerPrivate() { custom_plot->removePlottable(color_map); }
+    ~ColorMapPlotControllerImpl() { custom_plot->removePlottable(color_map); }
 
     ColorMapItem* colormap_item() { return master->currentItem(); }
 
@@ -55,7 +55,7 @@ struct ColorMapPlotController::ColorMapPlotControllerPrivate {
 };
 
 ColorMapPlotController::ColorMapPlotController(QCustomPlot* custom_plot,  QCPColorScale* color_scale)
-    : p_impl(std::make_unique<ColorMapPlotControllerPrivate>(this, custom_plot, color_scale))
+    : p_impl(std::make_unique<ColorMapPlotControllerImpl>(this, custom_plot, color_scale))
 {
 }
 

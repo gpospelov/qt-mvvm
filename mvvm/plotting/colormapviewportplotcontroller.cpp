@@ -19,7 +19,7 @@
 
 using namespace ModelView;
 
-struct ColorMapViewportPlotController::ColorMapViewportPlotControllerPrivate {
+struct ColorMapViewportPlotController::ColorMapViewportPlotControllerImpl {
     ColorMapViewportPlotController* master{nullptr};
     QCustomPlot* custom_plot{nullptr};
     QCPColorScale* color_scale{nullptr};
@@ -28,7 +28,7 @@ struct ColorMapViewportPlotController::ColorMapViewportPlotControllerPrivate {
     std::unique_ptr<ColorScalePlotController> colorScaleController;
     std::unique_ptr<ColorMapPlotController> colorMapController;
 
-    ColorMapViewportPlotControllerPrivate(ColorMapViewportPlotController* master, QCustomPlot* plot)
+    ColorMapViewportPlotControllerImpl(ColorMapViewportPlotController* master, QCustomPlot* plot)
         : master(master), custom_plot(plot), color_scale(new QCPColorScale(custom_plot))
     {
         xAxisController = std::make_unique<ViewportAxisPlotController>(custom_plot->xAxis);
@@ -61,7 +61,7 @@ struct ColorMapViewportPlotController::ColorMapViewportPlotControllerPrivate {
 };
 
 ColorMapViewportPlotController::ColorMapViewportPlotController(QCustomPlot* custom_plot)
-    : p_impl(std::make_unique<ColorMapViewportPlotControllerPrivate>(this, custom_plot))
+    : p_impl(std::make_unique<ColorMapViewportPlotControllerImpl>(this, custom_plot))
 {
 }
 
