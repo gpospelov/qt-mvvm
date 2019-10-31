@@ -34,8 +34,8 @@ private:
     void undo_command() override;
     void execute_command() override;
 
-    struct RemoveItemCommandPrivate;
-    std::unique_ptr<RemoveItemCommandPrivate> p_impl;
+    struct RemoveItemCommandImpl;
+    std::unique_ptr<RemoveItemCommandImpl> p_impl;
 };
 
 } // namespace ModelView
