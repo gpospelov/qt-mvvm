@@ -30,11 +30,11 @@ public:
     //! Adds property item of given type.
     template <typename T = PropertyItem> T* addProperty(const std::string& name);
 
-    template <typename T = PropertyItem, typename V>
-    T* addProperty(const std::string& name, const V& value);
+    template <typename V>
+    PropertyItem* addProperty(const std::string& name, const V& value);
 
     //! Register char property. Special case to turn it into std::string.
-    template <typename T = PropertyItem> T* addProperty(const std::string& name, const char* value);
+    PropertyItem* addProperty(const std::string& name, const char* value);
 
     std::string displayName() const override;
 };
@@ -48,15 +48,16 @@ template <typename T> T* CompoundItem::addProperty(const std::string& name)
     return property;
 }
 
-template <typename T> T* CompoundItem::addProperty(const std::string& name, const char* value)
+inline
+PropertyItem* CompoundItem::addProperty(const std::string& name, const char* value)
 {
-    return addProperty<T>(name, std::string(value));
+    return addProperty(name, std::string(value));
 }
 
-template <typename T, typename V>
-T* CompoundItem::addProperty(const std::string& name, const V& value)
+template <typename V>
+PropertyItem* CompoundItem::addProperty(const std::string& name, const V& value)
 {
-    T* property = new T;
+    auto property = new PropertyItem;
     registerTag(TagInfo::propertyTag(name, property->modelType()));
     property->setDisplayName(name);
     property->setData(QVariant::fromValue(value));
