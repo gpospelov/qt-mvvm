@@ -24,11 +24,26 @@ TEST_F(TestCompoundItem, initialState)
     EXPECT_EQ(item.childrenCount(), 0);
 }
 
+TEST_F(TestCompoundItem, addIntProperty)
+{
+    CompoundItem item;
+
+    const int expected = 42;
+    auto propertyItem = item.addProperty<PropertyItem>("name", expected);
+    EXPECT_TRUE(item.isTag("name"));
+
+    EXPECT_EQ(propertyItem->modelType(), Constants::PropertyType);
+    EXPECT_TRUE(Utils::IsIntVariant(propertyItem->data()));
+    EXPECT_EQ(propertyItem->displayName(), "name");
+    EXPECT_EQ(propertyItem->data().toInt(), expected);
+    EXPECT_EQ(propertyItem->data().value<int>(), expected);
+}
+
 TEST_F(TestCompoundItem, addDoubleProperty)
 {
     CompoundItem item;
 
-    const double expected(42.1);
+    const double expected = 42.1;
     auto propertyItem = item.addProperty<PropertyItem>("name", expected);
     EXPECT_TRUE(item.isTag("name"));
 
@@ -51,6 +66,19 @@ TEST_F(TestCompoundItem, addCharProperty)
     EXPECT_EQ(propertyItem->modelType(), Constants::PropertyType);
     EXPECT_TRUE(Utils::IsStdStringVariant(propertyItem->data()));
     EXPECT_EQ(propertyItem->data().value<std::string>(), std::string("abc"));
+}
+
+TEST_F(TestCompoundItem, addBoolProperty)
+{
+    CompoundItem item;
+
+    const bool expected = true;
+    auto propertyItem = item.addProperty<PropertyItem>("name", expected);
+    EXPECT_TRUE(item.isTag("name"));
+
+    EXPECT_EQ(propertyItem->modelType(), Constants::PropertyType);
+    EXPECT_TRUE(Utils::IsBoolVariant(propertyItem->data()));
+    EXPECT_EQ(propertyItem->data().value<bool>(), expected);
 }
 
 TEST_F(TestCompoundItem, setProperty)
