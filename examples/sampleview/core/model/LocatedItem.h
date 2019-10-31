@@ -25,11 +25,10 @@
 class LocatedItem : public ModelView::CompoundItem
 {
 public:
-    static const std::string P_X_POS;
-    static const std::string P_Y_POS;
+    static inline const std::string P_X_POS = "P_X_POS";
+    static inline const std::string P_Y_POS = "P_Y_POS";
 
     LocatedItem(const std::string& model_type);
-    ~LocatedItem() override;
 };
 
 #endif // LOCATEDITEM_H
