@@ -16,14 +16,14 @@
 
 using namespace ModelView;
 
-struct ViewportAxisPlotController::AxesPlotControllerPrivate {
+struct ViewportAxisPlotController::AxesPlotControllerImpl {
 
     ViewportAxisPlotController* controller{nullptr};
     QCPAxis* axis{nullptr};
     bool block_update{false};
     std::unique_ptr<QMetaObject::Connection> axis_conn;
 
-    AxesPlotControllerPrivate(ViewportAxisPlotController* controller, QCPAxis* axis)
+    AxesPlotControllerImpl(ViewportAxisPlotController* controller, QCPAxis* axis)
         : controller(controller), axis(axis)
     {
         if (!axis)
@@ -65,7 +65,7 @@ struct ViewportAxisPlotController::AxesPlotControllerPrivate {
 };
 
 ViewportAxisPlotController::ViewportAxisPlotController(QCPAxis* axis)
-    : p_impl(std::make_unique<AxesPlotControllerPrivate>(this, axis))
+    : p_impl(std::make_unique<AxesPlotControllerImpl>(this, axis))
 
 {
 }

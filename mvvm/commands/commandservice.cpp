@@ -29,7 +29,7 @@ void CommandService::setUndoRedoEnabled(bool value)
         m_commands.reset();
 }
 
-SessionItem* CommandService::insertNewItem(item_factory_func_t func, SessionItem* parent,
+SessionItem* CommandService::insertNewItem(const item_factory_func_t& func, SessionItem* parent,
                                            const TagRow& tagrow)
 {
     if (!parent)

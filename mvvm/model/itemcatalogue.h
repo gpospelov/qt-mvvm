@@ -46,7 +46,8 @@ public:
 
 private:
     void add(const std::string& model_type, item_factory_func_t func, const std::string& label);
-    std::unique_ptr<class ItemCataloguePrivate> p_impl;
+    struct ItemCatalogueImpl;
+    std::unique_ptr<ItemCatalogueImpl> p_impl;
 };
 
 template <typename T> void ItemCatalogue::registerItem(const std::string& label)

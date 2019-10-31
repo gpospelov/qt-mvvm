@@ -8,16 +8,15 @@
 // ************************************************************************** //
 
 #include "sessionitem.h"
+#include "customvariants.h"
+#include "itemmapper.h"
 #include "itempool.h"
 #include "itemutils.h"
-#include "itemmapper.h"
 #include "modelmapper.h"
 #include "sessionitemdata.h"
 #include "sessionitemtags.h"
 #include "sessionmodel.h"
 #include "taginfo.h"
-#include "customvariants.h"
-#include "sessionitem_p.h"
 #include "uniqueidgenerator.h"
 #include <stdexcept>
 
@@ -33,8 +32,21 @@ int appearance(const ModelView::SessionItem& item)
 
 using namespace ModelView;
 
-SessionItem::SessionItem(model_type modelType)
-    : p_impl(std::make_unique<SessionItemPrivate>())
+struct SessionItem::SessionItemImpl {
+    SessionItem* m_parent{nullptr};
+    SessionModel* m_model{nullptr};
+    std::unique_ptr<ItemMapper> m_mapper;
+    std::unique_ptr<SessionItemData> m_data;
+    std::unique_ptr<SessionItemTags> m_tags;
+    model_type m_modelType;
+
+    SessionItemImpl()
+        : m_data(std::make_unique<SessionItemData>()), m_tags(std::make_unique<SessionItemTags>())
+    {
+    }
+};
+
+SessionItem::SessionItem(model_type modelType) : p_impl(std::make_unique<SessionItemImpl>())
 {
     p_impl->m_modelType = std::move(modelType);
     setDataIntern(QVariant::fromValue(UniqueIdGenerator::generate()), ItemDataRole::IDENTIFIER);
@@ -119,7 +131,8 @@ bool SessionItem::insertItem(SessionItem* item, const TagRow& tagrow)
         if (p_impl->m_model) {
             // FIXME think of actual_tagrow removal if input tag,row will be always valid
             auto actual_tagrow = tagRowOfItem(item);
-            p_impl->m_model->mapper()->callOnRowInserted(this, actual_tagrow.tag, actual_tagrow.row);
+            p_impl->m_model->mapper()->callOnRowInserted(this, actual_tagrow.tag,
+                                                         actual_tagrow.row);
         }
     }
 
@@ -297,6 +310,23 @@ void SessionItem::setAppearanceFlag(int flag, bool value)
         flags &= ~flag;
 
     setDataIntern(flags, ItemDataRole::APPEARANCE);
+}
+
+SessionItemData* SessionItem::itemData() const
+{
+    return p_impl->m_data.get();
+}
+
+SessionItemTags* SessionItem::itemTags() const
+{
+    return p_impl->m_tags.get();
+}
+
+void SessionItem::setDataAndTags(std::unique_ptr<SessionItemData> data,
+                                 std::unique_ptr<SessionItemTags> tags)
+{
+    p_impl->m_data = std::move(data);
+    p_impl->m_tags = std::move(tags);
 }
 
 bool SessionItem::setDataIntern(const QVariant& variant, int role)

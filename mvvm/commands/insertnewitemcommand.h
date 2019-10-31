@@ -35,8 +35,8 @@ private:
     void undo_command() override;
     void execute_command() override;
 
-    struct InsertNewItemCommandPrivate;
-    std::unique_ptr<InsertNewItemCommandPrivate> p_impl;
+    struct InsertNewItemCommandImpl;
+    std::unique_ptr<InsertNewItemCommandImpl> p_impl;
 };
 
 } // namespace ModelView

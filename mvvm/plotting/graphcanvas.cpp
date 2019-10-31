@@ -18,13 +18,13 @@
 
 using namespace ModelView;
 
-struct GraphCanvas::GraphCanvasPrivate {
+struct GraphCanvas::GraphCanvasImpl {
     QCustomPlot* custom_plot{nullptr};
     std::unique_ptr<GraphViewportPlotController> viewport_controller;
     std::unique_ptr<StatusStringReporter> reporter;
     StatusLabel* status_label{nullptr};
 
-    GraphCanvasPrivate() : custom_plot(new QCustomPlot), status_label(new StatusLabel)
+    GraphCanvasImpl() : custom_plot(new QCustomPlot), status_label(new StatusLabel)
     {
         viewport_controller = std::make_unique<GraphViewportPlotController>(custom_plot);
 
@@ -38,7 +38,7 @@ struct GraphCanvas::GraphCanvasPrivate {
 };
 
 GraphCanvas::GraphCanvas(QWidget* parent)
-    : QWidget(parent), p_impl(std::make_unique<GraphCanvasPrivate>())
+    : QWidget(parent), p_impl(std::make_unique<GraphCanvasImpl>())
 {
     auto layout = new QVBoxLayout(this);
     layout->setMargin(0);

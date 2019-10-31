@@ -13,7 +13,6 @@
 #include "jsonitemdata.h"
 #include "jsontaginfo.h"
 #include "sessionitem.h"
-#include "sessionitem_p.h"
 #include "sessionitemcontainer.h"
 #include "sessionitemdata.h"
 #include "sessionitemtags.h"
@@ -127,8 +126,8 @@ QJsonObject JsonItemConverter::item_to_json(const SessionItem& item) const
 {
     QJsonObject result;
     result[modelKey] = QString::fromStdString(item.modelType());
-    result[itemDataKey] = m_itemdata_converter->get_json(*item.p_impl->m_data);
-    result[itemTagsKey] = tags_to_json(*item.p_impl->m_tags);
+    result[itemDataKey] = m_itemdata_converter->get_json(*item.itemData());
+    result[itemTagsKey] = tags_to_json(*item.itemTags());
 
     return result;
 }
@@ -176,8 +175,7 @@ std::unique_ptr<SessionItem> JsonItemConverter::json_to_item(const QJsonObject& 
     auto result = m_factory->createItem(modelType);
     result->setParent(parent);
 
-    result->p_impl->m_data = m_itemdata_converter->get_data(json[itemDataKey].toArray());
-    result->p_impl->m_tags = json_to_tags(json[itemTagsKey].toObject(), result.get());
+    result->setDataAndTags(m_itemdata_converter->get_data(json[itemDataKey].toArray()), json_to_tags(json[itemTagsKey].toObject(), result.get()));
 
     if (m_generate_new_identifiers)
         result->setData(QVariant::fromValue(UniqueIdGenerator::generate()),

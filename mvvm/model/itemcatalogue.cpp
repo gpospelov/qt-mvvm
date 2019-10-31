@@ -13,9 +13,8 @@
 
 using namespace ModelView;
 
-class ModelView::ItemCataloguePrivate
+struct ItemCatalogue::ItemCatalogueImpl
 {
-public:
     IFactory<std::string, SessionItem> factory;
     struct TypeAndLabel {
         std::string item_type;
@@ -25,11 +24,11 @@ public:
     std::vector<TypeAndLabel> m_info;
 };
 
-ItemCatalogue::ItemCatalogue() : p_impl(std::make_unique<ItemCataloguePrivate>()) {}
+ItemCatalogue::ItemCatalogue() : p_impl(std::make_unique<ItemCatalogueImpl>()) {}
 
 ItemCatalogue::ItemCatalogue(const ItemCatalogue& other)
 {
-    p_impl = std::make_unique<ItemCataloguePrivate>(*other.p_impl);
+    p_impl = std::make_unique<ItemCatalogueImpl>(*other.p_impl);
 }
 
 ItemCatalogue& ItemCatalogue::operator=(const ItemCatalogue& other)

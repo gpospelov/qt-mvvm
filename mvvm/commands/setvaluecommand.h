@@ -35,8 +35,8 @@ private:
     void execute_command() override;
     void swap_values();
 
-    struct SetValueCommandPrivate;
-    std::unique_ptr<SetValueCommandPrivate> p_impl;
+    struct SetValueCommandImpl;
+    std::unique_ptr<SetValueCommandImpl> p_impl;
 };
 
 } // namespace ModelView

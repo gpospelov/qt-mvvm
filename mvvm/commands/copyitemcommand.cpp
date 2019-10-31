@@ -23,16 +23,16 @@ namespace
 std::string generate_description(const std::string& modelType, const TagRow& tagrow);
 } // namespace
 
-struct CopyItemCommand::CopyItemCommandPrivate {
+struct CopyItemCommand::CopyItemCommandImpl {
     TagRow tagrow;
     result_t result;
     std::unique_ptr<ItemBackupStrategy> backup_strategy;
     Path item_path;
-    CopyItemCommandPrivate(TagRow tagrow) : tagrow(std::move(tagrow)), result(nullptr) {}
+    CopyItemCommandImpl(TagRow tagrow) : tagrow(std::move(tagrow)), result(nullptr) {}
 };
 
 CopyItemCommand::CopyItemCommand(const SessionItem* item, SessionItem* parent, TagRow tagrow)
-    : AbstractItemCommand(parent), p_impl(std::make_unique<CopyItemCommandPrivate>(tagrow))
+    : AbstractItemCommand(parent), p_impl(std::make_unique<CopyItemCommandImpl>(std::move(tagrow)))
 {
     setDescription(generate_description(item->modelType(), p_impl->tagrow));
     p_impl->backup_strategy = parent->model()->itemBackupStrategy();

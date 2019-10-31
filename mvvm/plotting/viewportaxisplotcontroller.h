@@ -36,8 +36,8 @@ protected:
     void subscribe() override;
 
 public:
-    struct AxesPlotControllerPrivate;
-    std::unique_ptr<AxesPlotControllerPrivate> p_impl;
+    struct AxesPlotControllerImpl;
+    std::unique_ptr<AxesPlotControllerImpl> p_impl;
 };
 
 } // namespace ModelView

@@ -18,13 +18,13 @@
 
 using namespace ModelView;
 
-struct ColorMapCanvas::ColorMapCanvasPrivate {
+struct ColorMapCanvas::ColorMapCanvasImpl {
     QCustomPlot* custom_plot{nullptr};
     std::unique_ptr<ColorMapViewportPlotController> viewport_controller;
     std::unique_ptr<StatusStringReporter> reporter;
     StatusLabel* status_label{nullptr};
 
-    ColorMapCanvasPrivate()
+    ColorMapCanvasImpl()
         : custom_plot(new QCustomPlot), status_label(new StatusLabel)
     {
         viewport_controller = std::make_unique<ColorMapViewportPlotController>(custom_plot);
@@ -39,7 +39,7 @@ struct ColorMapCanvas::ColorMapCanvasPrivate {
 };
 
 ColorMapCanvas::ColorMapCanvas(QWidget* parent)
-    : QWidget(parent), p_impl(std::make_unique<ColorMapCanvasPrivate>())
+    : QWidget(parent), p_impl(std::make_unique<ColorMapCanvasImpl>())
 {
     auto layout = new QVBoxLayout(this);
     layout->setMargin(0);

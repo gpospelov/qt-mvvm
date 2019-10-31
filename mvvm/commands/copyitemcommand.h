@@ -35,8 +35,8 @@ private:
     void undo_command() override;
     void execute_command() override;
 
-    struct CopyItemCommandPrivate;
-    std::unique_ptr<CopyItemCommandPrivate> p_impl;
+    struct CopyItemCommandImpl;
+    std::unique_ptr<CopyItemCommandImpl> p_impl;
 };
 
 } // namespace ModelView

@@ -18,20 +18,20 @@
 
 using namespace ModelView;
 
-struct GraphPlotController::GraphItemControllerPrivate {
+struct GraphPlotController::GraphItemControllerImpl {
     GraphPlotController* master{nullptr};
     QCustomPlot* custom_plot{nullptr};
     QCPGraph* graph{nullptr};
     std::unique_ptr<Data1DPlotController> data_controller;
 
-    GraphItemControllerPrivate(GraphPlotController* master, QCustomPlot* plot)
+    GraphItemControllerImpl(GraphPlotController* master, QCustomPlot* plot)
         : master(master), custom_plot(plot)
     {
         graph = custom_plot->addGraph();
         data_controller = std::make_unique<Data1DPlotController>(graph);
     }
 
-    ~GraphItemControllerPrivate() { custom_plot->removePlottable(graph); }
+    ~GraphItemControllerImpl() { custom_plot->removePlottable(graph); }
 
     GraphItem* graph_item() { return master->currentItem(); }
 
@@ -56,7 +56,7 @@ struct GraphPlotController::GraphItemControllerPrivate {
 };
 
 GraphPlotController::GraphPlotController(QCustomPlot* custom_plot)
-    : p_impl(std::make_unique<GraphItemControllerPrivate>(this, custom_plot))
+    : p_impl(std::make_unique<GraphItemControllerImpl>(this, custom_plot))
 {
 }
 

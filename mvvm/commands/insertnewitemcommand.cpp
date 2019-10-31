@@ -19,12 +19,12 @@ namespace
 std::string generate_description(const std::string& modelType, const TagRow& tagrow);
 } // namespace
 
-struct InsertNewItemCommand::InsertNewItemCommandPrivate {
+struct InsertNewItemCommand::InsertNewItemCommandImpl {
     item_factory_func_t factory_func;
     TagRow tagrow;
     result_t result;
     Path item_path;
-    InsertNewItemCommandPrivate(item_factory_func_t func, TagRow tagrow)
+    InsertNewItemCommandImpl(item_factory_func_t func, TagRow tagrow)
         : factory_func(func), tagrow(std::move(tagrow)), result(nullptr)
     {
     }
@@ -33,7 +33,7 @@ struct InsertNewItemCommand::InsertNewItemCommandPrivate {
 InsertNewItemCommand::InsertNewItemCommand(item_factory_func_t func, SessionItem* parent,
                                            TagRow tagrow)
     : AbstractItemCommand(parent),
-      p_impl(std::make_unique<InsertNewItemCommandPrivate>(func, tagrow))
+      p_impl(std::make_unique<InsertNewItemCommandImpl>(func, tagrow))
 {
     p_impl->item_path = pathFromItem(parent);
 }

@@ -34,8 +34,8 @@ protected:
     void subscribe() override;
 
 public:
-    struct ColorScalePlotControllerPrivate;
-    std::unique_ptr<ColorScalePlotControllerPrivate> p_impl;
+    struct ColorScalePlotControllerImpl;
+    std::unique_ptr<ColorScalePlotControllerImpl> p_impl;
 };
 
 } // namespace ModelView

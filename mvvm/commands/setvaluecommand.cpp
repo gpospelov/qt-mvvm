@@ -20,12 +20,12 @@ std::string generate_description(const std::string& str);
 
 using namespace ModelView;
 
-struct SetValueCommand::SetValueCommandPrivate {
+struct SetValueCommand::SetValueCommandImpl {
     QVariant m_value; //! Value to set as a result of command execution.
     int m_role;
     result_t m_result;
     Path m_item_path;
-    SetValueCommandPrivate(QVariant value, int role)
+    SetValueCommandImpl(QVariant value, int role)
         : m_value(std::move(value)), m_role(role), m_result(false)
     {
     }
@@ -34,7 +34,7 @@ struct SetValueCommand::SetValueCommandPrivate {
 // ----------------------------------------------------------------------------
 
 SetValueCommand::SetValueCommand(SessionItem* item, QVariant value, int role)
-    : AbstractItemCommand(item), p_impl(std::make_unique<SetValueCommandPrivate>(value, role))
+    : AbstractItemCommand(item), p_impl(std::make_unique<SetValueCommandImpl>(std::move(value), role))
 {
     setDescription(generate_description(p_impl->m_value.toString().toStdString()));
     p_impl->m_item_path = pathFromItem(item);

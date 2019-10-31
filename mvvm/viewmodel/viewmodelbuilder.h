@@ -38,8 +38,8 @@ public:
     std::unique_ptr<AbstractViewModel> build() const;
 
 private:
-    class ViewModelBuilderPrivate;
-    std::unique_ptr<ViewModelBuilderPrivate> p_impl;
+    struct ViewModelBuilderImpl;
+    std::unique_ptr<ViewModelBuilderImpl> p_impl;
 };
 
 } // namespace ModelView

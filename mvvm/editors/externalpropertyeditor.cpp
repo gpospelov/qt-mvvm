@@ -64,7 +64,7 @@ void ExternalPropertyEditor::update_components()
     if (!Utils::IsExtPropertyVariant(m_data))
         throw std::runtime_error("Error. Wrong variant type (ExternalProperty is required).");
 
-    ExternalProperty prop = m_data.value<ExternalProperty>();
+    auto prop = m_data.value<ExternalProperty>();
     QPixmap pixmap(Style::DefaultPixmapSize(), Style::DefaultPixmapSize());
     pixmap.fill(prop.color());
     m_textLabel->setText(QString::fromStdString(prop.text()));

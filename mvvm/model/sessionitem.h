@@ -98,7 +98,13 @@ private:
     void setModel(SessionModel* model);
     void setAppearanceFlag(int flag, bool value);
 
-    std::unique_ptr<SessionItemPrivate> p_impl;
+    // FIXME refactor converter access to item internals
+    class SessionItemData* itemData() const;
+    class SessionItemTags* itemTags() const;
+    void setDataAndTags(std::unique_ptr<SessionItemData> data, std::unique_ptr<SessionItemTags> tags);
+
+    struct SessionItemImpl;
+    std::unique_ptr<SessionItemImpl> p_impl;
 };
 
 //! Returns first item under given tag casted to a specified type.

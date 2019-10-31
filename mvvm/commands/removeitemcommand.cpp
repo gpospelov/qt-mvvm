@@ -20,18 +20,18 @@ namespace
 std::string generate_description(const TagRow& tagrow);
 } // namespace
 
-struct RemoveItemCommand::RemoveItemCommandPrivate {
+struct RemoveItemCommand::RemoveItemCommandImpl {
     TagRow tagrow;
     result_t result;
     std::unique_ptr<ItemBackupStrategy> backup_strategy;
     Path item_path;
-    RemoveItemCommandPrivate(TagRow tagrow) : tagrow(std::move(tagrow)), result(true) {}
+    RemoveItemCommandImpl(TagRow tagrow) : tagrow(std::move(tagrow)), result(true) {}
 };
 
 // ----------------------------------------------------------------------------
 
 RemoveItemCommand::RemoveItemCommand(SessionItem* parent, TagRow tagrow)
-    : AbstractItemCommand(parent), p_impl(std::make_unique<RemoveItemCommandPrivate>(tagrow))
+    : AbstractItemCommand(parent), p_impl(std::make_unique<RemoveItemCommandImpl>(tagrow))
 {
     setDescription(generate_description(p_impl->tagrow));
     p_impl->backup_strategy = parent->model()->itemBackupStrategy();

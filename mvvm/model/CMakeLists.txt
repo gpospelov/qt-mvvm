@@ -35,14 +35,12 @@ target_sources(${library_name} PRIVATE
     path.h
     propertyitem.cpp
     propertyitem.h
+    sessionitem.cpp
+    sessionitem.h
     sessionitemcontainer.cpp
     sessionitemcontainer.h
-    sessionitem.cpp
     sessionitemdata.cpp
     sessionitemdata.h
-    sessionitem.h
-    sessionitem_p.cpp
-    sessionitem_p.h
     sessionitemtags.cpp
     sessionitemtags.h
     sessionmodel.cpp
@@ -53,7 +51,8 @@ target_sources(${library_name} PRIVATE
     tagrow.h
     uniqueidgenerator.cpp
     uniqueidgenerator.h
-    variant-constants.h)
+    variant-constants.h
+)
 
 target_include_directories(${library_name}
     PUBLIC

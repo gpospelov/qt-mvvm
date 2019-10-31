@@ -36,8 +36,8 @@ protected:
     void subscribe() override;
 
 private:
-    struct GraphViewportPlotControllerPrivate;
-    std::unique_ptr<GraphViewportPlotControllerPrivate> p_impl;
+    struct GraphViewportPlotControllerImpl;
+    std::unique_ptr<GraphViewportPlotControllerImpl> p_impl;
 };
 
 } // namespace ModelView

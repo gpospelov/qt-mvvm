@@ -37,8 +37,8 @@ protected:
     void unsubscribe() override;
 
 private:
-    struct Data1DPlotControllerPrivate;
-    std::unique_ptr<Data1DPlotControllerPrivate> p_impl;
+    struct Data1DPlotControllerImpl;
+    std::unique_ptr<Data1DPlotControllerImpl> p_impl;
 };
 
 } // namespace ModelView

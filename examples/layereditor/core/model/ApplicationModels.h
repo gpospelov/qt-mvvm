@@ -38,8 +38,8 @@ public:
     void writeToFile(const QString& name);
 
 private:
-    struct ApplicationModelsPrivate;
-    std::unique_ptr<ApplicationModelsPrivate> p_impl;
+    struct ApplicationModelsImpl;
+    std::unique_ptr<ApplicationModelsImpl> p_impl;
 };
 
 #endif //  APPLICATIONMODELS_H

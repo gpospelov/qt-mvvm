@@ -30,8 +30,8 @@ public:
     std::unique_ptr<SessionItem> createCopy(const SessionItem* item) const;
 
 private:
-    class JsonItemCopyStrategyPrivate;
-    std::unique_ptr<JsonItemCopyStrategyPrivate> p_impl;
+    struct JsonItemCopyStrategyImpl;
+    std::unique_ptr<JsonItemCopyStrategyImpl> p_impl;
 };
 
 } // namespace ModelView

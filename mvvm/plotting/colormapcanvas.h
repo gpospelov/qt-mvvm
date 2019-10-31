@@ -37,8 +37,8 @@ public:
     void setItem(ColorMapViewportItem* viewport_item);
 
 private:
-    struct ColorMapCanvasPrivate;
-    std::unique_ptr<ColorMapCanvasPrivate> p_impl;
+    struct ColorMapCanvasImpl;
+    std::unique_ptr<ColorMapCanvasImpl> p_impl;
 };
 
 } // namespace ModelView

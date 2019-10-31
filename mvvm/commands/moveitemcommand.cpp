@@ -22,13 +22,13 @@ void check_input_data(const SessionItem* item, const SessionItem* parent);
 std::string generate_description(const TagRow& tagrow);
 } // namespace
 
-struct MoveItemCommand::MoveItemCommandPrivate {
+struct MoveItemCommand::MoveItemCommandImpl {
     TagRow target_tagrow;
     Path target_parent_path;
     Path original_parent_path;
     TagRow original_tagrow;
     result_t result;
-    MoveItemCommandPrivate(TagRow tagrow) : target_tagrow(std::move(tagrow)), result(true)
+    MoveItemCommandImpl(TagRow tagrow) : target_tagrow(std::move(tagrow)), result(true)
     {
         if (target_tagrow.row < 0)
             throw std::runtime_error("MoveItemCommand() -> Error. Uninitialized target row");
@@ -36,7 +36,7 @@ struct MoveItemCommand::MoveItemCommandPrivate {
 };
 
 MoveItemCommand::MoveItemCommand(SessionItem* item, SessionItem* new_parent, TagRow tagrow)
-    : AbstractItemCommand(new_parent), p_impl(std::make_unique<MoveItemCommandPrivate>(tagrow))
+    : AbstractItemCommand(new_parent), p_impl(std::make_unique<MoveItemCommandImpl>(tagrow))
 {
     check_input_data(item, new_parent);
     setDescription(generate_description(p_impl->target_tagrow));
