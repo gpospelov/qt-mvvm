@@ -34,7 +34,7 @@ struct SetValueCommand::SetValueCommandImpl {
 // ----------------------------------------------------------------------------
 
 SetValueCommand::SetValueCommand(SessionItem* item, QVariant value, int role)
-    : AbstractItemCommand(item), p_impl(std::make_unique<SetValueCommandImpl>(value, role))
+    : AbstractItemCommand(item), p_impl(std::make_unique<SetValueCommandImpl>(std::move(value), role))
 {
     setDescription(generate_description(p_impl->m_value.toString().toStdString()));
     p_impl->m_item_path = pathFromItem(item);

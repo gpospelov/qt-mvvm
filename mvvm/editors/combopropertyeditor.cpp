@@ -52,7 +52,7 @@ QSize ComboPropertyEditor::minimumSizeHint() const
 
 void ComboPropertyEditor::onIndexChanged(int index)
 {
-    ComboProperty comboProperty = m_data.value<ComboProperty>();
+    auto comboProperty = m_data.value<ComboProperty>();
 
     if (comboProperty.currentIndex() != index) {
         comboProperty.setCurrentIndex(index);
@@ -77,7 +77,7 @@ std::vector<std::string> ComboPropertyEditor::internLabels()
 {
     if (!m_data.canConvert<ComboProperty>())
         return {};
-    ComboProperty comboProperty = m_data.value<ComboProperty>();
+    auto comboProperty = m_data.value<ComboProperty>();
     return comboProperty.values();
 }
 
@@ -87,7 +87,7 @@ int ComboPropertyEditor::internIndex()
 {
     if (!m_data.canConvert<ComboProperty>())
         return 0;
-    ComboProperty comboProperty = m_data.value<ComboProperty>();
+    auto comboProperty = m_data.value<ComboProperty>();
     return comboProperty.currentIndex();
 }
 

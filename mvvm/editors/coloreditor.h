@@ -27,7 +27,7 @@ public:
     explicit ColorEditor(QWidget* parent = nullptr);
 
 protected:
-    virtual void mousePressEvent(QMouseEvent* event) override;
+    void mousePressEvent(QMouseEvent* event) override;
 
 private:
     QColor currentColor() const;

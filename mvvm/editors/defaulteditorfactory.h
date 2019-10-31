@@ -26,9 +26,9 @@ class CORE_EXPORT DefaultEditorFactory : public EditorFactoryInterface
 {
 public:
     DefaultEditorFactory();
-    ~DefaultEditorFactory();
+    ~DefaultEditorFactory() override;
 
-    std::unique_ptr<CustomEditor> createEditor(const QModelIndex& index) const;
+    std::unique_ptr<CustomEditor> createEditor(const QModelIndex& index) const override;
 
 protected:
     void registerBuilder(const std::string& name, EditorBuilders::builder_t strategy);

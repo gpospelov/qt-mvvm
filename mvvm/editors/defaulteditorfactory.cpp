@@ -59,7 +59,7 @@ void DefaultEditorFactory::registerBuilder(const std::string& name,
                                            EditorBuilders::builder_t strategy)
 {
     // intentional replacement
-    m_editor_builders[name] = strategy;
+    m_editor_builders[name] = std::move(strategy);
 }
 
 //! Returns builder for variant with given name.

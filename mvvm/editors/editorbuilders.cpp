@@ -37,9 +37,7 @@ double getStep(double val)
 
 } // namespace
 
-namespace ModelView
-{
-namespace EditorBuilders
+namespace ModelView :: EditorBuilders
 {
 
 builder_t BoolEditorBuilder()
@@ -136,5 +134,4 @@ builder_t ExternalPropertyEditorBuilder()
     return builder;
 }
 
-} // namespace EditorBuilders
-} // namespace ModelView
+} // namespace ModelView::EditorBuilders

@@ -35,7 +35,7 @@ public:
 
     void setUndoRedoEnabled(bool value);
 
-    SessionItem* insertNewItem(item_factory_func_t func, SessionItem* parent, const TagRow& tagrow);
+    SessionItem* insertNewItem(const item_factory_func_t& func, SessionItem* parent, const TagRow& tagrow);
 
     SessionItem* copyItem(const SessionItem* item, SessionItem* parent, const TagRow& tagrow);
 

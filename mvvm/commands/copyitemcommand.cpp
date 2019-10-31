@@ -32,7 +32,7 @@ struct CopyItemCommand::CopyItemCommandImpl {
 };
 
 CopyItemCommand::CopyItemCommand(const SessionItem* item, SessionItem* parent, TagRow tagrow)
-    : AbstractItemCommand(parent), p_impl(std::make_unique<CopyItemCommandImpl>(tagrow))
+    : AbstractItemCommand(parent), p_impl(std::make_unique<CopyItemCommandImpl>(std::move(tagrow)))
 {
     setDescription(generate_description(item->modelType(), p_impl->tagrow));
     p_impl->backup_strategy = parent->model()->itemBackupStrategy();
