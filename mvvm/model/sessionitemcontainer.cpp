@@ -141,5 +141,5 @@ bool SessionItemContainer::minimum_reached() const
 
 bool SessionItemContainer::is_valid_item(const SessionItem* item) const
 {
-    return item && m_tag_info.isValidChild(item->modelType()) ? true : false;
+    return item && m_tag_info.isValidChild(item->modelType());
 }
