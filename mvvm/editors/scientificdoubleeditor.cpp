@@ -21,7 +21,7 @@ const int max_digits = 1000;
 using namespace ModelView;
 
 ScientificDoubleEditor::ScientificDoubleEditor(QWidget* parent)
-    : CustomEditor(parent), m_lineEdit(new QLineEdit), m_validator(nullptr)
+    : CustomEditor(parent), m_lineEdit(new QLineEdit)
 
 {
     setAutoFillBackground(true);
