@@ -25,7 +25,7 @@
 class MultiLayer : public ModelView::CompoundItem
 {
 public:
-    static const std::string T_LAYERS;
+    static inline const std::string T_LAYERS = "T_LAYERS";
     MultiLayer();
 };
 
@@ -37,9 +37,9 @@ public:
 class LayerItem : public ModelView::CompoundItem
 {
 public:
-    static const std::string P_THICKNESS;
-    static const std::string P_COLOR;
-    static const std::string T_PARTICLES;
+    static inline const std::string P_THICKNESS = "Thickness";
+    static inline const std::string P_COLOR = "Color";
+    static inline const std::string T_PARTICLES = "Particles";
     LayerItem();
 };
 
@@ -53,8 +53,8 @@ Demonstrates how to create group of properties.
 class ParticleItem : public ModelView::CompoundItem
 {
 public:
-    static const std::string P_POSITION;
-    static const std::string P_SHAPES;
+    static inline const std::string P_POSITION = "Position";
+    static inline const std::string P_SHAPES = "Shapes";
     ParticleItem();
 };
 
@@ -68,9 +68,9 @@ Demonstrates how to syncronize properties between each other.
 class InterferenceFunctionItem : public ModelView::CompoundItem
 {
 public:
-    static const std::string P_ROTATION_ANLE;
-    static const std::string P_INTEGRATION;
-    static const std::string P_LATTICE_TYPE;
+    static inline const std::string P_ROTATION_ANLE = "Rotation";
+    static inline const std::string P_INTEGRATION = "Integration";
+    static inline const std::string P_LATTICE_TYPE = "Lattice";
 
     InterferenceFunctionItem();
 
@@ -88,8 +88,8 @@ private:
 class CylinderItem : public ModelView::CompoundItem
 {
 public:
-    static const std::string P_RADIUS;
-    static const std::string P_HEIGHT;
+    static inline const std::string P_RADIUS = "Radius";
+    static inline const std::string P_HEIGHT = "Height";
     CylinderItem();
 };
 
@@ -101,7 +101,7 @@ public:
 class SphereItem : public ModelView::CompoundItem
 {
 public:
-    static const std::string P_RADIUS;
+    static inline const std::string P_RADIUS = "Radius";
     SphereItem();
 };
 
@@ -113,10 +113,10 @@ public:
 class AnysoPyramidItem : public ModelView::CompoundItem
 {
 public:
-    static const std::string P_LENGTH;
-    static const std::string P_WIDTH;
-    static const std::string P_HEIGHT;
-    static const std::string P_ALPHA;
+    static inline const std::string P_LENGTH = "Length";
+    static inline const std::string P_WIDTH = "Width";
+    static inline const std::string P_HEIGHT = "Height";
+    static inline const std::string P_ALPHA = "Alpha";
     AnysoPyramidItem();
 };
 

@@ -41,9 +41,9 @@ void VectorItem::update_label()
 {
     std::ostringstream ostr;
     ostr << "("
-         << property(P_X).toDouble() << ", "
-         << property(P_Y).toDouble() << ", "
-         << property(P_Z).toDouble()
+         << property(P_X).value<double>() << ", "
+         << property(P_Y).value<double>() << ", "
+         << property(P_Z).value<double>()
          << ")";
     setDataIntern(QVariant::fromValue(ostr.str()), ItemDataRole::DATA);
 }

@@ -69,11 +69,11 @@ TEST_F(TestJsonVariant, boolVariant)
     // from json object to variant
     QVariant reco_variant = converter.get_variant(object);
     EXPECT_TRUE(Utils::IsBoolVariant(reco_variant));
-    EXPECT_EQ(reco_variant.toBool(), value);
+    EXPECT_EQ(reco_variant.value<bool>(), value);
     EXPECT_EQ(variant, reco_variant);
 
-    EXPECT_EQ(ToJsonAndBack(true).toBool(), true);
-    EXPECT_EQ(ToJsonAndBack(false).toBool(), false);
+    EXPECT_EQ(ToJsonAndBack(true).value<bool>(), true);
+    EXPECT_EQ(ToJsonAndBack(false).value<bool>(), false);
 }
 
 //! Int QVariant conversion.
@@ -92,7 +92,7 @@ TEST_F(TestJsonVariant, intVariant)
     // from json object to variant
     QVariant reco_variant = converter.get_variant(object);
     EXPECT_TRUE(Utils::IsIntVariant(reco_variant));
-    EXPECT_EQ(reco_variant.toInt(), value);
+    EXPECT_EQ(reco_variant.value<int>(), value);
     EXPECT_EQ(variant, reco_variant);
 }
 
@@ -133,16 +133,16 @@ TEST_F(TestJsonVariant, doubleVariant)
     // from json object to variant
     QVariant reco_variant = converter.get_variant(object);
     EXPECT_TRUE(Utils::IsDoubleVariant(reco_variant));
-    EXPECT_EQ(reco_variant.toDouble(), value);
+    EXPECT_EQ(reco_variant.value<double>(), value);
     EXPECT_EQ(variant, reco_variant);
 
     // more numbers
     value = 1e-03;
-    EXPECT_DOUBLE_EQ(ToJsonAndBack(value).toDouble(), value);
+    EXPECT_DOUBLE_EQ(ToJsonAndBack(value).value<double>(), value);
     value = 0.99e-7;
-    EXPECT_DOUBLE_EQ(ToJsonAndBack(value).toDouble(), value);
+    EXPECT_DOUBLE_EQ(ToJsonAndBack(value).value<double>(), value);
     value = 3.14159265359;
-    EXPECT_DOUBLE_EQ(ToJsonAndBack(value).toDouble(), value);
+    EXPECT_DOUBLE_EQ(ToJsonAndBack(value).value<double>(), value);
 }
 
 //! QVariant(std::vector<double>) conversion.

@@ -147,13 +147,13 @@ TEST_F(TestUndoRedo, setData)
     model.setData(item, QVariant::fromValue(43.0), role);
     model.setData(item, QVariant::fromValue(44.0), role);
     EXPECT_EQ(stack->index(), 4);
-    EXPECT_EQ(model.data(item, role).toDouble(), 44.0);
+    EXPECT_EQ(model.data(item, role).value<double>(), 44.0);
     stack->undo();
     stack->undo();
-    EXPECT_EQ(model.data(item, role).toDouble(), 42.0);
+    EXPECT_EQ(model.data(item, role).value<double>(), 42.0);
     stack->redo();
     stack->redo();
-    EXPECT_EQ(model.data(item, role).toDouble(), 44.0);
+    EXPECT_EQ(model.data(item, role).value<double>(), 44.0);
 }
 
 //! Undo/redo scenario when item data changed through item and not the model.
@@ -240,7 +240,7 @@ TEST_F(TestUndoRedo, insertAndSetData)
     EXPECT_EQ(stack->index(), 2);
     EXPECT_EQ(model.rootItem()->childrenCount(), 1);
     item = Utils::ChildAt(model.rootItem(), 0);
-    EXPECT_EQ(model.data(item, role).toDouble(), 42.0);
+    EXPECT_EQ(model.data(item, role).value<double>(), 42.0);
 }
 
 //! Inserting item, setting the data, removing row, undoing, checking item and data.
@@ -277,7 +277,7 @@ TEST_F(TestUndoRedo, removeRow)
     EXPECT_EQ(stack->index(), 2);
     EXPECT_EQ(model.rootItem()->childrenCount(), 1);
     item = Utils::ChildAt(model.rootItem(), 0);
-    EXPECT_EQ(model.data(item, role).toDouble(), 42.0);
+    EXPECT_EQ(model.data(item, role).value<double>(), 42.0);
     EXPECT_EQ(item->modelType(), Constants::BaseType);
 }
 
@@ -598,7 +598,7 @@ TEST_F(TestUndoRedo, copyLayerFromMultilayer)
     // copying layer
     auto layer_copy = dynamic_cast<ToyItems::LayerItem*>(model.copyItem(layer0, multilayer1));
     EXPECT_EQ(multilayer1->itemCount(ToyItems::MultiLayerItem::T_LAYERS), 1);
-    EXPECT_EQ(layer_copy->property(ToyItems::LayerItem::P_THICKNESS).toDouble(),
+    EXPECT_EQ(layer_copy->property(ToyItems::LayerItem::P_THICKNESS).value<double>(),
               expected_thickness);
     EXPECT_TRUE(layer0->identifier() != layer_copy->identifier());
 

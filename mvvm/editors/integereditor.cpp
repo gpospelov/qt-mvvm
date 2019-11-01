@@ -42,7 +42,7 @@ void IntegerEditor::setRange(int minimum, int maximum)
 void IntegerEditor::onEditingFinished()
 {
     int new_value = m_intEditor->value();
-    if (new_value != m_data.toInt())
+    if (new_value != m_data.value<int>())
         setDataIntern(QVariant::fromValue(new_value));
 }
 
@@ -51,5 +51,5 @@ void IntegerEditor::update_components()
     if (m_data.type() != QVariant::Int)
         throw std::runtime_error("IntegerEditor::update_components() -> Error. Wrong variant type");
 
-    m_intEditor->setValue(m_data.toInt());
+    m_intEditor->setValue(m_data.value<int>());
 }

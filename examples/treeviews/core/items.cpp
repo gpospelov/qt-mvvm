@@ -17,8 +17,6 @@
 
 using namespace ModelView;
 
-const std::string MultiLayer::T_LAYERS = "layer tag";
-
 MultiLayer::MultiLayer() : CompoundItem(::Constants::MultiLayerType)
 {
     registerTag(TagInfo::universalTag(T_LAYERS, {::Constants::LayerType}),
@@ -26,10 +24,6 @@ MultiLayer::MultiLayer() : CompoundItem(::Constants::MultiLayerType)
 }
 
 // ----------------------------------------------------------------------------
-
-const std::string LayerItem::P_THICKNESS = "Thickness";
-const std::string LayerItem::P_COLOR = "Color";
-const std::string LayerItem::T_PARTICLES = "Particles";
 
 LayerItem::LayerItem() : CompoundItem(::Constants::LayerType)
 {
@@ -41,9 +35,6 @@ LayerItem::LayerItem() : CompoundItem(::Constants::LayerType)
 
 // ----------------------------------------------------------------------------
 
-const std::string ParticleItem::P_POSITION = "Position";
-const std::string ParticleItem::P_SHAPES = "Shapes";
-
 ParticleItem::ParticleItem() : CompoundItem(::Constants::ParticleType)
 {
     addProperty<VectorItem>(P_POSITION);
@@ -51,10 +42,6 @@ ParticleItem::ParticleItem() : CompoundItem(::Constants::ParticleType)
 }
 
 // ----------------------------------------------------------------------------
-
-const std::string InterferenceFunctionItem::P_ROTATION_ANLE = "Rotation";
-const std::string InterferenceFunctionItem::P_INTEGRATION = "Integration";
-const std::string InterferenceFunctionItem::P_LATTICE_TYPE = "Lattice";
 
 InterferenceFunctionItem::InterferenceFunctionItem() : CompoundItem(::Constants::InterferenceType)
 {
@@ -80,13 +67,10 @@ void InterferenceFunctionItem::activate()
 void InterferenceFunctionItem::update_appearance()
 {
     auto angle_item = getItem(P_ROTATION_ANLE);
-    angle_item->setEnabled(!property(P_INTEGRATION).toBool());
+    angle_item->setEnabled(!property(P_INTEGRATION).value<bool>());
 }
 
 // ----------------------------------------------------------------------------
-
-const std::string CylinderItem::P_RADIUS = "Radius";
-const std::string CylinderItem::P_HEIGHT = "Height";
 
 CylinderItem::CylinderItem() : CompoundItem(::Constants::CylinderType)
 {
@@ -96,19 +80,12 @@ CylinderItem::CylinderItem() : CompoundItem(::Constants::CylinderType)
 
 // ----------------------------------------------------------------------------
 
-const std::string SphereItem::P_RADIUS = "Radius";
-
 SphereItem::SphereItem() : CompoundItem(::Constants::SphereType)
 {
     addProperty(P_RADIUS, 8.0);
 }
 
 // ----------------------------------------------------------------------------
-
-const std::string AnysoPyramidItem::P_LENGTH = "Length";
-const std::string AnysoPyramidItem::P_WIDTH = "Width";
-const std::string AnysoPyramidItem::P_HEIGHT = "Height";
-const std::string AnysoPyramidItem::P_ALPHA = "Alpha";
 
 AnysoPyramidItem::AnysoPyramidItem() : CompoundItem(::Constants::AnysoPyramidType)
 {

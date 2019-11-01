@@ -16,7 +16,7 @@ QItemSelectionModel::SelectionFlags MaterialTableView::selectionCommand(const QM
 
     if (check_column && (event_type & mouse_events)) {
         if ((mouse_event->buttons() & Qt::LeftButton) && event_type == QEvent::MouseButtonPress) {
-            bool checkState = index.data(Qt::CheckStateRole).toBool();
+            bool checkState = index.data(Qt::CheckStateRole).value<bool>();
             return QItemSelectionModel::Rows
                    | (checkState ? QItemSelectionModel::Deselect : QItemSelectionModel::Select);
         }

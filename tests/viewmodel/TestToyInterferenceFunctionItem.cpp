@@ -21,7 +21,8 @@ TEST_F(TestToyInterferenceFunctionItem, rotationAngleEnabled)
     auto interference = model.insertItem<ToyItems::InterferenceFunctionItem>();
 
     // by default integration flag is ON, rotation angle is disabled
-    EXPECT_TRUE(interference->property(ToyItems::InterferenceFunctionItem::P_INTEGRATION).toBool());
+    EXPECT_TRUE(
+        interference->property(ToyItems::InterferenceFunctionItem::P_INTEGRATION).value<bool>());
     EXPECT_FALSE(
         interference->getItem(ToyItems::InterferenceFunctionItem::P_ROTATION_ANLE)->isEnabled());
 

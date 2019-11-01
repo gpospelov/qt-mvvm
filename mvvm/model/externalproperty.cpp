@@ -36,10 +36,7 @@ std::string ExternalProperty::identifier() const
 
 bool ExternalProperty::isValid() const
 {
-    if (m_identifier.empty() && m_text.empty() && !m_color.isValid())
-        return false;
-
-    return true;
+    return !(m_identifier.empty() && m_text.empty() && !m_color.isValid());
 }
 
 bool ExternalProperty::operator==(const ExternalProperty& other) const

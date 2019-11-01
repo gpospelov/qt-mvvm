@@ -81,6 +81,6 @@ void GroupItem::init_group()
     combo.setValues(m_catalogue->labels());
     combo.setCurrentIndex(m_default_selected_index);
     setDataIntern(combo.variant(), ItemDataRole::DATA);
-    for (auto x : m_catalogue->modelTypes())
+    for (const auto& x : m_catalogue->modelTypes())
         insertItem(m_catalogue->create(x).release(), TagRow::append());
 }

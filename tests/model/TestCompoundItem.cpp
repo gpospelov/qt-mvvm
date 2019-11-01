@@ -35,7 +35,6 @@ TEST_F(TestCompoundItem, addIntProperty)
     EXPECT_EQ(propertyItem->modelType(), Constants::PropertyType);
     EXPECT_TRUE(Utils::IsIntVariant(propertyItem->data()));
     EXPECT_EQ(propertyItem->displayName(), "name");
-    EXPECT_EQ(propertyItem->data().toInt(), expected);
     EXPECT_EQ(propertyItem->data().value<int>(), expected);
 
     EXPECT_FALSE(propertyItem->data(ItemDataRole::LIMITS).isValid());
@@ -52,7 +51,6 @@ TEST_F(TestCompoundItem, addDoubleProperty)
     EXPECT_EQ(propertyItem->modelType(), Constants::PropertyType);
     EXPECT_TRUE(Utils::IsDoubleVariant(propertyItem->data()));
     EXPECT_EQ(propertyItem->displayName(), "name");
-    EXPECT_EQ(propertyItem->data().toDouble(), expected);
     EXPECT_EQ(propertyItem->data().value<double>(), expected);
 
     EXPECT_TRUE(propertyItem->data(ItemDataRole::LIMITS).isValid());
@@ -96,13 +94,13 @@ TEST_F(TestCompoundItem, setProperty)
     EXPECT_TRUE(item.isTag("height"));
 
     EXPECT_EQ(propertyItem->modelType(), Constants::PropertyType);
-    EXPECT_EQ(item.property("height").toDouble(), 42.0);
+    EXPECT_EQ(item.property("height").value<double>(), 42.0);
 
     // setting value
     double expected(442.0);
     item.setProperty("height", expected);
-    EXPECT_EQ(item.property("height").toDouble(), expected);
-    EXPECT_EQ(propertyItem->data().toDouble(), expected);
+    EXPECT_EQ(item.property("height").value<double>(), expected);
+    EXPECT_EQ(propertyItem->data().value<double>(), expected);
 }
 
 TEST_F(TestCompoundItem, itemAccess)

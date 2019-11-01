@@ -16,7 +16,8 @@ using namespace ModelView;
 
 size_t ItemPool::size() const
 {
-    assert(m_key_to_item.size() == m_item_to_key.size());
+    if (m_key_to_item.size() != m_item_to_key.size())
+        throw std::runtime_error("Error in ItemPool: array size mismatch");
     return m_key_to_item.size();
 }
 

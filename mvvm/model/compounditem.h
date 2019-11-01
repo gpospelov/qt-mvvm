@@ -63,8 +63,7 @@ PropertyItem* CompoundItem::addProperty(const std::string& name, const V& value)
     property->setData(QVariant::fromValue(value));
 
     if constexpr (std::is_floating_point_v<V>)
-        property->setData(QVariant::fromValue<RealLimits>(RealLimits::positive()),
-                          ItemDataRole::LIMITS);
+        property->setData(QVariant::fromValue<RealLimits>(RealLimits::positive()), ItemDataRole::LIMITS);
 
     insertItem(property, {name, 0});
     return property;

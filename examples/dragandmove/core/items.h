@@ -26,12 +26,12 @@
 class DemoItem : public ModelView::CompoundItem
 {
 public:
-    static const std::string P_BOOL_PROPERTY;
-    static const std::string P_INTEGER_PROPERTY;
-    static const std::string P_STRING_PROPERTY;
-    static const std::string P_DOUBLE_PROPERTY;
-    static const std::string P_COLOR_PROPERTY;
-    static const std::string P_COMBO_PROPERTY;
+    static inline const std::string P_BOOL_PROPERTY = "P_BOOL_PROPERTY";
+    static inline const std::string P_INTEGER_PROPERTY = "P_INTEGER_PROPERTY";
+    static inline const std::string P_STRING_PROPERTY = "P_STRING_PROPERTY";
+    static inline const std::string P_DOUBLE_PROPERTY = "P_DOUBLE_PROPERTY";
+    static inline const std::string P_COLOR_PROPERTY = "P_COLOR_PROPERTY";
+    static inline const std::string P_COMBO_PROPERTY = "P_COMBO_PROPERTY";
 
     DemoItem();
 };
@@ -44,7 +44,7 @@ public:
 class DemoContainerItem : public ModelView::CompoundItem
 {
 public:
-    static const std::string T_ITEMS;
+    static inline const std::string T_ITEMS = "T_ITEMS";
 
     DemoContainerItem();
 };

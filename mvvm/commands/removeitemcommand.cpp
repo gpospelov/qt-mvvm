@@ -31,7 +31,7 @@ struct RemoveItemCommand::RemoveItemCommandImpl {
 // ----------------------------------------------------------------------------
 
 RemoveItemCommand::RemoveItemCommand(SessionItem* parent, TagRow tagrow)
-    : AbstractItemCommand(parent), p_impl(std::make_unique<RemoveItemCommandImpl>(tagrow))
+    : AbstractItemCommand(parent), p_impl(std::make_unique<RemoveItemCommandImpl>(std::move(tagrow)))
 {
     setDescription(generate_description(p_impl->tagrow));
     p_impl->backup_strategy = parent->model()->itemBackupStrategy();

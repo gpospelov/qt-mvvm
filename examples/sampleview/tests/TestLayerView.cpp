@@ -56,8 +56,8 @@ TEST_F(TestlayerView, testChangeThickness)
     auto layer = model.insertNewItem(::Constants::LayerType);
     auto view = scene->getViewForItem(layer);
 
-    double x_pos = layer->property(LocatedItem::P_X_POS).toDouble();
-    double y_pos = layer->property(LocatedItem::P_Y_POS).toDouble();
+    double x_pos = layer->property(LocatedItem::P_X_POS).value<double>();
+    double y_pos = layer->property(LocatedItem::P_Y_POS).value<double>();
 
     layer->setProperty(LayerItem::P_THICKNESS, 100.0);
 
@@ -67,8 +67,8 @@ TEST_F(TestlayerView, testChangeThickness)
     EXPECT_DOUBLE_EQ(bound.top(), -65.0);
     EXPECT_DOUBLE_EQ(bound.bottom(), 65.0);
 
-    EXPECT_DOUBLE_EQ(x_pos, layer->property(LocatedItem::P_X_POS).toDouble());
-    EXPECT_DOUBLE_EQ(y_pos, layer->property(LocatedItem::P_Y_POS).toDouble());
+    EXPECT_DOUBLE_EQ(x_pos, layer->property(LocatedItem::P_X_POS).value<double>());
+    EXPECT_DOUBLE_EQ(y_pos, layer->property(LocatedItem::P_Y_POS).value<double>());
 
     QRectF frame = makeFrame(view->sceneBoundingRect());
     auto item_list = scene->items(frame, Qt::ContainsItemBoundingRect);

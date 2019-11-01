@@ -59,7 +59,7 @@ void ScientificSpinBoxEditor::onEditingFinished()
 {
     double new_value = m_doubleEditor->value();
 
-    if (!Utils::AreAlmostEqual(new_value, m_data.toDouble()))
+    if (!Utils::AreAlmostEqual(new_value, m_data.value<double>()))
         setDataIntern(QVariant::fromValue(new_value));
 }
 
@@ -69,5 +69,5 @@ void ScientificSpinBoxEditor::update_components()
         throw std::runtime_error(
             "ScientificSpinBoxEditor::update_components() -> Error. Wrong variant type");
 
-    m_doubleEditor->setValue(m_data.toDouble());
+    m_doubleEditor->setValue(m_data.value<double>());
 }

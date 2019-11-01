@@ -33,7 +33,7 @@ private slots:
 private:
     void update_components() override;
     QLineEdit* m_lineEdit;
-    QDoubleValidator* m_validator;
+    QDoubleValidator* m_validator{nullptr};
 };
 
 } // namespace ModelView

@@ -22,9 +22,9 @@ TEST_F(TestVectorItem, initialState)
 
     EXPECT_FALSE(item.isEditable());
 
-    EXPECT_EQ(item.property(VectorItem::P_X).toDouble(), 0.0);
-    EXPECT_EQ(item.property(VectorItem::P_Y).toDouble(), 0.0);
-    EXPECT_EQ(item.property(VectorItem::P_Z).toDouble(), 0.0);
+    EXPECT_EQ(item.property(VectorItem::P_X).value<double>(), 0.0);
+    EXPECT_EQ(item.property(VectorItem::P_Y).value<double>(), 0.0);
+    EXPECT_EQ(item.property(VectorItem::P_Z).value<double>(), 0.0);
 
     // default label
     EXPECT_EQ(item.data().value<std::string>(), "(0, 0, 0)");
@@ -37,9 +37,9 @@ TEST_F(TestVectorItem, initialStateFromModel)
     SessionModel model;
     auto item = model.insertItem<VectorItem>();
 
-    EXPECT_EQ(item->property(VectorItem::P_X).toDouble(), 0.0);
-    EXPECT_EQ(item->property(VectorItem::P_Y).toDouble(), 0.0);
-    EXPECT_EQ(item->property(VectorItem::P_Z).toDouble(), 0.0);
+    EXPECT_EQ(item->property(VectorItem::P_X).value<double>(), 0.0);
+    EXPECT_EQ(item->property(VectorItem::P_Y).value<double>(), 0.0);
+    EXPECT_EQ(item->property(VectorItem::P_Z).value<double>(), 0.0);
 
     // default label
     EXPECT_EQ(item->data().value<std::string>(), "(0, 0, 0)");

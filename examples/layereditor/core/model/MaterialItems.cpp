@@ -14,8 +14,6 @@
 
 using namespace ModelView;
 
-// ----------------------------------------------------------------------------
-
 MaterialContainerItem::MaterialContainerItem()
     : ModelView::CompoundItem(::Constants::MaterialContainerType)
 {
@@ -24,9 +22,6 @@ MaterialContainerItem::MaterialContainerItem()
 }
 
 // ----------------------------------------------------------------------------
-
-const std::string MaterialBaseItem::P_NAME = "P_NAME";
-const std::string MaterialBaseItem::P_COLOR = "P_COLOR";
 
 MaterialBaseItem::MaterialBaseItem(const std::string& model_type)
     : ModelView::CompoundItem(model_type)
@@ -44,9 +39,6 @@ void MaterialBaseItem::register_color()
 }
 
 // ----------------------------------------------------------------------------
-
-const std::string SLDMaterialItem::P_SLD_REAL = "P_SLD_REAL";
-const std::string SLDMaterialItem::P_SLD_IMAG = "P_SLD_IMAG";
 
 SLDMaterialItem::SLDMaterialItem() : MaterialBaseItem(::Constants::SLDMaterialType)
 {

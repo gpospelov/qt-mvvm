@@ -15,7 +15,7 @@ void SampleViewDecorator::initStyleOption(QStyleOptionViewItem* option, const QM
     if (!option || !hasDecorationImpl(index))
         return;
 
-    option->text = ModelView::ScientificSpinBox::toString(index.data(Qt::EditRole).toDouble(), 4);
+    option->text = ModelView::ScientificSpinBox::toString(index.data(Qt::EditRole).value<double>(), 4);
 }
 
 bool SampleViewDecorator::hasDecorationImpl(const QModelIndex &index) const

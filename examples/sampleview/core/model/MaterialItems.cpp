@@ -14,10 +14,6 @@
 
 using namespace ModelView;
 
-// ----------------------------------------------------------------------------
-
-const std::string MaterialContainerItem::T_MATERIALS = "T_MATERIALS";
-
 MaterialContainerItem::MaterialContainerItem()
     : ModelView::CompoundItem(::Constants::MaterialContainerType)
 {
@@ -26,12 +22,6 @@ MaterialContainerItem::MaterialContainerItem()
 }
 
 // ----------------------------------------------------------------------------
-
-const std::string MaterialBaseItem::P_COLOR = "P_COLOR";
-const std::string MaterialBaseItem::P_NAME = "P_NAME";
-const std::string MaterialBaseItem::P_H_X = "P_H_X";
-const std::string MaterialBaseItem::P_H_Y = "P_H_Y";
-const std::string MaterialBaseItem::P_H_Z = "P_H_Z";
 
 MaterialBaseItem::MaterialBaseItem(const std::string& model_type)
     : ModelView::CompoundItem(model_type)
@@ -56,11 +46,7 @@ void MaterialBaseItem::initMagFields()
 
 // ----------------------------------------------------------------------------
 
-const std::string SLDMaterialItem::P_SLD_REAL = "P_SLD_REAL";
-const std::string SLDMaterialItem::P_SLD_IMAG = "P_SLD_IMAG";
-
-SLDMaterialItem::SLDMaterialItem()
-    : MaterialBaseItem(::Constants::SLDMaterialType)
+SLDMaterialItem::SLDMaterialItem() : MaterialBaseItem(::Constants::SLDMaterialType)
 {
     addProperty(P_SLD_REAL, 1e-06)->setDisplayName("Re(SLD)");
     addProperty(P_SLD_IMAG, 1e-08)->setDisplayName("Im(SLD)");
@@ -78,11 +64,7 @@ void SLDMaterialItem::set_properties(const std::string& name, const QColor& colo
 
 // ----------------------------------------------------------------------------
 
-const std::string RefIndexMaterialItem::P_DELTA = "P_DELTA";
-const std::string RefIndexMaterialItem::P_BETA = "P_BETA";
-
-RefIndexMaterialItem::RefIndexMaterialItem()
-    : MaterialBaseItem(::Constants::RefIndexMaterialType)
+RefIndexMaterialItem::RefIndexMaterialItem() : MaterialBaseItem(::Constants::RefIndexMaterialType)
 {
     addProperty(P_DELTA, 1e-06)->setDisplayName("Delta");
     addProperty(P_BETA, 1e-08)->setDisplayName("Beta");

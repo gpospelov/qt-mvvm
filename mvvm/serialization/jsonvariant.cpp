@@ -147,7 +147,7 @@ QJsonObject from_bool(const QVariant& variant)
 {
     QJsonObject result;
     result[variantTypeKey] = QString::fromStdString(Constants::bool_type_name);
-    result[variantValueKey] = variant.toBool();
+    result[variantValueKey] = variant.value<bool>();
     return result;
 }
 
@@ -160,14 +160,14 @@ QJsonObject from_int(const QVariant& variant)
 {
     QJsonObject result;
     result[variantTypeKey] = QString::fromStdString(Constants::int_type_name);
-    result[variantValueKey] = variant.toInt();
+    result[variantValueKey] = variant.value<int>();
     return result;
 }
 
 QVariant to_int(const QJsonObject& object)
 {
     // deliberately recreating variant, otherwise it is changing type to QVariant::Double
-    return QVariant::fromValue(object[variantValueKey].toVariant().toInt());
+    return QVariant::fromValue(object[variantValueKey].toVariant().value<int>());
 }
 
 QJsonObject from_string(const QVariant& variant)
@@ -188,7 +188,7 @@ QJsonObject from_double(const QVariant& variant)
 {
     QJsonObject result;
     result[variantTypeKey] = QString::fromStdString(Constants::double_type_name);
-    result[variantValueKey] = variant.toDouble();
+    result[variantValueKey] = variant.value<double>();
     return result;
 }
 

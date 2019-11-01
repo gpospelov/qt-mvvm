@@ -37,9 +37,10 @@ public:
 class MaterialBaseItem : public ModelView::CompoundItem
 {
 public:
-    static const std::string P_NAME;
-    static const std::string P_COLOR;
+    static inline const std::string P_NAME = "P_NAME";
+    static inline const std::string P_COLOR = "P_COLOR";
     MaterialBaseItem(const std::string& model_type);
+
 protected:
     void register_name();
     void register_color();
@@ -52,9 +53,9 @@ protected:
 
 class SLDMaterialItem : public MaterialBaseItem
 {
-public:    
-    static const std::string P_SLD_REAL;
-    static const std::string P_SLD_IMAG;
+public:
+    static inline const std::string P_SLD_REAL = "P_SLD_REAL";
+    static inline const std::string P_SLD_IMAG = "P_SLD_IMAG";
 
     SLDMaterialItem();
 
@@ -62,4 +63,3 @@ public:
 };
 
 #endif // MATERIALITEMS_H
-

@@ -25,9 +25,9 @@
 class LayerItem : public ModelView::CompoundItem
 {
 public:
-    static const std::string P_NAME;
-    static const std::string P_MATERIAL;
-    static const std::string P_THICKNESS;
+    static inline const std::string P_NAME = "P_NAME";
+    static inline const std::string P_MATERIAL = "P_MATERIAL";
+    static inline const std::string P_THICKNESS = "P_THICKNESS";
     LayerItem();
 };
 
@@ -39,8 +39,8 @@ public:
 class MultiLayerItem : public ModelView::CompoundItem
 {
 public:
-    static const std::string T_LAYERS;
-    static const std::string P_NREPETITIONS;
+    static inline const std::string T_LAYERS = "T_LAYERS";
+    static inline const std::string P_NREPETITIONS = "P_NREPETITIONS";
     MultiLayerItem();
 };
 
