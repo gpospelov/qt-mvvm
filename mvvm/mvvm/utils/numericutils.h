@@ -10,7 +10,7 @@
 #ifndef MVVM_NUMERICUTILS_H
 #define MVVM_NUMERICUTILS_H
 
-#include "mvvm_export.h"
+#include <mvvm/model/mvvm_export.h>
 
 namespace ModelView
 {

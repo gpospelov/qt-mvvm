@@ -1,9 +1,9 @@
 #include "google_test.h"
-#include "labeldatarowstrategy.h"
-#include "sessionitem.h"
-#include "viewlabelitem.h"
-#include "viewdataitem.h"
-#include "viewemptyitem.h"
+#include <mvvm/viewmodel/labeldatarowstrategy.h>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/viewmodel/viewlabelitem.h>
+#include <mvvm/viewmodel/viewdataitem.h>
+#include <mvvm/viewmodel/viewemptyitem.h>
 #include "test_utils.h"
 
 namespace  {

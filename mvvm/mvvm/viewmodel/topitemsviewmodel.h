@@ -10,7 +10,7 @@
 #ifndef MVVM_TOPITEMSVIEWMODEL_H
 #define MVVM_TOPITEMSVIEWMODEL_H
 
-#include "abstractviewmodel.h"
+#include <mvvm/viewmodel/abstractviewmodel.h>
 
 namespace ModelView
 {

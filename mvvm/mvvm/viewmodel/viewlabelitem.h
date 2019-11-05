@@ -10,7 +10,7 @@
 #ifndef MVVM_VIEWLABELITEM_H
 #define MVVM_VIEWLABELITEM_H
 
-#include "viewitem.h"
+#include <mvvm/viewmodel/viewitem.h>
 
 namespace ModelView
 {

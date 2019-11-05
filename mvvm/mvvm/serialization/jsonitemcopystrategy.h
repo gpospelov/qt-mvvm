@@ -10,7 +10,7 @@
 #ifndef MVVM_JSONITEMCOPYSTRATEGY_H
 #define MVVM_JSONITEMCOPYSTRATEGY_H
 
-#include "itemcopystrategy.h"
+#include <mvvm/serialization/itemcopystrategy.h>
 #include <memory>
 
 namespace ModelView

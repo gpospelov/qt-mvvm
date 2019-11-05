@@ -10,7 +10,7 @@
 #ifndef MVVM_INTEGEREDITOR_H
 #define MVVM_INTEGEREDITOR_H
 
-#include "customeditor.h"
+#include <mvvm/editors/customeditor.h>
 
 class QSpinBox;
 

@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "statuslabel.h"
+#include <mvvm/widgets/statuslabel.h>
 #include <QColor>
 #include <QFont>
 #include <QPainter>

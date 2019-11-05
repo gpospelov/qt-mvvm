@@ -10,7 +10,7 @@
 #ifndef MVVM_DATA1DPLOTCONTROLLER_H
 #define MVVM_DATA1DPLOTCONTROLLER_H
 
-#include "itemcontroller.h"
+#include <mvvm/signals/itemcontroller.h>
 
 class QCPGraph;
 

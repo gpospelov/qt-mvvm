@@ -7,12 +7,12 @@
 //
 // ************************************************************************** //
 
-#include "abstractviewmodel.h"
-#include "sessionitem.h"
-#include "sessionmodel.h"
-#include "viewitems.h"
-#include "abstractviewmodelcontroller.h"
-#include "viewmodelutils.h"
+#include <mvvm/viewmodel/abstractviewmodel.h>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/model/sessionmodel.h>
+#include <mvvm/viewmodel/viewitems.h>
+#include <mvvm/viewmodel/abstractviewmodelcontroller.h>
+#include <mvvm/viewmodel/viewmodelutils.h>
 
 using namespace ModelView;
 

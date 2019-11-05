@@ -9,13 +9,13 @@
 
 #include "SampleWidget.h"
 #include "ApplicationModels.h"
-#include "itemstreeview.h"
-#include "standardviewmodels.h"
+#include <mvvm/widgets/itemstreeview.h>
+#include <mvvm/viewmodel/standardviewmodels.h>
 #include "MaterialTableWidget.h"
 #include "LayerTableWidget.h"
 #include "SampleModel.h"
 #include "MaterialModel.h"
-#include "sessionitem.h"
+#include <mvvm/model/sessionitem.h>
 #include <QVBoxLayout>
 #include <QTreeView>
 

@@ -8,11 +8,11 @@
 // ************************************************************************** //
 
 #include "colormapwidget.h"
-#include "colormapcanvas.h"
+#include <mvvm/plotting/colormapcanvas.h>
 #include "colormapmodel.h"
 #include "colormappropertywidget.h"
-#include "colormapviewportitem.h"
-#include "modelutils.h"
+#include <mvvm/standarditems/colormapviewportitem.h>
+#include <mvvm/model/modelutils.h>
 #include <QAction>
 #include <QBoxLayout>
 #include <QToolBar>

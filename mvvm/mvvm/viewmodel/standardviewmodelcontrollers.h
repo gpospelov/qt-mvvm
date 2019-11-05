@@ -10,7 +10,7 @@
 #ifndef MVVM_STANDARDVIEWMODELCONTROLLERS_H
 #define MVVM_STANDARDVIEWMODELCONTROLLERS_H
 
-#include "abstractviewmodelcontroller.h"
+#include <mvvm/viewmodel/abstractviewmodelcontroller.h>
 #include <string>
 #include <vector>
 

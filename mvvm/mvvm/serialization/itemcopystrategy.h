@@ -10,7 +10,7 @@
 #ifndef MVVM_ITEMCOPYSTRATEGY_H
 #define MVVM_ITEMCOPYSTRATEGY_H
 
-#include "mvvm_export.h"
+#include <mvvm/model/mvvm_export.h>
 #include <memory>
 
 namespace ModelView

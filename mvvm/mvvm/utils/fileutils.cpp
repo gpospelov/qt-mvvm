@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "fileutils.h"
+#include <mvvm/utils/fileutils.h>
 #include <QDir>
 #include <QFileInfo>
 #include <stdexcept>

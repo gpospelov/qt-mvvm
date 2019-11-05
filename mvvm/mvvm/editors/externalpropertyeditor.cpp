@@ -7,11 +7,11 @@
 //
 // ************************************************************************** //
 
-#include "externalpropertyeditor.h"
-#include "customeventfilters.h"
-#include "customvariants.h"
-#include "externalproperty.h"
-#include "styleutils.h"
+#include <mvvm/editors/externalpropertyeditor.h>
+#include <mvvm/editors/customeventfilters.h>
+#include <mvvm/model/customvariants.h>
+#include <mvvm/model/externalproperty.h>
+#include <mvvm/editors/styleutils.h>
 #include <QColor>
 #include <QHBoxLayout>
 #include <QLabel>

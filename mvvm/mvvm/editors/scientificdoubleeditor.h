@@ -10,7 +10,7 @@
 #ifndef MVVM_SCIENTIFICDOUBLEEDITOR_H
 #define MVVM_SCIENTIFICDOUBLEEDITOR_H
 
-#include "customeditor.h"
+#include <mvvm/editors/customeditor.h>
 
 class QLineEdit;
 class QDoubleValidator;

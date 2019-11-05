@@ -1,9 +1,9 @@
 #include "google_test.h"
 #include "test_utils.h"
-#include "sessionitem.h"
-#include "itempool.h"
-#include "taginfo.h"
-#include "itemutils.h"
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/model/itempool.h>
+#include <mvvm/model/taginfo.h>
+#include <mvvm/model/itemutils.h>
 #include <memory>
 #include <QDebug>
 

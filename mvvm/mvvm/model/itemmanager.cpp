@@ -7,12 +7,12 @@
 //
 // ************************************************************************** //
 
-#include "itemmanager.h"
-#include "customvariants.h"
-#include "itemfactory.h"
-#include "itempool.h"
-#include "sessionitem.h"
-#include "standarditemcatalogue.h"
+#include <mvvm/model/itemmanager.h>
+#include <mvvm/model/customvariants.h>
+#include <mvvm/model/itemfactory.h>
+#include <mvvm/model/itempool.h>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/standarditems/standarditemcatalogue.h>
 
 namespace
 {

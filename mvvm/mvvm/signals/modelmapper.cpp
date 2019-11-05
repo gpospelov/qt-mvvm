@@ -7,9 +7,9 @@
 //
 // ************************************************************************** //
 
-#include "modelmapper.h"
-#include "sessionitem.h"
-#include "sessionmodel.h"
+#include <mvvm/signals/modelmapper.h>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/model/sessionmodel.h>
 
 using namespace ModelView;
 

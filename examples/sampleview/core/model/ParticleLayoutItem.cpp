@@ -9,7 +9,7 @@
 
 #include "ParticleLayoutItem.h"
 #include "item_constants.h"
-#include "taginfo.h"
+#include <mvvm/model/taginfo.h>
 
 using namespace ModelView;
 

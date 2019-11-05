@@ -7,12 +7,12 @@
 //
 // ************************************************************************** //
 
-#include "defaulteditorfactory.h"
-#include "abstractviewmodel.h"
-#include "customeditor.h"
-#include "customvariants.h"
-#include "sessionitem.h"
-#include "variant-constants.h"
+#include <mvvm/editors/defaulteditorfactory.h>
+#include <mvvm/viewmodel/abstractviewmodel.h>
+#include <mvvm/editors/customeditor.h>
+#include <mvvm/model/customvariants.h>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/model/variant-constants.h>
 
 using namespace ModelView;
 

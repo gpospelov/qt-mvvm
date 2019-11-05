@@ -10,7 +10,7 @@
 #ifndef MVVM_ITEMMAPPER_H
 #define MVVM_ITEMMAPPER_H
 
-#include "callbackcontainer.h"
+#include <mvvm/signals/callbackcontainer.h>
 
 namespace ModelView
 {

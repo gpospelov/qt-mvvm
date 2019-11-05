@@ -10,8 +10,8 @@
 #ifndef MVVM_VIEWITEMS_H
 #define MVVM_VIEWITEMS_H
 
-#include "viewemptyitem.h"
-#include "viewlabelitem.h"
-#include "viewdataitem.h"
+#include <mvvm/viewmodel/viewemptyitem.h>
+#include <mvvm/viewmodel/viewlabelitem.h>
+#include <mvvm/viewmodel/viewdataitem.h>
 
 #endif // MVVM_VIEWITEMS_H

@@ -7,15 +7,15 @@
 //
 // ************************************************************************** //
 
-#include "abstractviewmodelcontroller.h"
-#include "abstractviewmodel.h"
-#include "childrenstrategyinterface.h"
-#include "rowstrategyinterface.h"
-#include "sessionitem.h"
-#include "sessionmodel.h"
-#include "modelmapper.h"
-#include "viewitem.h"
-#include "viewmodelutils.h"
+#include <mvvm/viewmodel/abstractviewmodelcontroller.h>
+#include <mvvm/viewmodel/abstractviewmodel.h>
+#include <mvvm/viewmodel/childrenstrategyinterface.h>
+#include <mvvm/viewmodel/rowstrategyinterface.h>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/model/sessionmodel.h>
+#include <mvvm/signals/modelmapper.h>
+#include <mvvm/viewmodel/viewitem.h>
+#include <mvvm/viewmodel/viewmodelutils.h>
 
 namespace
 {

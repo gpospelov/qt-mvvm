@@ -10,7 +10,7 @@
 #ifndef MVVM_COLORMAPITEM_H
 #define MVVM_COLORMAPITEM_H
 
-#include "compounditem.h"
+#include <mvvm/model/compounditem.h>
 
 namespace ModelView
 {

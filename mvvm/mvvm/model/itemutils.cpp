@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#include "itemutils.h"
-#include "sessionitem.h"
+#include <mvvm/model/itemutils.h>
+#include <mvvm/model/sessionitem.h>
 #include <iterator>
 
 using namespace ModelView;

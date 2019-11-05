@@ -1,6 +1,6 @@
-#include "axisitems.h"
-#include "data1ditem.h"
-#include "sessionmodel.h"
+#include <mvvm/standarditems/axisitems.h>
+#include <mvvm/standarditems/data1ditem.h>
+#include <mvvm/model/sessionmodel.h>
 #include "google_test.h"
 #include "MockWidgets.h"
 

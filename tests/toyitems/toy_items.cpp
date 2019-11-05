@@ -8,11 +8,11 @@
 // ************************************************************************** //
 
 #include "toy_items.h"
-#include "comboproperty.h"
-#include "itemmapper.h"
-#include "taginfo.h"
+#include <mvvm/model/comboproperty.h>
+#include <mvvm/signals/itemmapper.h>
+#include <mvvm/model/taginfo.h>
 #include "toy_constants.h"
-#include "vectoritem.h"
+#include <mvvm/standarditems/vectoritem.h>
 #include <QColor>
 #include <stdexcept>
 

@@ -10,7 +10,7 @@
 #ifndef MVVM_PROPERTYTABLEVIEWMODEL_H
 #define MVVM_PROPERTYTABLEVIEWMODEL_H
 
-#include "abstractviewmodel.h"
+#include <mvvm/viewmodel/abstractviewmodel.h>
 
 namespace ModelView
 {

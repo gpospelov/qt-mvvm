@@ -10,8 +10,8 @@
 #ifndef MVVM_ITEMPOOL_H
 #define MVVM_ITEMPOOL_H
 
-#include "mvvm_export.h"
-#include "mvvm_types.h"
+#include <mvvm/model/mvvm_export.h>
+#include <mvvm/model/mvvm_types.h>
 #include <map>
 
 namespace ModelView {

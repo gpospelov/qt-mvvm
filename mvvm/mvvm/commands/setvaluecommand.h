@@ -10,7 +10,7 @@
 #ifndef MVVM_SETVALUECOMMAND_H
 #define MVVM_SETVALUECOMMAND_H
 
-#include "abstractitemcommand.h"
+#include <mvvm/commands/abstractitemcommand.h>
 
 class QVariant;
 

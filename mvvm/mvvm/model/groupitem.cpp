@@ -7,10 +7,10 @@
 //
 // ************************************************************************** //
 
-#include "groupitem.h"
-#include "comboproperty.h"
-#include "containerutils.h"
-#include "taginfo.h"
+#include <mvvm/model/groupitem.h>
+#include <mvvm/model/comboproperty.h>
+#include <mvvm/utils/containerutils.h>
+#include <mvvm/model/taginfo.h>
 
 namespace  {
 std::string tag_name = "group_items";

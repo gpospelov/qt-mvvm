@@ -8,8 +8,8 @@
 // ************************************************************************** //
 
 #include "graphpropertywidget.h"
-#include "itemstreeview.h"
-#include "standardviewmodels.h"
+#include <mvvm/widgets/itemstreeview.h>
+#include <mvvm/viewmodel/standardviewmodels.h>
 #include "graphmodel.h"
 #include <QBoxLayout>
 #include <QPushButton>

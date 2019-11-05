@@ -13,7 +13,7 @@
 //! @file axisitems.h
 //! Collection of axis items for 1D and 2D data/plotting support.
 
-#include "compounditem.h"
+#include <mvvm/model/compounditem.h>
 #include <memory>
 #include <vector>
 

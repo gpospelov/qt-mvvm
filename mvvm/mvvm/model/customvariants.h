@@ -13,8 +13,8 @@
 //! @file customvariants.h
 //! Registrations and translations for custom variants.
 
-#include "mvvm_export.h"
-#include "reallimits.h"
+#include <mvvm/model/mvvm_export.h>
+#include <mvvm/utils/reallimits.h>
 #include <QMetaType>
 #include <QVariant>
 #include <string>

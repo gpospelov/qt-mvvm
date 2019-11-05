@@ -1,6 +1,6 @@
 #include "google_test.h"
-#include "vectoritem.h"
-#include "sessionmodel.h"
+#include <mvvm/standarditems/vectoritem.h>
+#include <mvvm/model/sessionmodel.h>
 
 using namespace ModelView;
 

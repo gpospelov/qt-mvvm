@@ -7,10 +7,10 @@
 //
 // ************************************************************************** //
 
-#include "viewemptyitem.h"
-#include "viewitemtypes.h"
-#include "mvvm_types.h"
-#include "viewmodelutils.h"
+#include <mvvm/viewmodel/viewemptyitem.h>
+#include <mvvm/viewmodel/viewitemtypes.h>
+#include <mvvm/model/mvvm_types.h>
+#include <mvvm/viewmodel/viewmodelutils.h>
 
 using namespace ModelView;
 

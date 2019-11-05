@@ -10,7 +10,7 @@
 #ifndef CUSTOMMODELDELEGATE_H
 #define CUSTOMMODELDELEGATE_H
 
-#include "viewmodeldelegate.h"
+#include <mvvm/viewmodel/viewmodeldelegate.h>
 
 class ApplicationModels;
 

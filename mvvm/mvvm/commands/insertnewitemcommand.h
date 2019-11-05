@@ -10,8 +10,8 @@
 #ifndef MVVM_INSERTNEWITEMCOMMAND_H
 #define MVVM_INSERTNEWITEMCOMMAND_H
 
-#include "abstractitemcommand.h"
-#include "function_types.h"
+#include <mvvm/commands/abstractitemcommand.h>
+#include <mvvm/model/function_types.h>
 
 namespace ModelView
 {

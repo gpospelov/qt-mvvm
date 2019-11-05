@@ -1,5 +1,5 @@
 #include "google_test.h"
-#include "stringutils.h"
+#include <mvvm/utils/stringutils.h>
 
 using namespace ModelView;
 

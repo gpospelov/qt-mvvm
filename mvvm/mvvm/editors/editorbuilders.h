@@ -10,7 +10,7 @@
 #ifndef MVVM_EDITORBUILDERSTRATEGY_H
 #define MVVM_EDITORBUILDERSTRATEGY_H
 
-#include "editorfactoryinterface.h"
+#include <mvvm/editors/editorfactoryinterface.h>
 #include <functional>
 #include <memory>
 

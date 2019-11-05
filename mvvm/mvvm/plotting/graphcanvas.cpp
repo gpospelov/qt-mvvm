@@ -7,13 +7,13 @@
 //
 // ************************************************************************** //
 
-#include "graphcanvas.h"
-#include "graphviewportitem.h"
-#include "graphviewportplotcontroller.h"
+#include <mvvm/plotting/graphcanvas.h>
+#include <mvvm/standarditems/graphviewportitem.h>
+#include <mvvm/plotting/graphviewportplotcontroller.h>
 #include "qcustomplot.h"
-#include "statuslabel.h"
-#include "statusstringreporter.h"
-#include "statusstringreporterfactory.h"
+#include <mvvm/widgets/statuslabel.h>
+#include <mvvm/plotting/statusstringreporter.h>
+#include <mvvm/plotting/statusstringreporterfactory.h>
 #include <QBoxLayout>
 
 using namespace ModelView;

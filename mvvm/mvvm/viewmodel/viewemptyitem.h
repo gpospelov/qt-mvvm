@@ -10,7 +10,7 @@
 #ifndef MVVM_VIEWEMPTYITEM_H
 #define MVVM_VIEWEMPTYITEM_H
 
-#include "viewitem.h"
+#include <mvvm/viewmodel/viewitem.h>
 
 namespace ModelView
 {

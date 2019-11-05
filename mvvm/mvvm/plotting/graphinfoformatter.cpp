@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#include "graphinfoformatter.h"
-#include "stringutils.h"
+#include <mvvm/plotting/graphinfoformatter.h>
+#include <mvvm/utils/stringutils.h>
 #include <qcustomplot.h>
 #include <sstream>
 

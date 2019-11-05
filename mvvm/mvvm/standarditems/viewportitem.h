@@ -10,7 +10,7 @@
 #ifndef MVVM_VIEWPORTITEM_H
 #define MVVM_VIEWPORTITEM_H
 
-#include "compounditem.h"
+#include <mvvm/model/compounditem.h>
 #include <vector>
 
 namespace ModelView

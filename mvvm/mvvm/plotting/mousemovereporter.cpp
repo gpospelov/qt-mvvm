@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#include "mousemovereporter.h"
-#include "mouseposinfo.h"
+#include <mvvm/plotting/mousemovereporter.h>
+#include <mvvm/plotting/mouseposinfo.h>
 #include <qcustomplot.h>
 #include <QMouseEvent>
 

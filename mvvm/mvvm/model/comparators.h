@@ -10,7 +10,7 @@
 #ifndef MVVM_COMPARATORS_H
 #define MVVM_COMPARATORS_H
 
-#include "mvvm_export.h"
+#include <mvvm/model/mvvm_export.h>
 
 namespace ModelView {
 

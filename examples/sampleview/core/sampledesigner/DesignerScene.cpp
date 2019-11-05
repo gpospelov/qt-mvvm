@@ -27,9 +27,9 @@
 #include "SampleViewFactory.h"
 #include "SceneSelectionController.h"
 #include "item_constants.h"
-#include "modelmapper.h"
-#include "modelutils.h"
-#include "sessionitem.h"
+#include <mvvm/signals/modelmapper.h>
+#include <mvvm/model/modelutils.h>
+#include <mvvm/model/sessionitem.h>
 #include <QGraphicsSceneMouseEvent>
 #include <QItemSelection>
 #include <QPainter>

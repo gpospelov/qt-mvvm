@@ -12,9 +12,9 @@
 #include "DesignerScene.h"
 #include "DesignerSceneUtils.h"
 #include "NodeEditorConnection.h"
-#include "modelmapper.h"
-#include "modelutils.h"
-#include "sessionitem.h"
+#include <mvvm/signals/modelmapper.h>
+#include <mvvm/model/modelutils.h>
+#include <mvvm/model/sessionitem.h>
 #include <QSet>
 
 using namespace ModelView;

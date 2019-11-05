@@ -10,8 +10,8 @@
 #ifndef MVVM_DEFAULTEDITORFACTORY_H
 #define MVVM_DEFAULTEDITORFACTORY_H
 
-#include "editorbuilders.h"
-#include "editorfactoryinterface.h"
+#include <mvvm/editors/editorbuilders.h>
+#include <mvvm/editors/editorfactoryinterface.h>
 #include <map>
 
 namespace ModelView

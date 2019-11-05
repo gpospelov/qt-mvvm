@@ -10,7 +10,7 @@
 #ifndef MVVM_ITEMCONTROLLER_H
 #define MVVM_ITEMCONTROLLER_H
 
-#include "itemmapper.h"
+#include <mvvm/signals/itemmapper.h>
 #include <memory>
 
 namespace ModelView

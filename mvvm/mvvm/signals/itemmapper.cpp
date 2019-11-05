@@ -7,10 +7,10 @@
 //
 // ************************************************************************** //
 
-#include "itemmapper.h"
-#include "sessionitem.h"
-#include "sessionmodel.h"
-#include "modelmapper.h"
+#include <mvvm/signals/itemmapper.h>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/model/sessionmodel.h>
+#include <mvvm/signals/modelmapper.h>
 
 using namespace ModelView;
 

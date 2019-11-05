@@ -10,7 +10,7 @@
 #ifndef MVVM_TAGINFO_H
 #define MVVM_TAGINFO_H
 
-#include "mvvm_export.h"
+#include <mvvm/model/mvvm_export.h>
 #include <string>
 #include <vector>
 

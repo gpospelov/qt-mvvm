@@ -10,7 +10,7 @@
 #ifndef MVVM_EDITORFACTORYINTERFACE_H
 #define MVVM_EDITORFACTORYINTERFACE_H
 
-#include "mvvm_export.h"
+#include <mvvm/model/mvvm_export.h>
 #include <string>
 #include <memory>
 

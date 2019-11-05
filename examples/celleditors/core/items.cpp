@@ -8,8 +8,8 @@
 // ************************************************************************** //
 
 #include "items.h"
-#include "comboproperty.h"
-#include "externalproperty.h"
+#include <mvvm/model/comboproperty.h>
+#include <mvvm/model/externalproperty.h>
 #include "item_constants.h"
 #include <QColor>
 

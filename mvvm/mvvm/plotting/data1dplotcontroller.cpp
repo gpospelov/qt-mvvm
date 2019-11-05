@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#include "data1dplotcontroller.h"
-#include "data1ditem.h"
+#include <mvvm/plotting/data1dplotcontroller.h>
+#include <mvvm/standarditems/data1ditem.h>
 #include "qcustomplot.h"
 
 using namespace ModelView;

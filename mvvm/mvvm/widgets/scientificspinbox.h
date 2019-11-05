@@ -10,7 +10,7 @@
 #ifndef MVVM_SCIENTIFICSPINBOX_H
 #define MVVM_SCIENTIFICSPINBOX_H
 
-#include "mvvm_export.h"
+#include <mvvm/model/mvvm_export.h>
 #include <QAbstractSpinBox>
 
 namespace ModelView

@@ -10,7 +10,7 @@
 #ifndef MVVM_CELLDECORATIONINTERFACE_H
 #define MVVM_CELLDECORATIONINTERFACE_H
 
-#include "mvvm_export.h"
+#include <mvvm/model/mvvm_export.h>
 #include <string>
 
 class QModelIndex;

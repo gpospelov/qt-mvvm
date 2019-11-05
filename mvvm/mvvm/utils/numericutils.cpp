@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "numericutils.h"
+#include <mvvm/utils/numericutils.h>
 #include <cmath>
 #include <limits>
 #include <algorithm>

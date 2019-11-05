@@ -1,5 +1,5 @@
 #include "google_test.h"
-#include "taginfo.h"
+#include <mvvm/model/taginfo.h>
 
 using namespace ModelView;
 

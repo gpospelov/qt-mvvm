@@ -10,7 +10,7 @@
 #ifndef MVVM_GRAPHPLOTCONTROLLER_H
 #define MVVM_GRAPHPLOTCONTROLLER_H
 
-#include "itemcontroller.h"
+#include <mvvm/signals/itemcontroller.h>
 
 class QCustomPlot;
 

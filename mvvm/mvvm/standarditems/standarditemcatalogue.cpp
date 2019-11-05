@@ -7,21 +7,21 @@
 //
 // ************************************************************************** //
 
-#include "standarditemcatalogue.h"
-#include "mvvm_types.h"
-#include "vectoritem.h"
-#include "propertyitem.h"
-#include "compounditem.h"
-#include "linkeditem.h"
-#include "axisitems.h"
-#include "data1ditem.h"
-#include "data2ditem.h"
-#include "graphitem.h"
-#include "graphviewportitem.h"
-#include "plottableitems.h"
-#include "containeritem.h"
-#include "colormapitem.h"
-#include "colormapviewportitem.h"
+#include <mvvm/standarditems/standarditemcatalogue.h>
+#include <mvvm/model/mvvm_types.h>
+#include <mvvm/standarditems/vectoritem.h>
+#include <mvvm/model/propertyitem.h>
+#include <mvvm/model/compounditem.h>
+#include <mvvm/standarditems/linkeditem.h>
+#include <mvvm/standarditems/axisitems.h>
+#include <mvvm/standarditems/data1ditem.h>
+#include <mvvm/standarditems/data2ditem.h>
+#include <mvvm/standarditems/graphitem.h>
+#include <mvvm/standarditems/graphviewportitem.h>
+#include <mvvm/standarditems/plottableitems.h>
+#include <mvvm/standarditems/containeritem.h>
+#include <mvvm/standarditems/colormapitem.h>
+#include <mvvm/standarditems/colormapviewportitem.h>
 
 using namespace ModelView;
 

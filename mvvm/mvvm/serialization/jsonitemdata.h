@@ -10,7 +10,7 @@
 #ifndef MVVM_JSONITEMDATA_H
 #define MVVM_JSONITEMDATA_H
 
-#include "jsonconverterinterfaces.h"
+#include <mvvm/serialization/jsonconverterinterfaces.h>
 #include <QString>
 #include <memory>
 #include <vector>

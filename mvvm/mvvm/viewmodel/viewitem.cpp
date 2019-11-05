@@ -7,10 +7,10 @@
 //
 // ************************************************************************** //
 
-#include "viewitem.h"
-#include "sessionitem.h"
-#include "customvariants.h"
-#include "viewmodelutils.h"
+#include <mvvm/viewmodel/viewitem.h>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/model/customvariants.h>
+#include <mvvm/viewmodel/viewmodelutils.h>
 #include <QDebug>
 
 using namespace ModelView;

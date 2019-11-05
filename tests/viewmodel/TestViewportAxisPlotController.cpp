@@ -1,8 +1,8 @@
-#include "axisitems.h"
+#include <mvvm/standarditems/axisitems.h>
 #include "google_test.h"
 #include "qcustomplot.h"
-#include "sessionmodel.h"
-#include "viewportaxisplotcontroller.h"
+#include <mvvm/model/sessionmodel.h>
+#include <mvvm/plotting/viewportaxisplotcontroller.h>
 #include <QSignalSpy>
 
 using namespace ModelView;

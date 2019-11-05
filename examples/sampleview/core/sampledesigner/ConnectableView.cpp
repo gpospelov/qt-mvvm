@@ -10,7 +10,7 @@
 #include "ConnectableView.h"
 #include "DesignerHelper.h"
 #include "NodeEditorConnection.h"
-#include "sessionitem.h"
+#include <mvvm/model/sessionitem.h>
 #include <QObject>
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>

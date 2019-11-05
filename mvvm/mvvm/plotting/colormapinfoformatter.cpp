@@ -7,9 +7,9 @@
 //
 // ************************************************************************** //
 
-#include "colormapinfoformatter.h"
+#include <mvvm/plotting/colormapinfoformatter.h>
 #include "qcustomplot.h"
-#include "stringutils.h"
+#include <mvvm/utils/stringutils.h>
 #include <iomanip>
 #include <sstream>
 

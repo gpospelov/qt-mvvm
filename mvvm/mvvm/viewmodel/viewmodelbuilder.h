@@ -10,7 +10,7 @@
 #ifndef MVVM_VIEWMODELBUILDER_H
 #define MVVM_VIEWMODELBUILDER_H
 
-#include "abstractviewmodel.h"
+#include <mvvm/viewmodel/abstractviewmodel.h>
 #include <memory>
 
 namespace ModelView

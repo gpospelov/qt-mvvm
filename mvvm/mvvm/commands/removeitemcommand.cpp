@@ -7,10 +7,10 @@
 //
 // ************************************************************************** //
 
-#include "removeitemcommand.h"
-#include "itembackupstrategy.h"
-#include "sessionitem.h"
-#include "sessionmodel.h"
+#include <mvvm/commands/removeitemcommand.h>
+#include <mvvm/serialization/itembackupstrategy.h>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/model/sessionmodel.h>
 #include <sstream>
 
 using namespace ModelView;

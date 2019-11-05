@@ -7,10 +7,10 @@
 //
 // ************************************************************************** //
 
-#include "statusstringreporter.h"
-#include "mousemovereporter.h"
-#include "mouseposinfo.h"
-#include "statusstringformatterinterface.h"
+#include <mvvm/plotting/statusstringreporter.h>
+#include <mvvm/plotting/mousemovereporter.h>
+#include <mvvm/plotting/mouseposinfo.h>
+#include <mvvm/plotting/statusstringformatterinterface.h>
 #include <QMouseEvent>
 #include <qcustomplot.h>
 

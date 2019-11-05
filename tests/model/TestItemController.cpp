@@ -1,8 +1,8 @@
 #include "google_test.h"
-#include "itemcontroller.h"
-#include "itemmapper.h"
-#include "propertyitem.h"
-#include "sessionmodel.h"
+#include <mvvm/signals/itemcontroller.h>
+#include <mvvm/signals/itemmapper.h>
+#include <mvvm/model/propertyitem.h>
+#include <mvvm/model/sessionmodel.h>
 #include <memory>
 
 using namespace ModelView;

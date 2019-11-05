@@ -10,8 +10,8 @@
 #ifndef MVVM_SESSIONITEMTAGS_H
 #define MVVM_SESSIONITEMTAGS_H
 
-#include "mvvm_export.h"
-#include "tagrow.h"
+#include <mvvm/model/mvvm_export.h>
+#include <mvvm/model/tagrow.h>
 #include <vector>
 #include <string>
 

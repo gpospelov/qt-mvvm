@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#include "propertytableviewmodel.h"
-#include "standardviewmodelcontrollers.h"
+#include <mvvm/viewmodel/propertytableviewmodel.h>
+#include <mvvm/viewmodel/standardviewmodelcontrollers.h>
 
 using namespace ModelView;
 

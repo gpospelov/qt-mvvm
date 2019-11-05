@@ -10,7 +10,7 @@
 #ifndef MVVM_DEFAULTCELLDECORATION_H
 #define MVVM_DEFAULTCELLDECORATION_H
 
-#include "celldecorationinterface.h"
+#include <mvvm/viewmodel/celldecorationinterface.h>
 
 class QModelIndex;
 

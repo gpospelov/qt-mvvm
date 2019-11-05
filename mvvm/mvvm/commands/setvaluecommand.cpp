@@ -7,9 +7,9 @@
 //
 // ************************************************************************** //
 
-#include "setvaluecommand.h"
-#include "sessionitem.h"
-#include "sessionmodel.h"
+#include <mvvm/commands/setvaluecommand.h>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/model/sessionmodel.h>
 #include <QVariant>
 #include <sstream>
 

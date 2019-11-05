@@ -1,9 +1,9 @@
-#include "comboproperty.h"
-#include "customvariants.h"
-#include "externalproperty.h"
+#include <mvvm/model/comboproperty.h>
+#include <mvvm/model/customvariants.h>
+#include <mvvm/model/externalproperty.h>
 #include "google_test.h"
-#include "jsonvariant.h"
-#include "reallimits.h"
+#include <mvvm/serialization/jsonvariant.h>
+#include <mvvm/utils/reallimits.h>
 #include "test_utils.h"
 #include <QColor>
 #include <QJsonArray>

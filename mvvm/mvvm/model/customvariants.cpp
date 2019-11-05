@@ -7,11 +7,11 @@
 //
 // ************************************************************************** //
 
-#include "customvariants.h"
-#include "variant-constants.h"
-#include "jsonvariant.h"
-#include "comboproperty.h"
-#include "externalproperty.h"
+#include <mvvm/model/customvariants.h>
+#include <mvvm/model/variant-constants.h>
+#include <mvvm/serialization/jsonvariant.h>
+#include <mvvm/model/comboproperty.h>
+#include <mvvm/model/externalproperty.h>
 
 using namespace ModelView;
 

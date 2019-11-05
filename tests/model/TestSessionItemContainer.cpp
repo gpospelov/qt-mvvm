@@ -1,6 +1,6 @@
 #include "google_test.h"
-#include "sessionitem.h"
-#include "sessionitemcontainer.h"
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/model/sessionitemcontainer.h>
 #include "test_utils.h"
 
 using namespace ModelView;

@@ -2,7 +2,7 @@
 #define MATERIALVIEWCONTROLLER_H
 
 #include "MaterialTableViewModel.h"
-#include "mvvm_types.h"
+#include <mvvm/model/mvvm_types.h>
 #include <QItemSelectionModel>
 #include <deque>
 

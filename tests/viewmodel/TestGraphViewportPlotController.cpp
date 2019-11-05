@@ -1,11 +1,11 @@
-#include "data1ditem.h"
+#include <mvvm/standarditems/data1ditem.h>
 #include "google_test.h"
-#include "graphitem.h"
-#include "graphviewportitem.h"
-#include "graphviewportplotcontroller.h"
+#include <mvvm/standarditems/graphitem.h>
+#include <mvvm/standarditems/graphviewportitem.h>
+#include <mvvm/plotting/graphviewportplotcontroller.h>
 #include "qcustomplot.h"
-#include "sessionmodel.h"
-#include "axisitems.h"
+#include <mvvm/model/sessionmodel.h>
+#include <mvvm/standarditems/axisitems.h>
 
 using namespace ModelView;
 

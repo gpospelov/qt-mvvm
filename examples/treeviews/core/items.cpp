@@ -9,10 +9,10 @@
 
 #include "items.h"
 #include "item_constants.h"
-#include "comboproperty.h"
-#include "itemmapper.h"
-#include "taginfo.h"
-#include "vectoritem.h"
+#include <mvvm/model/comboproperty.h>
+#include <mvvm/signals/itemmapper.h>
+#include <mvvm/model/taginfo.h>
+#include <mvvm/standarditems/vectoritem.h>
 #include <QColor>
 
 using namespace ModelView;

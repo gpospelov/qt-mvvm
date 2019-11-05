@@ -7,11 +7,11 @@
 //
 // ************************************************************************** //
 
-#include "colorscaleplotcontroller.h"
-#include "axisitems.h"
+#include <mvvm/plotting/colorscaleplotcontroller.h>
+#include <mvvm/standarditems/axisitems.h>
 #include "qcustomplot.h"
-#include "viewportaxisplotcontroller.h"
-#include "itemmapper.h"
+#include <mvvm/plotting/viewportaxisplotcontroller.h>
+#include <mvvm/signals/itemmapper.h>
 
 using namespace ModelView;
 

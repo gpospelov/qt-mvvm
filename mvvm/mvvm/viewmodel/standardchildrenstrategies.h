@@ -17,7 +17,7 @@
 Used for ViewModel generation when underlying SessionModel changes its layout.
 */
 
-#include "childrenstrategyinterface.h"
+#include <mvvm/viewmodel/childrenstrategyinterface.h>
 
 namespace ModelView {
 

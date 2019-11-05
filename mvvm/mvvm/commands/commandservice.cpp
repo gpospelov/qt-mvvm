@@ -7,14 +7,14 @@
 //
 // ************************************************************************** //
 
-#include "commandservice.h"
-#include "copyitemcommand.h"
-#include "insertnewitemcommand.h"
-#include "moveitemcommand.h"
-#include "removeitemcommand.h"
-#include "sessionitem.h"
-#include "sessionmodel.h"
-#include "setvaluecommand.h"
+#include <mvvm/commands/commandservice.h>
+#include <mvvm/commands/copyitemcommand.h>
+#include <mvvm/commands/insertnewitemcommand.h>
+#include <mvvm/commands/moveitemcommand.h>
+#include <mvvm/commands/removeitemcommand.h>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/model/sessionmodel.h>
+#include <mvvm/commands/setvaluecommand.h>
 #include <QUndoStack>
 
 using namespace ModelView;

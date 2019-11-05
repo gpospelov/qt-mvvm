@@ -1,9 +1,9 @@
-#include "compounditem.h"
+#include <mvvm/model/compounditem.h>
 #include "google_test.h"
-#include "itemfactory.h"
-#include "jsonitembackupstrategy.h"
-#include "propertyitem.h"
-#include "standarditemcatalogue.h"
+#include <mvvm/model/itemfactory.h>
+#include <mvvm/serialization/jsonitembackupstrategy.h>
+#include <mvvm/model/propertyitem.h>
+#include <mvvm/standarditems/standarditemcatalogue.h>
 
 using namespace ModelView;
 

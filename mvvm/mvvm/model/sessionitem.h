@@ -10,9 +10,9 @@
 #ifndef MVVM_SESSIONITEM_H
 #define MVVM_SESSIONITEM_H
 
-#include "mvvm_export.h"
-#include "mvvm_types.h"
-#include "tagrow.h"
+#include <mvvm/model/mvvm_export.h>
+#include <mvvm/model/mvvm_types.h>
+#include <mvvm/model/tagrow.h>
 #include <QVariant>
 #include <memory>
 #include <vector>

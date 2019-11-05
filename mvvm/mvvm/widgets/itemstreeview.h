@@ -10,7 +10,7 @@
 #ifndef MVVM_ITEMSTREEVIEW_H
 #define MVVM_ITEMSTREEVIEW_H
 
-#include "mvvm_export.h"
+#include <mvvm/model/mvvm_export.h>
 #include <QWidget>
 #include <memory>
 

@@ -10,7 +10,7 @@
 #ifndef MVVM_JSONUTILS_H
 #define MVVM_JSONUTILS_H
 
-#include "mvvm_export.h"
+#include <mvvm/model/mvvm_export.h>
 #include <string>
 
 class QJsonObject;

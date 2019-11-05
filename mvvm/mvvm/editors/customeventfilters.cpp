@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "customeventfilters.h"
+#include <mvvm/editors/customeventfilters.h>
 #include <QEvent>
 
 using namespace ModelView;

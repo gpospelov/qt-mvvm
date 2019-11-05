@@ -7,9 +7,9 @@
 //
 // ************************************************************************** //
 
-#include "jsonitemdata.h"
-#include "jsonvariant.h"
-#include "sessionitemdata.h"
+#include <mvvm/serialization/jsonitemdata.h>
+#include <mvvm/serialization/jsonvariant.h>
+#include <mvvm/model/sessionitemdata.h>
 #include <QJsonArray>
 #include <QJsonObject>
 #include <stdexcept>

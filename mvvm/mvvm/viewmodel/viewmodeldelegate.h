@@ -10,7 +10,7 @@
 #ifndef MVVM_VIEWMODELDELEGATE_H
 #define MVVM_VIEWMODELDELEGATE_H
 
-#include "mvvm_export.h"
+#include <mvvm/model/mvvm_export.h>
 #include <QStyledItemDelegate>
 #include <memory>
 

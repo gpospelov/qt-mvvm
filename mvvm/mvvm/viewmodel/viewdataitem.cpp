@@ -7,12 +7,12 @@
 //
 // ************************************************************************** //
 
-#include "viewdataitem.h"
-#include "customvariants.h"
-#include "viewitemtypes.h"
-#include "mvvm_types.h"
-#include "sessionitem.h"
-#include "viewmodelutils.h"
+#include <mvvm/viewmodel/viewdataitem.h>
+#include <mvvm/model/customvariants.h>
+#include <mvvm/viewmodel/viewitemtypes.h>
+#include <mvvm/model/mvvm_types.h>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/viewmodel/viewmodelutils.h>
 
 using namespace ModelView;
 

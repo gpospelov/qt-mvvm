@@ -7,11 +7,11 @@
 //
 // ************************************************************************** //
 
-#include "jsonutils.h"
-#include "sessionmodel.h"
-#include "jsonconverterinterfaces.h"
-#include "jsonmodel.h"
-#include "reallimits.h"
+#include <mvvm/serialization/jsonutils.h>
+#include <mvvm/model/sessionmodel.h>
+#include <mvvm/serialization/jsonconverterinterfaces.h>
+#include <mvvm/serialization/jsonmodel.h>
+#include <mvvm/utils/reallimits.h>
 #include <QJsonDocument>
 #include <QJsonObject>
 

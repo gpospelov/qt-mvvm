@@ -7,9 +7,9 @@
 //
 // ************************************************************************** //
 
-#include "sessionitemcontainer.h"
-#include "containerutils.h"
-#include "sessionitem.h"
+#include <mvvm/model/sessionitemcontainer.h>
+#include <mvvm/utils/containerutils.h>
+#include <mvvm/model/sessionitem.h>
 
 using namespace ModelView;
 

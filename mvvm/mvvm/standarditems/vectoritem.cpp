@@ -7,9 +7,9 @@
 //
 // ************************************************************************** //
 
-#include "vectoritem.h"
-#include "itemmapper.h"
-#include "customvariants.h"
+#include <mvvm/standarditems/vectoritem.h>
+#include <mvvm/signals/itemmapper.h>
+#include <mvvm/model/customvariants.h>
 #include <sstream>
 
 using namespace ModelView;

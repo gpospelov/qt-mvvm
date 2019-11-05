@@ -1,8 +1,8 @@
 #include "MockWidgets.h"
-#include "axisitems.h"
-#include "data2ditem.h"
+#include <mvvm/standarditems/axisitems.h>
+#include <mvvm/standarditems/data2ditem.h>
 #include "google_test.h"
-#include "sessionmodel.h"
+#include <mvvm/model/sessionmodel.h>
 
 using namespace ModelView;
 using ::testing::_;

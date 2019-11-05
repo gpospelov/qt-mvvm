@@ -10,7 +10,7 @@
 #ifndef MVVM_LABELDATAROWSTRATEGY_H
 #define MVVM_LABELDATAROWSTRATEGY_H
 
-#include "rowstrategyinterface.h"
+#include <mvvm/viewmodel/rowstrategyinterface.h>
 
 class QStandardItem;
 

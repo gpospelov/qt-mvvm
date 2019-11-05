@@ -10,7 +10,7 @@
 #ifndef MVVM_CUSTOMEVENTFILTERS_H
 #define MVVM_CUSTOMEVENTFILTERS_H
 
-#include "mvvm_export.h"
+#include <mvvm/model/mvvm_export.h>
 #include <QObject>
 
 namespace ModelView

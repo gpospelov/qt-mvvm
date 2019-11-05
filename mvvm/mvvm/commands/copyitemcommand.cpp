@@ -7,13 +7,13 @@
 //
 // ************************************************************************** //
 
-#include "copyitemcommand.h"
-#include "itembackupstrategy.h"
-#include "itemcopystrategy.h"
-#include "path.h"
-#include "sessionitem.h"
-#include "sessionmodel.h"
-#include "tagrow.h"
+#include <mvvm/commands/copyitemcommand.h>
+#include <mvvm/serialization/itembackupstrategy.h>
+#include <mvvm/serialization/itemcopystrategy.h>
+#include <mvvm/model/path.h>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/model/sessionmodel.h>
+#include <mvvm/model/tagrow.h>
 #include <sstream>
 
 using namespace ModelView;

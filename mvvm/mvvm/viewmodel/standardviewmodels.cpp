@@ -7,12 +7,12 @@
 //
 // ************************************************************************** //
 
-#include "standardviewmodels.h"
-#include "defaultviewmodel.h"
-#include "propertyviewmodel.h"
-#include "topitemsviewmodel.h"
-#include "viewmodelbuilder.h"
-#include "standardviewmodelcontrollers.h"
+#include <mvvm/viewmodel/standardviewmodels.h>
+#include <mvvm/viewmodel/defaultviewmodel.h>
+#include <mvvm/viewmodel/propertyviewmodel.h>
+#include <mvvm/viewmodel/topitemsviewmodel.h>
+#include <mvvm/viewmodel/viewmodelbuilder.h>
+#include <mvvm/viewmodel/standardviewmodelcontrollers.h>
 
 using namespace ModelView;
 

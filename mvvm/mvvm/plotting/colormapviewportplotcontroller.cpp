@@ -7,13 +7,13 @@
 //
 // ************************************************************************** //
 
-#include "colormapviewportplotcontroller.h"
-#include "axisitems.h"
-#include "viewportaxisplotcontroller.h"
-#include "colormapviewportitem.h"
-#include "colormapplotcontroller.h"
-#include "colormapitem.h"
-#include "colorscaleplotcontroller.h"
+#include <mvvm/plotting/colormapviewportplotcontroller.h>
+#include <mvvm/standarditems/axisitems.h>
+#include <mvvm/plotting/viewportaxisplotcontroller.h>
+#include <mvvm/standarditems/colormapviewportitem.h>
+#include <mvvm/plotting/colormapplotcontroller.h>
+#include <mvvm/standarditems/colormapitem.h>
+#include <mvvm/plotting/colorscaleplotcontroller.h>
 #include <list>
 #include <qcustomplot.h>
 

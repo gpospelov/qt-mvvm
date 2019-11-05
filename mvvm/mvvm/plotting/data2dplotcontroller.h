@@ -10,7 +10,7 @@
 #ifndef MVVM_DATA2DPLOTCONTROLLER_H
 #define MVVM_DATA2DPLOTCONTROLLER_H
 
-#include "itemcontroller.h"
+#include <mvvm/signals/itemcontroller.h>
 
 class QCPColorMap;
 

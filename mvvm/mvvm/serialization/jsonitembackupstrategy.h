@@ -10,7 +10,7 @@
 #ifndef MVVM_JSONITEMBACKUPSTRATEGY_H
 #define MVVM_JSONITEMBACKUPSTRATEGY_H
 
-#include "itembackupstrategy.h"
+#include <mvvm/serialization/itembackupstrategy.h>
 #include <memory>
 
 namespace ModelView

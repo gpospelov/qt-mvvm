@@ -7,20 +7,20 @@
 //
 // ************************************************************************** //
 
-#include "sessionmodel.h"
-#include "commandservice.h"
-#include "customvariants.h"
-#include "itemcatalogue.h"
-#include "itemfactory.h"
-#include "itemmanager.h"
-#include "itempool.h"
-#include "itemutils.h"
-#include "jsonitembackupstrategy.h"
-#include "jsonitemcopystrategy.h"
-#include "modelmapper.h"
-#include "sessionitem.h"
-#include "standarditemcatalogue.h"
-#include "taginfo.h"
+#include <mvvm/model/sessionmodel.h>
+#include <mvvm/commands/commandservice.h>
+#include <mvvm/model/customvariants.h>
+#include <mvvm/model/itemcatalogue.h>
+#include <mvvm/model/itemfactory.h>
+#include <mvvm/model/itemmanager.h>
+#include <mvvm/model/itempool.h>
+#include <mvvm/model/itemutils.h>
+#include <mvvm/serialization/jsonitembackupstrategy.h>
+#include <mvvm/serialization/jsonitemcopystrategy.h>
+#include <mvvm/signals/modelmapper.h>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/standarditems/standarditemcatalogue.h>
+#include <mvvm/model/taginfo.h>
 
 using namespace ModelView;
 

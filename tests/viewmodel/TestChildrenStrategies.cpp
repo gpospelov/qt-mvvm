@@ -1,10 +1,10 @@
 #include "google_test.h"
-#include "standardchildrenstrategies.h"
-#include "compounditem.h"
-#include "propertyitem.h"
-#include "sessionitem.h"
-#include "taginfo.h"
-#include "vectoritem.h"
+#include <mvvm/viewmodel/standardchildrenstrategies.h>
+#include <mvvm/model/compounditem.h>
+#include <mvvm/model/propertyitem.h>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/model/taginfo.h>
+#include <mvvm/standarditems/vectoritem.h>
 
 using namespace ModelView;
 

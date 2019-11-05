@@ -10,7 +10,7 @@
 #ifndef MVVM_COMBOPROPERTYEDITOR_H
 #define MVVM_COMBOPROPERTYEDITOR_H
 
-#include "customeditor.h"
+#include <mvvm/editors/customeditor.h>
 
 class QComboBox;
 

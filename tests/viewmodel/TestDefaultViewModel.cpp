@@ -1,10 +1,10 @@
-#include "defaultviewmodel.h"
+#include <mvvm/viewmodel/defaultviewmodel.h>
 #include "google_test.h"
-#include "sessionmodel.h"
-#include "vectoritem.h"
-#include "viewitems.h"
-#include "viewdataitem.h"
-#include "viewmodelutils.h"
+#include <mvvm/model/sessionmodel.h>
+#include <mvvm/standarditems/vectoritem.h>
+#include <mvvm/viewmodel/viewitems.h>
+#include <mvvm/viewmodel/viewdataitem.h>
+#include <mvvm/viewmodel/viewmodelutils.h>
 #include <QDebug>
 #include <QSignalSpy>
 

@@ -7,11 +7,11 @@
 //
 // ************************************************************************** //
 
-#include "propertyeditor.h"
-#include "standardviewmodels.h"
-#include "viewmodeldelegate.h"
-#include "sessionitem.h"
-#include "sessionmodel.h"
+#include <mvvm/widgets/propertyeditor.h>
+#include <mvvm/viewmodel/standardviewmodels.h>
+#include <mvvm/viewmodel/viewmodeldelegate.h>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/model/sessionmodel.h>
 #include <QVBoxLayout>
 #include <QTreeView>
 

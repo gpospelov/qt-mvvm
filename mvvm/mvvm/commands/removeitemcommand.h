@@ -10,7 +10,7 @@
 #ifndef MVVM_REMOVEITEMCOMMAND_H
 #define MVVM_REMOVEITEMCOMMAND_H
 
-#include "abstractitemcommand.h"
+#include <mvvm/commands/abstractitemcommand.h>
 
 namespace ModelView
 {

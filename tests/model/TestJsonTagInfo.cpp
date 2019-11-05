@@ -1,7 +1,7 @@
 #include "google_test.h"
-#include "jsontaginfo.h"
+#include <mvvm/serialization/jsontaginfo.h>
 #include "test_utils.h"
-#include "taginfo.h"
+#include <mvvm/model/taginfo.h>
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QJsonDocument>

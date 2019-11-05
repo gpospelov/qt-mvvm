@@ -10,7 +10,7 @@
 #ifndef MVVM_COLORMAPVIEWPORTPLOTCONTROLLER_H
 #define MVVM_COLORMAPVIEWPORTPLOTCONTROLLER_H
 
-#include "itemcontroller.h"
+#include <mvvm/signals/itemcontroller.h>
 
 class QCustomPlot;
 

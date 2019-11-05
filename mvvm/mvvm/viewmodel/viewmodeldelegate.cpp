@@ -7,11 +7,11 @@
 //
 // ************************************************************************** //
 
-#include "viewmodeldelegate.h"
-#include "comboproperty.h"
-#include "customeditor.h"
-#include "defaultcelldecoration.h"
-#include "defaulteditorfactory.h"
+#include <mvvm/viewmodel/viewmodeldelegate.h>
+#include <mvvm/model/comboproperty.h>
+#include <mvvm/editors/customeditor.h>
+#include <mvvm/viewmodel/defaultcelldecoration.h>
+#include <mvvm/editors/defaulteditorfactory.h>
 #include <QApplication>
 #include <QDebug>
 

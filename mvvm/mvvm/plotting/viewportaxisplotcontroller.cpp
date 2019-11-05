@@ -7,11 +7,11 @@
 //
 // ************************************************************************** //
 
-#include "viewportaxisplotcontroller.h"
-#include "axisitems.h"
-#include "itemmapper.h"
+#include <mvvm/plotting/viewportaxisplotcontroller.h>
+#include <mvvm/standarditems/axisitems.h>
+#include <mvvm/signals/itemmapper.h>
 #include "qcustomplot.h"
-#include "customplotutils.h"
+#include <mvvm/plotting/customplotutils.h>
 #include <QObject>
 
 using namespace ModelView;

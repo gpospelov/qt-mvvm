@@ -7,12 +7,12 @@
 //
 // ************************************************************************** //
 
-#include "itemfactory.h"
-#include "compounditem.h"
-#include "itemcatalogue.h"
-#include "propertyitem.h"
-#include "sessionitem.h"
-#include "vectoritem.h"
+#include <mvvm/model/itemfactory.h>
+#include <mvvm/model/compounditem.h>
+#include <mvvm/model/itemcatalogue.h>
+#include <mvvm/model/propertyitem.h>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/standarditems/vectoritem.h>
 
 using namespace ModelView;
 

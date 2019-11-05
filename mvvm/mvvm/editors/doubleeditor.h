@@ -10,7 +10,7 @@
 #ifndef MVVM_DOUBLEEDITOR_H
 #define MVVM_DOUBLEEDITOR_H
 
-#include "customeditor.h"
+#include <mvvm/editors/customeditor.h>
 
 class QDoubleSpinBox;
 

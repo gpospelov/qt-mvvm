@@ -7,13 +7,13 @@
 //
 // ************************************************************************** //
 
-#include "jsonvariant.h"
-#include "variant-constants.h"
-#include "comboproperty.h"
-#include "customvariants.h"
-#include "externalproperty.h"
-#include "jsonutils.h"
-#include "reallimits.h"
+#include <mvvm/serialization/jsonvariant.h>
+#include <mvvm/model/variant-constants.h>
+#include <mvvm/model/comboproperty.h>
+#include <mvvm/model/customvariants.h>
+#include <mvvm/model/externalproperty.h>
+#include <mvvm/serialization/jsonutils.h>
+#include <mvvm/utils/reallimits.h>
 #include <QColor>
 #include <QJsonArray>
 #include <QJsonObject>

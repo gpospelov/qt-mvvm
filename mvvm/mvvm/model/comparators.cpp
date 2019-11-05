@@ -1,8 +1,8 @@
-#include "comparators.h"
-#include "customvariants.h"
-#include "comboproperty.h"
-#include "externalproperty.h"
-#include "reallimits.h"
+#include <mvvm/model/comparators.h>
+#include <mvvm/model/customvariants.h>
+#include <mvvm/model/comboproperty.h>
+#include <mvvm/model/externalproperty.h>
+#include <mvvm/utils/reallimits.h>
 #include <QMetaType>
 
 using namespace ModelView;

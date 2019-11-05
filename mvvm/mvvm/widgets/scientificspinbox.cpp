@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "scientificspinbox.h"
+#include <mvvm/widgets/scientificspinbox.h>
 #include <QLineEdit>
 #include <cmath>
 

@@ -7,11 +7,11 @@
 //
 // ************************************************************************** //
 
-#include "graphplotcontroller.h"
-#include "data1ditem.h"
-#include "data1dplotcontroller.h"
-#include "graphitem.h"
-#include "itemmapper.h"
+#include <mvvm/plotting/graphplotcontroller.h>
+#include <mvvm/standarditems/data1ditem.h>
+#include <mvvm/plotting/data1dplotcontroller.h>
+#include <mvvm/standarditems/graphitem.h>
+#include <mvvm/signals/itemmapper.h>
 #include "qcustomplot.h"
 #include <QVector>
 #include <cassert>

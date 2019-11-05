@@ -1,10 +1,10 @@
 #include "google_test.h"
-#include "mvvm_types.h"
-#include "propertytableviewmodel.h"
-#include "sessionitem.h"
-#include "sessionmodel.h"
-#include "viewmodelutils.h"
-#include "vectoritem.h"
+#include <mvvm/model/mvvm_types.h>
+#include <mvvm/viewmodel/propertytableviewmodel.h>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/model/sessionmodel.h>
+#include <mvvm/viewmodel/viewmodelutils.h>
+#include <mvvm/standarditems/vectoritem.h>
 #include <QColor>
 #include <QModelIndexList>
 #include <QStandardItemModel>

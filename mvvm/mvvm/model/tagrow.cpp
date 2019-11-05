@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "tagrow.h"
+#include <mvvm/model/tagrow.h>
 
 //! Returns TagRow corresponding to the append to tag_name.
 //! If tag_name =="" the default name will be used in SessionItemTags context.

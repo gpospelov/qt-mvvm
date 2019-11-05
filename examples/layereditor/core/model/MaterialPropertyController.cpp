@@ -11,9 +11,9 @@
 #include "LayerItems.h"
 #include "MaterialModel.h"
 #include "SampleModel.h"
-#include "externalproperty.h"
-#include "modelmapper.h"
-#include "modelutils.h"
+#include <mvvm/model/externalproperty.h>
+#include <mvvm/signals/modelmapper.h>
+#include <mvvm/model/modelutils.h>
 
 using namespace ModelView;
 

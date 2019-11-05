@@ -10,7 +10,7 @@
 #ifndef MVVM_PROPERTYITEM_H
 #define MVVM_PROPERTYITEM_H
 
-#include "sessionitem.h"
+#include <mvvm/model/sessionitem.h>
 
 namespace ModelView {
 

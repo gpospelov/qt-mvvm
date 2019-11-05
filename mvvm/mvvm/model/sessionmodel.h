@@ -10,10 +10,10 @@
 #ifndef MVVM_SESSIONMODEL_H
 #define MVVM_SESSIONMODEL_H
 
-#include "function_types.h"
-#include "mvvm_export.h"
-#include "mvvm_types.h"
-#include "path.h"
+#include <mvvm/model/function_types.h>
+#include <mvvm/model/mvvm_export.h>
+#include <mvvm/model/mvvm_types.h>
+#include <mvvm/model/path.h>
 #include <QVariant>
 #include <memory>
 #include <string>

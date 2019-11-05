@@ -7,10 +7,10 @@
 //
 // ************************************************************************** //
 
-#include "colormapplotcontroller.h"
-#include "colormapitem.h"
-#include "data2ditem.h"
-#include "data2dplotcontroller.h"
+#include <mvvm/plotting/colormapplotcontroller.h>
+#include <mvvm/standarditems/colormapitem.h>
+#include <mvvm/standarditems/data2ditem.h>
+#include <mvvm/plotting/data2dplotcontroller.h>
 #include "qcustomplot.h"
 
 using namespace ModelView;

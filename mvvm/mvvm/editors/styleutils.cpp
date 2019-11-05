@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "styleutils.h"
+#include <mvvm/editors/styleutils.h>
 
 
 int ModelView::Style::DefaultPixmapSize()

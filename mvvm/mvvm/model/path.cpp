@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "path.h"
+#include <mvvm/model/path.h>
 #include <sstream>
 #include <algorithm>
 #include <iterator>

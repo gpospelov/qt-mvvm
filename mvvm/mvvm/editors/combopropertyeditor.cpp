@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#include "combopropertyeditor.h"
-#include "comboproperty.h"
+#include <mvvm/editors/combopropertyeditor.h>
+#include <mvvm/model/comboproperty.h>
 #include <QComboBox>
 #include <QVBoxLayout>
 

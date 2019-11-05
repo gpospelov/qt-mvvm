@@ -9,7 +9,7 @@
 
 #include "MaterialItems.h"
 #include "item_constants.h"
-#include "vectoritem.h"
+#include <mvvm/standarditems/vectoritem.h>
 #include <QColor>
 
 using namespace ModelView;

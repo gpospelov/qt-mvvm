@@ -10,7 +10,7 @@
 #ifndef MVVM_PROPERTIESROWSTRATEGY_H
 #define MVVM_PROPERTIESROWSTRATEGY_H
 
-#include "rowstrategyinterface.h"
+#include <mvvm/viewmodel/rowstrategyinterface.h>
 
 class QStandardItem;
 

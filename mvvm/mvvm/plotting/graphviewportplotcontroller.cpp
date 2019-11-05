@@ -7,14 +7,14 @@
 //
 // ************************************************************************** //
 
-#include "graphviewportplotcontroller.h"
-#include "axisitems.h"
-#include "viewportaxisplotcontroller.h"
-#include "graphitem.h"
-#include "graphplotcontroller.h"
-#include "graphviewportitem.h"
-#include <qcustomplot.h>
 #include <list>
+#include <mvvm/plotting/graphplotcontroller.h>
+#include <mvvm/plotting/graphviewportplotcontroller.h>
+#include <mvvm/plotting/viewportaxisplotcontroller.h>
+#include <mvvm/standarditems/axisitems.h>
+#include <mvvm/standarditems/graphitem.h>
+#include <mvvm/standarditems/graphviewportitem.h>
+#include <qcustomplot.h>
 
 using namespace ModelView;
 

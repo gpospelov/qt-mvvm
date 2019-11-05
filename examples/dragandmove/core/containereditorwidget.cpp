@@ -9,10 +9,10 @@
 
 #include "containereditorwidget.h"
 #include "dragviewmodel.h"
-#include "modelutils.h"
+#include <mvvm/model/modelutils.h>
 #include "samplemodel.h"
-#include "viewmodeldelegate.h"
-#include "viewmodelutils.h"
+#include <mvvm/viewmodel/viewmodeldelegate.h>
+#include <mvvm/viewmodel/viewmodelutils.h>
 #include <QBoxLayout>
 #include <QHeaderView>
 #include <QPushButton>

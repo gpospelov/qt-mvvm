@@ -1,7 +1,7 @@
 #include "google_test.h"
-#include "callbackcontainer.h"
-#include "mvvm_types.h"
-#include "sessionitem.h"
+#include <mvvm/signals/callbackcontainer.h>
+#include <mvvm/model/mvvm_types.h>
+#include <mvvm/model/sessionitem.h>
 #include "MockWidgets.h"
 #include <memory>
 

@@ -7,9 +7,9 @@
 //
 // ************************************************************************** //
 
-#include "propertyitem.h"
-#include "mvvm_types.h"
-#include "customvariants.h"
+#include <mvvm/model/propertyitem.h>
+#include <mvvm/model/mvvm_types.h>
+#include <mvvm/model/customvariants.h>
 
 using namespace ModelView;
 

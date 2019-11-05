@@ -10,7 +10,7 @@
 #ifndef MVVM_STRINGUTILS_H
 #define MVVM_STRINGUTILS_H
 
-#include "mvvm_export.h"
+#include <mvvm/model/mvvm_export.h>
 #include <string>
 
 namespace ModelView

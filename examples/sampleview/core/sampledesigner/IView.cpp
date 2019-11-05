@@ -9,7 +9,7 @@
 
 #include "IView.h"
 #include "LocatedItem.h"
-#include "itemmapper.h"
+#include <mvvm/signals/itemmapper.h>
 #include <QString>
 
 using namespace ModelView;

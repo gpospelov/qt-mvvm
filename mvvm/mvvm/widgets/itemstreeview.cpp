@@ -7,12 +7,12 @@
 //
 // ************************************************************************** //
 
-#include "itemstreeview.h"
-#include "sessionitem.h"
-#include "sessionmodel.h"
-#include "topitemsviewmodel.h"
-#include "abstractviewmodel.h"
-#include "viewmodeldelegate.h"
+#include <mvvm/widgets/itemstreeview.h>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/model/sessionmodel.h>
+#include <mvvm/viewmodel/topitemsviewmodel.h>
+#include <mvvm/viewmodel/abstractviewmodel.h>
+#include <mvvm/viewmodel/viewmodeldelegate.h>
 #include <QTreeView>
 #include <QVBoxLayout>
 

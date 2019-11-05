@@ -10,8 +10,8 @@
 #ifndef MVVM_ITEMFACTORY_H
 #define MVVM_ITEMFACTORY_H
 
-#include "mvvm_export.h"
-#include "itemfactoryinterface.h"
+#include <mvvm/model/mvvm_export.h>
+#include <mvvm/model/itemfactoryinterface.h>
 #include <memory>
 
 namespace ModelView

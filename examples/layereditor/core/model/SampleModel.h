@@ -10,7 +10,7 @@
 #ifndef SAMPLEMODEL_H
 #define SAMPLEMODEL_H
 
-#include "sessionmodel.h"
+#include <mvvm/model/sessionmodel.h>
 
 /*!
 @class SampleModel

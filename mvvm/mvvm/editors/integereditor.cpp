@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "integereditor.h"
+#include <mvvm/editors/integereditor.h>
 #include <QSpinBox>
 #include <QVBoxLayout>
 

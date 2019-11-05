@@ -15,7 +15,7 @@
 @brief Contains factory methods to create StatusStringReporter
 */
 
-#include "mvvm_export.h"
+#include <mvvm/model/mvvm_export.h>
 #include <functional>
 #include <memory>
 

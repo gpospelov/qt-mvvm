@@ -10,7 +10,7 @@
 #ifndef CUSTOMCELLDECORATION_H
 #define CUSTOMCELLDECORATION_H
 
-#include "defaultcelldecoration.h"
+#include <mvvm/viewmodel/defaultcelldecoration.h>
 
 class QModelIndex;
 

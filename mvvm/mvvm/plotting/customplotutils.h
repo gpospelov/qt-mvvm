@@ -10,7 +10,7 @@
 #ifndef MVVM_CUSTOMPLOTUTILS_H
 #define MVVM_CUSTOMPLOTUTILS_H
 
-#include "mvvm_export.h"
+#include <mvvm/model/mvvm_export.h>
 
 class QCPColorScale;
 class QCPAxis;

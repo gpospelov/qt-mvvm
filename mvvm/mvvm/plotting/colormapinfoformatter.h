@@ -10,7 +10,7 @@
 #ifndef MVVM_COLORMAPINFOFORMATTER_H
 #define MVVM_COLORMAPINFOFORMATTER_H
 
-#include "statusstringformatterinterface.h"
+#include <mvvm/plotting/statusstringformatterinterface.h>
 
 class QCustomPlot;
 

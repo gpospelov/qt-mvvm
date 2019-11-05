@@ -10,7 +10,7 @@
 #ifndef MVVM_MOUSEMOVEREPORTER_H
 #define MVVM_MOUSEMOVEREPORTER_H
 
-#include "mvvm_export.h"
+#include <mvvm/model/mvvm_export.h>
 #include <functional>
 #include <memory>
 

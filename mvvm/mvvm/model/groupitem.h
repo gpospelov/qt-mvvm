@@ -10,8 +10,8 @@
 #ifndef MVVM_GROUPITEM_H
 #define MVVM_GROUPITEM_H
 
-#include "sessionitem.h"
-#include "itemcatalogue.h"
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/model/itemcatalogue.h>
 #include <memory>
 
 namespace ModelView {

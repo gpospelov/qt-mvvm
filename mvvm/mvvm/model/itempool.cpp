@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#include "itempool.h"
-#include "uniqueidgenerator.h"
+#include <mvvm/model/itempool.h>
+#include <mvvm/model/uniqueidgenerator.h>
 #include <stdexcept>
 #include <cassert>
 

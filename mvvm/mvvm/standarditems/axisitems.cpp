@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#include "axisitems.h"
-#include "plottableitems.h"
+#include <mvvm/standarditems/axisitems.h>
+#include <mvvm/standarditems/plottableitems.h>
 
 namespace {
 const double default_axis_min = 0.0;

@@ -8,13 +8,13 @@
 // ************************************************************************** //
 
 #include "LayerTableWidget.h"
-#include "abstractviewmodel.h"
+#include <mvvm/viewmodel/abstractviewmodel.h>
 #include "CustomModelDelegate.h"
 #include "ApplicationModels.h"
-#include "sessionitem.h"
+#include <mvvm/model/sessionitem.h>
 #include "LayerTableViewModel.h"
 #include "SampleModel.h"
-#include "modelutils.h"
+#include <mvvm/model/modelutils.h>
 #include "LayerItems.h"
 #include <QTreeView>
 #include <QVBoxLayout>

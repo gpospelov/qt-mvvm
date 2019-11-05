@@ -10,7 +10,7 @@
 #ifndef MVVM_VECTORITEM_H
 #define MVVM_VECTORITEM_H
 
-#include "compounditem.h"
+#include <mvvm/model/compounditem.h>
 
 namespace ModelView {
 

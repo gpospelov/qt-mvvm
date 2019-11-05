@@ -7,17 +7,17 @@
 //
 // ************************************************************************** //
 
-#include "sessionitem.h"
-#include "customvariants.h"
-#include "itemmapper.h"
-#include "itempool.h"
-#include "itemutils.h"
-#include "modelmapper.h"
-#include "sessionitemdata.h"
-#include "sessionitemtags.h"
-#include "sessionmodel.h"
-#include "taginfo.h"
-#include "uniqueidgenerator.h"
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/model/customvariants.h>
+#include <mvvm/signals/itemmapper.h>
+#include <mvvm/model/itempool.h>
+#include <mvvm/model/itemutils.h>
+#include <mvvm/signals/modelmapper.h>
+#include <mvvm/model/sessionitemdata.h>
+#include <mvvm/model/sessionitemtags.h>
+#include <mvvm/model/sessionmodel.h>
+#include <mvvm/model/taginfo.h>
+#include <mvvm/model/uniqueidgenerator.h>
 #include <stdexcept>
 
 namespace

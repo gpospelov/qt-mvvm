@@ -7,10 +7,10 @@
 //
 // ************************************************************************** //
 
-#include "colormapitem.h"
-#include "data2ditem.h"
-#include "linkeditem.h"
-#include "plottableitems.h"
+#include <mvvm/standarditems/colormapitem.h>
+#include <mvvm/standarditems/data2ditem.h>
+#include <mvvm/standarditems/linkeditem.h>
+#include <mvvm/standarditems/plottableitems.h>
 #include <QColor>
 
 using namespace ModelView;

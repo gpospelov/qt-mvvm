@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#include "jsontaginfo.h"
-#include "taginfo.h"
+#include <mvvm/serialization/jsontaginfo.h>
+#include <mvvm/model/taginfo.h>
 #include <QJsonArray>
 #include <QString>
 #include <QStringList>

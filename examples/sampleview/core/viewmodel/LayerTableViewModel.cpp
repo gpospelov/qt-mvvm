@@ -11,8 +11,8 @@
 #include "LayerItems.h"
 #include "LayerTableViewModelController.h"
 #include "item_constants.h"
-#include "sessionitem.h"
-#include "sessionmodel.h"
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/model/sessionmodel.h>
 #include <QMimeData>
 
 using namespace ModelView;

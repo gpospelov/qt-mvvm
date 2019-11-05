@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "taginfo.h"
+#include <mvvm/model/taginfo.h>
 #include <algorithm>
 #include <sstream>
 #include <stdexcept>

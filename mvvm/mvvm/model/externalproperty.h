@@ -10,7 +10,7 @@
 #ifndef MVVM_EXTERNALPROPERTY_H
 #define MVVM_EXTERNALPROPERTY_H
 
-#include "mvvm_export.h"
+#include <mvvm/model/mvvm_export.h>
 #include <QColor>
 #include <QVariant>
 #include <string>

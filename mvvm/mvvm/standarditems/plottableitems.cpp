@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "plottableitems.h"
+#include <mvvm/standarditems/plottableitems.h>
 
 using namespace ModelView;
 

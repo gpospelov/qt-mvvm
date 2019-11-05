@@ -7,11 +7,11 @@
 //
 // ************************************************************************** //
 
-#include "viewlabelitem.h"
-#include "mvvm_types.h"
-#include "sessionitem.h"
-#include "viewitemtypes.h"
-#include "viewmodelutils.h"
+#include <mvvm/viewmodel/viewlabelitem.h>
+#include <mvvm/model/mvvm_types.h>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/viewmodel/viewitemtypes.h>
+#include <mvvm/viewmodel/viewmodelutils.h>
 
 using namespace ModelView;
 

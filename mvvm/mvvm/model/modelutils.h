@@ -10,10 +10,10 @@
 #ifndef MVVM_MODELUTILS_H
 #define MVVM_MODELUTILS_H
 
-#include "itemutils.h"
-#include "mvvm_export.h"
-#include "sessionitem.h"
-#include "sessionmodel.h"
+#include <mvvm/model/itemutils.h>
+#include <mvvm/model/mvvm_export.h>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/model/sessionmodel.h>
 #include <vector>
 
 namespace ModelView

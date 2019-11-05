@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "stringutils.h"
+#include <mvvm/utils/stringutils.h>
 #include <iomanip>
 #include <sstream>
 #include <cmath>

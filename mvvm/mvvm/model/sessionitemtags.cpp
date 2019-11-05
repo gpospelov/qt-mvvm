@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#include "sessionitemtags.h"
-#include "sessionitemcontainer.h"
+#include <mvvm/model/sessionitemtags.h>
+#include <mvvm/model/sessionitemcontainer.h>
 #include <stdexcept>
 
 using namespace ModelView;

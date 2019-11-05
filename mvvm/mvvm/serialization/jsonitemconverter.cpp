@@ -7,17 +7,17 @@
 //
 // ************************************************************************** //
 
-#include "jsonitemconverter.h"
-#include "customvariants.h"
-#include "itemfactoryinterface.h"
-#include "jsonitemdata.h"
-#include "jsontaginfo.h"
-#include "sessionitem.h"
-#include "sessionitemcontainer.h"
-#include "sessionitemdata.h"
-#include "sessionitemtags.h"
-#include "sessionmodel.h"
-#include "uniqueidgenerator.h"
+#include <mvvm/serialization/jsonitemconverter.h>
+#include <mvvm/model/customvariants.h>
+#include <mvvm/model/itemfactoryinterface.h>
+#include <mvvm/serialization/jsonitemdata.h>
+#include <mvvm/serialization/jsontaginfo.h>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/model/sessionitemcontainer.h>
+#include <mvvm/model/sessionitemdata.h>
+#include <mvvm/model/sessionitemtags.h>
+#include <mvvm/model/sessionmodel.h>
+#include <mvvm/model/uniqueidgenerator.h>
 #include <QJsonArray>
 #include <QJsonObject>
 

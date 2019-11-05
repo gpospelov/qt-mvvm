@@ -7,18 +7,18 @@
 //
 // ************************************************************************** //
 
-#include "editorbuilders.h"
-#include "booleditor.h"
-#include "doubleeditor.h"
-#include "coloreditor.h"
-#include "combopropertyeditor.h"
-#include "customvariants.h"
-#include "externalpropertyeditor.h"
-#include "reallimits.h"
-#include "scientificdoubleeditor.h"
-#include "scientificspinboxeditor.h"
-#include "sessionitem.h"
-#include "integereditor.h"
+#include <mvvm/editors/editorbuilders.h>
+#include <mvvm/editors/booleditor.h>
+#include <mvvm/editors/doubleeditor.h>
+#include <mvvm/editors/coloreditor.h>
+#include <mvvm/editors/combopropertyeditor.h>
+#include <mvvm/model/customvariants.h>
+#include <mvvm/editors/externalpropertyeditor.h>
+#include <mvvm/utils/reallimits.h>
+#include <mvvm/editors/scientificdoubleeditor.h>
+#include <mvvm/editors/scientificspinboxeditor.h>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/editors/integereditor.h>
 #include <QDoubleSpinBox>
 #include <cmath>
 

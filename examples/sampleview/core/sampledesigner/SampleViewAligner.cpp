@@ -17,7 +17,7 @@
 #include "IView.h"
 #include "SampleModel.h"
 #include "item_constants.h"
-#include "sessionitem.h"
+#include <mvvm/model/sessionitem.h>
 #include <QModelIndex>
 
 using namespace ModelView;

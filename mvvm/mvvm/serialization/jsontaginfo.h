@@ -10,7 +10,7 @@
 #ifndef MVVM_JSONTAGINFO_H
 #define MVVM_JSONTAGINFO_H
 
-#include "jsonconverterinterfaces.h"
+#include <mvvm/serialization/jsonconverterinterfaces.h>
 #include <QJsonObject>
 
 namespace ModelView {

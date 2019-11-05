@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "modelutils.h"
+#include <mvvm/model/modelutils.h>
 
 using namespace ModelView;
 

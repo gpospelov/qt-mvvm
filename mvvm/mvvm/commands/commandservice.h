@@ -10,9 +10,9 @@
 #ifndef MVVM_COMMANDSERVICE_H
 #define MVVM_COMMANDSERVICE_H
 
-#include "commandadapter.h"
-#include "function_types.h"
-#include "mvvm_export.h"
+#include <mvvm/commands/commandadapter.h>
+#include <mvvm/model/function_types.h>
+#include <mvvm/model/mvvm_export.h>
 #include <QUndoStack>
 #include <memory>
 

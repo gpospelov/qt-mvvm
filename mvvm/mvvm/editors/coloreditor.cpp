@@ -7,10 +7,10 @@
 //
 // ************************************************************************** //
 
-#include "coloreditor.h"
-#include "customeventfilters.h"
-#include "customvariants.h"
-#include "styleutils.h"
+#include <mvvm/editors/coloreditor.h>
+#include <mvvm/editors/customeventfilters.h>
+#include <mvvm/model/customvariants.h>
+#include <mvvm/editors/styleutils.h>
 #include <QColor>
 #include <QColorDialog>
 #include <QDebug>

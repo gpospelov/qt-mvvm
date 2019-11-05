@@ -10,7 +10,7 @@
 #ifndef MVVM_MOVEITEMCOMMAND_H
 #define MVVM_MOVEITEMCOMMAND_H
 
-#include "abstractitemcommand.h"
+#include <mvvm/commands/abstractitemcommand.h>
 #include <memory>
 
 namespace ModelView

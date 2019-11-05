@@ -7,15 +7,15 @@
 //
 // ************************************************************************** //
 
-#include "jsonmodel.h"
-#include "jsonitemdata.h"
-#include "sessionmodel.h"
-#include "sessionitem.h"
-#include "sessionitemdata.h"
-#include "itemutils.h"
-#include "customvariants.h"
-#include "mvvm_types.h"
-#include "jsonitemconverter.h"
+#include <mvvm/serialization/jsonmodel.h>
+#include <mvvm/serialization/jsonitemdata.h>
+#include <mvvm/model/sessionmodel.h>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/model/sessionitemdata.h>
+#include <mvvm/model/itemutils.h>
+#include <mvvm/model/customvariants.h>
+#include <mvvm/model/mvvm_types.h>
+#include <mvvm/serialization/jsonitemconverter.h>
 #include <QSet>
 #include <QJsonObject>
 #include <QJsonArray>

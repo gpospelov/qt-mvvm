@@ -9,9 +9,9 @@
 
 #include "samplemodel.h"
 #include "item_constants.h"
-#include "itemcatalogue.h"
+#include <mvvm/model/itemcatalogue.h>
 #include "items.h"
-#include "numericutils.h"
+#include <mvvm/utils/numericutils.h>
 #include <QColor>
 
 namespace

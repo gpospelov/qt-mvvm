@@ -1,5 +1,5 @@
 #include "google_test.h"
-#include "tagrow.h"
+#include <mvvm/model/tagrow.h>
 
 using namespace ModelView;
 

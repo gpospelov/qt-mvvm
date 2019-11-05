@@ -10,8 +10,8 @@
 #ifndef MVVM_ITEMCATALOGUE_H
 #define MVVM_ITEMCATALOGUE_H
 
-#include "mvvm_export.h"
-#include "function_types.h"
+#include <mvvm/model/mvvm_export.h>
+#include <mvvm/model/function_types.h>
 #include <string>
 #include <vector>
 

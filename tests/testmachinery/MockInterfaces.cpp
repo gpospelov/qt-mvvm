@@ -8,7 +8,7 @@
 // ************************************************************************** //
 
 #include "MockInterfaces.h"
-#include "sessionitem.h"
+#include <mvvm/model/sessionitem.h>
 
 ItemTestWidgetInterface::~ItemTestWidgetInterface() = default;
 

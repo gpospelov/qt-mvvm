@@ -10,7 +10,7 @@
 #ifndef MVVM_GRAPHVIEWPORTITEM_H
 #define MVVM_GRAPHVIEWPORTITEM_H
 
-#include "viewportitem.h"
+#include <mvvm/standarditems/viewportitem.h>
 
 namespace ModelView
 {

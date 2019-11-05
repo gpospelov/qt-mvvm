@@ -7,10 +7,10 @@
 //
 // ************************************************************************** //
 
-#include "compounditem.h"
-#include "itemutils.h"
-#include "sessionmodel.h"
-#include "taginfo.h"
+#include <mvvm/model/compounditem.h>
+#include <mvvm/model/itemutils.h>
+#include <mvvm/model/sessionmodel.h>
+#include <mvvm/model/taginfo.h>
 #include <stdexcept>
 
 using namespace ModelView;

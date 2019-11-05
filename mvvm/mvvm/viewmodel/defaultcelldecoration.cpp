@@ -7,10 +7,10 @@
 //
 // ************************************************************************** //
 
-#include "defaultcelldecoration.h"
-#include "comboproperty.h"
-#include "customvariants.h"
-#include "externalproperty.h"
+#include <mvvm/viewmodel/defaultcelldecoration.h>
+#include <mvvm/model/comboproperty.h>
+#include <mvvm/model/customvariants.h>
+#include <mvvm/model/externalproperty.h>
 #include <QModelIndex>
 
 using namespace ModelView;
