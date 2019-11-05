@@ -20,9 +20,7 @@ namespace ModelView
 {
 
 class SessionItem;
-class SessionItemTags;
 class SessionItemContainer;
-class SessionModel;
 class SessionItemTags;
 class ItemFactoryInterface;
 

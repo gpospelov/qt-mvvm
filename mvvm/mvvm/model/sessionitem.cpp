@@ -10,8 +10,6 @@
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/customvariants.h>
 #include <mvvm/signals/itemmapper.h>
-#include <mvvm/model/itempool.h>
-#include <mvvm/model/itemutils.h>
 #include <mvvm/signals/modelmapper.h>
 #include <mvvm/model/sessionitemdata.h>
 #include <mvvm/model/sessionitemtags.h>

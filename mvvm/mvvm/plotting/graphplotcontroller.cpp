@@ -13,8 +13,6 @@
 #include <mvvm/standarditems/graphitem.h>
 #include <mvvm/signals/itemmapper.h>
 #include "qcustomplot.h"
-#include <QVector>
-#include <cassert>
 
 using namespace ModelView;
 

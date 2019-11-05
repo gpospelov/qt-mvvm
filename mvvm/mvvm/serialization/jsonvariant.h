@@ -11,9 +11,11 @@
 #define MVVM_JSONVARIANT_H
 
 #include <mvvm/serialization/jsonvariantinterface.h>
-#include <QJsonObject>
-#include <QString>
-#include <QVariant>
+#include <map>
+#include <functional>
+
+class QJsonObject;
+class QJsonVariant;
 
 namespace ModelView
 {

@@ -11,7 +11,6 @@
 #include <mvvm/standarditems/data2ditem.h>
 #include <mvvm/standarditems/linkeditem.h>
 #include <mvvm/standarditems/plottableitems.h>
-#include <QColor>
 
 using namespace ModelView;
 

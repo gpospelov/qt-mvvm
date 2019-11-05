@@ -14,10 +14,8 @@
 #include <mvvm/model/externalproperty.h>
 #include <mvvm/serialization/jsonutils.h>
 #include <mvvm/utils/reallimits.h>
-#include <QColor>
 #include <QJsonArray>
 #include <QJsonObject>
-#include <sstream>
 #include <stdexcept>
 
 using namespace ModelView;

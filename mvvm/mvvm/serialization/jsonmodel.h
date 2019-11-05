@@ -12,15 +12,12 @@
 
 #include <mvvm/serialization/jsonconverterinterfaces.h>
 #include <QString>
-#include <memory>
 
 class QJsonObject;
 
 namespace ModelView {
 
 class SessionModel;
-class SessionItem;
-class JsonItemConverterInterface;
 
 class CORE_EXPORT JsonModel : public JsonModelInterface
 {

@@ -12,10 +12,8 @@
 
 #include <mvvm/model/mvvm_export.h>
 #include <memory>
-#include <vector>
 
 class QStandardItem;
-#include <QList>
 
 namespace ModelView
 {

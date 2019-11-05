@@ -12,7 +12,6 @@
 
 #include <mvvm/model/mvvm_export.h>
 #include <mvvm/model/datarole.h>
-#include <QVariant>
 #include <vector>
 
 namespace ModelView

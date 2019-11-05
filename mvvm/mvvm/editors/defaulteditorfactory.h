@@ -17,8 +17,6 @@
 namespace ModelView
 {
 
-class SessionItem;
-
 //! Default editor factory for custom variants.
 //! Used in context of trees and tables via ViewModelDelegate.
 

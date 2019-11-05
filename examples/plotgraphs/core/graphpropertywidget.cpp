@@ -10,6 +10,7 @@
 #include "graphpropertywidget.h"
 #include <mvvm/widgets/itemstreeview.h>
 #include <mvvm/viewmodel/standardviewmodels.h>
+#include <mvvm/viewmodel/abstractviewmodel.h>
 #include "graphmodel.h"
 #include <QBoxLayout>
 #include <QPushButton>

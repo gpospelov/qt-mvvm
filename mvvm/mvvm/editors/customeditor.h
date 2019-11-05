@@ -14,14 +14,8 @@
 #include <QWidget>
 #include <QVariant>
 
-class QStandardItem;
-
 namespace ModelView
 {
-
-class SessionModel;
-class SessionItem;
-class ViewItem;
 
 //! Base class for all custom variant editors.
 

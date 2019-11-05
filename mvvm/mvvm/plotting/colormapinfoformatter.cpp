@@ -10,7 +10,6 @@
 #include <mvvm/plotting/colormapinfoformatter.h>
 #include "qcustomplot.h"
 #include <mvvm/utils/stringutils.h>
-#include <iomanip>
 #include <sstream>
 
 using namespace ModelView;

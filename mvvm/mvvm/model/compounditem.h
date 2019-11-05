@@ -15,7 +15,6 @@
 #include <mvvm/utils/reallimits.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/taginfo.h>
-#include <type_traits>
 
 namespace ModelView
 {

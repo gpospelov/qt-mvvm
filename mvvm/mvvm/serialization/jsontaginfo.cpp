@@ -10,7 +10,7 @@
 #include <mvvm/serialization/jsontaginfo.h>
 #include <mvvm/model/taginfo.h>
 #include <QJsonArray>
-#include <QString>
+#include <QJsonObject>
 #include <QStringList>
 
 namespace

@@ -8,15 +8,9 @@
 // ************************************************************************** //
 
 #include <mvvm/serialization/jsonmodel.h>
-#include <mvvm/serialization/jsonitemdata.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/model/sessionitem.h>
-#include <mvvm/model/sessionitemdata.h>
-#include <mvvm/model/itemutils.h>
-#include <mvvm/model/customvariants.h>
-#include <mvvm/model/mvvm_types.h>
 #include <mvvm/serialization/jsonitemconverter.h>
-#include <QSet>
 #include <QJsonObject>
 #include <QJsonArray>
 #include <stdexcept>

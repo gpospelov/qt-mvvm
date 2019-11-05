@@ -11,8 +11,7 @@
 #define MVVM_ITEMCONTROLLER_H
 
 #include <mvvm/signals/itemmapper.h>
-#include <memory>
-
+#
 namespace ModelView
 {
 

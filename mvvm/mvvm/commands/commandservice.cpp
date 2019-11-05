@@ -15,7 +15,6 @@
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/commands/setvaluecommand.h>
-#include <QUndoStack>
 
 using namespace ModelView;
 

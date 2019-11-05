@@ -10,7 +10,6 @@
 #include <mvvm/viewmodel/viewmodelbuilder.h>
 #include <mvvm/viewmodel/abstractviewmodel.h>
 #include <mvvm/viewmodel/abstractviewmodelcontroller.h>
-#include <mvvm/model/sessionmodel.h>
 
 using namespace ModelView;
 

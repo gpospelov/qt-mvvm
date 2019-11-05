@@ -19,7 +19,6 @@
 #include <mvvm/editors/scientificspinboxeditor.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/editors/integereditor.h>
-#include <QDoubleSpinBox>
 #include <cmath>
 
 namespace

@@ -13,8 +13,6 @@
 #include <mvvm/model/mvvm_export.h>
 #include <string>
 
-class QJsonObject;
-
 namespace ModelView {
 
 class SessionModel;

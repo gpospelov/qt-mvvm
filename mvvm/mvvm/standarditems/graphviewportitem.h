@@ -16,7 +16,6 @@ namespace ModelView
 {
 
 class GraphItem;
-class ViewportAxisItem;
 
 /*!
 @class GraphViewportItem

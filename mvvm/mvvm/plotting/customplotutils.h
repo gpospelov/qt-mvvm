@@ -18,8 +18,6 @@ class QCPAxis;
 namespace ModelView
 {
 
-class SessionItem;
-
 namespace Utils
 {
 

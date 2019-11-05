@@ -11,12 +11,10 @@
 #define MVVM_VIEWPORTITEM_H
 
 #include <mvvm/model/compounditem.h>
-#include <vector>
 
 namespace ModelView
 {
 
-class GraphItem;
 class ViewportAxisItem;
 
 /*!

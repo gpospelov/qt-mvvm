@@ -11,7 +11,6 @@
 #define MVVM_COPYITEMCOMMAND_H
 
 #include <mvvm/commands/abstractitemcommand.h>
-#include <mvvm/model/mvvm_types.h>
 
 namespace ModelView
 {

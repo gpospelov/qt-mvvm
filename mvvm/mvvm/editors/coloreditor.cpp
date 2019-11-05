@@ -11,9 +11,7 @@
 #include <mvvm/editors/customeventfilters.h>
 #include <mvvm/model/customvariants.h>
 #include <mvvm/editors/styleutils.h>
-#include <QColor>
 #include <QColorDialog>
-#include <QDebug>
 #include <QHBoxLayout>
 #include <QLabel>
 

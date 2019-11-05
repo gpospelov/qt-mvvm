@@ -19,9 +19,6 @@
 namespace ModelView
 {
 
-class SessionItem;
-class SessionModel;
-
 namespace Utils
 {
 

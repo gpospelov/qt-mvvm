@@ -21,7 +21,6 @@ namespace ModelView
 {
 
 class SessionModel;
-class SessionItemPrivate;
 class TagInfo;
 class ItemMapper;
 

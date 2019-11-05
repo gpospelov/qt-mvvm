@@ -11,6 +11,7 @@
 #define MVVM_VIEWPORTAXISPLOTCONTROLLERS_H
 
 #include <mvvm/signals/itemcontroller.h>
+#include <memory>
 
 class QCPAxis;
 

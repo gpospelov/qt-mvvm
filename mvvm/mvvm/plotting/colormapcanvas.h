@@ -14,8 +14,6 @@
 #include <memory>
 #include <QWidget>
 
-class QCustomPlot;
-
 namespace ModelView
 {
 

@@ -8,7 +8,6 @@
 // ************************************************************************** //
 
 #include <mvvm/model/itemmanager.h>
-#include <mvvm/model/customvariants.h>
 #include <mvvm/model/itemfactory.h>
 #include <mvvm/model/itempool.h>
 #include <mvvm/model/sessionitem.h>

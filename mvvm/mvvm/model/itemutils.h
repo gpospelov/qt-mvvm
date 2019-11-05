@@ -14,8 +14,6 @@
 #include <functional>
 #include <vector>
 
-class QVariant;
-
 namespace ModelView {
 
 class SessionItem;

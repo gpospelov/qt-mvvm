@@ -21,10 +21,8 @@ class QItemSelectionModel;
 namespace ModelView
 {
 
-class SessionModel;
 class SessionItem;
 class AbstractViewModel;
-class TopItemsViewModel;
 class ViewModelDelegate;
 
 //! Tree view to show items of SessionModel via ViewModel mechanism.

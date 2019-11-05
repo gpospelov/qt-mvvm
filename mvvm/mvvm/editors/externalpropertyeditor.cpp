@@ -12,7 +12,6 @@
 #include <mvvm/model/customvariants.h>
 #include <mvvm/model/externalproperty.h>
 #include <mvvm/editors/styleutils.h>
-#include <QColor>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QToolButton>

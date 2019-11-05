@@ -13,7 +13,6 @@
 #include <mvvm/model/externalproperty.h>
 #include <mvvm/model/mvvm_types.h>
 #include <mvvm/model/sessionitem.h>
-#include <mvvm/model/sessionmodel.h>
 #include <mvvm/viewmodel/viewitem.h>
 #include <QStandardItemModel>
 #include <set>

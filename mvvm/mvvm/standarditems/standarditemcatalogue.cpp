@@ -8,7 +8,6 @@
 // ************************************************************************** //
 
 #include <mvvm/standarditems/standarditemcatalogue.h>
-#include <mvvm/model/mvvm_types.h>
 #include <mvvm/standarditems/vectoritem.h>
 #include <mvvm/model/propertyitem.h>
 #include <mvvm/model/compounditem.h>

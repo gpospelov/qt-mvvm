@@ -15,8 +15,6 @@
 namespace ModelView
 {
 
-class Data1DItem;
-
 /*!
 @class ContainerItem
 @brief Simple container to store any type of children.

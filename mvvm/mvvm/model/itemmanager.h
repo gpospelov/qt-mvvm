@@ -13,7 +13,6 @@
 #include <mvvm/model/mvvm_export.h>
 #include <mvvm/model/mvvm_types.h>
 #include <memory>
-#include <string>
 
 namespace ModelView
 {
@@ -21,7 +20,6 @@ namespace ModelView
 class SessionItem;
 class ItemPool;
 class ItemFactoryInterface;
-class ItemCatalogue;
 
 //! Manages item creation/registration for SessionModel.
 

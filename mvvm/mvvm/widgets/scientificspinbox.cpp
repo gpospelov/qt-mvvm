@@ -9,7 +9,7 @@
 
 #include <mvvm/widgets/scientificspinbox.h>
 #include <QLineEdit>
-#include <cmath>
+#include <limits>
 
 namespace
 {

@@ -12,9 +12,6 @@
 
 #include <mvvm/editors/customeditor.h>
 
-class QLineEdit;
-class QDoubleValidator;
-
 namespace ModelView
 {
 

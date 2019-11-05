@@ -9,7 +9,6 @@
 
 #include <mvvm/commands/moveitemcommand.h>
 #include <mvvm/model/sessionitem.h>
-#include <mvvm/model/sessionmodel.h>
 #include <mvvm/model/tagrow.h>
 #include <sstream>
 #include <stdexcept>

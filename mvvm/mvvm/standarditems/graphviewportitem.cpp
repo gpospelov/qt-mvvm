@@ -8,7 +8,6 @@
 // ************************************************************************** //
 
 #include <mvvm/standarditems/graphviewportitem.h>
-#include <mvvm/standarditems/axisitems.h>
 #include <mvvm/standarditems/graphitem.h>
 #include <algorithm>
 #include <vector>

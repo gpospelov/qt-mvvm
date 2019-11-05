@@ -11,6 +11,7 @@
 #define MVVM_COLORMAPPLOTCONTROLLER_H
 
 #include <mvvm/signals/itemcontroller.h>
+#include <memory>
 
 class QCustomPlot;
 class QCPColorScale;

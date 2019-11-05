@@ -13,7 +13,6 @@
 #include <mvvm/viewmodel/defaultcelldecoration.h>
 #include <mvvm/editors/defaulteditorfactory.h>
 #include <QApplication>
-#include <QDebug>
 
 using namespace ModelView;
 
@@ -49,8 +48,6 @@ void ViewModelDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opt
 QWidget* ViewModelDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& option,
                                          const QModelIndex& index) const
 {
-    qDebug() << "ViewModelDelegate::createEditor" << parent << option << index;
-
     if (auto editor = m_editor_factory->createEditor(index)) {
         editor->setParent(parent);
         connect(editor.get(), &CustomEditor::dataChanged, this,
@@ -66,8 +63,6 @@ void ViewModelDelegate::setEditorData(QWidget* editor, const QModelIndex& index)
     if (!index.isValid())
         return;
 
-    qDebug() << "ViewModelDelegate::setEditorData" << editor << index;
-
     if (auto customEditor = dynamic_cast<CustomEditor*>(editor))
         customEditor->setData(index.data());
     else
@@ -79,8 +74,6 @@ void ViewModelDelegate::setModelData(QWidget* editor, QAbstractItemModel* model,
 {
     if (!index.isValid())
         return;
-
-    qDebug() << "ViewModelDelegate::setModelData" << editor << model << index;
 
     if (auto customEditor = dynamic_cast<CustomEditor*>(editor)) {
         model->setData(index, customEditor->data());
@@ -112,7 +105,6 @@ void ViewModelDelegate::updateEditorGeometry(QWidget* editor, const QStyleOption
 
 void ViewModelDelegate::onCustomEditorDataChanged()
 {
-    qDebug() << "ViewModelDelegate::onCustomEditorDataChanged";
     CustomEditor* editor = qobject_cast<CustomEditor*>(sender());
     emit commitData(editor);
     if (!editor->is_persistent())

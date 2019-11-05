@@ -8,8 +8,6 @@
 // ************************************************************************** //
 
 #include <mvvm/viewmodel/abstractviewmodel.h>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/model/sessionmodel.h>
 #include <mvvm/viewmodel/viewitems.h>
 #include <mvvm/viewmodel/abstractviewmodelcontroller.h>
 #include <mvvm/viewmodel/viewmodelutils.h>

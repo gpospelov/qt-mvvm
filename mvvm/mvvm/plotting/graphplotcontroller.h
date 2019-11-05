@@ -11,6 +11,7 @@
 #define MVVM_GRAPHPLOTCONTROLLER_H
 
 #include <mvvm/signals/itemcontroller.h>
+#include <memory>
 
 class QCustomPlot;
 

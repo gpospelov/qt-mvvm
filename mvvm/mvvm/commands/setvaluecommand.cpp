@@ -9,8 +9,6 @@
 
 #include <mvvm/commands/setvaluecommand.h>
 #include <mvvm/model/sessionitem.h>
-#include <mvvm/model/sessionmodel.h>
-#include <QVariant>
 #include <sstream>
 
 namespace

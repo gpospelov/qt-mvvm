@@ -14,8 +14,6 @@
 #include <QStandardItemModel>
 #include <memory>
 
-class QStandardItem;
-
 namespace ModelView
 {
 

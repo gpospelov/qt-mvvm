@@ -8,7 +8,6 @@
 // ************************************************************************** //
 
 #include <mvvm/viewmodel/viewdataitem.h>
-#include <mvvm/model/customvariants.h>
 #include <mvvm/viewmodel/viewitemtypes.h>
 #include <mvvm/model/mvvm_types.h>
 #include <mvvm/model/sessionitem.h>

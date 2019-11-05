@@ -11,16 +11,15 @@
 #define MVVM_VIEWMODELUTILS_H
 
 #include <mvvm/model/mvvm_export.h>
-#include <QModelIndex>
-#include <QModelIndexList>
-#include <QVariant>
-#include <QVector>
 #include <functional>
 #include <vector>
+#include <QVector>
+#include <QModelIndex>
+#include <QModelIndexList>
 
 class QStandardItemModel;
 class QStandardItem;
-class QModelIndex;
+class QVariant;
 
 namespace ModelView
 {

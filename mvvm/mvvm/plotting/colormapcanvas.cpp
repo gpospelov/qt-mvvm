@@ -14,7 +14,6 @@
 #include <mvvm/plotting/statusstringreporter.h>
 #include <mvvm/plotting/statusstringreporterfactory.h>
 #include <mvvm/plotting/colormapviewportplotcontroller.h>
-#include <QBoxLayout>
 
 using namespace ModelView;
 

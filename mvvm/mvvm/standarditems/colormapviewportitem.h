@@ -15,7 +15,6 @@
 namespace ModelView
 {
 
-class GraphItem;
 class Data2DItem;
 
 /*!
