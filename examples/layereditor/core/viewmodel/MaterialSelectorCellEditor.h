@@ -16,12 +16,6 @@ class QComboBox;
 class QStandardItemModel;
 class MaterialModel;
 
-namespace ModelView
-{
-class SessionModel;
-class ExternalProperty;
-} // namespace ModelView
-
 /*!
 @class MaterialSelectorCellEditor
 @brief Custom editor for table cells to select material from the list of existing materials.

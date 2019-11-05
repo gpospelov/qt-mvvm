@@ -11,7 +11,6 @@
 #include "InterferenceFunctionItem.h"
 #include "LayerItems.h"
 #include "ParticleLayoutItem.h"
-#include "item_constants.h"
 #include <mvvm/model/itemcatalogue.h>
 
 using namespace ModelView;

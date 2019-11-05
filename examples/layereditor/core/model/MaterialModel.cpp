@@ -9,7 +9,6 @@
 
 #include "MaterialModel.h"
 #include "MaterialItems.h"
-#include "item_constants.h"
 #include <mvvm/model/itemcatalogue.h>
 #include <mvvm/model/externalproperty.h>
 #include <QColor>

@@ -8,7 +8,6 @@
 // ************************************************************************** //
 
 #include "samplemodel.h"
-#include "item_constants.h"
 #include <mvvm/model/itemcatalogue.h>
 #include "items.h"
 

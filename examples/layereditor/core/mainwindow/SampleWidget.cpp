@@ -16,7 +16,6 @@
 #include "LayerTableWidget.h"
 #include "SampleModel.h"
 #include "MaterialModel.h"
-#include <mvvm/model/sessionitem.h>
 #include <QVBoxLayout>
 #include <QTreeView>
 

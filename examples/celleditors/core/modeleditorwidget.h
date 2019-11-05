@@ -20,7 +20,6 @@ class QTableView;
 
 namespace ModelView
 {
-class ItemsTreeView;
 class AbstractViewModel;
 class ViewModelDelegate;
 } // namespace ModelView

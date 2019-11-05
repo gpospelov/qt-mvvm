@@ -9,7 +9,6 @@
 
 #include "SampleModel.h"
 #include "LayerItems.h"
-#include "item_constants.h"
 #include <mvvm/model/itemcatalogue.h>
 
 using namespace ModelView;

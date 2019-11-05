@@ -9,7 +9,6 @@
 
 #include "LayerTableViewModelController.h"
 #include "LayerItems.h"
-#include "item_constants.h"
 #include <mvvm/viewmodel/rowstrategyinterface.h>
 #include <mvvm/viewmodel/standardchildrenstrategies.h>
 #include <mvvm/viewmodel/viewitems.h>

@@ -10,11 +10,11 @@
 #ifndef APPLICATIONMODELS_H
 #define APPLICATIONMODELS_H
 
-#include <QString>
 #include <memory>
 
 class MaterialModel;
 class SampleModel;
+class QString;
 
 /*!
 @class ApplicationModels
