@@ -1,4 +1,4 @@
-target_sources(mvvm_model PRIVATE
+target_sources(mvvm_viewmodel PRIVATE
     booleditor.cpp
     booleditor.h
     coloreditor.cpp

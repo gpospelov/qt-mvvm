@@ -1,4 +1,4 @@
-target_sources(mvvm_model PRIVATE
+target_sources(mvvm_viewmodel PRIVATE
     itemstreeview.cpp
     itemstreeview.h
     propertyeditor.cpp

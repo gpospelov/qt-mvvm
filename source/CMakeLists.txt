@@ -1,1 +1,2 @@
 add_subdirectory(libmvvm_model)
+add_subdirectory(libmvvm_viewmodel)
