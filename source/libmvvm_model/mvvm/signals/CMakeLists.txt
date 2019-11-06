@@ -1,6 +1,4 @@
-set(library_name mvvm)
-
-target_sources(${library_name} PRIVATE
+target_sources(mvvm_model PRIVATE
     callback_types.h
     callbackcontainer.h
     itemcontroller.cpp

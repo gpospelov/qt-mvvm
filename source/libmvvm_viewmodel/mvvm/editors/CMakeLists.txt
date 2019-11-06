@@ -1,6 +1,4 @@
-set(library_name mvvm)
-
-target_sources(${library_name} PRIVATE
+target_sources(mvvm_viewmodel PRIVATE
     booleditor.cpp
     booleditor.h
     coloreditor.cpp

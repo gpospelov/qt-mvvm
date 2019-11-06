@@ -11,7 +11,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules)
 include(CTest)
 include(configuration)
 
-add_subdirectory(mvvm)
+add_subdirectory(source)
 add_subdirectory(examples)
 add_subdirectory(thirdparty/gtest)
 add_subdirectory(thirdparty/qcustomplot)

@@ -11,6 +11,5 @@ if(WIN32)
 endif()
 
 add_library(${library_name} STATIC ${source_files} ${include_files})
-target_link_libraries(${library_name} gtest gmock Qt5::Core Qt5::Test mvvm)
-target_include_directories(${library_name} PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR} > ${MVVM_PRIVATE_API})
+target_link_libraries(${library_name} gtest gmock Qt5::Core Qt5::Test mvvm_model)
+target_include_directories(${library_name} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>)

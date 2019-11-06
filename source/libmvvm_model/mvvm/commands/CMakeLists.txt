@@ -1,6 +1,4 @@
-set(library_name mvvm)
-
-target_sources(${library_name} PRIVATE
+target_sources(mvvm_model PRIVATE
     abstractitemcommand.cpp
     abstractitemcommand.h
     commandadapter.cpp

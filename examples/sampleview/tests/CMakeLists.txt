@@ -17,7 +17,7 @@ include_directories(${BUILD_INC_DIR} ${gtest_SOURCE_DIR}/include ${gtest_SOURCE_
 
 set(CMAKE_AUTOMOC ON)
 add_executable(${test} ${source_files} ${include_files})
-target_link_libraries(${test} gtest gmock Qt5::Core Qt5::Test mvvm sampleview_core testmachinery)
+target_link_libraries(${test} gtest gmock Qt5::Core Qt5::Test sampleview_core testmachinery)
 
 # to make clang code model in Qt creator happy
 target_compile_features(${test} PUBLIC cxx_std_17)
