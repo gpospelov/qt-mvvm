@@ -7,22 +7,21 @@
 //
 // ************************************************************************** //
 
-
 #include "google_test.h"
-#include <mvvm/widgets/scientificspinbox.h>
 #include <limits>
+#include <mvvm/widgets/scientificspinbox.h>
 
 using namespace ModelView;
 
-class TestScientificSpinBox : public ::testing::Test
+class ScientificSpinBoxTest : public ::testing::Test
 {
 public:
-    ~TestScientificSpinBox() override;
+    ~ScientificSpinBoxTest() override;
 };
 
-TestScientificSpinBox::~TestScientificSpinBox() = default;
+ScientificSpinBoxTest::~ScientificSpinBoxTest() = default;
 
-TEST_F(TestScientificSpinBox, testValueFromText)
+TEST_F(ScientificSpinBoxTest, testValueFromText)
 {
     QLocale locale(QLocale::C);
     locale.setNumberOptions(QLocale::RejectGroupSeparator);
@@ -68,7 +67,7 @@ TEST_F(TestScientificSpinBox, testValueFromText)
     EXPECT_EQ(0.012, to_value_2(QString("0.012")));
 }
 
-TEST_F(TestScientificSpinBox, testTextFromValue)
+TEST_F(ScientificSpinBoxTest, testTextFromValue)
 {
     int decimals = 3;
     auto to_string = [&decimals](double val) { return ScientificSpinBox::toString(val, decimals); };
@@ -116,7 +115,7 @@ TEST_F(TestScientificSpinBox, testTextFromValue)
     EXPECT_EQ(std::string("1.26556e+12"), to_string(1.265556e+12).toStdString());
 }
 
-TEST_F(TestScientificSpinBox, testRound)
+TEST_F(ScientificSpinBoxTest, testRound)
 {
     auto round_3 = [](double val) { return ScientificSpinBox::round(val, 3); };
     EXPECT_DOUBLE_EQ(1.232e-12, round_3(1.2323e-12));

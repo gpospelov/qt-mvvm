@@ -7,32 +7,31 @@
 //
 // ************************************************************************** //
 
-
 #include "google_test.h"
 #include "toy_includes.h"
-#include <mvvm/viewmodel/viewitems.h>
-#include <mvvm/viewmodel/viewdataitem.h>
-#include <mvvm/viewmodel/defaultviewmodel.h>
-#include <mvvm/standarditems/vectoritem.h>
-#include <mvvm/viewmodel/topitemsviewmodel.h>
-#include <QSignalSpy>
 #include <QDebug>
+#include <QSignalSpy>
+#include <mvvm/standarditems/vectoritem.h>
+#include <mvvm/viewmodel/defaultviewmodel.h>
+#include <mvvm/viewmodel/topitemsviewmodel.h>
+#include <mvvm/viewmodel/viewdataitem.h>
+#include <mvvm/viewmodel/viewitems.h>
 
 using namespace ModelView;
 
 //! Tests for toy Layer in the context of model and view model.
 
-class TestToyLayerItem : public ::testing::Test
+class ToyLayerItemTest : public ::testing::Test
 {
 public:
-    ~TestToyLayerItem();
+    ~ToyLayerItemTest();
 };
 
-TestToyLayerItem::~TestToyLayerItem() = default;
+ToyLayerItemTest::~ToyLayerItemTest() = default;
 
 //! Toy layer as prodused by toy SampleModel.
 
-TEST_F(TestToyLayerItem, inModel)
+TEST_F(ToyLayerItemTest, inModel)
 {
     ToyItems::SampleModel model;
     auto layer = model.insertItem<ToyItems::LayerItem>();
@@ -41,7 +40,7 @@ TEST_F(TestToyLayerItem, inModel)
     EXPECT_EQ(layer->displayName(), ToyItems::Constants::LayerType);
 }
 
-TEST_F(TestToyLayerItem, inViewModel)
+TEST_F(ToyLayerItemTest, inViewModel)
 {
     ToyItems::SampleModel model;
     auto layerItem = model.insertItem<ToyItems::LayerItem>();
@@ -65,13 +64,13 @@ TEST_F(TestToyLayerItem, inViewModel)
 
     // accessing to views representing label and value of thickness property
     QModelIndex thicknessLabelIndex = viewModel.index(0, 0, layerIndex);
-    auto thicknessLabelView
-        = dynamic_cast<ViewLabelItem*>(viewModel.itemFromIndex(thicknessLabelIndex));
+    auto thicknessLabelView =
+        dynamic_cast<ViewLabelItem*>(viewModel.itemFromIndex(thicknessLabelIndex));
     EXPECT_TRUE(thicknessLabelView != nullptr);
 
     QModelIndex thicknessValueIndex = viewModel.index(0, 1, layerIndex);
-    auto thicknessValueView
-        = dynamic_cast<ViewDataItem*>(viewModel.itemFromIndex(thicknessValueIndex));
+    auto thicknessValueView =
+        dynamic_cast<ViewDataItem*>(viewModel.itemFromIndex(thicknessValueIndex));
     EXPECT_TRUE(thicknessValueView != nullptr);
 
     // internally, views for label and data should point to single SessionItem corresponding to
@@ -83,7 +82,7 @@ TEST_F(TestToyLayerItem, inViewModel)
 //! Constructing ViewModel from a Layer with one "thickness" property.
 //! Change thickness property in SessionItem, control dataChanged signals from ViewModel.
 
-TEST_F(TestToyLayerItem, layerItemDataChanged)
+TEST_F(ToyLayerItemTest, layerItemDataChanged)
 {
     ToyItems::SampleModel model;
     auto layerItem = model.insertItem<ToyItems::LayerItem>();
@@ -110,7 +109,7 @@ TEST_F(TestToyLayerItem, layerItemDataChanged)
 
 //! Validates display name
 
-TEST_F(TestToyLayerItem, displayNameInMultiLayer)
+TEST_F(ToyLayerItemTest, displayNameInMultiLayer)
 {
     ToyItems::SampleModel model;
     auto multiLayer = model.insertItem<ToyItems::MultiLayerItem>();
@@ -125,7 +124,7 @@ TEST_F(TestToyLayerItem, displayNameInMultiLayer)
 
 //! LayerItem as rootItem.
 
-TEST_F(TestToyLayerItem, setRootItemContext)
+TEST_F(ToyLayerItemTest, setRootItemContext)
 {
     ToyItems::SampleModel model;
     auto layer = model.insertItem<ToyItems::LayerItem>();
@@ -137,12 +136,13 @@ TEST_F(TestToyLayerItem, setRootItemContext)
 
     // index of item representing thickness
     QModelIndex thicknessIndex = viewModel.index(0, 0, QModelIndex());
-    EXPECT_EQ(viewModel.sessionItemFromIndex(thicknessIndex), layer->getItem(ToyItems::LayerItem::P_THICKNESS));
+    EXPECT_EQ(viewModel.sessionItemFromIndex(thicknessIndex),
+              layer->getItem(ToyItems::LayerItem::P_THICKNESS));
 }
 
 //! LayerItem as rootItem.
 
-TEST_F(TestToyLayerItem, inTopItemsViewModelContext)
+TEST_F(ToyLayerItemTest, inTopItemsViewModelContext)
 {
     ToyItems::SampleModel model;
     auto layer = model.insertItem<ToyItems::LayerItem>();

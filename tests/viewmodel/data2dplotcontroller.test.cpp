@@ -7,31 +7,30 @@
 //
 // ************************************************************************** //
 
-
-#include <mvvm/standarditems/axisitems.h>
 #include "customplot_test_utils.h"
-#include <mvvm/standarditems/data2ditem.h>
-#include <mvvm/plotting/data2dplotcontroller.h>
 #include "google_test.h"
 #include "qcustomplot.h"
-#include <mvvm/model/sessionmodel.h>
 #include <QSignalSpy>
+#include <mvvm/model/sessionmodel.h>
+#include <mvvm/plotting/data2dplotcontroller.h>
+#include <mvvm/standarditems/axisitems.h>
+#include <mvvm/standarditems/data2ditem.h>
 
 using namespace ModelView;
 
 //! Testing Data1DPlotController.
 
-class TestData2DPlotController : public ::testing::Test
+class Data2DPlotControllerTest : public ::testing::Test
 {
 public:
-    ~TestData2DPlotController();
+    ~Data2DPlotControllerTest();
 };
 
-TestData2DPlotController::~TestData2DPlotController() = default;
+Data2DPlotControllerTest::~Data2DPlotControllerTest() = default;
 
 //! Initial state.
 
-TEST_F(TestData2DPlotController, initialState)
+TEST_F(Data2DPlotControllerTest, initialState)
 {
     // Constructor accept valid QCPColorMap
     EXPECT_THROW(Data2DPlotController(nullptr), std::runtime_error);
@@ -49,7 +48,7 @@ TEST_F(TestData2DPlotController, initialState)
 
 //! Testing controller when Data2DItem is not initialized properly.
 
-TEST_F(TestData2DPlotController, dataItemInInitialState)
+TEST_F(Data2DPlotControllerTest, dataItemInInitialState)
 {
     // creating custom plot and empty graph on it
     auto custom_plot = std::make_unique<QCustomPlot>();
@@ -70,7 +69,7 @@ TEST_F(TestData2DPlotController, dataItemInInitialState)
 
 //! Testing controller when Data2DItem got it's axes after controller was set.
 
-TEST_F(TestData2DPlotController, setAxesAfter)
+TEST_F(Data2DPlotControllerTest, setAxesAfter)
 {
     // creating custom plot and empty graph on it
     auto custom_plot = std::make_unique<QCustomPlot>();
@@ -98,7 +97,7 @@ TEST_F(TestData2DPlotController, setAxesAfter)
 
 //! Testing data points.
 
-TEST_F(TestData2DPlotController, dataPoints)
+TEST_F(Data2DPlotControllerTest, dataPoints)
 {
     // creating custom plot and empty graph on it
     auto custom_plot = std::make_unique<QCustomPlot>();
@@ -134,7 +133,7 @@ TEST_F(TestData2DPlotController, dataPoints)
 
 //! Testing two colormap scenario.
 
-TEST_F(TestData2DPlotController, twoDataItems)
+TEST_F(Data2DPlotControllerTest, twoDataItems)
 {
     // creating custom plot and empty graph on it
     auto custom_plot = std::make_unique<QCustomPlot>();
@@ -175,7 +174,7 @@ TEST_F(TestData2DPlotController, twoDataItems)
 
 //! Testing data range.
 
-TEST_F(TestData2DPlotController, dataRange)
+TEST_F(Data2DPlotControllerTest, dataRange)
 {
     // creating custom plot and empty graph on it
     auto custom_plot = std::make_unique<QCustomPlot>();

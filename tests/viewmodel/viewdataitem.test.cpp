@@ -7,24 +7,23 @@
 //
 // ************************************************************************** //
 
-
 #include "google_test.h"
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/viewmodel/viewdataitem.h>
 #include <QDebug>
 #include <memory>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/viewmodel/viewdataitem.h>
 
 using namespace ModelView;
 
-class TestViewDataItem : public ::testing::Test
+class ViewDataItemTest : public ::testing::Test
 {
 public:
-    ~TestViewDataItem();
+    ~ViewDataItemTest();
 };
 
-TestViewDataItem::~TestViewDataItem() = default;
+ViewDataItemTest::~ViewDataItemTest() = default;
 
-TEST_F(TestViewDataItem, initialState)
+TEST_F(ViewDataItemTest, initialState)
 {
     std::unique_ptr<SessionItem> item(new SessionItem);
 
@@ -36,7 +35,7 @@ TEST_F(TestViewDataItem, initialState)
 //! ViewDataItem::data method for double values.
 //! Checks that the data method is correctly forwarded to underlying SessionItem.
 
-TEST_F(TestViewDataItem, dataForDouble)
+TEST_F(ViewDataItemTest, dataForDouble)
 {
     // create SessionItem with data on board
     auto item = std::make_unique<SessionItem>();
@@ -52,7 +51,7 @@ TEST_F(TestViewDataItem, dataForDouble)
 //! ViewDataItem::setData for double values.
 //! Checks that the setData method is correctly forwarded to underlying SessionItem.
 
-TEST_F(TestViewDataItem, setDataForDouble)
+TEST_F(ViewDataItemTest, setDataForDouble)
 {
     // create SessionItem with data on board
     auto item = std::make_unique<SessionItem>();
@@ -77,7 +76,7 @@ TEST_F(TestViewDataItem, setDataForDouble)
 //! ViewDataItem::data method for QColor.
 //! Checks that the data method is correctly forwarded to underlying SessionItem.
 
-TEST_F(TestViewDataItem, dataForColor)
+TEST_F(ViewDataItemTest, dataForColor)
 {
     // create SessionItem with data on board
     auto item = std::make_unique<SessionItem>();
@@ -93,7 +92,7 @@ TEST_F(TestViewDataItem, dataForColor)
 //! ViewDataItem::setData for QColor.
 //! Checks that the setData method is correctly forwarded to underlying SessionItem.
 
-TEST_F(TestViewDataItem, setDataForColor)
+TEST_F(ViewDataItemTest, setDataForColor)
 {
     // create SessionItem with data on board
     auto item = std::make_unique<SessionItem>();
@@ -104,9 +103,9 @@ TEST_F(TestViewDataItem, setDataForColor)
     ViewDataItem viewItem(item.get());
     QVariant new_data = QVariant::fromValue(QColor(Qt::red));
     viewItem.setData(new_data, Qt::EditRole);
-    EXPECT_EQ(viewItem.data(Qt::DisplayRole), new_data); // new data
-    EXPECT_EQ(viewItem.data(Qt::EditRole), new_data);    // new data
-    EXPECT_EQ(viewItem.data(Qt::DecorationRole), new_data);    // new data
+    EXPECT_EQ(viewItem.data(Qt::DisplayRole), new_data);    // new data
+    EXPECT_EQ(viewItem.data(Qt::EditRole), new_data);       // new data
+    EXPECT_EQ(viewItem.data(Qt::DecorationRole), new_data); // new data
 
     // SessionItem itself should have new data
     EXPECT_EQ(item->data(), new_data); // new data
@@ -115,4 +114,3 @@ TEST_F(TestViewDataItem, setDataForColor)
     QVariant not_allowed_value("Layer");
     EXPECT_THROW(viewItem.setData(not_allowed_value, Qt::EditRole), std::runtime_error);
 }
-

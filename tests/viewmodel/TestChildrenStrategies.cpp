@@ -7,21 +7,20 @@
 //
 // ************************************************************************** //
 
-
 #include "google_test.h"
-#include <mvvm/viewmodel/standardchildrenstrategies.h>
 #include <mvvm/model/compounditem.h>
 #include <mvvm/model/propertyitem.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/taginfo.h>
 #include <mvvm/standarditems/vectoritem.h>
+#include <mvvm/viewmodel/standardchildrenstrategies.h>
 
 using namespace ModelView;
 
-class TestChildrenStrategies : public ::testing::Test
+class ChildrenStrategiesTest : public ::testing::Test
 {
 public:
-    ~TestChildrenStrategies();
+    ~ChildrenStrategiesTest();
 
     //! Helper class with two properties and one top level item on board.
     class TestItem : public CompoundItem
@@ -38,12 +37,12 @@ public:
     };
 };
 
-TestChildrenStrategies::~TestChildrenStrategies() = default;
-TestChildrenStrategies::TestItem::~TestItem() = default;
+ChildrenStrategiesTest::~ChildrenStrategiesTest() = default;
+ChildrenStrategiesTest::TestItem::~TestItem() = default;
 
 //! Testing AllChildrenStrategy.
 
-TEST_F(TestChildrenStrategies, AllChildrenStrategy)
+TEST_F(ChildrenStrategiesTest, AllChildrenStrategy)
 {
     AllChildrenStrategy strategy;
 
@@ -75,7 +74,7 @@ TEST_F(TestChildrenStrategies, AllChildrenStrategy)
 
 //! Testing TopItemsStrategy.
 
-TEST_F(TestChildrenStrategies, TopItemsStrategy)
+TEST_F(ChildrenStrategiesTest, TopItemsStrategy)
 {
     TopItemsStrategy strategy;
 
@@ -107,7 +106,7 @@ TEST_F(TestChildrenStrategies, TopItemsStrategy)
 
 //! Testing PropertyItemsStrategy.
 
-TEST_F(TestChildrenStrategies, PropertyItemsStrategy)
+TEST_F(ChildrenStrategiesTest, PropertyItemsStrategy)
 {
     PropertyItemsStrategy strategy;
 

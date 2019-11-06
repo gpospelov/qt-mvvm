@@ -7,22 +7,21 @@
 //
 // ************************************************************************** //
 
-
-#include <mvvm/standarditems/axisitems.h>
 #include "google_test.h"
 #include "qcustomplot.h"
+#include <QSignalSpy>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/plotting/viewportaxisplotcontroller.h>
-#include <QSignalSpy>
+#include <mvvm/standarditems/axisitems.h>
 
 using namespace ModelView;
 
 //! Testing AxisPlotControllers.
 
-class TestViewportAxisPlotController : public ::testing::Test
+class ViewportAxisPlotControllerTest : public ::testing::Test
 {
 public:
-    ~TestViewportAxisPlotController();
+    ~ViewportAxisPlotControllerTest();
 
     std::unique_ptr<QSignalSpy> createSpy(QCPAxis* axis)
     {
@@ -31,11 +30,11 @@ public:
     }
 };
 
-TestViewportAxisPlotController::~TestViewportAxisPlotController() = default;
+ViewportAxisPlotControllerTest::~ViewportAxisPlotControllerTest() = default;
 
 //! Initial state.
 
-TEST_F(TestViewportAxisPlotController, initialState)
+TEST_F(ViewportAxisPlotControllerTest, initialState)
 {
     auto custom_plot = std::make_unique<QCustomPlot>();
 
@@ -66,7 +65,7 @@ TEST_F(TestViewportAxisPlotController, initialState)
 //! Controller subscribed to ViewportAxisItem.
 //! Checking that QCPAxis get same parameters as in AxisItem.
 
-TEST_F(TestViewportAxisPlotController, setViewportAxisItem)
+TEST_F(ViewportAxisPlotControllerTest, setViewportAxisItem)
 {
     auto custom_plot = std::make_unique<QCustomPlot>();
     const double expected_min = 1.0;
@@ -101,7 +100,7 @@ TEST_F(TestViewportAxisPlotController, setViewportAxisItem)
 //! Controller subscribed to ViewportAxisItem.
 //! Change QCPAxis and check that ViewportAxisItem got new values.
 
-TEST_F(TestViewportAxisPlotController, changeQCPAxis)
+TEST_F(ViewportAxisPlotControllerTest, changeQCPAxis)
 {
     auto custom_plot = std::make_unique<QCustomPlot>();
 
@@ -137,7 +136,7 @@ TEST_F(TestViewportAxisPlotController, changeQCPAxis)
 //! Controller subscribed to ViewportAxisItem.
 //! Change ViewportAxisItem and check that QCPAxis got new values.
 
-TEST_F(TestViewportAxisPlotController, changeViewportAxisItem)
+TEST_F(ViewportAxisPlotControllerTest, changeViewportAxisItem)
 {
     auto custom_plot = std::make_unique<QCustomPlot>();
 
@@ -169,7 +168,7 @@ TEST_F(TestViewportAxisPlotController, changeViewportAxisItem)
 //! Controller subscribed to ViewportAxisItem.
 //! Change ViewportAxisItem logz and check that QCPAxis got new values.
 
-TEST_F(TestViewportAxisPlotController, changeViewportLogz)
+TEST_F(ViewportAxisPlotControllerTest, changeViewportLogz)
 {
     auto custom_plot = std::make_unique<QCustomPlot>();
 
@@ -197,7 +196,7 @@ TEST_F(TestViewportAxisPlotController, changeViewportLogz)
 //! Change ViewportAxisItem and check that QCPAxis got new values.
 //! Same text as before, only QCPAxis y-axis checked.
 
-TEST_F(TestViewportAxisPlotController, changeViewportAxisItemYCase)
+TEST_F(ViewportAxisPlotControllerTest, changeViewportAxisItemYCase)
 {
     auto custom_plot = std::make_unique<QCustomPlot>();
 

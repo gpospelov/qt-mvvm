@@ -7,14 +7,13 @@
 //
 // ************************************************************************** //
 
-
 #include "MockWidgets.h"
+#include "google_test.h"
+#include <mvvm/model/sessionmodel.h>
 #include <mvvm/standarditems/axisitems.h>
 #include <mvvm/standarditems/data1ditem.h>
-#include "google_test.h"
 #include <mvvm/standarditems/graphitem.h>
 #include <mvvm/standarditems/graphviewportitem.h>
-#include <mvvm/model/sessionmodel.h>
 
 using namespace ModelView;
 using ::testing::_;

@@ -7,17 +7,16 @@
 //
 // ************************************************************************** //
 
-
 #include "google_test.h"
-#include <mvvm/model/mvvm_types.h>
-#include <mvvm/viewmodel/propertytableviewmodel.h>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/viewmodel/viewmodelutils.h>
-#include <mvvm/standarditems/vectoritem.h>
 #include <QColor>
 #include <QModelIndexList>
 #include <QStandardItemModel>
+#include <mvvm/model/mvvm_types.h>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/model/sessionmodel.h>
+#include <mvvm/standarditems/vectoritem.h>
+#include <mvvm/viewmodel/propertytableviewmodel.h>
+#include <mvvm/viewmodel/viewmodelutils.h>
 
 namespace
 {
@@ -34,15 +33,15 @@ QList<QStandardItem*> get_items(std::vector<int> data)
 
 using namespace ModelView;
 
-class TestViewModelUtils : public ::testing::Test
+class ViewModelUtilsTest : public ::testing::Test
 {
 public:
-    ~TestViewModelUtils();
+    ~ViewModelUtilsTest();
 };
 
-TestViewModelUtils::~TestViewModelUtils() = default;
+ViewModelUtilsTest::~ViewModelUtilsTest() = default;
 
-TEST_F(TestViewModelUtils, iterate)
+TEST_F(ViewModelUtilsTest, iterate)
 {
     QStandardItemModel model;
 
@@ -68,7 +67,7 @@ TEST_F(TestViewModelUtils, iterate)
 
 //! Translation of item role to Qt roles.
 
-TEST_F(TestViewModelUtils, itemRoleToQtRole)
+TEST_F(ViewModelUtilsTest, itemRoleToQtRole)
 {
     // DATA role of SessionItem should be translated to two Qt roles (edit and siplay)
     auto roles = Utils::item_role_to_qt(ItemDataRole::DATA);
@@ -87,7 +86,7 @@ TEST_F(TestViewModelUtils, itemRoleToQtRole)
 
 //! Testing color role of item.
 
-TEST_F(TestViewModelUtils, itemTextColorRole)
+TEST_F(ViewModelUtilsTest, itemTextColorRole)
 {
     SessionItem item("Something");
 
@@ -102,7 +101,7 @@ TEST_F(TestViewModelUtils, itemTextColorRole)
 
 //! Testing check state role of item.
 
-TEST_F(TestViewModelUtils, itemCheckStateRole)
+TEST_F(ViewModelUtilsTest, itemCheckStateRole)
 {
     SessionItem item("Something");
 
@@ -119,7 +118,7 @@ TEST_F(TestViewModelUtils, itemCheckStateRole)
 
 //! Testing decoration role of the item.
 
-TEST_F(TestViewModelUtils, itemDecorationRole)
+TEST_F(ViewModelUtilsTest, itemDecorationRole)
 {
     SessionItem item("Something");
 
@@ -136,7 +135,7 @@ TEST_F(TestViewModelUtils, itemDecorationRole)
 //! ViewItem with its three property x, y, z forms one row. All corresponding
 //! indices of (x,y,z) should give us pointer to VectorItem.
 
-TEST_F(TestViewModelUtils, parentItemsFromIndex)
+TEST_F(ViewModelUtilsTest, parentItemsFromIndex)
 {
     // creating VectorItem and viewModel to see it as a table
     SessionModel model;

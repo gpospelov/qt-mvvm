@@ -10,7 +10,6 @@
 #include "customplot_test_utils.h"
 #include <qcustomplot.h>
 
-
 std::vector<double> TestUtils::binCenters(const QCPGraph* graph)
 {
     return get_values(graph, [](auto x) { return x.key; });

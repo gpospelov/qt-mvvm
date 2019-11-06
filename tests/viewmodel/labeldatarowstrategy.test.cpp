@@ -7,31 +7,32 @@
 //
 // ************************************************************************** //
 
-
 #include "google_test.h"
-#include <mvvm/viewmodel/labeldatarowstrategy.h>
+#include "test_utils.h"
 #include <mvvm/model/sessionitem.h>
-#include <mvvm/viewmodel/viewlabelitem.h>
+#include <mvvm/viewmodel/labeldatarowstrategy.h>
 #include <mvvm/viewmodel/viewdataitem.h>
 #include <mvvm/viewmodel/viewemptyitem.h>
-#include "test_utils.h"
+#include <mvvm/viewmodel/viewlabelitem.h>
 
-namespace  {
+namespace
+{
 const int expected_column_count = 2;
-const QStringList expected_labels = QStringList() << "Name" << "Value";
-}
+const QStringList expected_labels = QStringList() << "Name"
+                                                  << "Value";
+} // namespace
 
 using namespace ModelView;
 
-class TestLabelDataRowStrategy : public ::testing::Test
+class LabelDataRowStrategyTest : public ::testing::Test
 {
 public:
-    ~TestLabelDataRowStrategy();
+    ~LabelDataRowStrategyTest();
 };
 
-TestLabelDataRowStrategy::~TestLabelDataRowStrategy() = default;
+LabelDataRowStrategyTest::~LabelDataRowStrategyTest() = default;
 
-TEST_F(TestLabelDataRowStrategy, initialState)
+TEST_F(LabelDataRowStrategyTest, initialState)
 {
     LabelDataRowStrategy constructor;
     EXPECT_EQ(constructor.constructRow(nullptr).size(), 0);
@@ -40,7 +41,7 @@ TEST_F(TestLabelDataRowStrategy, initialState)
 
 //! Checks row construction for standard top level item, like Level, MultiLayer etc.
 
-TEST_F(TestLabelDataRowStrategy, topLevelItem)
+TEST_F(LabelDataRowStrategyTest, topLevelItem)
 {
     SessionItem item("model_type");
 
@@ -62,7 +63,7 @@ TEST_F(TestLabelDataRowStrategy, topLevelItem)
 
 //! Checks row construction for property item.
 
-TEST_F(TestLabelDataRowStrategy, propertyItem)
+TEST_F(LabelDataRowStrategyTest, propertyItem)
 {
     SessionItem item("model_type");
     item.setData(42.0);

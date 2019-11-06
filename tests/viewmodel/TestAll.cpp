@@ -7,13 +7,13 @@
 //
 // ************************************************************************** //
 
-
 #include "google_test.h"
 #include "qcustomplot.h"
-#include <QStandardItem>
 #include <QApplication>
+#include <QStandardItem>
 
-int main(int argc, char** argv) {
+int main(int argc, char** argv)
+{
     // FIXME find the way not to run app for all tests which doesn't use QWidget.
     // The problem here is because of ctest autodiscovery which runs given main at every test.
     QApplication app(argc, argv);

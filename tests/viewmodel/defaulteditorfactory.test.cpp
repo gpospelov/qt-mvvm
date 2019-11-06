@@ -7,32 +7,30 @@
 //
 // ************************************************************************** //
 
-
-#include <mvvm/viewmodel/defaultviewmodel.h>
 #include "google_test.h"
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/viewmodel/defaultviewmodel.h>
-#include <mvvm/editors/defaulteditorfactory.h>
-#include <mvvm/editors/scientificspinboxeditor.h>
-#include <mvvm/editors/scientificdoubleeditor.h>
-#include <mvvm/editors/combopropertyeditor.h>
 #include <mvvm/editors/booleditor.h>
 #include <mvvm/editors/coloreditor.h>
+#include <mvvm/editors/combopropertyeditor.h>
+#include <mvvm/editors/defaulteditorfactory.h>
 #include <mvvm/editors/externalpropertyeditor.h>
-#include <mvvm/model/comboproperty.h>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/model/externalproperty.h>
-#include <mvvm/utils/reallimits.h>
-#include <mvvm/model/propertyitem.h>
 #include <mvvm/editors/integereditor.h>
+#include <mvvm/editors/scientificdoubleeditor.h>
+#include <mvvm/editors/scientificspinboxeditor.h>
+#include <mvvm/model/comboproperty.h>
+#include <mvvm/model/externalproperty.h>
+#include <mvvm/model/propertyitem.h>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/model/sessionmodel.h>
+#include <mvvm/utils/reallimits.h>
+#include <mvvm/viewmodel/defaultviewmodel.h>
 
 using namespace ModelView;
 
-class TestDefaultEditorFactory : public ::testing::Test
+class DefaultEditorFactoryTest : public ::testing::Test
 {
 public:
-    TestDefaultEditorFactory() : m_factory(std::make_unique<DefaultEditorFactory>()) {}
-    ~TestDefaultEditorFactory();
+    DefaultEditorFactoryTest() : m_factory(std::make_unique<DefaultEditorFactory>()) {}
+    ~DefaultEditorFactoryTest();
 
     //! Helper function to build temporary model and create editor for cell.
     std::unique_ptr<CustomEditor> createEditor(const QVariant& variant)
@@ -51,11 +49,11 @@ protected:
     std::unique_ptr<DefaultEditorFactory> m_factory;
 };
 
-TestDefaultEditorFactory::~TestDefaultEditorFactory() = default;
+DefaultEditorFactoryTest::~DefaultEditorFactoryTest() = default;
 
 //! Tests editor creation on bool property.
 
-TEST_F(TestDefaultEditorFactory, boolProperty)
+TEST_F(DefaultEditorFactoryTest, boolProperty)
 {
     auto editor = createEditor(QVariant::fromValue(true));
     EXPECT_TRUE(dynamic_cast<BoolEditor*>(editor.get()));
@@ -63,7 +61,7 @@ TEST_F(TestDefaultEditorFactory, boolProperty)
 
 //! Tests editor creation on integer property.
 
-TEST_F(TestDefaultEditorFactory, integerProperty)
+TEST_F(DefaultEditorFactoryTest, integerProperty)
 {
     auto editor = createEditor(QVariant::fromValue(42));
     EXPECT_TRUE(dynamic_cast<IntegerEditor*>(editor.get()));
@@ -71,7 +69,7 @@ TEST_F(TestDefaultEditorFactory, integerProperty)
 
 //! Tests editor creation on double property.
 
-TEST_F(TestDefaultEditorFactory, doubleProperty)
+TEST_F(DefaultEditorFactoryTest, doubleProperty)
 {
     auto editor = createEditor(QVariant::fromValue(42.42));
     EXPECT_TRUE(dynamic_cast<ScientificSpinBoxEditor*>(editor.get()));
@@ -79,7 +77,7 @@ TEST_F(TestDefaultEditorFactory, doubleProperty)
 
 //! Tests editor creation on color property.
 
-TEST_F(TestDefaultEditorFactory, colorProperty)
+TEST_F(DefaultEditorFactoryTest, colorProperty)
 {
     auto editor = createEditor(QVariant::fromValue(QColor(Qt::green)));
     EXPECT_TRUE(dynamic_cast<ColorEditor*>(editor.get()));
@@ -87,7 +85,7 @@ TEST_F(TestDefaultEditorFactory, colorProperty)
 
 //! Tests editor creation on combo property.
 
-TEST_F(TestDefaultEditorFactory, comboProperty)
+TEST_F(DefaultEditorFactoryTest, comboProperty)
 {
     auto editor = createEditor(QVariant::fromValue(ComboProperty()));
     EXPECT_TRUE(dynamic_cast<ComboPropertyEditor*>(editor.get()));
@@ -95,7 +93,7 @@ TEST_F(TestDefaultEditorFactory, comboProperty)
 
 //! Tests editor creation on combo property.
 
-TEST_F(TestDefaultEditorFactory, externalProperty)
+TEST_F(DefaultEditorFactoryTest, externalProperty)
 {
     auto editor = createEditor(QVariant::fromValue(ExternalProperty()));
     EXPECT_TRUE(dynamic_cast<ExternalPropertyEditor*>(editor.get()));
@@ -103,7 +101,7 @@ TEST_F(TestDefaultEditorFactory, externalProperty)
 
 //! Tests editor creation on some unsupported property.
 
-TEST_F(TestDefaultEditorFactory, unsupportedProperty)
+TEST_F(DefaultEditorFactoryTest, unsupportedProperty)
 {
     // no dedicated editor for std::string yet
     auto editor = createEditor(QVariant::fromValue(std::string("text")));

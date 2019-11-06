@@ -7,31 +7,30 @@
 //
 // ************************************************************************** //
 
-
 #include "google_test.h"
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/viewmodel/viewitems.h>
-#include <mvvm/viewmodel/viewdataitem.h>
-#include <mvvm/viewmodel/defaultviewmodel.h>
-#include <mvvm/standarditems/vectoritem.h>
 #include <QSignalSpy>
+#include <mvvm/model/sessionmodel.h>
+#include <mvvm/standarditems/vectoritem.h>
+#include <mvvm/viewmodel/defaultviewmodel.h>
+#include <mvvm/viewmodel/viewdataitem.h>
+#include <mvvm/viewmodel/viewitems.h>
 
 using namespace ModelView;
 
 //! Tests of VectorItem in the context of DefaultViewModel.
 
-class TestVectorItemView : public ::testing::Test
+class VectorItemViewTest : public ::testing::Test
 {
 public:
-    ~TestVectorItemView();
+    ~VectorItemViewTest();
 };
 
-TestVectorItemView::~TestVectorItemView() = default;
+VectorItemViewTest::~VectorItemViewTest() = default;
 
 //! Constructing ViewModel from a VectorItem.
 //! Checking that view items point to correct SessionItem.
 
-TEST_F(TestVectorItemView, fromVector)
+TEST_F(VectorItemViewTest, fromVector)
 {
     SessionModel model;
     auto vectorItem = model.insertItem<VectorItem>();
@@ -51,26 +50,26 @@ TEST_F(TestVectorItemView, fromVector)
     EXPECT_EQ(viewModel.columnCount(vectorIndex), 2);
 
     // ViewLabelItem and ViewDataItem correspondint to P_X
-    auto pxLabel
-        = dynamic_cast<ViewLabelItem*>(viewModel.itemFromIndex(viewModel.index(0, 0, vectorIndex)));
-    auto pxData
-        = dynamic_cast<ViewDataItem*>(viewModel.itemFromIndex(viewModel.index(0, 1, vectorIndex)));
+    auto pxLabel =
+        dynamic_cast<ViewLabelItem*>(viewModel.itemFromIndex(viewModel.index(0, 0, vectorIndex)));
+    auto pxData =
+        dynamic_cast<ViewDataItem*>(viewModel.itemFromIndex(viewModel.index(0, 1, vectorIndex)));
     EXPECT_EQ(pxLabel->item(), vectorItem->getItem(VectorItem::P_X));
     EXPECT_EQ(pxData->item(), vectorItem->getItem(VectorItem::P_X));
 
     // ViewLabelItem and ViewDataItem correspondint to P_Y
-    pxLabel
-        = dynamic_cast<ViewLabelItem*>(viewModel.itemFromIndex(viewModel.index(1, 0, vectorIndex)));
-    pxData
-        = dynamic_cast<ViewDataItem*>(viewModel.itemFromIndex(viewModel.index(1, 1, vectorIndex)));
+    pxLabel =
+        dynamic_cast<ViewLabelItem*>(viewModel.itemFromIndex(viewModel.index(1, 0, vectorIndex)));
+    pxData =
+        dynamic_cast<ViewDataItem*>(viewModel.itemFromIndex(viewModel.index(1, 1, vectorIndex)));
     EXPECT_EQ(pxLabel->item(), vectorItem->getItem(VectorItem::P_Y));
     EXPECT_EQ(pxData->item(), vectorItem->getItem(VectorItem::P_Y));
 
     // ViewLabelItem and ViewDataItem correspondint to P_Z
-    pxLabel
-        = dynamic_cast<ViewLabelItem*>(viewModel.itemFromIndex(viewModel.index(2, 0, vectorIndex)));
-    pxData
-        = dynamic_cast<ViewDataItem*>(viewModel.itemFromIndex(viewModel.index(2, 1, vectorIndex)));
+    pxLabel =
+        dynamic_cast<ViewLabelItem*>(viewModel.itemFromIndex(viewModel.index(2, 0, vectorIndex)));
+    pxData =
+        dynamic_cast<ViewDataItem*>(viewModel.itemFromIndex(viewModel.index(2, 1, vectorIndex)));
     EXPECT_EQ(pxLabel->item(), vectorItem->getItem(VectorItem::P_Z));
     EXPECT_EQ(pxData->item(), vectorItem->getItem(VectorItem::P_Z));
 }

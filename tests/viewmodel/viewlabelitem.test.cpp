@@ -7,24 +7,23 @@
 //
 // ************************************************************************** //
 
-
 #include "google_test.h"
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/viewmodel/viewitems.h>
 #include <QDebug>
 #include <memory>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/viewmodel/viewitems.h>
 
 using namespace ModelView;
 
-class TestViewLabelItem : public ::testing::Test
+class ViewLabelItemTest : public ::testing::Test
 {
 public:
-    ~TestViewLabelItem();
+    ~ViewLabelItemTest();
 };
 
-TestViewLabelItem::~TestViewLabelItem() = default;
+ViewLabelItemTest::~ViewLabelItemTest() = default;
 
-TEST_F(TestViewLabelItem, initialViewLabelItem)
+TEST_F(ViewLabelItemTest, initialViewLabelItem)
 {
     std::unique_ptr<SessionItem> item(new SessionItem);
 
@@ -36,7 +35,7 @@ TEST_F(TestViewLabelItem, initialViewLabelItem)
 //! ViewLabelItem::data method
 //! Checks that the data method is correctly forwarded to underlying SessionItem.
 
-TEST_F(TestViewLabelItem, ViewLabelItem_data)
+TEST_F(ViewLabelItemTest, ViewLabelItem_data)
 {
     // create SessionItem with data on board
     auto item = std::make_unique<SessionItem>();
@@ -52,7 +51,7 @@ TEST_F(TestViewLabelItem, ViewLabelItem_data)
 //! ViewLabelItem::setData
 //! Checks that the setData method is correctly forwarded to underlying SessionItem.
 
-TEST_F(TestViewLabelItem, ViewLabelItem_setData)
+TEST_F(ViewLabelItemTest, ViewLabelItem_setData)
 {
     // create SessionItem with data on board
     auto item = std::make_unique<SessionItem>();

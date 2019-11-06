@@ -7,31 +7,30 @@
 //
 // ************************************************************************** //
 
-
-#include <mvvm/standarditems/axisitems.h>
 #include "customplot_test_utils.h"
-#include <mvvm/standarditems/data1ditem.h>
-#include <mvvm/plotting/data1dplotcontroller.h>
 #include "google_test.h"
 #include "qcustomplot.h"
-#include <mvvm/model/sessionmodel.h>
 #include <algorithm>
+#include <mvvm/model/sessionmodel.h>
+#include <mvvm/plotting/data1dplotcontroller.h>
+#include <mvvm/standarditems/axisitems.h>
+#include <mvvm/standarditems/data1ditem.h>
 
 using namespace ModelView;
 
 //! Testing Data1DPlotController.
 
-class TestData1DPlotController : public ::testing::Test
+class Data1DPlotControllerTest : public ::testing::Test
 {
 public:
-    ~TestData1DPlotController();
+    ~Data1DPlotControllerTest();
 };
 
-TestData1DPlotController::~TestData1DPlotController() = default;
+Data1DPlotControllerTest::~Data1DPlotControllerTest() = default;
 
 //! Initial state.
 
-TEST_F(TestData1DPlotController, initialState)
+TEST_F(Data1DPlotControllerTest, initialState)
 {
     // Constructor accept valid QCPGraph
     EXPECT_THROW(Data1DPlotController(nullptr), std::runtime_error);
@@ -49,7 +48,7 @@ TEST_F(TestData1DPlotController, initialState)
 
 //! Testing controller when Data1DItem is not initialized properly.
 
-TEST_F(TestData1DPlotController, dataItemInInitialState)
+TEST_F(Data1DPlotControllerTest, dataItemInInitialState)
 {
     // creating custom plot and empty graph on it
     auto custom_plot = std::make_unique<QCustomPlot>();
@@ -69,7 +68,7 @@ TEST_F(TestData1DPlotController, dataItemInInitialState)
 
 //! Testing controller when Data1DItem get it's axis after controller setup.
 
-TEST_F(TestData1DPlotController, axisAfter)
+TEST_F(Data1DPlotControllerTest, axisAfter)
 {
     // creating custom plot and empty graph on it
     auto custom_plot = std::make_unique<QCustomPlot>();
@@ -91,7 +90,7 @@ TEST_F(TestData1DPlotController, axisAfter)
 
 //! Testing graph points update.
 
-TEST_F(TestData1DPlotController, dataPoints)
+TEST_F(Data1DPlotControllerTest, dataPoints)
 {
     // creating custom plot and empty graph on it
     auto custom_plot = std::make_unique<QCustomPlot>();
@@ -118,7 +117,7 @@ TEST_F(TestData1DPlotController, dataPoints)
 
 //! Testing two graph scenario.
 
-TEST_F(TestData1DPlotController, twoDataItems)
+TEST_F(Data1DPlotControllerTest, twoDataItems)
 {
     // creating custom plot and empty graph on it
     auto custom_plot = std::make_unique<QCustomPlot>();

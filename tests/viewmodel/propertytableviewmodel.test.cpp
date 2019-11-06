@@ -7,26 +7,25 @@
 //
 // ************************************************************************** //
 
-
 #include "google_test.h"
-#include <mvvm/viewmodel/propertytableviewmodel.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/model/sessionitem.h>
 #include <mvvm/model/propertyitem.h>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/model/sessionmodel.h>
 #include <mvvm/model/taginfo.h>
 #include <mvvm/standarditems/vectoritem.h>
+#include <mvvm/viewmodel/propertytableviewmodel.h>
 
 using namespace ModelView;
 
-class TestPropertyTableViewModel : public ::testing::Test
+class PropertyTableViewModelTest : public ::testing::Test
 {
 public:
-    ~TestPropertyTableViewModel();
+    ~PropertyTableViewModelTest();
 };
 
-TestPropertyTableViewModel::~TestPropertyTableViewModel() = default;
+PropertyTableViewModelTest::~PropertyTableViewModelTest() = default;
 
-TEST_F(TestPropertyTableViewModel, initialState)
+TEST_F(PropertyTableViewModelTest, initialState)
 {
     PropertyTableViewModel viewModel;
     EXPECT_EQ(viewModel.rowCount(), 0);
@@ -34,7 +33,7 @@ TEST_F(TestPropertyTableViewModel, initialState)
     EXPECT_EQ(viewModel.sessionItemFromIndex(QModelIndex()), nullptr);
 }
 
-TEST_F(TestPropertyTableViewModel, baseItem)
+TEST_F(PropertyTableViewModelTest, baseItem)
 {
     SessionModel model;
     model.insertItem<SessionItem>();
@@ -46,7 +45,7 @@ TEST_F(TestPropertyTableViewModel, baseItem)
     EXPECT_EQ(viewModel.columnCount(), 0);
 }
 
-TEST_F(TestPropertyTableViewModel, propertyItem)
+TEST_F(PropertyTableViewModelTest, propertyItem)
 {
     SessionModel model;
     auto parent = model.insertItem<SessionItem>();
@@ -72,7 +71,7 @@ TEST_F(TestPropertyTableViewModel, propertyItem)
 
 //! VectorItem in a model.
 
-TEST_F(TestPropertyTableViewModel, vectorItem)
+TEST_F(PropertyTableViewModelTest, vectorItem)
 {
     SessionModel model;
     auto parent = model.insertItem<VectorItem>();

@@ -7,32 +7,31 @@
 //
 // ************************************************************************** //
 
-
-#include <mvvm/standarditems/axisitems.h>
-#include <mvvm/standarditems/colormapitem.h>
-#include <mvvm/plotting/colormapplotcontroller.h>
 #include "customplot_test_utils.h"
-#include <mvvm/standarditems/data2ditem.h>
 #include "google_test.h"
 #include "qcustomplot.h"
-#include <mvvm/model/sessionmodel.h>
 #include <QSignalSpy>
+#include <mvvm/model/sessionmodel.h>
+#include <mvvm/plotting/colormapplotcontroller.h>
+#include <mvvm/standarditems/axisitems.h>
+#include <mvvm/standarditems/colormapitem.h>
+#include <mvvm/standarditems/data2ditem.h>
 
 using namespace ModelView;
 
 //! Testing ColorMapPlotController.
 
-class TestColorMapPlotController : public ::testing::Test
+class ColorMapPlotControllerTest : public ::testing::Test
 {
 public:
-    ~TestColorMapPlotController();
+    ~ColorMapPlotControllerTest();
 };
 
-TestColorMapPlotController::~TestColorMapPlotController() = default;
+ColorMapPlotControllerTest::~ColorMapPlotControllerTest() = default;
 
 //! Initial state.
 
-TEST_F(TestColorMapPlotController, initialState)
+TEST_F(ColorMapPlotControllerTest, initialState)
 {
     auto custom_plot = std::make_unique<QCustomPlot>();
     ColorMapPlotController controller(custom_plot.get());
@@ -45,7 +44,7 @@ TEST_F(TestColorMapPlotController, initialState)
 
 //! Setting ColorMapItem with data and checking that QCPColorMap appeared among plottables.
 
-TEST_F(TestColorMapPlotController, setItem)
+TEST_F(ColorMapPlotControllerTest, setItem)
 {
     auto custom_plot = std::make_unique<QCustomPlot>();
     ColorMapPlotController controller(custom_plot.get());
@@ -81,7 +80,7 @@ TEST_F(TestColorMapPlotController, setItem)
 
 //! Setting data to graph after.
 
-TEST_F(TestColorMapPlotController, setDataAfter)
+TEST_F(ColorMapPlotControllerTest, setDataAfter)
 {
     auto custom_plot = std::make_unique<QCustomPlot>();
     ColorMapPlotController controller(custom_plot.get());
@@ -118,7 +117,7 @@ TEST_F(TestColorMapPlotController, setDataAfter)
 
 //! Unlinking from Data2DItem or ColorMapItem.
 
-TEST_F(TestColorMapPlotController, unlinkFromItem)
+TEST_F(ColorMapPlotControllerTest, unlinkFromItem)
 {
     auto custom_plot = std::make_unique<QCustomPlot>();
     ColorMapPlotController controller(custom_plot.get());
@@ -160,7 +159,7 @@ TEST_F(TestColorMapPlotController, unlinkFromItem)
 
 //! Deletion of controller should lead to graph removal.
 
-TEST_F(TestColorMapPlotController, controllerDelete)
+TEST_F(ColorMapPlotControllerTest, controllerDelete)
 {
     auto custom_plot = std::make_unique<QCustomPlot>();
     auto controller = std::make_unique<ColorMapPlotController>(custom_plot.get());

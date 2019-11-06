@@ -7,26 +7,25 @@
 //
 // ************************************************************************** //
 
-
 #include "google_test.h"
-#include <mvvm/viewmodel/propertiesrowstrategy.h>
+#include "test_utils.h"
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/standarditems/vectoritem.h>
+#include <mvvm/viewmodel/propertiesrowstrategy.h>
 #include <mvvm/viewmodel/viewdataitem.h>
-#include "test_utils.h"
 
 using namespace ModelView;
 
-class TestPropertiesRowStrategy : public ::testing::Test
+class PropertiesRowStrategyTest : public ::testing::Test
 {
 public:
-    ~TestPropertiesRowStrategy();
+    ~PropertiesRowStrategyTest();
 };
 
-TestPropertiesRowStrategy::~TestPropertiesRowStrategy() = default;
+PropertiesRowStrategyTest::~PropertiesRowStrategyTest() = default;
 
-TEST_F(TestPropertiesRowStrategy, initialState)
+TEST_F(PropertiesRowStrategyTest, initialState)
 {
     PropertiesRowStrategy strategy({});
     EXPECT_EQ(strategy.constructRow(nullptr).size(), 0);
@@ -35,7 +34,7 @@ TEST_F(TestPropertiesRowStrategy, initialState)
 
 //! Checks row construction for standard top level item. It shouldn't generate any rows.
 
-TEST_F(TestPropertiesRowStrategy, topLevelItem)
+TEST_F(PropertiesRowStrategyTest, topLevelItem)
 {
     SessionItem item("model_type");
 
@@ -49,7 +48,7 @@ TEST_F(TestPropertiesRowStrategy, topLevelItem)
 
 //! Checks row construction for property item. It shouldn't generate any rows.
 
-TEST_F(TestPropertiesRowStrategy, propertyItem)
+TEST_F(PropertiesRowStrategyTest, propertyItem)
 {
     SessionItem item("model_type");
     item.setData(42.0);
@@ -65,7 +64,7 @@ TEST_F(TestPropertiesRowStrategy, propertyItem)
 //! Checks row construction for vector item.
 //! There should be 3 view items looking to x, y, z properties.
 
-TEST_F(TestPropertiesRowStrategy, vectorItem)
+TEST_F(PropertiesRowStrategyTest, vectorItem)
 {
     VectorItem item;
 
@@ -77,7 +76,9 @@ TEST_F(TestPropertiesRowStrategy, vectorItem)
     auto items = strategy.constructRow(&item);
 
     EXPECT_EQ(items.size(), 3);
-    EXPECT_EQ(strategy.horizontalHeaderLabels(), QStringList() << "a" << "b" << "c");
+    EXPECT_EQ(strategy.horizontalHeaderLabels(), QStringList() << "a"
+                                                               << "b"
+                                                               << "c");
 
     // views should look at 3 property items
     auto view_x = dynamic_cast<ViewDataItem*>(items.at(0));
@@ -97,7 +98,7 @@ TEST_F(TestPropertiesRowStrategy, vectorItem)
 
 //! Row construction for rootItem with single item inserted. Shouldn't generate any row.
 
-TEST_F(TestPropertiesRowStrategy, baseItemInModelContext)
+TEST_F(PropertiesRowStrategyTest, baseItemInModelContext)
 {
     SessionModel model;
 
@@ -115,7 +116,7 @@ TEST_F(TestPropertiesRowStrategy, baseItemInModelContext)
 
 //! Row construction for rootItem with single item inserted. Shouldn't generate any row.
 
-TEST_F(TestPropertiesRowStrategy, propertyItemTree)
+TEST_F(PropertiesRowStrategyTest, propertyItemTree)
 {
     SessionModel model;
     auto parent = model.insertItem<SessionItem>();
@@ -141,7 +142,7 @@ TEST_F(TestPropertiesRowStrategy, propertyItemTree)
 
 //! Row construction for rootItem when vectorItem is present. Shouldn't generate any row.
 
-TEST_F(TestPropertiesRowStrategy, vectorItemInModelContext)
+TEST_F(PropertiesRowStrategyTest, vectorItemInModelContext)
 {
     SessionModel model;
     model.insertItem<VectorItem>();

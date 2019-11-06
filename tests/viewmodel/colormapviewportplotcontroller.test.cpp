@@ -7,34 +7,33 @@
 //
 // ************************************************************************** //
 
-
-#include <mvvm/standarditems/data1ditem.h>
+#include "customplot_test_utils.h"
 #include "google_test.h"
 #include "qcustomplot.h"
 #include <mvvm/model/sessionmodel.h>
-#include <mvvm/standarditems/colormapviewportitem.h>
 #include <mvvm/plotting/colormapviewportplotcontroller.h>
-#include "customplot_test_utils.h"
 #include <mvvm/standarditems/axisitems.h>
-#include <mvvm/standarditems/data2ditem.h>
 #include <mvvm/standarditems/colormapitem.h>
+#include <mvvm/standarditems/colormapviewportitem.h>
+#include <mvvm/standarditems/data1ditem.h>
+#include <mvvm/standarditems/data2ditem.h>
 #include <qcustomplot.h>
 
 using namespace ModelView;
 
 //! Testing ColorMapViewportPlotController.
 
-class TestColorMapViewportPlotController : public ::testing::Test
+class ColorMapViewportPlotControllerTest : public ::testing::Test
 {
 public:
-    ~TestColorMapViewportPlotController();
+    ~ColorMapViewportPlotControllerTest();
 };
 
-TestColorMapViewportPlotController::~TestColorMapViewportPlotController() = default;
+ColorMapViewportPlotControllerTest::~ColorMapViewportPlotControllerTest() = default;
 
 //! Initial state.
 
-TEST_F(TestColorMapViewportPlotController, initialState)
+TEST_F(ColorMapViewportPlotControllerTest, initialState)
 {
     auto custom_plot = std::make_unique<QCustomPlot>();
     ColorMapViewportPlotController controller(custom_plot.get());
@@ -48,10 +47,9 @@ TEST_F(TestColorMapViewportPlotController, initialState)
     EXPECT_DOUBLE_EQ(custom_plot->yAxis->range().upper, customplot_default_upper);
 }
 
-
 //! Check ::setItem() method when no colormaps exist.
 
-TEST_F(TestColorMapViewportPlotController, setEmptyViewport)
+TEST_F(ColorMapViewportPlotControllerTest, setEmptyViewport)
 {
     auto custom_plot = std::make_unique<QCustomPlot>();
     ColorMapViewportPlotController controller(custom_plot.get());
@@ -77,7 +75,7 @@ TEST_F(TestColorMapViewportPlotController, setEmptyViewport)
 
 //! Check ::setItem() method when data 2d is fully set up.
 
-TEST_F(TestColorMapViewportPlotController, setItem)
+TEST_F(ColorMapViewportPlotControllerTest, setItem)
 {
     auto custom_plot = std::make_unique<QCustomPlot>();
     ColorMapViewportPlotController controller(custom_plot.get());
@@ -107,7 +105,7 @@ TEST_F(TestColorMapViewportPlotController, setItem)
 
 //! Consequitive setup.
 
-TEST_F(TestColorMapViewportPlotController, setupConsequitive)
+TEST_F(ColorMapViewportPlotControllerTest, setupConsequitive)
 {
     auto custom_plot = std::make_unique<QCustomPlot>();
     ColorMapViewportPlotController controller(custom_plot.get());

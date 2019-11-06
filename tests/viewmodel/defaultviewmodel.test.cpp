@@ -7,28 +7,27 @@
 //
 // ************************************************************************** //
 
-
-#include <mvvm/viewmodel/defaultviewmodel.h>
 #include "google_test.h"
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/standarditems/vectoritem.h>
-#include <mvvm/viewmodel/viewitems.h>
-#include <mvvm/viewmodel/viewdataitem.h>
-#include <mvvm/viewmodel/viewmodelutils.h>
 #include <QDebug>
 #include <QSignalSpy>
+#include <mvvm/model/sessionmodel.h>
+#include <mvvm/standarditems/vectoritem.h>
+#include <mvvm/viewmodel/defaultviewmodel.h>
+#include <mvvm/viewmodel/viewdataitem.h>
+#include <mvvm/viewmodel/viewitems.h>
+#include <mvvm/viewmodel/viewmodelutils.h>
 
 using namespace ModelView;
 
-class TestDefaultViewModel : public ::testing::Test
+class DefaultViewModelTest : public ::testing::Test
 {
 public:
-    ~TestDefaultViewModel();
+    ~DefaultViewModelTest();
 };
 
-TestDefaultViewModel::~TestDefaultViewModel() = default;
+DefaultViewModelTest::~DefaultViewModelTest() = default;
 
-TEST_F(TestDefaultViewModel, initialState)
+TEST_F(DefaultViewModelTest, initialState)
 {
     SessionModel model;
     DefaultViewModel viewModel(&model);
@@ -39,7 +38,7 @@ TEST_F(TestDefaultViewModel, initialState)
 
 //! Single property item in a model.
 
-TEST_F(TestDefaultViewModel, fromPropertyItem)
+TEST_F(DefaultViewModelTest, fromPropertyItem)
 {
     SessionModel model;
     auto propertyItem = model.insertItem<PropertyItem>();
@@ -65,7 +64,7 @@ TEST_F(TestDefaultViewModel, fromPropertyItem)
 
 //! Single property item in a model.
 
-TEST_F(TestDefaultViewModel, sessionItemFromIndex)
+TEST_F(DefaultViewModelTest, sessionItemFromIndex)
 {
     SessionModel model;
     auto propertyItem = model.insertItem<PropertyItem>();
@@ -86,7 +85,7 @@ TEST_F(TestDefaultViewModel, sessionItemFromIndex)
 
 //! Index from single property item.
 
-TEST_F(TestDefaultViewModel, indexFromSessionItem)
+TEST_F(DefaultViewModelTest, indexFromSessionItem)
 {
     SessionModel model;
     auto propertyItem = model.insertItem<PropertyItem>();
@@ -100,13 +99,13 @@ TEST_F(TestDefaultViewModel, indexFromSessionItem)
     QModelIndex labelIndex = viewModel.index(0, 0);
     QModelIndex dataIndex = viewModel.index(0, 1);
 
-    QModelIndexList expected {labelIndex, dataIndex};
+    QModelIndexList expected{labelIndex, dataIndex};
     EXPECT_EQ(viewModel.indexOfSessionItem(propertyItem), expected);
 }
 
 //! Find ViewItem's corresponding to given PropertyItem.
 
-TEST_F(TestDefaultViewModel, findPropertyItemView)
+TEST_F(DefaultViewModelTest, findPropertyItemView)
 {
     SessionModel model;
     auto propertyItem = model.insertItem<PropertyItem>();
@@ -120,7 +119,7 @@ TEST_F(TestDefaultViewModel, findPropertyItemView)
 //! Constructing ViewModel from single PropertyItem.
 //! Change thickness property in SessionItem, control dataChanged signals from ViewModel.
 
-TEST_F(TestDefaultViewModel, propertyItemDataChanged)
+TEST_F(DefaultViewModelTest, propertyItemDataChanged)
 {
     SessionModel model;
     auto propertyItem = model.insertItem<PropertyItem>();
@@ -147,7 +146,7 @@ TEST_F(TestDefaultViewModel, propertyItemDataChanged)
 
 //! Inserting single top level item.
 
-TEST_F(TestDefaultViewModel, insertSingleTopItem)
+TEST_F(DefaultViewModelTest, insertSingleTopItem)
 {
     SessionModel model;
     DefaultViewModel viewModel(&model);
@@ -176,7 +175,7 @@ TEST_F(TestDefaultViewModel, insertSingleTopItem)
 
 //! Removing single top level item.
 
-TEST_F(TestDefaultViewModel, removeSingleTopItem)
+TEST_F(DefaultViewModelTest, removeSingleTopItem)
 {
     SessionModel model;
 
@@ -208,7 +207,7 @@ TEST_F(TestDefaultViewModel, removeSingleTopItem)
 //! Remove one of two top level items. The pecularity of DefaultViewModel is that it will
 //! remove all children of given parent and then recreate missing.
 
-TEST_F(TestDefaultViewModel, removeOneOfTopItems)
+TEST_F(DefaultViewModelTest, removeOneOfTopItems)
 {
     SessionModel model;
 
@@ -252,7 +251,7 @@ TEST_F(TestDefaultViewModel, removeOneOfTopItems)
 
 //! Single property item in ViewModel with various appearance flags.
 
-TEST_F(TestDefaultViewModel, propertyItemAppearance)
+TEST_F(DefaultViewModelTest, propertyItemAppearance)
 {
     SessionModel model;
 
@@ -301,7 +300,7 @@ TEST_F(TestDefaultViewModel, propertyItemAppearance)
 
 //! Signals in ViewModel when property item changes its appearance.
 
-TEST_F(TestDefaultViewModel, propertyItemAppearanceChanged)
+TEST_F(DefaultViewModelTest, propertyItemAppearanceChanged)
 {
     SessionModel model;
 
@@ -354,7 +353,7 @@ TEST_F(TestDefaultViewModel, propertyItemAppearanceChanged)
 
 //! Setting top level item as ROOT item
 
-TEST_F(TestDefaultViewModel, setRootItem)
+TEST_F(DefaultViewModelTest, setRootItem)
 {
     SessionModel model;
     DefaultViewModel viewModel(&model);
@@ -371,7 +370,7 @@ TEST_F(TestDefaultViewModel, setRootItem)
 
 //! On model destroyed.
 
-TEST_F(TestDefaultViewModel, onModelReset)
+TEST_F(DefaultViewModelTest, onModelReset)
 {
     auto model = std::make_unique<SessionModel>();
     model->insertItem<SessionItem>();
@@ -384,10 +383,9 @@ TEST_F(TestDefaultViewModel, onModelReset)
     EXPECT_EQ(viewModel.columnCount(), 2);
 }
 
-
 //! On model destroyed.
 
-TEST_F(TestDefaultViewModel, onModelDestroyed)
+TEST_F(DefaultViewModelTest, onModelDestroyed)
 {
     auto model = std::make_unique<SessionModel>();
     model->insertItem<SessionItem>();
@@ -400,4 +398,3 @@ TEST_F(TestDefaultViewModel, onModelDestroyed)
     EXPECT_EQ(viewModel.rowCount(), 0);
     EXPECT_EQ(viewModel.columnCount(), 0);
 }
-
