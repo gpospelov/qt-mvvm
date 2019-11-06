@@ -1,16 +1,13 @@
-set(library_name mvvm_model)
-
-if(WIN32)
-    add_definitions(-DCORE_BUILD_DLL)
-endif()
-
-add_library(${library_name} SHARED "")
+# -----------------------------------------------------------------------------
+# Library: mvvm_model
+# -----------------------------------------------------------------------------
+add_library(mvvm_model SHARED "")
 
 add_subdirectory(mvvm)
 
-target_link_libraries(${library_name} PUBLIC Qt5::Widgets PRIVATE qcustomplot)
+target_link_libraries(mvvm_model PUBLIC Qt5::Widgets PRIVATE qcustomplot)
+
+target_include_directories(mvvm_model PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>)
 
 # to make clang code model in Qt creator happy
-target_compile_features(${library_name} PUBLIC cxx_std_17)
-
-target_include_directories(${library_name} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>)
+target_compile_features(mvvm_model PUBLIC cxx_std_17)
