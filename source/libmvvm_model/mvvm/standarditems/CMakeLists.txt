@@ -1,6 +1,4 @@
-set(library_name mvvm)
-
-target_sources(${library_name} PRIVATE
+target_sources(mvvm_model PRIVATE
     axisitems.cpp
     axisitems.h
     colormapitem.cpp

@@ -1,4 +1,4 @@
-set(library_name mvvm)
+set(library_name mvvm_model)
 
 if(WIN32)
     add_definitions(-DCORE_BUILD_DLL)

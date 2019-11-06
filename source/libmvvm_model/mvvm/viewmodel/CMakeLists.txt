@@ -1,6 +1,4 @@
-set(library_name mvvm)
-
-target_sources(${library_name} PRIVATE
+target_sources(mvvm_model PRIVATE
     abstractviewmodel.cpp
     abstractviewmodel.h
     abstractviewmodelcontroller.cpp
