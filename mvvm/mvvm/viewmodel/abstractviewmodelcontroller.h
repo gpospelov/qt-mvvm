@@ -12,6 +12,7 @@
 
 #include <mvvm/model/mvvm_export.h>
 #include <memory>
+#include <string>
 
 class QStandardItem;
 
