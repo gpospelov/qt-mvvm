@@ -1,3 +1,12 @@
+// ************************************************************************** //
+//
+//  Prototype of mini MVVM framework for bornagainproject.org
+//
+//! @homepage  http://www.bornagainproject.org
+//! @license   GNU General Public License v3 or higher
+//
+// ************************************************************************** //
+
 #include <mvvm/model/comparators.h>
 #include <mvvm/model/customvariants.h>
 #include <mvvm/model/comboproperty.h>
