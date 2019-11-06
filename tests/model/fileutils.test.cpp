@@ -7,21 +7,20 @@
 //
 // ************************************************************************** //
 
-
 #include "google_test.h"
-#include <mvvm/utils/fileutils.h>
-#include <string>
+#include <QDir>
 #include <QFile>
 #include <QTextStream>
-#include <QDir>
+#include <mvvm/utils/fileutils.h>
 #include <stdexcept>
+#include <string>
 
 using namespace ModelView;
 
-class TestFileUtils : public ::testing::Test
+class FileUtilsTest : public ::testing::Test
 {
 public:
-    ~TestFileUtils();
+    ~FileUtilsTest();
 
     //! Helper function to create test file in a given directory (directory should exist).
     void createTestFile(const std::string& dirname, const std::string& fileName)
@@ -37,14 +36,12 @@ public:
         out << "Test file " << 42 << "\n";
         file.close();
     }
-    std::string projectDir() const {
-        return TestConfig::TestOutputDir() + "/" + "test_FileUtils";
-    }
+    std::string projectDir() const { return TestConfig::TestOutputDir() + "/" + "test_FileUtils"; }
 };
 
-TestFileUtils::~TestFileUtils() = default;
+FileUtilsTest::~FileUtilsTest() = default;
 
-TEST_F(TestFileUtils, initialState)
+TEST_F(FileUtilsTest, initialState)
 {
     QDir dir(QString::fromStdString(projectDir()));
     if (dir.exists()) {

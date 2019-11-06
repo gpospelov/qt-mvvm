@@ -7,29 +7,28 @@
 //
 // ************************************************************************** //
 
-
-#include <mvvm/model/customvariants.h>
 #include "google_test.h"
+#include <memory>
+#include <mvvm/model/customvariants.h>
 #include <mvvm/model/itemutils.h>
+#include <mvvm/model/propertyitem.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
-#include <mvvm/model/propertyitem.h>
 #include <mvvm/model/taginfo.h>
-#include <memory>
 
 using namespace ModelView;
 
-class TestItemUtils : public ::testing::Test
+class ItemUtilsTest : public ::testing::Test
 {
 public:
-    ~TestItemUtils();
+    ~ItemUtilsTest();
 };
 
-TestItemUtils::~TestItemUtils() = default;
+ItemUtilsTest::~ItemUtilsTest() = default;
 
 //! Simple iteration over item and its children
 
-TEST_F(TestItemUtils, iterateItem)
+TEST_F(ItemUtilsTest, iterateItem)
 {
     std::vector<const SessionItem*> visited_items;
 
@@ -62,7 +61,7 @@ TEST_F(TestItemUtils, iterateItem)
 
 //! Conditional iteration over item and its children.
 
-TEST_F(TestItemUtils, iterateIfItem)
+TEST_F(ItemUtilsTest, iterateIfItem)
 {
     std::vector<const SessionItem*> visited_items;
 
@@ -88,7 +87,7 @@ TEST_F(TestItemUtils, iterateIfItem)
 
 //! Iteration over root item of the model.
 
-TEST_F(TestItemUtils, iterateModel)
+TEST_F(ItemUtilsTest, iterateModel)
 {
     SessionModel model;
 
@@ -112,7 +111,7 @@ TEST_F(TestItemUtils, iterateModel)
 
 //! Copy number of child in parents tree.
 
-TEST_F(TestItemUtils, itemCopyNumber)
+TEST_F(ItemUtilsTest, itemCopyNumber)
 {
     SessionModel model;
 
@@ -130,7 +129,7 @@ TEST_F(TestItemUtils, itemCopyNumber)
 
 //! Check access to top level and property items.
 
-TEST_F(TestItemUtils, TopLevelAndPropertyItems)
+TEST_F(ItemUtilsTest, TopLevelAndPropertyItems)
 {
     SessionModel model;
 

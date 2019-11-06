@@ -7,23 +7,22 @@
 //
 // ************************************************************************** //
 
-
 #include "google_test.h"
-#include <mvvm/utils/reallimits.h>
-#include <mvvm/serialization/jsonutils.h>
 #include <limits>
+#include <mvvm/serialization/jsonutils.h>
+#include <mvvm/utils/reallimits.h>
 
 using namespace ModelView;
 
-class TestJsonUtils : public ::testing::Test
+class JsonUtilsTest : public ::testing::Test
 {
 protected:
-    ~TestJsonUtils();
+    ~JsonUtilsTest();
 };
 
-TestJsonUtils::~TestJsonUtils() = default;
+JsonUtilsTest::~JsonUtilsTest() = default;
 
-TEST_F(TestJsonUtils, toString)
+TEST_F(JsonUtilsTest, toString)
 {
     EXPECT_EQ(JsonUtils::ToString(RealLimits::limitless()), "limitless");
     EXPECT_EQ(JsonUtils::ToString(RealLimits::positive()), "positive");
@@ -35,7 +34,7 @@ TEST_F(TestJsonUtils, toString)
     EXPECT_EQ(JsonUtils::ToString(RealLimits::limited(-1.0, 2.0)), "limited");
 }
 
-TEST_F(TestJsonUtils, CreateLimits)
+TEST_F(JsonUtilsTest, CreateLimits)
 {
     EXPECT_EQ(JsonUtils::CreateLimits("limitless"), RealLimits::limitless());
     EXPECT_EQ(JsonUtils::CreateLimits("positive"), RealLimits::positive());
@@ -44,4 +43,3 @@ TEST_F(TestJsonUtils, CreateLimits)
     EXPECT_EQ(JsonUtils::CreateLimits("upperlimited", 0.0, 42.0), RealLimits::upperLimited(42.0));
     EXPECT_EQ(JsonUtils::CreateLimits("limited", -1.0, 2.0), RealLimits::limited(-1.0, 2.0));
 }
-

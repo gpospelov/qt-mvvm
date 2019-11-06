@@ -7,25 +7,24 @@
 //
 // ************************************************************************** //
 
-
-#include <mvvm/commands/setvaluecommand.h>
 #include "google_test.h"
+#include <mvvm/commands/setvaluecommand.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
 
 using namespace ModelView;
 
-class TestSetValueCommand : public ::testing::Test
+class SetValueCommandTest : public ::testing::Test
 {
 public:
-    ~TestSetValueCommand();
+    ~SetValueCommandTest();
 };
 
-TestSetValueCommand::~TestSetValueCommand() = default;
+SetValueCommandTest::~SetValueCommandTest() = default;
 
 //! Set item value through SetValueCommand command.
 
-TEST_F(TestSetValueCommand, setValueCommand)
+TEST_F(SetValueCommandTest, setValueCommand)
 {
     SessionModel model;
     const int role = ItemDataRole::DATA;
@@ -50,7 +49,7 @@ TEST_F(TestSetValueCommand, setValueCommand)
 
 //! Set same item value through SetValueCommand command.
 
-TEST_F(TestSetValueCommand, setSameValueCommand)
+TEST_F(SetValueCommandTest, setSameValueCommand)
 {
     SessionModel model;
     const int role = ItemDataRole::DATA;
@@ -73,4 +72,3 @@ TEST_F(TestSetValueCommand, setSameValueCommand)
     EXPECT_FALSE(command->result()); // value wasn't changed
     EXPECT_EQ(model.data(item, role), expected);
 }
-

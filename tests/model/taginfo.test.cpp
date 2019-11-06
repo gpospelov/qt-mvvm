@@ -7,7 +7,6 @@
 //
 // ************************************************************************** //
 
-
 #include "google_test.h"
 #include <mvvm/model/taginfo.h>
 
@@ -15,15 +14,15 @@ using namespace ModelView;
 
 //! Tests of TagInfo class.
 
-class TestTagInfo : public ::testing::Test
+class TagInfoTest : public ::testing::Test
 {
 public:
-    ~TestTagInfo();
+    ~TagInfoTest();
 };
 
-TestTagInfo::~TestTagInfo() = default;
+TagInfoTest::~TagInfoTest() = default;
 
-TEST_F(TestTagInfo, initialState)
+TEST_F(TagInfoTest, initialState)
 {
     TagInfo tag;
     EXPECT_EQ(tag.name(), std::string());
@@ -36,7 +35,7 @@ TEST_F(TestTagInfo, initialState)
 
 //! Testing default tag intended for storing unlimited amount of items of any type.
 
-TEST_F(TestTagInfo, defaultTag)
+TEST_F(TagInfoTest, defaultTag)
 {
     // initial state
     TagInfo tag = TagInfo::universalTag("name");
@@ -50,7 +49,7 @@ TEST_F(TestTagInfo, defaultTag)
 
 //! Testing property tag intended for storing single PropertyItem.
 
-TEST_F(TestTagInfo, propertyTag)
+TEST_F(TagInfoTest, propertyTag)
 {
     // initial state
     TagInfo tag = TagInfo::propertyTag("name", "model_type");

@@ -7,30 +7,29 @@
 //
 // ************************************************************************** //
 
-
 #include "MockWidgets.h"
 #include "google_test.h"
 #include <mvvm/model/itempool.h>
-#include <mvvm/standarditems/linkeditem.h>
 #include <mvvm/model/propertyitem.h>
 #include <mvvm/model/sessionmodel.h>
+#include <mvvm/standarditems/linkeditem.h>
 
 using namespace ModelView;
 using ::testing::_;
 
 //! LinkedItem tests.
 
-class TestLinkedItem : public ::testing::Test
+class LinkedItemTest : public ::testing::Test
 {
 public:
-    ~TestLinkedItem();
+    ~LinkedItemTest();
 };
 
-TestLinkedItem::~TestLinkedItem() = default;
+LinkedItemTest::~LinkedItemTest() = default;
 
 //! Initial state of item when it is created outside of model context.
 
-TEST_F(TestLinkedItem, initialState)
+TEST_F(LinkedItemTest, initialState)
 {
     LinkedItem item;
     EXPECT_EQ(item.get(), nullptr);
@@ -38,7 +37,7 @@ TEST_F(TestLinkedItem, initialState)
 
 //! Link in single model context.
 
-TEST_F(TestLinkedItem, sameModelContext)
+TEST_F(LinkedItemTest, sameModelContext)
 {
     SessionModel model;
     auto item = model.insertItem<PropertyItem>();
@@ -57,7 +56,7 @@ TEST_F(TestLinkedItem, sameModelContext)
 
 //! Link in different model context.
 
-TEST_F(TestLinkedItem, differentModelContext)
+TEST_F(LinkedItemTest, differentModelContext)
 {
     auto pool = std::make_shared<ItemPool>();
 
@@ -79,7 +78,7 @@ TEST_F(TestLinkedItem, differentModelContext)
 
 //! Signals when links is set.
 
-TEST_F(TestLinkedItem, onSetLink)
+TEST_F(LinkedItemTest, onSetLink)
 {
     SessionModel model;
     auto item = model.insertItem<PropertyItem>();
@@ -101,7 +100,7 @@ TEST_F(TestLinkedItem, onSetLink)
 
 //! Link in different model context.
 
-TEST_F(TestLinkedItem, setNullAsLink)
+TEST_F(LinkedItemTest, setNullAsLink)
 {
     auto pool = std::make_shared<ItemPool>();
 

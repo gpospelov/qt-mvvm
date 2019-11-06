@@ -7,24 +7,23 @@
 //
 // ************************************************************************** //
 
-
 #include "google_test.h"
-#include <mvvm/model/modelutils.h>
 #include "toy_constants.h"
 #include "toy_items.h"
 #include "toy_models.h"
+#include <mvvm/model/modelutils.h>
 
 using namespace ModelView;
 
-class TestModelUtils : public ::testing::Test
+class ModelUtilsTest : public ::testing::Test
 {
 public:
-    ~TestModelUtils();
+    ~ModelUtilsTest();
 };
 
-TestModelUtils::~TestModelUtils() = default;
+ModelUtilsTest::~ModelUtilsTest() = default;
 
-TEST_F(TestModelUtils, topItem)
+TEST_F(ModelUtilsTest, topItem)
 {
     ToyItems::SampleModel model;
     EXPECT_EQ(Utils::TopItem<>(&model), nullptr);
@@ -39,7 +38,7 @@ TEST_F(TestModelUtils, topItem)
     EXPECT_EQ(Utils::TopItem<ToyItems::MultiLayerItem>(&model), multilayer1);
 }
 
-TEST_F(TestModelUtils, topItems)
+TEST_F(ModelUtilsTest, topItems)
 {
     ToyItems::SampleModel model;
     EXPECT_EQ(Utils::TopItems<>(&model).size(), 0);
@@ -56,10 +55,10 @@ TEST_F(TestModelUtils, topItems)
     EXPECT_EQ(Utils::TopItems<ToyItems::MultiLayerItem>(&model), expected2);
 }
 
-TEST_F(TestModelUtils, findItems)
+TEST_F(ModelUtilsTest, findItems)
 {
     ToyItems::SampleModel model;
-    EXPECT_EQ(Utils::FindItems<>(&model).size(), 1); // because of rootItem
+    EXPECT_EQ(Utils::FindItems<>(&model).size(), 1);            // because of rootItem
     EXPECT_EQ(Utils::FindItems<SessionItem>(&model).size(), 1); // because of rootItem
     EXPECT_EQ(Utils::FindItems<ToyItems::MultiLayerItem>(&model).size(), 0);
 
@@ -78,7 +77,7 @@ TEST_F(TestModelUtils, findItems)
     EXPECT_EQ(Utils::FindItems<ToyItems::LayerItem>(&model), expected3);
 }
 
-TEST_F(TestModelUtils, DeleteItemFromModel)
+TEST_F(ModelUtilsTest, DeleteItemFromModel)
 {
     ToyItems::SampleModel model;
 

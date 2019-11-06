@@ -21,17 +21,17 @@ using ::testing::_;
 
 //! Testing AxesItems.
 
-class TestGraphViewportItem : public ::testing::Test
+class GraphViewportItemTest : public ::testing::Test
 {
 public:
-    ~TestGraphViewportItem();
+    ~GraphViewportItemTest();
 };
 
-TestGraphViewportItem::~TestGraphViewportItem() = default;
+GraphViewportItemTest::~GraphViewportItemTest() = default;
 
 //! Initial state.
 
-TEST_F(TestGraphViewportItem, initialState)
+TEST_F(GraphViewportItemTest, initialState)
 {
     GraphViewportItem item;
     EXPECT_EQ(item.xAxis()->modelType(), Constants::ViewportAxisItemType);
@@ -41,7 +41,7 @@ TEST_F(TestGraphViewportItem, initialState)
 
 //! Add graph to viewport.
 
-TEST_F(TestGraphViewportItem, addItem)
+TEST_F(GraphViewportItemTest, addItem)
 {
     SessionModel model;
 
@@ -75,7 +75,7 @@ TEST_F(TestGraphViewportItem, addItem)
 
 //! Check signaling on set data item.
 
-TEST_F(TestGraphViewportItem, onAddItem)
+TEST_F(GraphViewportItemTest, onAddItem)
 {
     SessionModel model;
     auto viewport_item = model.insertItem<GraphViewportItem>();
@@ -94,7 +94,7 @@ TEST_F(TestGraphViewportItem, onAddItem)
 
 //! Check signaling on set data item.
 
-TEST_F(TestGraphViewportItem, onSetDataItem)
+TEST_F(GraphViewportItemTest, onSetDataItem)
 {
     SessionModel model;
     auto viewport_item = model.insertItem<GraphViewportItem>();

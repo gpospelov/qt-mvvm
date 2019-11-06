@@ -7,34 +7,33 @@
 //
 // ************************************************************************** //
 
-
-#include <mvvm/model/compounditem.h>
-#include <mvvm/model/customvariants.h>
 #include "google_test.h"
-#include <mvvm/model/sessionmodel.h>
 #include "test_utils.h"
 #include <memory>
+#include <mvvm/model/compounditem.h>
+#include <mvvm/model/customvariants.h>
+#include <mvvm/model/sessionmodel.h>
 #include <stdexcept>
 
 using namespace ModelView;
 
 //! Test of CompountItem machinery (property children etc).
 
-class TestCompoundItem : public ::testing::Test
+class CompoundItemTest : public ::testing::Test
 {
 public:
-    ~TestCompoundItem();
+    ~CompoundItemTest();
 };
 
-TestCompoundItem::~TestCompoundItem() = default;
+CompoundItemTest::~CompoundItemTest() = default;
 
-TEST_F(TestCompoundItem, initialState)
+TEST_F(CompoundItemTest, initialState)
 {
     CompoundItem item;
     EXPECT_EQ(item.childrenCount(), 0);
 }
 
-TEST_F(TestCompoundItem, addIntProperty)
+TEST_F(CompoundItemTest, addIntProperty)
 {
     CompoundItem item;
 
@@ -50,7 +49,7 @@ TEST_F(TestCompoundItem, addIntProperty)
     EXPECT_FALSE(propertyItem->data(ItemDataRole::LIMITS).isValid());
 }
 
-TEST_F(TestCompoundItem, addDoubleProperty)
+TEST_F(CompoundItemTest, addDoubleProperty)
 {
     CompoundItem item;
 
@@ -66,7 +65,7 @@ TEST_F(TestCompoundItem, addDoubleProperty)
     EXPECT_TRUE(propertyItem->data(ItemDataRole::LIMITS).isValid());
 }
 
-TEST_F(TestCompoundItem, addCharProperty)
+TEST_F(CompoundItemTest, addCharProperty)
 {
     CompoundItem item;
 
@@ -80,7 +79,7 @@ TEST_F(TestCompoundItem, addCharProperty)
     EXPECT_FALSE(propertyItem->data(ItemDataRole::LIMITS).isValid());
 }
 
-TEST_F(TestCompoundItem, addBoolProperty)
+TEST_F(CompoundItemTest, addBoolProperty)
 {
     CompoundItem item;
 
@@ -95,8 +94,7 @@ TEST_F(TestCompoundItem, addBoolProperty)
     EXPECT_FALSE(propertyItem->data(ItemDataRole::LIMITS).isValid());
 }
 
-
-TEST_F(TestCompoundItem, setProperty)
+TEST_F(CompoundItemTest, setProperty)
 {
     CompoundItem item;
 
@@ -113,7 +111,7 @@ TEST_F(TestCompoundItem, setProperty)
     EXPECT_EQ(propertyItem->data().value<double>(), expected);
 }
 
-TEST_F(TestCompoundItem, itemAccess)
+TEST_F(CompoundItemTest, itemAccess)
 {
     const std::string tag = "tag";
 
@@ -129,7 +127,7 @@ TEST_F(TestCompoundItem, itemAccess)
     EXPECT_THROW(parent.item<CompoundItem>(tag), std::runtime_error);
 }
 
-TEST_F(TestCompoundItem, itemVectorAccess)
+TEST_F(CompoundItemTest, itemVectorAccess)
 {
     const std::string tag = "tag";
 
@@ -151,7 +149,7 @@ TEST_F(TestCompoundItem, itemVectorAccess)
 
 //! Tests automatic index addition to default display name.
 
-TEST_F(TestCompoundItem, displayNameIndexAddition)
+TEST_F(CompoundItemTest, displayNameIndexAddition)
 {
     const std::string tag = "tag";
 

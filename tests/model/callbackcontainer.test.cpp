@@ -7,36 +7,35 @@
 //
 // ************************************************************************** //
 
-
+#include "MockWidgets.h"
 #include "google_test.h"
-#include <mvvm/signals/callbackcontainer.h>
+#include <memory>
 #include <mvvm/model/mvvm_types.h>
 #include <mvvm/model/sessionitem.h>
-#include "MockWidgets.h"
-#include <memory>
+#include <mvvm/signals/callbackcontainer.h>
 
 using namespace ModelView;
 using ::testing::_;
 
 //! Testing CallbackContainer class.
 
-class TestCallbackContainer : public ::testing::Test
+class CallbackContainerTest : public ::testing::Test
 {
 public:
-    ~TestCallbackContainer();
+    ~CallbackContainerTest();
 };
 
-TestCallbackContainer::~TestCallbackContainer() = default;
+CallbackContainerTest::~CallbackContainerTest() = default;
 
 //! Callback container notifies single widget. Check if removal of widget disables notifications.
 
-TEST_F(TestCallbackContainer, singleWidget)
+TEST_F(CallbackContainerTest, singleWidget)
 {
     CallbackMockWidget widget;
     Signal<Callbacks::item_t> signal;
 
     signal.connect(std::bind(&CallbackMockWidget::onItemDestroy, &widget, std::placeholders::_1),
-                  &widget);
+                   &widget);
 
     std::unique_ptr<SessionItem> item(new SessionItem);
     EXPECT_CALL(widget, onItemDestroy(item.get())).Times(1);
@@ -55,18 +54,14 @@ TEST_F(TestCallbackContainer, singleWidget)
 //! Callback container notifies two widgets. Check if one widget is removed,
 //! the second is still notified.
 
-TEST_F(TestCallbackContainer, twoWidgets)
+TEST_F(CallbackContainerTest, twoWidgets)
 {
     CallbackMockWidget widget1, widget2;
     Signal<Callbacks::item_t> signal;
 
-    signal.connect([&](SessionItem* item){
-        widget1.onItemDestroy(item);
-    }, &widget1);
+    signal.connect([&](SessionItem* item) { widget1.onItemDestroy(item); }, &widget1);
 
-    signal.connect([&](SessionItem* item){
-        widget2.onItemDestroy(item);
-    }, &widget2);
+    signal.connect([&](SessionItem* item) { widget2.onItemDestroy(item); }, &widget2);
 
     std::unique_ptr<SessionItem> item(new SessionItem);
     EXPECT_CALL(widget1, onItemDestroy(item.get())).Times(1);
@@ -86,18 +81,16 @@ TEST_F(TestCallbackContainer, twoWidgets)
 
 //! Callback function with two parameters.
 
-TEST_F(TestCallbackContainer, twoParameters)
+TEST_F(CallbackContainerTest, twoParameters)
 {
     CallbackMockWidget widget1, widget2;
     Signal<Callbacks::item_int_t> signal;
 
-    signal.connect([&](SessionItem* item, int role){
-        widget1.onDataChange(item, role);
-    }, &widget1);
+    signal.connect([&](SessionItem* item, int role) { widget1.onDataChange(item, role); },
+                   &widget1);
 
-    signal.connect([&](SessionItem* item, int role){
-        widget2.onDataChange(item, role);
-    }, &widget2);
+    signal.connect([&](SessionItem* item, int role) { widget2.onDataChange(item, role); },
+                   &widget2);
 
     int expected_role = 42;
     std::unique_ptr<SessionItem> item(new SessionItem);

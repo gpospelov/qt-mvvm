@@ -7,41 +7,37 @@
 //
 // ************************************************************************** //
 
-
 #include "google_test.h"
-#include <mvvm/serialization/jsonitemdata.h>
 #include "test_utils.h"
-#include <mvvm/serialization/jsonvariant.h>
-#include <mvvm/model/sessionitemdata.h>
-#include <mvvm/model/customvariants.h>
-#include <QJsonObject>
 #include <QJsonArray>
+#include <QJsonObject>
+#include <mvvm/model/customvariants.h>
+#include <mvvm/model/sessionitemdata.h>
+#include <mvvm/serialization/jsonitemdata.h>
+#include <mvvm/serialization/jsonvariant.h>
 #include <string>
 
 using namespace ModelView;
 
 //! Test convertion of SessionItemData from/to QJsonObject.
 
-class TestJsonItemData : public ::testing::Test
+class JsonItemDataTest : public ::testing::Test
 {
 public:
-    ~TestJsonItemData();
+    ~JsonItemDataTest();
 
     static const QString test_dir;
 
-    static void SetUpTestCase()
-    {
-        TestUtils::CreateTestDirectory(test_dir);
-    }
+    static void SetUpTestCase() { TestUtils::CreateTestDirectory(test_dir); }
 };
 
-const QString TestJsonItemData::test_dir = "test_JsonItemData";
+const QString JsonItemDataTest::test_dir = "test_JsonItemData";
 
-TestJsonItemData::~TestJsonItemData() = default;
+JsonItemDataTest::~JsonItemDataTest() = default;
 
 //! Checks if json object is correctly identified as representing DataRole.
 
-TEST_F(TestJsonItemData, isValidDataRole)
+TEST_F(JsonItemDataTest, isValidDataRole)
 {
     JsonItemData converter;
     JsonVariant variant_converter;
@@ -67,7 +63,7 @@ TEST_F(TestJsonItemData, isValidDataRole)
 
 //! Creating QJsonArray from SessionItemData.
 
-TEST_F(TestJsonItemData, getJson)
+TEST_F(JsonItemDataTest, getJson)
 {
     JsonItemData converter;
 
@@ -75,7 +71,7 @@ TEST_F(TestJsonItemData, getJson)
     SessionItemData data;
     const int role = Qt::UserRole + 1;
     data.setData(QVariant::fromValue(42), role);
-    data.setData(QVariant::fromValue(std::string("abc")), role+2);
+    data.setData(QVariant::fromValue(std::string("abc")), role + 2);
 
     // creating json object out of it
     QJsonArray array = converter.get_json(data);
@@ -92,19 +88,18 @@ TEST_F(TestJsonItemData, getJson)
 
 //! From SessionItemData to json and back.
 
-TEST_F(TestJsonItemData, fromItemToJsonAndBack)
+TEST_F(JsonItemDataTest, fromItemToJsonAndBack)
 {
     JsonItemData converter;
 
     // initial data
     const std::vector<int> roles = {1, 2, 3};
-    const std::vector<QVariant> expected = {
-        QVariant::fromValue(42), QVariant::fromValue(1.23), QVariant::fromValue(std::string("abc"))
-    };
+    const std::vector<QVariant> expected = {QVariant::fromValue(42), QVariant::fromValue(1.23),
+                                            QVariant::fromValue(std::string("abc"))};
 
     // constructing SessionItemData
     SessionItemData data;
-    for (size_t i=0; i<roles.size(); ++i)
+    for (size_t i = 0; i < roles.size(); ++i)
         data.setData(expected[i], roles[i]);
 
     // constructing json array from data
@@ -118,28 +113,27 @@ TEST_F(TestJsonItemData, fromItemToJsonAndBack)
 
     EXPECT_EQ(data2->roles(), roles);
     for (auto role : roles) {
-        EXPECT_EQ(data2->data(role), expected[role-1]);
+        EXPECT_EQ(data2->data(role), expected[role - 1]);
     }
 }
 
 //! Filtering certain roles while writing to json.
 
-TEST_F(TestJsonItemData, filteredRoles)
+TEST_F(JsonItemDataTest, filteredRoles)
 {
     // initial data
     const std::vector<int> roles = {1, 2, 3};
-    const std::vector<QVariant> variants = {
-        QVariant::fromValue(42), QVariant::fromValue(1.23), QVariant::fromValue(std::string("abc"))
-    };
+    const std::vector<QVariant> variants = {QVariant::fromValue(42), QVariant::fromValue(1.23),
+                                            QVariant::fromValue(std::string("abc"))};
 
     // constructing SessionItemData
     SessionItemData data;
-    for (size_t i=0; i<roles.size(); ++i)
+    for (size_t i = 0; i < roles.size(); ++i)
         data.setData(variants[i], roles[i]);
 
     // constructing json array from data
     JsonItemData converter;
-    converter.set_role_filter({1,3});
+    converter.set_role_filter({1, 3});
     QJsonArray array = converter.get_json(data);
 
     // constructing data from json array
@@ -147,5 +141,3 @@ TEST_F(TestJsonItemData, filteredRoles)
     EXPECT_EQ(data2->roles().size(), 1u);
     EXPECT_EQ(data2->data(2).value<double>(), 1.23);
 }
-
-

@@ -7,13 +7,12 @@
 //
 // ************************************************************************** //
 
-
-#include "google_test.h"
-#include <mvvm/standarditems/colormapitem.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/standarditems/data2ditem.h>
 #include "MockWidgets.h"
+#include "google_test.h"
+#include <mvvm/model/sessionmodel.h>
 #include <mvvm/standarditems/axisitems.h>
+#include <mvvm/standarditems/colormapitem.h>
+#include <mvvm/standarditems/data2ditem.h>
 #include <mvvm/standarditems/linkeditem.h>
 
 using namespace ModelView;
@@ -21,17 +20,17 @@ using ::testing::_;
 
 //! Testing ColorMapItem.
 
-class TestColorMapItem : public ::testing::Test
+class ColorMapItemTest : public ::testing::Test
 {
 public:
-    ~TestColorMapItem();
+    ~ColorMapItemTest();
 };
 
-TestColorMapItem::~TestColorMapItem() = default;
+ColorMapItemTest::~ColorMapItemTest() = default;
 
 //! Initial state.
 
-TEST_F(TestColorMapItem, initialState)
+TEST_F(ColorMapItemTest, initialState)
 {
     ColorMapItem item;
     EXPECT_TRUE(item.dataItem() == nullptr);
@@ -40,7 +39,7 @@ TEST_F(TestColorMapItem, initialState)
 
 //! Setting dataItem in model context.
 
-TEST_F(TestColorMapItem, setDataItem)
+TEST_F(ColorMapItemTest, setDataItem)
 {
     SessionModel model;
     auto data_item = model.insertItem<Data2DItem>();
@@ -53,7 +52,7 @@ TEST_F(TestColorMapItem, setDataItem)
 
 //! Check signaling on set data item.
 
-TEST_F(TestColorMapItem, onSetDataItem)
+TEST_F(ColorMapItemTest, onSetDataItem)
 {
     SessionModel model;
     auto data_item = model.insertItem<Data2DItem>();

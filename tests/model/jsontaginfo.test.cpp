@@ -7,40 +7,36 @@
 //
 // ************************************************************************** //
 
-
 #include "google_test.h"
-#include <mvvm/serialization/jsontaginfo.h>
 #include "test_utils.h"
-#include <mvvm/model/taginfo.h>
-#include <QJsonObject>
 #include <QJsonArray>
 #include <QJsonDocument>
+#include <QJsonObject>
+#include <mvvm/model/taginfo.h>
+#include <mvvm/serialization/jsontaginfo.h>
 #include <string>
 
 using namespace ModelView;
 
 //! Test convertion of SessionItemData from/to QJsonObject.
 
-class TestJsonTagInfo : public ::testing::Test
+class JsonTagInfoTest : public ::testing::Test
 {
 public:
-    ~TestJsonTagInfo();
+    ~JsonTagInfoTest();
 
     static const QString test_dir;
 
-    static void SetUpTestCase()
-    {
-        TestUtils::CreateTestDirectory(test_dir);
-    }
+    static void SetUpTestCase() { TestUtils::CreateTestDirectory(test_dir); }
 };
 
-const QString TestJsonTagInfo::test_dir = "test_JsonTagInfo";
+const QString JsonTagInfoTest::test_dir = "test_JsonTagInfo";
 
-TestJsonTagInfo::~TestJsonTagInfo() = default;
+JsonTagInfoTest::~JsonTagInfoTest() = default;
 
 //! Checks if json object is correctly identified as representing TagInfo.
 
-TEST_F(TestJsonTagInfo, isItemTag)
+TEST_F(JsonTagInfoTest, isItemTag)
 {
     JsonTagInfo converter;
 
@@ -61,7 +57,7 @@ TEST_F(TestJsonTagInfo, isItemTag)
 
 //! Creating QJsonArray from TagInfo.
 
-TEST_F(TestJsonTagInfo, toJson)
+TEST_F(JsonTagInfoTest, toJson)
 {
     JsonTagInfo converter;
 
@@ -74,7 +70,7 @@ TEST_F(TestJsonTagInfo, toJson)
 
 //! From TagInfo to json and back.
 
-TEST_F(TestJsonTagInfo, tagInfoToJsonAndBack)
+TEST_F(JsonTagInfoTest, tagInfoToJsonAndBack)
 {
     JsonTagInfo converter;
 
@@ -91,7 +87,7 @@ TEST_F(TestJsonTagInfo, tagInfoToJsonAndBack)
 
 //! To file and back.
 
-TEST_F(TestJsonTagInfo, tagInfoToFileAndBack)
+TEST_F(JsonTagInfoTest, tagInfoToFileAndBack)
 {
     const std::string tag_name("tag");
     const std::string model_type("model");
@@ -112,4 +108,3 @@ TEST_F(TestJsonTagInfo, tagInfoToFileAndBack)
     EXPECT_EQ(reco_tag.max(), 1);
     EXPECT_EQ(reco_tag.modelTypes(), std::vector<std::string>() = {model_type});
 }
-

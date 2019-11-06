@@ -7,25 +7,24 @@
 //
 // ************************************************************************** //
 
-
-#include <mvvm/standarditems/axisitems.h>
 #include "google_test.h"
+#include <mvvm/standarditems/axisitems.h>
 
 using namespace ModelView;
 
 //! Testing AxisItems.
 
-class TestAxisItems : public ::testing::Test
+class AxisItemsTest : public ::testing::Test
 {
 public:
-    ~TestAxisItems();
+    ~AxisItemsTest();
 };
 
-TestAxisItems::~TestAxisItems() = default;
+AxisItemsTest::~AxisItemsTest() = default;
 
 //! Initial state
 
-TEST_F(TestAxisItems, initialState)
+TEST_F(AxisItemsTest, initialState)
 {
     FixedBinAxisItem axis;
     std::vector<double> expected{0.5};
@@ -35,7 +34,7 @@ TEST_F(TestAxisItems, initialState)
 
 //! Initial state
 
-TEST_F(TestAxisItems, viewportAxisInitialState)
+TEST_F(AxisItemsTest, viewportAxisInitialState)
 {
     ViewportAxisItem axis;
     EXPECT_EQ(axis.property(ViewportAxisItem::P_MIN), 0.0);
@@ -45,7 +44,7 @@ TEST_F(TestAxisItems, viewportAxisInitialState)
 
 //! ViewportAxisItem::setRange
 
-TEST_F(TestAxisItems, viewportAxisSetRange)
+TEST_F(AxisItemsTest, viewportAxisSetRange)
 {
     ViewportAxisItem axis;
 
@@ -61,7 +60,7 @@ TEST_F(TestAxisItems, viewportAxisSetRange)
 
 //! Factory method
 
-TEST_F(TestAxisItems, fixedBinAxisFactory)
+TEST_F(AxisItemsTest, fixedBinAxisFactory)
 {
     auto axis = FixedBinAxisItem::create(3, 1.0, 4.0);
 
@@ -76,7 +75,7 @@ TEST_F(TestAxisItems, fixedBinAxisFactory)
 
 //! Range method.
 
-TEST_F(TestAxisItems, fixedBinAxisRange)
+TEST_F(AxisItemsTest, fixedBinAxisRange)
 {
     auto axis = FixedBinAxisItem::create(3, 1.0, 4.0);
 

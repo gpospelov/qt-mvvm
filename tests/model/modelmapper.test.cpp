@@ -7,29 +7,28 @@
 //
 // ************************************************************************** //
 
-
 #include "MockWidgets.h"
 #include "google_test.h"
-#include <mvvm/signals/modelmapper.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
+#include <mvvm/signals/modelmapper.h>
 
 using namespace ModelView;
 using ::testing::_;
 
 //! Testing ModelMapper callbacks on basic model manipulations.
 
-class TestModelMapper : public ::testing::Test
+class ModelMapperTest : public ::testing::Test
 {
 public:
-    ~TestModelMapper();
+    ~ModelMapperTest();
 };
 
-TestModelMapper::~TestModelMapper() = default;
+ModelMapperTest::~ModelMapperTest() = default;
 
 //! Setting item data and checking corresponding signal.
 
-TEST(TestModelMapper, onDataChange)
+TEST(ModelMapperTest, onDataChange)
 {
     SessionModel model;
     MockWidgetForModel widget(&model);
@@ -68,7 +67,7 @@ TEST(TestModelMapper, onDataChange)
 
 //! Inserting item and checking corresponding signals.
 
-TEST(TestModelMapper, onRowInserted)
+TEST(ModelMapperTest, onRowInserted)
 {
     SessionModel model;
     MockWidgetForModel widget(&model);
@@ -88,7 +87,7 @@ TEST(TestModelMapper, onRowInserted)
 
 //! Inserting item and checking corresponding signals.
 
-TEST(TestModelMapper, onRowRemoved)
+TEST(ModelMapperTest, onRowRemoved)
 {
     SessionModel model;
     MockWidgetForModel widget(&model);
@@ -101,7 +100,8 @@ TEST(TestModelMapper, onRowRemoved)
     EXPECT_CALL(widget, onDataChange(_, _)).Times(0);
     EXPECT_CALL(widget, onRowInserted(_, _, _)).Times(0);
     EXPECT_CALL(widget, onRowRemoved(model.rootItem(), expected_tag, expected_index)).Times(1);
-    EXPECT_CALL(widget, onRowAboutToBeRemoved(model.rootItem(), expected_tag, expected_index)).Times(1);
+    EXPECT_CALL(widget, onRowAboutToBeRemoved(model.rootItem(), expected_tag, expected_index))
+        .Times(1);
     EXPECT_CALL(widget, onModelDestroyed(_)).Times(0);
     EXPECT_CALL(widget, onModelReset(_)).Times(0);
     // perform action
@@ -110,7 +110,7 @@ TEST(TestModelMapper, onRowRemoved)
 
 //! Testing signals on model destruction.
 
-TEST(TestModelMapper, onModelDestroyed)
+TEST(ModelMapperTest, onModelDestroyed)
 {
     auto model = std::make_unique<SessionModel>();
     auto widget = std::make_unique<MockWidgetForModel>(model.get());
@@ -128,7 +128,7 @@ TEST(TestModelMapper, onModelDestroyed)
 
 //! Testing signals on model destruction.
 
-TEST(TestModelMapper, onModelReset)
+TEST(ModelMapperTest, onModelReset)
 {
     auto model = std::make_unique<SessionModel>();
     auto widget = std::make_unique<MockWidgetForModel>(model.get());

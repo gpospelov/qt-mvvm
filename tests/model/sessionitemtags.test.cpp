@@ -7,28 +7,27 @@
 //
 // ************************************************************************** //
 
-
 #include "google_test.h"
+#include "test_utils.h"
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionitemtags.h>
 #include <mvvm/model/taginfo.h>
-#include "test_utils.h"
 
 using namespace ModelView;
 
 //! Tests for SessionItemTags class.
 
-class TestSessionItemTags : public ::testing::Test
+class SessionItemTagsTest : public ::testing::Test
 {
 public:
-    ~TestSessionItemTags();
+    ~SessionItemTagsTest();
 };
 
-TestSessionItemTags::~TestSessionItemTags() = default;
+SessionItemTagsTest::~SessionItemTagsTest() = default;
 
 //! Initial state of emty SessionItemTags.
 
-TEST_F(TestSessionItemTags, initialState)
+TEST_F(SessionItemTagsTest, initialState)
 {
     const std::string name("tag");
     SessionItemTags tag;
@@ -39,7 +38,7 @@ TEST_F(TestSessionItemTags, initialState)
 
 //! Registering tags.
 
-TEST_F(TestSessionItemTags, registerTag)
+TEST_F(SessionItemTagsTest, registerTag)
 {
     const std::string name("tag");
     SessionItemTags tag;
@@ -59,7 +58,7 @@ TEST_F(TestSessionItemTags, registerTag)
 
 //! Insert item.
 
-TEST_F(TestSessionItemTags, insertItem)
+TEST_F(SessionItemTagsTest, insertItem)
 {
     const std::string tag1 = "tag1";
     const std::string tag2 = "tag2";
@@ -99,7 +98,7 @@ TEST_F(TestSessionItemTags, insertItem)
 
 //! Testing method tagRowOfItem.
 
-TEST_F(TestSessionItemTags, tagRowOfItem)
+TEST_F(SessionItemTagsTest, tagRowOfItem)
 {
     const std::string tag1 = "tag1";
     const std::string tag2 = "tag2";
@@ -113,9 +112,9 @@ TEST_F(TestSessionItemTags, tagRowOfItem)
     auto child_t1_a = new SessionItem;
     auto child_t1_b = new SessionItem;
     auto child_t2_a = new SessionItem;
-    tag.insertItem(child_t1_a, TagRow::append());      // 0
-    tag.insertItem(child_t1_b, TagRow::append());      // 1
-    tag.insertItem(child_t2_a, {tag2, 0}); // 0
+    tag.insertItem(child_t1_a, TagRow::append()); // 0
+    tag.insertItem(child_t1_b, TagRow::append()); // 1
+    tag.insertItem(child_t2_a, {tag2, 0});        // 0
 
     // checking children tag and row
     EXPECT_EQ(tag.tagRowOfItem(child_t1_a).tag, tag1);
@@ -137,7 +136,7 @@ TEST_F(TestSessionItemTags, tagRowOfItem)
 
 //! Testing method getItem.
 
-TEST_F(TestSessionItemTags, getItem)
+TEST_F(SessionItemTagsTest, getItem)
 {
     const std::string tag1 = "tag1";
     const std::string tag2 = "tag2";
@@ -151,9 +150,9 @@ TEST_F(TestSessionItemTags, getItem)
     auto child_t1_a = new SessionItem;
     auto child_t1_b = new SessionItem;
     auto child_t2_a = new SessionItem;
-    tag.insertItem(child_t1_a, TagRow::append());      // 0
-    tag.insertItem(child_t1_b, TagRow::append());      // 1
-    tag.insertItem(child_t2_a, {tag2, 0}); // 0
+    tag.insertItem(child_t1_a, TagRow::append()); // 0
+    tag.insertItem(child_t1_b, TagRow::append()); // 1
+    tag.insertItem(child_t2_a, {tag2, 0});        // 0
 
     EXPECT_EQ(tag.getItem({tag1, 0}), child_t1_a);
     EXPECT_EQ(tag.getItem({tag1, 1}), child_t1_b);
@@ -163,7 +162,7 @@ TEST_F(TestSessionItemTags, getItem)
 
 //! Testing method getItem.
 
-TEST_F(TestSessionItemTags, takeItem)
+TEST_F(SessionItemTagsTest, takeItem)
 {
     const std::string tag1 = "tag1";
     const std::string tag2 = "tag2";
@@ -205,7 +204,7 @@ TEST_F(TestSessionItemTags, takeItem)
 
 //! Testing isSinglePropertyTag.
 
-TEST_F(TestSessionItemTags, isSinglePropertyTag)
+TEST_F(SessionItemTagsTest, isSinglePropertyTag)
 {
     SessionItemTags tag;
     tag.registerTag(TagInfo::universalTag("universal"), /*set_as_default*/ true);
@@ -216,4 +215,3 @@ TEST_F(TestSessionItemTags, isSinglePropertyTag)
 
     EXPECT_FALSE(tag.isSinglePropertyTag("unexisting tag"));
 }
-

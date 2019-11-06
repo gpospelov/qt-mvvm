@@ -7,25 +7,24 @@
 //
 // ************************************************************************** //
 
-
 #include "google_test.h"
+#include <memory>
 #include <mvvm/model/itempool.h>
 #include <mvvm/model/sessionitem.h>
-#include <memory>
 
 using namespace ModelView;
 
 //! Tests of ItemPool and its abilities to register/deregister SessionItem.
 
-class TestItemPool : public ::testing::Test
+class ItemPoolTest : public ::testing::Test
 {
 public:
-    ~TestItemPool();
+    ~ItemPoolTest();
 };
 
-TestItemPool::~TestItemPool() = default;
+ItemPoolTest::~ItemPoolTest() = default;
 
-TEST_F(TestItemPool, initialState)
+TEST_F(ItemPoolTest, initialState)
 {
     std::unique_ptr<ItemPool> pool(new ItemPool);
     EXPECT_EQ(pool->size(), 0u);
@@ -33,7 +32,7 @@ TEST_F(TestItemPool, initialState)
 
 //! Explicit item registrations.
 
-TEST_F(TestItemPool, registerItem)
+TEST_F(ItemPoolTest, registerItem)
 {
     std::unique_ptr<ItemPool> pool(new ItemPool);
     std::unique_ptr<SessionItem> item(new SessionItem);
@@ -64,7 +63,7 @@ TEST_F(TestItemPool, registerItem)
 
 //! Explicit item de-registrations.
 
-TEST_F(TestItemPool, deregisterItem)
+TEST_F(ItemPoolTest, deregisterItem)
 {
     std::unique_ptr<ItemPool> pool(new ItemPool);
     std::unique_ptr<SessionItem> item1(new SessionItem);
@@ -91,9 +90,9 @@ TEST_F(TestItemPool, deregisterItem)
     EXPECT_EQ(pool->size(), 0u);
 }
 
-//!Providing custom key.
+//! Providing custom key.
 
-TEST_F(TestItemPool, customKey)
+TEST_F(ItemPoolTest, customKey)
 {
     std::shared_ptr<ItemPool> pool(new ItemPool);
     EXPECT_EQ(pool.use_count(), 1l);

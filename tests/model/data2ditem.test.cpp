@@ -7,29 +7,28 @@
 //
 // ************************************************************************** //
 
-
 #include "MockWidgets.h"
-#include <mvvm/standarditems/axisitems.h>
-#include <mvvm/standarditems/data2ditem.h>
 #include "google_test.h"
 #include <mvvm/model/sessionmodel.h>
+#include <mvvm/standarditems/axisitems.h>
+#include <mvvm/standarditems/data2ditem.h>
 
 using namespace ModelView;
 using ::testing::_;
 
 //! Testing Data1DItem.
 
-class TestData2DItem : public ::testing::Test
+class Data2DItemTest : public ::testing::Test
 {
 public:
-    ~TestData2DItem();
+    ~Data2DItemTest();
 };
 
-TestData2DItem::~TestData2DItem() = default;
+Data2DItemTest::~Data2DItemTest() = default;
 
 //! Initial state.
 
-TEST_F(TestData2DItem, initialState)
+TEST_F(Data2DItemTest, initialState)
 {
     Data2DItem item;
 
@@ -40,7 +39,7 @@ TEST_F(TestData2DItem, initialState)
 
 //! Checking the method ::setAxis.
 
-TEST_F(TestData2DItem, setAxes)
+TEST_F(Data2DItemTest, setAxes)
 {
     Data2DItem item;
 
@@ -59,7 +58,7 @@ TEST_F(TestData2DItem, setAxes)
 
 //! Checking the method ::setContent.
 
-TEST_F(TestData2DItem, setContent)
+TEST_F(Data2DItemTest, setContent)
 {
     Data2DItem item;
 
@@ -76,7 +75,7 @@ TEST_F(TestData2DItem, setContent)
 
 //! Checking the signals when axes changed.
 
-TEST_F(TestData2DItem, checkSignalsOnAxisChange)
+TEST_F(Data2DItemTest, checkSignalsOnAxisChange)
 {
     SessionModel model;
     auto item = model.insertItem<Data2DItem>();
@@ -97,7 +96,7 @@ TEST_F(TestData2DItem, checkSignalsOnAxisChange)
 
 //! Checking the signals when content changed.
 
-TEST_F(TestData2DItem, checkSignalsOnContentChange)
+TEST_F(Data2DItemTest, checkSignalsOnContentChange)
 {
     SessionModel model;
     auto item = model.insertItem<Data2DItem>();

@@ -7,25 +7,24 @@
 //
 // ************************************************************************** //
 
-
 #include "google_test.h"
-#include <mvvm/model/itemutils.h>
 #include <mvvm/commands/copyitemcommand.h>
+#include <mvvm/model/itemutils.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/model/taginfo.h>
 
 using namespace ModelView;
 
-class TestCopyItemCommand : public ::testing::Test
+class CopyItemCommandTest : public ::testing::Test
 {
 public:
-    ~TestCopyItemCommand();
+    ~CopyItemCommandTest();
 };
 
-TestCopyItemCommand::~TestCopyItemCommand() = default;
+CopyItemCommandTest::~CopyItemCommandTest() = default;
 
-TEST_F(TestCopyItemCommand, copyChild)
+TEST_F(CopyItemCommandTest, copyChild)
 {
     SessionModel model;
 

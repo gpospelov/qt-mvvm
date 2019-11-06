@@ -7,29 +7,28 @@
 //
 // ************************************************************************** //
 
-
+#include "MockWidgets.h"
+#include "google_test.h"
+#include <mvvm/model/sessionmodel.h>
 #include <mvvm/standarditems/axisitems.h>
 #include <mvvm/standarditems/data1ditem.h>
-#include <mvvm/model/sessionmodel.h>
-#include "google_test.h"
-#include "MockWidgets.h"
 
 using namespace ModelView;
 using ::testing::_;
 
 //! Testing Data1DItem.
 
-class TestData1DItem : public ::testing::Test
+class Data1DItemTest : public ::testing::Test
 {
 public:
-    ~TestData1DItem();
+    ~Data1DItemTest();
 };
 
-TestData1DItem::~TestData1DItem() = default;
+Data1DItemTest::~Data1DItemTest() = default;
 
 //! Initial state.
 
-TEST_F(TestData1DItem, initialState)
+TEST_F(Data1DItemTest, initialState)
 {
     Data1DItem item;
 
@@ -40,7 +39,7 @@ TEST_F(TestData1DItem, initialState)
 
 //! Checking the method ::setFixedBinAxis.
 
-TEST_F(TestData1DItem, setFixedBinAxis)
+TEST_F(Data1DItemTest, setFixedBinAxis)
 {
     Data1DItem item;
 
@@ -65,7 +64,7 @@ TEST_F(TestData1DItem, setFixedBinAxis)
 
 //! Checking the method ::setContent.
 
-TEST_F(TestData1DItem, setContent)
+TEST_F(Data1DItemTest, setContent)
 {
     Data1DItem item;
 
@@ -80,7 +79,7 @@ TEST_F(TestData1DItem, setContent)
 
 //! Checking the signals when axes changed.
 
-TEST_F(TestData1DItem, checkSignalsOnAxisChange)
+TEST_F(Data1DItemTest, checkSignalsOnAxisChange)
 {
     SessionModel model;
     auto item = model.insertItem<Data1DItem>();
@@ -99,7 +98,7 @@ TEST_F(TestData1DItem, checkSignalsOnAxisChange)
 
 //! Checking the signals when content changed.
 
-TEST_F(TestData1DItem, checkSignalsOnContentChange)
+TEST_F(Data1DItemTest, checkSignalsOnContentChange)
 {
     SessionModel model;
     auto item = model.insertItem<Data1DItem>();

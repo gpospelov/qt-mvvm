@@ -7,27 +7,26 @@
 //
 // ************************************************************************** //
 
-
 #include "google_test.h"
 #include "test_utils.h"
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/model/itempool.h>
-#include <mvvm/model/taginfo.h>
-#include <mvvm/model/itemutils.h>
-#include <memory>
 #include <QDebug>
+#include <memory>
+#include <mvvm/model/itempool.h>
+#include <mvvm/model/itemutils.h>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/model/taginfo.h>
 
 using namespace ModelView;
 
-class TestSessionItem : public ::testing::Test
+class SessionItemTest : public ::testing::Test
 {
 public:
-    ~TestSessionItem();
+    ~SessionItemTest();
 };
 
-TestSessionItem::~TestSessionItem() = default;
+SessionItemTest::~SessionItemTest() = default;
 
-TEST_F(TestSessionItem, initialState)
+TEST_F(SessionItemTest, initialState)
 {
     SessionItem item;
     const int role = ItemDataRole::DATA;
@@ -48,13 +47,13 @@ TEST_F(TestSessionItem, initialState)
     EXPECT_FALSE(item.identifier().empty());
 }
 
-TEST_F(TestSessionItem, modelType)
+TEST_F(SessionItemTest, modelType)
 {
     SessionItem item2("Layer");
     EXPECT_EQ(item2.modelType(), "Layer");
 }
 
-TEST_F(TestSessionItem, setData)
+TEST_F(SessionItemTest, setData)
 {
     SessionItem item;
     const int role = ItemDataRole::DATA;
@@ -64,7 +63,8 @@ TEST_F(TestSessionItem, setData)
     QVariant expected(42.0);
     EXPECT_TRUE(item.setData(expected, role));
 
-    std::vector<int> expected_roles = {ItemDataRole::IDENTIFIER, ItemDataRole::DISPLAY, ItemDataRole::DATA};
+    std::vector<int> expected_roles = {ItemDataRole::IDENTIFIER, ItemDataRole::DISPLAY,
+                                       ItemDataRole::DATA};
     EXPECT_EQ(item.roles(), expected_roles);
     EXPECT_EQ(item.data(role), expected);
 
@@ -81,7 +81,7 @@ TEST_F(TestSessionItem, setData)
 
 //! Display role.
 
-TEST_F(TestSessionItem, displayName)
+TEST_F(SessionItemTest, displayName)
 {
     SessionItem item("Property");
     QVariant data(42.0);
@@ -98,7 +98,7 @@ TEST_F(TestSessionItem, displayName)
 
 //! Attempt to set the different Variant to already existing role.
 
-TEST_F(TestSessionItem, variantMismatch)
+TEST_F(SessionItemTest, variantMismatch)
 {
     SessionItem item;
     const int role = ItemDataRole::DATA;
@@ -107,7 +107,8 @@ TEST_F(TestSessionItem, variantMismatch)
     // setting data for the first time
     EXPECT_TRUE(item.setData(expected, role));
 
-    std::vector<int> expected_roles = {ItemDataRole::IDENTIFIER, ItemDataRole::DISPLAY, ItemDataRole::DATA};
+    std::vector<int> expected_roles = {ItemDataRole::IDENTIFIER, ItemDataRole::DISPLAY,
+                                       ItemDataRole::DATA};
     EXPECT_EQ(item.roles(), expected_roles);
     EXPECT_EQ(item.data(role), expected);
 
@@ -121,7 +122,7 @@ TEST_F(TestSessionItem, variantMismatch)
 
 //! Item registration in a pool.
 
-TEST_F(TestSessionItem, registerItem)
+TEST_F(SessionItemTest, registerItem)
 {
     std::unique_ptr<SessionItem> item(new SessionItem);
     auto item_id = item->identifier();
@@ -144,7 +145,7 @@ TEST_F(TestSessionItem, registerItem)
 
 //! Item registration in a pool.
 
-TEST_F(TestSessionItem, defaultTag)
+TEST_F(SessionItemTest, defaultTag)
 {
     SessionItem item;
     EXPECT_EQ(item.defaultTag(), std::string());
@@ -153,34 +154,34 @@ TEST_F(TestSessionItem, defaultTag)
 
 //! Registering tags
 
-TEST_F(TestSessionItem, registerTag)
+TEST_F(SessionItemTest, registerTag)
 {
     SessionItem item;
     item.registerTag(TagInfo::universalTag("tagname"));
     EXPECT_TRUE(item.isTag("tagname"));
 
-    //registering of tag with same name forbidden
+    // registering of tag with same name forbidden
     EXPECT_THROW(item.registerTag(TagInfo::universalTag("tagname")), std::runtime_error);
 
-    //registering empty tag is forbidden
+    // registering empty tag is forbidden
     EXPECT_THROW(item.registerTag(TagInfo::universalTag("")), std::runtime_error);
 }
 
 //! Registering tag and setting it as default
 
-TEST_F(TestSessionItem, registerDefaultTag)
+TEST_F(SessionItemTest, registerDefaultTag)
 {
     SessionItem item;
-    item.registerTag(TagInfo::universalTag("tagname"), /*set_as_default*/true);
+    item.registerTag(TagInfo::universalTag("tagname"), /*set_as_default*/ true);
     EXPECT_EQ(item.defaultTag(), "tagname");
 }
 
 //! Simple child insert.
 
-TEST_F(TestSessionItem, insertItem)
+TEST_F(SessionItemTest, insertItem)
 {
     std::unique_ptr<SessionItem> parent(new SessionItem);
-    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/true);
+    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
 
     std::unique_ptr<SessionItem> child(new SessionItem);
 
@@ -204,10 +205,10 @@ TEST_F(TestSessionItem, insertItem)
 
 //! Simple children insert.
 
-TEST_F(TestSessionItem, insertChildren)
+TEST_F(SessionItemTest, insertChildren)
 {
     std::unique_ptr<SessionItem> parent(new SessionItem);
-    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/true);
+    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
 
     auto child1 = new SessionItem;
     auto child2 = new SessionItem;
@@ -250,15 +251,15 @@ TEST_F(TestSessionItem, insertChildren)
 
     // attempt to insert item using out of scope index
     auto child5 = std::make_unique<SessionItem>();
-    EXPECT_FALSE(parent->insertItem(child5.get(), {"",  parent->childrenCount()+1}));
+    EXPECT_FALSE(parent->insertItem(child5.get(), {"", parent->childrenCount() + 1}));
 }
 
 //! Removing (taking) item from parent.
 
-TEST_F(TestSessionItem, takeItem)
+TEST_F(SessionItemTest, takeItem)
 {
     std::unique_ptr<SessionItem> parent(new SessionItem);
-    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/true);
+    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
 
     auto child1 = new SessionItem;
     auto child2 = new SessionItem;
@@ -286,7 +287,7 @@ TEST_F(TestSessionItem, takeItem)
 
 //! Insert and take tagged items.
 
-TEST_F(TestSessionItem, singleTagAndItems)
+TEST_F(SessionItemTest, singleTagAndItems)
 {
     const std::string tag1 = "tag1";
 
@@ -329,7 +330,7 @@ TEST_F(TestSessionItem, singleTagAndItems)
 
 //! Insert and take tagged items when two tags are present.
 
-TEST_F(TestSessionItem, twoTagsAndItems)
+TEST_F(SessionItemTest, twoTagsAndItems)
 {
     const std::string tag1 = "tag1";
     const std::string tag2 = "tag2";
@@ -356,7 +357,8 @@ TEST_F(TestSessionItem, twoTagsAndItems)
     parent->insertItem(child_t2_b, {tag2, 1}); // between child_t2_a and child_t2_c
 
     // testing item access via non-tag interface
-    std::vector<SessionItem*> expected = {child_t1_a, child_t1_b, child_t2_a, child_t2_b, child_t2_c};
+    std::vector<SessionItem*> expected = {child_t1_a, child_t1_b, child_t2_a, child_t2_b,
+                                          child_t2_c};
     EXPECT_EQ(parent->children(), expected);
     EXPECT_EQ(Utils::IndexOfChild(parent.get(), child_t1_a), 0);
     EXPECT_EQ(Utils::IndexOfChild(parent.get(), child_t2_c), 4);
@@ -386,7 +388,7 @@ TEST_F(TestSessionItem, twoTagsAndItems)
 
 //! Inserting and removing items when tag has limits.
 
-TEST_F(TestSessionItem, tagWithLimits)
+TEST_F(SessionItemTest, tagWithLimits)
 {
     const std::string tag1 = "tag1";
     const int maxItems = 3;
@@ -419,7 +421,7 @@ TEST_F(TestSessionItem, tagWithLimits)
 
 //! Inserting and removing items when tag has limits.
 
-TEST_F(TestSessionItem, tagModelTypes)
+TEST_F(SessionItemTest, tagModelTypes)
 {
     const std::string tag1 = "tag1";
     const std::string tag2 = "tag2";
@@ -429,7 +431,8 @@ TEST_F(TestSessionItem, tagModelTypes)
     const std::string modelType4 = "ModelType4";
 
     std::unique_ptr<SessionItem> parent(new SessionItem("ModelType"));
-    parent->registerTag(TagInfo(tag1, 0, -1, std::vector<std::string>() = {modelType1, modelType2}));
+    parent->registerTag(
+        TagInfo(tag1, 0, -1, std::vector<std::string>() = {modelType1, modelType2}));
     parent->registerTag(TagInfo(tag2, 0, -1, std::vector<std::string>() = {modelType3}));
 
     auto item1 = new SessionItem(modelType1);
@@ -451,7 +454,7 @@ TEST_F(TestSessionItem, tagModelTypes)
     EXPECT_EQ(parent->getItems(tag2), expected);
 }
 
-TEST_F(TestSessionItem, tagFromItem)
+TEST_F(SessionItemTest, tagFromItem)
 {
     const std::string tag1 = "tag1";
     const std::string tag2 = "tag2";
@@ -486,7 +489,7 @@ TEST_F(TestSessionItem, tagFromItem)
 
 //! Checks row of item in its tag
 
-TEST_F(TestSessionItem, tagRowFromItem)
+TEST_F(SessionItemTest, tagRowFromItem)
 {
     const std::string tag1 = "tag1";
     const std::string tag2 = "tag2";
@@ -506,7 +509,7 @@ TEST_F(TestSessionItem, tagRowFromItem)
     parent->insertItem(child_t2_c, {tag2, -1}); // 2
     parent->insertItem(child_t1_a, {tag1, -1}); // 0
     parent->insertItem(child_t1_b, {tag1, -1}); // 1
-    parent->insertItem(child_t2_b, {tag2, 1}); // 1 between child_t2_a and child_t2_c
+    parent->insertItem(child_t2_b, {tag2, 1});  // 1 between child_t2_a and child_t2_c
 
     EXPECT_EQ(parent->tagRowOfItem(child_t1_a).row, 0);
     EXPECT_EQ(parent->tagRowOfItem(child_t1_b).row, 1);
@@ -523,7 +526,7 @@ TEST_F(TestSessionItem, tagRowFromItem)
 
 //! Checks item appearance (enabled/disabled and editable/readonly).
 
-TEST_F(TestSessionItem, appearance)
+TEST_F(SessionItemTest, appearance)
 {
     SessionItem item("Model");
 
@@ -550,8 +553,7 @@ TEST_F(TestSessionItem, appearance)
     EXPECT_FALSE(item.isEditable());
 }
 
-
-TEST_F(TestSessionItem, itemsInTag)
+TEST_F(SessionItemTest, itemsInTag)
 {
     const std::string tag1 = "tag1";
     const std::string tag2 = "tag2";

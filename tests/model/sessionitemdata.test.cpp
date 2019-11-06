@@ -7,26 +7,25 @@
 //
 // ************************************************************************** //
 
-
 #include "google_test.h"
-#include <mvvm/model/sessionitemdata.h>
 #include <mvvm/model/mvvm_types.h>
+#include <mvvm/model/sessionitemdata.h>
 
 using namespace ModelView;
 
 //! Test of SessionItemData.
 
-class TestSessionItemData : public ::testing::Test
+class SessionItemDataTest : public ::testing::Test
 {
 public:
-    ~TestSessionItemData();
+    ~SessionItemDataTest();
 };
 
-TestSessionItemData::~TestSessionItemData() = default;
+SessionItemDataTest::~SessionItemDataTest() = default;
 
 //! Initial state of SessionItemData object.
 
-TEST_F(TestSessionItemData, initialState)
+TEST_F(SessionItemDataTest, initialState)
 {
     SessionItemData data;
     EXPECT_TRUE(data.roles().empty());
@@ -35,7 +34,7 @@ TEST_F(TestSessionItemData, initialState)
 
 //! Basic setData, data operations.
 
-TEST_F(TestSessionItemData, setDataDouble)
+TEST_F(SessionItemDataTest, setDataDouble)
 {
     SessionItemData data;
 
@@ -44,7 +43,7 @@ TEST_F(TestSessionItemData, setDataDouble)
 
     // setting variant for role
     EXPECT_TRUE(data.setData(variant, role));
-    std::vector<int> expected {role};
+    std::vector<int> expected{role};
     EXPECT_EQ(data.roles(), expected);
     EXPECT_TRUE(data.data(role) == variant);
 
@@ -66,7 +65,7 @@ TEST_F(TestSessionItemData, setDataDouble)
 
 //! Using different roles.
 
-TEST_F(TestSessionItemData, differentRoles)
+TEST_F(SessionItemDataTest, differentRoles)
 {
     SessionItemData data;
 
@@ -76,7 +75,7 @@ TEST_F(TestSessionItemData, differentRoles)
     EXPECT_TRUE(data.setData(QVariant::fromValue(42.0), role1));
     EXPECT_TRUE(data.setData(QVariant::fromValue(std::string("str")), role2));
 
-    std::vector<int> expected {role1, role2};
+    std::vector<int> expected{role1, role2};
     EXPECT_EQ(data.roles(), expected);
 
     EXPECT_TRUE(data.data(role1) == QVariant(42.0));
@@ -87,7 +86,7 @@ TEST_F(TestSessionItemData, differentRoles)
 
 //! Changing type of variant for role should not be allowed.
 
-TEST_F(TestSessionItemData, changingRole)
+TEST_F(SessionItemDataTest, changingRole)
 {
     SessionItemData data;
 
@@ -96,7 +95,7 @@ TEST_F(TestSessionItemData, changingRole)
 
     // setting variant for role
     EXPECT_TRUE(data.setData(variant, role));
-    std::vector<int> expected {role};
+    std::vector<int> expected{role};
     EXPECT_EQ(data.roles(), expected);
     EXPECT_TRUE(data.data(role) == variant);
 
@@ -104,20 +103,20 @@ TEST_F(TestSessionItemData, changingRole)
     EXPECT_THROW(data.setData(s, role), std::runtime_error);
 }
 
-TEST_F(TestSessionItemData, rangeLoop)
+TEST_F(SessionItemDataTest, rangeLoop)
 {
     SessionItemData data;
     const std::vector<double> expected_values = {1.2, 1.3};
     const std::vector<int> expected_roles = {1, 2};
 
-    for(size_t i=0; i<expected_values.size(); ++i) {
+    for (size_t i = 0; i < expected_values.size(); ++i) {
         data.setData(QVariant::fromValue(expected_values[i]), expected_roles[i]);
     }
 
     std::vector<double> values;
     std::vector<int> roles;
 
-    for(const auto& x : data) {
+    for (const auto& x : data) {
         values.push_back(x.m_data.value<double>());
         roles.push_back(x.m_role);
     }

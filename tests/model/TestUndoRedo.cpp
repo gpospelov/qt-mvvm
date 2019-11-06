@@ -7,15 +7,14 @@
 //
 // ************************************************************************** //
 
-
 #include "google_test.h"
+#include "toy_includes.h"
+#include "toy_items.h"
+#include <QUndoStack>
 #include <mvvm/model/itemutils.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/model/taginfo.h>
-#include "toy_includes.h"
-#include "toy_items.h"
-#include <QUndoStack>
 
 using namespace ModelView;
 

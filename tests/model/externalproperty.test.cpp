@@ -7,22 +7,21 @@
 //
 // ************************************************************************** //
 
-
+#include "google_test.h"
 #include <mvvm/model/comparators.h>
 #include <mvvm/model/externalproperty.h>
-#include "google_test.h"
 
 using namespace ModelView;
 
-class TestExternalProperty : public ::testing::Test
+class ExternalPropertyTest : public ::testing::Test
 {
 public:
-    ~TestExternalProperty();
+    ~ExternalPropertyTest();
 };
 
-TestExternalProperty::~TestExternalProperty() = default;
+ExternalPropertyTest::~ExternalPropertyTest() = default;
 
-TEST_F(TestExternalProperty, initialState)
+TEST_F(ExternalPropertyTest, initialState)
 {
     ExternalProperty property;
     EXPECT_FALSE(property.isValid());
@@ -31,7 +30,7 @@ TEST_F(TestExternalProperty, initialState)
     EXPECT_FALSE(property.color().isValid());
 }
 
-TEST_F(TestExternalProperty, constructor)
+TEST_F(ExternalPropertyTest, constructor)
 {
     ExternalProperty property("text", QColor(Qt::red), "123");
     EXPECT_TRUE(property.isValid());
@@ -40,7 +39,7 @@ TEST_F(TestExternalProperty, constructor)
     EXPECT_EQ(property.identifier(), "123");
 }
 
-TEST_F(TestExternalProperty, equalityOperators)
+TEST_F(ExternalPropertyTest, equalityOperators)
 {
     ExternalProperty prop1a;
     ExternalProperty prop1b;
@@ -56,7 +55,7 @@ TEST_F(TestExternalProperty, equalityOperators)
     EXPECT_FALSE(prop1a == prop2a);
 }
 
-TEST_F(TestExternalProperty, variantEquality)
+TEST_F(ExternalPropertyTest, variantEquality)
 {
     if (Comparators::registered()) {
         EXPECT_EQ(1, 1);

@@ -7,24 +7,23 @@
 //
 // ************************************************************************** //
 
-
-#include <mvvm/model/compounditem.h>
 #include "google_test.h"
+#include <mvvm/model/compounditem.h>
 #include <mvvm/model/itemfactory.h>
-#include <mvvm/serialization/jsonitemcopystrategy.h>
 #include <mvvm/model/propertyitem.h>
+#include <mvvm/serialization/jsonitemcopystrategy.h>
 #include <mvvm/standarditems/standarditemcatalogue.h>
 
 using namespace ModelView;
 
-class TestJsonItemCopyStrategy : public ::testing::Test
+class JsonItemCopyStrategyTest : public ::testing::Test
 {
 public:
-    TestJsonItemCopyStrategy()
+    JsonItemCopyStrategyTest()
         : m_factory(std::make_unique<ItemFactory>(CreateStandardItemCatalogue()))
     {
     }
-    ~TestJsonItemCopyStrategy();
+    ~JsonItemCopyStrategyTest();
 
     std::unique_ptr<JsonItemCopyStrategy> createCopyStrategy()
     {
@@ -34,11 +33,11 @@ public:
     std::unique_ptr<ItemFactory> m_factory;
 };
 
-TestJsonItemCopyStrategy::~TestJsonItemCopyStrategy() = default;
+JsonItemCopyStrategyTest::~JsonItemCopyStrategyTest() = default;
 
 //! Saving/restoring PropertyItem.
 
-TEST_F(TestJsonItemCopyStrategy, propertyItem)
+TEST_F(JsonItemCopyStrategyTest, propertyItem)
 {
     auto strategy = createCopyStrategy();
 
@@ -54,7 +53,7 @@ TEST_F(TestJsonItemCopyStrategy, propertyItem)
 
 //! Saving/restoring CompoundItem.
 
-TEST_F(TestJsonItemCopyStrategy, compoundItem)
+TEST_F(JsonItemCopyStrategyTest, compoundItem)
 {
     auto strategy = createCopyStrategy();
 
@@ -71,7 +70,7 @@ TEST_F(TestJsonItemCopyStrategy, compoundItem)
 
 //! Saving/restoring CustomItem.
 
-TEST_F(TestJsonItemCopyStrategy, customItem)
+TEST_F(JsonItemCopyStrategyTest, customItem)
 {
     auto strategy = createCopyStrategy();
 

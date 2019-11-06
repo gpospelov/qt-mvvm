@@ -7,7 +7,6 @@
 //
 // ************************************************************************** //
 
-
 #include "google_test.h"
 #include <mvvm/model/itemcatalogue.h>
 #include <mvvm/model/propertyitem.h>
@@ -18,15 +17,15 @@ using namespace ModelView;
 
 //! Testing ItemCatalogue construction
 
-class TestItemCatalogue : public ::testing::Test
+class ItemCatalogueTest : public ::testing::Test
 {
 public:
-    ~TestItemCatalogue();
+    ~ItemCatalogueTest();
 };
 
-TestItemCatalogue::~TestItemCatalogue() = default;
+ItemCatalogueTest::~ItemCatalogueTest() = default;
 
-TEST_F(TestItemCatalogue, initialState)
+TEST_F(ItemCatalogueTest, initialState)
 {
     ItemCatalogue catalogue;
     EXPECT_EQ(catalogue.itemCount(), 0);
@@ -34,7 +33,7 @@ TEST_F(TestItemCatalogue, initialState)
     EXPECT_EQ(catalogue.labels(), std::vector<std::string>({}));
 }
 
-TEST_F(TestItemCatalogue, addItem)
+TEST_F(ItemCatalogueTest, addItem)
 {
     ItemCatalogue catalogue;
 
@@ -56,7 +55,7 @@ TEST_F(TestItemCatalogue, addItem)
     EXPECT_EQ(catalogue.labels(), std::vector<std::string>({""}));
 }
 
-TEST_F(TestItemCatalogue, copyConstructor)
+TEST_F(ItemCatalogueTest, copyConstructor)
 {
     ItemCatalogue catalogue;
     catalogue.registerItem<PropertyItem>();
@@ -84,7 +83,7 @@ TEST_F(TestItemCatalogue, copyConstructor)
     EXPECT_THROW(copy.create(Constants::VectorItemType), std::runtime_error);
 }
 
-TEST_F(TestItemCatalogue, assignmentOperator)
+TEST_F(ItemCatalogueTest, assignmentOperator)
 {
     ItemCatalogue catalogue;
     catalogue.registerItem<PropertyItem>();
@@ -101,7 +100,7 @@ TEST_F(TestItemCatalogue, assignmentOperator)
     EXPECT_TRUE(dynamic_cast<PropertyItem*>(item.get()) != nullptr);
 }
 
-TEST_F(TestItemCatalogue, contains)
+TEST_F(ItemCatalogueTest, contains)
 {
     ItemCatalogue catalogue;
     catalogue.registerItem<PropertyItem>();
@@ -110,7 +109,7 @@ TEST_F(TestItemCatalogue, contains)
     EXPECT_FALSE(catalogue.contains(Constants::VectorItemType));
 }
 
-TEST_F(TestItemCatalogue, defaultItemCatalogue)
+TEST_F(ItemCatalogueTest, defaultItemCatalogue)
 {
     auto catalogue = CreateStandardItemCatalogue();
 
@@ -127,7 +126,7 @@ TEST_F(TestItemCatalogue, defaultItemCatalogue)
     EXPECT_TRUE(dynamic_cast<CompoundItem*>(item.get()) != nullptr);
 }
 
-TEST_F(TestItemCatalogue, addLabeledItem)
+TEST_F(ItemCatalogueTest, addLabeledItem)
 {
     ItemCatalogue catalogue;
     catalogue.registerItem<PropertyItem>("property");
@@ -138,7 +137,7 @@ TEST_F(TestItemCatalogue, addLabeledItem)
     EXPECT_EQ(catalogue.labels(), std::vector<std::string>({"property", "vector item"}));
 }
 
-TEST_F(TestItemCatalogue, merge)
+TEST_F(ItemCatalogueTest, merge)
 {
     ItemCatalogue catalogue1;
     catalogue1.registerItem<PropertyItem>("property");

@@ -7,25 +7,24 @@
 //
 // ************************************************************************** //
 
-
 #include "google_test.h"
-#include <mvvm/model/itemutils.h>
 #include <mvvm/commands/removeitemcommand.h>
+#include <mvvm/model/itemutils.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/model/taginfo.h>
 
 using namespace ModelView;
 
-class TestRemoveItemCommand : public ::testing::Test
+class RemoveItemCommandTest : public ::testing::Test
 {
 public:
-    ~TestRemoveItemCommand();
+    ~RemoveItemCommandTest();
 };
 
-TestRemoveItemCommand::~TestRemoveItemCommand() = default;
+RemoveItemCommandTest::~RemoveItemCommandTest() = default;
 
-TEST_F(TestRemoveItemCommand, removeAtCommand)
+TEST_F(RemoveItemCommandTest, removeAtCommand)
 {
     SessionModel model;
     auto item = model.insertItem<SessionItem>(model.rootItem(), "", 0);
@@ -46,7 +45,7 @@ TEST_F(TestRemoveItemCommand, removeAtCommand)
     EXPECT_EQ(restored->identifier(), item_identifier);
 }
 
-TEST_F(TestRemoveItemCommand, removeAtCommandChild)
+TEST_F(RemoveItemCommandTest, removeAtCommandChild)
 {
     SessionModel model;
     auto parent = model.insertItem<SessionItem>(model.rootItem(), "", 0);
@@ -76,7 +75,7 @@ TEST_F(TestRemoveItemCommand, removeAtCommandChild)
     EXPECT_EQ(restored->data().value<double>(), 42.0);
 }
 
-TEST_F(TestRemoveItemCommand, removeAtCommandParentWithChild)
+TEST_F(RemoveItemCommandTest, removeAtCommandParentWithChild)
 {
     SessionModel model;
     auto parent = model.insertItem<SessionItem>(model.rootItem(), "", 0);
@@ -111,7 +110,7 @@ TEST_F(TestRemoveItemCommand, removeAtCommandParentWithChild)
 
 //! RemoveAtCommand in multitag context
 
-TEST_F(TestRemoveItemCommand, removeAtCommandMultitag)
+TEST_F(RemoveItemCommandTest, removeAtCommandMultitag)
 {
     SessionModel model;
     auto parent = model.insertItem<SessionItem>(model.rootItem(), "", 0);

@@ -7,7 +7,6 @@
 //
 // ************************************************************************** //
 
-
 #include "google_test.h"
 #include <mvvm/model/tagrow.h>
 
@@ -15,17 +14,17 @@ using namespace ModelView;
 
 //! Testing AxisItems.
 
-class TestTagRow : public ::testing::Test
+class TagRowTest : public ::testing::Test
 {
 public:
-    ~TestTagRow();
+    ~TagRowTest();
 };
 
-TestTagRow::~TestTagRow() = default;
+TagRowTest::~TagRowTest() = default;
 
 //! Initial state.
 
-TEST_F(TestTagRow, initialState)
+TEST_F(TagRowTest, initialState)
 {
     TagRow tagrow;
     EXPECT_EQ(tagrow.tag, "");
@@ -34,9 +33,9 @@ TEST_F(TestTagRow, initialState)
 
 //! Brace initializer.
 
-TEST_F(TestTagRow, braceInitializer)
+TEST_F(TagRowTest, braceInitializer)
 {
-    TagRow tagrow {"abc", 42};
+    TagRow tagrow{"abc", 42};
     EXPECT_EQ(tagrow.tag, "abc");
     EXPECT_EQ(tagrow.row, 42);
 
@@ -51,7 +50,7 @@ TEST_F(TestTagRow, braceInitializer)
 
 //! Equality operators.
 
-TEST_F(TestTagRow, equalityOperators)
+TEST_F(TagRowTest, equalityOperators)
 {
     TagRow tag1;
     TagRow tag2;
@@ -76,10 +75,10 @@ TEST_F(TestTagRow, equalityOperators)
 
 //! Assignment operators.
 
-TEST_F(TestTagRow, assignmentOperator)
+TEST_F(TagRowTest, assignmentOperator)
 {
     TagRow tag1;
-    TagRow tag2 {"abc", 42};
+    TagRow tag2{"abc", 42};
 
     tag1 = tag2;
     EXPECT_EQ(tag1.row, 42);
@@ -88,7 +87,7 @@ TEST_F(TestTagRow, assignmentOperator)
 
 //! Factory methods.
 
-TEST_F(TestTagRow, factoryMethods)
+TEST_F(TagRowTest, factoryMethods)
 {
     auto tagrow = TagRow::append();
     EXPECT_EQ(tagrow.tag, "");
@@ -103,4 +102,3 @@ TEST_F(TestTagRow, factoryMethods)
     EXPECT_EQ(tagrow.tag, expected_name);
     EXPECT_EQ(tagrow.row, 0);
 }
-

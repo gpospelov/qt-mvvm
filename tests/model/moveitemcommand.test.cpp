@@ -7,25 +7,24 @@
 //
 // ************************************************************************** //
 
-
 #include "google_test.h"
-#include <mvvm/model/itemutils.h>
 #include <mvvm/commands/moveitemcommand.h>
+#include <mvvm/model/itemutils.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/model/taginfo.h>
 
 using namespace ModelView;
 
-class TestMoveItemCommand : public ::testing::Test
+class MoveItemCommandTest : public ::testing::Test
 {
 public:
-    ~TestMoveItemCommand();
+    ~MoveItemCommandTest();
 };
 
-TestMoveItemCommand::~TestMoveItemCommand() = default;
+MoveItemCommandTest::~MoveItemCommandTest() = default;
 
-TEST_F(TestMoveItemCommand, rootContextNext)
+TEST_F(MoveItemCommandTest, rootContextNext)
 {
     SessionModel model;
     auto item0 = model.insertItem<SessionItem>(model.rootItem(), "", -1); // 0
@@ -61,7 +60,7 @@ TEST_F(TestMoveItemCommand, rootContextNext)
     EXPECT_EQ(model.rootItem()->children(), expected);
 }
 
-TEST_F(TestMoveItemCommand, rootContextSamePos)
+TEST_F(MoveItemCommandTest, rootContextSamePos)
 {
     SessionModel model;
     auto item0 = model.insertItem<SessionItem>(model.rootItem(), "", -1);
@@ -91,7 +90,7 @@ TEST_F(TestMoveItemCommand, rootContextSamePos)
     EXPECT_EQ(model.rootItem()->children(), expected);
 }
 
-TEST_F(TestMoveItemCommand, rootContextPrev)
+TEST_F(MoveItemCommandTest, rootContextPrev)
 {
     SessionModel model;
     auto item0 = model.insertItem<SessionItem>(model.rootItem(), "", -1);
@@ -121,7 +120,7 @@ TEST_F(TestMoveItemCommand, rootContextPrev)
     EXPECT_EQ(model.rootItem()->children(), expected);
 }
 
-TEST_F(TestMoveItemCommand, rootContextLast)
+TEST_F(MoveItemCommandTest, rootContextLast)
 {
     SessionModel model;
     auto item0 = model.insertItem<SessionItem>(model.rootItem(), "", -1);
@@ -134,7 +133,7 @@ TEST_F(TestMoveItemCommand, rootContextLast)
     EXPECT_EQ(model.rootItem()->children(), expected);
 
     // moving item0 in the back of the list
-    MoveItemCommand command(item0, model.rootItem(), {"", model.rootItem()->childrenCount()-1});
+    MoveItemCommand command(item0, model.rootItem(), {"", model.rootItem()->childrenCount() - 1});
     command.execute();
     EXPECT_EQ(command.result(), true);
     EXPECT_EQ(command.isObsolete(), false);
@@ -152,7 +151,7 @@ TEST_F(TestMoveItemCommand, rootContextLast)
     EXPECT_EQ(model.rootItem()->children(), expected);
 }
 
-TEST_F(TestMoveItemCommand, rootContextLast2)
+TEST_F(MoveItemCommandTest, rootContextLast2)
 {
     SessionModel model;
     auto item0 = model.insertItem<SessionItem>(model.rootItem(), "", -1);
@@ -183,7 +182,7 @@ TEST_F(TestMoveItemCommand, rootContextLast2)
     EXPECT_EQ(model.rootItem()->children(), expected);
 }
 
-TEST_F(TestMoveItemCommand, fromRootToParent)
+TEST_F(MoveItemCommandTest, fromRootToParent)
 {
     SessionModel model;
     auto item0 = model.insertItem<SessionItem>(model.rootItem(), "", -1);
@@ -229,7 +228,7 @@ TEST_F(TestMoveItemCommand, fromRootToParent)
     EXPECT_EQ(parent->children(), expected);
 }
 
-TEST_F(TestMoveItemCommand, fromParentToRoot)
+TEST_F(MoveItemCommandTest, fromParentToRoot)
 {
     SessionModel model;
     auto item0 = model.insertItem<SessionItem>(model.rootItem(), "", -1);
@@ -275,7 +274,7 @@ TEST_F(TestMoveItemCommand, fromParentToRoot)
     EXPECT_EQ(parent->children(), expected);
 }
 
-TEST_F(TestMoveItemCommand, betweenParentTags)
+TEST_F(MoveItemCommandTest, betweenParentTags)
 {
     SessionModel model;
     auto parent = model.insertItem<SessionItem>(model.rootItem(), "", -1);

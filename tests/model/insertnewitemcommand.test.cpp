@@ -7,7 +7,6 @@
 //
 // ************************************************************************** //
 
-
 #include "google_test.h"
 #include <mvvm/commands/insertnewitemcommand.h>
 #include <mvvm/model/itemfactoryinterface.h>
@@ -18,10 +17,10 @@
 
 using namespace ModelView;
 
-class TestInsertNewItemCommand : public ::testing::Test
+class InsertNewItemCommandTest : public ::testing::Test
 {
 public:
-    ~TestInsertNewItemCommand();
+    ~InsertNewItemCommandTest();
     std::unique_ptr<InsertNewItemCommand> create_command(SessionItem* parent, std::string tag,
                                                          int row)
     {
@@ -32,11 +31,11 @@ public:
     }
 };
 
-TestInsertNewItemCommand::~TestInsertNewItemCommand() = default;
+InsertNewItemCommandTest::~InsertNewItemCommandTest() = default;
 
 //! Insert new item through InsertNewItemCommand command.
 
-TEST_F(TestInsertNewItemCommand, insertNewItemCommand)
+TEST_F(InsertNewItemCommandTest, insertNewItemCommand)
 {
     SessionModel model;
 
@@ -56,7 +55,7 @@ TEST_F(TestInsertNewItemCommand, insertNewItemCommand)
 
 //! Insert new item through InsertNewItemCommand command.
 
-TEST_F(TestInsertNewItemCommand, insertNewItemWithTagCommand)
+TEST_F(InsertNewItemCommandTest, insertNewItemWithTagCommand)
 {
     SessionModel model;
 
@@ -83,7 +82,7 @@ TEST_F(TestInsertNewItemCommand, insertNewItemWithTagCommand)
 
 //! Attempt to execute command twice.
 
-TEST_F(TestInsertNewItemCommand, attemptToExecuteTwice)
+TEST_F(InsertNewItemCommandTest, attemptToExecuteTwice)
 {
     SessionModel model;
     // command to set same value
@@ -96,7 +95,7 @@ TEST_F(TestInsertNewItemCommand, attemptToExecuteTwice)
 
 //! Attempt to undo command twice.
 
-TEST_F(TestInsertNewItemCommand, attemptToUndoTwice)
+TEST_F(InsertNewItemCommandTest, attemptToUndoTwice)
 {
     SessionModel model;
 

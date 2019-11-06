@@ -7,31 +7,30 @@
 //
 // ************************************************************************** //
 
-
 #include "google_test.h"
+#include <memory>
 #include <mvvm/model/path.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/model/taginfo.h>
-#include <memory>
 
 using namespace ModelView;
 
-class TestPath : public ::testing::Test
+class PathTest : public ::testing::Test
 {
 public:
-    ~TestPath();
+    ~PathTest();
 };
 
-TestPath::~TestPath() = default;
+PathTest::~PathTest() = default;
 
-TEST_F(TestPath, initialState)
+TEST_F(PathTest, initialState)
 {
     Path path;
     EXPECT_TRUE(path.str().empty());
 }
 
-TEST_F(TestPath, append)
+TEST_F(PathTest, append)
 {
     Path path;
     path.append(1);
@@ -44,19 +43,19 @@ TEST_F(TestPath, append)
     EXPECT_EQ(path.str(), "3,1,2");
 }
 
-TEST_F(TestPath, fromVector)
+TEST_F(PathTest, fromVector)
 {
     Path path = Path::fromVector({1, 2, 3});
     EXPECT_EQ(path.str(), "1,2,3");
 }
 
-TEST_F(TestPath, fromString)
+TEST_F(PathTest, fromString)
 {
     Path path = Path::fromString("3,2,3");
     EXPECT_EQ(path.str(), "3,2,3");
 }
 
-TEST_F(TestPath, pathFromItem)
+TEST_F(PathTest, pathFromItem)
 {
     SessionModel model;
 
@@ -96,7 +95,7 @@ TEST_F(TestPath, pathFromItem)
     EXPECT_EQ(model.pathFromItem(child201).str(), "2,0,1");
 }
 
-TEST_F(TestPath, itemFromPath)
+TEST_F(PathTest, itemFromPath)
 {
     SessionModel model;
 

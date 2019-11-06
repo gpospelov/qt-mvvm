@@ -7,19 +7,18 @@
 //
 // ************************************************************************** //
 
-
 #include "google_test.h"
-#include <mvvm/signals/itemcontroller.h>
-#include <mvvm/signals/itemmapper.h>
+#include <memory>
 #include <mvvm/model/propertyitem.h>
 #include <mvvm/model/sessionmodel.h>
-#include <memory>
+#include <mvvm/signals/itemcontroller.h>
+#include <mvvm/signals/itemmapper.h>
 
 using namespace ModelView;
 
 //! Testing ItemController.
 
-class TestItemController : public ::testing::Test
+class ItemControllerTest : public ::testing::Test
 {
 public:
     class TestController : public ItemController<PropertyItem>
@@ -34,22 +33,18 @@ public:
             currentItem()->mapper()->setOnDataChange(on_data_change, this);
         }
 
-        void unsubscribe()
-        {
-            on_unsubscribe_call_count++;
-        }
-
+        void unsubscribe() { on_unsubscribe_call_count++; }
     };
 
-    ~TestItemController();
+    ~ItemControllerTest();
 };
 
-TestItemController::~TestItemController() = default;
-TestItemController::TestController::~TestController() = default;
+ItemControllerTest::~ItemControllerTest() = default;
+ItemControllerTest::TestController::~TestController() = default;
 
 //! Initial state.
 
-TEST_F(TestItemController, initialState)
+TEST_F(ItemControllerTest, initialState)
 {
     TestController controller;
     EXPECT_EQ(controller.currentItem(), nullptr);
@@ -57,7 +52,7 @@ TEST_F(TestItemController, initialState)
 
 //! Check that controller aware of item deletion.
 
-TEST_F(TestItemController, itemDeletedBeforeController)
+TEST_F(ItemControllerTest, itemDeletedBeforeController)
 {
     SessionModel model;
     auto item = model.insertItem<PropertyItem>();
@@ -75,7 +70,7 @@ TEST_F(TestItemController, itemDeletedBeforeController)
 
 //! Checks unsubscribe scenario.
 
-TEST_F(TestItemController, unsubscribeScenario)
+TEST_F(ItemControllerTest, unsubscribeScenario)
 {
     SessionModel model;
     auto item = model.insertItem<PropertyItem>();
@@ -97,10 +92,9 @@ TEST_F(TestItemController, unsubscribeScenario)
     EXPECT_EQ(controller->ondata_change_call_count, 1);
 }
 
-
 //! Checks that controller can be deleted before item.
 
-TEST_F(TestItemController, controllerDeletedBeforeItem)
+TEST_F(ItemControllerTest, controllerDeletedBeforeItem)
 {
     SessionModel model;
     auto item = model.insertItem<PropertyItem>();
@@ -112,4 +106,3 @@ TEST_F(TestItemController, controllerDeletedBeforeItem)
     controller.reset();
     item->setData(42.0);
 }
-

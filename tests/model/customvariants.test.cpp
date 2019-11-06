@@ -7,33 +7,32 @@
 //
 // ************************************************************************** //
 
-
+#include "google_test.h"
+#include <QColor>
+#include <functional>
+#include <memory>
 #include <mvvm/model/comboproperty.h>
 #include <mvvm/model/customvariants.h>
-#include "google_test.h"
+#include <mvvm/model/externalproperty.h>
 #include <mvvm/model/itemutils.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/model/taginfo.h>
-#include <mvvm/model/externalproperty.h>
 #include <mvvm/model/variant-constants.h>
-#include <QColor>
-#include <memory>
-#include <functional>
 
 using namespace ModelView;
 
-class TestCustomVariants : public ::testing::Test
+class CustomVariantsTest : public ::testing::Test
 {
 public:
-    ~TestCustomVariants();
+    ~CustomVariantsTest();
 };
 
-TestCustomVariants::~TestCustomVariants() = default;
+CustomVariantsTest::~CustomVariantsTest() = default;
 
 //! Variant compatibility.
 
-TEST_F(TestCustomVariants, VariantName)
+TEST_F(CustomVariantsTest, VariantName)
 {
     const std::vector<double> vec{1, 2};
     const ComboProperty combo = ComboProperty::createFrom({"a1", "a2", "s3"});
@@ -41,17 +40,21 @@ TEST_F(TestCustomVariants, VariantName)
     EXPECT_EQ(Utils::VariantName(QVariant::fromValue(true)), Constants::bool_type_name);
     EXPECT_EQ(Utils::VariantName(QVariant::fromValue(1)), Constants::int_type_name);
     EXPECT_EQ(Utils::VariantName(QVariant::fromValue(42.0)), Constants::double_type_name);
-    EXPECT_EQ(Utils::VariantName(QVariant::fromValue(std::string("string"))), Constants::string_type_name);
+    EXPECT_EQ(Utils::VariantName(QVariant::fromValue(std::string("string"))),
+              Constants::string_type_name);
     EXPECT_EQ(Utils::VariantName(QVariant::fromValue(vec)), Constants::vector_double_type_name);
     EXPECT_EQ(Utils::VariantName(QVariant::fromValue(combo)), Constants::comboproperty_type_name);
-    EXPECT_EQ(Utils::VariantName(QVariant::fromValue(QColor(Qt::red))), Constants::qcolor_type_name);
-    EXPECT_EQ(Utils::VariantName(QVariant::fromValue(ExternalProperty())), Constants::extproperty_type_name);
-    EXPECT_EQ(Utils::VariantName(QVariant::fromValue(RealLimits())), Constants::reallimits_type_name);
+    EXPECT_EQ(Utils::VariantName(QVariant::fromValue(QColor(Qt::red))),
+              Constants::qcolor_type_name);
+    EXPECT_EQ(Utils::VariantName(QVariant::fromValue(ExternalProperty())),
+              Constants::extproperty_type_name);
+    EXPECT_EQ(Utils::VariantName(QVariant::fromValue(RealLimits())),
+              Constants::reallimits_type_name);
 }
 
 //! Variant compatibility.
 
-TEST_F(TestCustomVariants, CompatibleVariantTypes)
+TEST_F(CustomVariantsTest, CompatibleVariantTypes)
 {
     QVariant undefined;
     QVariant bool_variant = QVariant::fromValue(true);
@@ -66,8 +69,9 @@ TEST_F(TestCustomVariants, CompatibleVariantTypes)
     QVariant extprop_variant = QVariant::fromValue(ExternalProperty());
     QVariant limits_variant = QVariant::fromValue(RealLimits());
 
-    std::vector<QVariant> variants = {bool_variant, int_variant, double_variant, string_variant, vector_variant,
-                                      combo_variant, color_variant, extprop_variant, limits_variant};
+    std::vector<QVariant> variants = {bool_variant,   int_variant,     double_variant,
+                                      string_variant, vector_variant,  combo_variant,
+                                      color_variant,  extprop_variant, limits_variant};
     for (size_t i = 0; i < variants.size(); ++i) {
         EXPECT_TRUE(Utils::CompatibleVariantTypes(undefined, variants[i]));
         EXPECT_FALSE(Utils::VariantType(undefined) == Utils::VariantType(variants[i]));
@@ -85,7 +89,7 @@ TEST_F(TestCustomVariants, CompatibleVariantTypes)
 
 //! Test variant equality reported by SessionItemUtils::isTheSame
 
-TEST_F(TestCustomVariants, IsTheSameVariant)
+TEST_F(CustomVariantsTest, IsTheSameVariant)
 {
     const std::vector<double> vec1{1, 2};
     const std::vector<double> vec2{1, 2, 3};
@@ -96,18 +100,24 @@ TEST_F(TestCustomVariants, IsTheSameVariant)
     const RealLimits lim1;
     const RealLimits lim2 = RealLimits::limited(1.0, 2.0);
 
-    std::vector<QVariant> variants = {
-        QVariant(),
-        QVariant::fromValue(true), QVariant::fromValue(false),
-        QVariant::fromValue(1), QVariant::fromValue(2),
-        QVariant::fromValue(42.0), QVariant::fromValue(43.0),
-        QVariant::fromValue(std::string("string1")), QVariant::fromValue(std::string("string2")),
-        QVariant::fromValue(vec1), QVariant::fromValue(vec2),
-        combo1.variant(), combo2.variant(),
-        QVariant::fromValue(QColor(Qt::red)), QVariant::fromValue(QColor(Qt::green)),
-        QVariant::fromValue(extprop1), QVariant::fromValue(extprop2).
-        QVariant::fromValue(lim1), QVariant::fromValue(lim2)
-    };
+    std::vector<QVariant> variants = {QVariant(),
+                                      QVariant::fromValue(true),
+                                      QVariant::fromValue(false),
+                                      QVariant::fromValue(1),
+                                      QVariant::fromValue(2),
+                                      QVariant::fromValue(42.0),
+                                      QVariant::fromValue(43.0),
+                                      QVariant::fromValue(std::string("string1")),
+                                      QVariant::fromValue(std::string("string2")),
+                                      QVariant::fromValue(vec1),
+                                      QVariant::fromValue(vec2),
+                                      combo1.variant(),
+                                      combo2.variant(),
+                                      QVariant::fromValue(QColor(Qt::red)),
+                                      QVariant::fromValue(QColor(Qt::green)),
+                                      QVariant::fromValue(extprop1),
+                                      QVariant::fromValue(extprop2).QVariant::fromValue(lim1),
+                                      QVariant::fromValue(lim2)};
 
     for (size_t i = 0; i < variants.size(); ++i) {
         for (size_t j = 0; j < variants.size(); ++j) {
@@ -121,7 +131,7 @@ TEST_F(TestCustomVariants, IsTheSameVariant)
 
 //! Test translation of variants
 
-TEST_F(TestCustomVariants, variantTranslation)
+TEST_F(CustomVariantsTest, variantTranslation)
 {
     // from Variant based on std::string to variant based on QString
     QVariant stdstring_variant = QVariant::fromValue(std::string("abc"));
@@ -146,7 +156,7 @@ TEST_F(TestCustomVariants, variantTranslation)
 
 // FIXME replace tests in loop with parameterized tests
 
-TEST_F(TestCustomVariants, isVariantType)
+TEST_F(CustomVariantsTest, isVariantType)
 {
     using is_variant_t = std::function<bool(const QVariant&)>;
 
@@ -159,8 +169,7 @@ TEST_F(TestCustomVariants, isVariantType)
         {QVariant::fromValue(std::vector<double>({1, 2})), Utils::IsDoubleVectorVariant},
         {QVariant::fromValue(QColor(Qt::red)), Utils::IsColorVariant},
         {QVariant::fromValue(ExternalProperty()), Utils::IsExtPropertyVariant},
-        {QVariant::fromValue(RealLimits()), Utils::IsRealLimitsVariant}
-    };
+        {QVariant::fromValue(RealLimits()), Utils::IsRealLimitsVariant}};
 
     for (size_t i = 0; i < data.size(); ++i) {
         auto is_variant_func = data[i].second;
@@ -169,7 +178,7 @@ TEST_F(TestCustomVariants, isVariantType)
             if (i == j)
                 EXPECT_TRUE(is_variant_func(variant));
             else
-               EXPECT_FALSE(is_variant_func(variant));
+                EXPECT_FALSE(is_variant_func(variant));
         }
     }
 }

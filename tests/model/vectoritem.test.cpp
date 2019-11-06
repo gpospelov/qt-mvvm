@@ -7,26 +7,25 @@
 //
 // ************************************************************************** //
 
-
 #include "google_test.h"
-#include <mvvm/standarditems/vectoritem.h>
 #include <mvvm/model/sessionmodel.h>
+#include <mvvm/standarditems/vectoritem.h>
 
 using namespace ModelView;
 
 //! VectorItem tests.
 
-class TestVectorItem : public ::testing::Test
+class VectorItemTest : public ::testing::Test
 {
 public:
-    ~TestVectorItem();
+    ~VectorItemTest();
 };
 
-TestVectorItem::~TestVectorItem() = default;
+VectorItemTest::~VectorItemTest() = default;
 
 //! Initial state of item when it is created outside of model context.
 
-TEST_F(TestVectorItem, initialState)
+TEST_F(VectorItemTest, initialState)
 {
     VectorItem item;
 
@@ -42,7 +41,7 @@ TEST_F(TestVectorItem, initialState)
 
 //! Initial state of item in model context
 
-TEST_F(TestVectorItem, initialStateFromModel)
+TEST_F(VectorItemTest, initialStateFromModel)
 {
     SessionModel model;
     auto item = model.insertItem<VectorItem>();

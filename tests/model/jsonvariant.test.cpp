@@ -7,28 +7,27 @@
 //
 // ************************************************************************** //
 
-
-#include <mvvm/model/comboproperty.h>
-#include <mvvm/model/customvariants.h>
-#include <mvvm/model/externalproperty.h>
 #include "google_test.h"
-#include <mvvm/serialization/jsonvariant.h>
-#include <mvvm/utils/reallimits.h>
 #include "test_utils.h"
 #include <QColor>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <mvvm/model/comboproperty.h>
+#include <mvvm/model/customvariants.h>
+#include <mvvm/model/externalproperty.h>
+#include <mvvm/serialization/jsonvariant.h>
+#include <mvvm/utils/reallimits.h>
 #include <vector>
 
 using namespace ModelView;
 
 //! Test convertion of QVariant from/to QJsonObject.
 
-class TestJsonVariant : public ::testing::Test
+class JsonVariantTest : public ::testing::Test
 {
 public:
-    ~TestJsonVariant();
+    ~JsonVariantTest();
 
     static const QString test_dir;
 
@@ -42,13 +41,13 @@ public:
     }
 };
 
-const QString TestJsonVariant::test_dir = "test_JsonVariant";
+const QString JsonVariantTest::test_dir = "test_JsonVariant";
 
-TestJsonVariant::~TestJsonVariant() = default;
+JsonVariantTest::~JsonVariantTest() = default;
 
 //! Invalid QVariant conversion.
 
-TEST_F(TestJsonVariant, invalidVariant)
+TEST_F(JsonVariantTest, invalidVariant)
 {
     JsonVariant converter;
 
@@ -66,7 +65,7 @@ TEST_F(TestJsonVariant, invalidVariant)
 
 //! Bool QVariant conversion.
 
-TEST_F(TestJsonVariant, boolVariant)
+TEST_F(JsonVariantTest, boolVariant)
 {
     JsonVariant converter;
 
@@ -89,7 +88,7 @@ TEST_F(TestJsonVariant, boolVariant)
 
 //! Int QVariant conversion.
 
-TEST_F(TestJsonVariant, intVariant)
+TEST_F(JsonVariantTest, intVariant)
 {
     JsonVariant converter;
 
@@ -109,7 +108,7 @@ TEST_F(TestJsonVariant, intVariant)
 
 //! QVariant(std::string) conversion.
 
-TEST_F(TestJsonVariant, stringVariant)
+TEST_F(JsonVariantTest, stringVariant)
 {
     JsonVariant converter;
 
@@ -130,7 +129,7 @@ TEST_F(TestJsonVariant, stringVariant)
 
 //! QVariant(double) conversion.
 
-TEST_F(TestJsonVariant, doubleVariant)
+TEST_F(JsonVariantTest, doubleVariant)
 {
     JsonVariant converter;
 
@@ -158,7 +157,7 @@ TEST_F(TestJsonVariant, doubleVariant)
 
 //! QVariant(std::vector<double>) conversion.
 
-TEST_F(TestJsonVariant, vectorOfDoubleVariant)
+TEST_F(JsonVariantTest, vectorOfDoubleVariant)
 {
     JsonVariant converter;
 
@@ -178,7 +177,7 @@ TEST_F(TestJsonVariant, vectorOfDoubleVariant)
 
 //! QVariant(ComboProperty) conversion.
 
-TEST_F(TestJsonVariant, comboPropertyVariant)
+TEST_F(JsonVariantTest, comboPropertyVariant)
 {
     JsonVariant converter;
 
@@ -202,7 +201,7 @@ TEST_F(TestJsonVariant, comboPropertyVariant)
 
 //! QVariant(QColor) conversion.
 
-TEST_F(TestJsonVariant, colorVariant)
+TEST_F(JsonVariantTest, colorVariant)
 {
     JsonVariant converter;
 
@@ -222,7 +221,7 @@ TEST_F(TestJsonVariant, colorVariant)
 
 //! QVariant(ExternalProperty) conversion.
 
-TEST_F(TestJsonVariant, extPropVariant)
+TEST_F(JsonVariantTest, extPropVariant)
 {
     JsonVariant converter;
 
@@ -242,7 +241,7 @@ TEST_F(TestJsonVariant, extPropVariant)
 
 //! QVariant(RealLimits) convertion.
 
-TEST_F(TestJsonVariant, realLimitsVariant)
+TEST_F(JsonVariantTest, realLimitsVariant)
 {
     JsonVariant converter;
 
@@ -270,7 +269,7 @@ TEST_F(TestJsonVariant, realLimitsVariant)
 
 //! Writing variants to file and reading them back.
 
-TEST_F(TestJsonVariant, toFileAndBack)
+TEST_F(JsonVariantTest, toFileAndBack)
 {
     const std::string string_value("abc");
     const std::vector<double> vector_value = {42.1, 42.2, 42.3};

@@ -7,13 +7,12 @@
 //
 // ************************************************************************** //
 
-
-#include "google_test.h"
-#include <mvvm/standarditems/graphitem.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/standarditems/data1ditem.h>
 #include "MockWidgets.h"
+#include "google_test.h"
+#include <mvvm/model/sessionmodel.h>
 #include <mvvm/standarditems/axisitems.h>
+#include <mvvm/standarditems/data1ditem.h>
+#include <mvvm/standarditems/graphitem.h>
 #include <mvvm/standarditems/linkeditem.h>
 
 using namespace ModelView;
@@ -21,17 +20,17 @@ using ::testing::_;
 
 //! Testing GraphItem.
 
-class TestGraphItem : public ::testing::Test
+class GraphItemTest : public ::testing::Test
 {
 public:
-    ~TestGraphItem();
+    ~GraphItemTest();
 };
 
-TestGraphItem::~TestGraphItem() = default;
+GraphItemTest::~GraphItemTest() = default;
 
 //! Initial state.
 
-TEST_F(TestGraphItem, initialState)
+TEST_F(GraphItemTest, initialState)
 {
     GraphItem item;
     EXPECT_TRUE(item.dataItem() == nullptr);
@@ -41,7 +40,7 @@ TEST_F(TestGraphItem, initialState)
 
 //! Setting dataItem in model context.
 
-TEST_F(TestGraphItem, setDataItem)
+TEST_F(GraphItemTest, setDataItem)
 {
     SessionModel model;
     auto data_item = model.insertItem<Data1DItem>();
@@ -54,7 +53,7 @@ TEST_F(TestGraphItem, setDataItem)
 
 //! Setting dataItem in model context.
 
-TEST_F(TestGraphItem, binCenters)
+TEST_F(GraphItemTest, binCenters)
 {
     SessionModel model;
     auto data_item = model.insertItem<Data1DItem>();
@@ -73,7 +72,7 @@ TEST_F(TestGraphItem, binCenters)
 
 //! Check unlinking when nullptr is set as Data1DItem.
 
-TEST_F(TestGraphItem, setNullData)
+TEST_F(GraphItemTest, setNullData)
 {
     SessionModel model;
     auto data_item = model.insertItem<Data1DItem>();
@@ -97,7 +96,7 @@ TEST_F(TestGraphItem, setNullData)
 
 //! Check signaling on set data item.
 
-TEST_F(TestGraphItem, onSetDataItem)
+TEST_F(GraphItemTest, onSetDataItem)
 {
     SessionModel model;
     auto data_item = model.insertItem<Data1DItem>();

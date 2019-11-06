@@ -7,7 +7,6 @@
 //
 // ************************************************************************** //
 
-
 #include "google_test.h"
 #include <mvvm/model/groupitem.h>
 
@@ -15,15 +14,15 @@ using namespace ModelView;
 
 //! Testing GroupItem class.
 
-class TestGroupItem : public ::testing::Test
+class GroupItemTest : public ::testing::Test
 {
 public:
-    ~TestGroupItem();
+    ~GroupItemTest();
 };
 
-TestGroupItem::~TestGroupItem() = default;
+GroupItemTest::~GroupItemTest() = default;
 
-TEST_F(TestGroupItem, initialState)
+TEST_F(GroupItemTest, initialState)
 {
     GroupItem item;
     EXPECT_EQ(item.currentIndex(), -1);

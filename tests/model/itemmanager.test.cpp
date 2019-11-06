@@ -7,27 +7,26 @@
 //
 // ************************************************************************** //
 
-
 #include "google_test.h"
+#include <memory>
 #include <mvvm/model/itemmanager.h>
 #include <mvvm/model/itempool.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
-#include <memory>
 
 using namespace ModelView;
 
 //! Testing ItemFactory in the context of SessionModel and unique identifiers of SessionItem.
 
-class TestItemManager : public ::testing::Test
+class ItemManagerTest : public ::testing::Test
 {
 public:
-    ~TestItemManager();
+    ~ItemManagerTest();
 };
 
-TestItemManager::~TestItemManager() = default;
+ItemManagerTest::~ItemManagerTest() = default;
 
-TEST_F(TestItemManager, initialState)
+TEST_F(ItemManagerTest, initialState)
 {
     ItemManager manager;
     EXPECT_EQ(manager.itemPool(), nullptr);

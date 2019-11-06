@@ -7,28 +7,27 @@
 //
 // ************************************************************************** //
 
-
 #include "MockWidgets.h"
-#include <mvvm/model/compounditem.h>
 #include "google_test.h"
-#include <mvvm/signals/itemmapper.h>
+#include <mvvm/model/compounditem.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
+#include <mvvm/signals/itemmapper.h>
 
 using namespace ModelView;
 using ::testing::_;
 
-class TestItemMapper : public ::testing::Test
+class ItemMapperTest : public ::testing::Test
 {
 public:
-    ~TestItemMapper();
+    ~ItemMapperTest();
 };
 
-TestItemMapper::~TestItemMapper() = default;
+ItemMapperTest::~ItemMapperTest() = default;
 
 //! Check that mapper works only in model context.
 
-TEST(TestItemMapper, initialState)
+TEST(ItemMapperTest, initialState)
 {
     // item outside model context can't have a mapper
     auto item = std::make_unique<SessionItem>();
@@ -42,7 +41,7 @@ TEST(TestItemMapper, initialState)
 
 //! Destroying item, expecting single call of onItemDestroy in MockWidget.
 
-TEST(TestItemMapper, onItemDestroy)
+TEST(ItemMapperTest, onItemDestroy)
 {
     SessionModel model;
     auto item = model.insertItem<SessionItem>(model.rootItem(), "", 0);
@@ -58,12 +57,12 @@ TEST(TestItemMapper, onItemDestroy)
     EXPECT_CALL(widget, onRowAboutToBeRemoved(_, _, _)).Times(0);
 
     // performing action
-    model.removeItem(model.rootItem(), "",  0);
+    model.removeItem(model.rootItem(), "", 0);
 }
 
 //! Setting data to item, expecting onDataChange callback.
 
-TEST(TestItemMapper, onDataChange)
+TEST(ItemMapperTest, onDataChange)
 {
     SessionModel model;
     auto item = model.insertItem<SessionItem>(model.rootItem(), "", 0);
@@ -84,7 +83,7 @@ TEST(TestItemMapper, onDataChange)
 
 //! Setting same data to item, expecting no callbacks on onDataChange.
 
-TEST(TestItemMapper, onDataChangeDuplicate)
+TEST(ItemMapperTest, onDataChangeDuplicate)
 {
     SessionModel model;
     auto item = model.insertItem<SessionItem>(model.rootItem(), "", 0);
@@ -105,7 +104,7 @@ TEST(TestItemMapper, onDataChangeDuplicate)
 
 //! Setting mapper activity to false, change the data, expect no callbacks.
 
-TEST(TestItemMapper, setActivity)
+TEST(ItemMapperTest, setActivity)
 {
     SessionModel model;
     auto item = model.insertItem<SessionItem>(model.rootItem(), "", 0);
@@ -127,7 +126,7 @@ TEST(TestItemMapper, setActivity)
 
 //! Unsubscribing from item, expecting no callbacks.
 
-TEST(TestItemMapper, unsubscribe)
+TEST(ItemMapperTest, unsubscribe)
 {
     SessionModel model;
     auto item = model.insertItem<SessionItem>(model.rootItem(), "", 0);
@@ -146,7 +145,7 @@ TEST(TestItemMapper, unsubscribe)
 
 //! Changing item property.
 
-TEST(TestItemMapper, onPropertyChange)
+TEST(ItemMapperTest, onPropertyChange)
 {
     SessionModel model;
     auto item = model.insertItem<CompoundItem>();
@@ -171,11 +170,11 @@ TEST(TestItemMapper, onPropertyChange)
 
 //! Changing item property.
 
-TEST(TestItemMapper, onChildPropertyChange)
+TEST(ItemMapperTest, onChildPropertyChange)
 {
     SessionModel model;
     auto compound1 = model.insertItem<CompoundItem>();
-    compound1->registerTag(TagInfo::universalTag("tag1"), /*set_as_default*/true);
+    compound1->registerTag(TagInfo::universalTag("tag1"), /*set_as_default*/ true);
     auto compound2 = model.insertItem<CompoundItem>(compound1);
 
     auto property = compound2->addProperty("height", 42.0);
@@ -197,11 +196,11 @@ TEST(TestItemMapper, onChildPropertyChange)
 
 //! Inserting item to item.
 
-TEST(TestItemMapper, onRowInsert)
+TEST(ItemMapperTest, onRowInsert)
 {
     SessionModel model;
     auto compound1 = model.insertItem<CompoundItem>();
-    compound1->registerTag(TagInfo::universalTag("tag1"), /*set_as_default*/true);
+    compound1->registerTag(TagInfo::universalTag("tag1"), /*set_as_default*/ true);
 
     MockWidgetForItem widget(compound1);
 
@@ -220,14 +219,14 @@ TEST(TestItemMapper, onRowInsert)
 
 //! Inserting item to item.
 
-TEST(TestItemMapper, onRowAboutToRemove)
+TEST(ItemMapperTest, onRowAboutToRemove)
 {
     const int expected_row = 0;
     std::string expected_tag = "tag1";
 
     SessionModel model;
     auto compound1 = model.insertItem<CompoundItem>();
-    compound1->registerTag(TagInfo::universalTag("tag1"), /*set_as_default*/true);
+    compound1->registerTag(TagInfo::universalTag("tag1"), /*set_as_default*/ true);
     model.insertItem<CompoundItem>(compound1, expected_tag, expected_row);
 
     MockWidgetForItem widget(compound1);
