@@ -10,7 +10,7 @@
 #ifndef MVVM_MODELMAPPERINTERFACE_H
 #define MVVM_MODELMAPPERINTERFACE_H
 
-#include <mvvm/model/mvvm_export.h>
+#include <mvvm/core/export.h>
 #include <mvvm/signals/callback_types.h>
 
 namespace ModelView

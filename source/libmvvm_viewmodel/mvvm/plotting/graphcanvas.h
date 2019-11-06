@@ -10,7 +10,7 @@
 #ifndef MVVM_GRAPHCANVAS_H
 #define MVVM_GRAPHCANVAS_H
 
-#include <mvvm/model/mvvm_export.h>
+#include <mvvm/core/export.h>
 #include <memory>
 #include <QWidget>
 

@@ -11,7 +11,7 @@
 #define MVVM_SESSIONMODEL_H
 
 #include <mvvm/model/function_types.h>
-#include <mvvm/model/mvvm_export.h>
+#include <mvvm/core/export.h>
 #include <mvvm/model/mvvm_types.h>
 #include <mvvm/model/path.h>
 #include <QVariant>

@@ -10,7 +10,7 @@
 #ifndef MVVM_STATUSSTRINGREPORTER_H
 #define MVVM_STATUSSTRINGREPORTER_H
 
-#include <mvvm/model/mvvm_export.h>
+#include <mvvm/core/export.h>
 #include <functional>
 #include <memory>
 #include <string>

@@ -10,7 +10,7 @@
 #ifndef MVVM_SESSIONITEMDATA_H
 #define MVVM_SESSIONITEMDATA_H
 
-#include <mvvm/model/mvvm_export.h>
+#include <mvvm/core/export.h>
 #include <mvvm/model/datarole.h>
 #include <vector>
 

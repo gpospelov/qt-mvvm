@@ -10,7 +10,7 @@
 #ifndef MVVM_SESSIONITEMCONTAINER_H
 #define MVVM_SESSIONITEMCONTAINER_H
 
-#include <mvvm/model/mvvm_export.h>
+#include <mvvm/core/export.h>
 #include <mvvm/model/taginfo.h>
 #include <vector>
 

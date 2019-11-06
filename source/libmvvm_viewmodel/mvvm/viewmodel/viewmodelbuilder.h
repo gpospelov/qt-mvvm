@@ -10,7 +10,7 @@
 #ifndef MVVM_VIEWMODELBUILDER_H
 #define MVVM_VIEWMODELBUILDER_H
 
-#include <mvvm/model/mvvm_export.h>
+#include <mvvm/core/export.h>
 #include <memory>
 
 namespace ModelView

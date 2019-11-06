@@ -10,7 +10,7 @@
 #ifndef MVVM_ABSTRACTITEMCOMMAND_H
 #define MVVM_ABSTRACTITEMCOMMAND_H
 
-#include <mvvm/model/mvvm_export.h>
+#include <mvvm/core/export.h>
 #include <mvvm/model/path.h>
 #include <memory>
 #include <string>

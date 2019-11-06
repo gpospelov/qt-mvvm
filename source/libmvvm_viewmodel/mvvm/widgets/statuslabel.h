@@ -10,7 +10,7 @@
 #ifndef MVVM_STATUSLABEL_H
 #define MVVM_STATUSLABEL_H
 
-#include <mvvm/model/mvvm_export.h>
+#include <mvvm/core/export.h>
 #include <QFrame>
 
 class QPaintEvent;

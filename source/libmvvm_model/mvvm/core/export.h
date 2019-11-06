@@ -7,22 +7,22 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_STYLEUTILS_H
-#define MVVM_STYLEUTILS_H
+#ifndef MVVM_MVVM_EXPORT_H
+#define MVVM_MVVM_EXPORT_H
 
-#include <mvvm/core/export.h>
+#ifdef _WIN32
 
-namespace ModelView
-{
+#ifdef CORE_BUILD_DLL
 
-namespace Style
-{
+#define CORE_EXPORT __declspec(dllexport)
+#else
+#define CORE_EXPORT __declspec(dllimport)
+#endif  // CORE_BUILD_DLL
 
-//! Returns int value corresponding to pixmap in standard Qt table/tree decorations.
-CORE_EXPORT int DefaultPixmapSize();
+#endif  // _WIN32
 
-}
+#ifndef CORE_EXPORT
+#define CORE_EXPORT
+#endif
 
-} // namespace ModelView
-
-#endif // MVVM_STYLEUTILS_H
+#endif // MVVM_MVVM_EXPORT_H

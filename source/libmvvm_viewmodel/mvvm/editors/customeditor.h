@@ -10,7 +10,7 @@
 #ifndef MVVM_CUSTOMEDITOR_H
 #define MVVM_CUSTOMEDITOR_H
 
-#include <mvvm/model/mvvm_export.h>
+#include <mvvm/core/export.h>
 #include <QWidget>
 #include <QVariant>
 

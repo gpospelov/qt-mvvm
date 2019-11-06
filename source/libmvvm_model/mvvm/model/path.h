@@ -10,7 +10,7 @@
 #ifndef MVVM_PATH_H
 #define MVVM_PATH_H
 
-#include <mvvm/model/mvvm_export.h>
+#include <mvvm/core/export.h>
 #include <vector>
 #include <string>
 

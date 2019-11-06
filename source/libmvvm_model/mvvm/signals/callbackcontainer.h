@@ -11,7 +11,7 @@
 #define MVVM_CALLBACKCONTAINER_H
 
 #include <mvvm/signals/callback_types.h>
-#include <mvvm/model/mvvm_export.h>
+#include <mvvm/core/export.h>
 #include <algorithm>
 #include <functional>
 #include <list>

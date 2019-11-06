@@ -10,7 +10,7 @@
 #ifndef MVVM_CHILDRENSTRATEGYINTERFACE_H
 #define MVVM_CHILDRENSTRATEGYINTERFACE_H
 
-#include <mvvm/model/mvvm_export.h>
+#include <mvvm/core/export.h>
 #include <QList>
 
 class QStandardItem;

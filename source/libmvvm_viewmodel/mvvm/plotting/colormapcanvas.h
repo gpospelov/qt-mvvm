@@ -10,7 +10,7 @@
 #ifndef MVVM_COLORMAPCANVAS_H
 #define MVVM_COLORMAPCANVAS_H
 
-#include <mvvm/model/mvvm_export.h>
+#include <mvvm/core/export.h>
 #include <memory>
 #include <QWidget>
 

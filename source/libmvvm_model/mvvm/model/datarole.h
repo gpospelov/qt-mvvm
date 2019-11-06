@@ -10,7 +10,7 @@
 #ifndef MVVM_DATAROLE_H
 #define MVVM_DATAROLE_H
 
-#include <mvvm/model/mvvm_export.h>
+#include <mvvm/core/export.h>
 #include <QVariant>
 
 namespace ModelView {

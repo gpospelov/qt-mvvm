@@ -10,7 +10,7 @@
 #ifndef MVVM_PROPERTYEDITOR_H
 #define MVVM_PROPERTYEDITOR_H
 
-#include <mvvm/model/mvvm_export.h>
+#include <mvvm/core/export.h>
 #include <QWidget>
 #include <memory>
 

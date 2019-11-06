@@ -10,7 +10,7 @@
 #ifndef MVVM_ITEMFACTORY_H
 #define MVVM_ITEMFACTORY_H
 
-#include <mvvm/model/mvvm_export.h>
+#include <mvvm/core/export.h>
 #include <mvvm/model/itemfactoryinterface.h>
 #include <memory>
 
