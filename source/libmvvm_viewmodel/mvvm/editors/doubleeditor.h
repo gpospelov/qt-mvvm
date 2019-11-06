@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_DOUBLEEDITOR_H
-#define MVVM_DOUBLEEDITOR_H
+#ifndef MVVM_EDITORS_DOUBLEEDITOR_H
+#define MVVM_EDITORS_DOUBLEEDITOR_H
 
 #include <mvvm/editors/customeditor.h>
 
@@ -40,4 +40,4 @@ private:
 
 } // namespace ModelView
 
-#endif // MVVM_DOUBLEEDITOR_H
+#endif  // MVVM_EDITORS_DOUBLEEDITOR_H

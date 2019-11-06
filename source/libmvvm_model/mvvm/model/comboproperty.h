@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_COMBOPROPERTY_H
-#define MVVM_COMBOPROPERTY_H
+#ifndef MVVM_MODEL_COMBOPROPERTY_H
+#define MVVM_MODEL_COMBOPROPERTY_H
 
 #include <mvvm/core/export.h>
 #include <QVariant>
@@ -75,4 +75,4 @@ private:
 
 Q_DECLARE_METATYPE(ModelView::ComboProperty)
 
-#endif // MVVM_COMBOPROPERTY_H
+#endif  // MVVM_MODEL_COMBOPROPERTY_H

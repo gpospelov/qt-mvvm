@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_COLORMAPCANVAS_H
-#define MVVM_COLORMAPCANVAS_H
+#ifndef MVVM_PLOTTING_COLORMAPCANVAS_H
+#define MVVM_PLOTTING_COLORMAPCANVAS_H
 
 #include <mvvm/core/export.h>
 #include <memory>
@@ -41,4 +41,4 @@ private:
 
 } // namespace ModelView
 
-#endif // MVVM_COLORMAPCANVAS_H
+#endif  // MVVM_PLOTTING_COLORMAPCANVAS_H

@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_EDITORFACTORYINTERFACE_H
-#define MVVM_EDITORFACTORYINTERFACE_H
+#ifndef MVVM_EDITORS_EDITORFACTORYINTERFACE_H
+#define MVVM_EDITORS_EDITORFACTORYINTERFACE_H
 
 #include <mvvm/core/export.h>
 #include <string>
@@ -35,4 +35,4 @@ public:
 
 } // namespace ModelView
 
-#endif // MVVM_EDITORFACTORYINTERFACE_H
+#endif  // MVVM_EDITORS_EDITORFACTORYINTERFACE_H

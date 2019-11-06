@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_COPYITEMCOMMAND_H
-#define MVVM_COPYITEMCOMMAND_H
+#ifndef MVVM_COMMANDS_COPYITEMCOMMAND_H
+#define MVVM_COMMANDS_COPYITEMCOMMAND_H
 
 #include <mvvm/commands/abstractitemcommand.h>
 
@@ -40,4 +40,4 @@ private:
 
 } // namespace ModelView
 
-#endif // MVVM_COPYITEMCOMMAND_H
+#endif  // MVVM_COMMANDS_COPYITEMCOMMAND_H

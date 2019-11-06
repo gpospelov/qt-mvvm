@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_CONTAINERUTILS_H
-#define MVVM_CONTAINERUTILS_H
+#ifndef MVVM_UTILS_CONTAINERUTILS_H
+#define MVVM_UTILS_CONTAINERUTILS_H
 
 #include <mvvm/core/export.h>
 #include <string>
@@ -31,5 +31,5 @@ template <typename C, typename T> int IndexOfItem(const C& container, const T& i
 
 }  // namespace ModelView
 
-#endif // MVVM_CONTAINERUTILS_H
+#endif  // MVVM_UTILS_CONTAINERUTILS_H
 

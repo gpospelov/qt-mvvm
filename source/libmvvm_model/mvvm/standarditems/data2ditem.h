@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_DATA2DITEM_H
-#define MVVM_DATA2DITEM_H
+#ifndef MVVM_STANDARDITEMS_DATA2DITEM_H
+#define MVVM_STANDARDITEMS_DATA2DITEM_H
 
 #include <mvvm/model/compounditem.h>
 #include <vector>
@@ -49,4 +49,4 @@ private:
 
 } // namespace ModelView
 
-#endif // MVVM_DATA2DITEM_H
+#endif  // MVVM_STANDARDITEMS_DATA2DITEM_H

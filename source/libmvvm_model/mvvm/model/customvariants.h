@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_CUSTOMVARIANTS_H
-#define MVVM_CUSTOMVARIANTS_H
+#ifndef MVVM_MODEL_CUSTOMVARIANTS_H
+#define MVVM_MODEL_CUSTOMVARIANTS_H
 
 //! @file customvariants.h
 //! Registrations and translations for custom variants.
@@ -77,4 +77,4 @@ Q_DECLARE_METATYPE(std::string)
 Q_DECLARE_METATYPE(std::vector<double>)
 Q_DECLARE_METATYPE(ModelView::RealLimits)
 
-#endif // MVVM_CUSTOMVARIANTS_H
+#endif  // MVVM_MODEL_CUSTOMVARIANTS_H

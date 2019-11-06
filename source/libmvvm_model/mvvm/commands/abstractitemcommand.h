@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_ABSTRACTITEMCOMMAND_H
-#define MVVM_ABSTRACTITEMCOMMAND_H
+#ifndef MVVM_COMMANDS_ABSTRACTITEMCOMMAND_H
+#define MVVM_COMMANDS_ABSTRACTITEMCOMMAND_H
 
 #include <mvvm/core/export.h>
 #include <mvvm/model/path.h>
@@ -54,4 +54,4 @@ private:
 
 } // namespace ModelView
 
-#endif // MVVM_ABSTRACTITEMCOMMAND_H
+#endif  // MVVM_COMMANDS_ABSTRACTITEMCOMMAND_H

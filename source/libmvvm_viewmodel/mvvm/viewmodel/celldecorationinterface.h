@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_CELLDECORATIONINTERFACE_H
-#define MVVM_CELLDECORATIONINTERFACE_H
+#ifndef MVVM_VIEWMODEL_CELLDECORATIONINTERFACE_H
+#define MVVM_VIEWMODEL_CELLDECORATIONINTERFACE_H
 
 #include <mvvm/core/export.h>
 #include <string>
@@ -31,4 +31,4 @@ public:
 
 } // namespace ModelView
 
-#endif // MVVM_CELLDECORATIONINTERFACE_H
+#endif  // MVVM_VIEWMODEL_CELLDECORATIONINTERFACE_H

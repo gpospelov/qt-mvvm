@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_ABSTRACTVIEWMODELCONTROLLER_H
-#define MVVM_ABSTRACTVIEWMODELCONTROLLER_H
+#ifndef MVVM_VIEWMODEL_ABSTRACTVIEWMODELCONTROLLER_H
+#define MVVM_VIEWMODEL_ABSTRACTVIEWMODELCONTROLLER_H
 
 #include <mvvm/core/export.h>
 #include <memory>
@@ -73,4 +73,4 @@ private:
 
 } // namespace ModelView
 
-#endif // MVVM_ABSTRACTVIEWMODELCONTROLLER_H
+#endif  // MVVM_VIEWMODEL_ABSTRACTVIEWMODELCONTROLLER_H

@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_BOOLEDITOR_H
-#define MVVM_BOOLEDITOR_H
+#ifndef MVVM_EDITORS_BOOLEDITOR_H
+#define MVVM_EDITORS_BOOLEDITOR_H
 
 #include <mvvm/editors/customeditor.h>
 
@@ -36,4 +36,4 @@ private:
 
 } // namespace ModelView
 
-#endif // MVVM_BOOLEDITOR_H
+#endif  // MVVM_EDITORS_BOOLEDITOR_H

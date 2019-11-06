@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_DEFAULTVIEWMODEL_H
-#define MVVM_DEFAULTVIEWMODEL_H
+#ifndef MVVM_VIEWMODEL_DEFAULTVIEWMODEL_H
+#define MVVM_VIEWMODEL_DEFAULTVIEWMODEL_H
 
 #include <mvvm/viewmodel/abstractviewmodel.h>
 
@@ -31,4 +31,4 @@ public:
 
 } // namespace ModelView
 
-#endif // MVVM_DEFAULTVIEWMODEL_H
+#endif  // MVVM_VIEWMODEL_DEFAULTVIEWMODEL_H

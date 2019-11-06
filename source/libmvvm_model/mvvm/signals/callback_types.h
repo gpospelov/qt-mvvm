@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_CALLBACK_TYPES_H
-#define MVVM_CALLBACK_TYPES_H
+#ifndef MVVM_SIGNALS_CALLBACK_TYPES_H
+#define MVVM_SIGNALS_CALLBACK_TYPES_H
 
 #include <string>
 #include <functional>
@@ -29,5 +29,5 @@ using model_t = std::function<void(SessionModel*)>;
 
 } // namespace ModelView
 
-#endif // MVVM_CALLBACK_TYPES_H
+#endif  // MVVM_SIGNALS_CALLBACK_TYPES_H
 

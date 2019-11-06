@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_CALLBACKCONTAINER_H
-#define MVVM_CALLBACKCONTAINER_H
+#ifndef MVVM_SIGNALS_CALLBACKCONTAINER_H
+#define MVVM_SIGNALS_CALLBACKCONTAINER_H
 
 #include <mvvm/signals/callback_types.h>
 #include <mvvm/core/export.h>
@@ -70,4 +70,4 @@ template <typename T> class Signal : public SignalBase<T, Callbacks::slot_t>
 
 } // namespace ModelView
 
-#endif // MVVM_CALLBACKCONTAINER_H
+#endif  // MVVM_SIGNALS_CALLBACKCONTAINER_H

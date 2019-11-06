@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_COLORMAPPLOTCONTROLLER_H
-#define MVVM_COLORMAPPLOTCONTROLLER_H
+#ifndef MVVM_PLOTTING_COLORMAPPLOTCONTROLLER_H
+#define MVVM_PLOTTING_COLORMAPPLOTCONTROLLER_H
 
 #include <mvvm/signals/itemcontroller.h>
 #include <memory>
@@ -47,4 +47,4 @@ private:
 
 } // namespace ModelView
 
-#endif // MVVM_COLORMAPPLOTCONTROLLER_H
+#endif  // MVVM_PLOTTING_COLORMAPPLOTCONTROLLER_H

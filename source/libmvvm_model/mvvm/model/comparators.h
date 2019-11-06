@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_COMPARATORS_H
-#define MVVM_COMPARATORS_H
+#ifndef MVVM_MODEL_COMPARATORS_H
+#define MVVM_MODEL_COMPARATORS_H
 
 #include <mvvm/core/export.h>
 
@@ -28,5 +28,5 @@ private:
 
 }  // namespace ModelView
 
-#endif // MVVM_COMPARATORS_H
+#endif  // MVVM_MODEL_COMPARATORS_H
 

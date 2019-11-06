@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_EDITORBUILDERSTRATEGY_H
-#define MVVM_EDITORBUILDERSTRATEGY_H
+#ifndef MVVM_EDITORS_EDITORBUILDERS_H
+#define MVVM_EDITORS_EDITORBUILDERS_H
 
 #include <mvvm/core/export.h>
 #include <functional>
@@ -55,4 +55,4 @@ CORE_EXPORT builder_t ExternalPropertyEditorBuilder();
 
 } // namespace ModelView
 
-#endif // MVVM_EDITORBUILDERSTRATEGY_H
+#endif  // MVVM_EDITORS_EDITORBUILDERS_H

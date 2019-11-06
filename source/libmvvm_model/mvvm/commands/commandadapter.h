@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_COMMANDADAPTER_H
-#define MVVM_COMMANDADAPTER_H
+#ifndef MVVM_COMMANDS_COMMANDADAPTER_H
+#define MVVM_COMMANDS_COMMANDADAPTER_H
 
 #include <mvvm/core/export.h>
 #include <QUndoCommand>
@@ -36,4 +36,4 @@ private:
 
 } // namespace ModelView
 
-#endif // MVVM_COMMANDADAPTER_H
+#endif  // MVVM_COMMANDS_COMMANDADAPTER_H

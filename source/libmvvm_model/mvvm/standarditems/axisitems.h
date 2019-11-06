@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_AXISITEMS_H
-#define MVVM_AXISITEMS_H
+#ifndef MVVM_STANDARDITEMS_AXISITEMS_H
+#define MVVM_STANDARDITEMS_AXISITEMS_H
 
 //! @file axisitems.h
 //! Collection of axis items for 1D and 2D data/plotting support.
@@ -107,4 +107,4 @@ public:
 
 } // namespace ModelView
 
-#endif // MVVM_AXISITEMS_H
+#endif  // MVVM_STANDARDITEMS_AXISITEMS_H

@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_CUSTOMEDITOR_H
-#define MVVM_CUSTOMEDITOR_H
+#ifndef MVVM_EDITORS_CUSTOMEDITOR_H
+#define MVVM_EDITORS_CUSTOMEDITOR_H
 
 #include <mvvm/core/export.h>
 #include <QWidget>
@@ -46,4 +46,4 @@ protected:
 
 } // namespace ModelView
 
-#endif // MVVM_CUSTOMEDITOR_H
+#endif  // MVVM_EDITORS_CUSTOMEDITOR_H

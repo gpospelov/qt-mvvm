@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_CONTAINERITEM_H
-#define MVVM_CONTAINERITEM_H
+#ifndef MVVM_STANDARDITEMS_CONTAINERITEM_H
+#define MVVM_STANDARDITEMS_CONTAINERITEM_H
 
 #include <mvvm/model/compounditem.h>
 
@@ -31,4 +31,4 @@ public:
 
 } // namespace ModelView
 
-#endif // MVVM_CONTAINERITEM_H
+#endif  // MVVM_STANDARDITEMS_CONTAINERITEM_H

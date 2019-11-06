@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_CUSTOMPLOTUTILS_H
-#define MVVM_CUSTOMPLOTUTILS_H
+#ifndef MVVM_PLOTTING_CUSTOMPLOTUTILS_H
+#define MVVM_PLOTTING_CUSTOMPLOTUTILS_H
 
 #include <mvvm/core/export.h>
 
@@ -33,4 +33,4 @@ CORE_EXPORT void SetLogarithmicScale(QCPAxis* axis, bool isLogz);
 
 } // namespace ModelView
 
-#endif // MVVM_CUSTOMPLOTUTILS_H
+#endif  // MVVM_PLOTTING_CUSTOMPLOTUTILS_H

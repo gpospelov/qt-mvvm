@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_ABSTRACTVIEWMODEL_H
-#define MVVM_ABSTRACTVIEWMODEL_H
+#ifndef MVVM_VIEWMODEL_ABSTRACTVIEWMODEL_H
+#define MVVM_VIEWMODEL_ABSTRACTVIEWMODEL_H
 
 #include <mvvm/core/export.h>
 #include <QStandardItemModel>
@@ -76,4 +76,4 @@ private:
 
 } // namespace ModelView
 
-#endif // MVVM_ABSTRACTVIEWMODEL_H
+#endif  // MVVM_VIEWMODEL_ABSTRACTVIEWMODEL_H

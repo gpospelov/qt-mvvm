@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_COLOREDITOR_H
-#define MVVM_COLOREDITOR_H
+#ifndef MVVM_EDITORS_COLOREDITOR_H
+#define MVVM_EDITORS_COLOREDITOR_H
 
 #include <mvvm/editors/customeditor.h>
 
@@ -40,4 +40,4 @@ private:
 
 } // namespace ModelView
 
-#endif // MVVM_COLOREDITOR_H
+#endif  // MVVM_EDITORS_COLOREDITOR_H

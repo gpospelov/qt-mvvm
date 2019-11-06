@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_DATAROLE_H
-#define MVVM_DATAROLE_H
+#ifndef MVVM_MODEL_DATAROLE_H
+#define MVVM_MODEL_DATAROLE_H
 
 #include <mvvm/core/export.h>
 #include <QVariant>
@@ -28,4 +28,4 @@ public:
 
 }  // namespace ModelView
 
-#endif // MVVM_DATAROLE_H
+#endif  // MVVM_MODEL_DATAROLE_H

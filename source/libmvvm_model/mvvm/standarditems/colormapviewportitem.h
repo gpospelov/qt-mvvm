@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_COLORMAPVIEWPORTITEM_H
-#define MVVM_COLORMAPVIEWPORTITEM_H
+#ifndef MVVM_STANDARDITEMS_COLORMAPVIEWPORTITEM_H
+#define MVVM_STANDARDITEMS_COLORMAPVIEWPORTITEM_H
 
 #include <mvvm/standarditems/viewportitem.h>
 
@@ -41,4 +41,4 @@ private:
 
 } // namespace ModelView
 
-#endif // MVVM_COLORMAPVIEWPORTITEM_H
+#endif  // MVVM_STANDARDITEMS_COLORMAPVIEWPORTITEM_H

@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_CHILDRENSTRATEGYINTERFACE_H
-#define MVVM_CHILDRENSTRATEGYINTERFACE_H
+#ifndef MVVM_VIEWMODEL_CHILDRENSTRATEGYINTERFACE_H
+#define MVVM_VIEWMODEL_CHILDRENSTRATEGYINTERFACE_H
 
 #include <mvvm/core/export.h>
 #include <QList>
@@ -36,4 +36,4 @@ public:
 
 }  // namespace ModelView
 
-#endif // MVVM_ROWCONSTRUCTORINTERFACE_H
+#endif  // MVVM_VIEWMODEL_CHILDRENSTRATEGYINTERFACE_H
