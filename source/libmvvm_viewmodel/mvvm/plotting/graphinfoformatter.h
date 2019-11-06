@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_GRAPHINFOFORMATTER_H
-#define MVVM_GRAPHINFOFORMATTER_H
+#ifndef MVVM_PLOTTING_GRAPHINFOFORMATTER_H
+#define MVVM_PLOTTING_GRAPHINFOFORMATTER_H
 
 #include <mvvm/plotting/statusstringformatterinterface.h>
 
@@ -36,4 +36,4 @@ public:
 
 } // namespace ModelView
 
-#endif // MVVM_GRAPHINFOFORMATTER_H
+#endif  // MVVM_PLOTTING_GRAPHINFOFORMATTER_H

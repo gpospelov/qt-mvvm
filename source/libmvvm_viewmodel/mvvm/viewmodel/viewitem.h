@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_VIEWITEM_H
-#define MVVM_VIEWITEM_H
+#ifndef MVVM_VIEWMODEL_VIEWITEM_H
+#define MVVM_VIEWMODEL_VIEWITEM_H
 
 #include <mvvm/core/export.h>
 #include <QStandardItem>
@@ -48,4 +48,4 @@ protected:
 
 } // namespace ModelView
 
-#endif // MVVM_VIEWITEM_H
+#endif  // MVVM_VIEWMODEL_VIEWITEM_H

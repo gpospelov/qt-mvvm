@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_STANDARDVIEWMODELS_H
-#define MVVM_STANDARDVIEWMODELS_H
+#ifndef MVVM_VIEWMODEL_STANDARDVIEWMODELS_H
+#define MVVM_VIEWMODEL_STANDARDVIEWMODELS_H
 
 #include <mvvm/core/export.h>
 #include <memory>
@@ -38,4 +38,4 @@ CORE_EXPORT std::unique_ptr<AbstractViewModel> CreateTopItemsViewModel(SessionMo
 
 } // ModelView
 
-#endif // MVVM_STANDARDVIEWMODELS_H
+#endif  // MVVM_VIEWMODEL_STANDARDVIEWMODELS_H

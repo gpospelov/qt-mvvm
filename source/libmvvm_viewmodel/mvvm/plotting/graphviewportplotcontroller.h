@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_GRAPHVIEWPORTPLOTCONTROLLER_H
-#define MVVM_GRAPHVIEWPORTPLOTCONTROLLER_H
+#ifndef MVVM_PLOTTING_GRAPHVIEWPORTPLOTCONTROLLER_H
+#define MVVM_PLOTTING_GRAPHVIEWPORTPLOTCONTROLLER_H
 
 #include <mvvm/signals/itemcontroller.h>
 
@@ -42,4 +42,4 @@ private:
 
 } // namespace ModelView
 
-#endif // MVVM_GRAPHVIEWPORTPLOTCONTROLLER_H
+#endif  // MVVM_PLOTTING_GRAPHVIEWPORTPLOTCONTROLLER_H

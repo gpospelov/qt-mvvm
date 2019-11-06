@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_VIEWEMPTYITEM_H
-#define MVVM_VIEWEMPTYITEM_H
+#ifndef MVVM_VIEWMODEL_VIEWEMPTYITEM_H
+#define MVVM_VIEWMODEL_VIEWEMPTYITEM_H
 
 #include <mvvm/viewmodel/viewitem.h>
 
@@ -32,4 +32,4 @@ public:
 
 } // namespace ModelView
 
-#endif // MVVM_VIEWEMPTYITEM_H
+#endif  // MVVM_VIEWMODEL_VIEWEMPTYITEM_H

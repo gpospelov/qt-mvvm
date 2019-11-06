@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_MODELUTILS_H
-#define MVVM_MODELUTILS_H
+#ifndef MVVM_MODEL_MODELUTILS_H
+#define MVVM_MODEL_MODELUTILS_H
 
 #include <mvvm/model/itemutils.h>
 #include <mvvm/core/export.h>
@@ -66,4 +66,4 @@ void CORE_EXPORT DeleteItemFromModel(SessionItem* item);
 } // namespace Utils
 } // namespace ModelView
 
-#endif // MVVM_MODELUTILS_H
+#endif  // MVVM_MODEL_MODELUTILS_H

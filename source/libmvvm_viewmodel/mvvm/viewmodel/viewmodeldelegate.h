@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_VIEWMODELDELEGATE_H
-#define MVVM_VIEWMODELDELEGATE_H
+#ifndef MVVM_VIEWMODEL_VIEWMODELDELEGATE_H
+#define MVVM_VIEWMODEL_VIEWMODELDELEGATE_H
 
 #include <mvvm/core/export.h>
 #include <QStyledItemDelegate>
@@ -59,4 +59,4 @@ private:
 
 } // namespace ModelView
 
-#endif // MVVM_VIEWMODELDELEGATE_H
+#endif  // MVVM_VIEWMODEL_VIEWMODELDELEGATE_H

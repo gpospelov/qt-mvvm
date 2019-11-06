@@ -7,11 +7,11 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_VIEWITEMS_H
-#define MVVM_VIEWITEMS_H
+#ifndef MVVM_VIEWMODEL_VIEWITEMS_H
+#define MVVM_VIEWMODEL_VIEWITEMS_H
 
 #include <mvvm/viewmodel/viewemptyitem.h>
 #include <mvvm/viewmodel/viewlabelitem.h>
 #include <mvvm/viewmodel/viewdataitem.h>
 
-#endif // MVVM_VIEWITEMS_H
+#endif  // MVVM_VIEWMODEL_VIEWITEMS_H

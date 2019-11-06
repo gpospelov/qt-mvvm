@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_MOVEITEMCOMMAND_H
-#define MVVM_MOVEITEMCOMMAND_H
+#ifndef MVVM_COMMANDS_MOVEITEMCOMMAND_H
+#define MVVM_COMMANDS_MOVEITEMCOMMAND_H
 
 #include <mvvm/commands/abstractitemcommand.h>
 #include <memory>
@@ -41,4 +41,4 @@ private:
 
 } // namespace ModelView
 
-#endif // MVVM_MOVEITEMCOMMAND_H
+#endif  // MVVM_COMMANDS_MOVEITEMCOMMAND_H

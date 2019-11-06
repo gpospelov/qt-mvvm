@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_SCIENTIFICSPINBOXEDITOR_H
-#define MVVM_SCIENTIFICSPINBOXEDITOR_H
+#ifndef MVVM_EDITORS_SCIENTIFICSPINBOXEDITOR_H
+#define MVVM_EDITORS_SCIENTIFICSPINBOXEDITOR_H
 
 #include <mvvm/editors/customeditor.h>
 
@@ -38,4 +38,4 @@ private:
 
 } // namespace ModelView
 
-#endif // MVVM_SCIENTIFICSPINBOXEDITOR_H
+#endif  // MVVM_EDITORS_SCIENTIFICSPINBOXEDITOR_H

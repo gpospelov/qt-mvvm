@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_VIEWPORTITEM_H
-#define MVVM_VIEWPORTITEM_H
+#ifndef MVVM_STANDARDITEMS_VIEWPORTITEM_H
+#define MVVM_STANDARDITEMS_VIEWPORTITEM_H
 
 #include <mvvm/model/compounditem.h>
 
@@ -48,4 +48,4 @@ private:
 
 } // namespace ModelView
 
-#endif // MVVM_VIEWPORTITEM_H
+#endif  // MVVM_STANDARDITEMS_VIEWPORTITEM_H

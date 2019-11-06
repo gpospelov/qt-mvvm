@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_TAGROW_H
-#define MVVM_TAGROW_H
+#ifndef MVVM_MODEL_TAGROW_H
+#define MVVM_MODEL_TAGROW_H
 
 #include <mvvm/core/export.h>
 #include <string>
@@ -34,4 +34,4 @@ struct CORE_EXPORT TagRow
 CORE_EXPORT bool operator==(const ModelView::TagRow& left, const ModelView::TagRow& right);
 CORE_EXPORT bool operator!=(const ModelView::TagRow& left, const ModelView::TagRow& right);
 
-#endif //  MVVM_TAGROW_H
+#endif  // MVVM_MODEL_TAGROW_H

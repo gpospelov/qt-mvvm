@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_SCIENTIFICSPINBOX_H
-#define MVVM_SCIENTIFICSPINBOX_H
+#ifndef MVVM_WIDGETS_SCIENTIFICSPINBOX_H
+#define MVVM_WIDGETS_SCIENTIFICSPINBOX_H
 
 #include <mvvm/core/export.h>
 #include <QAbstractSpinBox>
@@ -68,4 +68,4 @@ private:
 
 } // namespace ModelView
 
-#endif // MVVM_SCIENTIFICSPINBOX_H
+#endif  // MVVM_WIDGETS_SCIENTIFICSPINBOX_H

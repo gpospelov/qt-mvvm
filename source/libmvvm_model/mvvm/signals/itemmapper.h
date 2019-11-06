@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_ITEMMAPPER_H
-#define MVVM_ITEMMAPPER_H
+#ifndef MVVM_SIGNALS_ITEMMAPPER_H
+#define MVVM_SIGNALS_ITEMMAPPER_H
 
 #include <mvvm/signals/callbackcontainer.h>
 
@@ -73,4 +73,4 @@ private:
 
 } // ModelView
 
-#endif // MVVM_ITEMMAPPER_H
+#endif  // MVVM_SIGNALS_ITEMMAPPER_H

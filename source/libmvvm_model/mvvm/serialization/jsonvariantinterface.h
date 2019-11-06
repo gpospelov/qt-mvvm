@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_JSONVARIANTINTERFACE_H
-#define MVVM_JSONVARIANTINTERFACE_H
+#ifndef MVVM_SERIALIZATION_JSONVARIANTINTERFACE_H
+#define MVVM_SERIALIZATION_JSONVARIANTINTERFACE_H
 
 #include <mvvm/core/export.h>
 
@@ -32,4 +32,4 @@ public:
 
 } // namespace ModelView
 
-#endif // MVVM_JSONVARIANTINTERFACE_H
+#endif  // MVVM_SERIALIZATION_JSONVARIANTINTERFACE_H

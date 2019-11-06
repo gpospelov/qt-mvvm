@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_GRAPHCANVAS_H
-#define MVVM_GRAPHCANVAS_H
+#ifndef MVVM_PLOTTING_GRAPHCANVAS_H
+#define MVVM_PLOTTING_GRAPHCANVAS_H
 
 #include <mvvm/core/export.h>
 #include <memory>
@@ -41,4 +41,4 @@ private:
 
 } // namespace ModelView
 
-#endif // MVVM_GRAPHCANVAS_H
+#endif  // MVVM_PLOTTING_GRAPHCANVAS_H

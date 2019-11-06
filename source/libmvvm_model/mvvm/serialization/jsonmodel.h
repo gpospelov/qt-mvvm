@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_JSONMODEL_H
-#define MVVM_JSONMODEL_H
+#ifndef MVVM_SERIALIZATION_JSONMODEL_H
+#define MVVM_SERIALIZATION_JSONMODEL_H
 
 #include <mvvm/serialization/jsonconverterinterfaces.h>
 #include <QString>
@@ -42,5 +42,5 @@ public:
 
 }  // namespace ModelView
 
-#endif // MVVM_JSONMODEL_H
+#endif  // MVVM_SERIALIZATION_JSONMODEL_H
 

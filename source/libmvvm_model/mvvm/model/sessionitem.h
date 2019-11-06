@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_SESSIONITEM_H
-#define MVVM_SESSIONITEM_H
+#ifndef MVVM_MODEL_SESSIONITEM_H
+#define MVVM_MODEL_SESSIONITEM_H
 
 #include <mvvm/core/export.h>
 #include <mvvm/model/mvvm_types.h>
@@ -136,5 +136,5 @@ template <typename T=SessionItem> std::vector<T*> SessionItem::items(const std::
 
 } // namespace ModelView
 
-#endif // MVVM_SESSIONITEM_H
+#endif  // MVVM_MODEL_SESSIONITEM_H
 

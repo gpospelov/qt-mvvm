@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_FUNCTION_TYPES_H
-#define MVVM_FUNCTION_TYPES_H
+#ifndef MVVM_MODEL_FUNCTION_TYPES_H
+#define MVVM_MODEL_FUNCTION_TYPES_H
 
 #include <memory>
 #include <functional>
@@ -20,5 +20,5 @@ using item_factory_func_t = std::function<std::unique_ptr<SessionItem>()>;
 
 } // namespace ModelView
 
-#endif // MVVM_FUNCTION_TYPES_H
+#endif  // MVVM_MODEL_FUNCTION_TYPES_H
 

@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_NUMERICUTILS_H
-#define MVVM_NUMERICUTILS_H
+#ifndef MVVM_UTILS_NUMERICUTILS_H
+#define MVVM_UTILS_NUMERICUTILS_H
 
 #include <mvvm/core/export.h>
 
@@ -30,4 +30,4 @@ CORE_EXPORT double RandDouble(double low, double high);
 
 } // namespace ModelView
 
-#endif // MVVM_NUMERICUTILS_H
+#endif  // MVVM_UTILS_NUMERICUTILS_H

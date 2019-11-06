@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_STANDARDVIEWMODELCONTROLLERS_H
-#define MVVM_STANDARDVIEWMODELCONTROLLERS_H
+#ifndef MVVM_VIEWMODEL_STANDARDVIEWMODELCONTROLLERS_H
+#define MVVM_VIEWMODEL_STANDARDVIEWMODELCONTROLLERS_H
 
 #include <mvvm/viewmodel/abstractviewmodelcontroller.h>
 #include <string>
@@ -81,4 +81,4 @@ public:
 
 } // namespace ModelView
 
-#endif // MVVM_STANDARDVIEWMODELCONTROLLERS_H
+#endif  // MVVM_VIEWMODEL_STANDARDVIEWMODELCONTROLLERS_H

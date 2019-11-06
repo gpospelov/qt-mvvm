@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_MVVM_TYPES_H
-#define MVVM_MVVM_TYPES_H
+#ifndef MVVM_MODEL_MVVM_TYPES_H
+#define MVVM_MODEL_MVVM_TYPES_H
 
 #include <string>
 
@@ -57,5 +57,5 @@ const model_type ColorMapViewportItemType = "ColorMapViewport";
 
 } // namespace ModelView
 
-#endif // MVVM_MVVM_TYPES_H
+#endif  // MVVM_MODEL_MVVM_TYPES_H
 

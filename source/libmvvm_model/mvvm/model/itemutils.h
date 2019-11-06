@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_ITEMUTILS_H
-#define MVVM_ITEMUTILS_H
+#ifndef MVVM_MODEL_ITEMUTILS_H
+#define MVVM_MODEL_ITEMUTILS_H
 
 #include <mvvm/core/export.h>
 #include <functional>
@@ -52,5 +52,5 @@ CORE_EXPORT std::vector<SessionItem*> SinglePropertyItems(const SessionItem& ite
 
 }  // namespace ModelView
 
-#endif // MVVM_ITEMUTILS_H
+#endif  // MVVM_MODEL_ITEMUTILS_H
 

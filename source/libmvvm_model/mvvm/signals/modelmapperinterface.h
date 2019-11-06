@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_MODELMAPPERINTERFACE_H
-#define MVVM_MODELMAPPERINTERFACE_H
+#ifndef MVVM_SIGNALS_MODELMAPPERINTERFACE_H
+#define MVVM_SIGNALS_MODELMAPPERINTERFACE_H
 
 #include <mvvm/core/export.h>
 #include <mvvm/signals/callback_types.h>
@@ -47,4 +47,4 @@ private:
 
 } // namespace ModelView
 
-#endif // MVVM_MODELMAPPERINTERFACE_H
+#endif  // MVVM_SIGNALS_MODELMAPPERINTERFACE_H

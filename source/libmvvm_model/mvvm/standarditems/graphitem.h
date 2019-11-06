@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_GRAPHITEM_H
-#define MVVM_GRAPHITEM_H
+#ifndef MVVM_STANDARDITEMS_GRAPHITEM_H
+#define MVVM_STANDARDITEMS_GRAPHITEM_H
 
 #include <mvvm/model/compounditem.h>
 
@@ -44,4 +44,4 @@ public:
 
 } // namespace ModelView
 
-#endif // MVVM_GRAPHITEM_H
+#endif  // MVVM_STANDARDITEMS_GRAPHITEM_H

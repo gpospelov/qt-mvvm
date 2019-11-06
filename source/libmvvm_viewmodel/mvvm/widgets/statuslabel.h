@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_STATUSLABEL_H
-#define MVVM_STATUSLABEL_H
+#ifndef MVVM_WIDGETS_STATUSLABEL_H
+#define MVVM_WIDGETS_STATUSLABEL_H
 
 #include <mvvm/core/export.h>
 #include <QFrame>
@@ -48,4 +48,4 @@ private:
 
 }  // namespace ModelView
 
-#endif // MVVM_STATUSLABEL_H
+#endif  // MVVM_WIDGETS_STATUSLABEL_H

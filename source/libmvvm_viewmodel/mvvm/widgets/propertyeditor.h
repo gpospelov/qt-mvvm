@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_PROPERTYEDITOR_H
-#define MVVM_PROPERTYEDITOR_H
+#ifndef MVVM_WIDGETS_PROPERTYEDITOR_H
+#define MVVM_WIDGETS_PROPERTYEDITOR_H
 
 #include <mvvm/core/export.h>
 #include <QWidget>
@@ -44,4 +44,4 @@ private:
 
 } // namespace ModelView
 
-#endif // MVVM_PROPERTYEDITOR_H
+#endif  // MVVM_WIDGETS_PROPERTYEDITOR_H

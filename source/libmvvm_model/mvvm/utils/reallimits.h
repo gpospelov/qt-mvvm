@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_REALLIMITS_H
-#define MVVM_REALLIMITS_H
+#ifndef MVVM_UTILS_REALLIMITS_H
+#define MVVM_UTILS_REALLIMITS_H
 
 #include <mvvm/core/export.h>
 
@@ -81,4 +81,4 @@ protected:
 
 } // namespace ModelView
 
-#endif // MVVM_REALLIMITS_H
+#endif  // MVVM_UTILS_REALLIMITS_H

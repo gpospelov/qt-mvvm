@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_TOPITEMSVIEWMODEL_H
-#define MVVM_TOPITEMSVIEWMODEL_H
+#ifndef MVVM_VIEWMODEL_TOPITEMSVIEWMODEL_H
+#define MVVM_VIEWMODEL_TOPITEMSVIEWMODEL_H
 
 #include <mvvm/viewmodel/abstractviewmodel.h>
 
@@ -26,4 +26,4 @@ public:
 
 } // namespace ModelView
 
-#endif // MVVM_TOPITEMSVIEWMODEL_H
+#endif  // MVVM_VIEWMODEL_TOPITEMSVIEWMODEL_H

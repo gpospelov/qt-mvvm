@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_TAGINFO_H
-#define MVVM_TAGINFO_H
+#ifndef MVVM_MODEL_TAGINFO_H
+#define MVVM_MODEL_TAGINFO_H
 
 #include <mvvm/core/export.h>
 #include <string>
@@ -57,4 +57,4 @@ private:
 
 } // namespace ModelView
 
-#endif //  MVVM_TAGINFO_H
+#endif  // MVVM_MODEL_TAGINFO_H

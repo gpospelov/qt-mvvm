@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_PATH_H
-#define MVVM_PATH_H
+#ifndef MVVM_MODEL_PATH_H
+#define MVVM_MODEL_PATH_H
 
 #include <mvvm/core/export.h>
 #include <vector>
@@ -51,5 +51,5 @@ private:
 
 }  // namespace ModelView
 
-#endif // MVVM_PATH_H
+#endif  // MVVM_MODEL_PATH_H
 

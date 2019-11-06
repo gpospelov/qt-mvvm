@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_ITEMCONTROLLER_H
-#define MVVM_ITEMCONTROLLER_H
+#ifndef MVVM_SIGNALS_ITEMCONTROLLER_H
+#define MVVM_SIGNALS_ITEMCONTROLLER_H
 
 #include <mvvm/signals/itemmapper.h>
 #
@@ -69,4 +69,4 @@ private:
 
 } // namespace ModelView
 
-#endif // MVVM_ITEMCONTROLLER_H
+#endif  // MVVM_SIGNALS_ITEMCONTROLLER_H

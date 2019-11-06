@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_EXTERNALPROPERTY_H
-#define MVVM_EXTERNALPROPERTY_H
+#ifndef MVVM_MODEL_EXTERNALPROPERTY_H
+#define MVVM_MODEL_EXTERNALPROPERTY_H
 
 #include <mvvm/core/export.h>
 #include <QColor>
@@ -49,4 +49,4 @@ private:
 
 Q_DECLARE_METATYPE(ModelView::ExternalProperty)
 
-#endif // MVVM_EXTERNALPROPERTY_H
+#endif  // MVVM_MODEL_EXTERNALPROPERTY_H

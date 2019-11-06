@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_STRINGUTILS_H
-#define MVVM_STRINGUTILS_H
+#ifndef MVVM_UTILS_STRINGUTILS_H
+#define MVVM_UTILS_STRINGUTILS_H
 
 #include <mvvm/core/export.h>
 #include <string>
@@ -29,4 +29,4 @@ CORE_EXPORT std::string ScientificDoubleToString(double input, int precision = 6
 
 } // namespace ModelView
 
-#endif // MVVM_STRINGUTILS_H
+#endif  // MVVM_UTILS_STRINGUTILS_H

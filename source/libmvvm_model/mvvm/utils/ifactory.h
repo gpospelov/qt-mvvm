@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_IFACTORY_H
-#define MVVM_IFACTORY_H
+#ifndef MVVM_UTILS_IFACTORY_H
+#define MVVM_UTILS_IFACTORY_H
 
 #include <functional>
 #include <map>
@@ -61,4 +61,4 @@ private:
 
 } // namespace ModelView
 
-#endif // MVVM_IFACTORY_H
+#endif  // MVVM_UTILS_IFACTORY_H

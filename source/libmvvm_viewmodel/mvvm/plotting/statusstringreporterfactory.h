@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_STATUSSTRINGREPORTERFACTORY_H
-#define MVVM_STATUSSTRINGREPORTERFACTORY_H
+#ifndef MVVM_PLOTTING_STATUSSTRINGREPORTERFACTORY_H
+#define MVVM_PLOTTING_STATUSSTRINGREPORTERFACTORY_H
 
 /*!
 @file statusstringreporterfactory.h
@@ -36,4 +36,4 @@ CreateColorMapReporter(QCustomPlot* custom_plot, std::function<void(const std::s
 
 } // namespace ModelView
 
-#endif // MVVM_GRAPHCANVAS_H
+#endif  // MVVM_PLOTTING_STATUSSTRINGREPORTERFACTORY_H

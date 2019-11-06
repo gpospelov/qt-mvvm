@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_SESSIONITEMCONTAINER_H
-#define MVVM_SESSIONITEMCONTAINER_H
+#ifndef MVVM_MODEL_SESSIONITEMCONTAINER_H
+#define MVVM_MODEL_SESSIONITEMCONTAINER_H
 
 #include <mvvm/core/export.h>
 #include <mvvm/model/taginfo.h>
@@ -66,4 +66,4 @@ private:
 
 } // namespace ModelView
 
-#endif // MVVM_SESSIONITEMCONTAINER_H
+#endif  // MVVM_MODEL_SESSIONITEMCONTAINER_H

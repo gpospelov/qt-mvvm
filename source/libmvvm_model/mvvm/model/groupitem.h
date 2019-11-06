@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_GROUPITEM_H
-#define MVVM_GROUPITEM_H
+#ifndef MVVM_MODEL_GROUPITEM_H
+#define MVVM_MODEL_GROUPITEM_H
 
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/itemcatalogue.h>
@@ -52,4 +52,4 @@ void GroupItem::registerItem(const std::string& text, bool make_selected)
 
 } // namespace ModelView
 
-#endif // MVVM_GROUPITEM_H
+#endif  // MVVM_MODEL_GROUPITEM_H

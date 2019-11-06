@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_VIEWPORTAXISPLOTCONTROLLERS_H
-#define MVVM_VIEWPORTAXISPLOTCONTROLLERS_H
+#ifndef MVVM_PLOTTING_VIEWPORTAXISPLOTCONTROLLER_H
+#define MVVM_PLOTTING_VIEWPORTAXISPLOTCONTROLLER_H
 
 #include <mvvm/signals/itemcontroller.h>
 #include <memory>
@@ -43,4 +43,4 @@ public:
 
 } // namespace ModelView
 
-#endif // MVVM_VIEWPORTAXISPLOTCONTROLLERS_H
+#endif  // MVVM_PLOTTING_VIEWPORTAXISPLOTCONTROLLER_H

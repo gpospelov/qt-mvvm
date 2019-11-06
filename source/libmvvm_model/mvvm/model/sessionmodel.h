@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_SESSIONMODEL_H
-#define MVVM_SESSIONMODEL_H
+#ifndef MVVM_MODEL_SESSIONMODEL_H
+#define MVVM_MODEL_SESSIONMODEL_H
 
 #include <mvvm/model/function_types.h>
 #include <mvvm/core/export.h>
@@ -108,4 +108,4 @@ T* SessionModel::insertItem(SessionItem* parent, const std::string& tag, int row
 
 } // namespace ModelView
 
-#endif // MVVM_SESSIONMODEL_H
+#endif  // MVVM_MODEL_SESSIONMODEL_H

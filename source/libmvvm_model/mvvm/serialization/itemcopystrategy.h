@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_ITEMCOPYSTRATEGY_H
-#define MVVM_ITEMCOPYSTRATEGY_H
+#ifndef MVVM_SERIALIZATION_ITEMCOPYSTRATEGY_H
+#define MVVM_SERIALIZATION_ITEMCOPYSTRATEGY_H
 
 #include <mvvm/core/export.h>
 #include <memory>
@@ -31,4 +31,4 @@ public:
 
 } // namespace ModelView
 
-#endif // MVVM_ITEMCOPYSTRATEGY_H
+#endif  // MVVM_SERIALIZATION_ITEMCOPYSTRATEGY_H

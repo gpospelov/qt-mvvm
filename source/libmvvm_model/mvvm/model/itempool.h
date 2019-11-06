@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_ITEMPOOL_H
-#define MVVM_ITEMPOOL_H
+#ifndef MVVM_MODEL_ITEMPOOL_H
+#define MVVM_MODEL_ITEMPOOL_H
 
 #include <mvvm/core/export.h>
 #include <mvvm/model/mvvm_types.h>
@@ -46,5 +46,5 @@ private:
 
 }  // namespace ModelView
 
-#endif // MVVM_ITEMPOOL_H
+#endif  // MVVM_MODEL_ITEMPOOL_H
 

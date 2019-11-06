@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_VIEWITEMTYPES_H
-#define MVVM_VIEWITEMTYPES_H
+#ifndef MVVM_VIEWMODEL_VIEWITEMTYPES_H
+#define MVVM_VIEWMODEL_VIEWITEMTYPES_H
 
 #include <mvvm/viewmodel/viewitem.h>
 
@@ -24,4 +24,4 @@ const int data_item_type = QStandardItem::UserType + 3;
 
 } // namespace ModelView
 
-#endif // MVVM_VIEWITEMTYPES_H
+#endif  // MVVM_VIEWMODEL_VIEWITEMTYPES_H

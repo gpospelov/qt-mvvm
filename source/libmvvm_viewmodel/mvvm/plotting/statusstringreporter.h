@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_STATUSSTRINGREPORTER_H
-#define MVVM_STATUSSTRINGREPORTER_H
+#ifndef MVVM_PLOTTING_STATUSSTRINGREPORTER_H
+#define MVVM_PLOTTING_STATUSSTRINGREPORTER_H
 
 #include <mvvm/core/export.h>
 #include <functional>
@@ -44,4 +44,4 @@ private:
 
 } // namespace ModelView
 
-#endif // MVVM_STATUSSTRINGREPORTER_H
+#endif  // MVVM_PLOTTING_STATUSSTRINGREPORTER_H

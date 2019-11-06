@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_MOUSEPOSINFO_H
-#define MVVM_MOUSEPOSINFO_H
+#ifndef MVVM_PLOTTING_MOUSEPOSINFO_H
+#define MVVM_PLOTTING_MOUSEPOSINFO_H
 
 #include <mvvm/core/export.h>
 
@@ -33,4 +33,4 @@ struct CORE_EXPORT MousePosInfo
 
 } // namespace ModelView
 
-#endif // MVVM_MOUSEPOSINFO_H
+#endif  // MVVM_PLOTTING_MOUSEPOSINFO_H

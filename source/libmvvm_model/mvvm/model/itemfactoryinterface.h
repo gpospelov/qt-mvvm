@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_ITEMFACTORYINTERFACE_H
-#define MVVM_ITEMFACTORYINTERFACE_H
+#ifndef MVVM_MODEL_ITEMFACTORYINTERFACE_H
+#define MVVM_MODEL_ITEMFACTORYINTERFACE_H
 
 #include <mvvm/core/export.h>
 #include <mvvm/model/mvvm_types.h>
@@ -33,5 +33,5 @@ public:
 
 } // namespace ModelView
 
-#endif // MVVM_ITEMFACTORYINTERFACE_H
+#endif  // MVVM_MODEL_ITEMFACTORYINTERFACE_H
 

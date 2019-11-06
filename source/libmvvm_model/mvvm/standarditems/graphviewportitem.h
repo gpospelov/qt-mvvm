@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_GRAPHVIEWPORTITEM_H
-#define MVVM_GRAPHVIEWPORTITEM_H
+#ifndef MVVM_STANDARDITEMS_GRAPHVIEWPORTITEM_H
+#define MVVM_STANDARDITEMS_GRAPHVIEWPORTITEM_H
 
 #include <mvvm/standarditems/viewportitem.h>
 
@@ -36,4 +36,4 @@ private:
 
 } // namespace ModelView
 
-#endif // MVVM_GRAPHVIEWPORTITEM_H
+#endif  // MVVM_STANDARDITEMS_GRAPHVIEWPORTITEM_H

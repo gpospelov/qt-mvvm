@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_VECTORITEM_H
-#define MVVM_VECTORITEM_H
+#ifndef MVVM_STANDARDITEMS_VECTORITEM_H
+#define MVVM_STANDARDITEMS_VECTORITEM_H
 
 #include <mvvm/model/compounditem.h>
 
@@ -33,6 +33,6 @@ private:
 
 } // ModelView
 
-#endif // MVVM_VECTORITEM_H
+#endif  // MVVM_STANDARDITEMS_VECTORITEM_H
 
 

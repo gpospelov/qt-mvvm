@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_SETVALUECOMMAND_H
-#define MVVM_SETVALUECOMMAND_H
+#ifndef MVVM_COMMANDS_SETVALUECOMMAND_H
+#define MVVM_COMMANDS_SETVALUECOMMAND_H
 
 #include <mvvm/commands/abstractitemcommand.h>
 
@@ -41,4 +41,4 @@ private:
 
 } // namespace ModelView
 
-#endif // MVVM_SETVALUECOMMAND_H
+#endif  // MVVM_COMMANDS_SETVALUECOMMAND_H

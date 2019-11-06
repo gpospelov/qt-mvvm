@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_ITEMFACTORY_H
-#define MVVM_ITEMFACTORY_H
+#ifndef MVVM_MODEL_ITEMFACTORY_H
+#define MVVM_MODEL_ITEMFACTORY_H
 
 #include <mvvm/core/export.h>
 #include <mvvm/model/itemfactoryinterface.h>
@@ -37,4 +37,4 @@ protected:
 
 } // namespace ModelView
 
-#endif // MVVM_ITEMFACTORY_H
+#endif  // MVVM_MODEL_ITEMFACTORY_H

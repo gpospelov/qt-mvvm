@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_LINKEDITEM_H
-#define MVVM_LINKEDITEM_H
+#ifndef MVVM_STANDARDITEMS_LINKEDITEM_H
+#define MVVM_STANDARDITEMS_LINKEDITEM_H
 
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
@@ -45,4 +45,4 @@ template <typename T> T* LinkedItem::get() const
 
 } // namespace ModelView
 
-#endif // MVVM_LINKEDITEM_H
+#endif  // MVVM_STANDARDITEMS_LINKEDITEM_H

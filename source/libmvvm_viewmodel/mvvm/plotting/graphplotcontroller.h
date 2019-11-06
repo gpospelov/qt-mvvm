@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_GRAPHPLOTCONTROLLER_H
-#define MVVM_GRAPHPLOTCONTROLLER_H
+#ifndef MVVM_PLOTTING_GRAPHPLOTCONTROLLER_H
+#define MVVM_PLOTTING_GRAPHPLOTCONTROLLER_H
 
 #include <mvvm/signals/itemcontroller.h>
 #include <memory>
@@ -49,4 +49,4 @@ private:
 
 } // namespace ModelView
 
-#endif // MVVM_GRAPHPLOTCONTROLLER_H
+#endif  // MVVM_PLOTTING_GRAPHPLOTCONTROLLER_H

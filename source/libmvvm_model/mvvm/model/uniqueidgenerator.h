@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_UNIQUEIDGENERATOR_H
-#define MVVM_UNIQUEIDGENERATOR_H
+#ifndef MVVM_MODEL_UNIQUEIDGENERATOR_H
+#define MVVM_MODEL_UNIQUEIDGENERATOR_H
 
 #include <mvvm/core/export.h>
 #include <mvvm/model/mvvm_types.h>
@@ -34,4 +34,4 @@ public:
 
 } // namespace ModelView
 
-#endif //  MVVM_UNIQUEIDGENERATOR_H
+#endif  // MVVM_MODEL_UNIQUEIDGENERATOR_H

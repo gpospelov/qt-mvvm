@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_STATUSSTRINGFORMATTERINTERFACE_H
-#define MVVM_STATUSSTRINGFORMATTERINTERFACE_H
+#ifndef MVVM_PLOTTING_STATUSSTRINGFORMATTERINTERFACE_H
+#define MVVM_PLOTTING_STATUSSTRINGFORMATTERINTERFACE_H
 
 #include <mvvm/core/export.h>
 #include <string>
@@ -34,4 +34,4 @@ public:
 
 } // namespace ModelView
 
-#endif // MVVM_STATUSSTRINGFORMATTERINTERFACE_H
+#endif  // MVVM_PLOTTING_STATUSSTRINGFORMATTERINTERFACE_H

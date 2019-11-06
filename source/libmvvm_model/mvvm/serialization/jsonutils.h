@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_JSONUTILS_H
-#define MVVM_JSONUTILS_H
+#ifndef MVVM_SERIALIZATION_JSONUTILS_H
+#define MVVM_SERIALIZATION_JSONUTILS_H
 
 #include <mvvm/core/export.h>
 #include <string>
@@ -32,4 +32,4 @@ CORE_EXPORT RealLimits CreateLimits(const std::string& text, double min = 0.0, d
 
 } // ModelView
 
-#endif // MVVM_JSONUTILS_H
+#endif  // MVVM_SERIALIZATION_JSONUTILS_H

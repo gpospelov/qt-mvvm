@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_REMOVEITEMCOMMAND_H
-#define MVVM_REMOVEITEMCOMMAND_H
+#ifndef MVVM_COMMANDS_REMOVEITEMCOMMAND_H
+#define MVVM_COMMANDS_REMOVEITEMCOMMAND_H
 
 #include <mvvm/commands/abstractitemcommand.h>
 
@@ -40,4 +40,4 @@ private:
 
 } // namespace ModelView
 
-#endif // MVVM_REMOVEITEMCOMMAND_H
+#endif  // MVVM_COMMANDS_REMOVEITEMCOMMAND_H

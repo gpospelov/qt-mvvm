@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_PROPERTYTABLEVIEWMODEL_H
-#define MVVM_PROPERTYTABLEVIEWMODEL_H
+#ifndef MVVM_VIEWMODEL_PROPERTYTABLEVIEWMODEL_H
+#define MVVM_VIEWMODEL_PROPERTYTABLEVIEWMODEL_H
 
 #include <mvvm/viewmodel/abstractviewmodel.h>
 
@@ -31,4 +31,4 @@ public:
 
 } // namespace ModelView
 
-#endif // MVVM_PROPERTYTABLEVIEWMODEL_H
+#endif  // MVVM_VIEWMODEL_PROPERTYTABLEVIEWMODEL_H

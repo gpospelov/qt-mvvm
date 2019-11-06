@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_FILEUTILS_H
-#define MVVM_FILEUTILS_H
+#ifndef MVVM_UTILS_FILEUTILS_H
+#define MVVM_UTILS_FILEUTILS_H
 
 #include <mvvm/core/export.h>
 #include <string>
@@ -37,4 +37,4 @@ CORE_EXPORT bool removeRecursively(const std::string& dirname);
 
 }  // namespace ModelView
 
-#endif // MVVM_FILEUTILS_H
+#endif  // MVVM_UTILS_FILEUTILS_H

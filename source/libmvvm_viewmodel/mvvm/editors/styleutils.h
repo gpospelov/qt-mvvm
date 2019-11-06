@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_STYLEUTILS_H
-#define MVVM_STYLEUTILS_H
+#ifndef MVVM_EDITORS_STYLEUTILS_H
+#define MVVM_EDITORS_STYLEUTILS_H
 
 #include <mvvm/core/export.h>
 
@@ -25,4 +25,4 @@ CORE_EXPORT int DefaultPixmapSize();
 
 } // namespace ModelView
 
-#endif // MVVM_STYLEUTILS_H
+#endif  // MVVM_EDITORS_STYLEUTILS_H

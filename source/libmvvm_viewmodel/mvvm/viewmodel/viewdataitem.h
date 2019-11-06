@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVMV_VIEWDATAITEM_H
-#define MVVMV_VIEWDATAITEM_H
+#ifndef MVVM_VIEWMODEL_VIEWDATAITEM_H
+#define MVVM_VIEWMODEL_VIEWDATAITEM_H
 
 #include <mvvm/viewmodel/viewitem.h>
 
@@ -30,4 +30,4 @@ public:
 
 } // namespace ModelView
 
-#endif // MVVMV_VIEWDATAITEM_H
+#endif  // MVVM_VIEWMODEL_VIEWDATAITEM_H

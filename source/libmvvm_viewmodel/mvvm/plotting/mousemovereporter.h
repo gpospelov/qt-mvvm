@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_MOUSEMOVEREPORTER_H
-#define MVVM_MOUSEMOVEREPORTER_H
+#ifndef MVVM_PLOTTING_MOUSEMOVEREPORTER_H
+#define MVVM_PLOTTING_MOUSEMOVEREPORTER_H
 
 #include <mvvm/core/export.h>
 #include <functional>
@@ -43,4 +43,4 @@ private:
 
 } // namespace ModelView
 
-#endif // MVVM_MOUSEMOVEREPORTER_H
+#endif  // MVVM_PLOTTING_MOUSEMOVEREPORTER_H
