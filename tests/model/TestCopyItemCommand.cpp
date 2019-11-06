@@ -1,9 +1,9 @@
 #include "google_test.h"
-#include "itemutils.h"
-#include "copyitemcommand.h"
-#include "sessionitem.h"
-#include "sessionmodel.h"
-#include "taginfo.h"
+#include <mvvm/model/itemutils.h>
+#include <mvvm/commands/copyitemcommand.h>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/model/sessionmodel.h>
+#include <mvvm/model/taginfo.h>
 
 using namespace ModelView;
 

@@ -2,8 +2,8 @@
 #include "LayerItems.h"
 #include "SampleModel.h"
 #include "item_constants.h"
-#include "modelutils.h"
-#include "sessionitem.h"
+#include <mvvm/model/modelutils.h>
+#include <mvvm/model/sessionitem.h>
 #include <set>
 
 using namespace ModelView;

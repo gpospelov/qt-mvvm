@@ -9,9 +9,8 @@
 
 #include "MaterialModel.h"
 #include "MaterialItems.h"
-#include "item_constants.h"
-#include "itemcatalogue.h"
-#include "externalproperty.h"
+#include <mvvm/model/itemcatalogue.h>
+#include <mvvm/model/externalproperty.h>
 #include <QColor>
 
 using namespace ModelView;

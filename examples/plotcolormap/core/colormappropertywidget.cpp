@@ -9,8 +9,9 @@
 
 #include "colormappropertywidget.h"
 #include "colormapmodel.h"
-#include "itemstreeview.h"
-#include "standardviewmodels.h"
+#include <mvvm/widgets/itemstreeview.h>
+#include <mvvm/viewmodel/standardviewmodels.h>
+#include <mvvm/viewmodel/abstractviewmodel.h>
 #include <QBoxLayout>
 #include <QPushButton>
 #include <QSlider>

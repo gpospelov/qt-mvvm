@@ -15,7 +15,7 @@
 @brief Collection of items for our application model.
 */
 
-#include "compounditem.h"
+#include <mvvm/model/compounditem.h>
 #include <string>
 
 /*!

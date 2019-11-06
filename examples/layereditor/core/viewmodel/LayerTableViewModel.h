@@ -10,7 +10,7 @@
 #ifndef LAYERTABLEVIEWMODEL_H
 #define LAYERTABLEVIEWMODEL_H
 
-#include "abstractviewmodel.h"
+#include <mvvm/viewmodel/abstractviewmodel.h>
 
 namespace ModelView
 {

@@ -1,11 +1,11 @@
 #include "google_test.h"
-#include "jsonmodel.h"
-#include "sessionitem.h"
-#include "sessionmodel.h"
-#include "taginfo.h"
+#include <mvvm/serialization/jsonmodel.h>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/model/sessionmodel.h>
+#include <mvvm/model/taginfo.h>
 #include "test_utils.h"
-#include "itempool.h"
-#include "propertyitem.h"
+#include <mvvm/model/itempool.h>
+#include <mvvm/model/propertyitem.h>
 #include <QDebug>
 #include <QJsonArray>
 #include <QJsonObject>

@@ -10,7 +10,7 @@
 #ifndef GRAPHMODEL_H
 #define GRAPHMODEL_H
 
-#include "sessionmodel.h"
+#include <mvvm/model/sessionmodel.h>
 
 namespace ModelView {
 class GraphViewportItem;

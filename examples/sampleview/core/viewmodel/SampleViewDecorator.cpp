@@ -1,5 +1,5 @@
 #include "SampleViewDecorator.h"
-#include "scientificspinbox.h"
+#include <mvvm/widgets/scientificspinbox.h>
 #include <QModelIndex>
 #include <QStyleOptionViewItem>
 

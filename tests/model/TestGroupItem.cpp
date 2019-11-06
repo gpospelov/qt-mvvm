@@ -1,5 +1,5 @@
 #include "google_test.h"
-#include "groupitem.h"
+#include <mvvm/model/groupitem.h>
 
 using namespace ModelView;
 

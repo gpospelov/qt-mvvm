@@ -1,7 +1,7 @@
 #include "MaterialControlPanel.h"
 #include "MaterialViewController.h"
 #include "QRCInitializer.h"
-#include "abstractviewmodel.h"
+#include <mvvm/viewmodel/abstractviewmodel.h>
 #include <QComboBox>
 #include <QHBoxLayout>
 #include <QPushButton>

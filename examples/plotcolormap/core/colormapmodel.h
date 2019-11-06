@@ -10,7 +10,7 @@
 #ifndef COLORMAPMODEL_H
 #define COLORMAPMODEL_H
 
-#include "sessionmodel.h"
+#include <mvvm/model/sessionmodel.h>
 
 namespace ModelView
 {

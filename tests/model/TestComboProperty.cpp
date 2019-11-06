@@ -1,5 +1,5 @@
-#include "comboproperty.h"
-#include "comparators.h"
+#include <mvvm/model/comboproperty.h>
+#include <mvvm/model/comparators.h>
 #include "google_test.h"
 
 using namespace ModelView;

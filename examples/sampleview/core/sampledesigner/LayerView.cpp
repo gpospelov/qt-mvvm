@@ -15,9 +15,9 @@
 #include "LayerView.h"
 #include "LayerItems.h"
 #include "ParticleLayoutView.h"
-#include "externalproperty.h"
+#include <mvvm/model/externalproperty.h>
 #include "item_constants.h"
-#include "mvvm_types.h"
+#include <mvvm/model/mvvm_types.h>
 #include <QGraphicsScene>
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>

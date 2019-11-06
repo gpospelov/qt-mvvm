@@ -10,9 +10,9 @@
 #include "LayerTableViewModelController.h"
 #include "LayerItems.h"
 #include "item_constants.h"
-#include "rowstrategyinterface.h"
-#include "standardchildrenstrategies.h"
-#include "viewitems.h"
+#include <mvvm/viewmodel/rowstrategyinterface.h>
+#include <mvvm/viewmodel/standardchildrenstrategies.h>
+#include <mvvm/viewmodel/viewitems.h>
 
 using namespace ModelView;
 

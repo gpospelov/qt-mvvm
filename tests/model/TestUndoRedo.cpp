@@ -1,8 +1,8 @@
 #include "google_test.h"
-#include "itemutils.h"
-#include "sessionitem.h"
-#include "sessionmodel.h"
-#include "taginfo.h"
+#include <mvvm/model/itemutils.h>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/model/sessionmodel.h>
+#include <mvvm/model/taginfo.h>
 #include "toy_includes.h"
 #include "toy_items.h"
 #include <QUndoStack>

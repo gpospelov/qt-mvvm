@@ -1,7 +1,7 @@
 #include "google_test.h"
-#include "sessionitem.h"
-#include "sessionitemtags.h"
-#include "taginfo.h"
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/model/sessionitemtags.h>
+#include <mvvm/model/taginfo.h>
 #include "test_utils.h"
 
 using namespace ModelView;

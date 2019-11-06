@@ -8,15 +8,15 @@
 // ************************************************************************** //
 
 #include "graphmodel.h"
-#include "containeritem.h"
-#include "data1ditem.h"
-#include "graphitem.h"
-#include "graphviewportitem.h"
-#include "modelutils.h"
-#include "mvvm_types.h"
-#include "numericutils.h"
-#include "containeritem.h"
-#include "axisitems.h"
+#include <mvvm/standarditems/containeritem.h>
+#include <mvvm/standarditems/data1ditem.h>
+#include <mvvm/standarditems/graphitem.h>
+#include <mvvm/standarditems/graphviewportitem.h>
+#include <mvvm/model/modelutils.h>
+#include <mvvm/model/mvvm_types.h>
+#include <mvvm/utils/numericutils.h>
+#include <mvvm/standarditems/containeritem.h>
+#include <mvvm/standarditems/axisitems.h>
 #include <QColor>
 #include <cmath>
 

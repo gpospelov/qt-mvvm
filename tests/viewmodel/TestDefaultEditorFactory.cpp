@@ -1,20 +1,20 @@
-#include "defaultviewmodel.h"
+#include <mvvm/viewmodel/defaultviewmodel.h>
 #include "google_test.h"
-#include "sessionmodel.h"
-#include "defaultviewmodel.h"
-#include "defaulteditorfactory.h"
-#include "scientificspinboxeditor.h"
-#include "scientificdoubleeditor.h"
-#include "combopropertyeditor.h"
-#include "booleditor.h"
-#include "coloreditor.h"
-#include "externalpropertyeditor.h"
-#include "comboproperty.h"
-#include "sessionitem.h"
-#include "externalproperty.h"
-#include "reallimits.h"
-#include "propertyitem.h"
-#include "integereditor.h"
+#include <mvvm/model/sessionmodel.h>
+#include <mvvm/viewmodel/defaultviewmodel.h>
+#include <mvvm/editors/defaulteditorfactory.h>
+#include <mvvm/editors/scientificspinboxeditor.h>
+#include <mvvm/editors/scientificdoubleeditor.h>
+#include <mvvm/editors/combopropertyeditor.h>
+#include <mvvm/editors/booleditor.h>
+#include <mvvm/editors/coloreditor.h>
+#include <mvvm/editors/externalpropertyeditor.h>
+#include <mvvm/model/comboproperty.h>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/model/externalproperty.h>
+#include <mvvm/utils/reallimits.h>
+#include <mvvm/model/propertyitem.h>
+#include <mvvm/editors/integereditor.h>
 
 using namespace ModelView;
 

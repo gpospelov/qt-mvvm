@@ -1,10 +1,10 @@
 #include "google_test.h"
-#include "insertnewitemcommand.h"
-#include "itemfactoryinterface.h"
-#include "itemutils.h"
-#include "sessionitem.h"
-#include "sessionmodel.h"
-#include "taginfo.h"
+#include <mvvm/commands/insertnewitemcommand.h>
+#include <mvvm/model/itemfactoryinterface.h>
+#include <mvvm/model/itemutils.h>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/model/sessionmodel.h>
+#include <mvvm/model/taginfo.h>
 
 using namespace ModelView;
 

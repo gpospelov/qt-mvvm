@@ -10,9 +10,9 @@
 #ifndef TOYCONSTANTS_H
 #define TOYCONSTANTS_H
 
-#include "itemfactoryinterface.h"
-#include "sessionitem.h"
-#include "sessionmodel.h"
+#include <mvvm/model/itemfactoryinterface.h>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/model/sessionmodel.h>
 #include <string>
 
 //! Collection of toy items and models for testing purposes.

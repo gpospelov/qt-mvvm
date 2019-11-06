@@ -9,9 +9,9 @@
 
 #include "dragviewmodel.h"
 #include "item_constants.h"
-#include "sessionitem.h"
-#include "sessionmodel.h"
-#include "viewmodelutils.h"
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/model/sessionmodel.h>
+#include <mvvm/viewmodel/viewmodelutils.h>
 #include <QByteArray>
 #include <QDataStream>
 #include <QDebug>

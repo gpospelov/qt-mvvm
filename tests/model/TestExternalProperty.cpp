@@ -1,5 +1,5 @@
-#include "comparators.h"
-#include "externalproperty.h"
+#include <mvvm/model/comparators.h>
+#include <mvvm/model/externalproperty.h>
 #include "google_test.h"
 
 using namespace ModelView;

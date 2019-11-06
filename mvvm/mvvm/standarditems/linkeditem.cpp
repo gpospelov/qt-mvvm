@@ -1,0 +1,22 @@
+// ************************************************************************** //
+//
+//  Prototype of mini MVVM framework for bornagainproject.org
+//
+//! @homepage  http://www.bornagainproject.org
+//! @license   GNU General Public License v3 or higher
+//
+// ************************************************************************** //
+
+#include <mvvm/standarditems/linkeditem.h>
+#include <mvvm/model/customvariants.h>
+
+using namespace ModelView;
+
+LinkedItem::LinkedItem() : SessionItem(Constants::LinkedItemType) {}
+
+//! Set link to given item.
+
+void LinkedItem::setLink(const SessionItem* item)
+{
+    setData(item ? QVariant::fromValue(item->identifier()) : QVariant());
+}

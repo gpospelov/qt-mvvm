@@ -10,8 +10,8 @@
 #ifndef TOYITEMS_H
 #define TOYITEMS_H
 
-#include "compounditem.h"
-#include "groupitem.h"
+#include <mvvm/model/compounditem.h>
+#include <mvvm/model/groupitem.h>
 #include <string>
 
 //! Collection of toy items and models for testing purposes.

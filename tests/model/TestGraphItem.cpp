@@ -1,10 +1,10 @@
 #include "google_test.h"
-#include "graphitem.h"
-#include "sessionmodel.h"
-#include "data1ditem.h"
+#include <mvvm/standarditems/graphitem.h>
+#include <mvvm/model/sessionmodel.h>
+#include <mvvm/standarditems/data1ditem.h>
 #include "MockWidgets.h"
-#include "axisitems.h"
-#include "linkeditem.h"
+#include <mvvm/standarditems/axisitems.h>
+#include <mvvm/standarditems/linkeditem.h>
 
 using namespace ModelView;
 using ::testing::_;

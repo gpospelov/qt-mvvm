@@ -1,9 +1,9 @@
 #include "MockWidgets.h"
 #include "google_test.h"
-#include "itempool.h"
-#include "linkeditem.h"
-#include "propertyitem.h"
-#include "sessionmodel.h"
+#include <mvvm/model/itempool.h>
+#include <mvvm/standarditems/linkeditem.h>
+#include <mvvm/model/propertyitem.h>
+#include <mvvm/model/sessionmodel.h>
 
 using namespace ModelView;
 using ::testing::_;

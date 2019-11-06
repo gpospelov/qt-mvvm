@@ -1,10 +1,10 @@
 #include "google_test.h"
-#include "propertytableviewmodel.h"
-#include "sessionmodel.h"
-#include "sessionitem.h"
-#include "propertyitem.h"
-#include "taginfo.h"
-#include "vectoritem.h"
+#include <mvvm/viewmodel/propertytableviewmodel.h>
+#include <mvvm/model/sessionmodel.h>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/model/propertyitem.h>
+#include <mvvm/model/taginfo.h>
+#include <mvvm/standarditems/vectoritem.h>
 
 using namespace ModelView;
 

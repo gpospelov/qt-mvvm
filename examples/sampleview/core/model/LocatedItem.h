@@ -15,7 +15,7 @@
 @brief Defines an item with 2D position information.
 */
 
-#include "compounditem.h"
+#include <mvvm/model/compounditem.h>
 
 /*!
 @class LocatedItem

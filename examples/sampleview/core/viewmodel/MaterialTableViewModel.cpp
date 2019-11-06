@@ -9,13 +9,13 @@
 
 #include "MaterialTableViewModel.h"
 #include "MaterialItems.h"
-#include "childrenstrategyinterface.h"
+#include <mvvm/viewmodel/childrenstrategyinterface.h>
 #include "item_constants.h"
-#include "itemutils.h"
-#include "rowstrategyinterface.h"
-#include "sessionitem.h"
-#include "standardviewmodelcontrollers.h"
-#include "viewdataitem.h"
+#include <mvvm/model/itemutils.h>
+#include <mvvm/viewmodel/rowstrategyinterface.h>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/viewmodel/standardviewmodelcontrollers.h>
+#include <mvvm/viewmodel/viewdataitem.h>
 
 using namespace ModelView;
 

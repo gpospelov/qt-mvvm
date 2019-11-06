@@ -1,6 +1,6 @@
 #include "google_test.h"
-#include "sessionitem.h"
-#include "viewitems.h"
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/viewmodel/viewitems.h>
 #include <QDebug>
 #include <memory>
 

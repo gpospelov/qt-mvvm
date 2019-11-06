@@ -15,7 +15,7 @@
 @brief Collection of materials to populate MaterialModel.
 */
 
-#include "compounditem.h"
+#include <mvvm/model/compounditem.h>
 class QColor;
 
 /*!

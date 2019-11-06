@@ -9,7 +9,7 @@
 
 #include "modeleditorwidget.h"
 #include "containereditorwidget.h"
-#include "modelutils.h"
+#include <mvvm/model/modelutils.h>
 #include "samplemodel.h"
 #include <QAction>
 #include <QDebug>

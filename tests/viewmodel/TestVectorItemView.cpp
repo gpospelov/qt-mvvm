@@ -1,9 +1,9 @@
 #include "google_test.h"
-#include "sessionmodel.h"
-#include "viewitems.h"
-#include "viewdataitem.h"
-#include "defaultviewmodel.h"
-#include "vectoritem.h"
+#include <mvvm/model/sessionmodel.h>
+#include <mvvm/viewmodel/viewitems.h>
+#include <mvvm/viewmodel/viewdataitem.h>
+#include <mvvm/viewmodel/defaultviewmodel.h>
+#include <mvvm/standarditems/vectoritem.h>
 #include <QSignalSpy>
 
 using namespace ModelView;

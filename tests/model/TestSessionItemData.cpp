@@ -1,6 +1,6 @@
 #include "google_test.h"
-#include "sessionitemdata.h"
-#include "mvvm_types.h"
+#include <mvvm/model/sessionitemdata.h>
+#include <mvvm/model/mvvm_types.h>
 
 using namespace ModelView;
 

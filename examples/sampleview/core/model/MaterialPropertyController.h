@@ -10,7 +10,7 @@
 #ifndef MATERIALPROPERTYCONTROLLER_H
 #define MATERIALPROPERTYCONTROLLER_H
 
-#include "sessionmodel.h"
+#include <mvvm/model/sessionmodel.h>
 
 class SampleModel;
 class MaterialModel;

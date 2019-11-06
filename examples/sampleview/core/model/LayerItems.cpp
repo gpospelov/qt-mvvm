@@ -9,7 +9,7 @@
 
 #include "LayerItems.h"
 #include "MaterialModel.h"
-#include "externalproperty.h"
+#include <mvvm/model/externalproperty.h>
 #include "item_constants.h"
 #include <QVariant>
 

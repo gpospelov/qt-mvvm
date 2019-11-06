@@ -1,8 +1,8 @@
 #include "google_test.h"
-#include "itemcatalogue.h"
-#include "propertyitem.h"
-#include "standarditemcatalogue.h"
-#include "vectoritem.h"
+#include <mvvm/model/itemcatalogue.h>
+#include <mvvm/model/propertyitem.h>
+#include <mvvm/standarditems/standarditemcatalogue.h>
+#include <mvvm/standarditems/vectoritem.h>
 
 using namespace ModelView;
 

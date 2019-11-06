@@ -2,7 +2,7 @@
 #include "MaterialItems.h"
 #include "MaterialModel.h"
 #include "item_constants.h"
-#include "modelutils.h"
+#include <mvvm/model/modelutils.h>
 
 using namespace ModelView;
 

@@ -1,6 +1,6 @@
 #include "google_test.h"
-#include "itempool.h"
-#include "sessionitem.h"
+#include <mvvm/model/itempool.h>
+#include <mvvm/model/sessionitem.h>
 #include <memory>
 
 using namespace ModelView;

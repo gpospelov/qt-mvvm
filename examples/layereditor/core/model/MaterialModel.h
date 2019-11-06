@@ -10,7 +10,7 @@
 #ifndef MATERIALMODEL_H
 #define MATERIALMODEL_H
 
-#include "sessionmodel.h"
+#include <mvvm/model/sessionmodel.h>
 #include <vector>
 
 namespace ModelView

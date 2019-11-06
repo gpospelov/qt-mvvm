@@ -8,12 +8,12 @@
 // ************************************************************************** //
 
 #include "colormapmodel.h"
-#include "axisitems.h"
-#include "containeritem.h"
-#include "data2ditem.h"
-#include "modelutils.h"
-#include "colormapitem.h"
-#include "colormapviewportitem.h"
+#include <mvvm/standarditems/axisitems.h>
+#include <mvvm/standarditems/containeritem.h>
+#include <mvvm/standarditems/data2ditem.h>
+#include <mvvm/model/modelutils.h>
+#include <mvvm/standarditems/colormapitem.h>
+#include <mvvm/standarditems/colormapviewportitem.h>
 #include <cmath>
 
 using namespace ModelView;

@@ -12,9 +12,9 @@
 #include "MaterialPropertyController.h"
 #include "SampleModel.h"
 #include "item_constants.h"
-#include "itempool.h"
-//#include "jsonmodel.h" // FIXME restore
-#include "sessionitem.h"
+#include <mvvm/model/itempool.h>
+#include <mvvm/serialization/jsonmodel.h>
+#include <mvvm/model/sessionitem.h>
 #include <QFile>
 #include <QJsonArray>
 #include <QJsonDocument>

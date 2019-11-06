@@ -8,7 +8,7 @@
 // ************************************************************************** //
 
 #include "samplemodel.h"
-#include "itemcatalogue.h"
+#include <mvvm/model/itemcatalogue.h>
 #include "items.h"
 
 namespace  {

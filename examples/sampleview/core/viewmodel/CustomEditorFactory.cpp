@@ -11,7 +11,7 @@
 #include "ApplicationModels.h"
 #include "MaterialModel.h"
 #include "MaterialSelectorCellEditor.h"
-#include "customvariants.h"
+#include <mvvm/model/customvariants.h>
 #include <QModelIndex>
 
 using namespace ModelView;

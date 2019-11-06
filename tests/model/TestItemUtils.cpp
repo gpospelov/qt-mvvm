@@ -1,10 +1,10 @@
-#include "customvariants.h"
+#include <mvvm/model/customvariants.h>
 #include "google_test.h"
-#include "itemutils.h"
-#include "sessionitem.h"
-#include "sessionmodel.h"
-#include "propertyitem.h"
-#include "taginfo.h"
+#include <mvvm/model/itemutils.h>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/model/sessionmodel.h>
+#include <mvvm/model/propertyitem.h>
+#include <mvvm/model/taginfo.h>
 #include <memory>
 
 using namespace ModelView;

@@ -8,13 +8,13 @@
 // ************************************************************************** //
 
 #include "testwidget.h"
-#include "itemstreeview.h"
-#include "propertyeditor.h"
-#include "sessionmodel.h"
-#include "sessionitem.h"
-#include "topitemsviewmodel.h"
-#include "defaultviewmodel.h"
-#include "viewitem.h"
+#include <mvvm/widgets/itemstreeview.h>
+#include <mvvm/widgets/propertyeditor.h>
+#include <mvvm/model/sessionmodel.h>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/viewmodel/topitemsviewmodel.h>
+#include <mvvm/viewmodel/defaultviewmodel.h>
+#include <mvvm/viewmodel/viewitem.h>
 #include <QBoxLayout>
 #include <QLabel>
 #include <QMenu>

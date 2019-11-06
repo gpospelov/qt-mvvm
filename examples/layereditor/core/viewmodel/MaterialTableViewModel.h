@@ -10,7 +10,7 @@
 #ifndef MATERIALTABLEVIEWMODEL_H
 #define MATERIALTABLEVIEWMODEL_H
 
-#include "abstractviewmodel.h"
+#include <mvvm/viewmodel/abstractviewmodel.h>
 
 namespace ModelView
 {

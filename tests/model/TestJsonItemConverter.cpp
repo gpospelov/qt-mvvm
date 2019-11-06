@@ -1,9 +1,9 @@
 #include "google_test.h"
-#include "jsonitemconverter.h"
-#include "propertyitem.h"
-#include "sessionitem.h"
-#include "sessionmodel.h"
-#include "taginfo.h"
+#include <mvvm/serialization/jsonitemconverter.h>
+#include <mvvm/model/propertyitem.h>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/model/sessionmodel.h>
+#include <mvvm/model/taginfo.h>
 #include "test_utils.h"
 #include <QJsonArray>
 #include <QJsonDocument>

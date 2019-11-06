@@ -1,10 +1,10 @@
 #include "google_test.h"
-#include "itempool.h"
-#include "sessionitem.h"
-#include "sessionmodel.h"
-#include "taginfo.h"
-#include "itemutils.h"
-#include "propertyitem.h"
+#include <mvvm/model/itempool.h>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/model/sessionmodel.h>
+#include <mvvm/model/taginfo.h>
+#include <mvvm/model/itemutils.h>
+#include <mvvm/model/propertyitem.h>
 #include <memory>
 
 using namespace ModelView;

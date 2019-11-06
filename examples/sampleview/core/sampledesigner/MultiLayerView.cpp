@@ -19,7 +19,7 @@
 #include "LayerView.h"
 #include "SampleModel.h"
 #include "item_constants.h"
-#include "sessionitem.h"
+#include <mvvm/model/sessionitem.h>
 #include <QGraphicsSceneMouseEvent>
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>

@@ -1,8 +1,8 @@
 #include "google_test.h"
-#include "itemmanager.h"
-#include "itempool.h"
-#include "sessionitem.h"
-#include "sessionmodel.h"
+#include <mvvm/model/itemmanager.h>
+#include <mvvm/model/itempool.h>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/model/sessionmodel.h>
 #include <memory>
 
 using namespace ModelView;

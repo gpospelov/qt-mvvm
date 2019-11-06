@@ -1,11 +1,11 @@
-#include "axisitems.h"
+#include <mvvm/standarditems/axisitems.h>
 #include "customplot_test_utils.h"
-#include "data1ditem.h"
+#include <mvvm/standarditems/data1ditem.h>
 #include "google_test.h"
-#include "graphitem.h"
-#include "graphplotcontroller.h"
+#include <mvvm/standarditems/graphitem.h>
+#include <mvvm/plotting/graphplotcontroller.h>
 #include "qcustomplot.h"
-#include "sessionmodel.h"
+#include <mvvm/model/sessionmodel.h>
 #include <QSignalSpy>
 
 using namespace ModelView;

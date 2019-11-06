@@ -1,6 +1,6 @@
 #include "SampleEditorFactory.h"
 #include "CustomColorEditor.h"
-#include "scientificspinbox.h"
+#include <mvvm/widgets/scientificspinbox.h>
 #include <QColor>
 
 std::unique_ptr<QItemEditorFactory> SampleEditorFactory::createStandardSampleEditorFactory()

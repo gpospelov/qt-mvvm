@@ -8,7 +8,7 @@
 // ************************************************************************** //
 
 #include "toy_models.h"
-#include "itemcatalogue.h"
+#include <mvvm/model/itemcatalogue.h>
 #include "toy_items.h"
 
 namespace  {

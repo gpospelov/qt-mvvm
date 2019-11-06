@@ -10,7 +10,7 @@
 #include "MaterialSelectorCellEditor.h"
 #include "MaterialItems.h"
 #include "MaterialModel.h"
-#include "externalproperty.h"
+#include <mvvm/model/externalproperty.h>
 #include <QColor>
 #include <QComboBox>
 #include <QStandardItemModel>

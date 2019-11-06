@@ -10,17 +10,11 @@
 #ifndef MATERIALSELECTORCELLEDITOR_H
 #define MATERIALSELECTORCELLEDITOR_H
 
-#include "customeditor.h"
+#include <mvvm/editors/customeditor.h>
 
 class QComboBox;
 class QStandardItemModel;
 class MaterialModel;
-
-namespace ModelView
-{
-class SessionModel;
-class ExternalProperty;
-} // namespace ModelView
 
 /*!
 @class MaterialSelectorCellEditor

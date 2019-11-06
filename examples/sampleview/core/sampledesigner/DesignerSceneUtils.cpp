@@ -10,7 +10,7 @@
 #include "DesignerSceneUtils.h"
 #include "MultiLayerView.h"
 #include "SampleViewFactory.h"
-#include "modelutils.h"
+#include <mvvm/model/modelutils.h>
 #include <QGraphicsItem>
 #include <QGraphicsScene>
 #include <limits>

@@ -1,5 +1,5 @@
 #include "google_test.h"
-#include "scientificspinbox.h"
+#include <mvvm/widgets/scientificspinbox.h>
 #include <limits>
 
 using namespace ModelView;

@@ -1,9 +1,9 @@
 #include "MockWidgets.h"
-#include "compounditem.h"
+#include <mvvm/model/compounditem.h>
 #include "google_test.h"
-#include "itemmapper.h"
-#include "sessionitem.h"
-#include "sessionmodel.h"
+#include <mvvm/signals/itemmapper.h>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/model/sessionmodel.h>
 
 using namespace ModelView;
 using ::testing::_;

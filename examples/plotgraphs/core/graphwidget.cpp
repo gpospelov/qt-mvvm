@@ -8,11 +8,11 @@
 // ************************************************************************** //
 
 #include "graphwidget.h"
-#include "graphcanvas.h"
+#include <mvvm/plotting/graphcanvas.h>
 #include "graphmodel.h"
 #include "graphpropertywidget.h"
-#include "graphviewportitem.h"
-#include "modelutils.h"
+#include <mvvm/standarditems/graphviewportitem.h>
+#include <mvvm/model/modelutils.h>
 #include <QAction>
 #include <QBoxLayout>
 #include <QToolBar>

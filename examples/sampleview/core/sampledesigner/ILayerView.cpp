@@ -13,7 +13,7 @@
 #include "DesignerSceneUtils.h"
 #include "LayerItems.h"
 #include "MultiLayerView.h"
-#include "sessionmodel.h"
+#include <mvvm/model/sessionmodel.h>
 #include <QGraphicsSceneMouseEvent>
 
 using namespace ModelView;

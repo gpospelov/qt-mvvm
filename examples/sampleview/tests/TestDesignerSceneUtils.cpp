@@ -5,7 +5,7 @@
 #include "item_constants.h"
 #include "LayerItems.h"
 #include "LayerView.h"
-#include "modelutils.h"
+#include <mvvm/model/modelutils.h>
 #include "MultiLayerView.h"
 #include "SampleModel.h"
 

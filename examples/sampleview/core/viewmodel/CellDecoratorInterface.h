@@ -10,8 +10,6 @@
 #ifndef CELLDECORATORINTERFACE_H
 #define CELLDECORATORINTERFACE_H
 
-#include "mvvm_export.h"
-
 class QModelIndex;
 class QStyleOptionViewItem;
 

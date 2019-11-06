@@ -1,10 +1,10 @@
-#include "comboproperty.h"
-#include "defaultviewmodel.h"
+#include <mvvm/model/comboproperty.h>
+#include <mvvm/viewmodel/defaultviewmodel.h>
 #include "google_test.h"
-#include "propertyviewmodel.h"
+#include <mvvm/viewmodel/propertyviewmodel.h>
 #include "toy_includes.h"
-#include "viewitems.h"
-#include "viewdataitem.h"
+#include <mvvm/viewmodel/viewitems.h>
+#include <mvvm/viewmodel/viewdataitem.h>
 #include <QSignalSpy>
 
 using namespace ModelView;

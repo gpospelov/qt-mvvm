@@ -1,8 +1,8 @@
 #include "google_test.h"
 #include "toy_includes.h"
-#include "viewitems.h"
-#include "defaultviewmodel.h"
-#include "viewmodelutils.h"
+#include <mvvm/viewmodel/viewitems.h>
+#include <mvvm/viewmodel/defaultviewmodel.h>
+#include <mvvm/viewmodel/viewmodelutils.h>
 #include <QSignalSpy>
 
 using namespace ModelView;

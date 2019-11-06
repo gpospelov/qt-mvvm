@@ -8,8 +8,7 @@
 // ************************************************************************** //
 
 #include "samplemodel.h"
-#include "item_constants.h"
-#include "itemcatalogue.h"
+#include <mvvm/model/itemcatalogue.h>
 #include "items.h"
 
 using namespace ModelView;

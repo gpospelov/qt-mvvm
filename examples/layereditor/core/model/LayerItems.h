@@ -15,7 +15,7 @@
 @brief Collection of layer and multi-layer items to populate SampleModel.
 */
 
-#include "compounditem.h"
+#include <mvvm/model/compounditem.h>
 
 /*!
 @class LayerItem

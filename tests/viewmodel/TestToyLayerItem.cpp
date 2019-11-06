@@ -1,10 +1,10 @@
 #include "google_test.h"
 #include "toy_includes.h"
-#include "viewitems.h"
-#include "viewdataitem.h"
-#include "defaultviewmodel.h"
-#include "vectoritem.h"
-#include "topitemsviewmodel.h"
+#include <mvvm/viewmodel/viewitems.h>
+#include <mvvm/viewmodel/viewdataitem.h>
+#include <mvvm/viewmodel/defaultviewmodel.h>
+#include <mvvm/standarditems/vectoritem.h>
+#include <mvvm/viewmodel/topitemsviewmodel.h>
 #include <QSignalSpy>
 #include <QDebug>
 

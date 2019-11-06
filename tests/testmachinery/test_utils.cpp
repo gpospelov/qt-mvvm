@@ -9,10 +9,10 @@
 
 #include "test_utils.h"
 #include "testconfig.h"
-#include "fileutils.h"
-#include "sessionmodel.h"
-#include "jsonconverterinterfaces.h"
-#include "jsonutils.h"
+#include <mvvm/utils/fileutils.h>
+#include <mvvm/model/sessionmodel.h>
+#include <mvvm/serialization/jsonconverterinterfaces.h>
+#include <mvvm/serialization/jsonutils.h>
 #include <QFile>
 #include <QString>
 #include <QJsonDocument>
