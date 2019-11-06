@@ -1,10 +1,10 @@
 // ************************************************************************** //
-//
-//  Prototype of mini MVVM framework for bornagainproject.org
-//
-//! @homepage  http://www.bornagainproject.org
-//! @license   GNU General Public License v3 or higher
-//
+//                                                                              
+//  Model-view-view-model framework for large GUI applications                  
+//                                                                              
+//! @authors   see AUTHORS                                                      
+//! @license   GNU General Public License v3 or higher (see COPYING)            
+//                                                                              
 // ************************************************************************** //
 
 #include <mvvm/standarditems/graphviewportitem.h>
