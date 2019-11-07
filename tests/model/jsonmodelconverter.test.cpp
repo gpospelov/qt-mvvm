@@ -9,7 +9,6 @@
 
 #include "google_test.h"
 #include "test_utils.h"
-#include <QDebug>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -24,22 +23,22 @@ using namespace ModelView;
 
 //! Checks JsonModel class and its ability to convert SessionModel to json and back.
 
-class JsonModelTest : public ::testing::Test
+class JsonModelConverterTest : public ::testing::Test
 {
 public:
-    ~JsonModelTest();
+    ~JsonModelConverterTest();
 
     static const QString test_dir;
 
     static void SetUpTestCase() { TestUtils::CreateTestDirectory(test_dir); }
 };
 
-JsonModelTest::~JsonModelTest() = default;
-const QString JsonModelTest::test_dir = "test_JsonModel";
+JsonModelConverterTest::~JsonModelConverterTest() = default;
+const QString JsonModelConverterTest::test_dir = "test_JsonModel";
 
 //! Validity of json object representing SessionModel.
 
-TEST_F(JsonModelTest, isValidModel)
+TEST_F(JsonModelConverterTest, isValidModel)
 {
     JsonModelConverter converter;
 
@@ -56,7 +55,7 @@ TEST_F(JsonModelTest, isValidModel)
 
 //! Creation of json object: empty model.
 
-TEST_F(JsonModelTest, emptyModel)
+TEST_F(JsonModelConverterTest, emptyModel)
 {
     JsonModelConverter converter;
     SessionModel model("TestModel");
@@ -72,7 +71,7 @@ TEST_F(JsonModelTest, emptyModel)
 
 //! Empty model to json and back.
 
-TEST_F(JsonModelTest, emptyModelToJsonAndBack)
+TEST_F(JsonModelConverterTest, emptyModelToJsonAndBack)
 {
     JsonModelConverter converter;
     SessionModel model("TestModel");
@@ -97,7 +96,7 @@ TEST_F(JsonModelTest, emptyModelToJsonAndBack)
 
 //! Creation of json object: single item in a model.
 
-TEST_F(JsonModelTest, singleItemToJsonAndBack)
+TEST_F(JsonModelConverterTest, singleItemToJsonAndBack)
 {
     JsonModelConverter converter;
     SessionModel model("TestModel");
@@ -118,7 +117,7 @@ TEST_F(JsonModelTest, singleItemToJsonAndBack)
 
 //! Filling model from json: parent and child in a model to json and back.
 
-TEST_F(JsonModelTest, parentAndChildToJsonAndBack)
+TEST_F(JsonModelConverterTest, parentAndChildToJsonAndBack)
 {
     JsonModelConverter converter;
     SessionModel model("TestModel");
@@ -166,7 +165,7 @@ TEST_F(JsonModelTest, parentAndChildToJsonAndBack)
 
 //! Item in a model to json and back: how persistent are identifiers.
 
-TEST_F(JsonModelTest, identifiers)
+TEST_F(JsonModelConverterTest, identifiers)
 {
     JsonModelConverter converter;
     auto pool1 = std::make_shared<ItemPool>();
@@ -202,7 +201,7 @@ TEST_F(JsonModelTest, identifiers)
 
 //! Filling model from json: parent and child in a model to json and back.
 
-TEST_F(JsonModelTest, parentAndChildToFileAndBack)
+TEST_F(JsonModelConverterTest, parentAndChildToFileAndBack)
 {
     JsonModelConverter converter;
     SessionModel model("TestModel");
