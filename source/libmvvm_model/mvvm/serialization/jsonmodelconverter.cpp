@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/serialization/jsonmodel.h>
+#include <mvvm/serialization/jsonmodelconverter.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/serialization/jsonitemconverter.h>
@@ -19,7 +19,7 @@ using namespace ModelView;
 
 namespace {
 QStringList expected_model_keys() {
-    QStringList result = QStringList() << JsonModel::modelKey << JsonModel::itemsKey;
+    QStringList result = QStringList() << JsonModelConverter::modelKey << JsonModelConverter::itemsKey;
     std::sort(result.begin(), result.end());
     return result;
 }
@@ -27,19 +27,16 @@ QStringList expected_model_keys() {
 
 }
 
-const QString ModelView::JsonModel::modelKey = "model";
-const QString ModelView::JsonModel::itemsKey = "items";
-const QString ModelView::JsonModel::versionKey = "version";
+const QString ModelView::JsonModelConverter::modelKey = "model";
+const QString ModelView::JsonModelConverter::itemsKey = "items";
+const QString ModelView::JsonModelConverter::versionKey = "version";
 
 
-JsonModel::JsonModel()
-{
+JsonModelConverter::JsonModelConverter() = default;
 
-}
+JsonModelConverter::~JsonModelConverter() = default;
 
-JsonModel::~JsonModel() = default;
-
-void JsonModel::model_to_json(const SessionModel& model, QJsonObject& json) const
+void JsonModelConverter::model_to_json(const SessionModel& model, QJsonObject& json) const
 {
     if (!model.rootItem())
         throw std::runtime_error("JsonModel::to_json() -> Error. Model is not initialized.");
@@ -56,7 +53,7 @@ void JsonModel::model_to_json(const SessionModel& model, QJsonObject& json) cons
     json[itemsKey] = itemArray;
 }
 
-void JsonModel::json_to_model(const QJsonObject& json, SessionModel& model) const
+void JsonModelConverter::json_to_model(const QJsonObject& json, SessionModel& model) const
 {
     if (!model.rootItem())
         throw std::runtime_error("JsonModel::json_to_model() -> Error. Model is not initialized.");
@@ -79,7 +76,7 @@ void JsonModel::json_to_model(const QJsonObject& json, SessionModel& model) cons
     }
 }
 
-bool JsonModel::isSessionModel(const QJsonObject& object) const
+bool JsonModelConverter::isSessionModel(const QJsonObject& object) const
 {
     static const QStringList expected = expected_model_keys();
 

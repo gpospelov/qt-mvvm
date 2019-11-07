@@ -12,8 +12,8 @@ target_sources(mvvm_model PRIVATE
     jsonitemcopystrategy.h
     jsonitemdata.cpp
     jsonitemdata.h
-    jsonmodel.cpp
-    jsonmodel.h
+    jsonmodelconverter.cpp
+    jsonmodelconverter.h
     jsontaginfo.cpp
     jsontaginfo.h
     jsonutils.cpp

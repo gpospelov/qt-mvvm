@@ -13,7 +13,7 @@
 #include "SampleModel.h"
 #include "item_constants.h"
 #include <mvvm/model/itempool.h>
-#include <mvvm/serialization/jsonmodel.h>
+#include <mvvm/serialization/jsonmodelconverter.h>
 #include <mvvm/model/sessionitem.h>
 #include <QFile>
 #include <QJsonArray>
@@ -63,7 +63,7 @@ void ApplicationModels::readFromFile(const QString& name)
     if (array.size() != 2)
         throw std::runtime_error("readFromFile() -> Unexpected amount of files");
 
-    ModelView::JsonModel converter;
+    ModelView::JsonModelConverter converter;
 
     p_impl->m_material_model->clear();
     converter.json_to_model(array.at(0).toObject(), *p_impl->m_material_model);
@@ -75,7 +75,7 @@ void ApplicationModels::readFromFile(const QString& name)
 
 void ApplicationModels::writeToFile(const QString& name)
 {
-    ModelView::JsonModel converter;
+    ModelView::JsonModelConverter converter;
 
     auto object = std::make_unique<QJsonObject>();
     converter.model_to_json(*p_impl->m_material_model, *object);

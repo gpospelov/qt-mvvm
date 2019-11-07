@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_SERIALIZATION_JSONMODEL_H
-#define MVVM_SERIALIZATION_JSONMODEL_H
+#ifndef MVVM_SERIALIZATION_JSONMODELCONVERTER_H
+#define MVVM_SERIALIZATION_JSONMODELCONVERTER_H
 
 #include <mvvm/serialization/jsonconverterinterfaces.h>
 #include <QString>
@@ -19,15 +19,15 @@ namespace ModelView {
 
 class SessionModel;
 
-class CORE_EXPORT JsonModel : public JsonModelInterface
+class CORE_EXPORT JsonModelConverter : public JsonModelConverterInterface
 {
 public:
     static const QString modelKey;
     static const QString itemsKey;
     static const QString versionKey;
 
-    JsonModel();
-    ~JsonModel() override;
+    JsonModelConverter();
+    ~JsonModelConverter() override;
 
     //! Writes content of model into json.
     void model_to_json(const SessionModel& model, QJsonObject& json) const override;
@@ -42,5 +42,5 @@ public:
 
 }  // namespace ModelView
 
-#endif  // MVVM_SERIALIZATION_JSONMODEL_H
+#endif  // MVVM_SERIALIZATION_JSONMODELCONVERTER_H
 
