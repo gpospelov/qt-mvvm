@@ -2,6 +2,8 @@ target_sources(mvvm_model PRIVATE
     itembackupstrategy.h
     itemcopystrategy.h
     jsonconverterinterfaces.h
+    jsondocument.cpp
+    jsondocument.h
     jsonitembackupstrategy.cpp
     jsonitembackupstrategy.h
     jsonitemconverter.cpp
