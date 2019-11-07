@@ -1,18 +1,18 @@
 // ************************************************************************** //
 //
-//  Prototype of mini MVVM framework for bornagainproject.org
+//  Model-view-view-model framework for large GUI applications
 //
-//! @homepage  http://www.bornagainproject.org
-//! @license   GNU General Public License v3 or higher
+//! @license   GNU General Public License v3 or higher (see COPYING)
+//! @authors   see AUTHORS
 //
 // ************************************************************************** //
 
-#ifndef MVVM_COMMANDSERVICE_H
-#define MVVM_COMMANDSERVICE_H
+#ifndef MVVM_COMMANDS_COMMANDSERVICE_H
+#define MVVM_COMMANDS_COMMANDSERVICE_H
 
 #include <mvvm/commands/commandadapter.h>
 #include <mvvm/model/function_types.h>
-#include <mvvm/model/mvvm_export.h>
+#include <mvvm/core/export.h>
 #include <QUndoStack>
 #include <memory>
 
@@ -82,4 +82,4 @@ typename C::result_t CommandService::process_command(Args&&... args)
 
 } // namespace ModelView
 
-#endif // MVVM_COMMANDSERVICE_H
+#endif  // MVVM_COMMANDS_COMMANDSERVICE_H

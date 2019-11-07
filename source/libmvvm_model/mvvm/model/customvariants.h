@@ -1,19 +1,19 @@
 // ************************************************************************** //
 //
-//  Prototype of mini MVVM framework for bornagainproject.org
+//  Model-view-view-model framework for large GUI applications
 //
-//! @homepage  http://www.bornagainproject.org
-//! @license   GNU General Public License v3 or higher
+//! @license   GNU General Public License v3 or higher (see COPYING)
+//! @authors   see AUTHORS
 //
 // ************************************************************************** //
 
-#ifndef MVVM_CUSTOMVARIANTS_H
-#define MVVM_CUSTOMVARIANTS_H
+#ifndef MVVM_MODEL_CUSTOMVARIANTS_H
+#define MVVM_MODEL_CUSTOMVARIANTS_H
 
 //! @file customvariants.h
 //! Registrations and translations for custom variants.
 
-#include <mvvm/model/mvvm_export.h>
+#include <mvvm/core/export.h>
 #include <mvvm/utils/reallimits.h>
 #include <QMetaType>
 #include <QVariant>
@@ -77,4 +77,4 @@ Q_DECLARE_METATYPE(std::string)
 Q_DECLARE_METATYPE(std::vector<double>)
 Q_DECLARE_METATYPE(ModelView::RealLimits)
 
-#endif // MVVM_CUSTOMVARIANTS_H
+#endif  // MVVM_MODEL_CUSTOMVARIANTS_H

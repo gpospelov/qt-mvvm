@@ -27,7 +27,6 @@ target_sources(mvvm_model PRIVATE
     itemutils.h
     modelutils.cpp
     modelutils.h
-    mvvm_export.h
     mvvm_types.h
     path.cpp
     path.h

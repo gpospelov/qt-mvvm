@@ -1,16 +1,16 @@
 // ************************************************************************** //
 //
-//  Prototype of mini MVVM framework for bornagainproject.org
+//  Model-view-view-model framework for large GUI applications
 //
-//! @homepage  http://www.bornagainproject.org
-//! @license   GNU General Public License v3 or higher
+//! @license   GNU General Public License v3 or higher (see COPYING)
+//! @authors   see AUTHORS
 //
 // ************************************************************************** //
 
-#ifndef MVVM_ITEMUTILS_H
-#define MVVM_ITEMUTILS_H
+#ifndef MVVM_MODEL_ITEMUTILS_H
+#define MVVM_MODEL_ITEMUTILS_H
 
-#include <mvvm/model/mvvm_export.h>
+#include <mvvm/core/export.h>
 #include <functional>
 #include <vector>
 
@@ -52,5 +52,5 @@ CORE_EXPORT std::vector<SessionItem*> SinglePropertyItems(const SessionItem& ite
 
 }  // namespace ModelView
 
-#endif // MVVM_ITEMUTILS_H
+#endif  // MVVM_MODEL_ITEMUTILS_H
 

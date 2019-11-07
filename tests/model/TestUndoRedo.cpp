@@ -1,11 +1,20 @@
+// ************************************************************************** //
+//
+//  Model-view-view-model framework for large GUI applications
+//
+//! @license   GNU General Public License v3 or higher (see COPYING)
+//! @authors   see AUTHORS
+//
+// ************************************************************************** //
+
 #include "google_test.h"
+#include "toy_includes.h"
+#include "toy_items.h"
+#include <QUndoStack>
 #include <mvvm/model/itemutils.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/model/taginfo.h>
-#include "toy_includes.h"
-#include "toy_items.h"
-#include <QUndoStack>
 
 using namespace ModelView;
 

@@ -1,16 +1,16 @@
 // ************************************************************************** //
 //
-//  Prototype of mini MVVM framework for bornagainproject.org
+//  Model-view-view-model framework for large GUI applications
 //
-//! @homepage  http://www.bornagainproject.org
-//! @license   GNU General Public License v3 or higher
+//! @license   GNU General Public License v3 or higher (see COPYING)
+//! @authors   see AUTHORS
 //
 // ************************************************************************** //
 
-#ifndef MVVM_CONTAINERUTILS_H
-#define MVVM_CONTAINERUTILS_H
+#ifndef MVVM_UTILS_CONTAINERUTILS_H
+#define MVVM_UTILS_CONTAINERUTILS_H
 
-#include <mvvm/model/mvvm_export.h>
+#include <mvvm/core/export.h>
 #include <string>
 #include <iterator>
 
@@ -31,5 +31,5 @@ template <typename C, typename T> int IndexOfItem(const C& container, const T& i
 
 }  // namespace ModelView
 
-#endif // MVVM_CONTAINERUTILS_H
+#endif  // MVVM_UTILS_CONTAINERUTILS_H
 

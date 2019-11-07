@@ -1,16 +1,16 @@
 // ************************************************************************** //
 //
-//  Prototype of mini MVVM framework for bornagainproject.org
+//  Model-view-view-model framework for large GUI applications
 //
-//! @homepage  http://www.bornagainproject.org
-//! @license   GNU General Public License v3 or higher
+//! @license   GNU General Public License v3 or higher (see COPYING)
+//! @authors   see AUTHORS
 //
 // ************************************************************************** //
 
-#ifndef MVVM_ITEMCATALOGUE_H
-#define MVVM_ITEMCATALOGUE_H
+#ifndef MVVM_MODEL_ITEMCATALOGUE_H
+#define MVVM_MODEL_ITEMCATALOGUE_H
 
-#include <mvvm/model/mvvm_export.h>
+#include <mvvm/core/export.h>
 #include <mvvm/model/function_types.h>
 #include <string>
 #include <vector>
@@ -58,4 +58,4 @@ template <typename T> void ItemCatalogue::registerItem(const std::string& label)
 
 } // namespace ModelView
 
-#endif // MVVM_ITEMCATALOGUE_H
+#endif  // MVVM_MODEL_ITEMCATALOGUE_H

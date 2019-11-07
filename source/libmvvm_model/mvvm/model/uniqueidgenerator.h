@@ -1,16 +1,16 @@
 // ************************************************************************** //
 //
-//  Prototype of mini MVVM framework for bornagainproject.org
+//  Model-view-view-model framework for large GUI applications
 //
-//! @homepage  http://www.bornagainproject.org
-//! @license   GNU General Public License v3 or higher
+//! @license   GNU General Public License v3 or higher (see COPYING)
+//! @authors   see AUTHORS
 //
 // ************************************************************************** //
 
-#ifndef MVVM_UNIQUEIDGENERATOR_H
-#define MVVM_UNIQUEIDGENERATOR_H
+#ifndef MVVM_MODEL_UNIQUEIDGENERATOR_H
+#define MVVM_MODEL_UNIQUEIDGENERATOR_H
 
-#include <mvvm/model/mvvm_export.h>
+#include <mvvm/core/export.h>
 #include <mvvm/model/mvvm_types.h>
 
 namespace ModelView
@@ -34,4 +34,4 @@ public:
 
 } // namespace ModelView
 
-#endif //  MVVM_UNIQUEIDGENERATOR_H
+#endif  // MVVM_MODEL_UNIQUEIDGENERATOR_H

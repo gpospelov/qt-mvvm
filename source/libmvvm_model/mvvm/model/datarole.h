@@ -1,16 +1,16 @@
 // ************************************************************************** //
 //
-//  Prototype of mini MVVM framework for bornagainproject.org
+//  Model-view-view-model framework for large GUI applications
 //
-//! @homepage  http://www.bornagainproject.org
-//! @license   GNU General Public License v3 or higher
+//! @license   GNU General Public License v3 or higher (see COPYING)
+//! @authors   see AUTHORS
 //
 // ************************************************************************** //
 
-#ifndef MVVM_DATAROLE_H
-#define MVVM_DATAROLE_H
+#ifndef MVVM_MODEL_DATAROLE_H
+#define MVVM_MODEL_DATAROLE_H
 
-#include <mvvm/model/mvvm_export.h>
+#include <mvvm/core/export.h>
 #include <QVariant>
 
 namespace ModelView {
@@ -28,4 +28,4 @@ public:
 
 }  // namespace ModelView
 
-#endif // MVVM_DATAROLE_H
+#endif  // MVVM_MODEL_DATAROLE_H

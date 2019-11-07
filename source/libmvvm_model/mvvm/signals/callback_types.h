@@ -1,14 +1,14 @@
 // ************************************************************************** //
 //
-//  Prototype of mini MVVM framework for bornagainproject.org
+//  Model-view-view-model framework for large GUI applications
 //
-//! @homepage  http://www.bornagainproject.org
-//! @license   GNU General Public License v3 or higher
+//! @license   GNU General Public License v3 or higher (see COPYING)
+//! @authors   see AUTHORS
 //
 // ************************************************************************** //
 
-#ifndef MVVM_CALLBACK_TYPES_H
-#define MVVM_CALLBACK_TYPES_H
+#ifndef MVVM_SIGNALS_CALLBACK_TYPES_H
+#define MVVM_SIGNALS_CALLBACK_TYPES_H
 
 #include <string>
 #include <functional>
@@ -29,5 +29,5 @@ using model_t = std::function<void(SessionModel*)>;
 
 } // namespace ModelView
 
-#endif // MVVM_CALLBACK_TYPES_H
+#endif  // MVVM_SIGNALS_CALLBACK_TYPES_H
 

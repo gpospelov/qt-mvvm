@@ -1,16 +1,16 @@
 // ************************************************************************** //
 //
-//  Prototype of mini MVVM framework for bornagainproject.org
+//  Model-view-view-model framework for large GUI applications
 //
-//! @homepage  http://www.bornagainproject.org
-//! @license   GNU General Public License v3 or higher
+//! @license   GNU General Public License v3 or higher (see COPYING)
+//! @authors   see AUTHORS
 //
 // ************************************************************************** //
 
-#ifndef MVVM_CELLDECORATIONINTERFACE_H
-#define MVVM_CELLDECORATIONINTERFACE_H
+#ifndef MVVM_VIEWMODEL_CELLDECORATIONINTERFACE_H
+#define MVVM_VIEWMODEL_CELLDECORATIONINTERFACE_H
 
-#include <mvvm/model/mvvm_export.h>
+#include <mvvm/core/export.h>
 #include <string>
 
 class QModelIndex;
@@ -31,4 +31,4 @@ public:
 
 } // namespace ModelView
 
-#endif // MVVM_CELLDECORATIONINTERFACE_H
+#endif  // MVVM_VIEWMODEL_CELLDECORATIONINTERFACE_H

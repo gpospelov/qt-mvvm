@@ -1,14 +1,14 @@
 // ************************************************************************** //
 //
-//  Prototype of mini MVVM framework for bornagainproject.org
+//  Model-view-view-model framework for large GUI applications
 //
-//! @homepage  http://www.bornagainproject.org
-//! @license   GNU General Public License v3 or higher
+//! @license   GNU General Public License v3 or higher (see COPYING)
+//! @authors   see AUTHORS
 //
 // ************************************************************************** //
 
-#ifndef MVVM_VARIANT_CONSTANTS_H
-#define MVVM_VARIANT_CONSTANTS_H
+#ifndef MVVM_MODEL_VARIANTCONSTANTS_H
+#define MVVM_MODEL_VARIANTCONSTANTS_H
 
 #include <string>
 
@@ -35,4 +35,4 @@ const std::string reallimits_type_name = "ModelView::RealLimits";
 
 } // namespace ModelView
 
-#endif // MVVM_VARIANT_CONSTANTS_H
+#endif  // MVVM_MODEL_VARIANTCONSTANTS_H

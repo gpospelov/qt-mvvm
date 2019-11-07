@@ -1,14 +1,14 @@
 // ************************************************************************** //
 //
-//  Prototype of mini MVVM framework for bornagainproject.org
+//  Model-view-view-model framework for large GUI applications
 //
-//! @homepage  http://www.bornagainproject.org
-//! @license   GNU General Public License v3 or higher
+//! @license   GNU General Public License v3 or higher (see COPYING)
+//! @authors   see AUTHORS
 //
 // ************************************************************************** //
 
-#ifndef MVVM_COMPOUNDITEM_H
-#define MVVM_COMPOUNDITEM_H
+#ifndef MVVM_MODEL_COMPOUNDITEM_H
+#define MVVM_MODEL_COMPOUNDITEM_H
 
 #include <mvvm/model/customvariants.h>
 #include <mvvm/model/propertyitem.h>
@@ -70,4 +70,4 @@ PropertyItem* CompoundItem::addProperty(const std::string& name, const V& value)
 
 } // namespace ModelView
 
-#endif // MVVM_COMPOUNDITEM_H
+#endif  // MVVM_MODEL_COMPOUNDITEM_H

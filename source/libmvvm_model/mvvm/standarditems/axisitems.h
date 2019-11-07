@@ -1,14 +1,14 @@
 // ************************************************************************** //
 //
-//  Prototype of mini MVVM framework for bornagainproject.org
+//  Model-view-view-model framework for large GUI applications
 //
-//! @homepage  http://www.bornagainproject.org
-//! @license   GNU General Public License v3 or higher
+//! @license   GNU General Public License v3 or higher (see COPYING)
+//! @authors   see AUTHORS
 //
 // ************************************************************************** //
 
-#ifndef MVVM_AXISITEMS_H
-#define MVVM_AXISITEMS_H
+#ifndef MVVM_STANDARDITEMS_AXISITEMS_H
+#define MVVM_STANDARDITEMS_AXISITEMS_H
 
 //! @file axisitems.h
 //! Collection of axis items for 1D and 2D data/plotting support.
@@ -107,4 +107,4 @@ public:
 
 } // namespace ModelView
 
-#endif // MVVM_AXISITEMS_H
+#endif  // MVVM_STANDARDITEMS_AXISITEMS_H

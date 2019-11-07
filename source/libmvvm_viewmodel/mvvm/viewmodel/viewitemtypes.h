@@ -1,14 +1,14 @@
 // ************************************************************************** //
 //
-//  Prototype of mini MVVM framework for bornagainproject.org
+//  Model-view-view-model framework for large GUI applications
 //
-//! @homepage  http://www.bornagainproject.org
-//! @license   GNU General Public License v3 or higher
+//! @license   GNU General Public License v3 or higher (see COPYING)
+//! @authors   see AUTHORS
 //
 // ************************************************************************** //
 
-#ifndef MVVM_VIEWITEMTYPES_H
-#define MVVM_VIEWITEMTYPES_H
+#ifndef MVVM_VIEWMODEL_VIEWITEMTYPES_H
+#define MVVM_VIEWMODEL_VIEWITEMTYPES_H
 
 #include <mvvm/viewmodel/viewitem.h>
 
@@ -24,4 +24,4 @@ const int data_item_type = QStandardItem::UserType + 3;
 
 } // namespace ModelView
 
-#endif // MVVM_VIEWITEMTYPES_H
+#endif  // MVVM_VIEWMODEL_VIEWITEMTYPES_H

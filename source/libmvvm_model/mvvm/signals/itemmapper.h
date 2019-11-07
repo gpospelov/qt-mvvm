@@ -1,14 +1,14 @@
 // ************************************************************************** //
 //
-//  Prototype of mini MVVM framework for bornagainproject.org
+//  Model-view-view-model framework for large GUI applications
 //
-//! @homepage  http://www.bornagainproject.org
-//! @license   GNU General Public License v3 or higher
+//! @license   GNU General Public License v3 or higher (see COPYING)
+//! @authors   see AUTHORS
 //
 // ************************************************************************** //
 
-#ifndef MVVM_ITEMMAPPER_H
-#define MVVM_ITEMMAPPER_H
+#ifndef MVVM_SIGNALS_ITEMMAPPER_H
+#define MVVM_SIGNALS_ITEMMAPPER_H
 
 #include <mvvm/signals/callbackcontainer.h>
 
@@ -73,4 +73,4 @@ private:
 
 } // ModelView
 
-#endif // MVVM_ITEMMAPPER_H
+#endif  // MVVM_SIGNALS_ITEMMAPPER_H

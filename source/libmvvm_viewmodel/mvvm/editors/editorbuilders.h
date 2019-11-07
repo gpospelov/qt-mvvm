@@ -1,16 +1,16 @@
 // ************************************************************************** //
 //
-//  Prototype of mini MVVM framework for bornagainproject.org
+//  Model-view-view-model framework for large GUI applications
 //
-//! @homepage  http://www.bornagainproject.org
-//! @license   GNU General Public License v3 or higher
+//! @license   GNU General Public License v3 or higher (see COPYING)
+//! @authors   see AUTHORS
 //
 // ************************************************************************** //
 
-#ifndef MVVM_EDITORBUILDERSTRATEGY_H
-#define MVVM_EDITORBUILDERSTRATEGY_H
+#ifndef MVVM_EDITORS_EDITORBUILDERS_H
+#define MVVM_EDITORS_EDITORBUILDERS_H
 
-#include <mvvm/model/mvvm_export.h>
+#include <mvvm/core/export.h>
 #include <functional>
 #include <memory>
 
@@ -55,4 +55,4 @@ CORE_EXPORT builder_t ExternalPropertyEditorBuilder();
 
 } // namespace ModelView
 
-#endif // MVVM_EDITORBUILDERSTRATEGY_H
+#endif  // MVVM_EDITORS_EDITORBUILDERS_H

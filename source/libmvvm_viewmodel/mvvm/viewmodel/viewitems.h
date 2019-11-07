@@ -1,17 +1,17 @@
 // ************************************************************************** //
 //
-//  Prototype of mini MVVM framework for bornagainproject.org
+//  Model-view-view-model framework for large GUI applications
 //
-//! @homepage  http://www.bornagainproject.org
-//! @license   GNU General Public License v3 or higher
+//! @license   GNU General Public License v3 or higher (see COPYING)
+//! @authors   see AUTHORS
 //
 // ************************************************************************** //
 
-#ifndef MVVM_VIEWITEMS_H
-#define MVVM_VIEWITEMS_H
+#ifndef MVVM_VIEWMODEL_VIEWITEMS_H
+#define MVVM_VIEWMODEL_VIEWITEMS_H
 
 #include <mvvm/viewmodel/viewemptyitem.h>
 #include <mvvm/viewmodel/viewlabelitem.h>
 #include <mvvm/viewmodel/viewdataitem.h>
 
-#endif // MVVM_VIEWITEMS_H
+#endif  // MVVM_VIEWMODEL_VIEWITEMS_H

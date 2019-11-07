@@ -1,14 +1,14 @@
 // ************************************************************************** //
 //
-//  Prototype of mini MVVM framework for bornagainproject.org
+//  Model-view-view-model framework for large GUI applications
 //
-//! @homepage  http://www.bornagainproject.org
-//! @license   GNU General Public License v3 or higher
+//! @license   GNU General Public License v3 or higher (see COPYING)
+//! @authors   see AUTHORS
 //
 // ************************************************************************** //
 
-#ifndef MVVM_VIEWPORTITEM_H
-#define MVVM_VIEWPORTITEM_H
+#ifndef MVVM_STANDARDITEMS_VIEWPORTITEM_H
+#define MVVM_STANDARDITEMS_VIEWPORTITEM_H
 
 #include <mvvm/model/compounditem.h>
 
@@ -48,4 +48,4 @@ private:
 
 } // namespace ModelView
 
-#endif // MVVM_VIEWPORTITEM_H
+#endif  // MVVM_STANDARDITEMS_VIEWPORTITEM_H

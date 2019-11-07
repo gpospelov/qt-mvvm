@@ -1,14 +1,14 @@
 // ************************************************************************** //
 //
-//  Prototype of mini MVVM framework for bornagainproject.org
+//  Model-view-view-model framework for large GUI applications
 //
-//! @homepage  http://www.bornagainproject.org
-//! @license   GNU General Public License v3 or higher
+//! @license   GNU General Public License v3 or higher (see COPYING)
+//! @authors   see AUTHORS
 //
 // ************************************************************************** //
 
-#ifndef MVVM_DATA2DPLOTCONTROLLER_H
-#define MVVM_DATA2DPLOTCONTROLLER_H
+#ifndef MVVM_PLOTTING_DATA2DPLOTCONTROLLER_H
+#define MVVM_PLOTTING_DATA2DPLOTCONTROLLER_H
 
 #include <mvvm/signals/itemcontroller.h>
 #include <memory>
@@ -44,4 +44,4 @@ private:
 
 } // namespace ModelView
 
-#endif // MVVM_DATA2DPLOTCONTROLLER_H
+#endif  // MVVM_PLOTTING_DATA2DPLOTCONTROLLER_H

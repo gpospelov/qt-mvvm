@@ -1,17 +1,17 @@
 // ************************************************************************** //
 //
-//  Prototype of mini MVVM framework for bornagainproject.org
+//  Model-view-view-model framework for large GUI applications
 //
-//! @homepage  http://www.bornagainproject.org
-//! @license   GNU General Public License v3 or higher
+//! @license   GNU General Public License v3 or higher (see COPYING)
+//! @authors   see AUTHORS
 //
 // ************************************************************************** //
 
-#ifndef MVVM_CALLBACKCONTAINER_H
-#define MVVM_CALLBACKCONTAINER_H
+#ifndef MVVM_SIGNALS_CALLBACKCONTAINER_H
+#define MVVM_SIGNALS_CALLBACKCONTAINER_H
 
 #include <mvvm/signals/callback_types.h>
-#include <mvvm/model/mvvm_export.h>
+#include <mvvm/core/export.h>
 #include <algorithm>
 #include <functional>
 #include <list>
@@ -70,4 +70,4 @@ template <typename T> class Signal : public SignalBase<T, Callbacks::slot_t>
 
 } // namespace ModelView
 
-#endif // MVVM_CALLBACKCONTAINER_H
+#endif  // MVVM_SIGNALS_CALLBACKCONTAINER_H

@@ -1,14 +1,9 @@
 // ************************************************************************** //
 //
-//  BornAgain: simulate and fit scattering at grazing incidence
+//  Model-view-view-model framework for large GUI applications
 //
-//! @file      GUI/coregui/Views/SampleDesigner/NodeEditor.h
-//! @brief     Defines class NodeEditor
-//!
-//! @homepage  http://www.bornagainproject.org
 //! @license   GNU General Public License v3 or higher (see COPYING)
-//! @copyright Forschungszentrum Jülich GmbH 2018
-//! @authors   Scientific Computing Group at MLZ (see CITATION, AUTHORS)
+//! @authors   see AUTHORS
 //
 // ************************************************************************** //
 

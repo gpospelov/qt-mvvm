@@ -1,14 +1,14 @@
 // ************************************************************************** //
 //
-//  Prototype of mini MVVM framework for bornagainproject.org
+//  Model-view-view-model framework for large GUI applications
 //
-//! @homepage  http://www.bornagainproject.org
-//! @license   GNU General Public License v3 or higher
+//! @license   GNU General Public License v3 or higher (see COPYING)
+//! @authors   see AUTHORS
 //
 // ************************************************************************** //
 
-#ifndef MVVM_COLORMAPINFOFORMATTER_H
-#define MVVM_COLORMAPINFOFORMATTER_H
+#ifndef MVVM_PLOTTING_COLORMAPINFOFORMATTER_H
+#define MVVM_PLOTTING_COLORMAPINFOFORMATTER_H
 
 #include <mvvm/plotting/statusstringformatterinterface.h>
 
@@ -36,4 +36,4 @@ public:
 
 } // namespace ModelView
 
-#endif // MVVM_COLORMAPINFOFORMATTER_H
+#endif  // MVVM_PLOTTING_COLORMAPINFOFORMATTER_H

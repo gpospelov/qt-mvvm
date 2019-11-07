@@ -1,14 +1,14 @@
 // ************************************************************************** //
 //
-//  Prototype of mini MVVM framework for bornagainproject.org
+//  Model-view-view-model framework for large GUI applications
 //
-//! @homepage  http://www.bornagainproject.org
-//! @license   GNU General Public License v3 or higher
+//! @license   GNU General Public License v3 or higher (see COPYING)
+//! @authors   see AUTHORS
 //
 // ************************************************************************** //
 
-#ifndef MVVM_JSONITEMBACKUPSTRATEGY_H
-#define MVVM_JSONITEMBACKUPSTRATEGY_H
+#ifndef MVVM_SERIALIZATION_JSONITEMBACKUPSTRATEGY_H
+#define MVVM_SERIALIZATION_JSONITEMBACKUPSTRATEGY_H
 
 #include <mvvm/serialization/itembackupstrategy.h>
 #include <memory>
@@ -38,4 +38,4 @@ private:
 
 } // namespace ModelView
 
-#endif // MVVM_JSONITEMBACKUPSTRATEGY_H
+#endif  // MVVM_SERIALIZATION_JSONITEMBACKUPSTRATEGY_H

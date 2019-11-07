@@ -1,3 +1,12 @@
+// ************************************************************************** //
+//
+//  Model-view-view-model framework for large GUI applications
+//
+//! @license   GNU General Public License v3 or higher (see COPYING)
+//! @authors   see AUTHORS
+//
+// ************************************************************************** //
+
 #include "google_test.h"
 #include "toy_includes.h"
 
@@ -5,17 +14,17 @@ using namespace ModelView;
 
 //! Tests of toy interference item in the context of model and viewmodel.
 
-class TestToyInterferenceFunctionItem : public ::testing::Test
+class ToyInterferenceFunctionItemTest : public ::testing::Test
 {
 public:
-    ~TestToyInterferenceFunctionItem();
+    ~ToyInterferenceFunctionItemTest();
 };
 
-TestToyInterferenceFunctionItem::~TestToyInterferenceFunctionItem() = default;
+ToyInterferenceFunctionItemTest::~ToyInterferenceFunctionItemTest() = default;
 
 //! Interference function (enabled/disabled).
 
-TEST_F(TestToyInterferenceFunctionItem, rotationAngleEnabled)
+TEST_F(ToyInterferenceFunctionItemTest, rotationAngleEnabled)
 {
     ToyItems::SampleModel model;
     auto interference = model.insertItem<ToyItems::InterferenceFunctionItem>();

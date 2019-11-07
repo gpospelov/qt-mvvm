@@ -1,14 +1,14 @@
 // ************************************************************************** //
 //
-//  Prototype of mini MVVM framework for bornagainproject.org
+//  Model-view-view-model framework for large GUI applications
 //
-//! @homepage  http://www.bornagainproject.org
-//! @license   GNU General Public License v3 or higher
+//! @license   GNU General Public License v3 or higher (see COPYING)
+//! @authors   see AUTHORS
 //
 // ************************************************************************** //
 
-#ifndef MVVM_JSONVARIANT_H
-#define MVVM_JSONVARIANT_H
+#ifndef MVVM_SERIALIZATION_JSONVARIANT_H
+#define MVVM_SERIALIZATION_JSONVARIANT_H
 
 #include <mvvm/serialization/jsonvariantinterface.h>
 #include <map>
@@ -42,4 +42,4 @@ private:
 
 } // namespace ModelView
 
-#endif // MVVM_JSONVARIANT_H
+#endif  // MVVM_SERIALIZATION_JSONVARIANT_H

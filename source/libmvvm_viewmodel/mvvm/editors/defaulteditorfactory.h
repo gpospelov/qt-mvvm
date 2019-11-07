@@ -1,14 +1,14 @@
 // ************************************************************************** //
 //
-//  Prototype of mini MVVM framework for bornagainproject.org
+//  Model-view-view-model framework for large GUI applications
 //
-//! @homepage  http://www.bornagainproject.org
-//! @license   GNU General Public License v3 or higher
+//! @license   GNU General Public License v3 or higher (see COPYING)
+//! @authors   see AUTHORS
 //
 // ************************************************************************** //
 
-#ifndef MVVM_DEFAULTEDITORFACTORY_H
-#define MVVM_DEFAULTEDITORFACTORY_H
+#ifndef MVVM_EDITORS_DEFAULTEDITORFACTORY_H
+#define MVVM_EDITORS_DEFAULTEDITORFACTORY_H
 
 #include <mvvm/editors/editorbuilders.h>
 #include <mvvm/editors/editorfactoryinterface.h>
@@ -36,4 +36,4 @@ protected:
 
 } // namespace ModelView
 
-#endif // MVVM_DEFAULTEDITORFACTORY_H
+#endif  // MVVM_EDITORS_DEFAULTEDITORFACTORY_H

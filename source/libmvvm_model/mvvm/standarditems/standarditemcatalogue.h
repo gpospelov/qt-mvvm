@@ -1,14 +1,14 @@
 // ************************************************************************** //
 //
-//  Prototype of mini MVVM framework for bornagainproject.org
+//  Model-view-view-model framework for large GUI applications
 //
-//! @homepage  http://www.bornagainproject.org
-//! @license   GNU General Public License v3 or higher
+//! @license   GNU General Public License v3 or higher (see COPYING)
+//! @authors   see AUTHORS
 //
 // ************************************************************************** //
 
-#ifndef MVVM_STANDARDITEMCATALOGUE_H
-#define MVVM_STANDARDITEMCATALOGUE_H
+#ifndef MVVM_STANDARDITEMS_STANDARDITEMCATALOGUE_H
+#define MVVM_STANDARDITEMS_STANDARDITEMCATALOGUE_H
 
 #include <mvvm/model/itemcatalogue.h>
 
@@ -19,4 +19,4 @@ CORE_EXPORT std::unique_ptr<ItemCatalogue> CreateStandardItemCatalogue();
 
 }
 
-#endif // MVVM_STANDARDITEMCATALOGUE_H
+#endif  // MVVM_STANDARDITEMS_STANDARDITEMCATALOGUE_H
