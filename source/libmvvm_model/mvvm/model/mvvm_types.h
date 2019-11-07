@@ -10,15 +10,13 @@
 #ifndef MVVM_MODEL_MVVM_TYPES_H
 #define MVVM_MODEL_MVVM_TYPES_H
 
+#include <mvvm/core/types.h>
 #include <string>
 
 namespace ModelView {
 
 class SessionItem;
 class SessionModel;
-
-using identifier_type = std::string;
-using model_type = std::string;
 
 //! Defines constants to be used as SessionItem data role.
 
