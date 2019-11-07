@@ -46,7 +46,5 @@ target_sources(mvvm_model PRIVATE
     taginfo.h
     tagrow.cpp
     tagrow.h
-    uniqueidgenerator.cpp
-    uniqueidgenerator.h
     variant-constants.h
 )

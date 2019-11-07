@@ -15,7 +15,7 @@
 #include <mvvm/model/sessionitemtags.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/model/taginfo.h>
-#include <mvvm/model/uniqueidgenerator.h>
+#include <mvvm/core/uniqueidgenerator.h>
 #include <stdexcept>
 
 namespace

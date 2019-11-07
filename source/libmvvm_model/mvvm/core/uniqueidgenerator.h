@@ -11,7 +11,7 @@
 #define MVVM_MODEL_UNIQUEIDGENERATOR_H
 
 #include <mvvm/core/export.h>
-#include <mvvm/model/mvvm_types.h>
+#include <mvvm/core/types.h>
 
 namespace ModelView
 {
