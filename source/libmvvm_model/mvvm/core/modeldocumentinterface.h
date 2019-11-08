@@ -18,7 +18,7 @@ namespace ModelView
 
 /*!
 @class ModelDocumentInterface
-@brief Base class to save and restore session models on and from disk.
+@brief Base class to save and restore session models to/from disk.
 
 Single ModelDocument corresponds to a single file on disk. It can contain arbitrary number
 of models.

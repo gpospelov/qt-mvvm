@@ -19,6 +19,11 @@ namespace ModelView
 
 class SessionModel;
 
+/*!
+@class JsonDocument
+@brief Saves and restores list of SessionModel's to/from disk using json format.
+*/
+
 class CORE_EXPORT JsonDocument : public ModelDocumentInterface
 {
 public:
