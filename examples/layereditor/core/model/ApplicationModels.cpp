@@ -12,7 +12,7 @@
 #include "MaterialPropertyController.h"
 #include "SampleModel.h"
 #include <mvvm/model/sessionitem.h>
-#include <mvvm/serialization/jsondocument.h>
+#include <mvvm/core/modeldocuments.h>
 
 using namespace ModelView;
 
@@ -20,7 +20,7 @@ struct ApplicationModels::ApplicationModelsImpl {
     std::unique_ptr<MaterialModel> m_material_model;
     std::unique_ptr<SampleModel> m_sample_model;
     std::unique_ptr<MaterialPropertyController> m_property_controller;
-    std::unique_ptr<JsonDocument> m_document;
+    std::unique_ptr<ModelDocumentInterface> m_document;
 
     ApplicationModelsImpl()
     {
@@ -28,14 +28,12 @@ struct ApplicationModels::ApplicationModelsImpl {
         m_sample_model = std::make_unique<SampleModel>();
         m_property_controller = std::make_unique<MaterialPropertyController>(m_material_model.get(),
                                                                              m_sample_model.get());
-        m_document = std::make_unique<JsonDocument>(
-            std::initializer_list<SessionModel*>{m_material_model.get(), m_sample_model.get()});
+        m_document = CreateJsonDocument({m_material_model.get(), m_sample_model.get()});
     }
 };
 
 ApplicationModels::ApplicationModels() : p_impl(std::make_unique<ApplicationModelsImpl>())
 {
-    std::unique_ptr<JsonDocument> m_document;
 }
 
 ApplicationModels::~ApplicationModels() = default;
