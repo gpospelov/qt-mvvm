@@ -22,7 +22,6 @@
 @brief Layer with name, thickness and reference to material.
 */
 
-// TODO: disentangle from LocatedItem
 class LayerItem : public LocatedItem
 {
 public:
@@ -38,7 +37,6 @@ public:
 @brief Multi layer capable of holding layers and other multi-layers.
 */
 
-// TODO: disentangle from LocatedItem
 class MultiLayerItem : public LocatedItem
 {
 public:
