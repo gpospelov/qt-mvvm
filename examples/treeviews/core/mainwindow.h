@@ -10,8 +10,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <memory>
 #include <QMainWindow>
+#include <memory>
 
 class SampleModel;
 class QTabWidget;

@@ -10,9 +10,9 @@
 #ifndef MVVM_WIDGETS_ITEMSTREEVIEW_H
 #define MVVM_WIDGETS_ITEMSTREEVIEW_H
 
-#include <mvvm/core/export.h>
 #include <QWidget>
 #include <memory>
+#include <mvvm/core/export.h>
 
 class QTreeView;
 class QItemSelection;
@@ -66,4 +66,4 @@ private:
 
 } // namespace ModelView
 
-#endif  // MVVM_WIDGETS_ITEMSTREEVIEW_H
+#endif // MVVM_WIDGETS_ITEMSTREEVIEW_H

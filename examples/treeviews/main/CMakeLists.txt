@@ -1,4 +1,4 @@
-set(executable_name treeviews)
+# Executable: treeviews
 
-add_executable(${executable_name} main.cpp)
-target_link_libraries(${executable_name} PUBLIC treeviewscore)
+add_executable(treeviews main.cpp)
+target_link_libraries(treeviews PUBLIC treeviewscore)
