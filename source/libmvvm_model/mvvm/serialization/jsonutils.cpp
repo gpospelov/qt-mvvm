@@ -10,7 +10,7 @@
 #include <mvvm/serialization/jsonutils.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/serialization/jsonconverterinterfaces.h>
-#include <mvvm/serialization/jsonmodel.h>
+#include <mvvm/serialization/jsonmodelconverter.h>
 #include <mvvm/utils/reallimits.h>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -29,7 +29,7 @@ using namespace ModelView;
 std::string JsonUtils::ModelToJsonString(const ModelView::SessionModel& model)
 {
     QJsonObject json_source;
-    JsonModel converter;
+    JsonModelConverter converter;
     converter.model_to_json(model, json_source);
     QJsonDocument document(json_source);
     return QString(document.toJson(QJsonDocument::Indented)).toStdString();

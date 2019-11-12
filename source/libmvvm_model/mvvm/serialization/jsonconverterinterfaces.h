@@ -65,10 +65,10 @@ public:
 
 //! Base class for all converters of SessionModel to/from json object.
 
-class CORE_EXPORT JsonModelInterface
+class CORE_EXPORT JsonModelConverterInterface
 {
 public:
-    virtual ~JsonModelInterface() = default;
+    virtual ~JsonModelConverterInterface() = default;
 
     virtual void model_to_json(const SessionModel&, QJsonObject&) const = 0;
 

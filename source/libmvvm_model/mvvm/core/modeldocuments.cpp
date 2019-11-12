@@ -7,12 +7,16 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/model/uniqueidgenerator.h>
-#include <QUuid>
+#include <mvvm/core/modeldocuments.h>
+#include <mvvm/serialization/jsondocument.h>
 
-using namespace ModelView;
-
-identifier_type UniqueIdGenerator::generate()
+namespace ModelView
 {
-    return  QUuid::createUuid().toString().toStdString();
+
+std::unique_ptr<ModelDocumentInterface>
+CreateJsonDocument(const std::initializer_list<SessionModel*>& models)
+{
+    return std::make_unique<JsonDocument>(models);
 }
+
+} // namespace ModelView

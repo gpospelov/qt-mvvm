@@ -35,9 +35,6 @@ PropertyEditor::PropertyEditor(QWidget* parent)
     // provide one click editing
     m_treeView->setEditTriggers(QAbstractItemView::AllEditTriggers);
     m_treeView->setAlternatingRowColors(true);
-
-    // FIXME implement placeholder model as in ComponentTreeView to have Name/Value labels
-    // displayed on emptry tree.
 }
 
 PropertyEditor::~PropertyEditor() = default;

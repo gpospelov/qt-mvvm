@@ -9,7 +9,6 @@
 
 #include "google_test.h"
 #include "test_utils.h"
-#include <QDebug>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -18,30 +17,30 @@
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/model/taginfo.h>
-#include <mvvm/serialization/jsonmodel.h>
+#include <mvvm/serialization/jsonmodelconverter.h>
 
 using namespace ModelView;
 
 //! Checks JsonModel class and its ability to convert SessionModel to json and back.
 
-class JsonModelTest : public ::testing::Test
+class JsonModelConverterTest : public ::testing::Test
 {
 public:
-    ~JsonModelTest();
+    ~JsonModelConverterTest();
 
     static const QString test_dir;
 
     static void SetUpTestCase() { TestUtils::CreateTestDirectory(test_dir); }
 };
 
-JsonModelTest::~JsonModelTest() = default;
-const QString JsonModelTest::test_dir = "test_JsonModel";
+JsonModelConverterTest::~JsonModelConverterTest() = default;
+const QString JsonModelConverterTest::test_dir = "test_JsonModel";
 
 //! Validity of json object representing SessionModel.
 
-TEST_F(JsonModelTest, isValidModel)
+TEST_F(JsonModelConverterTest, isValidModel)
 {
-    JsonModel converter;
+    JsonModelConverter converter;
 
     // empty json object is not valid
     QJsonObject object;
@@ -49,32 +48,32 @@ TEST_F(JsonModelTest, isValidModel)
 
     // json object representing valid SessionModel
     QJsonObject object2;
-    object2[JsonModel::modelKey] = "abc";
-    object2[JsonModel::itemsKey] = QJsonArray();
+    object2[JsonModelConverter::modelKey] = "abc";
+    object2[JsonModelConverter::itemsKey] = QJsonArray();
     EXPECT_TRUE(converter.isSessionModel(object2));
 }
 
 //! Creation of json object: empty model.
 
-TEST_F(JsonModelTest, emptyModel)
+TEST_F(JsonModelConverterTest, emptyModel)
 {
-    JsonModel converter;
+    JsonModelConverter converter;
     SessionModel model("TestModel");
 
     QJsonObject object;
     converter.model_to_json(model, object);
 
-    EXPECT_EQ(object[JsonModel::modelKey], "TestModel");
-    EXPECT_EQ(object[JsonModel::itemsKey].toArray().size(), 0);
+    EXPECT_EQ(object[JsonModelConverter::modelKey], "TestModel");
+    EXPECT_EQ(object[JsonModelConverter::itemsKey].toArray().size(), 0);
 
     EXPECT_TRUE(converter.isSessionModel(object));
 }
 
 //! Empty model to json and back.
 
-TEST_F(JsonModelTest, emptyModelToJsonAndBack)
+TEST_F(JsonModelConverterTest, emptyModelToJsonAndBack)
 {
-    JsonModel converter;
+    JsonModelConverter converter;
     SessionModel model("TestModel");
 
     QJsonObject object;
@@ -97,9 +96,9 @@ TEST_F(JsonModelTest, emptyModelToJsonAndBack)
 
 //! Creation of json object: single item in a model.
 
-TEST_F(JsonModelTest, singleItemToJsonAndBack)
+TEST_F(JsonModelConverterTest, singleItemToJsonAndBack)
 {
-    JsonModel converter;
+    JsonModelConverter converter;
     SessionModel model("TestModel");
 
     auto item = model.insertItem<SessionItem>(nullptr, "", -1);
@@ -118,9 +117,9 @@ TEST_F(JsonModelTest, singleItemToJsonAndBack)
 
 //! Filling model from json: parent and child in a model to json and back.
 
-TEST_F(JsonModelTest, parentAndChildToJsonAndBack)
+TEST_F(JsonModelConverterTest, parentAndChildToJsonAndBack)
 {
-    JsonModel converter;
+    JsonModelConverter converter;
     SessionModel model("TestModel");
 
     // filling original model with content
@@ -166,9 +165,9 @@ TEST_F(JsonModelTest, parentAndChildToJsonAndBack)
 
 //! Item in a model to json and back: how persistent are identifiers.
 
-TEST_F(JsonModelTest, identifiers)
+TEST_F(JsonModelConverterTest, identifiers)
 {
-    JsonModel converter;
+    JsonModelConverter converter;
     auto pool1 = std::make_shared<ItemPool>();
 
     // creating model and converting it to json
@@ -202,9 +201,9 @@ TEST_F(JsonModelTest, identifiers)
 
 //! Filling model from json: parent and child in a model to json and back.
 
-TEST_F(JsonModelTest, parentAndChildToFileAndBack)
+TEST_F(JsonModelConverterTest, parentAndChildToFileAndBack)
 {
-    JsonModel converter;
+    JsonModelConverter converter;
     SessionModel model("TestModel");
 
     // filling original model with content
