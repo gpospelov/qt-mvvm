@@ -52,7 +52,6 @@ std::vector<GraphItem*> GraphViewportItem::graphItems() const
 
 std::pair<double, double> GraphViewportItem::data_xaxis_range() const
 {
-    // FIXME think of using P_MIN and P_MAX of axis instead of binCenters
     return get_min_max(graphItems(), [](GraphItem* graph) { return graph->binCenters(); });
 }
 
