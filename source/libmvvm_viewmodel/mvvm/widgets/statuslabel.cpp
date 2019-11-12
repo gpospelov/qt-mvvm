@@ -8,23 +8,18 @@
 // ************************************************************************** //
 
 #include <mvvm/widgets/statuslabel.h>
+#include <mvvm/editors/styleutils.h>
 #include <QColor>
 #include <QFont>
 #include <QPainter>
 
-namespace
-{
-const int default_label_height = 24; // FIXME make central space to provide sizes
-const int default_text_size = 8;
-} // namespace
-
 using namespace ModelView;
 
 StatusLabel::StatusLabel(QWidget* parent)
-    : QFrame(parent), m_font("Monospace", default_text_size, QFont::Normal, false)
+    : QFrame(parent), m_font("Monospace", Style::DefaultInfoBarTextSize(), QFont::Normal, false)
 {
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-    setFixedHeight(default_label_height);
+    setFixedHeight(Style::DefaultInfoBarHeight());
 }
 
 void StatusLabel::setText(const QString& text)
