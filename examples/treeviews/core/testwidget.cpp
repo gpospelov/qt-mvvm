@@ -15,6 +15,7 @@
 #include <mvvm/viewmodel/topitemsviewmodel.h>
 #include <mvvm/viewmodel/defaultviewmodel.h>
 #include <mvvm/viewmodel/viewitem.h>
+#include <mvvm/widgets/allitemstreeview.h>
 #include <QBoxLayout>
 #include <QLabel>
 #include <QMenu>
@@ -32,7 +33,7 @@ const QString text = "Standard tree views and undo/redo basics.\n"
 }
 
 TestWidget::TestWidget(SessionModel* model, QWidget* parent)
-    : QWidget(parent), m_defaultTreeView(new ItemsTreeView), m_topItemView(new ItemsTreeView),
+    : QWidget(parent), m_defaultTreeView(new AllItemsTreeView(model)), m_topItemView(new ItemsTreeView),
       m_subsetTreeView(new ItemsTreeView), m_undoView(new QUndoView),
       m_propertyEditor(new PropertyEditor), m_sessionModel(model)
 {
@@ -99,8 +100,6 @@ SessionItem* TestWidget::item_from_view(QTreeView* view, const QPoint& point)
 
 void TestWidget::init_default_view()
 {
-    m_defaultTreeView->setViewModel(std::make_unique<DefaultViewModel>(m_sessionModel));
-
     // will notify m_topItemView and chose selected item in two other editors
     auto on_item_selected = [this](SessionItem* item) {
         m_subsetTreeView->setRootSessionItem(item);
