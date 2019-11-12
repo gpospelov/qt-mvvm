@@ -20,6 +20,7 @@ class SessionModel;
 class PropertyEditor;
 class ItemsTreeView;
 class AllItemsTreeView;
+class PropertyTreeView;
 } // namespace ModelView
 
 class QTreeView;
@@ -46,15 +47,14 @@ private:
     QBoxLayout* create_middle_layout();
     QBoxLayout* create_right_layout();
 
-    void init_default_view();
+    void connect_default_view();
     void init_topitems_view();
-    void init_subset_view();
 
     ModelView::AllItemsTreeView* m_defaultTreeView;
     ModelView::ItemsTreeView* m_topItemView;
-    ModelView::ItemsTreeView* m_subsetTreeView;
+    ModelView::AllItemsTreeView* m_subsetTreeView;
     QUndoView* m_undoView;
-    ModelView::PropertyEditor* m_propertyEditor;
+    ModelView::PropertyTreeView* m_propertyEditor;
     ModelView::SessionModel* m_sessionModel;
 };
 

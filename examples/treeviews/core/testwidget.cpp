@@ -16,6 +16,7 @@
 #include <mvvm/viewmodel/defaultviewmodel.h>
 #include <mvvm/viewmodel/viewitem.h>
 #include <mvvm/widgets/allitemstreeview.h>
+#include <mvvm/widgets/propertytreeview.h>
 #include <QBoxLayout>
 #include <QLabel>
 #include <QMenu>
@@ -34,8 +35,8 @@ const QString text = "Standard tree views and undo/redo basics.\n"
 
 TestWidget::TestWidget(SessionModel* model, QWidget* parent)
     : QWidget(parent), m_defaultTreeView(new AllItemsTreeView(model)), m_topItemView(new ItemsTreeView),
-      m_subsetTreeView(new ItemsTreeView), m_undoView(new QUndoView),
-      m_propertyEditor(new PropertyEditor), m_sessionModel(model)
+      m_subsetTreeView(new AllItemsTreeView(model)), m_undoView(new QUndoView),
+      m_propertyEditor(new PropertyTreeView), m_sessionModel(model)
 {
     auto mainLayout = new QVBoxLayout;
     mainLayout->setSpacing(10);
@@ -48,9 +49,8 @@ TestWidget::TestWidget(SessionModel* model, QWidget* parent)
     hlayout->addLayout(create_right_layout());
     mainLayout->addLayout(hlayout);
 
-    init_default_view();
+    connect_default_view();
     init_topitems_view();
-    init_subset_view();
 
     setLayout(mainLayout);
 
@@ -98,7 +98,7 @@ SessionItem* TestWidget::item_from_view(QTreeView* view, const QPoint& point)
     return viewItem->item();
 }
 
-void TestWidget::init_default_view()
+void TestWidget::connect_default_view()
 {
     // will notify m_topItemView and chose selected item in two other editors
     auto on_item_selected = [this](SessionItem* item) {
@@ -121,11 +121,6 @@ void TestWidget::init_topitems_view()
     // will notify m_defaultTreeView
     auto on_item_selected = [this](SessionItem* item) { m_defaultTreeView->setSelected(item); };
     connect(m_topItemView, &ItemsTreeView::itemSelected, on_item_selected);
-}
-
-void TestWidget::init_subset_view()
-{
-    m_subsetTreeView->setViewModel(std::make_unique<DefaultViewModel>(m_sessionModel));
 }
 
 QBoxLayout* TestWidget::create_top_layout()

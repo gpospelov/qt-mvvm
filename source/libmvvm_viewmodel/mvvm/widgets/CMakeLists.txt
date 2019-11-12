@@ -6,6 +6,8 @@ target_sources(mvvm_viewmodel PRIVATE
     itemstreeviewinterface.h
     propertyeditor.cpp
     propertyeditor.h
+    propertytreeview.cpp
+    propertytreeview.h
     scientificspinbox.cpp
     scientificspinbox.h
     statuslabel.cpp
