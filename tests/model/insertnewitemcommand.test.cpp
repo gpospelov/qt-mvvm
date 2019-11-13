@@ -9,6 +9,7 @@
 
 #include "google_test.h"
 #include <mvvm/commands/insertnewitemcommand.h>
+#include <mvvm/model/compounditem.h>
 #include <mvvm/model/itemfactoryinterface.h>
 #include <mvvm/model/itemutils.h>
 #include <mvvm/model/sessionitem.h>
@@ -46,11 +47,13 @@ TEST_F(InsertNewItemCommandTest, insertNewItemCommand)
     command->execute();
     EXPECT_EQ(model.rootItem()->childrenCount(), 1);
     EXPECT_EQ(command->result(), model.rootItem()->getItem("", 0));
+    EXPECT_EQ(command->isObsolete(), false);
 
     // undoing command
     command->undo();
     EXPECT_EQ(model.rootItem()->childrenCount(), 0);
     EXPECT_EQ(command->result(), nullptr);
+    EXPECT_EQ(command->isObsolete(), false);
 }
 
 //! Insert new item through InsertNewItemCommand command.
@@ -62,6 +65,7 @@ TEST_F(InsertNewItemCommandTest, insertNewItemWithTagCommand)
     // command to insert parent in the model
     auto command1 = create_command(model.rootItem(), "", 0);
     command1->execute(); // insertion
+    EXPECT_EQ(command1->isObsolete(), false);
 
     auto parent = command1->result();
     parent->registerTag(TagInfo::universalTag("tag1"), /*set_as_default*/ true);
@@ -70,6 +74,7 @@ TEST_F(InsertNewItemCommandTest, insertNewItemWithTagCommand)
     // command to insert child
     auto command2 = create_command(parent, "tag1", 0);
     command2->execute(); // insertion
+    EXPECT_EQ(command2->isObsolete(), false);
 
     EXPECT_EQ(parent->childrenCount(), 1);
     EXPECT_EQ(Utils::ChildAt(parent, 0), command2->result());
@@ -78,6 +83,7 @@ TEST_F(InsertNewItemCommandTest, insertNewItemWithTagCommand)
     command2->undo();
     EXPECT_EQ(parent->childrenCount(), 0);
     EXPECT_EQ(nullptr, command2->result());
+    EXPECT_EQ(command2->isObsolete(), false);
 }
 
 //! Attempt to execute command twice.
@@ -106,4 +112,33 @@ TEST_F(InsertNewItemCommandTest, attemptToUndoTwice)
     command->execute();
     command->undo();
     EXPECT_THROW(command->undo(), std::runtime_error);
+}
+
+//! Attempt to insert second property to the compount item.
+
+TEST_F(InsertNewItemCommandTest, attemptInsertSecondProperty)
+{
+    SessionModel model;
+    auto parent = model.insertItem<CompoundItem>();
+    parent->registerTag(TagInfo::propertyTag("radius", Constants::PropertyType));
+
+    // command to insert second property
+    auto factory_func = [parent]() {
+        return parent->model()->factory()->createItem(Constants::PropertyType);
+    };
+
+    // adding property to another tag is valid
+    InsertNewItemCommand command1(factory_func, parent, TagRow{"radius", -1});
+    EXPECT_NO_THROW(command1.execute());
+    EXPECT_FALSE(command1.isObsolete());
+    EXPECT_EQ(command1.result(), parent->getItem("radius"));
+
+    // adding second property to the same tag is not possible. Command should be in obsolete state
+    InsertNewItemCommand command2(factory_func, parent, TagRow{"radius", -1});
+    EXPECT_NO_THROW(command2.execute());
+    EXPECT_TRUE(command2.isObsolete());
+    EXPECT_EQ(command2.result(), nullptr);
+
+    // undoing failed command shouldn't be possible
+    EXPECT_THROW(command2.undo(), std::runtime_error);
 }
