@@ -8,6 +8,7 @@ target_sources(mvvm_viewmodel PRIVATE
     propertytreeview.h
     scientificspinbox.cpp
     scientificspinbox.h
+    standardtreeviews.h
     statuslabel.cpp
     statuslabel.h
     topitemstreeview.cpp

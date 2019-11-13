@@ -47,13 +47,12 @@ private:
     QBoxLayout* create_middle_layout();
     QBoxLayout* create_right_layout();
 
-    void connect_default_view();
-    void init_topitems_view();
+    void connect_views();
 
+    QUndoView* m_undoView;
     ModelView::AllItemsTreeView* m_defaultTreeView;
     ModelView::TopItemsTreeView* m_topItemView;
     ModelView::AllItemsTreeView* m_subsetTreeView;
-    QUndoView* m_undoView;
     ModelView::PropertyTreeView* m_propertyTreeView;
     ModelView::SessionModel* m_sessionModel;
 };

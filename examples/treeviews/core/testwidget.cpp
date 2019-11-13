@@ -8,20 +8,17 @@
 // ************************************************************************** //
 
 #include "testwidget.h"
-#include <mvvm/widgets/itemstreeview.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/viewmodel/topitemsviewmodel.h>
-#include <mvvm/viewmodel/defaultviewmodel.h>
-#include <mvvm/viewmodel/viewitem.h>
-#include <mvvm/widgets/allitemstreeview.h>
-#include <mvvm/widgets/topitemstreeview.h>
-#include <mvvm/widgets/propertytreeview.h>
 #include <QBoxLayout>
 #include <QLabel>
 #include <QMenu>
 #include <QTreeView>
 #include <QUndoView>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/model/sessionmodel.h>
+#include <mvvm/viewmodel/defaultviewmodel.h>
+#include <mvvm/viewmodel/topitemsviewmodel.h>
+#include <mvvm/viewmodel/viewitem.h>
+#include <mvvm/widgets/standardtreeviews.h>
 
 using namespace ModelView;
 
@@ -34,8 +31,8 @@ const QString text = "Standard tree views and undo/redo basics.\n"
 }
 
 TestWidget::TestWidget(SessionModel* model, QWidget* parent)
-    : QWidget(parent), m_defaultTreeView(new AllItemsTreeView(model)), m_topItemView(new TopItemsTreeView(model)),
-      m_subsetTreeView(new AllItemsTreeView(model)), m_undoView(new QUndoView),
+    : QWidget(parent), m_undoView(new QUndoView), m_defaultTreeView(new AllItemsTreeView(model)),
+      m_topItemView(new TopItemsTreeView(model)), m_subsetTreeView(new AllItemsTreeView(model)),
       m_propertyTreeView(new PropertyTreeView), m_sessionModel(model)
 {
     auto mainLayout = new QVBoxLayout;
@@ -48,11 +45,9 @@ TestWidget::TestWidget(SessionModel* model, QWidget* parent)
     hlayout->addLayout(create_middle_layout());
     hlayout->addLayout(create_right_layout());
     mainLayout->addLayout(hlayout);
-
-    connect_default_view();
-    init_topitems_view();
-
     setLayout(mainLayout);
+
+    connect_views();
 
     m_sessionModel->setUndoRedoEnabled(true);
     m_undoView->setStack(m_sessionModel->undoStack());
@@ -98,27 +93,25 @@ SessionItem* TestWidget::item_from_view(QTreeView* view, const QPoint& point)
     return viewItem->item();
 }
 
-void TestWidget::connect_default_view()
+//! Connect tree views to provide mutual item selection.
+
+void TestWidget::connect_views()
 {
-    // will notify m_topItemView and chose selected item in two other editors
+    // select items in other views when selection in m_defaultTreeView has changed
     auto on_item_selected = [this](SessionItem* item) {
         m_subsetTreeView->setRootSessionItem(item);
         m_propertyTreeView->setItem(item);
         m_topItemView->setSelected(item);
     };
-
-    connect(m_defaultTreeView, &ItemsTreeView::itemSelected, on_item_selected);
+    connect(m_defaultTreeView, &AllItemsTreeView::itemSelected, on_item_selected);
 
     m_defaultTreeView->treeView()->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(m_defaultTreeView->treeView(), &QTreeView::customContextMenuRequested, this,
             &TestWidget::onContextMenuRequest);
-}
 
-void TestWidget::init_topitems_view()
-{
     // will notify m_defaultTreeView
-    auto on_item_selected = [this](SessionItem* item) { m_defaultTreeView->setSelected(item); };
-    connect(m_topItemView, &ItemsTreeView::itemSelected, on_item_selected);
+    auto on_top_item_selected = [this](SessionItem* item) { m_defaultTreeView->setSelected(item); };
+    connect(m_topItemView, &TopItemsTreeView::itemSelected, on_top_item_selected);
 }
 
 QBoxLayout* TestWidget::create_top_layout()
