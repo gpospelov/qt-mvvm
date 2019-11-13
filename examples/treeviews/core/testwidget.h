@@ -17,7 +17,6 @@ namespace ModelView
 {
 class SessionItem;
 class SessionModel;
-class PropertyEditor;
 class ItemsTreeView;
 class AllItemsTreeView;
 class PropertyTreeView;
@@ -54,7 +53,7 @@ private:
     ModelView::ItemsTreeView* m_topItemView;
     ModelView::AllItemsTreeView* m_subsetTreeView;
     QUndoView* m_undoView;
-    ModelView::PropertyTreeView* m_propertyEditor;
+    ModelView::PropertyTreeView* m_propertyTreeView;
     ModelView::SessionModel* m_sessionModel;
 };
 
