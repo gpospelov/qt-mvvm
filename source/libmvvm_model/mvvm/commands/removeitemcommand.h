@@ -40,4 +40,4 @@ private:
 
 } // namespace ModelView
 
-#endif  // MVVM_COMMANDS_REMOVEITEMCOMMAND_H
+#endif // MVVM_COMMANDS_REMOVEITEMCOMMAND_H
