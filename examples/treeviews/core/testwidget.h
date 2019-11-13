@@ -20,6 +20,7 @@ class SessionModel;
 class ItemsTreeView;
 class AllItemsTreeView;
 class PropertyTreeView;
+class TopItemsTreeView;
 } // namespace ModelView
 
 class QTreeView;
@@ -50,7 +51,7 @@ private:
     void init_topitems_view();
 
     ModelView::AllItemsTreeView* m_defaultTreeView;
-    ModelView::ItemsTreeView* m_topItemView;
+    ModelView::TopItemsTreeView* m_topItemView;
     ModelView::AllItemsTreeView* m_subsetTreeView;
     QUndoView* m_undoView;
     ModelView::PropertyTreeView* m_propertyTreeView;

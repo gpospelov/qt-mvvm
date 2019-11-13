@@ -7,31 +7,33 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_VIEWMODEL_TOPITEMSVIEWMODEL_H
-#define MVVM_VIEWMODEL_TOPITEMSVIEWMODEL_H
+#ifndef MVVM_WIDGETS_TOPITEMSTREEVIEW_H
+#define MVVM_WIDGETS_TOPITEMSTREEVIEW_H
 
-#include <mvvm/viewmodel/abstractviewmodel.h>
+#include <mvvm/widgets/itemstreeview.h>
 
 namespace ModelView
 {
 
+class SessionModel;
+
 /*!
-@class TopItemsViewModel
-@brief View model to show top level items of SessionModel in Qt trees and tables.
+@class TopItemsTreeView
+@brief Widget holding standard QTreeView and intended for displaying all top level
+items of SessionModel.
 
 All property items (i.e. "thickness", "color" etc) will be filtered out, top level items
 (i.e. Layer, MultiLayer, ...) will be presented as simple parent/child tree.
 */
 
-//!
-//! Only top level items are shown, all property items are filtered out.
-
-class CORE_EXPORT TopItemsViewModel : public AbstractViewModel
+class CORE_EXPORT TopItemsTreeView : public ItemsTreeView
 {
+    Q_OBJECT
 public:
-    TopItemsViewModel(SessionModel* model, QObject* parent = nullptr);
+    TopItemsTreeView(SessionModel* model, QWidget* parent = nullptr);
+    ~TopItemsTreeView();
 };
 
 } // namespace ModelView
 
-#endif  // MVVM_VIEWMODEL_TOPITEMSVIEWMODEL_H
+#endif // MVVM_WIDGETS_TOPITEMSTREEVIEW_H
