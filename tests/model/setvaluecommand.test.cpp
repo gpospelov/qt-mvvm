@@ -39,12 +39,14 @@ TEST_F(SetValueCommandTest, setValueCommand)
     // executing command
     command->execute();
     EXPECT_TRUE(command->result()); // value was changed
+    EXPECT_EQ(command->isObsolete(), false);
     EXPECT_EQ(model.data(item, role), expected);
 
     // undoing command
     command->undo();
     EXPECT_TRUE(command->result()); // value was changed
     EXPECT_FALSE(model.data(item, role).isValid());
+    EXPECT_EQ(command->isObsolete(), false);
 }
 
 //! Set same item value through SetValueCommand command.
@@ -66,9 +68,11 @@ TEST_F(SetValueCommandTest, setSameValueCommand)
     command->execute();
     EXPECT_FALSE(command->result()); // value wasn't changed
     EXPECT_EQ(model.data(item, role), expected);
+    EXPECT_EQ(command->isObsolete(), true);
 
     // undoing command
     command->undo();
     EXPECT_FALSE(command->result()); // value wasn't changed
     EXPECT_EQ(model.data(item, role), expected);
+    EXPECT_EQ(command->isObsolete(), true);
 }

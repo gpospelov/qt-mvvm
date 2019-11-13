@@ -76,6 +76,7 @@ TEST_F(MoveItemCommandTest, rootContextSamePos)
     MoveItemCommand command(item1, model.rootItem(), {"", 1});
     command.execute();
     EXPECT_EQ(command.result(), true);
+    EXPECT_EQ(command.isObsolete(), false);
 
     // expecting new order of items
     expected = {item0, item1, item2, item3};
@@ -106,6 +107,7 @@ TEST_F(MoveItemCommandTest, rootContextPrev)
     MoveItemCommand command(item2, model.rootItem(), {"", 1});
     command.execute();
     EXPECT_EQ(command.result(), true);
+    EXPECT_EQ(command.isObsolete(), false);
 
     // expecting new order of items
     expected = {item0, item2, item1, item3};
