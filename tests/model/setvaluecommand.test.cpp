@@ -70,9 +70,6 @@ TEST_F(SetValueCommandTest, setSameValueCommand)
     EXPECT_EQ(model.data(item, role), expected);
     EXPECT_EQ(command->isObsolete(), true);
 
-    // undoing command
-    command->undo();
-    EXPECT_FALSE(command->result()); // value wasn't changed
-    EXPECT_EQ(model.data(item, role), expected);
-    EXPECT_EQ(command->isObsolete(), true);
+    // undoing command which is in isObsolete state is not possible
+    EXPECT_THROW(command->undo(), std::runtime_error);
 }
