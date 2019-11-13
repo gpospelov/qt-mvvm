@@ -112,6 +112,8 @@ int SessionItem::childrenCount() const
 
 bool SessionItem::insertItem(SessionItem* item, const TagRow& tagrow)
 {
+    // think of passing unique_ptr directly
+
     if (!item)
         throw std::runtime_error("SessionItem::insertItem() -> Invalid item.");
 
