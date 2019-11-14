@@ -34,7 +34,7 @@ TEST(ModelMapperTest, onDataChange)
     MockWidgetForModel widget(&model);
 
     EXPECT_CALL(widget, onRowInserted(_, _, _));
-    auto item = model.insertItem<SessionItem>(model.rootItem(), "", 0);
+    auto item = model.insertItem<SessionItem>(model.rootItem());
 
     // expecting signal to be called once
     const int role = ItemDataRole::DATA;
@@ -82,7 +82,7 @@ TEST(ModelMapperTest, onRowInserted)
     EXPECT_CALL(widget, onModelReset(_)).Times(0);
 
     // perform action
-    model.insertItem<SessionItem>(model.rootItem(), expected_tag, 0);
+    model.insertItem<SessionItem>(model.rootItem(), {expected_tag, 0});
 }
 
 //! Inserting item and checking corresponding signals.
@@ -95,7 +95,7 @@ TEST(ModelMapperTest, onRowRemoved)
     const int expected_index(0);
     const std::string expected_tag(model.rootItem()->defaultTag());
     EXPECT_CALL(widget, onRowInserted(model.rootItem(), expected_tag, expected_index)).Times(1);
-    model.insertItem<SessionItem>(model.rootItem(), expected_tag, expected_index);
+    model.insertItem<SessionItem>(model.rootItem(), {expected_tag, expected_index});
 
     EXPECT_CALL(widget, onDataChange(_, _)).Times(0);
     EXPECT_CALL(widget, onRowInserted(_, _, _)).Times(0);

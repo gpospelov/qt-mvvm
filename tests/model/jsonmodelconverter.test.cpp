@@ -101,7 +101,7 @@ TEST_F(JsonModelConverterTest, singleItemToJsonAndBack)
     JsonModelConverter converter;
     SessionModel model("TestModel");
 
-    auto item = model.insertItem<SessionItem>(nullptr, "", -1);
+    auto item = model.insertItem<SessionItem>();
 
     QJsonObject object;
     converter.model_to_json(model, object);

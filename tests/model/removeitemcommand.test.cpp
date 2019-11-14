@@ -28,7 +28,7 @@ RemoveItemCommandTest::~RemoveItemCommandTest() = default;
 TEST_F(RemoveItemCommandTest, removeAtCommand)
 {
     SessionModel model;
-    auto item = model.insertItem<SessionItem>(model.rootItem(), "", 0);
+    auto item = model.insertItem<SessionItem>(model.rootItem());
 
     auto item_identifier = item->identifier();
 
@@ -51,12 +51,12 @@ TEST_F(RemoveItemCommandTest, removeAtCommand)
 TEST_F(RemoveItemCommandTest, removeAtCommandChild)
 {
     SessionModel model;
-    auto parent = model.insertItem<SessionItem>(model.rootItem(), "", 0);
+    auto parent = model.insertItem<SessionItem>(model.rootItem());
     parent->registerTag(TagInfo::universalTag("tag1"), /*set_as_default*/ true);
 
-    auto child1 = model.insertItem<SessionItem>(parent, "tag1", -1);
+    auto child1 = model.insertItem<SessionItem>(parent);
     child1->setData(42.0);
-    model.insertItem<SessionItem>(parent, "tag1", -1);
+    model.insertItem<SessionItem>(parent);
 
     auto child1_identifier = child1->identifier();
 
@@ -83,10 +83,10 @@ TEST_F(RemoveItemCommandTest, removeAtCommandChild)
 TEST_F(RemoveItemCommandTest, removeAtCommandParentWithChild)
 {
     SessionModel model;
-    auto parent = model.insertItem<SessionItem>(model.rootItem(), "", 0);
+    auto parent = model.insertItem<SessionItem>(model.rootItem());
     parent->registerTag(TagInfo::universalTag("tag1"), /*set_as_default*/ true);
 
-    auto child1 = model.insertItem<SessionItem>(parent, "tag1", -1);
+    auto child1 = model.insertItem<SessionItem>(parent);
     child1->setData(42.0);
 
     auto parent_identifier = parent->identifier();
@@ -120,17 +120,17 @@ TEST_F(RemoveItemCommandTest, removeAtCommandParentWithChild)
 TEST_F(RemoveItemCommandTest, removeAtCommandMultitag)
 {
     SessionModel model;
-    auto parent = model.insertItem<SessionItem>(model.rootItem(), "", 0);
+    auto parent = model.insertItem<SessionItem>(model.rootItem());
     parent->registerTag(TagInfo::universalTag("tag1"));
     parent->registerTag(TagInfo::universalTag("tag2"));
 
-    auto child1 = model.insertItem<SessionItem>(parent, "tag1", -1);
+    auto child1 = model.insertItem<SessionItem>(parent, "tag1");
     child1->setData(41.0);
 
-    auto child2 = model.insertItem<SessionItem>(parent, "tag1", -1);
+    auto child2 = model.insertItem<SessionItem>(parent, "tag1");
     child2->setData(42.0);
 
-    auto child3 = model.insertItem<SessionItem>(parent, "tag2", -1);
+    auto child3 = model.insertItem<SessionItem>(parent, "tag2");
     child3->setData(43.0);
 
     auto parent_identifier = parent->identifier();
@@ -166,7 +166,7 @@ TEST_F(RemoveItemCommandTest, removeAtCommandMultitag)
 TEST_F(RemoveItemCommandTest, attemptToRemoveItem)
 {
     SessionModel model;
-    auto parent = model.insertItem<CompoundItem>(model.rootItem(), "", 0);
+    auto parent = model.insertItem<CompoundItem>(model.rootItem());
     parent->addProperty("thickness", 42.0);
 
     auto command = std::make_unique<RemoveItemCommand>(parent, TagRow{"thickness", 0});

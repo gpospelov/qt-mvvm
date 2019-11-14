@@ -35,7 +35,7 @@ TEST(ItemMapperTest, initialState)
 
     // item in model context does have a mapper
     SessionModel model;
-    auto item2 = model.insertItem<SessionItem>(model.rootItem(), "", 0);
+    auto item2 = model.insertItem<SessionItem>(model.rootItem());
     EXPECT_NO_THROW(item2->mapper());
 }
 
@@ -44,7 +44,7 @@ TEST(ItemMapperTest, initialState)
 TEST(ItemMapperTest, onItemDestroy)
 {
     SessionModel model;
-    auto item = model.insertItem<SessionItem>(model.rootItem(), "", 0);
+    auto item = model.insertItem<SessionItem>(model.rootItem());
 
     MockWidgetForItem widget(item);
 
@@ -65,7 +65,7 @@ TEST(ItemMapperTest, onItemDestroy)
 TEST(ItemMapperTest, onDataChange)
 {
     SessionModel model;
-    auto item = model.insertItem<SessionItem>(model.rootItem(), "", 0);
+    auto item = model.insertItem<SessionItem>(model.rootItem());
 
     MockWidgetForItem widget(item);
 
@@ -86,7 +86,7 @@ TEST(ItemMapperTest, onDataChange)
 TEST(ItemMapperTest, onDataChangeDuplicate)
 {
     SessionModel model;
-    auto item = model.insertItem<SessionItem>(model.rootItem(), "", 0);
+    auto item = model.insertItem<SessionItem>(model.rootItem());
 
     MockWidgetForItem widget(item);
 
@@ -107,7 +107,7 @@ TEST(ItemMapperTest, onDataChangeDuplicate)
 TEST(ItemMapperTest, setActivity)
 {
     SessionModel model;
-    auto item = model.insertItem<SessionItem>(model.rootItem(), "", 0);
+    auto item = model.insertItem<SessionItem>(model.rootItem());
 
     MockWidgetForItem widget(item);
 
@@ -129,7 +129,7 @@ TEST(ItemMapperTest, setActivity)
 TEST(ItemMapperTest, unsubscribe)
 {
     SessionModel model;
-    auto item = model.insertItem<SessionItem>(model.rootItem(), "", 0);
+    auto item = model.insertItem<SessionItem>(model.rootItem());
 
     MockWidgetForItem widget1(item);
     MockWidgetForItem widget2(item);
@@ -214,7 +214,7 @@ TEST(ItemMapperTest, onRowInsert)
     EXPECT_CALL(widget, onRowAboutToBeRemoved(_, _, _)).Times(0);
 
     // perform action
-    model.insertItem<CompoundItem>(compound1, expected_tag, expected_row);
+    model.insertItem<CompoundItem>(compound1, {expected_tag, expected_row});
 }
 
 //! Inserting item to item.
@@ -227,7 +227,7 @@ TEST(ItemMapperTest, onRowAboutToRemove)
     SessionModel model;
     auto compound1 = model.insertItem<CompoundItem>();
     compound1->registerTag(TagInfo::universalTag("tag1"), /*set_as_default*/ true);
-    model.insertItem<CompoundItem>(compound1, expected_tag, expected_row);
+    model.insertItem<CompoundItem>(compound1, {expected_tag, expected_row});
 
     MockWidgetForItem widget(compound1);
 

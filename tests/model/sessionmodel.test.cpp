@@ -123,13 +123,13 @@ TEST_F(SessionModelTest, insertNewItemWithTag)
     SessionModel model;
     auto parent = model.insertItem<SessionItem>();
     parent->registerTag(TagInfo::universalTag(tag1));
-    auto child1 = model.insertItem<PropertyItem>(parent, tag1, -1);
+    auto child1 = model.insertItem<PropertyItem>(parent, {tag1, -1});
 
     EXPECT_EQ(parent->tagFromItem(child1), tag1);
     EXPECT_EQ(Utils::IndexOfChild(parent, child1), 0);
 
     // adding second child
-    auto child2 = model.insertItem<PropertyItem>(parent, tag1, 0);
+    auto child2 = model.insertItem<PropertyItem>(parent, {tag1, 0});
 
     EXPECT_EQ(parent->tagFromItem(child2), tag1);
     EXPECT_EQ(Utils::IndexOfChild(parent, child1), 1);
@@ -165,7 +165,7 @@ TEST_F(SessionModelTest, removeItem)
     parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
 
     auto child1 = model.insertItem<SessionItem>(parent);
-    auto child2 = model.insertItem<SessionItem>(parent, "", 0); // before child1
+    auto child2 = model.insertItem<SessionItem>(parent, {"", 0}); // before child1
     Q_UNUSED(child2)
 
     // removing child2
@@ -330,7 +330,7 @@ TEST_F(SessionModelTest, forbiddenCopy)
     // single parent in a model
     auto parent0 = model.insertItem<SessionItem>();
     parent0->registerTag(TagInfo::propertyTag("property", "Property"));
-    auto property = model.insertItem<PropertyItem>(parent0, "property", -1);
+    auto property = model.insertItem<PropertyItem>(parent0, "property");
 
     // copying property to same property tag is not allowed
     auto copy = model.copyItem(property, parent0, "property", -1);

@@ -137,9 +137,9 @@ TEST_F(ItemUtilsTest, TopLevelAndPropertyItems)
     parent->registerTag(TagInfo::universalTag("default_tag"), /*set_as_default*/ true);
     parent->registerTag(TagInfo::propertyTag("property_tag", Constants::PropertyType));
 
-    auto child1 = model.insertItem<SessionItem>(parent, "default_tag", -1);
-    auto child2 = model.insertItem<PropertyItem>(parent, "property_tag", -1);
-    auto child3 = model.insertItem<SessionItem>(parent, "default_tag", -1);
+    auto child1 = model.insertItem<SessionItem>(parent, "default_tag");
+    auto child2 = model.insertItem<PropertyItem>(parent, "property_tag");
+    auto child3 = model.insertItem<SessionItem>(parent, "default_tag");
 
     EXPECT_EQ(Utils::TopLevelItems(*parent), std::vector<SessionItem*>({child1, child3}));
     EXPECT_EQ(Utils::SinglePropertyItems(*parent), std::vector<SessionItem*>({child2}));

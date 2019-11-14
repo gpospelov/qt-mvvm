@@ -50,7 +50,7 @@ public:
                                const TagRow& tagrow = {});
 
     template <typename T>
-    T* insertItem(SessionItem* parent = nullptr, const std::string& tag = {}, int row = -1);
+    T* insertItem(SessionItem* parent = nullptr, const TagRow& tagrow = {});
 
     SessionItem* copyItem(const SessionItem* item, SessionItem* parent, const std::string& tag = {},
                           int row = -1);
@@ -102,9 +102,9 @@ private:
 };
 
 template <typename T>
-T* SessionModel::insertItem(SessionItem* parent, const std::string& tag, int row)
+T* SessionModel::insertItem(SessionItem* parent, const TagRow& tagrow)
 {
-    return static_cast<T*>(intern_insert([]() { return std::make_unique<T>(); }, parent, {tag, row}));
+    return static_cast<T*>(intern_insert([]() { return std::make_unique<T>(); }, parent, tagrow));
 }
 
 } // namespace ModelView
