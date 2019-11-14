@@ -21,6 +21,7 @@
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/standarditems/standarditemcatalogue.h>
 #include <mvvm/model/taginfo.h>
+#include <mvvm/model/tagrow.h>
 
 using namespace ModelView;
 
@@ -61,7 +62,7 @@ SessionItem* SessionModel::insertNewItem(const model_type& modelType, SessionIte
 {
     // intentionally passing by value inside lambda
     auto create_func = [this, modelType]() { return factory()->createItem(modelType); };
-    return intern_insert(create_func, parent, tag, row);
+    return intern_insert(create_func, parent, {tag, row});
 }
 
 //! Copy item and insert it in parent's tag and row.
@@ -204,7 +205,7 @@ void SessionModel::createRootItem()
 }
 
 SessionItem* SessionModel::intern_insert(item_factory_func_t func, SessionItem* parent,
-                                       const std::string& tag, int row)
+                                       const TagRow& tagrow)
 {
-    return m_commands->insertNewItem(func, parent, {tag, row});
+    return m_commands->insertNewItem(func, parent, tagrow);
 }

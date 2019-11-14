@@ -32,6 +32,7 @@ class ItemPool;
 class ItemBackupStrategy;
 class ItemFactoryInterface;
 class ItemCopyStrategy;
+class TagRow;
 
 class CORE_EXPORT SessionModel
 {
@@ -91,8 +92,8 @@ protected:
 
 private:
     void createRootItem();
-    SessionItem* intern_insert(item_factory_func_t func, SessionItem* parent = nullptr,
-                            const std::string& tag = {}, int row = -1);
+    SessionItem* intern_insert(item_factory_func_t func, SessionItem* parent,
+                               const TagRow& tagrow);
 
     std::unique_ptr<CommandService> m_commands;
     std::string m_model_type;
@@ -103,7 +104,7 @@ private:
 template <typename T>
 T* SessionModel::insertItem(SessionItem* parent, const std::string& tag, int row)
 {
-    return static_cast<T*>(intern_insert([]() { return std::make_unique<T>(); }, parent, tag, row));
+    return static_cast<T*>(intern_insert([]() { return std::make_unique<T>(); }, parent, {tag, row}));
 }
 
 } // namespace ModelView
