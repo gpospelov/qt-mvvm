@@ -8,12 +8,12 @@
 // ************************************************************************** //
 
 #include <mvvm/commands/copyitemcommand.h>
-#include <mvvm/serialization/itembackupstrategy.h>
-#include <mvvm/serialization/itemcopystrategy.h>
 #include <mvvm/model/path.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/model/tagrow.h>
+#include <mvvm/serialization/itembackupstrategy.h>
+#include <mvvm/serialization/itemcopystrategy.h>
 #include <sstream>
 
 using namespace ModelView;
@@ -57,8 +57,12 @@ void CopyItemCommand::execute_command()
 {
     auto parent = itemFromPath(p_impl->item_path);
     auto item = p_impl->backup_strategy->restoreItem();
-    bool success = parent->insertItem(item.get(), p_impl->tagrow);
-    p_impl->result = success ? item.release() : nullptr;
+    if(parent->insertItem(item.get(), p_impl->tagrow)) {
+        p_impl->result = item.release();
+    } else {
+        p_impl->result = nullptr;
+        setObsolete(true);
+    }
 }
 
 CopyItemCommand::result_t CopyItemCommand::result() const

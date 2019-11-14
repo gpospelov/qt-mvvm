@@ -59,7 +59,8 @@ std::string SessionModel::modelType() const
 SessionItem* SessionModel::insertNewItem(const model_type& modelType, SessionItem* parent,
                                          const std::string& tag, int row)
 {
-    auto create_func = [this, &modelType]() { return factory()->createItem(modelType); };
+    // intentionally passing by value inside lambda
+    auto create_func = [this, modelType]() { return factory()->createItem(modelType); };
     return intern_insert(create_func, parent, tag, row);
 }
 

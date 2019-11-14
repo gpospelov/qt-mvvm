@@ -40,4 +40,4 @@ private:
 
 } // namespace ModelView
 
-#endif  // MVVM_COMMANDS_COPYITEMCOMMAND_H
+#endif // MVVM_COMMANDS_COPYITEMCOMMAND_H

@@ -11,7 +11,7 @@ configuration:
 
 # http://www.appveyor.com/docs/installed-software
 environment:
-  QTDIR: "C:\\Qt\\5.13.0\\msvc2017_64"
+  QTDIR: "C:\\Qt\\5.13\\msvc2017_64"
   PATH: "%QTDIR%\\bin;%PATH%"
 build:
   parallel: true

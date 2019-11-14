@@ -12,6 +12,7 @@
 #include <mvvm/model/itemutils.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
+#include <mvvm/model/compounditem.h>
 #include <mvvm/model/taginfo.h>
 
 using namespace ModelView;
@@ -37,9 +38,11 @@ TEST_F(RemoveItemCommandTest, removeAtCommand)
 
     EXPECT_EQ(command->result(), true);
     EXPECT_EQ(model.rootItem()->childrenCount(), 0);
+    EXPECT_FALSE(command->isObsolete());
 
     // undo command
     command->undo();
+    EXPECT_FALSE(command->isObsolete());
     EXPECT_EQ(model.rootItem()->childrenCount(), 1);
     auto restored = Utils::ChildAt(model.rootItem(), 0);
     EXPECT_EQ(restored->identifier(), item_identifier);
@@ -62,11 +65,13 @@ TEST_F(RemoveItemCommandTest, removeAtCommandChild)
     command->execute(); // removal
 
     // check that one child was removed
+    EXPECT_FALSE(command->isObsolete());
     EXPECT_EQ(command->result(), true);
     EXPECT_EQ(parent->childrenCount(), 1);
 
     // undo command
     command->undo();
+    EXPECT_FALSE(command->isObsolete());
     EXPECT_EQ(parent->childrenCount(), 2);
     auto restored = Utils::ChildAt(parent, 0);
     EXPECT_EQ(restored->identifier(), child1_identifier);
@@ -90,6 +95,7 @@ TEST_F(RemoveItemCommandTest, removeAtCommandParentWithChild)
     // command to remove parent
     auto command = std::make_unique<RemoveItemCommand>(model.rootItem(), TagRow{"", 0});
     command->execute(); // removal
+    EXPECT_FALSE(command->isObsolete());
 
     // check that one child was removed
     EXPECT_EQ(command->result(), true);
@@ -97,6 +103,7 @@ TEST_F(RemoveItemCommandTest, removeAtCommandParentWithChild)
 
     // undo command
     command->undo();
+    EXPECT_FALSE(command->isObsolete());
     EXPECT_EQ(model.rootItem()->childrenCount(), 1);
     auto restored_parent = Utils::ChildAt(model.rootItem(), 0);
     auto restored_child = Utils::ChildAt(restored_parent, 0);
@@ -136,11 +143,13 @@ TEST_F(RemoveItemCommandTest, removeAtCommandMultitag)
     command->execute(); // removal
 
     // check that one child was removed
+    EXPECT_FALSE(command->isObsolete());
     EXPECT_EQ(command->result(), true);
     EXPECT_EQ(parent->childrenCount(), 2);
 
     // undo command
     command->undo();
+    EXPECT_FALSE(command->isObsolete());
     EXPECT_EQ(parent->childrenCount(), 3);
     auto restored_parent = Utils::ChildAt(model.rootItem(), 0);
     auto restored_child2 = Utils::ChildAt(restored_parent, 1);
@@ -150,4 +159,19 @@ TEST_F(RemoveItemCommandTest, removeAtCommandMultitag)
 
     // checking the data of restored item
     EXPECT_EQ(restored_child2->data().value<double>(), 42.0);
+}
+
+//! Attempt to remove property item.
+
+TEST_F(RemoveItemCommandTest, attemptToRemoveItem)
+{
+    SessionModel model;
+    auto parent = model.insertItem<CompoundItem>(model.rootItem(), "", 0);
+    parent->addProperty("thickness", 42.0);
+
+    auto command = std::make_unique<RemoveItemCommand>(parent, TagRow{"thickness", 0});
+    command->execute();
+
+    EXPECT_TRUE(command->isObsolete());
+    EXPECT_EQ(command->result(), false);
 }

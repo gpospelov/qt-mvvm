@@ -10,9 +10,8 @@
 #ifndef MVVM_COMMANDS_ABSTRACTITEMCOMMAND_H
 #define MVVM_COMMANDS_ABSTRACTITEMCOMMAND_H
 
-#include <mvvm/core/export.h>
-#include <mvvm/model/path.h>
 #include <memory>
+#include <mvvm/core/export.h>
 #include <string>
 
 namespace ModelView
@@ -20,6 +19,7 @@ namespace ModelView
 
 class SessionItem;
 class SessionModel;
+class Path;
 
 //! Abstract command interface to manipulate SessionItem in model context.
 
@@ -54,4 +54,4 @@ private:
 
 } // namespace ModelView
 
-#endif  // MVVM_COMMANDS_ABSTRACTITEMCOMMAND_H
+#endif // MVVM_COMMANDS_ABSTRACTITEMCOMMAND_H

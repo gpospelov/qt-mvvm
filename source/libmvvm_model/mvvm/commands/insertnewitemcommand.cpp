@@ -32,8 +32,7 @@ struct InsertNewItemCommand::InsertNewItemCommandImpl {
 
 InsertNewItemCommand::InsertNewItemCommand(item_factory_func_t func, SessionItem* parent,
                                            TagRow tagrow)
-    : AbstractItemCommand(parent),
-      p_impl(std::make_unique<InsertNewItemCommandImpl>(func, tagrow))
+    : AbstractItemCommand(parent), p_impl(std::make_unique<InsertNewItemCommandImpl>(func, tagrow))
 {
     p_impl->item_path = pathFromItem(parent);
 }
@@ -52,8 +51,12 @@ void InsertNewItemCommand::execute_command()
     auto parent = itemFromPath(p_impl->item_path);
     auto child = p_impl->factory_func().release();
     setDescription(generate_description(child->modelType(), p_impl->tagrow));
-    parent->insertItem(child, p_impl->tagrow);
-    p_impl->result = child;
+    if (parent->insertItem(child, p_impl->tagrow)) {
+        p_impl->result = child;
+    } else {
+        delete child;
+        setObsolete(true);
+    }
 }
 
 InsertNewItemCommand::result_t InsertNewItemCommand::result() const
