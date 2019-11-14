@@ -23,6 +23,11 @@ struct CORE_EXPORT TagRow
     std::string tag = {};
     int row = -1;
 
+    TagRow() {}
+
+    TagRow(const std::string& name, int row = -1) : tag(name), row(row){}
+    TagRow(const char* name, int row = -1) : tag(name), row(row){}
+
     static TagRow append(const std::string& tag_name = {});
 
     static TagRow prepend(const std::string& tag_name = {});
