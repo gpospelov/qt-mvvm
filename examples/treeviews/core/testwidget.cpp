@@ -67,8 +67,8 @@ void TestWidget::onContextMenuRequest(const QPoint& point)
     // inserting item of same type after given item
     auto addItemAction = menu.addAction("Add item");
     auto add_item = [&]() {
-        m_sessionModel->insertNewItem(item->modelType(), item->parent(), tagrow.tag,
-                                      tagrow.row + 1);
+        TagRow next_pos{tagrow.tag, tagrow.row + 1};
+        m_sessionModel->insertNewItem(item->modelType(), item->parent(), next_pos);
     };
     connect(addItemAction, &QAction::triggered, add_item);
 

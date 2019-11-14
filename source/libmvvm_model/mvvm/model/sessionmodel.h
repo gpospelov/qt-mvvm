@@ -14,6 +14,7 @@
 #include <mvvm/core/export.h>
 #include <mvvm/core/types.h>
 #include <mvvm/model/path.h>
+#include <mvvm/model/tagrow.h>
 #include <QVariant>
 #include <memory>
 #include <string>
@@ -32,7 +33,6 @@ class ItemPool;
 class ItemBackupStrategy;
 class ItemFactoryInterface;
 class ItemCopyStrategy;
-class TagRow;
 
 class CORE_EXPORT SessionModel
 {
@@ -47,7 +47,7 @@ public:
     std::string modelType() const;
 
     SessionItem* insertNewItem(const model_type& modelType, SessionItem* parent = nullptr,
-                               const std::string& tag = {}, int row = -1);
+                               const TagRow& tagrow = {});
 
     template <typename T>
     T* insertItem(SessionItem* parent = nullptr, const std::string& tag = {}, int row = -1);
