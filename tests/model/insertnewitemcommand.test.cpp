@@ -54,6 +54,12 @@ TEST_F(InsertNewItemCommandTest, insertNewItemCommand)
     EXPECT_EQ(model.rootItem()->childrenCount(), 0);
     EXPECT_EQ(command->result(), nullptr);
     EXPECT_EQ(command->isObsolete(), false);
+
+    // executing again
+    command->execute();
+    EXPECT_EQ(model.rootItem()->childrenCount(), 1);
+    EXPECT_EQ(command->result(), model.rootItem()->getItem("", 0));
+    EXPECT_EQ(command->isObsolete(), false);
 }
 
 //! Insert new item through InsertNewItemCommand command.
