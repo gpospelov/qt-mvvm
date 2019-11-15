@@ -95,8 +95,9 @@ SceneModelController::SceneModelController(DesignerScene& scene, SampleModel* mo
         onModelChange();
     };
     m_model->mapper()->setOnRowInserted(on_row_insered, this);
-    m_model->mapper()->setOnRowRemoved([this](SessionItem*, std::string, int) { onModelChange(); },
-                                       this);
+
+    auto on_row_removed = [this](SessionItem*, TagRow) { onModelChange(); };
+    m_model->mapper()->setOnRowRemoved(on_row_removed, this);
 
     m_temp_model.clear();
 }

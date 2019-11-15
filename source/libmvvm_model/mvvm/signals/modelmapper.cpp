@@ -34,7 +34,7 @@ void ModelMapper::setOnRowInserted(Callbacks::item_tagrow_t f, Callbacks::slot_t
 //! Callback will be called with (SessionItem* parent, tag, row), where tag,row corresponds
 //! to removed child.
 
-void ModelMapper::setOnRowRemoved(Callbacks::item_str_int_t f, Callbacks::slot_t owner)
+void ModelMapper::setOnRowRemoved(Callbacks::item_tagrow_t f, Callbacks::slot_t owner)
 {
     m_on_row_removed.connect(std::move(f), owner);
 }
@@ -98,7 +98,7 @@ void ModelMapper::callOnRowInserted(SessionItem* parent, TagRow tagrow)
 void ModelMapper::callOnRowRemoved(SessionItem* parent, TagRow tagrow)
 {
     if (m_active)
-        m_on_row_removed(parent, tagrow.tag, tagrow.row);
+        m_on_row_removed(parent, tagrow);
 }
 
 void ModelMapper::callOnRowAboutToBeRemoved(SessionItem* parent, TagRow tagrow)
