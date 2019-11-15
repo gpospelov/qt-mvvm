@@ -448,7 +448,7 @@ TEST_F(TestUndoRedo, moveLayerFromMultiLayer)
     identifier_type id_multilayer1 = multilayer1->identifier();
 
     // moving layer from multilayer
-    model.moveItem(layer0, multilayer1, "", 0);
+    model.moveItem(layer0, multilayer1, {"", 0});
 
     // checking results
     std::vector<SessionItem*> expected = {layer0};
@@ -485,7 +485,7 @@ TEST_F(TestUndoRedo, moveLayerFromMLDeleteSecond)
     identifier_type id_multilayer1 = multilayer1->identifier();
 
     // moving layer from multilayer
-    model.moveItem(layer0, multilayer1, "", 0);
+    model.moveItem(layer0, multilayer1, {"", 0});
 
     // checking results
     std::vector<SessionItem*> expected = {layer0};
@@ -554,7 +554,7 @@ TEST_F(TestUndoRedo, moveLayerFromMLDeleteAll)
     EXPECT_EQ(stack->index(), 8);
 
     // moving  layer1 to second multilayer
-    model.moveItem(layer1, multilayer1, ToyItems::MultiLayerItem::T_LAYERS, 0);
+    model.moveItem(layer1, multilayer1, {ToyItems::MultiLayerItem::T_LAYERS, 0});
 
     // removing multilayers
     model.removeItem(model.rootItem(), {"", 1});

@@ -85,7 +85,7 @@ bool LayerTableViewModel::dropMimeData(const QMimeData* data, Qt::DropAction act
     SessionItem* parent_item = parent.isValid() ? sessionItemFromIndex(parent) : rootSessionItem();
     const std::string tag = parent.isValid() ? MultiLayerItem::T_LAYERS : std::string{};
     int insert_row = findInsertionRow(item, parent_item, row);
-    sessionModel()->moveItem(item, parent_item, tag, insert_row);
+    sessionModel()->moveItem(item, parent_item, {tag, insert_row});
 
     return true;
 }
@@ -98,7 +98,7 @@ bool LayerTableViewModel::processDirectDrop(SessionItem* to_drop, int row, int,
 
     auto session_model = sessionModel();
     if (!parent.isValid()) { // placing the item in the last top-level row
-        session_model->moveItem(to_drop, rootSessionItem(), {}, -1);
+        session_model->moveItem(to_drop, rootSessionItem(), {});
         return true;
     }
 
@@ -110,12 +110,12 @@ bool LayerTableViewModel::processDirectDrop(SessionItem* to_drop, int row, int,
 
     const std::string acceptor_type = acceptor->modelType();
     if (acceptor_type == ::Constants::MultiLayerType) { // inserting as the very first item
-        sessionModel()->moveItem(to_drop, acceptor, MultiLayerItem::T_LAYERS, 0);
+        sessionModel()->moveItem(to_drop, acceptor, {MultiLayerItem::T_LAYERS, 0});
     } else if (acceptor_type == ::Constants::LayerType) { // inserting after the acceptor item
         SessionItem* parent_item = acceptor->parent();
         auto tagrow = parent_item->tagRowOfItem(acceptor);
         int insert_row = findInsertionRow(to_drop, parent_item, tagrow.row + 1);
-        sessionModel()->moveItem(to_drop, parent_item, tagrow.tag, insert_row);
+        sessionModel()->moveItem(to_drop, parent_item, {tagrow.tag, insert_row});
     }
 
     return true;

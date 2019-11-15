@@ -135,10 +135,9 @@ void SessionModel::removeItem(SessionItem* parent, const TagRow& tagrow)
 //! Move item from it's current parent to a new parent under given tag and row.
 //! Old and new parents should belong to this model.
 
-void SessionModel::moveItem(SessionItem* item, SessionItem* new_parent, const std::string& tag,
-                            int row)
+void SessionModel::moveItem(SessionItem* item, SessionItem* new_parent, const TagRow& tagrow)
 {
-    m_commands->moveItem(item, new_parent, {tag, row});
+    m_commands->moveItem(item, new_parent, tagrow);
 }
 
 void SessionModel::register_item(SessionItem* item)

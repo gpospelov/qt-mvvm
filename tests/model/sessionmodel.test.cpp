@@ -226,7 +226,7 @@ TEST_F(SessionModelTest, moveItem)
     auto child1 = model.insertItem<PropertyItem>(parent1);
 
     // moving child0 from parent0 to parent 1
-    model.moveItem(child0, parent1, "", 0);
+    model.moveItem(child0, parent1, {"", 0});
 
     std::vector<SessionItem*> expected = {child0, child1};
     EXPECT_EQ(parent1->children(), expected);

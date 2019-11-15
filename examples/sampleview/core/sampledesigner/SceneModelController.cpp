@@ -144,7 +144,7 @@ void SceneModelController::remove(const QList<QGraphicsItem *>& views)
 
     // Remove directly selected connections
     for (auto item : viewToItem(childViews(connections(views))))
-        m_model->moveItem(item, m_model->rootItem(), {}, -1);
+        m_model->moveItem(item, m_model->rootItem(), {});
 
     // Remove the items of the selected views
     selectivelyRemove(viewToItem(DesignerSceneUtils::appendChildren(views)), m_model);
@@ -161,7 +161,7 @@ void SceneModelController::onConnect(NodeEditorConnection *connection)
     ConnectableView* parentView = connection->getParentView();
     ConnectableView* childView = connection->getChildView();
 
-    m_model->moveItem(childView->getItem(), parentView->getItem(), {}, -1);
+    m_model->moveItem(childView->getItem(), parentView->getItem(), {});
     m_scene.onModelChanged();
 }
 
@@ -198,7 +198,7 @@ void SceneModelController::selectivelyRemove(const QSet<ModelView::SessionItem*>
 {
     for (auto item: items)
         for (SessionItem* child : DesignerSceneUtils::visibleItems(item->children()))
-            m_model->moveItem(child, m_model->rootItem(), {}, -1);
+            m_model->moveItem(child, m_model->rootItem(), {});
 
     for (auto item : DesignerSceneUtils::headItems(items))
         Utils::DeleteItemFromModel(item);

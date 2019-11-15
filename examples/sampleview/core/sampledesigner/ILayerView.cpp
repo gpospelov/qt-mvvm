@@ -118,7 +118,7 @@ void ILayerView::onRelease(const QPointF& pos)
 
     dynamic_cast<DesignerScene*>(scene())->sendModelCommand(
         [item = getItem()](ModelView::SessionModel& model) {
-            model.moveItem(item, model.rootItem(), {}, -1);
+            model.moveItem(item, model.rootItem(), {});
         });
 }
 
@@ -128,7 +128,7 @@ void ILayerView::onChangeOwner(const ILayerView* requested_parent, int requested
     dynamic_cast<DesignerScene*>(scene())->sendModelCommand([item = getItem(),
                                         new_parent = requested_parent->getItem(),
                                         insertion_row](ModelView::SessionModel& model) {
-        model.moveItem(item, new_parent, MultiLayerItem::T_LAYERS, insertion_row);
+        model.moveItem(item, new_parent, {MultiLayerItem::T_LAYERS, insertion_row});
     });
 }
 
