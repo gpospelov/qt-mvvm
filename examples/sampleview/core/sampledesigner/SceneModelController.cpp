@@ -90,14 +90,14 @@ SceneModelController::SceneModelController(DesignerScene& scene, SampleModel* mo
     m_model->mapper()->setOnModelReset([this](SessionModel*) { onModelChange(); }, this);
     m_model->mapper()->setOnModelDestroyed([this](SessionModel*) { onModelDestroyed(); }, this);
 
-    auto on_row_insered = [this](SessionItem*, TagRow)
+    auto on_item_insered = [this](SessionItem*, TagRow)
     {
         onModelChange();
     };
-    m_model->mapper()->setOnItemInserted(on_row_insered, this);
+    m_model->mapper()->setOnItemInserted(on_item_insered, this);
 
-    auto on_row_removed = [this](SessionItem*, TagRow) { onModelChange(); };
-    m_model->mapper()->setOnItemRemoved(on_row_removed, this);
+    auto on_item_removed = [this](SessionItem*, TagRow) { onModelChange(); };
+    m_model->mapper()->setOnItemRemoved(on_item_removed, this);
 
     m_temp_model.clear();
 }

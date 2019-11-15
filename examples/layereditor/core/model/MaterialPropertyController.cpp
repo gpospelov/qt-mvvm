@@ -38,8 +38,8 @@ void MaterialPropertyController::connect_material_model()
     auto on_data_change = [this](SessionItem*, int) { update_all(); };
     m_material_model->mapper()->setOnDataChange(on_data_change, this);
 
-    auto on_row_removed = [this](SessionItem*, TagRow) { update_all(); };
-    m_material_model->mapper()->setOnItemRemoved(on_row_removed, this);
+    auto on_item_removed = [this](SessionItem*, TagRow) { update_all(); };
+    m_material_model->mapper()->setOnItemRemoved(on_item_removed, this);
 
     auto on_model_destroyed = [this](SessionModel*) { m_material_model = nullptr; };
     m_material_model->mapper()->setOnModelDestroyed(on_model_destroyed, this);
