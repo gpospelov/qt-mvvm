@@ -89,22 +89,22 @@ void ModelMapper::callOnDataChange(SessionItem* item, int role)
 
 //! Notifies all callbacks subscribed to "item data is changed" event.
 
-void ModelMapper::callOnRowInserted(SessionItem* parent, std::string tag, int row)
+void ModelMapper::callOnRowInserted(SessionItem* parent, TagRow tagrow)
 {
     if (m_active)
-        m_on_row_inserted(parent, tag, row);
+        m_on_row_inserted(parent, tagrow.tag, tagrow.row);
 }
 
-void ModelMapper::callOnRowRemoved(SessionItem* parent, std::string tag, int row)
+void ModelMapper::callOnRowRemoved(SessionItem* parent, TagRow tagrow)
 {
     if (m_active)
-        m_on_row_removed(parent, tag, row);
+        m_on_row_removed(parent, tagrow.tag, tagrow.row);
 }
 
-void ModelMapper::callOnRowAboutToBeRemoved(SessionItem* parent, std::string tag, int row)
+void ModelMapper::callOnRowAboutToBeRemoved(SessionItem* parent, TagRow tagrow)
 {
     if (m_active)
-        m_on_row_about_removed(parent, tag, row);
+        m_on_row_about_removed(parent, tagrow.tag, tagrow.row);
 }
 
 void ModelMapper::callOnModelDestroyed()

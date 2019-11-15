@@ -11,6 +11,7 @@
 #define MVVM_SIGNALS_MODELMAPPER_H
 
 #include <mvvm/signals/callbackcontainer.h>
+#include <mvvm/model/tagrow.h>
 
 namespace ModelView
 {
@@ -44,9 +45,9 @@ private:
     friend class SessionItem;
 
     void callOnDataChange(SessionItem* item, int role);
-    void callOnRowInserted(SessionItem* parent, std::string tag, int row);
-    void callOnRowRemoved(SessionItem* parent, std::string tag, int row);
-    void callOnRowAboutToBeRemoved(SessionItem* parent, std::string tag, int row);
+    void callOnRowInserted(SessionItem* parent, TagRow tagrow);
+    void callOnRowRemoved(SessionItem* parent, TagRow tagrow);
+    void callOnRowAboutToBeRemoved(SessionItem* parent, TagRow tagrow);
     void callOnModelDestroyed();
     void callOnModelReset();
 
