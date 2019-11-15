@@ -11,7 +11,6 @@
 #define MVVM_SIGNALS_MODELMAPPER_H
 
 #include <mvvm/signals/callbackcontainer.h>
-#include <mvvm/model/tagrow.h>
 
 namespace ModelView
 {

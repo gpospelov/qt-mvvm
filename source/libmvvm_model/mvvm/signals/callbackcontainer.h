@@ -10,8 +10,8 @@
 #ifndef MVVM_SIGNALS_CALLBACKCONTAINER_H
 #define MVVM_SIGNALS_CALLBACKCONTAINER_H
 
-#include <mvvm/signals/callback_types.h>
 #include <mvvm/core/export.h>
+#include <mvvm/signals/callback_types.h>
 #include <algorithm>
 #include <functional>
 #include <list>

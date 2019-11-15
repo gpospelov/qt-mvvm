@@ -12,12 +12,12 @@
 
 #include <string>
 #include <functional>
+#include <mvvm/model/tagrow.h>
 
 namespace ModelView {
 
 class SessionItem;
 class SessionModel;
-class TagRow;
 
 namespace Callbacks {
 using slot_t = const void*;
