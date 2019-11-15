@@ -11,11 +11,13 @@
 #define ITEMTESTWIDGET_H
 
 #include <string>
+#include <mvvm/model/tagrow.h>
 
 //! Various common utils for unit tests.
 
 namespace ModelView {
 class SessionItem;
+class SessionModel;
 }
 
 //! Interface for testing callbacks comming from SessionItem within gmock framework.
@@ -37,10 +39,12 @@ class ModelTestWidgetInterface {
 public:
     virtual ~ModelTestWidgetInterface();
 
-    virtual void onDataChange(ModelView::SessionItem* item, int role) = 0;
-    virtual void onRowInserted(ModelView::SessionItem* item, std::string tag, int row) = 0;
-    virtual void onRowRemoved(ModelView::SessionItem* item, std::string tag, int row) = 0;
-    virtual void onRowAboutToBeRemoved(ModelView::SessionItem* item, std::string tag, int row) = 0;
+    virtual void onModelDestroyed(ModelView::SessionModel*) = 0;
+    virtual void onModelReset(ModelView::SessionModel*) = 0;
+    virtual void onDataChange(ModelView::SessionItem*, int) = 0;
+    virtual void onItemInserted(ModelView::SessionItem*, ModelView::TagRow) = 0;
+    virtual void onItemRemoved(ModelView::SessionItem*, ModelView::TagRow) = 0;
+    virtual void onItemAboutToBeRemoved(ModelView::SessionItem*, ModelView::TagRow) = 0;
 };
 
 #endif // ITEMTESTWIDGET_H
