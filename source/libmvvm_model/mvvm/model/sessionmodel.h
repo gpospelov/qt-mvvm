@@ -51,8 +51,7 @@ public:
 
     template <typename T> T* insertItem(SessionItem* parent = nullptr, const TagRow& tagrow = {});
 
-    SessionItem* copyItem(const SessionItem* item, SessionItem* parent, const std::string& tag = {},
-                          int row = -1);
+    SessionItem* copyItem(const SessionItem* item, SessionItem* parent, const TagRow& tagrow = {});
 
     SessionItem* rootItem() const;
 

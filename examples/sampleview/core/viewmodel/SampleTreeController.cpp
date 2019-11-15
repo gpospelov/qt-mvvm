@@ -56,7 +56,7 @@ void SampleTreeController::onClone()
 
     auto parent = to_clone->parent();
     const auto tagrow = parent->tagRowOfItem(to_clone);
-    auto new_item = m_sample_model->copyItem(to_clone, parent, tagrow.tag, tagrow.row + 1);
+    auto new_item = m_sample_model->copyItem(to_clone, parent, {tagrow.tag, tagrow.row + 1});
     selectItem(new_item);
 }
 

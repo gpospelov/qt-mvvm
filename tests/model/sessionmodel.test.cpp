@@ -317,7 +317,7 @@ TEST_F(SessionModelTest, copyFreeItem)
     item->setData(42.0);
 
     // copying to parent
-    auto copy = model.copyItem(item.get(), parent0, "", -1);
+    auto copy = model.copyItem(item.get(), parent0);
     EXPECT_EQ(copy->data().value<double>(), 42.0);
 }
 
@@ -333,7 +333,7 @@ TEST_F(SessionModelTest, forbiddenCopy)
     auto property = model.insertItem<PropertyItem>(parent0, "property");
 
     // copying property to same property tag is not allowed
-    auto copy = model.copyItem(property, parent0, "property", -1);
+    auto copy = model.copyItem(property, parent0, {"property", -1});
     EXPECT_EQ(parent0->childrenCount(), 1);
     EXPECT_EQ(copy, nullptr);
 }
