@@ -8,17 +8,16 @@
 // ************************************************************************** //
 
 #include "graphmodel.h"
+#include <QColor>
+#include <cmath>
+#include <mvvm/model/modelutils.h>
+#include <mvvm/model/mvvm_types.h>
+#include <mvvm/standarditems/axisitems.h>
 #include <mvvm/standarditems/containeritem.h>
 #include <mvvm/standarditems/data1ditem.h>
 #include <mvvm/standarditems/graphitem.h>
 #include <mvvm/standarditems/graphviewportitem.h>
-#include <mvvm/model/modelutils.h>
-#include <mvvm/model/mvvm_types.h>
 #include <mvvm/utils/numericutils.h>
-#include <mvvm/standarditems/containeritem.h>
-#include <mvvm/standarditems/axisitems.h>
-#include <QColor>
-#include <cmath>
 
 namespace
 {
@@ -75,10 +74,10 @@ void GraphModel::remove_graph()
         throw std::runtime_error("Number of graphs do not much number of data items.");
 
     if (graph_count)
-        removeItem(viewport(), "", graph_count - 1);
+        removeItem(viewport(), {"", graph_count - 1});
 
     if (data_count)
-        removeItem(data_container(), "", data_count - 1);
+        removeItem(data_container(), {"", data_count - 1});
 }
 
 //! Put random noise to graph.
@@ -87,7 +86,8 @@ void GraphModel::randomize_graphs()
 {
     for (auto item : data_container()->items<Data1DItem>(ContainerItem::T_ITEMS)) {
         auto values = item->binValues();
-        std::transform(std::begin(values), std::end(values), std::begin(values), [](auto x) { return x*ModelView::Utils::RandDouble(0.8, 1.2);});
+        std::transform(std::begin(values), std::end(values), std::begin(values),
+                       [](auto x) { return x * ModelView::Utils::RandDouble(0.8, 1.2); });
         item->setContent(values);
     }
 }

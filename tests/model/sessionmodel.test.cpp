@@ -169,7 +169,7 @@ TEST_F(SessionModelTest, removeItem)
     Q_UNUSED(child2)
 
     // removing child2
-    model.removeItem(parent, "", 0); // removing child2
+    model.removeItem(parent, {"", 0}); // removing child2
     EXPECT_EQ(parent->childrenCount(), 1);
     EXPECT_EQ(Utils::ChildAt(parent, 0), child1);
 
@@ -186,7 +186,7 @@ TEST_F(SessionModelTest, removeNonExistingItem)
     parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
 
     // removing non existing child
-    EXPECT_NO_THROW(model.removeItem(parent, "", 0));
+    EXPECT_NO_THROW(model.removeItem(parent, {"", 0}));
 }
 
 TEST_F(SessionModelTest, takeRowFromRootItem)
@@ -350,7 +350,7 @@ TEST_F(SessionModelTest, findItem)
     EXPECT_EQ(model.findItem(id), parent);
 
     // check that we can't find deleted item.
-    model.removeItem(model.rootItem(), "", 0);
+    model.removeItem(model.rootItem(), {"", 0});
     EXPECT_EQ(model.findItem(id), nullptr);
 }
 
@@ -376,7 +376,7 @@ TEST_F(SessionModelTest, findItemInAlienModel)
     EXPECT_EQ(model2.findItem(id2), parent2);
 
     // check that we can't find deleted item.
-    model1.removeItem(model1.rootItem(), "", 0);
+    model1.removeItem(model1.rootItem(), {"", 0});
     EXPECT_EQ(model1.findItem(id1), nullptr);
     EXPECT_EQ(model2.findItem(id1), nullptr);
     EXPECT_EQ(model1.findItem(id2), parent2);

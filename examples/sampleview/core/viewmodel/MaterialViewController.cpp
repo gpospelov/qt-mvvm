@@ -19,19 +19,15 @@ namespace
 {
 const std::vector<std::pair<QString, std::string>> material_types = {
     {"SLD-based material", ::Constants::SLDMaterialType},
-    {"Refractive index material", ::Constants::RefIndexMaterialType}
-};
+    {"Refractive index material", ::Constants::RefIndexMaterialType}};
 
 const std::deque<QColor> color_queue = {Qt::blue,   Qt::red,  Qt::green,   Qt::gray,   Qt::black,
                                         Qt::yellow, Qt::cyan, Qt::magenta, Qt::darkRed};
 } // namespace
 
 MaterialViewController::MaterialViewController(MaterialModel* model)
-    : m_material_model(model)
-    , m_view_model(model)
-    , m_selection_model(&m_view_model)
-    , m_current_material_type(material_types.front().second)
-    , m_color_queue(color_queue)
+    : m_material_model(model), m_view_model(model), m_selection_model(&m_view_model),
+      m_current_material_type(material_types.front().second), m_color_queue(color_queue)
 {
     SessionItem* root = model ? Utils::TopItem<MaterialContainerItem>(model) : nullptr;
     m_view_model.setRootSessionItem(root);
@@ -74,7 +70,7 @@ void MaterialViewController::onCloneMaterial()
         auto new_item = m_material_model->insertNewItem(m_current_material_type, root,
                                                         MaterialContainerItem::T_MATERIALS);
 
-        for (auto child: item->children()) {
+        for (auto child : item->children()) {
             auto new_child = new_item->getItem(item->tagFromItem(child));
             new_child->setData(child->data());
         }
@@ -86,10 +82,8 @@ void MaterialViewController::onRemoveMaterial()
     auto to_delete = selectedMaterialItems();
     SessionItem* root = m_view_model.sessionItemFromIndex(QModelIndex());
 
-    for (auto item : to_delete) {
-        auto tagrow = root->tagRowOfItem(item);
-        m_material_model->removeItem(root, tagrow.tag, tagrow.row);
-    }
+    for (auto item : to_delete)
+        m_material_model->removeItem(root, root->tagRowOfItem(item));
 }
 
 QStringList MaterialViewController::materialSets() const
@@ -125,8 +119,7 @@ void MaterialViewController::toggleRowSpanSelection(const QModelIndex& index)
     int previous = selected.isValid() ? selected.row() : 0;
     int now = index.row();
 
-    for (int i = std::min(previous, now), max = std::max(previous, now); i <= max; ++i)
-    {
+    for (int i = std::min(previous, now), max = std::max(previous, now); i <= max; ++i) {
         QModelIndex i_index = m_view_model.index(i, 0);
         m_view_model.setData(i_index, set_value, Qt::CheckStateRole);
     }
@@ -148,8 +141,7 @@ void MaterialViewController::updateSelection(const QModelIndex& current)
         return flag | QItemSelectionModel::Rows;
     };
 
-    for (int i = 0, count = m_view_model.rowCount(); i < count; ++i)
-    {
+    for (int i = 0, count = m_view_model.rowCount(); i < count; ++i) {
         QModelIndex index = m_view_model.index(i, 0);
         m_selection_model.select(index, selection_state(index));
     }
@@ -159,8 +151,7 @@ void MaterialViewController::updateSelection(const QModelIndex& current)
 
 void MaterialViewController::onSelectionChanged(const QItemSelection&, const QItemSelection&)
 {
-    for (int i = 0, count = m_view_model.rowCount(); i < count; ++i)
-    {
+    for (int i = 0, count = m_view_model.rowCount(); i < count; ++i) {
         QModelIndex index = m_view_model.index(i, 0);
         m_view_model.setData(index, false, Qt::CheckStateRole);
     }
@@ -182,8 +173,7 @@ QList<MaterialBaseItem*> MaterialViewController::selectedMaterialItems() const
 QList<QModelIndex> MaterialViewController::checkedItems() const
 {
     QList<QModelIndex> result;
-    for (int i = 0, count = m_view_model.rowCount(); i < count; ++i)
-    {
+    for (int i = 0, count = m_view_model.rowCount(); i < count; ++i) {
         QModelIndex index = m_view_model.index(i, 0);
         if (index.data(Qt::CheckStateRole).value<bool>())
             result.append(index);

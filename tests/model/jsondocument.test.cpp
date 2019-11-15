@@ -71,7 +71,7 @@ TEST_F(JsonDocumentTest, saveLoadSingleModel)
     document.save(fileName.toStdString());
 
     // modifying model further
-    model.removeItem(model.rootItem(), "", 0);
+    model.removeItem(model.rootItem(), {"", 0});
 
     // loading model from file
     document.load(fileName.toStdString());
@@ -122,8 +122,8 @@ TEST_F(JsonDocumentTest, saveLoadTwoModels)
     document.save(fileName.toStdString());
 
     // modifying model further
-    model1.removeItem(model1.rootItem(), "", 0);
-    model2.removeItem(model2.rootItem(), "", 0);
+    model1.removeItem(model1.rootItem(), {"", 0});
+    model2.removeItem(model2.rootItem(), {"", 0});
 
     // loading model from file
     document.load(fileName.toStdString());
@@ -166,8 +166,8 @@ TEST_F(JsonDocumentTest, loadModelsInWrongOrder)
     }
 
     // modifying model further
-    model1.removeItem(model1.rootItem(), "", 0);
-    model2.removeItem(model2.rootItem(), "", 0);
+    model1.removeItem(model1.rootItem(), {"", 0});
+    model2.removeItem(model2.rootItem(), {"", 0});
 
     JsonDocument document({&model2, &model1}); // intentional wrong order
 

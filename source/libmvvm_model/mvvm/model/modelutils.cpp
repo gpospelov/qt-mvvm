@@ -17,6 +17,5 @@ void Utils::DeleteItemFromModel(SessionItem* item)
     if (!model)
         return;
 
-    auto [tag, row] = item->parent()->tagRowOfItem(item);
-    model->removeItem(item->parent(), tag, row);
+    model->removeItem(item->parent(), item->parent()->tagRowOfItem(item));
 }

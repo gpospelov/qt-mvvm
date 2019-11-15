@@ -57,7 +57,7 @@ TEST(ItemMapperTest, onItemDestroy)
     EXPECT_CALL(widget, onRowAboutToBeRemoved(_, _, _)).Times(0);
 
     // performing action
-    model.removeItem(model.rootItem(), "", 0);
+    model.removeItem(model.rootItem(), {"", 0});
 }
 
 //! Setting data to item, expecting onDataChange callback.
@@ -221,13 +221,12 @@ TEST(ItemMapperTest, onRowInsert)
 
 TEST(ItemMapperTest, onRowAboutToRemove)
 {
-    const int expected_row = 0;
-    std::string expected_tag = "tag1";
+    const TagRow expected_tagrow = {"tag1", 0};
 
     SessionModel model;
     auto compound1 = model.insertItem<CompoundItem>();
     compound1->registerTag(TagInfo::universalTag("tag1"), /*set_as_default*/ true);
-    model.insertItem<CompoundItem>(compound1, {expected_tag, expected_row});
+    model.insertItem<CompoundItem>(compound1, expected_tagrow);
 
     MockWidgetForItem widget(compound1);
 
@@ -236,8 +235,9 @@ TEST(ItemMapperTest, onRowAboutToRemove)
     EXPECT_CALL(widget, onPropertyChange(_, _)).Times(0);
     EXPECT_CALL(widget, onChildPropertyChange(_, _)).Times(0);
     EXPECT_CALL(widget, onRowInserted(_, _, _)).Times(0);
-    EXPECT_CALL(widget, onRowAboutToBeRemoved(compound1, expected_tag, expected_row)).Times(1);
+    EXPECT_CALL(widget, onRowAboutToBeRemoved(compound1, expected_tagrow.tag, expected_tagrow.row))
+        .Times(1);
 
     // perform action
-    model.removeItem(compound1, expected_tag, expected_row);
+    model.removeItem(compound1, expected_tagrow);
 }

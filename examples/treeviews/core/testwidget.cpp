@@ -74,9 +74,7 @@ void TestWidget::onContextMenuRequest(const QPoint& point)
 
     // removing item under the mouse
     auto removeItemAction = menu.addAction("Remove item");
-    auto remove_item = [&]() {
-        m_sessionModel->removeItem(item->parent(), tagrow.tag, tagrow.row);
-    };
+    auto remove_item = [&]() { m_sessionModel->removeItem(item->parent(), tagrow); };
     connect(removeItemAction, &QAction::triggered, remove_item);
 
     menu.exec(treeView->mapToGlobal(point));

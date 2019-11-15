@@ -161,7 +161,7 @@ TEST_F(DefaultViewModelTest, insertSingleTopItem)
     EXPECT_EQ(viewModel.columnCount(), 2);
 
     // removing child
-    model.removeItem(model.rootItem(), "", 0);
+    model.removeItem(model.rootItem(), {"", 0});
     EXPECT_EQ(spyInsert.count(), 1);
     EXPECT_EQ(viewModel.rowCount(), 0);
     EXPECT_EQ(viewModel.columnCount(), 2);
@@ -192,7 +192,7 @@ TEST_F(DefaultViewModelTest, removeSingleTopItem)
     QSignalSpy spyRemove(&viewModel, &DefaultViewModel::rowsRemoved);
 
     // removing child
-    model.removeItem(model.rootItem(), "", 0);
+    model.removeItem(model.rootItem(), {"", 0});
     ASSERT_EQ(spyRemove.count(), 1);
     EXPECT_EQ(viewModel.rowCount(), 0);
     EXPECT_EQ(viewModel.columnCount(), 2);
@@ -226,7 +226,7 @@ TEST_F(DefaultViewModelTest, removeOneOfTopItems)
     QSignalSpy spyInsert(&viewModel, &DefaultViewModel::rowsInserted);
 
     // removing child
-    model.removeItem(model.rootItem(), "", 0);
+    model.removeItem(model.rootItem(), {"", 0});
 
     // removal was called once
     EXPECT_EQ(spyRemove.count(), 1);

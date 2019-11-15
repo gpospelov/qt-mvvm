@@ -7,7 +7,6 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/model/sessionmodel.h>
 #include <mvvm/commands/commandservice.h>
 #include <mvvm/model/customvariants.h>
 #include <mvvm/model/itemcatalogue.h>
@@ -15,13 +14,14 @@
 #include <mvvm/model/itemmanager.h>
 #include <mvvm/model/itempool.h>
 #include <mvvm/model/itemutils.h>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/model/sessionmodel.h>
+#include <mvvm/model/taginfo.h>
+#include <mvvm/model/tagrow.h>
 #include <mvvm/serialization/jsonitembackupstrategy.h>
 #include <mvvm/serialization/jsonitemcopystrategy.h>
 #include <mvvm/signals/modelmapper.h>
-#include <mvvm/model/sessionitem.h>
 #include <mvvm/standarditems/standarditemcatalogue.h>
-#include <mvvm/model/taginfo.h>
-#include <mvvm/model/tagrow.h>
 
 using namespace ModelView;
 
@@ -127,9 +127,9 @@ QUndoStack* SessionModel::undoStack() const
 
 //! Removes given row from parent.
 
-void SessionModel::removeItem(SessionItem* parent, const std::string& tag, int row)
+void SessionModel::removeItem(SessionItem* parent, const TagRow& tagrow)
 {
-    m_commands->removeItem(parent, {tag, row});
+    m_commands->removeItem(parent, tagrow);
 }
 
 //! Move item from it's current parent to a new parent under given tag and row.
@@ -205,7 +205,7 @@ void SessionModel::createRootItem()
 }
 
 SessionItem* SessionModel::intern_insert(item_factory_func_t func, SessionItem* parent,
-                                       const TagRow& tagrow)
+                                         const TagRow& tagrow)
 {
     return m_commands->insertNewItem(func, parent, tagrow);
 }

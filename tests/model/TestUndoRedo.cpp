@@ -275,7 +275,7 @@ TEST_F(TestUndoRedo, removeRow)
     EXPECT_EQ(model.rootItem()->childrenCount(), 1);
 
     // removing the row
-    model.removeItem(model.rootItem(), "", 0);
+    model.removeItem(model.rootItem(), {"", 0});
     EXPECT_EQ(stack->count(), 3);
     EXPECT_EQ(stack->index(), 3);
     EXPECT_EQ(model.rootItem()->childrenCount(), 0);
@@ -313,7 +313,7 @@ TEST_F(TestUndoRedo, removeParentAndChild)
     EXPECT_EQ(stack->index(), 4);
 
     // removing parent
-    model.removeItem(model.rootItem(), "", 0);
+    model.removeItem(model.rootItem(), {"", 0});
     EXPECT_EQ(stack->count(), 5);
     EXPECT_EQ(stack->index(), 5);
     EXPECT_EQ(model.rootItem()->childrenCount(), 0);
@@ -350,7 +350,7 @@ TEST_F(TestUndoRedo, itemIdentifierOnRemove)
     identifier_type child_id = child->identifier();
 
     // removing parent
-    model.removeItem(model.rootItem(), "", 0);
+    model.removeItem(model.rootItem(), {"", 0});
     EXPECT_EQ(stack->count(), 3);
     EXPECT_EQ(stack->index(), 3);
     EXPECT_EQ(model.rootItem()->childrenCount(), 0);
@@ -395,7 +395,7 @@ TEST_F(TestUndoRedo, multiLayer)
     EXPECT_EQ(stack->index(), 3);
 
     // removing multi layer completely
-    model.removeItem(model.rootItem(), "", 0);
+    model.removeItem(model.rootItem(), {"", 0});
     EXPECT_EQ(stack->count(), 4);
     EXPECT_EQ(stack->index(), 4);
     EXPECT_EQ(model.rootItem()->childrenCount(), 0);
@@ -494,7 +494,7 @@ TEST_F(TestUndoRedo, moveLayerFromMLDeleteSecond)
     EXPECT_EQ(pool->item_for_key(id_layer0), layer0);
 
     // deleting second multilayer
-    model.removeItem(model.rootItem(), "", 1);
+    model.removeItem(model.rootItem(), {"", 1});
 
     // undoing deletion
     stack->undo();
@@ -557,8 +557,8 @@ TEST_F(TestUndoRedo, moveLayerFromMLDeleteAll)
     model.moveItem(layer1, multilayer1, ToyItems::MultiLayerItem::T_LAYERS, 0);
 
     // removing multilayers
-    model.removeItem(model.rootItem(), "", 1);
-    model.removeItem(model.rootItem(), "", 0);
+    model.removeItem(model.rootItem(), {"", 1});
+    model.removeItem(model.rootItem(), {"", 0});
 
     // checking status of unddo stack
     EXPECT_EQ(stack->count(), 11);

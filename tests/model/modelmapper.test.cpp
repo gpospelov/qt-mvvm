@@ -105,7 +105,7 @@ TEST(ModelMapperTest, onRowRemoved)
     EXPECT_CALL(widget, onModelDestroyed(_)).Times(0);
     EXPECT_CALL(widget, onModelReset(_)).Times(0);
     // perform action
-    model.removeItem(model.rootItem(), expected_tag, expected_index);
+    model.removeItem(model.rootItem(), {expected_tag, expected_index});
 }
 
 //! Testing signals on model destruction.
