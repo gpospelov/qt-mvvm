@@ -94,17 +94,17 @@ void MockWidgetForModel::setModel(ModelView::SessionModel* model)
     auto on_row_inserted = [this](ModelView::SessionItem* item, ModelView::TagRow tagrow) {
         onRowInserted(item, tagrow.tag, tagrow.row);
     };
-    m_model->mapper()->setOnRowInserted(on_row_inserted, this);
+    m_model->mapper()->setOnItemInserted(on_row_inserted, this);
 
     auto on_row_removed = [this](ModelView::SessionItem* item, ModelView::TagRow tagrow) {
         onRowRemoved(item, tagrow.tag, tagrow.row);
     };
-    m_model->mapper()->setOnRowRemoved(on_row_removed, this);
+    m_model->mapper()->setOnItemRemoved(on_row_removed, this);
 
     auto on_row_about_removed = [this](ModelView::SessionItem* item, ModelView::TagRow tagrow) {
         onRowAboutToBeRemoved(item, tagrow.tag, tagrow.row);
     };
-    m_model->mapper()->setOnRowAboutToBeRemoved(on_row_about_removed, this);
+    m_model->mapper()->setOnItemAboutToBeRemoved(on_row_about_removed, this);
 
     auto on_model_destroyed = [this](ModelView::SessionModel* model) {
         m_model = nullptr;

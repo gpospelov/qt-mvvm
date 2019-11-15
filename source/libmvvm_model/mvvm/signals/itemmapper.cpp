@@ -163,12 +163,12 @@ void ItemMapper::subscribe_to_model()
     auto on_row_inserted = [this](ModelView::SessionItem* item, TagRow tagrow) {
         onModelRowInserted(item, tagrow.tag, tagrow.row);
     };
-    m_model->mapper()->setOnRowInserted(on_row_inserted, this);
+    m_model->mapper()->setOnItemInserted(on_row_inserted, this);
 
     auto on_row_about_removed = [this](ModelView::SessionItem* item, ModelView::TagRow tagrow) {
         onModelRowAboutToBeRemoved(item, tagrow.tag, tagrow.row);
     };
-    m_model->mapper()->setOnRowAboutToBeRemoved(on_row_about_removed, this);
+    m_model->mapper()->setOnItemAboutToBeRemoved(on_row_about_removed, this);
 }
 
 //! Unsubscribes from model signals.

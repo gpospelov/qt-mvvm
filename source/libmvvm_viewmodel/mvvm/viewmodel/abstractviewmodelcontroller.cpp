@@ -100,12 +100,12 @@ void AbstractViewModelController::setSessionModel(SessionModel* model)
         auto on_row_inserted = [this](SessionItem* item, TagRow tagrow) {
             onRowInserted(item, tagrow.tag, tagrow.row);
         };
-        sessionModel()->mapper()->setOnRowInserted(on_row_inserted, this);
+        sessionModel()->mapper()->setOnItemInserted(on_row_inserted, this);
 
         auto on_row_removed = [this](SessionItem* item, TagRow tagrow) {
             onRowRemoved(item, tagrow.tag, tagrow.row);
         };
-        sessionModel()->mapper()->setOnRowRemoved(on_row_removed, this);
+        sessionModel()->mapper()->setOnItemRemoved(on_row_removed, this);
 
         auto on_model_destroyed = [this](SessionModel*) {
             p_impl->m_session_model = nullptr;
