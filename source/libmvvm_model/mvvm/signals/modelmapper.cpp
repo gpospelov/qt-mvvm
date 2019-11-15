@@ -25,7 +25,7 @@ void ModelMapper::setOnDataChange(Callbacks::item_int_t f, Callbacks::slot_t own
 //! Callback will be called with (SessionItem* parent, tag, row), where tag,row corresponds
 //! to inserted child.
 
-void ModelMapper::setOnRowInserted(Callbacks::item_str_int_t f, Callbacks::slot_t owner)
+void ModelMapper::setOnRowInserted(Callbacks::item_tagrow_t f, Callbacks::slot_t owner)
 {
     m_on_row_inserted.connect(std::move(f), owner);
 }
@@ -92,7 +92,7 @@ void ModelMapper::callOnDataChange(SessionItem* item, int role)
 void ModelMapper::callOnRowInserted(SessionItem* parent, TagRow tagrow)
 {
     if (m_active)
-        m_on_row_inserted(parent, tagrow.tag, tagrow.row);
+        m_on_row_inserted(parent, tagrow);
 }
 
 void ModelMapper::callOnRowRemoved(SessionItem* parent, TagRow tagrow)

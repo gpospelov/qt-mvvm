@@ -160,8 +160,8 @@ void ItemMapper::subscribe_to_model()
     auto on_data_change = [this](ModelView::SessionItem* item, int role) {onModelDataChange(item, role);};
     m_model->mapper()->setOnDataChange(on_data_change, this);
 
-    auto on_row_inserted = [this](ModelView::SessionItem* item, std::string tag, int row) {
-        onModelRowInserted(item, tag, row);
+    auto on_row_inserted = [this](ModelView::SessionItem* item, TagRow tagrow) {
+        onModelRowInserted(item, tagrow.tag, tagrow.row);
     };
     m_model->mapper()->setOnRowInserted(on_row_inserted, this);
 

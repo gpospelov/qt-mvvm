@@ -91,8 +91,8 @@ void MockWidgetForModel::setModel(ModelView::SessionModel* model)
     };
     m_model->mapper()->setOnDataChange(on_data_change, this);
 
-    auto on_row_inserted = [this](ModelView::SessionItem* item, std::string tag, int row) {
-        onRowInserted(item, tag, row);
+    auto on_row_inserted = [this](ModelView::SessionItem* item, ModelView::TagRow tagrow) {
+        onRowInserted(item, tagrow.tag, tagrow.row);
     };
     m_model->mapper()->setOnRowInserted(on_row_inserted, this);
 

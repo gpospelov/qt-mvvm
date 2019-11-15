@@ -89,8 +89,12 @@ SceneModelController::SceneModelController(DesignerScene& scene, SampleModel* mo
 
     m_model->mapper()->setOnModelReset([this](SessionModel*) { onModelChange(); }, this);
     m_model->mapper()->setOnModelDestroyed([this](SessionModel*) { onModelDestroyed(); }, this);
-    m_model->mapper()->setOnRowInserted([this](SessionItem*, std::string, int) { onModelChange(); },
-                                        this);
+
+    auto on_row_insered = [this](SessionItem*, TagRow)
+    {
+        onModelChange();
+    };
+    m_model->mapper()->setOnRowInserted(on_row_insered, this);
     m_model->mapper()->setOnRowRemoved([this](SessionItem*, std::string, int) { onModelChange(); },
                                        this);
 

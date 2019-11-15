@@ -97,8 +97,8 @@ void AbstractViewModelController::setSessionModel(SessionModel* model)
         auto on_data_change = [this](SessionItem* item, int role) { onDataChange(item, role); };
         sessionModel()->mapper()->setOnDataChange(on_data_change, this);
 
-        auto on_row_inserted = [this](SessionItem* item, std::string tag, int row) {
-            onRowInserted(item, tag, row);
+        auto on_row_inserted = [this](SessionItem* item, TagRow tagrow) {
+            onRowInserted(item, tagrow.tag, tagrow.row);
         };
         sessionModel()->mapper()->setOnRowInserted(on_row_inserted, this);
 

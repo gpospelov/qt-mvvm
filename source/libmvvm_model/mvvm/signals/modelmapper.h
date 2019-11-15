@@ -30,7 +30,7 @@ public:
     ModelMapper(SessionModel* item);
 
     void setOnDataChange(Callbacks::item_int_t f, Callbacks::slot_t owner);
-    void setOnRowInserted(Callbacks::item_str_int_t f, Callbacks::slot_t owner);
+    void setOnRowInserted(Callbacks::item_tagrow_t f, Callbacks::slot_t owner);
     void setOnRowRemoved(Callbacks::item_str_int_t f, Callbacks::slot_t owner);
     void setOnRowAboutToBeRemoved(Callbacks::item_str_int_t f, Callbacks::slot_t owner);
     void setOnModelDestroyed(Callbacks::model_t f, Callbacks::slot_t owner);
@@ -52,7 +52,7 @@ private:
     void callOnModelReset();
 
     Signal<Callbacks::item_int_t> m_on_data_change;
-    Signal<Callbacks::item_str_int_t> m_on_row_inserted;
+    Signal<Callbacks::item_tagrow_t> m_on_row_inserted;
     Signal<Callbacks::item_str_int_t> m_on_row_removed;
     Signal<Callbacks::item_str_int_t> m_on_row_about_removed;
     Signal<Callbacks::model_t> m_on_model_destroyed;

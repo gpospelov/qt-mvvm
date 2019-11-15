@@ -17,6 +17,7 @@ namespace ModelView {
 
 class SessionItem;
 class SessionModel;
+class TagRow;
 
 namespace Callbacks {
 using slot_t = const void*;
@@ -24,6 +25,7 @@ using item_t = std::function<void(SessionItem*)>;
 using item_int_t = std::function<void(SessionItem*, int)>;
 using item_str_t = std::function<void(SessionItem*, std::string)>;
 using item_str_int_t = std::function<void(SessionItem*, std::string, int)>;
+using item_tagrow_t = std::function<void(SessionItem*, TagRow)>;
 using model_t = std::function<void(SessionModel*)>;
 }
 
