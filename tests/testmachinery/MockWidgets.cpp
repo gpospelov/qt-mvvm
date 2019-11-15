@@ -101,8 +101,8 @@ void MockWidgetForModel::setModel(ModelView::SessionModel* model)
     };
     m_model->mapper()->setOnRowRemoved(on_row_removed, this);
 
-    auto on_row_about_removed = [this](ModelView::SessionItem* item, std::string tag, int row) {
-        onRowAboutToBeRemoved(item, tag, row);
+    auto on_row_about_removed = [this](ModelView::SessionItem* item, ModelView::TagRow tagrow) {
+        onRowAboutToBeRemoved(item, tagrow.tag, tagrow.row);
     };
     m_model->mapper()->setOnRowAboutToBeRemoved(on_row_about_removed, this);
 
