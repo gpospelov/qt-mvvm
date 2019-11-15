@@ -32,11 +32,10 @@ struct CORE_EXPORT TagRow
 
     static TagRow prepend(const std::string& tag_name = {});
 
+    bool operator==(const TagRow& other) const;
+    bool operator!=(const TagRow& other) const;
 };
 
 } // namespace ModelView
-
-CORE_EXPORT bool operator==(const ModelView::TagRow& left, const ModelView::TagRow& right);
-CORE_EXPORT bool operator!=(const ModelView::TagRow& left, const ModelView::TagRow& right);
 
 #endif  // MVVM_MODEL_TAGROW_H
