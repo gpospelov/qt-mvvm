@@ -27,7 +27,7 @@ void ModelMapper::setOnDataChange(Callbacks::item_int_t f, Callbacks::slot_t own
 
 void ModelMapper::setOnRowInserted(Callbacks::item_tagrow_t f, Callbacks::slot_t owner)
 {
-    m_on_row_inserted.connect(std::move(f), owner);
+    m_on_item_inserted.connect(std::move(f), owner);
 }
 
 //! Sets callback to be notified on removed row.
@@ -36,7 +36,7 @@ void ModelMapper::setOnRowInserted(Callbacks::item_tagrow_t f, Callbacks::slot_t
 
 void ModelMapper::setOnRowRemoved(Callbacks::item_tagrow_t f, Callbacks::slot_t owner)
 {
-    m_on_row_removed.connect(std::move(f), owner);
+    m_on_item_removed.connect(std::move(f), owner);
 }
 
 //! Sets callback to be notified when row is about to be removed.
@@ -45,7 +45,7 @@ void ModelMapper::setOnRowRemoved(Callbacks::item_tagrow_t f, Callbacks::slot_t 
 
 void ModelMapper::setOnRowAboutToBeRemoved(Callbacks::item_tagrow_t f, Callbacks::slot_t owner)
 {
-    m_on_row_about_removed.connect(std::move(f), owner);
+    m_on_item_about_removed.connect(std::move(f), owner);
 }
 
 //! Sets the callback for notifications on model destruction.
@@ -72,9 +72,9 @@ void ModelMapper::setActive(bool value)
 void ModelMapper::unsubscribe(Callbacks::slot_t client)
 {
     m_on_data_change.remove_client(client);
-    m_on_row_inserted.remove_client(client);
-    m_on_row_removed.remove_client(client);
-    m_on_row_about_removed.remove_client(client);
+    m_on_item_inserted.remove_client(client);
+    m_on_item_removed.remove_client(client);
+    m_on_item_about_removed.remove_client(client);
     m_on_model_destroyed.remove_client(client);
     m_on_model_reset.remove_client(client);
 }
@@ -89,22 +89,22 @@ void ModelMapper::callOnDataChange(SessionItem* item, int role)
 
 //! Notifies all callbacks subscribed to "item data is changed" event.
 
-void ModelMapper::callOnRowInserted(SessionItem* parent, TagRow tagrow)
+void ModelMapper::callOnItemInserted(SessionItem* parent, TagRow tagrow)
 {
     if (m_active)
-        m_on_row_inserted(parent, tagrow);
+        m_on_item_inserted(parent, tagrow);
 }
 
-void ModelMapper::callOnRowRemoved(SessionItem* parent, TagRow tagrow)
+void ModelMapper::callOnItemRemoved(SessionItem* parent, TagRow tagrow)
 {
     if (m_active)
-        m_on_row_removed(parent, tagrow);
+        m_on_item_removed(parent, tagrow);
 }
 
-void ModelMapper::callOnRowAboutToBeRemoved(SessionItem* parent, TagRow tagrow)
+void ModelMapper::callOnItemAboutToBeRemoved(SessionItem* parent, TagRow tagrow)
 {
     if (m_active)
-        m_on_row_about_removed(parent, tagrow);
+        m_on_item_about_removed(parent, tagrow);
 }
 
 void ModelMapper::callOnModelDestroyed()

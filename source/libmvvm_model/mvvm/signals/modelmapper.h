@@ -45,16 +45,16 @@ private:
     friend class SessionItem;
 
     void callOnDataChange(SessionItem* item, int role);
-    void callOnRowInserted(SessionItem* parent, TagRow tagrow);
-    void callOnRowRemoved(SessionItem* parent, TagRow tagrow);
-    void callOnRowAboutToBeRemoved(SessionItem* parent, TagRow tagrow);
+    void callOnItemInserted(SessionItem* parent, TagRow tagrow);
+    void callOnItemRemoved(SessionItem* parent, TagRow tagrow);
+    void callOnItemAboutToBeRemoved(SessionItem* parent, TagRow tagrow);
     void callOnModelDestroyed();
     void callOnModelReset();
 
     Signal<Callbacks::item_int_t> m_on_data_change;
-    Signal<Callbacks::item_tagrow_t> m_on_row_inserted;
-    Signal<Callbacks::item_tagrow_t> m_on_row_removed;
-    Signal<Callbacks::item_tagrow_t> m_on_row_about_removed;
+    Signal<Callbacks::item_tagrow_t> m_on_item_inserted;
+    Signal<Callbacks::item_tagrow_t> m_on_item_removed;
+    Signal<Callbacks::item_tagrow_t> m_on_item_about_removed;
     Signal<Callbacks::model_t> m_on_model_destroyed;
     Signal<Callbacks::model_t> m_on_model_reset;
 
