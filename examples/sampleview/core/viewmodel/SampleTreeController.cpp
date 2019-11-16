@@ -56,7 +56,7 @@ void SampleTreeController::onClone()
 
     auto parent = to_clone->parent();
     const auto tagrow = parent->tagRowOfItem(to_clone);
-    auto new_item = m_sample_model->copyItem(to_clone, parent, tagrow.tag, tagrow.row + 1);
+    auto new_item = m_sample_model->copyItem(to_clone, parent, {tagrow.tag, tagrow.row + 1});
     selectItem(new_item);
 }
 
@@ -77,7 +77,7 @@ ModelView::SessionItem*  SampleTreeController::insertSampleElement(const std::st
     auto selected_item = selectedItem(m_selection_model, m_view_model);
     SessionItem* parent = selected_item ? selected_item->parent() : nullptr;
     auto tagrow = selected_item ? parent->tagRowOfItem(selected_item) : TagRow{};
-    return m_sample_model->insertNewItem(model_type, parent, tagrow.tag, tagrow.row + 1);
+    return m_sample_model->insertNewItem(model_type, parent, {tagrow.tag, tagrow.row + 1});
 }
 
 SessionItem* SampleTreeController::findNextSibling(SessionItem* item)

@@ -64,7 +64,7 @@ TEST_F(ItemControllerTest, itemDeletedBeforeController)
     EXPECT_EQ(controller->currentItem(), item);
     EXPECT_EQ(controller->ondata_change_call_count, 1);
 
-    model.removeItem(model.rootItem(), "", 0);
+    model.removeItem(model.rootItem(), {"", 0});
     EXPECT_EQ(controller->currentItem(), nullptr);
 }
 

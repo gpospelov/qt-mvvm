@@ -12,10 +12,11 @@
 
 #include <mvvm/model/sessionmodel.h>
 
-namespace ModelView {
+namespace ModelView
+{
 class GraphViewportItem;
 class ContainerItem;
-}
+} // namespace ModelView
 
 /*!
 @class GraphModel
@@ -35,7 +36,6 @@ public:
     void remove_graph();
 
     void randomize_graphs();
-
 
 private:
     ModelView::GraphViewportItem* viewport();

@@ -18,6 +18,11 @@ class TagRowTest : public ::testing::Test
 {
 public:
     ~TagRowTest();
+
+    TagRow test_method(const TagRow& input)
+    {
+        return input;
+    }
 };
 
 TagRowTest::~TagRowTest() = default;
@@ -46,6 +51,10 @@ TEST_F(TagRowTest, braceInitializer)
     tagrow = {"cde", 43};
     EXPECT_EQ(tagrow.tag, "cde");
     EXPECT_EQ(tagrow.row, 43);
+
+    TagRow tagrow2 = {"cde"};
+    EXPECT_EQ(tagrow2.tag, "cde");
+    EXPECT_EQ(tagrow2.row, -1);
 }
 
 //! Equality operators.
@@ -101,4 +110,13 @@ TEST_F(TagRowTest, factoryMethods)
     tagrow = TagRow::prepend(expected_name);
     EXPECT_EQ(tagrow.tag, expected_name);
     EXPECT_EQ(tagrow.row, 0);
+}
+
+//! Implicit type convertion
+
+TEST_F(TagRowTest, implicitConvertion)
+{
+    auto tagrow = test_method("abc");
+    EXPECT_EQ(tagrow.tag, "abc");
+    EXPECT_EQ(tagrow.row, -1);
 }

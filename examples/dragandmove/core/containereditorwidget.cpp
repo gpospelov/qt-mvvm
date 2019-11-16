@@ -87,7 +87,7 @@ void ContainerEditorWidget::onMoveDown()
         if (tagrow.row == item->parent()->childrenCount() - 1)
             return;
 
-        m_model->moveItem(item, item->parent(), tagrow.tag, tagrow.row + 1);
+        m_model->moveItem(item, item->parent(), {tagrow.tag, tagrow.row + 1});
     }
 }
 
@@ -100,7 +100,7 @@ void ContainerEditorWidget::onMoveUp()
         if (tagrow.row == 0)
             return;
 
-        m_model->moveItem(item, item->parent(), tagrow.tag, tagrow.row - 1);
+        m_model->moveItem(item, item->parent(), {tagrow.tag, tagrow.row - 1});
     }
 }
 

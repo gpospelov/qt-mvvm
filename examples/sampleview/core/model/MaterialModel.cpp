@@ -84,7 +84,7 @@ ExternalProperty MaterialModel::material_property(const std::string& id, std::st
 
 void MaterialModel::init_model()
 {
-    auto container = insertNewItem(::Constants::MaterialContainerType);
+    auto container = insertItem<MaterialContainerItem>();
     auto material = insertItem<SLDMaterialItem>(container, MaterialContainerItem::T_MATERIALS);
     material->set_properties("Air", QColor(Qt::blue), 1e-06, 1e-07);
 

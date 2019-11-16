@@ -11,6 +11,7 @@
 #include "google_test.h"
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
+#include <mvvm/model/tagrow.h>
 #include <mvvm/signals/modelmapper.h>
 
 using namespace ModelView;
@@ -33,33 +34,33 @@ TEST(ModelMapperTest, onDataChange)
     SessionModel model;
     MockWidgetForModel widget(&model);
 
-    EXPECT_CALL(widget, onRowInserted(_, _, _));
-    auto item = model.insertItem<SessionItem>(model.rootItem(), "", 0);
+    EXPECT_CALL(widget, onItemInserted(_, _));
+    auto item = model.insertItem<SessionItem>(model.rootItem());
 
     // expecting signal to be called once
     const int role = ItemDataRole::DATA;
     EXPECT_CALL(widget, onDataChange(item, role)).Times(1);
-    EXPECT_CALL(widget, onRowInserted(_, _, _)).Times(0);
-    EXPECT_CALL(widget, onRowAboutToBeRemoved(_, _, _)).Times(0);
-    EXPECT_CALL(widget, onRowRemoved(_, _, _)).Times(0);
+    EXPECT_CALL(widget, onItemInserted(_, _)).Times(0);
+    EXPECT_CALL(widget, onItemAboutToBeRemoved(_, _)).Times(0);
+    EXPECT_CALL(widget, onItemRemoved(_, _)).Times(0);
     EXPECT_CALL(widget, onModelDestroyed(_)).Times(0);
     EXPECT_CALL(widget, onModelReset(_)).Times(0);
     model.setData(item, 42.0, ItemDataRole::DATA); // perform action
 
     // setting same data shouldn't trigger the signal
     EXPECT_CALL(widget, onDataChange(_, _)).Times(0);
-    EXPECT_CALL(widget, onRowInserted(_, _, _)).Times(0);
-    EXPECT_CALL(widget, onRowRemoved(_, _, _)).Times(0);
-    EXPECT_CALL(widget, onRowAboutToBeRemoved(_, _, _)).Times(0);
+    EXPECT_CALL(widget, onItemInserted(_, _)).Times(0);
+    EXPECT_CALL(widget, onItemRemoved(_, _)).Times(0);
+    EXPECT_CALL(widget, onItemAboutToBeRemoved(_, _)).Times(0);
     EXPECT_CALL(widget, onModelDestroyed(_)).Times(0);
     EXPECT_CALL(widget, onModelReset(_)).Times(0);
     model.setData(item, 42.0, ItemDataRole::DATA); // perform action
 
     // setting new data through item
     EXPECT_CALL(widget, onDataChange(item, role)).Times(1);
-    EXPECT_CALL(widget, onRowInserted(_, _, _)).Times(0);
-    EXPECT_CALL(widget, onRowRemoved(_, _, _)).Times(0);
-    EXPECT_CALL(widget, onRowAboutToBeRemoved(_, _, _)).Times(0);
+    EXPECT_CALL(widget, onItemInserted(_, _)).Times(0);
+    EXPECT_CALL(widget, onItemRemoved(_, _)).Times(0);
+    EXPECT_CALL(widget, onItemAboutToBeRemoved(_, _)).Times(0);
     EXPECT_CALL(widget, onModelDestroyed(_)).Times(0);
     EXPECT_CALL(widget, onModelReset(_)).Times(0);
     item->setData(43.0); // perform action
@@ -73,16 +74,15 @@ TEST(ModelMapperTest, onRowInserted)
     MockWidgetForModel widget(&model);
 
     EXPECT_CALL(widget, onDataChange(_, _)).Times(0);
-    const int expected_index(0);
-    const std::string expected_tag(model.rootItem()->defaultTag());
-    EXPECT_CALL(widget, onRowInserted(model.rootItem(), expected_tag, expected_index)).Times(1);
-    EXPECT_CALL(widget, onRowRemoved(_, _, _)).Times(0);
-    EXPECT_CALL(widget, onRowAboutToBeRemoved(_, _, _)).Times(0);
+    const TagRow expected_tagrow{model.rootItem()->defaultTag(), 0};
+    EXPECT_CALL(widget, onItemInserted(model.rootItem(), expected_tagrow)).Times(1);
+    EXPECT_CALL(widget, onItemRemoved(_, _)).Times(0);
+    EXPECT_CALL(widget, onItemAboutToBeRemoved(_, _)).Times(0);
     EXPECT_CALL(widget, onModelDestroyed(_)).Times(0);
     EXPECT_CALL(widget, onModelReset(_)).Times(0);
 
     // perform action
-    model.insertItem<SessionItem>(model.rootItem(), expected_tag, 0);
+    model.insertItem<SessionItem>(model.rootItem(), expected_tagrow);
 }
 
 //! Inserting item and checking corresponding signals.
@@ -92,20 +92,18 @@ TEST(ModelMapperTest, onRowRemoved)
     SessionModel model;
     MockWidgetForModel widget(&model);
 
-    const int expected_index(0);
-    const std::string expected_tag(model.rootItem()->defaultTag());
-    EXPECT_CALL(widget, onRowInserted(model.rootItem(), expected_tag, expected_index)).Times(1);
-    model.insertItem<SessionItem>(model.rootItem(), expected_tag, expected_index);
+    const TagRow expected_tagrow{model.rootItem()->defaultTag(), 0};
+    EXPECT_CALL(widget, onItemInserted(model.rootItem(), expected_tagrow)).Times(1);
+    model.insertItem<SessionItem>(model.rootItem(), expected_tagrow);
 
     EXPECT_CALL(widget, onDataChange(_, _)).Times(0);
-    EXPECT_CALL(widget, onRowInserted(_, _, _)).Times(0);
-    EXPECT_CALL(widget, onRowRemoved(model.rootItem(), expected_tag, expected_index)).Times(1);
-    EXPECT_CALL(widget, onRowAboutToBeRemoved(model.rootItem(), expected_tag, expected_index))
-        .Times(1);
+    EXPECT_CALL(widget, onItemInserted(_, _)).Times(0);
+    EXPECT_CALL(widget, onItemRemoved(model.rootItem(), expected_tagrow)).Times(1);
+    EXPECT_CALL(widget, onItemAboutToBeRemoved(model.rootItem(), expected_tagrow)).Times(1);
     EXPECT_CALL(widget, onModelDestroyed(_)).Times(0);
     EXPECT_CALL(widget, onModelReset(_)).Times(0);
     // perform action
-    model.removeItem(model.rootItem(), expected_tag, expected_index);
+    model.removeItem(model.rootItem(), expected_tagrow);
 }
 
 //! Testing signals on model destruction.
@@ -116,9 +114,9 @@ TEST(ModelMapperTest, onModelDestroyed)
     auto widget = std::make_unique<MockWidgetForModel>(model.get());
 
     EXPECT_CALL(*widget, onDataChange(_, _)).Times(0);
-    EXPECT_CALL(*widget, onRowInserted(_, _, _)).Times(0);
-    EXPECT_CALL(*widget, onRowRemoved(_, _, _)).Times(0);
-    EXPECT_CALL(*widget, onRowAboutToBeRemoved(_, _, _)).Times(0);
+    EXPECT_CALL(*widget, onItemInserted(_, _)).Times(0);
+    EXPECT_CALL(*widget, onItemRemoved(_, _)).Times(0);
+    EXPECT_CALL(*widget, onItemAboutToBeRemoved(_, _)).Times(0);
     EXPECT_CALL(*widget, onModelReset(_)).Times(0);
     EXPECT_CALL(*widget, onModelDestroyed(model.get())).Times(1);
 
@@ -134,9 +132,9 @@ TEST(ModelMapperTest, onModelReset)
     auto widget = std::make_unique<MockWidgetForModel>(model.get());
 
     EXPECT_CALL(*widget, onDataChange(_, _)).Times(0);
-    EXPECT_CALL(*widget, onRowInserted(_, _, _)).Times(0);
-    EXPECT_CALL(*widget, onRowRemoved(_, _, _)).Times(0);
-    EXPECT_CALL(*widget, onRowAboutToBeRemoved(_, _, _)).Times(0);
+    EXPECT_CALL(*widget, onItemInserted(_, _)).Times(0);
+    EXPECT_CALL(*widget, onItemRemoved(_, _)).Times(0);
+    EXPECT_CALL(*widget, onItemAboutToBeRemoved(_, _)).Times(0);
     EXPECT_CALL(*widget, onModelDestroyed(_)).Times(0);
     EXPECT_CALL(*widget, onModelReset(model.get())).Times(1);
 

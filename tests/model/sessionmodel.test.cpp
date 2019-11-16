@@ -123,13 +123,13 @@ TEST_F(SessionModelTest, insertNewItemWithTag)
     SessionModel model;
     auto parent = model.insertItem<SessionItem>();
     parent->registerTag(TagInfo::universalTag(tag1));
-    auto child1 = model.insertItem<PropertyItem>(parent, tag1, -1);
+    auto child1 = model.insertItem<PropertyItem>(parent, {tag1, -1});
 
     EXPECT_EQ(parent->tagFromItem(child1), tag1);
     EXPECT_EQ(Utils::IndexOfChild(parent, child1), 0);
 
     // adding second child
-    auto child2 = model.insertItem<PropertyItem>(parent, tag1, 0);
+    auto child2 = model.insertItem<PropertyItem>(parent, {tag1, 0});
 
     EXPECT_EQ(parent->tagFromItem(child2), tag1);
     EXPECT_EQ(Utils::IndexOfChild(parent, child1), 1);
@@ -165,11 +165,11 @@ TEST_F(SessionModelTest, removeItem)
     parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
 
     auto child1 = model.insertItem<SessionItem>(parent);
-    auto child2 = model.insertItem<SessionItem>(parent, "", 0); // before child1
+    auto child2 = model.insertItem<SessionItem>(parent, {"", 0}); // before child1
     Q_UNUSED(child2)
 
     // removing child2
-    model.removeItem(parent, "", 0); // removing child2
+    model.removeItem(parent, {"", 0}); // removing child2
     EXPECT_EQ(parent->childrenCount(), 1);
     EXPECT_EQ(Utils::ChildAt(parent, 0), child1);
 
@@ -186,7 +186,7 @@ TEST_F(SessionModelTest, removeNonExistingItem)
     parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
 
     // removing non existing child
-    EXPECT_NO_THROW(model.removeItem(parent, "", 0));
+    EXPECT_NO_THROW(model.removeItem(parent, {"", 0}));
 }
 
 TEST_F(SessionModelTest, takeRowFromRootItem)
@@ -226,7 +226,7 @@ TEST_F(SessionModelTest, moveItem)
     auto child1 = model.insertItem<PropertyItem>(parent1);
 
     // moving child0 from parent0 to parent 1
-    model.moveItem(child0, parent1, "", 0);
+    model.moveItem(child0, parent1, {"", 0});
 
     std::vector<SessionItem*> expected = {child0, child1};
     EXPECT_EQ(parent1->children(), expected);
@@ -317,7 +317,7 @@ TEST_F(SessionModelTest, copyFreeItem)
     item->setData(42.0);
 
     // copying to parent
-    auto copy = model.copyItem(item.get(), parent0, "", -1);
+    auto copy = model.copyItem(item.get(), parent0);
     EXPECT_EQ(copy->data().value<double>(), 42.0);
 }
 
@@ -330,10 +330,10 @@ TEST_F(SessionModelTest, forbiddenCopy)
     // single parent in a model
     auto parent0 = model.insertItem<SessionItem>();
     parent0->registerTag(TagInfo::propertyTag("property", "Property"));
-    auto property = model.insertItem<PropertyItem>(parent0, "property", -1);
+    auto property = model.insertItem<PropertyItem>(parent0, "property");
 
     // copying property to same property tag is not allowed
-    auto copy = model.copyItem(property, parent0, "property", -1);
+    auto copy = model.copyItem(property, parent0, {"property", -1});
     EXPECT_EQ(parent0->childrenCount(), 1);
     EXPECT_EQ(copy, nullptr);
 }
@@ -350,7 +350,7 @@ TEST_F(SessionModelTest, findItem)
     EXPECT_EQ(model.findItem(id), parent);
 
     // check that we can't find deleted item.
-    model.removeItem(model.rootItem(), "", 0);
+    model.removeItem(model.rootItem(), {"", 0});
     EXPECT_EQ(model.findItem(id), nullptr);
 }
 
@@ -376,7 +376,7 @@ TEST_F(SessionModelTest, findItemInAlienModel)
     EXPECT_EQ(model2.findItem(id2), parent2);
 
     // check that we can't find deleted item.
-    model1.removeItem(model1.rootItem(), "", 0);
+    model1.removeItem(model1.rootItem(), {"", 0});
     EXPECT_EQ(model1.findItem(id1), nullptr);
     EXPECT_EQ(model2.findItem(id1), nullptr);
     EXPECT_EQ(model1.findItem(id2), parent2);

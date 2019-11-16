@@ -25,13 +25,12 @@ ModelView::TagRow ModelView::TagRow::prepend(const std::string& tag_name)
     return {tag_name, 0};
 }
 
-bool operator==(const ModelView::TagRow& left, const ModelView::TagRow& right)
+bool ModelView::TagRow::operator==(const ModelView::TagRow& other) const
 {
-    return left.row == right.row && left.tag==right.tag;
+    return row == other.row && tag==other.tag;
 }
 
-bool operator!=(const ModelView::TagRow& left, const ModelView::TagRow& right)
+bool ModelView::TagRow::operator!=(const ModelView::TagRow& other) const
 {
-    return !(left == right);
+    return !(*this == other);
 }
-

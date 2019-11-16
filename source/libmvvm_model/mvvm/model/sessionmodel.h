@@ -10,12 +10,13 @@
 #ifndef MVVM_MODEL_SESSIONMODEL_H
 #define MVVM_MODEL_SESSIONMODEL_H
 
-#include <mvvm/model/function_types.h>
-#include <mvvm/core/export.h>
-#include <mvvm/model/mvvm_types.h>
-#include <mvvm/model/path.h>
 #include <QVariant>
 #include <memory>
+#include <mvvm/core/export.h>
+#include <mvvm/core/types.h>
+#include <mvvm/model/function_types.h>
+#include <mvvm/model/path.h>
+#include <mvvm/model/tagrow.h>
 #include <string>
 
 class QUndoStack;
@@ -46,13 +47,11 @@ public:
     std::string modelType() const;
 
     SessionItem* insertNewItem(const model_type& modelType, SessionItem* parent = nullptr,
-                               const std::string& tag = {}, int row = -1);
+                               const TagRow& tagrow = {});
 
-    template <typename T>
-    T* insertItem(SessionItem* parent = nullptr, const std::string& tag = {}, int row = -1);
+    template <typename T> T* insertItem(SessionItem* parent = nullptr, const TagRow& tagrow = {});
 
-    SessionItem* copyItem(const SessionItem* item, SessionItem* parent, const std::string& tag = {},
-                          int row = -1);
+    SessionItem* copyItem(const SessionItem* item, SessionItem* parent, const TagRow& tagrow = {});
 
     SessionItem* rootItem() const;
 
@@ -67,9 +66,9 @@ public:
 
     QUndoStack* undoStack() const;
 
-    void removeItem(SessionItem* parent, const std::string& tag, int row);
+    void removeItem(SessionItem* parent, const TagRow& tagrow);
 
-    void moveItem(SessionItem* item, SessionItem* new_parent, const std::string& tag, int row);
+    void moveItem(SessionItem* item, SessionItem* new_parent, const TagRow& tagrow);
 
     void register_item(SessionItem* item);
     void unregister_item(SessionItem* item);
@@ -91,8 +90,7 @@ protected:
 
 private:
     void createRootItem();
-    SessionItem* intern_insert(item_factory_func_t func, SessionItem* parent = nullptr,
-                            const std::string& tag = {}, int row = -1);
+    SessionItem* intern_insert(item_factory_func_t func, SessionItem* parent, const TagRow& tagrow);
 
     std::unique_ptr<CommandService> m_commands;
     std::string m_model_type;
@@ -100,12 +98,11 @@ private:
     std::unique_ptr<SessionItem> m_root_item;
 };
 
-template <typename T>
-T* SessionModel::insertItem(SessionItem* parent, const std::string& tag, int row)
+template <typename T> T* SessionModel::insertItem(SessionItem* parent, const TagRow& tagrow)
 {
-    return static_cast<T*>(intern_insert([]() { return std::make_unique<T>(); }, parent, tag, row));
+    return static_cast<T*>(intern_insert([]() { return std::make_unique<T>(); }, parent, tagrow));
 }
 
 } // namespace ModelView
 
-#endif  // MVVM_MODEL_SESSIONMODEL_H
+#endif // MVVM_MODEL_SESSIONMODEL_H

@@ -7,15 +7,15 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/model/sessionitem.h>
+#include <mvvm/core/uniqueidgenerator.h>
 #include <mvvm/model/customvariants.h>
-#include <mvvm/signals/itemmapper.h>
-#include <mvvm/signals/modelmapper.h>
+#include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionitemdata.h>
 #include <mvvm/model/sessionitemtags.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/model/taginfo.h>
-#include <mvvm/core/uniqueidgenerator.h>
+#include <mvvm/signals/itemmapper.h>
+#include <mvvm/signals/modelmapper.h>
 #include <stdexcept>
 
 namespace
@@ -131,8 +131,7 @@ bool SessionItem::insertItem(SessionItem* item, const TagRow& tagrow)
         if (p_impl->m_model) {
             // FIXME think of actual_tagrow removal if input tag,row will be always valid
             auto actual_tagrow = tagRowOfItem(item);
-            p_impl->m_model->mapper()->callOnRowInserted(this, actual_tagrow.tag,
-                                                         actual_tagrow.row);
+            p_impl->m_model->mapper()->callOnItemInserted(this, actual_tagrow);
         }
     }
 
@@ -147,14 +146,14 @@ SessionItem* SessionItem::takeItem(const TagRow& tagrow)
         return nullptr;
 
     if (p_impl->m_model)
-        p_impl->m_model->mapper()->callOnRowAboutToBeRemoved(this, tagrow.tag, tagrow.row);
+        p_impl->m_model->mapper()->callOnItemAboutToBeRemoved(this, tagrow);
 
     auto result = p_impl->m_tags->takeItem(tagrow);
     result->setParent(nullptr);
     result->setModel(nullptr);
     // FIXME remaining problem is that ItemMapper still looking to the model
     if (p_impl->m_model)
-        p_impl->m_model->mapper()->callOnRowRemoved(this, tagrow.tag, tagrow.row);
+        p_impl->m_model->mapper()->callOnItemRemoved(this, tagrow);
 
     return result;
 }

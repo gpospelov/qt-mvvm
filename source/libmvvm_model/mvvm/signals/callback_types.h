@@ -12,6 +12,7 @@
 
 #include <string>
 #include <functional>
+#include <mvvm/model/tagrow.h>
 
 namespace ModelView {
 
@@ -24,6 +25,7 @@ using item_t = std::function<void(SessionItem*)>;
 using item_int_t = std::function<void(SessionItem*, int)>;
 using item_str_t = std::function<void(SessionItem*, std::string)>;
 using item_str_int_t = std::function<void(SessionItem*, std::string, int)>;
+using item_tagrow_t = std::function<void(SessionItem*, TagRow)>;
 using model_t = std::function<void(SessionModel*)>;
 }
 

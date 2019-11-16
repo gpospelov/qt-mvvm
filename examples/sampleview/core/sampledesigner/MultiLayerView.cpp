@@ -154,7 +154,7 @@ void MultiLayerView::dropEvent(QGraphicsSceneDragDropEvent* event)
         return;
     designerScene->sendModelCommand([name = mimeData->getClassName(), pos = event->pos(),
                                      this](ModelView::SessionModel& model) {
-        model.insertNewItem(name, getItem(), {}, getDropArea(pos));
+        model.insertNewItem(name, getItem(), {"", getDropArea(pos)});
     });
 }
 

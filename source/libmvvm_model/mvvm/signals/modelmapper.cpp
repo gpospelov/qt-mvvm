@@ -22,30 +22,30 @@ void ModelMapper::setOnDataChange(Callbacks::item_int_t f, Callbacks::slot_t own
 }
 
 //! Sets callback to be notified on item insert.
-//! Callback will be called with (SessionItem* parent, tag, row), where tag,row corresponds
-//! to inserted child.
+//! Callback will be called with (SessionItem* parent, tagrow), where tagrow corresponds
+//! to the position of inserted child.
 
-void ModelMapper::setOnRowInserted(Callbacks::item_str_int_t f, Callbacks::slot_t owner)
+void ModelMapper::setOnItemInserted(Callbacks::item_tagrow_t f, Callbacks::slot_t owner)
 {
-    m_on_row_inserted.connect(std::move(f), owner);
+    m_on_item_inserted.connect(std::move(f), owner);
 }
 
-//! Sets callback to be notified on removed row.
-//! Callback will be called with (SessionItem* parent, tag, row), where tag,row corresponds
-//! to removed child.
+//! Sets callback to be notified on removed item.
+//! Callback will be called with (SessionItem* parent, tagrow), where tagrow corresponds
+//! to position of the removed child.
 
-void ModelMapper::setOnRowRemoved(Callbacks::item_str_int_t f, Callbacks::slot_t owner)
+void ModelMapper::setOnItemRemoved(Callbacks::item_tagrow_t f, Callbacks::slot_t owner)
 {
-    m_on_row_removed.connect(std::move(f), owner);
+    m_on_item_removed.connect(std::move(f), owner);
 }
 
-//! Sets callback to be notified when row is about to be removed.
-//! Callback will be called with (SessionItem* parent, tag, row), where tag,row corresponds
-//! to the child which going to be removed.
+//! Sets callback to be notified when item is about to be removed.
+//! Callback will be called with (SessionItem* parent, tagrow), where tagrow corresponds
+//! to the position of a child which going to be removed.
 
-void ModelMapper::setOnRowAboutToBeRemoved(Callbacks::item_str_int_t f, Callbacks::slot_t owner)
+void ModelMapper::setOnItemAboutToBeRemoved(Callbacks::item_tagrow_t f, Callbacks::slot_t owner)
 {
-    m_on_row_about_removed.connect(std::move(f), owner);
+    m_on_item_about_removed.connect(std::move(f), owner);
 }
 
 //! Sets the callback for notifications on model destruction.
@@ -72,9 +72,9 @@ void ModelMapper::setActive(bool value)
 void ModelMapper::unsubscribe(Callbacks::slot_t client)
 {
     m_on_data_change.remove_client(client);
-    m_on_row_inserted.remove_client(client);
-    m_on_row_removed.remove_client(client);
-    m_on_row_about_removed.remove_client(client);
+    m_on_item_inserted.remove_client(client);
+    m_on_item_removed.remove_client(client);
+    m_on_item_about_removed.remove_client(client);
     m_on_model_destroyed.remove_client(client);
     m_on_model_reset.remove_client(client);
 }
@@ -89,22 +89,22 @@ void ModelMapper::callOnDataChange(SessionItem* item, int role)
 
 //! Notifies all callbacks subscribed to "item data is changed" event.
 
-void ModelMapper::callOnRowInserted(SessionItem* parent, std::string tag, int row)
+void ModelMapper::callOnItemInserted(SessionItem* parent, TagRow tagrow)
 {
     if (m_active)
-        m_on_row_inserted(parent, tag, row);
+        m_on_item_inserted(parent, tagrow);
 }
 
-void ModelMapper::callOnRowRemoved(SessionItem* parent, std::string tag, int row)
+void ModelMapper::callOnItemRemoved(SessionItem* parent, TagRow tagrow)
 {
     if (m_active)
-        m_on_row_removed(parent, tag, row);
+        m_on_item_removed(parent, tagrow);
 }
 
-void ModelMapper::callOnRowAboutToBeRemoved(SessionItem* parent, std::string tag, int row)
+void ModelMapper::callOnItemAboutToBeRemoved(SessionItem* parent, TagRow tagrow)
 {
     if (m_active)
-        m_on_row_about_removed(parent, tag, row);
+        m_on_item_about_removed(parent, tagrow);
 }
 
 void ModelMapper::callOnModelDestroyed()

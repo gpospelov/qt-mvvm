@@ -23,15 +23,19 @@ struct CORE_EXPORT TagRow
     std::string tag = {};
     int row = -1;
 
+    TagRow() {}
+
+    TagRow(const std::string& name, int row = -1) : tag(name), row(row){}
+    TagRow(const char* name, int row = -1) : tag(name), row(row){}
+
     static TagRow append(const std::string& tag_name = {});
 
     static TagRow prepend(const std::string& tag_name = {});
 
+    bool operator==(const TagRow& other) const;
+    bool operator!=(const TagRow& other) const;
 };
 
 } // namespace ModelView
-
-CORE_EXPORT bool operator==(const ModelView::TagRow& left, const ModelView::TagRow& right);
-CORE_EXPORT bool operator!=(const ModelView::TagRow& left, const ModelView::TagRow& right);
 
 #endif  // MVVM_MODEL_TAGROW_H

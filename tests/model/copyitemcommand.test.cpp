@@ -30,12 +30,12 @@ TEST_F(CopyItemCommandTest, copyChild)
     SessionModel model;
 
     // parent with children and data
-    auto parent = model.insertItem<SessionItem>(model.rootItem(), "", 0);
+    auto parent = model.insertItem<SessionItem>(model.rootItem(), {"", 0});
     parent->registerTag(TagInfo::universalTag("tag1"), /*set_as_default*/ true);
 
-    auto child0 = model.insertItem<SessionItem>(parent, "tag1", -1);
+    auto child0 = model.insertItem<SessionItem>(parent, "tag1");
     child0->setData(42.0);
-    auto child1 = model.insertItem<SessionItem>(parent, "tag1", -1);
+    auto child1 = model.insertItem<SessionItem>(parent, "tag1");
     child1->setData(43.0);
 
     // making copy of child
@@ -65,11 +65,11 @@ TEST_F(CopyItemCommandTest, invalidCopyAttempt)
     SessionModel model;
 
     // parent with children and data
-    auto parent = model.insertItem<CompoundItem>(model.rootItem(), "", 0);
+    auto parent = model.insertItem<CompoundItem>(model.rootItem());
     parent->addProperty("thickness", 42.0);
     parent->registerTag(TagInfo::universalTag("tag1"), /*set_as_default*/ true);
 
-    auto child0 = model.insertItem<SessionItem>(parent, "tag1", -1);
+    auto child0 = model.insertItem<SessionItem>(parent);
     child0->setData(42.0);
 
     // making copy of child

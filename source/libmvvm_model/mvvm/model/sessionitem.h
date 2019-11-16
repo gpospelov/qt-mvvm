@@ -10,11 +10,11 @@
 #ifndef MVVM_MODEL_SESSIONITEM_H
 #define MVVM_MODEL_SESSIONITEM_H
 
+#include <QVariant>
+#include <memory>
 #include <mvvm/core/export.h>
 #include <mvvm/model/mvvm_types.h>
 #include <mvvm/model/tagrow.h>
-#include <QVariant>
-#include <memory>
 #include <vector>
 
 namespace ModelView
@@ -92,7 +92,7 @@ public:
 private:
     friend class SessionModel;
     friend class JsonItemConverter;
-    virtual void activate(){}
+    virtual void activate() {}
     void setParent(SessionItem* parent);
     void setModel(SessionModel* model);
     void setAppearanceFlag(int flag, bool value);
@@ -100,7 +100,8 @@ private:
     // FIXME refactor converter access to item internals
     class SessionItemData* itemData() const;
     class SessionItemTags* itemTags() const;
-    void setDataAndTags(std::unique_ptr<SessionItemData> data, std::unique_ptr<SessionItemTags> tags);
+    void setDataAndTags(std::unique_ptr<SessionItemData> data,
+                        std::unique_ptr<SessionItemTags> tags);
 
     struct SessionItemImpl;
     std::unique_ptr<SessionItemImpl> p_impl;
@@ -123,7 +124,7 @@ template <typename T> T* SessionItem::item(const std::string& tag) const
 
 //! Returns all items under given tag casted to specific type.
 
-template <typename T=SessionItem> std::vector<T*> SessionItem::items(const std::string& tag) const
+template <typename T = SessionItem> std::vector<T*> SessionItem::items(const std::string& tag) const
 {
     std::vector<T*> result;
     for (auto item : getItems(tag))
@@ -133,8 +134,6 @@ template <typename T=SessionItem> std::vector<T*> SessionItem::items(const std::
     return result;
 }
 
-
 } // namespace ModelView
 
-#endif  // MVVM_MODEL_SESSIONITEM_H
-
+#endif // MVVM_MODEL_SESSIONITEM_H

@@ -67,16 +67,14 @@ void TestWidget::onContextMenuRequest(const QPoint& point)
     // inserting item of same type after given item
     auto addItemAction = menu.addAction("Add item");
     auto add_item = [&]() {
-        m_sessionModel->insertNewItem(item->modelType(), item->parent(), tagrow.tag,
-                                      tagrow.row + 1);
+        TagRow next_pos{tagrow.tag, tagrow.row + 1};
+        m_sessionModel->insertNewItem(item->modelType(), item->parent(), next_pos);
     };
     connect(addItemAction, &QAction::triggered, add_item);
 
     // removing item under the mouse
     auto removeItemAction = menu.addAction("Remove item");
-    auto remove_item = [&]() {
-        m_sessionModel->removeItem(item->parent(), tagrow.tag, tagrow.row);
-    };
+    auto remove_item = [&]() { m_sessionModel->removeItem(item->parent(), tagrow); };
     connect(removeItemAction, &QAction::triggered, remove_item);
 
     menu.exec(treeView->mapToGlobal(point));

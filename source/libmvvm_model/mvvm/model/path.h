@@ -11,10 +11,11 @@
 #define MVVM_MODEL_PATH_H
 
 #include <mvvm/core/export.h>
-#include <vector>
 #include <string>
+#include <vector>
 
-namespace ModelView {
+namespace ModelView
+{
 
 //! Provides navigation through SessionModel.
 //! Contains chain of row indexes which has to be used to reach desired SessionItem starting
@@ -49,7 +50,6 @@ private:
     container_t m_data;
 };
 
-}  // namespace ModelView
+} // namespace ModelView
 
-#endif  // MVVM_MODEL_PATH_H
-
+#endif // MVVM_MODEL_PATH_H

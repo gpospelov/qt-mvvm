@@ -118,7 +118,7 @@ TEST_F(GraphViewportPlotControllerTest, addAndRemoveGraphs)
     data2->setContent(expected_content2);
 
     // adding graph item to viewport
-    auto graph_item1 = model.insertItem<GraphItem>(viewport_item, "", 0);
+    auto graph_item1 = model.insertItem<GraphItem>(viewport_item, {"", 0});
 
     // check that QCustomPlot knows about graph
     EXPECT_EQ(custom_plot->graphCount(), 1);
@@ -129,7 +129,7 @@ TEST_F(GraphViewportPlotControllerTest, addAndRemoveGraphs)
     EXPECT_EQ(custom_plot->graphCount(), 1);
 
     // adding secong graph
-    auto graph_item2 = model.insertItem<GraphItem>(viewport_item, "", 1);
+    auto graph_item2 = model.insertItem<GraphItem>(viewport_item, {"", 1});
     graph_item2->setDataItem(data2);
 
     // check that QCustomPlot knows about two graph
@@ -143,7 +143,7 @@ TEST_F(GraphViewportPlotControllerTest, addAndRemoveGraphs)
     EXPECT_DOUBLE_EQ(custom_plot->yAxis->range().upper, expected_content2[2]);
 
     // removing one GraphItem
-    model.removeItem(viewport_item, ViewportItem::T_ITEMS, 1);
+    model.removeItem(viewport_item, {ViewportItem::T_ITEMS, 1});
 
     // only single graph should remain on QCustomPlot3
     EXPECT_EQ(custom_plot->graphCount(), 1);

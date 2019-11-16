@@ -7,7 +7,6 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/model/sessionmodel.h>
 #include <mvvm/commands/commandservice.h>
 #include <mvvm/model/customvariants.h>
 #include <mvvm/model/itemcatalogue.h>
@@ -15,12 +14,14 @@
 #include <mvvm/model/itemmanager.h>
 #include <mvvm/model/itempool.h>
 #include <mvvm/model/itemutils.h>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/model/sessionmodel.h>
+#include <mvvm/model/taginfo.h>
+#include <mvvm/model/tagrow.h>
 #include <mvvm/serialization/jsonitembackupstrategy.h>
 #include <mvvm/serialization/jsonitemcopystrategy.h>
 #include <mvvm/signals/modelmapper.h>
-#include <mvvm/model/sessionitem.h>
 #include <mvvm/standarditems/standarditemcatalogue.h>
-#include <mvvm/model/taginfo.h>
 
 using namespace ModelView;
 
@@ -57,20 +58,20 @@ std::string SessionModel::modelType() const
 }
 
 SessionItem* SessionModel::insertNewItem(const model_type& modelType, SessionItem* parent,
-                                         const std::string& tag, int row)
+                                         const TagRow& tagrow)
 {
     // intentionally passing by value inside lambda
     auto create_func = [this, modelType]() { return factory()->createItem(modelType); };
-    return intern_insert(create_func, parent, tag, row);
+    return intern_insert(create_func, parent, tagrow);
 }
 
 //! Copy item and insert it in parent's tag and row.
 //! Item could belong to any model/parent.
 
 SessionItem* SessionModel::copyItem(const SessionItem* item, SessionItem* parent,
-                                    const std::string& tag, int row)
+                                    const TagRow& tagrow)
 {
-    return m_commands->copyItem(item, parent, {tag, row});
+    return m_commands->copyItem(item, parent, tagrow);
 }
 
 SessionItem* SessionModel::rootItem() const
@@ -126,18 +127,17 @@ QUndoStack* SessionModel::undoStack() const
 
 //! Removes given row from parent.
 
-void SessionModel::removeItem(SessionItem* parent, const std::string& tag, int row)
+void SessionModel::removeItem(SessionItem* parent, const TagRow& tagrow)
 {
-    m_commands->removeItem(parent, {tag, row});
+    m_commands->removeItem(parent, tagrow);
 }
 
 //! Move item from it's current parent to a new parent under given tag and row.
 //! Old and new parents should belong to this model.
 
-void SessionModel::moveItem(SessionItem* item, SessionItem* new_parent, const std::string& tag,
-                            int row)
+void SessionModel::moveItem(SessionItem* item, SessionItem* new_parent, const TagRow& tagrow)
 {
-    m_commands->moveItem(item, new_parent, {tag, row});
+    m_commands->moveItem(item, new_parent, tagrow);
 }
 
 void SessionModel::register_item(SessionItem* item)
@@ -204,7 +204,7 @@ void SessionModel::createRootItem()
 }
 
 SessionItem* SessionModel::intern_insert(item_factory_func_t func, SessionItem* parent,
-                                       const std::string& tag, int row)
+                                         const TagRow& tagrow)
 {
-    return m_commands->insertNewItem(func, parent, {tag, row});
+    return m_commands->insertNewItem(func, parent, tagrow);
 }
