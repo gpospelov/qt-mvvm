@@ -67,9 +67,9 @@ struct GraphViewportPlotController::GraphViewportPlotControllerImpl {
     }
 
     //! Adds controller for item.
-    void add_controller_for_item(SessionItem* parent, const std::string& tag, int row)
+    void add_controller_for_item(SessionItem* parent, const TagRow& tagrow)
     {
-        auto added_child = dynamic_cast<GraphItem*>(parent->getItem(tag, row));
+        auto added_child = dynamic_cast<GraphItem*>(parent->getItem(tagrow.tag, tagrow.row));
 
         for (auto& controller : graph_controllers)
             if (controller->currentItem() == added_child)
@@ -101,8 +101,8 @@ GraphViewportPlotController::GraphViewportPlotController(QCustomPlot* custom_plo
 
 void GraphViewportPlotController::subscribe()
 {
-    auto on_row_inserted = [this](SessionItem* parent, std::string tag, int row) {
-        p_impl->add_controller_for_item(parent, tag, row);
+    auto on_row_inserted = [this](SessionItem* parent, TagRow tagrow) {
+        p_impl->add_controller_for_item(parent, tagrow);
     };
     currentItem()->mapper()->setOnRowInserted(on_row_inserted, this);
 

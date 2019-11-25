@@ -56,8 +56,8 @@ void MockWidgetForItem::setItem(ModelView::SessionItem* item)
     };
     m_item->mapper()->setOnChildPropertyChange(on_child_property_change, this);
 
-    auto on_row_inserted = [this](ModelView::SessionItem* item, std::string tag, int row) {
-        onRowInserted(item, tag, row);
+    auto on_row_inserted = [this](ModelView::SessionItem* item, ModelView::TagRow tagrow) {
+        onRowInserted(item, tagrow.tag, tagrow.row);
     };
     m_item->mapper()->setOnRowInserted(on_row_inserted, this);
 

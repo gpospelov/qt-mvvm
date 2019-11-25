@@ -82,10 +82,10 @@ void ItemMapper::setOnChildPropertyChange(Callbacks::item_str_t f, Callbacks::sl
 
 Callback will be called with (compound_item, tag, row). For MultiLayer containing the T_LAYERS
 tag, the signal will be triggered on layer insertion with
-(multilayer*, T_LAYER, row) as callback parameters.
+(multilayer*, {T_LAYER, row}) as callback parameters.
 */
 
-void ItemMapper::setOnRowInserted(Callbacks::item_str_int_t f, Callbacks::slot_t owner)
+void ItemMapper::setOnRowInserted(Callbacks::item_tagrow_t f, Callbacks::slot_t owner)
 {
     m_on_row_inserted.connect(std::move(f), owner);
 }
@@ -144,7 +144,7 @@ void ItemMapper::onModelDataChange(SessionItem* item, int role)
 void ItemMapper::onModelRowInserted(SessionItem* parent, std::string tag, int row)
 {
     if (parent == m_item)
-        callOnRowInserted(m_item, tag, row);
+        callOnRowInserted(m_item, {tag, row});
 }
 
 void ItemMapper::onModelRowAboutToBeRemoved(SessionItem* parent, std::string tag, int row)
@@ -221,10 +221,10 @@ void ItemMapper::callOnChildPropertyChange(SessionItem* item, std::string proper
 
 //! Notifies all callbacks subscribed to "on row inserted" event.
 
-void ItemMapper::callOnRowInserted(SessionItem* parent, std::string tag, int row)
+void ItemMapper::callOnRowInserted(SessionItem* parent, TagRow tagrow)
 {
     if (m_active)
-        m_on_row_inserted(parent, tag, row);
+        m_on_row_inserted(parent, tagrow);
 }
 
 //! Notifies all callbacks subscribed to "on row about to be removed".

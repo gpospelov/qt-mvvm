@@ -67,7 +67,7 @@ ColorMapViewportPlotController::ColorMapViewportPlotController(QCustomPlot* cust
 
 void ColorMapViewportPlotController::subscribe()
 {
-    auto on_row_inserted = [this](SessionItem*, std::string, int) {
+    auto on_row_inserted = [this](SessionItem*, TagRow) {
         p_impl->setup_components();
     };
     currentItem()->mapper()->setOnRowInserted(on_row_inserted, this);
