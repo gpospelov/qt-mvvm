@@ -12,6 +12,7 @@
 
 #include <mvvm/core/export.h>
 #include <mvvm/signals/callback_types.h>
+#include <mvvm/model/tagrow.h>
 
 namespace ModelView
 {
@@ -30,17 +31,17 @@ public:
     virtual ~ModelMapperInterface() = default;
 
     virtual void setOnDataChange(Callbacks::item_int_t f, Callbacks::slot_t client) = 0;
-    virtual void setOnRowInserted(Callbacks::item_str_int_t f, Callbacks::slot_t client) = 0;
-    virtual void setOnRowRemoved(Callbacks::item_str_int_t f, Callbacks::slot_t client) = 0;
-    virtual void setOnRowAboutToBeRemoved(Callbacks::item_str_int_t f, Callbacks::slot_t client) = 0;
+    virtual void setOnItemInserted(Callbacks::item_tagrow_t f, Callbacks::slot_t client) = 0;
+    virtual void setOnItemRemoved(Callbacks::item_tagrow_t f, Callbacks::slot_t client) = 0;
+    virtual void setOnAboutToRemoveItem(Callbacks::item_tagrow_t f, Callbacks::slot_t client) = 0;
     virtual void setOnModelDestroyed(Callbacks::model_t f, Callbacks::slot_t client) = 0;
     virtual void setOnModelReset(Callbacks::model_t f, Callbacks::slot_t client) = 0;
 
 private:
     virtual void callOnDataChange(SessionItem* item, int role) = 0;
-    virtual void callOnRowInserted(SessionItem* parent, std::string tag, int row) = 0;
-    virtual void callOnRowRemoved(SessionItem* parent, std::string tag, int row) = 0;
-    virtual void callOnRowAboutToBeRemoved(SessionItem* parent, std::string tag, int row) = 0;
+    virtual void callOnItemInserted(SessionItem* parent, TagRow tagrow) = 0;
+    virtual void callOnItemRemoved(SessionItem* parent, TagRow tagrow) = 0;
+    virtual void callOnAboutToRemoveItem(SessionItem* parent, TagRow tagrow) = 0;
     virtual void callOnModelDestroyed() = 0;
     virtual void callOnModelReset() = 0;
 };
