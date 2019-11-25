@@ -107,8 +107,8 @@ TEST_F(GraphItemTest, onSetDataItem)
     EXPECT_CALL(widget, onDataChange(_, _)).Times(0);
     EXPECT_CALL(widget, onPropertyChange(graph_item, GraphItem::P_LINK)).Times(1);
     EXPECT_CALL(widget, onChildPropertyChange(_, _)).Times(0);
-    EXPECT_CALL(widget, onRowInserted(_, _, _)).Times(0);
-    EXPECT_CALL(widget, onRowAboutToBeRemoved(_, _, _)).Times(0);
+    EXPECT_CALL(widget, onItemInserted(_, _)).Times(0);
+    EXPECT_CALL(widget, onAboutToRemoveItem(_, _)).Times(0);
 
     // performing action
     graph_item->setDataItem(data_item);

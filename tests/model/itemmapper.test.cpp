@@ -53,8 +53,8 @@ TEST(ItemMapperTest, onItemDestroy)
     EXPECT_CALL(widget, onDataChange(_, _)).Times(0);
     EXPECT_CALL(widget, onPropertyChange(_, _)).Times(0);
     EXPECT_CALL(widget, onChildPropertyChange(_, _)).Times(0);
-    EXPECT_CALL(widget, onRowInserted(_, _, _)).Times(0);
-    EXPECT_CALL(widget, onRowAboutToBeRemoved(_, _, _)).Times(0);
+    EXPECT_CALL(widget, onItemInserted(_, _)).Times(0);
+    EXPECT_CALL(widget, onAboutToRemoveItem(_, _)).Times(0);
 
     // performing action
     model.removeItem(model.rootItem(), {"", 0});
@@ -74,8 +74,8 @@ TEST(ItemMapperTest, onDataChange)
     EXPECT_CALL(widget, onDataChange(expected_item, expected_role)).Times(1);
     EXPECT_CALL(widget, onPropertyChange(_, _)).Times(0);
     EXPECT_CALL(widget, onChildPropertyChange(_, _)).Times(0);
-    EXPECT_CALL(widget, onRowInserted(_, _, _)).Times(0);
-    EXPECT_CALL(widget, onRowAboutToBeRemoved(_, _, _)).Times(0);
+    EXPECT_CALL(widget, onItemInserted(_, _)).Times(0);
+    EXPECT_CALL(widget, onAboutToRemoveItem(_, _)).Times(0);
 
     // perform action
     item->setData(42.0);
@@ -94,8 +94,8 @@ TEST(ItemMapperTest, onDataChangeDuplicate)
     EXPECT_CALL(widget, onDataChange(_, _)).Times(1);
     EXPECT_CALL(widget, onPropertyChange(_, _)).Times(0);
     EXPECT_CALL(widget, onChildPropertyChange(_, _)).Times(0);
-    EXPECT_CALL(widget, onRowInserted(_, _, _)).Times(0);
-    EXPECT_CALL(widget, onRowAboutToBeRemoved(_, _, _)).Times(0);
+    EXPECT_CALL(widget, onItemInserted(_, _)).Times(0);
+    EXPECT_CALL(widget, onAboutToRemoveItem(_, _)).Times(0);
 
     // perform actions, only one call should be triggered
     item->setData(42.0);
@@ -117,8 +117,8 @@ TEST(ItemMapperTest, setActivity)
     EXPECT_CALL(widget, onDataChange(_, _)).Times(0);
     EXPECT_CALL(widget, onPropertyChange(_, _)).Times(0);
     EXPECT_CALL(widget, onChildPropertyChange(_, _)).Times(0);
-    EXPECT_CALL(widget, onRowInserted(_, _, _)).Times(0);
-    EXPECT_CALL(widget, onRowAboutToBeRemoved(_, _, _)).Times(0);
+    EXPECT_CALL(widget, onItemInserted(_, _)).Times(0);
+    EXPECT_CALL(widget, onAboutToRemoveItem(_, _)).Times(0);
 
     // perform actions, no calls should be triggered
     item->setData(42.0);
@@ -159,8 +159,8 @@ TEST(ItemMapperTest, onPropertyChange)
     EXPECT_CALL(widget, onDataChange(_, _)).Times(0);
     EXPECT_CALL(widget, onPropertyChange(item, "height")).Times(1);
     EXPECT_CALL(widget, onChildPropertyChange(_, _)).Times(0);
-    EXPECT_CALL(widget, onRowInserted(_, _, _)).Times(0);
-    EXPECT_CALL(widget, onRowAboutToBeRemoved(_, _, _)).Times(0);
+    EXPECT_CALL(widget, onItemInserted(_, _)).Times(0);
+    EXPECT_CALL(widget, onAboutToRemoveItem(_, _)).Times(0);
 
     // perform action
     item->setProperty("height", 43.0);
@@ -185,8 +185,8 @@ TEST(ItemMapperTest, onChildPropertyChange)
     EXPECT_CALL(widget, onDataChange(_, _)).Times(0);
     EXPECT_CALL(widget, onPropertyChange(_, _)).Times(0);
     EXPECT_CALL(widget, onChildPropertyChange(compound2, "height")).Times(1);
-    EXPECT_CALL(widget, onRowInserted(_, _, _)).Times(0);
-    EXPECT_CALL(widget, onRowAboutToBeRemoved(_, _, _)).Times(0);
+    EXPECT_CALL(widget, onItemInserted(_, _)).Times(0);
+    EXPECT_CALL(widget, onAboutToRemoveItem(_, _)).Times(0);
 
     // perform action
     compound2->setProperty("height", 43.0);
@@ -204,17 +204,16 @@ TEST(ItemMapperTest, onRowInsert)
 
     MockWidgetForItem widget(compound1);
 
-    const int expected_row = 0;
-    std::string expected_tag = "tag1";
+    const TagRow expected_tagrow{"tag1", 0};
     EXPECT_CALL(widget, onItemDestroy(_)).Times(0);
     EXPECT_CALL(widget, onDataChange(_, _)).Times(0);
     EXPECT_CALL(widget, onPropertyChange(_, _)).Times(0);
     EXPECT_CALL(widget, onChildPropertyChange(_, _)).Times(0);
-    EXPECT_CALL(widget, onRowInserted(compound1, expected_tag, expected_row)).Times(1);
-    EXPECT_CALL(widget, onRowAboutToBeRemoved(_, _, _)).Times(0);
+    EXPECT_CALL(widget, onItemInserted(compound1, expected_tagrow)).Times(1);
+    EXPECT_CALL(widget, onAboutToRemoveItem(_, _)).Times(0);
 
     // perform action
-    model.insertItem<CompoundItem>(compound1, {expected_tag, expected_row});
+    model.insertItem<CompoundItem>(compound1, expected_tagrow);
 }
 
 //! Inserting item to item.
@@ -234,9 +233,8 @@ TEST(ItemMapperTest, onRowAboutToRemove)
     EXPECT_CALL(widget, onDataChange(_, _)).Times(0);
     EXPECT_CALL(widget, onPropertyChange(_, _)).Times(0);
     EXPECT_CALL(widget, onChildPropertyChange(_, _)).Times(0);
-    EXPECT_CALL(widget, onRowInserted(_, _, _)).Times(0);
-    EXPECT_CALL(widget, onRowAboutToBeRemoved(compound1, expected_tagrow.tag, expected_tagrow.row))
-        .Times(1);
+    EXPECT_CALL(widget, onItemInserted(_, _)).Times(0);
+    EXPECT_CALL(widget, onAboutToRemoveItem(compound1, expected_tagrow)).Times(1);
 
     // perform action
     model.removeItem(compound1, expected_tagrow);

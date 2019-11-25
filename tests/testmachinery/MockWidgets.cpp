@@ -56,15 +56,15 @@ void MockWidgetForItem::setItem(ModelView::SessionItem* item)
     };
     m_item->mapper()->setOnChildPropertyChange(on_child_property_change, this);
 
-    auto on_row_inserted = [this](ModelView::SessionItem* item, ModelView::TagRow tagrow) {
-        onRowInserted(item, tagrow.tag, tagrow.row);
+    auto on_item_inserted = [this](ModelView::SessionItem* item, ModelView::TagRow tagrow) {
+        onItemInserted(item, tagrow);
     };
-    m_item->mapper()->setOnItemInserted(on_row_inserted, this);
+    m_item->mapper()->setOnItemInserted(on_item_inserted, this);
 
-    auto on_row_about_removed = [this](ModelView::SessionItem* item, ModelView::TagRow tagrow) {
-        onRowAboutToBeRemoved(item, tagrow.tag, tagrow.row);
+    auto on_about_to_remove_item = [this](ModelView::SessionItem* item, ModelView::TagRow tagrow) {
+        onAboutToRemoveItem(item, tagrow);
     };
-    m_item->mapper()->setOnAboutToRemoveItem(on_row_about_removed, this);
+    m_item->mapper()->setOnAboutToRemoveItem(on_about_to_remove_item, this);
 }
 
 // ----------------------------------------------------------------------------

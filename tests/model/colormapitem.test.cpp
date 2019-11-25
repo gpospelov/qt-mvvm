@@ -63,8 +63,8 @@ TEST_F(ColorMapItemTest, onSetDataItem)
     EXPECT_CALL(widget, onDataChange(_, _)).Times(0);
     EXPECT_CALL(widget, onPropertyChange(colormap_item, ColorMapItem::P_LINK)).Times(1);
     EXPECT_CALL(widget, onChildPropertyChange(_, _)).Times(0);
-    EXPECT_CALL(widget, onRowInserted(_, _, _)).Times(0);
-    EXPECT_CALL(widget, onRowAboutToBeRemoved(_, _, _)).Times(0);
+    EXPECT_CALL(widget, onItemInserted(_, _)).Times(0);
+    EXPECT_CALL(widget, onAboutToRemoveItem(_, _)).Times(0);
 
     // performing action
     colormap_item->setDataItem(data_item);

@@ -81,11 +81,12 @@ TEST_F(GraphViewportItemTest, onAddItem)
 
     MockWidgetForItem widget(viewport_item);
 
+    const TagRow expected_tagrow{ViewportItem::T_ITEMS, 0};
     EXPECT_CALL(widget, onDataChange(_, _)).Times(0);
     EXPECT_CALL(widget, onPropertyChange(_, _)).Times(0);
     EXPECT_CALL(widget, onChildPropertyChange(_, _)).Times(0);
-    EXPECT_CALL(widget, onRowInserted(viewport_item, ViewportItem::T_ITEMS, 0)).Times(1);
-    EXPECT_CALL(widget, onRowAboutToBeRemoved(_, _, _)).Times(0);
+    EXPECT_CALL(widget, onItemInserted(viewport_item, expected_tagrow)).Times(1);
+    EXPECT_CALL(widget, onAboutToRemoveItem(_, _)).Times(0);
 
     // triggering action
     model.insertItem<GraphItem>(viewport_item);
@@ -113,8 +114,8 @@ TEST_F(GraphViewportItemTest, onSetDataItem)
     EXPECT_CALL(widget, onDataChange(_, _)).Times(0);
     EXPECT_CALL(widget, onPropertyChange(_, _)).Times(0);
     EXPECT_CALL(widget, onChildPropertyChange(graph_item, GraphItem::P_LINK)).Times(1);
-    EXPECT_CALL(widget, onRowInserted(_, _, _)).Times(0);
-    EXPECT_CALL(widget, onRowAboutToBeRemoved(_, _, _)).Times(0);
+    EXPECT_CALL(widget, onItemInserted(_, _)).Times(0);
+    EXPECT_CALL(widget, onAboutToRemoveItem(_, _)).Times(0);
 
     // triggering action
     graph_item->setDataItem(data_item);

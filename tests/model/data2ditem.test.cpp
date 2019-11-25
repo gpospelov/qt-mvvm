@@ -87,8 +87,8 @@ TEST_F(Data2DItemTest, checkSignalsOnAxisChange)
     EXPECT_CALL(widget, onDataChange(item, ItemDataRole::DATA)).Times(1); // values should change
     EXPECT_CALL(widget, onPropertyChange(_, _)).Times(0);
     EXPECT_CALL(widget, onChildPropertyChange(_, _)).Times(0);
-    EXPECT_CALL(widget, onRowInserted(item, _, 0)).Times(2);
-    EXPECT_CALL(widget, onRowAboutToBeRemoved(_, _, _)).Times(0);
+    EXPECT_CALL(widget, onItemInserted(item, _)).Times(2);
+    EXPECT_CALL(widget, onAboutToRemoveItem(_, _)).Times(0);
 
     // trigger change
     item->setAxes(FixedBinAxisItem::create(1, 0.0, 5.0), FixedBinAxisItem::create(3, 0.0, 3.0));
@@ -107,8 +107,8 @@ TEST_F(Data2DItemTest, checkSignalsOnContentChange)
     EXPECT_CALL(widget, onDataChange(item, ItemDataRole::DATA)).Times(1); // values should change
     EXPECT_CALL(widget, onPropertyChange(_, _)).Times(0);
     EXPECT_CALL(widget, onChildPropertyChange(_, _)).Times(0);
-    EXPECT_CALL(widget, onRowInserted(_, _, _)).Times(0);
-    EXPECT_CALL(widget, onRowAboutToBeRemoved(_, _, _)).Times(0);
+    EXPECT_CALL(widget, onItemInserted(_, _)).Times(0);
+    EXPECT_CALL(widget, onAboutToRemoveItem(_, _)).Times(0);
 
     // trigger change
     item->setContent(std::vector<double>{1.0, 2.0, 3.0});
