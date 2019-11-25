@@ -13,6 +13,7 @@
 #include <mvvm/signals/modelmapper.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
+#include <mvvm/model/tagrow.h>
 
 // ----------------------------------------------------------------------------
 
@@ -60,8 +61,8 @@ void MockWidgetForItem::setItem(ModelView::SessionItem* item)
     };
     m_item->mapper()->setOnRowInserted(on_row_inserted, this);
 
-    auto on_row_about_removed = [this](ModelView::SessionItem* item, std::string tag, int row) {
-        onRowAboutToBeRemoved(item, tag, row);
+    auto on_row_about_removed = [this](ModelView::SessionItem* item, ModelView::TagRow tagrow) {
+        onRowAboutToBeRemoved(item, tagrow.tag, tagrow.row);
     };
     m_item->mapper()->setOnRowAboutToBeRemoved(on_row_about_removed, this);
 }

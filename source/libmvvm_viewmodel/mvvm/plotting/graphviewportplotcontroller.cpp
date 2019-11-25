@@ -83,9 +83,9 @@ struct GraphViewportPlotController::GraphViewportPlotControllerImpl {
 
     //! Remove GraphPlotController corresponding to GraphItem.
 
-    void remove_controller_for_item(SessionItem* parent, const std::string& tag, int row)
+    void remove_controller_for_item(SessionItem* parent, const TagRow& tagrow)
     {
-        auto child_about_to_be_removed = parent->getItem(tag, row);
+        auto child_about_to_be_removed = parent->getItem(tagrow.tag, tagrow.row);
         auto if_func = [&](const std::unique_ptr<GraphPlotController>& cntrl) -> bool {
             return cntrl->currentItem() == child_about_to_be_removed;
         };
@@ -106,8 +106,8 @@ void GraphViewportPlotController::subscribe()
     };
     currentItem()->mapper()->setOnRowInserted(on_row_inserted, this);
 
-    auto on_row_about_to_be_removed = [this](SessionItem* parent, std::string tag, int row) {
-        p_impl->remove_controller_for_item(parent, tag, row);
+    auto on_row_about_to_be_removed = [this](SessionItem* parent, TagRow tagrow) {
+        p_impl->remove_controller_for_item(parent, tagrow);
     };
     currentItem()->mapper()->setOnRowAboutToBeRemoved(on_row_about_to_be_removed, this);
 

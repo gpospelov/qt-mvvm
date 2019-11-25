@@ -93,12 +93,12 @@ void ItemMapper::setOnRowInserted(Callbacks::item_str_int_t f, Callbacks::slot_t
 /*!
 @brief Sets callback to be notified when row is about to be removed.
 
-Callback will be called with (compound_item, tag, row). For MultiLayer containing the T_LAYERS
+Callback will be called with (compound_item, tagrow). For MultiLayer containing the T_LAYERS
 tag, the signal will be triggered on layer deletion with
-(multilayer*, T_LAYER, row) as callback parameters.
+(multilayer*, {T_LAYER, row}) as callback parameters.
 */
 
-void ItemMapper::setOnRowAboutToBeRemoved(Callbacks::item_str_int_t f, Callbacks::slot_t owner)
+void ItemMapper::setOnRowAboutToBeRemoved(Callbacks::item_tagrow_t f, Callbacks::slot_t owner)
 {
     m_on_row_about_removed.connect(std::move(f), owner);
 }
@@ -150,7 +150,7 @@ void ItemMapper::onModelRowInserted(SessionItem* parent, std::string tag, int ro
 void ItemMapper::onModelRowAboutToBeRemoved(SessionItem* parent, std::string tag, int row)
 {
     if (parent == m_item)
-        callOnRowAboutToBeRemoved(m_item, tag, row);
+        callOnRowAboutToBeRemoved(m_item, {tag, row});
 }
 
 //! Subscribes to model signals.
@@ -229,9 +229,9 @@ void ItemMapper::callOnRowInserted(SessionItem* parent, std::string tag, int row
 
 //! Notifies all callbacks subscribed to "on row about to be removed".
 
-void ItemMapper::callOnRowAboutToBeRemoved(SessionItem* parent, std::string tag, int row)
+void ItemMapper::callOnRowAboutToBeRemoved(SessionItem* parent, TagRow tagrow)
 {
     if (m_active)
-        m_on_row_about_removed(parent, tag, row);
+        m_on_row_about_removed(parent, tagrow);
 }
 

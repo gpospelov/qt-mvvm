@@ -38,7 +38,7 @@ public:
     void setOnPropertyChange(Callbacks::item_str_t f, Callbacks::slot_t owner);
     void setOnChildPropertyChange(Callbacks::item_str_t f, Callbacks::slot_t owner);
     void setOnRowInserted(Callbacks::item_str_int_t f, Callbacks::slot_t owner);
-    void setOnRowAboutToBeRemoved(Callbacks::item_str_int_t f, Callbacks::slot_t owner);
+    void setOnRowAboutToBeRemoved(Callbacks::item_tagrow_t f, Callbacks::slot_t owner);
 
     void setActive(bool value);
 
@@ -57,14 +57,14 @@ private:
     void callOnPropertyChange(SessionItem* item, std::string property_name);
     void callOnChildPropertyChange(SessionItem* item, std::string property_name);
     void callOnRowInserted(SessionItem* parent, std::string tag, int row);
-    void callOnRowAboutToBeRemoved(SessionItem* parent, std::string tag, int row);
+    void callOnRowAboutToBeRemoved(SessionItem* parent, TagRow tagrow);
 
     Signal<Callbacks::item_t> m_on_item_destroy;
     Signal<Callbacks::item_int_t> m_on_data_change;
     Signal<Callbacks::item_str_t> m_on_property_change;
     Signal<Callbacks::item_str_t> m_on_child_property_change;
     Signal<Callbacks::item_str_int_t> m_on_row_inserted;
-    Signal<Callbacks::item_str_int_t> m_on_row_about_removed;
+    Signal<Callbacks::item_tagrow_t> m_on_row_about_removed;
 
     bool m_active;
     SessionItem* m_item;
