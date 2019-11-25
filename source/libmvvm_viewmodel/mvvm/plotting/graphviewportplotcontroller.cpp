@@ -101,15 +101,15 @@ GraphViewportPlotController::GraphViewportPlotController(QCustomPlot* custom_plo
 
 void GraphViewportPlotController::subscribe()
 {
-    auto on_row_inserted = [this](SessionItem* parent, TagRow tagrow) {
+    auto on_item_inserted = [this](SessionItem* parent, TagRow tagrow) {
         p_impl->add_controller_for_item(parent, tagrow);
     };
-    currentItem()->mapper()->setOnRowInserted(on_row_inserted, this);
+    currentItem()->mapper()->setOnItemInserted(on_item_inserted, this);
 
-    auto on_row_about_to_be_removed = [this](SessionItem* parent, TagRow tagrow) {
+    auto on_about_to_remove_item = [this](SessionItem* parent, TagRow tagrow) {
         p_impl->remove_controller_for_item(parent, tagrow);
     };
-    currentItem()->mapper()->setOnRowAboutToBeRemoved(on_row_about_to_be_removed, this);
+    currentItem()->mapper()->setOnAboutToRemoveItem(on_about_to_remove_item, this);
 
     p_impl->setup_components();
 }

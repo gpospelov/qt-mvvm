@@ -85,9 +85,9 @@ tag, the signal will be triggered on layer insertion with
 (multilayer*, {T_LAYER, row}) as callback parameters.
 */
 
-void ItemMapper::setOnRowInserted(Callbacks::item_tagrow_t f, Callbacks::slot_t owner)
+void ItemMapper::setOnItemInserted(Callbacks::item_tagrow_t f, Callbacks::slot_t owner)
 {
-    m_on_row_inserted.connect(std::move(f), owner);
+    m_on_item_inserted.connect(std::move(f), owner);
 }
 
 /*!
@@ -98,9 +98,9 @@ tag, the signal will be triggered on layer deletion with
 (multilayer*, {T_LAYER, row}) as callback parameters.
 */
 
-void ItemMapper::setOnRowAboutToBeRemoved(Callbacks::item_tagrow_t f, Callbacks::slot_t owner)
+void ItemMapper::setOnAboutToRemoveItem(Callbacks::item_tagrow_t f, Callbacks::slot_t owner)
 {
-    m_on_row_about_removed.connect(std::move(f), owner);
+    m_on_about_to_remove_item.connect(std::move(f), owner);
 }
 
 //! Sets activity flag to given value. Will disable all callbacks if false.
@@ -116,13 +116,13 @@ void ItemMapper::unsubscribe(Callbacks::slot_t client)
     m_on_data_change.remove_client(client);
     m_on_property_change.remove_client(client);
     m_on_child_property_change.remove_client(client);
-    m_on_row_inserted.remove_client(client);
-    m_on_row_about_removed.remove_client(client);
+    m_on_item_inserted.remove_client(client);
+    m_on_about_to_remove_item.remove_client(client);
 }
 
 //! Processes signals from the model when item data changed.
 
-void ItemMapper::onModelDataChange(SessionItem* item, int role)
+void ItemMapper::processDataChange(SessionItem* item, int role)
 {
     int nestling = nestlingDepth(item);
 
@@ -141,34 +141,34 @@ void ItemMapper::onModelDataChange(SessionItem* item, int role)
     }
 }
 
-void ItemMapper::onModelRowInserted(SessionItem* parent, TagRow tagrow)
+void ItemMapper::processItemInserted(SessionItem* parent, TagRow tagrow)
 {
     if (parent == m_item)
-        callOnRowInserted(m_item, tagrow);
+        callOnItemInserted(m_item, tagrow);
 }
 
-void ItemMapper::onModelRowAboutToBeRemoved(SessionItem* parent, TagRow tagrow)
+void ItemMapper::processAboutToRemoveItem(SessionItem* parent, TagRow tagrow)
 {
     if (parent == m_item)
-        callOnRowAboutToBeRemoved(m_item, tagrow);
+        callOnAboutToRemoveItem(m_item, tagrow);
 }
 
 //! Subscribes to model signals.
 
 void ItemMapper::subscribe_to_model()
 {
-    auto on_data_change = [this](ModelView::SessionItem* item, int role) {onModelDataChange(item, role);};
+    auto on_data_change = [this](ModelView::SessionItem* item, int role) {processDataChange(item, role);};
     m_model->mapper()->setOnDataChange(on_data_change, this);
 
-    auto on_row_inserted = [this](ModelView::SessionItem* item, TagRow tagrow) {
-        onModelRowInserted(item, tagrow);
+    auto on_item_inserted = [this](ModelView::SessionItem* item, TagRow tagrow) {
+        processItemInserted(item, tagrow);
     };
-    m_model->mapper()->setOnItemInserted(on_row_inserted, this);
+    m_model->mapper()->setOnItemInserted(on_item_inserted, this);
 
-    auto on_row_about_removed = [this](ModelView::SessionItem* item, ModelView::TagRow tagrow) {
-        onModelRowAboutToBeRemoved(item, tagrow);
+    auto on_about_to_remove_item = [this](ModelView::SessionItem* item, ModelView::TagRow tagrow) {
+        processAboutToRemoveItem(item, tagrow);
     };
-    m_model->mapper()->setOnItemAboutToBeRemoved(on_row_about_removed, this);
+    m_model->mapper()->setOnItemAboutToBeRemoved(on_about_to_remove_item, this);
 }
 
 //! Unsubscribes from model signals.
@@ -221,17 +221,17 @@ void ItemMapper::callOnChildPropertyChange(SessionItem* item, std::string proper
 
 //! Notifies all callbacks subscribed to "on row inserted" event.
 
-void ItemMapper::callOnRowInserted(SessionItem* parent, TagRow tagrow)
+void ItemMapper::callOnItemInserted(SessionItem* parent, TagRow tagrow)
 {
     if (m_active)
-        m_on_row_inserted(parent, tagrow);
+        m_on_item_inserted(parent, tagrow);
 }
 
 //! Notifies all callbacks subscribed to "on row about to be removed".
 
-void ItemMapper::callOnRowAboutToBeRemoved(SessionItem* parent, TagRow tagrow)
+void ItemMapper::callOnAboutToRemoveItem(SessionItem* parent, TagRow tagrow)
 {
     if (m_active)
-        m_on_row_about_removed(parent, tagrow);
+        m_on_about_to_remove_item(parent, tagrow);
 }
 
