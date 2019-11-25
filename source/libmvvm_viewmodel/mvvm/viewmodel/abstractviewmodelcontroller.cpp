@@ -97,15 +97,15 @@ void AbstractViewModelController::setSessionModel(SessionModel* model)
         auto on_data_change = [this](SessionItem* item, int role) { onDataChange(item, role); };
         sessionModel()->mapper()->setOnDataChange(on_data_change, this);
 
-        auto on_row_inserted = [this](SessionItem* item, TagRow tagrow) {
-            onRowInserted(item, tagrow.tag, tagrow.row);
+        auto on_item_inserted = [this](SessionItem* item, TagRow tagrow) {
+            onItemInserted(item, tagrow);
         };
-        sessionModel()->mapper()->setOnItemInserted(on_row_inserted, this);
+        sessionModel()->mapper()->setOnItemInserted(on_item_inserted, this);
 
-        auto on_row_removed = [this](SessionItem* item, TagRow tagrow) {
-            onRowRemoved(item, tagrow.tag, tagrow.row);
+        auto on_item_removed = [this](SessionItem* item, TagRow tagrow) {
+            onItemRemoved(item, tagrow);
         };
-        sessionModel()->mapper()->setOnItemRemoved(on_row_removed, this);
+        sessionModel()->mapper()->setOnItemRemoved(on_item_removed, this);
 
         auto on_model_destroyed = [this](SessionModel*) {
             p_impl->m_session_model = nullptr;
@@ -235,14 +235,14 @@ void AbstractViewModelController::onDataChange(SessionItem* item, int role)
 
 //! Rebuild view model branch on session model change.
 
-void AbstractViewModelController::onRowInserted(SessionItem* parent, std::string, int)
+void AbstractViewModelController::onItemInserted(SessionItem* parent, TagRow)
 {
     generate_children_views(parent);
 }
 
 //! Rebuild view model branch on session model change.
 
-void AbstractViewModelController::onRowRemoved(SessionItem* parent, std::string, int)
+void AbstractViewModelController::onItemRemoved(SessionItem* parent, TagRow)
 {
     generate_children_views(parent);
 }

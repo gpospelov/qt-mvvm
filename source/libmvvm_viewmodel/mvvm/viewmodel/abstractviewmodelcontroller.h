@@ -24,6 +24,7 @@ class SessionItem;
 class ChildrenStrategyInterface;
 class RowStrategyInterface;
 class SessionModel;
+class TagRow;
 
 /*!
 @class AbstractViewModelController
@@ -63,8 +64,8 @@ protected:
 
     void generate_children_views(SessionItem* parent);
     virtual void onDataChange(SessionItem* item, int role);
-    virtual void onRowInserted(SessionItem* parent, std::string tag, int row);
-    virtual void onRowRemoved(SessionItem* parent, std::string tag, int row);
+    virtual void onItemInserted(SessionItem* parent, TagRow tagrow);
+    virtual void onItemRemoved(SessionItem* parent, TagRow tagrow);
 
 private:
     struct AbstractViewModelControllerImpl;

@@ -48,7 +48,7 @@ void PropertyViewModelController::onDataChange(SessionItem* item, int role)
     // If data change occured with GroupItem, performs cleanup and regeneration of
     // ViewItems, corresponding to groupItem's current index.
     if (auto group = dynamic_cast<GroupItem*>(item))
-        AbstractViewModelController::onRowRemoved(group, "", 0);
+        AbstractViewModelController::onItemRemoved(group, {"", 0});
 }
 
 // ----------------------------------------------------------------------------
