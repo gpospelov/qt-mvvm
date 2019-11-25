@@ -46,8 +46,8 @@ public:
 
 private:
     void onModelDataChange(SessionItem* item, int role);
-    void onModelRowInserted(SessionItem* parent, std::string tag, int row);
-    void onModelRowAboutToBeRemoved(SessionItem* parent, std::string tag, int row);
+    void onModelRowInserted(SessionItem* parent, TagRow tagrow);
+    void onModelRowAboutToBeRemoved(SessionItem* parent, TagRow tagrow);
     void subscribe_to_model();
     void unsubscribe_from_model();
     int nestlingDepth(SessionItem* item, int level = 0);

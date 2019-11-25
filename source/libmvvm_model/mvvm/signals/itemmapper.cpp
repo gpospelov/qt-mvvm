@@ -141,16 +141,16 @@ void ItemMapper::onModelDataChange(SessionItem* item, int role)
     }
 }
 
-void ItemMapper::onModelRowInserted(SessionItem* parent, std::string tag, int row)
+void ItemMapper::onModelRowInserted(SessionItem* parent, TagRow tagrow)
 {
     if (parent == m_item)
-        callOnRowInserted(m_item, {tag, row});
+        callOnRowInserted(m_item, tagrow);
 }
 
-void ItemMapper::onModelRowAboutToBeRemoved(SessionItem* parent, std::string tag, int row)
+void ItemMapper::onModelRowAboutToBeRemoved(SessionItem* parent, TagRow tagrow)
 {
     if (parent == m_item)
-        callOnRowAboutToBeRemoved(m_item, {tag, row});
+        callOnRowAboutToBeRemoved(m_item, tagrow);
 }
 
 //! Subscribes to model signals.
@@ -161,12 +161,12 @@ void ItemMapper::subscribe_to_model()
     m_model->mapper()->setOnDataChange(on_data_change, this);
 
     auto on_row_inserted = [this](ModelView::SessionItem* item, TagRow tagrow) {
-        onModelRowInserted(item, tagrow.tag, tagrow.row);
+        onModelRowInserted(item, tagrow);
     };
     m_model->mapper()->setOnItemInserted(on_row_inserted, this);
 
     auto on_row_about_removed = [this](ModelView::SessionItem* item, ModelView::TagRow tagrow) {
-        onModelRowAboutToBeRemoved(item, tagrow.tag, tagrow.row);
+        onModelRowAboutToBeRemoved(item, tagrow);
     };
     m_model->mapper()->setOnItemAboutToBeRemoved(on_row_about_removed, this);
 }
