@@ -43,7 +43,7 @@ void ModelMapper::setOnItemRemoved(Callbacks::item_tagrow_t f, Callbacks::slot_t
 //! Callback will be called with (SessionItem* parent, tagrow), where tagrow corresponds
 //! to the position of a child which going to be removed.
 
-void ModelMapper::setOnItemAboutToBeRemoved(Callbacks::item_tagrow_t f, Callbacks::slot_t owner)
+void ModelMapper::setOnAboutToRemoveItem(Callbacks::item_tagrow_t f, Callbacks::slot_t owner)
 {
     m_on_item_about_removed.connect(std::move(f), owner);
 }

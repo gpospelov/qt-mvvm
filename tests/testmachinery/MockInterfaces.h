@@ -44,7 +44,7 @@ public:
     virtual void onDataChange(ModelView::SessionItem*, int) = 0;
     virtual void onItemInserted(ModelView::SessionItem*, ModelView::TagRow) = 0;
     virtual void onItemRemoved(ModelView::SessionItem*, ModelView::TagRow) = 0;
-    virtual void onItemAboutToBeRemoved(ModelView::SessionItem*, ModelView::TagRow) = 0;
+    virtual void onAboutToRemoveItem(ModelView::SessionItem*, ModelView::TagRow) = 0;
 };
 
 #endif // ITEMTESTWIDGET_H

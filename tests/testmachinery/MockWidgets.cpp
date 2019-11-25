@@ -102,10 +102,10 @@ void MockWidgetForModel::setModel(ModelView::SessionModel* model)
     };
     m_model->mapper()->setOnItemRemoved(on_item_removed, this);
 
-    auto on_item_about_removed = [this](ModelView::SessionItem* item, ModelView::TagRow tagrow) {
-        onItemAboutToBeRemoved(item, tagrow);
+    auto on_about_to_remove_item = [this](ModelView::SessionItem* item, ModelView::TagRow tagrow) {
+        onAboutToRemoveItem(item, tagrow);
     };
-    m_model->mapper()->setOnItemAboutToBeRemoved(on_item_about_removed, this);
+    m_model->mapper()->setOnAboutToRemoveItem(on_about_to_remove_item, this);
 
     auto on_model_destroyed = [this](ModelView::SessionModel* model) {
         m_model = nullptr;

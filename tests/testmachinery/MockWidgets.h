@@ -65,7 +65,7 @@ public:
     MOCK_METHOD2(onDataChange, void(ModelView::SessionItem* item, int role));
     MOCK_METHOD2(onItemInserted, void(ModelView::SessionItem* item, ModelView::TagRow tagrow));
     MOCK_METHOD2(onItemRemoved, void(ModelView::SessionItem* item, ModelView::TagRow tagrow));
-    MOCK_METHOD2(onItemAboutToBeRemoved, void(ModelView::SessionItem* item, ModelView::TagRow tagrow));
+    MOCK_METHOD2(onAboutToRemoveItem, void(ModelView::SessionItem* item, ModelView::TagRow tagrow));
 
 private:
     ModelView::SessionModel* m_model;

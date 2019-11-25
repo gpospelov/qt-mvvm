@@ -31,7 +31,7 @@ public:
     void setOnDataChange(Callbacks::item_int_t f, Callbacks::slot_t owner);
     void setOnItemInserted(Callbacks::item_tagrow_t f, Callbacks::slot_t owner);
     void setOnItemRemoved(Callbacks::item_tagrow_t f, Callbacks::slot_t owner);
-    void setOnItemAboutToBeRemoved(Callbacks::item_tagrow_t f, Callbacks::slot_t owner);
+    void setOnAboutToRemoveItem(Callbacks::item_tagrow_t f, Callbacks::slot_t owner);
     void setOnModelDestroyed(Callbacks::model_t f, Callbacks::slot_t owner);
     void setOnModelReset(Callbacks::model_t f, Callbacks::slot_t owner);
 

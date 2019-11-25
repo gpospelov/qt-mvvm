@@ -168,7 +168,7 @@ void ItemMapper::subscribe_to_model()
     auto on_about_to_remove_item = [this](ModelView::SessionItem* item, ModelView::TagRow tagrow) {
         processAboutToRemoveItem(item, tagrow);
     };
-    m_model->mapper()->setOnItemAboutToBeRemoved(on_about_to_remove_item, this);
+    m_model->mapper()->setOnAboutToRemoveItem(on_about_to_remove_item, this);
 }
 
 //! Unsubscribes from model signals.
