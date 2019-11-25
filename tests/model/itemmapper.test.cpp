@@ -196,7 +196,7 @@ TEST(ItemMapperTest, onChildPropertyChange)
 
 //! Inserting item to item.
 
-TEST(ItemMapperTest, onRowInsert)
+TEST(ItemMapperTest, onItemInsert)
 {
     SessionModel model;
     auto compound1 = model.insertItem<CompoundItem>();
@@ -218,7 +218,7 @@ TEST(ItemMapperTest, onRowInsert)
 
 //! Inserting item to item.
 
-TEST(ItemMapperTest, onRowAboutToRemove)
+TEST(ItemMapperTest, onAboutToRemoveItem)
 {
     const TagRow expected_tagrow = {"tag1", 0};
 

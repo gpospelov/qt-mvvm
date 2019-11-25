@@ -68,7 +68,7 @@ TEST(ModelMapperTest, onDataChange)
 
 //! Inserting item and checking corresponding signals.
 
-TEST(ModelMapperTest, onRowInserted)
+TEST(ModelMapperTest, onItemInserted)
 {
     SessionModel model;
     MockWidgetForModel widget(&model);
@@ -87,7 +87,7 @@ TEST(ModelMapperTest, onRowInserted)
 
 //! Inserting item and checking corresponding signals.
 
-TEST(ModelMapperTest, onRowRemoved)
+TEST(ModelMapperTest, onItemRemoved)
 {
     SessionModel model;
     MockWidgetForModel widget(&model);
