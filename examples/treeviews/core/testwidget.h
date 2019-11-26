@@ -17,7 +17,6 @@ namespace ModelView
 {
 class SessionItem;
 class SessionModel;
-class ItemsTreeView;
 class AllItemsTreeView;
 class PropertyTreeView;
 class TopItemsTreeView;

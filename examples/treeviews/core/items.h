@@ -121,7 +121,7 @@ public:
 };
 
 /*!
-@class AnysoPyramidItem
+@class ShapeGroupItem
 @brief Special group of shapes.
 */
 
