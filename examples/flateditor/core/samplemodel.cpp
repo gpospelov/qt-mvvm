@@ -8,8 +8,8 @@
 // ************************************************************************** //
 
 #include "samplemodel.h"
-#include <mvvm/model/itemcatalogue.h>
 #include "items.h"
+#include <mvvm/model/itemcatalogue.h>
 
 using namespace ModelView;
 
@@ -18,6 +18,8 @@ namespace
 std::unique_ptr<ModelView::ItemCatalogue> CreateToyItemCatalogue()
 {
     auto result = std::make_unique<ItemCatalogue>();
+    result->registerItem<BeamItem>();
+    result->registerItem<DistributionNoneItem>();
     result->registerItem<DistributionGaussianItem>();
     result->registerItem<DistributionLogNormalItem>();
     result->registerItem<DistributionTrapezoidItem>();
@@ -36,5 +38,6 @@ SampleModel::SampleModel() : SessionModel("SampleModel")
 
 void SampleModel::init_model()
 {
+    insertItem<BeamItem>();
     insertItem<DistributionGroupItem>();
 }

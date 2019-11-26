@@ -23,11 +23,11 @@ using namespace ModelView;
 
 namespace
 {
-const QString text = "Demonstrates automatic generation of property widgets from item properties.\n"
-                     "Tree on the left is showing content of our model, click to select items. "
+const QString text = "Demonstrates automatic generation of property editors in grid layout from item properties.\n"
+                     "Tree on the left is showing content of our model (use mouse to select items). "
                      "Tree in the top-right corner shows standard property tree of currently "
-                     "selected item. Widget in bottom-right corner shows automatically populated "
-                     "flat component view.";
+                     "selected item. Widget in bottom-right corner shows grid layout automatically populated "
+                     "with editors.";
 }
 
 DemoWidget::DemoWidget(SessionModel* model, QWidget* parent)

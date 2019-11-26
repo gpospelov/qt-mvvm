@@ -8,11 +8,38 @@
 // ************************************************************************** //
 
 #include "items.h"
+#include <mvvm/model/comboproperty.h>
+#include <QColor>
+
+using namespace ModelView;
+
+// ----------------------------------------------------------------------------
+
+BeamItem::BeamItem()
+    : ModelView::CompoundItem(::Constants::BeamItemType)
+{
+    auto combo = ComboProperty::createFrom({"x-rays", "neutrons"});
+    addProperty(P_BEAM_TYPE, combo)->setDisplayName("Type");
+
+    addProperty(P_IS_POLARIZED, true)->setDisplayName("Polarization");
+    addProperty(P_WAVELENGTH, 42.0)->setDisplayName("Wavelength");
+    addProperty<DistributionGroupItem>(P_ANGULAR_DISTRIBUTION)->setDisplayName("Angular distribution");
+
+    addProperty(P_ACCESS_LIGHT_BULB_COLOR, QColor(Qt::red))->setDisplayName("Access light");
+}
+
+// ----------------------------------------------------------------------------
+
+DistributionNoneItem::DistributionNoneItem()
+    : ModelView::CompoundItem(::Constants::DistributionNoneItemType)
+{
+    addProperty(P_MEAN, 0.5);
+}
 
 // ----------------------------------------------------------------------------
 
 DistributionGaussianItem::DistributionGaussianItem()
-    : ModelView::CompoundItem(Constants::DistributionGaussianItemType)
+    : ModelView::CompoundItem(::Constants::DistributionGaussianItemType)
 {
     addProperty(P_MEAN, 0.5);
     addProperty(P_STD_DEV, 1.0);
@@ -21,7 +48,7 @@ DistributionGaussianItem::DistributionGaussianItem()
 // ----------------------------------------------------------------------------
 
 DistributionLogNormalItem::DistributionLogNormalItem()
-    : ModelView::CompoundItem(Constants::DistributionLogNormalItemType)
+    : ModelView::CompoundItem(::Constants::DistributionLogNormalItemType)
 {
     addProperty(P_MEDIAN, 1.0);
     addProperty(P_SCALE_PAR, 1.0);
@@ -30,7 +57,7 @@ DistributionLogNormalItem::DistributionLogNormalItem()
 // ----------------------------------------------------------------------------
 
 DistributionTrapezoidItem::DistributionTrapezoidItem()
-    : ModelView::CompoundItem(Constants::DistributionTrapezoidItemType)
+    : ModelView::CompoundItem(::Constants::DistributionTrapezoidItemType)
 {
     addProperty(P_CENTER, 1.0);
     addProperty(P_LEFTWIDTH, 0.5);
@@ -42,6 +69,7 @@ DistributionTrapezoidItem::DistributionTrapezoidItem()
 
 DistributionGroupItem::DistributionGroupItem() : GroupItem(::Constants::DistributionGroupItemType)
 {
+    registerItem<DistributionNoneItem>("None");
     registerItem<DistributionGaussianItem>("Gaussian");
     registerItem<DistributionLogNormalItem>("Log normal");
     registerItem<DistributionTrapezoidItem>("Trpezoid");

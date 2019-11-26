@@ -17,12 +17,42 @@
 namespace Constants
 {
 
+const std::string BeamItemType = "Beam";
+const std::string DistributionNoneItemType = "DistributionNone";
 const std::string DistributionGaussianItemType = "DistributionGaussian";
 const std::string DistributionLogNormalItemType = "DistributionLogNormal";
 const std::string DistributionTrapezoidItemType = "DistributionTrapezoid";
 const std::string DistributionGroupItemType = "DistributionGroup";
 
 } // namespace Constants
+
+/*!
+@class BeamItem
+@brief Item to represent x-ray or neutron beam with properties to setup.
+*/
+
+class BeamItem : public ModelView::CompoundItem
+{
+public:
+    static inline const std::string P_BEAM_TYPE = "P_BEAM_TYPE";
+    static inline const std::string P_IS_POLARIZED = "P_IS_POLARIZED";
+    static inline const std::string P_WAVELENGTH = "P_WAVELENGTH";
+    static inline const std::string P_ANGULAR_DISTRIBUTION = "P_ANGULAR_DISTRIBUTION";
+    static inline const std::string P_ACCESS_LIGHT_BULB_COLOR = "P_COLOR";
+    BeamItem();
+};
+
+/*!
+@class DistributionNoneItem
+@brief Item to represent fixed value.
+*/
+
+class DistributionNoneItem : public ModelView::CompoundItem
+{
+public:
+    static inline const std::string P_MEAN = "P_MEAN";
+    DistributionNoneItem();
+};
 
 /*!
 @class DistributionGaussianItem
