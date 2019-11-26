@@ -10,125 +10,74 @@
 #ifndef FLATEDITORCORE_ITEMS_H
 #define FLATEDITORCORE_ITEMS_H
 
-//! @file items.h
-//! Collection of test items for our sample model.
-
 #include <mvvm/model/compounditem.h>
 #include <mvvm/model/groupitem.h>
 #include <string>
 
+namespace Constants
+{
+
+const std::string DistributionGaussianItemType = "DistributionGaussian";
+const std::string DistributionLogNormalItemType = "DistributionLogNormal";
+const std::string DistributionTrapezoidItemType = "DistributionTrapezoid";
+const std::string DistributionGroupItemType = "DistributionGroup";
+
+} // namespace Constants
+
 /*!
-@class MultiLayer
-@brief A multi layer with possibility to attach layers.
+@class DistributionGaussianItem
+@brief Item to represent gaussian distribution.
 */
 
-class MultiLayer : public ModelView::CompoundItem
+class DistributionGaussianItem : public ModelView::CompoundItem
 {
 public:
-    static inline const std::string T_LAYERS = "T_LAYERS";
-    MultiLayer();
+    static inline const std::string P_MEAN = "P_MEAN";
+    static inline const std::string P_STD_DEV = "P_STD_DEV";
+
+    DistributionGaussianItem();
 };
 
 /*!
-@class LayerItem
-@brief A layer with thickness, color property and possibility to attach particles.
+@class DistributionLogNormalItem
+@brief Item to represent log normal distribution.
 */
 
-class LayerItem : public ModelView::CompoundItem
+class DistributionLogNormalItem : public ModelView::CompoundItem
 {
+
 public:
-    static inline const std::string P_THICKNESS = "Thickness";
-    static inline const std::string P_COLOR = "Color";
-    static inline const std::string T_PARTICLES = "Particles";
-    LayerItem();
+    static inline const std::string P_MEDIAN = "P_MEDIAN";
+    static inline const std::string P_SCALE_PAR = "P_SCALE_PAR";
+
+    DistributionLogNormalItem();
 };
 
 /*!
-@class ParticleItem
-@brief A particle with position and shape group.
-
-Demonstrates how to create group of properties.
+@class DistributionTrapezoidItem
+@brief Item to represent trapezoid distribution.
 */
 
-class ParticleItem : public ModelView::CompoundItem
+class DistributionTrapezoidItem : public ModelView::CompoundItem
 {
 public:
-    static inline const std::string P_POSITION = "Position";
-    static inline const std::string P_SHAPES = "Shapes";
-    ParticleItem();
+    static inline const std::string P_CENTER = "P_CENTER";
+    static inline const std::string P_LEFTWIDTH = "P_LEFTWIDTH";
+    static inline const std::string P_MIDDLEWIDTH = "P_MIDDLEWIDTH";
+    static inline const std::string P_RIGHTWIDTH = "P_RIGHTWIDTH";
+
+    DistributionTrapezoidItem();
 };
 
 /*!
-@class InterferenceFunctionItem
-@brief Interference function with bool, double and combo on board.
-
-Demonstrates how to syncronize properties between each other.
+@class DistributionGroupItem
+@brief Group to hold probability distribution items.
 */
 
-class InterferenceFunctionItem : public ModelView::CompoundItem
+class DistributionGroupItem : public ModelView::GroupItem
 {
 public:
-    static inline const std::string P_ROTATION_ANLE = "Rotation";
-    static inline const std::string P_INTEGRATION = "Integration";
-    static inline const std::string P_LATTICE_TYPE = "Lattice";
-
-    InterferenceFunctionItem();
-
-    void activate() override;
-
-private:
-    void update_appearance();
-};
-
-/*!
-@class CylinderItem
-@brief Simple cylinder with radius and height.
-*/
-
-class CylinderItem : public ModelView::CompoundItem
-{
-public:
-    static inline const std::string P_RADIUS = "Radius";
-    static inline const std::string P_HEIGHT = "Height";
-    CylinderItem();
-};
-
-/*!
-@class SphereItem
-@brief Simple spherer with radius.
-*/
-
-class SphereItem : public ModelView::CompoundItem
-{
-public:
-    static inline const std::string P_RADIUS = "Radius";
-    SphereItem();
-};
-
-/*!
-@class AnysoPyramidItem
-@brief Pyramid with 4 parameters.
-*/
-
-class AnysoPyramidItem : public ModelView::CompoundItem
-{
-public:
-    static inline const std::string P_LENGTH = "Length";
-    static inline const std::string P_WIDTH = "Width";
-    static inline const std::string P_HEIGHT = "Height";
-    static inline const std::string P_ALPHA = "Alpha";
-    AnysoPyramidItem();
-};
-
-/*!
-@class AnysoPyramidItem
-@brief Special group of shapes.
-*/
-
-class ShapeGroupItem : public ModelView::GroupItem
-{
-public:
-    ShapeGroupItem();
+    DistributionGroupItem();
 };
 
 #endif // FLATEDITORCORE_ITEMS_H

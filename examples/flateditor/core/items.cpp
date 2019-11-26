@@ -8,99 +8,42 @@
 // ************************************************************************** //
 
 #include "items.h"
-#include "item_constants.h"
-#include <mvvm/model/comboproperty.h>
-#include <mvvm/signals/itemmapper.h>
-#include <mvvm/model/taginfo.h>
-#include <mvvm/standarditems/vectoritem.h>
-#include <QColor>
 
-using namespace ModelView;
+// ----------------------------------------------------------------------------
 
-MultiLayer::MultiLayer() : CompoundItem(::Constants::MultiLayerType)
+DistributionGaussianItem::DistributionGaussianItem()
+    : ModelView::CompoundItem(Constants::DistributionGaussianItemType)
 {
-    registerTag(TagInfo::universalTag(T_LAYERS, {::Constants::LayerType}),
-                /*set_as_default*/ true);
+    addProperty(P_MEAN, 0.5);
+    addProperty(P_STD_DEV, 1.0);
 }
 
 // ----------------------------------------------------------------------------
 
-LayerItem::LayerItem() : CompoundItem(::Constants::LayerType)
+DistributionLogNormalItem::DistributionLogNormalItem()
+    : ModelView::CompoundItem(Constants::DistributionLogNormalItemType)
 {
-    addProperty(P_THICKNESS, 42.0);
-    addProperty(P_COLOR, QColor(Qt::green));
-    registerTag(TagInfo::universalTag(T_PARTICLES, {::Constants::ParticleType}),
-                /*set_as_default*/ true);
+    addProperty(P_MEDIAN, 1.0);
+    addProperty(P_SCALE_PAR, 1.0);
 }
 
 // ----------------------------------------------------------------------------
 
-ParticleItem::ParticleItem() : CompoundItem(::Constants::ParticleType)
+DistributionTrapezoidItem::DistributionTrapezoidItem()
+    : ModelView::CompoundItem(Constants::DistributionTrapezoidItemType)
 {
-    addProperty<VectorItem>(P_POSITION);
-    addProperty<ShapeGroupItem>(P_SHAPES);
+    addProperty(P_CENTER, 1.0);
+    addProperty(P_LEFTWIDTH, 0.5);
+    addProperty(P_MIDDLEWIDTH, 1.0);
+    addProperty(P_RIGHTWIDTH, 0.6);
 }
 
 // ----------------------------------------------------------------------------
 
-InterferenceFunctionItem::InterferenceFunctionItem() : CompoundItem(::Constants::InterferenceType)
+DistributionGroupItem::DistributionGroupItem() : GroupItem(::Constants::DistributionGroupItemType)
 {
-    addProperty(P_ROTATION_ANLE, 90.0);
-    addProperty(P_INTEGRATION, true);
-
-    auto combo = ComboProperty::createFrom({"Default", "Square", "Hexagonal"});
-    addProperty(P_LATTICE_TYPE, combo);
-
-    update_appearance();
-}
-
-void InterferenceFunctionItem::activate()
-{
-    auto onIntegrationFlagChange = [this](SessionItem*, std::string property) {
-        if (property == P_INTEGRATION)
-            update_appearance();
-    };
-
-    mapper()->setOnPropertyChange(onIntegrationFlagChange, this);
-}
-
-void InterferenceFunctionItem::update_appearance()
-{
-    auto angle_item = getItem(P_ROTATION_ANLE);
-    angle_item->setEnabled(!property(P_INTEGRATION).value<bool>());
-}
-
-// ----------------------------------------------------------------------------
-
-CylinderItem::CylinderItem() : CompoundItem(::Constants::CylinderType)
-{
-    addProperty(P_RADIUS, 8.0);
-    addProperty(P_HEIGHT, 10.0);
-}
-
-// ----------------------------------------------------------------------------
-
-SphereItem::SphereItem() : CompoundItem(::Constants::SphereType)
-{
-    addProperty(P_RADIUS, 8.0);
-}
-
-// ----------------------------------------------------------------------------
-
-AnysoPyramidItem::AnysoPyramidItem() : CompoundItem(::Constants::AnysoPyramidType)
-{
-    addProperty(P_LENGTH, 8.0);
-    addProperty(P_WIDTH, 9.0);
-    addProperty(P_HEIGHT, 10.0);
-    addProperty(P_ALPHA, 11.0);
-}
-
-// ----------------------------------------------------------------------------
-
-ShapeGroupItem::ShapeGroupItem() : GroupItem(::Constants::ShapeGroupType)
-{
-    registerItem<CylinderItem>("Cylinder");
-    registerItem<SphereItem>("Full sphere", /*make_selected*/true);
-    registerItem<AnysoPyramidItem>("Anysotropical pyramid");
+    registerItem<DistributionGaussianItem>("Gaussian");
+    registerItem<DistributionLogNormalItem>("Log normal");
+    registerItem<DistributionTrapezoidItem>("Trpezoid");
     init_group();
 }

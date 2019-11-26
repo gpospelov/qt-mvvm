@@ -18,14 +18,10 @@ namespace
 std::unique_ptr<ModelView::ItemCatalogue> CreateToyItemCatalogue()
 {
     auto result = std::make_unique<ItemCatalogue>();
-    result->registerItem<MultiLayer>();
-    result->registerItem<LayerItem>();
-    result->registerItem<ParticleItem>();
-    result->registerItem<InterferenceFunctionItem>();
-    result->registerItem<SphereItem>();
-    result->registerItem<CylinderItem>();
-    result->registerItem<AnysoPyramidItem>();
-    result->registerItem<ShapeGroupItem>();
+    result->registerItem<DistributionGaussianItem>();
+    result->registerItem<DistributionLogNormalItem>();
+    result->registerItem<DistributionTrapezoidItem>();
+    result->registerItem<DistributionGroupItem>();
     return result;
 }
 } // namespace
@@ -40,11 +36,5 @@ SampleModel::SampleModel() : SessionModel("SampleModel")
 
 void SampleModel::init_model()
 {
-    auto multi_layer = insertItem<MultiLayer>();
-    auto layer = insertItem<LayerItem>(multi_layer);
-    insertItem<ParticleItem>(layer);
-
-    insertItem<LayerItem>(multi_layer);
-
-    insertItem<InterferenceFunctionItem>();
+    insertItem<DistributionGroupItem>();
 }

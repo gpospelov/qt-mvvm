@@ -5,7 +5,6 @@ add_library(flateditorcore STATIC)
 target_sources(flateditorcore PRIVATE
     demowidget.cpp
     demowidget.h
-    item_constants.h
     items.cpp
     items.h
     mainwindow.cpp
