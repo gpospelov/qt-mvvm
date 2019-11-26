@@ -18,6 +18,7 @@ namespace ModelView
 class SessionModel;
 class AllItemsTreeView;
 class PropertyTreeView;
+class PropertyFlatView;
 } // namespace ModelView
 
 class QBoxLayout;
@@ -43,6 +44,7 @@ private:
 
     ModelView::AllItemsTreeView* m_defaultTreeView;
     ModelView::PropertyTreeView* m_propertyTreeView;
+    ModelView::PropertyFlatView* m_propertyFlatView;
     ModelView::SessionModel* m_sessionModel;
 };
 

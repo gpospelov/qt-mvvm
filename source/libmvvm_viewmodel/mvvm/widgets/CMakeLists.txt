@@ -4,6 +4,8 @@ target_sources(mvvm_viewmodel PRIVATE
     itemstreeview.cpp
     itemstreeview.h
     itemstreeviewinterface.h
+    propertyflatview.cpp
+    propertyflatview.h
     propertytreeview.cpp
     propertytreeview.h
     scientificspinbox.cpp

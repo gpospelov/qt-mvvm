@@ -18,6 +18,7 @@
 #include <mvvm/viewmodel/topitemsviewmodel.h>
 #include <mvvm/viewmodel/viewitem.h>
 #include <mvvm/widgets/standardtreeviews.h>
+#include <mvvm/widgets/propertyflatview.h>
 
 using namespace ModelView;
 
@@ -32,7 +33,8 @@ const QString text = "Demonstrates automatic generation of property editors in g
 
 DemoWidget::DemoWidget(SessionModel* model, QWidget* parent)
     : QWidget(parent), m_defaultTreeView(new AllItemsTreeView(model)),
-      m_propertyTreeView(new PropertyTreeView), m_sessionModel(model)
+      m_propertyTreeView(new PropertyTreeView), m_propertyFlatView(new PropertyFlatView),
+      m_sessionModel(model)
 {
     auto mainLayout = new QVBoxLayout;
     mainLayout->setSpacing(10);
@@ -55,7 +57,10 @@ DemoWidget::~DemoWidget() = default;
 void DemoWidget::connect_views()
 {
     // select items in other views when selection in m_defaultTreeView has changed
-    auto on_item_selected = [this](SessionItem* item) { m_propertyTreeView->setItem(item); };
+    auto on_item_selected = [this](SessionItem* item) {
+        m_propertyTreeView->setItem(item);
+        m_propertyFlatView->setItem(item);
+    };
     connect(m_defaultTreeView, &AllItemsTreeView::itemSelected, on_item_selected);
 }
 
@@ -80,5 +85,6 @@ QBoxLayout* DemoWidget::create_right_layout()
 {
     auto result = new QVBoxLayout;
     result->addWidget(m_propertyTreeView);
+    result->addWidget(m_propertyFlatView);
     return result;
 }
