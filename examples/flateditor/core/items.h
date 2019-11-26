@@ -40,6 +40,11 @@ public:
     static inline const std::string P_ANGULAR_DISTRIBUTION = "P_ANGULAR_DISTRIBUTION";
     static inline const std::string P_ACCESS_LIGHT_BULB_COLOR = "P_COLOR";
     BeamItem();
+
+    void activate() override;
+
+private:
+    void update_appearance();
 };
 
 /*!

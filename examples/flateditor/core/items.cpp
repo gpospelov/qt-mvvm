@@ -8,24 +8,57 @@
 // ************************************************************************** //
 
 #include "items.h"
-#include <mvvm/model/comboproperty.h>
 #include <QColor>
+#include <mvvm/model/comboproperty.h>
+#include <mvvm/signals/itemmapper.h>
 
 using namespace ModelView;
 
+namespace
+{
+const std::string xrays = "x-rays";
+const std::string neutrons = "neutrons";
+} // namespace
+
 // ----------------------------------------------------------------------------
 
-BeamItem::BeamItem()
-    : ModelView::CompoundItem(::Constants::BeamItemType)
+BeamItem::BeamItem() : ModelView::CompoundItem(::Constants::BeamItemType)
 {
-    auto combo = ComboProperty::createFrom({"x-rays", "neutrons"});
+    auto combo = ComboProperty::createFrom({xrays, neutrons});
     addProperty(P_BEAM_TYPE, combo)->setDisplayName("Type");
 
-    addProperty(P_IS_POLARIZED, true)->setDisplayName("Polarization");
+    addProperty(P_IS_POLARIZED, false)->setDisplayName("Polarization");
     addProperty(P_WAVELENGTH, 42.0)->setDisplayName("Wavelength");
-    addProperty<DistributionGroupItem>(P_ANGULAR_DISTRIBUTION)->setDisplayName("Angular distribution");
+    addProperty<DistributionGroupItem>(P_ANGULAR_DISTRIBUTION)
+        ->setDisplayName("Angular distribution");
 
     addProperty(P_ACCESS_LIGHT_BULB_COLOR, QColor(Qt::red))->setDisplayName("Access light");
+
+    update_appearance();
+}
+
+void BeamItem::activate()
+{
+    auto on_beam_type_change = [this](SessionItem*, std::string property) {
+        if (property == P_BEAM_TYPE)
+            update_appearance();
+    };
+
+    mapper()->setOnPropertyChange(on_beam_type_change, this);
+}
+
+//! Enables IS_POLARIZED property when beam type changes from x-rays to neutrons.
+
+void BeamItem::update_appearance()
+{
+    auto polarized_property = getItem(P_IS_POLARIZED);
+    auto beam_type = property(P_BEAM_TYPE).value<ComboProperty>().value();
+
+    if (beam_type == xrays)
+        setProperty(P_IS_POLARIZED, false);
+
+    polarized_property->setEnabled(property(P_BEAM_TYPE).value<ComboProperty>().value()
+                                   == neutrons);
 }
 
 // ----------------------------------------------------------------------------
