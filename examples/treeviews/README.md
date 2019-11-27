@@ -12,7 +12,7 @@ functions etc.
 Additionally, example demonstrates
 
 + How to use undo/redo framework.
-+ How to propagate selections amound various tree views.
++ How to propagate selections among various tree views.
 + How to use so called 'group property` (See ShapeGroup and Particle items).
 + How to implement business logic on item level (see InterferenceFunction item).
 

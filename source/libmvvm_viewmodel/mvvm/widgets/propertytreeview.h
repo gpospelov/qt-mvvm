@@ -15,8 +15,6 @@
 namespace ModelView
 {
 
-class SessionModel;
-
 /*!
 @class PropertyTreeView
 @brief Widget holding standard QTreeView and intended for displaying all properties of given

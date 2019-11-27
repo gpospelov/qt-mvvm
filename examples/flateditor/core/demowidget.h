@@ -7,53 +7,45 @@
 //
 // ************************************************************************** //
 
-#ifndef TESTWIDGET_H
-#define TESTWIDGET_H
+#ifndef FLATEDITORCORE_DEMOWIDGET_H
+#define FLATEDITORCORE_DEMOWIDGET_H
 
 #include <QWidget>
 #include <memory>
 
 namespace ModelView
 {
-class SessionItem;
 class SessionModel;
 class AllItemsTreeView;
 class PropertyTreeView;
-class TopItemsTreeView;
+class PropertyFlatView;
 } // namespace ModelView
 
-class QTreeView;
-class QUndoView;
 class QBoxLayout;
 
-//! Playground to test basics of ViewModel.
+/*!
+@class DemoWidget
+@brief Demonstrates usage of PropertyFlatView.
+*/
 
-class TestWidget : public QWidget
+class DemoWidget : public QWidget
 {
     Q_OBJECT
 public:
-    TestWidget(ModelView::SessionModel* model, QWidget* parent = nullptr);
-    ~TestWidget();
-
-private slots:
-    void onContextMenuRequest(const QPoint& point);
+    DemoWidget(ModelView::SessionModel* model, QWidget* parent = nullptr);
+    ~DemoWidget();
 
 private:
-    ModelView::SessionItem* item_from_view(QTreeView* view, const QPoint& point);
-
     QBoxLayout* create_top_layout();
     QBoxLayout* create_left_layout();
-    QBoxLayout* create_middle_layout();
     QBoxLayout* create_right_layout();
 
     void connect_views();
 
-    QUndoView* m_undoView;
     ModelView::AllItemsTreeView* m_defaultTreeView;
-    ModelView::TopItemsTreeView* m_topItemView;
-    ModelView::AllItemsTreeView* m_subsetTreeView;
     ModelView::PropertyTreeView* m_propertyTreeView;
+    ModelView::PropertyFlatView* m_propertyFlatView;
     ModelView::SessionModel* m_sessionModel;
 };
 
-#endif // TESTWIDGET_H
+#endif // FLATEDITORCORE_DEMOWIDGET_H

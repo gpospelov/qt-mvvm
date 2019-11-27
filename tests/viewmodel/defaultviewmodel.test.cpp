@@ -10,7 +10,9 @@
 #include "google_test.h"
 #include <QDebug>
 #include <QSignalSpy>
+#include <mvvm/model/compounditem.h>
 #include <mvvm/model/sessionmodel.h>
+#include <mvvm/model/taginfo.h>
 #include <mvvm/standarditems/vectoritem.h>
 #include <mvvm/viewmodel/defaultviewmodel.h>
 #include <mvvm/viewmodel/viewdataitem.h>
@@ -366,6 +368,30 @@ TEST_F(DefaultViewModelTest, setRootItem)
     // new root item doesn't have children
     EXPECT_EQ(viewModel.rowCount(), 0);
     EXPECT_EQ(viewModel.columnCount(), 2);
+}
+
+//! Setting top level item as ROOT item (case parent and children).
+
+TEST_F(DefaultViewModelTest, setCompoundAsRootItem)
+{
+    SessionModel model;
+    DefaultViewModel viewModel(&model);
+
+    auto item = model.insertItem<CompoundItem>();
+    item->addProperty("thickness", 42.0);
+    item->addProperty<VectorItem>("position");
+    item->addProperty("radius", 43.0);
+
+    viewModel.setSessionModel(&model);
+    viewModel.setRootSessionItem(item);
+
+    EXPECT_EQ(viewModel.rowCount(), 3);
+    EXPECT_EQ(viewModel.columnCount(), 2);
+
+    // checking vector item
+    auto index_of_vector_item = viewModel.index(1, 0);
+    EXPECT_EQ(viewModel.rowCount(index_of_vector_item), 3);
+    EXPECT_EQ(viewModel.columnCount(index_of_vector_item), 2);
 }
 
 //! On model destroyed.
