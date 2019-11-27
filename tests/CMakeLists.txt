@@ -1,4 +1,3 @@
 add_subdirectory(libtestmachinery)
-add_subdirectory(toyitems)
 add_subdirectory(testmodel)
 add_subdirectory(testviewmodel)

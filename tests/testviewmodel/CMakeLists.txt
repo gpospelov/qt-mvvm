@@ -13,7 +13,7 @@ include_directories(${BUILD_INC_DIR} ${gtest_SOURCE_DIR}/include ${gtest_SOURCE_
 
 set(CMAKE_AUTOMOC ON)
 add_executable(${test} ${source_files} ${include_files})
-target_link_libraries(${test} gtest gmock Qt5::Core Qt5::Test mvvm_viewmodel toyitems testmachinery qcustomplot)
+target_link_libraries(${test} gtest gmock Qt5::Core Qt5::Test mvvm_viewmodel testmachinery qcustomplot)
 
 if (MVVM_TESTS_AUTOEXEC)
     if (MVVM_TESTS_AUTODISCOVERY)
