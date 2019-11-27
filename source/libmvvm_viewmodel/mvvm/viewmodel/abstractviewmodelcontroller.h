@@ -11,6 +11,7 @@
 #define MVVM_VIEWMODEL_ABSTRACTVIEWMODELCONTROLLER_H
 
 #include <mvvm/core/export.h>
+#include <mvvm/model/tagrow.h>
 #include <memory>
 #include <string>
 
@@ -24,7 +25,6 @@ class SessionItem;
 class ChildrenStrategyInterface;
 class RowStrategyInterface;
 class SessionModel;
-class TagRow;
 
 /*!
 @class AbstractViewModelController
