@@ -10,9 +10,9 @@
 #ifndef MVVM_WIDGETS_PROPERTYFLATVIEW_H
 #define MVVM_WIDGETS_PROPERTYFLATVIEW_H
 
-#include <mvvm/core/export.h>
-#include <memory>
 #include <QWidget>
+#include <memory>
+#include <mvvm/core/export.h>
 
 namespace ModelView
 {
