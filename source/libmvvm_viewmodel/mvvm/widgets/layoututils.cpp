@@ -13,6 +13,12 @@
 #include <QWidget>
 #include <mvvm/widgets/layoututils.h>
 
+namespace
+{
+void remove(QGridLayout* layout, int row, int column, bool deleteWidgets);
+void deleteChildWidgets(QLayoutItem* item);
+} // namespace
+
 void LayoutUtils::clearLayout(QLayout* layout, bool deleteWidgets)
 {
     if (!layout)
@@ -28,12 +34,6 @@ void LayoutUtils::clearLayout(QLayout* layout, bool deleteWidgets)
         delete item;
     }
 }
-
-namespace
-{
-void remove(QGridLayout* layout, int row, int column, bool deleteWidgets);
-void deleteChildWidgets(QLayoutItem* item);
-} // namespace
 
 /**
  * Removes all layout items on the given row from the given grid
@@ -93,9 +93,8 @@ void remove(QGridLayout* layout, int row, int column, bool deleteWidgets)
         if ((r <= row && r + rs - 1 >= row) || (c <= column && c + cs - 1 >= column)) {
             // This layout item is subject to deletion.
             QLayoutItem* item = layout->takeAt(i);
-            if (deleteWidgets) {
+            if (deleteWidgets)
                 deleteChildWidgets(item);
-            }
             delete item;
         }
     }
@@ -109,9 +108,8 @@ void deleteChildWidgets(QLayoutItem* item)
 {
     if (item->layout()) {
         // Process all child items recursively.
-        for (int i = 0; i < item->layout()->count(); i++) {
+        for (int i = 0; i < item->layout()->count(); i++)
             deleteChildWidgets(item->layout()->itemAt(i));
-        }
     }
     delete item->widget();
 }

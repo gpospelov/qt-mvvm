@@ -18,6 +18,7 @@
 #include <mvvm/viewmodel/viewlabelitem.h>
 #include <mvvm/viewmodel/viewmodeldelegate.h>
 #include <mvvm/widgets/propertyflatview.h>
+#include <mvvm/widgets/layoututils.h>
 
 using namespace ModelView;
 
@@ -84,6 +85,8 @@ struct PropertyFlatView::PropertyFlatViewImpl {
 
     void update_grid_layout()
     {
+        LayoutUtils::clearGridLayout(grid_layout, true);
+
         update_mappers();
         for (int row = 0; row < view_model->rowCount(); ++row) {
             for (int col = 0; col < view_model->columnCount(); ++col) {
