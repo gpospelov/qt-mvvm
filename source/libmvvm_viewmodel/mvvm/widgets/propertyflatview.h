@@ -30,12 +30,13 @@ class CORE_EXPORT PropertyFlatView : public QWidget
     Q_OBJECT
 public:
     PropertyFlatView(QWidget* parent = nullptr);
+    ~PropertyFlatView();
 
     void setItem(SessionItem* item);
 
 private:
-//    struct PropertyFlatViewImpl;
-//    std::unique_ptr<PropertyFlatViewImpl> p_impl;
+    struct PropertyFlatViewImpl;
+    std::unique_ptr<PropertyFlatViewImpl> p_impl;
 };
 
 } // namespace ModelView
