@@ -17,10 +17,10 @@
 
 using namespace ModelView;
 
-class ChildrenStrategiesTest : public ::testing::Test
+class StandardChildrenStrategiesTest : public ::testing::Test
 {
 public:
-    ~ChildrenStrategiesTest();
+    ~StandardChildrenStrategiesTest();
 
     //! Helper class with two properties and one top level item on board.
     class TestItem : public CompoundItem
@@ -37,12 +37,12 @@ public:
     };
 };
 
-ChildrenStrategiesTest::~ChildrenStrategiesTest() = default;
-ChildrenStrategiesTest::TestItem::~TestItem() = default;
+StandardChildrenStrategiesTest::~StandardChildrenStrategiesTest() = default;
+StandardChildrenStrategiesTest::TestItem::~TestItem() = default;
 
 //! Testing AllChildrenStrategy.
 
-TEST_F(ChildrenStrategiesTest, AllChildrenStrategy)
+TEST_F(StandardChildrenStrategiesTest, AllChildrenStrategy)
 {
     AllChildrenStrategy strategy;
 
@@ -74,7 +74,7 @@ TEST_F(ChildrenStrategiesTest, AllChildrenStrategy)
 
 //! Testing TopItemsStrategy.
 
-TEST_F(ChildrenStrategiesTest, TopItemsStrategy)
+TEST_F(StandardChildrenStrategiesTest, TopItemsStrategy)
 {
     TopItemsStrategy strategy;
 
@@ -106,7 +106,7 @@ TEST_F(ChildrenStrategiesTest, TopItemsStrategy)
 
 //! Testing PropertyItemsStrategy.
 
-TEST_F(ChildrenStrategiesTest, PropertyItemsStrategy)
+TEST_F(StandardChildrenStrategiesTest, PropertyItemsStrategy)
 {
     PropertyItemsStrategy strategy;
 

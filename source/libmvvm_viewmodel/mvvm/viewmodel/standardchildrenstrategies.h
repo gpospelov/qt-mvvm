@@ -50,7 +50,8 @@ public:
 /*!
 @class PropertyItemsStrategy
 @brief Strategy to find children of given item: only property item will be given,
-all top level items will be filtered out.
+all top level items will be filtered out, all inactive children of GroupItem will
+be filtered out.
 */
 
 class CORE_EXPORT PropertyItemsStrategy : public ChildrenStrategyInterface
