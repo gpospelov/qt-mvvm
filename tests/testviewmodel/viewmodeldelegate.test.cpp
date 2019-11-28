@@ -16,7 +16,6 @@
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/viewmodel/defaultviewmodel.h>
 #include <mvvm/viewmodel/viewmodeldelegate.h>
-#include <QDebug>
 
 using namespace ModelView;
 
