@@ -19,6 +19,7 @@
 #include <mvvm/viewmodel/viewmodeldelegate.h>
 #include <mvvm/widgets/propertyflatview.h>
 #include <mvvm/widgets/layoututils.h>
+#include <QDebug>
 
 using namespace ModelView;
 
@@ -27,6 +28,7 @@ struct PropertyFlatView::PropertyFlatViewImpl {
     std::unique_ptr<ViewModelDelegate> m_delegate;
     std::unique_ptr<DefaultEditorFactory> editor_factory;
     std::vector<std::unique_ptr<QDataWidgetMapper>> widget_mappers;
+    std::map<ViewItem*, QWidget *> item_to_widget;
 
     QGridLayout* grid_layout{nullptr};
     PropertyFlatViewImpl()
@@ -41,6 +43,7 @@ struct PropertyFlatView::PropertyFlatViewImpl {
     {
         auto result = std::make_unique<QLabel>(view_item->data(Qt::DisplayRole).toString());
         result->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed));
+        result->setEnabled(view_item->item()->isEnabled());
         return result;
     }
 
@@ -52,14 +55,39 @@ struct PropertyFlatView::PropertyFlatViewImpl {
         m_delegate->setEditorData(editor.get(), index);
         connect(editor.get(), &CustomEditor::dataChanged, m_delegate.get(),
                 &ViewModelDelegate::onCustomEditorDataChanged);
+        editor->setEnabled(view_model->sessionItemFromIndex(index)->isEnabled());
         return editor;
     }
+
+    //! Connect model.
+
+    void connect_model()
+    {
+        auto on_data_changed = [this](const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles)
+        {
+#if QT_VERSION >= QT_VERSION_CHECK(5, 13, 0)
+            QVector<int> expected_roles = {Qt::ForegroundRole};
+#else
+            QVector<int> expected_roles = {Qt::TextColorRole};
+#endif
+            qDebug() << topLeft << bottomRight << roles;
+            if (roles == expected_roles) {
+                auto view_item = view_model->viewItemFromIndex(topLeft);
+                qDebug() << "    " << view_item->isEditable();
+                auto it = item_to_widget.find(view_item);
+                if (it != item_to_widget.end())
+                    it->second->setEnabled(view_item->item()->isEnabled());
+            }
+        };
+        connect(view_model.get(), &AbstractViewModel::dataChanged, on_data_changed);
+    }
+
 
     //! Creates widget for given index to appear in grid layout.
 
     std::unique_ptr<QWidget> create_widget(const QModelIndex& index)
     {
-        auto view_item = view_model->itemFromIndex(index);
+        auto view_item = view_model->viewItemFromIndex(index);
         if (auto label_item = dynamic_cast<ViewLabelItem*>(view_item); label_item)
             return create_label(label_item);
         else
@@ -85,13 +113,17 @@ struct PropertyFlatView::PropertyFlatViewImpl {
 
     void update_grid_layout()
     {
+        connect_model();
+
         LayoutUtils::clearGridLayout(grid_layout, true);
 
         update_mappers();
+        item_to_widget.clear();
         for (int row = 0; row < view_model->rowCount(); ++row) {
             for (int col = 0; col < view_model->columnCount(); ++col) {
                 auto index = view_model->index(row, col);
                 auto widget = create_widget(index);
+                item_to_widget[view_model->viewItemFromIndex(index)] = widget.get();
                 widget_mappers[static_cast<size_t>(row)]->addMapping(widget.get(), col);
                 grid_layout->addWidget(widget.release(), row, col);
             }

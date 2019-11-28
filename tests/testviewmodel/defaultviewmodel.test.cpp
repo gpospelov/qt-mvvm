@@ -293,12 +293,12 @@ TEST_F(DefaultViewModelTest, propertyItemAppearance)
     // disabled item
     auto item2 = model.insertItem<PropertyItem>();
     item2->setData(42.0);
-    item2->setEnabled(false);
+    item2->setEnabled(false); // our convention: gray color, read only
 
     // read only item
     auto item3 = model.insertItem<PropertyItem>();
     item3->setData(42.0);
-    item3->setEditable(false);
+    item3->setEditable(false); // our convention: normal color, read only
 
     // making view model
     DefaultViewModel viewModel(&model);
