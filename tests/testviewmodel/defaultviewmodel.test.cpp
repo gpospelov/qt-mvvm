@@ -54,15 +54,44 @@ TEST_F(DefaultViewModelTest, fromPropertyItem)
     QModelIndex labelIndex = viewModel.index(0, 0);
     QModelIndex dataIndex = viewModel.index(0, 1);
 
-    // it should be ViewLabelItem looking at our MultiLayer item
+    // it should be ViewLabelItem looking at our PropertyItem item
     auto labelItem = dynamic_cast<ViewLabelItem*>(viewModel.itemFromIndex(labelIndex));
-    EXPECT_TRUE(labelItem != nullptr);
+    ASSERT_TRUE(labelItem != nullptr);
     EXPECT_EQ(labelItem->item(), propertyItem);
 
     auto dataItem = dynamic_cast<ViewDataItem*>(viewModel.itemFromIndex(dataIndex));
-    EXPECT_TRUE(dataItem != nullptr);
+    ASSERT_TRUE(dataItem != nullptr);
     EXPECT_EQ(dataItem->item(), propertyItem);
 }
+
+//! Single property item in a model, inserted after DefaultViewModel was setup.
+
+TEST_F(DefaultViewModelTest, initThenInsert)
+{
+    SessionModel model;
+    DefaultViewModel viewModel(&model);
+
+    auto propertyItem = model.insertItem<PropertyItem>();
+    propertyItem->setData(42.0);
+
+    EXPECT_EQ(viewModel.rowCount(), 1);
+    EXPECT_EQ(viewModel.columnCount(), 2);
+
+    // accessing first child under the root item
+    QModelIndex labelIndex = viewModel.index(0, 0);
+    QModelIndex dataIndex = viewModel.index(0, 1);
+
+    // it should be ViewLabelItem looking at our PropertyItem item
+    auto labelItem = dynamic_cast<ViewLabelItem*>(viewModel.itemFromIndex(labelIndex));
+    ASSERT_TRUE(labelItem != nullptr);
+    EXPECT_EQ(labelItem->item(), propertyItem);
+
+    // Feature: since our PropertyItem got it's value after ViewModel was initialized, the model
+    // still holds ViewEmptyItem and not ViewDataItem.
+    auto dataItem = dynamic_cast<ViewEmptyItem*>(viewModel.itemFromIndex(dataIndex));
+    ASSERT_TRUE(dataItem != nullptr);
+}
+
 
 //! Single property item in a model.
 
