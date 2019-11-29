@@ -149,7 +149,7 @@ PropertyFlatView::~PropertyFlatView() = default;
 
 void PropertyFlatView::setItem(SessionItem* item)
 {
-    p_impl->view_model = Utils::CreatePropertyViewModel(item->model());
+    p_impl->view_model = Utils::CreatePropertyFlatViewModel(item->model());
     p_impl->view_model->setRootSessionItem(item);
     p_impl->update_grid_layout();
 }

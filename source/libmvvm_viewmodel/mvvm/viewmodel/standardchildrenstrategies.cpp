@@ -50,6 +50,7 @@ std::vector<SessionItem*> PropertyItemsFlatStrategy::children(const SessionItem*
     std::vector<SessionItem*> result;
     for (auto child : Utils::SinglePropertyItems(*item)) {
         if (auto group_item = dynamic_cast<GroupItem*>(child); group_item) {
+            result.push_back(group_item);
             for (auto sub_property : Utils::SinglePropertyItems(*group_item->currentItem()))
                 result.push_back(sub_property);
         } else {

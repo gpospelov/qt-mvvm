@@ -248,11 +248,13 @@ TEST_F(StandardChildrenStrategiesTest, PropertyItemsFlatStrategy)
     {
         ToyItems::ParticleItem item;
         auto children = strategy.children(&item);
-        EXPECT_EQ(children.size(), 2);
+        EXPECT_EQ(children.size(), 3);
 
         std::vector<ChildrenData> expected_children_data{
             {Constants::VectorItemType, ToyItems::ParticleItem::P_POSITION},
+            {ToyItems::Constants::ShapeGroupType, ToyItems::ParticleItem::P_SHAPES},
             {Constants::PropertyType, ToyItems::SphereItem::P_RADIUS}};
+
         EXPECT_EQ(children_data(children), expected_children_data);
     }
 }
