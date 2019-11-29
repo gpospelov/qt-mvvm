@@ -295,7 +295,20 @@ TEST_F(ComboPropertyTest, setStringOfSelections)
     EXPECT_EQ(combo.stringOfSelections(), "0");
 }
 
-TEST_F(ComboPropertyTest, comboEquality)
+TEST_F(ComboPropertyTest, comboEqualityDiffIndex)
+{
+    ComboProperty c1 = ComboProperty::createFrom({"a1", "a2"});
+    ComboProperty c2 = ComboProperty::createFrom({"a1", "a2"});
+
+    c1.setValue("a1");
+    c2.setValue("a2");
+    EXPECT_TRUE(c1 != c2);
+
+    c2.setValue("a1");
+    EXPECT_TRUE(c1 == c2);
+}
+
+TEST_F(ComboPropertyTest, comboEqualityDiffList)
 {
     ComboProperty c1;
     ComboProperty c2;
@@ -338,17 +351,17 @@ TEST_F(ComboPropertyTest, comboEquality)
     EXPECT_TRUE(c1 == c2);
 }
 
-//! Check equality of ComboPeroperty's variants.
+//! Check equality of ComboProperty's variants.
 //! If comparators are not registered, the behavior is undefined.
 
-TEST_F(ComboPropertyTest, variantEquality)
+TEST_F(ComboPropertyTest, variantEqualityDiffLists)
 {
-    ComboProperty c1 = ComboProperty() << "a1"
-                                       << "a2";
-    ComboProperty c2 = ComboProperty() << "a1"
-                                       << "a2";
-
     if (ModelView::Comparators::registered()) {
+        ComboProperty c1 = ComboProperty() << "a1"
+                                           << "a2";
+        ComboProperty c2 = ComboProperty() << "a1"
+                                           << "a2";
+
         EXPECT_TRUE(c1.variant() == c2.variant());
 
         c2 << "a3";
@@ -368,4 +381,38 @@ TEST_F(ComboPropertyTest, variantEquality)
         EXPECT_TRUE(c1.variant() != c2.variant());
         EXPECT_FALSE(c1.variant() == c2.variant());
     }
+}
+
+//! Check equality of ComboProperty's variants when only selected item differs.
+
+TEST_F(ComboPropertyTest, variantEqualityDiffIndex)
+{
+    if (ModelView::Comparators::registered()) {
+        ComboProperty c1 = ComboProperty::createFrom({"a1", "a2"});
+        ComboProperty c2 = ComboProperty::createFrom({"a1", "a2"});
+
+        c1.setValue("a1");
+        c2.setValue("a2");
+
+        EXPECT_FALSE(c1.variant() == c2.variant());
+        EXPECT_TRUE(c1.variant() != c2.variant());
+
+        c2.setValue("a1");
+        EXPECT_TRUE(c1.variant() == c2.variant());
+        EXPECT_FALSE(c1.variant() != c2.variant());
+    }
+
+    if (ModelView::Comparators::registered()) {
+        ComboProperty c1 = ComboProperty::createFrom({"a1", "a2"});
+        ComboProperty c2 = ComboProperty::createFrom({"a1", "a2"});
+
+        c1.setValue("a1");
+        c2.setValue("a2");
+
+        std::vector<QVariant> variants = {QVariant::fromValue(c1), QVariant::fromValue(c2)};
+
+        EXPECT_FALSE(variants[0] == variants[1]);
+        EXPECT_TRUE(variants[0] != variants[1]);
+    }
+
 }
