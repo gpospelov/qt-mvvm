@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include "google_test.h"
+#include "toy_includes.h"
 #include <QGridLayout>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/standarditems/vectoritem.h>
@@ -77,4 +78,19 @@ TEST_F(PropertyFlatViewTest, appearanceForItem)
     x_item->setEnabled(true);
     expected_enabled = {1, 1, 1, 1, 1, 1};
     EXPECT_EQ(enable_status(flat_view), expected_enabled);
+}
+
+TEST_F(PropertyFlatViewTest, layoutForToyParticle)
+{
+    ToyItems::SampleModel model;
+    model.insertItem<ToyItems::ShapeGroupItem>();
+
+    PropertyFlatView flat_view;
+    flat_view.setItem(model.rootItem());
+
+    auto layout = flat_view.findChild<QGridLayout*>();
+    ASSERT_TRUE(layout != nullptr);
+
+    EXPECT_EQ(layout->rowCount(), 2); // group item and radius of sphere
+    EXPECT_EQ(layout->columnCount(), 2);
 }

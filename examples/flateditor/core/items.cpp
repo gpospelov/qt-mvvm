@@ -105,6 +105,6 @@ DistributionGroupItem::DistributionGroupItem() : GroupItem(::Constants::Distribu
     registerItem<DistributionNoneItem>("None");
     registerItem<DistributionGaussianItem>("Gaussian");
     registerItem<DistributionLogNormalItem>("Log normal");
-    registerItem<DistributionTrapezoidItem>("Trpezoid");
+    registerItem<DistributionTrapezoidItem>("Trapezoid");
     init_group();
 }

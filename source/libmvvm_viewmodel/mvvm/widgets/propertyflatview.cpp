@@ -13,6 +13,7 @@
 #include <mvvm/editors/customeditor.h>
 #include <mvvm/editors/defaulteditorfactory.h>
 #include <mvvm/model/sessionitem.h>
+#include <mvvm/model/groupitem.h>
 #include <mvvm/viewmodel/abstractviewmodel.h>
 #include <mvvm/viewmodel/standardviewmodels.h>
 #include <mvvm/viewmodel/viewlabelitem.h>
@@ -63,14 +64,13 @@ struct PropertyFlatView::PropertyFlatViewImpl {
 
     void connect_model()
     {
-        auto on_data_changed = [this](const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles)
+        auto update_appearance = [this](const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles)
         {
 #if QT_VERSION >= QT_VERSION_CHECK(5, 13, 0)
             QVector<int> expected_roles = {Qt::ForegroundRole};
 #else
             QVector<int> expected_roles = {Qt::TextColorRole};
 #endif
-            qDebug() << topLeft << bottomRight << roles;
             if (roles == expected_roles) {
                 auto view_item = view_model->viewItemFromIndex(topLeft);
                 qDebug() << "    " << view_item->isEditable();
@@ -79,9 +79,21 @@ struct PropertyFlatView::PropertyFlatViewImpl {
                     it->second->setEnabled(view_item->item()->isEnabled());
             }
         };
-        connect(view_model.get(), &AbstractViewModel::dataChanged, on_data_changed);
-    }
+        connect(view_model.get(), &AbstractViewModel::dataChanged, update_appearance);
 
+        auto update_layout = [this](const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles)
+        {
+            QVector<int> expected_roles = {Qt::DisplayRole, Qt::EditRole};
+            qDebug() << "AAA 1.1" << roles;
+            if (roles == expected_roles) {
+                auto view_item = view_model->viewItemFromIndex(topLeft);
+                qDebug() << "AAA 1.2" << QString::fromStdString(view_item->item()->modelType());
+                if (dynamic_cast<GroupItem*>(view_item->item()))
+                    update_grid_layout();
+            }
+        };
+        connect(view_model.get(), &AbstractViewModel::dataChanged, update_layout);
+    }
 
     //! Creates widget for given index to appear in grid layout.
 
@@ -113,8 +125,7 @@ struct PropertyFlatView::PropertyFlatViewImpl {
 
     void update_grid_layout()
     {
-        connect_model();
-
+        qDebug() << "ZXXX";
         LayoutUtils::clearGridLayout(grid_layout, true);
 
         update_mappers();
@@ -151,5 +162,6 @@ void PropertyFlatView::setItem(SessionItem* item)
 {
     p_impl->view_model = Utils::CreatePropertyFlatViewModel(item->model());
     p_impl->view_model->setRootSessionItem(item);
+    p_impl->connect_model();
     p_impl->update_grid_layout();
 }
