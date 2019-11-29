@@ -38,6 +38,7 @@ TEST_F(ToyShapeGroupItemTest, initialState)
     ASSERT_TRUE(item.currentItem() != nullptr);
     EXPECT_TRUE(item.data().isValid());
     EXPECT_EQ(item.currentType(), item.currentItem()->modelType());
+    EXPECT_EQ(item.currentType(), ToyItems::Constants::SphereType);
     ASSERT_EQ(item.children().size(), 3);
 
     // parent child relationship
@@ -57,16 +58,16 @@ TEST_F(ToyShapeGroupItemTest, setCurrentType)
     ToyItems::ShapeGroupItem item;
     item.setCurrentType(ToyItems::Constants::CylinderType);
 
-    EXPECT_EQ(item.currentIndex(), 1);
+    EXPECT_EQ(item.currentIndex(), 0);
     ASSERT_TRUE(item.currentItem() != nullptr);
     EXPECT_EQ(item.currentType(), item.currentItem()->modelType());
-    EXPECT_EQ(item.currentItem()->modelType(), ToyItems::Constants::SphereType);
+    EXPECT_EQ(item.currentItem()->modelType(), ToyItems::Constants::CylinderType);
     EXPECT_TRUE(item.data().isValid());
     EXPECT_EQ(item.children().size(), 3);
 
     // expected value in combo
     ComboProperty combo = item.data().value<ComboProperty>();
-    EXPECT_EQ(combo.currentIndex(), 1);
+    EXPECT_EQ(combo.currentIndex(), 0);
     EXPECT_EQ(combo.values(),
               std::vector<std::string>({"Cylinder", "Full sphere", "Anysotropical pyramid"}));
 }

@@ -63,7 +63,7 @@ void GroupItem::setCurrentIndex(int index)
     if (variant.isValid()) {
         auto combo = variant.value<ComboProperty>();
         combo.setCurrentIndex(index);
-        setDataIntern(variant, ItemDataRole::DATA);
+        setDataIntern(QVariant::fromValue(combo), ItemDataRole::DATA);
     }
 }
 
