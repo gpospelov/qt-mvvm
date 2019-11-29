@@ -8,7 +8,6 @@
 // ************************************************************************** //
 
 #include "google_test.h"
-#include "toy_constants.h"
 #include "toy_items.h"
 #include "toy_models.h"
 #include <mvvm/model/modelutils.h>

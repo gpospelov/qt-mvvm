@@ -19,6 +19,21 @@
 namespace ToyItems
 {
 
+namespace Constants
+{
+
+const ModelView::model_type MultiLayerType = "MultiLayer";
+const ModelView::model_type LayerType = "Layer";
+const ModelView::model_type ParticleType = "Particle";
+const ModelView::model_type InterferenceType = "Interference";
+
+const ModelView::model_type CylinderType = "Cylinder";
+const ModelView::model_type SphereType = "Sphere";
+const ModelView::model_type AnysoPyramidType = "AnysoPyramid";
+
+const ModelView::model_type ShapeGroupType = "ShapeGroup";
+} // namespace Constants
+
 class MultiLayerItem : public ModelView::CompoundItem
 {
 public:

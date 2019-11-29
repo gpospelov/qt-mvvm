@@ -11,7 +11,6 @@
 #include <mvvm/model/comboproperty.h>
 #include <mvvm/signals/itemmapper.h>
 #include <mvvm/model/taginfo.h>
-#include "toy_constants.h"
 #include <mvvm/standarditems/vectoritem.h>
 #include <QColor>
 #include <stdexcept>

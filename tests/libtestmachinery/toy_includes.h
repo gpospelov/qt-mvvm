@@ -12,7 +12,6 @@
 
 //! Collection of toy items and models for testing purposes.
 
-#include "toy_constants.h"
 #include "toy_items.h"
 #include "toy_models.h"
 
