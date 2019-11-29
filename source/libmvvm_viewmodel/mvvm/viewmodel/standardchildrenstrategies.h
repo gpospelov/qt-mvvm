@@ -19,7 +19,8 @@ Used for ViewModel generation when underlying SessionModel changes its layout.
 
 #include <mvvm/viewmodel/childrenstrategyinterface.h>
 
-namespace ModelView {
+namespace ModelView
+{
 
 class SessionItem;
 
@@ -46,7 +47,6 @@ public:
     std::vector<SessionItem*> children(const SessionItem* item) const override;
 };
 
-
 /*!
 @class PropertyItemsStrategy
 @brief Strategy to find children of given item: only property item will be given,
@@ -60,6 +60,6 @@ public:
     std::vector<SessionItem*> children(const SessionItem* item) const override;
 };
 
-}  // namespace ModelView
+} // namespace ModelView
 
-#endif  // MVVM_VIEWMODEL_STANDARDCHILDRENSTRATEGIES_H
+#endif // MVVM_VIEWMODEL_STANDARDCHILDRENSTRATEGIES_H

@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include "google_test.h"
+#include "toy_includes.h"
 #include <mvvm/model/compounditem.h>
 #include <mvvm/model/propertyitem.h>
 #include <mvvm/model/sessionitem.h>
@@ -70,6 +71,12 @@ TEST_F(StandardChildrenStrategiesTest, AllChildrenStrategy)
     TestItem item4;
     children = strategy.children(&item4);
     EXPECT_EQ(children.size(), 3);
+
+    // GroupItem
+    ToyItems::ShapeGroupItem item5;
+    item5.setCurrentType(ToyItems::Constants::CylinderType);
+    children = strategy.children(&item5);
+    EXPECT_EQ(children.size(), 3); // number of registered children
 }
 
 //! Testing TopItemsStrategy.
@@ -102,6 +109,12 @@ TEST_F(StandardChildrenStrategiesTest, TopItemsStrategy)
     TestItem item4;
     children = strategy.children(&item4);
     EXPECT_EQ(children.size(), 1);
+
+    // GroupItem
+    ToyItems::ShapeGroupItem item5;
+    item5.setCurrentType(ToyItems::Constants::CylinderType);
+    children = strategy.children(&item5);
+    EXPECT_EQ(children.size(), 3); // number of registered children
 }
 
 //! Testing PropertyItemsStrategy.
@@ -134,4 +147,10 @@ TEST_F(StandardChildrenStrategiesTest, PropertyItemsStrategy)
     TestItem item4;
     children = strategy.children(&item4);
     EXPECT_EQ(children.size(), 2);
+
+    // GroupItem
+    ToyItems::ShapeGroupItem item5;
+    item5.setCurrentType(ToyItems::Constants::CylinderType);
+    strategy.children(&item5);
+    EXPECT_EQ(children.size(), 2); // properties of cylinder
 }
