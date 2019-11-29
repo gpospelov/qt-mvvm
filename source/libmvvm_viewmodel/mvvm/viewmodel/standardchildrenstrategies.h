@@ -52,9 +52,55 @@ public:
 @brief Strategy to find children of given item: only property item will be given,
 all top level items will be filtered out, all inactive children of GroupItem will
 be filtered out.
+
+For example: if group property has Cylinder active:
+
+Particle
+    ShapeGroup
+        Sphere
+            Radius
+        Cylinder
+            Height
+            Radius
+
+will become:
+Particle
+    ShapeGroup -> Cylinder
+        Height
+        Radius
 */
 
 class CORE_EXPORT PropertyItemsStrategy : public ChildrenStrategyInterface
+{
+public:
+    std::vector<SessionItem*> children(const SessionItem* item) const override;
+};
+
+/*!
+@class PropertyItemsFlatStrategy
+@brief Strategy to find children of given item.
+
+Acts as PropertyItemStrategy, with the difference that active subproperties of
+GroupItem are moved to the same parent, as GroupItem itself.
+
+For example: if group property has Cylinder active:
+
+Particle
+    ShapeGroup
+        Sphere
+            Radius
+        Cylinder
+            Height
+            Radius
+
+will become:
+Particle
+    ShapeGroup -> Cylinder
+    Height
+    Radius
+*/
+
+class CORE_EXPORT PropertyItemsFlatStrategy : public ChildrenStrategyInterface
 {
 public:
     std::vector<SessionItem*> children(const SessionItem* item) const override;

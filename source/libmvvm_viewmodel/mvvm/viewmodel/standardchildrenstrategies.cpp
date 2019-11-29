@@ -10,9 +10,10 @@
 #include <mvvm/model/groupitem.h>
 #include <mvvm/model/itemutils.h>
 #include <mvvm/viewmodel/standardchildrenstrategies.h>
-#include <QDebug>
 
 using namespace ModelView;
+
+// ----------------------------------------------------------------------------
 
 std::vector<SessionItem*> AllChildrenStrategy::children(const SessionItem* item) const
 {
@@ -24,6 +25,8 @@ std::vector<SessionItem*> TopItemsStrategy::children(const SessionItem* item) co
     return item ? Utils::TopLevelItems(*item) : std::vector<SessionItem*>();
 }
 
+// ----------------------------------------------------------------------------
+
 std::vector<SessionItem*> PropertyItemsStrategy::children(const SessionItem* item) const
 {
     if (!item)
@@ -31,9 +34,28 @@ std::vector<SessionItem*> PropertyItemsStrategy::children(const SessionItem* ite
 
     auto group = dynamic_cast<const GroupItem*>(item);
     auto next_item = group ? group->currentItem() : item;
-    qDebug() << item << group << next_item;
-    if (group && next_item) {
-        qDebug() << QString::fromStdString(group->modelType()) << QString::fromStdString(next_item->modelType());
-    }
     return Utils::SinglePropertyItems(*next_item);
+}
+
+// ----------------------------------------------------------------------------
+
+std::vector<SessionItem*> PropertyItemsFlatStrategy::children(const SessionItem* item) const
+{
+    if (!item)
+        return std::vector<SessionItem*>();
+
+    if (auto group = dynamic_cast<const GroupItem*>(item); group)
+        return Utils::SinglePropertyItems(*group->currentItem());
+
+    std::vector<SessionItem*> result;
+    for (auto child : Utils::SinglePropertyItems(*item)) {
+        if (auto group_item = dynamic_cast<GroupItem*>(child); group_item) {
+            for (auto sub_property : Utils::SinglePropertyItems(*group_item->currentItem()))
+                result.push_back(sub_property);
+        } else {
+            result.push_back(child);
+        }
+    }
+
+    return result;
 }
