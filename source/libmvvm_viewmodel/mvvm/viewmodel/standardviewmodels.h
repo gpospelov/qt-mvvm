@@ -34,6 +34,11 @@ CORE_EXPORT std::unique_ptr<AbstractViewModel> CreatePropertyViewModel(SessionMo
 //! Shows only top items.
 CORE_EXPORT std::unique_ptr<AbstractViewModel> CreateTopItemsViewModel(SessionModel* model);
 
+//! Creates view model to represent SessionModel for Qt views.
+//! The model has two columns, shows only property items and simplified group items.
+//! Subproperties of group item moved one level up.
+CORE_EXPORT std::unique_ptr<AbstractViewModel> CreatePropertyFlatViewModel(SessionModel* model);
+
 } // Utils
 
 } // ModelView

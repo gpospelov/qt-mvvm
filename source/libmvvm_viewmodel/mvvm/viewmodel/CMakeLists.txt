@@ -15,6 +15,8 @@ target_sources(mvvm_viewmodel PRIVATE
     propertiesrowstrategy.h
     propertytableviewmodel.cpp
     propertytableviewmodel.h
+    propertyflatviewmodel.cpp
+    propertyflatviewmodel.h
     propertyviewmodel.cpp
     propertyviewmodel.h
     rowstrategyinterface.h
