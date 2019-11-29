@@ -83,7 +83,7 @@ TEST_F(PropertyFlatViewTest, appearanceForItem)
 TEST_F(PropertyFlatViewTest, layoutForToyParticle)
 {
     ToyItems::SampleModel model;
-    model.insertItem<ToyItems::ShapeGroupItem>();
+    auto group_item = model.insertItem<ToyItems::ShapeGroupItem>();
 
     PropertyFlatView flat_view;
     flat_view.setItem(model.rootItem());
@@ -92,5 +92,9 @@ TEST_F(PropertyFlatViewTest, layoutForToyParticle)
     ASSERT_TRUE(layout != nullptr);
 
     EXPECT_EQ(layout->rowCount(), 2); // group item and radius of sphere
+    EXPECT_EQ(layout->columnCount(), 2);
+
+    group_item->setCurrentType(ToyItems::Constants::CylinderType);
+    EXPECT_EQ(layout->rowCount(), 3); // group item, cylinder height and radius
     EXPECT_EQ(layout->columnCount(), 2);
 }
