@@ -111,7 +111,7 @@ void deleteChildWidgets(QLayoutItem* item)
         for (int i = 0; i < item->layout()->count(); i++)
             deleteChildWidgets(item->layout()->itemAt(i));
     }
-    delete item->widget();
+    item->widget()->deleteLater();
 }
 
 } // namespace

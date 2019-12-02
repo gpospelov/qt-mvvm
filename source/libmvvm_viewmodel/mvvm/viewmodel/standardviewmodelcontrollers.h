@@ -79,6 +79,24 @@ public:
                                      const std::vector<std::string>& labels = {});
 };
 
+/*!
+@class PropertyFlatViewModelController
+@brief Controller for AbstractViewModel to show item properties.
+
+Shows property items, hides top level items, hides inactive items of GroupProperty,
+moves subproperties of group item under parent of group item.
+*/
+
+class CORE_EXPORT PropertyFlatViewModelController : public AbstractViewModelController
+{
+public:
+    explicit PropertyFlatViewModelController(AbstractViewModel* view_model = nullptr);
+
+protected:
+    void onDataChange(SessionItem* item, int role) override;
+};
+
 } // namespace ModelView
+
 
 #endif  // MVVM_VIEWMODEL_STANDARDVIEWMODELCONTROLLERS_H

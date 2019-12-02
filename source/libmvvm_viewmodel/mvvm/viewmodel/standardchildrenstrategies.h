@@ -19,7 +19,8 @@ Used for ViewModel generation when underlying SessionModel changes its layout.
 
 #include <mvvm/viewmodel/childrenstrategyinterface.h>
 
-namespace ModelView {
+namespace ModelView
+{
 
 class SessionItem;
 
@@ -46,11 +47,27 @@ public:
     std::vector<SessionItem*> children(const SessionItem* item) const override;
 };
 
-
 /*!
 @class PropertyItemsStrategy
 @brief Strategy to find children of given item: only property item will be given,
-all top level items will be filtered out.
+all top level items will be filtered out, all inactive children of GroupItem will
+be filtered out.
+
+For example: if group property has Cylinder active:
+
+Particle
+    ShapeGroup
+        Sphere
+            Radius
+        Cylinder
+            Height
+            Radius
+
+will become:
+Particle
+    ShapeGroup -> Cylinder
+        Height
+        Radius
 */
 
 class CORE_EXPORT PropertyItemsStrategy : public ChildrenStrategyInterface
@@ -59,6 +76,36 @@ public:
     std::vector<SessionItem*> children(const SessionItem* item) const override;
 };
 
-}  // namespace ModelView
+/*!
+@class PropertyItemsFlatStrategy
+@brief Strategy to find children of given item.
 
-#endif  // MVVM_VIEWMODEL_STANDARDCHILDRENSTRATEGIES_H
+Acts as PropertyItemStrategy, with the difference that active subproperties of
+GroupItem are moved to the same parent, as GroupItem itself.
+
+For example: if group property has Cylinder active:
+
+Particle
+    ShapeGroup
+        Sphere
+            Radius
+        Cylinder
+            Height
+            Radius
+
+will become:
+Particle
+    ShapeGroup -> Cylinder
+    Height
+    Radius
+*/
+
+class CORE_EXPORT PropertyItemsFlatStrategy : public ChildrenStrategyInterface
+{
+public:
+    std::vector<SessionItem*> children(const SessionItem* item) const override;
+};
+
+} // namespace ModelView
+
+#endif // MVVM_VIEWMODEL_STANDARDCHILDRENSTRATEGIES_H

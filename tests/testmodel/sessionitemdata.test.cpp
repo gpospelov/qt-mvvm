@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include "google_test.h"
+#include <mvvm/model/comboproperty.h>
 #include <mvvm/model/mvvm_types.h>
 #include <mvvm/model/sessionitemdata.h>
 
@@ -61,6 +62,30 @@ TEST_F(SessionItemDataTest, setDataDouble)
     EXPECT_TRUE(data.setData(QVariant(), role));
     EXPECT_TRUE(data.roles().empty());
     EXPECT_FALSE(data.data(role).isValid());
+}
+
+//! Basic setData, data operations.
+
+TEST_F(SessionItemDataTest, setDataComboProperty)
+{
+    SessionItemData data;
+    ComboProperty c1 = ComboProperty::createFrom({"a1", "a2"});
+    ComboProperty c2 = ComboProperty::createFrom({"a1", "a2"});
+    c1.setValue("a1");
+    c2.setValue("a2");
+
+    const int role(ItemDataRole::DATA);
+
+    // setting variant for role
+    EXPECT_TRUE(data.setData(QVariant::fromValue(c1), role));
+    EXPECT_EQ(data.data(role).value<ComboProperty>(), c1);
+
+    // setting same data twice
+    EXPECT_FALSE(data.setData(QVariant::fromValue(c1), role));
+
+    // setting another data
+    EXPECT_TRUE(data.setData(QVariant::fromValue(c2), role));
+    EXPECT_EQ(data.data(role).value<ComboProperty>(), c2);
 }
 
 //! Using different roles.

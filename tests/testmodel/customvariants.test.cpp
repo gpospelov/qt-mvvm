@@ -100,6 +100,11 @@ TEST_F(CustomVariantsTest, IsTheSameVariant)
     const RealLimits lim1;
     const RealLimits lim2 = RealLimits::limited(1.0, 2.0);
 
+    ComboProperty combo3 = ComboProperty::createFrom({"e1", "e2"});
+    ComboProperty combo4 = ComboProperty::createFrom({"e1", "e2"});
+    combo3.setValue("e1");
+    combo4.setValue("e2");
+
     std::vector<QVariant> variants = {QVariant(),
                                       QVariant::fromValue(true),
                                       QVariant::fromValue(false),
@@ -111,13 +116,17 @@ TEST_F(CustomVariantsTest, IsTheSameVariant)
                                       QVariant::fromValue(std::string("string2")),
                                       QVariant::fromValue(vec1),
                                       QVariant::fromValue(vec2),
-                                      combo1.variant(),
-                                      combo2.variant(),
+                                      QVariant::fromValue(combo1),
+                                      QVariant::fromValue(combo2),
                                       QVariant::fromValue(QColor(Qt::red)),
                                       QVariant::fromValue(QColor(Qt::green)),
                                       QVariant::fromValue(extprop1),
-                                      QVariant::fromValue(extprop2).QVariant::fromValue(lim1),
-                                      QVariant::fromValue(lim2)};
+                                      QVariant::fromValue(extprop2),
+                                      QVariant::fromValue(lim1),
+                                      QVariant::fromValue(lim2),
+                                      QVariant::fromValue(combo3),
+                                      QVariant::fromValue(combo4)
+                                     };
 
     for (size_t i = 0; i < variants.size(); ++i) {
         for (size_t j = 0; j < variants.size(); ++j) {
@@ -127,6 +136,24 @@ TEST_F(CustomVariantsTest, IsTheSameVariant)
                 EXPECT_FALSE(Utils::IsTheSame(variants[i], variants[j]));
         }
     }
+}
+
+//! Checks if ComboProperty based variant is the same.
+
+TEST_F(CustomVariantsTest, IsTheSameComboProperty)
+{
+    ComboProperty combo1 = ComboProperty::createFrom({"a1", "a2"});
+    ComboProperty combo2 = ComboProperty::createFrom({"a1", "a2"});
+
+    EXPECT_TRUE(Utils::IsTheSame(QVariant::fromValue(combo1), QVariant::fromValue(combo1)));
+
+    combo1.setValue("a1");
+    combo2.setValue("a2");
+    EXPECT_FALSE(Utils::IsTheSame(QVariant::fromValue(combo1), QVariant::fromValue(combo2)));
+
+    QVariant v1 = QVariant::fromValue(combo1);
+    QVariant v2 = QVariant::fromValue(combo2);
+    EXPECT_FALSE(Utils::IsTheSame(v1, v2));
 }
 
 //! Test translation of variants

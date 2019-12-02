@@ -102,3 +102,8 @@ QModelIndexList AbstractViewModel::indexOfSessionItem(const SessionItem* item) c
         result.push_back(indexFromItem(view));
     return result;
 }
+
+ViewItem* AbstractViewModel::viewItemFromIndex(const QModelIndex& index) const
+{
+    return dynamic_cast<ViewItem*>(itemFromIndex(index));
+}

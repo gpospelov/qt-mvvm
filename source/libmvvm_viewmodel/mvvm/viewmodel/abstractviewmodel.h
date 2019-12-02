@@ -61,6 +61,8 @@ public:
 
     QModelIndexList indexOfSessionItem(const SessionItem* item) const;
 
+    ViewItem* viewItemFromIndex(const QModelIndex& index) const;
+
 protected:
     QStandardItem* rootViewItem() const;
     SessionModel* sessionModel() const;
