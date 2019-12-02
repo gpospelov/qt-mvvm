@@ -12,6 +12,8 @@ target_sources(collidingmice PRIVATE
     mainwindow.cpp
     mouse.h
     mouse.cpp
+    mousemodel.h
+    mousemodel.cpp
     mice.qrc
 )
 

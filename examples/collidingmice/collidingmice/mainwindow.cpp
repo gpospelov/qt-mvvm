@@ -50,7 +50,6 @@ MainWindow::MainWindow()
     setCentralWidget(view);
     resize(800, 600);
 
-
     QObject::connect(timer, SIGNAL(timeout()), scene, SLOT(advance()));
     timer->start(1000 / 33);
 }
