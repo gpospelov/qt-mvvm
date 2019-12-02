@@ -8,3 +8,4 @@
 + plotgraphs
 + sampleview
 + treeviews
++ collidingmice
