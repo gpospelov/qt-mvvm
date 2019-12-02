@@ -7,18 +7,26 @@
 //
 // ************************************************************************** //
 
-#include "mainwindow.h"
-#include <QApplication>
-#include <QLocale>
+#ifndef MAINWINDOW_H
+#define MAINWINDOW_H
 
-int main(int argc, char **argv)
+#include <QMainWindow>
+
+class QGraphicsScene;
+class QGraphicsView;
+class QTimer;
+
+class MainWindow : public QMainWindow
 {
-    QLocale::setDefault(QLocale(QLocale::English, QLocale::UnitedStates));
+    Q_OBJECT
+public:
+    MainWindow();
+    ~MainWindow();
 
-    QApplication app(argc, argv);
+private:
+    QGraphicsScene* scene;
+    QGraphicsView* view;
+    QTimer* timer;
+};
 
-    MainWindow win;
-    win.show();
-
-    return app.exec();
-}
+#endif //  MAINWINDOW_H
