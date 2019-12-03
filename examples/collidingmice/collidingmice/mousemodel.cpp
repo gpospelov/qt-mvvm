@@ -30,8 +30,8 @@ MouseItem::MouseItem() : ModelView::CompoundItem("MouseItem")
     addProperty(P_SPEED, 0.0)->setDisplayName("Speed");
     addProperty(P_EYE_DIRECTION, 0.0)->setDisplayName("Eye direction");
     addProperty(P_COLOR, QColor(Qt::red))->setDisplayName("Color");
-    addProperty(P_POSX, 0.0)->setDisplayName("X");
-    addProperty(P_POSY, 0.0)->setDisplayName("Y");
+    addProperty(P_XPOS, 0.0)->setDisplayName("X");
+    addProperty(P_YPOS, 0.0)->setDisplayName("Y");
 }
 
 MouseModel::MouseModel() : ModelView::SessionModel("MouseModel")
@@ -44,7 +44,7 @@ void MouseModel::populate_model()
 {
     for (int i = 0; i < MouseCount; ++i) {
         auto item = insertItem<MouseItem>();
-        item->setProperty(MouseItem::P_POSX, std::sin((i * 6.28) / MouseCount) * 200);
-        item->setProperty(MouseItem::P_POSY, std::cos((i * 6.28) / MouseCount) * 200);
+        item->setProperty(MouseItem::P_XPOS, std::sin((i * 6.28) / MouseCount) * 200);
+        item->setProperty(MouseItem::P_YPOS, std::cos((i * 6.28) / MouseCount) * 200);
     }
 }

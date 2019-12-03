@@ -56,6 +56,7 @@
 #include <QStyleOption>
 #include <qmath.h>
 #include "mousemodel.h"
+#include <mvvm/signals/itemmapper.h>
 
 const qreal Pi = M_PI;
 const qreal TwoPi = 2 * M_PI;
@@ -75,7 +76,15 @@ Mouse::Mouse(MouseItem* item)
       color(QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256)),
       mouse_item(item)
 {
-    setPos(item->property(MouseItem::P_POSX).toDouble(), item->property(MouseItem::P_POSY).toDouble());
+    auto on_property_change = [this](ModelView::SessionItem*, std::string property_name) {
+        if (property_name == MouseItem::P_XPOS)
+            setX(mouse_item->property(MouseItem::P_XPOS).toDouble());
+        if (property_name == MouseItem::P_YPOS)
+            setY(mouse_item->property(MouseItem::P_YPOS).toDouble());
+    };
+    mouse_item->mapper()->setOnPropertyChange(on_property_change, this);
+
+    setPos(item->property(MouseItem::P_XPOS).toDouble(), item->property(MouseItem::P_YPOS).toDouble());
     setRotation(QRandomGenerator::global()->bounded(360 * 16));
 }
 //! [0]
@@ -204,6 +213,9 @@ void Mouse::advance(int step)
     mouseEyeDirection = (qAbs(dx / 5) < 1) ? 0 : dx / 5;
 
     setRotation(rotation() + dx);
-    setPos(mapToParent(0, -(3 + sin(speed) * 3)));
+    auto new_coordinate = mapToParent(0, -(3 + sin(speed) * 3));
+    mouse_item->setProperty(MouseItem::P_XPOS, new_coordinate.x());
+    mouse_item->setProperty(MouseItem::P_YPOS, new_coordinate.y());
+//    setPos(mapToParent(0, -(3 + sin(speed) * 3)));
 }
 //! [11]
