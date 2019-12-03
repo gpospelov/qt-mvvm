@@ -55,6 +55,7 @@
 #include <QRandomGenerator>
 #include <QStyleOption>
 #include <qmath.h>
+#include "mousemodel.h"
 
 const qreal Pi = M_PI;
 const qreal TwoPi = 2 * M_PI;
@@ -74,6 +75,7 @@ Mouse::Mouse(MouseItem* item)
       color(QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256)),
       mouse_item(item)
 {
+    setPos(item->property(MouseItem::P_POSX).toDouble(), item->property(MouseItem::P_POSY).toDouble());
     setRotation(QRandomGenerator::global()->bounded(360 * 16));
 }
 //! [0]

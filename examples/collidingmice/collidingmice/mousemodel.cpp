@@ -10,6 +10,7 @@
 #include "mousemodel.h"
 #include <QColor>
 #include <mvvm/model/itemcatalogue.h>
+#include <cmath>
 
 namespace {
 static const int MouseCount = 7;
@@ -41,6 +42,9 @@ MouseModel::MouseModel() : ModelView::SessionModel("MouseModel")
 
 void MouseModel::populate_model()
 {
-    for (int i = 0; i < MouseCount; ++i)
-        insertItem<MouseItem>();
+    for (int i = 0; i < MouseCount; ++i) {
+        auto item = insertItem<MouseItem>();
+        item->setProperty(MouseItem::P_POSX, std::sin((i * 6.28) / MouseCount) * 200);
+        item->setProperty(MouseItem::P_POSY, std::cos((i * 6.28) / MouseCount) * 200);
+    }
 }
