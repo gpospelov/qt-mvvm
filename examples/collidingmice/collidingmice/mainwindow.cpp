@@ -11,12 +11,12 @@
 #include "mouse.h"
 #include "mousemodel.h"
 #include <mvvm/model/modelutils.h>
-#include <QCoreApplication>
+#include <mvvm/widgets/standardtreeviews.h>
 #include <QGraphicsScene>
 #include <QGraphicsView>
-#include <QSettings>
 #include <QTabWidget>
 #include <QTimer>
+#include <QVBoxLayout>
 
 namespace
 {
@@ -27,8 +27,15 @@ const QString pos_key = "pos";
 
 MainWindow::MainWindow()
     : scene(new QGraphicsScene), view(new QGraphicsView(scene)), timer(new QTimer),
-      mouse_model(std::make_unique<MouseModel>())
+      mouse_model(std::make_unique<MouseModel>()),
+      itemsTreeView(new ModelView::AllItemsTreeView(mouse_model.get()))
 {
+    auto central_widget = new QWidget;
+    auto layout = new QHBoxLayout;
+    layout->addWidget(itemsTreeView, 2);
+    layout->addWidget(view, 5);
+    central_widget->setLayout(layout);
+
     scene->setSceneRect(-300, -300, 600, 600);
     scene->setItemIndexMethod(QGraphicsScene::NoIndex);
 
@@ -44,8 +51,8 @@ MainWindow::MainWindow()
 
     view->setWindowTitle(QT_TRANSLATE_NOOP(QGraphicsView, "Colliding Mice"));
 
-    setCentralWidget(view);
-    resize(800, 600);
+    setCentralWidget(central_widget);
+    resize(1200, 900);
 
     QObject::connect(timer, SIGNAL(timeout()), scene, SLOT(advance()));
     timer->start(1000 / 33);

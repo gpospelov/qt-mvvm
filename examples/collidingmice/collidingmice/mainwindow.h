@@ -18,6 +18,10 @@ class QGraphicsView;
 class QTimer;
 class MouseModel;
 
+namespace ModelView {
+class AllItemsTreeView;
+}
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -30,6 +34,7 @@ private:
     QGraphicsView* view;
     QTimer* timer;
     std::unique_ptr<MouseModel> mouse_model;
+    ModelView::AllItemsTreeView* itemsTreeView;
 };
 
 #endif //  MAINWINDOW_H
