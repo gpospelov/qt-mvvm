@@ -11,10 +11,12 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <memory>
 
 class QGraphicsScene;
 class QGraphicsView;
 class QTimer;
+class MouseModel;
 
 class MainWindow : public QMainWindow
 {
@@ -27,6 +29,7 @@ private:
     QGraphicsScene* scene;
     QGraphicsView* view;
     QTimer* timer;
+    std::unique_ptr<MouseModel> mouse_model;
 };
 
 #endif //  MAINWINDOW_H

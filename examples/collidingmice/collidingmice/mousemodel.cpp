@@ -11,7 +11,17 @@
 #include <QColor>
 #include <mvvm/model/itemcatalogue.h>
 
+namespace {
 static const int MouseCount = 7;
+
+std::unique_ptr<ModelView::ItemCatalogue> CreateItemCatalogue()
+{
+    auto result = std::make_unique<ModelView::ItemCatalogue>();
+    result->registerItem<MouseItem>();
+    return result;
+}
+
+}
 
 MouseItem::MouseItem() : ModelView::CompoundItem("MouseItem")
 {
@@ -19,18 +29,17 @@ MouseItem::MouseItem() : ModelView::CompoundItem("MouseItem")
     addProperty(P_SPEED, 0.0)->setDisplayName("Speed");
     addProperty(P_EYE_DIRECTION, 0.0)->setDisplayName("Eye direction");
     addProperty(P_COLOR, QColor(Qt::red))->setDisplayName("Color");
+    addProperty(P_POSX, 0.0)->setDisplayName("X");
+    addProperty(P_POSY, 0.0)->setDisplayName("Y");
 }
 
 MouseModel::MouseModel() : ModelView::SessionModel("MouseModel")
 {
-    auto catalogue = std::make_unique<ModelView::ItemCatalogue>();
-    catalogue->registerItem<MouseItem>();
-    setItemCatalogue(std::move(catalogue));
-
-    create_mice();
+    setItemCatalogue(CreateItemCatalogue());
+    populate_model();
 }
 
-void MouseModel::create_mice()
+void MouseModel::populate_model()
 {
     for (int i = 0; i < MouseCount; ++i)
         insertItem<MouseItem>();

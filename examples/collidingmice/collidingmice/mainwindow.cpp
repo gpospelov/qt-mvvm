@@ -9,6 +9,8 @@
 
 #include "mainwindow.h"
 #include "mouse.h"
+#include "mousemodel.h"
+#include <mvvm/model/modelutils.h>
 #include <QCoreApplication>
 #include <QGraphicsScene>
 #include <QGraphicsView>
@@ -27,15 +29,18 @@ const QString pos_key = "pos";
 } // namespace
 
 MainWindow::MainWindow()
-    : scene(new QGraphicsScene), view(new QGraphicsView(scene)), timer(new QTimer)
+    : scene(new QGraphicsScene), view(new QGraphicsView(scene)), timer(new QTimer),
+      mouse_model(std::make_unique<MouseModel>())
 {
     scene->setSceneRect(-300, -300, 600, 600);
     scene->setItemIndexMethod(QGraphicsScene::NoIndex);
 
-    for (int i = 0; i < MouseCount; ++i) {
-        Mouse* mouse = new Mouse;
+    int i = 0;
+    for (auto item : ModelView::Utils::TopItems<MouseItem>(mouse_model.get())) {
+        Mouse* mouse = new Mouse(item);
         mouse->setPos(::sin((i * 6.28) / MouseCount) * 200, ::cos((i * 6.28) / MouseCount) * 200);
         scene->addItem(mouse);
+        ++i;
     }
 
     view->setRenderHint(QPainter::Antialiasing);

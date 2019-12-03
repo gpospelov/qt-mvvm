@@ -53,11 +53,13 @@
 
 #include <QGraphicsItem>
 
+class MouseItem;
+
 //! [0]
 class Mouse : public QGraphicsItem
 {
 public:
-    Mouse();
+    Mouse(MouseItem* item);
 
     QRectF boundingRect() const override;
     QPainterPath shape() const override;
@@ -72,6 +74,7 @@ private:
     qreal speed;
     qreal mouseEyeDirection;
     QColor color;
+    MouseItem* mouse_item;
 };
 //! [0]
 
