@@ -11,13 +11,13 @@
 #include "mouse.h"
 #include "mousemodel.h"
 #include <QAction>
+#include <QFileDialog>
 #include <QGraphicsScene>
 #include <QGraphicsView>
+#include <QMenuBar>
 #include <QTimer>
 #include <QToolBar>
 #include <QVBoxLayout>
-#include <QMenuBar>
-#include <QFileDialog>
 #include <mvvm/model/modelutils.h>
 #include <mvvm/widgets/standardtreeviews.h>
 
@@ -65,8 +65,7 @@ void MainWindow::init_scene()
     view->setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
     view->setDragMode(QGraphicsView::ScrollHandDrag);
 
-    for (auto item : ModelView::Utils::TopItems<MouseItem>(mouse_model.get()))
-        scene->addItem(new Mouse(item));
+    populate_scene();
 }
 
 void MainWindow::init_toolbar()
@@ -94,8 +93,10 @@ void MainWindow::init_menu()
     fileMenu->addAction(openAction);
     auto onOpenAction = [&]() {
         QString fileName = QFileDialog::getOpenFileName(this);
-        if (!fileName.isEmpty())
+        if (!fileName.isEmpty()) {
             mouse_model->readFromFile(fileName);
+            populate_scene();
+        }
     };
     connect(openAction, &QAction::triggered, onOpenAction);
 
@@ -109,5 +110,13 @@ void MainWindow::init_menu()
             mouse_model->writeToFile(fileName);
     };
     connect(saveAction, &QAction::triggered, onSaveAction);
+}
 
+//!
+
+void MainWindow::populate_scene()
+{
+    scene->clear();
+    for (auto item : ModelView::Utils::TopItems<MouseItem>(mouse_model.get()))
+        scene->addItem(new Mouse(item));
 }

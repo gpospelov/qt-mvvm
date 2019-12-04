@@ -36,6 +36,7 @@ private:
     void init_scene();
     void init_toolbar();
     void init_menu();
+    void populate_scene();
 
     QGraphicsScene* scene;
     QGraphicsView* view;
