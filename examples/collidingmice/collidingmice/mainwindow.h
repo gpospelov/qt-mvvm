@@ -17,8 +17,10 @@ class QGraphicsScene;
 class QGraphicsView;
 class QTimer;
 class MouseModel;
+class QAction;
 
-namespace ModelView {
+namespace ModelView
+{
 class AllItemsTreeView;
 }
 
@@ -30,9 +32,14 @@ public:
     ~MainWindow();
 
 private:
+    void create_central_widget();
+    void init_scene();
+    void init_toolbar();
+
     QGraphicsScene* scene;
     QGraphicsView* view;
     QTimer* timer;
+    QAction* pause_resume_action;
     std::unique_ptr<MouseModel> mouse_model;
     ModelView::AllItemsTreeView* itemsTreeView;
 };
