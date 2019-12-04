@@ -216,6 +216,5 @@ void Mouse::advance(int step)
     auto new_coordinate = mapToParent(0, -(3 + sin(speed) * 3));
     mouse_item->setProperty(MouseItem::P_XPOS, new_coordinate.x());
     mouse_item->setProperty(MouseItem::P_YPOS, new_coordinate.y());
-//    setPos(mapToParent(0, -(3 + sin(speed) * 3)));
 }
 //! [11]

@@ -17,6 +17,8 @@
 #include <QTabWidget>
 #include <QTimer>
 #include <QVBoxLayout>
+#include <QAction>
+#include <QToolBar>
 
 namespace
 {
@@ -35,6 +37,21 @@ MainWindow::MainWindow()
     layout->addWidget(itemsTreeView, 2);
     layout->addWidget(view, 5);
     central_widget->setLayout(layout);
+
+
+    auto toolbar = addToolBar("xxx");
+
+    auto pause_action = new QAction;
+    auto on_pause_action = [this]() {
+        if (timer->isActive())
+            timer->stop();
+        else
+            timer->start(1000 / 33);
+    };
+    connect(pause_action, &QAction::triggered, on_pause_action);
+
+    toolbar->addAction(pause_action);
+
 
     scene->setSceneRect(-300, -300, 600, 600);
     scene->setItemIndexMethod(QGraphicsScene::NoIndex);
