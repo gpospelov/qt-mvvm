@@ -9,7 +9,9 @@
 
 #include "mousemodel.h"
 #include <QColor>
+#include <QRandomGenerator>
 #include <mvvm/model/itemcatalogue.h>
+#include <mvvm/utils/numericutils.h>
 #include <cmath>
 
 namespace {
@@ -21,6 +23,13 @@ std::unique_ptr<ModelView::ItemCatalogue> CreateItemCatalogue()
     result->registerItem<MouseItem>();
     return result;
 }
+
+QColor random_color()
+{
+    auto rndm = []() -> int { return ModelView::Utils::RandInt(0, 255); };
+    return QColor(rndm(), rndm(), rndm());
+}
+
 
 }
 
@@ -46,5 +55,6 @@ void MouseModel::populate_model()
         auto item = insertItem<MouseItem>();
         item->setProperty(MouseItem::P_XPOS, std::sin((i * 6.28) / MouseCount) * 200);
         item->setProperty(MouseItem::P_YPOS, std::cos((i * 6.28) / MouseCount) * 200);
+        item->setProperty(MouseItem::P_COLOR, QVariant::fromValue(random_color()));
     }
 }

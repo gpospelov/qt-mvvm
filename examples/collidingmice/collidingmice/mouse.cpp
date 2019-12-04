@@ -54,7 +54,6 @@
 #include <QPainter>
 #include <QRandomGenerator>
 #include <QStyleOption>
-#include <qmath.h>
 #include "mousemodel.h"
 #include <mvvm/signals/itemmapper.h>
 
@@ -73,7 +72,7 @@ static qreal normalizeAngle(qreal angle)
 //! [0]
 Mouse::Mouse(MouseItem* item)
     : angle(0), speed(0), mouseEyeDirection(0),
-      color(QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256)),
+      color(item->property(MouseItem::P_COLOR).value<QColor>()),
       mouse_item(item)
 {
     auto on_property_change = [this](ModelView::SessionItem*, std::string property_name) {
@@ -81,6 +80,8 @@ Mouse::Mouse(MouseItem* item)
             setX(mouse_item->property(MouseItem::P_XPOS).toDouble());
         if (property_name == MouseItem::P_YPOS)
             setY(mouse_item->property(MouseItem::P_YPOS).toDouble());
+        if (property_name == MouseItem::P_COLOR)
+            color = mouse_item->property(MouseItem::P_COLOR).value<QColor>();
     };
     mouse_item->mapper()->setOnPropertyChange(on_property_change, this);
 
