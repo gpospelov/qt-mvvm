@@ -38,6 +38,10 @@ class MouseModel : public ModelView::SessionModel
 public:
     MouseModel();
 
+    void readFromFile(const QString& name);
+
+    void writeToFile(const QString& name);
+
 private:
     void populate_model();
 };

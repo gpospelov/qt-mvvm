@@ -10,11 +10,13 @@
 #include "mousemodel.h"
 #include <QColor>
 #include <QRandomGenerator>
+#include <cmath>
+#include <mvvm/core/modeldocuments.h>
 #include <mvvm/model/itemcatalogue.h>
 #include <mvvm/utils/numericutils.h>
-#include <cmath>
 
-namespace {
+namespace
+{
 static const int MouseCount = 7;
 
 std::unique_ptr<ModelView::ItemCatalogue> CreateItemCatalogue()
@@ -30,8 +32,7 @@ QColor random_color()
     return QColor(rndm(), rndm(), rndm());
 }
 
-
-}
+} // namespace
 
 MouseItem::MouseItem() : ModelView::CompoundItem("MouseItem")
 {
@@ -44,6 +45,18 @@ MouseModel::MouseModel() : ModelView::SessionModel("MouseModel")
 {
     setItemCatalogue(CreateItemCatalogue());
     populate_model();
+}
+
+void MouseModel::readFromFile(const QString& name)
+{
+    auto document = ModelView::CreateJsonDocument({this});
+    document->load(name.toStdString());
+}
+
+void MouseModel::writeToFile(const QString& name)
+{
+    auto document = ModelView::CreateJsonDocument({this});
+    document->save(name.toStdString());
 }
 
 void MouseModel::populate_model()

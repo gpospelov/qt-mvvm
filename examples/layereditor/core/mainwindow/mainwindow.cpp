@@ -8,24 +8,25 @@
 // ************************************************************************** //
 
 #include "mainwindow.h"
-#include "SampleWidget.h"
 #include "ApplicationModels.h"
-#include <QTabWidget>
-#include <QCoreApplication>
-#include <QSettings>
-#include <QMenuBar>
+#include "SampleWidget.h"
 #include <QAction>
+#include <QCoreApplication>
 #include <QFileDialog>
+#include <QMenuBar>
+#include <QSettings>
+#include <QTabWidget>
 
-namespace {
-    const QString main_window_group = "MainWindow";
-    const QString size_key = "size";
-    const QString pos_key = "pos";
-}
+namespace
+{
+const QString main_window_group = "MainWindow";
+const QString size_key = "size";
+const QString pos_key = "pos";
+} // namespace
 
 MainWindow::MainWindow()
     : m_tabWidget(new QTabWidget), m_models(std::make_unique<ApplicationModels>())
-{    
+{
     m_tabWidget->addTab(new SampleWidget(m_models.get()), "Materials and Layers");
 
     setCentralWidget(m_tabWidget);
@@ -92,5 +93,4 @@ void MainWindow::create_menus()
             m_models->writeToFile(fileName);
     };
     connect(saveAction, &QAction::triggered, onSaveAction);
-
 }

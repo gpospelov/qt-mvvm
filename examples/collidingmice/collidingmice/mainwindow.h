@@ -35,11 +35,11 @@ private:
     void create_central_widget();
     void init_scene();
     void init_toolbar();
+    void init_menu();
 
     QGraphicsScene* scene;
     QGraphicsView* view;
     QTimer* timer;
-    QAction* pause_resume_action;
     std::unique_ptr<MouseModel> mouse_model;
     ModelView::AllItemsTreeView* itemsTreeView;
 };
