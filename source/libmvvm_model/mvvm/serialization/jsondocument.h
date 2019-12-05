@@ -27,7 +27,7 @@ class SessionModel;
 class CORE_EXPORT JsonDocument : public ModelDocumentInterface
 {
 public:
-    JsonDocument(const std::initializer_list<SessionModel*>& models);
+    JsonDocument(std::initializer_list<SessionModel*> models);
     ~JsonDocument() override;
 
     void save(const std::string& file_name) const override;

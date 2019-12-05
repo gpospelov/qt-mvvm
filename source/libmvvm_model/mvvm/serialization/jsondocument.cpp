@@ -26,7 +26,7 @@ struct JsonDocument::JsonDocumentImpl {
     }
 };
 
-JsonDocument::JsonDocument(const std::initializer_list<ModelView::SessionModel*>& models)
+JsonDocument::JsonDocument(std::initializer_list<ModelView::SessionModel*> models)
     : p_impl(std::make_unique<JsonDocumentImpl>(models))
 {
 }
@@ -51,6 +51,8 @@ void JsonDocument::save(const std::string& file_name) const
         throw std::runtime_error("Error in JsonDocument: can't save the file '" + file_name + "'");
 
     file.write(document.toJson());
+
+    file.close();
 }
 
 //! Loads models from disk. If models have some data already, it will be rewritten.
@@ -76,6 +78,8 @@ void JsonDocument::load(const std::string& file_name)
         model->clear();
         converter.json_to_model(array.at(index++).toObject(), *model);
     }
+
+    file.close();
 }
 
 JsonDocument::~JsonDocument() = default;
