@@ -1,0 +1,12 @@
+BasedOnStyle: LLVM
+IndentWidth: 4
+UseTab: Never
+BreakBeforeBraces: Linux
+AllowShortIfStatementsOnASingleLine: false
+IndentCaseLabels: false
+ColumnLimit: 100
+AccessModifierOffset: -4
+BreakBeforeBinaryOperators: NonAssignment
+AllowShortFunctionsOnASingleLine: Inline
+PointerAlignment: Left
+

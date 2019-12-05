@@ -23,7 +23,7 @@ class CORE_EXPORT PropertyItem : public SessionItem
 public:
     PropertyItem();
 
-    SessionItem& setLimits(const RealLimits& value);
+    SessionItem* setLimits(const RealLimits& value);
 
 };
 

@@ -13,8 +13,17 @@
 #include <QMainWindow>
 #include <memory>
 
-class SampleModel;
-class QTabWidget;
+class QGraphicsScene;
+class QGraphicsView;
+class QTimer;
+class MouseModel;
+class QAction;
+class QSlider;
+
+namespace ModelView
+{
+class AllItemsTreeView;
+}
 
 class MainWindow : public QMainWindow
 {
@@ -23,15 +32,19 @@ public:
     MainWindow();
     ~MainWindow();
 
-protected:
-    void closeEvent(QCloseEvent* event);
-
 private:
-    void init_application();
-    void write_settings();
+    void create_central_widget();
+    void init_scene();
+    void init_toolbar();
+    void init_menu();
+    void populate_scene();
 
-    QTabWidget* m_tabWidget;
-    std::unique_ptr<SampleModel> m_sample_model;
+    QGraphicsScene* scene;
+    QGraphicsView* view;
+    QTimer* timer;
+    QSlider* slider;
+    std::unique_ptr<MouseModel> mouse_model;
+    ModelView::AllItemsTreeView* itemsTreeView;
 };
 
 #endif //  MAINWINDOW_H
