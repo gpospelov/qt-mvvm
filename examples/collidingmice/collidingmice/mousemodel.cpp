@@ -10,10 +10,12 @@
 #include "mousemodel.h"
 #include <QColor>
 #include <QRandomGenerator>
+#include <QUndoStack>
 #include <cmath>
 #include <mvvm/core/modeldocuments.h>
 #include <mvvm/model/itemcatalogue.h>
 #include <mvvm/utils/numericutils.h>
+#include <QDebug>
 
 namespace
 {
@@ -41,10 +43,16 @@ MouseItem::MouseItem() : ModelView::CompoundItem("MouseItem")
     addProperty(P_YPOS, 0.0)->setDisplayName("Y");
 }
 
+// ----------------------------------------------------------------------------
+
 MouseModel::MouseModel() : ModelView::SessionModel("MouseModel")
 {
     setItemCatalogue(CreateItemCatalogue());
     populate_model();
+
+    setUndoRedoEnabled(true);
+    const int max_commands_to_keep = 1000;
+    undoStack()->setUndoLimit(max_commands_to_keep);
 }
 
 void MouseModel::readFromFile(const QString& name)
@@ -57,6 +65,21 @@ void MouseModel::writeToFile(const QString& name)
 {
     auto document = ModelView::CreateJsonDocument({this});
     document->save(name.toStdString());
+}
+
+void MouseModel::setUndoPosition(int value)
+{
+    value = value < 0 ? 0 : value;
+    value = value > 100 ? 100 : value;
+    int desired_command_id = undoStack()->count() * value / 100;
+
+    if (undoStack()->index() < desired_command_id) {
+        while (undoStack()->index() != desired_command_id)
+            undoStack()->redo(); // going forward
+    } else {
+        while (undoStack()->index() != desired_command_id)
+            undoStack()->undo(); // going back in time
+    }
 }
 
 void MouseModel::populate_model()

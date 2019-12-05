@@ -18,16 +18,19 @@
 #include <QTimer>
 #include <QToolBar>
 #include <QVBoxLayout>
+#include <QLabel>
+#include <QSlider>
 #include <mvvm/model/modelutils.h>
 #include <mvvm/widgets/standardtreeviews.h>
 
 namespace
 {
 const int msec_update_period = 30;
+const int max_slider_value = 100;
 } // namespace
 
 MainWindow::MainWindow()
-    : scene(new QGraphicsScene), view(new QGraphicsView(scene)), timer(new QTimer),
+    : scene(new QGraphicsScene), view(new QGraphicsView(scene)), timer(new QTimer), slider(new QSlider),
       mouse_model(std::make_unique<MouseModel>()),
       itemsTreeView(new ModelView::AllItemsTreeView(mouse_model.get()))
 {
@@ -68,21 +71,43 @@ void MainWindow::init_scene()
     populate_scene();
 }
 
+//! Inits toolbar.
+
 void MainWindow::init_toolbar()
 {
     auto toolbar = addToolBar("toolbar");
 
+    // creates pause/resume button
     auto pause_resume_action = new QAction("Pause/Resume", this);
-
     auto on_pause_action = [this]() {
-        if (timer->isActive())
+        if (timer->isActive()) {
             timer->stop();
-        else
+        } else {
             timer->start(msec_update_period);
+            slider->setValue(max_slider_value);
+        }
     };
     connect(pause_resume_action, &QAction::triggered, on_pause_action);
     toolbar->addAction(pause_resume_action);
+
+    toolbar->addSeparator();
+
+    // creates undo/redo slider
+    toolbar->addWidget(new QLabel("   Back in time  "));
+    slider->setRange(0, max_slider_value);
+    slider->setValue(max_slider_value);
+    slider->setOrientation(Qt::Horizontal);
+    slider->setMaximumWidth(300);
+    toolbar->addWidget(slider);
+
+    auto on_slider_moved = [this](auto value){mouse_model->setUndoPosition(value);};
+    connect(slider, &QSlider::valueChanged, on_slider_moved);
+
+    auto on_slider_pressed = [this](){timer->stop();};
+    connect(slider, &QSlider::sliderPressed, on_slider_pressed);
 }
+
+//! Initializes file save/load menu.
 
 void MainWindow::init_menu()
 {
@@ -112,7 +137,7 @@ void MainWindow::init_menu()
     connect(saveAction, &QAction::triggered, onSaveAction);
 }
 
-//!
+//! Populates scene with content from the model.
 
 void MainWindow::populate_scene()
 {

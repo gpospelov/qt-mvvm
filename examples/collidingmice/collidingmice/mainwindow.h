@@ -18,6 +18,7 @@ class QGraphicsView;
 class QTimer;
 class MouseModel;
 class QAction;
+class QSlider;
 
 namespace ModelView
 {
@@ -41,6 +42,7 @@ private:
     QGraphicsScene* scene;
     QGraphicsView* view;
     QTimer* timer;
+    QSlider* slider;
     std::unique_ptr<MouseModel> mouse_model;
     ModelView::AllItemsTreeView* itemsTreeView;
 };
