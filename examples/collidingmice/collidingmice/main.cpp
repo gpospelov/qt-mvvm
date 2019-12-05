@@ -7,16 +7,18 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/core/modeldocuments.h>
-#include <mvvm/serialization/jsondocument.h>
+#include "mainwindow.h"
+#include <QApplication>
+#include <QLocale>
 
-namespace ModelView
+int main(int argc, char **argv)
 {
+    QLocale::setDefault(QLocale(QLocale::English, QLocale::UnitedStates));
 
-std::unique_ptr<ModelDocumentInterface>
-CreateJsonDocument(std::initializer_list<SessionModel*> models)
-{
-    return std::make_unique<JsonDocument>(models);
+    QApplication app(argc, argv);
+
+    MainWindow win;
+    win.show();
+
+    return app.exec();
 }
-
-} // namespace ModelView

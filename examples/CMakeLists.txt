@@ -1,6 +1,7 @@
 # CMakeLists.txt with user examples
 
 add_subdirectory(celleditors)
+add_subdirectory(collidingmice)
 add_subdirectory(dragandmove)
 add_subdirectory(flateditor)
 add_subdirectory(layereditor)

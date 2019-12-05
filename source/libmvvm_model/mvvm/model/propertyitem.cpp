@@ -18,8 +18,8 @@ PropertyItem::PropertyItem() : SessionItem(Constants::PropertyType)
 
 }
 
-SessionItem& PropertyItem::setLimits(const RealLimits& value)
+SessionItem* PropertyItem::setLimits(const RealLimits& value)
 {
     this->setData( QVariant::fromValue<RealLimits>(value), ItemDataRole::LIMITS);
-    return *this;
+    return this;
 }
