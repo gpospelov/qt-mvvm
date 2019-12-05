@@ -22,6 +22,7 @@
 #include <QSlider>
 #include <mvvm/model/modelutils.h>
 #include <mvvm/widgets/standardtreeviews.h>
+#include <QDebug>
 
 namespace
 {
@@ -101,7 +102,7 @@ void MainWindow::init_toolbar()
     toolbar->addWidget(slider);
 
     auto on_slider_moved = [this](auto value){mouse_model->setUndoPosition(value);};
-    connect(slider, &QSlider::valueChanged, on_slider_moved);
+    connect(slider, &QSlider::sliderMoved, on_slider_moved);
 
     auto on_slider_pressed = [this](){timer->stop();};
     connect(slider, &QSlider::sliderPressed, on_slider_pressed);

@@ -70,7 +70,6 @@ protected:
     void advance(int step) override;
 
 private:
-    qreal angle;
     qreal speed;
     qreal mouseEyeDirection;
     QColor color;

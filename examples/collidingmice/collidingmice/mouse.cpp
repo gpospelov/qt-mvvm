@@ -71,7 +71,7 @@ static qreal normalizeAngle(qreal angle)
 
 //! [0]
 Mouse::Mouse(MouseItem* item)
-    : angle(0), speed(0), mouseEyeDirection(0),
+    : speed(0), mouseEyeDirection(0),
       color(item->property(MouseItem::P_COLOR).value<QColor>()),
       mouse_item(item)
 {
@@ -82,6 +82,10 @@ Mouse::Mouse(MouseItem* item)
             setY(mouse_item->property(MouseItem::P_YPOS).toDouble());
         if (property_name == MouseItem::P_COLOR)
             color = mouse_item->property(MouseItem::P_COLOR).value<QColor>();
+        if (property_name == MouseItem::P_ANGLE) {
+            qreal dx = ::sin(mouse_item->property(MouseItem::P_ANGLE).value<double>()) * 10;
+            setRotation(rotation() + dx);
+        }
     };
     mouse_item->mapper()->setOnPropertyChange(on_property_change, this);
 
@@ -151,6 +155,9 @@ void Mouse::advance(int step)
 //! [4]
     // Don't move too far away
 //! [5]
+
+    qreal angle = mouse_item->property(MouseItem::P_ANGLE).value<double>();
+
     QLineF lineToCenter(QPointF(0, 0), mapFromScene(0, 0));
     if (lineToCenter.length() > 150) {
         qreal angleToCenter = std::atan2(lineToCenter.dy(), lineToCenter.dx());
@@ -213,9 +220,9 @@ void Mouse::advance(int step)
     qreal dx = ::sin(angle) * 10;
     mouseEyeDirection = (qAbs(dx / 5) < 1) ? 0 : dx / 5;
 
-    setRotation(rotation() + dx);
     auto new_coordinate = mapToParent(0, -(3 + sin(speed) * 3));
     mouse_item->setProperty(MouseItem::P_XPOS, new_coordinate.x());
     mouse_item->setProperty(MouseItem::P_YPOS, new_coordinate.y());
+    mouse_item->setProperty(MouseItem::P_ANGLE, angle);
 }
 //! [11]

@@ -9,13 +9,13 @@
 
 #include "mousemodel.h"
 #include <QColor>
+#include <QDebug>
 #include <QRandomGenerator>
 #include <QUndoStack>
 #include <cmath>
 #include <mvvm/core/modeldocuments.h>
 #include <mvvm/model/itemcatalogue.h>
 #include <mvvm/utils/numericutils.h>
-#include <QDebug>
 
 namespace
 {
@@ -41,6 +41,7 @@ MouseItem::MouseItem() : ModelView::CompoundItem("MouseItem")
     addProperty(P_COLOR, QColor(Qt::red))->setDisplayName("Color");
     addProperty(P_XPOS, 0.0)->setDisplayName("X");
     addProperty(P_YPOS, 0.0)->setDisplayName("Y");
+    addProperty(P_ANGLE, 0.0)->setDisplayName("Angle of yaw");
 }
 
 // ----------------------------------------------------------------------------
