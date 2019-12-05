@@ -63,6 +63,11 @@ TEST_F(CompoundItemTest, addDoubleProperty)
     EXPECT_EQ(propertyItem->data().value<double>(), expected);
 
     EXPECT_TRUE(propertyItem->data(ItemDataRole::LIMITS).isValid());
+
+    // limits should be non negative by default
+    auto limits = propertyItem->data(ItemDataRole::LIMITS).value<RealLimits>();
+    EXPECT_TRUE(limits.hasLowerLimit());
+    EXPECT_FALSE(limits.hasUpperLimit());
 }
 
 TEST_F(CompoundItemTest, addCharProperty)
