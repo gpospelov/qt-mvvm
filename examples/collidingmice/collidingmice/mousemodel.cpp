@@ -9,8 +9,6 @@
 
 #include "mousemodel.h"
 #include <QColor>
-#include <QDebug>
-#include <QRandomGenerator>
 #include <QUndoStack>
 #include <cmath>
 #include <mvvm/core/modeldocuments.h>
