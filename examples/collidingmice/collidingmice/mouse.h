@@ -70,7 +70,6 @@ protected:
     void advance(int step) override;
 
 private:
-    qreal speed;
     qreal mouseEyeDirection;
     QColor color;
     MouseItem* mouse_item;

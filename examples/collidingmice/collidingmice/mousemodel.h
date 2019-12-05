@@ -25,6 +25,7 @@ public:
     static inline const std::string P_XPOS = "P_XPOS";
     static inline const std::string P_YPOS = "P_YPOS";
     static inline const std::string P_ANGLE = "P_ANGLE";
+    static inline const std::string P_SPEED = "P_SPEED";
 
     MouseItem();
 };

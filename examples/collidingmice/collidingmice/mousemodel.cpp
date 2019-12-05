@@ -42,6 +42,7 @@ MouseItem::MouseItem() : ModelView::CompoundItem("MouseItem")
     addProperty(P_XPOS, 0.0)->setDisplayName("X");
     addProperty(P_YPOS, 0.0)->setDisplayName("Y");
     addProperty(P_ANGLE, 0.0)->setDisplayName("Angle of yaw");
+    addProperty(P_SPEED, 0.0)->setDisplayName("Speed");
 }
 
 // ----------------------------------------------------------------------------

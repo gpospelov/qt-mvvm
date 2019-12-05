@@ -71,7 +71,7 @@ static qreal normalizeAngle(qreal angle)
 
 //! [0]
 Mouse::Mouse(MouseItem* item)
-    : speed(0), mouseEyeDirection(0),
+    : mouseEyeDirection(0),
       color(item->property(MouseItem::P_COLOR).value<QColor>()),
       mouse_item(item)
 {
@@ -215,6 +215,8 @@ void Mouse::advance(int step)
 //! [10]
 
 //! [11]
+
+    qreal speed = mouse_item->property(MouseItem::P_SPEED).value<double>();
     speed += (-50 + QRandomGenerator::global()->bounded(100)) / 100.0;
 
     qreal dx = ::sin(angle) * 10;
@@ -224,5 +226,6 @@ void Mouse::advance(int step)
     mouse_item->setProperty(MouseItem::P_XPOS, new_coordinate.x());
     mouse_item->setProperty(MouseItem::P_YPOS, new_coordinate.y());
     mouse_item->setProperty(MouseItem::P_ANGLE, angle);
+    mouse_item->setProperty(MouseItem::P_SPEED, speed);
 }
 //! [11]
