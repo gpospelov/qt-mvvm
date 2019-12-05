@@ -52,10 +52,11 @@
 
 #include <QGraphicsScene>
 #include <QPainter>
-#include <QRandomGenerator>
 #include <QStyleOption>
 #include "mousemodel.h"
 #include <mvvm/signals/itemmapper.h>
+#include <mvvm/utils/numericutils.h>
+#include <cmath>
 
 const qreal Pi = M_PI;
 const qreal TwoPi = 2 * M_PI;
@@ -83,14 +84,14 @@ Mouse::Mouse(MouseItem* item)
         if (property_name == MouseItem::P_COLOR)
             color = mouse_item->property(MouseItem::P_COLOR).value<QColor>();
         if (property_name == MouseItem::P_ANGLE) {
-            qreal dx = ::sin(mouse_item->property(MouseItem::P_ANGLE).value<double>()) * 10;
+            qreal dx = std::sin(mouse_item->property(MouseItem::P_ANGLE).value<double>()) * 10;
             setRotation(rotation() + dx);
         }
     };
     mouse_item->mapper()->setOnPropertyChange(on_property_change, this);
 
     setPos(item->property(MouseItem::P_XPOS).toDouble(), item->property(MouseItem::P_YPOS).toDouble());
-    setRotation(QRandomGenerator::global()->bounded(360 * 16));
+    setRotation(ModelView::Utils::RandInt(0, 360 * 16));
 }
 //! [0]
 
@@ -206,18 +207,18 @@ void Mouse::advance(int step)
 
     // Add some random movement
 //! [10]
-    if (dangerMice.size() > 1 && QRandomGenerator::global()->bounded(10) == 0) {
-        if (QRandomGenerator::global()->bounded(1))
-            angle += QRandomGenerator::global()->bounded(1 / 500.0);
+    if (dangerMice.size() > 1 && ModelView::Utils::RandInt(0, 10) == 0) {
+        if (ModelView::Utils::RandInt(0, 1))
+            angle += ModelView::Utils::RandDouble(0.0, 1 / 500.0);
         else
-            angle -= QRandomGenerator::global()->bounded(1 / 500.0);
+            angle -= ModelView::Utils::RandDouble(0.0, 1 / 500.0);
     }
 //! [10]
 
 //! [11]
 
     qreal speed = mouse_item->property(MouseItem::P_SPEED).value<double>();
-    speed += (-50 + QRandomGenerator::global()->bounded(100)) / 100.0;
+    speed += (-50 + ModelView::Utils::RandInt(0, 100)) / 100.0;
 
     qreal dx = ::sin(angle) * 10;
     mouseEyeDirection = (qAbs(dx / 5) < 1) ? 0 : dx / 5;
