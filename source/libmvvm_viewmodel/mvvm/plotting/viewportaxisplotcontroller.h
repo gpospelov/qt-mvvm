@@ -10,8 +10,8 @@
 #ifndef MVVM_PLOTTING_VIEWPORTAXISPLOTCONTROLLER_H
 #define MVVM_PLOTTING_VIEWPORTAXISPLOTCONTROLLER_H
 
-#include <mvvm/signals/itemcontroller.h>
 #include <memory>
+#include <mvvm/signals/itemcontroller.h>
 
 class QCPAxis;
 
@@ -43,4 +43,4 @@ public:
 
 } // namespace ModelView
 
-#endif  // MVVM_PLOTTING_VIEWPORTAXISPLOTCONTROLLER_H
+#endif // MVVM_PLOTTING_VIEWPORTAXISPLOTCONTROLLER_H

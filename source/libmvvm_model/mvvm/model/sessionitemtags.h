@@ -12,8 +12,8 @@
 
 #include <mvvm/core/export.h>
 #include <mvvm/model/tagrow.h>
-#include <vector>
 #include <string>
+#include <vector>
 
 namespace ModelView
 {
@@ -78,4 +78,4 @@ private:
 
 } // namespace ModelView
 
-#endif  // MVVM_MODEL_SESSIONITEMTAGS_H
+#endif // MVVM_MODEL_SESSIONITEMTAGS_H

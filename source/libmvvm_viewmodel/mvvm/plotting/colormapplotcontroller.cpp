@@ -7,11 +7,11 @@
 //
 // ************************************************************************** //
 
+#include "qcustomplot.h"
 #include <mvvm/plotting/colormapplotcontroller.h>
+#include <mvvm/plotting/data2dplotcontroller.h>
 #include <mvvm/standarditems/colormapitem.h>
 #include <mvvm/standarditems/data2ditem.h>
-#include <mvvm/plotting/data2dplotcontroller.h>
-#include "qcustomplot.h"
 
 using namespace ModelView;
 
@@ -21,7 +21,8 @@ struct ColorMapPlotController::ColorMapPlotControllerImpl {
     QCPColorMap* color_map{nullptr};
     std::unique_ptr<Data2DPlotController> data_controller;
 
-    ColorMapPlotControllerImpl(ColorMapPlotController* master, QCustomPlot* plot, QCPColorScale* color_scale)
+    ColorMapPlotControllerImpl(ColorMapPlotController* master, QCustomPlot* plot,
+                               QCPColorScale* color_scale)
         : master(master), custom_plot(plot)
     {
         color_map = new QCPColorMap(custom_plot->xAxis, custom_plot->yAxis);
@@ -48,13 +49,14 @@ struct ColorMapPlotController::ColorMapPlotControllerImpl {
 
     void update_interpolation()
     {
-        auto is_interpolated = colormap_item()->property(ColorMapItem::P_INTERPOLATION).value<bool>();
+        auto is_interpolated =
+            colormap_item()->property(ColorMapItem::P_INTERPOLATION).value<bool>();
         color_map->setInterpolate(is_interpolated);
         custom_plot->replot();
     }
 };
 
-ColorMapPlotController::ColorMapPlotController(QCustomPlot* custom_plot,  QCPColorScale* color_scale)
+ColorMapPlotController::ColorMapPlotController(QCustomPlot* custom_plot, QCPColorScale* color_scale)
     : p_impl(std::make_unique<ColorMapPlotControllerImpl>(this, custom_plot, color_scale))
 {
 }

@@ -7,10 +7,10 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/plotting/statusstringreporterfactory.h>
-#include <mvvm/plotting/statusstringreporter.h>
 #include <mvvm/plotting/colormapinfoformatter.h>
 #include <mvvm/plotting/graphinfoformatter.h>
+#include <mvvm/plotting/statusstringreporter.h>
+#include <mvvm/plotting/statusstringreporterfactory.h>
 
 namespace ModelView
 {
@@ -29,5 +29,4 @@ CreateColorMapReporter(QCustomPlot* custom_plot, std::function<void(const std::s
                                                   std::make_unique<ColorMapInfoFormatter>());
 }
 
-}
-
+} // namespace ModelView

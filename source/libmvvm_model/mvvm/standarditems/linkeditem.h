@@ -31,18 +31,16 @@ public:
 
     void setLink(const SessionItem* item);
 
-    template <typename T=SessionItem> T* get() const;
+    template <typename T = SessionItem> T* get() const;
 };
 
 //! Returns item linked to given item. Works only in model context.
 
 template <typename T> T* LinkedItem::get() const
 {
-    return model()
-               ? dynamic_cast<T*>(model()->findItem(data().value<std::string>()))
-               : nullptr;
+    return model() ? dynamic_cast<T*>(model()->findItem(data().value<std::string>())) : nullptr;
 }
 
 } // namespace ModelView
 
-#endif  // MVVM_STANDARDITEMS_LINKEDITEM_H
+#endif // MVVM_STANDARDITEMS_LINKEDITEM_H

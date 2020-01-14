@@ -12,8 +12,8 @@
 #include <QStyleOptionViewItem>
 #include <mvvm/editors/customeditor.h>
 #include <mvvm/model/propertyitem.h>
-#include <mvvm/standarditems/vectoritem.h>
 #include <mvvm/model/sessionmodel.h>
+#include <mvvm/standarditems/vectoritem.h>
 #include <mvvm/viewmodel/defaultviewmodel.h>
 #include <mvvm/viewmodel/viewmodeldelegate.h>
 
@@ -26,14 +26,14 @@ class ViewModelDelegateTest : public ::testing::Test
 public:
     ~ViewModelDelegateTest();
 
-    struct TestData
-    {
+    struct TestData {
         SessionModel model{};
         DefaultViewModel view_model;
         ViewModelDelegate delegate;
         QDataWidgetMapper mapper;
 
-        TestData() : view_model(&model){
+        TestData() : view_model(&model)
+        {
             mapper.setModel(&view_model);
             mapper.setItemDelegate(&delegate);
         }
@@ -41,7 +41,7 @@ public:
         std::unique_ptr<CustomEditor> create_editor(const QModelIndex& index)
         {
             return std::unique_ptr<CustomEditor>(dynamic_cast<CustomEditor*>(
-                    delegate.createEditor(nullptr, QStyleOptionViewItem(), index)));
+                delegate.createEditor(nullptr, QStyleOptionViewItem(), index)));
         }
 
         void map_to_index(QWidget* widget, const QModelIndex& index)
@@ -52,10 +52,7 @@ public:
         }
     };
 
-    std::unique_ptr<TestData> test_data()
-    {
-        return std::make_unique<TestData>();
-    }
+    std::unique_ptr<TestData> test_data() { return std::make_unique<TestData>(); }
 };
 
 ViewModelDelegateTest::~ViewModelDelegateTest() = default;

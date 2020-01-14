@@ -7,9 +7,9 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/utils/reallimits.h>
-#include <mvvm/utils/numericutils.h>
 #include <limits>
+#include <mvvm/utils/numericutils.h>
+#include <mvvm/utils/reallimits.h>
 
 namespace
 {
@@ -102,8 +102,7 @@ bool RealLimits::operator==(const RealLimits& other) const
     // RealLimits::nonnegative different.
     // FIXME Is there better solution? Can we drop either positive or non-negative?
     return (m_has_lower_limit == other.m_has_lower_limit)
-           && (m_has_upper_limit == other.m_has_upper_limit)
-           && m_lower_limit == other.m_lower_limit
+           && (m_has_upper_limit == other.m_has_upper_limit) && m_lower_limit == other.m_lower_limit
            && m_upper_limit == other.m_upper_limit;
 }
 

@@ -22,7 +22,7 @@ class ILayerView : public ConnectableView
 
 public:
     ILayerView(QGraphicsItem* parent, int view_type);
-    ~ILayerView() override ;
+    ~ILayerView() override;
 
     QString getLabel() const override { return QString(); }
 
@@ -44,6 +44,5 @@ private:
 
     QPointF m_drag_start_position;
 };
-
 
 #endif // ILAYERVIEW_H

@@ -10,9 +10,9 @@
 #ifndef MVVM_EDITORS_DEFAULTEDITORFACTORY_H
 #define MVVM_EDITORS_DEFAULTEDITORFACTORY_H
 
+#include <map>
 #include <mvvm/editors/editorbuilders.h>
 #include <mvvm/editors/editorfactoryinterface.h>
-#include <map>
 
 namespace ModelView
 {
@@ -36,4 +36,4 @@ protected:
 
 } // namespace ModelView
 
-#endif  // MVVM_EDITORS_DEFAULTEDITORFACTORY_H
+#endif // MVVM_EDITORS_DEFAULTEDITORFACTORY_H

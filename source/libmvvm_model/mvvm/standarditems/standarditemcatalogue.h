@@ -19,4 +19,4 @@ CORE_EXPORT std::unique_ptr<ItemCatalogue> CreateStandardItemCatalogue();
 
 }
 
-#endif  // MVVM_STANDARDITEMS_STANDARDITEMCATALOGUE_H
+#endif // MVVM_STANDARDITEMS_STANDARDITEMCATALOGUE_H

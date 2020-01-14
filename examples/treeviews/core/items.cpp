@@ -9,11 +9,11 @@
 
 #include "items.h"
 #include "item_constants.h"
-#include <mvvm/model/comboproperty.h>
-#include <mvvm/signals/itemmapper.h>
-#include <mvvm/model/taginfo.h>
-#include <mvvm/standarditems/vectoritem.h>
 #include <QColor>
+#include <mvvm/model/comboproperty.h>
+#include <mvvm/model/taginfo.h>
+#include <mvvm/signals/itemmapper.h>
+#include <mvvm/standarditems/vectoritem.h>
 
 using namespace ModelView;
 
@@ -100,7 +100,7 @@ AnysoPyramidItem::AnysoPyramidItem() : CompoundItem(::Constants::AnysoPyramidTyp
 ShapeGroupItem::ShapeGroupItem() : GroupItem(::Constants::ShapeGroupType)
 {
     registerItem<CylinderItem>("Cylinder");
-    registerItem<SphereItem>("Full sphere", /*make_selected*/true);
+    registerItem<SphereItem>("Full sphere", /*make_selected*/ true);
     registerItem<AnysoPyramidItem>("Anysotropical pyramid");
     init_group();
 }

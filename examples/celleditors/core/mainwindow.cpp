@@ -9,9 +9,9 @@
 
 #include "mainwindow.h"
 #include "item_constants.h"
+#include "items.h"
 #include "modeleditorwidget.h"
 #include "samplemodel.h"
-#include "items.h"
 #include <QCoreApplication>
 #include <QSettings>
 #include <QTabWidget>
@@ -23,8 +23,7 @@ const QString size_key = "size";
 const QString pos_key = "pos";
 } // namespace
 
-MainWindow::MainWindow()
-    : m_tabWidget(new QTabWidget), m_model(std::make_unique<SampleModel>())
+MainWindow::MainWindow() : m_tabWidget(new QTabWidget), m_model(std::make_unique<SampleModel>())
 {
     setCentralWidget(m_tabWidget);
     init_application();

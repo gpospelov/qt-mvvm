@@ -10,8 +10,8 @@
 #ifndef MVVM_WIDGETS_ITEMSTREEVIEWINTERFACE_H
 #define MVVM_WIDGETS_ITEMSTREEVIEWINTERFACE_H
 
-#include <mvvm/core/export.h>
 #include <QWidget>
+#include <mvvm/core/export.h>
 
 class QTreeView;
 
@@ -28,12 +28,9 @@ class SessionModel;
 class CORE_EXPORT ItemsTreeViewInterface : public QWidget
 {
 public:
-
     virtual void setSessionModel(SessionModel* model) = 0;
 
-
     virtual QTreeView* treeView() const = 0;
-
 };
 
 } // namespace ModelView

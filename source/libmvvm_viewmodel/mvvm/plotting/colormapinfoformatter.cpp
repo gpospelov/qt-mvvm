@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/plotting/colormapinfoformatter.h>
 #include "qcustomplot.h"
+#include <mvvm/plotting/colormapinfoformatter.h>
 #include <mvvm/utils/stringutils.h>
 #include <sstream>
 

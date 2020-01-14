@@ -13,9 +13,11 @@
 #include <mvvm/core/export.h>
 #include <string>
 
-namespace ModelView {
+namespace ModelView
+{
 
-namespace Utils {
+namespace Utils
+{
 
 //! Returns true if file exists.
 CORE_EXPORT bool exists(const std::string& fileName);
@@ -33,8 +35,8 @@ CORE_EXPORT void create_subdir(const std::string& parentName, const std::string&
 //! to the parent (working directory of the executable).
 CORE_EXPORT bool removeRecursively(const std::string& dirname);
 
-}  // namespace Utils
+} // namespace Utils
 
-}  // namespace ModelView
+} // namespace ModelView
 
-#endif  // MVVM_UTILS_FILEUTILS_H
+#endif // MVVM_UTILS_FILEUTILS_H

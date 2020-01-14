@@ -29,29 +29,29 @@ class QGraphicsSceneMouseEvent;
 //! attributes
 class NodeEditor : public QObject
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-    explicit NodeEditor(QObject *parent = 0);
+    explicit NodeEditor(QObject* parent = 0);
 
-    void install(QGraphicsScene *scene);
+    void install(QGraphicsScene* scene);
 
-    bool eventFilter(QObject *object, QEvent *event);
+    bool eventFilter(QObject* object, QEvent* event);
 
 signals:
     void selectionModeChangeRequest(int);
-    void connectionIsEstablished(NodeEditorConnection *);
+    void connectionIsEstablished(NodeEditorConnection*);
 
 private:
-	QGraphicsItem *itemAt(const QPointF&);
+    QGraphicsItem* itemAt(const QPointF&);
 
 private:
-    bool processMousePress(QGraphicsSceneMouseEvent *event);
-    bool processMouseMove(QGraphicsSceneMouseEvent *event);
-    bool processMouseRelease(QGraphicsSceneMouseEvent *event);
+    bool processMousePress(QGraphicsSceneMouseEvent* event);
+    bool processMouseMove(QGraphicsSceneMouseEvent* event);
+    bool processMouseRelease(QGraphicsSceneMouseEvent* event);
 
-    QGraphicsScene *m_scene;
-    NodeEditorConnection *m_conn;
+    QGraphicsScene* m_scene;
+    NodeEditorConnection* m_conn;
 };
 
 #endif // NODEEDITOR_H

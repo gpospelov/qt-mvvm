@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/viewmodel/labeldatarowstrategy.h>
 #include <mvvm/model/sessionitem.h>
+#include <mvvm/viewmodel/labeldatarowstrategy.h>
 #include <mvvm/viewmodel/viewitems.h>
 
 using namespace ModelView;
@@ -34,5 +34,6 @@ QList<QStandardItem*> LabelDataRowStrategy::constructRow(SessionItem* item)
 
 QStringList LabelDataRowStrategy::horizontalHeaderLabels() const
 {
-    return QStringList() << "Name" << "Value";
+    return QStringList() << "Name"
+                         << "Value";
 }

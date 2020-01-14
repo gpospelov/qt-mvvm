@@ -10,9 +10,9 @@
 #ifndef MVVM_PLOTTING_STATUSSTRINGREPORTER_H
 #define MVVM_PLOTTING_STATUSSTRINGREPORTER_H
 
-#include <mvvm/core/export.h>
 #include <functional>
 #include <memory>
+#include <mvvm/core/export.h>
 #include <string>
 
 class QCustomPlot;
@@ -44,4 +44,4 @@ private:
 
 } // namespace ModelView
 
-#endif  // MVVM_PLOTTING_STATUSSTRINGREPORTER_H
+#endif // MVVM_PLOTTING_STATUSSTRINGREPORTER_H

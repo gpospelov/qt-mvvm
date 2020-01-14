@@ -20,9 +20,8 @@
 class DesignerHelper
 {
 public:
-
     enum EWidgetTypes {
-        NODE_EDITOR_PORT = QGraphicsItem::UserType+1,
+        NODE_EDITOR_PORT = QGraphicsItem::UserType + 1,
         NODE_EDITOR_CONNECTION,
         MULTILAYER,
         LAYER,
@@ -36,30 +35,33 @@ public:
     static int getDefaultLayerHeight() { return m_default_layer_height; }
     static QColor getDefaultLayerColor() { return QColor(Qt::lightGray); }
 
-    static int getDefaultMultiLayerWidth() { return m_default_layer_width*1.15; }
+    static int getDefaultMultiLayerWidth() { return m_default_layer_width * 1.15; }
     static int getDefaultMultiLayerHeight() { return m_default_layer_height; }
     static QRectF getDefaultMultiLayerRect();
 
-    static int getDefaultParticleLayoutWidth() { return m_default_layer_height*3.5; }
-    static int getDefaultParticleLayoutHeight() { return m_default_layer_height*4.5; }
+    static int getDefaultParticleLayoutWidth() { return m_default_layer_height * 3.5; }
+    static int getDefaultParticleLayoutHeight() { return m_default_layer_height * 4.5; }
 
-    static int getDefaultInterferenceFunctionWidth() { return m_default_layer_height*4.5; }
-    static int getDefaultInterferenceFunctionHeight() { return m_default_layer_height*4; }
+    static int getDefaultInterferenceFunctionWidth() { return m_default_layer_height * 4.5; }
+    static int getDefaultInterferenceFunctionHeight() { return m_default_layer_height * 4; }
 
-    static int getDefaultParticleWidth() { return m_default_layer_height*3.5; }
-    static int getDefaultParticleHeight() { return m_default_layer_height*4; }
+    static int getDefaultParticleWidth() { return m_default_layer_height * 3.5; }
+    static int getDefaultParticleHeight() { return m_default_layer_height * 4; }
     static QColor getDefaultParticleColor() { return QColor(210, 223, 237); }
 
-    static int getDefaultTransformationWidth() { return m_default_layer_height*4; }
-    static int getDefaultTransformationHeight() { return m_default_layer_height*2; }
+    static int getDefaultTransformationWidth() { return m_default_layer_height * 4; }
+    static int getDefaultTransformationHeight() { return m_default_layer_height * 2; }
     static QColor getDefaultTransformationColor() { return QColor(145, 50, 220); }
 
-    static int getDefaultMaterialWidth() { return m_default_layer_height*1.2; }
-    static int getDefaultMaterialHeight() { return m_default_layer_height*1.2; }
-    static QColor getDefaultMaterialColor() { return QColor(qrand() % 256, qrand() % 256, qrand() % 256); }
+    static int getDefaultMaterialWidth() { return m_default_layer_height * 1.2; }
+    static int getDefaultMaterialHeight() { return m_default_layer_height * 1.2; }
+    static QColor getDefaultMaterialColor()
+    {
+        return QColor(qrand() % 256, qrand() % 256, qrand() % 256);
+    }
 
-    static QGradient getLayerGradient(const QColor &color, const QRectF &rect);
-    static QGradient getDecorationGradient(const QColor &color, const QRectF &rect);
+    static QGradient getLayerGradient(const QColor& color, const QRectF& rect);
+    static QGradient getDecorationGradient(const QColor& color, const QRectF& rect);
 
     static QPixmap getSceneBackground();
     static QPixmap getPixmapLayer();
@@ -71,7 +73,8 @@ public:
     static QColor getRandomColor() { return QColor(qrand() % 256, qrand() % 256, qrand() % 256); }
 
     //! sort graphics item according they y-coordinate
-    static bool sort_layers(QGraphicsItem* left, QGraphicsItem *right) {
+    static bool sort_layers(QGraphicsItem* left, QGraphicsItem* right)
+    {
         return left->y() < right->y();
     }
 

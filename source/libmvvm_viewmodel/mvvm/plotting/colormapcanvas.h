@@ -10,9 +10,9 @@
 #ifndef MVVM_PLOTTING_COLORMAPCANVAS_H
 #define MVVM_PLOTTING_COLORMAPCANVAS_H
 
-#include <mvvm/core/export.h>
-#include <memory>
 #include <QWidget>
+#include <memory>
+#include <mvvm/core/export.h>
 
 namespace ModelView
 {
@@ -41,4 +41,4 @@ private:
 
 } // namespace ModelView
 
-#endif  // MVVM_PLOTTING_COLORMAPCANVAS_H
+#endif // MVVM_PLOTTING_COLORMAPCANVAS_H

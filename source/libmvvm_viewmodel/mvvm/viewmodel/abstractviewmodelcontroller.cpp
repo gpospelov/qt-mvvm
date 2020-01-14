@@ -7,13 +7,13 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/viewmodel/abstractviewmodelcontroller.h>
-#include <mvvm/viewmodel/abstractviewmodel.h>
-#include <mvvm/viewmodel/childrenstrategyinterface.h>
-#include <mvvm/viewmodel/rowstrategyinterface.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/signals/modelmapper.h>
+#include <mvvm/viewmodel/abstractviewmodel.h>
+#include <mvvm/viewmodel/abstractviewmodelcontroller.h>
+#include <mvvm/viewmodel/childrenstrategyinterface.h>
+#include <mvvm/viewmodel/rowstrategyinterface.h>
 #include <mvvm/viewmodel/viewitem.h>
 #include <mvvm/viewmodel/viewmodelutils.h>
 
@@ -34,8 +34,7 @@ bool isValidItemRole(const ModelView::ViewItem* view, int item_role)
 
 using namespace ModelView;
 
-struct AbstractViewModelController::AbstractViewModelControllerImpl
-{
+struct AbstractViewModelController::AbstractViewModelControllerImpl {
     AbstractViewModelControllerImpl(AbstractViewModel* view_model)
         : m_view_model(view_model), m_root_item(nullptr), m_session_model(nullptr)
     {
@@ -59,8 +58,7 @@ struct AbstractViewModelController::AbstractViewModelControllerImpl
 
     void update_layout()
     {
-        m_view_model->setHorizontalHeaderLabels(
-        m_row_strategy->horizontalHeaderLabels());
+        m_view_model->setHorizontalHeaderLabels(m_row_strategy->horizontalHeaderLabels());
     }
 
     AbstractViewModel* m_view_model;
@@ -121,7 +119,6 @@ void AbstractViewModelController::setSessionModel(SessionModel* model)
 
         init_view_model();
     }
-
 }
 
 void AbstractViewModelController::setChildrenStrategy(
@@ -197,7 +194,7 @@ void AbstractViewModelController::check_initialization()
 {
     const std::string msg("AbstractViewModelController::check_initialization() -> Error. ");
     if (!p_impl->m_view_model)
-        throw std::runtime_error(msg+"ViewModel is not defined");
+        throw std::runtime_error(msg + "ViewModel is not defined");
 
     if (!p_impl->m_session_model)
         throw std::runtime_error(msg + "SessionModel is not defined");
@@ -230,7 +227,6 @@ void AbstractViewModelController::onDataChange(SessionItem* item, int role)
             p_impl->m_view_model->dataChanged(index, index, Utils::item_role_to_qt(role));
         }
     }
-
 }
 
 //! Rebuild view model branch on session model change.
@@ -246,4 +242,3 @@ void AbstractViewModelController::onItemRemoved(SessionItem* parent, TagRow)
 {
     generate_children_views(parent);
 }
-

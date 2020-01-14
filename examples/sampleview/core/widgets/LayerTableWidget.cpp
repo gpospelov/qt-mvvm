@@ -17,15 +17,15 @@
 
 using namespace ModelView;
 
-namespace {
+namespace
+{
 QTreeView* createSampleView(SampleTreeController& controller, QAbstractItemDelegate* delegate);
 }
 
 LayerTableWidget::LayerTableWidget(ApplicationModels* models, QWidget* parent)
-    : QWidget(parent)
-    , m_controller(models ? models->sampleModel() : nullptr)
-    , m_delegate(std::make_unique<CustomModelDelegate>(models))
-    , m_sample_table(createSampleView(m_controller, m_delegate.get()))
+    : QWidget(parent), m_controller(models ? models->sampleModel() : nullptr),
+      m_delegate(std::make_unique<CustomModelDelegate>(models)),
+      m_sample_table(createSampleView(m_controller, m_delegate.get()))
 {
     auto layout = new QVBoxLayout(this);
     layout->setMargin(0);
@@ -37,7 +37,8 @@ LayerTableWidget::LayerTableWidget(ApplicationModels* models, QWidget* parent)
 
 LayerTableWidget::~LayerTableWidget() = default;
 
-namespace {
+namespace
+{
 QTreeView* createSampleView(SampleTreeController& controller, QAbstractItemDelegate* delegate)
 {
     std::unique_ptr<QTreeView> result(new QTreeView);
@@ -52,4 +53,4 @@ QTreeView* createSampleView(SampleTreeController& controller, QAbstractItemDeleg
 
     return result.release();
 }
-}
+} // namespace

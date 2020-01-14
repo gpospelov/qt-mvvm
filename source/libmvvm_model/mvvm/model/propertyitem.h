@@ -12,7 +12,8 @@
 
 #include <mvvm/model/sessionitem.h>
 
-namespace ModelView {
+namespace ModelView
+{
 
 class RealLimits;
 
@@ -24,9 +25,8 @@ public:
     PropertyItem();
 
     SessionItem* setLimits(const RealLimits& value);
-
 };
 
 } // namespace ModelView
 
-#endif  // MVVM_MODEL_PROPERTYITEM_H
+#endif // MVVM_MODEL_PROPERTYITEM_H

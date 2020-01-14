@@ -7,14 +7,14 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/plotting/colormapviewportplotcontroller.h>
-#include <mvvm/standarditems/axisitems.h>
-#include <mvvm/plotting/viewportaxisplotcontroller.h>
-#include <mvvm/standarditems/colormapviewportitem.h>
-#include <mvvm/plotting/colormapplotcontroller.h>
-#include <mvvm/standarditems/colormapitem.h>
-#include <mvvm/plotting/colorscaleplotcontroller.h>
 #include <list>
+#include <mvvm/plotting/colormapplotcontroller.h>
+#include <mvvm/plotting/colormapviewportplotcontroller.h>
+#include <mvvm/plotting/colorscaleplotcontroller.h>
+#include <mvvm/plotting/viewportaxisplotcontroller.h>
+#include <mvvm/standarditems/axisitems.h>
+#include <mvvm/standarditems/colormapitem.h>
+#include <mvvm/standarditems/colormapviewportitem.h>
 #include <qcustomplot.h>
 
 using namespace ModelView;
@@ -52,7 +52,8 @@ struct ColorMapViewportPlotController::ColorMapViewportPlotControllerImpl {
         viewport_item()->update_viewport();
     }
 
-    void unsubscribe_components() {
+    void unsubscribe_components()
+    {
         xAxisController->setItem(nullptr);
         yAxisController->setItem(nullptr);
         colorScaleController->setItem(nullptr);
@@ -67,11 +68,8 @@ ColorMapViewportPlotController::ColorMapViewportPlotController(QCustomPlot* cust
 
 void ColorMapViewportPlotController::subscribe()
 {
-    auto on_item_inserted = [this](SessionItem*, TagRow) {
-        p_impl->setup_components();
-    };
+    auto on_item_inserted = [this](SessionItem*, TagRow) { p_impl->setup_components(); };
     currentItem()->mapper()->setOnItemInserted(on_item_inserted, this);
-
 
     p_impl->setup_components();
 }

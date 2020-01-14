@@ -28,7 +28,7 @@ public:
     LayerTableViewModel(ModelView::SessionModel* model = nullptr, QObject* parent = nullptr);
     ~LayerTableViewModel() override;
 
-    Qt::ItemFlags flags(const QModelIndex &index) const override;
+    Qt::ItemFlags flags(const QModelIndex& index) const override;
     QMimeData* mimeData(const QModelIndexList& index_list) const override;
     Qt::DropActions supportedDragActions() const override;
     Qt::DropActions supportedDropActions() const override;

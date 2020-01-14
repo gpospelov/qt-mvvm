@@ -10,13 +10,15 @@
 #ifndef MVVM_UTILS_CONTAINERUTILS_H
 #define MVVM_UTILS_CONTAINERUTILS_H
 
+#include <iterator>
 #include <mvvm/core/export.h>
 #include <string>
-#include <iterator>
 
-namespace ModelView {
+namespace ModelView
+{
 
-namespace Utils {
+namespace Utils
+{
 
 //! Returns index corresponding to the first occurance of the item in the container.
 //! If item doesn't exist, will return -1.
@@ -27,9 +29,8 @@ template <typename C, typename T> int IndexOfItem(const C& container, const T& i
     return pos == container.end() ? -1 : static_cast<int>(std::distance(container.begin(), pos));
 }
 
-}  // namespace Utils
+} // namespace Utils
 
-}  // namespace ModelView
+} // namespace ModelView
 
-#endif  // MVVM_UTILS_CONTAINERUTILS_H
-
+#endif // MVVM_UTILS_CONTAINERUTILS_H

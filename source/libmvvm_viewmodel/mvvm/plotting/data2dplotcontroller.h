@@ -10,8 +10,8 @@
 #ifndef MVVM_PLOTTING_DATA2DPLOTCONTROLLER_H
 #define MVVM_PLOTTING_DATA2DPLOTCONTROLLER_H
 
-#include <mvvm/signals/itemcontroller.h>
 #include <memory>
+#include <mvvm/signals/itemcontroller.h>
 
 class QCPColorMap;
 
@@ -44,4 +44,4 @@ private:
 
 } // namespace ModelView
 
-#endif  // MVVM_PLOTTING_DATA2DPLOTCONTROLLER_H
+#endif // MVVM_PLOTTING_DATA2DPLOTCONTROLLER_H

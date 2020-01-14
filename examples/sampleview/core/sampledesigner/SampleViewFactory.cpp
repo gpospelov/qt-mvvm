@@ -15,19 +15,20 @@
 #include "item_constants.h"
 #include <unordered_map>
 
-namespace {
+namespace
+{
 template <class T> IView* factory()
 {
     return new T;
 }
-using FactoryFunc = IView*(*)();
+using FactoryFunc = IView* (*)();
 
 const std::unordered_map<std::string, FactoryFunc> item_map{
     {Constants::MultiLayerType, factory<MultiLayerView>},
     {Constants::LayerType, factory<LayerView>},
     {Constants::ParticleLayoutType, factory<ParticleLayoutView>},
     {Constants::InterferenceFunctionType, factory<InterferenceFunctionView>}};
-};
+}; // namespace
 
 bool SampleViewFactory::isValidType(const std::string& name)
 {

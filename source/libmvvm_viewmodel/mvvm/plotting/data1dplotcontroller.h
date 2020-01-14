@@ -10,8 +10,8 @@
 #ifndef MVVM_PLOTTING_DATA1DPLOTCONTROLLER_H
 #define MVVM_PLOTTING_DATA1DPLOTCONTROLLER_H
 
-#include <mvvm/signals/itemcontroller.h>
 #include <memory>
+#include <mvvm/signals/itemcontroller.h>
 
 class QCPGraph;
 
@@ -44,4 +44,4 @@ private:
 
 } // namespace ModelView
 
-#endif  // MVVM_PLOTTING_DATA1DPLOTCONTROLLER_H
+#endif // MVVM_PLOTTING_DATA1DPLOTCONTROLLER_H

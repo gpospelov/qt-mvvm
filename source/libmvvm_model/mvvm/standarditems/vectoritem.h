@@ -12,7 +12,8 @@
 
 #include <mvvm/model/compounditem.h>
 
-namespace ModelView {
+namespace ModelView
+{
 
 //! Vector item with three x,y,z property items.
 
@@ -31,8 +32,6 @@ private:
     void update_label();
 };
 
-} // ModelView
+} // namespace ModelView
 
-#endif  // MVVM_STANDARDITEMS_VECTORITEM_H
-
-
+#endif // MVVM_STANDARDITEMS_VECTORITEM_H

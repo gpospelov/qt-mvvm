@@ -20,20 +20,21 @@ class DesignerMimeData : public QMimeData
 {
     Q_OBJECT
 public:
-    DesignerMimeData(const std::string& name, const QString &xmldescr, QDrag *drag);
+    DesignerMimeData(const std::string& name, const QString& xmldescr, QDrag* drag);
     ~DesignerMimeData() override;
 
     //! Execute a drag and drop operation.
-    static Qt::DropAction execDrag(const std::string& name, const QString &xmldescr, QWidget * dragSource);
+    static Qt::DropAction execDrag(const std::string& name, const QString& xmldescr,
+                                   QWidget* dragSource);
 
     std::string getClassName() const { return m_classname; }
+
 private:
-    void read_xmldescr(const QString &xmldescr);
-    void read_widget(QXmlStreamReader &reader);
+    void read_xmldescr(const QString& xmldescr);
+    void read_widget(QXmlStreamReader& reader);
 
     std::string m_entryname;
     std::string m_classname;
-
 };
 
 #endif // DESIGNERMIMEDATA_H

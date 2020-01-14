@@ -21,8 +21,7 @@ class MaterialControlPanel : public QWidget
     Q_OBJECT
 
 public:
-    explicit MaterialControlPanel(MaterialViewController& view_model,
-                                  QWidget* parent = nullptr);
+    explicit MaterialControlPanel(MaterialViewController& view_model, QWidget* parent = nullptr);
     ~MaterialControlPanel() override;
 
 private:

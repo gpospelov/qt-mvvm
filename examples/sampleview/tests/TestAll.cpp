@@ -8,10 +8,11 @@
 // ************************************************************************** //
 
 #include "google_test.h"
-#include <QStandardItem>
 #include <QApplication>
+#include <QStandardItem>
 
-int main(int argc, char** argv) {
+int main(int argc, char** argv)
+{
     QApplication app(argc, argv);
     Q_UNUSED(app)
 

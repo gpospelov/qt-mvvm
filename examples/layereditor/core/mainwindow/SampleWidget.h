@@ -22,7 +22,6 @@ namespace ModelView
 class ItemsTreeView;
 }
 
-
 /*!
 @class SampleWidget
 @brief Main widget with material and layer editors.

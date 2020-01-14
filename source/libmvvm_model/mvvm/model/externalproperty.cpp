@@ -13,8 +13,7 @@ using namespace ModelView;
 
 ExternalProperty::ExternalProperty() = default;
 
-ExternalProperty::ExternalProperty(std::string text, QColor color,
-                                   std::string id)
+ExternalProperty::ExternalProperty(std::string text, QColor color, std::string id)
     : m_text(std::move(text)), m_color(std::move(color)), m_identifier(std::move(id))
 {
 }

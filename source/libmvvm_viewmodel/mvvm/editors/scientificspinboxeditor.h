@@ -38,4 +38,4 @@ private:
 
 } // namespace ModelView
 
-#endif  // MVVM_EDITORS_SCIENTIFICSPINBOXEDITOR_H
+#endif // MVVM_EDITORS_SCIENTIFICSPINBOXEDITOR_H

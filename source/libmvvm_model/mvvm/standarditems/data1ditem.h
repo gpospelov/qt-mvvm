@@ -43,4 +43,4 @@ public:
 
 } // namespace ModelView
 
-#endif  // MVVM_STANDARDITEMS_DATA1DITEM_H
+#endif // MVVM_STANDARDITEMS_DATA1DITEM_H

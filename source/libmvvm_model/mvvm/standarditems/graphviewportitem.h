@@ -36,4 +36,4 @@ private:
 
 } // namespace ModelView
 
-#endif  // MVVM_STANDARDITEMS_GRAPHVIEWPORTITEM_H
+#endif // MVVM_STANDARDITEMS_GRAPHVIEWPORTITEM_H

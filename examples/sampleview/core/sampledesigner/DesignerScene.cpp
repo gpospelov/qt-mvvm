@@ -11,7 +11,6 @@
 #include "ConnectableView.h"
 #include "DesignerHelper.h"
 #include "DesignerMimeData.h"
-#include "SceneModelController.h"
 #include "IView.h"
 #include "LayerView.h"
 #include "LocatedItem.h"
@@ -20,23 +19,21 @@
 #include "SampleModel.h"
 #include "SampleViewAligner.h"
 #include "SampleViewFactory.h"
+#include "SceneModelController.h"
 #include "SceneSelectionController.h"
 #include "item_constants.h"
-#include <mvvm/signals/modelmapper.h>
-#include <mvvm/model/modelutils.h>
-#include <mvvm/model/sessionitem.h>
 #include <QGraphicsSceneMouseEvent>
 #include <QItemSelection>
 #include <QPainter>
+#include <mvvm/model/modelutils.h>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/signals/modelmapper.h>
 
 using namespace ModelView;
 
 DesignerScene::DesignerScene(SampleModel* sample_model, QObject* parent)
-    : QGraphicsScene(parent)
-    , m_model_control(*this, sample_model)
-    , m_select_control(nullptr)
-    , m_aligner(new SampleViewAligner(this))
-    , m_nodeEditor(new NodeEditor(this))
+    : QGraphicsScene(parent), m_model_control(*this, sample_model), m_select_control(nullptr),
+      m_aligner(new SampleViewAligner(this)), m_nodeEditor(new NodeEditor(this))
 {
     setSceneRect(QRectF(-800, -800, 1600, 1600));
     setBackgroundBrush(DesignerHelper::getSceneBackground());
@@ -115,7 +112,7 @@ void DesignerScene::updateViews()
 }
 
 //! adds view for item, if it doesn't exists
-void DesignerScene::addViewForItem(SessionItem *item)
+void DesignerScene::addViewForItem(SessionItem* item)
 {
     if (!item) {
         Q_ASSERT(item);
@@ -142,11 +139,11 @@ void DesignerScene::addViewForItem(SessionItem *item)
 //! aligns SampleView's on graphical canvas
 void DesignerScene::alignViews()
 {
-    //m_aligner->alignSample(m_sampleModel->rootItem(), QPointF(200, 800));
+    // m_aligner->alignSample(m_sampleModel->rootItem(), QPointF(200, 800));
 }
 
 //! shows appropriate layer interface to drop while moving ILayerView
-void DesignerScene::drawForeground(QPainter *painter, const QRectF & /* rect */)
+void DesignerScene::drawForeground(QPainter* painter, const QRectF& /* rect */)
 {
     if (isLayerDragged()) {
         painter->setPen(QPen(Qt::darkBlue, 2, Qt::DashLine));
@@ -157,21 +154,20 @@ void DesignerScene::drawForeground(QPainter *painter, const QRectF & /* rect */)
 //! handles drag event
 //! LayerView can be dragged only over MultiLayerView
 //! MultiLayerView can be dragged both, over the scene and over another MultiLayerView
-void DesignerScene::dragMoveEvent(QGraphicsSceneDragDropEvent *event)
+void DesignerScene::dragMoveEvent(QGraphicsSceneDragDropEvent* event)
 {
-    const DesignerMimeData *mimeData = checkDragEvent(event);
-    if(isAcceptedByMultiLayer(mimeData, event)) {
+    const DesignerMimeData* mimeData = checkDragEvent(event);
+    if (isAcceptedByMultiLayer(mimeData, event)) {
         QGraphicsScene::dragMoveEvent(event);
-
     }
 }
 
 //! Hadles drop event
 //! LayerView can be dropped on MultiLayerView only
 //! MultiLayerView can be droped on the scene or another MultiLayerView
-void DesignerScene::dropEvent(QGraphicsSceneDragDropEvent *event)
+void DesignerScene::dropEvent(QGraphicsSceneDragDropEvent* event)
 {
-    const DesignerMimeData *mimeData = checkDragEvent(event);
+    const DesignerMimeData* mimeData = checkDragEvent(event);
     if (!mimeData)
         return;
 
@@ -195,9 +191,9 @@ void DesignerScene::dropEvent(QGraphicsSceneDragDropEvent *event)
 }
 
 //! returns proper MimeData if the object can be hadled by graphics scene
-const DesignerMimeData *DesignerScene::checkDragEvent(QGraphicsSceneDragDropEvent *event)
+const DesignerMimeData* DesignerScene::checkDragEvent(QGraphicsSceneDragDropEvent* event)
 {
-    const DesignerMimeData *mimeData = qobject_cast<const DesignerMimeData *>(event->mimeData());
+    const DesignerMimeData* mimeData = qobject_cast<const DesignerMimeData*>(event->mimeData());
     if (!mimeData) {
         event->ignore();
         return nullptr;
@@ -206,9 +202,9 @@ const DesignerMimeData *DesignerScene::checkDragEvent(QGraphicsSceneDragDropEven
     return mimeData;
 }
 
-void DesignerScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
+void DesignerScene::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 {
-    if(isLayerDragged()) {
+    if (isLayerDragged()) {
         invalidate(); // to redraw vertical dashed line which denotes where to drag the layer
     }
     QGraphicsScene::mouseMoveEvent(event);
@@ -222,11 +218,11 @@ void DesignerScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 }
 
 //! Returns true if there is MultiLayerView nearby during drag event.
-bool DesignerScene::isMultiLayerNearby(QGraphicsSceneDragDropEvent *event)
+bool DesignerScene::isMultiLayerNearby(QGraphicsSceneDragDropEvent* event)
 {
     QRectF rect = DesignerHelper::getDefaultMultiLayerRect();
     rect.moveCenter(event->scenePos());
-    for(QGraphicsItem* item : items(rect)) {
+    for (QGraphicsItem* item : items(rect)) {
         if (item->type() == DesignerHelper::MULTILAYER)
             return true;
     }
@@ -243,9 +239,11 @@ void DesignerScene::adjustSceneRect()
     setSceneRect(sceneRect().united(boundingRect));
 }
 
-bool DesignerScene::isAcceptedByMultiLayer(const DesignerMimeData *mimeData, QGraphicsSceneDragDropEvent *event)
+bool DesignerScene::isAcceptedByMultiLayer(const DesignerMimeData* mimeData,
+                                           QGraphicsSceneDragDropEvent* event)
 {
-    if(!mimeData) return false;
+    if (!mimeData)
+        return false;
 
     // MultiLayer can be inserted in MultiLayer
     if (mimeData->getClassName() == ::Constants::MultiLayerType && isMultiLayerNearby(event)) {
@@ -261,7 +259,7 @@ bool DesignerScene::isAcceptedByMultiLayer(const DesignerMimeData *mimeData, QGr
 
 bool DesignerScene::isLayerDragged() const
 {
-    ILayerView *layer = dynamic_cast<ILayerView *>(mouseGrabberItem());
+    ILayerView* layer = dynamic_cast<ILayerView*>(mouseGrabberItem());
     return layer && !m_layer_interface_line.isNull();
 }
 

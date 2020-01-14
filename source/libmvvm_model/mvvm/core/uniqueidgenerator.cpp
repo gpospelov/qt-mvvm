@@ -7,12 +7,12 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/core/uniqueidgenerator.h>
 #include <QUuid>
+#include <mvvm/core/uniqueidgenerator.h>
 
 using namespace ModelView;
 
 identifier_type UniqueIdGenerator::generate()
 {
-    return  QUuid::createUuid().toString().toStdString();
+    return QUuid::createUuid().toString().toStdString();
 }

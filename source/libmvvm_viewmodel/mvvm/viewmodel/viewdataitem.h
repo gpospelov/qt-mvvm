@@ -30,4 +30,4 @@ public:
 
 } // namespace ModelView
 
-#endif  // MVVM_VIEWMODEL_VIEWDATAITEM_H
+#endif // MVVM_VIEWMODEL_VIEWDATAITEM_H

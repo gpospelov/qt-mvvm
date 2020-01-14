@@ -26,7 +26,8 @@ user actions on item change.
 template <typename T> class ItemController
 {
 public:
-    virtual ~ItemController() {
+    virtual ~ItemController()
+    {
         if (m_item)
             m_item->mapper()->unsubscribe(this);
     }
@@ -56,7 +57,8 @@ protected:
     virtual void unsubscribe() {}
 
 private:
-    void unsubscribe_from_current() {
+    void unsubscribe_from_current()
+    {
         if (!m_item)
             return;
 
@@ -69,4 +71,4 @@ private:
 
 } // namespace ModelView
 
-#endif  // MVVM_SIGNALS_ITEMCONTROLLER_H
+#endif // MVVM_SIGNALS_ITEMCONTROLLER_H

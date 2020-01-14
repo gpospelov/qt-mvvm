@@ -9,7 +9,6 @@
 
 #include <mvvm/editors/styleutils.h>
 
-
 int ModelView::Style::DefaultPixmapSize()
 {
     const int default_pixmap_size = 16;

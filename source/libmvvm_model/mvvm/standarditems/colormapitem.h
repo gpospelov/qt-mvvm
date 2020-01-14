@@ -41,4 +41,4 @@ public:
 
 } // namespace ModelView
 
-#endif  // MVVM_STANDARDITEMS_COLORMAPITEM_H
+#endif // MVVM_STANDARDITEMS_COLORMAPITEM_H

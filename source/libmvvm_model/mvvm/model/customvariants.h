@@ -13,10 +13,10 @@
 //! @file customvariants.h
 //! Registrations and translations for custom variants.
 
-#include <mvvm/core/export.h>
-#include <mvvm/utils/reallimits.h>
 #include <QMetaType>
 #include <QVariant>
+#include <mvvm/core/export.h>
+#include <mvvm/utils/reallimits.h>
 #include <string>
 #include <vector>
 
@@ -77,4 +77,4 @@ Q_DECLARE_METATYPE(std::string)
 Q_DECLARE_METATYPE(std::vector<double>)
 Q_DECLARE_METATYPE(ModelView::RealLimits)
 
-#endif  // MVVM_MODEL_CUSTOMVARIANTS_H
+#endif // MVVM_MODEL_CUSTOMVARIANTS_H

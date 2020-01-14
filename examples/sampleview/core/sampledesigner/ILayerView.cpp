@@ -13,18 +13,18 @@
 #include "DesignerSceneUtils.h"
 #include "LayerItems.h"
 #include "MultiLayerView.h"
-#include <mvvm/model/sessionmodel.h>
 #include <QGraphicsSceneMouseEvent>
+#include <mvvm/model/sessionmodel.h>
 
 using namespace ModelView;
 
-namespace {
-enum class MouseReleaseAction {NO_CHANGE, CHANGE_OWNER, CHANGE_POSITION, RELEASE};
+namespace
+{
+enum class MouseReleaseAction { NO_CHANGE, CHANGE_OWNER, CHANGE_POSITION, RELEASE };
 int itemRow(const SessionItem* item);
 } // namespace
 
-ILayerView::ILayerView(QGraphicsItem* parent, int view_type)
-    : ConnectableView(parent, view_type)
+ILayerView::ILayerView(QGraphicsItem* parent, int view_type) : ConnectableView(parent, view_type)
 {
     setFlag(QGraphicsItem::ItemIsMovable, true);
     setFlag(QGraphicsItem::ItemIsSelectable, true);
@@ -35,13 +35,13 @@ ILayerView::~ILayerView() = default;
 
 //! Detects movement of the ILayerView and sends possible drop areas to GraphicsScene
 //! for visualization.
-QVariant ILayerView::itemChange(GraphicsItemChange change, const QVariant &value)
+QVariant ILayerView::itemChange(GraphicsItemChange change, const QVariant& value)
 {
     if (change == ItemPositionChange && scene()) {
 
         const auto [multilayer, row] = DesignerSceneUtils::nearestMultilayer(*this);
         if (multilayer) {
-            DesignerScene *designerScene = dynamic_cast<DesignerScene *>(scene());
+            DesignerScene* designerScene = dynamic_cast<DesignerScene*>(scene());
             designerScene->setLayerInterfaceLine(
                 DesignerSceneUtils::getInterfaceToScene(*multilayer, row));
         }
@@ -49,7 +49,7 @@ QVariant ILayerView::itemChange(GraphicsItemChange change, const QVariant &value
     return QGraphicsItem::itemChange(change, value);
 }
 
-void ILayerView::mousePressEvent(QGraphicsSceneMouseEvent *event)
+void ILayerView::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
     if (event->button() == Qt::LeftButton) {
         m_drag_start_position = pos();
@@ -83,7 +83,7 @@ auto ILayerView::determineAction(const MultiLayerView* new_parent, int row) cons
 
 //! Detects possible MultiLayerView's to drop given ILayerView and propagate
 //! request to SessionModel.
-void ILayerView::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+void ILayerView::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
     const auto [requested_parent, requested_row] = DesignerSceneUtils::nearestMultilayer(*this);
     const MouseReleaseAction action_type = determineAction(requested_parent, requested_row);
@@ -125,11 +125,11 @@ void ILayerView::onRelease(const QPointF& pos)
 void ILayerView::onChangeOwner(const ILayerView* requested_parent, int requested_row)
 {
     const int insertion_row = insertionRow(requested_parent, requested_row);
-    dynamic_cast<DesignerScene*>(scene())->sendModelCommand([item = getItem(),
-                                        new_parent = requested_parent->getItem(),
-                                        insertion_row](ModelView::SessionModel& model) {
-        model.moveItem(item, new_parent, {MultiLayerItem::T_LAYERS, insertion_row});
-    });
+    dynamic_cast<DesignerScene*>(scene())->sendModelCommand(
+        [item = getItem(), new_parent = requested_parent->getItem(),
+         insertion_row](ModelView::SessionModel& model) {
+            model.moveItem(item, new_parent, {MultiLayerItem::T_LAYERS, insertion_row});
+        });
 }
 
 int ILayerView::insertionRow(const ILayerView* new_parent, int insertion_row) const
@@ -142,9 +142,10 @@ int ILayerView::insertionRow(const ILayerView* new_parent, int insertion_row) co
     return insertion_row;
 }
 
-namespace {
+namespace
+{
 int itemRow(const SessionItem* item)
 {
     return item->parent()->tagRowOfItem(item).row;
 }
-}
+} // namespace

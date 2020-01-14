@@ -10,8 +10,8 @@
 #ifndef MVVM_SERIALIZATION_JSONCONVERTERINTERFACES_H
 #define MVVM_SERIALIZATION_JSONCONVERTERINTERFACES_H
 
-#include <mvvm/core/export.h>
 #include <memory>
+#include <mvvm/core/export.h>
 #include <string>
 
 class QJsonObject;
@@ -77,4 +77,4 @@ public:
 
 } // namespace ModelView
 
-#endif  // MVVM_SERIALIZATION_JSONCONVERTERINTERFACES_H
+#endif // MVVM_SERIALIZATION_JSONCONVERTERINTERFACES_H

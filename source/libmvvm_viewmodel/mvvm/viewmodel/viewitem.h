@@ -10,8 +10,8 @@
 #ifndef MVVM_VIEWMODEL_VIEWITEM_H
 #define MVVM_VIEWMODEL_VIEWITEM_H
 
-#include <mvvm/core/export.h>
 #include <QStandardItem>
+#include <mvvm/core/export.h>
 
 namespace ModelView
 {
@@ -48,4 +48,4 @@ protected:
 
 } // namespace ModelView
 
-#endif  // MVVM_VIEWMODEL_VIEWITEM_H
+#endif // MVVM_VIEWMODEL_VIEWITEM_H

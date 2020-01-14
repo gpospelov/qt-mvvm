@@ -10,9 +10,9 @@
 #ifndef MVVM_EDITORS_EDITORFACTORYINTERFACE_H
 #define MVVM_EDITORS_EDITORFACTORYINTERFACE_H
 
+#include <memory>
 #include <mvvm/core/export.h>
 #include <string>
-#include <memory>
 
 class QModelIndex;
 class QWidget;
@@ -35,4 +35,4 @@ public:
 
 } // namespace ModelView
 
-#endif  // MVVM_EDITORS_EDITORFACTORYINTERFACE_H
+#endif // MVVM_EDITORS_EDITORFACTORYINTERFACE_H

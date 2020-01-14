@@ -36,4 +36,4 @@ private:
 
 } // namespace ModelView
 
-#endif  // MVVM_VIEWMODEL_PROPERTIESROWSTRATEGY_H
+#endif // MVVM_VIEWMODEL_PROPERTIESROWSTRATEGY_H

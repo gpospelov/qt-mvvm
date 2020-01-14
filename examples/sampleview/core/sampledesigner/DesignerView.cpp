@@ -18,8 +18,7 @@
 #include <QShortcut>
 #include <QVBoxLayout>
 
-DesignerView::DesignerView(DesignerScene* scene, QWidget* parent)
-    : QGraphicsView(scene, parent)
+DesignerView::DesignerView(DesignerScene* scene, QWidget* parent) : QGraphicsView(scene, parent)
 {
     if (!scene)
         throw std::runtime_error("Error in DesignerView: scene is null.");
@@ -95,15 +94,11 @@ void DesignerView::pasteSelected()
     designerScene()->modelController().paste();
 }
 
-void DesignerView::zoomIn()
-{
-}
+void DesignerView::zoomIn() {}
 
-void DesignerView::zoomOut()
-{
-}
+void DesignerView::zoomOut() {}
 
-void DesignerView::keyPressEvent(QKeyEvent *event)
+void DesignerView::keyPressEvent(QKeyEvent* event)
 {
     switch (event->key()) {
     case Qt::Key_Left:
@@ -130,7 +125,7 @@ void DesignerView::keyPressEvent(QKeyEvent *event)
     }
 }
 
-void DesignerView::keyReleaseEvent(QKeyEvent *event)
+void DesignerView::keyReleaseEvent(QKeyEvent* event)
 {
     switch (event->key()) {
     case Qt::Key_Space:
@@ -144,7 +139,7 @@ void DesignerView::keyReleaseEvent(QKeyEvent *event)
     }
 }
 
-DesignerScene *DesignerView::designerScene() const
+DesignerScene* DesignerView::designerScene() const
 {
     return dynamic_cast<DesignerScene*>(scene());
 }

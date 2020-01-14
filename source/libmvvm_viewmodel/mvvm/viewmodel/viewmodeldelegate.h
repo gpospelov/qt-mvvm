@@ -10,9 +10,9 @@
 #ifndef MVVM_VIEWMODEL_VIEWMODELDELEGATE_H
 #define MVVM_VIEWMODEL_VIEWMODELDELEGATE_H
 
-#include <mvvm/core/export.h>
 #include <QStyledItemDelegate>
 #include <memory>
+#include <mvvm/core/export.h>
 
 namespace ModelView
 {
@@ -41,7 +41,7 @@ public:
     void setModelData(QWidget* editor, QAbstractItemModel* model,
                       const QModelIndex& index) const override;
 
-    QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+    QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const override;
 
     void updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option,
                               const QModelIndex& index) const override;
@@ -59,4 +59,4 @@ private:
 
 } // namespace ModelView
 
-#endif  // MVVM_VIEWMODEL_VIEWMODELDELEGATE_H
+#endif // MVVM_VIEWMODEL_VIEWMODELDELEGATE_H

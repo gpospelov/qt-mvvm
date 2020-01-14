@@ -7,10 +7,10 @@
 //
 // ************************************************************************** //
 
+#include <QMouseEvent>
 #include <mvvm/plotting/mousemovereporter.h>
 #include <mvvm/plotting/mouseposinfo.h>
 #include <qcustomplot.h>
-#include <QMouseEvent>
 
 using namespace ModelView;
 
@@ -18,7 +18,8 @@ struct MouseMoveReporter::MouseMoveReporterImpl {
     MouseMoveReporter* reporter{nullptr};
     QCustomPlot* custom_plot{nullptr};
     callback_t callback;
-    MouseMoveReporterImpl(MouseMoveReporter* reporter, QCustomPlot* custom_plot, callback_t callback)
+    MouseMoveReporterImpl(MouseMoveReporter* reporter, QCustomPlot* custom_plot,
+                          callback_t callback)
         : reporter(reporter), custom_plot(custom_plot), callback(callback)
     {
         if (!custom_plot)
@@ -40,21 +41,15 @@ struct MouseMoveReporter::MouseMoveReporterImpl {
         QObject::connect(custom_plot, &QCustomPlot::mouseMove, on_mouse_move);
     }
 
-    double pixelToXaxisCoord(double pixel) const
-    {
-        return custom_plot->xAxis->pixelToCoord(pixel);
-    }
+    double pixelToXaxisCoord(double pixel) const { return custom_plot->xAxis->pixelToCoord(pixel); }
 
-    double pixelToYaxisCoord(double pixel) const
-    {
-        return custom_plot->yAxis->pixelToCoord(pixel);
-    }
+    double pixelToYaxisCoord(double pixel) const { return custom_plot->yAxis->pixelToCoord(pixel); }
 
     bool axesRangeContains(double xpos, double ypos) const
     {
-        return custom_plot->xAxis->range().contains(xpos) && custom_plot->yAxis->range().contains(ypos);
+        return custom_plot->xAxis->range().contains(xpos)
+               && custom_plot->yAxis->range().contains(ypos);
     }
-
 };
 
 MouseMoveReporter::MouseMoveReporter(QCustomPlot* custom_plot, callback_t callback)

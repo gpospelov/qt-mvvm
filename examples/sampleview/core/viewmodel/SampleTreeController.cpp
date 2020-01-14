@@ -17,16 +17,15 @@
 
 using namespace ModelView;
 
-namespace {
+namespace
+{
 SessionItem* selectedItem(const QItemSelectionModel& selection_model,
                           const LayerTableViewModel& view_model);
 }
 
 SampleTreeController::SampleTreeController(SampleModel* model)
-    : QObject()
-    , m_sample_model(model)
-    , m_view_model(m_sample_model)
-    , m_selection_model(&m_view_model)
+    : QObject(), m_sample_model(model), m_view_model(m_sample_model),
+      m_selection_model(&m_view_model)
 {
     auto root = model ? model->rootItem() : nullptr;
     m_view_model.setRootSessionItem(root);
@@ -37,8 +36,8 @@ SampleTreeController::~SampleTreeController() = default;
 void SampleTreeController::onCreateMultiLayer()
 {
     auto mlayer = insertSampleElement(::Constants::MultiLayerType);
-    auto new_item = m_sample_model->insertNewItem(::Constants::LayerType, mlayer,
-                                                  MultiLayerItem::T_LAYERS);
+    auto new_item =
+        m_sample_model->insertNewItem(::Constants::LayerType, mlayer, MultiLayerItem::T_LAYERS);
     selectItem(new_item);
 }
 
@@ -72,7 +71,7 @@ void SampleTreeController::onRemove()
     selectItem(to_select);
 }
 
-ModelView::SessionItem*  SampleTreeController::insertSampleElement(const std::string& model_type)
+ModelView::SessionItem* SampleTreeController::insertSampleElement(const std::string& model_type)
 {
     auto selected_item = selectedItem(m_selection_model, m_view_model);
     SessionItem* parent = selected_item ? selected_item->parent() : nullptr;
@@ -103,7 +102,7 @@ SessionItem* SampleTreeController::findNextSibling(SessionItem* item)
     return nullptr;
 }
 
-void SampleTreeController::selectItem(SessionItem *item)
+void SampleTreeController::selectItem(SessionItem* item)
 {
     if (!item)
         return;
@@ -118,7 +117,8 @@ void SampleTreeController::selectItem(SessionItem *item)
     m_selection_model.setCurrentIndex(id, flags);
 }
 
-namespace {
+namespace
+{
 SessionItem* selectedItem(const QItemSelectionModel& selection_model,
                           const LayerTableViewModel& view_model)
 {
@@ -130,4 +130,4 @@ SessionItem* selectedItem(const QItemSelectionModel& selection_model,
 
     return view_model.sessionItemFromIndex(selection.front());
 }
-}
+} // namespace

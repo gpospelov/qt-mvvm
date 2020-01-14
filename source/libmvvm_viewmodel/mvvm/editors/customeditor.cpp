@@ -11,11 +11,7 @@
 
 using namespace ModelView;
 
-CustomEditor::CustomEditor(QWidget* parent)
-    : QWidget(parent)
-{
-
-}
+CustomEditor::CustomEditor(QWidget* parent) : QWidget(parent) {}
 
 QVariant CustomEditor::data() const
 {

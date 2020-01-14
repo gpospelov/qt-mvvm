@@ -125,8 +125,7 @@ TEST_F(CustomVariantsTest, IsTheSameVariant)
                                       QVariant::fromValue(lim1),
                                       QVariant::fromValue(lim2),
                                       QVariant::fromValue(combo3),
-                                      QVariant::fromValue(combo4)
-                                     };
+                                      QVariant::fromValue(combo4)};
 
     for (size_t i = 0; i < variants.size(); ++i) {
         for (size_t j = 0; j < variants.size(); ++j) {

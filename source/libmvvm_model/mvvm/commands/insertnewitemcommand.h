@@ -41,4 +41,4 @@ private:
 
 } // namespace ModelView
 
-#endif  // MVVM_COMMANDS_INSERTNEWITEMCOMMAND_H
+#endif // MVVM_COMMANDS_INSERTNEWITEMCOMMAND_H

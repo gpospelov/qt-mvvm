@@ -7,15 +7,15 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/serialization/jsonvariant.h>
-#include <mvvm/model/variant-constants.h>
+#include <QJsonArray>
+#include <QJsonObject>
 #include <mvvm/model/comboproperty.h>
 #include <mvvm/model/customvariants.h>
 #include <mvvm/model/externalproperty.h>
+#include <mvvm/model/variant-constants.h>
 #include <mvvm/serialization/jsonutils.h>
+#include <mvvm/serialization/jsonvariant.h>
 #include <mvvm/utils/reallimits.h>
-#include <QJsonArray>
-#include <QJsonObject>
 #include <stdexcept>
 
 using namespace ModelView;

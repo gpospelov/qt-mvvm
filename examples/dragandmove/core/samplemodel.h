@@ -12,7 +12,8 @@
 
 #include <mvvm/model/sessionmodel.h>
 
-namespace ModelView {
+namespace ModelView
+{
 class SessionItem;
 }
 

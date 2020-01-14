@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/model/sessionitemdata.h>
 #include <mvvm/model/customvariants.h>
+#include <mvvm/model/sessionitemdata.h>
 #include <sstream>
 
 using namespace ModelView;

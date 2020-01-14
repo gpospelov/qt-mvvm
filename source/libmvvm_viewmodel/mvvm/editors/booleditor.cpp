@@ -7,20 +7,20 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/editors/booleditor.h>
 #include <QCheckBox>
 #include <QHBoxLayout>
+#include <mvvm/editors/booleditor.h>
 #include <stdexcept>
 
-namespace  {
+namespace
+{
 const QString true_text = "True";
 const QString false_text = "False";
-}
+} // namespace
 
 using namespace ModelView;
 
-BoolEditor::BoolEditor(QWidget* parent)
-    : CustomEditor(parent), m_checkBox(new QCheckBox)
+BoolEditor::BoolEditor(QWidget* parent) : CustomEditor(parent), m_checkBox(new QCheckBox)
 
 {
     setAutoFillBackground(true);
@@ -41,7 +41,7 @@ bool BoolEditor::is_persistent() const
 
 void BoolEditor::onCheckBoxChange(bool value)
 {
-    if(value != m_data.value<bool>())
+    if (value != m_data.value<bool>())
         setDataIntern(QVariant(value));
 }
 

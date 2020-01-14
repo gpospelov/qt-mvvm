@@ -8,13 +8,12 @@
 // ************************************************************************** //
 
 #include <mvvm/model/itemcatalogue.h>
-#include <mvvm/utils/ifactory.h>
 #include <mvvm/model/sessionitem.h>
+#include <mvvm/utils/ifactory.h>
 
 using namespace ModelView;
 
-struct ItemCatalogue::ItemCatalogueImpl
-{
+struct ItemCatalogue::ItemCatalogueImpl {
     IFactory<std::string, SessionItem> factory;
     struct TypeAndLabel {
         std::string item_type;
@@ -87,7 +86,8 @@ void ItemCatalogue::merge(const ItemCatalogue& other)
     size_t index(0);
     for (auto it : other.p_impl->factory) {
         if (contains(it.first))
-            throw std::runtime_error("ItemCatalogue::add() -> Catalogue contains duplicated records");
+            throw std::runtime_error(
+                "ItemCatalogue::add() -> Catalogue contains duplicated records");
 
         add(it.first, it.second, other.p_impl->m_info[index].item_label);
         ++index;

@@ -18,7 +18,8 @@
 @brief A collection of functions returning properly configured QItemEditorFactory.
 */
 
-namespace SampleEditorFactory {
+namespace SampleEditorFactory
+{
 std::unique_ptr<QItemEditorFactory> createStandardSampleEditorFactory();
 }
 

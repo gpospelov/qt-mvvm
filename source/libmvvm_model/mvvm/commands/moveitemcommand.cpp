@@ -8,8 +8,8 @@
 // ************************************************************************** //
 
 #include <mvvm/commands/moveitemcommand.h>
-#include <mvvm/model/sessionitem.h>
 #include <mvvm/model/path.h>
+#include <mvvm/model/sessionitem.h>
 #include <sstream>
 #include <stdexcept>
 

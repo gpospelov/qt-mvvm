@@ -27,7 +27,7 @@ ModelView::TagRow ModelView::TagRow::prepend(const std::string& tag_name)
 
 bool ModelView::TagRow::operator==(const ModelView::TagRow& other) const
 {
-    return row == other.row && tag==other.tag;
+    return row == other.row && tag == other.tag;
 }
 
 bool ModelView::TagRow::operator!=(const ModelView::TagRow& other) const

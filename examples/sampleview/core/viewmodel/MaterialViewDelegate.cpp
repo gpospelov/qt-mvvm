@@ -10,18 +10,18 @@
 #include "MaterialViewDelegate.h"
 #include "MaterialViewController.h"
 #include <QApplication>
-#include <QMouseEvent>
 #include <QDebug>
+#include <QMouseEvent>
 
 MaterialViewDelegate::MaterialViewDelegate(MaterialViewController& controller, QObject* parent)
-    : SampleViewDelegate(parent)
-    , m_controller(controller)
-{}
+    : SampleViewDelegate(parent), m_controller(controller)
+{
+}
 
 MaterialViewDelegate::~MaterialViewDelegate() = default;
 
 bool MaterialViewDelegate::editorEvent(QEvent* event, QAbstractItemModel* model,
-                                   const QStyleOptionViewItem& option, const QModelIndex& index)
+                                       const QStyleOptionViewItem& option, const QModelIndex& index)
 {
     bool has_check_role = index.data(Qt::CheckStateRole).isValid();
     auto mouse_event = dynamic_cast<QMouseEvent*>(event);

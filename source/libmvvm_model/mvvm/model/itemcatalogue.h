@@ -53,9 +53,10 @@ private:
 template <typename T> void ItemCatalogue::registerItem(const std::string& label)
 {
     T x;
-    add(x.modelType(), []() { return std::make_unique<T>(); }, label);
+    add(
+        x.modelType(), []() { return std::make_unique<T>(); }, label);
 }
 
 } // namespace ModelView
 
-#endif  // MVVM_MODEL_ITEMCATALOGUE_H
+#endif // MVVM_MODEL_ITEMCATALOGUE_H

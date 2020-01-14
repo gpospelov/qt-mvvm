@@ -8,18 +8,18 @@
 // ************************************************************************** //
 
 #include "samplemodel.h"
-#include <mvvm/model/itemcatalogue.h>
 #include "items.h"
+#include <mvvm/model/itemcatalogue.h>
 
-namespace  {
+namespace
+{
 std::unique_ptr<ModelView::ItemCatalogue> CreateToyItemCatalogue()
 {
     auto result = std::make_unique<ModelView::ItemCatalogue>();
     result->registerItem<DemoPropertiesItem>();
     return result;
 }
-}
-
+} // namespace
 
 SampleModel::SampleModel() : SessionModel("SampleModel")
 {

@@ -7,14 +7,14 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/plotting/graphcanvas.h>
-#include <mvvm/standarditems/graphviewportitem.h>
-#include <mvvm/plotting/graphviewportplotcontroller.h>
 #include "qcustomplot.h"
-#include <mvvm/widgets/statuslabel.h>
+#include <QBoxLayout>
+#include <mvvm/plotting/graphcanvas.h>
+#include <mvvm/plotting/graphviewportplotcontroller.h>
 #include <mvvm/plotting/statusstringreporter.h>
 #include <mvvm/plotting/statusstringreporterfactory.h>
-#include <QBoxLayout>
+#include <mvvm/standarditems/graphviewportitem.h>
+#include <mvvm/widgets/statuslabel.h>
 
 using namespace ModelView;
 

@@ -7,13 +7,13 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/plotting/colormapcanvas.h>
-#include <mvvm/standarditems/colormapviewportitem.h>
 #include "qcustomplot.h"
-#include <mvvm/widgets/statuslabel.h>
+#include <mvvm/plotting/colormapcanvas.h>
+#include <mvvm/plotting/colormapviewportplotcontroller.h>
 #include <mvvm/plotting/statusstringreporter.h>
 #include <mvvm/plotting/statusstringreporterfactory.h>
-#include <mvvm/plotting/colormapviewportplotcontroller.h>
+#include <mvvm/standarditems/colormapviewportitem.h>
+#include <mvvm/widgets/statuslabel.h>
 
 using namespace ModelView;
 
@@ -23,8 +23,7 @@ struct ColorMapCanvas::ColorMapCanvasImpl {
     std::unique_ptr<StatusStringReporter> reporter;
     StatusLabel* status_label{nullptr};
 
-    ColorMapCanvasImpl()
-        : custom_plot(new QCustomPlot), status_label(new StatusLabel)
+    ColorMapCanvasImpl() : custom_plot(new QCustomPlot), status_label(new StatusLabel)
     {
         viewport_controller = std::make_unique<ColorMapViewportPlotController>(custom_plot);
 

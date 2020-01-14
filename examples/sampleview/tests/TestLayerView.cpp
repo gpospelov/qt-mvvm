@@ -7,13 +7,13 @@
 //
 // ************************************************************************** //
 
-#include "google_test.h"
 #include "DesignerScene.h"
-#include "item_constants.h"
 #include "LayerItems.h"
 #include "LayerView.h"
-#include <mvvm/model/modelutils.h>
 #include "SampleModel.h"
+#include "google_test.h"
+#include "item_constants.h"
+#include <mvvm/model/modelutils.h>
 
 using namespace ModelView;
 
@@ -30,8 +30,7 @@ protected:
     std::unique_ptr<DesignerScene> scene;
 };
 
-TestlayerView::TestlayerView()
-    : scene(std::make_unique<DesignerScene>(&model))
+TestlayerView::TestlayerView() : scene(std::make_unique<DesignerScene>(&model))
 {
     model.clear();
 }

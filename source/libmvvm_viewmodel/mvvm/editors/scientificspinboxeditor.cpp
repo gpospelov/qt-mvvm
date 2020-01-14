@@ -7,16 +7,15 @@
 //
 // ************************************************************************** //
 
+#include <QVBoxLayout>
 #include <mvvm/editors/scientificspinboxeditor.h>
 #include <mvvm/utils/numericutils.h>
 #include <mvvm/widgets/scientificspinbox.h>
-#include <QVBoxLayout>
 
 using namespace ModelView;
 
 ScientificSpinBoxEditor::ScientificSpinBoxEditor(QWidget* parent)
-    : CustomEditor(parent)
-    , m_doubleEditor(new ScientificSpinBox)
+    : CustomEditor(parent), m_doubleEditor(new ScientificSpinBox)
 {
     setAutoFillBackground(true);
     setFocusPolicy(Qt::StrongFocus);
@@ -29,9 +28,7 @@ ScientificSpinBoxEditor::ScientificSpinBoxEditor(QWidget* parent)
 
     layout->addWidget(m_doubleEditor);
 
-    connect(m_doubleEditor,
-            &ScientificSpinBox::valueChanged,
-            [=] { this->onEditingFinished(); });
+    connect(m_doubleEditor, &ScientificSpinBox::valueChanged, [=] { this->onEditingFinished(); });
 
     setLayout(layout);
 
@@ -43,7 +40,6 @@ void ScientificSpinBoxEditor::setRange(double minimum, double maximum)
     m_doubleEditor->setMinimum(minimum);
     m_doubleEditor->setMaximum(maximum);
 }
-
 
 void ScientificSpinBoxEditor::setDecimals(int decimals)
 {

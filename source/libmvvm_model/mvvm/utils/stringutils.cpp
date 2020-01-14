@@ -7,10 +7,10 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/utils/stringutils.h>
-#include <iomanip>
-#include <sstream>
 #include <cmath>
+#include <iomanip>
+#include <mvvm/utils/stringutils.h>
+#include <sstream>
 
 using namespace ModelView;
 

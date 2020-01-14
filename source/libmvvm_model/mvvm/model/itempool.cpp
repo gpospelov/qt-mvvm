@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/model/itempool.h>
 #include <mvvm/core/uniqueidgenerator.h>
+#include <mvvm/model/itempool.h>
 #include <stdexcept>
 
 using namespace ModelView;
@@ -45,7 +45,7 @@ identifier_type ItemPool::register_item(SessionItem* item, identifier_type key)
 void ItemPool::unregister_item(SessionItem* item)
 {
     auto it = m_item_to_key.find(item);
-    if ( it == m_item_to_key.end())
+    if (it == m_item_to_key.end())
         throw std::runtime_error("ItemPool::deregister_item() -> Attempt to deregister "
                                  "non existing item.");
     auto key = it->second;

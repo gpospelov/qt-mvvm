@@ -10,9 +10,9 @@
 #ifndef MVVM_EDITORS_CUSTOMEDITOR_H
 #define MVVM_EDITORS_CUSTOMEDITOR_H
 
-#include <mvvm/core/export.h>
-#include <QWidget>
 #include <QVariant>
+#include <QWidget>
+#include <mvvm/core/export.h>
 
 namespace ModelView
 {
@@ -46,4 +46,4 @@ protected:
 
 } // namespace ModelView
 
-#endif  // MVVM_EDITORS_CUSTOMEDITOR_H
+#endif // MVVM_EDITORS_CUSTOMEDITOR_H

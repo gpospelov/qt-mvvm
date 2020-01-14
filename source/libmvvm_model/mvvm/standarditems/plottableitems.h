@@ -34,4 +34,4 @@ public:
 
 } // namespace ModelView
 
-#endif  // MVVM_STANDARDITEMS_PLOTTABLEITEMS_H
+#endif // MVVM_STANDARDITEMS_PLOTTABLEITEMS_H

@@ -34,4 +34,4 @@ public:
 
 } // namespace ModelView
 
-#endif  // MVVM_VIEWMODEL_TOPITEMSVIEWMODEL_H
+#endif // MVVM_VIEWMODEL_TOPITEMSVIEWMODEL_H

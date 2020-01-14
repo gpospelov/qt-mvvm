@@ -15,9 +15,9 @@
 @brief Contains factory methods to create StatusStringReporter
 */
 
-#include <mvvm/core/export.h>
 #include <functional>
 #include <memory>
+#include <mvvm/core/export.h>
 
 class QCustomPlot;
 
@@ -36,4 +36,4 @@ CreateColorMapReporter(QCustomPlot* custom_plot, std::function<void(const std::s
 
 } // namespace ModelView
 
-#endif  // MVVM_PLOTTING_STATUSSTRINGREPORTERFACTORY_H
+#endif // MVVM_PLOTTING_STATUSSTRINGREPORTERFACTORY_H

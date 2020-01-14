@@ -7,9 +7,9 @@
 //
 // ************************************************************************** //
 
+#include <mvvm/model/mvvm_types.h>
 #include <mvvm/viewmodel/viewemptyitem.h>
 #include <mvvm/viewmodel/viewitemtypes.h>
-#include <mvvm/model/mvvm_types.h>
 
 using namespace ModelView;
 

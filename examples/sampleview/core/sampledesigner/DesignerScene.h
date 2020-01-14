@@ -17,9 +17,9 @@
 
 namespace ModelView
 {
-    class SessionItem;
-    class SessionModel;
-}
+class SessionItem;
+class SessionModel;
+} // namespace ModelView
 
 class SampleModel;
 class QItemSelectionModel;
@@ -38,7 +38,7 @@ class DesignerScene : public QGraphicsScene
 {
     Q_OBJECT
 public:
-    using ModelCommand = std::function<void (ModelView::SessionModel& model)>;
+    using ModelCommand = std::function<void(ModelView::SessionModel& model)>;
 
     explicit DesignerScene(SampleModel* sample_model, QObject* parent = nullptr);
     ~DesignerScene() override;
@@ -47,18 +47,21 @@ public:
 
     IView* getViewForItem(ModelView::SessionItem* item) const;
 
-    NodeEditor *getNodeEditor() { return m_nodeEditor;}
+    NodeEditor* getNodeEditor() { return m_nodeEditor; }
     SceneModelController& modelController() { return m_model_control; }
 
     // slots:
     void onModelChanged();
     void onModelDestroyed();
 
-    void setLayerInterfaceLine(const QLineF &line=QLineF()) { m_layer_interface_line = line;
-                                                              invalidate(); }
+    void setLayerInterfaceLine(const QLineF& line = QLineF())
+    {
+        m_layer_interface_line = line;
+        invalidate();
+    }
 
-    void dragMoveEvent(QGraphicsSceneDragDropEvent *event) override;
-    void dropEvent(QGraphicsSceneDragDropEvent *event) override;
+    void dragMoveEvent(QGraphicsSceneDragDropEvent* event) override;
+    void dropEvent(QGraphicsSceneDragDropEvent* event) override;
 
     void onSmartAlign();
 
@@ -68,10 +71,10 @@ signals:
     void selectionModeChangeRequest(int);
 
 protected:
-    const DesignerMimeData *checkDragEvent(QGraphicsSceneDragDropEvent * event);
+    const DesignerMimeData* checkDragEvent(QGraphicsSceneDragDropEvent* event);
     void drawForeground(QPainter* painter, const QRectF& rect) override;
-    void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
+    void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
 
 private:
     void addViewForItem(ModelView::SessionItem* item);
@@ -79,9 +82,10 @@ private:
     void updateScene();
     void updateViews();
     void alignViews();
-    bool isMultiLayerNearby(QGraphicsSceneDragDropEvent *event);
+    bool isMultiLayerNearby(QGraphicsSceneDragDropEvent* event);
     void adjustSceneRect();
-    bool isAcceptedByMultiLayer(const DesignerMimeData *mimeData, QGraphicsSceneDragDropEvent *event);
+    bool isAcceptedByMultiLayer(const DesignerMimeData* mimeData,
+                                QGraphicsSceneDragDropEvent* event);
     bool isLayerDragged() const;
 
     SceneModelController m_model_control;
@@ -93,11 +97,9 @@ private:
     QLineF m_layer_interface_line;
     //!< Foreground line representing appropriate interface during layer's movement
 
-    SampleViewAligner *m_aligner;
+    SampleViewAligner* m_aligner;
 
-    NodeEditor *m_nodeEditor;
+    NodeEditor* m_nodeEditor;
 };
 
-
 #endif // DESIGNERSCENE_H
-

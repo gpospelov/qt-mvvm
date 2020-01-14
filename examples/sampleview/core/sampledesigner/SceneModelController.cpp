@@ -12,14 +12,15 @@
 #include "DesignerScene.h"
 #include "DesignerSceneUtils.h"
 #include "NodeEditorConnection.h"
-#include <mvvm/signals/modelmapper.h>
+#include <QSet>
 #include <mvvm/model/modelutils.h>
 #include <mvvm/model/sessionitem.h>
-#include <QSet>
+#include <mvvm/signals/modelmapper.h>
 
 using namespace ModelView;
 
-namespace {
+namespace
+{
 //! Guard to block controller-model connection
 class BlockGuard
 {
@@ -42,14 +43,15 @@ class ModelCommandExecutor
 {
 public:
     ModelCommandExecutor(SceneModelController::ModelCommand& command, SessionModel* model)
-        : m_command(command)
-        , m_model(model)
-    {}
+        : m_command(command), m_model(model)
+    {
+    }
 
     ~ModelCommandExecutor() { m_command = SceneModelController::ModelCommand(); }
 
     //! Returns true if the command was executed, false otherwise
-    [[nodiscard]] bool execute() {
+    [[nodiscard]] bool execute()
+    {
         if (!m_model || !m_command)
             return false;
         m_command(*m_model);
@@ -65,8 +67,7 @@ private:
 QSet<SessionItem*> keys(const std::map<SessionItem*, SessionItem*>& input);
 
 //! Converts a view iterable into the list of corresponding SessionItem pointers.
-template<class T>
-QSet<SessionItem*> viewToItem(const T& views);
+template <class T> QSet<SessionItem*> viewToItem(const T& views);
 
 //! Filters and returns all NodeEditorConnection instances from the input list.
 QList<NodeEditorConnection*> connections(const QList<QGraphicsItem*>& views);
@@ -80,9 +81,7 @@ QSet<SessionItem*> map(const std::map<SessionItem*, SessionItem*>& lookup_table,
 } // namespace
 
 SceneModelController::SceneModelController(DesignerScene& scene, SampleModel* model)
-    : m_scene(scene)
-    , m_model(model)
-    , m_block(false)
+    : m_scene(scene), m_model(model), m_block(false)
 {
     if (!m_model)
         throw std::runtime_error("Error in GraphicsObjectController: passed model is null.");
@@ -90,10 +89,7 @@ SceneModelController::SceneModelController(DesignerScene& scene, SampleModel* mo
     m_model->mapper()->setOnModelReset([this](SessionModel*) { onModelChange(); }, this);
     m_model->mapper()->setOnModelDestroyed([this](SessionModel*) { onModelDestroyed(); }, this);
 
-    auto on_item_insered = [this](SessionItem*, TagRow)
-    {
-        onModelChange();
-    };
+    auto on_item_insered = [this](SessionItem*, TagRow) { onModelChange(); };
     m_model->mapper()->setOnItemInserted(on_item_insered, this);
 
     auto on_item_removed = [this](SessionItem*, TagRow) { onModelChange(); };
@@ -116,7 +112,7 @@ void SceneModelController::copy(const QList<QGraphicsItem*>& views)
     const QSet<SessionItem*> selected_items = viewToItem(DesignerSceneUtils::appendChildren(views));
 
     std::map<SessionItem*, SessionItem*> lookup_table;
-    for (SessionItem* origin: DesignerSceneUtils::headItems(selected_items)) {
+    for (SessionItem* origin : DesignerSceneUtils::headItems(selected_items)) {
         SessionItem* copy = m_temp_model.copyItem(origin, m_temp_model.rootItem());
         const auto to_merge = DesignerSceneUtils::makeLookupTable(origin, copy);
         lookup_table.insert(to_merge.begin(), to_merge.end());
@@ -135,13 +131,13 @@ void SceneModelController::paste()
     BlockGuard signal_guard(m_block);
 
     const auto to_copy = Utils::TopItems(&m_temp_model);
-    for (SessionItem* item: to_copy)
+    for (SessionItem* item : to_copy)
         m_model->copyItem(item, m_model->rootItem());
 
     m_scene.onModelChanged();
 }
 
-void SceneModelController::remove(const QList<QGraphicsItem *>& views)
+void SceneModelController::remove(const QList<QGraphicsItem*>& views)
 {
     if (!m_model)
         return;
@@ -157,7 +153,7 @@ void SceneModelController::remove(const QList<QGraphicsItem *>& views)
     m_scene.onModelChanged();
 }
 
-void SceneModelController::onConnect(NodeEditorConnection *connection)
+void SceneModelController::onConnect(NodeEditorConnection* connection)
 {
     if (!m_model)
         return;
@@ -201,7 +197,7 @@ void SceneModelController::onModelDestroyed()
 void SceneModelController::selectivelyRemove(const QSet<ModelView::SessionItem*>& items,
                                              SampleModel* m_model)
 {
-    for (auto item: items)
+    for (auto item : items)
         for (SessionItem* child : DesignerSceneUtils::visibleItems(item->children()))
             m_model->moveItem(child, m_model->rootItem(), {});
 
@@ -209,7 +205,8 @@ void SceneModelController::selectivelyRemove(const QSet<ModelView::SessionItem*>
         Utils::DeleteItemFromModel(item);
 }
 
-namespace {
+namespace
+{
 QSet<SessionItem*> keys(const std::map<SessionItem*, SessionItem*>& input)
 {
     QSet<SessionItem*> result;
@@ -218,11 +215,10 @@ QSet<SessionItem*> keys(const std::map<SessionItem*, SessionItem*>& input)
     return result;
 }
 
-template<class T>
-QSet<SessionItem *> viewToItem(const T& views)
+template <class T> QSet<SessionItem*> viewToItem(const T& views)
 {
     QSet<SessionItem*> items;
-    for (auto view: views)
+    for (auto view : views)
         if (auto iview = dynamic_cast<IView*>(view); iview && iview->getItem())
             items.insert(iview->getItem());
 
@@ -255,8 +251,8 @@ QSet<SessionItem*> map(const std::map<SessionItem*, SessionItem*>& lookup_table,
                        const QSet<SessionItem*>& items)
 {
     QSet<SessionItem*> result;
-    for (auto item: items)
+    for (auto item : items)
         result.insert(lookup_table.at(item));
     return result;
 }
-}
+} // namespace

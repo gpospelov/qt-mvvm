@@ -8,13 +8,12 @@
 // ************************************************************************** //
 
 #include "SampleViewDelegate.h"
-#include "SampleViewDecorator.h"
 #include "SampleEditorFactory.h"
+#include "SampleViewDecorator.h"
 #include <QApplication>
 
 SampleViewDelegate::SampleViewDelegate(QObject* parent)
-    : QStyledItemDelegate(parent)
-    , m_cell_decorator(std::make_unique<SampleViewDecorator>())
+    : QStyledItemDelegate(parent), m_cell_decorator(std::make_unique<SampleViewDecorator>())
 {
     setItemEditorFactory(SampleEditorFactory::createStandardSampleEditorFactory().release());
 }
@@ -28,7 +27,6 @@ void SampleViewDelegate::initStyleOption(QStyleOptionViewItem* option,
 
     if (m_cell_decorator && m_cell_decorator->hasCustomDecoration(index))
         m_cell_decorator->initStyleOption(option, index);
-
 }
 
 void SampleViewDelegate::setCellDecorator(decoration_ptr cell_decoration)

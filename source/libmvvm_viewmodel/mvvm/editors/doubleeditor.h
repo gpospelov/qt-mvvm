@@ -40,4 +40,4 @@ private:
 
 } // namespace ModelView
 
-#endif  // MVVM_EDITORS_DOUBLEEDITOR_H
+#endif // MVVM_EDITORS_DOUBLEEDITOR_H

@@ -8,17 +8,17 @@
 // ************************************************************************** //
 
 #include "graphpropertywidget.h"
-#include <mvvm/widgets/itemstreeview.h>
-#include <mvvm/viewmodel/standardviewmodels.h>
-#include <mvvm/viewmodel/abstractviewmodel.h>
 #include "graphmodel.h"
 #include <QBoxLayout>
 #include <QPushButton>
+#include <mvvm/viewmodel/abstractviewmodel.h>
+#include <mvvm/viewmodel/standardviewmodels.h>
+#include <mvvm/widgets/itemstreeview.h>
 
 using namespace ModelView;
 
-GraphPropertyWidget::GraphPropertyWidget(GraphModel* model, QWidget* parent) : QWidget(parent),
-    m_treeView(new ItemsTreeView), m_model(model)
+GraphPropertyWidget::GraphPropertyWidget(GraphModel* model, QWidget* parent)
+    : QWidget(parent), m_treeView(new ItemsTreeView), m_model(model)
 {
     auto mainLayout = new QVBoxLayout;
 

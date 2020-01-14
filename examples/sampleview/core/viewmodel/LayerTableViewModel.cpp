@@ -11,9 +11,9 @@
 #include "LayerItems.h"
 #include "LayerTableViewModelController.h"
 #include "item_constants.h"
+#include <QMimeData>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
-#include <QMimeData>
 
 using namespace ModelView;
 
@@ -34,8 +34,8 @@ LayerTableViewModel::~LayerTableViewModel() = default;
 
 Qt::ItemFlags LayerTableViewModel::flags(const QModelIndex& index) const
 {
-    Qt::ItemFlags flags = index.isValid() ? Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled
-                                          : Qt::ItemIsDropEnabled;
+    Qt::ItemFlags flags =
+        index.isValid() ? Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled : Qt::ItemIsDropEnabled;
     return flags | AbstractViewModel::flags(index);
 }
 
@@ -137,7 +137,7 @@ SessionItem* findParent(SessionItem* item, QList<std::string> models)
 {
     while (item) {
         const std::string& current_model = item->modelType();
-        for (const auto& model: models)
+        for (const auto& model : models)
             if (current_model == model)
                 return item;
         item = item->parent();

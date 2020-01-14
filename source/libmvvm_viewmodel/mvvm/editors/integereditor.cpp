@@ -7,9 +7,9 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/editors/integereditor.h>
 #include <QSpinBox>
 #include <QVBoxLayout>
+#include <mvvm/editors/integereditor.h>
 
 using namespace ModelView;
 

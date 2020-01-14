@@ -31,4 +31,3 @@ public:
 };
 
 #endif //  LAYERTABLEVIEWMODELCONTROLLER_H
-

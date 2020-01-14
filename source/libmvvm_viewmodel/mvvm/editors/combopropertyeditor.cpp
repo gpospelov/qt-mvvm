@@ -7,10 +7,10 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/editors/combopropertyeditor.h>
-#include <mvvm/model/comboproperty.h>
 #include <QComboBox>
 #include <QVBoxLayout>
+#include <mvvm/editors/combopropertyeditor.h>
+#include <mvvm/model/comboproperty.h>
 
 namespace
 {

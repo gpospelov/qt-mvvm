@@ -7,11 +7,11 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/serialization/jsonitemdata.h>
-#include <mvvm/serialization/jsonvariant.h>
-#include <mvvm/model/sessionitemdata.h>
 #include <QJsonArray>
 #include <QJsonObject>
+#include <mvvm/model/sessionitemdata.h>
+#include <mvvm/serialization/jsonitemdata.h>
+#include <mvvm/serialization/jsonvariant.h>
 #include <stdexcept>
 
 using namespace ModelView;
@@ -19,18 +19,16 @@ using namespace ModelView;
 const QString ModelView::JsonItemData::roleKey = "role";
 const QString ModelView::JsonItemData::variantKey = "variant";
 
-namespace {
+namespace
+{
 QJsonValue keyValue(const QJsonValue& parent_value, const QString& key)
 {
     const QJsonObject& parent_object = parent_value.toObject();
     return parent_object.value(key);
 }
-}
+} // namespace
 
-JsonItemData::JsonItemData()
-    : m_variant_converter(new JsonVariant)
-{
-}
+JsonItemData::JsonItemData() : m_variant_converter(new JsonVariant) {}
 
 JsonItemData::~JsonItemData() = default;
 
@@ -85,6 +83,6 @@ void JsonItemData::set_role_filter(const std::vector<int>& roles)
 bool JsonItemData::role_to_save(int role) const
 {
     bool role_in_list = std::find(m_roles_to_filter.begin(), m_roles_to_filter.end(), role)
-            !=m_roles_to_filter.end();
+                        != m_roles_to_filter.end();
     return !role_in_list;
 }

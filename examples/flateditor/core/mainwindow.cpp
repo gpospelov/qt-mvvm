@@ -8,8 +8,8 @@
 // ************************************************************************** //
 
 #include "mainwindow.h"
-#include "samplemodel.h"
 #include "demowidget.h"
+#include "samplemodel.h"
 #include <QCoreApplication>
 #include <QSettings>
 #include <QTabWidget>

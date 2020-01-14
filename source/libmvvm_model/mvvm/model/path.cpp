@@ -7,10 +7,10 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/model/path.h>
-#include <sstream>
 #include <algorithm>
 #include <iterator>
+#include <mvvm/model/path.h>
+#include <sstream>
 
 using namespace ModelView;
 
@@ -19,14 +19,13 @@ Path Path::fromString(const std::string& str)
     Path result;
 
     std::string str_spaces(str);
-    std::replace( str_spaces.begin(), str_spaces.end(), ',', ' ');
+    std::replace(str_spaces.begin(), str_spaces.end(), ',', ' ');
 
     std::vector<std::string> parts;
 
     std::istringstream iss(str_spaces);
-    std::copy(std::istream_iterator<std::string>(iss),
-         std::istream_iterator<std::string>(),
-         std::back_inserter(parts));
+    std::copy(std::istream_iterator<std::string>(iss), std::istream_iterator<std::string>(),
+              std::back_inserter(parts));
 
     for (const auto& x : parts)
         result.append(std::stoi(x));
@@ -38,7 +37,7 @@ Path Path::fromVector(const std::vector<int>& data)
 {
     Path result;
 
-    for(auto x : data)
+    for (auto x : data)
         result.append(x);
 
     return result;
@@ -49,7 +48,7 @@ std::string Path::str()
     std::ostringstream str;
     std::string result;
 
-    for(auto it = m_data.begin(); it!= m_data.end(); ++it) {
+    for (auto it = m_data.begin(); it != m_data.end(); ++it) {
         str << std::to_string(*it);
         if (std::next(it) != m_data.end())
             str << ",";

@@ -14,8 +14,9 @@
 #include <QGraphicsObject>
 #include <memory>
 
-namespace ModelView {
-    class SessionItem;
+namespace ModelView
+{
+class SessionItem;
 }
 
 //! parent class for graphic representation of all ISample's
@@ -26,7 +27,7 @@ public:
     static constexpr qreal basic_width = 200.0;
     static constexpr qreal basic_height = 30.0;
 
-    IView(QGraphicsItem *parent, int view_type);
+    IView(QGraphicsItem* parent, int view_type);
     ~IView() override;
 
     int type() const override final { return m_view_type; }

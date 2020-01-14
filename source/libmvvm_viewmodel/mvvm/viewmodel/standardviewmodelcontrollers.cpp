@@ -7,11 +7,11 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/viewmodel/standardviewmodelcontrollers.h>
-#include <mvvm/viewmodel/standardchildrenstrategies.h>
 #include <mvvm/model/groupitem.h>
 #include <mvvm/viewmodel/labeldatarowstrategy.h>
 #include <mvvm/viewmodel/propertiesrowstrategy.h>
+#include <mvvm/viewmodel/standardchildrenstrategies.h>
+#include <mvvm/viewmodel/standardviewmodelcontrollers.h>
 
 using namespace ModelView;
 

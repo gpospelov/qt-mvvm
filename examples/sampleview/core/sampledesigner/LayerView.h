@@ -17,7 +17,7 @@ class LayerView : public ILayerView
 {
     Q_OBJECT
 public:
-    LayerView(QGraphicsItem *parent = nullptr);
+    LayerView(QGraphicsItem* parent = nullptr);
 
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
 

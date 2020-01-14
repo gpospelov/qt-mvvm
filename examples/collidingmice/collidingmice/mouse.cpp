@@ -50,16 +50,16 @@
 
 #include "mouse.h"
 
+#include "mousemodel.h"
 #include <QGraphicsScene>
 #include <QPainter>
 #include <QStyleOption>
-#include "mousemodel.h"
+#include <cmath>
 #include <mvvm/signals/itemmapper.h>
 #include <mvvm/utils/numericutils.h>
-#include <cmath>
 
 #ifndef M_PI
-    #define M_PI 3.14159265358979323846
+#define M_PI 3.14159265358979323846
 #endif
 
 const qreal Pi = M_PI;
@@ -76,8 +76,7 @@ static qreal normalizeAngle(qreal angle)
 
 //! [0]
 Mouse::Mouse(MouseItem* item)
-    : mouseEyeDirection(0),
-      color(item->property(MouseItem::P_COLOR).value<QColor>()),
+    : mouseEyeDirection(0), color(item->property(MouseItem::P_COLOR).value<QColor>()),
       mouse_item(item)
 {
     auto on_property_change = [this](ModelView::SessionItem*, std::string property_name) {
@@ -94,7 +93,8 @@ Mouse::Mouse(MouseItem* item)
     };
     mouse_item->mapper()->setOnPropertyChange(on_property_change, this);
 
-    setPos(item->property(MouseItem::P_XPOS).toDouble(), item->property(MouseItem::P_YPOS).toDouble());
+    setPos(item->property(MouseItem::P_XPOS).toDouble(),
+           item->property(MouseItem::P_YPOS).toDouble());
     setRotation(ModelView::Utils::RandInt(0, 360 * 16));
 }
 //! [0]
@@ -103,8 +103,7 @@ Mouse::Mouse(MouseItem* item)
 QRectF Mouse::boundingRect() const
 {
     qreal adjust = 0.5;
-    return QRectF(-18 - adjust, -22 - adjust,
-                  36 + adjust, 60 + adjust);
+    return QRectF(-18 - adjust, -22 - adjust, 36 + adjust, 60 + adjust);
 }
 //! [1]
 
@@ -118,7 +117,7 @@ QPainterPath Mouse::shape() const
 //! [2]
 
 //! [3]
-void Mouse::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
+void Mouse::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
 {
     // Body
     painter->setBrush(color);
@@ -157,9 +156,9 @@ void Mouse::advance(int step)
 {
     if (!step)
         return;
-//! [4]
+    //! [4]
     // Don't move too far away
-//! [5]
+    //! [5]
 
     qreal angle = mouse_item->property(MouseItem::P_ANGLE).value<double>();
 
@@ -179,17 +178,15 @@ void Mouse::advance(int step)
         angle += 0.25;
     } else if (::sin(angle) > 0) {
         angle -= 0.25;
-//! [5] //! [6]
+        //! [5] //! [6]
     }
-//! [6]
+    //! [6]
 
     // Try not to crash with any other mice
-//! [7]
-    QList<QGraphicsItem *> dangerMice = scene()->items(QPolygonF()
-                                                       << mapToScene(0, 0)
-                                                       << mapToScene(-30, -50)
-                                                       << mapToScene(30, -50));
-    foreach (QGraphicsItem *item, dangerMice) {
+    //! [7]
+    QList<QGraphicsItem*> dangerMice = scene()->items(
+        QPolygonF() << mapToScene(0, 0) << mapToScene(-30, -50) << mapToScene(30, -50));
+    foreach (QGraphicsItem* item, dangerMice) {
         if (item == this)
             continue;
 
@@ -203,23 +200,23 @@ void Mouse::advance(int step)
         } else if (angleToMouse <= TwoPi && angleToMouse > (TwoPi - Pi / 2)) {
             // Rotate left
             angle -= 0.5;
-//! [7] //! [8]
+            //! [7] //! [8]
         }
-//! [8] //! [9]
+        //! [8] //! [9]
     }
-//! [9]
+    //! [9]
 
     // Add some random movement
-//! [10]
+    //! [10]
     if (dangerMice.size() > 1 && ModelView::Utils::RandInt(0, 10) == 0) {
         if (ModelView::Utils::RandInt(0, 1))
             angle += ModelView::Utils::RandDouble(0.0, 1 / 500.0);
         else
             angle -= ModelView::Utils::RandDouble(0.0, 1 / 500.0);
     }
-//! [10]
+    //! [10]
 
-//! [11]
+    //! [11]
 
     qreal speed = mouse_item->property(MouseItem::P_SPEED).value<double>();
     speed += (-50 + ModelView::Utils::RandInt(0, 100)) / 100.0;

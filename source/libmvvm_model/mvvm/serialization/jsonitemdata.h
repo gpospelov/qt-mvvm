@@ -10,14 +10,15 @@
 #ifndef MVVM_SERIALIZATION_JSONITEMDATA_H
 #define MVVM_SERIALIZATION_JSONITEMDATA_H
 
-#include <mvvm/serialization/jsonconverterinterfaces.h>
 #include <QString>
 #include <memory>
+#include <mvvm/serialization/jsonconverterinterfaces.h>
 #include <vector>
 
 class QJsonObject;
 
-namespace ModelView {
+namespace ModelView
+{
 
 class JsonVariantInterface;
 
@@ -48,6 +49,6 @@ private:
     std::vector<int> m_roles_to_filter;
 };
 
-}  // namespace ModelView
+} // namespace ModelView
 
-#endif  // MVVM_SERIALIZATION_JSONITEMDATA_H
+#endif // MVVM_SERIALIZATION_JSONITEMDATA_H

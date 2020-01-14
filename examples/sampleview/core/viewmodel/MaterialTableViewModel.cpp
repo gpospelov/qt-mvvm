@@ -9,24 +9,24 @@
 
 #include "MaterialTableViewModel.h"
 #include "MaterialItems.h"
-#include <mvvm/viewmodel/childrenstrategyinterface.h>
 #include "item_constants.h"
 #include <mvvm/model/itemutils.h>
-#include <mvvm/viewmodel/rowstrategyinterface.h>
 #include <mvvm/model/sessionitem.h>
+#include <mvvm/viewmodel/childrenstrategyinterface.h>
+#include <mvvm/viewmodel/rowstrategyinterface.h>
 #include <mvvm/viewmodel/standardviewmodelcontrollers.h>
 #include <mvvm/viewmodel/viewdataitem.h>
 
 using namespace ModelView;
 
-namespace {
+namespace
+{
 const std::map<std::string, std::function<bool(const ModelView::SessionItem*)>> name_2_filter = {
     {::Constants::SLDMaterialType,
      [](const SessionItem* item) -> bool { return dynamic_cast<const SLDMaterialItem*>(item); }},
     {::Constants::RefIndexMaterialType, [](const SessionItem* item) -> bool {
          return dynamic_cast<const RefIndexMaterialItem*>(item);
-     }}
-};
+     }}};
 
 //! Acts like standard TopItemsStrategy, but filters out all items
 //! according to view model's discriminant.
@@ -64,8 +64,8 @@ QStandardItem* createCheckItem();
 } // namespace
 
 MaterialTableViewModel::MaterialTableViewModel(ModelView::SessionModel* model, QObject* parent)
-    : AbstractViewModel(std::make_unique<MaterialViewController>(this), parent)
-    , m_material_type(::Constants::SLDMaterialType)
+    : AbstractViewModel(std::make_unique<MaterialViewController>(this), parent),
+      m_material_type(::Constants::SLDMaterialType)
 {
     setSessionModel(model);
 }
@@ -87,12 +87,12 @@ MaterialBaseItem* MaterialTableViewModel::sessionItemFromRow(int row) const
     if (!current_root)
         return nullptr;
 
-    for (int i = 0, n_cols = columnCount(); i < n_cols; ++i){
+    for (int i = 0, n_cols = columnCount(); i < n_cols; ++i) {
         QModelIndex i_index = index(row, i, QModelIndex());
         if (!i_index.isValid())
             continue;
         auto current_item = sessionItemFromIndex(i_index);
-        while(current_item && current_item != current_root)
+        while (current_item && current_item != current_root)
             if (auto material = dynamic_cast<MaterialBaseItem*>(current_item))
                 return material;
             else
@@ -101,11 +101,12 @@ MaterialBaseItem* MaterialTableViewModel::sessionItemFromRow(int row) const
     return nullptr;
 }
 
-namespace {
+namespace
+{
 FilterChildrenStrategy::FilterChildrenStrategy(MaterialTableViewModel* view_model)
-    : ChildrenStrategyInterface()
-    , m_view_model(view_model)
-{}
+    : ChildrenStrategyInterface(), m_view_model(view_model)
+{
+}
 
 std::vector<SessionItem*> FilterChildrenStrategy::children(const SessionItem* item) const
 {
@@ -123,9 +124,9 @@ std::vector<SessionItem*> FilterChildrenStrategy::children(const SessionItem* it
 }
 
 MaterialTableRowStrategy::MaterialTableRowStrategy(MaterialTableViewModel* view_model)
-    : RowStrategyInterface()
-    , m_view_model(view_model)
-{}
+    : RowStrategyInterface(), m_view_model(view_model)
+{
+}
 
 QList<QStandardItem*> MaterialTableRowStrategy::constructRow(SessionItem* item)
 {
@@ -153,7 +154,7 @@ QStringList MaterialTableRowStrategy::horizontalHeaderLabels() const
                                  "unknown material type encountered");
 
     QStringList result;
-    for (auto child_item: label_carrier->children()) {
+    for (auto child_item : label_carrier->children()) {
         result.append(QString::fromStdString(child_item->displayName()));
     }
 
@@ -177,4 +178,4 @@ QStandardItem* createCheckItem()
     check_item->setCheckable(true);
     return check_item;
 }
-} //namespace
+} // namespace

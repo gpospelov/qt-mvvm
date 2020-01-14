@@ -55,5 +55,4 @@ private:
     QList<QLineF> m_interfaces;
 };
 
-
 #endif // MULTILAYERVIEW_H

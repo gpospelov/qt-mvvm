@@ -10,9 +10,9 @@
 #ifndef MVVM_MODEL_ITEMFACTORYINTERFACE_H
 #define MVVM_MODEL_ITEMFACTORYINTERFACE_H
 
+#include <memory>
 #include <mvvm/core/export.h>
 #include <mvvm/model/mvvm_types.h>
-#include <memory>
 
 namespace ModelView
 {
@@ -33,5 +33,4 @@ public:
 
 } // namespace ModelView
 
-#endif  // MVVM_MODEL_ITEMFACTORYINTERFACE_H
-
+#endif // MVVM_MODEL_ITEMFACTORYINTERFACE_H

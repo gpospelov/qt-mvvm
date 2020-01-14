@@ -8,10 +8,10 @@
 // ************************************************************************** //
 
 #include "items.h"
-#include <mvvm/model/comboproperty.h>
-#include <mvvm/model/externalproperty.h>
 #include "item_constants.h"
 #include <QColor>
+#include <mvvm/model/comboproperty.h>
+#include <mvvm/model/externalproperty.h>
 
 using namespace ModelView;
 

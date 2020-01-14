@@ -27,8 +27,8 @@ CORE_EXPORT int DefaultInfoBarHeight();
 //! Returns default size of text on info bar.
 CORE_EXPORT int DefaultInfoBarTextSize();
 
-}
+} // namespace Style
 
 } // namespace ModelView
 
-#endif  // MVVM_EDITORS_STYLEUTILS_H
+#endif // MVVM_EDITORS_STYLEUTILS_H

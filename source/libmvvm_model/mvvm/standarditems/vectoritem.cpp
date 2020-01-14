@@ -7,9 +7,9 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/standarditems/vectoritem.h>
-#include <mvvm/signals/itemmapper.h>
 #include <mvvm/model/customvariants.h>
+#include <mvvm/signals/itemmapper.h>
+#include <mvvm/standarditems/vectoritem.h>
 #include <sstream>
 
 using namespace ModelView;
@@ -31,19 +31,14 @@ VectorItem::VectorItem() : CompoundItem(Constants::VectorItemType)
 
 void VectorItem::activate()
 {
-    auto on_property_change = [this](SessionItem*, std::string){
-        update_label();
-    };
+    auto on_property_change = [this](SessionItem*, std::string) { update_label(); };
     mapper()->setOnPropertyChange(on_property_change, this);
 }
 
 void VectorItem::update_label()
 {
     std::ostringstream ostr;
-    ostr << "("
-         << property(P_X).value<double>() << ", "
-         << property(P_Y).value<double>() << ", "
-         << property(P_Z).value<double>()
-         << ")";
+    ostr << "(" << property(P_X).value<double>() << ", " << property(P_Y).value<double>() << ", "
+         << property(P_Z).value<double>() << ")";
     setDataIntern(QVariant::fromValue(ostr.str()), ItemDataRole::DATA);
 }

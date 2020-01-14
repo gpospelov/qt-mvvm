@@ -7,19 +7,19 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/serialization/jsonitemconverter.h>
+#include <QJsonArray>
+#include <QJsonObject>
+#include <mvvm/core/uniqueidgenerator.h>
 #include <mvvm/model/customvariants.h>
 #include <mvvm/model/itemfactoryinterface.h>
-#include <mvvm/serialization/jsonitemdata.h>
-#include <mvvm/serialization/jsontaginfo.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionitemcontainer.h>
 #include <mvvm/model/sessionitemdata.h>
 #include <mvvm/model/sessionitemtags.h>
 #include <mvvm/model/sessionmodel.h>
-#include <mvvm/core/uniqueidgenerator.h>
-#include <QJsonArray>
-#include <QJsonObject>
+#include <mvvm/serialization/jsonitemconverter.h>
+#include <mvvm/serialization/jsonitemdata.h>
+#include <mvvm/serialization/jsontaginfo.h>
 
 namespace
 {
@@ -175,7 +175,8 @@ std::unique_ptr<SessionItem> JsonItemConverter::json_to_item(const QJsonObject& 
     auto result = m_factory->createItem(modelType);
     result->setParent(parent);
 
-    result->setDataAndTags(m_itemdata_converter->get_data(json[itemDataKey].toArray()), json_to_tags(json[itemTagsKey].toObject(), result.get()));
+    result->setDataAndTags(m_itemdata_converter->get_data(json[itemDataKey].toArray()),
+                           json_to_tags(json[itemTagsKey].toObject(), result.get()));
 
     if (m_generate_new_identifiers)
         result->setData(QVariant::fromValue(UniqueIdGenerator::generate()),

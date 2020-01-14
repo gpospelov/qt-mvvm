@@ -28,4 +28,4 @@ public:
 
 } // namespace ModelView
 
-#endif  // MVVM_VIEWMODEL_DEFAULTCELLDECORATION_H
+#endif // MVVM_VIEWMODEL_DEFAULTCELLDECORATION_H

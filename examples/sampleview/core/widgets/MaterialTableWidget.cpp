@@ -8,28 +8,28 @@
 // ************************************************************************** //
 
 #include "MaterialTableWidget.h"
-#include "MaterialTableDecorator.h"
 #include "MaterialControlPanel.h"
 #include "MaterialModel.h"
+#include "MaterialTableDecorator.h"
 #include "MaterialTableView.h"
 #include "MaterialTableViewModel.h"
 #include "MaterialViewDelegate.h"
 #include <QHeaderView>
 #include <QVBoxLayout>
 
-namespace {
+namespace
+{
 std::unique_ptr<QStyledItemDelegate>
 createMaterialTableDelegate(MaterialViewController& view_controller);
 
 QTableView* createMaterialTable(MaterialViewController& view_controller,
                                 QStyledItemDelegate* delegate);
-}
+} // namespace
 
 MaterialTableWidget::MaterialTableWidget(MaterialModel* material_model, QWidget* parent)
-    : QWidget(parent)
-    , m_controller(material_model)
-    , m_delegate(createMaterialTableDelegate(m_controller))
-    , m_material_table(createMaterialTable(m_controller, m_delegate.get()))
+    : QWidget(parent), m_controller(material_model),
+      m_delegate(createMaterialTableDelegate(m_controller)),
+      m_material_table(createMaterialTable(m_controller, m_delegate.get()))
 {
     auto layout = new QVBoxLayout(this);
     layout->setMargin(0);
@@ -41,7 +41,8 @@ MaterialTableWidget::MaterialTableWidget(MaterialModel* material_model, QWidget*
 
 MaterialTableWidget::~MaterialTableWidget() = default;
 
-namespace {
+namespace
+{
 std::unique_ptr<QStyledItemDelegate>
 createMaterialTableDelegate(MaterialViewController& view_controller)
 {
@@ -65,4 +66,4 @@ QTableView* createMaterialTable(MaterialViewController& view_controller,
 
     return result.release();
 }
-}
+} // namespace

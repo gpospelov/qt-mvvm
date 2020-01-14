@@ -7,19 +7,21 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/standarditems/data2ditem.h>
 #include <mvvm/standarditems/axisitems.h>
+#include <mvvm/standarditems/data2ditem.h>
 
 using namespace ModelView;
 
-namespace {
-size_t total_bin_count(Data2DItem* item) {
+namespace
+{
+size_t total_bin_count(Data2DItem* item)
+{
     if (auto xaxis = item->xAxis(); xaxis)
         if (auto yaxis = item->yAxis(); yaxis)
-            return static_cast<size_t>(xaxis->size()*yaxis->size());
+            return static_cast<size_t>(xaxis->size() * yaxis->size());
     return 0;
 }
-}
+} // namespace
 
 Data2DItem::Data2DItem() : CompoundItem(Constants::Data2DItemType)
 {

@@ -7,19 +7,19 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/utils/numericutils.h>
+#include <algorithm>
 #include <cmath>
 #include <limits>
-#include <algorithm>
+#include <mvvm/utils/numericutils.h>
 #include <random>
-
 
 using namespace ModelView;
 
 bool Utils::AreAlmostEqual(double a, double b, double tolerance)
 {
     constexpr double eps = std::numeric_limits<double>::epsilon();
-    return std::abs(a-b) <= eps * std::max( tolerance*eps, std::max(1., tolerance)*std::abs(b) );
+    return std::abs(a - b)
+           <= eps * std::max(tolerance * eps, std::max(1., tolerance) * std::abs(b));
 }
 
 int Utils::RandInt(int low, int high)

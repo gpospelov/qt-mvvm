@@ -44,4 +44,4 @@ public:
 
 } // namespace ModelView
 
-#endif  // MVVM_STANDARDITEMS_GRAPHITEM_H
+#endif // MVVM_STANDARDITEMS_GRAPHITEM_H

@@ -7,15 +7,14 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/commands/commandadapter.h>
 #include <mvvm/commands/abstractitemcommand.h>
+#include <mvvm/commands/commandadapter.h>
 
 using namespace ModelView;
 
 CommandAdapter::CommandAdapter(std::shared_ptr<AbstractItemCommand> command)
     : m_command(std::move(command))
 {
-
 }
 
 CommandAdapter::~CommandAdapter() = default;

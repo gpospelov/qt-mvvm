@@ -31,4 +31,4 @@ public:
 
 } // namespace ModelView
 
-#endif  // MVVM_STANDARDITEMS_CONTAINERITEM_H
+#endif // MVVM_STANDARDITEMS_CONTAINERITEM_H

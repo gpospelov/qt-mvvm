@@ -7,15 +7,14 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/serialization/jsonitemcopystrategy.h>
-#include <mvvm/serialization/jsonitemconverter.h>
-#include <mvvm/model/sessionitem.h>
 #include <QJsonObject>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/serialization/jsonitemconverter.h>
+#include <mvvm/serialization/jsonitemcopystrategy.h>
 
 using namespace ModelView;
 
-struct JsonItemCopyStrategy::JsonItemCopyStrategyImpl
-{
+struct JsonItemCopyStrategy::JsonItemCopyStrategyImpl {
     std::unique_ptr<JsonItemConverter> m_converter;
 };
 
