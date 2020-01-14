@@ -10,13 +10,14 @@
 #ifndef SAMPLETREECONTROLLER_H
 #define SAMPLETREECONTROLLER_H
 
-#include <QObject>
 #include "LayerTableViewModel.h"
 #include <QItemSelectionModel>
+#include <QObject>
 #include <set>
 
 class SampleModel;
-namespace ModelView {
+namespace ModelView
+{
 class SessionItem;
 }
 

@@ -10,12 +10,13 @@
 #include "InterferenceFunctionView.h"
 #include "DesignerHelper.h"
 
-namespace {
+namespace
+{
 constexpr qreal interference_width = IView::basic_width * 0.7;
 constexpr qreal interference_height = IView::basic_height * 4.0;
 constexpr QRectF interference_shape(-interference_width / 2.0, -interference_height / 2.0,
                                     interference_width, interference_height);
-}
+} // namespace
 
 InterferenceFunctionView::InterferenceFunctionView(QGraphicsItem* parent)
     : ConnectableView(parent, DesignerHelper::INTERFERENCE_FUNCTION, interference_shape)

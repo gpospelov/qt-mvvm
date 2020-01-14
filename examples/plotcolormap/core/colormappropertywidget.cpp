@@ -9,12 +9,12 @@
 
 #include "colormappropertywidget.h"
 #include "colormapmodel.h"
-#include <mvvm/widgets/itemstreeview.h>
-#include <mvvm/viewmodel/standardviewmodels.h>
-#include <mvvm/viewmodel/abstractviewmodel.h>
 #include <QBoxLayout>
 #include <QPushButton>
 #include <QSlider>
+#include <mvvm/viewmodel/abstractviewmodel.h>
+#include <mvvm/viewmodel/standardviewmodels.h>
+#include <mvvm/widgets/itemstreeview.h>
 
 using namespace ModelView;
 
@@ -50,6 +50,6 @@ void ColorMapPropertyWidget::setup_slider()
     m_slider->setRange(0, 100);
     m_slider->setValue(50.0);
 
-    auto on_value_changed = [this](int value) { m_model->update_data(value/10.0); };
+    auto on_value_changed = [this](int value) { m_model->update_data(value / 10.0); };
     connect(m_slider, &QSlider::valueChanged, on_value_changed);
 }

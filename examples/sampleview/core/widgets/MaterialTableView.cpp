@@ -10,7 +10,8 @@
 #include "MaterialTableView.h"
 #include <QMouseEvent>
 
-namespace {
+namespace
+{
 int mouse_events = QEvent::MouseButtonPress | QEvent::MouseButtonRelease | QEvent::MouseMove;
 }
 

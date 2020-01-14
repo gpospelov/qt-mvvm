@@ -9,23 +9,22 @@
 
 #include "SampleWidget.h"
 #include "ApplicationModels.h"
-#include <mvvm/widgets/itemstreeview.h>
-#include <mvvm/viewmodel/standardviewmodels.h>
-#include <mvvm/viewmodel/abstractviewmodel.h>
-#include "MaterialTableWidget.h"
 #include "LayerTableWidget.h"
-#include "SampleModel.h"
 #include "MaterialModel.h"
-#include <QVBoxLayout>
+#include "MaterialTableWidget.h"
+#include "SampleModel.h"
 #include <QTreeView>
+#include <QVBoxLayout>
+#include <mvvm/viewmodel/abstractviewmodel.h>
+#include <mvvm/viewmodel/standardviewmodels.h>
+#include <mvvm/widgets/itemstreeview.h>
 
 using namespace ModelView;
 
 SampleWidget::SampleWidget(ApplicationModels* models, QWidget* parent)
-    : QWidget(parent), m_materialTree(new ItemsTreeView), m_sampleTree(new ItemsTreeView)
-    , m_materialTableWidget(new MaterialTableWidget(models->materialModel()))
-    , m_layerTableWidget(new LayerTableWidget(models))
-    , m_models(models)
+    : QWidget(parent), m_materialTree(new ItemsTreeView), m_sampleTree(new ItemsTreeView),
+      m_materialTableWidget(new MaterialTableWidget(models->materialModel())),
+      m_layerTableWidget(new LayerTableWidget(models)), m_models(models)
 {
     auto mainLayout = new QVBoxLayout;
     mainLayout->setSpacing(10);
@@ -55,4 +54,3 @@ QBoxLayout* SampleWidget::create_bottom_layout()
     result->addWidget(m_layerTableWidget);
     return result;
 }
-

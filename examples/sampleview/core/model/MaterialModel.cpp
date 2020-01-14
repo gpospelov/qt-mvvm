@@ -9,11 +9,11 @@
 
 #include "MaterialModel.h"
 #include "MaterialItems.h"
-#include <mvvm/model/externalproperty.h>
 #include "item_constants.h"
+#include <QColor>
+#include <mvvm/model/externalproperty.h>
 #include <mvvm/model/itemcatalogue.h>
 #include <mvvm/model/modelutils.h>
-#include <QColor>
 
 using namespace ModelView;
 
@@ -47,7 +47,7 @@ ExternalProperty MaterialModel::undefined_material()
 //! If no container_id was given, the very first container is examined.
 
 std::vector<ExternalProperty> MaterialModel::material_data(std::string container_id) const
- {
+{
     std::vector<ExternalProperty> result{undefined_material()};
     const auto containers = rootItem()->children();
     if (!containers.empty() && container_id.empty())

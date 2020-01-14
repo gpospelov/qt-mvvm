@@ -7,16 +7,15 @@
 //
 // ************************************************************************** //
 
-#include "google_test.h"
 #include "DesignerScene.h"
-#include "item_constants.h"
 #include "LayerItems.h"
 #include "LayerView.h"
+#include "MultiLayerView.h"
 #include "NodeEditorConnection.h"
 #include "ParticleLayoutItem.h"
-#include <mvvm/model/modelutils.h>
-#include "MultiLayerView.h"
 #include "SampleModel.h"
+#include "google_test.h"
+#include "item_constants.h"
 #include <mvvm/model/modelutils.h>
 
 using namespace ModelView;
@@ -37,8 +36,7 @@ protected:
 };
 
 TestScene::TestScene()
-    : scene(std::make_unique<DesignerScene>(&model))
-    , control(scene->modelController())
+    : scene(std::make_unique<DesignerScene>(&model)), control(scene->modelController())
 {
     model.clear();
 }
@@ -275,7 +273,7 @@ TEST_F(TestScene, testCopy)
 
     // selecting the layout (multilayer and its children stay unselected)
     selection_path = QPainterPath();
-    selection_rect = QRectF (-310.0, -10.0, 20.0, 20.0);
+    selection_rect = QRectF(-310.0, -10.0, 20.0, 20.0);
     selection_path.addRect(selection_rect);
     scene->setSelectionArea(selection_path, Qt::IntersectsItemBoundingRect);
 

@@ -9,9 +9,9 @@
 
 #include "LayerItems.h"
 #include "MaterialModel.h"
-#include <mvvm/model/externalproperty.h>
 #include "item_constants.h"
 #include <QVariant>
+#include <mvvm/model/externalproperty.h>
 
 using namespace ModelView;
 

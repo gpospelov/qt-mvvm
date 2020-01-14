@@ -10,14 +10,15 @@
 #include "LayerView.h"
 #include "LayerItems.h"
 #include "ParticleLayoutView.h"
-#include <mvvm/model/externalproperty.h>
 #include "item_constants.h"
-#include <mvvm/model/mvvm_types.h>
 #include <QGraphicsScene>
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
+#include <mvvm/model/externalproperty.h>
+#include <mvvm/model/mvvm_types.h>
 
-namespace {
+namespace
+{
 constexpr qreal basic_layer_width = IView::basic_width;
 constexpr qreal basic_layer_height = IView::basic_height;
 constexpr qreal max_layer_height = 500.0;
@@ -26,14 +27,13 @@ constexpr QRectF defaultShape();
 // linear conversion of layer's thickness in nanometers to screen size to have reasonable
 // graphics representation
 qreal thicknessToHeight(double nm);
-}
+} // namespace
 
 using namespace ModelView;
 
-LayerView::LayerView(QGraphicsItem *parent)
-    : ILayerView(parent, DesignerHelper::LAYER)
+LayerView::LayerView(QGraphicsItem* parent) : ILayerView(parent, DesignerHelper::LAYER)
 {
-    setColor(QColor(qrand() % 256, qrand() % 256, qrand() % 256) );
+    setColor(QColor(qrand() % 256, qrand() % 256, qrand() % 256));
     setRectangle(defaultShape());
     setAcceptDrops(false);
     addPort(QString(), NodeEditorPort::INPUT, NodeEditorPort::PARTICLE_LAYOUT);
@@ -45,7 +45,7 @@ void LayerView::paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
     if (option->state & (QStyle::State_Selected | QStyle::State_HasFocus)) {
         painter->setPen(Qt::DashLine);
     }
-    painter->setBrush(DesignerHelper::getLayerGradient(m_color, getRectangle() ) );
+    painter->setBrush(DesignerHelper::getLayerGradient(m_color, getRectangle()));
     painter->drawRect(getRectangle());
 }
 
@@ -94,7 +94,7 @@ void LayerView::updateHeight()
 
 void LayerView::updateColor()
 {
-    if(getItem()->isTag(LayerItem::P_MATERIAL)) {
+    if (getItem()->isTag(LayerItem::P_MATERIAL)) {
         QVariant v = getItem()->getItem(LayerItem::P_MATERIAL)->data();
         if (v.isValid()) {
             auto mp = v.value<ExternalProperty>();
@@ -109,13 +109,13 @@ void LayerView::updateColor()
 // FIXME: this method has nothing to do with ports. For unknown reason it uses them to set label.
 void LayerView::updateLabel()
 {
-    if(getInputPorts().size() < 1)
+    if (getInputPorts().size() < 1)
         return;
 
-    NodeEditorPort *port = getInputPorts()[0];
+    NodeEditorPort* port = getInputPorts()[0];
 
-    QString material = "" ;
-    if(getItem()->isTag(LayerItem::P_MATERIAL)){
+    QString material = "";
+    if (getItem()->isTag(LayerItem::P_MATERIAL)) {
         QVariant v = getItem()->getItem(LayerItem::P_MATERIAL)->data();
         if (v.isValid()) {
             ExternalProperty mp = v.value<ExternalProperty>();
@@ -127,7 +127,8 @@ void LayerView::updateLabel()
     port->setLabel(infoToDisplay);
 }
 
-namespace {
+namespace
+{
 constexpr QRectF defaultShape()
 {
     return QRectF(-basic_layer_width / 2.0, -basic_layer_height / 2.0, basic_layer_width,
@@ -138,4 +139,4 @@ qreal thicknessToHeight(double nm)
 {
     return nm > 0 ? std::min(basic_layer_height + nm, max_layer_height) : basic_layer_height;
 }
-}
+} // namespace

@@ -17,18 +17,19 @@
 #include <mvvm/viewmodel/defaultviewmodel.h>
 #include <mvvm/viewmodel/topitemsviewmodel.h>
 #include <mvvm/viewmodel/viewitem.h>
-#include <mvvm/widgets/standardtreeviews.h>
 #include <mvvm/widgets/propertyflatview.h>
+#include <mvvm/widgets/standardtreeviews.h>
 
 using namespace ModelView;
 
 namespace
 {
-const QString text = "Demonstrates automatic generation of property editors in grid layout from item properties.\n"
-                     "Tree on the left is showing content of our model (use mouse to select items). "
-                     "Tree in the top-right corner shows standard property tree of currently "
-                     "selected item. Widget in bottom-right corner shows grid layout automatically populated "
-                     "with editors.";
+const QString text =
+    "Demonstrates automatic generation of property editors in grid layout from item properties.\n"
+    "Tree on the left is showing content of our model (use mouse to select items). "
+    "Tree in the top-right corner shows standard property tree of currently "
+    "selected item. Widget in bottom-right corner shows grid layout automatically populated "
+    "with editors.";
 }
 
 DemoWidget::DemoWidget(SessionModel* model, QWidget* parent)

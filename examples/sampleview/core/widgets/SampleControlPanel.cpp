@@ -15,7 +15,8 @@
 
 const auto init = QRCInitializer::initSampleViewResources();
 
-namespace {
+namespace
+{
 QPushButton* createButton(QWidget* parent, QIcon icon)
 {
     QPushButton* result = new QPushButton(parent);
@@ -23,14 +24,14 @@ QPushButton* createButton(QWidget* parent, QIcon icon)
     result->setIcon(icon);
     return result;
 }
-}
+} // namespace
 
 SampleControlPanel::SampleControlPanel(SampleTreeController& sample_controller, QWidget* parent)
-    : QWidget(parent)
-    , m_new_multilayer_button(createButton(this, QIcon(":/icons/toolbar16dark_newitem.svg")))
-    , m_new_layer_button(createButton(this, QIcon(":/icons/toolbar16dark_newitem.svg")))
-    , m_clone_button(createButton(this, QIcon(":/icons/toolbar16dark_cloneitem.svg")))
-    , m_remove_button(createButton(this, QIcon(":/icons/toolbar16dark_recycle.svg")))
+    : QWidget(parent),
+      m_new_multilayer_button(createButton(this, QIcon(":/icons/toolbar16dark_newitem.svg"))),
+      m_new_layer_button(createButton(this, QIcon(":/icons/toolbar16dark_newitem.svg"))),
+      m_clone_button(createButton(this, QIcon(":/icons/toolbar16dark_cloneitem.svg"))),
+      m_remove_button(createButton(this, QIcon(":/icons/toolbar16dark_recycle.svg")))
 {
     // setting connections
     connect(m_new_multilayer_button, &QPushButton::clicked, &sample_controller,

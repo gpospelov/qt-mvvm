@@ -12,7 +12,8 @@
 
 #include <string>
 
-namespace Constants {
+namespace Constants
+{
 
 const std::string MultiLayerType = "MultiLayer";
 const std::string LayerType = "Layer";

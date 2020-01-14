@@ -15,58 +15,53 @@
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
 
-NodeEditor::NodeEditor(QObject *parent)
-    : QObject(parent)
-    , m_scene(0)
-    , m_conn(0)
-{}
+NodeEditor::NodeEditor(QObject* parent) : QObject(parent), m_scene(0), m_conn(0) {}
 
-void NodeEditor::install(QGraphicsScene *scene)
+void NodeEditor::install(QGraphicsScene* scene)
 {
     scene->installEventFilter(this);
     m_scene = scene;
 }
 
-QGraphicsItem* NodeEditor::itemAt(const QPointF &pos)
+QGraphicsItem* NodeEditor::itemAt(const QPointF& pos)
 {
-    QList<QGraphicsItem*> items = m_scene->items(QRectF(pos - QPointF(1,1), QSize(3,3)));
+    QList<QGraphicsItem*> items = m_scene->items(QRectF(pos - QPointF(1, 1), QSize(3, 3)));
 
-    for(QGraphicsItem* item : items)
+    for (QGraphicsItem* item : items)
         if (item->type() > QGraphicsItem::UserType)
             return item;
 
     return nullptr;
 }
 
-bool NodeEditor::eventFilter(QObject *object, QEvent *event)
+bool NodeEditor::eventFilter(QObject* object, QEvent* event)
 {
-    QGraphicsSceneMouseEvent *mouseEvent = dynamic_cast<QGraphicsSceneMouseEvent*>(event);
-    if(!mouseEvent)  return QObject::eventFilter(object, event);
+    QGraphicsSceneMouseEvent* mouseEvent = dynamic_cast<QGraphicsSceneMouseEvent*>(event);
+    if (!mouseEvent)
+        return QObject::eventFilter(object, event);
 
     bool isProcessedEvent(false);
 
-    if(event->type() == QEvent::GraphicsSceneMousePress) {
+    if (event->type() == QEvent::GraphicsSceneMousePress) {
         isProcessedEvent = processMousePress(mouseEvent);
-    }
-    else if(event->type() == QEvent::GraphicsSceneMouseMove) {
+    } else if (event->type() == QEvent::GraphicsSceneMouseMove) {
         isProcessedEvent = processMouseMove(mouseEvent);
-    }
-    else if(event->type() == QEvent::GraphicsSceneMouseRelease) {
+    } else if (event->type() == QEvent::GraphicsSceneMouseRelease) {
         isProcessedEvent = processMouseRelease(mouseEvent);
     }
     return isProcessedEvent ? isProcessedEvent : QObject::eventFilter(object, event);
 }
 
-bool NodeEditor::processMousePress(QGraphicsSceneMouseEvent *event)
+bool NodeEditor::processMousePress(QGraphicsSceneMouseEvent* event)
 {
     bool result(false);
 
-    if(m_conn==0 && event->button() == Qt::LeftButton) {
-        QGraphicsItem *item = itemAt(event->scenePos());
+    if (m_conn == 0 && event->button() == Qt::LeftButton) {
+        QGraphicsItem* item = itemAt(event->scenePos());
         if (item && item->type() == NodeEditorPort::TYPE) {
             emit selectionModeChangeRequest(DesignerView::SIMPLE_SELECTION);
             m_conn = new NodeEditorConnection(m_scene);
-            m_conn->setPort1((NodeEditorPort*) item);
+            m_conn->setPort1((NodeEditorPort*)item);
             m_conn->setPos1(item->scenePos());
             m_conn->setPos2(event->scenePos());
             m_conn->updatePath();
@@ -77,7 +72,7 @@ bool NodeEditor::processMousePress(QGraphicsSceneMouseEvent *event)
     return result;
 }
 
-bool NodeEditor::processMouseMove(QGraphicsSceneMouseEvent *event)
+bool NodeEditor::processMouseMove(QGraphicsSceneMouseEvent* event)
 {
     bool result(false);
 
@@ -89,26 +84,20 @@ bool NodeEditor::processMouseMove(QGraphicsSceneMouseEvent *event)
     return result;
 }
 
-bool NodeEditor::processMouseRelease(QGraphicsSceneMouseEvent *event)
+bool NodeEditor::processMouseRelease(QGraphicsSceneMouseEvent* event)
 {
     bool result(false);
 
-    if (m_conn && event->button() == Qt::LeftButton)
-    {
+    if (m_conn && event->button() == Qt::LeftButton) {
         emit selectionModeChangeRequest(DesignerView::RUBBER_SELECTION);
 
-        QGraphicsItem *item = itemAt(event->scenePos());
-        if (item && item->type() == NodeEditorPort::TYPE)
-        {
-            NodeEditorPort *port1 = m_conn->port1();
-            NodeEditorPort *port2 = (NodeEditorPort*) item;
+        QGraphicsItem* item = itemAt(event->scenePos());
+        if (item && item->type() == NodeEditorPort::TYPE) {
+            NodeEditorPort* port1 = m_conn->port1();
+            NodeEditorPort* port2 = (NodeEditorPort*)item;
 
-            if (port1->parentItem() != port2->parentItem()
-                    && port1->isOutput() != port2->isOutput()
-                    && !port1->isConnected(port2)
-                    && port1->getPortType() == port2->getPortType()
-                    )
-            {
+            if (port1->parentItem() != port2->parentItem() && port1->isOutput() != port2->isOutput()
+                && !port1->isConnected(port2) && port1->getPortType() == port2->getPortType()) {
                 m_conn->setPos2(port2->scenePos());
                 m_conn->setPort2(port2);
                 m_conn->updatePath();

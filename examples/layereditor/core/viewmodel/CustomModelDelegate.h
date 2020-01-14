@@ -26,7 +26,6 @@ class CustomModelDelegate : public ModelView::ViewModelDelegate
 {
 public:
     explicit CustomModelDelegate(ApplicationModels* models, QObject* parent = nullptr);
-
 };
 
 #endif

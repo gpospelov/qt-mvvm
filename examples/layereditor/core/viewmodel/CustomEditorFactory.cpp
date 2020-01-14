@@ -11,8 +11,8 @@
 #include "ApplicationModels.h"
 #include "MaterialModel.h"
 #include "MaterialSelectorCellEditor.h"
-#include <mvvm/model/customvariants.h>
 #include <QModelIndex>
+#include <mvvm/model/customvariants.h>
 
 using namespace ModelView;
 
@@ -20,8 +20,7 @@ CustomEditorFactory::~CustomEditorFactory() = default;
 
 CustomEditorFactory::CustomEditorFactory(ApplicationModels* models) : m_models(models) {}
 
-std::unique_ptr<CustomEditor>
-CustomEditorFactory::createEditor(const QModelIndex& index) const
+std::unique_ptr<CustomEditor> CustomEditorFactory::createEditor(const QModelIndex& index) const
 {
     auto value = index.data(Qt::EditRole);
     if (Utils::IsExtPropertyVariant(value))

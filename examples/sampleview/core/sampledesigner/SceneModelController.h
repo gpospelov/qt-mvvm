@@ -23,7 +23,7 @@ template <class T> class QList;
 class SceneModelController
 {
 public:
-    using ModelCommand = std::function<void (ModelView::SessionModel& model)>;
+    using ModelCommand = std::function<void(ModelView::SessionModel& model)>;
 
     SceneModelController(DesignerScene& scene, SampleModel* model);
     ~SceneModelController();

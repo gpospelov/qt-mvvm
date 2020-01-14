@@ -8,15 +8,15 @@
 // ************************************************************************** //
 
 #include "SampleViewController.h"
+#include "ApplicationModels.h"
 #include "DesignerScene.h"
 #include "DesignerView.h"
 #include "MultiLayerView.h"
-#include "ApplicationModels.h"
 
 SampleViewController::SampleViewController(ApplicationModels* models)
     : m_designerScene(models ? models->sampleModel() : nullptr)
-{}
-
+{
+}
 
 SampleViewController::~SampleViewController() = default;
 
@@ -25,7 +25,8 @@ DesignerView* SampleViewController::createDesignerView()
     return new DesignerView(&m_designerScene);
 }
 
-void SampleViewController::setSelectionModel(QItemSelectionModel *model, FilterPropertyProxy *proxy)
+void SampleViewController::setSelectionModel(QItemSelectionModel* model, FilterPropertyProxy* proxy)
 {
-    if(model) m_designerScene.setSelectionModel(model, proxy);
+    if (model)
+        m_designerScene.setSelectionModel(model, proxy);
 }

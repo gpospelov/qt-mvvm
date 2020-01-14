@@ -10,14 +10,15 @@
 #include "DesignerSceneUtils.h"
 #include "MultiLayerView.h"
 #include "SampleViewFactory.h"
-#include <mvvm/model/modelutils.h>
 #include <QGraphicsItem>
 #include <QGraphicsScene>
 #include <limits>
+#include <mvvm/model/modelutils.h>
 
 using namespace ModelView;
 
-namespace {
+namespace
+{
 QList<QGraphicsItem*> intersectingItems(const ILayerView& view)
 {
     const QGraphicsScene* scene = view.scene();
@@ -50,7 +51,7 @@ QSet<SessionItem*> ancestors(const SessionItem* item)
     return result;
 }
 
-template<class InputIterator>
+template <class InputIterator>
 QSet<SessionItem*> visibleItems(const InputIterator& begin, const InputIterator& end)
 {
     QSet<ModelView::SessionItem*> result;
@@ -60,23 +61,22 @@ QSet<SessionItem*> visibleItems(const InputIterator& begin, const InputIterator&
     });
     return result;
 }
-}
+} // namespace
 
 QLineF DesignerSceneUtils::getInterfaceToScene(const MultiLayerView& sample, int row)
 {
     QLineF line = sample.getInterfaceLine(row);
-    if(line.length() != 0) {
+    if (line.length() != 0) {
         QPointF p1(sample.mapToScene(line.p1()));
         QPointF p2(sample.mapToScene(line.p2()));
         const int prolongation = 20.0;
-        return QLineF(p1.x() -prolongation, p1.y(), p2.x()+prolongation, p2.y());
+        return QLineF(p1.x() - prolongation, p1.y(), p2.x() + prolongation, p2.y());
     }
 
     return QLineF();
 }
 
-std::tuple<MultiLayerView*, int>
-DesignerSceneUtils::nearestMultilayer(const ILayerView& view)
+std::tuple<MultiLayerView*, int> DesignerSceneUtils::nearestMultilayer(const ILayerView& view)
 {
     const QList<QGraphicsItem*> items = intersectingItems(view);
     const QPointF scene_pos = view.scenePos();
@@ -103,7 +103,7 @@ DesignerSceneUtils::nearestMultilayer(const ILayerView& view)
 QSet<SessionItem*> DesignerSceneUtils::headItems(const QSet<SessionItem*>& items)
 {
     QSet<SessionItem*> result;
-    for (SessionItem* item: items)
+    for (SessionItem* item : items)
         if (!items.intersects(ancestors(item)))
             result.insert(item);
 

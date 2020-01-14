@@ -10,14 +10,13 @@
 #include "MaterialSelectorCellEditor.h"
 #include "MaterialItems.h"
 #include "MaterialModel.h"
-#include <mvvm/model/externalproperty.h>
 #include <QColor>
 #include <QComboBox>
 #include <QStandardItemModel>
 #include <QVBoxLayout>
+#include <mvvm/model/externalproperty.h>
 
 using namespace ModelView;
-
 
 MaterialSelectorCellEditor::MaterialSelectorCellEditor(MaterialModel* model, QWidget* parent)
     : CustomEditor(parent), m_box(new QComboBox), m_model(model),

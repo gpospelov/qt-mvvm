@@ -21,17 +21,16 @@
 #include <QSettings>
 #include <QTreeView>
 
-namespace {
-    const QString main_window_group = "MainWindow";
-    const QString size_key = "size";
-    const QString pos_key = "pos";
-}
+namespace
+{
+const QString main_window_group = "MainWindow";
+const QString size_key = "size";
+const QString pos_key = "pos";
+} // namespace
 
 MainWindow::MainWindow()
-    : m_models(std::make_unique<ApplicationModels>())
-    , m_scene_controller(m_models.get())
-    , m_material_editor(new QDockWidget(this))
-    , m_sample_editor(new QDockWidget(this))
+    : m_models(std::make_unique<ApplicationModels>()), m_scene_controller(m_models.get()),
+      m_material_editor(new QDockWidget(this)), m_sample_editor(new QDockWidget(this))
 {
     setCentralWidget(m_scene_controller.createDesignerView());
     init_material_editor();

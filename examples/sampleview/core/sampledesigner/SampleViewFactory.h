@@ -21,5 +21,4 @@ public:
     static IView* createSampleView(const std::string& name);
 };
 
-
 #endif // SAMPLEVIEWFACTORY_H

@@ -14,20 +14,20 @@
 #include "LayerView.h"
 #include "SampleModel.h"
 #include "item_constants.h"
-#include <mvvm/model/sessionitem.h>
 #include <QGraphicsSceneMouseEvent>
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
+#include <mvvm/model/sessionitem.h>
 
-namespace {
-    constexpr qreal width_multiplier = 1.15;
-    constexpr qreal multilayer_height = IView::basic_height;
-    constexpr qreal multilayer_width = IView::basic_width * width_multiplier;
+namespace
+{
+constexpr qreal width_multiplier = 1.15;
+constexpr qreal multilayer_height = IView::basic_height;
+constexpr qreal multilayer_width = IView::basic_width * width_multiplier;
 
-    constexpr QRectF defaultShape();
-    bool acceptsModel(const ModelView::SessionItem* item, const std::string& model_type);
-}
-
+constexpr QRectF defaultShape();
+bool acceptsModel(const ModelView::SessionItem* item, const std::string& model_type);
+} // namespace
 
 MultiLayerView::MultiLayerView(QGraphicsItem* parent)
     : ILayerView(parent, DesignerHelper::MULTILAYER)
@@ -53,7 +53,7 @@ void MultiLayerView::paint(QPainter* painter, const QStyleOptionGraphicsItem* op
     if (option->state & (QStyle::State_Selected | QStyle::State_HasFocus)) {
         painter->setPen(Qt::DashLine);
     }
-    painter->setBrush(DesignerHelper::getLayerGradient(m_color, getRectangle() ) );
+    painter->setBrush(DesignerHelper::getLayerGradient(m_color, getRectangle()));
     painter->drawRect(getRectangle());
 }
 
@@ -65,7 +65,7 @@ void MultiLayerView::addView(IView* childView)
         return;
     }
 
-    if(childItems().contains(layer))
+    if (childItems().contains(layer))
         return;
 
     addNewLayer(layer, m_layers.size());
@@ -111,8 +111,8 @@ void MultiLayerView::updateGeometry()
 int MultiLayerView::getDropArea(QPointF pos)
 {
     int area(-1);
-    for(int i=0; i<m_drop_areas.size(); ++i) {
-        if( m_drop_areas.at(i).contains(pos) ) {
+    for (int i = 0; i < m_drop_areas.size(); ++i) {
+        if (m_drop_areas.at(i).contains(pos)) {
             area = i;
             break;
         }
@@ -123,7 +123,7 @@ int MultiLayerView::getDropArea(QPointF pos)
 //! Returns drop area rectangle corresponding to given row
 QRectF MultiLayerView::getDropAreaRectangle(int row)
 {
-    if(row>=0 && row < m_drop_areas.size()) {
+    if (row >= 0 && row < m_drop_areas.size()) {
         return m_drop_areas[row];
     } else {
         return QRectF();
@@ -133,7 +133,7 @@ QRectF MultiLayerView::getDropAreaRectangle(int row)
 //! Returns line representing interface
 QLineF MultiLayerView::getInterfaceLine(int row) const
 {
-    if(row>=0 && row < m_interfaces.size()) {
+    if (row >= 0 && row < m_interfaces.size()) {
         return m_interfaces[row];
     } else {
         return QLineF();
@@ -158,7 +158,7 @@ void MultiLayerView::dropEvent(QGraphicsSceneDragDropEvent* event)
     });
 }
 
-const DesignerMimeData *MultiLayerView::checkDragEvent(QGraphicsSceneDragDropEvent* event)
+const DesignerMimeData* MultiLayerView::checkDragEvent(QGraphicsSceneDragDropEvent* event)
 {
     const DesignerMimeData* mimeData = qobject_cast<const DesignerMimeData*>(event->mimeData());
     if (!mimeData) {
@@ -167,8 +167,7 @@ const DesignerMimeData *MultiLayerView::checkDragEvent(QGraphicsSceneDragDropEve
     }
     int row = getDropArea(event->pos());
     event->setAccepted(mimeData->hasFormat("bornagain/widget")
-        && acceptsModel(getItem(), mimeData->getClassName())
-        && row != -1);
+                       && acceptsModel(getItem(), mimeData->getClassName()) && row != -1);
     return mimeData;
 }
 
@@ -201,8 +200,8 @@ void MultiLayerView::updateHeight()
 void MultiLayerView::updateWidth()
 {
     qreal max_width = 0.0;
-    for(ILayerView* layer : m_layers)
-        if(layer->boundingRect().width() > max_width)
+    for (ILayerView* layer : m_layers)
+        if (layer->boundingRect().width() > max_width)
             max_width = layer->boundingRect().width();
 
     const qreal mlayer_width = max_width > 0 ? max_width * width_multiplier : multilayer_width;
@@ -222,30 +221,30 @@ void MultiLayerView::alignChildren()
     }
 
     qreal y_pos = m_rect.top() + multilayer_height / 2.0;
-    for(ILayerView* layer : m_layers) {
+    for (ILayerView* layer : m_layers) {
         const qreal l_height = layer->boundingRect().height();
         layer->setPos({0.0, y_pos + l_height / 2.0});
-        m_drop_areas.append(QRectF(m_rect.left(), y_pos - l_height / 2.0,
-                                   m_rect.width(), l_height));
+        m_drop_areas.append(
+            QRectF(m_rect.left(), y_pos - l_height / 2.0, m_rect.width(), l_height));
         m_interfaces.append({{m_rect.left(), y_pos}, {m_rect.right(), y_pos}});
         y_pos += l_height;
     }
     const qreal l_height = m_layers.back()->boundingRect().height();
-    m_drop_areas.append(QRectF(m_rect.left(), y_pos - l_height / 2.0,
-                               m_rect.width(), l_height));
+    m_drop_areas.append(QRectF(m_rect.left(), y_pos - l_height / 2.0, m_rect.width(), l_height));
     m_interfaces.append({{m_rect.left(), y_pos}, {m_rect.right(), y_pos}});
 }
 
-namespace {
-    constexpr QRectF defaultShape()
-    {
-        return QRectF(-multilayer_width / 2.0, -multilayer_height / 2.0, multilayer_width,
-                      multilayer_height);
-    }
-
-    bool acceptsModel(const ModelView::SessionItem* item, const std::string& model_type)
-    {
-        // TODO: implement this function
-        return false;
-    }
+namespace
+{
+constexpr QRectF defaultShape()
+{
+    return QRectF(-multilayer_width / 2.0, -multilayer_height / 2.0, multilayer_width,
+                  multilayer_height);
 }
+
+bool acceptsModel(const ModelView::SessionItem* item, const std::string& model_type)
+{
+    // TODO: implement this function
+    return false;
+}
+} // namespace

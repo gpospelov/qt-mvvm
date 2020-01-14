@@ -11,11 +11,12 @@
 #define MATERIALVIEWCONTROLLER_H
 
 #include "MaterialTableViewModel.h"
-#include <mvvm/model/mvvm_types.h>
 #include <QItemSelectionModel>
 #include <deque>
+#include <mvvm/model/mvvm_types.h>
 
-namespace ModelView {
+namespace ModelView
+{
 class SessionItem;
 }
 
@@ -28,7 +29,7 @@ class MaterialViewController : public QObject
 public:
     MaterialViewController(MaterialModel* model);
 
-// getters:
+    // getters:
     MaterialTableViewModel& viewModel() { return m_view_model; }
     QItemSelectionModel& selectionModel() { return m_selection_model; }
     QStringList materialSets() const;
@@ -38,7 +39,7 @@ public:
     //! adds row span to current selection
     void toggleRowSpanSelection(const QModelIndex& index);
 
-// public slots:
+    // public slots:
     void onMaterialSelectionChange(const QString& material_display_name);
     void onCreateMaterial();
     void onCloneMaterial();

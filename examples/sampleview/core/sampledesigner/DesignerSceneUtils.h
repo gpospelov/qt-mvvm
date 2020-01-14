@@ -20,7 +20,8 @@ class ILayerView;
 class MultiLayerView;
 class QGraphicsItem;
 
-namespace ModelView {
+namespace ModelView
+{
 class SessionItem;
 }
 
@@ -47,6 +48,6 @@ QSet<QGraphicsItem*> appendChildren(QList<QGraphicsItem*> views);
 //! Filters session items corresponding to some IView instances and returns them.
 QSet<ModelView::SessionItem*> visibleItems(const std::vector<ModelView::SessionItem*>& items);
 QSet<ModelView::SessionItem*> visibleItems(const QSet<ModelView::SessionItem*>& items);
-};
+}; // namespace DesignerSceneUtils
 
 #endif // DESIGNERSCENEUTILS_H

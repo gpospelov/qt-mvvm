@@ -10,14 +10,15 @@
 #include "MaterialControlPanel.h"
 #include "MaterialViewController.h"
 #include "QRCInitializer.h"
-#include <mvvm/viewmodel/abstractviewmodel.h>
 #include <QComboBox>
 #include <QHBoxLayout>
 #include <QPushButton>
+#include <mvvm/viewmodel/abstractviewmodel.h>
 
 const auto init = QRCInitializer::initSampleViewResources();
 
-namespace {
+namespace
+{
 QPushButton* createButton(QWidget* parent, QIcon icon)
 {
     QPushButton* result = new QPushButton(parent);
@@ -25,16 +26,15 @@ QPushButton* createButton(QWidget* parent, QIcon icon)
     result->setIcon(icon);
     return result;
 }
-}
+} // namespace
 
 using namespace ModelView;
 
 MaterialControlPanel::MaterialControlPanel(MaterialViewController& view_control, QWidget* parent)
-    : QWidget(parent)
-    , m_new_button(createButton(this, QIcon(":/icons/toolbar16dark_newitem.svg")))
-    , m_clone_button(createButton(this, QIcon(":/icons/toolbar16dark_cloneitem.svg")))
-    , m_remove_button(createButton(this, QIcon(":/icons/toolbar16dark_recycle.svg")))
-    , m_material_type_selector(new QComboBox(this))
+    : QWidget(parent), m_new_button(createButton(this, QIcon(":/icons/toolbar16dark_newitem.svg"))),
+      m_clone_button(createButton(this, QIcon(":/icons/toolbar16dark_cloneitem.svg"))),
+      m_remove_button(createButton(this, QIcon(":/icons/toolbar16dark_recycle.svg"))),
+      m_material_type_selector(new QComboBox(this))
 {
     // setting connections
     m_material_type_selector->addItems(view_control.materialSets());

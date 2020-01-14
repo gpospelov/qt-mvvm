@@ -9,15 +9,13 @@
 
 #include "IView.h"
 #include "LocatedItem.h"
-#include <mvvm/signals/itemmapper.h>
 #include <QString>
+#include <mvvm/signals/itemmapper.h>
 
 using namespace ModelView;
 
-IView::IView(QGraphicsItem *parent, int view_type)
-    : QGraphicsObject(parent)
-    , m_item(nullptr)
-    , m_view_type(view_type)
+IView::IView(QGraphicsItem* parent, int view_type)
+    : QGraphicsObject(parent), m_item(nullptr), m_view_type(view_type)
 {
     connect(this, &IView::xChanged, this, &IView::onChangedX);
     connect(this, &IView::yChanged, this, &IView::onChangedY);
@@ -28,7 +26,7 @@ IView::~IView()
     unsubscribe();
 }
 
-void IView::subscribe(SessionItem *item)
+void IView::subscribe(SessionItem* item)
 {
     if (m_item)
         unsubscribe();
@@ -37,7 +35,7 @@ void IView::subscribe(SessionItem *item)
 
     m_item = item;
 
-    if(toolTip().isEmpty())
+    if (toolTip().isEmpty())
         setToolTip(QString::fromStdString(item->displayName()));
 
     setX(m_item->property(LocatedItem::P_X_POS).toReal());
@@ -63,14 +61,14 @@ void IView::unsubscribe()
 
 void IView::onChangedX()
 {
-    if(!m_item)
+    if (!m_item)
         return;
     m_item->setProperty(LocatedItem::P_X_POS, x());
 }
 
 void IView::onChangedY()
 {
-    if(!m_item)
+    if (!m_item)
         return;
     m_item->setProperty(LocatedItem::P_Y_POS, y());
 }

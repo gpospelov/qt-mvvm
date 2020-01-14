@@ -15,8 +15,7 @@ using namespace ModelView;
 
 const std::string ParticleLayoutItem::T_INTERFERENCE = "Interference Tag";
 
-ParticleLayoutItem::ParticleLayoutItem()
-    : LocatedItem(::Constants::ParticleLayoutType)
+ParticleLayoutItem::ParticleLayoutItem() : LocatedItem(::Constants::ParticleLayoutType)
 {
     registerTag(TagInfo(T_INTERFERENCE, 0, 1, {::Constants::InterferenceFunctionType}));
     setDefaultTag(T_INTERFERENCE);

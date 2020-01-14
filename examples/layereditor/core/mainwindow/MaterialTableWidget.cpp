@@ -9,14 +9,14 @@
 
 #include "MaterialTableWidget.h"
 #include "CustomCellDecoration.h"
-#include "MaterialTableViewModel.h"
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/viewmodel/viewmodeldelegate.h>
-#include "MaterialModel.h"
-#include <mvvm/model/modelutils.h>
 #include "MaterialItems.h"
+#include "MaterialModel.h"
+#include "MaterialTableViewModel.h"
 #include <QTreeView>
 #include <QVBoxLayout>
+#include <mvvm/model/modelutils.h>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/viewmodel/viewmodeldelegate.h>
 
 using namespace ModelView;
 

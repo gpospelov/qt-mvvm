@@ -19,8 +19,7 @@ class SampleControlPanel : public QWidget
 {
     Q_OBJECT
 public:
-    explicit SampleControlPanel(SampleTreeController& sample_controller,
-                                QWidget* parent = nullptr);
+    explicit SampleControlPanel(SampleTreeController& sample_controller, QWidget* parent = nullptr);
     ~SampleControlPanel() override;
 
 private:

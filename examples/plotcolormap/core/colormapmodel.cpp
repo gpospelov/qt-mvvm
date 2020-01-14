@@ -8,13 +8,13 @@
 // ************************************************************************** //
 
 #include "colormapmodel.h"
-#include <mvvm/standarditems/axisitems.h>
-#include <mvvm/standarditems/containeritem.h>
-#include <mvvm/standarditems/data2ditem.h>
+#include <cmath>
 #include <mvvm/model/modelutils.h>
+#include <mvvm/standarditems/axisitems.h>
 #include <mvvm/standarditems/colormapitem.h>
 #include <mvvm/standarditems/colormapviewportitem.h>
-#include <cmath>
+#include <mvvm/standarditems/containeritem.h>
+#include <mvvm/standarditems/data2ditem.h>
 
 using namespace ModelView;
 
@@ -31,7 +31,7 @@ void fill_data(Data2DItem* data_item, double scale = 1.0)
     std::vector<double> values;
     for (auto y : yAxis->binCenters()) {
         for (auto x : xAxis->binCenters()) {
-            double r = scale*(3.0 * std::sqrt(x * x + y * y) + 1e-2);
+            double r = scale * (3.0 * std::sqrt(x * x + y * y) + 1e-2);
             double z = 2 * x * (std::cos(r + 2) / r - std::sin(r + 2) / r);
             values.push_back(z);
         }

@@ -8,22 +8,23 @@
 // ************************************************************************** //
 
 #include "LayerTableWidget.h"
-#include <mvvm/viewmodel/abstractviewmodel.h>
-#include "CustomModelDelegate.h"
 #include "ApplicationModels.h"
-#include <mvvm/model/sessionitem.h>
+#include "CustomModelDelegate.h"
+#include "LayerItems.h"
 #include "LayerTableViewModel.h"
 #include "SampleModel.h"
-#include <mvvm/model/modelutils.h>
-#include "LayerItems.h"
+#include <QHeaderView>
 #include <QTreeView>
 #include <QVBoxLayout>
-#include <QHeaderView>
+#include <mvvm/model/modelutils.h>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/viewmodel/abstractviewmodel.h>
 
 using namespace ModelView;
 
 LayerTableWidget::LayerTableWidget(ApplicationModels* models, QWidget* parent)
-    : QWidget(parent), m_treeView(new QTreeView), m_delegate(std::make_unique<CustomModelDelegate>(models))
+    : QWidget(parent), m_treeView(new QTreeView),
+      m_delegate(std::make_unique<CustomModelDelegate>(models))
 {
     auto layout = new QVBoxLayout;
     layout->setMargin(0);

@@ -8,8 +8,8 @@
 // ************************************************************************** //
 
 #include "samplemodel.h"
-#include <mvvm/model/itemcatalogue.h>
 #include "items.h"
+#include <mvvm/model/itemcatalogue.h>
 
 using namespace ModelView;
 

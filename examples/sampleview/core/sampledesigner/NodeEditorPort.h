@@ -16,9 +16,9 @@
  * Copyright (c) 2012, STANISLAW ADASZEWSKI
  */
 
+#include "DesignerHelper.h"
 #include <QGraphicsPathItem>
 #include <QString>
-#include "DesignerHelper.h"
 
 class NodeEditorConnection;
 class IView;
@@ -34,7 +34,7 @@ public:
     //! port direction
     enum EPortDirection { INPUT, OUTPUT };
 
-    NodeEditorPort(QGraphicsItem *parent = 0, const QString &name = QString("unnamed"),
+    NodeEditorPort(QGraphicsItem* parent = 0, const QString& name = QString("unnamed"),
                    EPortDirection direction = INPUT, EPortType port_type = DEFAULT);
 
     virtual ~NodeEditorPort();
@@ -42,14 +42,14 @@ public:
     bool isOutput();
     bool isInput();
 
-    void remove(NodeEditorConnection *connection);
-    void append(NodeEditorConnection *connection);
+    void remove(NodeEditorConnection* connection);
+    void append(NodeEditorConnection* connection);
 
-    const QString &portName() const;
+    const QString& portName() const;
 
     virtual int type() const;
 
-    bool isConnected(NodeEditorPort *);
+    bool isConnected(NodeEditorPort*);
 
     bool isConnected();
 
@@ -60,7 +60,7 @@ public:
     void setLabel(QString name);
 
 protected:
-    QVariant itemChange(GraphicsItemChange change, const QVariant &value);
+    QVariant itemChange(GraphicsItemChange change, const QVariant& value);
 
 private:
     QString m_name;
@@ -69,11 +69,11 @@ private:
     QColor m_color;
     int m_radius;
     int m_margin;
-    QVector<NodeEditorConnection *> m_connections;
-    QGraphicsTextItem *m_label;
+    QVector<NodeEditorConnection*> m_connections;
+    QGraphicsTextItem* m_label;
 };
 
-inline const QString &NodeEditorPort::portName() const
+inline const QString& NodeEditorPort::portName() const
 {
     return m_name;
 }

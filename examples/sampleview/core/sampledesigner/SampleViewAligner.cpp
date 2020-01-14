@@ -12,17 +12,15 @@
 #include "IView.h"
 #include "SampleModel.h"
 #include "item_constants.h"
-#include <mvvm/model/sessionitem.h>
 #include <QModelIndex>
+#include <mvvm/model/sessionitem.h>
 
 using namespace ModelView;
 
-SampleViewAligner::SampleViewAligner(DesignerScene *scene)
-    : m_scene(scene)
+SampleViewAligner::SampleViewAligner(DesignerScene* scene) : m_scene(scene)
 {
     Q_ASSERT(m_scene);
 }
-
 
 //! Spring based implified algorithm for smart alignment
 void SampleViewAligner::smartAlign()
@@ -33,10 +31,9 @@ void SampleViewAligner::smartAlign()
     advance();
 }
 
-
 //! Forms list of all views which are subject for smart alignment (i.e. views
 //! which do not have parent view)
-void SampleViewAligner::updateViews(const QModelIndex & parentIndex)
+void SampleViewAligner::updateViews(const QModelIndex& parentIndex)
 {
     /*SampleModel *sampleModel = m_scene->getSampleModel();
     for( int i_row = 0; i_row < sampleModel->rowCount( parentIndex ); ++i_row) {
@@ -49,20 +46,18 @@ void SampleViewAligner::updateViews(const QModelIndex & parentIndex)
      }*/
 }
 
-
 //! Calculates forces acting on all views for smart alignment
 void SampleViewAligner::updateForces()
 {
     m_viewToPos.clear();
-    for(IView *view : m_views) {
+    for (IView* view : m_views) {
         calculateForces(view);
     }
 }
 
-
 //! Calculates forces acting on single view (simplified force directed spring algorithm)
 //! and deduce new position of views.
-void SampleViewAligner::calculateForces(IView *view)
+void SampleViewAligner::calculateForces(IView* view)
 {
     qreal xvel = 0;
     qreal yvel = 0;
@@ -70,7 +65,7 @@ void SampleViewAligner::calculateForces(IView *view)
     // repulsive forces which are pushing items away
 
     double weight1(200.0);
-    for(IView *other : m_views) {
+    for (IView* other : m_views) {
         QPointF vec = view->mapToItem(other, other->boundingRect().center());
         qreal dx = view->boundingRect().center().x() - vec.x();
         qreal dy = view->boundingRect().center().y() - vec.y();
@@ -82,67 +77,66 @@ void SampleViewAligner::calculateForces(IView *view)
     }
     // attracting forces which are pulling views together
     double weight2(100.0);
-    for(IView *other : getConnectedViews(view)) {
+    for (IView* other : getConnectedViews(view)) {
         QPointF vec = view->mapToItem(other, other->boundingRect().center());
         qreal dx = view->boundingRect().center().x() - vec.x();
         qreal dy = view->boundingRect().center().y() - vec.y();
-        xvel += dx/weight2;
-        yvel += dy/weight2;
+        xvel += dx / weight2;
+        yvel += dy / weight2;
     }
     QPointF newPos = view->pos() + QPointF(xvel, yvel);
     m_viewToPos[view] = newPos;
 }
 
-
 //! Applies calculated positions to views
 void SampleViewAligner::advance()
 {
-    for(IView *view : m_views) {
+    for (IView* view : m_views) {
         view->setPos(m_viewToPos[view]);
     }
 }
-
 
 //! Returns list of views connected with given view for the subsequent force calculation.
 //!
 //! Weirdness of given function is due to the fact, that, for example, ParticleLayout view
 //! should interact not with Layer view, but with its parent - MultiLayer view.
 //! Similarly, MultiLayer is not interacting with its Layers, but directly with the ParticleLayout.
-QList<IView *> SampleViewAligner::getConnectedViews(IView *view)
+QList<IView*> SampleViewAligner::getConnectedViews(IView* view)
 {
-    QList<IView *> result;
+    QList<IView*> result;
 
-    SessionItem *itemOfView = view->getItem();
+    SessionItem* itemOfView = view->getItem();
 
-    QList<SessionItem *> connected_items;
+    QList<SessionItem*> connected_items;
 
-    if(itemOfView->parent()->modelType() == ::Constants::LayerType) {
-        // e.g. we are dealing here with ParticleLayout, so we will use directly MultiLayer to interact with
+    if (itemOfView->parent()->modelType() == ::Constants::LayerType) {
+        // e.g. we are dealing here with ParticleLayout, so we will use directly MultiLayer to
+        // interact with
         connected_items.append(itemOfView->parent()->parent());
     } else {
         connected_items.append(itemOfView->parent());
     }
-    if(itemOfView->modelType() == ::Constants::MultiLayerType) {
-        // MultiLayer will not interact with its Layers, but with they children, e.g. with ParticleLayouts
-        for(auto child : itemOfView->children()) {
+    if (itemOfView->modelType() == ::Constants::MultiLayerType) {
+        // MultiLayer will not interact with its Layers, but with they children, e.g. with
+        // ParticleLayouts
+        for (auto child : itemOfView->children()) {
             auto grand_children = child->children();
             std::for_each(grand_children.begin(), grand_children.end(),
-                [&connected_items](auto child) { connected_items.append(child); });
+                          [&connected_items](auto child) { connected_items.append(child); });
         }
     } else {
         auto children = itemOfView->children();
         std::for_each(children.begin(), children.end(),
-            [&connected_items](auto child) { connected_items.append(child); });
+                      [&connected_items](auto child) { connected_items.append(child); });
     }
-    for(auto item : connected_items) {
-        IView *view = m_scene->getViewForItem(item);
-        if(view) {
+    for (auto item : connected_items) {
+        IView* view = m_scene->getViewForItem(item);
+        if (view) {
             result.append(view);
         }
     }
     return result;
 }
-
 
 //! Aligns sample starting from reference point.
 //! If force_alignment=false, view's position will be changed only if it has Null coordinate,
@@ -161,11 +155,11 @@ void SampleViewAligner::alignSample(SessionItem* item, QPointF reference, bool f
     }
 
     int child_counter = 0;
-    for (auto child: item->children()) {
+    for (auto child : item->children()) {
         IView* view = m_scene->getViewForItem(child);
         if (!view)
             continue;
-        QPointF child_reference = reference + QPointF(-150, 150*child_counter++);
+        QPointF child_reference = reference + QPointF(-150, 150 * child_counter++);
         alignSample(child, child_reference, force_alignment);
     }
 }

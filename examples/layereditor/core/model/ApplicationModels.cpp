@@ -11,8 +11,8 @@
 #include "MaterialModel.h"
 #include "MaterialPropertyController.h"
 #include "SampleModel.h"
-#include <mvvm/model/sessionitem.h>
 #include <mvvm/core/modeldocuments.h>
+#include <mvvm/model/sessionitem.h>
 
 using namespace ModelView;
 
@@ -32,9 +32,7 @@ struct ApplicationModels::ApplicationModelsImpl {
     }
 };
 
-ApplicationModels::ApplicationModels() : p_impl(std::make_unique<ApplicationModelsImpl>())
-{
-}
+ApplicationModels::ApplicationModels() : p_impl(std::make_unique<ApplicationModelsImpl>()) {}
 
 ApplicationModels::~ApplicationModels() = default;
 

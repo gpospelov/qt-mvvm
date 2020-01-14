@@ -10,7 +10,7 @@
 #ifndef DESIGNERVIEW_H
 #define DESIGNERVIEW_H
 
-#include<QGraphicsView>
+#include <QGraphicsView>
 
 class DesignerScene;
 class QGraphicsView;
@@ -28,9 +28,9 @@ class DesignerView : public QGraphicsView
 
 public:
     explicit DesignerView(DesignerScene* scene, QWidget* parent = nullptr);
-    virtual ~DesignerView(){}
+    virtual ~DesignerView() {}
 
-    enum ESelectionModes { SIMPLE_SELECTION, RUBBER_SELECTION, HAND_DRAG};
+    enum ESelectionModes { SIMPLE_SELECTION, RUBBER_SELECTION, HAND_DRAG };
     int getSelectionMode() const;
 
     void onSelectionMode(int);
@@ -47,10 +47,10 @@ signals:
     void selectionModeChanged(int);
 
 protected:
-//    void wheelEvent(QWheelEvent *event);
-//    void scaleView(qreal scaleFactor);
-    void keyPressEvent(QKeyEvent *event);
-    void keyReleaseEvent(QKeyEvent *event);
+    //    void wheelEvent(QWheelEvent *event);
+    //    void scaleView(qreal scaleFactor);
+    void keyPressEvent(QKeyEvent* event);
+    void keyReleaseEvent(QKeyEvent* event);
 
     DesignerScene* designerScene() const;
 };

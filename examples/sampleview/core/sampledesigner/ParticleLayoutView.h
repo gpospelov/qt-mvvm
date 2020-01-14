@@ -15,8 +15,8 @@
 class ParticleLayoutView : public ConnectableView
 {
 public:
-    ParticleLayoutView(QGraphicsItem *parent = nullptr);
-    void addView(IView *childView) override; // to add Particle
+    ParticleLayoutView(QGraphicsItem* parent = nullptr);
+    void addView(IView* childView) override; // to add Particle
 };
 
 #endif // PARTICLELAYOUTVIEW_H

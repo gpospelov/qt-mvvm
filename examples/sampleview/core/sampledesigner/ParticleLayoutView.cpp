@@ -11,10 +11,11 @@
 #include "DesignerHelper.h"
 #include <QGraphicsScene>
 
-namespace {
+namespace
+{
 constexpr qreal layout_width = IView::basic_width * 1.08;
 constexpr qreal layout_height = IView::basic_height * 4.5;
-}
+} // namespace
 
 ParticleLayoutView::ParticleLayoutView(QGraphicsItem* parent)
     : ConnectableView(parent, DesignerHelper::PARTICLE_LAYOUT)

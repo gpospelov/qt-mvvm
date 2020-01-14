@@ -8,15 +8,15 @@
 // ************************************************************************** //
 
 #include "colormapwidget.h"
-#include <mvvm/plotting/colormapcanvas.h>
 #include "colormapmodel.h"
 #include "colormappropertywidget.h"
-#include <mvvm/standarditems/colormapviewportitem.h>
-#include <mvvm/model/modelutils.h>
 #include <QAction>
 #include <QBoxLayout>
 #include <QToolBar>
 #include <QToolButton>
+#include <mvvm/model/modelutils.h>
+#include <mvvm/plotting/colormapcanvas.h>
+#include <mvvm/standarditems/colormapviewportitem.h>
 
 using namespace ModelView;
 

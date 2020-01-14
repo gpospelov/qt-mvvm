@@ -8,10 +8,10 @@
 // ************************************************************************** //
 
 #include "samplemodel.h"
-#include <mvvm/model/itemcatalogue.h>
 #include "items.h"
-#include <mvvm/utils/numericutils.h>
 #include <QColor>
+#include <mvvm/model/itemcatalogue.h>
+#include <mvvm/utils/numericutils.h>
 
 namespace
 {
@@ -36,8 +36,8 @@ std::string random_name()
 
     std::string result;
     for (size_t i = 0; i < len; ++i) {
-        size_t random_index =
-            static_cast<size_t>(ModelView::Utils::RandInt(0, static_cast<int>(alphabet.size() - 1)));
+        size_t random_index = static_cast<size_t>(
+            ModelView::Utils::RandInt(0, static_cast<int>(alphabet.size() - 1)));
         result.push_back(alphabet[random_index]);
     }
 

@@ -35,6 +35,4 @@ private:
     DesignerScene m_designerScene; //! scene which holds all objects
 };
 
-
-
 #endif // SAMPLEDESIGNER_H

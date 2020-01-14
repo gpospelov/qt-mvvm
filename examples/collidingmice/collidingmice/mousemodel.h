@@ -47,7 +47,7 @@ public:
     //! Sets undo stack to given position.
     //! value=0   - first command in the stack (corresponds to the model status "in the past")
     //! value=100 - last command in the stack (corresponds to the status "now")
-   void setUndoPosition(int value);
+    void setUndoPosition(int value);
 
 private:
     void populate_model();
