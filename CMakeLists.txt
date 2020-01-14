@@ -10,7 +10,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules)
 
 include(CTest)
 include(configuration)
-include(ClangFormat)
+include(CodeTools)
 
 add_subdirectory(source)
 add_subdirectory(examples)
@@ -18,6 +18,5 @@ add_subdirectory(thirdparty/gtest)
 add_subdirectory(thirdparty/qcustomplot)
 add_subdirectory(tests)
 
-
-
- 
+# Defines new target for 'clangformat'. See CodeTools.cmake for details.
+project_clangformat_setup()
