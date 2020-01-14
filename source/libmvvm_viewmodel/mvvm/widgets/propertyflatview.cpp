@@ -80,9 +80,7 @@ struct PropertyFlatView::PropertyFlatViewImpl {
         };
         connect(view_model.get(), &AbstractViewModel::dataChanged, on_data_change);
 
-        auto on_row_inserted = [this](const QModelIndex&, int, int) {
-            update_grid_layout();
-        };
+        auto on_row_inserted = [this](const QModelIndex&, int, int) { update_grid_layout(); };
         connect(view_model.get(), &AbstractViewModel::rowsInserted, on_row_inserted);
     }
 

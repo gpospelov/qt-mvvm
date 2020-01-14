@@ -7,12 +7,13 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/model/groupitem.h>
 #include <mvvm/model/comboproperty.h>
-#include <mvvm/utils/containerutils.h>
+#include <mvvm/model/groupitem.h>
 #include <mvvm/model/taginfo.h>
+#include <mvvm/utils/containerutils.h>
 
-namespace  {
+namespace
+{
 std::string tag_name = "group_items";
 }
 
@@ -20,10 +21,11 @@ using namespace ModelView;
 
 GroupItem::~GroupItem() = default;
 
-GroupItem::GroupItem(model_type modelType) :SessionItem(std::move(modelType)),
-    m_catalogue(std::make_unique<ItemCatalogue>()), m_default_selected_index(0)
+GroupItem::GroupItem(model_type modelType)
+    : SessionItem(std::move(modelType)), m_catalogue(std::make_unique<ItemCatalogue>()),
+      m_default_selected_index(0)
 {
-    registerTag(TagInfo::universalTag(tag_name), /*set_as_default*/true);
+    registerTag(TagInfo::universalTag(tag_name), /*set_as_default*/ true);
 }
 
 int GroupItem::currentIndex() const
@@ -51,8 +53,8 @@ void GroupItem::setCurrentType(const std::string& model_type)
     auto model_types = m_catalogue->modelTypes();
     int index = Utils::IndexOfItem(model_types, model_type);
     if (index == -1)
-        throw std::runtime_error("GroupItem::setCurrentType() -> Model type '"+model_type+
-                                 "' doesn't belong to the group");
+        throw std::runtime_error("GroupItem::setCurrentType() -> Model type '" + model_type
+                                 + "' doesn't belong to the group");
 
     setCurrentIndex(index);
 }

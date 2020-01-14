@@ -10,11 +10,12 @@
 #ifndef MVVM_MODEL_ITEMUTILS_H
 #define MVVM_MODEL_ITEMUTILS_H
 
-#include <mvvm/core/export.h>
 #include <functional>
+#include <mvvm/core/export.h>
 #include <vector>
 
-namespace ModelView {
+namespace ModelView
+{
 
 class SessionItem;
 
@@ -26,7 +27,8 @@ CORE_EXPORT void iterate(SessionItem* item, const std::function<void(SessionItem
 
 //! Iterates through all model indices and calls user function.
 //! If function returns false for given index, iteration will not go down to children.
-CORE_EXPORT void iterate_if(const SessionItem* item, const std::function<bool(const SessionItem*)>& fun);
+CORE_EXPORT void iterate_if(const SessionItem* item,
+                            const std::function<bool(const SessionItem*)>& fun);
 
 //! Returns copy number of given item in it's parent hierarchy. Takes into account only items with
 //! same modelType.
@@ -48,9 +50,8 @@ CORE_EXPORT std::vector<SessionItem*> TopLevelItems(const SessionItem& item);
 
 CORE_EXPORT std::vector<SessionItem*> SinglePropertyItems(const SessionItem& item);
 
-}  // namespace Utils
+} // namespace Utils
 
-}  // namespace ModelView
+} // namespace ModelView
 
-#endif  // MVVM_MODEL_ITEMUTILS_H
-
+#endif // MVVM_MODEL_ITEMUTILS_H

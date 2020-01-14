@@ -10,8 +10,8 @@
 #ifndef MVVM_VIEWMODEL_VIEWMODELBUILDER_H
 #define MVVM_VIEWMODEL_VIEWMODELBUILDER_H
 
-#include <mvvm/core/export.h>
 #include <memory>
+#include <mvvm/core/export.h>
 
 namespace ModelView
 {
@@ -44,4 +44,4 @@ private:
 
 } // namespace ModelView
 
-#endif  // MVVM_VIEWMODEL_VIEWMODELBUILDER_H
+#endif // MVVM_VIEWMODEL_VIEWMODELBUILDER_H

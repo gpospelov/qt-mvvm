@@ -10,8 +10,8 @@
 #ifndef MVVM_PLOTTING_COLORMAPPLOTCONTROLLER_H
 #define MVVM_PLOTTING_COLORMAPPLOTCONTROLLER_H
 
-#include <mvvm/signals/itemcontroller.h>
 #include <memory>
+#include <mvvm/signals/itemcontroller.h>
 
 class QCustomPlot;
 class QCPColorScale;
@@ -33,7 +33,7 @@ is destroyed.
 class CORE_EXPORT ColorMapPlotController : public ItemController<ColorMapItem>
 {
 public:
-    explicit ColorMapPlotController(QCustomPlot* plot, QCPColorScale* color_scale=nullptr);
+    explicit ColorMapPlotController(QCustomPlot* plot, QCPColorScale* color_scale = nullptr);
     ~ColorMapPlotController() override;
 
 protected:
@@ -47,4 +47,4 @@ private:
 
 } // namespace ModelView
 
-#endif  // MVVM_PLOTTING_COLORMAPPLOTCONTROLLER_H
+#endif // MVVM_PLOTTING_COLORMAPPLOTCONTROLLER_H

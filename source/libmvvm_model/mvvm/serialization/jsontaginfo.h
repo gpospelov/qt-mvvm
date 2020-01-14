@@ -10,16 +10,18 @@
 #ifndef MVVM_SERIALIZATION_JSONTAGINFO_H
 #define MVVM_SERIALIZATION_JSONTAGINFO_H
 
-#include <mvvm/serialization/jsonconverterinterfaces.h>
 #include <QString>
+#include <mvvm/serialization/jsonconverterinterfaces.h>
 
 class QJsonObject;
 
-namespace ModelView {
+namespace ModelView
+{
 
 //! Default converter between TagInfo and json object.
 
-class CORE_EXPORT JsonTagInfo : public JsonTagInfoInterface {
+class CORE_EXPORT JsonTagInfo : public JsonTagInfoInterface
+{
 public:
     static const QString nameKey;
     static const QString minKey;
@@ -33,6 +35,6 @@ public:
     bool isTagInfo(const QJsonObject& object);
 };
 
-}  // namespace ModelView
+} // namespace ModelView
 
-#endif  // MVVM_SERIALIZATION_JSONTAGINFO_H
+#endif // MVVM_SERIALIZATION_JSONTAGINFO_H

@@ -10,9 +10,9 @@
 #ifndef MVVM_VIEWMODEL_ABSTRACTVIEWMODELCONTROLLER_H
 #define MVVM_VIEWMODEL_ABSTRACTVIEWMODELCONTROLLER_H
 
+#include <memory>
 #include <mvvm/core/export.h>
 #include <mvvm/model/tagrow.h>
-#include <memory>
 #include <string>
 
 class QStandardItem;
@@ -74,4 +74,4 @@ private:
 
 } // namespace ModelView
 
-#endif  // MVVM_VIEWMODEL_ABSTRACTVIEWMODELCONTROLLER_H
+#endif // MVVM_VIEWMODEL_ABSTRACTVIEWMODELCONTROLLER_H

@@ -13,8 +13,8 @@
 //! @file axisitems.h
 //! Collection of axis items for 1D and 2D data/plotting support.
 
-#include <mvvm/model/compounditem.h>
 #include <memory>
+#include <mvvm/model/compounditem.h>
 #include <vector>
 
 namespace ModelView
@@ -107,4 +107,4 @@ public:
 
 } // namespace ModelView
 
-#endif  // MVVM_STANDARDITEMS_AXISITEMS_H
+#endif // MVVM_STANDARDITEMS_AXISITEMS_H

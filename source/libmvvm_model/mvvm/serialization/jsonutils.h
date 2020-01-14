@@ -13,12 +13,14 @@
 #include <mvvm/core/export.h>
 #include <string>
 
-namespace ModelView {
+namespace ModelView
+{
 
 class SessionModel;
 class RealLimits;
 
-namespace JsonUtils {
+namespace JsonUtils
+{
 
 //! Returns multiline string representing model content as json.
 CORE_EXPORT std::string ModelToJsonString(const SessionModel& model);
@@ -28,8 +30,8 @@ CORE_EXPORT std::string ToString(const RealLimits& limits);
 
 CORE_EXPORT RealLimits CreateLimits(const std::string& text, double min = 0.0, double max = 0.0);
 
-} // JsonUtils
+} // namespace JsonUtils
 
-} // ModelView
+} // namespace ModelView
 
-#endif  // MVVM_SERIALIZATION_JSONUTILS_H
+#endif // MVVM_SERIALIZATION_JSONUTILS_H

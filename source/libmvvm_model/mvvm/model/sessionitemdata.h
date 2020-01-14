@@ -41,5 +41,4 @@ private:
 
 } // namespace ModelView
 
-#endif  // MVVM_MODEL_SESSIONITEMDATA_H
-
+#endif // MVVM_MODEL_SESSIONITEMDATA_H

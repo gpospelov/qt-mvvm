@@ -7,11 +7,11 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/viewmodel/defaultcelldecoration.h>
+#include <QModelIndex>
 #include <mvvm/model/comboproperty.h>
 #include <mvvm/model/customvariants.h>
 #include <mvvm/model/externalproperty.h>
-#include <QModelIndex>
+#include <mvvm/viewmodel/defaultcelldecoration.h>
 
 using namespace ModelView;
 
@@ -35,4 +35,3 @@ std::string DefaultCellDecoration::cellText(const QModelIndex& index) const
 
     return {};
 }
-

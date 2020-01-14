@@ -10,8 +10,8 @@
 #ifndef MVVM_SERIALIZATION_ITEMCOPYSTRATEGY_H
 #define MVVM_SERIALIZATION_ITEMCOPYSTRATEGY_H
 
-#include <mvvm/core/export.h>
 #include <memory>
+#include <mvvm/core/export.h>
 
 namespace ModelView
 {
@@ -31,4 +31,4 @@ public:
 
 } // namespace ModelView
 
-#endif  // MVVM_SERIALIZATION_ITEMCOPYSTRATEGY_H
+#endif // MVVM_SERIALIZATION_ITEMCOPYSTRATEGY_H

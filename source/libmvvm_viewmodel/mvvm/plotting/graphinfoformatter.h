@@ -36,4 +36,4 @@ public:
 
 } // namespace ModelView
 
-#endif  // MVVM_PLOTTING_GRAPHINFOFORMATTER_H
+#endif // MVVM_PLOTTING_GRAPHINFOFORMATTER_H

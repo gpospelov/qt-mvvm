@@ -10,8 +10,8 @@
 #ifndef MVVM_PLOTTING_COLORSCALEPLOTCONTROLLER_H
 #define MVVM_PLOTTING_COLORSCALEPLOTCONTROLLER_H
 
-#include <mvvm/signals/itemcontroller.h>
 #include <memory>
+#include <mvvm/signals/itemcontroller.h>
 
 class QCPColorScale;
 
@@ -41,4 +41,4 @@ public:
 
 } // namespace ModelView
 
-#endif  // MVVM_PLOTTING_COLORSCALEPLOTCONTROLLER_H
+#endif // MVVM_PLOTTING_COLORSCALEPLOTCONTROLLER_H

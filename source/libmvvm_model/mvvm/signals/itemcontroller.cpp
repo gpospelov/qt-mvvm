@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
+#include <mvvm/model/sessionitem.h>
 #include <mvvm/signals/itemcontroller.h>
 #include <mvvm/signals/itemmapper.h>
-#include <mvvm/model/sessionitem.h>
 
 using namespace ModelView;

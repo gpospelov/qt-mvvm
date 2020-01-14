@@ -36,4 +36,4 @@ private:
 
 } // namespace ModelView
 
-#endif  // MVVM_EDITORS_INTEGEREDITOR_H
+#endif // MVVM_EDITORS_INTEGEREDITOR_H

@@ -7,15 +7,14 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/signals/itemmapper.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
+#include <mvvm/signals/itemmapper.h>
 #include <mvvm/signals/modelmapper.h>
 
 using namespace ModelView;
 
-ItemMapper::ItemMapper(SessionItem* item)
-    : m_active(true), m_item(item), m_model(nullptr)
+ItemMapper::ItemMapper(SessionItem* item) : m_active(true), m_item(item), m_model(nullptr)
 {
     if (!m_item)
         throw std::runtime_error("ItemMapper::ItemMapper() -> Not initialized item");
@@ -136,7 +135,7 @@ void ItemMapper::processDataChange(SessionItem* item, int role)
 
     // child property changed
     if (nestling == 2) {
-        if(auto parent = item->parent())
+        if (auto parent = item->parent())
             callOnChildPropertyChange(parent, parent->tagFromItem(item));
     }
 }
@@ -157,7 +156,9 @@ void ItemMapper::processAboutToRemoveItem(SessionItem* parent, TagRow tagrow)
 
 void ItemMapper::subscribe_to_model()
 {
-    auto on_data_change = [this](ModelView::SessionItem* item, int role) {processDataChange(item, role);};
+    auto on_data_change = [this](ModelView::SessionItem* item, int role) {
+        processDataChange(item, role);
+    };
     m_model->mapper()->setOnDataChange(on_data_change, this);
 
     auto on_item_inserted = [this](ModelView::SessionItem* item, TagRow tagrow) {
@@ -234,4 +235,3 @@ void ItemMapper::callOnAboutToRemoveItem(SessionItem* parent, TagRow tagrow)
     if (m_active)
         m_on_about_to_remove_item(parent, tagrow);
 }
-

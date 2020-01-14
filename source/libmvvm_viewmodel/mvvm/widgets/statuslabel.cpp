@@ -7,11 +7,11 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/widgets/statuslabel.h>
-#include <mvvm/editors/styleutils.h>
 #include <QColor>
 #include <QFont>
 #include <QPainter>
+#include <mvvm/editors/styleutils.h>
+#include <mvvm/widgets/statuslabel.h>
 
 using namespace ModelView;
 

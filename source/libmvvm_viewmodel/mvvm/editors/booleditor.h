@@ -36,4 +36,4 @@ private:
 
 } // namespace ModelView
 
-#endif  // MVVM_EDITORS_BOOLEDITOR_H
+#endif // MVVM_EDITORS_BOOLEDITOR_H

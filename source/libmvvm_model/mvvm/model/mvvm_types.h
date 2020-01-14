@@ -13,28 +13,27 @@
 #include <mvvm/core/types.h>
 #include <string>
 
-namespace ModelView {
+namespace ModelView
+{
 
 class SessionItem;
 class SessionModel;
 
 //! Defines constants to be used as SessionItem data role.
 
-namespace ItemDataRole {
+namespace ItemDataRole
+{
 const int IDENTIFIER = 0;
 const int DATA = 1;
 const int DISPLAY = 2;
 const int APPEARANCE = 3;
 const int LIMITS = 4;
-};
+}; // namespace ItemDataRole
 
-enum Appearance {
-    NOFLAGS = 0x000,
-    ENABLED = 0x001,
-    EDITABLE = 0x002
-};
+enum Appearance { NOFLAGS = 0x000, ENABLED = 0x001, EDITABLE = 0x002 };
 
-namespace Constants {
+namespace Constants
+{
 const model_type BaseType = "SessionItem";
 const model_type PropertyType = "Property";
 const model_type GroupItemType = "Group";
@@ -55,5 +54,4 @@ const model_type ColorMapViewportItemType = "ColorMapViewport";
 
 } // namespace ModelView
 
-#endif  // MVVM_MODEL_MVVM_TYPES_H
-
+#endif // MVVM_MODEL_MVVM_TYPES_H

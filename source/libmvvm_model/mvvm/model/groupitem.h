@@ -10,11 +10,12 @@
 #ifndef MVVM_MODEL_GROUPITEM_H
 #define MVVM_MODEL_GROUPITEM_H
 
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/model/itemcatalogue.h>
 #include <memory>
+#include <mvvm/model/itemcatalogue.h>
+#include <mvvm/model/sessionitem.h>
 
-namespace ModelView {
+namespace ModelView
+{
 
 //! Group item holds collection of predefined items.
 
@@ -34,7 +35,7 @@ public:
 protected:
     void setCurrentIndex(int index);
     bool is_valid_index() const;
-    template<typename T> void registerItem(const std::string& text, bool make_selected=false);
+    template <typename T> void registerItem(const std::string& text, bool make_selected = false);
     // FIXME how to make sure that init_group() was called in constructor?
     // Shell we delegate this call to CompoundItem::addProperty ?
     void init_group();
@@ -42,8 +43,7 @@ protected:
     int m_default_selected_index;
 };
 
-template <typename T>
-void GroupItem::registerItem(const std::string& text, bool make_selected)
+template <typename T> void GroupItem::registerItem(const std::string& text, bool make_selected)
 {
     m_catalogue->registerItem<T>(text);
     if (make_selected)
@@ -52,4 +52,4 @@ void GroupItem::registerItem(const std::string& text, bool make_selected)
 
 } // namespace ModelView
 
-#endif  // MVVM_MODEL_GROUPITEM_H
+#endif // MVVM_MODEL_GROUPITEM_H

@@ -81,4 +81,4 @@ protected:
 
 } // namespace ModelView
 
-#endif  // MVVM_UTILS_REALLIMITS_H
+#endif // MVVM_UTILS_REALLIMITS_H

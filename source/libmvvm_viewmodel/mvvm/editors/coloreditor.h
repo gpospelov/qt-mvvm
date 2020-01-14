@@ -40,4 +40,4 @@ private:
 
 } // namespace ModelView
 
-#endif  // MVVM_EDITORS_COLOREDITOR_H
+#endif // MVVM_EDITORS_COLOREDITOR_H

@@ -11,7 +11,6 @@
 #include <mvvm/model/path.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
-#include <mvvm/model/path.h>
 #include <stdexcept>
 
 using namespace ModelView;
@@ -23,15 +22,12 @@ struct AbstractItemCommand::AbstractItemCommandImpl {
     EStatus status{INITIAL};
     SessionModel* model{nullptr};
     AbstractItemCommand* parent_impl{nullptr};
-    AbstractItemCommandImpl(AbstractItemCommand* parent) : parent_impl(parent){}
+    AbstractItemCommandImpl(AbstractItemCommand* parent) : parent_impl(parent) {}
 
     void set_after_execute() { status = AFTER_EXECUTE; }
     void set_after_undo() { status = AFTER_UNDO; }
     bool can_execute() const { return status != AFTER_EXECUTE; }
-    bool can_undo() const
-    {
-        return status == AFTER_EXECUTE && !parent_impl->isObsolete();
-    }
+    bool can_undo() const { return status == AFTER_EXECUTE && !parent_impl->isObsolete(); }
 };
 
 AbstractItemCommand::AbstractItemCommand(SessionItem* receiver)

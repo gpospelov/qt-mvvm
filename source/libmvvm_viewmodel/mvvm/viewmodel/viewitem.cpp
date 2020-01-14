@@ -7,17 +7,14 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/viewmodel/viewitem.h>
-#include <mvvm/model/sessionitem.h>
 #include <mvvm/model/customvariants.h>
+#include <mvvm/model/sessionitem.h>
+#include <mvvm/viewmodel/viewitem.h>
 #include <mvvm/viewmodel/viewmodelutils.h>
 
 using namespace ModelView;
 
-ViewItem::ViewItem(SessionItem* item, int item_role)
-    : m_item(item), m_item_role(item_role)
-{
-}
+ViewItem::ViewItem(SessionItem* item, int item_role) : m_item(item), m_item_role(item_role) {}
 
 //! Returns data from underlying SessionItem.
 

@@ -10,12 +10,12 @@
 #ifndef MVVM_VIEWMODEL_VIEWMODELUTILS_H
 #define MVVM_VIEWMODEL_VIEWMODELUTILS_H
 
-#include <mvvm/core/export.h>
-#include <functional>
-#include <vector>
-#include <QVector>
 #include <QModelIndex>
 #include <QModelIndexList>
+#include <QVector>
+#include <functional>
+#include <mvvm/core/export.h>
+#include <vector>
 
 class QStandardItemModel;
 class QStandardItem;
@@ -61,4 +61,4 @@ CORE_EXPORT std::vector<SessionItem*> ParentItemsFromIndex(const QModelIndexList
 
 } // namespace ModelView
 
-#endif  // MVVM_VIEWMODEL_VIEWMODELUTILS_H
+#endif // MVVM_VIEWMODEL_VIEWMODELUTILS_H

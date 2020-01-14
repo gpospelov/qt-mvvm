@@ -10,12 +10,13 @@
 #ifndef MVVM_VIEWMODEL_CHILDRENSTRATEGYINTERFACE_H
 #define MVVM_VIEWMODEL_CHILDRENSTRATEGYINTERFACE_H
 
-#include <mvvm/core/export.h>
 #include <QList>
+#include <mvvm/core/export.h>
 
 class QStandardItem;
 
-namespace ModelView {
+namespace ModelView
+{
 
 class SessionItem;
 
@@ -34,6 +35,6 @@ public:
     virtual std::vector<SessionItem*> children(const SessionItem* item) const = 0;
 };
 
-}  // namespace ModelView
+} // namespace ModelView
 
-#endif  // MVVM_VIEWMODEL_CHILDRENSTRATEGYINTERFACE_H
+#endif // MVVM_VIEWMODEL_CHILDRENSTRATEGYINTERFACE_H

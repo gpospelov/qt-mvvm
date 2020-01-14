@@ -26,4 +26,4 @@ public:
 
 } // namespace ModelView
 
-#endif  // MVVM_VIEWMODEL_PROPERTYVIEWMODEL_H
+#endif // MVVM_VIEWMODEL_PROPERTYVIEWMODEL_H

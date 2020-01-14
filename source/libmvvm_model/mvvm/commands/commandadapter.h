@@ -10,9 +10,9 @@
 #ifndef MVVM_COMMANDS_COMMANDADAPTER_H
 #define MVVM_COMMANDS_COMMANDADAPTER_H
 
-#include <mvvm/core/export.h>
 #include <QUndoCommand>
 #include <memory>
+#include <mvvm/core/export.h>
 
 namespace ModelView
 {
@@ -36,4 +36,4 @@ private:
 
 } // namespace ModelView
 
-#endif  // MVVM_COMMANDS_COMMANDADAPTER_H
+#endif // MVVM_COMMANDS_COMMANDADAPTER_H

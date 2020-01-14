@@ -12,9 +12,9 @@
 
 #include <mvvm/model/customvariants.h>
 #include <mvvm/model/propertyitem.h>
-#include <mvvm/utils/reallimits.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/taginfo.h>
+#include <mvvm/utils/reallimits.h>
 
 namespace ModelView
 {
@@ -29,8 +29,7 @@ public:
     //! Adds property item of given type.
     template <typename T = PropertyItem> T* addProperty(const std::string& name);
 
-    template <typename V>
-    PropertyItem* addProperty(const std::string& name, const V& value);
+    template <typename V> PropertyItem* addProperty(const std::string& name, const V& value);
 
     //! Register char property. Special case to turn it into std::string.
     PropertyItem* addProperty(const std::string& name, const char* value);
@@ -47,8 +46,7 @@ template <typename T> T* CompoundItem::addProperty(const std::string& name)
     return property;
 }
 
-inline
-PropertyItem* CompoundItem::addProperty(const std::string& name, const char* value)
+inline PropertyItem* CompoundItem::addProperty(const std::string& name, const char* value)
 {
     return addProperty(name, std::string(value));
 }
@@ -62,7 +60,8 @@ PropertyItem* CompoundItem::addProperty(const std::string& name, const V& value)
     property->setData(QVariant::fromValue(value));
 
     if constexpr (std::is_floating_point_v<V>)
-        property->setData(QVariant::fromValue<RealLimits>(RealLimits::nonnegative()), ItemDataRole::LIMITS);
+        property->setData(QVariant::fromValue<RealLimits>(RealLimits::nonnegative()),
+                          ItemDataRole::LIMITS);
 
     insertItem(property, {name, 0});
     return property;
@@ -70,4 +69,4 @@ PropertyItem* CompoundItem::addProperty(const std::string& name, const V& value)
 
 } // namespace ModelView
 
-#endif  // MVVM_MODEL_COMPOUNDITEM_H
+#endif // MVVM_MODEL_COMPOUNDITEM_H

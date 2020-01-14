@@ -12,7 +12,8 @@
 
 #include <mvvm/core/export.h>
 
-namespace ModelView {
+namespace ModelView
+{
 
 //! Helper class to register variant comparators.
 
@@ -26,7 +27,6 @@ private:
     static bool m_is_registered;
 };
 
-}  // namespace ModelView
+} // namespace ModelView
 
-#endif  // MVVM_MODEL_COMPARATORS_H
-
+#endif // MVVM_MODEL_COMPARATORS_H

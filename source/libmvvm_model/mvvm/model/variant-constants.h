@@ -35,4 +35,4 @@ const std::string reallimits_type_name = "ModelView::RealLimits";
 
 } // namespace ModelView
 
-#endif  // MVVM_MODEL_VARIANTCONSTANTS_H
+#endif // MVVM_MODEL_VARIANTCONSTANTS_H

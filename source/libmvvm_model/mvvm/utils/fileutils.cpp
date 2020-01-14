@@ -7,9 +7,9 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/utils/fileutils.h>
 #include <QDir>
 #include <QFileInfo>
+#include <mvvm/utils/fileutils.h>
 #include <stdexcept>
 
 using namespace ModelView;

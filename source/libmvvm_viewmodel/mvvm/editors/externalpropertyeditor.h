@@ -10,8 +10,8 @@
 #ifndef MVVM_EDITORS_EXTERNALPROPERTYEDITOR_H
 #define MVVM_EDITORS_EXTERNALPROPERTYEDITOR_H
 
-#include <mvvm/editors/customeditor.h>
 #include <functional>
+#include <mvvm/editors/customeditor.h>
 
 class QLabel;
 
@@ -43,4 +43,4 @@ private:
 
 } // namespace ModelView
 
-#endif  // MVVM_EDITORS_EXTERNALPROPERTYEDITOR_H
+#endif // MVVM_EDITORS_EXTERNALPROPERTYEDITOR_H

@@ -10,12 +10,13 @@
 #ifndef MVVM_SERIALIZATION_JSONMODELCONVERTER_H
 #define MVVM_SERIALIZATION_JSONMODELCONVERTER_H
 
-#include <mvvm/serialization/jsonconverterinterfaces.h>
 #include <QString>
+#include <mvvm/serialization/jsonconverterinterfaces.h>
 
 class QJsonObject;
 
-namespace ModelView {
+namespace ModelView
+{
 
 class SessionModel;
 
@@ -37,10 +38,8 @@ public:
 
     //! Returns true if given json object represents SessionModel.
     bool isSessionModel(const QJsonObject& object) const;
-
 };
 
-}  // namespace ModelView
+} // namespace ModelView
 
-#endif  // MVVM_SERIALIZATION_JSONMODELCONVERTER_H
-
+#endif // MVVM_SERIALIZATION_JSONMODELCONVERTER_H

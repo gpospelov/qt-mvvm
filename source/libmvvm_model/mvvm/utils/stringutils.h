@@ -29,4 +29,4 @@ CORE_EXPORT std::string ScientificDoubleToString(double input, int precision = 6
 
 } // namespace ModelView
 
-#endif  // MVVM_UTILS_STRINGUTILS_H
+#endif // MVVM_UTILS_STRINGUTILS_H

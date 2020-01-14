@@ -33,4 +33,4 @@ CORE_EXPORT void SetLogarithmicScale(QCPAxis* axis, bool isLogz);
 
 } // namespace ModelView
 
-#endif  // MVVM_PLOTTING_CUSTOMPLOTUTILS_H
+#endif // MVVM_PLOTTING_CUSTOMPLOTUTILS_H

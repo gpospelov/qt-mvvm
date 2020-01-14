@@ -7,15 +7,14 @@
 //
 // ************************************************************************** //
 
+#include <QJsonObject>
+#include <mvvm/model/sessionitem.h>
 #include <mvvm/serialization/jsonitembackupstrategy.h>
 #include <mvvm/serialization/jsonitemconverter.h>
-#include <mvvm/model/sessionitem.h>
-#include <QJsonObject>
 
 using namespace ModelView;
 
-struct JsonItemBackupStrategy::JsonItemBackupStrategyImpl
-{
+struct JsonItemBackupStrategy::JsonItemBackupStrategyImpl {
     std::unique_ptr<JsonItemConverter> m_converter;
     QJsonObject m_json;
 };

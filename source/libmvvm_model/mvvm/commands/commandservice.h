@@ -10,11 +10,11 @@
 #ifndef MVVM_COMMANDS_COMMANDSERVICE_H
 #define MVVM_COMMANDS_COMMANDSERVICE_H
 
-#include <mvvm/commands/commandadapter.h>
-#include <mvvm/model/function_types.h>
-#include <mvvm/core/export.h>
 #include <QUndoStack>
 #include <memory>
+#include <mvvm/commands/commandadapter.h>
+#include <mvvm/core/export.h>
+#include <mvvm/model/function_types.h>
 
 class QUndoCommand;
 class QVariant;
@@ -35,7 +35,8 @@ public:
 
     void setUndoRedoEnabled(bool value);
 
-    SessionItem* insertNewItem(const item_factory_func_t& func, SessionItem* parent, const TagRow& tagrow);
+    SessionItem* insertNewItem(const item_factory_func_t& func, SessionItem* parent,
+                               const TagRow& tagrow);
 
     SessionItem* copyItem(const SessionItem* item, SessionItem* parent, const TagRow& tagrow);
 
@@ -82,4 +83,4 @@ typename C::result_t CommandService::process_command(Args&&... args)
 
 } // namespace ModelView
 
-#endif  // MVVM_COMMANDS_COMMANDSERVICE_H
+#endif // MVVM_COMMANDS_COMMANDSERVICE_H

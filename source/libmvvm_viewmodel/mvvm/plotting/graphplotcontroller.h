@@ -10,8 +10,8 @@
 #ifndef MVVM_PLOTTING_GRAPHPLOTCONTROLLER_H
 #define MVVM_PLOTTING_GRAPHPLOTCONTROLLER_H
 
-#include <mvvm/signals/itemcontroller.h>
 #include <memory>
+#include <mvvm/signals/itemcontroller.h>
 
 class QCustomPlot;
 
@@ -49,4 +49,4 @@ private:
 
 } // namespace ModelView
 
-#endif  // MVVM_PLOTTING_GRAPHPLOTCONTROLLER_H
+#endif // MVVM_PLOTTING_GRAPHPLOTCONTROLLER_H

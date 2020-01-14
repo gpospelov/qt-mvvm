@@ -7,14 +7,13 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/viewmodel/viewmodelbuilder.h>
 #include <mvvm/viewmodel/abstractviewmodel.h>
 #include <mvvm/viewmodel/abstractviewmodelcontroller.h>
+#include <mvvm/viewmodel/viewmodelbuilder.h>
 
 using namespace ModelView;
 
-struct ViewModelBuilder::ViewModelBuilderImpl
-{
+struct ViewModelBuilder::ViewModelBuilderImpl {
     ViewModelBuilderImpl() : m_session_model(nullptr) {}
     std::unique_ptr<AbstractViewModelController> m_controller;
     SessionModel* m_session_model;

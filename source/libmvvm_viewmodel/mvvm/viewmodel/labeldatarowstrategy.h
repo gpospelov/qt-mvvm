@@ -32,4 +32,4 @@ public:
 
 } // namespace ModelView
 
-#endif  // MVVM_VIEWMODEL_LABELDATAROWSTRATEGY_H
+#endif // MVVM_VIEWMODEL_LABELDATAROWSTRATEGY_H

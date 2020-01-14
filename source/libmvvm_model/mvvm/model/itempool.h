@@ -10,11 +10,12 @@
 #ifndef MVVM_MODEL_ITEMPOOL_H
 #define MVVM_MODEL_ITEMPOOL_H
 
+#include <map>
 #include <mvvm/core/export.h>
 #include <mvvm/model/mvvm_types.h>
-#include <map>
 
-namespace ModelView {
+namespace ModelView
+{
 
 class SessionItem;
 
@@ -44,7 +45,6 @@ private:
     std::map<SessionItem*, identifier_type> m_item_to_key;
 };
 
-}  // namespace ModelView
+} // namespace ModelView
 
-#endif  // MVVM_MODEL_ITEMPOOL_H
-
+#endif // MVVM_MODEL_ITEMPOOL_H

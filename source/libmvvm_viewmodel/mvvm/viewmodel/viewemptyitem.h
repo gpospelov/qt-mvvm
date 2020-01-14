@@ -32,4 +32,4 @@ public:
 
 } // namespace ModelView
 
-#endif  // MVVM_VIEWMODEL_VIEWEMPTYITEM_H
+#endif // MVVM_VIEWMODEL_VIEWEMPTYITEM_H

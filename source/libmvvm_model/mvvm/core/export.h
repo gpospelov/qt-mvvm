@@ -17,9 +17,9 @@
 #define CORE_EXPORT __declspec(dllexport)
 #else
 #define CORE_EXPORT __declspec(dllimport)
-#endif  // CORE_BUILD_DLL
+#endif // CORE_BUILD_DLL
 
-#endif  // _WIN32
+#endif // _WIN32
 
 #ifndef CORE_EXPORT
 #define CORE_EXPORT

@@ -7,11 +7,11 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/serialization/jsontaginfo.h>
-#include <mvvm/model/taginfo.h>
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QStringList>
+#include <mvvm/model/taginfo.h>
+#include <mvvm/serialization/jsontaginfo.h>
 
 namespace
 {

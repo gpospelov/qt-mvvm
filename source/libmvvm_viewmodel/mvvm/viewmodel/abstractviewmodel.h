@@ -10,9 +10,9 @@
 #ifndef MVVM_VIEWMODEL_ABSTRACTVIEWMODEL_H
 #define MVVM_VIEWMODEL_ABSTRACTVIEWMODEL_H
 
-#include <mvvm/core/export.h>
 #include <QStandardItemModel>
 #include <memory>
+#include <mvvm/core/export.h>
 
 namespace ModelView
 {
@@ -78,4 +78,4 @@ private:
 
 } // namespace ModelView
 
-#endif  // MVVM_VIEWMODEL_ABSTRACTVIEWMODEL_H
+#endif // MVVM_VIEWMODEL_ABSTRACTVIEWMODEL_H

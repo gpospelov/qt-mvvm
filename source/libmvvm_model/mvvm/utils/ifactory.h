@@ -52,8 +52,8 @@ public:
 
     size_t size() const { return m_data.size(); }
 
-    typename map_t::iterator begin() { return m_data.begin();}
-    typename map_t::iterator end() { return m_data.end();}
+    typename map_t::iterator begin() { return m_data.begin(); }
+    typename map_t::iterator end() { return m_data.end(); }
 
 private:
     map_t m_data;
@@ -61,4 +61,4 @@ private:
 
 } // namespace ModelView
 
-#endif  // MVVM_UTILS_IFACTORY_H
+#endif // MVVM_UTILS_IFACTORY_H

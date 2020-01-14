@@ -7,12 +7,12 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/plotting/viewportaxisplotcontroller.h>
-#include <mvvm/standarditems/axisitems.h>
-#include <mvvm/signals/itemmapper.h>
 #include "qcustomplot.h"
-#include <mvvm/plotting/customplotutils.h>
 #include <QObject>
+#include <mvvm/plotting/customplotutils.h>
+#include <mvvm/plotting/viewportaxisplotcontroller.h>
+#include <mvvm/signals/itemmapper.h>
+#include <mvvm/standarditems/axisitems.h>
 
 using namespace ModelView;
 
@@ -61,7 +61,6 @@ struct ViewportAxisPlotController::AxesPlotControllerImpl {
     {
         Utils::SetLogarithmicScale(axis, controller->currentItem()->is_in_log());
     }
-
 };
 
 ViewportAxisPlotController::ViewportAxisPlotController(QCPAxis* axis)

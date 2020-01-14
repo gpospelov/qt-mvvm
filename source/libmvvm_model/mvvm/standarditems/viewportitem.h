@@ -48,4 +48,4 @@ private:
 
 } // namespace ModelView
 
-#endif  // MVVM_STANDARDITEMS_VIEWPORTITEM_H
+#endif // MVVM_STANDARDITEMS_VIEWPORTITEM_H

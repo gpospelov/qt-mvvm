@@ -57,4 +57,4 @@ private:
 
 } // namespace ModelView
 
-#endif  // MVVM_MODEL_TAGINFO_H
+#endif // MVVM_MODEL_TAGINFO_H

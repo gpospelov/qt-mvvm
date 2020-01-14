@@ -11,8 +11,8 @@
 #define MVVM_SIGNALS_MODELMAPPERINTERFACE_H
 
 #include <mvvm/core/export.h>
-#include <mvvm/signals/callback_types.h>
 #include <mvvm/model/tagrow.h>
+#include <mvvm/signals/callback_types.h>
 
 namespace ModelView
 {
@@ -48,4 +48,4 @@ private:
 
 } // namespace ModelView
 
-#endif  // MVVM_SIGNALS_MODELMAPPERINTERFACE_H
+#endif // MVVM_SIGNALS_MODELMAPPERINTERFACE_H

@@ -10,9 +10,9 @@
 #ifndef MVVM_SERIALIZATION_JSONITEMCONVERTER_H
 #define MVVM_SERIALIZATION_JSONITEMCONVERTER_H
 
-#include <mvvm/serialization/jsonconverterinterfaces.h>
 #include <QString>
 #include <memory>
+#include <mvvm/serialization/jsonconverterinterfaces.h>
 
 class QJsonObject;
 
@@ -66,4 +66,4 @@ private:
 
 } // namespace ModelView
 
-#endif  // MVVM_SERIALIZATION_JSONITEMCONVERTER_H
+#endif // MVVM_SERIALIZATION_JSONITEMCONVERTER_H

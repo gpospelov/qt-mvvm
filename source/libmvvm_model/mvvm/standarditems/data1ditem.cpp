@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/standarditems/data1ditem.h>
 #include <mvvm/standarditems/axisitems.h>
+#include <mvvm/standarditems/data1ditem.h>
 
 using namespace ModelView;
 

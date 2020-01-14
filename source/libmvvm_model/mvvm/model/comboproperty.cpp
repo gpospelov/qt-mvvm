@@ -59,7 +59,7 @@ ComboProperty::ComboProperty() = default;
 ComboProperty::ComboProperty(std::vector<std::string> values) : m_values(std::move(values)) {}
 
 ComboProperty ComboProperty::createFrom(const std::vector<std::string>& values,
-                                      const std::string& current_value)
+                                        const std::string& current_value)
 {
     ComboProperty result(values);
 

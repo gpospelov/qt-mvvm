@@ -10,8 +10,8 @@
 #ifndef MVVM_VIEWMODEL_STANDARDVIEWMODELS_H
 #define MVVM_VIEWMODEL_STANDARDVIEWMODELS_H
 
-#include <mvvm/core/export.h>
 #include <memory>
+#include <mvvm/core/export.h>
 
 namespace ModelView
 {
@@ -39,8 +39,8 @@ CORE_EXPORT std::unique_ptr<AbstractViewModel> CreateTopItemsViewModel(SessionMo
 //! Subproperties of group item moved one level up.
 CORE_EXPORT std::unique_ptr<AbstractViewModel> CreatePropertyFlatViewModel(SessionModel* model);
 
-} // Utils
+} // namespace Utils
 
-} // ModelView
+} // namespace ModelView
 
-#endif  // MVVM_VIEWMODEL_STANDARDVIEWMODELS_H
+#endif // MVVM_VIEWMODEL_STANDARDVIEWMODELS_H

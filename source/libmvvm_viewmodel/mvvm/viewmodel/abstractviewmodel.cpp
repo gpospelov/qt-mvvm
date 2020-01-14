@@ -8,15 +8,15 @@
 // ************************************************************************** //
 
 #include <mvvm/viewmodel/abstractviewmodel.h>
-#include <mvvm/viewmodel/viewitems.h>
 #include <mvvm/viewmodel/abstractviewmodelcontroller.h>
+#include <mvvm/viewmodel/viewitems.h>
 #include <mvvm/viewmodel/viewmodelutils.h>
 
 using namespace ModelView;
 
-AbstractViewModel::AbstractViewModel(std::unique_ptr<AbstractViewModelController> controller, QObject* parent)
-    : QStandardItemModel(parent),
-      m_controller(std::move(controller))
+AbstractViewModel::AbstractViewModel(std::unique_ptr<AbstractViewModelController> controller,
+                                     QObject* parent)
+    : QStandardItemModel(parent), m_controller(std::move(controller))
 {
     m_controller->setViewModel(this);
     setItemPrototype(new ViewEmptyItem);

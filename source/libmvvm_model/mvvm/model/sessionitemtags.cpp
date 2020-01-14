@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/model/sessionitemtags.h>
 #include <mvvm/model/sessionitemcontainer.h>
+#include <mvvm/model/sessionitemtags.h>
 #include <stdexcept>
 
 using namespace ModelView;
@@ -148,7 +148,8 @@ SessionItemContainer* SessionItemTags::container(const std::string& tag_name) co
     std::string tagName = tag_name.empty() ? defaultTag() : tag_name;
     auto container = find_container(tagName);
     if (!container)
-        throw std::runtime_error("SessionItemTags::container() -> Error. No such container '"+tagName+"'");
+        throw std::runtime_error("SessionItemTags::container() -> Error. No such container '"
+                                 + tagName + "'");
 
     return container;
 }
@@ -158,7 +159,7 @@ SessionItemContainer* SessionItemTags::container(const std::string& tag_name) co
 SessionItemContainer* SessionItemTags::find_container(const std::string& tag_name) const
 {
     for (auto cont : m_containers)
-        if (cont->name() ==tag_name)
+        if (cont->name() == tag_name)
             return cont;
 
     return nullptr;

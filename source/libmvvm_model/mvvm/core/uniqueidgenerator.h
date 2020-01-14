@@ -34,4 +34,4 @@ public:
 
 } // namespace ModelView
 
-#endif  // MVVM_MODEL_UNIQUEIDGENERATOR_H
+#endif // MVVM_MODEL_UNIQUEIDGENERATOR_H

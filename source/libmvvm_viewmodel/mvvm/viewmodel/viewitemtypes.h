@@ -24,4 +24,4 @@ const int data_item_type = QStandardItem::UserType + 3;
 
 } // namespace ModelView
 
-#endif  // MVVM_VIEWMODEL_VIEWITEMTYPES_H
+#endif // MVVM_VIEWMODEL_VIEWITEMTYPES_H

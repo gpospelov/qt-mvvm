@@ -10,8 +10,8 @@
 #ifndef MVVM_EDITORS_CUSTOMEVENTFILTERS_H
 #define MVVM_EDITORS_CUSTOMEVENTFILTERS_H
 
-#include <mvvm/core/export.h>
 #include <QObject>
+#include <mvvm/core/export.h>
 
 namespace ModelView
 {
@@ -30,4 +30,4 @@ protected:
 
 } // namespace ModelView
 
-#endif  // MVVM_EDITORS_CUSTOMEVENTFILTERS_H
+#endif // MVVM_EDITORS_CUSTOMEVENTFILTERS_H

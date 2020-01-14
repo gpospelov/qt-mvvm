@@ -27,6 +27,7 @@ class SessionModel;
 class CORE_EXPORT ItemMapper
 {
     friend class SessionItem;
+
 public:
     ItemMapper(SessionItem* item);
     ~ItemMapper();
@@ -71,6 +72,6 @@ private:
     SessionModel* m_model;
 };
 
-} // ModelView
+} // namespace ModelView
 
-#endif  // MVVM_SIGNALS_ITEMMAPPER_H
+#endif // MVVM_SIGNALS_ITEMMAPPER_H

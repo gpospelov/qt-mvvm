@@ -10,12 +10,13 @@
 #ifndef MVVM_VIEWMODEL_ROWSTRATEGYINTERFACE_H
 #define MVVM_VIEWMODEL_ROWSTRATEGYINTERFACE_H
 
-#include <mvvm/core/export.h>
 #include <QList>
+#include <mvvm/core/export.h>
 
 class QStandardItem;
 
-namespace ModelView {
+namespace ModelView
+{
 
 class SessionItem;
 
@@ -37,6 +38,6 @@ public:
     virtual QStringList horizontalHeaderLabels() const = 0;
 };
 
-}  // namespace ModelView
+} // namespace ModelView
 
-#endif  // MVVM_VIEWMODEL_ROWSTRATEGYINTERFACE_H
+#endif // MVVM_VIEWMODEL_ROWSTRATEGYINTERFACE_H

@@ -63,4 +63,4 @@ private:
 
 } // namespace ModelView
 
-#endif  // MVVM_SIGNALS_MODELMAPPER_H
+#endif // MVVM_SIGNALS_MODELMAPPER_H

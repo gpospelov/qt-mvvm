@@ -10,12 +10,13 @@
 #ifndef MVVM_WIDGETS_STATUSLABEL_H
 #define MVVM_WIDGETS_STATUSLABEL_H
 
-#include <mvvm/core/export.h>
 #include <QFrame>
+#include <mvvm/core/export.h>
 
 class QPaintEvent;
 
-namespace ModelView {
+namespace ModelView
+{
 
 /*!
 @class StatusLabel
@@ -46,6 +47,6 @@ private:
     QFont m_font;
 };
 
-}  // namespace ModelView
+} // namespace ModelView
 
-#endif  // MVVM_WIDGETS_STATUSLABEL_H
+#endif // MVVM_WIDGETS_STATUSLABEL_H

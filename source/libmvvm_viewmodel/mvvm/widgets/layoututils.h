@@ -45,4 +45,3 @@ CORE_EXPORT QWidget* placeHolder();
 } // namespace LayoutUtils
 
 #endif // MVVM_WIDGETS_LAYOUTUTILS_H
-

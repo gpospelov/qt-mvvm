@@ -10,9 +10,9 @@
 #ifndef MVVM_EDITORS_EDITORBUILDERS_H
 #define MVVM_EDITORS_EDITORBUILDERS_H
 
-#include <mvvm/core/export.h>
 #include <functional>
 #include <memory>
+#include <mvvm/core/export.h>
 
 namespace ModelView
 {
@@ -55,4 +55,4 @@ CORE_EXPORT builder_t ExternalPropertyEditorBuilder();
 
 } // namespace ModelView
 
-#endif  // MVVM_EDITORS_EDITORBUILDERS_H
+#endif // MVVM_EDITORS_EDITORBUILDERS_H

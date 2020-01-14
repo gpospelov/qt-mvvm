@@ -10,25 +10,26 @@
 #ifndef MVVM_SIGNALS_CALLBACK_TYPES_H
 #define MVVM_SIGNALS_CALLBACK_TYPES_H
 
-#include <string>
 #include <functional>
 #include <mvvm/model/tagrow.h>
+#include <string>
 
-namespace ModelView {
+namespace ModelView
+{
 
 class SessionItem;
 class SessionModel;
 
-namespace Callbacks {
+namespace Callbacks
+{
 using slot_t = const void*;
 using item_t = std::function<void(SessionItem*)>;
 using item_int_t = std::function<void(SessionItem*, int)>;
 using item_str_t = std::function<void(SessionItem*, std::string)>;
 using item_tagrow_t = std::function<void(SessionItem*, TagRow)>;
 using model_t = std::function<void(SessionModel*)>;
-}
+} // namespace Callbacks
 
 } // namespace ModelView
 
-#endif  // MVVM_SIGNALS_CALLBACK_TYPES_H
-
+#endif // MVVM_SIGNALS_CALLBACK_TYPES_H

@@ -10,10 +10,11 @@
 #ifndef MVVM_MODEL_DATAROLE_H
 #define MVVM_MODEL_DATAROLE_H
 
-#include <mvvm/core/export.h>
 #include <QVariant>
+#include <mvvm/core/export.h>
 
-namespace ModelView {
+namespace ModelView
+{
 
 //! Represents pair of data,role for SessionItemData.
 
@@ -26,6 +27,6 @@ public:
     bool operator==(const DataRole& other) const;
 };
 
-}  // namespace ModelView
+} // namespace ModelView
 
-#endif  // MVVM_MODEL_DATAROLE_H
+#endif // MVVM_MODEL_DATAROLE_H

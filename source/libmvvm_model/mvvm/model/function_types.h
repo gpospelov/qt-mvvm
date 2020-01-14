@@ -10,15 +10,15 @@
 #ifndef MVVM_MODEL_FUNCTION_TYPES_H
 #define MVVM_MODEL_FUNCTION_TYPES_H
 
-#include <memory>
 #include <functional>
+#include <memory>
 
-namespace ModelView {
+namespace ModelView
+{
 
 class SessionItem;
 using item_factory_func_t = std::function<std::unique_ptr<SessionItem>()>;
 
 } // namespace ModelView
 
-#endif  // MVVM_MODEL_FUNCTION_TYPES_H
-
+#endif // MVVM_MODEL_FUNCTION_TYPES_H

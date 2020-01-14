@@ -10,9 +10,9 @@
 #ifndef MVVM_MODEL_ITEMMANAGER_H
 #define MVVM_MODEL_ITEMMANAGER_H
 
+#include <memory>
 #include <mvvm/core/export.h>
 #include <mvvm/model/mvvm_types.h>
-#include <memory>
 
 namespace ModelView
 {
@@ -57,4 +57,4 @@ private:
 
 } // namespace ModelView
 
-#endif  // MVVM_MODEL_ITEMMANAGER_H
+#endif // MVVM_MODEL_ITEMMANAGER_H

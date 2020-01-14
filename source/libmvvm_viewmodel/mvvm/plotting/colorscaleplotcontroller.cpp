@@ -7,11 +7,11 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/plotting/colorscaleplotcontroller.h>
-#include <mvvm/standarditems/axisitems.h>
 #include "qcustomplot.h"
+#include <mvvm/plotting/colorscaleplotcontroller.h>
 #include <mvvm/plotting/viewportaxisplotcontroller.h>
 #include <mvvm/signals/itemmapper.h>
+#include <mvvm/standarditems/axisitems.h>
 
 using namespace ModelView;
 
@@ -23,8 +23,7 @@ struct ColorScalePlotController::ColorScalePlotControllerImpl {
     std::unique_ptr<ViewportAxisPlotController> axisController;
     QCPMarginGroup* margin_group{nullptr};
 
-    ColorScalePlotControllerImpl(ColorScalePlotController* controller,
-                                    QCPColorScale* color_scale)
+    ColorScalePlotControllerImpl(ColorScalePlotController* controller, QCPColorScale* color_scale)
         : controller(controller), color_scale(color_scale)
     {
         if (!color_scale)
@@ -97,7 +96,6 @@ void ColorScalePlotController::subscribe()
             p_impl->update_log_scale();
     };
     currentItem()->mapper()->setOnPropertyChange(on_property_change, this);
-
 
     p_impl->setup_components();
 }

@@ -7,15 +7,16 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/serialization/jsonutils.h>
+#include <QJsonDocument>
+#include <QJsonObject>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/serialization/jsonconverterinterfaces.h>
 #include <mvvm/serialization/jsonmodelconverter.h>
+#include <mvvm/serialization/jsonutils.h>
 #include <mvvm/utils/reallimits.h>
-#include <QJsonDocument>
-#include <QJsonObject>
 
-namespace {
+namespace
+{
 const std::string text_limitless = "limitless";
 const std::string text_positive = "positive";
 const std::string text_nonnegative = "nonnegative";
@@ -23,7 +24,7 @@ const std::string text_lowerlimited = "lowerlimited";
 const std::string text_upperlimited = "upperlimited";
 const std::string text_limited = "limited";
 const std::string separator = " ";
-}
+} // namespace
 using namespace ModelView;
 
 std::string JsonUtils::ModelToJsonString(const ModelView::SessionModel& model)
@@ -33,7 +34,6 @@ std::string JsonUtils::ModelToJsonString(const ModelView::SessionModel& model)
     converter.model_to_json(model, json_source);
     QJsonDocument document(json_source);
     return QString(document.toJson(QJsonDocument::Indented)).toStdString();
-
 }
 
 std::string JsonUtils::ToString(const ModelView::RealLimits& limits)
@@ -44,11 +44,11 @@ std::string JsonUtils::ToString(const ModelView::RealLimits& limits)
         return text_positive;
     else if (limits.isNonnegative())
         return text_nonnegative;
-    else if(limits.isLowerLimited())
+    else if (limits.isLowerLimited())
         return text_lowerlimited;
-    else if(limits.isUpperLimited())
+    else if (limits.isUpperLimited())
         return text_upperlimited;
-    else if(limits.isLimited())
+    else if (limits.isLimited())
         return text_limited;
     else
         throw std::runtime_error("JsonUtils::ToString() -> Unknown type");
@@ -62,11 +62,11 @@ RealLimits JsonUtils::CreateLimits(const std::string& text, double min, double m
         return RealLimits::positive();
     else if (text == text_nonnegative)
         return RealLimits::nonnegative();
-    else if(text == text_lowerlimited)
+    else if (text == text_lowerlimited)
         return RealLimits::lowerLimited(min);
-    else if(text == text_upperlimited)
+    else if (text == text_upperlimited)
         return RealLimits::upperLimited(max);
-    else if(text == text_limited)
+    else if (text == text_limited)
         return RealLimits::limited(min, max);
     else
         throw std::runtime_error("JsonUtils::CreateLimits -> Unknown type");

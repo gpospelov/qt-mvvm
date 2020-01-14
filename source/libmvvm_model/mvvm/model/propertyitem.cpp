@@ -7,19 +7,16 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/model/propertyitem.h>
-#include <mvvm/model/mvvm_types.h>
 #include <mvvm/model/customvariants.h>
+#include <mvvm/model/mvvm_types.h>
+#include <mvvm/model/propertyitem.h>
 
 using namespace ModelView;
 
-PropertyItem::PropertyItem() : SessionItem(Constants::PropertyType)
-{
-
-}
+PropertyItem::PropertyItem() : SessionItem(Constants::PropertyType) {}
 
 SessionItem* PropertyItem::setLimits(const RealLimits& value)
 {
-    this->setData( QVariant::fromValue<RealLimits>(value), ItemDataRole::LIMITS);
+    this->setData(QVariant::fromValue<RealLimits>(value), ItemDataRole::LIMITS);
     return this;
 }

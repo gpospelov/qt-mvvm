@@ -10,9 +10,9 @@
 #ifndef MVVM_MODEL_ITEMFACTORY_H
 #define MVVM_MODEL_ITEMFACTORY_H
 
+#include <memory>
 #include <mvvm/core/export.h>
 #include <mvvm/model/itemfactoryinterface.h>
-#include <memory>
 
 namespace ModelView
 {
@@ -37,4 +37,4 @@ protected:
 
 } // namespace ModelView
 
-#endif  // MVVM_MODEL_ITEMFACTORY_H
+#endif // MVVM_MODEL_ITEMFACTORY_H
