@@ -19,4 +19,4 @@ add_subdirectory(thirdparty/qcustomplot)
 add_subdirectory(tests)
 
 # Defines new 'clangformat' target. See CodeTools.cmake for details.
-project_clangformat_setup()
+# project_clangformat_setup()
