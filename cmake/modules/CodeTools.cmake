@@ -1,7 +1,8 @@
 # Collection of functions to set-up code beautification and analysis
 include(ClangFormat)
 
-set(BEAUTIFICATION_TARGETS mvvm_model mvvm_viewmodel)
+# List of targets for project code beautification.
+set(BEAUTIFICATION_TARGETS mvvm_model mvvm_viewmodel testmodel testviewmodel)
 
 
 # Defines new target for 'clangformat' to beautify whole project.

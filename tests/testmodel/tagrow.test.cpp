@@ -19,10 +19,7 @@ class TagRowTest : public ::testing::Test
 public:
     ~TagRowTest();
 
-    TagRow test_method(const TagRow& input)
-    {
-        return input;
-    }
+    TagRow test_method(const TagRow& input) { return input; }
 };
 
 TagRowTest::~TagRowTest() = default;

@@ -80,7 +80,7 @@ TEST_F(PropertyFlatViewTest, appearanceForItem)
     EXPECT_EQ(enable_status(flat_view), expected_enabled);
 }
 
-//TEST_F(PropertyFlatViewTest, layoutForShapeGroup)
+// TEST_F(PropertyFlatViewTest, layoutForShapeGroup)
 //{
 //    ToyItems::SampleModel model;
 //    auto group_item = model.insertItem<ToyItems::ShapeGroupItem>();

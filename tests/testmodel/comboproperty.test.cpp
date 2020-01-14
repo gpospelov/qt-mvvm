@@ -414,5 +414,4 @@ TEST_F(ComboPropertyTest, variantEqualityDiffIndex)
         EXPECT_FALSE(variants[0] == variants[1]);
         EXPECT_TRUE(variants[0] != variants[1]);
     }
-
 }

@@ -92,7 +92,6 @@ TEST_F(DefaultViewModelTest, initThenInsert)
     ASSERT_TRUE(dataItem != nullptr);
 }
 
-
 //! Single property item in a model.
 
 TEST_F(DefaultViewModelTest, sessionItemFromIndex)
