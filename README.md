@@ -13,10 +13,10 @@ of [BornAgain project](https://www.bornagainproject.org).
 
 Main features of framework are:
 
-+ Application data model design allowing to store almost any type of data
-+ View model design to show parts of data model in Qt widgets
++ Application model to store almost any type of data (independent from Qt)
 + Serialization of application models to json
 + Undo/redo based on command pattern
++ View model to show parts of data model in Qt widgets (Qt-dependent)
 + Some scientific graphics
 + Automatic generation of widgets from model content
 + Flexible layout of Qt's trees and tables
@@ -39,8 +39,8 @@ by dragging a slider:
 
 ![alt text](doc/colliding-mice-after.png)
 
-The demo demonstrates that by using `qt-mvvm` library it is possible 
-to equip the GUI with serialization and undo/redo and to provide proper 
+The demo shows that by using `qt-mvvm` library it is possible 
+to equip the GUI with the serialization and undo/redo and to provide proper 
 model/view via relatively small modifications to the original code.
 Implementing these features from the scratch in Qt would take
 much more time and resulting code wouldn't be easily transferable to different project.
@@ -73,6 +73,8 @@ and appears everywhere, even in places which has nothing to do with Qt graphics.
 
 `SessionModel` has undo/redo,
 serialization and it's own minimal signaling to handle business logic.
+So intention here is to build the data model to handle GUI's which is 
+independent on any particular GUI library.
 
 Second library, `libmmv_viewmodel.so`, contains `ViewModel` and Co
 as counterpart of `SessionModel` in Qt world.
