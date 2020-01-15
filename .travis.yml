@@ -6,11 +6,11 @@ matrix:
     - os: linux
       dist: bionic
       services: xvfb
-      env: BUILD_TYPE=Release TESTS_AUTOEXEC=ON TESTS_AUTODISCOVERY=OFF CMAKE_DIRNAME="cmake_install"
+      env: BUILD_TYPE=Release TESTS_AUTODISCOVERY=OFF CMAKE_DIRNAME="cmake_install"
     - os: osx
       osx_image: xcode10.3
       compiler: clang
-      env: BUILD_TYPE=Release TESTS_AUTOEXEC=ON TESTS_AUTODISCOVERY=OFF
+      env: BUILD_TYPE=Release TESTS_AUTODISCOVERY=OFF
 
 install:
 - .travis/${TRAVIS_OS_NAME}/install.sh

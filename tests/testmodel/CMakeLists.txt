@@ -22,10 +22,8 @@ target_link_libraries(${test} gtest gmock Qt5::Core Qt5::Test mvvm_model testmac
 # to make clang code model in Qt creator happy
 target_compile_features(${test} PUBLIC cxx_std_17)
 
-if (MVVM_TESTS_AUTOEXEC)
-    if (MVVM_TESTS_AUTODISCOVERY)
-        gtest_discover_tests(${test})
-    else()
-        add_custom_target(${test}_run ALL DEPENDS ${test} COMMAND ${test})
-    endif()
+if (MVVM_GTEST_DISCOVER_TESTS)
+    gtest_discover_tests(${test})
+else()
+    add_custom_target(${test}_run ALL DEPENDS ${test} COMMAND ${test})
 endif()
