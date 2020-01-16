@@ -66,12 +66,12 @@ According to some, [Qt is misusing the model view terminology](https://stackover
 and more correct naming would be
 
 + Data -> Model
-+ View -> ViewModel
++ Model -> ViewModel
 + Delegate -> Controller
 + View (that's ok)
 
 Whatever right terminology is, Qt doesn't tell much about architecture of
-complex applications, how to structure, what they call, the `Data` and there to put business logic. Qt's [model view](https://doc.qt.io/qt-5/model-view-programming.html) is rather the way to show the data in Qt's trees and tables and adjust they behavior with delegates.
+complex applications, how to structure, what they call, the `Data` and there to put business logic. Qt's [model view](https://doc.qt.io/qt-5/model-view-programming.html) is rather the way to show the data in Qt's trees and tables and adjust their behavior with delegates.
 
 Given library is an attempt to understand how to deal with application data.
 
@@ -102,7 +102,7 @@ as a thin counterpart of `SessionModel` in Qt world.
 as a `proxy` to different parts of `SessionModel`.
 It is derived from `QAbstractItemModel` and intended to work together with Qt's trees and tables. The layout of `ViewModel` (i.e. parent/child relationships) doesn't follow the layout of original SessionModel. It is generated on the fly
 by using strategy `who-is-my-next-child` provided
-by the user. In practice it allows to generate Qt tables and trees with arbitrary layouts, based on common data, without diving into the nightmare of
+by the user. In practice it allows to generate Qt tables and trees with arbitrary layouts, based on common data source, without diving into the nightmare of
 `QAbstractProxyModel`.
 Particularly, aforementioned machinery allows to have something in the line of the ancient [Qt property browser framework](https://doc.qt.io/archives/qq/qq18-propertybrowser.html). 
 
