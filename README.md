@@ -5,47 +5,21 @@
 
 ## Overview
 
-This is model-view-viewmodel framework intended for large Qt based 
+This model-view-viewmodel framework is intended for large Qt based 
 scientific applications written in C++.
-The definition of `large` is quite arbitrary and means something 
-above 30k and below 300k lines of code. Project was created as a playground toward GUI refactoring
+Project was created as a playground toward GUI refactoring
 of [BornAgain project](https://www.bornagainproject.org).
 
-Main features of framework are:
+Main features of the framework are:
 
-+ Application model to store almost any type of data (independent from Qt)
-+ Serialization of application models to json
-+ Undo/redo based on command pattern
-+ View model to show parts of data model in Qt widgets (Qt-dependent)
-+ Some scientific graphics
-+ Automatic generation of widgets from model content
-+ Flexible layout of Qt's trees and tables
-
-## Example
-
-If you are familiar with Qt's reach example section you might
-saw it's funny `collidingmice` example showing basics of
-`QGraphicsScene`.
-
-![alt text](doc/colliding-mice-before.png)
-
-To demonstrate the idea behind `qt-mvvm` library the code of the example
-has been slightly modified. The mice data has been moved into dedicated model,
-the content of the model was shown both in the `QGraphicsScene` and in 
-`QTreeView`. It is possible now to save the data in json file and later 
-load the session with saved mice positions. Additionally, it is possible
-to go back in time  and watch how mice are moving in opposite direction
-by dragging a slider:
-
-![alt text](doc/colliding-mice-after.png)
-
-The demo shows that by using `qt-mvvm` library it is possible 
-to equip the GUI with the serialization and undo/redo and to provide proper 
-model/view via relatively small modifications to the original code.
-Implementing these features from the scratch in Qt would take
-much more time and resulting code wouldn't be easily transferable to different project.
-
-This and other examples can be found in `examples` sub-directory of qt-mvvm package.
++ Application model to store arbitrary data of GUI session. Qt-independent.
++ Serialization of application models to json.
++ Undo/redo based on command pattern.
++ View model to show parts of application model in Qt widgets. Depends on Qt.
++ Scientific plotting based on `qcustomplot`.
++ Automatic generation of widgets from model content.
++ Property editors.
++ Flexible layout of Qt's trees and tables.
 
 ## Installation instruction
 
@@ -58,38 +32,96 @@ cmake <source>; make -j8; ctest
 <build-dir>/bin/collidingmice
 ```
 
+## Example
+
+If you are familiar with Qt's reach example section you might
+saw it's funny `collidingmice` example showing basics of
+`QGraphicsScene`.
+
+![alt text](doc/colliding-mice-before.png)
+
+In order to demonstrate the idea behind `qt-mvvm` library the code of the example
+was slightly modified. The mice data has been moved into dedicated model,
+the content of the model was shown both in the `QGraphicsScene` and in 
+`QTreeView`. It is possible now to save application state in json file and later 
+load the session back with saved mice positions. Additionally, it is possible
+to go back in time  and watch how mice are moving in opposite directions
+by dragging a slider:
+
+![alt text](doc/colliding-mice-after.png)
+
+The demo shows that `qt-mvvm` library allows 
+to equip the GUI with the serialization and undo/redo and to provide proper 
+model/view relations via relatively small modifications to the original code.
+Implementing similar features from the scratch in bare metal Qt would take
+much more time and resulting code wouldn't be easily transferable to another project.
+
+This and other examples can be found in `examples` sub-directory of qt-mvvm package.
+
+## The context
+
+Qt, naturally, has [model view](https://doc.qt.io/qt-5/model-view-programming.html)
+to manage the data and its presentation.
+According to some, [Qt is misusing the model view terminology](https://stackoverflow.com/questions/5543198/why-qt-is-misusing-model-view-terminology)
+and more correct naming would be
+
++ Data -> Model
++ View -> ViewModel
++ Delegate -> Controller
++ View (that's ok)
+
+Whatever right terminology is, Qt doesn't tell much about architecture of
+complex applications, how to structure, what they call, the `Data` and there to put business logic. Qt's [model view](https://doc.qt.io/qt-5/model-view-programming.html) is rather the way to show the data in Qt's trees and tables and adjust they behavior with delegates.
+
+Given library is an attempt to understand how to deal with application data.
+
 ## More explanations
 
-The main idea of the framework is the following. The whole data of GUI application 
-is stored in the tree like structure `SessionModel`. This part of code resides in
-`libmvvm_model.so` library and it is intentionally made Qt-independent.
+The framework consists of two libraries: `libmvvm_model.so` and `libmvvm_viewmodel.so`.
 
-> Strictly speaking, QVariant is still there but eventually will be replaced with std::variant.
+`libmvvm_model.so` defines tree like structure `SessionModel` to store
+any data of GUI session. This part of the framework 
+is intentionally made Qt-independent. The idea behind is the following.
 
-The decision to not to depend on Qt here was connected with the fact, that
-large Qt based GUI applications get quickly spoiled with Qt presentation 
-logic - `QModelIndex` and others penetrates into business logic of GUI application
-and appears everywhere, even in places which has nothing to do with Qt graphics.
+In large Qt applications the business logic gets quickly spoiled with presentation
+logic. Qt classes like `QModelIndex` start to appear everywhere,
+even in places which has nothing to do with Qt graphics. Attempt to store GUI 
+session data in `QAbstractItemModel` leads to inflexible layout in Qt trees and tables. Attempt to fix this with `QAbstractProxyModel` leads to appearance of
+overwhelmingly complicated proxy models. Removing Qt from dependencies allows
+to focus more on common needs (i.e. objects/properties construction/editing) of GUI applications rather than on presentation details.
 
-`SessionModel` has undo/redo,
-serialization and it's own minimal signaling to handle business logic.
-So intention here is to build the data model to handle GUI's which is 
-independent on any particular GUI library.
+`SessionModel` has concept of properties, undo/redo,
+serialization, and it's own minimal signaling to handle business logic.
+Thus, intention here is to build application model to handle data and logic of GUI  while being independent on any particular GUI library.
 
-Second library, `libmmv_viewmodel.so`, contains `ViewModel` and Co
-as counterpart of `SessionModel` in Qt world.
-`ViewModel` doesn't own the data but simply serve
-as a `view` to different parts of `SessionModel`.
-It is derived from `QAbstractItemModel` and intended to work together with Qt's trees and tables.  It is much easier now to generate tables and trees with arbitrary layouts without diving into the nightmare of
+> Strictly speaking, `libmvvm_model.so` still relies on `QVariant` but eventually it will be replaced with std::variant.
+
+Second library, `libmmv_viewmodel.so`, contains `ViewModel` and serves
+as a thin counterpart of `SessionModel` in Qt world.
+`ViewModel` doesn't own the data but simply acts
+as a `proxy` to different parts of `SessionModel`.
+It is derived from `QAbstractItemModel` and intended to work together with Qt's trees and tables. The layout of `ViewModel` (i.e. parent/child relationships) doesn't follow the layout of original SessionModel. It is generated on the fly
+by using strategy `who-is-my-next-child` provided
+by the user. In practice it allows to generate Qt tables and trees with arbitrary layouts, based on common data, without diving into the nightmare of
 `QAbstractProxyModel`.
-Additional machinery allows to have something in the line of ancient [Qt property browser framework](https://doc.qt.io/archives/qq/qq18-propertybrowser.html). 
+Particularly, aforementioned machinery allows to have something in the line of the ancient [Qt property browser framework](https://doc.qt.io/archives/qq/qq18-propertybrowser.html). 
 
-## Size of framework
+
+## Size of the framework
 
 + 15k loc of libraries (libmvvm_model.so and libmmv_viewmodel.so)
 + 15k loc of tests
 + 10k of user examples
 
-## Disclaimer
+## Disclaimer and afterword
 
-Project is under active development.
+The library is intended for large GUI applications.
+The definition of `large` is quite arbitrary and means something 
+in the range 20k - 200k lines of code. 
+The main logic here is that using the additional library for smaller Qt applications 
+is redundant, Qt has everything that may be required. If small GUI become
+messy with time, it can always be refactored or even rewritten from the scratch.
+Developers of larger GUI should know better what they need and probably 
+have already implemented similar machinery.
+
+The project is under active development.
