@@ -71,7 +71,7 @@ and more correct naming would be
 + View (that's ok)
 
 Whatever right terminology is, Qt doesn't tell much about architecture of
-complex applications, how to structure, what they call, the `Data` and there to put business logic. Qt's [model view](https://doc.qt.io/qt-5/model-view-programming.html) is rather the way to show the data in Qt's trees and tables and adjust their behavior with delegates.
+complex applications, how to structure, what they call, the `Data` and where to put business logic. Qt's [model view](https://doc.qt.io/qt-5/model-view-programming.html) is rather the way to show the data in Qt's trees and tables and adjust their behavior with delegates.
 
 Given library is an attempt to understand how to deal with application data.
 
