@@ -667,7 +667,11 @@ QCPPaintBufferPixmap::~QCPPaintBufferPixmap()
 QCPPainter *QCPPaintBufferPixmap::startPainting()
 {
   QCPPainter *result = new QCPPainter(&mBuffer);
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+  result->setRenderHint(QPainter::Antialiasing);
+#else
   result->setRenderHint(QPainter::HighQualityAntialiasing);
+#endif
   return result;
 }
 
@@ -1105,7 +1109,13 @@ void QCPLayer::setMode(QCPLayer::LayerMode mode)
   {
     mMode = mode;
     if (!mPaintBuffer.isNull())
-      mPaintBuffer.data()->setInvalidated();
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+        mPaintBuffer.toStrongRef()->setInvalidated();
+#else
+        mPaintBuffer.data()->setInvalidated();
+#endif
+
   }
 }
 
@@ -1142,14 +1152,25 @@ void QCPLayer::drawToPaintBuffer()
 {
   if (!mPaintBuffer.isNull())
   {
-    if (QCPPainter *painter = mPaintBuffer.data()->startPainting())
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+      if (QCPPainter *painter = mPaintBuffer.toStrongRef()->startPainting())
+#else
+      if (QCPPainter *painter = mPaintBuffer.data()->startPainting())
+#endif
+
     {
       if (painter->isActive())
         draw(painter);
       else
         qDebug() << Q_FUNC_INFO << "paint buffer returned inactive painter";
       delete painter;
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+      mPaintBuffer.toStrongRef()->donePainting();
+#else
       mPaintBuffer.data()->donePainting();
+#endif
+
     } else
       qDebug() << Q_FUNC_INFO << "paint buffer returned zero painter";
   } else
@@ -1175,9 +1196,21 @@ void QCPLayer::replot()
   {
     if (!mPaintBuffer.isNull())
     {
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+      mPaintBuffer.toStrongRef()->clear(Qt::transparent);
+#else
       mPaintBuffer.data()->clear(Qt::transparent);
+#endif
+
       drawToPaintBuffer();
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+      mPaintBuffer.toStrongRef()->setInvalidated(false);
+#else
       mPaintBuffer.data()->setInvalidated(false);
+#endif
+
       mParentPlot->update();
     } else
       qDebug() << Q_FUNC_INFO << "no valid paint buffer associated with this layer";
@@ -1204,7 +1237,13 @@ void QCPLayer::addChild(QCPLayerable *layerable, bool prepend)
     else
       mChildren.append(layerable);
     if (!mPaintBuffer.isNull())
-      mPaintBuffer.data()->setInvalidated();
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+        mPaintBuffer.toStrongRef()->setInvalidated();
+#else
+        mPaintBuffer.data()->setInvalidated();
+#endif
+
   } else
     qDebug() << Q_FUNC_INFO << "layerable is already child of this layer" << reinterpret_cast<quintptr>(layerable);
 }
@@ -1223,7 +1262,13 @@ void QCPLayer::removeChild(QCPLayerable *layerable)
   if (mChildren.removeOne(layerable))
   {
     if (!mPaintBuffer.isNull())
-      mPaintBuffer.data()->setInvalidated();
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+        mPaintBuffer.toStrongRef()->setInvalidated();
+#else
+        mPaintBuffer.data()->setInvalidated();
+#endif
+
   } else
     qDebug() << Q_FUNC_INFO << "layerable is not child of this layer" << reinterpret_cast<quintptr>(layerable);
 }
@@ -11334,15 +11379,25 @@ QCPItemAnchor::QCPItemAnchor(QCustomPlot *parentPlot, QCPAbstractItem *parentIte
 QCPItemAnchor::~QCPItemAnchor()
 {
   // unregister as parent at children:
-  foreach (QCPItemPosition *child, mChildrenX.toList())
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+    foreach (QCPItemPosition *child, mChildrenX.values())
+#else
+    foreach (QCPItemPosition *child, mChildrenX.toList())
+#endif
   {
     if (child->parentAnchorX() == this)
-      child->setParentAnchorX(0); // this acts back on this anchor and child removes itself from mChildrenX
+      child->setParentAnchorX(nullptr); // this acts back on this anchor and child removes itself from mChildrenX
   }
-  foreach (QCPItemPosition *child, mChildrenY.toList())
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+    foreach (QCPItemPosition *child, mChildrenY.values())
+#else
+    foreach (QCPItemPosition *child, mChildrenY.toList())
+#endif
   {
     if (child->parentAnchorY() == this)
-      child->setParentAnchorY(0); // this acts back on this anchor and child removes itself from mChildrenY
+      child->setParentAnchorY(nullptr); // this acts back on this anchor and child removes itself from mChildrenY
   }
 }
 
@@ -11512,15 +11567,24 @@ QCPItemPosition::~QCPItemPosition()
   // unregister as parent at children:
   // Note: this is done in ~QCPItemAnchor again, but it's important QCPItemPosition does it itself, because only then
   //       the setParentAnchor(0) call the correct QCPItemPosition::pixelPosition function instead of QCPItemAnchor::pixelPosition
-  foreach (QCPItemPosition *child, mChildrenX.toList())
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+    foreach (QCPItemPosition *child, mChildrenX.values())
+#else
+    foreach (QCPItemPosition *child, mChildrenX.toList())
+#endif
   {
     if (child->parentAnchorX() == this)
       child->setParentAnchorX(0); // this acts back on this anchor and child removes itself from mChildrenX
   }
-  foreach (QCPItemPosition *child, mChildrenY.toList())
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+    foreach (QCPItemPosition *child, mChildrenY.values())
+#else
+    foreach (QCPItemPosition *child, mChildrenY.toList())
+#endif
   {
     if (child->parentAnchorY() == this)
-      child->setParentAnchorY(0); // this acts back on this anchor and child removes itself from mChildrenY
+      child->setParentAnchorY(nullptr); // this acts back on this anchor and child removes itself from mChildrenY
   }
   // unregister as child in parent:
   if (mParentAnchorX)
@@ -14134,7 +14198,12 @@ bool QCustomPlot::removeLayer(QCPLayer *layer)
     setCurrentLayer(targetLayer);
   // invalidate the paint buffer that was responsible for this layer:
   if (!layer->mPaintBuffer.isNull())
-    layer->mPaintBuffer.data()->setInvalidated();
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+      layer->mPaintBuffer.toStrongRef()->setInvalidated();
+#else
+      layer->mPaintBuffer.data()->setInvalidated();
+#endif
+
   // remove layer:
   delete layer;
   mLayers.removeOne(layer);
@@ -14171,9 +14240,17 @@ bool QCustomPlot::moveLayer(QCPLayer *layer, QCPLayer *otherLayer, QCustomPlot::
   
   // invalidate the paint buffers that are responsible for the layers:
   if (!layer->mPaintBuffer.isNull())
-    layer->mPaintBuffer.data()->setInvalidated();
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+      layer->mPaintBuffer.toStrongRef()->setInvalidated();
+#else
+      layer->mPaintBuffer.data()->setInvalidated();
+#endif
   if (!otherLayer->mPaintBuffer.isNull())
-    otherLayer->mPaintBuffer.data()->setInvalidated();
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+      otherLayer->mPaintBuffer.toStrongRef()->setInvalidated();
+#else
+      otherLayer->mPaintBuffer.data()->setInvalidated();
+#endif
   
   updateLayerIndices();
   return true;
@@ -14744,11 +14821,15 @@ QSize QCustomPlot::sizeHint() const
 */
 void QCustomPlot::paintEvent(QPaintEvent *event)
 {
-  Q_UNUSED(event);
+  Q_UNUSED(event)
   QCPPainter painter(this);
   if (painter.isActive())
   {
-    painter.setRenderHint(QPainter::HighQualityAntialiasing); // to make Antialiasing look good if using the OpenGL graphicssystem
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+      painter.setRenderHint(QPainter::Antialiasing); // to make Antialiasing look good if using the OpenGL graphicssystem
+#else
+      painter.setRenderHint(QPainter::HighQualityAntialiasing); // to make Antialiasing look good if using the OpenGL graphicssystem
+#endif
     if (mBackgroundBrush.style() != Qt::NoBrush)
       painter.fillRect(mViewport, mBackgroundBrush);
     drawBackground(&painter);
