@@ -41,6 +41,7 @@ struct DocksController::DocksControllerImpl {
 
         auto dock = new QDockWidget;
         dock->setWidget(widget);
+        dock->setWindowTitle(widget->windowTitle());
 
         main_window->addDockWidget(area, dock);
         docks[index] = DockWidgetInfo(dock, widget, area);

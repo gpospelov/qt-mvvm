@@ -7,6 +7,8 @@ target_sources(quickreflcore PRIVATE
     refldockwindow.h
     dockscontroller.cpp
     dockscontroller.h
+    reflwidgets.cpp
+    reflwidgets.h
 )
 
 target_include_directories(quickreflcore PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>)
