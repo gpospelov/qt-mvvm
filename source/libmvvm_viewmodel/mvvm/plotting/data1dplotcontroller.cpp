@@ -11,6 +11,18 @@
 #include <mvvm/plotting/data1dplotcontroller.h>
 #include <mvvm/standarditems/data1ditem.h>
 
+namespace {
+template<typename T>
+QVector<T> fromStdVector(const std::vector<T>& vec)
+{
+#if QT_VERSION >= QT_VERSION_CHECK(5, 13, 0)
+    return QVector<T>(vec.begin(), vec.end());
+#else
+    return QVector<T>>::fromStdVector(vec);
+#endif
+}
+}
+
 using namespace ModelView;
 
 struct Data1DPlotController::Data1DPlotControllerImpl {
@@ -25,8 +37,8 @@ struct Data1DPlotController::Data1DPlotControllerImpl {
     {
         auto data_item = controller->currentItem();
         if (data_item) {
-            m_graph->setData(QVector<double>::fromStdVector(data_item->binCenters()),
-                             QVector<double>::fromStdVector(data_item->binValues()));
+            m_graph->setData(fromStdVector<double>(data_item->binCenters()),
+                             fromStdVector<double>(data_item->binValues()));
             m_graph->parentPlot()->replot();
         }
     }
