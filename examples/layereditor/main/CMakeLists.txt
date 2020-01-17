@@ -1,4 +1,4 @@
-set(executable_name layereditor)
+# Executable: layereditor
 
-add_executable(${executable_name} main.cpp)
-target_link_libraries(${executable_name} PRIVATE layereditorcore)
+add_executable(layereditor main.cpp)
+target_link_libraries(layereditor PRIVATE layereditorcore)
