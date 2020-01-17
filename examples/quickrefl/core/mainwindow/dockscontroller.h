@@ -25,6 +25,8 @@ public:
     DocksController(QMainWindow* main_window);
     ~DocksController();
 
+    void addWidget(int index, QWidget* widget, Qt::DockWidgetArea area);
+
 private:
     struct DocksControllerImpl;
     std::unique_ptr<DocksControllerImpl> p_impl;
