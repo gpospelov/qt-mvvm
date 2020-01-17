@@ -1,0 +1,38 @@
+// ************************************************************************** //
+//
+//  Model-view-view-model framework for large GUI applications
+//
+//! @license   GNU General Public License v3 or higher (see COPYING)
+//! @authors   see AUTHORS
+//
+// ************************************************************************** //
+
+#ifndef APPLICATIONMODELS_H
+#define APPLICATIONMODELS_H
+
+#include <memory>
+
+class ViewItemsModel;
+
+/*!
+@class ApplicationModels
+@brief Container class to hold all SessionModel's used during GUI session.
+
+Given class holds SampleModel with multilayer structure and MaterialModel with collection
+of materials.
+*/
+
+class ApplicationModels
+{
+public:
+    ApplicationModels();
+    ~ApplicationModels();
+
+    ViewItemsModel* viewItemsModel();
+
+private:
+    struct ApplicationModelsImpl;
+    std::unique_ptr<ApplicationModelsImpl> p_impl;
+};
+
+#endif //  APPLICATIONMODELS_H
