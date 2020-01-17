@@ -9,5 +9,6 @@ add_subdirectory(plotcolormap)
 add_subdirectory(plotgraphs)
 add_subdirectory(sampleview)
 add_subdirectory(treeviews)
+add_subdirectory(quickrefl)
 
 
