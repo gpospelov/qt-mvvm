@@ -15,10 +15,10 @@ namespace {
 template<typename T>
 QVector<T> fromStdVector(const std::vector<T>& vec)
 {
-#if QT_VERSION >= QT_VERSION_CHECK(5, 13, 0)
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
     return QVector<T>(vec.begin(), vec.end());
 #else
-    return QVector<T>>::fromStdVector(vec);
+    return QVector<T>::fromStdVector(vec);
 #endif
 }
 }
