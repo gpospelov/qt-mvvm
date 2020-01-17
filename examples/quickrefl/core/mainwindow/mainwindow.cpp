@@ -8,12 +8,12 @@
 // ************************************************************************** //
 
 #include "mainwindow.h"
+#include "refldockwindow.h"
 #include <QAction>
 #include <QCoreApplication>
 #include <QFileDialog>
 #include <QMenuBar>
 #include <QSettings>
-#include <QTabWidget>
 
 namespace
 {
@@ -23,10 +23,9 @@ const QString pos_key = "pos";
 } // namespace
 
 MainWindow::MainWindow()
-    : m_tabWidget(new QTabWidget)
+    : m_reflDockWindow(new ReflDockWindow)
 {
-    setCentralWidget(m_tabWidget);
-
+    setCentralWidget(m_reflDockWindow);
     create_menus();
     init_application();
 }

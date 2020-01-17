@@ -7,31 +7,20 @@
 //
 // ************************************************************************** //
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef REFLDOCKWINDOW_H
+#define REFLDOCKWINDOW_H
 
 #include <QMainWindow>
 
-class ReflDockWindow;
+class QTabWidget;
 
-//! Application main window.
+//! Main reflectometry window with all components for quick sample editing and simulations.
 
-class MainWindow : public QMainWindow
+class ReflDockWindow : public QMainWindow
 {
     Q_OBJECT
 public:
-    MainWindow();
-    ~MainWindow();
-
-protected:
-    void closeEvent(QCloseEvent* event);
-
-private:
-    void init_application();
-    void write_settings();
-    void create_menus();
-
-    ReflDockWindow* m_reflDockWindow;
+    ReflDockWindow(QWidget* parent = nullptr);
 };
 
-#endif //  MAINWINDOW_H
+#endif //  REFLDOCKWINDOW_H
