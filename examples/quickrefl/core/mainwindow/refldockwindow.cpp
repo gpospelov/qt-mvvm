@@ -8,13 +8,14 @@
 // ************************************************************************** //
 
 #include "refldockwindow.h"
+#include "applicationmodels.h"
 #include "dockscontroller.h"
 #include "reflwidgets.h"
 #include <QLabel>
 
 ReflDockWindow::ReflDockWindow(QWidget* parent)
-    : QMainWindow(parent), docks_controller(new DocksController(this))
-
+    : QMainWindow(parent), docks_controller(new DocksController(this)),
+      models(std::make_unique<ApplicationModels>())
 {
     setCentralWidget(new QLabel("Reflectometry docks"));
 
@@ -25,3 +26,5 @@ ReflDockWindow::ReflDockWindow(QWidget* parent)
     docks_controller->addWidget(4, new ReflPlotWidget, Qt::BottomDockWidgetArea);
     docks_controller->addWidget(5, new InstrumentEditor, Qt::BottomDockWidgetArea);
 }
+
+ReflDockWindow::~ReflDockWindow() = default;

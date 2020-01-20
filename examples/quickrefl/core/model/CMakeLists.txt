@@ -10,6 +10,8 @@ target_sources(quickreflcore PRIVATE
     materialitems.h
     materialmodel.cpp
     materialmodel.h
+    materialpropertycontroller.cpp
+    materialpropertycontroller.h
     samplemodel.cpp
     samplemodel.h
 )
