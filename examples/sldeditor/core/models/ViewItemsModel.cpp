@@ -8,7 +8,6 @@
 // ************************************************************************** //
 
 #include "ViewItemsModel.h"
-#include "HandleItem.h"
 
 #include <mvvm/model/externalproperty.h>
 #include <mvvm/model/itemcatalogue.h>
@@ -23,7 +22,7 @@ std::unique_ptr<ItemCatalogue> CreateItemCatalogue()
 {
     auto result = std::make_unique<ModelView::ItemCatalogue>();
     result->registerItem<HandleItem>();
-    // result->registerItem<SLDMaterialItem>();
+    result->registerItem<SegmentItem>();
     return result;
 }
 
@@ -40,10 +39,22 @@ ViewItemsModel::ViewItemsModel() : SessionModel("ViewItemsModel")
     setItemCatalogue(CreateItemCatalogue());
 }
 
-void ViewItemsModel::addHandle()
+HandleItem* ViewItemsModel::addHandle()
 {
     auto handle = insertItem<HandleItem>();
     handle->setProperty(HandleItem::P_XPOS, 10.);
     handle->setProperty(HandleItem::P_XPOS, 10.);
     handle->setProperty(HandleItem::P_COLOR, QVariant::fromValue(random_color()));
+    return handle;
+}
+
+SegmentItem* ViewItemsModel::addSegment()
+{
+    auto segment = insertItem<SegmentItem>();
+    segment->setProperty(SegmentItem::P_X_INI, -20.);
+    segment->setProperty(SegmentItem::P_Y_INI, 0.);
+    segment->setProperty(SegmentItem::P_X_FIN, 20.);
+    segment->setProperty(SegmentItem::P_Y_FIN, 0.);
+    segment->setProperty(SegmentItem::P_COLOR, QVariant::fromValue(random_color()));
+    return segment;
 }

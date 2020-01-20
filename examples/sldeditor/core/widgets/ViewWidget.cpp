@@ -15,6 +15,7 @@ ViewWidget::ViewWidget(QWidget *parent) : QGraphicsView(parent)
 {
     QGraphicsScene* scene = new QGraphicsScene(parent = this);
     this->setScene(scene);
+    setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
 }
 
 

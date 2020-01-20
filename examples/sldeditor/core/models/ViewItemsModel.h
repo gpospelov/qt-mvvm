@@ -13,6 +13,9 @@
 #include <mvvm/model/sessionmodel.h>
 #include <vector>
 
+#include "HandleItem.h"
+#include "SegmentItem.h"
+
 namespace ModelView
 {
 class ExternalProperty;
@@ -29,7 +32,9 @@ public:
     ViewItemsModel();
 
     //! Add a handle item
-    void addHandle();
+    HandleItem* addHandle();
+    //! Add a segment item
+    SegmentItem* addSegment();
      
 private:
 

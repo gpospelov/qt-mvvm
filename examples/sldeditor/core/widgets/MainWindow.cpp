@@ -11,8 +11,11 @@
 #include "AppModels.h"
 #include "ViewWidget.h"
 #include "ViewItemsModel.h"
+
 #include "HandleItem.h"
 #include "Handle.h"
+#include "SegmentItem.h"
+#include "Segment.h"
 
 #include <QAction>
 #include <QCoreApplication>
@@ -68,8 +71,18 @@ void MainWindow::initApplication()
         settings.endGroup();
     }
 
-    m_models->viewItemsModel()->addHandle();
-    for (auto item : ModelView::Utils::TopItems<HandleItem>(m_models->viewItemsModel()))
-        m_view_widget->scene()->addItem(new Handle(item));
+    HandleItem* handle_item_left = m_models->viewItemsModel()->addHandle();
+    HandleItem* handle_item_right = m_models->viewItemsModel()->addHandle();
 
+    Handle* handle_left = new Handle(handle_item_left);
+    Handle* handle_right = new Handle(handle_item_right);
+
+    m_view_widget->scene()->addItem(handle_left);
+    m_view_widget->scene()->addItem(handle_right);
+
+    SegmentItem* segment_item = m_models->viewItemsModel()->addSegment();
+    Segment* segment = new Segment(segment_item);
+    m_view_widget->scene()->addItem(segment); 
+
+    segment->addHandles(handle_left, handle_right);
 }
