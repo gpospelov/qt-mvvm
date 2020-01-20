@@ -7,18 +7,14 @@
 //
 // ************************************************************************** //
 
-#include "MainWindow.h"
-#include <QApplication>
-#include <QLocale>
 
-int main(int argc, char** argv)
+#include "ViewWidget.h"
+#include <QGraphicsScene>
+
+ViewWidget::ViewWidget(QWidget *parent) : QGraphicsView(parent)
 {
-    QLocale::setDefault(QLocale(QLocale::English, QLocale::UnitedStates));
-
-    QApplication app(argc, argv);
-
-    MainWindow win;
-    win.show();
-
-    return app.exec();
+    QGraphicsScene* scene = new QGraphicsScene(parent = this);
+    this->setScene(scene);
 }
+
+

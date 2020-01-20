@@ -7,18 +7,17 @@
 //
 // ************************************************************************** //
 
-#include "MainWindow.h"
-#include <QApplication>
-#include <QLocale>
+#include <QGraphicsView>
 
-int main(int argc, char** argv)
+class ViewWidget : public QGraphicsView
 {
-    QLocale::setDefault(QLocale(QLocale::English, QLocale::UnitedStates));
+    Q_OBJECT
 
-    QApplication app(argc, argv);
+public:
+    //! The constructor
+    ViewWidget(QWidget *parent = nullptr);
 
-    MainWindow win;
-    win.show();
+private:
 
-    return app.exec();
-}
+
+};

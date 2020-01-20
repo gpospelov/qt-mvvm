@@ -3,6 +3,8 @@ set(library_name sldeditorcore)
 target_sources(${library_name} PRIVATE
     MainWindow.cpp
     MainWindow.h
+    ViewWidget.cpp
+    ViewWidget.h
 
 )
 
