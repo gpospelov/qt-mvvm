@@ -8,15 +8,22 @@
 // ************************************************************************** //
 
 #include "MainWindow.h"
-#include "ApplicationModels.h"
+#include "AppModels.h"
 #include "ViewWidget.h"
+#include "ViewItemsModel.h"
+#include "HandleItem.h"
+#include "Handle.h"
 
 #include <QAction>
 #include <QCoreApplication>
 #include <QFileDialog>
 #include <QMenuBar>
 #include <QSettings>
+#include <QTreeView>
+#include <QHBoxLayout>
 
+#include <mvvm/model/modelutils.h>
+#include <mvvm/widgets/standardtreeviews.h>
 
 namespace
 {
@@ -28,8 +35,15 @@ const QString pos_key = "pos";
 MainWindow::MainWindow()
     : m_view_widget(new ViewWidget), 
     m_models(std::make_unique<ApplicationModels>())
-{
-    setCentralWidget(m_view_widget);
+{   
+    auto widget = new QWidget();
+    auto layout = new QHBoxLayout(widget);
+    auto tree = new ModelView::AllItemsTreeView(m_models->viewItemsModel());
+
+    layout->addWidget(m_view_widget);
+    layout->addWidget(tree);
+
+    setCentralWidget(widget);
     initApplication();
 }
 
@@ -53,4 +67,9 @@ void MainWindow::initApplication()
         move(settings.value(pos_key, QPoint(200, 200)).toPoint());
         settings.endGroup();
     }
+
+    m_models->viewItemsModel()->addHandle();
+    for (auto item : ModelView::Utils::TopItems<HandleItem>(m_models->viewItemsModel()))
+        m_view_widget->scene()->addItem(new Handle(item));
+
 }

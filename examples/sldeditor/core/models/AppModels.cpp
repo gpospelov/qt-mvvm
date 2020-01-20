@@ -7,12 +7,12 @@
 //
 // ************************************************************************** //
 
-#include "ApplicationModels.h"
+#include "AppModels.h"
 #include "ViewItemsModel.h"
 #include <mvvm/core/modeldocuments.h>
 #include <mvvm/model/sessionitem.h>
 
-using namespace ModelView;
+
 
 struct ApplicationModels::ApplicationModelsImpl {
     std::unique_ptr<ViewItemsModel> m_view_items_model;

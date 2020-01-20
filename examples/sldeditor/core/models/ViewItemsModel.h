@@ -28,12 +28,9 @@ class ViewItemsModel : public ModelView::SessionModel
 public:
     ViewItemsModel();
 
-    static ModelView::ExternalProperty undefined_material();
-
-    std::vector<ModelView::ExternalProperty> material_data();
-
-    ModelView::ExternalProperty material_property(const std::string& id);
-
+    //! Add a handle item
+    void addHandle();
+     
 private:
 
 };

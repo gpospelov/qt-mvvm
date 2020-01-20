@@ -5,7 +5,8 @@ target_sources(${library_name} PRIVATE
     MainWindow.h
     ViewWidget.cpp
     ViewWidget.h
-
+    Handle.h
+    Handle.cpp
 )
 
 target_include_directories(${library_name} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>)
