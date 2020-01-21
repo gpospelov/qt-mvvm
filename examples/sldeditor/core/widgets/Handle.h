@@ -33,6 +33,8 @@ public:
     void paint(
         QPainter* painter, const QStyleOptionGraphicsItem* option, 
         QWidget* widget) override;
+    //! Return a pointer to the handle item
+    HandleItem* handleItem() const {return handle_item;};
 
 protected:
     //! On move update the model

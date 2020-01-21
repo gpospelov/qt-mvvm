@@ -37,6 +37,8 @@ public:
 
     //! Add the handles at the end
     void addHandles(Handle* left_handle, Handle* right_handle);
+    //! Move the linked handles
+    void moveHandles() const;
 
 protected:
     //! On move update the model

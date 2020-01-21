@@ -42,6 +42,7 @@ Handle::Handle(HandleItem* item) :
            item->property(HandleItem::P_YPOS).toDouble());
 
     setFlag(QGraphicsItem::ItemIsMovable);
+    setZValue(20);
 
 }
 

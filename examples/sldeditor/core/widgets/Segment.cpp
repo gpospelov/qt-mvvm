@@ -9,6 +9,8 @@
 
 #include "Segment.h"
 #include "SegmentItem.h" 
+#include "Handle.h"
+#include "HandleItem.h"
 
 #include <QGraphicsScene>
 #include <QGraphicsWidget>
@@ -51,6 +53,7 @@ Segment::Segment(SegmentItem* item) :
     );
 
     setFlag(QGraphicsItem::ItemIsMovable);
+    setZValue(10);
 
 }
 
@@ -85,19 +88,77 @@ QRectF Segment::boundingRect() const
         segment_item->property(SegmentItem::P_HEIGHT).toDouble());
 }
 
-void Segment::mouseMoveEvent(QGraphicsSceneMouseEvent *event){
-    _dragged = true;
-
+void Segment::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
+{
     if (segment_item->property(SegmentItem::P_HORIZONTAL).toBool())
         segment_item->setProperty(SegmentItem::P_Y_POS, double(y()+ event->pos().y()));
     else
         segment_item->setProperty(SegmentItem::P_X_POS, double(x()+ event->pos().x()));
-        
 
+    moveHandles();
 }
 
 void Segment::addHandles(Handle* left_handle, Handle* right_handle)
 {
     _left_handle = left_handle;
     _right_handle = right_handle;
+    moveHandles();
+}
+
+void Segment::moveHandles() const
+{
+    // Put the handles in place
+    double x_pos;
+    double y_pos;
+    HandleItem* item;
+
+    if (segment_item->property(SegmentItem::P_HORIZONTAL).toBool()){
+
+        x_pos = (
+            segment_item->property(SegmentItem::P_X_POS).toDouble() 
+            - segment_item->property(SegmentItem::P_WIDTH).toDouble()/2);
+
+        y_pos = (
+            segment_item->property(SegmentItem::P_Y_POS).toDouble());
+
+        item = _left_handle->handleItem();
+        item->setProperty(HandleItem::P_XPOS, x_pos);
+        item->setProperty(HandleItem::P_YPOS, y_pos);
+        
+        x_pos = (
+            segment_item->property(SegmentItem::P_X_POS).toDouble() 
+            + segment_item->property(SegmentItem::P_WIDTH).toDouble()/2);
+
+        y_pos = (
+            segment_item->property(SegmentItem::P_Y_POS).toDouble());
+
+        item = _right_handle->handleItem();
+        item->setProperty(HandleItem::P_XPOS, x_pos);
+        item->setProperty(HandleItem::P_YPOS, y_pos);
+
+    }else{
+
+        x_pos = (
+            segment_item->property(SegmentItem::P_X_POS).toDouble());
+
+        y_pos = (
+            segment_item->property(SegmentItem::P_Y_POS).toDouble()
+            + segment_item->property(SegmentItem::P_HEIGHT).toDouble()/2);
+
+        item = _left_handle->handleItem();
+        item->setProperty(HandleItem::P_XPOS, x_pos);
+        item->setProperty(HandleItem::P_YPOS, y_pos);
+
+        x_pos = (
+            segment_item->property(SegmentItem::P_X_POS).toDouble());
+
+        y_pos = (
+            segment_item->property(SegmentItem::P_Y_POS).toDouble()
+            - segment_item->property(SegmentItem::P_HEIGHT).toDouble()/2);
+
+        item = _right_handle->handleItem();
+        item->setProperty(HandleItem::P_XPOS, x_pos);
+        item->setProperty(HandleItem::P_YPOS, y_pos);
+    }
+    
 }
