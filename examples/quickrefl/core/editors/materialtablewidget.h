@@ -14,6 +14,7 @@
 
 namespace ModelView {
 class AbstractViewModel;
+class ViewModelDelegate;
 }
 
 class MaterialModel;
@@ -33,6 +34,7 @@ private:
     MaterialModel* material_model{nullptr};
     std::unique_ptr<ModelView::AbstractViewModel> view_model;
     MaterialTableView* table_view{nullptr};
+    std::unique_ptr<ModelView::ViewModelDelegate> m_delegate;
 };
 
 #endif // MATERIALTABLEWIDGET_H

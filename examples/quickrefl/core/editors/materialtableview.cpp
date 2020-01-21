@@ -9,8 +9,18 @@
 
 #include "materialtableview.h"
 #include <QMouseEvent>
+#include <QHeaderView>
+
 
 MaterialTableView::~MaterialTableView() = default;
+
+void MaterialTableView::setModel(QAbstractItemModel* model)
+{
+    QTableView::setModel(model);
+    setAlternatingRowColors(true);
+    horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
+}
 
 void MaterialTableView::keyPressEvent(QKeyEvent* event)
 {

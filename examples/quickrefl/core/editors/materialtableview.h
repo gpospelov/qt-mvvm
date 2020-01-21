@@ -21,6 +21,8 @@ public:
     using QTableView::QTableView;
     ~MaterialTableView() override;
 
+    void setModel(QAbstractItemModel *model) override;
+
 protected:
     void keyPressEvent(QKeyEvent* event) override;
     QModelIndex moveCursor(QAbstractItemView::CursorAction cursorAction,
