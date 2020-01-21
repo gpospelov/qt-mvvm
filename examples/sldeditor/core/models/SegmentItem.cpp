@@ -20,8 +20,9 @@
 SegmentItem::SegmentItem() : ModelView::CompoundItem("SegmentItem")
 {
     addProperty(P_COLOR, QColor(Qt::red))->setDisplayName("Color");
-    addProperty(P_X_INI, -20.)->setLimits(ModelView::RealLimits::limitless())->setDisplayName("X start");
-    addProperty(P_Y_INI, 0.0)->setLimits(ModelView::RealLimits::limitless())->setDisplayName("Y start");
-    addProperty(P_X_FIN, 20.)->setLimits(ModelView::RealLimits::limitless())->setDisplayName("X end");
-    addProperty(P_Y_FIN, 0.0)->setLimits(ModelView::RealLimits::limitless())->setDisplayName("Y end");
+    addProperty(P_X_POS, -20.)->setLimits(ModelView::RealLimits::limitless())->setDisplayName("X");
+    addProperty(P_Y_POS, -20.)->setLimits(ModelView::RealLimits::limitless())->setDisplayName("Y");
+    addProperty(P_HEIGHT, 0.0)->setLimits(ModelView::RealLimits::limitless())->setDisplayName("Height");
+    addProperty(P_WIDTH, 20.)->setLimits(ModelView::RealLimits::limitless())->setDisplayName("Width");
+    addProperty(P_HORIZONTAL, true)->setLimits(ModelView::RealLimits::limitless())->setDisplayName("Horizontal");
 }

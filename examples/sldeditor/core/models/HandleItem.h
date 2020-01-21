@@ -24,6 +24,7 @@ public:
     static inline const std::string P_COLOR = "P_COLOR";
     static inline const std::string P_XPOS = "P_XPOS";
     static inline const std::string P_YPOS = "P_YPOS";
+    static inline const std::string P_RADIUS = "P_RADIUS";
     HandleItem();
 };
 

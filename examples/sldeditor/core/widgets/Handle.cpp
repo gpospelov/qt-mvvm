@@ -13,6 +13,8 @@
 #include <QGraphicsScene>
 #include <QPainter>
 #include <QStyleOption>
+#include <QGraphicsSceneMouseEvent>
+
 #include <cmath>
 #include <mvvm/signals/itemmapper.h>
 #include <mvvm/utils/numericutils.h>
@@ -31,6 +33,8 @@ Handle::Handle(HandleItem* item) :
             setY(handle_item->property(HandleItem::P_YPOS).toDouble());
         if (property_name == HandleItem::P_COLOR)
             color = handle_item->property(HandleItem::P_COLOR).value<QColor>();
+        if (property_name == HandleItem::P_RADIUS)
+            update();
     };
     handle_item->mapper()->setOnPropertyChange(on_property_change, this);
 
@@ -44,24 +48,38 @@ Handle::Handle(HandleItem* item) :
 void Handle::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
 {
     painter->setBrush(color);
-    painter->drawEllipse(-10, -10, 20, 20);
+    painter->drawEllipse(
+        - handle_item->property(HandleItem::P_RADIUS).toDouble()/2,
+        - handle_item->property(HandleItem::P_RADIUS).toDouble()/2,
+        handle_item->property(HandleItem::P_RADIUS).toDouble(),
+        handle_item->property(HandleItem::P_RADIUS).toDouble()
+    );
 }
 
 QPainterPath Handle::shape() const
 {
     QPainterPath path;
-    path.addRect(-10, -10, 20, 20);
+    path.addRect(
+        - handle_item->property(HandleItem::P_RADIUS).toDouble()/2,
+        - handle_item->property(HandleItem::P_RADIUS).toDouble()/2,
+        handle_item->property(HandleItem::P_RADIUS).toDouble(),
+        handle_item->property(HandleItem::P_RADIUS).toDouble()
+    );
     return path;
 }
 
 QRectF Handle::boundingRect() const
 {
-    return QRectF(-10,-10,20,20);
+    return QRectF(
+        - handle_item->property(HandleItem::P_RADIUS).toDouble()/2,
+        - handle_item->property(HandleItem::P_RADIUS).toDouble()/2,
+        handle_item->property(HandleItem::P_RADIUS).toDouble(),
+        handle_item->property(HandleItem::P_RADIUS).toDouble()
+    );
 }
 
 void Handle::mouseMoveEvent(QGraphicsSceneMouseEvent *event){
     _dragged = true;
-    handle_item->setProperty(HandleItem::P_XPOS, double(x()));
-    handle_item->setProperty(HandleItem::P_YPOS, double(y()));
-    QGraphicsItem::mouseMoveEvent(event);
+    handle_item->setProperty(HandleItem::P_XPOS, double(x()+ event->pos().x()));
+    handle_item->setProperty(HandleItem::P_YPOS, double(y()+ event->pos().y()));
 }

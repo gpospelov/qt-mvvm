@@ -51,10 +51,10 @@ HandleItem* ViewItemsModel::addHandle()
 SegmentItem* ViewItemsModel::addSegment()
 {
     auto segment = insertItem<SegmentItem>();
-    segment->setProperty(SegmentItem::P_X_INI, -20.);
-    segment->setProperty(SegmentItem::P_Y_INI, 0.);
-    segment->setProperty(SegmentItem::P_X_FIN, 20.);
-    segment->setProperty(SegmentItem::P_Y_FIN, 0.);
+    segment->setProperty(SegmentItem::P_X_POS, 0.);
+    segment->setProperty(SegmentItem::P_Y_POS, 0.);
+    segment->setProperty(SegmentItem::P_HEIGHT, 10.);
+    segment->setProperty(SegmentItem::P_WIDTH, 150.);
     segment->setProperty(SegmentItem::P_COLOR, QVariant::fromValue(random_color()));
     return segment;
 }
