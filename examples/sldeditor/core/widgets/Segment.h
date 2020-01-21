@@ -36,6 +36,9 @@ public:
         QPainter* painter, const QStyleOptionGraphicsItem* option, 
         QWidget* widget) override;
 
+    //! Retrieve segment item
+    SegmentItem* segmentItem() const {return segment_item;};
+
     //! Add the handles at the end
     void addHandles(Handle* left_handle, Handle* right_handle);
     //! Move the linked handles

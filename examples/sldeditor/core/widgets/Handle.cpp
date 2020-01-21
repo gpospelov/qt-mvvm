@@ -45,7 +45,7 @@ Handle::Handle(HandleItem* item) :
     setPos(item->property(HandleItem::P_XPOS).toDouble(),
            item->property(HandleItem::P_YPOS).toDouble());
 
-    setFlag(QGraphicsItem::ItemIsMovable);
+    // setFlag(QGraphicsItem::ItemIsMovable);
     setZValue(20);
 
 }

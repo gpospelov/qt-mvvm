@@ -155,6 +155,11 @@ void Segment::refreshFromHandles()
 }
 void Segment::moveHandles()
 {
+    if (!_left_handle)
+        return;
+    if (!_right_handle)
+        return;
+
     // Put the handles in place
     double x_pos;
     double y_pos;

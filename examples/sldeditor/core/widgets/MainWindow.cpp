@@ -28,6 +28,8 @@
 #include <mvvm/model/modelutils.h>
 #include <mvvm/widgets/standardtreeviews.h>
 
+#include <iostream>
+
 namespace
 {
 const QString main_window_group = "MainWindow";
@@ -71,35 +73,74 @@ void MainWindow::initApplication()
         settings.endGroup();
     }
 
-    HandleItem* handle_item_1 = m_models->viewItemsModel()->addHandle();
-    HandleItem* handle_item_2 = m_models->viewItemsModel()->addHandle();
-    HandleItem* handle_item_3 = m_models->viewItemsModel()->addHandle();
+    std::vector<std::vector<double>> values;
+    values.push_back(std::vector<double>{50.,50.});
+    values.push_back(std::vector<double>{30.,40.});
+    values.push_back(std::vector<double>{50.,30.});
+    values.push_back(std::vector<double>{10.,50.});
+    values.push_back(std::vector<double>{50.,10.});
 
-    Handle* handle_1 = new Handle(handle_item_1);
-    Handle* handle_2 = new Handle(handle_item_2);
-    Handle* handle_3 = new Handle(handle_item_3);
+    std::vector<Segment*> top_segments;
+    std::vector<std::vector<Handle*>> handles;
 
-    m_view_widget->scene()->addItem(handle_1);
-    m_view_widget->scene()->addItem(handle_2);
-    m_view_widget->scene()->addItem(handle_3);
+    double edge = 0;
+    for (std::vector<double> data : values){
 
-    SegmentItem* segment_item_1 = m_models->viewItemsModel()->addSegment();
-    SegmentItem* segment_item_2 = m_models->viewItemsModel()->addSegment();
+        //initialise segments
+        SegmentItem* segment_item = m_models->viewItemsModel()->addSegment();
+        Segment* segment = new Segment(segment_item);
+        m_view_widget->scene()->addItem(segment); 
+        top_segments.push_back(segment);
 
-    Segment* segment_1 = new Segment(segment_item_1);
-    Segment* segment_2 = new Segment(segment_item_2);
+        //set parameters
+        segment_item->setProperty(SegmentItem::P_X_POS, data[0]/2+edge);
+        segment_item->setProperty(SegmentItem::P_Y_POS, -data[1]);
+        segment_item->setProperty(SegmentItem::P_WIDTH, data[0]);
+        edge += data[0];
 
-    m_view_widget->scene()->addItem(segment_1); 
-    m_view_widget->scene()->addItem(segment_2); 
+        //initialise handles
+        HandleItem* handle_item_left = m_models->viewItemsModel()->addHandle();
+        HandleItem* handle_item_right = m_models->viewItemsModel()->addHandle();
+        Handle* handle_left = new Handle(handle_item_left);
+        Handle* handle_right = new Handle(handle_item_right);
+        m_view_widget->scene()->addItem(handle_left);
+        m_view_widget->scene()->addItem(handle_right);
+        handles.push_back(std::vector<Handle*>{handle_left, handle_right});
 
-    segment_1->addHandles(handle_1, handle_2);
-    segment_2->addHandles(handle_2, handle_3);
+        //set the handles
+        segment->addHandles(handle_left, handle_right);
 
-    segment_item_1->setProperty(SegmentItem::P_HORIZONTAL, false);
-    segment_item_1->setProperty(SegmentItem::P_WIDTH, segment_item_2->property(SegmentItem::P_HEIGHT));
-    segment_item_1->setProperty(SegmentItem::P_HEIGHT, segment_item_2->property(SegmentItem::P_WIDTH));
-    segment_item_1->setProperty(
-        SegmentItem::P_Y_POS, -segment_item_1->property(SegmentItem::P_HEIGHT).toDouble()/2);
-    segment_item_1->setProperty(
-        SegmentItem::P_X_POS, -segment_item_2->property(SegmentItem::P_WIDTH).toDouble()/2);
+    }
+
+    std::vector<Segment*> side_segments;
+    edge = 0;
+    for (int i = 1; i < top_segments.size(); ++i){
+        edge += values[i][0];
+
+        //initialise segments
+        SegmentItem* segment_item = m_models->viewItemsModel()->addSegment();
+        Segment* segment = new Segment(segment_item);
+        m_view_widget->scene()->addItem(segment); 
+        side_segments.push_back(segment);
+
+        //set parameters
+        segment_item->setProperty(SegmentItem::P_HORIZONTAL, false);
+        segment_item->setProperty(SegmentItem::P_X_POS, edge);
+        segment_item->setProperty(
+            SegmentItem::P_Y_POS, 
+            (top_segments[i]->segmentItem()->property(SegmentItem::P_Y_POS).toDouble() 
+            - top_segments[i-1]->segmentItem()->property(SegmentItem::P_Y_POS).toDouble())/2
+            + top_segments[i-1]->segmentItem()->property(SegmentItem::P_Y_POS).toDouble());
+        segment_item->setProperty(
+            SegmentItem::P_HEIGHT, 
+            (top_segments[i]->segmentItem()->property(SegmentItem::P_Y_POS).toDouble() 
+            - top_segments[i-1]->segmentItem()->property(SegmentItem::P_Y_POS).toDouble()));
+        segment_item->setProperty(
+            SegmentItem::P_WIDTH, 
+            top_segments[i-1]->segmentItem()->property(SegmentItem::P_HEIGHT).toDouble());
+
+        //set the handles
+        segment->addHandles(handles[i-1][1], handles[i][0]);
+    }
+
 }
