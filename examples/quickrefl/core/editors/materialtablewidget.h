@@ -12,14 +12,27 @@
 
 #include <QWidget>
 
-//! Widget to hold material table (MaterialTableView) and all corresponding model and delegates.
+namespace ModelView {
+class AbstractViewModel;
+}
+
+class MaterialModel;
+class MaterialTableView;
+
+//! Widget to hold material table (MaterialTableView) and all corresponding models and delegates.
 //! Belongs to MaterialEditor.
 
 class MaterialTableWidget : public QWidget
 {
     Q_OBJECT
 public:
-    MaterialTableWidget(QWidget* parent = nullptr);
+    MaterialTableWidget(MaterialModel* material_model, QWidget* parent = nullptr);
+    ~MaterialTableWidget();
+
+private:
+    MaterialModel* material_model{nullptr};
+    std::unique_ptr<ModelView::AbstractViewModel> view_model;
+    MaterialTableView* table_view{nullptr};
 };
 
 #endif // MATERIALTABLEWIDGET_H

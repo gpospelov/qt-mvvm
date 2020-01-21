@@ -10,6 +10,8 @@
 #include "materialtableview.h"
 #include <QMouseEvent>
 
+MaterialTableView::~MaterialTableView() = default;
+
 void MaterialTableView::keyPressEvent(QKeyEvent* event)
 {
     if (!event || event->key() != Qt::Key_Return || state() == QAbstractItemView::EditingState)

@@ -8,5 +8,23 @@
 // ************************************************************************** //
 
 #include "materialtablewidget.h"
+#include "materialtableview.h"
+#include <mvvm/viewmodel/abstractviewmodel.h>
+#include <mvvm/viewmodel/standardviewmodels.h>
+#include "materialmodel.h"
+#include <QVBoxLayout>
 
-MaterialTableWidget::MaterialTableWidget(QWidget* parent) : QWidget(parent) {}
+MaterialTableWidget::MaterialTableWidget(MaterialModel* material_model, QWidget* parent)
+    : QWidget(parent), material_model(material_model),
+      view_model(ModelView::Utils::CreatePropertyTableViewModel(material_model)),
+      table_view(new MaterialTableView)
+{
+    auto layout = new QVBoxLayout;
+    layout->setContentsMargins(0, 0, 0, 0);
+    layout->addWidget(table_view);
+    setLayout(layout);
+
+    table_view->setModel(view_model.get());
+}
+
+MaterialTableWidget::~MaterialTableWidget() = default;

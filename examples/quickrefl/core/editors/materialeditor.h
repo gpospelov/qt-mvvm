@@ -11,15 +11,14 @@
 #define MATERIALEDITOR_H
 
 #include <QWidget>
-#include <memory>
 
-class MaterialEditorToolBar;
-class MaterialEditorActions;
 class MaterialModel;
-class QTableView;
+class MaterialEditorActions;
+class MaterialEditorToolBar;
 class MaterialTableWidget;
 
-namespace ModelView {
+namespace ModelView
+{
 class AbstractViewModel;
 }
 
@@ -34,11 +33,9 @@ public:
 
 private:
     MaterialModel* material_model{nullptr};
-    std::unique_ptr<ModelView::AbstractViewModel> view_model;
     MaterialEditorActions* actions{nullptr};
     MaterialEditorToolBar* toolbar{nullptr};
     MaterialTableWidget* table_widget{nullptr};
 };
 
 #endif // MATERIALEDITOR_H
-
