@@ -13,9 +13,11 @@
 
 ViewWidget::ViewWidget(QWidget *parent) : QGraphicsView(parent)
 {
-    QGraphicsScene* scene = new QGraphicsScene(parent = this);
+    QGraphicsScene* scene = new QGraphicsScene(-500,-500,1000,1000,parent = this);
     this->setScene(scene);
-    setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
+    setRenderHints(QPainter::Antialiasing);
+    setCacheMode(QGraphicsView::CacheNone);
+    setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
 }
 
 

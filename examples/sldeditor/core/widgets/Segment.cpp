@@ -81,11 +81,12 @@ QPainterPath Segment::shape() const
 
 QRectF Segment::boundingRect() const
 {
+    double epsilon = 10;
     return QRectF(
-        - segment_item->property(SegmentItem::P_WIDTH).toDouble()/2,
-        - segment_item->property(SegmentItem::P_HEIGHT).toDouble()/2,
-        segment_item->property(SegmentItem::P_WIDTH).toDouble(),
-        segment_item->property(SegmentItem::P_HEIGHT).toDouble());
+        - segment_item->property(SegmentItem::P_WIDTH).toDouble()/2 - epsilon,
+        - segment_item->property(SegmentItem::P_HEIGHT).toDouble()/2 - epsilon,
+        segment_item->property(SegmentItem::P_WIDTH).toDouble() + 2*epsilon,
+        segment_item->property(SegmentItem::P_HEIGHT).toDouble() + 2*epsilon);
 }
 
 void Segment::mouseMoveEvent(QGraphicsSceneMouseEvent *event)

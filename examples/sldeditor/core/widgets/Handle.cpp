@@ -75,11 +75,12 @@ QPainterPath Handle::shape() const
 
 QRectF Handle::boundingRect() const
 {
+    double epsilon = 10;
     return QRectF(
-        - handle_item->property(HandleItem::P_RADIUS).toDouble()/2,
-        - handle_item->property(HandleItem::P_RADIUS).toDouble()/2,
-        handle_item->property(HandleItem::P_RADIUS).toDouble(),
-        handle_item->property(HandleItem::P_RADIUS).toDouble()
+        - handle_item->property(HandleItem::P_RADIUS).toDouble()/2 - epsilon,
+        - handle_item->property(HandleItem::P_RADIUS).toDouble()/2 - epsilon,
+        handle_item->property(HandleItem::P_RADIUS).toDouble() + 2*epsilon,
+        handle_item->property(HandleItem::P_RADIUS).toDouble() + 2*epsilon
     );
 }
 

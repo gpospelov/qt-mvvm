@@ -49,7 +49,7 @@ private:
     //! Disconnect the handle signaling
     void disconnectHandles();
 
-protected:
+public:
     //! On move update the model
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
 
