@@ -10,19 +10,24 @@
 #include "materialeditor.h"
 #include "materialeditoractions.h"
 #include "materialeditortoolbar.h"
+#include "materialmodel.h"
 #include <QTableView>
 #include <QToolBar>
 #include <QVBoxLayout>
+#include <mvvm/viewmodel/abstractviewmodel.h>
+#include <mvvm/viewmodel/standardviewmodels.h>
 
 MaterialEditor::MaterialEditor(MaterialModel* material_model, QWidget* parent)
-    : QWidget(parent), material_model(material_model), actions(new MaterialEditorActions(this)),
-      toolbar(new MaterialEditorToolBar(actions))
+    : QWidget(parent), material_model(material_model),
+      view_model(ModelView::Utils::CreatePropertyTableViewModel(material_model)),
+      actions(new MaterialEditorActions(this)), toolbar(new MaterialEditorToolBar(actions))
 {
     setWindowTitle("Material editor");
 
     auto layout = new QVBoxLayout;
 
     auto table = new QTableView;
+    table->setModel(view_model.get());
 
     layout->addWidget(table);
     layout->addWidget(toolbar);
