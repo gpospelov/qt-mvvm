@@ -31,6 +31,11 @@ CORE_EXPORT std::unique_ptr<AbstractViewModel> CreateDefaultViewModel(SessionMod
 CORE_EXPORT std::unique_ptr<AbstractViewModel> CreatePropertyViewModel(SessionModel* model);
 
 //! Creates view model to represent SessionModel for Qt views.
+//! Shows all properties of CompoundItem in columns of the table, rows of the table represent
+//! different CompoundItems. Items of same type and table like structure of the model are expected.
+CORE_EXPORT std::unique_ptr<AbstractViewModel> CreatePropertyTableViewModel(SessionModel* model);
+
+//! Creates view model to represent SessionModel for Qt views.
 //! Shows only top items.
 CORE_EXPORT std::unique_ptr<AbstractViewModel> CreateTopItemsViewModel(SessionModel* model);
 

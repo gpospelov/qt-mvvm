@@ -10,6 +10,7 @@
 #include <mvvm/viewmodel/defaultviewmodel.h>
 #include <mvvm/viewmodel/propertyflatviewmodel.h>
 #include <mvvm/viewmodel/propertyviewmodel.h>
+#include <mvvm/viewmodel/propertytableviewmodel.h>
 #include <mvvm/viewmodel/standardviewmodelcontrollers.h>
 #include <mvvm/viewmodel/standardviewmodels.h>
 #include <mvvm/viewmodel/topitemsviewmodel.h>
@@ -29,6 +30,11 @@ std::unique_ptr<AbstractViewModel> Utils::CreatePropertyViewModel(SessionModel* 
     return std::make_unique<PropertyViewModel>(model);
 }
 
+std::unique_ptr<AbstractViewModel> Utils::CreatePropertyTableViewModel(SessionModel* model)
+{
+    return std::make_unique<PropertyTableViewModel>(model);
+}
+
 std::unique_ptr<AbstractViewModel> Utils::CreateTopItemsViewModel(SessionModel* model)
 {
     return std::make_unique<TopItemsViewModel>(model);
@@ -38,3 +44,4 @@ std::unique_ptr<AbstractViewModel> Utils::CreatePropertyFlatViewModel(SessionMod
 {
     return std::make_unique<PropertyFlatViewModel>(model);
 }
+
