@@ -88,10 +88,12 @@ QRectF Segment::boundingRect() const
 void Segment::mouseMoveEvent(QGraphicsSceneMouseEvent *event){
     _dragged = true;
 
-    segment_item->setProperty(SegmentItem::P_X_POS, double(x()+ event->pos().x()));
-    segment_item->setProperty(SegmentItem::P_Y_POS, double(y()+ event->pos().y()));
+    if (segment_item->property(SegmentItem::P_HORIZONTAL).toBool())
+        segment_item->setProperty(SegmentItem::P_Y_POS, double(y()+ event->pos().y()));
+    else
+        segment_item->setProperty(SegmentItem::P_X_POS, double(x()+ event->pos().x()));
+        
 
-    // QGraphicsItem::mouseMoveEvent(event);
 }
 
 void Segment::addHandles(Handle* left_handle, Handle* right_handle)
