@@ -27,10 +27,14 @@ Handle::Handle(HandleItem* item) :
     color(item->property(HandleItem::P_COLOR).value<QColor>())
 {
     auto on_property_change = [this](ModelView::SessionItem*, std::string property_name) {
-        if (property_name == HandleItem::P_XPOS)
+        if (property_name == HandleItem::P_XPOS){
             setX(handle_item->property(HandleItem::P_XPOS).toDouble());
-        if (property_name == HandleItem::P_YPOS)
+            emit moved();
+        }
+        if (property_name == HandleItem::P_YPOS){
             setY(handle_item->property(HandleItem::P_YPOS).toDouble());
+            emit moved();
+        }
         if (property_name == HandleItem::P_COLOR)
             color = handle_item->property(HandleItem::P_COLOR).value<QColor>();
         if (property_name == HandleItem::P_RADIUS)
@@ -80,7 +84,7 @@ QRectF Handle::boundingRect() const
 }
 
 void Handle::mouseMoveEvent(QGraphicsSceneMouseEvent *event){
-    _dragged = true;
     handle_item->setProperty(HandleItem::P_XPOS, double(x()+ event->pos().x()));
     handle_item->setProperty(HandleItem::P_YPOS, double(y()+ event->pos().y()));
 }
+

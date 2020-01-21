@@ -71,18 +71,35 @@ void MainWindow::initApplication()
         settings.endGroup();
     }
 
-    HandleItem* handle_item_left = m_models->viewItemsModel()->addHandle();
-    HandleItem* handle_item_right = m_models->viewItemsModel()->addHandle();
+    HandleItem* handle_item_1 = m_models->viewItemsModel()->addHandle();
+    HandleItem* handle_item_2 = m_models->viewItemsModel()->addHandle();
+    HandleItem* handle_item_3 = m_models->viewItemsModel()->addHandle();
 
-    Handle* handle_left = new Handle(handle_item_left);
-    Handle* handle_right = new Handle(handle_item_right);
+    Handle* handle_1 = new Handle(handle_item_1);
+    Handle* handle_2 = new Handle(handle_item_2);
+    Handle* handle_3 = new Handle(handle_item_3);
 
-    m_view_widget->scene()->addItem(handle_left);
-    m_view_widget->scene()->addItem(handle_right);
+    m_view_widget->scene()->addItem(handle_1);
+    m_view_widget->scene()->addItem(handle_2);
+    m_view_widget->scene()->addItem(handle_3);
 
-    SegmentItem* segment_item = m_models->viewItemsModel()->addSegment();
-    Segment* segment = new Segment(segment_item);
-    m_view_widget->scene()->addItem(segment); 
+    SegmentItem* segment_item_1 = m_models->viewItemsModel()->addSegment();
+    SegmentItem* segment_item_2 = m_models->viewItemsModel()->addSegment();
 
-    segment->addHandles(handle_left, handle_right);
+    Segment* segment_1 = new Segment(segment_item_1);
+    Segment* segment_2 = new Segment(segment_item_2);
+
+    m_view_widget->scene()->addItem(segment_1); 
+    m_view_widget->scene()->addItem(segment_2); 
+
+    segment_1->addHandles(handle_1, handle_2);
+    segment_2->addHandles(handle_2, handle_3);
+
+    segment_item_1->setProperty(SegmentItem::P_HORIZONTAL, false);
+    segment_item_1->setProperty(SegmentItem::P_WIDTH, segment_item_2->property(SegmentItem::P_HEIGHT));
+    segment_item_1->setProperty(SegmentItem::P_HEIGHT, segment_item_2->property(SegmentItem::P_WIDTH));
+    segment_item_1->setProperty(
+        SegmentItem::P_Y_POS, -segment_item_1->property(SegmentItem::P_HEIGHT).toDouble()/2);
+    segment_item_1->setProperty(
+        SegmentItem::P_X_POS, -segment_item_2->property(SegmentItem::P_WIDTH).toDouble()/2);
 }

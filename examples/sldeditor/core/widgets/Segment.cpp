@@ -102,15 +102,64 @@ void Segment::addHandles(Handle* left_handle, Handle* right_handle)
 {
     _left_handle = left_handle;
     _right_handle = right_handle;
+
+    connectHandles();
     moveHandles();
+
 }
 
-void Segment::moveHandles() const
+void Segment::connectHandles()
+{
+    connect( 
+        _left_handle, &Handle::moved,
+        this, &Segment::refreshFromHandles);
+
+    connect(
+        _right_handle, &Handle::moved,
+        this, &Segment::refreshFromHandles);
+}
+
+void Segment::disconnectHandles()
+{
+    disconnect( 
+        _left_handle, &Handle::moved,
+        this, &Segment::refreshFromHandles);
+
+    disconnect(
+        _right_handle, &Handle::moved,
+        this, &Segment::refreshFromHandles);
+}
+
+void Segment::refreshFromHandles()
+{
+    if (!_left_handle)
+        return;
+    if (!_right_handle)
+        return;
+    
+    double left_x = _left_handle->pos().x();
+    double left_y = _left_handle->pos().y();
+    double right_x = _right_handle->pos().x();
+    double right_y = _right_handle->pos().y();
+
+    if (segment_item->property(SegmentItem::P_HORIZONTAL).toBool()){
+        segment_item->setProperty(SegmentItem::P_X_POS, (right_x - left_x) / 2 + left_x);
+        segment_item->setProperty(SegmentItem::P_Y_POS, left_y);
+        segment_item->setProperty(SegmentItem::P_WIDTH,(right_x - left_x));
+    }else{
+        segment_item->setProperty(SegmentItem::P_X_POS, right_x);
+        segment_item->setProperty(SegmentItem::P_Y_POS, (right_y - left_y)/2 + left_y );
+        segment_item->setProperty(SegmentItem::P_HEIGHT,(right_y - left_y));
+    }
+}
+void Segment::moveHandles()
 {
     // Put the handles in place
     double x_pos;
     double y_pos;
     HandleItem* item;
+
+    disconnectHandles(); 
 
     if (segment_item->property(SegmentItem::P_HORIZONTAL).toBool()){
 
@@ -143,7 +192,7 @@ void Segment::moveHandles() const
 
         y_pos = (
             segment_item->property(SegmentItem::P_Y_POS).toDouble()
-            + segment_item->property(SegmentItem::P_HEIGHT).toDouble()/2);
+            - segment_item->property(SegmentItem::P_HEIGHT).toDouble()/2);
 
         item = _left_handle->handleItem();
         item->setProperty(HandleItem::P_XPOS, x_pos);
@@ -154,11 +203,12 @@ void Segment::moveHandles() const
 
         y_pos = (
             segment_item->property(SegmentItem::P_Y_POS).toDouble()
-            - segment_item->property(SegmentItem::P_HEIGHT).toDouble()/2);
+            + segment_item->property(SegmentItem::P_HEIGHT).toDouble()/2);
 
         item = _right_handle->handleItem();
         item->setProperty(HandleItem::P_XPOS, x_pos);
         item->setProperty(HandleItem::P_YPOS, y_pos);
     }
     
+    connectHandles();
 }

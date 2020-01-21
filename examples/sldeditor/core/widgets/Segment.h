@@ -20,8 +20,9 @@ class SegmentItem;
 @brief The visual Segment element
 */
 
-class Segment : public QGraphicsItem
+class Segment : public QGraphicsObject
 {
+    
 public:
     //! The constructor
     Segment(SegmentItem* item);
@@ -38,7 +39,15 @@ public:
     //! Add the handles at the end
     void addHandles(Handle* left_handle, Handle* right_handle);
     //! Move the linked handles
-    void moveHandles() const;
+    void moveHandles();
+    //! Refresh the properties from the handle info
+    void refreshFromHandles();
+
+private: 
+    //! Connect the handles
+    void connectHandles();
+    //! Disconnect the handle signaling
+    void disconnectHandles();
 
 protected:
     //! On move update the model
@@ -49,8 +58,6 @@ private:
     SegmentItem* segment_item;
     //! The color property
     QColor color;
-    //! Property if object is being moved
-    bool _dragged;
     //! placeholder for handles
     Handle* _left_handle;
     Handle* _right_handle;

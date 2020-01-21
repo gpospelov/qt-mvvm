@@ -19,8 +19,9 @@ class HandleItem;
 @brief The visual handle element
 */
 
-class Handle : public QGraphicsItem
+class Handle : public QGraphicsObject
 {
+    Q_OBJECT
 public:
     //! The constructor
     Handle(HandleItem* item);
@@ -36,6 +37,10 @@ public:
     //! Return a pointer to the handle item
     HandleItem* handleItem() const {return handle_item;};
 
+signals:
+    //! Moved signal
+    void moved();
+
 protected:
     //! On move update the model
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
@@ -45,8 +50,6 @@ private:
     HandleItem* handle_item;
     //! The color property
     QColor color;
-    //! Property if object is being moved
-    bool _dragged;
 
 };
 
