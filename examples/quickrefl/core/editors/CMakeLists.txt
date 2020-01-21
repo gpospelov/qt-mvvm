@@ -3,6 +3,10 @@
 target_sources(quickreflcore PRIVATE
     materialeditor.cpp
     materialeditor.h
+    materialeditoractions.cpp
+    materialeditoractions.h
+    materialeditortoolbar.cpp
+    materialeditortoolbar.h
     styleutils.h
     styleutils.cpp
 )

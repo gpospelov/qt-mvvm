@@ -7,27 +7,22 @@
 //
 // ************************************************************************** //
 
-#ifndef MATERIALEDITOR_H
-#define MATERIALEDITOR_H
+#ifndef MATERIALEDITORTOOLBAR_H
+#define MATERIALEDITORTOOLBAR_H
 
-#include <QWidget>
+#include <QToolBar>
 
-class MaterialEditorToolBar;
 class MaterialEditorActions;
 
-//! Material editor.
+//! Material editor toolbar.
 
-class MaterialEditor : public QWidget
+class MaterialEditorToolBar : public QToolBar
 {
     Q_OBJECT
 public:
-    MaterialEditor(QWidget* parent = nullptr);
-    ~MaterialEditor();
-
-private:
-    MaterialEditorActions* actions{nullptr};
-    MaterialEditorToolBar* toolbar{nullptr};
+    MaterialEditorToolBar(MaterialEditorActions* actions, QWidget* parent = nullptr);
+    ~MaterialEditorToolBar() = default;
 };
 
-#endif // MATERIALEDITOR_H
+#endif // MATERIALEDITORTOOLBAR_H
 
