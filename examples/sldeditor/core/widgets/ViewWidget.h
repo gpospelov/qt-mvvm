@@ -8,6 +8,8 @@
 // ************************************************************************** //
 
 #include <QGraphicsView>
+#include <QWheelEvent>
+#include <QKeyEvent>
 
 class ViewWidget : public QGraphicsView
 {
@@ -17,6 +19,9 @@ public:
     //! The constructor
     ViewWidget(QWidget *parent = nullptr);
 
+protected:
+    void keyPressEvent(QKeyEvent *event);
+    void wheelEvent(QWheelEvent *event);
 private:
 
 
