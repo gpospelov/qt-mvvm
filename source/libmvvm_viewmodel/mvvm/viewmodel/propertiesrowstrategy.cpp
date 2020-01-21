@@ -15,7 +15,7 @@
 using namespace ModelView;
 
 PropertiesRowStrategy::PropertiesRowStrategy(const std::vector<std::string>& labels)
-    : m_column_labels(labels)
+    : user_defined_column_labels(labels)
 {
 }
 
@@ -26,7 +26,11 @@ QList<QStandardItem*> PropertiesRowStrategy::constructRow(SessionItem* item)
     if (!item)
         return result;
 
-    for (auto child : Utils::SinglePropertyItems(*item)) {
+    auto items_in_row = Utils::SinglePropertyItems(*item);
+    if (user_defined_column_labels.empty())
+        update_column_labels(items_in_row);
+
+    for (auto child : items_in_row) {
         if (child->data().isValid())
             result.push_back(new ViewDataItem(child));
         else
@@ -38,7 +42,18 @@ QList<QStandardItem*> PropertiesRowStrategy::constructRow(SessionItem* item)
 QStringList PropertiesRowStrategy::horizontalHeaderLabels() const
 {
     QStringList result;
-    std::transform(m_column_labels.begin(), m_column_labels.end(), std::back_inserter(result),
+    auto labels =
+        user_defined_column_labels.empty() ? current_column_labels : user_defined_column_labels;
+    std::transform(labels.begin(), labels.end(), std::back_inserter(result),
                    [](const std::string& str) { return QString::fromStdString(str); });
     return result;
+}
+
+//! Updates current column labels.
+
+void PropertiesRowStrategy::update_column_labels(std::vector<SessionItem*> items)
+{
+    current_column_labels.clear();
+    std::transform(items.begin(), items.end(), std::back_inserter(current_column_labels),
+                   [](const SessionItem* item) { return item->displayName(); });
 }
