@@ -86,6 +86,6 @@ QRectF Handle::boundingRect() const
 
 void Handle::mouseMoveEvent(QGraphicsSceneMouseEvent *event){
     handle_item->setProperty(HandleItem::P_XPOS, double(x()+ event->pos().x()));
-    handle_item->setProperty(HandleItem::P_YPOS, double(y()+ event->pos().y()));
+    // handle_item->setProperty(HandleItem::P_YPOS, double(y()+ event->pos().y()));
 }
 

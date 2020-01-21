@@ -75,9 +75,9 @@ void MainWindow::initApplication()
 
     std::vector<std::vector<double>> values;
     values.push_back(std::vector<double>{50.,50.});
-    values.push_back(std::vector<double>{30.,40.});
+    values.push_back(std::vector<double>{80.,40.});
     values.push_back(std::vector<double>{50.,30.});
-    values.push_back(std::vector<double>{10.,50.});
+    values.push_back(std::vector<double>{90.,50.});
     values.push_back(std::vector<double>{50.,10.});
 
     std::vector<Segment*> top_segments;
@@ -142,5 +142,8 @@ void MainWindow::initApplication()
         //set the handles
         segment->addHandles(handles[i-1][1], handles[i][0]);
     }
+
+    handles[0][0]->setFlag(QGraphicsItem::ItemIsMovable);
+    handles[(handles.size())-1][1]->setFlag(QGraphicsItem::ItemIsMovable);
 
 }
