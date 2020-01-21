@@ -9,6 +9,8 @@ target_sources(quickreflcore PRIVATE
     materialeditortoolbar.h
     materialtableview.cpp
     materialtableview.h
+    materialtablewidget.cpp
+    materialtablewidget.h
     styleutils.cpp
     styleutils.h
 )

@@ -17,6 +17,7 @@ class MaterialEditorToolBar;
 class MaterialEditorActions;
 class MaterialModel;
 class QTableView;
+class MaterialTableWidget;
 
 namespace ModelView {
 class AbstractViewModel;
@@ -36,6 +37,7 @@ private:
     std::unique_ptr<ModelView::AbstractViewModel> view_model;
     MaterialEditorActions* actions{nullptr};
     MaterialEditorToolBar* toolbar{nullptr};
+    MaterialTableWidget* table_widget{nullptr};
 };
 
 #endif // MATERIALEDITOR_H
