@@ -8,15 +8,15 @@
 // ************************************************************************** //
 
 #include "materialeditor.h"
-#include "materialeditortoolbar.h"
 #include "materialeditoractions.h"
-#include <QToolBar>
+#include "materialeditortoolbar.h"
 #include <QTableView>
+#include <QToolBar>
 #include <QVBoxLayout>
 
-
-MaterialEditor::MaterialEditor(QWidget* parent)
-    : QWidget(parent), actions(new MaterialEditorActions(this)), toolbar(new MaterialEditorToolBar(actions))
+MaterialEditor::MaterialEditor(MaterialModel* material_model, QWidget* parent)
+    : QWidget(parent), material_model(material_model), actions(new MaterialEditorActions(this)),
+      toolbar(new MaterialEditorToolBar(actions))
 {
     setWindowTitle("Material editor");
 

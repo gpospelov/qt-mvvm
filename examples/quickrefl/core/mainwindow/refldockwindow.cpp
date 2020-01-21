@@ -19,7 +19,8 @@ ReflDockWindow::ReflDockWindow(QWidget* parent)
 {
     setCentralWidget(new QLabel("Reflectometry docks"));
 
-    docks_controller->addWidget(0, new MaterialEditor, Qt::TopDockWidgetArea);
+    docks_controller->addWidget(0, new MaterialEditor(models->materialModel()),
+                                Qt::TopDockWidgetArea);
     docks_controller->addWidget(1, new LayerEditor, Qt::TopDockWidgetArea);
     docks_controller->addWidget(2, new LayerCanvas, Qt::LeftDockWidgetArea);
     docks_controller->addWidget(3, new SLDEditor, Qt::RightDockWidgetArea);

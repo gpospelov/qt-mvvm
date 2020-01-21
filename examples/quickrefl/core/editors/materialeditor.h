@@ -14,6 +14,7 @@
 
 class MaterialEditorToolBar;
 class MaterialEditorActions;
+class MaterialModel;
 
 //! Material editor.
 
@@ -21,10 +22,11 @@ class MaterialEditor : public QWidget
 {
     Q_OBJECT
 public:
-    MaterialEditor(QWidget* parent = nullptr);
+    MaterialEditor(MaterialModel* material_model, QWidget* parent = nullptr);
     ~MaterialEditor();
 
 private:
+    MaterialModel* material_model{nullptr};
     MaterialEditorActions* actions{nullptr};
     MaterialEditorToolBar* toolbar{nullptr};
 };
