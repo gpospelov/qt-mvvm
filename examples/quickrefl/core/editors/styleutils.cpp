@@ -12,5 +12,5 @@
 
 QSize StyleUtils::ToolBarIconSize()
 {
-    return QSize(32, 32);
+    return QSize(24, 24);
 }

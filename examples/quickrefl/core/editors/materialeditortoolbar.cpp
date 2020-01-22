@@ -19,27 +19,53 @@ MaterialEditorToolBar::MaterialEditorToolBar(MaterialEditorActions* actions, QWi
 {
     InitIconResources();
 
-    setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     setIconSize(StyleUtils::ToolBarIconSize());
+    setToolButtonStyle(Qt::ToolButtonFollowStyle);
 
-    auto t0 = new QToolButton;
-    t0->setIcon(QIcon(":/icons/toolbar16dark_newitem.svg"));
-    t0->setText("Add material");
-    addWidget(t0);
+    auto action = new QAction;
+    action->setIcon(QIcon(":/icons/plus-circle-outline.svg"));
+    action->setText("Add material");
+    action->setToolTip("Adds new material at the bottom of the list");
+    addAction(action);
 
-    auto t1 = new QToolButton;
-    t1->setIcon(QIcon(":/icons/toolbar16dark_newitem.svg"));
-    t1->setText("Add material");
-    addWidget(t1);
+    action = new QAction;
+    action->setIcon(QIcon(":/icons/plus-circle-multiple-outline.svg"));
+    action->setText("Clone");
+    action->setToolTip("Clones selected material");
+    addAction(action);
 
-    auto t2 = new QToolButton;
-    t2->setIcon(QIcon(":/icons/toolbar16dark_newitem.svg"));
-    t2->setText("Add material");
-    addWidget(t2);
+    action = new QAction;
+    action->setIcon(QIcon(":/icons/beaker-remove-outline.svg"));
+    action->setText("Remove");
+    action->setToolTip("Removes selected material");
+    addAction(action);
 
-    auto t3 = new QAction;
-    t3->setIcon(QIcon(":/icons/toolbar16dark_newitem.svg"));
-    t3->setText("Add material");
-    addAction(t3);
+    addSeparator();
+
+    action = new QAction;
+    action->setIcon(QIcon(":/icons/arrow-up-circle-outline.svg"));
+    action->setText("Up");
+    action->setToolTip("Move selected material up");
+    addAction(action);
+
+    action = new QAction;
+    action->setIcon(QIcon(":/icons/arrow-down-circle-outline.svg"));
+    action->setText("Down");
+    action->setToolTip("Move selected material down");
+    addAction(action);
+
+    addSeparator();
+
+    action = new QAction;
+    action->setIcon(QIcon(":/icons/import.svg"));
+    action->setText("Import");
+    action->setToolTip("Imports materials from file");
+    addAction(action);
+
+    action = new QAction;
+    action->setIcon(QIcon(":/icons/export.svg"));
+    action->setText("Export");
+    action->setToolTip("Exports materials to file");
+    addAction(action);
 
 }

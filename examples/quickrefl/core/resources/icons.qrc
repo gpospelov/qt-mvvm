@@ -1,5 +1,28 @@
 <RCC>
     <qresource prefix="/">
-        <file>icons/toolbar16dark_newitem.svg</file>
+    <file>icons/arrow-down-circle-outline.svg</file>
+    <file>icons/arrow-down.svg</file>
+    <file>icons/arrow-up-circle-outline.svg</file>
+    <file>icons/arrow-up.svg</file>
+    <file>icons/beaker-remove-outline.svg</file>
+    <file>icons/beaker-remove-outline.svg</file>
+    <file>icons/export.svg</file>
+    <file>icons/import.svg</file>
+    <file>icons/plus-box-multiple-outline.svg</file>
+    <file>icons/plus-box-outline.svg</file>
+    <file>icons/plus-circle-multiple-outline.svg</file>
+    <file>icons/plus-circle-outline.svg</file>
+    <file>icons/plus-circle-outline.svg</file>
     </qresource>
 </RCC>
+
+
+
+
+
+
+
+
+
+
+
