@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icons/toolbar16dark_newitem.svg</file>
+    </qresource>
+</RCC>
