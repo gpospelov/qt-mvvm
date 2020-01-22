@@ -11,6 +11,7 @@
 #define MATERIALTABLEWIDGET_H
 
 #include <QWidget>
+#include <memory>
 
 namespace ModelView {
 class AbstractViewModel;
