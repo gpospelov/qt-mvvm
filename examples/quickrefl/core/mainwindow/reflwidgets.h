@@ -12,18 +12,10 @@
 
 #include <QWidget>
 
+#include "materialeditor.h"
+
 //! @file reflwidgets.h
 //! Collection of placeholders for future reflectometry widgets.
-
-
-//! Material editor.
-
-class MaterialEditor : public QWidget
-{
-    Q_OBJECT
-public:
-    MaterialEditor(QWidget* parent = nullptr);
-};
 
 //! Layer editor.
 

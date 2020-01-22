@@ -9,14 +9,6 @@
 
 #include "reflwidgets.h"
 
-MaterialEditor::MaterialEditor(QWidget* parent)
-    : QWidget(parent)
-{
-    setWindowTitle("Material Editor");
-}
-
-//! ---------------------------------------------------------------------------
-
 LayerEditor::LayerEditor(QWidget* parent)
     : QWidget(parent)
 {

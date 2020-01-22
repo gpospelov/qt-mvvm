@@ -53,10 +53,9 @@ struct AbstractViewModelController::AbstractViewModelControllerImpl {
     void reset_view_model()
     {
         m_view_model->clear();
-        update_layout();
     }
 
-    void update_layout()
+    void update_labels()
     {
         m_view_model->setHorizontalHeaderLabels(m_row_strategy->horizontalHeaderLabels());
     }
@@ -158,6 +157,7 @@ void AbstractViewModelController::init_view_model()
     check_initialization();
     reset_view_model();
     iterate(rootSessionItem(), p_impl->m_view_model->rootViewItem());
+    p_impl->update_labels();
 }
 
 void AbstractViewModelController::setRootSessionItem(SessionItem* item)
