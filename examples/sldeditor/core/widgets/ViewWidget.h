@@ -7,9 +7,12 @@
 //
 // ************************************************************************** //
 
+#include "AxisViewWidget.h"
+
 #include <QGraphicsView>
 #include <QWheelEvent>
 #include <QKeyEvent>
+#include <QDragMoveEvent>
 
 class ViewWidget : public QGraphicsView
 {
@@ -18,11 +21,18 @@ class ViewWidget : public QGraphicsView
 public:
     //! The constructor
     ViewWidget(QWidget *parent = nullptr);
+    //! Get the visible region
+    QRectF visibleRect() const;
 
 protected:
-    void keyPressEvent(QKeyEvent *event);
+    //! Manage wheelevent
     void wheelEvent(QWheelEvent *event);
+    //! Manage the drag event
+    void drageMoveEvent(QDragMoveEvent* event);
+    //! The resize event that needs to propagate to axes
+    void resizeEvent(QResizeEvent* event);
+
 private:
-
-
+    //! The axis items
+    AxisViewWidget* _axis;
 };

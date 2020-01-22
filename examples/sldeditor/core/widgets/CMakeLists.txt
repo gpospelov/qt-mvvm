@@ -9,6 +9,10 @@ target_sources(${library_name} PRIVATE
     Handle.cpp
     Segment.h
     Segment.cpp
+    AxisViewWidget.h
+    AxisViewWidget.cpp
+    AxisObject.h
+    AxisObject.cpp
 )
 
 target_include_directories(${library_name} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>)
