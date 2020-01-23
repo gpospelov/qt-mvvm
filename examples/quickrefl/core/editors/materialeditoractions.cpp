@@ -9,13 +9,15 @@
 
 #include "materialeditoractions.h"
 #include "materialmodel.h"
+#include "materialitems.h"
 #include "materialselectionmodel.h"
+#include <mvvm/model/modelutils.h>
 #include <QDebug>
 
 struct MaterialEditorActions::MaterialEditorActionsImpl {
     MaterialModel* material_model{nullptr};
     MaterialSelectionModel* selection_model{nullptr};
-    MaterialEditorActionsImpl(MaterialModel* material_model) : material_model(material_model) {}
+    MaterialEditorActionsImpl(MaterialModel* material_model) : material_model(material_model) {}    
 };
 
 MaterialEditorActions::MaterialEditorActions(MaterialModel* material_model, QObject* parent)
@@ -38,7 +40,8 @@ void MaterialEditorActions::onCloneMaterial()
 
 void MaterialEditorActions::onRemoveMaterial()
 {
-    qDebug() << "MaterialEditorActions::onRemoveMaterial()";
+    for (auto item : p_impl->selection_model->selectedMaterials())
+        ModelView::Utils::DeleteItemFromModel(item);
 }
 
 void MaterialEditorActions::onMoveUp()
