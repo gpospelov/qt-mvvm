@@ -9,6 +9,7 @@
 
 #include "materialeditoractions.h"
 #include "materialselectionmodel.h"
+#include "materialmodel.h"
 #include <QDebug>
 
 struct MaterialEditorActions::MaterialEditorActionsImpl {
@@ -27,9 +28,12 @@ void MaterialEditorActions::onAddMaterial()
     qDebug() << "MaterialEditorActions::onAddMaterial()";
 }
 
+//! Processes request to clone selected materials.
+
 void MaterialEditorActions::onCloneMaterial()
 {
-    qDebug() << "MaterialEditorActions::onCloneMaterial()";
+    for (const auto item : p_impl->selection_model->selectedMaterials())
+        p_impl->material_model->cloneMaterial(item);
 }
 
 void MaterialEditorActions::onRemoveMaterial()

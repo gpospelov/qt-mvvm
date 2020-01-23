@@ -16,10 +16,10 @@
 namespace ModelView
 {
 class AbstractViewModel;
-class SessionItem;
 } // namespace ModelView
 
 class MaterialEditorActions;
+class MaterialBaseItem;
 
 //! Custom selection model for material view model (AbstractViewModel).
 //! Reports clients about selected MaterialItem in material table and hides
@@ -32,7 +32,7 @@ public:
     MaterialSelectionModel(ModelView::AbstractViewModel* view_model, QObject* parent = nullptr);
     ~MaterialSelectionModel() = default;
 
-    std::vector<ModelView::SessionItem*> selectedMaterials() const;
+    std::vector<MaterialBaseItem*> selectedMaterials() const;
 };
 
 #endif // MATERIALSELECTIONMODEL_H

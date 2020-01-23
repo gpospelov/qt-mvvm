@@ -45,13 +45,13 @@ MaterialEditorToolBar::MaterialEditorToolBar(MaterialEditorActions* actions, QWi
 
     action = new QAction("Up");
     action->setIcon(QIcon(":/icons/arrow-up-circle-outline.svg"));
-    action->setToolTip("Move selected material up");
+    action->setToolTip("Moves selected material up");
     connect(action, &QAction::triggered, actions, &MaterialEditorActions::onMoveUp);
     addAction(action);
 
     action = new QAction("Down");
     action->setIcon(QIcon(":/icons/arrow-down-circle-outline.svg"));
-    action->setToolTip("Move selected material down");
+    action->setToolTip("Moves selected material down");
     connect(action, &QAction::triggered, actions, &MaterialEditorActions::onMoveDown);
     addAction(action);
 
