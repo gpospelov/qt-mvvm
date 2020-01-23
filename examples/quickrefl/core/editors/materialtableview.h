@@ -14,6 +14,7 @@
 
 //! Extension of QTableView for material editing.
 //! Provide better user experinece while navigating between cells.
+//! Part of MaterialTableWidget.
 
 class MaterialTableView : public QTableView
 {

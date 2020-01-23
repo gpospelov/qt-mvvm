@@ -13,11 +13,13 @@
 #include <mvvm/viewmodel/standardviewmodels.h>
 #include <mvvm/viewmodel/viewmodeldelegate.h>
 #include "materialmodel.h"
+#include "materialselectionmodel.h"
 #include <QVBoxLayout>
 
 MaterialTableWidget::MaterialTableWidget(MaterialModel* material_model, QWidget* parent)
     : QWidget(parent), material_model(material_model),
       view_model(ModelView::Utils::CreatePropertyTableViewModel(material_model)),
+      selection_model(new MaterialSelectionModel(view_model.get(), this)),
       table_view(new MaterialTableView), m_delegate(std::make_unique<ModelView::ViewModelDelegate>())
 {
     auto layout = new QVBoxLayout;
