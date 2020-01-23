@@ -54,16 +54,8 @@ void MaterialEditorActions::onMoveDown()
 {
     auto items = p_impl->selection_model->selectedMaterials();
     std::reverse(items.begin(), items.end()); // to correctly move multiple selections
-
-    for (auto item : items) {
-        auto tagrow = item->parent()->tagRowOfItem(item);
-
-        // item already at the buttom
-        if (tagrow.row == item->parent()->childrenCount() - 1)
-            return;
-
-        p_impl->material_model->moveItem(item, item->parent(), {tagrow.tag, tagrow.row + 1});
-    }
+    for (auto item : p_impl->selection_model->selectedMaterials())
+        ModelView::Utils::MoveDown(item);
 }
 
 void MaterialEditorActions::onExport()
