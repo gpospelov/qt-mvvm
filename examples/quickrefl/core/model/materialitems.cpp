@@ -17,7 +17,7 @@ MaterialContainerItem::MaterialContainerItem()
     : ModelView::CompoundItem(::Constants::MaterialContainerItemType)
 {
     registerTag(TagInfo::universalTag(
-        T_MATERIALS, {::Constants::SLDMaterialItemType}));
+        T_MATERIALS, {::Constants::SLDMaterialItemType}), /*set_as_default*/ true);
 }
 
 // ----------------------------------------------------------------------------

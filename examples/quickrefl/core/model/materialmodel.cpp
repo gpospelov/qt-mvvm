@@ -79,6 +79,15 @@ ExternalProperty MaterialModel::material_property(const std::string& id, std::st
     return undefined_material();
 }
 
+//! Clones material and adds it at the bottom of MaterialContainerItem.
+
+void MaterialModel::cloneMaterial(const MaterialBaseItem* item)
+{
+    auto material_container =
+        Utils::TopItem<MaterialContainerItem>(const_cast<MaterialModel*>(this));
+    SessionModel::copyItem(item, material_container);
+}
+
 //! Populates the model with some default content.
 
 void MaterialModel::init_model()
