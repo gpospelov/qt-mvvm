@@ -29,9 +29,10 @@ MaterialTableWidget::MaterialTableWidget(MaterialModel* material_model, QWidget*
     layout->addWidget(table_view);
     setLayout(layout);
 
+    // FIXME (without this string silently doesn't work. Provide exception.
     view_model->setRootSessionItem(ModelView::Utils::TopItem<MaterialContainerItem>(material_model));
-
     table_view->setModel(view_model.get());
+    table_view->setSelectionModel(selection_model);
     table_view->setItemDelegate(m_delegate.get());
 }
 

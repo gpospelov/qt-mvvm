@@ -8,8 +8,8 @@
 // ************************************************************************** //
 
 #include "materialmodel.h"
-#include "materialitems.h"
 #include "item_constants.h"
+#include "materialitems.h"
 #include <QColor>
 #include <mvvm/model/externalproperty.h>
 #include <mvvm/model/itemcatalogue.h>
@@ -83,9 +83,15 @@ ExternalProperty MaterialModel::material_property(const std::string& id, std::st
 
 void MaterialModel::cloneMaterial(const MaterialBaseItem* item)
 {
-    auto material_container =
-        Utils::TopItem<MaterialContainerItem>(const_cast<MaterialModel*>(this));
-    SessionModel::copyItem(item, material_container);
+    SessionModel::copyItem(item, materialContainer());
+}
+
+//! Adds default material.
+
+void MaterialModel::addDefaultMaterial()
+{
+    auto material = insertItem<SLDMaterialItem>(materialContainer());
+    material->set_properties("Default", QColor(Qt::green), 1e-03, 1e-05);
 }
 
 //! Populates the model with some default content.
@@ -93,12 +99,17 @@ void MaterialModel::cloneMaterial(const MaterialBaseItem* item)
 void MaterialModel::init_model()
 {
     auto container = insertItem<MaterialContainerItem>();
-    auto material = insertItem<SLDMaterialItem>(container, MaterialContainerItem::T_MATERIALS);
+    auto material = insertItem<SLDMaterialItem>(container);
     material->set_properties("Air", QColor(Qt::blue), 1e-06, 1e-07);
 
-    material = insertItem<SLDMaterialItem>(container, MaterialContainerItem::T_MATERIALS);
+    material = insertItem<SLDMaterialItem>(container);
     material->set_properties("Au", QColor(Qt::yellow), 2.4e-06, 5.6e-07);
 
-    material = insertItem<SLDMaterialItem>(container, MaterialContainerItem::T_MATERIALS);
+    material = insertItem<SLDMaterialItem>(container);
     material->set_properties("Si2O3", QColor(Qt::darkCyan), 3.4e-06, 3.6e-07);
+}
+
+MaterialContainerItem* MaterialModel::materialContainer()
+{
+    return Utils::TopItem<MaterialContainerItem>(const_cast<MaterialModel*>(this));
 }

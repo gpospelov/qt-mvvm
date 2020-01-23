@@ -8,8 +8,8 @@
 // ************************************************************************** //
 
 #include "materialeditoractions.h"
-#include "materialselectionmodel.h"
 #include "materialmodel.h"
+#include "materialselectionmodel.h"
 #include <QDebug>
 
 struct MaterialEditorActions::MaterialEditorActionsImpl {
@@ -25,7 +25,7 @@ MaterialEditorActions::MaterialEditorActions(MaterialModel* material_model, QObj
 
 void MaterialEditorActions::onAddMaterial()
 {
-    qDebug() << "MaterialEditorActions::onAddMaterial()";
+    p_impl->material_model->addDefaultMaterial();
 }
 
 //! Processes request to clone selected materials.

@@ -19,6 +19,7 @@ class ExternalProperty;
 }
 
 class MaterialBaseItem;
+class MaterialContainerItem;
 
 /*!
 @class MaterialModel
@@ -40,8 +41,11 @@ public:
 
     void cloneMaterial(const MaterialBaseItem* item);
 
+    void addDefaultMaterial();
+
 private:
     void init_model();
+    MaterialContainerItem* materialContainer();
 };
 
 #endif //  MATERIALMODEL_H
