@@ -9,6 +9,7 @@
 
 #include "materialtablewidget.h"
 #include "materialtableview.h"
+#include "materialtreeview.h"
 #include <mvvm/viewmodel/abstractviewmodel.h>
 #include <mvvm/viewmodel/standardviewmodels.h>
 #include <mvvm/viewmodel/viewmodeldelegate.h>
@@ -22,7 +23,7 @@ MaterialTableWidget::MaterialTableWidget(MaterialModel* material_model, QWidget*
     : QWidget(parent), material_model(material_model),
       view_model(ModelView::Utils::CreatePropertyTableViewModel(material_model)),
       selection_model(new MaterialSelectionModel(view_model.get(), this)),
-      table_view(new MaterialTableView), m_delegate(std::make_unique<ModelView::ViewModelDelegate>())
+      table_view(new MaterialTreeView), m_delegate(std::make_unique<ModelView::ViewModelDelegate>())
 {
     auto layout = new QVBoxLayout;
     layout->setContentsMargins(0, 0, 0, 0);
