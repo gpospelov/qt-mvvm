@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include "materialeditortoolbar.h"
+#include "materialeditoractions.h"
 #include "styleutils.h"
 #include "resources.h"
 #include <QToolButton>
@@ -22,50 +23,49 @@ MaterialEditorToolBar::MaterialEditorToolBar(MaterialEditorActions* actions, QWi
     setIconSize(StyleUtils::ToolBarIconSize());
     setToolButtonStyle(Qt::ToolButtonFollowStyle);
 
-    auto action = new QAction;
+    auto action = new QAction("Add material");
     action->setIcon(QIcon(":/icons/plus-circle-outline.svg"));
-    action->setText("Add material");
     action->setToolTip("Adds new material at the bottom of the list");
+    connect(action, &QAction::triggered, actions, &MaterialEditorActions::onAddMaterial);
     addAction(action);
 
-    action = new QAction;
+    action = new QAction("Clone");
     action->setIcon(QIcon(":/icons/plus-circle-multiple-outline.svg"));
-    action->setText("Clone");
     action->setToolTip("Clones selected material");
+    connect(action, &QAction::triggered, actions, &MaterialEditorActions::onCloneMaterial);
     addAction(action);
 
-    action = new QAction;
+    action = new QAction("Remove");
     action->setIcon(QIcon(":/icons/beaker-remove-outline.svg"));
-    action->setText("Remove");
     action->setToolTip("Removes selected material");
+    connect(action, &QAction::triggered, actions, &MaterialEditorActions::onRemoveMaterial);
     addAction(action);
 
     addSeparator();
 
-    action = new QAction;
+    action = new QAction("Up");
     action->setIcon(QIcon(":/icons/arrow-up-circle-outline.svg"));
-    action->setText("Up");
     action->setToolTip("Move selected material up");
+    connect(action, &QAction::triggered, actions, &MaterialEditorActions::onMoveUp);
     addAction(action);
 
-    action = new QAction;
+    action = new QAction("Down");
     action->setIcon(QIcon(":/icons/arrow-down-circle-outline.svg"));
-    action->setText("Down");
     action->setToolTip("Move selected material down");
+    connect(action, &QAction::triggered, actions, &MaterialEditorActions::onMoveDown);
     addAction(action);
 
     addSeparator();
 
-    action = new QAction;
+    action = new QAction("Import");
     action->setIcon(QIcon(":/icons/import.svg"));
-    action->setText("Import");
     action->setToolTip("Imports materials from file");
+    connect(action, &QAction::triggered, actions, &MaterialEditorActions::onImport);
     addAction(action);
 
-    action = new QAction;
+    action = new QAction("Export");
     action->setIcon(QIcon(":/icons/export.svg"));
-    action->setText("Export");
     action->setToolTip("Exports materials to file");
+    connect(action, &QAction::triggered, actions, &MaterialEditorActions::onExport);
     addAction(action);
-
 }

@@ -14,6 +14,7 @@
 #include <memory>
 
 //! Handles user actions applied to material table.
+//! Belongs to MaterialEditor.
 
 class MaterialEditorActions : public QObject
 {
@@ -21,6 +22,14 @@ class MaterialEditorActions : public QObject
 public:
     MaterialEditorActions(QObject* parent = nullptr);
     ~MaterialEditorActions();
+
+    void onAddMaterial();
+    void onCloneMaterial();
+    void onRemoveMaterial();
+    void onMoveUp();
+    void onMoveDown();
+    void onExport();
+    void onImport();
 
 private:
     struct MaterialEditorActionsImpl;
