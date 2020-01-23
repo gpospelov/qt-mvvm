@@ -14,6 +14,7 @@
 #include <memory>
 
 class MaterialModel;
+class MaterialSelectionModel;
 
 //! Handles user actions applied to material table.
 //! Belongs to MaterialEditor.
@@ -32,6 +33,8 @@ public:
     void onMoveDown();
     void onExport();
     void onImport();
+
+    void setMaterialSelectionModel(MaterialSelectionModel* selection_model);
 
 private:
     struct MaterialEditorActionsImpl;

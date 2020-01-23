@@ -8,10 +8,12 @@
 // ************************************************************************** //
 
 #include "materialeditoractions.h"
+#include "materialselectionmodel.h"
 #include <QDebug>
 
 struct MaterialEditorActions::MaterialEditorActionsImpl {
     MaterialModel* material_model{nullptr};
+    MaterialSelectionModel* selection_model{nullptr};
     MaterialEditorActionsImpl(MaterialModel* material_model) : material_model(material_model) {}
 };
 
@@ -53,6 +55,11 @@ void MaterialEditorActions::onExport()
 void MaterialEditorActions::onImport()
 {
     qDebug() << "MaterialEditorActions::onImport()";
+}
+
+void MaterialEditorActions::setMaterialSelectionModel(MaterialSelectionModel* selection_model)
+{
+    p_impl->selection_model = selection_model;
 }
 
 MaterialEditorActions::~MaterialEditorActions() = default;

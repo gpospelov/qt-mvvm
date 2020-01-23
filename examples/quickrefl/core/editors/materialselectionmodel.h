@@ -11,10 +11,13 @@
 #define MATERIALSELECTIONMODEL_H
 
 #include <QItemSelectionModel>
+#include <vector>
 
-namespace ModelView {
+namespace ModelView
+{
 class AbstractViewModel;
-}
+class SessionItem;
+} // namespace ModelView
 
 class MaterialEditorActions;
 
@@ -26,8 +29,10 @@ class MaterialSelectionModel : public QItemSelectionModel
 {
     Q_OBJECT
 public:
-    MaterialSelectionModel(ModelView::AbstractViewModel* view_model, QObject *parent = nullptr);
+    MaterialSelectionModel(ModelView::AbstractViewModel* view_model, QObject* parent = nullptr);
     ~MaterialSelectionModel() = default;
+
+    std::vector<ModelView::SessionItem*> selectedMaterials() const;
 };
 
 #endif // MATERIALSELECTIONMODEL_H

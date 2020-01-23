@@ -32,6 +32,8 @@ public:
     MaterialTableWidget(MaterialModel* material_model, QWidget* parent = nullptr);
     ~MaterialTableWidget();
 
+    MaterialSelectionModel* selectionModel() const;
+
 private:
     MaterialModel* material_model{nullptr};
     std::unique_ptr<ModelView::AbstractViewModel> view_model;

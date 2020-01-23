@@ -32,3 +32,8 @@ MaterialTableWidget::MaterialTableWidget(MaterialModel* material_model, QWidget*
 }
 
 MaterialTableWidget::~MaterialTableWidget() = default;
+
+MaterialSelectionModel* MaterialTableWidget::selectionModel() const
+{
+    return selection_model;
+}
