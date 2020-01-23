@@ -46,12 +46,31 @@ void MaterialEditorActions::onRemoveMaterial()
 
 void MaterialEditorActions::onMoveUp()
 {
-    qDebug() << "MaterialEditorActions::onMoveUp()";
+    for (auto item : p_impl->selection_model->selectedMaterials()) {
+        auto tagrow = item->parent()->tagRowOfItem(item);
+
+        // item already at the top
+        if (tagrow.row == 0)
+            return;
+
+        p_impl->material_model->moveItem(item, item->parent(), {tagrow.tag, tagrow.row - 1});
+    }
 }
 
 void MaterialEditorActions::onMoveDown()
 {
-    qDebug() << "MaterialEditorActions::onMoveDown()";
+    auto items = p_impl->selection_model->selectedMaterials();
+    std::reverse(items.begin(), items.end()); // to correctly move multiple selections
+
+    for (auto item : items) {
+        auto tagrow = item->parent()->tagRowOfItem(item);
+
+        // item already at the buttom
+        if (tagrow.row == item->parent()->childrenCount() - 1)
+            return;
+
+        p_impl->material_model->moveItem(item, item->parent(), {tagrow.tag, tagrow.row + 1});
+    }
 }
 
 void MaterialEditorActions::onExport()
