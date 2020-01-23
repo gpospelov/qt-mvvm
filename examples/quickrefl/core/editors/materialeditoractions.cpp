@@ -11,10 +11,12 @@
 #include <QDebug>
 
 struct MaterialEditorActions::MaterialEditorActionsImpl {
+    MaterialModel* material_model{nullptr};
+    MaterialEditorActionsImpl(MaterialModel* material_model) : material_model(material_model) {}
 };
 
-MaterialEditorActions::MaterialEditorActions(QObject* parent)
-    : QObject(parent), p_impl(std::make_unique<MaterialEditorActionsImpl>())
+MaterialEditorActions::MaterialEditorActions(MaterialModel* material_model, QObject* parent)
+    : QObject(parent), p_impl(std::make_unique<MaterialEditorActionsImpl>(material_model))
 {
 }
 

@@ -13,6 +13,8 @@
 #include <QObject>
 #include <memory>
 
+class MaterialModel;
+
 //! Handles user actions applied to material table.
 //! Belongs to MaterialEditor.
 
@@ -20,7 +22,7 @@ class MaterialEditorActions : public QObject
 {
     Q_OBJECT
 public:
-    MaterialEditorActions(QObject* parent = nullptr);
+    MaterialEditorActions(MaterialModel* material_model, QObject* parent = nullptr);
     ~MaterialEditorActions();
 
     void onAddMaterial();
