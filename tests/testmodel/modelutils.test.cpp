@@ -85,3 +85,27 @@ TEST_F(ModelUtilsTest, DeleteItemFromModel)
     Utils::DeleteItemFromModel(item);
     EXPECT_EQ(model.rootItem()->childrenCount(), 0);
 }
+
+TEST_F(ModelUtilsTest, MoveItemUp)
+{
+    ToyItems::SampleModel model;
+
+    auto multilayer = model.insertItem<ToyItems::MultiLayerItem>();
+    auto layer0 = model.insertItem<ToyItems::LayerItem>(multilayer);
+    auto layer1 = model.insertItem<ToyItems::LayerItem>(multilayer);
+    auto layer2 = model.insertItem<ToyItems::LayerItem>(multilayer);
+
+    std::vector<SessionItem*> expected = {layer0, layer1, layer2};
+
+    // original layout
+    EXPECT_EQ(multilayer->getItems(ToyItems::MultiLayerItem::T_LAYERS), expected);
+
+    // moving top layer up doesn't change the order
+    Utils::MoveUp(layer0);
+    EXPECT_EQ(multilayer->getItems(ToyItems::MultiLayerItem::T_LAYERS), expected);
+
+    // moving bottom layer up change the order
+    Utils::MoveUp(layer2);
+    expected = {layer0, layer2, layer1};
+    EXPECT_EQ(multilayer->getItems(ToyItems::MultiLayerItem::T_LAYERS), expected);
+}

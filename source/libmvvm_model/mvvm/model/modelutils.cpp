@@ -19,3 +19,11 @@ void Utils::DeleteItemFromModel(SessionItem* item)
 
     model->removeItem(item->parent(), item->parent()->tagRowOfItem(item));
 }
+
+void Utils::MoveUp(SessionItem* item)
+{
+    auto tagrow = item->parent()->tagRowOfItem(item);
+    if (tagrow.row == 0)
+        return; // item already at the top
+    item->model()->moveItem(item, item->parent(), {tagrow.tag, tagrow.row - 1});
+}

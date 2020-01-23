@@ -46,15 +46,8 @@ void MaterialEditorActions::onRemoveMaterial()
 
 void MaterialEditorActions::onMoveUp()
 {
-    for (auto item : p_impl->selection_model->selectedMaterials()) {
-        auto tagrow = item->parent()->tagRowOfItem(item);
-
-        // item already at the top
-        if (tagrow.row == 0)
-            return;
-
-        p_impl->material_model->moveItem(item, item->parent(), {tagrow.tag, tagrow.row - 1});
-    }
+    for (auto item : p_impl->selection_model->selectedMaterials())
+        ModelView::Utils::MoveUp(item);
 }
 
 void MaterialEditorActions::onMoveDown()
