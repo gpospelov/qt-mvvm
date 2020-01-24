@@ -379,7 +379,7 @@ TEST_F(TestUndoRedo, multiLayer)
     // creating multi layer
     auto parent = model.insertItem<ToyItems::MultiLayerItem>();
     EXPECT_TRUE(dynamic_cast<ToyItems::MultiLayerItem*>(parent) != nullptr);
-    EXPECT_EQ(parent->modelType(), ToyItems::Constants::MultiLayerType);
+    EXPECT_EQ(parent->modelType(), ToyItems::Constants::MultiLayerItemType);
 
     // inserting two layers
     auto layer0 = model.insertItem<ToyItems::LayerItem>(parent);

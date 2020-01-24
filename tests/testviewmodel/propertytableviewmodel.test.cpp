@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include "google_test.h"
+#include "toy_items.h"
 #include <mvvm/model/propertyitem.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
@@ -86,4 +87,49 @@ TEST_F(PropertyTableViewModelTest, vectorItem)
     viewModel.setRootSessionItem(parent);
     EXPECT_EQ(viewModel.rowCount(), 0);
     EXPECT_EQ(viewModel.columnCount(), 3); // FIXME should be 0, pecularity of PropertiesRowStrategy
+}
+
+//! MultiLayer with layers, view model still looks to the RootItem.
+//! No MultiLayer should be visible in table.
+
+TEST_F(PropertyTableViewModelTest, multiLayerAndRootItem)
+{
+    SessionModel model;
+    auto multilayer = model.insertItem<ToyItems::MultiLayerItem>();
+    model.insertItem<ToyItems::LayerItem>(multilayer);
+    model.insertItem<ToyItems::LayerItem>(multilayer);
+
+    PropertyTableViewModel viewModel;
+    viewModel.setSessionModel(&model);
+
+    // ViewModel should be empty, since we are looking to RootItem.
+    EXPECT_EQ(viewModel.rowCount(), 0);
+    EXPECT_EQ(viewModel.columnCount(), 0);
+}
+
+//! MultiLayer with layers, multilayer is given as root index.
+
+TEST_F(PropertyTableViewModelTest, multiLayer)
+{
+    SessionModel model;
+    auto multilayer = model.insertItem<ToyItems::MultiLayerItem>();
+    model.insertItem<ToyItems::LayerItem>(multilayer);
+    model.insertItem<ToyItems::LayerItem>(multilayer);
+
+    PropertyTableViewModel viewModel;
+    viewModel.setSessionModel(&model);
+    viewModel.setRootSessionItem(multilayer);
+
+    EXPECT_EQ(viewModel.rowCount(), 2);    // two layers
+    EXPECT_EQ(viewModel.columnCount(), 2); // layer thickness and color
+
+    // add another layer
+    model.insertItem<ToyItems::LayerItem>(multilayer);
+    EXPECT_EQ(viewModel.rowCount(), 3);    // two layers
+    EXPECT_EQ(viewModel.columnCount(), 2); // layer thickness and color
+
+    // switching view model back to model's root, table should be empty
+    viewModel.setRootSessionItem(model.rootItem());
+    EXPECT_EQ(viewModel.rowCount(), 0);    // two layers
+    EXPECT_EQ(viewModel.columnCount(), 0); // layer thickness and color
 }

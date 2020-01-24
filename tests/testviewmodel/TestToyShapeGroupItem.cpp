@@ -38,7 +38,7 @@ TEST_F(ToyShapeGroupItemTest, initialState)
     ASSERT_TRUE(item.currentItem() != nullptr);
     EXPECT_TRUE(item.data().isValid());
     EXPECT_EQ(item.currentType(), item.currentItem()->modelType());
-    EXPECT_EQ(item.currentType(), ToyItems::Constants::SphereType);
+    EXPECT_EQ(item.currentType(), ToyItems::Constants::SphereItemType);
     ASSERT_EQ(item.children().size(), 3);
 
     // parent child relationship
@@ -56,12 +56,12 @@ TEST_F(ToyShapeGroupItemTest, initialState)
 TEST_F(ToyShapeGroupItemTest, setCurrentType)
 {
     ToyItems::ShapeGroupItem item;
-    item.setCurrentType(ToyItems::Constants::CylinderType);
+    item.setCurrentType(ToyItems::Constants::CylinderItemType);
 
     EXPECT_EQ(item.currentIndex(), 0);
     ASSERT_TRUE(item.currentItem() != nullptr);
     EXPECT_EQ(item.currentType(), item.currentItem()->modelType());
-    EXPECT_EQ(item.currentItem()->modelType(), ToyItems::Constants::CylinderType);
+    EXPECT_EQ(item.currentItem()->modelType(), ToyItems::Constants::CylinderItemType);
     EXPECT_TRUE(item.data().isValid());
     EXPECT_EQ(item.children().size(), 3);
 
@@ -103,7 +103,7 @@ TEST_F(ToyShapeGroupItemTest, setDataInModelContext)
 
     // initial status
     EXPECT_EQ(item->currentIndex(), 1);
-    EXPECT_EQ(item->currentType(), ToyItems::Constants::SphereType);
+    EXPECT_EQ(item->currentType(), ToyItems::Constants::SphereItemType);
     ComboProperty combo = model.data(item, ItemDataRole::DATA).value<ComboProperty>();
     EXPECT_EQ(combo.currentIndex(), 1);
 
@@ -112,7 +112,7 @@ TEST_F(ToyShapeGroupItemTest, setDataInModelContext)
     model.setData(item, combo.variant(), ItemDataRole::DATA);
 
     EXPECT_EQ(item->currentIndex(), 0);
-    EXPECT_EQ(item->currentType(), ToyItems::Constants::CylinderType);
+    EXPECT_EQ(item->currentType(), ToyItems::Constants::CylinderItemType);
 }
 
 //! ViewLabelItem and ViewDataItem from ShapeItem.
@@ -125,7 +125,7 @@ TEST_F(ToyShapeGroupItemTest, viewItemsFromShapeGroup)
 
     ViewLabelItem labelItem(groupItem);
     EXPECT_EQ(labelItem.data(Qt::DisplayRole).toString().toStdString(),
-              ToyItems::Constants::ShapeGroupType);
+              ToyItems::Constants::ShapeGroupItemType);
 
     ViewDataItem dataItem(groupItem);
     EXPECT_EQ(dataItem.data(Qt::DisplayRole).value<ComboProperty>().currentIndex(), 1);
@@ -188,7 +188,7 @@ TEST_F(ToyShapeGroupItemTest, inPropertyViewModelContext)
 {
     ToyItems::SampleModel model;
     auto parent = model.insertItem<SessionItem>();
-    parent->registerTag(TagInfo::propertyTag("property_tag", ToyItems::Constants::ShapeGroupType));
+    parent->registerTag(TagInfo::propertyTag("property_tag", ToyItems::Constants::ShapeGroupItemType));
 
     auto groupItem = model.insertItem<ToyItems::ShapeGroupItem>(parent, "property_tag");
     ASSERT_TRUE(groupItem != nullptr);

@@ -129,7 +129,26 @@ TEST_F(ItemUtilsTest, itemCopyNumber)
 
 //! Check access to top level and property items.
 
-TEST_F(ItemUtilsTest, TopLevelAndPropertyItems)
+TEST_F(ItemUtilsTest, TopLevelItems)
+{
+    SessionModel model;
+
+    auto parent = model.insertItem<SessionItem>();
+    parent->registerTag(TagInfo::universalTag("default_tag"), /*set_as_default*/ true);
+    parent->registerTag(TagInfo::propertyTag("property_tag", Constants::PropertyType));
+
+    auto child1 = model.insertItem<SessionItem>(parent, "default_tag");
+    model.insertItem<PropertyItem>(parent, "property_tag");
+    auto child3 = model.insertItem<SessionItem>(parent, "default_tag");
+
+    EXPECT_EQ(Utils::TopLevelItems(*model.rootItem()), std::vector<SessionItem*>({parent}));
+    EXPECT_EQ(Utils::TopLevelItems(*child1), std::vector<SessionItem*>({}));
+    EXPECT_EQ(Utils::TopLevelItems(*parent), std::vector<SessionItem*>({child1, child3}));
+}
+
+//! Check access to top level and property items.
+
+TEST_F(ItemUtilsTest, SinglePropertyItems)
 {
     SessionModel model;
 
@@ -139,8 +158,9 @@ TEST_F(ItemUtilsTest, TopLevelAndPropertyItems)
 
     auto child1 = model.insertItem<SessionItem>(parent, "default_tag");
     auto child2 = model.insertItem<PropertyItem>(parent, "property_tag");
-    auto child3 = model.insertItem<SessionItem>(parent, "default_tag");
+    model.insertItem<SessionItem>(parent, "default_tag");
 
-    EXPECT_EQ(Utils::TopLevelItems(*parent), std::vector<SessionItem*>({child1, child3}));
+    EXPECT_EQ(Utils::SinglePropertyItems(*model.rootItem()), std::vector<SessionItem*>({}));
+    EXPECT_EQ(Utils::SinglePropertyItems(*child1), std::vector<SessionItem*>({}));
     EXPECT_EQ(Utils::SinglePropertyItems(*parent), std::vector<SessionItem*>({child2}));
 }

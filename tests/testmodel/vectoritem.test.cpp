@@ -29,6 +29,10 @@ TEST_F(VectorItemTest, initialState)
 {
     VectorItem item;
 
+    EXPECT_TRUE(item.isSinglePropertyTag(VectorItem::P_X));
+    EXPECT_TRUE(item.isSinglePropertyTag(VectorItem::P_Y));
+    EXPECT_TRUE(item.isSinglePropertyTag(VectorItem::P_Z));
+
     EXPECT_FALSE(item.isEditable());
 
     EXPECT_EQ(item.property(VectorItem::P_X).value<double>(), 0.0);

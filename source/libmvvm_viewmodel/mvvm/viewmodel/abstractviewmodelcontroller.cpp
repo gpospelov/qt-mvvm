@@ -145,9 +145,9 @@ void AbstractViewModelController::iterate(const SessionItem* item, QStandardItem
         if (!row.empty()) {
             parent->appendRow(row);
             parent = row.at(0); // labelItem
+            iterate(child, parent);
         }
 
-        iterate(child, parent);
         parent = origParent;
     }
 }
