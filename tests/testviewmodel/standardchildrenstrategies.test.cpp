@@ -92,7 +92,7 @@ TEST_F(StandardChildrenStrategiesTest, AllChildrenStrategy)
 
     // GroupItem
     ToyItems::ShapeGroupItem item5;
-    item5.setCurrentType(ToyItems::Constants::CylinderType);
+    item5.setCurrentType(ToyItems::Constants::CylinderItemType);
     children = strategy.children(&item5);
     EXPECT_EQ(children.size(), 3); // number of registered children
 }
@@ -130,7 +130,7 @@ TEST_F(StandardChildrenStrategiesTest, TopItemsStrategy)
 
     // GroupItem
     ToyItems::ShapeGroupItem item5;
-    item5.setCurrentType(ToyItems::Constants::CylinderType);
+    item5.setCurrentType(ToyItems::Constants::CylinderItemType);
     children = strategy.children(&item5);
     EXPECT_EQ(children.size(), 3); // number of registered children
 }
@@ -179,7 +179,7 @@ TEST_F(StandardChildrenStrategiesTest, PropertyItemsStrategy)
     // GroupItem
     {
         ToyItems::ShapeGroupItem item;
-        item.setCurrentType(ToyItems::Constants::CylinderType);
+        item.setCurrentType(ToyItems::Constants::CylinderItemType);
         auto children = strategy.children(&item);
         EXPECT_EQ(children.size(), 2);
 
@@ -234,7 +234,7 @@ TEST_F(StandardChildrenStrategiesTest, PropertyItemsFlatStrategy)
     // GroupItem
     {
         ToyItems::ShapeGroupItem item;
-        item.setCurrentType(ToyItems::Constants::CylinderType);
+        item.setCurrentType(ToyItems::Constants::CylinderItemType);
         auto children = strategy.children(&item);
         EXPECT_EQ(children.size(), 2);
 
@@ -252,7 +252,7 @@ TEST_F(StandardChildrenStrategiesTest, PropertyItemsFlatStrategy)
 
         std::vector<ChildrenData> expected_children_data{
             {Constants::VectorItemType, ToyItems::ParticleItem::P_POSITION},
-            {ToyItems::Constants::ShapeGroupType, ToyItems::ParticleItem::P_SHAPES},
+            {ToyItems::Constants::ShapeGroupItemType, ToyItems::ParticleItem::P_SHAPES},
             {Constants::PropertyType, ToyItems::SphereItem::P_RADIUS}};
 
         EXPECT_EQ(children_data(children), expected_children_data);
