@@ -7,10 +7,13 @@
 //
 // ************************************************************************** //
 
-#include "styleutils.h"
-#include <QSize>
+#ifndef RESOURCES_H
+#define RESOURCES_H
 
-QSize StyleUtils::ToolBarIconSize()
-{
-    return QSize(24, 24);
+#include <QtGlobal>
+
+inline void InitIconResources() {
+    Q_INIT_RESOURCE(icons);
 }
+
+#endif

@@ -7,30 +7,33 @@
 //
 // ************************************************************************** //
 
-#ifndef MATERIALTABLEVIEW_H
-#define MATERIALTABLEVIEW_H
+#ifndef MATERIALTREEVIEW_H
+#define MATERIALTREEVIEW_H
 
-#include <QTableView>
+#include <QTreeView>
 
-//! Extension of QTableView for material editing.
+//! Extension of QTreeView for material editing.
 //! Provide better user experinece while navigating between cells.
 //! Part of MaterialTableWidget.
 
-class MaterialTableView : public QTableView
+class MaterialTreeView : public QTreeView
 {
 public:
-    using QTableView::QTableView;
-    ~MaterialTableView() override;
+    using QTreeView::QTreeView;
 
-    void setModel(QAbstractItemModel *model) override;
+    explicit MaterialTreeView(QWidget* parent = nullptr);
+    ~MaterialTreeView() override;
+
+    void setModel(QAbstractItemModel* model) override;
 
 protected:
     void keyPressEvent(QKeyEvent* event) override;
     QModelIndex moveCursor(QAbstractItemView::CursorAction cursorAction,
                            Qt::KeyboardModifiers modifiers) override;
+
 private:
     bool isTextField(const QModelIndex& index) const;
     bool isKeyboardEditable(const QModelIndex& index) const;
 };
 
-#endif // MATERIALTABLEVIEW_H
+#endif // MATERIALTREEVIEW_H

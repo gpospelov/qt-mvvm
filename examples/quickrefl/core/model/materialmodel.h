@@ -18,6 +18,9 @@ namespace ModelView
 class ExternalProperty;
 }
 
+class MaterialBaseItem;
+class MaterialContainerItem;
+
 /*!
 @class MaterialModel
 @brief Model to hold MaterialItems.
@@ -36,8 +39,13 @@ public:
     ModelView::ExternalProperty material_property(const std::string& id,
                                                   std::string container_id = std::string());
 
+    void cloneMaterial(const MaterialBaseItem* item);
+
+    void addDefaultMaterial();
+
 private:
     void init_model();
+    MaterialContainerItem* materialContainer();
 };
 
 #endif //  MATERIALMODEL_H

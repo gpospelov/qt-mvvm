@@ -20,6 +20,8 @@ class ViewModelDelegate;
 
 class MaterialModel;
 class MaterialTableView;
+class MaterialTreeView;
+class MaterialSelectionModel;
 
 //! Widget to hold material table (MaterialTableView) and all corresponding models and delegates.
 //! Belongs to MaterialEditor.
@@ -31,10 +33,13 @@ public:
     MaterialTableWidget(MaterialModel* material_model, QWidget* parent = nullptr);
     ~MaterialTableWidget();
 
+    MaterialSelectionModel* selectionModel() const;
+
 private:
     MaterialModel* material_model{nullptr};
     std::unique_ptr<ModelView::AbstractViewModel> view_model;
-    MaterialTableView* table_view{nullptr};
+    MaterialSelectionModel* selection_model{nullptr};
+    MaterialTreeView* table_view{nullptr};
     std::unique_ptr<ModelView::ViewModelDelegate> m_delegate;
 };
 

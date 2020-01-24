@@ -79,29 +79,14 @@ void ContainerEditorWidget::onMoveDown()
 {
     auto items = selected_items();
     std::reverse(items.begin(), items.end()); // to correctly move multiple selections
-
-    for (auto item : items) {
-        auto tagrow = item->parent()->tagRowOfItem(item);
-
-        // item already at the buttom
-        if (tagrow.row == item->parent()->childrenCount() - 1)
-            return;
-
-        m_model->moveItem(item, item->parent(), {tagrow.tag, tagrow.row + 1});
-    }
+    for (auto item : selected_items())
+        ModelView::Utils::MoveDown(item);
 }
 
 void ContainerEditorWidget::onMoveUp()
 {
-    for (auto item : selected_items()) {
-        auto tagrow = item->parent()->tagRowOfItem(item);
-
-        // item already at the top
-        if (tagrow.row == 0)
-            return;
-
-        m_model->moveItem(item, item->parent(), {tagrow.tag, tagrow.row - 1});
-    }
+    for (auto item : selected_items())
+        ModelView::Utils::MoveUp(item);
 }
 
 std::vector<SessionItem*> ContainerEditorWidget::selected_items() const

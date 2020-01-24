@@ -16,7 +16,8 @@
 
 MaterialEditor::MaterialEditor(MaterialModel* material_model, QWidget* parent)
     : QWidget(parent), material_model(material_model),
-      actions(new MaterialEditorActions(this)), toolbar(new MaterialEditorToolBar(actions)),
+      actions(new MaterialEditorActions(material_model, this)),
+      toolbar(new MaterialEditorToolBar(actions)),
       table_widget(new MaterialTableWidget(material_model))
 {
     setWindowTitle("Material editor");
@@ -25,6 +26,8 @@ MaterialEditor::MaterialEditor(MaterialModel* material_model, QWidget* parent)
     layout->addWidget(toolbar);
     layout->addWidget(table_widget);
     setLayout(layout);
+
+    actions->setMaterialSelectionModel(table_widget->selectionModel());
 }
 
 MaterialEditor::~MaterialEditor() = default;
