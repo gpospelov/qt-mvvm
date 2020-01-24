@@ -9,7 +9,6 @@
 
 #include "google_test.h"
 #include "test_utils.h"
-#include <QDebug>
 #include <memory>
 #include <mvvm/model/itempool.h>
 #include <mvvm/model/itemutils.h>
@@ -124,7 +123,7 @@ TEST_F(SessionItemTest, variantMismatch)
 
 TEST_F(SessionItemTest, registerItem)
 {
-    std::unique_ptr<SessionItem> item(new SessionItem);
+    auto item = std::make_unique<SessionItem>();
     auto item_id = item->identifier();
     EXPECT_EQ(item->roles().size(), 2u);
 
@@ -180,7 +179,7 @@ TEST_F(SessionItemTest, registerDefaultTag)
 
 TEST_F(SessionItemTest, insertItem)
 {
-    std::unique_ptr<SessionItem> parent(new SessionItem);
+    auto parent = std::make_unique<SessionItem>();
     parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
 
     std::unique_ptr<SessionItem> child(new SessionItem);
@@ -207,7 +206,7 @@ TEST_F(SessionItemTest, insertItem)
 
 TEST_F(SessionItemTest, insertChildren)
 {
-    std::unique_ptr<SessionItem> parent(new SessionItem);
+    auto parent = std::make_unique<SessionItem>();
     parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
 
     auto child1 = new SessionItem;
@@ -258,7 +257,7 @@ TEST_F(SessionItemTest, insertChildren)
 
 TEST_F(SessionItemTest, takeItem)
 {
-    std::unique_ptr<SessionItem> parent(new SessionItem);
+    auto parent = std::make_unique<SessionItem>();
     parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
 
     auto child1 = new SessionItem;
@@ -292,7 +291,7 @@ TEST_F(SessionItemTest, singleTagAndItems)
     const std::string tag1 = "tag1";
 
     // creating parent with one tag
-    std::unique_ptr<SessionItem> parent(new SessionItem);
+    auto parent = std::make_unique<SessionItem>();
     parent->registerTag(TagInfo::universalTag(tag1));
     EXPECT_TRUE(parent->isTag(tag1));
 
@@ -336,7 +335,7 @@ TEST_F(SessionItemTest, twoTagsAndItems)
     const std::string tag2 = "tag2";
 
     // creating parent with one tag
-    std::unique_ptr<SessionItem> parent(new SessionItem);
+    auto parent = std::make_unique<SessionItem>();
     parent->registerTag(TagInfo::universalTag(tag1));
     parent->registerTag(TagInfo::universalTag(tag2));
     EXPECT_TRUE(parent->isTag(tag1));
@@ -392,7 +391,7 @@ TEST_F(SessionItemTest, tagWithLimits)
 {
     const std::string tag1 = "tag1";
     const int maxItems = 3;
-    std::unique_ptr<SessionItem> parent(new SessionItem);
+    auto parent = std::make_unique<SessionItem>();
     parent->registerTag(TagInfo(tag1, 0, maxItems, std::vector<std::string>() = {}));
 
     // placing maximu allowed number of items
@@ -430,7 +429,7 @@ TEST_F(SessionItemTest, tagModelTypes)
     const std::string modelType3 = "ModelType3";
     const std::string modelType4 = "ModelType4";
 
-    std::unique_ptr<SessionItem> parent(new SessionItem("ModelType"));
+    auto parent = std::make_unique<SessionItem>();
     parent->registerTag(
         TagInfo(tag1, 0, -1, std::vector<std::string>() = {modelType1, modelType2}));
     parent->registerTag(TagInfo(tag2, 0, -1, std::vector<std::string>() = {modelType3}));
@@ -460,7 +459,7 @@ TEST_F(SessionItemTest, tagFromItem)
     const std::string tag2 = "tag2";
 
     // creating parent with one tag
-    std::unique_ptr<SessionItem> parent(new SessionItem);
+    auto parent = std::make_unique<SessionItem>();
     parent->registerTag(TagInfo::universalTag(tag1));
     parent->registerTag(TagInfo::universalTag(tag2));
 
@@ -495,7 +494,7 @@ TEST_F(SessionItemTest, tagRowFromItem)
     const std::string tag2 = "tag2";
 
     // creating parent with one tag
-    std::unique_ptr<SessionItem> parent(new SessionItem);
+    auto parent = std::make_unique<SessionItem>();
     parent->registerTag(TagInfo::universalTag(tag1));
     parent->registerTag(TagInfo::universalTag(tag2));
 
@@ -559,7 +558,7 @@ TEST_F(SessionItemTest, itemsInTag)
     const std::string tag2 = "tag2";
 
     // creating parent with one tag
-    std::unique_ptr<SessionItem> parent(new SessionItem);
+    auto parent = std::make_unique<SessionItem>();
     parent->registerTag(TagInfo::universalTag(tag1));
     parent->registerTag(TagInfo::universalTag(tag2));
 

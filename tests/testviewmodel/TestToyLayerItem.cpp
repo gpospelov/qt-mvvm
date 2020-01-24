@@ -29,6 +29,16 @@ public:
 
 ToyLayerItemTest::~ToyLayerItemTest() = default;
 
+//! Initial state.
+
+TEST_F(ToyLayerItemTest, initialState)
+{
+    ToyItems::LayerItem item;
+    EXPECT_TRUE(item.isSinglePropertyTag(ToyItems::LayerItem::P_THICKNESS));
+    EXPECT_TRUE(item.isSinglePropertyTag(ToyItems::LayerItem::P_COLOR));
+    EXPECT_FALSE(item.isSinglePropertyTag(ToyItems::LayerItem::T_PARTICLES));
+}
+
 //! Toy layer as prodused by toy SampleModel.
 
 TEST_F(ToyLayerItemTest, inModel)

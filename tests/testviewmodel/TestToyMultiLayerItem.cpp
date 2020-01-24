@@ -26,7 +26,15 @@ public:
 
 ToyMultilayerItemTest::~ToyMultilayerItemTest() = default;
 
-//! Toy multilayer as produced bo toy SampleModel.
+//! Initial state.
+
+TEST_F(ToyMultilayerItemTest, initialState)
+{
+    ToyItems::MultiLayerItem item;
+    EXPECT_FALSE(item.isSinglePropertyTag(ToyItems::MultiLayerItem::T_LAYERS));
+}
+
+//! Toy multilayer in a SampleModel.
 
 TEST_F(ToyMultilayerItemTest, multiLayer)
 {
