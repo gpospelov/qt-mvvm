@@ -12,8 +12,6 @@
 
 #include <mvvm/viewmodel/celldecorationinterface.h>
 
-class QModelIndex;
-
 namespace ModelView
 {
 
@@ -22,9 +20,11 @@ namespace ModelView
 class CORE_EXPORT DefaultCellDecoration : public CellDecorationInterface
 {
 public:
-    bool hasCustomDecoration(const QModelIndex& index) const;
-    std::string cellText(const QModelIndex& index) const;
-    void initStyleOption(QStyleOptionViewItem* option, const QModelIndex& index);
+    bool hasCustomDecoration(const QModelIndex& index) const override;
+    void initStyleOption(QStyleOptionViewItem* option, const QModelIndex& index) override;
+
+protected:
+    virtual std::string cellText(const QModelIndex& index) const;
 };
 
 } // namespace ModelView
