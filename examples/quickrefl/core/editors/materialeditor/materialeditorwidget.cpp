@@ -8,31 +8,34 @@
 // ************************************************************************** //
 
 #include "materialeditorwidget.h"
+#include "materialitems.h"
+#include "materialmodel.h"
+#include "materialselectionmodel.h"
 #include "materialtableview.h"
 #include "materialtreeview.h"
+#include <QVBoxLayout>
+#include <mvvm/model/modelutils.h>
 #include <mvvm/viewmodel/abstractviewmodel.h>
 #include <mvvm/viewmodel/standardviewmodels.h>
 #include <mvvm/viewmodel/viewmodeldelegate.h>
-#include <mvvm/model/modelutils.h>
-#include "materialmodel.h"
-#include "materialselectionmodel.h"
-#include "materialitems.h"
-#include <QVBoxLayout>
+
 MaterialEditorWidget::MaterialEditorWidget(MaterialModel* material_model, QWidget* parent)
     : QWidget(parent), material_model(material_model),
       view_model(ModelView::Utils::CreatePropertyTableViewModel(material_model)),
       selection_model(new MaterialSelectionModel(view_model.get(), this)),
-      table_view(new MaterialTreeView), m_delegate(std::make_unique<ModelView::ViewModelDelegate>())
+      material_view(new MaterialTreeView),
+      m_delegate(std::make_unique<ModelView::ViewModelDelegate>())
 {
     auto layout = new QVBoxLayout;
     layout->setContentsMargins(0, 0, 0, 0);
-    layout->addWidget(table_view);
+    layout->addWidget(material_view);
     setLayout(layout);
 
-    view_model->setRootSessionItem(ModelView::Utils::TopItem<MaterialContainerItem>(material_model));
-    table_view->setModel(view_model.get());
-    table_view->setSelectionModel(selection_model);
-    table_view->setItemDelegate(m_delegate.get());
+    view_model->setRootSessionItem(
+        ModelView::Utils::TopItem<MaterialContainerItem>(material_model));
+    material_view->setModel(view_model.get());
+    material_view->setSelectionModel(selection_model);
+    material_view->setItemDelegate(m_delegate.get());
 }
 
 MaterialEditorWidget::~MaterialEditorWidget() = default;

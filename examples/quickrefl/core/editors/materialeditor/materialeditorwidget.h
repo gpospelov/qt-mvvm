@@ -13,10 +13,11 @@
 #include <QWidget>
 #include <memory>
 
-namespace ModelView {
+namespace ModelView
+{
 class AbstractViewModel;
 class ViewModelDelegate;
-}
+} // namespace ModelView
 
 class MaterialModel;
 class MaterialTableView;
@@ -39,7 +40,7 @@ private:
     MaterialModel* material_model{nullptr};
     std::unique_ptr<ModelView::AbstractViewModel> view_model;
     MaterialSelectionModel* selection_model{nullptr};
-    MaterialTreeView* table_view{nullptr};
+    MaterialTreeView* material_view{nullptr};
     std::unique_ptr<ModelView::ViewModelDelegate> m_delegate;
 };
 
