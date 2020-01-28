@@ -13,6 +13,7 @@
 #include <mvvm/model/customvariants.h>
 #include <mvvm/model/externalproperty.h>
 #include <mvvm/viewmodel/defaultcelldecoration.h>
+#include <mvvm/widgets/scientificspinbox.h>
 
 using namespace ModelView;
 
@@ -38,6 +39,10 @@ std::optional<std::string> DefaultCellDecoration::cellText(const QModelIndex& in
     else if (Utils::IsColorVariant(variant))
         return std::optional<std::string>{std::string()};
 
+    else if (Utils::IsDoubleVariant(variant))
+        return std::optional<std::string>{
+            ScientificSpinBox::toString(index.data(Qt::EditRole).value<double>(), 4).toStdString()};
+
     return {};
 }
 
@@ -46,5 +51,8 @@ void DefaultCellDecoration::initStyleOption(QStyleOptionViewItem* option, const 
     if (!hasCustomDecoration(index))
         return;
 
-    option->text = QString::fromStdString(cellText(index).value());
+    auto value = cellText(index).value();
+    option->text = QString::fromStdString(value);
+    if (value.empty())
+        option->features &= ~QStyleOptionViewItem::HasDisplay;
 }
