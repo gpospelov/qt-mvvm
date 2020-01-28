@@ -8,7 +8,6 @@
 // ************************************************************************** //
 
 #include "MaterialTableWidget.h"
-#include "CustomCellDecoration.h"
 #include "MaterialItems.h"
 #include "MaterialModel.h"
 #include "MaterialTableViewModel.h"
@@ -23,8 +22,6 @@ using namespace ModelView;
 MaterialTableWidget::MaterialTableWidget(MaterialModel* material_model, QWidget* parent)
     : QWidget(parent), m_treeView(new QTreeView), m_delegate(std::make_unique<ViewModelDelegate>())
 {
-    m_delegate->setCellDecoration(std::make_unique<CustomCellDecoration>());
-
     auto layout = new QVBoxLayout;
     layout->setMargin(0);
     layout->setSpacing(0);

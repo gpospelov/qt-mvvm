@@ -8,7 +8,6 @@
 // ************************************************************************** //
 
 #include "CustomModelDelegate.h"
-#include "CustomCellDecoration.h"
 #include "CustomEditorFactory.h"
 
 using namespace ModelView;
