@@ -11,6 +11,7 @@
 #define MVVM_VIEWMODEL_DEFAULTCELLDECORATION_H
 
 #include <mvvm/viewmodel/celldecorationinterface.h>
+#include <optional>
 
 namespace ModelView
 {
@@ -24,7 +25,7 @@ public:
     void initStyleOption(QStyleOptionViewItem* option, const QModelIndex& index) override;
 
 protected:
-    virtual std::string cellText(const QModelIndex& index) const;
+    virtual std::optional<std::string> cellText(const QModelIndex& index) const;
 };
 
 } // namespace ModelView

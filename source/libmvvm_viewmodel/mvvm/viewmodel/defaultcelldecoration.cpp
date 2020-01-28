@@ -18,21 +18,22 @@ using namespace ModelView;
 
 bool DefaultCellDecoration::hasCustomDecoration(const QModelIndex& index) const
 {
-    return !cellText(index).empty();
+    return cellText(index) ? true : false;
 }
 
-std::string DefaultCellDecoration::cellText(const QModelIndex& index) const
+std::optional<std::string> DefaultCellDecoration::cellText(const QModelIndex& index) const
 {
     auto variant = index.data();
 
     if (Utils::IsComboVariant(variant))
-        return variant.value<ComboProperty>().label();
+        return std::optional<std::string>{variant.value<ComboProperty>().label()};
 
     else if (Utils::IsBoolVariant(variant))
-        return variant.value<bool>() ? "True" : "False";
+        return variant.value<bool>() ? std::optional<std::string>{"True"}
+                                     : std::optional<std::string>{"False"};
 
     else if (Utils::IsExtPropertyVariant(variant))
-        return variant.value<ExternalProperty>().text();
+        return std::optional<std::string>{variant.value<ExternalProperty>().text()};
 
     return {};
 }
@@ -42,5 +43,5 @@ void DefaultCellDecoration::initStyleOption(QStyleOptionViewItem* option, const 
     if (!hasCustomDecoration(index))
         return;
 
-    option->text = QString::fromStdString(cellText(index));
+    option->text = QString::fromStdString(cellText(index).value());
 }
