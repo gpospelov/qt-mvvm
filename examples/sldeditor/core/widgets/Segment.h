@@ -10,8 +10,8 @@
 #ifndef SEGMENT_H
 #define SEGMENT_H
 
-#include <QGraphicsItem>
 #include "Handle.h"
+#include "ViewObject.h"
 
 class SegmentItem;
 
@@ -20,7 +20,7 @@ class SegmentItem;
 @brief The visual Segment element
 */
 
-class Segment : public QGraphicsObject
+class Segment : public ViewObject
 {
     
 public:
@@ -51,6 +51,7 @@ private:
     void connectHandles();
     //! Disconnect the handle signaling
     void disconnectHandles();
+
 
 public:
     //! On move update the model

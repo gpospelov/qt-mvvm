@@ -28,6 +28,8 @@ public:
     AxisViewWidget();
     //! Resize widget and redraw items
     void resize(const QSize size);
+    //! Get the axis object
+    AxisObject* getAxisObject() const;
 
 private:
     AxisObject* _axis_object;

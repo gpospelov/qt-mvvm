@@ -21,7 +21,7 @@ ViewWidget::ViewWidget(QWidget *parent) : QGraphicsView(parent)
     setCacheMode(QGraphicsView::CacheNone);
     setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
     setDragMode(QGraphicsView::ScrollHandDrag);
-
+    // scale(1.0, -1.0);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
@@ -60,4 +60,9 @@ QRectF ViewWidget::visibleRect()  const
     QPointF br = tl + viewport()->rect().bottomRight();
     QMatrix mat = matrix().inverted();
     return mat.mapRect(QRectF(tl,br));
+}
+
+AxisViewWidget* ViewWidget::getAxisView() const
+{
+    return _axis;
 }

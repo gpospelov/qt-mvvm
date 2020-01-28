@@ -78,7 +78,7 @@ void MainWindow::initApplication()
     values.push_back(std::vector<double>{80.,40.});
     values.push_back(std::vector<double>{50.,30.});
     values.push_back(std::vector<double>{90.,50.});
-    values.push_back(std::vector<double>{50.,10.});
+    values.push_back(std::vector<double>{50.,0.});
 
     std::vector<Segment*> top_segments;
     std::vector<std::vector<Handle*>> handles;
@@ -94,7 +94,7 @@ void MainWindow::initApplication()
 
         //set parameters
         segment_item->setProperty(SegmentItem::P_X_POS, data[0]/2+edge);
-        segment_item->setProperty(SegmentItem::P_Y_POS, -data[1]);
+        segment_item->setProperty(SegmentItem::P_Y_POS, data[1]);
         segment_item->setProperty(SegmentItem::P_WIDTH, data[0]);
         edge += data[0];
 
@@ -115,7 +115,7 @@ void MainWindow::initApplication()
     std::vector<Segment*> side_segments;
     edge = 0;
     for (int i = 1; i < top_segments.size(); ++i){
-        edge += values[i][0];
+        edge += values[i-1][0];
 
         //initialise segments
         SegmentItem* segment_item = m_models->viewItemsModel()->addSegment();
@@ -129,7 +129,7 @@ void MainWindow::initApplication()
         segment_item->setProperty(
             SegmentItem::P_Y_POS, 
             (top_segments[i]->segmentItem()->property(SegmentItem::P_Y_POS).toDouble() 
-            - top_segments[i-1]->segmentItem()->property(SegmentItem::P_Y_POS).toDouble())/2
+            - top_segments[i-1]->segmentItem()->property(SegmentItem::P_Y_POS).toDouble())/2.
             + top_segments[i-1]->segmentItem()->property(SegmentItem::P_Y_POS).toDouble());
         segment_item->setProperty(
             SegmentItem::P_HEIGHT, 

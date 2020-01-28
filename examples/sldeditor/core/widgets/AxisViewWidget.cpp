@@ -41,3 +41,8 @@ void AxisViewWidget::resize(const QSize size)
     update();
 
 }
+
+AxisObject* AxisViewWidget::getAxisObject() const
+{
+    return _axis_object;
+}

@@ -9,6 +9,7 @@
 
 #include "Handle.h"
 #include "HandleItem.h"
+#include "AxisObject.h"
 
 #include <QGraphicsScene>
 #include <QPainter>
@@ -28,11 +29,11 @@ Handle::Handle(HandleItem* item) :
 {
     auto on_property_change = [this](ModelView::SessionItem*, std::string property_name) {
         if (property_name == HandleItem::P_XPOS){
-            setX(handle_item->property(HandleItem::P_XPOS).toDouble());
+            update();
             emit moved();
         }
         if (property_name == HandleItem::P_YPOS){
-            setY(handle_item->property(HandleItem::P_YPOS).toDouble());
+            update();
             emit moved();
         }
         if (property_name == HandleItem::P_COLOR)
@@ -40,33 +41,39 @@ Handle::Handle(HandleItem* item) :
         if (property_name == HandleItem::P_RADIUS)
             update();
     };
+
     handle_item->mapper()->setOnPropertyChange(on_property_change, this);
-
-    setPos(item->property(HandleItem::P_XPOS).toDouble(),
-           item->property(HandleItem::P_YPOS).toDouble());
-
-    // setFlag(QGraphicsItem::ItemIsMovable);
     setZValue(20);
-
 }
 
 void Handle::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
 {
+    AxisObject* axis = getAxes();
+    if (!axis) return;
+
     painter->setBrush(color);
     painter->drawEllipse(
-        - handle_item->property(HandleItem::P_RADIUS).toDouble()/2,
-        - handle_item->property(HandleItem::P_RADIUS).toDouble()/2,
-        handle_item->property(HandleItem::P_RADIUS).toDouble(),
-        handle_item->property(HandleItem::P_RADIUS).toDouble()
+        QPointF(
+            axis->fromRealToSceneX(handle_item->property(HandleItem::P_XPOS).toDouble()),
+            axis->fromRealToSceneY(handle_item->property(HandleItem::P_YPOS).toDouble())
+        ),
+        handle_item->property(HandleItem::P_RADIUS).toDouble()/2.,
+        handle_item->property(HandleItem::P_RADIUS).toDouble()/2.
     );
 }
 
 QPainterPath Handle::shape() const
 {
     QPainterPath path;
+
+    AxisObject* axis = getAxes();
+    if (!axis) return path;
+
     path.addRect(
-        - handle_item->property(HandleItem::P_RADIUS).toDouble()/2,
-        - handle_item->property(HandleItem::P_RADIUS).toDouble()/2,
+        axis->fromRealToSceneX(handle_item->property(HandleItem::P_XPOS).toDouble() 
+        - handle_item->property(HandleItem::P_RADIUS).toDouble()/2),
+        axis->fromRealToSceneY(handle_item->property(HandleItem::P_YPOS).toDouble()
+        - handle_item->property(HandleItem::P_RADIUS).toDouble()/2),
         handle_item->property(HandleItem::P_RADIUS).toDouble(),
         handle_item->property(HandleItem::P_RADIUS).toDouble()
     );
@@ -76,16 +83,24 @@ QPainterPath Handle::shape() const
 QRectF Handle::boundingRect() const
 {
     double epsilon = 10;
+
+    AxisObject* axis = getAxes();
+    if (!axis) return QRectF(0,0,1,1);
+
     return QRectF(
-        - handle_item->property(HandleItem::P_RADIUS).toDouble()/2 - epsilon,
-        - handle_item->property(HandleItem::P_RADIUS).toDouble()/2 - epsilon,
-        handle_item->property(HandleItem::P_RADIUS).toDouble() + 2*epsilon,
-        handle_item->property(HandleItem::P_RADIUS).toDouble() + 2*epsilon
+        axis->fromRealToSceneX(handle_item->property(HandleItem::P_XPOS).toDouble() 
+        - handle_item->property(HandleItem::P_RADIUS).toDouble()/2)-epsilon,
+        axis->fromRealToSceneY(handle_item->property(HandleItem::P_YPOS).toDouble()
+        - handle_item->property(HandleItem::P_RADIUS).toDouble()/2)-epsilon,
+        handle_item->property(HandleItem::P_RADIUS).toDouble()+2*epsilon,
+        handle_item->property(HandleItem::P_RADIUS).toDouble()+2*epsilon
     );
 }
 
 void Handle::mouseMoveEvent(QGraphicsSceneMouseEvent *event){
-    handle_item->setProperty(HandleItem::P_XPOS, double(x()+ event->pos().x()));
-    // handle_item->setProperty(HandleItem::P_YPOS, double(y()+ event->pos().y()));
+    AxisObject* axis = getAxes();
+    if (!axis) return ;
+
+    handle_item->setProperty(HandleItem::P_XPOS, axis->fromSceneToRealX(double(x()+ event->pos().x())));
 }
 

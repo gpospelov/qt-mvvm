@@ -23,6 +23,8 @@ public:
     ViewWidget(QWidget *parent = nullptr);
     //! Get the visible region
     QRectF visibleRect() const;
+    //! Get the axis
+    AxisViewWidget* getAxisView() const;
 
 protected:
     //! Manage wheelevent

@@ -10,6 +10,8 @@
 #ifndef HANDLE_H
 #define HANDLE_H
 
+#include "ViewObject.h"
+
 #include <QGraphicsItem>
 
 class HandleItem;
@@ -19,7 +21,7 @@ class HandleItem;
 @brief The visual handle element
 */
 
-class Handle : public QGraphicsObject
+class Handle : public ViewObject
 {
     Q_OBJECT
 public:

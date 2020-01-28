@@ -41,17 +41,28 @@ public:
     //! Refresh call after update of the viewport
     void refresh();
 
+    double fromSceneToRealX(double input_x) const;
+    double fromSceneToRealY(double input_y) const;
+    double fromRealToSceneX(double input_x) const;
+    double fromRealToSceneY(double input_y) const;
+
+    double fromSceneToAxisX(double input_x) const;
+    double fromSceneToAxisY(double input_y) const;
+    double fromAxisToSceneX(double input_x) const;
+    double fromAxisToSceneY(double input_y) const;
+
 private:
-    //! Reprocess boundaries internally
     void getViewPortSize();
+    QRectF getSceneRect() const;
 
 private:
     //! The color property
     QColor color;
-    //! The view rectangle in coordinates
-    QRectF _view_port_size;
     //! The axis item linking all the info
     AxisItem* _axis_item;
+    //! Scale items
+    double m_x_scale_factor;
+    double m_y_scale_factor;
 
 };
 
