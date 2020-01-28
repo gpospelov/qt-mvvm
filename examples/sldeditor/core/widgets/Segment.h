@@ -35,6 +35,8 @@ public:
     void paint(
         QPainter* painter, const QStyleOptionGraphicsItem* option, 
         QWidget* widget) override;
+    //! Get the scene rectangle
+    QRectF getSceneRect() const;
 
     //! Retrieve segment item
     SegmentItem* segmentItem() const {return segment_item;};

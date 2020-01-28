@@ -29,11 +29,15 @@ Handle::Handle(HandleItem* item) :
 {
     auto on_property_change = [this](ModelView::SessionItem*, std::string property_name) {
         if (property_name == HandleItem::P_XPOS){
-            update();
+            AxisObject* axis = getAxes();
+            setX(axis->fromRealToSceneX(
+                handle_item->property(HandleItem::P_XPOS).toDouble()));
             emit moved();
         }
         if (property_name == HandleItem::P_YPOS){
-            update();
+            AxisObject* axis = getAxes();
+            setY(axis->fromRealToSceneY(
+                handle_item->property(HandleItem::P_YPOS).toDouble()));
             emit moved();
         }
         if (property_name == HandleItem::P_COLOR)
@@ -53,10 +57,7 @@ void Handle::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
 
     painter->setBrush(color);
     painter->drawEllipse(
-        QPointF(
-            axis->fromRealToSceneX(handle_item->property(HandleItem::P_XPOS).toDouble()),
-            axis->fromRealToSceneY(handle_item->property(HandleItem::P_YPOS).toDouble())
-        ),
+        QPointF(0,0),
         handle_item->property(HandleItem::P_RADIUS).toDouble()/2.,
         handle_item->property(HandleItem::P_RADIUS).toDouble()/2.
     );
@@ -69,14 +70,7 @@ QPainterPath Handle::shape() const
     AxisObject* axis = getAxes();
     if (!axis) return path;
 
-    path.addRect(
-        axis->fromRealToSceneX(handle_item->property(HandleItem::P_XPOS).toDouble() 
-        - handle_item->property(HandleItem::P_RADIUS).toDouble()/2),
-        axis->fromRealToSceneY(handle_item->property(HandleItem::P_YPOS).toDouble()
-        - handle_item->property(HandleItem::P_RADIUS).toDouble()/2),
-        handle_item->property(HandleItem::P_RADIUS).toDouble(),
-        handle_item->property(HandleItem::P_RADIUS).toDouble()
-    );
+    path.addRect(getSceneRect());
     return path;
 }
 
@@ -87,14 +81,29 @@ QRectF Handle::boundingRect() const
     AxisObject* axis = getAxes();
     if (!axis) return QRectF(0,0,1,1);
 
+    return getSceneRect();
+}
+
+QRectF Handle::getSceneRect() const
+{
+    AxisObject* axis = getAxes();
+    if (!axis) return QRectF(0,0,1,1);
+
     return QRectF(
-        axis->fromRealToSceneX(handle_item->property(HandleItem::P_XPOS).toDouble() 
-        - handle_item->property(HandleItem::P_RADIUS).toDouble()/2)-epsilon,
-        axis->fromRealToSceneY(handle_item->property(HandleItem::P_YPOS).toDouble()
-        - handle_item->property(HandleItem::P_RADIUS).toDouble()/2)-epsilon,
-        handle_item->property(HandleItem::P_RADIUS).toDouble()+2*epsilon,
-        handle_item->property(HandleItem::P_RADIUS).toDouble()+2*epsilon
+        QPointF(
+            axis->fromRealToSceneX(
+                - handle_item->property(HandleItem::P_RADIUS).toDouble()/2.),
+            axis->fromRealToSceneY(
+                + handle_item->property(HandleItem::P_RADIUS).toDouble()/2.)
+        ),
+        QPointF(
+            axis->fromRealToSceneX(
+                handle_item->property(HandleItem::P_RADIUS).toDouble()/2.),
+            axis->fromRealToSceneY(
+                - handle_item->property(HandleItem::P_RADIUS).toDouble()/2.)
+        )
     );
+    
 }
 
 void Handle::mouseMoveEvent(QGraphicsSceneMouseEvent *event){

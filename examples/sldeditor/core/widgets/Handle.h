@@ -36,6 +36,9 @@ public:
     void paint(
         QPainter* painter, const QStyleOptionGraphicsItem* option, 
         QWidget* widget) override;
+    //! Get the scene rectangle
+    QRectF getSceneRect() const;
+    
     //! Return a pointer to the handle item
     HandleItem* handleItem() const {return handle_item;};
 
