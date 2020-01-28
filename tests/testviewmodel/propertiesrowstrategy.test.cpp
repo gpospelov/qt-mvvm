@@ -106,9 +106,7 @@ TEST_F(PropertiesRowStrategyTest, vectorItemAutoLabels)
     EXPECT_EQ(item.property(VectorItem::P_Y).value<double>(), 0.0);
     EXPECT_EQ(item.property(VectorItem::P_Z).value<double>(), 0.0);
 
-    QStringList expected = QStringList() << QString::fromStdString(VectorItem::P_X)
-                                         << QString::fromStdString(VectorItem::P_Y)
-                                         << QString::fromStdString(VectorItem::P_Z);
+    QStringList expected = QStringList() << "X" << "Y" << "Z";
 
     PropertiesRowStrategy strategy;
     auto items = strategy.constructRow(&item);
