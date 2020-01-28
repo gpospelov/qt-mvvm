@@ -20,9 +20,9 @@ namespace ModelView
 class CORE_EXPORT VectorItem : public CompoundItem
 {
 public:
-    static const std::string P_X;
-    static const std::string P_Y;
-    static const std::string P_Z;
+    static inline const std::string P_X = "P_X";
+    static inline const std::string P_Y = "P_Y";
+    static inline const std::string P_Z = "P_Z";
 
     VectorItem();
 

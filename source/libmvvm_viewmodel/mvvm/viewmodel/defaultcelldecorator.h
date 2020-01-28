@@ -7,26 +7,27 @@
 //
 // ************************************************************************** //
 
-#ifndef MATERIALTABLEDECORATOR_H
-#define MATERIALTABLEDECORATOR_H
+#ifndef MVVM_VIEWMODEL_DEFAULTCELLDECORATOR_H
+#define MVVM_VIEWMODEL_DEFAULTCELLDECORATOR_H
 
-#include "SampleViewDecorator.h"
+#include <mvvm/viewmodel/celldecoratorinterface.h>
+#include <optional>
 
-/*!
-@class MaterialTableDecorator
-@brief A decorator for MaterialTableDelegate. Features text removal from decorated items.
-*/
+namespace ModelView
+{
 
-class MaterialTableDecorator : public SampleViewDecorator
+//! Generates default cell decorations for Qt trees and tables.
+
+class CORE_EXPORT DefaultCellDecorator : public CellDecoratorInterface
 {
 public:
-    ~MaterialTableDecorator() override;
-
     bool hasCustomDecoration(const QModelIndex& index) const override;
     void initStyleOption(QStyleOptionViewItem* option, const QModelIndex& index) override;
 
-private:
-    bool hasDecorationImpl(const QModelIndex& index) const;
+protected:
+    virtual std::optional<std::string> cellText(const QModelIndex& index) const;
 };
 
-#endif // MATERIALTABLEDECORATOR_H
+} // namespace ModelView
+
+#endif // MVVM_VIEWMODEL_DEFAULTCELLDECORATOR_H

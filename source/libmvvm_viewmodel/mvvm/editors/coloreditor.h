@@ -33,8 +33,8 @@ private:
     QColor currentColor() const;
 
     void update_components() override;
-    QLabel* m_textLabel;
-    QLabel* m_pixmapLabel;
+    QLabel* m_textLabel{nullptr};
+    QLabel* m_pixmapLabel{nullptr};
     LostFocusFilter* m_focusFilter;
 };
 

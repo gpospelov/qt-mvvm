@@ -7,26 +7,29 @@
 //
 // ************************************************************************** //
 
-#ifndef CELLDECORATORINTERFACE_H
-#define CELLDECORATORINTERFACE_H
+#ifndef MVVM_VIEWMODEL_CELLDECORATORINTERFACE_H
+#define MVVM_VIEWMODEL_CELLDECORATORINTERFACE_H
+
+#include <mvvm/core/export.h>
+#include <string>
 
 class QModelIndex;
 class QStyleOptionViewItem;
 
-/*!
-@class CellDecoratorInterface
-@brief Generates cell decorations. Intended for use with SampleViewDelegate and its descendants.
-*/
+namespace ModelView
+{
 
-class CellDecoratorInterface
+//! Interface class to generate cell decorations (i.e. text) in Qt trees and tables.
+
+class CORE_EXPORT CellDecoratorInterface
 {
 public:
-    virtual ~CellDecoratorInterface();
+    virtual ~CellDecoratorInterface() = default;
+
     virtual bool hasCustomDecoration(const QModelIndex& index) const = 0;
     virtual void initStyleOption(QStyleOptionViewItem* option, const QModelIndex& index) = 0;
-
-protected:
-    bool hasValue(const QModelIndex& index, int role) const;
 };
 
-#endif //  CELLDECORATORINTERFACE_H
+} // namespace ModelView
+
+#endif // MVVM_VIEWMODEL_CELLDECORATORINTERFACE_H

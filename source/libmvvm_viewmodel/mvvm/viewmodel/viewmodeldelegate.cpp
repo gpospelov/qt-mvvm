@@ -11,14 +11,14 @@
 #include <mvvm/editors/customeditor.h>
 #include <mvvm/editors/defaulteditorfactory.h>
 #include <mvvm/model/comboproperty.h>
-#include <mvvm/viewmodel/defaultcelldecoration.h>
+#include <mvvm/viewmodel/defaultcelldecorator.h>
 #include <mvvm/viewmodel/viewmodeldelegate.h>
 
 using namespace ModelView;
 
 ViewModelDelegate::ViewModelDelegate(QObject* parent)
     : QStyledItemDelegate(parent), m_editor_factory(std::make_unique<DefaultEditorFactory>()),
-      m_cell_decoration(std::make_unique<DefaultCellDecoration>())
+      m_cell_decoration(std::make_unique<DefaultCellDecorator>())
 {
 }
 
@@ -29,20 +29,9 @@ void ViewModelDelegate::setEditorFactory(std::unique_ptr<EditorFactoryInterface>
     m_editor_factory = std::move(editor_factory);
 }
 
-void ViewModelDelegate::setCellDecoration(std::unique_ptr<CellDecorationInterface> cell_decoration)
+void ViewModelDelegate::setCellDecoration(std::unique_ptr<CellDecoratorInterface> cell_decoration)
 {
     m_cell_decoration = std::move(cell_decoration);
-}
-
-void ViewModelDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option,
-                              const QModelIndex& index) const
-{
-    if (m_cell_decoration->hasCustomDecoration(index)) {
-        QString text = QString::fromStdString(m_cell_decoration->cellText(index));
-        paintCustomLabel(painter, option, index, text);
-    } else {
-        QStyledItemDelegate::paint(painter, option, index);
-    }
 }
 
 QWidget* ViewModelDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& option,
@@ -111,13 +100,11 @@ void ViewModelDelegate::onCustomEditorDataChanged()
         emit closeEditor(editor);
 }
 
-void ViewModelDelegate::paintCustomLabel(QPainter* painter, const QStyleOptionViewItem& option,
-                                         const QModelIndex& index, const QString& text) const
+void ViewModelDelegate::initStyleOption(QStyleOptionViewItem* option,
+                                        const QModelIndex& index) const
 {
-    QStyleOptionViewItem opt = option;
-    initStyleOption(&opt, index); // calling original method to take into accounts colors etc
-    opt.text = displayText(text, option.locale); // by overriding text with ours
-    const QWidget* widget = opt.widget;
-    QStyle* style = widget ? widget->style() : QApplication::style();
-    style->drawControl(QStyle::CE_ItemViewItem, &opt, painter, widget);
+    QStyledItemDelegate::initStyleOption(option, index);
+
+    if (m_cell_decoration && m_cell_decoration->hasCustomDecoration(index))
+        m_cell_decoration->initStyleOption(option, index);
 }

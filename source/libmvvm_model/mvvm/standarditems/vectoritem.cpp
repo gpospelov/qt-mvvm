@@ -14,15 +14,11 @@
 
 using namespace ModelView;
 
-const std::string VectorItem::P_X = "X";
-const std::string VectorItem::P_Y = "Y";
-const std::string VectorItem::P_Z = "Z";
-
 VectorItem::VectorItem() : CompoundItem(Constants::VectorItemType)
 {
-    addProperty(P_X, 0.0);
-    addProperty(P_Y, 0.0);
-    addProperty(P_Z, 0.0);
+    addProperty(P_X, 0.0)->setDisplayName("X");
+    addProperty(P_Y, 0.0)->setDisplayName("Y");
+    addProperty(P_Z, 0.0)->setDisplayName("Z");
 
     setEditable(false);
 

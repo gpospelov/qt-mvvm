@@ -1,8 +1,6 @@
 set(library_name layereditorcore)
 
 target_sources(${library_name} PRIVATE
-    CustomCellDecoration.cpp
-    CustomCellDecoration.h
     CustomEditorFactory.cpp
     CustomEditorFactory.h
     CustomModelDelegate.cpp
