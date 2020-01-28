@@ -1,6 +1,8 @@
 # Static library: quickreflcore.
 
 target_sources(quickreflcore PRIVATE
+    customeditorfactory.cpp
+    customeditorfactory.h
     layereditor.cpp
     layereditor.h
     layereditoractions.cpp
@@ -13,6 +15,10 @@ target_sources(quickreflcore PRIVATE
     layerselectionmodel.h
     layertreeview.cpp
     layertreeview.h
+    layerviewmodel.cpp
+    layerviewmodel.h
+    layerviewmodelcontroller.cpp
+    layerviewmodelcontroller.h
 )
 
 target_include_directories(quickreflcore PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>)

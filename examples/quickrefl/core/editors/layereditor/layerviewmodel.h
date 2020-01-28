@@ -1,0 +1,31 @@
+// ************************************************************************** //
+//
+//  Model-view-view-model framework for large GUI applications
+//
+//! @license   GNU General Public License v3 or higher (see COPYING)
+//! @authors   see AUTHORS
+//
+// ************************************************************************** //
+
+#ifndef LAYERTABLEVIEWMODEL_H
+#define LAYERTABLEVIEWMODEL_H
+
+#include <mvvm/viewmodel/abstractviewmodel.h>
+
+namespace ModelView
+{
+class SessionModel;
+} // namespace ModelView
+
+/*!
+@class LayerTableViewModel
+@brief View model to display content of MultiLayerItem in table like views.
+*/
+
+class LayerTableViewModel : public ModelView::AbstractViewModel
+{
+public:
+    LayerTableViewModel(ModelView::SessionModel* model = nullptr, QObject* parent = nullptr);
+};
+
+#endif //  LAYERTABLEVIEWMODEL_H
