@@ -34,17 +34,6 @@ void ViewModelDelegate::setCellDecoration(std::unique_ptr<CellDecorationInterfac
     m_cell_decoration = std::move(cell_decoration);
 }
 
-void ViewModelDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option,
-                              const QModelIndex& index) const
-{
-    if (m_cell_decoration->hasCustomDecoration(index)) {
-        QString text = QString::fromStdString(m_cell_decoration->cellText(index));
-        paintCustomLabel(painter, option, index, text);
-    } else {
-        QStyledItemDelegate::paint(painter, option, index);
-    }
-}
-
 QWidget* ViewModelDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& option,
                                          const QModelIndex& index) const
 {
@@ -111,13 +100,11 @@ void ViewModelDelegate::onCustomEditorDataChanged()
         emit closeEditor(editor);
 }
 
-void ViewModelDelegate::paintCustomLabel(QPainter* painter, const QStyleOptionViewItem& option,
-                                         const QModelIndex& index, const QString& text) const
+void ViewModelDelegate::initStyleOption(QStyleOptionViewItem* option,
+                                        const QModelIndex& index) const
 {
-    QStyleOptionViewItem opt = option;
-    initStyleOption(&opt, index); // calling original method to take into accounts colors etc
-    opt.text = displayText(text, option.locale); // by overriding text with ours
-    const QWidget* widget = opt.widget;
-    QStyle* style = widget ? widget->style() : QApplication::style();
-    style->drawControl(QStyle::CE_ItemViewItem, &opt, painter, widget);
+    QStyledItemDelegate::initStyleOption(option, index);
+
+    if (m_cell_decoration && m_cell_decoration->hasCustomDecoration(index))
+        m_cell_decoration->initStyleOption(option, index);
 }

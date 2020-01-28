@@ -31,9 +31,6 @@ public:
     void setEditorFactory(std::unique_ptr<EditorFactoryInterface> editor_factory);
     void setCellDecoration(std::unique_ptr<CellDecorationInterface> cell_decoration);
 
-    void paint(QPainter* painter, const QStyleOptionViewItem& option,
-               const QModelIndex& index) const override;
-
     QWidget* createEditor(QWidget* parent, const QStyleOptionViewItem& option,
                           const QModelIndex& index) const override;
 
@@ -49,9 +46,8 @@ public:
 public slots:
     void onCustomEditorDataChanged();
 
-private:
-    void paintCustomLabel(QPainter* painter, const QStyleOptionViewItem& option,
-                          const QModelIndex& index, const QString& text) const;
+protected:
+    void initStyleOption(QStyleOptionViewItem* option, const QModelIndex& index) const override;
 
     std::unique_ptr<EditorFactoryInterface> m_editor_factory;
     std::unique_ptr<CellDecorationInterface> m_cell_decoration;
