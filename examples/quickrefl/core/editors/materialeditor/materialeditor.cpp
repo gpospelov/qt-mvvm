@@ -18,16 +18,16 @@ MaterialEditor::MaterialEditor(MaterialModel* material_model, QWidget* parent)
     : QWidget(parent), material_model(material_model),
       actions(new MaterialEditorActions(material_model, this)),
       toolbar(new MaterialEditorToolBar(actions)),
-      table_widget(new MaterialEditorWidget(material_model))
+      editor_widget(new MaterialEditorWidget(material_model))
 {
     setWindowTitle("Material editor");
 
     auto layout = new QVBoxLayout;
     layout->addWidget(toolbar);
-    layout->addWidget(table_widget);
+    layout->addWidget(editor_widget);
     setLayout(layout);
 
-    actions->setMaterialSelectionModel(table_widget->selectionModel());
+    actions->setMaterialSelectionModel(editor_widget->selectionModel());
 }
 
 MaterialEditor::~MaterialEditor() = default;

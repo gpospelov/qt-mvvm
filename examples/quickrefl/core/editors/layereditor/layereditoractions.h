@@ -31,8 +31,6 @@ public:
     void onRemove();
     void onMoveUp();
     void onMoveDown();
-    void onExport();
-    void onImport();
 
     void setSelectionModel(LayerSelectionModel* selection_model);
 

@@ -35,7 +35,7 @@ private:
     MaterialModel* material_model{nullptr};
     MaterialEditorActions* actions{nullptr};
     MaterialEditorToolBar* toolbar{nullptr};
-    MaterialEditorWidget* table_widget{nullptr};
+    MaterialEditorWidget* editor_widget{nullptr};
 };
 
 #endif // MATERIALEDITOR_H

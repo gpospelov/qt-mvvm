@@ -49,16 +49,6 @@ void LayerEditorActions::onMoveDown()
     qDebug() << "LayerEditorActions::onMoveDown()";
 }
 
-void LayerEditorActions::onExport()
-{
-    qDebug() << "LayerEditorActions::onExport()";
-}
-
-void LayerEditorActions::onImport()
-{
-    qDebug() << "LayerEditorActions::onImport()";
-}
-
 void LayerEditorActions::setSelectionModel(LayerSelectionModel* selection_model)
 {
     p_impl->selection_model = selection_model;
