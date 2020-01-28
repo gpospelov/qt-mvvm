@@ -35,6 +35,9 @@ std::optional<std::string> DefaultCellDecoration::cellText(const QModelIndex& in
     else if (Utils::IsExtPropertyVariant(variant))
         return std::optional<std::string>{variant.value<ExternalProperty>().text()};
 
+    else if (Utils::IsColorVariant(variant))
+        return std::optional<std::string>{std::string()};
+
     return {};
 }
 
