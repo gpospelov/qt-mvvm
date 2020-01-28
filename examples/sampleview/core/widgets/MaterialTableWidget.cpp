@@ -10,10 +10,10 @@
 #include "MaterialTableWidget.h"
 #include "MaterialControlPanel.h"
 #include "MaterialModel.h"
-#include "MaterialTableDecorator.h"
 #include "MaterialTableView.h"
 #include "MaterialTableViewModel.h"
 #include "MaterialViewDelegate.h"
+#include <mvvm/viewmodel/defaultcelldecoration.h>
 #include <QHeaderView>
 #include <QVBoxLayout>
 
@@ -47,7 +47,7 @@ std::unique_ptr<QStyledItemDelegate>
 createMaterialTableDelegate(MaterialViewController& view_controller)
 {
     auto result = std::make_unique<MaterialViewDelegate>(view_controller);
-    result->setCellDecorator(std::make_unique<MaterialTableDecorator>());
+    result->setCellDecorator(std::make_unique<ModelView::DefaultCellDecoration>());
     return std::move(result); // complain on C++11 defect
 }
 
