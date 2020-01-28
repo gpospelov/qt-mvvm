@@ -4,6 +4,7 @@ add_library(${library_name} STATIC "")
 
 add_subdirectory(mainwindow)
 add_subdirectory(model)
+add_subdirectory(editors/layereditor)
 add_subdirectory(editors/materialeditor)
 add_subdirectory(resources)
 
