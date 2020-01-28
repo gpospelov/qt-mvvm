@@ -15,8 +15,6 @@ target_sources(quickreflcore PRIVATE
     materialtablewidget.h
     materialtreeview.cpp
     materialtreeview.h
-    styleutils.cpp
-    styleutils.h
 )
 
 target_include_directories(quickreflcore PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>)
