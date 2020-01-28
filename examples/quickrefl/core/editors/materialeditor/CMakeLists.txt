@@ -7,12 +7,12 @@ target_sources(quickreflcore PRIVATE
     materialeditoractions.h
     materialeditortoolbar.cpp
     materialeditortoolbar.h
+    materialeditorwidget.cpp
+    materialeditorwidget.h
     materialselectionmodel.cpp
     materialselectionmodel.h
     materialtableview.cpp
     materialtableview.h
-    materialtablewidget.cpp
-    materialtablewidget.h
     materialtreeview.cpp
     materialtreeview.h
 )

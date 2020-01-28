@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "materialtablewidget.h"
+#include "materialeditorwidget.h"
 #include "materialtableview.h"
 #include "materialtreeview.h"
 #include <mvvm/viewmodel/abstractviewmodel.h>
@@ -18,8 +18,7 @@
 #include "materialselectionmodel.h"
 #include "materialitems.h"
 #include <QVBoxLayout>
-
-MaterialTableWidget::MaterialTableWidget(MaterialModel* material_model, QWidget* parent)
+MaterialEditorWidget::MaterialEditorWidget(MaterialModel* material_model, QWidget* parent)
     : QWidget(parent), material_model(material_model),
       view_model(ModelView::Utils::CreatePropertyTableViewModel(material_model)),
       selection_model(new MaterialSelectionModel(view_model.get(), this)),
@@ -36,9 +35,9 @@ MaterialTableWidget::MaterialTableWidget(MaterialModel* material_model, QWidget*
     table_view->setItemDelegate(m_delegate.get());
 }
 
-MaterialTableWidget::~MaterialTableWidget() = default;
+MaterialEditorWidget::~MaterialEditorWidget() = default;
 
-MaterialSelectionModel* MaterialTableWidget::selectionModel() const
+MaterialSelectionModel* MaterialEditorWidget::selectionModel() const
 {
     return selection_model;
 }

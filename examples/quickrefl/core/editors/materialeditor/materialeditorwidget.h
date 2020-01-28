@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MATERIALTABLEWIDGET_H
-#define MATERIALTABLEWIDGET_H
+#ifndef MATERIALEDITORWIDGET_H
+#define MATERIALEDITORWIDGET_H
 
 #include <QWidget>
 #include <memory>
@@ -23,15 +23,15 @@ class MaterialTableView;
 class MaterialTreeView;
 class MaterialSelectionModel;
 
-//! Widget to hold material table (MaterialTableView) and all corresponding models and delegates.
+//! Widget to hold material table (MaterialTreeView) and all corresponding models and delegates.
 //! Belongs to MaterialEditor.
 
-class MaterialTableWidget : public QWidget
+class MaterialEditorWidget : public QWidget
 {
     Q_OBJECT
 public:
-    MaterialTableWidget(MaterialModel* material_model, QWidget* parent = nullptr);
-    ~MaterialTableWidget();
+    MaterialEditorWidget(MaterialModel* material_model, QWidget* parent = nullptr);
+    ~MaterialEditorWidget();
 
     MaterialSelectionModel* selectionModel() const;
 
@@ -43,4 +43,4 @@ private:
     std::unique_ptr<ModelView::ViewModelDelegate> m_delegate;
 };
 
-#endif // MATERIALTABLEWIDGET_H
+#endif // MATERIALEDITORWIDGET_H

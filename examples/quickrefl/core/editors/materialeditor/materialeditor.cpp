@@ -11,14 +11,14 @@
 #include "materialeditoractions.h"
 #include "materialeditortoolbar.h"
 #include "materialmodel.h"
-#include "materialtablewidget.h"
+#include "materialeditorwidget.h"
 #include <QVBoxLayout>
 
 MaterialEditor::MaterialEditor(MaterialModel* material_model, QWidget* parent)
     : QWidget(parent), material_model(material_model),
       actions(new MaterialEditorActions(material_model, this)),
       toolbar(new MaterialEditorToolBar(actions)),
-      table_widget(new MaterialTableWidget(material_model))
+      table_widget(new MaterialEditorWidget(material_model))
 {
     setWindowTitle("Material editor");
 
