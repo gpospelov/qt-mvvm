@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_VIEWMODEL_CELLDECORATIONINTERFACE_H
-#define MVVM_VIEWMODEL_CELLDECORATIONINTERFACE_H
+#ifndef MVVM_VIEWMODEL_CELLDECORATORINTERFACE_H
+#define MVVM_VIEWMODEL_CELLDECORATORINTERFACE_H
 
 #include <mvvm/core/export.h>
 #include <string>
@@ -21,10 +21,10 @@ namespace ModelView
 
 //! Interface class to generate cell decorations (i.e. text) in Qt trees and tables.
 
-class CORE_EXPORT CellDecorationInterface
+class CORE_EXPORT CellDecoratorInterface
 {
 public:
-    virtual ~CellDecorationInterface() = default;
+    virtual ~CellDecoratorInterface() = default;
 
     virtual bool hasCustomDecoration(const QModelIndex& index) const = 0;
     virtual void initStyleOption(QStyleOptionViewItem* option, const QModelIndex& index) = 0;
@@ -32,4 +32,4 @@ public:
 
 } // namespace ModelView
 
-#endif // MVVM_VIEWMODEL_CELLDECORATIONINTERFACE_H
+#endif // MVVM_VIEWMODEL_CELLDECORATORINTERFACE_H

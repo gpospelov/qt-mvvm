@@ -12,17 +12,17 @@
 #include <mvvm/model/comboproperty.h>
 #include <mvvm/model/customvariants.h>
 #include <mvvm/model/externalproperty.h>
-#include <mvvm/viewmodel/defaultcelldecoration.h>
+#include <mvvm/viewmodel/defaultcelldecorator.h>
 #include <mvvm/widgets/scientificspinbox.h>
 
 using namespace ModelView;
 
-bool DefaultCellDecoration::hasCustomDecoration(const QModelIndex& index) const
+bool DefaultCellDecorator::hasCustomDecoration(const QModelIndex& index) const
 {
     return cellText(index) ? true : false;
 }
 
-std::optional<std::string> DefaultCellDecoration::cellText(const QModelIndex& index) const
+std::optional<std::string> DefaultCellDecorator::cellText(const QModelIndex& index) const
 {
     auto variant = index.data();
 
@@ -46,7 +46,7 @@ std::optional<std::string> DefaultCellDecoration::cellText(const QModelIndex& in
     return {};
 }
 
-void DefaultCellDecoration::initStyleOption(QStyleOptionViewItem* option, const QModelIndex& index)
+void DefaultCellDecorator::initStyleOption(QStyleOptionViewItem* option, const QModelIndex& index)
 {
     if (!hasCustomDecoration(index))
         return;

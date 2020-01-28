@@ -15,7 +15,7 @@
 
 namespace ModelView
 {
-class CellDecorationInterface;
+class CellDecoratorInterface;
 }
 
 /*!
@@ -25,7 +25,7 @@ class CellDecorationInterface;
 
 class SampleViewDelegate : public QStyledItemDelegate
 {
-    using decoration_ptr = std::unique_ptr<ModelView::CellDecorationInterface>;
+    using decoration_ptr = std::unique_ptr<ModelView::CellDecoratorInterface>;
 
 public:
     explicit SampleViewDelegate(QObject* parent = nullptr);

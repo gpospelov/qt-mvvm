@@ -10,11 +10,11 @@
 #include "SampleViewDelegate.h"
 #include "SampleEditorFactory.h"
 #include <QApplication>
-#include <mvvm/viewmodel/defaultcelldecoration.h>
+#include <mvvm/viewmodel/defaultcelldecorator.h>
 
 SampleViewDelegate::SampleViewDelegate(QObject* parent)
     : QStyledItemDelegate(parent),
-      m_cell_decorator(std::make_unique<ModelView::DefaultCellDecoration>())
+      m_cell_decorator(std::make_unique<ModelView::DefaultCellDecorator>())
 {
     setItemEditorFactory(SampleEditorFactory::createStandardSampleEditorFactory().release());
 }

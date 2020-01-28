@@ -11,14 +11,14 @@
 #include <mvvm/editors/customeditor.h>
 #include <mvvm/editors/defaulteditorfactory.h>
 #include <mvvm/model/comboproperty.h>
-#include <mvvm/viewmodel/defaultcelldecoration.h>
+#include <mvvm/viewmodel/defaultcelldecorator.h>
 #include <mvvm/viewmodel/viewmodeldelegate.h>
 
 using namespace ModelView;
 
 ViewModelDelegate::ViewModelDelegate(QObject* parent)
     : QStyledItemDelegate(parent), m_editor_factory(std::make_unique<DefaultEditorFactory>()),
-      m_cell_decoration(std::make_unique<DefaultCellDecoration>())
+      m_cell_decoration(std::make_unique<DefaultCellDecorator>())
 {
 }
 
@@ -29,7 +29,7 @@ void ViewModelDelegate::setEditorFactory(std::unique_ptr<EditorFactoryInterface>
     m_editor_factory = std::move(editor_factory);
 }
 
-void ViewModelDelegate::setCellDecoration(std::unique_ptr<CellDecorationInterface> cell_decoration)
+void ViewModelDelegate::setCellDecoration(std::unique_ptr<CellDecoratorInterface> cell_decoration)
 {
     m_cell_decoration = std::move(cell_decoration);
 }

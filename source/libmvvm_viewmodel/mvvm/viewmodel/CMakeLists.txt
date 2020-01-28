@@ -3,10 +3,10 @@ target_sources(mvvm_viewmodel PRIVATE
     abstractviewmodel.h
     abstractviewmodelcontroller.cpp
     abstractviewmodelcontroller.h
-    celldecorationinterface.h
+    celldecoratorinterface.h
     childrenstrategyinterface.h
-    defaultcelldecoration.cpp
-    defaultcelldecoration.h
+    defaultcelldecorator.cpp
+    defaultcelldecorator.h
     defaultviewmodel.cpp
     defaultviewmodel.h
     labeldatarowstrategy.cpp

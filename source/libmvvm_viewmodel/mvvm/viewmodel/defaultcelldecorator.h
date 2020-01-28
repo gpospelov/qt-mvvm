@@ -7,10 +7,10 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_VIEWMODEL_DEFAULTCELLDECORATION_H
-#define MVVM_VIEWMODEL_DEFAULTCELLDECORATION_H
+#ifndef MVVM_VIEWMODEL_DEFAULTCELLDECORATOR_H
+#define MVVM_VIEWMODEL_DEFAULTCELLDECORATOR_H
 
-#include <mvvm/viewmodel/celldecorationinterface.h>
+#include <mvvm/viewmodel/celldecoratorinterface.h>
 #include <optional>
 
 namespace ModelView
@@ -18,7 +18,7 @@ namespace ModelView
 
 //! Generates default cell decorations for Qt trees and tables.
 
-class CORE_EXPORT DefaultCellDecoration : public CellDecorationInterface
+class CORE_EXPORT DefaultCellDecorator : public CellDecoratorInterface
 {
 public:
     bool hasCustomDecoration(const QModelIndex& index) const override;
@@ -30,4 +30,4 @@ protected:
 
 } // namespace ModelView
 
-#endif // MVVM_VIEWMODEL_DEFAULTCELLDECORATION_H
+#endif // MVVM_VIEWMODEL_DEFAULTCELLDECORATOR_H
