@@ -19,7 +19,7 @@ using namespace ModelView;
 
 bool DefaultCellDecorator::hasCustomDecoration(const QModelIndex& index) const
 {
-    return cellText(index) ? true : false;
+    return cellText(index).has_value();
 }
 
 std::optional<std::string> DefaultCellDecorator::cellText(const QModelIndex& index) const
