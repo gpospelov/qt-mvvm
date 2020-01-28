@@ -14,6 +14,7 @@
 #include <string>
 
 class QModelIndex;
+class QStyleOptionViewItem;
 
 namespace ModelView
 {
@@ -27,6 +28,7 @@ public:
 
     virtual bool hasCustomDecoration(const QModelIndex& index) const = 0;
     virtual std::string cellText(const QModelIndex& index) const = 0;
+    virtual void initStyleOption(QStyleOptionViewItem* option, const QModelIndex& index) = 0;
 };
 
 } // namespace ModelView

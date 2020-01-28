@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include <QModelIndex>
+#include <QStyleOptionViewItem>
 #include <mvvm/model/comboproperty.h>
 #include <mvvm/model/customvariants.h>
 #include <mvvm/model/externalproperty.h>
@@ -34,4 +35,12 @@ std::string DefaultCellDecoration::cellText(const QModelIndex& index) const
         return variant.value<ExternalProperty>().text();
 
     return {};
+}
+
+void DefaultCellDecoration::initStyleOption(QStyleOptionViewItem* option, const QModelIndex& index)
+{
+    if (!hasCustomDecoration(index))
+        return;
+
+    option->text = QString::fromStdString(cellText(index));
 }

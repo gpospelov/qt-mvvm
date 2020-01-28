@@ -24,6 +24,7 @@ class CORE_EXPORT DefaultCellDecoration : public CellDecorationInterface
 public:
     bool hasCustomDecoration(const QModelIndex& index) const;
     std::string cellText(const QModelIndex& index) const;
+    void initStyleOption(QStyleOptionViewItem* option, const QModelIndex& index);
 };
 
 } // namespace ModelView
