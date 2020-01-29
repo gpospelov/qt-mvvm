@@ -25,7 +25,7 @@ class ExternalProperty;
 //! Custom editor for table/tree cells to select ExternalProperty from the list of
 //! external properties. Uses callbacks to retrieve vector of possible properties.
 
-class ExternalPropertyComboEditor : public ModelView::CustomEditor
+class CORE_EXPORT ExternalPropertyComboEditor : public ModelView::CustomEditor
 {
 public:
     using callback_t = std::function<std::vector<ModelView::ExternalProperty>()>;
