@@ -12,6 +12,7 @@
 #include <QLayout>
 #include <QScrollBar>
 
+//! The constructor
 ViewWidget::ViewWidget(QWidget* parent) : QGraphicsView(parent)
 {
     QGraphicsScene* scene = new QGraphicsScene(parent = this);
@@ -31,6 +32,7 @@ ViewWidget::ViewWidget(QWidget* parent) : QGraphicsView(parent)
     _axis->resize(size());
 }
 
+//! Manage wheelevent
 void ViewWidget::wheelEvent(QWheelEvent* event)
 {
     if (event->delta() > 0)
@@ -41,12 +43,14 @@ void ViewWidget::wheelEvent(QWheelEvent* event)
     _axis->resize(size());
 }
 
+//! The resize event that needs to propagate to axes
 void ViewWidget::resizeEvent(QResizeEvent* event)
 {
     _axis->resize(size());
     QGraphicsView::resizeEvent(event);
 }
 
+//! Get the visible region
 QRectF ViewWidget::visibleRect() const
 {
     QPointF tl(horizontalScrollBar()->value(), verticalScrollBar()->value());
@@ -55,6 +59,7 @@ QRectF ViewWidget::visibleRect() const
     return mat.mapRect(QRectF(tl, br));
 }
 
+//! Get the axis
 AxisViewWidget* ViewWidget::getAxisView() const
 {
     return _axis;
