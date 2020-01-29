@@ -193,14 +193,13 @@ void SegmentView::moveHandles()
     if (!axis)
         return;
 
-    // Put the handles in place
-    double x_pos;
-    double y_pos;
-    HandleItem* item;
-
     disconnectHandles();
 
     if (segment_item->property(SegmentItem::P_HORIZONTAL).toBool()) {
+
+        double x_pos = 0.;
+        double y_pos = 0.;
+        HandleItem* item;
 
         x_pos = (segment_item->property(SegmentItem::P_X_POS).toDouble()
                  - segment_item->property(SegmentItem::P_WIDTH).toDouble() / 2);
@@ -221,6 +220,10 @@ void SegmentView::moveHandles()
         item->setProperty(HandleItem::P_YPOS, y_pos);
 
     } else {
+
+        double x_pos = 0.;
+        double y_pos = 0.;
+        HandleItem* item;
 
         x_pos = (segment_item->property(SegmentItem::P_X_POS).toDouble());
 

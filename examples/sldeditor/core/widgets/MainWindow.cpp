@@ -84,7 +84,7 @@ void MainWindow::initApplication()
     std::vector<std::vector<HandleView*>> handles;
 
     double edge = 0;
-    for (std::vector<double> data : values) {
+    for (const auto& data : values) {
 
         // initialise segments
         SegmentItem* segment_item = m_models->viewItemsModel()->addSegment();
