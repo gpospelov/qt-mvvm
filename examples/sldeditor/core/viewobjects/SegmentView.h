@@ -35,7 +35,8 @@ public:
 public:
     void addHandles(HandleView* left_handle_in, HandleView* right_handle_in);
     void moveHandles();
-    void refreshFromHandles();
+    void refreshFromLeftHandle();
+    void refreshFromRightHandle();
 
 private:
     void connectHandles();

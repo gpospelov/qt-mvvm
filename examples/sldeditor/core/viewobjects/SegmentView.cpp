@@ -140,21 +140,21 @@ void SegmentView::addHandles(HandleView* left_handle_in, HandleView* right_handl
 //! Connect the handles
 void SegmentView::connectHandles()
 {
-    connect(left_handle, &HandleView::moved, this, &SegmentView::refreshFromHandles);
+    connect(left_handle, &HandleView::moved, this, &SegmentView::refreshFromLeftHandle);
 
-    connect(right_handle, &HandleView::moved, this, &SegmentView::refreshFromHandles);
+    connect(right_handle, &HandleView::moved, this, &SegmentView::refreshFromRightHandle);
 }
 
 //! Disconnect the handle signaling
 void SegmentView::disconnectHandles()
 {
-    disconnect(left_handle, &HandleView::moved, this, &SegmentView::refreshFromHandles);
+    disconnect(left_handle, &HandleView::moved, this, &SegmentView::refreshFromLeftHandle);
 
-    disconnect(right_handle, &HandleView::moved, this, &SegmentView::refreshFromHandles);
+    disconnect(right_handle, &HandleView::moved, this, &SegmentView::refreshFromRightHandle);
 }
 
 //! Refresh the properties from the handle info
-void SegmentView::refreshFromHandles()
+void SegmentView::refreshFromLeftHandle()
 {
     if (!left_handle)
         return;
@@ -171,13 +171,48 @@ void SegmentView::refreshFromHandles()
     double right_y = right_handle->handleItem()->property(HandleItem::P_YPOS).toDouble();
 
     if (segment_item->property(SegmentItem::P_HORIZONTAL).toBool()) {
-        segment_item->setProperty(SegmentItem::P_X_POS, (right_x - left_x) / 2. + left_x);
+        segment_item->setProperty(SegmentItem::P_X_POS,
+                                  segment_item->property(SegmentItem::P_WIDTH).toDouble() / 2.
+                                      + left_x);
         segment_item->setProperty(SegmentItem::P_Y_POS, left_y);
-        segment_item->setProperty(SegmentItem::P_WIDTH, (right_x - left_x));
+        moveHandles();
     } else {
-        segment_item->setProperty(SegmentItem::P_X_POS, right_x);
+        segment_item->setProperty(SegmentItem::P_X_POS, left_x);
         segment_item->setProperty(SegmentItem::P_Y_POS, (right_y - left_y) / 2. + left_y);
         segment_item->setProperty(SegmentItem::P_HEIGHT, (right_y - left_y));
+        moveHandles();
+    }
+}
+
+//! Refresh the properties from the handle info
+void SegmentView::refreshFromRightHandle()
+{
+    if (!left_handle)
+        return;
+    if (!right_handle)
+        return;
+
+    AxisObject* axis = getAxes();
+    if (!axis)
+        return;
+
+    double left_x = left_handle->handleItem()->property(HandleItem::P_XPOS).toDouble();
+    double left_y = left_handle->handleItem()->property(HandleItem::P_YPOS).toDouble();
+    double right_x = right_handle->handleItem()->property(HandleItem::P_XPOS).toDouble();
+    double right_y = right_handle->handleItem()->property(HandleItem::P_YPOS).toDouble();
+
+    if (segment_item->property(SegmentItem::P_HORIZONTAL).toBool()) {
+        segment_item->setProperty(SegmentItem::P_WIDTH, (right_x - left_x));
+        segment_item->setProperty(SegmentItem::P_X_POS,
+                                  segment_item->property(SegmentItem::P_WIDTH).toDouble() / 2.
+                                      + left_x);
+        segment_item->setProperty(SegmentItem::P_Y_POS, left_y);
+        moveHandles();
+    } else {
+        segment_item->setProperty(SegmentItem::P_X_POS, left_x);
+        segment_item->setProperty(SegmentItem::P_Y_POS, (right_y - left_y) / 2. + left_y);
+        segment_item->setProperty(SegmentItem::P_HEIGHT, (right_y - left_y));
+        moveHandles();
     }
 }
 
