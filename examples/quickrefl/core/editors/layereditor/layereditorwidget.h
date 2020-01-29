@@ -18,7 +18,7 @@ namespace ModelView
 class ViewModelDelegate;
 } // namespace ModelView
 
-class SampleModel;
+class ApplicationModels;
 class LayerTreeView;
 class LayerSelectionModel;
 class LayerViewModel;
@@ -30,13 +30,12 @@ class LayerEditorWidget : public QWidget
 {
     Q_OBJECT
 public:
-    LayerEditorWidget(SampleModel* sample_model, QWidget* parent = nullptr);
+    LayerEditorWidget(ApplicationModels* models, QWidget* parent = nullptr);
     ~LayerEditorWidget();
 
     LayerSelectionModel* selectionModel() const;
 
 private:
-    SampleModel* sample_model{nullptr};
     std::unique_ptr<LayerViewModel> view_model;
     LayerSelectionModel* selection_model{nullptr};
     LayerTreeView* layer_view{nullptr};

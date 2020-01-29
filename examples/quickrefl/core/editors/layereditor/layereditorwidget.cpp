@@ -8,27 +8,30 @@
 // ************************************************************************** //
 
 #include "layereditorwidget.h"
-#include "samplemodel.h"
+#include "applicationmodels.h"
+#include "customeditorfactory.h"
 #include "layerselectionmodel.h"
 #include "layertreeview.h"
 #include "layerviewmodel.h"
+#include "materialmodel.h"
+#include "samplemodel.h"
 #include <QVBoxLayout>
 #include <mvvm/model/modelutils.h>
 #include <mvvm/viewmodel/abstractviewmodel.h>
 #include <mvvm/viewmodel/standardviewmodels.h>
 #include <mvvm/viewmodel/viewmodeldelegate.h>
 
-LayerEditorWidget::LayerEditorWidget(SampleModel* sample_model, QWidget* parent)
-    : QWidget(parent), sample_model(sample_model),
-      view_model(std::make_unique<LayerViewModel>(sample_model)),
+LayerEditorWidget::LayerEditorWidget(ApplicationModels* models, QWidget* parent)
+    : QWidget(parent), view_model(std::make_unique<LayerViewModel>(models->sampleModel())),
       selection_model(new LayerSelectionModel(view_model.get(), this)),
-      layer_view(new LayerTreeView),
-      m_delegate(std::make_unique<ModelView::ViewModelDelegate>())
+      layer_view(new LayerTreeView), m_delegate(std::make_unique<ModelView::ViewModelDelegate>())
 {
     auto layout = new QVBoxLayout;
     layout->setContentsMargins(0, 0, 0, 0);
     layout->addWidget(layer_view);
     setLayout(layout);
+
+    m_delegate->setEditorFactory(std::make_unique<CustomEditorFactory>(models));
 
     layer_view->setModel(view_model.get());
     layer_view->setSelectionModel(selection_model);

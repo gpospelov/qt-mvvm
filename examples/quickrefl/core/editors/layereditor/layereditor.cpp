@@ -8,17 +8,15 @@
 // ************************************************************************** //
 
 #include "layereditor.h"
+#include "applicationmodels.h"
 #include "layereditoractions.h"
 #include "layereditortoolbar.h"
-#include "samplemodel.h"
 #include "layereditorwidget.h"
 #include <QVBoxLayout>
 
-LayerEditor::LayerEditor(SampleModel* model, QWidget* parent)
-    : QWidget(parent), sample_model(model),
-      actions(new LayerEditorActions(model, this)),
-      toolbar(new LayerEditorToolBar(actions)),
-      editor_widget(new LayerEditorWidget(model))
+LayerEditor::LayerEditor(ApplicationModels* models, QWidget* parent)
+    : QWidget(parent), actions(new LayerEditorActions(models->sampleModel(), this)),
+      toolbar(new LayerEditorToolBar(actions)), editor_widget(new LayerEditorWidget(models))
 {
     setWindowTitle("Layer editor");
 

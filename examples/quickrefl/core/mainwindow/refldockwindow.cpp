@@ -22,7 +22,7 @@ ReflDockWindow::ReflDockWindow(QWidget* parent)
 
     docks_controller->addWidget(0, new MaterialEditor(models->materialModel()),
                                 Qt::TopDockWidgetArea);
-    docks_controller->addWidget(1, new LayerEditor(models->sampleModel()), Qt::TopDockWidgetArea);
+    docks_controller->addWidget(1, new LayerEditor(models.get()), Qt::TopDockWidgetArea);
     docks_controller->addWidget(2, new LayerCanvas, Qt::LeftDockWidgetArea);
     docks_controller->addWidget(3, new SLDEditor, Qt::RightDockWidgetArea);
     docks_controller->addWidget(4, new ReflPlotWidget, Qt::BottomDockWidgetArea);

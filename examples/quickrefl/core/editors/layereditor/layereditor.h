@@ -12,7 +12,7 @@
 
 #include <QWidget>
 
-class SampleModel;
+class ApplicationModels;
 class LayerEditorActions;
 class LayerEditorToolBar;
 class LayerEditorWidget;
@@ -28,11 +28,10 @@ class LayerEditor : public QWidget
 {
     Q_OBJECT
 public:
-    LayerEditor(SampleModel* model, QWidget* parent = nullptr);
+    LayerEditor(ApplicationModels* models, QWidget* parent = nullptr);
     ~LayerEditor();
 
 private:
-    SampleModel* sample_model{nullptr};
     LayerEditorActions* actions{nullptr};
     LayerEditorToolBar* toolbar{nullptr};
     LayerEditorWidget* editor_widget{nullptr};

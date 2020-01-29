@@ -7,9 +7,9 @@
 //
 // ************************************************************************** //
 
-#include "MaterialSelectorCellEditor.h"
-#include "MaterialItems.h"
-#include "MaterialModel.h"
+#include "materialselectorcelleditor.h"
+#include "materialitems.h"
+#include "materialmodel.h"
 #include <QColor>
 #include <QComboBox>
 #include <QStandardItemModel>
