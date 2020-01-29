@@ -8,8 +8,6 @@
 // ************************************************************************** //
 
 #include "materialselectorcelleditor.h"
-#include "materialitems.h"
-#include "materialmodel.h"
 #include <QColor>
 #include <QComboBox>
 #include <QStandardItemModel>
@@ -18,8 +16,8 @@
 
 using namespace ModelView;
 
-MaterialSelectorCellEditor::MaterialSelectorCellEditor(MaterialModel* model, QWidget* parent)
-    : CustomEditor(parent), m_box(new QComboBox), m_model(model),
+MaterialSelectorCellEditor::MaterialSelectorCellEditor(callback_t callback,  QWidget* parent)
+    : CustomEditor(parent), get_properties(callback), m_box(new QComboBox),
       m_combo_model(new QStandardItemModel(this))
 {
     setAutoFillBackground(true);
@@ -49,11 +47,11 @@ QSize MaterialSelectorCellEditor::minimumSizeHint() const
 void MaterialSelectorCellEditor::onIndexChanged(int index)
 {
     auto property = m_data.value<ModelView::ExternalProperty>();
-    auto mdata = m_model->material_data();
+    auto mdata = get_properties();
 
     if (index >= 0 && index < static_cast<int>(mdata.size())) {
         if (property != mdata[static_cast<size_t>(index)])
-            setDataIntern(QVariant::fromValue(mdata[index]));
+            setDataIntern(QVariant::fromValue(mdata[static_cast<size_t>(index)]));
     }
 }
 
@@ -64,7 +62,7 @@ void MaterialSelectorCellEditor::update_components()
     m_combo_model->clear();
 
     QStandardItem* parentItem = m_combo_model->invisibleRootItem();
-    for (auto prop : m_model->material_data()) {
+    for (auto prop : get_properties()) {
         auto item = new QStandardItem(QString::fromStdString(prop.text()));
         parentItem->appendRow(item);
         item->setData(prop.color(), Qt::DecorationRole);
@@ -84,7 +82,7 @@ int MaterialSelectorCellEditor::internIndex()
 
     auto property = m_data.value<ModelView::ExternalProperty>();
     int result(-1);
-    for (auto prop : m_model->material_data()) {
+    for (auto prop : get_properties()) {
         ++result;
         if (property.identifier() == prop.identifier())
             return result;
