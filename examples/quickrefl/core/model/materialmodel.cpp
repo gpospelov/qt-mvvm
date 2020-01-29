@@ -14,6 +14,7 @@
 #include <mvvm/model/externalproperty.h>
 #include <mvvm/model/itemcatalogue.h>
 #include <mvvm/model/modelutils.h>
+#include <mvvm/utils/numericutils.h>
 
 using namespace ModelView;
 
@@ -26,6 +27,37 @@ std::unique_ptr<ItemCatalogue> CreateItemCatalogue()
     result->registerItem<SLDMaterialItem>();
     return result;
 }
+
+const double rho_si = 2.01e-05;
+const double mu_si = 5.96e-07;
+
+const std::string air_material_name = "Air";
+const std::string substrate_material_name = "Si";
+const std::string default_material_name = "Default";
+
+QColor random_color()
+{
+    auto rndm = []() -> int { return ModelView::Utils::RandInt(0, 255); };
+    return QColor(rndm(), rndm(), rndm());
+}
+
+//! Returns map of good looking colors for standard material names.
+
+std::map<std::string, QColor> name_to_color_map()
+{
+    std::map<std::string, QColor> result = {{air_material_name, QColor(179, 242, 255)},
+                                            {substrate_material_name, QColor(205, 102, 0)},
+                                            {default_material_name, QColor(Qt::green)}};
+    return result;
+}
+
+QColor suggestMaterialColor(const std::string& name)
+{
+    static auto color_map = name_to_color_map();
+    auto it = color_map.find(name);
+    return it != color_map.end() ? it->second : random_color();
+}
+
 } // namespace
 
 MaterialModel::MaterialModel() : SessionModel("MaterialModel")
@@ -100,13 +132,9 @@ void MaterialModel::init_model()
 {
     auto container = insertItem<MaterialContainerItem>();
     auto material = insertItem<SLDMaterialItem>(container);
-    material->set_properties("Air", QColor(Qt::blue), 1e-06, 1e-07);
-
+    material->set_properties(air_material_name, suggestMaterialColor(air_material_name), 0.0, 0.0);
     material = insertItem<SLDMaterialItem>(container);
-    material->set_properties("Au", QColor(Qt::yellow), 2.4e-06, 5.6e-07);
-
-    material = insertItem<SLDMaterialItem>(container);
-    material->set_properties("Si2O3", QColor(Qt::darkCyan), 3.4e-06, 3.6e-07);
+    material->set_properties(substrate_material_name, suggestMaterialColor(substrate_material_name), rho_si, mu_si);
 }
 
 MaterialContainerItem* MaterialModel::materialContainer()
