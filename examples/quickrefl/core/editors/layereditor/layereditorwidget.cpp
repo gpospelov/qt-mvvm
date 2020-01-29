@@ -10,6 +10,7 @@
 #include "layereditorwidget.h"
 #include "applicationmodels.h"
 #include "customeditorfactory.h"
+#include "layeritems.h"
 #include "layerselectionmodel.h"
 #include "layertreeview.h"
 #include "layerviewmodel.h"
@@ -32,6 +33,8 @@ LayerEditorWidget::LayerEditorWidget(ApplicationModels* models, QWidget* parent)
     setLayout(layout);
 
     m_delegate->setEditorFactory(std::make_unique<CustomEditorFactory>(models));
+    view_model->setRootSessionItem(
+        ModelView::Utils::TopItem<MultiLayerItem>(models->sampleModel()));
 
     layer_view->setModel(view_model.get());
     layer_view->setSelectionModel(selection_model);
