@@ -74,12 +74,7 @@ void MainWindow::initApplication()
     }
 
     std::vector<std::vector<double>> values{
-        {50., 50.},
-        {80., 40.},
-        {50., 30.},
-        {90., 50.},
-        {50., 0.}
-    };
+        {50., 50.}, {80., 40.}, {50., 30.}, {90., 50.}, {50., 0.}};
 
     std::vector<SegmentView*> top_segments;
     std::vector<std::vector<HandleView*>> handles;
