@@ -28,11 +28,9 @@ public:
 
 protected:
     //! Manage wheelevent
-    void wheelEvent(QWheelEvent* event);
-    //! Manage the drag event
-    void drageMoveEvent(QDragMoveEvent* event);
+    void wheelEvent(QWheelEvent* event) override;
     //! The resize event that needs to propagate to axes
-    void resizeEvent(QResizeEvent* event);
+    void resizeEvent(QResizeEvent* event) override;
 
 private:
     //! The axis items

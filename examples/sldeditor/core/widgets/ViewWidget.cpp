@@ -38,18 +38,13 @@ void ViewWidget::wheelEvent(QWheelEvent* event)
     else
         scale(0.8, 0.8);
 
-    // _axis->resize();
-}
-
-void ViewWidget::drageMoveEvent(QDragMoveEvent* event)
-{
-    // _axis->resize();
-    drageMoveEvent(event);
+    _axis->resize(size());
 }
 
 void ViewWidget::resizeEvent(QResizeEvent* event)
 {
     _axis->resize(size());
+    QGraphicsView::resizeEvent(event);
 }
 
 QRectF ViewWidget::visibleRect() const
