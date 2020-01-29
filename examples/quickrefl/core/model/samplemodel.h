@@ -18,8 +18,7 @@ class SampleModel : public ModelView::SessionModel
 public:
     SampleModel();
 
-private:
-    void init_model();
+    void create_default_multilayer();
 };
 
 #endif //  SAMPLEMODEL_H
