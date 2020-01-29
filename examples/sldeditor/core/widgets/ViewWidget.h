@@ -28,5 +28,5 @@ protected:
     void resizeEvent(QResizeEvent* event) override;
 
 private:
-    AxisViewWidget* _axis;
+    AxisViewWidget* axis;
 };

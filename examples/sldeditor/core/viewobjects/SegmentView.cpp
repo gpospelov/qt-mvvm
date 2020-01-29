@@ -30,7 +30,7 @@
 //! The constructor
 SegmentView::SegmentView(SegmentItem* item)
     : segment_item(item), color(item->property(SegmentItem::P_COLOR).value<QColor>()),
-      _left_handle(nullptr), _right_handle(nullptr)
+      left_handle(nullptr), right_handle(nullptr)
 {
     auto on_property_change = [this](ModelView::SessionItem*, std::string property_name) {
         if (property_name == SegmentItem::P_X_POS) {
@@ -128,10 +128,10 @@ void SegmentView::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 }
 
 //! Add the handles at the end
-void SegmentView::addHandles(HandleView* left_handle, HandleView* right_handle)
+void SegmentView::addHandles(HandleView* left_handle_in, HandleView* right_handle_in)
 {
-    _left_handle = left_handle;
-    _right_handle = right_handle;
+    left_handle = left_handle_in;
+    right_handle = right_handle_in;
 
     connectHandles();
     moveHandles();
@@ -140,35 +140,35 @@ void SegmentView::addHandles(HandleView* left_handle, HandleView* right_handle)
 //! Connect the handles
 void SegmentView::connectHandles()
 {
-    connect(_left_handle, &HandleView::moved, this, &SegmentView::refreshFromHandles);
+    connect(left_handle, &HandleView::moved, this, &SegmentView::refreshFromHandles);
 
-    connect(_right_handle, &HandleView::moved, this, &SegmentView::refreshFromHandles);
+    connect(right_handle, &HandleView::moved, this, &SegmentView::refreshFromHandles);
 }
 
 //! Disconnect the handle signaling
 void SegmentView::disconnectHandles()
 {
-    disconnect(_left_handle, &HandleView::moved, this, &SegmentView::refreshFromHandles);
+    disconnect(left_handle, &HandleView::moved, this, &SegmentView::refreshFromHandles);
 
-    disconnect(_right_handle, &HandleView::moved, this, &SegmentView::refreshFromHandles);
+    disconnect(right_handle, &HandleView::moved, this, &SegmentView::refreshFromHandles);
 }
 
 //! Refresh the properties from the handle info
 void SegmentView::refreshFromHandles()
 {
-    if (!_left_handle)
+    if (!left_handle)
         return;
-    if (!_right_handle)
+    if (!right_handle)
         return;
 
     AxisObject* axis = getAxes();
     if (!axis)
         return;
 
-    double left_x = _left_handle->handleItem()->property(HandleItem::P_XPOS).toDouble();
-    double left_y = _left_handle->handleItem()->property(HandleItem::P_YPOS).toDouble();
-    double right_x = _right_handle->handleItem()->property(HandleItem::P_XPOS).toDouble();
-    double right_y = _right_handle->handleItem()->property(HandleItem::P_YPOS).toDouble();
+    double left_x = left_handle->handleItem()->property(HandleItem::P_XPOS).toDouble();
+    double left_y = left_handle->handleItem()->property(HandleItem::P_YPOS).toDouble();
+    double right_x = right_handle->handleItem()->property(HandleItem::P_XPOS).toDouble();
+    double right_y = right_handle->handleItem()->property(HandleItem::P_YPOS).toDouble();
 
     if (segment_item->property(SegmentItem::P_HORIZONTAL).toBool()) {
         segment_item->setProperty(SegmentItem::P_X_POS, (right_x - left_x) / 2. + left_x);
@@ -184,9 +184,9 @@ void SegmentView::refreshFromHandles()
 //! Move the linked handles
 void SegmentView::moveHandles()
 {
-    if (!_left_handle)
+    if (!left_handle)
         return;
-    if (!_right_handle)
+    if (!right_handle)
         return;
 
     AxisObject* axis = getAxes();
@@ -206,7 +206,7 @@ void SegmentView::moveHandles()
 
         y_pos = (segment_item->property(SegmentItem::P_Y_POS).toDouble());
 
-        item = _left_handle->handleItem();
+        item = left_handle->handleItem();
         item->setProperty(HandleItem::P_XPOS, x_pos);
         item->setProperty(HandleItem::P_YPOS, y_pos);
 
@@ -215,7 +215,7 @@ void SegmentView::moveHandles()
 
         y_pos = (segment_item->property(SegmentItem::P_Y_POS).toDouble());
 
-        item = _right_handle->handleItem();
+        item = right_handle->handleItem();
         item->setProperty(HandleItem::P_XPOS, x_pos);
         item->setProperty(HandleItem::P_YPOS, y_pos);
 
@@ -230,7 +230,7 @@ void SegmentView::moveHandles()
         y_pos = (segment_item->property(SegmentItem::P_Y_POS).toDouble()
                  - segment_item->property(SegmentItem::P_HEIGHT).toDouble() / 2);
 
-        item = _left_handle->handleItem();
+        item = left_handle->handleItem();
         item->setProperty(HandleItem::P_XPOS, x_pos);
         item->setProperty(HandleItem::P_YPOS, y_pos);
 
@@ -239,7 +239,7 @@ void SegmentView::moveHandles()
         y_pos = (segment_item->property(SegmentItem::P_Y_POS).toDouble()
                  + segment_item->property(SegmentItem::P_HEIGHT).toDouble() / 2);
 
-        item = _right_handle->handleItem();
+        item = right_handle->handleItem();
         item->setProperty(HandleItem::P_XPOS, x_pos);
         item->setProperty(HandleItem::P_YPOS, y_pos);
     }

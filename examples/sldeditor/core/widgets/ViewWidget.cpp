@@ -27,9 +27,9 @@ ViewWidget::ViewWidget(QWidget* parent) : QGraphicsView(parent)
 
     setContentsMargins(0, 0, 0, 0);
 
-    _axis = new AxisViewWidget();
-    _axis->setParent(viewport());
-    _axis->resize(size());
+    axis = new AxisViewWidget();
+    axis->setParent(viewport());
+    axis->resize(size());
 }
 
 //! Manage wheelevent
@@ -40,13 +40,13 @@ void ViewWidget::wheelEvent(QWheelEvent* event)
     else
         scale(0.8, 0.8);
 
-    _axis->resize(size());
+    axis->resize(size());
 }
 
 //! The resize event that needs to propagate to axes
 void ViewWidget::resizeEvent(QResizeEvent* event)
 {
-    _axis->resize(size());
+    axis->resize(size());
     QGraphicsView::resizeEvent(event);
 }
 
@@ -62,5 +62,5 @@ QRectF ViewWidget::visibleRect() const
 //! Get the axis
 AxisViewWidget* ViewWidget::getAxisView() const
 {
-    return _axis;
+    return axis;
 }

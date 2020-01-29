@@ -30,8 +30,8 @@ protected:
 private:
     void initApplication();
 
-    ViewWidget* m_view_widget;
-    std::unique_ptr<ApplicationModels> m_models;
+    ViewWidget* view_widget;
+    std::unique_ptr<ApplicationModels> models;
 };
 
 #endif //  MAINWINDOW_H

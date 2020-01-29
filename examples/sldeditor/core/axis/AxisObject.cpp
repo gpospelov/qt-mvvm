@@ -25,7 +25,7 @@
 
 //! The constructor of AxisObject
 AxisObject::AxisObject()
-    : QGraphicsObject(), color(QColor("grey")), m_x_scale_factor(1.), m_y_scale_factor(-1.)
+    : QGraphicsObject(), color(QColor("grey")), x_scale_factor(1.), y_scale_factor(-1.)
 {
     setZValue(0);
 }
@@ -155,25 +155,25 @@ QRectF AxisObject::boundingRect() const
 //! Convertion from Scene to real coordinates of X
 double AxisObject::fromSceneToRealX(double input_x) const
 {
-    return input_x * m_x_scale_factor;
+    return input_x * x_scale_factor;
 }
 
 //! Convertion from Scene to real coordinates of Y
 double AxisObject::fromSceneToRealY(double input_y) const
 {
-    return input_y * m_y_scale_factor;
+    return input_y * y_scale_factor;
 }
 
 //! Convertion of real to Scene coordinates of X
 double AxisObject::fromRealToSceneX(double input_x) const
 {
-    return input_x / m_x_scale_factor;
+    return input_x / x_scale_factor;
 }
 
 //! Convertion of real to Scene coordinates of Y
 double AxisObject::fromRealToSceneY(double input_y) const
 {
-    return input_y / m_y_scale_factor;
+    return input_y / y_scale_factor;
 }
 
 //! Convertion of Scene to axis coordinates of X
@@ -221,4 +221,10 @@ QRectF AxisObject::getSceneRect() const
         return QRectF(0, 0, 1, 1);
 
     return main_view->mapToScene(main_view->viewport()->geometry()).boundingRect();
+}
+
+//! Get the axis item
+AxisItem* AxisObject::axisItem() const
+{
+    return axis_item;
 }

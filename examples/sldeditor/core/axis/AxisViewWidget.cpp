@@ -32,8 +32,8 @@ AxisViewWidget::AxisViewWidget() : QGraphicsView()
     setAttribute(Qt::WA_TranslucentBackground);
     setStyleSheet("border-width: 0px; border-style: solid;background: transparent");
 
-    _axis_object = new AxisObject();
-    scene()->addItem(_axis_object);
+    axis_object = new AxisObject();
+    scene()->addItem(axis_object);
 }
 
 //! Resize widget and redraw items
@@ -47,5 +47,5 @@ void AxisViewWidget::resize(const QSize size)
 //! Get the axis object
 AxisObject* AxisViewWidget::getAxisObject() const
 {
-    return _axis_object;
+    return axis_object;
 }

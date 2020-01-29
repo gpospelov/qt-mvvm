@@ -39,13 +39,13 @@ const QString pos_key = "pos";
 } // namespace
 
 MainWindow::MainWindow()
-    : m_view_widget(new ViewWidget), m_models(std::make_unique<ApplicationModels>())
+    : view_widget(new ViewWidget), models(std::make_unique<ApplicationModels>())
 {
     auto widget = new QWidget();
     auto layout = new QHBoxLayout(widget);
-    auto tree = new ModelView::AllItemsTreeView(m_models->viewItemsModel());
+    auto tree = new ModelView::AllItemsTreeView(models->viewItemsModel());
 
-    layout->addWidget(m_view_widget);
+    layout->addWidget(view_widget);
     layout->addWidget(tree);
 
     setCentralWidget(widget);
@@ -83,9 +83,9 @@ void MainWindow::initApplication()
     for (const auto& data : values) {
 
         // initialise segments
-        SegmentItem* segment_item = m_models->viewItemsModel()->addSegment();
+        SegmentItem* segment_item = models->viewItemsModel()->addSegment();
         SegmentView* segment = new SegmentView(segment_item);
-        m_view_widget->scene()->addItem(segment);
+        view_widget->scene()->addItem(segment);
         top_segments.push_back(segment);
 
         // set parameters
@@ -95,12 +95,12 @@ void MainWindow::initApplication()
         edge += data[0];
 
         // initialise handles
-        HandleItem* handle_item_left = m_models->viewItemsModel()->addHandle();
-        HandleItem* handle_item_right = m_models->viewItemsModel()->addHandle();
+        HandleItem* handle_item_left = models->viewItemsModel()->addHandle();
+        HandleItem* handle_item_right = models->viewItemsModel()->addHandle();
         HandleView* handle_left = new HandleView(handle_item_left);
         HandleView* handle_right = new HandleView(handle_item_right);
-        m_view_widget->scene()->addItem(handle_left);
-        m_view_widget->scene()->addItem(handle_right);
+        view_widget->scene()->addItem(handle_left);
+        view_widget->scene()->addItem(handle_right);
         handles.push_back(std::vector<HandleView*>{handle_left, handle_right});
 
         // set the handles
@@ -113,9 +113,9 @@ void MainWindow::initApplication()
         edge += values[i - 1][0];
 
         // initialise segments
-        SegmentItem* segment_item = m_models->viewItemsModel()->addSegment();
+        SegmentItem* segment_item = models->viewItemsModel()->addSegment();
         SegmentView* segment = new SegmentView(segment_item);
-        m_view_widget->scene()->addItem(segment);
+        view_widget->scene()->addItem(segment);
         side_segments.push_back(segment);
 
         // set parameters

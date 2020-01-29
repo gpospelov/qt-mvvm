@@ -33,7 +33,7 @@ public:
     SegmentItem* segmentItem() const;
 
 public:
-    void addHandles(HandleView* left_handle, HandleView* right_handle);
+    void addHandles(HandleView* left_handle_in, HandleView* right_handle_in);
     void moveHandles();
     void refreshFromHandles();
 
@@ -47,8 +47,8 @@ public:
 private:
     SegmentItem* segment_item;
     QColor color;
-    HandleView* _left_handle;
-    HandleView* _right_handle;
+    HandleView* left_handle;
+    HandleView* right_handle;
 };
 
 #endif // SEGMENTVIEW_H

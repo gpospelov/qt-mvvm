@@ -29,7 +29,7 @@ public:
     AxisObject* getAxisObject() const;
 
 private:
-    AxisObject* _axis_object;
+    AxisObject* axis_object;
 };
 
 #endif // AXISVIEWWIDGET_H
