@@ -19,8 +19,6 @@ target_sources(quickreflcore PRIVATE
     layerviewmodel.h
     layerviewmodelcontroller.cpp
     layerviewmodelcontroller.h
-    externalpropertycomboeditor.cpp
-    externalpropertycomboeditor.h
 )
 
 target_include_directories(quickreflcore PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>)

@@ -11,15 +11,16 @@
 #define EXTERNALPROPERTYCOMBOEDITOR_H
 
 #include <functional>
-#include <vector>
 #include <mvvm/editors/customeditor.h>
-
-namespace ModelView {
-class ExternalProperty;
-}
+#include <vector>
 
 class QComboBox;
 class QStandardItemModel;
+
+namespace ModelView
+{
+
+class ExternalProperty;
 
 //! Custom editor for table/tree cells to select ExternalProperty from the list of
 //! external properties. Uses callbacks to retrieve vector of possible properties.
@@ -44,5 +45,7 @@ private:
     QComboBox* m_box;
     QStandardItemModel* m_combo_model;
 };
+
+} // namespace ModelView
 
 #endif // EXTERNALPROPERTYCOMBOEDITOR_H

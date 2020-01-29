@@ -7,16 +7,16 @@
 //
 // ************************************************************************** //
 
-#include "externalpropertycomboeditor.h"
 #include <QColor>
 #include <QComboBox>
 #include <QStandardItemModel>
 #include <QVBoxLayout>
+#include <mvvm/editors/externalpropertycomboeditor.h>
 #include <mvvm/model/externalproperty.h>
 
 using namespace ModelView;
 
-ExternalPropertyComboEditor::ExternalPropertyComboEditor(callback_t callback,  QWidget* parent)
+ExternalPropertyComboEditor::ExternalPropertyComboEditor(callback_t callback, QWidget* parent)
     : CustomEditor(parent), get_properties(callback), m_box(new QComboBox),
       m_combo_model(new QStandardItemModel(this))
 {
