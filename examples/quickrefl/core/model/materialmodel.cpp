@@ -82,7 +82,7 @@ ExternalProperty MaterialModel::undefined_material()
 
 std::vector<ExternalProperty> MaterialModel::material_data(std::string container_id) const
 {
-    std::vector<ExternalProperty> result{undefined_material()};
+    std::vector<ExternalProperty> result;
     const auto containers = rootItem()->children();
     if (!containers.empty() && container_id.empty())
         container_id = Utils::TopItem<MaterialContainerItem>(this)->identifier();
