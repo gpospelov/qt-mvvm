@@ -15,7 +15,7 @@
 class MaterialModel;
 class MaterialEditorActions;
 class MaterialEditorToolBar;
-class MaterialTableWidget;
+class MaterialEditorWidget;
 
 namespace ModelView
 {
@@ -35,7 +35,7 @@ private:
     MaterialModel* material_model{nullptr};
     MaterialEditorActions* actions{nullptr};
     MaterialEditorToolBar* toolbar{nullptr};
-    MaterialTableWidget* table_widget{nullptr};
+    MaterialEditorWidget* editor_widget{nullptr};
 };
 
 #endif // MATERIALEDITOR_H

@@ -9,12 +9,6 @@
 
 #include "reflwidgets.h"
 
-LayerEditor::LayerEditor(QWidget* parent)
-    : QWidget(parent)
-{
-    setWindowTitle(QString("Layer Editor"));
-}
-
 //! ---------------------------------------------------------------------------
 
 LayerCanvas::LayerCanvas(QWidget* parent)

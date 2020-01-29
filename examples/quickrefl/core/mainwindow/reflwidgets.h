@@ -17,15 +17,6 @@
 //! @file reflwidgets.h
 //! Collection of placeholders for future reflectometry widgets.
 
-//! Layer editor.
-
-class LayerEditor : public QWidget
-{
-    Q_OBJECT
-public:
-    LayerEditor(QWidget* parent = nullptr);
-};
-
 //! Layer graphics scene.
 
 class LayerCanvas : public QWidget

@@ -7,19 +7,17 @@
 //
 // ************************************************************************** //
 
-#include "MaterialSelectorCellEditor.h"
-#include "MaterialItems.h"
-#include "MaterialModel.h"
 #include <QColor>
 #include <QComboBox>
 #include <QStandardItemModel>
 #include <QVBoxLayout>
+#include <mvvm/editors/externalpropertycomboeditor.h>
 #include <mvvm/model/externalproperty.h>
 
 using namespace ModelView;
 
-MaterialSelectorCellEditor::MaterialSelectorCellEditor(MaterialModel* model, QWidget* parent)
-    : CustomEditor(parent), m_box(new QComboBox), m_model(model),
+ExternalPropertyComboEditor::ExternalPropertyComboEditor(callback_t callback, QWidget* parent)
+    : CustomEditor(parent), get_properties(callback), m_box(new QComboBox),
       m_combo_model(new QStandardItemModel(this))
 {
     setAutoFillBackground(true);
@@ -36,35 +34,35 @@ MaterialSelectorCellEditor::MaterialSelectorCellEditor(MaterialModel* model, QWi
     setConnected(true);
 }
 
-QSize MaterialSelectorCellEditor::sizeHint() const
+QSize ExternalPropertyComboEditor::sizeHint() const
 {
     return m_box->sizeHint();
 }
 
-QSize MaterialSelectorCellEditor::minimumSizeHint() const
+QSize ExternalPropertyComboEditor::minimumSizeHint() const
 {
     return m_box->minimumSizeHint();
 }
 
-void MaterialSelectorCellEditor::onIndexChanged(int index)
+void ExternalPropertyComboEditor::onIndexChanged(int index)
 {
     auto property = m_data.value<ModelView::ExternalProperty>();
-    auto mdata = m_model->material_data();
+    auto mdata = get_properties();
 
     if (index >= 0 && index < static_cast<int>(mdata.size())) {
         if (property != mdata[static_cast<size_t>(index)])
-            setDataIntern(QVariant::fromValue(mdata[index]));
+            setDataIntern(QVariant::fromValue(mdata[static_cast<size_t>(index)]));
     }
 }
 
-void MaterialSelectorCellEditor::update_components()
+void ExternalPropertyComboEditor::update_components()
 {
     setConnected(false);
 
     m_combo_model->clear();
 
     QStandardItem* parentItem = m_combo_model->invisibleRootItem();
-    for (auto prop : m_model->material_data()) {
+    for (auto prop : get_properties()) {
         auto item = new QStandardItem(QString::fromStdString(prop.text()));
         parentItem->appendRow(item);
         item->setData(prop.color(), Qt::DecorationRole);
@@ -77,14 +75,14 @@ void MaterialSelectorCellEditor::update_components()
 
 //! Returns index for QComboBox.
 
-int MaterialSelectorCellEditor::internIndex()
+int ExternalPropertyComboEditor::internIndex()
 {
     if (!m_data.canConvert<ModelView::ExternalProperty>())
         return 0;
 
     auto property = m_data.value<ModelView::ExternalProperty>();
     int result(-1);
-    for (auto prop : m_model->material_data()) {
+    for (auto prop : get_properties()) {
         ++result;
         if (property.identifier() == prop.identifier())
             return result;
@@ -93,12 +91,12 @@ int MaterialSelectorCellEditor::internIndex()
     return result;
 }
 
-void MaterialSelectorCellEditor::setConnected(bool isConnected)
+void ExternalPropertyComboEditor::setConnected(bool isConnected)
 {
     if (isConnected)
         connect(m_box, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this,
-                &MaterialSelectorCellEditor::onIndexChanged, Qt::UniqueConnection);
+                &ExternalPropertyComboEditor::onIndexChanged, Qt::UniqueConnection);
     else
         disconnect(m_box, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
-                   this, &MaterialSelectorCellEditor::onIndexChanged);
+                   this, &ExternalPropertyComboEditor::onIndexChanged);
 }

@@ -16,6 +16,8 @@ target_sources(mvvm_viewmodel PRIVATE
     editorbuilders.cpp
     editorbuilders.h
     editorfactoryinterface.h
+    externalpropertycomboeditor.cpp
+    externalpropertycomboeditor.h
     externalpropertyeditor.cpp
     externalpropertyeditor.h
     integereditor.cpp
