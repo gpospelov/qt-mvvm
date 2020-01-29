@@ -73,12 +73,13 @@ void MainWindow::initApplication()
         settings.endGroup();
     }
 
-    std::vector<std::vector<double>> values;
-    values.push_back(std::vector<double>{50., 50.});
-    values.push_back(std::vector<double>{80., 40.});
-    values.push_back(std::vector<double>{50., 30.});
-    values.push_back(std::vector<double>{90., 50.});
-    values.push_back(std::vector<double>{50., 0.});
+    std::vector<std::vector<double>> values{
+        {50., 50.},
+        {80., 40.},
+        {50., 30.},
+        {90., 50.},
+        {50., 0.}
+    };
 
     std::vector<SegmentView*> top_segments;
     std::vector<std::vector<HandleView*>> handles;

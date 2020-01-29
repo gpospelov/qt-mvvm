@@ -44,16 +44,16 @@ void AxisObject::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidg
     double offset_y = 25.;
     double pen_thickness = 5.;
 
-    std::vector<std::vector<double>> points;
-
-    points.push_back(std::vector<double>{center_x - _view_port_size.width() / 2. + offset_x,
-                                         center_y - _view_port_size.height() / 2. + offset_y});
-    points.push_back(std::vector<double>{center_x + _view_port_size.width() / 2. - offset_x,
-                                         center_y - _view_port_size.height() / 2. + offset_y});
-    points.push_back(std::vector<double>{center_x + _view_port_size.width() / 2. - offset_x,
-                                         center_y + _view_port_size.height() / 2. - offset_y});
-    points.push_back(std::vector<double>{center_x - _view_port_size.width() / 2. + offset_x,
-                                         center_y + _view_port_size.height() / 2. - offset_y});
+    std::vector<std::vector<double>> points{
+        {center_x - _view_port_size.width() / 2. + offset_x,
+        center_y - _view_port_size.height() / 2. + offset_y},
+        {center_x + _view_port_size.width() / 2. - offset_x,
+        center_y - _view_port_size.height() / 2. + offset_y},
+        {center_x + _view_port_size.width() / 2. - offset_x,
+        center_y + _view_port_size.height() / 2. - offset_y},
+        {center_x - _view_port_size.width() / 2. + offset_x,
+        center_y + _view_port_size.height() / 2. - offset_y}
+    };
 
     painter->setPen(QPen(color, pen_thickness));
     painter->drawLine(points[0][0], points[0][1], points[1][0], points[1][1]);
