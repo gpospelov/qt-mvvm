@@ -28,4 +28,4 @@ public:
     AxisItem();
 };
 
-#endif // HANDLEITEM_H
+#endif // AXISITEM_H

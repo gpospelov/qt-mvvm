@@ -7,10 +7,12 @@
 //
 // ************************************************************************** //
 
-#include "Segment.h"
-#include "SegmentItem.h" 
-#include "Handle.h"
+#include "SegmentView.h"
+#include "SegmentItem.h"
+
+#include "HandleView.h"
 #include "HandleItem.h"
+
 #include "AxisObject.h"
 
 #include <QGraphicsScene>
@@ -26,7 +28,7 @@
 #include <iostream>
 
 
-Segment::Segment(SegmentItem* item) : 
+SegmentView::SegmentView(SegmentItem* item) : 
     segment_item(item), 
     color(item->property(SegmentItem::P_COLOR).value<QColor>()),
     _left_handle(nullptr),
@@ -58,7 +60,7 @@ Segment::Segment(SegmentItem* item) :
     setZValue(10);
 }
 
-void Segment::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
+void SegmentView::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
 {
     AxisObject* axis = getAxes();
     if (!axis) return;
@@ -67,7 +69,7 @@ void Segment::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*
     painter->drawRect(getSceneRect());
 }
 
-QPainterPath Segment::shape() const
+QPainterPath SegmentView::shape() const
 {
     QPainterPath path;
 
@@ -79,7 +81,7 @@ QPainterPath Segment::shape() const
     return path;
 }
 
-QRectF Segment::boundingRect() const
+QRectF SegmentView::boundingRect() const
 {
     double epsilon = 10;
 
@@ -89,7 +91,7 @@ QRectF Segment::boundingRect() const
     return getSceneRect();
 }
 
-QRectF Segment::getSceneRect() const
+QRectF SegmentView::getSceneRect() const
 {
     AxisObject* axis = getAxes();
     if (!axis) return QRectF(0,0,1,1);
@@ -111,7 +113,7 @@ QRectF Segment::getSceneRect() const
     
 }
 
-void Segment::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
+void SegmentView::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     AxisObject* axis = getAxes();
     if (!axis) return ;
@@ -126,7 +128,7 @@ void Segment::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     moveHandles();
 }
 
-void Segment::addHandles(Handle* left_handle, Handle* right_handle)
+void SegmentView::addHandles(HandleView* left_handle, HandleView* right_handle)
 {
     _left_handle = left_handle;
     _right_handle = right_handle;
@@ -136,29 +138,29 @@ void Segment::addHandles(Handle* left_handle, Handle* right_handle)
 
 }
 
-void Segment::connectHandles()
+void SegmentView::connectHandles()
 {
     connect( 
-        _left_handle, &Handle::moved,
-        this, &Segment::refreshFromHandles);
+        _left_handle, &HandleView::moved,
+        this, &SegmentView::refreshFromHandles);
 
     connect(
-        _right_handle, &Handle::moved,
-        this, &Segment::refreshFromHandles);
+        _right_handle, &HandleView::moved,
+        this, &SegmentView::refreshFromHandles);
 }
 
-void Segment::disconnectHandles()
+void SegmentView::disconnectHandles()
 {
     disconnect( 
-        _left_handle, &Handle::moved,
-        this, &Segment::refreshFromHandles);
+        _left_handle, &HandleView::moved,
+        this, &SegmentView::refreshFromHandles);
 
     disconnect(
-        _right_handle, &Handle::moved,
-        this, &Segment::refreshFromHandles);
+        _right_handle, &HandleView::moved,
+        this, &SegmentView::refreshFromHandles);
 }
 
-void Segment::refreshFromHandles()
+void SegmentView::refreshFromHandles()
 {
     if (!_left_handle)
         return;
@@ -183,7 +185,7 @@ void Segment::refreshFromHandles()
         segment_item->setProperty(SegmentItem::P_HEIGHT,(right_y - left_y));
     }
 }
-void Segment::moveHandles()
+void SegmentView::moveHandles()
 {
     if (!_left_handle)
         return;

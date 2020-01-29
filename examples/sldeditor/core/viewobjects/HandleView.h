@@ -7,29 +7,29 @@
 //
 // ************************************************************************** //
 
-#ifndef SEGMENT_H
-#define SEGMENT_H
+#ifndef HANDLEVIEW_H
+#define HANDLEVIEW_H
 
-#include "Handle.h"
 #include "ViewObject.h"
 
-class SegmentItem;
+#include <QGraphicsItem>
+
+class HandleItem;
 
 /*!
-@class Segment
-@brief The visual Segment element
+@class Handle
+@brief The visual handle element
 */
-
-class Segment : public ViewObject
+class HandleView : public ViewObject
 {
-    
+    Q_OBJECT
 public:
     //! The constructor
-    Segment(SegmentItem* item);
+    HandleView(HandleItem* item);
 
     //! The bounding rectangle of the handle
     QRectF boundingRect() const override;
-    //! The shape ? 
+    //! The shape
     QPainterPath shape() const override;
     //! The overriden paint method
     void paint(
@@ -37,38 +37,24 @@ public:
         QWidget* widget) override;
     //! Get the scene rectangle
     QRectF getSceneRect() const;
+    
+    //! Return a pointer to the handle item
+    HandleItem* handleItem() const {return handle_item;};
 
-    //! Retrieve segment item
-    SegmentItem* segmentItem() const {return segment_item;};
+signals:
+    //! Moved signal
+    void moved();
 
-    //! Add the handles at the end
-    void addHandles(Handle* left_handle, Handle* right_handle);
-    //! Move the linked handles
-    void moveHandles();
-    //! Refresh the properties from the handle info
-    void refreshFromHandles();
-
-private: 
-    //! Connect the handles
-    void connectHandles();
-    //! Disconnect the handle signaling
-    void disconnectHandles();
-
-
-public:
+protected:
     //! On move update the model
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
 
 private:
     //! The link back to the item 
-    SegmentItem* segment_item;
+    HandleItem* handle_item;
     //! The color property
     QColor color;
-    //! placeholder for handles
-    Handle* _left_handle;
-    Handle* _right_handle;
-
 
 };
 
-#endif
+#endif //HANDLEVIEW_H

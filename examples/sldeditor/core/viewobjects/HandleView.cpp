@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "Handle.h"
+#include "HandleView.h"
 #include "HandleItem.h"
 #include "AxisObject.h"
 
@@ -23,7 +23,7 @@
 #include <iostream>
 
 
-Handle::Handle(HandleItem* item) : 
+HandleView::HandleView(HandleItem* item) : 
     handle_item(item), 
     color(item->property(HandleItem::P_COLOR).value<QColor>())
 {
@@ -50,7 +50,7 @@ Handle::Handle(HandleItem* item) :
     setZValue(20);
 }
 
-void Handle::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
+void HandleView::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
 {
     AxisObject* axis = getAxes();
     if (!axis) return;
@@ -63,7 +63,7 @@ void Handle::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
     );
 }
 
-QPainterPath Handle::shape() const
+QPainterPath HandleView::shape() const
 {
     QPainterPath path;
 
@@ -74,7 +74,7 @@ QPainterPath Handle::shape() const
     return path;
 }
 
-QRectF Handle::boundingRect() const
+QRectF HandleView::boundingRect() const
 {
     double epsilon = 10;
 
@@ -84,7 +84,7 @@ QRectF Handle::boundingRect() const
     return getSceneRect();
 }
 
-QRectF Handle::getSceneRect() const
+QRectF HandleView::getSceneRect() const
 {
     AxisObject* axis = getAxes();
     if (!axis) return QRectF(0,0,1,1);
@@ -106,7 +106,7 @@ QRectF Handle::getSceneRect() const
     
 }
 
-void Handle::mouseMoveEvent(QGraphicsSceneMouseEvent *event){
+void HandleView::mouseMoveEvent(QGraphicsSceneMouseEvent *event){
     AxisObject* axis = getAxes();
     if (!axis) return ;
 

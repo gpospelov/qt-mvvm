@@ -13,9 +13,10 @@
 #include "ViewItemsModel.h"
 
 #include "HandleItem.h"
-#include "Handle.h"
+#include "HandleView.h"
+
 #include "SegmentItem.h"
-#include "Segment.h"
+#include "SegmentView.h"
 
 #include <QAction>
 #include <QCoreApplication>
@@ -80,15 +81,15 @@ void MainWindow::initApplication()
     values.push_back(std::vector<double>{90.,50.});
     values.push_back(std::vector<double>{50.,0.});
 
-    std::vector<Segment*> top_segments;
-    std::vector<std::vector<Handle*>> handles;
+    std::vector<SegmentView*> top_segments;
+    std::vector<std::vector<HandleView*>> handles;
 
     double edge = 0;
     for (std::vector<double> data : values){
 
         //initialise segments
         SegmentItem* segment_item = m_models->viewItemsModel()->addSegment();
-        Segment* segment = new Segment(segment_item);
+        SegmentView* segment = new SegmentView(segment_item);
         m_view_widget->scene()->addItem(segment); 
         top_segments.push_back(segment);
 
@@ -101,25 +102,25 @@ void MainWindow::initApplication()
         //initialise handles
         HandleItem* handle_item_left = m_models->viewItemsModel()->addHandle();
         HandleItem* handle_item_right = m_models->viewItemsModel()->addHandle();
-        Handle* handle_left = new Handle(handle_item_left);
-        Handle* handle_right = new Handle(handle_item_right);
+        HandleView* handle_left = new HandleView(handle_item_left);
+        HandleView* handle_right = new HandleView(handle_item_right);
         m_view_widget->scene()->addItem(handle_left);
         m_view_widget->scene()->addItem(handle_right);
-        handles.push_back(std::vector<Handle*>{handle_left, handle_right});
+        handles.push_back(std::vector<HandleView*>{handle_left, handle_right});
 
         //set the handles
         segment->addHandles(handle_left, handle_right);
 
     }
 
-    std::vector<Segment*> side_segments;
+    std::vector<SegmentView*> side_segments;
     edge = 0;
     for (int i = 1; i < top_segments.size(); ++i){
         edge += values[i-1][0];
 
         //initialise segments
         SegmentItem* segment_item = m_models->viewItemsModel()->addSegment();
-        Segment* segment = new Segment(segment_item);
+        SegmentView* segment = new SegmentView(segment_item);
         m_view_widget->scene()->addItem(segment); 
         side_segments.push_back(segment);
 

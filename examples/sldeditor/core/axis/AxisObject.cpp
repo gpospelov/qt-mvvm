@@ -185,7 +185,7 @@ void AxisObject::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidg
 QPainterPath AxisObject::shape() const
 {
     QPainterPath path;
-    path.addRect(-10,-10,20,20);
+    path.addRect(scene()->sceneRect());
     return path;
 }
 
