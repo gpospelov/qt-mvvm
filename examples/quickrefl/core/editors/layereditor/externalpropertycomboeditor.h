@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MATERIALSELECTORCELLEDITOR_H
-#define MATERIALSELECTORCELLEDITOR_H
+#ifndef EXTERNALPROPERTYCOMBOEDITOR_H
+#define EXTERNALPROPERTYCOMBOEDITOR_H
 
 #include <functional>
 #include <vector>
@@ -21,16 +21,14 @@ class ExternalProperty;
 class QComboBox;
 class QStandardItemModel;
 
-/*!
-@class MaterialSelectorCellEditor
-@brief Custom editor for table cells to select material from the list of existing materials.
-*/
+//! Custom editor for table/tree cells to select ExternalProperty from the list of
+//! external properties. Uses callbacks to retrieve vector of possible properties.
 
-class MaterialSelectorCellEditor : public ModelView::CustomEditor
+class ExternalPropertyComboEditor : public ModelView::CustomEditor
 {
 public:
     using callback_t = std::function<std::vector<ModelView::ExternalProperty>()>;
-    explicit MaterialSelectorCellEditor(callback_t callback, QWidget* parent = nullptr);
+    ExternalPropertyComboEditor(callback_t callback, QWidget* parent = nullptr);
 
     QSize sizeHint() const override;
     QSize minimumSizeHint() const override;
@@ -47,4 +45,4 @@ private:
     QStandardItemModel* m_combo_model;
 };
 
-#endif // MATERIALSELECTORCELLEDITOR_H
+#endif // EXTERNALPROPERTYCOMBOEDITOR_H

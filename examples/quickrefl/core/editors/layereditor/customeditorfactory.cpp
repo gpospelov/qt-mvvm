@@ -10,7 +10,7 @@
 #include "customeditorfactory.h"
 #include "applicationmodels.h"
 #include "materialmodel.h"
-#include "materialselectorcelleditor.h"
+#include "externalpropertycomboeditor.h"
 #include <QModelIndex>
 #include <mvvm/model/customvariants.h>
 #include <mvvm/model/externalproperty.h>
@@ -25,7 +25,7 @@ std::unique_ptr<CustomEditor> CustomEditorFactory::createEditor(const QModelInde
 {
     auto value = index.data(Qt::EditRole);
     if (Utils::IsExtPropertyVariant(value))
-        return std::make_unique<MaterialSelectorCellEditor>(
+        return std::make_unique<ExternalPropertyComboEditor>(
             [this]() { return m_models->materialModel()->material_data(); });
     else
         return DefaultEditorFactory::createEditor(index);

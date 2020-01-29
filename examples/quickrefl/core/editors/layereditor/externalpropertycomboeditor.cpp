@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "materialselectorcelleditor.h"
+#include "externalpropertycomboeditor.h"
 #include <QColor>
 #include <QComboBox>
 #include <QStandardItemModel>
@@ -16,7 +16,7 @@
 
 using namespace ModelView;
 
-MaterialSelectorCellEditor::MaterialSelectorCellEditor(callback_t callback,  QWidget* parent)
+ExternalPropertyComboEditor::ExternalPropertyComboEditor(callback_t callback,  QWidget* parent)
     : CustomEditor(parent), get_properties(callback), m_box(new QComboBox),
       m_combo_model(new QStandardItemModel(this))
 {
@@ -34,17 +34,17 @@ MaterialSelectorCellEditor::MaterialSelectorCellEditor(callback_t callback,  QWi
     setConnected(true);
 }
 
-QSize MaterialSelectorCellEditor::sizeHint() const
+QSize ExternalPropertyComboEditor::sizeHint() const
 {
     return m_box->sizeHint();
 }
 
-QSize MaterialSelectorCellEditor::minimumSizeHint() const
+QSize ExternalPropertyComboEditor::minimumSizeHint() const
 {
     return m_box->minimumSizeHint();
 }
 
-void MaterialSelectorCellEditor::onIndexChanged(int index)
+void ExternalPropertyComboEditor::onIndexChanged(int index)
 {
     auto property = m_data.value<ModelView::ExternalProperty>();
     auto mdata = get_properties();
@@ -55,7 +55,7 @@ void MaterialSelectorCellEditor::onIndexChanged(int index)
     }
 }
 
-void MaterialSelectorCellEditor::update_components()
+void ExternalPropertyComboEditor::update_components()
 {
     setConnected(false);
 
@@ -75,7 +75,7 @@ void MaterialSelectorCellEditor::update_components()
 
 //! Returns index for QComboBox.
 
-int MaterialSelectorCellEditor::internIndex()
+int ExternalPropertyComboEditor::internIndex()
 {
     if (!m_data.canConvert<ModelView::ExternalProperty>())
         return 0;
@@ -91,12 +91,12 @@ int MaterialSelectorCellEditor::internIndex()
     return result;
 }
 
-void MaterialSelectorCellEditor::setConnected(bool isConnected)
+void ExternalPropertyComboEditor::setConnected(bool isConnected)
 {
     if (isConnected)
         connect(m_box, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this,
-                &MaterialSelectorCellEditor::onIndexChanged, Qt::UniqueConnection);
+                &ExternalPropertyComboEditor::onIndexChanged, Qt::UniqueConnection);
     else
         disconnect(m_box, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
-                   this, &MaterialSelectorCellEditor::onIndexChanged);
+                   this, &ExternalPropertyComboEditor::onIndexChanged);
 }
