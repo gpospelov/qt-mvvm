@@ -22,7 +22,7 @@
 
 #include <iostream>
 
-
+//! The constructor
 HandleView::HandleView(HandleItem* item) : 
     handle_item(item), 
     color(item->property(HandleItem::P_COLOR).value<QColor>())
@@ -50,6 +50,7 @@ HandleView::HandleView(HandleItem* item) :
     setZValue(20);
 }
 
+//! The overriden paint method
 void HandleView::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
 {
     AxisObject* axis = getAxes();
@@ -63,6 +64,7 @@ void HandleView::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidg
     );
 }
 
+//! The shape
 QPainterPath HandleView::shape() const
 {
     QPainterPath path;
@@ -74,6 +76,7 @@ QPainterPath HandleView::shape() const
     return path;
 }
 
+//! The bounding rectangle of the handle
 QRectF HandleView::boundingRect() const
 {
     double epsilon = 10;
@@ -84,6 +87,7 @@ QRectF HandleView::boundingRect() const
     return getSceneRect();
 }
 
+//! Get the scene rectangle
 QRectF HandleView::getSceneRect() const
 {
     AxisObject* axis = getAxes();
@@ -106,6 +110,7 @@ QRectF HandleView::getSceneRect() const
     
 }
 
+//! On move update the model
 void HandleView::mouseMoveEvent(QGraphicsSceneMouseEvent *event){
     AxisObject* axis = getAxes();
     if (!axis) return ;
@@ -113,3 +118,8 @@ void HandleView::mouseMoveEvent(QGraphicsSceneMouseEvent *event){
     handle_item->setProperty(HandleItem::P_XPOS, axis->fromSceneToRealX(double(x()+ event->pos().x())));
 }
 
+//! Return a pointer to the handle item
+HandleItem* HandleView::handleItem() const
+{
+    return handle_item;
+}

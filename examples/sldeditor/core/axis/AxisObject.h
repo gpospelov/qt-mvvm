@@ -18,28 +18,18 @@
 @class AxisObject 
 @brief This instance will manage all the axis visual components
 */
-
 class AxisObject : public QGraphicsObject
 {
     Q_OBJECT
+
 public:
-    //! The constructor
     AxisObject();
-
-    //! The bounding rectangle of the handle
-    QRectF boundingRect() const;
-    //! The shape ? 
-    QPainterPath shape() const;
-    //! The overriden paint method
-    void paint(
-        QPainter* painter, const QStyleOptionGraphicsItem* option, 
-        QWidget* widget);
+    QRectF boundingRect() const override;
+    QPainterPath shape() const override;
+    void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
 
 public:
-    //! Retrieve axis item
     AxisItem* axisItem() const {return _axis_item;};
-    //! Refresh call after update of the viewport
-    void refresh();
 
     double fromSceneToRealX(double input_x) const;
     double fromSceneToRealY(double input_y) const;
@@ -52,15 +42,11 @@ public:
     double fromAxisToSceneY(double input_y) const;
 
 private:
-    void getViewPortSize();
     QRectF getSceneRect() const;
 
 private:
-    //! The color property
     QColor color;
-    //! The axis item linking all the info
     AxisItem* _axis_item;
-    //! Scale items
     double m_x_scale_factor;
     double m_y_scale_factor;
 

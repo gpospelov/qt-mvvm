@@ -23,36 +23,26 @@ class HandleItem;
 class HandleView : public ViewObject
 {
     Q_OBJECT
+
 public:
-    //! The constructor
     HandleView(HandleItem* item);
 
-    //! The bounding rectangle of the handle
     QRectF boundingRect() const override;
-    //! The shape
     QPainterPath shape() const override;
-    //! The overriden paint method
     void paint(
         QPainter* painter, const QStyleOptionGraphicsItem* option, 
         QWidget* widget) override;
-    //! Get the scene rectangle
     QRectF getSceneRect() const;
-    
-    //! Return a pointer to the handle item
-    HandleItem* handleItem() const {return handle_item;};
+    HandleItem* handleItem() const;
 
 signals:
-    //! Moved signal
     void moved();
 
 protected:
-    //! On move update the model
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
 
 private:
-    //! The link back to the item 
     HandleItem* handle_item;
-    //! The color property
     QColor color;
 
 };

@@ -9,8 +9,20 @@
 
 #include "TicksView.h"
 #include <math.h>
-#include <iostream>
+#include <algorithm> 
 
+TicksView::TicksView()
+{
+    maxTicks = 6;
+}
+
+TicksView::TicksView(float min, float max)
+{   
+    maxTicks = 6;
+    minPoint = std::min(min, max);
+    maxPoint = std::max(min, max);
+    calculate();
+}
 /**
 * Calculate and update values for tick spacing and nice
 * minimum and maximum data points on the axis.
@@ -31,7 +43,6 @@ void TicksView::calculate()
 * @param round whether to round the result
 * @return a "nice" number to be used for the data range
 */
-
 float TicksView::niceNum(float range, bool round) 
 {   
     float exponent; /** exponent of range */

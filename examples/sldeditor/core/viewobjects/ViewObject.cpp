@@ -10,11 +10,13 @@
 #include "ViewObject.h"
 #include "ViewWidget.h"
 
+//! The constructor
 ViewObject::ViewObject() : QGraphicsObject()
 {
     
 }
 
+//! Get the conversion axes
 AxisObject* ViewObject::getAxes() const
 {
     ViewWidget* main_view = dynamic_cast<ViewWidget*>(scene()->views().last());

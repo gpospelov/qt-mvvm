@@ -17,7 +17,6 @@
 @class HandleItem
 @brief Domain object to hold mouse info.
 */
-
 class HandleItem : public ModelView::CompoundItem
 {
 public:

@@ -10,25 +10,22 @@
 #ifndef AXISVIEWWIDGET_H
 #define AXISVIEWWIDGET_H
 
-#include "AxisItem.h"
-#include "AxisObject.h"
-
 #include <QGraphicsView>
+
+class AxisItem;
+class AxisObject;
 
 /*!
 @class Axis
 @brief This instance will manage all the axis
 */
-
 class AxisViewWidget : public QGraphicsView
 {
     Q_OBJECT
+
 public:
-    //! The constructor
     AxisViewWidget();
-    //! Resize widget and redraw items
     void resize(const QSize size);
-    //! Get the axis object
     AxisObject* getAxisObject() const;
 
 private:

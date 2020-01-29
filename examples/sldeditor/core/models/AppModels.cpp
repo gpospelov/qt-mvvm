@@ -12,8 +12,6 @@
 #include <mvvm/core/modeldocuments.h>
 #include <mvvm/model/sessionitem.h>
 
-
-
 struct ApplicationModels::ApplicationModelsImpl {
     std::unique_ptr<ViewItemsModel> m_view_items_model;
 

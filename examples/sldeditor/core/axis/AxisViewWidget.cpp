@@ -8,6 +8,8 @@
 // ************************************************************************** //
 
 #include "AxisViewWidget.h"
+#include "AxisItem.h"
+#include "AxisObject.h"
 
 #include <QGraphicsScene>
 #include <QGraphicsView>
@@ -17,7 +19,7 @@
 
 #include <iostream>
 
-
+//! The constructor
 AxisViewWidget::AxisViewWidget() : QGraphicsView()
 {
     QGraphicsScene* scene_item = new QGraphicsScene();
@@ -34,14 +36,15 @@ AxisViewWidget::AxisViewWidget() : QGraphicsView()
     scene()->addItem(_axis_object);
 }
 
+//! Resize widget and redraw items
 void AxisViewWidget::resize(const QSize size)
 {
     QWidget::resize(size.width(), size.height());
     scene()->setSceneRect(0,0,size.width(), size.height());
     update();
-
 }
 
+//! Get the axis object
 AxisObject* AxisViewWidget::getAxisObject() const
 {
     return _axis_object;

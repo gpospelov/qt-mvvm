@@ -23,12 +23,13 @@
 #include <string>
 #include <math.h>
 
-
+//! The constructor of AxisObject
 AxisObject::AxisObject() : QGraphicsObject() , color(QColor("grey")), m_x_scale_factor(1.), m_y_scale_factor(-1.)
 {
     setZValue(0);
 }
 
+//! The paint method for the axis items
 void AxisObject::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
 {
     std::cout<<"I am being painted"<<std::endl;
@@ -181,7 +182,7 @@ void AxisObject::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidg
 
 }
 
-
+//! The shape of the whole view
 QPainterPath AxisObject::shape() const
 {
     QPainterPath path;
@@ -189,42 +190,37 @@ QPainterPath AxisObject::shape() const
     return path;
 }
 
+//! The bounding rectangle
 QRectF AxisObject::boundingRect() const
 {
     return scene()->sceneRect();
 }
 
-void AxisObject::refresh()
-{
-    update();
-
-}
-
-//! The scaling parts
+//! Convertion from Scene to real coordinates of X
 double AxisObject::fromSceneToRealX(double input_x) const
 {
     return input_x * m_x_scale_factor;
 }
 
-//! The scaling parts
+//! Convertion from Scene to real coordinates of Y
 double AxisObject::fromSceneToRealY(double input_y) const
 {
     return input_y * m_y_scale_factor;
 }
 
-//! The scaling parts
+//! Convertion of real to Scene coordinates of X
 double AxisObject::fromRealToSceneX(double input_x) const
 {
     return input_x / m_x_scale_factor;
 }
 
-//! The scaling parts
+//! Convertion of real to Scene coordinates of Y
 double AxisObject::fromRealToSceneY(double input_y) const
 {
     return input_y / m_y_scale_factor;
 }
 
-//! The scaling parts
+//! Convertion of Scene to axis coordinates of X
 double AxisObject::fromSceneToAxisX(double input_x) const
 {
     QRectF _view_port_size = scene()->sceneRect();
@@ -233,7 +229,7 @@ double AxisObject::fromSceneToAxisX(double input_x) const
     return (input_x - scene_rect.x()) / x_factor; 
 }
 
-//! The scaling parts
+//! Convertion of Scene to axis coordinates of Y
 double AxisObject::fromSceneToAxisY(double input_y) const
 {
     QRectF _view_port_size = scene()->sceneRect();
@@ -242,7 +238,7 @@ double AxisObject::fromSceneToAxisY(double input_y) const
     return (input_y - scene_rect.y()) / y_factor; 
 }
 
-//! The scaling parts
+//! Convertion of axis to Scene coordinates of x
 double AxisObject::fromAxisToSceneX(double input_x) const
 {
     QRectF _view_port_size = scene()->sceneRect();
@@ -251,7 +247,7 @@ double AxisObject::fromAxisToSceneX(double input_x) const
     return input_x * x_factor +scene_rect.x(); 
 }
 
-//! The scaling parts
+//! Convertion of axis to Scene coordinates of y
 double AxisObject::fromAxisToSceneY(double input_y) const
 {
     QRectF _view_port_size = scene()->sceneRect();

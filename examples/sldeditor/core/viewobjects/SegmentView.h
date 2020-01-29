@@ -22,51 +22,35 @@ class SegmentItem;
 
 class SegmentView : public ViewObject
 {
-    
-public:
-    //! The constructor
-    SegmentView(SegmentItem* item);
+    Q_OBJECT
 
-    //! The bounding rectangle of the handle
+public:
+    SegmentView(SegmentItem* item);
     QRectF boundingRect() const override;
-    //! The shape ? 
     QPainterPath shape() const override;
-    //! The overriden paint method
     void paint(
         QPainter* painter, const QStyleOptionGraphicsItem* option, 
         QWidget* widget) override;
-    //! Get the scene rectangle
     QRectF getSceneRect() const;
+    SegmentItem* segmentItem() const;
 
-    //! Retrieve segment item
-    SegmentItem* segmentItem() const {return segment_item;};
-
-    //! Add the handles at the end
+public:
     void addHandles(HandleView* left_handle, HandleView* right_handle);
-    //! Move the linked handles
     void moveHandles();
-    //! Refresh the properties from the handle info
     void refreshFromHandles();
 
 private: 
-    //! Connect the handles
     void connectHandles();
-    //! Disconnect the handle signaling
     void disconnectHandles();
 
 public:
-    //! On move update the model
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
 
 private:
-    //! The link back to the item 
     SegmentItem* segment_item;
-    //! The color property
     QColor color;
-    //! placeholder for handles
     HandleView* _left_handle;
     HandleView* _right_handle;
-
 };
 
 #endif // SEGMENTVIEW_H

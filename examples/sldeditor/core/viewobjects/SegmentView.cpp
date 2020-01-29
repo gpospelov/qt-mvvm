@@ -27,7 +27,7 @@
 
 #include <iostream>
 
-
+//! The constructor
 SegmentView::SegmentView(SegmentItem* item) : 
     segment_item(item), 
     color(item->property(SegmentItem::P_COLOR).value<QColor>()),
@@ -60,6 +60,7 @@ SegmentView::SegmentView(SegmentItem* item) :
     setZValue(10);
 }
 
+//! The overriden paint method
 void SegmentView::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
 {
     AxisObject* axis = getAxes();
@@ -69,6 +70,7 @@ void SegmentView::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWid
     painter->drawRect(getSceneRect());
 }
 
+//! The shape
 QPainterPath SegmentView::shape() const
 {
     QPainterPath path;
@@ -81,6 +83,7 @@ QPainterPath SegmentView::shape() const
     return path;
 }
 
+//! The bounding rectangle of the handle
 QRectF SegmentView::boundingRect() const
 {
     double epsilon = 10;
@@ -91,6 +94,7 @@ QRectF SegmentView::boundingRect() const
     return getSceneRect();
 }
 
+//! Get the scene rectangle
 QRectF SegmentView::getSceneRect() const
 {
     AxisObject* axis = getAxes();
@@ -113,6 +117,7 @@ QRectF SegmentView::getSceneRect() const
     
 }
 
+//! On move update the model
 void SegmentView::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     AxisObject* axis = getAxes();
@@ -128,6 +133,7 @@ void SegmentView::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     moveHandles();
 }
 
+//! Add the handles at the end
 void SegmentView::addHandles(HandleView* left_handle, HandleView* right_handle)
 {
     _left_handle = left_handle;
@@ -135,9 +141,9 @@ void SegmentView::addHandles(HandleView* left_handle, HandleView* right_handle)
 
     connectHandles();
     moveHandles();
-
 }
 
+//! Connect the handles
 void SegmentView::connectHandles()
 {
     connect( 
@@ -149,6 +155,7 @@ void SegmentView::connectHandles()
         this, &SegmentView::refreshFromHandles);
 }
 
+//! Disconnect the handle signaling
 void SegmentView::disconnectHandles()
 {
     disconnect( 
@@ -160,6 +167,7 @@ void SegmentView::disconnectHandles()
         this, &SegmentView::refreshFromHandles);
 }
 
+//! Refresh the properties from the handle info
 void SegmentView::refreshFromHandles()
 {
     if (!_left_handle)
@@ -185,6 +193,8 @@ void SegmentView::refreshFromHandles()
         segment_item->setProperty(SegmentItem::P_HEIGHT,(right_y - left_y));
     }
 }
+
+//! Move the linked handles
 void SegmentView::moveHandles()
 {
     if (!_left_handle)
@@ -254,3 +264,7 @@ void SegmentView::moveHandles()
     connectHandles();
 }
 
+SegmentItem* SegmentView::segmentItem() const
+{
+    return segment_item;
+}
