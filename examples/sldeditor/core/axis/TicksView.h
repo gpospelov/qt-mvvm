@@ -14,8 +14,8 @@
 @class TicksView
 @brief This instance will manage the ticks and their spacing
 */
-class TicksView 
-{   
+class TicksView
+{
 
 public:
     TicksView();
@@ -23,7 +23,7 @@ public:
     void calculate();
     float niceNum(float range, bool round);
     void setMinMaxPoints(float minPoint, float maxPoint);
-    void setMaxTicks(float maxTicks) ;
+    void setMaxTicks(float maxTicks);
     int decimals(void);
 
 public:
@@ -34,6 +34,5 @@ public:
     float range;
     float niceMin;
     float niceMax;
-
 };
-#endif //TICKSVIEW_H
+#endif // TICKSVIEW_H

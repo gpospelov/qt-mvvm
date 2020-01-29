@@ -8,13 +8,13 @@
 // ************************************************************************** //
 
 #include "HandleView.h"
-#include "HandleItem.h"
 #include "AxisObject.h"
+#include "HandleItem.h"
 
 #include <QGraphicsScene>
+#include <QGraphicsSceneMouseEvent>
 #include <QPainter>
 #include <QStyleOption>
-#include <QGraphicsSceneMouseEvent>
 
 #include <cmath>
 #include <mvvm/signals/itemmapper.h>
@@ -23,21 +23,18 @@
 #include <iostream>
 
 //! The constructor
-HandleView::HandleView(HandleItem* item) : 
-    handle_item(item), 
-    color(item->property(HandleItem::P_COLOR).value<QColor>())
+HandleView::HandleView(HandleItem* item)
+    : handle_item(item), color(item->property(HandleItem::P_COLOR).value<QColor>())
 {
     auto on_property_change = [this](ModelView::SessionItem*, std::string property_name) {
-        if (property_name == HandleItem::P_XPOS){
+        if (property_name == HandleItem::P_XPOS) {
             AxisObject* axis = getAxes();
-            setX(axis->fromRealToSceneX(
-                handle_item->property(HandleItem::P_XPOS).toDouble()));
+            setX(axis->fromRealToSceneX(handle_item->property(HandleItem::P_XPOS).toDouble()));
             emit moved();
         }
-        if (property_name == HandleItem::P_YPOS){
+        if (property_name == HandleItem::P_YPOS) {
             AxisObject* axis = getAxes();
-            setY(axis->fromRealToSceneY(
-                handle_item->property(HandleItem::P_YPOS).toDouble()));
+            setY(axis->fromRealToSceneY(handle_item->property(HandleItem::P_YPOS).toDouble()));
             emit moved();
         }
         if (property_name == HandleItem::P_COLOR)
@@ -54,14 +51,12 @@ HandleView::HandleView(HandleItem* item) :
 void HandleView::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
 {
     AxisObject* axis = getAxes();
-    if (!axis) return;
+    if (!axis)
+        return;
 
     painter->setBrush(color);
-    painter->drawEllipse(
-        QPointF(0,0),
-        handle_item->property(HandleItem::P_RADIUS).toDouble()/2.,
-        handle_item->property(HandleItem::P_RADIUS).toDouble()/2.
-    );
+    painter->drawEllipse(QPointF(0, 0), handle_item->property(HandleItem::P_RADIUS).toDouble() / 2.,
+                         handle_item->property(HandleItem::P_RADIUS).toDouble() / 2.);
 }
 
 //! The shape
@@ -70,7 +65,8 @@ QPainterPath HandleView::shape() const
     QPainterPath path;
 
     AxisObject* axis = getAxes();
-    if (!axis) return path;
+    if (!axis)
+        return path;
 
     path.addRect(getSceneRect());
     return path;
@@ -82,7 +78,8 @@ QRectF HandleView::boundingRect() const
     double epsilon = 10;
 
     AxisObject* axis = getAxes();
-    if (!axis) return QRectF(0,0,1,1);
+    if (!axis)
+        return QRectF(0, 0, 1, 1);
 
     return getSceneRect();
 }
@@ -91,31 +88,27 @@ QRectF HandleView::boundingRect() const
 QRectF HandleView::getSceneRect() const
 {
     AxisObject* axis = getAxes();
-    if (!axis) return QRectF(0,0,1,1);
+    if (!axis)
+        return QRectF(0, 0, 1, 1);
 
     return QRectF(
         QPointF(
-            axis->fromRealToSceneX(
-                - handle_item->property(HandleItem::P_RADIUS).toDouble()/2.),
-            axis->fromRealToSceneY(
-                + handle_item->property(HandleItem::P_RADIUS).toDouble()/2.)
-        ),
+            axis->fromRealToSceneX(-handle_item->property(HandleItem::P_RADIUS).toDouble() / 2.),
+            axis->fromRealToSceneY(+handle_item->property(HandleItem::P_RADIUS).toDouble() / 2.)),
         QPointF(
-            axis->fromRealToSceneX(
-                handle_item->property(HandleItem::P_RADIUS).toDouble()/2.),
-            axis->fromRealToSceneY(
-                - handle_item->property(HandleItem::P_RADIUS).toDouble()/2.)
-        )
-    );
-    
+            axis->fromRealToSceneX(handle_item->property(HandleItem::P_RADIUS).toDouble() / 2.),
+            axis->fromRealToSceneY(-handle_item->property(HandleItem::P_RADIUS).toDouble() / 2.)));
 }
 
 //! On move update the model
-void HandleView::mouseMoveEvent(QGraphicsSceneMouseEvent *event){
+void HandleView::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
+{
     AxisObject* axis = getAxes();
-    if (!axis) return ;
+    if (!axis)
+        return;
 
-    handle_item->setProperty(HandleItem::P_XPOS, axis->fromSceneToRealX(double(x()+ event->pos().x())));
+    handle_item->setProperty(HandleItem::P_XPOS,
+                             axis->fromSceneToRealX(double(x() + event->pos().x())));
 }
 
 //! Return a pointer to the handle item

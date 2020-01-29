@@ -29,9 +29,7 @@ public:
 
     QRectF boundingRect() const override;
     QPainterPath shape() const override;
-    void paint(
-        QPainter* painter, const QStyleOptionGraphicsItem* option, 
-        QWidget* widget) override;
+    void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
     QRectF getSceneRect() const;
     HandleItem* handleItem() const;
 
@@ -39,12 +37,11 @@ signals:
     void moved();
 
 protected:
-    void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
+    void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;
 
 private:
     HandleItem* handle_item;
     QColor color;
-
 };
 
-#endif //HANDLEVIEW_H
+#endif // HANDLEVIEW_H

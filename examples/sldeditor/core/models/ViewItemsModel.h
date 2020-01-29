@@ -35,9 +35,8 @@ public:
     HandleItem* addHandle();
     //! Add a segment item
     SegmentItem* addSegment();
-     
-private:
 
+private:
 };
 
 #endif //  VIEWITEMSMODEL_H

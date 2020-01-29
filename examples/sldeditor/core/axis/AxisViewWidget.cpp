@@ -12,10 +12,10 @@
 #include "AxisObject.h"
 
 #include <QGraphicsScene>
+#include <QGraphicsSceneMouseEvent>
 #include <QGraphicsView>
 #include <QPainter>
 #include <QStyleOption>
-#include <QGraphicsSceneMouseEvent>
 
 #include <iostream>
 
@@ -27,7 +27,7 @@ AxisViewWidget::AxisViewWidget() : QGraphicsView()
     setRenderHints(QPainter::Antialiasing);
     setCacheMode(QGraphicsView::CacheNone);
     setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
-    setAttribute( Qt::WA_TransparentForMouseEvents );
+    setAttribute(Qt::WA_TransparentForMouseEvents);
     setWindowFlags(Qt::FramelessWindowHint);
     setAttribute(Qt::WA_TranslucentBackground);
     setStyleSheet("border-width: 0px; border-style: solid;background: transparent");
@@ -40,7 +40,7 @@ AxisViewWidget::AxisViewWidget() : QGraphicsView()
 void AxisViewWidget::resize(const QSize size)
 {
     QWidget::resize(size.width(), size.height());
-    scene()->setSceneRect(0,0,size.width(), size.height());
+    scene()->setSceneRect(0, 0, size.width(), size.height());
     update();
 }
 

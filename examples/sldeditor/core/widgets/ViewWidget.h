@@ -9,10 +9,10 @@
 
 #include "AxisViewWidget.h"
 
-#include <QGraphicsView>
-#include <QWheelEvent>
-#include <QKeyEvent>
 #include <QDragMoveEvent>
+#include <QGraphicsView>
+#include <QKeyEvent>
+#include <QWheelEvent>
 
 class ViewWidget : public QGraphicsView
 {
@@ -20,7 +20,7 @@ class ViewWidget : public QGraphicsView
 
 public:
     //! The constructor
-    ViewWidget(QWidget *parent = nullptr);
+    ViewWidget(QWidget* parent = nullptr);
     //! Get the visible region
     QRectF visibleRect() const;
     //! Get the axis
@@ -28,7 +28,7 @@ public:
 
 protected:
     //! Manage wheelevent
-    void wheelEvent(QWheelEvent *event);
+    void wheelEvent(QWheelEvent* event);
     //! Manage the drag event
     void drageMoveEvent(QDragMoveEvent* event);
     //! The resize event that needs to propagate to axes

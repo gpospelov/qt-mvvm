@@ -15,7 +15,7 @@
 #include <QGraphicsObject>
 
 /*!
-@class AxisObject 
+@class AxisObject
 @brief This instance will manage all the axis visual components
 */
 class AxisObject : public QGraphicsObject
@@ -29,7 +29,7 @@ public:
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
 
 public:
-    AxisItem* axisItem() const {return _axis_item;};
+    AxisItem* axisItem() const { return _axis_item; };
 
     double fromSceneToRealX(double input_x) const;
     double fromSceneToRealY(double input_y) const;
@@ -49,7 +49,6 @@ private:
     AxisItem* _axis_item;
     double m_x_scale_factor;
     double m_y_scale_factor;
-
 };
 
 #endif // AXISOBJECT_H

@@ -28,9 +28,7 @@ public:
     SegmentView(SegmentItem* item);
     QRectF boundingRect() const override;
     QPainterPath shape() const override;
-    void paint(
-        QPainter* painter, const QStyleOptionGraphicsItem* option, 
-        QWidget* widget) override;
+    void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
     QRectF getSceneRect() const;
     SegmentItem* segmentItem() const;
 
@@ -39,12 +37,12 @@ public:
     void moveHandles();
     void refreshFromHandles();
 
-private: 
+private:
     void connectHandles();
     void disconnectHandles();
 
 public:
-    void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
+    void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;
 
 private:
     SegmentItem* segment_item;

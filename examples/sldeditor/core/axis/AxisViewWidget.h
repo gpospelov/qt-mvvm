@@ -30,7 +30,6 @@ public:
 
 private:
     AxisObject* _axis_object;
-
 };
 
 #endif // AXISVIEWWIDGET_H

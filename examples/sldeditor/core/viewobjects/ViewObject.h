@@ -18,15 +18,11 @@ class ViewObject : public QGraphicsObject
 {
     Q_OBJECT
 public:
-    
     ViewObject();
     QRectF boundingRect() const = 0;
     QPainterPath shape() const = 0;
-    void paint(
-            QPainter* painter, const QStyleOptionGraphicsItem* option, 
-            QWidget* widget) = 0;
+    void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) = 0;
     AxisObject* getAxes() const;
-
 };
 
 #endif // VIEWOBJECT_H
