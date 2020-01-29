@@ -15,13 +15,13 @@
 
 namespace ModelView
 {
-class AbstractViewModel;
 class ViewModelDelegate;
 } // namespace ModelView
 
 class SampleModel;
 class LayerTreeView;
 class LayerSelectionModel;
+class LayerViewModel;
 
 //! Widget to hold layer tree (LayerTreeView) and all corresponding models and delegates.
 //! Belongs to LayerEditor.
@@ -37,7 +37,7 @@ public:
 
 private:
     SampleModel* sample_model{nullptr};
-    std::unique_ptr<ModelView::AbstractViewModel> view_model;
+    std::unique_ptr<LayerViewModel> view_model;
     LayerSelectionModel* selection_model{nullptr};
     LayerTreeView* layer_view{nullptr};
     std::unique_ptr<ModelView::ViewModelDelegate> m_delegate;

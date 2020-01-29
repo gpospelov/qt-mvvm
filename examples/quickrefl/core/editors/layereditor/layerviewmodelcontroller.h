@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef LAYERTABLEVIEWMODELCONTROLLER_H
-#define LAYERTABLEVIEWMODELCONTROLLER_H
+#ifndef LAYERVIEWMODELCONTROLLER_H
+#define LAYERVIEWMODELCONTROLLER_H
 
 #include <mvvm/viewmodel/abstractviewmodelcontroller.h>
 
@@ -18,16 +18,16 @@ class AbstractViewModel;
 } // namespace ModelView
 
 /*!
-@class LayerTableViewModelController
-@brief Controller for LayerTableViewModel to show MultiLayerItem in a tree with custom layout.
+@class LayerViewModelController
+@brief Controller for LayerViewModel to show MultiLayerItem in a tree with custom layout.
 
 Will iterate through all top level items and creates rows with layer properties.
 */
 
-class LayerTableViewModelController : public ModelView::AbstractViewModelController
+class LayerViewModelController : public ModelView::AbstractViewModelController
 {
 public:
-    explicit LayerTableViewModelController(ModelView::AbstractViewModel* view_model = nullptr);
+    explicit LayerViewModelController(ModelView::AbstractViewModel* view_model = nullptr);
 };
 
-#endif //  LAYERTABLEVIEWMODELCONTROLLER_H
+#endif //  LAYERVIEWMODELCONTROLLER_H

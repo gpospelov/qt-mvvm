@@ -11,6 +11,7 @@
 #include "samplemodel.h"
 #include "layerselectionmodel.h"
 #include "layertreeview.h"
+#include "layerviewmodel.h"
 #include <QVBoxLayout>
 #include <mvvm/model/modelutils.h>
 #include <mvvm/viewmodel/abstractviewmodel.h>
@@ -19,7 +20,7 @@
 
 LayerEditorWidget::LayerEditorWidget(SampleModel* sample_model, QWidget* parent)
     : QWidget(parent), sample_model(sample_model),
-      view_model(ModelView::Utils::CreatePropertyTableViewModel(sample_model)),
+      view_model(std::make_unique<LayerViewModel>(sample_model)),
       selection_model(new LayerSelectionModel(view_model.get(), this)),
       layer_view(new LayerTreeView),
       m_delegate(std::make_unique<ModelView::ViewModelDelegate>())

@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef LAYERTABLEVIEWMODEL_H
-#define LAYERTABLEVIEWMODEL_H
+#ifndef LAYERVIEWMODEL_H
+#define LAYERVIEWMODEL_H
 
 #include <mvvm/viewmodel/abstractviewmodel.h>
 
@@ -18,14 +18,14 @@ class SessionModel;
 } // namespace ModelView
 
 /*!
-@class LayerTableViewModel
+@class LayerViewModel
 @brief View model to display content of MultiLayerItem in table like views.
 */
 
-class LayerTableViewModel : public ModelView::AbstractViewModel
+class LayerViewModel : public ModelView::AbstractViewModel
 {
 public:
-    LayerTableViewModel(ModelView::SessionModel* model = nullptr, QObject* parent = nullptr);
+    LayerViewModel(ModelView::SessionModel* model = nullptr, QObject* parent = nullptr);
 };
 
-#endif //  LAYERTABLEVIEWMODEL_H
+#endif //  LAYERVIEWMODEL_H

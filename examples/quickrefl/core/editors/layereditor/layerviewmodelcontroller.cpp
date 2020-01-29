@@ -52,7 +52,7 @@ public:
     }
 };
 
-LayerTableViewModelController::LayerTableViewModelController(AbstractViewModel* view_model)
+LayerViewModelController::LayerViewModelController(AbstractViewModel* view_model)
     : AbstractViewModelController(view_model)
 {
     setRowStrategy(std::make_unique<CustomLayerRowStrategy>());
