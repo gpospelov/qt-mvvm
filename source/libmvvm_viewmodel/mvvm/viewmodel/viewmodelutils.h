@@ -51,6 +51,9 @@ CORE_EXPORT QVariant CheckStateRole(const SessionItem& item);
 //! Returns decoration role for given item.
 CORE_EXPORT QVariant DecorationRole(const SessionItem& item);
 
+//! Returns vector of underlying SessionItem's for given index list.
+CORE_EXPORT std::vector<SessionItem*> ItemsFromIndex(const QModelIndexList& index_list);
+
 //! Returns vector of parent items from given index list.
 //! Finds all SessionItems corresponding to given index list and collect their parents.
 //! Function is usefull in the context of table-like views when we want to find compound items

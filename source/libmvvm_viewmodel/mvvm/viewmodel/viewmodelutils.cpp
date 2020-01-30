@@ -95,6 +95,20 @@ QVariant Utils::DecorationRole(const SessionItem& item)
     return QVariant();
 }
 
+std::vector<SessionItem*> Utils::ItemsFromIndex(const QModelIndexList& index_list)
+{
+    if (index_list.empty())
+        return {};
+
+    std::vector<SessionItem*> result;
+
+    if (auto model = dynamic_cast<const AbstractViewModel*>(index_list.front().model()))
+        std::transform(index_list.begin(), index_list.end(), std::back_inserter(result),
+                       [model](auto index) { return model->sessionItemFromIndex(index); });
+
+    return result;
+}
+
 std::vector<SessionItem*> Utils::ParentItemsFromIndex(const QModelIndexList& index_list)
 {
     if (index_list.empty())

@@ -131,6 +131,37 @@ TEST_F(ViewModelUtilsTest, itemDecorationRole)
     EXPECT_EQ(Utils::DecorationRole(item).value<QColor>(), expected);
 }
 
+//! Check ItemsFromIndex in PropertyTableViewModel context.
+//! ViewItem with its three property x, y, z forms one row. All corresponding
+//! indices of (x,y,z) should give us pointers to VectorItem's properties.
+
+TEST_F(ViewModelUtilsTest, itemsFromIndex)
+{
+    // creating VectorItem and viewModel to see it as a table
+    SessionModel model;
+    auto parent = model.insertItem<VectorItem>();
+    PropertyTableViewModel viewModel;
+    viewModel.setSessionModel(&model);
+
+    // it's a table with one row and x,y,z columns
+    EXPECT_EQ(viewModel.rowCount(), 1);
+    EXPECT_EQ(viewModel.columnCount(), 3);
+
+    // empty index list doesn't lead to SessionItem's
+    QModelIndexList index_list;
+    EXPECT_EQ(Utils::ItemsFromIndex(index_list).size(), 0);
+
+    // index list populated with column of properties
+    index_list.push_back(viewModel.index(0, 0));
+    index_list.push_back(viewModel.index(0, 1));
+    index_list.push_back(viewModel.index(0, 2));
+
+    std::vector<SessionItem*> expected = {parent->getItem(VectorItem::P_X),
+                                          parent->getItem(VectorItem::P_Y),
+                                          parent->getItem(VectorItem::P_Z)};
+    EXPECT_EQ(Utils::ItemsFromIndex(index_list), expected);
+}
+
 //! Check ParentItemsFromIndex in PropertyTableViewModel context.
 //! ViewItem with its three property x, y, z forms one row. All corresponding
 //! indices of (x,y,z) should give us pointer to VectorItem.
