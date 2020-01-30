@@ -36,6 +36,11 @@ public:
     static inline const std::string P_NREPETITIONS = "P_NREPETITIONS";
 
     MultiLayerItem();
+
+    void activate() override;
+
+private:
+    void update_layer_appearance();
 };
 
 #endif // LAYERITEM_H

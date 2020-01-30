@@ -37,13 +37,10 @@ void SampleModel::create_default_multilayer()
 
     auto top = insertItem<LayerItem>(multilayer);
     top->setDisplayName("Ambient");
-    top->setProperty(LayerItem::P_THICKNESS, 0.0);
-
     auto middle = insertItem<LayerItem>(multilayer);
     middle->setDisplayName("Middle");
-    middle->setProperty(LayerItem::P_THICKNESS, 42.0);
-
     auto substrate = insertItem<LayerItem>(multilayer);
     substrate->setDisplayName("Substrate");
-    substrate->setProperty(LayerItem::P_THICKNESS, 0.0);
+
+    middle->setProperty(LayerItem::P_THICKNESS, 42.0);
 }
