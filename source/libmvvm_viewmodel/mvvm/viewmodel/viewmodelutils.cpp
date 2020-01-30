@@ -113,10 +113,9 @@ std::vector<SessionItem*> Utils::ItemsFromIndex(const QModelIndexList& index_lis
 std::vector<SessionItem*> Utils::ParentItemsFromIndex(const QModelIndexList& index_list)
 {
     std::set<SessionItem*> unique_parents;
-    auto all_items = ItemsFromIndex(index_list);
-    std::transform(all_items.begin(), all_items.end(),
-                   std::inserter(unique_parents, unique_parents.begin()),
-                   [](auto item) { return item->parent(); });
+    for(auto item : ItemsFromIndex(index_list))
+        if (item)
+            unique_parents.insert(item->parent());
 
     std::vector<SessionItem*> result;
     std::copy(unique_parents.begin(), unique_parents.end(), std::back_inserter(result));
