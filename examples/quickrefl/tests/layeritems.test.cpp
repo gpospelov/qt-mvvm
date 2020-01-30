@@ -14,7 +14,7 @@
 
 using namespace ModelView;
 
-//! Test of CompountItem machinery (property children etc).
+//! Test layer items.
 
 class LayerItemsTest : public ::testing::Test
 {
