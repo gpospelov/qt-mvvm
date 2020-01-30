@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include <QStandardItemModel>
+#include <iterator>
 #include <mvvm/model/customvariants.h>
 #include <mvvm/model/externalproperty.h>
 #include <mvvm/model/mvvm_types.h>
@@ -111,20 +112,13 @@ std::vector<SessionItem*> Utils::ItemsFromIndex(const QModelIndexList& index_lis
 
 std::vector<SessionItem*> Utils::ParentItemsFromIndex(const QModelIndexList& index_list)
 {
-    if (index_list.empty())
-        return {};
+    std::set<SessionItem*> unique_parents;
+    auto all_items = ItemsFromIndex(index_list);
+    std::transform(all_items.begin(), all_items.end(),
+                   std::inserter(unique_parents, unique_parents.begin()),
+                   [](auto item) { return item->parent(); });
 
     std::vector<SessionItem*> result;
-
-    if (auto model = dynamic_cast<const AbstractViewModel*>(index_list.front().model())) {
-        std::set<SessionItem*> unique_parents;
-        for (auto index : index_list) {
-            auto property_item = model->sessionItemFromIndex(index);
-            unique_parents.insert(property_item->parent());
-        }
-
-        std::copy(unique_parents.begin(), unique_parents.end(), std::back_inserter(result));
-    }
-
+    std::copy(unique_parents.begin(), unique_parents.end(), std::back_inserter(result));
     return result;
 }
