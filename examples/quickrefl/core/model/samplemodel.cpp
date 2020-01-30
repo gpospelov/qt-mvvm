@@ -27,7 +27,6 @@ std::unique_ptr<ItemCatalogue> CreateItemCatalogue()
 SampleModel::SampleModel() : SessionModel("SampleModel")
 {
     setItemCatalogue(CreateItemCatalogue());
-    create_default_multilayer();
 }
 
 //! Populate the model with default MultiLayer with 3 layers.

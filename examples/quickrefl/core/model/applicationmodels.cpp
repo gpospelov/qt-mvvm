@@ -34,6 +34,7 @@ struct ApplicationModels::ApplicationModelsImpl {
         m_document = std::make_unique<JsonDocument>(
             std::initializer_list<SessionModel*>{m_material_model.get(), m_sample_model.get()});
 
+        m_sample_model->create_default_multilayer();
         update_material_properties();
     }
 
