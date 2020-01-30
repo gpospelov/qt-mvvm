@@ -31,8 +31,8 @@ std::unique_ptr<ItemCatalogue> CreateItemCatalogue()
 const double rho_si = 2.01e-05;
 const double mu_si = 5.96e-07;
 
-const double rho_ni = 9.4245e-06;
-const double mu_ni = 0.0;
+const double rho_default = 9.4245e-06;
+const double mu_default = 0.0;
 
 const std::string air_material_name = "Air";
 const std::string substrate_material_name = "Si";
@@ -126,7 +126,7 @@ void MaterialModel::cloneMaterial(const MaterialBaseItem* item)
 void MaterialModel::addDefaultMaterial()
 {
     auto material = insertItem<SLDMaterialItem>(materialContainer());
-    material->set_properties("Default", QColor(Qt::green), 1e-03, 1e-05);
+    material->set_properties("Default", QColor(Qt::green), rho_default, mu_default);
 }
 
 //! Populates the model with some default content.
@@ -137,7 +137,7 @@ void MaterialModel::init_model()
     auto material = insertItem<SLDMaterialItem>(container);
     material->set_properties(air_material_name, suggestMaterialColor(air_material_name), 0.0, 0.0);
     material = insertItem<SLDMaterialItem>(container);
-    material->set_properties(default_material_name, suggestMaterialColor(default_material_name), rho_ni, mu_ni);
+    material->set_properties(default_material_name, suggestMaterialColor(default_material_name), rho_default, mu_default);
     material = insertItem<SLDMaterialItem>(container);
     material->set_properties(substrate_material_name, suggestMaterialColor(substrate_material_name), rho_si, mu_si);
 }
