@@ -8,15 +8,26 @@
 // ************************************************************************** //
 
 #include "layereditoractions.h"
-#include "samplemodel.h"
+#include "item_constants.h"
+#include "layeritems.h"
 #include "layerselectionmodel.h"
-#include <mvvm/model/modelutils.h>
+#include "samplemodel.h"
 #include <QDebug>
+#include <mvvm/model/modelutils.h>
 
 struct LayerEditorActions::LayerEditorActionsImpl {
     SampleModel* model{nullptr};
     LayerSelectionModel* selection_model{nullptr};
     LayerEditorActionsImpl(SampleModel* model) : model(model) {}
+
+    ModelView::SessionItem* insertSampleElement(const std::string& model_type)
+    {
+        auto items = selection_model->selectedItems();
+        auto selected_item = items.empty() ? nullptr : items.back();
+        auto parent = selected_item ? selected_item->parent() : nullptr;
+        auto tagrow = selected_item ? parent->tagRowOfItem(selected_item) : ModelView::TagRow{};
+        return model->insertNewItem(model_type, parent, {tagrow.tag, tagrow.row + 1});
+    }
 };
 
 LayerEditorActions::LayerEditorActions(SampleModel* model, QObject* parent)
@@ -24,9 +35,12 @@ LayerEditorActions::LayerEditorActions(SampleModel* model, QObject* parent)
 {
 }
 
-void LayerEditorActions::onAdd()
+//! Adds layer after selected item. If more than one item is selected, adds after the last one.
+
+void LayerEditorActions::onAddLayer()
 {
-    qDebug() << "LayerEditorActions::onAdd()";
+    auto new_item = p_impl->insertSampleElement(::Constants::LayerItemType);
+    p_impl->selection_model->selectItem(new_item);
 }
 
 void LayerEditorActions::onClone()
