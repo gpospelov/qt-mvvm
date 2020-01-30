@@ -54,6 +54,7 @@ TEST(ItemMapperTest, onItemDestroy)
     EXPECT_CALL(widget, onPropertyChange(_, _)).Times(0);
     EXPECT_CALL(widget, onChildPropertyChange(_, _)).Times(0);
     EXPECT_CALL(widget, onItemInserted(_, _)).Times(0);
+    EXPECT_CALL(widget, onItemRemoved(_, _)).Times(0);
     EXPECT_CALL(widget, onAboutToRemoveItem(_, _)).Times(0);
 
     // performing action
@@ -75,6 +76,7 @@ TEST(ItemMapperTest, onDataChange)
     EXPECT_CALL(widget, onPropertyChange(_, _)).Times(0);
     EXPECT_CALL(widget, onChildPropertyChange(_, _)).Times(0);
     EXPECT_CALL(widget, onItemInserted(_, _)).Times(0);
+    EXPECT_CALL(widget, onItemRemoved(_, _)).Times(0);
     EXPECT_CALL(widget, onAboutToRemoveItem(_, _)).Times(0);
 
     // perform action
@@ -95,6 +97,7 @@ TEST(ItemMapperTest, onDataChangeDuplicate)
     EXPECT_CALL(widget, onPropertyChange(_, _)).Times(0);
     EXPECT_CALL(widget, onChildPropertyChange(_, _)).Times(0);
     EXPECT_CALL(widget, onItemInserted(_, _)).Times(0);
+    EXPECT_CALL(widget, onItemRemoved(_, _)).Times(0);
     EXPECT_CALL(widget, onAboutToRemoveItem(_, _)).Times(0);
 
     // perform actions, only one call should be triggered
@@ -118,6 +121,7 @@ TEST(ItemMapperTest, setActivity)
     EXPECT_CALL(widget, onPropertyChange(_, _)).Times(0);
     EXPECT_CALL(widget, onChildPropertyChange(_, _)).Times(0);
     EXPECT_CALL(widget, onItemInserted(_, _)).Times(0);
+    EXPECT_CALL(widget, onItemRemoved(_, _)).Times(0);
     EXPECT_CALL(widget, onAboutToRemoveItem(_, _)).Times(0);
 
     // perform actions, no calls should be triggered
@@ -160,6 +164,7 @@ TEST(ItemMapperTest, onPropertyChange)
     EXPECT_CALL(widget, onPropertyChange(item, "height")).Times(1);
     EXPECT_CALL(widget, onChildPropertyChange(_, _)).Times(0);
     EXPECT_CALL(widget, onItemInserted(_, _)).Times(0);
+    EXPECT_CALL(widget, onItemRemoved(_, _)).Times(0);
     EXPECT_CALL(widget, onAboutToRemoveItem(_, _)).Times(0);
 
     // perform action
@@ -186,6 +191,7 @@ TEST(ItemMapperTest, onChildPropertyChange)
     EXPECT_CALL(widget, onPropertyChange(_, _)).Times(0);
     EXPECT_CALL(widget, onChildPropertyChange(compound2, "height")).Times(1);
     EXPECT_CALL(widget, onItemInserted(_, _)).Times(0);
+    EXPECT_CALL(widget, onItemRemoved(_, _)).Times(0);
     EXPECT_CALL(widget, onAboutToRemoveItem(_, _)).Times(0);
 
     // perform action
@@ -210,6 +216,7 @@ TEST(ItemMapperTest, onItemInsert)
     EXPECT_CALL(widget, onPropertyChange(_, _)).Times(0);
     EXPECT_CALL(widget, onChildPropertyChange(_, _)).Times(0);
     EXPECT_CALL(widget, onItemInserted(compound1, expected_tagrow)).Times(1);
+    EXPECT_CALL(widget, onItemRemoved(_, _)).Times(0);
     EXPECT_CALL(widget, onAboutToRemoveItem(_, _)).Times(0);
 
     // perform action
@@ -234,6 +241,7 @@ TEST(ItemMapperTest, onAboutToRemoveItem)
     EXPECT_CALL(widget, onPropertyChange(_, _)).Times(0);
     EXPECT_CALL(widget, onChildPropertyChange(_, _)).Times(0);
     EXPECT_CALL(widget, onItemInserted(_, _)).Times(0);
+    EXPECT_CALL(widget, onItemRemoved(compound1, expected_tagrow)).Times(1);
     EXPECT_CALL(widget, onAboutToRemoveItem(compound1, expected_tagrow)).Times(1);
 
     // perform action
