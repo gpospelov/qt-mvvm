@@ -12,6 +12,7 @@
 #include "layeritems.h"
 #include "layerselectionmodel.h"
 #include "samplemodel.h"
+#include <mvvm/viewmodel/abstractviewmodel.h>
 #include <QDebug>
 #include <mvvm/model/modelutils.h>
 
@@ -24,9 +25,14 @@ struct LayerEditorActions::LayerEditorActionsImpl {
     {
         auto items = selection_model->selectedItems();
         auto selected_item = items.empty() ? nullptr : items.back();
-        auto parent = selected_item ? selected_item->parent() : nullptr;
+        auto parent = selected_item ? selected_item->parent() : root_item();
         auto tagrow = selected_item ? parent->tagRowOfItem(selected_item) : ModelView::TagRow{};
         return model->insertNewItem(model_type, parent, {tagrow.tag, tagrow.row + 1});
+    }
+
+    ModelView::SessionItem* root_item() {
+        auto model = dynamic_cast<ModelView::AbstractViewModel *>(selection_model->model());
+        return model->sessionItemFromIndex(QModelIndex());
     }
 };
 
