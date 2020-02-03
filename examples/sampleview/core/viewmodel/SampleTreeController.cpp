@@ -11,6 +11,7 @@
 #include "LayerItems.h"
 #include "SampleModel.h"
 #include "item_constants.h"
+#include <mvvm/model/itemutils.h>
 #include <mvvm/model/modelutils.h>
 #include <mvvm/model/sessionitem.h>
 #include <set>
@@ -65,7 +66,7 @@ void SampleTreeController::onRemove()
     if (!item)
         return;
 
-    SessionItem* to_select = findNextSibling(item);
+    SessionItem* to_select = Utils::FindNextItemToSelect(item);
 
     Utils::DeleteItemFromModel(item);
     selectItem(to_select);
@@ -79,28 +80,6 @@ ModelView::SessionItem* SampleTreeController::insertSampleElement(const std::str
     return m_sample_model->insertNewItem(model_type, parent, {tagrow.tag, tagrow.row + 1});
 }
 
-SessionItem* SampleTreeController::findNextSibling(SessionItem* item)
-{
-    if (!item)
-        return nullptr;
-
-    auto parent = item->parent();
-    if (!parent)
-        return nullptr;
-
-    auto siblings = parent->getItems(parent->tagFromItem(item));
-    size_t size = siblings.size();
-    if (size <= 1)
-        return parent;
-    if (siblings.back() == item)
-        return siblings[size - 2];
-
-    for (size_t i = 0; i < size; ++i)
-        if (siblings[i] == item)
-            return siblings[i + 1];
-
-    return nullptr;
-}
 
 void SampleTreeController::selectItem(SessionItem* item)
 {
