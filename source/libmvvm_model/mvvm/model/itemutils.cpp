@@ -94,3 +94,28 @@ std::vector<SessionItem*> Utils::SinglePropertyItems(const SessionItem& item)
             result.push_back(child);
     return result;
 }
+
+SessionItem* Utils::FindNextSibling(SessionItem* item)
+{
+    auto parent = item ? item->parent() : nullptr;
+    if (!parent)
+        return nullptr;
+    auto tagrow = parent->tagRowOfItem(item);
+    return parent->getItem(tagrow.tag, tagrow.row + 1);
+}
+
+SessionItem* Utils::FindPreviousSibling(SessionItem* item)
+{
+    auto parent = item ? item->parent() : nullptr;
+    if (!parent)
+        return nullptr;
+    auto tagrow = parent->tagRowOfItem(item);
+    return parent->getItem(tagrow.tag, tagrow.row - 1);
+}
+
+SessionItem* Utils::FindNextItemToSelect(SessionItem* item)
+{
+    auto next = FindNextSibling(item);
+    auto closest = next ? next : FindPreviousSibling(item);
+    return closest ? closest : item->parent();
+}
