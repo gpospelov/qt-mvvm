@@ -12,7 +12,6 @@
 #include "layeritems.h"
 #include "layerselectionmodel.h"
 #include "samplemodel.h"
-#include <QDebug>
 #include <mvvm/model/itemutils.h>
 #include <mvvm/model/modelutils.h>
 #include <mvvm/viewmodel/abstractviewmodel.h>
@@ -58,7 +57,19 @@ void LayerEditorActions::onAddLayer()
 
 void LayerEditorActions::onClone()
 {
-    qDebug() << "LayerEditorActions::onClone()";
+    auto items = p_impl->selection_model->selectedItems();
+    if (items.empty())
+        return;
+
+    std::vector<ModelView::SessionItem*> new_selection;
+    for (auto to_clone : items) {
+        auto parent = to_clone->parent();
+        const auto tagrow = parent->tagRowOfItem(to_clone);
+        new_selection.push_back(
+            p_impl->model->copyItem(to_clone, parent, {tagrow.tag, tagrow.row + 1}));
+    }
+
+    p_impl->selection_model->selectItems(new_selection);
 }
 
 void LayerEditorActions::onRemove()

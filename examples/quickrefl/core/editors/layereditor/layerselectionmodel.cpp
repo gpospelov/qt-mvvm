@@ -32,6 +32,7 @@ void LayerSelectionModel::selectItems(std::vector<ModelView::SessionItem*> items
 }
 
 //! Selects whole row corresponding to given item.
+//! FIXME merge two methods: selectItem and selectItems, provide tests.
 
 void LayerSelectionModel::selectItem(ModelView::SessionItem* item)
 {
