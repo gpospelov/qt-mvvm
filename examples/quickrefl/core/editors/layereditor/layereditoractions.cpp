@@ -25,10 +25,15 @@ struct LayerEditorActions::LayerEditorActionsImpl {
     ModelView::SessionItem* insertSampleElement(const std::string& model_type)
     {
         auto items = selection_model->selectedItems();
-        auto selected_item = items.empty() ? nullptr : items.back();
-        auto parent = selected_item ? selected_item->parent() : root_item();
-        auto tagrow = selected_item ? parent->tagRowOfItem(selected_item) : ModelView::TagRow{};
-        return model->insertNewItem(model_type, parent, {tagrow.tag, tagrow.row + 1});
+        if (items.empty()) {
+            auto parent = root_item();
+            return model->insertNewItem(model_type, parent);
+        } else {
+            auto selected_item = items.back();
+            auto parent = selected_item->parent();
+            auto tagrow = parent->tagRowOfItem(selected_item);
+            return model->insertNewItem(model_type, parent, {tagrow.tag, tagrow.row + 1});
+        }
     }
 
     ModelView::SessionItem* root_item()

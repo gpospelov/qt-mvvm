@@ -25,6 +25,9 @@ class LayerEditorActionsTest : public ::testing::Test
 public:
     ~LayerEditorActionsTest();
 
+    //! Test data representing MultiLayer with two layers and all machinery around:
+    //! ViewModel, SelectionModel and actions.
+
     struct TestData {
         SampleModel sample_model;
         LayerViewModel view_model{&sample_model};
@@ -39,6 +42,7 @@ public:
             multilayer = sample_model.insertItem<MultiLayerItem>();
             top = sample_model.insertItem<LayerItem>(multilayer);
             bottom = sample_model.insertItem<LayerItem>(multilayer);
+            view_model.setRootSessionItem(multilayer);
         }
     };
 };
@@ -81,6 +85,26 @@ TEST_F(LayerEditorActionsTest, addNewLayerAfterSelection)
 
     // checking, that new layer is selected
     std::vector<SessionItem*> expected = {layers.at(1)};
+    EXPECT_EQ(test_data.selection_model.selectedItems(), expected);
+}
+
+//! Adds new layer when no selection exists.
+
+TEST_F(LayerEditorActionsTest, addNewLayerNoSelection)
+{
+    TestData test_data;
+
+    // adding new layer when no selection exist
+    test_data.actions.onAddLayer();
+
+    // checking layout of multilayer
+    auto layers = test_data.multilayer->getItems(MultiLayerItem::T_LAYERS);
+    EXPECT_EQ(layers.size(), 3);
+    EXPECT_EQ(layers.at(0), test_data.top);
+    EXPECT_EQ(layers.at(1), test_data.bottom);
+
+    // checking, that new layer is selected
+    std::vector<SessionItem*> expected = {layers.at(2)};
     EXPECT_EQ(test_data.selection_model.selectedItems(), expected);
 }
 
