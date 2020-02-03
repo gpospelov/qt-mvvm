@@ -12,9 +12,10 @@
 #include "layeritems.h"
 #include "layerselectionmodel.h"
 #include "samplemodel.h"
-#include <mvvm/viewmodel/abstractviewmodel.h>
 #include <QDebug>
+#include <mvvm/model/itemutils.h>
 #include <mvvm/model/modelutils.h>
+#include <mvvm/viewmodel/abstractviewmodel.h>
 
 struct LayerEditorActions::LayerEditorActionsImpl {
     SampleModel* model{nullptr};
@@ -30,8 +31,9 @@ struct LayerEditorActions::LayerEditorActionsImpl {
         return model->insertNewItem(model_type, parent, {tagrow.tag, tagrow.row + 1});
     }
 
-    ModelView::SessionItem* root_item() {
-        auto model = dynamic_cast<ModelView::AbstractViewModel *>(selection_model->model());
+    ModelView::SessionItem* root_item()
+    {
+        auto model = dynamic_cast<ModelView::AbstractViewModel*>(selection_model->model());
         return model->sessionItemFromIndex(QModelIndex());
     }
 };
@@ -56,7 +58,15 @@ void LayerEditorActions::onClone()
 
 void LayerEditorActions::onRemove()
 {
-    qDebug() << "LayerEditorActions::onRemove()";
+    auto items = p_impl->selection_model->selectedItems();
+    if (items.empty())
+        return;
+
+    auto next_to_select = ModelView::Utils::FindNextItemToSelect(items.back());
+    for (auto item : items)
+        ModelView::Utils::DeleteItemFromModel(item);
+
+    p_impl->selection_model->selectItem(next_to_select);
 }
 
 void LayerEditorActions::onMoveUp()

@@ -83,3 +83,25 @@ TEST_F(LayerEditorActionsTest, addNewLayerAfterSelection)
     std::vector<SessionItem*> expected = {layers.at(1)};
     EXPECT_EQ(test_data.selection_model.selectedItems(), expected);
 }
+
+//! Adds new layer after selected layer.
+
+TEST_F(LayerEditorActionsTest, onRemoveLayer)
+{
+    TestData test_data;
+
+    // selecting top layer
+    test_data.selection_model.selectItem(test_data.top);
+
+    // removing selected top layer
+    test_data.actions.onRemove();
+
+    // checking layout of multilayer
+    auto layers = test_data.multilayer->getItems(MultiLayerItem::T_LAYERS);
+    EXPECT_EQ(layers.size(), 1);
+    EXPECT_EQ(layers.at(0), test_data.bottom);
+
+    // checking, that next layer beneath is selected
+    std::vector<SessionItem*> expected = {test_data.bottom};
+    EXPECT_EQ(test_data.selection_model.selectedItems(), expected);
+}
