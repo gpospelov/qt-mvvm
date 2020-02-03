@@ -90,6 +90,19 @@ void ItemMapper::setOnItemInserted(Callbacks::item_tagrow_t f, Callbacks::slot_t
 }
 
 /*!
+@brief Sets callback to be notified on child removal.
+
+Callback will be called with (compound_item, tag, row). For MultiLayer containing the T_LAYERS
+tag, the signal will be triggered on layer removal with
+(multilayer*, {T_LAYER, oldrow}) as callback parameters.
+*/
+
+void ItemMapper::setOnItemRemoved(Callbacks::item_tagrow_t f, Callbacks::slot_t owner)
+{
+    m_on_item_removed.connect(std::move(f), owner);
+}
+
+/*!
 @brief Sets callback to be notified when row is about to be removed.
 
 Callback will be called with (compound_item, tagrow). For MultiLayer containing the T_LAYERS
@@ -116,6 +129,7 @@ void ItemMapper::unsubscribe(Callbacks::slot_t client)
     m_on_property_change.remove_client(client);
     m_on_child_property_change.remove_client(client);
     m_on_item_inserted.remove_client(client);
+    m_on_item_removed.remove_client(client);
     m_on_about_to_remove_item.remove_client(client);
 }
 
@@ -146,6 +160,12 @@ void ItemMapper::processItemInserted(SessionItem* parent, TagRow tagrow)
         callOnItemInserted(m_item, tagrow);
 }
 
+void ItemMapper::processItemRemoved(SessionItem* parent, TagRow tagrow)
+{
+    if (parent == m_item)
+        callOnItemRemoved(m_item, tagrow);
+}
+
 void ItemMapper::processAboutToRemoveItem(SessionItem* parent, TagRow tagrow)
 {
     if (parent == m_item)
@@ -165,6 +185,11 @@ void ItemMapper::subscribe_to_model()
         processItemInserted(item, tagrow);
     };
     m_model->mapper()->setOnItemInserted(on_item_inserted, this);
+
+    auto on_item_removed = [this](ModelView::SessionItem* item, TagRow tagrow) {
+        processItemRemoved(item, tagrow);
+    };
+    m_model->mapper()->setOnItemRemoved(on_item_removed, this);
 
     auto on_about_to_remove_item = [this](ModelView::SessionItem* item, ModelView::TagRow tagrow) {
         processAboutToRemoveItem(item, tagrow);
@@ -226,6 +251,14 @@ void ItemMapper::callOnItemInserted(SessionItem* parent, TagRow tagrow)
 {
     if (m_active)
         m_on_item_inserted(parent, tagrow);
+}
+
+//! Notifies all callbacks subscribed to "on row removed" event.
+
+void ItemMapper::callOnItemRemoved(SessionItem* parent, TagRow tagrow)
+{
+    if (m_active)
+        m_on_item_removed(parent, tagrow);
 }
 
 //! Notifies all callbacks subscribed to "on row about to be removed".

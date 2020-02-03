@@ -25,8 +25,8 @@ LayerEditorToolBar::LayerEditorToolBar(LayerEditorActions* actions, QWidget* par
 
     auto action = new QAction("Add");
     action->setIcon(QIcon(":/icons/plus-circle-outline.svg"));
-    action->setToolTip("Adds new layer at the bottom of the list");
-    connect(action, &QAction::triggered, actions, &LayerEditorActions::onAdd);
+    action->setToolTip("Adds a new layer after selected one.");
+    connect(action, &QAction::triggered, actions, &LayerEditorActions::onAddLayer);
     addAction(action);
 
     action = new QAction("Clone");

@@ -20,6 +20,7 @@ using namespace ModelView;
 class CustomLayerRowStrategy : public RowStrategyInterface
 {
 public:
+
     QList<QStandardItem*> constructRow(SessionItem* item)
     {
         QList<QStandardItem*> result;
@@ -43,6 +44,7 @@ public:
 
         return result;
     }
+
     QStringList horizontalHeaderLabels() const
     {
         return QStringList() << "Type"

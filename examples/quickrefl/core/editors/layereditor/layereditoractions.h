@@ -26,7 +26,7 @@ public:
     LayerEditorActions(SampleModel* model, QObject* parent = nullptr);
     ~LayerEditorActions();
 
-    void onAdd();
+    void onAddLayer();
     void onClone();
     void onRemove();
     void onMoveUp();

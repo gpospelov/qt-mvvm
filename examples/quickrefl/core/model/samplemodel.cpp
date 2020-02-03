@@ -27,17 +27,20 @@ std::unique_ptr<ItemCatalogue> CreateItemCatalogue()
 SampleModel::SampleModel() : SessionModel("SampleModel")
 {
     setItemCatalogue(CreateItemCatalogue());
-    init_model();
 }
 
-//! Populats the model with some default content.
+//! Populate the model with default MultiLayer with 3 layers.
 
-void SampleModel::init_model()
+void SampleModel::create_default_multilayer()
 {
     auto multilayer = insertItem<MultiLayerItem>();
-    insertItem<LayerItem>(multilayer);
-    auto assembly = insertItem<MultiLayerItem>(multilayer);
-    insertItem<LayerItem>(assembly);
-    insertItem<LayerItem>(assembly);
-    insertItem<LayerItem>(multilayer);
+
+    auto top = insertItem<LayerItem>(multilayer);
+    top->setDisplayName("Ambient");
+    auto middle = insertItem<LayerItem>(multilayer);
+    middle->setDisplayName("Middle");
+    auto substrate = insertItem<LayerItem>(multilayer);
+    substrate->setDisplayName("Substrate");
+
+    middle->setProperty(LayerItem::P_THICKNESS, 42.0);
 }

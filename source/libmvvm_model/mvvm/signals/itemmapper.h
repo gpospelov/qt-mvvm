@@ -39,6 +39,7 @@ public:
     void setOnPropertyChange(Callbacks::item_str_t f, Callbacks::slot_t owner);
     void setOnChildPropertyChange(Callbacks::item_str_t f, Callbacks::slot_t owner);
     void setOnItemInserted(Callbacks::item_tagrow_t f, Callbacks::slot_t owner);
+    void setOnItemRemoved(Callbacks::item_tagrow_t f, Callbacks::slot_t owner);
     void setOnAboutToRemoveItem(Callbacks::item_tagrow_t f, Callbacks::slot_t owner);
 
     void setActive(bool value);
@@ -48,6 +49,7 @@ public:
 private:
     void processDataChange(SessionItem* item, int role);
     void processItemInserted(SessionItem* parent, TagRow tagrow);
+    void processItemRemoved(SessionItem* parent, TagRow tagrow);
     void processAboutToRemoveItem(SessionItem* parent, TagRow tagrow);
     void subscribe_to_model();
     void unsubscribe_from_model();
@@ -58,6 +60,7 @@ private:
     void callOnPropertyChange(SessionItem* item, std::string property_name);
     void callOnChildPropertyChange(SessionItem* item, std::string property_name);
     void callOnItemInserted(SessionItem* parent, TagRow tagrow);
+    void callOnItemRemoved(SessionItem* parent, TagRow tagrow);
     void callOnAboutToRemoveItem(SessionItem* parent, TagRow tagrow);
 
     Signal<Callbacks::item_t> m_on_item_destroy;
@@ -65,6 +68,7 @@ private:
     Signal<Callbacks::item_str_t> m_on_property_change;
     Signal<Callbacks::item_str_t> m_on_child_property_change;
     Signal<Callbacks::item_tagrow_t> m_on_item_inserted;
+    Signal<Callbacks::item_tagrow_t> m_on_item_removed;
     Signal<Callbacks::item_tagrow_t> m_on_about_to_remove_item;
 
     bool m_active;

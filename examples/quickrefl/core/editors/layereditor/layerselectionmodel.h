@@ -30,7 +30,13 @@ public:
     LayerSelectionModel(ModelView::AbstractViewModel* view_model, QObject* parent = nullptr);
     ~LayerSelectionModel() = default;
 
+    void selectItems(std::vector<ModelView::SessionItem*> items);
+    void selectItem(ModelView::SessionItem* item);
+
     std::vector<ModelView::SessionItem*> selectedItems() const;
+
+private:
+    const ModelView::AbstractViewModel* viewModel() const;
 };
 
 #endif // LAYERSELECTIONMODEL_H

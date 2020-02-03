@@ -8,9 +8,12 @@
 // ************************************************************************** //
 
 #include "applicationmodels.h"
+#include "layeritems.h"
 #include "materialmodel.h"
 #include "materialpropertycontroller.h"
 #include "samplemodel.h"
+#include <mvvm/model/externalproperty.h>
+#include <mvvm/model/modelutils.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/serialization/jsondocument.h>
 
@@ -30,6 +33,25 @@ struct ApplicationModels::ApplicationModelsImpl {
                                                                              m_sample_model.get());
         m_document = std::make_unique<JsonDocument>(
             std::initializer_list<SessionModel*>{m_material_model.get(), m_sample_model.get()});
+
+        m_sample_model->create_default_multilayer();
+        update_material_properties();
+    }
+
+    //! Runs through all layers and assign materials.
+    //! Expecting 3 materials existing by default (air, default, Si) to assign to our 3 layers.
+
+    void update_material_properties()
+    {
+        auto multilayer = Utils::TopItem<MultiLayerItem>(m_sample_model.get());
+        auto layers = multilayer->items<LayerItem>(MultiLayerItem::T_LAYERS);
+        size_t index(0);
+        for (const auto& material_property : m_material_model->material_data()) {
+            if (index < layers.size())
+                layers[index]->setProperty(LayerItem::P_MATERIAL,
+                                           QVariant::fromValue(material_property));
+            ++index;
+        }
     }
 };
 
