@@ -37,7 +37,7 @@ void Utils::MoveUp(SessionItem* item)
 void Utils::MoveDown(SessionItem* item)
 {
     auto tagrow = item->parent()->tagRowOfItem(item);
-    if (tagrow.row == item->parent()->childrenCount() - 1)
+    if (tagrow.row == item->parent()->itemCount(tagrow.tag) - 1)
         return; // item already at the buttom
     item->model()->moveItem(item, item->parent(), {tagrow.tag, tagrow.row + 1});
 }

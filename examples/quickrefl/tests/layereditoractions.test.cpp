@@ -182,7 +182,7 @@ TEST_F(LayerEditorActionsTest, onMoveDown)
     EXPECT_EQ(test_data.selection_model.selectedItems(), expected);
 
     // moving down once again, nothing should change
-    test_data.actions.onMoveUp();
+    test_data.actions.onMoveDown();
     EXPECT_EQ(layers.at(0), test_data.bottom);
     EXPECT_EQ(layers.at(1), test_data.top);
     EXPECT_EQ(test_data.selection_model.selectedItems(), expected);

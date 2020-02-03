@@ -104,7 +104,7 @@ TEST_F(ModelUtilsTest, MoveItemUp)
     Utils::MoveUp(layer0);
     EXPECT_EQ(multilayer->getItems(ToyItems::MultiLayerItem::T_LAYERS), expected);
 
-    // moving bottom layer up change the order
+    // moving bottom layer up does change the order
     Utils::MoveUp(layer2);
     expected = {layer0, layer2, layer1};
     EXPECT_EQ(multilayer->getItems(ToyItems::MultiLayerItem::T_LAYERS), expected);
@@ -128,8 +128,8 @@ TEST_F(ModelUtilsTest, MoveItemDown)
     Utils::MoveDown(layer2);
     EXPECT_EQ(multilayer->getItems(ToyItems::MultiLayerItem::T_LAYERS), expected);
 
-    // moving top layer up doesn't change the order
-    expected = {layer1, layer0, layer2};
+    // moving top layer down doesn't change the order
     Utils::MoveDown(layer0);
+    expected = {layer1, layer0, layer2};
     EXPECT_EQ(multilayer->getItems(ToyItems::MultiLayerItem::T_LAYERS), expected);
 }
