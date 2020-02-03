@@ -71,12 +71,22 @@ void LayerEditorActions::onRemove()
 
 void LayerEditorActions::onMoveUp()
 {
-    qDebug() << "LayerEditorActions::onMoveUp()";
+    auto selected = p_impl->selection_model->selectedItems();
+
+    for (auto item : selected)
+        ModelView::Utils::MoveUp(item);
+
+    p_impl->selection_model->selectItems(selected);
 }
 
 void LayerEditorActions::onMoveDown()
 {
-    qDebug() << "LayerEditorActions::onMoveDown()";
+    auto selected = p_impl->selection_model->selectedItems();
+
+    for (auto item : selected)
+        ModelView::Utils::MoveDown(item);
+
+    p_impl->selection_model->selectItems(selected);
 }
 
 void LayerEditorActions::setSelectionModel(LayerSelectionModel* selection_model)

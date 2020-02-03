@@ -105,3 +105,61 @@ TEST_F(LayerEditorActionsTest, onRemoveLayer)
     std::vector<SessionItem*> expected = {test_data.bottom};
     EXPECT_EQ(test_data.selection_model.selectedItems(), expected);
 }
+
+//! Move one layer up.
+
+TEST_F(LayerEditorActionsTest, onMoveUp)
+{
+    TestData test_data;
+
+    // selecting bottom layer
+    test_data.selection_model.selectItem(test_data.bottom);
+
+    // moving selected bottom layer up
+    test_data.actions.onMoveUp();
+
+    // checking layout of multilayer
+    auto layers = test_data.multilayer->getItems(MultiLayerItem::T_LAYERS);
+    EXPECT_EQ(layers.size(), 2);
+    EXPECT_EQ(layers.at(0), test_data.bottom);
+    EXPECT_EQ(layers.at(1), test_data.top);
+
+    // checking, that former bottom layer is stil selected
+    std::vector<SessionItem*> expected = {test_data.bottom};
+    EXPECT_EQ(test_data.selection_model.selectedItems(), expected);
+
+    // moving up once again, nothing should change
+    test_data.actions.onMoveUp();
+    EXPECT_EQ(layers.at(0), test_data.bottom);
+    EXPECT_EQ(layers.at(1), test_data.top);
+    EXPECT_EQ(test_data.selection_model.selectedItems(), expected);
+}
+
+//! Move one layer up.
+
+TEST_F(LayerEditorActionsTest, onMoveDown)
+{
+    TestData test_data;
+
+    // selecting top layer
+    test_data.selection_model.selectItem(test_data.top);
+
+    // moving selected top layer down
+    test_data.actions.onMoveDown();
+
+    // checking layout of multilayer
+    auto layers = test_data.multilayer->getItems(MultiLayerItem::T_LAYERS);
+    EXPECT_EQ(layers.size(), 2);
+    EXPECT_EQ(layers.at(0), test_data.bottom);
+    EXPECT_EQ(layers.at(1), test_data.top);
+
+    // checking, that former top layer is stil selected
+    std::vector<SessionItem*> expected = {test_data.top};
+    EXPECT_EQ(test_data.selection_model.selectedItems(), expected);
+
+    // moving down once again, nothing should change
+    test_data.actions.onMoveUp();
+    EXPECT_EQ(layers.at(0), test_data.bottom);
+    EXPECT_EQ(layers.at(1), test_data.top);
+    EXPECT_EQ(test_data.selection_model.selectedItems(), expected);
+}

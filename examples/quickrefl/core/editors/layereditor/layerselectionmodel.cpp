@@ -8,12 +8,27 @@
 // ************************************************************************** //
 
 #include "layerselectionmodel.h"
+#include <QItemSelection>
 #include <mvvm/viewmodel/abstractviewmodel.h>
 #include <mvvm/viewmodel/viewmodelutils.h>
 
 LayerSelectionModel::LayerSelectionModel(ModelView::AbstractViewModel* view_model, QObject* parent)
     : QItemSelectionModel(view_model, parent)
 {
+}
+
+void LayerSelectionModel::selectItems(std::vector<ModelView::SessionItem*> items)
+{
+    QModelIndexList indexes;
+    for (auto item : items)
+        indexes << viewModel()->indexOfSessionItem(item);
+
+    if (indexes.empty())
+        return;
+
+    QItemSelection selection(indexes.front(), indexes.back());
+    auto flags = QItemSelectionModel::SelectCurrent | QItemSelectionModel::Rows;
+    select(selection, flags);
 }
 
 //! Selects whole row corresponding to given item.
