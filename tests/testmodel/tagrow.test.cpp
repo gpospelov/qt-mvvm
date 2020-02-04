@@ -126,3 +126,12 @@ TEST_F(TagRowTest, next)
     EXPECT_EQ(tagrow.next().tag, "tag");
     EXPECT_EQ(tagrow.next().row, 1);
 }
+
+//! Find previous tagrow.
+
+TEST_F(TagRowTest, prev)
+{
+    TagRow tagrow{"tag", 1};
+    EXPECT_EQ(tagrow.prev().tag, "tag");
+    EXPECT_EQ(tagrow.prev().row, 0);
+}
