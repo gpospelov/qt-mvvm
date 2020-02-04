@@ -49,7 +49,7 @@ void MultiLayerItem::activate()
 
 void MultiLayerItem::update_layer_appearance()
 {
-    auto layers = getItems(T_LAYERS);
+    auto layers = items<LayerItem>(T_LAYERS);
     for (auto it = layers.begin(); it != layers.end(); ++it) {
         if (it == layers.begin() || std::next(it) == layers.end()) {
             (*it)->getItem(LayerItem::P_THICKNESS)->setEnabled(false);
