@@ -54,9 +54,12 @@ void HandleView::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidg
     if (!axis)
         return;
 
+    painter->setPen(Qt::NoPen);
     painter->setBrush(color);
-    painter->drawEllipse(QPointF(0, 0), handle_item->property(HandleItem::P_RADIUS).toDouble() / 2.,
-                         handle_item->property(HandleItem::P_RADIUS).toDouble() / 2.);
+    painter->drawEllipse(
+        QPointF(0, 0),
+        axis->xFactor() * handle_item->property(HandleItem::P_RADIUS).toDouble() / 2.,
+        axis->yFactor() * handle_item->property(HandleItem::P_RADIUS).toDouble() / 2.);
 }
 
 //! The shape

@@ -66,6 +66,7 @@ void SegmentView::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWid
     if (!axis)
         return;
 
+    painter->setPen(Qt::NoPen);
     painter->setBrush(color);
     painter->drawRect(getSceneRect());
 }
@@ -103,14 +104,24 @@ QRectF SegmentView::getSceneRect() const
     if (!axis)
         return QRectF(0, 0, 1, 1);
 
-    return QRectF(
-        QPointF(
-            axis->fromRealToSceneX(-segment_item->property(SegmentItem::P_WIDTH).toDouble() / 2.),
-            axis->fromRealToSceneY(+segment_item->property(SegmentItem::P_HEIGHT).toDouble() / 2.)),
-        QPointF(
-            axis->fromRealToSceneX(segment_item->property(SegmentItem::P_WIDTH).toDouble() / 2.),
-            axis->fromRealToSceneY(-segment_item->property(SegmentItem::P_HEIGHT).toDouble()
-                                   / 2.)));
+    if (segment_item->property(SegmentItem::P_HORIZONTAL).toBool())
+        return QRectF(
+            QPointF(
+                axis->fromRealToSceneX(-segment_item->property(SegmentItem::P_WIDTH).toDouble() / 2.),
+                axis->yFactor()*axis->fromRealToSceneY(+segment_item->property(SegmentItem::P_HEIGHT).toDouble() / 2.)),
+            QPointF(
+                axis->fromRealToSceneX(segment_item->property(SegmentItem::P_WIDTH).toDouble() / 2.),
+                axis->yFactor()*axis->fromRealToSceneY(-segment_item->property(SegmentItem::P_HEIGHT).toDouble()
+                                    / 2.)));
+    else
+        return QRectF(
+            QPointF(
+                axis->xFactor()*axis->fromRealToSceneX(-segment_item->property(SegmentItem::P_WIDTH).toDouble() / 2.),
+                axis->fromRealToSceneY(+segment_item->property(SegmentItem::P_HEIGHT).toDouble() / 2.)),
+            QPointF(
+                axis->xFactor()*axis->fromRealToSceneX(segment_item->property(SegmentItem::P_WIDTH).toDouble() / 2.),
+                axis->fromRealToSceneY(-segment_item->property(SegmentItem::P_HEIGHT).toDouble()
+                                    / 2.)));
 }
 
 //! On move update the model

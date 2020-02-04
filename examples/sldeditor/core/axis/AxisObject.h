@@ -41,6 +41,9 @@ public:
     double fromAxisToSceneX(double input_x) const;
     double fromAxisToSceneY(double input_y) const;
 
+    double xFactor() const;
+    double yFactor() const;
+
 private:
     QRectF getSceneRect() const;
 

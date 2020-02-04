@@ -228,3 +228,18 @@ AxisItem* AxisObject::axisItem() const
 {
     return axis_item;
 }
+
+double AxisObject::xFactor() const
+{
+    QRectF _view_port_size = scene()->sceneRect();
+    QRectF scene_rect = getSceneRect();
+    return scene_rect.width() / _view_port_size.width();
+}
+
+//! Convertion of Scene to axis coordinates of Y
+double AxisObject::yFactor() const
+{
+    QRectF _view_port_size = scene()->sceneRect();
+    QRectF scene_rect = getSceneRect();
+    return scene_rect.height() / _view_port_size.height();
+}
