@@ -219,7 +219,7 @@ std::vector<SessionItem*> SessionItem::getItems(const std::string& tag) const
     return p_impl->m_tags->getItems(tag);
 }
 
-std::string SessionItem::tagFromItem(const SessionItem* item) const
+std::string SessionItem::tagOfItem(const SessionItem* item) const
 {
     return p_impl->m_tags->tagRowOfItem(item).tag;
 }

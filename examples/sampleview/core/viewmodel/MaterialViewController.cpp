@@ -71,7 +71,7 @@ void MaterialViewController::onCloneMaterial()
                                                         MaterialContainerItem::T_MATERIALS);
 
         for (auto child : item->children()) {
-            auto new_child = new_item->getItem(item->tagFromItem(child));
+            auto new_child = new_item->getItem(item->tagOfItem(child));
             new_child->setData(child->data());
         }
     }

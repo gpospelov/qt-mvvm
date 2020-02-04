@@ -145,12 +145,12 @@ void ItemMapper::processDataChange(SessionItem* item, int role)
 
     // data of item's property changed
     if (nestling == 1)
-        callOnPropertyChange(m_item, m_item->tagFromItem(item));
+        callOnPropertyChange(m_item, m_item->tagOfItem(item));
 
     // child property changed
     if (nestling == 2) {
         if (auto parent = item->parent())
-            callOnChildPropertyChange(parent, parent->tagFromItem(item));
+            callOnChildPropertyChange(parent, parent->tagOfItem(item));
     }
 }
 
