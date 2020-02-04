@@ -9,6 +9,7 @@
 
 #include "google_test.h"
 #include "layereditoractions.h"
+#include "item_constants.h"
 #include "layeritems.h"
 #include "layerselectionmodel.h"
 #include "layerviewmodel.h"
@@ -82,6 +83,35 @@ TEST_F(LayerEditorActionsTest, addNewLayerAfterSelection)
     EXPECT_EQ(layers.size(), 3);
     EXPECT_EQ(layers.at(0), test_data.top);
     EXPECT_EQ(layers.at(2), test_data.bottom);
+
+    // checking, that new layer is selected
+    std::vector<SessionItem*> expected = {layers.at(1)};
+    EXPECT_EQ(test_data.selection_model.selectedItems(), expected);
+}
+
+//! Adds new multi-layer after selected layer.
+
+TEST_F(LayerEditorActionsTest, addNewMultiLayerAfterSelection)
+{
+    TestData test_data;
+
+    // selecting top layer
+    test_data.selection_model.selectItem(test_data.top);
+
+    // adding new layer after selection
+    test_data.actions.onAddMultiLayer();
+
+
+    // checking layout of multilayer
+    auto layers = test_data.multilayer->getItems(MultiLayerItem::T_LAYERS);
+    EXPECT_EQ(layers.size(), 3);
+    EXPECT_EQ(layers.at(0), test_data.top);
+    EXPECT_EQ(layers.at(2), test_data.bottom);
+
+    // checking that layer was added
+    EXPECT_EQ(layers.at(1)->modelType(), ::Constants::MultiLayerItemType);
+    auto sublayers = layers.at(1)->getItems(MultiLayerItem::T_LAYERS);
+    EXPECT_EQ(sublayers.size(), 2);
 
     // checking, that new layer is selected
     std::vector<SessionItem*> expected = {layers.at(1)};

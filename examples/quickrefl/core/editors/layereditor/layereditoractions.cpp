@@ -63,9 +63,9 @@ void LayerEditorActions::onAddMultiLayer()
 {
     auto [parent, tagrow] = p_impl->locateInsertPlace();
     auto multilayer = p_impl->model->insertItem<MultiLayerItem>(parent, tagrow);
-    auto layer = p_impl->model->insertItem<LayerItem>(multilayer);
-    layer = p_impl->model->insertItem<LayerItem>(multilayer);
-    p_impl->selection_model->selectItem(layer);
+    p_impl->model->insertItem<LayerItem>(multilayer);
+    p_impl->model->insertItem<LayerItem>(multilayer);
+    p_impl->selection_model->selectItem(multilayer);
 }
 
 void LayerEditorActions::onClone()

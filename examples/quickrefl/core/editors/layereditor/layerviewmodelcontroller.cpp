@@ -28,7 +28,8 @@ public:
         // multilayer row contains its name, repetion and placeholders (instead of material and
         // thickness)
         if (auto multilayer = dynamic_cast<MultiLayerItem*>(item)) {
-            result.push_back(new ViewLabelItem(multilayer));
+            result.push_back(new ViewDataItem(multilayer->getItem(LayerItem::P_NAME)));
+//            result.push_back(new ViewLabelItem(multilayer));
             result.push_back(new ViewDataItem(multilayer->getItem(MultiLayerItem::P_NREPETITIONS)));
             result.push_back(new ViewEmptyItem()); // instead of P_MATERIAL
             result.push_back(new ViewEmptyItem()); // instead of P_THICKNESS
@@ -48,7 +49,7 @@ public:
 
     QStringList horizontalHeaderLabels() const
     {
-        return QStringList() << "Type"
+        return QStringList() << "Name"
                              << "Nr."
                              << "Material"
                              << "Thickness";
