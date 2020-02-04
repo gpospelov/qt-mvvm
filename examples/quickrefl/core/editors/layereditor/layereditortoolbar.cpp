@@ -76,14 +76,14 @@ QMenu* LayerEditorToolBar::create_layer_menu(LayerEditorActions* editor_actions)
 
     // add layer action
     auto action = result->addAction("Adds a single layer");
-    action->setIcon(QIcon(":/icons/plus-circle-outline.svg"));
+    action->setIcon(QIcon(":/icons/layers-outline.svg"));
     action->setToolTip("Adds a new layer after selected one");
     connect(action, &QAction::triggered, editor_actions, &LayerEditorActions::onAddLayer);
     result->setDefaultAction(action);
 
     // add layer repeater action
     action = result->addAction("Adds layer repeater");
-    action->setIcon(QIcon(":/icons/plus-circle-outline.svg"));
+    action->setIcon(QIcon(":/icons/layers-triple-outline.svg"));
     action->setToolTip("Adds a new layer-repeater after selected one.\n"
                        "Layer repeater allows to repeat it content (i.e. bi-layer) "
                        "certain amount of times");
