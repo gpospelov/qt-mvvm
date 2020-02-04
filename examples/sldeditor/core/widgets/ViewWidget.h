@@ -26,7 +26,14 @@ public:
 protected:
     void wheelEvent(QWheelEvent* event) override;
     void resizeEvent(QResizeEvent* event) override;
+    void mouseMoveEvent(QMouseEvent* event) override;
+    void mousePressEvent(QMouseEvent* event) override;
+    void mouseReleaseEvent(QMouseEvent* event) override;
+
+    void rescaleScene(QMouseEvent* event);
 
 private:
     AxisViewWidget* axis;
+    QPointF init_mouse_pos;
+    QPointF scale_factor;
 };
