@@ -23,6 +23,22 @@ class LayerSelectionModelTest : public ::testing::Test
 {
 public:
     ~LayerSelectionModelTest();
+
+    struct TestData {
+        SampleModel sample_model;
+        LayerViewModel view_model{&sample_model};
+        LayerSelectionModel selection_model{&view_model};
+        SessionItem* multilayer{nullptr};
+        SessionItem* top{nullptr};
+        SessionItem* bottom{nullptr};
+        TestData()
+        {
+            multilayer = sample_model.insertItem<MultiLayerItem>();
+            top = sample_model.insertItem<LayerItem>(multilayer);
+            bottom = sample_model.insertItem<LayerItem>(multilayer);
+            view_model.setRootSessionItem(multilayer);
+        }
+    };
 };
 
 LayerSelectionModelTest::~LayerSelectionModelTest() = default;
@@ -31,33 +47,54 @@ LayerSelectionModelTest::~LayerSelectionModelTest() = default;
 
 TEST_F(LayerSelectionModelTest, initialState)
 {
-    SampleModel model;
-    auto multilayer = model.insertItem<MultiLayerItem>();
-    auto top = model.insertItem<LayerItem>(multilayer);
-    auto bottom = model.insertItem<LayerItem>(multilayer);
+    TestData test_data;
+    EXPECT_FALSE(test_data.selection_model.hasSelection());
 
-    LayerViewModel viewmodel(&model);
-    viewmodel.setRootSessionItem(multilayer);
-    LayerSelectionModel selection_model(&viewmodel);
+    // checking layout of multilayer
+    auto layers = test_data.multilayer->getItems(MultiLayerItem::T_LAYERS);
+    EXPECT_EQ(layers.size(), 2);
+    EXPECT_EQ(layers.at(0), test_data.top);
+    EXPECT_EQ(layers.at(1), test_data.bottom);
+}
 
-    // no selection at the beginning
-    EXPECT_FALSE(selection_model.hasSelection());
+TEST_F(LayerSelectionModelTest, selectLayerItem)
+{
+    TestData test_data;
 
     // selecting top layer
-    selection_model.selectItem(top);
-    EXPECT_TRUE(selection_model.hasSelection());
-    EXPECT_EQ(selection_model.selectedIndexes().size(), 4); // name, nr, material, thickness
+    test_data.selection_model.selectItem(test_data.top);
+    EXPECT_TRUE(test_data.selection_model.hasSelection());
+    EXPECT_EQ(test_data.selection_model.selectedIndexes().size(),
+              4); // name, nr, material, thickness
 
     // checking back that top layer is selected
-    std::vector<SessionItem*> expected = {top};
-    EXPECT_EQ(selection_model.selectedItems(), expected);
+    std::vector<SessionItem*> expected = {test_data.top};
+    EXPECT_EQ(test_data.selection_model.selectedItems(), expected);
 
     // selecting bottom layer
-    selection_model.selectItem(bottom);
-    EXPECT_TRUE(selection_model.hasSelection());
-    EXPECT_EQ(selection_model.selectedIndexes().size(), 4); // name, nr, material, thickness
+    test_data.selection_model.selectItem(test_data.bottom);
+    EXPECT_TRUE(test_data.selection_model.hasSelection());
+    // 4 indexes should be selected: name, nr, material, thickness
+    EXPECT_EQ(test_data.selection_model.selectedIndexes().size(), 4);
 
     // checking back that top layer is selected
-    expected  = {bottom};
-    EXPECT_EQ(selection_model.selectedItems(), expected);
+    expected = {test_data.bottom};
+    EXPECT_EQ(test_data.selection_model.selectedItems(), expected);
+}
+
+TEST_F(LayerSelectionModelTest, selectLayerItems)
+{
+    TestData test_data;
+
+    std::vector<ModelView::SessionItem*> to_select{test_data.top, test_data.bottom};
+    test_data.selection_model.selectItems(to_select);
+
+    // selecting top layer
+    EXPECT_TRUE(test_data.selection_model.hasSelection());
+
+    EXPECT_EQ(test_data.selection_model.selectedIndexes().size(), 8); // two rows of cells
+
+    // checking back that top layer is selected
+    std::vector<SessionItem*> expected = to_select;
+    EXPECT_EQ(test_data.selection_model.selectedItems(), expected);
 }
