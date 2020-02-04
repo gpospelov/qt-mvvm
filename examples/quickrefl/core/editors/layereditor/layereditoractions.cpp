@@ -12,6 +12,7 @@
 #include "layeritems.h"
 #include "layerselectionmodel.h"
 #include "samplemodel.h"
+#include <QAction>
 #include <mvvm/model/itemutils.h>
 #include <mvvm/model/modelutils.h>
 #include <mvvm/viewmodel/abstractviewmodel.h>
@@ -51,7 +52,13 @@ LayerEditorActions::LayerEditorActions(SampleModel* model, QObject* parent)
 
 void LayerEditorActions::onAddLayer()
 {
-    auto new_item = p_impl->insertSampleElement(::Constants::LayerItemType);
+    auto layer_type = Constants::LayerItemType;
+
+    if (auto action = qobject_cast<QAction*>(sender()); action)
+        if (action->data().canConvert(QVariant::String))
+            layer_type = action->data().toString().toStdString();
+
+    auto new_item = p_impl->insertSampleElement(layer_type);
     p_impl->selection_model->selectItem(new_item);
 }
 
