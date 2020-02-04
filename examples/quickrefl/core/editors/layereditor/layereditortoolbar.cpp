@@ -11,7 +11,6 @@
 #include "layereditoractions.h"
 #include "resources.h"
 #include "styleutils.h"
-#include "item_constants.h"
 #include <QAction>
 #include <QMenu>
 #include <QToolButton>
@@ -79,7 +78,6 @@ QMenu* LayerEditorToolBar::create_layer_menu(LayerEditorActions* editor_actions)
     auto action = result->addAction("Adds a single layer");
     action->setIcon(QIcon(":/icons/plus-circle-outline.svg"));
     action->setToolTip("Adds a new layer after selected one");
-    action->setData(QVariant::fromValue(QString::fromStdString(Constants::LayerItemType)));
     connect(action, &QAction::triggered, editor_actions, &LayerEditorActions::onAddLayer);
     result->setDefaultAction(action);
 
@@ -89,8 +87,7 @@ QMenu* LayerEditorToolBar::create_layer_menu(LayerEditorActions* editor_actions)
     action->setToolTip("Adds a new layer-repeater after selected one.\n"
                        "Layer repeater allows to repeat it content (i.e. bi-layer) "
                        "certain amount of times");
-    action->setData(QVariant::fromValue(QString::fromStdString(Constants::MultiLayerItemType)));
-    connect(action, &QAction::triggered, editor_actions, &LayerEditorActions::onAddLayer);
+    connect(action, &QAction::triggered, editor_actions, &LayerEditorActions::onAddMultiLayer);
 
     return result;
 }
