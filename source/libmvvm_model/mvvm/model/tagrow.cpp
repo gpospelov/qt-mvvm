@@ -9,6 +9,15 @@
 
 #include <mvvm/model/tagrow.h>
 
+
+//! Constructs new tagrow representing next row in given tag.
+//! No validity check.
+
+ModelView::TagRow ModelView::TagRow::next() const
+{
+    return {tag, row + 1};
+}
+
 //! Returns TagRow corresponding to the append to tag_name.
 //! If tag_name =="" the default name will be used in SessionItemTags context.
 
