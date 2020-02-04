@@ -9,11 +9,11 @@
 
 #include "layereditortoolbar.h"
 #include "layereditoractions.h"
-#include "styleutils.h"
 #include "resources.h"
-#include <QToolButton>
+#include "styleutils.h"
 #include <QAction>
-
+#include <QMenu>
+#include <QToolButton>
 
 LayerEditorToolBar::LayerEditorToolBar(LayerEditorActions* actions, QWidget* parent)
     : QToolBar(parent)
@@ -21,15 +21,24 @@ LayerEditorToolBar::LayerEditorToolBar(LayerEditorActions* actions, QWidget* par
     InitIconResources();
 
     setIconSize(StyleUtils::ToolBarIconSize());
-    setToolButtonStyle(Qt::ToolButtonFollowStyle);
+    setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 
-    auto action = new QAction("Add");
-    action->setIcon(QIcon(":/icons/plus-circle-outline.svg"));
-    action->setToolTip("Adds a new layer after selected one.");
-    connect(action, &QAction::triggered, actions, &LayerEditorActions::onAddLayer);
-    addAction(action);
+    auto layer_menu = create_layer_menu(actions);
 
-    action = new QAction("Clone");
+    auto add_layer_button = new QToolButton;
+    add_layer_button->setText("Add");
+    add_layer_button->setToolTip(
+        "Adds a new single layer (default) or new layer-repeater after currently selected.\nIf "
+        "nothing is selected, appends to the end. Click and hold to see possible choices.");
+    add_layer_button->setPopupMode(QToolButton::MenuButtonPopup);
+    add_layer_button->setIcon(QIcon(":/icons/plus-circle-outline.svg"));
+    add_layer_button->setMenu(layer_menu);
+    add_layer_button->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+    addWidget(add_layer_button);
+    connect(add_layer_button, &QToolButton::clicked,
+            [layer_menu]() { layer_menu->defaultAction()->triggered(); });
+
+    auto action = new QAction("Clone");
     action->setIcon(QIcon(":/icons/plus-circle-multiple-outline.svg"));
     action->setToolTip("Clones selected layer");
     connect(action, &QAction::triggered, actions, &LayerEditorActions::onClone);
@@ -54,4 +63,30 @@ LayerEditorToolBar::LayerEditorToolBar(LayerEditorActions* actions, QWidget* par
     action->setToolTip("Moves selected layer down");
     connect(action, &QAction::triggered, actions, &LayerEditorActions::onMoveDown);
     addAction(action);
+}
+
+//! Creates menu to add layer and layer-repeater.
+
+QMenu* LayerEditorToolBar::create_layer_menu(LayerEditorActions* editor_actions)
+{
+    auto result = new QMenu("Add", this);
+    result->setToolTipsVisible(true);
+    result->menuAction()->setToolTip("Adds a single layer or layer-repeater.");
+    result->setIcon(QIcon(":/icons/plus-circle-outline.svg"));
+
+    // add layer action
+    auto action = result->addAction("Adds a single layer");
+    action->setIcon(QIcon(":/icons/plus-circle-outline.svg"));
+    action->setToolTip("Adds a new layer after selected one");
+    connect(action, &QAction::triggered, editor_actions, &LayerEditorActions::onAddLayer);
+    result->setDefaultAction(action);
+
+    // add layer repeater action
+    action = result->addAction("Adds layer repeater");
+    action->setIcon(QIcon(":/icons/plus-circle-outline.svg"));
+    action->setToolTip("Adds a new layer-repeater after selected one.\n"
+                       "Layer repeater allows to repeat it content (i.e. bi-layer) "
+                       "certain amount of times");
+
+    return result;
 }

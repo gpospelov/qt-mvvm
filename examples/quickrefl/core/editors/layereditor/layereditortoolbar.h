@@ -22,6 +22,9 @@ class LayerEditorToolBar : public QToolBar
 public:
     LayerEditorToolBar(LayerEditorActions* actions, QWidget* parent = nullptr);
     ~LayerEditorToolBar() = default;
+
+private:
+    QMenu* create_layer_menu(LayerEditorActions* editor_actions);
 };
 
 #endif // LAYEREDITORTOOLBAR_H
