@@ -36,7 +36,8 @@ public:
 
         // layer row contains its name, placeholder for repetition, layer material and thickness
         if (auto layer = dynamic_cast<LayerItem*>(item)) {
-            result.push_back(new ViewLabelItem(layer));
+            result.push_back(new ViewDataItem(layer->getItem(LayerItem::P_NAME)));
+//            result.push_back(new ViewLabelItem(layer));
             result.push_back(new ViewEmptyItem()); // instead of P_NREPETITIONS
             result.push_back(new ViewDataItem(layer->getItem(LayerItem::P_MATERIAL)));
             result.push_back(new ViewDataItem(layer->getItem(LayerItem::P_THICKNESS)));

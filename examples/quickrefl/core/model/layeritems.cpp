@@ -16,13 +16,14 @@
 
 LayerItem::LayerItem() : ModelView::CompoundItem(::Constants::LayerItemType)
 {
-    addProperty(P_NAME, "Layer")->setDisplayName("Name");
+    addProperty(P_NAME, "Unnamed")->setDisplayName("Name");
     addProperty(P_MATERIAL, MaterialModel::undefined_material())->setDisplayName("Material");
     addProperty(P_THICKNESS, 0.0)->setDisplayName("Thickness");
 }
 
 MultiLayerItem::MultiLayerItem() : ModelView::CompoundItem(::Constants::MultiLayerItemType)
 {
+    addProperty(P_NAME, "Unnamed")->setDisplayName("Name");
     addProperty(P_NREPETITIONS, 1)->setDisplayName("Nr.");
     std::vector<std::string> allowed_child = {::Constants::MultiLayerItemType,
                                               ::Constants::LayerItemType};

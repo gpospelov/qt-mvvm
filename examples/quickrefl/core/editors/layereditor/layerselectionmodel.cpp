@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include "layerselectionmodel.h"
+#include "layeritems.h"
 #include <QItemSelection>
 #include <mvvm/viewmodel/abstractviewmodel.h>
 #include <mvvm/viewmodel/viewmodelutils.h>
@@ -21,7 +22,7 @@ void LayerSelectionModel::selectItems(std::vector<ModelView::SessionItem*> items
 {
     QModelIndexList indexes;
     for (auto item : items)
-        indexes << viewModel()->indexOfSessionItem(item);
+        indexes << viewModel()->indexOfSessionItem(item->getItem(LayerItem::P_NAME));
 
     if (indexes.empty())
         return;
@@ -36,7 +37,7 @@ void LayerSelectionModel::selectItems(std::vector<ModelView::SessionItem*> items
 
 void LayerSelectionModel::selectItem(ModelView::SessionItem* item)
 {
-    const QModelIndexList index_list = viewModel()->indexOfSessionItem(item);
+    const QModelIndexList index_list = viewModel()->indexOfSessionItem(item->getItem(LayerItem::P_NAME));
     if (index_list.empty())
         return;
 
@@ -48,7 +49,7 @@ void LayerSelectionModel::selectItem(ModelView::SessionItem* item)
 
 //! Returns vector of selected layers or multilayers.
 //! We assume, that there is a single line selection mode switched on, and that
-//! the first column always contains either MultiLayerItem or LayerItem.
+//! the columns contains property items related to either LayerItem or MultiLayerItem.
 
 std::vector<ModelView::SessionItem*> LayerSelectionModel::selectedItems() const
 {
@@ -59,7 +60,7 @@ std::vector<ModelView::SessionItem*> LayerSelectionModel::selectedItems() const
     std::vector<ModelView::SessionItem*> result;
     for (const auto& index : selection)
         if (auto item = viewModel()->sessionItemFromIndex(index); item)
-            result.push_back(item);
+            result.push_back(item->parent());
 
     return result;
 }

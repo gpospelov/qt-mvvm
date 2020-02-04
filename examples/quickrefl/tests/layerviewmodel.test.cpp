@@ -44,14 +44,14 @@ TEST_F(LayerViewModelTest, twoLayerSystem)
     // check indexes in first row and their correspondance to top-layer related items
     QModelIndexList selection = {viewmodel.index(0, 0), viewmodel.index(0, 1),
                                  viewmodel.index(0, 2), viewmodel.index(0, 3)};
-    std::vector<SessionItem*> expected = {top, nullptr, top->getItem(LayerItem::P_MATERIAL),
+    std::vector<SessionItem*> expected = {top->getItem(LayerItem::P_NAME), nullptr, top->getItem(LayerItem::P_MATERIAL),
                                           top->getItem(LayerItem::P_THICKNESS)};
     EXPECT_EQ(Utils::ItemsFromIndex(selection), expected);
 
     // check indexes in first row and their correspondance to bottom-layer related items
     selection = {viewmodel.index(1, 0), viewmodel.index(1, 1), viewmodel.index(1, 2),
                  viewmodel.index(1, 3)};
-    expected = {bottom, nullptr, bottom->getItem(LayerItem::P_MATERIAL),
+    expected = {bottom->getItem(LayerItem::P_NAME), nullptr, bottom->getItem(LayerItem::P_MATERIAL),
                 bottom->getItem(LayerItem::P_THICKNESS)};
     EXPECT_EQ(Utils::ItemsFromIndex(selection), expected);
 }
