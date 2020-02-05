@@ -60,6 +60,10 @@ struct AbstractViewModelController::AbstractViewModelControllerImpl {
         m_view_model->setHorizontalHeaderLabels(m_row_strategy->horizontalHeaderLabels());
     }
 
+    std::vector<QStandardItem*> findStandardViews(SessionItem* item) {
+        return m_view_model->findStandardViews(item);
+    }
+
     AbstractViewModel* m_view_model;
     SessionItem* m_root_item;
     SessionModel* m_session_model;
@@ -208,7 +212,7 @@ void AbstractViewModelController::check_initialization()
 
 void AbstractViewModelController::generate_children_views(SessionItem* parent)
 {
-    auto views = p_impl->m_view_model->findStandardViews(parent);
+    auto views = p_impl->findStandardViews(parent);
     for (auto view : views)
         view->removeRows(0, view->rowCount());
 

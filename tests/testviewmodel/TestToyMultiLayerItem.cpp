@@ -64,6 +64,11 @@ TEST_F(ToyMultilayerItemTest, multiLayerView)
     auto viewItem = dynamic_cast<ViewLabelItem*>(viewModel.itemFromIndex(mlIndex));
     EXPECT_TRUE(viewItem != nullptr);
     EXPECT_EQ(viewItem->item(), multiLayerItem);
+
+    // adding layer
+    model.insertItem<ToyItems::LayerItem>(multiLayerItem);
+    EXPECT_EQ(viewModel.rowCount(mlIndex), 1);
+    EXPECT_EQ(viewModel.columnCount(mlIndex), 2);
 }
 
 //! Find ViewItem corresponding to given MultiLayer item.
