@@ -117,3 +117,21 @@ TEST_F(TagRowTest, implicitConvertion)
     EXPECT_EQ(tagrow.tag, "abc");
     EXPECT_EQ(tagrow.row, -1);
 }
+
+//! Find next tagrow.
+
+TEST_F(TagRowTest, next)
+{
+    TagRow tagrow{"tag", 0};
+    EXPECT_EQ(tagrow.next().tag, "tag");
+    EXPECT_EQ(tagrow.next().row, 1);
+}
+
+//! Find previous tagrow.
+
+TEST_F(TagRowTest, prev)
+{
+    TagRow tagrow{"tag", 1};
+    EXPECT_EQ(tagrow.prev().tag, "tag");
+    EXPECT_EQ(tagrow.prev().row, 0);
+}

@@ -29,7 +29,7 @@ void Utils::MoveUp(SessionItem* item)
     auto tagrow = item->parent()->tagRowOfItem(item);
     if (tagrow.row == 0)
         return; // item already at the top
-    item->model()->moveItem(item, item->parent(), {tagrow.tag, tagrow.row - 1});
+    item->model()->moveItem(item, item->parent(), tagrow.prev());
 }
 
 //! Moves item down (increments row of the item). Works on children belonging to single tag.
@@ -39,5 +39,5 @@ void Utils::MoveDown(SessionItem* item)
     auto tagrow = item->parent()->tagRowOfItem(item);
     if (tagrow.row == item->parent()->itemCount(tagrow.tag) - 1)
         return; // item already at the buttom
-    item->model()->moveItem(item, item->parent(), {tagrow.tag, tagrow.row + 1});
+    item->model()->moveItem(item, item->parent(), tagrow.next());
 }

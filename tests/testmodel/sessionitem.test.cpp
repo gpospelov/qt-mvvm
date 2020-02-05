@@ -475,14 +475,14 @@ TEST_F(SessionItemTest, tagFromItem)
     parent->insertItem(child_t1_b, {tag1, -1});
     parent->insertItem(child_t2_b, {tag2, 1}); // between child_t2_a and child_t2_c
 
-    EXPECT_EQ(parent->tagFromItem(child_t1_a), "tag1");
-    EXPECT_EQ(parent->tagFromItem(child_t1_b), "tag1");
-    EXPECT_EQ(parent->tagFromItem(child_t2_a), "tag2");
-    EXPECT_EQ(parent->tagFromItem(child_t2_b), "tag2");
-    EXPECT_EQ(parent->tagFromItem(child_t2_c), "tag2");
+    EXPECT_EQ(parent->tagOfItem(child_t1_a), "tag1");
+    EXPECT_EQ(parent->tagOfItem(child_t1_b), "tag1");
+    EXPECT_EQ(parent->tagOfItem(child_t2_a), "tag2");
+    EXPECT_EQ(parent->tagOfItem(child_t2_b), "tag2");
+    EXPECT_EQ(parent->tagOfItem(child_t2_c), "tag2");
 
     auto child = new SessionItem;
-    EXPECT_EQ(parent->tagFromItem(child), "");
+    EXPECT_EQ(parent->tagOfItem(child), "");
     delete child;
 }
 

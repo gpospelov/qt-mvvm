@@ -12,28 +12,31 @@
 #include "layeritems.h"
 #include "layerselectionmodel.h"
 #include "samplemodel.h"
+#include <QAction>
 #include <mvvm/model/itemutils.h>
 #include <mvvm/model/modelutils.h>
 #include <mvvm/viewmodel/abstractviewmodel.h>
+
+using namespace ModelView;
 
 struct LayerEditorActions::LayerEditorActionsImpl {
     SampleModel* model{nullptr};
     LayerSelectionModel* selection_model{nullptr};
     LayerEditorActionsImpl(SampleModel* model) : model(model) {}
 
-    ModelView::SessionItem* insertSampleElement(const std::string& model_type)
+    //! Finds parent na tagrow to insert new item
+
+    std::pair<SessionItem*, TagRow> locateInsertPlace()
     {
-        auto items = selection_model->selectedItems();
-        if (items.empty()) {
-            auto parent = root_item();
-            return model->insertNewItem(model_type, parent);
-        } else {
-            auto selected_item = items.back();
-            auto parent = selected_item->parent();
-            auto tagrow = parent->tagRowOfItem(selected_item);
-            return model->insertNewItem(model_type, parent, {tagrow.tag, tagrow.row + 1});
-        }
+        auto all_selected = selection_model->selectedItems();
+        auto selected = all_selected.empty() ? nullptr : all_selected.back();
+        if (selected)
+            return {selected->parent(), selected->parent()->tagRowOfItem(selected).next()};
+        else
+            return {root_item(), TagRow{}};
     }
+
+    //! Returns a multi layer playing the role of invisible root item.
 
     ModelView::SessionItem* root_item()
     {
@@ -51,8 +54,18 @@ LayerEditorActions::LayerEditorActions(SampleModel* model, QObject* parent)
 
 void LayerEditorActions::onAddLayer()
 {
-    auto new_item = p_impl->insertSampleElement(::Constants::LayerItemType);
+    auto [parent, tagrow] = p_impl->locateInsertPlace();
+    auto new_item = p_impl->model->insertItem<LayerItem>(parent, tagrow);
     p_impl->selection_model->selectItem(new_item);
+}
+
+void LayerEditorActions::onAddMultiLayer()
+{
+    auto [parent, tagrow] = p_impl->locateInsertPlace();
+    auto multilayer = p_impl->model->insertItem<MultiLayerItem>(parent, tagrow);
+    p_impl->model->insertItem<LayerItem>(multilayer);
+    p_impl->model->insertItem<LayerItem>(multilayer);
+    p_impl->selection_model->selectItem(multilayer);
 }
 
 void LayerEditorActions::onClone()
@@ -66,7 +79,7 @@ void LayerEditorActions::onClone()
         auto parent = to_clone->parent();
         const auto tagrow = parent->tagRowOfItem(to_clone);
         new_selection.push_back(
-            p_impl->model->copyItem(to_clone, parent, {tagrow.tag, tagrow.row + 1}));
+            p_impl->model->copyItem(to_clone, parent, tagrow.next()));
     }
 
     p_impl->selection_model->selectItems(new_selection);

@@ -51,7 +51,7 @@ public:
     {
         std::vector<ChildrenData> result;
         for (auto child : children)
-            result.push_back({child->modelType(), child->parent()->tagFromItem(child)});
+            result.push_back({child->modelType(), child->parent()->tagOfItem(child)});
         return result;
     }
 };

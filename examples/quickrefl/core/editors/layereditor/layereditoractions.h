@@ -27,6 +27,7 @@ public:
     ~LayerEditorActions();
 
     void onAddLayer();
+    void onAddMultiLayer();
     void onClone();
     void onRemove();
     void onMoveUp();

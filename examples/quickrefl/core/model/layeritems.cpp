@@ -16,13 +16,14 @@
 
 LayerItem::LayerItem() : ModelView::CompoundItem(::Constants::LayerItemType)
 {
-    addProperty(P_NAME, "Layer")->setDisplayName("Name");
+    addProperty(P_NAME, "Unnamed")->setDisplayName("Name");
     addProperty(P_MATERIAL, MaterialModel::undefined_material())->setDisplayName("Material");
     addProperty(P_THICKNESS, 0.0)->setDisplayName("Thickness");
 }
 
 MultiLayerItem::MultiLayerItem() : ModelView::CompoundItem(::Constants::MultiLayerItemType)
 {
+    addProperty(P_NAME, "Unnamed")->setDisplayName("Name");
     addProperty(P_NREPETITIONS, 1)->setDisplayName("Nr.");
     std::vector<std::string> allowed_child = {::Constants::MultiLayerItemType,
                                               ::Constants::LayerItemType};
@@ -49,7 +50,7 @@ void MultiLayerItem::activate()
 
 void MultiLayerItem::update_layer_appearance()
 {
-    auto layers = getItems(T_LAYERS);
+    auto layers = items<LayerItem>(T_LAYERS);
     for (auto it = layers.begin(); it != layers.end(); ++it) {
         if (it == layers.begin() || std::next(it) == layers.end()) {
             (*it)->getItem(LayerItem::P_THICKNESS)->setEnabled(false);

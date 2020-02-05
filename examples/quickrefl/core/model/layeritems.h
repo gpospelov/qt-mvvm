@@ -32,6 +32,7 @@ public:
 class MultiLayerItem : public ModelView::CompoundItem
 {
 public:
+    static inline const std::string P_NAME = "P_NAME";
     static inline const std::string T_LAYERS = "T_LAYERS";
     static inline const std::string P_NREPETITIONS = "P_NREPETITIONS";
 
