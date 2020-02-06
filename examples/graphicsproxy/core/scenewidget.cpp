@@ -9,6 +9,7 @@
 
 #include "scenewidget.h"
 #include "scenemodel.h"
+#include "sceneitems.h"
 #include "scenepropertywidget.h"
 #include "graphicsscene.h"
 #include "graphicsview.h"
@@ -47,6 +48,7 @@ SceneWidget::SceneWidget(SceneModel* model, QWidget* parent)
     init_actions();
 
     graphics_scene->setColorMap(m_colorMapCanvas);
+    graphics_scene->setRegionOfInterest(Utils::TopItem<RegionOfInterestItem>(model));
 }
 
 void SceneWidget::init_actions()

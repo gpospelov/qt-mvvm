@@ -30,6 +30,11 @@ void GraphicsScene::setColorMap(ModelView::ColorMapCanvas* colormap)
     addItem(colormap_proxy);
 }
 
+void GraphicsScene::setRegionOfInterest(RegionOfInterestItem* roi)
+{
+
+}
+
 //! Adjust size of scene and color map proxy.
 
 void GraphicsScene::update_size(const QSize& newSize)
