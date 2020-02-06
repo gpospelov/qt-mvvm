@@ -10,6 +10,8 @@
 #include "scenewidget.h"
 #include "scenemodel.h"
 #include "scenepropertywidget.h"
+#include "graphicsscene.h"
+#include "graphicsview.h"
 #include <QAction>
 #include <QBoxLayout>
 #include <QToolBar>
@@ -23,6 +25,8 @@ using namespace ModelView;
 SceneWidget::SceneWidget(SceneModel* model, QWidget* parent)
     : QWidget(parent), m_toolBar(new QToolBar), m_resetViewportAction(nullptr),
       m_propertyWidget(new ScenePropertyWidget), m_colorMapCanvas(new ColorMapCanvas),
+      graphics_scene(new GraphicsScene(this)),
+      graphics_view(new GraphicsView(graphics_scene, this)),
       m_model(model)
 {
     auto mainLayout = new QVBoxLayout;
@@ -61,7 +65,7 @@ void SceneWidget::init_actions()
 QBoxLayout* SceneWidget::create_left_layout()
 {
     auto result = new QVBoxLayout;
-    result->addWidget(m_colorMapCanvas);
+    result->addWidget(graphics_view);
     return result;
 }
 

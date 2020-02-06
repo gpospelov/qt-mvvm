@@ -17,6 +17,8 @@ class ScenePropertyWidget;
 class QToolBar;
 class QAction;
 class SceneModel;
+class GraphicsScene;
+class GraphicsView;
 
 namespace ModelView
 {
@@ -42,6 +44,8 @@ private:
 
     ScenePropertyWidget* m_propertyWidget;
     ModelView::ColorMapCanvas* m_colorMapCanvas;
+    GraphicsScene* graphics_scene;
+    GraphicsView* graphics_view;
     SceneModel* m_model;
 };
 
