@@ -7,24 +7,23 @@
 //
 // ************************************************************************** //
 
-#ifndef GRAPHICSPROXY_GRAPHICSSCENE_H
-#define GRAPHICSPROXY_GRAPHICSSCENE_H
+#ifndef GRAPHICSPROXY_COLORMAPPROXYWIDGET_H
+#define GRAPHICSPROXY_COLORMAPPROXYWIDGET_H
 
-#include <QGraphicsScene>
+#include <QGraphicsProxyWidget>
 
-namespace ModelView  {
+namespace ModelView
+{
 class ColorMapCanvas;
 }
 
-//! Custom graphics scene to show QCustomPlot with additional elements on top.
+//! Custom proxy widget to embed color map in graphics scene.
 
-class GraphicsScene : public QGraphicsScene
+class ColorMapProxyWidget : public QGraphicsProxyWidget
 {
     Q_OBJECT
 public:
-    GraphicsScene(QObject* parent);
-
-    void setColorMap(ModelView::ColorMapCanvas* colormap);
+    ColorMapProxyWidget(ModelView::ColorMapCanvas* colormap);
 };
 
-#endif //  GRAPHICSPROXY_GRAPHICSSCENE_H
+#endif //  GRAPHICSPROXY_COLORMAPPROXYWIDGET_H

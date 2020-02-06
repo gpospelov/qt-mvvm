@@ -7,13 +7,10 @@
 //
 // ************************************************************************** //
 
-#include "graphicsscene.h"
 #include "colormapproxywidget.h"
+#include <mvvm/plotting/colormapcanvas.h>
 
-GraphicsScene::GraphicsScene(QObject* parent) : QGraphicsScene(parent) {}
-
-void GraphicsScene::setColorMap(ModelView::ColorMapCanvas* colormap)
+ColorMapProxyWidget::ColorMapProxyWidget(ModelView::ColorMapCanvas* colormap)
 {
-    auto proxy = new ColorMapProxyWidget(colormap);
-    addItem(proxy);
+    setWidget(colormap);
 }
