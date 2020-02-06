@@ -33,4 +33,5 @@ target_sources(mvvm_viewmodel PRIVATE
     statusstringreporterfactory.h
     viewportaxisplotcontroller.cpp
     viewportaxisplotcontroller.h
+    sceneadapterinterface.h
 )
