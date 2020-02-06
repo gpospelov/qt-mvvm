@@ -8,7 +8,9 @@
 // ************************************************************************** //
 
 #include "scenemodel.h"
+#include "sceneitems.h"
 #include <cmath>
+#include <mvvm/model/itemcatalogue.h>
 #include <mvvm/model/modelutils.h>
 #include <mvvm/standarditems/axisitems.h>
 #include <mvvm/standarditems/colormapitem.h>
@@ -39,42 +41,58 @@ void fill_data(Data2DItem* data_item, double scale = 1.0)
 
     data_item->setContent(values);
 }
+
+std::unique_ptr<ModelView::ItemCatalogue> CreateToyItemCatalogue()
+{
+    auto result = std::make_unique<ItemCatalogue>();
+    result->registerItem<RegionOfInterestItem>();
+    return result;
+}
+
 } // namespace
 
 SceneModel::SceneModel() : SessionModel("ColorMapModel")
 {
-    init_model();
+    setItemCatalogue(CreateToyItemCatalogue());
+
+    create_roi();
+    create_data();
+    create_colormap();
 }
 
-//! Updates data.
+//! Recalculates data points in Data2DItem according to scale provided.
 
 void SceneModel::update_data(double scale)
 {
-    auto data_item = data_container()->item<Data2DItem>(ContainerItem::T_ITEMS);
-    fill_data(data_item, scale);
+    fill_data(Utils::TopItem<Data2DItem>(this), scale);
 }
 
-void SceneModel::add_colormap()
+//! Creates item representing region of interest in the context of color map and graphics scene.
+
+void SceneModel::create_roi()
 {
-    auto data_item = insertItem<Data2DItem>(data_container());
+    auto roi = insertItem<RegionOfInterestItem>();
+    roi->setProperty(RegionOfInterestItem::P_XLOW, -2.0);
+    roi->setProperty(RegionOfInterestItem::P_YLOW, 1.0);
+    roi->setProperty(RegionOfInterestItem::P_XUP, 2.0);
+    roi->setProperty(RegionOfInterestItem::P_YUP, 2.0);
+}
+
+//! Creates item to store 2D data and fills it with values.
+
+void SceneModel::create_data()
+{
+    auto data_item = insertItem<Data2DItem>();
     data_item->setAxes(FixedBinAxisItem::create(nbinsx, -5.0, 5.0),
                        FixedBinAxisItem::create(nbinsy, 0.0, 5.0));
     fill_data(data_item);
+}
 
+//! Creates items for graphical representation of 2D data in the form of a colormap.
+
+void SceneModel::create_colormap()
+{
     auto viewport_item = insertItem<ColorMapViewportItem>();
     auto colormap_item = insertItem<ColorMapItem>(viewport_item);
-    colormap_item->setDataItem(data_item);
-}
-
-ContainerItem* SceneModel::data_container()
-{
-    return Utils::TopItem<ContainerItem>(this);
-}
-
-void SceneModel::init_model()
-{
-    auto container = insertItem<ContainerItem>();
-    container->setDisplayName("Data container");
-
-    add_colormap();
+    colormap_item->setDataItem(Utils::TopItem<Data2DItem>(this));
 }

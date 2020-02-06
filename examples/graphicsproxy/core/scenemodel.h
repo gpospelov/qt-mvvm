@@ -27,9 +27,9 @@ public:
     void update_data(double scale);
 
 private:
-    ModelView::ContainerItem* data_container();
-    void init_model();
-    void add_colormap();
+    void create_roi();
+    void create_data();
+    void create_colormap();
 };
 
 #endif // GRAPHICSPROXY_SCENEMODEL_H
