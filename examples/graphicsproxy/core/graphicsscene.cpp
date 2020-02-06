@@ -9,6 +9,7 @@
 
 #include "graphicsscene.h"
 #include "colormapproxywidget.h"
+#include "regionofinterestview.h"
 #include <QDebug>
 
 namespace
@@ -32,7 +33,7 @@ void GraphicsScene::setColorMap(ModelView::ColorMapCanvas* colormap)
 
 void GraphicsScene::setRegionOfInterest(RegionOfInterestItem* roi)
 {
-
+    addItem(new RegionOfInterestView(roi));
 }
 
 //! Adjust size of scene and color map proxy.
