@@ -12,9 +12,12 @@
 
 #include <QGraphicsScene>
 
-namespace ModelView  {
+namespace ModelView
+{
 class ColorMapCanvas;
 }
+
+class ColorMapProxyWidget;
 
 //! Custom graphics scene to show QCustomPlot with additional elements on top.
 
@@ -25,6 +28,11 @@ public:
     GraphicsScene(QObject* parent);
 
     void setColorMap(ModelView::ColorMapCanvas* colormap);
+
+    void update_size(const QSize& newSize);
+
+private:
+    ColorMapProxyWidget* colormap_proxy{nullptr};
 };
 
 #endif //  GRAPHICSPROXY_GRAPHICSSCENE_H

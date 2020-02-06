@@ -9,11 +9,34 @@
 
 #include "graphicsscene.h"
 #include "colormapproxywidget.h"
+#include <QDebug>
 
-GraphicsScene::GraphicsScene(QObject* parent) : QGraphicsScene(parent) {}
+namespace
+{
+const double scene_origin_x{0.0};
+const double scene_origin_y{0.0};
+const QRectF default_scene_rect{QPointF{scene_origin_x, scene_origin_y}, QSizeF{800, 600}};
+} // namespace
+
+GraphicsScene::GraphicsScene(QObject* parent) : QGraphicsScene(parent)
+{
+    setSceneRect(default_scene_rect);
+}
 
 void GraphicsScene::setColorMap(ModelView::ColorMapCanvas* colormap)
 {
-    auto proxy = new ColorMapProxyWidget(colormap);
-    addItem(proxy);
+    clear();
+    colormap_proxy = new ColorMapProxyWidget(colormap);
+    addItem(colormap_proxy);
+}
+
+//! Adjust size of scene and color map proxy.
+
+void GraphicsScene::update_size(const QSize& newSize)
+{
+    if (colormap_proxy) {
+        colormap_proxy->resize(newSize);
+        setSceneRect(scene_origin_x, scene_origin_y, newSize.width(), newSize.height());
+        colormap_proxy->setPos(0.0, 0.0);
+    }
 }
