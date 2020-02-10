@@ -18,6 +18,7 @@ namespace ModelView
 {
 
 class ColorMapViewportItem;
+class SceneAdapterInterface;
 
 /*!
 @class ColorMapCanvas
@@ -33,6 +34,8 @@ public:
     ~ColorMapCanvas() override;
 
     void setItem(ColorMapViewportItem* viewport_item);
+
+    std::unique_ptr<SceneAdapterInterface> createSceneAdapter() const;
 
 private:
     struct ColorMapCanvasImpl;

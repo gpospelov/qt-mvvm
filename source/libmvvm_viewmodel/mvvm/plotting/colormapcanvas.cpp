@@ -12,6 +12,7 @@
 #include <mvvm/plotting/colormapviewportplotcontroller.h>
 #include <mvvm/plotting/statusstringreporter.h>
 #include <mvvm/plotting/statusstringreporterfactory.h>
+#include <mvvm/plotting/customplotsceneadapter.h>
 #include <mvvm/standarditems/colormapviewportitem.h>
 #include <mvvm/widgets/statuslabel.h>
 
@@ -55,4 +56,11 @@ ColorMapCanvas::~ColorMapCanvas() = default;
 void ColorMapCanvas::setItem(ColorMapViewportItem* viewport_item)
 {
     p_impl->viewport_controller->setItem(viewport_item);
+}
+
+//! Creates
+
+std::unique_ptr<SceneAdapterInterface> ColorMapCanvas::createSceneAdapter() const
+{
+    return std::make_unique<CustomPlotSceneAdapter>(p_impl->customPlot());
 }
