@@ -31,7 +31,7 @@ public:
     QRectF boundingRect() const override;
 
 protected:
-    void paint(QPainter*, const QStyleOptionGraphicsItem*, QWidget*);
+    void paint(QPainter*, const QStyleOptionGraphicsItem*, QWidget*) override;
 
 private:
     const ModelView::SceneAdapterInterface* scene_adapter{nullptr};

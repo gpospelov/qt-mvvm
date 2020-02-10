@@ -10,7 +10,6 @@
 #include "regionofinterestview.h"
 #include "sceneitems.h"
 #include <QPainter>
-#include <QDebug>
 #include <mvvm/plotting/sceneadapterinterface.h>
 
 namespace
@@ -36,6 +35,13 @@ RegionOfInterestView::RegionOfInterestView(RegionOfInterestItem* item,
 QRectF RegionOfInterestView::boundingRect() const
 {
     return rect.marginsAdded(QMarginsF(bbox_margins, bbox_margins, bbox_margins, bbox_margins));
+}
+
+void RegionOfInterestView::advance(int phase)
+{
+    if (!phase)
+        return;
+    update_geometry();
 }
 
 void RegionOfInterestView::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)

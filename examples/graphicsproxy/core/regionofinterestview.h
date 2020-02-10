@@ -32,6 +32,8 @@ public:
 
     QRectF boundingRect() const override;
 
+    void advance(int phase) override;
+
 protected:
     void paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*);
 
