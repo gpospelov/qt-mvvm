@@ -10,6 +10,8 @@
 #include "graphicsscene.h"
 #include "colormapproxywidget.h"
 #include "regionofinterestview.h"
+#include <mvvm/plotting/sceneadapterinterface.h>
+#include <mvvm/plotting/colormapcanvas.h>
 #include <QDebug>
 
 namespace
@@ -24,9 +26,12 @@ GraphicsScene::GraphicsScene(QObject* parent) : QGraphicsScene(parent)
     setSceneRect(default_scene_rect);
 }
 
+GraphicsScene::~GraphicsScene() = default;
+
 void GraphicsScene::setColorMap(ModelView::ColorMapCanvas* colormap)
 {
     clear();
+    scene_adapter = colormap->createSceneAdapter();
     colormap_proxy = new ColorMapProxyWidget(colormap);
     addItem(colormap_proxy);
 }
