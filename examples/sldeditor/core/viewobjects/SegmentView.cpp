@@ -106,22 +106,28 @@ QRectF SegmentView::getSceneRect() const
 
     if (segment_item->property(SegmentItem::P_HORIZONTAL).toBool())
         return QRectF(
-            QPointF(
-                axis->fromRealToSceneX(-segment_item->property(SegmentItem::P_WIDTH).toDouble() / 2.),
-                axis->yFactor()*axis->fromRealToSceneY(+segment_item->property(SegmentItem::P_HEIGHT).toDouble() / 2.)),
-            QPointF(
-                axis->fromRealToSceneX(segment_item->property(SegmentItem::P_WIDTH).toDouble() / 2.),
-                axis->yFactor()*axis->fromRealToSceneY(-segment_item->property(SegmentItem::P_HEIGHT).toDouble()
-                                    / 2.)));
+            QPointF(axis->fromRealToSceneX(-segment_item->property(SegmentItem::P_WIDTH).toDouble()
+                                           / 2.),
+                    axis->yFactor()
+                        * axis->fromRealToSceneY(
+                            +segment_item->property(SegmentItem::P_HEIGHT).toDouble() / 2.)),
+            QPointF(axis->fromRealToSceneX(segment_item->property(SegmentItem::P_WIDTH).toDouble()
+                                           / 2.),
+                    axis->yFactor()
+                        * axis->fromRealToSceneY(
+                            -segment_item->property(SegmentItem::P_HEIGHT).toDouble() / 2.)));
     else
         return QRectF(
-            QPointF(
-                axis->xFactor()*axis->fromRealToSceneX(-segment_item->property(SegmentItem::P_WIDTH).toDouble() / 2.),
-                axis->fromRealToSceneY(+segment_item->property(SegmentItem::P_HEIGHT).toDouble() / 2.)),
-            QPointF(
-                axis->xFactor()*axis->fromRealToSceneX(segment_item->property(SegmentItem::P_WIDTH).toDouble() / 2.),
-                axis->fromRealToSceneY(-segment_item->property(SegmentItem::P_HEIGHT).toDouble()
-                                    / 2.)));
+            QPointF(axis->xFactor()
+                        * axis->fromRealToSceneX(
+                            -segment_item->property(SegmentItem::P_WIDTH).toDouble() / 2.),
+                    axis->fromRealToSceneY(+segment_item->property(SegmentItem::P_HEIGHT).toDouble()
+                                           / 2.)),
+            QPointF(axis->xFactor()
+                        * axis->fromRealToSceneX(
+                            segment_item->property(SegmentItem::P_WIDTH).toDouble() / 2.),
+                    axis->fromRealToSceneY(-segment_item->property(SegmentItem::P_HEIGHT).toDouble()
+                                           / 2.)));
 }
 
 //! On move update the model
