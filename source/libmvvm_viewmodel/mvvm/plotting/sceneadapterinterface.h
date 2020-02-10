@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef GRAPHICSPROXY_SCENEADAPTERINTERFACE_H
-#define GRAPHICSPROXY_SCENEADAPTERINTERFACE_H
+#ifndef MVVM_PLOTTING_SCENEADAPTERINTERFACE_H
+#define MVVM_PLOTTING_SCENEADAPTERINTERFACE_H
 
 #include <mvvm/core/export.h>
 
@@ -25,6 +25,7 @@ coordinates in the coordinates of local system of QCustomPlot and vice versa.
 
 class CORE_EXPORT SceneAdapterInterface
 {
+public:
     virtual ~SceneAdapterInterface() = default;
 
     //! convert local x-coordinate to scene coordinate
@@ -42,4 +43,4 @@ class CORE_EXPORT SceneAdapterInterface
 
 } // namespace ModelView
 
-#endif // GRAPHICSPROXY_SCENEADAPTERINTERFACE_H
+#endif // MVVM_PLOTTING_SCENEADAPTERINTERFACE_H
