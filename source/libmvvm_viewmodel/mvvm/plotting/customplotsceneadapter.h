@@ -38,6 +38,8 @@ public:
 
     double fromSceneY(double scene_y) const override;
 
+    QRectF viewportRectangle() const override;
+
 private:
     struct CustomPlotSceneAdapterImpl;
     std::unique_ptr<CustomPlotSceneAdapterImpl> p_impl;

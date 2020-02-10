@@ -12,6 +12,8 @@
 
 #include <mvvm/core/export.h>
 
+class QRectF;
+
 namespace ModelView
 {
 
@@ -39,6 +41,9 @@ public:
 
     //! convert scene y-coordinate to local axis coordinate
     virtual double fromSceneY(double) const = 0;
+
+    //! returns viewport rectangle in scene coordinates
+    virtual QRectF viewportRectangle() const = 0;
 };
 
 } // namespace ModelView

@@ -36,6 +36,19 @@ struct CustomPlotSceneAdapter::CustomPlotSceneAdapterImpl {
     {
         return custom_plot ? custom_plot->yAxis->pixelToCoord(scene_y) : scene_y;
     }
+
+    QRectF viewportRectangle() const
+    {
+        if (!custom_plot)
+            return {};
+
+        auto xrange = custom_plot->xAxis->range();
+        auto yrange = custom_plot->yAxis->range();
+
+        return QRectF(toSceneX(xrange.lower), toSceneY(yrange.upper),
+                      toSceneX(xrange.upper) - toSceneX(xrange.lower),
+                      toSceneY(yrange.lower) - toSceneY(yrange.upper));
+    }
 };
 
 CustomPlotSceneAdapter::CustomPlotSceneAdapter(QCustomPlot* custom_plot)
@@ -65,4 +78,9 @@ double CustomPlotSceneAdapter::fromSceneX(double scene_x) const
 double CustomPlotSceneAdapter::fromSceneY(double scene_y) const
 {
     return p_impl->fromSceneX(scene_y);
+}
+
+QRectF CustomPlotSceneAdapter::viewportRectangle() const
+{
+    return p_impl->viewportRectangle();
 }
