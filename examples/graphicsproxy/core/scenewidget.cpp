@@ -47,8 +47,7 @@ SceneWidget::SceneWidget(SceneModel* model, QWidget* parent)
     m_colorMapCanvas->setItem(Utils::TopItem<ColorMapViewportItem>(model));
     init_actions();
 
-    graphics_scene->setColorMap(m_colorMapCanvas);
-    graphics_scene->setRegionOfInterest(Utils::TopItem<RegionOfInterestItem>(model));
+    graphics_scene->setContext(m_colorMapCanvas, Utils::TopItem<RegionOfInterestItem>(model));
 }
 
 void SceneWidget::init_actions()

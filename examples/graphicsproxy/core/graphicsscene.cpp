@@ -8,11 +8,11 @@
 // ************************************************************************** //
 
 #include "graphicsscene.h"
+#include "axesrectangleview.h"
 #include "colormapproxywidget.h"
 #include "regionofinterestview.h"
-#include "axesrectangleview.h"
-#include <mvvm/plotting/sceneadapterinterface.h>
 #include <mvvm/plotting/colormapcanvas.h>
+#include <mvvm/plotting/sceneadapterinterface.h>
 
 namespace
 {
@@ -26,23 +26,14 @@ GraphicsScene::GraphicsScene(QObject* parent) : QGraphicsScene(parent)
     setSceneRect(default_scene_rect);
 }
 
-GraphicsScene::~GraphicsScene() = default;
-
-void GraphicsScene::setColorMap(ModelView::ColorMapCanvas* colormap)
+void GraphicsScene::setContext(ModelView::ColorMapCanvas* colormap, RegionOfInterestItem* roi)
 {
     clear();
-    scene_adapter = colormap->createSceneAdapter();
-    colormap_proxy = new ColorMapProxyWidget(colormap);
-    addItem(colormap_proxy);
+    create_colormap_proxy(colormap);
+    create_roi_view(roi);
 }
 
-void GraphicsScene::setRegionOfInterest(RegionOfInterestItem* roi)
-{
-    auto axes_view = new AxesRectangleView(scene_adapter.get());
-    auto roi_view = new RegionOfInterestView(roi, scene_adapter.get());
-    roi_view->setParentItem(axes_view);
-    addItem(axes_view);
-}
+GraphicsScene::~GraphicsScene() = default;
 
 //! Adjust size of scene and color map proxy.
 
@@ -54,4 +45,23 @@ void GraphicsScene::update_size(const QSize& newSize)
         colormap_proxy->setPos(0.0, 0.0);
         advance();
     }
+}
+
+void GraphicsScene::create_colormap_proxy(ModelView::ColorMapCanvas* colormap)
+{
+    scene_adapter = colormap->createSceneAdapter();
+    colormap_proxy = new ColorMapProxyWidget(colormap);
+    addItem(colormap_proxy);
+}
+
+//! Creates parent object AxesRectangleView to hold single child RegionOfInterestView.
+//! AxesRectangleView serves as an invisible clipping rectangle to hide parts of children
+//! when they go out of axes rectangle at current zoom level.
+
+void GraphicsScene::create_roi_view(RegionOfInterestItem* roi_item)
+{
+    auto axes_view = new AxesRectangleView(scene_adapter.get());
+    auto roi_view = new RegionOfInterestView(roi_item, scene_adapter.get());
+    roi_view->setParentItem(axes_view);
+    addItem(axes_view);
 }

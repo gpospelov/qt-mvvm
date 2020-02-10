@@ -22,7 +22,7 @@ QRectF AxesRectangleView::boundingRect() const
     return rect;
 }
 
-//! Recalculates bounding rectangle using viewport as reported by the adapter.
+//! Recalculates bounding rectangle using axes viewport as reported by the adapter.
 
 void AxesRectangleView::advance(int phase)
 {

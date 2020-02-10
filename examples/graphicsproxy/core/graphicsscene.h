@@ -30,12 +30,14 @@ public:
     GraphicsScene(QObject* parent);
     ~GraphicsScene() override;
 
-    void setColorMap(ModelView::ColorMapCanvas* colormap);
-    void setRegionOfInterest(RegionOfInterestItem* roi);
+    void setContext(ModelView::ColorMapCanvas* colormap, RegionOfInterestItem* roi);
 
     void update_size(const QSize& newSize);
 
 private:
+    void create_colormap_proxy(ModelView::ColorMapCanvas* colormap);
+    void create_roi_view(RegionOfInterestItem* roi_item);
+
     ColorMapProxyWidget* colormap_proxy{nullptr};
     std::unique_ptr<ModelView::SceneAdapterInterface> scene_adapter;
 };
