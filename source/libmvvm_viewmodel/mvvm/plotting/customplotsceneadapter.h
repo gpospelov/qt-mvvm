@@ -11,6 +11,7 @@
 #define MVVM_PLOTTING_CUSTOMPLOTSCENEADAPTER_H
 
 #include <mvvm/plotting/sceneadapterinterface.h>
+#include <memory>
 
 class QCustomPlot;
 
@@ -36,6 +37,10 @@ public:
     double fromSceneX(double scene_x) const override;
 
     double fromSceneY(double scene_y) const override;
+
+private:
+    struct CustomPlotSceneAdapterImpl;
+    std::unique_ptr<CustomPlotSceneAdapterImpl> p_impl;
 };
 
 } // namespace ModelView
