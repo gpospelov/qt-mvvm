@@ -74,33 +74,35 @@ qreal RegionOfInterestView::height() const
     return bottom() - top();
 }
 
-//! returns the x-coordinate of the rectangle's left edge
+//! Returns the x-coordinate of the rectangle's left edge in the coordinate system of the scene.
 
 qreal RegionOfInterestView::left() const
 {
     return scene_adapter->toSceneX(par(RegionOfInterestItem::P_XLOW));
 }
 
-//! returns the x-coordinate of the rectangle's right edge
+//! Returns the x-coordinate of the rectangle's right edge in the coordinate system of the scene.
 
 qreal RegionOfInterestView::right() const
 {
     return scene_adapter->toSceneX(par(RegionOfInterestItem::P_XUP));
 }
 
-//! Returns the y-coordinate of the rectangle's top edge.
+//! Returns the y-coordinate of the rectangle's top edge in the coordinate system of the scene.
 
 qreal RegionOfInterestView::top() const
 {
     return scene_adapter->toSceneY(par(RegionOfInterestItem::P_YUP));
 }
 
-//! Returns the y-coordinate of the rectangle's bottom edge.
+//! Returns the y-coordinate of the rectangle's bottom edge in the coordinate system of the scene.
 
 qreal RegionOfInterestView::bottom() const
 {
     return scene_adapter->toSceneY(par(RegionOfInterestItem::P_YLOW));
 }
+
+//! Returns the value of ComboItem's property with given name.
 
 double RegionOfInterestView::par(const std::string& name) const
 {
