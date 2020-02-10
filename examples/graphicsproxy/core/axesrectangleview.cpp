@@ -19,7 +19,17 @@ AxesRectangleView::AxesRectangleView(const ModelView::SceneAdapterInterface* sce
 
 QRectF AxesRectangleView::boundingRect() const
 {
-    return scene_adapter->viewportRectangle();
+    return rect;
+}
+
+//! Recalculates bounding rectangle using viewport as reported by the adapter.
+
+void AxesRectangleView::advance(int phase)
+{
+    if (!phase)
+        return;
+    prepareGeometryChange();
+    rect = scene_adapter->viewportRectangle();
 }
 
 void AxesRectangleView::paint(QPainter*, const QStyleOptionGraphicsItem*, QWidget*)

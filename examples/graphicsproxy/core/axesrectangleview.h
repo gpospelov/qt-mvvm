@@ -30,11 +30,14 @@ public:
 
     QRectF boundingRect() const override;
 
+    void advance(int phase) override;
+
 protected:
     void paint(QPainter*, const QStyleOptionGraphicsItem*, QWidget*) override;
 
 private:
     const ModelView::SceneAdapterInterface* scene_adapter{nullptr};
+    QRectF rect;
 };
 
 #endif // GRAPHICSPROXY_AXESRECTANGLEVIEW_H
