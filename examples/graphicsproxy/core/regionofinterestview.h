@@ -12,6 +12,11 @@
 
 #include <QGraphicsObject>
 
+namespace ModelView
+{
+class SceneAdapterInterface;
+}
+
 class RegionOfInterestItem;
 
 //! Graphics object to represent RegionOfInterestItem on graphics scene.
@@ -22,7 +27,8 @@ class RegionOfInterestView : public QGraphicsObject
     Q_OBJECT
 
 public:
-    RegionOfInterestView(RegionOfInterestItem* item);
+    RegionOfInterestView(RegionOfInterestItem* item,
+                         const ModelView::SceneAdapterInterface* scene_adapter);
 
     QRectF boundingRect() const override;
 
@@ -42,6 +48,7 @@ private:
 
     RegionOfInterestItem* item{nullptr};
     QRectF rect;
+    const ModelView::SceneAdapterInterface* scene_adapter{nullptr};
 };
 
 #endif // GRAPHICSPROXY_REGIONOFINTERESTVIEW_H

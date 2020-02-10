@@ -38,7 +38,7 @@ void GraphicsScene::setColorMap(ModelView::ColorMapCanvas* colormap)
 
 void GraphicsScene::setRegionOfInterest(RegionOfInterestItem* roi)
 {
-    addItem(new RegionOfInterestView(roi));
+    addItem(new RegionOfInterestView(roi, scene_adapter.get()));
 }
 
 //! Adjust size of scene and color map proxy.
