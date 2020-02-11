@@ -35,7 +35,7 @@ public:
     model_type modelType() const;
 
     virtual std::string displayName() const;
-    void setDisplayName(const std::string& name);
+    virtual SessionItem* setDisplayName(const std::string& name);
 
     std::string identifier() const;
 

@@ -70,9 +70,10 @@ std::string SessionItem::displayName() const
     return data(ItemDataRole::DISPLAY).value<std::string>();
 }
 
-void SessionItem::setDisplayName(const std::string& name)
+SessionItem* SessionItem::setDisplayName(const std::string& name)
 {
     setData(QVariant::fromValue(name), ItemDataRole::DISPLAY);
+    return this;
 }
 
 std::string SessionItem::identifier() const
