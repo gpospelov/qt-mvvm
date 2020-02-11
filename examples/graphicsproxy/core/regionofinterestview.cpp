@@ -44,7 +44,7 @@ void RegionOfInterestView::advance(int phase)
     if (!phase)
         return;
     prepareGeometryChange();
-    controller->update_geometry();
+    controller->update_view_from_item();
 }
 
 void RegionOfInterestView::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
@@ -55,4 +55,10 @@ void RegionOfInterestView::paint(QPainter* painter, const QStyleOptionGraphicsIt
     QRectF secondRect = controller->roi_rectangle().marginsAdded(QMarginsF(1, 1, 1, 1));
     painter->setPen(QPen(QColor(255, 255, 245)));
     painter->drawRect(secondRect);
+}
+
+void RegionOfInterestView::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
+{
+    QGraphicsItem::mouseMoveEvent(event);
+    controller->update_item_from_view();
 }

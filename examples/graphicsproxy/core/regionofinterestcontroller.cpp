@@ -20,45 +20,31 @@ struct RegionOfInterestController::RegionOfInterestControllerImpl {
     RegionOfInterestView* roi_view{nullptr};
     bool block_on_property_changed{false};
     QRectF roi_rectangle;
-    std::unique_ptr<QMetaObject::Connection> xpos_conn;
-    std::unique_ptr<QMetaObject::Connection> ypos_conn;
 
     RegionOfInterestControllerImpl(RegionOfInterestItem* item,
                                    const ModelView::SceneAdapterInterface* scene_adapter,
                                    RegionOfInterestView* view)
         : roi_item(item), scene_adapter(scene_adapter), roi_view(view)
     {
-        xpos_conn = std::make_unique<QMetaObject::Connection>();
-        ypos_conn = std::make_unique<QMetaObject::Connection>();
     }
 
-    //! Connects signals related to QGraphicsObject position change. Will update
-    //! properties of RegionOfInterestItem on any move performed by the user on scene.
+    //! Updates properties of RegionOfInterestItem on any move performed by the user on scene.
 
-    void connect_graphics_view()
+    void update_item_from_view()
     {
-        auto on_scene_x_changed = [this]() {
-            block_on_property_changed = true;
-            roi_item->setProperty(RegionOfInterestItem::P_XLOW,
-                                  scene_adapter->fromSceneX(roi_view->x()));
-            roi_item->setProperty(RegionOfInterestItem::P_XUP,
-                                  scene_adapter->fromSceneX(roi_view->x() + roi_rectangle.width()));
-            block_on_property_changed = false;
-        };
-        *xpos_conn =
-            QObject::connect(roi_view, &RegionOfInterestView::xChanged, on_scene_x_changed);
+        block_on_property_changed = true;
 
-        auto on_scene_y_changed = [this]() {
-            block_on_property_changed = true;
-            roi_item->setProperty(
-                RegionOfInterestItem::P_YLOW,
-                scene_adapter->fromSceneY(roi_view->y() + roi_rectangle.height()));
-            roi_item->setProperty(RegionOfInterestItem::P_YUP,
-                                  scene_adapter->fromSceneY(roi_view->y()));
-            block_on_property_changed = false;
-        };
-        *ypos_conn =
-            QObject::connect(roi_view, &RegionOfInterestView::yChanged, on_scene_y_changed);
+        roi_item->setProperty(RegionOfInterestItem::P_XLOW,
+                              scene_adapter->fromSceneX(roi_view->x()));
+        roi_item->setProperty(RegionOfInterestItem::P_XUP,
+                              scene_adapter->fromSceneX(roi_view->x() + roi_rectangle.width()));
+
+        roi_item->setProperty(RegionOfInterestItem::P_YLOW,
+                              scene_adapter->fromSceneY(roi_view->y() + roi_rectangle.height()));
+        roi_item->setProperty(RegionOfInterestItem::P_YUP,
+                              scene_adapter->fromSceneY(roi_view->y()));
+
+        block_on_property_changed = false;
     }
 
     //! Calculates view rectangle in scene coordinates from item properties.
@@ -105,15 +91,18 @@ QRectF RegionOfInterestController::roi_rectangle() const
     return p_impl->roi_rectangle;
 }
 
-void RegionOfInterestController::update_geometry()
+void RegionOfInterestController::update_view_from_item()
 {
     p_impl->update_geometry();
 }
 
+void RegionOfInterestController::update_item_from_view()
+{
+    p_impl->update_item_from_view();
+}
+
 void RegionOfInterestController::subscribe()
 {
-    p_impl->update_geometry();
-
     auto on_property_change = [this](SessionItem*, std::string) {
         if (p_impl->block_on_property_changed)
             return;
@@ -122,5 +111,5 @@ void RegionOfInterestController::subscribe()
     };
     currentItem()->mapper()->setOnPropertyChange(on_property_change, this);
 
-    p_impl->connect_graphics_view();
+    p_impl->update_geometry();
 }

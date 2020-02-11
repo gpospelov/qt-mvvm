@@ -36,7 +36,9 @@ public:
 
     QRectF roi_rectangle() const;
 
-    void update_geometry();
+    void update_view_from_item();
+
+    void update_item_from_view();
 
 protected:
     void subscribe() override;

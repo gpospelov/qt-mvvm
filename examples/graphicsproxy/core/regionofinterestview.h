@@ -10,7 +10,7 @@
 #ifndef GRAPHICSPROXY_REGIONOFINTERESTVIEW_H
 #define GRAPHICSPROXY_REGIONOFINTERESTVIEW_H
 
-#include <QGraphicsObject>
+#include <QGraphicsItem>
 #include <memory>
 
 namespace ModelView
@@ -24,21 +24,20 @@ class RegionOfInterestController;
 //! Graphics object to represent RegionOfInterestItem on graphics scene.
 //! Follows standard QGraphicsScene notations: (x,y) origin is top left corner.
 
-class RegionOfInterestView : public QGraphicsObject
+class RegionOfInterestView : public QGraphicsItem
 {
-    Q_OBJECT
-
 public:
     RegionOfInterestView(RegionOfInterestItem* item,
                          const ModelView::SceneAdapterInterface* scene_adapter);
-    ~RegionOfInterestView();
+    ~RegionOfInterestView() override;
 
     QRectF boundingRect() const override;
 
     void advance(int phase) override;
 
 protected:
-    void paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*);
+    void paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*) override;
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
 
 private:
     void update_geometry();
