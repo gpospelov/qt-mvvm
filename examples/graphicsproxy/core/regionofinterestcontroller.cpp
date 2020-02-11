@@ -69,10 +69,19 @@ struct RegionOfInterestController::RegionOfInterestControllerImpl {
 
     double width() const { return right() - left(); }
     double height() const { return bottom() - top(); }
+
+    //! Returns the x-coordinate of the rectangle's left edge.
     double left() const { return scene_adapter->toSceneX(par(RegionOfInterestItem::P_XLOW)); }
+
+    //! Returns the x-coordinate of the rectangle's right edge.
     double right() const { return scene_adapter->toSceneX(par(RegionOfInterestItem::P_XUP)); }
+
+    //! Returns the y-coordinate of the rectangle's top edge.
     double top() const { return scene_adapter->toSceneY(par(RegionOfInterestItem::P_YUP)); }
+
+    //! Returns the y-coordinate of the rectangle's bottom edge.
     double bottom() const { return scene_adapter->toSceneY(par(RegionOfInterestItem::P_YLOW)); }
+
     double par(const std::string& name) const { return roi_item->property(name).value<double>(); }
 };
 

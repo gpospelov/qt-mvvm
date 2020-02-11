@@ -24,6 +24,8 @@ class ColorMapProxyWidget : public QGraphicsProxyWidget
     Q_OBJECT
 public:
     ColorMapProxyWidget(ModelView::ColorMapCanvas* colormap);
+
+    bool eventFilter(QObject* object, QEvent* event);
 };
 
 #endif //  GRAPHICSPROXY_COLORMAPPROXYWIDGET_H
