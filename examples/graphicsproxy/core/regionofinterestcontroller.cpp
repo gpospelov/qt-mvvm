@@ -28,7 +28,7 @@ struct RegionOfInterestController::RegionOfInterestControllerImpl {
     {
     }
 
-    //! Updates properties of RegionOfInterestItem on any move performed by the user on scene.
+    //! Updates item properties from current view position.
 
     void update_item_from_view()
     {
@@ -59,9 +59,9 @@ struct RegionOfInterestController::RegionOfInterestControllerImpl {
         roi_view->setY(scene_adapter->toSceneY(par(RegionOfInterestItem::P_YUP)));
     }
 
-    //! Sets view appearance from item properties and current state of scene adapter.
+    //! Updates view appearance using current values of item properties and state of scene adapter.
 
-    void update_geometry()
+    void update_view_from_item()
     {
         set_view_rectangle_from_item();
         set_view_position_from_item();
@@ -91,10 +91,14 @@ QRectF RegionOfInterestController::roi_rectangle() const
     return p_impl->roi_rectangle;
 }
 
+//! Updates view appearance using current values of item properties and state of scene adapter.
+
 void RegionOfInterestController::update_view_from_item()
 {
-    p_impl->update_geometry();
+    p_impl->update_view_from_item();
 }
+
+//! Updates item properties from current view position.
 
 void RegionOfInterestController::update_item_from_view()
 {
@@ -107,9 +111,10 @@ void RegionOfInterestController::subscribe()
         if (p_impl->block_on_property_changed)
             return;
 
-        p_impl->update_geometry();
+        p_impl->update_view_from_item();
+        p_impl->roi_view->update();
     };
     currentItem()->mapper()->setOnPropertyChange(on_property_change, this);
 
-    p_impl->update_geometry();
+    p_impl->update_view_from_item();
 }
