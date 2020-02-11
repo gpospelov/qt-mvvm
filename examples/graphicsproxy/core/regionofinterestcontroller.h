@@ -13,6 +13,11 @@
 #include <memory>
 #include <mvvm/signals/itemcontroller.h>
 
+namespace ModelView
+{
+class SceneAdapterInterface;
+}
+
 class RegionOfInterestItem;
 class RegionOfInterestView;
 class QRectF;
@@ -24,7 +29,9 @@ class QRectF;
 class RegionOfInterestController : public ModelView::ItemController<RegionOfInterestItem>
 {
 public:
-    RegionOfInterestController(RegionOfInterestItem* item, RegionOfInterestView* view);
+    RegionOfInterestController(RegionOfInterestItem* item,
+                               const ModelView::SceneAdapterInterface* scene_adapter,
+                               RegionOfInterestView* view);
     ~RegionOfInterestController() override;
 
     QRectF roi_rectangle() const;

@@ -16,14 +16,17 @@ using namespace ModelView;
 
 struct RegionOfInterestController::RegionOfInterestControllerImpl {
     RegionOfInterestItem* roi_item{nullptr};
-    RegionOfInterestView* roi_view{nullptr};
     const SceneAdapterInterface* scene_adapter{nullptr};
+    RegionOfInterestView* roi_view{nullptr};
     bool block_on_property_changed{false};
     QRectF roi_rectangle;
     std::unique_ptr<QMetaObject::Connection> xpos_conn;
     std::unique_ptr<QMetaObject::Connection> ypos_conn;
-    RegionOfInterestControllerImpl(RegionOfInterestItem* item, RegionOfInterestView* view)
-        : roi_item(item), roi_view(view)
+
+    RegionOfInterestControllerImpl(RegionOfInterestItem* item,
+                                   const ModelView::SceneAdapterInterface* scene_adapter,
+                                   RegionOfInterestView* view)
+        : roi_item(item), scene_adapter(scene_adapter), roi_view(view)
     {
         xpos_conn = std::make_unique<QMetaObject::Connection>();
         ypos_conn = std::make_unique<QMetaObject::Connection>();
@@ -78,21 +81,24 @@ struct RegionOfInterestController::RegionOfInterestControllerImpl {
         set_view_position_from_item();
     }
 
-    double par(const std::string& name) const { return roi_item->property(name).value<double>(); }
     double width() const { return right() - left(); }
     double height() const { return bottom() - top(); }
     double left() const { return scene_adapter->toSceneX(par(RegionOfInterestItem::P_XLOW)); }
     double right() const { return scene_adapter->toSceneX(par(RegionOfInterestItem::P_XUP)); }
     double top() const { return scene_adapter->toSceneY(par(RegionOfInterestItem::P_YUP)); }
     double bottom() const { return scene_adapter->toSceneY(par(RegionOfInterestItem::P_YLOW)); }
+    double par(const std::string& name) const { return roi_item->property(name).value<double>(); }
 };
 
-RegionOfInterestController::RegionOfInterestController(RegionOfInterestItem* item,
-                                                       RegionOfInterestView* view)
-    : p_impl(std::make_unique<RegionOfInterestControllerImpl>(item, view))
+RegionOfInterestController::RegionOfInterestController(
+    RegionOfInterestItem* item, const ModelView::SceneAdapterInterface* scene_adapter,
+    RegionOfInterestView* view)
+    : p_impl(std::make_unique<RegionOfInterestControllerImpl>(item, scene_adapter, view))
 {
     setItem(item);
 }
+
+RegionOfInterestController::~RegionOfInterestController() = default;
 
 QRectF RegionOfInterestController::roi_rectangle() const
 {
@@ -103,8 +109,6 @@ void RegionOfInterestController::update_geometry()
 {
     p_impl->update_geometry();
 }
-
-RegionOfInterestController::~RegionOfInterestController() = default;
 
 void RegionOfInterestController::subscribe()
 {

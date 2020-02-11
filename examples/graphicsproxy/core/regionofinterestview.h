@@ -11,6 +11,7 @@
 #define GRAPHICSPROXY_REGIONOFINTERESTVIEW_H
 
 #include <QGraphicsObject>
+#include <memory>
 
 namespace ModelView
 {
@@ -18,6 +19,7 @@ class SceneAdapterInterface;
 }
 
 class RegionOfInterestItem;
+class RegionOfInterestController;
 
 //! Graphics object to represent RegionOfInterestItem on graphics scene.
 //! Follows standard QGraphicsScene notations: (x,y) origin is top left corner.
@@ -29,6 +31,7 @@ class RegionOfInterestView : public QGraphicsObject
 public:
     RegionOfInterestView(RegionOfInterestItem* item,
                          const ModelView::SceneAdapterInterface* scene_adapter);
+    ~RegionOfInterestView();
 
     QRectF boundingRect() const override;
 
@@ -39,18 +42,7 @@ protected:
 
 private:
     void update_geometry();
-    qreal width() const;
-    qreal height() const;
-    qreal left() const;
-    qreal right() const;
-    qreal top() const;
-    qreal bottom() const;
-
-    double par(const std::string& name) const;
-
-    RegionOfInterestItem* item{nullptr};
-    QRectF rect;
-    const ModelView::SceneAdapterInterface* scene_adapter{nullptr};
+    std::unique_ptr<RegionOfInterestController> controller;
 };
 
 #endif // GRAPHICSPROXY_REGIONOFINTERESTVIEW_H
