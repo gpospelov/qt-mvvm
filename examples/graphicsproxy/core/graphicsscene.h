@@ -11,6 +11,7 @@
 #define GRAPHICSPROXY_GRAPHICSSCENE_H
 
 #include <QGraphicsScene>
+#include <memory>
 
 namespace ModelView
 {
