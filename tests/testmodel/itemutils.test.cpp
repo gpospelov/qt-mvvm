@@ -129,7 +129,26 @@ TEST_F(ItemUtilsTest, itemCopyNumber)
 
 //! Check access to top level and property items.
 
-TEST_F(ItemUtilsTest, TopLevelAndPropertyItems)
+TEST_F(ItemUtilsTest, TopLevelItems)
+{
+    SessionModel model;
+
+    auto parent = model.insertItem<SessionItem>();
+    parent->registerTag(TagInfo::universalTag("default_tag"), /*set_as_default*/ true);
+    parent->registerTag(TagInfo::propertyTag("property_tag", Constants::PropertyType));
+
+    auto child1 = model.insertItem<SessionItem>(parent, "default_tag");
+    model.insertItem<PropertyItem>(parent, "property_tag");
+    auto child3 = model.insertItem<SessionItem>(parent, "default_tag");
+
+    EXPECT_EQ(Utils::TopLevelItems(*model.rootItem()), std::vector<SessionItem*>({parent}));
+    EXPECT_EQ(Utils::TopLevelItems(*child1), std::vector<SessionItem*>({}));
+    EXPECT_EQ(Utils::TopLevelItems(*parent), std::vector<SessionItem*>({child1, child3}));
+}
+
+//! Check access to top level and property items.
+
+TEST_F(ItemUtilsTest, SinglePropertyItems)
 {
     SessionModel model;
 
@@ -139,8 +158,75 @@ TEST_F(ItemUtilsTest, TopLevelAndPropertyItems)
 
     auto child1 = model.insertItem<SessionItem>(parent, "default_tag");
     auto child2 = model.insertItem<PropertyItem>(parent, "property_tag");
-    auto child3 = model.insertItem<SessionItem>(parent, "default_tag");
+    model.insertItem<SessionItem>(parent, "default_tag");
 
-    EXPECT_EQ(Utils::TopLevelItems(*parent), std::vector<SessionItem*>({child1, child3}));
+    EXPECT_EQ(Utils::SinglePropertyItems(*model.rootItem()), std::vector<SessionItem*>({}));
+    EXPECT_EQ(Utils::SinglePropertyItems(*child1), std::vector<SessionItem*>({}));
     EXPECT_EQ(Utils::SinglePropertyItems(*parent), std::vector<SessionItem*>({child2}));
+}
+
+//! Looking for next item.
+
+TEST_F(ItemUtilsTest, FindNextSibling)
+{
+    SessionModel model;
+
+    auto parent = model.insertItem<SessionItem>();
+    parent->registerTag(TagInfo::universalTag("default_tag"), /*set_as_default*/ true);
+    parent->registerTag(TagInfo::propertyTag("property_tag", Constants::PropertyType));
+
+    auto property = model.insertItem<PropertyItem>(parent, "property_tag");
+    auto child0 = model.insertItem<SessionItem>(parent, "default_tag");
+    auto child1 = model.insertItem<SessionItem>(parent, "default_tag");
+    auto child2 = model.insertItem<SessionItem>(parent, "default_tag");
+
+    EXPECT_EQ(Utils::FindNextSibling(child0), child1);
+    EXPECT_EQ(Utils::FindNextSibling(child1), child2);
+    EXPECT_EQ(Utils::FindNextSibling(child2), nullptr);
+    EXPECT_EQ(Utils::FindNextSibling(property), nullptr);
+    EXPECT_EQ(Utils::FindNextSibling(parent), nullptr);
+}
+
+//! Looking for previous item.
+
+TEST_F(ItemUtilsTest, FindPreviousSibling)
+{
+    SessionModel model;
+
+    auto parent = model.insertItem<SessionItem>();
+    parent->registerTag(TagInfo::universalTag("default_tag"), /*set_as_default*/ true);
+    parent->registerTag(TagInfo::propertyTag("property_tag", Constants::PropertyType));
+
+    auto property = model.insertItem<PropertyItem>(parent, "property_tag");
+    auto child0 = model.insertItem<SessionItem>(parent, "default_tag");
+    auto child1 = model.insertItem<SessionItem>(parent, "default_tag");
+    auto child2 = model.insertItem<SessionItem>(parent, "default_tag");
+
+    EXPECT_EQ(Utils::FindPreviousSibling(child0), nullptr);
+    EXPECT_EQ(Utils::FindPreviousSibling(child1), child0);
+    EXPECT_EQ(Utils::FindPreviousSibling(child2), child1);
+    EXPECT_EQ(Utils::FindPreviousSibling(property), nullptr);
+    EXPECT_EQ(Utils::FindPreviousSibling(parent), nullptr);
+}
+
+//! Looking for previous item.
+
+TEST_F(ItemUtilsTest, FindNextItemToSelect)
+{
+    SessionModel model;
+
+    auto parent = model.insertItem<SessionItem>();
+    parent->registerTag(TagInfo::universalTag("default_tag"), /*set_as_default*/ true);
+    parent->registerTag(TagInfo::propertyTag("property_tag", Constants::PropertyType));
+
+    auto property = model.insertItem<PropertyItem>(parent, "property_tag");
+    auto child0 = model.insertItem<SessionItem>(parent, "default_tag");
+    auto child1 = model.insertItem<SessionItem>(parent, "default_tag");
+    auto child2 = model.insertItem<SessionItem>(parent, "default_tag");
+
+    EXPECT_EQ(Utils::FindNextItemToSelect(child0), child1);
+    EXPECT_EQ(Utils::FindNextItemToSelect(child1), child2);
+    EXPECT_EQ(Utils::FindNextItemToSelect(child2), child1);
+    EXPECT_EQ(Utils::FindNextItemToSelect(property), parent);
+    EXPECT_EQ(Utils::FindNextItemToSelect(parent), model.rootItem());
 }

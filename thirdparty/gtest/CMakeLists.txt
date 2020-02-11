@@ -3,7 +3,7 @@ if(POLICY CMP0042)
 endif()
 
 if( NOT EXISTS "${CMAKE_CURRENT_LIST_DIR}/googletest/.git" )
-    message(WARNING "The git gtest submodule is not available, testing is not possible. "
+    message(SEND_ERROR "The git gtest submodule is not available, testing is not possible. "
         "Please run 'git submodule update --init --recursive'.")
 else()
     if(MSVC)

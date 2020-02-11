@@ -11,6 +11,7 @@ file(MAKE_DIRECTORY ${BUILD_INC_DIR})
 file(MAKE_DIRECTORY ${TEST_OUTPUT_DIR})
 
 set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
 
 find_package(Qt5 COMPONENTS Widgets Core Gui PrintSupport REQUIRED)
 

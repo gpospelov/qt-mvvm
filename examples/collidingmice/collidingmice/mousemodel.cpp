@@ -15,6 +15,7 @@
 #include <mvvm/model/itemcatalogue.h>
 #include <mvvm/utils/numericutils.h>
 #include <mvvm/utils/reallimits.h>
+#include <algorithm>
 
 namespace
 {
@@ -74,9 +75,7 @@ void MouseModel::writeToFile(const QString& name)
 
 void MouseModel::setUndoPosition(int value)
 {
-    value = value < 0 ? 0 : value;
-    value = value > 100 ? 100 : value;
-    int desired_command_id = undoStack()->count() * value / 100;
+    int desired_command_id = undoStack()->count() * std::clamp(value, 0, 100) / 100;
 
     if (undoStack()->index() < desired_command_id) {
         while (undoStack()->index() != desired_command_id)

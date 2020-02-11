@@ -16,6 +16,7 @@
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/viewmodel/viewmodelutils.h>
+#include <algorithm>
 
 namespace
 {
@@ -108,7 +109,7 @@ bool DragViewModel::dropMimeData(const QMimeData* data, Qt::DropAction action, i
 
         qDebug() << "going to move" << id << item << requested_row;
         auto tag = item->parent()->tagRowOfItem(item).tag;
-        int row = requested_row >= item->parent()->itemCount(tag) ? -1 : requested_row;
+        int row = std::clamp(requested_row, 0, item->parent()->itemCount(tag) - 1);
         sessionModel()->moveItem(item, rootSessionItem(), {"", row});
     }
 

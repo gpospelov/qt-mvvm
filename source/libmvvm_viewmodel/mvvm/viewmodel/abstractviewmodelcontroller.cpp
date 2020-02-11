@@ -53,12 +53,15 @@ struct AbstractViewModelController::AbstractViewModelControllerImpl {
     void reset_view_model()
     {
         m_view_model->clear();
-        update_layout();
     }
 
-    void update_layout()
+    void update_labels()
     {
         m_view_model->setHorizontalHeaderLabels(m_row_strategy->horizontalHeaderLabels());
+    }
+
+    std::vector<QStandardItem*> findStandardViews(SessionItem* item) {
+        return m_view_model->findStandardViews(item);
     }
 
     AbstractViewModel* m_view_model;
@@ -146,9 +149,9 @@ void AbstractViewModelController::iterate(const SessionItem* item, QStandardItem
         if (!row.empty()) {
             parent->appendRow(row);
             parent = row.at(0); // labelItem
+            iterate(child, parent);
         }
 
-        iterate(child, parent);
         parent = origParent;
     }
 }
@@ -158,6 +161,7 @@ void AbstractViewModelController::init_view_model()
     check_initialization();
     reset_view_model();
     iterate(rootSessionItem(), p_impl->m_view_model->rootViewItem());
+    p_impl->update_labels();
 }
 
 void AbstractViewModelController::setRootSessionItem(SessionItem* item)
@@ -208,7 +212,7 @@ void AbstractViewModelController::check_initialization()
 
 void AbstractViewModelController::generate_children_views(SessionItem* parent)
 {
-    auto views = p_impl->m_view_model->findStandardViews(parent);
+    auto views = p_impl->findStandardViews(parent);
     for (auto view : views)
         view->removeRows(0, view->rowCount());
 

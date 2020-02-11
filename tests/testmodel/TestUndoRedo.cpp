@@ -379,7 +379,7 @@ TEST_F(TestUndoRedo, multiLayer)
     // creating multi layer
     auto parent = model.insertItem<ToyItems::MultiLayerItem>();
     EXPECT_TRUE(dynamic_cast<ToyItems::MultiLayerItem*>(parent) != nullptr);
-    EXPECT_EQ(parent->modelType(), ToyItems::Constants::MultiLayerType);
+    EXPECT_EQ(parent->modelType(), ToyItems::Constants::MultiLayerItemType);
 
     // inserting two layers
     auto layer0 = model.insertItem<ToyItems::LayerItem>(parent);
@@ -421,8 +421,8 @@ TEST_F(TestUndoRedo, multiLayer)
     EXPECT_EQ(layer1_at->identifier(), id_layer1);
 
     // checking tag
-    EXPECT_EQ(parent_at->tagFromItem(layer0_at), ToyItems::MultiLayerItem::T_LAYERS);
-    EXPECT_EQ(parent_at->tagFromItem(layer1_at), ToyItems::MultiLayerItem::T_LAYERS);
+    EXPECT_EQ(parent_at->tagOfItem(layer0_at), ToyItems::MultiLayerItem::T_LAYERS);
+    EXPECT_EQ(parent_at->tagOfItem(layer1_at), ToyItems::MultiLayerItem::T_LAYERS);
     std::vector<SessionItem*> expected = {layer0_at, layer1_at};
     EXPECT_EQ(parent_at->getItems(ToyItems::MultiLayerItem::T_LAYERS), expected);
 }

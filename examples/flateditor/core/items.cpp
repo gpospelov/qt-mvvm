@@ -66,7 +66,8 @@ void BeamItem::update_appearance()
 DistributionNoneItem::DistributionNoneItem()
     : ModelView::CompoundItem(::Constants::DistributionNoneItemType)
 {
-    addProperty(P_MEAN, 0.5);
+    setDisplayName("Fixed value");
+    addProperty(P_MEAN, 0.5)->setDisplayName("Value");
 }
 
 // ----------------------------------------------------------------------------
@@ -74,8 +75,8 @@ DistributionNoneItem::DistributionNoneItem()
 DistributionGaussianItem::DistributionGaussianItem()
     : ModelView::CompoundItem(::Constants::DistributionGaussianItemType)
 {
-    addProperty(P_MEAN, 0.5);
-    addProperty(P_STD_DEV, 1.0);
+    addProperty(P_MEAN, 0.5)->setDisplayName("Mean");
+    addProperty(P_STD_DEV, 1.0)->setDisplayName("StdDev");
 }
 
 // ----------------------------------------------------------------------------
@@ -83,8 +84,8 @@ DistributionGaussianItem::DistributionGaussianItem()
 DistributionLogNormalItem::DistributionLogNormalItem()
     : ModelView::CompoundItem(::Constants::DistributionLogNormalItemType)
 {
-    addProperty(P_MEDIAN, 1.0);
-    addProperty(P_SCALE_PAR, 1.0);
+    addProperty(P_MEDIAN, 1.0)->setDisplayName("Median");
+    addProperty(P_SCALE_PAR, 1.0)->setDisplayName("Scale");
 }
 
 // ----------------------------------------------------------------------------
@@ -92,17 +93,17 @@ DistributionLogNormalItem::DistributionLogNormalItem()
 DistributionTrapezoidItem::DistributionTrapezoidItem()
     : ModelView::CompoundItem(::Constants::DistributionTrapezoidItemType)
 {
-    addProperty(P_CENTER, 1.0);
-    addProperty(P_LEFTWIDTH, 0.5);
-    addProperty(P_MIDDLEWIDTH, 1.0);
-    addProperty(P_RIGHTWIDTH, 0.6);
+    addProperty(P_CENTER, 1.0)->setDisplayName("Center");
+    addProperty(P_LEFTWIDTH, 0.5)->setDisplayName("Left width");
+    addProperty(P_MIDDLEWIDTH, 1.0)->setDisplayName("Middle width");
+    addProperty(P_RIGHTWIDTH, 0.6)->setDisplayName("Right width");
 }
 
 // ----------------------------------------------------------------------------
 
 DistributionGroupItem::DistributionGroupItem() : GroupItem(::Constants::DistributionGroupItemType)
 {
-    registerItem<DistributionNoneItem>("None");
+    registerItem<DistributionNoneItem>("Fixed value");
     registerItem<DistributionGaussianItem>("Gaussian");
     registerItem<DistributionLogNormalItem>("Log normal");
     registerItem<DistributionTrapezoidItem>("Trapezoid");

@@ -9,6 +9,8 @@ target_sources(mvvm_viewmodel PRIVATE
     colormapviewportplotcontroller.h
     colorscaleplotcontroller.cpp
     colorscaleplotcontroller.h
+    customplotsceneadapter.cpp
+    customplotsceneadapter.h
     customplotutils.cpp
     customplotutils.h
     data1dplotcontroller.cpp
@@ -26,6 +28,7 @@ target_sources(mvvm_viewmodel PRIVATE
     mousemovereporter.cpp
     mousemovereporter.h
     mouseposinfo.h
+    sceneadapterinterface.h
     statusstringformatterinterface.h
     statusstringreporter.cpp
     statusstringreporter.h

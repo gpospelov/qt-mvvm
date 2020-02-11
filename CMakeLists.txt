@@ -13,8 +13,7 @@ include(CodeTools)
 
 add_subdirectory(source)
 add_subdirectory(examples)
-add_subdirectory(thirdparty/gtest)
-add_subdirectory(thirdparty/qcustomplot)
+add_subdirectory(thirdparty)
 add_subdirectory(tests)
 
 # Defines new 'clangformat' target. See CodeTools.cmake for details.

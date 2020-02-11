@@ -46,8 +46,6 @@ public:
 
     void setRowStrategy(std::unique_ptr<RowStrategyInterface> row_strategy);
 
-    void reset_view_model();
-
     virtual void iterate(const SessionItem* item, QStandardItem* parent);
 
     void init_view_model();
@@ -68,6 +66,7 @@ protected:
     virtual void onItemRemoved(SessionItem* parent, TagRow tagrow);
 
 private:
+    void reset_view_model();
     struct AbstractViewModelControllerImpl;
     std::unique_ptr<AbstractViewModelControllerImpl> p_impl;
 };

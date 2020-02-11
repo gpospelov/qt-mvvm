@@ -22,16 +22,16 @@ namespace ToyItems
 namespace Constants
 {
 
-const ModelView::model_type MultiLayerType = "MultiLayer";
-const ModelView::model_type LayerType = "Layer";
-const ModelView::model_type ParticleType = "Particle";
-const ModelView::model_type InterferenceType = "Interference";
+const ModelView::model_type MultiLayerItemType = "MultiLayer";
+const ModelView::model_type LayerItemType = "Layer";
+const ModelView::model_type ParticleItemType = "Particle";
+const ModelView::model_type InterferenceItemType = "Interference";
 
-const ModelView::model_type CylinderType = "Cylinder";
-const ModelView::model_type SphereType = "Sphere";
-const ModelView::model_type AnysoPyramidType = "AnysoPyramid";
+const ModelView::model_type CylinderItemType = "Cylinder";
+const ModelView::model_type SphereItemType = "Sphere";
+const ModelView::model_type AnysoPyramidItemType = "AnysoPyramid";
 
-const ModelView::model_type ShapeGroupType = "ShapeGroup";
+const ModelView::model_type ShapeGroupItemType = "ShapeGroup";
 } // namespace Constants
 
 // ----------------------------------------------------------------------------

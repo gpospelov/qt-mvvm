@@ -13,7 +13,10 @@
 #include <QStyledItemDelegate>
 #include <memory>
 
+namespace ModelView
+{
 class CellDecoratorInterface;
+}
 
 /*!
 @class SampleViewDelegate
@@ -22,7 +25,7 @@ class CellDecoratorInterface;
 
 class SampleViewDelegate : public QStyledItemDelegate
 {
-    using decoration_ptr = std::unique_ptr<CellDecoratorInterface>;
+    using decoration_ptr = std::unique_ptr<ModelView::CellDecoratorInterface>;
 
 public:
     explicit SampleViewDelegate(QObject* parent = nullptr);

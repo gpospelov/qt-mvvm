@@ -17,23 +17,23 @@
 
 using namespace ToyItems;
 
-MultiLayerItem::MultiLayerItem() : CompoundItem(Constants::MultiLayerType)
+MultiLayerItem::MultiLayerItem() : CompoundItem(Constants::MultiLayerItemType)
 {
-    registerTag(ModelView::TagInfo::universalTag(T_LAYERS, {Constants::LayerType}),
+    registerTag(ModelView::TagInfo::universalTag(T_LAYERS, {Constants::LayerItemType}),
                 /*set_as_default*/ true);
 }
 
-LayerItem::LayerItem() : CompoundItem(Constants::LayerType)
+LayerItem::LayerItem() : CompoundItem(Constants::LayerItemType)
 {
     addProperty(P_THICKNESS, 42.0);
     addProperty(P_COLOR, QColor(Qt::green));
-    registerTag(ModelView::TagInfo::universalTag(T_PARTICLES, {Constants::ParticleType}),
+    registerTag(ModelView::TagInfo::universalTag(T_PARTICLES, {Constants::ParticleItemType}),
                 /*set_as_default*/ true);
 }
 
 // ----------------------------------------------------------------------------
 
-ParticleItem::ParticleItem() : CompoundItem(Constants::ParticleType)
+ParticleItem::ParticleItem() : CompoundItem(Constants::ParticleItemType)
 {
     addProperty<ModelView::VectorItem>(P_POSITION);
     addProperty<ShapeGroupItem>(P_SHAPES);
@@ -41,7 +41,7 @@ ParticleItem::ParticleItem() : CompoundItem(Constants::ParticleType)
 
 // ----------------------------------------------------------------------------
 
-InterferenceFunctionItem::InterferenceFunctionItem() : CompoundItem(Constants::InterferenceType)
+InterferenceFunctionItem::InterferenceFunctionItem() : CompoundItem(Constants::InterferenceItemType)
 {
     addProperty(P_ROTATION_ANLE, 90.0);
     addProperty(P_INTEGRATION, true);
@@ -69,7 +69,7 @@ void InterferenceFunctionItem::update_appearance()
 
 // ----------------------------------------------------------------------------
 
-CylinderItem::CylinderItem() : CompoundItem(Constants::CylinderType)
+CylinderItem::CylinderItem() : CompoundItem(Constants::CylinderItemType)
 {
     addProperty(P_RADIUS, 8.0);
     addProperty(P_HEIGHT, 10.0);
@@ -77,14 +77,14 @@ CylinderItem::CylinderItem() : CompoundItem(Constants::CylinderType)
 
 // ----------------------------------------------------------------------------
 
-SphereItem::SphereItem() : CompoundItem(Constants::SphereType)
+SphereItem::SphereItem() : CompoundItem(Constants::SphereItemType)
 {
     addProperty(P_RADIUS, 8.0);
 }
 
 // ----------------------------------------------------------------------------
 
-AnysoPyramidItem::AnysoPyramidItem() : CompoundItem(Constants::AnysoPyramidType)
+AnysoPyramidItem::AnysoPyramidItem() : CompoundItem(Constants::AnysoPyramidItemType)
 {
     addProperty(P_LENGTH, 8.0);
     addProperty(P_WIDTH, 8.0);
@@ -92,7 +92,7 @@ AnysoPyramidItem::AnysoPyramidItem() : CompoundItem(Constants::AnysoPyramidType)
     addProperty(P_ALPHA, 8.0);
 }
 
-ShapeGroupItem::ShapeGroupItem() : GroupItem(Constants::ShapeGroupType)
+ShapeGroupItem::ShapeGroupItem() : GroupItem(Constants::ShapeGroupItemType)
 {
     registerItem<CylinderItem>("Cylinder");
     registerItem<SphereItem>("Full sphere", /*make_selected*/ true);

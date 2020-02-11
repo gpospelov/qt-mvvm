@@ -434,7 +434,7 @@ TEST_F(DefaultViewModelTest, onModelReset)
     DefaultViewModel viewModel(model.get());
     model->clear();
     EXPECT_EQ(viewModel.rowCount(), 0);
-    EXPECT_EQ(viewModel.columnCount(), 2);
+    EXPECT_EQ(viewModel.columnCount(), 0);
 }
 
 //! On model destroyed.

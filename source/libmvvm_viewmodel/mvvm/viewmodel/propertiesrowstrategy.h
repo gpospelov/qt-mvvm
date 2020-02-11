@@ -25,13 +25,15 @@ class SessionItem;
 class CORE_EXPORT PropertiesRowStrategy : public RowStrategyInterface
 {
 public:
-    PropertiesRowStrategy(const std::vector<std::string>& labels);
+    PropertiesRowStrategy(const std::vector<std::string>& labels = {});
 
     QList<QStandardItem*> constructRow(SessionItem* item);
     QStringList horizontalHeaderLabels() const;
 
 private:
-    std::vector<std::string> m_column_labels;
+    void update_column_labels(std::vector<ModelView::SessionItem*> items);
+    std::vector<std::string> current_column_labels;
+    std::vector<std::string> user_defined_column_labels;
 };
 
 } // namespace ModelView

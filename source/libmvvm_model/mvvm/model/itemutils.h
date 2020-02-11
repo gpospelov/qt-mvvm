@@ -50,6 +50,19 @@ CORE_EXPORT std::vector<SessionItem*> TopLevelItems(const SessionItem& item);
 
 CORE_EXPORT std::vector<SessionItem*> SinglePropertyItems(const SessionItem& item);
 
+//! Returns next sibling with same tag.
+
+CORE_EXPORT SessionItem* FindNextSibling(SessionItem* item);
+
+//! Returns previous sibling with same tag.
+
+CORE_EXPORT SessionItem* FindPreviousSibling(SessionItem* item);
+
+//! Finds next item to select
+//! Method is used in the context of next item selection after given item was deleted.
+
+CORE_EXPORT SessionItem* FindNextItemToSelect(SessionItem* item);
+
 } // namespace Utils
 
 } // namespace ModelView

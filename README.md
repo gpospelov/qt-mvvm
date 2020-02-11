@@ -16,7 +16,7 @@ Main features of the framework are:
 + Serialization of application models to json.
 + Undo/redo based on command pattern.
 + View model to show parts of application model in Qt widgets. Depends on Qt.
-+ Scientific plotting based on `qcustomplot`.
++ Scientific plotting based on [qcustomplot](https://www.qcustomplot.com/).
 + Automatic generation of widgets from model content.
 + Property editors.
 + Flexible layout of Qt's trees and tables.
@@ -71,9 +71,11 @@ and more correct naming would be
 + View (that's ok)
 
 Whatever right terminology is, Qt doesn't tell much about architecture of
-complex applications, how to structure, what they call, the `Data` and where to put business logic. Qt's [model view](https://doc.qt.io/qt-5/model-view-programming.html) is rather the way to show the data in Qt's trees and tables and adjust their behavior with delegates.
+complex applications, how to structure the `Data` and where to put business logic.
+Qt's [model view](https://doc.qt.io/qt-5/model-view-programming.html) is rather a way to adapt the user
+data for Qt's trees and tables and adjust their behavior with delegates.
 
-Given library is an attempt to understand how to deal with application data.
+Given library is an attempt to understand how to deal with the application data.
 
 ## More explanations
 
@@ -81,7 +83,7 @@ The framework consists of two libraries: `libmvvm_model.so` and `libmvvm_viewmod
 
 `libmvvm_model.so` defines tree like structure `SessionModel` to store
 any data of GUI session. This part of the framework 
-is intentionally made Qt-independent. The idea behind is the following.
+is intentionally made Qt-independent. The idea behind is the following:
 
 In large Qt applications the business logic gets quickly spoiled with presentation
 logic. Qt classes like `QModelIndex` start to appear everywhere,

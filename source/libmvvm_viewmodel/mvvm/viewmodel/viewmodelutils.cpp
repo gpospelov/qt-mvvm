@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include <QStandardItemModel>
+#include <iterator>
 #include <mvvm/model/customvariants.h>
 #include <mvvm/model/externalproperty.h>
 #include <mvvm/model/mvvm_types.h>
@@ -95,22 +96,28 @@ QVariant Utils::DecorationRole(const SessionItem& item)
     return QVariant();
 }
 
-std::vector<SessionItem*> Utils::ParentItemsFromIndex(const QModelIndexList& index_list)
+std::vector<SessionItem*> Utils::ItemsFromIndex(const QModelIndexList& index_list)
 {
     if (index_list.empty())
         return {};
 
     std::vector<SessionItem*> result;
 
-    if (auto model = dynamic_cast<const AbstractViewModel*>(index_list.front().model())) {
-        std::set<SessionItem*> unique_parents;
-        for (auto index : index_list) {
-            auto property_item = model->sessionItemFromIndex(index);
-            unique_parents.insert(property_item->parent());
-        }
+    if (auto model = dynamic_cast<const AbstractViewModel*>(index_list.front().model()))
+        std::transform(index_list.begin(), index_list.end(), std::back_inserter(result),
+                       [model](auto index) { return model->sessionItemFromIndex(index); });
 
-        std::copy(unique_parents.begin(), unique_parents.end(), std::back_inserter(result));
-    }
+    return result;
+}
 
+std::vector<SessionItem*> Utils::ParentItemsFromIndex(const QModelIndexList& index_list)
+{
+    std::set<SessionItem*> unique_parents;
+    for(auto item : ItemsFromIndex(index_list))
+        if (item)
+            unique_parents.insert(item->parent());
+
+    std::vector<SessionItem*> result;
+    std::copy(unique_parents.begin(), unique_parents.end(), std::back_inserter(result));
     return result;
 }

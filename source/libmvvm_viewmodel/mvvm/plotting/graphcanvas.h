@@ -18,6 +18,7 @@ namespace ModelView
 {
 
 class GraphViewportItem;
+class SceneAdapterInterface;
 
 /*!
 @class GraphCanvas
@@ -33,6 +34,8 @@ public:
     ~GraphCanvas() override;
 
     void setItem(GraphViewportItem* viewport_item);
+
+    std::unique_ptr<SceneAdapterInterface> createSceneAdapter() const;
 
 private:
     struct GraphCanvasImpl;

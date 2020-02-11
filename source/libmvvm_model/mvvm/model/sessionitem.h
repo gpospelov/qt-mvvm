@@ -72,7 +72,7 @@ public:
     std::vector<SessionItem*> getItems(const std::string& tag) const;
     template <typename T> T* item(const std::string& tag) const;
     template <typename T> std::vector<T*> items(const std::string& tag) const;
-    std::string tagFromItem(const SessionItem* item) const;
+    std::string tagOfItem(const SessionItem* item) const;
     TagRow tagRowOfItem(const SessionItem* item) const;
 
     ItemMapper* mapper();

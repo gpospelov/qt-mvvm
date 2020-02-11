@@ -26,7 +26,15 @@ public:
 
 ToyMultilayerItemTest::~ToyMultilayerItemTest() = default;
 
-//! Toy multilayer as produced bo toy SampleModel.
+//! Initial state.
+
+TEST_F(ToyMultilayerItemTest, initialState)
+{
+    ToyItems::MultiLayerItem item;
+    EXPECT_FALSE(item.isSinglePropertyTag(ToyItems::MultiLayerItem::T_LAYERS));
+}
+
+//! Toy multilayer in a SampleModel.
 
 TEST_F(ToyMultilayerItemTest, multiLayer)
 {
@@ -34,7 +42,7 @@ TEST_F(ToyMultilayerItemTest, multiLayer)
     auto multiLayer = model.insertItem<ToyItems::MultiLayerItem>();
 
     EXPECT_FALSE(multiLayer->data().isValid());
-    EXPECT_EQ(multiLayer->displayName(), ToyItems::Constants::MultiLayerType);
+    EXPECT_EQ(multiLayer->displayName(), ToyItems::Constants::MultiLayerItemType);
 }
 
 //! Constructing ViewModel from a MultiLayer.
@@ -56,6 +64,11 @@ TEST_F(ToyMultilayerItemTest, multiLayerView)
     auto viewItem = dynamic_cast<ViewLabelItem*>(viewModel.itemFromIndex(mlIndex));
     EXPECT_TRUE(viewItem != nullptr);
     EXPECT_EQ(viewItem->item(), multiLayerItem);
+
+    // adding layer
+    model.insertItem<ToyItems::LayerItem>(multiLayerItem);
+    EXPECT_EQ(viewModel.rowCount(mlIndex), 1);
+    EXPECT_EQ(viewModel.columnCount(mlIndex), 2);
 }
 
 //! Find ViewItem corresponding to given MultiLayer item.
@@ -82,5 +95,5 @@ TEST_F(ToyMultilayerItemTest, viewItemsForMultiLayer)
 
     ViewLabelItem labelItem(multiLayer);
     EXPECT_EQ(labelItem.data(Qt::DisplayRole).toString().toStdString(),
-              ToyItems::Constants::MultiLayerType);
+              ToyItems::Constants::MultiLayerItemType);
 }
