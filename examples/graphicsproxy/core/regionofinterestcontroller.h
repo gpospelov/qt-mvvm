@@ -15,6 +15,7 @@
 
 class RegionOfInterestItem;
 class RegionOfInterestView;
+class QRectF;
 
 //! Establishes communications between RegionOfInterestItem and RegionOfInterestView.
 //! Provides updates of view position/appearance on graphics scene, when underlying item changes.
@@ -25,6 +26,10 @@ class RegionOfInterestController : public ModelView::ItemController<RegionOfInte
 public:
     RegionOfInterestController(RegionOfInterestItem* item, RegionOfInterestView* view);
     ~RegionOfInterestController() override;
+
+    QRectF roi_rectangle() const;
+
+    void update_geometry();
 
 protected:
     void subscribe() override;
