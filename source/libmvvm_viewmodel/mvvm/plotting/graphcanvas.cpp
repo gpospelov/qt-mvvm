@@ -9,6 +9,7 @@
 
 #include "qcustomplot.h"
 #include <QBoxLayout>
+#include <mvvm/plotting/customplotsceneadapter.h>
 #include <mvvm/plotting/graphcanvas.h>
 #include <mvvm/plotting/graphviewportplotcontroller.h>
 #include <mvvm/plotting/statusstringreporter.h>
@@ -56,6 +57,11 @@ GraphCanvas::GraphCanvas(QWidget* parent)
 void GraphCanvas::setItem(GraphViewportItem* viewport_item)
 {
     p_impl->viewport_controller->setItem(viewport_item);
+}
+
+std::unique_ptr<SceneAdapterInterface> GraphCanvas::createSceneAdapter() const
+{
+    return std::make_unique<CustomPlotSceneAdapter>(p_impl->customPlot());
 }
 
 GraphCanvas::~GraphCanvas() = default;
