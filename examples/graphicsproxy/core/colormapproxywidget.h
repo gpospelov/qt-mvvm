@@ -23,6 +23,7 @@ class ColorMapProxyWidget : public QGraphicsProxyWidget
 {
     Q_OBJECT
 public:
+    // FIXME change ColorMapCanvas to QWidget
     ColorMapProxyWidget(ModelView::ColorMapCanvas* colormap);
 
     bool eventFilter(QObject* object, QEvent* event);
