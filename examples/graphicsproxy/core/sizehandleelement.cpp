@@ -10,6 +10,7 @@
 #include "sizehandleelement.h"
 #include "regionofinterestview.h"
 #include <QCursor>
+#include <QDebug>
 #include <QPainter>
 #include <functional>
 #include <map>
@@ -42,10 +43,17 @@ auto create_handle_data()
     return result;
 }
 
+//! Returns true if container contains an item.
+
+template <typename T, typename U> bool contains(const T& vec, U item)
+{
+    return std::find(vec.begin(), vec.end(), item) != vec.end();
+}
+
 } // namespace
 
 SizeHandleElement::SizeHandleElement(SizeHandleElement::HandleInfo info, RegionOfInterestView* view)
-    : QGraphicsItem(view), info(info)
+    : QGraphicsItem(view), roi_view(view), info(info)
 {
     setCursor(QCursor(info.cursor));
     setVisible(false);
@@ -102,6 +110,30 @@ SizeHandleElement::EHandlePosition SizeHandleElement::oppositeHandlePosition() c
     return info.opposite_position;
 }
 
+//! Returns true if this handle is one of the corners.
+
+bool SizeHandleElement::isCornerHandle() const
+{
+    static std::vector<EHandlePosition> expected = {TOPLEFT, TOPRIGHT, BOTTOMLEFT, BOTTOMRIGHT};
+    return ::contains(expected, info.position);
+}
+
+//! Returns true if this handle is intended for resize along y-direction only.
+
+bool SizeHandleElement::isVerticalHandle() const
+{
+    static std::vector<EHandlePosition> expected = {TOPMIDDLE, BOTTOMMIDLE};
+    return ::contains(expected, info.position);
+}
+
+//! Returns true if this handle is intended for resize along x-direction only.
+
+bool SizeHandleElement::isHorizontalHandle() const
+{
+    static std::vector<EHandlePosition> expected = {MIDDLELEFT, MIDDLERIGHT};
+    return ::contains(expected, info.position);
+}
+
 void SizeHandleElement::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
 {
     QBrush brush;
@@ -111,4 +143,18 @@ void SizeHandleElement::paint(QPainter* painter, const QStyleOptionGraphicsItem*
     painter->setBrush(brush);
     painter->setPen(QPen(QColor(99, 162, 217)));
     painter->drawRect(boundingRect());
+}
+
+void SizeHandleElement::mousePressEvent(QGraphicsSceneMouseEvent* event)
+{
+    qDebug() << "mousePressEvent";
+    roi_view->setActiveHandle(this);
+    QGraphicsItem::mousePressEvent(event);
+}
+
+void SizeHandleElement::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
+{
+    qDebug() << "mouseReleaseEvent";
+    roi_view->setActiveHandle(nullptr);
+    QGraphicsItem::mouseReleaseEvent(event);
 }

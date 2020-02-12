@@ -27,7 +27,6 @@ public:
         TOPMIDDLE,
         TOPRIGHT,
         MIDDLELEFT,
-        CENTER,
         MIDDLERIGHT,
         BOTTOMLEFT,
         BOTTOMMIDLE,
@@ -48,7 +47,7 @@ public:
 
     static std::vector<EHandlePosition> possible_handle_positions();
 
-    QRectF boundingRect() const;
+    QRectF boundingRect() const override;
 
     void updateHandleElementPosition(const QRectF& rect);
 
@@ -56,8 +55,14 @@ public:
 
     EHandlePosition oppositeHandlePosition() const;
 
+    bool isCornerHandle() const;
+    bool isVerticalHandle() const;
+    bool isHorizontalHandle() const;
+
 protected:
-    void paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*);
+    void paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*) override;
+    void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
 
 private:
     SizeHandleElement(HandleInfo info, RegionOfInterestView* view);
