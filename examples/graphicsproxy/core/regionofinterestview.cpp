@@ -67,6 +67,18 @@ void RegionOfInterestView::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
     controller->update_item_from_view();
 }
 
+//! Show/hides handles on rectangle selection/deselection.
+
+QVariant RegionOfInterestView::itemChange(QGraphicsItem::GraphicsItemChange change,
+                                          const QVariant& value)
+{
+    if (change == QGraphicsItem::ItemSelectedChange) {
+        for (auto handle : handles)
+            handle->setVisible(!this->isSelected());
+    }
+    return value;
+}
+
 void RegionOfInterestView::create_size_handle_elements()
 {
     for (auto pos_type : SizeHandleElement::possible_handle_positions())

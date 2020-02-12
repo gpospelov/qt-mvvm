@@ -48,6 +48,7 @@ SizeHandleElement::SizeHandleElement(SizeHandleElement::HandleInfo info, RegionO
     : QGraphicsItem(view), info(info)
 {
     setCursor(QCursor(info.cursor));
+    setVisible(false);
 }
 
 //! Factory method to create new SizeHandleElement for given position enum.
