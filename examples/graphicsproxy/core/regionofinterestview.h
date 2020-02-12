@@ -37,6 +37,8 @@ public:
 
     void advance(int phase) override;
 
+    void setActiveHandle(SizeHandleElement* element);
+
 protected:
     void paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;
@@ -45,8 +47,10 @@ protected:
 private:
     void create_size_handle_elements();
     void update_geometry();
+    SizeHandleElement* findOpposite(SizeHandleElement* element);
     std::unique_ptr<RegionOfInterestController> controller;
     std::vector<SizeHandleElement*> handles;
+    SizeHandleElement* active_handle{nullptr};
 };
 
 #endif // GRAPHICSPROXY_REGIONOFINTERESTVIEW_H

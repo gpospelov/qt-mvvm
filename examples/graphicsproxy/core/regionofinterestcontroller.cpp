@@ -67,6 +67,26 @@ struct RegionOfInterestController::RegionOfInterestControllerImpl {
         set_view_position_from_item();
     }
 
+    void update_item_from_corner(double left, double right, double top, double bottom)
+    {
+        roi_item->setProperty(RegionOfInterestItem::P_XLOW, scene_adapter->fromSceneX(left));
+        roi_item->setProperty(RegionOfInterestItem::P_YLOW, scene_adapter->fromSceneY(top));
+        roi_item->setProperty(RegionOfInterestItem::P_XUP, scene_adapter->fromSceneX(right));
+        roi_item->setProperty(RegionOfInterestItem::P_YUP, scene_adapter->fromSceneY(bottom));
+    }
+
+    void update_item_from_vertical_handle(double top, double bottom)
+    {
+        roi_item->setProperty(RegionOfInterestItem::P_YLOW, scene_adapter->fromSceneY(top));
+        roi_item->setProperty(RegionOfInterestItem::P_YUP, scene_adapter->fromSceneY(bottom));
+    }
+
+    void update_item_from_horizontal_handle(double left, double right)
+    {
+        roi_item->setProperty(RegionOfInterestItem::P_XLOW, scene_adapter->fromSceneX(left));
+        roi_item->setProperty(RegionOfInterestItem::P_XUP, scene_adapter->fromSceneX(right));
+    }
+
     double width() const { return right() - left(); }
     double height() const { return bottom() - top(); }
 
@@ -112,6 +132,22 @@ void RegionOfInterestController::update_view_from_item()
 void RegionOfInterestController::update_item_from_view()
 {
     p_impl->update_item_from_view();
+}
+
+void RegionOfInterestController::update_item_from_corner(double left, double right, double top,
+                                                         double bottom)
+{
+    p_impl->update_item_from_corner(left, right, top, bottom);
+}
+
+void RegionOfInterestController::update_item_from_vertical_handle(double top, double bottom)
+{
+    p_impl->update_item_from_vertical_handle(top, bottom);
+}
+
+void RegionOfInterestController::update_item_from_horizontal_handle(double left, double right)
+{
+    p_impl->update_item_from_horizontal_handle(left, right);
 }
 
 void RegionOfInterestController::subscribe()

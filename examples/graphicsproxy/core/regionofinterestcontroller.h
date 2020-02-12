@@ -40,6 +40,12 @@ public:
 
     void update_item_from_view();
 
+    void update_item_from_corner(double left, double right, double top, double bottom);
+
+    void update_item_from_vertical_handle(double top, double bottom);
+
+    void update_item_from_horizontal_handle(double left, double right);
+
 protected:
     void subscribe() override;
 
