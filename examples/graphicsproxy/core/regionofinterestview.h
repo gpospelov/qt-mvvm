@@ -12,6 +12,7 @@
 
 #include <QGraphicsItem>
 #include <memory>
+#include <vector>
 
 namespace ModelView
 {
@@ -20,6 +21,7 @@ class SceneAdapterInterface;
 
 class RegionOfInterestItem;
 class RegionOfInterestController;
+class SizeHandleElement;
 
 //! Graphics object to represent RegionOfInterestItem on graphics scene.
 //! Follows standard QGraphicsScene notations: (x,y) origin is top left corner.
@@ -37,11 +39,13 @@ public:
 
 protected:
     void paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*) override;
-    void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
+    void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;
 
 private:
+    void create_size_handle_elements();
     void update_geometry();
     std::unique_ptr<RegionOfInterestController> controller;
+    std::vector<SizeHandleElement*> handles;
 };
 
 #endif // GRAPHICSPROXY_REGIONOFINTERESTVIEW_H

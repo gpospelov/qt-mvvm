@@ -10,6 +10,7 @@
 #include "regionofinterestview.h"
 #include "regionofinterestcontroller.h"
 #include "sceneitems.h"
+#include "sizehandleelement.h"
 #include <QPainter>
 #include <mvvm/plotting/sceneadapterinterface.h>
 
@@ -29,6 +30,7 @@ RegionOfInterestView::RegionOfInterestView(RegionOfInterestItem* item,
     setFlag(QGraphicsItem::ItemIsMovable);
     setFlag(QGraphicsItem::ItemSendsGeometryChanges);
     setAcceptHoverEvents(true);
+    create_size_handle_elements();
 }
 
 RegionOfInterestView::~RegionOfInterestView() = default;
@@ -45,6 +47,8 @@ void RegionOfInterestView::advance(int phase)
         return;
     prepareGeometryChange();
     controller->update_view_from_item();
+    for (auto handle : handles)
+        handle->updateHandleElementPosition(controller->roi_rectangle());
 }
 
 void RegionOfInterestView::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
@@ -61,4 +65,10 @@ void RegionOfInterestView::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 {
     QGraphicsItem::mouseMoveEvent(event);
     controller->update_item_from_view();
+}
+
+void RegionOfInterestView::create_size_handle_elements()
+{
+    for (auto pos_type : SizeHandleElement::possible_handle_positions())
+        handles.push_back(SizeHandleElement::create(pos_type, this));
 }
