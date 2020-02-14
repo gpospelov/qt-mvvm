@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef GRAPHICSPROXY_COLORMAPPROXYWIDGET_H
-#define GRAPHICSPROXY_COLORMAPPROXYWIDGET_H
+#ifndef GRAPHICSPROXY_CUSTOMPLOTPROXYWIDGET_H
+#define GRAPHICSPROXY_CUSTOMPLOTPROXYWIDGET_H
 
 #include <QGraphicsProxyWidget>
 
@@ -16,11 +16,11 @@ class QWidget;
 
 //! Custom proxy widget to embed color map in graphics scene.
 
-class ColorMapProxyWidget : public QGraphicsProxyWidget
+class CustomPlotProxyWidget : public QGraphicsProxyWidget
 {
     Q_OBJECT
 public:
-    ColorMapProxyWidget(QWidget* colormap);
+    CustomPlotProxyWidget(QWidget* colormap);
 
     bool eventFilter(QObject* object, QEvent* event);
 
@@ -36,4 +36,4 @@ private:
     bool block_signals_to_proxy{false};
 };
 
-#endif //  GRAPHICSPROXY_COLORMAPPROXYWIDGET_H
+#endif //  GRAPHICSPROXY_CUSTOMPLOTPROXYWIDGET_H

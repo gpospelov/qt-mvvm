@@ -14,7 +14,7 @@
 #include <QGraphicsSceneWheelEvent>
 #include <QWidget>
 
-ColorMapProxyWidget::ColorMapProxyWidget(QWidget* colormap)
+CustomPlotProxyWidget::CustomPlotProxyWidget(QWidget* colormap)
 {
     setWidget(colormap);
     colormap->installEventFilter(this);
@@ -24,7 +24,7 @@ ColorMapProxyWidget::ColorMapProxyWidget(QWidget* colormap)
 //! Used in RegionOfInterestView to recalculate bounding box and scene positions depending on
 //! current state of CustomPlotSceneAdapter.
 
-bool ColorMapProxyWidget::eventFilter(QObject* /*object*/, QEvent* event)
+bool CustomPlotProxyWidget::eventFilter(QObject* /*object*/, QEvent* event)
 {
     // catching zoom/resize events in QCustomPlot
     if (event->type() == QEvent::Resize || event->type() == QEvent::UpdateRequest) {
@@ -34,33 +34,33 @@ bool ColorMapProxyWidget::eventFilter(QObject* /*object*/, QEvent* event)
     return true;
 }
 
-void ColorMapProxyWidget::setBlockSignalsToProxy(bool value)
+void CustomPlotProxyWidget::setBlockSignalsToProxy(bool value)
 {
     block_signals_to_proxy = value;
 }
 
-void ColorMapProxyWidget::mousePressEvent(QGraphicsSceneMouseEvent* event)
+void CustomPlotProxyWidget::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
     if (block_signals_to_proxy)
         return;
     QGraphicsProxyWidget::mousePressEvent(event);
 }
 
-void ColorMapProxyWidget::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
+void CustomPlotProxyWidget::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 {
     if (block_signals_to_proxy)
         return;
     QGraphicsProxyWidget::mouseMoveEvent(event);
 }
 
-void ColorMapProxyWidget::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
+void CustomPlotProxyWidget::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
     if (block_signals_to_proxy)
         return;
     QGraphicsProxyWidget::mouseReleaseEvent(event);
 }
 
-void ColorMapProxyWidget::wheelEvent(QGraphicsSceneWheelEvent* event)
+void CustomPlotProxyWidget::wheelEvent(QGraphicsSceneWheelEvent* event)
 {
     if (block_signals_to_proxy)
         return;
