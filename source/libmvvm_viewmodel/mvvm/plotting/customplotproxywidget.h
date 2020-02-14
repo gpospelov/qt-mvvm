@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef GRAPHICSPROXY_CUSTOMPLOTPROXYWIDGET_H
-#define GRAPHICSPROXY_CUSTOMPLOTPROXYWIDGET_H
+#ifndef MVVM_PLOTTING_CUSTOMPLOTPROXYWIDGET_H
+#define MVVM_PLOTTING_CUSTOMPLOTPROXYWIDGET_H
 
 #include <QGraphicsProxyWidget>
 
@@ -36,4 +36,4 @@ private:
     bool block_signals_to_proxy{false};
 };
 
-#endif //  GRAPHICSPROXY_CUSTOMPLOTPROXYWIDGET_H
+#endif //  MVVM_PLOTTING_CUSTOMPLOTPROXYWIDGET_H

@@ -9,6 +9,8 @@ target_sources(mvvm_viewmodel PRIVATE
     colormapviewportplotcontroller.h
     colorscaleplotcontroller.cpp
     colorscaleplotcontroller.h
+    customplotproxywidget.cpp
+    customplotproxywidget.h
     customplotsceneadapter.cpp
     customplotsceneadapter.h
     customplotutils.cpp

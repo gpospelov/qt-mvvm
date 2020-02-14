@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "colormapproxywidget.h"
+#include <mvvm/plotting/customplotproxywidget.h>
 #include <QEvent>
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>

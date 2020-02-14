@@ -9,9 +9,9 @@
 
 #include "graphicsscene.h"
 #include "axesrectangleview.h"
-#include "colormapproxywidget.h"
 #include "regionofinterestview.h"
 #include <mvvm/plotting/colormapcanvas.h>
+#include <mvvm/plotting/customplotproxywidget.h>
 #include <mvvm/plotting/sceneadapterinterface.h>
 
 namespace
