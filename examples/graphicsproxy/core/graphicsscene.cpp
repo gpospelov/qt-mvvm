@@ -43,7 +43,8 @@ void GraphicsScene::update_size(const QSize& newSize)
         colormap_proxy->resize(newSize);
         setSceneRect(scene_origin_x, scene_origin_y, newSize.width(), newSize.height());
         colormap_proxy->setPos(0.0, 0.0);
-        advance();
+        advance(); // notifies all QGraphicsItem that it is time to replot themself using new status
+                   // of scene adapter
     }
 }
 
