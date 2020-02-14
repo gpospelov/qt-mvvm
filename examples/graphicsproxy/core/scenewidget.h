@@ -39,8 +39,9 @@ private:
     QBoxLayout* create_left_layout();
     QBoxLayout* create_right_layout();
 
-    QToolBar* m_toolBar;
-    QAction* m_resetViewportAction;
+    QToolBar* m_toolBar{nullptr};
+    QAction* m_resetViewportAction{nullptr};
+    QAction* m_setViewportToRoiAction{nullptr};
 
     ScenePropertyWidget* m_propertyWidget;
     ModelView::ColorMapCanvas* m_colorMapCanvas;

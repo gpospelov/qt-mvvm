@@ -77,7 +77,7 @@ double CustomPlotSceneAdapter::fromSceneX(double scene_x) const
 
 double CustomPlotSceneAdapter::fromSceneY(double scene_y) const
 {
-    return p_impl->fromSceneX(scene_y);
+    return p_impl->fromSceneY(scene_y);
 }
 
 QRectF CustomPlotSceneAdapter::viewportRectangle() const

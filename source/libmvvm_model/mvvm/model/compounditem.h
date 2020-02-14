@@ -59,6 +59,8 @@ PropertyItem* CompoundItem::addProperty(const std::string& name, const V& value)
     property->setDisplayName(name);
     property->setData(QVariant::fromValue(value));
 
+    // FIXME consider limitless values by default.
+
     if constexpr (std::is_floating_point_v<V>)
         property->setData(QVariant::fromValue<RealLimits>(RealLimits::nonnegative()),
                           ItemDataRole::LIMITS);

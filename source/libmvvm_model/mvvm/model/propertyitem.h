@@ -24,7 +24,9 @@ class CORE_EXPORT PropertyItem : public SessionItem
 public:
     PropertyItem();
 
-    SessionItem* setLimits(const RealLimits& value);
+    PropertyItem* setDisplayName(const std::string& name) override;
+
+    PropertyItem* setLimits(const RealLimits& value);
 };
 
 } // namespace ModelView

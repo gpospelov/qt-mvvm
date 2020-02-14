@@ -19,7 +19,7 @@ class ColorMapCanvas;
 class SceneAdapterInterface;
 }
 
-class ColorMapProxyWidget;
+class CustomPlotProxyWidget;
 class RegionOfInterestItem;
 
 //! Custom graphics scene to show QCustomPlot with additional elements on top.
@@ -39,7 +39,7 @@ private:
     void create_colormap_proxy(ModelView::ColorMapCanvas* colormap);
     void create_roi_view(RegionOfInterestItem* roi_item);
 
-    ColorMapProxyWidget* colormap_proxy{nullptr};
+    CustomPlotProxyWidget* colormap_proxy{nullptr};
     std::unique_ptr<ModelView::SceneAdapterInterface> scene_adapter;
 };
 

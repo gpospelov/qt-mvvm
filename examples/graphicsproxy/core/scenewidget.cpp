@@ -8,17 +8,18 @@
 // ************************************************************************** //
 
 #include "scenewidget.h"
-#include "scenemodel.h"
-#include "sceneitems.h"
-#include "scenepropertywidget.h"
 #include "graphicsscene.h"
 #include "graphicsview.h"
+#include "sceneitems.h"
+#include "scenemodel.h"
+#include "scenepropertywidget.h"
 #include <QAction>
 #include <QBoxLayout>
 #include <QToolBar>
 #include <QToolButton>
 #include <mvvm/model/modelutils.h>
 #include <mvvm/plotting/colormapcanvas.h>
+#include <mvvm/standarditems/axisitems.h>
 #include <mvvm/standarditems/colormapviewportitem.h>
 
 using namespace ModelView;
@@ -27,8 +28,7 @@ SceneWidget::SceneWidget(SceneModel* model, QWidget* parent)
     : QWidget(parent), m_toolBar(new QToolBar), m_resetViewportAction(nullptr),
       m_propertyWidget(new ScenePropertyWidget), m_colorMapCanvas(new ColorMapCanvas),
       graphics_scene(new GraphicsScene(this)),
-      graphics_view(new GraphicsView(graphics_scene, this)),
-      m_model(model)
+      graphics_view(new GraphicsView(graphics_scene, this)), m_model(model)
 {
     auto mainLayout = new QVBoxLayout;
     mainLayout->setSpacing(10);
@@ -61,8 +61,19 @@ void SceneWidget::init_actions()
         viewport->update_viewport();
     };
     connect(m_resetViewportAction, &QAction::triggered, on_reset);
-
     m_toolBar->addAction(m_resetViewportAction);
+
+    m_setViewportToRoiAction = new QAction("Set to ROI", this);
+    auto on_set_to_roi = [this]() {
+        auto viewport = Utils::TopItem<ColorMapViewportItem>(m_model);
+        auto roi = Utils::TopItem<RegionOfInterestItem>(m_model);
+        viewport->xAxis()->set_range(roi->property(RegionOfInterestItem::P_XLOW).value<double>(),
+                                     roi->property(RegionOfInterestItem::P_XUP).value<double>());
+        viewport->yAxis()->set_range(roi->property(RegionOfInterestItem::P_YLOW).value<double>(),
+                                     roi->property(RegionOfInterestItem::P_YUP).value<double>());
+    };
+    connect(m_setViewportToRoiAction, &QAction::triggered, on_set_to_roi);
+    m_toolBar->addAction(m_setViewportToRoiAction);
 }
 
 QBoxLayout* SceneWidget::create_left_layout()

@@ -9,9 +9,9 @@
 
 #include "graphicsscene.h"
 #include "axesrectangleview.h"
-#include "colormapproxywidget.h"
 #include "regionofinterestview.h"
 #include <mvvm/plotting/colormapcanvas.h>
+#include <mvvm/plotting/customplotproxywidget.h>
 #include <mvvm/plotting/sceneadapterinterface.h>
 
 namespace
@@ -43,14 +43,15 @@ void GraphicsScene::update_size(const QSize& newSize)
         colormap_proxy->resize(newSize);
         setSceneRect(scene_origin_x, scene_origin_y, newSize.width(), newSize.height());
         colormap_proxy->setPos(0.0, 0.0);
-        advance();
+        advance(); // notifies all QGraphicsItem that it is time to replot themself using new status
+                   // of scene adapter
     }
 }
 
 void GraphicsScene::create_colormap_proxy(ModelView::ColorMapCanvas* colormap)
 {
     scene_adapter = colormap->createSceneAdapter();
-    colormap_proxy = new ColorMapProxyWidget(colormap);
+    colormap_proxy = new CustomPlotProxyWidget(colormap);
     addItem(colormap_proxy);
 }
 

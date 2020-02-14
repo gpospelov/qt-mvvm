@@ -10,7 +10,9 @@
 #ifndef GRAPHICSPROXY_REGIONOFINTERESTVIEW_H
 #define GRAPHICSPROXY_REGIONOFINTERESTVIEW_H
 
-#include <QGraphicsObject>
+#include <QGraphicsItem>
+#include <memory>
+#include <vector>
 
 namespace ModelView
 {
@@ -18,39 +20,40 @@ class SceneAdapterInterface;
 }
 
 class RegionOfInterestItem;
+class RegionOfInterestController;
+class SizeHandleElement;
 
 //! Graphics object to represent RegionOfInterestItem on graphics scene.
 //! Follows standard QGraphicsScene notations: (x,y) origin is top left corner.
 
-class RegionOfInterestView : public QGraphicsObject
+class RegionOfInterestView : public QGraphicsItem
 {
-    Q_OBJECT
-
 public:
     RegionOfInterestView(RegionOfInterestItem* item,
                          const ModelView::SceneAdapterInterface* scene_adapter);
+    ~RegionOfInterestView() override;
 
     QRectF boundingRect() const override;
 
     void advance(int phase) override;
 
+    void setActiveHandle(SizeHandleElement* element);
+
+    void update_geometry();
+
 protected:
-    void paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*);
+    void paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*) override;
+    void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;
+    QVariant itemChange(GraphicsItemChange change, const QVariant& value) override;
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
 
 private:
-    void update_geometry();
-    qreal width() const;
-    qreal height() const;
-    qreal left() const;
-    qreal right() const;
-    qreal top() const;
-    qreal bottom() const;
-
-    double par(const std::string& name) const;
-
-    RegionOfInterestItem* item{nullptr};
-    QRectF rect;
-    const ModelView::SceneAdapterInterface* scene_adapter{nullptr};
+    void create_size_handle_elements();
+    SizeHandleElement* findOpposite(SizeHandleElement* element);
+    std::unique_ptr<RegionOfInterestController> controller;
+    std::vector<SizeHandleElement*> handles;
+    SizeHandleElement* active_handle{nullptr}; //!
+    QPointF opposite_origin; //! coordinate of opposite corner at the moment of click
 };
 
 #endif // GRAPHICSPROXY_REGIONOFINTERESTVIEW_H
