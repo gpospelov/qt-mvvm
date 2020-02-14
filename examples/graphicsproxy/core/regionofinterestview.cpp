@@ -43,19 +43,19 @@ QRectF RegionOfInterestView::boundingRect() const
         QMarginsF(bbox_margins, bbox_margins, bbox_margins, bbox_margins));
 }
 
+//! Updates view appearance from RegionOfInterestItem.
+//! Triggered by QGraphicsScene::advance method on any QGraphicsView resize ore zoom in/out
+//! events in QCustomPlot.
+
 void RegionOfInterestView::advance(int phase)
 {
     if (!phase)
         return;
-    prepareGeometryChange();
-    controller->update_view_from_item();
-    for (auto handle : handles)
-        handle->updateHandleElementPosition(controller->roi_rectangle());
+    update_geometry();
 }
 
 void RegionOfInterestView::setActiveHandle(SizeHandleElement* element)
 {
-    qDebug() << "element" << element;
     setFlag(QGraphicsItem::ItemIsMovable, element ? false : true);
     active_handle = element;
     if (active_handle)
@@ -81,20 +81,14 @@ void RegionOfInterestView::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
         auto bottom = std::min(event->scenePos().y(), opposite_origin.y());
         auto top = std::max(event->scenePos().y(), opposite_origin.y());
 
-        if (active_handle->isCornerHandle()) {
+        if (active_handle->isCornerHandle())
             controller->update_item_from_corner(left, right, top, bottom);
-
-        } else if (active_handle->isVerticalHandle()) {
+        else if (active_handle->isVerticalHandle())
             controller->update_item_from_vertical_handle(top, bottom);
-
-        } else if (active_handle->isHorizontalHandle()) {
+        else if (active_handle->isHorizontalHandle())
             controller->update_item_from_horizontal_handle(left, right);
-        }
 
-        prepareGeometryChange();
-        controller->update_view_from_item();
-        for (auto handle : handles)
-            handle->updateHandleElementPosition(controller->roi_rectangle());
+        update_geometry();
 
     } else {
         QGraphicsItem::mouseMoveEvent(event);
@@ -107,10 +101,9 @@ void RegionOfInterestView::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 QVariant RegionOfInterestView::itemChange(QGraphicsItem::GraphicsItemChange change,
                                           const QVariant& value)
 {
-    if (change == QGraphicsItem::ItemSelectedChange) {
+    if (change == QGraphicsItem::ItemSelectedChange)
         for (auto handle : handles)
             handle->setVisible(!this->isSelected());
-    }
     return value;
 }
 
@@ -126,6 +119,17 @@ void RegionOfInterestView::create_size_handle_elements()
     for (auto pos_type : SizeHandleElement::possible_handle_positions())
         handles.push_back(SizeHandleElement::create(pos_type, this));
 }
+
+void RegionOfInterestView::update_geometry()
+{
+    prepareGeometryChange();
+    controller->update_view_from_item();
+    for (auto handle : handles)
+        handle->updateHandleElementPosition(controller->roi_rectangle());
+}
+
+//! Finds handle element which is located on "opposite" rectangle corner with
+//! respect to currently selected one.
 
 SizeHandleElement* RegionOfInterestView::findOpposite(SizeHandleElement* element)
 {
