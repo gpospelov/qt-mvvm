@@ -58,6 +58,8 @@ void RegionOfInterestView::setActiveHandle(SizeHandleElement* element)
     qDebug() << "element" << element;
     setFlag(QGraphicsItem::ItemIsMovable, element ? false : true);
     active_handle = element;
+    if (active_handle)
+        opposite_origin = findOpposite(active_handle)->scenePos();
 }
 
 void RegionOfInterestView::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
@@ -72,14 +74,12 @@ void RegionOfInterestView::paint(QPainter* painter, const QStyleOptionGraphicsIt
 
 void RegionOfInterestView::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 {
-
     if (active_handle) {
-        auto opposite = findOpposite(active_handle)->pos();
 
-        auto left = std::min(event->scenePos().x(), opposite.x());
-        auto right = std::max(event->scenePos().x(), opposite.x());
-        auto bottom = std::min(event->scenePos().y(), opposite.y());
-        auto top = std::max(event->scenePos().y(), opposite.y());
+        auto left = std::min(event->scenePos().x(), opposite_origin.x());
+        auto right = std::max(event->scenePos().x(), opposite_origin.x());
+        auto bottom = std::min(event->scenePos().y(), opposite_origin.y());
+        auto top = std::max(event->scenePos().y(), opposite_origin.y());
 
         if (active_handle->isCornerHandle()) {
             controller->update_item_from_corner(left, right, top, bottom);
@@ -112,6 +112,13 @@ QVariant RegionOfInterestView::itemChange(QGraphicsItem::GraphicsItemChange chan
             handle->setVisible(!this->isSelected());
     }
     return value;
+}
+
+void RegionOfInterestView::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
+{
+    // SizeHandleElement::mouseReleaseEvent is not triggered, so we have to do it here
+    setActiveHandle(nullptr);
+    QGraphicsItem::mouseReleaseEvent(event);
 }
 
 void RegionOfInterestView::create_size_handle_elements()

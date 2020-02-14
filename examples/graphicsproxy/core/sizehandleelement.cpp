@@ -10,7 +10,6 @@
 #include "sizehandleelement.h"
 #include "regionofinterestview.h"
 #include <QCursor>
-#include <QDebug>
 #include <QPainter>
 #include <functional>
 #include <map>
@@ -147,14 +146,13 @@ void SizeHandleElement::paint(QPainter* painter, const QStyleOptionGraphicsItem*
 
 void SizeHandleElement::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
-    qDebug() << "mousePressEvent";
     roi_view->setActiveHandle(this);
     QGraphicsItem::mousePressEvent(event);
 }
 
-void SizeHandleElement::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
+void SizeHandleElement::mouseReleaseEvent(QGraphicsSceneMouseEvent* /*event*/)
 {
-    qDebug() << "mouseReleaseEvent";
-    roi_view->setActiveHandle(nullptr);
-    QGraphicsItem::mouseReleaseEvent(event);
+    // it is not triggered since we are in move mode, so have to do the same in RegionOfInterestView
+    //    roi_view->setActiveHandle(nullptr);
+    //    QGraphicsItem::mouseReleaseEvent(event);
 }

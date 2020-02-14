@@ -42,7 +42,8 @@ public:
 protected:
     void paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;
-    QVariant itemChange(GraphicsItemChange change, const QVariant& value);
+    QVariant itemChange(GraphicsItemChange change, const QVariant& value) override;
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
 
 private:
     void create_size_handle_elements();
@@ -50,7 +51,8 @@ private:
     SizeHandleElement* findOpposite(SizeHandleElement* element);
     std::unique_ptr<RegionOfInterestController> controller;
     std::vector<SizeHandleElement*> handles;
-    SizeHandleElement* active_handle{nullptr};
+    SizeHandleElement* active_handle{nullptr}; //!
+    QPointF opposite_origin; //! coordinate of opposite corner at the moment of click
 };
 
 #endif // GRAPHICSPROXY_REGIONOFINTERESTVIEW_H
