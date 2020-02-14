@@ -134,7 +134,7 @@ void RegionOfInterestController::update_item_from_view()
     p_impl->update_item_from_view();
 }
 
-//! Updates item properties using coordinates reported during vcorner resize.
+//! Updates item properties using coordinates reported during corner resize.
 
 void RegionOfInterestController::update_item_from_corner(double left, double right, double top,
                                                          double bottom)

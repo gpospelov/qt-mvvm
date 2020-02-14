@@ -22,8 +22,8 @@ BasicAxisItem::BasicAxisItem(std::string model_type) : CompoundItem(model_type) 
 
 void BasicAxisItem::register_min_max()
 {
-    addProperty(P_MIN, default_axis_min)->setDisplayName("Min");
-    addProperty(P_MAX, default_axis_max)->setDisplayName("Max");
+    addProperty(P_MIN, default_axis_min)->setDisplayName("Min")->setLimits(RealLimits::limitless());
+    addProperty(P_MAX, default_axis_max)->setDisplayName("Max")->setLimits(RealLimits::limitless());
 }
 
 // --- ViewportAxisItem ------------------------------------------------------
