@@ -12,9 +12,9 @@
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
 #include <QGraphicsSceneWheelEvent>
-#include <mvvm/plotting/colormapcanvas.h>
+#include <QWidget>
 
-ColorMapProxyWidget::ColorMapProxyWidget(ModelView::ColorMapCanvas* colormap)
+ColorMapProxyWidget::ColorMapProxyWidget(QWidget* colormap)
 {
     setWidget(colormap);
     colormap->installEventFilter(this);

@@ -12,10 +12,7 @@
 
 #include <QGraphicsProxyWidget>
 
-namespace ModelView
-{
-class ColorMapCanvas;
-}
+class QWidget;
 
 //! Custom proxy widget to embed color map in graphics scene.
 
@@ -23,8 +20,7 @@ class ColorMapProxyWidget : public QGraphicsProxyWidget
 {
     Q_OBJECT
 public:
-    // FIXME change ColorMapCanvas to QWidget
-    ColorMapProxyWidget(ModelView::ColorMapCanvas* colormap);
+    ColorMapProxyWidget(QWidget* colormap);
 
     bool eventFilter(QObject* object, QEvent* event);
 
