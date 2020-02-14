@@ -134,16 +134,22 @@ void RegionOfInterestController::update_item_from_view()
     p_impl->update_item_from_view();
 }
 
+//! Updates item properties using coordinates reported during vcorner resize.
+
 void RegionOfInterestController::update_item_from_corner(double left, double right, double top,
                                                          double bottom)
 {
     p_impl->update_item_from_corner(left, right, top, bottom);
 }
 
+//! Updates item properties using coordinates reported during vertical resize.
+
 void RegionOfInterestController::update_item_from_vertical_handle(double top, double bottom)
 {
     p_impl->update_item_from_vertical_handle(top, bottom);
 }
+
+//! Updates item properties using coordinates reported during horizontal resize.
 
 void RegionOfInterestController::update_item_from_horizontal_handle(double left, double right)
 {
@@ -156,7 +162,7 @@ void RegionOfInterestController::subscribe()
         if (p_impl->block_on_property_changed)
             return;
 
-        p_impl->update_view_from_item();
+        p_impl->roi_view->update_geometry();
         p_impl->roi_view->update();
     };
     currentItem()->mapper()->setOnPropertyChange(on_property_change, this);

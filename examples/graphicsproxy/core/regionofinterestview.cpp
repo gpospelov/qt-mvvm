@@ -58,8 +58,19 @@ void RegionOfInterestView::setActiveHandle(SizeHandleElement* element)
 {
     setFlag(QGraphicsItem::ItemIsMovable, element ? false : true);
     active_handle = element;
+    // saving position of opposite corner to allow resize
     if (active_handle)
         opposite_origin = findOpposite(active_handle)->scenePos();
+}
+
+//! Recalculates view rectangle and position of handles using properties of RegionOfInterestItem.
+
+void RegionOfInterestView::update_geometry()
+{
+    prepareGeometryChange();
+    controller->update_view_from_item();
+    for (auto handle : handles)
+        handle->updateHandleElementPosition(controller->roi_rectangle());
 }
 
 void RegionOfInterestView::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
@@ -118,14 +129,6 @@ void RegionOfInterestView::create_size_handle_elements()
 {
     for (auto pos_type : SizeHandleElement::possible_handle_positions())
         handles.push_back(SizeHandleElement::create(pos_type, this));
-}
-
-void RegionOfInterestView::update_geometry()
-{
-    prepareGeometryChange();
-    controller->update_view_from_item();
-    for (auto handle : handles)
-        handle->updateHandleElementPosition(controller->roi_rectangle());
 }
 
 //! Finds handle element which is located on "opposite" rectangle corner with
