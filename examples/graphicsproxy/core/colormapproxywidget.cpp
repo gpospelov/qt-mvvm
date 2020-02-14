@@ -10,6 +10,8 @@
 #include "colormapproxywidget.h"
 #include <QEvent>
 #include <QGraphicsScene>
+#include <QGraphicsSceneMouseEvent>
+#include <QGraphicsSceneWheelEvent>
 #include <mvvm/plotting/colormapcanvas.h>
 
 ColorMapProxyWidget::ColorMapProxyWidget(ModelView::ColorMapCanvas* colormap)
@@ -30,4 +32,37 @@ bool ColorMapProxyWidget::eventFilter(QObject* /*object*/, QEvent* event)
         return false;
     }
     return true;
+}
+
+void ColorMapProxyWidget::setBlockSignalsToProxy(bool value)
+{
+    block_signals_to_proxy = value;
+}
+
+void ColorMapProxyWidget::mousePressEvent(QGraphicsSceneMouseEvent* event)
+{
+    if (block_signals_to_proxy)
+        return;
+    QGraphicsProxyWidget::mousePressEvent(event);
+}
+
+void ColorMapProxyWidget::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
+{
+    if (block_signals_to_proxy)
+        return;
+    QGraphicsProxyWidget::mouseMoveEvent(event);
+}
+
+void ColorMapProxyWidget::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
+{
+    if (block_signals_to_proxy)
+        return;
+    QGraphicsProxyWidget::mouseReleaseEvent(event);
+}
+
+void ColorMapProxyWidget::wheelEvent(QGraphicsSceneWheelEvent* event)
+{
+    if (block_signals_to_proxy)
+        return;
+    QGraphicsProxyWidget::wheelEvent(event);
 }

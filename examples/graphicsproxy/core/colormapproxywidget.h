@@ -27,6 +27,17 @@ public:
     ColorMapProxyWidget(ModelView::ColorMapCanvas* colormap);
 
     bool eventFilter(QObject* object, QEvent* event);
+
+    void setBlockSignalsToProxy(bool value);
+
+protected:
+    void mousePressEvent(QGraphicsSceneMouseEvent* event);
+    void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent* event);
+    void wheelEvent(QGraphicsSceneWheelEvent* event);
+
+private:
+    bool block_signals_to_proxy{false};
 };
 
 #endif //  GRAPHICSPROXY_COLORMAPPROXYWIDGET_H
