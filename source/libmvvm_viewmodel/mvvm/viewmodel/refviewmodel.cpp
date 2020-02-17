@@ -68,7 +68,11 @@ RefViewItem* RefViewModel::itemForIndex(const QModelIndex& index) const
                            : p_impl->root.get();
 }
 
-void RefViewModel::appendRow(RefViewItem* parent, std::vector<std::unique_ptr<RefViewItem>> items)
+void RefViewModel::appendRow(const QModelIndex& parent,
+                             std::vector<std::unique_ptr<RefViewItem>> items)
 {
-    parent->appendRow(std::move(items));
+    auto parent_item = itemForIndex(parent);
+    beginInsertRows(parent, parent_item->rowCount(), parent_item->rowCount());
+    parent_item->appendRow(std::move(items));
+    endInsertRows();
 }
