@@ -16,12 +16,14 @@ struct RefViewItem::RefViewItemImpl {
     std::vector<std::unique_ptr<RefViewItem>> children;
     int rows{0};
     int columns{0};
-    RefViewItemImpl() {}
+    SessionItem* item;
+    int role;
+    RefViewItemImpl(SessionItem* item, int role) : item(item), role(role) {}
 
     void appendRow(std::vector<std::unique_ptr<RefViewItem>> items)
     {
         if (items.empty())
-            throw std::runtime_error("Error in RefViewItem: attempt to cappend empty row");
+            throw std::runtime_error("Error in RefViewItem: attempt to append empty row");
 
         if (columns > 0 && items.size() != static_cast<size_t>(columns))
             throw std::runtime_error("Error in RefViewItem: wrong number of columns.");
@@ -31,9 +33,23 @@ struct RefViewItem::RefViewItemImpl {
         columns = static_cast<int>(items.size());
         ++rows;
     }
+
+    RefViewItem* child(int row, int column) const
+    {
+        if (row < 0 || row >= rows)
+            throw std::runtime_error("Error in RefViewItem: wrong row)");
+
+        if (column < 0 || column >= columns)
+            throw std::runtime_error("Error in RefViewItem: wrong column)");
+
+        return children.at(static_cast<size_t>(column + row * columns)).get();
+    }
 };
 
-RefViewItem::RefViewItem() : p_impl(std::make_unique<RefViewItemImpl>()) {}
+RefViewItem::RefViewItem(SessionItem* item, int role)
+    : p_impl(std::make_unique<RefViewItemImpl>(item, role))
+{
+}
 
 RefViewItem::~RefViewItem() = default;
 
@@ -57,4 +73,19 @@ void RefViewItem::clear()
     p_impl->children.clear();
     p_impl->rows = 0;
     p_impl->columns = 0;
+}
+
+RefViewItem* RefViewItem::child(int row, int column) const
+{
+    return p_impl->child(row, column);
+}
+
+SessionItem* RefViewItem::item() const
+{
+    return p_impl->item;
+}
+
+int RefViewItem::item_role() const
+{
+    return p_impl->role;
 }

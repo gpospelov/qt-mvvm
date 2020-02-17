@@ -17,12 +17,14 @@
 namespace ModelView
 {
 
+class SessionItem;
+
 //! Represents the view of SessionItem's data in single cell of ViewModel.
 
 class CORE_EXPORT RefViewItem
 {
 public:
-    RefViewItem();
+    explicit RefViewItem(SessionItem* item = nullptr, int role = 0);
     virtual ~RefViewItem();
 
     int rowCount() const;
@@ -32,6 +34,12 @@ public:
     void appendRow(std::vector<std::unique_ptr<RefViewItem>> items);
 
     void clear();
+
+    RefViewItem* child(int row, int column) const;
+
+    SessionItem* item() const;
+
+    int item_role() const;
 
 private:
     struct RefViewItemImpl;
