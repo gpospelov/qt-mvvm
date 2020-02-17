@@ -12,9 +12,12 @@
 
 #include <QAbstractItemModel>
 #include <mvvm/core/export.h>
+#include <memory>
 
 namespace ModelView
 {
+
+class RefViewItem;
 
 /*!
 @class RefViewModel
@@ -29,6 +32,7 @@ class CORE_EXPORT RefViewModel : public QAbstractItemModel
     Q_OBJECT
 public:
     explicit RefViewModel(QObject* parent = nullptr);
+    ~RefViewModel();
 
     QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const override;
 
@@ -39,6 +43,14 @@ public:
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;
 
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+
+    RefViewItem* rootItem() const;
+
+    RefViewItem* itemForIndex(const QModelIndex& index) const;
+
+private:
+    struct RefViewModelImpl;
+    std::unique_ptr<RefViewModelImpl> p_impl;
 };
 
 }; // namespace ModelView

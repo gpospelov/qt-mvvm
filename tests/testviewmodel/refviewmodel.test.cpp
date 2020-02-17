@@ -25,5 +25,8 @@ RefViewModelTest::~RefViewModelTest() = default;
 TEST_F(RefViewModelTest, initialState)
 {
     RefViewModel viewmodel;
-    EXPECT_EQ(1, 1);
+    EXPECT_EQ(viewmodel.rowCount(), 0);
+    EXPECT_EQ(viewmodel.columnCount(), 0);
+    EXPECT_TRUE(viewmodel.rootItem() != nullptr);
+    EXPECT_EQ(viewmodel.rootItem(), viewmodel.itemForIndex(QModelIndex()));
 }
