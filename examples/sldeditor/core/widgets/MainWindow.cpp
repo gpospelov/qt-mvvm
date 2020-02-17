@@ -18,6 +18,9 @@
 #include "SegmentItem.h"
 #include "SegmentView.h"
 
+#include "RoughnessItem.h"
+#include "RoughnessView.h"
+
 #include <QAction>
 #include <QCoreApplication>
 #include <QFileDialog>
@@ -141,4 +144,13 @@ void MainWindow::initApplication()
 
     handles[0][0]->setFlag(QGraphicsItem::ItemIsMovable);
     handles[(handles.size()) - 1][1]->setFlag(QGraphicsItem::ItemIsMovable);
+
+    auto roughness_item = models->viewItemsModel()->addRoughness();
+    auto roughness_view = new RoughnessView(roughness_item);
+    roughness_view->setSegments(
+        side_segments[0],
+        top_segments[1],
+        side_segments[1]
+    );
+    // view_widget->scene()->addItem(roughness_view);
 }

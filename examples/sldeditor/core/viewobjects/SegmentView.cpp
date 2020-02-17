@@ -39,17 +39,25 @@ SegmentView::SegmentView(SegmentItem* item)
         if (property_name == SegmentItem::P_X_POS) {
             AxisObject* axis = getAxes();
             setX(axis->fromRealToSceneX(segment_item->property(SegmentItem::P_X_POS).toDouble()));
+            emit moved();
         }
         if (property_name == SegmentItem::P_Y_POS) {
             AxisObject* axis = getAxes();
             setY(axis->fromRealToSceneY(segment_item->property(SegmentItem::P_Y_POS).toDouble()));
+            emit moved();
         }
-        if (property_name == SegmentItem::P_HEIGHT)
+        if (property_name == SegmentItem::P_HEIGHT){
             update();
-        if (property_name == SegmentItem::P_WIDTH)
+            emit moved();
+        }
+        if (property_name == SegmentItem::P_WIDTH){
             update();
-        if (property_name == SegmentItem::P_HORIZONTAL)
+            emit moved();
+        }
+        if (property_name == SegmentItem::P_HORIZONTAL){
             update();
+            emit moved();
+        }
         if (property_name == SegmentItem::P_COLOR)
             update();
     };

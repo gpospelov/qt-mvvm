@@ -7,52 +7,54 @@
 //
 // ************************************************************************** //
 
-#ifndef SEGMENTVIEW_H
-#define SEGMENTVIEW_H
+#ifndef ROUGHNESSVIEW_H
+#define ROUGHNESSVIEW_H
 
-#include "HandleView.h"
 #include "ViewObject.h"
 
-class SegmentItem;
-
+class RoughnessItem;
+class SegmentView;
+class HandleView;
 /*!
-@class Segment
+@class RoughnessView
 @brief The visual Segment element
 */
 
-class SegmentView : public ViewObject
+class RoughnessView : public ViewObject
 {
     Q_OBJECT
 
 public:
-    SegmentView(SegmentItem* item);
+    RoughnessView(RoughnessItem* item);
     QRectF boundingRect() const override;
     QPainterPath shape() const override;
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
-    QRectF getSceneRect() const;
-    SegmentItem* segmentItem() const;
+    QPainterPath getPath() const;
+    RoughnessItem* roughnessItem() const;
 
 public:
-    void addHandles(HandleView* left_handle_in, HandleView* right_handle_in);
     void moveHandles();
     void refreshFromLeftHandle();
     void refreshFromRightHandle();
-
-signals:
-    void moved();
+    void setSegments(SegmentView* left_segment_in, SegmentView* middle_segment_in,
+                     SegmentView* right_segment_in);
 
 private:
+    void refreshFromSegments();
+    void connectSegments();
+    void disconnectSegments();
     void connectHandles();
     void disconnectHandles();
 
-public:
-    void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;
-
 private:
-    SegmentItem* segment_item;
-    QColor color;
-    HandleView* left_handle;
+    RoughnessItem* roughness_item;
+
+    SegmentView* left_segment;
+    SegmentView* middle_segment;
+    SegmentView* right_segment;
+
     HandleView* right_handle;
+    HandleView* left_handle;
 };
 
-#endif // SEGMENTVIEW_H
+#endif // ROUGHNESSVIEW_H
