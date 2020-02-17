@@ -19,6 +19,10 @@ target_sources(mvvm_viewmodel PRIVATE
     propertyflatviewmodel.h
     propertyviewmodel.cpp
     propertyviewmodel.h
+    refviewmodel.cpp
+    refviewmodel.h
+    refviewitem.cpp
+    refviewitem.h
     rowstrategyinterface.h
     standardchildrenstrategies.cpp
     standardchildrenstrategies.h
