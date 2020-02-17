@@ -9,30 +9,31 @@
 
 #include "AxisViewWidget.h"
 
-#include <QGraphicsView>
-#include <QWheelEvent>
-#include <QKeyEvent>
 #include <QDragMoveEvent>
+#include <QGraphicsView>
+#include <QKeyEvent>
+#include <QWheelEvent>
 
 class ViewWidget : public QGraphicsView
 {
     Q_OBJECT
 
 public:
-    //! The constructor
-    ViewWidget(QWidget *parent = nullptr);
-    //! Get the visible region
+    ViewWidget(QWidget* parent = nullptr);
     QRectF visibleRect() const;
+    AxisViewWidget* getAxisView() const;
 
 protected:
-    //! Manage wheelevent
-    void wheelEvent(QWheelEvent *event);
-    //! Manage the drag event
-    void drageMoveEvent(QDragMoveEvent* event);
-    //! The resize event that needs to propagate to axes
-    void resizeEvent(QResizeEvent* event);
+    void wheelEvent(QWheelEvent* event) override;
+    void resizeEvent(QResizeEvent* event) override;
+    void mouseMoveEvent(QMouseEvent* event) override;
+    void mousePressEvent(QMouseEvent* event) override;
+    void mouseReleaseEvent(QMouseEvent* event) override;
+
+    void rescaleScene(QMouseEvent* event);
 
 private:
-    //! The axis items
-    AxisViewWidget* _axis;
+    AxisViewWidget* axis;
+    QPointF init_mouse_pos;
+    QPointF scale_factor;
 };

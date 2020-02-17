@@ -12,15 +12,10 @@
 #include <mvvm/core/modeldocuments.h>
 #include <mvvm/model/sessionitem.h>
 
-
-
 struct ApplicationModels::ApplicationModelsImpl {
     std::unique_ptr<ViewItemsModel> m_view_items_model;
 
-    ApplicationModelsImpl()
-    {
-        m_view_items_model = std::make_unique<ViewItemsModel>();
-    }
+    ApplicationModelsImpl() { m_view_items_model = std::make_unique<ViewItemsModel>(); }
 };
 
 ApplicationModels::ApplicationModels() : p_impl(std::make_unique<ApplicationModelsImpl>()) {}

@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "HandleItem.h"
+#include "RoughnessItem.h"
 #include <QColor>
 #include <QUndoStack>
 #include <cmath>
@@ -16,12 +16,8 @@
 #include <mvvm/utils/numericutils.h>
 #include <mvvm/utils/reallimits.h>
 
-HandleItem::HandleItem() : ModelView::CompoundItem("HandleItem")
+RoughnessItem::RoughnessItem() : ModelView::CompoundItem("RoughnessItem")
 {
+    addProperty(P_ROUGHNESS, 10.)->setLimits(ModelView::RealLimits::limitless())->setDisplayName("Roughness");
     addProperty(P_COLOR, QColor(Qt::red))->setDisplayName("Color");
-    addProperty(P_XPOS, 0.0)->setLimits(ModelView::RealLimits::limitless())->setDisplayName("X");
-    addProperty(P_YPOS, 0.0)->setLimits(ModelView::RealLimits::limitless())->setDisplayName("Y");
-    addProperty(P_RADIUS, 20.)
-        ->setLimits(ModelView::RealLimits::limitless())
-        ->setDisplayName("Radius");
 }

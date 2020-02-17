@@ -16,7 +16,6 @@
 #include <mvvm/utils/numericutils.h>
 #include <mvvm/utils/reallimits.h>
 
-
 AxisItem::AxisItem() : ModelView::CompoundItem("AxisItem")
 {
     addProperty(COLOR, QColor(Qt::red))->setDisplayName("Color");

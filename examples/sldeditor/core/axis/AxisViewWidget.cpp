@@ -8,16 +8,18 @@
 // ************************************************************************** //
 
 #include "AxisViewWidget.h"
+#include "AxisItem.h"
+#include "AxisObject.h"
 
 #include <QGraphicsScene>
+#include <QGraphicsSceneMouseEvent>
 #include <QGraphicsView>
 #include <QPainter>
 #include <QStyleOption>
-#include <QGraphicsSceneMouseEvent>
 
 #include <iostream>
 
-
+//! The constructor
 AxisViewWidget::AxisViewWidget() : QGraphicsView()
 {
     QGraphicsScene* scene_item = new QGraphicsScene();
@@ -25,19 +27,25 @@ AxisViewWidget::AxisViewWidget() : QGraphicsView()
     setRenderHints(QPainter::Antialiasing);
     setCacheMode(QGraphicsView::CacheNone);
     setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
-    setAttribute( Qt::WA_TransparentForMouseEvents );
+    setAttribute(Qt::WA_TransparentForMouseEvents);
     setWindowFlags(Qt::FramelessWindowHint);
     setAttribute(Qt::WA_TranslucentBackground);
     setStyleSheet("border-width: 0px; border-style: solid;background: transparent");
 
-    _axis_object = new AxisObject();
-    scene()->addItem(_axis_object);
+    axis_object = new AxisObject();
+    scene()->addItem(axis_object);
 }
 
+//! Resize widget and redraw items
 void AxisViewWidget::resize(const QSize size)
 {
     QWidget::resize(size.width(), size.height());
-    scene()->setSceneRect(0,0,size.width(), size.height());
+    scene()->setSceneRect(0, 0, size.width(), size.height());
     update();
+}
 
+//! Get the axis object
+AxisObject* AxisViewWidget::getAxisObject() const
+{
+    return axis_object;
 }

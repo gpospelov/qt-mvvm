@@ -7,25 +7,22 @@
 //
 // ************************************************************************** //
 
-#ifndef AXISITEM_H
-#define AXISITEM_H
+#ifndef ROUGHNESSITEM_H
+#define ROUGHNESSITEM_H
 
 #include <mvvm/model/compounditem.h>
 #include <mvvm/model/sessionmodel.h>
 
 /*!
-@class AxisItem
+@class RoughnessItem
 @brief Domain object to hold mouse info.
 */
-
-class AxisItem : public ModelView::CompoundItem
+class RoughnessItem : public ModelView::CompoundItem
 {
 public:
-    static inline const std::string COLOR = "COLOR";
-    static inline const std::string THICKNESS = "THICKNESS";
-    static inline const std::string OFFSET_X = "OFFSET_X";
-    static inline const std::string OFFSET_Y = "OFFSET_Y";
-    AxisItem();
+    static inline const std::string P_ROUGHNESS = "P_ROUGHNESS";
+    static inline const std::string P_COLOR = "P_COLOR";
+    RoughnessItem();
 };
 
-#endif // AXISITEM_H
+#endif // ROUGHNESSITEM_H

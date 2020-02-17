@@ -15,6 +15,7 @@
 
 #include "HandleItem.h"
 #include "SegmentItem.h"
+#include "RoughnessItem.h"
 
 namespace ModelView
 {
@@ -35,9 +36,10 @@ public:
     HandleItem* addHandle();
     //! Add a segment item
     SegmentItem* addSegment();
-     
-private:
+    //! Add a roughtness item
+    RoughnessItem* addRoughness();
 
+private:
 };
 
 #endif //  VIEWITEMSMODEL_H
