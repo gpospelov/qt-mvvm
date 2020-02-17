@@ -29,4 +29,5 @@ TEST_F(RefViewModelTest, initialState)
     EXPECT_EQ(viewmodel.columnCount(), 0);
     EXPECT_TRUE(viewmodel.rootItem() != nullptr);
     EXPECT_EQ(viewmodel.rootItem(), viewmodel.itemForIndex(QModelIndex()));
+    EXPECT_FALSE(viewmodel.index(0, 0, QModelIndex()).isValid());
 }

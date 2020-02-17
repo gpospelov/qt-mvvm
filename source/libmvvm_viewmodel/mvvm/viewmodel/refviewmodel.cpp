@@ -26,10 +26,12 @@ RefViewModel::~RefViewModel() = default;
 
 QModelIndex RefViewModel::index(int row, int column, const QModelIndex& parent) const
 {
-    Q_UNUSED(row)
-    Q_UNUSED(column)
-    Q_UNUSED(parent)
-    return QModelIndex();
+    auto parent_item = itemForIndex(parent);
+    const bool is_valid_row = row >= 0 && row < rowCount(parent);
+    const bool is_valid_column = column >= 0 && column < columnCount(parent);
+    return is_valid_row && is_valid_column
+               ? createIndex(row, column, parent_item->child(row, column))
+               : QModelIndex();
 }
 
 QModelIndex RefViewModel::parent(const QModelIndex& child) const
@@ -64,4 +66,9 @@ RefViewItem* RefViewModel::itemForIndex(const QModelIndex& index) const
 {
     return index.isValid() ? static_cast<RefViewItem*>(index.internalPointer())
                            : p_impl->root.get();
+}
+
+void RefViewModel::appendRow(RefViewItem* parent, std::vector<std::unique_ptr<RefViewItem>> items)
+{
+    parent->appendRow(std::move(items));
 }
