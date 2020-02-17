@@ -13,9 +13,6 @@
 #include "HandleItem.h"
 #include "HandleView.h"
 
-#include "AxisObject.h"
-
-#include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
 #include <QGraphicsWidget>
 #include <QPainter>
@@ -24,11 +21,10 @@
 #include <cmath>
 #include <mvvm/model/mvvm_types.h>
 #include <mvvm/model/propertyitem.h>
+#include <mvvm/plotting/sceneadapterinterface.h>
 #include <mvvm/signals/itemmapper.h>
 #include <mvvm/utils/numericutils.h>
 #include <mvvm/utils/reallimits.h>
-
-#include <iostream>
 
 //! The constructor
 SegmentView::SegmentView(SegmentItem* item)
@@ -37,24 +33,22 @@ SegmentView::SegmentView(SegmentItem* item)
 {
     auto on_property_change = [this](ModelView::SessionItem*, std::string property_name) {
         if (property_name == SegmentItem::P_X_POS) {
-            AxisObject* axis = getAxes();
-            setX(axis->fromRealToSceneX(segment_item->property(SegmentItem::P_X_POS).toDouble()));
+            update();
             emit moved();
         }
         if (property_name == SegmentItem::P_Y_POS) {
-            AxisObject* axis = getAxes();
-            setY(axis->fromRealToSceneY(segment_item->property(SegmentItem::P_Y_POS).toDouble()));
-            emit moved();
-        }
-        if (property_name == SegmentItem::P_HEIGHT){
             update();
             emit moved();
         }
-        if (property_name == SegmentItem::P_WIDTH){
+        if (property_name == SegmentItem::P_HEIGHT) {
             update();
             emit moved();
         }
-        if (property_name == SegmentItem::P_HORIZONTAL){
+        if (property_name == SegmentItem::P_WIDTH) {
+            update();
+            emit moved();
+        }
+        if (property_name == SegmentItem::P_HORIZONTAL) {
             update();
             emit moved();
         }
@@ -70,9 +64,11 @@ SegmentView::SegmentView(SegmentItem* item)
 //! The overriden paint method
 void SegmentView::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
 {
-    AxisObject* axis = getAxes();
-    if (!axis)
+    auto adapter = getSceneAdapter();
+    if (!adapter)
         return;
+
+    ViewObject::paint(painter, nullptr, nullptr);
 
     painter->setPen(Qt::NoPen);
     painter->setBrush(color);
@@ -83,77 +79,65 @@ void SegmentView::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWid
 QPainterPath SegmentView::shape() const
 {
     QPainterPath path;
-
-    AxisObject* axis = getAxes();
-    if (!axis)
-        return path;
-
     path.addRect(getSceneRect());
-
     return path;
 }
 
 //! The bounding rectangle of the handle
 QRectF SegmentView::boundingRect() const
 {
-    double epsilon = 10;
-
-    AxisObject* axis = getAxes();
-    if (!axis)
-        return QRectF(0, 0, 1, 1);
-
     return getSceneRect();
 }
 
 //! Get the scene rectangle
 QRectF SegmentView::getSceneRect() const
 {
-    AxisObject* axis = getAxes();
-    if (!axis)
+    auto adapter = getSceneAdapter();
+    if (!adapter)
         return QRectF(0, 0, 1, 1);
 
     if (segment_item->property(SegmentItem::P_HORIZONTAL).toBool())
         return QRectF(
-            QPointF(axis->fromRealToSceneX(-segment_item->property(SegmentItem::P_WIDTH).toDouble()
-                                           / 2.),
-                    axis->yFactor()
-                        * axis->fromRealToSceneY(
-                            +segment_item->property(SegmentItem::P_HEIGHT).toDouble() / 2.)),
-            QPointF(axis->fromRealToSceneX(segment_item->property(SegmentItem::P_WIDTH).toDouble()
-                                           / 2.),
-                    axis->yFactor()
-                        * axis->fromRealToSceneY(
-                            -segment_item->property(SegmentItem::P_HEIGHT).toDouble() / 2.)));
+            QPointF(
+                adapter->toSceneX(segment_item->property(SegmentItem::P_X_POS).toDouble()
+                                  - segment_item->property(SegmentItem::P_WIDTH).toDouble() / 2.),
+                adapter->toSceneY(segment_item->property(SegmentItem::P_Y_POS).toDouble())
+                    + segment_item->property(SegmentItem::P_HEIGHT).toDouble() / 2.),
+            QPointF(
+                adapter->toSceneX(segment_item->property(SegmentItem::P_X_POS).toDouble()
+                                  + segment_item->property(SegmentItem::P_WIDTH).toDouble() / 2.),
+                adapter->toSceneY(segment_item->property(SegmentItem::P_Y_POS).toDouble())
+                    - segment_item->property(SegmentItem::P_HEIGHT).toDouble() / 2.));
     else
         return QRectF(
-            QPointF(axis->xFactor()
-                        * axis->fromRealToSceneX(
-                            -segment_item->property(SegmentItem::P_WIDTH).toDouble() / 2.),
-                    axis->fromRealToSceneY(+segment_item->property(SegmentItem::P_HEIGHT).toDouble()
-                                           / 2.)),
-            QPointF(axis->xFactor()
-                        * axis->fromRealToSceneX(
-                            segment_item->property(SegmentItem::P_WIDTH).toDouble() / 2.),
-                    axis->fromRealToSceneY(-segment_item->property(SegmentItem::P_HEIGHT).toDouble()
-                                           / 2.)));
+            QPointF(
+                adapter->toSceneX(segment_item->property(SegmentItem::P_X_POS).toDouble())
+                    - segment_item->property(SegmentItem::P_WIDTH).toDouble() / 2.,
+                adapter->toSceneY(segment_item->property(SegmentItem::P_Y_POS).toDouble()
+                                  + segment_item->property(SegmentItem::P_HEIGHT).toDouble() / 2.)),
+            QPointF(adapter->toSceneX(segment_item->property(SegmentItem::P_X_POS).toDouble())
+                        + segment_item->property(SegmentItem::P_WIDTH).toDouble() / 2.,
+                    adapter->toSceneY(segment_item->property(SegmentItem::P_Y_POS).toDouble()
+                                      - segment_item->property(SegmentItem::P_HEIGHT).toDouble()
+                                            / 2.)));
 }
 
 //! On move update the model
 void SegmentView::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 {
-    AxisObject* axis = getAxes();
-    if (!axis)
+    auto adapter = getSceneAdapter();
+    if (!adapter)
         return;
 
     if (segment_item->property(SegmentItem::P_HORIZONTAL).toBool())
-        if (axis->fromSceneToRealY(double(y() + event->pos().y())) > 0)
+        if (adapter->fromSceneY(double(y() + event->pos().y())) > 0)
             segment_item->setProperty(SegmentItem::P_Y_POS,
-                                      axis->fromSceneToRealY(double(y() + event->pos().y())));
+                                      adapter->fromSceneY(double(y() + event->pos().y())));
         else
             return;
     else
         segment_item->setProperty(SegmentItem::P_X_POS,
-                                  axis->fromSceneToRealX(double(x() + event->pos().x())));
+                                  adapter->fromSceneX(double(x() + event->pos().x())));
 
     moveHandles();
 }
@@ -192,10 +176,6 @@ void SegmentView::refreshFromLeftHandle()
     if (!right_handle)
         return;
 
-    AxisObject* axis = getAxes();
-    if (!axis)
-        return;
-
     double left_x = left_handle->handleItem()->property(HandleItem::P_XPOS).toDouble();
     double left_y = left_handle->handleItem()->property(HandleItem::P_YPOS).toDouble();
     double right_x = right_handle->handleItem()->property(HandleItem::P_XPOS).toDouble();
@@ -220,10 +200,6 @@ void SegmentView::refreshFromRightHandle()
     if (!left_handle)
         return;
     if (!right_handle)
-        return;
-
-    AxisObject* axis = getAxes();
-    if (!axis)
         return;
 
     double left_x = left_handle->handleItem()->property(HandleItem::P_XPOS).toDouble();
@@ -257,10 +233,6 @@ void SegmentView::moveHandles()
     if (!left_handle)
         return;
     if (!right_handle)
-        return;
-
-    AxisObject* axis = getAxes();
-    if (!axis)
         return;
 
     if (segment_item->property(SegmentItem::P_HORIZONTAL).toBool()) {

@@ -8,17 +8,33 @@
 // ************************************************************************** //
 
 #include "ViewObject.h"
-#include "ViewWidget.h"
+#include "GraphicsScene.h"
+#include "mvvm/plotting/sceneadapterinterface.h"
+
+#include <QPainter>
 
 //! The constructor
 ViewObject::ViewObject() : QGraphicsObject() {}
 
 //! Get the conversion axes
-AxisObject* ViewObject::getAxes() const
+ModelView::SceneAdapterInterface* ViewObject::getSceneAdapter() const
 {
-    ViewWidget* main_view = dynamic_cast<ViewWidget*>(scene()->views().last());
-    if (!main_view)
+    GraphicsScene* scene_item = static_cast<GraphicsScene*>(scene());
+    if (!scene_item)
         return nullptr;
 
-    return main_view->getAxisView()->getAxisObject();
+    return scene_item->getSceneAdapter();
+}
+
+void ViewObject::advance(int phase)
+{
+    if (!phase)
+        return;
+    prepareGeometryChange();
+    update();
+}
+
+void ViewObject::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
+{
+    painter->setClipRect(getSceneAdapter()->viewportRectangle());
 }

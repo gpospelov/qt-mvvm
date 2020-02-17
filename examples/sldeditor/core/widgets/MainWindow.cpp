@@ -88,7 +88,7 @@ void MainWindow::initApplication()
         // initialise segments
         SegmentItem* segment_item = models->viewItemsModel()->addSegment();
         SegmentView* segment = new SegmentView(segment_item);
-        view_widget->scene()->addItem(segment);
+        view_widget->getScene()->addItem(segment);
         top_segments.push_back(segment);
 
         // set parameters
@@ -102,8 +102,8 @@ void MainWindow::initApplication()
         HandleItem* handle_item_right = models->viewItemsModel()->addHandle();
         HandleView* handle_left = new HandleView(handle_item_left);
         HandleView* handle_right = new HandleView(handle_item_right);
-        view_widget->scene()->addItem(handle_left);
-        view_widget->scene()->addItem(handle_right);
+        view_widget->getScene()->addItem(handle_left);
+        view_widget->getScene()->addItem(handle_right);
         handles.push_back(std::vector<HandleView*>{handle_left, handle_right});
 
         // set the handles
@@ -118,7 +118,7 @@ void MainWindow::initApplication()
         // initialise segments
         SegmentItem* segment_item = models->viewItemsModel()->addSegment();
         SegmentView* segment = new SegmentView(segment_item);
-        view_widget->scene()->addItem(segment);
+        view_widget->getScene()->addItem(segment);
         side_segments.push_back(segment);
 
         // set parameters
@@ -147,10 +147,10 @@ void MainWindow::initApplication()
 
     auto roughness_item = models->viewItemsModel()->addRoughness();
     auto roughness_view = new RoughnessView(roughness_item);
-    roughness_view->setSegments(
-        side_segments[0],
-        top_segments[1],
-        side_segments[1]
-    );
+    roughness_view->setSegments(side_segments[0], top_segments[1], side_segments[1]);
+
     // view_widget->scene()->addItem(roughness_view);
+
+    view_widget->getScene()->setContext();
+    // view_widget->getScene()->addItem(axes_view);
 }

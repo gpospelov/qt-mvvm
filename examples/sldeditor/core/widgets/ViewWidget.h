@@ -7,12 +7,12 @@
 //
 // ************************************************************************** //
 
-#include "AxisViewWidget.h"
-
 #include <QDragMoveEvent>
 #include <QGraphicsView>
 #include <QKeyEvent>
 #include <QWheelEvent>
+
+class GraphicsScene;
 
 class ViewWidget : public QGraphicsView
 {
@@ -20,20 +20,12 @@ class ViewWidget : public QGraphicsView
 
 public:
     ViewWidget(QWidget* parent = nullptr);
-    QRectF visibleRect() const;
-    AxisViewWidget* getAxisView() const;
+    GraphicsScene* getScene() const;
 
 protected:
-    void wheelEvent(QWheelEvent* event) override;
-    void resizeEvent(QResizeEvent* event) override;
-    void mouseMoveEvent(QMouseEvent* event) override;
-    void mousePressEvent(QMouseEvent* event) override;
-    void mouseReleaseEvent(QMouseEvent* event) override;
-
-    void rescaleScene(QMouseEvent* event);
+    void resizeEvent(QResizeEvent* event);
 
 private:
-    AxisViewWidget* axis;
     QPointF init_mouse_pos;
     QPointF scale_factor;
 };

@@ -14,8 +14,9 @@
 #include <vector>
 
 #include "HandleItem.h"
-#include "SegmentItem.h"
+#include "RegionOfInterestItem.h"
 #include "RoughnessItem.h"
+#include "SegmentItem.h"
 
 namespace ModelView
 {
@@ -36,10 +37,10 @@ public:
     HandleItem* addHandle();
     //! Add a segment item
     SegmentItem* addSegment();
-    //! Add a roughtness item
+    //! Add a roughness item
     RoughnessItem* addRoughness();
-
-private:
+    //! Add a region of interest item
+    RegionOfInterestItem* addRegionOfInterest();
 };
 
 #endif //  VIEWITEMSMODEL_H

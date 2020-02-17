@@ -60,18 +60,18 @@ RoughnessView::RoughnessView(RoughnessItem* item) : roughness_item(item)
 //! The overriden paint method
 void RoughnessView::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
 {
-    AxisObject* axis = getAxes();
-    if (!axis)
+    auto adapter = getSceneAdapter();
+    if (!adapter)
         return;
 
     painter->setPen(Qt::NoPen);
     painter->setBrush(QColor("red"));
     painter->drawPath(getPath());
 
-    if (!right_handle->scene()){
+    if (!right_handle->scene()) {
         scene()->addItem(right_handle);
     }
-    if (!left_handle->scene()){
+    if (!left_handle->scene()) {
         scene()->addItem(left_handle);
     }
 }
@@ -80,13 +80,7 @@ void RoughnessView::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QW
 QPainterPath RoughnessView::shape() const
 {
     QPainterPath path;
-
-    AxisObject* axis = getAxes();
-    if (!axis)
-        return path;
-
     path.addPath(getPath());
-
     return path;
 }
 
@@ -95,18 +89,18 @@ QRectF RoughnessView::boundingRect() const
 {
     double epsilon = 10;
 
-    AxisObject* axis = getAxes();
-    if (!axis)
+    auto adapter = getSceneAdapter();
+    if (!adapter)
         return QRectF(0, 0, 1, 1);
 
-    return QRectF(0, 0, 1, 1);//getPath().boundingRect();
+    return QRectF(0, 0, 1, 1); // getPath().boundingRect();
 }
 
 //! Get the scene rectangle
 QPainterPath RoughnessView::getPath() const
 {
-    AxisObject* axis = getAxes();
-    if (!axis)
+    auto adapter = getSceneAdapter();
+    if (!adapter)
         return QPainterPath();
 
     auto path = QPainterPath();
@@ -155,7 +149,6 @@ void RoughnessView::refreshFromSegments()
     if (!right_segment)
         return;
 
-    
     return;
 }
 
@@ -164,7 +157,4 @@ RoughnessItem* RoughnessView::roughnessItem() const
     return roughness_item;
 }
 
-void RoughnessView::moveHandles() 
-{
-
-}
+void RoughnessView::moveHandles() {}

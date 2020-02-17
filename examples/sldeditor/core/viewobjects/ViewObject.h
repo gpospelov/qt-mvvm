@@ -10,19 +10,24 @@
 #ifndef VIEWOBJECT_H
 #define VIEWOBJECT_H
 
-#include "AxisObject.h"
+#include "GraphicsScene.h"
 
 #include <QGraphicsObject>
 
 class ViewObject : public QGraphicsObject
 {
     Q_OBJECT
+
 public:
     ViewObject();
     QRectF boundingRect() const = 0;
     QPainterPath shape() const = 0;
-    void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) = 0;
-    AxisObject* getAxes() const;
+    void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
+    void advance(int phase) override;
+
+    ModelView::SceneAdapterInterface* getSceneAdapter() const;
+
+public:
 };
 
 #endif // VIEWOBJECT_H

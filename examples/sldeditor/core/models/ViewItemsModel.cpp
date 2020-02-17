@@ -24,6 +24,7 @@ std::unique_ptr<ItemCatalogue> CreateItemCatalogue()
     result->registerItem<HandleItem>();
     result->registerItem<SegmentItem>();
     result->registerItem<RoughnessItem>();
+    result->registerItem<RegionOfInterestItem>();
     return result;
 }
 
@@ -38,6 +39,8 @@ QColor random_color()
 ViewItemsModel::ViewItemsModel() : SessionModel("ViewItemsModel")
 {
     setItemCatalogue(CreateItemCatalogue());
+
+    addRegionOfInterest();
 }
 
 HandleItem* ViewItemsModel::addHandle()
@@ -66,4 +69,14 @@ RoughnessItem* ViewItemsModel::addRoughness()
     roughness->setProperty(RoughnessItem::P_ROUGHNESS, 0.);
     roughness->setProperty(RoughnessItem::P_COLOR, QVariant::fromValue(random_color()));
     return roughness;
+}
+
+RegionOfInterestItem* ViewItemsModel::addRegionOfInterest()
+{
+    auto roi = insertItem<RegionOfInterestItem>();
+    roi->setProperty(RegionOfInterestItem::P_XLOW, -2.0);
+    roi->setProperty(RegionOfInterestItem::P_YLOW, 1.0);
+    roi->setProperty(RegionOfInterestItem::P_XUP, 2.0);
+    roi->setProperty(RegionOfInterestItem::P_YUP, 2.0);
+    return roi;
 }
