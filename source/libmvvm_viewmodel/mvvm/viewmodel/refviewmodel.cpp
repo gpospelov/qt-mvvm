@@ -89,11 +89,16 @@ QModelIndex RefViewModel::indexFromItem(const RefViewItem* item) const
                : QModelIndex();
 }
 
-void RefViewModel::appendRow(const QModelIndex& parent,
+//! Appends row of items to given parent.
+
+void RefViewModel::appendRow(RefViewItem* parent,
                              std::vector<std::unique_ptr<RefViewItem>> items)
 {
-    auto parent_item = itemFromIndex(parent) ? itemFromIndex(parent) : rootItem();
-    beginInsertRows(parent, parent_item->rowCount(), parent_item->rowCount());
-    parent_item->appendRow(std::move(items));
+    const bool parent_belongs_to_model = indexFromItem(parent).isValid() || parent == rootItem();
+    if (!parent_belongs_to_model)
+        throw std::runtime_error("Error in RefViewModel: attempt to use parent from another model");
+
+    beginInsertRows(indexFromItem(parent), parent->rowCount(), parent->rowCount());
+    parent->appendRow(std::move(items));
     endInsertRows();
 }

@@ -81,7 +81,7 @@ TEST_F(RefViewModelTest, appendRow)
     RefViewItem* expected = children[0].get();
 
     // appending one row
-    viewmodel.appendRow(QModelIndex(), std::move(children));
+    viewmodel.appendRow(viewmodel.rootItem(), std::move(children));
     EXPECT_EQ(viewmodel.rowCount(), 1);
     EXPECT_EQ(viewmodel.columnCount(), 1);
 
@@ -119,11 +119,11 @@ TEST_F(RefViewModelTest, appendRowToRow)
     std::vector<RefViewItem*> expected_row1 = {children_row1[0].get(), children_row1[1].get()};
 
     // appending rows to root
-    viewmodel.appendRow(QModelIndex(), std::move(children_row0));
+    viewmodel.appendRow(viewmodel.rootItem(), std::move(children_row0));
     // appending rows to row
     auto child0_index = viewmodel.index(0, 0, QModelIndex());
     auto child1_index = viewmodel.index(0, 1, QModelIndex());
-    viewmodel.appendRow(child0_index, std::move(children_row1));
+    viewmodel.appendRow(expected_row0[0], std::move(children_row1));
 
     // checking results
     EXPECT_EQ(viewmodel.rowCount(QModelIndex()), 1);
@@ -157,7 +157,7 @@ TEST_F(RefViewModelTest, rowsInserted)
     QSignalSpy spyInsert(&viewmodel, &RefViewModel::rowsInserted);
 
     // appending one row
-    viewmodel.appendRow(QModelIndex(), std::move(children));
+    viewmodel.appendRow(viewmodel.rootItem(), std::move(children));
     EXPECT_EQ(viewmodel.rowCount(), 1);
     EXPECT_EQ(viewmodel.columnCount(), 2);
 

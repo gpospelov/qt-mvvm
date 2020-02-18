@@ -50,7 +50,7 @@ public:
 
     QModelIndex indexFromItem(const RefViewItem *item) const;
 
-    void appendRow(const QModelIndex& parent, std::vector<std::unique_ptr<RefViewItem>> items);
+    void appendRow(RefViewItem* parent, std::vector<std::unique_ptr<RefViewItem>> items);
 
 private:
     struct RefViewModelImpl;
