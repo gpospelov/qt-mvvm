@@ -80,6 +80,15 @@ RefViewItem* RefViewModel::itemFromIndex(const QModelIndex& index) const
     return index.isValid() ? static_cast<RefViewItem*>(index.internalPointer()) : nullptr;
 }
 
+//! Returns the QModelIndex associated with the given item.
+
+QModelIndex RefViewModel::indexFromItem(const RefViewItem* item) const
+{
+    return item && item->parent()
+               ? createIndex(item->row(), item->column(), const_cast<RefViewItem*>(item))
+               : QModelIndex();
+}
+
 void RefViewModel::appendRow(const QModelIndex& parent,
                              std::vector<std::unique_ptr<RefViewItem>> items)
 {

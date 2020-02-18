@@ -68,6 +68,7 @@ TEST_F(RefViewModelTest, initialState)
     EXPECT_FALSE(non_existing_index.isValid());
     EXPECT_EQ(viewmodel.itemFromIndex(non_existing_index), nullptr);
     EXPECT_EQ(viewmodel.parent(QModelIndex()), QModelIndex());
+    EXPECT_EQ(viewmodel.indexFromItem(viewmodel.rootItem()), QModelIndex());
 }
 
 TEST_F(RefViewModelTest, appendRow)
@@ -89,6 +90,9 @@ TEST_F(RefViewModelTest, appendRow)
     EXPECT_EQ(child_index.row(), 0);
     EXPECT_EQ(child_index.column(), 0);
     EXPECT_EQ(child_index.model(), &viewmodel);
+
+    // indexFromItem
+    EXPECT_EQ(viewmodel.indexFromItem(expected), child_index);
 
     //  getting child from index
     EXPECT_EQ(viewmodel.itemFromIndex(child_index), expected);
@@ -117,20 +121,27 @@ TEST_F(RefViewModelTest, appendRowToRow)
     // appending rows to root
     viewmodel.appendRow(QModelIndex(), std::move(children_row0));
     // appending rows to row
-    auto parent_index = viewmodel.index(0, 0, QModelIndex());
-    viewmodel.appendRow(parent_index, std::move(children_row1));
+    auto child0_index = viewmodel.index(0, 0, QModelIndex());
+    auto child1_index = viewmodel.index(0, 1, QModelIndex());
+    viewmodel.appendRow(child0_index, std::move(children_row1));
 
     // checking results
     EXPECT_EQ(viewmodel.rowCount(QModelIndex()), 1);
     EXPECT_EQ(viewmodel.columnCount(QModelIndex()), 2);
-    EXPECT_EQ(viewmodel.rowCount(parent_index), 1);
-    EXPECT_EQ(viewmodel.columnCount(parent_index), 2);
+    EXPECT_EQ(viewmodel.rowCount(child0_index), 1);
+    EXPECT_EQ(viewmodel.columnCount(child0_index), 2);
 
     // checking parent index of children in second row
-    auto child0_index = viewmodel.index(0, 0, parent_index);
-    auto child1_index = viewmodel.index(0, 1, parent_index);
-    EXPECT_EQ(viewmodel.parent(child0_index), parent_index);
-    EXPECT_EQ(viewmodel.parent(child1_index), parent_index);
+    auto grandchild0_index = viewmodel.index(0, 0, child0_index);
+    auto grandchild1_index = viewmodel.index(0, 1, child0_index);
+    EXPECT_EQ(viewmodel.parent(grandchild0_index), child0_index);
+    EXPECT_EQ(viewmodel.parent(grandchild1_index), child0_index);
+
+    // index of item
+    EXPECT_EQ(viewmodel.indexFromItem(expected_row0[0]), child0_index);
+    EXPECT_EQ(viewmodel.indexFromItem(expected_row0[1]), child1_index);
+    EXPECT_EQ(viewmodel.indexFromItem(expected_row1[0]), grandchild0_index);
+    EXPECT_EQ(viewmodel.indexFromItem(expected_row1[1]), grandchild1_index);
 }
 
 TEST_F(RefViewModelTest, rowsInserted)
