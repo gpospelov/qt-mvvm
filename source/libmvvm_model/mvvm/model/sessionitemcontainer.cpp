@@ -65,7 +65,7 @@ SessionItem* SessionItemContainer::takeItem(int index)
 
     SessionItem* result = itemAt(index);
     if (result)
-        m_items.erase(m_items.begin() + index);
+        m_items.erase(std::next(m_items.begin(), index));
 
     return result;
 }
