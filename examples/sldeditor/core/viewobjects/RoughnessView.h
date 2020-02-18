@@ -34,13 +34,14 @@ public:
 
 public:
     void moveHandles();
-    void refreshFromLeftHandle();
-    void refreshFromRightHandle();
     void setSegments(SegmentView* left_segment_in, SegmentView* middle_segment_in,
                      SegmentView* right_segment_in);
 
 private:
     void refreshFromSegments();
+    void refreshFromLeftHandle();
+    void refreshFromRightHandle();
+
     void connectSegments();
     void disconnectSegments();
     void connectHandles();

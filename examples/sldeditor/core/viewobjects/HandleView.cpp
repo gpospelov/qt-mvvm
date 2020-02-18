@@ -21,7 +21,8 @@
 
 //! The constructor
 HandleView::HandleView(HandleItem* item)
-    : handle_item(item), color(item->property(HandleItem::P_COLOR).value<QColor>())
+    : handle_item(item), color(item->property(HandleItem::P_COLOR).value<QColor>()),
+      allowed_x(false), allowed_y(false)
 {
     auto on_property_change = [this](ModelView::SessionItem*, std::string property_name) {
         if (property_name == HandleItem::P_XPOS) {
@@ -41,6 +42,7 @@ HandleView::HandleView(HandleItem* item)
     };
 
     handle_item->mapper()->setOnPropertyChange(on_property_change, this);
+    setFlag(QGraphicsItem::ItemIsMovable);
     setZValue(20);
 }
 
@@ -54,7 +56,7 @@ void HandleView::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidg
     ViewObject::paint(painter, nullptr, nullptr);
 
     painter->setPen(Qt::NoPen);
-    painter->setBrush(color);
+    painter->setBrush(handle_item->property(HandleItem::P_COLOR).value<QColor>());
     painter->drawEllipse(
         QPointF(adapter->toSceneX(handle_item->property(HandleItem::P_XPOS).toDouble()),
                 adapter->toSceneY(handle_item->property(HandleItem::P_YPOS).toDouble())),
@@ -83,15 +85,14 @@ QRectF HandleView::getSceneRect() const
     if (!adapter)
         return QRectF(0, 0, 1, 1);
 
-    return QRectF(
-        QPointF(adapter->toSceneX(handle_item->property(HandleItem::P_XPOS).toDouble()
-                                  - handle_item->property(HandleItem::P_RADIUS).toDouble() / 2.),
-                adapter->toSceneY(handle_item->property(HandleItem::P_YPOS).toDouble()
-                                  + handle_item->property(HandleItem::P_RADIUS).toDouble() / 2.)),
-        QPointF(adapter->toSceneX(handle_item->property(HandleItem::P_XPOS).toDouble()
-                                  + handle_item->property(HandleItem::P_RADIUS).toDouble() / 2.),
-                adapter->toSceneY(handle_item->property(HandleItem::P_YPOS).toDouble()
-                                  - handle_item->property(HandleItem::P_RADIUS).toDouble() / 2.)));
+    return QRectF(QPointF(adapter->toSceneX(handle_item->property(HandleItem::P_XPOS).toDouble())
+                              - handle_item->property(HandleItem::P_RADIUS).toDouble() / 2.,
+                          adapter->toSceneY(handle_item->property(HandleItem::P_YPOS).toDouble())
+                              - handle_item->property(HandleItem::P_RADIUS).toDouble() / 2.),
+                  QPointF(adapter->toSceneX(handle_item->property(HandleItem::P_XPOS).toDouble())
+                              + handle_item->property(HandleItem::P_RADIUS).toDouble() / 2.,
+                          adapter->toSceneY(handle_item->property(HandleItem::P_YPOS).toDouble())
+                              + handle_item->property(HandleItem::P_RADIUS).toDouble() / 2.));
 }
 
 //! On move update the model
@@ -101,14 +102,21 @@ void HandleView::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
     if (!adapter)
         return;
 
-    handle_item->setProperty(HandleItem::P_XPOS,
-                             adapter->fromSceneX(double(x() + event->pos().x())));
-    handle_item->setProperty(HandleItem::P_YPOS,
-                             adapter->fromSceneY(double(y() + event->pos().y())));
+    if (allowed_x)
+        handle_item->setProperty(HandleItem::P_XPOS, adapter->fromSceneX(event->pos().x()));
+    if (allowed_y)
+        handle_item->setProperty(HandleItem::P_YPOS, adapter->fromSceneY(event->pos().y()));
 }
 
 //! Return a pointer to the handle item
 HandleItem* HandleView::handleItem() const
 {
     return handle_item;
+}
+
+//! Set the moving trueth of the handle
+void HandleView::setMoveDirections(bool along_x, bool along_y)
+{
+    allowed_x = along_x;
+    allowed_y = along_y;
 }

@@ -18,7 +18,7 @@
 
 HandleItem::HandleItem() : ModelView::CompoundItem("HandleItem")
 {
-    addProperty(P_COLOR, QColor(Qt::red))->setDisplayName("Color");
+    addProperty(P_COLOR, QColor(Qt::black))->setDisplayName("Color");
     addProperty(P_XPOS, 0.0)->setLimits(ModelView::RealLimits::limitless())->setDisplayName("X");
     addProperty(P_YPOS, 0.0)->setLimits(ModelView::RealLimits::limitless())->setDisplayName("Y");
     addProperty(P_RADIUS, 20.)

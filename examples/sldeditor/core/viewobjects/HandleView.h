@@ -32,6 +32,7 @@ public:
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
     QRectF getSceneRect() const;
     HandleItem* handleItem() const;
+    void setMoveDirections(bool along_x, bool along_y);
 
 signals:
     void moved();
@@ -42,6 +43,8 @@ protected:
 private:
     HandleItem* handle_item;
     QColor color;
+    bool allowed_x;
+    bool allowed_y;
 };
 
 #endif // HANDLEVIEW_H

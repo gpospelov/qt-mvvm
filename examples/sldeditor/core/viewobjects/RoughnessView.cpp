@@ -34,22 +34,30 @@ RoughnessView::RoughnessView(RoughnessItem* item) : roughness_item(item)
     HandleItem* right_handle_item = item->model()->insertItem<HandleItem>();
     HandleItem* left_handle_item = item->model()->insertItem<HandleItem>();
 
+    right_handle_item->setProperty(HandleItem::P_COLOR, QColor(Qt::black));
+    left_handle_item->setProperty(HandleItem::P_COLOR, QColor(Qt::black));
+
+    right_handle_item->setProperty(HandleItem::P_RADIUS, 10.);
+    left_handle_item->setProperty(HandleItem::P_RADIUS, 10.);
+
     right_handle = new HandleView(right_handle_item);
     left_handle = new HandleView(left_handle_item);
+
+    right_handle->setMoveDirections(true, false);
+    left_handle->setMoveDirections(true, false);
 
     right_handle->setFlag(QGraphicsItem::ItemIsMovable);
     left_handle->setFlag(QGraphicsItem::ItemIsMovable);
 
     auto on_property_change = [this](ModelView::SessionItem*, std::string property_name) {
         if (property_name == RoughnessItem::P_ROUGHNESS) {
-            update();
-            // moveHandles();
+            refreshFromSegments();
         }
     };
 
     roughness_item->mapper()->setOnPropertyChange(on_property_change, this);
 
-    setZValue(30);
+    setZValue(15);
 }
 
 //! The overriden paint method
@@ -88,8 +96,6 @@ QPainterPath RoughnessView::shape() const
 //! The bounding rectangle of the handle
 QRectF RoughnessView::boundingRect() const
 {
-    double epsilon = 10;
-
     auto adapter = getSceneAdapter();
     if (!adapter)
         return QRectF(0, 0, 1, 1);
@@ -185,39 +191,86 @@ void RoughnessView::setSegments(SegmentView* left_segment_in, SegmentView* middl
     right_segment = right_segment_in;
 
     connectSegments();
+    refreshFromSegments();
+    connectHandles();
 }
 
 //! Connect the handles
-void RoughnessView::connectSegments()
+void RoughnessView::connectHandles()
 {
-    connect(left_segment, &SegmentView::moved, this, &RoughnessView::refreshFromSegments);
-
-    connect(middle_segment, &SegmentView::moved, this, &RoughnessView::refreshFromSegments);
-
-    connect(right_segment, &SegmentView::moved, this, &RoughnessView::refreshFromSegments);
+    connect(left_handle, &HandleView::moved, this, &RoughnessView::refreshFromLeftHandle);
+    connect(right_handle, &HandleView::moved, this, &RoughnessView::refreshFromRightHandle);
 }
 
 //! Disconnect the handle signaling
+void RoughnessView::disconnectHandles()
+{
+    disconnect(left_handle, &HandleView::moved, this, &RoughnessView::refreshFromLeftHandle);
+    disconnect(right_handle, &HandleView::moved, this, &RoughnessView::refreshFromRightHandle);
+}
+
+//! Connect the Segments
+void RoughnessView::connectSegments()
+{
+    connect(left_segment, &SegmentView::moved, this, &RoughnessView::refreshFromSegments);
+    connect(middle_segment, &SegmentView::moved, this, &RoughnessView::refreshFromSegments);
+    connect(right_segment, &SegmentView::moved, this, &RoughnessView::refreshFromSegments);
+}
+
+//! Disconnect the segments signaling
 void RoughnessView::disconnectSegments()
 {
     disconnect(left_segment, &SegmentView::moved, this, &RoughnessView::refreshFromSegments);
-
     disconnect(middle_segment, &SegmentView::moved, this, &RoughnessView::refreshFromSegments);
-
     disconnect(right_segment, &SegmentView::moved, this, &RoughnessView::refreshFromSegments);
+}
+
+//! Refresh the properties from the handle info
+void RoughnessView::refreshFromLeftHandle()
+{
+    if (!left_handle || !right_handle)
+        return;
+
+    disconnectHandles();
+    roughness_item->setProperty(
+        RoughnessItem::P_ROUGHNESS,
+        std::abs(left_handle->handleItem()->property(HandleItem::P_XPOS).toDouble()
+                 - middle_segment->segmentItem()->property(SegmentItem::P_X_POS).toDouble()));
+    refreshFromSegments();
+    connectHandles();
+}
+
+//! Refresh the properties from the handle info
+void RoughnessView::refreshFromRightHandle()
+{
+    if (!left_handle || !right_handle)
+        return;
+
+    disconnectHandles();
+    roughness_item->setProperty(
+        RoughnessItem::P_ROUGHNESS,
+        std::abs(right_handle->handleItem()->property(HandleItem::P_XPOS).toDouble()
+                 - middle_segment->segmentItem()->property(SegmentItem::P_X_POS).toDouble()));
+    refreshFromSegments();
+    connectHandles();
 }
 
 //! Refresh the properties from the handle info
 void RoughnessView::refreshFromSegments()
 {
-    if (!left_segment)
-        return;
-    if (!middle_segment)
-        return;
-    if (!right_segment)
+    if (!left_segment || !middle_segment || !right_segment)
         return;
 
-    return;
+    double width_left = left_segment->segmentItem()->property(SegmentItem::P_WIDTH).toDouble();
+    double width_right = right_segment->segmentItem()->property(SegmentItem::P_WIDTH).toDouble();
+
+    if (roughness_item->property(RoughnessItem::P_ROUGHNESS) > width_left / 2.)
+        roughness_item->setProperty(RoughnessItem::P_ROUGHNESS, width_left / 2.);
+    if (roughness_item->property(RoughnessItem::P_ROUGHNESS) > width_right / 2.)
+        roughness_item->setProperty(RoughnessItem::P_ROUGHNESS, width_right / 2.);
+
+    moveHandles();
+    update();
 }
 
 RoughnessItem* RoughnessView::roughnessItem() const
@@ -225,4 +278,19 @@ RoughnessItem* RoughnessView::roughnessItem() const
     return roughness_item;
 }
 
-void RoughnessView::moveHandles() {}
+void RoughnessView::moveHandles()
+{
+    left_handle->handleItem()->setProperty(
+        HandleItem::P_XPOS, middle_segment->segmentItem()->property(SegmentItem::P_X_POS).toDouble()
+                                - roughness_item->property(RoughnessItem::P_ROUGHNESS).toDouble());
+    right_handle->handleItem()->setProperty(
+        HandleItem::P_XPOS, middle_segment->segmentItem()->property(SegmentItem::P_X_POS).toDouble()
+                                + roughness_item->property(RoughnessItem::P_ROUGHNESS).toDouble());
+
+    left_handle->handleItem()->setProperty(
+        HandleItem::P_YPOS,
+        middle_segment->segmentItem()->property(SegmentItem::P_Y_POS).toDouble());
+    right_handle->handleItem()->setProperty(
+        HandleItem::P_YPOS,
+        middle_segment->segmentItem()->property(SegmentItem::P_Y_POS).toDouble());
+}

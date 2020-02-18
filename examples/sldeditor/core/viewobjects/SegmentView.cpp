@@ -156,7 +156,6 @@ void SegmentView::addHandles(HandleView* left_handle_in, HandleView* right_handl
 void SegmentView::connectHandles()
 {
     connect(left_handle, &HandleView::moved, this, &SegmentView::refreshFromLeftHandle);
-
     connect(right_handle, &HandleView::moved, this, &SegmentView::refreshFromRightHandle);
 }
 
@@ -164,16 +163,13 @@ void SegmentView::connectHandles()
 void SegmentView::disconnectHandles()
 {
     disconnect(left_handle, &HandleView::moved, this, &SegmentView::refreshFromLeftHandle);
-
     disconnect(right_handle, &HandleView::moved, this, &SegmentView::refreshFromRightHandle);
 }
 
 //! Refresh the properties from the handle info
 void SegmentView::refreshFromLeftHandle()
 {
-    if (!left_handle)
-        return;
-    if (!right_handle)
+    if (!left_handle || !right_handle)
         return;
 
     double left_x = left_handle->handleItem()->property(HandleItem::P_XPOS).toDouble();
@@ -197,9 +193,7 @@ void SegmentView::refreshFromLeftHandle()
 //! Refresh the properties from the handle info
 void SegmentView::refreshFromRightHandle()
 {
-    if (!left_handle)
-        return;
-    if (!right_handle)
+    if (!left_handle || !right_handle)
         return;
 
     double left_x = left_handle->handleItem()->property(HandleItem::P_XPOS).toDouble();

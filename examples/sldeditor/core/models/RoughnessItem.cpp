@@ -21,5 +21,5 @@ RoughnessItem::RoughnessItem() : ModelView::CompoundItem("RoughnessItem")
     addProperty(P_ROUGHNESS, 10.)
         ->setLimits(ModelView::RealLimits::limitless())
         ->setDisplayName("Roughness");
-    addProperty(P_COLOR, QColor(Qt::red))->setDisplayName("Color");
+    addProperty(P_COLOR, QColor(Qt::black))->setDisplayName("Color");
 }
