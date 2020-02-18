@@ -13,12 +13,18 @@
 using namespace ModelView;
 
 struct RefViewModel::RefViewModelImpl {
+    RefViewModel* model{nullptr};
     std::unique_ptr<RefViewItem> root;
-    RefViewModelImpl() : root(std::make_unique<RefViewItem>()) {}
+    RefViewModelImpl(RefViewModel* model) : model(model), root(std::make_unique<RefViewItem>()) {}
+
+    bool item_belongs_to_model(RefViewItem* item)
+    {
+        return model->indexFromItem(item).isValid() || item == model->rootItem();
+    }
 };
 
 RefViewModel::RefViewModel(QObject* parent)
-    : QAbstractItemModel(parent), p_impl(std::make_unique<RefViewModelImpl>())
+    : QAbstractItemModel(parent), p_impl(std::make_unique<RefViewModelImpl>(this))
 {
 }
 
@@ -89,13 +95,21 @@ QModelIndex RefViewModel::indexFromItem(const RefViewItem* item) const
                : QModelIndex();
 }
 
+void RefViewModel::removeRow(RefViewItem* parent, int row)
+{
+    if (!p_impl->item_belongs_to_model(parent))
+        throw std::runtime_error("Error in RefViewModel: attempt to use parent from another model");
+
+    beginRemoveRows(indexFromItem(parent), row, row);
+    parent->removeRow(row);
+    endRemoveRows();
+}
+
 //! Appends row of items to given parent.
 
-void RefViewModel::appendRow(RefViewItem* parent,
-                             std::vector<std::unique_ptr<RefViewItem>> items)
+void RefViewModel::appendRow(RefViewItem* parent, std::vector<std::unique_ptr<RefViewItem>> items)
 {
-    const bool parent_belongs_to_model = indexFromItem(parent).isValid() || parent == rootItem();
-    if (!parent_belongs_to_model)
+    if (!p_impl->item_belongs_to_model(parent))
         throw std::runtime_error("Error in RefViewModel: attempt to use parent from another model");
 
     beginInsertRows(indexFromItem(parent), parent->rowCount(), parent->rowCount());

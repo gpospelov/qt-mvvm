@@ -105,6 +105,25 @@ TEST_F(RefViewModelTest, appendRow)
     EXPECT_EQ(viewmodel.parent(child_index), QModelIndex());
 }
 
+TEST_F(RefViewModelTest, removeRow)
+{
+    RefViewModel viewmodel;
+
+    // item to append
+    std::vector<std::unique_ptr<RefViewItem>> children;
+    children.emplace_back(std::make_unique<RefViewItem>());
+
+    // appending one row
+    viewmodel.appendRow(viewmodel.rootItem(), std::move(children));
+    EXPECT_EQ(viewmodel.rowCount(), 1);
+    EXPECT_EQ(viewmodel.columnCount(), 1);
+
+    // removing row
+    viewmodel.removeRow(viewmodel.rootItem(), 0);
+    EXPECT_EQ(viewmodel.rowCount(), 0);
+    EXPECT_EQ(viewmodel.columnCount(), 0);
+}
+
 TEST_F(RefViewModelTest, appendRowToRow)
 {
     RefViewModel viewmodel;
@@ -155,6 +174,7 @@ TEST_F(RefViewModelTest, rowsInserted)
     std::vector<RefViewItem*> expected = {children[0].get(), children[1].get()};
 
     QSignalSpy spyInsert(&viewmodel, &RefViewModel::rowsInserted);
+    QSignalSpy spyRemove(&viewmodel, &RefViewModel::rowsRemoved);
 
     // appending one row
     viewmodel.appendRow(viewmodel.rootItem(), std::move(children));
@@ -162,6 +182,7 @@ TEST_F(RefViewModelTest, rowsInserted)
     EXPECT_EQ(viewmodel.columnCount(), 2);
 
     // checking that signaling is about the parent
+    EXPECT_EQ(spyRemove.count(), 0);
     EXPECT_EQ(spyInsert.count(), 1);
     QList<QVariant> arguments = spyInsert.takeFirst();
     EXPECT_EQ(arguments.size(), 3); // QModelIndex &parent, int first, int last
@@ -174,4 +195,41 @@ TEST_F(RefViewModelTest, rowsInserted)
     auto index1 = viewmodel.index(0, 1, QModelIndex());
     EXPECT_EQ(viewmodel.itemFromIndex(index0), expected[0]);
     EXPECT_EQ(viewmodel.itemFromIndex(index1), expected[1]);
+}
+
+TEST_F(RefViewModelTest, rowsRemoved)
+{
+    RefViewModel viewmodel;
+
+    // three rows of items
+    std::vector<std::unique_ptr<RefViewItem>> children_row0, children_row1, children_row2;
+    children_row0.emplace_back(std::make_unique<RefViewItem>());
+    children_row0.emplace_back(std::make_unique<RefViewItem>());
+    children_row1.emplace_back(std::make_unique<RefViewItem>());
+    children_row1.emplace_back(std::make_unique<RefViewItem>());
+    children_row2.emplace_back(std::make_unique<RefViewItem>());
+    children_row2.emplace_back(std::make_unique<RefViewItem>());
+    std::vector<RefViewItem*> expected_row0 = {children_row0[0].get(), children_row0[1].get()};
+    std::vector<RefViewItem*> expected_row1 = {children_row1[0].get(), children_row1[1].get()};
+    std::vector<RefViewItem*> expected_row2 = {children_row2[0].get(), children_row2[1].get()};
+
+    QSignalSpy spyInsert(&viewmodel, &RefViewModel::rowsInserted);
+    QSignalSpy spyRemove(&viewmodel, &RefViewModel::rowsRemoved);
+
+    // appending one row
+    viewmodel.appendRow(viewmodel.rootItem(), std::move(children_row0));
+    viewmodel.appendRow(viewmodel.rootItem(), std::move(children_row1));
+    viewmodel.appendRow(viewmodel.rootItem(), std::move(children_row2));
+
+    // removing middle row
+    viewmodel.removeRow(viewmodel.rootItem(), 1);
+
+    // checking that signaling is about the parent
+    EXPECT_EQ(spyRemove.count(), 1);
+    EXPECT_EQ(spyInsert.count(), 3);
+    QList<QVariant> arguments = spyRemove.takeFirst();
+    EXPECT_EQ(arguments.size(), 3); // QModelIndex &parent, int first, int last
+    EXPECT_EQ(arguments.at(0).value<QModelIndex>(), QModelIndex());
+    EXPECT_EQ(arguments.at(1).value<int>(), 1);
+    EXPECT_EQ(arguments.at(2).value<int>(), 1);
 }

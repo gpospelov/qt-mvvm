@@ -50,6 +50,8 @@ public:
 
     QModelIndex indexFromItem(const RefViewItem *item) const;
 
+    void removeRow(RefViewItem* parent, int row);
+
     void appendRow(RefViewItem* parent, std::vector<std::unique_ptr<RefViewItem>> items);
 
 private:
