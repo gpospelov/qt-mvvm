@@ -35,6 +35,8 @@ public:
 
     void insertRow(int row, std::vector<std::unique_ptr<RefViewItem>> items);
 
+    void removeRow(int row);
+
     void clear();
 
     RefViewItem* parent() const;

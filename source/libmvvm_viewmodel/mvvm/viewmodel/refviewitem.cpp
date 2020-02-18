@@ -39,11 +39,25 @@ struct RefViewItem::RefViewItemImpl {
         if (row < 0 || row > rows)
             throw std::runtime_error("Error in RefViewItem: invalid row index.");
 
-        children.insert(std::next(children.begin(), row*columns), std::make_move_iterator(items.begin()),
+        children.insert(std::next(children.begin(), row * columns),
+                        std::make_move_iterator(items.begin()),
                         std::make_move_iterator(items.end()));
 
         columns = static_cast<int>(items.size());
         ++rows;
+    }
+
+    void removeRow(int row)
+    {
+        if (row < 0 || row >= rows)
+            throw std::runtime_error("Error in RefViewItem: invalid row index.");
+
+        auto begin = std::next(children.begin(), row * columns);
+        auto end = std::next(begin, columns);
+        children.erase(begin, end);
+        --rows;
+        if (rows == 0)
+            columns = 0;
     }
 
     RefViewItem* child(int row, int column) const
@@ -103,6 +117,13 @@ void RefViewItem::insertRow(int row, std::vector<std::unique_ptr<RefViewItem>> i
     for (auto& x : items)
         x.get()->setParent(this);
     p_impl->insertRow(row, std::move(items));
+}
+
+//! Removes row of items at given 'row'. Items will be deleted.
+
+void RefViewItem::removeRow(int row)
+{
+    p_impl->removeRow(row);
 }
 
 void RefViewItem::clear()

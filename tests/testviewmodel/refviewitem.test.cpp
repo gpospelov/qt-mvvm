@@ -61,6 +61,24 @@ TEST_F(RefViewItemTest, appendRow)
     EXPECT_EQ(expected->column(), 0);
 }
 
+//! Remove row.
+
+TEST_F(RefViewItemTest, removeRow)
+{
+    std::vector<std::unique_ptr<RefViewItem>> children;
+    children.emplace_back(std::make_unique<RefViewItem>());
+
+    // appending row with single item
+    RefViewItem view_item;
+    view_item.appendRow(std::move(children));
+    view_item.removeRow(0);
+
+    // checking parent
+    EXPECT_EQ(view_item.rowCount(), 0);
+    EXPECT_EQ(view_item.columnCount(), 0);
+}
+
+
 //! Append two rows with two items each.
 
 TEST_F(RefViewItemTest, appendTwoRows)
@@ -112,7 +130,7 @@ TEST_F(RefViewItemTest, appendTwoRows)
 
 //! Append two rows with two items each.
 
-TEST_F(RefViewItemTest, insertRow)
+TEST_F(RefViewItemTest, insertRowsThenRemove)
 {
     // preparing two rows of children, two columns each
     std::vector<std::unique_ptr<RefViewItem>> children_row0, children_row1, children_row2;
@@ -162,6 +180,13 @@ TEST_F(RefViewItemTest, insertRow)
     EXPECT_EQ(expected_row1[1]->column(), 1);
     EXPECT_EQ(expected_row2[0]->column(), 0);
     EXPECT_EQ(expected_row2[1]->column(), 1);
+
+    // removing middle row
+    view_item.removeRow(1);
+    EXPECT_EQ(view_item.child(0, 0), expected_row0[0]);
+    EXPECT_EQ(view_item.child(0, 1), expected_row0[1]);
+    EXPECT_EQ(view_item.child(1, 0), expected_row1[0]);
+    EXPECT_EQ(view_item.child(1, 1), expected_row1[1]);
 }
 
 //! Clean item's children.
