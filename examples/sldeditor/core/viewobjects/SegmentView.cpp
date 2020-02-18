@@ -289,3 +289,13 @@ SegmentItem* SegmentView::segmentItem() const
 {
     return segment_item;
 }
+
+HandleView* SegmentView::leftHandle() const
+{
+    return left_handle;
+}
+
+HandleView* SegmentView::rightHandle() const
+{
+    return right_handle;
+}

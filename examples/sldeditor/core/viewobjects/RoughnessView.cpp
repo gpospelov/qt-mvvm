@@ -9,7 +9,6 @@
 #include "RoughnessView.h"
 #include "RoughnessItem.h"
 
-#include "AxisObject.h"
 #include "HandleItem.h"
 #include "HandleView.h"
 #include "SegmentItem.h"
@@ -24,11 +23,10 @@
 #include <cmath>
 #include <mvvm/model/mvvm_types.h>
 #include <mvvm/model/propertyitem.h>
+#include <mvvm/plotting/sceneadapterinterface.h>
 #include <mvvm/signals/itemmapper.h>
 #include <mvvm/utils/numericutils.h>
 #include <mvvm/utils/reallimits.h>
-
-#include <iostream>
 
 //! The constructor
 RoughnessView::RoughnessView(RoughnessItem* item) : roughness_item(item)
@@ -42,17 +40,14 @@ RoughnessView::RoughnessView(RoughnessItem* item) : roughness_item(item)
     right_handle->setFlag(QGraphicsItem::ItemIsMovable);
     left_handle->setFlag(QGraphicsItem::ItemIsMovable);
 
-    // scene()->addItem(right_handle);
-    // scene()->addItem(left_handle);
+    auto on_property_change = [this](ModelView::SessionItem*, std::string property_name) {
+        if (property_name == RoughnessItem::P_ROUGHNESS) {
+            update();
+            // moveHandles();
+        }
+    };
 
-    // auto on_property_change = [this](ModelView::SessionItem*, std::string property_name) {
-    //     if (property_name == RoughnessItem::P_ROUGHNESS) {
-    //         update();
-    //         moveHandles();
-    //     }
-    // };
-
-    // roughness_item->mapper()->setOnPropertyChange(on_property_change, this);
+    roughness_item->mapper()->setOnPropertyChange(on_property_change, this);
 
     setZValue(30);
 }
@@ -64,15 +59,21 @@ void RoughnessView::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QW
     if (!adapter)
         return;
 
-    painter->setPen(Qt::NoPen);
-    painter->setBrush(QColor("red"));
+    ViewObject::paint(painter, nullptr, nullptr);
+
+    auto pen = QPen(Qt::PenStyle::DashLine);
+    pen.setColor(roughness_item->property(RoughnessItem::P_COLOR).value<QColor>());
+
+    painter->setPen(pen);
     painter->drawPath(getPath());
 
     if (!right_handle->scene()) {
         scene()->addItem(right_handle);
+        right_handle->update();
     }
     if (!left_handle->scene()) {
         scene()->addItem(left_handle);
+        left_handle->update();
     }
 }
 
@@ -103,8 +104,75 @@ QPainterPath RoughnessView::getPath() const
     if (!adapter)
         return QPainterPath();
 
+    if (!left_segment || !middle_segment || !right_segment)
+        return QPainterPath();
+
+    double roughness = roughness_item->property(RoughnessItem::P_ROUGHNESS).toDouble();
+
+    double width_left = left_segment->segmentItem()->property(SegmentItem::P_WIDTH).toDouble();
+    double width_mid = middle_segment->segmentItem()->property(SegmentItem::P_WIDTH).toDouble();
+    double width_right = right_segment->segmentItem()->property(SegmentItem::P_WIDTH).toDouble();
+
+    double height_left = left_segment->segmentItem()->property(SegmentItem::P_HEIGHT).toDouble();
+    double height_mid = middle_segment->segmentItem()->property(SegmentItem::P_HEIGHT).toDouble();
+    double height_right = right_segment->segmentItem()->property(SegmentItem::P_HEIGHT).toDouble();
+
+    double pos_x = middle_segment->segmentItem()->property(SegmentItem::P_X_POS).toDouble();
+    double pos_y = middle_segment->segmentItem()->property(SegmentItem::P_Y_POS).toDouble();
+    double comp_left = left_segment->segmentItem()->property(SegmentItem::P_Y_POS).toDouble();
+    double comp_right = right_segment->segmentItem()->property(SegmentItem::P_Y_POS).toDouble();
+
     auto path = QPainterPath();
 
+    if (comp_left > comp_right) {
+        path.moveTo(adapter->toSceneX(pos_x - roughness),
+                    adapter->toSceneY(pos_y - height_mid / 2.) + height_left / 2.);
+        path.lineTo(adapter->toSceneX(pos_x - roughness),
+                    adapter->toSceneY(pos_y + height_mid / 2.));
+        path.lineTo(adapter->toSceneX(pos_x)
+                        - middle_segment->rightHandle()
+                                  ->handleItem()
+                                  ->property(HandleItem::P_RADIUS)
+                                  .toDouble()
+                              / 2.,
+                    adapter->toSceneY(pos_y + height_mid / 2.));
+
+        path.moveTo(adapter->toSceneX(pos_x + roughness),
+                    adapter->toSceneY(pos_y + height_mid / 2.) - height_right / 2.);
+        path.lineTo(adapter->toSceneX(pos_x + roughness),
+                    adapter->toSceneY(pos_y - height_mid / 2.));
+        path.lineTo(adapter->toSceneX(pos_x)
+                        + middle_segment->leftHandle()
+                                  ->handleItem()
+                                  ->property(HandleItem::P_RADIUS)
+                                  .toDouble()
+                              / 2.,
+                    adapter->toSceneY(pos_y - height_mid / 2.));
+    } else {
+        path.moveTo(adapter->toSceneX(pos_x - roughness),
+                    adapter->toSceneY(pos_y - height_mid / 2.) - height_left / 2.);
+        path.lineTo(adapter->toSceneX(pos_x - roughness),
+                    adapter->toSceneY(pos_y + height_mid / 2.));
+        path.lineTo(adapter->toSceneX(pos_x)
+                        - middle_segment->leftHandle()
+                                  ->handleItem()
+                                  ->property(HandleItem::P_RADIUS)
+                                  .toDouble()
+                              / 2.,
+                    adapter->toSceneY(pos_y + height_mid / 2.));
+
+        path.moveTo(adapter->toSceneX(pos_x + roughness),
+                    adapter->toSceneY(pos_y + height_mid / 2.) + height_right / 2.);
+        path.lineTo(adapter->toSceneX(pos_x + roughness),
+                    adapter->toSceneY(pos_y - height_mid / 2.));
+        path.lineTo(adapter->toSceneX(pos_x)
+                        + middle_segment->rightHandle()
+                                  ->handleItem()
+                                  ->property(HandleItem::P_RADIUS)
+                                  .toDouble()
+                              / 2.,
+                    adapter->toSceneY(pos_y - height_mid / 2.));
+    }
     return path;
 }
 

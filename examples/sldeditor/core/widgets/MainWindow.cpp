@@ -147,9 +147,9 @@ void MainWindow::initApplication()
 
     auto roughness_item = models->viewItemsModel()->addRoughness();
     auto roughness_view = new RoughnessView(roughness_item);
-    roughness_view->setSegments(side_segments[0], top_segments[1], side_segments[1]);
+    roughness_view->setSegments(top_segments[1], side_segments[1], top_segments[2]);
 
-    // view_widget->scene()->addItem(roughness_view);
+    view_widget->scene()->addItem(roughness_view);
 
     view_widget->getScene()->setContext();
     // view_widget->getScene()->addItem(axes_view);

@@ -38,6 +38,9 @@ public:
     void refreshFromLeftHandle();
     void refreshFromRightHandle();
 
+    HandleView* leftHandle() const;
+    HandleView* rightHandle() const;
+
 signals:
     void moved();
 
