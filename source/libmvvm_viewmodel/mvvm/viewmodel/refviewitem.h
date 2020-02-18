@@ -43,6 +43,10 @@ public:
 
     int item_role() const;
 
+    int row() const;
+
+    int column() const;
+
 protected:
     void setParent(RefViewItem* parent);
 

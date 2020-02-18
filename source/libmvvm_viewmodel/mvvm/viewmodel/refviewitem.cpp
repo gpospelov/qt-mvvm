@@ -7,9 +7,10 @@
 //
 // ************************************************************************** //
 
+#include <algorithm>
+#include <mvvm/utils/containerutils.h>
 #include <mvvm/viewmodel/refviewitem.h>
 #include <vector>
-#include <algorithm>
 
 using namespace ModelView;
 
@@ -47,9 +48,11 @@ struct RefViewItem::RefViewItemImpl {
         return children.at(static_cast<size_t>(column + row * columns)).get();
     }
 
-    RefViewItem* parent()
+    RefViewItem* parent() { return parent_view_item; }
+
+    int index_of_child(const RefViewItem* child)
     {
-        return parent_view_item;
+        return Utils::IndexOfItem(children.begin(), children.end(), child);
     }
 };
 
@@ -60,10 +63,14 @@ RefViewItem::RefViewItem(SessionItem* item, int role)
 
 RefViewItem::~RefViewItem() = default;
 
+//! Returns the number of child item rows that the item has.
+
 int RefViewItem::rowCount() const
 {
     return p_impl->rows;
 }
+
+//! Returns the number of child item columns that the item has.
 
 int RefViewItem::columnCount() const
 {
@@ -72,7 +79,7 @@ int RefViewItem::columnCount() const
 
 void RefViewItem::appendRow(std::vector<std::unique_ptr<RefViewItem>> items)
 {
-    for(auto& x : items)
+    for (auto& x : items)
         x.get()->setParent(this);
     p_impl->appendRow(std::move(items));
 }
@@ -102,6 +109,24 @@ SessionItem* RefViewItem::item() const
 int RefViewItem::item_role() const
 {
     return p_impl->role;
+}
+
+//! Returns the row where the item is located in its parent's child table, or -1 if the item has no
+//! parent.
+
+int RefViewItem::row() const
+{
+    auto index = parent() ? parent()->p_impl->index_of_child(this) : -1;
+    return index >= 0 ? index / parent()->p_impl->columns : -1;
+}
+
+//! Returns the column where the item is located in its parent's child table, or -1 if the item has
+//! no parent.
+
+int RefViewItem::column() const
+{
+    auto index = parent() ? parent()->p_impl->index_of_child(this) : -1;
+    return index >= 0 ? index % parent()->p_impl->columns : -1;
 }
 
 void RefViewItem::setParent(RefViewItem* parent)
