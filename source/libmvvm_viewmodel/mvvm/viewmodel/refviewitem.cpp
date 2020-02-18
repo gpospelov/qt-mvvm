@@ -15,7 +15,7 @@
 using namespace ModelView;
 
 struct RefViewItem::RefViewItemImpl {
-    std::vector<std::unique_ptr<RefViewItem>> children;
+    std::vector<std::unique_ptr<RefViewItem>> children; //! buffer to hold rows x columns
     int rows{0};
     int columns{0};
     SessionItem* item{nullptr};
@@ -25,14 +25,23 @@ struct RefViewItem::RefViewItemImpl {
 
     void appendRow(std::vector<std::unique_ptr<RefViewItem>> items)
     {
+        insertRow(rows, std::move(items));
+    }
+
+    void insertRow(int row, std::vector<std::unique_ptr<RefViewItem>> items)
+    {
         if (items.empty())
-            throw std::runtime_error("Error in RefViewItem: attempt to append empty row");
+            throw std::runtime_error("Error in RefViewItem: attempt to insert empty row");
 
         if (columns > 0 && items.size() != static_cast<size_t>(columns))
             throw std::runtime_error("Error in RefViewItem: wrong number of columns.");
 
-        children.insert(children.end(), std::make_move_iterator(items.begin()),
+        if (row < 0 || row > rows)
+            throw std::runtime_error("Error in RefViewItem: invalid row index.");
+
+        children.insert(std::next(children.begin(), row*columns), std::make_move_iterator(items.begin()),
                         std::make_move_iterator(items.end()));
+
         columns = static_cast<int>(items.size());
         ++rows;
     }
@@ -77,11 +86,23 @@ int RefViewItem::columnCount() const
     return p_impl->columns;
 }
 
+//! Appends a row containing items. Number of items should be the same as columnCount()
+//! (if there are already some rows). If it is a first row, then items can be of any size.
+
 void RefViewItem::appendRow(std::vector<std::unique_ptr<RefViewItem>> items)
 {
     for (auto& x : items)
         x.get()->setParent(this);
     p_impl->appendRow(std::move(items));
+}
+
+//! Insert a row of items at index 'row'.
+
+void RefViewItem::insertRow(int row, std::vector<std::unique_ptr<RefViewItem>> items)
+{
+    for (auto& x : items)
+        x.get()->setParent(this);
+    p_impl->insertRow(row, std::move(items));
 }
 
 void RefViewItem::clear()

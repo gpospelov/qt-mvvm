@@ -110,6 +110,60 @@ TEST_F(RefViewItemTest, appendTwoRows)
     EXPECT_EQ(view_item.columnCount(), 2);
 }
 
+//! Append two rows with two items each.
+
+TEST_F(RefViewItemTest, insertRow)
+{
+    // preparing two rows of children, two columns each
+    std::vector<std::unique_ptr<RefViewItem>> children_row0, children_row1, children_row2;
+    children_row0.emplace_back(std::make_unique<RefViewItem>());
+    children_row0.emplace_back(std::make_unique<RefViewItem>());
+    children_row1.emplace_back(std::make_unique<RefViewItem>());
+    children_row1.emplace_back(std::make_unique<RefViewItem>());
+    children_row2.emplace_back(std::make_unique<RefViewItem>());
+    children_row2.emplace_back(std::make_unique<RefViewItem>());
+    std::vector<RefViewItem*> expected_row0 = {children_row0[0].get(), children_row0[1].get()};
+    std::vector<RefViewItem*> expected_row1 = {children_row1[0].get(), children_row1[1].get()};
+    std::vector<RefViewItem*> expected_row2 = {children_row2[0].get(), children_row2[1].get()};
+
+    // appending rows
+    RefViewItem view_item;
+    view_item.appendRow(std::move(children_row0));
+    view_item.appendRow(std::move(children_row1));
+    view_item.insertRow(1, std::move(children_row2)); // inserting in-between
+
+    EXPECT_EQ(view_item.rowCount(), 3);
+    EXPECT_EQ(view_item.columnCount(), 2);
+    EXPECT_EQ(view_item.child(0, 0), expected_row0[0]);
+    EXPECT_EQ(view_item.child(0, 1), expected_row0[1]);
+    EXPECT_EQ(view_item.child(1, 0), expected_row2[0]);
+    EXPECT_EQ(view_item.child(1, 1), expected_row2[1]);
+    EXPECT_EQ(view_item.child(2, 0), expected_row1[0]);
+    EXPECT_EQ(view_item.child(2, 1), expected_row1[1]);
+
+    // checking parents
+    EXPECT_EQ(expected_row0[0]->parent(), &view_item);
+    EXPECT_EQ(expected_row0[1]->parent(), &view_item);
+    EXPECT_EQ(expected_row1[0]->parent(), &view_item);
+    EXPECT_EQ(expected_row1[1]->parent(), &view_item);
+    EXPECT_EQ(expected_row2[0]->parent(), &view_item);
+    EXPECT_EQ(expected_row2[1]->parent(), &view_item);
+
+    // checking row and column of children
+    EXPECT_EQ(expected_row0[0]->row(), 0);
+    EXPECT_EQ(expected_row0[1]->row(), 0);
+    EXPECT_EQ(expected_row1[0]->row(), 2);
+    EXPECT_EQ(expected_row1[1]->row(), 2);
+    EXPECT_EQ(expected_row2[0]->row(), 1);
+    EXPECT_EQ(expected_row2[1]->row(), 1);
+    EXPECT_EQ(expected_row0[0]->column(), 0);
+    EXPECT_EQ(expected_row0[1]->column(), 1);
+    EXPECT_EQ(expected_row1[0]->column(), 0);
+    EXPECT_EQ(expected_row1[1]->column(), 1);
+    EXPECT_EQ(expected_row2[0]->column(), 0);
+    EXPECT_EQ(expected_row2[1]->column(), 1);
+}
+
 //! Clean item's children.
 
 TEST_F(RefViewItemTest, clear)
