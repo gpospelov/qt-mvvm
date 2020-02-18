@@ -29,6 +29,17 @@ template <typename C, typename T> int IndexOfItem(const C& container, const T& i
     return pos == container.end() ? -1 : static_cast<int>(std::distance(container.begin(), pos));
 }
 
+
+//! Returns index corresponding to the first occurance of the item in the container.
+//! If item doesn't exist, will return -1.
+
+template <typename It, typename T> int IndexOfItem(It begin, It end, const T& item)
+{
+    auto pos = find(begin, end, item);
+    return pos == end ? -1 : static_cast<int>(std::distance(begin, pos));
+}
+
+
 } // namespace Utils
 
 } // namespace ModelView
