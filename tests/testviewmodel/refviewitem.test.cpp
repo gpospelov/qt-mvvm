@@ -30,6 +30,7 @@ TEST_F(RefViewItemTest, initialState)
 
     EXPECT_EQ(view_item.rowCount(), 0);
     EXPECT_EQ(view_item.columnCount(), 0);
+    EXPECT_EQ(view_item.parent(), nullptr);
     EXPECT_THROW(view_item.child(0, 0), std::runtime_error);
 }
 
@@ -49,33 +50,40 @@ TEST_F(RefViewItemTest, appendRow)
     EXPECT_EQ(view_item.columnCount(), 1);
     EXPECT_EQ(view_item.child(0, 0), expected);
     EXPECT_THROW(view_item.child(0, 1), std::runtime_error);
+    EXPECT_EQ(expected->parent(), &view_item);
 }
 
 //! Append two rows with two items each.
 
 TEST_F(RefViewItemTest, appendTwoRows)
 {
+    // preparing two rows of children, two columns each
     std::vector<std::unique_ptr<RefViewItem>> children_row0, children_row1, children_row2;
-
     children_row0.emplace_back(std::make_unique<RefViewItem>());
     children_row0.emplace_back(std::make_unique<RefViewItem>());
     children_row1.emplace_back(std::make_unique<RefViewItem>());
     children_row1.emplace_back(std::make_unique<RefViewItem>());
+    std::vector<RefViewItem*> expected_row0 = {children_row0[0].get(), children_row0[1].get()};
+    std::vector<RefViewItem*> expected_row1 = {children_row1[0].get(), children_row1[1].get()};
 
-    std::vector<RefViewItem*> expected0 = {children_row0[0].get(), children_row0[1].get()};
-    std::vector<RefViewItem*> expected1 = {children_row1[0].get(), children_row1[1].get()};
-
+    // appending rows
     RefViewItem view_item;
     view_item.appendRow(std::move(children_row0));
     view_item.appendRow(std::move(children_row1));
 
     EXPECT_EQ(view_item.rowCount(), 2);
     EXPECT_EQ(view_item.columnCount(), 2);
-    EXPECT_EQ(view_item.child(0, 0), expected0[0]);
-    EXPECT_EQ(view_item.child(0, 1), expected0[1]);
-    EXPECT_EQ(view_item.child(1, 0), expected1[0]);
-    EXPECT_EQ(view_item.child(1, 1), expected1[1]);
+    EXPECT_EQ(view_item.child(0, 0), expected_row0[0]);
+    EXPECT_EQ(view_item.child(0, 1), expected_row0[1]);
+    EXPECT_EQ(view_item.child(1, 0), expected_row1[0]);
+    EXPECT_EQ(view_item.child(1, 1), expected_row1[1]);
     EXPECT_THROW(view_item.child(2, 2), std::runtime_error);
+
+    // checking parents
+    EXPECT_EQ(expected_row0[0]->parent(), &view_item);
+    EXPECT_EQ(expected_row0[1]->parent(), &view_item);
+    EXPECT_EQ(expected_row1[0]->parent(), &view_item);
+    EXPECT_EQ(expected_row1[1]->parent(), &view_item);
 
     // attempt to add row with different amount of children should fail
     children_row2.emplace_back(std::make_unique<RefViewItem>());
@@ -84,7 +92,7 @@ TEST_F(RefViewItemTest, appendTwoRows)
     EXPECT_EQ(view_item.columnCount(), 2);
 }
 
-//! Append single item as row.
+//! Clean item's children.
 
 TEST_F(RefViewItemTest, clear)
 {

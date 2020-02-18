@@ -9,6 +9,7 @@
 
 #include <mvvm/viewmodel/refviewitem.h>
 #include <vector>
+#include <algorithm>
 
 using namespace ModelView;
 
@@ -16,8 +17,9 @@ struct RefViewItem::RefViewItemImpl {
     std::vector<std::unique_ptr<RefViewItem>> children;
     int rows{0};
     int columns{0};
-    SessionItem* item;
-    int role;
+    SessionItem* item{nullptr};
+    int role{0};
+    RefViewItem* parent_view_item{nullptr};
     RefViewItemImpl(SessionItem* item, int role) : item(item), role(role) {}
 
     void appendRow(std::vector<std::unique_ptr<RefViewItem>> items)
@@ -44,6 +46,11 @@ struct RefViewItem::RefViewItemImpl {
 
         return children.at(static_cast<size_t>(column + row * columns)).get();
     }
+
+    RefViewItem* parent()
+    {
+        return parent_view_item;
+    }
 };
 
 RefViewItem::RefViewItem(SessionItem* item, int role)
@@ -65,6 +72,8 @@ int RefViewItem::columnCount() const
 
 void RefViewItem::appendRow(std::vector<std::unique_ptr<RefViewItem>> items)
 {
+    for(auto& x : items)
+        x.get()->setParent(this);
     p_impl->appendRow(std::move(items));
 }
 
@@ -73,6 +82,11 @@ void RefViewItem::clear()
     p_impl->children.clear();
     p_impl->rows = 0;
     p_impl->columns = 0;
+}
+
+RefViewItem* RefViewItem::parent() const
+{
+    return p_impl->parent();
 }
 
 RefViewItem* RefViewItem::child(int row, int column) const
@@ -88,4 +102,9 @@ SessionItem* RefViewItem::item() const
 int RefViewItem::item_role() const
 {
     return p_impl->role;
+}
+
+void RefViewItem::setParent(RefViewItem* parent)
+{
+    p_impl->parent_view_item = parent;
 }

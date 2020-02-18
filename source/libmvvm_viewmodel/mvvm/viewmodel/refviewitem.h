@@ -35,11 +35,16 @@ public:
 
     void clear();
 
+    RefViewItem* parent() const;
+
     RefViewItem* child(int row, int column) const;
 
     SessionItem* item() const;
 
     int item_role() const;
+
+protected:
+    void setParent(RefViewItem* parent);
 
 private:
     struct RefViewItemImpl;
