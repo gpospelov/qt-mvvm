@@ -67,6 +67,7 @@ TEST_F(RefViewModelTest, initialState)
     auto non_existing_index = viewmodel.index(0, 0, QModelIndex());
     EXPECT_FALSE(non_existing_index.isValid());
     EXPECT_EQ(viewmodel.itemFromIndex(non_existing_index), nullptr);
+    EXPECT_EQ(viewmodel.parent(QModelIndex()), QModelIndex());
 }
 
 TEST_F(RefViewModelTest, appendRow)
@@ -84,17 +85,52 @@ TEST_F(RefViewModelTest, appendRow)
     EXPECT_EQ(viewmodel.columnCount(), 1);
 
     // constructing index for child
-    auto index = viewmodel.index(0, 0, QModelIndex());
-    EXPECT_EQ(index.row(), 0);
-    EXPECT_EQ(index.column(), 0);
-    EXPECT_EQ(index.model(), &viewmodel);
+    auto child_index = viewmodel.index(0, 0, QModelIndex());
+    EXPECT_EQ(child_index.row(), 0);
+    EXPECT_EQ(child_index.column(), 0);
+    EXPECT_EQ(child_index.model(), &viewmodel);
 
     //  getting child from index
-    EXPECT_EQ(viewmodel.itemFromIndex(index), expected);
+    EXPECT_EQ(viewmodel.itemFromIndex(child_index), expected);
 
     // no grand-children
-    EXPECT_EQ(viewmodel.rowCount(index), 0);
-    EXPECT_EQ(viewmodel.columnCount(index), 0);
+    EXPECT_EQ(viewmodel.rowCount(child_index), 0);
+    EXPECT_EQ(viewmodel.columnCount(child_index), 0);
+
+    // parent index
+    EXPECT_EQ(viewmodel.parent(child_index), QModelIndex());
+}
+
+TEST_F(RefViewModelTest, appendRowToRow)
+{
+    RefViewModel viewmodel;
+
+    // preparing two rows of children, two columns each
+    std::vector<std::unique_ptr<RefViewItem>> children_row0, children_row1;
+    children_row0.emplace_back(std::make_unique<RefViewItem>());
+    children_row0.emplace_back(std::make_unique<RefViewItem>());
+    children_row1.emplace_back(std::make_unique<RefViewItem>());
+    children_row1.emplace_back(std::make_unique<RefViewItem>());
+    std::vector<RefViewItem*> expected_row0 = {children_row0[0].get(), children_row0[1].get()};
+    std::vector<RefViewItem*> expected_row1 = {children_row1[0].get(), children_row1[1].get()};
+
+    // appending rows to root
+    viewmodel.appendRow(QModelIndex(), std::move(children_row0));
+    // appending rows to row
+    auto parent_index = viewmodel.index(0, 0, QModelIndex());
+    viewmodel.appendRow(parent_index, std::move(children_row1));
+
+    // checking results
+    EXPECT_EQ(viewmodel.rowCount(QModelIndex()), 1);
+    EXPECT_EQ(viewmodel.columnCount(QModelIndex()), 2);
+    EXPECT_EQ(viewmodel.rowCount(parent_index), 1);
+    EXPECT_EQ(viewmodel.columnCount(parent_index), 2);
+
+    // checking parent index of children in second row
+    auto child0_index = viewmodel.index(0, 0, parent_index);
+    auto child1_index = viewmodel.index(0, 1, parent_index);
+    EXPECT_EQ(viewmodel.parent(child0_index), parent_index);
+    EXPECT_EQ(viewmodel.parent(child1_index), parent_index);
 }
 
 TEST_F(RefViewModelTest, rowsInserted)

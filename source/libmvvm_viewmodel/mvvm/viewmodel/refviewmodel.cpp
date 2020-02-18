@@ -36,7 +36,13 @@ QModelIndex RefViewModel::index(int row, int column, const QModelIndex& parent) 
 
 QModelIndex RefViewModel::parent(const QModelIndex& child) const
 {
-    Q_UNUSED(child)
+    if (auto child_item = itemFromIndex(child); child_item) {
+        auto parent_item = child_item->parent();
+        return parent_item == rootItem()
+                   ? QModelIndex()
+                   : createIndex(parent_item->row(), parent_item->column(), parent_item);
+    }
+
     return QModelIndex();
 }
 
