@@ -9,6 +9,7 @@
 
 #include "google_test.h"
 #include <QSignalSpy>
+#include <QStandardItemModel>
 #include <mvvm/viewmodel/refviewitem.h>
 #include <mvvm/viewmodel/refviewmodel.h>
 
@@ -24,6 +25,36 @@ public:
 
 RefViewModelTest::~RefViewModelTest() = default;
 
+//! Checking behaviour of QStandardItemModel for reference.
+
+TEST_F(RefViewModelTest, standardItemModel)
+{
+    QStandardItemModel model;
+    auto parent = model.invisibleRootItem();
+
+    EXPECT_EQ(model.rowCount(), 0);
+    EXPECT_EQ(model.columnCount(), 0);
+
+    QList<QStandardItem*> children{new QStandardItem, new QStandardItem};
+    parent->appendRow(children);
+    auto index = model.index(0, 1, QModelIndex());
+    EXPECT_EQ(model.itemFromIndex(index), children.at(1));
+
+    // construction of index for non-existing column leads to invalid index
+    auto non_existing_index = model.index(0, 2, QModelIndex());
+    EXPECT_FALSE(non_existing_index.isValid());
+    EXPECT_EQ(non_existing_index, QModelIndex());
+
+    // attempt to retrieve item using this non-existing index leads to nullptr.
+    EXPECT_EQ(model.itemFromIndex(non_existing_index), nullptr);
+
+    // default constructed index gives same nullptr
+    EXPECT_EQ(model.itemFromIndex(QModelIndex()), nullptr);
+
+    // to summarize, default-constructed index, invalid index and index leading to non-existing
+    // item are the same
+}
+
 //! Initial state of empty RefViewModel.
 
 TEST_F(RefViewModelTest, initialState)
@@ -32,10 +63,10 @@ TEST_F(RefViewModelTest, initialState)
     EXPECT_EQ(viewmodel.rowCount(), 0);
     EXPECT_EQ(viewmodel.columnCount(), 0);
     EXPECT_TRUE(viewmodel.rootItem() != nullptr);
-    EXPECT_EQ(viewmodel.rootItem(), viewmodel.itemForIndex(QModelIndex()));
+    EXPECT_EQ(viewmodel.itemFromIndex(QModelIndex()), nullptr);
     auto non_existing_index = viewmodel.index(0, 0, QModelIndex());
     EXPECT_FALSE(non_existing_index.isValid());
-    EXPECT_EQ(viewmodel.itemForIndex(non_existing_index), nullptr);
+    EXPECT_EQ(viewmodel.itemFromIndex(non_existing_index), nullptr);
 }
 
 TEST_F(RefViewModelTest, appendRow)
@@ -59,7 +90,7 @@ TEST_F(RefViewModelTest, appendRow)
     EXPECT_EQ(index.model(), &viewmodel);
 
     //  getting child from index
-    EXPECT_EQ(viewmodel.itemForIndex(index), expected);
+    EXPECT_EQ(viewmodel.itemFromIndex(index), expected);
 
     // no grand-children
     EXPECT_EQ(viewmodel.rowCount(index), 0);
@@ -94,6 +125,6 @@ TEST_F(RefViewModelTest, rowsInserted)
     //  getting child from index
     auto index0 = viewmodel.index(0, 0, QModelIndex());
     auto index1 = viewmodel.index(0, 1, QModelIndex());
-    EXPECT_EQ(viewmodel.itemForIndex(index0), expected[0]);
-    EXPECT_EQ(viewmodel.itemForIndex(index1), expected[1]);
+    EXPECT_EQ(viewmodel.itemFromIndex(index0), expected[0]);
+    EXPECT_EQ(viewmodel.itemFromIndex(index1), expected[1]);
 }

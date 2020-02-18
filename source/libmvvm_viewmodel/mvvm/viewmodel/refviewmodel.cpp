@@ -26,7 +26,7 @@ RefViewModel::~RefViewModel() = default;
 
 QModelIndex RefViewModel::index(int row, int column, const QModelIndex& parent) const
 {
-    auto parent_item = itemForIndex(parent);
+    auto parent_item = itemFromIndex(parent) ? itemFromIndex(parent) : rootItem();
     const bool is_valid_row = row >= 0 && row < rowCount(parent);
     const bool is_valid_column = column >= 0 && column < columnCount(parent);
     return is_valid_row && is_valid_column
@@ -42,12 +42,14 @@ QModelIndex RefViewModel::parent(const QModelIndex& child) const
 
 int RefViewModel::rowCount(const QModelIndex& parent) const
 {
-    return itemForIndex(parent)->rowCount();
+    auto parent_item = itemFromIndex(parent);
+    return parent_item ? parent_item->rowCount() : rootItem()->rowCount();
 }
 
 int RefViewModel::columnCount(const QModelIndex& parent) const
 {
-    return itemForIndex(parent)->columnCount();
+    auto parent_item = itemFromIndex(parent);
+    return parent_item ? parent_item->columnCount() : rootItem()->columnCount();
 }
 
 QVariant RefViewModel::data(const QModelIndex& index, int role) const
@@ -57,21 +59,25 @@ QVariant RefViewModel::data(const QModelIndex& index, int role) const
     return QVariant();
 }
 
+//! Returns a pointer to invisible root item.
+
 RefViewItem* RefViewModel::rootItem() const
 {
     return p_impl->root.get();
 }
 
-RefViewItem* RefViewModel::itemForIndex(const QModelIndex& index) const
+//! Returns a pointer to the RefViewItem associated with the given index.
+//! If index is invalid, returns nullptr.
+
+RefViewItem* RefViewModel::itemFromIndex(const QModelIndex& index) const
 {
-    return index.isValid() ? static_cast<RefViewItem*>(index.internalPointer())
-                           : p_impl->root.get();
+    return index.isValid() ? static_cast<RefViewItem*>(index.internalPointer()) : nullptr;
 }
 
 void RefViewModel::appendRow(const QModelIndex& parent,
                              std::vector<std::unique_ptr<RefViewItem>> items)
 {
-    auto parent_item = itemForIndex(parent);
+    auto parent_item = itemFromIndex(parent) ? itemFromIndex(parent) : rootItem();
     beginInsertRows(parent, parent_item->rowCount(), parent_item->rowCount());
     parent_item->appendRow(std::move(items));
     endInsertRows();
