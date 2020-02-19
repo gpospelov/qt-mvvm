@@ -11,7 +11,11 @@
 #define TESTUTILS_H
 
 #include <mvvm/model/customvariants.h>
+#include <memory>
 #include <QString>
+
+//! @file test_utils.h
+//! @brief Collection of utility functions for various unit tests.
 
 class QJsonObject;
 class QJsonArray;
@@ -47,6 +51,8 @@ QString ModelToJsonString(ModelView::SessionModel& model);
 
 QJsonDocument LoadJson(const QString& fileName);
 
+//! Deletes items in the container and cleans container afterwards.
+
 template<typename T>
 void clean_items(T& items) {
     for (auto item : items)
@@ -54,6 +60,26 @@ void clean_items(T& items) {
     items.clear();
 }
 
+//! Creates vector of unique_ptr of given type.
+
+template<typename B, typename D> auto create_row(int ncolumns)
+{
+    std::vector<std::unique_ptr<B>> result;
+    for (int i=0; i<ncolumns; ++i)
+        result.emplace_back(std::make_unique<D>());
+    return result;
+}
+
+//! Creates vector of pointers from vector of unique_ptr.
+
+template<typename T>
+auto create_pointers(const std::vector<std::unique_ptr<T>>& vec)
+{
+    std::vector<T*> result;
+    std::transform(vec.begin(), vec.end(), std::back_inserter(result),
+                   [](auto& x) { return x.get(); });
+    return result;
+}
 
 }
 

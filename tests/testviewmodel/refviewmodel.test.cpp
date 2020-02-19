@@ -12,6 +12,7 @@
 #include <QStandardItemModel>
 #include <mvvm/viewmodel/refviewitem.h>
 #include <mvvm/viewmodel/refviewmodel.h>
+#include "test_utils.h"
 
 using namespace ModelView;
 
@@ -32,10 +33,7 @@ public:
 
     std::vector<std::unique_ptr<RefViewItem>> create_row(int ncolumns) const
     {
-        std::vector<std::unique_ptr<RefViewItem>> result;
-        for (int i = 0; i < ncolumns; ++i)
-            result.emplace_back(std::make_unique<TestItem>());
-        return result;
+        return TestUtils::create_row<RefViewItem, TestItem>(ncolumns);
     }
 
     //! Helper function to get vector of bare pointer out of vector of unique_ptr.
@@ -43,10 +41,7 @@ public:
 
     std::vector<RefViewItem*> get_expected(const std::vector<std::unique_ptr<RefViewItem>>& vec)
     {
-        std::vector<RefViewItem*> result;
-        std::transform(vec.begin(), vec.end(), std::back_inserter(result),
-                       [](auto& x) { return x.get(); });
-        return result;
+        return TestUtils::create_pointers(vec);
     }
 };
 
