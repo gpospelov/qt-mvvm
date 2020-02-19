@@ -27,6 +27,27 @@ public:
         TestItem() : RefViewItem(nullptr, 0) {}
         ~TestItem() override;
     };
+
+    //! Helper function to create row of test items.
+
+    std::vector<std::unique_ptr<RefViewItem>> create_row(int ncolumns) const
+    {
+        std::vector<std::unique_ptr<RefViewItem>> result;
+        for (int i = 0; i < ncolumns; ++i)
+            result.emplace_back(std::make_unique<TestItem>());
+        return result;
+    }
+
+    //! Helper function to get vector of bare pointer out of vector of unique_ptr.
+    //! Used to validate logic when using std::move.
+
+    std::vector<RefViewItem*> get_expected(const std::vector<std::unique_ptr<RefViewItem>>& vec)
+    {
+        std::vector<RefViewItem*> result;
+        std::transform(vec.begin(), vec.end(), std::back_inserter(result),
+                       [](auto& x) { return x.get(); });
+        return result;
+    }
 };
 
 RefViewModelTest::~RefViewModelTest() = default;
@@ -83,9 +104,8 @@ TEST_F(RefViewModelTest, appendRow)
     RefViewModel viewmodel;
 
     // item to append
-    std::vector<std::unique_ptr<RefViewItem>> children;
-    children.emplace_back(std::make_unique<TestItem>());
-    RefViewItem* expected = children[0].get();
+    auto children = create_row(/*ncolumns*/ 1);
+    auto expected = get_expected(children);
 
     // appending one row
     viewmodel.appendRow(viewmodel.rootItem(), std::move(children));
@@ -99,10 +119,10 @@ TEST_F(RefViewModelTest, appendRow)
     EXPECT_EQ(child_index.model(), &viewmodel);
 
     // indexFromItem
-    EXPECT_EQ(viewmodel.indexFromItem(expected), child_index);
+    EXPECT_EQ(viewmodel.indexFromItem(expected[0]), child_index);
 
     //  getting child from index
-    EXPECT_EQ(viewmodel.itemFromIndex(child_index), expected);
+    EXPECT_EQ(viewmodel.itemFromIndex(child_index), expected[0]);
 
     // no grand-children
     EXPECT_EQ(viewmodel.rowCount(child_index), 0);
@@ -117,8 +137,7 @@ TEST_F(RefViewModelTest, removeRow)
     RefViewModel viewmodel;
 
     // item to append
-    std::vector<std::unique_ptr<RefViewItem>> children;
-    children.emplace_back(std::make_unique<TestItem>());
+    auto children = create_row(/*ncolumns*/ 1);
 
     // appending one row
     viewmodel.appendRow(viewmodel.rootItem(), std::move(children));
@@ -136,13 +155,10 @@ TEST_F(RefViewModelTest, appendRowToRow)
     RefViewModel viewmodel;
 
     // preparing two rows of children, two columns each
-    std::vector<std::unique_ptr<RefViewItem>> children_row0, children_row1;
-    children_row0.emplace_back(std::make_unique<TestItem>());
-    children_row0.emplace_back(std::make_unique<TestItem>());
-    children_row1.emplace_back(std::make_unique<TestItem>());
-    children_row1.emplace_back(std::make_unique<TestItem>());
-    std::vector<RefViewItem*> expected_row0 = {children_row0[0].get(), children_row0[1].get()};
-    std::vector<RefViewItem*> expected_row1 = {children_row1[0].get(), children_row1[1].get()};
+    auto children_row0 = create_row(/*ncolumns*/ 2);
+    auto children_row1 = create_row(/*ncolumns*/ 2);
+    auto expected_row0 = get_expected(children_row0);
+    auto expected_row1 = get_expected(children_row1);
 
     // appending rows to root
     viewmodel.appendRow(viewmodel.rootItem(), std::move(children_row0));
@@ -175,10 +191,8 @@ TEST_F(RefViewModelTest, onRowsAppended)
     RefViewModel viewmodel;
 
     // two items to append as a single row with two columns
-    std::vector<std::unique_ptr<RefViewItem>> children;
-    children.emplace_back(std::make_unique<TestItem>());
-    children.emplace_back(std::make_unique<TestItem>());
-    std::vector<RefViewItem*> expected = {children[0].get(), children[1].get()};
+    auto children = create_row(/*ncolumns*/ 2);
+    auto expected = get_expected(children);
 
     QSignalSpy spyInsert(&viewmodel, &RefViewModel::rowsInserted);
     QSignalSpy spyRemove(&viewmodel, &RefViewModel::rowsRemoved);
@@ -209,16 +223,12 @@ TEST_F(RefViewModelTest, rowsRemoved)
     RefViewModel viewmodel;
 
     // three rows of items
-    std::vector<std::unique_ptr<RefViewItem>> children_row0, children_row1, children_row2;
-    children_row0.emplace_back(std::make_unique<TestItem>());
-    children_row0.emplace_back(std::make_unique<TestItem>());
-    children_row1.emplace_back(std::make_unique<TestItem>());
-    children_row1.emplace_back(std::make_unique<TestItem>());
-    children_row2.emplace_back(std::make_unique<TestItem>());
-    children_row2.emplace_back(std::make_unique<TestItem>());
-    std::vector<RefViewItem*> expected_row0 = {children_row0[0].get(), children_row0[1].get()};
-    std::vector<RefViewItem*> expected_row1 = {children_row1[0].get(), children_row1[1].get()};
-    std::vector<RefViewItem*> expected_row2 = {children_row2[0].get(), children_row2[1].get()};
+    auto children_row0 = create_row(/*ncolumns*/ 2);
+    auto children_row1 = create_row(/*ncolumns*/ 2);
+    auto children_row2 = create_row(/*ncolumns*/ 2);
+    auto expected_row0 = get_expected(children_row0);
+    auto expected_row1 = get_expected(children_row1);
+    auto expected_row2 = get_expected(children_row2);
 
     QSignalSpy spyInsert(&viewmodel, &RefViewModel::rowsInserted);
     QSignalSpy spyRemove(&viewmodel, &RefViewModel::rowsRemoved);
