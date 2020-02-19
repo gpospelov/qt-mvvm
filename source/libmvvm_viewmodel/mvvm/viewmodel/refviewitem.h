@@ -13,6 +13,7 @@
 #include <memory>
 #include <mvvm/core/export.h>
 #include <vector>
+#include <QVariant>
 
 namespace ModelView
 {
@@ -49,6 +50,10 @@ public:
     int row() const;
 
     int column() const;
+
+    QVariant data(int qt_role) const;
+
+    void setData(const QVariant& value, int qt_role);
 
 protected:
     RefViewItem(SessionItem* item, int role);
