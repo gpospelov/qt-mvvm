@@ -22,6 +22,7 @@ class RefViewModelTest : public ::testing::Test
 {
 public:
     ~RefViewModelTest();
+
     class TestItem : public RefViewItem
     {
     public:
