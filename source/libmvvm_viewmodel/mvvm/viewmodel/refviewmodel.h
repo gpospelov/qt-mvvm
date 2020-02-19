@@ -52,6 +52,8 @@ public:
 
     void removeRow(RefViewItem* parent, int row);
 
+    void insertRow(RefViewItem* parent, int row, std::vector<std::unique_ptr<RefViewItem>> items);
+
     void appendRow(RefViewItem* parent, std::vector<std::unique_ptr<RefViewItem>> items);
 
 private:

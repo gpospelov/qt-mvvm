@@ -105,14 +105,22 @@ void RefViewModel::removeRow(RefViewItem* parent, int row)
     endRemoveRows();
 }
 
-//! Appends row of items to given parent.
+//! Insert a row of items at index 'row' to given parent.
 
-void RefViewModel::appendRow(RefViewItem* parent, std::vector<std::unique_ptr<RefViewItem>> items)
+void RefViewModel::insertRow(RefViewItem* parent, int row,
+                             std::vector<std::unique_ptr<RefViewItem>> items)
 {
     if (!p_impl->item_belongs_to_model(parent))
         throw std::runtime_error("Error in RefViewModel: attempt to use parent from another model");
 
-    beginInsertRows(indexFromItem(parent), parent->rowCount(), parent->rowCount());
+    beginInsertRows(indexFromItem(parent), row, row);
     parent->appendRow(std::move(items));
     endInsertRows();
+}
+
+//! Appends row of items to given parent.
+
+void RefViewModel::appendRow(RefViewItem* parent, std::vector<std::unique_ptr<RefViewItem>> items)
+{
+    insertRow(parent, parent->rowCount(), std::move(items));
 }

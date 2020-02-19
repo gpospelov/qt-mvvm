@@ -163,7 +163,7 @@ TEST_F(RefViewModelTest, appendRowToRow)
     EXPECT_EQ(viewmodel.indexFromItem(expected_row1[1]), grandchild1_index);
 }
 
-TEST_F(RefViewModelTest, rowsInserted)
+TEST_F(RefViewModelTest, onRowsAppended)
 {
     RefViewModel viewmodel;
 
