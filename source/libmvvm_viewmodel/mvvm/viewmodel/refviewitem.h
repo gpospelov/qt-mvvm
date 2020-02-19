@@ -51,9 +51,9 @@ public:
 
     int column() const;
 
-    QVariant data(int qt_role) const;
+    virtual QVariant data(int qt_role) const;
 
-    void setData(const QVariant& value, int qt_role);
+    virtual void setData(const QVariant& value, int qt_role);
 
 protected:
     RefViewItem(SessionItem* item, int role);
