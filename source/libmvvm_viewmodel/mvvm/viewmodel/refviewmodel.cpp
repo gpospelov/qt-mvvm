@@ -15,7 +15,7 @@ using namespace ModelView;
 struct RefViewModel::RefViewModelImpl {
     RefViewModel* model{nullptr};
     std::unique_ptr<RefViewItem> root;
-    RefViewModelImpl(RefViewModel* model) : model(model), root(std::make_unique<RefViewItem>()) {}
+    RefViewModelImpl(RefViewModel* model) : model(model) {}
 
     bool item_belongs_to_model(RefViewItem* item)
     {
@@ -26,6 +26,7 @@ struct RefViewModel::RefViewModelImpl {
 RefViewModel::RefViewModel(QObject* parent)
     : QAbstractItemModel(parent), p_impl(std::make_unique<RefViewModelImpl>(this))
 {
+    p_impl->root = std::unique_ptr<RefViewItem>(new RefViewItem(nullptr, 0));
 }
 
 RefViewModel::~RefViewModel() = default;

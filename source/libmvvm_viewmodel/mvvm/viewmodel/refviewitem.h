@@ -24,7 +24,6 @@ class SessionItem;
 class CORE_EXPORT RefViewItem
 {
 public:
-    explicit RefViewItem(SessionItem* item = nullptr, int role = 0);
     virtual ~RefViewItem();
 
     int rowCount() const;
@@ -52,9 +51,11 @@ public:
     int column() const;
 
 protected:
+    RefViewItem(SessionItem* item, int role);
     void setParent(RefViewItem* parent);
 
 private:
+    friend class RefViewModel;
     struct RefViewItemImpl;
     std::unique_ptr<RefViewItemImpl> p_impl;
 };

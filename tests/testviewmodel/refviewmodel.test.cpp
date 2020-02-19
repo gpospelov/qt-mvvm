@@ -21,9 +21,16 @@ class RefViewModelTest : public ::testing::Test
 {
 public:
     ~RefViewModelTest();
+    class TestItem : public RefViewItem
+    {
+    public:
+        TestItem() : RefViewItem(nullptr, 0) {}
+        ~TestItem() override;
+    };
 };
 
 RefViewModelTest::~RefViewModelTest() = default;
+RefViewModelTest::TestItem::~TestItem() = default;
 
 //! Checking behaviour of QStandardItemModel for reference.
 
@@ -77,7 +84,7 @@ TEST_F(RefViewModelTest, appendRow)
 
     // item to append
     std::vector<std::unique_ptr<RefViewItem>> children;
-    children.emplace_back(std::make_unique<RefViewItem>());
+    children.emplace_back(std::make_unique<TestItem>());
     RefViewItem* expected = children[0].get();
 
     // appending one row
@@ -111,7 +118,7 @@ TEST_F(RefViewModelTest, removeRow)
 
     // item to append
     std::vector<std::unique_ptr<RefViewItem>> children;
-    children.emplace_back(std::make_unique<RefViewItem>());
+    children.emplace_back(std::make_unique<TestItem>());
 
     // appending one row
     viewmodel.appendRow(viewmodel.rootItem(), std::move(children));
@@ -130,10 +137,10 @@ TEST_F(RefViewModelTest, appendRowToRow)
 
     // preparing two rows of children, two columns each
     std::vector<std::unique_ptr<RefViewItem>> children_row0, children_row1;
-    children_row0.emplace_back(std::make_unique<RefViewItem>());
-    children_row0.emplace_back(std::make_unique<RefViewItem>());
-    children_row1.emplace_back(std::make_unique<RefViewItem>());
-    children_row1.emplace_back(std::make_unique<RefViewItem>());
+    children_row0.emplace_back(std::make_unique<TestItem>());
+    children_row0.emplace_back(std::make_unique<TestItem>());
+    children_row1.emplace_back(std::make_unique<TestItem>());
+    children_row1.emplace_back(std::make_unique<TestItem>());
     std::vector<RefViewItem*> expected_row0 = {children_row0[0].get(), children_row0[1].get()};
     std::vector<RefViewItem*> expected_row1 = {children_row1[0].get(), children_row1[1].get()};
 
@@ -169,8 +176,8 @@ TEST_F(RefViewModelTest, onRowsAppended)
 
     // two items to append as a single row with two columns
     std::vector<std::unique_ptr<RefViewItem>> children;
-    children.emplace_back(std::make_unique<RefViewItem>());
-    children.emplace_back(std::make_unique<RefViewItem>());
+    children.emplace_back(std::make_unique<TestItem>());
+    children.emplace_back(std::make_unique<TestItem>());
     std::vector<RefViewItem*> expected = {children[0].get(), children[1].get()};
 
     QSignalSpy spyInsert(&viewmodel, &RefViewModel::rowsInserted);
@@ -203,12 +210,12 @@ TEST_F(RefViewModelTest, rowsRemoved)
 
     // three rows of items
     std::vector<std::unique_ptr<RefViewItem>> children_row0, children_row1, children_row2;
-    children_row0.emplace_back(std::make_unique<RefViewItem>());
-    children_row0.emplace_back(std::make_unique<RefViewItem>());
-    children_row1.emplace_back(std::make_unique<RefViewItem>());
-    children_row1.emplace_back(std::make_unique<RefViewItem>());
-    children_row2.emplace_back(std::make_unique<RefViewItem>());
-    children_row2.emplace_back(std::make_unique<RefViewItem>());
+    children_row0.emplace_back(std::make_unique<TestItem>());
+    children_row0.emplace_back(std::make_unique<TestItem>());
+    children_row1.emplace_back(std::make_unique<TestItem>());
+    children_row1.emplace_back(std::make_unique<TestItem>());
+    children_row2.emplace_back(std::make_unique<TestItem>());
+    children_row2.emplace_back(std::make_unique<TestItem>());
     std::vector<RefViewItem*> expected_row0 = {children_row0[0].get(), children_row0[1].get()};
     std::vector<RefViewItem*> expected_row1 = {children_row1[0].get(), children_row1[1].get()};
     std::vector<RefViewItem*> expected_row2 = {children_row2[0].get(), children_row2[1].get()};
