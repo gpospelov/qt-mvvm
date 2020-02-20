@@ -29,3 +29,11 @@ QVariant RefViewLabelItem::data(int role) const
 //! ---------------------------------------------------------------------------
 
 RefViewDataItem::RefViewDataItem(SessionItem* item) : RefViewItem(item, ItemDataRole::DATA) {}
+
+Qt::ItemFlags RefViewDataItem::flags() const
+{
+    Qt::ItemFlags result = RefViewItem::flags();
+    if (item() && item()->isEditable() && item()->isEnabled())
+        result |= Qt::ItemIsEditable;
+    return result;
+}

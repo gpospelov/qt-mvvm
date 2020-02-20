@@ -206,13 +206,22 @@ QVariant RefViewItem::data(int qt_role) const
 }
 
 //! Sets the data to underlying SessionItem.
-//! Converts data and roles from Qt definiutions to what SessionItem expects.
+//! Converts data and roles from Qt definitions to what SessionItem expects.
 
 bool RefViewItem::setData(const QVariant& value, int qt_role)
 {
     if (p_impl->item && qt_role == Qt::EditRole)
         return p_impl->item->setData(Utils::toCustomVariant(value), p_impl->role);
     return false;
+}
+
+//! Returns Qt's item flags.
+//! Converts internal SessionItem's status enable/disabled/readonly to what Qt expects.
+
+Qt::ItemFlags RefViewItem::flags() const
+{
+    Qt::ItemFlags result = Qt::ItemIsSelectable | Qt::ItemIsEnabled;
+    return result;
 }
 
 void RefViewItem::setParent(RefViewItem* parent)

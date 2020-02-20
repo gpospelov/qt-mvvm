@@ -142,3 +142,13 @@ void RefViewModel::appendRow(RefViewItem* parent, std::vector<std::unique_ptr<Re
 {
     insertRow(parent, parent->rowCount(), std::move(items));
 }
+
+//! Returns the item flags for the given index.
+
+Qt::ItemFlags RefViewModel::flags(const QModelIndex& index) const
+{
+    Qt::ItemFlags result = QAbstractItemModel::flags(index);
+    if (auto item = itemFromIndex(index); item)
+        result |= item->flags();
+    return result;
+}

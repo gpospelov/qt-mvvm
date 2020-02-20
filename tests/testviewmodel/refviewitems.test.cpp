@@ -23,6 +23,10 @@ public:
 
 RefViewItemsTest::~RefViewItemsTest() = default;
 
+// ----------------------------------------------------------------------------
+// Tests for ViewLabelItem
+// ----------------------------------------------------------------------------
+
 TEST_F(RefViewItemsTest, ViewLabelItem_initialState)
 {
     auto item = std::make_unique<SessionItem>();
@@ -71,6 +75,22 @@ TEST_F(RefViewItemsTest, ViewLabelItem_setData)
     QVariant not_allowed_value(42);
     EXPECT_THROW(viewItem.setData(not_allowed_value, Qt::EditRole), std::runtime_error);
 }
+
+//! Testing ViewLabelItem::flags.
+
+TEST_F(RefViewItemsTest, ViewLabelItem_flags)
+{
+    SessionItem item;
+    QVariant expected = QVariant::fromValue(std::string("Layer"));
+    EXPECT_TRUE(item.setData(expected, ItemDataRole::DISPLAY));
+
+    RefViewLabelItem viewItem(&item);
+    EXPECT_FALSE(viewItem.flags() & Qt::ItemIsEditable);
+}
+
+// ----------------------------------------------------------------------------
+// Tests for ViewDataItem
+// ----------------------------------------------------------------------------
 
 TEST_F(RefViewItemsTest, ViewDataItem_initialState)
 {
@@ -179,4 +199,16 @@ TEST_F(RefViewItemsTest, ViewDataItem_setDataForColor)
     // it is not allowed to set another type of data to ViewDataItem
     QVariant not_allowed_value("Layer");
     EXPECT_THROW(viewItem.setData(not_allowed_value, Qt::EditRole), std::runtime_error);
+}
+
+//! Testing ViewLabelItem::flags.
+
+TEST_F(RefViewItemsTest, ViewDataItem_flags)
+{
+    SessionItem item;
+    QVariant expected = QVariant::fromValue(std::string("Layer"));
+    EXPECT_TRUE(item.setData(expected, ItemDataRole::DATA));
+
+    RefViewDataItem viewItem(&item);
+    EXPECT_TRUE(viewItem.flags() & Qt::ItemIsEditable);
 }

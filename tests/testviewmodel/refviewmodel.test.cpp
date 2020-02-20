@@ -295,3 +295,29 @@ TEST_F(RefViewModelTest, setData)
     QVector<int> expected_roles{Qt::EditRole};
     EXPECT_EQ(arguments.at(2).value<QVector<int>>(), expected_roles);
 }
+
+TEST_F(RefViewModelTest, flags)
+{
+    SessionItem item;
+    QVariant expected(42.0);
+    item.setData(expected);
+    item.setDisplayName("Name");
+
+    children_t children;
+    children.emplace_back(std::make_unique<RefViewLabelItem>(&item));
+    children.emplace_back(std::make_unique<RefViewDataItem>(&item));
+
+    RefViewModel viewmodel;
+    viewmodel.appendRow(viewmodel.rootItem(), std::move(children));
+
+    QModelIndex label_index = viewmodel.index(0, 0, QModelIndex());
+    QModelIndex data_index = viewmodel.index(0, 1, QModelIndex());
+
+    EXPECT_TRUE(viewmodel.flags(label_index) & Qt::ItemIsSelectable);
+    EXPECT_TRUE(viewmodel.flags(label_index) & Qt::ItemIsEnabled);
+    EXPECT_FALSE(viewmodel.flags(label_index) & Qt::ItemIsEditable);
+
+    EXPECT_TRUE(viewmodel.flags(data_index) & Qt::ItemIsSelectable);
+    EXPECT_TRUE(viewmodel.flags(data_index) & Qt::ItemIsEnabled);
+    EXPECT_TRUE(viewmodel.flags(data_index) & Qt::ItemIsEditable);
+}

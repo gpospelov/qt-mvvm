@@ -55,6 +55,8 @@ public:
 
     virtual bool setData(const QVariant& value, int qt_role);
 
+    virtual Qt::ItemFlags flags() const;
+
 protected:
     RefViewItem(SessionItem* item, int role);
     void setParent(RefViewItem* parent);

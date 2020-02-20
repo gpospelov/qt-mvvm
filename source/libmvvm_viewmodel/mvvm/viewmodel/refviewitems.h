@@ -33,6 +33,9 @@ class CORE_EXPORT RefViewDataItem : public RefViewItem
 {
 public:
     explicit RefViewDataItem(SessionItem* item);
+
+    Qt::ItemFlags flags() const override;
+
 };
 
 } // namespace ModelView
