@@ -12,6 +12,8 @@
 #include <QStandardItemModel>
 #include <mvvm/viewmodel/refviewitem.h>
 #include <mvvm/viewmodel/refviewmodel.h>
+#include <mvvm/viewmodel/refviewitems.h>
+#include <mvvm/model/sessionitem.h>
 #include "test_utils.h"
 
 using namespace ModelView;
@@ -30,9 +32,12 @@ public:
         ~TestItem() override;
     };
 
+    using children_t = std::vector<std::unique_ptr<RefViewItem>>;
+    using expected_t = std::vector<RefViewItem*>;
+
     //! Helper function to create row of test items.
 
-    std::vector<std::unique_ptr<RefViewItem>> create_row(int ncolumns) const
+    children_t create_row(int ncolumns) const
     {
         return TestUtils::create_row<RefViewItem, TestItem>(ncolumns);
     }
@@ -40,7 +45,7 @@ public:
     //! Helper function to get vector of bare pointer out of vector of unique_ptr.
     //! Used to validate logic when using std::move.
 
-    std::vector<RefViewItem*> get_expected(const std::vector<std::unique_ptr<RefViewItem>>& vec)
+    expected_t get_expected(const children_t& vec)
     {
         return TestUtils::create_pointers(vec);
     }
@@ -245,4 +250,21 @@ TEST_F(RefViewModelTest, rowsRemoved)
     EXPECT_EQ(arguments.at(0).value<QModelIndex>(), QModelIndex());
     EXPECT_EQ(arguments.at(1).value<int>(), 1);
     EXPECT_EQ(arguments.at(2).value<int>(), 1);
+}
+
+TEST_F(RefViewModelTest, data)
+{
+    SessionItem item;
+    QVariant expected(42.0);
+    item.setData(expected);
+
+    children_t children;
+    children.emplace_back(std::make_unique<RefViewDataItem>(&item));
+
+    RefViewModel viewmodel;
+    viewmodel.appendRow(viewmodel.rootItem(), std::move(children));
+
+    QModelIndex children_index = viewmodel.index(0, 0, QModelIndex());
+
+    EXPECT_EQ(viewmodel.data(children_index, Qt::EditRole), expected);
 }

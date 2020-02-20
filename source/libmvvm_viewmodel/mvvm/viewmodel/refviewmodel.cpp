@@ -67,9 +67,11 @@ int RefViewModel::columnCount(const QModelIndex& parent) const
 
 QVariant RefViewModel::data(const QModelIndex& index, int role) const
 {
-    Q_UNUSED(index)
-    Q_UNUSED(role)
-    return QVariant();
+    if (!rootItem())
+        return QVariant();
+
+    auto item = itemFromIndex(index);
+    return item ? item->data(role) : QVariant();
 }
 
 //! Returns a pointer to invisible root item.
