@@ -35,17 +35,17 @@ public:
     using children_t = std::vector<std::unique_ptr<RefViewItem>>;
     using expected_t = std::vector<RefViewItem*>;
 
-    //! Helper function to create row of test items.
+    //! Helper function to get two vectors, each ncolumns length, in the form of a pair.
+    //! First vector contains unique_ptr objects, second vector bare pointers to same objects.
+    //! First vector is intended to be moved inside a model, second vector is to validate
+    //! the content of a model after the move.
 
-    children_t create_row(int ncolumns) const
+    std::pair<children_t, expected_t> test_data(int ncolumns)
     {
-        return TestUtils::create_row<RefViewItem, TestItem>(ncolumns);
+        auto vector_of_unique = TestUtils::create_row<RefViewItem, TestItem>(ncolumns);
+        auto vector_of_pointers = TestUtils::create_pointers(vector_of_unique);
+        return std::make_pair(std::move(vector_of_unique), std::move(vector_of_pointers));
     }
-
-    //! Helper function to get vector of bare pointer out of vector of unique_ptr.
-    //! Used to validate logic when using std::move.
-
-    expected_t get_expected(const children_t& vec) { return TestUtils::create_pointers(vec); }
 };
 
 RefViewModelTest::~RefViewModelTest() = default;
@@ -102,8 +102,7 @@ TEST_F(RefViewModelTest, appendRow)
     RefViewModel viewmodel;
 
     // item to append
-    auto children = create_row(/*ncolumns*/ 1);
-    auto expected = get_expected(children);
+    auto [children, expected] = test_data(/*ncolumns*/ 1);
 
     // appending one row
     viewmodel.appendRow(viewmodel.rootItem(), std::move(children));
@@ -135,7 +134,7 @@ TEST_F(RefViewModelTest, removeRow)
     RefViewModel viewmodel;
 
     // item to append
-    auto children = create_row(/*ncolumns*/ 1);
+    auto [children, expected] = test_data(/*ncolumns*/ 1);
 
     // appending one row
     viewmodel.appendRow(viewmodel.rootItem(), std::move(children));
@@ -153,10 +152,8 @@ TEST_F(RefViewModelTest, appendRowToRow)
     RefViewModel viewmodel;
 
     // preparing two rows of children, two columns each
-    auto children_row0 = create_row(/*ncolumns*/ 2);
-    auto children_row1 = create_row(/*ncolumns*/ 2);
-    auto expected_row0 = get_expected(children_row0);
-    auto expected_row1 = get_expected(children_row1);
+    auto [children_row0, expected_row0] = test_data(/*ncolumns*/ 2);
+    auto [children_row1, expected_row1] = test_data(/*ncolumns*/ 2);
 
     // appending rows to root
     viewmodel.appendRow(viewmodel.rootItem(), std::move(children_row0));
@@ -189,8 +186,7 @@ TEST_F(RefViewModelTest, onRowsAppended)
     RefViewModel viewmodel;
 
     // two items to append as a single row with two columns
-    auto children = create_row(/*ncolumns*/ 2);
-    auto expected = get_expected(children);
+    auto [children, expected] = test_data(/*ncolumns*/ 2);
 
     QSignalSpy spyInsert(&viewmodel, &RefViewModel::rowsInserted);
     QSignalSpy spyRemove(&viewmodel, &RefViewModel::rowsRemoved);
@@ -221,12 +217,9 @@ TEST_F(RefViewModelTest, rowsRemoved)
     RefViewModel viewmodel;
 
     // three rows of items
-    auto children_row0 = create_row(/*ncolumns*/ 2);
-    auto children_row1 = create_row(/*ncolumns*/ 2);
-    auto children_row2 = create_row(/*ncolumns*/ 2);
-    auto expected_row0 = get_expected(children_row0);
-    auto expected_row1 = get_expected(children_row1);
-    auto expected_row2 = get_expected(children_row2);
+    auto [children_row0, expected_row0] = test_data(/*ncolumns*/ 2);
+    auto [children_row1, expected_row1] = test_data(/*ncolumns*/ 2);
+    auto [children_row2, expected_row2] = test_data(/*ncolumns*/ 2);
 
     QSignalSpy spyInsert(&viewmodel, &RefViewModel::rowsInserted);
     QSignalSpy spyRemove(&viewmodel, &RefViewModel::rowsRemoved);
