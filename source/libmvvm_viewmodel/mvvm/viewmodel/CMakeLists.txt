@@ -25,6 +25,10 @@ target_sources(mvvm_viewmodel PRIVATE
     refviewitem.h
     refviewitems.cpp
     refviewitems.h
+    refviewmodelcontroller.cpp
+    refviewmodelcontroller.h
+    refcontrolledviewmodel.cpp
+    refcontrolledviewmodel.h
     rowstrategyinterface.h
     standardchildrenstrategies.cpp
     standardchildrenstrategies.h
