@@ -53,7 +53,7 @@ public:
 
     virtual QVariant data(int qt_role) const;
 
-    virtual void setData(const QVariant& value, int qt_role);
+    virtual bool setData(const QVariant& value, int qt_role);
 
 protected:
     RefViewItem(SessionItem* item, int role);

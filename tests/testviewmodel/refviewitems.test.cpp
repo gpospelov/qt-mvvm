@@ -60,7 +60,7 @@ TEST_F(RefViewItemsTest, ViewLabelItem_setData)
     // initialize viewItem with sessionItem and set the data
     RefViewLabelItem viewItem(item.get());
     QVariant new_data("MultiLayer");
-    viewItem.setData(new_data, Qt::EditRole);
+    EXPECT_TRUE(viewItem.setData(new_data, Qt::EditRole));
     EXPECT_EQ(viewItem.data(Qt::DisplayRole), new_data); // new data
     EXPECT_EQ(viewItem.data(Qt::EditRole), new_data);    // new data
 
@@ -110,7 +110,7 @@ TEST_F(RefViewItemsTest, ViewDataItem_setDataForDouble)
     // initialize viewItem with sessionItem and set the data
     RefViewDataItem viewItem(item.get());
     QVariant new_data(43.0);
-    viewItem.setData(new_data, Qt::EditRole);
+    EXPECT_TRUE(viewItem.setData(new_data, Qt::EditRole));
     EXPECT_EQ(viewItem.data(Qt::DisplayRole), new_data); // new data
     EXPECT_EQ(viewItem.data(Qt::EditRole), new_data);    // new data
 
@@ -120,6 +120,23 @@ TEST_F(RefViewItemsTest, ViewDataItem_setDataForDouble)
     // it is not allowed to set another type of data to ViewDataItem
     QVariant not_allowed_value("Layer");
     EXPECT_THROW(viewItem.setData(not_allowed_value, Qt::EditRole), std::runtime_error);
+}
+
+//! ViewDataItem::setData for double values.
+//! Checks that setting of same data returns false.
+
+TEST_F(RefViewItemsTest, ViewDataItem_setSameData)
+{
+    // create SessionItem with data on board
+    auto item = std::make_unique<SessionItem>();
+    QVariant expected(42.0);
+    EXPECT_TRUE(item->setData(expected));
+
+    // initialize viewItem with sessionItem and set the data
+    RefViewDataItem viewItem(item.get());
+    QVariant new_data(42.0);
+    EXPECT_FALSE(viewItem.setData(new_data, Qt::EditRole));
+    EXPECT_EQ(viewItem.data(Qt::EditRole), new_data); // new data
 }
 
 //! ViewDataItem::data method for QColor.
@@ -151,7 +168,7 @@ TEST_F(RefViewItemsTest, ViewDataItem_setDataForColor)
     // initialize viewItem with sessionItem and set the data
     RefViewDataItem viewItem(item.get());
     QVariant new_data = QVariant::fromValue(QColor(Qt::red));
-    viewItem.setData(new_data, Qt::EditRole);
+    EXPECT_TRUE(viewItem.setData(new_data, Qt::EditRole));
     EXPECT_EQ(viewItem.data(Qt::DisplayRole), new_data);    // new data
     EXPECT_EQ(viewItem.data(Qt::EditRole), new_data);       // new data
     EXPECT_EQ(viewItem.data(Qt::DecorationRole), new_data); // new data

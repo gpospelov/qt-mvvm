@@ -208,10 +208,11 @@ QVariant RefViewItem::data(int qt_role) const
 //! Sets the data to underlying SessionItem.
 //! Converts data and roles from Qt definiutions to what SessionItem expects.
 
-void RefViewItem::setData(const QVariant& value, int qt_role)
+bool RefViewItem::setData(const QVariant& value, int qt_role)
 {
     if (p_impl->item && qt_role == Qt::EditRole)
-        p_impl->item->setData(Utils::toCustomVariant(value), p_impl->role);
+        return p_impl->item->setData(Utils::toCustomVariant(value), p_impl->role);
+    return false;
 }
 
 void RefViewItem::setParent(RefViewItem* parent)
