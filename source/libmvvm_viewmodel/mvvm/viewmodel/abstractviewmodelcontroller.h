@@ -66,7 +66,6 @@ protected:
     virtual void onItemRemoved(SessionItem* parent, TagRow tagrow);
 
 private:
-    void reset_view_model();
     struct AbstractViewModelControllerImpl;
     std::unique_ptr<AbstractViewModelControllerImpl> p_impl;
 };
