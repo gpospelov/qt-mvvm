@@ -58,7 +58,8 @@ public:
 
     void appendRow(RefViewItem* parent, std::vector<std::unique_ptr<RefViewItem>> items);
 
-    Qt::ItemFlags flags(const QModelIndex& index) const;
+    Qt::ItemFlags flags(const QModelIndex& index) const override;
+
 private:
     struct RefViewModelImpl;
     std::unique_ptr<RefViewModelImpl> p_impl;

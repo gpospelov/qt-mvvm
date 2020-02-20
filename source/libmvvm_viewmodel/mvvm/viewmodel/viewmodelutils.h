@@ -30,9 +30,9 @@ class SessionItem;
 namespace Utils
 {
 
-//! Iterates through QStandardItem model
-CORE_EXPORT void iterate_model(const QStandardItemModel* model, const QModelIndex& parent,
-                               std::function<void(QStandardItem*)> fun);
+//! Iterates through QAbstractItem model
+CORE_EXPORT void iterate_model(const QAbstractItemModel* model, const QModelIndex& parent,
+                               std::function<void(const QModelIndex& child)> fun);
 
 //! Returns vector of all ViewItems representing given SessionItem.
 CORE_EXPORT std::vector<ViewItem*> findViews(const QStandardItemModel* model,

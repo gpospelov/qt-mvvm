@@ -38,9 +38,7 @@ public:
 
     void setRowStrategy(std::unique_ptr<RowStrategyInterface> row_strategy);
 
-
     SessionModel* sessionModel() const;
-
 
 private:
     struct RefViewModelControllerImpl;
