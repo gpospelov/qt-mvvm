@@ -8,13 +8,13 @@
 // ************************************************************************** //
 
 #include "google_test.h"
+#include "test_utils.h"
 #include <QSignalSpy>
 #include <QStandardItemModel>
-#include <mvvm/viewmodel/refviewitem.h>
-#include <mvvm/viewmodel/refviewmodel.h>
-#include <mvvm/viewmodel/refviewitems.h>
 #include <mvvm/model/sessionitem.h>
-#include "test_utils.h"
+#include <mvvm/viewmodel/refviewitem.h>
+#include <mvvm/viewmodel/refviewitems.h>
+#include <mvvm/viewmodel/refviewmodel.h>
 
 using namespace ModelView;
 
@@ -45,10 +45,7 @@ public:
     //! Helper function to get vector of bare pointer out of vector of unique_ptr.
     //! Used to validate logic when using std::move.
 
-    expected_t get_expected(const children_t& vec)
-    {
-        return TestUtils::create_pointers(vec);
-    }
+    expected_t get_expected(const children_t& vec) { return TestUtils::create_pointers(vec); }
 };
 
 RefViewModelTest::~RefViewModelTest() = default;
@@ -267,4 +264,34 @@ TEST_F(RefViewModelTest, data)
     QModelIndex children_index = viewmodel.index(0, 0, QModelIndex());
 
     EXPECT_EQ(viewmodel.data(children_index, Qt::EditRole), expected);
+}
+
+TEST_F(RefViewModelTest, setData)
+{
+    // creating single item
+    SessionItem item;
+    QVariant expected(42.0);
+    item.setData(expected);
+
+    // creating view model displaying given SessionItem
+    children_t children;
+    children.emplace_back(std::make_unique<RefViewDataItem>(&item));
+    RefViewModel viewmodel;
+    viewmodel.appendRow(viewmodel.rootItem(), std::move(children));
+
+    QSignalSpy spyData(&viewmodel, &RefViewModel::dataChanged);
+
+    // changing the data
+    QModelIndex children_index = viewmodel.index(0, 0, QModelIndex());
+    QVariant new_value(43.0);
+    EXPECT_TRUE(viewmodel.setData(children_index, new_value, Qt::EditRole));
+
+    // checking signaling
+    EXPECT_EQ(spyData.count(), 1);
+    QList<QVariant> arguments = spyData.takeFirst();
+    EXPECT_EQ(arguments.size(), 3); // QModelIndex &parent, int first, int last
+    EXPECT_EQ(arguments.at(0).value<QModelIndex>(), children_index);
+    EXPECT_EQ(arguments.at(1).value<QModelIndex>(), children_index);
+    QVector<int> expected_roles{Qt::EditRole};
+    EXPECT_EQ(arguments.at(2).value<QVector<int>>(), expected_roles);
 }

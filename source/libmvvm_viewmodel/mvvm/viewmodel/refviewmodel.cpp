@@ -74,6 +74,21 @@ QVariant RefViewModel::data(const QModelIndex& index, int role) const
     return item ? item->data(role) : QVariant();
 }
 
+bool RefViewModel::setData(const QModelIndex& index, const QVariant& value, int role)
+{
+    if (!index.isValid())
+        return false;
+
+    if (auto item = itemFromIndex(index); item) {
+        bool result = item->setData(value, role);
+        if (result)
+            dataChanged(index, index, QVector<int>() << role);
+        return result;
+    }
+
+    return false;
+}
+
 //! Returns a pointer to invisible root item.
 
 RefViewItem* RefViewModel::rootItem() const
