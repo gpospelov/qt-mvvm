@@ -40,6 +40,8 @@ TEST_F(RefViewModelControllerTest, initialState)
     RefViewModel view_model;
     auto controller = create_controller(&session_model, &view_model);
 
+    EXPECT_EQ(controller->sessionModel(), &session_model);
+    EXPECT_EQ(controller->rootSessionItem(), session_model.rootItem());
     EXPECT_EQ(view_model.columnCount(), 0);
     EXPECT_EQ(view_model.rowCount(), 0);
 }

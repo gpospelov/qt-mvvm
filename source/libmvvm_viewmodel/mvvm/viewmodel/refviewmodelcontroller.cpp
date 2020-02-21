@@ -77,3 +77,8 @@ void RefViewModelController::setRootSessionItem(SessionItem* item)
 {
     p_impl->view_model->setRootViewItem(std::make_unique<RefRootViewItem>(item));
 }
+
+SessionItem* RefViewModelController::rootSessionItem() const
+{
+    return p_impl->view_model->rootItem()->item();
+}
