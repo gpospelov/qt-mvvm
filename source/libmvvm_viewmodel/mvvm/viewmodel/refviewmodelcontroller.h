@@ -45,6 +45,8 @@ public:
 
     SessionItem* rootSessionItem() const;
 
+    void init();
+
 private:
     struct RefViewModelControllerImpl;
     std::unique_ptr<RefViewModelControllerImpl> p_impl;

@@ -44,6 +44,15 @@ struct RefViewModelController::RefViewModelControllerImpl {
         if (!children_strategy)
             throw std::runtime_error(msg + "Children is not defined");
     }
+
+    void init_view_model()
+    {
+        check_initialization();
+        view_model->clear();
+        // iterate
+        // update labels
+    }
+
 };
 
 RefViewModelController::RefViewModelController(SessionModel* session_model,
@@ -81,4 +90,12 @@ void RefViewModelController::setRootSessionItem(SessionItem* item)
 SessionItem* RefViewModelController::rootSessionItem() const
 {
     return p_impl->view_model->rootItem()->item();
+}
+
+//! Init controller and update the model.
+
+void RefViewModelController::init()
+{
+    p_impl->init_view_model();
+
 }
