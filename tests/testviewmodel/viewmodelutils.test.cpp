@@ -58,7 +58,8 @@ TEST_F(ViewModelUtilsTest, iterate)
     std::vector<int> expected = {1, 2, 3, 4, 10, 20};
     std::vector<int> result;
 
-    Utils::iterate_model(&model, QModelIndex(), [&](const QStandardItem* item) {
+    Utils::iterate_model(&model, QModelIndex(), [&](const QModelIndex& index) {
+        auto item = model.itemFromIndex(index);
         result.push_back(item->data(Qt::EditRole).value<int>());
     });
 

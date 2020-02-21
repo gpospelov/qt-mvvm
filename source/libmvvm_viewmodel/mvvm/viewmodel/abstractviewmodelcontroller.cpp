@@ -116,7 +116,7 @@ void AbstractViewModelController::setSessionModel(SessionModel* model)
 
         auto on_model_reset = [this](SessionModel*) {
             setRootSessionItem(nullptr);
-            reset_view_model();
+           p_impl->reset_view_model();
         };
         sessionModel()->mapper()->setOnModelReset(on_model_reset, this);
 
@@ -133,11 +133,6 @@ void AbstractViewModelController::setChildrenStrategy(
 void AbstractViewModelController::setRowStrategy(std::unique_ptr<RowStrategyInterface> row_strategy)
 {
     p_impl->m_row_strategy = std::move(row_strategy);
-}
-
-void AbstractViewModelController::reset_view_model()
-{
-    p_impl->reset_view_model();
 }
 
 void AbstractViewModelController::iterate(const SessionItem* item, QStandardItem* parent)
@@ -159,7 +154,7 @@ void AbstractViewModelController::iterate(const SessionItem* item, QStandardItem
 void AbstractViewModelController::init_view_model()
 {
     check_initialization();
-    reset_view_model();
+    p_impl->reset_view_model();
     iterate(rootSessionItem(), p_impl->m_view_model->rootViewItem());
     p_impl->update_labels();
 }

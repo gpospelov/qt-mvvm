@@ -87,7 +87,7 @@ is intentionally made Qt-independent. The idea behind is the following:
 
 In large Qt applications the business logic gets quickly spoiled with presentation
 logic. Qt classes like `QModelIndex` start to appear everywhere,
-even in places which has nothing to do with Qt graphics. Attempt to store GUI 
+even in places which have nothing to do with Qt graphics. Attempt to store GUI
 session data in `QAbstractItemModel` leads to inflexible layout in Qt trees and tables. Attempt to fix this with `QAbstractProxyModel` leads to appearance of
 overwhelmingly complicated proxy models. Removing Qt from dependencies allows
 to focus more on common needs (i.e. objects/properties construction/editing) of GUI applications rather than on presentation details.

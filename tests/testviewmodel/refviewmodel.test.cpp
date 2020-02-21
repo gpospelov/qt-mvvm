@@ -8,9 +8,12 @@
 // ************************************************************************** //
 
 #include "google_test.h"
+#include "test_utils.h"
 #include <QSignalSpy>
 #include <QStandardItemModel>
+#include <mvvm/model/sessionitem.h>
 #include <mvvm/viewmodel/refviewitem.h>
+#include <mvvm/viewmodel/refviewitems.h>
 #include <mvvm/viewmodel/refviewmodel.h>
 
 using namespace ModelView;
@@ -21,9 +24,32 @@ class RefViewModelTest : public ::testing::Test
 {
 public:
     ~RefViewModelTest();
+
+    class TestItem : public RefViewItem
+    {
+    public:
+        TestItem() : RefViewItem(nullptr, 0) {}
+        ~TestItem() override;
+    };
+
+    using children_t = std::vector<std::unique_ptr<RefViewItem>>;
+    using expected_t = std::vector<RefViewItem*>;
+
+    //! Helper function to get two vectors, each ncolumns length, in the form of a pair.
+    //! First vector contains unique_ptr objects, second vector bare pointers to same objects.
+    //! First vector is intended to be moved inside a model, second vector is to validate
+    //! the content of a model after the move.
+
+    std::pair<children_t, expected_t> test_data(int ncolumns)
+    {
+        auto vector_of_unique = TestUtils::create_row<RefViewItem, TestItem>(ncolumns);
+        auto vector_of_pointers = TestUtils::create_pointers(vector_of_unique);
+        return std::make_pair(std::move(vector_of_unique), std::move(vector_of_pointers));
+    }
 };
 
 RefViewModelTest::~RefViewModelTest() = default;
+RefViewModelTest::TestItem::~TestItem() = default;
 
 //! Checking behaviour of QStandardItemModel for reference.
 
@@ -76,9 +102,7 @@ TEST_F(RefViewModelTest, appendRow)
     RefViewModel viewmodel;
 
     // item to append
-    std::vector<std::unique_ptr<RefViewItem>> children;
-    children.emplace_back(std::make_unique<RefViewItem>());
-    RefViewItem* expected = children[0].get();
+    auto [children, expected] = test_data(/*ncolumns*/ 1);
 
     // appending one row
     viewmodel.appendRow(viewmodel.rootItem(), std::move(children));
@@ -92,10 +116,10 @@ TEST_F(RefViewModelTest, appendRow)
     EXPECT_EQ(child_index.model(), &viewmodel);
 
     // indexFromItem
-    EXPECT_EQ(viewmodel.indexFromItem(expected), child_index);
+    EXPECT_EQ(viewmodel.indexFromItem(expected[0]), child_index);
 
     //  getting child from index
-    EXPECT_EQ(viewmodel.itemFromIndex(child_index), expected);
+    EXPECT_EQ(viewmodel.itemFromIndex(child_index), expected[0]);
 
     // no grand-children
     EXPECT_EQ(viewmodel.rowCount(child_index), 0);
@@ -110,8 +134,7 @@ TEST_F(RefViewModelTest, removeRow)
     RefViewModel viewmodel;
 
     // item to append
-    std::vector<std::unique_ptr<RefViewItem>> children;
-    children.emplace_back(std::make_unique<RefViewItem>());
+    auto [children, expected] = test_data(/*ncolumns*/ 1);
 
     // appending one row
     viewmodel.appendRow(viewmodel.rootItem(), std::move(children));
@@ -129,13 +152,8 @@ TEST_F(RefViewModelTest, appendRowToRow)
     RefViewModel viewmodel;
 
     // preparing two rows of children, two columns each
-    std::vector<std::unique_ptr<RefViewItem>> children_row0, children_row1;
-    children_row0.emplace_back(std::make_unique<RefViewItem>());
-    children_row0.emplace_back(std::make_unique<RefViewItem>());
-    children_row1.emplace_back(std::make_unique<RefViewItem>());
-    children_row1.emplace_back(std::make_unique<RefViewItem>());
-    std::vector<RefViewItem*> expected_row0 = {children_row0[0].get(), children_row0[1].get()};
-    std::vector<RefViewItem*> expected_row1 = {children_row1[0].get(), children_row1[1].get()};
+    auto [children_row0, expected_row0] = test_data(/*ncolumns*/ 2);
+    auto [children_row1, expected_row1] = test_data(/*ncolumns*/ 2);
 
     // appending rows to root
     viewmodel.appendRow(viewmodel.rootItem(), std::move(children_row0));
@@ -163,15 +181,12 @@ TEST_F(RefViewModelTest, appendRowToRow)
     EXPECT_EQ(viewmodel.indexFromItem(expected_row1[1]), grandchild1_index);
 }
 
-TEST_F(RefViewModelTest, rowsInserted)
+TEST_F(RefViewModelTest, onRowsAppended)
 {
     RefViewModel viewmodel;
 
     // two items to append as a single row with two columns
-    std::vector<std::unique_ptr<RefViewItem>> children;
-    children.emplace_back(std::make_unique<RefViewItem>());
-    children.emplace_back(std::make_unique<RefViewItem>());
-    std::vector<RefViewItem*> expected = {children[0].get(), children[1].get()};
+    auto [children, expected] = test_data(/*ncolumns*/ 2);
 
     QSignalSpy spyInsert(&viewmodel, &RefViewModel::rowsInserted);
     QSignalSpy spyRemove(&viewmodel, &RefViewModel::rowsRemoved);
@@ -202,16 +217,9 @@ TEST_F(RefViewModelTest, rowsRemoved)
     RefViewModel viewmodel;
 
     // three rows of items
-    std::vector<std::unique_ptr<RefViewItem>> children_row0, children_row1, children_row2;
-    children_row0.emplace_back(std::make_unique<RefViewItem>());
-    children_row0.emplace_back(std::make_unique<RefViewItem>());
-    children_row1.emplace_back(std::make_unique<RefViewItem>());
-    children_row1.emplace_back(std::make_unique<RefViewItem>());
-    children_row2.emplace_back(std::make_unique<RefViewItem>());
-    children_row2.emplace_back(std::make_unique<RefViewItem>());
-    std::vector<RefViewItem*> expected_row0 = {children_row0[0].get(), children_row0[1].get()};
-    std::vector<RefViewItem*> expected_row1 = {children_row1[0].get(), children_row1[1].get()};
-    std::vector<RefViewItem*> expected_row2 = {children_row2[0].get(), children_row2[1].get()};
+    auto [children_row0, expected_row0] = test_data(/*ncolumns*/ 2);
+    auto [children_row1, expected_row1] = test_data(/*ncolumns*/ 2);
+    auto [children_row2, expected_row2] = test_data(/*ncolumns*/ 2);
 
     QSignalSpy spyInsert(&viewmodel, &RefViewModel::rowsInserted);
     QSignalSpy spyRemove(&viewmodel, &RefViewModel::rowsRemoved);
@@ -232,4 +240,77 @@ TEST_F(RefViewModelTest, rowsRemoved)
     EXPECT_EQ(arguments.at(0).value<QModelIndex>(), QModelIndex());
     EXPECT_EQ(arguments.at(1).value<int>(), 1);
     EXPECT_EQ(arguments.at(2).value<int>(), 1);
+}
+
+TEST_F(RefViewModelTest, data)
+{
+    SessionItem item;
+    QVariant expected(42.0);
+    item.setData(expected);
+
+    children_t children;
+    children.emplace_back(std::make_unique<RefViewDataItem>(&item));
+
+    RefViewModel viewmodel;
+    viewmodel.appendRow(viewmodel.rootItem(), std::move(children));
+
+    QModelIndex children_index = viewmodel.index(0, 0, QModelIndex());
+
+    EXPECT_EQ(viewmodel.data(children_index, Qt::EditRole), expected);
+}
+
+TEST_F(RefViewModelTest, setData)
+{
+    // creating single item
+    SessionItem item;
+    QVariant expected(42.0);
+    item.setData(expected);
+
+    // creating view model displaying given SessionItem
+    children_t children;
+    children.emplace_back(std::make_unique<RefViewDataItem>(&item));
+    RefViewModel viewmodel;
+    viewmodel.appendRow(viewmodel.rootItem(), std::move(children));
+
+    QSignalSpy spyData(&viewmodel, &RefViewModel::dataChanged);
+
+    // changing the data
+    QModelIndex children_index = viewmodel.index(0, 0, QModelIndex());
+    QVariant new_value(43.0);
+    EXPECT_TRUE(viewmodel.setData(children_index, new_value, Qt::EditRole));
+
+    // checking signaling
+    EXPECT_EQ(spyData.count(), 1);
+    QList<QVariant> arguments = spyData.takeFirst();
+    EXPECT_EQ(arguments.size(), 3); // QModelIndex &parent, int first, int last
+    EXPECT_EQ(arguments.at(0).value<QModelIndex>(), children_index);
+    EXPECT_EQ(arguments.at(1).value<QModelIndex>(), children_index);
+    QVector<int> expected_roles{Qt::EditRole};
+    EXPECT_EQ(arguments.at(2).value<QVector<int>>(), expected_roles);
+}
+
+TEST_F(RefViewModelTest, flags)
+{
+    SessionItem item;
+    QVariant expected(42.0);
+    item.setData(expected);
+    item.setDisplayName("Name");
+
+    children_t children;
+    children.emplace_back(std::make_unique<RefViewLabelItem>(&item));
+    children.emplace_back(std::make_unique<RefViewDataItem>(&item));
+
+    RefViewModel viewmodel;
+    viewmodel.appendRow(viewmodel.rootItem(), std::move(children));
+
+    QModelIndex label_index = viewmodel.index(0, 0, QModelIndex());
+    QModelIndex data_index = viewmodel.index(0, 1, QModelIndex());
+
+    EXPECT_TRUE(viewmodel.flags(label_index) & Qt::ItemIsSelectable);
+    EXPECT_TRUE(viewmodel.flags(label_index) & Qt::ItemIsEnabled);
+    EXPECT_FALSE(viewmodel.flags(label_index) & Qt::ItemIsEditable);
+
+    EXPECT_TRUE(viewmodel.flags(data_index) & Qt::ItemIsSelectable);
+    EXPECT_TRUE(viewmodel.flags(data_index) & Qt::ItemIsEnabled);
+    EXPECT_TRUE(viewmodel.flags(data_index) & Qt::ItemIsEditable);
 }

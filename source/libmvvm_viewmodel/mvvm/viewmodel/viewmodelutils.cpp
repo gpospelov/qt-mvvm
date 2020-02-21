@@ -20,8 +20,8 @@
 
 using namespace ModelView;
 
-void Utils::iterate_model(const QStandardItemModel* model, const QModelIndex& parent,
-                          std::function<void(QStandardItem*)> fun)
+void Utils::iterate_model(const QAbstractItemModel* model, const QModelIndex& parent,
+                          std::function<void(const QModelIndex& child)> fun)
 {
     if (!model)
         return;
@@ -29,9 +29,8 @@ void Utils::iterate_model(const QStandardItemModel* model, const QModelIndex& pa
     for (int row = 0; row < model->rowCount(parent); ++row) {
         for (int col = 0; col < model->columnCount(parent); ++col) {
             auto index = model->index(row, col, parent);
-            auto item = model->itemFromIndex(index);
-            if (item)
-                fun(item);
+            if (index.isValid())
+                fun(index);
         }
         for (int col = 0; col < model->columnCount(parent); ++col) {
             auto index = model->index(row, col, parent);
@@ -45,12 +44,14 @@ std::vector<ViewItem*> Utils::findViews(const QStandardItemModel* model,
                                         const QModelIndex& parent)
 {
     std::vector<ViewItem*> result;
-    iterate_model(model, parent, [&](QStandardItem* standard_item) {
+    auto on_item = [&](const QModelIndex& index) {
+        auto standard_item = model->itemFromIndex(index);
         if (auto view = dynamic_cast<ViewItem*>(standard_item)) {
             if (view->item() == item)
                 result.push_back(view);
         }
-    });
+    };
+    iterate_model(model, parent, on_item);
 
     return result;
 }
@@ -113,7 +114,7 @@ std::vector<SessionItem*> Utils::ItemsFromIndex(const QModelIndexList& index_lis
 std::vector<SessionItem*> Utils::ParentItemsFromIndex(const QModelIndexList& index_list)
 {
     std::set<SessionItem*> unique_parents;
-    for(auto item : ItemsFromIndex(index_list))
+    for (auto item : ItemsFromIndex(index_list))
         if (item)
             unique_parents.insert(item->parent());
 

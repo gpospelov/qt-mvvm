@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include "google_test.h"
+#include "test_utils.h"
 #include <mvvm/viewmodel/refviewitem.h>
 
 using namespace ModelView;
@@ -18,15 +19,37 @@ class RefViewItemTest : public ::testing::Test
 {
 public:
     ~RefViewItemTest();
+    class TestItem : public RefViewItem
+    {
+    public:
+        TestItem() : RefViewItem(nullptr, 0) {}
+        ~TestItem() override;
+    };
+
+    using children_t = std::vector<std::unique_ptr<RefViewItem>>;
+    using expected_t = std::vector<RefViewItem*>;
+
+    //! Helper function to get two vectors, each ncolumns length, in the form of a pair.
+    //! First vector contains unique_ptr objects, second vector bare pointers to same objects.
+    //! First vector is intended to be moved inside a model, second vector is to validate
+    //! the content of a model after the move.
+
+    std::pair<children_t, expected_t> test_data(int ncolumns)
+    {
+        auto vector_of_unique = TestUtils::create_row<RefViewItem, TestItem>(ncolumns);
+        auto vector_of_pointers = TestUtils::create_pointers(vector_of_unique);
+        return std::make_pair(std::move(vector_of_unique), std::move(vector_of_pointers));
+    }
 };
 
 RefViewItemTest::~RefViewItemTest() = default;
+RefViewItemTest::TestItem::~TestItem() = default;
 
 //! Initial state of RefViewItem.
 
 TEST_F(RefViewItemTest, initialState)
 {
-    RefViewItem view_item;
+    TestItem view_item;
 
     EXPECT_EQ(view_item.rowCount(), 0);
     EXPECT_EQ(view_item.columnCount(), 0);
@@ -34,42 +57,40 @@ TEST_F(RefViewItemTest, initialState)
     EXPECT_EQ(view_item.column(), -1);
     EXPECT_EQ(view_item.parent(), nullptr);
     EXPECT_THROW(view_item.child(0, 0), std::runtime_error);
+    EXPECT_EQ(view_item.item(), nullptr);
+    EXPECT_EQ(view_item.item_role(), 0);
 }
 
 //! Append single item as row.
 
 TEST_F(RefViewItemTest, appendRow)
 {
-    std::vector<std::unique_ptr<RefViewItem>> children;
-    children.emplace_back(std::make_unique<RefViewItem>());
-
-    RefViewItem* expected = children[0].get();
+    auto [children, expected] = test_data(/*ncolumns*/ 1);
 
     // appending row with single item
-    RefViewItem view_item;
+    TestItem view_item;
     view_item.appendRow(std::move(children));
 
     // checking parent
     EXPECT_EQ(view_item.rowCount(), 1);
     EXPECT_EQ(view_item.columnCount(), 1);
-    EXPECT_EQ(view_item.child(0, 0), expected);
+    EXPECT_EQ(view_item.child(0, 0), expected[0]);
     EXPECT_THROW(view_item.child(0, 1), std::runtime_error);
 
     // checking appended child
-    EXPECT_EQ(expected->parent(), &view_item);
-    EXPECT_EQ(expected->row(), 0);
-    EXPECT_EQ(expected->column(), 0);
+    EXPECT_EQ(expected[0]->parent(), &view_item);
+    EXPECT_EQ(expected[0]->row(), 0);
+    EXPECT_EQ(expected[0]->column(), 0);
 }
 
 //! Remove row.
 
 TEST_F(RefViewItemTest, removeRow)
 {
-    std::vector<std::unique_ptr<RefViewItem>> children;
-    children.emplace_back(std::make_unique<RefViewItem>());
+    auto [children, expected] = test_data(/*ncolumns*/ 1);
 
     // appending row with single item
-    RefViewItem view_item;
+    TestItem view_item;
     view_item.appendRow(std::move(children));
     view_item.removeRow(0);
 
@@ -78,22 +99,16 @@ TEST_F(RefViewItemTest, removeRow)
     EXPECT_EQ(view_item.columnCount(), 0);
 }
 
-
 //! Append two rows with two items each.
 
 TEST_F(RefViewItemTest, appendTwoRows)
 {
     // preparing two rows of children, two columns each
-    std::vector<std::unique_ptr<RefViewItem>> children_row0, children_row1, children_row2;
-    children_row0.emplace_back(std::make_unique<RefViewItem>());
-    children_row0.emplace_back(std::make_unique<RefViewItem>());
-    children_row1.emplace_back(std::make_unique<RefViewItem>());
-    children_row1.emplace_back(std::make_unique<RefViewItem>());
-    std::vector<RefViewItem*> expected_row0 = {children_row0[0].get(), children_row0[1].get()};
-    std::vector<RefViewItem*> expected_row1 = {children_row1[0].get(), children_row1[1].get()};
+    auto [children_row0, expected_row0] = test_data(/*ncolumns*/ 2);
+    auto [children_row1, expected_row1] = test_data(/*ncolumns*/ 2);
 
     // appending rows
-    RefViewItem view_item;
+    TestItem view_item;
     view_item.appendRow(std::move(children_row0));
     view_item.appendRow(std::move(children_row1));
 
@@ -122,7 +137,7 @@ TEST_F(RefViewItemTest, appendTwoRows)
     EXPECT_EQ(expected_row1[1]->column(), 1);
 
     // attempt to add row with different amount of children should fail
-    children_row2.emplace_back(std::make_unique<RefViewItem>());
+    auto [children_row2, expected_row2] = test_data(/*ncolumns*/ 1);
     EXPECT_THROW(view_item.appendRow(std::move(children_row2)), std::runtime_error);
     EXPECT_EQ(view_item.rowCount(), 2);
     EXPECT_EQ(view_item.columnCount(), 2);
@@ -133,19 +148,12 @@ TEST_F(RefViewItemTest, appendTwoRows)
 TEST_F(RefViewItemTest, insertRowsThenRemove)
 {
     // preparing two rows of children, two columns each
-    std::vector<std::unique_ptr<RefViewItem>> children_row0, children_row1, children_row2;
-    children_row0.emplace_back(std::make_unique<RefViewItem>());
-    children_row0.emplace_back(std::make_unique<RefViewItem>());
-    children_row1.emplace_back(std::make_unique<RefViewItem>());
-    children_row1.emplace_back(std::make_unique<RefViewItem>());
-    children_row2.emplace_back(std::make_unique<RefViewItem>());
-    children_row2.emplace_back(std::make_unique<RefViewItem>());
-    std::vector<RefViewItem*> expected_row0 = {children_row0[0].get(), children_row0[1].get()};
-    std::vector<RefViewItem*> expected_row1 = {children_row1[0].get(), children_row1[1].get()};
-    std::vector<RefViewItem*> expected_row2 = {children_row2[0].get(), children_row2[1].get()};
+    auto [children_row0, expected_row0] = test_data(/*ncolumns*/ 2);
+    auto [children_row1, expected_row1] = test_data(/*ncolumns*/ 2);
+    auto [children_row2, expected_row2] = test_data(/*ncolumns*/ 2);
 
     // appending rows
-    RefViewItem view_item;
+    TestItem view_item;
     view_item.appendRow(std::move(children_row0));
     view_item.appendRow(std::move(children_row1));
     view_item.insertRow(1, std::move(children_row2)); // inserting in-between
@@ -193,10 +201,9 @@ TEST_F(RefViewItemTest, insertRowsThenRemove)
 
 TEST_F(RefViewItemTest, clear)
 {
-    std::vector<std::unique_ptr<RefViewItem>> children;
-    children.emplace_back(std::make_unique<RefViewItem>());
+    auto [children, expected] = test_data(/*ncolumns*/ 1);
 
-    RefViewItem view_item;
+    TestItem view_item;
     view_item.appendRow(std::move(children));
     view_item.clear();
 

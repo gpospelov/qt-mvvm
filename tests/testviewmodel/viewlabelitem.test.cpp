@@ -25,8 +25,7 @@ ViewLabelItemTest::~ViewLabelItemTest() = default;
 
 TEST_F(ViewLabelItemTest, initialViewLabelItem)
 {
-    std::unique_ptr<SessionItem> item(new SessionItem);
-
+    auto item = std::make_unique<SessionItem>();
     ViewLabelItem viewItem(item.get());
     EXPECT_EQ(viewItem.item(), item.get());
     EXPECT_EQ(viewItem.item_role(), ItemDataRole::DISPLAY);

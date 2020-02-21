@@ -25,10 +25,9 @@ ViewDataItemTest::~ViewDataItemTest() = default;
 
 TEST_F(ViewDataItemTest, initialState)
 {
-    std::unique_ptr<SessionItem> item(new SessionItem);
-
-    ViewDataItem viewItem(item.get());
-    EXPECT_EQ(viewItem.item(), item.get());
+    SessionItem item;
+    ViewDataItem viewItem(&item);
+    EXPECT_EQ(viewItem.item(), &item);
     EXPECT_EQ(viewItem.item_role(), ItemDataRole::DATA);
 }
 
@@ -38,12 +37,12 @@ TEST_F(ViewDataItemTest, initialState)
 TEST_F(ViewDataItemTest, dataForDouble)
 {
     // create SessionItem with data on board
-    auto item = std::make_unique<SessionItem>();
+    SessionItem item;
     QVariant expected(42.0);
-    EXPECT_TRUE(item->setData(expected));
+    EXPECT_TRUE(item.setData(expected));
 
     // initialize viewItem with sessionItem and check the data
-    ViewDataItem viewItem(item.get());
+    ViewDataItem viewItem(&item);
     EXPECT_EQ(viewItem.data(Qt::EditRole), expected);
     EXPECT_EQ(viewItem.data(Qt::DisplayRole), expected);
 }
@@ -54,19 +53,19 @@ TEST_F(ViewDataItemTest, dataForDouble)
 TEST_F(ViewDataItemTest, setDataForDouble)
 {
     // create SessionItem with data on board
-    auto item = std::make_unique<SessionItem>();
+    SessionItem item;
     QVariant expected(42.0);
-    EXPECT_TRUE(item->setData(expected));
+    EXPECT_TRUE(item.setData(expected));
 
     // initialize viewItem with sessionItem and set the data
-    ViewDataItem viewItem(item.get());
+    ViewDataItem viewItem(&item);
     QVariant new_data(43.0);
     viewItem.setData(new_data, Qt::EditRole);
     EXPECT_EQ(viewItem.data(Qt::DisplayRole), new_data); // new data
     EXPECT_EQ(viewItem.data(Qt::EditRole), new_data);    // new data
 
     // SessionItem itself should have new data
-    EXPECT_EQ(item->data(), new_data); // new data
+    EXPECT_EQ(item.data(), new_data); // new data
 
     // it is not allowed to set another type of data to ViewDataItem
     QVariant not_allowed_value("Layer");
@@ -79,11 +78,11 @@ TEST_F(ViewDataItemTest, setDataForDouble)
 TEST_F(ViewDataItemTest, dataForColor)
 {
     // create SessionItem with data on board
-    auto item = std::make_unique<SessionItem>();
+    SessionItem item;
     QVariant expected = QVariant::fromValue(QColor(Qt::green));
-    EXPECT_TRUE(item->setData(expected));
+    EXPECT_TRUE(item.setData(expected));
 
-    ViewDataItem viewItem(item.get());
+    ViewDataItem viewItem(&item);
     EXPECT_EQ(viewItem.data(Qt::EditRole), expected);
     EXPECT_EQ(viewItem.data(Qt::DisplayRole), expected);
     EXPECT_EQ(viewItem.data(Qt::DecorationRole), expected);
@@ -95,12 +94,12 @@ TEST_F(ViewDataItemTest, dataForColor)
 TEST_F(ViewDataItemTest, setDataForColor)
 {
     // create SessionItem with data on board
-    auto item = std::make_unique<SessionItem>();
+    SessionItem item;
     QVariant expected = QVariant::fromValue(QColor(Qt::green));
-    EXPECT_TRUE(item->setData(expected));
+    EXPECT_TRUE(item.setData(expected));
 
     // initialize viewItem with sessionItem and set the data
-    ViewDataItem viewItem(item.get());
+    ViewDataItem viewItem(&item);
     QVariant new_data = QVariant::fromValue(QColor(Qt::red));
     viewItem.setData(new_data, Qt::EditRole);
     EXPECT_EQ(viewItem.data(Qt::DisplayRole), new_data);    // new data
@@ -108,7 +107,7 @@ TEST_F(ViewDataItemTest, setDataForColor)
     EXPECT_EQ(viewItem.data(Qt::DecorationRole), new_data); // new data
 
     // SessionItem itself should have new data
-    EXPECT_EQ(item->data(), new_data); // new data
+    EXPECT_EQ(item.data(), new_data); // new data
 
     // it is not allowed to set another type of data to ViewDataItem
     QVariant not_allowed_value("Layer");

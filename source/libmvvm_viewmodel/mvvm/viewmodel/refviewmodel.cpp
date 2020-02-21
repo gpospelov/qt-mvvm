@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/viewmodel/refviewitem.h>
+#include <mvvm/viewmodel/refviewitems.h>
 #include <mvvm/viewmodel/refviewmodel.h>
 
 using namespace ModelView;
@@ -15,7 +15,7 @@ using namespace ModelView;
 struct RefViewModel::RefViewModelImpl {
     RefViewModel* model{nullptr};
     std::unique_ptr<RefViewItem> root;
-    RefViewModelImpl(RefViewModel* model) : model(model), root(std::make_unique<RefViewItem>()) {}
+    RefViewModelImpl(RefViewModel* model) : model(model) {}
 
     bool item_belongs_to_model(RefViewItem* item)
     {
@@ -26,6 +26,7 @@ struct RefViewModel::RefViewModelImpl {
 RefViewModel::RefViewModel(QObject* parent)
     : QAbstractItemModel(parent), p_impl(std::make_unique<RefViewModelImpl>(this))
 {
+    setRootViewItem(std::make_unique<RefRootViewItem>(nullptr));
 }
 
 RefViewModel::~RefViewModel() = default;
@@ -66,9 +67,26 @@ int RefViewModel::columnCount(const QModelIndex& parent) const
 
 QVariant RefViewModel::data(const QModelIndex& index, int role) const
 {
-    Q_UNUSED(index)
-    Q_UNUSED(role)
-    return QVariant();
+    if (!rootItem())
+        return QVariant();
+
+    auto item = itemFromIndex(index);
+    return item ? item->data(role) : QVariant();
+}
+
+bool RefViewModel::setData(const QModelIndex& index, const QVariant& value, int role)
+{
+    if (!index.isValid())
+        return false;
+
+    if (auto item = itemFromIndex(index); item) {
+        bool result = item->setData(value, role);
+        if (result)
+            dataChanged(index, index, QVector<int>() << role);
+        return result;
+    }
+
+    return false;
 }
 
 //! Returns a pointer to invisible root item.
@@ -105,14 +123,39 @@ void RefViewModel::removeRow(RefViewItem* parent, int row)
     endRemoveRows();
 }
 
-//! Appends row of items to given parent.
+//! Insert a row of items at index 'row' to given parent.
 
-void RefViewModel::appendRow(RefViewItem* parent, std::vector<std::unique_ptr<RefViewItem>> items)
+void RefViewModel::insertRow(RefViewItem* parent, int row,
+                             std::vector<std::unique_ptr<RefViewItem>> items)
 {
     if (!p_impl->item_belongs_to_model(parent))
         throw std::runtime_error("Error in RefViewModel: attempt to use parent from another model");
 
-    beginInsertRows(indexFromItem(parent), parent->rowCount(), parent->rowCount());
+    beginInsertRows(indexFromItem(parent), row, row);
     parent->appendRow(std::move(items));
     endInsertRows();
+}
+
+//! Appends row of items to given parent.
+
+void RefViewModel::appendRow(RefViewItem* parent, std::vector<std::unique_ptr<RefViewItem>> items)
+{
+    insertRow(parent, parent->rowCount(), std::move(items));
+}
+
+//! Returns the item flags for the given index.
+
+Qt::ItemFlags RefViewModel::flags(const QModelIndex& index) const
+{
+    Qt::ItemFlags result = QAbstractItemModel::flags(index);
+    if (auto item = itemFromIndex(index); item)
+        result |= item->flags();
+    return result;
+}
+
+void RefViewModel::setRootViewItem(std::unique_ptr<RefViewItem> root_item)
+{
+    beginResetModel();
+    p_impl->root = std::move(root_item);
+    endResetModel();
 }

@@ -8,8 +8,11 @@
 // ************************************************************************** //
 
 #include <algorithm>
+#include <mvvm/model/customvariants.h>
+#include <mvvm/model/sessionitem.h>
 #include <mvvm/utils/containerutils.h>
 #include <mvvm/viewmodel/refviewitem.h>
+#include <mvvm/viewmodel/viewmodelutils.h>
 #include <vector>
 
 using namespace ModelView;
@@ -77,6 +80,10 @@ struct RefViewItem::RefViewItemImpl {
     {
         return Utils::IndexOfItem(children.begin(), children.end(), child);
     }
+
+    //! Returns item data associated with this RefViewItem.
+
+    QVariant data() const { return item ? item->data(role) : QVariant(); }
 };
 
 RefViewItem::RefViewItem(SessionItem* item, int role)
@@ -169,6 +176,52 @@ int RefViewItem::column() const
 {
     auto index = parent() ? parent()->p_impl->index_of_child(this) : -1;
     return index >= 0 ? index % parent()->p_impl->columns : -1;
+}
+
+//! Returns the data for given role according to Qt::ItemDataRole namespace definitions.
+//! Converts data and roles from underlying SessionItem to what Qt expects.
+
+QVariant RefViewItem::data(int qt_role) const
+{
+    if (!p_impl->item)
+        return QVariant();
+
+    if (qt_role == Qt::DisplayRole || qt_role == Qt::EditRole)
+        return Utils::toQtVariant(p_impl->data());
+#if QT_VERSION >= QT_VERSION_CHECK(5, 13, 0)
+    else if (qt_role == Qt::ForegroundRole)
+#else
+    else if (qt_role == Qt::TextColorRole)
+#endif
+        return Utils::TextColorRole(*p_impl->item);
+
+    else if (qt_role == Qt::CheckStateRole)
+        return Utils::CheckStateRole(*p_impl->item);
+
+    else if (qt_role == Qt::DecorationRole)
+        return Utils::DecorationRole(*p_impl->item);
+
+    else
+        return QVariant();
+}
+
+//! Sets the data to underlying SessionItem.
+//! Converts data and roles from Qt definitions to what SessionItem expects.
+
+bool RefViewItem::setData(const QVariant& value, int qt_role)
+{
+    if (p_impl->item && qt_role == Qt::EditRole)
+        return p_impl->item->setData(Utils::toCustomVariant(value), p_impl->role);
+    return false;
+}
+
+//! Returns Qt's item flags.
+//! Converts internal SessionItem's status enable/disabled/readonly to what Qt expects.
+
+Qt::ItemFlags RefViewItem::flags() const
+{
+    Qt::ItemFlags result = Qt::ItemIsSelectable | Qt::ItemIsEnabled;
+    return result;
 }
 
 void RefViewItem::setParent(RefViewItem* parent)
