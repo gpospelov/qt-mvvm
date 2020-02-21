@@ -17,6 +17,14 @@ namespace ModelView
 
 class SessionItem;
 
+//! Represents root item.
+
+class CORE_EXPORT RefRootViewItem : public RefViewItem
+{
+public:
+    explicit RefRootViewItem(SessionItem* item);
+};
+
 //! Represents display name of SessionItem in any cell of Qt's trees and tables.
 
 class CORE_EXPORT RefViewLabelItem : public RefViewItem

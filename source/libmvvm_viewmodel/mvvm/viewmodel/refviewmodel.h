@@ -60,6 +60,9 @@ public:
 
     Qt::ItemFlags flags(const QModelIndex& index) const override;
 
+protected:
+    void setRootViewItem(std::unique_ptr<RefViewItem> root_item);
+
 private:
     struct RefViewModelImpl;
     std::unique_ptr<RefViewModelImpl> p_impl;

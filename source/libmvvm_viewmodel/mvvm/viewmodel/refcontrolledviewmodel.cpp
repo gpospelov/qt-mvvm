@@ -9,12 +9,18 @@
 
 #include <mvvm/viewmodel/refcontrolledviewmodel.h>
 #include <mvvm/viewmodel/refviewmodelcontroller.h>
+#include <mvvm/viewmodel/refviewitems.h>
 
 using namespace ModelView;
 
 RefControlledViewModel::RefControlledViewModel(std::unique_ptr<RefViewModelController> controller,
                                                QObject* parent)
 {
+}
+
+void RefControlledViewModel::setRootSessionItem(SessionItem* item)
+{
+
 }
 
 RefControlledViewModel::~RefControlledViewModel() = default;

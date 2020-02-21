@@ -12,6 +12,10 @@
 
 using namespace ModelView;
 
+RefRootViewItem::RefRootViewItem(SessionItem* item) : RefViewItem(item, ItemDataRole::DATA) {}
+
+//! ---------------------------------------------------------------------------
+
 RefViewLabelItem::RefViewLabelItem(SessionItem* item) : RefViewItem(item, ItemDataRole::DISPLAY) {}
 
 QVariant RefViewLabelItem::data(int role) const

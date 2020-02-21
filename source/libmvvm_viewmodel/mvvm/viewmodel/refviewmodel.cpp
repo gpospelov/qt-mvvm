@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/viewmodel/refviewitem.h>
+#include <mvvm/viewmodel/refviewitems.h>
 #include <mvvm/viewmodel/refviewmodel.h>
 
 using namespace ModelView;
@@ -26,7 +26,7 @@ struct RefViewModel::RefViewModelImpl {
 RefViewModel::RefViewModel(QObject* parent)
     : QAbstractItemModel(parent), p_impl(std::make_unique<RefViewModelImpl>(this))
 {
-    p_impl->root = std::unique_ptr<RefViewItem>(new RefViewItem(nullptr, 0));
+    setRootViewItem(std::make_unique<RefRootViewItem>(nullptr));
 }
 
 RefViewModel::~RefViewModel() = default;
@@ -151,4 +151,11 @@ Qt::ItemFlags RefViewModel::flags(const QModelIndex& index) const
     if (auto item = itemFromIndex(index); item)
         result |= item->flags();
     return result;
+}
+
+void RefViewModel::setRootViewItem(std::unique_ptr<RefViewItem> root_item)
+{
+    beginResetModel();
+    p_impl->root = std::move(root_item);
+    endResetModel();
 }

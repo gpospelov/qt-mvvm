@@ -18,17 +18,17 @@ using namespace ModelView;
 struct RefViewModelController::RefViewModelControllerImpl {
     RefViewModelController* controller;
     SessionModel* session_model{nullptr};
-    ViewModel* view_model{nullptr};
+    RefViewModel* view_model{nullptr};
     std::unique_ptr<ChildrenStrategyInterface> m_children_strategy;
     std::unique_ptr<RowStrategyInterface> m_row_strategy;
     RefViewModelControllerImpl(RefViewModelController* controller, SessionModel* session_model,
-                               ViewModel* view_model)
+                               RefViewModel* view_model)
         : controller(controller), session_model(session_model), view_model(view_model)
     {
     }
 };
 
-RefViewModelController::RefViewModelController(SessionModel* session_model, ViewModel* view_model)
+RefViewModelController::RefViewModelController(SessionModel* session_model, RefViewModel* view_model)
     : p_impl(std::make_unique<RefViewModelControllerImpl>(this, session_model, view_model))
 {
 }
@@ -51,4 +51,9 @@ void RefViewModelController::setRowStrategy(std::unique_ptr<RowStrategyInterface
 SessionModel* RefViewModelController::sessionModel() const
 {
     return p_impl->session_model;
+}
+
+void RefViewModelController::setRootSessionItem(SessionItem* item)
+{
+
 }
