@@ -167,6 +167,6 @@ void RefViewModel::setRootViewItem(std::unique_ptr<RefViewItem> root_item)
 void RefViewModel::clear()
 {
     beginResetModel();
-    rootItem()->clear();
+    rootItem()->clear(); // FIXME What to do with root item here?
     endResetModel();
 }

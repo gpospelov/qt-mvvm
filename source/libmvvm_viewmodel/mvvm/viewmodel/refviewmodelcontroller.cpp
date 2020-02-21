@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include <mvvm/model/sessionmodel.h>
+#include <mvvm/signals/modelmapper.h>
 #include <mvvm/viewmodel/childrenstrategyinterface.h>
 #include <mvvm/viewmodel/refviewitems.h>
 #include <mvvm/viewmodel/refviewmodel.h>
@@ -15,6 +16,40 @@
 #include <mvvm/viewmodel/rowstrategyinterface.h>
 
 using namespace ModelView;
+
+namespace
+{
+
+//! Return vector of underlying SessionItems for given view item at given row.
+
+std::vector<SessionItem*> get_items_at_row(RefViewItem* parent, int row)
+{
+    std::vector<SessionItem*> result;
+    if (row < parent->rowCount())
+        for (int column = 0; column < parent->columnCount(); ++column)
+            result.push_back(parent->child(row, column)->item());
+    return result;
+}
+
+//! Return vector of underlying SessionItems from given vector of view items.
+
+std::vector<SessionItem*> get_items(const std::vector<std::unique_ptr<RefViewItem>>& view_items)
+{
+    std::vector<SessionItem*> result;
+    std::transform(view_items.begin(), view_items.end(), std::back_inserter(result),
+                   [](const auto& x) { return x.get()->item(); });
+    return result;
+}
+
+//! Returns true if given row can be inserted to the parent.
+//! Will return false, if parent already has a row of same length made for same SessionItem's.
+
+bool row_was_already_inserted(RefViewItem* parent, int row,
+                        const std::vector<std::unique_ptr<RefViewItem>>& children)
+{
+    return get_items_at_row(parent, row) == get_items(children);
+}
+} // namespace
 
 struct RefViewModelController::RefViewModelControllerImpl {
     RefViewModelController* controller;
@@ -25,8 +60,9 @@ struct RefViewModelController::RefViewModelControllerImpl {
 
     RefViewModelControllerImpl(RefViewModelController* controller, SessionModel* session_model,
                                RefViewModel* view_model)
-        : controller(controller), session_model(session_model), view_model(view_model)
+        : controller(controller), view_model(view_model)
     {
+        setSessionModel(session_model);
     }
 
     void check_initialization()
@@ -75,12 +111,11 @@ struct RefViewModelController::RefViewModelControllerImpl {
         for (auto child : children_strategy->children(item)) {
             auto row = row_strategy->constructRefRow(child);
             if (!row.empty()) {
-                auto next_parent = row.at(0).get();
-
-                if (nrow < parent->rowCount() && parent->child(nrow, 0)->item() == next_parent->item())
+                if (row_was_already_inserted(parent, nrow, row))
                     continue;
 
-                parent->insertRow(nrow, std::move(row));
+                auto next_parent = row.at(0).get();
+                view_model->insertRow(parent, nrow, std::move(row));
                 parent = next_parent; // labelItem
                 iterate(child, parent);
             }
@@ -89,6 +124,37 @@ struct RefViewModelController::RefViewModelControllerImpl {
         }
     }
 
+    void setSessionModel(SessionModel* model)
+    {
+        session_model = model;
+
+        auto on_data_change = [this](SessionItem* item, int role) {
+            controller->onDataChange(item, role);
+        };
+        session_model->mapper()->setOnDataChange(on_data_change, controller);
+
+        auto on_item_inserted = [this](SessionItem* item, TagRow tagrow) {
+            controller->onItemInserted(item, tagrow);
+        };
+        session_model->mapper()->setOnItemInserted(on_item_inserted, controller);
+
+        auto on_item_removed = [this](SessionItem* item, TagRow tagrow) {
+            controller->onItemRemoved(item, tagrow);
+        };
+        session_model->mapper()->setOnItemRemoved(on_item_removed, controller);
+
+        auto on_model_destroyed = [this](SessionModel*) {
+            session_model = nullptr;
+            view_model->clear();
+        };
+        session_model->mapper()->setOnModelDestroyed(on_model_destroyed, controller);
+
+        auto on_model_reset = [this](SessionModel*) {
+            // FIXME what else ?
+            view_model->clear();
+        };
+        session_model->mapper()->setOnModelReset(on_model_reset, controller);
+    }
 };
 
 RefViewModelController::RefViewModelController(SessionModel* session_model,
@@ -98,7 +164,11 @@ RefViewModelController::RefViewModelController(SessionModel* session_model,
     view_model->setRootViewItem(std::make_unique<RefRootViewItem>(session_model->rootItem()));
 }
 
-RefViewModelController::~RefViewModelController() = default;
+RefViewModelController::~RefViewModelController()
+{
+    if (p_impl->session_model)
+        p_impl->session_model->mapper()->unsubscribe(this);
+}
 
 void RefViewModelController::setChildrenStrategy(
     std::unique_ptr<ChildrenStrategyInterface> children_strategy)
@@ -135,3 +205,12 @@ void RefViewModelController::init()
 {
     p_impl->init_view_model();
 }
+
+void RefViewModelController::onDataChange(SessionItem*, int) {}
+
+void RefViewModelController::onItemInserted(SessionItem*, TagRow)
+{
+    p_impl->iterate_insert(rootSessionItem(), p_impl->view_model->rootItem());
+}
+
+void RefViewModelController::onItemRemoved(SessionItem*, TagRow) {}

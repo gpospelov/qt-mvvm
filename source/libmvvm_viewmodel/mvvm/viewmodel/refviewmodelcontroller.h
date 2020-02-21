@@ -12,6 +12,7 @@
 
 #include <memory>
 #include <mvvm/core/export.h>
+#include <mvvm/model/tagrow.h>
 
 class QStandardItem;
 
@@ -46,6 +47,11 @@ public:
     SessionItem* rootSessionItem() const;
 
     void init();
+
+protected:
+    virtual void onDataChange(SessionItem* item, int role);
+    virtual void onItemInserted(SessionItem* parent, TagRow tagrow);
+    virtual void onItemRemoved(SessionItem* parent, TagRow tagrow);
 
 private:
     struct RefViewModelControllerImpl;
