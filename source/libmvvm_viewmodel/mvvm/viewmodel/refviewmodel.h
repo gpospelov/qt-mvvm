@@ -62,6 +62,8 @@ public:
 
     void setRootViewItem(std::unique_ptr<RefViewItem> root_item);
 
+    void clear();
+
 private:
     struct RefViewModelImpl;
     std::unique_ptr<RefViewModelImpl> p_impl;

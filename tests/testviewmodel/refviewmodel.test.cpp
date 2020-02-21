@@ -314,3 +314,27 @@ TEST_F(RefViewModelTest, flags)
     EXPECT_TRUE(viewmodel.flags(data_index) & Qt::ItemIsEnabled);
     EXPECT_TRUE(viewmodel.flags(data_index) & Qt::ItemIsEditable);
 }
+
+//! Clearing the model.
+
+TEST_F(RefViewModelTest, clear)
+{
+    RefViewModel viewmodel;
+
+    // item to append
+    auto [children, expected] = test_data(/*ncolumns*/ 1);
+
+    // appending one row
+    viewmodel.appendRow(viewmodel.rootItem(), std::move(children));
+    EXPECT_EQ(viewmodel.rowCount(), 1);
+    EXPECT_EQ(viewmodel.columnCount(), 1);
+
+    QSignalSpy spyClear(&viewmodel, &RefViewModel::modelReset);
+
+    viewmodel.clear();
+    EXPECT_EQ(viewmodel.rowCount(), 0);
+    EXPECT_EQ(viewmodel.columnCount(), 0);
+
+    EXPECT_EQ(spyClear.count(), 1);
+    EXPECT_EQ(spyClear.takeFirst().size(), 0);
+}
