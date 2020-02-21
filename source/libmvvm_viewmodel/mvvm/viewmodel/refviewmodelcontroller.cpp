@@ -10,6 +10,7 @@
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/viewmodel/childrenstrategyinterface.h>
 #include <mvvm/viewmodel/refviewmodel.h>
+#include <mvvm/viewmodel/refviewitems.h>
 #include <mvvm/viewmodel/refviewmodelcontroller.h>
 #include <mvvm/viewmodel/rowstrategyinterface.h>
 
@@ -19,18 +20,37 @@ struct RefViewModelController::RefViewModelControllerImpl {
     RefViewModelController* controller;
     SessionModel* session_model{nullptr};
     RefViewModel* view_model{nullptr};
-    std::unique_ptr<ChildrenStrategyInterface> m_children_strategy;
-    std::unique_ptr<RowStrategyInterface> m_row_strategy;
+    std::unique_ptr<ChildrenStrategyInterface> children_strategy;
+    std::unique_ptr<RowStrategyInterface> row_strategy;
+
     RefViewModelControllerImpl(RefViewModelController* controller, SessionModel* session_model,
                                RefViewModel* view_model)
         : controller(controller), session_model(session_model), view_model(view_model)
     {
     }
+
+    void check_initialization()
+    {
+        const std::string msg("Error in RefViewModelController: ");
+        if (!view_model)
+            throw std::runtime_error(msg + "ViewModel is not defined");
+
+        if (!session_model)
+            throw std::runtime_error(msg + "SessionModel is not defined");
+
+        if (!row_strategy)
+            throw std::runtime_error(msg + "RowStrategy is not defined");
+
+        if (!children_strategy)
+            throw std::runtime_error(msg + "Children is not defined");
+    }
 };
 
-RefViewModelController::RefViewModelController(SessionModel* session_model, RefViewModel* view_model)
+RefViewModelController::RefViewModelController(SessionModel* session_model,
+                                               RefViewModel* view_model)
     : p_impl(std::make_unique<RefViewModelControllerImpl>(this, session_model, view_model))
 {
+    view_model->setRootViewItem(std::make_unique<RefRootViewItem>(session_model->rootItem()));
 }
 
 RefViewModelController::~RefViewModelController() = default;
@@ -38,12 +58,12 @@ RefViewModelController::~RefViewModelController() = default;
 void RefViewModelController::setChildrenStrategy(
     std::unique_ptr<ChildrenStrategyInterface> children_strategy)
 {
-    p_impl->m_children_strategy = std::move(children_strategy);
+    p_impl->children_strategy = std::move(children_strategy);
 }
 
 void RefViewModelController::setRowStrategy(std::unique_ptr<RowStrategyInterface> row_strategy)
 {
-    p_impl->m_row_strategy = std::move(row_strategy);
+    p_impl->row_strategy = std::move(row_strategy);
 }
 
 //! Returns SessionModel handled by this controller.
@@ -55,5 +75,5 @@ SessionModel* RefViewModelController::sessionModel() const
 
 void RefViewModelController::setRootSessionItem(SessionItem* item)
 {
-
+    p_impl->view_model->setRootViewItem(std::make_unique<RefRootViewItem>(item));
 }
