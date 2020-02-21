@@ -9,8 +9,8 @@
 
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/viewmodel/childrenstrategyinterface.h>
-#include <mvvm/viewmodel/refviewmodel.h>
 #include <mvvm/viewmodel/refviewitems.h>
+#include <mvvm/viewmodel/refviewmodel.h>
 #include <mvvm/viewmodel/refviewmodelcontroller.h>
 #include <mvvm/viewmodel/rowstrategyinterface.h>
 
@@ -49,10 +49,24 @@ struct RefViewModelController::RefViewModelControllerImpl {
     {
         check_initialization();
         view_model->clear();
-        // iterate
+        iterate(controller->rootSessionItem(), view_model->rootItem());
         // update labels
     }
 
+    void iterate(const SessionItem* item, RefViewItem* parent)
+    {
+        RefViewItem* origParent(parent);
+        for (auto child : children_strategy->children(item)) {
+            auto row = row_strategy->constructRefRow(child);
+            if (!row.empty()) {
+                auto next_parent = row.at(0).get();
+                parent->appendRow(std::move(row));
+                parent = next_parent; // labelItem
+                iterate(child, parent);
+            }
+            parent = origParent;
+        }
+    }
 };
 
 RefViewModelController::RefViewModelController(SessionModel* session_model,
@@ -97,5 +111,4 @@ SessionItem* RefViewModelController::rootSessionItem() const
 void RefViewModelController::init()
 {
     p_impl->init_view_model();
-
 }

@@ -9,11 +9,12 @@
 
 #include "google_test.h"
 #include "test_utils.h"
-#include <mvvm/model/sessionmodel.h>
 #include <mvvm/model/propertyitem.h>
-#include <mvvm/viewmodel/refviewmodelcontroller.h>
-#include <mvvm/viewmodel/refviewmodel.h>
+#include <mvvm/model/sessionmodel.h>
 #include <mvvm/viewmodel/labeldatarowstrategy.h>
+#include <mvvm/viewmodel/refviewitems.h>
+#include <mvvm/viewmodel/refviewmodel.h>
+#include <mvvm/viewmodel/refviewmodelcontroller.h>
 #include <mvvm/viewmodel/standardchildrenstrategies.h>
 
 using namespace ModelView;
@@ -25,7 +26,8 @@ class RefViewModelControllerTest : public ::testing::Test
 public:
     ~RefViewModelControllerTest();
 
-    auto create_controller(SessionModel* session_model, RefViewModel* view_model) {
+    auto create_controller(SessionModel* session_model, RefViewModel* view_model)
+    {
         auto result = std::make_unique<RefViewModelController>(session_model, view_model);
         result->setRowStrategy(std::make_unique<LabelDataRowStrategy>());
         result->setChildrenStrategy(std::make_unique<AllChildrenStrategy>());
@@ -61,19 +63,16 @@ TEST_F(RefViewModelControllerTest, fromPropertyItem)
     RefViewModel view_model;
     auto controller = create_controller(&session_model, &view_model);
 
-//    EXPECT_EQ(view_model.rowCount(), 1);
-//    EXPECT_EQ(view_model.columnCount(), 2);
+    EXPECT_EQ(view_model.rowCount(), 1);
+    EXPECT_EQ(view_model.columnCount(), 2);
 
     // accessing first child under the root item
-//    QModelIndex labelIndex = viewModel.index(0, 0);
-//    QModelIndex dataIndex = viewModel.index(0, 1);
+    QModelIndex labelIndex = view_model.index(0, 0);
+    QModelIndex dataIndex = view_model.index(0, 1);
 
-//    // it should be ViewLabelItem looking at our PropertyItem item
-//    auto labelItem = dynamic_cast<ViewLabelItem*>(viewModel.itemFromIndex(labelIndex));
-//    ASSERT_TRUE(labelItem != nullptr);
-//    EXPECT_EQ(labelItem->item(), propertyItem);
-
-//    auto dataItem = dynamic_cast<ViewDataItem*>(viewModel.itemFromIndex(dataIndex));
-//    ASSERT_TRUE(dataItem != nullptr);
-//    EXPECT_EQ(dataItem->item(), propertyItem);
+    // it should be ViewLabelItem and ViewDataItem looking at our PropertyItem item
+    EXPECT_EQ(view_model.itemFromIndex(labelIndex)->item_role(), ItemDataRole::DISPLAY);
+    EXPECT_EQ(view_model.itemFromIndex(labelIndex)->item(), propertyItem);
+    EXPECT_EQ(view_model.itemFromIndex(dataIndex)->item_role(), ItemDataRole::DATA);
+    EXPECT_EQ(view_model.itemFromIndex(dataIndex)->item(), propertyItem);
 }
