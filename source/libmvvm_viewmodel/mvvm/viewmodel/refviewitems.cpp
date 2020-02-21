@@ -41,3 +41,10 @@ Qt::ItemFlags RefViewDataItem::flags() const
         result |= Qt::ItemIsEditable;
     return result;
 }
+
+RefViewEmptyItem::RefViewEmptyItem() : RefViewItem(nullptr, 0) {}
+
+QVariant RefViewEmptyItem::data(int) const
+{
+    return QVariant();
+}

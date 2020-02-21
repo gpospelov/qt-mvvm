@@ -10,6 +10,7 @@
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/viewmodel/labeldatarowstrategy.h>
 #include <mvvm/viewmodel/viewitems.h>
+#include <mvvm/viewmodel/refviewitems.h>
 
 using namespace ModelView;
 
@@ -36,4 +37,19 @@ QStringList LabelDataRowStrategy::horizontalHeaderLabels() const
 {
     return QStringList() << "Name"
                          << "Value";
+}
+
+std::vector<std::unique_ptr<RefViewItem>> LabelDataRowStrategy::constructRefRow(SessionItem* item)
+{
+    std::vector<std::unique_ptr<RefViewItem>> result;
+
+    if (!item)
+        return result;
+
+    result.emplace_back(std::make_unique<RefViewLabelItem>(item));
+    if (item->data().isValid())
+        result.emplace_back(std::make_unique<RefViewDataItem>(item));
+    else
+        result.emplace_back(std::make_unique<RefViewEmptyItem>());
+    return result;
 }
