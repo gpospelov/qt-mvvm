@@ -49,7 +49,7 @@ struct RefViewModelController::RefViewModelControllerImpl {
     {
         check_initialization();
         view_model->clear();
-        iterate(controller->rootSessionItem(), view_model->rootItem());
+        iterate_insert(controller->rootSessionItem(), view_model->rootItem());
         // update labels
     }
 
@@ -67,6 +67,28 @@ struct RefViewModelController::RefViewModelControllerImpl {
             parent = origParent;
         }
     }
+
+    void iterate_insert(const SessionItem* item, RefViewItem* parent)
+    {
+        RefViewItem* origParent(parent);
+        int nrow(0);
+        for (auto child : children_strategy->children(item)) {
+            auto row = row_strategy->constructRefRow(child);
+            if (!row.empty()) {
+                auto next_parent = row.at(0).get();
+
+                if (nrow < parent->rowCount() && parent->child(nrow, 0)->item() == next_parent->item())
+                    continue;
+
+                parent->insertRow(nrow, std::move(row));
+                parent = next_parent; // labelItem
+                iterate(child, parent);
+            }
+            parent = origParent;
+            ++nrow;
+        }
+    }
+
 };
 
 RefViewModelController::RefViewModelController(SessionModel* session_model,
@@ -99,6 +121,7 @@ SessionModel* RefViewModelController::sessionModel() const
 void RefViewModelController::setRootSessionItem(SessionItem* item)
 {
     p_impl->view_model->setRootViewItem(std::make_unique<RefRootViewItem>(item));
+    // FIXME put call of init() here (after strategies will be in constructor)
 }
 
 SessionItem* RefViewModelController::rootSessionItem() const
