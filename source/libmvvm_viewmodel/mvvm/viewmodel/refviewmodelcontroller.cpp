@@ -22,7 +22,7 @@ namespace
 
 //! Return vector of underlying SessionItems for given view item at given row.
 
-std::vector<SessionItem*> get_items_at_row(RefViewItem* parent, int row)
+std::vector<SessionItem*> current_items_at_row(RefViewItem* parent, int row)
 {
     std::vector<SessionItem*> result;
     if (row < parent->rowCount())
@@ -33,7 +33,8 @@ std::vector<SessionItem*> get_items_at_row(RefViewItem* parent, int row)
 
 //! Return vector of underlying SessionItems from given vector of view items.
 
-std::vector<SessionItem*> get_items(const std::vector<std::unique_ptr<RefViewItem>>& view_items)
+std::vector<SessionItem*>
+underlying_items(const std::vector<std::unique_ptr<RefViewItem>>& view_items)
 {
     std::vector<SessionItem*> result;
     std::transform(view_items.begin(), view_items.end(), std::back_inserter(result),
@@ -41,13 +42,12 @@ std::vector<SessionItem*> get_items(const std::vector<std::unique_ptr<RefViewIte
     return result;
 }
 
-//! Returns true if given row can be inserted to the parent.
-//! Will return false, if parent already has a row of same length made for same SessionItem's.
+//! Returns true if a row with same underlying SessionItem's was already inserted to the parent.
 
 bool row_was_already_inserted(RefViewItem* parent, int row,
-                        const std::vector<std::unique_ptr<RefViewItem>>& children)
+                              const std::vector<std::unique_ptr<RefViewItem>>& candidates)
 {
-    return get_items_at_row(parent, row) == get_items(children);
+    return current_items_at_row(parent, row) == underlying_items(candidates);
 }
 } // namespace
 
@@ -104,6 +104,12 @@ struct RefViewModelController::RefViewModelControllerImpl {
         }
     }
 
+    //! Populates ViewModel with content of SessionModel. Triggered by insertEvent in SessionModel.
+    //! a) Iterates over all SessionItem's following iteration strategy.
+    //! b) Constructs corresponding rows of ViewItems' following row strategy
+    //! c) Adds them to parent ViewItem, if they have not been added yet.
+    //! c) Or just skips row of ViewItem's and jumps further.
+
     void iterate_insert(const SessionItem* item, RefViewItem* parent)
     {
         RefViewItem* origParent(parent);
@@ -118,6 +124,32 @@ struct RefViewModelController::RefViewModelControllerImpl {
                 view_model->insertRow(parent, nrow, std::move(row));
                 parent = next_parent; // labelItem
                 iterate(child, parent);
+            }
+            parent = origParent;
+            ++nrow;
+        }
+    }
+
+    void iterate_remove(const SessionItem* item, RefViewItem* parent)
+    {
+        RefViewItem* origParent(parent);
+        int nrow(0);
+
+        auto children = children_strategy->children(item);
+        if (children.empty() && view_model->rowCount(view_model->indexFromItem(parent)) == 1)
+            view_model->removeRow(parent, 0);
+
+        for (auto child : children) {
+            auto row = row_strategy->constructRefRow(child);
+            if (!row.empty()) {
+                if (row_was_already_inserted(parent, nrow, row))
+                    continue;
+
+                view_model->removeRow(parent, nrow);
+//                auto next_parent = row.at(0).get();
+//                view_model->insertRow(parent, nrow, std::move(row));
+//                parent = next_parent; // labelItem
+//                iterate(child, parent);
             }
             parent = origParent;
             ++nrow;
@@ -213,4 +245,7 @@ void RefViewModelController::onItemInserted(SessionItem*, TagRow)
     p_impl->iterate_insert(rootSessionItem(), p_impl->view_model->rootItem());
 }
 
-void RefViewModelController::onItemRemoved(SessionItem*, TagRow) {}
+void RefViewModelController::onItemRemoved(SessionItem*, TagRow)
+{
+    p_impl->iterate_remove(rootSessionItem(), p_impl->view_model->rootItem());
+}

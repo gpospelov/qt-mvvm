@@ -177,3 +177,58 @@ TEST_F(RefViewModelControllerTest, initThenInsertProperties)
     EXPECT_EQ(view_model.rowCount(), 2);
     EXPECT_EQ(view_model.columnCount(), 2);
 }
+
+//! Insert two property items in a model, inserted after controller was setup.
+
+TEST_F(RefViewModelControllerTest, initThenInsertVector)
+{
+    SessionModel session_model;
+
+    RefViewModel view_model;
+    QSignalSpy spyInsert(&view_model, &RefViewModel::rowsInserted);
+    QSignalSpy spyRemove(&view_model, &RefViewModel::rowsRemoved);
+
+    auto controller = create_controller(&session_model, &view_model);
+    session_model.insertItem<VectorItem>();
+    session_model.insertItem<VectorItem>();
+
+    // checking signaling
+    EXPECT_EQ(spyInsert.count(), 2);
+
+    // checking model layout
+    EXPECT_EQ(view_model.rowCount(), 2);
+    EXPECT_EQ(view_model.columnCount(), 2);
+}
+
+//! Removing single top level item.
+
+TEST_F(RefViewModelControllerTest, removeSingleTopItem)
+{
+    SessionModel session_model;
+
+    // inserting single item
+    session_model.insertItem<SessionItem>();
+
+    RefViewModel view_model;
+    auto controller = create_controller(&session_model, &view_model);
+
+    // root item should have one child
+    EXPECT_EQ(view_model.rowCount(), 1);
+    EXPECT_EQ(view_model.columnCount(), 2);
+
+    QSignalSpy spyInsert(&view_model, &RefViewModel::rowsInserted);
+    QSignalSpy spyRemove(&view_model, &RefViewModel::rowsRemoved);
+
+    // removing child
+    session_model.removeItem(session_model.rootItem(), {"", 0});
+    ASSERT_EQ(spyInsert.count(), 0);
+    ASSERT_EQ(spyRemove.count(), 1);
+    EXPECT_EQ(view_model.rowCount(), 0);
+    EXPECT_EQ(view_model.columnCount(), 0);
+
+    QList<QVariant> arguments = spyRemove.takeFirst();
+    ASSERT_EQ(arguments.size(), 3); // QModelIndex &parent, int first, int last
+    EXPECT_EQ(arguments.at(0).value<QModelIndex>(), QModelIndex());
+    EXPECT_EQ(arguments.at(1).value<int>(), 0);
+    EXPECT_EQ(arguments.at(2).value<int>(), 0);
+}
