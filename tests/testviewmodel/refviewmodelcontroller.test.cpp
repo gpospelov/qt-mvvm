@@ -204,11 +204,11 @@ TEST_F(RefViewModelControllerTest, initThenInsertVector)
 
 TEST_F(RefViewModelControllerTest, removeSingleTopItem)
 {
+    // constructing the model with single item
     SessionModel session_model;
-
-    // inserting single item
     session_model.insertItem<SessionItem>();
 
+    // constructing viewmodel and its controller
     RefViewModel view_model;
     auto controller = create_controller(&session_model, &view_model);
 
@@ -228,6 +228,44 @@ TEST_F(RefViewModelControllerTest, removeSingleTopItem)
 
     QList<QVariant> arguments = spyRemove.takeFirst();
     ASSERT_EQ(arguments.size(), 3); // QModelIndex &parent, int first, int last
+    EXPECT_EQ(arguments.at(0).value<QModelIndex>(), QModelIndex());
+    EXPECT_EQ(arguments.at(1).value<int>(), 0);
+    EXPECT_EQ(arguments.at(2).value<int>(), 0);
+}
+
+//! Remove one of two top level items.
+
+TEST_F(RefViewModelControllerTest, removeOneOfTopItems)
+{
+    // constructing model with two items
+    SessionModel session_model;
+    session_model.insertItem<SessionItem>();
+    session_model.insertItem<SessionItem>();
+
+    // constructing viewmodel and its controller
+    RefViewModel view_model;
+    auto controller = create_controller(&session_model, &view_model);
+
+    // root item should have one child
+    EXPECT_EQ(view_model.rowCount(), 2);
+    EXPECT_EQ(view_model.columnCount(), 2);
+
+    QSignalSpy spyRemove(&view_model, &RefViewModel::rowsRemoved);
+    QSignalSpy spyInsert(&view_model, &RefViewModel::rowsInserted);
+
+    // removing child
+    session_model.removeItem(session_model.rootItem(), {"", 0});
+
+    // no insert was called
+    EXPECT_EQ(spyInsert.count(), 0);
+
+    // removal was called once
+    EXPECT_EQ(spyRemove.count(), 1);
+    EXPECT_EQ(view_model.rowCount(), 1);
+    EXPECT_EQ(view_model.columnCount(), 2);
+
+    QList<QVariant> arguments = spyRemove.takeFirst();
+    EXPECT_EQ(arguments.size(), 3); // QModelIndex &parent, int first, int last
     EXPECT_EQ(arguments.at(0).value<QModelIndex>(), QModelIndex());
     EXPECT_EQ(arguments.at(1).value<int>(), 0);
     EXPECT_EQ(arguments.at(2).value<int>(), 0);
