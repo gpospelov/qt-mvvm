@@ -17,6 +17,7 @@
 #include <mvvm/viewmodel/standardviewmodelcontrollers.h>
 #include <mvvm/viewmodel/viewdataitem.h>
 #include <mvvm/viewmodel/refviewitems.h>
+#include <QStandardItem>
 
 using namespace ModelView;
 
@@ -46,8 +47,6 @@ class MaterialTableRowStrategy : public RowStrategyInterface
 {
 public:
     MaterialTableRowStrategy(MaterialTableViewModel* view_model);
-    //! Construct row of QStandardItems from given SessionItem.
-    QList<QStandardItem*> constructRow(SessionItem* item) override;
 
     QStringList horizontalHeaderLabels() const override;
 
@@ -60,23 +59,22 @@ private:
 class MaterialViewController : public AbstractViewModelController
 {
 public:
-    MaterialViewController(MaterialTableViewModel* model);
+    MaterialViewController(SessionModel* session_model, MaterialTableViewModel* model);
 };
 
 QStandardItem* createCheckItem();
 } // namespace
 
 MaterialTableViewModel::MaterialTableViewModel(ModelView::SessionModel* model, QObject* parent)
-    : AbstractViewModel(std::make_unique<MaterialViewController>(this), parent),
+    : AbstractViewModel(std::make_unique<MaterialViewController>(model, this), parent),
       m_material_type(::Constants::SLDMaterialType)
 {
-    setSessionModel(model);
 }
 
 void MaterialTableViewModel::setMaterialType(const std::string& material_type)
 {
     m_material_type = material_type;
-    update();
+//    update(); FIXME
 }
 
 /*! Returns material item associated with the particular row.
@@ -131,19 +129,6 @@ MaterialTableRowStrategy::MaterialTableRowStrategy(MaterialTableViewModel* view_
 {
 }
 
-QList<QStandardItem*> MaterialTableRowStrategy::constructRow(SessionItem* item)
-{
-    QList<QStandardItem*> result;
-
-    if (!item)
-        return result;
-
-    for (auto child : Utils::SinglePropertyItems(*item))
-        result.push_back(new ViewDataItem(child));
-    result.push_front(createCheckItem());
-    return result;
-}
-
 std::vector<std::unique_ptr<RefViewItem>> MaterialTableRowStrategy::constructRefRow(SessionItem* item)
 {
     std::vector<std::unique_ptr<RefViewItem>> result;
@@ -182,8 +167,8 @@ QStringList MaterialTableRowStrategy::horizontalHeaderLabels() const
 }
 
 
-MaterialViewController::MaterialViewController(MaterialTableViewModel* model)
-    : AbstractViewModelController(model)
+MaterialViewController::MaterialViewController(SessionModel* session_model, MaterialTableViewModel* model)
+    : AbstractViewModelController(session_model, model)
 {
     setRowStrategy(std::make_unique<MaterialTableRowStrategy>(model));
     setChildrenStrategy(std::make_unique<FilterChildrenStrategy>(model));

@@ -27,7 +27,7 @@ Will iterate through all top level items and creates rows with layer properties.
 class LayerTableViewModelController : public ModelView::AbstractViewModelController
 {
 public:
-    explicit LayerTableViewModelController(ModelView::AbstractViewModel* view_model = nullptr);
+    explicit LayerTableViewModelController(ModelView::SessionModel* model, ModelView::AbstractViewModel* view_model = nullptr);
 };
 
 #endif //  LAYERTABLEVIEWMODELCONTROLLER_H

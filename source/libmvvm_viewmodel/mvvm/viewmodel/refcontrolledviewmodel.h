@@ -31,6 +31,10 @@ public:
                            QObject* parent = nullptr);
     ~RefControlledViewModel() override;
 
+    SessionModel* sessionModel() const;
+
+    SessionItem* rootSessionItem();
+
     void setRootSessionItem(SessionItem* item);
 
     SessionItem* sessionItemFromIndex(const QModelIndex& index) const;

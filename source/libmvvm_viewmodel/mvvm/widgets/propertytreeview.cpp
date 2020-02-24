@@ -32,7 +32,7 @@ void PropertyTreeView::setItem(SessionItem* item)
 {
     setViewModel(Utils::CreatePropertyViewModel(item->model()));
     viewModel()->setRootSessionItem(item);
-    viewModel()->setHorizontalHeaderLabels(labels);
+    //viewModel()->setHorizontalHeaderLabels(labels); FIXME restore
     treeView()->setRootIsDecorated(false);
     treeView()->expandAll();
 }

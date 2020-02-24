@@ -20,6 +20,16 @@ RefControlledViewModel::RefControlledViewModel(std::unique_ptr<RefViewModelContr
 {
 }
 
+SessionModel* RefControlledViewModel::sessionModel() const
+{
+    return m_controller->sessionModel();
+}
+
+SessionItem* RefControlledViewModel::rootSessionItem()
+{
+    return m_controller->rootSessionItem();
+}
+
 RefControlledViewModel::~RefControlledViewModel() = default;
 
 void RefControlledViewModel::setRootSessionItem(SessionItem* item)

@@ -29,7 +29,7 @@ struct PropertyFlatView::PropertyFlatViewImpl {
     std::unique_ptr<ViewModelDelegate> m_delegate;
     std::unique_ptr<DefaultEditorFactory> editor_factory;
     std::vector<std::unique_ptr<QDataWidgetMapper>> widget_mappers;
-    std::map<ViewItem*, QWidget*> item_to_widget;
+    std::map<RefViewItem*, QWidget*> item_to_widget;
 
     QGridLayout* grid_layout{nullptr};
     PropertyFlatViewImpl()
@@ -40,7 +40,7 @@ struct PropertyFlatView::PropertyFlatViewImpl {
 
     //! Creates label for given index.
 
-    std::unique_ptr<QLabel> create_label(ViewItem* view_item)
+    std::unique_ptr<QLabel> create_label(RefViewItem* view_item)
     {
         auto result = std::make_unique<QLabel>(view_item->data(Qt::DisplayRole).toString());
         result->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed));

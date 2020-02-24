@@ -12,6 +12,7 @@
 #include <memory>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/viewmodel/viewdataitem.h>
+#include <QColor>
 
 using namespace ModelView;
 

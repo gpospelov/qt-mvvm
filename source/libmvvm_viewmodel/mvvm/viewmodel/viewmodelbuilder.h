@@ -10,38 +10,38 @@
 #ifndef MVVM_VIEWMODEL_VIEWMODELBUILDER_H
 #define MVVM_VIEWMODEL_VIEWMODELBUILDER_H
 
-#include <memory>
-#include <mvvm/core/export.h>
+//#include <memory>
+//#include <mvvm/core/export.h>
 
-namespace ModelView
-{
+//namespace ModelView
+//{
 
-class SessionModel;
-class AbstractViewModel;
-class AbstractViewModelController;
+//class SessionModel;
+//class AbstractViewModel;
+//class AbstractViewModelController;
 
-/*!
-@class ViewModelBuilder
-@brief Utility class to build the AbstractViewModel using controller and SessionModel.
-*/
+///*!
+//@class ViewModelBuilder
+//@brief Utility class to build the AbstractViewModel using controller and SessionModel.
+//*/
 
-class CORE_EXPORT ViewModelBuilder
-{
-public:
-    ViewModelBuilder();
-    ~ViewModelBuilder();
+//class CORE_EXPORT ViewModelBuilder
+//{
+//public:
+//    ViewModelBuilder();
+//    ~ViewModelBuilder();
 
-    ViewModelBuilder& setSessionModel(SessionModel* session_model);
+//    ViewModelBuilder& setSessionModel(SessionModel* session_model);
 
-    ViewModelBuilder& setController(std::unique_ptr<AbstractViewModelController> controller);
+//    ViewModelBuilder& setController(std::unique_ptr<AbstractViewModelController> controller);
 
-    std::unique_ptr<AbstractViewModel> build() const;
+//    std::unique_ptr<AbstractViewModel> build() const;
 
-private:
-    struct ViewModelBuilderImpl;
-    std::unique_ptr<ViewModelBuilderImpl> p_impl;
-};
+//private:
+//    struct ViewModelBuilderImpl;
+//    std::unique_ptr<ViewModelBuilderImpl> p_impl;
+//};
 
-} // namespace ModelView
+//} // namespace ModelView
 
 #endif // MVVM_VIEWMODEL_VIEWMODELBUILDER_H

@@ -9,101 +9,107 @@
 
 #include <mvvm/viewmodel/abstractviewmodel.h>
 #include <mvvm/viewmodel/abstractviewmodelcontroller.h>
-#include <mvvm/viewmodel/viewitems.h>
-#include <mvvm/viewmodel/viewmodelutils.h>
+//#include <mvvm/viewmodel/viewitems.h>
+//#include <mvvm/viewmodel/viewmodelutils.h>
 
 using namespace ModelView;
 
-AbstractViewModel::AbstractViewModel(std::unique_ptr<AbstractViewModelController> controller,
-                                     QObject* parent)
-    : QStandardItemModel(parent), m_controller(std::move(controller))
-{
-    m_controller->setViewModel(this);
-    setItemPrototype(new ViewEmptyItem);
-}
+AbstractViewModel::AbstractViewModel(std::unique_ptr<RefViewModelController> controller, QObject* parent) : RefControlledViewModel(std::move(controller), parent){}
 
 AbstractViewModel::~AbstractViewModel() = default;
 
-void AbstractViewModel::setSessionModel(SessionModel* model)
-{
-    m_controller->setSessionModel(model);
-}
 
-void AbstractViewModel::setRootSessionItem(SessionItem* item)
-{
-    m_controller->setRootSessionItem(item);
-}
+//AbstractViewModel::AbstractViewModel(std::unique_ptr<AbstractViewModelController> controller,
+//                                     QObject* parent)
+//    : QStandardItemModel(parent), m_controller(std::move(controller))
+//{
+//    m_controller->setViewModel(this);
+//    setItemPrototype(new ViewEmptyItem);
+//}
 
-void AbstractViewModel::update()
-{
-    m_controller->init_view_model();
-}
+//AbstractViewModel::~AbstractViewModel() = default;
 
-//! Returns QStandardItem associated with top level item (rootSessionItem).
+//void AbstractViewModel::setSessionModel(SessionModel* model)
+//{
+//    m_controller->setSessionModel(model);
+//}
 
-QStandardItem* AbstractViewModel::rootViewItem() const
-{
-    return invisibleRootItem();
-}
+//void AbstractViewModel::setRootSessionItem(SessionItem* item)
+//{
+//    m_controller->setRootSessionItem(item);
+//}
 
-SessionModel* AbstractViewModel::sessionModel() const
-{
-    return m_controller->sessionModel();
-}
+//void AbstractViewModel::update()
+//{
+//    m_controller->init_view_model();
+//}
 
-SessionItem* AbstractViewModel::rootSessionItem() const
-{
-    return m_controller->rootSessionItem();
-}
+////! Returns QStandardItem associated with top level item (rootSessionItem).
 
-//! Returns vector of standard views used to display given SessionItem.
+//QStandardItem* AbstractViewModel::rootViewItem() const
+//{
+//    return invisibleRootItem();
+//}
 
-std::vector<QStandardItem*> AbstractViewModel::findStandardViews(const SessionItem* item) const
-{
-    if (item == m_controller->rootSessionItem())
-        return {rootViewItem()};
+//SessionModel* AbstractViewModel::sessionModel() const
+//{
+//    return m_controller->sessionModel();
+//}
 
-    std::vector<QStandardItem*> result;
-    for (auto view : findViews(item))
-        result.push_back(view);
+//SessionItem* AbstractViewModel::rootSessionItem() const
+//{
+//    return m_controller->rootSessionItem();
+//}
 
-    return result;
-}
+////! Returns vector of standard views used to display given SessionItem.
 
-std::vector<ViewItem*> AbstractViewModel::findViews(const SessionItem* item) const
-{
-    return Utils::findViews(this, item, QModelIndex());
-}
+//std::vector<QStandardItem*> AbstractViewModel::findStandardViews(const SessionItem* item) const
+//{
+//    if (item == m_controller->rootSessionItem())
+//        return {rootViewItem()};
 
-//! Returns SessionItem corresponding to given QModelIndex.
+//    std::vector<QStandardItem*> result;
+//    for (auto view : findViews(item))
+//        result.push_back(view);
 
-SessionItem* AbstractViewModel::sessionItemFromIndex(const QModelIndex& index) const
-{
-    SessionItem* result(nullptr);
-    if (!m_controller->sessionModel())
-        return result;
+//    return result;
+//}
 
-    if (index.isValid()) {
-        if (auto viewItem = dynamic_cast<ViewItem*>(itemFromIndex(index)))
-            result = viewItem->item();
-    } else {
-        result = m_controller->rootSessionItem();
-    }
+//std::vector<ViewItem*> AbstractViewModel::findViews(const SessionItem* item) const
+//{
+//    return Utils::findViews(this, item, QModelIndex());
+//}
 
-    return result;
-}
+////! Returns SessionItem corresponding to given QModelIndex.
 
-//! Returns list of QModelIndex'es related to given SessionItem.
+//SessionItem* AbstractViewModel::sessionItemFromIndex(const QModelIndex& index) const
+//{
+//    SessionItem* result(nullptr);
+//    if (!m_controller->sessionModel())
+//        return result;
 
-QModelIndexList AbstractViewModel::indexOfSessionItem(const SessionItem* item) const
-{
-    QModelIndexList result;
-    for (auto view : findStandardViews(item))
-        result.push_back(indexFromItem(view));
-    return result;
-}
+//    if (index.isValid()) {
+//        if (auto viewItem = dynamic_cast<ViewItem*>(itemFromIndex(index)))
+//            result = viewItem->item();
+//    } else {
+//        result = m_controller->rootSessionItem();
+//    }
 
-ViewItem* AbstractViewModel::viewItemFromIndex(const QModelIndex& index) const
-{
-    return dynamic_cast<ViewItem*>(itemFromIndex(index));
-}
+//    return result;
+//}
+
+////! Returns list of QModelIndex'es related to given SessionItem.
+
+//QModelIndexList AbstractViewModel::indexOfSessionItem(const SessionItem* item) const
+//{
+//    QModelIndexList result;
+//    for (auto view : findStandardViews(item))
+//        result.push_back(indexFromItem(view));
+//    return result;
+//}
+
+//ViewItem* AbstractViewModel::viewItemFromIndex(const QModelIndex& index) const
+//{
+//    return dynamic_cast<ViewItem*>(itemFromIndex(index));
+//}
+

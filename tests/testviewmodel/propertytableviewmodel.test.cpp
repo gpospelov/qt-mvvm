@@ -39,8 +39,7 @@ TEST_F(PropertyTableViewModelTest, baseItem)
     SessionModel model;
     model.insertItem<SessionItem>();
 
-    PropertyTableViewModel viewModel;
-    viewModel.setSessionModel(&model);
+    PropertyTableViewModel viewModel(&model);
 
     EXPECT_EQ(viewModel.rowCount(), 0);
     EXPECT_EQ(viewModel.columnCount(), 0);
@@ -58,8 +57,7 @@ TEST_F(PropertyTableViewModelTest, propertyItem)
     model.insertItem<PropertyItem>(parent, "property_tag");
     model.insertItem<SessionItem>(parent, "universal_tag");
 
-    PropertyTableViewModel viewModel;
-    viewModel.setSessionModel(&model);
+    PropertyTableViewModel viewModel(&model);
 
     // one cell corresponding to single item at property_tag of our parent
     EXPECT_EQ(viewModel.rowCount(), 1);
@@ -77,8 +75,7 @@ TEST_F(PropertyTableViewModelTest, vectorItem)
     SessionModel model;
     auto parent = model.insertItem<VectorItem>();
 
-    PropertyTableViewModel viewModel;
-    viewModel.setSessionModel(&model);
+    PropertyTableViewModel viewModel(&model);
 
     EXPECT_EQ(viewModel.rowCount(), 1);
     EXPECT_EQ(viewModel.columnCount(), 3);
@@ -99,8 +96,7 @@ TEST_F(PropertyTableViewModelTest, multiLayerAndRootItem)
     model.insertItem<ToyItems::LayerItem>(multilayer);
     model.insertItem<ToyItems::LayerItem>(multilayer);
 
-    PropertyTableViewModel viewModel;
-    viewModel.setSessionModel(&model);
+    PropertyTableViewModel viewModel(&model);
 
     // ViewModel should be empty, since we are looking to RootItem.
     EXPECT_EQ(viewModel.rowCount(), 0);
@@ -116,8 +112,7 @@ TEST_F(PropertyTableViewModelTest, multiLayer)
     model.insertItem<ToyItems::LayerItem>(multilayer);
     model.insertItem<ToyItems::LayerItem>(multilayer);
 
-    PropertyTableViewModel viewModel;
-    viewModel.setSessionModel(&model);
+    PropertyTableViewModel viewModel(&model);
     viewModel.setRootSessionItem(multilayer);
 
     EXPECT_EQ(viewModel.rowCount(), 2);    // two layers

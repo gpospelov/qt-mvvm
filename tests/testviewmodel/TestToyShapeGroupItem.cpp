@@ -194,8 +194,7 @@ TEST_F(ToyShapeGroupItemTest, inPropertyViewModelContext)
     ASSERT_TRUE(groupItem != nullptr);
 
     // constructing viewModel from sample model
-    PropertyViewModel viewModel;
-    viewModel.setSessionModel(&model);
+    PropertyViewModel viewModel(&model);
     viewModel.setRootSessionItem(parent);
 
     // root item should have one child, item looking at our groupItem

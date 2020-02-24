@@ -17,29 +17,32 @@ using namespace ModelView;
 
 // ----------------------------------------------------------------------------
 
-DefaultViewModelController::DefaultViewModelController(AbstractViewModel* view_model)
-    : AbstractViewModelController(view_model)
+DefaultViewModelController::DefaultViewModelController(SessionModel* session_model, RefViewModel* view_model)
+    : AbstractViewModelController(session_model, view_model)
 {
     setRowStrategy(std::make_unique<LabelDataRowStrategy>());
     setChildrenStrategy(std::make_unique<AllChildrenStrategy>());
+    init();
 }
 
 // ----------------------------------------------------------------------------
 
-TopItemsViewModelController::TopItemsViewModelController(AbstractViewModel* view_model)
-    : AbstractViewModelController(view_model)
+TopItemsViewModelController::TopItemsViewModelController(SessionModel* session_model, RefViewModel* view_model)
+    : AbstractViewModelController(session_model, view_model)
 {
     setRowStrategy(std::make_unique<LabelDataRowStrategy>());
     setChildrenStrategy(std::make_unique<TopItemsStrategy>());
+    init();
 }
 
 // ----------------------------------------------------------------------------
 
-PropertyViewModelController::PropertyViewModelController(AbstractViewModel* view_model)
-    : AbstractViewModelController(view_model)
+PropertyViewModelController::PropertyViewModelController(SessionModel* session_model, RefViewModel* view_model)
+    : AbstractViewModelController(session_model, view_model)
 {
     setRowStrategy(std::make_unique<LabelDataRowStrategy>());
     setChildrenStrategy(std::make_unique<PropertyItemsStrategy>());
+    init();
 }
 
 void PropertyViewModelController::onDataChange(SessionItem* item, int role)
@@ -53,21 +56,23 @@ void PropertyViewModelController::onDataChange(SessionItem* item, int role)
 
 // ----------------------------------------------------------------------------
 
-PropertyTableViewModelController::PropertyTableViewModelController(
-    AbstractViewModel* view_model, const std::vector<std::string>& labels)
-    : AbstractViewModelController(view_model)
+PropertyTableViewModelController::PropertyTableViewModelController(SessionModel* session_model,
+    RefViewModel* view_model, const std::vector<std::string>& labels)
+    : AbstractViewModelController(session_model, view_model)
 {
     setRowStrategy(std::make_unique<PropertiesRowStrategy>(labels));
     setChildrenStrategy(std::make_unique<TopItemsStrategy>());
+    init();
 }
 
 // ----------------------------------------------------------------------------
 
-PropertyFlatViewModelController::PropertyFlatViewModelController(AbstractViewModel* view_model)
-    : AbstractViewModelController(view_model)
+PropertyFlatViewModelController::PropertyFlatViewModelController(SessionModel* session_model, RefViewModel* view_model)
+    : AbstractViewModelController(session_model, view_model)
 {
     setRowStrategy(std::make_unique<LabelDataRowStrategy>());
     setChildrenStrategy(std::make_unique<PropertyItemsFlatStrategy>());
+    init();
 }
 
 void PropertyFlatViewModelController::onDataChange(SessionItem* item, int role)

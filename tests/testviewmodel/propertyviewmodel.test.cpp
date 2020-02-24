@@ -40,8 +40,7 @@ TEST_F(PropertyViewModelTest, baseItem)
     SessionModel model;
     model.insertItem<SessionItem>();
 
-    PropertyViewModel viewModel;
-    viewModel.setSessionModel(&model);
+    PropertyViewModel viewModel(&model);
 
     // Root item has default tag and all items considered as top items.
     // PropertyViewModel shouldn't see any items.
@@ -61,8 +60,7 @@ TEST_F(PropertyViewModelTest, propertyItem)
     model.insertItem<PropertyItem>(parent, "property_tag");
     model.insertItem<SessionItem>(parent, "universal_tag");
 
-    PropertyViewModel viewModel;
-    viewModel.setSessionModel(&model);
+    PropertyViewModel viewModel(&model);
     viewModel.setRootSessionItem(parent);
 
     // View model should see only property item belonging to parent.
@@ -77,8 +75,7 @@ TEST_F(PropertyViewModelTest, vectorItem)
     SessionModel model;
     auto parent = model.insertItem<VectorItem>();
 
-    PropertyViewModel viewModel;
-    viewModel.setSessionModel(&model);
+    PropertyViewModel viewModel(&model);
 
     EXPECT_EQ(viewModel.rowCount(), 0); // root item doesn't have properties
     EXPECT_EQ(viewModel.columnCount(), 2);

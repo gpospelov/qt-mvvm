@@ -41,8 +41,7 @@ TEST_F(PropertyFlatModelTest, baseItem)
     SessionModel model;
     model.insertItem<SessionItem>();
 
-    PropertyFlatViewModel viewModel;
-    viewModel.setSessionModel(&model);
+    PropertyFlatViewModel viewModel(&model);
 
     // Root item has default tag and all items considered as top items.
     // PropertyViewModel shouldn't see any items.
@@ -62,8 +61,7 @@ TEST_F(PropertyFlatModelTest, propertyItem)
     model.insertItem<PropertyItem>(parent, "property_tag");
     model.insertItem<SessionItem>(parent, "universal_tag");
 
-    PropertyFlatViewModel viewModel;
-    viewModel.setSessionModel(&model);
+    PropertyFlatViewModel viewModel(&model);
     viewModel.setRootSessionItem(parent);
 
     // View model should see only property item belonging to parent.
@@ -78,8 +76,7 @@ TEST_F(PropertyFlatModelTest, vectorItem)
     SessionModel model;
     auto parent = model.insertItem<VectorItem>();
 
-    PropertyFlatViewModel viewModel;
-    viewModel.setSessionModel(&model);
+    PropertyFlatViewModel viewModel(&model);
 
     EXPECT_EQ(viewModel.rowCount(), 0); // root item doesn't have properties
     EXPECT_EQ(viewModel.columnCount(), 2);
@@ -99,8 +96,7 @@ TEST_F(PropertyFlatModelTest, particleItem)
     auto group = dynamic_cast<GroupItem*>(particle->getItem(ToyItems::ParticleItem::P_SHAPES));
     group->setCurrentType(ToyItems::Constants::SphereItemType);
 
-    PropertyFlatViewModel viewModel;
-    viewModel.setSessionModel(&model);
+    PropertyFlatViewModel viewModel(&model);
     viewModel.setRootSessionItem(particle);
 
     // We should see 3 rows: VectorItem, GroupItem itself, and Radius of sphere

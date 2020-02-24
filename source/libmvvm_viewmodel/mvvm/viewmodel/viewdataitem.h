@@ -10,23 +10,25 @@
 #ifndef MVVM_VIEWMODEL_VIEWDATAITEM_H
 #define MVVM_VIEWMODEL_VIEWDATAITEM_H
 
-#include <mvvm/viewmodel/viewitem.h>
+#include <mvvm/viewmodel/refviewitems.h>
 
 namespace ModelView
 {
 
-class SessionItem;
+using ViewDataItem = RefViewDataItem;
 
-//! Represents data role of SessionItem in any cell of Qt's trees and tables.
+//class SessionItem;
 
-class CORE_EXPORT ViewDataItem : public ViewItem
-{
-public:
-    explicit ViewDataItem(SessionItem* item);
-    int type() const override;
+////! Represents data role of SessionItem in any cell of Qt's trees and tables.
 
-    QVariant data(int role) const override;
-};
+//class CORE_EXPORT ViewDataItem : public ViewItem
+//{
+//public:
+//    explicit ViewDataItem(SessionItem* item);
+//    int type() const override;
+
+//    QVariant data(int role) const override;
+//};
 
 } // namespace ModelView
 
