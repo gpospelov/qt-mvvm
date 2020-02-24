@@ -61,7 +61,7 @@ TEST_F(ToyMultilayerItemTest, multiLayerView)
     QModelIndex mlIndex = viewModel.index(0, 0);
 
     // it should be ViewLabelItem looking at our MultiLayer item
-    auto viewItem = dynamic_cast<ViewLabelItem*>(viewModel.itemFromIndex(mlIndex));
+    auto viewItem = dynamic_cast<RefViewLabelItem*>(viewModel.itemFromIndex(mlIndex));
     EXPECT_TRUE(viewItem != nullptr);
     EXPECT_EQ(viewItem->item(), multiLayerItem);
 

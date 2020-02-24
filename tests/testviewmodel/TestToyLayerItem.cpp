@@ -161,7 +161,7 @@ TEST_F(ToyLayerItemTest, inTopItemsViewModelContext)
     viewModel.setRootSessionItem(layer);
 
     EXPECT_EQ(viewModel.rowCount(QModelIndex()), 0);
-    EXPECT_EQ(viewModel.columnCount(QModelIndex()), 2);
+    EXPECT_EQ(viewModel.columnCount(QModelIndex()), 0);
 
     model.insertItem<ToyItems::ParticleItem>(layer);
     EXPECT_EQ(viewModel.rowCount(QModelIndex()), 1);

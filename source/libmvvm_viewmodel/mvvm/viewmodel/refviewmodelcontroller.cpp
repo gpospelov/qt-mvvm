@@ -132,14 +132,16 @@ struct RefViewModelController::RefViewModelControllerImpl {
         for (auto child : children_strategy->children(item)) {
             auto row = row_strategy->constructRefRow(child);
             if (!row.empty()) {
-                if (row_was_already_inserted(parent, nrow, row))
-                    continue;
-
-                auto next_parent = row.at(0).get();
-                item_to_view[child] = next_parent;
-                view_model->insertRow(parent, nrow, std::move(row));
-                parent = next_parent; // labelItem
-                iterate(child, parent);
+                RefViewItem* next_parent{nullptr};
+                if (row_was_already_inserted(parent, nrow, row)) {
+                    next_parent = parent->child(nrow, 0);
+                } else {
+                    next_parent = row.at(0).get();
+                    item_to_view[child] = next_parent;
+                    view_model->insertRow(parent, nrow, std::move(row));
+                }
+                parent = next_parent;
+                iterate_insert(child, parent);
             }
             parent = origParent;
             ++nrow;
@@ -223,6 +225,9 @@ struct RefViewModelController::RefViewModelControllerImpl {
 
     std::vector<RefViewItem*> findViews(const SessionItem* item) const
     {
+        if (item == session_model->rootItem())
+            return {view_model->rootItem()};
+
         std::vector<RefViewItem*> result;
         auto on_index = [&](const QModelIndex& index) {
             auto view_item = view_model->itemFromIndex(index);

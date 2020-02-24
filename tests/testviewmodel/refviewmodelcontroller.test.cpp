@@ -18,6 +18,7 @@
 #include <mvvm/viewmodel/refviewmodel.h>
 #include <mvvm/viewmodel/refviewmodelcontroller.h>
 #include <mvvm/viewmodel/standardchildrenstrategies.h>
+#include <QDebug>
 
 using namespace ModelView;
 
@@ -199,6 +200,34 @@ TEST_F(RefViewModelControllerTest, initThenInsertVector)
     EXPECT_EQ(view_model.rowCount(), 2);
     EXPECT_EQ(view_model.columnCount(), 2);
 }
+
+//! Insert child to parent
+
+TEST_F(RefViewModelControllerTest, insertChildToParent)
+{
+    SessionModel session_model;
+
+    RefViewModel view_model;
+    QSignalSpy spyInsert(&view_model, &RefViewModel::rowsInserted);
+    QSignalSpy spyRemove(&view_model, &RefViewModel::rowsRemoved);
+
+    auto controller = create_controller(&session_model, &view_model);
+
+    auto parent = session_model.insertItem<CompoundItem>();
+    parent->registerTag(TagInfo::universalTag("children"), /*set_as_default*/ true);
+    auto child = session_model.insertItem<SessionItem>(parent);
+    child = session_model.insertItem<SessionItem>(parent);
+
+    // checking signaling
+    EXPECT_EQ(spyInsert.count(), 3);
+
+    // checking model layout: parent and two children
+    EXPECT_EQ(view_model.rowCount(), 1);
+    EXPECT_EQ(view_model.columnCount(), 2);
+    EXPECT_EQ(view_model.rowCount(view_model.index(0,0)), 2);
+    EXPECT_EQ(view_model.columnCount(view_model.index(0,0)), 2);
+}
+
 
 //! Removing single top level item.
 
