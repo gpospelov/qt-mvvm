@@ -27,8 +27,10 @@ class CORE_EXPORT PropertiesRowStrategy : public RowStrategyInterface
 public:
     PropertiesRowStrategy(const std::vector<std::string>& labels = {});
 
-    QList<QStandardItem*> constructRow(SessionItem* item);
-    QStringList horizontalHeaderLabels() const;
+    QList<QStandardItem*> constructRow(SessionItem* item) override;
+    QStringList horizontalHeaderLabels() const  override;
+
+    std::vector<std::unique_ptr<RefViewItem>> constructRefRow(SessionItem*item) override;
 
 private:
     void update_column_labels(std::vector<ModelView::SessionItem*> items);

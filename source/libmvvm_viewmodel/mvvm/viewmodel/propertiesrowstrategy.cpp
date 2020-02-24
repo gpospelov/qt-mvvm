@@ -10,6 +10,7 @@
 #include <mvvm/model/itemutils.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/viewmodel/propertiesrowstrategy.h>
+#include <mvvm/viewmodel/refviewitems.h>
 #include <mvvm/viewmodel/viewitems.h>
 
 using namespace ModelView;
@@ -46,6 +47,27 @@ QStringList PropertiesRowStrategy::horizontalHeaderLabels() const
         user_defined_column_labels.empty() ? current_column_labels : user_defined_column_labels;
     std::transform(labels.begin(), labels.end(), std::back_inserter(result),
                    [](const std::string& str) { return QString::fromStdString(str); });
+    return result;
+}
+
+std::vector<std::unique_ptr<RefViewItem>> PropertiesRowStrategy::constructRefRow(SessionItem* item)
+{
+    std::vector<std::unique_ptr<RefViewItem>> result;
+
+    if (!item)
+        return result;
+
+    auto items_in_row = Utils::SinglePropertyItems(*item);
+    if (user_defined_column_labels.empty())
+        update_column_labels(items_in_row);
+
+    for (auto child : items_in_row) {
+        if (child->data().isValid())
+            result.emplace_back(std::make_unique<RefViewDataItem>(child));
+        else
+            result.emplace_back(std::make_unique<RefViewLabelItem>(child));
+    }
+
     return result;
 }
 

@@ -41,10 +41,7 @@ public:
 
     virtual QStringList horizontalHeaderLabels() const = 0;
 
-    virtual std::vector<std::unique_ptr<RefViewItem>> constructRefRow(SessionItem*)
-    {
-        throw std::runtime_error("Error in RowStrategyInterface: not implemented");
-    }
+    virtual std::vector<std::unique_ptr<RefViewItem>> constructRefRow(SessionItem*) = 0;
 };
 
 } // namespace ModelView
