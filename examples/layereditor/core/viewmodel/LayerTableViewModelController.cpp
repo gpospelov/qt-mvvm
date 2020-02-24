@@ -63,5 +63,4 @@ LayerTableViewModelController::LayerTableViewModelController(SessionModel* model
 {
     setRowStrategy(std::make_unique<CustomLayerRowStrategy>());
     setChildrenStrategy(std::make_unique<TopItemsStrategy>());
-    init();
 }

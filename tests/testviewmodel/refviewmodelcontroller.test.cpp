@@ -33,7 +33,7 @@ public:
         auto result = std::make_unique<RefViewModelController>(session_model, view_model);
         result->setRowStrategy(std::make_unique<LabelDataRowStrategy>());
         result->setChildrenStrategy(std::make_unique<AllChildrenStrategy>());
-        result->init();
+        result->setRootSessionItem(session_model->rootItem());
         return result;
     }
 };

@@ -22,7 +22,6 @@ DefaultViewModelController::DefaultViewModelController(SessionModel* session_mod
 {
     setRowStrategy(std::make_unique<LabelDataRowStrategy>());
     setChildrenStrategy(std::make_unique<AllChildrenStrategy>());
-    init();
 }
 
 // ----------------------------------------------------------------------------
@@ -32,7 +31,6 @@ TopItemsViewModelController::TopItemsViewModelController(SessionModel* session_m
 {
     setRowStrategy(std::make_unique<LabelDataRowStrategy>());
     setChildrenStrategy(std::make_unique<TopItemsStrategy>());
-    init();
 }
 
 // ----------------------------------------------------------------------------
@@ -42,7 +40,6 @@ PropertyViewModelController::PropertyViewModelController(SessionModel* session_m
 {
     setRowStrategy(std::make_unique<LabelDataRowStrategy>());
     setChildrenStrategy(std::make_unique<PropertyItemsStrategy>());
-    init();
 }
 
 void PropertyViewModelController::onDataChange(SessionItem* item, int role)
@@ -62,7 +59,6 @@ PropertyTableViewModelController::PropertyTableViewModelController(SessionModel*
 {
     setRowStrategy(std::make_unique<PropertiesRowStrategy>(labels));
     setChildrenStrategy(std::make_unique<TopItemsStrategy>());
-    init();
 }
 
 // ----------------------------------------------------------------------------
@@ -72,7 +68,6 @@ PropertyFlatViewModelController::PropertyFlatViewModelController(SessionModel* s
 {
     setRowStrategy(std::make_unique<LabelDataRowStrategy>());
     setChildrenStrategy(std::make_unique<PropertyItemsFlatStrategy>());
-    init();
 }
 
 void PropertyFlatViewModelController::onDataChange(SessionItem* item, int role)

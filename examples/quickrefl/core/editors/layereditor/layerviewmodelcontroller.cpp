@@ -67,5 +67,4 @@ LayerViewModelController::LayerViewModelController(SessionModel* model, Abstract
 {
     setRowStrategy(std::make_unique<CustomLayerRowStrategy>());
     setChildrenStrategy(std::make_unique<TopItemsStrategy>());
-    init();
 }
