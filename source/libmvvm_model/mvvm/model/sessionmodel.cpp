@@ -160,8 +160,8 @@ ModelMapper* SessionModel::mapper()
 
 void SessionModel::clear()
 {
-    mapper()->callOnModelReset();
     createRootItem();
+    mapper()->callOnModelReset();
 }
 
 //! Returns strategy suitable for saving/restoring SessionItem.
