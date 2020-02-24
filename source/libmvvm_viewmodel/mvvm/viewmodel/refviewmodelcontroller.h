@@ -52,6 +52,7 @@ protected:
     virtual void onDataChange(SessionItem* item, int role);
     virtual void onItemInserted(SessionItem* parent, TagRow tagrow);
     virtual void onItemRemoved(SessionItem* parent, TagRow tagrow);
+    virtual void onAboutToRemoveItem(SessionItem* parent, TagRow tagrow);
 
 private:
     struct RefViewModelControllerImpl;

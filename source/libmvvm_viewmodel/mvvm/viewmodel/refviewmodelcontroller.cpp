@@ -7,6 +7,8 @@
 //
 // ************************************************************************** //
 
+#include <map>
+#include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/signals/modelmapper.h>
 #include <mvvm/viewmodel/childrenstrategyinterface.h>
@@ -57,6 +59,7 @@ struct RefViewModelController::RefViewModelControllerImpl {
     RefViewModel* view_model{nullptr};
     std::unique_ptr<ChildrenStrategyInterface> children_strategy;
     std::unique_ptr<RowStrategyInterface> row_strategy;
+    std::map<SessionItem*, RefViewItem*> item_to_view; //! correspondence of item and its view
 
     RefViewModelControllerImpl(RefViewModelController* controller, SessionModel* session_model,
                                RefViewModel* view_model)
@@ -121,6 +124,7 @@ struct RefViewModelController::RefViewModelControllerImpl {
                     continue;
 
                 auto next_parent = row.at(0).get();
+                item_to_view[child] = next_parent;
                 view_model->insertRow(parent, nrow, std::move(row));
                 parent = next_parent; // labelItem
                 iterate(child, parent);
@@ -146,13 +150,25 @@ struct RefViewModelController::RefViewModelControllerImpl {
                     continue;
 
                 view_model->removeRow(parent, nrow);
-//                auto next_parent = row.at(0).get();
-//                view_model->insertRow(parent, nrow, std::move(row));
-//                parent = next_parent; // labelItem
-//                iterate(child, parent);
+                //                auto next_parent = row.at(0).get();
+                //                view_model->insertRow(parent, nrow, std::move(row));
+                //                parent = next_parent; // labelItem
+                //                iterate(child, parent);
             }
             parent = origParent;
             ++nrow;
+        }
+    }
+
+    //! Remove row of ViewItem's corresponding to given item.
+
+    void remove_row_of_views(SessionItem* item)
+    {
+        auto pos = item_to_view.find(item);
+        if (pos != item_to_view.end()) {
+            auto view = pos->second;
+            view_model->removeRow(view->parent(), view->row());
+            item_to_view.erase(pos);
         }
     }
 
@@ -174,6 +190,11 @@ struct RefViewModelController::RefViewModelControllerImpl {
             controller->onItemRemoved(item, tagrow);
         };
         session_model->mapper()->setOnItemRemoved(on_item_removed, controller);
+
+        auto on_about_to_remove = [this](SessionItem* item, TagRow tagrow) {
+            controller->onAboutToRemoveItem(item, tagrow);
+        };
+        session_model->mapper()->setOnAboutToRemoveItem(on_about_to_remove, controller);
 
         auto on_model_destroyed = [this](SessionModel*) {
             session_model = nullptr;
@@ -247,5 +268,10 @@ void RefViewModelController::onItemInserted(SessionItem*, TagRow)
 
 void RefViewModelController::onItemRemoved(SessionItem*, TagRow)
 {
-    p_impl->iterate_remove(rootSessionItem(), p_impl->view_model->rootItem());
+//    p_impl->iterate_remove(rootSessionItem(), p_impl->view_model->rootItem());
+}
+
+void RefViewModelController::onAboutToRemoveItem(SessionItem* parent, TagRow tagrow)
+{
+    p_impl->remove_row_of_views(parent->getItem(tagrow.tag, tagrow.row));
 }
