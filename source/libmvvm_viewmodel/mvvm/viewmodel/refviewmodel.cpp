@@ -161,12 +161,3 @@ void RefViewModel::setRootViewItem(std::unique_ptr<RefViewItem> root_item)
     p_impl->root = std::move(root_item);
     endResetModel();
 }
-
-//! Removes all items from the model and sets the number of rows and columns to zero.
-
-void RefViewModel::clear()
-{
-    beginResetModel();
-    rootItem()->clear(); // FIXME What to do with root item here?
-    endResetModel();
-}

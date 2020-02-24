@@ -87,7 +87,7 @@ struct RefViewModelController::RefViewModelControllerImpl {
     void init_view_model()
     {
         check_initialization();
-        view_model->clear();
+        //        view_model->clear();
         iterate_insert(controller->rootSessionItem(), view_model->rootItem());
         // update labels
     }
@@ -198,13 +198,13 @@ struct RefViewModelController::RefViewModelControllerImpl {
 
         auto on_model_destroyed = [this](SessionModel*) {
             session_model = nullptr;
-            view_model->clear();
+            view_model->setRootViewItem(std::make_unique<RefRootViewItem>(nullptr));
         };
         session_model->mapper()->setOnModelDestroyed(on_model_destroyed, controller);
 
         auto on_model_reset = [this](SessionModel*) {
-            // FIXME what else ?
-            view_model->clear();
+            view_model->setRootViewItem(
+                std::make_unique<RefRootViewItem>(session_model->rootItem()));
         };
         session_model->mapper()->setOnModelReset(on_model_reset, controller);
     }
@@ -244,7 +244,7 @@ SessionModel* RefViewModelController::sessionModel() const
 void RefViewModelController::setRootSessionItem(SessionItem* item)
 {
     p_impl->view_model->setRootViewItem(std::make_unique<RefRootViewItem>(item));
-    // FIXME put call of init() here (after strategies will be in constructor)
+    init();
 }
 
 SessionItem* RefViewModelController::rootSessionItem() const
@@ -268,7 +268,7 @@ void RefViewModelController::onItemInserted(SessionItem*, TagRow)
 
 void RefViewModelController::onItemRemoved(SessionItem*, TagRow)
 {
-//    p_impl->iterate_remove(rootSessionItem(), p_impl->view_model->rootItem());
+    //    p_impl->iterate_remove(rootSessionItem(), p_impl->view_model->rootItem());
 }
 
 void RefViewModelController::onAboutToRemoveItem(SessionItem* parent, TagRow tagrow)
