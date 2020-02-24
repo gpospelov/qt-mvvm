@@ -25,6 +25,15 @@ public:
     explicit RefRootViewItem(SessionItem* item);
 };
 
+//! Represents empty cell of tree or table.
+
+class CORE_EXPORT RefViewEmptyItem : public RefViewItem
+{
+public:
+    RefViewEmptyItem();
+    QVariant data(int role) const override;
+};
+
 //! Represents display name of SessionItem in any cell of Qt's trees and tables.
 
 class CORE_EXPORT RefViewLabelItem : public RefViewItem

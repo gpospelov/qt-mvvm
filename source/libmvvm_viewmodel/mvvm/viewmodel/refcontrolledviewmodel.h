@@ -22,20 +22,22 @@ class SessionItem;
 class RefViewItem;
 class RefViewModelController;
 
+//!
+
 class CORE_EXPORT RefControlledViewModel : public RefViewModel
 {
 public:
     RefControlledViewModel(std::unique_ptr<RefViewModelController> controller,
                            QObject* parent = nullptr);
-    virtual ~RefControlledViewModel();
+    ~RefControlledViewModel() override;
 
     void setRootSessionItem(SessionItem* item);
 
     SessionItem* sessionItemFromIndex(const QModelIndex& index) const;
 
-    QModelIndexList indexOfSessionItem(const SessionItem* item) const;
-
     RefViewItem* viewItemFromIndex(const QModelIndex& index) const;
+
+    QModelIndexList indexOfSessionItem(const SessionItem* item) const;
 
 private:
     std::unique_ptr<RefViewModelController> m_controller;

@@ -12,6 +12,9 @@
 
 #include <QList>
 #include <mvvm/core/export.h>
+#include <vector>
+#include <memory>
+#include <stdexcept>
 
 class QStandardItem;
 
@@ -19,6 +22,7 @@ namespace ModelView
 {
 
 class SessionItem;
+class RefViewItem;
 
 /*!
 @class RowStrategyInterface
@@ -36,6 +40,8 @@ public:
     virtual QList<QStandardItem*> constructRow(SessionItem* item) = 0;
 
     virtual QStringList horizontalHeaderLabels() const = 0;
+
+    virtual std::vector<std::unique_ptr<RefViewItem>> constructRefRow(SessionItem*) = 0;
 };
 
 } // namespace ModelView

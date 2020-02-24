@@ -16,6 +16,7 @@
 #include <mvvm/viewmodel/rowstrategyinterface.h>
 #include <mvvm/viewmodel/standardviewmodelcontrollers.h>
 #include <mvvm/viewmodel/viewdataitem.h>
+#include <mvvm/viewmodel/refviewitems.h>
 
 using namespace ModelView;
 
@@ -49,6 +50,8 @@ public:
     QList<QStandardItem*> constructRow(SessionItem* item) override;
 
     QStringList horizontalHeaderLabels() const override;
+
+    std::vector<std::unique_ptr<RefViewItem>> constructRefRow(SessionItem*)  override;
 
 private:
     MaterialTableViewModel* m_view_model;
@@ -141,6 +144,20 @@ QList<QStandardItem*> MaterialTableRowStrategy::constructRow(SessionItem* item)
     return result;
 }
 
+std::vector<std::unique_ptr<RefViewItem>> MaterialTableRowStrategy::constructRefRow(SessionItem* item)
+{
+    std::vector<std::unique_ptr<RefViewItem>> result;
+
+    if (!item)
+        return result;
+
+    for (auto child : Utils::SinglePropertyItems(*item))
+        result.emplace_back(std::make_unique<RefViewDataItem>(child));
+//    result.push_front(createCheckItem());
+    return result;
+}
+
+
 QStringList MaterialTableRowStrategy::horizontalHeaderLabels() const
 {
     std::unique_ptr<MaterialBaseItem> label_carrier;
@@ -163,6 +180,7 @@ QStringList MaterialTableRowStrategy::horizontalHeaderLabels() const
 
     return result;
 }
+
 
 MaterialViewController::MaterialViewController(MaterialTableViewModel* model)
     : AbstractViewModelController(model)

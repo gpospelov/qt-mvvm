@@ -153,6 +153,8 @@ Qt::ItemFlags RefViewModel::flags(const QModelIndex& index) const
     return result;
 }
 
+//! Sets new root item. Previous item will be deleted, model will be reset.
+
 void RefViewModel::setRootViewItem(std::unique_ptr<RefViewItem> root_item)
 {
     beginResetModel();
