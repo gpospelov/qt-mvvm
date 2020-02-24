@@ -16,6 +16,7 @@
 #include <mvvm/viewmodel/refviewmodel.h>
 #include <mvvm/viewmodel/refviewmodelcontroller.h>
 #include <mvvm/viewmodel/rowstrategyinterface.h>
+#include <mvvm/viewmodel/viewmodelutils.h>
 
 using namespace ModelView;
 
@@ -51,6 +52,18 @@ bool row_was_already_inserted(RefViewItem* parent, int row,
 {
     return current_items_at_row(parent, row) == underlying_items(candidates);
 }
+
+//! Returns true if given SessionItem role is valid for view
+bool isValidItemRole(const RefViewItem* view, int item_role)
+{
+    if (view->item_role() == item_role)
+        return true;
+
+    if (item_role == ModelView::ItemDataRole::APPEARANCE)
+        return true;
+    return false;
+}
+
 } // namespace
 
 struct RefViewModelController::RefViewModelControllerImpl {
@@ -87,7 +100,6 @@ struct RefViewModelController::RefViewModelControllerImpl {
     void init_view_model()
     {
         check_initialization();
-        //        view_model->clear();
         iterate_insert(controller->rootSessionItem(), view_model->rootItem());
         // update labels
     }
@@ -108,7 +120,7 @@ struct RefViewModelController::RefViewModelControllerImpl {
     }
 
     //! Populates ViewModel with content of SessionModel. Triggered by insertEvent in SessionModel.
-    //! a) Iterates over all SessionItem's following iteration strategy.
+    //! a) Iterates over all SessionItem's following children strategy.
     //! b) Constructs corresponding rows of ViewItems' following row strategy
     //! c) Adds them to parent ViewItem, if they have not been added yet.
     //! c) Or just skips row of ViewItem's and jumps further.
@@ -208,13 +220,24 @@ struct RefViewModelController::RefViewModelControllerImpl {
         };
         session_model->mapper()->setOnModelReset(on_model_reset, controller);
     }
+
+    std::vector<RefViewItem*> findViews(const SessionItem* item) const
+    {
+        std::vector<RefViewItem*> result;
+        auto on_index = [&](const QModelIndex& index) {
+            auto view_item = view_model->itemFromIndex(index);
+            if (view_item->item() == item)
+                result.push_back(view_item);
+        };
+        Utils::iterate_model(view_model, QModelIndex(), on_index);
+        return result;
+    }
 };
 
 RefViewModelController::RefViewModelController(SessionModel* session_model,
                                                RefViewModel* view_model)
     : p_impl(std::make_unique<RefViewModelControllerImpl>(this, session_model, view_model))
 {
-    view_model->setRootViewItem(std::make_unique<RefRootViewItem>(session_model->rootItem()));
 }
 
 RefViewModelController::~RefViewModelController()
@@ -244,7 +267,7 @@ SessionModel* RefViewModelController::sessionModel() const
 void RefViewModelController::setRootSessionItem(SessionItem* item)
 {
     p_impl->view_model->setRootViewItem(std::make_unique<RefRootViewItem>(item));
-    init();
+    p_impl->init_view_model();
 }
 
 SessionItem* RefViewModelController::rootSessionItem() const
@@ -252,14 +275,23 @@ SessionItem* RefViewModelController::rootSessionItem() const
     return p_impl->view_model->rootItem()->item();
 }
 
-//! Init controller and update the model.
+//! Returns all ViewItem's displaying given SessionItem.
 
-void RefViewModelController::init()
+std::vector<RefViewItem*> RefViewModelController::findViews(const SessionItem* item) const
 {
-    p_impl->init_view_model();
+    return p_impl->findViews(item);
 }
 
-void RefViewModelController::onDataChange(SessionItem*, int) {}
+void RefViewModelController::onDataChange(SessionItem* item, int role)
+{
+    for (auto view : findViews(item)) {
+        // inform corresponding LabelView and DataView
+        if (isValidItemRole(view, role)) {
+            auto index = p_impl->view_model->indexFromItem(view);
+            p_impl->view_model->dataChanged(index, index, Utils::item_role_to_qt(role));
+        }
+    }
+}
 
 void RefViewModelController::onItemInserted(SessionItem*, TagRow)
 {

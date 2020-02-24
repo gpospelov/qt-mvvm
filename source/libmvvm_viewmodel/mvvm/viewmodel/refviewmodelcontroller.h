@@ -13,6 +13,7 @@
 #include <memory>
 #include <mvvm/core/export.h>
 #include <mvvm/model/tagrow.h>
+#include <vector>
 
 class QStandardItem;
 
@@ -22,6 +23,7 @@ namespace ModelView
 class SessionModel;
 class SessionItem;
 class RefViewModel;
+class RefViewItem;
 class ChildrenStrategyInterface;
 class RowStrategyInterface;
 
@@ -46,7 +48,7 @@ public:
 
     SessionItem* rootSessionItem() const;
 
-    void init();
+    std::vector<RefViewItem*> findViews(const ModelView::SessionItem* item) const;
 
 protected:
     virtual void onDataChange(SessionItem* item, int role);

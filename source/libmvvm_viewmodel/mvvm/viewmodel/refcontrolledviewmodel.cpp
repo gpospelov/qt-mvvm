@@ -11,6 +11,8 @@
 #include <mvvm/viewmodel/refviewitems.h>
 #include <mvvm/viewmodel/refviewmodelcontroller.h>
 #include <mvvm/viewmodel/viewmodelutils.h>
+#include <mvvm/model/sessionmodel.h>
+#include <mvvm/model/sessionitem.h>
 
 using namespace ModelView;
 
@@ -18,6 +20,7 @@ RefControlledViewModel::RefControlledViewModel(std::unique_ptr<RefViewModelContr
                                                QObject* parent)
     : RefViewModel(parent), m_controller(std::move(controller))
 {
+    m_controller->setRootSessionItem(sessionModel()->rootItem());
 }
 
 SessionModel* RefControlledViewModel::sessionModel() const
@@ -50,11 +53,7 @@ RefViewItem* RefControlledViewModel::viewItemFromIndex(const QModelIndex& index)
 QModelIndexList RefControlledViewModel::indexOfSessionItem(const SessionItem* item) const
 {
     QModelIndexList result;
-    auto on_index = [&](const QModelIndex& index) {
-        auto view_item = itemFromIndex(index);
-        if (view_item->item() == item)
-            result.push_back(index);
-    };
-    Utils::iterate_model(this, QModelIndex(), on_index);
+    for(auto view : m_controller->findViews(item))
+        result.push_back(indexFromItem(view));
     return result;
 }
