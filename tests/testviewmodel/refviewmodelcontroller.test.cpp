@@ -270,3 +270,91 @@ TEST_F(RefViewModelControllerTest, removeOneOfTopItems)
     EXPECT_EQ(arguments.at(1).value<int>(), 0);
     EXPECT_EQ(arguments.at(2).value<int>(), 0);
 }
+
+//! Setting top level item as ROOT item
+
+TEST_F(RefViewModelControllerTest, setRootItem)
+{
+    SessionModel session_model;
+
+    // constructing viewmodel and its controller
+    RefViewModel view_model;
+    auto controller = create_controller(&session_model, &view_model);
+
+    auto item = session_model.insertItem<PropertyItem>();
+
+    controller->setRootSessionItem(item);
+
+    // new root item doesn't have children
+    EXPECT_EQ(view_model.rowCount(), 0);
+    EXPECT_EQ(view_model.columnCount(), 0);
+}
+
+//! Setting top level item as ROOT item (case parent and children).
+
+TEST_F(RefViewModelControllerTest, setCompoundAsRootItem)
+{
+    SessionModel session_model;
+
+    // constructing viewmodel and its controller
+    RefViewModel view_model;
+    auto controller = create_controller(&session_model, &view_model);
+
+    auto item = session_model.insertItem<CompoundItem>();
+    item->addProperty("thickness", 42.0);
+    item->addProperty<VectorItem>("position");
+    item->addProperty("radius", 43.0);
+
+    controller->setRootSessionItem(item);
+
+    EXPECT_EQ(view_model.rowCount(), 3);
+    EXPECT_EQ(view_model.columnCount(), 2);
+
+    // checking vector item
+    auto index_of_vector_item = view_model.index(1, 0);
+    EXPECT_EQ(view_model.rowCount(index_of_vector_item), 3);
+    EXPECT_EQ(view_model.columnCount(index_of_vector_item), 2);
+}
+
+//! On model destroyed.
+
+TEST_F(RefViewModelControllerTest, onModelReset)
+{
+    SessionModel session_model;
+    session_model.insertItem<SessionItem>();
+    session_model.insertItem<SessionItem>();
+    session_model.insertItem<SessionItem>();
+
+    // constructing viewmodel and its controller
+    RefViewModel view_model;
+    auto controller = create_controller(&session_model, &view_model);
+    EXPECT_EQ(controller->rootSessionItem(), session_model.rootItem());
+
+    QSignalSpy spyRset(&view_model, &RefViewModel::modelReset);
+
+    session_model.clear();
+
+    EXPECT_EQ(spyRset.count(), 1);
+    EXPECT_EQ(view_model.rowCount(), 0);
+    EXPECT_EQ(view_model.columnCount(), 0);
+    EXPECT_EQ(controller->rootSessionItem(), session_model.rootItem());
+}
+
+//! On model destroyed.
+
+TEST_F(RefViewModelControllerTest, onModelDestroyed)
+{
+    auto session_model = std::make_unique<SessionModel>();
+    session_model->insertItem<SessionItem>();
+
+    // constructing viewmodel and its controller
+    RefViewModel view_model;
+    auto controller = create_controller(session_model.get(), &view_model);
+    EXPECT_EQ(view_model.rowCount(), 1);
+    EXPECT_EQ(view_model.columnCount(), 2);
+
+    session_model.reset();
+    EXPECT_EQ(view_model.rowCount(), 0);
+    EXPECT_EQ(view_model.columnCount(), 0);
+    EXPECT_EQ(view_model.rootItem()->item(), nullptr);
+}
