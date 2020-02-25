@@ -28,7 +28,8 @@ PropertyTableViewModelTest::~PropertyTableViewModelTest() = default;
 
 TEST_F(PropertyTableViewModelTest, initialState)
 {
-    PropertyTableViewModel viewModel;
+    SessionModel model;
+    PropertyTableViewModel viewModel(&model);
     EXPECT_EQ(viewModel.rowCount(), 0);
     EXPECT_EQ(viewModel.columnCount(), 0);
     EXPECT_EQ(viewModel.sessionItemFromIndex(QModelIndex()), nullptr);

@@ -30,7 +30,8 @@ PropertyFlatViewModelTest::~PropertyFlatViewModelTest() = default;
 
 TEST_F(PropertyFlatViewModelTest, initialState)
 {
-    PropertyFlatViewModel viewModel;
+    SessionModel model;
+    PropertyFlatViewModel viewModel(&model);
     EXPECT_EQ(viewModel.rowCount(), 0);
     EXPECT_EQ(viewModel.columnCount(), 0);
     EXPECT_EQ(viewModel.sessionItemFromIndex(QModelIndex()), nullptr);

@@ -26,7 +26,7 @@ Registered properties will form columns of the table, top level items will form 
 class CORE_EXPORT PropertyTableViewModel : public AbstractViewModel
 {
 public:
-    PropertyTableViewModel(SessionModel* model = nullptr, QObject* parent = nullptr);
+    PropertyTableViewModel(SessionModel* model, QObject* parent = nullptr);
 };
 
 } // namespace ModelView

@@ -21,7 +21,7 @@ namespace ModelView
 class CORE_EXPORT PropertyViewModel : public AbstractViewModel
 {
 public:
-    PropertyViewModel(SessionModel* model = nullptr, QObject* parent = nullptr);
+    PropertyViewModel(SessionModel* model, QObject* parent = nullptr);
 };
 
 } // namespace ModelView

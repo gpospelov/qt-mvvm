@@ -28,7 +28,7 @@ class MaterialBaseItem;
 class MaterialTableViewModel : public ModelView::AbstractViewModel
 {
 public:
-    MaterialTableViewModel(ModelView::SessionModel* model = nullptr, QObject* parent = nullptr);
+    MaterialTableViewModel(ModelView::SessionModel* model, QObject* parent = nullptr);
     void setMaterialType(const std::string& material_type);
     std::string materialType() const { return m_material_type; }
 

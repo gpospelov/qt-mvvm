@@ -25,7 +25,7 @@ class SessionModel;
 class LayerViewModel : public ModelView::AbstractViewModel
 {
 public:
-    LayerViewModel(ModelView::SessionModel* model = nullptr, QObject* parent = nullptr);
+    LayerViewModel(ModelView::SessionModel* model, QObject* parent = nullptr);
 };
 
 #endif //  LAYERVIEWMODEL_H
