@@ -29,6 +29,8 @@ void LayerSelectionModel::selectItems(std::vector<ModelView::SessionItem*> items
     if (indexes.empty())
         return;
 
+    clearSelection();
+
     QItemSelection selection(indexes.front(), indexes.back());
     auto flags = QItemSelectionModel::SelectCurrent | QItemSelectionModel::Rows;
     select(selection, flags);
