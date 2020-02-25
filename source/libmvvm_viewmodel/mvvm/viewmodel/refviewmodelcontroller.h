@@ -56,6 +56,9 @@ protected:
     virtual void onItemRemoved(SessionItem* parent, TagRow tagrow);
     virtual void onAboutToRemoveItem(SessionItem* parent, TagRow tagrow);
 
+    void update_branch(const SessionItem* item);
+//    void iterate(const SessionItem* item, RefViewItem* parent);
+
 private:
     struct RefViewModelControllerImpl;
     std::unique_ptr<RefViewModelControllerImpl> p_impl;

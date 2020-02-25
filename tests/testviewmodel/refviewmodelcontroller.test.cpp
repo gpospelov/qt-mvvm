@@ -194,7 +194,7 @@ TEST_F(RefViewModelControllerTest, initThenInsertVector)
     session_model.insertItem<VectorItem>();
 
     // checking signaling
-    EXPECT_EQ(spyInsert.count(), 2);
+    EXPECT_EQ(spyInsert.count(), 8); // two vector items and 2*(x,y,z)
 
     // checking model layout
     EXPECT_EQ(view_model.rowCount(), 2);
