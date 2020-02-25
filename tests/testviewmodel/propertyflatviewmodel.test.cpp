@@ -18,17 +18,17 @@
 
 using namespace ModelView;
 
-//! Tests for PropertyFlatModel class.
+//! Tests for PropertyFlatViewModel class.
 
-class PropertyFlatModelTest : public ::testing::Test
+class PropertyFlatViewModelTest : public ::testing::Test
 {
 public:
-    ~PropertyFlatModelTest();
+    ~PropertyFlatViewModelTest();
 };
 
-PropertyFlatModelTest::~PropertyFlatModelTest() = default;
+PropertyFlatViewModelTest::~PropertyFlatViewModelTest() = default;
 
-TEST_F(PropertyFlatModelTest, initialState)
+TEST_F(PropertyFlatViewModelTest, initialState)
 {
     PropertyFlatViewModel viewModel;
     EXPECT_EQ(viewModel.rowCount(), 0);
@@ -36,7 +36,7 @@ TEST_F(PropertyFlatModelTest, initialState)
     EXPECT_EQ(viewModel.sessionItemFromIndex(QModelIndex()), nullptr);
 }
 
-TEST_F(PropertyFlatModelTest, baseItem)
+TEST_F(PropertyFlatViewModelTest, baseItem)
 {
     SessionModel model;
     model.insertItem<SessionItem>();
@@ -49,7 +49,7 @@ TEST_F(PropertyFlatModelTest, baseItem)
     EXPECT_EQ(viewModel.columnCount(), 2);
 }
 
-TEST_F(PropertyFlatModelTest, propertyItem)
+TEST_F(PropertyFlatViewModelTest, propertyItem)
 {
     SessionModel model;
     auto parent = model.insertItem<SessionItem>();
@@ -71,7 +71,7 @@ TEST_F(PropertyFlatModelTest, propertyItem)
 
 //! VectorItem in a model.
 
-TEST_F(PropertyFlatModelTest, vectorItem)
+TEST_F(PropertyFlatViewModelTest, vectorItem)
 {
     SessionModel model;
     auto parent = model.insertItem<VectorItem>();
@@ -89,7 +89,7 @@ TEST_F(PropertyFlatModelTest, vectorItem)
 
 //! ParticleItem in a model
 
-TEST_F(PropertyFlatModelTest, particleItem)
+TEST_F(PropertyFlatViewModelTest, particleItem)
 {
     ToyItems::SampleModel model;
     auto particle = model.insertItem<ToyItems::ParticleItem>();
