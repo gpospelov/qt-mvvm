@@ -34,7 +34,7 @@ TEST_F(PropertyFlatViewModelTest, initialState)
     PropertyFlatViewModel viewModel(&model);
     EXPECT_EQ(viewModel.rowCount(), 0);
     EXPECT_EQ(viewModel.columnCount(), 0);
-    EXPECT_EQ(viewModel.sessionItemFromIndex(QModelIndex()), nullptr);
+    EXPECT_EQ(viewModel.sessionItemFromIndex(QModelIndex()), model.rootItem());
 }
 
 TEST_F(PropertyFlatViewModelTest, baseItem)
@@ -47,7 +47,7 @@ TEST_F(PropertyFlatViewModelTest, baseItem)
     // Root item has default tag and all items considered as top items.
     // PropertyViewModel shouldn't see any items.
     EXPECT_EQ(viewModel.rowCount(), 0);
-    EXPECT_EQ(viewModel.columnCount(), 2);
+    EXPECT_EQ(viewModel.columnCount(), 0);
 }
 
 TEST_F(PropertyFlatViewModelTest, propertyItem)
@@ -80,7 +80,7 @@ TEST_F(PropertyFlatViewModelTest, vectorItem)
     PropertyFlatViewModel viewModel(&model);
 
     EXPECT_EQ(viewModel.rowCount(), 0); // root item doesn't have properties
-    EXPECT_EQ(viewModel.columnCount(), 2);
+    EXPECT_EQ(viewModel.columnCount(), 0);
 
     // switching to vectorItem and checking that it has 3 properties
     viewModel.setRootSessionItem(parent);
