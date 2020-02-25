@@ -157,7 +157,7 @@ TEST_F(RefViewModelControllerTest, initThenInsertProperty)
     EXPECT_EQ(view_model.itemFromIndex(dataIndex)->item(), nullptr);
 }
 
-//! Insert two property items in a model, inserted after controller was setup.
+//! Insert three property items in a model, inserted after controller was setup.
 
 TEST_F(RefViewModelControllerTest, initThenInsertProperties)
 {
@@ -168,8 +168,36 @@ TEST_F(RefViewModelControllerTest, initThenInsertProperties)
     QSignalSpy spyRemove(&view_model, &RefViewModel::rowsRemoved);
 
     auto controller = create_controller(&session_model, &view_model);
-    session_model.insertItem<PropertyItem>();
-    session_model.insertItem<PropertyItem>();
+    auto item0 = session_model.insertItem<PropertyItem>();
+    auto item1 = session_model.insertItem<PropertyItem>();
+    auto item2 = session_model.insertItem<PropertyItem>();
+
+    // checking signaling
+    EXPECT_EQ(spyInsert.count(), 3);
+
+    // checking model layout
+    EXPECT_EQ(view_model.rowCount(), 3);
+    EXPECT_EQ(view_model.columnCount(), 2);
+
+    EXPECT_EQ(view_model.itemFromIndex(view_model.index(0, 0))->item(), item0);
+    EXPECT_EQ(view_model.itemFromIndex(view_model.index(1, 0))->item(), item1);
+    EXPECT_EQ(view_model.itemFromIndex(view_model.index(2, 0))->item(), item2);
+}
+
+//! Inserting property items in reversed order.
+
+TEST_F(RefViewModelControllerTest, insertInBetween)
+{
+    SessionModel session_model;
+
+    RefViewModel view_model;
+    QSignalSpy spyInsert(&view_model, &RefViewModel::rowsInserted);
+    QSignalSpy spyRemove(&view_model, &RefViewModel::rowsRemoved);
+
+    auto controller = create_controller(&session_model, &view_model);
+    auto item0 = session_model.insertItem<PropertyItem>();
+    // inserting in front
+    auto item1 = session_model.insertItem<PropertyItem>(session_model.rootItem(), {"", 0});
 
     // checking signaling
     EXPECT_EQ(spyInsert.count(), 2);
@@ -177,6 +205,9 @@ TEST_F(RefViewModelControllerTest, initThenInsertProperties)
     // checking model layout
     EXPECT_EQ(view_model.rowCount(), 2);
     EXPECT_EQ(view_model.columnCount(), 2);
+
+    EXPECT_EQ(view_model.itemFromIndex(view_model.index(0, 0))->item(), item1);
+    EXPECT_EQ(view_model.itemFromIndex(view_model.index(1, 0))->item(), item0);
 }
 
 //! Insert two property items in a model, inserted after controller was setup.

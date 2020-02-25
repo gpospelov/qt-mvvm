@@ -145,7 +145,7 @@ void RefViewModel::insertRow(RefViewItem* parent, int row,
         throw std::runtime_error("Error in RefViewModel: attempt to use parent from another model");
 
     beginInsertRows(indexFromItem(parent), row, row);
-    parent->appendRow(std::move(items));
+    parent->insertRow(row, std::move(items));
     endInsertRows();
 }
 
