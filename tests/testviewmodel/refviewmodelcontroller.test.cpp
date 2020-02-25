@@ -9,6 +9,7 @@
 
 #include "google_test.h"
 #include "test_utils.h"
+#include <QDebug>
 #include <QSignalSpy>
 #include <mvvm/model/propertyitem.h>
 #include <mvvm/model/sessionmodel.h>
@@ -18,7 +19,6 @@
 #include <mvvm/viewmodel/refviewmodel.h>
 #include <mvvm/viewmodel/refviewmodelcontroller.h>
 #include <mvvm/viewmodel/standardchildrenstrategies.h>
-#include <QDebug>
 
 using namespace ModelView;
 
@@ -224,10 +224,9 @@ TEST_F(RefViewModelControllerTest, insertChildToParent)
     // checking model layout: parent and two children
     EXPECT_EQ(view_model.rowCount(), 1);
     EXPECT_EQ(view_model.columnCount(), 2);
-    EXPECT_EQ(view_model.rowCount(view_model.index(0,0)), 2);
-    EXPECT_EQ(view_model.columnCount(view_model.index(0,0)), 2);
+    EXPECT_EQ(view_model.rowCount(view_model.index(0, 0)), 2);
+    EXPECT_EQ(view_model.columnCount(view_model.index(0, 0)), 2);
 }
-
 
 //! Removing single top level item.
 
