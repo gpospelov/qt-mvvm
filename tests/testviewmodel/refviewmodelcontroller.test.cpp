@@ -386,3 +386,26 @@ TEST_F(RefViewModelControllerTest, onModelDestroyed)
     EXPECT_EQ(view_model.columnCount(), 0);
     EXPECT_EQ(view_model.rootItem()->item(), nullptr);
 }
+
+TEST_F(RefViewModelControllerTest, findViews)
+{
+    SessionModel session_model;
+    RefViewModel view_model;
+    auto controller = create_controller(&session_model, &view_model);
+
+    // view of root item
+    auto views = controller->findViews(session_model.rootItem());
+    ASSERT_EQ(views.size(), 1);
+    EXPECT_EQ(views.at(0), view_model.rootItem());
+
+    // views of VectorItem
+    auto item = session_model.insertItem<VectorItem>();
+    views = controller->findViews(item);
+    ASSERT_EQ(views.size(), 2);
+
+    // setting as root item
+    controller->setRootSessionItem(item);
+    views = controller->findViews(item);
+    ASSERT_EQ(views.size(), 1);
+    EXPECT_EQ(views.at(0), view_model.rootItem());
+}

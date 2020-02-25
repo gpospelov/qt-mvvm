@@ -255,7 +255,7 @@ struct RefViewModelController::RefViewModelControllerImpl {
 
     std::vector<RefViewItem*> findViews(const SessionItem* item) const
     {
-        if (item == session_model->rootItem())
+        if (item == view_model->rootItem()->item())
             return {view_model->rootItem()};
 
         std::vector<RefViewItem*> result;
@@ -346,7 +346,6 @@ void RefViewModelController::onAboutToRemoveItem(SessionItem* parent, TagRow tag
 
 void RefViewModelController::update_branch(const SessionItem* item)
 {
-
     auto views = findViews(item);
     if (views.empty())
         return;
