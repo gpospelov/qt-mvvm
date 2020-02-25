@@ -314,3 +314,33 @@ TEST_F(RefViewModelTest, flags)
     EXPECT_TRUE(viewmodel.flags(data_index) & Qt::ItemIsEnabled);
     EXPECT_TRUE(viewmodel.flags(data_index) & Qt::ItemIsEditable);
 }
+
+TEST_F(RefViewModelTest, clearRowsFromRoot)
+{
+    RefViewModel viewmodel;
+
+    // three rows of items
+    auto [children_row0, expected_row0] = test_data(/*ncolumns*/ 2);
+    auto [children_row1, expected_row1] = test_data(/*ncolumns*/ 2);
+
+    QSignalSpy spyInsert(&viewmodel, &RefViewModel::rowsInserted);
+    QSignalSpy spyRemove(&viewmodel, &RefViewModel::rowsRemoved);
+
+    // appending one row
+    viewmodel.appendRow(viewmodel.rootItem(), std::move(children_row0));
+    viewmodel.appendRow(viewmodel.rootItem(), std::move(children_row1));
+
+    viewmodel.clearRows(viewmodel.rootItem());
+
+    EXPECT_EQ(viewmodel.rowCount(), 0);
+    EXPECT_EQ(viewmodel.columnCount(), 0);
+
+    // checking that signaling is about the parent
+    EXPECT_EQ(spyRemove.count(), 1);
+    EXPECT_EQ(spyInsert.count(), 2);
+    QList<QVariant> arguments = spyRemove.takeFirst();
+    EXPECT_EQ(arguments.size(), 3); // QModelIndex &parent, int first, int last
+    EXPECT_EQ(arguments.at(0).value<QModelIndex>(), QModelIndex());
+    EXPECT_EQ(arguments.at(1).value<int>(), 0);
+    EXPECT_EQ(arguments.at(2).value<int>(), 1);
+}
