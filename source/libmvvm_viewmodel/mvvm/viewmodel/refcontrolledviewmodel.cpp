@@ -57,3 +57,8 @@ QModelIndexList RefControlledViewModel::indexOfSessionItem(const SessionItem* it
         result.push_back(indexFromItem(view));
     return result;
 }
+
+std::vector<RefViewItem*> RefControlledViewModel::findViews(const SessionItem* item) const
+{
+    return m_controller->findViews(item);
+}

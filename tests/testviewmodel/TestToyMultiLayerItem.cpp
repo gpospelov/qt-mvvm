@@ -73,19 +73,17 @@ TEST_F(ToyMultilayerItemTest, multiLayerView)
 
 //! Find ViewItem corresponding to given MultiLayer item.
 
-// FIXME restore test
+TEST_F(ToyMultilayerItemTest, findMultiLayerView)
+{
+    ToyItems::SampleModel model;
+    auto multiLayerItem = model.insertItem<ToyItems::MultiLayerItem>();
 
-//TEST_F(ToyMultilayerItemTest, findMultiLayerView)
-//{
-//    ToyItems::SampleModel model;
-//    auto multiLayerItem = model.insertItem<ToyItems::MultiLayerItem>();
+    DefaultViewModel viewModel(&model);
 
-//    DefaultViewModel viewModel(&model);
-
-//    auto views = Utils::findViews(&viewModel, multiLayerItem);
-//    EXPECT_EQ(views.size(), 1);
-//    EXPECT_EQ(views.at(0)->item(), multiLayerItem);
-//}
+    auto views = viewModel.findViews(multiLayerItem);
+    EXPECT_EQ(views.size(), 1);
+    EXPECT_EQ(views.at(0)->item(), multiLayerItem);
+}
 
 //! How ViewLabelItem sees MultiLayer
 

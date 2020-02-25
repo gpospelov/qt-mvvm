@@ -43,6 +43,8 @@ public:
 
     QModelIndexList indexOfSessionItem(const SessionItem* item) const;
 
+    std::vector<RefViewItem*> findViews(const ModelView::SessionItem* item) const;
+
 private:
     std::unique_ptr<RefViewModelController> m_controller;
 };

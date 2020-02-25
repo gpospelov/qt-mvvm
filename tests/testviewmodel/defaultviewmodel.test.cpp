@@ -135,16 +135,15 @@ TEST_F(DefaultViewModelTest, indexFromSessionItem)
 
 //! Find ViewItem's corresponding to given PropertyItem.
 
-//TEST_F(DefaultViewModelTest, findPropertyItemView)
-//{
-//    SessionModel model;
-//    auto propertyItem = model.insertItem<PropertyItem>();
-//    propertyItem->setData(42.0);
+TEST_F(DefaultViewModelTest, findPropertyItemView)
+{
+    SessionModel model;
+    auto propertyItem = model.insertItem<PropertyItem>();
+    propertyItem->setData(42.0);
 
-//    DefaultViewModel viewModel(&model);
-//    auto views = Utils::findViews(&viewModel, propertyItem);
-//    EXPECT_EQ(views.size(), 2);
-//}
+    DefaultViewModel viewModel(&model);
+    auto views = viewModel.findViews(propertyItem);
+}
 
 // FIXME restore test
 
