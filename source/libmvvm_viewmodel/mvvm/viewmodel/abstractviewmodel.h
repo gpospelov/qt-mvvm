@@ -19,7 +19,7 @@
 namespace ModelView
 {
 
-class AbstractViewModel : public RefControlledViewModel
+class CORE_EXPORT AbstractViewModel : public RefControlledViewModel
 {
 public:
     AbstractViewModel(std::unique_ptr<RefViewModelController> controller,
