@@ -17,7 +17,7 @@
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/viewmodel/abstractviewmodel.h>
 #include <mvvm/viewmodel/standardviewmodels.h>
-#include <mvvm/viewmodel/viewlabelitem.h>
+#include <mvvm/viewmodel/refviewitems.h>
 #include <mvvm/viewmodel/viewmodeldelegate.h>
 #include <mvvm/widgets/layoututils.h>
 #include <mvvm/widgets/propertyflatview.h>
@@ -82,6 +82,9 @@ struct PropertyFlatView::PropertyFlatViewImpl {
 
         auto on_row_inserted = [this](const QModelIndex&, int, int) { update_grid_layout(); };
         connect(view_model.get(), &AbstractViewModel::rowsInserted, on_row_inserted);
+
+        auto on_row_removed = [this](const QModelIndex&, int, int) { update_grid_layout(); };
+        connect(view_model.get(), &AbstractViewModel::rowsRemoved, on_row_removed);
     }
 
     //! Creates widget for given index to appear in grid layout.
@@ -89,7 +92,7 @@ struct PropertyFlatView::PropertyFlatViewImpl {
     std::unique_ptr<QWidget> create_widget(const QModelIndex& index)
     {
         auto view_item = view_model->viewItemFromIndex(index);
-        if (auto label_item = dynamic_cast<ViewLabelItem*>(view_item); label_item)
+        if (auto label_item = dynamic_cast<RefViewLabelItem*>(view_item); label_item)
             return create_label(label_item);
         else
             return create_editor(index);

@@ -109,6 +109,11 @@ TEST_F(PropertyFlatViewModelTest, particleItem)
     // We should see 3 rows: VectorItem, GroupItem itself, Cylinderr length and radius
     EXPECT_EQ(viewModel.rowCount(), 4);
     EXPECT_EQ(viewModel.columnCount(), 2);
+
+    // switching back
+    group->setCurrentType(ToyItems::Constants::SphereItemType);
+    EXPECT_EQ(viewModel.rowCount(), 3);
+    EXPECT_EQ(viewModel.columnCount(), 2);
 }
 
 
