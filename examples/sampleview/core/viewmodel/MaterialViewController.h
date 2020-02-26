@@ -14,6 +14,7 @@
 #include <QItemSelectionModel>
 #include <deque>
 #include <mvvm/model/mvvm_types.h>
+#include <QColor>
 
 namespace ModelView
 {

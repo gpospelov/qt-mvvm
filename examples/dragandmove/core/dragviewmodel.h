@@ -23,7 +23,7 @@ class SessionModel;
 class DragViewModel : public ModelView::PropertyTableViewModel
 {
 public:
-    DragViewModel(ModelView::SessionModel* model = nullptr, QObject* parent = nullptr);
+    DragViewModel(ModelView::SessionModel* model, QObject* parent = nullptr);
 
     Qt::ItemFlags flags(const QModelIndex& index) const override;
     QMimeData* mimeData(const QModelIndexList& index_list) const override;

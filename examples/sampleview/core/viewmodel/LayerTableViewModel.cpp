@@ -14,6 +14,7 @@
 #include <QMimeData>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
+#include <QDataStream>
 
 using namespace ModelView;
 
@@ -25,9 +26,8 @@ std::string deserialize(QByteArray byteArray);
 } // namespace
 
 LayerTableViewModel::LayerTableViewModel(SessionModel* model, QObject* parent)
-    : AbstractViewModel(std::make_unique<LayerTableViewModelController>(this), parent)
+    : AbstractViewModel(std::make_unique<LayerTableViewModelController>(model, this), parent)
 {
-    setSessionModel(model);
 }
 
 LayerTableViewModel::~LayerTableViewModel() = default;

@@ -10,23 +10,25 @@
 #ifndef MVVM_VIEWMODEL_VIEWLABELITEM_H
 #define MVVM_VIEWMODEL_VIEWLABELITEM_H
 
-#include <mvvm/viewmodel/viewitem.h>
+#include <mvvm/viewmodel/refviewitems.h>
 
 namespace ModelView
 {
 
-class SessionItem;
+using ViewLabelItem = RefViewLabelItem;
 
-//! Represents display name of SessionItem in any cell of Qt's trees and tables.
+//class SessionItem;
 
-class CORE_EXPORT ViewLabelItem : public ViewItem
-{
-public:
-    explicit ViewLabelItem(SessionItem* item);
-    int type() const override;
+////! Represents display name of SessionItem in any cell of Qt's trees and tables.
 
-    QVariant data(int role) const override;
-};
+//class CORE_EXPORT ViewLabelItem : public ViewItem
+//{
+//public:
+//    explicit ViewLabelItem(SessionItem* item);
+//    int type() const override;
+
+//    QVariant data(int role) const override;
+//};
 
 } // namespace ModelView
 

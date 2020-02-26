@@ -8,14 +8,16 @@
 // ************************************************************************** //
 
 #include "google_test.h"
-#include "layereditoractions.h"
 #include "item_constants.h"
+#include "layereditoractions.h"
 #include "layeritems.h"
 #include "layerselectionmodel.h"
 #include "layerviewmodel.h"
 #include "samplemodel.h"
 #include "test_utils.h"
+#include <mvvm/viewmodel/refviewitems.h>
 #include <mvvm/viewmodel/viewmodelutils.h>
+#include <QDebug>
 
 using namespace ModelView;
 
@@ -74,9 +76,25 @@ TEST_F(LayerEditorActionsTest, addNewLayerAfterSelection)
 
     // selecting top layer
     test_data.selection_model.selectItem(test_data.top);
+    std::vector<SessionItem*> expected = {test_data.top};
+    EXPECT_EQ(test_data.selection_model.selectedItems(), expected);
+
+    // layout
+    auto ml_index = QModelIndex();
+    auto top_index = test_data.view_model.index(0, 0, ml_index);
+    auto bottom_index = test_data.view_model.index(1, 0, ml_index);
+    EXPECT_EQ(test_data.view_model.rootItem()->item(), test_data.multilayer);
+    EXPECT_EQ(test_data.view_model.itemFromIndex(top_index)->item(), test_data.top->getItem(LayerItem::P_NAME));
+    EXPECT_EQ(test_data.view_model.itemFromIndex(bottom_index)->item(), test_data.bottom->getItem(LayerItem::P_NAME));
 
     // adding new layer after selection
     test_data.actions.onAddLayer();
+
+    top_index = test_data.view_model.index(0, 0, ml_index);
+    bottom_index = test_data.view_model.index(2, 0, ml_index);
+    EXPECT_EQ(test_data.view_model.itemFromIndex(top_index)->item(), test_data.top->getItem(LayerItem::P_NAME));
+    EXPECT_EQ(test_data.view_model.itemFromIndex(bottom_index)->item(), test_data.bottom->getItem(LayerItem::P_NAME));
+
 
     // checking layout of multilayer
     auto layers = test_data.multilayer->getItems(MultiLayerItem::T_LAYERS);
@@ -84,8 +102,10 @@ TEST_F(LayerEditorActionsTest, addNewLayerAfterSelection)
     EXPECT_EQ(layers.at(0), test_data.top);
     EXPECT_EQ(layers.at(2), test_data.bottom);
 
+    // checking layout of viewmodel
+
     // checking, that new layer is selected
-    std::vector<SessionItem*> expected = {layers.at(1)};
+    expected = {layers.at(1)};
     EXPECT_EQ(test_data.selection_model.selectedItems(), expected);
 }
 
@@ -100,7 +120,6 @@ TEST_F(LayerEditorActionsTest, addNewMultiLayerAfterSelection)
 
     // adding new layer after selection
     test_data.actions.onAddMultiLayer();
-
 
     // checking layout of multilayer
     auto layers = test_data.multilayer->getItems(MultiLayerItem::T_LAYERS);

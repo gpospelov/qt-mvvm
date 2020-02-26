@@ -33,7 +33,7 @@ TEST_F(LayerViewModelTest, initialState)
     LayerViewModel viewmodel(&model);
 
     EXPECT_EQ(viewmodel.rowCount(), 0);
-    EXPECT_EQ(viewmodel.columnCount(), 4);
+    EXPECT_EQ(viewmodel.columnCount(), 0);
 }
 
 //! Checks signals while inserting LayerItem in empty model

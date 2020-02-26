@@ -141,8 +141,7 @@ TEST_F(ViewModelUtilsTest, itemsFromIndex)
     // creating VectorItem and viewModel to see it as a table
     SessionModel model;
     auto parent = model.insertItem<VectorItem>();
-    PropertyTableViewModel viewModel;
-    viewModel.setSessionModel(&model);
+    PropertyTableViewModel viewModel(&model);
 
     // it's a table with one row and x,y,z columns
     EXPECT_EQ(viewModel.rowCount(), 1);
@@ -172,8 +171,7 @@ TEST_F(ViewModelUtilsTest, parentItemsFromIndex)
     // creating VectorItem and viewModel to see it as a table
     SessionModel model;
     auto parent = model.insertItem<VectorItem>();
-    PropertyTableViewModel viewModel;
-    viewModel.setSessionModel(&model);
+    PropertyTableViewModel viewModel(&model);
 
     // it's a table with one row and x,y,z columns
     EXPECT_EQ(viewModel.rowCount(), 1);

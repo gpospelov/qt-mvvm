@@ -13,7 +13,6 @@
 using namespace ModelView;
 
 TopItemsViewModel::TopItemsViewModel(SessionModel* model, QObject* parent)
-    : AbstractViewModel(std::make_unique<TopItemsViewModelController>(this), parent)
+    : AbstractViewModel(std::make_unique<TopItemsViewModelController>(model, this), parent)
 {
-    setSessionModel(model);
 }

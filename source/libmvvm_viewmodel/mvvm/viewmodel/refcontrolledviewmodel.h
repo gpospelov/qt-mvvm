@@ -31,6 +31,10 @@ public:
                            QObject* parent = nullptr);
     ~RefControlledViewModel() override;
 
+    SessionModel* sessionModel() const;
+
+    SessionItem* rootSessionItem();
+
     void setRootSessionItem(SessionItem* item);
 
     SessionItem* sessionItemFromIndex(const QModelIndex& index) const;
@@ -38,6 +42,8 @@ public:
     RefViewItem* viewItemFromIndex(const QModelIndex& index) const;
 
     QModelIndexList indexOfSessionItem(const SessionItem* item) const;
+
+    std::vector<RefViewItem*> findViews(const ModelView::SessionItem* item) const;
 
 private:
     std::unique_ptr<RefViewModelController> m_controller;

@@ -12,6 +12,7 @@
 #include "MaterialModel.h"
 #include "item_constants.h"
 #include <mvvm/model/modelutils.h>
+#include <QColor>
 
 using namespace ModelView;
 

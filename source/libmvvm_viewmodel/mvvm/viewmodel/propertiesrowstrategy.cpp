@@ -20,26 +20,6 @@ PropertiesRowStrategy::PropertiesRowStrategy(const std::vector<std::string>& lab
 {
 }
 
-QList<QStandardItem*> PropertiesRowStrategy::constructRow(SessionItem* item)
-{
-    QList<QStandardItem*> result;
-
-    if (!item)
-        return result;
-
-    auto items_in_row = Utils::SinglePropertyItems(*item);
-    if (user_defined_column_labels.empty())
-        update_column_labels(items_in_row);
-
-    for (auto child : items_in_row) {
-        if (child->data().isValid())
-            result.push_back(new ViewDataItem(child));
-        else
-            result.push_back(new ViewLabelItem(child));
-    }
-    return result;
-}
-
 QStringList PropertiesRowStrategy::horizontalHeaderLabels() const
 {
     QStringList result;

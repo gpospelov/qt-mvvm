@@ -25,7 +25,7 @@ class SessionModel;
 class MaterialTableViewModel : public ModelView::AbstractViewModel
 {
 public:
-    MaterialTableViewModel(ModelView::SessionModel* model = nullptr, QObject* parent = nullptr);
+    MaterialTableViewModel(ModelView::SessionModel* model, QObject* parent = nullptr);
 };
 
 #endif //  MATERIALTABLEVIEWMODEL_H

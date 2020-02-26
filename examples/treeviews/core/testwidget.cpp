@@ -17,7 +17,7 @@
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/viewmodel/defaultviewmodel.h>
 #include <mvvm/viewmodel/topitemsviewmodel.h>
-#include <mvvm/viewmodel/viewitem.h>
+#include <mvvm/viewmodel/refviewitem.h>
 #include <mvvm/widgets/standardtreeviews.h>
 
 using namespace ModelView;
@@ -84,10 +84,8 @@ void TestWidget::onContextMenuRequest(const QPoint& point)
 SessionItem* TestWidget::item_from_view(QTreeView* view, const QPoint& point)
 {
     QModelIndex index = view->indexAt(point);
-    auto item = m_defaultTreeView->viewModel()->itemFromIndex(index);
-    auto viewItem = dynamic_cast<ViewItem*>(item);
-    Q_ASSERT(viewItem);
-    return viewItem->item();
+    auto view_item = m_defaultTreeView->viewModel()->itemFromIndex(index);
+    return view_item->item();
 }
 
 //! Connect tree views to provide mutual item selection.

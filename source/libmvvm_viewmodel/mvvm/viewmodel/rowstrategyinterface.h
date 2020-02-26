@@ -36,9 +36,6 @@ class CORE_EXPORT RowStrategyInterface
 public:
     virtual ~RowStrategyInterface() = default;
 
-    //! Construct row of QStandardItems from given SessionItem.
-    virtual QList<QStandardItem*> constructRow(SessionItem* item) = 0;
-
     virtual QStringList horizontalHeaderLabels() const = 0;
 
     virtual std::vector<std::unique_ptr<RefViewItem>> constructRefRow(SessionItem*) = 0;

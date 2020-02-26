@@ -129,6 +129,35 @@ TEST_F(RefViewModelTest, appendRow)
     EXPECT_EQ(viewmodel.parent(child_index), QModelIndex());
 }
 
+//! Insert one row befor another.
+
+TEST_F(RefViewModelTest, insertRow)
+{
+    RefViewModel viewmodel;
+
+    // item to append
+    auto [children_row0, expected_row0] = test_data(/*ncolumns*/ 1);
+    auto [children_front, expected_front] = test_data(/*ncolumns*/ 1);
+
+    // appending one row
+    viewmodel.appendRow(viewmodel.rootItem(), std::move(children_row0));
+    viewmodel.insertRow(viewmodel.rootItem(), 0, std::move(children_front));
+    EXPECT_EQ(viewmodel.rowCount(), 2);
+    EXPECT_EQ(viewmodel.columnCount(), 1);
+
+    // constructing index for child
+    auto child_index0 = viewmodel.index(0, 0, QModelIndex());
+    auto child_index1 = viewmodel.index(1, 0, QModelIndex());
+
+    // indexFromItem
+    EXPECT_EQ(viewmodel.indexFromItem(expected_row0[0]), child_index1);
+    EXPECT_EQ(viewmodel.indexFromItem(expected_front[0]), child_index0);
+
+    //  getting child from index
+    EXPECT_EQ(viewmodel.itemFromIndex(child_index0), expected_front[0]);
+    EXPECT_EQ(viewmodel.itemFromIndex(child_index1), expected_row0[0]);
+}
+
 TEST_F(RefViewModelTest, removeRow)
 {
     RefViewModel viewmodel;
@@ -313,4 +342,34 @@ TEST_F(RefViewModelTest, flags)
     EXPECT_TRUE(viewmodel.flags(data_index) & Qt::ItemIsSelectable);
     EXPECT_TRUE(viewmodel.flags(data_index) & Qt::ItemIsEnabled);
     EXPECT_TRUE(viewmodel.flags(data_index) & Qt::ItemIsEditable);
+}
+
+TEST_F(RefViewModelTest, clearRowsFromRoot)
+{
+    RefViewModel viewmodel;
+
+    // three rows of items
+    auto [children_row0, expected_row0] = test_data(/*ncolumns*/ 2);
+    auto [children_row1, expected_row1] = test_data(/*ncolumns*/ 2);
+
+    QSignalSpy spyInsert(&viewmodel, &RefViewModel::rowsInserted);
+    QSignalSpy spyRemove(&viewmodel, &RefViewModel::rowsRemoved);
+
+    // appending one row
+    viewmodel.appendRow(viewmodel.rootItem(), std::move(children_row0));
+    viewmodel.appendRow(viewmodel.rootItem(), std::move(children_row1));
+
+    viewmodel.clearRows(viewmodel.rootItem());
+
+    EXPECT_EQ(viewmodel.rowCount(), 0);
+    EXPECT_EQ(viewmodel.columnCount(), 0);
+
+    // checking that signaling is about the parent
+    EXPECT_EQ(spyRemove.count(), 1);
+    EXPECT_EQ(spyInsert.count(), 2);
+    QList<QVariant> arguments = spyRemove.takeFirst();
+    EXPECT_EQ(arguments.size(), 3); // QModelIndex &parent, int first, int last
+    EXPECT_EQ(arguments.at(0).value<QModelIndex>(), QModelIndex());
+    EXPECT_EQ(arguments.at(1).value<int>(), 0);
+    EXPECT_EQ(arguments.at(2).value<int>(), 1);
 }

@@ -34,7 +34,7 @@ TEST_F(DefaultViewModelTest, initialState)
     SessionModel model;
     DefaultViewModel viewModel(&model);
     EXPECT_EQ(viewModel.rowCount(), 0);
-    EXPECT_EQ(viewModel.columnCount(), 2);
+    EXPECT_EQ(viewModel.columnCount(), 0);
     EXPECT_EQ(viewModel.sessionItemFromIndex(QModelIndex()), model.rootItem());
 }
 
@@ -88,7 +88,7 @@ TEST_F(DefaultViewModelTest, initThenInsert)
 
     // Feature: since our PropertyItem got it's value after ViewModel was initialized, the model
     // still holds ViewEmptyItem and not ViewDataItem.
-    auto dataItem = dynamic_cast<ViewEmptyItem*>(viewModel.itemFromIndex(dataIndex));
+    auto dataItem = dynamic_cast<RefViewEmptyItem*>(viewModel.itemFromIndex(dataIndex));
     ASSERT_TRUE(dataItem != nullptr);
 }
 
@@ -142,9 +142,10 @@ TEST_F(DefaultViewModelTest, findPropertyItemView)
     propertyItem->setData(42.0);
 
     DefaultViewModel viewModel(&model);
-    auto views = Utils::findViews(&viewModel, propertyItem);
-    EXPECT_EQ(views.size(), 2);
+    auto views = viewModel.findViews(propertyItem);
 }
+
+// FIXME restore test
 
 //! Constructing ViewModel from single PropertyItem.
 //! Change thickness property in SessionItem, control dataChanged signals from ViewModel.
@@ -194,7 +195,7 @@ TEST_F(DefaultViewModelTest, insertSingleTopItem)
     model.removeItem(model.rootItem(), {"", 0});
     EXPECT_EQ(spyInsert.count(), 1);
     EXPECT_EQ(viewModel.rowCount(), 0);
-    EXPECT_EQ(viewModel.columnCount(), 2);
+    EXPECT_EQ(viewModel.columnCount(), 0);
 
     QList<QVariant> arguments = spyInsert.takeFirst();
     EXPECT_EQ(arguments.size(), 3); // QModelIndex &parent, int first, int last
@@ -225,7 +226,7 @@ TEST_F(DefaultViewModelTest, removeSingleTopItem)
     model.removeItem(model.rootItem(), {"", 0});
     ASSERT_EQ(spyRemove.count(), 1);
     EXPECT_EQ(viewModel.rowCount(), 0);
-    EXPECT_EQ(viewModel.columnCount(), 2);
+    EXPECT_EQ(viewModel.columnCount(), 0);
 
     QList<QVariant> arguments = spyRemove.takeFirst();
     ASSERT_EQ(arguments.size(), 3); // QModelIndex &parent, int first, int last
@@ -234,8 +235,7 @@ TEST_F(DefaultViewModelTest, removeSingleTopItem)
     EXPECT_EQ(arguments.at(2).value<int>(), 0);
 }
 
-//! Remove one of two top level items. The pecularity of DefaultViewModel is that it will
-//! remove all children of given parent and then recreate missing.
+//! Remove one of two top level items.
 
 TEST_F(DefaultViewModelTest, removeOneOfTopItems)
 {
@@ -263,20 +263,14 @@ TEST_F(DefaultViewModelTest, removeOneOfTopItems)
     EXPECT_EQ(viewModel.rowCount(), 1);
     EXPECT_EQ(viewModel.columnCount(), 2);
 
-    // insert was called once to restore missed items
-    EXPECT_EQ(spyInsert.count(), 1);
+    // no call to insert
+    EXPECT_EQ(spyInsert.count(), 0);
 
     QList<QVariant> arguments = spyRemove.takeFirst();
     EXPECT_EQ(arguments.size(), 3); // QModelIndex &parent, int first, int last
     EXPECT_EQ(arguments.at(0).value<QModelIndex>(), QModelIndex());
-    EXPECT_EQ(arguments.at(1).value<int>(), 0); //
-    EXPECT_EQ(arguments.at(2).value<int>(), 1); // two children was removed
-
-    arguments = spyInsert.takeFirst();
-    EXPECT_EQ(arguments.size(), 3); // QModelIndex &parent, int first, int last
-    EXPECT_EQ(arguments.at(0).value<QModelIndex>(), QModelIndex());
     EXPECT_EQ(arguments.at(1).value<int>(), 0);
-    EXPECT_EQ(arguments.at(2).value<int>(), 0); // one child was inserted back.
+    EXPECT_EQ(arguments.at(2).value<int>(), 0);
 }
 
 //! Single property item in ViewModel with various appearance flags.
@@ -306,26 +300,17 @@ TEST_F(DefaultViewModelTest, propertyItemAppearance)
     // shown in gray color. While QStandardItem::isEnabled means "no interaction".
     // In our case QStandardItem::isEnabled should be always true.
 
-    // ViewLabel of item1
-    EXPECT_FALSE(viewModel.item(0, 0)->isEditable()); // label is always readonly
-    EXPECT_TRUE(viewModel.item(0, 0)->isEnabled());   // QStandardItem is always enabled
-    // ViewData of item1
-    EXPECT_TRUE(viewModel.item(0, 1)->isEditable());
-    EXPECT_TRUE(viewModel.item(0, 1)->isEnabled());
+    // ViewLabel and ViewDataItem of item1
+    EXPECT_FALSE(viewModel.flags(viewModel.index(0,0)) & Qt::ItemIsEditable);
+    EXPECT_TRUE(viewModel.flags(viewModel.index(0,1)) & Qt::ItemIsEditable);
 
-    // ViewLabel of item2
-    EXPECT_FALSE(viewModel.item(1, 0)->isEditable()); // label is always readonly
-    EXPECT_TRUE(viewModel.item(1, 0)->isEnabled());   // QStandardItem is always enabled
-    // ViewData of item2
-    EXPECT_FALSE(viewModel.item(1, 1)->isEditable());
-    EXPECT_TRUE(viewModel.item(1, 1)->isEnabled());
+    // ViewLabel and ViewDataItem of item2
+    EXPECT_FALSE(viewModel.flags(viewModel.index(1,0)) & Qt::ItemIsEditable);
+    EXPECT_FALSE(viewModel.flags(viewModel.index(1,1)) & Qt::ItemIsEditable);
 
-    // ViewLabel of item3
-    EXPECT_FALSE(viewModel.item(2, 0)->isEditable()); // label is always readonly
-    EXPECT_TRUE(viewModel.item(2, 0)->isEnabled());   // QStandardItem is always enabled
-    // ViewData of item3
-    EXPECT_FALSE(viewModel.item(2, 1)->isEditable());
-    EXPECT_TRUE(viewModel.item(2, 1)->isEnabled());
+    // ViewLabel and ViewDataItem of item2
+    EXPECT_FALSE(viewModel.flags(viewModel.index(2,0)) & Qt::ItemIsEditable);
+    EXPECT_FALSE(viewModel.flags(viewModel.index(2,1)) & Qt::ItemIsEditable);
 }
 
 //! Signals in ViewModel when property item changes its appearance.
@@ -340,8 +325,8 @@ TEST_F(DefaultViewModelTest, propertyItemAppearanceChanged)
 
     // setting up ViewModel and spying it's dataChanged signals
     DefaultViewModel viewModel(&model);
-    auto labelView = viewModel.item(0, 0);
-    auto dataView = viewModel.item(0, 1);
+    auto labelView = viewModel.itemFromIndex(viewModel.index(0, 0));
+    auto dataView = viewModel.itemFromIndex(viewModel.index(0, 1));
     QSignalSpy spyDataChanged(&viewModel, &DefaultViewModel::dataChanged);
 
     // Changing item appearance
@@ -389,13 +374,11 @@ TEST_F(DefaultViewModelTest, setRootItem)
     DefaultViewModel viewModel(&model);
 
     auto item = model.insertItem<PropertyItem>();
-
-    viewModel.setSessionModel(&model);
     viewModel.setRootSessionItem(item);
 
     // new root item doesn't have children
     EXPECT_EQ(viewModel.rowCount(), 0);
-    EXPECT_EQ(viewModel.columnCount(), 2);
+    EXPECT_EQ(viewModel.columnCount(), 0);
 }
 
 //! Setting top level item as ROOT item (case parent and children).
@@ -410,7 +393,6 @@ TEST_F(DefaultViewModelTest, setCompoundAsRootItem)
     item->addProperty<VectorItem>("position");
     item->addProperty("radius", 43.0);
 
-    viewModel.setSessionModel(&model);
     viewModel.setRootSessionItem(item);
 
     EXPECT_EQ(viewModel.rowCount(), 3);

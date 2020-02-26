@@ -7,15 +7,18 @@
 //
 // ************************************************************************** //
 
+#include <QDebug>
 #include <map>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/signals/modelmapper.h>
+#include <mvvm/utils/containerutils.h>
 #include <mvvm/viewmodel/childrenstrategyinterface.h>
 #include <mvvm/viewmodel/refviewitems.h>
 #include <mvvm/viewmodel/refviewmodel.h>
 #include <mvvm/viewmodel/refviewmodelcontroller.h>
 #include <mvvm/viewmodel/rowstrategyinterface.h>
+#include <mvvm/viewmodel/viewmodelutils.h>
 
 using namespace ModelView;
 
@@ -51,6 +54,18 @@ bool row_was_already_inserted(RefViewItem* parent, int row,
 {
     return current_items_at_row(parent, row) == underlying_items(candidates);
 }
+
+//! Returns true if given SessionItem role is valid for view
+bool isValidItemRole(const RefViewItem* view, int item_role)
+{
+    if (view->item_role() == item_role)
+        return true;
+
+    if (item_role == ModelView::ItemDataRole::APPEARANCE)
+        return true;
+    return false;
+}
+
 } // namespace
 
 struct RefViewModelController::RefViewModelControllerImpl {
@@ -87,9 +102,11 @@ struct RefViewModelController::RefViewModelControllerImpl {
     void init_view_model()
     {
         check_initialization();
-        //        view_model->clear();
-        iterate_insert(controller->rootSessionItem(), view_model->rootItem());
-        // update labels
+        item_to_view.clear();
+        item_to_view[controller->rootSessionItem()] = view_model->rootItem();
+        iterate(controller->rootSessionItem(), view_model->rootItem());
+        //        iterate_insert(controller->rootSessionItem(), view_model->rootItem());
+        // update labels FIXME
     }
 
     void iterate(const SessionItem* item, RefViewItem* parent)
@@ -99,7 +116,8 @@ struct RefViewModelController::RefViewModelControllerImpl {
             auto row = row_strategy->constructRefRow(child);
             if (!row.empty()) {
                 auto next_parent = row.at(0).get();
-                parent->appendRow(std::move(row));
+                view_model->appendRow(parent, std::move(row));
+                item_to_view[child] = next_parent;
                 parent = next_parent; // labelItem
                 iterate(child, parent);
             }
@@ -107,11 +125,11 @@ struct RefViewModelController::RefViewModelControllerImpl {
         }
     }
 
-    //! Populates ViewModel with content of SessionModel. Triggered by insertEvent in SessionModel.
-    //! a) Iterates over all SessionItem's following iteration strategy.
-    //! b) Constructs corresponding rows of ViewItems' following row strategy
-    //! c) Adds them to parent ViewItem, if they have not been added yet.
-    //! c) Or just skips row of ViewItem's and jumps further.
+//    //! Populates ViewModel with content of SessionModel. Triggered by insertEvent in SessionModel.
+//    //! a) Iterates over all SessionItem's following children strategy.
+//    //! b) Constructs corresponding rows of ViewItems' following row strategy
+//    //! c) Adds them to parent ViewItem, if they have not been added yet.
+//    //! c) Or just skips row of ViewItem's and jumps further.
 
     void iterate_insert(const SessionItem* item, RefViewItem* parent)
     {
@@ -120,45 +138,47 @@ struct RefViewModelController::RefViewModelControllerImpl {
         for (auto child : children_strategy->children(item)) {
             auto row = row_strategy->constructRefRow(child);
             if (!row.empty()) {
-                if (row_was_already_inserted(parent, nrow, row))
-                    continue;
-
-                auto next_parent = row.at(0).get();
-                item_to_view[child] = next_parent;
-                view_model->insertRow(parent, nrow, std::move(row));
-                parent = next_parent; // labelItem
-                iterate(child, parent);
+                RefViewItem* next_parent{nullptr};
+                if (row_was_already_inserted(parent, nrow, row)) {
+                    next_parent = parent->child(nrow, 0);
+                } else {
+                    next_parent = row.at(0).get();
+                    item_to_view[child] = next_parent;
+                    view_model->insertRow(parent, nrow, std::move(row));
+                }
+                parent = next_parent;
+                iterate_insert(child, parent);
             }
             parent = origParent;
             ++nrow;
         }
     }
 
-    void iterate_remove(const SessionItem* item, RefViewItem* parent)
-    {
-        RefViewItem* origParent(parent);
-        int nrow(0);
+//    void iterate_remove(const SessionItem* item, RefViewItem* parent)
+//    {
+//        RefViewItem* origParent(parent);
+//        int nrow(0);
 
-        auto children = children_strategy->children(item);
-        if (children.empty() && view_model->rowCount(view_model->indexFromItem(parent)) == 1)
-            view_model->removeRow(parent, 0);
+//        auto children = children_strategy->children(item);
+//        if (children.empty() && view_model->rowCount(view_model->indexFromItem(parent)) == 1)
+//            view_model->removeRow(parent, 0);
 
-        for (auto child : children) {
-            auto row = row_strategy->constructRefRow(child);
-            if (!row.empty()) {
-                if (row_was_already_inserted(parent, nrow, row))
-                    continue;
+//        for (auto child : children) {
+//            auto row = row_strategy->constructRefRow(child);
+//            if (!row.empty()) {
+//                if (row_was_already_inserted(parent, nrow, row))
+//                    continue;
 
-                view_model->removeRow(parent, nrow);
-                //                auto next_parent = row.at(0).get();
-                //                view_model->insertRow(parent, nrow, std::move(row));
-                //                parent = next_parent; // labelItem
-                //                iterate(child, parent);
-            }
-            parent = origParent;
-            ++nrow;
-        }
-    }
+//                view_model->removeRow(parent, nrow);
+//                //                auto next_parent = row.at(0).get();
+//                //                view_model->insertRow(parent, nrow, std::move(row));
+//                //                parent = next_parent; // labelItem
+//                //                iterate(child, parent);
+//            }
+//            parent = origParent;
+//            ++nrow;
+//        }
+//    }
 
     //! Remove row of ViewItem's corresponding to given item.
 
@@ -169,6 +189,30 @@ struct RefViewModelController::RefViewModelControllerImpl {
             auto view = pos->second;
             view_model->removeRow(view->parent(), view->row());
             item_to_view.erase(pos);
+        }
+    }
+
+    void insert_view(SessionItem* parent, TagRow tagrow)
+    {
+        auto child = parent->getItem(tagrow.tag, tagrow.row);
+        auto children = children_strategy->children(parent);
+        auto index = Utils::IndexOfItem(children, child);
+        if (index == -1)
+            return;
+
+        auto pos = item_to_view.find(parent);
+        if (pos == item_to_view.end())
+            return;
+
+        auto parent_view = pos->second;
+
+        auto row = row_strategy->constructRefRow(child);
+        if (!row.empty()) {
+            auto next_parent = row.at(0).get();
+            view_model->insertRow(parent_view, index, std::move(row));
+            item_to_view[child] = next_parent;
+            parent_view = next_parent; // labelItem
+            iterate(child, parent_view);
         }
     }
 
@@ -208,13 +252,27 @@ struct RefViewModelController::RefViewModelControllerImpl {
         };
         session_model->mapper()->setOnModelReset(on_model_reset, controller);
     }
+
+    std::vector<RefViewItem*> findViews(const SessionItem* item) const
+    {
+        if (item == view_model->rootItem()->item())
+            return {view_model->rootItem()};
+
+        std::vector<RefViewItem*> result;
+        auto on_index = [&](const QModelIndex& index) {
+            auto view_item = view_model->itemFromIndex(index);
+            if (view_item->item() == item)
+                result.push_back(view_item);
+        };
+        Utils::iterate_model(view_model, QModelIndex(), on_index);
+        return result;
+    }
 };
 
 RefViewModelController::RefViewModelController(SessionModel* session_model,
                                                RefViewModel* view_model)
     : p_impl(std::make_unique<RefViewModelControllerImpl>(this, session_model, view_model))
 {
-    view_model->setRootViewItem(std::make_unique<RefRootViewItem>(session_model->rootItem()));
 }
 
 RefViewModelController::~RefViewModelController()
@@ -244,7 +302,7 @@ SessionModel* RefViewModelController::sessionModel() const
 void RefViewModelController::setRootSessionItem(SessionItem* item)
 {
     p_impl->view_model->setRootViewItem(std::make_unique<RefRootViewItem>(item));
-    init();
+    p_impl->init_view_model();
 }
 
 SessionItem* RefViewModelController::rootSessionItem() const
@@ -252,18 +310,28 @@ SessionItem* RefViewModelController::rootSessionItem() const
     return p_impl->view_model->rootItem()->item();
 }
 
-//! Init controller and update the model.
+//! Returns all ViewItem's displaying given SessionItem.
 
-void RefViewModelController::init()
+std::vector<RefViewItem*> RefViewModelController::findViews(const SessionItem* item) const
 {
-    p_impl->init_view_model();
+    return p_impl->findViews(item);
 }
 
-void RefViewModelController::onDataChange(SessionItem*, int) {}
-
-void RefViewModelController::onItemInserted(SessionItem*, TagRow)
+void RefViewModelController::onDataChange(SessionItem* item, int role)
 {
-    p_impl->iterate_insert(rootSessionItem(), p_impl->view_model->rootItem());
+    for (auto view : findViews(item)) {
+        // inform corresponding LabelView and DataView
+        if (isValidItemRole(view, role)) {
+            auto index = p_impl->view_model->indexFromItem(view);
+            p_impl->view_model->dataChanged(index, index, Utils::item_role_to_qt(role));
+        }
+    }
+}
+
+void RefViewModelController::onItemInserted(SessionItem* parent, TagRow tagrow)
+{
+//        p_impl->iterate_insert(rootSessionItem(), p_impl->view_model->rootItem());
+    p_impl->insert_view(parent, tagrow);
 }
 
 void RefViewModelController::onItemRemoved(SessionItem*, TagRow)
@@ -275,3 +343,20 @@ void RefViewModelController::onAboutToRemoveItem(SessionItem* parent, TagRow tag
 {
     p_impl->remove_row_of_views(parent->getItem(tagrow.tag, tagrow.row));
 }
+
+void RefViewModelController::update_branch(const SessionItem* item)
+{
+    auto views = findViews(item);
+    if (views.empty())
+        return;
+
+    for (auto view : views)
+        p_impl->view_model->clearRows(view);
+
+   p_impl->iterate(item, views.at(0));
+}
+
+//void RefViewModelController::iterate(const SessionItem* item, RefViewItem* parent)
+//{
+//    p_impl->iterate(item, parent);
+//}
