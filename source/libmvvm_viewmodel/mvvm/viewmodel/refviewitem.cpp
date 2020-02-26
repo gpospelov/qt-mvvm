@@ -84,6 +84,16 @@ struct RefViewItem::RefViewItemImpl {
     //! Returns item data associated with this RefViewItem.
 
     QVariant data() const { return item ? item->data(role) : QVariant(); }
+
+    //! Returns vector of children.
+
+    std::vector<RefViewItem*> get_children() const
+    {
+        std::vector<RefViewItem*> result;
+        std::transform(children.begin(), children.end(), std::back_inserter(result),
+                       [](const auto& x) { return x.get(); });
+        return result;
+    }
 };
 
 RefViewItem::RefViewItem(SessionItem* item, int role)
@@ -222,6 +232,11 @@ Qt::ItemFlags RefViewItem::flags() const
 {
     Qt::ItemFlags result = Qt::ItemIsSelectable | Qt::ItemIsEnabled;
     return result;
+}
+
+std::vector<RefViewItem*> RefViewItem::children() const
+{
+    return p_impl->get_children();
 }
 
 void RefViewItem::setParent(RefViewItem* parent)

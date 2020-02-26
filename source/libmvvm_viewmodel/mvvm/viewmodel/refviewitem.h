@@ -57,6 +57,8 @@ public:
 
     virtual Qt::ItemFlags flags() const;
 
+    std::vector<RefViewItem*> children() const;
+
 protected:
     RefViewItem(SessionItem* item, int role);
     void setParent(RefViewItem* parent);

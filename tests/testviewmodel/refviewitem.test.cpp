@@ -210,3 +210,19 @@ TEST_F(RefViewItemTest, clear)
     EXPECT_EQ(view_item.rowCount(), 0);
     EXPECT_EQ(view_item.columnCount(), 0);
 }
+
+TEST_F(RefViewItemTest, children)
+{
+    auto [children_row0, expected_row0] = test_data(/*ncolumns*/ 2);
+    auto [children_row1, expected_row1] = test_data(/*ncolumns*/ 2);
+
+    TestItem view_item;
+    view_item.appendRow(std::move(children_row0));
+    view_item.appendRow(std::move(children_row1));
+
+    std::vector<RefViewItem*> expected;
+    std::copy(expected_row0.begin(), expected_row0.end(), std::back_inserter(expected));
+    std::copy(expected_row1.begin(), expected_row1.end(), std::back_inserter(expected));
+
+    EXPECT_EQ(view_item.children(), expected);
+}
