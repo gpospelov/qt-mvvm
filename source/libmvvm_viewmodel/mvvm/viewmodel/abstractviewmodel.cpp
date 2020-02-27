@@ -14,7 +14,7 @@
 
 using namespace ModelView;
 
-AbstractViewModel::AbstractViewModel(std::unique_ptr<RefViewModelController> controller, QObject* parent) : RefControlledViewModel(std::move(controller), parent){}
+AbstractViewModel::AbstractViewModel(std::unique_ptr<RefViewModelController> controller, QObject* parent) : ViewModel(std::move(controller), parent){}
 
 AbstractViewModel::~AbstractViewModel() = default;
 

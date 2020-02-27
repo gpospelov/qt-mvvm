@@ -7,11 +7,9 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_VIEWMODEL_REFCONTROLLEDVIEWMODEL_H
-#define MVVM_VIEWMODEL_REFCONTROLLEDVIEWMODEL_H
+#ifndef MVVM_VIEWMODEL_VIEWMODEL_H
+#define MVVM_VIEWMODEL_VIEWMODEL_H
 
-#include <memory>
-#include <mvvm/core/export.h>
 #include <mvvm/viewmodel/viewmodelbase.h>
 
 namespace ModelView
@@ -22,14 +20,13 @@ class SessionItem;
 class RefViewItem;
 class RefViewModelController;
 
-//!
+//! Main class to represent content of SessionModel in Qt's trees and tables.
 
-class CORE_EXPORT RefControlledViewModel : public ViewModelBase
+class CORE_EXPORT ViewModel : public ViewModelBase
 {
 public:
-    RefControlledViewModel(std::unique_ptr<RefViewModelController> controller,
-                           QObject* parent = nullptr);
-    ~RefControlledViewModel() override;
+    ViewModel(std::unique_ptr<RefViewModelController> controller, QObject* parent = nullptr);
+    ~ViewModel() override;
 
     SessionModel* sessionModel() const;
 
@@ -51,4 +48,4 @@ private:
 
 } // namespace ModelView
 
-#endif // MVVM_VIEWMODEL_REFCONTROLLEDVIEWMODEL_H
+#endif // MVVM_VIEWMODEL_VIEWMODEL_H

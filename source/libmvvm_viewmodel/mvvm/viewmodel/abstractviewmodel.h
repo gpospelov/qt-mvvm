@@ -14,12 +14,12 @@
 //#include <memory>
 //#include <mvvm/core/export.h>
 
-#include <mvvm/viewmodel/refcontrolledviewmodel.h>
+#include <mvvm/viewmodel/viewmodel.h>
 
 namespace ModelView
 {
 
-class CORE_EXPORT AbstractViewModel : public RefControlledViewModel
+class CORE_EXPORT AbstractViewModel : public ViewModel
 {
 public:
     AbstractViewModel(std::unique_ptr<RefViewModelController> controller,
