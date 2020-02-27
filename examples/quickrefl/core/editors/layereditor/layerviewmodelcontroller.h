@@ -10,7 +10,7 @@
 #ifndef LAYERVIEWMODELCONTROLLER_H
 #define LAYERVIEWMODELCONTROLLER_H
 
-#include <mvvm/viewmodel/abstractviewmodelcontroller.h>
+#include <mvvm/viewmodel/viewmodelcontroller.h>
 
 namespace ModelView
 {
@@ -24,7 +24,7 @@ class ViewModel;
 Will iterate through all top level items and creates rows with layer properties.
 */
 
-class LayerViewModelController : public ModelView::AbstractViewModelController
+class LayerViewModelController : public ModelView::ViewModelController
 {
 public:
     explicit LayerViewModelController(ModelView::SessionModel* model,

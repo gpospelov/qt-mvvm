@@ -56,7 +56,7 @@ private:
     MaterialTableViewModel* m_view_model;
 };
 
-class MaterialViewController : public AbstractViewModelController
+class MaterialViewController : public ViewModelController
 {
 public:
     MaterialViewController(SessionModel* session_model, MaterialTableViewModel* model);
@@ -168,7 +168,7 @@ QStringList MaterialTableRowStrategy::horizontalHeaderLabels() const
 
 
 MaterialViewController::MaterialViewController(SessionModel* session_model, MaterialTableViewModel* model)
-    : AbstractViewModelController(session_model, model)
+    : ViewModelController(session_model, model)
 {
     setRowStrategy(std::make_unique<MaterialTableRowStrategy>(model));
     setChildrenStrategy(std::make_unique<FilterChildrenStrategy>(model));

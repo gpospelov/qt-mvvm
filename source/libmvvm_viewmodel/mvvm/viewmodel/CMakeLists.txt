@@ -1,6 +1,4 @@
 target_sources(mvvm_viewmodel PRIVATE
-    abstractviewmodelcontroller.cpp
-    abstractviewmodelcontroller.h
     celldecoratorinterface.h
     childrenstrategyinterface.h
     defaultcelldecorator.cpp

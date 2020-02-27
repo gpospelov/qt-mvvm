@@ -61,7 +61,7 @@ public:
 
 LayerTableViewModelController::LayerTableViewModelController(SessionModel* model,
                                                              ViewModel* view_model)
-    : AbstractViewModelController(model, view_model)
+    : ViewModelController(model, view_model)
 {
     setRowStrategy(std::make_unique<CustomLayerRowStrategy>());
     setChildrenStrategy(std::make_unique<TopItemsStrategy>());
