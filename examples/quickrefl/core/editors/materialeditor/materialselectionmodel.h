@@ -15,7 +15,7 @@
 
 namespace ModelView
 {
-class AbstractViewModel;
+class ViewModel;
 } // namespace ModelView
 
 class MaterialEditorActions;
@@ -29,7 +29,7 @@ class MaterialSelectionModel : public QItemSelectionModel
 {
     Q_OBJECT
 public:
-    MaterialSelectionModel(ModelView::AbstractViewModel* view_model, QObject* parent = nullptr);
+    MaterialSelectionModel(ModelView::ViewModel* view_model, QObject* parent = nullptr);
     ~MaterialSelectionModel() = default;
 
     std::vector<MaterialBaseItem*> selectedMaterials() const;

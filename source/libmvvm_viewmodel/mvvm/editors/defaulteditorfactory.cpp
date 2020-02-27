@@ -12,7 +12,7 @@
 #include <mvvm/model/customvariants.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/variant-constants.h>
-#include <mvvm/viewmodel/abstractviewmodel.h>
+#include <mvvm/viewmodel/viewmodel.h>
 
 using namespace ModelView;
 
@@ -21,7 +21,7 @@ namespace
 
 const SessionItem* itemFromIndex(const QModelIndex& index)
 {
-    auto model = dynamic_cast<const AbstractViewModel*>(index.model());
+    auto model = dynamic_cast<const ViewModel*>(index.model());
     return model ? model->sessionItemFromIndex(index) : nullptr;
 }
 

@@ -66,7 +66,7 @@ QStandardItem* createCheckItem();
 } // namespace
 
 MaterialTableViewModel::MaterialTableViewModel(ModelView::SessionModel* model, QObject* parent)
-    : AbstractViewModel(std::make_unique<MaterialViewController>(model, this), parent),
+    : ViewModel(std::make_unique<MaterialViewController>(model, this), parent),
       m_material_type(::Constants::SLDMaterialType)
 {
 }

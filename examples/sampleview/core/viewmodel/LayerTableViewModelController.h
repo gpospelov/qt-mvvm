@@ -14,7 +14,7 @@
 
 namespace ModelView
 {
-class AbstractViewModel;
+class ViewModel;
 } // namespace ModelView
 
 /*!
@@ -27,7 +27,8 @@ Will iterate through all top level items and creates rows with layer properties.
 class LayerTableViewModelController : public ModelView::AbstractViewModelController
 {
 public:
-    explicit LayerTableViewModelController(ModelView::SessionModel* model, ModelView::AbstractViewModel* view_model = nullptr);
+    explicit LayerTableViewModelController(ModelView::SessionModel* model,
+                                           ModelView::ViewModel* view_model = nullptr);
 };
 
 #endif //  LAYERTABLEVIEWMODELCONTROLLER_H

@@ -13,7 +13,7 @@
 #include <QComboBox>
 #include <QHBoxLayout>
 #include <QPushButton>
-#include <mvvm/viewmodel/abstractviewmodel.h>
+#include <mvvm/viewmodel/viewmodel.h>
 
 const auto init = QRCInitializer::initSampleViewResources();
 

@@ -10,7 +10,7 @@
 #ifndef MATERIALTABLEVIEWMODEL_H
 #define MATERIALTABLEVIEWMODEL_H
 
-#include <mvvm/viewmodel/abstractviewmodel.h>
+#include <mvvm/viewmodel/viewmodel.h>
 
 namespace ModelView
 {
@@ -22,7 +22,7 @@ class SessionModel;
 @brief View model to display content of MaterialModel in table like views.
 */
 
-class MaterialTableViewModel : public ModelView::AbstractViewModel
+class MaterialTableViewModel : public ModelView::ViewModel
 {
 public:
     MaterialTableViewModel(ModelView::SessionModel* model, QObject* parent = nullptr);

@@ -18,7 +18,7 @@
 #include <QVBoxLayout>
 #include <mvvm/model/modelutils.h>
 #include <mvvm/model/sessionitem.h>
-#include <mvvm/viewmodel/abstractviewmodel.h>
+#include <mvvm/viewmodel/viewmodel.h>
 
 using namespace ModelView;
 

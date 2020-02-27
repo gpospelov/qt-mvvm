@@ -13,6 +13,6 @@
 using namespace ModelView;
 
 LayerViewModel::LayerViewModel(SessionModel* model, QObject* parent)
-    : AbstractViewModel(std::make_unique<LayerViewModelController>(model, this), parent)
+    : ViewModel(std::make_unique<LayerViewModelController>(model, this), parent)
 {
 }

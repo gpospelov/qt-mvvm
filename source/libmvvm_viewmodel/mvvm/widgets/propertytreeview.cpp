@@ -9,7 +9,7 @@
 
 #include <QTreeView>
 #include <mvvm/model/sessionitem.h>
-#include <mvvm/viewmodel/abstractviewmodel.h>
+#include <mvvm/viewmodel/viewmodel.h>
 #include <mvvm/viewmodel/standardviewmodels.h>
 #include <mvvm/widgets/propertytreeview.h>
 

@@ -15,7 +15,7 @@
 #include <QAction>
 #include <mvvm/model/itemutils.h>
 #include <mvvm/model/modelutils.h>
-#include <mvvm/viewmodel/abstractviewmodel.h>
+#include <mvvm/viewmodel/viewmodel.h>
 
 using namespace ModelView;
 
@@ -40,7 +40,7 @@ struct LayerEditorActions::LayerEditorActionsImpl {
 
     ModelView::SessionItem* root_item()
     {
-        auto model = dynamic_cast<ModelView::AbstractViewModel*>(selection_model->model());
+        auto model = dynamic_cast<ModelView::ViewModel*>(selection_model->model());
         return model->sessionItemFromIndex(QModelIndex());
     }
 };

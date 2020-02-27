@@ -13,7 +13,7 @@
 #include <mvvm/viewmodel/rowstrategyinterface.h>
 #include <mvvm/viewmodel/standardchildrenstrategies.h>
 #include <mvvm/viewmodel/viewitems.h>
-#include <mvvm/viewmodel/abstractviewmodel.h>
+#include <mvvm/viewmodel/viewmodel.h>
 
 using namespace ModelView;
 
@@ -58,7 +58,8 @@ public:
     }
 };
 
-LayerTableViewModelController::LayerTableViewModelController(SessionModel* model, AbstractViewModel* view_model)
+LayerTableViewModelController::LayerTableViewModelController(SessionModel* model,
+                                                             ViewModel* view_model)
     : AbstractViewModelController(model, view_model)
 {
     setRowStrategy(std::make_unique<CustomLayerRowStrategy>());

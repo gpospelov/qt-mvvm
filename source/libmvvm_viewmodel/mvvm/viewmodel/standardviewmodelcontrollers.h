@@ -11,7 +11,7 @@
 #define MVVM_VIEWMODEL_STANDARDVIEWMODELCONTROLLERS_H
 
 #include <mvvm/viewmodel/abstractviewmodelcontroller.h>
-#include <mvvm/viewmodel/abstractviewmodel.h>
+#include <mvvm/viewmodel/viewmodel.h>
 #include <string>
 #include <vector>
 

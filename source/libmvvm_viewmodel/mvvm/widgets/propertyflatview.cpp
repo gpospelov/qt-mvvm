@@ -15,7 +15,7 @@
 #include <mvvm/editors/defaulteditorfactory.h>
 #include <mvvm/model/groupitem.h>
 #include <mvvm/model/sessionitem.h>
-#include <mvvm/viewmodel/abstractviewmodel.h>
+#include <mvvm/viewmodel/viewmodel.h>
 #include <mvvm/viewmodel/standardviewmodels.h>
 #include <mvvm/viewmodel/refviewitems.h>
 #include <mvvm/viewmodel/viewmodeldelegate.h>
@@ -25,7 +25,7 @@
 using namespace ModelView;
 
 struct PropertyFlatView::PropertyFlatViewImpl {
-    std::unique_ptr<AbstractViewModel> view_model;
+    std::unique_ptr<ViewModel> view_model;
     std::unique_ptr<ViewModelDelegate> m_delegate;
     std::unique_ptr<DefaultEditorFactory> editor_factory;
     std::vector<std::unique_ptr<QDataWidgetMapper>> widget_mappers;
@@ -78,13 +78,13 @@ struct PropertyFlatView::PropertyFlatViewImpl {
                     it->second->setEnabled(view_item->item()->isEnabled());
             }
         };
-        connect(view_model.get(), &AbstractViewModel::dataChanged, on_data_change);
+        connect(view_model.get(), &ViewModel::dataChanged, on_data_change);
 
         auto on_row_inserted = [this](const QModelIndex&, int, int) { update_grid_layout(); };
-        connect(view_model.get(), &AbstractViewModel::rowsInserted, on_row_inserted);
+        connect(view_model.get(), &ViewModel::rowsInserted, on_row_inserted);
 
         auto on_row_removed = [this](const QModelIndex&, int, int) { update_grid_layout(); };
-        connect(view_model.get(), &AbstractViewModel::rowsRemoved, on_row_removed);
+        connect(view_model.get(), &ViewModel::rowsRemoved, on_row_removed);
     }
 
     //! Creates widget for given index to appear in grid layout.

@@ -21,7 +21,7 @@ class QItemSelectionModel;
 
 namespace ModelView
 {
-class AbstractViewModel;
+class ViewModel;
 class ViewModelDelegate;
 class SessionItem;
 } // namespace ModelView
@@ -52,7 +52,7 @@ private:
     QBoxLayout* create_button_layout();
 
     QTreeView* m_treeView;
-    std::unique_ptr<ModelView::AbstractViewModel> m_viewModel;
+    std::unique_ptr<ModelView::ViewModel> m_viewModel;
     std::unique_ptr<ModelView::ViewModelDelegate> m_delegate;
     ModelView::SessionItem* m_container;
     SampleModel* m_model;
