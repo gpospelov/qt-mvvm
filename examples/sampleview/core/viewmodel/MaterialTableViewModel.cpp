@@ -15,7 +15,7 @@
 #include <mvvm/viewmodel/childrenstrategyinterface.h>
 #include <mvvm/viewmodel/rowstrategyinterface.h>
 #include <mvvm/viewmodel/standardviewmodelcontrollers.h>
-#include <mvvm/viewmodel/refviewitems.h>
+#include <mvvm/viewmodel/standardviewitems.h>
 #include <QStandardItem>
 
 using namespace ModelView;
@@ -49,7 +49,7 @@ public:
 
     QStringList horizontalHeaderLabels() const override;
 
-    std::vector<std::unique_ptr<RefViewItem>> constructRefRow(SessionItem*)  override;
+    std::vector<std::unique_ptr<ViewItem>> constructRefRow(SessionItem*)  override;
 
 private:
     MaterialTableViewModel* m_view_model;
@@ -128,15 +128,15 @@ MaterialTableRowStrategy::MaterialTableRowStrategy(MaterialTableViewModel* view_
 {
 }
 
-std::vector<std::unique_ptr<RefViewItem>> MaterialTableRowStrategy::constructRefRow(SessionItem* item)
+std::vector<std::unique_ptr<ViewItem>> MaterialTableRowStrategy::constructRefRow(SessionItem* item)
 {
-    std::vector<std::unique_ptr<RefViewItem>> result;
+    std::vector<std::unique_ptr<ViewItem>> result;
 
     if (!item)
         return result;
 
     for (auto child : Utils::SinglePropertyItems(*item))
-        result.emplace_back(std::make_unique<RefViewDataItem>(child));
+        result.emplace_back(std::make_unique<ViewDataItem>(child));
 //    result.push_front(createCheckItem());
     return result;
 }

@@ -23,7 +23,7 @@ namespace ModelView
 class SessionModel;
 class SessionItem;
 class ViewModelBase;
-class RefViewItem;
+class ViewItem;
 class ChildrenStrategyInterface;
 class RowStrategyInterface;
 
@@ -48,7 +48,7 @@ public:
 
     SessionItem* rootSessionItem() const;
 
-    std::vector<RefViewItem*> findViews(const ModelView::SessionItem* item) const;
+    std::vector<ViewItem*> findViews(const ModelView::SessionItem* item) const;
 
 protected:
     virtual void onDataChange(SessionItem* item, int role);

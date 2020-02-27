@@ -10,7 +10,7 @@
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/viewmodel/viewmodel.h>
-#include <mvvm/viewmodel/refviewitems.h>
+#include <mvvm/viewmodel/standardviewitems.h>
 #include <mvvm/viewmodel/viewmodelcontroller.h>
 
 using namespace ModelView;
@@ -43,7 +43,7 @@ SessionItem* ViewModel::sessionItemFromIndex(const QModelIndex& index) const
     return index.isValid() ? itemFromIndex(index)->item() : m_controller->rootSessionItem();
 }
 
-RefViewItem* ViewModel::viewItemFromIndex(const QModelIndex& index) const
+ViewItem* ViewModel::viewItemFromIndex(const QModelIndex& index) const
 {
     return itemFromIndex(index);
 }
@@ -60,7 +60,7 @@ QModelIndexList ViewModel::indexOfSessionItem(const SessionItem* item) const
 
 //! Returns vector of all ViewItem's representing given SessionItem.
 
-std::vector<RefViewItem*> ViewModel::findViews(const SessionItem* item) const
+std::vector<ViewItem*> ViewModel::findViews(const SessionItem* item) const
 {
     return m_controller->findViews(item);
 }

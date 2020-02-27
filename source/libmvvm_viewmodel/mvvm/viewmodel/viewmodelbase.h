@@ -17,7 +17,7 @@
 namespace ModelView
 {
 
-class RefViewItem;
+class ViewItem;
 
 /*!
 @class ViewModelBase
@@ -48,23 +48,23 @@ public:
 
     bool setData(const QModelIndex& index, const QVariant& value, int role) override;
 
-    RefViewItem* rootItem() const;
+    ViewItem* rootItem() const;
 
-    RefViewItem* itemFromIndex(const QModelIndex& index) const;
+    ViewItem* itemFromIndex(const QModelIndex& index) const;
 
-    QModelIndex indexFromItem(const RefViewItem* item) const;
+    QModelIndex indexFromItem(const ViewItem* item) const;
 
-    void removeRow(RefViewItem* parent, int row);
+    void removeRow(ViewItem* parent, int row);
 
-    void clearRows(RefViewItem* parent);
+    void clearRows(ViewItem* parent);
 
-    void insertRow(RefViewItem* parent, int row, std::vector<std::unique_ptr<RefViewItem>> items);
+    void insertRow(ViewItem* parent, int row, std::vector<std::unique_ptr<ViewItem>> items);
 
-    void appendRow(RefViewItem* parent, std::vector<std::unique_ptr<RefViewItem>> items);
+    void appendRow(ViewItem* parent, std::vector<std::unique_ptr<ViewItem>> items);
 
     Qt::ItemFlags flags(const QModelIndex& index) const override;
 
-    void setRootViewItem(std::unique_ptr<RefViewItem> root_item);
+    void setRootViewItem(std::unique_ptr<ViewItem> root_item);
 
 private:
     struct RefViewModelImpl;

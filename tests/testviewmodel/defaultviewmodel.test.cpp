@@ -15,7 +15,7 @@
 #include <mvvm/model/taginfo.h>
 #include <mvvm/standarditems/vectoritem.h>
 #include <mvvm/viewmodel/defaultviewmodel.h>
-#include <mvvm/viewmodel/refviewitems.h>
+#include <mvvm/viewmodel/standardviewitems.h>
 #include <mvvm/viewmodel/viewmodelutils.h>
 
 using namespace ModelView;
@@ -54,11 +54,11 @@ TEST_F(DefaultViewModelTest, fromPropertyItem)
     QModelIndex dataIndex = viewModel.index(0, 1);
 
     // it should be ViewLabelItem looking at our PropertyItem item
-    auto labelItem = dynamic_cast<RefViewLabelItem*>(viewModel.itemFromIndex(labelIndex));
+    auto labelItem = dynamic_cast<ViewLabelItem*>(viewModel.itemFromIndex(labelIndex));
     ASSERT_TRUE(labelItem != nullptr);
     EXPECT_EQ(labelItem->item(), propertyItem);
 
-    auto dataItem = dynamic_cast<RefViewDataItem*>(viewModel.itemFromIndex(dataIndex));
+    auto dataItem = dynamic_cast<ViewDataItem*>(viewModel.itemFromIndex(dataIndex));
     ASSERT_TRUE(dataItem != nullptr);
     EXPECT_EQ(dataItem->item(), propertyItem);
 }
@@ -81,13 +81,13 @@ TEST_F(DefaultViewModelTest, initThenInsert)
     QModelIndex dataIndex = viewModel.index(0, 1);
 
     // it should be ViewLabelItem looking at our PropertyItem item
-    auto labelItem = dynamic_cast<RefViewLabelItem*>(viewModel.itemFromIndex(labelIndex));
+    auto labelItem = dynamic_cast<ViewLabelItem*>(viewModel.itemFromIndex(labelIndex));
     ASSERT_TRUE(labelItem != nullptr);
     EXPECT_EQ(labelItem->item(), propertyItem);
 
     // Feature: since our PropertyItem got it's value after ViewModel was initialized, the model
     // still holds ViewEmptyItem and not ViewDataItem.
-    auto dataItem = dynamic_cast<RefViewEmptyItem*>(viewModel.itemFromIndex(dataIndex));
+    auto dataItem = dynamic_cast<ViewEmptyItem*>(viewModel.itemFromIndex(dataIndex));
     ASSERT_TRUE(dataItem != nullptr);
 }
 
@@ -454,26 +454,26 @@ TEST_F(DefaultViewModelTest, fromVector)
     EXPECT_EQ(viewModel.columnCount(vectorIndex), 2);
 
     // ViewLabelItem and ViewDataItem correspondint to P_X
-    auto pxLabel = dynamic_cast<RefViewLabelItem*>(
+    auto pxLabel = dynamic_cast<ViewLabelItem*>(
         viewModel.itemFromIndex(viewModel.index(0, 0, vectorIndex)));
     auto pxData =
-        dynamic_cast<RefViewDataItem*>(viewModel.itemFromIndex(viewModel.index(0, 1, vectorIndex)));
+        dynamic_cast<ViewDataItem*>(viewModel.itemFromIndex(viewModel.index(0, 1, vectorIndex)));
     EXPECT_EQ(pxLabel->item(), vectorItem->getItem(VectorItem::P_X));
     EXPECT_EQ(pxData->item(), vectorItem->getItem(VectorItem::P_X));
 
     // ViewLabelItem and ViewDataItem correspondint to P_Y
-    pxLabel = dynamic_cast<RefViewLabelItem*>(
+    pxLabel = dynamic_cast<ViewLabelItem*>(
         viewModel.itemFromIndex(viewModel.index(1, 0, vectorIndex)));
     pxData =
-        dynamic_cast<RefViewDataItem*>(viewModel.itemFromIndex(viewModel.index(1, 1, vectorIndex)));
+        dynamic_cast<ViewDataItem*>(viewModel.itemFromIndex(viewModel.index(1, 1, vectorIndex)));
     EXPECT_EQ(pxLabel->item(), vectorItem->getItem(VectorItem::P_Y));
     EXPECT_EQ(pxData->item(), vectorItem->getItem(VectorItem::P_Y));
 
     // ViewLabelItem and ViewDataItem correspondint to P_Z
-    pxLabel = dynamic_cast<RefViewLabelItem*>(
+    pxLabel = dynamic_cast<ViewLabelItem*>(
         viewModel.itemFromIndex(viewModel.index(2, 0, vectorIndex)));
     pxData =
-        dynamic_cast<RefViewDataItem*>(viewModel.itemFromIndex(viewModel.index(2, 1, vectorIndex)));
+        dynamic_cast<ViewDataItem*>(viewModel.itemFromIndex(viewModel.index(2, 1, vectorIndex)));
     EXPECT_EQ(pxLabel->item(), vectorItem->getItem(VectorItem::P_Z));
     EXPECT_EQ(pxData->item(), vectorItem->getItem(VectorItem::P_Z));
 }

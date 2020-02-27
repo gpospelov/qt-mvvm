@@ -13,7 +13,7 @@
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/standarditems/vectoritem.h>
 #include <mvvm/viewmodel/propertiesrowstrategy.h>
-#include <mvvm/viewmodel/refviewitems.h>
+#include <mvvm/viewmodel/standardviewitems.h>
 
 using namespace ModelView;
 

@@ -14,7 +14,7 @@
 #include <mvvm/signals/modelmapper.h>
 #include <mvvm/utils/containerutils.h>
 #include <mvvm/viewmodel/childrenstrategyinterface.h>
-#include <mvvm/viewmodel/refviewitems.h>
+#include <mvvm/viewmodel/standardviewitems.h>
 #include <mvvm/viewmodel/viewmodelcontroller.h>
 #include <mvvm/viewmodel/rowstrategyinterface.h>
 #include <mvvm/viewmodel/viewmodelbase.h>
@@ -26,7 +26,7 @@ namespace
 {
 
 //! Returns true if given SessionItem role is valid for view
-bool isValidItemRole(const RefViewItem* view, int item_role)
+bool isValidItemRole(const ViewItem* view, int item_role)
 {
     if (view->item_role() == item_role)
         return true;
@@ -44,7 +44,7 @@ struct ViewModelController::RefViewModelControllerImpl {
     ViewModelBase* view_model{nullptr};
     std::unique_ptr<ChildrenStrategyInterface> children_strategy;
     std::unique_ptr<RowStrategyInterface> row_strategy;
-    std::map<SessionItem*, RefViewItem*> item_to_view; //! correspondence of item and its view
+    std::map<SessionItem*, ViewItem*> item_to_view; //! correspondence of item and its view
 
     RefViewModelControllerImpl(ViewModelController* controller, SessionModel* session_model,
                                ViewModelBase* view_model)
@@ -78,9 +78,9 @@ struct ViewModelController::RefViewModelControllerImpl {
         // update labels FIXME
     }
 
-    void iterate(const SessionItem* item, RefViewItem* parent)
+    void iterate(const SessionItem* item, ViewItem* parent)
     {
-        RefViewItem* origParent(parent);
+        ViewItem* origParent(parent);
         for (auto child : children_strategy->children(item)) {
             auto row = row_strategy->constructRefRow(child);
             if (!row.empty()) {
@@ -106,7 +106,7 @@ struct ViewModelController::RefViewModelControllerImpl {
         }
     }
 
-    void remove_children_of_view(RefViewItem* view)
+    void remove_children_of_view(ViewItem* view)
     {
         for (auto child : view->children()) {
             auto pos = std::find_if(item_to_view.begin(), item_to_view.end(),
@@ -168,23 +168,23 @@ struct ViewModelController::RefViewModelControllerImpl {
 
         auto on_model_destroyed = [this](SessionModel*) {
             session_model = nullptr;
-            view_model->setRootViewItem(std::make_unique<RefRootViewItem>(nullptr));
+            view_model->setRootViewItem(std::make_unique<RootViewItem>(nullptr));
         };
         session_model->mapper()->setOnModelDestroyed(on_model_destroyed, controller);
 
         auto on_model_reset = [this](SessionModel*) {
             view_model->setRootViewItem(
-                std::make_unique<RefRootViewItem>(session_model->rootItem()));
+                std::make_unique<RootViewItem>(session_model->rootItem()));
         };
         session_model->mapper()->setOnModelReset(on_model_reset, controller);
     }
 
-    std::vector<RefViewItem*> findViews(const SessionItem* item) const
+    std::vector<ViewItem*> findViews(const SessionItem* item) const
     {
         if (item == view_model->rootItem()->item())
             return {view_model->rootItem()};
 
-        std::vector<RefViewItem*> result;
+        std::vector<ViewItem*> result;
         auto on_index = [&](const QModelIndex& index) {
             auto view_item = view_model->itemFromIndex(index);
             if (view_item->item() == item)
@@ -226,7 +226,7 @@ SessionModel* ViewModelController::sessionModel() const
 
 void ViewModelController::setRootSessionItem(SessionItem* item)
 {
-    p_impl->view_model->setRootViewItem(std::make_unique<RefRootViewItem>(item));
+    p_impl->view_model->setRootViewItem(std::make_unique<RootViewItem>(item));
     p_impl->init_view_model();
 }
 
@@ -237,7 +237,7 @@ SessionItem* ViewModelController::rootSessionItem() const
 
 //! Returns all ViewItem's displaying given SessionItem.
 
-std::vector<RefViewItem*> ViewModelController::findViews(const SessionItem* item) const
+std::vector<ViewItem*> ViewModelController::findViews(const SessionItem* item) const
 {
     return p_impl->findViews(item);
 }

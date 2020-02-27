@@ -17,7 +17,7 @@
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/viewmodel/viewmodel.h>
 #include <mvvm/viewmodel/standardviewmodels.h>
-#include <mvvm/viewmodel/refviewitems.h>
+#include <mvvm/viewmodel/standardviewitems.h>
 #include <mvvm/viewmodel/viewmodeldelegate.h>
 #include <mvvm/widgets/layoututils.h>
 #include <mvvm/widgets/propertyflatview.h>
@@ -29,7 +29,7 @@ struct PropertyFlatView::PropertyFlatViewImpl {
     std::unique_ptr<ViewModelDelegate> m_delegate;
     std::unique_ptr<DefaultEditorFactory> editor_factory;
     std::vector<std::unique_ptr<QDataWidgetMapper>> widget_mappers;
-    std::map<RefViewItem*, QWidget*> item_to_widget;
+    std::map<ViewItem*, QWidget*> item_to_widget;
 
     QGridLayout* grid_layout{nullptr};
     PropertyFlatViewImpl()
@@ -40,7 +40,7 @@ struct PropertyFlatView::PropertyFlatViewImpl {
 
     //! Creates label for given index.
 
-    std::unique_ptr<QLabel> create_label(RefViewItem* view_item)
+    std::unique_ptr<QLabel> create_label(ViewItem* view_item)
     {
         auto result = std::make_unique<QLabel>(view_item->data(Qt::DisplayRole).toString());
         result->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed));
@@ -92,7 +92,7 @@ struct PropertyFlatView::PropertyFlatViewImpl {
     std::unique_ptr<QWidget> create_widget(const QModelIndex& index)
     {
         auto view_item = view_model->viewItemFromIndex(index);
-        if (auto label_item = dynamic_cast<RefViewLabelItem*>(view_item); label_item)
+        if (auto label_item = dynamic_cast<ViewLabelItem*>(view_item); label_item)
             return create_label(label_item);
         else
             return create_editor(index);

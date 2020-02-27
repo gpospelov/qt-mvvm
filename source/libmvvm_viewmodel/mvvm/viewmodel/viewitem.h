@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_VIEWMODEL_REFVIEWITEM_H
-#define MVVM_VIEWMODEL_REFVIEWITEM_H
+#ifndef MVVM_VIEWMODEL_VIEWITEM_H
+#define MVVM_VIEWMODEL_VIEWITEM_H
 
 #include <memory>
 #include <mvvm/core/export.h>
@@ -22,26 +22,26 @@ class SessionItem;
 
 //! Represents the view of SessionItem's data in single cell of ViewModel.
 
-class CORE_EXPORT RefViewItem
+class CORE_EXPORT ViewItem
 {
 public:
-    virtual ~RefViewItem();
+    virtual ~ViewItem();
 
     int rowCount() const;
 
     int columnCount() const;
 
-    void appendRow(std::vector<std::unique_ptr<RefViewItem>> items);
+    void appendRow(std::vector<std::unique_ptr<ViewItem>> items);
 
-    void insertRow(int row, std::vector<std::unique_ptr<RefViewItem>> items);
+    void insertRow(int row, std::vector<std::unique_ptr<ViewItem>> items);
 
     void removeRow(int row);
 
     void clear();
 
-    RefViewItem* parent() const;
+    ViewItem* parent() const;
 
-    RefViewItem* child(int row, int column) const;
+    ViewItem* child(int row, int column) const;
 
     SessionItem* item() const;
 
@@ -57,18 +57,17 @@ public:
 
     virtual Qt::ItemFlags flags() const;
 
-    std::vector<RefViewItem*> children() const;
+    std::vector<ViewItem*> children() const;
 
 protected:
-    RefViewItem(SessionItem* item, int role);
-    void setParent(RefViewItem* parent);
+    ViewItem(SessionItem* item, int role);
+    void setParent(ViewItem* parent);
 
 private:
-    friend class RefViewModel;
     struct RefViewItemImpl;
     std::unique_ptr<RefViewItemImpl> p_impl;
 };
 
 }; // namespace ModelView
 
-#endif // MVVM_VIEWMODEL_REFVIEWITEM_H
+#endif // MVVM_VIEWMODEL_VIEWITEM_H

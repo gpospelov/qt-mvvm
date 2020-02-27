@@ -14,7 +14,7 @@
 #include <mvvm/standarditems/vectoritem.h>
 #include <mvvm/viewmodel/defaultviewmodel.h>
 #include <mvvm/viewmodel/topitemsviewmodel.h>
-#include <mvvm/viewmodel/refviewitems.h>
+#include <mvvm/viewmodel/standardviewitems.h>
 
 using namespace ModelView;
 
@@ -63,7 +63,7 @@ TEST_F(ToyLayerItemTest, inViewModel)
 
     // accessing to viewItem representing layerItem
     QModelIndex layerIndex = viewModel.index(0, 0);
-    auto viewItem = dynamic_cast<RefViewLabelItem*>(viewModel.itemFromIndex(layerIndex));
+    auto viewItem = dynamic_cast<ViewLabelItem*>(viewModel.itemFromIndex(layerIndex));
     EXPECT_TRUE(viewItem != nullptr);
     EXPECT_EQ(viewItem->item(), layerItem);
 
@@ -74,12 +74,12 @@ TEST_F(ToyLayerItemTest, inViewModel)
     // accessing to views representing label and value of thickness property
     QModelIndex thicknessLabelIndex = viewModel.index(0, 0, layerIndex);
     auto thicknessLabelView =
-        dynamic_cast<RefViewLabelItem*>(viewModel.itemFromIndex(thicknessLabelIndex));
+        dynamic_cast<ViewLabelItem*>(viewModel.itemFromIndex(thicknessLabelIndex));
     EXPECT_TRUE(thicknessLabelView != nullptr);
 
     QModelIndex thicknessValueIndex = viewModel.index(0, 1, layerIndex);
     auto thicknessValueView =
-        dynamic_cast<RefViewDataItem*>(viewModel.itemFromIndex(thicknessValueIndex));
+        dynamic_cast<ViewDataItem*>(viewModel.itemFromIndex(thicknessValueIndex));
     EXPECT_TRUE(thicknessValueView != nullptr);
 
     // internally, views for label and data should point to single SessionItem corresponding to

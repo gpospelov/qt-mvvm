@@ -12,8 +12,7 @@
 #include <QSignalSpy>
 #include <QStandardItemModel>
 #include <mvvm/model/sessionitem.h>
-#include <mvvm/viewmodel/refviewitem.h>
-#include <mvvm/viewmodel/refviewitems.h>
+#include <mvvm/viewmodel/standardviewitems.h>
 #include <mvvm/viewmodel/viewmodelbase.h>
 
 using namespace ModelView;
@@ -25,15 +24,15 @@ class ViewModelBaseTest : public ::testing::Test
 public:
     ~ViewModelBaseTest();
 
-    class TestItem : public RefViewItem
+    class TestItem : public ViewItem
     {
     public:
-        TestItem() : RefViewItem(nullptr, 0) {}
+        TestItem() : ViewItem(nullptr, 0) {}
         ~TestItem() override;
     };
 
-    using children_t = std::vector<std::unique_ptr<RefViewItem>>;
-    using expected_t = std::vector<RefViewItem*>;
+    using children_t = std::vector<std::unique_ptr<ViewItem>>;
+    using expected_t = std::vector<ViewItem*>;
 
     //! Helper function to get two vectors, each ncolumns length, in the form of a pair.
     //! First vector contains unique_ptr objects, second vector bare pointers to same objects.
@@ -42,7 +41,7 @@ public:
 
     std::pair<children_t, expected_t> test_data(int ncolumns)
     {
-        auto vector_of_unique = TestUtils::create_row<RefViewItem, TestItem>(ncolumns);
+        auto vector_of_unique = TestUtils::create_row<ViewItem, TestItem>(ncolumns);
         auto vector_of_pointers = TestUtils::create_pointers(vector_of_unique);
         return std::make_pair(std::move(vector_of_unique), std::move(vector_of_pointers));
     }
@@ -278,7 +277,7 @@ TEST_F(ViewModelBaseTest, data)
     item.setData(expected);
 
     children_t children;
-    children.emplace_back(std::make_unique<RefViewDataItem>(&item));
+    children.emplace_back(std::make_unique<ViewDataItem>(&item));
 
     ViewModelBase viewmodel;
     viewmodel.appendRow(viewmodel.rootItem(), std::move(children));
@@ -297,7 +296,7 @@ TEST_F(ViewModelBaseTest, setData)
 
     // creating view model displaying given SessionItem
     children_t children;
-    children.emplace_back(std::make_unique<RefViewDataItem>(&item));
+    children.emplace_back(std::make_unique<ViewDataItem>(&item));
     ViewModelBase viewmodel;
     viewmodel.appendRow(viewmodel.rootItem(), std::move(children));
 
@@ -326,8 +325,8 @@ TEST_F(ViewModelBaseTest, flags)
     item.setDisplayName("Name");
 
     children_t children;
-    children.emplace_back(std::make_unique<RefViewLabelItem>(&item));
-    children.emplace_back(std::make_unique<RefViewDataItem>(&item));
+    children.emplace_back(std::make_unique<ViewLabelItem>(&item));
+    children.emplace_back(std::make_unique<ViewDataItem>(&item));
 
     ViewModelBase viewmodel;
     viewmodel.appendRow(viewmodel.rootItem(), std::move(children));

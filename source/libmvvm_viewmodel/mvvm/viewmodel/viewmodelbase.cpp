@@ -7,17 +7,17 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/viewmodel/refviewitems.h>
+#include <mvvm/viewmodel/standardviewitems.h>
 #include <mvvm/viewmodel/viewmodelbase.h>
 
 using namespace ModelView;
 
 struct ViewModelBase::RefViewModelImpl {
     ViewModelBase* model{nullptr};
-    std::unique_ptr<RefViewItem> root;
+    std::unique_ptr<ViewItem> root;
     RefViewModelImpl(ViewModelBase* model) : model(model) {}
 
-    bool item_belongs_to_model(RefViewItem* item)
+    bool item_belongs_to_model(ViewItem* item)
     {
         return model->indexFromItem(item).isValid() || item == model->rootItem();
     }
@@ -26,7 +26,7 @@ struct ViewModelBase::RefViewModelImpl {
 ViewModelBase::ViewModelBase(QObject* parent)
     : QAbstractItemModel(parent), p_impl(std::make_unique<RefViewModelImpl>(this))
 {
-    setRootViewItem(std::make_unique<RefRootViewItem>(nullptr));
+    setRootViewItem(std::make_unique<RootViewItem>(nullptr));
 }
 
 ViewModelBase::~ViewModelBase() = default;
@@ -91,7 +91,7 @@ bool ViewModelBase::setData(const QModelIndex& index, const QVariant& value, int
 
 //! Returns a pointer to invisible root item.
 
-RefViewItem* ViewModelBase::rootItem() const
+ViewItem* ViewModelBase::rootItem() const
 {
     return p_impl->root.get();
 }
@@ -99,21 +99,21 @@ RefViewItem* ViewModelBase::rootItem() const
 //! Returns a pointer to the RefViewItem associated with the given index.
 //! If index is invalid, returns nullptr.
 
-RefViewItem* ViewModelBase::itemFromIndex(const QModelIndex& index) const
+ViewItem* ViewModelBase::itemFromIndex(const QModelIndex& index) const
 {
-    return index.isValid() ? static_cast<RefViewItem*>(index.internalPointer()) : nullptr;
+    return index.isValid() ? static_cast<ViewItem*>(index.internalPointer()) : nullptr;
 }
 
 //! Returns the QModelIndex associated with the given item.
 
-QModelIndex ViewModelBase::indexFromItem(const RefViewItem* item) const
+QModelIndex ViewModelBase::indexFromItem(const ViewItem* item) const
 {
     return item && item->parent()
-               ? createIndex(item->row(), item->column(), const_cast<RefViewItem*>(item))
+               ? createIndex(item->row(), item->column(), const_cast<ViewItem*>(item))
                : QModelIndex();
 }
 
-void ViewModelBase::removeRow(RefViewItem* parent, int row)
+void ViewModelBase::removeRow(ViewItem* parent, int row)
 {
     if (!p_impl->item_belongs_to_model(parent))
         throw std::runtime_error("Error in RefViewModel: attempt to use parent from another model");
@@ -123,7 +123,7 @@ void ViewModelBase::removeRow(RefViewItem* parent, int row)
     endRemoveRows();
 }
 
-void ViewModelBase::clearRows(RefViewItem* parent)
+void ViewModelBase::clearRows(ViewItem* parent)
 {
     if (!p_impl->item_belongs_to_model(parent))
         throw std::runtime_error("Error in RefViewModel: attempt to use parent from another model");
@@ -138,8 +138,8 @@ void ViewModelBase::clearRows(RefViewItem* parent)
 
 //! Insert a row of items at index 'row' to given parent.
 
-void ViewModelBase::insertRow(RefViewItem* parent, int row,
-                              std::vector<std::unique_ptr<RefViewItem>> items)
+void ViewModelBase::insertRow(ViewItem* parent, int row,
+                              std::vector<std::unique_ptr<ViewItem>> items)
 {
     if (!p_impl->item_belongs_to_model(parent))
         throw std::runtime_error("Error in RefViewModel: attempt to use parent from another model");
@@ -151,7 +151,7 @@ void ViewModelBase::insertRow(RefViewItem* parent, int row,
 
 //! Appends row of items to given parent.
 
-void ViewModelBase::appendRow(RefViewItem* parent, std::vector<std::unique_ptr<RefViewItem>> items)
+void ViewModelBase::appendRow(ViewItem* parent, std::vector<std::unique_ptr<ViewItem>> items)
 {
     insertRow(parent, parent->rowCount(), std::move(items));
 }
@@ -168,7 +168,7 @@ Qt::ItemFlags ViewModelBase::flags(const QModelIndex& index) const
 
 //! Sets new root item. Previous item will be deleted, model will be reset.
 
-void ViewModelBase::setRootViewItem(std::unique_ptr<RefViewItem> root_item)
+void ViewModelBase::setRootViewItem(std::unique_ptr<ViewItem> root_item)
 {
     beginResetModel();
     p_impl->root = std::move(root_item);

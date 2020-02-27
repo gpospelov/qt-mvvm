@@ -11,7 +11,7 @@
 #include "test_utils.h"
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/viewmodel/labeldatarowstrategy.h>
-#include <mvvm/viewmodel/refviewitems.h>
+#include <mvvm/viewmodel/standardviewitems.h>
 
 namespace
 {
@@ -49,8 +49,8 @@ TEST_F(LabelDataRowStrategyTest, topLevelItem)
     EXPECT_EQ(constructor.horizontalHeaderLabels(), expected_labels);
 
     // checking that it is label and data
-    auto labelItem = dynamic_cast<RefViewLabelItem*>(items.at(0).get());
-    auto emptyItem = dynamic_cast<RefViewEmptyItem*>(items.at(1).get());
+    auto labelItem = dynamic_cast<ViewLabelItem*>(items.at(0).get());
+    auto emptyItem = dynamic_cast<ViewEmptyItem*>(items.at(1).get());
     ASSERT_TRUE(labelItem != nullptr);
     EXPECT_EQ(labelItem->item(), &item);
     ASSERT_TRUE(emptyItem != nullptr);
@@ -70,8 +70,8 @@ TEST_F(LabelDataRowStrategyTest, propertyItem)
     EXPECT_EQ(constructor.horizontalHeaderLabels(), expected_labels);
 
     // checking that it is label and data
-    auto labelItem = dynamic_cast<RefViewLabelItem*>(items.at(0).get());
-    auto dataItem = dynamic_cast<RefViewDataItem*>(items.at(1).get());
+    auto labelItem = dynamic_cast<ViewLabelItem*>(items.at(0).get());
+    auto dataItem = dynamic_cast<ViewDataItem*>(items.at(1).get());
     ASSERT_TRUE(labelItem != nullptr);
     EXPECT_EQ(labelItem->item(), &item);
     ASSERT_TRUE(dataItem != nullptr);

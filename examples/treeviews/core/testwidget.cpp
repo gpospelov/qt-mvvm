@@ -17,7 +17,7 @@
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/viewmodel/defaultviewmodel.h>
 #include <mvvm/viewmodel/topitemsviewmodel.h>
-#include <mvvm/viewmodel/refviewitem.h>
+#include <mvvm/viewmodel/viewitem.h>
 #include <mvvm/widgets/standardtreeviews.h>
 
 using namespace ModelView;

@@ -15,7 +15,7 @@
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/standarditems/vectoritem.h>
 #include <mvvm/viewmodel/labeldatarowstrategy.h>
-#include <mvvm/viewmodel/refviewitems.h>
+#include <mvvm/viewmodel/standardviewitems.h>
 #include <mvvm/viewmodel/viewmodelbase.h>
 #include <mvvm/viewmodel/viewmodelcontroller.h>
 #include <mvvm/viewmodel/standardchildrenstrategies.h>

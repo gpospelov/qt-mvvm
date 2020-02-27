@@ -7,10 +7,10 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_VIEWMODEL_REFVIEWITEMS_H
-#define MVVM_VIEWMODEL_REFVIEWITEMS_H
+#ifndef MVVM_VIEWMODEL_VIEWITEMS_H
+#define MVVM_VIEWMODEL_VIEWITEMS_H
 
-#include <mvvm/viewmodel/refviewitem.h>
+#include <mvvm/viewmodel/viewitem.h>
 
 namespace ModelView
 {
@@ -19,37 +19,37 @@ class SessionItem;
 
 //! Represents root item.
 
-class CORE_EXPORT RefRootViewItem : public RefViewItem
+class CORE_EXPORT RootViewItem : public ViewItem
 {
 public:
-    explicit RefRootViewItem(SessionItem* item);
+    explicit RootViewItem(SessionItem* item);
 };
 
 //! Represents empty cell of tree or table.
 
-class CORE_EXPORT RefViewEmptyItem : public RefViewItem
+class CORE_EXPORT ViewEmptyItem : public ViewItem
 {
 public:
-    RefViewEmptyItem();
+    ViewEmptyItem();
     QVariant data(int role) const override;
 };
 
 //! Represents display name of SessionItem in any cell of Qt's trees and tables.
 
-class CORE_EXPORT RefViewLabelItem : public RefViewItem
+class CORE_EXPORT ViewLabelItem : public ViewItem
 {
 public:
-    explicit RefViewLabelItem(SessionItem* item);
+    explicit ViewLabelItem(SessionItem* item);
 
     QVariant data(int role) const override;
 };
 
 //! Represents data role of SessionItem in any cell of Qt's trees and tables.
 
-class CORE_EXPORT RefViewDataItem : public RefViewItem
+class CORE_EXPORT ViewDataItem : public ViewItem
 {
 public:
-    explicit RefViewDataItem(SessionItem* item);
+    explicit ViewDataItem(SessionItem* item);
 
     Qt::ItemFlags flags() const override;
 
@@ -57,4 +57,4 @@ public:
 
 } // namespace ModelView
 
-#endif // MVVM_VIEWMODEL_REFVIEWITEMS_H
+#endif // MVVM_VIEWMODEL_VIEWITEMS_H

@@ -11,27 +11,27 @@
 #include <mvvm/model/customvariants.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/utils/containerutils.h>
-#include <mvvm/viewmodel/refviewitem.h>
+#include <mvvm/viewmodel/viewitem.h>
 #include <mvvm/viewmodel/viewmodelutils.h>
 #include <vector>
 
 using namespace ModelView;
 
-struct RefViewItem::RefViewItemImpl {
-    std::vector<std::unique_ptr<RefViewItem>> children; //! buffer to hold rows x columns
+struct ViewItem::RefViewItemImpl {
+    std::vector<std::unique_ptr<ViewItem>> children; //! buffer to hold rows x columns
     int rows{0};
     int columns{0};
     SessionItem* item{nullptr};
     int role{0};
-    RefViewItem* parent_view_item{nullptr};
+    ViewItem* parent_view_item{nullptr};
     RefViewItemImpl(SessionItem* item, int role) : item(item), role(role) {}
 
-    void appendRow(std::vector<std::unique_ptr<RefViewItem>> items)
+    void appendRow(std::vector<std::unique_ptr<ViewItem>> items)
     {
         insertRow(rows, std::move(items));
     }
 
-    void insertRow(int row, std::vector<std::unique_ptr<RefViewItem>> items)
+    void insertRow(int row, std::vector<std::unique_ptr<ViewItem>> items)
     {
         if (items.empty())
             throw std::runtime_error("Error in RefViewItem: attempt to insert empty row");
@@ -63,7 +63,7 @@ struct RefViewItem::RefViewItemImpl {
             columns = 0;
     }
 
-    RefViewItem* child(int row, int column) const
+    ViewItem* child(int row, int column) const
     {
         if (row < 0 || row >= rows)
             throw std::runtime_error("Error in RefViewItem: wrong row)");
@@ -74,9 +74,9 @@ struct RefViewItem::RefViewItemImpl {
         return children.at(static_cast<size_t>(column + row * columns)).get();
     }
 
-    RefViewItem* parent() { return parent_view_item; }
+    ViewItem* parent() { return parent_view_item; }
 
-    int index_of_child(const RefViewItem* child)
+    int index_of_child(const ViewItem* child)
     {
         return Utils::IndexOfItem(children.begin(), children.end(), child);
     }
@@ -87,32 +87,32 @@ struct RefViewItem::RefViewItemImpl {
 
     //! Returns vector of children.
 
-    std::vector<RefViewItem*> get_children() const
+    std::vector<ViewItem*> get_children() const
     {
-        std::vector<RefViewItem*> result;
+        std::vector<ViewItem*> result;
         std::transform(children.begin(), children.end(), std::back_inserter(result),
                        [](const auto& x) { return x.get(); });
         return result;
     }
 };
 
-RefViewItem::RefViewItem(SessionItem* item, int role)
+ViewItem::ViewItem(SessionItem* item, int role)
     : p_impl(std::make_unique<RefViewItemImpl>(item, role))
 {
 }
 
-RefViewItem::~RefViewItem() = default;
+ViewItem::~ViewItem() = default;
 
 //! Returns the number of child item rows that the item has.
 
-int RefViewItem::rowCount() const
+int ViewItem::rowCount() const
 {
     return p_impl->rows;
 }
 
 //! Returns the number of child item columns that the item has.
 
-int RefViewItem::columnCount() const
+int ViewItem::columnCount() const
 {
     return p_impl->columns;
 }
@@ -120,7 +120,7 @@ int RefViewItem::columnCount() const
 //! Appends a row containing items. Number of items should be the same as columnCount()
 //! (if there are already some rows). If it is a first row, then items can be of any size.
 
-void RefViewItem::appendRow(std::vector<std::unique_ptr<RefViewItem>> items)
+void ViewItem::appendRow(std::vector<std::unique_ptr<ViewItem>> items)
 {
     for (auto& x : items)
         x.get()->setParent(this);
@@ -129,7 +129,7 @@ void RefViewItem::appendRow(std::vector<std::unique_ptr<RefViewItem>> items)
 
 //! Insert a row of items at index 'row'.
 
-void RefViewItem::insertRow(int row, std::vector<std::unique_ptr<RefViewItem>> items)
+void ViewItem::insertRow(int row, std::vector<std::unique_ptr<ViewItem>> items)
 {
     for (auto& x : items)
         x.get()->setParent(this);
@@ -138,34 +138,34 @@ void RefViewItem::insertRow(int row, std::vector<std::unique_ptr<RefViewItem>> i
 
 //! Removes row of items at given 'row'. Items will be deleted.
 
-void RefViewItem::removeRow(int row)
+void ViewItem::removeRow(int row)
 {
     p_impl->removeRow(row);
 }
 
-void RefViewItem::clear()
+void ViewItem::clear()
 {
     p_impl->children.clear();
     p_impl->rows = 0;
     p_impl->columns = 0;
 }
 
-RefViewItem* RefViewItem::parent() const
+ViewItem* ViewItem::parent() const
 {
     return p_impl->parent();
 }
 
-RefViewItem* RefViewItem::child(int row, int column) const
+ViewItem* ViewItem::child(int row, int column) const
 {
     return p_impl->child(row, column);
 }
 
-SessionItem* RefViewItem::item() const
+SessionItem* ViewItem::item() const
 {
     return p_impl->item;
 }
 
-int RefViewItem::item_role() const
+int ViewItem::item_role() const
 {
     return p_impl->role;
 }
@@ -173,7 +173,7 @@ int RefViewItem::item_role() const
 //! Returns the row where the item is located in its parent's child table, or -1 if the item has no
 //! parent.
 
-int RefViewItem::row() const
+int ViewItem::row() const
 {
     auto index = parent() ? parent()->p_impl->index_of_child(this) : -1;
     return index >= 0 ? index / parent()->p_impl->columns : -1;
@@ -182,7 +182,7 @@ int RefViewItem::row() const
 //! Returns the column where the item is located in its parent's child table, or -1 if the item has
 //! no parent.
 
-int RefViewItem::column() const
+int ViewItem::column() const
 {
     auto index = parent() ? parent()->p_impl->index_of_child(this) : -1;
     return index >= 0 ? index % parent()->p_impl->columns : -1;
@@ -191,7 +191,7 @@ int RefViewItem::column() const
 //! Returns the data for given role according to Qt::ItemDataRole namespace definitions.
 //! Converts data and roles from underlying SessionItem to what Qt expects.
 
-QVariant RefViewItem::data(int qt_role) const
+QVariant ViewItem::data(int qt_role) const
 {
     if (!p_impl->item)
         return QVariant();
@@ -218,7 +218,7 @@ QVariant RefViewItem::data(int qt_role) const
 //! Sets the data to underlying SessionItem.
 //! Converts data and roles from Qt definitions to what SessionItem expects.
 
-bool RefViewItem::setData(const QVariant& value, int qt_role)
+bool ViewItem::setData(const QVariant& value, int qt_role)
 {
     if (p_impl->item && qt_role == Qt::EditRole)
         return p_impl->item->setData(Utils::toCustomVariant(value), p_impl->role);
@@ -228,18 +228,18 @@ bool RefViewItem::setData(const QVariant& value, int qt_role)
 //! Returns Qt's item flags.
 //! Converts internal SessionItem's status enable/disabled/readonly to what Qt expects.
 
-Qt::ItemFlags RefViewItem::flags() const
+Qt::ItemFlags ViewItem::flags() const
 {
     Qt::ItemFlags result = Qt::ItemIsSelectable | Qt::ItemIsEnabled;
     return result;
 }
 
-std::vector<RefViewItem*> RefViewItem::children() const
+std::vector<ViewItem*> ViewItem::children() const
 {
     return p_impl->get_children();
 }
 
-void RefViewItem::setParent(RefViewItem* parent)
+void ViewItem::setParent(ViewItem* parent)
 {
     p_impl->parent_view_item = parent;
 }
