@@ -28,15 +28,15 @@ class ChildrenStrategyInterface;
 class RowStrategyInterface;
 
 /*!
-@class RefViewModelController
-@brief Propagates changes from SessionModel to its ViewModel.
+@class ViewModelController
+@brief Propagates changes from SessionModel to its ViewModelBase.
 */
 
-class CORE_EXPORT RefViewModelController
+class CORE_EXPORT ViewModelController
 {
 public:
-    RefViewModelController(SessionModel* session_model, ViewModelBase* view_model);
-    virtual ~RefViewModelController();
+    ViewModelController(SessionModel* session_model, ViewModelBase* view_model);
+    virtual ~ViewModelController();
 
     void setChildrenStrategy(std::unique_ptr<ChildrenStrategyInterface> children_strategy);
 
@@ -57,7 +57,6 @@ protected:
     virtual void onAboutToRemoveItem(SessionItem* parent, TagRow tagrow);
 
     void update_branch(const SessionItem* item);
-//    void iterate(const SessionItem* item, RefViewItem* parent);
 
 private:
     struct RefViewModelControllerImpl;

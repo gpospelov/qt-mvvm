@@ -11,11 +11,11 @@
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/viewmodel/viewmodel.h>
 #include <mvvm/viewmodel/refviewitems.h>
-#include <mvvm/viewmodel/refviewmodelcontroller.h>
+#include <mvvm/viewmodel/viewmodelcontroller.h>
 
 using namespace ModelView;
 
-ViewModel::ViewModel(std::unique_ptr<RefViewModelController> controller, QObject* parent)
+ViewModel::ViewModel(std::unique_ptr<ViewModelController> controller, QObject* parent)
     : ViewModelBase(parent), m_controller(std::move(controller))
 {
     m_controller->setRootSessionItem(sessionModel()->rootItem());

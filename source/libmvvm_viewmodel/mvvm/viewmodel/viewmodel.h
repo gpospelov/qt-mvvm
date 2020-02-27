@@ -18,14 +18,14 @@ namespace ModelView
 class SessionModel;
 class SessionItem;
 class RefViewItem;
-class RefViewModelController;
+class ViewModelController;
 
 //! Main class to represent content of SessionModel in Qt's trees and tables.
 
 class CORE_EXPORT ViewModel : public ViewModelBase
 {
 public:
-    ViewModel(std::unique_ptr<RefViewModelController> controller, QObject* parent = nullptr);
+    ViewModel(std::unique_ptr<ViewModelController> controller, QObject* parent = nullptr);
     ~ViewModel() override;
 
     SessionModel* sessionModel() const;
@@ -43,7 +43,7 @@ public:
     std::vector<RefViewItem*> findViews(const ModelView::SessionItem* item) const;
 
 private:
-    std::unique_ptr<RefViewModelController> m_controller;
+    std::unique_ptr<ViewModelController> m_controller;
 };
 
 } // namespace ModelView

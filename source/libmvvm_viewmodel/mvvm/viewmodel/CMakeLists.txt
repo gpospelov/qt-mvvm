@@ -23,8 +23,8 @@ target_sources(mvvm_viewmodel PRIVATE
     refviewitem.h
     refviewitems.cpp
     refviewitems.h
-    refviewmodelcontroller.cpp
-    refviewmodelcontroller.h
+    viewmodelcontroller.cpp
+    viewmodelcontroller.h
     viewmodel.cpp
     viewmodel.h
     rowstrategyinterface.h

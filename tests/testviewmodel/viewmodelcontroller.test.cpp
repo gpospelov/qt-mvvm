@@ -17,21 +17,21 @@
 #include <mvvm/viewmodel/labeldatarowstrategy.h>
 #include <mvvm/viewmodel/refviewitems.h>
 #include <mvvm/viewmodel/viewmodelbase.h>
-#include <mvvm/viewmodel/refviewmodelcontroller.h>
+#include <mvvm/viewmodel/viewmodelcontroller.h>
 #include <mvvm/viewmodel/standardchildrenstrategies.h>
 
 using namespace ModelView;
 
-//! Tests of RefViewModelController class.
+//! Tests of ViewModelController class.
 
-class RefViewModelControllerTest : public ::testing::Test
+class ViewModelControllerTest : public ::testing::Test
 {
 public:
-    ~RefViewModelControllerTest();
+    ~ViewModelControllerTest();
 
     auto create_controller(SessionModel* session_model, ViewModelBase* view_model)
     {
-        auto result = std::make_unique<RefViewModelController>(session_model, view_model);
+        auto result = std::make_unique<ViewModelController>(session_model, view_model);
         result->setRowStrategy(std::make_unique<LabelDataRowStrategy>());
         result->setChildrenStrategy(std::make_unique<AllChildrenStrategy>());
         result->setRootSessionItem(session_model->rootItem());
@@ -39,11 +39,11 @@ public:
     }
 };
 
-RefViewModelControllerTest::~RefViewModelControllerTest() = default;
+ViewModelControllerTest::~ViewModelControllerTest() = default;
 
 //! Initial state of the controller. Empty SessionModel, empty ViewModel.
 
-TEST_F(RefViewModelControllerTest, initialState)
+TEST_F(ViewModelControllerTest, initialState)
 {
     SessionModel session_model;
     ViewModelBase view_model;
@@ -57,7 +57,7 @@ TEST_F(RefViewModelControllerTest, initialState)
 
 //! Single property item in a model.
 
-TEST_F(RefViewModelControllerTest, fromPropertyItem)
+TEST_F(ViewModelControllerTest, fromPropertyItem)
 {
     SessionModel session_model;
     auto propertyItem = session_model.insertItem<PropertyItem>();
@@ -82,7 +82,7 @@ TEST_F(RefViewModelControllerTest, fromPropertyItem)
 
 //! VectorItem in a model.
 
-TEST_F(RefViewModelControllerTest, fromVectorItem)
+TEST_F(ViewModelControllerTest, fromVectorItem)
 {
     SessionModel session_model;
     auto vectorItem = session_model.insertItem<VectorItem>();
@@ -119,7 +119,7 @@ TEST_F(RefViewModelControllerTest, fromVectorItem)
 
 //! Single property item in a model, inserted after controller was setup.
 
-TEST_F(RefViewModelControllerTest, initThenInsertProperty)
+TEST_F(ViewModelControllerTest, initThenInsertProperty)
 {
     SessionModel session_model;
 
@@ -159,7 +159,7 @@ TEST_F(RefViewModelControllerTest, initThenInsertProperty)
 
 //! Insert three property items in a model, inserted after controller was setup.
 
-TEST_F(RefViewModelControllerTest, initThenInsertProperties)
+TEST_F(ViewModelControllerTest, initThenInsertProperties)
 {
     SessionModel session_model;
 
@@ -186,7 +186,7 @@ TEST_F(RefViewModelControllerTest, initThenInsertProperties)
 
 //! Inserting property items in reversed order.
 
-TEST_F(RefViewModelControllerTest, insertInBetween)
+TEST_F(ViewModelControllerTest, insertInBetween)
 {
     SessionModel session_model;
 
@@ -212,7 +212,7 @@ TEST_F(RefViewModelControllerTest, insertInBetween)
 
 //! Insert two property items in a model, inserted after controller was setup.
 
-TEST_F(RefViewModelControllerTest, initThenInsertVector)
+TEST_F(ViewModelControllerTest, initThenInsertVector)
 {
     SessionModel session_model;
 
@@ -234,7 +234,7 @@ TEST_F(RefViewModelControllerTest, initThenInsertVector)
 
 //! Insert child to parent
 
-TEST_F(RefViewModelControllerTest, insertChildToParent)
+TEST_F(ViewModelControllerTest, insertChildToParent)
 {
     SessionModel session_model;
 
@@ -261,7 +261,7 @@ TEST_F(RefViewModelControllerTest, insertChildToParent)
 
 //! Removing single top level item.
 
-TEST_F(RefViewModelControllerTest, removeSingleTopItem)
+TEST_F(ViewModelControllerTest, removeSingleTopItem)
 {
     // constructing the model with single item
     SessionModel session_model;
@@ -294,7 +294,7 @@ TEST_F(RefViewModelControllerTest, removeSingleTopItem)
 
 //! Remove one of two top level items.
 
-TEST_F(RefViewModelControllerTest, removeOneOfTopItems)
+TEST_F(ViewModelControllerTest, removeOneOfTopItems)
 {
     // constructing model with two items
     SessionModel session_model;
@@ -332,7 +332,7 @@ TEST_F(RefViewModelControllerTest, removeOneOfTopItems)
 
 //! Setting top level item as ROOT item
 
-TEST_F(RefViewModelControllerTest, setRootItem)
+TEST_F(ViewModelControllerTest, setRootItem)
 {
     SessionModel session_model;
 
@@ -351,7 +351,7 @@ TEST_F(RefViewModelControllerTest, setRootItem)
 
 //! Setting top level item as ROOT item (case parent and children).
 
-TEST_F(RefViewModelControllerTest, setCompoundAsRootItem)
+TEST_F(ViewModelControllerTest, setCompoundAsRootItem)
 {
     SessionModel session_model;
 
@@ -377,7 +377,7 @@ TEST_F(RefViewModelControllerTest, setCompoundAsRootItem)
 
 //! On model destroyed.
 
-TEST_F(RefViewModelControllerTest, onModelReset)
+TEST_F(ViewModelControllerTest, onModelReset)
 {
     SessionModel session_model;
     session_model.insertItem<SessionItem>();
@@ -401,7 +401,7 @@ TEST_F(RefViewModelControllerTest, onModelReset)
 
 //! On model destroyed.
 
-TEST_F(RefViewModelControllerTest, onModelDestroyed)
+TEST_F(ViewModelControllerTest, onModelDestroyed)
 {
     auto session_model = std::make_unique<SessionModel>();
     session_model->insertItem<SessionItem>();
@@ -418,7 +418,7 @@ TEST_F(RefViewModelControllerTest, onModelDestroyed)
     EXPECT_EQ(view_model.rootItem()->item(), nullptr);
 }
 
-TEST_F(RefViewModelControllerTest, findViews)
+TEST_F(ViewModelControllerTest, findViews)
 {
     SessionModel session_model;
     ViewModelBase view_model;

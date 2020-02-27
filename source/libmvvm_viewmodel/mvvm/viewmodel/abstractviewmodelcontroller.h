@@ -10,14 +10,14 @@
 #ifndef MVVM_VIEWMODEL_ABSTRACTVIEWMODELCONTROLLER_H
 #define MVVM_VIEWMODEL_ABSTRACTVIEWMODELCONTROLLER_H
 
-#include <mvvm/viewmodel/refviewmodelcontroller.h>
+#include <mvvm/viewmodel/viewmodelcontroller.h>
 
 namespace ModelView
 {
-class CORE_EXPORT AbstractViewModelController : public RefViewModelController
+class CORE_EXPORT AbstractViewModelController : public ViewModelController
 {
 public:
-    AbstractViewModelController(SessionModel* session_model, ViewModelBase* view_model) : RefViewModelController(session_model, view_model){}
+    AbstractViewModelController(SessionModel* session_model, ViewModelBase* view_model) : ViewModelController(session_model, view_model){}
 
 };
 }

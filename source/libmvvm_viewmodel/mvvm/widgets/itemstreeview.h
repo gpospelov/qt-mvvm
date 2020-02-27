@@ -35,7 +35,7 @@ class CORE_EXPORT ItemsTreeView : public QWidget
 
 public:
     explicit ItemsTreeView(QWidget* parent = nullptr);
-    ~ItemsTreeView();
+    ~ItemsTreeView() override;
 
     QTreeView* treeView();
 
