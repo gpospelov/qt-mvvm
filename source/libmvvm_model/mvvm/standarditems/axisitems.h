@@ -33,7 +33,7 @@ public:
     static inline const std::string P_MIN = "P_MIN";
     static inline const std::string P_MAX = "P_MAX";
 
-    explicit BasicAxisItem(std::string model_type);
+    explicit BasicAxisItem(const std::string& model_type);
 
 protected:
     void register_min_max();
@@ -52,7 +52,7 @@ class CORE_EXPORT ViewportAxisItem : public BasicAxisItem
 public:
     static inline const std::string P_TITLE = "P_TITLE";
     static inline const std::string P_IS_LOG = "P_IS_LOG";
-    explicit ViewportAxisItem(std::string model_type = Constants::ViewportAxisItemType);
+    explicit ViewportAxisItem(const std::string& model_type = Constants::ViewportAxisItemType);
 
     std::pair<double, double> range() const;
 
@@ -77,7 +77,7 @@ class CORE_EXPORT BinnedAxisItem : public BasicAxisItem
 public:
     static inline const std::string P_NBINS = "P_NBINS";
 
-    explicit BinnedAxisItem(std::string model_type);
+    explicit BinnedAxisItem(const std::string& model_type);
 
     std::pair<double, double> range() const;
 

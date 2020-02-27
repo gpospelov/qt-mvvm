@@ -23,7 +23,7 @@ const double failback_max = 1.0;
 //! Find min and max values along all data points in all graphs.
 //! Function 'func' is used to run either through binCenters or binValues.
 
-template <typename T> auto get_min_max(std::vector<GraphItem*> graphs, T func)
+template <typename T> auto get_min_max(const std::vector<GraphItem*>& graphs, T func)
 {
     std::vector<double> values;
     for (auto graph : graphs) {

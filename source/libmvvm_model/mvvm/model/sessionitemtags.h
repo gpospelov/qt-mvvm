@@ -37,7 +37,7 @@ public:
 
     // tag
 
-    void registerTag(TagInfo tagInfo, bool set_as_default = false);
+    void registerTag(const ModelView::TagInfo& tagInfo, bool set_as_default = false);
 
     bool isTag(const std::string& name) const;
 

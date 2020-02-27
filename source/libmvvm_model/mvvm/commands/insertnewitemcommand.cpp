@@ -25,13 +25,13 @@ struct InsertNewItemCommand::InsertNewItemCommandImpl {
     result_t result;
     Path item_path;
     InsertNewItemCommandImpl(item_factory_func_t func, TagRow tagrow)
-        : factory_func(func), tagrow(std::move(tagrow)), result(nullptr)
+        : factory_func(std::move(func)), tagrow(std::move(tagrow)), result(nullptr)
     {
     }
 };
 
 InsertNewItemCommand::InsertNewItemCommand(item_factory_func_t func, SessionItem* parent,
-                                           TagRow tagrow)
+                                           const TagRow& tagrow)
     : AbstractItemCommand(parent), p_impl(std::make_unique<InsertNewItemCommandImpl>(func, tagrow))
 {
     p_impl->item_path = pathFromItem(parent);
