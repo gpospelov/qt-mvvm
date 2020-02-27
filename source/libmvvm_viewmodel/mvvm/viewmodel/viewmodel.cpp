@@ -9,8 +9,8 @@
 
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
-#include <mvvm/viewmodel/viewmodel.h>
 #include <mvvm/viewmodel/standardviewitems.h>
+#include <mvvm/viewmodel/viewmodel.h>
 #include <mvvm/viewmodel/viewmodelcontroller.h>
 
 using namespace ModelView;
@@ -19,6 +19,16 @@ ViewModel::ViewModel(std::unique_ptr<ViewModelController> controller, QObject* p
     : ViewModelBase(parent), m_controller(std::move(controller))
 {
     m_controller->setRootSessionItem(sessionModel()->rootItem());
+}
+
+QVariant ViewModel::headerData(int section, Qt::Orientation orientation, int role) const
+{
+    if (orientation == Qt::Horizontal && role == Qt::DisplayRole) {
+        auto data = m_controller->horizontalHeaderLabels();
+        if (section < data.size())
+            return data.at(section);
+    }
+    return QVariant();
 }
 
 SessionModel* ViewModel::sessionModel() const

@@ -28,6 +28,9 @@ public:
     ViewModel(std::unique_ptr<ViewModelController> controller, QObject* parent = nullptr);
     ~ViewModel() override;
 
+    QVariant headerData(int section, Qt::Orientation orientation,
+                        int role = Qt::DisplayRole) const override;
+
     SessionModel* sessionModel() const;
 
     SessionItem* rootSessionItem();

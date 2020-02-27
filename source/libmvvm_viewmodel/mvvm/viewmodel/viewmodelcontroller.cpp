@@ -14,10 +14,10 @@
 #include <mvvm/signals/modelmapper.h>
 #include <mvvm/utils/containerutils.h>
 #include <mvvm/viewmodel/childrenstrategyinterface.h>
-#include <mvvm/viewmodel/standardviewitems.h>
-#include <mvvm/viewmodel/viewmodelcontroller.h>
 #include <mvvm/viewmodel/rowstrategyinterface.h>
+#include <mvvm/viewmodel/standardviewitems.h>
 #include <mvvm/viewmodel/viewmodelbase.h>
+#include <mvvm/viewmodel/viewmodelcontroller.h>
 #include <mvvm/viewmodel/viewmodelutils.h>
 
 using namespace ModelView;
@@ -173,8 +173,7 @@ struct ViewModelController::RefViewModelControllerImpl {
         session_model->mapper()->setOnModelDestroyed(on_model_destroyed, controller);
 
         auto on_model_reset = [this](SessionModel*) {
-            view_model->setRootViewItem(
-                std::make_unique<RootViewItem>(session_model->rootItem()));
+            view_model->setRootViewItem(std::make_unique<RootViewItem>(session_model->rootItem()));
         };
         session_model->mapper()->setOnModelReset(on_model_reset, controller);
     }
@@ -240,6 +239,11 @@ SessionItem* ViewModelController::rootSessionItem() const
 std::vector<ViewItem*> ViewModelController::findViews(const SessionItem* item) const
 {
     return p_impl->findViews(item);
+}
+
+QStringList ViewModelController::horizontalHeaderLabels() const
+{
+    return p_impl->row_strategy->horizontalHeaderLabels();
 }
 
 void ViewModelController::onDataChange(SessionItem* item, int role)

@@ -14,6 +14,7 @@
 #include <mvvm/core/export.h>
 #include <mvvm/model/tagrow.h>
 #include <vector>
+#include <QStringList>
 
 class QStandardItem;
 
@@ -49,6 +50,8 @@ public:
     SessionItem* rootSessionItem() const;
 
     std::vector<ViewItem*> findViews(const ModelView::SessionItem* item) const;
+
+    QStringList horizontalHeaderLabels() const;
 
 protected:
     virtual void onDataChange(SessionItem* item, int role);
