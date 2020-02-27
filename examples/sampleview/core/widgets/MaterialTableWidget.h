@@ -10,7 +10,6 @@
 #ifndef MATERIALTABLEWIDGET_H
 #define MATERIALTABLEWIDGET_H
 
-#include "MaterialViewController.h"
 #include <QWidget>
 #include <memory>
 
@@ -30,8 +29,6 @@ public:
     ~MaterialTableWidget() override;
 
 private:
-    MaterialViewController m_controller;
-    std::unique_ptr<QStyledItemDelegate> m_delegate;
     QTableView* m_material_table;
 };
 
