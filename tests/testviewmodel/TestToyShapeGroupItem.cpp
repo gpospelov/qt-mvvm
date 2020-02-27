@@ -13,8 +13,7 @@
 #include <mvvm/model/comboproperty.h>
 #include <mvvm/viewmodel/defaultviewmodel.h>
 #include <mvvm/viewmodel/propertyviewmodel.h>
-#include <mvvm/viewmodel/viewdataitem.h>
-#include <mvvm/viewmodel/viewitems.h>
+#include <mvvm/viewmodel/refviewitems.h>
 
 using namespace ModelView;
 
@@ -123,11 +122,11 @@ TEST_F(ToyShapeGroupItemTest, viewItemsFromShapeGroup)
 
     auto groupItem = model.insertItem<ToyItems::ShapeGroupItem>();
 
-    ViewLabelItem labelItem(groupItem);
+    RefViewLabelItem labelItem(groupItem);
     EXPECT_EQ(labelItem.data(Qt::DisplayRole).toString().toStdString(),
               ToyItems::Constants::ShapeGroupItemType);
 
-    ViewDataItem dataItem(groupItem);
+    RefViewDataItem dataItem(groupItem);
     EXPECT_EQ(dataItem.data(Qt::DisplayRole).value<ComboProperty>().currentIndex(), 1);
 }
 
@@ -214,12 +213,12 @@ TEST_F(ToyShapeGroupItemTest, inPropertyViewModelContext)
         QModelIndex radiusLabelIndex = viewModel.index(0, 0, groupIndex);
         QModelIndex radiusValueIndex = viewModel.index(0, 1, groupIndex);
         auto radiusLabelItem =
-            dynamic_cast<ViewLabelItem*>(viewModel.itemFromIndex(radiusLabelIndex));
+            dynamic_cast<RefViewLabelItem*>(viewModel.itemFromIndex(radiusLabelIndex));
         ASSERT_TRUE(radiusLabelItem != nullptr);
         auto radiusPropertyItem = groupItem->currentItem()->getItem(ToyItems::SphereItem::P_RADIUS);
         EXPECT_EQ(radiusLabelItem->item(), radiusPropertyItem);
         auto radiusValueItem =
-            dynamic_cast<ViewDataItem*>(viewModel.itemFromIndex(radiusValueIndex));
+            dynamic_cast<RefViewDataItem*>(viewModel.itemFromIndex(radiusValueIndex));
         ASSERT_TRUE(radiusValueItem != nullptr);
         EXPECT_EQ(radiusValueItem->item(), radiusPropertyItem);
     }
@@ -242,13 +241,13 @@ TEST_F(ToyShapeGroupItemTest, inPropertyViewModelContext)
         QModelIndex radiusLabelIndex = viewModel.index(0, 0, groupIndex);
         QModelIndex radiusValueIndex = viewModel.index(0, 1, groupIndex);
         auto radiusLabelItem =
-            dynamic_cast<ViewLabelItem*>(viewModel.itemFromIndex(radiusLabelIndex));
+            dynamic_cast<RefViewLabelItem*>(viewModel.itemFromIndex(radiusLabelIndex));
         ASSERT_TRUE(radiusLabelItem != nullptr);
         auto radiusPropertyItem =
             groupItem->currentItem()->getItem(ToyItems::CylinderItem::P_RADIUS);
         EXPECT_EQ(radiusLabelItem->item(), radiusPropertyItem);
         auto radiusValueItem =
-            dynamic_cast<ViewDataItem*>(viewModel.itemFromIndex(radiusValueIndex));
+            dynamic_cast<RefViewDataItem*>(viewModel.itemFromIndex(radiusValueIndex));
         ASSERT_TRUE(radiusValueItem != nullptr);
         EXPECT_EQ(radiusValueItem->item(), radiusPropertyItem);
     }
@@ -258,13 +257,13 @@ TEST_F(ToyShapeGroupItemTest, inPropertyViewModelContext)
         QModelIndex heightLabelIndex = viewModel.index(1, 0, groupIndex);
         QModelIndex heightValueIndex = viewModel.index(1, 1, groupIndex);
         auto heightLabelItem =
-            dynamic_cast<ViewLabelItem*>(viewModel.itemFromIndex(heightLabelIndex));
+            dynamic_cast<RefViewLabelItem*>(viewModel.itemFromIndex(heightLabelIndex));
         ASSERT_TRUE(heightLabelItem != nullptr);
         auto heightPropertyItem =
             groupItem->currentItem()->getItem(ToyItems::CylinderItem::P_HEIGHT);
         EXPECT_EQ(heightLabelItem->item(), heightPropertyItem);
         auto heightValueItem =
-            dynamic_cast<ViewDataItem*>(viewModel.itemFromIndex(heightValueIndex));
+            dynamic_cast<RefViewDataItem*>(viewModel.itemFromIndex(heightValueIndex));
         ASSERT_TRUE(heightPropertyItem != nullptr);
         EXPECT_EQ(heightValueItem->item(), heightPropertyItem);
     }

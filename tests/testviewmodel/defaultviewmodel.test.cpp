@@ -15,8 +15,7 @@
 #include <mvvm/model/taginfo.h>
 #include <mvvm/standarditems/vectoritem.h>
 #include <mvvm/viewmodel/defaultviewmodel.h>
-#include <mvvm/viewmodel/viewdataitem.h>
-#include <mvvm/viewmodel/viewitems.h>
+#include <mvvm/viewmodel/refviewitems.h>
 #include <mvvm/viewmodel/viewmodelutils.h>
 
 using namespace ModelView;
@@ -55,11 +54,11 @@ TEST_F(DefaultViewModelTest, fromPropertyItem)
     QModelIndex dataIndex = viewModel.index(0, 1);
 
     // it should be ViewLabelItem looking at our PropertyItem item
-    auto labelItem = dynamic_cast<ViewLabelItem*>(viewModel.itemFromIndex(labelIndex));
+    auto labelItem = dynamic_cast<RefViewLabelItem*>(viewModel.itemFromIndex(labelIndex));
     ASSERT_TRUE(labelItem != nullptr);
     EXPECT_EQ(labelItem->item(), propertyItem);
 
-    auto dataItem = dynamic_cast<ViewDataItem*>(viewModel.itemFromIndex(dataIndex));
+    auto dataItem = dynamic_cast<RefViewDataItem*>(viewModel.itemFromIndex(dataIndex));
     ASSERT_TRUE(dataItem != nullptr);
     EXPECT_EQ(dataItem->item(), propertyItem);
 }
@@ -82,7 +81,7 @@ TEST_F(DefaultViewModelTest, initThenInsert)
     QModelIndex dataIndex = viewModel.index(0, 1);
 
     // it should be ViewLabelItem looking at our PropertyItem item
-    auto labelItem = dynamic_cast<ViewLabelItem*>(viewModel.itemFromIndex(labelIndex));
+    auto labelItem = dynamic_cast<RefViewLabelItem*>(viewModel.itemFromIndex(labelIndex));
     ASSERT_TRUE(labelItem != nullptr);
     EXPECT_EQ(labelItem->item(), propertyItem);
 
@@ -301,16 +300,16 @@ TEST_F(DefaultViewModelTest, propertyItemAppearance)
     // In our case QStandardItem::isEnabled should be always true.
 
     // ViewLabel and ViewDataItem of item1
-    EXPECT_FALSE(viewModel.flags(viewModel.index(0,0)) & Qt::ItemIsEditable);
-    EXPECT_TRUE(viewModel.flags(viewModel.index(0,1)) & Qt::ItemIsEditable);
+    EXPECT_FALSE(viewModel.flags(viewModel.index(0, 0)) & Qt::ItemIsEditable);
+    EXPECT_TRUE(viewModel.flags(viewModel.index(0, 1)) & Qt::ItemIsEditable);
 
     // ViewLabel and ViewDataItem of item2
-    EXPECT_FALSE(viewModel.flags(viewModel.index(1,0)) & Qt::ItemIsEditable);
-    EXPECT_FALSE(viewModel.flags(viewModel.index(1,1)) & Qt::ItemIsEditable);
+    EXPECT_FALSE(viewModel.flags(viewModel.index(1, 0)) & Qt::ItemIsEditable);
+    EXPECT_FALSE(viewModel.flags(viewModel.index(1, 1)) & Qt::ItemIsEditable);
 
     // ViewLabel and ViewDataItem of item2
-    EXPECT_FALSE(viewModel.flags(viewModel.index(2,0)) & Qt::ItemIsEditable);
-    EXPECT_FALSE(viewModel.flags(viewModel.index(2,1)) & Qt::ItemIsEditable);
+    EXPECT_FALSE(viewModel.flags(viewModel.index(2, 0)) & Qt::ItemIsEditable);
+    EXPECT_FALSE(viewModel.flags(viewModel.index(2, 1)) & Qt::ItemIsEditable);
 }
 
 //! Signals in ViewModel when property item changes its appearance.
@@ -433,4 +432,48 @@ TEST_F(DefaultViewModelTest, onModelDestroyed)
     model.reset();
     EXPECT_EQ(viewModel.rowCount(), 0);
     EXPECT_EQ(viewModel.columnCount(), 0);
+}
+
+TEST_F(DefaultViewModelTest, fromVector)
+{
+    SessionModel model;
+    auto vectorItem = model.insertItem<VectorItem>();
+
+    // constructing viewModel from sample model
+    DefaultViewModel viewModel(&model);
+
+    // root item should have one child, item looking at our vectorItem
+    EXPECT_EQ(viewModel.rowCount(), 1);
+    EXPECT_EQ(viewModel.columnCount(), 2);
+
+    // accessing to viewItem representing layerItem
+    QModelIndex vectorIndex = viewModel.index(0, 0);
+
+    // it has three rows and two columns, corresponding to our P_X, P_Y, P_Z
+    EXPECT_EQ(viewModel.rowCount(vectorIndex), 3);
+    EXPECT_EQ(viewModel.columnCount(vectorIndex), 2);
+
+    // ViewLabelItem and ViewDataItem correspondint to P_X
+    auto pxLabel = dynamic_cast<RefViewLabelItem*>(
+        viewModel.itemFromIndex(viewModel.index(0, 0, vectorIndex)));
+    auto pxData =
+        dynamic_cast<RefViewDataItem*>(viewModel.itemFromIndex(viewModel.index(0, 1, vectorIndex)));
+    EXPECT_EQ(pxLabel->item(), vectorItem->getItem(VectorItem::P_X));
+    EXPECT_EQ(pxData->item(), vectorItem->getItem(VectorItem::P_X));
+
+    // ViewLabelItem and ViewDataItem correspondint to P_Y
+    pxLabel = dynamic_cast<RefViewLabelItem*>(
+        viewModel.itemFromIndex(viewModel.index(1, 0, vectorIndex)));
+    pxData =
+        dynamic_cast<RefViewDataItem*>(viewModel.itemFromIndex(viewModel.index(1, 1, vectorIndex)));
+    EXPECT_EQ(pxLabel->item(), vectorItem->getItem(VectorItem::P_Y));
+    EXPECT_EQ(pxData->item(), vectorItem->getItem(VectorItem::P_Y));
+
+    // ViewLabelItem and ViewDataItem correspondint to P_Z
+    pxLabel = dynamic_cast<RefViewLabelItem*>(
+        viewModel.itemFromIndex(viewModel.index(2, 0, vectorIndex)));
+    pxData =
+        dynamic_cast<RefViewDataItem*>(viewModel.itemFromIndex(viewModel.index(2, 1, vectorIndex)));
+    EXPECT_EQ(pxLabel->item(), vectorItem->getItem(VectorItem::P_Z));
+    EXPECT_EQ(pxData->item(), vectorItem->getItem(VectorItem::P_Z));
 }

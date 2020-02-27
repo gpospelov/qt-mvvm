@@ -15,7 +15,6 @@
 #include <mvvm/viewmodel/childrenstrategyinterface.h>
 #include <mvvm/viewmodel/rowstrategyinterface.h>
 #include <mvvm/viewmodel/standardviewmodelcontrollers.h>
-#include <mvvm/viewmodel/viewdataitem.h>
 #include <mvvm/viewmodel/refviewitems.h>
 #include <QStandardItem>
 

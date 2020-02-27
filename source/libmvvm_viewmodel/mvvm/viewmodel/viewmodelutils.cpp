@@ -14,7 +14,6 @@
 #include <mvvm/model/mvvm_types.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/viewmodel/viewmodel.h>
-#include <mvvm/viewmodel/viewitem.h>
 #include <mvvm/viewmodel/viewmodelutils.h>
 #include <set>
 
@@ -37,23 +36,6 @@ void Utils::iterate_model(const QAbstractItemModel* model, const QModelIndex& pa
             iterate_model(model, index, fun);
         }
     }
-}
-
-std::vector<ViewItem*> Utils::findViews(const QStandardItemModel* model,
-                                        const ModelView::SessionItem* item,
-                                        const QModelIndex& parent)
-{
-    std::vector<ViewItem*> result;
-    auto on_item = [&](const QModelIndex& index) {
-        auto standard_item = model->itemFromIndex(index);
-        if (auto view = dynamic_cast<ViewItem*>(standard_item)) {
-            if (view->item() == item)
-                result.push_back(view);
-        }
-    };
-    iterate_model(model, parent, on_item);
-
-    return result;
 }
 
 //! Translates SessionItem's data role to vector of Qt roles.

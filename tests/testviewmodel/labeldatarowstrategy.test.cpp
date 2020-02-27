@@ -11,9 +11,7 @@
 #include "test_utils.h"
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/viewmodel/labeldatarowstrategy.h>
-#include <mvvm/viewmodel/viewdataitem.h>
-#include <mvvm/viewmodel/viewemptyitem.h>
-#include <mvvm/viewmodel/viewlabelitem.h>
+#include <mvvm/viewmodel/refviewitems.h>
 
 namespace
 {

@@ -11,7 +11,6 @@
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/viewmodel/propertiesrowstrategy.h>
 #include <mvvm/viewmodel/refviewitems.h>
-#include <mvvm/viewmodel/viewitems.h>
 
 using namespace ModelView;
 

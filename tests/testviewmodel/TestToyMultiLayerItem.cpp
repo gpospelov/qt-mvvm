@@ -11,7 +11,7 @@
 #include "toy_includes.h"
 #include <QSignalSpy>
 #include <mvvm/viewmodel/defaultviewmodel.h>
-#include <mvvm/viewmodel/viewitems.h>
+#include <mvvm/viewmodel/refviewitems.h>
 #include <mvvm/viewmodel/viewmodelutils.h>
 
 using namespace ModelView;
@@ -93,7 +93,7 @@ TEST_F(ToyMultilayerItemTest, viewItemsForMultiLayer)
 
     auto multiLayer = model.insertItem<ToyItems::MultiLayerItem>();
 
-    ViewLabelItem labelItem(multiLayer);
+    RefViewLabelItem labelItem(multiLayer);
     EXPECT_EQ(labelItem.data(Qt::DisplayRole).toString().toStdString(),
               ToyItems::Constants::MultiLayerItemType);
 }

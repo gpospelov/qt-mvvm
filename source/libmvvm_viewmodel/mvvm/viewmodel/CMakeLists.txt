@@ -34,18 +34,6 @@ target_sources(mvvm_viewmodel PRIVATE
     standardviewmodels.h
     topitemsviewmodel.cpp
     topitemsviewmodel.h
-    viewdataitem.cpp
-    viewdataitem.h
-    viewemptyitem.cpp
-    viewemptyitem.h
-    viewitem.cpp
-    viewitem.h
-    viewitems.h
-    viewitemtypes.h
-    viewlabelitem.cpp
-    viewlabelitem.h
-    viewmodelbuilder.cpp
-    viewmodelbuilder.h
     viewmodeldelegate.cpp
     viewmodeldelegate.h
     viewmodelutils.cpp

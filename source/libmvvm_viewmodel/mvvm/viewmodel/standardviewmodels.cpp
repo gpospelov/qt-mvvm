@@ -11,17 +11,13 @@
 #include <mvvm/viewmodel/propertyflatviewmodel.h>
 #include <mvvm/viewmodel/propertyviewmodel.h>
 #include <mvvm/viewmodel/propertytableviewmodel.h>
-#include <mvvm/viewmodel/standardviewmodelcontrollers.h>
 #include <mvvm/viewmodel/standardviewmodels.h>
 #include <mvvm/viewmodel/topitemsviewmodel.h>
-#include <mvvm/viewmodel/viewmodelbuilder.h>
 
 using namespace ModelView;
 
 std::unique_ptr<ViewModel> Utils::CreateDefaultViewModel(ModelView::SessionModel* model)
 {
-//    auto controller = std::make_unique<DefaultViewModelController>();
-//    return ViewModelBuilder().setSessionModel(model).setController(std::move(controller)).build();
     return std::make_unique<DefaultViewModel>(model);
 }
 

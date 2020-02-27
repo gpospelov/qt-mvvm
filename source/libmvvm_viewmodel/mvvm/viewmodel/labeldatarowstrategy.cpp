@@ -9,7 +9,6 @@
 
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/viewmodel/labeldatarowstrategy.h>
-#include <mvvm/viewmodel/viewitems.h>
 #include <mvvm/viewmodel/refviewitems.h>
 
 using namespace ModelView;

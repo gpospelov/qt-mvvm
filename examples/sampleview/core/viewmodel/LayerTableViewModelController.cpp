@@ -13,7 +13,6 @@
 #include <mvvm/viewmodel/refviewitems.h>
 #include <mvvm/viewmodel/rowstrategyinterface.h>
 #include <mvvm/viewmodel/standardchildrenstrategies.h>
-#include <mvvm/viewmodel/viewitems.h>
 #include <mvvm/viewmodel/viewmodel.h>
 
 using namespace ModelView;
