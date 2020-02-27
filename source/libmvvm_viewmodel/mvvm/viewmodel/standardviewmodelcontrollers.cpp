@@ -19,7 +19,7 @@ using namespace ModelView;
 // ----------------------------------------------------------------------------
 
 DefaultViewModelController::DefaultViewModelController(SessionModel* session_model,
-                                                       RefViewModel* view_model)
+                                                       ViewModelBase* view_model)
     : AbstractViewModelController(session_model, view_model)
 {
     setRowStrategy(std::make_unique<LabelDataRowStrategy>());
@@ -29,7 +29,7 @@ DefaultViewModelController::DefaultViewModelController(SessionModel* session_mod
 // ----------------------------------------------------------------------------
 
 TopItemsViewModelController::TopItemsViewModelController(SessionModel* session_model,
-                                                         RefViewModel* view_model)
+                                                         ViewModelBase* view_model)
     : AbstractViewModelController(session_model, view_model)
 {
     setRowStrategy(std::make_unique<LabelDataRowStrategy>());
@@ -39,7 +39,7 @@ TopItemsViewModelController::TopItemsViewModelController(SessionModel* session_m
 // ----------------------------------------------------------------------------
 
 PropertyViewModelController::PropertyViewModelController(SessionModel* session_model,
-                                                         RefViewModel* view_model)
+                                                         ViewModelBase* view_model)
     : AbstractViewModelController(session_model, view_model)
 {
     setRowStrategy(std::make_unique<LabelDataRowStrategy>());
@@ -58,7 +58,7 @@ void PropertyViewModelController::onDataChange(SessionItem* item, int role)
 // ----------------------------------------------------------------------------
 
 PropertyTableViewModelController::PropertyTableViewModelController(
-    SessionModel* session_model, RefViewModel* view_model, const std::vector<std::string>& labels)
+    SessionModel* session_model, ViewModelBase* view_model, const std::vector<std::string>& labels)
     : AbstractViewModelController(session_model, view_model)
 {
     setRowStrategy(std::make_unique<PropertiesRowStrategy>(labels));
@@ -68,7 +68,7 @@ PropertyTableViewModelController::PropertyTableViewModelController(
 // ----------------------------------------------------------------------------
 
 PropertyFlatViewModelController::PropertyFlatViewModelController(SessionModel* session_model,
-                                                                 RefViewModel* view_model)
+                                                                 ViewModelBase* view_model)
     : AbstractViewModelController(session_model, view_model)
 {
     setRowStrategy(std::make_unique<LabelDataRowStrategy>());

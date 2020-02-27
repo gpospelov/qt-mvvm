@@ -18,7 +18,7 @@ using namespace ModelView;
 
 RefControlledViewModel::RefControlledViewModel(std::unique_ptr<RefViewModelController> controller,
                                                QObject* parent)
-    : RefViewModel(parent), m_controller(std::move(controller))
+    : ViewModelBase(parent), m_controller(std::move(controller))
 {
     m_controller->setRootSessionItem(sessionModel()->rootItem());
 }

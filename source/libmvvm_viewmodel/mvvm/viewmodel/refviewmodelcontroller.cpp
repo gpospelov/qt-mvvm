@@ -15,7 +15,7 @@
 #include <mvvm/utils/containerutils.h>
 #include <mvvm/viewmodel/childrenstrategyinterface.h>
 #include <mvvm/viewmodel/refviewitems.h>
-#include <mvvm/viewmodel/refviewmodel.h>
+#include <mvvm/viewmodel/viewmodelbase.h>
 #include <mvvm/viewmodel/refviewmodelcontroller.h>
 #include <mvvm/viewmodel/rowstrategyinterface.h>
 #include <mvvm/viewmodel/viewmodelutils.h>
@@ -71,13 +71,13 @@ bool isValidItemRole(const RefViewItem* view, int item_role)
 struct RefViewModelController::RefViewModelControllerImpl {
     RefViewModelController* controller;
     SessionModel* session_model{nullptr};
-    RefViewModel* view_model{nullptr};
+    ViewModelBase* view_model{nullptr};
     std::unique_ptr<ChildrenStrategyInterface> children_strategy;
     std::unique_ptr<RowStrategyInterface> row_strategy;
     std::map<SessionItem*, RefViewItem*> item_to_view; //! correspondence of item and its view
 
     RefViewModelControllerImpl(RefViewModelController* controller, SessionModel* session_model,
-                               RefViewModel* view_model)
+                               ViewModelBase* view_model)
         : controller(controller), view_model(view_model)
     {
         setSessionModel(session_model);
@@ -283,7 +283,7 @@ struct RefViewModelController::RefViewModelControllerImpl {
 };
 
 RefViewModelController::RefViewModelController(SessionModel* session_model,
-                                               RefViewModel* view_model)
+                                               ViewModelBase* view_model)
     : p_impl(std::make_unique<RefViewModelControllerImpl>(this, session_model, view_model))
 {
 }

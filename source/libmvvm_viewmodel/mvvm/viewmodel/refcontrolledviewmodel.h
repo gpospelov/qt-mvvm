@@ -12,7 +12,7 @@
 
 #include <memory>
 #include <mvvm/core/export.h>
-#include <mvvm/viewmodel/refviewmodel.h>
+#include <mvvm/viewmodel/viewmodelbase.h>
 
 namespace ModelView
 {
@@ -24,7 +24,7 @@ class RefViewModelController;
 
 //!
 
-class CORE_EXPORT RefControlledViewModel : public RefViewModel
+class CORE_EXPORT RefControlledViewModel : public ViewModelBase
 {
 public:
     RefControlledViewModel(std::unique_ptr<RefViewModelController> controller,

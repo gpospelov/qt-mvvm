@@ -33,7 +33,7 @@ The layout corresponds to original SessionModel, generates standard label/value 
 class CORE_EXPORT DefaultViewModelController : public AbstractViewModelController
 {
 public:
-    explicit DefaultViewModelController(SessionModel* session_model, RefViewModel* view_model);
+    explicit DefaultViewModelController(SessionModel* session_model, ViewModelBase* view_model);
 };
 
 /*!
@@ -46,7 +46,7 @@ Shows only top level items, property items, group items are hidden.
 class CORE_EXPORT TopItemsViewModelController : public AbstractViewModelController
 {
 public:
-    explicit TopItemsViewModelController(SessionModel* session_model, RefViewModel* view_model);
+    explicit TopItemsViewModelController(SessionModel* session_model, ViewModelBase* view_model);
 };
 
 /*!
@@ -59,7 +59,7 @@ Shows property items, hides top level items, hides inactive items of GroupProper
 class CORE_EXPORT PropertyViewModelController : public AbstractViewModelController
 {
 public:
-    explicit PropertyViewModelController(SessionModel* session_model, RefViewModel* view_model);
+    explicit PropertyViewModelController(SessionModel* session_model, ViewModelBase* view_model);
 
 protected:
     void onDataChange(SessionItem* item, int role) override;
@@ -76,7 +76,7 @@ FIXME What to do with group property?
 class CORE_EXPORT PropertyTableViewModelController : public AbstractViewModelController
 {
 public:
-    PropertyTableViewModelController(SessionModel* session_model, RefViewModel* view_model,
+    PropertyTableViewModelController(SessionModel* session_model, ViewModelBase* view_model,
                                      const std::vector<std::string>& labels = {});
 };
 
@@ -91,7 +91,7 @@ moves subproperties of group item under parent of group item.
 class CORE_EXPORT PropertyFlatViewModelController : public AbstractViewModelController
 {
 public:
-    explicit PropertyFlatViewModelController(SessionModel* session_model, RefViewModel* view_model);
+    explicit PropertyFlatViewModelController(SessionModel* session_model, ViewModelBase* view_model);
 
 protected:
     void onDataChange(SessionItem* item, int role) override;

@@ -22,7 +22,7 @@ namespace ModelView
 
 class SessionModel;
 class SessionItem;
-class RefViewModel;
+class ViewModelBase;
 class RefViewItem;
 class ChildrenStrategyInterface;
 class RowStrategyInterface;
@@ -35,7 +35,7 @@ class RowStrategyInterface;
 class CORE_EXPORT RefViewModelController
 {
 public:
-    RefViewModelController(SessionModel* session_model, RefViewModel* view_model);
+    RefViewModelController(SessionModel* session_model, ViewModelBase* view_model);
     virtual ~RefViewModelController();
 
     void setChildrenStrategy(std::unique_ptr<ChildrenStrategyInterface> children_strategy);

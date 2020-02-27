@@ -122,10 +122,10 @@ TEST_F(LayerViewModelTest, inserMultitLayer)
     EXPECT_EQ(Utils::ItemsFromIndex(selection), expected);
 
     // adding layer to the multilayer
-//    QModelIndex mlIndex = viewmodel.index(0, 0);
-//    model.insertItem<LayerItem>(multilayer);
-//    EXPECT_EQ(viewmodel.rowCount(mlIndex), 1);
-//    EXPECT_EQ(viewmodel.columnCount(mlIndex), 4);
+    QModelIndex mlIndex = viewmodel.index(0, 0);
+    model.insertItem<LayerItem>(multilayer);
+    EXPECT_EQ(viewmodel.rowCount(mlIndex), 1);
+    EXPECT_EQ(viewmodel.columnCount(mlIndex), 4);
 }
 
 //! Layout of LayerViewModel for two layer system.

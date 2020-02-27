@@ -19,8 +19,8 @@ target_sources(mvvm_viewmodel PRIVATE
     propertyflatviewmodel.h
     propertyviewmodel.cpp
     propertyviewmodel.h
-    refviewmodel.cpp
-    refviewmodel.h
+    viewmodelbase.cpp
+    viewmodelbase.h
     refviewitem.cpp
     refviewitem.h
     refviewitems.cpp

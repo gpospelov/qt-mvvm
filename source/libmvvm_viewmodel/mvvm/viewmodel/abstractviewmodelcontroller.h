@@ -17,7 +17,7 @@ namespace ModelView
 class CORE_EXPORT AbstractViewModelController : public RefViewModelController
 {
 public:
-    AbstractViewModelController(SessionModel* session_model, RefViewModel* view_model) : RefViewModelController(session_model, view_model){}
+    AbstractViewModelController(SessionModel* session_model, ViewModelBase* view_model) : RefViewModelController(session_model, view_model){}
 
 };
 }
