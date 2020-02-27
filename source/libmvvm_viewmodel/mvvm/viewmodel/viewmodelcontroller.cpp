@@ -75,7 +75,6 @@ struct ViewModelController::RefViewModelControllerImpl {
         item_to_view.clear();
         item_to_view[controller->rootSessionItem()] = view_model->rootItem();
         iterate(controller->rootSessionItem(), view_model->rootItem());
-        // update labels FIXME
     }
 
     void iterate(const SessionItem* item, ViewItem* parent)

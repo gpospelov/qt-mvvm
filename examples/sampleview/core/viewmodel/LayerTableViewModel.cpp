@@ -132,7 +132,6 @@ int LayerTableViewModel::findInsertionRow(SessionItem* to_drop, SessionItem* new
 
 namespace
 {
-// TODO: move to item or model utils
 SessionItem* findParent(SessionItem* item, QList<std::string> models)
 {
     while (item) {

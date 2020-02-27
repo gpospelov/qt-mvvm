@@ -144,8 +144,6 @@ TEST_F(DefaultViewModelTest, findPropertyItemView)
     auto views = viewModel.findViews(propertyItem);
 }
 
-// FIXME restore test
-
 //! Constructing ViewModel from single PropertyItem.
 //! Change thickness property in SessionItem, control dataChanged signals from ViewModel.
 

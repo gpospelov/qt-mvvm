@@ -106,7 +106,6 @@ void LayerView::updateColor()
     }
 }
 
-// FIXME: this method has nothing to do with ports. For unknown reason it uses them to set label.
 void LayerView::updateLabel()
 {
     if (getInputPorts().size() < 1)

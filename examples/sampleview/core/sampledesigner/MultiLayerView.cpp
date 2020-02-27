@@ -244,7 +244,7 @@ constexpr QRectF defaultShape()
 
 bool acceptsModel(const ModelView::SessionItem* item, const std::string& model_type)
 {
-    // TODO: implement this function
+    // implement this function
     return false;
 }
 } // namespace

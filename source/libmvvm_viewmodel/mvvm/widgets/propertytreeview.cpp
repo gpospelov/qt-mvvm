@@ -15,11 +15,6 @@
 
 using namespace ModelView;
 
-namespace
-{
-const QStringList labels = {"Name", "Value"};
-}
-
 PropertyTreeView::PropertyTreeView(QWidget* parent) : ItemsTreeView(parent)
 {
     treeView()->setHeaderHidden(false);
@@ -32,7 +27,6 @@ void PropertyTreeView::setItem(SessionItem* item)
 {
     setViewModel(Utils::CreatePropertyViewModel(item->model()));
     viewModel()->setRootSessionItem(item);
-    //viewModel()->setHorizontalHeaderLabels(labels); FIXME restore
     treeView()->setRootIsDecorated(false);
     treeView()->expandAll();
 }
