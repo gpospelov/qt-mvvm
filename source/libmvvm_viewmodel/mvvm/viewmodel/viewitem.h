@@ -64,8 +64,8 @@ protected:
     void setParent(ViewItem* parent);
 
 private:
-    struct RefViewItemImpl;
-    std::unique_ptr<RefViewItemImpl> p_impl;
+    struct ViewItemImpl;
+    std::unique_ptr<ViewItemImpl> p_impl;
 };
 
 }; // namespace ModelView

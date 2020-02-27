@@ -17,14 +17,14 @@
 
 using namespace ModelView;
 
-struct ViewItem::RefViewItemImpl {
+struct ViewItem::ViewItemImpl {
     std::vector<std::unique_ptr<ViewItem>> children; //! buffer to hold rows x columns
     int rows{0};
     int columns{0};
     SessionItem* item{nullptr};
     int role{0};
     ViewItem* parent_view_item{nullptr};
-    RefViewItemImpl(SessionItem* item, int role) : item(item), role(role) {}
+    ViewItemImpl(SessionItem* item, int role) : item(item), role(role) {}
 
     void appendRow(std::vector<std::unique_ptr<ViewItem>> items)
     {
@@ -34,13 +34,13 @@ struct ViewItem::RefViewItemImpl {
     void insertRow(int row, std::vector<std::unique_ptr<ViewItem>> items)
     {
         if (items.empty())
-            throw std::runtime_error("Error in RefViewItem: attempt to insert empty row");
+            throw std::runtime_error("Error in ViewItemImpl: attempt to insert empty row");
 
         if (columns > 0 && items.size() != static_cast<size_t>(columns))
-            throw std::runtime_error("Error in RefViewItem: wrong number of columns.");
+            throw std::runtime_error("Error in ViewItemImpl: wrong number of columns.");
 
         if (row < 0 || row > rows)
-            throw std::runtime_error("Error in RefViewItem: invalid row index.");
+            throw std::runtime_error("Error in ViewItemImpl: invalid row index.");
 
         children.insert(std::next(children.begin(), row * columns),
                         std::make_move_iterator(items.begin()),
@@ -97,7 +97,7 @@ struct ViewItem::RefViewItemImpl {
 };
 
 ViewItem::ViewItem(SessionItem* item, int role)
-    : p_impl(std::make_unique<RefViewItemImpl>(item, role))
+    : p_impl(std::make_unique<ViewItemImpl>(item, role))
 {
 }
 

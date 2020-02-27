@@ -117,7 +117,7 @@ struct ViewModelController::RefViewModelControllerImpl {
         view_model->clearRows(view);
     }
 
-    void insert_view(SessionItem* parent, TagRow tagrow)
+    void insert_view(SessionItem* parent, const TagRow& tagrow)
     {
         auto child = parent->getItem(tagrow.tag, tagrow.row);
         auto children = children_strategy->children(parent);

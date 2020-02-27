@@ -14,8 +14,8 @@
 
 using namespace ModelView;
 
-PropertiesRowStrategy::PropertiesRowStrategy(const std::vector<std::string>& labels)
-    : user_defined_column_labels(labels)
+PropertiesRowStrategy::PropertiesRowStrategy(std::vector<std::string> labels)
+    : user_defined_column_labels(std::move(labels))
 {
 }
 

@@ -25,7 +25,7 @@ class SessionItem;
 class CORE_EXPORT PropertiesRowStrategy : public RowStrategyInterface
 {
 public:
-    PropertiesRowStrategy(const std::vector<std::string>& labels = {});
+    PropertiesRowStrategy(std::vector<std::string> labels = {});
 
     QStringList horizontalHeaderLabels() const  override;
 

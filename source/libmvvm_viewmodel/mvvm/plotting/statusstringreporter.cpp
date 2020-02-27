@@ -66,8 +66,6 @@ struct StatusStringReporter::StatusStringReporterImpl {
     {
         // for future improvements
     }
-
-    ~StatusStringReporterImpl() = default;
 };
 
 StatusStringReporter::StatusStringReporter(

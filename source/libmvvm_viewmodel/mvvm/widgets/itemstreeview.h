@@ -48,7 +48,7 @@ public:
     ViewModel* viewModel() const;
 
 signals:
-    void itemSelected(SessionItem*);
+    void itemSelected(ModelView::SessionItem*);
 
 private slots:
     void onSelectionChanged(const QItemSelection&, const QItemSelection&);
