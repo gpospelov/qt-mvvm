@@ -26,7 +26,7 @@ std::string deserialize(QByteArray byteArray);
 } // namespace
 
 LayerTableViewModel::LayerTableViewModel(SessionModel* model, QObject* parent)
-    : AbstractViewModel(std::make_unique<LayerTableViewModelController>(model, this), parent)
+    : ViewModel(std::make_unique<LayerTableViewModelController>(model, this), parent)
 {
 }
 
@@ -36,14 +36,14 @@ Qt::ItemFlags LayerTableViewModel::flags(const QModelIndex& index) const
 {
     Qt::ItemFlags flags =
         index.isValid() ? Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled : Qt::ItemIsDropEnabled;
-    return flags | AbstractViewModel::flags(index);
+    return flags | ViewModel::flags(index);
 }
 
 QMimeData* LayerTableViewModel::mimeData(const QModelIndexList& index_list) const
 {
     auto item = sessionItemFromIndex(index_list.front()); // assuming single row selection
     if (!item)
-        return AbstractViewModel::mimeData(index_list);
+        return ViewModel::mimeData(index_list);
 
     auto mimeData = new QMimeData;
     mimeData->setData(QString::fromStdString(::Constants::SampleMimeType),
@@ -132,7 +132,6 @@ int LayerTableViewModel::findInsertionRow(SessionItem* to_drop, SessionItem* new
 
 namespace
 {
-// TODO: move to item or model utils
 SessionItem* findParent(SessionItem* item, QList<std::string> models)
 {
     while (item) {

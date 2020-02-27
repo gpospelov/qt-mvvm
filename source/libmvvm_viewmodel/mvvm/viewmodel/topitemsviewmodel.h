@@ -10,7 +10,7 @@
 #ifndef MVVM_VIEWMODEL_TOPITEMSVIEWMODEL_H
 #define MVVM_VIEWMODEL_TOPITEMSVIEWMODEL_H
 
-#include <mvvm/viewmodel/abstractviewmodel.h>
+#include <mvvm/viewmodel/viewmodel.h>
 
 namespace ModelView
 {
@@ -26,7 +26,7 @@ All property items (i.e. "thickness", "color" etc) will be filtered out, top lev
 //!
 //! Only top level items are shown, all property items are filtered out.
 
-class CORE_EXPORT TopItemsViewModel : public AbstractViewModel
+class CORE_EXPORT TopItemsViewModel : public ViewModel
 {
 public:
     TopItemsViewModel(SessionModel* model, QObject* parent = nullptr);

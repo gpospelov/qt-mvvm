@@ -10,7 +10,7 @@
 #ifndef LAYERVIEWMODEL_H
 #define LAYERVIEWMODEL_H
 
-#include <mvvm/viewmodel/abstractviewmodel.h>
+#include <mvvm/viewmodel/viewmodel.h>
 
 namespace ModelView
 {
@@ -22,7 +22,7 @@ class SessionModel;
 @brief View model to display content of MultiLayerItem in table like views.
 */
 
-class LayerViewModel : public ModelView::AbstractViewModel
+class LayerViewModel : public ModelView::ViewModel
 {
 public:
     LayerViewModel(ModelView::SessionModel* model, QObject* parent = nullptr);

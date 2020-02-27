@@ -9,8 +9,7 @@
 
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/viewmodel/labeldatarowstrategy.h>
-#include <mvvm/viewmodel/viewitems.h>
-#include <mvvm/viewmodel/refviewitems.h>
+#include <mvvm/viewmodel/standardviewitems.h>
 
 using namespace ModelView;
 
@@ -24,17 +23,17 @@ QStringList LabelDataRowStrategy::horizontalHeaderLabels() const
                          << "Value";
 }
 
-std::vector<std::unique_ptr<RefViewItem>> LabelDataRowStrategy::constructRefRow(SessionItem* item)
+std::vector<std::unique_ptr<ViewItem>> LabelDataRowStrategy::constructRefRow(SessionItem* item)
 {
-    std::vector<std::unique_ptr<RefViewItem>> result;
+    std::vector<std::unique_ptr<ViewItem>> result;
 
     if (!item)
         return result;
 
-    result.emplace_back(std::make_unique<RefViewLabelItem>(item));
+    result.emplace_back(std::make_unique<ViewLabelItem>(item));
     if (item->data().isValid())
-        result.emplace_back(std::make_unique<RefViewDataItem>(item));
+        result.emplace_back(std::make_unique<ViewDataItem>(item));
     else
-        result.emplace_back(std::make_unique<RefViewEmptyItem>());
+        result.emplace_back(std::make_unique<ViewEmptyItem>());
     return result;
 }

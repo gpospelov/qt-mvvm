@@ -9,25 +9,25 @@
 
 #include "google_test.h"
 #include "test_utils.h"
-#include <mvvm/viewmodel/refviewitem.h>
+#include <mvvm/viewmodel/viewitem.h>
 
 using namespace ModelView;
 
-//! Tests for RefViewItem class.
+//! Tests for ViewItem class.
 
-class RefViewItemTest : public ::testing::Test
+class ViewItemTest : public ::testing::Test
 {
 public:
-    ~RefViewItemTest();
-    class TestItem : public RefViewItem
+    ~ViewItemTest();
+    class TestItem : public ViewItem
     {
     public:
-        TestItem() : RefViewItem(nullptr, 0) {}
+        TestItem() : ViewItem(nullptr, 0) {}
         ~TestItem() override;
     };
 
-    using children_t = std::vector<std::unique_ptr<RefViewItem>>;
-    using expected_t = std::vector<RefViewItem*>;
+    using children_t = std::vector<std::unique_ptr<ViewItem>>;
+    using expected_t = std::vector<ViewItem*>;
 
     //! Helper function to get two vectors, each ncolumns length, in the form of a pair.
     //! First vector contains unique_ptr objects, second vector bare pointers to same objects.
@@ -36,18 +36,18 @@ public:
 
     std::pair<children_t, expected_t> test_data(int ncolumns)
     {
-        auto vector_of_unique = TestUtils::create_row<RefViewItem, TestItem>(ncolumns);
+        auto vector_of_unique = TestUtils::create_row<ViewItem, TestItem>(ncolumns);
         auto vector_of_pointers = TestUtils::create_pointers(vector_of_unique);
         return std::make_pair(std::move(vector_of_unique), std::move(vector_of_pointers));
     }
 };
 
-RefViewItemTest::~RefViewItemTest() = default;
-RefViewItemTest::TestItem::~TestItem() = default;
+ViewItemTest::~ViewItemTest() = default;
+ViewItemTest::TestItem::~TestItem() = default;
 
 //! Initial state of RefViewItem.
 
-TEST_F(RefViewItemTest, initialState)
+TEST_F(ViewItemTest, initialState)
 {
     TestItem view_item;
 
@@ -63,7 +63,7 @@ TEST_F(RefViewItemTest, initialState)
 
 //! Append single item as row.
 
-TEST_F(RefViewItemTest, appendRow)
+TEST_F(ViewItemTest, appendRow)
 {
     auto [children, expected] = test_data(/*ncolumns*/ 1);
 
@@ -85,7 +85,7 @@ TEST_F(RefViewItemTest, appendRow)
 
 //! Remove row.
 
-TEST_F(RefViewItemTest, removeRow)
+TEST_F(ViewItemTest, removeRow)
 {
     auto [children, expected] = test_data(/*ncolumns*/ 1);
 
@@ -101,7 +101,7 @@ TEST_F(RefViewItemTest, removeRow)
 
 //! Append two rows with two items each.
 
-TEST_F(RefViewItemTest, appendTwoRows)
+TEST_F(ViewItemTest, appendTwoRows)
 {
     // preparing two rows of children, two columns each
     auto [children_row0, expected_row0] = test_data(/*ncolumns*/ 2);
@@ -145,7 +145,7 @@ TEST_F(RefViewItemTest, appendTwoRows)
 
 //! Append two rows with two items each.
 
-TEST_F(RefViewItemTest, insertRowsThenRemove)
+TEST_F(ViewItemTest, insertRowsThenRemove)
 {
     // preparing two rows of children, two columns each
     auto [children_row0, expected_row0] = test_data(/*ncolumns*/ 2);
@@ -199,7 +199,7 @@ TEST_F(RefViewItemTest, insertRowsThenRemove)
 
 //! Clean item's children.
 
-TEST_F(RefViewItemTest, clear)
+TEST_F(ViewItemTest, clear)
 {
     auto [children, expected] = test_data(/*ncolumns*/ 1);
 
@@ -209,4 +209,20 @@ TEST_F(RefViewItemTest, clear)
 
     EXPECT_EQ(view_item.rowCount(), 0);
     EXPECT_EQ(view_item.columnCount(), 0);
+}
+
+TEST_F(ViewItemTest, children)
+{
+    auto [children_row0, expected_row0] = test_data(/*ncolumns*/ 2);
+    auto [children_row1, expected_row1] = test_data(/*ncolumns*/ 2);
+
+    TestItem view_item;
+    view_item.appendRow(std::move(children_row0));
+    view_item.appendRow(std::move(children_row1));
+
+    std::vector<ViewItem*> expected;
+    std::copy(expected_row0.begin(), expected_row0.end(), std::back_inserter(expected));
+    std::copy(expected_row1.begin(), expected_row1.end(), std::back_inserter(expected));
+
+    EXPECT_EQ(view_item.children(), expected);
 }

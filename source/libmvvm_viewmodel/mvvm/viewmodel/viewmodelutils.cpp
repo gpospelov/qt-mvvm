@@ -13,8 +13,7 @@
 #include <mvvm/model/externalproperty.h>
 #include <mvvm/model/mvvm_types.h>
 #include <mvvm/model/sessionitem.h>
-#include <mvvm/viewmodel/abstractviewmodel.h>
-#include <mvvm/viewmodel/viewitem.h>
+#include <mvvm/viewmodel/viewmodel.h>
 #include <mvvm/viewmodel/viewmodelutils.h>
 #include <set>
 
@@ -37,23 +36,6 @@ void Utils::iterate_model(const QAbstractItemModel* model, const QModelIndex& pa
             iterate_model(model, index, fun);
         }
     }
-}
-
-std::vector<ViewItem*> Utils::findViews(const QStandardItemModel* model,
-                                        const ModelView::SessionItem* item,
-                                        const QModelIndex& parent)
-{
-    std::vector<ViewItem*> result;
-    auto on_item = [&](const QModelIndex& index) {
-        auto standard_item = model->itemFromIndex(index);
-        if (auto view = dynamic_cast<ViewItem*>(standard_item)) {
-            if (view->item() == item)
-                result.push_back(view);
-        }
-    };
-    iterate_model(model, parent, on_item);
-
-    return result;
 }
 
 //! Translates SessionItem's data role to vector of Qt roles.
@@ -104,7 +86,7 @@ std::vector<SessionItem*> Utils::ItemsFromIndex(const QModelIndexList& index_lis
 
     std::vector<SessionItem*> result;
 
-    if (auto model = dynamic_cast<const AbstractViewModel*>(index_list.front().model()))
+    if (auto model = dynamic_cast<const ViewModel*>(index_list.front().model()))
         std::transform(index_list.begin(), index_list.end(), std::back_inserter(result),
                        [model](auto index) { return model->sessionItemFromIndex(index); });
 

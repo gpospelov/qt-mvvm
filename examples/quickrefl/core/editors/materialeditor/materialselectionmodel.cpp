@@ -9,10 +9,10 @@
 
 #include "materialselectionmodel.h"
 #include "materialitems.h"
-#include <mvvm/viewmodel/abstractviewmodel.h>
+#include <mvvm/viewmodel/viewmodel.h>
 #include <mvvm/viewmodel/viewmodelutils.h>
 
-MaterialSelectionModel::MaterialSelectionModel(ModelView::AbstractViewModel* view_model,
+MaterialSelectionModel::MaterialSelectionModel(ModelView::ViewModel* view_model,
                                                QObject* parent)
     : QItemSelectionModel(view_model, parent)
 {

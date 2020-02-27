@@ -15,7 +15,6 @@
 #include "materialtreeview.h"
 #include <QVBoxLayout>
 #include <mvvm/model/modelutils.h>
-#include <mvvm/viewmodel/abstractviewmodel.h>
 #include <mvvm/viewmodel/standardviewmodels.h>
 #include <mvvm/viewmodel/viewmodeldelegate.h>
 

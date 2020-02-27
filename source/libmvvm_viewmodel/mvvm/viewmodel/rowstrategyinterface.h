@@ -22,7 +22,7 @@ namespace ModelView
 {
 
 class SessionItem;
-class RefViewItem;
+class ViewItem;
 
 /*!
 @class RowStrategyInterface
@@ -38,7 +38,7 @@ public:
 
     virtual QStringList horizontalHeaderLabels() const = 0;
 
-    virtual std::vector<std::unique_ptr<RefViewItem>> constructRefRow(SessionItem*) = 0;
+    virtual std::vector<std::unique_ptr<ViewItem>> constructRefRow(SessionItem*) = 0;
 };
 
 } // namespace ModelView

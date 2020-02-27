@@ -15,7 +15,7 @@
 #include "layerviewmodel.h"
 #include "samplemodel.h"
 #include "test_utils.h"
-#include <mvvm/viewmodel/refviewitems.h>
+#include <mvvm/viewmodel/standardviewitems.h>
 #include <mvvm/viewmodel/viewmodelutils.h>
 #include <QDebug>
 

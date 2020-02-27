@@ -16,7 +16,6 @@
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/viewmodel/defaultviewmodel.h>
 #include <mvvm/viewmodel/topitemsviewmodel.h>
-#include <mvvm/viewmodel/viewitem.h>
 #include <mvvm/widgets/propertyflatview.h>
 #include <mvvm/widgets/standardtreeviews.h>
 

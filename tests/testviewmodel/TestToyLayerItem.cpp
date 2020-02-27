@@ -14,8 +14,7 @@
 #include <mvvm/standarditems/vectoritem.h>
 #include <mvvm/viewmodel/defaultviewmodel.h>
 #include <mvvm/viewmodel/topitemsviewmodel.h>
-#include <mvvm/viewmodel/viewdataitem.h>
-#include <mvvm/viewmodel/viewitems.h>
+#include <mvvm/viewmodel/standardviewitems.h>
 
 using namespace ModelView;
 

@@ -18,7 +18,7 @@ class MaterialModel;
 
 namespace ModelView
 {
-class AbstractViewModel;
+class ViewModel;
 class ViewModelDelegate;
 class SessionItem;
 } // namespace ModelView
@@ -32,7 +32,7 @@ class MaterialTableWidget : public QWidget
 {
 public:
     explicit MaterialTableWidget(MaterialModel* material_model, QWidget* parent = nullptr);
-    ~MaterialTableWidget();
+    ~MaterialTableWidget() override;
 
     void setItem(ModelView::SessionItem* material_container);
 
@@ -40,7 +40,7 @@ public:
 
 private:
     QTreeView* m_treeView;
-    std::unique_ptr<ModelView::AbstractViewModel> m_viewModel;
+    std::unique_ptr<ModelView::ViewModel> m_viewModel;
     std::unique_ptr<ModelView::ViewModelDelegate> m_delegate;
 };
 

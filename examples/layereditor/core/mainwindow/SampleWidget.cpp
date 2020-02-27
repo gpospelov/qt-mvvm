@@ -15,7 +15,6 @@
 #include "SampleModel.h"
 #include <QTreeView>
 #include <QVBoxLayout>
-#include <mvvm/viewmodel/abstractviewmodel.h>
 #include <mvvm/viewmodel/standardviewmodels.h>
 #include <mvvm/widgets/itemstreeview.h>
 

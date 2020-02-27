@@ -28,7 +28,7 @@ class CORE_EXPORT LabelDataRowStrategy : public RowStrategyInterface
 public:
     QStringList horizontalHeaderLabels() const  override;
 
-    std::vector<std::unique_ptr<RefViewItem>> constructRefRow(SessionItem*)  override;
+    std::vector<std::unique_ptr<ViewItem>> constructRefRow(SessionItem*)  override;
 
 };
 

@@ -11,7 +11,7 @@
 #include "graphmodel.h"
 #include <QBoxLayout>
 #include <QPushButton>
-#include <mvvm/viewmodel/abstractviewmodel.h>
+#include <mvvm/viewmodel/viewmodel.h>
 #include <mvvm/viewmodel/standardviewmodels.h>
 #include <mvvm/widgets/itemstreeview.h>
 

@@ -13,6 +13,6 @@
 using namespace ModelView;
 
 PropertyTableViewModel::PropertyTableViewModel(SessionModel* model, QObject* parent)
-    : AbstractViewModel(std::make_unique<PropertyTableViewModelController>(model, this), parent)
+    : ViewModel(std::make_unique<PropertyTableViewModelController>(model, this), parent)
 {
 }

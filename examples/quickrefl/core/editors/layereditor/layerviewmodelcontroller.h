@@ -10,11 +10,11 @@
 #ifndef LAYERVIEWMODELCONTROLLER_H
 #define LAYERVIEWMODELCONTROLLER_H
 
-#include <mvvm/viewmodel/abstractviewmodelcontroller.h>
+#include <mvvm/viewmodel/viewmodelcontroller.h>
 
 namespace ModelView
 {
-class AbstractViewModel;
+class ViewModel;
 } // namespace ModelView
 
 /*!
@@ -24,10 +24,11 @@ class AbstractViewModel;
 Will iterate through all top level items and creates rows with layer properties.
 */
 
-class LayerViewModelController : public ModelView::AbstractViewModelController
+class LayerViewModelController : public ModelView::ViewModelController
 {
 public:
-    explicit LayerViewModelController(ModelView::SessionModel* model, ModelView::AbstractViewModel* view_model = nullptr);
+    explicit LayerViewModelController(ModelView::SessionModel* model,
+                                      ModelView::ViewModel* view_model);
 };
 
 #endif //  LAYERVIEWMODELCONTROLLER_H

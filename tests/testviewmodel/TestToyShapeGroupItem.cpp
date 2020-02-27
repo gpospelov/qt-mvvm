@@ -13,8 +13,7 @@
 #include <mvvm/model/comboproperty.h>
 #include <mvvm/viewmodel/defaultviewmodel.h>
 #include <mvvm/viewmodel/propertyviewmodel.h>
-#include <mvvm/viewmodel/viewdataitem.h>
-#include <mvvm/viewmodel/viewitems.h>
+#include <mvvm/viewmodel/standardviewitems.h>
 
 using namespace ModelView;
 

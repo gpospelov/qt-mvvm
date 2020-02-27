@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/viewmodel/abstractviewmodel.h>
+#include <mvvm/viewmodel/viewmodel.h>
 #include <mvvm/viewmodel/standardviewmodels.h>
 #include <mvvm/widgets/allitemstreeview.h>
 

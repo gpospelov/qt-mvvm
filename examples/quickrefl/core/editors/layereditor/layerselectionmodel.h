@@ -15,7 +15,7 @@
 
 namespace ModelView
 {
-class AbstractViewModel;
+class ViewModel;
 class SessionItem;
 } // namespace ModelView
 
@@ -27,7 +27,7 @@ class LayerSelectionModel : public QItemSelectionModel
 {
     Q_OBJECT
 public:
-    LayerSelectionModel(ModelView::AbstractViewModel* view_model, QObject* parent = nullptr);
+    LayerSelectionModel(ModelView::ViewModel* view_model, QObject* parent = nullptr);
     ~LayerSelectionModel() = default;
 
     void selectItems(std::vector<ModelView::SessionItem*> items);
@@ -36,7 +36,7 @@ public:
     std::vector<ModelView::SessionItem*> selectedItems() const;
 
 private:
-    const ModelView::AbstractViewModel* viewModel() const;
+    const ModelView::ViewModel* viewModel() const;
 };
 
 #endif // LAYERSELECTIONMODEL_H

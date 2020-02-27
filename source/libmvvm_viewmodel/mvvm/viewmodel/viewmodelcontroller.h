@@ -14,6 +14,7 @@
 #include <mvvm/core/export.h>
 #include <mvvm/model/tagrow.h>
 #include <vector>
+#include <QStringList>
 
 class QStandardItem;
 
@@ -22,21 +23,21 @@ namespace ModelView
 
 class SessionModel;
 class SessionItem;
-class RefViewModel;
-class RefViewItem;
+class ViewModelBase;
+class ViewItem;
 class ChildrenStrategyInterface;
 class RowStrategyInterface;
 
 /*!
-@class RefViewModelController
-@brief Propagates changes from SessionModel to its ViewModel.
+@class ViewModelController
+@brief Propagates changes from SessionModel to its ViewModelBase.
 */
 
-class CORE_EXPORT RefViewModelController
+class CORE_EXPORT ViewModelController
 {
 public:
-    RefViewModelController(SessionModel* session_model, RefViewModel* view_model);
-    virtual ~RefViewModelController();
+    ViewModelController(SessionModel* session_model, ViewModelBase* view_model);
+    virtual ~ViewModelController();
 
     void setChildrenStrategy(std::unique_ptr<ChildrenStrategyInterface> children_strategy);
 
@@ -48,7 +49,9 @@ public:
 
     SessionItem* rootSessionItem() const;
 
-    std::vector<RefViewItem*> findViews(const ModelView::SessionItem* item) const;
+    std::vector<ViewItem*> findViews(const ModelView::SessionItem* item) const;
+
+    QStringList horizontalHeaderLabels() const;
 
 protected:
     virtual void onDataChange(SessionItem* item, int role);
@@ -57,7 +60,6 @@ protected:
     virtual void onAboutToRemoveItem(SessionItem* parent, TagRow tagrow);
 
     void update_branch(const SessionItem* item);
-//    void iterate(const SessionItem* item, RefViewItem* parent);
 
 private:
     struct RefViewModelControllerImpl;

@@ -15,9 +15,9 @@
 #include <mvvm/editors/defaulteditorfactory.h>
 #include <mvvm/model/groupitem.h>
 #include <mvvm/model/sessionitem.h>
-#include <mvvm/viewmodel/abstractviewmodel.h>
+#include <mvvm/viewmodel/viewmodel.h>
 #include <mvvm/viewmodel/standardviewmodels.h>
-#include <mvvm/viewmodel/viewlabelitem.h>
+#include <mvvm/viewmodel/standardviewitems.h>
 #include <mvvm/viewmodel/viewmodeldelegate.h>
 #include <mvvm/widgets/layoututils.h>
 #include <mvvm/widgets/propertyflatview.h>
@@ -25,11 +25,11 @@
 using namespace ModelView;
 
 struct PropertyFlatView::PropertyFlatViewImpl {
-    std::unique_ptr<AbstractViewModel> view_model;
+    std::unique_ptr<ViewModel> view_model;
     std::unique_ptr<ViewModelDelegate> m_delegate;
     std::unique_ptr<DefaultEditorFactory> editor_factory;
     std::vector<std::unique_ptr<QDataWidgetMapper>> widget_mappers;
-    std::map<RefViewItem*, QWidget*> item_to_widget;
+    std::map<ViewItem*, QWidget*> item_to_widget;
 
     QGridLayout* grid_layout{nullptr};
     PropertyFlatViewImpl()
@@ -40,7 +40,7 @@ struct PropertyFlatView::PropertyFlatViewImpl {
 
     //! Creates label for given index.
 
-    std::unique_ptr<QLabel> create_label(RefViewItem* view_item)
+    std::unique_ptr<QLabel> create_label(ViewItem* view_item)
     {
         auto result = std::make_unique<QLabel>(view_item->data(Qt::DisplayRole).toString());
         result->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed));
@@ -78,10 +78,13 @@ struct PropertyFlatView::PropertyFlatViewImpl {
                     it->second->setEnabled(view_item->item()->isEnabled());
             }
         };
-        connect(view_model.get(), &AbstractViewModel::dataChanged, on_data_change);
+        connect(view_model.get(), &ViewModel::dataChanged, on_data_change);
 
         auto on_row_inserted = [this](const QModelIndex&, int, int) { update_grid_layout(); };
-        connect(view_model.get(), &AbstractViewModel::rowsInserted, on_row_inserted);
+        connect(view_model.get(), &ViewModel::rowsInserted, on_row_inserted);
+
+        auto on_row_removed = [this](const QModelIndex&, int, int) { update_grid_layout(); };
+        connect(view_model.get(), &ViewModel::rowsRemoved, on_row_removed);
     }
 
     //! Creates widget for given index to appear in grid layout.

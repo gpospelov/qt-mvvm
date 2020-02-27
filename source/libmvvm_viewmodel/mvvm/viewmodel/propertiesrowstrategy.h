@@ -29,7 +29,7 @@ public:
 
     QStringList horizontalHeaderLabels() const  override;
 
-    std::vector<std::unique_ptr<RefViewItem>> constructRefRow(SessionItem*item) override;
+    std::vector<std::unique_ptr<ViewItem>> constructRefRow(SessionItem*item) override;
 
 private:
     void update_column_labels(std::vector<ModelView::SessionItem*> items);

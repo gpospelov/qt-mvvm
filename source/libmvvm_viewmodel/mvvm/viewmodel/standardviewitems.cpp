@@ -8,17 +8,17 @@
 // ************************************************************************** //
 
 #include <mvvm/model/sessionitem.h>
-#include <mvvm/viewmodel/refviewitems.h>
+#include <mvvm/viewmodel/standardviewitems.h>
 
 using namespace ModelView;
 
-RefRootViewItem::RefRootViewItem(SessionItem* item) : RefViewItem(item, ItemDataRole::DATA) {}
+RootViewItem::RootViewItem(SessionItem* item) : ViewItem(item, ItemDataRole::DATA) {}
 
 //! ---------------------------------------------------------------------------
 
-RefViewLabelItem::RefViewLabelItem(SessionItem* item) : RefViewItem(item, ItemDataRole::DISPLAY) {}
+ViewLabelItem::ViewLabelItem(SessionItem* item) : ViewItem(item, ItemDataRole::DISPLAY) {}
 
-QVariant RefViewLabelItem::data(int role) const
+QVariant ViewLabelItem::data(int role) const
 {
     if (!item())
         return QVariant();
@@ -27,24 +27,24 @@ QVariant RefViewLabelItem::data(int role) const
     if (role == Qt::DisplayRole || role == Qt::EditRole)
         return QString::fromStdString(item()->displayName());
 
-    return RefViewItem::data(role);
+    return ViewItem::data(role);
 }
 
 //! ---------------------------------------------------------------------------
 
-RefViewDataItem::RefViewDataItem(SessionItem* item) : RefViewItem(item, ItemDataRole::DATA) {}
+ViewDataItem::ViewDataItem(SessionItem* item) : ViewItem(item, ItemDataRole::DATA) {}
 
-Qt::ItemFlags RefViewDataItem::flags() const
+Qt::ItemFlags ViewDataItem::flags() const
 {
-    Qt::ItemFlags result = RefViewItem::flags();
+    Qt::ItemFlags result = ViewItem::flags();
     if (item() && item()->isEditable() && item()->isEnabled())
         result |= Qt::ItemIsEditable;
     return result;
 }
 
-RefViewEmptyItem::RefViewEmptyItem() : RefViewItem(nullptr, 0) {}
+ViewEmptyItem::ViewEmptyItem() : ViewItem(nullptr, 0) {}
 
-QVariant RefViewEmptyItem::data(int) const
+QVariant ViewEmptyItem::data(int) const
 {
     return QVariant();
 }

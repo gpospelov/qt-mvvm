@@ -1,8 +1,4 @@
 target_sources(mvvm_viewmodel PRIVATE
-    abstractviewmodel.cpp
-    abstractviewmodel.h
-    abstractviewmodelcontroller.cpp
-    abstractviewmodelcontroller.h
     celldecoratorinterface.h
     childrenstrategyinterface.h
     defaultcelldecorator.cpp
@@ -13,43 +9,31 @@ target_sources(mvvm_viewmodel PRIVATE
     labeldatarowstrategy.h
     propertiesrowstrategy.cpp
     propertiesrowstrategy.h
-    propertytableviewmodel.cpp
-    propertytableviewmodel.h
     propertyflatviewmodel.cpp
     propertyflatviewmodel.h
+    propertytableviewmodel.cpp
+    propertytableviewmodel.h
     propertyviewmodel.cpp
     propertyviewmodel.h
-    refviewmodel.cpp
-    refviewmodel.h
-    refviewitem.cpp
-    refviewitem.h
-    refviewitems.cpp
-    refviewitems.h
-    refviewmodelcontroller.cpp
-    refviewmodelcontroller.h
-    refcontrolledviewmodel.cpp
-    refcontrolledviewmodel.h
     rowstrategyinterface.h
     standardchildrenstrategies.cpp
     standardchildrenstrategies.h
+    standardviewitems.cpp
+    standardviewitems.h
     standardviewmodelcontrollers.cpp
     standardviewmodelcontrollers.h
     standardviewmodels.cpp
     standardviewmodels.h
     topitemsviewmodel.cpp
     topitemsviewmodel.h
-    viewdataitem.cpp
-    viewdataitem.h
-    viewemptyitem.cpp
-    viewemptyitem.h
     viewitem.cpp
     viewitem.h
-    viewitems.h
-    viewitemtypes.h
-    viewlabelitem.cpp
-    viewlabelitem.h
-    viewmodelbuilder.cpp
-    viewmodelbuilder.h
+    viewmodel.cpp
+    viewmodel.h
+    viewmodelbase.cpp
+    viewmodelbase.h
+    viewmodelcontroller.cpp
+    viewmodelcontroller.h
     viewmodeldelegate.cpp
     viewmodeldelegate.h
     viewmodelutils.cpp

@@ -11,26 +11,26 @@
 #include <QColor>
 #include <memory>
 #include <mvvm/model/sessionitem.h>
-#include <mvvm/viewmodel/refviewitems.h>
+#include <mvvm/viewmodel/standardviewitems.h>
 
 using namespace ModelView;
 
-class RefViewItemsTest : public ::testing::Test
+class StandardViewItemsTest : public ::testing::Test
 {
 public:
-    ~RefViewItemsTest();
+    ~StandardViewItemsTest();
 };
 
-RefViewItemsTest::~RefViewItemsTest() = default;
+StandardViewItemsTest::~StandardViewItemsTest() = default;
 
 // ----------------------------------------------------------------------------
 // Tests for ViewLabelItem
 // ----------------------------------------------------------------------------
 
-TEST_F(RefViewItemsTest, ViewLabelItem_initialState)
+TEST_F(StandardViewItemsTest, ViewLabelItem_initialState)
 {
     SessionItem item;
-    RefViewLabelItem viewItem(&item);
+    ViewLabelItem viewItem(&item);
     EXPECT_EQ(viewItem.item(), &item);
     EXPECT_EQ(viewItem.item_role(), ItemDataRole::DISPLAY);
 }
@@ -38,7 +38,7 @@ TEST_F(RefViewItemsTest, ViewLabelItem_initialState)
 //! ViewLabelItem::data method
 //! Checks that the data method is correctly forwarded to underlying SessionItem.
 
-TEST_F(RefViewItemsTest, ViewLabelItem_data)
+TEST_F(StandardViewItemsTest, ViewLabelItem_data)
 {
     // create SessionItem with data on board
     SessionItem item;
@@ -46,7 +46,7 @@ TEST_F(RefViewItemsTest, ViewLabelItem_data)
     EXPECT_TRUE(item.setData(expected, ItemDataRole::DISPLAY));
 
     // initialize viewItem with sessionItem and check the data
-    RefViewLabelItem viewItem(&item);
+    ViewLabelItem viewItem(&item);
     EXPECT_EQ(Utils::toCustomVariant(viewItem.data(Qt::EditRole)), expected);
     EXPECT_EQ(Utils::toCustomVariant(viewItem.data(Qt::DisplayRole)), expected);
 }
@@ -54,7 +54,7 @@ TEST_F(RefViewItemsTest, ViewLabelItem_data)
 //! ViewLabelItem::setData
 //! Checks that the setData method is correctly forwarded to underlying SessionItem.
 
-TEST_F(RefViewItemsTest, ViewLabelItem_setData)
+TEST_F(StandardViewItemsTest, ViewLabelItem_setData)
 {
     // create SessionItem with data on board
     SessionItem item;
@@ -62,7 +62,7 @@ TEST_F(RefViewItemsTest, ViewLabelItem_setData)
     EXPECT_TRUE(item.setData(expected, ItemDataRole::DISPLAY));
 
     // initialize viewItem with sessionItem and set the data
-    RefViewLabelItem viewItem(&item);
+    ViewLabelItem viewItem(&item);
     QVariant new_data("MultiLayer");
     EXPECT_TRUE(viewItem.setData(new_data, Qt::EditRole));
     EXPECT_EQ(viewItem.data(Qt::DisplayRole), new_data); // new data
@@ -78,13 +78,13 @@ TEST_F(RefViewItemsTest, ViewLabelItem_setData)
 
 //! Testing ViewLabelItem::flags.
 
-TEST_F(RefViewItemsTest, ViewLabelItem_flags)
+TEST_F(StandardViewItemsTest, ViewLabelItem_flags)
 {
     SessionItem item;
     QVariant expected = QVariant::fromValue(std::string("Layer"));
     EXPECT_TRUE(item.setData(expected, ItemDataRole::DISPLAY));
 
-    RefViewLabelItem viewItem(&item);
+    ViewLabelItem viewItem(&item);
     EXPECT_FALSE(viewItem.flags() & Qt::ItemIsEditable);
 }
 
@@ -92,10 +92,10 @@ TEST_F(RefViewItemsTest, ViewLabelItem_flags)
 // Tests for ViewDataItem
 // ----------------------------------------------------------------------------
 
-TEST_F(RefViewItemsTest, ViewDataItem_initialState)
+TEST_F(StandardViewItemsTest, ViewDataItem_initialState)
 {
     SessionItem item;
-    RefViewDataItem viewItem(&item);
+    ViewDataItem viewItem(&item);
     EXPECT_EQ(viewItem.item(), &item);
     EXPECT_EQ(viewItem.item_role(), ItemDataRole::DATA);
 }
@@ -103,7 +103,7 @@ TEST_F(RefViewItemsTest, ViewDataItem_initialState)
 //! ViewDataItem::data method for double values.
 //! Checks that the data method is correctly forwarded to underlying SessionItem.
 
-TEST_F(RefViewItemsTest, ViewDataItem_dataForDouble)
+TEST_F(StandardViewItemsTest, ViewDataItem_dataForDouble)
 {
     // create SessionItem with data on board
     SessionItem item;
@@ -111,7 +111,7 @@ TEST_F(RefViewItemsTest, ViewDataItem_dataForDouble)
     EXPECT_TRUE(item.setData(expected));
 
     // initialize viewItem with sessionItem and check the data
-    RefViewDataItem viewItem(&item);
+    ViewDataItem viewItem(&item);
     EXPECT_EQ(viewItem.data(Qt::EditRole), expected);
     EXPECT_EQ(viewItem.data(Qt::DisplayRole), expected);
 }
@@ -119,7 +119,7 @@ TEST_F(RefViewItemsTest, ViewDataItem_dataForDouble)
 //! ViewDataItem::setData for double values.
 //! Checks that the setData method is correctly forwarded to underlying SessionItem.
 
-TEST_F(RefViewItemsTest, ViewDataItem_setDataForDouble)
+TEST_F(StandardViewItemsTest, ViewDataItem_setDataForDouble)
 {
     // create SessionItem with data on board
     SessionItem item;
@@ -127,7 +127,7 @@ TEST_F(RefViewItemsTest, ViewDataItem_setDataForDouble)
     EXPECT_TRUE(item.setData(expected));
 
     // initialize viewItem with sessionItem and set the data
-    RefViewDataItem viewItem(&item);
+    ViewDataItem viewItem(&item);
     QVariant new_data(43.0);
     EXPECT_TRUE(viewItem.setData(new_data, Qt::EditRole));
     EXPECT_EQ(viewItem.data(Qt::DisplayRole), new_data); // new data
@@ -144,7 +144,7 @@ TEST_F(RefViewItemsTest, ViewDataItem_setDataForDouble)
 //! ViewDataItem::setData for double values.
 //! Checks that setting of same data returns false.
 
-TEST_F(RefViewItemsTest, ViewDataItem_setSameData)
+TEST_F(StandardViewItemsTest, ViewDataItem_setSameData)
 {
     // create SessionItem with data on board
     SessionItem item;
@@ -152,7 +152,7 @@ TEST_F(RefViewItemsTest, ViewDataItem_setSameData)
     EXPECT_TRUE(item.setData(expected));
 
     // initialize viewItem with sessionItem and set the data
-    RefViewDataItem viewItem(&item);
+    ViewDataItem viewItem(&item);
     QVariant new_data(42.0);
     EXPECT_FALSE(viewItem.setData(new_data, Qt::EditRole));
     EXPECT_EQ(viewItem.data(Qt::EditRole), new_data); // new data
@@ -161,14 +161,14 @@ TEST_F(RefViewItemsTest, ViewDataItem_setSameData)
 //! ViewDataItem::data method for QColor.
 //! Checks that the data method is correctly forwarded to underlying SessionItem.
 
-TEST_F(RefViewItemsTest, ViewDataItem_dataForColor)
+TEST_F(StandardViewItemsTest, ViewDataItem_dataForColor)
 {
     // create SessionItem with data on board
     SessionItem item;
     QVariant expected = QVariant::fromValue(QColor(Qt::green));
     EXPECT_TRUE(item.setData(expected));
 
-    RefViewDataItem viewItem(&item);
+    ViewDataItem viewItem(&item);
     EXPECT_EQ(viewItem.data(Qt::EditRole), expected);
     EXPECT_EQ(viewItem.data(Qt::DisplayRole), expected);
     EXPECT_EQ(viewItem.data(Qt::DecorationRole), expected);
@@ -177,7 +177,7 @@ TEST_F(RefViewItemsTest, ViewDataItem_dataForColor)
 //! ViewDataItem::setData for QColor.
 //! Checks that the setData method is correctly forwarded to underlying SessionItem.
 
-TEST_F(RefViewItemsTest, ViewDataItem_setDataForColor)
+TEST_F(StandardViewItemsTest, ViewDataItem_setDataForColor)
 {
     // create SessionItem with data on board
     SessionItem item;
@@ -185,7 +185,7 @@ TEST_F(RefViewItemsTest, ViewDataItem_setDataForColor)
     EXPECT_TRUE(item.setData(expected));
 
     // initialize viewItem with sessionItem and set the data
-    RefViewDataItem viewItem(&item);
+    ViewDataItem viewItem(&item);
     QVariant new_data = QVariant::fromValue(QColor(Qt::red));
     EXPECT_TRUE(viewItem.setData(new_data, Qt::EditRole));
     EXPECT_EQ(viewItem.data(Qt::DisplayRole), new_data);    // new data
@@ -202,12 +202,12 @@ TEST_F(RefViewItemsTest, ViewDataItem_setDataForColor)
 
 //! Testing ViewLabelItem::flags.
 
-TEST_F(RefViewItemsTest, ViewDataItem_flags)
+TEST_F(StandardViewItemsTest, ViewDataItem_flags)
 {
     SessionItem item;
     QVariant expected = QVariant::fromValue(std::string("Layer"));
     EXPECT_TRUE(item.setData(expected, ItemDataRole::DATA));
 
-    RefViewDataItem viewItem(&item);
+    ViewDataItem viewItem(&item);
     EXPECT_TRUE(viewItem.flags() & Qt::ItemIsEditable);
 }

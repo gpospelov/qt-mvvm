@@ -11,7 +11,7 @@
 #include "toy_includes.h"
 #include <QSignalSpy>
 #include <mvvm/viewmodel/defaultviewmodel.h>
-#include <mvvm/viewmodel/viewitems.h>
+#include <mvvm/viewmodel/standardviewitems.h>
 #include <mvvm/viewmodel/viewmodelutils.h>
 
 using namespace ModelView;
@@ -61,7 +61,7 @@ TEST_F(ToyMultilayerItemTest, multiLayerView)
     QModelIndex mlIndex = viewModel.index(0, 0);
 
     // it should be ViewLabelItem looking at our MultiLayer item
-    auto viewItem = dynamic_cast<RefViewLabelItem*>(viewModel.itemFromIndex(mlIndex));
+    auto viewItem = dynamic_cast<ViewLabelItem*>(viewModel.itemFromIndex(mlIndex));
     EXPECT_TRUE(viewItem != nullptr);
     EXPECT_EQ(viewItem->item(), multiLayerItem);
 

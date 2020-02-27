@@ -20,7 +20,7 @@ class QTableView;
 
 namespace ModelView
 {
-class AbstractViewModel;
+class ViewModel;
 class ViewModelDelegate;
 } // namespace ModelView
 
@@ -46,8 +46,8 @@ private:
     QTreeView* m_horizontalTree;
     QTableView* m_tableView;
 
-    std::unique_ptr<ModelView::AbstractViewModel> m_verticalViewModel;
-    std::unique_ptr<ModelView::AbstractViewModel> m_horizontalViewModel;
+    std::unique_ptr<ModelView::ViewModel> m_verticalViewModel;
+    std::unique_ptr<ModelView::ViewModel> m_horizontalViewModel;
     std::unique_ptr<ModelView::ViewModelDelegate> m_delegate;
 };
 

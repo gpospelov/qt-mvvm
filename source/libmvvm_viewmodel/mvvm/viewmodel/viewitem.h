@@ -10,42 +10,64 @@
 #ifndef MVVM_VIEWMODEL_VIEWITEM_H
 #define MVVM_VIEWMODEL_VIEWITEM_H
 
-#include <QStandardItem>
+#include <memory>
 #include <mvvm/core/export.h>
+#include <vector>
+#include <QVariant>
 
 namespace ModelView
 {
 
 class SessionItem;
 
-//! Represents the view of SessionItem's data in single cell of Qt table/tree.
-//! Act as QStandardItem which stores SessionItem inside.
-//!
-//! In principle, it is intended to show SessionItem's data role, but it can be used for
-//! any role SessionItem can carry on board.
+//! Represents the view of SessionItem's data in single cell of ViewModel.
 
-class CORE_EXPORT ViewItem : public QStandardItem
+class CORE_EXPORT ViewItem
 {
 public:
-    ~ViewItem() override;
+    virtual ~ViewItem();
 
-    QVariant data(int role) const override;
+    int rowCount() const;
 
-    void setData(const QVariant& value, int role) override;
+    int columnCount() const;
 
-    SessionItem* item();
+    void appendRow(std::vector<std::unique_ptr<ViewItem>> items);
 
-    ViewItem* clone() const override;
+    void insertRow(int row, std::vector<std::unique_ptr<ViewItem>> items);
+
+    void removeRow(int row);
+
+    void clear();
+
+    ViewItem* parent() const;
+
+    ViewItem* child(int row, int column) const;
+
+    SessionItem* item() const;
 
     int item_role() const;
 
-protected:
-    ViewItem(SessionItem* item, int item_role);
+    int row() const;
 
-    SessionItem* m_item;
-    int m_item_role; // one of roles defined in ItemDataRole
+    int column() const;
+
+    virtual QVariant data(int qt_role) const;
+
+    virtual bool setData(const QVariant& value, int qt_role);
+
+    virtual Qt::ItemFlags flags() const;
+
+    std::vector<ViewItem*> children() const;
+
+protected:
+    ViewItem(SessionItem* item, int role);
+    void setParent(ViewItem* parent);
+
+private:
+    struct RefViewItemImpl;
+    std::unique_ptr<RefViewItemImpl> p_impl;
 };
 
-} // namespace ModelView
+}; // namespace ModelView
 
 #endif // MVVM_VIEWMODEL_VIEWITEM_H
