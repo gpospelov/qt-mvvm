@@ -40,6 +40,7 @@ Qt::ItemFlags ViewDataItem::flags() const
     Qt::ItemFlags result = ViewItem::flags();
     if (item() && item()->isEditable() && item()->isEnabled())
         result |= Qt::ItemIsEditable;
+
     return result;
 }
 
@@ -47,6 +48,8 @@ QVariant ViewDataItem::data(int role) const
 {
     if (role == Qt::DecorationRole)
         return Utils::DecorationRole(*item());
+    else if (role == Qt::CheckStateRole)
+        return Utils::CheckStateRole(*item());
 
     return ViewItem::data(role);
 }
