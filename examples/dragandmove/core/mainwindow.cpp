@@ -27,7 +27,7 @@ MainWindow::MainWindow() : m_tabWidget(new QTabWidget), m_model(std::make_unique
     setCentralWidget(m_tabWidget);
     init_application();
 
-    m_tabWidget->addTab(new ModelEditorWidget(m_model.get()), "Available properties");
+    m_tabWidget->addTab(new ModelEditorWidget(m_model.get()), "Drag and Move");
     m_tabWidget->setCurrentIndex(m_tabWidget->count() - 1);
 }
 

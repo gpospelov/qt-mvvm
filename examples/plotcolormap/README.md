@@ -25,7 +25,7 @@ It's an item which can have arbitrary amount of `ColorMapItem's` on board. Addit
 
 It is a widget, wrapper around `QCustomPlot`, provided with status string.
 It shows the content of `ColorMapViewportItem` on the screen and establishes the signaling between `QCustomPlot` and `SessionModel`.
-When user zooms in into `QCustomPlot` with the mouse wheel or drag color bar, the data of the model is updated. Similarly, when data is updated via some tree or table view, the changes are propagated to `qcustomplot`.
-If the user saves a project file, all zoom level's and, possibly, other settings of `qcustomplot` will be automatically preserved.
+When user zooms in into `QCustomPlot` with the mouse wheel or drag color bar, the data of the model is updated. Similarly, when data is updated in a model via some tree or table view, the changes are propagated back to `qcustomplot`.
+If the user saves a project file, all zoom level's and, possibly, other settings of `qcustomplot` can be automatically preserved.
 
 
