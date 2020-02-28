@@ -9,6 +9,7 @@
 
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/viewmodel/standardviewitems.h>
+#include <mvvm/viewmodel/viewmodelutils.h>
 
 using namespace ModelView;
 
@@ -40,6 +41,14 @@ Qt::ItemFlags ViewDataItem::flags() const
     if (item() && item()->isEditable() && item()->isEnabled())
         result |= Qt::ItemIsEditable;
     return result;
+}
+
+QVariant ViewDataItem::data(int role) const
+{
+    if (role == Qt::DecorationRole)
+        return Utils::DecorationRole(*item());
+
+    return ViewItem::data(role);
 }
 
 ViewEmptyItem::ViewEmptyItem() : ViewItem(nullptr, 0) {}

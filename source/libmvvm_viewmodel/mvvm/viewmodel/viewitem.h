@@ -10,10 +10,10 @@
 #ifndef MVVM_VIEWMODEL_VIEWITEM_H
 #define MVVM_VIEWMODEL_VIEWITEM_H
 
+#include <QVariant>
 #include <memory>
 #include <mvvm/core/export.h>
 #include <vector>
-#include <QVariant>
 
 namespace ModelView
 {

@@ -96,8 +96,7 @@ struct ViewItem::ViewItemImpl {
     }
 };
 
-ViewItem::ViewItem(SessionItem* item, int role)
-    : p_impl(std::make_unique<ViewItemImpl>(item, role))
+ViewItem::ViewItem(SessionItem* item, int role) : p_impl(std::make_unique<ViewItemImpl>(item, role))
 {
 }
 
@@ -207,9 +206,6 @@ QVariant ViewItem::data(int qt_role) const
 
     else if (qt_role == Qt::CheckStateRole)
         return Utils::CheckStateRole(*p_impl->item);
-
-    else if (qt_role == Qt::DecorationRole)
-        return Utils::DecorationRole(*p_impl->item);
 
     else
         return QVariant();
