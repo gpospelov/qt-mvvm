@@ -1,4 +1,4 @@
-# Example "celleditors".
+# Example "plotgraphs".
 
 Example shows how to plot one-dimensional graphs using wrappers around `qcustomplot` library. 
 
@@ -10,7 +10,7 @@ properly separate `scientific data` from `presentation data`.
 ## Data1DItem
 
 It's an item to hold one-dimensional vector of `double` values and information
-about axis binning. Data1DItem is not intended for direct plotting and needs `GraphItem` for that.
+about axis binning. `Data1DItem` is not intended for direct plotting and needs `GraphItem` for that.
 
 ## GraphItem
 

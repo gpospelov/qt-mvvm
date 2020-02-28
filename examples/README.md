@@ -3,7 +3,7 @@
 + [Treeviews: how to represent the model using trees with different layouts](treeviews/README.md)
 + [Celleditors:  how to create editable properties and use various editors
 in cells of Qt trees and tables](celleditors/README.md)
-+ plotgraphs
++ [Plotgraphs:  how to plot one-dimensional graphs](plotgraphs/README.md)
 + colormap
 + dragandmove
 + flateditor
