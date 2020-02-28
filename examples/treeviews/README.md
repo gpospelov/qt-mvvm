@@ -26,3 +26,4 @@ Item `Interference` demonstrates how to implement business logic. Every time use
 
 ![treeviews](../../doc/treeviews2.png)
 
+Business logic is implemented via lambda's on board of `InterferenceItem` (see code for details).
