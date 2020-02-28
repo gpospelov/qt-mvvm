@@ -11,6 +11,7 @@
 #define MATERIALMODEL_H
 
 #include <mvvm/model/sessionmodel.h>
+#include <mvvm/model/tagrow.h>
 #include <vector>
 
 namespace ModelView
@@ -20,6 +21,7 @@ class ExternalProperty;
 
 class MaterialBaseItem;
 class MaterialContainerItem;
+class SLDMaterialItem;
 
 /*!
 @class MaterialModel
@@ -39,9 +41,9 @@ public:
     ModelView::ExternalProperty material_property(const std::string& id,
                                                   std::string container_id = std::string());
 
-    void cloneMaterial(const MaterialBaseItem* item);
+    MaterialBaseItem* cloneMaterial(const MaterialBaseItem* item);
 
-    void addDefaultMaterial();
+    SLDMaterialItem* addDefaultMaterial(const ModelView::TagRow& tagrow = {});
 
 private:
     void init_model();
