@@ -56,7 +56,7 @@ model/view relations via relatively small modifications to the original code.
 Implementing similar features from the scratch in bare metal Qt would take
 much more time and resulting code wouldn't be easily transferable to another project.
 
-This and other examples can be found in `examples` sub-directory of qt-mvvm package.
+This and other examples can be found in [examples](examples/README.md) sub-directory of qt-mvvm package.
 
 ## The context
 

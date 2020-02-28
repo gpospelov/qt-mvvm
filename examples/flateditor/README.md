@@ -1,6 +1,7 @@
 # Example "flateditor".
 
-Example shows how to automatically populate layout with widgets to edit SessionModel content.
+Example shows how to automatically populate grid layout from 
+application model content.
 
 ![flateditor](../../doc/flateditor.png)
 
