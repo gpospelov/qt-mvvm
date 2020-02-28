@@ -26,7 +26,8 @@ public:
         return QStringList() << "Name"
                              << "Nr."
                              << "Material"
-                             << "Thickness";
+                             << "Thickness"
+                             << "Sigma";
     }
 
     std::vector<std::unique_ptr<ViewItem>> constructRefRow(SessionItem* item)
@@ -43,6 +44,7 @@ public:
                 multilayer->getItem(MultiLayerItem::P_NREPETITIONS)));
             result.emplace_back(std::make_unique<ViewEmptyItem>()); // instead of P_MATERIAL
             result.emplace_back(std::make_unique<ViewEmptyItem>()); // instead of P_THICKNESS
+            result.emplace_back(std::make_unique<ViewEmptyItem>()); // instead of P_ROUGHNESS
         }
 
         // layer row contains its name, placeholder for repetition, layer material and thickness
@@ -55,6 +57,8 @@ public:
                 std::make_unique<ViewDataItem>(layer->getItem(LayerItem::P_MATERIAL)));
             result.emplace_back(
                 std::make_unique<ViewDataItem>(layer->getItem(LayerItem::P_THICKNESS)));
+            result.emplace_back(
+                std::make_unique<ViewDataItem>(layer->getItem(LayerItem::P_ROUGHNESS)->getItem(RoughnessItem::P_SIGMA)));
         }
 
         return result;

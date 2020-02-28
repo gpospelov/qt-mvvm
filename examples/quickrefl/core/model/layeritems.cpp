@@ -28,7 +28,7 @@ LayerItem::LayerItem() : ModelView::CompoundItem(::Constants::LayerItemType)
     addProperty(P_NAME, "Unnamed")->setDisplayName("Name");
     addProperty(P_MATERIAL, MaterialModel::undefined_material())->setDisplayName("Material");
     addProperty(P_THICKNESS, 0.0)->setDisplayName("Thickness");
-    addProperty(P_ROUGHNESS, 0.0)->setDisplayName("Roughness");
+    addProperty<RoughnessItem>(P_ROUGHNESS);
 }
 
 //! ---------------------------------------------------------------------------
