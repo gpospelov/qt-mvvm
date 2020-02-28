@@ -95,8 +95,6 @@ QJsonObject JsonVariant::get_json(const QVariant& variant)
 
 QVariant JsonVariant::get_variant(const QJsonObject& object)
 {
-    QVariant result;
-
     if (!isVariant(object))
         throw std::runtime_error("json::get_variant() -> Error. Invalid json object");
 
@@ -113,7 +111,7 @@ QVariant JsonVariant::get_variant(const QJsonObject& object)
 bool JsonVariant::isVariant(const QJsonObject& object) const
 {
     static const QStringList expected = expected_variant_keys();
-    return object.keys() == expected ? true : false;
+    return object.keys() == expected;
 }
 
 namespace

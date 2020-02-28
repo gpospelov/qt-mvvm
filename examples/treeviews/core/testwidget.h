@@ -41,7 +41,6 @@ private slots:
 private:
     ModelView::SessionItem* item_from_view(QTreeView* view, const QPoint& point);
 
-    QBoxLayout* create_top_layout();
     QBoxLayout* create_left_layout();
     QBoxLayout* create_middle_layout();
     QBoxLayout* create_right_layout();

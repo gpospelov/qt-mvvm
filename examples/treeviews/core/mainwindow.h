@@ -14,7 +14,6 @@
 #include <memory>
 
 class SampleModel;
-class QTabWidget;
 
 class MainWindow : public QMainWindow
 {
@@ -31,7 +30,6 @@ private:
     void write_settings();
     void init_model();
 
-    QTabWidget* m_tabWidget;
     std::unique_ptr<SampleModel> m_sample_model;
 };
 

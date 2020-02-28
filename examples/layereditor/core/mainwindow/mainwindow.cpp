@@ -45,7 +45,7 @@ void MainWindow::closeEvent(QCloseEvent* event)
 
 void MainWindow::init_application()
 {
-    QCoreApplication::setApplicationName("qt-mvvm-example");
+    QCoreApplication::setApplicationName("layereditor");
     QCoreApplication::setApplicationVersion("0.1");
     QCoreApplication::setOrganizationName("qt-mvvm");
 

@@ -60,7 +60,7 @@ GraphPlotController::GraphPlotController(QCustomPlot* custom_plot)
 
 void GraphPlotController::subscribe()
 {
-    auto on_property_change = [this](SessionItem* item, std::string property_name) {
+    auto on_property_change = [this](SessionItem* item, const std::string& property_name) {
         Q_UNUSED(item)
         if (property_name == GraphItem::P_COLOR)
             p_impl->update_graph_pen();

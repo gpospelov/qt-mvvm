@@ -116,17 +116,19 @@ ExternalProperty MaterialModel::material_property(const std::string& id, std::st
 
 //! Clones material and adds it at the bottom of MaterialContainerItem.
 
-void MaterialModel::cloneMaterial(const MaterialBaseItem* item)
+MaterialBaseItem* MaterialModel::cloneMaterial(const MaterialBaseItem* item)
 {
-    SessionModel::copyItem(item, materialContainer());
+    auto tagrow = item->parent()->tagRowOfItem(item).next();
+    return static_cast<MaterialBaseItem*>(SessionModel::copyItem(item, item->parent(), tagrow));
 }
 
 //! Adds default material.
 
-void MaterialModel::addDefaultMaterial()
+SLDMaterialItem* MaterialModel::addDefaultMaterial(const ModelView::TagRow& tagrow)
 {
-    auto material = insertItem<SLDMaterialItem>(materialContainer());
+    auto material = insertItem<SLDMaterialItem>(materialContainer(), tagrow);
     material->set_properties("Default", QColor(Qt::green), rho_default, mu_default);
+    return material;
 }
 
 //! Populates the model with some default content.
@@ -137,9 +139,11 @@ void MaterialModel::init_model()
     auto material = insertItem<SLDMaterialItem>(container);
     material->set_properties(air_material_name, suggestMaterialColor(air_material_name), 0.0, 0.0);
     material = insertItem<SLDMaterialItem>(container);
-    material->set_properties(default_material_name, suggestMaterialColor(default_material_name), rho_default, mu_default);
+    material->set_properties(default_material_name, suggestMaterialColor(default_material_name),
+                             rho_default, mu_default);
     material = insertItem<SLDMaterialItem>(container);
-    material->set_properties(substrate_material_name, suggestMaterialColor(substrate_material_name), rho_si, mu_si);
+    material->set_properties(substrate_material_name, suggestMaterialColor(substrate_material_name),
+                             rho_si, mu_si);
 }
 
 MaterialContainerItem* MaterialModel::materialContainer()

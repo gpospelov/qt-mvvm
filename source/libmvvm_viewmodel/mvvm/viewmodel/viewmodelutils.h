@@ -32,7 +32,7 @@ namespace Utils
 
 //! Iterates through QAbstractItem model
 CORE_EXPORT void iterate_model(const QAbstractItemModel* model, const QModelIndex& parent,
-                               std::function<void(const QModelIndex& child)> fun);
+                               const std::function<void(const QModelIndex& child)>& fun);
 
 //! Returns vector of Qt roles corresponding to given ItemDataRole.
 CORE_EXPORT QVector<int> item_role_to_qt(int role);

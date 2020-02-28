@@ -14,12 +14,24 @@
 #include <mvvm/model/externalproperty.h>
 #include <mvvm/signals/itemmapper.h>
 
+RoughnessItem::RoughnessItem() : ModelView::CompoundItem(::Constants::RoughnessItemType)
+{
+    addProperty(P_SIGMA, 0.0)->setDisplayName("Sigma");
+    addProperty(P_HURST, 0.5)->setDisplayName("Hurst");
+    addProperty(P_LATERAL_CORR_LENGTH, 0.0)->setDisplayName("Correlation length");
+}
+
+//! ---------------------------------------------------------------------------
+
 LayerItem::LayerItem() : ModelView::CompoundItem(::Constants::LayerItemType)
 {
     addProperty(P_NAME, "Unnamed")->setDisplayName("Name");
     addProperty(P_MATERIAL, MaterialModel::undefined_material())->setDisplayName("Material");
     addProperty(P_THICKNESS, 0.0)->setDisplayName("Thickness");
+    addProperty<RoughnessItem>(P_ROUGHNESS);
 }
+
+//! ---------------------------------------------------------------------------
 
 MultiLayerItem::MultiLayerItem() : ModelView::CompoundItem(::Constants::MultiLayerItemType)
 {
@@ -60,3 +72,4 @@ void MultiLayerItem::update_layer_appearance()
         }
     }
 }
+

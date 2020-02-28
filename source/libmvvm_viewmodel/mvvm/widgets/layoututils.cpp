@@ -25,10 +25,8 @@ void LayoutUtils::clearLayout(QLayout* layout, bool deleteWidgets)
         return;
 
     while (QLayoutItem* item = layout->takeAt(0)) {
-        if (deleteWidgets) {
-            if (QWidget* widget = item->widget())
-                delete widget;
-        }
+        if (deleteWidgets)
+            delete item->widget();
         if (QLayout* childLayout = item->layout())
             LayoutUtils::clearLayout(childLayout, deleteWidgets);
         delete item;

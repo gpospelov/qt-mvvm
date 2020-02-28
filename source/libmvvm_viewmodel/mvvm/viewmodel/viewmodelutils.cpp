@@ -20,7 +20,7 @@
 using namespace ModelView;
 
 void Utils::iterate_model(const QAbstractItemModel* model, const QModelIndex& parent,
-                          std::function<void(const QModelIndex& child)> fun)
+                          const std::function<void(const QModelIndex& child)>& fun)
 {
     if (!model)
         return;

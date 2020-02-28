@@ -10,10 +10,10 @@
 #ifndef MVVM_VIEWMODEL_VIEWITEM_H
 #define MVVM_VIEWMODEL_VIEWITEM_H
 
+#include <QVariant>
 #include <memory>
 #include <mvvm/core/export.h>
 #include <vector>
-#include <QVariant>
 
 namespace ModelView
 {
@@ -64,8 +64,8 @@ protected:
     void setParent(ViewItem* parent);
 
 private:
-    struct RefViewItemImpl;
-    std::unique_ptr<RefViewItemImpl> p_impl;
+    struct ViewItemImpl;
+    std::unique_ptr<ViewItemImpl> p_impl;
 };
 
 }; // namespace ModelView

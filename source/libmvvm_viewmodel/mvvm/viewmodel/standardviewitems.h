@@ -53,6 +53,7 @@ public:
 
     Qt::ItemFlags flags() const override;
 
+    QVariant data(int role) const override;
 };
 
 } // namespace ModelView

@@ -94,8 +94,8 @@ struct PropertyFlatView::PropertyFlatViewImpl {
         auto view_item = view_model->viewItemFromIndex(index);
         if (auto label_item = dynamic_cast<ViewLabelItem*>(view_item); label_item)
             return create_label(label_item);
-        else
-            return create_editor(index);
+
+        return create_editor(index);
     }
 
     //! Creates row of widget mappers. Each widget mapper will serve all editors in a column.

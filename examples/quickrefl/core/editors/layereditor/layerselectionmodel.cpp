@@ -64,5 +64,5 @@ std::vector<ModelView::SessionItem*> LayerSelectionModel::selectedItems() const
 
 const ModelView::ViewModel* LayerSelectionModel::viewModel() const
 {
-    return dynamic_cast<const ModelView::ViewModel*>(model());
+    return static_cast<const ModelView::ViewModel*>(model());
 }

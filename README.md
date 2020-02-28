@@ -90,7 +90,7 @@ logic. Qt classes like `QModelIndex` start to appear everywhere,
 even in places which have nothing to do with Qt graphics. Attempt to store GUI
 session data in `QAbstractItemModel` leads to inflexible layout in Qt trees and tables. Attempt to fix this with `QAbstractProxyModel` leads to appearance of
 overwhelmingly complicated proxy models. Removing Qt from dependencies allows
-to focus more on common needs (i.e. objects/properties construction/editing) of GUI applications rather than on presentation details.
+to focus more on common needs (i.e. objects construction, property editing etc) of GUI applications rather than on presentation details.
 
 `SessionModel` has concept of properties, undo/redo,
 serialization, and it's own minimal signaling to handle business logic.

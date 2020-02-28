@@ -94,7 +94,7 @@ void ViewModelDelegate::updateEditorGeometry(QWidget* editor, const QStyleOption
 
 void ViewModelDelegate::onCustomEditorDataChanged()
 {
-    CustomEditor* editor = qobject_cast<CustomEditor*>(sender());
+    auto editor = qobject_cast<CustomEditor*>(sender());
     emit commitData(editor);
     if (!editor->is_persistent())
         emit closeEditor(editor);

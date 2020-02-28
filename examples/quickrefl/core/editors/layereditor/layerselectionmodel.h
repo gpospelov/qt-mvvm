@@ -35,7 +35,6 @@ public:
 
     std::vector<ModelView::SessionItem*> selectedItems() const;
 
-private:
     const ModelView::ViewModel* viewModel() const;
 };
 

@@ -21,7 +21,7 @@ SessionItemTags::~SessionItemTags()
         delete tag;
 }
 
-void SessionItemTags::registerTag(TagInfo tagInfo, bool set_as_default)
+void SessionItemTags::registerTag(const TagInfo& tagInfo, bool set_as_default)
 {
     if (isTag(tagInfo.name()))
         throw std::runtime_error("SessionItemTags::registerTag() -> Error. Existing name '"

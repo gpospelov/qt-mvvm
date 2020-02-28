@@ -64,8 +64,8 @@ TEST_F(LayerSelectionModelTest, selectLayerItem)
     // selecting top layer
     test_data.selection_model.selectItem(test_data.top);
     EXPECT_TRUE(test_data.selection_model.hasSelection());
-    // 4 indexes should be selected: name, nr, material, thickness
-    EXPECT_EQ(test_data.selection_model.selectedIndexes().size(), 4);
+    // 4 indexes should be selected: name, nr, material, thickness, sigma
+    EXPECT_EQ(test_data.selection_model.selectedIndexes().size(), 5);
 
     // checking back that top layer is selected
     std::vector<SessionItem*> expected = {test_data.top};
@@ -74,8 +74,8 @@ TEST_F(LayerSelectionModelTest, selectLayerItem)
     // selecting bottom layer
     test_data.selection_model.selectItem(test_data.bottom);
     EXPECT_TRUE(test_data.selection_model.hasSelection());
-    // 4 indexes should be selected: name, nr, material, thickness
-    EXPECT_EQ(test_data.selection_model.selectedIndexes().size(), 4);
+    // 4 indexes should be selected: name, nr, material, thickness, sigma
+    EXPECT_EQ(test_data.selection_model.selectedIndexes().size(), 5);
 
     // checking back that top layer is selected
     expected = {test_data.bottom};
@@ -92,7 +92,7 @@ TEST_F(LayerSelectionModelTest, selectLayerItems)
     // selecting top layer
     EXPECT_TRUE(test_data.selection_model.hasSelection());
 
-    EXPECT_EQ(test_data.selection_model.selectedIndexes().size(), 8); // two rows of cells
+    EXPECT_EQ(test_data.selection_model.selectedIndexes().size(), 10); // two rows of cells
 
     // checking back that top layer is selected
     std::vector<SessionItem*> expected = to_select;
@@ -120,7 +120,7 @@ TEST_F(LayerSelectionModelTest, selectMultiLayerItem)
     test_data.selection_model.selectItem(new_ml);
 
     EXPECT_TRUE(test_data.selection_model.hasSelection());
-    EXPECT_EQ(test_data.selection_model.selectedIndexes().size(), 4);
+    EXPECT_EQ(test_data.selection_model.selectedIndexes().size(), 5);
 
     std::vector<SessionItem*> expected = {new_ml};
     EXPECT_EQ(test_data.selection_model.selectedItems(), expected);

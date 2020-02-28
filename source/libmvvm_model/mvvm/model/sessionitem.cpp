@@ -85,8 +85,7 @@ bool SessionItem::setData(const QVariant& variant, int role)
 {
     if (p_impl->m_model)
         return p_impl->m_model->setData(this, variant, role); // to use undo/redo
-    else
-        return setDataIntern(variant, role);
+    return setDataIntern(variant, role);
 }
 
 QVariant SessionItem::data(int role) const
