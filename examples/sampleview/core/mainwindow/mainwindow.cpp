@@ -48,7 +48,7 @@ void MainWindow::closeEvent(QCloseEvent* event)
 
 void MainWindow::init_application()
 {
-    QCoreApplication::setApplicationName("Layer editor prototype");
+    QCoreApplication::setApplicationName("sampleview");
     QCoreApplication::setApplicationVersion("0.0");
     QCoreApplication::setOrganizationName("qt-mvvm");
 

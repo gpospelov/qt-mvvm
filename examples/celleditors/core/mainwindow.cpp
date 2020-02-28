@@ -48,7 +48,7 @@ void MainWindow::write_settings()
 
 void MainWindow::init_application()
 {
-    QCoreApplication::setApplicationName("qt-mvvm-example");
+    QCoreApplication::setApplicationName("celleditors");
     QCoreApplication::setApplicationVersion("0.1");
     QCoreApplication::setOrganizationName("qt-mvvm");
 
