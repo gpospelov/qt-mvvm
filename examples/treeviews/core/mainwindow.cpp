@@ -21,14 +21,10 @@ const QString size_key = "size";
 const QString pos_key = "pos";
 } // namespace
 
-MainWindow::MainWindow()
-    : m_tabWidget(new QTabWidget), m_sample_model(std::make_unique<SampleModel>())
+MainWindow::MainWindow() : m_sample_model(std::make_unique<SampleModel>())
 {
-    m_tabWidget->addTab(new TestWidget(m_sample_model.get()), "Tree views");
-
-    m_tabWidget->setCurrentIndex(m_tabWidget->count() - 1);
-    setCentralWidget(m_tabWidget);
-
+    auto central_widget = new TestWidget(m_sample_model.get());
+    setCentralWidget(central_widget);
     init_application();
 }
 
