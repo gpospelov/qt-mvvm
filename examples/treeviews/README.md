@@ -1,19 +1,19 @@
 # Example "treeviews".
 
-Example shows how to represent the model using trees with different layouts.
+The example shows how to represent the model using trees with different layouts.
 
-Application model contains hierarchical structure, `MultiLayer`, which holds `Layer` structures populated with particles. Every item have some editable properties.
+The application model contains a hierarchical structure, `MultiLayer`, which holds `Layer` structures populated with particles. Every item has some editable properties.
 
 ![treeviews](../../doc/treeviews1.png)
 
-+ Tree on the left shows application model in the form of two column tree
++ Tree on the left shows application model in the form of two-column tree
 with standard `property name` and `property value` layout. All items are shown.
-+ Top tree at the center demonstrates filtered tree, where only top-level-items are shown and all property items (leaves) are filtered out.
++ Top tree at the center demonstrates a filtered tree, where only top-level-items are shown and all property items (leaves) are filtered out.
 + Bottom tree at the center shows currently selected branch corresponding to the `Particle`.
-+ Top tree at the right shows undo-redo stack where user can walk through modifications done to the data.
-+ Bottom tree at the right shows properties (leaves) of currently selected `Particle` item.
++ Top tree at the right shows undo-redo stack where the user can walk through modifications done to the data.
++ Bottom tree at the right shows properties (leaves) of currently selected `Particle` items.
 
-Example also demonstrates following features:
+The example also demonstrates the following features:
 
 ## Group property
 
@@ -22,7 +22,7 @@ Only property `Radius` of currently selected shape `Full sphere` is shown, other
 
 ## Business logic
 
-Item `Interference` demonstrates how to implement business logic. Every time user clicks on its `Integration flag` property, the property `Rotation` gets either enabled or disabled.
+Item `Interference` demonstrates how to implement business logic. Every time the user clicks on its `Integration flag` property, the property `Rotation` gets either enabled or disabled.
 
 ![treeviews](../../doc/treeviews2.png)
 
