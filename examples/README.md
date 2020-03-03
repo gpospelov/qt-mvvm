@@ -16,4 +16,5 @@ application model content.](flateditor/README.md)
 
 + sampleview
 + quickrefl
++ concurrentplot
 
