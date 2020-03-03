@@ -21,13 +21,10 @@ ColorMapPropertyWidget::ColorMapPropertyWidget(ColorMapModel* model, QWidget* pa
     : QWidget(parent), m_slider(new QSlider), m_treeView(new ItemsTreeView), m_model(model)
 {
     auto mainLayout = new QVBoxLayout;
-
     mainLayout->addWidget(m_slider);
     mainLayout->addWidget(m_treeView);
-
     setLayout(mainLayout);
     setModel(model);
-
     setup_slider();
 }
 
