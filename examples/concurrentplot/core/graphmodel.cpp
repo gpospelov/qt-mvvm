@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include "graphmodel.h"
+#include "toysimulation.h"
 #include <QColor>
 #include <cmath>
 #include <mvvm/model/modelutils.h>
@@ -22,22 +23,11 @@
 namespace
 {
 
-constexpr double pi = 3.14159265358979323846;
-constexpr int npoints = 400;
-constexpr double xmin = 0.0;
-constexpr double xmax = 5.0;
-constexpr double dx = (xmax - xmin) / npoints;
-
-std::vector<double> bin_values(double amp_factor = 1.0)
+auto simulation_result(double amp_factor = 1.0)
 {
-    std::vector<double> result;
-    for (int i = 0; i < npoints; ++i) {
-        double x = xmin + i * dx;
-        double value = amp_factor * 10.0 * std::sin(2.0 * pi * 2 * x)
-                       + amp_factor * 5.0 * std::sin(2 * pi * 2.25 * x);
-        result.push_back(value);
-    }
-    return result;
+    ToySimulation simulation(amp_factor);
+    simulation.runSimulation();
+    return simulation.simulationResult();
 }
 
 } // namespace
@@ -53,9 +43,11 @@ GraphModel::GraphModel() : SessionModel("GraphModel")
 
 void GraphModel::add_graph()
 {
+    auto [xmin, xmax, points] = simulation_result(ModelView::Utils::RandDouble(0.5, 1.0));
+
     auto data = insertItem<Data1DItem>(data_container());
-    data->setAxis(FixedBinAxisItem::create(npoints, xmin, xmax));
-    data->setContent(bin_values(ModelView::Utils::RandDouble(0.5, 1.0)));
+    data->setAxis(FixedBinAxisItem::create(static_cast<int>(points.size()), xmin, xmax));
+    data->setContent(points);
 
     auto graph = insertItem<GraphItem>(viewport());
     graph->setDataItem(data);
