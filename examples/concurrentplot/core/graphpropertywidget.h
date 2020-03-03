@@ -16,6 +16,7 @@
 class QBoxLayout;
 class GraphModel;
 class QBoxLayout;
+class QSlider;
 
 namespace ModelView
 {
@@ -36,7 +37,8 @@ public:
     void setModel(GraphModel* model);
 
 private:
-    QBoxLayout* create_button_layout();
+    void setup_slider();
+    QSlider* m_slider;
     ModelView::ItemsTreeView* m_treeView;
     GraphModel* m_model;
 };

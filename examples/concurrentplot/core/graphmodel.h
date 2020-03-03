@@ -37,6 +37,8 @@ public:
 
     void randomize_graphs();
 
+    void set_data(const std::vector<double>& data);
+
 private:
     ModelView::GraphViewportItem* viewport();
     ModelView::ContainerItem* data_container();

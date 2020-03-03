@@ -84,6 +84,12 @@ void GraphModel::randomize_graphs()
     }
 }
 
+void GraphModel::set_data(const std::vector<double>& data)
+{
+    auto item = data_container()->item<Data1DItem>(ContainerItem::T_ITEMS);
+    item->setContent(data);
+}
+
 //! Returns viewport item containig graph items.
 
 GraphViewportItem* GraphModel::viewport()
