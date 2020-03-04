@@ -31,6 +31,7 @@
 + Repair flateditor example.
 + Profile collidingmice example.
 + Make QML example.
++ Implement user examples showing colormap with projections.
 
 ## Miscellaneous
 
