@@ -25,7 +25,7 @@ namespace ModelView
 {
 
 struct empty_stack : public std::exception {
-    const char* what() const noexcept;
+    const char* what() const noexcept { return "Empty stack"; }
 };
 
 //! @class threadsafe_stack
@@ -59,7 +59,7 @@ public:
         if (data.empty())
             throw empty_stack();
         std::shared_ptr<T> const res(std::make_shared<T>(std::move(data.top())));
-        data.pot();
+        data.pop();
         return res;
     }
 
