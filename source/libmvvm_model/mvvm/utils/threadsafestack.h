@@ -16,6 +16,7 @@
 #include <stack>
 #include <stdexcept>
 #include <thread>
+#include <condition_variable>
 
 //! @file threadsafestack.h
 //! @brief Thread-safe stack borrowed from Anthony Williams, C++ Concurrency in Action, Second
@@ -37,6 +38,7 @@ template <typename T> class threadsafe_stack
 private:
     std::stack<T> data;
     mutable std::mutex m;
+    std::condition_variable data_condition;
 
 public:
     threadsafe_stack() {}
@@ -51,25 +53,45 @@ public:
     {
         std::lock_guard<std::mutex> lock(m);
         data.push(std::move(new_value));
+        data_condition.notify_one();
     }
 
-    std::shared_ptr<T> pop()
+    void wait_and_pop(T& value)
     {
-        std::lock_guard<std::mutex> lock(m);
-        if (data.empty())
-            throw empty_stack();
+        std::unique_lock<std::mutex> lock(m);
+        data_condition.wait(lock, [this]{ return !data.empty();});
+        value = std::move(data.top());
+        data.pop();
+    }
+
+    std::shared_ptr<T> wait_and_pop()
+    {
+        std::unique_lock<std::mutex> lock(m);
+        data_condition.wait(lock, [this]{ return !data.empty();});
+
         std::shared_ptr<T> const res(std::make_shared<T>(std::move(data.top())));
         data.pop();
         return res;
     }
 
-    void pop(T& value)
+    bool try_pop(T& value)
     {
         std::lock_guard<std::mutex> lock(m);
         if (data.empty())
-            throw empty_stack();
+            return false;
         value = std::move(data.top());
         data.pop();
+        return true;
+    }
+
+    std::shared_ptr<T> try_pop()
+    {
+        std::lock_guard<std::mutex> lock(m);
+        if (data.empty())
+            return std::shared_ptr<T>();
+        std::shared_ptr<T> res(std::make_shared<T>(std::move(data.top())));
+        data.pop();
+        return res;
     }
 
     bool empty() const
