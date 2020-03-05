@@ -17,6 +17,7 @@ class QBoxLayout;
 class GraphModel;
 class QBoxLayout;
 class QSlider;
+class JobManager;
 
 namespace ModelView
 {
@@ -33,6 +34,7 @@ class GraphPropertyWidget : public QWidget
     Q_OBJECT
 public:
     explicit GraphPropertyWidget(GraphModel* model = nullptr, QWidget* parent = nullptr);
+    ~GraphPropertyWidget();
 
     void setModel(GraphModel* model);
 
@@ -41,6 +43,7 @@ private:
     QSlider* m_slider;
     ModelView::ItemsTreeView* m_treeView;
     GraphModel* m_model;
+    std::unique_ptr<JobManager> job_manager;
 };
 
 #endif // GRAPHPROPERTYWIDGET_H

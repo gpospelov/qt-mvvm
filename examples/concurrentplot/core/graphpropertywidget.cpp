@@ -9,13 +9,13 @@
 
 #include "graphpropertywidget.h"
 #include "graphmodel.h"
+#include "jobmanager.h"
 #include <QBoxLayout>
 #include <QPushButton>
 #include <QSlider>
 #include <mvvm/viewmodel/standardviewmodels.h>
 #include <mvvm/viewmodel/viewmodel.h>
 #include <mvvm/widgets/itemstreeview.h>
-#include <toysimulation.h>
 
 using namespace ModelView;
 
@@ -30,12 +30,15 @@ GraphPropertyWidget::GraphPropertyWidget(GraphModel* model, QWidget* parent)
     setup_slider();
 }
 
+GraphPropertyWidget::~GraphPropertyWidget() = default;
+
 void GraphPropertyWidget::setModel(GraphModel* model)
 {
     if (!model)
         return;
 
     m_model = model;
+    job_manager = std::make_unique<JobManager>(model);
 
     m_treeView->setViewModel(Utils::CreateDefaultViewModel(model));
 }
@@ -49,10 +52,8 @@ void GraphPropertyWidget::setup_slider()
     m_slider->setValue(50.0);
 
     auto on_value_changed = [this](int value) {
-        ToySimulation simulation(value / 100., 1);
-        simulation.runSimulation();
-        auto result = simulation.simulationResult();
-        m_model->set_data(result.data);
+        if (job_manager)
+            job_manager->requestSimulation(value);
     };
     connect(m_slider, &QSlider::valueChanged, on_value_changed);
 }
