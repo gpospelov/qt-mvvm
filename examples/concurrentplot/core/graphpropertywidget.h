@@ -7,16 +7,17 @@
 //
 // ************************************************************************** //
 
-#ifndef COLORMAPPROPERTYWIDGET_H
-#define COLORMAPPROPERTYWIDGET_H
+#ifndef GRAPHPROPERTYWIDGET_H
+#define GRAPHPROPERTYWIDGET_H
 
 #include <QWidget>
 #include <memory>
 
 class QBoxLayout;
-class ColorMapModel;
+class GraphModel;
 class QBoxLayout;
 class QSlider;
+class JobManager;
 
 namespace ModelView
 {
@@ -24,23 +25,25 @@ class ItemsTreeView;
 } // namespace ModelView
 
 /*!
-@class ColorMapPropertyWidget
+@class GraphPropertyWidget
 @brief Shows model content in standard tree view.
 */
 
-class ColorMapPropertyWidget : public QWidget
+class GraphPropertyWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit ColorMapPropertyWidget(ColorMapModel* model = nullptr, QWidget* parent = nullptr);
+    explicit GraphPropertyWidget(GraphModel* model = nullptr, QWidget* parent = nullptr);
+    ~GraphPropertyWidget();
 
-    void setModel(ColorMapModel* model);
+    void setModel(GraphModel* model);
 
 private:
     void setup_slider();
     QSlider* m_slider;
     ModelView::ItemsTreeView* m_treeView;
-    ColorMapModel* m_model;
+    GraphModel* m_model;
+    std::unique_ptr<JobManager> job_manager;
 };
 
-#endif // COLORMAPPROPERTYWIDGET_H
+#endif // GRAPHPROPERTYWIDGET_H
