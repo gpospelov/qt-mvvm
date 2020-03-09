@@ -17,7 +17,7 @@
 class ToySimulation
 {
 public:
-    //! Data to represent input conditions for toy simulation.
+    //! Represents input conditions for toy simulation.
     struct InputData
     {
         double xmin{0.0};
@@ -26,6 +26,7 @@ public:
         double amplitude{1.0};
     };
 
+    //! Represents results of the simulation.
     struct Result {
         double xmin{0.0};
         double xmax{5.0};
