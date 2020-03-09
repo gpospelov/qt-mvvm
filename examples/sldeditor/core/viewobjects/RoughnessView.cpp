@@ -115,10 +115,7 @@ QPainterPath RoughnessView::getPath() const
 
     double roughness = roughness_item->property(RoughnessItem::P_ROUGHNESS).toDouble();
 
-    double width_left = left_segment->segmentItem()->property(SegmentItem::P_WIDTH).toDouble();
     double width_mid = middle_segment->segmentItem()->property(SegmentItem::P_WIDTH).toDouble();
-    double width_right = right_segment->segmentItem()->property(SegmentItem::P_WIDTH).toDouble();
-
     double height_left = left_segment->segmentItem()->property(SegmentItem::P_HEIGHT).toDouble();
     double height_mid = middle_segment->segmentItem()->property(SegmentItem::P_HEIGHT).toDouble();
     double height_right = right_segment->segmentItem()->property(SegmentItem::P_HEIGHT).toDouble();
