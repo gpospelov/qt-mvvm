@@ -7,18 +7,22 @@
 //
 // ************************************************************************** //
 
-#include "MainWindow.h"
-#include <QApplication>
-#include <QLocale>
+#include <QDragMoveEvent>
+#include <QGraphicsView>
+#include <QKeyEvent>
+#include <QWheelEvent>
 
-int main(int argc, char** argv)
+class GraphicsScene;
+
+class SLDViewWidget : public QGraphicsView
 {
-    QLocale::setDefault(QLocale(QLocale::English, QLocale::UnitedStates));
+    Q_OBJECT
 
-    QApplication app(argc, argv);
+public:
+    SLDViewWidget(QWidget* parent = nullptr);
+    GraphicsScene* getScene() const;
 
-    MainWindow win;
-    win.show();
+protected:
+    void resizeEvent(QResizeEvent* event);
 
-    return app.exec();
-}
+};

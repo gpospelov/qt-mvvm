@@ -1,4 +1,4 @@
-set(library_name sldeditorcore)
+set(library_name quickreflcore)
 
 target_sources(${library_name} PRIVATE
     GraphicsScene.cpp

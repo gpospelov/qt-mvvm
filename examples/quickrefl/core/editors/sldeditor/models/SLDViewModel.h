@@ -28,10 +28,10 @@ class ExternalProperty;
 @brief This holds the model for all the graphical elements of the sld editor
 */
 
-class ViewItemsModel : public ModelView::SessionModel
+class SLDViewModel : public ModelView::SessionModel
 {
 public:
-    ViewItemsModel();
+    SLDViewModel();
 
     //! Add a handle item
     HandleItem* addHandle();
@@ -39,8 +39,6 @@ public:
     SegmentItem* addSegment();
     //! Add a roughness item
     RoughnessItem* addRoughness();
-    //! Add a region of interest item
-    RegionOfInterestItem* addRegionOfInterest();
 };
 
 #endif //  VIEWITEMSMODEL_H

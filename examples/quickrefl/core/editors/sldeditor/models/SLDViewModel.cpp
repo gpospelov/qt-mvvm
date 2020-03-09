@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "ViewItemsModel.h"
+#include "SLDViewModel.h"
 
 #include <mvvm/model/externalproperty.h>
 #include <mvvm/model/itemcatalogue.h>
@@ -24,7 +24,6 @@ std::unique_ptr<ItemCatalogue> CreateItemCatalogue()
     result->registerItem<HandleItem>();
     result->registerItem<SegmentItem>();
     result->registerItem<RoughnessItem>();
-    result->registerItem<RegionOfInterestItem>();
     return result;
 }
 
@@ -36,14 +35,12 @@ QColor random_color()
 
 } // namespace
 
-ViewItemsModel::ViewItemsModel() : SessionModel("ViewItemsModel")
+SLDViewModel::SLDViewModel() : SessionModel("ViewItemsModel")
 {
     setItemCatalogue(CreateItemCatalogue());
-
-    addRegionOfInterest();
 }
 
-HandleItem* ViewItemsModel::addHandle()
+HandleItem* SLDViewModel::addHandle()
 {
     auto handle = insertItem<HandleItem>();
     handle->setProperty(HandleItem::P_XPOS, 10.);
@@ -52,7 +49,7 @@ HandleItem* ViewItemsModel::addHandle()
     return handle;
 }
 
-SegmentItem* ViewItemsModel::addSegment()
+SegmentItem* SLDViewModel::addSegment()
 {
     auto segment = insertItem<SegmentItem>();
     segment->setProperty(SegmentItem::P_X_POS, 0.);
@@ -63,20 +60,10 @@ SegmentItem* ViewItemsModel::addSegment()
     return segment;
 }
 
-RoughnessItem* ViewItemsModel::addRoughness()
+RoughnessItem* SLDViewModel::addRoughness()
 {
     auto roughness = insertItem<RoughnessItem>();
     roughness->setProperty(RoughnessItem::P_ROUGHNESS, 0.);
     roughness->setProperty(RoughnessItem::P_COLOR, QVariant::fromValue(random_color()));
     return roughness;
-}
-
-RegionOfInterestItem* ViewItemsModel::addRegionOfInterest()
-{
-    auto roi = insertItem<RegionOfInterestItem>();
-    roi->setProperty(RegionOfInterestItem::P_XLOW, -2.0);
-    roi->setProperty(RegionOfInterestItem::P_YLOW, 1.0);
-    roi->setProperty(RegionOfInterestItem::P_XUP, 2.0);
-    roi->setProperty(RegionOfInterestItem::P_YUP, 2.0);
-    return roi;
 }

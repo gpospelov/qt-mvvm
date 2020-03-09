@@ -7,13 +7,13 @@
 //
 // ************************************************************************** //
 
-#include "ViewWidget.h"
+#include "SLDViewWidget.h"
 #include "GraphicsScene.h"
 
 #include <memory>
 
 //! The constructor
-ViewWidget::ViewWidget(QWidget* parent) : QGraphicsView(parent), scale_factor(1., 1.)
+SLDViewWidget::SLDViewWidget(QWidget* parent) : QGraphicsView(parent)
 {
     GraphicsScene* scene_item = new GraphicsScene(parent = this);
     setScene(scene_item);
@@ -26,14 +26,14 @@ ViewWidget::ViewWidget(QWidget* parent) : QGraphicsView(parent), scale_factor(1.
     setContentsMargins(0, 0, 0, 0);
 }
 
-void ViewWidget::resizeEvent(QResizeEvent* event)
+void SLDViewWidget::resizeEvent(QResizeEvent* event)
 {
     QWidget::resizeEvent(event);
     GraphicsScene* scene_item = static_cast<GraphicsScene*>(scene());
     scene_item->update_size(event->size());
 }
 
-GraphicsScene* ViewWidget::getScene() const
+GraphicsScene* SLDViewWidget::getScene() const
 {
     return static_cast<GraphicsScene*>(scene());
 }
