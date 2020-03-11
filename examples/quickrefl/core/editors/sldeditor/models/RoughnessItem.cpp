@@ -23,3 +23,13 @@ RoughnessItem::RoughnessItem() : ModelView::CompoundItem("RoughnessItem")
         ->setDisplayName("Roughness");
     addProperty(P_COLOR, QColor(Qt::black))->setDisplayName("Color");
 }
+
+void RoughnessItem::setLayerIdentifier(std::string layer_identifier_in)
+{
+    layer_identifier = layer_identifier_in;
+}
+
+std::string RoughnessItem::layerIdentifier(std::string layer_identifier_in)
+{
+    return layer_identifier;
+}

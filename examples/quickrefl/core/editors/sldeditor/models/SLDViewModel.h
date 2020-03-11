@@ -36,9 +36,9 @@ public:
     //! Add a handle item
     HandleItem* addHandle();
     //! Add a segment item
-    SegmentItem* addSegment();
+    SegmentItem* addSegment(std::string layer_identifier_in);
     //! Add a roughness item
-    RoughnessItem* addRoughness();
+    RoughnessItem* addRoughness(std::string layer_identifier_in);
 };
 
 #endif //  VIEWITEMSMODEL_H

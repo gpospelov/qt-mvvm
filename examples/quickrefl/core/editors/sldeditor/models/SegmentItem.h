@@ -27,7 +27,13 @@ public:
     static inline const std::string P_HEIGHT = "P_HEIGHT";
     static inline const std::string P_WIDTH = "P_WIDTH";
     static inline const std::string P_HORIZONTAL = "P_HORIZONTAL";
-    SegmentItem();
+    SegmentItem(std::string layer_identifier_in = "");
+
+    void setLayerIdentifier(std::string layer_identifier_in);
+    std::string layerIdentifier(std::string layer_identifier_in);
+
+private:
+    std::string layer_identifier;
 };
 
 #endif // SEGMENTITEM_H

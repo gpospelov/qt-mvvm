@@ -28,27 +28,32 @@
 
 //! The constructor
 SegmentView::SegmentView(SegmentItem* item)
-    : segment_item(item), color(item->property(SegmentItem::P_COLOR).value<QColor>()),
+    : ViewObject(), segment_item(item), color(item->property(SegmentItem::P_COLOR).value<QColor>()),
       left_handle(nullptr), right_handle(nullptr)
 {
     auto on_property_change = [this](ModelView::SessionItem*, std::string property_name) {
         if (property_name == SegmentItem::P_X_POS) {
+            prepareGeometryChange();
             update();
             emit moved();
         }
         if (property_name == SegmentItem::P_Y_POS) {
+            prepareGeometryChange();
             update();
             emit moved();
         }
         if (property_name == SegmentItem::P_HEIGHT) {
+            prepareGeometryChange();
             update();
             emit moved();
         }
         if (property_name == SegmentItem::P_WIDTH) {
+            prepareGeometryChange();
             update();
             emit moved();
         }
         if (property_name == SegmentItem::P_HORIZONTAL) {
+            prepareGeometryChange();
             update();
             emit moved();
         }

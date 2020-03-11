@@ -49,7 +49,7 @@ HandleItem* SLDViewModel::addHandle()
     return handle;
 }
 
-SegmentItem* SLDViewModel::addSegment()
+SegmentItem* SLDViewModel::addSegment(std::string layer_identifier_in)
 {
     auto segment = insertItem<SegmentItem>();
     segment->setProperty(SegmentItem::P_X_POS, 0.);
@@ -60,7 +60,7 @@ SegmentItem* SLDViewModel::addSegment()
     return segment;
 }
 
-RoughnessItem* SLDViewModel::addRoughness()
+RoughnessItem* SLDViewModel::addRoughness(std::string layer_identifier_in)
 {
     auto roughness = insertItem<RoughnessItem>();
     roughness->setProperty(RoughnessItem::P_ROUGHNESS, 0.);

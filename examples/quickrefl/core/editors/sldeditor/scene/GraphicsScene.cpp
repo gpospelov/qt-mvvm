@@ -24,7 +24,9 @@ const QRectF default_scene_rect{QPointF{scene_origin_x, scene_origin_y}, QSizeF{
 //! The contructor
 GraphicsScene::GraphicsScene(QObject* parent) : QGraphicsScene(parent)
 {
+    setItemIndexMethod(QGraphicsScene::NoIndex);
     setSceneRect(default_scene_rect);
+    setContext();
 }
 
 //! Initialise the GraphicsScene with its elements
@@ -61,9 +63,4 @@ void GraphicsScene::createPlotProxy(ModelView::GraphCanvas* plot_canvas)
 ModelView::SceneAdapterInterface* GraphicsScene::getSceneAdapter() const
 {
     return scene_adapter.get();
-}
-
-AxesRectangleView* GraphicsScene::axesView() const
-{
-    return axes_view;
 }

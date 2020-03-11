@@ -16,6 +16,7 @@
 class MaterialModel;
 class SampleModel;
 class SLDViewModel;
+class SLDController;
 
 //!  Main class to holds all models of GUI session.
 
@@ -28,6 +29,7 @@ public:
     MaterialModel* materialModel();
     SampleModel* sampleModel();
     SLDViewModel* sldViewModel();
+    SLDController* sldController();
 
     void readFromFile(const QString& name);
 

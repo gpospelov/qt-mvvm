@@ -13,6 +13,7 @@
 #include "materialpropertycontroller.h"
 #include "samplemodel.h"
 #include "SLDViewModel.h"
+#include "SLDController.h"
 #include <mvvm/model/externalproperty.h>
 #include <mvvm/model/modelutils.h>
 #include <mvvm/model/sessionitem.h>
@@ -25,6 +26,7 @@ struct ApplicationModels::ApplicationModelsImpl {
     std::unique_ptr<SampleModel> m_sample_model;
     std::unique_ptr<SLDViewModel> m_sld_view_model;
     std::unique_ptr<MaterialPropertyController> m_property_controller;
+    std::unique_ptr<SLDController> m_sld_controller;
     std::unique_ptr<JsonDocument> m_document;
 
     ApplicationModelsImpl()
@@ -34,6 +36,10 @@ struct ApplicationModels::ApplicationModelsImpl {
         m_sld_view_model = std::make_unique<SLDViewModel>();
         m_property_controller = std::make_unique<MaterialPropertyController>(m_material_model.get(),
                                                                              m_sample_model.get());
+        m_sld_controller = std::make_unique<SLDController>(m_material_model.get(),
+                                                           m_sample_model.get(),
+                                                           m_sld_view_model.get(),
+                                                           nullptr);
         m_document = std::make_unique<JsonDocument>(
             std::initializer_list<SessionModel*>{m_material_model.get(), m_sample_model.get()});
 
@@ -77,6 +83,10 @@ SLDViewModel* ApplicationModels::sldViewModel()
     return p_impl->m_sld_view_model.get();
 }
 
+SLDController* ApplicationModels::sldController()
+{
+    return p_impl->m_sld_controller.get();
+}
 
 void ApplicationModels::readFromFile(const QString& name)
 {

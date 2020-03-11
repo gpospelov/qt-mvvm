@@ -21,7 +21,6 @@ class SceneAdapterInterface;
 
 class CustomPlotProxyWidget;
 class RegionOfInterestItem;
-class AxesRectangleView;
 
 //! Custom graphics scene to show QCustomPlot with additional elements on top.
 
@@ -36,14 +35,11 @@ public:
     void setContext();
     void update_size(const QSize& newSize);
     ModelView::SceneAdapterInterface* getSceneAdapter() const;
-    AxesRectangleView* axesView() const;
 
 private:
     void createPlotProxy(ModelView::GraphCanvas* plot_canvas);
-
     CustomPlotProxyWidget* plot_proxy{nullptr};
     std::unique_ptr<ModelView::SceneAdapterInterface> scene_adapter;
-    AxesRectangleView* axes_view;
 };
 
 #endif //  GRAPHICSPROXY_GRAPHICSSCENE_H

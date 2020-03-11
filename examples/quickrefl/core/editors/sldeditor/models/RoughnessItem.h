@@ -23,6 +23,12 @@ public:
     static inline const std::string P_ROUGHNESS = "P_ROUGHNESS";
     static inline const std::string P_COLOR = "P_COLOR";
     RoughnessItem();
+
+    void setLayerIdentifier(std::string layer_identifier_in);
+    std::string layerIdentifier(std::string layer_identifier_in);
+
+private:
+    std::string layer_identifier;
 };
 
 #endif // ROUGHNESSITEM_H

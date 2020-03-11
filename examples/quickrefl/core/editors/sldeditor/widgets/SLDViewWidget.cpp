@@ -9,11 +9,12 @@
 
 #include "SLDViewWidget.h"
 #include "GraphicsScene.h"
+#include "SLDController.h"
 
 #include <memory>
 
 //! The constructor
-SLDViewWidget::SLDViewWidget(QWidget* parent) : QGraphicsView(parent)
+SLDViewWidget::SLDViewWidget(SLDController* sld_controller, QWidget* parent) : QGraphicsView(parent)
 {
     GraphicsScene* scene_item = new GraphicsScene(parent = this);
     setScene(scene_item);
@@ -24,6 +25,8 @@ SLDViewWidget::SLDViewWidget(QWidget* parent) : QGraphicsView(parent)
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setContentsMargins(0, 0, 0, 0);
+    
+    sld_controller->setScene(scene_item);
 }
 
 void SLDViewWidget::resizeEvent(QResizeEvent* event)
