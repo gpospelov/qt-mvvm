@@ -31,6 +31,7 @@ public:
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
     QRectF getSceneRect() const;
     SegmentItem* segmentItem() const;
+    void propertyChanged();
 
 public:
     void addHandles(HandleView* left_handle_in, HandleView* right_handle_in);

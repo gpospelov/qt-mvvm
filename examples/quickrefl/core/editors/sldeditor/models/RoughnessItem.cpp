@@ -8,6 +8,13 @@
 // ************************************************************************** //
 
 #include "RoughnessItem.h"
+
+#include "samplemodel.h"
+#include "layeritems.h"
+
+#include "materialmodel.h"
+#include "materialitems.h"
+
 #include <QColor>
 #include <QUndoStack>
 #include <cmath>
@@ -32,4 +39,11 @@ void RoughnessItem::setLayerIdentifier(std::string layer_identifier_in)
 std::string RoughnessItem::layerIdentifier(std::string layer_identifier_in)
 {
     return layer_identifier;
+}
+
+void RoughnessItem::fetchFromLayer(SampleModel* layer_model, MaterialModel* material_model)
+{
+    auto model_pointer = model();
+    auto item = dynamic_cast<MaterialBaseItem*>(model_pointer->findItem(layer_identifier));
+
 }

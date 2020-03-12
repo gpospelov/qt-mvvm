@@ -33,29 +33,19 @@ SegmentView::SegmentView(SegmentItem* item)
 {
     auto on_property_change = [this](ModelView::SessionItem*, std::string property_name) {
         if (property_name == SegmentItem::P_X_POS) {
-            prepareGeometryChange();
-            update();
-            emit moved();
+            propertyChanged();
         }
         if (property_name == SegmentItem::P_Y_POS) {
-            prepareGeometryChange();
-            update();
-            emit moved();
+            propertyChanged();
         }
         if (property_name == SegmentItem::P_HEIGHT) {
-            prepareGeometryChange();
-            update();
-            emit moved();
+            propertyChanged();
         }
         if (property_name == SegmentItem::P_WIDTH) {
-            prepareGeometryChange();
-            update();
-            emit moved();
+            propertyChanged();
         }
         if (property_name == SegmentItem::P_HORIZONTAL) {
-            prepareGeometryChange();
-            update();
-            emit moved();
+            propertyChanged();
         }
         if (property_name == SegmentItem::P_COLOR)
             update();
@@ -64,6 +54,14 @@ SegmentView::SegmentView(SegmentItem* item)
     segment_item->mapper()->setOnPropertyChange(on_property_change, this);
     setFlag(QGraphicsItem::ItemIsMovable);
     setZValue(10);
+}
+
+void SegmentView::propertyChanged()
+{
+    prepareGeometryChange();
+    update();
+    moveHandles();
+    emit moved();
 }
 
 //! The overriden paint method
@@ -76,7 +74,7 @@ void SegmentView::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWid
     ViewObject::paint(painter, nullptr, nullptr);
 
     painter->setPen(Qt::NoPen);
-    painter->setBrush(color);
+    painter->setBrush(segment_item->property(SegmentItem::P_COLOR).value<QColor>());
     painter->drawRect(getSceneRect());
 }
 

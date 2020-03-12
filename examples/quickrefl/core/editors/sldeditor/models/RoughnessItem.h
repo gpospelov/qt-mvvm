@@ -13,6 +13,9 @@
 #include <mvvm/model/compounditem.h>
 #include <mvvm/model/sessionmodel.h>
 
+class SampleModel;
+class MaterialModel;
+
 /*!
 @class RoughnessItem
 @brief Domain object to hold mouse info.
@@ -26,7 +29,8 @@ public:
 
     void setLayerIdentifier(std::string layer_identifier_in);
     std::string layerIdentifier(std::string layer_identifier_in);
-
+    void fetchFromLayer(SampleModel* layer_model, MaterialModel* material_model);
+    
 private:
     std::string layer_identifier;
 };

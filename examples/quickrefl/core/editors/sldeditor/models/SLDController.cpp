@@ -45,14 +45,14 @@ SLDController::SLDController(MaterialModel* material_model, SampleModel* sample_
 void SLDController::connectSLDModel()
 {
     // MaterialModel
-    auto on_mat_data_change = [this](SessionItem*, int) { updateAll(); };
+    auto on_mat_data_change = [this](SessionItem* item, int) { updateAll(item); };
     p_material_model->mapper()->setOnDataChange(on_mat_data_change, this);
 
     auto on_mat_model_destroyed = [this](SessionModel*) { p_material_model = nullptr; };
     p_material_model->mapper()->setOnModelDestroyed(on_mat_model_destroyed, this);
     
     // SampleModel
-    auto on_sam_data_change = [this](SessionItem*, int) { updateAll(); };
+    auto on_sam_data_change = [this](SessionItem* item, int) { updateAll(item); };
     p_sample_model->mapper()->setOnDataChange(on_sam_data_change, this);
 
     auto on_sam_item_inserted = [this](SessionItem*, TagRow) { buildSLD(); };
@@ -105,6 +105,7 @@ void SLDController::buildSLD()
 
     connectViewItem(top_segments, handles, side_segments, roughness);
     drawViewItems(top_segments, handles, side_segments, roughness);
+    updateAll();
 
 }
 
@@ -123,11 +124,15 @@ void SLDController::clearScene()
             p_scene_item->removeItem(item);
             item->deleteLater();
         }else if(dynamic_cast<HandleView*>(items[i])){
-            p_scene_item->removeItem(items[i]);
-            // dynamic_cast<HandleView*>(items.at(i))->deleteLater();
+            HandleView* item = dynamic_cast<HandleView*>(items[i]);
+            item->setVisible(false);
+            p_scene_item->removeItem(item);
+            item->deleteLater();
         }else if(dynamic_cast<RoughnessView*>(items[i])){
-            p_scene_item->removeItem(items[i]);
-            // dynamic_cast<RoughnessView*>(items.at(i))->deleteLater();
+            RoughnessView* item = dynamic_cast<RoughnessView*>(items[i]);
+            item->setVisible(false);
+            p_scene_item->removeItem(item);
+            item->deleteLater();
         }
     }
 }
@@ -237,7 +242,31 @@ void SLDController::drawViewItems(std::vector<SegmentView*> top_segments, std::v
     }
 }
 
-void SLDController::updateAll()
+void SLDController::updateAll(SessionItem* item)
 {
-    std::cout<<"Updating"<<std::endl;
+    auto view_items = p_sld_model->rootItem()->children();
+
+    if (!item){
+        for (auto* item: view_items){
+            if (dynamic_cast<SegmentItem*>(item)){
+                auto mod_item = dynamic_cast<SegmentItem*>(item);
+                mod_item->fetchFromLayer(p_sample_model, p_material_model);
+            } else if (dynamic_cast<SegmentItem*>(item)){
+                auto mod_item = dynamic_cast<SegmentItem*>(item);
+                mod_item->fetchFromLayer(p_sample_model, p_material_model);
+            }
+        }
+    }else{
+
+        for (auto* item: view_items){
+            if (dynamic_cast<SegmentItem*>(item)){
+                auto mod_item = dynamic_cast<SegmentItem*>(item);
+                mod_item->fetchFromLayer(p_sample_model, p_material_model);
+            }else if (dynamic_cast<RoughnessItem*>(item)){
+                auto mod_item = dynamic_cast<RoughnessItem*>(item);
+                mod_item->fetchFromLayer(p_sample_model, p_material_model);
+            }
+
+        }
+    }
 }

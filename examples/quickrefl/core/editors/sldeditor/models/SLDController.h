@@ -54,7 +54,7 @@ private:
                        std::vector<SegmentView*> side_segments,
                        std::vector<RoughnessView*> roughness_views);
 
-    void updateAll();
+    void updateAll(ModelView::SessionItem* item = nullptr);
     
 
 private:
