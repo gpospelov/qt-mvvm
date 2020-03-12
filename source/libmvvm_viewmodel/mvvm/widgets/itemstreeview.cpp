@@ -9,7 +9,7 @@
 
 #include <QTreeView>
 #include <QVBoxLayout>
-#include <mvvm/viewmodel/abstractviewmodel.h>
+#include <mvvm/viewmodel/viewmodel.h>
 #include <mvvm/viewmodel/viewmodeldelegate.h>
 #include <mvvm/widgets/itemstreeview.h>
 
@@ -28,7 +28,7 @@ ItemsTreeView::ItemsTreeView(QWidget* parent)
 
 ItemsTreeView::~ItemsTreeView() = default;
 
-void ItemsTreeView::setViewModel(std::unique_ptr<AbstractViewModel> viewModel)
+void ItemsTreeView::setViewModel(std::unique_ptr<ViewModel> viewModel)
 {
     m_viewModel = std::move(viewModel);
     m_treeView->setItemDelegate(m_delegate.get());
@@ -56,7 +56,7 @@ void ItemsTreeView::setRootSessionItem(SessionItem* item)
     m_treeView->expandAll();
 }
 
-AbstractViewModel* ItemsTreeView::viewModel() const
+ViewModel* ItemsTreeView::viewModel() const
 {
     return m_viewModel.get();
 }

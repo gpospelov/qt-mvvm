@@ -13,8 +13,7 @@
 #include <mvvm/model/comboproperty.h>
 #include <mvvm/viewmodel/defaultviewmodel.h>
 #include <mvvm/viewmodel/propertyviewmodel.h>
-#include <mvvm/viewmodel/viewdataitem.h>
-#include <mvvm/viewmodel/viewitems.h>
+#include <mvvm/viewmodel/standardviewitems.h>
 
 using namespace ModelView;
 
@@ -194,8 +193,7 @@ TEST_F(ToyShapeGroupItemTest, inPropertyViewModelContext)
     ASSERT_TRUE(groupItem != nullptr);
 
     // constructing viewModel from sample model
-    PropertyViewModel viewModel;
-    viewModel.setSessionModel(&model);
+    PropertyViewModel viewModel(&model);
     viewModel.setRootSessionItem(parent);
 
     // root item should have one child, item looking at our groupItem

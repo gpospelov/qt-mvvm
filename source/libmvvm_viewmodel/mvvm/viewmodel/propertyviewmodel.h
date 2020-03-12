@@ -10,7 +10,7 @@
 #ifndef MVVM_VIEWMODEL_PROPERTYVIEWMODEL_H
 #define MVVM_VIEWMODEL_PROPERTYVIEWMODEL_H
 
-#include <mvvm/viewmodel/abstractviewmodel.h>
+#include <mvvm/viewmodel/viewmodel.h>
 
 namespace ModelView
 {
@@ -18,10 +18,10 @@ namespace ModelView
 //! View model to show content of SessionModel in Qt widgets.
 //! Only property items are shown, also hides inactive items of GroupProperty.
 
-class CORE_EXPORT PropertyViewModel : public AbstractViewModel
+class CORE_EXPORT PropertyViewModel : public ViewModel
 {
 public:
-    PropertyViewModel(SessionModel* model = nullptr, QObject* parent = nullptr);
+    PropertyViewModel(SessionModel* model, QObject* parent = nullptr);
 };
 
 } // namespace ModelView

@@ -33,7 +33,7 @@ TEST_F(LayerViewModelTest, initialState)
     LayerViewModel viewmodel(&model);
 
     EXPECT_EQ(viewmodel.rowCount(), 0);
-    EXPECT_EQ(viewmodel.columnCount(), 4);
+    EXPECT_EQ(viewmodel.columnCount(), 0);
 }
 
 //! Checks signals while inserting LayerItem in empty model
@@ -50,7 +50,7 @@ TEST_F(LayerViewModelTest, insertLayer)
 
     auto layer = model.insertItem<LayerItem>();
     EXPECT_EQ(viewmodel.rowCount(), 1);
-    EXPECT_EQ(viewmodel.columnCount(), 4);
+    EXPECT_EQ(viewmodel.columnCount(), 5);
 
     // checking ::rowInserted
     EXPECT_EQ(spyRowsInserted.count(), 1);
@@ -93,7 +93,7 @@ TEST_F(LayerViewModelTest, inserMultitLayer)
 
     auto multilayer = model.insertItem<MultiLayerItem>();
     EXPECT_EQ(viewmodel.rowCount(), 1);
-    EXPECT_EQ(viewmodel.columnCount(), 4);
+    EXPECT_EQ(viewmodel.columnCount(), 5);
 
     // checking ::rowInserted
     EXPECT_EQ(spyRowsInserted.count(), 1);
@@ -122,10 +122,10 @@ TEST_F(LayerViewModelTest, inserMultitLayer)
     EXPECT_EQ(Utils::ItemsFromIndex(selection), expected);
 
     // adding layer to the multilayer
-//    QModelIndex mlIndex = viewmodel.index(0, 0);
-//    model.insertItem<LayerItem>(multilayer);
-//    EXPECT_EQ(viewmodel.rowCount(mlIndex), 1);
-//    EXPECT_EQ(viewmodel.columnCount(mlIndex), 4);
+    QModelIndex mlIndex = viewmodel.index(0, 0);
+    model.insertItem<LayerItem>(multilayer);
+    EXPECT_EQ(viewmodel.rowCount(mlIndex), 1);
+    EXPECT_EQ(viewmodel.columnCount(mlIndex), 5);
 }
 
 //! Layout of LayerViewModel for two layer system.
@@ -141,7 +141,7 @@ TEST_F(LayerViewModelTest, twoLayerSystem)
     viewmodel.setRootSessionItem(multilayer);
 
     EXPECT_EQ(viewmodel.rowCount(), 2);
-    EXPECT_EQ(viewmodel.columnCount(), 4); // name, Nr, material, thickness
+    EXPECT_EQ(viewmodel.columnCount(), 5); // name, Nr, material, thickness, sigma
 
     // check indexes in first row and their correspondance to top-layer related items
     QModelIndexList selection = {viewmodel.index(0, 0), viewmodel.index(0, 1),

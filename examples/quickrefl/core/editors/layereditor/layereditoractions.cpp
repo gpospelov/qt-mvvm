@@ -15,7 +15,7 @@
 #include <QAction>
 #include <mvvm/model/itemutils.h>
 #include <mvvm/model/modelutils.h>
-#include <mvvm/viewmodel/abstractviewmodel.h>
+#include <mvvm/viewmodel/viewmodel.h>
 
 using namespace ModelView;
 
@@ -24,7 +24,7 @@ struct LayerEditorActions::LayerEditorActionsImpl {
     LayerSelectionModel* selection_model{nullptr};
     LayerEditorActionsImpl(SampleModel* model) : model(model) {}
 
-    //! Finds parent na tagrow to insert new item
+    //! Finds parent and tagrow to insert new item
 
     std::pair<SessionItem*, TagRow> locateInsertPlace()
     {
@@ -32,16 +32,14 @@ struct LayerEditorActions::LayerEditorActionsImpl {
         auto selected = all_selected.empty() ? nullptr : all_selected.back();
         if (selected)
             return {selected->parent(), selected->parent()->tagRowOfItem(selected).next()};
-        else
-            return {root_item(), TagRow{}};
+        return {root_item(), TagRow{}};
     }
 
     //! Returns a multi layer playing the role of invisible root item.
 
     ModelView::SessionItem* root_item()
     {
-        auto model = dynamic_cast<ModelView::AbstractViewModel*>(selection_model->model());
-        return model->sessionItemFromIndex(QModelIndex());
+        return selection_model->viewModel()->sessionItemFromIndex(QModelIndex());
     }
 };
 

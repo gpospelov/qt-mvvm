@@ -11,9 +11,7 @@
 #include "test_utils.h"
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/viewmodel/labeldatarowstrategy.h>
-#include <mvvm/viewmodel/viewdataitem.h>
-#include <mvvm/viewmodel/viewemptyitem.h>
-#include <mvvm/viewmodel/viewlabelitem.h>
+#include <mvvm/viewmodel/standardviewitems.h>
 
 namespace
 {
@@ -35,7 +33,7 @@ LabelDataRowStrategyTest::~LabelDataRowStrategyTest() = default;
 TEST_F(LabelDataRowStrategyTest, initialState)
 {
     LabelDataRowStrategy constructor;
-    EXPECT_EQ(constructor.constructRow(nullptr).size(), 0);
+    EXPECT_EQ(constructor.constructRefRow(nullptr).size(), 0);
     EXPECT_EQ(constructor.horizontalHeaderLabels(), expected_labels);
 }
 
@@ -46,19 +44,17 @@ TEST_F(LabelDataRowStrategyTest, topLevelItem)
     SessionItem item("model_type");
 
     LabelDataRowStrategy constructor;
-    auto items = constructor.constructRow(&item);
+    auto items = constructor.constructRefRow(&item);
     EXPECT_EQ(items.size(), expected_column_count); // label and empty items
     EXPECT_EQ(constructor.horizontalHeaderLabels(), expected_labels);
 
     // checking that it is label and data
-    auto labelItem = dynamic_cast<ViewLabelItem*>(items.at(0));
-    auto emptyItem = dynamic_cast<ViewEmptyItem*>(items.at(1));
+    auto labelItem = dynamic_cast<ViewLabelItem*>(items.at(0).get());
+    auto emptyItem = dynamic_cast<ViewEmptyItem*>(items.at(1).get());
     ASSERT_TRUE(labelItem != nullptr);
     EXPECT_EQ(labelItem->item(), &item);
     ASSERT_TRUE(emptyItem != nullptr);
     EXPECT_EQ(emptyItem->item(), nullptr);
-
-    TestUtils::clean_items(items);
 }
 
 //! Checks row construction for property item.
@@ -69,17 +65,15 @@ TEST_F(LabelDataRowStrategyTest, propertyItem)
     item.setData(42.0);
 
     LabelDataRowStrategy constructor;
-    auto items = constructor.constructRow(&item);
+    auto items = constructor.constructRefRow(&item);
     EXPECT_EQ(items.size(), expected_column_count);
     EXPECT_EQ(constructor.horizontalHeaderLabels(), expected_labels);
 
     // checking that it is label and data
-    auto labelItem = dynamic_cast<ViewLabelItem*>(items.at(0));
-    auto dataItem = dynamic_cast<ViewDataItem*>(items.at(1));
+    auto labelItem = dynamic_cast<ViewLabelItem*>(items.at(0).get());
+    auto dataItem = dynamic_cast<ViewDataItem*>(items.at(1).get());
     ASSERT_TRUE(labelItem != nullptr);
     EXPECT_EQ(labelItem->item(), &item);
     ASSERT_TRUE(dataItem != nullptr);
     EXPECT_EQ(dataItem->item(), &item);
-
-    TestUtils::clean_items(items);
 }

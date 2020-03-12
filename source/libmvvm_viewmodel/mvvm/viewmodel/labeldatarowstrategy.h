@@ -26,8 +26,10 @@ class SessionItem;
 class CORE_EXPORT LabelDataRowStrategy : public RowStrategyInterface
 {
 public:
-    QList<QStandardItem*> constructRow(SessionItem* item);
-    QStringList horizontalHeaderLabels() const;
+    QStringList horizontalHeaderLabels() const  override;
+
+    std::vector<std::unique_ptr<ViewItem>> constructRefRow(SessionItem*)  override;
+
 };
 
 } // namespace ModelView

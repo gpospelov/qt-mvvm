@@ -58,7 +58,8 @@ TEST_F(ViewModelUtilsTest, iterate)
     std::vector<int> expected = {1, 2, 3, 4, 10, 20};
     std::vector<int> result;
 
-    Utils::iterate_model(&model, QModelIndex(), [&](const QStandardItem* item) {
+    Utils::iterate_model(&model, QModelIndex(), [&](const QModelIndex& index) {
+        auto item = model.itemFromIndex(index);
         result.push_back(item->data(Qt::EditRole).value<int>());
     });
 
@@ -140,8 +141,7 @@ TEST_F(ViewModelUtilsTest, itemsFromIndex)
     // creating VectorItem and viewModel to see it as a table
     SessionModel model;
     auto parent = model.insertItem<VectorItem>();
-    PropertyTableViewModel viewModel;
-    viewModel.setSessionModel(&model);
+    PropertyTableViewModel viewModel(&model);
 
     // it's a table with one row and x,y,z columns
     EXPECT_EQ(viewModel.rowCount(), 1);
@@ -171,8 +171,7 @@ TEST_F(ViewModelUtilsTest, parentItemsFromIndex)
     // creating VectorItem and viewModel to see it as a table
     SessionModel model;
     auto parent = model.insertItem<VectorItem>();
-    PropertyTableViewModel viewModel;
-    viewModel.setSessionModel(&model);
+    PropertyTableViewModel viewModel(&model);
 
     // it's a table with one row and x,y,z columns
     EXPECT_EQ(viewModel.rowCount(), 1);

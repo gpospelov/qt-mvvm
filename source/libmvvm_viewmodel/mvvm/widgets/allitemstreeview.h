@@ -27,7 +27,7 @@ class CORE_EXPORT AllItemsTreeView : public ItemsTreeView
     Q_OBJECT
 public:
     AllItemsTreeView(SessionModel* model, QWidget* parent = nullptr);
-    ~AllItemsTreeView();
+    ~AllItemsTreeView() override;
 };
 
 } // namespace ModelView

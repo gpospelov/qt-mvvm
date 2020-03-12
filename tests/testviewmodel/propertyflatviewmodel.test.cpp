@@ -18,39 +18,39 @@
 
 using namespace ModelView;
 
-//! Tests for PropertyFlatModel class.
+//! Tests for PropertyFlatViewModel class.
 
-class PropertyFlatModelTest : public ::testing::Test
+class PropertyFlatViewModelTest : public ::testing::Test
 {
 public:
-    ~PropertyFlatModelTest();
+    ~PropertyFlatViewModelTest();
 };
 
-PropertyFlatModelTest::~PropertyFlatModelTest() = default;
+PropertyFlatViewModelTest::~PropertyFlatViewModelTest() = default;
 
-TEST_F(PropertyFlatModelTest, initialState)
+TEST_F(PropertyFlatViewModelTest, initialState)
 {
-    PropertyFlatViewModel viewModel;
+    SessionModel model;
+    PropertyFlatViewModel viewModel(&model);
     EXPECT_EQ(viewModel.rowCount(), 0);
     EXPECT_EQ(viewModel.columnCount(), 0);
-    EXPECT_EQ(viewModel.sessionItemFromIndex(QModelIndex()), nullptr);
+    EXPECT_EQ(viewModel.sessionItemFromIndex(QModelIndex()), model.rootItem());
 }
 
-TEST_F(PropertyFlatModelTest, baseItem)
+TEST_F(PropertyFlatViewModelTest, baseItem)
 {
     SessionModel model;
     model.insertItem<SessionItem>();
 
-    PropertyFlatViewModel viewModel;
-    viewModel.setSessionModel(&model);
+    PropertyFlatViewModel viewModel(&model);
 
     // Root item has default tag and all items considered as top items.
     // PropertyViewModel shouldn't see any items.
     EXPECT_EQ(viewModel.rowCount(), 0);
-    EXPECT_EQ(viewModel.columnCount(), 2);
+    EXPECT_EQ(viewModel.columnCount(), 0);
 }
 
-TEST_F(PropertyFlatModelTest, propertyItem)
+TEST_F(PropertyFlatViewModelTest, propertyItem)
 {
     SessionModel model;
     auto parent = model.insertItem<SessionItem>();
@@ -62,8 +62,7 @@ TEST_F(PropertyFlatModelTest, propertyItem)
     model.insertItem<PropertyItem>(parent, "property_tag");
     model.insertItem<SessionItem>(parent, "universal_tag");
 
-    PropertyFlatViewModel viewModel;
-    viewModel.setSessionModel(&model);
+    PropertyFlatViewModel viewModel(&model);
     viewModel.setRootSessionItem(parent);
 
     // View model should see only property item belonging to parent.
@@ -73,16 +72,15 @@ TEST_F(PropertyFlatModelTest, propertyItem)
 
 //! VectorItem in a model.
 
-TEST_F(PropertyFlatModelTest, vectorItem)
+TEST_F(PropertyFlatViewModelTest, vectorItem)
 {
     SessionModel model;
     auto parent = model.insertItem<VectorItem>();
 
-    PropertyFlatViewModel viewModel;
-    viewModel.setSessionModel(&model);
+    PropertyFlatViewModel viewModel(&model);
 
     EXPECT_EQ(viewModel.rowCount(), 0); // root item doesn't have properties
-    EXPECT_EQ(viewModel.columnCount(), 2);
+    EXPECT_EQ(viewModel.columnCount(), 0);
 
     // switching to vectorItem and checking that it has 3 properties
     viewModel.setRootSessionItem(parent);
@@ -92,15 +90,14 @@ TEST_F(PropertyFlatModelTest, vectorItem)
 
 //! ParticleItem in a model
 
-TEST_F(PropertyFlatModelTest, particleItem)
+TEST_F(PropertyFlatViewModelTest, particleItem)
 {
     ToyItems::SampleModel model;
     auto particle = model.insertItem<ToyItems::ParticleItem>();
     auto group = dynamic_cast<GroupItem*>(particle->getItem(ToyItems::ParticleItem::P_SHAPES));
     group->setCurrentType(ToyItems::Constants::SphereItemType);
 
-    PropertyFlatViewModel viewModel;
-    viewModel.setSessionModel(&model);
+    PropertyFlatViewModel viewModel(&model);
     viewModel.setRootSessionItem(particle);
 
     // We should see 3 rows: VectorItem, GroupItem itself, and Radius of sphere
@@ -111,6 +108,11 @@ TEST_F(PropertyFlatModelTest, particleItem)
     group->setCurrentType(ToyItems::Constants::CylinderItemType);
     // We should see 3 rows: VectorItem, GroupItem itself, Cylinderr length and radius
     EXPECT_EQ(viewModel.rowCount(), 4);
+    EXPECT_EQ(viewModel.columnCount(), 2);
+
+    // switching back
+    group->setCurrentType(ToyItems::Constants::SphereItemType);
+    EXPECT_EQ(viewModel.rowCount(), 3);
     EXPECT_EQ(viewModel.columnCount(), 2);
 }
 

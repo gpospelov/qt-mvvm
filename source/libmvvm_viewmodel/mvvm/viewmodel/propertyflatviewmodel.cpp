@@ -13,7 +13,6 @@
 using namespace ModelView;
 
 PropertyFlatViewModel::PropertyFlatViewModel(SessionModel* model, QObject* parent)
-    : AbstractViewModel(std::make_unique<PropertyFlatViewModelController>(this), parent)
+    : ViewModel(std::make_unique<PropertyFlatViewModelController>(model, this), parent)
 {
-    setSessionModel(model);
 }

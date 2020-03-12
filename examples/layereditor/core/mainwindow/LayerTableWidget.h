@@ -19,7 +19,7 @@ class ApplicationModels;
 
 namespace ModelView
 {
-class AbstractViewModel;
+class ViewModel;
 class SessionItem;
 } // namespace ModelView
 
@@ -38,7 +38,7 @@ public:
 
 private:
     QTreeView* m_treeView;
-    std::unique_ptr<ModelView::AbstractViewModel> m_viewModel;
+    std::unique_ptr<ModelView::ViewModel> m_viewModel;
     std::unique_ptr<CustomModelDelegate> m_delegate;
 };
 

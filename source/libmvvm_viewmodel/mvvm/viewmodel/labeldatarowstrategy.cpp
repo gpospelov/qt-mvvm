@@ -9,7 +9,7 @@
 
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/viewmodel/labeldatarowstrategy.h>
-#include <mvvm/viewmodel/viewitems.h>
+#include <mvvm/viewmodel/standardviewitems.h>
 
 using namespace ModelView;
 
@@ -17,23 +17,23 @@ using namespace ModelView;
 //! For LayerItem two items will be generated: ViewLabelItem and ViewEmptyItem, both uneditable.
 //! For LayerItem's thickness property, two items will be generated: ViewLabelItem and ViewDataItem.
 
-QList<QStandardItem*> LabelDataRowStrategy::constructRow(SessionItem* item)
-{
-    QList<QStandardItem*> result;
-
-    if (!item)
-        return result;
-
-    result.push_back(new ViewLabelItem(item));
-    if (item->data().isValid())
-        result.push_back(new ViewDataItem(item));
-    else
-        result.push_back(new ViewEmptyItem);
-    return result;
-}
-
 QStringList LabelDataRowStrategy::horizontalHeaderLabels() const
 {
     return QStringList() << "Name"
                          << "Value";
+}
+
+std::vector<std::unique_ptr<ViewItem>> LabelDataRowStrategy::constructRefRow(SessionItem* item)
+{
+    std::vector<std::unique_ptr<ViewItem>> result;
+
+    if (!item)
+        return result;
+
+    result.emplace_back(std::make_unique<ViewLabelItem>(item));
+    if (item->data().isValid())
+        result.emplace_back(std::make_unique<ViewDataItem>(item));
+    else
+        result.emplace_back(std::make_unique<ViewEmptyItem>());
+    return result;
 }

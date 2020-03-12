@@ -22,7 +22,7 @@ namespace ModelView
 {
 
 class SessionItem;
-class AbstractViewModel;
+class ViewModel;
 class ViewModelDelegate;
 
 //! Tree view to show items of SessionModel via ViewModel mechanism.
@@ -35,20 +35,20 @@ class CORE_EXPORT ItemsTreeView : public QWidget
 
 public:
     explicit ItemsTreeView(QWidget* parent = nullptr);
-    ~ItemsTreeView();
+    ~ItemsTreeView() override;
 
     QTreeView* treeView();
 
-    void setViewModel(std::unique_ptr<AbstractViewModel> viewModel);
+    void setViewModel(std::unique_ptr<ViewModel> viewModel);
 
     void setSelected(SessionItem* item);
 
     void setRootSessionItem(SessionItem* item);
 
-    AbstractViewModel* viewModel() const;
+    ViewModel* viewModel() const;
 
 signals:
-    void itemSelected(SessionItem*);
+    void itemSelected(ModelView::SessionItem*);
 
 private slots:
     void onSelectionChanged(const QItemSelection&, const QItemSelection&);
@@ -59,7 +59,7 @@ private:
     void set_connected(bool flag);
 
     QTreeView* m_treeView;
-    std::unique_ptr<AbstractViewModel> m_viewModel;
+    std::unique_ptr<ViewModel> m_viewModel;
     std::unique_ptr<ViewModelDelegate> m_delegate;
     bool m_block_selection;
 };

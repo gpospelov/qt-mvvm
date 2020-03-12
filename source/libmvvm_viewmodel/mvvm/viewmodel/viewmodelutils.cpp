@@ -13,15 +13,14 @@
 #include <mvvm/model/externalproperty.h>
 #include <mvvm/model/mvvm_types.h>
 #include <mvvm/model/sessionitem.h>
-#include <mvvm/viewmodel/abstractviewmodel.h>
-#include <mvvm/viewmodel/viewitem.h>
+#include <mvvm/viewmodel/viewmodel.h>
 #include <mvvm/viewmodel/viewmodelutils.h>
 #include <set>
 
 using namespace ModelView;
 
-void Utils::iterate_model(const QStandardItemModel* model, const QModelIndex& parent,
-                          std::function<void(QStandardItem*)> fun)
+void Utils::iterate_model(const QAbstractItemModel* model, const QModelIndex& parent,
+                          const std::function<void(const QModelIndex& child)>& fun)
 {
     if (!model)
         return;
@@ -29,30 +28,14 @@ void Utils::iterate_model(const QStandardItemModel* model, const QModelIndex& pa
     for (int row = 0; row < model->rowCount(parent); ++row) {
         for (int col = 0; col < model->columnCount(parent); ++col) {
             auto index = model->index(row, col, parent);
-            auto item = model->itemFromIndex(index);
-            if (item)
-                fun(item);
+            if (index.isValid())
+                fun(index);
         }
         for (int col = 0; col < model->columnCount(parent); ++col) {
             auto index = model->index(row, col, parent);
             iterate_model(model, index, fun);
         }
     }
-}
-
-std::vector<ViewItem*> Utils::findViews(const QStandardItemModel* model,
-                                        const ModelView::SessionItem* item,
-                                        const QModelIndex& parent)
-{
-    std::vector<ViewItem*> result;
-    iterate_model(model, parent, [&](QStandardItem* standard_item) {
-        if (auto view = dynamic_cast<ViewItem*>(standard_item)) {
-            if (view->item() == item)
-                result.push_back(view);
-        }
-    });
-
-    return result;
 }
 
 //! Translates SessionItem's data role to vector of Qt roles.
@@ -103,7 +86,7 @@ std::vector<SessionItem*> Utils::ItemsFromIndex(const QModelIndexList& index_lis
 
     std::vector<SessionItem*> result;
 
-    if (auto model = dynamic_cast<const AbstractViewModel*>(index_list.front().model()))
+    if (auto model = dynamic_cast<const ViewModel*>(index_list.front().model()))
         std::transform(index_list.begin(), index_list.end(), std::back_inserter(result),
                        [model](auto index) { return model->sessionItemFromIndex(index); });
 
@@ -113,7 +96,7 @@ std::vector<SessionItem*> Utils::ItemsFromIndex(const QModelIndexList& index_lis
 std::vector<SessionItem*> Utils::ParentItemsFromIndex(const QModelIndexList& index_list)
 {
     std::set<SessionItem*> unique_parents;
-    for(auto item : ItemsFromIndex(index_list))
+    for (auto item : ItemsFromIndex(index_list))
         if (item)
             unique_parents.insert(item->parent());
 

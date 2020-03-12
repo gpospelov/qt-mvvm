@@ -10,18 +10,28 @@
 #include <mvvm/model/itemutils.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/viewmodel/propertiesrowstrategy.h>
-#include <mvvm/viewmodel/viewitems.h>
+#include <mvvm/viewmodel/standardviewitems.h>
 
 using namespace ModelView;
 
-PropertiesRowStrategy::PropertiesRowStrategy(const std::vector<std::string>& labels)
-    : user_defined_column_labels(labels)
+PropertiesRowStrategy::PropertiesRowStrategy(std::vector<std::string> labels)
+    : user_defined_column_labels(std::move(labels))
 {
 }
 
-QList<QStandardItem*> PropertiesRowStrategy::constructRow(SessionItem* item)
+QStringList PropertiesRowStrategy::horizontalHeaderLabels() const
 {
-    QList<QStandardItem*> result;
+    QStringList result;
+    auto labels =
+        user_defined_column_labels.empty() ? current_column_labels : user_defined_column_labels;
+    std::transform(labels.begin(), labels.end(), std::back_inserter(result),
+                   [](const std::string& str) { return QString::fromStdString(str); });
+    return result;
+}
+
+std::vector<std::unique_ptr<ViewItem>> PropertiesRowStrategy::constructRefRow(SessionItem* item)
+{
+    std::vector<std::unique_ptr<ViewItem>> result;
 
     if (!item)
         return result;
@@ -32,20 +42,11 @@ QList<QStandardItem*> PropertiesRowStrategy::constructRow(SessionItem* item)
 
     for (auto child : items_in_row) {
         if (child->data().isValid())
-            result.push_back(new ViewDataItem(child));
+            result.emplace_back(std::make_unique<ViewDataItem>(child));
         else
-            result.push_back(new ViewLabelItem(child));
+            result.emplace_back(std::make_unique<ViewLabelItem>(child));
     }
-    return result;
-}
 
-QStringList PropertiesRowStrategy::horizontalHeaderLabels() const
-{
-    QStringList result;
-    auto labels =
-        user_defined_column_labels.empty() ? current_column_labels : user_defined_column_labels;
-    std::transform(labels.begin(), labels.end(), std::back_inserter(result),
-                   [](const std::string& str) { return QString::fromStdString(str); });
     return result;
 }
 

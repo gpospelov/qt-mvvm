@@ -60,7 +60,7 @@ public:
     bool setData(SessionItem* item, const QVariant& value, int role);
 
     Path pathFromItem(const SessionItem* item) const;
-    SessionItem* itemFromPath(Path path) const;
+    SessionItem* itemFromPath(const Path& path) const;
 
     void setUndoRedoEnabled(bool value);
 
@@ -83,7 +83,7 @@ public:
 
     const ItemFactoryInterface* factory() const;
 
-    SessionItem* findItem(identifier_type id);
+    SessionItem* findItem(const identifier_type& id);
 
 protected:
     std::unique_ptr<ItemManager> m_item_manager;

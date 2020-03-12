@@ -36,7 +36,6 @@ public:
     ~DemoWidget();
 
 private:
-    QBoxLayout* create_top_layout();
     QBoxLayout* create_left_layout();
     QBoxLayout* create_right_layout();
 

@@ -13,7 +13,6 @@
 using namespace ModelView;
 
 DefaultViewModel::DefaultViewModel(SessionModel* model, QObject* parent)
-    : AbstractViewModel(std::make_unique<DefaultViewModelController>(this), parent)
+    : ViewModel(std::make_unique<DefaultViewModelController>(model, this), parent)
 {
-    setSessionModel(model);
 }

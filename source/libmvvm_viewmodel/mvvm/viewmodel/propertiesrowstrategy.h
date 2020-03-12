@@ -25,10 +25,11 @@ class SessionItem;
 class CORE_EXPORT PropertiesRowStrategy : public RowStrategyInterface
 {
 public:
-    PropertiesRowStrategy(const std::vector<std::string>& labels = {});
+    PropertiesRowStrategy(std::vector<std::string> labels = {});
 
-    QList<QStandardItem*> constructRow(SessionItem* item);
-    QStringList horizontalHeaderLabels() const;
+    QStringList horizontalHeaderLabels() const  override;
+
+    std::vector<std::unique_ptr<ViewItem>> constructRefRow(SessionItem*item) override;
 
 private:
     void update_column_labels(std::vector<ModelView::SessionItem*> items);

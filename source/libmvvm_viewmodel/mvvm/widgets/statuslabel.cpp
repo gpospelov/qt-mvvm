@@ -48,7 +48,7 @@ void StatusLabel::setAlignment(Qt::Alignment alignment)
 
 void StatusLabel::paintEvent(QPaintEvent* event)
 {
-    QWidget::paintEvent(event);
+    QFrame::paintEvent(event);
 
     QPainter painter(this);
     painter.setBrush(QColor(Qt::black));

@@ -85,8 +85,7 @@ bool SessionItem::setData(const QVariant& variant, int role)
 {
     if (p_impl->m_model)
         return p_impl->m_model->setData(this, variant, role); // to use undo/redo
-    else
-        return setDataIntern(variant, role);
+    return setDataIntern(variant, role);
 }
 
 QVariant SessionItem::data(int role) const
@@ -220,12 +219,16 @@ std::vector<SessionItem*> SessionItem::getItems(const std::string& tag) const
     return p_impl->m_tags->getItems(tag);
 }
 
+//! Returns tag corresponding to given item.
+//! Returns "" if item doesn't belong to children.
+
 std::string SessionItem::tagOfItem(const SessionItem* item) const
 {
-    return p_impl->m_tags->tagRowOfItem(item).tag;
+    return tagRowOfItem(item).tag;
 }
 
 //! Returns pair of tag and row corresponding to given item.
+//! Returns {"", -1} if item doesn't belong to children.
 
 TagRow SessionItem::tagRowOfItem(const SessionItem* item) const
 {

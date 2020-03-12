@@ -13,7 +13,6 @@
 using namespace ModelView;
 
 LayerTableViewModel::LayerTableViewModel(SessionModel* model, QObject* parent)
-    : AbstractViewModel(std::make_unique<LayerTableViewModelController>(this), parent)
+    : ViewModel(std::make_unique<LayerTableViewModelController>(model, this), parent)
 {
-    setSessionModel(model);
 }

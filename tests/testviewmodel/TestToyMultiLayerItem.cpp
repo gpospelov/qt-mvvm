@@ -11,7 +11,7 @@
 #include "toy_includes.h"
 #include <QSignalSpy>
 #include <mvvm/viewmodel/defaultviewmodel.h>
-#include <mvvm/viewmodel/viewitems.h>
+#include <mvvm/viewmodel/standardviewitems.h>
 #include <mvvm/viewmodel/viewmodelutils.h>
 
 using namespace ModelView;
@@ -80,7 +80,7 @@ TEST_F(ToyMultilayerItemTest, findMultiLayerView)
 
     DefaultViewModel viewModel(&model);
 
-    auto views = Utils::findViews(&viewModel, multiLayerItem);
+    auto views = viewModel.findViews(multiLayerItem);
     EXPECT_EQ(views.size(), 1);
     EXPECT_EQ(views.at(0)->item(), multiLayerItem);
 }

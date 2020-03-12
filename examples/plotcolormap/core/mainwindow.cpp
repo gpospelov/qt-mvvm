@@ -23,7 +23,7 @@ const QString pos_key = "pos";
 
 MainWindow::MainWindow() : m_tabWidget(new QTabWidget), m_model(std::make_unique<ColorMapModel>())
 {
-    m_tabWidget->addTab(new ColorMapWidget(m_model.get()), "Graphs");
+    m_tabWidget->addTab(new ColorMapWidget(m_model.get()), "Color Map");
 
     m_tabWidget->setCurrentIndex(m_tabWidget->count() - 1);
     setCentralWidget(m_tabWidget);
@@ -41,7 +41,7 @@ void MainWindow::closeEvent(QCloseEvent* event)
 
 void MainWindow::init_application()
 {
-    QCoreApplication::setApplicationName("qt-mvvm-example");
+    QCoreApplication::setApplicationName("plotcolormap");
     QCoreApplication::setApplicationVersion("0.1");
     QCoreApplication::setOrganizationName("qt-mvvm");
 

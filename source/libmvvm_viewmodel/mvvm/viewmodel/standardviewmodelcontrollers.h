@@ -10,7 +10,8 @@
 #ifndef MVVM_VIEWMODEL_STANDARDVIEWMODELCONTROLLERS_H
 #define MVVM_VIEWMODEL_STANDARDVIEWMODELCONTROLLERS_H
 
-#include <mvvm/viewmodel/abstractviewmodelcontroller.h>
+#include <mvvm/viewmodel/viewmodelcontroller.h>
+#include <mvvm/viewmodel/viewmodel.h>
 #include <string>
 #include <vector>
 
@@ -29,10 +30,10 @@ namespace ModelView
 The layout corresponds to original SessionModel, generates standard label/value tree.
 */
 
-class CORE_EXPORT DefaultViewModelController : public AbstractViewModelController
+class CORE_EXPORT DefaultViewModelController : public ViewModelController
 {
 public:
-    explicit DefaultViewModelController(AbstractViewModel* view_model = nullptr);
+    explicit DefaultViewModelController(SessionModel* session_model, ViewModelBase* view_model);
 };
 
 /*!
@@ -42,10 +43,10 @@ public:
 Shows only top level items, property items, group items are hidden.
 */
 
-class CORE_EXPORT TopItemsViewModelController : public AbstractViewModelController
+class CORE_EXPORT TopItemsViewModelController : public ViewModelController
 {
 public:
-    explicit TopItemsViewModelController(AbstractViewModel* view_model = nullptr);
+    explicit TopItemsViewModelController(SessionModel* session_model, ViewModelBase* view_model);
 };
 
 /*!
@@ -55,10 +56,10 @@ public:
 Shows property items, hides top level items, hides inactive items of GroupProperty.
 */
 
-class CORE_EXPORT PropertyViewModelController : public AbstractViewModelController
+class CORE_EXPORT PropertyViewModelController : public ViewModelController
 {
 public:
-    explicit PropertyViewModelController(AbstractViewModel* view_model = nullptr);
+    explicit PropertyViewModelController(SessionModel* session_model, ViewModelBase* view_model);
 
 protected:
     void onDataChange(SessionItem* item, int role) override;
@@ -72,10 +73,10 @@ Shows all property items and place them in table columns.
 FIXME What to do with group property?
 */
 
-class CORE_EXPORT PropertyTableViewModelController : public AbstractViewModelController
+class CORE_EXPORT PropertyTableViewModelController : public ViewModelController
 {
 public:
-    PropertyTableViewModelController(AbstractViewModel* view_model = nullptr,
+    PropertyTableViewModelController(SessionModel* session_model, ViewModelBase* view_model,
                                      const std::vector<std::string>& labels = {});
 };
 
@@ -87,10 +88,10 @@ Shows property items, hides top level items, hides inactive items of GroupProper
 moves subproperties of group item under parent of group item.
 */
 
-class CORE_EXPORT PropertyFlatViewModelController : public AbstractViewModelController
+class CORE_EXPORT PropertyFlatViewModelController : public ViewModelController
 {
 public:
-    explicit PropertyFlatViewModelController(AbstractViewModel* view_model = nullptr);
+    explicit PropertyFlatViewModelController(SessionModel* session_model, ViewModelBase* view_model);
 
 protected:
     void onDataChange(SessionItem* item, int role) override;

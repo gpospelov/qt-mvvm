@@ -10,7 +10,7 @@
 #ifndef MVVM_VIEWMODEL_PROPERTYTABLEVIEWMODEL_H
 #define MVVM_VIEWMODEL_PROPERTYTABLEVIEWMODEL_H
 
-#include <mvvm/viewmodel/abstractviewmodel.h>
+#include <mvvm/viewmodel/viewmodel.h>
 
 namespace ModelView
 {
@@ -23,10 +23,10 @@ Given view model is intended to show registered properties of items in table-lik
 Registered properties will form columns of the table, top level items will form table rows.
 */
 
-class CORE_EXPORT PropertyTableViewModel : public AbstractViewModel
+class CORE_EXPORT PropertyTableViewModel : public ViewModel
 {
 public:
-    PropertyTableViewModel(SessionModel* model = nullptr, QObject* parent = nullptr);
+    PropertyTableViewModel(SessionModel* model, QObject* parent = nullptr);
 };
 
 } // namespace ModelView

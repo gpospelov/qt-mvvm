@@ -14,8 +14,7 @@
 #include <mvvm/standarditems/vectoritem.h>
 #include <mvvm/viewmodel/defaultviewmodel.h>
 #include <mvvm/viewmodel/topitemsviewmodel.h>
-#include <mvvm/viewmodel/viewdataitem.h>
-#include <mvvm/viewmodel/viewitems.h>
+#include <mvvm/viewmodel/standardviewitems.h>
 
 using namespace ModelView;
 
@@ -161,7 +160,7 @@ TEST_F(ToyLayerItemTest, inTopItemsViewModelContext)
     viewModel.setRootSessionItem(layer);
 
     EXPECT_EQ(viewModel.rowCount(QModelIndex()), 0);
-    EXPECT_EQ(viewModel.columnCount(QModelIndex()), 2);
+    EXPECT_EQ(viewModel.columnCount(QModelIndex()), 0);
 
     model.insertItem<ToyItems::ParticleItem>(layer);
     EXPECT_EQ(viewModel.rowCount(QModelIndex()), 1);

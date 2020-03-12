@@ -20,6 +20,7 @@ std::unique_ptr<ItemCatalogue> CreateItemCatalogue()
     auto result = std::make_unique<ItemCatalogue>();
     result->registerItem<MultiLayerItem>();
     result->registerItem<LayerItem>();
+    result->registerItem<RoughnessItem>();
     return result;
 }
 } // namespace

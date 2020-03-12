@@ -27,7 +27,7 @@ CORE_EXPORT void SetLogarithmicScale(QCPColorScale* axis, bool is_log_scale);
 
 //! Switch axis to logarithmic scale mode.
 
-CORE_EXPORT void SetLogarithmicScale(QCPAxis* axis, bool isLogz);
+CORE_EXPORT void SetLogarithmicScale(QCPAxis* axis, bool is_log_scale);
 
 } // namespace Utils
 

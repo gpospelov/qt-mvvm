@@ -12,7 +12,6 @@
 #include <QBoxLayout>
 #include <QPushButton>
 #include <QSlider>
-#include <mvvm/viewmodel/abstractviewmodel.h>
 #include <mvvm/viewmodel/standardviewmodels.h>
 #include <mvvm/widgets/itemstreeview.h>
 
@@ -21,14 +20,11 @@ using namespace ModelView;
 ColorMapPropertyWidget::ColorMapPropertyWidget(ColorMapModel* model, QWidget* parent)
     : QWidget(parent), m_slider(new QSlider), m_treeView(new ItemsTreeView), m_model(model)
 {
-    auto mainLayout = new QVBoxLayout;
-
-    mainLayout->addWidget(m_slider);
-    mainLayout->addWidget(m_treeView);
-
-    setLayout(mainLayout);
+    auto layout = new QVBoxLayout;
+    layout->addWidget(m_slider);
+    layout->addWidget(m_treeView);
+    setLayout(layout);
     setModel(model);
-
     setup_slider();
 }
 

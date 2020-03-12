@@ -10,10 +10,10 @@
 #include "layerselectionmodel.h"
 #include "layeritems.h"
 #include <QItemSelection>
-#include <mvvm/viewmodel/abstractviewmodel.h>
+#include <mvvm/viewmodel/viewmodel.h>
 #include <mvvm/viewmodel/viewmodelutils.h>
 
-LayerSelectionModel::LayerSelectionModel(ModelView::AbstractViewModel* view_model, QObject* parent)
+LayerSelectionModel::LayerSelectionModel(ModelView::ViewModel* view_model, QObject* parent)
     : QItemSelectionModel(view_model, parent)
 {
 }
@@ -28,6 +28,8 @@ void LayerSelectionModel::selectItems(std::vector<ModelView::SessionItem*> items
 
     if (indexes.empty())
         return;
+
+    clearSelection();
 
     QItemSelection selection(indexes.front(), indexes.back());
     auto flags = QItemSelectionModel::SelectCurrent | QItemSelectionModel::Rows;
@@ -60,7 +62,7 @@ std::vector<ModelView::SessionItem*> LayerSelectionModel::selectedItems() const
     return result;
 }
 
-const ModelView::AbstractViewModel* LayerSelectionModel::viewModel() const
+const ModelView::ViewModel* LayerSelectionModel::viewModel() const
 {
-    return dynamic_cast<const ModelView::AbstractViewModel*>(model());
+    return static_cast<const ModelView::ViewModel*>(model());
 }

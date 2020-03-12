@@ -13,7 +13,7 @@
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/standarditems/vectoritem.h>
 #include <mvvm/viewmodel/propertiesrowstrategy.h>
-#include <mvvm/viewmodel/viewdataitem.h>
+#include <mvvm/viewmodel/standardviewitems.h>
 
 using namespace ModelView;
 
@@ -28,7 +28,7 @@ PropertiesRowStrategyTest::~PropertiesRowStrategyTest() = default;
 TEST_F(PropertiesRowStrategyTest, initialState)
 {
     PropertiesRowStrategy strategy;
-    EXPECT_EQ(strategy.constructRow(nullptr).size(), 0);
+    EXPECT_EQ(strategy.constructRefRow(nullptr).size(), 0);
     EXPECT_EQ(strategy.horizontalHeaderLabels(), QStringList());
 }
 
@@ -39,11 +39,9 @@ TEST_F(PropertiesRowStrategyTest, topLevelItem)
     SessionItem item("model_type");
 
     PropertiesRowStrategy strategy;
-    auto items = strategy.constructRow(&item);
+    auto items = strategy.constructRefRow(&item);
     EXPECT_EQ(items.size(), 0);
     EXPECT_EQ(strategy.horizontalHeaderLabels(), QStringList());
-
-    TestUtils::clean_items(items);
 }
 
 //! Checks row construction for property item. It shouldn't generate any rows.
@@ -54,11 +52,9 @@ TEST_F(PropertiesRowStrategyTest, propertyItem)
     item.setData(42.0);
 
     PropertiesRowStrategy strategy;
-    auto items = strategy.constructRow(&item);
+    auto items = strategy.constructRefRow(&item);
     EXPECT_EQ(items.size(), 0);
     EXPECT_EQ(strategy.horizontalHeaderLabels(), QStringList());
-
-    TestUtils::clean_items(items);
 }
 
 //! Checks row construction for vector item.
@@ -73,7 +69,7 @@ TEST_F(PropertiesRowStrategyTest, vectorItemCustomLabels)
     EXPECT_EQ(item.property(VectorItem::P_Z).value<double>(), 0.0);
 
     PropertiesRowStrategy strategy({"a", "b", "c"});
-    auto items = strategy.constructRow(&item);
+    auto items = strategy.constructRefRow(&item);
 
     EXPECT_EQ(items.size(), 3);
     EXPECT_EQ(strategy.horizontalHeaderLabels(), QStringList() << "a"
@@ -81,19 +77,14 @@ TEST_F(PropertiesRowStrategyTest, vectorItemCustomLabels)
                                                                << "c");
 
     // views should look at 3 property items
-    auto view_x = dynamic_cast<ViewDataItem*>(items.at(0));
-    ASSERT_TRUE(view_x != nullptr);
+    auto view_x = items.at(0).get();
     EXPECT_EQ(view_x->item(), item.getItem(VectorItem::P_X));
 
-    auto view_y = dynamic_cast<ViewDataItem*>(items.at(1));
-    ASSERT_TRUE(view_y != nullptr);
+    auto view_y = items.at(1).get();
     EXPECT_EQ(view_y->item(), item.getItem(VectorItem::P_Y));
 
-    auto view_z = dynamic_cast<ViewDataItem*>(items.at(2));
-    ASSERT_TRUE(view_z != nullptr);
+    auto view_z = items.at(2).get();
     EXPECT_EQ(view_z->item(), item.getItem(VectorItem::P_Z));
-
-    TestUtils::clean_items(items);
 }
 
 //! Checks row label construction for vector item.
@@ -109,9 +100,8 @@ TEST_F(PropertiesRowStrategyTest, vectorItemAutoLabels)
     QStringList expected = QStringList() << "X" << "Y" << "Z";
 
     PropertiesRowStrategy strategy;
-    auto items = strategy.constructRow(&item);
+    auto items = strategy.constructRefRow(&item);
     EXPECT_EQ(strategy.horizontalHeaderLabels(), expected);
-    TestUtils::clean_items(items);
 }
 
 //! Row construction for rootItem with single item inserted. Shouldn't generate any row.
@@ -121,15 +111,12 @@ TEST_F(PropertiesRowStrategyTest, baseItemInModelContext)
     SessionModel model;
 
     PropertiesRowStrategy strategy;
-    auto items = strategy.constructRow(model.rootItem());
+    auto items = strategy.constructRefRow(model.rootItem());
     EXPECT_EQ(items.size(), 0);
-    TestUtils::clean_items(items);
 
     model.insertItem<SessionItem>();
-    items = strategy.constructRow(model.rootItem());
+    items = strategy.constructRefRow(model.rootItem());
     EXPECT_EQ(items.size(), 0);
-
-    TestUtils::clean_items(items);
 }
 
 //! Row construction for rootItem with single item inserted. Shouldn't generate any row.
@@ -146,16 +133,14 @@ TEST_F(PropertiesRowStrategyTest, propertyItemTree)
     model.insertItem<PropertyItem>(parent, "property_tag");
 
     PropertiesRowStrategy strategy;
-    auto items = strategy.constructRow(model.rootItem());
+    auto items = strategy.constructRefRow(model.rootItem());
 
     // root item doesn't have properties
     EXPECT_EQ(items.size(), 0);
-    TestUtils::clean_items(items);
 
     // parent has one registered property.
-    items = strategy.constructRow(parent);
+    items = strategy.constructRefRow(parent);
     EXPECT_EQ(items.size(), 1);
-    TestUtils::clean_items(items);
 }
 
 //! Row construction for rootItem when vectorItem is present. Shouldn't generate any row.
@@ -166,7 +151,6 @@ TEST_F(PropertiesRowStrategyTest, vectorItemInModelContext)
     model.insertItem<VectorItem>();
 
     PropertiesRowStrategy strategy;
-    auto items = strategy.constructRow(model.rootItem());
+    auto items = strategy.constructRefRow(model.rootItem());
     EXPECT_EQ(items.size(), 0);
-    TestUtils::clean_items(items);
 }

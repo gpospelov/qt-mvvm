@@ -27,7 +27,7 @@ VectorItem::VectorItem() : CompoundItem(Constants::VectorItemType)
 
 void VectorItem::activate()
 {
-    auto on_property_change = [this](SessionItem*, std::string) { update_label(); };
+    auto on_property_change = [this](SessionItem*, const std::string&) { update_label(); };
     mapper()->setOnPropertyChange(on_property_change, this);
 }
 

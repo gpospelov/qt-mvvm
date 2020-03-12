@@ -9,16 +9,11 @@
 
 #include <QTreeView>
 #include <mvvm/model/sessionitem.h>
-#include <mvvm/viewmodel/abstractviewmodel.h>
+#include <mvvm/viewmodel/viewmodel.h>
 #include <mvvm/viewmodel/standardviewmodels.h>
 #include <mvvm/widgets/propertytreeview.h>
 
 using namespace ModelView;
-
-namespace
-{
-const QStringList labels = {"Name", "Value"};
-}
 
 PropertyTreeView::PropertyTreeView(QWidget* parent) : ItemsTreeView(parent)
 {
@@ -32,7 +27,6 @@ void PropertyTreeView::setItem(SessionItem* item)
 {
     setViewModel(Utils::CreatePropertyViewModel(item->model()));
     viewModel()->setRootSessionItem(item);
-    viewModel()->setHorizontalHeaderLabels(labels);
     treeView()->setRootIsDecorated(false);
     treeView()->expandAll();
 }

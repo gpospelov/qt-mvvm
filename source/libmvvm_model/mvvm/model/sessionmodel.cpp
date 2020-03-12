@@ -35,7 +35,7 @@ SessionModel::SessionModel(std::string model_type, std::shared_ptr<ItemPool> poo
       m_commands(std::make_unique<CommandService>(this)), m_model_type(std::move(model_type)),
       m_mapper(std::make_unique<ModelMapper>(this))
 {
-    m_item_manager->setItemPool(pool);
+    m_item_manager->setItemPool(std::move(pool));
     createRootItem();
 }
 
@@ -104,7 +104,7 @@ Path SessionModel::pathFromItem(const SessionItem* item) const
 
 //! Returns item from path.
 
-SessionItem* SessionModel::itemFromPath(Path path) const
+SessionItem* SessionModel::itemFromPath(const Path& path) const
 {
     SessionItem* result(rootItem());
     for (const auto& x : path) {
@@ -160,8 +160,8 @@ ModelMapper* SessionModel::mapper()
 
 void SessionModel::clear()
 {
-    mapper()->callOnModelReset();
     createRootItem();
+    mapper()->callOnModelReset();
 }
 
 //! Returns strategy suitable for saving/restoring SessionItem.
@@ -189,7 +189,7 @@ const ItemFactoryInterface* SessionModel::factory() const
 
 //!  Returns SessionItem for given identifier.
 
-SessionItem* SessionModel::findItem(identifier_type id)
+SessionItem* SessionModel::findItem(const identifier_type& id)
 {
     return m_item_manager->findItem(id);
 }

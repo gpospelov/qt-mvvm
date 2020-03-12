@@ -12,7 +12,6 @@
 #include <QBoxLayout>
 #include <QPushButton>
 #include <QSlider>
-#include <mvvm/viewmodel/abstractviewmodel.h>
 #include <mvvm/viewmodel/standardviewmodels.h>
 #include <mvvm/widgets/itemstreeview.h>
 

@@ -58,7 +58,7 @@ CustomPlotSceneAdapter::CustomPlotSceneAdapter(QCustomPlot* custom_plot)
     QObject::connect(custom_plot, &QCustomPlot::destroyed, on_customplot_destroy);
 }
 
-CustomPlotSceneAdapter::~CustomPlotSceneAdapter() {}
+CustomPlotSceneAdapter::~CustomPlotSceneAdapter() = default;
 
 double CustomPlotSceneAdapter::toSceneX(double customplot_x) const
 {

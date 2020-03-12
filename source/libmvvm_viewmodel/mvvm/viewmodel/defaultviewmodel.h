@@ -10,7 +10,7 @@
 #ifndef MVVM_VIEWMODEL_DEFAULTVIEWMODEL_H
 #define MVVM_VIEWMODEL_DEFAULTVIEWMODEL_H
 
-#include <mvvm/viewmodel/abstractviewmodel.h>
+#include <mvvm/viewmodel/viewmodel.h>
 
 namespace ModelView
 {
@@ -23,7 +23,7 @@ Given view model provides two column tree with label/data, with one-to-one child
 correspondence as in the original SessionModel.
 */
 
-class CORE_EXPORT DefaultViewModel : public AbstractViewModel
+class CORE_EXPORT DefaultViewModel : public ViewModel
 {
 public:
     DefaultViewModel(SessionModel* model, QObject* parent = nullptr);

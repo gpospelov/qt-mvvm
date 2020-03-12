@@ -10,4 +10,5 @@ target_sources(mvvm_model PRIVATE
     reallimits.h
     stringutils.cpp
     stringutils.h
+    threadsafestack.h
 )

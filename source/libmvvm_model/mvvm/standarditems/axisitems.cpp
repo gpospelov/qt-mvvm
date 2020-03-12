@@ -18,7 +18,7 @@ const double default_axis_max = 1.0;
 
 using namespace ModelView;
 
-BasicAxisItem::BasicAxisItem(std::string model_type) : CompoundItem(model_type) {}
+BasicAxisItem::BasicAxisItem(const std::string& model_type) : CompoundItem(model_type) {}
 
 void BasicAxisItem::register_min_max()
 {
@@ -28,7 +28,7 @@ void BasicAxisItem::register_min_max()
 
 // --- ViewportAxisItem ------------------------------------------------------
 
-ViewportAxisItem::ViewportAxisItem(const std::string model_type) : BasicAxisItem(model_type)
+ViewportAxisItem::ViewportAxisItem(const std::string& model_type) : BasicAxisItem(model_type)
 {
     addProperty<TextItem>(P_TITLE)->setDisplayName("Title");
     register_min_max();
@@ -57,7 +57,7 @@ bool ViewportAxisItem::is_in_log() const
 
 // --- BinnedAxisItem ------------------------------------------------------
 
-BinnedAxisItem::BinnedAxisItem(std::string model_type) : BasicAxisItem(model_type)
+BinnedAxisItem::BinnedAxisItem(const std::string& model_type) : BasicAxisItem(model_type)
 {
     addProperty(P_NBINS, 1)->setDisplayName("Nbins");
     register_min_max();

@@ -27,7 +27,7 @@ MainWindow::MainWindow() : m_tabWidget(new QTabWidget), m_model(std::make_unique
     setCentralWidget(m_tabWidget);
     init_application();
 
-    m_tabWidget->addTab(new ModelEditorWidget(m_model.get()), "Available properties");
+    m_tabWidget->addTab(new ModelEditorWidget(m_model.get()), "Drag and Move");
     m_tabWidget->setCurrentIndex(m_tabWidget->count() - 1);
 }
 
@@ -50,7 +50,7 @@ void MainWindow::write_settings()
 
 void MainWindow::init_application()
 {
-    QCoreApplication::setApplicationName("qt-mvvm-example");
+    QCoreApplication::setApplicationName("dragandmove");
     QCoreApplication::setApplicationVersion("0.1");
     QCoreApplication::setOrganizationName("qt-mvvm");
 

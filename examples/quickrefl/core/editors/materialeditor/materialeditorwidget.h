@@ -15,7 +15,7 @@
 
 namespace ModelView
 {
-class AbstractViewModel;
+class ViewModel;
 class ViewModelDelegate;
 } // namespace ModelView
 
@@ -38,7 +38,7 @@ public:
 
 private:
     MaterialModel* material_model{nullptr};
-    std::unique_ptr<ModelView::AbstractViewModel> view_model;
+    std::unique_ptr<ModelView::ViewModel> view_model;
     MaterialSelectionModel* selection_model{nullptr};
     MaterialTreeView* material_view{nullptr};
     std::unique_ptr<ModelView::ViewModelDelegate> m_delegate;
