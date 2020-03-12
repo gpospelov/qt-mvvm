@@ -43,7 +43,10 @@ std::string RoughnessViewItem::layerIdentifier(std::string layer_identifier_in)
 
 void RoughnessViewItem::fetchFromLayer(SampleModel* layer_model, MaterialModel* material_model)
 {
-    auto model_pointer = model();
-    auto item = dynamic_cast<MaterialBaseItem*>(model_pointer->findItem(layer_identifier));
-
+    auto layer_item = dynamic_cast<LayerItem*>(layer_model->findItem(layer_identifier));
+    if (!layer_item)
+        return;
+    auto roughness_item = layer_item->item<RoughnessItem>(LayerItem::P_ROUGHNESS);
+    
+    setProperty(P_ROUGHNESS, roughness_item->property(RoughnessItem::P_SIGMA));
 }
