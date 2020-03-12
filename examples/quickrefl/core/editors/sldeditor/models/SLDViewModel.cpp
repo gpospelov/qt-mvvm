@@ -23,7 +23,7 @@ std::unique_ptr<ItemCatalogue> CreateItemCatalogue()
     auto result = std::make_unique<ModelView::ItemCatalogue>();
     result->registerItem<HandleItem>();
     result->registerItem<SegmentItem>();
-    result->registerItem<RoughnessItem>();
+    result->registerItem<RoughnessViewItem>();
     return result;
 }
 
@@ -61,11 +61,11 @@ SegmentItem* SLDViewModel::addSegment(std::string layer_identifier_in)
     return segment;
 }
 
-RoughnessItem* SLDViewModel::addRoughness(std::string layer_identifier_in)
+RoughnessViewItem* SLDViewModel::addRoughness(std::string layer_identifier_in)
 {
-    auto roughness = insertItem<RoughnessItem>();
+    auto roughness = insertItem<RoughnessViewItem>();
     roughness->setLayerIdentifier(layer_identifier_in);
-    roughness->setProperty(RoughnessItem::P_ROUGHNESS, 0.);
-    roughness->setProperty(RoughnessItem::P_COLOR, QVariant::fromValue(random_color()));
+    roughness->setProperty(RoughnessViewItem::P_ROUGHNESS, 0.);
+    roughness->setProperty(RoughnessViewItem::P_COLOR, QVariant::fromValue(random_color()));
     return roughness;
 }

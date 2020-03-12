@@ -9,8 +9,8 @@ target_sources(${library_name} PRIVATE
     HandleItem.cpp   
     SegmentItem.h
     SegmentItem.cpp
-    RoughnessItem.h
-    RoughnessItem.cpp
+    RoughnessViewItem.h
+    RoughnessViewItem.cpp
 )
 
 target_include_directories(${library_name} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>)

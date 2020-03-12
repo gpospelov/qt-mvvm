@@ -20,7 +20,7 @@
 #include "SegmentItem.h"
 #include "SegmentView.h"
 
-#include "RoughnessItem.h"
+#include "RoughnessViewItem.h"
 #include "RoughnessView.h"
 
 #include <mvvm/model/externalproperty.h>
@@ -198,7 +198,7 @@ std::vector<RoughnessView*> SLDController::buildRoughnessBoxes(std::vector<std::
 {
     std::vector<RoughnessView*> output;
     for (int i = 1; i < identifiers.size(); ++i) {
-        RoughnessItem* roughness_item = p_sld_model->addRoughness(identifiers[i]);
+        RoughnessViewItem* roughness_item = p_sld_model->addRoughness(identifiers[i]);
         RoughnessView* roughness_view = new RoughnessView(roughness_item);
         output.push_back(roughness_view);
     }
@@ -262,8 +262,8 @@ void SLDController::updateAll(SessionItem* item)
             if (dynamic_cast<SegmentItem*>(item)){
                 auto mod_item = dynamic_cast<SegmentItem*>(item);
                 mod_item->fetchFromLayer(p_sample_model, p_material_model);
-            }else if (dynamic_cast<RoughnessItem*>(item)){
-                auto mod_item = dynamic_cast<RoughnessItem*>(item);
+            }else if (dynamic_cast<RoughnessViewItem*>(item)){
+                auto mod_item = dynamic_cast<RoughnessViewItem*>(item);
                 mod_item->fetchFromLayer(p_sample_model, p_material_model);
             }
 

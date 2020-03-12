@@ -12,7 +12,7 @@
 
 #include "ViewObject.h"
 
-class RoughnessItem;
+class RoughnessViewItem;
 class SegmentView;
 class HandleView;
 /*!
@@ -25,12 +25,12 @@ class RoughnessView : public ViewObject
     Q_OBJECT
 
 public:
-    RoughnessView(RoughnessItem* item);
+    RoughnessView(RoughnessViewItem* item);
     QRectF boundingRect() const override;
     QPainterPath shape() const override;
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
     QPainterPath getPath() const;
-    RoughnessItem* roughnessItem() const;
+    RoughnessViewItem* roughnessItem() const;
 
 public:
     void moveHandles();
@@ -48,7 +48,7 @@ private:
     void disconnectHandles();
 
 private:
-    RoughnessItem* roughness_item;
+    RoughnessViewItem* roughness_item;
 
     SegmentView* left_segment;
     SegmentView* middle_segment;

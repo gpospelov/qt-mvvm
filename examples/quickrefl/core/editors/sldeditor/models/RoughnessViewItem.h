@@ -20,12 +20,12 @@ class MaterialModel;
 @class RoughnessItem
 @brief Domain object to hold mouse info.
 */
-class RoughnessItem : public ModelView::CompoundItem
+class RoughnessViewItem : public ModelView::CompoundItem
 {
 public:
     static inline const std::string P_ROUGHNESS = "P_ROUGHNESS";
     static inline const std::string P_COLOR = "P_COLOR";
-    RoughnessItem();
+    RoughnessViewItem();
 
     void setLayerIdentifier(std::string layer_identifier_in);
     std::string layerIdentifier(std::string layer_identifier_in);

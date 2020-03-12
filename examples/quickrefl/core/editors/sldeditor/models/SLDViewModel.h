@@ -15,7 +15,7 @@
 
 #include "HandleItem.h"
 #include "RegionOfInterestItem.h"
-#include "RoughnessItem.h"
+#include "RoughnessViewItem.h"
 #include "SegmentItem.h"
 
 namespace ModelView
@@ -38,7 +38,7 @@ public:
     //! Add a segment item
     SegmentItem* addSegment(std::string layer_identifier_in);
     //! Add a roughness item
-    RoughnessItem* addRoughness(std::string layer_identifier_in);
+    RoughnessViewItem* addRoughness(std::string layer_identifier_in);
 };
 
 #endif //  VIEWITEMSMODEL_H
