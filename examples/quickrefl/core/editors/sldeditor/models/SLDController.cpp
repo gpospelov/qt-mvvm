@@ -192,7 +192,11 @@ std::vector<std::vector<HandleView*>> SLDController::buildHandles(std::vector<st
 std::vector<RoughnessView*> SLDController::buildRoughnessBoxes(std::vector<std::string> &identifiers)
 {
     std::vector<RoughnessView*> output;
-    
+    for (int i = 1; i < identifiers.size(); ++i) {
+        RoughnessItem* roughness_item = p_sld_model->addRoughness(identifiers[i]);
+        RoughnessView* roughness_view = new RoughnessView(roughness_item);
+        output.push_back(roughness_view);
+    }
     return output;
 }
 
@@ -205,6 +209,10 @@ void SLDController::connectViewItem(std::vector<SegmentView*> top_segments, std:
 
     for (int i = 1; i < top_segments.size(); ++i){
         side_segments[i-1]->addHandles(handles[i-1][1],handles[i][0]);
+    }
+
+    for (int i = 1; i < top_segments.size(); ++i){
+        roughness_views[i-1]->setSegments(top_segments[i-1],side_segments[i-1],top_segments[i]);
     }
 
 }

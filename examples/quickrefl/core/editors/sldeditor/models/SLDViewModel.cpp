@@ -52,6 +52,7 @@ HandleItem* SLDViewModel::addHandle()
 SegmentItem* SLDViewModel::addSegment(std::string layer_identifier_in)
 {
     auto segment = insertItem<SegmentItem>();
+    segment->setLayerIdentifier(layer_identifier_in);
     segment->setProperty(SegmentItem::P_X_POS, 0.);
     segment->setProperty(SegmentItem::P_Y_POS, 0.);
     segment->setProperty(SegmentItem::P_HEIGHT, 10.);
@@ -63,6 +64,7 @@ SegmentItem* SLDViewModel::addSegment(std::string layer_identifier_in)
 RoughnessItem* SLDViewModel::addRoughness(std::string layer_identifier_in)
 {
     auto roughness = insertItem<RoughnessItem>();
+    roughness->setLayerIdentifier(layer_identifier_in);
     roughness->setProperty(RoughnessItem::P_ROUGHNESS, 0.);
     roughness->setProperty(RoughnessItem::P_COLOR, QVariant::fromValue(random_color()));
     return roughness;
