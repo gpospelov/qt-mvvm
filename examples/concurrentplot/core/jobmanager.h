@@ -11,6 +11,8 @@
 #define JOBMANAGER_H
 
 #include <mvvm/utils/threadsafestack.h>
+#include <atomic>
+#include <thread>
 
 class GraphModel;
 
@@ -20,11 +22,17 @@ class JobManager
 {
 public:
     JobManager(GraphModel* model);
+    ~JobManager();
 
     void requestSimulation(double value);
 
+    void run_simulation();
+
 private:
+    std::thread sim_thread;
     GraphModel* model{nullptr};
+    ModelView::threadsafe_stack<double> requested_values;
+    std::atomic<bool> is_running;
 };
 
 #endif // JOBMANAGER_H
