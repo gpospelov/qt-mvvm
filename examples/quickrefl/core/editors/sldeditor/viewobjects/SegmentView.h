@@ -54,7 +54,6 @@ public:
 
 private:
     SegmentItem* segment_item;
-    QColor color;
     HandleView* left_handle;
     HandleView* right_handle;
 };

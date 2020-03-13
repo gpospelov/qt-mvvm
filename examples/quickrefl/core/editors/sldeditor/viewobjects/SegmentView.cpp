@@ -28,7 +28,7 @@
 
 //! The constructor
 SegmentView::SegmentView(SegmentItem* item)
-    : ViewObject(), segment_item(item), color(item->property(SegmentItem::P_COLOR).value<QColor>()),
+    : ViewObject(), segment_item(item),
       left_handle(nullptr), right_handle(nullptr)
 {
     auto on_property_change = [this](ModelView::SessionItem*, std::string property_name) {

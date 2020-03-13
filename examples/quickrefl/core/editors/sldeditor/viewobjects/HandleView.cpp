@@ -21,7 +21,7 @@
 
 //! The constructor
 HandleView::HandleView(HandleItem* item)
-    : handle_item(item), color(item->property(HandleItem::P_COLOR).value<QColor>()),
+    : handle_item(item),
       allowed_x(false), allowed_y(false)
 {
     auto on_property_change = [this](ModelView::SessionItem*, std::string property_name) {
@@ -34,7 +34,6 @@ HandleView::HandleView(HandleItem* item)
             emit moved();
         }
         if (property_name == HandleItem::P_COLOR) {
-            color = handle_item->property(HandleItem::P_COLOR).value<QColor>();
             update();
         }
         if (property_name == HandleItem::P_RADIUS)

@@ -42,7 +42,6 @@ protected:
 
 private:
     HandleItem* handle_item;
-    QColor color;
     bool allowed_x;
     bool allowed_y;
 };
