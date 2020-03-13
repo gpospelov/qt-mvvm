@@ -35,7 +35,14 @@ public:
     void setScene(GraphicsScene* scene);
 
 private:
+    void connectMaterialModel();
+    void connectLayerModel();
     void connectSLDModel();
+
+    void disconnectMaterialModel() const;
+    void disconnectLayerModel() const;
+    void disconnectSLDModel() const;
+
     void buildSLD();
     void clearScene();
     std::vector<std::string> getIdentifierVector(ModelView::SessionItem* item);
@@ -54,8 +61,8 @@ private:
                        std::vector<SegmentView*> side_segments,
                        std::vector<RoughnessView*> roughness_views);
 
-    void updateAll(ModelView::SessionItem* item = nullptr);
-    
+    void updateToView(ModelView::SessionItem* item = nullptr);
+    void updateFromView(ModelView::SessionItem* item = nullptr);
 
 private:
     MaterialModel* p_material_model;

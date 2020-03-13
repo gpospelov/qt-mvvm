@@ -28,7 +28,7 @@ public:
     RoughnessViewItem();
 
     void setLayerIdentifier(std::string layer_identifier_in);
-    std::string layerIdentifier(std::string layer_identifier_in);
+    std::string layerIdentifier();
     void fetchFromLayer(SampleModel* layer_model, MaterialModel* material_model);
     
 private:

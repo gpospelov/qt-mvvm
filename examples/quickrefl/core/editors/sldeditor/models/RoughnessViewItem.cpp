@@ -36,7 +36,7 @@ void RoughnessViewItem::setLayerIdentifier(std::string layer_identifier_in)
     layer_identifier = layer_identifier_in;
 }
 
-std::string RoughnessViewItem::layerIdentifier(std::string layer_identifier_in)
+std::string RoughnessViewItem::layerIdentifier()
 {
     return layer_identifier;
 }

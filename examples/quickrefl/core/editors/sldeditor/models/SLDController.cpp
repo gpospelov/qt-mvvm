@@ -10,6 +10,7 @@
 #include "SLDController.h"
 #include "SLDViewModel.h"
 #include "materialmodel.h"
+#include "materialitems.h"
 #include "samplemodel.h"
 #include "layeritems.h"
 #include "GraphicsScene.h"
@@ -37,22 +38,25 @@ SLDController::SLDController(MaterialModel* material_model, SampleModel* sample_
     : p_material_model(material_model), p_sample_model(sample_model), p_sld_model(sld_model),p_scene_item(scene_item)
 {
     connectSLDModel();
+    connectLayerModel();
+    connectMaterialModel();
     buildSLD();
-    updateAll();
+    updateToView();
 }
 
 //! Connect with signals of MaterialModel, SampleModel, SLDViewModel.
-void SLDController::connectSLDModel()
+void SLDController::connectMaterialModel()
 {
-    // MaterialModel
-    auto on_mat_data_change = [this](SessionItem* item, int) { updateAll(item); };
+    auto on_mat_data_change = [this](SessionItem* item, int) { updateToView(item); };
     p_material_model->mapper()->setOnDataChange(on_mat_data_change, this);
 
     auto on_mat_model_destroyed = [this](SessionModel*) { p_material_model = nullptr; };
     p_material_model->mapper()->setOnModelDestroyed(on_mat_model_destroyed, this);
-    
-    // SampleModel
-    auto on_sam_data_change = [this](SessionItem* item, int) { updateAll(item); };
+}
+
+void SLDController::connectLayerModel()
+{
+    auto on_sam_data_change = [this](SessionItem* item, int) { updateToView(item); };
     p_sample_model->mapper()->setOnDataChange(on_sam_data_change, this);
 
     auto on_sam_item_inserted = [this](SessionItem*, TagRow) { buildSLD(); };
@@ -63,11 +67,30 @@ void SLDController::connectSLDModel()
 
     auto on_sam_model_destroyed = [this](SessionModel*) { p_sample_model = nullptr; };
     p_sample_model->mapper()->setOnModelDestroyed(on_sam_model_destroyed, this);
+}
 
-    // SLDModel
+void SLDController::connectSLDModel()
+{
     auto on_sld_model_destroyed = [this](SessionModel*) { p_sld_model = nullptr; };
     p_sld_model->mapper()->setOnModelDestroyed(on_sld_model_destroyed, this);
 
+    auto on_sld_data_change = [this](SessionItem* item, int) { updateFromView(item); };
+    p_sld_model->mapper()->setOnDataChange(on_sld_data_change, this);
+}
+
+void SLDController::disconnectMaterialModel() const
+{
+    p_material_model->mapper()->unsubscribe(this);
+}
+
+void SLDController::disconnectLayerModel() const
+{
+    p_sample_model->mapper()->unsubscribe(this);
+}
+
+void SLDController::disconnectSLDModel() const
+{
+    p_sld_model->mapper()->unsubscribe(this);
 }
 
 void SLDController::setScene(GraphicsScene* scene)
@@ -88,7 +111,7 @@ void SLDController::buildSLD()
     if (!p_scene_item)
         return;
 
-
+    disconnectSLDModel();
     p_sld_model->clear();
     clearScene();
 
@@ -105,8 +128,8 @@ void SLDController::buildSLD()
 
     connectViewItem(top_segments, handles, side_segments, roughness);
     drawViewItems(top_segments, handles, side_segments, roughness);
-    updateAll();
-
+    updateToView();
+    connectSLDModel();
 }
 
 void SLDController::clearScene()
@@ -242,7 +265,7 @@ void SLDController::drawViewItems(std::vector<SegmentView*> top_segments, std::v
     }
 }
 
-void SLDController::updateAll(SessionItem* item)
+void SLDController::updateToView(SessionItem* item)
 {
     auto view_items = p_sld_model->rootItem()->children();
 
@@ -257,7 +280,6 @@ void SLDController::updateAll(SessionItem* item)
             }
         }
     }else{
-
         for (auto* item: view_items){
             if (dynamic_cast<SegmentItem*>(item)){
                 auto mod_item = dynamic_cast<SegmentItem*>(item);
@@ -266,7 +288,45 @@ void SLDController::updateAll(SessionItem* item)
                 auto mod_item = dynamic_cast<RoughnessViewItem*>(item);
                 mod_item->fetchFromLayer(p_sample_model, p_material_model);
             }
+        }
+    }
+}
 
+void SLDController::updateFromView(SessionItem* item)
+{
+
+    if (dynamic_cast<SegmentItem*>(item->parent())){
+        auto segment_item = dynamic_cast<SegmentItem*>(item->parent());
+        auto layer_item_session = p_sample_model->findItem(segment_item->layerIdentifier());
+        if (!layer_item_session) return;
+
+        if (segment_item->tagOfItem(item) == SegmentItem::P_WIDTH){
+            auto layer_item = dynamic_cast<LayerItem*>(layer_item_session);
+            layer_item->setProperty(LayerItem::P_THICKNESS, 
+                segment_item->property(SegmentItem::P_WIDTH).toDouble());
+        }else if (segment_item->tagOfItem(item) == SegmentItem::P_Y_POS){
+            auto layer_item = dynamic_cast<LayerItem*>(layer_item_session);
+            auto material_item = dynamic_cast<SLDMaterialItem*>(
+                p_material_model->findItem(layer_item->property(LayerItem::P_MATERIAL).value<ModelView::ExternalProperty>().identifier()));
+            if (!material_item) return ;
+            material_item->setProperty(SLDMaterialItem::P_SLD_REAL, 
+                segment_item->property(SegmentItem::P_Y_POS).toDouble()*1e-6);
+        }else{
+            return;
+        }
+
+    }else if (dynamic_cast<RoughnessViewItem*>(item->parent())){
+        auto roughness_view_item = dynamic_cast<RoughnessViewItem*>(item->parent());
+        auto layer_item_session = p_sample_model->findItem(roughness_view_item->layerIdentifier());
+        if (!layer_item_session) return;
+
+        if (item->parent()->tagOfItem(item) == RoughnessViewItem::P_ROUGHNESS){
+            auto layer_item = dynamic_cast<LayerItem*>(layer_item_session);
+            auto roughness_item = layer_item->item<RoughnessItem>(LayerItem::P_ROUGHNESS);
+            roughness_item->setProperty(RoughnessItem::P_SIGMA, 
+                roughness_view_item->property(RoughnessViewItem::P_ROUGHNESS).toDouble());
+        }else{
+            return;
         }
     }
 }

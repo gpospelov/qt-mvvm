@@ -47,7 +47,7 @@ void SegmentItem::setLayerIdentifier(std::string layer_identifier_in)
     layer_identifier = layer_identifier_in;
 }
 
-std::string SegmentItem::layerIdentifier(std::string layer_identifier_in)
+std::string SegmentItem::layerIdentifier()
 {
     return layer_identifier;
 }
