@@ -31,16 +31,19 @@ RoughnessViewItem::RoughnessViewItem() : ModelView::CompoundItem("RoughnessItem"
     addProperty(P_COLOR, QColor(Qt::black))->setDisplayName("Color");
 }
 
+//! Setter for the layer identifier string
 void RoughnessViewItem::setLayerIdentifier(std::string layer_identifier_in)
 {
     layer_identifier = layer_identifier_in;
 }
 
+//! Getter for the layer identifier string
 std::string RoughnessViewItem::layerIdentifier()
 {
     return layer_identifier;
 }
 
+//! Fetch the parameters from the layer and material model
 void RoughnessViewItem::fetchFromLayer(SampleModel* layer_model, MaterialModel* material_model)
 {
     auto layer_item = dynamic_cast<LayerItem*>(layer_model->findItem(layer_identifier));

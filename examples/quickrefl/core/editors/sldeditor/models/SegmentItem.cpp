@@ -42,16 +42,19 @@ SegmentItem::SegmentItem(std::string layer_identifier_in)
         ->setDisplayName("Horizontal");
 }
 
+//! Setter for the layer identifier string
 void SegmentItem::setLayerIdentifier(std::string layer_identifier_in)
 {
     layer_identifier = layer_identifier_in;
 }
 
+//! Getter for the layer identifier string
 std::string SegmentItem::layerIdentifier()
 {
     return layer_identifier;
 }
 
+//! Fetch the parameters from the layer and material model
 void SegmentItem::fetchFromLayer(SampleModel* layer_model, MaterialModel* material_model)
 {
     auto layer_item = dynamic_cast<LayerItem*>(layer_model->findItem(layer_identifier));

@@ -133,6 +133,7 @@ void SLDController::buildSLD()
     connectSLDModel();
 }
 
+//! Remove all the segments, handles and roughness view items in the scene
 void SLDController::clearScene()
 {
     if (!p_scene_item)
@@ -161,6 +162,7 @@ void SLDController::clearScene()
     }
 }
 
+//! build the identifier vector
 std::vector<std::string> SLDController::getIdentifierVector(SessionItem* item)
 {
     std::vector<std::string> output;
@@ -181,6 +183,7 @@ std::vector<std::string> SLDController::getIdentifierVector(SessionItem* item)
     return output;
 }
 
+//! build the top segments of the sld view
 std::vector<SegmentView*> SLDController::buildTopSegments(std::vector<std::string>& identifiers)
 {
     std::vector<SegmentView*> output;
@@ -192,6 +195,7 @@ std::vector<SegmentView*> SLDController::buildTopSegments(std::vector<std::strin
     return output;
 }
 
+//! build the side segments of the sld view
 std::vector<SegmentView*> SLDController::buildSideSegments(std::vector<std::string>& identifiers)
 {
     std::vector<SegmentView*> output;
@@ -205,6 +209,7 @@ std::vector<SegmentView*> SLDController::buildSideSegments(std::vector<std::stri
     return output;
 }
 
+//! build the handles of the sld view
 std::vector<std::vector<HandleView*>>
 SLDController::buildHandles(std::vector<std::string>& identifiers)
 {
@@ -219,6 +224,7 @@ SLDController::buildHandles(std::vector<std::string>& identifiers)
     return output;
 }
 
+//! build the roughness of sld view
 std::vector<RoughnessView*>
 SLDController::buildRoughnessBoxes(std::vector<std::string>& identifiers)
 {
@@ -231,6 +237,7 @@ SLDController::buildRoughnessBoxes(std::vector<std::string>& identifiers)
     return output;
 }
 
+//! Connect the view items as intended
 void SLDController::connectViewItem(std::vector<SegmentView*> top_segments,
                                     std::vector<std::vector<HandleView*>> handles,
                                     std::vector<SegmentView*> side_segments,
@@ -251,6 +258,7 @@ void SLDController::connectViewItem(std::vector<SegmentView*> top_segments,
     }
 }
 
+//! Draw the view items
 void SLDController::drawViewItems(std::vector<SegmentView*> top_segments,
                                   std::vector<std::vector<HandleView*>> handles,
                                   std::vector<SegmentView*> side_segments,
@@ -274,6 +282,7 @@ void SLDController::drawViewItems(std::vector<SegmentView*> top_segments,
     }
 }
 
+//! Update the view items with the changes in the material or layer models
 void SLDController::updateToView(SessionItem* item)
 {
     auto view_items = p_sld_model->rootItem()->children();
@@ -306,6 +315,7 @@ void SLDController::updateToView(SessionItem* item)
     
 }
 
+//! Update the material and layer models from the view items
 void SLDController::updateFromView(SessionItem* item)
 {
 

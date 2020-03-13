@@ -40,6 +40,7 @@ SLDViewModel::SLDViewModel() : SessionModel("ViewItemsModel")
     setItemCatalogue(CreateItemCatalogue());
 }
 
+//! Add a handle view item
 HandleItem* SLDViewModel::addHandle()
 {
     auto handle = insertItem<HandleItem>();
@@ -48,6 +49,7 @@ HandleItem* SLDViewModel::addHandle()
     return handle;
 }
 
+//! Add a Segment view item
 SegmentItem* SLDViewModel::addSegment(std::string layer_identifier_in)
 {
     auto segment = insertItem<SegmentItem>();
@@ -59,6 +61,7 @@ SegmentItem* SLDViewModel::addSegment(std::string layer_identifier_in)
     return segment;
 }
 
+//! Add a roughness view item
 RoughnessViewItem* SLDViewModel::addRoughness(std::string layer_identifier_in)
 {
     auto roughness = insertItem<RoughnessViewItem>();
