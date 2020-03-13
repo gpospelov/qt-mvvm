@@ -277,18 +277,7 @@ void SLDController::drawViewItems(std::vector<SegmentView*> top_segments,
 void SLDController::updateToView(SessionItem* item)
 {
     auto view_items = p_sld_model->rootItem()->children();
-
     if (!item) {
-        for (auto* item : view_items) {
-            if (dynamic_cast<SegmentItem*>(item)) {
-                auto mod_item = dynamic_cast<SegmentItem*>(item);
-                mod_item->fetchFromLayer(p_sample_model, p_material_model);
-            } else if (dynamic_cast<SegmentItem*>(item)) {
-                auto mod_item = dynamic_cast<SegmentItem*>(item);
-                mod_item->fetchFromLayer(p_sample_model, p_material_model);
-            }
-        }
-    } else {
         for (auto* item : view_items) {
             if (dynamic_cast<SegmentItem*>(item)) {
                 auto mod_item = dynamic_cast<SegmentItem*>(item);
@@ -298,7 +287,23 @@ void SLDController::updateToView(SessionItem* item)
                 mod_item->fetchFromLayer(p_sample_model, p_material_model);
             }
         }
+    } else {
+        if (dynamic_cast<MultiLayerItem*>(item->parent())){
+            buildSLD();
+            return;
+        }else{
+            for (auto* item : view_items) {
+                if (dynamic_cast<SegmentItem*>(item)) {
+                    auto mod_item = dynamic_cast<SegmentItem*>(item);
+                    mod_item->fetchFromLayer(p_sample_model, p_material_model);
+                } else if (dynamic_cast<RoughnessViewItem*>(item)) {
+                    auto mod_item = dynamic_cast<RoughnessViewItem*>(item);
+                    mod_item->fetchFromLayer(p_sample_model, p_material_model);
+                }
+            }
+        }
     }
+    
 }
 
 void SLDController::updateFromView(SessionItem* item)
