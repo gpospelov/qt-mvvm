@@ -17,6 +17,7 @@ class QBoxLayout;
 class GraphModel;
 class GraphPropertyWidget;
 class GraphWidgetToolBar;
+class JobManager;
 
 namespace ModelView
 {
@@ -34,6 +35,7 @@ class GraphWidget : public QWidget
     Q_OBJECT
 public:
     explicit GraphWidget(GraphModel* model = nullptr, QWidget* parent = nullptr);
+    ~GraphWidget();
 
     void setModel(GraphModel* model);
 
@@ -42,6 +44,7 @@ private:
     ModelView::GraphCanvas* m_graphCanvas{nullptr};
     GraphPropertyWidget* m_propertyWidget{nullptr};
     GraphModel* m_model{nullptr};
+    std::unique_ptr<JobManager> job_manager;
 };
 
 #endif // GRAPHWIDGET_H

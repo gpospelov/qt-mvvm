@@ -25,10 +25,14 @@ class GraphWidgetToolBar : public QToolBar
 public:
     explicit GraphWidgetToolBar(QWidget* parent = nullptr);
 
+signals:
+    void valueChanged(int value);
+
 private:
     void add_wide_separator();
     void init_value_elements();
     void init_slowdown_elements();
+    void init_flow_elements();
 
     QSpinBox* value_box{nullptr}; //! Input parameter for simulation.
     QSlider* value_slider{nullptr};    //! Input parameter for simulation.

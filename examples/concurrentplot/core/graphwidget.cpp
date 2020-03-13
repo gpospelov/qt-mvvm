@@ -11,6 +11,7 @@
 #include "graphmodel.h"
 #include "graphpropertywidget.h"
 #include "graphwidgettoolbar.h"
+#include "jobmanager.h"
 #include <QBoxLayout>
 #include <mvvm/model/modelutils.h>
 #include <mvvm/plotting/graphcanvas.h>
@@ -35,7 +36,15 @@ GraphWidget::GraphWidget(GraphModel* model, QWidget* parent)
 
     setLayout(mainLayout);
     setModel(model);
+
+    auto on_value_changed = [this](int value) {
+        if (job_manager)
+            job_manager->requestSimulation(value);
+    };
+    connect(toolbar, &GraphWidgetToolBar::valueChanged, on_value_changed);
 }
+
+GraphWidget::~GraphWidget() = default;
 
 void GraphWidget::setModel(GraphModel* model)
 {
@@ -43,6 +52,8 @@ void GraphWidget::setModel(GraphModel* model)
         return;
 
     m_model = model;
+
+    job_manager = std::make_unique<JobManager>(model);
 
     m_propertyWidget->setModel(model);
 
