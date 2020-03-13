@@ -14,7 +14,6 @@
 #include <vector>
 
 #include "HandleItem.h"
-#include "RegionOfInterestItem.h"
 #include "RoughnessViewItem.h"
 #include "SegmentItem.h"
 
