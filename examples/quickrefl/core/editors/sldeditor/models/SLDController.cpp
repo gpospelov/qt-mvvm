@@ -119,7 +119,7 @@ void SLDController::buildSLD()
     if (p_sample_model->rootItem()->childrenCount() == 0)
         return;
 
-    std::vector<std::string> identifiers =
+    string_vec identifiers =
         getIdentifierVector(p_sample_model->rootItem()->children().at(0));
 
     auto top_segments = buildTopSegments(identifiers);
@@ -163,9 +163,9 @@ void SLDController::clearScene()
 }
 
 //! build the identifier vector
-std::vector<std::string> SLDController::getIdentifierVector(SessionItem* item)
+string_vec SLDController::getIdentifierVector(SessionItem* item)
 {
-    std::vector<std::string> output;
+    string_vec output;
 
     auto children = item->children();
     for (int i = 0; i < item->childrenCount(); ++i) {
@@ -184,9 +184,9 @@ std::vector<std::string> SLDController::getIdentifierVector(SessionItem* item)
 }
 
 //! build the top segments of the sld view
-std::vector<SegmentView*> SLDController::buildTopSegments(std::vector<std::string>& identifiers)
+segment_vec SLDController::buildTopSegments(string_vec& identifiers)
 {
-    std::vector<SegmentView*> output;
+    segment_vec output;
     for (const auto identifier : identifiers) {
         SegmentItem* segment_item = p_sld_model->addSegment(identifier);
         SegmentView* segment = new SegmentView(segment_item);
@@ -196,9 +196,9 @@ std::vector<SegmentView*> SLDController::buildTopSegments(std::vector<std::strin
 }
 
 //! build the side segments of the sld view
-std::vector<SegmentView*> SLDController::buildSideSegments(std::vector<std::string>& identifiers)
+segment_vec SLDController::buildSideSegments(string_vec& identifiers)
 {
-    std::vector<SegmentView*> output;
+    segment_vec output;
     for (int i = 1; i < identifiers.size(); ++i) {
         SegmentItem* segment_item = p_sld_model->addSegment("");
         SegmentView* segment = new SegmentView(segment_item);
@@ -210,10 +210,10 @@ std::vector<SegmentView*> SLDController::buildSideSegments(std::vector<std::stri
 }
 
 //! build the handles of the sld view
-std::vector<std::vector<HandleView*>>
-SLDController::buildHandles(std::vector<std::string>& identifiers)
+handle_vec
+SLDController::buildHandles(string_vec& identifiers)
 {
-    std::vector<std::vector<HandleView*>> output;
+    handle_vec output;
     for (const auto identifier : identifiers) {
         HandleItem* handle_item_left = p_sld_model->addHandle();
         HandleItem* handle_item_right = p_sld_model->addHandle();
@@ -225,10 +225,10 @@ SLDController::buildHandles(std::vector<std::string>& identifiers)
 }
 
 //! build the roughness of sld view
-std::vector<RoughnessView*>
-SLDController::buildRoughnessBoxes(std::vector<std::string>& identifiers)
+roughness_vec
+SLDController::buildRoughnessBoxes(string_vec& identifiers)
 {
-    std::vector<RoughnessView*> output;
+    roughness_vec output;
     for (int i = 1; i < identifiers.size(); ++i) {
         RoughnessViewItem* roughness_item = p_sld_model->addRoughness(identifiers[i]);
         RoughnessView* roughness_view = new RoughnessView(roughness_item);
@@ -238,10 +238,10 @@ SLDController::buildRoughnessBoxes(std::vector<std::string>& identifiers)
 }
 
 //! Connect the view items as intended
-void SLDController::connectViewItem(std::vector<SegmentView*> top_segments,
-                                    std::vector<std::vector<HandleView*>> handles,
-                                    std::vector<SegmentView*> side_segments,
-                                    std::vector<RoughnessView*> roughness_views)
+void SLDController::connectViewItem(segment_vec top_segments,
+                                    handle_vec handles,
+                                    segment_vec side_segments,
+                                    roughness_vec roughness_views)
 {
 
     for (int i = 0; i < top_segments.size(); ++i) {
@@ -259,10 +259,10 @@ void SLDController::connectViewItem(std::vector<SegmentView*> top_segments,
 }
 
 //! Draw the view items
-void SLDController::drawViewItems(std::vector<SegmentView*> top_segments,
-                                  std::vector<std::vector<HandleView*>> handles,
-                                  std::vector<SegmentView*> side_segments,
-                                  std::vector<RoughnessView*> roughness_views)
+void SLDController::drawViewItems(segment_vec top_segments,
+                                  handle_vec handles,
+                                  segment_vec side_segments,
+                                  roughness_vec roughness_views)
 {
     if (!p_scene_item)
         return;

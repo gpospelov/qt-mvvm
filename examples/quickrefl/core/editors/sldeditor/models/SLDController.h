@@ -27,6 +27,10 @@ class RoughnessView;
 @class SLDController
 @brief This manages model connectivity
 */
+using string_vec = std::vector<std::string>; 
+using segment_vec = std::vector<SegmentView*>;
+using handle_vec = std::vector<std::vector<HandleView*>>;
+using roughness_vec = std::vector<RoughnessView*>;
 
 class SLDController
 {
@@ -46,21 +50,21 @@ private:
 
     void buildSLD();
     void clearScene();
-    std::vector<std::string> getIdentifierVector(ModelView::SessionItem* item);
-    std::vector<SegmentView*> buildTopSegments(std::vector<std::string>& identifiers);
-    std::vector<SegmentView*> buildSideSegments(std::vector<std::string>& identifiers);
-    std::vector<std::vector<HandleView*>> buildHandles(std::vector<std::string>& identifiers);
-    std::vector<RoughnessView*> buildRoughnessBoxes(std::vector<std::string>& identifiers);
+    string_vec getIdentifierVector(ModelView::SessionItem* item);
+    segment_vec buildTopSegments(string_vec& identifiers);
+    segment_vec buildSideSegments(string_vec& identifiers);
+    handle_vec buildHandles(string_vec& identifiers);
+    roughness_vec buildRoughnessBoxes(string_vec& identifiers);
 
-    void connectViewItem(std::vector<SegmentView*> top_segments,
-                         std::vector<std::vector<HandleView*>> handles,
-                         std::vector<SegmentView*> side_segments,
-                         std::vector<RoughnessView*> roughness_views);
+    void connectViewItem(segment_vec top_segments,
+                         handle_vec handles,
+                         segment_vec side_segments,
+                         roughness_vec roughness_views);
 
-    void drawViewItems(std::vector<SegmentView*> top_segments,
-                       std::vector<std::vector<HandleView*>> handles,
-                       std::vector<SegmentView*> side_segments,
-                       std::vector<RoughnessView*> roughness_views);
+    void drawViewItems(segment_vec top_segments,
+                       handle_vec handles,
+                       segment_vec side_segments,
+                       roughness_vec roughness_views);
 
     void updateToView(ModelView::SessionItem* item = nullptr);
     void updateFromView(ModelView::SessionItem* item = nullptr);
