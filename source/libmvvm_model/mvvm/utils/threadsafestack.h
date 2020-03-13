@@ -56,6 +56,17 @@ public:
         data_condition.notify_one();
     }
 
+    //! Updates top value in a stack.
+
+    void update_top(T new_value)
+    {
+        std::lock_guard<std::mutex> lock(m);
+        if (!data.empty())
+            data.pop();
+        data.push(std::move(new_value));
+        data_condition.notify_one();
+    }
+
     void wait_and_pop(T& value)
     {
         std::unique_lock<std::mutex> lock(m);

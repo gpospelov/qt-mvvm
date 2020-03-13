@@ -23,9 +23,9 @@ public:
 
 ThreadSafeStackTest::~ThreadSafeStackTest() = default;
 
-//! No threads. Checking stack initial state.
+//! Checking stack initial state (single thread mode).
 
-TEST_F(ThreadSafeStackTest, noThreadsInitialState)
+TEST_F(ThreadSafeStackTest, initialState)
 {
     threadsafe_stack<int> stack;
     EXPECT_TRUE(stack.empty());
@@ -36,9 +36,9 @@ TEST_F(ThreadSafeStackTest, noThreadsInitialState)
     EXPECT_FALSE(sh_value);
 }
 
-//! No threads. Checking stack initial state.
+//! Push and then pop (single thread mode).
 
-TEST_F(ThreadSafeStackTest, noThreadsPushAndPop)
+TEST_F(ThreadSafeStackTest, pushAndPop)
 {
     threadsafe_stack<int> stack;
 
@@ -51,6 +51,30 @@ TEST_F(ThreadSafeStackTest, noThreadsPushAndPop)
     stack.push(43);
     auto result = stack.wait_and_pop();
     EXPECT_EQ(*result.get(), 43);
+}
+
+//! Update top value (single thread mode).
+
+TEST_F(ThreadSafeStackTest, updateTop)
+{
+    threadsafe_stack<int> stack;
+
+    // update of empty stack means simple appearance of value
+    stack.update_top(42);
+    EXPECT_FALSE(stack.empty());
+    int value(0);
+    EXPECT_TRUE(stack.try_pop(value));
+    EXPECT_EQ(value, 42);
+
+    // updating value
+    stack.push(43);
+    stack.update_top(44);
+    auto result = stack.wait_and_pop();
+    EXPECT_EQ(*result.get(), 44);
+
+    // shouldn't be more values
+    auto sh_value = stack.try_pop();
+    EXPECT_FALSE(sh_value);
 }
 
 //! Push and pop in concurrent mode.
