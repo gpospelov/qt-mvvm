@@ -14,6 +14,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
 find_package(Qt5 COMPONENTS Widgets Core Gui PrintSupport REQUIRED)
+find_package(Threads)
 
 get_target_property(Qt5Widgets_location Qt5::Widgets LOCATION_Release)
 message(STATUS "  ${Qt5Widgets_LIBRARIES} ${Qt5Widgets_location}")
@@ -22,6 +23,6 @@ message(STATUS "  Includes: ${Qt5Widgets_INCLUDE_DIRS}")
 # Generating config files
 
 configure_file(${CMAKE_SOURCE_DIR}/cmake/scripts/testconfig.h.in  ${BUILD_INC_DIR}/testconfig.h @ONLY)
-add_definitions(-I${BUILD_INC_DIR})
+add_definitions(-I${BUILD_INC_DIR} -pthread)
 
 add_compile_options($<$<CXX_COMPILER_ID:MSVC>:/MP>)
