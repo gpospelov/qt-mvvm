@@ -29,7 +29,7 @@ JobManager::~JobManager()
 void JobManager::requestSimulation(double value)
 {
     std::cout << "JobManager::requestSimulation() 1.1 -> saving value" << std::endl;
-    requested_values.push(value);
+    requested_values.update_top(value);
     std::cout << "JobManager::requestSimulation() 1.2 -> value saved" << std::endl;
 }
 
