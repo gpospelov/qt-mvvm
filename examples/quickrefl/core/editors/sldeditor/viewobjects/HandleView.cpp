@@ -20,9 +20,7 @@
 #include <mvvm/utils/numericutils.h>
 
 //! The constructor
-HandleView::HandleView(HandleItem* item)
-    : handle_item(item),
-      allowed_x(false), allowed_y(false)
+HandleView::HandleView(HandleItem* item) : handle_item(item), allowed_x(false), allowed_y(false)
 {
     auto on_property_change = [this](ModelView::SessionItem*, std::string property_name) {
         if (property_name == HandleItem::P_XPOS) {

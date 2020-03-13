@@ -27,7 +27,7 @@ class RoughnessView;
 @class SLDController
 @brief This manages model connectivity
 */
-using string_vec = std::vector<std::string>; 
+using string_vec = std::vector<std::string>;
 using segment_vec = std::vector<SegmentView*>;
 using handle_vec = std::vector<std::vector<HandleView*>>;
 using roughness_vec = std::vector<RoughnessView*>;
@@ -56,14 +56,10 @@ private:
     handle_vec buildHandles(string_vec& identifiers);
     roughness_vec buildRoughnessBoxes(string_vec& identifiers);
 
-    void connectViewItem(segment_vec top_segments,
-                         handle_vec handles,
-                         segment_vec side_segments,
+    void connectViewItem(segment_vec top_segments, handle_vec handles, segment_vec side_segments,
                          roughness_vec roughness_views);
 
-    void drawViewItems(segment_vec top_segments,
-                       handle_vec handles,
-                       segment_vec side_segments,
+    void drawViewItems(segment_vec top_segments, handle_vec handles, segment_vec side_segments,
                        roughness_vec roughness_views);
 
     void updateToView(ModelView::SessionItem* item = nullptr);

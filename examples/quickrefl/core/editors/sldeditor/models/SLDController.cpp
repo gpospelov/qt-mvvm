@@ -119,8 +119,7 @@ void SLDController::buildSLD()
     if (p_sample_model->rootItem()->childrenCount() == 0)
         return;
 
-    string_vec identifiers =
-        getIdentifierVector(p_sample_model->rootItem()->children().at(0));
+    string_vec identifiers = getIdentifierVector(p_sample_model->rootItem()->children().at(0));
 
     auto top_segments = buildTopSegments(identifiers);
     auto side_segments = buildSideSegments(identifiers);
@@ -210,8 +209,7 @@ segment_vec SLDController::buildSideSegments(string_vec& identifiers)
 }
 
 //! build the handles of the sld view
-handle_vec
-SLDController::buildHandles(string_vec& identifiers)
+handle_vec SLDController::buildHandles(string_vec& identifiers)
 {
     handle_vec output;
     for (const auto identifier : identifiers) {
@@ -225,8 +223,7 @@ SLDController::buildHandles(string_vec& identifiers)
 }
 
 //! build the roughness of sld view
-roughness_vec
-SLDController::buildRoughnessBoxes(string_vec& identifiers)
+roughness_vec SLDController::buildRoughnessBoxes(string_vec& identifiers)
 {
     roughness_vec output;
     for (int i = 1; i < identifiers.size(); ++i) {
@@ -238,10 +235,8 @@ SLDController::buildRoughnessBoxes(string_vec& identifiers)
 }
 
 //! Connect the view items as intended
-void SLDController::connectViewItem(segment_vec top_segments,
-                                    handle_vec handles,
-                                    segment_vec side_segments,
-                                    roughness_vec roughness_views)
+void SLDController::connectViewItem(segment_vec top_segments, handle_vec handles,
+                                    segment_vec side_segments, roughness_vec roughness_views)
 {
 
     for (int i = 0; i < top_segments.size(); ++i) {
@@ -259,10 +254,8 @@ void SLDController::connectViewItem(segment_vec top_segments,
 }
 
 //! Draw the view items
-void SLDController::drawViewItems(segment_vec top_segments,
-                                  handle_vec handles,
-                                  segment_vec side_segments,
-                                  roughness_vec roughness_views)
+void SLDController::drawViewItems(segment_vec top_segments, handle_vec handles,
+                                  segment_vec side_segments, roughness_vec roughness_views)
 {
     if (!p_scene_item)
         return;
@@ -297,10 +290,10 @@ void SLDController::updateToView(SessionItem* item)
             }
         }
     } else {
-        if (dynamic_cast<MultiLayerItem*>(item->parent())){
+        if (dynamic_cast<MultiLayerItem*>(item->parent())) {
             buildSLD();
             return;
-        }else{
+        } else {
             for (auto* item : view_items) {
                 if (dynamic_cast<SegmentItem*>(item)) {
                     auto mod_item = dynamic_cast<SegmentItem*>(item);
@@ -312,13 +305,11 @@ void SLDController::updateToView(SessionItem* item)
             }
         }
     }
-    
 }
 
 //! Update the material and layer models from the view items
 void SLDController::updateFromView(SessionItem* item)
 {
-
     if (dynamic_cast<SegmentItem*>(item->parent())) {
         auto segment_item = dynamic_cast<SegmentItem*>(item->parent());
         auto layer_item_session = p_sample_model->findItem(segment_item->layerIdentifier());

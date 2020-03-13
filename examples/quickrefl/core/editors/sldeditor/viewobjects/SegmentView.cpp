@@ -28,8 +28,7 @@
 
 //! The constructor
 SegmentView::SegmentView(SegmentItem* item)
-    : ViewObject(), segment_item(item),
-      left_handle(nullptr), right_handle(nullptr)
+    : ViewObject(), segment_item(item), left_handle(nullptr), right_handle(nullptr)
 {
     auto on_property_change = [this](ModelView::SessionItem*, std::string property_name) {
         if (property_name == SegmentItem::P_X_POS) {
