@@ -8,11 +8,11 @@
 // ************************************************************************** //
 
 #include "refldockwindow.h"
+#include "SLDViewWidget.h"
 #include "applicationmodels.h"
 #include "dockscontroller.h"
 #include "layereditor.h"
 #include "reflwidgets.h"
-#include "SLDViewWidget.h"
 #include <QLabel>
 
 ReflDockWindow::ReflDockWindow(QWidget* parent)
@@ -25,7 +25,7 @@ ReflDockWindow::ReflDockWindow(QWidget* parent)
                                 Qt::TopDockWidgetArea);
     docks_controller->addWidget(1, new LayerEditor(models.get()), Qt::TopDockWidgetArea);
     docks_controller->addWidget(2, new LayerCanvas, Qt::LeftDockWidgetArea);
-    docks_controller->addWidget(3, new SLDViewWidget(models->sldController(),parent),
+    docks_controller->addWidget(3, new SLDViewWidget(models->sldController(), parent),
                                 Qt::RightDockWidgetArea);
     docks_controller->addWidget(4, new ReflPlotWidget, Qt::BottomDockWidgetArea);
     docks_controller->addWidget(5, new InstrumentEditor, Qt::BottomDockWidgetArea);

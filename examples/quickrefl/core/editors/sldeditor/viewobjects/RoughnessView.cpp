@@ -278,11 +278,13 @@ RoughnessViewItem* RoughnessView::roughnessItem() const
 void RoughnessView::moveHandles()
 {
     left_handle->handleItem()->setProperty(
-        HandleItem::P_XPOS, middle_segment->segmentItem()->property(SegmentItem::P_X_POS).toDouble()
-                                - roughness_item->property(RoughnessViewItem::P_ROUGHNESS).toDouble());
+        HandleItem::P_XPOS,
+        middle_segment->segmentItem()->property(SegmentItem::P_X_POS).toDouble()
+            - roughness_item->property(RoughnessViewItem::P_ROUGHNESS).toDouble());
     right_handle->handleItem()->setProperty(
-        HandleItem::P_XPOS, middle_segment->segmentItem()->property(SegmentItem::P_X_POS).toDouble()
-                                + roughness_item->property(RoughnessViewItem::P_ROUGHNESS).toDouble());
+        HandleItem::P_XPOS,
+        middle_segment->segmentItem()->property(SegmentItem::P_X_POS).toDouble()
+            + roughness_item->property(RoughnessViewItem::P_ROUGHNESS).toDouble());
 
     left_handle->handleItem()->setProperty(
         HandleItem::P_YPOS,

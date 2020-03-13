@@ -25,5 +25,4 @@ public:
 
 protected:
     void resizeEvent(QResizeEvent* event);
-
 };

@@ -9,11 +9,11 @@
 
 #include "RoughnessViewItem.h"
 
-#include "samplemodel.h"
 #include "layeritems.h"
+#include "samplemodel.h"
 
-#include "materialmodel.h"
 #include "materialitems.h"
+#include "materialmodel.h"
 
 #include <QColor>
 #include <QUndoStack>
@@ -47,6 +47,6 @@ void RoughnessViewItem::fetchFromLayer(SampleModel* layer_model, MaterialModel* 
     if (!layer_item)
         return;
     auto roughness_item = layer_item->item<RoughnessItem>(LayerItem::P_ROUGHNESS);
-    
+
     setProperty(P_ROUGHNESS, roughness_item->property(RoughnessItem::P_SIGMA));
 }

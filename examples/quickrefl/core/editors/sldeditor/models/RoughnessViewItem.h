@@ -30,7 +30,7 @@ public:
     void setLayerIdentifier(std::string layer_identifier_in);
     std::string layerIdentifier();
     void fetchFromLayer(SampleModel* layer_model, MaterialModel* material_model);
-    
+
 private:
     std::string layer_identifier;
 };

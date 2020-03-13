@@ -25,7 +25,7 @@ SLDViewWidget::SLDViewWidget(SLDController* sld_controller, QWidget* parent) : Q
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setContentsMargins(0, 0, 0, 0);
-    
+
     sld_controller->setScene(scene_item);
 }
 

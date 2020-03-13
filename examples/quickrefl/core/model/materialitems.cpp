@@ -16,8 +16,8 @@ using namespace ModelView;
 MaterialContainerItem::MaterialContainerItem()
     : ModelView::CompoundItem(::Constants::MaterialContainerItemType)
 {
-    registerTag(TagInfo::universalTag(
-        T_MATERIALS, {::Constants::SLDMaterialItemType}), /*set_as_default*/ true);
+    registerTag(TagInfo::universalTag(T_MATERIALS, {::Constants::SLDMaterialItemType}),
+                /*set_as_default*/ true);
 }
 
 // ----------------------------------------------------------------------------
@@ -60,4 +60,3 @@ void SLDMaterialItem::set_properties(const std::string& name, const QColor& colo
     setProperty(P_SLD_REAL, real);
     setProperty(P_SLD_IMAG, imag);
 }
-

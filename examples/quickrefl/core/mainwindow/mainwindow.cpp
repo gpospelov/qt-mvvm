@@ -22,8 +22,7 @@ const QString size_key = "size";
 const QString pos_key = "pos";
 } // namespace
 
-MainWindow::MainWindow()
-    : m_reflDockWindow(new ReflDockWindow)
+MainWindow::MainWindow() : m_reflDockWindow(new ReflDockWindow)
 {
     setCentralWidget(m_reflDockWindow);
     create_menus();

@@ -76,8 +76,7 @@ void LayerEditorActions::onClone()
     for (auto to_clone : items) {
         auto parent = to_clone->parent();
         const auto tagrow = parent->tagRowOfItem(to_clone);
-        new_selection.push_back(
-            p_impl->model->copyItem(to_clone, parent, tagrow.next()));
+        new_selection.push_back(p_impl->model->copyItem(to_clone, parent, tagrow.next()));
     }
 
     p_impl->selection_model->selectItems(new_selection);

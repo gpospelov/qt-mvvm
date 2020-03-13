@@ -21,7 +21,7 @@ class ViewObject : public QGraphicsObject
 public:
     ViewObject();
     ~ViewObject();
-    
+
     void exposedGeometryChange();
     QRectF boundingRect() const = 0;
     QPainterPath shape() const = 0;

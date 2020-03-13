@@ -9,9 +9,9 @@
 
 #include "layerviewmodelcontroller.h"
 #include "layeritems.h"
-#include <mvvm/viewmodel/standardviewitems.h>
 #include <mvvm/viewmodel/rowstrategyinterface.h>
 #include <mvvm/viewmodel/standardchildrenstrategies.h>
+#include <mvvm/viewmodel/standardviewitems.h>
 #include <mvvm/viewmodel/viewmodel.h>
 
 using namespace ModelView;
@@ -49,16 +49,15 @@ public:
 
         // layer row contains its name, placeholder for repetition, layer material and thickness
         if (auto layer = dynamic_cast<LayerItem*>(item)) {
-            result.emplace_back(
-                std::make_unique<ViewDataItem>(layer->getItem(LayerItem::P_NAME)));
+            result.emplace_back(std::make_unique<ViewDataItem>(layer->getItem(LayerItem::P_NAME)));
             //            result.push_back(new ViewLabelItem(layer));
             result.emplace_back(std::make_unique<ViewEmptyItem>()); // instead of P_NREPETITIONS
             result.emplace_back(
                 std::make_unique<ViewDataItem>(layer->getItem(LayerItem::P_MATERIAL)));
             result.emplace_back(
                 std::make_unique<ViewDataItem>(layer->getItem(LayerItem::P_THICKNESS)));
-            result.emplace_back(
-                std::make_unique<ViewDataItem>(layer->getItem(LayerItem::P_ROUGHNESS)->getItem(RoughnessItem::P_SIGMA)));
+            result.emplace_back(std::make_unique<ViewDataItem>(
+                layer->getItem(LayerItem::P_ROUGHNESS)->getItem(RoughnessItem::P_SIGMA)));
         }
 
         return result;

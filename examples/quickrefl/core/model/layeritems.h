@@ -27,7 +27,6 @@ public:
     RoughnessItem();
 };
 
-
 //! Layer with name, thickness and reference to material.
 
 class LayerItem : public ModelView::CompoundItem

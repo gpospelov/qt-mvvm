@@ -15,9 +15,9 @@
 #include "layerviewmodel.h"
 #include "samplemodel.h"
 #include "test_utils.h"
+#include <QDebug>
 #include <mvvm/viewmodel/standardviewitems.h>
 #include <mvvm/viewmodel/viewmodelutils.h>
-#include <QDebug>
 
 using namespace ModelView;
 
@@ -84,17 +84,20 @@ TEST_F(LayerEditorActionsTest, addNewLayerAfterSelection)
     auto top_index = test_data.view_model.index(0, 0, ml_index);
     auto bottom_index = test_data.view_model.index(1, 0, ml_index);
     EXPECT_EQ(test_data.view_model.rootItem()->item(), test_data.multilayer);
-    EXPECT_EQ(test_data.view_model.itemFromIndex(top_index)->item(), test_data.top->getItem(LayerItem::P_NAME));
-    EXPECT_EQ(test_data.view_model.itemFromIndex(bottom_index)->item(), test_data.bottom->getItem(LayerItem::P_NAME));
+    EXPECT_EQ(test_data.view_model.itemFromIndex(top_index)->item(),
+              test_data.top->getItem(LayerItem::P_NAME));
+    EXPECT_EQ(test_data.view_model.itemFromIndex(bottom_index)->item(),
+              test_data.bottom->getItem(LayerItem::P_NAME));
 
     // adding new layer after selection
     test_data.actions.onAddLayer();
 
     top_index = test_data.view_model.index(0, 0, ml_index);
     bottom_index = test_data.view_model.index(2, 0, ml_index);
-    EXPECT_EQ(test_data.view_model.itemFromIndex(top_index)->item(), test_data.top->getItem(LayerItem::P_NAME));
-    EXPECT_EQ(test_data.view_model.itemFromIndex(bottom_index)->item(), test_data.bottom->getItem(LayerItem::P_NAME));
-
+    EXPECT_EQ(test_data.view_model.itemFromIndex(top_index)->item(),
+              test_data.top->getItem(LayerItem::P_NAME));
+    EXPECT_EQ(test_data.view_model.itemFromIndex(bottom_index)->item(),
+              test_data.bottom->getItem(LayerItem::P_NAME));
 
     // checking layout of multilayer
     auto layers = test_data.multilayer->getItems(MultiLayerItem::T_LAYERS);

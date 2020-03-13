@@ -106,8 +106,8 @@ TEST_F(LayerSelectionModelTest, selectMultiLayerItem)
     TestData test_data;
 
     // adding new MultiLayer between top and bottom layer
-    auto new_ml = test_data.sample_model.insertItem<MultiLayerItem>(
-        test_data.multilayer, {MultiLayerItem::T_LAYERS, 1});
+    auto new_ml = test_data.sample_model.insertItem<MultiLayerItem>(test_data.multilayer,
+                                                                    {MultiLayerItem::T_LAYERS, 1});
 
     // checking layout
     auto layers = test_data.multilayer->getItems(MultiLayerItem::T_LAYERS);
@@ -124,5 +124,4 @@ TEST_F(LayerSelectionModelTest, selectMultiLayerItem)
 
     std::vector<SessionItem*> expected = {new_ml};
     EXPECT_EQ(test_data.selection_model.selectedItems(), expected);
-
 }

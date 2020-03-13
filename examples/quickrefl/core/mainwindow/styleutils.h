@@ -16,8 +16,7 @@ class QSize;
 
 namespace StyleUtils
 {
-    QSize ToolBarIconSize();
+QSize ToolBarIconSize();
 };
 
 #endif // STYLEUTILS_H
-

@@ -10,8 +10,8 @@
 #ifndef SLDCONTROLLER_H
 #define SLDCONTROLLER_H
 
-#include <mvvm/model/sessionmodel.h>
 #include <mvvm/model/sessionitem.h>
+#include <mvvm/model/sessionmodel.h>
 #include <vector>
 
 class MaterialModel;
@@ -31,7 +31,8 @@ class RoughnessView;
 class SLDController
 {
 public:
-    SLDController(MaterialModel* material_model, SampleModel* sample_model, SLDViewModel* sld_model, GraphicsScene* scene_item);
+    SLDController(MaterialModel* material_model, SampleModel* sample_model, SLDViewModel* sld_model,
+                  GraphicsScene* scene_item);
     void setScene(GraphicsScene* scene);
 
 private:
@@ -46,17 +47,17 @@ private:
     void buildSLD();
     void clearScene();
     std::vector<std::string> getIdentifierVector(ModelView::SessionItem* item);
-    std::vector<SegmentView*> buildTopSegments(std::vector<std::string> &identifiers);
-    std::vector<SegmentView*> buildSideSegments(std::vector<std::string> &identifiers);
-    std::vector<std::vector<HandleView*>> buildHandles(std::vector<std::string> &identifiers);
-    std::vector<RoughnessView*> buildRoughnessBoxes(std::vector<std::string> &identifiers);
+    std::vector<SegmentView*> buildTopSegments(std::vector<std::string>& identifiers);
+    std::vector<SegmentView*> buildSideSegments(std::vector<std::string>& identifiers);
+    std::vector<std::vector<HandleView*>> buildHandles(std::vector<std::string>& identifiers);
+    std::vector<RoughnessView*> buildRoughnessBoxes(std::vector<std::string>& identifiers);
 
-    void connectViewItem(std::vector<SegmentView*> top_segments, 
+    void connectViewItem(std::vector<SegmentView*> top_segments,
                          std::vector<std::vector<HandleView*>> handles,
                          std::vector<SegmentView*> side_segments,
                          std::vector<RoughnessView*> roughness_views);
 
-    void drawViewItems(std::vector<SegmentView*> top_segments, 
+    void drawViewItems(std::vector<SegmentView*> top_segments,
                        std::vector<std::vector<HandleView*>> handles,
                        std::vector<SegmentView*> side_segments,
                        std::vector<RoughnessView*> roughness_views);

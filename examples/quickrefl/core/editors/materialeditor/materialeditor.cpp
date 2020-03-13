@@ -10,8 +10,8 @@
 #include "materialeditor.h"
 #include "materialeditoractions.h"
 #include "materialeditortoolbar.h"
-#include "materialmodel.h"
 #include "materialeditorwidget.h"
+#include "materialmodel.h"
 #include <QVBoxLayout>
 
 MaterialEditor::MaterialEditor(MaterialModel* material_model, QWidget* parent)

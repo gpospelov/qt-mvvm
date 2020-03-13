@@ -9,22 +9,22 @@
 
 #include "SegmentItem.h"
 
-#include "samplemodel.h"
 #include "layeritems.h"
+#include "samplemodel.h"
 
-#include "materialmodel.h"
 #include "materialitems.h"
+#include "materialmodel.h"
 
 #include <QColor>
 #include <QUndoStack>
 #include <cmath>
-#include <mvvm/model/externalproperty.h>
 #include <mvvm/core/modeldocuments.h>
+#include <mvvm/model/externalproperty.h>
 #include <mvvm/model/itemcatalogue.h>
 #include <mvvm/utils/numericutils.h>
 #include <mvvm/utils/reallimits.h>
 
-SegmentItem::SegmentItem(std::string layer_identifier_in) 
+SegmentItem::SegmentItem(std::string layer_identifier_in)
     : ModelView::CompoundItem("SegmentItem"), layer_identifier(layer_identifier_in)
 
 {
@@ -58,15 +58,17 @@ void SegmentItem::fetchFromLayer(SampleModel* layer_model, MaterialModel* materi
     if (!layer_item)
         return;
 
-    double buffer_x = property(P_X_POS).toDouble() - property(P_WIDTH).toDouble()/2;
+    double buffer_x = property(P_X_POS).toDouble() - property(P_WIDTH).toDouble() / 2;
     setProperty(P_WIDTH, layer_item->property(LayerItem::P_THICKNESS).toDouble());
-    setProperty(P_X_POS, buffer_x+layer_item->property(LayerItem::P_THICKNESS).toDouble()/2);
+    setProperty(P_X_POS, buffer_x + layer_item->property(LayerItem::P_THICKNESS).toDouble() / 2);
 
     auto material_item = dynamic_cast<SLDMaterialItem*>(
-        material_model->findItem(layer_item->property(LayerItem::P_MATERIAL).value<ModelView::ExternalProperty>().identifier()));
+        material_model->findItem(layer_item->property(LayerItem::P_MATERIAL)
+                                     .value<ModelView::ExternalProperty>()
+                                     .identifier()));
     if (!material_item)
         return;
 
-    setProperty(P_Y_POS, material_item->property(SLDMaterialItem::P_SLD_REAL).toDouble()*1e6);
+    setProperty(P_Y_POS, material_item->property(SLDMaterialItem::P_SLD_REAL).toDouble() * 1e6);
     setProperty(P_COLOR, material_item->property(SLDMaterialItem::P_COLOR));
 }

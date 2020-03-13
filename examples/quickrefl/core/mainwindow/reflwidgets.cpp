@@ -11,33 +11,28 @@
 
 //! ---------------------------------------------------------------------------
 
-LayerCanvas::LayerCanvas(QWidget* parent)
-    : QWidget(parent)
+LayerCanvas::LayerCanvas(QWidget* parent) : QWidget(parent)
 {
     setWindowTitle(QString("Layer Canvas"));
 }
 
 //! ---------------------------------------------------------------------------
 
-SLDEditor::SLDEditor(QWidget* parent)
-    : QWidget(parent)
+SLDEditor::SLDEditor(QWidget* parent) : QWidget(parent)
 {
     setWindowTitle(QString("SLD Editor"));
 }
 
 //! ---------------------------------------------------------------------------
 
-ReflPlotWidget::ReflPlotWidget(QWidget* parent)
-    : QWidget(parent)
+ReflPlotWidget::ReflPlotWidget(QWidget* parent) : QWidget(parent)
 {
     setWindowTitle(QString("Reflectivity plot"));
 }
 
-
 //! ---------------------------------------------------------------------------
 
-InstrumentEditor::InstrumentEditor(QWidget* parent)
-    : QWidget(parent)
+InstrumentEditor::InstrumentEditor(QWidget* parent) : QWidget(parent)
 {
     setWindowTitle(QString("Instrument Editor"));
 }
