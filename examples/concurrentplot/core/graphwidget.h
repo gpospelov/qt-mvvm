@@ -16,8 +16,7 @@
 class QBoxLayout;
 class GraphModel;
 class GraphPropertyWidget;
-class QToolBar;
-class QAction;
+class GraphWidgetToolBar;
 
 namespace ModelView
 {
@@ -39,9 +38,7 @@ public:
     void setModel(GraphModel* model);
 
 private:
-    void init_toolbar();
-
-    QToolBar* m_toolBar{nullptr};
+    GraphWidgetToolBar* toolbar{nullptr};
     ModelView::GraphCanvas* m_graphCanvas{nullptr};
     GraphPropertyWidget* m_propertyWidget{nullptr};
     GraphModel* m_model{nullptr};
