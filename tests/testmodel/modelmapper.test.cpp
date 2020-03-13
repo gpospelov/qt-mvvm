@@ -66,6 +66,59 @@ TEST(ModelMapperTest, onDataChange)
     item->setData(43.0); // perform action
 }
 
+//! Testing signaling after unsubscribe.
+
+TEST(ModelMapperTest, onDataChangeUnsubscribe)
+{
+    SessionModel model;
+    MockWidgetForModel widget(&model);
+
+    EXPECT_CALL(widget, onItemInserted(_, _));
+    auto item = model.insertItem<SessionItem>(model.rootItem());
+
+    // unsubscribing
+    widget.setModel(nullptr);
+
+    // no calls should be done
+    EXPECT_CALL(widget, onDataChange(_, _)).Times(0);
+    EXPECT_CALL(widget, onItemInserted(_, _)).Times(0);
+    EXPECT_CALL(widget, onAboutToRemoveItem(_, _)).Times(0);
+    EXPECT_CALL(widget, onItemRemoved(_, _)).Times(0);
+    EXPECT_CALL(widget, onModelDestroyed(_)).Times(0);
+    EXPECT_CALL(widget, onModelReset(_)).Times(0);
+
+    item->setData(43.0); // perform action
+}
+
+//! Testing signaling after subscribe/unsubscribe twice.
+
+TEST(ModelMapperTest, onDataChangeMultipleUnsubscribe)
+{
+    SessionModel model;
+    MockWidgetForModel widget(&model);
+
+    EXPECT_CALL(widget, onItemInserted(_, _));
+    auto item = model.insertItem<SessionItem>(model.rootItem());
+
+    // unsubscribing
+    widget.setModel(nullptr);
+    // subscribing again
+    widget.setModel(&model);
+    // unsubscribing
+    widget.setModel(nullptr);
+    // subscribing again
+    widget.setModel(&model);
+
+    const int role = ItemDataRole::DATA;
+    EXPECT_CALL(widget, onDataChange(item, role)).Times(1);
+    EXPECT_CALL(widget, onItemInserted(_, _)).Times(0);
+    EXPECT_CALL(widget, onAboutToRemoveItem(_, _)).Times(0);
+    EXPECT_CALL(widget, onItemRemoved(_, _)).Times(0);
+    EXPECT_CALL(widget, onModelDestroyed(_)).Times(0);
+    EXPECT_CALL(widget, onModelReset(_)).Times(0);
+    model.setData(item, 42.0, ItemDataRole::DATA); // perform action
+}
+
 //! Inserting item and checking corresponding signals.
 
 TEST(ModelMapperTest, onItemInserted)
