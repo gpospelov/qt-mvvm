@@ -8,9 +8,8 @@
 // ************************************************************************** //
 
 #include "materialtableview.h"
-#include <QMouseEvent>
 #include <QHeaderView>
-
+#include <QMouseEvent>
 
 MaterialTableView::~MaterialTableView() = default;
 

@@ -7,21 +7,22 @@
 //
 // ************************************************************************** //
 
-#ifndef MATERIALEDITORTOOLBAR_H
-#define MATERIALEDITORTOOLBAR_H
+#include <QDragMoveEvent>
+#include <QGraphicsView>
+#include <QKeyEvent>
+#include <QWheelEvent>
 
-#include <QToolBar>
+class GraphicsScene;
+class SLDController;
 
-class MaterialEditorActions;
-
-//! Material editor toolbar.
-
-class MaterialEditorToolBar : public QToolBar
+class SLDViewWidget : public QGraphicsView
 {
     Q_OBJECT
-public:
-    MaterialEditorToolBar(MaterialEditorActions* actions, QWidget* parent = nullptr);
-    ~MaterialEditorToolBar() = default;
-};
 
-#endif // MATERIALEDITORTOOLBAR_H
+public:
+    SLDViewWidget(SLDController* sld_model, QWidget* parent = nullptr);
+    GraphicsScene* getScene() const;
+
+protected:
+    void resizeEvent(QResizeEvent* event);
+};

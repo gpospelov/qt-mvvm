@@ -12,7 +12,8 @@
 
 #include <QtGlobal>
 
-inline void InitIconResources() {
+inline void InitIconResources()
+{
     Q_INIT_RESOURCE(icons);
 }
 

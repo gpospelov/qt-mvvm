@@ -28,4 +28,3 @@ private:
 };
 
 #endif // LAYEREDITORTOOLBAR_H
-

@@ -9,11 +9,10 @@
 
 #include "materialeditortoolbar.h"
 #include "materialeditoractions.h"
-#include "styleutils.h"
 #include "resources.h"
-#include <QToolButton>
+#include "styleutils.h"
 #include <QAction>
-
+#include <QToolButton>
 
 MaterialEditorToolBar::MaterialEditorToolBar(MaterialEditorActions* actions, QWidget* parent)
     : QToolBar(parent)

@@ -72,4 +72,3 @@ void MultiLayerItem::update_layer_appearance()
         }
     }
 }
-

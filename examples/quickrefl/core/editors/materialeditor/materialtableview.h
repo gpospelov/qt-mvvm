@@ -22,12 +22,13 @@ public:
     using QTableView::QTableView;
     ~MaterialTableView() override;
 
-    void setModel(QAbstractItemModel *model) override;
+    void setModel(QAbstractItemModel* model) override;
 
 protected:
     void keyPressEvent(QKeyEvent* event) override;
     QModelIndex moveCursor(QAbstractItemView::CursorAction cursorAction,
                            Qt::KeyboardModifiers modifiers) override;
+
 private:
     bool isTextField(const QModelIndex& index) const;
     bool isKeyboardEditable(const QModelIndex& index) const;

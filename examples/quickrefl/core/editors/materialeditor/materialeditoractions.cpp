@@ -8,12 +8,12 @@
 // ************************************************************************** //
 
 #include "materialeditoractions.h"
-#include "materialmodel.h"
 #include "materialitems.h"
+#include "materialmodel.h"
 #include "materialselectionmodel.h"
+#include <QDebug>
 #include <mvvm/model/modelutils.h>
 #include <mvvm/viewmodel/viewmodel.h>
-#include <QDebug>
 
 using namespace ModelView;
 
@@ -39,7 +39,6 @@ struct MaterialEditorActions::MaterialEditorActionsImpl {
     {
         return selection_model->viewModel()->sessionItemFromIndex(QModelIndex());
     }
-
 };
 
 MaterialEditorActions::MaterialEditorActions(MaterialModel* material_model, QObject* parent)
@@ -58,7 +57,7 @@ void MaterialEditorActions::onAddMaterial()
 
 void MaterialEditorActions::onCloneMaterial()
 {
-     std::vector<ModelView::SessionItem*> new_selection;
+    std::vector<ModelView::SessionItem*> new_selection;
     for (const auto item : p_impl->selection_model->selectedMaterials())
         new_selection.push_back(p_impl->material_model->cloneMaterial(item));
     p_impl->selection_model->selectItems(new_selection);
