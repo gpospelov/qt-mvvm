@@ -7,12 +7,13 @@
 //
 // ************************************************************************** //
 
+
 #include "MockWidgets.h"
+#include <mvvm/signals/itemmapper.h>
+#include <mvvm/signals/modelmapper.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/model/tagrow.h>
-#include <mvvm/signals/itemmapper.h>
-#include <mvvm/signals/modelmapper.h>
 
 // ----------------------------------------------------------------------------
 
@@ -32,9 +33,12 @@ void MockWidgetForItem::setItem(ModelView::SessionItem* item)
     if (m_item == item)
         return;
 
+    if (m_item)
+        m_item->mapper()->unsubscribe(this);
+
     m_item = item;
 
-    if (m_item == nullptr)
+    if (!m_item)
         return;
 
     auto on_item_destroy = [this](ModelView::SessionItem* item) {
@@ -92,9 +96,12 @@ void MockWidgetForModel::setModel(ModelView::SessionModel* model)
     if (m_model == model)
         return;
 
+    if (m_model)
+        m_model->mapper()->unsubscribe(this);
+
     m_model = model;
 
-    if (m_model == nullptr)
+    if (!m_model)
         return;
 
     auto on_data_change = [this](ModelView::SessionItem* item, int role) {
