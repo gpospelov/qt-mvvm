@@ -35,24 +35,16 @@ class GraphWidget : public QWidget
     Q_OBJECT
 public:
     explicit GraphWidget(GraphModel* model = nullptr, QWidget* parent = nullptr);
-    ~GraphWidget();
 
     void setModel(GraphModel* model);
 
 private:
-    void init_actions();
+    void init_toolbar();
 
-    QBoxLayout* create_left_layout();
-    QBoxLayout* create_right_layout();
-
-    QToolBar* m_toolBar;
-    QAction* m_resetViewportAction;
-    QAction* m_addGraphAction;
-    QAction* m_removeGraphAction;
-
-    ModelView::GraphCanvas* m_graphCanvas;
-    GraphPropertyWidget* m_propertyWidget;
-    GraphModel* m_model;
+    QToolBar* m_toolBar{nullptr};
+    ModelView::GraphCanvas* m_graphCanvas{nullptr};
+    GraphPropertyWidget* m_propertyWidget{nullptr};
+    GraphModel* m_model{nullptr};
 };
 
 #endif // GRAPHWIDGET_H
