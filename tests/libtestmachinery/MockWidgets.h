@@ -7,7 +7,6 @@
 //
 // ************************************************************************** //
 
-
 #ifndef MOCKWIDGETS_H
 #define MOCKWIDGETS_H
 
@@ -56,7 +55,7 @@ private:
 class MockWidgetForModel : public ModelTestWidgetInterface
 {
 public:
-    MockWidgetForModel(ModelView::SessionModel* item);
+    MockWidgetForModel(ModelView::SessionModel* model);
     ~MockWidgetForModel();
 
     void setModel(ModelView::SessionModel* model);
