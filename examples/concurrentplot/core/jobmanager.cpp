@@ -21,6 +21,7 @@ JobManager::JobManager(GraphModel* model) : model(model), is_running(true)
 JobManager::~JobManager()
 {
     std::cout << "JobManager::~JobManager() -> joining" << std::endl;
+    requested_values.stop();
     is_running = false;
     sim_thread.join();
     std::cout << "JobManager::~JobManager() -> joined" << std::endl;
