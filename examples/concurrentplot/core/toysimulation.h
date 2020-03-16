@@ -11,6 +11,7 @@
 #define TOYSIMULATION_H
 
 #include <vector>
+#include <mvvm/utils/progresshandler.h>
 
 //! Represents long running toy scientific simulation.
 
@@ -39,10 +40,13 @@ public:
 
     Result simulationResult() const;
 
+    void setProgressCallback(ModelView::ProgressHandler::callback_t callback);
+
 private:
     InputData input_data;
     Result result;
     int delay{0};
+    ModelView::ProgressHandler progress_handler;
 };
 
 #endif //  TOYSIMULATION_H

@@ -42,20 +42,27 @@ void JobManager::run_simulation()
         try {
             std::cout << "JobManager::run_simulation() 1.3 -> waiting for value " << std::endl;
             auto value = requested_values.wait_and_pop();
-            std::cout << "JobManager::run_simulation() 1.4 -> obtained value " << value.get() << std::endl;
+            std::cout << "JobManager::run_simulation() 1.4 -> obtained value " << value.get()
+                      << std::endl;
 
             std::cout << "JobManager::run_simulation() 1.4.1 -> starting sim " << std::endl;
-            ToySimulation simulation(*value.get() / 100., 1);
+            double amplitude = *value.get() / 100.;
+            ToySimulation simulation(amplitude, 1);
+
+            auto on_progress = [this](int value) {
+                progress = value;
+                return interrupt_request;
+            };
+            simulation.setProgressCallback(on_progress);
+
             simulation.runSimulation();
             auto result = simulation.simulationResult();
             model->set_data(result.data);
             std::cout << "JobManager::run_simulation() 1.4.2 -> sim done " << std::endl;
 
         } catch (std::exception ex) {
-            std::cout << "JobManager::run_simulation() 1.5 -> terminated during waiting for value" << std::endl;
+            std::cout << "JobManager::run_simulation() 1.5 -> terminated during waiting for value"
+                      << std::endl;
         }
-
     }
-
-
 }

@@ -10,8 +10,8 @@
 #ifndef JOBMANAGER_H
 #define JOBMANAGER_H
 
-#include <mvvm/utils/threadsafestack.h>
 #include <atomic>
+#include <mvvm/utils/threadsafestack.h>
 #include <thread>
 
 class GraphModel;
@@ -33,6 +33,8 @@ private:
     GraphModel* model{nullptr};
     ModelView::threadsafe_stack<double> requested_values;
     std::atomic<bool> is_running;
+    bool interrupt_request{false};
+    int progress{0};
 };
 
 #endif // JOBMANAGER_H

@@ -12,6 +12,8 @@
 #include <cmath>
 #include <thread>
 
+using namespace ModelView;
+
 namespace
 {
 constexpr double pi = 3.14159265358979323846;
@@ -21,6 +23,7 @@ constexpr double pi = 3.14159265358979323846;
 
 ToySimulation::ToySimulation(double amplitude, int delay) : delay(delay)
 {
+    progress_handler.setMaxTicksCount(input_data.npoints);
     input_data.amplitude = amplitude;
 }
 
@@ -37,6 +40,8 @@ void ToySimulation::runSimulation()
                        + input_data.amplitude * 5.0 * std::sin(2 * pi * 2.25 * x);
         result.data.push_back(value);
 
+        progress_handler.setCompletedTicks(1);
+
         if (delay > 0)
             std::this_thread::sleep_for(std::chrono::milliseconds(delay));
     }
@@ -47,4 +52,9 @@ void ToySimulation::runSimulation()
 ToySimulation::Result ToySimulation::simulationResult() const
 {
     return result;
+}
+
+void ToySimulation::setProgressCallback(ProgressHandler::callback_t callback)
+{
+    progress_handler.subscribe(callback);
 }

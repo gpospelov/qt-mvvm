@@ -7,12 +7,12 @@
 //
 // ************************************************************************** //
 
-#ifndef PROGRESSHANDLER_H
-#define PROGRESSHANDLER_H
+#ifndef MVVM_UTILS_PROGRESSHANDLER_H
+#define MVVM_UTILS_PROGRESSHANDLER_H
 
-#include <mvvm/core/export.h>
-#include <mutex>
 #include <functional>
+#include <mutex>
+#include <mvvm/core/export.h>
 
 namespace ModelView
 {
@@ -20,7 +20,7 @@ namespace ModelView
 //! Maintain information about progress of a computation.
 //! Initialized with callback function to report progress and retrieve interruption request status.
 
-class ProgressHandler
+class CORE_EXPORT ProgressHandler
 {
 public:
     using callback_t = std::function<bool(size_t)>;
@@ -51,4 +51,4 @@ private:
 
 } // namespace ModelView
 
-#endif
+#endif // MVVM_UTILS_PROGRESSHANDLER_H
