@@ -95,6 +95,7 @@ void GraphWidgetToolBar::init_slowdown_elements()
     addWidget(label);
 
     slowdown_spinbox->setValue(10);
+    slowdown_spinbox->setMinimumWidth(100);
     addWidget(slowdown_spinbox);
 }
 

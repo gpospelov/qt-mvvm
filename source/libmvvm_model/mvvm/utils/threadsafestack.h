@@ -17,6 +17,7 @@
 #include <stdexcept>
 #include <thread>
 #include <condition_variable>
+#include <atomic>
 
 //! @file threadsafestack.h
 //! @brief Thread-safe stack borrowed from Anthony Williams, C++ Concurrency in Action, Second
@@ -39,9 +40,11 @@ private:
     std::stack<T> data;
     mutable std::mutex m;
     std::condition_variable data_condition;
+    std::atomic<bool> in_waiting_state{true};
 
 public:
     threadsafe_stack() {}
+    ~threadsafe_stack() { stop(); }
     threadsafe_stack(const threadsafe_stack& other)
     {
         std::lock_guard<std::mutex> lock(m);
@@ -70,7 +73,9 @@ public:
     void wait_and_pop(T& value)
     {
         std::unique_lock<std::mutex> lock(m);
-        data_condition.wait(lock, [this]{ return !data.empty();});
+        data_condition.wait(lock, [this]{ return !data.empty() || !in_waiting_state;});
+        if (data.empty())
+            throw empty_stack();
         value = std::move(data.top());
         data.pop();
     }
@@ -78,8 +83,9 @@ public:
     std::shared_ptr<T> wait_and_pop()
     {
         std::unique_lock<std::mutex> lock(m);
-        data_condition.wait(lock, [this]{ return !data.empty();});
-
+        data_condition.wait(lock, [this]{ return !data.empty() || !in_waiting_state;});
+        if (data.empty())
+            throw empty_stack();
         std::shared_ptr<T> const res(std::make_shared<T>(std::move(data.top())));
         data.pop();
         return res;
@@ -109,6 +115,15 @@ public:
     {
         std::lock_guard<std::mutex> lock(m);
         return data.empty();
+    }
+
+    //! Terminates waiting in wait_and_pop methods.
+
+    void stop()
+    {
+        std::lock_guard<std::mutex> lock(m);
+        in_waiting_state = false;
+        data_condition.notify_all();
     }
 };
 

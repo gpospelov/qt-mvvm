@@ -121,3 +121,39 @@ TEST_F(ThreadSafeStackTest, concurentPushAndPop)
         throw;
     }
 }
+
+//! Explicitely terminate waiting (concurrent mode).
+
+TEST_F(ThreadSafeStackTest, concurentStopWaiting)
+{
+    threadsafe_stack<int> stack;
+    std::promise<void> go, pop_ready_for_test;
+    std::shared_future<void> ready(go.get_future());
+    std::future<std::shared_ptr<int>> pop_done;
+
+    try {
+        // starting pop thread
+        pop_done = std::async(std::launch::async, [&stack, ready, &pop_ready_for_test]() {
+            pop_ready_for_test.set_value();
+            ready.wait();
+            return stack.wait_and_pop();
+        });
+
+        // waiting for threads being prepared for racing
+        pop_ready_for_test.get_future().wait();
+
+        // starting waiting on empty stack
+        go.set_value();
+
+        // stopping waiting
+        stack.stop();
+
+        // stopping stack will raise exception
+        EXPECT_THROW(*pop_done.get(), empty_stack);
+        EXPECT_TRUE(stack.empty());
+
+    } catch (...) {
+        go.set_value();
+        throw;
+    }
+}
