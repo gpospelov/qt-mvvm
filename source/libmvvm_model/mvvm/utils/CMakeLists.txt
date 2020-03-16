@@ -6,6 +6,8 @@ target_sources(mvvm_model PRIVATE
     ifactory.h
     numericutils.cpp
     numericutils.h
+    progresshandler.cpp
+    progresshandler.h
     reallimits.cpp
     reallimits.h
     stringutils.cpp
