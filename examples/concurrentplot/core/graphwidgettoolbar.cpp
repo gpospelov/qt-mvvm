@@ -39,6 +39,11 @@ GraphWidgetToolBar::GraphWidgetToolBar(QWidget* parent)
     init_flow_elements();
 }
 
+void GraphWidgetToolBar::onProgressChanged(int value)
+{
+    progressbar->setValue(value);
+}
+
 void GraphWidgetToolBar::add_wide_separator()
 {
     addWidget(new QLabel(" "));

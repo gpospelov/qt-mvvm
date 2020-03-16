@@ -42,6 +42,9 @@ GraphWidget::GraphWidget(GraphModel* model, QWidget* parent)
             job_manager->requestSimulation(value);
     };
     connect(toolbar, &GraphWidgetToolBar::valueChanged, on_value_changed);
+
+    connect(job_manager.get(), &JobManager::progressChanged, toolbar,
+            &GraphWidgetToolBar::onProgressChanged, Qt::QueuedConnection);
 }
 
 GraphWidget::~GraphWidget() = default;

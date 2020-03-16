@@ -50,7 +50,7 @@ void JobManager::run_simulation()
             ToySimulation simulation(amplitude, 1);
 
             auto on_progress = [this](int value) {
-                progress = value;
+                progressChanged(value);
                 return interrupt_request;
             };
             simulation.setProgressCallback(on_progress);

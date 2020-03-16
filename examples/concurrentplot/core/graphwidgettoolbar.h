@@ -28,6 +28,9 @@ public:
 signals:
     void valueChanged(int value);
 
+public slots:
+    void onProgressChanged(int value);
+
 private:
     void add_wide_separator();
     void init_value_elements();

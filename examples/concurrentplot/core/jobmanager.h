@@ -10,6 +10,7 @@
 #ifndef JOBMANAGER_H
 #define JOBMANAGER_H
 
+#include <QObject>
 #include <atomic>
 #include <mvvm/utils/threadsafestack.h>
 #include <thread>
@@ -18,8 +19,9 @@ class GraphModel;
 
 //! Handles all thread activity for running job simulation in the background.
 
-class JobManager
+class JobManager : public QObject
 {
+    Q_OBJECT
 public:
     JobManager(GraphModel* model);
     ~JobManager();
@@ -28,13 +30,15 @@ public:
 
     void run_simulation();
 
+signals:
+    void progressChanged(int value);
+
 private:
     std::thread sim_thread;
     GraphModel* model{nullptr};
     ModelView::threadsafe_stack<double> requested_values;
     std::atomic<bool> is_running;
     bool interrupt_request{false};
-    int progress{0};
 };
 
 #endif // JOBMANAGER_H
