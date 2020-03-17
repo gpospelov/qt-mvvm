@@ -46,7 +46,7 @@ void ToySimulation::runSimulation()
 
         progress_handler.setCompletedTicks(1);
 
-        std::cout << "delay " << delay << " amplitude:" << input_data.amplitude << std::endl;
+//        std::cout << "delay " << delay << " amplitude:" << input_data.amplitude << std::endl;
 
         if (delay > 0)
             std::this_thread::sleep_for(std::chrono::microseconds(delay));

@@ -88,7 +88,6 @@ void GraphWidgetToolBar::init_value_elements()
     auto on_slider_changed = [this](int value) {
         qDebug() << "Slider box changed";
         value_box->setValue(value);
-        this->valueChanged(value);
     };
     connect(value_slider, &QSlider::valueChanged, on_slider_changed);
 }

@@ -13,6 +13,7 @@
 #include "graphwidgettoolbar.h"
 #include "jobmanager.h"
 #include <QBoxLayout>
+#include <QDebug>
 #include <mvvm/model/modelutils.h>
 #include <mvvm/plotting/graphcanvas.h>
 #include <mvvm/standarditems/graphviewportitem.h>
@@ -60,6 +61,7 @@ void GraphWidget::init_connections()
 {
     // change in amplitude is propagated from toolbar to JobManager
     auto on_value_changed = [this](int value) {
+        qDebug() << "GraphWidget::on_value_changed " << value;
         if (job_manager)
             job_manager->requestSimulation(value);
     };
