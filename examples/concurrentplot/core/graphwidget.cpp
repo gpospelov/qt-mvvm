@@ -37,14 +37,7 @@ GraphWidget::GraphWidget(GraphModel* model, QWidget* parent)
     setLayout(mainLayout);
     setModel(model);
 
-    auto on_value_changed = [this](int value) {
-        if (job_manager)
-            job_manager->requestSimulation(value);
-    };
-    connect(toolbar, &GraphWidgetToolBar::valueChanged, on_value_changed);
-
-    connect(job_manager.get(), &JobManager::progressChanged, toolbar,
-            &GraphWidgetToolBar::onProgressChanged, Qt::QueuedConnection);
+    init_connections();
 }
 
 GraphWidget::~GraphWidget() = default;
@@ -61,4 +54,21 @@ void GraphWidget::setModel(GraphModel* model)
     m_propertyWidget->setModel(model);
 
     m_graphCanvas->setItem(Utils::TopItem<GraphViewportItem>(model));
+}
+
+void GraphWidget::init_connections()
+{
+    // change in amplitude triggers simulation run
+    auto on_value_changed = [this](int value) {
+        if (job_manager)
+            job_manager->requestSimulation(value);
+    };
+    connect(toolbar, &GraphWidgetToolBar::valueChanged, on_value_changed);
+
+    // simulation progress is propagated to progressbar
+    connect(job_manager.get(), &JobManager::progressChanged, toolbar,
+            &GraphWidgetToolBar::onProgressChanged, Qt::QueuedConnection);
+
+    // simulation delay factor is propagated to JobManager
+    connect(toolbar, &GraphWidgetToolBar::delayChanged, job_manager.get(), &JobManager::setDelay);
 }

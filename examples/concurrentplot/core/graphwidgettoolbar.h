@@ -27,6 +27,7 @@ public:
 
 signals:
     void valueChanged(int value);
+    void delayChanged(int delay);
 
 public slots:
     void onProgressChanged(int value);
@@ -34,7 +35,7 @@ public slots:
 private:
     void add_wide_separator();
     void init_value_elements();
-    void init_slowdown_elements();
+    void init_delay_elements();
     void init_flow_elements();
 
     QSpinBox* value_box{nullptr}; //! Input parameter for simulation.

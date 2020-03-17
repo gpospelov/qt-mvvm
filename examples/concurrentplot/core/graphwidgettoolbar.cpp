@@ -8,13 +8,13 @@
 // ************************************************************************** //
 
 #include "graphwidgettoolbar.h"
+#include <QDebug>
 #include <QLabel>
 #include <QProgressBar>
 #include <QPushButton>
 #include <QSlider>
 #include <QSpinBox>
 #include <QVBoxLayout>
-#include <QDebug>
 
 namespace
 {
@@ -33,11 +33,13 @@ GraphWidgetToolBar::GraphWidgetToolBar(QWidget* parent)
     init_value_elements();
     add_wide_separator();
 
-    init_slowdown_elements();
+    init_delay_elements();
     add_wide_separator();
 
     init_flow_elements();
 }
+
+//! Set progress bar to given value.
 
 void GraphWidgetToolBar::onProgressChanged(int value)
 {
@@ -55,15 +57,23 @@ void GraphWidgetToolBar::add_wide_separator()
 
 void GraphWidgetToolBar::init_value_elements()
 {
+    const QString tooltip = "Input parameter of background simulation. \n"
+                            "Any change triggers new simulation and subsequent replot.";
+
+    auto label = new QLabel("Amplitude");
+    label->setToolTip(tooltip);
+
     value_box->setValue(initial_value);
     value_box->setRange(min_value, max_value);
     value_box->setMinimumWidth(100);
-//    auto on_value_changed = [this](int value) {
-//        qDebug() << "Spin box changed";
-//        value_slider->setValue(value);
-//        this->valueChanged(value);
-//    };
-//    connect(value_box, QOverload<int>::of(&QSpinBox::valueChanged), on_value_changed);
+    value_box->setToolTip(tooltip);
+
+    //    auto on_value_changed = [this](int value) {
+    //        qDebug() << "Spin box changed";
+    //        value_slider->setValue(value);
+    //        this->valueChanged(value);
+    //    };
+    //    connect(value_box, QOverload<int>::of(&QSpinBox::valueChanged), on_value_changed);
 
     auto on_editing_finished = [this]() {
         qDebug() << "Spin box editing finished";
@@ -78,6 +88,7 @@ void GraphWidgetToolBar::init_value_elements()
     value_slider->setRange(min_value, max_value);
     value_slider->setValue(initial_value);
     value_slider->setMaximumWidth(400);
+    value_slider->setToolTip(tooltip);
     addWidget(value_slider);
 
     auto on_slider_changed = [this](int value) {
@@ -86,22 +97,23 @@ void GraphWidgetToolBar::init_value_elements()
         this->valueChanged(value);
     };
     connect(value_slider, &QSlider::valueChanged, on_slider_changed);
-
 }
 
 //! Inits label and sping box to edit simulation slowdown factor.
 
-void GraphWidgetToolBar::init_slowdown_elements()
+void GraphWidgetToolBar::init_delay_elements()
 {
-    const QString slowdown_tooltip = "Slowdown factor affects the duration \n"
-                                     "of background simulation on slider move.";
-    auto label = new QLabel("Slowdown");
-    label->setToolTip(slowdown_tooltip);
+    const QString tooltip = "Delay affects the duration of background simulation.";
+    auto label = new QLabel("Delay");
+    label->setToolTip(tooltip);
     addWidget(label);
 
-    slowdown_spinbox->setValue(10);
+    slowdown_spinbox->setValue(100);
     slowdown_spinbox->setMinimumWidth(100);
     addWidget(slowdown_spinbox);
+
+    connect(value_box, QOverload<int>::of(&QSpinBox::valueChanged), this,
+            &GraphWidgetToolBar::delayChanged);
 }
 
 void GraphWidgetToolBar::init_flow_elements()

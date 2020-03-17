@@ -47,7 +47,7 @@ void JobManager::run_simulation()
 
             std::cout << "JobManager::run_simulation() 1.4.1 -> starting sim " << std::endl;
             double amplitude = *value.get() / 100.;
-            ToySimulation simulation(amplitude, 1);
+            ToySimulation simulation(amplitude, delay);
 
             auto on_progress = [this](int value) {
                 progressChanged(value);
@@ -66,3 +66,9 @@ void JobManager::run_simulation()
         }
     }
 }
+
+void JobManager::setDelay(int value)
+{
+    delay = value;
+}
+

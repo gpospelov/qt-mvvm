@@ -40,6 +40,8 @@ public:
     void setModel(GraphModel* model);
 
 private:
+    void init_connections();
+
     GraphWidgetToolBar* toolbar{nullptr};
     ModelView::GraphCanvas* m_graphCanvas{nullptr};
     GraphPropertyWidget* m_propertyWidget{nullptr};
