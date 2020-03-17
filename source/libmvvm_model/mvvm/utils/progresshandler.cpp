@@ -51,5 +51,6 @@ void ProgressHandler::setCompletedTicks(size_t value)
 
 void ProgressHandler::reset()
 {
+    interrupt_request = false;
     completed_ticks = 0;
 }

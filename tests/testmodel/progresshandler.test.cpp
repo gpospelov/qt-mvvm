@@ -43,7 +43,7 @@ TEST_F(ProgressHandlerTest, fullConstructor)
 
     handler.setCompletedTicks(900);
     EXPECT_FALSE(handler.has_interrupt_request());
-    EXPECT_EQ(progress, 100);
+    EXPECT_EQ(progress, 100); // reports value in percents
 }
 
 TEST_F(ProgressHandlerTest, interruptRequest)
@@ -59,5 +59,11 @@ TEST_F(ProgressHandlerTest, interruptRequest)
 
     handler.setCompletedTicks(1000);
     EXPECT_TRUE(handler.has_interrupt_request());
-    EXPECT_EQ(progress, 100);
+    EXPECT_EQ(progress, 100); // reports value in percents
+
+    // checking reset
+    handler.reset();
+    EXPECT_FALSE(handler.has_interrupt_request());
+    handler.setCompletedTicks(100);
+    EXPECT_EQ(progress, 10); // reports value in percents
 }
