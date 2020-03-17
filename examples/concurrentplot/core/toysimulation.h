@@ -10,8 +10,8 @@
 #ifndef TOYSIMULATION_H
 #define TOYSIMULATION_H
 
-#include <vector>
 #include <mvvm/utils/progresshandler.h>
+#include <vector>
 
 //! Represents long running toy scientific simulation.
 
@@ -19,8 +19,7 @@ class ToySimulation
 {
 public:
     //! Represents input conditions for toy simulation.
-    struct InputData
-    {
+    struct InputData {
         double xmin{0.0};
         double xmax{5.0};
         int npoints{400};

@@ -11,6 +11,7 @@
 #include <chrono>
 #include <cmath>
 #include <thread>
+#include <iostream>
 
 using namespace ModelView;
 
@@ -42,8 +43,10 @@ void ToySimulation::runSimulation()
 
         progress_handler.setCompletedTicks(1);
 
+        std::cout << "delay " << delay << std::endl;
+
         if (delay > 0)
-            std::this_thread::sleep_for(std::chrono::milliseconds(delay));
+            std::this_thread::sleep_for(std::chrono::microseconds(delay));
     }
 }
 

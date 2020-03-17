@@ -40,7 +40,7 @@ private:
 
     QSpinBox* value_box{nullptr}; //! Input parameter for simulation.
     QSlider* value_slider{nullptr};    //! Input parameter for simulation.
-    QSpinBox* slowdown_spinbox{nullptr}; //! Factor defining how slow simulation is.
+    QSpinBox* delay_spinbox{nullptr}; //! Factor defining how slow simulation is.
     QProgressBar* progressbar{nullptr}; //! SImulation progressbar.
     QPushButton* cancel_button{nullptr}; //! Cancels simulation.
 };
