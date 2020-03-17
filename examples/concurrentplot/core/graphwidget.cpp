@@ -58,17 +58,20 @@ void GraphWidget::setModel(GraphModel* model)
 
 void GraphWidget::init_connections()
 {
-    // change in amplitude triggers simulation run
+    // change in amplitude is propagated from toolbar to JobManager
     auto on_value_changed = [this](int value) {
         if (job_manager)
             job_manager->requestSimulation(value);
     };
     connect(toolbar, &GraphWidgetToolBar::valueChanged, on_value_changed);
 
-    // simulation progress is propagated to progressbar
+    // simulation progress is propagated from JobManager to toolbar
     connect(job_manager.get(), &JobManager::progressChanged, toolbar,
             &GraphWidgetToolBar::onProgressChanged, Qt::QueuedConnection);
 
-    // simulation delay factor is propagated to JobManager
+    // simulation delay factor is propagated from toolbar to JobManager
     connect(toolbar, &GraphWidgetToolBar::delayChanged, job_manager.get(), &JobManager::setDelay);
+
+    // cancel click is propagated from toolbar to JobManager
+    connect(toolbar, &GraphWidgetToolBar::cancelPressed, job_manager.get(), &JobManager::onInterruptRequest);
 }

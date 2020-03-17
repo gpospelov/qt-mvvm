@@ -35,6 +35,7 @@ signals:
 
 public slots:
     void setDelay(int value);
+    void onInterruptRequest();
 
 private:
     std::thread sim_thread;

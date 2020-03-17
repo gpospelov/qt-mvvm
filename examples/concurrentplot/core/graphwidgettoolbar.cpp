@@ -123,4 +123,5 @@ void GraphWidgetToolBar::init_flow_elements()
 
     cancel_button->setText("Cancel Simulation");
     addWidget(cancel_button);
+    connect(cancel_button, &QPushButton::pressed, this, &GraphWidgetToolBar::cancelPressed);
 }

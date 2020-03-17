@@ -28,6 +28,7 @@ public:
 signals:
     void valueChanged(int value);
     void delayChanged(int delay);
+    void cancelPressed();
 
 public slots:
     void onProgressChanged(int value);

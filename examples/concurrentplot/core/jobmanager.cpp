@@ -42,10 +42,10 @@ void JobManager::run_simulation()
         try {
             std::cout << "JobManager::run_simulation() 1.3 -> waiting for value " << std::endl;
             auto value = requested_values.wait_and_pop();
-            std::cout << "JobManager::run_simulation() 1.4 -> obtained value " << value.get()
+            std::cout << "JobManager::run_simulation() 1.4 -> obtained value " << *value.get()
                       << std::endl;
 
-            std::cout << "JobManager::run_simulation() 1.4.1 -> starting sim " << std::endl;
+            std::cout << "JobManager::run_simulation() 1.4.1 -> starting sim " << interrupt_request << std::endl;
             double amplitude = *value.get() / 100.;
             ToySimulation simulation(amplitude, delay);
 
@@ -55,20 +55,37 @@ void JobManager::run_simulation()
             };
             simulation.setProgressCallback(on_progress);
 
+            std::cout << "JobManager::run_simulation() 1.4.2 " << std::endl;
             simulation.runSimulation();
+            std::cout << "JobManager::run_simulation() 1.4.3 " << std::endl;
             auto result = simulation.simulationResult();
+            std::cout << "JobManager::run_simulation() 1.4.4 " << std::endl;
             model->set_data(result.data);
-            std::cout << "JobManager::run_simulation() 1.4.2 -> sim done " << std::endl;
+            std::cout << "JobManager::run_simulation() 1.4.5 -> sim done " << std::endl;
 
         } catch (std::exception ex) {
-            std::cout << "JobManager::run_simulation() 1.5 -> terminated during waiting for value"
+            // Exception is thrown
+            // a) If waiting on stack was terminated
+            // b) If simulation was terminated
+            interrupt_request = false;
+            std::cout << "JobManager::run_simulation() 1.5 -> terminated during waiting for value " << ex.what()
                       << std::endl;
         }
     }
 }
 
+//! Saves simulation delay parameter for later use.
+
 void JobManager::setDelay(int value)
 {
     delay = value;
+}
+
+//! Processes interrupt request by setting corresponding flag.
+
+void JobManager::onInterruptRequest()
+{
+    std::cout << "Interrupt request" << std::endl;
+    interrupt_request = true;
 }
 
