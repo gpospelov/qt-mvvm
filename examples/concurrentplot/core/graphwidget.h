@@ -39,6 +39,9 @@ public:
 
     void setModel(GraphModel* model);
 
+public slots:
+    void onSimulationCompleted();
+
 private:
     void init_connections();
 

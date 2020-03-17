@@ -57,6 +57,13 @@ void GraphWidget::setModel(GraphModel* model)
     m_graphCanvas->setItem(Utils::TopItem<GraphViewportItem>(model));
 }
 
+//! Takes ready simulation results from JobManager and write into the model.
+
+void GraphWidget::onSimulationCompleted()
+{
+    m_model->set_data(job_manager->getValues());
+}
+
 void GraphWidget::init_connections()
 {
     // change in amplitude is propagated from toolbar to JobManager
@@ -67,13 +74,21 @@ void GraphWidget::init_connections()
     };
     connect(toolbar, &GraphWidgetToolBar::valueChanged, on_value_changed);
 
-    // simulation progress is propagated from JobManager to toolbar
+    // Simulation progress is propagated from JobManager to toolbar.
+    // Connection is made queued since JobManager::progressChanged is emitted from non-GUI thread.
     connect(job_manager.get(), &JobManager::progressChanged, toolbar,
             &GraphWidgetToolBar::onProgressChanged, Qt::QueuedConnection);
+
+    // Notification about completed simulation from jobManager to GraphWidget.
+    // Connection is made queued since JobManager::simulationCompleted is emitted from non-GUI thread.
+    connect(job_manager.get(), &JobManager::simulationCompleted, this,
+            &GraphWidget::onSimulationCompleted, Qt::QueuedConnection);
 
     // simulation delay factor is propagated from toolbar to JobManager
     connect(toolbar, &GraphWidgetToolBar::delayChanged, job_manager.get(), &JobManager::setDelay);
 
     // cancel click is propagated from toolbar to JobManager
     connect(toolbar, &GraphWidgetToolBar::cancelPressed, job_manager.get(), &JobManager::onInterruptRequest);
+
+
 }

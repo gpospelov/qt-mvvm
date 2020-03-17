@@ -60,7 +60,9 @@ void JobManager::run_simulation()
             std::cout << "JobManager::run_simulation() 1.4.3 " << std::endl;
             auto result = simulation.simulationResult();
             std::cout << "JobManager::run_simulation() 1.4.4 " << std::endl;
-            model->set_data(result.data);
+            simulation_results.push(result);
+            simulationCompleted();
+//            model->set_data(result.data);
             std::cout << "JobManager::run_simulation() 1.4.5 -> sim done " << std::endl;
 
         } catch (std::exception ex) {
@@ -72,6 +74,12 @@ void JobManager::run_simulation()
                       << std::endl;
         }
     }
+}
+
+std::vector<double> JobManager::getValues()
+{
+    auto value = simulation_results.wait_and_pop();
+    return value->data;
 }
 
 //! Saves simulation delay parameter for later use.
