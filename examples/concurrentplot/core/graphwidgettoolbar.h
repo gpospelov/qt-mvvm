@@ -39,10 +39,10 @@ private:
     void init_delay_elements();
     void init_flow_elements();
 
-    QSpinBox* value_box{nullptr}; //! Input parameter for simulation.
-    QSlider* value_slider{nullptr};    //! Input parameter for simulation.
-    QSpinBox* delay_spinbox{nullptr}; //! Factor defining how slow simulation is.
-    QProgressBar* progressbar{nullptr}; //! SImulation progressbar.
+    QSpinBox* value_box{nullptr};        //! Input parameter for simulation.
+    QSlider* value_slider{nullptr};      //! Input parameter for simulation.
+    QSpinBox* delay_spinbox{nullptr};    //! Factor defining how slow simulation is.
+    QProgressBar* progressbar{nullptr};  //! Simulation progressbar.
     QPushButton* cancel_button{nullptr}; //! Cancels simulation.
 };
 

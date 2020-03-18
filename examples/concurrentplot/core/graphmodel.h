@@ -31,12 +31,6 @@ class GraphModel : public ModelView::SessionModel
 public:
     GraphModel();
 
-    void add_graph();
-
-    void remove_graph();
-
-    void randomize_graphs();
-
     void set_data(const std::vector<double>& data);
 
 private:
@@ -44,6 +38,7 @@ private:
     ModelView::ContainerItem* data_container();
 
     void init_model();
+    void add_graph();
 };
 
 #endif // GRAPHMODEL_H

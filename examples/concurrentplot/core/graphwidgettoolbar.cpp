@@ -53,7 +53,7 @@ void GraphWidgetToolBar::add_wide_separator()
     addWidget(new QLabel(" "));
 }
 
-//! Inits elements to edit initial simulation parameters.
+//! Inits elements to edit initial simulation parameter.
 
 void GraphWidgetToolBar::init_value_elements()
 {
@@ -64,6 +64,7 @@ void GraphWidgetToolBar::init_value_elements()
     label->setToolTip(tooltip);
     addWidget(label);
 
+    // Value box setup.
     value_box->setValue(initial_value);
     value_box->setRange(min_value, max_value);
     value_box->setMinimumWidth(100);
@@ -72,12 +73,12 @@ void GraphWidgetToolBar::init_value_elements()
     addWidget(value_box);
 
     auto on_value_changed = [this](int value) {
-        qDebug() << "Spin box changed";
         value_slider->setValue(value);
         this->valueChanged(value);
     };
     connect(value_box, QOverload<int>::of(&QSpinBox::valueChanged), on_value_changed);
 
+    // Slider setup.
     value_slider->setOrientation(Qt::Horizontal);
     value_slider->setRange(min_value, max_value);
     value_slider->setValue(initial_value);
@@ -86,7 +87,6 @@ void GraphWidgetToolBar::init_value_elements()
     addWidget(value_slider);
 
     auto on_slider_changed = [this](int value) {
-        qDebug() << "Slider box changed";
         value_box->setValue(value);
     };
     connect(value_slider, &QSlider::valueChanged, on_slider_changed);
@@ -110,6 +110,8 @@ void GraphWidgetToolBar::init_delay_elements()
             &GraphWidgetToolBar::delayChanged);
     delay_spinbox->setValue(1000);
 }
+
+//! Inits progress bar and button to cancel running simulation.
 
 void GraphWidgetToolBar::init_flow_elements()
 {
