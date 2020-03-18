@@ -10,6 +10,7 @@
 #ifndef TOYSIMULATION_H
 #define TOYSIMULATION_H
 
+#include <mvvm/utils/progresshandler.h>
 #include <vector>
 
 //! Represents long running toy scientific simulation.
@@ -18,8 +19,7 @@ class ToySimulation
 {
 public:
     //! Represents input conditions for toy simulation.
-    struct InputData
-    {
+    struct InputData {
         double xmin{0.0};
         double xmax{5.0};
         int npoints{400};
@@ -39,10 +39,13 @@ public:
 
     Result simulationResult() const;
 
+    void setProgressCallback(ModelView::ProgressHandler::callback_t callback);
+
 private:
     InputData input_data;
     Result result;
     int delay{0};
+    ModelView::ProgressHandler progress_handler;
 };
 
 #endif //  TOYSIMULATION_H

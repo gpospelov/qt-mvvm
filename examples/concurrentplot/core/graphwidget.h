@@ -11,13 +11,12 @@
 #define GRAPHWIDGET_H
 
 #include <QWidget>
-#include <memory>
 
 class QBoxLayout;
 class GraphModel;
 class GraphPropertyWidget;
-class QToolBar;
-class QAction;
+class GraphWidgetToolBar;
+class JobManager;
 
 namespace ModelView
 {
@@ -25,34 +24,29 @@ class ItemsTreeView;
 class GraphCanvas;
 } // namespace ModelView
 
-/*!
-@class GraphWidget
-@brief Shows canvas with plots on the left and property editor on the right.
-*/
+//! Shows canvas with plots on the left and property editor on the right.
+//! Provides connections between toolbar on JobManager.
 
 class GraphWidget : public QWidget
 {
     Q_OBJECT
 public:
     explicit GraphWidget(GraphModel* model = nullptr, QWidget* parent = nullptr);
-    ~GraphWidget();
 
     void setModel(GraphModel* model);
 
+public slots:
+    void onSimulationCompleted();
+
 private:
-    void init_actions();
+    void init_toolbar_connections();
+    void init_jobmanager_connections();
 
-    QBoxLayout* create_left_layout();
-    QBoxLayout* create_right_layout();
-
-    QToolBar* m_toolBar;
-    QAction* m_resetViewportAction;
-    QAction* m_addGraphAction;
-    QAction* m_removeGraphAction;
-
-    ModelView::GraphCanvas* m_graphCanvas;
-    GraphPropertyWidget* m_propertyWidget;
-    GraphModel* m_model;
+    GraphWidgetToolBar* toolbar{nullptr};
+    ModelView::GraphCanvas* m_graphCanvas{nullptr};
+    GraphPropertyWidget* m_propertyWidget{nullptr};
+    GraphModel* m_model{nullptr};
+    JobManager* job_manager{nullptr};
 };
 
 #endif // GRAPHWIDGET_H

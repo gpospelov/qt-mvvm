@@ -10,10 +10,9 @@
 #include "graphwidget.h"
 #include "graphmodel.h"
 #include "graphpropertywidget.h"
-#include <QAction>
+#include "graphwidgettoolbar.h"
+#include "jobmanager.h"
 #include <QBoxLayout>
-#include <QToolBar>
-#include <QToolButton>
 #include <mvvm/model/modelutils.h>
 #include <mvvm/plotting/graphcanvas.h>
 #include <mvvm/standarditems/graphviewportitem.h>
@@ -21,76 +20,69 @@
 using namespace ModelView;
 
 GraphWidget::GraphWidget(GraphModel* model, QWidget* parent)
-    : QWidget(parent), m_toolBar(new QToolBar), m_resetViewportAction(nullptr),
-      m_addGraphAction(nullptr), m_removeGraphAction(nullptr), m_graphCanvas(new GraphCanvas),
-      m_propertyWidget(new GraphPropertyWidget), m_model(nullptr)
+    : QWidget(parent), toolbar(new GraphWidgetToolBar), m_graphCanvas(new GraphCanvas),
+      m_propertyWidget(new GraphPropertyWidget), m_model(nullptr), job_manager(new JobManager(this))
 {
     auto mainLayout = new QVBoxLayout;
     mainLayout->setSpacing(10);
 
     auto centralLayout = new QHBoxLayout;
-
-    centralLayout->addLayout(create_left_layout(), 3);
-    centralLayout->addLayout(create_right_layout(), 1);
-
-    mainLayout->addWidget(m_toolBar);
+    centralLayout->addWidget(m_graphCanvas, 3);
+    centralLayout->addWidget(m_propertyWidget, 1);
+    mainLayout->addWidget(toolbar);
     mainLayout->addLayout(centralLayout);
-
     setLayout(mainLayout);
-    setModel(model);
 
-    init_actions();
+    setModel(model);
+    init_toolbar_connections();
+    init_jobmanager_connections();
 }
 
 void GraphWidget::setModel(GraphModel* model)
 {
     if (!model)
         return;
-
     m_model = model;
-
     m_propertyWidget->setModel(model);
-
     m_graphCanvas->setItem(Utils::TopItem<GraphViewportItem>(model));
 }
 
-void GraphWidget::init_actions()
+//! Takes simulation results from JobManager and write into the model.
+
+void GraphWidget::onSimulationCompleted()
 {
-    const int toolbar_icon_size = 24;
-    m_toolBar->setIconSize(QSize(toolbar_icon_size, toolbar_icon_size));
-
-    m_resetViewportAction = new QAction("Reset view", this);
-    auto on_reset = [this]() {
-        auto viewport = Utils::TopItem<GraphViewportItem>(m_model);
-        viewport->update_viewport();
-    };
-    connect(m_resetViewportAction, &QAction::triggered, on_reset);
-
-    m_addGraphAction = new QAction("Add graph", this);
-    auto on_add_graph = [this]() { m_model->add_graph(); };
-    connect(m_addGraphAction, &QAction::triggered, on_add_graph);
-
-    m_removeGraphAction = new QAction("Remove graph", this);
-    auto on_remove_graph = [this]() { m_model->remove_graph(); };
-    connect(m_removeGraphAction, &QAction::triggered, on_remove_graph);
-
-    m_toolBar->addAction(m_resetViewportAction);
-    m_toolBar->addAction(m_addGraphAction);
-    m_toolBar->addAction(m_removeGraphAction);
+    auto data = job_manager->simulationResult();
+    if (!data.empty())
+        m_model->set_data(data);
 }
 
-GraphWidget::~GraphWidget() = default;
+//! Connects signals going from toolbar.
 
-QBoxLayout* GraphWidget::create_left_layout()
+void GraphWidget::init_toolbar_connections()
 {
-    auto result = new QVBoxLayout;
-    result->addWidget(m_graphCanvas);
-    return result;
+    // Change in amplitude is propagated from toolbar to JobManager.
+    connect(toolbar, &GraphWidgetToolBar::valueChanged, job_manager,
+            &JobManager::requestSimulation);
+
+    // simulation delay factor is propagated from toolbar to JobManager
+    connect(toolbar, &GraphWidgetToolBar::delayChanged, job_manager, &JobManager::setDelay);
+
+    // cancel click is propagated from toolbar to JobManager
+    connect(toolbar, &GraphWidgetToolBar::cancelPressed, job_manager,
+            &JobManager::onInterruptRequest);
 }
 
-QBoxLayout* GraphWidget::create_right_layout()
+//! Connect signals going from JobManager.
+//! Connections are made queued since signals are emitted from non-GUI thread and we want to
+//! deal with widgets.
+
+void GraphWidget::init_jobmanager_connections()
 {
-    auto result = new QVBoxLayout;
-    result->addWidget(m_propertyWidget);
-    return result;
+    // Simulation progress is propagated from JobManager to toolbar.
+    connect(job_manager, &JobManager::progressChanged, toolbar,
+            &GraphWidgetToolBar::onProgressChanged, Qt::QueuedConnection);
+
+    // Notification about completed simulation from jobManager to GraphWidget.
+    connect(job_manager, &JobManager::simulationCompleted, this,
+            &GraphWidget::onSimulationCompleted, Qt::QueuedConnection);
 }

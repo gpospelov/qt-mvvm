@@ -16,8 +16,6 @@
 class QBoxLayout;
 class GraphModel;
 class QBoxLayout;
-class QSlider;
-class JobManager;
 
 namespace ModelView
 {
@@ -39,11 +37,7 @@ public:
     void setModel(GraphModel* model);
 
 private:
-    void setup_slider();
-    QSlider* m_slider;
     ModelView::ItemsTreeView* m_treeView;
-    GraphModel* m_model;
-    std::unique_ptr<JobManager> job_manager;
 };
 
 #endif // GRAPHPROPERTYWIDGET_H
