@@ -36,6 +36,8 @@ std::vector<double> JobManager::simulationResult()
 
 void JobManager::requestSimulation(double value)
 {
+    // We replace top value in a stack (non-empty stack means that simulation is still running
+    // for previous value).
     requested_values.update_top(value);
 }
 

@@ -18,13 +18,8 @@ class GraphViewportItem;
 class ContainerItem;
 } // namespace ModelView
 
-/*!
-@class GraphModel
-@brief Main application model to demonstrate how to plot data.
-
-Contains few Data1DItem's, GraphItem's and ViewPortItem. Provides functionality to easily
-add and remove graphs.
-*/
+//! Main application model holding data for single graph.
+//! Contains few Data1DItem's, GraphItem's and ViewPortItem.
 
 class GraphModel : public ModelView::SessionModel
 {
@@ -34,11 +29,8 @@ public:
     void set_data(const std::vector<double>& data);
 
 private:
-    ModelView::GraphViewportItem* viewport();
-    ModelView::ContainerItem* data_container();
-
     void init_model();
-    void add_graph();
+    void add_graph(ModelView::ContainerItem* container, ModelView::GraphViewportItem* viewport);
 };
 
 #endif // GRAPHMODEL_H

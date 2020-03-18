@@ -12,9 +12,7 @@
 
 #include "toysimulation.h"
 #include <QObject>
-#include <atomic>
 #include <mvvm/utils/threadsafestack.h>
-#include <thread>
 
 //! Handles all thread activity for running job simulation in the background.
 
@@ -23,7 +21,7 @@ class JobManager : public QObject
     Q_OBJECT
 public:
     JobManager(QObject* parent = nullptr);
-    ~JobManager();
+    ~JobManager() override;
 
     std::vector<double> simulationResult();
 
