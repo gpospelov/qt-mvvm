@@ -54,9 +54,14 @@
 
 <hr>
 
+### [Concurrentplot: how to run heavy simulations in the background and regularly update plots.](concurrentplot/README.md)
+
+![concurrentplot](../doc/concurrentplot.png)
+
+<hr>
+
 ### Under development
 
 + sampleview
 + quickrefl
-+ concurrentplot
 
