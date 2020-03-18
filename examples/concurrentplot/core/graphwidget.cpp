@@ -50,7 +50,7 @@ void GraphWidget::setModel(GraphModel* model)
 
     m_model = model;
 
-    job_manager = std::make_unique<JobManager>(model);
+    job_manager = std::make_unique<JobManager>();
 
     m_propertyWidget->setModel(model);
 
@@ -61,7 +61,7 @@ void GraphWidget::setModel(GraphModel* model)
 
 void GraphWidget::onSimulationCompleted()
 {
-    auto data = job_manager->getValues();
+    auto data = job_manager->simulationResult();
     if (!data.empty())
         m_model->set_data(data);
 }
