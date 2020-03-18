@@ -61,7 +61,9 @@ void GraphWidget::setModel(GraphModel* model)
 
 void GraphWidget::onSimulationCompleted()
 {
-    m_model->set_data(job_manager->getValues());
+    auto data = job_manager->getValues();
+    if (!data.empty())
+        m_model->set_data(data);
 }
 
 void GraphWidget::init_connections()
