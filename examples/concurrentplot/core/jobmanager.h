@@ -27,8 +27,6 @@ public:
     JobManager(GraphModel* model);
     ~JobManager();
 
-    void requestSimulation(double value);
-
     void run_simulation();
 
     std::vector<double> getValues();
@@ -38,6 +36,7 @@ signals:
     void simulationCompleted();
 
 public slots:
+    void requestSimulation(double value);
     void setDelay(int value);
     void onInterruptRequest();
 

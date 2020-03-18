@@ -69,12 +69,8 @@ void GraphWidget::onSimulationCompleted()
 void GraphWidget::init_connections()
 {
     // change in amplitude is propagated from toolbar to JobManager
-    auto on_value_changed = [this](int value) {
-        qDebug() << "GraphWidget::on_value_changed " << value;
-        if (job_manager)
-            job_manager->requestSimulation(value);
-    };
-    connect(toolbar, &GraphWidgetToolBar::valueChanged, on_value_changed);
+    connect(toolbar, &GraphWidgetToolBar::valueChanged, job_manager.get(),
+            &JobManager::requestSimulation);
 
     // Simulation progress is propagated from JobManager to toolbar.
     // Connection is made queued since JobManager::progressChanged is emitted from non-GUI thread.
@@ -82,7 +78,8 @@ void GraphWidget::init_connections()
             &GraphWidgetToolBar::onProgressChanged, Qt::QueuedConnection);
 
     // Notification about completed simulation from jobManager to GraphWidget.
-    // Connection is made queued since JobManager::simulationCompleted is emitted from non-GUI thread.
+    // Connection is made queued since JobManager::simulationCompleted is emitted from non-GUI
+    // thread.
     connect(job_manager.get(), &JobManager::simulationCompleted, this,
             &GraphWidget::onSimulationCompleted, Qt::QueuedConnection);
 
@@ -90,7 +87,6 @@ void GraphWidget::init_connections()
     connect(toolbar, &GraphWidgetToolBar::delayChanged, job_manager.get(), &JobManager::setDelay);
 
     // cancel click is propagated from toolbar to JobManager
-    connect(toolbar, &GraphWidgetToolBar::cancelPressed, job_manager.get(), &JobManager::onInterruptRequest);
-
-
+    connect(toolbar, &GraphWidgetToolBar::cancelPressed, job_manager.get(),
+            &JobManager::onInterruptRequest);
 }

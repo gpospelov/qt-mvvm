@@ -27,13 +27,6 @@ JobManager::~JobManager()
     std::cout << "JobManager::~JobManager() -> joined" << std::endl;
 }
 
-void JobManager::requestSimulation(double value)
-{
-    std::cout << "JobManager::requestSimulation() 1.1 -> saving value" << std::endl;
-    requested_values.update_top(value);
-    std::cout << "JobManager::requestSimulation() 1.2 -> value saved" << std::endl;
-}
-
 void JobManager::run_simulation()
 {
     std::cout << "JobManager::run_simulation() 1.1" << std::endl;
@@ -80,6 +73,16 @@ std::vector<double> JobManager::getValues()
 {
     auto value = simulation_results.try_pop();
     return value ? value->data : std::vector<double>{};
+}
+
+//! Performs simulation request. Given value will be stored in a stack of values to trigger
+//! corresponding waiting thread.
+
+void JobManager::requestSimulation(double value)
+{
+    std::cout << "JobManager::requestSimulation() 1.1 -> saving value" << std::endl;
+    requested_values.update_top(value);
+    std::cout << "JobManager::requestSimulation() 1.2 -> value saved" << std::endl;
 }
 
 //! Saves simulation delay parameter for later use.
