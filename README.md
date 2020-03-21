@@ -34,8 +34,8 @@ cmake <source>; make -j8; ctest
 
 ## Example
 
-If you are familiar with Qt's reach example section you might
-saw it's funny `collidingmice` example showing basics of
+If you are familiar with Qt's reach example section you might saw
+it's funny `collidingmice` example showing basics of
 `QGraphicsScene`.
 
 ![alt text](doc/colliding-mice-before.png)
