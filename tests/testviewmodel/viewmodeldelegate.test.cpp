@@ -84,6 +84,6 @@ TEST_F(ViewModelDelegateTest, widgetMapper)
     test_data.map_to_index(editor.get(), x_value_index);
 
     editor->setData(43.0);
-    editor->dataChanged();
+    editor->dataChanged(editor->data());
     EXPECT_EQ(x_item->data().value<double>(), 43.0);
 }

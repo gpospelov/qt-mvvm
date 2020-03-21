@@ -28,6 +28,8 @@ public:
     void setDecimals(int decimals);
     void setSingleStep(double step);
 
+    bool is_persistent() const override;
+
 private slots:
     void onEditingFinished();
 

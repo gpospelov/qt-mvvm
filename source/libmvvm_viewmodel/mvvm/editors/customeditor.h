@@ -22,6 +22,7 @@ namespace ModelView
 class CORE_EXPORT CustomEditor : public QWidget
 {
     Q_OBJECT
+    Q_PROPERTY(QVariant value MEMBER m_data READ data WRITE setData NOTIFY dataChanged USER true)
 
 public:
     explicit CustomEditor(QWidget* parent = nullptr);
@@ -35,7 +36,7 @@ public slots:
 
 signals:
     //! Emmits signal when data was changed in an editor.
-    void dataChanged();
+    void dataChanged(QVariant value);
 
 protected:
     void setDataIntern(const QVariant& data);

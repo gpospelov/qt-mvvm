@@ -51,6 +51,11 @@ void ScientificSpinBoxEditor::setSingleStep(double step)
     m_doubleEditor->setSingleStep(step);
 }
 
+bool ScientificSpinBoxEditor::is_persistent() const
+{
+    return true;
+}
+
 void ScientificSpinBoxEditor::onEditingFinished()
 {
     double new_value = m_doubleEditor->value();

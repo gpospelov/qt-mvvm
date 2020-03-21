@@ -38,5 +38,5 @@ void CustomEditor::setData(const QVariant& data)
 void CustomEditor::setDataIntern(const QVariant& data)
 {
     m_data = data;
-    dataChanged();
+    dataChanged(m_data);
 }
