@@ -54,8 +54,8 @@ struct PropertyFlatView::PropertyFlatViewImpl {
     {
         auto editor = editor_factory->createEditor(index);
         m_delegate->setEditorData(editor.get(), index);
-//        connect(editor.get(), &CustomEditor::dataChanged, m_delegate.get(),
-//                &ViewModelDelegate::onCustomEditorDataChanged);
+        connect(editor.get(), &CustomEditor::dataChanged, m_delegate.get(),
+                &ViewModelDelegate::onCustomEditorDataChanged);
         editor->setEnabled(view_model->sessionItemFromIndex(index)->isEnabled());
         return editor;
     }
