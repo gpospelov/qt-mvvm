@@ -22,6 +22,7 @@ public:
 
 private:
     void init_model();
+    void init_factory();
     QStandardItemModel* model{nullptr};
 };
 

@@ -8,18 +8,22 @@
 // ************************************************************************** //
 
 #include "centralwidget.h"
+#include "colorlisteditor.h"
 #include <QGridLayout>
+#include <QItemEditorFactory>
 #include <QStandardItemModel>
 #include <QTableView>
 #include <QTreeView>
 
 namespace
 {
-QList<QStandardItem*> createRow(QString text, int ncol)
+
+QList<QStandardItem*> createRow(QVector<QVariant> data)
 {
     QList<QStandardItem*> result;
-    for (int i = 0; i < ncol; ++i) {
-        auto item = new QStandardItem(text);
+    for (auto value : data) {
+        auto item = new QStandardItem;
+        item->setData(value, Qt::EditRole);
         result.append(item);
     }
     return result;
@@ -29,6 +33,7 @@ QList<QStandardItem*> createRow(QString text, int ncol)
 CentralWidget::CentralWidget(QWidget* parent) : QWidget(parent), model(new QStandardItemModel)
 {
     init_model();
+//    init_factory();
 
     auto table0 = new QTableView;
     table0->setModel(model);
@@ -54,7 +59,19 @@ CentralWidget::CentralWidget(QWidget* parent) : QWidget(parent), model(new QStan
 
 void CentralWidget::init_model()
 {
+    QVector<QVariant> data = {QVariant::fromValue(42), QVariant::fromValue(42.1), QVariant::fromValue(QColor(Qt::red))};
     QStandardItem* parentItem = model->invisibleRootItem();
-    parentItem->appendRow(createRow("xxx", 4));
-    parentItem->appendRow(createRow("xxx", 4));
+    parentItem->appendRow(createRow(data));
+    parentItem->appendRow(createRow(data));
+}
+
+void CentralWidget::init_factory()
+{
+    QItemEditorFactory* factory = new QItemEditorFactory;
+
+    QItemEditorCreatorBase* colorListCreator = new QStandardItemEditorCreator<ColorListEditor>();
+
+    factory->registerEditor(QVariant::Color, colorListCreator);
+
+    QItemEditorFactory::setDefaultFactory(factory);
 }
