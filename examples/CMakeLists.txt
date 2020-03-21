@@ -12,5 +12,7 @@ add_subdirectory(treeviews)
 add_subdirectory(quickrefl)
 add_subdirectory(graphicsproxy)
 add_subdirectory(concurrentplot)
+add_subdirectory(defaultqt)
+
 
 

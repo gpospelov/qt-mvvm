@@ -27,6 +27,8 @@ public:
     QSize sizeHint() const override;
     QSize minimumSizeHint() const override;
 
+    bool is_persistent() const override;
+
 protected slots:
     virtual void onIndexChanged(int index);
 

@@ -50,6 +50,11 @@ QSize ComboPropertyEditor::minimumSizeHint() const
     return m_box->minimumSizeHint();
 }
 
+bool ComboPropertyEditor::is_persistent() const
+{
+    return true;
+}
+
 void ComboPropertyEditor::onIndexChanged(int index)
 {
     auto comboProperty = m_data.value<ComboProperty>();
