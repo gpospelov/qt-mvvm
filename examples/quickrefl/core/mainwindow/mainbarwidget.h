@@ -11,10 +11,13 @@
 #define MAINBARWIDGET_H
 
 #include <QWidget>
+#include <map>
 class QStackedWidget;
 class QHBoxLayout;
+class QPushButton;
 
-//! Main window with button-bar on top and stacked widget at bottom.
+//! Widget container with functionality similar to QTabWidget. Has large button bar on top,
+//! and stacked widget at bottom.
 
 class MainBarWidget : public QWidget
 {
@@ -31,6 +34,7 @@ public:
 private:
     QStackedWidget* stacked_widget{nullptr};
     QHBoxLayout* button_layout{nullptr};
+    std::map<int, QPushButton*> index_to_button;
 };
 
 #endif // MAINBARWIDGET_H

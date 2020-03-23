@@ -14,7 +14,6 @@
 #include <QFileDialog>
 #include <QMenuBar>
 #include <QSettings>
-#include <QTabWidget>
 #include "mainbarwidget.h"
 
 namespace
@@ -24,21 +23,11 @@ const QString size_key = "size";
 const QString pos_key = "pos";
 } // namespace
 
-MainWindow::MainWindow() : m_reflDockWindow(new ReflDockWindow)
+MainWindow::MainWindow() : m_reflDockWindow(new ReflDockWindow), bar_widget(new MainBarWidget)
 {
     init_application();
-
-    auto widget = new MainBarWidget;
-    widget->addWidget(new QWidget, "Project");
-    widget->addWidget(new QWidget, "Data");
-    widget->addWidget(m_reflDockWindow, "Simulation");
-    widget->addWidget(new QWidget, "Fitting");
-    widget->addWidget(new QWidget, "Export");
-    widget->addWidget(new QWidget, "Settings");
-
-//    init_tabs();
-
-    setCentralWidget(widget);
+    init_tabs();
+    setCentralWidget(bar_widget);
 }
 
 MainWindow::~MainWindow() = default;
@@ -66,8 +55,13 @@ void MainWindow::init_application()
 
 void MainWindow::init_tabs()
 {
-    tab_widget->addTab(m_reflDockWindow, "Simulation");
-    tab_widget->setCurrentIndex(0);
+    bar_widget->addWidget(new QWidget, "Project");
+    bar_widget->addWidget(new QWidget, "Data");
+    bar_widget->addWidget(m_reflDockWindow, "Simulation");
+    bar_widget->addWidget(new QWidget, "Fitting");
+    bar_widget->addWidget(new QWidget, "Export");
+    bar_widget->addWidget(new QWidget, "Settings");
+    bar_widget->setCurrentIndex(2);
 }
 
 void MainWindow::write_settings()

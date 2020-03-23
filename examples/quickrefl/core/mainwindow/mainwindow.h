@@ -13,7 +13,7 @@
 #include <QMainWindow>
 
 class ReflDockWindow;
-class QTabWidget;
+class MainBarWidget;
 
 //! Application main window.
 
@@ -33,7 +33,7 @@ private:
     void write_settings();
 
     ReflDockWindow* m_reflDockWindow{nullptr};
-    QTabWidget* tab_widget{nullptr};
+    MainBarWidget* bar_widget{nullptr};
 };
 
 #endif //  MAINWINDOW_H
