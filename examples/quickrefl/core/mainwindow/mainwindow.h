@@ -13,6 +13,7 @@
 #include <QMainWindow>
 
 class ReflDockWindow;
+class QTabWidget;
 
 //! Application main window.
 
@@ -28,10 +29,11 @@ protected:
 
 private:
     void init_application();
+    void init_tabs();
     void write_settings();
-    void create_menus();
 
-    ReflDockWindow* m_reflDockWindow;
+    ReflDockWindow* m_reflDockWindow{nullptr};
+    QTabWidget* tab_widget{nullptr};
 };
 
 #endif //  MAINWINDOW_H

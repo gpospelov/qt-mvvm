@@ -14,6 +14,7 @@
 #include <QFileDialog>
 #include <QMenuBar>
 #include <QSettings>
+#include <QTabWidget>
 
 namespace
 {
@@ -22,11 +23,11 @@ const QString size_key = "size";
 const QString pos_key = "pos";
 } // namespace
 
-MainWindow::MainWindow() : m_reflDockWindow(new ReflDockWindow)
+MainWindow::MainWindow() : m_reflDockWindow(new ReflDockWindow), tab_widget(new QTabWidget)
 {
-    setCentralWidget(m_reflDockWindow);
-    create_menus();
     init_application();
+    init_tabs();
+    setCentralWidget(tab_widget);
 }
 
 MainWindow::~MainWindow() = default;
@@ -52,6 +53,12 @@ void MainWindow::init_application()
     }
 }
 
+void MainWindow::init_tabs()
+{
+    tab_widget->addTab(m_reflDockWindow, "Simulation");
+    tab_widget->setCurrentIndex(0);
+}
+
 void MainWindow::write_settings()
 {
     QSettings settings;
@@ -59,11 +66,4 @@ void MainWindow::write_settings()
     settings.setValue(size_key, size());
     settings.setValue(pos_key, pos());
     settings.endGroup();
-}
-
-//! Creates application file menu.
-
-void MainWindow::create_menus()
-{
-    menuBar()->addMenu("&File");
 }
