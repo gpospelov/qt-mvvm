@@ -15,6 +15,7 @@
 #include <QMenuBar>
 #include <QSettings>
 #include <QTabWidget>
+#include "mainbarwidget.h"
 
 namespace
 {
@@ -23,11 +24,21 @@ const QString size_key = "size";
 const QString pos_key = "pos";
 } // namespace
 
-MainWindow::MainWindow() : m_reflDockWindow(new ReflDockWindow), tab_widget(new QTabWidget)
+MainWindow::MainWindow() : m_reflDockWindow(new ReflDockWindow)
 {
     init_application();
-    init_tabs();
-    setCentralWidget(tab_widget);
+
+    auto widget = new MainBarWidget;
+    widget->addWidget(new QWidget, "Project");
+    widget->addWidget(new QWidget, "Data");
+    widget->addWidget(m_reflDockWindow, "Simulation");
+    widget->addWidget(new QWidget, "Fitting");
+    widget->addWidget(new QWidget, "Export");
+    widget->addWidget(new QWidget, "Settings");
+
+//    init_tabs();
+
+    setCentralWidget(widget);
 }
 
 MainWindow::~MainWindow() = default;
