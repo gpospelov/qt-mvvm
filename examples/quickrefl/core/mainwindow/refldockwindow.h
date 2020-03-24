@@ -15,6 +15,7 @@
 
 class DocksController;
 class ApplicationModels;
+class QToolBar;
 
 //! Main reflectometry window with all components for quick sample editing and simulations.
 
@@ -26,6 +27,10 @@ public:
     ~ReflDockWindow();
 
 private:
+    void setup_toolbar();
+    void setup_centralwidget();
+
+    QToolBar* toolbar{nullptr};
     DocksController* docks_controller{nullptr};
     std::unique_ptr<ApplicationModels> models;
 };
