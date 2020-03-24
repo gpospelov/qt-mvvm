@@ -27,8 +27,11 @@ ReflDockWindow::ReflDockWindow(QWidget* parent)
                                 Qt::TopDockWidgetArea);
     docks_controller->addWidget(1, new LayerEditor(models.get()), Qt::TopDockWidgetArea);
     docks_controller->addWidget(3, new ReflPlotWidget, Qt::BottomDockWidgetArea);
-    docks_controller->addWidget(4, new SLDViewWidget(models->sldController(), parent),
-                                Qt::BottomDockWidgetArea);
+
+    auto sld_widget = new SLDViewWidget(models->sldController());
+    auto sld_editor = new SLDEditor(sld_widget);
+
+    docks_controller->addWidget(4, sld_editor, Qt::BottomDockWidgetArea);
 }
 
 ReflDockWindow::~ReflDockWindow() = default;
