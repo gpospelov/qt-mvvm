@@ -13,6 +13,7 @@
 #include "dockscontroller.h"
 #include "layereditor.h"
 #include "reflwidgets.h"
+#include "quicksimeditor.h"
 #include <QToolBar>
 #include <QLabel>
 
@@ -26,12 +27,12 @@ ReflDockWindow::ReflDockWindow(QWidget* parent)
     docks_controller->addWidget(0, new MaterialEditor(models->materialModel()),
                                 Qt::TopDockWidgetArea);
     docks_controller->addWidget(1, new LayerEditor(models.get()), Qt::TopDockWidgetArea);
-    docks_controller->addWidget(3, new ReflPlotWidget, Qt::BottomDockWidgetArea);
 
     auto sld_widget = new SLDViewWidget(models->sldController());
     auto sld_editor = new SLDEditor(sld_widget);
+    docks_controller->addWidget(3, sld_editor, Qt::BottomDockWidgetArea);
 
-    docks_controller->addWidget(4, sld_editor, Qt::BottomDockWidgetArea);
+    docks_controller->addWidget(4, new QuickSimEditor, Qt::BottomDockWidgetArea);
 }
 
 ReflDockWindow::~ReflDockWindow() = default;
