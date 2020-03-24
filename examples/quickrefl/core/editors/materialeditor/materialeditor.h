@@ -31,6 +31,9 @@ public:
     MaterialEditor(MaterialModel* material_model, QWidget* parent = nullptr);
     ~MaterialEditor();
 
+    QSize sizeHint() const override;
+    QSize minimumSizeHint() const override;
+
 private:
     MaterialModel* material_model{nullptr};
     MaterialEditorActions* actions{nullptr};

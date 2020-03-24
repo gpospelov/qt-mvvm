@@ -42,6 +42,9 @@ class ReflPlotWidget : public QWidget
     Q_OBJECT
 public:
     ReflPlotWidget(QWidget* parent = nullptr);
+
+    QSize sizeHint() const override;
+    QSize minimumSizeHint() const override;
 };
 
 //! Instrument editor.

@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include "reflwidgets.h"
+#include "styleutils.h"
 
 //! ---------------------------------------------------------------------------
 
@@ -28,6 +29,16 @@ SLDEditor::SLDEditor(QWidget* parent) : QWidget(parent)
 ReflPlotWidget::ReflPlotWidget(QWidget* parent) : QWidget(parent)
 {
     setWindowTitle(QString("Reflectivity plot"));
+}
+
+QSize ReflPlotWidget::sizeHint() const
+{
+    return StyleUtils::DockSizeHint();
+}
+
+QSize ReflPlotWidget::minimumSizeHint() const
+{
+    return StyleUtils::DockMinimumSizeHint();
 }
 
 //! ---------------------------------------------------------------------------

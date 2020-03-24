@@ -31,6 +31,9 @@ public:
     LayerEditor(ApplicationModels* models, QWidget* parent = nullptr);
     ~LayerEditor();
 
+    QSize sizeHint() const override;
+    QSize minimumSizeHint() const override;
+
 private:
     LayerEditorActions* actions{nullptr};
     LayerEditorToolBar* toolbar{nullptr};
