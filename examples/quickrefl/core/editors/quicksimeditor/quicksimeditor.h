@@ -12,6 +12,11 @@
 
 #include <QWidget>
 
+namespace ModelView
+{
+class GraphCanvas;
+}
+
 //! Quick reflectivity simulations.
 
 class QuickSimEditor : public QWidget
@@ -22,6 +27,9 @@ public:
 
     QSize sizeHint() const override;
     QSize minimumSizeHint() const override;
+
+private:
+    ModelView::GraphCanvas* graph_canvas{nullptr};
 };
 
 #endif // QUICKSIMEDITOR_H
