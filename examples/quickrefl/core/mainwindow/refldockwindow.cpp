@@ -32,7 +32,7 @@ ReflDockWindow::ReflDockWindow(QWidget* parent)
     auto sld_editor = new SLDEditor(sld_widget);
     docks_controller->addWidget(3, sld_editor, Qt::BottomDockWidgetArea);
 
-    docks_controller->addWidget(4, new QuickSimEditor, Qt::BottomDockWidgetArea);
+    docks_controller->addWidget(4, new QuickSimEditor(models.get()), Qt::BottomDockWidgetArea);
 }
 
 ReflDockWindow::~ReflDockWindow() = default;

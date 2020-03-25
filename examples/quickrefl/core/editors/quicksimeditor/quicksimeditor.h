@@ -19,6 +19,7 @@ class GraphCanvas;
 }
 
 class JobModel;
+class ApplicationModels;
 
 //! Quick reflectivity simulations.
 
@@ -26,13 +27,14 @@ class QuickSimEditor : public QWidget
 {
     Q_OBJECT
 public:
-    QuickSimEditor(QWidget* parent = nullptr);
+    QuickSimEditor(ApplicationModels* app_models, QWidget* parent = nullptr);
     ~QuickSimEditor();
 
     QSize sizeHint() const override;
     QSize minimumSizeHint() const override;
 
 private:
+    ApplicationModels* app_models{nullptr};
     std::unique_ptr<JobModel> job_model;
     ModelView::GraphCanvas* graph_canvas{nullptr};
 };
