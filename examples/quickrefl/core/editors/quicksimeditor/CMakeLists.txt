@@ -1,6 +1,8 @@
 # Static library: quickreflcore.
 
 target_sources(quickreflcore PRIVATE
+    materialprofile.cpp
+    materialprofile.h
     quicksimcontroller.cpp
     quicksimcontroller.h
     quicksimeditor.cpp
