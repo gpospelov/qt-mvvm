@@ -15,11 +15,12 @@
 
 #include <mvvm/signals/itemmapper.h>
 #include <stdexcept>
+#include <string>
 
 using namespace ModelView;
 
 LayerElementController::LayerElementController(LayerElementItem* layer_view_item)
-    : QObject(), p_model_item(layer_view_item)
+    : QObject(), p_model_item(layer_view_item), m_sample_item_id(" ")
 {
 }
 
@@ -32,16 +33,20 @@ LayerElementItem* LayerElementController::layerElementItem() const
 //! Connect to the set item
 void LayerElementController::connectToModel() const
 {
-    auto on_property_change = [this](ModelView::SessionItem*, std::string property_name) {
+    auto on_property_change = [this](ModelView::SessionItem* item, std::string property_name) {
         if (property_name == LayerElementItem::P_X_POS) {
             updateSideSegment();
             updateTopSegment();
         }
         if (property_name == LayerElementItem::P_HEIGHT) {
+            emit heightChanged(m_sample_item_id,
+                               layerElementItem()->property(LayerElementItem::P_HEIGHT).toDouble());
             updateSideSegment();
             updateTopSegment();
         }
         if (property_name == LayerElementItem::P_WIDTH) {
+            emit widthChanged(m_sample_item_id,
+                              layerElementItem()->property(LayerElementItem::P_WIDTH).toDouble());
             updateSideSegment();
             updateTopSegment();
         }
@@ -104,6 +109,24 @@ void LayerElementController::unsetScene()
     p_scene = nullptr;
 }
 
+//! Set the idenfier of the sample item to report
+void LayerElementController::setSampleItemId(std::string identifier)
+{
+    m_sample_item_id = identifier;
+}
+
+//! Return the set sample item identifier
+std::string LayerElementController::sampleItemId() const
+{
+    return m_sample_item_id;
+}
+
+//! Unset the sample item identifier
+void LayerElementController::unsetSampleItemId()
+{
+    m_sample_item_id = " ";
+}
+
 //! Get the scene adapter to convert to axes
 SceneAdapterInterface* LayerElementController::getSceneAdapter() const
 {
@@ -120,6 +143,11 @@ void LayerElementController::setLayerAbove(LayerElementController* layer_view_co
 
     if (!(layer_view_controller->layerBelow() == this))
         layer_view_controller->setLayerBelow(this);
+
+    double pos =
+        p_controller_above->layerElementItem()->property(LayerElementItem::P_X_POS).toDouble()
+        + p_controller_above->layerElementItem()->property(LayerElementItem::P_WIDTH).toDouble();
+    layerElementItem()->setProperty(LayerElementItem::P_X_POS, pos);
 }
 
 //! Set the layer below the current one in relation
@@ -171,14 +199,22 @@ void LayerElementController::unsetLayerBelow(bool silent)
 void LayerElementController::setSideSegment(SegmentElementView* segment_view)
 {
     m_segment_views[0] = segment_view;
+    m_segment_views[0]->setLayerElementController(this);
     updateSideSegment();
+
+    if (scene())
+        scene()->addItem(m_segment_views[0]);
 }
 
 //! Set the top segment elements
 void LayerElementController::setTopSegment(SegmentElementView* segment_view)
 {
     m_segment_views[1] = segment_view;
+    m_segment_views[1]->setLayerElementController(this);
     updateTopSegment();
+
+    if (scene())
+        scene()->addItem(m_segment_views[1]);
 }
 
 //! Return the side Segment view
@@ -286,5 +322,30 @@ void LayerElementController::removeSegmentsFromScene() const
     for (auto segment_view : m_segment_views) {
         if (segment_view && segment_view->scene() == scene())
             scene()->removeItem(segment_view);
+    }
+}
+
+//! The move logic
+void LayerElementController::segmentViewMoved(SegmentElementView* segment_view)
+{
+    if (segment_view == sideSegment()) {
+        double x = sideSegment()->getLastPos().x();
+        if (layerAbove()) {
+            double w = 0;
+            auto item = layerAbove()->layerElementItem();
+            if (x < item->property(LayerElementItem::P_X_POS).toDouble()) {
+                w = 1e-6;
+                x = item->property(LayerElementItem::P_X_POS).toDouble() + w;
+            } else {
+                w = x - item->property(LayerElementItem::P_X_POS).toDouble();
+            }
+            item->setProperty(LayerElementItem::P_WIDTH, w);
+        }
+        layerElementItem()->setProperty(LayerElementItem::P_X_POS, x);
+    } else if (segment_view == topSegment()) {
+        double y = topSegment()->getLastPos().y();
+        if (y < 0)
+            y = 0;
+        layerElementItem()->setProperty(LayerElementItem::P_HEIGHT, y);
     }
 }

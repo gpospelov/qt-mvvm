@@ -40,6 +40,14 @@ public:
     GraphicsScene* scene() const;
     void unsetScene();
 
+    void setSampleItemId(std::string indentifier);
+    std::string sampleItemId() const;
+    void unsetSampleItemId();
+
+signals:
+    void heightChanged(std::string id, double value) const;
+    void widthChanged(std::string id, double value) const;
+
 private:
     ModelView::SceneAdapterInterface* getSceneAdapter() const;
 
@@ -59,6 +67,8 @@ public:
     void unsetSideSegment();
     void unsetTopSegment();
 
+    void segmentViewMoved(SegmentElementView* segment_view);
+
 protected:
     void updateSideSegment() const;
     void updateTopSegment() const;
@@ -67,9 +77,11 @@ protected:
     void putSegementsOnScene() const;
     void removeSegmentsFromScene() const;
 
+public:
 private:
     LayerElementItem* p_model_item;
     GraphicsScene* p_scene = nullptr;
+    std::string m_sample_item_id;
 
     std::vector<SegmentElementView*> m_segment_views = {nullptr, nullptr};
     std::vector<HandleElementView*> m_handle_views = {nullptr, nullptr, nullptr};

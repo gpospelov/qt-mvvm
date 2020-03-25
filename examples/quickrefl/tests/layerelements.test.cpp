@@ -9,8 +9,11 @@
 
 #include "google_test.h"
 
+#include "GraphicsScene.h"
 #include "layerelementcontroller.h"
 #include "layerelementitem.h"
+#include "materialmodel.h"
+#include "samplemodel.h"
 #include "segmentelementview.h"
 #include "sldelementmodel.h"
 
@@ -18,6 +21,8 @@
 #include <mvvm/viewmodel/viewmodelutils.h>
 
 #include <QColor>
+#include <QGraphicsSceneMouseEvent>
+#include <QSignalSpy>
 
 using namespace ModelView;
 
@@ -47,7 +52,9 @@ public:
         LayerElementItem* exposed_layer_item{nullptr};
         LayerElementControllerFriend* exposed_controller{nullptr};
 
-        SLDElementModel* model{nullptr};
+        SampleModel* sample_model{nullptr};
+        MaterialModel* material_model{nullptr};
+        SLDElementModel* view_model{nullptr};
 
         LayerElementItem* above_layer_item{nullptr};
         LayerElementItem* middle_layer_item{nullptr};
@@ -57,19 +64,24 @@ public:
         LayerElementController* middle_controller{nullptr};
         LayerElementController* below_controller{nullptr};
 
+        GraphicsScene* scene{nullptr};
+
         TestData()
         {
             exposed_layer_item = new LayerElementItem();
             exposed_controller = new LayerElementControllerFriend(exposed_layer_item);
 
-            model = new SLDElementModel();
-            above_layer_item = model->addLayer();
-            middle_layer_item = model->addLayer();
-            below_layer_item = model->addLayer();
+            sample_model = new SampleModel();
+            view_model = new SLDElementModel();
+            above_layer_item = view_model->addLayer();
+            middle_layer_item = view_model->addLayer();
+            below_layer_item = view_model->addLayer();
 
             above_controller = new LayerElementController(above_layer_item);
             middle_controller = new LayerElementController(middle_layer_item);
             below_controller = new LayerElementController(below_layer_item);
+
+            scene = new GraphicsScene();
         }
     };
 };
@@ -87,6 +99,7 @@ TEST_F(LayerElementTest, initialState)
     EXPECT_EQ(nullptr, test_data.middle_controller->layerBelow());
     EXPECT_EQ(nullptr, test_data.middle_controller->topSegment());
     EXPECT_EQ(nullptr, test_data.middle_controller->sideSegment());
+    EXPECT_EQ(nullptr, test_data.middle_controller->scene());
 }
 
 TEST_F(LayerElementTest, addremoveabovebelow)
@@ -299,11 +312,147 @@ TEST_F(LayerElementTest, testsegementviewsupdate)
     EXPECT_EQ(5., top_rect.height());
 }
 
-TEST_F(LayerElementTest, testhandles)
+TEST_F(LayerElementTest, testscene)
 {
     TestData test_data;
+
+    test_data.middle_controller->setScene(test_data.scene);
+
+    EXPECT_EQ(test_data.scene, test_data.middle_controller->scene());
+
+    test_data.middle_controller->connectToModel();
+
+    auto side_segment_middle = new SegmentElementViewFriend();
+    auto top_segment_middle = new SegmentElementViewFriend();
+    test_data.middle_controller->setSideSegment(side_segment_middle);
+    test_data.middle_controller->setTopSegment(top_segment_middle);
+
+    EXPECT_EQ(test_data.scene, side_segment_middle->scene());
+    EXPECT_EQ(test_data.scene, top_segment_middle->scene());
+
+    test_data.middle_controller->unsetScene();
+    EXPECT_EQ(nullptr, side_segment_middle->scene());
+    EXPECT_EQ(nullptr, top_segment_middle->scene());
+
+    test_data.middle_controller->setScene(test_data.scene);
+    EXPECT_EQ(test_data.scene, side_segment_middle->scene());
+    EXPECT_EQ(test_data.scene, top_segment_middle->scene());
 }
 
+TEST_F(LayerElementTest, testpropagation)
+{
+    TestData test_data;
+
+    test_data.above_controller->setScene(test_data.scene);
+    test_data.middle_controller->setScene(test_data.scene);
+    test_data.below_controller->setScene(test_data.scene);
+
+    test_data.above_controller->connectToModel();
+    test_data.middle_controller->connectToModel();
+    test_data.below_controller->connectToModel();
+
+    test_data.above_controller->setSampleItemId("above");
+    test_data.middle_controller->setSampleItemId("middle");
+    test_data.below_controller->setSampleItemId("below");
+
+    auto side_segment_above = new SegmentElementViewFriend();
+    auto top_segment_above = new SegmentElementViewFriend();
+    test_data.above_controller->setSideSegment(side_segment_above);
+    test_data.above_controller->setTopSegment(top_segment_above);
+
+    auto side_segment_middle = new SegmentElementViewFriend();
+    auto top_segment_middle = new SegmentElementViewFriend();
+    test_data.middle_controller->setSideSegment(side_segment_middle);
+    test_data.middle_controller->setTopSegment(top_segment_middle);
+
+    auto side_segment_below = new SegmentElementViewFriend();
+    auto top_segment_below = new SegmentElementViewFriend();
+    test_data.below_controller->setSideSegment(side_segment_below);
+    test_data.below_controller->setTopSegment(top_segment_below);
+
+    test_data.middle_controller->setLayerAbove(test_data.above_controller);
+    test_data.middle_controller->setLayerBelow(test_data.below_controller);
+
+    LayerElementItem* item_above = test_data.above_controller->layerElementItem();
+    LayerElementItem* item_middle = test_data.middle_controller->layerElementItem();
+    LayerElementItem* item_below = test_data.below_controller->layerElementItem();
+
+    // #############################################################################s
+    // Test signaling for initial construction
+    EXPECT_EQ(0., item_above->property(LayerElementItem::P_X_POS).toDouble());
+    EXPECT_EQ(10., item_above->property(LayerElementItem::P_WIDTH).toDouble());
+    EXPECT_EQ(10., item_middle->property(LayerElementItem::P_X_POS).toDouble());
+    EXPECT_EQ(10., item_middle->property(LayerElementItem::P_WIDTH).toDouble());
+    EXPECT_EQ(20., item_below->property(LayerElementItem::P_X_POS).toDouble());
+    EXPECT_EQ(10., item_below->property(LayerElementItem::P_WIDTH).toDouble());
+
+    // #############################################################################s
+    // Test signaling for property changes
+    QSignalSpy spy_ctr_above_width(test_data.above_controller,
+                                   &LayerElementController::widthChanged);
+    QSignalSpy spy_ctr_middle_height(test_data.middle_controller,
+                                     &LayerElementController::heightChanged);
+
+    auto mouse_move_event = new QGraphicsSceneMouseEvent();
+    QList<QVariant> move_arguments;
+
+    // Try standard x move
+    mouse_move_event->setPos(QPointF(8, 0));
+    side_segment_middle->mouseMoveEvent(mouse_move_event);
+    move_arguments = spy_ctr_above_width.takeFirst();
+
+    EXPECT_EQ(move_arguments.at(0).value<std::string>(), "above");
+    EXPECT_EQ(move_arguments.at(1).value<double>(), 8);
+    EXPECT_EQ(8., item_above->property(LayerElementItem::P_WIDTH).toDouble());
+    EXPECT_EQ(8., item_middle->property(LayerElementItem::P_X_POS).toDouble());
+
+    // Try limit x move
+    mouse_move_event->setPos(QPointF(-1, 0));
+    side_segment_middle->mouseMoveEvent(mouse_move_event);
+    move_arguments = spy_ctr_above_width.takeFirst();
+
+    EXPECT_EQ(move_arguments.at(0).value<std::string>(), "above");
+    EXPECT_EQ(move_arguments.at(1).value<double>(), 1e-6);
+    EXPECT_EQ(1e-6, item_above->property(LayerElementItem::P_WIDTH).toDouble());
+    EXPECT_EQ(1e-6, item_middle->property(LayerElementItem::P_X_POS).toDouble());
+
+    // Try standard x move
+    mouse_move_event->setPos(QPointF(10, 0));
+    side_segment_middle->mouseMoveEvent(mouse_move_event);
+    move_arguments = spy_ctr_above_width.takeFirst();
+
+    EXPECT_EQ(move_arguments.at(0).value<std::string>(), "above");
+    EXPECT_EQ(move_arguments.at(1).value<double>(), 10);
+    EXPECT_EQ(10., item_above->property(LayerElementItem::P_WIDTH).toDouble());
+    EXPECT_EQ(10., item_middle->property(LayerElementItem::P_X_POS).toDouble());
+
+    // Try standard y move
+    mouse_move_event->setPos(QPointF(0, 8));
+    top_segment_middle->mouseMoveEvent(mouse_move_event);
+    move_arguments = spy_ctr_middle_height.takeFirst();
+
+    EXPECT_EQ(move_arguments.at(0).value<std::string>(), "middle");
+    EXPECT_EQ(move_arguments.at(1).value<double>(), 8);
+    EXPECT_EQ(8., item_middle->property(LayerElementItem::P_HEIGHT).toDouble());
+
+    // Try limit y move
+    mouse_move_event->setPos(QPointF(0, -1));
+    top_segment_middle->mouseMoveEvent(mouse_move_event);
+    move_arguments = spy_ctr_middle_height.takeFirst();
+
+    EXPECT_EQ(move_arguments.at(0).value<std::string>(), "middle");
+    EXPECT_EQ(move_arguments.at(1).value<double>(), 0);
+    EXPECT_EQ(0, item_middle->property(LayerElementItem::P_HEIGHT).toDouble());
+
+    // Try standard y move
+    mouse_move_event->setPos(QPointF(0, 10));
+    top_segment_middle->mouseMoveEvent(mouse_move_event);
+    move_arguments = spy_ctr_middle_height.takeFirst();
+
+    EXPECT_EQ(move_arguments.at(0).value<std::string>(), "middle");
+    EXPECT_EQ(move_arguments.at(1).value<double>(), 10);
+    EXPECT_EQ(10., item_middle->property(LayerElementItem::P_HEIGHT).toDouble());
+}
 TEST_F(LayerElementTest, moveelements)
 {
     TestData test_data;

@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include "segmentelementview.h"
+#include "layerelementcontroller.h"
 
 #include <QGraphicsSceneMouseEvent>
 #include <QPainter>
@@ -15,7 +16,8 @@
 
 //! The constructor
 SegmentElementView::SegmentElementView()
-    : QGraphicsItem(), m_rectangle(QRectF(0, 0, 0, 0)), m_brush(QBrush()), m_pen(QPen())
+    : QGraphicsItem(), m_rectangle(QRectF(0, 0, 0, 0)), m_brush(QBrush()), m_pen(QPen()),
+      m_pos(QPointF(0, 0))
 {
     setFlag(QGraphicsItem::ItemIsMovable);
 }
@@ -43,7 +45,17 @@ QRectF SegmentElementView::boundingRect() const
 }
 
 //! On move update the model
-void SegmentElementView::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {}
+void SegmentElementView::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
+{
+    m_pos = event->pos();
+    p_controller->segmentViewMoved(this);
+}
+
+//! Set the controller to report back the move
+void SegmentElementView::setLayerElementController(LayerElementController* controller)
+{
+    p_controller = controller;
+}
 
 //! Set the draw rectangle
 void SegmentElementView::setRectangle(QRectF rectangle)
@@ -62,4 +74,10 @@ void SegmentElementView::setBrush(QBrush brush)
 void SegmentElementView::setPen(QPen pen)
 {
     m_pen = pen;
+}
+
+//! Get the last position of the item
+QPointF SegmentElementView::getLastPos() const
+{
+    return m_pos;
 }
