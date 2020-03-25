@@ -13,6 +13,7 @@
 #include <mvvm/model/sessionmodel.h>
 
 //! Contains results of quick reflectometry simulations.
+// TODO make JobModel part of ApplicationModels
 
 class JobModel : public ModelView::SessionModel
 {

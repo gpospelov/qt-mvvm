@@ -20,6 +20,7 @@ class GraphCanvas;
 
 class JobModel;
 class ApplicationModels;
+class QuickSimController;
 
 //! Quick reflectivity simulations.
 
@@ -36,6 +37,7 @@ public:
 private:
     ApplicationModels* app_models{nullptr};
     std::unique_ptr<JobModel> job_model;
+    QuickSimController* sim_controller{nullptr};
     ModelView::GraphCanvas* graph_canvas{nullptr};
 };
 

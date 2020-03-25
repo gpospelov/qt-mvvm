@@ -11,6 +11,7 @@
 #include "jobmodel.h"
 #include "styleutils.h"
 #include "applicationmodels.h"
+#include "quicksimcontroller.h"
 #include <QVBoxLayout>
 #include <mvvm/model/modelutils.h>
 #include <mvvm/plotting/graphcanvas.h>
@@ -20,6 +21,7 @@ using namespace ModelView;
 
 QuickSimEditor::QuickSimEditor(ApplicationModels* app_models, QWidget* parent)
     : QWidget(parent), app_models(app_models), job_model(std::make_unique<JobModel>()),
+      sim_controller(new QuickSimController(app_models, job_model.get(), this)),
       graph_canvas(new ModelView::GraphCanvas)
 {
     setWindowTitle(QString("Reflectivity plot"));
