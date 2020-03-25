@@ -8,18 +8,22 @@
 // ************************************************************************** //
 
 #include "quicksimeditor.h"
+#include "jobmodel.h"
 #include "styleutils.h"
 #include <QVBoxLayout>
 #include <mvvm/plotting/graphcanvas.h>
 
 QuickSimEditor::QuickSimEditor(QWidget* parent)
-    : QWidget(parent), graph_canvas(new ModelView::GraphCanvas)
+    : QWidget(parent), job_model(std::make_unique<JobModel>()),
+      graph_canvas(new ModelView::GraphCanvas)
 {
     setWindowTitle(QString("Reflectivity plot"));
     auto layout = new QVBoxLayout;
     layout->addWidget(graph_canvas);
     setLayout(layout);
 }
+
+QuickSimEditor::~QuickSimEditor() = default;
 
 QSize QuickSimEditor::sizeHint() const
 {
