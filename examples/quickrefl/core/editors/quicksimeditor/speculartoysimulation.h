@@ -20,9 +20,6 @@
 class SpecularToySimulation
 {
 public:
-    //! Data structure representing multi layer.
-    using multilayer_t = std::vector<MaterialProfile::Slice>;
-
     //! Represents results of the simulation.
     struct Result {
         double xmin{0.0};
@@ -30,7 +27,7 @@ public:
         std::vector<double> data;
     };
 
-    SpecularToySimulation(const multilayer_t& input_data);
+    SpecularToySimulation(const multislice_t& input_data);
 
     void runSimulation();
 
@@ -42,7 +39,7 @@ private:
     void calculate_sld_profile();
 
     ModelView::ProgressHandler progress_handler;
-    multilayer_t input_data;
+    multislice_t input_data;
     Result sld_profile;
 };
 

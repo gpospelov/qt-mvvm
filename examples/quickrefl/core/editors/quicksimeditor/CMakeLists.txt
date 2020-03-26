@@ -3,10 +3,13 @@
 target_sources(quickreflcore PRIVATE
     materialprofile.cpp
     materialprofile.h
+    profilehelper.cpp
+    profilehelper.h
     quicksimcontroller.cpp
     quicksimcontroller.h
     quicksimeditor.cpp
     quicksimeditor.h
+    slice.h
     speculartoysimulation.cpp
     speculartoysimulation.h
 )

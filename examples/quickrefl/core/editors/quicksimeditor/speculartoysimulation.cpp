@@ -17,7 +17,7 @@ const int simulation_steps_count = 100;
 
 using namespace ModelView;
 
-SpecularToySimulation::SpecularToySimulation(const multilayer_t &input_data)
+SpecularToySimulation::SpecularToySimulation(const multislice_t &input_data)
     : input_data(input_data)
 {
 }

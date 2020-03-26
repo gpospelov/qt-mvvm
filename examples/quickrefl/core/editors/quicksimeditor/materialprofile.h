@@ -10,17 +10,22 @@
 #ifndef MATERIALPROFILE_H
 #define MATERIALPROFILE_H
 
+#include "slice.h"
+
 //! Collection of methods borrowed from BornAgain for material profile calculations.
 
 namespace MaterialProfile
 {
 
-//! Layer parameters. Data structure to feed simulation with input parameters.
-struct Slice {
-    double sld_real{0.0};
-    double thickness{0.0};
-    double top_sigma{0.0};
-};
+//! Calculate average material profile for given multilayer
+std::vector<complex_t> CalculateProfile(const multislice_t& multilayer, int n_points, double z_min,
+                                        double z_max);
+
+//! Get default z limits for generating a material profile
+std::pair<double, double> DefaultMaterialProfileLimits(const multislice_t& multilayer);
+
+//! Generate z values (equidistant) for use in MaterialProfile
+std::vector<double> GenerateZValues(int n_points, double z_min, double z_max);
 
 } // namespace MaterialProfile
 
