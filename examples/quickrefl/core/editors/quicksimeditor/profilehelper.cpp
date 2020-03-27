@@ -13,9 +13,7 @@
 // ************************************************************************** //
 
 #include "profilehelper.h"
-
-#define _USE_MATH_DEFINES
-#include <cmath>
+#include <mvvm/utils/mathconstants.h>
 
 namespace
 {
