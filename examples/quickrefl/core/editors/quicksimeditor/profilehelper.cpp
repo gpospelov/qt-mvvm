@@ -14,6 +14,9 @@
 
 #include "profilehelper.h"
 
+#define _USE_MATH_DEFINES
+#include <cmath>
+
 namespace
 {
 const double prefactor = std::sqrt(2.0 / M_PI);
