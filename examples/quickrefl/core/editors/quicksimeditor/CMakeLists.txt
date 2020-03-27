@@ -12,6 +12,8 @@ target_sources(quickreflcore PRIVATE
     slice.h
     speculartoysimulation.cpp
     speculartoysimulation.h
+    quicksimutils.cpp
+    quicksimutils.h
 )
 
 target_include_directories(quickreflcore PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>)

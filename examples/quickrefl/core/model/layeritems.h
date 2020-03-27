@@ -54,8 +54,6 @@ public:
 
     void activate() override;
 
-    multislice_t multislice() const;
-
 private:
     void update_layer_appearance();
 };

@@ -58,33 +58,6 @@ void MultiLayerItem::activate()
     mapper()->setOnItemRemoved(on_item_removed, this);
 }
 
-//! Creates multi-slice presentation of internal layers structure. Used as simulation input.
-//! TODO Provide unit tests, provide support for nested MultiLayers
-
-multislice_t MultiLayerItem::multislice() const
-{
-    multislice_t result;
-    auto layers = items<LayerItem>(T_LAYERS);
-    for (const auto& layer : items<LayerItem>(T_LAYERS)) {
-        if (layer->modelType() != Constants::LayerItemType)
-            throw std::runtime_error("Currently supports layers only. FIXME");
-
-        double thickness = layer->property(LayerItem::P_THICKNESS).value<double>();
-        auto roughness = layer->item<RoughnessItem>(LayerItem::P_ROUGHNESS);
-        double sigma = roughness->property(RoughnessItem::P_SIGMA).value<double>();
-
-        auto material = model()->findItem(layer->property(LayerItem::P_MATERIAL)
-                                              .value<ModelView::ExternalProperty>()
-                                              .identifier());
-        double sld_real = material->property(SLDMaterialItem::P_SLD_REAL).value<double>();
-        double sld_imag = material->property(SLDMaterialItem::P_SLD_IMAG).value<double>();
-
-        result.push_back({complex_t{sld_real, sld_imag}, thickness, sigma});
-    }
-
-    return result;
-}
-
 //! Sets thickness property of top and bottom layers to disabled state.
 //! Reset thickness of top and bottom layer to 0.
 
