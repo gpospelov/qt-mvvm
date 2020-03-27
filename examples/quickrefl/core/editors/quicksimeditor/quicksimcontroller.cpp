@@ -9,12 +9,23 @@
 
 #include "quicksimcontroller.h"
 #include "applicationmodels.h"
+#include "jobmodel.h"
+#include "layeritems.h"
 #include "materialmodel.h"
+#include "materialprofile.h"
+#include "quicksimutils.h"
 #include "samplemodel.h"
+#include "slice.h"
 #include <QDebug>
+#include <mvvm/model/modelutils.h>
 #include <mvvm/signals/modelmapper.h>
+#include <mvvm/standarditems/axisitems.h>
+#include <mvvm/standarditems/data1ditem.h>
 
-using namespace ModelView;
+namespace
+{
+const int profile_points_count = 400;
+}
 
 QuickSimController::QuickSimController(ApplicationModels* app_models, JobModel* job_model,
                                        QObject* parent)
@@ -47,35 +58,51 @@ void QuickSimController::setup_models_tracking()
 {
     // Setup MaterialModel
     {
-        auto on_data_change = [this](SessionItem*, int) { onModelChange(); };
+        auto on_data_change = [this](ModelView::SessionItem*, int) { onModelChange(); };
         material_model->mapper()->setOnDataChange(on_data_change, this);
 
-        auto on_item_removed = [this](SessionItem*, TagRow) { onModelChange(); };
+        auto on_item_removed = [this](ModelView::SessionItem*, ModelView::TagRow) {
+            onModelChange();
+        };
         material_model->mapper()->setOnItemRemoved(on_item_removed, this);
 
-        auto on_model_destroyed = [this](SessionModel*) { material_model = nullptr; };
+        auto on_model_destroyed = [this](ModelView::SessionModel*) { material_model = nullptr; };
         material_model->mapper()->setOnModelDestroyed(on_model_destroyed, this);
     }
 
     // Setup SampleModel
     {
-        auto on_data_change = [this](SessionItem*, int) { onModelChange(); };
+        auto on_data_change = [this](ModelView::SessionItem*, int) { onModelChange(); };
         sample_model->mapper()->setOnDataChange(on_data_change, this);
 
-        auto on_item_removed = [this](SessionItem*, TagRow) { onModelChange(); };
+        auto on_item_removed = [this](ModelView::SessionItem*, ModelView::TagRow) {
+            onModelChange();
+        };
         sample_model->mapper()->setOnItemRemoved(on_item_removed, this);
 
-        auto on_model_destroyed = [this](SessionModel*) { sample_model = nullptr; };
+        auto on_model_destroyed = [this](ModelView::SessionModel*) { sample_model = nullptr; };
         sample_model->mapper()->setOnModelDestroyed(on_model_destroyed, this);
     }
-
 }
 
 //! Performs update of sld profile for immediate plotting.
 
 void QuickSimController::update_sld_profile()
 {
-    // TODO
+    qDebug() << "QuickSimController::update_sld_profile()";
+    auto multilayer = ModelView::Utils::TopItem<MultiLayerItem>(sample_model);
+    auto slices = ::Utils::CreateMultiSlice(*multilayer);
+
+    auto [xmin, xmax] = MaterialProfile::DefaultMaterialProfileLimits(slices);
+    auto data_item = ModelView::Utils::TopItem<ModelView::Data1DItem>(job_model);
+    data_item->setAxis(ModelView::FixedBinAxisItem::create(profile_points_count, xmin, xmax));
+
+    std::vector<double> values;
+    for (const auto& material :
+         MaterialProfile::CalculateProfile(slices, profile_points_count, xmin, xmax))
+        values.push_back(material.real());
+
+    data_item->setContent(values);
 }
 
 //! Submit data to JobManager for consequent specular simulation.
