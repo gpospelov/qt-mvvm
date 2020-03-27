@@ -32,6 +32,7 @@ class MaterialModel : public ModelView::SessionModel
 {
 public:
     MaterialModel();
+    MaterialModel(std::shared_ptr<ModelView::ItemPool> pool);
 
     static ModelView::ExternalProperty undefined_material();
 
