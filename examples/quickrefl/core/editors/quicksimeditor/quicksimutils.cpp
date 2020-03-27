@@ -28,8 +28,8 @@ multislice_t Utils::CreateMultiSlice(const MultiLayerItem& multilayer)
         auto material = multilayer.model()->findItem(layer->property(LayerItem::P_MATERIAL)
                                                          .value<ModelView::ExternalProperty>()
                                                          .identifier());
-        double sld_real = material->property(SLDMaterialItem::P_SLD_REAL).value<double>();
-        double sld_imag = material->property(SLDMaterialItem::P_SLD_IMAG).value<double>();
+        double sld_real = material ? material->property(SLDMaterialItem::P_SLD_REAL).value<double>() : 0.0;
+        double sld_imag = material ? material->property(SLDMaterialItem::P_SLD_IMAG).value<double>() : 0.0;
 
         result.push_back({complex_t{sld_real, sld_imag}, thickness, sigma});
     }

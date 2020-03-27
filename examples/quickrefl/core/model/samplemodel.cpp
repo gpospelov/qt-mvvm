@@ -33,6 +33,7 @@ SampleModel::SampleModel() : SessionModel(model_name)
 
 SampleModel::SampleModel(std::shared_ptr<ModelView::ItemPool> pool) : SessionModel(model_name, pool)
 {
+    init_model();
 }
 
 //! Populate the model with default MultiLayer with 3 layers.
