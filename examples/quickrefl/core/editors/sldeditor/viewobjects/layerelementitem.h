@@ -30,6 +30,11 @@ public:
     static inline const std::string P_TOP_PEN_WIDTH = "P_TOP_PEN_WIDTH";
     static inline const std::string P_TOP_PEN_COLOR = "P_TOP_PEN_COLOR";
 
+    static inline const std::string P_HANDLE_RADIUS = "P_HANDLE_RADIUS";
+    static inline const std::string P_HANDLE_BRUSH_COLOR = "P_HANDLE_BRUSH_COLOR";
+    static inline const std::string P_HANDLE_PEN_WIDTH = "P_HANDLE_PEN_WIDTH";
+    static inline const std::string P_HANDLE_PEN_COLOR = "P_HANDLE_PEN_COLOR";
+
     LayerElementItem();
 };
 

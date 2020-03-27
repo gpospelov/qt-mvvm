@@ -22,10 +22,6 @@ class HandleElementView;
 class SegmentElementView;
 class RoughnessElementView;
 
-class HandleElementItem;
-class SegmentElementItem;
-class RoughnessElementItem;
-
 class LayerElementController : public QObject
 {
     Q_OBJECT
@@ -78,13 +74,27 @@ protected:
     void removeSegmentsFromScene() const;
 
 public:
+    void setSegmentHandles(HandleElementView* first_handle, HandleElementView* secondHandle);
+    HandleElementView* firstSegmentHandle() const;
+    HandleElementView* secondSegmentHandle() const;
+    void unsetSegmentHandles();
+
+    void handleViewMoved(HandleElementView* handle_view);
+
+protected:
+    void updateSegmentHandles() const;
+    QRectF firstSegmentHandleRect() const;
+    QRectF secondSegmentHandleRect() const;
+    void putSegmentHandlesOnScene() const;
+    void removeSegmentHandlesFromScene() const;
+
 private:
     LayerElementItem* p_model_item;
     GraphicsScene* p_scene = nullptr;
     std::string m_sample_item_id;
 
     std::vector<SegmentElementView*> m_segment_views = {nullptr, nullptr};
-    std::vector<HandleElementView*> m_handle_views = {nullptr, nullptr, nullptr};
+    std::vector<HandleElementView*> m_handle_views = {nullptr, nullptr};
     std::vector<HandleElementView*> m_rough_handles_views = {nullptr, nullptr};
     RoughnessElementView* p_roughness_view = nullptr;
 

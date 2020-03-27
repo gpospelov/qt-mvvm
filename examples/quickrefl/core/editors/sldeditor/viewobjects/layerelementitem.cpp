@@ -26,8 +26,13 @@ LayerElementItem::LayerElementItem() : ModelView::CompoundItem("LayerElement")
     addProperty(P_SIDE_PEN_WIDTH, 2.)->setDisplayName("Side segment pen width");
     addProperty(P_SIDE_PEN_COLOR, QColor("black"))->setDisplayName("Side segment pen color");
 
-    addProperty(P_TOP_THICKNESS, 5.)->setDisplayName("Side segment thickness");
-    addProperty(P_TOP_BRUSH_COLOR, QColor("black"))->setDisplayName("Side segment color");
-    addProperty(P_TOP_PEN_WIDTH, 2.)->setDisplayName("Side segment pen width");
-    addProperty(P_TOP_PEN_COLOR, QColor("black"))->setDisplayName("Side segment pen color");
+    addProperty(P_TOP_THICKNESS, 5.)->setDisplayName("Top segment thickness");
+    addProperty(P_TOP_BRUSH_COLOR, QColor("black"))->setDisplayName("Top segment color");
+    addProperty(P_TOP_PEN_WIDTH, 2.)->setDisplayName("Top segment pen width");
+    addProperty(P_TOP_PEN_COLOR, QColor("black"))->setDisplayName("Top segment pen color");
+
+    addProperty(P_HANDLE_RADIUS, 5.)->setDisplayName("Handle radius");
+    addProperty(P_HANDLE_BRUSH_COLOR, QColor("black"))->setDisplayName("Handle color");
+    addProperty(P_HANDLE_PEN_WIDTH, 2.)->setDisplayName("Handle pen width");
+    addProperty(P_HANDLE_PEN_COLOR, QColor("black"))->setDisplayName("Handle pen color");
 }

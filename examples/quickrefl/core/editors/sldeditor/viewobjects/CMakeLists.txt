@@ -7,8 +7,11 @@ target_sources(${library_name} PRIVATE
     layerelementcontroller.cpp
     layerelementitem.h
     layerelementitem.cpp
+
     segmentelementview.h
     segmentelementview.cpp
+    handleelementview.h
+    handleelementview.cpp
 
     HandleView.h
     HandleView.cpp
