@@ -14,6 +14,7 @@
 //! Collection of layer and multi-layer items to populate SampleModel.
 
 #include <mvvm/model/compounditem.h>
+#include "slice.h"
 
 //! Item to represent the roughness of the layer.
 
@@ -37,7 +38,7 @@ public:
     static inline const std::string P_THICKNESS = "P_THICKNESS";
     static inline const std::string P_ROUGHNESS = "P_ROUGHNESS";
 
-    LayerItem();
+    LayerItem();    
 };
 
 //! Multi layer capable of holding layers and other multi-layers.

@@ -7,20 +7,9 @@
 //
 // ************************************************************************** //
 
-#include "styleutils.h"
-#include <QSize>
+#ifndef MVVM_UTILS_MATHCONSTANTS_H
+#define MVVM_UTILS_MATHCONSTANTS_H
 
-QSize StyleUtils::ToolBarIconSize()
-{
-    return QSize(24, 24);
-}
+#define M_PI 3.14159265358979323846 /* pi */
 
-QSize StyleUtils::DockSizeHint()
-{
-    return QSize(480, 360);
-}
-
-QSize StyleUtils::DockMinimumSizeHint()
-{
-    return QSize(320, 240);
-}
+#endif

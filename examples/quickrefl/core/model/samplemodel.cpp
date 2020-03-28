@@ -15,6 +15,7 @@ using namespace ModelView;
 
 namespace
 {
+const std::string model_name{"SampleModel"};
 std::unique_ptr<ItemCatalogue> CreateItemCatalogue()
 {
     auto result = std::make_unique<ItemCatalogue>();
@@ -25,9 +26,14 @@ std::unique_ptr<ItemCatalogue> CreateItemCatalogue()
 }
 } // namespace
 
-SampleModel::SampleModel() : SessionModel("SampleModel")
+SampleModel::SampleModel() : SessionModel(model_name)
 {
-    setItemCatalogue(CreateItemCatalogue());
+    init_model();
+}
+
+SampleModel::SampleModel(std::shared_ptr<ModelView::ItemPool> pool) : SessionModel(model_name, pool)
+{
+    init_model();
 }
 
 //! Populate the model with default MultiLayer with 3 layers.
@@ -44,4 +50,9 @@ void SampleModel::create_default_multilayer()
     substrate->setProperty(LayerItem::P_NAME, QVariant::fromValue(std::string("Substrate")));
 
     middle->setProperty(LayerItem::P_THICKNESS, 42.0);
+}
+
+void SampleModel::init_model()
+{
+    setItemCatalogue(CreateItemCatalogue());
 }

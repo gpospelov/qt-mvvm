@@ -28,20 +28,17 @@ public:
 
 //! SLD editor.
 
+// FIXME Move title and sizeHints on board of SLDViewWidget and get rid of SLDEditor class.
+
 class SLDEditor : public QWidget
 {
     Q_OBJECT
 public:
-    SLDEditor(QWidget* parent = nullptr);
-};
+    SLDEditor(class SLDViewWidget* sld_view, QWidget* parent = nullptr);
 
-//! Reflectivity plot.
+    QSize sizeHint() const override;
+    QSize minimumSizeHint() const override;
 
-class ReflPlotWidget : public QWidget
-{
-    Q_OBJECT
-public:
-    ReflPlotWidget(QWidget* parent = nullptr);
 };
 
 //! Instrument editor.

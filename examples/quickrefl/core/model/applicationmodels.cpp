@@ -18,6 +18,7 @@
 #include <mvvm/model/modelutils.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/serialization/jsondocument.h>
+#include <mvvm/model/itempool.h>
 
 using namespace ModelView;
 
@@ -28,11 +29,13 @@ struct ApplicationModels::ApplicationModelsImpl {
     std::unique_ptr<MaterialPropertyController> m_property_controller;
     std::unique_ptr<SLDController> m_sld_controller;
     std::unique_ptr<JsonDocument> m_document;
+    std::shared_ptr<ItemPool> item_pool;
 
     ApplicationModelsImpl()
     {
-        m_material_model = std::make_unique<MaterialModel>();
-        m_sample_model = std::make_unique<SampleModel>();
+        item_pool = std::make_shared<ItemPool>();
+        m_material_model = std::make_unique<MaterialModel>(item_pool);
+        m_sample_model = std::make_unique<SampleModel>(item_pool);
         m_sld_view_model = std::make_unique<SLDViewModel>();
         m_property_controller = std::make_unique<MaterialPropertyController>(m_material_model.get(),
                                                                              m_sample_model.get());

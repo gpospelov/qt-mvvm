@@ -7,20 +7,21 @@
 //
 // ************************************************************************** //
 
-#include "styleutils.h"
-#include <QSize>
+#ifndef JOBMODEL_H
+#define JOBMODEL_H
 
-QSize StyleUtils::ToolBarIconSize()
-{
-    return QSize(24, 24);
-}
+#include <mvvm/model/sessionmodel.h>
 
-QSize StyleUtils::DockSizeHint()
-{
-    return QSize(480, 360);
-}
+//! Contains results of quick reflectometry simulations.
+// TODO make JobModel part of ApplicationModels
 
-QSize StyleUtils::DockMinimumSizeHint()
+class JobModel : public ModelView::SessionModel
 {
-    return QSize(320, 240);
-}
+public:
+    JobModel();
+
+private:
+    void init_model();
+};
+
+#endif //  JOBMODEL_H

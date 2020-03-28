@@ -8,6 +8,9 @@
 // ************************************************************************** //
 
 #include "reflwidgets.h"
+#include "styleutils.h"
+#include "SLDViewWidget.h"
+#include <QVBoxLayout>
 
 //! ---------------------------------------------------------------------------
 
@@ -18,17 +21,24 @@ LayerCanvas::LayerCanvas(QWidget* parent) : QWidget(parent)
 
 //! ---------------------------------------------------------------------------
 
-SLDEditor::SLDEditor(QWidget* parent) : QWidget(parent)
+SLDEditor::SLDEditor(class SLDViewWidget* sld_view, QWidget* parent) : QWidget(parent)
 {
     setWindowTitle(QString("SLD Editor"));
+    auto layout = new QVBoxLayout;
+    layout->addWidget(sld_view);
+    setLayout(layout);
 }
 
-//! ---------------------------------------------------------------------------
-
-ReflPlotWidget::ReflPlotWidget(QWidget* parent) : QWidget(parent)
+QSize SLDEditor::sizeHint() const
 {
-    setWindowTitle(QString("Reflectivity plot"));
+    return StyleUtils::DockSizeHint();
 }
+
+QSize SLDEditor::minimumSizeHint() const
+{
+    return StyleUtils::DockMinimumSizeHint();
+}
+
 
 //! ---------------------------------------------------------------------------
 

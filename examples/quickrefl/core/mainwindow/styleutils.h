@@ -16,7 +16,16 @@ class QSize;
 
 namespace StyleUtils
 {
+
+//! Size of tolbar icons for LayerEditor, MaterialEditor and similar.
 QSize ToolBarIconSize();
+
+//! Hint on size of docks on main reflectometry window.
+QSize DockSizeHint();
+
+//! Hint on minimum size of docks on main reflectometry window.
+QSize DockMinimumSizeHint();
+
 };
 
 #endif // STYLEUTILS_H

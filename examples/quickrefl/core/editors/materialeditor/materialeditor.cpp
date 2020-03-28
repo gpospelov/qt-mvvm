@@ -12,6 +12,7 @@
 #include "materialeditortoolbar.h"
 #include "materialeditorwidget.h"
 #include "materialmodel.h"
+#include "styleutils.h"
 #include <QVBoxLayout>
 
 MaterialEditor::MaterialEditor(MaterialModel* material_model, QWidget* parent)
@@ -28,6 +29,16 @@ MaterialEditor::MaterialEditor(MaterialModel* material_model, QWidget* parent)
     setLayout(layout);
 
     actions->setMaterialSelectionModel(editor_widget->selectionModel());
+}
+
+QSize MaterialEditor::sizeHint() const
+{
+    return StyleUtils::DockSizeHint();
+}
+
+QSize MaterialEditor::minimumSizeHint() const
+{
+    return StyleUtils::DockMinimumSizeHint();
 }
 
 MaterialEditor::~MaterialEditor() = default;

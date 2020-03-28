@@ -4,6 +4,7 @@ target_sources(mvvm_model PRIVATE
     fileutils.cpp
     fileutils.h
     ifactory.h
+    mathconstants.h
     numericutils.cpp
     numericutils.h
     progresshandler.cpp

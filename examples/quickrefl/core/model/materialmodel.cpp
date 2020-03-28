@@ -20,6 +20,8 @@ using namespace ModelView;
 
 namespace
 {
+
+const std::string model_name{"MaterialModel"};
 std::unique_ptr<ItemCatalogue> CreateItemCatalogue()
 {
     auto result = std::make_unique<ModelView::ItemCatalogue>();
@@ -63,9 +65,14 @@ QColor suggestMaterialColor(const std::string& name)
 
 } // namespace
 
-MaterialModel::MaterialModel() : SessionModel("MaterialModel")
+MaterialModel::MaterialModel() : SessionModel(model_name)
 {
-    setItemCatalogue(CreateItemCatalogue());
+    init_model();
+}
+
+MaterialModel::MaterialModel(std::shared_ptr<ModelView::ItemPool> pool)
+    : SessionModel(model_name, pool)
+{
     init_model();
 }
 
@@ -135,6 +142,8 @@ SLDMaterialItem* MaterialModel::addDefaultMaterial(const ModelView::TagRow& tagr
 
 void MaterialModel::init_model()
 {
+    setItemCatalogue(CreateItemCatalogue());
+
     auto container = insertItem<MaterialContainerItem>();
     auto material = insertItem<SLDMaterialItem>(container);
     material->set_properties(air_material_name, suggestMaterialColor(air_material_name), 0.0, 0.0);

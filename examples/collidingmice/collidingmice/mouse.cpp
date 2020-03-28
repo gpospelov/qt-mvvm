@@ -57,10 +57,7 @@
 #include <cmath>
 #include <mvvm/signals/itemmapper.h>
 #include <mvvm/utils/numericutils.h>
-
-#ifndef M_PI
-#define M_PI 3.14159265358979323846
-#endif
+#include <mvvm/utils/mathconstants.h>
 
 const qreal Pi = M_PI;
 const qreal TwoPi = 2 * M_PI;

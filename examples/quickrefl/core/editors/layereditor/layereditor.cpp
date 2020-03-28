@@ -12,6 +12,7 @@
 #include "layereditoractions.h"
 #include "layereditortoolbar.h"
 #include "layereditorwidget.h"
+#include "styleutils.h"
 #include <QVBoxLayout>
 
 LayerEditor::LayerEditor(ApplicationModels* models, QWidget* parent)
@@ -26,6 +27,16 @@ LayerEditor::LayerEditor(ApplicationModels* models, QWidget* parent)
     setLayout(layout);
 
     actions->setSelectionModel(editor_widget->selectionModel());
+}
+
+QSize LayerEditor::sizeHint() const
+{
+    return StyleUtils::DockSizeHint();
+}
+
+QSize LayerEditor::minimumSizeHint() const
+{
+    return StyleUtils::DockMinimumSizeHint();
 }
 
 LayerEditor::~LayerEditor() = default;
