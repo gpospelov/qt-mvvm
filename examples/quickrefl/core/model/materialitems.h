@@ -15,6 +15,10 @@
 
 #include <mvvm/model/compounditem.h>
 
+namespace ModelView {
+class ExternalProperty;
+}
+
 //! Container to hold MaterialItems.
 
 class MaterialContainerItem : public ModelView::CompoundItem
@@ -34,6 +38,8 @@ public:
     static inline const std::string P_H_X = "P_H_X";
     static inline const std::string P_H_Y = "P_H_Y";
     static inline const std::string P_H_Z = "P_H_Z";
+
+    ModelView::ExternalProperty external_property() const;
 
 protected:
     MaterialBaseItem(const std::string& model_type);

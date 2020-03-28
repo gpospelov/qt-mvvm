@@ -9,6 +9,7 @@
 
 #include "materialitems.h"
 #include "item_constants.h"
+#include <mvvm/model/externalproperty.h>
 #include <QColor>
 
 using namespace ModelView;
@@ -27,6 +28,15 @@ MaterialBaseItem::MaterialBaseItem(const std::string& model_type)
 {
     addProperty(P_COLOR, QColor(Qt::green))->setDisplayName("Color");
     addProperty(P_NAME, "Unnamed")->setDisplayName("Name");
+}
+
+//! Returns ExternalProperty representing this material.
+
+ModelView::ExternalProperty MaterialBaseItem::external_property() const
+{
+    QColor color = isTag(P_COLOR) ? property(P_COLOR).value<QColor>() : QColor(Qt::red);
+    std::string name = isTag(P_NAME) ? property(P_NAME).value<std::string>() : std::string();
+    return ModelView::ExternalProperty(name, color, identifier());
 }
 
 /*! Creates mag. field-related properties.
@@ -60,3 +70,4 @@ void SLDMaterialItem::set_properties(const std::string& name, const QColor& colo
     setProperty(P_SLD_REAL, real);
     setProperty(P_SLD_IMAG, imag);
 }
+
