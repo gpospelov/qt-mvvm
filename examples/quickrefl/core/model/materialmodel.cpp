@@ -87,6 +87,8 @@ ExternalProperty MaterialModel::undefined_material()
 //! Here we assume that all materials seats in top level material containers.
 //! If no container_id was given, the very first container is examined.
 
+// TODO Simplify and cover with unit tests.
+
 std::vector<ExternalProperty> MaterialModel::material_data(std::string container_id) const
 {
     std::vector<ExternalProperty> result;
@@ -98,12 +100,8 @@ std::vector<ExternalProperty> MaterialModel::material_data(std::string container
         if (container->identifier() != container_id)
             continue;
         for (auto item : container->children()) {
-            if (auto material = dynamic_cast<MaterialBaseItem*>(item)) {
-                auto text = material->property(MaterialBaseItem::P_NAME).value<std::string>();
-                auto color = material->property(MaterialBaseItem::P_COLOR).value<QColor>();
-                auto id = material->identifier();
-                result.push_back(ExternalProperty(text, color, id));
-            }
+            if (auto material = dynamic_cast<MaterialBaseItem*>(item))
+                result.push_back(material->external_property());
         }
     }
     return result;
