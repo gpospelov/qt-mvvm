@@ -175,45 +175,43 @@ TEST_F(QuickSimUtilsTest, threeLayerSlices)
     }
 }
 
-////! Slice for MultiLayer containing air, repeated bi-layer and substrate.
+//! Slice for MultiLayer containing air, repeated bi-layer and substrate.
 
-//// FIXME enable test after fixing Roughness and Sigma appearance of layer inside MultiLayer
+TEST_F(QuickSimUtilsTest, nestedMultiLayerSlice)
+{
+    TestData test_data;
 
-//TEST_F(QuickSimUtilsTest, nestedMultiLayerSlice)
-//{
-//    TestData test_data;
+    // preparing layer data
+    using layer_info = std::tuple<double, double, complex_t>; // thickness, sigma, material
+    layer_info air = {0.0, 0.0, {0.0, 0.0}};
+    const int repetition_count = 2;
+    layer_info ti_layer = {20.0, 10.0, {-1.9493e-06, 0.0}};
+    layer_info ni_layer = {80.0, 10.0, {9.4245e-06, 0.0}};
+    layer_info substrate = {0.0, 10.0, {2.0704e-06, 0.0}};
 
-//    // preparing layer data
-//    using layer_info = std::tuple<double, double, complex_t>; // thickness, sigma, material
-//    layer_info air = {0.0, 0.0, {0.0, 0.0}};
-//    const int repetition_count = 2;
-//    layer_info ti_layer = {20.0, 10.0, {-1.9493e-06, 0.0}};
-//    layer_info ni_layer = {80.0, 10.0, {9.4245e-06, 0.0}};
-//    layer_info substrate = {0.0, 10.0, {2.0704e-06, 0.0}};
+    // adding air layer
+    test_data.addLayer(test_data.multilayer, air);
+    // adding nested multilayer with content repetition
+    auto multilayer = test_data.multilayer;
+    auto nested_multilayer = test_data.sample_model.insertItem<MultiLayerItem>(multilayer);
+    nested_multilayer->setProperty(MultiLayerItem::P_NREPETITIONS, repetition_count);
+    test_data.addLayer(nested_multilayer, ti_layer);
+    test_data.addLayer(nested_multilayer, ni_layer);
+    // adding substrate
+    test_data.addLayer(test_data.multilayer, substrate);
 
-//    // adding air layer
-//    test_data.addLayer(test_data.multilayer, air);
-//    // adding nested multilayer with content repetition
-//    auto multilayer = test_data.multilayer;
-//    auto nested_multilayer = test_data.sample_model.insertItem<MultiLayerItem>(multilayer);
-//    nested_multilayer->setProperty(MultiLayerItem::P_NREPETITIONS, repetition_count);
-//    test_data.addLayer(nested_multilayer, ti_layer);
-//    test_data.addLayer(nested_multilayer, ni_layer);
-//    // adding substrate
-//    test_data.addLayer(test_data.multilayer, substrate);
+    auto multislice = ::Utils::CreateMultiSlice(*test_data.multilayer);
+    ASSERT_EQ(multislice.size(), 6);
 
-//    auto multislice = ::Utils::CreateMultiSlice(*test_data.multilayer);
-//    ASSERT_EQ(multislice.size(), 6);
-
-//    // expected slice content
-//    const std::vector<layer_info> layer_data = {air,      ti_layer, ni_layer,
-//                                                ti_layer, ni_layer, substrate};
-//    int index(0);
-//    for (auto [thickness, sigma, sld] : layer_data) {
-//        EXPECT_EQ(multislice[index].material.real(), sld.real());
-//        EXPECT_EQ(multislice[index].material.imag(), sld.imag());
-//        EXPECT_EQ(multislice[index].thickness, thickness);
-//        EXPECT_EQ(multislice[index].sigma, sigma);
-//        ++index;
-//    }
-//}
+    // expected slice content
+    const std::vector<layer_info> layer_data = {air,      ti_layer, ni_layer,
+                                                ti_layer, ni_layer, substrate};
+    int index(0);
+    for (auto [thickness, sigma, sld] : layer_data) {
+        EXPECT_EQ(multislice[index].material.real(), sld.real());
+        EXPECT_EQ(multislice[index].material.imag(), sld.imag());
+        EXPECT_EQ(multislice[index].thickness, thickness);
+        EXPECT_EQ(multislice[index].sigma, sigma);
+        ++index;
+    }
+}
