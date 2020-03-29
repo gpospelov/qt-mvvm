@@ -12,6 +12,8 @@ target_sources(${library_name} PRIVATE
     segmentelementview.cpp
     handleelementview.h
     handleelementview.cpp
+    roughnesselementview.h
+    roughnesselementview.cpp
 
     HandleView.h
     HandleView.cpp

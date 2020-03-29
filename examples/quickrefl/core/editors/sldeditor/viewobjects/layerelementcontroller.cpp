@@ -12,6 +12,7 @@
 #include "GraphicsScene.h"
 #include "handleelementview.h"
 #include "layerelementitem.h"
+#include "roughnesselementview.h"
 #include "segmentelementview.h"
 
 #include <mvvm/signals/itemmapper.h>
@@ -39,6 +40,7 @@ void LayerElementController::connectToModel() const
             updateSideSegment();
             updateTopSegment();
             updateSegmentHandles();
+            updateRoughness();
         }
         if (property_name == LayerElementItem::P_HEIGHT) {
             emit heightChanged(m_sample_item_id,
@@ -46,6 +48,7 @@ void LayerElementController::connectToModel() const
             updateSideSegment();
             updateTopSegment();
             updateSegmentHandles();
+            updateRoughness();
         }
         if (property_name == LayerElementItem::P_WIDTH) {
             emit widthChanged(m_sample_item_id,
@@ -53,8 +56,16 @@ void LayerElementController::connectToModel() const
             updateSideSegment();
             updateTopSegment();
             updateSegmentHandles();
+            updateRoughness();
+        }
+        if (property_name == LayerElementItem::P_ROUGHNESS) {
+            emit roughnessChanged(
+                m_sample_item_id,
+                layerElementItem()->property(LayerElementItem::P_ROUGHNESS).toDouble());
+            updateRoughness();
         }
 
+        // Side segment update
         if (property_name == LayerElementItem::P_SIDE_THICKNESS) {
             updateSideSegment();
         }
@@ -68,6 +79,7 @@ void LayerElementController::connectToModel() const
             updateSideSegment();
         }
 
+        // Top segment update
         if (property_name == LayerElementItem::P_TOP_THICKNESS) {
             updateTopSegment();
         }
@@ -79,6 +91,45 @@ void LayerElementController::connectToModel() const
         }
         if (property_name == LayerElementItem::P_TOP_BRUSH_COLOR) {
             updateTopSegment();
+        }
+
+        // Segment handle update
+        if (property_name == LayerElementItem::P_HANDLE_RADIUS) {
+            updateSegmentHandles();
+        }
+        if (property_name == LayerElementItem::P_HANDLE_BRUSH_COLOR) {
+            updateSegmentHandles();
+        }
+        if (property_name == LayerElementItem::P_HANDLE_PEN_WIDTH) {
+            updateSegmentHandles();
+        }
+        if (property_name == LayerElementItem::P_HANDLE_PEN_COLOR) {
+            updateSegmentHandles();
+        }
+
+        // Roughness handles update
+        if (property_name == LayerElementItem::P_R_HANDLE_RADIUS) {
+            updateRoughness();
+        }
+        if (property_name == LayerElementItem::P_R_HANDLE_BRUSH_COLOR) {
+            updateRoughness();
+        }
+        if (property_name == LayerElementItem::P_R_HANDLE_PEN_WIDTH) {
+            updateRoughness();
+        }
+        if (property_name == LayerElementItem::P_R_HANDLE_PEN_COLOR) {
+            updateRoughness();
+        }
+
+        // Roughness update
+        if (property_name == LayerElementItem::P_ROUGHNESS_BRUSH_COLOR) {
+            updateRoughness();
+        }
+        if (property_name == LayerElementItem::P_ROUGHNESS_PEN_WIDTH) {
+            updateRoughness();
+        }
+        if (property_name == LayerElementItem::P_ROUGHNESS_PEN_COLOR) {
+            updateRoughness();
         }
     };
 
@@ -363,7 +414,7 @@ void LayerElementController::setSegmentHandles(HandleElementView* first_handle,
     m_handle_views[1] = second_handle;
     m_handle_views[0]->setLayerElementController(this);
     m_handle_views[1]->setLayerElementController(this);
-    // updateSegmentHandles();
+    updateSegmentHandles();
 
     if (scene()) {
         scene()->addItem(m_handle_views[0]);
@@ -396,7 +447,59 @@ void LayerElementController::unsetSegmentHandles()
 }
 
 //! The move logic for the handles associated to the segments
-void LayerElementController::handleViewMoved(HandleElementView* handle_view) {}
+void LayerElementController::handleViewMoved(HandleElementView* handle_view)
+{
+    if (handle_view == leftRoughnessHandle()) {
+        double pos = layerElementItem()->property(LayerElementItem::P_X_POS).toDouble();
+        double roughness = pos - leftRoughnessHandle()->getLastPos().x();
+
+        if (roughness < 0) {
+            layerElementItem()->setProperty(LayerElementItem::P_ROUGHNESS, 0.);
+            return;
+        }
+
+        double width = layerElementItem()->property(LayerElementItem::P_WIDTH).toDouble();
+        auto layer_above = layerAbove();
+        if (layer_above) {
+            double second_width =
+                layer_above->layerElementItem()->property(LayerElementItem::P_WIDTH).toDouble();
+            if (second_width < width)
+                width = second_width;
+        }
+
+        if (roughness > width / 2.) {
+            layerElementItem()->setProperty(LayerElementItem::P_ROUGHNESS, width / 2.);
+            return;
+        }
+
+        layerElementItem()->setProperty(LayerElementItem::P_ROUGHNESS, roughness);
+
+    } else if (handle_view == rightRoughnessHandle()) {
+        double pos = layerElementItem()->property(LayerElementItem::P_X_POS).toDouble();
+        double roughness = rightRoughnessHandle()->getLastPos().x() - pos;
+
+        if (roughness < 0) {
+            layerElementItem()->setProperty(LayerElementItem::P_ROUGHNESS, 0.);
+            return;
+        }
+
+        double width = layerElementItem()->property(LayerElementItem::P_WIDTH).toDouble();
+        auto layer_above = layerAbove();
+        if (layer_above) {
+            double second_width =
+                layer_above->layerElementItem()->property(LayerElementItem::P_WIDTH).toDouble();
+            if (second_width < width)
+                width = second_width;
+        }
+
+        if (roughness > width / 2.) {
+            layerElementItem()->setProperty(LayerElementItem::P_ROUGHNESS, width / 2.);
+            return;
+        }
+
+        layerElementItem()->setProperty(LayerElementItem::P_ROUGHNESS, roughness);
+    }
+}
 
 //! Update the handles of the segment
 void LayerElementController::updateSegmentHandles() const
@@ -458,5 +561,249 @@ void LayerElementController::removeSegmentHandlesFromScene() const
     for (auto handle_view : m_handle_views) {
         if (handle_view && handle_view->scene() == scene())
             scene()->removeItem(handle_view);
+    }
+}
+
+//! Set the roughness element view
+void LayerElementController::setRoughness(RoughnessElementView* roughness_view)
+{
+    p_roughness_view = roughness_view;
+    updateRoughness();
+}
+
+//! Set the roughness handle element views
+void LayerElementController::setRoughnessHandles(HandleElementView* first_handle_view,
+                                                 HandleElementView* second_handle_view)
+{
+    m_rough_handles_views[0] = first_handle_view;
+    m_rough_handles_views[1] = second_handle_view;
+    m_rough_handles_views[0]->setFlag(QGraphicsItem::ItemIsMovable);
+    m_rough_handles_views[1]->setFlag(QGraphicsItem::ItemIsMovable);
+    m_rough_handles_views[0]->setLayerElementController(this);
+    m_rough_handles_views[1]->setLayerElementController(this);
+    updateRoughness();
+
+    if (scene()) {
+        scene()->addItem(m_rough_handles_views[0]);
+        scene()->addItem(m_rough_handles_views[1]);
+    }
+}
+
+//! Return the roughness element view
+RoughnessElementView* LayerElementController::roughness() const
+{
+    return p_roughness_view;
+}
+
+//! Return the left roughness handle element view
+HandleElementView* LayerElementController::leftRoughnessHandle() const
+{
+    return m_rough_handles_views[0];
+}
+
+//! Return the right roughness handle element view
+HandleElementView* LayerElementController::rightRoughnessHandle() const
+{
+    return m_rough_handles_views[1];
+}
+
+//! Remove the roughness view element pointer
+void LayerElementController::unsetRoughness()
+{
+    if (p_roughness_view && scene() && p_roughness_view->scene() == scene())
+        scene()->removeItem(p_roughness_view);
+    p_roughness_view = nullptr;
+}
+
+//! Remove the handle pointers
+void LayerElementController::unsetRoughnessHandles()
+{
+    if (m_rough_handles_views[0] && scene() && m_rough_handles_views[0]->scene() == scene())
+        scene()->removeItem(m_handle_views[0]);
+    if (m_rough_handles_views[1] && scene() && m_rough_handles_views[1]->scene() == scene())
+        scene()->removeItem(m_rough_handles_views[1]);
+
+    m_rough_handles_views[0] = nullptr;
+    m_rough_handles_views[1] = nullptr;
+}
+
+//! Update the whole roughness drawing
+void LayerElementController::updateRoughness() const
+{
+    // Test the roughness
+    double roughness = layerElementItem()->property(LayerElementItem::P_ROUGHNESS).toDouble();
+    double width = layerElementItem()->property(LayerElementItem::P_WIDTH).toDouble();
+    auto layer_above = layerAbove();
+    if (layer_above) {
+        double second_width =
+            layer_above->layerElementItem()->property(LayerElementItem::P_WIDTH).toDouble();
+        if (second_width < width)
+            width = second_width;
+    }
+    if (roughness > width / 2.) {
+        layerElementItem()->setProperty(LayerElementItem::P_ROUGHNESS, width / 2.);
+        return;
+    }
+
+    // Perform the painting
+    auto pen = QPen();
+    auto brush = QBrush();
+
+    // Take care of the rounghnessview
+    pen.setColor(
+        layerElementItem()->property(LayerElementItem::P_ROUGHNESS_PEN_COLOR).value<QColor>());
+    pen.setWidthF(layerElementItem()->property(LayerElementItem::P_ROUGHNESS_PEN_WIDTH).toDouble());
+    brush.setColor(
+        layerElementItem()->property(LayerElementItem::P_ROUGHNESS_BRUSH_COLOR).value<QColor>());
+    if (p_roughness_view) {
+        p_roughness_view->setPen(pen);
+        p_roughness_view->setBrush(brush);
+        p_roughness_view->setLeftPath(leftRoughnessPath());
+        p_roughness_view->setRightPath(rightRoughnessPath());
+    }
+
+    // Take care of the handles
+    pen.setColor(
+        layerElementItem()->property(LayerElementItem::P_R_HANDLE_PEN_COLOR).value<QColor>());
+    pen.setWidthF(layerElementItem()->property(LayerElementItem::P_R_HANDLE_PEN_WIDTH).toDouble());
+    brush.setColor(
+        layerElementItem()->property(LayerElementItem::P_R_HANDLE_BRUSH_COLOR).value<QColor>());
+
+    if (m_rough_handles_views[0]) {
+        m_rough_handles_views.at(0)->setPen(pen);
+        m_rough_handles_views.at(0)->setBrush(brush);
+        m_rough_handles_views.at(0)->setRectangle(leftRoughnessHandleRect());
+    }
+    if (m_rough_handles_views[1]) {
+        m_rough_handles_views.at(1)->setPen(pen);
+        m_rough_handles_views.at(1)->setBrush(brush);
+        m_rough_handles_views.at(1)->setRectangle(rightRoughnessHandleRect());
+    }
+}
+
+//! get the left painter path for the roughness view
+QPainterPath LayerElementController::leftRoughnessPath() const
+{
+    double pos = layerElementItem()->property(LayerElementItem::P_X_POS).toDouble();
+    double height = layerElementItem()->property(LayerElementItem::P_HEIGHT).toDouble();
+    double roughness = layerElementItem()->property(LayerElementItem::P_ROUGHNESS).toDouble();
+
+    auto path = QPainterPath();
+
+    auto layer_above = layerAbove();
+    if (!layer_above) {
+        path.moveTo(pos, 0);
+        path.lineTo(pos - roughness, 0);
+    } else {
+        path.moveTo(
+            pos - roughness,
+            layer_above->layerElementItem()->property(LayerElementItem::P_HEIGHT).toDouble());
+    }
+    path.lineTo(pos - roughness, height);
+    path.lineTo(pos, height);
+
+    return path;
+}
+
+//! get the right painter path for the roughness view
+QPainterPath LayerElementController::rightRoughnessPath() const
+{
+    double pos = layerElementItem()->property(LayerElementItem::P_X_POS).toDouble();
+    double height = layerElementItem()->property(LayerElementItem::P_HEIGHT).toDouble();
+    double roughness = layerElementItem()->property(LayerElementItem::P_ROUGHNESS).toDouble();
+
+    auto path = QPainterPath();
+
+    auto layer_above = layerAbove();
+    if (!layer_above) {
+        path.moveTo(pos, 0);
+        path.lineTo(pos + roughness, 0);
+    } else {
+        path.moveTo(
+            pos, layer_above->layerElementItem()->property(LayerElementItem::P_HEIGHT).toDouble());
+        path.lineTo(
+            pos + roughness,
+            layer_above->layerElementItem()->property(LayerElementItem::P_HEIGHT).toDouble());
+    }
+    path.lineTo(pos + roughness, height);
+
+    return path;
+}
+
+//! get the rectangle for the left roughness handles
+QRectF LayerElementController::leftRoughnessHandleRect() const
+{
+    double pos_x = layerElementItem()->property(LayerElementItem::P_X_POS).toDouble();
+    double height = layerElementItem()->property(LayerElementItem::P_HEIGHT).toDouble();
+    double radius = layerElementItem()->property(LayerElementItem::P_R_HANDLE_RADIUS).toDouble();
+    double roughness = layerElementItem()->property(LayerElementItem::P_ROUGHNESS).toDouble();
+
+    auto layer_above = layerAbove();
+    double lower_height = 0;
+    if (layer_above) {
+        lower_height =
+            layer_above->layerElementItem()->property(LayerElementItem::P_HEIGHT).toDouble();
+    }
+    double pos_y = (lower_height - height) / 2 + height;
+
+    return QRectF(pos_x - roughness - radius, pos_y - radius, 2 * radius, 2 * radius);
+}
+
+//! get the rectangle for the right roughness handles
+QRectF LayerElementController::rightRoughnessHandleRect() const
+{
+    double pos_x = layerElementItem()->property(LayerElementItem::P_X_POS).toDouble();
+    double height = layerElementItem()->property(LayerElementItem::P_HEIGHT).toDouble();
+    double radius = layerElementItem()->property(LayerElementItem::P_R_HANDLE_RADIUS).toDouble();
+    double roughness = layerElementItem()->property(LayerElementItem::P_ROUGHNESS).toDouble();
+
+    auto layer_above = layerAbove();
+    double lower_height = 0;
+    if (layer_above) {
+        lower_height =
+            layer_above->layerElementItem()->property(LayerElementItem::P_HEIGHT).toDouble();
+    }
+    double pos_y = (lower_height - height) / 2 + height;
+
+    return QRectF(pos_x + roughness - radius, pos_y - radius, 2 * radius, 2 * radius);
+}
+
+//! Put the roughnes view on the scene
+void LayerElementController::putRoughnessOnScene() const
+{
+    if (!scene())
+        return;
+    if (p_roughness_view)
+        scene()->removeItem(p_roughness_view);
+}
+
+//! Put the roughness handles on the scene
+void LayerElementController::putRoughnessHandlesOnScene() const
+{
+    if (!scene())
+        return;
+    for (auto handle_roughness_view : m_rough_handles_views) {
+        if (handle_roughness_view)
+            scene()->addItem(handle_roughness_view);
+    }
+}
+
+//! Remove the roughness view item from the scene
+void LayerElementController::removeRoughnessFromScene() const
+{
+    if (!scene())
+        return;
+    if (p_roughness_view && p_roughness_view->scene() == scene())
+        scene()->removeItem(p_roughness_view);
+}
+
+//! Remove the roughness handles from the sene
+void LayerElementController::removeRoughnessHandlesFromScene() const
+{
+    if (!scene())
+        return;
+    for (auto handle_roughness_view : m_rough_handles_views) {
+        if (handle_roughness_view && handle_roughness_view->scene() == scene())
+            scene()->removeItem(handle_roughness_view);
     }
 }

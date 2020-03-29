@@ -11,6 +11,7 @@
 #define LAYERELEMENTCONTROLLER_H
 
 #include <QObject>
+#include <QPainterPath>
 #include <vector>
 
 #include "mvvm/plotting/sceneadapterinterface.h"
@@ -40,13 +41,18 @@ public:
     std::string sampleItemId() const;
     void unsetSampleItemId();
 
+    // ##################################################################################
+    // Signals for the sld controller
 signals:
     void heightChanged(std::string id, double value) const;
     void widthChanged(std::string id, double value) const;
+    void roughnessChanged(std::string id, double value) const;
 
 private:
     ModelView::SceneAdapterInterface* getSceneAdapter() const;
 
+    // ##################################################################################
+    // Inter layer logic related
 public:
     void setLayerAbove(LayerElementController* layer_view_controller);
     void setLayerBelow(LayerElementController* layer_view_controller);
@@ -55,6 +61,8 @@ public:
     void unsetLayerAbove(bool silent = true);
     void unsetLayerBelow(bool silent = true);
 
+    // ##################################################################################
+    // Segment and handle related
 public:
     void setSideSegment(SegmentElementView* segment_view);
     void setTopSegment(SegmentElementView* segment_view);
@@ -87,6 +95,29 @@ protected:
     QRectF secondSegmentHandleRect() const;
     void putSegmentHandlesOnScene() const;
     void removeSegmentHandlesFromScene() const;
+
+    // ##################################################################################
+    // Roughness related
+public:
+    void setRoughness(RoughnessElementView* roughness_view);
+    void setRoughnessHandles(HandleElementView* first_handle_view,
+                             HandleElementView* second_handle_view);
+    RoughnessElementView* roughness() const;
+    HandleElementView* leftRoughnessHandle() const;
+    HandleElementView* rightRoughnessHandle() const;
+    void unsetRoughness();
+    void unsetRoughnessHandles();
+    void updateRoughness() const;
+
+protected:
+    QPainterPath leftRoughnessPath() const;
+    QPainterPath rightRoughnessPath() const;
+    QRectF leftRoughnessHandleRect() const;
+    QRectF rightRoughnessHandleRect() const;
+    void putRoughnessOnScene() const;
+    void putRoughnessHandlesOnScene() const;
+    void removeRoughnessFromScene() const;
+    void removeRoughnessHandlesFromScene() const;
 
 private:
     LayerElementItem* p_model_item;
