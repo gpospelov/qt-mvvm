@@ -30,6 +30,7 @@ class LayerElementController : public QObject
 public:
     LayerElementController(LayerElementItem* layer_view_item);
     LayerElementItem* layerElementItem() const;
+    void autoPopulate();
     void connectToModel() const;
     void disconnectFormModel() const;
 

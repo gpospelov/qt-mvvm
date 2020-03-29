@@ -117,7 +117,7 @@ LayerElementTest::~LayerElementTest() = default;
 
 //! Test the creation of the controller
 
-TEST_F(LayerElementTest, initialState)
+TEST_F(LayerElementTest, initialstate)
 {
     TestData test_data;
 
@@ -145,6 +145,37 @@ TEST_F(LayerElementTest, initialState)
     //! Check the roughness handles init
     EXPECT_EQ(nullptr, test_data.middle_controller->leftRoughnessHandle());
     EXPECT_EQ(nullptr, test_data.middle_controller->rightRoughnessHandle());
+}
+
+TEST_F(LayerElementTest, autopopulate)
+{
+    TestData test_data;
+    test_data.middle_controller->autoPopulate();
+
+    //! Check the layer item system init
+    EXPECT_NE(nullptr, test_data.middle_controller->layerElementItem());
+
+    //! Check the layer system init
+    EXPECT_EQ(nullptr, test_data.middle_controller->layerAbove());
+    EXPECT_EQ(nullptr, test_data.middle_controller->layerBelow());
+
+    //! Check the segment system init
+    EXPECT_NE(nullptr, test_data.middle_controller->topSegment());
+    EXPECT_NE(nullptr, test_data.middle_controller->sideSegment());
+
+    //! Check the scene init
+    EXPECT_EQ(nullptr, test_data.middle_controller->scene());
+
+    //! Check the handles init
+    EXPECT_NE(nullptr, test_data.middle_controller->firstSegmentHandle());
+    EXPECT_NE(nullptr, test_data.middle_controller->secondSegmentHandle());
+
+    //! Check the roughness init
+    EXPECT_NE(nullptr, test_data.middle_controller->roughness());
+
+    //! Check the roughness handles init
+    EXPECT_NE(nullptr, test_data.middle_controller->leftRoughnessHandle());
+    EXPECT_NE(nullptr, test_data.middle_controller->rightRoughnessHandle());
 }
 
 TEST_F(LayerElementTest, addremoveabovebelow)

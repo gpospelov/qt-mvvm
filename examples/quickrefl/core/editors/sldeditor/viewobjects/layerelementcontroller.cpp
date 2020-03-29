@@ -32,6 +32,16 @@ LayerElementItem* LayerElementController::layerElementItem() const
     return p_model_item;
 }
 
+//! Allow the population of the own elements
+void LayerElementController::autoPopulate()
+{
+    setSideSegment(new SegmentElementView());
+    setTopSegment(new SegmentElementView());
+    setSegmentHandles(new HandleElementView(), new HandleElementView());
+    setRoughness(new RoughnessElementView());
+    setRoughnessHandles(new HandleElementView(), new HandleElementView());
+}
+
 //! Connect to the set item
 void LayerElementController::connectToModel() const
 {
