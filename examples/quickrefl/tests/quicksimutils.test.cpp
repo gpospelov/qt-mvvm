@@ -51,13 +51,21 @@ public:
             multilayer = sample_model.insertItem<MultiLayerItem>();
         }
 
-        //! Add layer and material to corresponding models. Layer will be linked to given material.
-        void addLayer(double thickness, double sigma, complex_t sld)
+        //! Add layer to given multilayer models. At the same time corresponding material will
+        //! be added to MaterialModel and the Layer will be linked to it.
+        void addLayer(MultiLayerItem* _multilayer, double thickness, double sigma, complex_t sld)
         {
             auto material = material_model.insertItem<SLDMaterialItem>();
             material->set_properties("gold", QColor(), sld.real(), sld.imag());
-            auto layer = sample_model.insertItem<LayerItem>(multilayer);
+            auto layer = sample_model.insertItem<LayerItem>(_multilayer);
             setup_layer(layer, thickness, sigma, material);
+        }
+
+        void addLayer(MultiLayerItem* _multilayer,
+                      const std::tuple<double, double, complex_t>& info)
+        {
+            auto [thickness, sigma, sld] = info;
+            addLayer(_multilayer, thickness, sigma, sld);
         }
     };
 
@@ -76,7 +84,7 @@ TEST_F(QuickSimUtilsTest, testData)
     double thickness{42.0};
     double sigma{43.0};
     complex_t sld{1.0, 2.0};
-    test_data.addLayer(thickness, sigma, sld);
+    test_data.addLayer(test_data.multilayer, thickness, sigma, sld);
 
     // checking that layer got necessary parameters
     auto layer = test_data.multilayer->item<LayerItem>(MultiLayerItem::T_LAYERS);
@@ -129,7 +137,7 @@ TEST_F(QuickSimUtilsTest, definedLayerSlice)
     const complex_t sld{1.0, 2.0};
 
     // adding layer
-    test_data.addLayer(thickness, sigma, sld);
+    test_data.addLayer(test_data.multilayer, thickness, sigma, sld);
 
     // creating multi slice
     auto multislice = ::Utils::CreateMultiSlice(*test_data.multilayer);
@@ -148,11 +156,11 @@ TEST_F(QuickSimUtilsTest, threeLayerSlices)
     TestData test_data;
 
     // initializing MaterialModel with single material
-    using layer_info = std::tuple<double, double, complex_t>; // thickness, sigma
+    using layer_info = std::tuple<double, double, complex_t>; // thickness, sigma, material
     std::vector<layer_info> layer_data = {
         {0.0, 0.0, {11, 12}}, {42.0, 10.0, {13, 14}}, {0.0, 0.0, {15, 16}}};
     for (auto [thickness, sigma, sld] : layer_data)
-        test_data.addLayer(thickness, sigma, sld);
+        test_data.addLayer(test_data.multilayer, thickness, sigma, sld);
 
     auto multislice = ::Utils::CreateMultiSlice(*test_data.multilayer);
 
@@ -166,3 +174,46 @@ TEST_F(QuickSimUtilsTest, threeLayerSlices)
         ++index;
     }
 }
+
+////! Slice for MultiLayer containing air, repeated bi-layer and substrate.
+
+//// FIXME enable test after fixing Roughness and Sigma appearance of layer inside MultiLayer
+
+//TEST_F(QuickSimUtilsTest, nestedMultiLayerSlice)
+//{
+//    TestData test_data;
+
+//    // preparing layer data
+//    using layer_info = std::tuple<double, double, complex_t>; // thickness, sigma, material
+//    layer_info air = {0.0, 0.0, {0.0, 0.0}};
+//    const int repetition_count = 2;
+//    layer_info ti_layer = {20.0, 10.0, {-1.9493e-06, 0.0}};
+//    layer_info ni_layer = {80.0, 10.0, {9.4245e-06, 0.0}};
+//    layer_info substrate = {0.0, 10.0, {2.0704e-06, 0.0}};
+
+//    // adding air layer
+//    test_data.addLayer(test_data.multilayer, air);
+//    // adding nested multilayer with content repetition
+//    auto multilayer = test_data.multilayer;
+//    auto nested_multilayer = test_data.sample_model.insertItem<MultiLayerItem>(multilayer);
+//    nested_multilayer->setProperty(MultiLayerItem::P_NREPETITIONS, repetition_count);
+//    test_data.addLayer(nested_multilayer, ti_layer);
+//    test_data.addLayer(nested_multilayer, ni_layer);
+//    // adding substrate
+//    test_data.addLayer(test_data.multilayer, substrate);
+
+//    auto multislice = ::Utils::CreateMultiSlice(*test_data.multilayer);
+//    ASSERT_EQ(multislice.size(), 6);
+
+//    // expected slice content
+//    const std::vector<layer_info> layer_data = {air,      ti_layer, ni_layer,
+//                                                ti_layer, ni_layer, substrate};
+//    int index(0);
+//    for (auto [thickness, sigma, sld] : layer_data) {
+//        EXPECT_EQ(multislice[index].material.real(), sld.real());
+//        EXPECT_EQ(multislice[index].material.imag(), sld.imag());
+//        EXPECT_EQ(multislice[index].thickness, thickness);
+//        EXPECT_EQ(multislice[index].sigma, sigma);
+//        ++index;
+//    }
+//}
