@@ -84,6 +84,7 @@ void QuickSimController::setup_models_tracking()
         auto on_model_destroyed = [this](ModelView::SessionModel*) { sample_model = nullptr; };
         sample_model->mapper()->setOnModelDestroyed(on_model_destroyed, this);
     }
+    update_sld_profile();
 }
 
 //! Performs update of sld profile for immediate plotting.
