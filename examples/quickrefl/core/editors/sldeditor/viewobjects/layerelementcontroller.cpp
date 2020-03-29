@@ -159,6 +159,8 @@ void LayerElementController::setScene(GraphicsScene* scene)
 
     putSegementsOnScene();
     putSegmentHandlesOnScene();
+    putRoughnessOnScene();
+    putRoughnessHandlesOnScene();
 }
 
 //! Return the current set scene
@@ -172,7 +174,8 @@ void LayerElementController::unsetScene()
 {
     removeSegmentsFromScene();
     removeSegmentHandlesFromScene();
-
+    removeRoughnessFromScene();
+    removeRoughnessHandlesFromScene();
     p_scene = nullptr;
 }
 
