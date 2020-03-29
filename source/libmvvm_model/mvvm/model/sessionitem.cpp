@@ -195,7 +195,7 @@ void SessionItem::registerTag(const TagInfo& tagInfo, bool set_as_default)
 
 //! Returns true if tag with given name exists.
 
-bool SessionItem::isTag(const std::string& name)
+bool SessionItem::isTag(const std::string& name) const
 {
     return p_impl->m_tags->isTag(name);
 }

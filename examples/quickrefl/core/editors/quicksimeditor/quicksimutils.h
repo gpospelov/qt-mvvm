@@ -17,7 +17,7 @@ class MultiLayerItem;
 namespace Utils
 {
 
-//! Creates multi-slice presentation of internal layers structure.
+//! Creates multi-slice presentation of internal multilayer structure.
 multislice_t CreateMultiSlice(const MultiLayerItem& multilayer);
 
 } // namespace Utils

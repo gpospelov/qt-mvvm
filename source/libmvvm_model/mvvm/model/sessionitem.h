@@ -64,7 +64,7 @@ public:
 
     void registerTag(const TagInfo& tagInfo, bool set_as_default = false);
 
-    bool isTag(const std::string& name);
+    bool isTag(const std::string& name) const;
 
     // access tagged items
     int itemCount(const std::string& tag) const;

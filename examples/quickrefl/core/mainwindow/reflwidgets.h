@@ -29,12 +29,13 @@ public:
 //! SLD editor.
 
 // FIXME Move title and sizeHints on board of SLDViewWidget and get rid of SLDEditor class.
+class SLDViewWidget;
 
 class SLDEditor : public QWidget
 {
     Q_OBJECT
 public:
-    SLDEditor(class SLDViewWidget* sld_view, QWidget* parent = nullptr);
+    SLDEditor(SLDViewWidget* sld_view = nullptr, QWidget* parent = nullptr);
 
     QSize sizeHint() const override;
     QSize minimumSizeHint() const override;

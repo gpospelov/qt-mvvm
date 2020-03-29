@@ -21,7 +21,7 @@ LayerCanvas::LayerCanvas(QWidget* parent) : QWidget(parent)
 
 //! ---------------------------------------------------------------------------
 
-SLDEditor::SLDEditor(class SLDViewWidget* sld_view, QWidget* parent) : QWidget(parent)
+SLDEditor::SLDEditor(SLDViewWidget* sld_view, QWidget* parent) : QWidget(parent)
 {
     setWindowTitle(QString("SLD Editor"));
     auto layout = new QVBoxLayout;

@@ -33,11 +33,11 @@ ProfileHelper::ProfileHelper(const multislice_t& sample)
     double bottom_z{0};
     for (size_t i = 0; i < N; ++i) {
         m_materialdata.push_back(sample[i].material);
+        bottom_z -= sample[i].thickness;
         if (i + 1 < N) {
             m_zlimits.push_back(bottom_z);
             m_sigmas.push_back(sample[i + 1].sigma);
         }
-        bottom_z += sample[i].thickness;
     }
 }
 

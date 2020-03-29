@@ -21,6 +21,7 @@
 #include <mvvm/signals/modelmapper.h>
 #include <mvvm/standarditems/axisitems.h>
 #include <mvvm/standarditems/data1ditem.h>
+#include <mvvm/standarditems/graphviewportitem.h>
 
 namespace
 {
@@ -83,6 +84,7 @@ void QuickSimController::setup_models_tracking()
         auto on_model_destroyed = [this](ModelView::SessionModel*) { sample_model = nullptr; };
         sample_model->mapper()->setOnModelDestroyed(on_model_destroyed, this);
     }
+    update_sld_profile();
 }
 
 //! Performs update of sld profile for immediate plotting.
@@ -103,6 +105,9 @@ void QuickSimController::update_sld_profile()
         values.push_back(material.real());
 
     data_item->setContent(values);
+
+    auto viewport_item = ModelView::Utils::TopItem<ModelView::GraphViewportItem>(job_model);
+    viewport_item->update_viewport();
 }
 
 //! Submit data to JobManager for consequent specular simulation.
