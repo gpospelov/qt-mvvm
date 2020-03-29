@@ -844,7 +844,7 @@ TEST_F(LayerElementTest, testpropagation)
     EXPECT_EQ(8., item_above->property(LayerElementItem::P_WIDTH).toDouble());
     EXPECT_EQ(8., item_middle->property(LayerElementItem::P_X_POS).toDouble());
     EXPECT_EQ(3., first_handle_middle->rectangle().x());
-    EXPECT_EQ(-5., first_handle_middle->rectangle().y());
+    EXPECT_EQ(5., first_handle_middle->rectangle().y());
     EXPECT_EQ(3., second_handle_middle->rectangle().x());
     EXPECT_EQ(5., second_handle_middle->rectangle().y());
 
@@ -863,7 +863,7 @@ TEST_F(LayerElementTest, testpropagation)
     EXPECT_EQ(1e-6, item_above->property(LayerElementItem::P_WIDTH).toDouble());
     EXPECT_EQ(1e-6, item_middle->property(LayerElementItem::P_X_POS).toDouble());
     EXPECT_EQ(-5 + 1e-6, first_handle_middle->rectangle().x());
-    EXPECT_EQ(-5., first_handle_middle->rectangle().y());
+    EXPECT_EQ(5., first_handle_middle->rectangle().y());
     EXPECT_EQ(-5 + 1e-6, second_handle_middle->rectangle().x());
     EXPECT_EQ(5., second_handle_middle->rectangle().y());
 
@@ -882,7 +882,7 @@ TEST_F(LayerElementTest, testpropagation)
     EXPECT_EQ(10., item_above->property(LayerElementItem::P_WIDTH).toDouble());
     EXPECT_EQ(10., item_middle->property(LayerElementItem::P_X_POS).toDouble());
     EXPECT_EQ(5., first_handle_middle->rectangle().x());
-    EXPECT_EQ(-5., first_handle_middle->rectangle().y());
+    EXPECT_EQ(5., first_handle_middle->rectangle().y());
     EXPECT_EQ(5., second_handle_middle->rectangle().x());
     EXPECT_EQ(5., second_handle_middle->rectangle().y());
 
@@ -895,7 +895,7 @@ TEST_F(LayerElementTest, testpropagation)
     EXPECT_EQ(move_arguments.at(1).value<double>(), 8);
     EXPECT_EQ(8., item_middle->property(LayerElementItem::P_HEIGHT).toDouble());
     EXPECT_EQ(5., first_handle_middle->rectangle().x());
-    EXPECT_EQ(-5., first_handle_middle->rectangle().y());
+    EXPECT_EQ(5., first_handle_middle->rectangle().y());
     EXPECT_EQ(5., second_handle_middle->rectangle().x());
     EXPECT_EQ(3., second_handle_middle->rectangle().y());
 
@@ -908,7 +908,7 @@ TEST_F(LayerElementTest, testpropagation)
     EXPECT_EQ(move_arguments.at(1).value<double>(), 0);
     EXPECT_EQ(0, item_middle->property(LayerElementItem::P_HEIGHT).toDouble());
     EXPECT_EQ(5., first_handle_middle->rectangle().x());
-    EXPECT_EQ(-5., first_handle_middle->rectangle().y());
+    EXPECT_EQ(5., first_handle_middle->rectangle().y());
     EXPECT_EQ(5., second_handle_middle->rectangle().x());
     EXPECT_EQ(-5., second_handle_middle->rectangle().y());
 
@@ -921,7 +921,7 @@ TEST_F(LayerElementTest, testpropagation)
     EXPECT_EQ(move_arguments.at(1).value<double>(), 10);
     EXPECT_EQ(10., item_middle->property(LayerElementItem::P_HEIGHT).toDouble());
     EXPECT_EQ(5., first_handle_middle->rectangle().x());
-    EXPECT_EQ(-5., first_handle_middle->rectangle().y());
+    EXPECT_EQ(5., first_handle_middle->rectangle().y());
     EXPECT_EQ(5., second_handle_middle->rectangle().x());
     EXPECT_EQ(5., second_handle_middle->rectangle().y());
 

@@ -368,10 +368,24 @@ void LayerElementController::updateTopSegment() const
 //! Return the side segment rectangle
 QRectF LayerElementController::sideSegmentRect() const
 {
-    double pos = layerElementItem()->property(LayerElementItem::P_X_POS).toDouble();
-    double height = layerElementItem()->property(LayerElementItem::P_HEIGHT).toDouble();
-    double thickness = layerElementItem()->property(LayerElementItem::P_SIDE_THICKNESS).toDouble();
-    return QRectF(pos - thickness / 2., 0., thickness, height);
+    double this_pos = layerElementItem()->property(LayerElementItem::P_X_POS).toDouble();
+    double this_height = layerElementItem()->property(LayerElementItem::P_HEIGHT).toDouble();
+    double this_thickness =
+        layerElementItem()->property(LayerElementItem::P_SIDE_THICKNESS).toDouble();
+
+    double above_height = 0;
+    if (layerAbove()) {
+        above_height =
+            layerAbove()->layerElementItem()->property(LayerElementItem::P_HEIGHT).toDouble();
+    }
+
+    if (above_height > this_height) {
+        return QRectF(this_pos - this_thickness / 2., this_height, this_thickness,
+                      above_height - this_height);
+    } else {
+        return QRectF(this_pos - this_thickness / 2., above_height, this_thickness,
+                      this_height - above_height);
+    }
 }
 
 //! Return the top segment rectangle
@@ -530,7 +544,14 @@ QRectF LayerElementController::firstSegmentHandleRect() const
 {
     double pos = layerElementItem()->property(LayerElementItem::P_X_POS).toDouble();
     double radius = layerElementItem()->property(LayerElementItem::P_HANDLE_RADIUS).toDouble();
-    return QRectF(pos - radius, -radius, 2 * radius, 2 * radius);
+
+    double above_height = 0;
+    if (layerAbove()) {
+        above_height =
+            layerAbove()->layerElementItem()->property(LayerElementItem::P_HEIGHT).toDouble();
+    }
+
+    return QRectF(pos - radius, above_height - radius, 2 * radius, 2 * radius);
 }
 
 //! Get the second segment handle rectangle
