@@ -15,7 +15,7 @@
 
 //! The constructor
 RoughnessElementView::RoughnessElementView()
-    : QGraphicsItem(), m_left_path(QPainterPath()), m_right_path(QPainterPath()), m_brush(QBrush()),
+    : ElementView(), m_left_path(QPainterPath()), m_right_path(QPainterPath()), m_brush(QBrush()),
       m_pen(QPen())
 {
 }
@@ -23,18 +23,19 @@ RoughnessElementView::RoughnessElementView()
 //! The overriden paint method
 void RoughnessElementView::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
 {
+    painter->setClipRect(getSceneAdapter()->viewportRectangle());
     painter->setPen(m_pen);
     painter->setBrush(m_brush);
-    painter->drawPath(m_left_path);
-    painter->drawPath(m_right_path);
+    painter->drawPath(displayPath(m_left_path));
+    painter->drawPath(displayPath(m_right_path));
 }
 
 //! The shape
 QPainterPath RoughnessElementView::shape() const
 {
     QPainterPath path;
-    path.addPath(m_left_path);
-    path.addPath(m_right_path);
+    path.addPath(displayPath(m_left_path));
+    path.addPath(displayPath(m_right_path));
     return path;
 }
 
@@ -42,8 +43,8 @@ QPainterPath RoughnessElementView::shape() const
 QRectF RoughnessElementView::boundingRect() const
 {
     QPainterPath path;
-    path.addPath(m_left_path);
-    path.addPath(m_right_path);
+    path.addPath(displayPath(m_left_path));
+    path.addPath(displayPath(m_right_path));
     return path.boundingRect();
 }
 

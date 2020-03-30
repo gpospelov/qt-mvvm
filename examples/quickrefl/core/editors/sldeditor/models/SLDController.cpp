@@ -159,14 +159,14 @@ string_vec SLDController::getIdentifierVector(SessionItem* item)
 }
 
 //! Build and set up the layer controllers
-void SLDController::buildLayerControllers(string_vec& identifiers) 
+void SLDController::buildLayerControllers(string_vec& identifiers)
 {
     if (!p_scene_item)
         return;
     if (!p_sld_model)
         return;
 
-    for (auto& identifier : identifiers){
+    for (auto& identifier : identifiers) {
         auto layer_element_item = p_sld_model->addLayer();
         auto layer_element_controller = new LayerElementController(layer_element_item);
         layer_element_controller->autoPopulate();
@@ -174,13 +174,11 @@ void SLDController::buildLayerControllers(string_vec& identifiers)
         layer_element_controller->connectToModel();
         layer_element_controller->setSampleItemId(identifier);
         layer_controllers.push_back(layer_element_controller);
-    }    
+    }
 }
 
 //! Update the view items with the changes in the material or layer models
-void SLDController::updateToView(SessionItem* item)
-{
-}
+void SLDController::updateToView(SessionItem* item) {}
 
 //! Update the material and layer models from the view items
 void SLDController::updateFromView(SessionItem* item) {}

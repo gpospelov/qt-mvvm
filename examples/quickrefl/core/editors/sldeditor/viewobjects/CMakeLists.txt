@@ -8,6 +8,8 @@ target_sources(${library_name} PRIVATE
     layerelementitem.h
     layerelementitem.cpp
 
+    elementview.h
+    elementview.cpp
     segmentelementview.h
     segmentelementview.cpp
     handleelementview.h

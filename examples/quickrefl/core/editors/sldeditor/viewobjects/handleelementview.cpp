@@ -16,38 +16,40 @@
 
 //! The constructor
 HandleElementView::HandleElementView()
-    : QGraphicsItem(), m_rectangle(QRectF(0, 0, 0, 0)), m_brush(QBrush()), m_pen(QPen()),
+    : ElementView(), m_rectangle(QRectF(0, 0, 0, 0)), m_brush(QBrush()), m_pen(QPen()),
       m_pos(QPointF(0, 0))
 {
-    // setFlag(QGraphicsItem::ItemIsMovable);
+    adaptW(false);
+    adaptH(false);
 }
 
 //! The overriden paint method
 void HandleElementView::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
 {
+    painter->setClipRect(getSceneAdapter()->viewportRectangle());
     painter->setPen(m_pen);
     painter->setBrush(m_brush);
-    painter->drawRect(m_rectangle);
+    painter->drawEllipse(displayRect(m_rectangle));
 }
 
 //! The shape
 QPainterPath HandleElementView::shape() const
 {
     QPainterPath path;
-    path.addRect(m_rectangle);
+    path.addRect(displayRect(m_rectangle));
     return path;
 }
 
 //! The bounding rectangle of the handle
 QRectF HandleElementView::boundingRect() const
 {
-    return m_rectangle;
+    return displayRect(m_rectangle);
 }
 
 //! On move update the model
 void HandleElementView::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 {
-    m_pos = event->pos();
+    m_pos = scenePos(event->pos());
     p_controller->handleViewMoved(this);
 }
 

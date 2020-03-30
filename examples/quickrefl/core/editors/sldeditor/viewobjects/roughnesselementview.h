@@ -10,7 +10,7 @@
 #ifndef ROUGHNESSELEMENTVIEW_H
 #define ROUGHNESSELEMENTVIEW_H
 
-#include <QGraphicsItem>
+#include "elementview.h"
 
 #include <QBrush>
 #include <QPainterPath>
@@ -21,7 +21,7 @@
 @brief The visual Segment element
 */
 
-class RoughnessElementView : public QGraphicsItem
+class RoughnessElementView : public ElementView
 {
 public:
     RoughnessElementView();

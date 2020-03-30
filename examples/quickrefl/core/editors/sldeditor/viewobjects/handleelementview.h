@@ -10,7 +10,7 @@
 #ifndef HANDLEELEMENTVIEW_H
 #define HANDLEELEMENTVIEW_H
 
-#include <QGraphicsItem>
+#include "elementview.h"
 
 #include <QBrush>
 #include <QPen>
@@ -23,7 +23,7 @@ class LayerElementController;
 @brief The visual Segment element
 */
 
-class HandleElementView : public QGraphicsItem
+class HandleElementView : public ElementView
 {
 public:
     HandleElementView();

@@ -309,6 +309,7 @@ void LayerElementController::unsetLayerBelow(bool silent)
 void LayerElementController::setSideSegment(SegmentElementView* segment_view)
 {
     m_segment_views[0] = segment_view;
+    m_segment_views[0]->adaptW(false);
     m_segment_views[0]->setLayerElementController(this);
     updateSideSegment();
 
@@ -320,6 +321,7 @@ void LayerElementController::setSideSegment(SegmentElementView* segment_view)
 void LayerElementController::setTopSegment(SegmentElementView* segment_view)
 {
     m_segment_views[1] = segment_view;
+    m_segment_views[1]->adaptH(false);
     m_segment_views[1]->setLayerElementController(this);
     updateTopSegment();
 
@@ -393,7 +395,7 @@ void LayerElementController::updateSideSegment() const
     pen.setWidthF(layerElementItem()->property(LayerElementItem::P_SIDE_PEN_WIDTH).toDouble());
     m_segment_views.at(0)->setPen(pen);
 
-    auto brush = QBrush();
+    auto brush = QBrush(Qt::SolidPattern);
     brush.setColor(
         layerElementItem()->property(LayerElementItem::P_SIDE_BRUSH_COLOR).value<QColor>());
     m_segment_views.at(0)->setBrush(brush);
@@ -412,7 +414,7 @@ void LayerElementController::updateTopSegment() const
     pen.setWidthF(layerElementItem()->property(LayerElementItem::P_TOP_PEN_WIDTH).toDouble());
     m_segment_views.at(1)->setPen(pen);
 
-    auto brush = QBrush();
+    auto brush = QBrush(Qt::SolidPattern);
     brush.setColor(
         layerElementItem()->property(LayerElementItem::P_TOP_BRUSH_COLOR).value<QColor>());
     m_segment_views.at(1)->setBrush(brush);
@@ -578,7 +580,7 @@ void LayerElementController::updateSegmentHandles() const
         layerElementItem()->property(LayerElementItem::P_HANDLE_PEN_COLOR).value<QColor>());
     pen.setWidthF(layerElementItem()->property(LayerElementItem::P_HANDLE_PEN_WIDTH).toDouble());
 
-    auto brush = QBrush();
+    auto brush = QBrush(Qt::SolidPattern);
     brush.setColor(
         layerElementItem()->property(LayerElementItem::P_HANDLE_BRUSH_COLOR).value<QColor>());
 
@@ -645,6 +647,10 @@ void LayerElementController::setRoughness(RoughnessElementView* roughness_view)
 {
     p_roughness_view = roughness_view;
     updateRoughness();
+
+    if (scene()) {
+        scene()->addItem(p_roughness_view);
+    }
 }
 
 //! Set the roughness handle element views
@@ -726,6 +732,7 @@ void LayerElementController::updateRoughness() const
     auto brush = QBrush();
 
     // Take care of the rounghnessview
+    pen.setStyle(Qt::PenStyle::DashLine);
     pen.setColor(
         layerElementItem()->property(LayerElementItem::P_ROUGHNESS_PEN_COLOR).value<QColor>());
     pen.setWidthF(layerElementItem()->property(LayerElementItem::P_ROUGHNESS_PEN_WIDTH).toDouble());
@@ -739,6 +746,7 @@ void LayerElementController::updateRoughness() const
     }
 
     // Take care of the handles
+    pen.setStyle(Qt::PenStyle::SolidLine);
     pen.setColor(
         layerElementItem()->property(LayerElementItem::P_R_HANDLE_PEN_COLOR).value<QColor>());
     pen.setWidthF(layerElementItem()->property(LayerElementItem::P_R_HANDLE_PEN_WIDTH).toDouble());
@@ -850,7 +858,7 @@ void LayerElementController::putRoughnessOnScene() const
     if (!scene())
         return;
     if (p_roughness_view)
-        scene()->removeItem(p_roughness_view);
+        scene()->addItem(p_roughness_view);
 }
 
 //! Put the roughness handles on the scene
