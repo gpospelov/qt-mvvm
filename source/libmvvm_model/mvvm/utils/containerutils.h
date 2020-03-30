@@ -10,11 +10,14 @@
 #ifndef MVVM_UTILS_CONTAINERUTILS_H
 #define MVVM_UTILS_CONTAINERUTILS_H
 
+#include <algorithm>
+#include <complex>
 #include <iterator>
 #include <memory>
 #include <mvvm/core/export.h>
 #include <string>
 #include <type_traits>
+#include <vector>
 
 namespace ModelView
 {
@@ -48,6 +51,32 @@ template <typename It, typename T> int IndexOfItem(It begin, It end, const T& it
 template <typename C, typename T> int IndexOfItem(const C& container, const T& item)
 {
     return IndexOfItem(container.begin(), container.end(), item);
+}
+
+//! Returns vector containing results of elemntwise unary function application.
+
+template <typename It, typename UnaryFunction>
+std::vector<double> Apply(It begin, It end, UnaryFunction func)
+{
+    std::vector<double> result;
+    std::transform(begin, end, std::back_inserter(result), func);
+    return result;
+}
+
+//! Returns vector with real part of complex numbers.
+
+template <typename C> std::vector<double> Real(const C& container)
+{
+    return Apply(std::begin(container), std::end(container),
+                 [](const auto& x) { return std::real(x); });
+}
+
+//! Returns vector with imag part of complex numbers.
+
+template <typename C> std::vector<double> Imag(const C& container)
+{
+    return Apply(std::begin(container), std::end(container),
+                 [](const auto& x) { return std::imag(x); });
 }
 
 } // namespace Utils

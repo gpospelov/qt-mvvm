@@ -10,6 +10,7 @@
 #include "google_test.h"
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/utils/containerutils.h>
+#include <complex>
 
 using namespace ModelView;
 
@@ -55,4 +56,11 @@ TEST_F(ContainerUtilsTest, IndexOfItem)
     EXPECT_EQ(Utils::IndexOfItem(unique_items, unique_items[0].get()), 0);
     EXPECT_EQ(Utils::IndexOfItem(unique_items, unique_items[1].get()), 1);
     EXPECT_EQ(Utils::IndexOfItem(unique_items, &other), -1);
+}
+
+TEST_F(ContainerUtilsTest, Real)
+{
+    std::vector<std::complex<double>> data = {{1.0, 10.0}, {2.0, 20.0}};
+    EXPECT_EQ(Utils::Real(data), (std::vector<double>{1.0, 2.0}));
+    EXPECT_EQ(Utils::Imag(data), (std::vector<double>{10.0, 20.0}));
 }

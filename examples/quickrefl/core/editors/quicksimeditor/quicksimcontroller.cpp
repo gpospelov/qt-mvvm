@@ -18,6 +18,7 @@
 #include "slice.h"
 #include <QDebug>
 #include <mvvm/model/modelutils.h>
+#include <mvvm/utils/containerutils.h>
 #include <mvvm/signals/modelmapper.h>
 #include <mvvm/standarditems/axisitems.h>
 #include <mvvm/standarditems/data1ditem.h>
@@ -99,11 +100,7 @@ void QuickSimController::update_sld_profile()
     auto data_item = ModelView::Utils::TopItem<ModelView::Data1DItem>(job_model);
     data_item->setAxis(ModelView::FixedBinAxisItem::create(profile_points_count, xmin, xmax));
 
-    std::vector<double> values;
-    for (const auto& material :
-         MaterialProfile::CalculateProfile(slices, profile_points_count, xmin, xmax))
-        values.push_back(material.real());
-
+    auto values = ModelView::Utils::Real(MaterialProfile::CalculateProfile(slices, profile_points_count, xmin, xmax));
     data_item->setContent(values);
 
     auto viewport_item = ModelView::Utils::TopItem<ModelView::GraphViewportItem>(job_model);
