@@ -18,11 +18,11 @@
 #include "slice.h"
 #include <QDebug>
 #include <mvvm/model/modelutils.h>
-#include <mvvm/utils/containerutils.h>
 #include <mvvm/signals/modelmapper.h>
 #include <mvvm/standarditems/axisitems.h>
 #include <mvvm/standarditems/data1ditem.h>
 #include <mvvm/standarditems/graphviewportitem.h>
+#include <mvvm/utils/containerutils.h>
 
 namespace
 {
@@ -86,8 +86,7 @@ void QuickSimController::setup_models_tracking()
         sample_model->mapper()->setOnModelDestroyed(on_model_destroyed, this);
     }
     update_sld_profile();
-    auto viewport_item = ModelView::Utils::TopItem<ModelView::GraphViewportItem>(job_model);
-    viewport_item->update_viewport();
+    job_model->sld_viewport()->update_viewport();
 }
 
 //! Performs update of sld profile for immediate plotting.
@@ -99,10 +98,12 @@ void QuickSimController::update_sld_profile()
     auto slices = ::Utils::CreateMultiSlice(*multilayer);
 
     auto [xmin, xmax] = MaterialProfile::DefaultMaterialProfileLimits(slices);
-    auto data_item = ModelView::Utils::TopItem<ModelView::Data1DItem>(job_model);
+
+    auto data_item = job_model->sld_data();
     data_item->setAxis(ModelView::FixedBinAxisItem::create(profile_points_count, xmin, xmax));
 
-    auto values = ModelView::Utils::Real(MaterialProfile::CalculateProfile(slices, profile_points_count, xmin, xmax));
+    auto values = ModelView::Utils::Real(
+        MaterialProfile::CalculateProfile(slices, profile_points_count, xmin, xmax));
     data_item->setContent(values);
 }
 

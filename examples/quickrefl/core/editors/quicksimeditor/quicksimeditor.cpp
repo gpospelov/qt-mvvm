@@ -8,13 +8,13 @@
 // ************************************************************************** //
 
 #include "quicksimeditor.h"
-#include "jobmodel.h"
-#include "styleutils.h"
 #include "applicationmodels.h"
-#include "quicksimcontroller.h"
 #include "grapheditor.h"
-#include <QVBoxLayout>
+#include "jobmodel.h"
+#include "quicksimcontroller.h"
+#include "styleutils.h"
 #include <QTabWidget>
+#include <QVBoxLayout>
 #include <mvvm/model/modelutils.h>
 #include <mvvm/plotting/graphcanvas.h>
 #include <mvvm/standarditems/graphviewportitem.h>
@@ -35,7 +35,7 @@ QuickSimEditor::QuickSimEditor(ApplicationModels* app_models, QWidget* parent)
     auto layout = new QVBoxLayout(this);
     layout->addWidget(tabwidget);
 
-    sld_canvas->setItem(Utils::TopItem<GraphViewportItem>(job_model.get()));
+    sld_canvas->setItem(job_model->sld_viewport());
 }
 
 QuickSimEditor::~QuickSimEditor() = default;
