@@ -42,6 +42,40 @@ void LayerElementController::autoPopulate()
     setRoughnessHandles(new HandleElementView(), new HandleElementView());
 }
 
+//! If loacally created the view elements nees to be locally destroyed
+void LayerElementController::deleteViewItems()
+{
+    if (m_segment_views[0]){
+        auto temp_ptr = m_segment_views[0];
+        unsetSideSegment();
+        delete temp_ptr;
+    }
+    if (m_segment_views[1]){
+        auto temp_ptr = m_segment_views[1];
+        unsetTopSegment();
+        delete temp_ptr;
+    }
+    if (m_handle_views[0]){
+        auto temp_ptr_0 = m_handle_views[0];
+        auto temp_ptr_1 = m_handle_views[1];
+        unsetSegmentHandles();
+        delete temp_ptr_0;
+        delete temp_ptr_1;
+    }
+    if (p_roughness_view){
+        auto temp_ptr = p_roughness_view;
+        unsetRoughness();
+        delete temp_ptr;
+    }
+    if (m_rough_handles_views[0]){
+        auto temp_ptr_0 = m_rough_handles_views[0];
+        auto temp_ptr_1 = m_rough_handles_views[1];
+        unsetRoughnessHandles();
+        delete temp_ptr_0;
+        delete temp_ptr_1;
+    }
+}
+
 //! Connect to the set item
 void LayerElementController::connectToModel() const
 {

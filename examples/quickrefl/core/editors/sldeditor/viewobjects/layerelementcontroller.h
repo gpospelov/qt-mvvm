@@ -31,6 +31,7 @@ public:
     LayerElementController(LayerElementItem* layer_view_item);
     LayerElementItem* layerElementItem() const;
     void autoPopulate();
+    void deleteViewItems();
     void connectToModel() const;
     void disconnectFormModel() const;
 
