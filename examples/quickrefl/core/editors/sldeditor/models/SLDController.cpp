@@ -36,7 +36,6 @@ SLDController::SLDController(MaterialModel* material_model, SampleModel* sample_
     connectLayerModel();
     connectMaterialModel();
     buildSLD();
-    updateToView();
 }
 
 //! Connect with signals of MaterialModel, SampleModel, SLDViewModel.
@@ -114,7 +113,6 @@ void SLDController::buildSLD()
 
     string_vec identifiers = getIdentifierVector(p_sample_model->rootItem()->children().at(0));
     buildLayerControllers(identifiers);
-
     updateToView();
     connectSLDElementModel();
 }
@@ -133,7 +131,7 @@ void SLDController::clearScene()
         layer_controllers.at(i)->deleteViewItems();
         delete layer_controllers.at(i);
     }
-
+    layer_controllers.clear();
     p_sld_model->clear();
 }
 
@@ -182,7 +180,36 @@ void SLDController::buildLayerControllers(string_vec& identifiers)
 }
 
 //! Update the view items with the changes in the material or layer models
-void SLDController::updateToView(SessionItem* item) {}
+void SLDController::updateToView(SessionItem* item)
+{
+    for (auto layer_controller : layer_controllers) {
+        if (!item || item->parent()->identifier() == layer_controller->sampleItemId()) {
+            auto layer_item =
+                dynamic_cast<LayerItem*>(p_sample_model->findItem(layer_controller->sampleItemId()));
+            auto roughness_item = layer_item->item<RoughnessItem>(LayerItem::P_ROUGHNESS);
+            auto material_item = dynamic_cast<SLDMaterialItem*>(
+                p_material_model->findItem(layer_item->property(LayerItem::P_MATERIAL)
+                                             .value<ModelView::ExternalProperty>()
+                                             .identifier()));
 
+            layer_controller->layerElementItem()->setProperty(
+                LayerElementItem::P_ROUGHNESS, roughness_item->property(RoughnessItem::P_SIGMA));
+            layer_controller->layerElementItem()->setProperty(
+                LayerElementItem::P_WIDTH, layer_item->property(LayerItem::P_THICKNESS).toDouble());
+
+            if (material_item){
+                layer_controller->layerElementItem()->setProperty(
+                    LayerElementItem::P_HEIGHT,
+                    material_item->property(SLDMaterialItem::P_SLD_REAL).toDouble() * 1e6);
+                layer_controller->layerElementItem()->setProperty(
+                    LayerElementItem::P_TOP_BRUSH_COLOR,
+                    material_item->property(SLDMaterialItem::P_COLOR));
+                layer_controller->layerElementItem()->setProperty(
+                    LayerElementItem::P_SIDE_BRUSH_COLOR,
+                    material_item->property(SLDMaterialItem::P_COLOR));
+            }
+        }
+    }
+}
 //! Update the material and layer models from the view items
 void SLDController::updateFromView(SessionItem* item) {}
