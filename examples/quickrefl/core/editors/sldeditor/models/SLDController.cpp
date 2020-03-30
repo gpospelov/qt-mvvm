@@ -206,6 +206,11 @@ void SLDController::disconnectLayerControllers()
 //! Update the view items with the changes in the material or layer models
 void SLDController::updateToView(SessionItem* item)
 {
+    if (item && dynamic_cast<MultiLayerItem*>(item->parent())) {
+        buildSLD();
+        return;
+    }
+
     for (auto layer_controller : layer_controllers) {
         // if (!item || item->parent()->identifier() == layer_controller->sampleItemId()
         //     || item->parent()->parent()->identifier() == layer_controller->sampleItemId()) {
