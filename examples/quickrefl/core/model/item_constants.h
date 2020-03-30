@@ -20,6 +20,7 @@ const std::string LayerItemType = "Layer";
 const std::string RoughnessItemType = "Roughness";
 const std::string SLDMaterialItemType = "SLDMaterial";
 const std::string MaterialContainerItemType = "MaterialContainer";
+const std::string JobItemType = "Job";
 } // namespace Constants
 
 #endif //  ITEM_CONSTANTS_H
