@@ -111,6 +111,11 @@ void LayerElementController::connectToModel() const
             updateTopSegment();
             updateSegmentHandles();
             updateRoughness();
+            if (layerBelow())
+                layerBelow()->layerElementItem()->setProperty(
+                    LayerElementItem::P_X_POS,
+                    layerElementItem()->property(LayerElementItem::P_X_POS).toDouble()
+                        + layerElementItem()->property(LayerElementItem::P_WIDTH).toDouble());
         }
         if (property_name == LayerElementItem::P_ROUGHNESS) {
             emit roughnessChanged(
