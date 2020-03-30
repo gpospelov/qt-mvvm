@@ -16,13 +16,13 @@
 #include "quicksimutils.h"
 #include "samplemodel.h"
 #include "slice.h"
+#include "speculartoysimulation.h"
 #include <QDebug>
 #include <mvvm/model/modelutils.h>
 #include <mvvm/signals/modelmapper.h>
 #include <mvvm/standarditems/axisitems.h>
 #include <mvvm/standarditems/data1ditem.h>
 #include <mvvm/standarditems/graphviewportitem.h>
-#include <mvvm/utils/containerutils.h>
 
 namespace
 {
@@ -97,14 +97,10 @@ void QuickSimController::update_sld_profile()
     auto multilayer = ModelView::Utils::TopItem<MultiLayerItem>(sample_model);
     auto slices = ::Utils::CreateMultiSlice(*multilayer);
 
-    auto [xmin, xmax] = MaterialProfile::DefaultMaterialProfileLimits(slices);
-
-    auto data_item = job_model->sld_data();
-    data_item->setAxis(ModelView::FixedBinAxisItem::create(profile_points_count, xmin, xmax));
-
-    auto values = ModelView::Utils::Real(
-        MaterialProfile::CalculateProfile(slices, profile_points_count, xmin, xmax));
-    data_item->setContent(values);
+    auto [xmin, xmax, values] = SpecularToySimulation::sld_profile(slices, profile_points_count);
+    job_model->sld_data()->setAxis(
+        ModelView::FixedBinAxisItem::create(profile_points_count, xmin, xmax));
+    job_model->sld_data()->setContent(values);
 }
 
 //! Submit data to JobManager for consequent specular simulation.

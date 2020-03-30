@@ -8,17 +8,18 @@
 // ************************************************************************** //
 
 #include "speculartoysimulation.h"
+#include "materialprofile.h"
+#include <mvvm/utils/containerutils.h>
 
 namespace
 {
-const int sld_points_count = 400;
 const int simulation_steps_count = 100;
-}
+} // namespace
 
 using namespace ModelView;
 
-SpecularToySimulation::SpecularToySimulation(const multislice_t &input_data)
-    : input_data(input_data)
+SpecularToySimulation::SpecularToySimulation(const multislice_t& multislice)
+    : input_data(multislice)
 {
 }
 
@@ -35,12 +36,13 @@ void SpecularToySimulation::setProgressCallback(ModelView::ProgressHandler::call
 
 SpecularToySimulation::Result SpecularToySimulation::simulationResult() const
 {
-    return sld_profile;
+    return {};
 }
 
-//! Calculates
-
-void SpecularToySimulation::calculate_sld_profile()
+SpecularToySimulation::Result SpecularToySimulation::sld_profile(const multislice_t& multislice,
+                                                                 int n_points)
 {
-
+    auto [xmin, xmax] = MaterialProfile::DefaultMaterialProfileLimits(multislice);
+    auto profile = MaterialProfile::CalculateProfile(multislice, n_points, xmin, xmax);
+    return {xmin, xmax, ModelView::Utils::Real(profile)};
 }
