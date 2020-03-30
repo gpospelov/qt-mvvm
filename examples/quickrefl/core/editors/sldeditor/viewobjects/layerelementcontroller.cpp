@@ -85,6 +85,11 @@ void LayerElementController::connectToModel() const
             updateTopSegment();
             updateSegmentHandles();
             updateRoughness();
+            if (layerBelow())
+                layerBelow()->layerElementItem()->setProperty(
+                    LayerElementItem::P_X_POS,
+                    layerElementItem()->property(LayerElementItem::P_X_POS).toDouble()
+                        + layerElementItem()->property(LayerElementItem::P_WIDTH).toDouble());
         }
         if (property_name == LayerElementItem::P_HEIGHT) {
             emit heightChanged(m_sample_item_id,
@@ -93,6 +98,11 @@ void LayerElementController::connectToModel() const
             updateTopSegment();
             updateSegmentHandles();
             updateRoughness();
+            if (layerBelow()) {
+                layerBelow()->updateSideSegment();
+                layerBelow()->updateSegmentHandles();
+                layerBelow()->updateRoughness();
+            }
         }
         if (property_name == LayerElementItem::P_WIDTH) {
             emit widthChanged(m_sample_item_id,
