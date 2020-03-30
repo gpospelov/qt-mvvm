@@ -18,7 +18,6 @@
 #include "samplemodel.h"
 #include "segmentelementview.h"
 #include "sldelementmodel.h"
-
 #include "test_utils.h"
 #include <mvvm/viewmodel/viewmodelutils.h>
 

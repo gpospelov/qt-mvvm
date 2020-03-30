@@ -20,13 +20,12 @@ class SLDElementModel;
 class GraphicsScene;
 class LayerElementController;
 
-
 /*!
 @class SLDController
 @brief This manages model connectivity
 */
 using string_vec = std::vector<std::string>;
-using layer_ctrl_vec = std::vector<LayerElementController>;
+using layer_ctrl_vec = std::vector<LayerElementController*>;
 
 class SLDController
 {
@@ -47,7 +46,7 @@ private:
     void clearScene();
     string_vec getIdentifierVector(ModelView::SessionItem* item);
     void buildLayerControllers(string_vec& identifiers);
-    
+
     void updateToView(ModelView::SessionItem* item = nullptr);
     void updateFromView(ModelView::SessionItem* item = nullptr);
 
@@ -57,7 +56,6 @@ private:
     SLDElementModel* p_sld_model;
     GraphicsScene* p_scene_item;
     layer_ctrl_vec layer_controllers;
-
 };
 
 #endif //  SLDCONTROLLER_H

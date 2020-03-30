@@ -14,9 +14,9 @@
 #include "materialmodel.h"
 #include "samplemodel.h"
 
-#include "sldelementmodel.h"
 #include "layerelementcontroller.h"
 #include "layerelementitem.h"
+#include "sldelementmodel.h"
 
 #include <mvvm/model/compounditem.h>
 #include <mvvm/model/externalproperty.h>
@@ -107,14 +107,12 @@ void SLDController::buildSLD()
         return;
 
     disconnectSLDElementModel();
-    p_sld_model->clear();
     clearScene();
 
     if (p_sample_model->rootItem()->childrenCount() == 0)
         return;
 
     string_vec identifiers = getIdentifierVector(p_sample_model->rootItem()->children().at(0));
-
     buildLayerControllers(identifiers);
 
     updateToView();
@@ -130,8 +128,13 @@ void SLDController::clearScene()
         return;
 
     for (int i = 0; i < layer_controllers.size(); ++i) {
-        layer_controllers.at(i).unsetScene();
+        layer_controllers.at(i)->disconnectFormModel();
+        layer_controllers.at(i)->unsetScene();
+        layer_controllers.at(i)->deleteViewItems();
+        delete layer_controllers.at(i);
     }
+
+    p_sld_model->clear();
 }
 
 //! build the identifier vector
@@ -155,46 +158,29 @@ string_vec SLDController::getIdentifierVector(SessionItem* item)
     return output;
 }
 
-//! build the top segments of the sld view
-void SLDController::buildLayerControllers(string_vec& identifiers)
+//! Build and set up the layer controllers
+void SLDController::buildLayerControllers(string_vec& identifiers) 
 {
+    if (!p_scene_item)
+        return;
+    if (!p_sld_model)
+        return;
 
+    for (auto& identifier : identifiers){
+        auto layer_element_item = p_sld_model->addLayer();
+        auto layer_element_controller = new LayerElementController(layer_element_item);
+        layer_element_controller->autoPopulate();
+        layer_element_controller->setScene(p_scene_item);
+        layer_element_controller->connectToModel();
+        layer_element_controller->setSampleItemId(identifier);
+        layer_controllers.push_back(layer_element_controller);
+    }    
 }
 
 //! Update the view items with the changes in the material or layer models
 void SLDController::updateToView(SessionItem* item)
 {
-    auto view_items = p_sld_model->rootItem()->children();
-    if (!item) {
-        for (auto* item : view_items) {
-            if (dynamic_cast<SegmentItem*>(item)) {
-                auto mod_item = dynamic_cast<SegmentItem*>(item);
-                mod_item->fetchFromLayer(p_sample_model, p_material_model);
-            } else if (dynamic_cast<RoughnessViewItem*>(item)) {
-                auto mod_item = dynamic_cast<RoughnessViewItem*>(item);
-                mod_item->fetchFromLayer(p_sample_model, p_material_model);
-            }
-        }
-    } else {
-        if (dynamic_cast<MultiLayerItem*>(item->parent())) {
-            buildSLD();
-            return;
-        } else {
-            for (auto* item : view_items) {
-                if (dynamic_cast<SegmentItem*>(item)) {
-                    auto mod_item = dynamic_cast<SegmentItem*>(item);
-                    mod_item->fetchFromLayer(p_sample_model, p_material_model);
-                } else if (dynamic_cast<RoughnessViewItem*>(item)) {
-                    auto mod_item = dynamic_cast<RoughnessViewItem*>(item);
-                    mod_item->fetchFromLayer(p_sample_model, p_material_model);
-                }
-            }
-        }
-    }
 }
 
 //! Update the material and layer models from the view items
-void SLDController::updateFromView(SessionItem* item)
-{
-
-}
+void SLDController::updateFromView(SessionItem* item) {}

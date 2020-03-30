@@ -45,29 +45,29 @@ void LayerElementController::autoPopulate()
 //! If loacally created the view elements nees to be locally destroyed
 void LayerElementController::deleteViewItems()
 {
-    if (m_segment_views[0]){
+    if (m_segment_views[0]) {
         auto temp_ptr = m_segment_views[0];
         unsetSideSegment();
         delete temp_ptr;
     }
-    if (m_segment_views[1]){
+    if (m_segment_views[1]) {
         auto temp_ptr = m_segment_views[1];
         unsetTopSegment();
         delete temp_ptr;
     }
-    if (m_handle_views[0]){
+    if (m_handle_views[0]) {
         auto temp_ptr_0 = m_handle_views[0];
         auto temp_ptr_1 = m_handle_views[1];
         unsetSegmentHandles();
         delete temp_ptr_0;
         delete temp_ptr_1;
     }
-    if (p_roughness_view){
+    if (p_roughness_view) {
         auto temp_ptr = p_roughness_view;
         unsetRoughness();
         delete temp_ptr;
     }
-    if (m_rough_handles_views[0]){
+    if (m_rough_handles_views[0]) {
         auto temp_ptr_0 = m_rough_handles_views[0];
         auto temp_ptr_1 = m_rough_handles_views[1];
         unsetRoughnessHandles();
@@ -189,6 +189,9 @@ void LayerElementController::disconnectFormModel() const
 //! Set the scene
 void LayerElementController::setScene(GraphicsScene* scene)
 {
+    if (!scene)
+        return;
+
     p_scene = scene;
 
     putSegementsOnScene();
@@ -206,6 +209,9 @@ GraphicsScene* LayerElementController::scene() const
 //! Set the scene
 void LayerElementController::unsetScene()
 {
+    if (!scene())
+        return;
+
     removeSegmentsFromScene();
     removeSegmentHandlesFromScene();
     removeRoughnessFromScene();
@@ -376,6 +382,7 @@ void LayerElementController::segmentViewMoved(SegmentElementView* segment_view)
     }
 }
 
+//! Update the view of the side segment
 void LayerElementController::updateSideSegment() const
 {
     if (!m_segment_views[0])
@@ -394,6 +401,7 @@ void LayerElementController::updateSideSegment() const
     m_segment_views.at(0)->setRectangle(sideSegmentRect());
 }
 
+//! Update the view of the top segment
 void LayerElementController::updateTopSegment() const
 {
     if (!m_segment_views[1])
@@ -687,7 +695,7 @@ void LayerElementController::unsetRoughness()
 void LayerElementController::unsetRoughnessHandles()
 {
     if (m_rough_handles_views[0] && scene() && m_rough_handles_views[0]->scene() == scene())
-        scene()->removeItem(m_handle_views[0]);
+        scene()->removeItem(m_rough_handles_views[0]);
     if (m_rough_handles_views[1] && scene() && m_rough_handles_views[1]->scene() == scene())
         scene()->removeItem(m_rough_handles_views[1]);
 
