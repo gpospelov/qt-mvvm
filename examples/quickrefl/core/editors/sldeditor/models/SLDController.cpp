@@ -67,9 +67,6 @@ void SLDController::connectSLDElementModel()
 {
     auto on_sld_model_destroyed = [this](SessionModel*) { p_sld_model = nullptr; };
     p_sld_model->mapper()->setOnModelDestroyed(on_sld_model_destroyed, this);
-
-    auto on_sld_data_change = [this](SessionItem* item, int) { updateFromView(item); };
-    p_sld_model->mapper()->setOnDataChange(on_sld_data_change, this);
 }
 
 void SLDController::disconnectMaterialModel() const
@@ -115,6 +112,7 @@ void SLDController::buildSLD()
     buildLayerControllers(identifiers);
     updateToView();
     connectSLDElementModel();
+    connectLayerControllers();
 }
 
 //! Remove all the segments, handles and roughness view items in the scene
@@ -179,37 +177,89 @@ void SLDController::buildLayerControllers(string_vec& identifiers)
     }
 }
 
+//! Connect the layer controllers
+void SLDController::connectLayerControllers()
+{
+    for (auto layer_controller : layer_controllers) {
+        QObject::connect(layer_controller, &LayerElementController::heightChanged, this,
+                         &SLDController::updateSLDFromView);
+        QObject::connect(layer_controller, &LayerElementController::widthChanged, this,
+                         &SLDController::updateThicknessFromView);
+        QObject::connect(layer_controller, &LayerElementController::roughnessChanged, this,
+                         &SLDController::updateRoughnessFromView);
+    }
+}
+
+//! Disconnect the layer controllers
+void SLDController::disconnectLayerControllers()
+{
+    for (auto layer_controller : layer_controllers) {
+        QObject::disconnect(layer_controller, &LayerElementController::heightChanged, this,
+                            &SLDController::updateSLDFromView);
+        QObject::disconnect(layer_controller, &LayerElementController::widthChanged, this,
+                            &SLDController::updateThicknessFromView);
+        QObject::disconnect(layer_controller, &LayerElementController::roughnessChanged, this,
+                            &SLDController::updateRoughnessFromView);
+    }
+}
+
 //! Update the view items with the changes in the material or layer models
 void SLDController::updateToView(SessionItem* item)
 {
     for (auto layer_controller : layer_controllers) {
-        if (!item || item->parent()->identifier() == layer_controller->sampleItemId() || item->parent()->parent()->identifier() == layer_controller->sampleItemId()) {
-            auto layer_item =
-                dynamic_cast<LayerItem*>(p_sample_model->findItem(layer_controller->sampleItemId()));
-            auto roughness_item = layer_item->item<RoughnessItem>(LayerItem::P_ROUGHNESS);
-            auto material_item = dynamic_cast<SLDMaterialItem*>(
-                p_material_model->findItem(layer_item->property(LayerItem::P_MATERIAL)
-                                             .value<ModelView::ExternalProperty>()
-                                             .identifier()));
+        // if (!item || item->parent()->identifier() == layer_controller->sampleItemId()
+        //     || item->parent()->parent()->identifier() == layer_controller->sampleItemId()) {
+        auto layer_item =
+            dynamic_cast<LayerItem*>(p_sample_model->findItem(layer_controller->sampleItemId()));
+        auto roughness_item = layer_item->item<RoughnessItem>(LayerItem::P_ROUGHNESS);
+        auto material_item = dynamic_cast<SLDMaterialItem*>(
+            p_material_model->findItem(layer_item->property(LayerItem::P_MATERIAL)
+                                           .value<ModelView::ExternalProperty>()
+                                           .identifier()));
 
-            layer_controller->layerElementItem()->setProperty(
-                LayerElementItem::P_ROUGHNESS, roughness_item->property(RoughnessItem::P_SIGMA));
-            layer_controller->layerElementItem()->setProperty(
-                LayerElementItem::P_WIDTH, layer_item->property(LayerItem::P_THICKNESS).toDouble());
+        layer_controller->layerElementItem()->setProperty(
+            LayerElementItem::P_ROUGHNESS, roughness_item->property(RoughnessItem::P_SIGMA));
+        layer_controller->layerElementItem()->setProperty(
+            LayerElementItem::P_WIDTH, layer_item->property(LayerItem::P_THICKNESS).toDouble());
 
-            if (material_item){
-                layer_controller->layerElementItem()->setProperty(
-                    LayerElementItem::P_HEIGHT,
-                    material_item->property(SLDMaterialItem::P_SLD_REAL).toDouble() * 1e6);
-                layer_controller->layerElementItem()->setProperty(
-                    LayerElementItem::P_TOP_BRUSH_COLOR,
-                    material_item->property(SLDMaterialItem::P_COLOR));
-                layer_controller->layerElementItem()->setProperty(
-                    LayerElementItem::P_SIDE_BRUSH_COLOR,
-                    material_item->property(SLDMaterialItem::P_COLOR));
-            }
+        if (material_item) {
+            layer_controller->layerElementItem()->setProperty(
+                LayerElementItem::P_HEIGHT,
+                material_item->property(SLDMaterialItem::P_SLD_REAL).toDouble() * 1e6);
+            layer_controller->layerElementItem()->setProperty(
+                LayerElementItem::P_TOP_BRUSH_COLOR,
+                material_item->property(SLDMaterialItem::P_COLOR));
+            layer_controller->layerElementItem()->setProperty(
+                LayerElementItem::P_SIDE_BRUSH_COLOR,
+                material_item->property(SLDMaterialItem::P_COLOR));
         }
+        // }
     }
 }
+
 //! Update the material and layer models from the view items
-void SLDController::updateFromView(SessionItem* item) {}
+void SLDController::updateThicknessFromView(std::string identifier, double value)
+{
+    auto layer_item = dynamic_cast<LayerItem*>(p_sample_model->findItem(identifier));
+    layer_item->setProperty(LayerItem::P_THICKNESS, value);
+}
+
+//! Update the material and layer models from the view items
+void SLDController::updateSLDFromView(std::string identifier, double value)
+{
+    auto layer_item = dynamic_cast<LayerItem*>(p_sample_model->findItem(identifier));
+    auto material_item = dynamic_cast<SLDMaterialItem*>(
+        p_material_model->findItem(layer_item->property(LayerItem::P_MATERIAL)
+                                       .value<ModelView::ExternalProperty>()
+                                       .identifier()));
+    if (material_item)
+        material_item->setProperty(SLDMaterialItem::P_SLD_REAL, value / 1e6);
+}
+
+//! Update the material and layer models from the view items
+void SLDController::updateRoughnessFromView(std::string identifier, double value)
+{
+    auto layer_item = dynamic_cast<LayerItem*>(p_sample_model->findItem(identifier));
+    auto roughness_item = layer_item->item<RoughnessItem>(LayerItem::P_ROUGHNESS);
+    roughness_item->setProperty(RoughnessItem::P_SIGMA, value);
+}

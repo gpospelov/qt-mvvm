@@ -10,6 +10,7 @@
 #ifndef SLDCONTROLLER_H
 #define SLDCONTROLLER_H
 
+#include <QObject>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <vector>
@@ -27,8 +28,10 @@ class LayerElementController;
 using string_vec = std::vector<std::string>;
 using layer_ctrl_vec = std::vector<LayerElementController*>;
 
-class SLDController
+class SLDController : public QObject
 {
+    Q_OBJECT
+
 public:
     SLDController(MaterialModel* material_model, SampleModel* sample_model,
                   SLDElementModel* sld_model, GraphicsScene* scene_item);
@@ -46,9 +49,13 @@ private:
     void clearScene();
     string_vec getIdentifierVector(ModelView::SessionItem* item);
     void buildLayerControllers(string_vec& identifiers);
+    void connectLayerControllers();
+    void disconnectLayerControllers();
 
     void updateToView(ModelView::SessionItem* item = nullptr);
-    void updateFromView(ModelView::SessionItem* item = nullptr);
+    void updateThicknessFromView(std::string identifier, double value);
+    void updateSLDFromView(std::string identifier, double value);
+    void updateRoughnessFromView(std::string identifier, double value);
 
 private:
     MaterialModel* p_material_model;
