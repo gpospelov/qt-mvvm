@@ -183,7 +183,7 @@ void SLDController::buildLayerControllers(string_vec& identifiers)
 void SLDController::updateToView(SessionItem* item)
 {
     for (auto layer_controller : layer_controllers) {
-        if (!item || item->parent()->identifier() == layer_controller->sampleItemId()) {
+        if (!item || item->parent()->identifier() == layer_controller->sampleItemId() || item->parent()->parent()->identifier() == layer_controller->sampleItemId()) {
             auto layer_item =
                 dynamic_cast<LayerItem*>(p_sample_model->findItem(layer_controller->sampleItemId()));
             auto roughness_item = layer_item->item<RoughnessItem>(LayerItem::P_ROUGHNESS);
