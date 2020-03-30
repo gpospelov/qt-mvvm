@@ -175,6 +175,10 @@ void SLDController::buildLayerControllers(string_vec& identifiers)
         layer_element_controller->setSampleItemId(identifier);
         layer_controllers.push_back(layer_element_controller);
     }
+
+    for (int i = 0; i < layer_controllers.size() - 1; ++i) {
+        layer_controllers.at(i)->setLayerBelow(layer_controllers.at(i + 1));
+    }
 }
 
 //! Update the view items with the changes in the material or layer models
