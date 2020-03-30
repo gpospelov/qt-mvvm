@@ -37,6 +37,8 @@ public:
 
     std::unique_ptr<SceneAdapterInterface> createSceneAdapter() const;
 
+    void update_viewport();
+
 private:
     struct GraphCanvasImpl;
     std::unique_ptr<GraphCanvasImpl> p_impl;

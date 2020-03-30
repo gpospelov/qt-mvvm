@@ -35,6 +35,11 @@ struct GraphCanvas::GraphCanvasImpl {
         reporter = CreateGraphReporter(custom_plot, on_mouse_move);
     }
 
+    //! Updates viewport.
+    void update_viewport() {
+        viewport_controller->currentItem()->update_viewport();
+    }
+
     QCustomPlot* customPlot() { return custom_plot; }
 };
 
@@ -62,6 +67,11 @@ void GraphCanvas::setItem(GraphViewportItem* viewport_item)
 std::unique_ptr<SceneAdapterInterface> GraphCanvas::createSceneAdapter() const
 {
     return std::make_unique<CustomPlotSceneAdapter>(p_impl->customPlot());
+}
+
+void GraphCanvas::update_viewport()
+{
+    p_impl->update_viewport();
 }
 
 GraphCanvas::~GraphCanvas() = default;
