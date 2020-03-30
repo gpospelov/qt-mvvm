@@ -19,6 +19,9 @@ class GraphEditorToolBar : public QToolBar
     Q_OBJECT
 public:
     explicit GraphEditorToolBar(QWidget* parent = nullptr);
+
+signals:
+    void resetViewport();
 };
 
 #endif // GRAPHEDITORTOOLBAR_H

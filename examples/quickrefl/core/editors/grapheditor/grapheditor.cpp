@@ -20,6 +20,9 @@ GraphEditor::GraphEditor(QWidget* parent)
     layout->setContentsMargins(0, 0, 0, 0);
     layout->addWidget(graph_canvas);
     layout->addWidget(toolbar);
+
+    connect(toolbar, &GraphEditorToolBar::resetViewport,
+            [this]() { graph_canvas->update_viewport(); });
 }
 
 void GraphEditor::setItem(ModelView::GraphViewportItem* viewport_item)
