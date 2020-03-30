@@ -12,6 +12,7 @@
 #include "styleutils.h"
 #include "applicationmodels.h"
 #include "quicksimcontroller.h"
+#include "grapheditor.h"
 #include <QVBoxLayout>
 #include <mvvm/model/modelutils.h>
 #include <mvvm/plotting/graphcanvas.h>
@@ -22,14 +23,13 @@ using namespace ModelView;
 QuickSimEditor::QuickSimEditor(ApplicationModels* app_models, QWidget* parent)
     : QWidget(parent), app_models(app_models), job_model(std::make_unique<JobModel>()),
       sim_controller(new QuickSimController(app_models, job_model.get(), this)),
-      graph_canvas(new ModelView::GraphCanvas)
+      graph_editor(new GraphEditor)
 {
     setWindowTitle(QString("Reflectivity plot"));
-    auto layout = new QVBoxLayout;
-    layout->addWidget(graph_canvas);
-    setLayout(layout);
+    auto layout = new QVBoxLayout(this);
+    layout->addWidget(graph_editor);
 
-    graph_canvas->setItem(Utils::TopItem<GraphViewportItem>(job_model.get()));
+    graph_editor->setItem(Utils::TopItem<GraphViewportItem>(job_model.get()));
 }
 
 QuickSimEditor::~QuickSimEditor() = default;

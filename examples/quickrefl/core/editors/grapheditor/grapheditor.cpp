@@ -17,6 +17,8 @@ GraphEditor::GraphEditor(QWidget* parent)
     : QWidget(parent), toolbar(new GraphEditorToolBar), graph_canvas(new ModelView::GraphCanvas)
 {
     auto layout = new QHBoxLayout(this);
+    layout->setContentsMargins(0, 0, 0, 0);
+    layout->addWidget(graph_canvas);
     layout->addWidget(toolbar);
 }
 
