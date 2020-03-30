@@ -86,6 +86,8 @@ void QuickSimController::setup_models_tracking()
         sample_model->mapper()->setOnModelDestroyed(on_model_destroyed, this);
     }
     update_sld_profile();
+    auto viewport_item = ModelView::Utils::TopItem<ModelView::GraphViewportItem>(job_model);
+    viewport_item->update_viewport();
 }
 
 //! Performs update of sld profile for immediate plotting.
@@ -102,9 +104,6 @@ void QuickSimController::update_sld_profile()
 
     auto values = ModelView::Utils::Real(MaterialProfile::CalculateProfile(slices, profile_points_count, xmin, xmax));
     data_item->setContent(values);
-
-    auto viewport_item = ModelView::Utils::TopItem<ModelView::GraphViewportItem>(job_model);
-    viewport_item->update_viewport();
 }
 
 //! Submit data to JobManager for consequent specular simulation.
