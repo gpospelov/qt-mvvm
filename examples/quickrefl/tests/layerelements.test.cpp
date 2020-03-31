@@ -777,6 +777,8 @@ TEST_F(LayerElementTest, testpropagation)
 {
     TestData test_data;
 
+    auto adapter = test_data.scene->getSceneAdapter();
+
     // Set the scenes
     test_data.above_controller->setScene(test_data.scene);
     test_data.middle_controller->setScene(test_data.scene);
@@ -865,7 +867,7 @@ TEST_F(LayerElementTest, testpropagation)
     QList<QVariant> move_arguments;
 
     // Try standard x move
-    mouse_move_event->setPos(QPointF(8, 0));
+    mouse_move_event->setPos(QPointF(adapter->toSceneX(8), adapter->toSceneY(0)));
     side_segment_middle->mouseMoveEvent(mouse_move_event);
     move_arguments = spy_ctr_above_width.takeLast();
 
@@ -884,7 +886,7 @@ TEST_F(LayerElementTest, testpropagation)
     EXPECT_EQ(4, item_middle->property(LayerElementItem::P_ROUGHNESS).toDouble());
 
     // Try limit x move
-    mouse_move_event->setPos(QPointF(-1, 0));
+    mouse_move_event->setPos(QPointF(adapter->toSceneX(-1), adapter->toSceneY(0)));
     side_segment_middle->mouseMoveEvent(mouse_move_event);
 
     move_arguments = spy_ctr_above_width.takeLast();
@@ -903,7 +905,7 @@ TEST_F(LayerElementTest, testpropagation)
     EXPECT_EQ(1e-6 / 2, item_middle->property(LayerElementItem::P_ROUGHNESS).toDouble());
 
     // Try standard x move
-    mouse_move_event->setPos(QPointF(10, 0));
+    mouse_move_event->setPos(QPointF(adapter->toSceneX(10), adapter->toSceneY(0)));
     side_segment_middle->mouseMoveEvent(mouse_move_event);
     move_arguments = spy_ctr_above_width.takeLast();
 
@@ -917,7 +919,7 @@ TEST_F(LayerElementTest, testpropagation)
     EXPECT_EQ(5., second_handle_middle->rectangle().y());
 
     // Try standard y move
-    mouse_move_event->setPos(QPointF(0, 8));
+    mouse_move_event->setPos(QPointF(adapter->toSceneX(0), adapter->toSceneY(8)));
     top_segment_middle->mouseMoveEvent(mouse_move_event);
     move_arguments = spy_ctr_middle_height.takeLast();
 
@@ -930,7 +932,7 @@ TEST_F(LayerElementTest, testpropagation)
     EXPECT_EQ(3., second_handle_middle->rectangle().y());
 
     // Try limit y move
-    mouse_move_event->setPos(QPointF(0, -1));
+    mouse_move_event->setPos(QPointF(adapter->toSceneX(0), adapter->toSceneY(-1)));
     top_segment_middle->mouseMoveEvent(mouse_move_event);
     move_arguments = spy_ctr_middle_height.takeLast();
 
@@ -943,7 +945,7 @@ TEST_F(LayerElementTest, testpropagation)
     EXPECT_EQ(-5., second_handle_middle->rectangle().y());
 
     // Try standard y move
-    mouse_move_event->setPos(QPointF(0, 10));
+    mouse_move_event->setPos(QPointF(adapter->toSceneX(0), adapter->toSceneY(10)));
     top_segment_middle->mouseMoveEvent(mouse_move_event);
     move_arguments = spy_ctr_middle_height.takeLast();
 
@@ -956,7 +958,7 @@ TEST_F(LayerElementTest, testpropagation)
     EXPECT_EQ(5., second_handle_middle->rectangle().y());
 
     // Try standard roughness move left handle
-    mouse_move_event->setPos(QPointF(7, 0));
+    mouse_move_event->setPos(QPointF(adapter->toSceneX(7), adapter->toSceneY(0)));
     left_handle_middle->mouseMoveEvent(mouse_move_event);
 
     move_arguments = spy_ctr_middle_roughness.takeLast();
@@ -965,7 +967,7 @@ TEST_F(LayerElementTest, testpropagation)
     EXPECT_EQ(3., item_middle->property(LayerElementItem::P_ROUGHNESS).toDouble());
 
     // Try limit roughness move left handle
-    mouse_move_event->setPos(QPointF(2, 0));
+    mouse_move_event->setPos(QPointF(adapter->toSceneX(2), adapter->toSceneY(0)));
     left_handle_middle->mouseMoveEvent(mouse_move_event);
 
     move_arguments = spy_ctr_middle_roughness.takeLast();
@@ -974,7 +976,7 @@ TEST_F(LayerElementTest, testpropagation)
     EXPECT_EQ(5., item_middle->property(LayerElementItem::P_ROUGHNESS).toDouble());
 
     // Try standard roughness move left handle
-    mouse_move_event->setPos(QPointF(8, 0));
+    mouse_move_event->setPos(QPointF(adapter->toSceneX(8), adapter->toSceneY(0)));
     left_handle_middle->mouseMoveEvent(mouse_move_event);
 
     move_arguments = spy_ctr_middle_roughness.takeLast();
@@ -983,7 +985,7 @@ TEST_F(LayerElementTest, testpropagation)
     EXPECT_EQ(2., item_middle->property(LayerElementItem::P_ROUGHNESS).toDouble());
 
     // Try standard roughness move right handle
-    mouse_move_event->setPos(QPointF(13, 0));
+    mouse_move_event->setPos(QPointF(adapter->toSceneX(13), adapter->toSceneY(0)));
     right_handle_middle->mouseMoveEvent(mouse_move_event);
 
     move_arguments = spy_ctr_middle_roughness.takeLast();
@@ -992,7 +994,7 @@ TEST_F(LayerElementTest, testpropagation)
     EXPECT_EQ(3., item_middle->property(LayerElementItem::P_ROUGHNESS).toDouble());
 
     // Try limit roughness move right handle
-    mouse_move_event->setPos(QPointF(8, 0));
+    mouse_move_event->setPos(QPointF(adapter->toSceneX(8), adapter->toSceneY(0)));
     right_handle_middle->mouseMoveEvent(mouse_move_event);
 
     move_arguments = spy_ctr_middle_roughness.takeLast();
@@ -1001,7 +1003,7 @@ TEST_F(LayerElementTest, testpropagation)
     EXPECT_EQ(0, item_middle->property(LayerElementItem::P_ROUGHNESS).toDouble());
 
     // Try standard roughness move right handle
-    mouse_move_event->setPos(QPointF(13, 0));
+    mouse_move_event->setPos(QPointF(adapter->toSceneX(13), adapter->toSceneY(0)));
     right_handle_middle->mouseMoveEvent(mouse_move_event);
 
     move_arguments = spy_ctr_middle_roughness.takeLast();
