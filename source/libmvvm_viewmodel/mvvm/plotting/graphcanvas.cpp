@@ -37,6 +37,8 @@ struct GraphCanvas::GraphCanvasImpl {
 
     //! Updates viewport.
     void update_viewport() {
+        if (!viewport_controller->currentItem())
+            return;
         viewport_controller->currentItem()->update_viewport();
     }
 
