@@ -13,14 +13,11 @@
 #include <QWidget>
 #include <memory>
 
-namespace ModelView
-{
-class GraphCanvas;
-}
-
 class JobModel;
 class ApplicationModels;
 class QuickSimController;
+class GraphEditor;
+class QTabWidget;
 
 //! Quick reflectivity simulations.
 
@@ -38,7 +35,9 @@ private:
     ApplicationModels* app_models{nullptr};
     std::unique_ptr<JobModel> job_model;
     QuickSimController* sim_controller{nullptr};
-    ModelView::GraphCanvas* graph_canvas{nullptr};
+    GraphEditor* sld_canvas{nullptr};
+    GraphEditor* refl_canvas{nullptr};
+    QTabWidget* tabwidget{nullptr};
 };
 
 #endif // QUICKSIMEDITOR_H

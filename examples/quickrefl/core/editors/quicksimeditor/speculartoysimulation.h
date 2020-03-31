@@ -27,7 +27,7 @@ public:
         std::vector<double> data;
     };
 
-    SpecularToySimulation(const multislice_t& input_data);
+    SpecularToySimulation(const multislice_t& multislice);
 
     void runSimulation();
 
@@ -35,12 +35,11 @@ public:
 
     Result simulationResult() const;
 
-private:
-    void calculate_sld_profile();
+    static Result sld_profile(const multislice_t& multislice, int n_points);
 
+private:
     ModelView::ProgressHandler progress_handler;
     multislice_t input_data;
-    Result sld_profile;
 };
 
 #endif // SPECULARTOYSIMULATION_H

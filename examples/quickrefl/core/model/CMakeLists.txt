@@ -4,6 +4,8 @@ target_sources(quickreflcore PRIVATE
     applicationmodels.cpp
     applicationmodels.h
     item_constants.h
+    jobitem.cpp
+    jobitem.h
     jobmodel.cpp
     jobmodel.h
     layeritems.cpp

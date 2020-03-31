@@ -8,10 +8,12 @@
 // ************************************************************************** //
 
 #include "quicksimeditor.h"
-#include "jobmodel.h"
-#include "styleutils.h"
 #include "applicationmodels.h"
+#include "grapheditor.h"
+#include "jobmodel.h"
 #include "quicksimcontroller.h"
+#include "styleutils.h"
+#include <QTabWidget>
 #include <QVBoxLayout>
 #include <mvvm/model/modelutils.h>
 #include <mvvm/plotting/graphcanvas.h>
@@ -22,14 +24,18 @@ using namespace ModelView;
 QuickSimEditor::QuickSimEditor(ApplicationModels* app_models, QWidget* parent)
     : QWidget(parent), app_models(app_models), job_model(std::make_unique<JobModel>()),
       sim_controller(new QuickSimController(app_models, job_model.get(), this)),
-      graph_canvas(new ModelView::GraphCanvas)
+      sld_canvas(new GraphEditor), refl_canvas(new GraphEditor), tabwidget(new QTabWidget)
 {
-    setWindowTitle(QString("Reflectivity plot"));
-    auto layout = new QVBoxLayout;
-    layout->addWidget(graph_canvas);
-    setLayout(layout);
+    tabwidget->addTab(sld_canvas, "SLD profile");
+    tabwidget->addTab(refl_canvas, "Reflectivity");
+    tabwidget->setCurrentIndex(0);
+    tabwidget->setTabPosition(QTabWidget::East);
 
-    graph_canvas->setItem(Utils::TopItem<GraphViewportItem>(job_model.get()));
+    setWindowTitle(QString("Reflectivity plot"));
+    auto layout = new QVBoxLayout(this);
+    layout->addWidget(tabwidget);
+
+    sld_canvas->setItem(job_model->sld_viewport());
 }
 
 QuickSimEditor::~QuickSimEditor() = default;

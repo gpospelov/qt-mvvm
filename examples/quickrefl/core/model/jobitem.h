@@ -7,26 +7,27 @@
 //
 // ************************************************************************** //
 
-#ifndef JOBMODEL_H
-#define JOBMODEL_H
+#ifndef JOBITEM_H
+#define JOBITEM_H
 
-#include <mvvm/model/sessionmodel.h>
+#include <mvvm/model/compounditem.h>
 
-namespace ModelView
-{
+namespace ModelView {
 class Data1DItem;
 class GraphViewportItem;
-} // namespace ModelView
+}
 
-class JobItem;
+//! Holds results of toy reflectivity simulation.
 
-//! Contains results of quick reflectometry simulations.
-// TODO make JobModel part of ApplicationModels
-
-class JobModel : public ModelView::SessionModel
+class JobItem : public ModelView::CompoundItem
 {
 public:
-    JobModel();
+    static inline const std::string P_SLD_DATA = "P_SLD_DATA";
+    static inline const std::string P_SLD_VIEWPORT = "P_SLD_VIEWPORT";
+    static inline const std::string P_SPECULAR_DATA = "P_SPECULAR_DATA";
+    static inline const std::string P_SPECULAR_VIEWPORT = "P_SPECULAR_VIEWPORT";
+
+    JobItem();
 
     ModelView::Data1DItem* sld_data() const;
     ModelView::GraphViewportItem* sld_viewport() const;
@@ -35,8 +36,7 @@ public:
     ModelView::GraphViewportItem* specular_viewport() const;
 
 private:
-    JobItem* job_item() const;
-    void init_model();
+    void setup_graph(const std::string& data_tag, const std::string& viewport_tag);
 };
 
-#endif //  JOBMODEL_H
+#endif // JOBITEM_H
