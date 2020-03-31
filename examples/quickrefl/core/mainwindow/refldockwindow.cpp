@@ -8,7 +8,7 @@
 // ************************************************************************** //
 
 #include "refldockwindow.h"
-#include "SLDViewWidget.h"
+#include "sldviewwidget.h"
 #include "applicationmodels.h"
 #include "dockscontroller.h"
 #include "layereditor.h"

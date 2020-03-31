@@ -9,7 +9,7 @@
 
 #include "reflwidgets.h"
 #include "styleutils.h"
-#include "SLDViewWidget.h"
+#include "sldviewwidget.h"
 #include <QVBoxLayout>
 
 //! ---------------------------------------------------------------------------

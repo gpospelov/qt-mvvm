@@ -13,14 +13,14 @@
 #include <QWheelEvent>
 
 class GraphicsScene;
-class SLDController;
+class SLDElementController;
 
 class SLDViewWidget : public QGraphicsView
 {
     Q_OBJECT
 
 public:
-    SLDViewWidget(SLDController* sld_model, QWidget* parent = nullptr);
+    SLDViewWidget(SLDElementController* sld_model, QWidget* parent = nullptr);
     GraphicsScene* getScene() const;
 
 protected:

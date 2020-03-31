@@ -29,7 +29,7 @@ class GraphicsScene : public QGraphicsScene
     Q_OBJECT
 
 public:
-    GraphicsScene(QObject* parent);
+    GraphicsScene(QObject* parent = nullptr);
     ~GraphicsScene() override;
 
     void setContext();

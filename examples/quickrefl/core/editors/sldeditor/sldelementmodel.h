@@ -7,15 +7,13 @@
 //
 // ************************************************************************** //
 
-#ifndef VIEWITEMSMODEL_H
-#define VIEWITEMSMODEL_H
+#ifndef SLDELEMENTMODEL_H
+#define SLDELEMENTMODEL_H
 
 #include <mvvm/model/sessionmodel.h>
 #include <vector>
 
-#include "HandleItem.h"
-#include "RoughnessViewItem.h"
-#include "SegmentItem.h"
+class LayerElementItem;
 
 namespace ModelView
 {
@@ -27,17 +25,13 @@ class ExternalProperty;
 @brief This holds the model for all the graphical elements of the sld editor
 */
 
-class SLDViewModel : public ModelView::SessionModel
+class SLDElementModel : public ModelView::SessionModel
 {
 public:
-    SLDViewModel();
+    SLDElementModel();
 
-    //! Add a handle item
-    HandleItem* addHandle();
-    //! Add a segment item
-    SegmentItem* addSegment(std::string layer_identifier_in);
-    //! Add a roughness item
-    RoughnessViewItem* addRoughness(std::string layer_identifier_in);
+    //! Add a layer item
+    LayerElementItem* addLayer();
 };
 
-#endif //  VIEWITEMSMODEL_H
+#endif //  SLDELEMENTMODEL_H

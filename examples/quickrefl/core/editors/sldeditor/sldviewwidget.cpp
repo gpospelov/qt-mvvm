@@ -7,14 +7,14 @@
 //
 // ************************************************************************** //
 
-#include "SLDViewWidget.h"
-#include "GraphicsScene.h"
-#include "SLDController.h"
+#include "sldviewwidget.h"
+#include "graphicsscene.h"
+#include "sldelementcontroller.h"
 
 #include <memory>
 
 //! The constructor
-SLDViewWidget::SLDViewWidget(SLDController* sld_controller, QWidget* parent) : QGraphicsView(parent)
+SLDViewWidget::SLDViewWidget(SLDElementController* sld_controller, QWidget* parent) : QGraphicsView(parent)
 {
     GraphicsScene* scene_item = new GraphicsScene(parent = this);
     setScene(scene_item);

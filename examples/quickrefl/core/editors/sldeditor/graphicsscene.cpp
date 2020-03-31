@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "GraphicsScene.h"
+#include "graphicsscene.h"
 
 #include <mvvm/model/modelutils.h>
 #include <mvvm/plotting/customplotproxywidget.h>
