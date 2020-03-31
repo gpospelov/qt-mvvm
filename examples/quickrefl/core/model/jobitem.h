@@ -12,10 +12,11 @@
 
 #include <mvvm/model/compounditem.h>
 
-namespace ModelView {
+namespace ModelView
+{
 class Data1DItem;
 class GraphViewportItem;
-}
+} // namespace ModelView
 
 //! Holds results of toy reflectivity simulation.
 

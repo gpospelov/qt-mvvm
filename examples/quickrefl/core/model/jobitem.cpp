@@ -21,29 +21,29 @@ JobItem::JobItem() : ModelView::CompoundItem(::Constants::JobItemType)
     setup_graph(P_SPECULAR_DATA, P_SPECULAR_VIEWPORT);
 }
 
-Data1DItem *JobItem::sld_data() const
+Data1DItem* JobItem::sld_data() const
 {
     return item<Data1DItem>(P_SLD_DATA);
 }
 
-GraphViewportItem *JobItem::sld_viewport() const
+GraphViewportItem* JobItem::sld_viewport() const
 {
     return item<GraphViewportItem>(P_SLD_VIEWPORT);
 }
 
-Data1DItem *JobItem::specular_data() const
+Data1DItem* JobItem::specular_data() const
 {
-    return item<Data1DItem>(P_SLD_DATA);
+    return item<Data1DItem>(P_SPECULAR_DATA);
 }
 
-GraphViewportItem *JobItem::specular_viewport() const
+GraphViewportItem* JobItem::specular_viewport() const
 {
-    return item<GraphViewportItem>(P_SLD_VIEWPORT);
+    return item<GraphViewportItem>(P_SPECULAR_VIEWPORT);
 }
 
 //! Setup data, graph and viewport.
 
-void JobItem::setup_graph(const std::string &data_tag, const std::string &viewport_tag)
+void JobItem::setup_graph(const std::string& data_tag, const std::string& viewport_tag)
 {
     auto data = addProperty<Data1DItem>(data_tag);
     auto viewport = addProperty<GraphViewportItem>(viewport_tag);
