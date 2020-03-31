@@ -9,7 +9,7 @@
 
 #include "google_test.h"
 
-#include "GraphicsScene.h"
+#include "graphicsscene.h"
 #include "handleelementview.h"
 #include "layerelementcontroller.h"
 #include "layerelementitem.h"
