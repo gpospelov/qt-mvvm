@@ -767,6 +767,7 @@ void LayerElementController::updateRoughness() const
     pen.setWidthF(layerElementItem()->property(LayerElementItem::P_R_HANDLE_PEN_WIDTH).toDouble());
     brush.setColor(
         layerElementItem()->property(LayerElementItem::P_R_HANDLE_BRUSH_COLOR).value<QColor>());
+    brush.setStyle(Qt::SolidPattern);
 
     if (m_rough_handles_views[0]) {
         m_rough_handles_views.at(0)->setPen(pen);

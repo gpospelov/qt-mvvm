@@ -21,6 +21,7 @@ HandleElementView::HandleElementView()
 {
     adaptW(false);
     adaptH(false);
+    setZValue(2);
 }
 
 //! The overriden paint method

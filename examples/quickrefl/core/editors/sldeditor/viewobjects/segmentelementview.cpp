@@ -20,6 +20,7 @@ SegmentElementView::SegmentElementView()
       m_pos(QPointF(0, 0))
 {
     setFlag(QGraphicsItem::ItemIsMovable);
+    setZValue(1);
 }
 
 //! The overriden paint method

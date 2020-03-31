@@ -37,7 +37,7 @@ LayerElementItem::LayerElementItem() : ModelView::CompoundItem("LayerElement")
     addProperty(P_HANDLE_PEN_WIDTH, 2.)->setDisplayName("Handle pen width");
     addProperty(P_HANDLE_PEN_COLOR, QColor("black"))->setDisplayName("Handle pen color");
 
-    addProperty(P_R_HANDLE_RADIUS, 2.)->setDisplayName("Roughness handle radius");
+    addProperty(P_R_HANDLE_RADIUS, 4.)->setDisplayName("Roughness handle radius");
     addProperty(P_R_HANDLE_BRUSH_COLOR, QColor("black"))->setDisplayName("Roughness handle color");
     addProperty(P_R_HANDLE_PEN_WIDTH, 2.)->setDisplayName("Roughness handle pen width");
     addProperty(P_R_HANDLE_PEN_COLOR, QColor("black"))
