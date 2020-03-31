@@ -1,6 +1,8 @@
 # Static library: quickreflcore.
 
 target_sources(quickreflcore PRIVATE
+    fouriertransform.cpp
+    fouriertransform.h
     materialprofile.cpp
     materialprofile.h
     profilehelper.cpp
@@ -9,11 +11,11 @@ target_sources(quickreflcore PRIVATE
     quicksimcontroller.h
     quicksimeditor.cpp
     quicksimeditor.h
+    quicksimutils.cpp
+    quicksimutils.h
     slice.h
     speculartoysimulation.cpp
     speculartoysimulation.h
-    quicksimutils.cpp
-    quicksimutils.h
 )
 
 target_include_directories(quickreflcore PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>)
