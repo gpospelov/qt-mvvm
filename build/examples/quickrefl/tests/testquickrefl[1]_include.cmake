@@ -1,0 +1,5 @@
+if(EXISTS "/Users/alexanderschober/Projects/qtmvvm/qt-mvvm/build/examples/quickrefl/tests/testquickrefl[1]_tests.cmake")
+  include("/Users/alexanderschober/Projects/qtmvvm/qt-mvvm/build/examples/quickrefl/tests/testquickrefl[1]_tests.cmake")
+else()
+  add_test(testquickrefl_NOT_BUILT testquickrefl_NOT_BUILT)
+endif()

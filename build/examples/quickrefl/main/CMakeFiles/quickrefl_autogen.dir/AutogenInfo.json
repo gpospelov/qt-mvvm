@@ -1,0 +1,73 @@
+{
+	"BUILD_DIR" : "/Users/alexanderschober/Projects/qtmvvm/qt-mvvm/build/examples/quickrefl/main/quickrefl_autogen",
+	"CMAKE_BINARY_DIR" : "/Users/alexanderschober/Projects/qtmvvm/qt-mvvm/build",
+	"CMAKE_CURRENT_BINARY_DIR" : "/Users/alexanderschober/Projects/qtmvvm/qt-mvvm/build/examples/quickrefl/main",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/Users/alexanderschober/Projects/qtmvvm/qt-mvvm/examples/quickrefl/main",
+	"CMAKE_EXECUTABLE" : "/usr/local/Cellar/cmake/3.16.5/bin/cmake",
+	"CMAKE_SOURCE_DIR" : "/Users/alexanderschober/Projects/qtmvvm/qt-mvvm",
+	"HEADERS" : [],
+	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
+	"INCLUDE_DIR" : "/Users/alexanderschober/Projects/qtmvvm/qt-mvvm/build/examples/quickrefl/main/quickrefl_autogen/include",
+	"MOC_COMPILATION_FILE" : "/Users/alexanderschober/Projects/qtmvvm/qt-mvvm/build/examples/quickrefl/main/quickrefl_autogen/mocs_compilation.cpp",
+	"MOC_DEFINITIONS" : [ "QT_CORE_LIB", "QT_GUI_LIB", "QT_WIDGETS_LIB" ],
+	"MOC_DEPEND_FILTERS" : 
+	[
+		[
+			"Q_PLUGIN_METADATA",
+			"[\n][ \t]*Q_PLUGIN_METADATA[ \t]*\\([^\\)]*FILE[ \t]*\"([^\"]+)\""
+		]
+	],
+	"MOC_INCLUDES" : 
+	[
+		"/Users/alexanderschober/Projects/qtmvvm/qt-mvvm/examples/quickrefl/core/mainwindow",
+		"/Users/alexanderschober/Projects/qtmvvm/qt-mvvm/examples/quickrefl/core/model",
+		"/Users/alexanderschober/Projects/qtmvvm/qt-mvvm/examples/quickrefl/core/editors/layereditor",
+		"/Users/alexanderschober/Projects/qtmvvm/qt-mvvm/examples/quickrefl/core/editors/materialeditor",
+		"/Users/alexanderschober/Projects/qtmvvm/qt-mvvm/examples/quickrefl/core/editors/sldeditor",
+		"/Users/alexanderschober/Projects/qtmvvm/qt-mvvm/examples/quickrefl/core/editors/quicksimeditor",
+		"/Users/alexanderschober/Projects/qtmvvm/qt-mvvm/examples/quickrefl/core/resources",
+		"/Users/alexanderschober/Projects/qtmvvm/qt-mvvm/source/libmvvm_viewmodel",
+		"/Users/alexanderschober/Projects/qtmvvm/qt-mvvm/source/libmvvm_model",
+		"/usr/local/opt/qt/lib/QtWidgets.framework",
+		"/usr/local/opt/qt/lib/QtWidgets.framework/Headers",
+		"/usr/local/opt/qt/lib/QtGui.framework",
+		"/usr/local/opt/qt/lib/QtGui.framework/Headers",
+		"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/OpenGL.framework/Headers",
+		"/usr/local/opt/qt/lib/QtCore.framework",
+		"/usr/local/opt/qt/lib/QtCore.framework/Headers",
+		"/usr/local/opt/qt/mkspecs/macx-clang",
+		"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1",
+		"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/11.0.0/include",
+		"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include",
+		"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/usr/include"
+	],
+	"MOC_MACRO_NAMES" : [ "Q_OBJECT", "Q_GADGET", "Q_NAMESPACE", "Q_NAMESPACE_EXPORT" ],
+	"MOC_OPTIONS" : [],
+	"MOC_PATH_PREFIX" : true,
+	"MOC_PREDEFS_CMD" : 
+	[
+		"/usr/bin/clang++",
+		"-dM",
+		"-E",
+		"-c",
+		"/usr/local/Cellar/cmake/3.16.5/share/cmake/Modules/CMakeCXXCompilerABI.cpp"
+	],
+	"MOC_PREDEFS_FILE" : "/Users/alexanderschober/Projects/qtmvvm/qt-mvvm/build/examples/quickrefl/main/quickrefl_autogen/moc_predefs.h",
+	"MOC_RELAXED_MODE" : false,
+	"MOC_SKIP" : [],
+	"MULTI_CONFIG" : false,
+	"PARALLEL" : 4,
+	"PARSE_CACHE_FILE" : "/Users/alexanderschober/Projects/qtmvvm/qt-mvvm/build/examples/quickrefl/main/CMakeFiles/quickrefl_autogen.dir/ParseCache.txt",
+	"QT_MOC_EXECUTABLE" : "/usr/local/opt/qt/bin/moc",
+	"QT_UIC_EXECUTABLE" : "",
+	"QT_VERSION_MAJOR" : 5,
+	"SETTINGS_FILE" : "/Users/alexanderschober/Projects/qtmvvm/qt-mvvm/build/examples/quickrefl/main/CMakeFiles/quickrefl_autogen.dir/AutogenUsed.txt",
+	"SOURCES" : 
+	[
+		[
+			"/Users/alexanderschober/Projects/qtmvvm/qt-mvvm/examples/quickrefl/main/main.cpp",
+			"Mu"
+		]
+	],
+	"VERBOSITY" : 0
+}
