@@ -97,10 +97,23 @@ void QuickSimController::update_sld_profile()
     auto multilayer = ModelView::Utils::TopItem<MultiLayerItem>(sample_model);
     auto slices = ::Utils::CreateMultiSlice(*multilayer);
 
-    auto [xmin, xmax, values] = SpecularToySimulation::sld_profile(slices, profile_points_count);
-    job_model->sld_data()->setAxis(
-        ModelView::FixedBinAxisItem::create(profile_points_count, xmin, xmax));
-    job_model->sld_data()->setContent(values);
+    {
+        auto [xmin, xmax, values] =
+            SpecularToySimulation::sld_profile(slices, profile_points_count);
+        auto data = job_model->sld_data();
+        data->setAxis(ModelView::FixedBinAxisItem::create(profile_points_count, xmin, xmax));
+        data->setContent(values);
+    }
+
+    {
+        SpecularToySimulation simulation(slices);
+        simulation.runSimulation();
+
+        auto [xmin, xmax, values] = simulation.simulationResult();
+        auto data = job_model->specular_data();
+        data->setAxis(ModelView::FixedBinAxisItem::create(values.size(), xmin, xmax));
+        data->setContent(values);
+    }
 }
 
 //! Submit data to JobManager for consequent specular simulation.

@@ -40,6 +40,7 @@ public:
 private:
     ModelView::ProgressHandler progress_handler;
     multislice_t input_data;
+    Result specular_result;
 };
 
 #endif // SPECULARTOYSIMULATION_H

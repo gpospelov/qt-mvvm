@@ -8,12 +8,13 @@
 // ************************************************************************** //
 
 #include "speculartoysimulation.h"
+#include "fouriertransform.h"
 #include "materialprofile.h"
 #include <mvvm/utils/containerutils.h>
 
 namespace
 {
-const int simulation_steps_count = 100;
+const int simulation_steps_count = 500;
 } // namespace
 
 using namespace ModelView;
@@ -25,7 +26,13 @@ SpecularToySimulation::SpecularToySimulation(const multislice_t& multislice)
 
 void SpecularToySimulation::runSimulation()
 {
-    // TODO
+    auto [xmin, xmax] = MaterialProfile::DefaultMaterialProfileLimits(input_data);
+    auto profile =
+        MaterialProfile::CalculateProfile(input_data, simulation_steps_count, xmin, xmax);
+    auto specular = fourier_transform(profile);
+    specular_result.xmin = 0.0;
+    specular_result.xmax = specular.size();
+    specular_result.data = ModelView::Utils::Real(specular);
 }
 
 void SpecularToySimulation::setProgressCallback(ModelView::ProgressHandler::callback_t callback)
@@ -36,7 +43,7 @@ void SpecularToySimulation::setProgressCallback(ModelView::ProgressHandler::call
 
 SpecularToySimulation::Result SpecularToySimulation::simulationResult() const
 {
-    return {};
+    return specular_result;
 }
 
 SpecularToySimulation::Result SpecularToySimulation::sld_profile(const multislice_t& multislice,

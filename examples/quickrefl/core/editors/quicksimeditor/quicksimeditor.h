@@ -36,7 +36,7 @@ private:
     std::unique_ptr<JobModel> job_model;
     QuickSimController* sim_controller{nullptr};
     GraphEditor* sld_canvas{nullptr};
-    GraphEditor* refl_canvas{nullptr};
+    GraphEditor* spec_canvas{nullptr};
     QTabWidget* tabwidget{nullptr};
 };
 
