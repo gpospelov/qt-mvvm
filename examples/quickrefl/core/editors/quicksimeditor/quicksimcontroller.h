@@ -39,6 +39,7 @@ signals:
 
 public slots:
     void onInterruptRequest();
+    void onLiveStateChanged();
 
 private slots:
     void onMultiLayerChange();
@@ -54,6 +55,8 @@ private:
     MaterialModel* material_model{nullptr};
     JobModel* job_model{nullptr};
     JobManager* job_manager{nullptr};
+
+    bool live_simulation{true}; //! Run simulation on every parameter change.
 };
 
 #endif // QUICKSIMCONTROLLER_H

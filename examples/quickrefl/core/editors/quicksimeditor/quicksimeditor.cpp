@@ -71,6 +71,10 @@ void QuickSimEditor::setup_toolbar_connections()
     // Simulation interrupt request is propagated from toolbar to controller.
     connect(toolbar, &QuickSimEditorToolBar::cancelPressed, sim_controller,
             &QuickSimController::onInterruptRequest);
+
+    // Live simulation toggle is propagated from toobar to controller.
+    connect(toolbar, &QuickSimEditorToolBar::liveStateChanged, sim_controller,
+            &QuickSimController::onLiveStateChanged);
 }
 
 //! Connects signals from controller.

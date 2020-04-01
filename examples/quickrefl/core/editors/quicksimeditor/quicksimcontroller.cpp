@@ -55,11 +55,17 @@ void QuickSimController::onInterruptRequest()
     job_manager->onInterruptRequest();
 }
 
+void QuickSimController::onLiveStateChanged()
+{
+    live_simulation = !live_simulation;
+}
+
 //! Submits simulation job.
 
 void QuickSimController::onMultiLayerChange()
 {
-    qDebug() << "onMultiLayerChange";
+    if (!live_simulation)
+        return;
 
     auto multilayer = ModelView::Utils::TopItem<MultiLayerItem>(sample_model);
     auto slices = ::Utils::CreateMultiSlice(*multilayer);
