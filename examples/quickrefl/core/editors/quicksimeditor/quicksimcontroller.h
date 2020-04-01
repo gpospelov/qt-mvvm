@@ -34,6 +34,9 @@ public:
                        QObject* parent = nullptr);
     ~QuickSimController();
 
+signals:
+    void progressChanged(int value);
+
 private slots:
     void onMultiLayerChange();
     void onSimulationCompleted();

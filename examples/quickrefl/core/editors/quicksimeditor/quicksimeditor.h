@@ -38,6 +38,7 @@ public:
 
 private:
     void setup_toolbar_connections();
+    void setup_controller_connections();
 
     ApplicationModels* app_models{nullptr};
     std::unique_ptr<JobModel> job_model;

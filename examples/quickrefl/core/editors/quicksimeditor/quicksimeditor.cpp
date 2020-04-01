@@ -41,6 +41,7 @@ QuickSimEditor::QuickSimEditor(ApplicationModels* app_models, QWidget* parent)
     spec_canvas->setItem(job_model->specular_viewport());
 
     setup_toolbar_connections();
+    setup_controller_connections();
 }
 
 QuickSimEditor::~QuickSimEditor() = default;
@@ -55,15 +56,24 @@ QSize QuickSimEditor::minimumSizeHint() const
     return StyleUtils::DockMinimumSizeHint();
 }
 
-//! Connects to signals from toolbar.
+//! Connects signals from toolbar.
 
 void QuickSimEditor::setup_toolbar_connections()
 {
-    // Change in amplitude is propagated from toolbar to JobManager.
+    // Request to reset plot is propagated from toolbar to viewports.
     auto on_reset_view = [this]() {
         auto viewport = tabwidget->currentIndex() == 0 ? job_model->sld_viewport()
                                                        : job_model->specular_viewport();
         viewport->update_viewport();
     };
     connect(toolbar, &QuickSimEditorToolBar::resetViewRequest, on_reset_view);
+}
+
+//! Connects signals from controller.
+
+void QuickSimEditor::setup_controller_connections()
+{
+    // Progress values propagated from controller to toolbar.
+    connect(sim_controller, &QuickSimController::progressChanged, toolbar,
+            &QuickSimEditorToolBar::onProgressChanged);
 }

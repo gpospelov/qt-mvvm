@@ -97,7 +97,7 @@ void QuickSimEditorToolBar::setup_simulation_elements()
     addAction(settings_action);
 }
 
-//! Inits progress bar and button to cancel running simulation.
+//! Setups actions to reset plot and access its settings.
 
 void QuickSimEditorToolBar::setup_plot_elements()
 {

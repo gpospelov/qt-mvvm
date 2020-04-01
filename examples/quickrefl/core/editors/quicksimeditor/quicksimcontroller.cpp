@@ -132,6 +132,11 @@ void QuickSimController::submit_specular_simulation(const multislice_t& multisli
 
 void QuickSimController::setup_jobmanager_connections()
 {
+
+    // Simulation progress is propagated from JobManager to toolbar.
+    connect(job_manager, &JobManager::progressChanged, this, &QuickSimController::progressChanged,
+            Qt::QueuedConnection);
+
     // Notification about completed simulation from jobManager to GraphWidget.
     connect(job_manager, &JobManager::simulationCompleted, this,
             &QuickSimController::onSimulationCompleted, Qt::QueuedConnection);
