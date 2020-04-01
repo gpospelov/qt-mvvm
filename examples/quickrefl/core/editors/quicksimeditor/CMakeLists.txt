@@ -11,6 +11,8 @@ target_sources(quickreflcore PRIVATE
     quicksimcontroller.h
     quicksimeditor.cpp
     quicksimeditor.h
+    quicksimeditortoolbar.cpp
+    quicksimeditortoolbar.h
     quicksimutils.cpp
     quicksimutils.h
     slice.h

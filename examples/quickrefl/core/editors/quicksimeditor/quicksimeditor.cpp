@@ -13,6 +13,7 @@
 #include "jobmodel.h"
 #include "quicksimcontroller.h"
 #include "styleutils.h"
+#include "quicksimeditortoolbar.h"
 #include <QTabWidget>
 #include <QVBoxLayout>
 #include <mvvm/model/modelutils.h>
@@ -24,6 +25,7 @@ using namespace ModelView;
 QuickSimEditor::QuickSimEditor(ApplicationModels* app_models, QWidget* parent)
     : QWidget(parent), app_models(app_models), job_model(std::make_unique<JobModel>()),
       sim_controller(new QuickSimController(app_models, job_model.get(), this)),
+      toolbar(new QuickSimEditorToolBar),
       sld_canvas(new GraphEditor), spec_canvas(new GraphEditor), tabwidget(new QTabWidget)
 {
     tabwidget->addTab(sld_canvas, "SLD profile");
@@ -33,6 +35,7 @@ QuickSimEditor::QuickSimEditor(ApplicationModels* app_models, QWidget* parent)
 
     setWindowTitle(QString("Reflectivity plot"));
     auto layout = new QVBoxLayout(this);
+    layout->addWidget(toolbar);
     layout->addWidget(tabwidget);
 
     sld_canvas->setItem(job_model->sld_viewport());
