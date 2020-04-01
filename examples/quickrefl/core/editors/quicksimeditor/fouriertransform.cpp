@@ -9,9 +9,9 @@
 
 #include "fouriertransform.h"
 #include <algorithm>
-#include <numeric>
-#include <iterator>
 #include <cmath>
+#include <iterator>
+#include <numeric>
 
 //! Implementation of fourier transformation for vector with complex numbers.
 //! Taken from C++ STL Cookbook by Jacek Galowicz.
@@ -33,6 +33,16 @@ public:
 
     bool operator!=(const num_iterator& other) const { return pos != other.pos; }
 };
+
+namespace std
+{
+
+template <> struct iterator_traits<num_iterator> {
+    using iterator_category = std::forward_iterator_tag;
+    using value_type = int;
+};
+
+} // namespace std
 
 signal_t fourier_transform(const signal_t& signal, bool back_transform)
 {
