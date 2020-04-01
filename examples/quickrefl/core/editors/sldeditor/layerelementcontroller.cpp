@@ -266,7 +266,7 @@ void LayerElementController::setLayerAbove(LayerElementController* layer_view_co
 {
     p_controller_above = layer_view_controller;
 
-    if (!(layer_view_controller->layerBelow() == this))
+    if (layer_view_controller->layerBelow() != this)
         layer_view_controller->setLayerBelow(this);
 
     double pos =
@@ -280,7 +280,7 @@ void LayerElementController::setLayerBelow(LayerElementController* layer_view_co
 {
     p_controller_below = layer_view_controller;
 
-    if (!(layer_view_controller->layerAbove() == this))
+    if (layer_view_controller->layerAbove() != this)
         layer_view_controller->setLayerAbove(this);
 }
 
