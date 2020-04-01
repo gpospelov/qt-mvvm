@@ -48,6 +48,13 @@ QuickSimController::~QuickSimController()
         sample_model->mapper()->unsubscribe(this);
 }
 
+//! Requests interruption of running simulaitons.
+
+void QuickSimController::onInterruptRequest()
+{
+    job_manager->onInterruptRequest();
+}
+
 //! Submits simulation job.
 
 void QuickSimController::onMultiLayerChange()

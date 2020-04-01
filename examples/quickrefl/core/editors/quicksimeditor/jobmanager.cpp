@@ -79,6 +79,7 @@ void JobManager::wait_and_run()
             // a) If waiting on stack was stopped my calling threadsafe_stack::stop.
             // b) If simulation was interrupted via interrupt_request
             interrupt_request = false;
+            progressChanged(0);
         }
     }
 }

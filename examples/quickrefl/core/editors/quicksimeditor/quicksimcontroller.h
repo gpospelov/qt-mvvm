@@ -37,6 +37,9 @@ public:
 signals:
     void progressChanged(int value);
 
+public slots:
+    void onInterruptRequest();
+
 private slots:
     void onMultiLayerChange();
     void onSimulationCompleted();

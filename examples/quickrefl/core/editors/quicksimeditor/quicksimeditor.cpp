@@ -67,6 +67,10 @@ void QuickSimEditor::setup_toolbar_connections()
         viewport->update_viewport();
     };
     connect(toolbar, &QuickSimEditorToolBar::resetViewRequest, on_reset_view);
+
+    // Simulation interrupt request is propagated from toolbar to controller.
+    connect(toolbar, &QuickSimEditorToolBar::cancelPressed, sim_controller,
+            &QuickSimController::onInterruptRequest);
 }
 
 //! Connects signals from controller.
