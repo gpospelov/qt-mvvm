@@ -11,9 +11,11 @@
 #include "fouriertransform.h"
 #include "materialprofile.h"
 #include <mvvm/utils/containerutils.h>
+#include <thread>
 
 namespace
 {
+const int delay_mksec = 10;
 const int simulation_steps_count = 500;
 } // namespace
 
@@ -26,6 +28,7 @@ SpecularToySimulation::SpecularToySimulation(const multislice_t& multislice)
 
 void SpecularToySimulation::runSimulation()
 {
+    // actual simulation
     auto [xmin, xmax] = MaterialProfile::DefaultMaterialProfileLimits(input_data);
     auto profile =
         MaterialProfile::CalculateProfile(input_data, simulation_steps_count, xmin, xmax);
@@ -33,6 +36,16 @@ void SpecularToySimulation::runSimulation()
     specular_result.xmin = 0.0;
     specular_result.xmax = specular.size();
     specular_result.data = ModelView::Utils::Real(specular);
+
+    // Mimicking long simulation time, reporting progress and canceling, if necessary.
+    progress_handler.reset();
+    for (int i = 0; i < simulation_steps_count; ++i) {
+        if (progress_handler.has_interrupt_request())
+            throw std::runtime_error("Interrupt request");
+
+        progress_handler.setCompletedTicks(1);
+        std::this_thread::sleep_for(std::chrono::microseconds(delay_mksec));
+    }
 }
 
 void SpecularToySimulation::setProgressCallback(ModelView::ProgressHandler::callback_t callback)
