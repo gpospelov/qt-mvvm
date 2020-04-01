@@ -13,11 +13,16 @@
 #include <QWidget>
 #include <memory>
 
+namespace ModelView
+{
+class GraphCanvas;
+}
+
 class JobModel;
 class ApplicationModels;
 class QuickSimController;
-class GraphEditor;
 class QTabWidget;
+class QuickSimEditorToolBar;
 
 //! Quick reflectivity simulations.
 
@@ -32,11 +37,15 @@ public:
     QSize minimumSizeHint() const override;
 
 private:
+    void setup_toolbar_connections();
+    void setup_controller_connections();
+
     ApplicationModels* app_models{nullptr};
     std::unique_ptr<JobModel> job_model;
     QuickSimController* sim_controller{nullptr};
-    GraphEditor* sld_canvas{nullptr};
-    GraphEditor* refl_canvas{nullptr};
+    QuickSimEditorToolBar* toolbar{nullptr};
+    ModelView::GraphCanvas* sld_canvas{nullptr};
+    ModelView::GraphCanvas* spec_canvas{nullptr};
     QTabWidget* tabwidget{nullptr};
 };
 
