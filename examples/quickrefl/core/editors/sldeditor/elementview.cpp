@@ -22,10 +22,7 @@ ElementView::~ElementView() = default;
 ModelView::SceneAdapterInterface* ElementView::sceneAdapter() const
 {
     GraphicsScene* scene_item = static_cast<GraphicsScene*>(scene());
-    if (!scene_item)
-        return nullptr;
-
-    return scene_item->sceneAdapter();
+    return p_scene ? p_scene->sceneAdapter() : nullptr;
 }
 
 //! Advance method used by the scene adapter
