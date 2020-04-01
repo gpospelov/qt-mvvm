@@ -25,7 +25,7 @@ public:
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
     void advance(int phase) override;
 
-    ModelView::SceneAdapterInterface* getSceneAdapter() const;
+    ModelView::SceneAdapterInterface* sceneAdapter() const;
 
     void setCenterBased(bool choice);
     void adaptX(bool choice);

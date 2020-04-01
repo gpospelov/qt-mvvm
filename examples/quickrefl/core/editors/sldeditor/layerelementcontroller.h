@@ -51,7 +51,7 @@ signals:
     void roughnessChanged(std::string id, double value) const;
 
 private:
-    ModelView::SceneAdapterInterface* getSceneAdapter() const;
+    ModelView::SceneAdapterInterface* sceneAdapter() const;
 
     // ##################################################################################
     // Inter layer logic related
