@@ -24,7 +24,7 @@ RoughnessElementView::RoughnessElementView()
 //! The overriden paint method
 void RoughnessElementView::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
 {
-    painter->setClipRect(getSceneAdapter()->viewportRectangle());
+    painter->setClipRect(sceneAdapter()->viewportRectangle());
     painter->setPen(m_pen);
     painter->setBrush(m_brush);
     painter->drawPath(displayPath(m_left_path));

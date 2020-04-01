@@ -60,7 +60,7 @@ void GraphicsScene::createPlotProxy(ModelView::GraphCanvas* plot_canvas)
 }
 
 //! Return the pointer of the scene adapter on request
-ModelView::SceneAdapterInterface* GraphicsScene::getSceneAdapter() const
+ModelView::SceneAdapterInterface* GraphicsScene::sceneAdapter() const
 {
     return scene_adapter.get();
 }

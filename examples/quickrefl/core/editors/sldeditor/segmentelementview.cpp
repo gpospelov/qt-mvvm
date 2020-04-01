@@ -26,7 +26,7 @@ SegmentElementView::SegmentElementView()
 //! The overriden paint method
 void SegmentElementView::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
 {
-    painter->setClipRect(getSceneAdapter()->viewportRectangle());
+    painter->setClipRect(sceneAdapter()->viewportRectangle());
     painter->setPen(m_pen);
     painter->setBrush(m_brush);
     painter->drawRect(displayRect(m_rectangle));

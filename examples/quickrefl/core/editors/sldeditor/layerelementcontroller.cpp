@@ -253,12 +253,12 @@ void LayerElementController::unsetSampleItemId()
 }
 
 //! Get the scene adapter to convert to axes
-SceneAdapterInterface* LayerElementController::getSceneAdapter() const
+SceneAdapterInterface* LayerElementController::sceneAdapter() const
 {
     if (!p_scene)
         return nullptr;
 
-    return p_scene->getSceneAdapter();
+    return p_scene->sceneAdapter();
 }
 
 //! Set the layer above the current one in relation
