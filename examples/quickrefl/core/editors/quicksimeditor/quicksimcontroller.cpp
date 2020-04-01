@@ -9,6 +9,7 @@
 
 #include "quicksimcontroller.h"
 #include "applicationmodels.h"
+#include "jobmanager.h"
 #include "jobmodel.h"
 #include "layeritems.h"
 #include "materialmodel.h"
@@ -32,9 +33,11 @@ const int profile_points_count = 400;
 QuickSimController::QuickSimController(ApplicationModels* app_models, JobModel* job_model,
                                        QObject* parent)
     : QObject(parent), sample_model(app_models->sampleModel()),
-      material_model(app_models->materialModel()), job_model(job_model)
+      material_model(app_models->materialModel()), job_model(job_model),
+      job_manager(new JobManager(this))
 {
-    setup_models_tracking();
+    setup_multilayer_tracking();
+    setup_jobmanager_connections();
 }
 
 QuickSimController::~QuickSimController()
@@ -47,24 +50,38 @@ QuickSimController::~QuickSimController()
 
 //! Submits simulation job.
 
-void QuickSimController::onModelChange()
+void QuickSimController::onMultiLayerChange()
 {
-    qDebug() << "onModelChange";
-    update_sld_profile();
-    submit_specular_simulation();
+    qDebug() << "onMultiLayerChange";
+
+    auto multilayer = ModelView::Utils::TopItem<MultiLayerItem>(sample_model);
+    auto slices = ::Utils::CreateMultiSlice(*multilayer);
+
+    update_sld_profile(slices);
+    submit_specular_simulation(slices);
+}
+
+//! Takes simulation results from JobManager and write into the model.
+
+void QuickSimController::onSimulationCompleted()
+{
+    auto [xmin, xmax, values] = job_manager->simulationResult();
+    auto data = job_model->specular_data();
+    data->setAxis(ModelView::FixedBinAxisItem::create(values.size(), xmin, xmax));
+    data->setContent(values);
 }
 
 //! Setups tracking of SampleModel and MaterialModel.
 
-void QuickSimController::setup_models_tracking()
+void QuickSimController::setup_multilayer_tracking()
 {
     // Setup MaterialModel
     {
-        auto on_data_change = [this](ModelView::SessionItem*, int) { onModelChange(); };
+        auto on_data_change = [this](ModelView::SessionItem*, int) { onMultiLayerChange(); };
         material_model->mapper()->setOnDataChange(on_data_change, this);
 
         auto on_item_removed = [this](ModelView::SessionItem*, ModelView::TagRow) {
-            onModelChange();
+            onMultiLayerChange();
         };
         material_model->mapper()->setOnItemRemoved(on_item_removed, this);
 
@@ -74,51 +91,48 @@ void QuickSimController::setup_models_tracking()
 
     // Setup SampleModel
     {
-        auto on_data_change = [this](ModelView::SessionItem*, int) { onModelChange(); };
+        auto on_data_change = [this](ModelView::SessionItem*, int) { onMultiLayerChange(); };
         sample_model->mapper()->setOnDataChange(on_data_change, this);
 
         auto on_item_removed = [this](ModelView::SessionItem*, ModelView::TagRow) {
-            onModelChange();
+            onMultiLayerChange();
         };
         sample_model->mapper()->setOnItemRemoved(on_item_removed, this);
 
         auto on_model_destroyed = [this](ModelView::SessionModel*) { sample_model = nullptr; };
         sample_model->mapper()->setOnModelDestroyed(on_model_destroyed, this);
     }
-    update_sld_profile();
+
+    onMultiLayerChange();
     job_model->sld_viewport()->update_viewport();
 }
 
 //! Performs update of sld profile for immediate plotting.
 
-void QuickSimController::update_sld_profile()
+void QuickSimController::update_sld_profile(const multislice_t& multislice)
 {
     qDebug() << "QuickSimController::update_sld_profile()";
-    auto multilayer = ModelView::Utils::TopItem<MultiLayerItem>(sample_model);
-    auto slices = ::Utils::CreateMultiSlice(*multilayer);
-
-    {
-        auto [xmin, xmax, values] =
-            SpecularToySimulation::sld_profile(slices, profile_points_count);
-        auto data = job_model->sld_data();
-        data->setAxis(ModelView::FixedBinAxisItem::create(profile_points_count, xmin, xmax));
-        data->setContent(values);
-    }
-
-    {
-        SpecularToySimulation simulation(slices);
-        simulation.runSimulation();
-
-        auto [xmin, xmax, values] = simulation.simulationResult();
-        auto data = job_model->specular_data();
-        data->setAxis(ModelView::FixedBinAxisItem::create(values.size(), xmin, xmax));
-        data->setContent(values);
-    }
+    auto [xmin, xmax, values] =
+        SpecularToySimulation::sld_profile(multislice, profile_points_count);
+    auto data = job_model->sld_data();
+    data->setAxis(ModelView::FixedBinAxisItem::create(profile_points_count, xmin, xmax));
+    data->setContent(values);
 }
 
-//! Submit data to JobManager for consequent specular simulation.
+//! Submit data to JobManager for consequent specular simulation in a separate thread.
 
-void QuickSimController::submit_specular_simulation()
+void QuickSimController::submit_specular_simulation(const multislice_t& multislice)
 {
-    // TODO
+    job_manager->requestSimulation(multislice);
+}
+
+//! Connect signals going from JobManager.
+//! Connections are made queued since signals are emitted from non-GUI thread and we want to
+//! deal with widgets.
+
+void QuickSimController::setup_jobmanager_connections()
+{
+    // Notification about completed simulation from jobManager to GraphWidget.
+    connect(job_manager, &JobManager::simulationCompleted, this,
+            &QuickSimController::onSimulationCompleted, Qt::QueuedConnection);
 }

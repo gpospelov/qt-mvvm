@@ -10,6 +10,7 @@
 #ifndef QUICKSIMCONTROLLER_H
 #define QUICKSIMCONTROLLER_H
 
+#include "slice.h"
 #include <QObject>
 #include <memory>
 
@@ -17,6 +18,7 @@ class ApplicationModels;
 class MaterialModel;
 class SampleModel;
 class JobModel;
+class JobManager;
 
 //! Provides quick reflectometry simulations on any change of SampleModel and MaterialModel.
 //! Listens for any change in SampleModel and MaterialModel, extracts the data needed for
@@ -33,16 +35,19 @@ public:
     ~QuickSimController();
 
 private slots:
-    void onModelChange();
+    void onMultiLayerChange();
+    void onSimulationCompleted();
 
 private:
-    void setup_models_tracking();
-    void update_sld_profile();
-    void submit_specular_simulation();
+    void setup_multilayer_tracking();
+    void update_sld_profile(const multislice_t& multilayer);
+    void submit_specular_simulation(const multislice_t& multislice);
+    void setup_jobmanager_connections();
 
     SampleModel* sample_model{nullptr};
     MaterialModel* material_model{nullptr};
     JobModel* job_model{nullptr};
+    JobManager* job_manager{nullptr};
 };
 
 #endif // QUICKSIMCONTROLLER_H
