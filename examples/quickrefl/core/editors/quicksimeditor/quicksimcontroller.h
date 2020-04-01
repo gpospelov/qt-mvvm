@@ -39,7 +39,7 @@ signals:
 
 public slots:
     void onInterruptRequest();
-    void onLiveStateChanged();
+    void onRealTimeRequest(bool status);
 
 private slots:
     void onMultiLayerChange();

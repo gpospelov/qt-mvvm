@@ -55,9 +55,9 @@ void QuickSimController::onInterruptRequest()
     job_manager->onInterruptRequest();
 }
 
-void QuickSimController::onLiveStateChanged()
+void QuickSimController::onRealTimeRequest(bool status)
 {
-    live_simulation = !live_simulation;
+    live_simulation = status;
 }
 
 //! Submits simulation job.

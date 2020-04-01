@@ -28,7 +28,7 @@ public:
     explicit QuickSimEditorToolBar(QWidget* parent = nullptr);
 
 signals:
-    void liveStateChanged();
+    void realTimeRequest(bool);
     void runPressed();
     void cancelPressed();
     void instrumentSettingsRequest();

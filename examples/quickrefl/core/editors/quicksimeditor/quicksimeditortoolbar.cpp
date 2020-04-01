@@ -62,7 +62,7 @@ void QuickSimEditorToolBar::setup_simulation_elements()
                                  "on any multilayer change.";
     live_checkbox->setCheckState(Qt::Checked);
     live_checkbox->setToolTip(live_tooltip);
-    auto on_check_state = [this](int) { liveStateChanged(); };
+    auto on_check_state = [this](int state) { realTimeRequest(state == Qt::Checked); };
     connect(live_checkbox, &QCheckBox::stateChanged, on_check_state);
     addWidget(live_checkbox);
     auto label = new QLabel("Live");
