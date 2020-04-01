@@ -3,6 +3,8 @@
 target_sources(quickreflcore PRIVATE
     fouriertransform.cpp
     fouriertransform.h
+    jobmanager.cpp
+    jobmanager.h
     materialprofile.cpp
     materialprofile.h
     profilehelper.cpp
