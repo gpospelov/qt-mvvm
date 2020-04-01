@@ -46,7 +46,7 @@ QRectF SegmentElementView::boundingRect() const
     return displayRect(m_rectangle);
 }
 
-//! On move update the model
+//! On move save the new position and notify the controller
 void SegmentElementView::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 {
     m_pos = scenePos(event->pos());

@@ -23,7 +23,6 @@ class CustomPlotProxyWidget;
 class RegionOfInterestItem;
 
 //! Custom graphics scene to show QCustomPlot with additional elements on top.
-
 class GraphicsScene : public QGraphicsScene
 {
     Q_OBJECT

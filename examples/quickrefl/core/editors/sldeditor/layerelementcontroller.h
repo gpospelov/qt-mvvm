@@ -16,13 +16,18 @@
 
 #include "mvvm/plotting/sceneadapterinterface.h"
 
+// The mvvm item associated to this layer
 class LayerElementItem;
+// The graphics scene to put the QGraphicsViewItem on
 class GraphicsScene;
-
+// The handle QGraphicsViewItem
 class HandleElementView;
+// The segment QGraphicsViewItem
 class SegmentElementView;
+// The roughness QGraphicsViewItem
 class RoughnessElementView;
 
+//! Manages the whole appearance of a layer on the graphicsscene
 class LayerElementController : public QObject
 {
     Q_OBJECT

@@ -14,6 +14,7 @@
 
 #include <QGraphicsObject>
 
+//! The interface of any QGraphicsViewItem on GraphicsScene to the Sceneadapter
 class ElementView : public QGraphicsObject
 {
     Q_OBJECT

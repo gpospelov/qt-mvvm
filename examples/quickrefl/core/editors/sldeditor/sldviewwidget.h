@@ -15,6 +15,7 @@
 class GraphicsScene;
 class SLDElementController;
 
+//! The segment QGraphicsViewItem on the Graphicsscene
 class SLDViewWidget : public QGraphicsView
 {
     Q_OBJECT

@@ -27,6 +27,7 @@
 
 using namespace ModelView;
 
+//! Contructor
 SLDElementController::SLDElementController(MaterialModel* material_model, SampleModel* sample_model,
                              SLDElementModel* sld_model, GraphicsScene* scene_item)
     : p_material_model(material_model), p_sample_model(sample_model), p_sld_model(sld_model),
@@ -38,7 +39,7 @@ SLDElementController::SLDElementController(MaterialModel* material_model, Sample
     buildSLD();
 }
 
-//! Connect with signals of MaterialModel, SampleModel, SLDViewModel.
+//! Connect with signals of MaterialModel
 void SLDElementController::connectMaterialModel()
 {
     auto on_mat_data_change = [this](SessionItem* item, int) { updateToView(item); };
@@ -48,6 +49,7 @@ void SLDElementController::connectMaterialModel()
     p_material_model->mapper()->setOnModelDestroyed(on_mat_model_destroyed, this);
 }
 
+//! Connect with signals of SampleModel
 void SLDElementController::connectLayerModel()
 {
     auto on_sam_data_change = [this](SessionItem* item, int) { updateToView(item); };
@@ -63,34 +65,39 @@ void SLDElementController::connectLayerModel()
     p_sample_model->mapper()->setOnModelDestroyed(on_sam_model_destroyed, this);
 }
 
+//! Connect with signals of SLDViewModel
 void SLDElementController::connectSLDElementModel()
 {
     auto on_sld_model_destroyed = [this](SessionModel*) { p_sld_model = nullptr; };
     p_sld_model->mapper()->setOnModelDestroyed(on_sld_model_destroyed, this);
 }
 
+//! Disconnect with signals of MaterialModel
 void SLDElementController::disconnectMaterialModel() const
 {
     p_material_model->mapper()->unsubscribe(this);
 }
 
+//! Disconnect with signals of SampleModel
 void SLDElementController::disconnectLayerModel() const
 {
     p_sample_model->mapper()->unsubscribe(this);
 }
 
+//! Disconnect with signals of SLDViewModel
 void SLDElementController::disconnectSLDElementModel() const
 {
     p_sld_model->mapper()->unsubscribe(this);
 }
 
+//! Set the scene of the current controller to be passed to the LayerElementControllers
 void SLDElementController::setScene(GraphicsScene* scene)
 {
     p_scene_item = scene;
     buildSLD();
 }
 
-//! Updates all material properties in LayerItems to get new material colors and labels.
+//! Updates all material properties in LayerItems to get new material colors and labels
 void SLDElementController::buildSLD()
 {
     if (!p_sld_model)
@@ -115,7 +122,7 @@ void SLDElementController::buildSLD()
     connectLayerControllers();
 }
 
-//! Remove all the segments, handles and roughness view items in the scene
+//! Remove all LayerElementControllers and their items from scene and memory
 void SLDElementController::clearScene()
 {
     if (!p_scene_item)
@@ -133,7 +140,7 @@ void SLDElementController::clearScene()
     p_sld_model->clear();
 }
 
-//! build the identifier vector
+//! Get the identifiers of all layeritems in the sample model in order of appearance
 string_vec SLDElementController::getIdentifierVector(SessionItem* item)
 {
     string_vec output;
@@ -212,8 +219,6 @@ void SLDElementController::updateToView(SessionItem* item)
     }
 
     for (auto layer_controller : layer_controllers) {
-        // if (!item || item->parent()->identifier() == layer_controller->sampleItemId()
-        //     || item->parent()->parent()->identifier() == layer_controller->sampleItemId()) {
         auto layer_item =
             dynamic_cast<LayerItem*>(p_sample_model->findItem(layer_controller->sampleItemId()));
         auto roughness_item = layer_item->item<RoughnessItem>(LayerItem::P_ROUGHNESS);
@@ -238,7 +243,6 @@ void SLDElementController::updateToView(SessionItem* item)
                 LayerElementItem::P_SIDE_BRUSH_COLOR,
                 material_item->property(SLDMaterialItem::P_COLOR));
         }
-        // }
     }
 }
 
