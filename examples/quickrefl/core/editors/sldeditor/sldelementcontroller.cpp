@@ -29,7 +29,7 @@ using namespace ModelView;
 
 //! Contructor
 SLDElementController::SLDElementController(MaterialModel* material_model, SampleModel* sample_model,
-                             SLDElementModel* sld_model, GraphicsScene* scene_item)
+                                           SLDElementModel* sld_model, GraphicsScene* scene_item)
     : p_material_model(material_model), p_sample_model(sample_model), p_sld_model(sld_model),
       p_scene_item(scene_item)
 {

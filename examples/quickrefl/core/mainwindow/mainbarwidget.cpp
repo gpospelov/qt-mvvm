@@ -13,7 +13,8 @@
 #include <QStackedWidget>
 #include <QVBoxLayout>
 
-namespace {
+namespace
+{
 const int buttonHeight = 60;
 }
 
@@ -38,7 +39,7 @@ void MainBarWidget::addWidget(QWidget* widget, const QString& title)
     button->setMinimumHeight(buttonHeight);
 
     QFont font = button->font();
-    font.setPointSize(font.pointSize()*1.25);
+    font.setPointSize(font.pointSize() * 1.25);
     button->setFont(font);
 
     int index = stacked_widget->addWidget(widget);

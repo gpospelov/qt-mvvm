@@ -8,8 +8,8 @@
 // ************************************************************************** //
 
 #include "reflwidgets.h"
-#include "styleutils.h"
 #include "sldviewwidget.h"
+#include "styleutils.h"
 #include <QVBoxLayout>
 
 //! ---------------------------------------------------------------------------
@@ -38,7 +38,6 @@ QSize SLDEditor::minimumSizeHint() const
 {
     return StyleUtils::DockMinimumSizeHint();
 }
-
 
 //! ---------------------------------------------------------------------------
 

@@ -9,8 +9,8 @@
 
 #include "grapheditortoolbar.h"
 #include "styleutils.h"
-#include <QToolButton>
 #include <QLayout>
+#include <QToolButton>
 
 GraphEditorToolBar::GraphEditorToolBar(QWidget* parent) : QToolBar(parent)
 {

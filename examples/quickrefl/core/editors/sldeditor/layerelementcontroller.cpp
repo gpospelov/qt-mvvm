@@ -379,24 +379,9 @@ void LayerElementController::unsetTopSegment()
 void LayerElementController::segmentViewMoved(SegmentElementView* segment_view)
 {
     if (segment_view == sideSegment()) {
-        double x = sideSegment()->getLastPos().x();
-        if (layerAbove()) {
-            double w = 0;
-            auto item = layerAbove()->layerElementItem();
-            if (x < item->property(LayerElementItem::P_X_POS).toDouble()) {
-                w = 1e-6;
-                x = item->property(LayerElementItem::P_X_POS).toDouble() + w;
-            } else {
-                w = x - item->property(LayerElementItem::P_X_POS).toDouble();
-            }
-            item->setProperty(LayerElementItem::P_WIDTH, w);
-        }
-        layerElementItem()->setProperty(LayerElementItem::P_X_POS, x);
+        sideSegmentMoved();
     } else if (segment_view == topSegment()) {
-        double y = topSegment()->getLastPos().y();
-        if (y < 0)
-            y = 0;
-        layerElementItem()->setProperty(LayerElementItem::P_HEIGHT, y);
+        topSegmentMoved();
     }
 }
 
@@ -493,6 +478,33 @@ void LayerElementController::removeSegmentsFromScene() const
     }
 }
 
+//! Handle the position variation of the side segment
+void LayerElementController::sideSegmentMoved() const
+{
+    double x = sideSegment()->getLastPos().x();
+    if (layerAbove()) {
+        double w = 0;
+        auto item = layerAbove()->layerElementItem();
+        if (x < item->property(LayerElementItem::P_X_POS).toDouble()) {
+            w = 1e-6;
+            x = item->property(LayerElementItem::P_X_POS).toDouble() + w;
+        } else {
+            w = x - item->property(LayerElementItem::P_X_POS).toDouble();
+        }
+        item->setProperty(LayerElementItem::P_WIDTH, w);
+    }
+    layerElementItem()->setProperty(LayerElementItem::P_X_POS, x);
+}
+
+//! Handle the position variation of the top segment
+void LayerElementController::topSegmentMoved() const
+{
+    double y = topSegment()->getLastPos().y();
+    if (y < 0)
+        y = 0;
+    layerElementItem()->setProperty(LayerElementItem::P_HEIGHT, y);
+}
+
 //! Set the side segment elements
 void LayerElementController::setSegmentHandles(HandleElementView* first_handle,
                                                HandleElementView* second_handle)
@@ -537,54 +549,9 @@ void LayerElementController::unsetSegmentHandles()
 void LayerElementController::handleViewMoved(HandleElementView* handle_view)
 {
     if (handle_view == leftRoughnessHandle()) {
-        double pos = layerElementItem()->property(LayerElementItem::P_X_POS).toDouble();
-        double roughness = pos - leftRoughnessHandle()->getLastPos().x();
-
-        if (roughness < 0) {
-            layerElementItem()->setProperty(LayerElementItem::P_ROUGHNESS, 0.);
-            return;
-        }
-
-        double width = layerElementItem()->property(LayerElementItem::P_WIDTH).toDouble();
-        auto layer_above = layerAbove();
-        if (layer_above) {
-            double second_width =
-                layer_above->layerElementItem()->property(LayerElementItem::P_WIDTH).toDouble();
-            if (second_width < width)
-                width = second_width;
-        }
-
-        if (roughness > width / 2.) {
-            layerElementItem()->setProperty(LayerElementItem::P_ROUGHNESS, width / 2.);
-            return;
-        }
-
-        layerElementItem()->setProperty(LayerElementItem::P_ROUGHNESS, roughness);
-
+        leftHandleMoved();
     } else if (handle_view == rightRoughnessHandle()) {
-        double pos = layerElementItem()->property(LayerElementItem::P_X_POS).toDouble();
-        double roughness = rightRoughnessHandle()->getLastPos().x() - pos;
-
-        if (roughness < 0) {
-            layerElementItem()->setProperty(LayerElementItem::P_ROUGHNESS, 0.);
-            return;
-        }
-
-        double width = layerElementItem()->property(LayerElementItem::P_WIDTH).toDouble();
-        auto layer_above = layerAbove();
-        if (layer_above) {
-            double second_width =
-                layer_above->layerElementItem()->property(LayerElementItem::P_WIDTH).toDouble();
-            if (second_width < width)
-                width = second_width;
-        }
-
-        if (roughness > width / 2.) {
-            layerElementItem()->setProperty(LayerElementItem::P_ROUGHNESS, width / 2.);
-            return;
-        }
-
-        layerElementItem()->setProperty(LayerElementItem::P_ROUGHNESS, roughness);
+        rightHandleMoved();
     }
 }
 
@@ -907,4 +874,60 @@ void LayerElementController::removeRoughnessHandlesFromScene() const
         if (handle_roughness_view && handle_roughness_view->scene() == scene())
             scene()->removeItem(handle_roughness_view);
     }
+}
+
+//! Handle the position variation of the left handle
+void LayerElementController::leftHandleMoved() const
+{
+    double pos = layerElementItem()->property(LayerElementItem::P_X_POS).toDouble();
+    double roughness = pos - leftRoughnessHandle()->getLastPos().x();
+
+    if (roughness < 0) {
+        layerElementItem()->setProperty(LayerElementItem::P_ROUGHNESS, 0.);
+        return;
+    }
+
+    double width = layerElementItem()->property(LayerElementItem::P_WIDTH).toDouble();
+    auto layer_above = layerAbove();
+    if (layer_above) {
+        double second_width =
+            layer_above->layerElementItem()->property(LayerElementItem::P_WIDTH).toDouble();
+        if (second_width < width)
+            width = second_width;
+    }
+
+    if (roughness > width / 2.) {
+        layerElementItem()->setProperty(LayerElementItem::P_ROUGHNESS, width / 2.);
+        return;
+    }
+
+    layerElementItem()->setProperty(LayerElementItem::P_ROUGHNESS, roughness);
+}
+
+//! Handle the position variation of the right handle
+void LayerElementController::rightHandleMoved() const
+{
+    double pos = layerElementItem()->property(LayerElementItem::P_X_POS).toDouble();
+    double roughness = rightRoughnessHandle()->getLastPos().x() - pos;
+
+    if (roughness < 0) {
+        layerElementItem()->setProperty(LayerElementItem::P_ROUGHNESS, 0.);
+        return;
+    }
+
+    double width = layerElementItem()->property(LayerElementItem::P_WIDTH).toDouble();
+    auto layer_above = layerAbove();
+    if (layer_above) {
+        double second_width =
+            layer_above->layerElementItem()->property(LayerElementItem::P_WIDTH).toDouble();
+        if (second_width < width)
+            width = second_width;
+    }
+
+    if (roughness > width / 2.) {
+        layerElementItem()->setProperty(LayerElementItem::P_ROUGHNESS, width / 2.);
+        return;
+    }
+
+    layerElementItem()->setProperty(LayerElementItem::P_ROUGHNESS, roughness);
 }
