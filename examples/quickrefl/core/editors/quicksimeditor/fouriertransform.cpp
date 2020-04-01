@@ -10,6 +10,8 @@
 #include "fouriertransform.h"
 #include <algorithm>
 #include <numeric>
+#include <iterator>
+#include <cmath>
 
 //! Implementation of fourier transformation for vector with complex numbers.
 //! Taken from C++ STL Cookbook by Jacek Galowicz.
