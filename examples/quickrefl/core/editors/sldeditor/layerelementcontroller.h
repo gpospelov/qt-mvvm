@@ -129,6 +129,7 @@ protected:
     void putRoughnessOnScene() const;
     void putRoughnessHandlesOnScene() const;
     void removeRoughnessFromScene() const;
+    void removeRoughnessHandlesFromScene() const;
 
     void leftHandleMoved() const;
     void rightHandleMoved() const;
