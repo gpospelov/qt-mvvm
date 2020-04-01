@@ -29,7 +29,7 @@ public:
 
 signals:
     void realTimeRequest(bool);
-    void runPressed();
+    void runSimulationRequest();
     void cancelPressed();
     void instrumentSettingsRequest();
     void resetViewRequest();

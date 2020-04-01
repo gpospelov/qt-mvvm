@@ -73,7 +73,7 @@ void QuickSimEditorToolBar::setup_simulation_elements()
     auto run_action = new QAction("Run");
     run_action->setIcon(QIcon(":/icons/play-circle-outline.svg"));
     run_action->setToolTip("Run simulation for current multilayer state");
-    connect(run_action, &QAction::triggered, this, &QuickSimEditorToolBar::runPressed);
+    connect(run_action, &QAction::triggered, this, &QuickSimEditorToolBar::runSimulationRequest);
     addAction(run_action);
 
     // progress bar

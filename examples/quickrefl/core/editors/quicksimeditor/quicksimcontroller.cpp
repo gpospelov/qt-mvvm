@@ -57,21 +57,25 @@ void QuickSimController::onInterruptRequest()
 
 void QuickSimController::onRealTimeRequest(bool status)
 {
-    live_simulation = status;
+    in_realtime_mode = status;
 }
 
-//! Submits simulation job.
+//! Processes multilayer on request. Doesn't work in real time mode.
+
+void QuickSimController::onRunSimulationRequest()
+{
+    if (in_realtime_mode)
+        return;
+    process_multilayer();
+}
+
+//! Processes multilayer on any model change. Works only in realtime mode.
 
 void QuickSimController::onMultiLayerChange()
 {
-    if (!live_simulation)
+    if (!in_realtime_mode)
         return;
-
-    auto multilayer = ModelView::Utils::TopItem<MultiLayerItem>(sample_model);
-    auto slices = ::Utils::CreateMultiSlice(*multilayer);
-
-    update_sld_profile(slices);
-    submit_specular_simulation(slices);
+    process_multilayer();
 }
 
 //! Takes simulation results from JobManager and write into the model.
@@ -120,7 +124,17 @@ void QuickSimController::setup_multilayer_tracking()
     job_model->sld_viewport()->update_viewport();
 }
 
-//! Performs update of sld profile for immediate plotting.
+//! Constructs multislice, calculates profile and submits specular simulation.
+
+void QuickSimController::process_multilayer()
+{
+    auto multilayer = ModelView::Utils::TopItem<MultiLayerItem>(sample_model);
+    auto slices = ::Utils::CreateMultiSlice(*multilayer);
+    update_sld_profile(slices);
+    submit_specular_simulation(slices);
+}
+
+//! Calculates sld profile from slice and immediately update data items.
 
 void QuickSimController::update_sld_profile(const multislice_t& multislice)
 {
@@ -128,7 +142,7 @@ void QuickSimController::update_sld_profile(const multislice_t& multislice)
     auto [xmin, xmax, values] =
         SpecularToySimulation::sld_profile(multislice, profile_points_count);
     auto data = job_model->sld_data();
-    data->setAxis(ModelView::FixedBinAxisItem::create(profile_points_count, xmin, xmax));
+    data->setAxis(ModelView::FixedBinAxisItem::create(values.size(), xmin, xmax));
     data->setContent(values);
 }
 
@@ -139,9 +153,8 @@ void QuickSimController::submit_specular_simulation(const multislice_t& multisli
     job_manager->requestSimulation(multislice);
 }
 
-//! Connect signals going from JobManager.
-//! Connections are made queued since signals are emitted from non-GUI thread and we want to
-//! deal with widgets.
+//! Connect signals going from JobManager.Connections are made queued since signals are emitted
+//! from non-GUI thread and we want to deal with widgets.
 
 void QuickSimController::setup_jobmanager_connections()
 {

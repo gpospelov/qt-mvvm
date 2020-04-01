@@ -40,6 +40,7 @@ signals:
 public slots:
     void onInterruptRequest();
     void onRealTimeRequest(bool status);
+    void onRunSimulationRequest();
 
 private slots:
     void onMultiLayerChange();
@@ -47,6 +48,7 @@ private slots:
 
 private:
     void setup_multilayer_tracking();
+    void process_multilayer();
     void update_sld_profile(const multislice_t& multilayer);
     void submit_specular_simulation(const multislice_t& multislice);
     void setup_jobmanager_connections();
@@ -56,7 +58,7 @@ private:
     JobModel* job_model{nullptr};
     JobManager* job_manager{nullptr};
 
-    bool live_simulation{true}; //! Run simulation on every parameter change.
+    bool in_realtime_mode{true}; //! Run simulation on every parameter change.
 };
 
 #endif // QUICKSIMCONTROLLER_H

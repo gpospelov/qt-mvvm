@@ -72,9 +72,13 @@ void QuickSimEditor::setup_toolbar_connections()
     connect(toolbar, &QuickSimEditorToolBar::cancelPressed, sim_controller,
             &QuickSimController::onInterruptRequest);
 
-    // Live simulation toggle is propagated from toobar to controller.
+    // Request for real time mode is propagated from toobar to controller.
     connect(toolbar, &QuickSimEditorToolBar::realTimeRequest, sim_controller,
             &QuickSimController::onRealTimeRequest);
+
+    // RUn simulation is propagated from toobar to controller.
+    connect(toolbar, &QuickSimEditorToolBar::runSimulationRequest, sim_controller,
+            &QuickSimController::onRunSimulationRequest);
 }
 
 //! Connects signals from controller.
