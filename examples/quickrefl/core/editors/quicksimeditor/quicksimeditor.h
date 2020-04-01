@@ -33,6 +33,8 @@ public:
     QSize minimumSizeHint() const override;
 
 private:
+    void setup_toolbar_connections();
+
     ApplicationModels* app_models{nullptr};
     std::unique_ptr<JobModel> job_model;
     QuickSimController* sim_controller{nullptr};
