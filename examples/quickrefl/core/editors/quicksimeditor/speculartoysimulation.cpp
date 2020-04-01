@@ -15,7 +15,7 @@
 
 namespace
 {
-const int delay_mksec = 10;
+const int delay_mksec = 500;
 const int simulation_steps_count = 500;
 } // namespace
 
