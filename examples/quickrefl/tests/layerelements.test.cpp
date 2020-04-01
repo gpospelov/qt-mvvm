@@ -777,7 +777,7 @@ TEST_F(LayerElementTest, testpropagation)
 {
     TestData test_data;
 
-    auto adapter = test_data.scene->getSceneAdapter();
+    auto adapter = test_data.scene->sceneAdapter();
 
     // Set the scenes
     test_data.above_controller->setScene(test_data.scene);
