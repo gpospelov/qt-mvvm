@@ -25,8 +25,8 @@ using namespace ModelView;
 QuickSimEditor::QuickSimEditor(ApplicationModels* app_models, QWidget* parent)
     : QWidget(parent), app_models(app_models), job_model(std::make_unique<JobModel>()),
       sim_controller(new QuickSimController(app_models, job_model.get(), this)),
-      toolbar(new QuickSimEditorToolBar), sld_canvas(new GraphEditor), spec_canvas(new GraphEditor),
-      tabwidget(new QTabWidget)
+      toolbar(new QuickSimEditorToolBar), sld_canvas(new ModelView::GraphCanvas),
+      spec_canvas(new ModelView::GraphCanvas), tabwidget(new QTabWidget)
 {
     tabwidget->addTab(sld_canvas, "SLD profile");
     tabwidget->addTab(spec_canvas, "Reflectivity");
