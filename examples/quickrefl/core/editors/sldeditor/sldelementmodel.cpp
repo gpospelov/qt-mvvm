@@ -34,12 +34,13 @@ QColor random_color()
 
 } // namespace
 
+//! Contructor
 SLDElementModel::SLDElementModel() : SessionModel("ViewItemsModel")
 {
     setItemCatalogue(CreateItemCatalogue());
 }
 
-//! Add a handle view item
+//! Add a layer item to the model and return its pointer
 LayerElementItem* SLDElementModel::addLayer()
 {
     auto layer_element_item = insertItem<LayerElementItem>();

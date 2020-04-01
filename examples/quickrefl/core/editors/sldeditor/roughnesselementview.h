@@ -16,11 +16,8 @@
 #include <QPainterPath>
 #include <QPen>
 
-/*!
-@class Segment
-@brief The visual Segment element
-*/
 
+//! The roughness QGraphicsViewItem
 class RoughnessElementView : public ElementView
 {
 public:

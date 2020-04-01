@@ -18,11 +18,7 @@
 
 class LayerElementController;
 
-/*!
-@class Segment
-@brief The visual Segment element
-*/
-
+//! The segment QGraphicsViewItem on the Graphicsscene
 class SegmentElementView : public ElementView
 {
 public:

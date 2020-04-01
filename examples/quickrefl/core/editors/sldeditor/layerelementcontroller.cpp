@@ -21,6 +21,7 @@
 
 using namespace ModelView;
 
+//! Constructor
 LayerElementController::LayerElementController(LayerElementItem* layer_view_item)
     : QObject(), p_model_item(layer_view_item), m_sample_item_id(" ")
 {

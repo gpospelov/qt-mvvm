@@ -29,6 +29,7 @@ SLDViewWidget::SLDViewWidget(SLDElementController* sld_controller, QWidget* pare
     sld_controller->setScene(scene_item);
 }
 
+//! Resize event management
 void SLDViewWidget::resizeEvent(QResizeEvent* event)
 {
     QWidget::resizeEvent(event);
@@ -36,6 +37,7 @@ void SLDViewWidget::resizeEvent(QResizeEvent* event)
     scene_item->update_size(event->size());
 }
 
+//! dynamic cast implementation of the get scene into the right object
 GraphicsScene* SLDViewWidget::getScene() const
 {
     return static_cast<GraphicsScene*>(scene());
