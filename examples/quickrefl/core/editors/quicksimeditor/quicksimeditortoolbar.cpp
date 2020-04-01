@@ -60,7 +60,7 @@ void QuickSimEditorToolBar::setup_simulation_elements()
     // live check box and label
     const QString live_tooltip = "Automatically run simulation and update plot\n"
                                  "on any multilayer change.";
-    live_checkbox->setCheckState(Qt::Checked);
+    live_checkbox->setCheckState(Qt::Unchecked);
     live_checkbox->setToolTip(live_tooltip);
     auto on_check_state = [this](int state) { realTimeRequest(state == Qt::Checked); };
     connect(live_checkbox, &QCheckBox::stateChanged, on_check_state);

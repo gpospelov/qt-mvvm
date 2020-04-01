@@ -66,16 +66,14 @@ void QuickSimController::onRunSimulationRequest()
 {
     if (in_realtime_mode)
         return;
-    process_multilayer();
+    process_multilayer(/*submit_simulation*/true);
 }
 
 //! Processes multilayer on any model change. Works only in realtime mode.
 
 void QuickSimController::onMultiLayerChange()
 {
-    if (!in_realtime_mode)
-        return;
-    process_multilayer();
+    process_multilayer(/*submit_simulation*/in_realtime_mode);
 }
 
 //! Takes simulation results from JobManager and write into the model.
@@ -126,12 +124,13 @@ void QuickSimController::setup_multilayer_tracking()
 
 //! Constructs multislice, calculates profile and submits specular simulation.
 
-void QuickSimController::process_multilayer()
+void QuickSimController::process_multilayer(bool submit_simulation)
 {
     auto multilayer = ModelView::Utils::TopItem<MultiLayerItem>(sample_model);
     auto slices = ::Utils::CreateMultiSlice(*multilayer);
     update_sld_profile(slices);
-    submit_specular_simulation(slices);
+    if (submit_simulation)
+        submit_specular_simulation(slices);
 }
 
 //! Calculates sld profile from slice and immediately update data items.
@@ -153,17 +152,17 @@ void QuickSimController::submit_specular_simulation(const multislice_t& multisli
     job_manager->requestSimulation(multislice);
 }
 
-//! Connect signals going from JobManager.Connections are made queued since signals are emitted
+//! Connect signals going from JobManager. Connections are made queued since signals are emitted
 //! from non-GUI thread and we want to deal with widgets.
 
 void QuickSimController::setup_jobmanager_connections()
 {
 
-    // Simulation progress is propagated from JobManager to toolbar.
+    // Simulation progress is propagated from JobManager to this controller for further forwarding.
     connect(job_manager, &JobManager::progressChanged, this, &QuickSimController::progressChanged,
             Qt::QueuedConnection);
 
-    // Notification about completed simulation from jobManager to GraphWidget.
+    // Notification about completed simulation from jobManager to this controller.
     connect(job_manager, &JobManager::simulationCompleted, this,
             &QuickSimController::onSimulationCompleted, Qt::QueuedConnection);
 }
