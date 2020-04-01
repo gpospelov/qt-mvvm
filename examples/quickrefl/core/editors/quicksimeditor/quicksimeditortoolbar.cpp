@@ -89,9 +89,9 @@ void QuickSimEditorToolBar::setup_simulation_elements()
     addAction(cancel_action);
 
     // job settings
-    auto settings_action = new QAction("Instrument");
-    settings_action->setIcon(QIcon(":/icons/alpha-i-circle-outline.svg"));
-    settings_action->setToolTip("Instrument settings for quick reflectometry simulations");
+    auto settings_action = new QAction("Setup");
+    settings_action->setIcon(QIcon(":/icons/alpha-s-circle-outline.svg"));
+    settings_action->setToolTip("Specular instrument setup for quick simulations");
     connect(settings_action, &QAction::triggered, this,
             &QuickSimEditorToolBar::instrumentSettingsRequest);
     addAction(settings_action);

@@ -9,7 +9,6 @@
 
 #include "quicksimeditor.h"
 #include "applicationmodels.h"
-#include "grapheditor.h"
 #include "jobmodel.h"
 #include "quicksimcontroller.h"
 #include "quicksimeditortoolbar.h"
