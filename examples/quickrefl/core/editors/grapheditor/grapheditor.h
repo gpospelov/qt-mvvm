@@ -16,7 +16,7 @@ namespace ModelView
 {
 class GraphCanvas;
 class GraphViewportItem;
-}
+} // namespace ModelView
 
 class GraphEditorToolBar;
 
@@ -26,7 +26,7 @@ class GraphEditor : public QWidget
 {
     Q_OBJECT
 public:
-   explicit GraphEditor(QWidget* parent = nullptr);
+    explicit GraphEditor(QWidget* parent = nullptr);
 
     void setItem(ModelView::GraphViewportItem* viewport_item);
 

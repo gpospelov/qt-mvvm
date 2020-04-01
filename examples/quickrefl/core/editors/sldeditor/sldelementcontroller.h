@@ -31,7 +31,7 @@ class SLDElementController : public QObject
 
 public:
     SLDElementController(MaterialModel* material_model, SampleModel* sample_model,
-                  SLDElementModel* sld_model, GraphicsScene* scene_item);
+                         SLDElementModel* sld_model, GraphicsScene* scene_item);
     void setScene(GraphicsScene* scene);
 
 private:

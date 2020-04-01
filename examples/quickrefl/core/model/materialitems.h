@@ -15,7 +15,8 @@
 
 #include <mvvm/model/compounditem.h>
 
-namespace ModelView {
+namespace ModelView
+{
 class ExternalProperty;
 }
 

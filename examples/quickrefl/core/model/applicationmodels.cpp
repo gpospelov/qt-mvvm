@@ -12,14 +12,14 @@
 #include "materialmodel.h"
 #include "materialpropertycontroller.h"
 #include "samplemodel.h"
-#include "sldelementmodel.h"
 #include "sldelementcontroller.h"
+#include "sldelementmodel.h"
 
 #include <mvvm/model/externalproperty.h>
+#include <mvvm/model/itempool.h>
 #include <mvvm/model/modelutils.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/serialization/jsondocument.h>
-#include <mvvm/model/itempool.h>
 
 using namespace ModelView;
 

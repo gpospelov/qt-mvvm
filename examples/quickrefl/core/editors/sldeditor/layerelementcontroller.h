@@ -69,7 +69,6 @@ public:
     SegmentElementView* topSegment() const;
     void unsetSideSegment();
     void unsetTopSegment();
-
     void segmentViewMoved(SegmentElementView* segment_view);
 
     // ##################################################################################
@@ -78,7 +77,6 @@ public:
     HandleElementView* firstSegmentHandle() const;
     HandleElementView* secondSegmentHandle() const;
     void unsetSegmentHandles();
-
     void handleViewMoved(HandleElementView* handle_view);
 
     // ##################################################################################
@@ -103,7 +101,7 @@ private:
 
 protected:
     // ##################################################################################
-    // Segment related public methods
+    // Segment related protected methods
     void updateSideSegment() const;
     void updateTopSegment() const;
     QRectF sideSegmentRect() const;
@@ -111,8 +109,11 @@ protected:
     void putSegementsOnScene() const;
     void removeSegmentsFromScene() const;
 
+    void sideSegmentMoved() const;
+    void topSegmentMoved() const;
+
     // ##################################################################################
-    // Handle related public methods
+    // Handle related protected methods
     void updateSegmentHandles() const;
     QRectF firstSegmentHandleRect() const;
     QRectF secondSegmentHandleRect() const;
@@ -120,7 +121,7 @@ protected:
     void removeSegmentHandlesFromScene() const;
 
     // ##################################################################################
-    // Roughness related
+    // Roughness related protected methods
     QPainterPath leftRoughnessPath() const;
     QPainterPath rightRoughnessPath() const;
     QRectF leftRoughnessHandleRect() const;
@@ -128,7 +129,9 @@ protected:
     void putRoughnessOnScene() const;
     void putRoughnessHandlesOnScene() const;
     void removeRoughnessFromScene() const;
-    void removeRoughnessHandlesFromScene() const;
+
+    void leftHandleMoved() const;
+    void rightHandleMoved() const;
 
 private:
     LayerElementItem* p_model_item;
@@ -144,4 +147,4 @@ private:
     LayerElementController* p_controller_below = nullptr;
 };
 
-#endif //LAYERELEMENTCONTROLLER_H
+#endif // LAYERELEMENTCONTROLLER_H

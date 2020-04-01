@@ -14,7 +14,8 @@
 #include <memory>
 
 //! The constructor
-SLDViewWidget::SLDViewWidget(SLDElementController* sld_controller, QWidget* parent) : QGraphicsView(parent)
+SLDViewWidget::SLDViewWidget(SLDElementController* sld_controller, QWidget* parent)
+    : QGraphicsView(parent)
 {
     GraphicsScene* scene_item = new GraphicsScene(parent = this);
     setScene(scene_item);

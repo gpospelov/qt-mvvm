@@ -16,7 +16,6 @@
 #include <QPainterPath>
 #include <QPen>
 
-
 //! The roughness QGraphicsViewItem
 class RoughnessElementView : public ElementView
 {

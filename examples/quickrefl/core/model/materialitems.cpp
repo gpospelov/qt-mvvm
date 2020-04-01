@@ -9,8 +9,8 @@
 
 #include "materialitems.h"
 #include "item_constants.h"
-#include <mvvm/model/externalproperty.h>
 #include <QColor>
+#include <mvvm/model/externalproperty.h>
 
 using namespace ModelView;
 
@@ -70,4 +70,3 @@ void SLDMaterialItem::set_properties(const std::string& name, const QColor& colo
     setProperty(P_SLD_REAL, real);
     setProperty(P_SLD_IMAG, imag);
 }
-
