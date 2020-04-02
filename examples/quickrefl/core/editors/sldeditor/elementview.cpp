@@ -60,7 +60,7 @@ QRectF ElementView::displayRect(QRectF real_rect) const
         double center_y = y + h / 2.;
 
         if (m_adapt_x) {
-            center_x = adapter->toSceneX(center_x);
+            center_x = adapter->toSceneX(-center_x);
         }
         if (m_adapt_y) {
             center_y = adapter->toSceneY(center_y);
@@ -77,7 +77,7 @@ QRectF ElementView::displayRect(QRectF real_rect) const
 
     } else {
         if (m_adapt_x) {
-            x = adapter->toSceneX(x);
+            x = adapter->toSceneX(-x);
         }
         if (m_adapt_y) {
             y = adapter->toSceneY(y);
@@ -103,7 +103,7 @@ QPainterPath ElementView::displayPath(QPainterPath real_path) const
     auto display_path = QPainterPath(real_path);
     for (int i = 0; i < display_path.elementCount(); i++) {
         QPointF pt = display_path.elementAt(i);
-        display_path.setElementPositionAt(i, adapter->toSceneX(pt.x()), adapter->toSceneY(pt.y()));
+        display_path.setElementPositionAt(i, adapter->toSceneX(-pt.x()), adapter->toSceneY(pt.y()));
     }
     return display_path;
 }
@@ -115,7 +115,7 @@ QPointF ElementView::scenePos(QPointF pixel_pos) const
     if (!adapter)
         return pixel_pos;
 
-    return QPointF(adapter->fromSceneX(pixel_pos.x()), adapter->fromSceneY(pixel_pos.y()));
+    return QPointF(-adapter->fromSceneX(pixel_pos.x()), adapter->fromSceneY(pixel_pos.y()));
 }
 
 //! Adapt the dimensions according to the center

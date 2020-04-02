@@ -240,13 +240,23 @@ void SLDElementController::updateToView(SessionItem* item)
         if (material_item) {
             layer_controller->layerElementItem()->setProperty(
                 LayerElementItem::P_HEIGHT,
-                material_item->property(SLDMaterialItem::P_SLD_REAL).toDouble() * 1e6);
+                material_item->property(SLDMaterialItem::P_SLD_REAL).toDouble());
             layer_controller->layerElementItem()->setProperty(
                 LayerElementItem::P_TOP_BRUSH_COLOR,
                 material_item->property(SLDMaterialItem::P_COLOR));
             layer_controller->layerElementItem()->setProperty(
                 LayerElementItem::P_SIDE_BRUSH_COLOR,
                 material_item->property(SLDMaterialItem::P_COLOR));
+        }else{
+            layer_controller->layerElementItem()->setProperty(
+                LayerElementItem::P_HEIGHT,
+                1e-6);
+            layer_controller->layerElementItem()->setProperty(
+                LayerElementItem::P_TOP_BRUSH_COLOR,
+                QColor("red"));
+            layer_controller->layerElementItem()->setProperty(
+                LayerElementItem::P_SIDE_BRUSH_COLOR,
+                QColor("red"));
         }
     }
 }
@@ -267,7 +277,7 @@ void SLDElementController::updateSLDFromView(std::string identifier, double valu
                                        .value<ModelView::ExternalProperty>()
                                        .identifier()));
     if (material_item)
-        material_item->setProperty(SLDMaterialItem::P_SLD_REAL, value / 1e6);
+        material_item->setProperty(SLDMaterialItem::P_SLD_REAL, value);
 }
 
 //! Update the material and layer models from the view items
