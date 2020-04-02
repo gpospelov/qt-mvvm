@@ -14,8 +14,7 @@
 #include <QResizeEvent>
 
 //! The constructor
-SLDViewWidget::SLDViewWidget(ApplicationModels* app_models, QWidget* parent)
-    : QGraphicsView(parent)
+SLDViewWidget::SLDViewWidget(ApplicationModels* app_models, QWidget* parent) : QGraphicsView(parent)
 {
     GraphicsScene* scene_item = new GraphicsScene(parent = this);
     setScene(scene_item);
@@ -27,8 +26,9 @@ SLDViewWidget::SLDViewWidget(ApplicationModels* app_models, QWidget* parent)
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setContentsMargins(0, 0, 0, 0);
 
-    m_sld_controller = std::make_unique<SLDElementController>(
-            app_models->materialModel(), app_models->sampleModel(), app_models->sldViewModel(), nullptr);
+    m_sld_controller = std::make_unique<SLDElementController>(app_models->materialModel(),
+                                                              app_models->sampleModel(),
+                                                              app_models->sldViewModel(), nullptr);
     m_sld_controller->setScene(scene_item);
 }
 

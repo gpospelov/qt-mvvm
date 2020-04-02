@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include "applicationmodels.h"
+#include "jobmodel.h"
 #include "layeritems.h"
 #include "materialmodel.h"
 #include "materialpropertycontroller.h"
@@ -26,6 +27,7 @@ struct ApplicationModels::ApplicationModelsImpl {
     std::unique_ptr<MaterialModel> m_material_model;
     std::unique_ptr<SampleModel> m_sample_model;
     std::unique_ptr<SLDElementModel> m_sld_view_model;
+    std::unique_ptr<JobModel> m_job_model;
     std::unique_ptr<MaterialPropertyController> m_property_controller;
     std::unique_ptr<JsonDocument> m_document;
     std::shared_ptr<ItemPool> item_pool;
@@ -36,6 +38,7 @@ struct ApplicationModels::ApplicationModelsImpl {
         m_material_model = std::make_unique<MaterialModel>(item_pool);
         m_sample_model = std::make_unique<SampleModel>(item_pool);
         m_sld_view_model = std::make_unique<SLDElementModel>();
+        m_job_model = std::make_unique<JobModel>();
         m_property_controller = std::make_unique<MaterialPropertyController>(m_material_model.get(),
                                                                              m_sample_model.get());
         m_document = std::make_unique<JsonDocument>(
@@ -79,6 +82,11 @@ SampleModel* ApplicationModels::sampleModel()
 SLDElementModel* ApplicationModels::sldViewModel()
 {
     return p_impl->m_sld_view_model.get();
+}
+
+JobModel* ApplicationModels::jobModel()
+{
+    return p_impl->m_job_model.get();
 }
 
 void ApplicationModels::readFromFile(const QString& name)

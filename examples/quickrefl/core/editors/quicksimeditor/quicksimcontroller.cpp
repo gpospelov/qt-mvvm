@@ -30,11 +30,9 @@ namespace
 const int profile_points_count = 400;
 }
 
-QuickSimController::QuickSimController(ApplicationModels* app_models, JobModel* job_model,
-                                       QObject* parent)
-    : QObject(parent), sample_model(app_models->sampleModel()),
-      material_model(app_models->materialModel()), job_model(job_model),
-      job_manager(new JobManager(this))
+QuickSimController::QuickSimController(ApplicationModels* app_models, QObject* parent)
+    : QObject(parent), sample_model(app_models->sampleModel()), job_model(app_models->jobModel()),
+      material_model(app_models->materialModel()), job_manager(new JobManager(this))
 {
     setup_multilayer_tracking();
     setup_jobmanager_connections();

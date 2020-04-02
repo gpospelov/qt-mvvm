@@ -41,7 +41,6 @@ private:
     void setup_controller_connections();
 
     ApplicationModels* app_models{nullptr};
-    std::unique_ptr<JobModel> job_model;
     QuickSimController* sim_controller{nullptr};
     QuickSimEditorToolBar* toolbar{nullptr};
     ModelView::GraphCanvas* sld_canvas{nullptr};

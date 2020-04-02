@@ -22,10 +22,10 @@
 using namespace ModelView;
 
 QuickSimEditor::QuickSimEditor(ApplicationModels* app_models, QWidget* parent)
-    : QWidget(parent), app_models(app_models), job_model(std::make_unique<JobModel>()),
-      sim_controller(new QuickSimController(app_models, job_model.get(), this)),
-      toolbar(new QuickSimEditorToolBar), sld_canvas(new ModelView::GraphCanvas),
-      spec_canvas(new ModelView::GraphCanvas), tabwidget(new QTabWidget)
+    : QWidget(parent), app_models(app_models),
+      sim_controller(new QuickSimController(app_models, this)), toolbar(new QuickSimEditorToolBar),
+      sld_canvas(new ModelView::GraphCanvas), spec_canvas(new ModelView::GraphCanvas),
+      tabwidget(new QTabWidget)
 {
     tabwidget->addTab(sld_canvas, "SLD profile");
     tabwidget->addTab(spec_canvas, "Reflectivity");
@@ -37,8 +37,8 @@ QuickSimEditor::QuickSimEditor(ApplicationModels* app_models, QWidget* parent)
     layout->addWidget(toolbar);
     layout->addWidget(tabwidget);
 
-    sld_canvas->setItem(job_model->sld_viewport());
-    spec_canvas->setItem(job_model->specular_viewport());
+    sld_canvas->setItem(app_models->jobModel()->sld_viewport());
+    spec_canvas->setItem(app_models->jobModel()->specular_viewport());
 
     setup_toolbar_connections();
     setup_controller_connections();
@@ -62,8 +62,9 @@ void QuickSimEditor::setup_toolbar_connections()
 {
     // Request to reset plot is propagated from toolbar to viewports.
     auto on_reset_view = [this]() {
-        auto viewport = tabwidget->currentIndex() == 0 ? job_model->sld_viewport()
-                                                       : job_model->specular_viewport();
+        auto viewport = tabwidget->currentIndex() == 0
+                            ? app_models->jobModel()->sld_viewport()
+                            : app_models->jobModel()->specular_viewport();
         viewport->update_viewport();
     };
     connect(toolbar, &QuickSimEditorToolBar::resetViewRequest, on_reset_view);
