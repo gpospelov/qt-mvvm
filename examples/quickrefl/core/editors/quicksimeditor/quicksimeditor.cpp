@@ -37,7 +37,7 @@ QuickSimEditor::QuickSimEditor(ApplicationModels* app_models, QWidget* parent)
     layout->addWidget(toolbar);
     layout->addWidget(tabwidget);
 
-    sld_canvas->setItem(app_models->jobModel()->sld_viewport());
+    // sld_canvas->setItem(app_models->jobModel()->sld_viewport());
     spec_canvas->setItem(app_models->jobModel()->specular_viewport());
 
     setup_toolbar_connections();

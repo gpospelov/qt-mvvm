@@ -13,6 +13,7 @@
 #include <mvvm/plotting/customplotproxywidget.h>
 #include <mvvm/plotting/graphcanvas.h>
 #include <mvvm/plotting/sceneadapterinterface.h>
+#include <mvvm/standarditems/graphviewportitem.h>
 
 namespace
 {
@@ -29,15 +30,21 @@ GraphicsScene::GraphicsScene(QObject* parent) : QGraphicsScene(parent)
     setContext();
 }
 
+//! The destructor
+GraphicsScene::~GraphicsScene() = default;
+
 //! Initialise the GraphicsScene with its elements
 void GraphicsScene::setContext()
 {
-    // clear();
-    createPlotProxy(new ModelView::GraphCanvas);
+    graph_canvas = new ModelView::GraphCanvas;
+    createPlotProxy(graph_canvas);
 }
 
-//! The destructor
-GraphicsScene::~GraphicsScene() = default;
+//! Set te graph canvas item
+void GraphicsScene::setItem(ModelView::GraphViewportItem* viewport_item)
+{
+    graph_canvas->setItem(viewport_item);
+}
 
 //! Adjust size of scene and color map proxy.
 void GraphicsScene::update_size(const QSize& newSize)
