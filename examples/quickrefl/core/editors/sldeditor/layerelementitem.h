@@ -13,6 +13,7 @@
 #include <mvvm/model/compounditem.h>
 #include <mvvm/model/sessionmodel.h>
 
+//! The mvvm session item associated to a layer
 class LayerElementItem : public ModelView::CompoundItem
 {
 public:

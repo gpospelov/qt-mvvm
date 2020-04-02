@@ -21,8 +21,6 @@ class GraphViewportItem;
 class JobItem;
 
 //! Contains results of quick reflectometry simulations.
-// TODO make JobModel part of ApplicationModels
-
 class JobModel : public ModelView::SessionModel
 {
 public:

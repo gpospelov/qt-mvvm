@@ -19,13 +19,13 @@ ElementView::ElementView() : QGraphicsObject() {}
 ElementView::~ElementView() = default;
 
 //! Get the conversion axes
-ModelView::SceneAdapterInterface* ElementView::getSceneAdapter() const
+ModelView::SceneAdapterInterface* ElementView::sceneAdapter() const
 {
     GraphicsScene* scene_item = static_cast<GraphicsScene*>(scene());
     if (!scene_item)
         return nullptr;
 
-    return scene_item->getSceneAdapter();
+    return scene_item->sceneAdapter();
 }
 
 //! Advance method used by the scene adapter
@@ -40,13 +40,13 @@ void ElementView::advance(int phase)
 //! paint override
 void ElementView::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
-    painter->setClipRect(getSceneAdapter()->viewportRectangle());
+    painter->setClipRect(sceneAdapter()->viewportRectangle());
 }
 
 //! modify the rectangle for display according to the scene adapter
 QRectF ElementView::displayRect(QRectF real_rect) const
 {
-    auto adapter = getSceneAdapter();
+    auto adapter = sceneAdapter();
     if (!adapter)
         return real_rect;
 
@@ -96,7 +96,7 @@ QRectF ElementView::displayRect(QRectF real_rect) const
 //! modify the path for display according to the scene adapter
 QPainterPath ElementView::displayPath(QPainterPath real_path) const
 {
-    auto adapter = getSceneAdapter();
+    auto adapter = sceneAdapter();
     if (!adapter)
         return real_path;
 
@@ -111,7 +111,7 @@ QPainterPath ElementView::displayPath(QPainterPath real_path) const
 //! modify the rectangle for display according to the scene adapter
 QPointF ElementView::scenePos(QPointF pixel_pos) const
 {
-    auto adapter = getSceneAdapter();
+    auto adapter = sceneAdapter();
     if (!adapter)
         return pixel_pos;
 

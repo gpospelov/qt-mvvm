@@ -13,6 +13,7 @@
 #include <mvvm/model/sessionmodel.h>
 #include <vector>
 
+// The mvvm session item associated to a layer
 class LayerElementItem;
 
 namespace ModelView
@@ -20,11 +21,7 @@ namespace ModelView
 class ExternalProperty;
 }
 
-/*!
-@class ViewItemsModel
-@brief This holds the model for all the graphical elements of the sld editor
-*/
-
+//! The model of the sld layer visual representation
 class SLDElementModel : public ModelView::SessionModel
 {
 public:

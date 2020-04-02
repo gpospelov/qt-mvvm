@@ -8,14 +8,14 @@
 // ************************************************************************** //
 
 #include "refldockwindow.h"
-#include "sldviewwidget.h"
 #include "applicationmodels.h"
 #include "dockscontroller.h"
 #include "layereditor.h"
-#include "reflwidgets.h"
 #include "quicksimeditor.h"
-#include <QToolBar>
+#include "reflwidgets.h"
+#include "sldviewwidget.h"
 #include <QLabel>
+#include <QToolBar>
 
 ReflDockWindow::ReflDockWindow(QWidget* parent)
     : QMainWindow(parent), toolbar(new QToolBar), docks_controller(new DocksController(this)),
@@ -28,7 +28,7 @@ ReflDockWindow::ReflDockWindow(QWidget* parent)
                                 Qt::TopDockWidgetArea);
     docks_controller->addWidget(1, new LayerEditor(models.get()), Qt::TopDockWidgetArea);
 
-    auto sld_widget = new SLDViewWidget(models->sldController());
+    auto sld_widget = new SLDViewWidget(models.get(), this);
     auto sld_editor = new SLDEditor(sld_widget);
     docks_controller->addWidget(3, sld_editor, Qt::BottomDockWidgetArea);
 

@@ -10,9 +10,9 @@
 #ifndef SPECULARTOYSIMULATION_H
 #define SPECULARTOYSIMULATION_H
 
+#include "materialprofile.h"
 #include <mvvm/utils/progresshandler.h>
 #include <vector>
-#include "materialprofile.h"
 
 //! Toy simulation to calculate "specular reflectivity.
 //! Used by JobManager to run simulation in mylti-threaded mode.

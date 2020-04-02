@@ -10,9 +10,8 @@
 #include "materialprofile.h"
 #include "profilehelper.h"
 
-std::vector<complex_t>
-MaterialProfile::CalculateProfile(const multislice_t& multilayer, int n_points,
-                                  double z_min, double z_max)
+std::vector<complex_t> MaterialProfile::CalculateProfile(const multislice_t& multilayer,
+                                                         int n_points, double z_min, double z_max)
 {
     ProfileHelper helper(multilayer);
     std::vector<double> z_values = GenerateZValues(n_points, z_min, z_max);
@@ -20,7 +19,7 @@ MaterialProfile::CalculateProfile(const multislice_t& multilayer, int n_points,
 }
 
 std::pair<double, double>
-MaterialProfile::DefaultMaterialProfileLimits(const multislice_t &multilayer)
+MaterialProfile::DefaultMaterialProfileLimits(const multislice_t& multilayer)
 {
     ProfileHelper helper(multilayer);
     return helper.defaultLimits();

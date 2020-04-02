@@ -27,7 +27,7 @@ HandleElementView::HandleElementView()
 //! The overriden paint method
 void HandleElementView::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
 {
-    painter->setClipRect(getSceneAdapter()->viewportRectangle());
+    painter->setClipRect(sceneAdapter()->viewportRectangle());
     painter->setPen(m_pen);
     painter->setBrush(m_brush);
     painter->drawEllipse(displayRect(m_rectangle));

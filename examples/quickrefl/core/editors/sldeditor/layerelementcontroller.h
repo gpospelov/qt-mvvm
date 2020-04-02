@@ -16,13 +16,18 @@
 
 #include "mvvm/plotting/sceneadapterinterface.h"
 
+// The mvvm item associated to this layer
 class LayerElementItem;
+// The graphics scene to put the QGraphicsViewItem on
 class GraphicsScene;
-
+// The handle QGraphicsViewItem
 class HandleElementView;
+// The segment QGraphicsViewItem
 class SegmentElementView;
+// The roughness QGraphicsViewItem
 class RoughnessElementView;
 
+//! Manages the whole appearance of a layer on the graphicsscene
 class LayerElementController : public QObject
 {
     Q_OBJECT
@@ -35,27 +40,20 @@ public:
     void connectToModel() const;
     void disconnectFormModel() const;
 
+    // ##################################################################################
+    // Scene management related
     void setScene(GraphicsScene* scene);
     GraphicsScene* scene() const;
     void unsetScene();
 
+    // ##################################################################################
+    // Sample id management related
     void setSampleItemId(std::string indentifier);
     std::string sampleItemId() const;
     void unsetSampleItemId();
 
     // ##################################################################################
-    // Signals for the sld controller
-signals:
-    void heightChanged(std::string id, double value) const;
-    void widthChanged(std::string id, double value) const;
-    void roughnessChanged(std::string id, double value) const;
-
-private:
-    ModelView::SceneAdapterInterface* getSceneAdapter() const;
-
-    // ##################################################################################
     // Inter layer logic related
-public:
     void setLayerAbove(LayerElementController* layer_view_controller);
     void setLayerBelow(LayerElementController* layer_view_controller);
     LayerElementController* layerAbove() const;
@@ -64,43 +62,25 @@ public:
     void unsetLayerBelow(bool silent = true);
 
     // ##################################################################################
-    // Segment and handle related
-public:
+    // Segment related public methods
     void setSideSegment(SegmentElementView* segment_view);
     void setTopSegment(SegmentElementView* segment_view);
     SegmentElementView* sideSegment() const;
     SegmentElementView* topSegment() const;
     void unsetSideSegment();
     void unsetTopSegment();
-
     void segmentViewMoved(SegmentElementView* segment_view);
 
-protected:
-    void updateSideSegment() const;
-    void updateTopSegment() const;
-    QRectF sideSegmentRect() const;
-    QRectF topSegmentRect() const;
-    void putSegementsOnScene() const;
-    void removeSegmentsFromScene() const;
-
-public:
+    // ##################################################################################
+    // Handle related public methods
     void setSegmentHandles(HandleElementView* first_handle, HandleElementView* secondHandle);
     HandleElementView* firstSegmentHandle() const;
     HandleElementView* secondSegmentHandle() const;
     void unsetSegmentHandles();
-
     void handleViewMoved(HandleElementView* handle_view);
-
-protected:
-    void updateSegmentHandles() const;
-    QRectF firstSegmentHandleRect() const;
-    QRectF secondSegmentHandleRect() const;
-    void putSegmentHandlesOnScene() const;
-    void removeSegmentHandlesFromScene() const;
 
     // ##################################################################################
     // Roughness related
-public:
     void setRoughness(RoughnessElementView* roughness_view);
     void setRoughnessHandles(HandleElementView* first_handle_view,
                              HandleElementView* second_handle_view);
@@ -111,7 +91,37 @@ public:
     void unsetRoughnessHandles();
     void updateRoughness() const;
 
+signals:
+    void heightChanged(std::string id, double value) const;
+    void widthChanged(std::string id, double value) const;
+    void roughnessChanged(std::string id, double value) const;
+
+private:
+    ModelView::SceneAdapterInterface* sceneAdapter() const;
+
 protected:
+    // ##################################################################################
+    // Segment related protected methods
+    void updateSideSegment() const;
+    void updateTopSegment() const;
+    QRectF sideSegmentRect() const;
+    QRectF topSegmentRect() const;
+    void putSegementsOnScene() const;
+    void removeSegmentsFromScene() const;
+
+    void sideSegmentMoved() const;
+    void topSegmentMoved() const;
+
+    // ##################################################################################
+    // Handle related protected methods
+    void updateSegmentHandles() const;
+    QRectF firstSegmentHandleRect() const;
+    QRectF secondSegmentHandleRect() const;
+    void putSegmentHandlesOnScene() const;
+    void removeSegmentHandlesFromScene() const;
+
+    // ##################################################################################
+    // Roughness related protected methods
     QPainterPath leftRoughnessPath() const;
     QPainterPath rightRoughnessPath() const;
     QRectF leftRoughnessHandleRect() const;
@@ -120,6 +130,9 @@ protected:
     void putRoughnessHandlesOnScene() const;
     void removeRoughnessFromScene() const;
     void removeRoughnessHandlesFromScene() const;
+
+    void leftHandleMoved() const;
+    void rightHandleMoved() const;
 
 private:
     LayerElementItem* p_model_item;
@@ -135,4 +148,4 @@ private:
     LayerElementController* p_controller_below = nullptr;
 };
 
-#endif
+#endif // LAYERELEMENTCONTROLLER_H

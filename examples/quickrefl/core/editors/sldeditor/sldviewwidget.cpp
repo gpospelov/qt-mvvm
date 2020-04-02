@@ -8,13 +8,13 @@
 // ************************************************************************** //
 
 #include "sldviewwidget.h"
+#include "applicationmodels.h"
 #include "graphicsscene.h"
 #include "sldelementcontroller.h"
-
-#include <memory>
+#include <QResizeEvent>
 
 //! The constructor
-SLDViewWidget::SLDViewWidget(SLDElementController* sld_controller, QWidget* parent) : QGraphicsView(parent)
+SLDViewWidget::SLDViewWidget(ApplicationModels* app_models, QWidget* parent) : QGraphicsView(parent)
 {
     GraphicsScene* scene_item = new GraphicsScene(parent = this);
     setScene(scene_item);
@@ -26,17 +26,19 @@ SLDViewWidget::SLDViewWidget(SLDElementController* sld_controller, QWidget* pare
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setContentsMargins(0, 0, 0, 0);
 
-    sld_controller->setScene(scene_item);
+    m_sld_controller = std::make_unique<SLDElementController>(app_models->materialModel(),
+                                                              app_models->sampleModel(),
+                                                              app_models->sldViewModel(), nullptr);
+    m_sld_controller->setScene(scene_item);
 }
 
+//! The destructor
+SLDViewWidget::~SLDViewWidget() = default;
+
+//! Resize event management
 void SLDViewWidget::resizeEvent(QResizeEvent* event)
 {
     QWidget::resizeEvent(event);
     GraphicsScene* scene_item = static_cast<GraphicsScene*>(scene());
     scene_item->update_size(event->size());
-}
-
-GraphicsScene* SLDViewWidget::getScene() const
-{
-    return static_cast<GraphicsScene*>(scene());
 }

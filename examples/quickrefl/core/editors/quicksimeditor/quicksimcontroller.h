@@ -29,9 +29,7 @@ class QuickSimController : public QObject
 {
     Q_OBJECT
 public:
-    // TODO Move JobModel into ApplicationModels
-    QuickSimController(ApplicationModels* app_models, JobModel* job_model,
-                       QObject* parent = nullptr);
+    QuickSimController(ApplicationModels* app_models, QObject* parent = nullptr);
     ~QuickSimController();
 
 signals:

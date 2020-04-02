@@ -30,7 +30,7 @@ LayerItemsTest::~LayerItemsTest() = default;
 // FIXME restore testing of thickness and roughness appearance for top and bottom layers
 // FIXME together with  layeritems.cpp
 
-//TEST_F(LayerItemsTest, layerAppearanceTwoLayerSystem)
+// TEST_F(LayerItemsTest, layerAppearanceTwoLayerSystem)
 //{
 //    SampleModel model;
 
@@ -48,7 +48,7 @@ LayerItemsTest::~LayerItemsTest() = default;
 //    EXPECT_EQ(bottom->property(LayerItem::P_THICKNESS).value<double>(), 0.0);
 //}
 
-//TEST_F(LayerItemsTest, layerAppearanceThreeLayerSystem)
+// TEST_F(LayerItemsTest, layerAppearanceThreeLayerSystem)
 //{
 //    SampleModel model;
 

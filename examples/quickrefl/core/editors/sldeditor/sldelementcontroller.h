@@ -21,20 +21,18 @@ class SLDElementModel;
 class GraphicsScene;
 class LayerElementController;
 
-/*!
-@class SLDElementController
-@brief This manages model connectivity
-*/
 using string_vec = std::vector<std::string>;
 using layer_ctrl_vec = std::vector<LayerElementController*>;
 
+//! The controller of the sld layer visual representation
 class SLDElementController : public QObject
 {
     Q_OBJECT
 
 public:
     SLDElementController(MaterialModel* material_model, SampleModel* sample_model,
-                  SLDElementModel* sld_model, GraphicsScene* scene_item);
+                         SLDElementModel* sld_model, GraphicsScene* scene_item);
+    ~SLDElementController();
     void setScene(GraphicsScene* scene);
 
 private:

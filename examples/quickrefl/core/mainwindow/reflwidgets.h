@@ -39,7 +39,6 @@ public:
 
     QSize sizeHint() const override;
     QSize minimumSizeHint() const override;
-
 };
 
 //! Instrument editor.

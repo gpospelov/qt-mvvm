@@ -8,13 +8,13 @@
 // ************************************************************************** //
 
 #include "mainwindow.h"
+#include "mainbarwidget.h"
 #include "refldockwindow.h"
 #include <QAction>
 #include <QCoreApplication>
 #include <QFileDialog>
 #include <QMenuBar>
 #include <QSettings>
-#include "mainbarwidget.h"
 
 namespace
 {

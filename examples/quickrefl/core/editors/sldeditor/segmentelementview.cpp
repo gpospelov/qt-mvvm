@@ -26,7 +26,7 @@ SegmentElementView::SegmentElementView()
 //! The overriden paint method
 void SegmentElementView::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
 {
-    painter->setClipRect(getSceneAdapter()->viewportRectangle());
+    painter->setClipRect(sceneAdapter()->viewportRectangle());
     painter->setPen(m_pen);
     painter->setBrush(m_brush);
     painter->drawRect(displayRect(m_rectangle));
@@ -46,7 +46,7 @@ QRectF SegmentElementView::boundingRect() const
     return displayRect(m_rectangle);
 }
 
-//! On move update the model
+//! On move save the new position and notify the controller
 void SegmentElementView::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 {
     m_pos = scenePos(event->pos());
