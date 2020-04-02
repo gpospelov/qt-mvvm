@@ -39,6 +39,11 @@ SLDElementController::SLDElementController(MaterialModel* material_model, Sample
     buildSLD();
 }
 
+SLDElementController::~SLDElementController()
+{
+    clearScene();
+}
+
 //! Connect with signals of MaterialModel
 void SLDElementController::connectMaterialModel()
 {

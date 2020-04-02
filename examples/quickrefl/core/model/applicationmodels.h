@@ -29,7 +29,6 @@ public:
     MaterialModel* materialModel();
     SampleModel* sampleModel();
     SLDElementModel* sldViewModel();
-    SLDElementController* sldController();
 
     void readFromFile(const QString& name);
 

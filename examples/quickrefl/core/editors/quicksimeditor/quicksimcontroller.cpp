@@ -66,14 +66,14 @@ void QuickSimController::onRunSimulationRequest()
 {
     if (in_realtime_mode)
         return;
-    process_multilayer(/*submit_simulation*/true);
+    process_multilayer(/*submit_simulation*/ true);
 }
 
 //! Processes multilayer on any model change. Works only in realtime mode.
 
 void QuickSimController::onMultiLayerChange()
 {
-    process_multilayer(/*submit_simulation*/in_realtime_mode);
+    process_multilayer(/*submit_simulation*/ in_realtime_mode);
 }
 
 //! Takes simulation results from JobManager and write into the model.
