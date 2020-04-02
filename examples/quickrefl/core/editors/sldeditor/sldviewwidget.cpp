@@ -13,8 +13,6 @@
 #include "sldelementcontroller.h"
 #include <QResizeEvent>
 
-#include <memory>
-
 //! The constructor
 SLDViewWidget::SLDViewWidget(ApplicationModels* app_models, QWidget* parent)
     : QGraphicsView(parent)

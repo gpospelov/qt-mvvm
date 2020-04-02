@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include <QGraphicsView>
+#include <memory>
 
 class ApplicationModels;
 class SLDElementController;
