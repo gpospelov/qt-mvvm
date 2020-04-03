@@ -8,11 +8,13 @@
 // ************************************************************************** //
 
 #include "importdataeditor.h"
+#include "CsvImportAssistant.h"
 #include "datasetitem.h"
 #include "realdatamodel.h"
 #include "styleutils.h"
 #include <QAction>
 #include <QDebug>
+#include <QFileDialog>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QToolBar>
@@ -45,7 +47,11 @@ void ImportDataEditor::setup_toolbar()
     load_action->setToolTip("Summons the famous data loader.");
     load_action->setIcon(QIcon(":/icons/aspect-ratio.svg"));
     toolbar->addAction(load_action);
-    //    connect(reset_view, &QToolButton::clicked, [this]() { resetViewport(); });
+    auto on_load_action = [this]() {
+        QString fileName = QFileDialog::getOpenFileName(nullptr, "Open file");
+        CsvImportAssistant assistant(fileName, true);
+    };
+    connect(load_action, &QAction::triggered, on_load_action);
 }
 
 void ImportDataEditor::setup_views()
@@ -55,8 +61,7 @@ void ImportDataEditor::setup_views()
     topitems_tree->setRootSessionItem(dataset->viewportContainer());
 
     // make property tree showing the item selected
-    auto on_item_selected = [this](SessionItem* item)
-    {
+    auto on_item_selected = [this](SessionItem* item) {
         property_tree->setItem(item);
         // FIXME if viewport contains lots of graphs we probably would like to show only single
         // graph on graph selection. For that we have to implement for GraphViewportItem
