@@ -247,16 +247,12 @@ void SLDElementController::updateToView(SessionItem* item)
             layer_controller->layerElementItem()->setProperty(
                 LayerElementItem::P_SIDE_BRUSH_COLOR,
                 material_item->property(SLDMaterialItem::P_COLOR));
-        }else{
-            layer_controller->layerElementItem()->setProperty(
-                LayerElementItem::P_HEIGHT,
-                1e-6);
-            layer_controller->layerElementItem()->setProperty(
-                LayerElementItem::P_TOP_BRUSH_COLOR,
-                QColor("red"));
-            layer_controller->layerElementItem()->setProperty(
-                LayerElementItem::P_SIDE_BRUSH_COLOR,
-                QColor("red"));
+        } else {
+            layer_controller->layerElementItem()->setProperty(LayerElementItem::P_HEIGHT, 1e-6);
+            layer_controller->layerElementItem()->setProperty(LayerElementItem::P_TOP_BRUSH_COLOR,
+                                                              QColor("red"));
+            layer_controller->layerElementItem()->setProperty(LayerElementItem::P_SIDE_BRUSH_COLOR,
+                                                              QColor("red"));
         }
     }
 }
