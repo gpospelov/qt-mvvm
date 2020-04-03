@@ -7,12 +7,18 @@
 //
 // ************************************************************************** //
 
-#include "importwindow.h"
-#include "importdataeditor.h"
-#include <QVBoxLayout>
+#ifndef IMPORTDATAEDITOR_H
+#define IMPORTDATAEDITOR_H
 
-ImportWindow::ImportWindow(QWidget* parent) : QWidget(parent)
+#include <QWidget>
+
+//! Main editor to import user data.
+
+class ImportDataEditor : public QWidget
 {
-    auto layout = new QVBoxLayout(this);
-    layout->addWidget(new ImportDataEditor);
-}
+    Q_OBJECT
+public:
+    ImportDataEditor(QWidget* parent = nullptr);
+};
+
+#endif // IMPORTDATAEDITOR_H

@@ -7,12 +7,12 @@
 //
 // ************************************************************************** //
 
-#include "importwindow.h"
 #include "importdataeditor.h"
+#include <QLabel>
 #include <QVBoxLayout>
 
-ImportWindow::ImportWindow(QWidget* parent) : QWidget(parent)
+ImportDataEditor::ImportDataEditor(QWidget* parent) : QWidget(parent)
 {
     auto layout = new QVBoxLayout(this);
-    layout->addWidget(new ImportDataEditor);
+    layout->addWidget(new QLabel("Hello World!"));
 }
