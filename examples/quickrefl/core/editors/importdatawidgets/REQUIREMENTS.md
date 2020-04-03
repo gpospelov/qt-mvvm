@@ -62,6 +62,7 @@ Here we can benefit from successful UI tricks invented by Exel, Libreoffice, and
 + Guess if it is binary file by reading few first bytes.
 + Guess common separator by reading first bytes of data.
 + Guess comment line identifier.
++ Guess number of columns by reading first bytes of data. 
 + Provide possibility to define column separator, comment line identifier.
 
 <hr>
@@ -90,6 +91,9 @@ Y-error: combo_for_column_index   combo_to_select_yerrType
 
 + In general, it should be like QTreeView on the left, and GraphCanvas on the right.
 + Tree view should contain top level items: viewports and graphs, belonging to them.
-+ There should be possible to drag-and-drop graphs from one viewports to another.
-+ When we are clicking on tree items on the left, the canvas on the right shows corresponding items.
++ There should be possible to drag-and-drop graphs inside the tree: from one viewports to another.
++ When we are clicking on viewport item on the left, the canvas on the right shows cviewport with orresponding graphs.
++ When we click on single graph on the left, we see single graph on it's viewport on the right. Other graphs belonging to same viwport are hidden.
+
+
   
