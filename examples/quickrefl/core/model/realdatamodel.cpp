@@ -8,5 +8,26 @@
 // ************************************************************************** //
 
 #include "realdatamodel.h"
+#include "datasetitem.h"
+#include <mvvm/model/itemcatalogue.h>
 
-RealDataModel::RealDataModel() : SessionModel("RealDataModel") {}
+using namespace ModelView;
+
+namespace
+{
+
+std::unique_ptr<ItemCatalogue> CreateItemCatalogue()
+{
+    auto result = std::make_unique<ModelView::ItemCatalogue>();
+    result->registerItem<DataSetItem>();
+    return result;
+}
+
+} // namespace
+
+
+RealDataModel::RealDataModel() : SessionModel("RealDataModel")
+{
+    setItemCatalogue(CreateItemCatalogue());
+    insertItem<DataSetItem>();
+}
