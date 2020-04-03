@@ -12,6 +12,7 @@
 
 #include <QMainWindow>
 
+class ImportWindow;
 class ReflDockWindow;
 class MainBarWidget;
 
@@ -32,6 +33,7 @@ private:
     void init_tabs();
     void write_settings();
 
+    ImportWindow* import_window{nullptr};
     ReflDockWindow* m_reflDockWindow{nullptr};
     MainBarWidget* bar_widget{nullptr};
 };
