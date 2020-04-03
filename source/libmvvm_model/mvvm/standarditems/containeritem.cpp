@@ -15,3 +15,5 @@ ContainerItem::ContainerItem() : CompoundItem(Constants::ContainerItemType)
 {
     registerTag(ModelView::TagInfo::universalTag(T_ITEMS), /*set_as_default*/ true);
 }
+
+// FIXME implement empty() const and tests
