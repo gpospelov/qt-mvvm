@@ -16,6 +16,8 @@ target_sources(quickreflcore PRIVATE
     materialmodel.h
     materialpropertycontroller.cpp
     materialpropertycontroller.h
+    realdatamodel.cpp
+    realdatamodel.h
     samplemodel.cpp
     samplemodel.h
 )

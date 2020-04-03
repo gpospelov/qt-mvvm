@@ -17,7 +17,7 @@
 #include <QLabel>
 #include <QToolBar>
 
-ReflDockWindow::ReflDockWindow(ApplicationModels *models, QWidget* parent)
+ReflDockWindow::ReflDockWindow(ApplicationModels* models, QWidget* parent)
     : QMainWindow(parent), toolbar(new QToolBar), docks_controller(new DocksController(this)),
       models(models)
 {

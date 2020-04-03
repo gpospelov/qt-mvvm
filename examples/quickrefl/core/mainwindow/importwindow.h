@@ -11,7 +11,8 @@
 #define IMPORTWINDOW_H
 
 #include <QWidget>
-#include <memory>
+
+class ApplicationModels;
 
 //! Main window to import user data.
 
@@ -19,7 +20,10 @@ class ImportWindow : public QWidget
 {
     Q_OBJECT
 public:
-    ImportWindow(QWidget* parent = nullptr);
+    ImportWindow(ApplicationModels* models, QWidget* parent = nullptr);
+
+private:
+    ApplicationModels* models{nullptr};
 };
 
 #endif //  IMPORTWINDOW_H

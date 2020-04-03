@@ -23,7 +23,7 @@ class ReflDockWindow : public QMainWindow
 {
     Q_OBJECT
 public:
-    ReflDockWindow(ApplicationModels*models, QWidget* parent = nullptr);
+    ReflDockWindow(ApplicationModels* models, QWidget* parent = nullptr);
     ~ReflDockWindow();
 
 private:

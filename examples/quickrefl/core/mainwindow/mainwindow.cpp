@@ -26,7 +26,7 @@ const QString pos_key = "pos";
 } // namespace
 
 MainWindow::MainWindow()
-    : models(std::make_unique<ApplicationModels>()), import_window(new ImportWindow),
+    : models(std::make_unique<ApplicationModels>()), import_window(new ImportWindow(models.get())),
       m_reflDockWindow(new ReflDockWindow(models.get())), bar_widget(new MainBarWidget)
 {
     init_application();

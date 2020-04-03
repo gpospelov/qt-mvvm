@@ -12,13 +12,18 @@
 
 #include <QWidget>
 
+class RealDataModel;
+
 //! Main editor to import user data.
 
 class ImportDataEditor : public QWidget
 {
     Q_OBJECT
 public:
-    ImportDataEditor(QWidget* parent = nullptr);
+    ImportDataEditor(RealDataModel* model, QWidget* parent = nullptr);
+
+private:
+    RealDataModel* model{nullptr};
 };
 
 #endif // IMPORTDATAEDITOR_H

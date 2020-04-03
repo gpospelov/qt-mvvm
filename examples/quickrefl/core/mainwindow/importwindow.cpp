@@ -8,11 +8,13 @@
 // ************************************************************************** //
 
 #include "importwindow.h"
+#include "applicationmodels.h"
 #include "importdataeditor.h"
 #include <QVBoxLayout>
 
-ImportWindow::ImportWindow(QWidget* parent) : QWidget(parent)
+ImportWindow::ImportWindow(ApplicationModels* models, QWidget* parent)
+    : QWidget(parent), models(models)
 {
     auto layout = new QVBoxLayout(this);
-    layout->addWidget(new ImportDataEditor);
+    layout->addWidget(new ImportDataEditor(models->realDataModel()));
 }

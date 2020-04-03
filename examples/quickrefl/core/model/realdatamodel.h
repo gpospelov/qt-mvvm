@@ -7,14 +7,17 @@
 //
 // ************************************************************************** //
 
-#include "importdataeditor.h"
-#include "realdatamodel.h"
-#include <QLabel>
-#include <QVBoxLayout>
+#ifndef REALDATAMODEL_H
+#define REALDATAMODEL_H
 
-ImportDataEditor::ImportDataEditor(RealDataModel* model, QWidget* parent)
-    : QWidget(parent), model(model)
+#include <mvvm/model/sessionmodel.h>
+
+//! The model to store imported reflectometry data.
+
+class RealDataModel : public ModelView::SessionModel
 {
-    auto layout = new QVBoxLayout(this);
-    layout->addWidget(new QLabel("Hello World!"));
-}
+public:
+    RealDataModel();
+};
+
+#endif //  REALDATAMODEL_H
