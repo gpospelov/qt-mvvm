@@ -12,6 +12,7 @@
 #include <QColor>
 #include <mvvm/model/itemcatalogue.h>
 #include <mvvm/utils/numericutils.h>
+#include <mvvm/widgets/utils.h>
 
 namespace
 {
@@ -21,12 +22,6 @@ std::unique_ptr<ModelView::ItemCatalogue> CreateToyItemCatalogue()
     result->registerItem<DemoItem>();
     result->registerItem<DemoContainerItem>();
     return result;
-}
-
-QColor random_color()
-{
-    auto rndm = []() -> int { return ModelView::Utils::RandInt(0, 255); };
-    return QColor(rndm(), rndm(), rndm());
 }
 
 std::string random_name()
@@ -55,7 +50,7 @@ SampleModel::SampleModel() : SessionModel("SampleModel")
 void SampleModel::append_random_item(ModelView::SessionItem* container)
 {
     auto item = insertItem<DemoItem>(container);
-    item->setProperty(DemoItem::P_COLOR_PROPERTY, random_color());
+    item->setProperty(DemoItem::P_COLOR_PROPERTY, ModelView::Utils::random_color());
     item->setProperty(DemoItem::P_STRING_PROPERTY, QVariant::fromValue(random_name()));
     item->setProperty(DemoItem::P_INTEGER_PROPERTY, ModelView::Utils::RandInt(0, 10));
 }

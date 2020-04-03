@@ -12,7 +12,6 @@
 
 #include <mvvm/model/externalproperty.h>
 #include <mvvm/model/itemcatalogue.h>
-#include <mvvm/utils/numericutils.h>
 #include <mvvm/utils/reallimits.h>
 
 using namespace ModelView;
@@ -24,12 +23,6 @@ std::unique_ptr<ItemCatalogue> CreateItemCatalogue()
     auto result = std::make_unique<ModelView::ItemCatalogue>();
     result->registerItem<LayerElementItem>();
     return result;
-}
-
-QColor random_color()
-{
-    auto rndm = []() -> int { return ModelView::Utils::RandInt(0, 255); };
-    return QColor(rndm(), rndm(), rndm());
 }
 
 } // namespace

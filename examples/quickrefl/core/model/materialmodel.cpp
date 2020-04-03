@@ -14,7 +14,7 @@
 #include <mvvm/model/externalproperty.h>
 #include <mvvm/model/itemcatalogue.h>
 #include <mvvm/model/modelutils.h>
-#include <mvvm/utils/numericutils.h>
+#include <mvvm/widgets/utils.h>
 
 using namespace ModelView;
 
@@ -40,12 +40,6 @@ const std::string air_material_name = "Air";
 const std::string substrate_material_name = "Si";
 const std::string default_material_name = "Default";
 
-QColor random_color()
-{
-    auto rndm = []() -> int { return ModelView::Utils::RandInt(0, 255); };
-    return QColor(rndm(), rndm(), rndm());
-}
-
 //! Returns map of good looking colors for standard material names.
 
 std::map<std::string, QColor> name_to_color_map()
@@ -60,7 +54,7 @@ QColor suggestMaterialColor(const std::string& name)
 {
     static auto color_map = name_to_color_map();
     auto it = color_map.find(name);
-    return it != color_map.end() ? it->second : random_color();
+    return it != color_map.end() ? it->second : Utils::random_color();
 }
 
 } // namespace
