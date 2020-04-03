@@ -36,7 +36,7 @@ private:
 
     std::unique_ptr<ApplicationModels> models;
     ImportWindow* import_window{nullptr};
-    ReflDockWindow* m_reflDockWindow{nullptr};
+    ReflDockWindow* refl_window{nullptr};
     MainBarWidget* bar_widget{nullptr};
 };
 

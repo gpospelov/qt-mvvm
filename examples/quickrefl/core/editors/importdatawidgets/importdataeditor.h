@@ -12,7 +12,16 @@
 
 #include <QWidget>
 
+namespace ModelView
+{
+class GraphCanvas;
+class TopItemsTreeView;
+class PropertyTreeView;
+}
+
 class RealDataModel;
+class QToolBar;
+class QBoxLayout;
 
 //! Main editor to import user data.
 
@@ -23,7 +32,15 @@ public:
     ImportDataEditor(RealDataModel* model, QWidget* parent = nullptr);
 
 private:
+    void setup_toolbar();
+    void setup_views();
+    QBoxLayout* create_bottom_layout();
+
     RealDataModel* model{nullptr};
+    QToolBar* toolbar{nullptr};
+    ModelView::TopItemsTreeView* topitems_tree{nullptr};
+    ModelView::GraphCanvas* graph_canvas{nullptr};
+    ModelView::PropertyTreeView* property_tree{nullptr};
 };
 
 #endif // IMPORTDATAEDITOR_H
