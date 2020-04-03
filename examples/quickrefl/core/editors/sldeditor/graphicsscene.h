@@ -17,6 +17,7 @@ namespace ModelView
 {
 class GraphCanvas;
 class SceneAdapterInterface;
+class GraphViewportItem;
 } // namespace ModelView
 
 class CustomPlotProxyWidget;
@@ -32,6 +33,7 @@ public:
     ~GraphicsScene() override;
 
     void setContext();
+    void setItem(ModelView::GraphViewportItem* viewport_item);
     void update_size(const QSize& newSize);
     ModelView::SceneAdapterInterface* sceneAdapter() const;
 
@@ -39,6 +41,7 @@ private:
     void createPlotProxy(ModelView::GraphCanvas* plot_canvas);
     CustomPlotProxyWidget* plot_proxy{nullptr};
     std::unique_ptr<ModelView::SceneAdapterInterface> scene_adapter;
+    ModelView::GraphCanvas* graph_canvas{nullptr};
 };
 
 #endif //  GRAPHICSPROXY_GRAPHICSSCENE_H

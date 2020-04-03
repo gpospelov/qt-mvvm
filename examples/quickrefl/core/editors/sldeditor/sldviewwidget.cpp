@@ -10,6 +10,7 @@
 #include "sldviewwidget.h"
 #include "applicationmodels.h"
 #include "graphicsscene.h"
+#include "jobmodel.h"
 #include "sldelementcontroller.h"
 #include <QResizeEvent>
 
@@ -30,6 +31,7 @@ SLDViewWidget::SLDViewWidget(ApplicationModels* app_models, QWidget* parent) : Q
                                                               app_models->sampleModel(),
                                                               app_models->sldViewModel(), nullptr);
     m_sld_controller->setScene(scene_item);
+    scene_item->setItem(app_models->jobModel()->sld_viewport());
 }
 
 //! The destructor
