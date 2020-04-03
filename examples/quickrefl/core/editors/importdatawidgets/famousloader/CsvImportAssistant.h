@@ -17,9 +17,8 @@
 
 #include "CsvDataColumn.h"
 #include "CsvReader.h"
-#include "DataFormatUtils.h"
+//#include "DataFormatUtils.h"
 #include "ImportDataInfo.h"
-#include "WinDllMacros.h"
 #include <QStringList>
 #include <QWidget>
 #include <memory>
@@ -46,7 +45,7 @@ public:
 };
 
 //! Logic for importing intensity data from csv files
-class BA_CORE_API_ CsvImportAssistant : public QObject
+class CsvImportAssistant : public QObject
 {
     Q_OBJECT
 public:

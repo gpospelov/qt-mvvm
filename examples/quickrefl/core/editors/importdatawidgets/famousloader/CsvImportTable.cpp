@@ -13,7 +13,9 @@
 // ************************************************************************** //
 
 #include "CsvImportTable.h"
-#include "ScientificSpinBox.h"
+#include <mvvm/widgets/scientificspinbox.h>
+
+using namespace ModelView;
 
 namespace {
 

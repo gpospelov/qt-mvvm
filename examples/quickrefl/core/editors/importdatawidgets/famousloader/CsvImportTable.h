@@ -20,7 +20,7 @@
 #include <QTableWidget>
 #include <set>
 
-class BA_CORE_API_ CsvImportData : public QObject
+class CsvImportData : public QObject
 {
 public:
     // FIXME: move DATA_TYPE enumeration to csv namespace

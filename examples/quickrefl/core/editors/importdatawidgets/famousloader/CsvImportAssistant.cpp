@@ -13,11 +13,12 @@
 // ************************************************************************** //
 
 #include "CsvImportAssistant.h"
-#include "DataFormatUtils.cpp"
+//#include "DataFormatUtils.cpp"
 #include "DataSelector.h"
 #include "ImportDataInfo.h"
-#include "StyleUtils.h"
-#include "mainwindow_constants.h"
+//#include "StyleUtils.h"
+//#include "mainwindow_constants.h"
+#include "OutputData.h"
 #include <QFileDialog>
 #include <QFormLayout>
 #include <QMenu>
@@ -167,9 +168,9 @@ ImportDataInfo CsvImportAssistant::fillData()
     getValuesFromColumns(intensityValues,coordinateValues);
 
     auto axisName = csv::UnitsLabels[m_units].toStdString();
-    PointwiseAxis coordAxis(axisName, coordinateValues);
-    resultOutputData->addAxis(coordAxis);
-    resultOutputData->setRawDataVector(intensityValues);
+//    PointwiseAxis coordAxis(axisName, coordinateValues);
+//    resultOutputData->addAxis(coordAxis);
+//    resultOutputData->setRawDataVector(intensityValues);
 
     ImportDataInfo result(std::move(resultOutputData), m_units);
     return result;
@@ -264,7 +265,7 @@ void CsvImportAssistant::removeBlankColumns()
     size_t nCols = m_csvArray[0].size();
 
     if (!hasEqualLengthLines(m_csvArray)) {
-        throw Exceptions::NotImplementedException(
+        throw std::runtime_error(
             "All inner vectors should have the same length already.");
     }
 
