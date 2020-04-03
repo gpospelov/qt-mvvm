@@ -17,6 +17,7 @@
 
 #include "IUnitConverter.h"
 #include <map>
+#include <string>
 
 //! Contains functions to create maps that give the right axis names for different
 //! detector types and units
