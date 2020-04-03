@@ -8,9 +8,10 @@
 // ************************************************************************** //
 
 #include "mainwindow.h"
+#include "applicationmodels.h"
+#include "importwindow.h"
 #include "mainbarwidget.h"
 #include "refldockwindow.h"
-#include "importwindow.h"
 #include <QAction>
 #include <QCoreApplication>
 #include <QFileDialog>
@@ -24,7 +25,9 @@ const QString size_key = "size";
 const QString pos_key = "pos";
 } // namespace
 
-MainWindow::MainWindow() : import_window(new ImportWindow), m_reflDockWindow(new ReflDockWindow), bar_widget(new MainBarWidget)
+MainWindow::MainWindow()
+    : models(std::make_unique<ApplicationModels>()), import_window(new ImportWindow),
+      m_reflDockWindow(new ReflDockWindow(models.get())), bar_widget(new MainBarWidget)
 {
     init_application();
     init_tabs();

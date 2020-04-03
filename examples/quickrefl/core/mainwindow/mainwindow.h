@@ -15,6 +15,7 @@
 class ImportWindow;
 class ReflDockWindow;
 class MainBarWidget;
+class ApplicationModels;
 
 //! Application main window.
 
@@ -33,6 +34,7 @@ private:
     void init_tabs();
     void write_settings();
 
+    std::unique_ptr<ApplicationModels> models;
     ImportWindow* import_window{nullptr};
     ReflDockWindow* m_reflDockWindow{nullptr};
     MainBarWidget* bar_widget{nullptr};

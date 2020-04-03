@@ -23,7 +23,7 @@ class ReflDockWindow : public QMainWindow
 {
     Q_OBJECT
 public:
-    ReflDockWindow(QWidget* parent = nullptr);
+    ReflDockWindow(ApplicationModels*models, QWidget* parent = nullptr);
     ~ReflDockWindow();
 
 private:
@@ -32,7 +32,7 @@ private:
 
     QToolBar* toolbar{nullptr};
     DocksController* docks_controller{nullptr};
-    std::unique_ptr<ApplicationModels> models;
+    ApplicationModels* models;
 };
 
 #endif //  REFLDOCKWINDOW_H

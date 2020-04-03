@@ -17,22 +17,22 @@
 #include <QLabel>
 #include <QToolBar>
 
-ReflDockWindow::ReflDockWindow(QWidget* parent)
+ReflDockWindow::ReflDockWindow(ApplicationModels *models, QWidget* parent)
     : QMainWindow(parent), toolbar(new QToolBar), docks_controller(new DocksController(this)),
-      models(std::make_unique<ApplicationModels>())
+      models(models)
 {
     setup_toolbar();
     setup_centralwidget();
 
     docks_controller->addWidget(0, new MaterialEditor(models->materialModel()),
                                 Qt::TopDockWidgetArea);
-    docks_controller->addWidget(1, new LayerEditor(models.get()), Qt::TopDockWidgetArea);
+    docks_controller->addWidget(1, new LayerEditor(models), Qt::TopDockWidgetArea);
 
-    auto sld_widget = new SLDViewWidget(models.get(), this);
+    auto sld_widget = new SLDViewWidget(models, this);
     auto sld_editor = new SLDEditor(sld_widget);
     docks_controller->addWidget(3, sld_editor, Qt::BottomDockWidgetArea);
 
-    docks_controller->addWidget(4, new QuickSimEditor(models.get()), Qt::BottomDockWidgetArea);
+    docks_controller->addWidget(4, new QuickSimEditor(models), Qt::BottomDockWidgetArea);
 }
 
 ReflDockWindow::~ReflDockWindow() = default;
