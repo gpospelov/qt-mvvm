@@ -17,4 +17,6 @@ target_sources(mvvm_viewmodel PRIVATE
     statuslabel.h
     topitemstreeview.cpp
     topitemstreeview.h
+    utils.cpp
+    utils.h
 )
