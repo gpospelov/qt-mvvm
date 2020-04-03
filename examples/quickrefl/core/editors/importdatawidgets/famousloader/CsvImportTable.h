@@ -19,6 +19,7 @@
 #include "CsvNamespace.h"
 #include <QTableWidget>
 #include <set>
+#include <memory>
 
 class CsvImportData : public QObject
 {
