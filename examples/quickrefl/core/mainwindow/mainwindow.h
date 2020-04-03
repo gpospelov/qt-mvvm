@@ -11,6 +11,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <memory>
 
 class ImportWindow;
 class ReflDockWindow;
