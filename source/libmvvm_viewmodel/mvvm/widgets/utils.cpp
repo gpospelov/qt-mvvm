@@ -7,11 +7,12 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_UTILS_MATHCONSTANTS_H
-#define MVVM_UTILS_MATHCONSTANTS_H
+#include <QColor>
+#include <mvvm/utils/numericutils.h>
+#include <mvvm/widgets/utils.h>
 
-#ifndef M_PI
-#define M_PI 3.14159265358979323846264338327950288 /* pi */
-#endif
-
-#endif
+QColor ModelView::Utils::random_color()
+{
+    auto rndm = []() -> int { return ModelView::Utils::RandInt(0, 255); };
+    return QColor(rndm(), rndm(), rndm());
+}
