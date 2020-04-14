@@ -49,54 +49,115 @@ void ElementView::paint(QPainter* painter, const QStyleOptionGraphicsItem* optio
 }
 
 //! modify the rectangle for display according to the scene adapter
-QRectF ElementView::displayRect(QRectF real_rect) const
+QRectF ElementView::displayRect(const QRectF &real_rect) const
 {
     auto adapter = sceneAdapter();
     if (!adapter)
         return real_rect;
 
+    auto output = QRectF(real_rect);
+
+    if (m_center_based) {
+        output = displayRectCenterBased(real_rect);
+    } else {
+        output = displayRectEdgeBased(real_rect);
+    }
+
+    if (m_stretch_left) {
+        output = stretchRectLeft(output);
+    } else if (m_stretch_right){
+        output = stretchRectRight(output);
+    }
+
+    return output;
+}
+
+//! Helper function for displayRect based on the center of real_rect
+QRectF ElementView::displayRectCenterBased(const QRectF &real_rect) const
+{
+    auto adapter = sceneAdapter();
     double x = real_rect.x();
     double y = real_rect.y();
     double w = real_rect.width();
     double h = real_rect.height();
 
-    if (m_center_based) {
-        double center_x = x + w / 2.;
-        double center_y = y + h / 2.;
+    double center_x = x + w / 2.;
+    double center_y = y + h / 2.;
 
-        if (m_adapt_x) {
-            center_x = adapter->toSceneX(-center_x);
-        }
-        if (m_adapt_y) {
-            center_y = adapter->toSceneY(center_y);
-        }
-        if (m_adapt_width) {
-            w = adapter->toSceneX(w) - adapter->toSceneX(0);
-        }
-        if (m_adapt_height) {
-            h = adapter->toSceneY(h) - adapter->toSceneY(0);
-        }
+    if (m_adapt_x) {
+        center_x = adapter->toSceneX(-center_x);
+    }
+    if (m_adapt_y) {
+        center_y = adapter->toSceneY(center_y);
+    }
+    if (m_adapt_width) {
+        w = adapter->toSceneX(w) - adapter->toSceneX(0);
+    }
+    if (m_adapt_height) {
+        h = adapter->toSceneY(h) - adapter->toSceneY(0);
+    }
 
-        x = center_x - w / 2;
-        y = center_y - h / 2;
+    x = center_x - w / 2;
+    y = center_y - h / 2;
 
-    } else {
-        if (m_adapt_x) {
-            x = adapter->toSceneX(-x);
-        }
-        if (m_adapt_y) {
-            y = adapter->toSceneY(y);
-        }
-        if (m_adapt_width) {
-            w = adapter->toSceneX(w) - adapter->toSceneX(0);
-        }
-        if (m_adapt_height) {
-            h = adapter->toSceneY(h) - adapter->toSceneY(0);
-        }
+    return QRectF(x, y, w, h); 
+}
+
+//! Helper function for displayRect based on the edge of real_rect
+QRectF ElementView::displayRectEdgeBased(const QRectF &real_rect) const
+{
+    auto adapter = sceneAdapter();
+    double x = real_rect.x();
+    double y = real_rect.y();
+    double w = real_rect.width();
+    double h = real_rect.height();
+
+    if (m_adapt_x) {
+        x = adapter->toSceneX(-x);
+    }
+    if (m_adapt_y) {
+        y = adapter->toSceneY(y);
+    }
+    if (m_adapt_width) {
+        w = adapter->toSceneX(w) - adapter->toSceneX(0);
+    }
+    if (m_adapt_height) {
+        h = adapter->toSceneY(h) - adapter->toSceneY(0);
     }
 
     return QRectF(x, y, w, h);
 }
+
+//! Stretch the rectangle to the left limit of the viewport
+QRectF ElementView::stretchRectLeft(const QRectF &real_rect) const
+{
+    auto adapter = sceneAdapter();
+    double x_i = real_rect.x();
+    double y_i = real_rect.y();
+    double x_f = real_rect.x() + real_rect.width();
+    double y_f = real_rect.y() + real_rect.height();
+
+    auto viewport_rect = sceneAdapter()->viewportRectangle();
+    x_i = viewport_rect.x();
+
+    return QRectF(x_i, y_i, x_f - x_i, y_f - y_i);
+}
+
+//! Stretch the rectangle to the right limit of the viewport
+QRectF ElementView::stretchRectRight(const QRectF &real_rect) const
+{
+    auto adapter = sceneAdapter();
+    double x_i = real_rect.x();
+    double y_i = real_rect.y();
+    double x_f = real_rect.x() + real_rect.width();
+    double y_f = real_rect.y() + real_rect.height();
+
+    auto viewport_rect = sceneAdapter()->viewportRectangle();
+    x_f = viewport_rect.x() + viewport_rect.width();
+
+    return QRectF(x_i, y_i, x_f - x_i, y_f - y_i);
+}
+
 
 //! modify the path for display according to the scene adapter
 QPainterPath ElementView::displayPath(QPainterPath real_path) const
@@ -151,6 +212,18 @@ void ElementView::adaptW(bool choice)
 void ElementView::adaptH(bool choice)
 {
     m_adapt_height = choice;
+}
+
+//! Stretch the rectangle to the left limit of the viewport
+void ElementView::stretchLeft(bool choice)
+{
+    m_stretch_left = choice;
+}
+
+//! Stretch the rectangle to the right limit of the viewport
+void ElementView::stretchRight(bool choice)
+{
+    m_stretch_right = choice;
 }
 
 //! The hoover enter event
