@@ -20,8 +20,6 @@ SLDViewWidget::SLDViewWidget(ApplicationModels* app_models, QWidget* parent) : Q
     GraphicsScene* scene_item = new GraphicsScene(parent = this);
     setScene(scene_item);
     setRenderHints(QPainter::Antialiasing);
-    setCacheMode(QGraphicsView::CacheNone);
-    setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
     setDragMode(QGraphicsView::ScrollHandDrag);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
