@@ -12,7 +12,7 @@
 using namespace ModelView;
 
 ProgressHandler::ProgressHandler(ProgressHandler::callback_t callback, size_t max_ticks_count)
-    : runner_callback(callback), max_ticks_count(max_ticks_count)
+    : runner_callback(std::move(callback)), max_ticks_count(max_ticks_count)
 {
 }
 

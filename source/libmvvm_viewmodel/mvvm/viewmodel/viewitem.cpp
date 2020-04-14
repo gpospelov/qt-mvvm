@@ -122,7 +122,7 @@ int ViewItem::columnCount() const
 void ViewItem::appendRow(std::vector<std::unique_ptr<ViewItem>> items)
 {
     for (auto& x : items)
-        x.get()->setParent(this);
+        x->setParent(this);
     p_impl->appendRow(std::move(items));
 }
 

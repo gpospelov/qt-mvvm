@@ -43,11 +43,11 @@ void SampleModel::create_default_multilayer()
     auto multilayer = insertItem<MultiLayerItem>();
 
     auto top = insertItem<LayerItem>(multilayer);
-    top->setProperty(LayerItem::P_NAME, QVariant::fromValue(std::string("Ambient")));
+    top->setProperty(LayerItem::P_NAME, std::string("Ambient"));
     auto middle = insertItem<LayerItem>(multilayer);
-    middle->setProperty(LayerItem::P_NAME, QVariant::fromValue(std::string("Middle")));
+    middle->setProperty(LayerItem::P_NAME, std::string("Middle"));
     auto substrate = insertItem<LayerItem>(multilayer);
-    substrate->setProperty(LayerItem::P_NAME, QVariant::fromValue(std::string("Substrate")));
+    substrate->setProperty(LayerItem::P_NAME, std::string("Substrate"));
 
     middle->setProperty(LayerItem::P_THICKNESS, 42.0);
 }

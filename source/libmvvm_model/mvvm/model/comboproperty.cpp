@@ -38,7 +38,8 @@ template <typename C, typename T> std::string toString(const C& container, const
 std::vector<std::string> tokenize(const std::string& str, const std::string& delimeter)
 {
     std::vector<std::string> result;
-    size_t start = str.find_first_not_of(delimeter), end = start;
+    size_t start = str.find_first_not_of(delimeter);
+    size_t end = start;
 
     while (start != std::string::npos) {
         // Find next occurence of delimiter
@@ -176,13 +177,6 @@ void ComboProperty::setStringOfValues(const std::string& values)
     auto current = value();
     m_values = tokenize(values, value_separator);
     setCurrentIndex(contains(m_values, current) ? Utils::IndexOfItem(m_values, current) : 0);
-}
-
-//! Constructs variant enclosing given ComboProperty.
-
-QVariant ComboProperty::variant() const
-{
-    return QVariant::fromValue(*this);
 }
 
 //! Returns vector of selected indices.

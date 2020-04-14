@@ -41,7 +41,7 @@ protected:
     void setObsolete(bool flag);
     void setDescription(const std::string& text);
     Path pathFromItem(SessionItem* item) const;
-    SessionItem* itemFromPath(Path path) const;
+    SessionItem* itemFromPath(const Path& path) const;
     SessionModel* model() const;
 
 private:

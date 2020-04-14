@@ -203,7 +203,7 @@ void SessionModel::createRootItem()
     m_root_item->registerTag(TagInfo::universalTag("rootTag"), /*set_as_default*/ true);
 }
 
-SessionItem* SessionModel::intern_insert(item_factory_func_t func, SessionItem* parent,
+SessionItem* SessionModel::intern_insert(const item_factory_func_t& func, SessionItem* parent,
                                          const TagRow& tagrow)
 {
     return m_commands->insertNewItem(func, parent, tagrow);

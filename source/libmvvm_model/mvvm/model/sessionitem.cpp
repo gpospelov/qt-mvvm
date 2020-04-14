@@ -277,14 +277,6 @@ QVariant SessionItem::property(const std::string& tag) const
     return getItem(tag)->data();
 }
 
-//! Sets data to property item.
-//! Property is single item registered under certain tag via CompoundItem::addProperty method.
-
-void SessionItem::setProperty(const std::string& tag, const QVariant& variant)
-{
-    getItem(tag)->setData(variant);
-}
-
 void SessionItem::setParent(SessionItem* parent)
 {
     p_impl->m_parent = parent;
@@ -313,6 +305,13 @@ void SessionItem::setAppearanceFlag(int flag, bool value)
         flags &= ~flag;
 
     setDataIntern(flags, ItemDataRole::APPEARANCE);
+}
+
+//! Sets value to property item. Internal method to hide
+
+void SessionItem::set_property_intern(const std::string &tag, const QVariant &variant)
+{
+    getItem(tag)->setData(variant);
 }
 
 SessionItemData* SessionItem::itemData() const

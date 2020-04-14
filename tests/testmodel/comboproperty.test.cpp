@@ -362,24 +362,24 @@ TEST_F(ComboPropertyTest, variantEqualityDiffLists)
         ComboProperty c2 = ComboProperty() << "a1"
                                            << "a2";
 
-        EXPECT_TRUE(c1.variant() == c2.variant());
+        EXPECT_TRUE(QVariant::fromValue(c1) == QVariant::fromValue(c2));
 
         c2 << "a3";
         c2.setValue("a2");
 
-        EXPECT_TRUE(c1.variant() != c2.variant());
-        EXPECT_FALSE(c1.variant() == c2.variant());
+        EXPECT_TRUE(QVariant::fromValue(c1) != QVariant::fromValue(c2));
+        EXPECT_FALSE(QVariant::fromValue(c1) == QVariant::fromValue(c2));
 
         c1 << "a3";
         c1.setValue("a2");
 
-        EXPECT_TRUE(c1.variant() == c2.variant());
-        EXPECT_FALSE(c1.variant() != c2.variant());
+        EXPECT_TRUE(QVariant::fromValue(c1) == QVariant::fromValue(c2));
+        EXPECT_FALSE(QVariant::fromValue(c1) != QVariant::fromValue(c2));
 
         c1.setStringOfSelections("0");
         c2.setStringOfSelections("1");
-        EXPECT_TRUE(c1.variant() != c2.variant());
-        EXPECT_FALSE(c1.variant() == c2.variant());
+        EXPECT_TRUE(QVariant::fromValue(c1) != QVariant::fromValue(c2));
+        EXPECT_FALSE(QVariant::fromValue(c1) == QVariant::fromValue(c2));
     }
 }
 
@@ -394,12 +394,12 @@ TEST_F(ComboPropertyTest, variantEqualityDiffIndex)
         c1.setValue("a1");
         c2.setValue("a2");
 
-        EXPECT_FALSE(c1.variant() == c2.variant());
-        EXPECT_TRUE(c1.variant() != c2.variant());
+        EXPECT_FALSE(QVariant::fromValue(c1) == QVariant::fromValue(c2));
+        EXPECT_TRUE(QVariant::fromValue(c1) != QVariant::fromValue(c2));
 
         c2.setValue("a1");
-        EXPECT_TRUE(c1.variant() == c2.variant());
-        EXPECT_FALSE(c1.variant() != c2.variant());
+        EXPECT_TRUE(QVariant::fromValue(c1) == QVariant::fromValue(c2));
+        EXPECT_FALSE(QVariant::fromValue(c1) != QVariant::fromValue(c2));
     }
 
     if (ModelView::Comparators::registered()) {

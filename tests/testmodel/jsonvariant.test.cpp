@@ -186,7 +186,7 @@ TEST_F(JsonVariantTest, comboPropertyVariant)
     value.setSelected("a2", true);
     value.setSelected("a3", true);
 
-    QVariant variant = value.variant();
+    QVariant variant = QVariant::fromValue(value);
 
     // from variant to json object
     auto object = converter.get_json(variant);

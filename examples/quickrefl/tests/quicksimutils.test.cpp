@@ -28,7 +28,7 @@ void setup_layer(LayerItem* layer, double thickness, double sigma, SLDMaterialIt
     layer->setProperty(LayerItem::P_THICKNESS, thickness);
     auto roughness = layer->item<RoughnessItem>(LayerItem::P_ROUGHNESS);
     roughness->setProperty(RoughnessItem::P_SIGMA, sigma);
-    layer->setProperty(LayerItem::P_MATERIAL, QVariant::fromValue(material->external_property()));
+    layer->setProperty(LayerItem::P_MATERIAL, material->external_property());
 }
 
 } // namespace

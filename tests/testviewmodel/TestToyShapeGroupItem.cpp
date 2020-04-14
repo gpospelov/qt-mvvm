@@ -108,7 +108,7 @@ TEST_F(ToyShapeGroupItemTest, setDataInModelContext)
 
     // setting through combo
     combo.setCurrentIndex(0);
-    model.setData(item, combo.variant(), ItemDataRole::DATA);
+    model.setData(item, QVariant::fromValue(combo), ItemDataRole::DATA);
 
     EXPECT_EQ(item->currentIndex(), 0);
     EXPECT_EQ(item->currentType(), ToyItems::Constants::CylinderItemType);
@@ -158,7 +158,7 @@ TEST_F(ToyShapeGroupItemTest, inDefaultViewModelContext)
     // changing the data
     ComboProperty combo = model.data(groupItem, ItemDataRole::DATA).value<ComboProperty>();
     combo.setCurrentIndex(0);
-    model.setData(groupItem, combo.variant(), ItemDataRole::DATA);
+    model.setData(groupItem, QVariant::fromValue(combo), ItemDataRole::DATA);
 
     // expectances
     EXPECT_EQ(spyRemove.count(), 0);
@@ -187,7 +187,8 @@ TEST_F(ToyShapeGroupItemTest, inPropertyViewModelContext)
 {
     ToyItems::SampleModel model;
     auto parent = model.insertItem<SessionItem>();
-    parent->registerTag(TagInfo::propertyTag("property_tag", ToyItems::Constants::ShapeGroupItemType));
+    parent->registerTag(
+        TagInfo::propertyTag("property_tag", ToyItems::Constants::ShapeGroupItemType));
 
     auto groupItem = model.insertItem<ToyItems::ShapeGroupItem>(parent, "property_tag");
     ASSERT_TRUE(groupItem != nullptr);
@@ -231,7 +232,7 @@ TEST_F(ToyShapeGroupItemTest, inPropertyViewModelContext)
     // changing the data (now GroupItem's current item changed from Sphere to Cylinder
     ComboProperty combo = model.data(groupItem, ItemDataRole::DATA).value<ComboProperty>();
     combo.setCurrentIndex(0);
-    model.setData(groupItem, combo.variant(), ItemDataRole::DATA);
+    model.setData(groupItem, QVariant::fromValue(combo), ItemDataRole::DATA);
 
     EXPECT_EQ(viewModel.columnCount(groupIndex), 2);
     EXPECT_EQ(viewModel.rowCount(groupIndex), 2); // Radius and Height of cylinder

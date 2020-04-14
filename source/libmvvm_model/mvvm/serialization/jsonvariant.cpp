@@ -234,7 +234,7 @@ QVariant to_comboproperty(const QJsonObject& object)
     QJsonObject json_data = object[variantValueKey].toObject();
     combo.setStringOfValues(json_data[comboValuesKey].toString().toStdString());
     combo.setStringOfSelections(json_data[comboSelectionKey].toString().toStdString());
-    return combo.variant();
+    return QVariant::fromValue(combo);
 }
 
 // --- QColor ------
