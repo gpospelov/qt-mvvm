@@ -486,7 +486,6 @@ void LayerElementController::sideSegmentMoved() const
         double w = 0;
         auto item = layerAbove()->layerElementItem();
         if (x < item->property(LayerElementItem::P_X_POS).toDouble()) {
-            w = 1e-6;
             x = item->property(LayerElementItem::P_X_POS).toDouble() + w;
         } else {
             w = x - item->property(LayerElementItem::P_X_POS).toDouble();
