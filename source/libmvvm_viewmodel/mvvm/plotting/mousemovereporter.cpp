@@ -20,7 +20,7 @@ struct MouseMoveReporter::MouseMoveReporterImpl {
     callback_t callback;
     MouseMoveReporterImpl(MouseMoveReporter* reporter, QCustomPlot* custom_plot,
                           callback_t callback)
-        : reporter(reporter), custom_plot(custom_plot), callback(callback)
+        : reporter(reporter), custom_plot(custom_plot), callback(std::move(callback))
     {
         if (!custom_plot)
             throw std::runtime_error("MouseMoveReporter: not initialized custom plot.");
