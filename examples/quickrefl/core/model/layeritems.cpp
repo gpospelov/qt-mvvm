@@ -70,7 +70,11 @@ void MultiLayerItem::update_layer_appearance()
         
     auto layers = items<LayerItem>(T_LAYERS);
     for (auto it = layers.begin(); it != layers.end(); ++it) {
-        if (it == layers.begin() || std::next(it) == layers.end()) {
+        if (it == layers.begin()) {
+            (*it)->getItem(LayerItem::P_THICKNESS)->setEnabled(false);
+            (*it)->getItem(LayerItem::P_ROUGHNESS)->getItem(RoughnessItem::P_SIGMA)->setEnabled(false);
+            (*it)->setProperty(LayerItem::P_THICKNESS, 0.0);
+        } else if(std::next(it) == layers.end()) {
             (*it)->getItem(LayerItem::P_THICKNESS)->setEnabled(false);
             (*it)->setProperty(LayerItem::P_THICKNESS, 0.0);
         } else {
