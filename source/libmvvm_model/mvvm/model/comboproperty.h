@@ -50,8 +50,6 @@ public:
     std::string stringOfValues() const;
     void setStringOfValues(const std::string& values);
 
-    QVariant variant() const;
-
     std::vector<int> selectedIndices() const;
     std::vector<std::string> selectedValues() const;
 

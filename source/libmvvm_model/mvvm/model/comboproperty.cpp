@@ -179,13 +179,6 @@ void ComboProperty::setStringOfValues(const std::string& values)
     setCurrentIndex(contains(m_values, current) ? Utils::IndexOfItem(m_values, current) : 0);
 }
 
-//! Constructs variant enclosing given ComboProperty.
-
-QVariant ComboProperty::variant() const
-{
-    return QVariant::fromValue(*this);
-}
-
 //! Returns vector of selected indices.
 
 std::vector<int> ComboProperty::selectedIndices() const
