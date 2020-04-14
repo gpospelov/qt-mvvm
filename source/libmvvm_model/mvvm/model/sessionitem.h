@@ -87,7 +87,8 @@ public:
 
     QVariant property(const std::string& tag) const;
 
-    void setProperty(const std::string& tag, const QVariant& variant);
+    template<typename T>
+    void setProperty(const std::string& tag, const T& value);
 
 private:
     friend class SessionModel;
@@ -96,6 +97,7 @@ private:
     void setParent(SessionItem* parent);
     void setModel(SessionModel* model);
     void setAppearanceFlag(int flag, bool value);
+    void set_property_intern(const std::string& tag, const QVariant& variant);
 
     // FIXME refactor converter access to item internals
     class SessionItemData* itemData() const;
@@ -106,6 +108,16 @@ private:
     struct SessionItemImpl;
     std::unique_ptr<SessionItemImpl> p_impl;
 };
+
+//! Sets value to property item.
+//! Property is single item registered under certain tag via CompoundItem::addProperty method, the
+//! value will be assigned to it's data role.
+
+template<typename T>
+void SessionItem::setProperty(const std::string &tag, const T& value)
+{
+    set_property_intern(tag, QVariant::fromValue(value));
+}
 
 //! Returns first item under given tag casted to a specified type.
 //! Returns nullptr, if item doesn't exist. If item exists but can't be casted will throw.
