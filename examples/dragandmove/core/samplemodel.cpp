@@ -51,7 +51,7 @@ void SampleModel::append_random_item(ModelView::SessionItem* container)
 {
     auto item = insertItem<DemoItem>(container);
     item->setProperty(DemoItem::P_COLOR_PROPERTY, ModelView::Utils::random_color());
-    item->setProperty(DemoItem::P_STRING_PROPERTY, QVariant::fromValue(random_name()));
+    item->setProperty(DemoItem::P_STRING_PROPERTY, random_name());
     item->setProperty(DemoItem::P_INTEGER_PROPERTY, ModelView::Utils::RandInt(0, 10));
 }
 

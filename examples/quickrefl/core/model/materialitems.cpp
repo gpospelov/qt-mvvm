@@ -65,8 +65,8 @@ SLDMaterialItem::SLDMaterialItem() : MaterialBaseItem(::Constants::SLDMaterialIt
 void SLDMaterialItem::set_properties(const std::string& name, const QColor& color, double real,
                                      double imag)
 {
-    setProperty(P_NAME, QVariant::fromValue(name));
-    setProperty(P_COLOR, QVariant::fromValue(color));
+    setProperty(P_NAME, name);
+    setProperty(P_COLOR, color);
     setProperty(P_SLD_REAL, real);
     setProperty(P_SLD_IMAG, imag);
 }

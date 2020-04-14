@@ -60,7 +60,7 @@ void GraphModel::add_graph()
     auto graph = insertItem<GraphItem>(viewport());
     graph->setDataItem(data);
     auto rndm = []() -> int { return ModelView::Utils::RandInt(0, 255); };
-    graph->setProperty(GraphItem::P_COLOR, QVariant::fromValue(QColor(rndm(), rndm(), rndm())));
+    graph->setProperty(GraphItem::P_COLOR, QColor(rndm(), rndm(), rndm()));
 }
 
 //! Remove last graph and data item.

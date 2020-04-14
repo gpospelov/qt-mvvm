@@ -12,9 +12,9 @@
 #include "layeritems.h"
 #include "materialmodel.h"
 #include "materialpropertycontroller.h"
+#include "realdatamodel.h"
 #include "samplemodel.h"
 #include "sldelementmodel.h"
-#include "realdatamodel.h"
 #include <mvvm/model/externalproperty.h>
 #include <mvvm/model/itempool.h>
 #include <mvvm/model/modelutils.h>
@@ -60,8 +60,7 @@ struct ApplicationModels::ApplicationModelsImpl {
         size_t index(0);
         for (const auto& material_property : m_material_model->material_data()) {
             if (index < layers.size())
-                layers[index]->setProperty(LayerItem::P_MATERIAL,
-                                           QVariant::fromValue(material_property));
+                layers[index]->setProperty(LayerItem::P_MATERIAL, material_property);
             ++index;
         }
     }
@@ -91,7 +90,7 @@ JobModel* ApplicationModels::jobModel()
     return p_impl->m_job_model.get();
 }
 
-RealDataModel *ApplicationModels::realDataModel()
+RealDataModel* ApplicationModels::realDataModel()
 {
     return p_impl->m_realdata_model.get();
 }
