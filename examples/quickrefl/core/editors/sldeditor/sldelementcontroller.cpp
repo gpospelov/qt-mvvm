@@ -188,8 +188,9 @@ void SLDElementController::buildLayerControllers(string_vec& identifiers)
     for (int i = 0; i < layer_controllers.size() - 1; ++i) {
         layer_controllers.at(i)->setLayerBelow(layer_controllers.at(i + 1));
     }
-    
+
     layer_controllers.at(0)->topSegment()->stretchRight(true);
+    layer_controllers.at(1)->sideSegment()->setFlag(QGraphicsItem::ItemIsMovable,false);
     layer_controllers.at(layer_controllers.size()-1)->topSegment()->stretchLeft(true);
 
 }
