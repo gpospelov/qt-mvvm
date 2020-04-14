@@ -39,6 +39,11 @@ protected:
     QPainterPath displayPath(QPainterPath real_path) const;
     QPointF scenePos(QPointF pixel_pos) const;
 
+    void hoverEnterEvent (QGraphicsSceneHoverEvent *event) override;
+    void hoverLeaveEvent (QGraphicsSceneHoverEvent *event) override;
+    void mousePressEvent (QGraphicsSceneMouseEvent *event) override;
+    void mouseReleaseEvent (QGraphicsSceneMouseEvent *event) override;
+
 private:
     bool m_center_based = true;
     bool m_adapt_x = true;

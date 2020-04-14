@@ -13,9 +13,14 @@
 
 #include <QPainter>
 #include <QPainterPath>
+#include <QCursor>
 
 //! The constructor
-ElementView::ElementView() : QGraphicsObject() {}
+ElementView::ElementView() : QGraphicsObject() 
+{
+    setAcceptHoverEvents(true);
+}
+
 ElementView::~ElementView() = default;
 
 //! Get the conversion axes
@@ -146,4 +151,35 @@ void ElementView::adaptW(bool choice)
 void ElementView::adaptH(bool choice)
 {
     m_adapt_height = choice;
+}
+
+//! The hoover enter event
+void ElementView::hoverEnterEvent (QGraphicsSceneHoverEvent *event)
+{
+    if (flags() & QGraphicsItem::ItemIsMovable)
+        setCursor(QCursor(Qt::OpenHandCursor));
+    QGraphicsItem::hoverEnterEvent(event);
+}
+
+//! The hoover exit event
+void ElementView::hoverLeaveEvent (QGraphicsSceneHoverEvent *event)
+{
+    unsetCursor();
+    QGraphicsItem::hoverLeaveEvent(event);
+}
+
+//! The mouse press event
+void ElementView::mousePressEvent (QGraphicsSceneMouseEvent *event)
+{
+    if (flags() & QGraphicsItem::ItemIsMovable)
+        setCursor(QCursor(Qt::ClosedHandCursor));
+    QGraphicsItem::mousePressEvent(event);
+}
+
+//! The mouse release event
+void ElementView::mouseReleaseEvent (QGraphicsSceneMouseEvent *event)
+{
+    if (flags() & QGraphicsItem::ItemIsMovable)
+        setCursor(QCursor(Qt::OpenHandCursor));
+    QGraphicsItem::mouseReleaseEvent(event);
 }
