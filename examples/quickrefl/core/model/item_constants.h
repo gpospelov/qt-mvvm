@@ -21,6 +21,7 @@ const std::string RoughnessItemType = "Roughness";
 const std::string SLDMaterialItemType = "SLDMaterial";
 const std::string MaterialContainerItemType = "MaterialContainer";
 const std::string JobItemType = "Job";
+const std::string DataSetItemType = "DataSet";
 } // namespace Constants
 
 #endif //  ITEM_CONSTANTS_H

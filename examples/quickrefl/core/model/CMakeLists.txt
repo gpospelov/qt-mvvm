@@ -3,6 +3,8 @@
 target_sources(quickreflcore PRIVATE
     applicationmodels.cpp
     applicationmodels.h
+    datasetitem.cpp
+    datasetitem.h
     item_constants.h
     jobitem.cpp
     jobitem.h
@@ -16,6 +18,8 @@ target_sources(quickreflcore PRIVATE
     materialmodel.h
     materialpropertycontroller.cpp
     materialpropertycontroller.h
+    realdatamodel.cpp
+    realdatamodel.h
     samplemodel.cpp
     samplemodel.h
 )

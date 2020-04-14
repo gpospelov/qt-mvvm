@@ -17,6 +17,7 @@
 #include <mvvm/standarditems/graphitem.h>
 #include <mvvm/standarditems/graphviewportitem.h>
 #include <mvvm/utils/numericutils.h>
+#include <mvvm/widgets/utils.h>
 
 namespace
 {
@@ -26,12 +27,6 @@ auto simulation_result(double amp_factor = 1.0)
     ToySimulation simulation(amp_factor);
     simulation.runSimulation();
     return simulation.simulationResult();
-}
-
-QColor random_color()
-{
-    auto rndm = []() -> int { return ModelView::Utils::RandInt(0, 255); };
-    return QColor(rndm(), rndm(), rndm());
 }
 
 } // namespace
@@ -77,5 +72,5 @@ void GraphModel::add_graph(ModelView::ContainerItem* container,
 
     auto graph = insertItem<GraphItem>(viewport);
     graph->setDataItem(data);
-    graph->setProperty(GraphItem::P_COLOR, QVariant::fromValue(random_color()));
+    graph->setProperty(GraphItem::P_COLOR, QVariant::fromValue(ModelView::Utils::random_color()));
 }

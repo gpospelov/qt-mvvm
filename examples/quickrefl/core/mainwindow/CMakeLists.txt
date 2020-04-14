@@ -1,14 +1,16 @@
 # Static library: quickreflcore.
 
 target_sources(quickreflcore PRIVATE
-    mainwindow.cpp
-    mainwindow.h
-    mainbarwidget.cpp
-    mainbarwidget.h
-    refldockwindow.cpp
-    refldockwindow.h
     dockscontroller.cpp
     dockscontroller.h
+    importwindow.cpp
+    importwindow.h
+    mainbarwidget.cpp
+    mainbarwidget.h
+    mainwindow.cpp
+    mainwindow.h
+    refldockwindow.cpp
+    refldockwindow.h
     reflwidgets.cpp
     reflwidgets.h
     styleutils.cpp

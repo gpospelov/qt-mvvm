@@ -10,12 +10,12 @@
 #include "mousemodel.h"
 #include <QColor>
 #include <QUndoStack>
+#include <algorithm>
 #include <cmath>
 #include <mvvm/core/modeldocuments.h>
 #include <mvvm/model/itemcatalogue.h>
-#include <mvvm/utils/numericutils.h>
 #include <mvvm/utils/reallimits.h>
-#include <algorithm>
+#include <mvvm/widgets/utils.h>
 
 namespace
 {
@@ -26,12 +26,6 @@ std::unique_ptr<ModelView::ItemCatalogue> CreateItemCatalogue()
     auto result = std::make_unique<ModelView::ItemCatalogue>();
     result->registerItem<MouseItem>();
     return result;
-}
-
-QColor random_color()
-{
-    auto rndm = []() -> int { return ModelView::Utils::RandInt(0, 255); };
-    return QColor(rndm(), rndm(), rndm());
 }
 
 } // namespace
@@ -92,6 +86,7 @@ void MouseModel::populate_model()
         auto item = insertItem<MouseItem>();
         item->setProperty(MouseItem::P_XPOS, std::sin((i * 6.28) / MouseCount) * 200);
         item->setProperty(MouseItem::P_YPOS, std::cos((i * 6.28) / MouseCount) * 200);
-        item->setProperty(MouseItem::P_COLOR, QVariant::fromValue(random_color()));
+        item->setProperty(MouseItem::P_COLOR,
+                          QVariant::fromValue(ModelView::Utils::random_color()));
     }
 }

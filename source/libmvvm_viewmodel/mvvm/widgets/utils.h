@@ -7,13 +7,26 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/standarditems/containeritem.h>
+#ifndef MVVM_WIDGETS_UTILS_H
+#define MVVM_WIDGETS_UTILS_H
 
-using namespace ModelView;
+#include <mvvm/core/export.h>
 
-ContainerItem::ContainerItem() : CompoundItem(Constants::ContainerItemType)
+class QColor;
+
+namespace ModelView
 {
-    registerTag(ModelView::TagInfo::universalTag(T_ITEMS), /*set_as_default*/ true);
-}
 
-// FIXME implement empty() const and tests
+//! Collection of various widget-related utils.
+
+namespace Utils
+{
+
+//! Returns random color.
+CORE_EXPORT QColor random_color();
+
+} // namespace Utils
+
+} // namespace ModelView
+
+#endif // MVVM_WIDGETS_UTILS_H

@@ -11,9 +11,12 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <memory>
 
+class ImportWindow;
 class ReflDockWindow;
 class MainBarWidget;
+class ApplicationModels;
 
 //! Application main window.
 
@@ -32,7 +35,9 @@ private:
     void init_tabs();
     void write_settings();
 
-    ReflDockWindow* m_reflDockWindow{nullptr};
+    std::unique_ptr<ApplicationModels> models;
+    ImportWindow* import_window{nullptr};
+    ReflDockWindow* refl_window{nullptr};
     MainBarWidget* bar_widget{nullptr};
 };
 

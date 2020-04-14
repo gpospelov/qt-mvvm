@@ -7,13 +7,14 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/standarditems/containeritem.h>
+#include "importwindow.h"
+#include "applicationmodels.h"
+#include "importdataeditor.h"
+#include <QVBoxLayout>
 
-using namespace ModelView;
-
-ContainerItem::ContainerItem() : CompoundItem(Constants::ContainerItemType)
+ImportWindow::ImportWindow(ApplicationModels* models, QWidget* parent)
+    : QWidget(parent), models(models)
 {
-    registerTag(ModelView::TagInfo::universalTag(T_ITEMS), /*set_as_default*/ true);
+    auto layout = new QVBoxLayout(this);
+    layout->addWidget(new ImportDataEditor(models->realDataModel()));
 }
-
-// FIXME implement empty() const and tests
