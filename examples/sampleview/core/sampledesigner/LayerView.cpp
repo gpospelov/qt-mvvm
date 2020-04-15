@@ -83,7 +83,7 @@ void LayerView::updateHeight()
     if (!getItem()->isTag(LayerItem::P_THICKNESS))
         return;
 
-    const double thickness = getItem()->property(LayerItem::P_THICKNESS).value<double>();
+    const double thickness = getItem()->property<double>(LayerItem::P_THICKNESS);
     const qreal height = thicknessToHeight(thickness);
     m_rect.setTop(-height / 2.0);
     m_rect.setHeight(height);

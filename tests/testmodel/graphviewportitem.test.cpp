@@ -61,15 +61,15 @@ TEST_F(GraphViewportItemTest, addItem)
 
     // x-axis of viewport should be set to FixedBinAxis of DataItem
     auto xaxis = viewport_item->xAxis();
-    EXPECT_DOUBLE_EQ(xaxis->property(ViewportAxisItem::P_MIN).value<double>(), expected_centers[0]);
-    EXPECT_DOUBLE_EQ(xaxis->property(ViewportAxisItem::P_MAX).value<double>(), expected_centers[2]);
+    EXPECT_DOUBLE_EQ(xaxis->property<double>(ViewportAxisItem::P_MIN), expected_centers[0]);
+    EXPECT_DOUBLE_EQ(xaxis->property<double>(ViewportAxisItem::P_MAX), expected_centers[2]);
 
     // y-axis of viewport should be set to min/max of expected_content
     auto yaxis = viewport_item->yAxis();
     auto [expected_amin, expected_amax] =
         std::minmax_element(std::begin(expected_content), std::end(expected_content));
-    EXPECT_DOUBLE_EQ(yaxis->property(ViewportAxisItem::P_MIN).value<double>(), *expected_amin);
-    EXPECT_DOUBLE_EQ(yaxis->property(ViewportAxisItem::P_MAX).value<double>(), *expected_amax);
+    EXPECT_DOUBLE_EQ(yaxis->property<double>(ViewportAxisItem::P_MIN), *expected_amin);
+    EXPECT_DOUBLE_EQ(yaxis->property<double>(ViewportAxisItem::P_MAX), *expected_amax);
 }
 
 //! Check signaling on set data item.

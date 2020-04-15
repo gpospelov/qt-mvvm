@@ -62,7 +62,7 @@ TEST_F(CompoundItemTest, setIntProperty)
     const int expected = 42;
     item.setProperty(property_name, expected);
 
-    EXPECT_EQ(item.property(property_name).value<int>(), expected);
+    EXPECT_EQ(item.property<int>(property_name), expected);
     EXPECT_EQ(propertyItem->data().value<int>(), expected);
 }
 
@@ -95,7 +95,7 @@ TEST_F(CompoundItemTest, setDoubleProperty)
     const double expected = 42.0;
     item.setProperty(property_name, expected);
 
-    EXPECT_EQ(item.property(property_name).value<double>(), expected);
+    EXPECT_EQ(item.property<double>(property_name), expected);
     EXPECT_EQ(propertyItem->data().value<double>(), expected);
 }
 
@@ -121,7 +121,7 @@ TEST_F(CompoundItemTest, setCharProperty)
     const char* expected{"bbb"};
     item.setProperty(property_name, expected);
 
-    EXPECT_EQ(item.property(property_name).value<std::string>(), std::string(expected));
+    EXPECT_EQ(item.property<std::string>(property_name), std::string(expected));
     EXPECT_EQ(propertyItem->data().value<std::string>(), std::string(expected));
 }
 
@@ -147,7 +147,7 @@ TEST_F(CompoundItemTest, setStringProperty)
     const std::string expected{"bbb"};
     item.setProperty(property_name, expected);
 
-    EXPECT_EQ(item.property(property_name).value<std::string>(), expected);
+    EXPECT_EQ(item.property<std::string>(property_name), expected);
     EXPECT_EQ(propertyItem->data().value<std::string>(), expected);
 }
 
@@ -174,7 +174,7 @@ TEST_F(CompoundItemTest, setBoolProperty)
     const bool expected = true;
     item.setProperty(property_name, expected);
 
-    EXPECT_EQ(item.property(property_name).value<bool>(), expected);
+    EXPECT_EQ(item.property<bool>(property_name), expected);
     EXPECT_EQ(propertyItem->data().value<bool>(), expected);
 }
 

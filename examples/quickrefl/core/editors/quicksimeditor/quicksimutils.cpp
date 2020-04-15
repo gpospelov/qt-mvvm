@@ -23,18 +23,15 @@ Slice create_slice(const ModelView::SessionItem& layer)
     if (layer.modelType() != Constants::LayerItemType)
         throw std::runtime_error("Error in create_slice(): not a layer.");
 
-    double thickness = layer.property(LayerItem::P_THICKNESS).value<double>();
+    double thickness = layer.property<double>(LayerItem::P_THICKNESS);
     auto roughness = layer.item<RoughnessItem>(LayerItem::P_ROUGHNESS);
-    double sigma = roughness->property(RoughnessItem::P_SIGMA).value<double>();
+    double sigma = roughness->property<double>(RoughnessItem::P_SIGMA);
 
-    auto material_property =
-        layer.property(LayerItem::P_MATERIAL).value<ModelView::ExternalProperty>();
+    auto material_property = layer.property<ModelView::ExternalProperty>(LayerItem::P_MATERIAL);
     auto material = layer.model()->findItem(material_property.identifier());
     // layer which is not linked with material will get (0,0) as SLD material.
-    double sld_real =
-        material ? material->property(SLDMaterialItem::P_SLD_REAL).value<double>() : 0.0;
-    double sld_imag =
-        material ? material->property(SLDMaterialItem::P_SLD_IMAG).value<double>() : 0.0;
+    double sld_real = material ? material->property<double>(SLDMaterialItem::P_SLD_REAL) : 0.0;
+    double sld_imag = material ? material->property<double>(SLDMaterialItem::P_SLD_IMAG) : 0.0;
     return {complex_t{sld_real, sld_imag}, thickness, sigma};
 }
 
@@ -46,7 +43,7 @@ void AddToMultiSlice(multislice_t& result, const ModelView::SessionItem& multila
         if (item->modelType() == Constants::LayerItemType) {
             result.push_back(create_slice(*item));
         } else if (item->modelType() == Constants::MultiLayerItemType) {
-            const int rep_count = item->property(MultiLayerItem::P_NREPETITIONS).value<int>();
+            const int rep_count = item->property<int>(MultiLayerItem::P_NREPETITIONS);
             for (int i_rep = 0; i_rep < rep_count; ++i_rep)
                 AddToMultiSlice(result, *item);
         } else {

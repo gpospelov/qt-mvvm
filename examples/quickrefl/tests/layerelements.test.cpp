@@ -847,12 +847,12 @@ TEST_F(LayerElementTest, testpropagation)
 
     // #############################################################################s
     // Test propagation for the contruction
-    EXPECT_EQ(0., item_above->property(LayerElementItem::P_X_POS).toDouble());
-    EXPECT_EQ(10., item_above->property(LayerElementItem::P_WIDTH).toDouble());
-    EXPECT_EQ(10., item_middle->property(LayerElementItem::P_X_POS).toDouble());
-    EXPECT_EQ(10., item_middle->property(LayerElementItem::P_WIDTH).toDouble());
-    EXPECT_EQ(20., item_below->property(LayerElementItem::P_X_POS).toDouble());
-    EXPECT_EQ(10., item_below->property(LayerElementItem::P_WIDTH).toDouble());
+    EXPECT_EQ(0., item_above->property<double>(LayerElementItem::P_X_POS));
+    EXPECT_EQ(10., item_above->property<double>(LayerElementItem::P_WIDTH));
+    EXPECT_EQ(10., item_middle->property<double>(LayerElementItem::P_X_POS));
+    EXPECT_EQ(10., item_middle->property<double>(LayerElementItem::P_WIDTH));
+    EXPECT_EQ(20., item_below->property<double>(LayerElementItem::P_X_POS));
+    EXPECT_EQ(10., item_below->property<double>(LayerElementItem::P_WIDTH));
 
     // #############################################################################s
     // Test signaling for property changes
@@ -873,8 +873,8 @@ TEST_F(LayerElementTest, testpropagation)
 
     EXPECT_EQ(move_arguments.at(0).value<std::string>(), "above");
     EXPECT_EQ(move_arguments.at(1).value<double>(), 8);
-    EXPECT_EQ(8., item_above->property(LayerElementItem::P_WIDTH).toDouble());
-    EXPECT_EQ(8., item_middle->property(LayerElementItem::P_X_POS).toDouble());
+    EXPECT_EQ(8., item_above->property<double>(LayerElementItem::P_WIDTH));
+    EXPECT_EQ(8., item_middle->property<double>(LayerElementItem::P_X_POS));
     EXPECT_EQ(3., first_handle_middle->rectangle().x());
     EXPECT_EQ(5., first_handle_middle->rectangle().y());
     EXPECT_EQ(3., second_handle_middle->rectangle().x());
@@ -883,7 +883,7 @@ TEST_F(LayerElementTest, testpropagation)
     move_arguments = spy_ctr_middle_roughness.takeLast();
     EXPECT_EQ(move_arguments.at(0).value<std::string>(), "middle");
     EXPECT_EQ(move_arguments.at(1).value<double>(), 4);
-    EXPECT_EQ(4, item_middle->property(LayerElementItem::P_ROUGHNESS).toDouble());
+    EXPECT_EQ(4, item_middle->property<double>(LayerElementItem::P_ROUGHNESS));
 
     // Try limit x move
     mouse_move_event->setPos(QPointF(adapter->toSceneX(1), adapter->toSceneY(0)));
@@ -892,8 +892,8 @@ TEST_F(LayerElementTest, testpropagation)
     move_arguments = spy_ctr_above_width.takeLast();
     EXPECT_EQ(move_arguments.at(0).value<std::string>(), "above");
     EXPECT_EQ(move_arguments.at(1).value<double>(), 0);
-    EXPECT_EQ(0, item_above->property(LayerElementItem::P_WIDTH).toDouble());
-    EXPECT_EQ(0, item_middle->property(LayerElementItem::P_X_POS).toDouble());
+    EXPECT_EQ(0, item_above->property<double>(LayerElementItem::P_WIDTH));
+    EXPECT_EQ(0, item_middle->property<double>(LayerElementItem::P_X_POS));
     EXPECT_EQ(-5, first_handle_middle->rectangle().x());
     EXPECT_EQ(5., first_handle_middle->rectangle().y());
     EXPECT_EQ(-5, second_handle_middle->rectangle().x());
@@ -906,8 +906,8 @@ TEST_F(LayerElementTest, testpropagation)
 
     EXPECT_EQ(move_arguments.at(0).value<std::string>(), "above");
     EXPECT_EQ(move_arguments.at(1).value<double>(), 10);
-    EXPECT_EQ(10., item_above->property(LayerElementItem::P_WIDTH).toDouble());
-    EXPECT_EQ(10., item_middle->property(LayerElementItem::P_X_POS).toDouble());
+    EXPECT_EQ(10., item_above->property<double>(LayerElementItem::P_WIDTH));
+    EXPECT_EQ(10., item_middle->property<double>(LayerElementItem::P_X_POS));
     EXPECT_EQ(5., first_handle_middle->rectangle().x());
     EXPECT_EQ(5., first_handle_middle->rectangle().y());
     EXPECT_EQ(5., second_handle_middle->rectangle().x());
@@ -920,7 +920,7 @@ TEST_F(LayerElementTest, testpropagation)
 
     EXPECT_EQ(move_arguments.at(0).value<std::string>(), "middle");
     EXPECT_EQ(move_arguments.at(1).value<double>(), 8);
-    EXPECT_EQ(8., item_middle->property(LayerElementItem::P_HEIGHT).toDouble());
+    EXPECT_EQ(8., item_middle->property<double>(LayerElementItem::P_HEIGHT));
     EXPECT_EQ(5., first_handle_middle->rectangle().x());
     EXPECT_EQ(5., first_handle_middle->rectangle().y());
     EXPECT_EQ(5., second_handle_middle->rectangle().x());
@@ -933,7 +933,7 @@ TEST_F(LayerElementTest, testpropagation)
 
     EXPECT_EQ(move_arguments.at(0).value<std::string>(), "middle");
     EXPECT_EQ(move_arguments.at(1).value<double>(), 0);
-    EXPECT_EQ(0, item_middle->property(LayerElementItem::P_HEIGHT).toDouble());
+    EXPECT_EQ(0, item_middle->property<double>(LayerElementItem::P_HEIGHT));
     EXPECT_EQ(5., first_handle_middle->rectangle().x());
     EXPECT_EQ(5., first_handle_middle->rectangle().y());
     EXPECT_EQ(5., second_handle_middle->rectangle().x());
@@ -946,7 +946,7 @@ TEST_F(LayerElementTest, testpropagation)
 
     EXPECT_EQ(move_arguments.at(0).value<std::string>(), "middle");
     EXPECT_EQ(move_arguments.at(1).value<double>(), 10);
-    EXPECT_EQ(10., item_middle->property(LayerElementItem::P_HEIGHT).toDouble());
+    EXPECT_EQ(10., item_middle->property<double>(LayerElementItem::P_HEIGHT));
     EXPECT_EQ(5., first_handle_middle->rectangle().x());
     EXPECT_EQ(5., first_handle_middle->rectangle().y());
     EXPECT_EQ(5., second_handle_middle->rectangle().x());
@@ -959,7 +959,7 @@ TEST_F(LayerElementTest, testpropagation)
     move_arguments = spy_ctr_middle_roughness.takeLast();
     EXPECT_EQ(move_arguments.at(0).value<std::string>(), "middle");
     EXPECT_EQ(move_arguments.at(1).value<double>(), 3.);
-    EXPECT_EQ(3., item_middle->property(LayerElementItem::P_ROUGHNESS).toDouble());
+    EXPECT_EQ(3., item_middle->property<double>(LayerElementItem::P_ROUGHNESS));
 
     // Try limit roughness move left handle
     mouse_move_event->setPos(QPointF(adapter->toSceneX(-2), adapter->toSceneY(0)));
@@ -968,7 +968,7 @@ TEST_F(LayerElementTest, testpropagation)
     move_arguments = spy_ctr_middle_roughness.takeLast();
     EXPECT_EQ(move_arguments.at(0).value<std::string>(), "middle");
     EXPECT_EQ(move_arguments.at(1).value<double>(), 5.);
-    EXPECT_EQ(5., item_middle->property(LayerElementItem::P_ROUGHNESS).toDouble());
+    EXPECT_EQ(5., item_middle->property<double>(LayerElementItem::P_ROUGHNESS));
 
     // Try standard roughness move left handle
     mouse_move_event->setPos(QPointF(adapter->toSceneX(-8), adapter->toSceneY(0)));
@@ -977,7 +977,7 @@ TEST_F(LayerElementTest, testpropagation)
     move_arguments = spy_ctr_middle_roughness.takeLast();
     EXPECT_EQ(move_arguments.at(0).value<std::string>(), "middle");
     EXPECT_EQ(move_arguments.at(1).value<double>(), 2.);
-    EXPECT_EQ(2., item_middle->property(LayerElementItem::P_ROUGHNESS).toDouble());
+    EXPECT_EQ(2., item_middle->property<double>(LayerElementItem::P_ROUGHNESS));
 
     // Try standard roughness move right handle
     mouse_move_event->setPos(QPointF(adapter->toSceneX(-13), adapter->toSceneY(0)));
@@ -986,7 +986,7 @@ TEST_F(LayerElementTest, testpropagation)
     move_arguments = spy_ctr_middle_roughness.takeLast();
     EXPECT_EQ(move_arguments.at(0).value<std::string>(), "middle");
     EXPECT_EQ(move_arguments.at(1).value<double>(), 3.);
-    EXPECT_EQ(3., item_middle->property(LayerElementItem::P_ROUGHNESS).toDouble());
+    EXPECT_EQ(3., item_middle->property<double>(LayerElementItem::P_ROUGHNESS));
 
     // Try limit roughness move right handle
     mouse_move_event->setPos(QPointF(adapter->toSceneX(-8), adapter->toSceneY(0)));
@@ -995,7 +995,7 @@ TEST_F(LayerElementTest, testpropagation)
     move_arguments = spy_ctr_middle_roughness.takeLast();
     EXPECT_EQ(move_arguments.at(0).value<std::string>(), "middle");
     EXPECT_EQ(move_arguments.at(1).value<double>(), 0);
-    EXPECT_EQ(0, item_middle->property(LayerElementItem::P_ROUGHNESS).toDouble());
+    EXPECT_EQ(0, item_middle->property<double>(LayerElementItem::P_ROUGHNESS));
 
     // Try standard roughness move right handle
     mouse_move_event->setPos(QPointF(adapter->toSceneX(-13), adapter->toSceneY(0)));
@@ -1004,7 +1004,7 @@ TEST_F(LayerElementTest, testpropagation)
     move_arguments = spy_ctr_middle_roughness.takeLast();
     EXPECT_EQ(move_arguments.at(0).value<std::string>(), "middle");
     EXPECT_EQ(move_arguments.at(1).value<double>(), 3);
-    EXPECT_EQ(3, item_middle->property(LayerElementItem::P_ROUGHNESS).toDouble());
+    EXPECT_EQ(3, item_middle->property<double>(LayerElementItem::P_ROUGHNESS));
 }
 TEST_F(LayerElementTest, moveelements)
 {

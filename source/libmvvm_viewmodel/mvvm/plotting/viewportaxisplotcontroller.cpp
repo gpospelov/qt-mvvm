@@ -80,10 +80,10 @@ void ViewportAxisPlotController::subscribe()
             return;
 
         if (name == ViewportAxisItem::P_MIN)
-            p_impl->axis->setRangeLower(item->property(name).value<double>());
+            p_impl->axis->setRangeLower(item->property<double>(name));
 
         if (name == ViewportAxisItem::P_MAX)
-            p_impl->axis->setRangeUpper(item->property(name).value<double>());
+            p_impl->axis->setRangeUpper(item->property<double>(name));
 
         if (name == ViewportAxisItem::P_IS_LOG)
             p_impl->update_log_scale();

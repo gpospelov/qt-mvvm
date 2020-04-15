@@ -35,9 +35,9 @@ TEST_F(VectorItemTest, initialState)
 
     EXPECT_FALSE(item.isEditable());
 
-    EXPECT_EQ(item.property(VectorItem::P_X).value<double>(), 0.0);
-    EXPECT_EQ(item.property(VectorItem::P_Y).value<double>(), 0.0);
-    EXPECT_EQ(item.property(VectorItem::P_Z).value<double>(), 0.0);
+    EXPECT_EQ(item.property<double>(VectorItem::P_X), 0.0);
+    EXPECT_EQ(item.property<double>(VectorItem::P_Y), 0.0);
+    EXPECT_EQ(item.property<double>(VectorItem::P_Z), 0.0);
 
     // default label
     EXPECT_EQ(item.data().value<std::string>(), "(0, 0, 0)");
@@ -50,9 +50,9 @@ TEST_F(VectorItemTest, initialStateFromModel)
     SessionModel model;
     auto item = model.insertItem<VectorItem>();
 
-    EXPECT_EQ(item->property(VectorItem::P_X).value<double>(), 0.0);
-    EXPECT_EQ(item->property(VectorItem::P_Y).value<double>(), 0.0);
-    EXPECT_EQ(item->property(VectorItem::P_Z).value<double>(), 0.0);
+    EXPECT_EQ(item->property<double>(VectorItem::P_X), 0.0);
+    EXPECT_EQ(item->property<double>(VectorItem::P_Y), 0.0);
+    EXPECT_EQ(item->property<double>(VectorItem::P_Z), 0.0);
 
     // default label
     EXPECT_EQ(item->data().value<std::string>(), "(0, 0, 0)");

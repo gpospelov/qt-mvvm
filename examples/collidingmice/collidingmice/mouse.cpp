@@ -56,8 +56,8 @@
 #include <QStyleOption>
 #include <cmath>
 #include <mvvm/signals/itemmapper.h>
-#include <mvvm/utils/numericutils.h>
 #include <mvvm/utils/mathconstants.h>
+#include <mvvm/utils/numericutils.h>
 
 const qreal Pi = M_PI;
 const qreal TwoPi = 2 * M_PI;
@@ -73,25 +73,23 @@ static qreal normalizeAngle(qreal angle)
 
 //! [0]
 Mouse::Mouse(MouseItem* item)
-    : mouseEyeDirection(0), color(item->property(MouseItem::P_COLOR).value<QColor>()),
-      mouse_item(item)
+    : mouseEyeDirection(0), color(item->property<QColor>(MouseItem::P_COLOR)), mouse_item(item)
 {
     auto on_property_change = [this](ModelView::SessionItem*, std::string property_name) {
         if (property_name == MouseItem::P_XPOS)
-            setX(mouse_item->property(MouseItem::P_XPOS).toDouble());
+            setX(mouse_item->property<double>(MouseItem::P_XPOS));
         if (property_name == MouseItem::P_YPOS)
-            setY(mouse_item->property(MouseItem::P_YPOS).toDouble());
+            setY(mouse_item->property<double>(MouseItem::P_YPOS));
         if (property_name == MouseItem::P_COLOR)
-            color = mouse_item->property(MouseItem::P_COLOR).value<QColor>();
+            color = mouse_item->property<QColor>(MouseItem::P_COLOR);
         if (property_name == MouseItem::P_ANGLE) {
-            qreal dx = std::sin(mouse_item->property(MouseItem::P_ANGLE).value<double>()) * 10;
+            qreal dx = std::sin(mouse_item->property<double>(MouseItem::P_ANGLE)) * 10;
             setRotation(rotation() + dx);
         }
     };
     mouse_item->mapper()->setOnPropertyChange(on_property_change, this);
 
-    setPos(item->property(MouseItem::P_XPOS).toDouble(),
-           item->property(MouseItem::P_YPOS).toDouble());
+    setPos(item->property<double>(MouseItem::P_XPOS), item->property<double>(MouseItem::P_YPOS));
     setRotation(ModelView::Utils::RandInt(0, 360 * 16));
 }
 //! [0]
@@ -157,7 +155,7 @@ void Mouse::advance(int step)
     // Don't move too far away
     //! [5]
 
-    qreal angle = mouse_item->property(MouseItem::P_ANGLE).value<double>();
+    qreal angle = mouse_item->property<double>(MouseItem::P_ANGLE);
 
     QLineF lineToCenter(QPointF(0, 0), mapFromScene(0, 0));
     if (lineToCenter.length() > 150) {
@@ -215,7 +213,7 @@ void Mouse::advance(int step)
 
     //! [11]
 
-    qreal speed = mouse_item->property(MouseItem::P_SPEED).value<double>();
+    qreal speed = mouse_item->property<double>(MouseItem::P_SPEED);
     speed += (-50 + ModelView::Utils::RandInt(0, 100)) / 100.0;
 
     qreal dx = ::sin(angle) * 10;

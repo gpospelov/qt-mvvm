@@ -169,7 +169,7 @@ TEST(ItemMapperTest, onPropertyChange)
 
     // perform action
     item->setProperty("height", 43.0);
-    EXPECT_EQ(item->property("height"), 43.0);
+    EXPECT_EQ(item->property<double>("height"), 43.0);
     EXPECT_EQ(property->data().value<double>(), 43.0);
 }
 
@@ -196,7 +196,7 @@ TEST(ItemMapperTest, onChildPropertyChange)
 
     // perform action
     compound2->setProperty("height", 43.0);
-    EXPECT_EQ(compound2->property("height"), 43.0);
+    EXPECT_EQ(compound2->property<double>("height"), 43.0);
     EXPECT_EQ(property->data().value<double>(), 43.0);
 }
 

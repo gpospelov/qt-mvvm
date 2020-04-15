@@ -87,7 +87,7 @@ public:
 
     bool isSinglePropertyTag(const std::string& tag) const;
 
-    template <typename T = QVariant> T property(const std::string& tag) const;
+    template <typename T> T property(const std::string& tag) const;
 
     template <typename T> void setProperty(const std::string& tag, const T& value);
 

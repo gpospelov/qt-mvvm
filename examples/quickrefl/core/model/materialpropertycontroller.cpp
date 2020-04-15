@@ -51,7 +51,7 @@ void MaterialPropertyController::update_all()
 {
     auto layers = Utils::FindItems<LayerItem>(m_sample_model);
     for (auto layer : Utils::FindItems<LayerItem>(m_sample_model)) {
-        auto property = layer->property(LayerItem::P_MATERIAL).value<ModelView::ExternalProperty>();
+        auto property = layer->property<ExternalProperty>(LayerItem::P_MATERIAL);
         auto updated = m_material_model->material_property(property.identifier());
         if (property != updated)
             layer->setProperty(LayerItem::P_MATERIAL, updated);

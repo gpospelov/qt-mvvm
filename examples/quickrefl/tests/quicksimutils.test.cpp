@@ -88,15 +88,15 @@ TEST_F(QuickSimUtilsTest, testData)
 
     // checking that layer got necessary parameters
     auto layer = test_data.multilayer->item<LayerItem>(MultiLayerItem::T_LAYERS);
-    EXPECT_EQ(layer->property(LayerItem::P_THICKNESS).value<double>(), thickness);
+    EXPECT_EQ(layer->property<double>(LayerItem::P_THICKNESS), thickness);
     auto roughness = layer->item<RoughnessItem>(LayerItem::P_ROUGHNESS);
-    EXPECT_EQ(roughness->property(RoughnessItem::P_SIGMA).value<double>(), sigma);
+    EXPECT_EQ(roughness->property<double>(RoughnessItem::P_SIGMA), sigma);
 
     // checking that layer is linked to material with necessary parameters
-    auto material_property = layer->property(LayerItem::P_MATERIAL).value<ExternalProperty>();
+    auto material_property = layer->property<ExternalProperty>(LayerItem::P_MATERIAL);
     auto material = test_data.sample_model.findItem(material_property.identifier());
-    EXPECT_EQ(material->property(SLDMaterialItem::P_SLD_REAL), sld.real());
-    EXPECT_EQ(material->property(SLDMaterialItem::P_SLD_IMAG), sld.imag());
+    EXPECT_EQ(material->property<double>(SLDMaterialItem::P_SLD_REAL), sld.real());
+    EXPECT_EQ(material->property<double>(SLDMaterialItem::P_SLD_IMAG), sld.imag());
 }
 
 //! Multi-slice of empty MultiLayer.

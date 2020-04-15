@@ -64,9 +64,9 @@ TEST_F(PropertiesRowStrategyTest, vectorItemCustomLabels)
 {
     VectorItem item;
 
-    EXPECT_EQ(item.property(VectorItem::P_X).value<double>(), 0.0);
-    EXPECT_EQ(item.property(VectorItem::P_Y).value<double>(), 0.0);
-    EXPECT_EQ(item.property(VectorItem::P_Z).value<double>(), 0.0);
+    EXPECT_EQ(item.property<double>(VectorItem::P_X), 0.0);
+    EXPECT_EQ(item.property<double>(VectorItem::P_Y), 0.0);
+    EXPECT_EQ(item.property<double>(VectorItem::P_Z), 0.0);
 
     PropertiesRowStrategy strategy({"a", "b", "c"});
     auto items = strategy.constructRefRow(&item);
@@ -93,11 +93,13 @@ TEST_F(PropertiesRowStrategyTest, vectorItemAutoLabels)
 {
     VectorItem item;
 
-    EXPECT_EQ(item.property(VectorItem::P_X).value<double>(), 0.0);
-    EXPECT_EQ(item.property(VectorItem::P_Y).value<double>(), 0.0);
-    EXPECT_EQ(item.property(VectorItem::P_Z).value<double>(), 0.0);
+    EXPECT_EQ(item.property<double>(VectorItem::P_X), 0.0);
+    EXPECT_EQ(item.property<double>(VectorItem::P_Y), 0.0);
+    EXPECT_EQ(item.property<double>(VectorItem::P_Z), 0.0);
 
-    QStringList expected = QStringList() << "X" << "Y" << "Z";
+    QStringList expected = QStringList() << "X"
+                                         << "Y"
+                                         << "Z";
 
     PropertiesRowStrategy strategy;
     auto items = strategy.constructRefRow(&item);

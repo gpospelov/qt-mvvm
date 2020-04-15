@@ -78,8 +78,8 @@ TEST_F(TestMultilayerView, testInsertLayer)
     QPointF mpos = mview->pos(); // position in parent coordinates (i.e. scene)
     EXPECT_DOUBLE_EQ(initial_pos.x(), mpos.x());
     EXPECT_DOUBLE_EQ(initial_pos.y(), mpos.y());
-    EXPECT_DOUBLE_EQ(mpos.x(), mlayer->property(LocatedItem::P_X_POS).value<double>());
-    EXPECT_DOUBLE_EQ(mpos.y(), mlayer->property(LocatedItem::P_Y_POS).value<double>());
+    EXPECT_DOUBLE_EQ(mpos.x(), mlayer->property<double>(LocatedItem::P_X_POS));
+    EXPECT_DOUBLE_EQ(mpos.y(), mlayer->property<double>(LocatedItem::P_Y_POS));
 
     QRectF lbound = lview->boundingRect();
     EXPECT_DOUBLE_EQ(lbound.left(), -100.0);
@@ -90,8 +90,8 @@ TEST_F(TestMultilayerView, testInsertLayer)
     QPointF lpos = lview->pos(); // position in parent coordinates (i.e. multilayer)
     EXPECT_DOUBLE_EQ(lpos.x(), 0.0);
     EXPECT_DOUBLE_EQ(lpos.y(), 0.0);
-    EXPECT_DOUBLE_EQ(lpos.x(), layer->property(LocatedItem::P_X_POS).value<double>());
-    EXPECT_DOUBLE_EQ(lpos.y(), layer->property(LocatedItem::P_Y_POS).value<double>());
+    EXPECT_DOUBLE_EQ(lpos.x(), layer->property<double>(LocatedItem::P_X_POS));
+    EXPECT_DOUBLE_EQ(lpos.y(), layer->property<double>(LocatedItem::P_Y_POS));
 
     QRectF frame = makeFrame(mview->sceneBoundingRect());
     auto item_list = scene->items(frame, Qt::ContainsItemBoundingRect);
@@ -120,8 +120,8 @@ TEST_F(TestMultilayerView, testRemoveLayer)
     const QPointF pos = view->pos();
     EXPECT_DOUBLE_EQ(initial_pos.x(), pos.x());
     EXPECT_DOUBLE_EQ(initial_pos.y(), pos.y());
-    EXPECT_DOUBLE_EQ(pos.x(), mlayer->property(LocatedItem::P_X_POS).value<double>());
-    EXPECT_DOUBLE_EQ(pos.y(), mlayer->property(LocatedItem::P_Y_POS).value<double>());
+    EXPECT_DOUBLE_EQ(pos.x(), mlayer->property<double>(LocatedItem::P_X_POS));
+    EXPECT_DOUBLE_EQ(pos.y(), mlayer->property<double>(LocatedItem::P_Y_POS));
 
     const QRectF frame = makeFrame(view->sceneBoundingRect());
     auto item_list = scene->items(frame, Qt::ContainsItemBoundingRect);

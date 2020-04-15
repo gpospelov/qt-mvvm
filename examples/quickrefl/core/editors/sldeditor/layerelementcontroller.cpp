@@ -89,12 +89,12 @@ void LayerElementController::connectToModel() const
             if (layerBelow())
                 layerBelow()->layerElementItem()->setProperty(
                     LayerElementItem::P_X_POS,
-                    layerElementItem()->property(LayerElementItem::P_X_POS).toDouble()
-                        + layerElementItem()->property(LayerElementItem::P_WIDTH).toDouble());
+                    layerElementItem()->property<double>(LayerElementItem::P_X_POS)
+                        + layerElementItem()->property<double>(LayerElementItem::P_WIDTH));
         }
         if (property_name == LayerElementItem::P_HEIGHT) {
             emit heightChanged(m_sample_item_id,
-                               layerElementItem()->property(LayerElementItem::P_HEIGHT).toDouble());
+                               layerElementItem()->property<double>(LayerElementItem::P_HEIGHT));
             updateSideSegment();
             updateTopSegment();
             updateSegmentHandles();
@@ -107,7 +107,7 @@ void LayerElementController::connectToModel() const
         }
         if (property_name == LayerElementItem::P_WIDTH) {
             emit widthChanged(m_sample_item_id,
-                              layerElementItem()->property(LayerElementItem::P_WIDTH).toDouble());
+                              layerElementItem()->property<double>(LayerElementItem::P_WIDTH));
             updateSideSegment();
             updateTopSegment();
             updateSegmentHandles();
@@ -115,13 +115,12 @@ void LayerElementController::connectToModel() const
             if (layerBelow())
                 layerBelow()->layerElementItem()->setProperty(
                     LayerElementItem::P_X_POS,
-                    layerElementItem()->property(LayerElementItem::P_X_POS).toDouble()
-                        + layerElementItem()->property(LayerElementItem::P_WIDTH).toDouble());
+                    layerElementItem()->property<double>(LayerElementItem::P_X_POS)
+                        + layerElementItem()->property<double>(LayerElementItem::P_WIDTH));
         }
         if (property_name == LayerElementItem::P_ROUGHNESS) {
-            emit roughnessChanged(
-                m_sample_item_id,
-                layerElementItem()->property(LayerElementItem::P_ROUGHNESS).toDouble());
+            emit roughnessChanged(m_sample_item_id, layerElementItem()->property<double>(
+                                                        LayerElementItem::P_ROUGHNESS));
             updateRoughness();
         }
 
@@ -271,8 +270,8 @@ void LayerElementController::setLayerAbove(LayerElementController* layer_view_co
         layer_view_controller->setLayerBelow(this);
 
     double pos =
-        p_controller_above->layerElementItem()->property(LayerElementItem::P_X_POS).toDouble()
-        + p_controller_above->layerElementItem()->property(LayerElementItem::P_WIDTH).toDouble();
+        p_controller_above->layerElementItem()->property<double>(LayerElementItem::P_X_POS)
+        + p_controller_above->layerElementItem()->property<double>(LayerElementItem::P_WIDTH);
     layerElementItem()->setProperty(LayerElementItem::P_X_POS, pos);
 }
 
@@ -392,13 +391,12 @@ void LayerElementController::updateSideSegment() const
         return;
 
     auto pen = QPen();
-    pen.setColor(layerElementItem()->property(LayerElementItem::P_SIDE_PEN_COLOR).value<QColor>());
-    pen.setWidthF(layerElementItem()->property(LayerElementItem::P_SIDE_PEN_WIDTH).toDouble());
+    pen.setColor(layerElementItem()->property<QColor>(LayerElementItem::P_SIDE_PEN_COLOR));
+    pen.setWidthF(layerElementItem()->property<double>(LayerElementItem::P_SIDE_PEN_WIDTH));
     m_segment_views.at(0)->setPen(pen);
 
     auto brush = QBrush(Qt::SolidPattern);
-    brush.setColor(
-        layerElementItem()->property(LayerElementItem::P_SIDE_BRUSH_COLOR).value<QColor>());
+    brush.setColor(layerElementItem()->property<QColor>(LayerElementItem::P_SIDE_BRUSH_COLOR));
     m_segment_views.at(0)->setBrush(brush);
 
     m_segment_views.at(0)->setRectangle(sideSegmentRect());
@@ -411,13 +409,12 @@ void LayerElementController::updateTopSegment() const
         return;
 
     auto pen = QPen();
-    pen.setColor(layerElementItem()->property(LayerElementItem::P_TOP_PEN_COLOR).value<QColor>());
-    pen.setWidthF(layerElementItem()->property(LayerElementItem::P_TOP_PEN_WIDTH).toDouble());
+    pen.setColor(layerElementItem()->property<QColor>(LayerElementItem::P_TOP_PEN_COLOR));
+    pen.setWidthF(layerElementItem()->property<double>(LayerElementItem::P_TOP_PEN_WIDTH));
     m_segment_views.at(1)->setPen(pen);
 
     auto brush = QBrush(Qt::SolidPattern);
-    brush.setColor(
-        layerElementItem()->property(LayerElementItem::P_TOP_BRUSH_COLOR).value<QColor>());
+    brush.setColor(layerElementItem()->property<QColor>(LayerElementItem::P_TOP_BRUSH_COLOR));
     m_segment_views.at(1)->setBrush(brush);
 
     m_segment_views.at(1)->setRectangle(topSegmentRect());
@@ -426,15 +423,15 @@ void LayerElementController::updateTopSegment() const
 //! Return the side segment rectangle
 QRectF LayerElementController::sideSegmentRect() const
 {
-    double this_pos = layerElementItem()->property(LayerElementItem::P_X_POS).toDouble();
-    double this_height = layerElementItem()->property(LayerElementItem::P_HEIGHT).toDouble();
+    double this_pos = layerElementItem()->property<double>(LayerElementItem::P_X_POS);
+    double this_height = layerElementItem()->property<double>(LayerElementItem::P_HEIGHT);
     double this_thickness =
-        layerElementItem()->property(LayerElementItem::P_SIDE_THICKNESS).toDouble();
+        layerElementItem()->property<double>(LayerElementItem::P_SIDE_THICKNESS);
 
     double above_height = 0;
     if (layerAbove()) {
         above_height =
-            layerAbove()->layerElementItem()->property(LayerElementItem::P_HEIGHT).toDouble();
+            layerAbove()->layerElementItem()->property<double>(LayerElementItem::P_HEIGHT);
     }
 
     if (above_height > this_height) {
@@ -449,10 +446,10 @@ QRectF LayerElementController::sideSegmentRect() const
 //! Return the top segment rectangle
 QRectF LayerElementController::topSegmentRect() const
 {
-    double pos = layerElementItem()->property(LayerElementItem::P_X_POS).toDouble();
-    double height = layerElementItem()->property(LayerElementItem::P_HEIGHT).toDouble();
-    double width = layerElementItem()->property(LayerElementItem::P_WIDTH).toDouble();
-    double thickness = layerElementItem()->property(LayerElementItem::P_TOP_THICKNESS).toDouble();
+    double pos = layerElementItem()->property<double>(LayerElementItem::P_X_POS);
+    double height = layerElementItem()->property<double>(LayerElementItem::P_HEIGHT);
+    double width = layerElementItem()->property<double>(LayerElementItem::P_WIDTH);
+    double thickness = layerElementItem()->property<double>(LayerElementItem::P_TOP_THICKNESS);
     return QRectF(pos, height - thickness / 2., width, thickness);
 }
 
@@ -485,10 +482,10 @@ void LayerElementController::sideSegmentMoved() const
     if (layerAbove()) {
         double w = 0;
         auto item = layerAbove()->layerElementItem();
-        if (x < item->property(LayerElementItem::P_X_POS).toDouble()) {
-            x = item->property(LayerElementItem::P_X_POS).toDouble() + w;
+        if (x < item->property<double>(LayerElementItem::P_X_POS)) {
+            x = item->property<double>(LayerElementItem::P_X_POS) + w;
         } else {
-            w = x - item->property(LayerElementItem::P_X_POS).toDouble();
+            w = x - item->property<double>(LayerElementItem::P_X_POS);
         }
         item->setProperty(LayerElementItem::P_WIDTH, w);
     }
@@ -558,13 +555,11 @@ void LayerElementController::handleViewMoved(HandleElementView* handle_view)
 void LayerElementController::updateSegmentHandles() const
 {
     auto pen = QPen();
-    pen.setColor(
-        layerElementItem()->property(LayerElementItem::P_HANDLE_PEN_COLOR).value<QColor>());
-    pen.setWidthF(layerElementItem()->property(LayerElementItem::P_HANDLE_PEN_WIDTH).toDouble());
+    pen.setColor(layerElementItem()->property<QColor>(LayerElementItem::P_HANDLE_PEN_COLOR));
+    pen.setWidthF(layerElementItem()->property<double>(LayerElementItem::P_HANDLE_PEN_WIDTH));
 
     auto brush = QBrush(Qt::SolidPattern);
-    brush.setColor(
-        layerElementItem()->property(LayerElementItem::P_HANDLE_BRUSH_COLOR).value<QColor>());
+    brush.setColor(layerElementItem()->property<QColor>(LayerElementItem::P_HANDLE_BRUSH_COLOR));
 
     if (m_handle_views[0]) {
         m_handle_views.at(0)->setPen(pen);
@@ -581,13 +576,13 @@ void LayerElementController::updateSegmentHandles() const
 //! Get the first segment handle rectangle
 QRectF LayerElementController::firstSegmentHandleRect() const
 {
-    double pos = layerElementItem()->property(LayerElementItem::P_X_POS).toDouble();
-    double radius = layerElementItem()->property(LayerElementItem::P_HANDLE_RADIUS).toDouble();
+    double pos = layerElementItem()->property<double>(LayerElementItem::P_X_POS);
+    double radius = layerElementItem()->property<double>(LayerElementItem::P_HANDLE_RADIUS);
 
     double above_height = 0;
     if (layerAbove()) {
         above_height =
-            layerAbove()->layerElementItem()->property(LayerElementItem::P_HEIGHT).toDouble();
+            layerAbove()->layerElementItem()->property<double>(LayerElementItem::P_HEIGHT);
     }
 
     return QRectF(pos - radius, above_height - radius, 2 * radius, 2 * radius);
@@ -596,9 +591,9 @@ QRectF LayerElementController::firstSegmentHandleRect() const
 //! Get the second segment handle rectangle
 QRectF LayerElementController::secondSegmentHandleRect() const
 {
-    double pos = layerElementItem()->property(LayerElementItem::P_X_POS).toDouble();
-    double height = layerElementItem()->property(LayerElementItem::P_HEIGHT).toDouble();
-    double radius = layerElementItem()->property(LayerElementItem::P_HANDLE_RADIUS).toDouble();
+    double pos = layerElementItem()->property<double>(LayerElementItem::P_X_POS);
+    double height = layerElementItem()->property<double>(LayerElementItem::P_HEIGHT);
+    double radius = layerElementItem()->property<double>(LayerElementItem::P_HANDLE_RADIUS);
     return QRectF(pos - radius, height - radius, 2 * radius, 2 * radius);
 }
 
@@ -695,8 +690,8 @@ void LayerElementController::unsetRoughnessHandles()
 void LayerElementController::updateRoughness() const
 {
     // Test the roughness
-    double roughness = layerElementItem()->property(LayerElementItem::P_ROUGHNESS).toDouble();
-    double width = layerElementItem()->property(LayerElementItem::P_WIDTH).toDouble();
+    double roughness = layerElementItem()->property<double>(LayerElementItem::P_ROUGHNESS);
+    double width = layerElementItem()->property<double>(LayerElementItem::P_WIDTH);
     setRoughnessInLimits(roughness, false);
 
     // Perform the painting
@@ -705,11 +700,9 @@ void LayerElementController::updateRoughness() const
 
     // Take care of the rounghnessview
     pen.setStyle(Qt::PenStyle::DashLine);
-    pen.setColor(
-        layerElementItem()->property(LayerElementItem::P_ROUGHNESS_PEN_COLOR).value<QColor>());
-    pen.setWidthF(layerElementItem()->property(LayerElementItem::P_ROUGHNESS_PEN_WIDTH).toDouble());
-    brush.setColor(
-        layerElementItem()->property(LayerElementItem::P_ROUGHNESS_BRUSH_COLOR).value<QColor>());
+    pen.setColor(layerElementItem()->property<QColor>(LayerElementItem::P_ROUGHNESS_PEN_COLOR));
+    pen.setWidthF(layerElementItem()->property<double>(LayerElementItem::P_ROUGHNESS_PEN_WIDTH));
+    brush.setColor(layerElementItem()->property<QColor>(LayerElementItem::P_ROUGHNESS_BRUSH_COLOR));
     if (p_roughness_view) {
         p_roughness_view->setPen(pen);
         p_roughness_view->setBrush(brush);
@@ -719,11 +712,9 @@ void LayerElementController::updateRoughness() const
 
     // Take care of the handles
     pen.setStyle(Qt::PenStyle::SolidLine);
-    pen.setColor(
-        layerElementItem()->property(LayerElementItem::P_R_HANDLE_PEN_COLOR).value<QColor>());
-    pen.setWidthF(layerElementItem()->property(LayerElementItem::P_R_HANDLE_PEN_WIDTH).toDouble());
-    brush.setColor(
-        layerElementItem()->property(LayerElementItem::P_R_HANDLE_BRUSH_COLOR).value<QColor>());
+    pen.setColor(layerElementItem()->property<QColor>(LayerElementItem::P_R_HANDLE_PEN_COLOR));
+    pen.setWidthF(layerElementItem()->property<double>(LayerElementItem::P_R_HANDLE_PEN_WIDTH));
+    brush.setColor(layerElementItem()->property<QColor>(LayerElementItem::P_R_HANDLE_BRUSH_COLOR));
     brush.setStyle(Qt::SolidPattern);
 
     if (m_rough_handles_views[0]) {
@@ -741,9 +732,9 @@ void LayerElementController::updateRoughness() const
 //! get the left painter path for the roughness view
 QPainterPath LayerElementController::leftRoughnessPath() const
 {
-    double pos = layerElementItem()->property(LayerElementItem::P_X_POS).toDouble();
-    double height = layerElementItem()->property(LayerElementItem::P_HEIGHT).toDouble();
-    double roughness = layerElementItem()->property(LayerElementItem::P_ROUGHNESS).toDouble();
+    double pos = layerElementItem()->property<double>(LayerElementItem::P_X_POS);
+    double height = layerElementItem()->property<double>(LayerElementItem::P_HEIGHT);
+    double roughness = layerElementItem()->property<double>(LayerElementItem::P_ROUGHNESS);
 
     auto path = QPainterPath();
 
@@ -752,9 +743,8 @@ QPainterPath LayerElementController::leftRoughnessPath() const
         path.moveTo(pos, 0);
         path.lineTo(pos - roughness, 0);
     } else {
-        path.moveTo(
-            pos - roughness,
-            layer_above->layerElementItem()->property(LayerElementItem::P_HEIGHT).toDouble());
+        path.moveTo(pos - roughness,
+                    layer_above->layerElementItem()->property<double>(LayerElementItem::P_HEIGHT));
     }
     path.lineTo(pos - roughness, height);
     path.lineTo(pos, height);
@@ -765,9 +755,9 @@ QPainterPath LayerElementController::leftRoughnessPath() const
 //! get the right painter path for the roughness view
 QPainterPath LayerElementController::rightRoughnessPath() const
 {
-    double pos = layerElementItem()->property(LayerElementItem::P_X_POS).toDouble();
-    double height = layerElementItem()->property(LayerElementItem::P_HEIGHT).toDouble();
-    double roughness = layerElementItem()->property(LayerElementItem::P_ROUGHNESS).toDouble();
+    double pos = layerElementItem()->property<double>(LayerElementItem::P_X_POS);
+    double height = layerElementItem()->property<double>(LayerElementItem::P_HEIGHT);
+    double roughness = layerElementItem()->property<double>(LayerElementItem::P_ROUGHNESS);
 
     auto path = QPainterPath();
 
@@ -776,11 +766,10 @@ QPainterPath LayerElementController::rightRoughnessPath() const
         path.moveTo(pos, 0);
         path.lineTo(pos + roughness, 0);
     } else {
-        path.moveTo(
-            pos, layer_above->layerElementItem()->property(LayerElementItem::P_HEIGHT).toDouble());
-        path.lineTo(
-            pos + roughness,
-            layer_above->layerElementItem()->property(LayerElementItem::P_HEIGHT).toDouble());
+        path.moveTo(pos,
+                    layer_above->layerElementItem()->property<double>(LayerElementItem::P_HEIGHT));
+        path.lineTo(pos + roughness,
+                    layer_above->layerElementItem()->property<double>(LayerElementItem::P_HEIGHT));
     }
     path.lineTo(pos + roughness, height);
 
@@ -790,16 +779,16 @@ QPainterPath LayerElementController::rightRoughnessPath() const
 //! get the rectangle for the left roughness handles
 QRectF LayerElementController::leftRoughnessHandleRect() const
 {
-    double pos_x = layerElementItem()->property(LayerElementItem::P_X_POS).toDouble();
-    double height = layerElementItem()->property(LayerElementItem::P_HEIGHT).toDouble();
-    double radius = layerElementItem()->property(LayerElementItem::P_R_HANDLE_RADIUS).toDouble();
-    double roughness = layerElementItem()->property(LayerElementItem::P_ROUGHNESS).toDouble();
+    double pos_x = layerElementItem()->property<double>(LayerElementItem::P_X_POS);
+    double height = layerElementItem()->property<double>(LayerElementItem::P_HEIGHT);
+    double radius = layerElementItem()->property<double>(LayerElementItem::P_R_HANDLE_RADIUS);
+    double roughness = layerElementItem()->property<double>(LayerElementItem::P_ROUGHNESS);
 
     auto layer_above = layerAbove();
     double lower_height = 0;
     if (layer_above) {
         lower_height =
-            layer_above->layerElementItem()->property(LayerElementItem::P_HEIGHT).toDouble();
+            layer_above->layerElementItem()->property<double>(LayerElementItem::P_HEIGHT);
     }
     double pos_y = (lower_height - height) / 2 + height;
 
@@ -809,16 +798,16 @@ QRectF LayerElementController::leftRoughnessHandleRect() const
 //! get the rectangle for the right roughness handles
 QRectF LayerElementController::rightRoughnessHandleRect() const
 {
-    double pos_x = layerElementItem()->property(LayerElementItem::P_X_POS).toDouble();
-    double height = layerElementItem()->property(LayerElementItem::P_HEIGHT).toDouble();
-    double radius = layerElementItem()->property(LayerElementItem::P_R_HANDLE_RADIUS).toDouble();
-    double roughness = layerElementItem()->property(LayerElementItem::P_ROUGHNESS).toDouble();
+    double pos_x = layerElementItem()->property<double>(LayerElementItem::P_X_POS);
+    double height = layerElementItem()->property<double>(LayerElementItem::P_HEIGHT);
+    double radius = layerElementItem()->property<double>(LayerElementItem::P_R_HANDLE_RADIUS);
+    double roughness = layerElementItem()->property<double>(LayerElementItem::P_ROUGHNESS);
 
     auto layer_above = layerAbove();
     double lower_height = 0;
     if (layer_above) {
         lower_height =
-            layer_above->layerElementItem()->property(LayerElementItem::P_HEIGHT).toDouble();
+            layer_above->layerElementItem()->property<double>(LayerElementItem::P_HEIGHT);
     }
     double pos_y = (lower_height - height) / 2 + height;
 
@@ -868,7 +857,7 @@ void LayerElementController::removeRoughnessHandlesFromScene() const
 //! Handle the position variation of the left handle
 void LayerElementController::leftHandleMoved() const
 {
-    double pos = layerElementItem()->property(LayerElementItem::P_X_POS).toDouble();
+    double pos = layerElementItem()->property<double>(LayerElementItem::P_X_POS);
     double roughness = pos - leftRoughnessHandle()->getLastPos().x();
     setRoughnessInLimits(roughness);
 }
@@ -876,7 +865,7 @@ void LayerElementController::leftHandleMoved() const
 //! Handle the position variation of the right handle
 void LayerElementController::rightHandleMoved() const
 {
-    double pos = layerElementItem()->property(LayerElementItem::P_X_POS).toDouble();
+    double pos = layerElementItem()->property<double>(LayerElementItem::P_X_POS);
     double roughness = rightRoughnessHandle()->getLastPos().x() - pos;
     setRoughnessInLimits(roughness);
 }
@@ -889,14 +878,14 @@ void LayerElementController::setRoughnessInLimits(double roughness, bool active)
         return;
     }
 
-    double width = layerElementItem()->property(LayerElementItem::P_WIDTH).toDouble();
+    double width = layerElementItem()->property<double>(LayerElementItem::P_WIDTH);
     if (width == 0)
         width = 1e6;
 
     auto layer_above = layerAbove();
     if (layer_above) {
         double second_width =
-            layer_above->layerElementItem()->property(LayerElementItem::P_WIDTH).toDouble();
+            layer_above->layerElementItem()->property<double>(LayerElementItem::P_WIDTH);
         if (second_width == 0)
             second_width = 1e6;
 

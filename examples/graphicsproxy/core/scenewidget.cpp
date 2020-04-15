@@ -67,10 +67,10 @@ void SceneWidget::init_actions()
     auto on_set_to_roi = [this]() {
         auto viewport = Utils::TopItem<ColorMapViewportItem>(m_model);
         auto roi = Utils::TopItem<RegionOfInterestItem>(m_model);
-        viewport->xAxis()->set_range(roi->property(RegionOfInterestItem::P_XLOW).value<double>(),
-                                     roi->property(RegionOfInterestItem::P_XUP).value<double>());
-        viewport->yAxis()->set_range(roi->property(RegionOfInterestItem::P_YLOW).value<double>(),
-                                     roi->property(RegionOfInterestItem::P_YUP).value<double>());
+        viewport->xAxis()->set_range(roi->property<double>(RegionOfInterestItem::P_XLOW),
+                                     roi->property<double>(RegionOfInterestItem::P_XUP));
+        viewport->yAxis()->set_range(roi->property<double>(RegionOfInterestItem::P_YLOW),
+                                     roi->property<double>(RegionOfInterestItem::P_YUP));
     };
     connect(m_setViewportToRoiAction, &QAction::triggered, on_set_to_roi);
     m_toolBar->addAction(m_setViewportToRoiAction);

@@ -102,7 +102,7 @@ struct RegionOfInterestController::RegionOfInterestControllerImpl {
     //! Returns the y-coordinate of the rectangle's bottom edge.
     double bottom() const { return scene_adapter->toSceneY(par(RegionOfInterestItem::P_YLOW)); }
 
-    double par(const std::string& name) const { return roi_item->property(name).value<double>(); }
+    double par(const std::string& name) const { return roi_item->property<double>(name); }
 };
 
 RegionOfInterestController::RegionOfInterestController(

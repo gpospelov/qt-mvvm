@@ -155,7 +155,7 @@ string_vec SLDElementController::getIdentifierVector(SessionItem* item)
     for (int i = 0; i < item->childrenCount(); ++i) {
         if (dynamic_cast<MultiLayerItem*>(children.at(i))) {
             auto child = dynamic_cast<MultiLayerItem*>(children.at(i));
-            for (int j = 0; j < child->property(MultiLayerItem::P_NREPETITIONS).toInt(); ++j) {
+            for (int j = 0; j < child->property<int>(MultiLayerItem::P_NREPETITIONS); ++j) {
                 auto child_output = getIdentifierVector(child);
                 output.insert(output.end(), child_output.begin(), child_output.end());
             }
@@ -233,26 +233,25 @@ void SLDElementController::updateToView(SessionItem* item)
         auto layer_item =
             dynamic_cast<LayerItem*>(p_sample_model->findItem(layer_controller->sampleItemId()));
         auto roughness_item = layer_item->item<RoughnessItem>(LayerItem::P_ROUGHNESS);
-        auto material_item = dynamic_cast<SLDMaterialItem*>(
-            p_material_model->findItem(layer_item->property(LayerItem::P_MATERIAL)
-                                           .value<ModelView::ExternalProperty>()
-                                           .identifier()));
+        auto material_item = dynamic_cast<SLDMaterialItem*>(p_material_model->findItem(
+            layer_item->property<ExternalProperty>(LayerItem::P_MATERIAL).identifier()));
 
         layer_controller->layerElementItem()->setProperty(
-            LayerElementItem::P_ROUGHNESS, roughness_item->property(RoughnessItem::P_SIGMA));
+            LayerElementItem::P_ROUGHNESS,
+            roughness_item->property<double>(RoughnessItem::P_SIGMA));
         layer_controller->layerElementItem()->setProperty(
-            LayerElementItem::P_WIDTH, layer_item->property(LayerItem::P_THICKNESS).toDouble());
+            LayerElementItem::P_WIDTH, layer_item->property<double>(LayerItem::P_THICKNESS));
 
         if (material_item) {
             layer_controller->layerElementItem()->setProperty(
                 LayerElementItem::P_HEIGHT,
-                material_item->property(SLDMaterialItem::P_SLD_REAL).toDouble());
+                material_item->property<double>(SLDMaterialItem::P_SLD_REAL));
             layer_controller->layerElementItem()->setProperty(
                 LayerElementItem::P_TOP_BRUSH_COLOR,
-                material_item->property(SLDMaterialItem::P_COLOR));
+                material_item->property<QColor>(SLDMaterialItem::P_COLOR));
             layer_controller->layerElementItem()->setProperty(
                 LayerElementItem::P_SIDE_BRUSH_COLOR,
-                material_item->property(SLDMaterialItem::P_COLOR));
+                material_item->property<QColor>(SLDMaterialItem::P_COLOR));
         } else {
             layer_controller->layerElementItem()->setProperty(LayerElementItem::P_HEIGHT, 1e-6);
             layer_controller->layerElementItem()->setProperty(LayerElementItem::P_TOP_BRUSH_COLOR,
@@ -274,10 +273,8 @@ void SLDElementController::updateThicknessFromView(std::string identifier, doubl
 void SLDElementController::updateSLDFromView(std::string identifier, double value)
 {
     auto layer_item = dynamic_cast<LayerItem*>(p_sample_model->findItem(identifier));
-    auto material_item = dynamic_cast<SLDMaterialItem*>(
-        p_material_model->findItem(layer_item->property(LayerItem::P_MATERIAL)
-                                       .value<ModelView::ExternalProperty>()
-                                       .identifier()));
+    auto material_item = dynamic_cast<SLDMaterialItem*>(p_material_model->findItem(
+        layer_item->property<ExternalProperty>(LayerItem::P_MATERIAL).identifier()));
     if (material_item)
         material_item->setProperty(SLDMaterialItem::P_SLD_REAL, value);
 }

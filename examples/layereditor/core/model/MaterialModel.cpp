@@ -50,8 +50,8 @@ std::vector<ExternalProperty> MaterialModel::material_data()
     for (auto container : rootItem()->children()) {
         for (auto item : container->children()) {
             if (auto material = dynamic_cast<SLDMaterialItem*>(item)) {
-                auto text = material->property(SLDMaterialItem::P_NAME).value<std::string>();
-                auto color = material->property(SLDMaterialItem::P_COLOR).value<QColor>();
+                auto text = material->property<std::string>(SLDMaterialItem::P_NAME);
+                auto color = material->property<QColor>(SLDMaterialItem::P_COLOR);
                 auto id = material->identifier();
                 result.push_back(ExternalProperty(text, color, id));
             }

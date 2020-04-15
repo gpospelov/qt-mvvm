@@ -38,8 +38,8 @@ void IView::subscribe(SessionItem* item)
     if (toolTip().isEmpty())
         setToolTip(QString::fromStdString(item->displayName()));
 
-    setX(m_item->property(LocatedItem::P_X_POS).toReal());
-    setY(m_item->property(LocatedItem::P_Y_POS).toReal());
+    setX(m_item->property<double>(LocatedItem::P_X_POS));
+    setY(m_item->property<double>(LocatedItem::P_Y_POS));
 
     auto on_property_change = [this](SessionItem*, std::string property) {
         onPropertyChange(property);
@@ -83,7 +83,7 @@ void IView::onPropertyChange(const std::string& propertyName)
 {
     Q_ASSERT(m_item);
     if (propertyName == LocatedItem::P_X_POS)
-        setX(m_item->property(LocatedItem::P_X_POS).toReal());
+        setX(m_item->property<double>(LocatedItem::P_X_POS));
     else if (propertyName == LocatedItem::P_Y_POS)
-        setY(m_item->property(LocatedItem::P_Y_POS).toReal());
+        setY(m_item->property<double>(LocatedItem::P_Y_POS));
 }
