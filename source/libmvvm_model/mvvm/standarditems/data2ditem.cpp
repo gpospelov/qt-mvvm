@@ -27,6 +27,7 @@ Data2DItem::Data2DItem() : CompoundItem(Constants::Data2DItemType)
 {
     registerTag(TagInfo(T_XAXIS, 0, 1, {Constants::FixedBinAxisItemType}));
     registerTag(TagInfo(T_YAXIS, 0, 1, {Constants::FixedBinAxisItemType}));
+    setContent(std::vector<double>());
 }
 
 //! Sets axes and put data points to zero.
@@ -66,9 +67,6 @@ void Data2DItem::setContent(const std::vector<double>& data)
 std::vector<double> Data2DItem::content() const
 {
     return data<std::vector<double>>();
-    // FIXME cleanup
-//    auto variant = data();
-//    return variant.isValid() ? variant.value<std::vector<double>>() : std::vector<double>();
 }
 
 //! Insert axis under given tag. Previous axis will be deleted and data points invalidated.
