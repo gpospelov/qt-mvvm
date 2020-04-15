@@ -78,6 +78,21 @@ TEST_F(SessionItemTest, setData)
     EXPECT_EQ(item.data<QVariant>(role), QVariant::fromValue(43.0));
 }
 
+TEST_F(SessionItemTest, hasData)
+{
+    SessionItem item;
+
+    EXPECT_FALSE(item.hasData());
+    EXPECT_TRUE(item.hasData(ItemDataRole::IDENTIFIER));
+    EXPECT_FALSE(item.hasData(ItemDataRole::DATA));
+    EXPECT_TRUE(item.hasData(ItemDataRole::DISPLAY));
+    EXPECT_FALSE(item.hasData(ItemDataRole::APPEARANCE));
+    EXPECT_FALSE(item.hasData(ItemDataRole::LIMITS));
+
+    item.setData(42.0);
+    EXPECT_TRUE(item.hasData());
+}
+
 //! Display role.
 
 TEST_F(SessionItemTest, displayName)

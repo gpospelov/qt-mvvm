@@ -64,9 +64,9 @@ SessionItemData::const_iterator SessionItemData::end() const
     return m_values.end();
 }
 
-//! Returns true
+//! Returns true if item has data with given role.
 
-bool SessionItemData::hasRole(int role) const
+bool SessionItemData::hasData(int role) const
 {
     auto has_role = [role](const auto& x) { return x.m_role == role; };
     return std::find_if(m_values.begin(), m_values.end(), has_role) != m_values.end();

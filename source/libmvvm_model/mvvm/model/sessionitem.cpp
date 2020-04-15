@@ -89,6 +89,13 @@ bool SessionItem::setData(const QVariant& variant, int role)
     return setDataIntern(variant, role);
 }
 
+//! Returns true if item has data on board with given role.
+
+bool SessionItem::hasData(int role) const
+{
+    return p_impl->m_data->hasData(role);
+}
+
 //! Returns data in the form of QVariant for given role.
 //! Method invented to hide implementaiton details.
 

@@ -44,6 +44,8 @@ public:
     bool setData(const QVariant& variant, int role = ItemDataRole::DATA);
     bool setDataIntern(const QVariant& variant, int role);
 
+    bool hasData(int role = ItemDataRole::DATA) const;
+
     template <typename T> T data(int role = ItemDataRole::DATA) const;
 
     SessionModel* model() const;
