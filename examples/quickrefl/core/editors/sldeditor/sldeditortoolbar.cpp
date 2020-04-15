@@ -23,4 +23,10 @@ SLDEditorToolBar::SLDEditorToolBar(SLDEditorActions* actions, QWidget* parent)
     setIconSize(StyleUtils::ToolBarIconSize());
     setToolButtonStyle(Qt::ToolButtonFollowStyle);
 
+    auto reset_view = new QToolButton;
+    reset_view->setToolTip("Set axes to default range.");
+    reset_view->setIcon(QIcon(":/icons/aspect-ratio.svg"));
+    addWidget(reset_view);
+    connect(reset_view, &QToolButton::clicked, [this]() { resetViewport(); });
+
 }

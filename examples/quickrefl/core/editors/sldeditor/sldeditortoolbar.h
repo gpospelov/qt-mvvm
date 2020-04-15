@@ -22,6 +22,10 @@ class SLDEditorToolBar : public QToolBar
 public:
     SLDEditorToolBar(SLDEditorActions* actions, QWidget* parent = nullptr);
     ~SLDEditorToolBar() = default;
+
+signals:
+    void resetViewport();
+    
 };
 
 #endif // SLDEDITORTOOLBAR_H

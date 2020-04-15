@@ -46,6 +46,12 @@ void GraphicsScene::setItem(ModelView::GraphViewportItem* viewport_item)
     graph_canvas->setItem(viewport_item);
 }
 
+//! Set te graph canvas item
+ModelView::GraphCanvas* GraphicsScene::graphCanvas() const
+{
+    return graph_canvas;
+}
+
 //! Adjust size of scene and color map proxy.
 void GraphicsScene::update_size(const QSize& newSize)
 {

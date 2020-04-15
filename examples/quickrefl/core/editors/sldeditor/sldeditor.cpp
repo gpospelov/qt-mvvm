@@ -13,8 +13,10 @@
 #include "sldeditortoolbar.h"
 #include "sldeditoractions.h"
 #include "applicationmodels.h"
+#include "graphicsscene.h"
 
 #include "styleutils.h"
+#include <mvvm/plotting/graphcanvas.h>
 #include <QVBoxLayout>
 
 //! The constructor
@@ -28,6 +30,13 @@ SLDEditor::SLDEditor(ApplicationModels* apps_models, QWidget* parent)
     layout->addWidget(p_editor_tollbar);
     layout->addWidget(p_view_widget);
     setLayout(layout);
+
+    connect(p_editor_tollbar, &SLDEditorToolBar::resetViewport,
+            [this]() { 
+                GraphicsScene* scene_item = dynamic_cast<GraphicsScene*>(p_view_widget->scene());
+                if (!scene_item) return;
+                scene_item->graphCanvas()->update_viewport(); 
+            });
 }
 
 //! The destructor

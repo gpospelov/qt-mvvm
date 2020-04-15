@@ -34,8 +34,9 @@ public:
 
     void setContext();
     void setItem(ModelView::GraphViewportItem* viewport_item);
-    void update_size(const QSize& newSize);
+    ModelView::GraphCanvas* graphCanvas() const;
     ModelView::SceneAdapterInterface* sceneAdapter() const;
+    void update_size(const QSize& newSize);
 
 private:
     void createPlotProxy(ModelView::GraphCanvas* plot_canvas);
