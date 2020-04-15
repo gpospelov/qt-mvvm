@@ -12,6 +12,7 @@
 
 #include <QVariant>
 #include <memory>
+#include <mvvm/model/customvariants.h>
 #include <mvvm/core/export.h>
 #include <mvvm/model/mvvm_types.h>
 #include <mvvm/model/tagrow.h>
@@ -87,7 +88,10 @@ public:
 
     QVariant property(const std::string& tag) const;
 
-    void setProperty(const std::string& tag, const QVariant& variant);
+    template<typename T>
+    void setProperty(const std::string& tag, const T& value);
+
+    void setProperty(const std::string& tag, const char* value);
 
 private:
     friend class SessionModel;
@@ -96,6 +100,7 @@ private:
     void setParent(SessionItem* parent);
     void setModel(SessionModel* model);
     void setAppearanceFlag(int flag, bool value);
+    void set_property_intern(const std::string& tag, const QVariant& variant);
 
     // FIXME refactor converter access to item internals
     class SessionItemData* itemData() const;
@@ -107,10 +112,25 @@ private:
     std::unique_ptr<SessionItemImpl> p_impl;
 };
 
+//! Sets value to property item.
+//! Property is single item registered under certain tag via CompoundItem::addProperty method, the
+//! value will be assigned to it's data role.
+
+template<typename T>
+inline void SessionItem::setProperty(const std::string &tag, const T& value)
+{
+    set_property_intern(tag, QVariant::fromValue(value));
+}
+
+inline void SessionItem::setProperty(const std::string &tag, const char* value)
+{
+    setProperty(tag, std::string(value));
+}
+
 //! Returns first item under given tag casted to a specified type.
 //! Returns nullptr, if item doesn't exist. If item exists but can't be casted will throw.
 
-template <typename T> T* SessionItem::item(const std::string& tag) const
+template <typename T> inline T* SessionItem::item(const std::string& tag) const
 {
     if (auto item = getItem(tag); item) {
         T* tag_item = dynamic_cast<T*>(item);

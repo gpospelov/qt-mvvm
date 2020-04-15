@@ -64,7 +64,7 @@ TEST_F(CustomVariantsTest, CompatibleVariantTypes)
     std::vector<double> vec{1, 2};
     QVariant vector_variant = QVariant::fromValue(vec);
     ComboProperty combo = ComboProperty::createFrom({"a1", "a2", "s3"});
-    QVariant combo_variant = combo.variant();
+    QVariant combo_variant = QVariant::fromValue(combo);
     QVariant color_variant = QVariant::fromValue(QColor(Qt::red));
     QVariant extprop_variant = QVariant::fromValue(ExternalProperty());
     QVariant limits_variant = QVariant::fromValue(RealLimits());

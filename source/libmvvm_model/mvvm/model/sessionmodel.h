@@ -90,7 +90,8 @@ protected:
 
 private:
     void createRootItem();
-    SessionItem* intern_insert(item_factory_func_t func, SessionItem* parent, const TagRow& tagrow);
+    SessionItem* intern_insert(const item_factory_func_t& func, SessionItem* parent,
+                               const TagRow& tagrow);
 
     std::unique_ptr<CommandService> m_commands;
     std::string m_model_type;

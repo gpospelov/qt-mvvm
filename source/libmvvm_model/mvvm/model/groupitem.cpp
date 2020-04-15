@@ -82,7 +82,7 @@ void GroupItem::init_group()
     ComboProperty combo;
     combo.setValues(m_catalogue->labels());
     combo.setCurrentIndex(m_default_selected_index);
-    setDataIntern(combo.variant(), ItemDataRole::DATA);
+    setDataIntern(QVariant::fromValue(combo), ItemDataRole::DATA);
     for (const auto& x : m_catalogue->modelTypes())
         insertItem(m_catalogue->create(x).release(), TagRow::append(tag_name));
 }

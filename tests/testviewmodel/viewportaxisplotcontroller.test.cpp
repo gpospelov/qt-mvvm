@@ -185,8 +185,7 @@ TEST_F(ViewportAxisPlotControllerTest, changeViewportLogz)
     EXPECT_EQ(qcp_axis->scaleType(), QCPAxis::stLinear);
 
     // changing scale
-    // FIXME replace ::fromValue with simple 'true' after ::property refactoring
-    axisItem->setProperty(ViewportAxisItem::P_IS_LOG, QVariant::fromValue(true));
+    axisItem->setProperty(ViewportAxisItem::P_IS_LOG, true);
 
     // QCPAxis should switch to logarithmic
     EXPECT_EQ(qcp_axis->scaleType(), QCPAxis::stLogarithmic);

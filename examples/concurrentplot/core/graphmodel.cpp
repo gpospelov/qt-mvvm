@@ -72,5 +72,5 @@ void GraphModel::add_graph(ModelView::ContainerItem* container,
 
     auto graph = insertItem<GraphItem>(viewport);
     graph->setDataItem(data);
-    graph->setProperty(GraphItem::P_COLOR, QVariant::fromValue(ModelView::Utils::random_color()));
+    graph->setProperty(GraphItem::P_COLOR, ModelView::Utils::random_color());
 }
