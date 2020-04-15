@@ -13,7 +13,7 @@
 #include "layereditor.h"
 #include "quicksimeditor.h"
 #include "reflwidgets.h"
-#include "sldviewwidget.h"
+#include "sldeditor.h"
 #include <QLabel>
 #include <QToolBar>
 
@@ -28,9 +28,7 @@ ReflDockWindow::ReflDockWindow(ApplicationModels* models, QWidget* parent)
                                 Qt::TopDockWidgetArea);
     docks_controller->addWidget(1, new LayerEditor(models), Qt::TopDockWidgetArea);
 
-    auto sld_widget = new SLDViewWidget(models, this);
-    auto sld_editor = new SLDEditor(sld_widget);
-    docks_controller->addWidget(3, sld_editor, Qt::BottomDockWidgetArea);
+    docks_controller->addWidget(3, new SLDEditor(models, this), Qt::BottomDockWidgetArea);
 
     docks_controller->addWidget(4, new QuickSimEditor(models), Qt::BottomDockWidgetArea);
 }

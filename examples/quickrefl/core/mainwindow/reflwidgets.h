@@ -26,21 +26,6 @@ public:
     LayerCanvas(QWidget* parent = nullptr);
 };
 
-//! SLD editor.
-
-// FIXME Move title and sizeHints on board of SLDViewWidget and get rid of SLDEditor class.
-class SLDViewWidget;
-
-class SLDEditor : public QWidget
-{
-    Q_OBJECT
-public:
-    SLDEditor(SLDViewWidget* sld_view = nullptr, QWidget* parent = nullptr);
-
-    QSize sizeHint() const override;
-    QSize minimumSizeHint() const override;
-};
-
 //! Instrument editor.
 
 class InstrumentEditor : public QWidget
