@@ -8,15 +8,14 @@
 // ************************************************************************** //
 
 #include "sldeditortoolbar.h"
-#include "sldeditoractions.h"
 #include "resources.h"
+#include "sldeditoractions.h"
 #include "styleutils.h"
 
 #include <QAction>
 #include <QToolButton>
 
-SLDEditorToolBar::SLDEditorToolBar(SLDEditorActions* actions, QWidget* parent)
-    : QToolBar(parent)
+SLDEditorToolBar::SLDEditorToolBar(SLDEditorActions* actions, QWidget* parent) : QToolBar(parent)
 {
     InitIconResources();
 
@@ -28,5 +27,4 @@ SLDEditorToolBar::SLDEditorToolBar(SLDEditorActions* actions, QWidget* parent)
     reset_view->setIcon(QIcon(":/icons/aspect-ratio.svg"));
     addWidget(reset_view);
     connect(reset_view, &QToolButton::clicked, [this]() { resetViewport(); });
-
 }

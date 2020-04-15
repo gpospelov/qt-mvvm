@@ -116,4 +116,4 @@ std::map<AxesUnits, std::string> InitSampleDepthAxis()
     return result;
 }
 
-}
+} // namespace AxisNames

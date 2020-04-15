@@ -11,12 +11,12 @@
 #include "graphicsscene.h"
 #include "mvvm/plotting/sceneadapterinterface.h"
 
+#include <QCursor>
 #include <QPainter>
 #include <QPainterPath>
-#include <QCursor>
 
 //! The constructor
-ElementView::ElementView() : QGraphicsObject() 
+ElementView::ElementView() : QGraphicsObject()
 {
     setAcceptHoverEvents(true);
 }
@@ -49,7 +49,7 @@ void ElementView::paint(QPainter* painter, const QStyleOptionGraphicsItem* optio
 }
 
 //! modify the rectangle for display according to the scene adapter
-QRectF ElementView::displayRect(const QRectF &real_rect) const
+QRectF ElementView::displayRect(const QRectF& real_rect) const
 {
     auto adapter = sceneAdapter();
     if (!adapter)
@@ -65,7 +65,7 @@ QRectF ElementView::displayRect(const QRectF &real_rect) const
 
     if (m_stretch_left) {
         output = stretchRectLeft(output);
-    } else if (m_stretch_right){
+    } else if (m_stretch_right) {
         output = stretchRectRight(output);
     }
 
@@ -73,7 +73,7 @@ QRectF ElementView::displayRect(const QRectF &real_rect) const
 }
 
 //! Helper function for displayRect based on the center of real_rect
-QRectF ElementView::displayRectCenterBased(const QRectF &real_rect) const
+QRectF ElementView::displayRectCenterBased(const QRectF& real_rect) const
 {
     auto adapter = sceneAdapter();
     double x = real_rect.x();
@@ -100,11 +100,11 @@ QRectF ElementView::displayRectCenterBased(const QRectF &real_rect) const
     x = center_x - w / 2;
     y = center_y - h / 2;
 
-    return QRectF(x, y, w, h); 
+    return QRectF(x, y, w, h);
 }
 
 //! Helper function for displayRect based on the edge of real_rect
-QRectF ElementView::displayRectEdgeBased(const QRectF &real_rect) const
+QRectF ElementView::displayRectEdgeBased(const QRectF& real_rect) const
 {
     auto adapter = sceneAdapter();
     double x = real_rect.x();
@@ -129,7 +129,7 @@ QRectF ElementView::displayRectEdgeBased(const QRectF &real_rect) const
 }
 
 //! Stretch the rectangle to the left limit of the viewport
-QRectF ElementView::stretchRectLeft(const QRectF &real_rect) const
+QRectF ElementView::stretchRectLeft(const QRectF& real_rect) const
 {
     auto adapter = sceneAdapter();
     double x_i = real_rect.x();
@@ -144,7 +144,7 @@ QRectF ElementView::stretchRectLeft(const QRectF &real_rect) const
 }
 
 //! Stretch the rectangle to the right limit of the viewport
-QRectF ElementView::stretchRectRight(const QRectF &real_rect) const
+QRectF ElementView::stretchRectRight(const QRectF& real_rect) const
 {
     auto adapter = sceneAdapter();
     double x_i = real_rect.x();
@@ -157,7 +157,6 @@ QRectF ElementView::stretchRectRight(const QRectF &real_rect) const
 
     return QRectF(x_i, y_i, x_f - x_i, y_f - y_i);
 }
-
 
 //! modify the path for display according to the scene adapter
 QPainterPath ElementView::displayPath(QPainterPath real_path) const
@@ -227,7 +226,7 @@ void ElementView::stretchRight(bool choice)
 }
 
 //! The hoover enter event
-void ElementView::hoverEnterEvent (QGraphicsSceneHoverEvent *event)
+void ElementView::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
 {
     if (flags() & QGraphicsItem::ItemIsMovable)
         setCursor(QCursor(Qt::OpenHandCursor));
@@ -235,14 +234,14 @@ void ElementView::hoverEnterEvent (QGraphicsSceneHoverEvent *event)
 }
 
 //! The hoover exit event
-void ElementView::hoverLeaveEvent (QGraphicsSceneHoverEvent *event)
+void ElementView::hoverLeaveEvent(QGraphicsSceneHoverEvent* event)
 {
     unsetCursor();
     QGraphicsItem::hoverLeaveEvent(event);
 }
 
 //! The mouse press event
-void ElementView::mousePressEvent (QGraphicsSceneMouseEvent *event)
+void ElementView::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
     if (flags() & QGraphicsItem::ItemIsMovable)
         setCursor(QCursor(Qt::ClosedHandCursor));
@@ -250,7 +249,7 @@ void ElementView::mousePressEvent (QGraphicsSceneMouseEvent *event)
 }
 
 //! The mouse release event
-void ElementView::mouseReleaseEvent (QGraphicsSceneMouseEvent *event)
+void ElementView::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
     if (flags() & QGraphicsItem::ItemIsMovable)
         setCursor(QCursor(Qt::OpenHandCursor));

@@ -19,7 +19,9 @@ using namespace ModelView;
 
 struct SLDEditorActions::SLDEditorActionsImpl {
     SLDElementModel* sld_element_model{nullptr};
-    SLDEditorActionsImpl(SLDElementModel* sld_element_model) : sld_element_model(sld_element_model) {}
+    SLDEditorActionsImpl(SLDElementModel* sld_element_model) : sld_element_model(sld_element_model)
+    {
+    }
 };
 
 SLDEditorActions::SLDEditorActions(SLDElementModel* sld_element_model, QObject* parent)

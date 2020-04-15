@@ -165,12 +165,12 @@ ImportDataInfo CsvImportAssistant::fillData()
     std::vector<double> intensityValues;
     std::vector<double> coordinateValues;
 
-    getValuesFromColumns(intensityValues,coordinateValues);
+    getValuesFromColumns(intensityValues, coordinateValues);
 
     auto axisName = csv::UnitsLabels[m_units].toStdString();
-//    PointwiseAxis coordAxis(axisName, coordinateValues);
-//    resultOutputData->addAxis(coordAxis);
-//    resultOutputData->setRawDataVector(intensityValues);
+    //    PointwiseAxis coordAxis(axisName, coordinateValues);
+    //    resultOutputData->addAxis(coordAxis);
+    //    resultOutputData->setRawDataVector(intensityValues);
 
     ImportDataInfo result(std::move(resultOutputData), m_units);
     return result;
@@ -265,8 +265,7 @@ void CsvImportAssistant::removeBlankColumns()
     size_t nCols = m_csvArray[0].size();
 
     if (!hasEqualLengthLines(m_csvArray)) {
-        throw std::runtime_error(
-            "All inner vectors should have the same length already.");
+        throw std::runtime_error("All inner vectors should have the same length already.");
     }
 
     // traverse the array columnwise -- this may be inneficient.

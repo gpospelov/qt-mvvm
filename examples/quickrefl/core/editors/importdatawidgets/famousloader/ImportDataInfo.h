@@ -19,7 +19,7 @@
 #include <QString>
 #include <memory>
 
-template<class T> class OutputData;
+template <class T> class OutputData;
 
 //! Carries information about loaded data.
 
@@ -34,7 +34,7 @@ public:
 
     operator bool() const;
 
-    std::unique_ptr<OutputData<double>> intensityData() const &;
+    std::unique_ptr<OutputData<double>> intensityData() const&;
     std::unique_ptr<OutputData<double>> intensityData() &&;
     size_t dataRank() const;
     QString unitsLabel() const;

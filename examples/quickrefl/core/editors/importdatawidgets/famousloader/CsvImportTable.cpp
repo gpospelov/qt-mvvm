@@ -17,7 +17,8 @@
 
 using namespace ModelView;
 
-namespace {
+namespace
+{
 
 ScientificSpinBox* createMultiplierBox(double value = 1.0, bool enabled = false,
                                        QWidget* parent = nullptr)
@@ -27,14 +28,12 @@ ScientificSpinBox* createMultiplierBox(double value = 1.0, bool enabled = false,
     result->setEnabled(enabled);
     return result;
 }
-}
+} // namespace
 
 CsvImportData::CsvImportData(QObject* parent)
-    :QObject(parent)
-    , m_data(new csv::DataArray)
-    , m_n_header(0)
-    , m_n_footer(0)
-{}
+    : QObject(parent), m_data(new csv::DataArray), m_n_header(0), m_n_footer(0)
+{
+}
 
 void CsvImportData::setData(csv::DataArray data)
 {
@@ -205,9 +204,9 @@ bool CsvImportData::rowExcluded(int row)
 std::set<std::pair<int, int>> CsvImportData::checkData()
 {
     std::set<std::pair<int, int>> result;
-    for (auto type: availableTypes()) {
+    for (auto type : availableTypes()) {
         auto col_result = checkFormat(multipliedValues(type), type == Coordinate);
-        std::for_each(col_result.begin(), col_result.end(), [col=column(type), &result](int row){
+        std::for_each(col_result.begin(), col_result.end(), [col = column(type), &result](int row) {
             result.insert({row, col});
         });
     }
@@ -256,10 +255,9 @@ std::set<int> CsvImportData::checkFormat(const csv::DataColumn& values, bool che
 }
 
 CsvImportTable::CsvImportTable(QWidget* parent)
-    : QTableWidget(parent)
-    , m_import_data(new CsvImportData(this))
-    , m_data_is_suitable(true)
-{}
+    : QTableWidget(parent), m_import_data(new CsvImportData(this)), m_data_is_suitable(true)
+{
+}
 
 int CsvImportTable::selectedRow() const
 {
@@ -402,7 +400,7 @@ void CsvImportTable::setHeaders()
         headers.append(QString::number(j + 1));
     setHorizontalHeaderLabels(headers);
 
-    for (auto type: CsvImportData::availableTypes()) {
+    for (auto type : CsvImportData::availableTypes()) {
         int col = m_import_data->column(type);
         if (col < 0)
             continue;
@@ -413,7 +411,7 @@ void CsvImportTable::setHeaders()
 void CsvImportTable::updateSelectedCols()
 {
     // FIXME: replace recreation of sell items with value assignment
-    for(auto type: CsvImportData::availableTypes()) {
+    for (auto type : CsvImportData::availableTypes()) {
         csv::DataColumn values = m_import_data->multipliedValues(type);
         if (values.empty())
             continue;
@@ -438,11 +436,10 @@ void CsvImportTable::setMultiplierFields()
                 static_cast<ScientificSpinBox*>(cellWidget(0, m_import_data->column(type)));
             spin_box->setEnabled(true);
             spin_box->setValue(m_import_data->multiplier(type));
-            connect(spin_box, &ScientificSpinBox::editingFinished, this,
-                    [this, spin_box, type]() {
-                        m_import_data->setMultiplier(type, spin_box->value());
-                        updateSelection();
-                    });
+            connect(spin_box, &ScientificSpinBox::editingFinished, this, [this, spin_box, type]() {
+                m_import_data->setMultiplier(type, spin_box->value());
+                updateSelection();
+            });
         }
 
     // FIXME: move row headers initialization elsewhere
@@ -462,7 +459,7 @@ void CsvImportTable::greyoutDiscardedRows()
     int nCols = this->columnCount();
 
     for (int i = rowOffset(); i < nRows; i++) {
-        Qt::GlobalColor color = m_import_data->rowExcluded(i-rowOffset()) ? Qt::gray : Qt::white;
+        Qt::GlobalColor color = m_import_data->rowExcluded(i - rowOffset()) ? Qt::gray : Qt::white;
         for (int j = 0; j < nCols; j++)
             markCell(i, j, color);
     }
@@ -471,7 +468,7 @@ void CsvImportTable::greyoutDiscardedRows()
 bool CsvImportTable::checkData()
 {
     auto to_highlight = m_import_data->checkData();
-    for(auto index: to_highlight)
+    for (auto index : to_highlight)
         markCell(index.first + rowOffset(), index.second, Qt::red);
     return to_highlight.empty();
 }

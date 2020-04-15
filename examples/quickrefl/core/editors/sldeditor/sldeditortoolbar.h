@@ -25,7 +25,6 @@ public:
 
 signals:
     void resetViewport();
-    
 };
 
 #endif // SLDEDITORTOOLBAR_H

@@ -9,20 +9,21 @@
 
 #include "sldeditor.h"
 
-#include "sldviewwidget.h"
-#include "sldeditortoolbar.h"
-#include "sldeditoractions.h"
 #include "applicationmodels.h"
 #include "graphicsscene.h"
+#include "sldeditoractions.h"
+#include "sldeditortoolbar.h"
+#include "sldviewwidget.h"
 
 #include "styleutils.h"
-#include <mvvm/plotting/graphcanvas.h>
 #include <QVBoxLayout>
+#include <mvvm/plotting/graphcanvas.h>
 
 //! The constructor
-SLDEditor::SLDEditor(ApplicationModels* apps_models, QWidget* parent) 
-    : QWidget(parent), p_view_widget(new SLDViewWidget(apps_models,this)),
-    p_editor_actions(new SLDEditorActions(apps_models->sldViewModel(),this)),p_editor_tollbar(new SLDEditorToolBar(p_editor_actions))
+SLDEditor::SLDEditor(ApplicationModels* apps_models, QWidget* parent)
+    : QWidget(parent), p_view_widget(new SLDViewWidget(apps_models, this)),
+      p_editor_actions(new SLDEditorActions(apps_models->sldViewModel(), this)),
+      p_editor_tollbar(new SLDEditorToolBar(p_editor_actions))
 {
     setWindowTitle("SLD editor");
 
@@ -31,12 +32,12 @@ SLDEditor::SLDEditor(ApplicationModels* apps_models, QWidget* parent)
     layout->addWidget(p_view_widget);
     setLayout(layout);
 
-    connect(p_editor_tollbar, &SLDEditorToolBar::resetViewport,
-            [this]() { 
-                GraphicsScene* scene_item = dynamic_cast<GraphicsScene*>(p_view_widget->scene());
-                if (!scene_item) return;
-                scene_item->graphCanvas()->update_viewport(); 
-            });
+    connect(p_editor_tollbar, &SLDEditorToolBar::resetViewport, [this]() {
+        GraphicsScene* scene_item = dynamic_cast<GraphicsScene*>(p_view_widget->scene());
+        if (!scene_item)
+            return;
+        scene_item->graphCanvas()->update_viewport();
+    });
 }
 
 //! The destructor
@@ -51,4 +52,3 @@ QSize SLDEditor::minimumSizeHint() const
 {
     return StyleUtils::DockMinimumSizeHint();
 }
-

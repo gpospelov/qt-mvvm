@@ -879,7 +879,6 @@ void LayerElementController::rightHandleMoved() const
     double pos = layerElementItem()->property(LayerElementItem::P_X_POS).toDouble();
     double roughness = rightRoughnessHandle()->getLastPos().x() - pos;
     setRoughnessInLimits(roughness);
-
 }
 
 //! Handle the position variation of the right handle
@@ -893,7 +892,7 @@ void LayerElementController::setRoughnessInLimits(double roughness, bool active)
     double width = layerElementItem()->property(LayerElementItem::P_WIDTH).toDouble();
     if (width == 0)
         width = 1e6;
-    
+
     auto layer_above = layerAbove();
     if (layer_above) {
         double second_width =
