@@ -10,17 +10,22 @@
 #include "sldeditor.h"
 
 #include "sldviewwidget.h"
+#include "sldeditortoolbar.h"
+#include "sldeditoractions.h"
+#include "applicationmodels.h"
+
 #include "styleutils.h"
 #include <QVBoxLayout>
 
 //! The constructor
 SLDEditor::SLDEditor(ApplicationModels* apps_models, QWidget* parent) 
-    : QWidget(parent), p_view_widget(new SLDViewWidget(apps_models,this))
+    : QWidget(parent), p_view_widget(new SLDViewWidget(apps_models,this)),
+    p_editor_actions(new SLDEditorActions(apps_models->sldViewModel(),this)),p_editor_tollbar(new SLDEditorToolBar(p_editor_actions))
 {
     setWindowTitle("SLD editor");
 
     auto layout = new QVBoxLayout;
-    // layout->addWidget(toolbar);
+    layout->addWidget(p_editor_tollbar);
     layout->addWidget(p_view_widget);
     setLayout(layout);
 }
