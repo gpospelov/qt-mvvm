@@ -40,7 +40,7 @@ TEST_F(VectorItemTest, initialState)
     EXPECT_EQ(item.property<double>(VectorItem::P_Z), 0.0);
 
     // default label
-    EXPECT_EQ(item.data().value<std::string>(), "(0, 0, 0)");
+    EXPECT_EQ(item.data<std::string>(), "(0, 0, 0)");
 }
 
 //! Initial state of item in model context
@@ -55,9 +55,9 @@ TEST_F(VectorItemTest, initialStateFromModel)
     EXPECT_EQ(item->property<double>(VectorItem::P_Z), 0.0);
 
     // default label
-    EXPECT_EQ(item->data().value<std::string>(), "(0, 0, 0)");
+    EXPECT_EQ(item->data<std::string>(), "(0, 0, 0)");
 
     // changing vector component
     item->setProperty(VectorItem::P_X, 1.0);
-    EXPECT_EQ(item->data().value<std::string>(), "(1, 0, 0)");
+    EXPECT_EQ(item->data<std::string>(), "(1, 0, 0)");
 }

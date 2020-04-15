@@ -33,7 +33,7 @@ TEST_F(SessionItemTest, initialState)
     EXPECT_EQ(item.model(), nullptr);
     EXPECT_EQ(item.parent(), nullptr);
     EXPECT_EQ(item.childrenCount(), 0);
-    EXPECT_FALSE(item.data(role).isValid());
+    EXPECT_FALSE(item.data<QVariant>(role).isValid());
     EXPECT_TRUE(item.children().empty());
     EXPECT_EQ(item.modelType(), Constants::BaseType);
     EXPECT_EQ(item.displayName(), Constants::BaseType);
@@ -57,7 +57,7 @@ TEST_F(SessionItemTest, setData)
     SessionItem item;
     const int role = ItemDataRole::DATA;
 
-    EXPECT_FALSE(item.data(role).isValid());
+    EXPECT_FALSE(item.data<QVariant>(role).isValid());
 
     QVariant expected(42.0);
     EXPECT_TRUE(item.setData(expected, role));
@@ -65,17 +65,17 @@ TEST_F(SessionItemTest, setData)
     std::vector<int> expected_roles = {ItemDataRole::IDENTIFIER, ItemDataRole::DISPLAY,
                                        ItemDataRole::DATA};
     EXPECT_EQ(item.roles(), expected_roles);
-    EXPECT_EQ(item.data(role), expected);
+    EXPECT_EQ(item.data<QVariant>(role), expected);
 
     // setting another value
     EXPECT_TRUE(item.setData(QVariant::fromValue(43.0), role));
     EXPECT_EQ(item.roles(), expected_roles);
-    EXPECT_EQ(item.data(role), QVariant::fromValue(43.0));
+    EXPECT_EQ(item.data<QVariant>(role), QVariant::fromValue(43.0));
 
     // setting same value
     EXPECT_FALSE(item.setData(QVariant::fromValue(43.0), role));
     EXPECT_EQ(item.roles(), expected_roles);
-    EXPECT_EQ(item.data(role), QVariant::fromValue(43.0));
+    EXPECT_EQ(item.data<QVariant>(role), QVariant::fromValue(43.0));
 }
 
 //! Display role.
@@ -92,7 +92,7 @@ TEST_F(SessionItemTest, displayName)
     // checking setter
     item.setDisplayName("width");
     EXPECT_EQ(item.displayName(), "width");
-    EXPECT_EQ(item.data().value<double>(), 42.0);
+    EXPECT_EQ(item.data<double>(), 42.0);
 }
 
 //! Attempt to set the different Variant to already existing role.
@@ -109,7 +109,7 @@ TEST_F(SessionItemTest, variantMismatch)
     std::vector<int> expected_roles = {ItemDataRole::IDENTIFIER, ItemDataRole::DISPLAY,
                                        ItemDataRole::DATA};
     EXPECT_EQ(item.roles(), expected_roles);
-    EXPECT_EQ(item.data(role), expected);
+    EXPECT_EQ(item.data<QVariant>(role), expected);
 
     // attempt to rewrite variant with another type
     EXPECT_THROW(item.setData(QVariant::fromValue(std::string("abc")), role), std::runtime_error);
@@ -530,7 +530,7 @@ TEST_F(SessionItemTest, appearance)
     SessionItem item("Model");
 
     // there shouldn't be any data
-    auto variant = item.data(ItemDataRole::APPEARANCE);
+    auto variant = item.data<QVariant>(ItemDataRole::APPEARANCE);
     EXPECT_FALSE(variant.isValid());
 
     // default status
@@ -543,7 +543,7 @@ TEST_F(SessionItemTest, appearance)
     EXPECT_TRUE(item.isEditable());
 
     // data should be there now
-    variant = item.data(ItemDataRole::APPEARANCE);
+    variant = item.data<QVariant>(ItemDataRole::APPEARANCE);
     EXPECT_TRUE(variant.isValid());
 
     // making it readonly

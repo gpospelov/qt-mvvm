@@ -31,7 +31,7 @@ std::vector<std::unique_ptr<ViewItem>> LabelDataRowStrategy::constructRefRow(Ses
         return result;
 
     result.emplace_back(std::make_unique<ViewLabelItem>(item));
-    if (item->data().isValid())
+    if (item->data<QVariant>().isValid()) // FIXME cleanup
         result.emplace_back(std::make_unique<ViewDataItem>(item));
     else
         result.emplace_back(std::make_unique<ViewEmptyItem>());

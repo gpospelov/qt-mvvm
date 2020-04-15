@@ -49,7 +49,7 @@ TEST_F(JsonItemBackupStrategyTest, propertyItem)
 
     EXPECT_EQ(item.modelType(), restored->modelType());
     EXPECT_EQ(item.identifier(), restored->identifier());
-    EXPECT_EQ(item.data(), restored->data());
+    EXPECT_EQ(item.data<QVariant>(), restored->data<QVariant>());
 }
 
 //! Saving/restoring CompoundItem.
@@ -66,7 +66,7 @@ TEST_F(JsonItemBackupStrategyTest, compoundItem)
 
     EXPECT_EQ(item.modelType(), restored->modelType());
     EXPECT_EQ(item.identifier(), restored->identifier());
-    EXPECT_EQ(restored->getItem("thickness")->data(), property->data());
+    EXPECT_EQ(restored->getItem("thickness")->data<double>(), property->data<double>());
     EXPECT_EQ(restored->getItem("thickness")->identifier(), property->identifier());
 }
 

@@ -47,11 +47,11 @@ TEST_F(CompoundItemTest, addIntProperty)
     EXPECT_TRUE(item.isTag("name"));
 
     EXPECT_EQ(propertyItem->modelType(), Constants::PropertyType);
-    EXPECT_TRUE(Utils::IsIntVariant(propertyItem->data()));
+    EXPECT_TRUE(Utils::IsIntVariant(propertyItem->data<QVariant>()));
     EXPECT_EQ(propertyItem->displayName(), property_name);
-    EXPECT_EQ(propertyItem->data().value<int>(), expected);
+    EXPECT_EQ(propertyItem->data<int>(), expected);
 
-    EXPECT_FALSE(propertyItem->data(ItemDataRole::LIMITS).isValid());
+    EXPECT_FALSE(propertyItem->data<QVariant>(ItemDataRole::LIMITS).isValid());
 }
 
 TEST_F(CompoundItemTest, setIntProperty)
@@ -63,7 +63,7 @@ TEST_F(CompoundItemTest, setIntProperty)
     item.setProperty(property_name, expected);
 
     EXPECT_EQ(item.property<int>(property_name), expected);
-    EXPECT_EQ(propertyItem->data().value<int>(), expected);
+    EXPECT_EQ(propertyItem->data<int>(), expected);
 }
 
 TEST_F(CompoundItemTest, addDoubleProperty)
@@ -75,14 +75,14 @@ TEST_F(CompoundItemTest, addDoubleProperty)
     EXPECT_TRUE(item.isTag(property_name));
 
     EXPECT_EQ(propertyItem->modelType(), Constants::PropertyType);
-    EXPECT_TRUE(Utils::IsDoubleVariant(propertyItem->data()));
+    EXPECT_TRUE(Utils::IsDoubleVariant(propertyItem->data<QVariant>()));
     EXPECT_EQ(propertyItem->displayName(), property_name);
-    EXPECT_EQ(propertyItem->data().value<double>(), expected);
+    EXPECT_EQ(propertyItem->data<double>(), expected);
 
-    EXPECT_TRUE(propertyItem->data(ItemDataRole::LIMITS).isValid());
+    EXPECT_TRUE(propertyItem->data<QVariant>(ItemDataRole::LIMITS).isValid());
 
     // limits should be non negative by default
-    auto limits = propertyItem->data(ItemDataRole::LIMITS).value<RealLimits>();
+    auto limits = propertyItem->data<RealLimits>(ItemDataRole::LIMITS);
     EXPECT_TRUE(limits.hasLowerLimit());
     EXPECT_FALSE(limits.hasUpperLimit());
 }
@@ -96,7 +96,7 @@ TEST_F(CompoundItemTest, setDoubleProperty)
     item.setProperty(property_name, expected);
 
     EXPECT_EQ(item.property<double>(property_name), expected);
-    EXPECT_EQ(propertyItem->data().value<double>(), expected);
+    EXPECT_EQ(propertyItem->data<double>(), expected);
 }
 
 TEST_F(CompoundItemTest, addCharProperty)
@@ -107,10 +107,10 @@ TEST_F(CompoundItemTest, addCharProperty)
     EXPECT_TRUE(item.isTag(property_name));
 
     EXPECT_EQ(propertyItem->modelType(), Constants::PropertyType);
-    EXPECT_TRUE(Utils::IsStdStringVariant(propertyItem->data()));
-    EXPECT_EQ(propertyItem->data().value<std::string>(), std::string("abc"));
+    EXPECT_TRUE(Utils::IsStdStringVariant(propertyItem->data<QVariant>()));
+    EXPECT_EQ(propertyItem->data<std::string>(), std::string("abc"));
 
-    EXPECT_FALSE(propertyItem->data(ItemDataRole::LIMITS).isValid());
+    EXPECT_FALSE(propertyItem->data<QVariant>(ItemDataRole::LIMITS).isValid());
 }
 
 TEST_F(CompoundItemTest, setCharProperty)
@@ -122,7 +122,7 @@ TEST_F(CompoundItemTest, setCharProperty)
     item.setProperty(property_name, expected);
 
     EXPECT_EQ(item.property<std::string>(property_name), std::string(expected));
-    EXPECT_EQ(propertyItem->data().value<std::string>(), std::string(expected));
+    EXPECT_EQ(propertyItem->data<std::string>(), std::string(expected));
 }
 
 TEST_F(CompoundItemTest, addStringProperty)
@@ -133,10 +133,10 @@ TEST_F(CompoundItemTest, addStringProperty)
     EXPECT_TRUE(item.isTag(property_name));
 
     EXPECT_EQ(propertyItem->modelType(), Constants::PropertyType);
-    EXPECT_TRUE(Utils::IsStdStringVariant(propertyItem->data()));
-    EXPECT_EQ(propertyItem->data().value<std::string>(), std::string("abc"));
+    EXPECT_TRUE(Utils::IsStdStringVariant(propertyItem->data<QVariant>()));
+    EXPECT_EQ(propertyItem->data<std::string>(), std::string("abc"));
 
-    EXPECT_FALSE(propertyItem->data(ItemDataRole::LIMITS).isValid());
+    EXPECT_FALSE(propertyItem->data<QVariant>(ItemDataRole::LIMITS).isValid());
 }
 
 TEST_F(CompoundItemTest, setStringProperty)
@@ -148,7 +148,7 @@ TEST_F(CompoundItemTest, setStringProperty)
     item.setProperty(property_name, expected);
 
     EXPECT_EQ(item.property<std::string>(property_name), expected);
-    EXPECT_EQ(propertyItem->data().value<std::string>(), expected);
+    EXPECT_EQ(propertyItem->data<std::string>(), expected);
 }
 
 TEST_F(CompoundItemTest, addBoolProperty)
@@ -160,10 +160,10 @@ TEST_F(CompoundItemTest, addBoolProperty)
     EXPECT_TRUE(item.isTag(property_name));
 
     EXPECT_EQ(propertyItem->modelType(), Constants::PropertyType);
-    EXPECT_TRUE(Utils::IsBoolVariant(propertyItem->data()));
-    EXPECT_EQ(propertyItem->data().value<bool>(), expected);
+    EXPECT_TRUE(Utils::IsBoolVariant(propertyItem->data<QVariant>()));
+    EXPECT_EQ(propertyItem->data<bool>(), expected);
 
-    EXPECT_FALSE(propertyItem->data(ItemDataRole::LIMITS).isValid());
+    EXPECT_FALSE(propertyItem->data<QVariant>(ItemDataRole::LIMITS).isValid());
 }
 
 TEST_F(CompoundItemTest, setBoolProperty)
@@ -175,7 +175,7 @@ TEST_F(CompoundItemTest, setBoolProperty)
     item.setProperty(property_name, expected);
 
     EXPECT_EQ(item.property<bool>(property_name), expected);
-    EXPECT_EQ(propertyItem->data().value<bool>(), expected);
+    EXPECT_EQ(propertyItem->data<bool>(), expected);
 }
 
 TEST_F(CompoundItemTest, itemAccess)

@@ -52,7 +52,8 @@ builder_t IntegerEditorBuilder()
 {
     auto builder = [](const SessionItem* item) -> std::unique_ptr<CustomEditor> {
         auto editor = std::make_unique<IntegerEditor>();
-        auto variant = item->data(ItemDataRole::LIMITS);
+        auto variant = item->data<QVariant>(ItemDataRole::LIMITS);
+        // FIXME cleanup
         if (variant.isValid()) {
             auto limits = variant.value<RealLimits>();
             editor->setRange(static_cast<int>(limits.lowerLimit()),
@@ -67,7 +68,8 @@ builder_t DoubleEditorBuilder()
 {
     auto builder = [](const SessionItem* item) -> std::unique_ptr<CustomEditor> {
         auto editor = std::make_unique<DoubleEditor>();
-        auto variant = item->data(ItemDataRole::LIMITS);
+        auto variant = item->data<QVariant>(ItemDataRole::LIMITS);
+        // FIXME cleanup
         if (variant.isValid()) {
             auto limits = variant.value<RealLimits>();
             editor->setRange(limits.lowerLimit(), limits.upperLimit());
@@ -83,7 +85,8 @@ builder_t ScientificDoubleEditorBuilder()
 {
     auto builder = [](const SessionItem* item) -> std::unique_ptr<CustomEditor> {
         auto editor = std::make_unique<ScientificDoubleEditor>();
-        auto variant = item->data(ItemDataRole::LIMITS);
+        auto variant = item->data<QVariant>(ItemDataRole::LIMITS);
+        // FIXME cleanup
         if (variant.isValid()) {
             auto limits = variant.value<RealLimits>();
             editor->setRange(limits.lowerLimit(), limits.upperLimit());
@@ -97,12 +100,13 @@ builder_t ScientificSpinBoxEditorBuilder()
 {
     auto builder = [](const SessionItem* item) -> std::unique_ptr<CustomEditor> {
         auto editor = std::make_unique<ScientificSpinBoxEditor>();
-        auto variant = item->data(ItemDataRole::LIMITS);
+        auto variant = item->data<QVariant>(ItemDataRole::LIMITS);
+        // FIXME cleanup
         if (variant.isValid()) {
             auto limits = variant.value<RealLimits>();
             editor->setRange(limits.lowerLimit(), limits.upperLimit());
         }
-        editor->setSingleStep(getStep(item->data().value<double>()));
+        editor->setSingleStep(getStep(item->data<double>()));
         editor->setDecimals(default_decimals);
         return std::move(editor);
     };

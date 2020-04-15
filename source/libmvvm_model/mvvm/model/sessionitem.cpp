@@ -22,7 +22,8 @@ namespace
 {
 int appearance(const ModelView::SessionItem& item)
 {
-    auto value = item.data(ModelView::ItemDataRole::APPEARANCE);
+    // FIXME cleanup
+    auto value = item.data<QVariant>(ModelView::ItemDataRole::APPEARANCE);
     return value.isValid() ? value.value<int>()
                            : ModelView::Appearance::EDITABLE | ModelView::Appearance::ENABLED;
 }
@@ -67,7 +68,7 @@ model_type SessionItem::modelType() const
 
 std::string SessionItem::displayName() const
 {
-    return data(ItemDataRole::DISPLAY).value<std::string>();
+    return data<std::string>(ItemDataRole::DISPLAY);
 }
 
 SessionItem* SessionItem::setDisplayName(const std::string& name)
@@ -78,7 +79,7 @@ SessionItem* SessionItem::setDisplayName(const std::string& name)
 
 std::string SessionItem::identifier() const
 {
-    return data(ItemDataRole::IDENTIFIER).value<std::string>();
+    return data<std::string>(ItemDataRole::IDENTIFIER);
 }
 
 bool SessionItem::setData(const QVariant& variant, int role)

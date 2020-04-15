@@ -30,7 +30,8 @@ GroupItem::GroupItem(model_type modelType)
 
 int GroupItem::currentIndex() const
 {
-    auto variant = data();
+    auto variant = data<QVariant>();
+    // FIXME cleanup
     return variant.isValid() ? variant.value<ComboProperty>().currentIndex() : -1;
 }
 
@@ -61,7 +62,8 @@ void GroupItem::setCurrentType(const std::string& model_type)
 
 void GroupItem::setCurrentIndex(int index)
 {
-    auto variant = data();
+    auto variant = data<QVariant>();
+    // FIXME cleanup
     if (variant.isValid()) {
         auto combo = variant.value<ComboProperty>();
         combo.setCurrentIndex(index);

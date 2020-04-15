@@ -65,8 +65,10 @@ void Data2DItem::setContent(const std::vector<double>& data)
 
 std::vector<double> Data2DItem::content() const
 {
-    auto variant = data();
-    return variant.isValid() ? variant.value<std::vector<double>>() : std::vector<double>();
+    return data<std::vector<double>>();
+    // FIXME cleanup
+//    auto variant = data();
+//    return variant.isValid() ? variant.value<std::vector<double>>() : std::vector<double>();
 }
 
 //! Insert axis under given tag. Previous axis will be deleted and data points invalidated.

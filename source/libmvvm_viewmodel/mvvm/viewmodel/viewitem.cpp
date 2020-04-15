@@ -83,7 +83,7 @@ struct ViewItem::ViewItemImpl {
 
     //! Returns item data associated with this RefViewItem.
 
-    QVariant data() const { return item ? item->data(role) : QVariant(); }
+    QVariant data() const { return item ? item->data<QVariant>(role) : QVariant(); }
 
     //! Returns vector of children.
 

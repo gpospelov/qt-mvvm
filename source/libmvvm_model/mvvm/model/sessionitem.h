@@ -44,7 +44,7 @@ public:
     bool setData(const QVariant& variant, int role = ItemDataRole::DATA);
     bool setDataIntern(const QVariant& variant, int role);
 
-    template <typename T = QVariant> T data(int role = ItemDataRole::DATA) const;
+    template <typename T> T data(int role = ItemDataRole::DATA) const;
 
     SessionModel* model() const;
 
@@ -126,10 +126,7 @@ template <typename T> inline T SessionItem::data(int role) const
 
 template <typename T> inline T SessionItem::property(const std::string& tag) const
 {
-    auto item_data = getItem(tag)->data();
-    if constexpr (std::is_same<T, QVariant>::value)
-        return item_data;
-    return item_data.value<T>();
+    return getItem(tag)->data<T>();
 }
 
 //! Sets value to property item.
