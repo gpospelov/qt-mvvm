@@ -47,7 +47,7 @@ struct GraphPlotController::GraphItemControllerImpl {
 
     void update_graph_pen()
     {
-        auto color = graph_item()->property(GraphItem::P_COLOR).value<QColor>();
+        auto color = graph_item()->property<QColor>(GraphItem::P_COLOR);
         graph->setPen(QPen(color));
         custom_plot->replot();
     }

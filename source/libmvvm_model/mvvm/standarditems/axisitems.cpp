@@ -39,7 +39,7 @@ ViewportAxisItem::ViewportAxisItem(const std::string& model_type) : BasicAxisIte
 
 std::pair<double, double> ViewportAxisItem::range() const
 {
-    return std::make_pair(property(P_MIN).value<double>(), property(P_MAX).value<double>());
+    return std::make_pair(property<double>(P_MIN), property<double>(P_MAX));
 }
 
 //! Sets lower, upper range of axis to given values.
@@ -52,7 +52,7 @@ void ViewportAxisItem::set_range(double lower, double upper)
 
 bool ViewportAxisItem::is_in_log() const
 {
-    return property(P_IS_LOG).value<bool>();
+    return property<bool>(P_IS_LOG);
 }
 
 // --- BinnedAxisItem ------------------------------------------------------
@@ -65,12 +65,12 @@ BinnedAxisItem::BinnedAxisItem(const std::string& model_type) : BasicAxisItem(mo
 
 std::pair<double, double> BinnedAxisItem::range() const
 {
-    return std::make_pair(property(P_MIN).value<double>(), property(P_MAX).value<double>());
+    return std::make_pair(property<double>(P_MIN), property<double>(P_MAX));
 }
 
 int BinnedAxisItem::size() const
 {
-    return property(P_NBINS).value<int>();
+    return property<int>(P_NBINS);
 }
 
 // --- FixedBinAxisItem ------------------------------------------------------
@@ -89,9 +89,9 @@ std::unique_ptr<FixedBinAxisItem> FixedBinAxisItem::create(int nbins, double xmi
 std::vector<double> FixedBinAxisItem::binCenters() const
 {
     std::vector<double> result;
-    int nbins = property(P_NBINS).value<int>();
-    double start = property(P_MIN).value<double>();
-    double end = property(P_MAX).value<double>();
+    int nbins = property<int>(P_NBINS);
+    double start = property<double>(P_MIN);
+    double end = property<double>(P_MAX);
     double step = (end - start) / nbins;
 
     result.resize(static_cast<size_t>(nbins), 0.0);

@@ -24,6 +24,7 @@ size_t total_bin_count(Data1DItem* item)
 Data1DItem::Data1DItem() : CompoundItem(Constants::Data1DItemType)
 {
     registerTag(TagInfo(T_AXIS, 0, 1, {Constants::FixedBinAxisItemType}));
+    setContent(std::vector<double>());
 }
 
 //! Sets axis. Bin content will be set to zero.
@@ -60,6 +61,5 @@ std::vector<double> Data1DItem::binCenters() const
 
 std::vector<double> Data1DItem::binValues() const
 {
-    auto variant = data();
-    return variant.isValid() ? variant.value<std::vector<double>>() : std::vector<double>();
+    return data<std::vector<double>>();
 }

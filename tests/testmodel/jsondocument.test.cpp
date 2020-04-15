@@ -90,7 +90,7 @@ TEST_F(JsonDocumentTest, saveLoadSingleModel)
     EXPECT_EQ(reco_parent->childrenCount(), 1);
     EXPECT_EQ(reco_parent->identifier(), parent_identifier);
     EXPECT_EQ(reco_parent->defaultTag(), "defaultTag");
-    EXPECT_EQ(reco_parent->data(), 42);
+    EXPECT_EQ(reco_parent->data<int>(), 42);
 
     // checking child reconstruction
     EXPECT_EQ(reco_child->model(), &model);

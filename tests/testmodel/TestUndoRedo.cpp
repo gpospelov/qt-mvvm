@@ -182,7 +182,7 @@ TEST_F(TestUndoRedo, setDataThroughItem)
 
     // setting new data through item (and not through model)
     item->setData(value, role);
-    EXPECT_EQ(item->data(role), value);
+    EXPECT_EQ(item->data<QVariant>(role), value);
 
     EXPECT_EQ(stack->index(), 2); // insert and setData commands
     EXPECT_FALSE(model.undoStack()->canRedo());
@@ -271,7 +271,7 @@ TEST_F(TestUndoRedo, removeRow)
     EXPECT_EQ(stack->index(), 2); // insert and setData commands
     EXPECT_FALSE(model.undoStack()->canRedo());
     EXPECT_TRUE(model.undoStack()->canUndo());
-    EXPECT_EQ(item->data(role), data);
+    EXPECT_EQ(item->data<QVariant>(role), data);
     EXPECT_EQ(model.rootItem()->childrenCount(), 1);
 
     // removing the row
@@ -329,8 +329,8 @@ TEST_F(TestUndoRedo, removeParentAndChild)
     EXPECT_EQ(parent_at->modelType(), Constants::BaseType);
     EXPECT_EQ(child_at->modelType(), Constants::PropertyType);
 
-    EXPECT_EQ(parent_at->data(role1), data1);
-    EXPECT_EQ(child_at->data(role2), data2);
+    EXPECT_EQ(parent_at->data<QVariant>(role1), data1);
+    EXPECT_EQ(child_at->data<QVariant>(role2), data2);
 }
 
 //! Insert item, remove row, undo and check item id.
@@ -607,8 +607,7 @@ TEST_F(TestUndoRedo, copyLayerFromMultilayer)
     // copying layer
     auto layer_copy = dynamic_cast<ToyItems::LayerItem*>(model.copyItem(layer0, multilayer1));
     EXPECT_EQ(multilayer1->itemCount(ToyItems::MultiLayerItem::T_LAYERS), 1);
-    EXPECT_EQ(layer_copy->property(ToyItems::LayerItem::P_THICKNESS).value<double>(),
-              expected_thickness);
+    EXPECT_EQ(layer_copy->property<double>(ToyItems::LayerItem::P_THICKNESS), expected_thickness);
     EXPECT_TRUE(layer0->identifier() != layer_copy->identifier());
 
     auto id = layer_copy->identifier();

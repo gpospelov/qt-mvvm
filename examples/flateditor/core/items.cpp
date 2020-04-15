@@ -52,13 +52,12 @@ void BeamItem::activate()
 void BeamItem::update_appearance()
 {
     auto polarized_property = getItem(P_IS_POLARIZED);
-    auto beam_type = property(P_BEAM_TYPE).value<ComboProperty>().value();
+    auto beam_type = property<ComboProperty>(P_BEAM_TYPE).value();
 
     if (beam_type == xrays)
         setProperty(P_IS_POLARIZED, false);
 
-    polarized_property->setEnabled(property(P_BEAM_TYPE).value<ComboProperty>().value()
-                                   == neutrons);
+    polarized_property->setEnabled(property<ComboProperty>(P_BEAM_TYPE).value() == neutrons);
 }
 
 // ----------------------------------------------------------------------------

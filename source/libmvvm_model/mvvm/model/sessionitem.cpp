@@ -18,17 +18,17 @@
 #include <mvvm/signals/modelmapper.h>
 #include <stdexcept>
 
+using namespace ModelView;
+
 namespace
 {
 int appearance(const ModelView::SessionItem& item)
 {
-    auto value = item.data(ModelView::ItemDataRole::APPEARANCE);
-    return value.isValid() ? value.value<int>()
-                           : ModelView::Appearance::EDITABLE | ModelView::Appearance::ENABLED;
+    const int default_appearance = Appearance::EDITABLE | Appearance::ENABLED;
+    return item.hasData(ItemDataRole::APPEARANCE) ? item.data<int>(ItemDataRole::APPEARANCE)
+                                                  : default_appearance;
 }
 } // namespace
-
-using namespace ModelView;
 
 struct SessionItem::SessionItemImpl {
     SessionItem* m_parent{nullptr};
@@ -67,7 +67,7 @@ model_type SessionItem::modelType() const
 
 std::string SessionItem::displayName() const
 {
-    return data(ItemDataRole::DISPLAY).value<std::string>();
+    return data<std::string>(ItemDataRole::DISPLAY);
 }
 
 SessionItem* SessionItem::setDisplayName(const std::string& name)
@@ -78,7 +78,7 @@ SessionItem* SessionItem::setDisplayName(const std::string& name)
 
 std::string SessionItem::identifier() const
 {
-    return data(ItemDataRole::IDENTIFIER).value<std::string>();
+    return data<std::string>(ItemDataRole::IDENTIFIER);
 }
 
 bool SessionItem::setData(const QVariant& variant, int role)
@@ -88,7 +88,17 @@ bool SessionItem::setData(const QVariant& variant, int role)
     return setDataIntern(variant, role);
 }
 
-QVariant SessionItem::data(int role) const
+//! Returns true if item has data on board with given role.
+
+bool SessionItem::hasData(int role) const
+{
+    return p_impl->m_data->hasData(role);
+}
+
+//! Returns data in the form of QVariant for given role.
+//! Method invented to hide implementaiton details.
+
+QVariant SessionItem::data_internal(int role) const
 {
     return p_impl->m_data->data(role);
 }
@@ -269,14 +279,6 @@ bool SessionItem::isSinglePropertyTag(const std::string& tag) const
     return p_impl->m_tags->isSinglePropertyTag(tag);
 }
 
-//! Returns data stored in property item.
-//! Property is single item registered under certain tag via CompoundItem::addProperty method.
-
-QVariant SessionItem::property(const std::string& tag) const
-{
-    return getItem(tag)->data();
-}
-
 void SessionItem::setParent(SessionItem* parent)
 {
     p_impl->m_parent = parent;
@@ -305,13 +307,6 @@ void SessionItem::setAppearanceFlag(int flag, bool value)
         flags &= ~flag;
 
     setDataIntern(flags, ItemDataRole::APPEARANCE);
-}
-
-//! Sets value to property item. Internal method to hide
-
-void SessionItem::set_property_intern(const std::string &tag, const QVariant &variant)
-{
-    getItem(tag)->setData(variant);
 }
 
 SessionItemData* SessionItem::itemData() const

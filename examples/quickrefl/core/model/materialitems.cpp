@@ -34,8 +34,8 @@ MaterialBaseItem::MaterialBaseItem(const std::string& model_type)
 
 ModelView::ExternalProperty MaterialBaseItem::external_property() const
 {
-    QColor color = isTag(P_COLOR) ? property(P_COLOR).value<QColor>() : QColor(Qt::red);
-    std::string name = isTag(P_NAME) ? property(P_NAME).value<std::string>() : std::string();
+    QColor color = isTag(P_COLOR) ? property<QColor>(P_COLOR) : QColor(Qt::red);
+    std::string name = isTag(P_NAME) ? property<std::string>(P_NAME) : std::string();
     return ModelView::ExternalProperty(name, color, identifier());
 }
 

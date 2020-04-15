@@ -47,7 +47,7 @@ TEST_F(JsonItemCopyStrategyTest, propertyItem)
     auto copy = strategy->createCopy(&item);
 
     EXPECT_EQ(item.modelType(), copy->modelType());
-    EXPECT_EQ(item.data(), copy->data());
+    EXPECT_EQ(item.data<QVariant>(), copy->data<QVariant>());
     EXPECT_FALSE(item.identifier() == copy->identifier());
 }
 
@@ -63,7 +63,7 @@ TEST_F(JsonItemCopyStrategyTest, compoundItem)
     auto copy = strategy->createCopy(&item);
 
     EXPECT_EQ(item.modelType(), copy->modelType());
-    EXPECT_EQ(copy->getItem("thickness")->data(), property->data());
+    EXPECT_EQ(copy->getItem("thickness")->data<double>(), property->data<double>());
     EXPECT_FALSE(copy->getItem("thickness")->identifier() == property->identifier());
     EXPECT_FALSE(item.identifier() == copy->identifier());
 }

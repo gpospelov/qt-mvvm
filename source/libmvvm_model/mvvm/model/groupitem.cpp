@@ -26,12 +26,12 @@ GroupItem::GroupItem(model_type modelType)
       m_default_selected_index(0)
 {
     registerTag(TagInfo::universalTag(tag_name), /*set_as_default*/ true);
+    setData(QVariant::fromValue(ComboProperty()));
 }
 
 int GroupItem::currentIndex() const
 {
-    auto variant = data();
-    return variant.isValid() ? variant.value<ComboProperty>().currentIndex() : -1;
+    return data<ComboProperty>().currentIndex();
 }
 
 //! Returns currently selected item.
@@ -61,12 +61,9 @@ void GroupItem::setCurrentType(const std::string& model_type)
 
 void GroupItem::setCurrentIndex(int index)
 {
-    auto variant = data();
-    if (variant.isValid()) {
-        auto combo = variant.value<ComboProperty>();
-        combo.setCurrentIndex(index);
-        setDataIntern(QVariant::fromValue(combo), ItemDataRole::DATA);
-    }
+    auto combo = data<ComboProperty>();
+    combo.setCurrentIndex(index);
+    setDataIntern(QVariant::fromValue(combo), ItemDataRole::DATA);
 }
 
 bool GroupItem::is_valid_index() const

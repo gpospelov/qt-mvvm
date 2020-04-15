@@ -35,6 +35,8 @@ TEST_F(Data2DItemTest, initialState)
     EXPECT_EQ(item.xAxis(), nullptr);
     EXPECT_EQ(item.yAxis(), nullptr);
     EXPECT_EQ(item.content(), std::vector<double>());
+    EXPECT_TRUE(item.hasData());
+    EXPECT_TRUE(item.data<std::vector<double>>().empty());
 }
 
 //! Checking the method ::setAxis.

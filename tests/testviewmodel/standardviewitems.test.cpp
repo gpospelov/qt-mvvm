@@ -69,7 +69,7 @@ TEST_F(StandardViewItemsTest, ViewLabelItem_setData)
     EXPECT_EQ(viewItem.data(Qt::EditRole), new_data);    // new data
 
     // SessionItem itself should have new data
-    EXPECT_EQ(item.data(ItemDataRole::DISPLAY), Utils::toCustomVariant(new_data)); // new data
+    EXPECT_EQ(item.data<QVariant>(ItemDataRole::DISPLAY), Utils::toCustomVariant(new_data)); // new data
 
     // it is not allowed to set another type of data to ViewLabelItem
     QVariant not_allowed_value(42);
@@ -134,7 +134,7 @@ TEST_F(StandardViewItemsTest, ViewDataItem_setDataForDouble)
     EXPECT_EQ(viewItem.data(Qt::EditRole), new_data);    // new data
 
     // SessionItem itself should have new data
-    EXPECT_EQ(item.data(), new_data); // new data
+    EXPECT_EQ(item.data<QVariant>(), new_data); // new data
 
     // it is not allowed to set another type of data to ViewDataItem
     QVariant not_allowed_value("Layer");
@@ -193,7 +193,7 @@ TEST_F(StandardViewItemsTest, ViewDataItem_setDataForColor)
     EXPECT_EQ(viewItem.data(Qt::DecorationRole), new_data); // new data
 
     // SessionItem itself should have new data
-    EXPECT_EQ(item.data(), new_data); // new data
+    EXPECT_EQ(item.data<QVariant>(), new_data); // new data
 
     // it is not allowed to set another type of data to ViewDataItem
     QVariant not_allowed_value("Layer");

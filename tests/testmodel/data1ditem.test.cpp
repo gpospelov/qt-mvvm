@@ -35,6 +35,8 @@ TEST_F(Data1DItemTest, initialState)
     EXPECT_EQ(item.getItem(Data1DItem::T_AXIS), nullptr);
     EXPECT_EQ(item.binCenters(), std::vector<double>());
     EXPECT_EQ(item.binValues(), std::vector<double>());
+    EXPECT_TRUE(item.hasData());
+    EXPECT_TRUE(item.data<std::vector<double>>().empty());
 }
 
 //! Checking the method ::setFixedBinAxis.

@@ -55,7 +55,7 @@ void SetValueCommand::execute_command()
 void SetValueCommand::swap_values()
 {
     auto item = itemFromPath(p_impl->m_item_path);
-    QVariant old = item->data(p_impl->m_role);
+    auto old = item->data<QVariant>(p_impl->m_role);
     p_impl->m_result = item->setDataIntern(p_impl->m_value, p_impl->m_role);
     setObsolete(!p_impl->m_result);
     p_impl->m_value = old;

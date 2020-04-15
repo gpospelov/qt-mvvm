@@ -49,8 +49,7 @@ struct ColorMapPlotController::ColorMapPlotControllerImpl {
 
     void update_interpolation()
     {
-        auto is_interpolated =
-            colormap_item()->property(ColorMapItem::P_INTERPOLATION).value<bool>();
+        auto is_interpolated = colormap_item()->property<bool>(ColorMapItem::P_INTERPOLATION);
         color_map->setInterpolate(is_interpolated);
         custom_plot->replot();
     }

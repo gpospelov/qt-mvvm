@@ -81,7 +81,7 @@ SessionItem* SessionModel::rootItem() const
 
 QVariant SessionModel::data(SessionItem* item, int role) const
 {
-    return item->data(role);
+    return item->data<QVariant>(role);
 }
 
 bool SessionModel::setData(SessionItem* item, const QVariant& value, int role)

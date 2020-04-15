@@ -83,7 +83,7 @@ void LayerView::updateHeight()
     if (!getItem()->isTag(LayerItem::P_THICKNESS))
         return;
 
-    const double thickness = getItem()->property(LayerItem::P_THICKNESS).value<double>();
+    const double thickness = getItem()->property<double>(LayerItem::P_THICKNESS);
     const qreal height = thicknessToHeight(thickness);
     m_rect.setTop(-height / 2.0);
     m_rect.setHeight(height);
@@ -95,7 +95,7 @@ void LayerView::updateHeight()
 void LayerView::updateColor()
 {
     if (getItem()->isTag(LayerItem::P_MATERIAL)) {
-        QVariant v = getItem()->getItem(LayerItem::P_MATERIAL)->data();
+        QVariant v = getItem()->getItem(LayerItem::P_MATERIAL)->data<QVariant>();
         if (v.isValid()) {
             auto mp = v.value<ExternalProperty>();
             setColor(mp.color());
@@ -115,7 +115,7 @@ void LayerView::updateLabel()
 
     QString material = "";
     if (getItem()->isTag(LayerItem::P_MATERIAL)) {
-        QVariant v = getItem()->getItem(LayerItem::P_MATERIAL)->data();
+        QVariant v = getItem()->getItem(LayerItem::P_MATERIAL)->data<QVariant>();
         if (v.isValid()) {
             ExternalProperty mp = v.value<ExternalProperty>();
             material = QString::fromStdString(mp.text());

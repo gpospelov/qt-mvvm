@@ -7,6 +7,7 @@
 //
 // ************************************************************************** //
 
+#include <algorithm>
 #include <mvvm/model/customvariants.h>
 #include <mvvm/model/sessionitemdata.h>
 #include <sstream>
@@ -61,6 +62,14 @@ SessionItemData::const_iterator SessionItemData::begin() const
 SessionItemData::const_iterator SessionItemData::end() const
 {
     return m_values.end();
+}
+
+//! Returns true if item has data with given role.
+
+bool SessionItemData::hasData(int role) const
+{
+    auto has_role = [role](const auto& x) { return x.m_role == role; };
+    return std::find_if(m_values.begin(), m_values.end(), has_role) != m_values.end();
 }
 
 //! Check if variant is compatible

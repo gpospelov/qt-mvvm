@@ -34,6 +34,8 @@ public:
     const_iterator begin() const;
     const_iterator end() const;
 
+    bool hasData(int role) const;
+
 private:
     void assure_validity(const QVariant& variant, int role);
     container_type m_values;

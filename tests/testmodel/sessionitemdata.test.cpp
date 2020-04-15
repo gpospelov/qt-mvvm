@@ -149,3 +149,18 @@ TEST_F(SessionItemDataTest, rangeLoop)
     EXPECT_EQ(values, expected_values);
     EXPECT_EQ(roles, expected_roles);
 }
+
+TEST_F(SessionItemDataTest, hasRole)
+{
+    SessionItemData data;
+    EXPECT_FALSE(data.hasData(0));
+    EXPECT_FALSE(data.hasData(1));
+
+    const int role = 99;
+    data.setData(QVariant::fromValue(42), role);
+    EXPECT_TRUE(data.hasData(role));
+    EXPECT_FALSE(data.hasData(1));
+
+    data.setData(QVariant(), role);
+    EXPECT_FALSE(data.hasData(role));
+}

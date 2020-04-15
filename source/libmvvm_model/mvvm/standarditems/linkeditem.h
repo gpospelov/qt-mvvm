@@ -38,7 +38,7 @@ public:
 
 template <typename T> T* LinkedItem::get() const
 {
-    return model() ? dynamic_cast<T*>(model()->findItem(data().value<std::string>())) : nullptr;
+    return model() ? dynamic_cast<T*>(model()->findItem(data<std::string>())) : nullptr;
 }
 
 } // namespace ModelView
