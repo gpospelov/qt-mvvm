@@ -28,6 +28,6 @@ typedef std::vector<std::vector<std::string>> DataArray;
 typedef std::vector<std::string> DataRow;
 typedef std::vector<std::string> DataColumn;
 bool isAscii(QString filename);
-}
+} // namespace csv
 
 #endif // CSVNAMESPACE_H

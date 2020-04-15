@@ -67,8 +67,7 @@ private:
     void removeBlankColumns();
     void removeMultipleWhiteSpaces();
     void runDataSelector(QWidget* parent);
-    void getValuesFromColumns(std::vector<double>& intensityVals,
-                                            std::vector<double>& coordVals);
+    void getValuesFromColumns(std::vector<double>& intensityVals, std::vector<double>& coordVals);
     void resetSelection();
     void resetAssistant();
 

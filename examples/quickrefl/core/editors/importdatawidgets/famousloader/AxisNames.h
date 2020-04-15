@@ -34,6 +34,6 @@ std::map<AxesUnits, std::string> InitOffSpecAxis1();
 std::map<AxesUnits, std::string> InitSpecAxis();
 std::map<AxesUnits, std::string> InitSpecAxisQ();
 std::map<AxesUnits, std::string> InitSampleDepthAxis();
-}
+} // namespace AxisNames
 
 #endif // AXISNAMES_H

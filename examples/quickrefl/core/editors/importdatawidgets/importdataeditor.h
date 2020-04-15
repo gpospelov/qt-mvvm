@@ -17,7 +17,7 @@ namespace ModelView
 class GraphCanvas;
 class TopItemsTreeView;
 class PropertyTreeView;
-}
+} // namespace ModelView
 
 class RealDataModel;
 class QToolBar;

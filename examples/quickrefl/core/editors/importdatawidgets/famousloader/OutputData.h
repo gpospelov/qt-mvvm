@@ -17,11 +17,12 @@
 
 #include <vector>
 
-template<typename T> class OutputData {
+template <typename T> class OutputData
+{
 public:
     std::vector<T> data;
-    int getRank() const { return 1;}
-    OutputData<T>* clone() const { return nullptr;}
+    int getRank() const { return 1; }
+    OutputData<T>* clone() const { return nullptr; }
 };
 
 #endif // OUTPUTDATA_H

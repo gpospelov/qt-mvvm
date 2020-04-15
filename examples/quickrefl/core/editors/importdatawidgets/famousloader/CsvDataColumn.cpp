@@ -17,9 +17,7 @@
 /*Csv Intensity Column*/
 
 // Constructors:
-CsvIntensityColumn::CsvIntensityColumn() : m_colNum(-1), m_multiplier(1.0), m_values({})
-{
-}
+CsvIntensityColumn::CsvIntensityColumn() : m_colNum(-1), m_multiplier(1.0), m_values({}) {}
 
 CsvIntensityColumn::CsvIntensityColumn(const CsvIntensityColumn& toCopy)
     : m_colNum(toCopy.columnNumber()), m_multiplier(toCopy.multiplier()), m_values(toCopy.values())
@@ -68,9 +66,7 @@ void CsvIntensityColumn::resetColumn(int colNum, double multiplier, csv::DataCol
 /*Csv Coordinate Column*/
 
 // Constructors:
-CsvCoordinateColumn::CsvCoordinateColumn() : CsvIntensityColumn(), m_units(AxesUnits::NBINS)
-{
-}
+CsvCoordinateColumn::CsvCoordinateColumn() : CsvIntensityColumn(), m_units(AxesUnits::NBINS) {}
 
 CsvCoordinateColumn::CsvCoordinateColumn(const CsvCoordinateColumn& toCopy)
     : CsvIntensityColumn(toCopy), m_units(toCopy.units())

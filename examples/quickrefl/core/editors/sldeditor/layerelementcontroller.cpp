@@ -486,7 +486,6 @@ void LayerElementController::sideSegmentMoved() const
         double w = 0;
         auto item = layerAbove()->layerElementItem();
         if (x < item->property(LayerElementItem::P_X_POS).toDouble()) {
-            w = 1e-6;
             x = item->property(LayerElementItem::P_X_POS).toDouble() + w;
         } else {
             w = x - item->property(LayerElementItem::P_X_POS).toDouble();
@@ -698,17 +697,7 @@ void LayerElementController::updateRoughness() const
     // Test the roughness
     double roughness = layerElementItem()->property(LayerElementItem::P_ROUGHNESS).toDouble();
     double width = layerElementItem()->property(LayerElementItem::P_WIDTH).toDouble();
-    auto layer_above = layerAbove();
-    if (layer_above) {
-        double second_width =
-            layer_above->layerElementItem()->property(LayerElementItem::P_WIDTH).toDouble();
-        if (second_width < width)
-            width = second_width;
-    }
-    if (roughness > width / 2.) {
-        layerElementItem()->setProperty(LayerElementItem::P_ROUGHNESS, width / 2.);
-        return;
-    }
+    setRoughnessInLimits(roughness, false);
 
     // Perform the painting
     auto pen = QPen();
@@ -881,27 +870,7 @@ void LayerElementController::leftHandleMoved() const
 {
     double pos = layerElementItem()->property(LayerElementItem::P_X_POS).toDouble();
     double roughness = pos - leftRoughnessHandle()->getLastPos().x();
-
-    if (roughness < 0) {
-        layerElementItem()->setProperty(LayerElementItem::P_ROUGHNESS, 0.);
-        return;
-    }
-
-    double width = layerElementItem()->property(LayerElementItem::P_WIDTH).toDouble();
-    auto layer_above = layerAbove();
-    if (layer_above) {
-        double second_width =
-            layer_above->layerElementItem()->property(LayerElementItem::P_WIDTH).toDouble();
-        if (second_width < width)
-            width = second_width;
-    }
-
-    if (roughness > width / 2.) {
-        layerElementItem()->setProperty(LayerElementItem::P_ROUGHNESS, width / 2.);
-        return;
-    }
-
-    layerElementItem()->setProperty(LayerElementItem::P_ROUGHNESS, roughness);
+    setRoughnessInLimits(roughness);
 }
 
 //! Handle the position variation of the right handle
@@ -909,17 +878,28 @@ void LayerElementController::rightHandleMoved() const
 {
     double pos = layerElementItem()->property(LayerElementItem::P_X_POS).toDouble();
     double roughness = rightRoughnessHandle()->getLastPos().x() - pos;
+    setRoughnessInLimits(roughness);
+}
 
+//! Handle the position variation of the right handle
+void LayerElementController::setRoughnessInLimits(double roughness, bool active) const
+{
     if (roughness < 0) {
         layerElementItem()->setProperty(LayerElementItem::P_ROUGHNESS, 0.);
         return;
     }
 
     double width = layerElementItem()->property(LayerElementItem::P_WIDTH).toDouble();
+    if (width == 0)
+        width = 1e6;
+
     auto layer_above = layerAbove();
     if (layer_above) {
         double second_width =
             layer_above->layerElementItem()->property(LayerElementItem::P_WIDTH).toDouble();
+        if (second_width == 0)
+            second_width = 1e6;
+
         if (second_width < width)
             width = second_width;
     }
@@ -929,5 +909,6 @@ void LayerElementController::rightHandleMoved() const
         return;
     }
 
-    layerElementItem()->setProperty(LayerElementItem::P_ROUGHNESS, roughness);
+    if (active)
+        layerElementItem()->setProperty(LayerElementItem::P_ROUGHNESS, roughness);
 }

@@ -46,5 +46,5 @@ TableContextMenu::TableContextMenu(QWidget* parent)
     connect(m_setAsTheta, &QAction::triggered, this, [this]() { emit setColumnAs(csv::_theta_); });
     connect(m_setAsQ, &QAction::triggered, this, [this]() { emit setColumnAs(csv::_q_); });
     connect(m_resetAction, &QAction::triggered, this, [this]() { emit resetTable(); });
-    connect(m_discardRow, &QAction::triggered,this,[this](){emit discardRow();});
+    connect(m_discardRow, &QAction::triggered, this, [this]() { emit discardRow(); });
 }

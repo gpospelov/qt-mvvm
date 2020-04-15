@@ -130,6 +130,7 @@ protected:
     void putRoughnessHandlesOnScene() const;
     void removeRoughnessFromScene() const;
     void removeRoughnessHandlesFromScene() const;
+    void setRoughnessInLimits(double roughness, bool active = true) const;
 
     void leftHandleMoved() const;
     void rightHandleMoved() const;

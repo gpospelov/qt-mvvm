@@ -33,11 +33,24 @@ public:
     void adaptY(bool choice);
     void adaptW(bool choice);
     void adaptH(bool choice);
+    void stretchLeft(bool choice);
+    void stretchRight(bool choice);
 
 protected:
-    QRectF displayRect(QRectF real_rect) const;
+    QRectF displayRect(const QRectF& real_rect) const;
     QPainterPath displayPath(QPainterPath real_path) const;
     QPointF scenePos(QPointF pixel_pos) const;
+
+    void hoverEnterEvent(QGraphicsSceneHoverEvent* event) override;
+    void hoverLeaveEvent(QGraphicsSceneHoverEvent* event) override;
+    void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
+
+private:
+    QRectF displayRectCenterBased(const QRectF& real_rect) const;
+    QRectF displayRectEdgeBased(const QRectF& real_rect) const;
+    QRectF stretchRectLeft(const QRectF& real_rect) const;
+    QRectF stretchRectRight(const QRectF& real_rect) const;
 
 private:
     bool m_center_based = true;
@@ -45,6 +58,8 @@ private:
     bool m_adapt_y = true;
     bool m_adapt_width = true;
     bool m_adapt_height = true;
+    bool m_stretch_left = false;
+    bool m_stretch_right = false;
 };
 
 #endif // ELEMENTVIEW_H

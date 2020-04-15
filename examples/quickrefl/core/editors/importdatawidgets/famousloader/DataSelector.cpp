@@ -45,7 +45,7 @@ DataSelector::DataSelector(csv::DataArray csvArray, QWidget* parent)
     setMinimumSize(default_dialog_size);
     resize(600, 600);
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    //StyleUtils::setResizable(this);
+    // StyleUtils::setResizable(this);
     setLayout(createLayout());
 
     if (!updateData())
@@ -117,15 +117,14 @@ void DataSelector::updateSelection()
     m_tableWidget->setLastRow(lastLine() - 1);
 
     if (!m_tableWidget->dataLooksGood()) {
-        m_errorLabel->setText(
-            "\n\n"
-            "Data selected for importing does not look good!\n\n"
-            "Make sure that:\n"
-            "    1. There are no repeated values in the coordinate column.\n"
-            "    2. The coordinate values are ascendingly sorted.\n"
-            "    3. Intensity and coordinate values are valid numbers.\n\n"
-            "Use the context menu of the table to manually discard some rows;\n"
-            "Alternatively, modify the file in an external editor.");
+        m_errorLabel->setText("\n\n"
+                              "Data selected for importing does not look good!\n\n"
+                              "Make sure that:\n"
+                              "    1. There are no repeated values in the coordinate column.\n"
+                              "    2. The coordinate values are ascendingly sorted.\n"
+                              "    3. Intensity and coordinate values are valid numbers.\n\n"
+                              "Use the context menu of the table to manually discard some rows;\n"
+                              "Alternatively, modify the file in an external editor.");
     } else {
         m_errorLabel->clear();
     }
@@ -155,7 +154,7 @@ void DataSelector::populateUnitsComboBox()
 {
     QList<QString> available_units = m_tableWidget->availableCoordinateUnits();
     m_coordinateUnitsComboBox->clear();
-    for (auto units: available_units)
+    for (auto units : available_units)
         m_coordinateUnitsComboBox->addItem(units);
 }
 
@@ -252,9 +251,9 @@ void DataSelector::onCancelButton()
 
 void DataSelector::onImportButton()
 {
-    //We shouldn't be here if the data is
-    //not previously sanitised.
-        accept();
+    // We shouldn't be here if the data is
+    // not previously sanitised.
+    accept();
 }
 
 QBoxLayout* DataSelector::createLayout()
