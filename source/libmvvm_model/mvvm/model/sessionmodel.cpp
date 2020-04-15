@@ -81,7 +81,6 @@ SessionItem* SessionModel::rootItem() const
 
 QVariant SessionModel::data(SessionItem* item, int role) const
 {
-    // FIXME cleanup
     return item->data<QVariant>(role);
 }
 
