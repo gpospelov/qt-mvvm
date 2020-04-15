@@ -41,7 +41,7 @@ std::vector<std::unique_ptr<ViewItem>> PropertiesRowStrategy::constructRefRow(Se
         update_column_labels(items_in_row);
 
     for (auto child : items_in_row) {
-        if (child->data<QVariant>().isValid()) // FIXME cleanup
+        if (child->hasData())
             result.emplace_back(std::make_unique<ViewDataItem>(child));
         else
             result.emplace_back(std::make_unique<ViewLabelItem>(child));
