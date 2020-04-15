@@ -18,18 +18,17 @@
 #include <mvvm/signals/modelmapper.h>
 #include <stdexcept>
 
+using namespace ModelView;
+
 namespace
 {
 int appearance(const ModelView::SessionItem& item)
 {
-    // FIXME cleanup
-    auto value = item.data<QVariant>(ModelView::ItemDataRole::APPEARANCE);
-    return value.isValid() ? value.value<int>()
-                           : ModelView::Appearance::EDITABLE | ModelView::Appearance::ENABLED;
+    const int default_appearance = Appearance::EDITABLE | Appearance::ENABLED;
+    return item.hasData(ItemDataRole::APPEARANCE) ? item.data<int>(ItemDataRole::APPEARANCE)
+                                                  : default_appearance;
 }
 } // namespace
-
-using namespace ModelView;
 
 struct SessionItem::SessionItemImpl {
     SessionItem* m_parent{nullptr};
