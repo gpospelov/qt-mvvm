@@ -299,13 +299,6 @@ void SessionItem::setAppearanceFlag(int flag, bool value)
     setDataIntern(flags, ItemDataRole::APPEARANCE);
 }
 
-//! Sets value to property item. Internal method to hide
-
-void SessionItem::set_property_intern(const std::string &tag, const QVariant &variant)
-{
-    getItem(tag)->setData(variant);
-}
-
 SessionItemData* SessionItem::itemData() const
 {
     return p_impl->m_data.get();

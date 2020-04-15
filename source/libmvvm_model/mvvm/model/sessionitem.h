@@ -100,7 +100,6 @@ private:
     void setParent(SessionItem* parent);
     void setModel(SessionModel* model);
     void setAppearanceFlag(int flag, bool value);
-    void set_property_intern(const std::string& tag, const QVariant& variant);
 
     // FIXME refactor converter access to item internals
     class SessionItemData* itemData() const;
@@ -129,8 +128,12 @@ template <typename T> inline T SessionItem::property(const std::string& tag) con
 
 template <typename T> inline void SessionItem::setProperty(const std::string& tag, const T& value)
 {
-    set_property_intern(tag, QVariant::fromValue(value));
+    getItem(tag)->setData(QVariant::fromValue(value));
 }
+
+//! Sets value to property item (specialized for special "const char *" case).
+//! Property is single item registered under certain tag via CompoundItem::addProperty method, the
+//! value will be assigned to it's data role.
 
 inline void SessionItem::setProperty(const std::string& tag, const char* value)
 {
