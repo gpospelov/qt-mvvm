@@ -88,7 +88,10 @@ bool SessionItem::setData(const QVariant& variant, int role)
     return setDataIntern(variant, role);
 }
 
-QVariant SessionItem::data(int role) const
+//! Returns data in the form of QVariant for given role.
+//! Method invented to hide implementaiton details.
+
+QVariant SessionItem::data_internal(int role) const
 {
     return p_impl->m_data->data(role);
 }

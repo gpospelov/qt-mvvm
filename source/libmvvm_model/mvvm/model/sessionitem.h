@@ -44,7 +44,7 @@ public:
     bool setData(const QVariant& variant, int role = ItemDataRole::DATA);
     bool setDataIntern(const QVariant& variant, int role);
 
-    QVariant data(int role = ItemDataRole::DATA) const;
+    template <typename T = QVariant> T data(int role = ItemDataRole::DATA) const;
 
     SessionModel* model() const;
 
@@ -97,6 +97,7 @@ private:
     friend class SessionModel;
     friend class JsonItemConverter;
     virtual void activate() {}
+    QVariant data_internal(int role) const;
     void setParent(SessionItem* parent);
     void setModel(SessionModel* model);
     void setAppearanceFlag(int flag, bool value);
@@ -110,6 +111,15 @@ private:
     struct SessionItemImpl;
     std::unique_ptr<SessionItemImpl> p_impl;
 };
+
+//! Returns data of given type T for given role.
+
+template <typename T> inline T SessionItem::data(int role) const
+{
+    if constexpr (std::is_same<T, QVariant>::value)
+        return data_internal(role);
+    return data_internal(role).value<T>();
+}
 
 //! Returns data stored in property item.
 //! Property is single item registered under certain tag via CompoundItem::addProperty method.
