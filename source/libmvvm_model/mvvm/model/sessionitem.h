@@ -12,10 +12,11 @@
 
 #include <QVariant>
 #include <memory>
-#include <mvvm/model/customvariants.h>
 #include <mvvm/core/export.h>
+#include <mvvm/model/customvariants.h>
 #include <mvvm/model/mvvm_types.h>
 #include <mvvm/model/tagrow.h>
+#include <type_traits>
 #include <vector>
 
 namespace ModelView
@@ -86,10 +87,9 @@ public:
 
     bool isSinglePropertyTag(const std::string& tag) const;
 
-    QVariant property(const std::string& tag) const;
+    template <typename T = QVariant> T property(const std::string& tag) const;
 
-    template<typename T>
-    void setProperty(const std::string& tag, const T& value);
+    template <typename T> void setProperty(const std::string& tag, const T& value);
 
     void setProperty(const std::string& tag, const char* value);
 
@@ -112,17 +112,27 @@ private:
     std::unique_ptr<SessionItemImpl> p_impl;
 };
 
+//! Returns data stored in property item.
+//! Property is single item registered under certain tag via CompoundItem::addProperty method.
+
+template <typename T> inline T SessionItem::property(const std::string& tag) const
+{
+    auto item_data = getItem(tag)->data();
+    if constexpr (std::is_same<T, QVariant>::value)
+        return item_data;
+    return item_data.value<T>();
+}
+
 //! Sets value to property item.
 //! Property is single item registered under certain tag via CompoundItem::addProperty method, the
 //! value will be assigned to it's data role.
 
-template<typename T>
-inline void SessionItem::setProperty(const std::string &tag, const T& value)
+template <typename T> inline void SessionItem::setProperty(const std::string& tag, const T& value)
 {
     set_property_intern(tag, QVariant::fromValue(value));
 }
 
-inline void SessionItem::setProperty(const std::string &tag, const char* value)
+inline void SessionItem::setProperty(const std::string& tag, const char* value)
 {
     setProperty(tag, std::string(value));
 }
