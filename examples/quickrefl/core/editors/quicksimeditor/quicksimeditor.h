@@ -21,7 +21,6 @@ class GraphCanvas;
 class JobModel;
 class ApplicationModels;
 class QuickSimController;
-class QTabWidget;
 class QuickSimEditorToolBar;
 
 //! Quick reflectivity simulations.
@@ -43,9 +42,7 @@ private:
     ApplicationModels* app_models{nullptr};
     QuickSimController* sim_controller{nullptr};
     QuickSimEditorToolBar* toolbar{nullptr};
-    ModelView::GraphCanvas* sld_canvas{nullptr};
     ModelView::GraphCanvas* spec_canvas{nullptr};
-    QTabWidget* tabwidget{nullptr};
 };
 
 #endif // QUICKSIMEDITOR_H
