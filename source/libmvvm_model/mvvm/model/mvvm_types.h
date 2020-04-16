@@ -35,21 +35,22 @@ enum Appearance { NOFLAGS = 0x000, ENABLED = 0x001, EDITABLE = 0x002 };
 namespace Constants
 {
 const model_type BaseType = "SessionItem";
-const model_type PropertyType = "Property";
-const model_type GroupItemType = "Group";
-const model_type CompoundItemType = "Compound";
-const model_type VectorItemType = "Vector";
-const model_type LinkedItemType = "Linked";
-const model_type ViewportAxisItemType = "ViewportAxis";
-const model_type FixedBinAxisItemType = "FixedBinAxis";
-const model_type Data1DItemType = "Data1D";
-const model_type Data2DItemType = "Data2D";
-const model_type GraphItemType = "Graph";
-const model_type GraphViewportItemType = "GraphViewport";
-const model_type TextItemType = "Text";
-const model_type ContainerItemType = "Container";
 const model_type ColorMapItemType = "ColorMap";
 const model_type ColorMapViewportItemType = "ColorMapViewport";
+const model_type CompoundItemType = "Compound";
+const model_type ContainerItemType = "Container";
+const model_type Data1DItemType = "Data1D";
+const model_type Data2DItemType = "Data2D";
+const model_type FixedBinAxisItemType = "FixedBinAxis";
+const model_type GraphItemType = "Graph";
+const model_type GraphViewportItemType = "GraphViewport";
+const model_type GroupItemType = "Group";
+const model_type LinkedItemType = "Linked";
+const model_type PointwiseAxisItemType = "PointwiseAxis";
+const model_type PropertyType = "Property";
+const model_type TextItemType = "Text";
+const model_type VectorItemType = "Vector";
+const model_type ViewportAxisItemType = "ViewportAxis";
 } // namespace Constants
 
 } // namespace ModelView

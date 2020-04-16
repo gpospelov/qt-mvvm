@@ -93,14 +93,29 @@ public:
 Defines an axis with equidistant binning.
 */
 
-//!
-
 class CORE_EXPORT FixedBinAxisItem : public BinnedAxisItem
 {
 public:
     FixedBinAxisItem();
 
     static std::unique_ptr<FixedBinAxisItem> create(int nbins, double xmin, double xmax);
+
+    std::vector<double> binCenters() const;
+};
+
+/*!
+@class PointwiseAxisItem
+@brief Item to represent pointwise axis.
+
+Defines an axis via array of points representing point coordinates.
+*/
+
+class CORE_EXPORT PointwiseAxisItem : public BinnedAxisItem
+{
+public:
+    PointwiseAxisItem();
+
+    static std::unique_ptr<PointwiseAxisItem> create(const std::vector<double>& data);
 
     std::vector<double> binCenters() const;
 };

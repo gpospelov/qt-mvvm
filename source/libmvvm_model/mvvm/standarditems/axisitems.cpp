@@ -100,3 +100,35 @@ std::vector<double> FixedBinAxisItem::binCenters() const
 
     return result;
 }
+
+// --- PointwiseAxisItem ------------------------------------------------------
+
+PointwiseAxisItem::PointwiseAxisItem() : BinnedAxisItem(Constants::PointwiseAxisItemType)
+{
+    // vector of points matching default xmin, xmax
+    setData(std::vector<double>{default_axis_min, default_axis_max});
+}
+
+std::unique_ptr<PointwiseAxisItem> PointwiseAxisItem::create(const std::vector<double>& data)
+{
+    auto result = std::make_unique<PointwiseAxisItem>();
+    result->setData(data);
+    result->setProperty(P_NBINS, static_cast<int>(data.size()));
+    result->setProperty(P_MIN, data.front());
+    result->setProperty(P_MAX, data.back());
+
+    // Nbins, min, max are defined via factory ::create method and shouldn't be changed after.
+    // Flags below prevents their editing in widgets, but doesn't help against direct modification
+    result->getItem(P_NBINS)->setEditable(false);
+    result->getItem(P_MIN)->setEditable(false);
+    result->getItem(P_MAX)->setEditable(false);
+
+    // Now to make nbinx, xmin, xmax consistent with data<> points?
+
+    return result;
+}
+
+std::vector<double> PointwiseAxisItem::binCenters() const
+{
+    return data<std::vector<double>>();
+}

@@ -27,20 +27,21 @@ using namespace ModelView;
 std::unique_ptr<ItemCatalogue> ModelView::CreateStandardItemCatalogue()
 {
     auto result = std::make_unique<ItemCatalogue>();
-    result->registerItem<SessionItem>();
-    result->registerItem<PropertyItem>();
-    result->registerItem<CompoundItem>();
-    result->registerItem<VectorItem>();
-    result->registerItem<LinkedItem>();
-    result->registerItem<FixedBinAxisItem>();
-    result->registerItem<ViewportAxisItem>();
-    result->registerItem<Data1DItem>();
-    result->registerItem<Data2DItem>();
-    result->registerItem<GraphItem>();
-    result->registerItem<GraphViewportItem>();
     result->registerItem<ColorMapItem>();
     result->registerItem<ColorMapViewportItem>();
-    result->registerItem<TextItem>();
+    result->registerItem<CompoundItem>();
     result->registerItem<ContainerItem>();
+    result->registerItem<Data1DItem>();
+    result->registerItem<Data2DItem>();
+    result->registerItem<FixedBinAxisItem>();
+    result->registerItem<GraphItem>();
+    result->registerItem<GraphViewportItem>();
+    result->registerItem<LinkedItem>();
+    result->registerItem<PointwiseAxisItem>();
+    result->registerItem<PropertyItem>();
+    result->registerItem<SessionItem>();
+    result->registerItem<TextItem>();
+    result->registerItem<VectorItem>();
+    result->registerItem<ViewportAxisItem>();
     return result;
 }

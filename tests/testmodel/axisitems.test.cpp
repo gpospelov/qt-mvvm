@@ -83,3 +83,30 @@ TEST_F(AxisItemsTest, fixedBinAxisRange)
     EXPECT_EQ(lower, 1.0);
     EXPECT_EQ(upper, 4.0);
 }
+
+TEST_F(AxisItemsTest, PointwiseAxisInitialState)
+{
+    PointwiseAxisItem axis;
+    EXPECT_EQ(axis.property<double>(PointwiseAxisItem::P_MIN), 0.0);
+    EXPECT_EQ(axis.property<double>(PointwiseAxisItem::P_MAX), 1.0);
+    EXPECT_EQ(axis.property<int>(PointwiseAxisItem::P_NBINS), 1);
+
+    std::vector<double> expected_centers = {0.0, 1.0};
+    EXPECT_EQ(axis.binCenters(), expected_centers);
+}
+
+TEST_F(AxisItemsTest, PointwiseAxisCreate)
+{
+    std::vector<double> expected_centers{1.0, 2.0, 3.0};
+    auto axis = PointwiseAxisItem::create(expected_centers);
+
+    EXPECT_EQ(axis->property<double>(PointwiseAxisItem::P_MIN), 1.0);
+    EXPECT_EQ(axis->property<double>(PointwiseAxisItem::P_MAX), 3.0);
+    EXPECT_EQ(axis->property<int>(PointwiseAxisItem::P_NBINS), 3);
+
+    EXPECT_FALSE(axis->getItem(PointwiseAxisItem::P_MIN)->isEditable());
+    EXPECT_FALSE(axis->getItem(PointwiseAxisItem::P_MAX)->isEditable());
+    EXPECT_FALSE(axis->getItem(PointwiseAxisItem::P_NBINS)->isEditable());
+
+    EXPECT_EQ(axis->binCenters(), expected_centers);
+}
