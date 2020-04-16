@@ -52,8 +52,12 @@ bool Utils::IsTheSame(const QVariant& var1, const QVariant& var2)
 QVariant Utils::toQtVariant(const QVariant& custom)
 {
     // converts variant based on std::string to variant based on QString
-    if (custom.typeName() == Constants::string_type_name)
+    if (custom.typeName() == Constants::string_type_name) {
         return QVariant(QString::fromStdString(custom.value<std::string>()));
+    } else if (IsDoubleVectorVariant(custom)) {
+        QString str = QString("vector of %1 elements").arg(custom.value<std::vector<double>>().size());
+        return QVariant(str);
+    }
 
     // in other cases returns unchanged variant
     return custom;
