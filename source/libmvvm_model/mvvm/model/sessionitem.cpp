@@ -59,8 +59,8 @@ struct SessionItem::SessionItemImpl {
 SessionItem::SessionItem(model_type modelType) : p_impl(std::make_unique<SessionItemImpl>(this))
 {
     p_impl->m_modelType = std::move(modelType);
-    setDataIntern(QVariant::fromValue(UniqueIdGenerator::generate()), ItemDataRole::IDENTIFIER);
-    setDataIntern(QVariant::fromValue(p_impl->m_modelType), ItemDataRole::DISPLAY);
+    setData(UniqueIdGenerator::generate(), ItemDataRole::IDENTIFIER);
+    setData(p_impl->m_modelType, ItemDataRole::DISPLAY);
 }
 
 SessionItem::~SessionItem()
@@ -319,7 +319,7 @@ void SessionItem::setAppearanceFlag(int flag, bool value)
     else
         flags &= ~flag;
 
-    setDataIntern(flags, ItemDataRole::APPEARANCE);
+    setData(flags, ItemDataRole::APPEARANCE);
 }
 
 SessionItemData* SessionItem::itemData() const
