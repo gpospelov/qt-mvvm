@@ -75,13 +75,11 @@ size, etc) and thus not intended for direct plotting.
 class CORE_EXPORT BinnedAxisItem : public BasicAxisItem
 {
 public:
-    static inline const std::string P_NBINS = "P_NBINS";
-
     explicit BinnedAxisItem(const std::string& model_type);
 
-    std::pair<double, double> range() const;
+    virtual std::pair<double, double> range() const = 0;
 
-    int size() const;
+    virtual int size() const= 0;
 
     virtual std::vector<double> binCenters() const = 0;
 };
@@ -96,11 +94,16 @@ Defines an axis with equidistant binning.
 class CORE_EXPORT FixedBinAxisItem : public BinnedAxisItem
 {
 public:
+    static inline const std::string P_NBINS = "P_NBINS";
     FixedBinAxisItem();
 
     static std::unique_ptr<FixedBinAxisItem> create(int nbins, double xmin, double xmax);
 
-    std::vector<double> binCenters() const;
+    std::pair<double, double> range() const override;
+
+    int size() const override;
+
+    std::vector<double> binCenters() const override;
 };
 
 /*!
@@ -117,7 +120,11 @@ public:
 
     static std::unique_ptr<PointwiseAxisItem> create(const std::vector<double>& data);
 
-    std::vector<double> binCenters() const;
+    std::pair<double, double> range() const override;
+
+    int size() const override;
+
+    std::vector<double> binCenters() const override;
 };
 
 } // namespace ModelView

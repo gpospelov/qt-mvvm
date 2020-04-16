@@ -57,25 +57,15 @@ bool ViewportAxisItem::is_in_log() const
 
 // --- BinnedAxisItem ------------------------------------------------------
 
-BinnedAxisItem::BinnedAxisItem(const std::string& model_type) : BasicAxisItem(model_type)
+BinnedAxisItem::BinnedAxisItem(const std::string& model_type) : BasicAxisItem(model_type) {}
+
+// --- FixedBinAxisItem ------------------------------------------------------
+
+FixedBinAxisItem::FixedBinAxisItem() : BinnedAxisItem(Constants::FixedBinAxisItemType)
 {
     addProperty(P_NBINS, 1)->setDisplayName("Nbins");
     register_min_max();
 }
-
-std::pair<double, double> BinnedAxisItem::range() const
-{
-    return std::make_pair(property<double>(P_MIN), property<double>(P_MAX));
-}
-
-int BinnedAxisItem::size() const
-{
-    return property<int>(P_NBINS);
-}
-
-// --- FixedBinAxisItem ------------------------------------------------------
-
-FixedBinAxisItem::FixedBinAxisItem() : BinnedAxisItem(Constants::FixedBinAxisItemType) {}
 
 std::unique_ptr<FixedBinAxisItem> FixedBinAxisItem::create(int nbins, double xmin, double xmax)
 {
@@ -84,6 +74,16 @@ std::unique_ptr<FixedBinAxisItem> FixedBinAxisItem::create(int nbins, double xmi
     result->setProperty(P_MIN, xmin);
     result->setProperty(P_MAX, xmax);
     return result;
+}
+
+std::pair<double, double> FixedBinAxisItem::range() const
+{
+    return std::make_pair(property<double>(P_MIN), property<double>(P_MAX));
+}
+
+int FixedBinAxisItem::size() const
+{
+    return property<int>(P_NBINS);
 }
 
 std::vector<double> FixedBinAxisItem::binCenters() const
@@ -113,19 +113,19 @@ std::unique_ptr<PointwiseAxisItem> PointwiseAxisItem::create(const std::vector<d
 {
     auto result = std::make_unique<PointwiseAxisItem>();
     result->setData(data);
-    result->setProperty(P_NBINS, static_cast<int>(data.size()));
-    result->setProperty(P_MIN, data.front());
-    result->setProperty(P_MAX, data.back());
-
-    // Nbins, min, max are defined via factory ::create method and shouldn't be changed after.
-    // Flags below prevents their editing in widgets, but doesn't help against direct modification
-    result->getItem(P_NBINS)->setEditable(false);
-    result->getItem(P_MIN)->setEditable(false);
-    result->getItem(P_MAX)->setEditable(false);
-
-    // Now to make nbinx, xmin, xmax consistent with data<> points?
-
     return result;
+}
+
+std::pair<double, double> PointwiseAxisItem::range() const
+{
+    auto data = binCenters();
+    return binCenters().empty() ? std::make_pair(default_axis_min, default_axis_max)
+                                : std::make_pair(data.front(), data.back());
+}
+
+int PointwiseAxisItem::size() const
+{
+    return binCenters().size();
 }
 
 std::vector<double> PointwiseAxisItem::binCenters() const
