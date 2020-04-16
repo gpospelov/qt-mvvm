@@ -26,7 +26,7 @@ GroupItem::GroupItem(model_type modelType)
       m_default_selected_index(0)
 {
     registerTag(TagInfo::universalTag(tag_name), /*set_as_default*/ true);
-    setData(QVariant::fromValue(ComboProperty()));
+    setData(ComboProperty());
 }
 
 int GroupItem::currentIndex() const

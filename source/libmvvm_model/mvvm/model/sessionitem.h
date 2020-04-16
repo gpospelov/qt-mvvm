@@ -41,7 +41,7 @@ public:
 
     std::string identifier() const;
 
-    template <typename T = QVariant> bool setData(const T& value, int role = ItemDataRole::DATA);
+    template <typename T> bool setData(const T& value, int role = ItemDataRole::DATA);
     bool setDataIntern(const QVariant& variant, int role);
 
     bool hasData(int role = ItemDataRole::DATA) const;
@@ -147,7 +147,7 @@ template <typename T> inline T SessionItem::property(const std::string& tag) con
 
 template <typename T> inline void SessionItem::setProperty(const std::string& tag, const T& value)
 {
-    getItem(tag)->setData(QVariant::fromValue(value));
+    getItem(tag)->setData(value);
 }
 
 //! Sets value to property item (specialized for special "const char *" case).

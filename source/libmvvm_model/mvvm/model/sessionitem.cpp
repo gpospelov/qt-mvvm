@@ -72,7 +72,7 @@ std::string SessionItem::displayName() const
 
 SessionItem* SessionItem::setDisplayName(const std::string& name)
 {
-    setData(QVariant::fromValue(name), ItemDataRole::DISPLAY);
+    setData(name, ItemDataRole::DISPLAY);
     return this;
 }
 

@@ -23,6 +23,6 @@ PropertyItem* PropertyItem::setDisplayName(const std::string& name)
 
 PropertyItem* PropertyItem::setLimits(const RealLimits& value)
 {
-    this->setData(QVariant::fromValue<RealLimits>(value), ItemDataRole::LIMITS);
+    this->setData(value, ItemDataRole::LIMITS);
     return this;
 }
