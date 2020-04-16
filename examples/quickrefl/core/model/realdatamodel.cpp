@@ -38,8 +38,8 @@ RealDataModel::RealDataModel() : SessionModel("RealDataModel")
     // FIXME Fake data, remove at some point all below
     {
         auto data = insertItem<Data1DItem>(dataset->dataContainer());
-        data->setAxis(FixedBinAxisItem::create(3, 1.0, 3.0));
-        data->setContent({1.0, 2.0, 3.0});
+        data->setAxis(PointwiseAxisItem::create(std::vector<double>{1.0, 2.0, 3.0}));
+        data->setContent({10.0, 15.0, 30.0});
 
         auto viewport = insertItem<GraphViewportItem>(dataset->viewportContainer());
         auto graph = insertItem<GraphItem>(viewport);
