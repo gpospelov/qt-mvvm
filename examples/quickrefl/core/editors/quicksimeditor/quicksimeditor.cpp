@@ -24,20 +24,13 @@ using namespace ModelView;
 QuickSimEditor::QuickSimEditor(ApplicationModels* app_models, QWidget* parent)
     : QWidget(parent), app_models(app_models),
       sim_controller(new QuickSimController(app_models, this)), toolbar(new QuickSimEditorToolBar),
-      sld_canvas(new ModelView::GraphCanvas), spec_canvas(new ModelView::GraphCanvas),
-      tabwidget(new QTabWidget)
+      spec_canvas(new ModelView::GraphCanvas)
 {
-    tabwidget->addTab(sld_canvas, "SLD profile");
-    tabwidget->addTab(spec_canvas, "Reflectivity");
-    tabwidget->setCurrentIndex(0);
-    tabwidget->setTabPosition(QTabWidget::East);
-
     setWindowTitle(QString("Reflectivity plot"));
     auto layout = new QVBoxLayout(this);
     layout->addWidget(toolbar);
-    layout->addWidget(tabwidget);
+    layout->addWidget(spec_canvas);
 
-    // sld_canvas->setItem(app_models->jobModel()->sld_viewport());
     spec_canvas->setItem(app_models->jobModel()->specular_viewport());
 
     setup_toolbar_connections();
@@ -61,12 +54,7 @@ QSize QuickSimEditor::minimumSizeHint() const
 void QuickSimEditor::setup_toolbar_connections()
 {
     // Request to reset plot is propagated from toolbar to viewports.
-    auto on_reset_view = [this]() {
-        auto viewport = tabwidget->currentIndex() == 0
-                            ? app_models->jobModel()->sld_viewport()
-                            : app_models->jobModel()->specular_viewport();
-        viewport->update_viewport();
-    };
+    auto on_reset_view = [this]() { spec_canvas->update_viewport(); };
     connect(toolbar, &QuickSimEditorToolBar::resetViewRequest, on_reset_view);
 
     // Simulation interrupt request is propagated from toolbar to controller.

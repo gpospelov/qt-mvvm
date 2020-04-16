@@ -73,6 +73,39 @@ TEST_F(GraphPlotControllerTest, setItem)
     EXPECT_EQ(graph->pen().color(), QColor(Qt::red));
 }
 
+//! Setting GraphItem with data and checking that plottable contains correct data.
+//! Same as aboe, except that the data is based on PointWiseAxis.
+
+TEST_F(GraphPlotControllerTest, setPointwiseItem)
+{
+    auto custom_plot = std::make_unique<QCustomPlot>();
+    GraphPlotController controller(custom_plot.get());
+
+    // setup model and single data item in it
+    const std::vector<double> expected_centers = {1.0, 2.0, 3.0};
+    const std::vector<double> expected_values = {42.0, 43.0, 44.0};
+
+    SessionModel model;
+    auto data_item = model.insertItem<Data1DItem>();
+    data_item->setAxis(PointwiseAxisItem::create(expected_centers));
+    data_item->setContent(expected_values);
+
+    // setup graph item
+    auto graph_item = model.insertItem<GraphItem>();
+    graph_item->setProperty(GraphItem::P_COLOR, QColor(Qt::red));
+    graph_item->setDataItem(data_item);
+
+    // initializing controller
+    controller.setItem(graph_item);
+
+    // Checking resulting plottables
+    EXPECT_EQ(custom_plot->graphCount(), 1);
+    auto graph = custom_plot->graph();
+    EXPECT_EQ(TestUtils::binCenters(graph), expected_centers);
+    EXPECT_EQ(TestUtils::binValues(graph), expected_values);
+    EXPECT_EQ(graph->pen().color(), QColor(Qt::red));
+}
+
 //! Setting data to graph after.
 
 TEST_F(GraphPlotControllerTest, setDataAfter)

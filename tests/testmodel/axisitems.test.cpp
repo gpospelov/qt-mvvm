@@ -58,7 +58,22 @@ TEST_F(AxisItemsTest, viewportAxisSetRange)
     EXPECT_EQ(axis.property<double>(ViewportAxisItem::P_MAX), 2.0);
 }
 
-//! Factory method
+//! Factory method for FixedBinAxisItem.
+
+TEST_F(AxisItemsTest, fixedBinAxisInitialState)
+{
+    FixedBinAxisItem axis;
+    EXPECT_EQ(axis.property<double>(FixedBinAxisItem::P_MIN), 0.0);
+    EXPECT_EQ(axis.property<double>(FixedBinAxisItem::P_MAX), 1.0);
+    EXPECT_EQ(axis.property<int>(FixedBinAxisItem::P_NBINS), 1);
+    EXPECT_EQ(axis.binCenters(), std::vector<double>{0.5});
+    EXPECT_EQ(axis.size(), 1);
+    auto [lower, upper] = axis.range();
+    EXPECT_EQ(lower, 0.0);
+    EXPECT_EQ(upper, 1.0);
+}
+
+//! Factory method for FixedBinAxisItem.
 
 TEST_F(AxisItemsTest, fixedBinAxisFactory)
 {
@@ -82,4 +97,20 @@ TEST_F(AxisItemsTest, fixedBinAxisRange)
     auto [lower, upper] = axis->range();
     EXPECT_EQ(lower, 1.0);
     EXPECT_EQ(upper, 4.0);
+}
+
+TEST_F(AxisItemsTest, PointwiseAxisInitialState)
+{
+    PointwiseAxisItem axis;
+    std::vector<double> expected_centers = {0.0, 1.0};
+    EXPECT_EQ(axis.binCenters(), expected_centers);
+    EXPECT_EQ(axis.size(), 2);
+}
+
+TEST_F(AxisItemsTest, PointwiseAxisCreate)
+{
+    std::vector<double> expected_centers{1.0, 2.0, 3.0};
+    auto axis = PointwiseAxisItem::create(expected_centers);
+    EXPECT_EQ(axis->binCenters(), expected_centers);
+    EXPECT_EQ(axis->size(), 3);
 }
