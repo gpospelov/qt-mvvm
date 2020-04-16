@@ -179,8 +179,7 @@ std::unique_ptr<SessionItem> JsonItemConverter::json_to_item(const QJsonObject& 
                            json_to_tags(json[itemTagsKey].toObject(), result.get()));
 
     if (m_generate_new_identifiers)
-        result->setData(QVariant::fromValue(UniqueIdGenerator::generate()),
-                        ItemDataRole::IDENTIFIER);
+        result->setData(UniqueIdGenerator::generate(), ItemDataRole::IDENTIFIER);
 
     return result;
 }

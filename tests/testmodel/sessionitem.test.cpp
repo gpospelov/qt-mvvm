@@ -68,12 +68,12 @@ TEST_F(SessionItemTest, setData)
     EXPECT_EQ(item.data<QVariant>(role), expected);
 
     // setting another value
-    EXPECT_TRUE(item.setData(QVariant::fromValue(43.0), role));
+    EXPECT_TRUE(item.setData(43.0, role));
     EXPECT_EQ(item.roles(), expected_roles);
     EXPECT_EQ(item.data<QVariant>(role), QVariant::fromValue(43.0));
 
     // setting same value
-    EXPECT_FALSE(item.setData(QVariant::fromValue(43.0), role));
+    EXPECT_FALSE(item.setData(43.0, role));
     EXPECT_EQ(item.roles(), expected_roles);
     EXPECT_EQ(item.data<QVariant>(role), QVariant::fromValue(43.0));
 }
@@ -91,6 +91,41 @@ TEST_F(SessionItemTest, hasData)
 
     item.setData(42.0);
     EXPECT_TRUE(item.hasData());
+}
+
+TEST_F(SessionItemTest, setDoubleData)
+{
+    SessionItem item;
+    const double expected = 42.0;
+    EXPECT_TRUE(item.setData(expected));
+    EXPECT_EQ(item.data<double>(), expected);
+}
+
+TEST_F(SessionItemTest, setIntData)
+{
+    SessionItem item;
+    const int expected = 42;
+    EXPECT_TRUE(item.setData(expected));
+    EXPECT_EQ(item.data<int>(), expected);
+}
+
+TEST_F(SessionItemTest, setBoolData)
+{
+    SessionItem item;
+    const bool expected_true = true;
+    EXPECT_TRUE(item.setData(expected_true));
+    EXPECT_EQ(item.data<bool>(), expected_true);
+    const bool expected_false = false;
+    EXPECT_TRUE(item.setData(expected_false));
+    EXPECT_EQ(item.data<bool>(), expected_false);
+}
+
+TEST_F(SessionItemTest, setStringData)
+{
+    SessionItem item;
+    const std::string expected{"abc"};
+    EXPECT_TRUE(item.setData(expected));
+    EXPECT_EQ(item.data<std::string>(), expected);
 }
 
 //! Display role.
@@ -127,7 +162,7 @@ TEST_F(SessionItemTest, variantMismatch)
     EXPECT_EQ(item.data<QVariant>(role), expected);
 
     // attempt to rewrite variant with another type
-    EXPECT_THROW(item.setData(QVariant::fromValue(std::string("abc")), role), std::runtime_error);
+    EXPECT_THROW(item.setData(std::string("abc"), role), std::runtime_error);
 
     // removing value by passing invalid variant
     EXPECT_NO_THROW(item.setData(QVariant(), role));

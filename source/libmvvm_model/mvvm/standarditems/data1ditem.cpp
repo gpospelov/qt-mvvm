@@ -46,7 +46,7 @@ void Data1DItem::setContent(const std::vector<double>& data)
     if (total_bin_count(this) != data.size())
         throw std::runtime_error("Data1DItem::setContent() -> Data doesn't match size of axis");
 
-    setData(QVariant::fromValue(data));
+    setData(data);
 }
 
 //! Returns coordinates of bin centers.

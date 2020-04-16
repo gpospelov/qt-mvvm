@@ -31,6 +31,7 @@ int appearance(const ModelView::SessionItem& item)
 } // namespace
 
 struct SessionItem::SessionItemImpl {
+    SessionItem* m_this_item{nullptr};
     SessionItem* m_parent{nullptr};
     SessionModel* m_model{nullptr};
     std::unique_ptr<ItemMapper> m_mapper;
@@ -38,17 +39,28 @@ struct SessionItem::SessionItemImpl {
     std::unique_ptr<SessionItemTags> m_tags;
     model_type m_modelType;
 
-    SessionItemImpl()
-        : m_data(std::make_unique<SessionItemData>()), m_tags(std::make_unique<SessionItemTags>())
+    SessionItemImpl(SessionItem* this_item)
+        : m_this_item(this_item), m_data(std::make_unique<SessionItemData>()),
+          m_tags(std::make_unique<SessionItemTags>())
     {
     }
+
+    //! Sets the data for given role, notifies the model.
+    bool setData(const QVariant& variant, int role)
+    {
+        bool result = m_data->setData(variant, role);
+        if (result && m_model)
+            m_model->mapper()->callOnDataChange(m_this_item, role);
+        return result;
+    }
+
 };
 
-SessionItem::SessionItem(model_type modelType) : p_impl(std::make_unique<SessionItemImpl>())
+SessionItem::SessionItem(model_type modelType) : p_impl(std::make_unique<SessionItemImpl>(this))
 {
     p_impl->m_modelType = std::move(modelType);
-    setDataIntern(QVariant::fromValue(UniqueIdGenerator::generate()), ItemDataRole::IDENTIFIER);
-    setDataIntern(QVariant::fromValue(p_impl->m_modelType), ItemDataRole::DISPLAY);
+    setData(UniqueIdGenerator::generate(), ItemDataRole::IDENTIFIER);
+    setData(p_impl->m_modelType, ItemDataRole::DISPLAY);
 }
 
 SessionItem::~SessionItem()
@@ -72,7 +84,7 @@ std::string SessionItem::displayName() const
 
 SessionItem* SessionItem::setDisplayName(const std::string& name)
 {
-    setData(QVariant::fromValue(name), ItemDataRole::DISPLAY);
+    setData(name, ItemDataRole::DISPLAY);
     return this;
 }
 
@@ -81,26 +93,11 @@ std::string SessionItem::identifier() const
     return data<std::string>(ItemDataRole::IDENTIFIER);
 }
 
-bool SessionItem::setData(const QVariant& variant, int role)
-{
-    if (p_impl->m_model)
-        return p_impl->m_model->setData(this, variant, role); // to use undo/redo
-    return setDataIntern(variant, role);
-}
-
 //! Returns true if item has data on board with given role.
 
 bool SessionItem::hasData(int role) const
 {
     return p_impl->m_data->hasData(role);
-}
-
-//! Returns data in the form of QVariant for given role.
-//! Method invented to hide implementaiton details.
-
-QVariant SessionItem::data_internal(int role) const
-{
-    return p_impl->m_data->data(role);
 }
 
 SessionModel* SessionItem::model() const
@@ -279,6 +276,22 @@ bool SessionItem::isSinglePropertyTag(const std::string& tag) const
     return p_impl->m_tags->isSinglePropertyTag(tag);
 }
 
+//! Sets the data for given role.
+//! Method invented to hide implementaiton details.
+
+bool SessionItem::set_data_internal(QVariant value, int role)
+{
+    return model() ? model()->setData(this, value, role) : setDataIntern(value, role);
+}
+
+//! Returns data in the form of QVariant for given role.
+//! Method invented to hide implementaiton details.
+
+QVariant SessionItem::data_internal(int role) const
+{
+    return p_impl->m_data->data(role);
+}
+
 void SessionItem::setParent(SessionItem* parent)
 {
     p_impl->m_parent = parent;
@@ -306,7 +319,7 @@ void SessionItem::setAppearanceFlag(int flag, bool value)
     else
         flags &= ~flag;
 
-    setDataIntern(flags, ItemDataRole::APPEARANCE);
+    setData(flags, ItemDataRole::APPEARANCE);
 }
 
 SessionItemData* SessionItem::itemData() const
@@ -328,8 +341,5 @@ void SessionItem::setDataAndTags(std::unique_ptr<SessionItemData> data,
 
 bool SessionItem::setDataIntern(const QVariant& variant, int role)
 {
-    bool result = p_impl->m_data->setData(variant, role);
-    if (result && p_impl->m_model)
-        p_impl->m_model->mapper()->callOnDataChange(this, role);
-    return result;
+    return p_impl->setData(variant, role);
 }

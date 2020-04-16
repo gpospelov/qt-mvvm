@@ -59,7 +59,7 @@ void Data2DItem::setContent(const std::vector<double>& data)
     if (total_bin_count(this) != data.size())
         throw std::runtime_error("Data1DItem::setContent() -> Data doesn't match size of axis");
 
-    setData(QVariant::fromValue(data));
+    setData(data);
 }
 
 //! Returns 2d vector representing 2d data.

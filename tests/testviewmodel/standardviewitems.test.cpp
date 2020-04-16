@@ -42,13 +42,13 @@ TEST_F(StandardViewItemsTest, ViewLabelItem_data)
 {
     // create SessionItem with data on board
     SessionItem item;
-    QVariant expected = QVariant::fromValue(std::string("Layer"));
+    const std::string expected("Layer");
     EXPECT_TRUE(item.setData(expected, ItemDataRole::DISPLAY));
 
     // initialize viewItem with sessionItem and check the data
     ViewLabelItem viewItem(&item);
-    EXPECT_EQ(Utils::toCustomVariant(viewItem.data(Qt::EditRole)), expected);
-    EXPECT_EQ(Utils::toCustomVariant(viewItem.data(Qt::DisplayRole)), expected);
+    EXPECT_EQ(Utils::toCustomVariant(viewItem.data(Qt::EditRole)), QVariant::fromValue(expected));
+    EXPECT_EQ(Utils::toCustomVariant(viewItem.data(Qt::DisplayRole)), QVariant::fromValue(expected));
 }
 
 //! ViewLabelItem::setData
@@ -58,7 +58,7 @@ TEST_F(StandardViewItemsTest, ViewLabelItem_setData)
 {
     // create SessionItem with data on board
     SessionItem item;
-    QVariant expected = QVariant::fromValue(std::string("Layer"));
+    const std::string expected("Layer");
     EXPECT_TRUE(item.setData(expected, ItemDataRole::DISPLAY));
 
     // initialize viewItem with sessionItem and set the data
@@ -81,7 +81,7 @@ TEST_F(StandardViewItemsTest, ViewLabelItem_setData)
 TEST_F(StandardViewItemsTest, ViewLabelItem_flags)
 {
     SessionItem item;
-    QVariant expected = QVariant::fromValue(std::string("Layer"));
+    const std::string expected("Layer");
     EXPECT_TRUE(item.setData(expected, ItemDataRole::DISPLAY));
 
     ViewLabelItem viewItem(&item);

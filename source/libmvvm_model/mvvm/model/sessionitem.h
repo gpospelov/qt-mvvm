@@ -41,7 +41,7 @@ public:
 
     std::string identifier() const;
 
-    bool setData(const QVariant& variant, int role = ItemDataRole::DATA);
+    template <typename T> bool setData(const T& value, int role = ItemDataRole::DATA);
     bool setDataIntern(const QVariant& variant, int role);
 
     bool hasData(int role = ItemDataRole::DATA) const;
@@ -99,6 +99,7 @@ private:
     friend class SessionModel;
     friend class JsonItemConverter;
     virtual void activate() {}
+    bool set_data_internal(QVariant value, int role);
     QVariant data_internal(int role) const;
     void setParent(SessionItem* parent);
     void setModel(SessionModel* model);
@@ -113,6 +114,15 @@ private:
     struct SessionItemImpl;
     std::unique_ptr<SessionItemImpl> p_impl;
 };
+
+//! Sets data for given role.
+
+template <typename T> inline bool SessionItem::setData(const T& value, int role)
+{
+    if constexpr (std::is_same<T, QVariant>::value)
+        return set_data_internal(value, role);
+    return set_data_internal(QVariant::fromValue(value), role);
+}
 
 //! Returns data of given type T for given role.
 
@@ -137,7 +147,7 @@ template <typename T> inline T SessionItem::property(const std::string& tag) con
 
 template <typename T> inline void SessionItem::setProperty(const std::string& tag, const T& value)
 {
-    getItem(tag)->setData(QVariant::fromValue(value));
+    getItem(tag)->setData(value);
 }
 
 //! Sets value to property item (specialized for special "const char *" case).

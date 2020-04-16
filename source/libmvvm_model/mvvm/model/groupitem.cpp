@@ -26,7 +26,7 @@ GroupItem::GroupItem(model_type modelType)
       m_default_selected_index(0)
 {
     registerTag(TagInfo::universalTag(tag_name), /*set_as_default*/ true);
-    setData(QVariant::fromValue(ComboProperty()));
+    setData(ComboProperty());
 }
 
 int GroupItem::currentIndex() const
@@ -63,7 +63,7 @@ void GroupItem::setCurrentIndex(int index)
 {
     auto combo = data<ComboProperty>();
     combo.setCurrentIndex(index);
-    setDataIntern(QVariant::fromValue(combo), ItemDataRole::DATA);
+    setData(combo, ItemDataRole::DATA);
 }
 
 bool GroupItem::is_valid_index() const
@@ -79,7 +79,7 @@ void GroupItem::init_group()
     ComboProperty combo;
     combo.setValues(m_catalogue->labels());
     combo.setCurrentIndex(m_default_selected_index);
-    setDataIntern(QVariant::fromValue(combo), ItemDataRole::DATA);
+    setData(combo, ItemDataRole::DATA);
     for (const auto& x : m_catalogue->modelTypes())
         insertItem(m_catalogue->create(x).release(), TagRow::append(tag_name));
 }
