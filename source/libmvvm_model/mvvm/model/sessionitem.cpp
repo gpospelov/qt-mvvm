@@ -81,26 +81,11 @@ std::string SessionItem::identifier() const
     return data<std::string>(ItemDataRole::IDENTIFIER);
 }
 
-bool SessionItem::setData(const QVariant& variant, int role)
-{
-    if (p_impl->m_model)
-        return p_impl->m_model->setData(this, variant, role); // to use undo/redo
-    return setDataIntern(variant, role);
-}
-
 //! Returns true if item has data on board with given role.
 
 bool SessionItem::hasData(int role) const
 {
     return p_impl->m_data->hasData(role);
-}
-
-//! Returns data in the form of QVariant for given role.
-//! Method invented to hide implementaiton details.
-
-QVariant SessionItem::data_internal(int role) const
-{
-    return p_impl->m_data->data(role);
 }
 
 SessionModel* SessionItem::model() const
@@ -277,6 +262,22 @@ void SessionItem::setEnabled(bool value)
 bool SessionItem::isSinglePropertyTag(const std::string& tag) const
 {
     return p_impl->m_tags->isSinglePropertyTag(tag);
+}
+
+//! Sets the data for given role.
+//! Method invented to hide implementaiton details.
+
+bool SessionItem::set_data_internal(QVariant value, int role)
+{
+    return model() ? model()->setData(this, value, role) : setDataIntern(value, role);
+}
+
+//! Returns data in the form of QVariant for given role.
+//! Method invented to hide implementaiton details.
+
+QVariant SessionItem::data_internal(int role) const
+{
+    return p_impl->m_data->data(role);
 }
 
 void SessionItem::setParent(SessionItem* parent)
