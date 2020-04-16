@@ -31,6 +31,7 @@ int appearance(const ModelView::SessionItem& item)
 } // namespace
 
 struct SessionItem::SessionItemImpl {
+    SessionItem* m_this_item{nullptr};
     SessionItem* m_parent{nullptr};
     SessionModel* m_model{nullptr};
     std::unique_ptr<ItemMapper> m_mapper;
@@ -38,13 +39,14 @@ struct SessionItem::SessionItemImpl {
     std::unique_ptr<SessionItemTags> m_tags;
     model_type m_modelType;
 
-    SessionItemImpl()
-        : m_data(std::make_unique<SessionItemData>()), m_tags(std::make_unique<SessionItemTags>())
+    SessionItemImpl(SessionItem* this_item)
+        : m_this_item(this_item), m_data(std::make_unique<SessionItemData>()),
+          m_tags(std::make_unique<SessionItemTags>())
     {
     }
 };
 
-SessionItem::SessionItem(model_type modelType) : p_impl(std::make_unique<SessionItemImpl>())
+SessionItem::SessionItem(model_type modelType) : p_impl(std::make_unique<SessionItemImpl>(this))
 {
     p_impl->m_modelType = std::move(modelType);
     setDataIntern(QVariant::fromValue(UniqueIdGenerator::generate()), ItemDataRole::IDENTIFIER);
