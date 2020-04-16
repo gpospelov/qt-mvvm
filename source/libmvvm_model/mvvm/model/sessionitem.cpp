@@ -44,6 +44,16 @@ struct SessionItem::SessionItemImpl {
           m_tags(std::make_unique<SessionItemTags>())
     {
     }
+
+    //! Sets the data for given role, notifies the model.
+    bool setData(const QVariant& variant, int role)
+    {
+        bool result = m_data->setData(variant, role);
+        if (result && m_model)
+            m_model->mapper()->callOnDataChange(m_this_item, role);
+        return result;
+    }
+
 };
 
 SessionItem::SessionItem(model_type modelType) : p_impl(std::make_unique<SessionItemImpl>(this))
@@ -331,8 +341,5 @@ void SessionItem::setDataAndTags(std::unique_ptr<SessionItemData> data,
 
 bool SessionItem::setDataIntern(const QVariant& variant, int role)
 {
-    bool result = p_impl->m_data->setData(variant, role);
-    if (result && p_impl->m_model)
-        p_impl->m_model->mapper()->callOnDataChange(this, role);
-    return result;
+    return p_impl->setData(variant, role);
 }
