@@ -1,0 +1,7 @@
+add_subdirectory(grapheditor)
+add_subdirectory(importdatawidgets)
+add_subdirectory(layereditor)
+add_subdirectory(materialeditor)
+add_subdirectory(quicksimeditor)
+add_subdirectory(sldeditor)
+
