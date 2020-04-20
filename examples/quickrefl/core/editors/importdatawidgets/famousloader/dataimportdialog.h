@@ -14,14 +14,15 @@
 #include <QDialog>
 #include <QGroupBox>
 #include <QTabWidget>
+#include <QTableView>
 
 namespace DataImport
 {
 
 class ImportFileWidget;
-class ParameterWidget;
-class TextSelectionView;
-class TableSelectionView;
+class ImportParameterWidget;
+class ImportTextView;
+// class ImportTableView;
 
 //! This is the main dialog for the data loader
 class DataLoaderDialog : public QDialog
@@ -37,9 +38,9 @@ private:
 
 private:
     ImportFileWidget* p_import_file_list{nullptr};
-    ParameterWidget* p_parameter_dialog{nullptr};
-    TextSelectionView* p_text_view{nullptr};
-    TableSelectionView* p_table_view{nullptr};
+    ImportParameterWidget* p_parameter_dialog{nullptr};
+    ImportTextView* p_text_view{nullptr};
+    QTableView* p_table_view{nullptr};
 };
 }
 
