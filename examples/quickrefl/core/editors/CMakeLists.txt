@@ -4,4 +4,5 @@ add_subdirectory(layereditor)
 add_subdirectory(materialeditor)
 add_subdirectory(quicksimeditor)
 add_subdirectory(sldeditor)
+add_subdirectory(welcomeview)
 
