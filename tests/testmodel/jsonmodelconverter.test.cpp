@@ -28,13 +28,12 @@ class JsonModelConverterTest : public ::testing::Test
 public:
     ~JsonModelConverterTest();
 
-    static const QString test_dir;
+    static inline const QString test_dir = "test_JsonModel";
 
     static void SetUpTestCase() { TestUtils::CreateTestDirectory(test_dir); }
 };
 
 JsonModelConverterTest::~JsonModelConverterTest() = default;
-const QString JsonModelConverterTest::test_dir = "test_JsonModel";
 
 //! Validity of json object representing SessionModel.
 

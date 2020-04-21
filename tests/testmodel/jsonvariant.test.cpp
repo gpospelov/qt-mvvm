@@ -29,7 +29,7 @@ class JsonVariantTest : public ::testing::Test
 public:
     ~JsonVariantTest();
 
-    static const QString test_dir;
+    static inline const QString test_dir = "test_JsonVariant";
 
     static void SetUpTestCase() { TestUtils::CreateTestDirectory(test_dir); }
 
@@ -40,8 +40,6 @@ public:
         return converter.get_variant(json);
     }
 };
-
-const QString JsonVariantTest::test_dir = "test_JsonVariant";
 
 JsonVariantTest::~JsonVariantTest() = default;
 

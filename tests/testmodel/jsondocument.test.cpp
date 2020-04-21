@@ -38,7 +38,7 @@ public:
         ~TestModel2();
     };
 
-    static const QString test_dir;
+    static inline const QString test_dir = "test_JsonDocument";
 
     static void SetUpTestCase() { TestUtils::CreateTestDirectory(test_dir); }
 };
@@ -46,7 +46,6 @@ public:
 JsonDocumentTest::~JsonDocumentTest() = default;
 JsonDocumentTest::TestModel1::~TestModel1() = default;
 JsonDocumentTest::TestModel2::~TestModel2() = default;
-const QString JsonDocumentTest::test_dir = "test_JsonDocument";
 
 //! Saving the model with content into document and restoring it after.
 

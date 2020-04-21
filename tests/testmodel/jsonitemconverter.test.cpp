@@ -28,7 +28,7 @@ public:
     JsonItemConverterTest() : m_model(std::make_unique<SessionModel>()) {}
     ~JsonItemConverterTest();
 
-    static const QString test_dir;
+    static inline const QString test_dir = "test_JsonItemConverter";
 
     static void SetUpTestCase() { TestUtils::CreateTestDirectory(test_dir); }
 
@@ -42,7 +42,6 @@ private:
 };
 
 JsonItemConverterTest::~JsonItemConverterTest() = default;
-const QString JsonItemConverterTest::test_dir = "test_JsonItemConverter";
 
 //! Checks the validity of json object representing SessionItem.
 
