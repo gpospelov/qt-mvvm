@@ -219,12 +219,12 @@ TEST_F(JsonModelConverterTest, parentAndChildToFileAndBack)
     converter.model_to_json(model, *object);
 
     // saving object to file
-    auto fileName = TestUtils::TestFileName(QString::fromStdString(test_dir), "model.json");
-    TestUtils::SaveJson(*object, fileName);
+    auto fileName = TestUtils::TestFileName(test_dir, "model.json");
+    TestUtils::SaveJson(*object, QString::fromStdString(fileName));
     object.reset();
 
     // converting document back to item
-    auto document = TestUtils::LoadJson(fileName);
+    auto document = TestUtils::LoadJson(QString::fromStdString(fileName));
     SessionModel target("TestModel");
     converter.json_to_model(document.object(), target);
 

@@ -102,8 +102,8 @@ TEST_F(JsonItemDataTest, fromItemToJsonAndBack)
 
     // constructing json array from data
     QJsonArray array = converter.get_json(data);
-    auto fileName = TestUtils::TestFileName(QString::fromStdString(test_dir), "itemdata.json");
-    TestUtils::SaveJson(array, fileName);
+    auto fileName = TestUtils::TestFileName(test_dir, "itemdata.json");
+    TestUtils::SaveJson(array, QString::fromStdString(fileName));
 
     // constructing data from json array
     auto data2 = converter.get_data(array);

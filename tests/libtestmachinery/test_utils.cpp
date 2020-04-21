@@ -33,20 +33,16 @@ void TestUtils::CreateTestDirectory(const std::string &test_sub_dir)
         Utils::create_dir(path);
 }
 
-QString TestUtils::TestDirectoryPath(const QString& test_sub_dir)
-{
-    return QString::fromStdString(TestConfig::TestOutputDir()) + "/" + test_sub_dir;
-}
-
 std::string TestUtils::TestDirectoryPath(const std::string& test_sub_dir)
 {
     auto result = std::filesystem::path(TestConfig::TestOutputDir()) / test_sub_dir;
     return result.string();
 }
 
-QString TestUtils::TestFileName(const QString& test_sub_dir, const QString& file_name)
+std::string TestUtils::TestFileName(const std::string &test_sub_dir, const std::string &file_name)
 {
-    return TestDirectoryPath(test_sub_dir) + "/" + file_name;
+    std::filesystem::path result = std::filesystem::path(TestDirectoryPath(test_sub_dir)) / file_name;
+    return result.string();
 }
 
 void TestUtils::SaveJson(const QJsonObject& object, const QString& fileName)

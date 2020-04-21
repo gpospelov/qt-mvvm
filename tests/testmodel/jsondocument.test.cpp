@@ -51,7 +51,7 @@ JsonDocumentTest::TestModel2::~TestModel2() = default;
 
 TEST_F(JsonDocumentTest, saveLoadSingleModel)
 {
-    auto fileName = TestUtils::TestFileName(QString::fromStdString(test_dir), "model.json");
+    auto fileName = TestUtils::TestFileName(test_dir, "model.json");
     SessionModel model("TestModel");
     JsonDocument document({&model});
 
@@ -67,13 +67,13 @@ TEST_F(JsonDocumentTest, saveLoadSingleModel)
     const auto child_identifier = child->identifier();
 
     // saving model in file
-    document.save(fileName.toStdString());
+    document.save(fileName);
 
     // modifying model further
     model.removeItem(model.rootItem(), {"", 0});
 
     // loading model from file
-    document.load(fileName.toStdString());
+    document.load(fileName);
 
     // checking that it is as it was right after the save
 
@@ -105,7 +105,7 @@ TEST_F(JsonDocumentTest, saveLoadSingleModel)
 
 TEST_F(JsonDocumentTest, saveLoadTwoModels)
 {
-    auto fileName = TestUtils::TestFileName(QString::fromStdString(test_dir), "models.json");
+    auto fileName = TestUtils::TestFileName(test_dir, "models.json");
     TestModel1 model1;
     TestModel1 model2;
     JsonDocument document({&model1, &model2});
@@ -118,14 +118,14 @@ TEST_F(JsonDocumentTest, saveLoadTwoModels)
     const auto parent_identifier2 = parent2->identifier();
 
     // saving models in file
-    document.save(fileName.toStdString());
+    document.save(fileName);
 
     // modifying model further
     model1.removeItem(model1.rootItem(), {"", 0});
     model2.removeItem(model2.rootItem(), {"", 0});
 
     // loading model from file
-    document.load(fileName.toStdString());
+    document.load(fileName);
 
     // checking that it is as it was right after the save
 
@@ -147,7 +147,7 @@ TEST_F(JsonDocumentTest, saveLoadTwoModels)
 
 TEST_F(JsonDocumentTest, loadModelsInWrongOrder)
 {
-    auto fileName = TestUtils::TestFileName(QString::fromStdString(test_dir), "models.json");
+    auto fileName = TestUtils::TestFileName(test_dir, "models.json");
     TestModel1 model1;
     TestModel2 model2;
 
@@ -161,7 +161,7 @@ TEST_F(JsonDocumentTest, loadModelsInWrongOrder)
     // saving models in file
     {
         JsonDocument document({&model1, &model2});
-        document.save(fileName.toStdString());
+        document.save(fileName);
     }
 
     // modifying model further
@@ -171,5 +171,5 @@ TEST_F(JsonDocumentTest, loadModelsInWrongOrder)
     JsonDocument document({&model2, &model1}); // intentional wrong order
 
     // loading model from file
-    EXPECT_THROW(document.load(fileName.toStdString()), std::runtime_error);
+    EXPECT_THROW(document.load(fileName), std::runtime_error);
 }
