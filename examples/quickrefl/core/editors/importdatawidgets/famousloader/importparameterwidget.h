@@ -11,13 +11,26 @@
 #ifndef IMPORTPARAMETERWIDGET_H
 #define IMPORTPARAMETERWIDGET_H
 
+#include <QListWidgetItem>
+#include <QWidget>
 #include <memory>
 #include <QWidget>
+#include <QProxyStyle>
+
+#include "importlogic.h"
 
 QT_BEGIN_NAMESPACE
-class QCheckBox;
+class Switch;
 class QSpinBox;
 class QColor;
+class QLabel;
+class QComboBox;
+class QLineEdit;
+class QListWidget;
+class QHBoxLayout;
+class QLineEdit;
+class QTabWidget;
+class QGridLayout;
 QT_END_NAMESPACE
 
 namespace ModelView
@@ -28,33 +41,114 @@ namespace ModelView
 namespace DataImport
 {
 
+// -------------------------------------------------
+//! This is the tab widget side style
+class CustomTabStyle : public QProxyStyle {
+public:
+    CustomTabStyle() : QProxyStyle("fusion"){};
+  QSize sizeFromContents(ContentsType type, const QStyleOption* option,
+                         const QSize& size, const QWidget* widget) const {
+    QSize s = QProxyStyle::sizeFromContents(type, option, size, widget);
+    if (type == QStyle::CT_TabBarTab) {
+      s.transpose();
+    }
+    return s;
+  }
+
+  void drawControl(ControlElement element, const QStyleOption* option, QPainter* painter, const QWidget* widget) const {
+    if (element == CE_TabBarTabLabel) {
+      if (const QStyleOptionTab* tab = qstyleoption_cast<const QStyleOptionTab*>(option)) {
+        QStyleOptionTab opt(*tab);
+        opt.shape = QTabBar::RoundedNorth;
+        QProxyStyle::drawControl(element, &opt, painter, widget);
+        return;
+      }
+    }
+    QProxyStyle::drawControl(element, option, painter, widget);
+  }
+};
+
+// -------------------------------------------------
+//! This is the main dialog for the data loader
+class LineBlockWidget : public QWidget
+{
+    Q_OBJECT
+
+public:
+    LineBlockWidget(LineBlock* line_block = nullptr, QWidget* parent = nullptr);
+    ~LineBlockWidget() = default;
+    LineBlock* lineBlock() const;
+
+signals:
+    void parameterChanged();
+
+private:
+    void grabFromLineBlock();
+    void setEnabled();
+    void typeChanged();
+    void startRangeChanged();
+    void endRangeChanged();
+    void connectSubcomponents();
+
+    void createComponents();
+    void initComponents();
+    void setLayout();
+    void setTypeLayout();
+    void setRangeLayout();
+    void connectAll();
+
+    void dataChanged();
+
+private:
+    LineBlock* p_line_block;
+
+    QTabWidget* p_tab_widget;
+
+    SwitchSpace::Switch* p_active_checkbox;
+    ModelView::ColorEditor* p_color_editor;
+
+    QSpinBox* p_line_start;
+    QSpinBox* p_line_end;
+
+    QComboBox* p_type_select;
+    QComboBox* p_range_start;
+    QComboBox* p_range_end;
+    QComboBox* p_separators;
+
+    QLineEdit* p_filter_name;
+    QLineEdit* p_ignore_chars;
+    QLineEdit* p_ignore_lines;
+
+    QGridLayout* p_type_layout;
+    QGridLayout* p_range_layout;
+};
+
+// -------------------------------------------------
 //! This is the main dialog for the data loader
 class ImportParameterWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    ImportParameterWidget(QWidget* parent = nullptr);
+    ImportParameterWidget(ImportLogic* import_logic, QWidget* parent = nullptr);
     ~ImportParameterWidget() = default;
 
-    std::vector<bool> stringPresent() const;
-    std::vector<int> stringLocation() const;
-    std::vector<QColor> stringColor() const;
+    void addLineBlock();
+    void removeLineBlock();
 
 signals:
-    void valuesChanged();
-
+    void parameterChanged();
+    
 private:
-    void checkValues(int start);
-    void createWidgets();
     void setLayout();
-    void setInitialState();
+    void initialise();
     void connectAll();
 
 private:
-    std::vector<QCheckBox*> m_checkboxes;
-    std::vector<QSpinBox*> m_spinboxes;
-    std::vector<ModelView::ColorEditor*> m_color_editors;
+    ImportLogic* p_import_logic;
+
+    std::vector<LineBlockWidget*> m_line_block_widgets;
+    QListWidget* p_list_widget;
 };
 }
 

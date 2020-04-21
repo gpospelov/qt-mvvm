@@ -23,10 +23,14 @@
 DataImport::DataLoaderDialog::DataLoaderDialog(QWidget* parent): QDialog(parent)
 {   
     // The placeholders
-    auto h_widget = new QWidget(this);
-    auto file_list_space = new QGroupBox("Selected Files:", h_widget);
-    auto parameter_space = new QGroupBox("Import parameters:", h_widget);
-    auto selection_space = new QTabWidget(this);
+    auto v_splitter = new QSplitter(Qt::Vertical, this);
+    auto h_splitter = new QSplitter(v_splitter);
+    v_splitter->setChildrenCollapsible(false);
+    h_splitter->setChildrenCollapsible(false);
+
+    auto file_list_space = new QGroupBox("Selected Files:", h_splitter);
+    auto selection_space = new QTabWidget(h_splitter);
+    auto parameter_space = new QGroupBox("Import parameters:", v_splitter);
 
     // The dialog buttons
     auto button_box = new QDialogButtonBox(QDialogButtonBox::Cancel | QDialogButtonBox::Ok);
@@ -34,12 +38,12 @@ DataImport::DataLoaderDialog::DataLoaderDialog(QWidget* parent): QDialog(parent)
     connect(button_box, SIGNAL(rejected()), this, SLOT(reject()));
 
     // Manage the layout
-    auto h_layout = new QHBoxLayout(h_widget);
-    h_layout->addWidget(file_list_space);
-    h_layout->addWidget(parameter_space);
+    h_splitter->addWidget(file_list_space);
+    h_splitter->addWidget(selection_space);
     auto v_layout = new QVBoxLayout(this);
-    v_layout->addWidget(h_widget);
-    v_layout->addWidget(selection_space);
+    v_splitter->addWidget(h_splitter);
+    v_splitter->addWidget(parameter_space);
+    v_layout->addWidget(v_splitter);
     v_layout->addWidget(button_box);
 
     // Finally set up the individual elements
@@ -63,7 +67,7 @@ void DataImport::DataLoaderDialog::setUpParameterSpace(QGroupBox* conainer)
 {
     conainer->setContentsMargins(0,0,0,0);
     auto layout = new QVBoxLayout(conainer);
-    p_parameter_dialog = new DataImport::ImportParameterWidget(conainer);
+    p_parameter_dialog = new DataImport::ImportParameterWidget(p_data_import_logic.get(), conainer);
     layout->addWidget(p_parameter_dialog);
     layout->setSpacing(0);
 }
@@ -86,3 +90,22 @@ void DataImport::DataLoaderDialog::setUpSelectionSpace(QTabWidget* tab_widget)
     tab_widget->addTab(second_tab, "Table view");
 }
 
+//! This function will manage the chnage of file selection
+void DataImport::DataLoaderDialog::selectedFileChanged()
+{
+    int file_num = p_import_file_list->currentSelection();
+    if (file_num<0){
+        p_text_view->setHtml("");
+    }else{
+        p_text_view->setHtml(QString::fromStdString(p_data_import_logic->getPreview(file_num)));
+    }
+}
+
+//! This function will manage the change in the line selections
+void DataImport::DataLoaderDialog::lineParameterChanged()
+{
+    // p_data_import_logic->setProcessingText(p_parameter_dialog->stringPresent(),
+    //                                        p_parameter_dialog->stringLocation(),
+    //                                        p_parameter_dialog->stringColor());
+    selectedFileChanged();
+}
