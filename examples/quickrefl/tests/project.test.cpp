@@ -41,13 +41,13 @@ public:
         };
     };
 
-    static inline const QString test_dir = "test_QuickReflProject";
+    static inline const std::string test_dir = "test_QuickReflProject";
 
     static void SetUpTestCase() { TestUtils::CreateTestDirectory(test_dir); }
 
     std::filesystem::path test_path() const
     {
-        return {TestUtils::TestDirectoryPath(test_dir.toStdString())};
+        return {TestUtils::TestDirectoryPath(test_dir)};
     }
 };
 

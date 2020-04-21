@@ -26,7 +26,7 @@ class JsonItemDataTest : public ::testing::Test
 public:
     ~JsonItemDataTest();
 
-    static inline const QString test_dir = "test_JsonItemData";
+    static inline const std::string test_dir = "test_JsonItemData";
 
     static void SetUpTestCase() { TestUtils::CreateTestDirectory(test_dir); }
 };
@@ -102,7 +102,7 @@ TEST_F(JsonItemDataTest, fromItemToJsonAndBack)
 
     // constructing json array from data
     QJsonArray array = converter.get_json(data);
-    auto fileName = TestUtils::TestFileName(test_dir, "itemdata.json");
+    auto fileName = TestUtils::TestFileName(QString::fromStdString(test_dir), "itemdata.json");
     TestUtils::SaveJson(array, fileName);
 
     // constructing data from json array

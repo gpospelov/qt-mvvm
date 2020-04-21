@@ -25,12 +25,10 @@ class JsonTagInfoTest : public ::testing::Test
 public:
     ~JsonTagInfoTest();
 
-    static const QString test_dir;
+    static inline const std::string test_dir = "test_JsonTagInfo";
 
     static void SetUpTestCase() { TestUtils::CreateTestDirectory(test_dir); }
 };
-
-const QString JsonTagInfoTest::test_dir = "test_JsonTagInfo";
 
 JsonTagInfoTest::~JsonTagInfoTest() = default;
 
@@ -97,7 +95,7 @@ TEST_F(JsonTagInfoTest, tagInfoToFileAndBack)
     auto object = converter.to_json(tag);
 
     // saving object to file
-    auto fileName = TestUtils::TestFileName(test_dir, "taginfo.json");
+    auto fileName = TestUtils::TestFileName(QString::fromStdString(test_dir), "taginfo.json");
     TestUtils::SaveJson(object, fileName);
 
     auto document = TestUtils::LoadJson(fileName);

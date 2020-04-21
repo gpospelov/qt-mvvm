@@ -28,7 +28,7 @@ class JsonModelConverterTest : public ::testing::Test
 public:
     ~JsonModelConverterTest();
 
-    static inline const QString test_dir = "test_JsonModel";
+    static inline const std::string test_dir = "test_JsonModel";
 
     static void SetUpTestCase() { TestUtils::CreateTestDirectory(test_dir); }
 };
@@ -219,7 +219,7 @@ TEST_F(JsonModelConverterTest, parentAndChildToFileAndBack)
     converter.model_to_json(model, *object);
 
     // saving object to file
-    auto fileName = TestUtils::TestFileName(test_dir, "model.json");
+    auto fileName = TestUtils::TestFileName(QString::fromStdString(test_dir), "model.json");
     TestUtils::SaveJson(*object, fileName);
     object.reset();
 

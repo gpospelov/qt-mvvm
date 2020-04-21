@@ -26,11 +26,11 @@ namespace {
 void SaveDocument(const QJsonDocument& document, const QString& fileName);
 }
 
-void TestUtils::CreateTestDirectory(const QString& test_sub_dir)
+void TestUtils::CreateTestDirectory(const std::string &test_sub_dir)
 {
     auto path = TestDirectoryPath(test_sub_dir);
-    if(!Utils::exists(path.toStdString()))
-        Utils::create_dir(path.toStdString());
+    if(!Utils::exists(path))
+        Utils::create_dir(path);
 }
 
 QString TestUtils::TestDirectoryPath(const QString& test_sub_dir)

@@ -28,7 +28,7 @@ public:
     JsonItemConverterTest() : m_model(std::make_unique<SessionModel>()) {}
     ~JsonItemConverterTest();
 
-    static inline const QString test_dir = "test_JsonItemConverter";
+    static inline const std::string test_dir = "test_JsonItemConverter";
 
     static void SetUpTestCase() { TestUtils::CreateTestDirectory(test_dir); }
 
@@ -135,7 +135,7 @@ TEST_F(JsonItemConverterTest, propertyItemToFileAndBack)
     auto object = converter->to_json(&item);
 
     // saving object to file
-    auto fileName = TestUtils::TestFileName(test_dir, "propertyitem.json");
+    auto fileName = TestUtils::TestFileName(QString::fromStdString(test_dir), "propertyitem.json");
     TestUtils::SaveJson(object, fileName);
 
     auto document = TestUtils::LoadJson(fileName);
@@ -205,7 +205,7 @@ TEST_F(JsonItemConverterTest, parentAndChildToFileAndBack)
     EXPECT_TRUE(converter->isSessionItem(object));
 
     // saving object to file
-    auto fileName = TestUtils::TestFileName(test_dir, "parentandchild.json");
+    auto fileName = TestUtils::TestFileName(QString::fromStdString(test_dir), "parentandchild.json");
     TestUtils::SaveJson(object, fileName);
 
     // converting document back to item

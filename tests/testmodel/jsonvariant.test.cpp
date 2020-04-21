@@ -29,7 +29,7 @@ class JsonVariantTest : public ::testing::Test
 public:
     ~JsonVariantTest();
 
-    static inline const QString test_dir = "test_JsonVariant";
+    static inline const std::string test_dir = "test_JsonVariant";
 
     static void SetUpTestCase() { TestUtils::CreateTestDirectory(test_dir); }
 
@@ -299,7 +299,7 @@ TEST_F(JsonVariantTest, toFileAndBack)
         json_array.append(converter.get_json(var));
 
     // writing to file
-    auto fileName = TestUtils::TestFileName(test_dir, "variants.json");
+    auto fileName = TestUtils::TestFileName(QString::fromStdString(test_dir), "variants.json");
     TestUtils::SaveJson(json_array, fileName);
 
     // reading variants from file
