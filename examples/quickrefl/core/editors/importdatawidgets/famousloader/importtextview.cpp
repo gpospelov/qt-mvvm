@@ -20,6 +20,7 @@ namespace DataImport
 
 ImportTextView::ImportTextView(QWidget *parent) : QTextEdit(parent)
 {
+    setReadOnly(true);
     lineNumberArea = new LineNumberArea(this);
 
     connect(this->document(), &QTextDocument::blockCountChanged, this, &ImportTextView::updateLineNumberAreaWidth);
