@@ -18,6 +18,7 @@
 #include <mvvm/serialization/jsonconverterinterfaces.h>
 #include <mvvm/serialization/jsonutils.h>
 #include <string>
+#include <QTextStream>
 
 using namespace ModelView;
 
@@ -77,6 +78,21 @@ QJsonDocument TestUtils::LoadJson(const std::string& fileName)
 
     return QJsonDocument().fromJson(jsonFile.readAll());
 }
+
+void TestUtils::CreateTestFile(const std::string& dirname, const std::string& fileName)
+{
+    std::string filename = dirname.empty() ? fileName : dirname + "/" + fileName;
+
+    QFile file(QString::fromStdString(filename));
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+        throw std::runtime_error("TestFileUtils::createTestFile() -> Error. "
+                                 "Can't create file");
+
+    QTextStream out(&file);
+    out << "Test file " << 42 << "\n";
+    file.close();
+}
+
 
 namespace
 {

@@ -51,6 +51,9 @@ QString ModelToJsonString(ModelView::SessionModel& model);
 
 QJsonDocument LoadJson(const std::string& fileName);
 
+//! Helper function to create test file in a given directory (directory should exist).
+void CreateTestFile(const std::string& dirname, const std::string& fileName);
+
 //! Deletes items in the container and cleans container afterwards.
 
 template <typename T> void clean_items(T& items)

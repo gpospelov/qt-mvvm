@@ -8,9 +8,8 @@
 // ************************************************************************** //
 
 #include "google_test.h"
+#include "test_utils.h"
 #include <QDir>
-#include <QFile>
-#include <QTextStream>
 #include <mvvm/utils/fileutils.h>
 #include <stdexcept>
 #include <string>
@@ -22,20 +21,6 @@ class FileUtilsTest : public ::testing::Test
 public:
     ~FileUtilsTest();
 
-    //! Helper function to create test file in a given directory (directory should exist).
-    void createTestFile(const std::string& dirname, const std::string& fileName)
-    {
-        std::string filename = dirname.empty() ? fileName : dirname + "/" + fileName;
-
-        QFile file(QString::fromStdString(filename));
-        if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
-            throw std::runtime_error("TestFileUtils::createTestFile() -> Error. "
-                                     "Can't create file");
-
-        QTextStream out(&file);
-        out << "Test file " << 42 << "\n";
-        file.close();
-    }
     std::string projectDir() const { return TestConfig::TestOutputDir() + "/" + "test_FileUtils"; }
 };
 
@@ -52,6 +37,6 @@ TEST_F(FileUtilsTest, initialState)
     Utils::create_subdir(".", projectDir());
     EXPECT_TRUE(Utils::exists(projectDir()));
 
-    createTestFile(projectDir(), "a.txt");
+    TestUtils::CreateTestFile(projectDir(), "a.txt");
     EXPECT_TRUE(Utils::exists(projectDir() + "/a.txt"));
 }
