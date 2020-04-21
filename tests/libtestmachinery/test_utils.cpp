@@ -18,6 +18,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <string>
+#include <filesystem>
 
 using namespace ModelView;
 
@@ -35,6 +36,12 @@ void TestUtils::CreateTestDirectory(const QString& test_sub_dir)
 QString TestUtils::TestDirectoryPath(const QString& test_sub_dir)
 {
     return QString::fromStdString(TestConfig::TestOutputDir()) + "/" + test_sub_dir;
+}
+
+std::string TestUtils::TestDirectoryPath(const std::string& test_sub_dir)
+{
+    auto result = std::filesystem::path(TestConfig::TestOutputDir()) / test_sub_dir;
+    return result.string();
 }
 
 QString TestUtils::TestFileName(const QString& test_sub_dir, const QString& file_name)

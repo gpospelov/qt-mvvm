@@ -36,6 +36,7 @@ void CreateTestDirectory(const QString& test_sub_dir);
 
 //! Returns full path to the main test folder in CMAKE_BINARY_DIR.
 QString TestDirectoryPath(const QString& test_sub_dir);
+std::string TestDirectoryPath(const std::string& test_sub_dir);
 
 //! Returns full path to the file in test directory.
 QString TestFileName(const QString& test_sub_dir, const QString& file_name);

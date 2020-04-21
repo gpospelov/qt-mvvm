@@ -12,7 +12,8 @@
 
 #include <vector>
 
-namespace ModelView {
+namespace ModelView
+{
 class SessionModel;
 }
 
@@ -21,8 +22,9 @@ class SessionModel;
 
 class ApplicationModelsInterface
 {
+public:
     //! Returns vector of models intended for saving on disk.
-    virtual std::vector<ModelView::SessionModel *> persistent_models() const = 0;
+    virtual std::vector<ModelView::SessionModel*> persistent_models() const = 0;
 };
 
 #endif //  APPLICATIONMODELSINTERFACE_H

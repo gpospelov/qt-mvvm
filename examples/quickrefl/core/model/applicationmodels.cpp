@@ -92,7 +92,5 @@ RealDataModel* ApplicationModels::realDataModel()
 
 std::vector<SessionModel*> ApplicationModels::persistent_models() const
 {
-    std::vector<SessionModel*> result = {p_impl->m_material_model.get(),
-                                         p_impl->m_sample_model.get()};
-    return result;
+    return {p_impl->m_material_model.get(), p_impl->m_sample_model.get()};
 }
