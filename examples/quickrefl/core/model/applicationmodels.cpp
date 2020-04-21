@@ -19,7 +19,6 @@
 #include <mvvm/model/itempool.h>
 #include <mvvm/model/modelutils.h>
 #include <mvvm/model/sessionitem.h>
-#include <mvvm/serialization/jsondocument.h>
 
 using namespace ModelView;
 
@@ -30,7 +29,6 @@ struct ApplicationModels::ApplicationModelsImpl {
     std::unique_ptr<JobModel> m_job_model;
     std::unique_ptr<RealDataModel> m_realdata_model;
     std::unique_ptr<MaterialPropertyController> m_property_controller;
-    std::unique_ptr<JsonDocument> m_document;
     std::shared_ptr<ItemPool> item_pool;
 
     ApplicationModelsImpl()
@@ -43,9 +41,6 @@ struct ApplicationModels::ApplicationModelsImpl {
         m_realdata_model = std::make_unique<RealDataModel>();
         m_property_controller = std::make_unique<MaterialPropertyController>(m_material_model.get(),
                                                                              m_sample_model.get());
-        m_document = std::make_unique<JsonDocument>(
-            std::initializer_list<SessionModel*>{m_material_model.get(), m_sample_model.get()});
-
         m_sample_model->create_default_multilayer();
         update_material_properties();
     }
@@ -93,14 +88,4 @@ JobModel* ApplicationModels::jobModel()
 RealDataModel* ApplicationModels::realDataModel()
 {
     return p_impl->m_realdata_model.get();
-}
-
-void ApplicationModels::readFromFile(const QString& name)
-{
-    p_impl->m_document->load(name.toStdString());
-}
-
-void ApplicationModels::writeToFile(const QString& name)
-{
-    p_impl->m_document->save(name.toStdString());
 }

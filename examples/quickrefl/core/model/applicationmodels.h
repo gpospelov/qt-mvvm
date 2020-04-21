@@ -34,10 +34,6 @@ public:
     JobModel* jobModel();
     RealDataModel* realDataModel();
 
-    void readFromFile(const QString& name);
-
-    void writeToFile(const QString& name);
-
 private:
     struct ApplicationModelsImpl;
     std::unique_ptr<ApplicationModelsImpl> p_impl;
