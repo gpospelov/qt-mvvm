@@ -9,6 +9,7 @@
 
 #include "projectutils.h"
 #include <cctype>
+#include <filesystem>
 #include <mvvm/model/sessionmodel.h>
 
 namespace
@@ -16,9 +17,22 @@ namespace
 const std::string json_extention = ".json";
 }
 
+namespace fs = std::filesystem;
+
 std::string ProjectUtils::SuggestFileName(const ModelView::SessionModel& model)
 {
     std::string result = model.modelType();
     std::transform(result.begin(), result.end(), result.begin(), ::tolower);
     return result + json_extention;
+}
+
+std::vector<std::string> ProjectUtils::FindFiles(const std::string& dirname, const std::string& ext)
+{
+    std::vector<std::string> result;
+    for (const auto& entry : fs::directory_iterator(dirname)) {
+        const auto filenameStr = entry.path().filename().string();
+        if (entry.is_regular_file() && entry.path().extension() == ext)
+            result.push_back(entry.path().string());
+    }
+    return result;
 }
