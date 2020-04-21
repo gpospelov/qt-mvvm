@@ -10,7 +10,7 @@
 #ifndef IMPORTTEXTVIEW_H
 #define IMPORTTEXTVIEW_H
 
-#include <QPlainTextEdit>
+#include <QTextEdit>
 
 QT_BEGIN_NAMESPACE
 class QPaintEvent;
@@ -25,7 +25,7 @@ namespace DataImport
 
 class LineNumberArea;
 
-class ImportTextView : public QPlainTextEdit
+class ImportTextView : public QTextEdit
 {
     Q_OBJECT
 
@@ -34,6 +34,7 @@ public:
 
     void lineNumberAreaPaintEvent(QPaintEvent *event);
     int lineNumberAreaWidth();
+    int getFirstVisibleBlockId();
 
 protected:
     void resizeEvent(QResizeEvent *event) override;
@@ -41,7 +42,7 @@ protected:
 private slots:
     void updateLineNumberAreaWidth(int newBlockCount);
     void highlightCurrentLine();
-    void updateLineNumberArea(const QRect &rect, int dy);
+    void updateLineNumberArea(const QRectF &rect);
 
 private:
     QWidget *lineNumberArea;
@@ -62,6 +63,7 @@ protected:
     void paintEvent(QPaintEvent *event) override
     {
         codeEditor->lineNumberAreaPaintEvent(event);
+        update();
     }
 
 private:

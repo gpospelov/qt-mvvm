@@ -11,31 +11,29 @@
 
 #include <QPainter>
 #include <QTextBlock>
+#include <QTextDocument>
+#include <QAbstractTextDocumentLayout>
+#include <QScrollBar>
 
-//![constructor]
 namespace DataImport
 {
 
-ImportTextView::ImportTextView(QWidget *parent) : QPlainTextEdit(parent)
+ImportTextView::ImportTextView(QWidget *parent) : QTextEdit(parent)
 {
     lineNumberArea = new LineNumberArea(this);
 
-    connect(this, &ImportTextView::blockCountChanged, this, &ImportTextView::updateLineNumberAreaWidth);
-    connect(this, &ImportTextView::updateRequest, this, &ImportTextView::updateLineNumberArea);
+    connect(this->document(), &QTextDocument::blockCountChanged, this, &ImportTextView::updateLineNumberAreaWidth);
+    connect(this->document()->documentLayout(), &QAbstractTextDocumentLayout::update, this, &ImportTextView::updateLineNumberArea);
     connect(this, &ImportTextView::cursorPositionChanged, this, &ImportTextView::highlightCurrentLine);
 
     updateLineNumberAreaWidth(0);
     highlightCurrentLine();
 }
 
-//![constructor]
-
-//![extraAreaWidth]
-
 int ImportTextView::lineNumberAreaWidth()
 {
     int digits = 1;
-    int max = qMax(1, blockCount());
+    int max = qMax(1, document()->blockCount());
     while (max >= 10) {
         max /= 10;
         ++digits;
@@ -46,45 +44,26 @@ int ImportTextView::lineNumberAreaWidth()
     return space;
 }
 
-//![extraAreaWidth]
-
-//![slotUpdateExtraAreaWidth]
-
 void ImportTextView::updateLineNumberAreaWidth(int /* newBlockCount */)
 {
     setViewportMargins(lineNumberAreaWidth(), 0, 0, 0);
 }
 
-//![slotUpdateExtraAreaWidth]
-
-//![slotUpdateRequest]
-
-void ImportTextView::updateLineNumberArea(const QRect &rect, int dy)
+void ImportTextView::updateLineNumberArea(const QRectF &rect)
 {
-    if (dy)
-        lineNumberArea->scroll(0, dy);
-    else
-        lineNumberArea->update(0, rect.y(), lineNumberArea->width(), rect.height());
+    lineNumberArea->update(0, rect.y(), lineNumberArea->width(), rect.height());
 
     if (rect.contains(viewport()->rect()))
         updateLineNumberAreaWidth(0);
 }
 
-//![slotUpdateRequest]
-
-//![resizeEvent]
-
 void ImportTextView::resizeEvent(QResizeEvent *e)
 {
-    QPlainTextEdit::resizeEvent(e);
+    QTextEdit::resizeEvent(e);
 
     QRect cr = contentsRect();
     lineNumberArea->setGeometry(QRect(cr.left(), cr.top(), lineNumberAreaWidth(), cr.height()));
 }
-
-//![resizeEvent]
-
-//![cursorPositionChanged]
 
 void ImportTextView::highlightCurrentLine()
 {
@@ -105,25 +84,52 @@ void ImportTextView::highlightCurrentLine()
     setExtraSelections(extraSelections);
 }
 
-//![cursorPositionChanged]
+//! Get the first visible block id
+int ImportTextView::getFirstVisibleBlockId()
+{
+    QTextCursor curs = QTextCursor(this->document());
+    curs.movePosition(QTextCursor::Start);
+    for(int i=0; i < this->document()->blockCount(); ++i)
+    {
+        QTextBlock block = curs.block();
 
-//![extraAreaPaintEvent_0]
+        QRect r1 = this->viewport()->geometry();
+        QRect r2 = this->document()->documentLayout()->blockBoundingRect(block).translated(
+                    this->viewport()->geometry().x(), this->viewport()->geometry().y() - (
+                        this->verticalScrollBar()->sliderPosition()
+                        ) ).toRect();
+
+        if (r1.contains(r2, true)) { return i; }
+
+        curs.movePosition(QTextCursor::NextBlock);
+    }
+
+    return 0;
+}
 
 void ImportTextView::lineNumberAreaPaintEvent(QPaintEvent *event)
 {
     QPainter painter(lineNumberArea);
     painter.fillRect(event->rect(), Qt::lightGray);
 
-//![extraAreaPaintEvent_0]
+    int blockNumber = this->getFirstVisibleBlockId();
+    QTextBlock block = this->document()->findBlockByNumber(blockNumber);
+    QTextBlock prev_block = (blockNumber > 0) ? this->document()->findBlockByNumber(blockNumber-1) : block;
+    int translate_y = (blockNumber > 0) ? -this->verticalScrollBar()->sliderPosition() : 0;
+    int top = this->viewport()->geometry().top();
+    int additional_margin;
+    if (blockNumber == 0)
+        // Simply adjust to document's margin
+        additional_margin = (int) this->document()->documentMargin() -1 - this->verticalScrollBar()->sliderPosition();
+    else
+        // Getting the height of the visible part of the previous "non entirely visible" block
+        additional_margin = (int) this->document()->documentLayout()->blockBoundingRect(prev_block)
+                .translated(0, translate_y).intersected(this->viewport()->geometry()).height();
 
-//![extraAreaPaintEvent_1]
-    QTextBlock block = firstVisibleBlock();
-    int blockNumber = block.blockNumber();
-    int top = qRound(blockBoundingGeometry(block).translated(contentOffset()).top());
-    int bottom = top + qRound(blockBoundingRect(block).height());
-//![extraAreaPaintEvent_1]
+    // Shift the starting point
+    top += additional_margin;
+    int bottom = top + (int) this->document()->documentLayout()->blockBoundingRect(block).height();
 
-//![extraAreaPaintEvent_2]
     while (block.isValid() && top <= event->rect().bottom()) {
         if (block.isVisible() && bottom >= event->rect().top()) {
             QString number = QString::number(blockNumber + 1);
@@ -134,9 +140,8 @@ void ImportTextView::lineNumberAreaPaintEvent(QPaintEvent *event)
 
         block = block.next();
         top = bottom;
-        bottom = top + qRound(blockBoundingRect(block).height());
+        bottom = top + qRound(document()->documentLayout()->blockBoundingRect(block).height());
         ++blockNumber;
     }
 }
-//![extraAreaPaintEvent_2]
 }
