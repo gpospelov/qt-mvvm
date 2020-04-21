@@ -17,6 +17,7 @@
 #include <QSizePolicy>
 #include <QIcon>
 #include <QFileDialog>
+#include <QItemSelectionModel>
 
 //! This is the constructor
 DataImport::ImportFileWidget::ImportFileWidget(QWidget* parent): QWidget(parent)
@@ -56,8 +57,7 @@ void DataImport::ImportFileWidget::createWidgets()
     side_layout->addWidget(add_button);
     side_layout->addWidget(reset_button);
     side_layout->addStretch();
-    main_layout->addLayout(side_layout);   
-    setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+    main_layout->addLayout(side_layout);
 
     // Connect the buttons
     connect(
@@ -68,6 +68,16 @@ void DataImport::ImportFileWidget::createWidgets()
         reset_button, &QPushButton::clicked,
         this, &DataImport::ImportFileWidget::resetFiles
     );
+    connect(
+        p_list_view->selectionModel(), &QItemSelectionModel::currentChanged,
+        [=](QModelIndex,QModelIndex){emit selectionChanged();}
+    );
+}
+
+//! Get the current selection
+int DataImport::ImportFileWidget::currentSelection() const
+{
+    return p_list_view->currentIndex().row();
 }
 
 //! This is the method called by the add file button
