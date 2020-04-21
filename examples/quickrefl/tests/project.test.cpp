@@ -14,6 +14,7 @@
 #include <cctype>
 #include <filesystem>
 #include <mvvm/model/sessionmodel.h>
+#include <mvvm/model/propertyitem.h>
 
 namespace
 {
@@ -73,7 +74,7 @@ public:
 
 ProjectTest::~ProjectTest() = default;
 
-//! Testing helper structure.
+//! Testing saveModel.
 
 TEST_F(ProjectTest, saveModel)
 {
@@ -86,4 +87,42 @@ TEST_F(ProjectTest, saveModel)
 
     auto sample_json = std::filesystem::path(project_dir) / get_json_filename(samplemodel_name);
     EXPECT_TRUE(std::filesystem::exists(sample_json));
+
+    auto material_json = std::filesystem::path(project_dir) / get_json_filename(materialmodel_name);
+    EXPECT_TRUE(std::filesystem::exists(material_json));
+}
+
+//! Testing loadModel.
+
+TEST_F(ProjectTest, loadModel)
+{
+    ApplicationModels models;
+    Project project(&models);
+
+    auto item0 = models.sample_model->insertItem<ModelView::PropertyItem>();
+    item0->setData(std::string("sample_model_item"));
+    auto item0_identifier = item0->identifier();
+
+    auto item1 = models.material_model->insertItem<ModelView::PropertyItem>();
+    item1->setData(std::string("material_model_item"));
+    auto item1_identifier = item1->identifier();
+
+    // create project directory and save file
+    auto project_dir = create_project_dir("Untitled2");
+    project.save(project_dir);
+
+    // cleaning models
+    models.sample_model->clear();
+    models.material_model->clear();
+    EXPECT_EQ(models.sample_model->rootItem()->childrenCount(), 0);
+    EXPECT_EQ(models.material_model->rootItem()->childrenCount(), 0);
+
+    // loading
+    project.load(project_dir);
+    EXPECT_EQ(models.sample_model->rootItem()->childrenCount(), 1);
+    EXPECT_EQ(models.material_model->rootItem()->childrenCount(), 1);
+
+    // checking identifiers
+    EXPECT_EQ(models.sample_model->rootItem()->children()[0]->identifier(), item0_identifier);
+    EXPECT_EQ(models.material_model->rootItem()->children()[0]->identifier(), item1_identifier);
 }

@@ -11,6 +11,7 @@
 #include "applicationmodelsinterface.h"
 #include "projectutils.h"
 #include <filesystem>
+#include <functional>
 #include <mvvm/core/modeldocuments.h>
 
 struct Project::ProjectImpl {
@@ -44,5 +45,15 @@ bool Project::save(const std::string& dirname) const
 
 bool Project::load(const std::string& dirname)
 {
+    std::filesystem::path outputdir(dirname);
+    if (!std::filesystem::exists(outputdir))
+        return false;
+
+    for (auto model : p_impl->models()) {
+        auto document = ModelView::CreateJsonDocument({model});
+        std::filesystem::path filename = outputdir / ProjectUtils::SuggestFileName(*model);
+        document->load(filename.string());
+    }
+
     return true;
 }
