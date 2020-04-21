@@ -15,6 +15,7 @@
 #include <QGroupBox>
 #include <QTabWidget>
 #include <QTableView>
+#include "importlogic.h"
 
 namespace DataImport
 {
@@ -27,6 +28,8 @@ class ImportTextView;
 //! This is the main dialog for the data loader
 class DataLoaderDialog : public QDialog
 {
+    Q_OBJECT
+
 public:
     DataLoaderDialog(QWidget* parent = nullptr);
     ~DataLoaderDialog() = default;
@@ -36,11 +39,15 @@ private:
     void setUpParameterSpace(QGroupBox* conainer);
     void setUpSelectionSpace(QTabWidget* tab_widget);
 
+private slots:
+    void selectedFileChanged();
+
 private:
     ImportFileWidget* p_import_file_list{nullptr};
     ImportParameterWidget* p_parameter_dialog{nullptr};
     ImportTextView* p_text_view{nullptr};
     QTableView* p_table_view{nullptr};
+    std::unique_ptr<ImportLogic> p_data_import_logic;
 };
 }
 
