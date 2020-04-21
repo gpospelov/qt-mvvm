@@ -300,10 +300,10 @@ TEST_F(JsonVariantTest, toFileAndBack)
 
     // writing to file
     auto fileName = TestUtils::TestFileName(test_dir, "variants.json");
-    TestUtils::SaveJson(json_array, QString::fromStdString(fileName));
+    TestUtils::SaveJson(json_array, fileName);
 
     // reading variants from file
-    auto document = TestUtils::LoadJson(QString::fromStdString(fileName));
+    auto document = TestUtils::LoadJson(fileName);
     std::vector<QVariant> reco_variants;
     for (const auto x : document.array())
         reco_variants.push_back(converter.get_variant(x.toObject()));

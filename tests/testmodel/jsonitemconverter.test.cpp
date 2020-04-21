@@ -136,9 +136,9 @@ TEST_F(JsonItemConverterTest, propertyItemToFileAndBack)
 
     // saving object to file
     auto fileName = TestUtils::TestFileName(test_dir, "propertyitem.json");
-    TestUtils::SaveJson(object, QString::fromStdString(fileName));
+    TestUtils::SaveJson(object, fileName);
 
-    auto document = TestUtils::LoadJson(QString::fromStdString(fileName));
+    auto document = TestUtils::LoadJson(fileName);
     auto reco = converter->from_json(document.object());
 
     EXPECT_EQ(reco->parent(), nullptr);
@@ -206,10 +206,10 @@ TEST_F(JsonItemConverterTest, parentAndChildToFileAndBack)
 
     // saving object to file
     auto fileName = TestUtils::TestFileName(test_dir, "parentandchild.json");
-    TestUtils::SaveJson(object, QString::fromStdString(fileName));
+    TestUtils::SaveJson(object, fileName);
 
     // converting document back to item
-    auto document = TestUtils::LoadJson(QString::fromStdString(fileName));
+    auto document = TestUtils::LoadJson(fileName);
     auto reco_parent = converter->from_json(document.object());
 
     // checking parent reconstruction

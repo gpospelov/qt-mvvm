@@ -96,9 +96,9 @@ TEST_F(JsonTagInfoTest, tagInfoToFileAndBack)
 
     // saving object to file
     auto fileName = TestUtils::TestFileName(test_dir, "taginfo.json");
-    TestUtils::SaveJson(object, QString::fromStdString(fileName));
+    TestUtils::SaveJson(object, fileName);
 
-    auto document = TestUtils::LoadJson(QString::fromStdString(fileName));
+    auto document = TestUtils::LoadJson(fileName);
     TagInfo reco_tag = converter.from_json(document.object());
 
     EXPECT_EQ(reco_tag.name(), tag_name);
