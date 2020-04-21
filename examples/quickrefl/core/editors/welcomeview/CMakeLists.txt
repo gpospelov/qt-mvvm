@@ -5,6 +5,8 @@ target_sources(${library_name} PRIVATE
     welcomeview.h
     project.cpp
     project.h
+    projectutils.cpp
+    projectutils.h
     projectinterface.h
 )
 
