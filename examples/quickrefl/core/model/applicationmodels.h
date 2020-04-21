@@ -10,8 +10,13 @@
 #ifndef APPLICATIONMODELS_H
 #define APPLICATIONMODELS_H
 
-#include <QString>
+#include "applicationmodelsinterface.h"
 #include <memory>
+
+namespace ModelView
+{
+class SessionModel;
+}
 
 class MaterialModel;
 class SampleModel;
@@ -22,7 +27,7 @@ class RealDataModel;
 
 //!  Main class to holds all models of GUI session.
 
-class ApplicationModels
+class ApplicationModels : public ApplicationModelsInterface
 {
 public:
     ApplicationModels();
@@ -33,6 +38,8 @@ public:
     SLDElementModel* sldViewModel();
     JobModel* jobModel();
     RealDataModel* realDataModel();
+
+    std::vector<ModelView::SessionModel*> persistent_models() const override;
 
 private:
     struct ApplicationModelsImpl;
