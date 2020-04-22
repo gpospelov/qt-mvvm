@@ -12,9 +12,7 @@
 #include "projectutils.h"
 #include <functional>
 #include <mvvm/core/modeldocuments.h>
-#include <mvvm/core/filesystem.h>
-
-namespace fs = std::filesystem;
+#include <mvvm/utils/fileutils.h>
 
 struct Project::ProjectImpl {
     ApplicationModelsInterface* app_models{nullptr};
@@ -33,28 +31,26 @@ Project::~Project() = default;
 
 bool Project::save(const std::string& dirname) const
 {
-    fs::path outputdir(dirname);
-    if (!fs::exists(outputdir))
+    if (!ModelView::Utils::exists(dirname))
         return false;
 
     for (auto model : p_impl->models()) {
         auto document = ModelView::CreateJsonDocument({model});
-        fs::path filename = outputdir / ProjectUtils::SuggestFileName(*model);
-        document->save(filename.string());
+        auto filename = ModelView::Utils::join(dirname, ProjectUtils::SuggestFileName(*model));
+        document->save(filename);
     }
     return true;
 }
 
 bool Project::load(const std::string& dirname)
 {
-    fs::path outputdir(dirname);
-    if (!fs::exists(outputdir))
+    if (!ModelView::Utils::exists(dirname))
         return false;
 
     for (auto model : p_impl->models()) {
         auto document = ModelView::CreateJsonDocument({model});
-        fs::path filename = outputdir / ProjectUtils::SuggestFileName(*model);
-        document->load(filename.string());
+        auto filename = ModelView::Utils::join(dirname, ProjectUtils::SuggestFileName(*model));
+        document->load(filename);
     }
 
     return true;

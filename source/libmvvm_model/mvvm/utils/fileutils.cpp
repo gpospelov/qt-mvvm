@@ -10,9 +10,22 @@
 #include <QDir>
 #include <QFileInfo>
 #include <mvvm/utils/fileutils.h>
+#include <mvvm/core/filesystem.h>
 #include <stdexcept>
 
 using namespace ModelView;
+
+bool Utils::exists(const std::string& fileName)
+{
+    QFileInfo info(QString::fromStdString(fileName));
+    return info.exists();
+}
+
+std::string Utils::join(const std::string& part1, const std::string& part2)
+{
+    auto path = std::filesystem::path(part1) / std::filesystem::path(part2);
+    return path.string();
+}
 
 void Utils::create_dir(const std::string& dir_name)
 {
@@ -20,12 +33,6 @@ void Utils::create_dir(const std::string& dir_name)
         Utils::removeRecursively(dir_name);
 
     Utils::create_subdir(".", dir_name);
-}
-
-bool Utils::exists(const std::string& fileName)
-{
-    QFileInfo info(QString::fromStdString(fileName));
-    return info.exists();
 }
 
 void Utils::create_subdir(const std::string& parentName, const std::string& subdirName)

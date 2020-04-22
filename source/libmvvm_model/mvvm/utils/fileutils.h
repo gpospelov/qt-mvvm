@@ -22,6 +22,9 @@ namespace Utils
 //! Returns true if file exists.
 CORE_EXPORT bool exists(const std::string& fileName);
 
+//! Returns true if file exists.
+CORE_EXPORT std::string join(const std::string& part1, const std::string& part2);
+
 //! Creates directory in current working directory. If such directory already exists,
 //! it will be removed with all its content.
 // FIXME do not remove existing directory
