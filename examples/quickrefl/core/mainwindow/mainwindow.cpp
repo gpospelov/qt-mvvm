@@ -12,7 +12,7 @@
 #include "importwindow.h"
 #include "mainbarwidget.h"
 #include "refldockwindow.h"
-#include <QAction>
+#include "welcomeview.h"
 #include <QCoreApplication>
 #include <QFileDialog>
 #include <QMenuBar>
@@ -59,7 +59,7 @@ void MainWindow::init_application()
 
 void MainWindow::init_tabs()
 {
-    bar_widget->addWidget(new QWidget, "Project");
+    bar_widget->addWidget(new WelcomeView, "Project");
     bar_widget->addWidget(import_window, "Data");
     bar_widget->addWidget(refl_window, "Simulation");
     bar_widget->addWidget(new QWidget, "Fitting");

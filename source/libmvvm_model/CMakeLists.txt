@@ -11,3 +11,7 @@ target_include_directories(mvvm_model PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_L
 
 # to make clang code model in Qt creator happy
 target_compile_features(mvvm_model PUBLIC cxx_std_17)
+
+if (DISABLE_FILESYSTEM)
+add_definitions(-DDISABLE_FILESYSTEM)
+endif()

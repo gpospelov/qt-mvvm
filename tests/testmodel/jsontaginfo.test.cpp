@@ -25,12 +25,10 @@ class JsonTagInfoTest : public ::testing::Test
 public:
     ~JsonTagInfoTest();
 
-    static const QString test_dir;
+    static inline const std::string test_dir = "test_JsonTagInfo";
 
     static void SetUpTestCase() { TestUtils::CreateTestDirectory(test_dir); }
 };
-
-const QString JsonTagInfoTest::test_dir = "test_JsonTagInfo";
 
 JsonTagInfoTest::~JsonTagInfoTest() = default;
 

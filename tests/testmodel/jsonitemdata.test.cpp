@@ -26,12 +26,10 @@ class JsonItemDataTest : public ::testing::Test
 public:
     ~JsonItemDataTest();
 
-    static const QString test_dir;
+    static inline const std::string test_dir = "test_JsonItemData";
 
     static void SetUpTestCase() { TestUtils::CreateTestDirectory(test_dir); }
 };
-
-const QString JsonItemDataTest::test_dir = "test_JsonItemData";
 
 JsonItemDataTest::~JsonItemDataTest() = default;
 

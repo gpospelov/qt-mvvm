@@ -8,9 +8,8 @@
 // ************************************************************************** //
 
 #include "google_test.h"
+#include "test_utils.h"
 #include <QDir>
-#include <QFile>
-#include <QTextStream>
 #include <mvvm/utils/fileutils.h>
 #include <stdexcept>
 #include <string>
@@ -22,36 +21,44 @@ class FileUtilsTest : public ::testing::Test
 public:
     ~FileUtilsTest();
 
-    //! Helper function to create test file in a given directory (directory should exist).
-    void createTestFile(const std::string& dirname, const std::string& fileName)
-    {
-        std::string filename = dirname.empty() ? fileName : dirname + "/" + fileName;
-
-        QFile file(QString::fromStdString(filename));
-        if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
-            throw std::runtime_error("TestFileUtils::createTestFile() -> Error. "
-                                     "Can't create file");
-
-        QTextStream out(&file);
-        out << "Test file " << 42 << "\n";
-        file.close();
-    }
-    std::string projectDir() const { return TestConfig::TestOutputDir() + "/" + "test_FileUtils"; }
+    static inline const std::string test_dir = "test_FileUtils";
+    static void SetUpTestCase() { TestUtils::CreateTestDirectory(test_dir); }
+    std::string testDir() const { return TestUtils::TestDirectoryPath(test_dir); }
 };
 
 FileUtilsTest::~FileUtilsTest() = default;
 
-TEST_F(FileUtilsTest, initialState)
+TEST_F(FileUtilsTest, exists)
 {
-    QDir dir(QString::fromStdString(projectDir()));
-    if (dir.exists()) {
-        EXPECT_TRUE(Utils::removeRecursively(projectDir()) == true);
-        EXPECT_TRUE(dir.exists() == false);
-    }
+    EXPECT_TRUE(Utils::exists(testDir()));
+}
 
-    Utils::create_subdir(".", projectDir());
-    EXPECT_TRUE(Utils::exists(projectDir()));
+TEST_F(FileUtilsTest, create_directory)
+{
+    std::string dirname = testDir() + std::string("/") + "subdir";
+    Utils::remove(dirname);
 
-    createTestFile(projectDir(), "a.txt");
-    EXPECT_TRUE(Utils::exists(projectDir() + "/a.txt"));
+    EXPECT_TRUE(Utils::create_directory(dirname));
+    EXPECT_TRUE(Utils::exists(dirname));
+}
+
+TEST_F(FileUtilsTest, remove_all)
+{
+    std::string dirname = testDir() + std::string("/") + "subdir2";
+    Utils::create_directory(dirname);
+
+    EXPECT_TRUE(Utils::exists(dirname));
+    Utils::remove_all((dirname));
+    EXPECT_FALSE(Utils::exists(dirname));
+}
+
+#include <QDebug>
+TEST_F(FileUtilsTest, FindFiles)
+{
+    TestUtils::CreateTestFile(testDir(), "a.txt");
+    TestUtils::CreateTestFile(testDir(), "name0.json");
+    TestUtils::CreateTestFile(testDir(), "name1.json");
+    ASSERT_EQ(Utils::FindFiles(testDir(), ".json").size(), 2);
+    qDebug() << "AAA" << QString::fromStdString(Utils::FindFiles(testDir(), ".json")[0]);
+    EXPECT_EQ(Utils::FindFiles(testDir(), ".json")[0], Utils::join(testDir(), "name0.json"));
 }
