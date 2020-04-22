@@ -21,22 +21,29 @@ class FileUtilsTest : public ::testing::Test
 public:
     ~FileUtilsTest();
 
-    std::string projectDir() const { return TestConfig::TestOutputDir() + "/" + "test_FileUtils"; }
+    static inline const std::string test_dir = "test_FileUtils";
+    static void SetUpTestCase() { TestUtils::CreateTestDirectory(test_dir); }
+    std::string testDir() const { return TestUtils::TestDirectoryPath(test_dir); }
 };
 
 FileUtilsTest::~FileUtilsTest() = default;
 
+TEST_F(FileUtilsTest, exists)
+{
+    EXPECT_TRUE(Utils::exists(testDir()));
+}
+
 TEST_F(FileUtilsTest, initialState)
 {
-    QDir dir(QString::fromStdString(projectDir()));
+    QDir dir(QString::fromStdString(testDir()));
     if (dir.exists()) {
-        EXPECT_TRUE(Utils::removeRecursively(projectDir()) == true);
+        EXPECT_TRUE(Utils::removeRecursively(testDir()) == true);
         EXPECT_TRUE(dir.exists() == false);
     }
 
-    Utils::create_subdir(".", projectDir());
-    EXPECT_TRUE(Utils::exists(projectDir()));
+    Utils::create_subdir(".", testDir());
+    EXPECT_TRUE(Utils::exists(testDir()));
 
-    TestUtils::CreateTestFile(projectDir(), "a.txt");
-    EXPECT_TRUE(Utils::exists(projectDir() + "/a.txt"));
+    TestUtils::CreateTestFile(testDir(), "a.txt");
+    EXPECT_TRUE(Utils::exists(testDir() + "/a.txt"));
 }

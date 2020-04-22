@@ -9,15 +9,13 @@
 
 #include "projectutils.h"
 #include <cctype>
-#include <filesystem>
 #include <mvvm/model/sessionmodel.h>
+#include <mvvm/core/filesystem.h>
 
 namespace
 {
 const std::string json_extention = ".json";
 }
-
-namespace fs = std::filesystem;
 
 std::string ProjectUtils::SuggestFileName(const ModelView::SessionModel& model)
 {

@@ -10,9 +10,9 @@
 #include "project.h"
 #include "applicationmodelsinterface.h"
 #include "projectutils.h"
-#include <filesystem>
 #include <functional>
 #include <mvvm/core/modeldocuments.h>
+#include <mvvm/core/filesystem.h>
 
 struct Project::ProjectImpl {
     ApplicationModelsInterface* app_models{nullptr};
@@ -31,13 +31,13 @@ Project::~Project() = default;
 
 bool Project::save(const std::string& dirname) const
 {
-    std::filesystem::path outputdir(dirname);
-    if (!std::filesystem::exists(outputdir))
+    fs::path outputdir(dirname);
+    if (!fs::exists(outputdir))
         return false;
 
     for (auto model : p_impl->models()) {
         auto document = ModelView::CreateJsonDocument({model});
-        std::filesystem::path filename = outputdir / ProjectUtils::SuggestFileName(*model);
+        fs::path filename = outputdir / ProjectUtils::SuggestFileName(*model);
         document->save(filename.string());
     }
     return true;
@@ -45,13 +45,13 @@ bool Project::save(const std::string& dirname) const
 
 bool Project::load(const std::string& dirname)
 {
-    std::filesystem::path outputdir(dirname);
-    if (!std::filesystem::exists(outputdir))
+    fs::path outputdir(dirname);
+    if (!fs::exists(outputdir))
         return false;
 
     for (auto model : p_impl->models()) {
         auto document = ModelView::CreateJsonDocument({model});
-        std::filesystem::path filename = outputdir / ProjectUtils::SuggestFileName(*model);
+        fs::path filename = outputdir / ProjectUtils::SuggestFileName(*model);
         document->load(filename.string());
     }
 

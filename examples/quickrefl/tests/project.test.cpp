@@ -12,9 +12,9 @@
 #include "project.h"
 #include "test_utils.h"
 #include <cctype>
-#include <filesystem>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/model/propertyitem.h>
+#include <mvvm/core/filesystem.h>
 
 namespace
 {
@@ -59,15 +59,15 @@ public:
 
     static void SetUpTestCase() { TestUtils::CreateTestDirectory(test_dir); }
 
-    std::filesystem::path test_path() const { return {TestUtils::TestDirectoryPath(test_dir)}; }
+    fs::path test_path() const { return {TestUtils::TestDirectoryPath(test_dir)}; }
 
     //! Create project directory in test directory.
     //! Remove recursively previous one with same name, if exist.
     std::string create_project_dir(const std::string& name)
     {
-        std::filesystem::path project_path = test_path() / name;
-        std::filesystem::remove_all(project_path);
-        std::filesystem::create_directory(project_path);
+        fs::path project_path = test_path() / name;
+        fs::remove_all(project_path);
+        fs::create_directory(project_path);
         return project_path.string();
     }
 };
@@ -85,11 +85,11 @@ TEST_F(ProjectTest, saveModel)
     auto project_dir = create_project_dir("Untitled1");
     project.save(project_dir);
 
-    auto sample_json = std::filesystem::path(project_dir) / get_json_filename(samplemodel_name);
-    EXPECT_TRUE(std::filesystem::exists(sample_json));
+    auto sample_json = fs::path(project_dir) / get_json_filename(samplemodel_name);
+    EXPECT_TRUE(fs::exists(sample_json));
 
-    auto material_json = std::filesystem::path(project_dir) / get_json_filename(materialmodel_name);
-    EXPECT_TRUE(std::filesystem::exists(material_json));
+    auto material_json = fs::path(project_dir) / get_json_filename(materialmodel_name);
+    EXPECT_TRUE(fs::exists(material_json));
 }
 
 //! Testing loadModel.
