@@ -32,6 +32,11 @@ bool Utils::create_directory(const std::string& path)
     return std::filesystem::create_directory(path);
 }
 
+bool Utils::remove(const std::string& path)
+{
+    return std::filesystem::remove(path);
+}
+
 void Utils::remove_all(const std::string& path)
 {
     std::filesystem::remove_all(path);

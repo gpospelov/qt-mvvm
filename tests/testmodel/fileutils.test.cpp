@@ -36,16 +36,19 @@ TEST_F(FileUtilsTest, exists)
 TEST_F(FileUtilsTest, create_directory)
 {
     std::string dirname = testDir() + std::string("/") + "subdir";
+    Utils::remove(dirname);
+
     EXPECT_TRUE(Utils::create_directory(dirname));
     EXPECT_TRUE(Utils::exists(dirname));
 }
 
 TEST_F(FileUtilsTest, remove_all)
 {
-    std::string dirname = testDir() + std::string("/") + "subdir";
-    EXPECT_TRUE(Utils::create_directory(dirname));
-    Utils::remove_all((dirname));
+    std::string dirname = testDir() + std::string("/") + "subdir2";
+    Utils::create_directory(dirname);
 
+    EXPECT_TRUE(Utils::exists(dirname));
+    Utils::remove_all((dirname));
     EXPECT_FALSE(Utils::exists(dirname));
 }
 

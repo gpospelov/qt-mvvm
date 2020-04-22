@@ -30,6 +30,9 @@ CORE_EXPORT std::string join(const std::string& part1, const std::string& part2)
 //! no error reported.
 CORE_EXPORT bool create_directory(const std::string& path);
 
+//! Removes file or empty directory.
+CORE_EXPORT bool remove(const std::string& path);
+
 //! Removes directory with all its content.
 CORE_EXPORT void remove_all(const std::string& path);
 
