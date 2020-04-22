@@ -21,6 +21,8 @@
 #include <string>
 
 using namespace ModelView;
+namespace fs = std::filesystem;
+
 
 namespace
 {

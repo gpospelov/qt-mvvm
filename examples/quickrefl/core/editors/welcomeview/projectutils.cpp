@@ -12,6 +12,8 @@
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/core/filesystem.h>
 
+namespace fs = std::filesystem;
+
 namespace
 {
 const std::string json_extention = ".json";

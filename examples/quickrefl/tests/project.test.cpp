@@ -16,6 +16,8 @@
 #include <mvvm/model/propertyitem.h>
 #include <mvvm/core/filesystem.h>
 
+namespace fs = std::filesystem;
+
 namespace
 {
 const std::string samplemodel_name = "SampleModel";

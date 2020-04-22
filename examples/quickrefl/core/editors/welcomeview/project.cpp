@@ -14,6 +14,8 @@
 #include <mvvm/core/modeldocuments.h>
 #include <mvvm/core/filesystem.h>
 
+namespace fs = std::filesystem;
+
 struct Project::ProjectImpl {
     ApplicationModelsInterface* app_models{nullptr};
     ProjectImpl(ApplicationModelsInterface* app_models) : app_models(app_models) {}
