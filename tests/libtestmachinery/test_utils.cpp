@@ -14,14 +14,13 @@
 #include <QJsonObject>
 #include <QString>
 #include <QTextStream>
-#include <mvvm/core/filesystem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/serialization/jsonconverterinterfaces.h>
 #include <mvvm/serialization/jsonutils.h>
+#include <mvvm/utils/fileutils.h>
 #include <string>
 
 using namespace ModelView;
-namespace fs = std::filesystem;
 
 
 namespace
@@ -31,20 +30,18 @@ void SaveDocument(const QJsonDocument& document, const std::string& fileName);
 
 void TestUtils::CreateTestDirectory(const std::string& test_sub_dir)
 {
-    auto path = TestDirectoryPath(test_sub_dir);
-    fs::create_directory(fs::path(path));
+    Utils::create_dir(TestDirectoryPath(test_sub_dir));
 }
 
 std::string TestUtils::TestDirectoryPath(const std::string& test_sub_dir)
 {
-    auto result = fs::path(TestConfig::TestOutputDir()) / test_sub_dir;
-    return result.string();
+    return std::string(TestConfig::TestOutputDir()) + std::string("/") + test_sub_dir;
 }
 
 std::string TestUtils::TestFileName(const std::string& test_sub_dir, const std::string& file_name)
 {
-    fs::path result = fs::path(TestDirectoryPath(test_sub_dir)) / file_name;
-    return result.string();
+
+    return TestDirectoryPath(test_sub_dir) + std::string("/") + file_name;
 }
 
 void TestUtils::SaveJson(const QJsonObject& object, const std::string& fileName)
