@@ -52,11 +52,13 @@ TEST_F(FileUtilsTest, remove_all)
     EXPECT_FALSE(Utils::exists(dirname));
 }
 
+#include <QDebug>
 TEST_F(FileUtilsTest, FindFiles)
 {
     TestUtils::CreateTestFile(testDir(), "a.txt");
     TestUtils::CreateTestFile(testDir(), "name0.json");
     TestUtils::CreateTestFile(testDir(), "name1.json");
     ASSERT_EQ(Utils::FindFiles(testDir(), ".json").size(), 2);
-    ASSERT_EQ(Utils::FindFiles(testDir(), ".json")[0], testDir() + "/name0.json");
+    qDebug() << "AAA" << QString::fromStdString(Utils::FindFiles(testDir(), ".json")[0]);
+    EXPECT_EQ(Utils::FindFiles(testDir(), ".json")[0], Utils::join(testDir(), "name0.json"));
 }

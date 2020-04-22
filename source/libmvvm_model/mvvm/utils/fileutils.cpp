@@ -70,9 +70,11 @@ void Utils::remove_all(const std::string& path)
 #endif
 }
 
+#include <QDebug>
 std::vector<std::string> Utils::FindFiles(const std::string& dirname, const std::string& ext)
 {
 #ifdef DISABLE_FILESYSTEM
+    qDebug() << "1.1";
     std::vector<std::string> result;
     QDir dir(QString::fromStdString(dirname));
     if (dir.exists()) {
@@ -84,6 +86,7 @@ std::vector<std::string> Utils::FindFiles(const std::string& dirname, const std:
     }
     return result;
 #else
+    qDebug() << "1.2";
     std::vector<std::string> result;
     for (const auto& entry : std::filesystem::directory_iterator(dirname)) {
         const auto filenameStr = entry.path().filename().string();
