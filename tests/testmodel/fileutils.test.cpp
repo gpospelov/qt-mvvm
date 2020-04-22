@@ -33,6 +33,22 @@ TEST_F(FileUtilsTest, exists)
     EXPECT_TRUE(Utils::exists(testDir()));
 }
 
+TEST_F(FileUtilsTest, create_directory)
+{
+    std::string dirname = testDir() + std::string("/") + "subdir";
+    EXPECT_TRUE(Utils::create_directory(dirname));
+    EXPECT_TRUE(Utils::exists(dirname));
+}
+
+TEST_F(FileUtilsTest, remove_all)
+{
+    std::string dirname = testDir() + std::string("/") + "subdir";
+    EXPECT_TRUE(Utils::create_directory(dirname));
+    Utils::remove_all((dirname));
+
+    EXPECT_FALSE(Utils::exists(dirname));
+}
+
 TEST_F(FileUtilsTest, initialState)
 {
     QDir dir(QString::fromStdString(testDir()));
@@ -46,4 +62,13 @@ TEST_F(FileUtilsTest, initialState)
 
     TestUtils::CreateTestFile(testDir(), "a.txt");
     EXPECT_TRUE(Utils::exists(testDir() + "/a.txt"));
+}
+
+TEST_F(FileUtilsTest, FindFiles)
+{
+    TestUtils::CreateTestFile(testDir(), "a.txt");
+    TestUtils::CreateTestFile(testDir(), "name0.json");
+    TestUtils::CreateTestFile(testDir(), "name1.json");
+    ASSERT_EQ(Utils::FindFiles(testDir(), ".json").size(), 2);
+    ASSERT_EQ(Utils::FindFiles(testDir(), ".json")[0], testDir() + "/name0.json");
 }

@@ -10,9 +10,6 @@
 #include "projectutils.h"
 #include <cctype>
 #include <mvvm/model/sessionmodel.h>
-#include <mvvm/core/filesystem.h>
-
-namespace fs = std::filesystem;
 
 namespace
 {
@@ -26,13 +23,3 @@ std::string ProjectUtils::SuggestFileName(const ModelView::SessionModel& model)
     return result + json_extention;
 }
 
-std::vector<std::string> ProjectUtils::FindFiles(const std::string& dirname, const std::string& ext)
-{
-    std::vector<std::string> result;
-    for (const auto& entry : fs::directory_iterator(dirname)) {
-        const auto filenameStr = entry.path().filename().string();
-        if (entry.is_regular_file() && entry.path().extension() == ext)
-            result.push_back(entry.path().string());
-    }
-    return result;
-}

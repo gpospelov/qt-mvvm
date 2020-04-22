@@ -12,11 +12,9 @@
 #include "project.h"
 #include "test_utils.h"
 #include <cctype>
-#include <mvvm/model/sessionmodel.h>
 #include <mvvm/model/propertyitem.h>
-#include <mvvm/core/filesystem.h>
-
-namespace fs = std::filesystem;
+#include <mvvm/model/sessionmodel.h>
+#include <mvvm/utils/fileutils.h>
 
 namespace
 {
@@ -58,19 +56,17 @@ public:
     };
 
     static inline const std::string test_dir = "test_QuickReflProject";
-
     static void SetUpTestCase() { TestUtils::CreateTestDirectory(test_dir); }
-
-    fs::path test_path() const { return {TestUtils::TestDirectoryPath(test_dir)}; }
+    std::string testDir() const { return {TestUtils::TestDirectoryPath(test_dir)}; }
 
     //! Create project directory in test directory.
     //! Remove recursively previous one with same name, if exist.
     std::string create_project_dir(const std::string& name)
     {
-        fs::path project_path = test_path() / name;
-        fs::remove_all(project_path);
-        fs::create_directory(project_path);
-        return project_path.string();
+        auto path = ModelView::Utils::join(testDir(), name);
+        ModelView::Utils::remove_all(path);
+        ModelView::Utils::create_directory(path);
+        return path;
     }
 };
 
@@ -87,11 +83,11 @@ TEST_F(ProjectTest, saveModel)
     auto project_dir = create_project_dir("Untitled1");
     project.save(project_dir);
 
-    auto sample_json = fs::path(project_dir) / get_json_filename(samplemodel_name);
-    EXPECT_TRUE(fs::exists(sample_json));
+    auto sample_json = ModelView::Utils::join(project_dir, get_json_filename(samplemodel_name));
+    EXPECT_TRUE(ModelView::Utils::exists(sample_json));
 
-    auto material_json = fs::path(project_dir) / get_json_filename(materialmodel_name);
-    EXPECT_TRUE(fs::exists(material_json));
+    auto material_json = ModelView::Utils::join(project_dir, get_json_filename(materialmodel_name));
+    EXPECT_TRUE(ModelView::Utils::exists(material_json));
 }
 
 //! Testing loadModel.

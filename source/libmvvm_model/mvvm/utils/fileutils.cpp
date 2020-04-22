@@ -27,6 +27,16 @@ std::string Utils::join(const std::string& part1, const std::string& part2)
     return path.string();
 }
 
+bool Utils::create_directory(const std::string& path)
+{
+    return std::filesystem::create_directory(path);
+}
+
+void Utils::remove_all(const std::string& path)
+{
+    std::filesystem::remove_all(path);
+}
+
 void Utils::create_dir(const std::string& dir_name)
 {
     if (Utils::exists(dir_name))
@@ -56,4 +66,15 @@ bool Utils::removeRecursively(const std::string& dirname)
                                  + dirname + "'.");
 
     return dir.removeRecursively();
+}
+
+std::vector<std::string> Utils::FindFiles(const std::string& dirname, const std::string& ext)
+{
+    std::vector<std::string> result;
+    for (const auto& entry : std::filesystem::directory_iterator(dirname)) {
+        const auto filenameStr = entry.path().filename().string();
+        if (entry.is_regular_file() && entry.path().extension() == ext)
+            result.push_back(entry.path().string());
+    }
+    return result;
 }

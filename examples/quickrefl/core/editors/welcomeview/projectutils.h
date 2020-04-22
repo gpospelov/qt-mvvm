@@ -26,8 +26,6 @@ namespace ProjectUtils
 //! Suggests file name which can be used to store json content of given model.
 std::string SuggestFileName(const ModelView::SessionModel& model);
 
-//! Returns list of files with given extention found in given directory.
-std::vector<std::string> FindFiles(const std::string& dirname, const std::string& ext);
 } // namespace ProjectUtils
 
 #endif // PROJECTUTILS_H
