@@ -30,7 +30,7 @@ void SaveDocument(const QJsonDocument& document, const std::string& fileName);
 
 void TestUtils::CreateTestDirectory(const std::string& test_sub_dir)
 {
-    Utils::create_dir(TestDirectoryPath(test_sub_dir));
+    Utils::create_directory(TestDirectoryPath(test_sub_dir));
 }
 
 std::string TestUtils::TestDirectoryPath(const std::string& test_sub_dir)

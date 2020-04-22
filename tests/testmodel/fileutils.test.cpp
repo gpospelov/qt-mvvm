@@ -49,21 +49,6 @@ TEST_F(FileUtilsTest, remove_all)
     EXPECT_FALSE(Utils::exists(dirname));
 }
 
-TEST_F(FileUtilsTest, initialState)
-{
-    QDir dir(QString::fromStdString(testDir()));
-    if (dir.exists()) {
-        EXPECT_TRUE(Utils::removeRecursively(testDir()) == true);
-        EXPECT_TRUE(dir.exists() == false);
-    }
-
-    Utils::create_subdir(".", testDir());
-    EXPECT_TRUE(Utils::exists(testDir()));
-
-    TestUtils::CreateTestFile(testDir(), "a.txt");
-    EXPECT_TRUE(Utils::exists(testDir() + "/a.txt"));
-}
-
 TEST_F(FileUtilsTest, FindFiles)
 {
     TestUtils::CreateTestFile(testDir(), "a.txt");
