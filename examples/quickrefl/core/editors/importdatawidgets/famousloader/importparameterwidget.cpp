@@ -71,7 +71,7 @@ void DataImport::LineBlockWidget::createComponents()
 {
     // Initialise all the widgets
     p_tab_widget = new QTabWidget(this);
-    p_active_checkbox = new Switch(this);
+    p_active_checkbox = new SwitchSpace::Switch(this);
     p_type_select = new QComboBox(this);
     p_line_start = new QSpinBox(this);
     p_line_end = new QSpinBox(this);
@@ -209,7 +209,7 @@ void DataImport::LineBlockWidget::setRangeLayout()
 //! Connect all the widgets of the layout
 void DataImport::LineBlockWidget::connectAll()
 {
-    connect(p_active_checkbox, &Switch::stateChanged, this,
+    connect(p_active_checkbox, &SwitchSpace::Switch::stateChanged, this,
             &DataImport::LineBlockWidget::setEnabled);
     connect(p_type_select, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
             this, &DataImport::LineBlockWidget::typeChanged);
@@ -287,9 +287,9 @@ void DataImport::LineBlockWidget::connectSubcomponents()
                 dynamic_cast<QSpinBox*>(object), 
                 static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),
                 this, &DataImport::LineBlockWidget::dataChanged);
-        if (dynamic_cast<Switch*>(object))
+        if (dynamic_cast<SwitchSpace::Switch*>(object))
             connect(
-                dynamic_cast<Switch*>(object), &Switch::stateChanged,
+                dynamic_cast<SwitchSpace::Switch*>(object), &SwitchSpace::Switch::stateChanged,
                 this, &DataImport::LineBlockWidget::dataChanged);
         if (dynamic_cast<QLineEdit*>(object))
             connect(

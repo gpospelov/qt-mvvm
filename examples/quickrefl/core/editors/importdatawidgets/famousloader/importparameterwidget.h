@@ -20,7 +20,6 @@
 #include "importlogic.h"
 
 QT_BEGIN_NAMESPACE
-class Switch;
 class QSpinBox;
 class QColor;
 class QLabel;
@@ -36,6 +35,11 @@ QT_END_NAMESPACE
 namespace ModelView
 {
     class ColorEditor;
+}
+
+namespace SwitchSpace
+{
+    class Switch;
 }
 
 namespace DataImport
@@ -103,10 +107,8 @@ private:
     LineBlock* p_line_block;
 
     QTabWidget* p_tab_widget;
-
     SwitchSpace::Switch* p_active_checkbox;
-    ModelView::ColorEditor* p_color_editor;
-
+    QComboBox* p_type_select;
     QSpinBox* p_line_start;
     QSpinBox* p_line_end;
 

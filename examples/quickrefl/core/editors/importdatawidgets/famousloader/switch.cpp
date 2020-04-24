@@ -16,6 +16,9 @@
 
 #include "switch.h"
 
+namespace SwitchSpace
+{
+
 #define CORNER_RADIUS 8.0
 #define THUMB_RADIUS 14.5
 #define SHADOW_ELEVATION 2.0
@@ -193,7 +196,7 @@ QSize Switch::sizeHint() const
 {
     auto h = style.height;
     auto w = style.indicatorMargin.left() + style.height + style.indicatorMargin.right()
-             + fontMetrics().width(text());
+             + fontMetrics().horizontalAdvance(text());
 
     return QSize(w, h);
 }
@@ -275,7 +278,7 @@ void Switch::paintEvent(QPaintEvent*)
 
 void Switch::resizeEvent(QResizeEvent* e)
 {
-    shadowPixmap = Style::drawShadowEllipse(THUMB_RADIUS, SHADOW_ELEVATION, QColor(0, 0, 0, 70));
+    shadowPixmap = SwitchStyle::drawShadowEllipse(THUMB_RADIUS, SHADOW_ELEVATION, QColor(0, 0, 0, 70));
     SelectionControl::resizeEvent(e);
 }
 
@@ -300,3 +303,5 @@ void Switch::toggle(Qt::CheckState state)
             colorFromOpacity(style.trackOffBrush, style.trackOffOpacity));
     }
 }
+
+}; // end SwitchSpace namespace

@@ -17,18 +17,22 @@
 #ifndef STYLE_H
 #define STYLE_H
 
+#include <QColor>
+#include <QFont>
+#include <QMargins>
+#include <QPainter>
 #include <QtCore/qeasingcurve.h>
 
-#define cyan500 QColor("#00bcd4")
-#define gray50 QColor("#fafafa")
-#define black QColor("#000000")
-#define gray400 QColor("#bdbdbd")
+#define STYLE_cyan500 QColor("#00bcd4")
+#define STYLE_gray50 QColor("#fafafa")
+#define STYLE_black QColor("#000000")
+#define STYLE_gray400 QColor("#bdbdbd")
 
 Q_DECL_IMPORT void qt_blurImage(QPainter* p, QImage& blurImage, qreal radius, bool quality,
                                 bool alphaOnly,
                                 int transposed = 0); // src/widgets/effects/qpixmapfilter.cpp
 
-namespace Style
+namespace SwitchStyle
 {
 
 using Type = QEasingCurve::Type;
@@ -44,10 +48,11 @@ struct Animation {
 struct Switch {
     Switch()
         : height{36}, font{QFont("Roboto medium", 13)}, indicatorMargin{QMargins(8, 8, 8, 8)},
-          thumbOnBrush{cyan500}, thumbOnOpacity{1}, trackOnBrush{cyan500}, trackOnOpacity{0.5},
-          thumbOffBrush{gray50}, thumbOffOpacity{1}, trackOffBrush{black}, trackOffOpacity{0.38},
-          thumbDisabled{gray400}, thumbDisabledOpacity{1}, trackDisabled{black},
-          trackDisabledOpacity{0.12}, textColor{black}, disabledTextOpacity{0.26},
+          thumbOnBrush{STYLE_cyan500}, thumbOnOpacity{1}, trackOnBrush{STYLE_cyan500},
+          trackOnOpacity{0.5}, thumbOffBrush{STYLE_gray50}, thumbOffOpacity{1},
+          trackOffBrush{STYLE_black}, trackOffOpacity{0.38}, thumbDisabled{STYLE_gray400},
+          thumbDisabledOpacity{1}, trackDisabled{STYLE_black},
+          trackDisabledOpacity{0.12}, textColor{STYLE_black}, disabledTextOpacity{0.26},
           thumbBrushAnimation{Animation(Type::Linear, 150)},
           trackBrushAnimation{Animation(Type::Linear, 150)}, thumbPosAniamtion{
                                                                  Animation(Type::InOutQuad, 150)}
@@ -112,6 +117,6 @@ inline QPixmap drawShadowEllipse(qreal radius, qreal elevation, const QColor& co
     return QPixmap::fromImage(tmp);
 }
 
-} // namespace Style
+} // namespace SwitchStyle
 
 #endif // STYLE_H

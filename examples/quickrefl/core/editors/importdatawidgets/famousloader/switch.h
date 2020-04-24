@@ -20,6 +20,9 @@
 #include "style.h"
 #include <QtWidgets>
 
+namespace SwitchSpace
+{
+
 // -------------------------------------------------
 //! The animation class
 class Animator : public QVariantAnimation
@@ -105,11 +108,13 @@ protected:
     }
 
 private:
-    Style::Switch style;
+    SwitchStyle::Switch style;
     QPixmap shadowPixmap;
     QPointer<Animator> thumbBrushAnimation;
     QPointer<Animator> trackBrushAnimation;
     QPointer<Animator> thumbPosAniamtion;
 };
+
+}; // end SwitchSpace namespace
 
 #endif // SWITCH_H
