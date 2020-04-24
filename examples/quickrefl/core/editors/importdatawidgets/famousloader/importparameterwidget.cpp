@@ -312,6 +312,12 @@ void DataImport::LineBlockWidget::dataChanged()
     if (!p_line_block)
         return;
 
+    if (p_line_start->value()>=p_line_end->value()){
+        p_line_end->blockSignals(true);
+        p_line_end->setValue(p_line_start->value()+1);
+        p_line_end->blockSignals(false);
+    }
+
     int start = 0;
     int end = 0;
     if (p_range_start->currentIndex() == 1){
