@@ -31,7 +31,7 @@ test_script:
 - echo "qt-mvvm test_script" %CD%
 - echo %PATH%
 - ps: >-
-    ctest --output-on-failure
+    ctest -j2 --output-on-failure
 
     if (-not $?) {
 
