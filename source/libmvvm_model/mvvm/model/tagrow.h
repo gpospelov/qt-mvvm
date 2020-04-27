@@ -18,7 +18,9 @@ namespace ModelView
 
 //! Aggregate to hold (tag, row) information for SessionModel.
 
-struct CORE_EXPORT TagRow {
+class CORE_EXPORT TagRow
+{
+public:
     std::string tag = {};
     int row = -1;
 

@@ -1,4 +1,4 @@
-image: Visual Studio 2017
+image: Visual Studio 2019
 
 matrix:
   fast_finish: true
@@ -11,7 +11,7 @@ configuration:
 
 # http://www.appveyor.com/docs/installed-software
 environment:
-  QTDIR: "C:\\Qt\\5.13\\msvc2017_64"
+  QTDIR: "C:\\Qt\\5.14\\msvc2017_64"
   PATH: "%QTDIR%\\bin;%PATH%"
 build:
   parallel: true
@@ -24,5 +24,25 @@ build_script:
 - mkdir build
 - cd build
 - cmake --version
-- cmake -G "Visual Studio 15 2017 Win64" ..
-- cmake --build . 
+- cmake -G "Visual Studio 16 2019" ..
+- cmake --build . -j2
+
+test_script:
+- echo "qt-mvvm test_script" %CD%
+- echo %PATH%
+- ps: >-
+    ctest -j2 --output-on-failure
+
+    if (-not $?) {
+
+        type Testing/Temporary/LastTest.log
+
+        throw "tests failed"
+
+    }
+
+on_failure:
+- appveyor PushArtifact Testing/Temporary/LastTest.log
+#- ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+
+

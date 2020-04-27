@@ -267,45 +267,45 @@ TEST_F(LayerElementTest, testgeometriesupdate)
     left_roughness_handle_rec = test_data.exposed_controller->pubLeftRoughnessHandleRect();
     right_roughness_handle_rec = test_data.exposed_controller->pubRightRoughnessHandleRect();
 
-    EXPECT_EQ(pos - side_thickness / 2., side_rect.x());
-    EXPECT_EQ(0., side_rect.y());
-    EXPECT_EQ(side_thickness, side_rect.width());
-    EXPECT_EQ(height, side_rect.height());
+    EXPECT_DOUBLE_EQ(pos - side_thickness / 2., side_rect.x());
+    EXPECT_DOUBLE_EQ(0., side_rect.y());
+    EXPECT_DOUBLE_EQ(side_thickness, side_rect.width());
+    EXPECT_DOUBLE_EQ(height, side_rect.height());
 
-    EXPECT_EQ(pos, top_rect.x());
-    EXPECT_EQ(height - top_thickness / 2., top_rect.y());
-    EXPECT_EQ(width, top_rect.width());
-    EXPECT_EQ(top_thickness, top_rect.height());
+    EXPECT_DOUBLE_EQ(pos, top_rect.x());
+    EXPECT_DOUBLE_EQ(height - top_thickness / 2., top_rect.y());
+    EXPECT_DOUBLE_EQ(width, top_rect.width());
+    EXPECT_DOUBLE_EQ(top_thickness, top_rect.height());
 
-    EXPECT_EQ(pos - handle_radius, first_handle_rect.x());
-    EXPECT_EQ(-handle_radius, first_handle_rect.y());
-    EXPECT_EQ(2 * handle_radius, first_handle_rect.width());
-    EXPECT_EQ(2 * handle_radius, first_handle_rect.height());
+    EXPECT_DOUBLE_EQ(pos - handle_radius, first_handle_rect.x());
+    EXPECT_DOUBLE_EQ(-handle_radius, first_handle_rect.y());
+    EXPECT_DOUBLE_EQ(2 * handle_radius, first_handle_rect.width());
+    EXPECT_DOUBLE_EQ(2 * handle_radius, first_handle_rect.height());
 
-    EXPECT_EQ(pos - handle_radius, second_handle_rect.x());
-    EXPECT_EQ(height - handle_radius, second_handle_rect.y());
-    EXPECT_EQ(2 * handle_radius, second_handle_rect.width());
-    EXPECT_EQ(2 * handle_radius, second_handle_rect.height());
+    EXPECT_DOUBLE_EQ(pos - handle_radius, second_handle_rect.x());
+    EXPECT_DOUBLE_EQ(height - handle_radius, second_handle_rect.y());
+    EXPECT_DOUBLE_EQ(2 * handle_radius, second_handle_rect.width());
+    EXPECT_DOUBLE_EQ(2 * handle_radius, second_handle_rect.height());
 
-    EXPECT_EQ(pos - roughness, left_roughness_path.boundingRect().x());
-    EXPECT_EQ(0., left_roughness_path.boundingRect().y());
-    EXPECT_EQ(roughness, left_roughness_path.boundingRect().width());
-    EXPECT_EQ(height, left_roughness_path.boundingRect().height());
+    EXPECT_DOUBLE_EQ(pos - roughness, left_roughness_path.boundingRect().x());
+    EXPECT_DOUBLE_EQ(0., left_roughness_path.boundingRect().y());
+    EXPECT_DOUBLE_EQ(roughness, left_roughness_path.boundingRect().width());
+    EXPECT_DOUBLE_EQ(height, left_roughness_path.boundingRect().height());
 
-    EXPECT_EQ(pos, right_roughness_path.boundingRect().x());
-    EXPECT_EQ(0., right_roughness_path.boundingRect().y());
-    EXPECT_EQ(roughness, right_roughness_path.boundingRect().width());
-    EXPECT_EQ(height, right_roughness_path.boundingRect().height());
+    EXPECT_DOUBLE_EQ(pos, right_roughness_path.boundingRect().x());
+    EXPECT_DOUBLE_EQ(0., right_roughness_path.boundingRect().y());
+    EXPECT_DOUBLE_EQ(roughness, right_roughness_path.boundingRect().width());
+    EXPECT_DOUBLE_EQ(height, right_roughness_path.boundingRect().height());
 
-    EXPECT_EQ(pos - roughness - r_handle_radius, left_roughness_handle_rec.x());
-    EXPECT_EQ(height / 2 - r_handle_radius, left_roughness_handle_rec.y());
-    EXPECT_EQ(2 * r_handle_radius, left_roughness_handle_rec.width());
-    EXPECT_EQ(2 * r_handle_radius, left_roughness_handle_rec.height());
+    EXPECT_DOUBLE_EQ(pos - roughness - r_handle_radius, left_roughness_handle_rec.x());
+    EXPECT_DOUBLE_EQ(height / 2 - r_handle_radius, left_roughness_handle_rec.y());
+    EXPECT_DOUBLE_EQ(2 * r_handle_radius, left_roughness_handle_rec.width());
+    EXPECT_DOUBLE_EQ(2 * r_handle_radius, left_roughness_handle_rec.height());
 
-    EXPECT_EQ(pos + roughness - r_handle_radius, right_roughness_handle_rec.x());
-    EXPECT_EQ(height / 2 - r_handle_radius, right_roughness_handle_rec.y());
-    EXPECT_EQ(2 * r_handle_radius, right_roughness_handle_rec.width());
-    EXPECT_EQ(2 * r_handle_radius, right_roughness_handle_rec.height());
+    EXPECT_DOUBLE_EQ(pos + roughness - r_handle_radius, right_roughness_handle_rec.x());
+    EXPECT_DOUBLE_EQ(height / 2 - r_handle_radius, right_roughness_handle_rec.y());
+    EXPECT_DOUBLE_EQ(2 * r_handle_radius, right_roughness_handle_rec.width());
+    EXPECT_DOUBLE_EQ(2 * r_handle_radius, right_roughness_handle_rec.height());
 
     // #############################################################################s
     // Check x move
@@ -320,45 +320,45 @@ TEST_F(LayerElementTest, testgeometriesupdate)
     left_roughness_handle_rec = test_data.exposed_controller->pubLeftRoughnessHandleRect();
     right_roughness_handle_rec = test_data.exposed_controller->pubRightRoughnessHandleRect();
 
-    EXPECT_EQ(pos - side_thickness / 2., side_rect.x());
-    EXPECT_EQ(0., side_rect.y());
-    EXPECT_EQ(side_thickness, side_rect.width());
-    EXPECT_EQ(height, side_rect.height());
+    EXPECT_DOUBLE_EQ(pos - side_thickness / 2., side_rect.x());
+    EXPECT_DOUBLE_EQ(0., side_rect.y());
+    EXPECT_DOUBLE_EQ(side_thickness, side_rect.width());
+    EXPECT_DOUBLE_EQ(height, side_rect.height());
 
-    EXPECT_EQ(pos, top_rect.x());
-    EXPECT_EQ(height - top_thickness / 2., top_rect.y());
-    EXPECT_EQ(width, top_rect.width());
-    EXPECT_EQ(top_thickness, top_rect.height());
+    EXPECT_DOUBLE_EQ(pos, top_rect.x());
+    EXPECT_DOUBLE_EQ(height - top_thickness / 2., top_rect.y());
+    EXPECT_DOUBLE_EQ(width, top_rect.width());
+    EXPECT_DOUBLE_EQ(top_thickness, top_rect.height());
 
-    EXPECT_EQ(pos - handle_radius, first_handle_rect.x());
-    EXPECT_EQ(-handle_radius, first_handle_rect.y());
-    EXPECT_EQ(2 * handle_radius, first_handle_rect.width());
-    EXPECT_EQ(2 * handle_radius, first_handle_rect.height());
+    EXPECT_DOUBLE_EQ(pos - handle_radius, first_handle_rect.x());
+    EXPECT_DOUBLE_EQ(-handle_radius, first_handle_rect.y());
+    EXPECT_DOUBLE_EQ(2 * handle_radius, first_handle_rect.width());
+    EXPECT_DOUBLE_EQ(2 * handle_radius, first_handle_rect.height());
 
-    EXPECT_EQ(pos - handle_radius, second_handle_rect.x());
-    EXPECT_EQ(height - handle_radius, second_handle_rect.y());
-    EXPECT_EQ(2 * handle_radius, second_handle_rect.width());
-    EXPECT_EQ(2 * handle_radius, second_handle_rect.height());
+    EXPECT_DOUBLE_EQ(pos - handle_radius, second_handle_rect.x());
+    EXPECT_DOUBLE_EQ(height - handle_radius, second_handle_rect.y());
+    EXPECT_DOUBLE_EQ(2 * handle_radius, second_handle_rect.width());
+    EXPECT_DOUBLE_EQ(2 * handle_radius, second_handle_rect.height());
 
-    EXPECT_EQ(pos - roughness, left_roughness_path.boundingRect().x());
-    EXPECT_EQ(0., left_roughness_path.boundingRect().y());
-    EXPECT_EQ(roughness, left_roughness_path.boundingRect().width());
-    EXPECT_EQ(height, left_roughness_path.boundingRect().height());
+    EXPECT_DOUBLE_EQ(pos - roughness, left_roughness_path.boundingRect().x());
+    EXPECT_DOUBLE_EQ(0., left_roughness_path.boundingRect().y());
+    EXPECT_DOUBLE_EQ(roughness, left_roughness_path.boundingRect().width());
+    EXPECT_DOUBLE_EQ(height, left_roughness_path.boundingRect().height());
 
-    EXPECT_EQ(pos, right_roughness_path.boundingRect().x());
-    EXPECT_EQ(0., right_roughness_path.boundingRect().y());
-    EXPECT_EQ(roughness, right_roughness_path.boundingRect().width());
-    EXPECT_EQ(height, right_roughness_path.boundingRect().height());
+    EXPECT_DOUBLE_EQ(pos, right_roughness_path.boundingRect().x());
+    EXPECT_DOUBLE_EQ(0., right_roughness_path.boundingRect().y());
+    EXPECT_DOUBLE_EQ(roughness, right_roughness_path.boundingRect().width());
+    EXPECT_DOUBLE_EQ(height, right_roughness_path.boundingRect().height());
 
-    EXPECT_EQ(pos - roughness - r_handle_radius, left_roughness_handle_rec.x());
-    EXPECT_EQ(height / 2 - r_handle_radius, left_roughness_handle_rec.y());
-    EXPECT_EQ(2 * r_handle_radius, left_roughness_handle_rec.width());
-    EXPECT_EQ(2 * r_handle_radius, left_roughness_handle_rec.height());
+    EXPECT_DOUBLE_EQ(pos - roughness - r_handle_radius, left_roughness_handle_rec.x());
+    EXPECT_DOUBLE_EQ(height / 2 - r_handle_radius, left_roughness_handle_rec.y());
+    EXPECT_DOUBLE_EQ(2 * r_handle_radius, left_roughness_handle_rec.width());
+    EXPECT_DOUBLE_EQ(2 * r_handle_radius, left_roughness_handle_rec.height());
 
-    EXPECT_EQ(pos + roughness - r_handle_radius, right_roughness_handle_rec.x());
-    EXPECT_EQ(height / 2 - r_handle_radius, right_roughness_handle_rec.y());
-    EXPECT_EQ(2 * r_handle_radius, right_roughness_handle_rec.width());
-    EXPECT_EQ(2 * r_handle_radius, right_roughness_handle_rec.height());
+    EXPECT_DOUBLE_EQ(pos + roughness - r_handle_radius, right_roughness_handle_rec.x());
+    EXPECT_DOUBLE_EQ(height / 2 - r_handle_radius, right_roughness_handle_rec.y());
+    EXPECT_DOUBLE_EQ(2 * r_handle_radius, right_roughness_handle_rec.width());
+    EXPECT_DOUBLE_EQ(2 * r_handle_radius, right_roughness_handle_rec.height());
 
     // #############################################################################s
     // Check width change
@@ -373,45 +373,45 @@ TEST_F(LayerElementTest, testgeometriesupdate)
     left_roughness_handle_rec = test_data.exposed_controller->pubLeftRoughnessHandleRect();
     right_roughness_handle_rec = test_data.exposed_controller->pubRightRoughnessHandleRect();
 
-    EXPECT_EQ(pos - side_thickness / 2., side_rect.x());
-    EXPECT_EQ(0., side_rect.y());
-    EXPECT_EQ(side_thickness, side_rect.width());
-    EXPECT_EQ(height, side_rect.height());
+    EXPECT_DOUBLE_EQ(pos - side_thickness / 2., side_rect.x());
+    EXPECT_DOUBLE_EQ(0., side_rect.y());
+    EXPECT_DOUBLE_EQ(side_thickness, side_rect.width());
+    EXPECT_DOUBLE_EQ(height, side_rect.height());
 
-    EXPECT_EQ(pos, top_rect.x());
-    EXPECT_EQ(height - top_thickness / 2., top_rect.y());
-    EXPECT_EQ(width, top_rect.width());
-    EXPECT_EQ(top_thickness, top_rect.height());
+    EXPECT_DOUBLE_EQ(pos, top_rect.x());
+    EXPECT_DOUBLE_EQ(height - top_thickness / 2., top_rect.y());
+    EXPECT_DOUBLE_EQ(width, top_rect.width());
+    EXPECT_DOUBLE_EQ(top_thickness, top_rect.height());
 
-    EXPECT_EQ(pos - handle_radius, first_handle_rect.x());
-    EXPECT_EQ(-handle_radius, first_handle_rect.y());
-    EXPECT_EQ(2 * handle_radius, first_handle_rect.width());
-    EXPECT_EQ(2 * handle_radius, first_handle_rect.height());
+    EXPECT_DOUBLE_EQ(pos - handle_radius, first_handle_rect.x());
+    EXPECT_DOUBLE_EQ(-handle_radius, first_handle_rect.y());
+    EXPECT_DOUBLE_EQ(2 * handle_radius, first_handle_rect.width());
+    EXPECT_DOUBLE_EQ(2 * handle_radius, first_handle_rect.height());
 
-    EXPECT_EQ(pos - handle_radius, second_handle_rect.x());
-    EXPECT_EQ(height - handle_radius, second_handle_rect.y());
-    EXPECT_EQ(2 * handle_radius, second_handle_rect.width());
-    EXPECT_EQ(2 * handle_radius, second_handle_rect.height());
+    EXPECT_DOUBLE_EQ(pos - handle_radius, second_handle_rect.x());
+    EXPECT_DOUBLE_EQ(height - handle_radius, second_handle_rect.y());
+    EXPECT_DOUBLE_EQ(2 * handle_radius, second_handle_rect.width());
+    EXPECT_DOUBLE_EQ(2 * handle_radius, second_handle_rect.height());
 
-    EXPECT_EQ(pos - roughness, left_roughness_path.boundingRect().x());
-    EXPECT_EQ(0., left_roughness_path.boundingRect().y());
-    EXPECT_EQ(roughness, left_roughness_path.boundingRect().width());
-    EXPECT_EQ(height, left_roughness_path.boundingRect().height());
+    EXPECT_DOUBLE_EQ(pos - roughness, left_roughness_path.boundingRect().x());
+    EXPECT_DOUBLE_EQ(0., left_roughness_path.boundingRect().y());
+    EXPECT_DOUBLE_EQ(roughness, left_roughness_path.boundingRect().width());
+    EXPECT_DOUBLE_EQ(height, left_roughness_path.boundingRect().height());
 
-    EXPECT_EQ(pos, right_roughness_path.boundingRect().x());
-    EXPECT_EQ(0., right_roughness_path.boundingRect().y());
-    EXPECT_EQ(roughness, right_roughness_path.boundingRect().width());
-    EXPECT_EQ(height, right_roughness_path.boundingRect().height());
+    EXPECT_DOUBLE_EQ(pos, right_roughness_path.boundingRect().x());
+    EXPECT_DOUBLE_EQ(0., right_roughness_path.boundingRect().y());
+    EXPECT_DOUBLE_EQ(roughness, right_roughness_path.boundingRect().width());
+    EXPECT_DOUBLE_EQ(height, right_roughness_path.boundingRect().height());
 
-    EXPECT_EQ(pos - roughness - r_handle_radius, left_roughness_handle_rec.x());
-    EXPECT_EQ(height / 2 - r_handle_radius, left_roughness_handle_rec.y());
-    EXPECT_EQ(2 * r_handle_radius, left_roughness_handle_rec.width());
-    EXPECT_EQ(2 * r_handle_radius, left_roughness_handle_rec.height());
+    EXPECT_DOUBLE_EQ(pos - roughness - r_handle_radius, left_roughness_handle_rec.x());
+    EXPECT_DOUBLE_EQ(height / 2 - r_handle_radius, left_roughness_handle_rec.y());
+    EXPECT_DOUBLE_EQ(2 * r_handle_radius, left_roughness_handle_rec.width());
+    EXPECT_DOUBLE_EQ(2 * r_handle_radius, left_roughness_handle_rec.height());
 
-    EXPECT_EQ(pos + roughness - r_handle_radius, right_roughness_handle_rec.x());
-    EXPECT_EQ(height / 2 - r_handle_radius, right_roughness_handle_rec.y());
-    EXPECT_EQ(2 * r_handle_radius, right_roughness_handle_rec.width());
-    EXPECT_EQ(2 * r_handle_radius, right_roughness_handle_rec.height());
+    EXPECT_DOUBLE_EQ(pos + roughness - r_handle_radius, right_roughness_handle_rec.x());
+    EXPECT_DOUBLE_EQ(height / 2 - r_handle_radius, right_roughness_handle_rec.y());
+    EXPECT_DOUBLE_EQ(2 * r_handle_radius, right_roughness_handle_rec.width());
+    EXPECT_DOUBLE_EQ(2 * r_handle_radius, right_roughness_handle_rec.height());
 
     // #############################################################################s
     // Check heigh change
@@ -426,45 +426,45 @@ TEST_F(LayerElementTest, testgeometriesupdate)
     left_roughness_handle_rec = test_data.exposed_controller->pubLeftRoughnessHandleRect();
     right_roughness_handle_rec = test_data.exposed_controller->pubRightRoughnessHandleRect();
 
-    EXPECT_EQ(pos - side_thickness / 2., side_rect.x());
-    EXPECT_EQ(0., side_rect.y());
-    EXPECT_EQ(side_thickness, side_rect.width());
-    EXPECT_EQ(height, side_rect.height());
+    EXPECT_DOUBLE_EQ(pos - side_thickness / 2., side_rect.x());
+    EXPECT_DOUBLE_EQ(0., side_rect.y());
+    EXPECT_DOUBLE_EQ(side_thickness, side_rect.width());
+    EXPECT_DOUBLE_EQ(height, side_rect.height());
 
-    EXPECT_EQ(pos, top_rect.x());
-    EXPECT_EQ(height - top_thickness / 2., top_rect.y());
-    EXPECT_EQ(width, top_rect.width());
-    EXPECT_EQ(top_thickness, top_rect.height());
+    EXPECT_DOUBLE_EQ(pos, top_rect.x());
+    EXPECT_DOUBLE_EQ(height - top_thickness / 2., top_rect.y());
+    EXPECT_DOUBLE_EQ(width, top_rect.width());
+    EXPECT_DOUBLE_EQ(top_thickness, top_rect.height());
 
-    EXPECT_EQ(pos - handle_radius, first_handle_rect.x());
-    EXPECT_EQ(-handle_radius, first_handle_rect.y());
-    EXPECT_EQ(2 * handle_radius, first_handle_rect.width());
-    EXPECT_EQ(2 * handle_radius, first_handle_rect.height());
+    EXPECT_DOUBLE_EQ(pos - handle_radius, first_handle_rect.x());
+    EXPECT_DOUBLE_EQ(-handle_radius, first_handle_rect.y());
+    EXPECT_DOUBLE_EQ(2 * handle_radius, first_handle_rect.width());
+    EXPECT_DOUBLE_EQ(2 * handle_radius, first_handle_rect.height());
 
-    EXPECT_EQ(pos - handle_radius, second_handle_rect.x());
-    EXPECT_EQ(height - handle_radius, second_handle_rect.y());
-    EXPECT_EQ(2 * handle_radius, second_handle_rect.width());
-    EXPECT_EQ(2 * handle_radius, second_handle_rect.height());
+    EXPECT_DOUBLE_EQ(pos - handle_radius, second_handle_rect.x());
+    EXPECT_DOUBLE_EQ(height - handle_radius, second_handle_rect.y());
+    EXPECT_DOUBLE_EQ(2 * handle_radius, second_handle_rect.width());
+    EXPECT_DOUBLE_EQ(2 * handle_radius, second_handle_rect.height());
 
-    EXPECT_EQ(pos - roughness, left_roughness_path.boundingRect().x());
-    EXPECT_EQ(0., left_roughness_path.boundingRect().y());
-    EXPECT_EQ(roughness, left_roughness_path.boundingRect().width());
-    EXPECT_EQ(height, left_roughness_path.boundingRect().height());
+    EXPECT_DOUBLE_EQ(pos - roughness, left_roughness_path.boundingRect().x());
+    EXPECT_DOUBLE_EQ(0., left_roughness_path.boundingRect().y());
+    EXPECT_DOUBLE_EQ(roughness, left_roughness_path.boundingRect().width());
+    EXPECT_DOUBLE_EQ(height, left_roughness_path.boundingRect().height());
 
-    EXPECT_EQ(pos, right_roughness_path.boundingRect().x());
-    EXPECT_EQ(0., right_roughness_path.boundingRect().y());
-    EXPECT_EQ(roughness, right_roughness_path.boundingRect().width());
-    EXPECT_EQ(height, right_roughness_path.boundingRect().height());
+    EXPECT_DOUBLE_EQ(pos, right_roughness_path.boundingRect().x());
+    EXPECT_DOUBLE_EQ(0., right_roughness_path.boundingRect().y());
+    EXPECT_DOUBLE_EQ(roughness, right_roughness_path.boundingRect().width());
+    EXPECT_DOUBLE_EQ(height, right_roughness_path.boundingRect().height());
 
-    EXPECT_EQ(pos - roughness - r_handle_radius, left_roughness_handle_rec.x());
-    EXPECT_EQ(height / 2 - r_handle_radius, left_roughness_handle_rec.y());
-    EXPECT_EQ(2 * r_handle_radius, left_roughness_handle_rec.width());
-    EXPECT_EQ(2 * r_handle_radius, left_roughness_handle_rec.height());
+    EXPECT_DOUBLE_EQ(pos - roughness - r_handle_radius, left_roughness_handle_rec.x());
+    EXPECT_DOUBLE_EQ(height / 2 - r_handle_radius, left_roughness_handle_rec.y());
+    EXPECT_DOUBLE_EQ(2 * r_handle_radius, left_roughness_handle_rec.width());
+    EXPECT_DOUBLE_EQ(2 * r_handle_radius, left_roughness_handle_rec.height());
 
-    EXPECT_EQ(pos + roughness - r_handle_radius, right_roughness_handle_rec.x());
-    EXPECT_EQ(height / 2 - r_handle_radius, right_roughness_handle_rec.y());
-    EXPECT_EQ(2 * r_handle_radius, right_roughness_handle_rec.width());
-    EXPECT_EQ(2 * r_handle_radius, right_roughness_handle_rec.height());
+    EXPECT_DOUBLE_EQ(pos + roughness - r_handle_radius, right_roughness_handle_rec.x());
+    EXPECT_DOUBLE_EQ(height / 2 - r_handle_radius, right_roughness_handle_rec.y());
+    EXPECT_DOUBLE_EQ(2 * r_handle_radius, right_roughness_handle_rec.width());
+    EXPECT_DOUBLE_EQ(2 * r_handle_radius, right_roughness_handle_rec.height());
 }
 
 TEST_F(LayerElementTest, testviewsupdate)
@@ -536,45 +536,45 @@ TEST_F(LayerElementTest, testviewsupdate)
     left_roughness_handle_rec = left_handle->rectangle();
     right_roughness_handle_rec = right_handle->rectangle();
 
-    EXPECT_EQ(pos - side_thickness / 2., side_rect.x());
-    EXPECT_EQ(0., side_rect.y());
-    EXPECT_EQ(side_thickness, side_rect.width());
-    EXPECT_EQ(height, side_rect.height());
+    EXPECT_DOUBLE_EQ(pos - side_thickness / 2., side_rect.x());
+    EXPECT_DOUBLE_EQ(0., side_rect.y());
+    EXPECT_DOUBLE_EQ(side_thickness, side_rect.width());
+    EXPECT_DOUBLE_EQ(height, side_rect.height());
 
-    EXPECT_EQ(pos, top_rect.x());
-    EXPECT_EQ(height - top_thickness / 2., top_rect.y());
-    EXPECT_EQ(width, top_rect.width());
-    EXPECT_EQ(top_thickness, top_rect.height());
+    EXPECT_DOUBLE_EQ(pos, top_rect.x());
+    EXPECT_DOUBLE_EQ(height - top_thickness / 2., top_rect.y());
+    EXPECT_DOUBLE_EQ(width, top_rect.width());
+    EXPECT_DOUBLE_EQ(top_thickness, top_rect.height());
 
-    EXPECT_EQ(pos - handle_radius, first_handle_rect.x());
-    EXPECT_EQ(-handle_radius, first_handle_rect.y());
-    EXPECT_EQ(2 * handle_radius, first_handle_rect.width());
-    EXPECT_EQ(2 * handle_radius, first_handle_rect.height());
+    EXPECT_DOUBLE_EQ(pos - handle_radius, first_handle_rect.x());
+    EXPECT_DOUBLE_EQ(-handle_radius, first_handle_rect.y());
+    EXPECT_DOUBLE_EQ(2 * handle_radius, first_handle_rect.width());
+    EXPECT_DOUBLE_EQ(2 * handle_radius, first_handle_rect.height());
 
-    EXPECT_EQ(pos - handle_radius, second_handle_rect.x());
-    EXPECT_EQ(height - handle_radius, second_handle_rect.y());
-    EXPECT_EQ(2 * handle_radius, second_handle_rect.width());
-    EXPECT_EQ(2 * handle_radius, second_handle_rect.height());
+    EXPECT_DOUBLE_EQ(pos - handle_radius, second_handle_rect.x());
+    EXPECT_DOUBLE_EQ(height - handle_radius, second_handle_rect.y());
+    EXPECT_DOUBLE_EQ(2 * handle_radius, second_handle_rect.width());
+    EXPECT_DOUBLE_EQ(2 * handle_radius, second_handle_rect.height());
 
-    EXPECT_EQ(pos - roughness, left_roughness_path.boundingRect().x());
-    EXPECT_EQ(0., left_roughness_path.boundingRect().y());
-    EXPECT_EQ(roughness, left_roughness_path.boundingRect().width());
-    EXPECT_EQ(height, left_roughness_path.boundingRect().height());
+    EXPECT_DOUBLE_EQ(pos - roughness, left_roughness_path.boundingRect().x());
+    EXPECT_DOUBLE_EQ(0., left_roughness_path.boundingRect().y());
+    EXPECT_DOUBLE_EQ(roughness, left_roughness_path.boundingRect().width());
+    EXPECT_DOUBLE_EQ(height, left_roughness_path.boundingRect().height());
 
-    EXPECT_EQ(pos, right_roughness_path.boundingRect().x());
-    EXPECT_EQ(0., right_roughness_path.boundingRect().y());
-    EXPECT_EQ(roughness, right_roughness_path.boundingRect().width());
-    EXPECT_EQ(height, right_roughness_path.boundingRect().height());
+    EXPECT_DOUBLE_EQ(pos, right_roughness_path.boundingRect().x());
+    EXPECT_DOUBLE_EQ(0., right_roughness_path.boundingRect().y());
+    EXPECT_DOUBLE_EQ(roughness, right_roughness_path.boundingRect().width());
+    EXPECT_DOUBLE_EQ(height, right_roughness_path.boundingRect().height());
 
-    EXPECT_EQ(pos - roughness - r_handle_radius, left_roughness_handle_rec.x());
-    EXPECT_EQ(height / 2 - r_handle_radius, left_roughness_handle_rec.y());
-    EXPECT_EQ(2 * r_handle_radius, left_roughness_handle_rec.width());
-    EXPECT_EQ(2 * r_handle_radius, left_roughness_handle_rec.height());
+    EXPECT_DOUBLE_EQ(pos - roughness - r_handle_radius, left_roughness_handle_rec.x());
+    EXPECT_DOUBLE_EQ(height / 2 - r_handle_radius, left_roughness_handle_rec.y());
+    EXPECT_DOUBLE_EQ(2 * r_handle_radius, left_roughness_handle_rec.width());
+    EXPECT_DOUBLE_EQ(2 * r_handle_radius, left_roughness_handle_rec.height());
 
-    EXPECT_EQ(pos + roughness - r_handle_radius, right_roughness_handle_rec.x());
-    EXPECT_EQ(height / 2 - r_handle_radius, right_roughness_handle_rec.y());
-    EXPECT_EQ(2 * r_handle_radius, right_roughness_handle_rec.width());
-    EXPECT_EQ(2 * r_handle_radius, right_roughness_handle_rec.height());
+    EXPECT_DOUBLE_EQ(pos + roughness - r_handle_radius, right_roughness_handle_rec.x());
+    EXPECT_DOUBLE_EQ(height / 2 - r_handle_radius, right_roughness_handle_rec.y());
+    EXPECT_DOUBLE_EQ(2 * r_handle_radius, right_roughness_handle_rec.width());
+    EXPECT_DOUBLE_EQ(2 * r_handle_radius, right_roughness_handle_rec.height());
 
     // #############################################################################s
     // Test change of position
@@ -589,45 +589,45 @@ TEST_F(LayerElementTest, testviewsupdate)
     left_roughness_handle_rec = left_handle->rectangle();
     right_roughness_handle_rec = right_handle->rectangle();
 
-    EXPECT_EQ(pos - side_thickness / 2., side_rect.x());
-    EXPECT_EQ(0., side_rect.y());
-    EXPECT_EQ(side_thickness, side_rect.width());
-    EXPECT_EQ(height, side_rect.height());
+    EXPECT_DOUBLE_EQ(pos - side_thickness / 2., side_rect.x());
+    EXPECT_DOUBLE_EQ(0., side_rect.y());
+    EXPECT_DOUBLE_EQ(side_thickness, side_rect.width());
+    EXPECT_DOUBLE_EQ(height, side_rect.height());
 
-    EXPECT_EQ(pos, top_rect.x());
-    EXPECT_EQ(height - top_thickness / 2., top_rect.y());
-    EXPECT_EQ(width, top_rect.width());
-    EXPECT_EQ(top_thickness, top_rect.height());
+    EXPECT_DOUBLE_EQ(pos, top_rect.x());
+    EXPECT_DOUBLE_EQ(height - top_thickness / 2., top_rect.y());
+    EXPECT_DOUBLE_EQ(width, top_rect.width());
+    EXPECT_DOUBLE_EQ(top_thickness, top_rect.height());
 
-    EXPECT_EQ(pos - handle_radius, first_handle_rect.x());
-    EXPECT_EQ(-handle_radius, first_handle_rect.y());
-    EXPECT_EQ(2 * handle_radius, first_handle_rect.width());
-    EXPECT_EQ(2 * handle_radius, first_handle_rect.height());
+    EXPECT_DOUBLE_EQ(pos - handle_radius, first_handle_rect.x());
+    EXPECT_DOUBLE_EQ(-handle_radius, first_handle_rect.y());
+    EXPECT_DOUBLE_EQ(2 * handle_radius, first_handle_rect.width());
+    EXPECT_DOUBLE_EQ(2 * handle_radius, first_handle_rect.height());
 
-    EXPECT_EQ(pos - handle_radius, second_handle_rect.x());
-    EXPECT_EQ(height - handle_radius, second_handle_rect.y());
-    EXPECT_EQ(2 * handle_radius, second_handle_rect.width());
-    EXPECT_EQ(2 * handle_radius, second_handle_rect.height());
+    EXPECT_DOUBLE_EQ(pos - handle_radius, second_handle_rect.x());
+    EXPECT_DOUBLE_EQ(height - handle_radius, second_handle_rect.y());
+    EXPECT_DOUBLE_EQ(2 * handle_radius, second_handle_rect.width());
+    EXPECT_DOUBLE_EQ(2 * handle_radius, second_handle_rect.height());
 
-    EXPECT_EQ(pos - roughness, left_roughness_path.boundingRect().x());
-    EXPECT_EQ(0., left_roughness_path.boundingRect().y());
-    EXPECT_EQ(roughness, left_roughness_path.boundingRect().width());
-    EXPECT_EQ(height, left_roughness_path.boundingRect().height());
+    EXPECT_DOUBLE_EQ(pos - roughness, left_roughness_path.boundingRect().x());
+    EXPECT_DOUBLE_EQ(0., left_roughness_path.boundingRect().y());
+    EXPECT_DOUBLE_EQ(roughness, left_roughness_path.boundingRect().width());
+    EXPECT_DOUBLE_EQ(height, left_roughness_path.boundingRect().height());
 
-    EXPECT_EQ(pos, right_roughness_path.boundingRect().x());
-    EXPECT_EQ(0., right_roughness_path.boundingRect().y());
-    EXPECT_EQ(roughness, right_roughness_path.boundingRect().width());
-    EXPECT_EQ(height, right_roughness_path.boundingRect().height());
+    EXPECT_DOUBLE_EQ(pos, right_roughness_path.boundingRect().x());
+    EXPECT_DOUBLE_EQ(0., right_roughness_path.boundingRect().y());
+    EXPECT_DOUBLE_EQ(roughness, right_roughness_path.boundingRect().width());
+    EXPECT_DOUBLE_EQ(height, right_roughness_path.boundingRect().height());
 
-    EXPECT_EQ(pos - roughness - r_handle_radius, left_roughness_handle_rec.x());
-    EXPECT_EQ(height / 2 - r_handle_radius, left_roughness_handle_rec.y());
-    EXPECT_EQ(2 * r_handle_radius, left_roughness_handle_rec.width());
-    EXPECT_EQ(2 * r_handle_radius, left_roughness_handle_rec.height());
+    EXPECT_DOUBLE_EQ(pos - roughness - r_handle_radius, left_roughness_handle_rec.x());
+    EXPECT_DOUBLE_EQ(height / 2 - r_handle_radius, left_roughness_handle_rec.y());
+    EXPECT_DOUBLE_EQ(2 * r_handle_radius, left_roughness_handle_rec.width());
+    EXPECT_DOUBLE_EQ(2 * r_handle_radius, left_roughness_handle_rec.height());
 
-    EXPECT_EQ(pos + roughness - r_handle_radius, right_roughness_handle_rec.x());
-    EXPECT_EQ(height / 2 - r_handle_radius, right_roughness_handle_rec.y());
-    EXPECT_EQ(2 * r_handle_radius, right_roughness_handle_rec.width());
-    EXPECT_EQ(2 * r_handle_radius, right_roughness_handle_rec.height());
+    EXPECT_DOUBLE_EQ(pos + roughness - r_handle_radius, right_roughness_handle_rec.x());
+    EXPECT_DOUBLE_EQ(height / 2 - r_handle_radius, right_roughness_handle_rec.y());
+    EXPECT_DOUBLE_EQ(2 * r_handle_radius, right_roughness_handle_rec.width());
+    EXPECT_DOUBLE_EQ(2 * r_handle_radius, right_roughness_handle_rec.height());
 
     // #############################################################################s
     // Test change of width
@@ -642,45 +642,45 @@ TEST_F(LayerElementTest, testviewsupdate)
     left_roughness_handle_rec = left_handle->rectangle();
     right_roughness_handle_rec = right_handle->rectangle();
 
-    EXPECT_EQ(pos - side_thickness / 2., side_rect.x());
-    EXPECT_EQ(0., side_rect.y());
-    EXPECT_EQ(side_thickness, side_rect.width());
-    EXPECT_EQ(height, side_rect.height());
+    EXPECT_DOUBLE_EQ(pos - side_thickness / 2., side_rect.x());
+    EXPECT_DOUBLE_EQ(0., side_rect.y());
+    EXPECT_DOUBLE_EQ(side_thickness, side_rect.width());
+    EXPECT_DOUBLE_EQ(height, side_rect.height());
 
-    EXPECT_EQ(pos, top_rect.x());
-    EXPECT_EQ(height - top_thickness / 2., top_rect.y());
-    EXPECT_EQ(width, top_rect.width());
-    EXPECT_EQ(top_thickness, top_rect.height());
+    EXPECT_DOUBLE_EQ(pos, top_rect.x());
+    EXPECT_DOUBLE_EQ(height - top_thickness / 2., top_rect.y());
+    EXPECT_DOUBLE_EQ(width, top_rect.width());
+    EXPECT_DOUBLE_EQ(top_thickness, top_rect.height());
 
-    EXPECT_EQ(pos - handle_radius, first_handle_rect.x());
-    EXPECT_EQ(-handle_radius, first_handle_rect.y());
-    EXPECT_EQ(2 * handle_radius, first_handle_rect.width());
-    EXPECT_EQ(2 * handle_radius, first_handle_rect.height());
+    EXPECT_DOUBLE_EQ(pos - handle_radius, first_handle_rect.x());
+    EXPECT_DOUBLE_EQ(-handle_radius, first_handle_rect.y());
+    EXPECT_DOUBLE_EQ(2 * handle_radius, first_handle_rect.width());
+    EXPECT_DOUBLE_EQ(2 * handle_radius, first_handle_rect.height());
 
-    EXPECT_EQ(pos - handle_radius, second_handle_rect.x());
-    EXPECT_EQ(height - handle_radius, second_handle_rect.y());
-    EXPECT_EQ(2 * handle_radius, second_handle_rect.width());
-    EXPECT_EQ(2 * handle_radius, second_handle_rect.height());
+    EXPECT_DOUBLE_EQ(pos - handle_radius, second_handle_rect.x());
+    EXPECT_DOUBLE_EQ(height - handle_radius, second_handle_rect.y());
+    EXPECT_DOUBLE_EQ(2 * handle_radius, second_handle_rect.width());
+    EXPECT_DOUBLE_EQ(2 * handle_radius, second_handle_rect.height());
 
-    EXPECT_EQ(pos - roughness, left_roughness_path.boundingRect().x());
-    EXPECT_EQ(0., left_roughness_path.boundingRect().y());
-    EXPECT_EQ(roughness, left_roughness_path.boundingRect().width());
-    EXPECT_EQ(height, left_roughness_path.boundingRect().height());
+    EXPECT_DOUBLE_EQ(pos - roughness, left_roughness_path.boundingRect().x());
+    EXPECT_DOUBLE_EQ(0., left_roughness_path.boundingRect().y());
+    EXPECT_DOUBLE_EQ(roughness, left_roughness_path.boundingRect().width());
+    EXPECT_DOUBLE_EQ(height, left_roughness_path.boundingRect().height());
 
-    EXPECT_EQ(pos, right_roughness_path.boundingRect().x());
-    EXPECT_EQ(0., right_roughness_path.boundingRect().y());
-    EXPECT_EQ(roughness, right_roughness_path.boundingRect().width());
-    EXPECT_EQ(height, right_roughness_path.boundingRect().height());
+    EXPECT_DOUBLE_EQ(pos, right_roughness_path.boundingRect().x());
+    EXPECT_DOUBLE_EQ(0., right_roughness_path.boundingRect().y());
+    EXPECT_DOUBLE_EQ(roughness, right_roughness_path.boundingRect().width());
+    EXPECT_DOUBLE_EQ(height, right_roughness_path.boundingRect().height());
 
-    EXPECT_EQ(pos - roughness - r_handle_radius, left_roughness_handle_rec.x());
-    EXPECT_EQ(height / 2 - r_handle_radius, left_roughness_handle_rec.y());
-    EXPECT_EQ(2 * r_handle_radius, left_roughness_handle_rec.width());
-    EXPECT_EQ(2 * r_handle_radius, left_roughness_handle_rec.height());
+    EXPECT_DOUBLE_EQ(pos - roughness - r_handle_radius, left_roughness_handle_rec.x());
+    EXPECT_DOUBLE_EQ(height / 2 - r_handle_radius, left_roughness_handle_rec.y());
+    EXPECT_DOUBLE_EQ(2 * r_handle_radius, left_roughness_handle_rec.width());
+    EXPECT_DOUBLE_EQ(2 * r_handle_radius, left_roughness_handle_rec.height());
 
-    EXPECT_EQ(pos + roughness - r_handle_radius, right_roughness_handle_rec.x());
-    EXPECT_EQ(height / 2 - r_handle_radius, right_roughness_handle_rec.y());
-    EXPECT_EQ(2 * r_handle_radius, right_roughness_handle_rec.width());
-    EXPECT_EQ(2 * r_handle_radius, right_roughness_handle_rec.height());
+    EXPECT_DOUBLE_EQ(pos + roughness - r_handle_radius, right_roughness_handle_rec.x());
+    EXPECT_DOUBLE_EQ(height / 2 - r_handle_radius, right_roughness_handle_rec.y());
+    EXPECT_DOUBLE_EQ(2 * r_handle_radius, right_roughness_handle_rec.width());
+    EXPECT_DOUBLE_EQ(2 * r_handle_radius, right_roughness_handle_rec.height());
 
     // #############################################################################s
     // Test propagation change of height
@@ -695,45 +695,45 @@ TEST_F(LayerElementTest, testviewsupdate)
     left_roughness_handle_rec = left_handle->rectangle();
     right_roughness_handle_rec = right_handle->rectangle();
 
-    EXPECT_EQ(pos - side_thickness / 2., side_rect.x());
-    EXPECT_EQ(0., side_rect.y());
-    EXPECT_EQ(side_thickness, side_rect.width());
-    EXPECT_EQ(height, side_rect.height());
+    EXPECT_DOUBLE_EQ(pos - side_thickness / 2., side_rect.x());
+    EXPECT_DOUBLE_EQ(0., side_rect.y());
+    EXPECT_DOUBLE_EQ(side_thickness, side_rect.width());
+    EXPECT_DOUBLE_EQ(height, side_rect.height());
 
-    EXPECT_EQ(pos, top_rect.x());
-    EXPECT_EQ(height - top_thickness / 2., top_rect.y());
-    EXPECT_EQ(width, top_rect.width());
-    EXPECT_EQ(top_thickness, top_rect.height());
+    EXPECT_DOUBLE_EQ(pos, top_rect.x());
+    EXPECT_DOUBLE_EQ(height - top_thickness / 2., top_rect.y());
+    EXPECT_DOUBLE_EQ(width, top_rect.width());
+    EXPECT_DOUBLE_EQ(top_thickness, top_rect.height());
 
-    EXPECT_EQ(pos - handle_radius, first_handle_rect.x());
-    EXPECT_EQ(-handle_radius, first_handle_rect.y());
-    EXPECT_EQ(2 * handle_radius, first_handle_rect.width());
-    EXPECT_EQ(2 * handle_radius, first_handle_rect.height());
+    EXPECT_DOUBLE_EQ(pos - handle_radius, first_handle_rect.x());
+    EXPECT_DOUBLE_EQ(-handle_radius, first_handle_rect.y());
+    EXPECT_DOUBLE_EQ(2 * handle_radius, first_handle_rect.width());
+    EXPECT_DOUBLE_EQ(2 * handle_radius, first_handle_rect.height());
 
-    EXPECT_EQ(pos - handle_radius, second_handle_rect.x());
-    EXPECT_EQ(height - handle_radius, second_handle_rect.y());
-    EXPECT_EQ(2 * handle_radius, second_handle_rect.width());
-    EXPECT_EQ(2 * handle_radius, second_handle_rect.height());
+    EXPECT_DOUBLE_EQ(pos - handle_radius, second_handle_rect.x());
+    EXPECT_DOUBLE_EQ(height - handle_radius, second_handle_rect.y());
+    EXPECT_DOUBLE_EQ(2 * handle_radius, second_handle_rect.width());
+    EXPECT_DOUBLE_EQ(2 * handle_radius, second_handle_rect.height());
 
-    EXPECT_EQ(pos - roughness, left_roughness_path.boundingRect().x());
-    EXPECT_EQ(0., left_roughness_path.boundingRect().y());
-    EXPECT_EQ(roughness, left_roughness_path.boundingRect().width());
-    EXPECT_EQ(height, left_roughness_path.boundingRect().height());
+    EXPECT_DOUBLE_EQ(pos - roughness, left_roughness_path.boundingRect().x());
+    EXPECT_DOUBLE_EQ(0., left_roughness_path.boundingRect().y());
+    EXPECT_DOUBLE_EQ(roughness, left_roughness_path.boundingRect().width());
+    EXPECT_DOUBLE_EQ(height, left_roughness_path.boundingRect().height());
 
-    EXPECT_EQ(pos, right_roughness_path.boundingRect().x());
-    EXPECT_EQ(0., right_roughness_path.boundingRect().y());
-    EXPECT_EQ(roughness, right_roughness_path.boundingRect().width());
-    EXPECT_EQ(height, right_roughness_path.boundingRect().height());
+    EXPECT_DOUBLE_EQ(pos, right_roughness_path.boundingRect().x());
+    EXPECT_DOUBLE_EQ(0., right_roughness_path.boundingRect().y());
+    EXPECT_DOUBLE_EQ(roughness, right_roughness_path.boundingRect().width());
+    EXPECT_DOUBLE_EQ(height, right_roughness_path.boundingRect().height());
 
-    EXPECT_EQ(pos - roughness - r_handle_radius, left_roughness_handle_rec.x());
-    EXPECT_EQ(height / 2 - r_handle_radius, left_roughness_handle_rec.y());
-    EXPECT_EQ(2 * r_handle_radius, left_roughness_handle_rec.width());
-    EXPECT_EQ(2 * r_handle_radius, left_roughness_handle_rec.height());
+    EXPECT_DOUBLE_EQ(pos - roughness - r_handle_radius, left_roughness_handle_rec.x());
+    EXPECT_DOUBLE_EQ(height / 2 - r_handle_radius, left_roughness_handle_rec.y());
+    EXPECT_DOUBLE_EQ(2 * r_handle_radius, left_roughness_handle_rec.width());
+    EXPECT_DOUBLE_EQ(2 * r_handle_radius, left_roughness_handle_rec.height());
 
-    EXPECT_EQ(pos + roughness - r_handle_radius, right_roughness_handle_rec.x());
-    EXPECT_EQ(height / 2 - r_handle_radius, right_roughness_handle_rec.y());
-    EXPECT_EQ(2 * r_handle_radius, right_roughness_handle_rec.width());
-    EXPECT_EQ(2 * r_handle_radius, right_roughness_handle_rec.height());
+    EXPECT_DOUBLE_EQ(pos + roughness - r_handle_radius, right_roughness_handle_rec.x());
+    EXPECT_DOUBLE_EQ(height / 2 - r_handle_radius, right_roughness_handle_rec.y());
+    EXPECT_DOUBLE_EQ(2 * r_handle_radius, right_roughness_handle_rec.width());
+    EXPECT_DOUBLE_EQ(2 * r_handle_radius, right_roughness_handle_rec.height());
 }
 
 TEST_F(LayerElementTest, testscene)
@@ -847,12 +847,12 @@ TEST_F(LayerElementTest, testpropagation)
 
     // #############################################################################s
     // Test propagation for the contruction
-    EXPECT_EQ(0., item_above->property<double>(LayerElementItem::P_X_POS));
-    EXPECT_EQ(10., item_above->property<double>(LayerElementItem::P_WIDTH));
-    EXPECT_EQ(10., item_middle->property<double>(LayerElementItem::P_X_POS));
-    EXPECT_EQ(10., item_middle->property<double>(LayerElementItem::P_WIDTH));
-    EXPECT_EQ(20., item_below->property<double>(LayerElementItem::P_X_POS));
-    EXPECT_EQ(10., item_below->property<double>(LayerElementItem::P_WIDTH));
+    EXPECT_DOUBLE_EQ(0., item_above->property<double>(LayerElementItem::P_X_POS));
+    EXPECT_DOUBLE_EQ(10., item_above->property<double>(LayerElementItem::P_WIDTH));
+    EXPECT_DOUBLE_EQ(10., item_middle->property<double>(LayerElementItem::P_X_POS));
+    EXPECT_DOUBLE_EQ(10., item_middle->property<double>(LayerElementItem::P_WIDTH));
+    EXPECT_DOUBLE_EQ(20., item_below->property<double>(LayerElementItem::P_X_POS));
+    EXPECT_DOUBLE_EQ(10., item_below->property<double>(LayerElementItem::P_WIDTH));
 
     // #############################################################################s
     // Test signaling for property changes
@@ -872,18 +872,18 @@ TEST_F(LayerElementTest, testpropagation)
     move_arguments = spy_ctr_above_width.takeLast();
 
     EXPECT_EQ(move_arguments.at(0).value<std::string>(), "above");
-    EXPECT_EQ(move_arguments.at(1).value<double>(), 8);
-    EXPECT_EQ(8., item_above->property<double>(LayerElementItem::P_WIDTH));
-    EXPECT_EQ(8., item_middle->property<double>(LayerElementItem::P_X_POS));
-    EXPECT_EQ(3., first_handle_middle->rectangle().x());
-    EXPECT_EQ(5., first_handle_middle->rectangle().y());
-    EXPECT_EQ(3., second_handle_middle->rectangle().x());
-    EXPECT_EQ(5., second_handle_middle->rectangle().y());
+    EXPECT_DOUBLE_EQ(move_arguments.at(1).value<double>(), 8);
+    EXPECT_DOUBLE_EQ(8., item_above->property<double>(LayerElementItem::P_WIDTH));
+    EXPECT_DOUBLE_EQ(8., item_middle->property<double>(LayerElementItem::P_X_POS));
+    EXPECT_DOUBLE_EQ(3., first_handle_middle->rectangle().x());
+    EXPECT_DOUBLE_EQ(5., first_handle_middle->rectangle().y());
+    EXPECT_DOUBLE_EQ(3., second_handle_middle->rectangle().x());
+    EXPECT_DOUBLE_EQ(5., second_handle_middle->rectangle().y());
 
     move_arguments = spy_ctr_middle_roughness.takeLast();
     EXPECT_EQ(move_arguments.at(0).value<std::string>(), "middle");
-    EXPECT_EQ(move_arguments.at(1).value<double>(), 4);
-    EXPECT_EQ(4, item_middle->property<double>(LayerElementItem::P_ROUGHNESS));
+    EXPECT_DOUBLE_EQ(move_arguments.at(1).value<double>(), 4);
+    EXPECT_DOUBLE_EQ(4, item_middle->property<double>(LayerElementItem::P_ROUGHNESS));
 
     // Try limit x move
     mouse_move_event->setPos(QPointF(adapter->toSceneX(1), adapter->toSceneY(0)));
@@ -891,13 +891,13 @@ TEST_F(LayerElementTest, testpropagation)
 
     move_arguments = spy_ctr_above_width.takeLast();
     EXPECT_EQ(move_arguments.at(0).value<std::string>(), "above");
-    EXPECT_EQ(move_arguments.at(1).value<double>(), 0);
-    EXPECT_EQ(0, item_above->property<double>(LayerElementItem::P_WIDTH));
-    EXPECT_EQ(0, item_middle->property<double>(LayerElementItem::P_X_POS));
-    EXPECT_EQ(-5, first_handle_middle->rectangle().x());
-    EXPECT_EQ(5., first_handle_middle->rectangle().y());
-    EXPECT_EQ(-5, second_handle_middle->rectangle().x());
-    EXPECT_EQ(5., second_handle_middle->rectangle().y());
+    EXPECT_DOUBLE_EQ(move_arguments.at(1).value<double>(), 0);
+    EXPECT_DOUBLE_EQ(0, item_above->property<double>(LayerElementItem::P_WIDTH));
+    EXPECT_DOUBLE_EQ(0, item_middle->property<double>(LayerElementItem::P_X_POS));
+    EXPECT_DOUBLE_EQ(-5, first_handle_middle->rectangle().x());
+    EXPECT_DOUBLE_EQ(5., first_handle_middle->rectangle().y());
+    EXPECT_DOUBLE_EQ(-5, second_handle_middle->rectangle().x());
+    EXPECT_DOUBLE_EQ(5., second_handle_middle->rectangle().y());
 
     // Try standard x move
     mouse_move_event->setPos(QPointF(adapter->toSceneX(-10), adapter->toSceneY(0)));
@@ -905,13 +905,13 @@ TEST_F(LayerElementTest, testpropagation)
     move_arguments = spy_ctr_above_width.takeLast();
 
     EXPECT_EQ(move_arguments.at(0).value<std::string>(), "above");
-    EXPECT_EQ(move_arguments.at(1).value<double>(), 10);
-    EXPECT_EQ(10., item_above->property<double>(LayerElementItem::P_WIDTH));
-    EXPECT_EQ(10., item_middle->property<double>(LayerElementItem::P_X_POS));
-    EXPECT_EQ(5., first_handle_middle->rectangle().x());
-    EXPECT_EQ(5., first_handle_middle->rectangle().y());
-    EXPECT_EQ(5., second_handle_middle->rectangle().x());
-    EXPECT_EQ(5., second_handle_middle->rectangle().y());
+    EXPECT_DOUBLE_EQ(move_arguments.at(1).value<double>(), 10);
+    EXPECT_DOUBLE_EQ(10., item_above->property<double>(LayerElementItem::P_WIDTH));
+    EXPECT_DOUBLE_EQ(10., item_middle->property<double>(LayerElementItem::P_X_POS));
+    EXPECT_DOUBLE_EQ(5., first_handle_middle->rectangle().x());
+    EXPECT_DOUBLE_EQ(5., first_handle_middle->rectangle().y());
+    EXPECT_DOUBLE_EQ(5., second_handle_middle->rectangle().x());
+    EXPECT_DOUBLE_EQ(5., second_handle_middle->rectangle().y());
 
     // Try standard y move
     mouse_move_event->setPos(QPointF(adapter->toSceneX(0), adapter->toSceneY(8)));
@@ -919,12 +919,12 @@ TEST_F(LayerElementTest, testpropagation)
     move_arguments = spy_ctr_middle_height.takeLast();
 
     EXPECT_EQ(move_arguments.at(0).value<std::string>(), "middle");
-    EXPECT_EQ(move_arguments.at(1).value<double>(), 8);
-    EXPECT_EQ(8., item_middle->property<double>(LayerElementItem::P_HEIGHT));
-    EXPECT_EQ(5., first_handle_middle->rectangle().x());
-    EXPECT_EQ(5., first_handle_middle->rectangle().y());
-    EXPECT_EQ(5., second_handle_middle->rectangle().x());
-    EXPECT_EQ(3., second_handle_middle->rectangle().y());
+    EXPECT_DOUBLE_EQ(move_arguments.at(1).value<double>(), 8);
+    EXPECT_DOUBLE_EQ(8., item_middle->property<double>(LayerElementItem::P_HEIGHT));
+    EXPECT_DOUBLE_EQ(5., first_handle_middle->rectangle().x());
+    EXPECT_DOUBLE_EQ(5., first_handle_middle->rectangle().y());
+    EXPECT_DOUBLE_EQ(5., second_handle_middle->rectangle().x());
+    EXPECT_DOUBLE_EQ(3., second_handle_middle->rectangle().y());
 
     // Try limit y move
     mouse_move_event->setPos(QPointF(adapter->toSceneX(-0), adapter->toSceneY(-1)));
@@ -933,11 +933,11 @@ TEST_F(LayerElementTest, testpropagation)
 
     EXPECT_EQ(move_arguments.at(0).value<std::string>(), "middle");
     EXPECT_EQ(move_arguments.at(1).value<double>(), 0);
-    EXPECT_EQ(0, item_middle->property<double>(LayerElementItem::P_HEIGHT));
-    EXPECT_EQ(5., first_handle_middle->rectangle().x());
-    EXPECT_EQ(5., first_handle_middle->rectangle().y());
-    EXPECT_EQ(5., second_handle_middle->rectangle().x());
-    EXPECT_EQ(-5., second_handle_middle->rectangle().y());
+    EXPECT_DOUBLE_EQ(0, item_middle->property<double>(LayerElementItem::P_HEIGHT));
+    EXPECT_DOUBLE_EQ(5., first_handle_middle->rectangle().x());
+    EXPECT_DOUBLE_EQ(5., first_handle_middle->rectangle().y());
+    EXPECT_DOUBLE_EQ(5., second_handle_middle->rectangle().x());
+    EXPECT_DOUBLE_EQ(-5., second_handle_middle->rectangle().y());
 
     // Try standard y move
     mouse_move_event->setPos(QPointF(adapter->toSceneX(0), adapter->toSceneY(10)));
@@ -945,12 +945,12 @@ TEST_F(LayerElementTest, testpropagation)
     move_arguments = spy_ctr_middle_height.takeLast();
 
     EXPECT_EQ(move_arguments.at(0).value<std::string>(), "middle");
-    EXPECT_EQ(move_arguments.at(1).value<double>(), 10);
-    EXPECT_EQ(10., item_middle->property<double>(LayerElementItem::P_HEIGHT));
-    EXPECT_EQ(5., first_handle_middle->rectangle().x());
-    EXPECT_EQ(5., first_handle_middle->rectangle().y());
-    EXPECT_EQ(5., second_handle_middle->rectangle().x());
-    EXPECT_EQ(5., second_handle_middle->rectangle().y());
+    EXPECT_DOUBLE_EQ(move_arguments.at(1).value<double>(), 10);
+    EXPECT_DOUBLE_EQ(10., item_middle->property<double>(LayerElementItem::P_HEIGHT));
+    EXPECT_DOUBLE_EQ(5., first_handle_middle->rectangle().x());
+    EXPECT_DOUBLE_EQ(5., first_handle_middle->rectangle().y());
+    EXPECT_DOUBLE_EQ(5., second_handle_middle->rectangle().x());
+    EXPECT_DOUBLE_EQ(5., second_handle_middle->rectangle().y());
 
     // Try standard roughness move left handle
     mouse_move_event->setPos(QPointF(adapter->toSceneX(-7), adapter->toSceneY(0)));
@@ -958,8 +958,8 @@ TEST_F(LayerElementTest, testpropagation)
 
     move_arguments = spy_ctr_middle_roughness.takeLast();
     EXPECT_EQ(move_arguments.at(0).value<std::string>(), "middle");
-    EXPECT_EQ(move_arguments.at(1).value<double>(), 3.);
-    EXPECT_EQ(3., item_middle->property<double>(LayerElementItem::P_ROUGHNESS));
+    EXPECT_DOUBLE_EQ(move_arguments.at(1).value<double>(), 3.);
+    EXPECT_DOUBLE_EQ(3., item_middle->property<double>(LayerElementItem::P_ROUGHNESS));
 
     // Try limit roughness move left handle
     mouse_move_event->setPos(QPointF(adapter->toSceneX(-2), adapter->toSceneY(0)));
@@ -967,8 +967,8 @@ TEST_F(LayerElementTest, testpropagation)
 
     move_arguments = spy_ctr_middle_roughness.takeLast();
     EXPECT_EQ(move_arguments.at(0).value<std::string>(), "middle");
-    EXPECT_EQ(move_arguments.at(1).value<double>(), 5.);
-    EXPECT_EQ(5., item_middle->property<double>(LayerElementItem::P_ROUGHNESS));
+    EXPECT_DOUBLE_EQ(move_arguments.at(1).value<double>(), 5.);
+    EXPECT_DOUBLE_EQ(5., item_middle->property<double>(LayerElementItem::P_ROUGHNESS));
 
     // Try standard roughness move left handle
     mouse_move_event->setPos(QPointF(adapter->toSceneX(-8), adapter->toSceneY(0)));
@@ -976,8 +976,8 @@ TEST_F(LayerElementTest, testpropagation)
 
     move_arguments = spy_ctr_middle_roughness.takeLast();
     EXPECT_EQ(move_arguments.at(0).value<std::string>(), "middle");
-    EXPECT_EQ(move_arguments.at(1).value<double>(), 2.);
-    EXPECT_EQ(2., item_middle->property<double>(LayerElementItem::P_ROUGHNESS));
+    EXPECT_FLOAT_EQ(move_arguments.at(1).value<double>(), 2.); // DOUBLE_EQ not enough under Windows
+    EXPECT_FLOAT_EQ(2., item_middle->property<double>(LayerElementItem::P_ROUGHNESS));
 
     // Try standard roughness move right handle
     mouse_move_event->setPos(QPointF(adapter->toSceneX(-13), adapter->toSceneY(0)));
@@ -985,8 +985,8 @@ TEST_F(LayerElementTest, testpropagation)
 
     move_arguments = spy_ctr_middle_roughness.takeLast();
     EXPECT_EQ(move_arguments.at(0).value<std::string>(), "middle");
-    EXPECT_EQ(move_arguments.at(1).value<double>(), 3.);
-    EXPECT_EQ(3., item_middle->property<double>(LayerElementItem::P_ROUGHNESS));
+    EXPECT_DOUBLE_EQ(move_arguments.at(1).value<double>(), 3.);
+    EXPECT_DOUBLE_EQ(3., item_middle->property<double>(LayerElementItem::P_ROUGHNESS));
 
     // Try limit roughness move right handle
     mouse_move_event->setPos(QPointF(adapter->toSceneX(-8), adapter->toSceneY(0)));
@@ -994,8 +994,8 @@ TEST_F(LayerElementTest, testpropagation)
 
     move_arguments = spy_ctr_middle_roughness.takeLast();
     EXPECT_EQ(move_arguments.at(0).value<std::string>(), "middle");
-    EXPECT_EQ(move_arguments.at(1).value<double>(), 0);
-    EXPECT_EQ(0, item_middle->property<double>(LayerElementItem::P_ROUGHNESS));
+    EXPECT_DOUBLE_EQ(move_arguments.at(1).value<double>(), 0);
+    EXPECT_DOUBLE_EQ(0, item_middle->property<double>(LayerElementItem::P_ROUGHNESS));
 
     // Try standard roughness move right handle
     mouse_move_event->setPos(QPointF(adapter->toSceneX(-13), adapter->toSceneY(0)));
@@ -1003,8 +1003,8 @@ TEST_F(LayerElementTest, testpropagation)
 
     move_arguments = spy_ctr_middle_roughness.takeLast();
     EXPECT_EQ(move_arguments.at(0).value<std::string>(), "middle");
-    EXPECT_EQ(move_arguments.at(1).value<double>(), 3);
-    EXPECT_EQ(3, item_middle->property<double>(LayerElementItem::P_ROUGHNESS));
+    EXPECT_DOUBLE_EQ(move_arguments.at(1).value<double>(), 3);
+    EXPECT_DOUBLE_EQ(3, item_middle->property<double>(LayerElementItem::P_ROUGHNESS));
 }
 TEST_F(LayerElementTest, moveelements)
 {

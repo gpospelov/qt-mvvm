@@ -75,7 +75,7 @@ public:
     SessionItem* getItem(const std::string& tag, int row = 0) const; // FIXME TagRow?
     std::vector<SessionItem*> getItems(const std::string& tag) const;
     template <typename T> T* item(const std::string& tag) const;
-    template <typename T> std::vector<T*> items(const std::string& tag) const;
+    template <typename T = SessionItem> std::vector<T*> items(const std::string& tag) const;
     std::string tagOfItem(const SessionItem* item) const;
     TagRow tagRowOfItem(const SessionItem* item) const;
 
@@ -176,7 +176,7 @@ template <typename T> inline T* SessionItem::item(const std::string& tag) const
 
 //! Returns all items under given tag casted to specific type.
 
-template <typename T = SessionItem> std::vector<T*> SessionItem::items(const std::string& tag) const
+template <typename T> std::vector<T*> SessionItem::items(const std::string& tag) const
 {
     std::vector<T*> result;
     for (auto item : getItems(tag))

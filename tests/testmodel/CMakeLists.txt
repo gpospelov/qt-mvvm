@@ -1,7 +1,5 @@
 set(test testmodel)
 
-include(GoogleTest)
-
 file(GLOB source_files "*.cpp")
 file(GLOB include_files "*.h")
 
