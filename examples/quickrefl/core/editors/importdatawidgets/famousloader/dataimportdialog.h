@@ -23,7 +23,7 @@ namespace DataImport
 class ImportFileWidget;
 class ImportParameterWidget;
 class ImportTextView;
-// class ImportTableView;
+class ImportTableView;
 
 //! This is the main dialog for the data loader
 class DataLoaderDialog : public QDialog
@@ -46,7 +46,7 @@ private:
     ImportFileWidget* p_import_file_list{nullptr};
     ImportParameterWidget* p_parameter_dialog{nullptr};
     ImportTextView* p_text_view{nullptr};
-    QTableView* p_table_view{nullptr};
+    ImportTableView* p_table_view{nullptr};
     std::unique_ptr<ImportLogic> p_data_import_logic;
 };
 }

@@ -12,6 +12,7 @@
 #include "importfilewidget.h"
 #include "importparameterwidget.h"
 #include "importtextview.h"
+#include "importtableview.h"
 
 #include <QSplitter>
 #include <QVBoxLayout>
@@ -26,7 +27,9 @@ DataImport::DataLoaderDialog::DataLoaderDialog(QWidget* parent): QDialog(parent)
     p_data_import_logic = std::unique_ptr<DataImport::ImportLogic>(new DataImport::ImportLogic());
 
     // The placeholders
-    auto v_splitter = new QSplitter(Qt::Vertical, this);
+    auto h_splitter = new QSplitter(this);
+    auto v_splitter = new QSplitter(Qt::Vertical, h_splitter);
+    h_splitter->setChildrenCollapsible(false);
     v_splitter->setChildrenCollapsible(false);
 
     auto file_list_space = new QGroupBox("Selected Files:", v_splitter);
@@ -41,9 +44,11 @@ DataImport::DataLoaderDialog::DataLoaderDialog(QWidget* parent): QDialog(parent)
     // Manage the layout
     v_splitter->addWidget(file_list_space);
     v_splitter->addWidget(parameter_space);
-    v_splitter->addWidget(selection_space);
+    h_splitter->addWidget(v_splitter);
+    h_splitter->addWidget(selection_space);
+    
     auto v_layout = new QVBoxLayout(this);
-    v_layout->addWidget(v_splitter);
+    v_layout->addWidget(h_splitter);
     v_layout->addWidget(button_box);
 
     // Finally set up the individual elements
@@ -98,7 +103,7 @@ void DataImport::DataLoaderDialog::setUpSelectionSpace(QTabWidget* tab_widget)
 
     auto second_tab = new QWidget(tab_widget);
     auto second_layout = new QVBoxLayout(second_tab);
-    p_table_view = new QTableView(second_tab);
+    p_table_view = new ImportTableView(second_tab);
     second_layout->addWidget(p_table_view);
 
     tab_widget->addTab(first_tab, "Text view");
