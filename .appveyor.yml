@@ -25,4 +25,24 @@ build_script:
 - cd build
 - cmake --version
 - cmake -G "Visual Studio 15 2017 Win64" ..
-- cmake --build . 
+- cmake --build .
+
+test_script:
+- echo "qt-mvvm test_script" %CD%
+- echo %PATH%
+- ps: >-
+    ctest --output-on-failure
+
+    if (-not $?) {
+
+        type Testing/Temporary/LastTest.log
+
+        throw "tests failed"
+
+    }
+
+on_failure:
+- appveyor PushArtifact Testing/Temporary/LastTest.log
+#- ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+
+
