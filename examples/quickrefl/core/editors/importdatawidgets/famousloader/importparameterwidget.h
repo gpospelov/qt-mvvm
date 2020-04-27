@@ -87,10 +87,11 @@ public:
 signals:
     void parameterChanged();
     void nameChanged(std::string name, LineBlockWidget*);
+    void typeChanged(std::string type, LineBlockWidget*);
 
 private:
     void setEnabled();
-    void typeChanged();
+    void typeVariation();
     void startRangeChanged();
     void endRangeChanged();
     void connectSubcomponents();
@@ -142,14 +143,17 @@ public:
 signals:
     void parameterChanged();
     void namesChanged();
+    void typesChanged();
 
 private slots:
     void processNameChanged(std::string name, LineBlockWidget* widget);
+    void processTypeChanged(std::string type, LineBlockWidget* widget);
     
 private:
     void setLayout();
     void initialise();
     void connectAll();
+    void resetFromLineBlocks() const;
 
 private:
     ImportLogic* p_import_logic;

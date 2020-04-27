@@ -226,13 +226,23 @@ std::string DataImport::ImportLogic::getPreview(int row) const
 }
 
 //! Get the names of all the LineBlocks in place
-bool DataImport::ImportLogic::nameInBlocks(const std::string &name) const
+DataImport::LineBlock* DataImport::ImportLogic::nameInBlocks(const std::string &name) const
 {
     for (auto &line_block: m_line_blocks){
-        if (name == line_block->name()) return true;
+        if (name == line_block->name()) return line_block.get();
     }
-    return false;
+    return nullptr;
 }
+
+//! Get the names of all the LineBlocks in place
+DataImport::LineBlock* DataImport::ImportLogic::typeInBlocks(const std::string &type) const
+{
+    for (auto &line_block: m_line_blocks){
+        if (type == line_block->type()) return line_block.get();
+    }
+    return nullptr;
+}
+
 
 //! build the preview string with html style
 void DataImport::ImportLogic::initSeparators()

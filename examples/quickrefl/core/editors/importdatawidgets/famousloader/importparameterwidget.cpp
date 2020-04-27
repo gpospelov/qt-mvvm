@@ -56,7 +56,12 @@ void DataImport::LineBlockWidget::grabFromLineBlock()
     if (!p_line_block)
         return;
 
-    if (p_line_block->active() != p_active_checkbox->checkState()) p_active_checkbox->setChecked(p_line_block->active());
+    QList<QWidget*> object_list = this->findChildren<QWidget *>();
+    foreach(QWidget* object, object_list) {
+        object->blockSignals(true);
+    }
+
+    if (p_line_block->active() != (p_active_checkbox->checkState()==Qt::Checked)) p_active_checkbox->setChecked(p_line_block->active());
     p_type_select->setCurrentText(QString::fromStdString(p_line_block->type()));
     p_color_editor->setData(QColor(QString::fromStdString(p_line_block->color())));
     p_line_start->setValue(p_line_block->start());
@@ -64,6 +69,11 @@ void DataImport::LineBlockWidget::grabFromLineBlock()
     p_separators->setCurrentText(QString::fromStdString(p_line_block->separator()));
     p_filter_name->setText(QString::fromStdString(p_line_block->name()));
 
+    foreach(QWidget* object, object_list) {
+        object->blockSignals(false);
+    }
+
+    emit parameterChanged();
 }
 
 //! Create the subcomponents
@@ -212,7 +222,7 @@ void DataImport::LineBlockWidget::connectAll()
     connect(p_active_checkbox, &SwitchSpace::Switch::stateChanged, this,
             &DataImport::LineBlockWidget::setEnabled);
     connect(p_type_select, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
-            this, &DataImport::LineBlockWidget::typeChanged);
+            this, &DataImport::LineBlockWidget::typeVariation);
     connect(p_range_start, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
             this, &DataImport::LineBlockWidget::startRangeChanged);
     connect(p_range_end, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
@@ -228,7 +238,7 @@ void DataImport::LineBlockWidget::setEnabled()
 }
 
 //! Widget logic when the type changed
-void DataImport::LineBlockWidget::typeChanged()
+void DataImport::LineBlockWidget::typeVariation()
 {
     bool visible = false;
     int current_index = p_type_select->currentIndex();
@@ -313,7 +323,10 @@ void DataImport::LineBlockWidget::dataChanged()
         return;
     }
 
-    p_line_block->setName(p_filter_name->text().toStdString());
+    if (p_type_select->currentText().toStdString() != p_line_block->type()){
+        emit typeChanged(p_type_select->currentText().toStdString(), this);
+        return;
+    }
 
     if (p_line_start->value()>=p_line_end->value()){
         p_line_end->blockSignals(true);
@@ -336,7 +349,6 @@ void DataImport::LineBlockWidget::dataChanged()
     }
 
     p_line_block->setActive(p_active_checkbox->isChecked());
-    p_line_block->setType(p_type_select->currentText().toStdString());
     p_line_block->setSeparator(p_separators->currentText().toStdString());
     p_line_block->setColor(p_color_editor->data().value<QColor>().name().toStdString());
     p_line_block->setStart(start);
@@ -433,6 +445,11 @@ void DataImport::ImportParameterWidget::addLineBlock()
         this, &DataImport::ImportParameterWidget::processNameChanged
     );
 
+    connect(
+        temp_widget, &DataImport::LineBlockWidget::typeChanged,
+        this, &DataImport::ImportParameterWidget::processTypeChanged
+    );
+
     emit parameterChanged();
 }
 
@@ -446,6 +463,15 @@ void DataImport::ImportParameterWidget::removeLineBlock()
     }
 }
 
+//! Reset all the info in the linblockwidgets from the linblock items
+void DataImport::ImportParameterWidget::resetFromLineBlocks() const
+{
+    QList<QListWidgetItem*> items = p_list_widget->findItems("*", Qt::MatchWildcard);
+    foreach(QListWidgetItem * item, items){
+        dynamic_cast<DataImport::LineBlockWidget*>(p_list_widget->itemWidget(item))->grabFromLineBlock();
+    }
+}
+
 //! This manages the naming by allowing only dofferent names and sends it upstream if changed
 void DataImport::ImportParameterWidget::processNameChanged(std::string name, LineBlockWidget* widget)
 {
@@ -454,4 +480,18 @@ void DataImport::ImportParameterWidget::processNameChanged(std::string name, Lin
         emit namesChanged();
     }
     widget->grabFromLineBlock();
+}
+
+//! This manages the types as only one data type and one header type is allowed
+void DataImport::ImportParameterWidget::processTypeChanged(std::string type, LineBlockWidget* widget)
+{   
+    auto line_block = p_import_logic->typeInBlocks(type);
+    if (!line_block || type == "Comments" || type == "Info") {
+        widget->lineBlock()->setType(type);
+    } else {
+        line_block->setType("Comments");
+        widget->lineBlock()->setType(type);
+    }
+    resetFromLineBlocks();
+    emit typesChanged();
 }

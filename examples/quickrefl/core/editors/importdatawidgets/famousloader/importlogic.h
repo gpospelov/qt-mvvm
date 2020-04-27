@@ -84,7 +84,8 @@ public:
     LineBlock* addLineBlock(std::string name);
     void removeLineBlock(LineBlock* block_ptr);
     std::string getPreview(int row) const;
-    bool nameInBlocks(const std::string &name) const;
+    LineBlock* nameInBlocks(const std::string &name) const;
+    LineBlock* typeInBlocks(const std::string &type) const;
 
 public slots:
     void setFiles(std::vector<std::string> file_paths);
