@@ -872,7 +872,7 @@ TEST_F(LayerElementTest, testpropagation)
     move_arguments = spy_ctr_above_width.takeLast();
 
     EXPECT_EQ(move_arguments.at(0).value<std::string>(), "above");
-    EXPECT_EQ(move_arguments.at(1).value<double>(), 8);
+    EXPECT_DOUBLE_EQ(move_arguments.at(1).value<double>(), 8);
     EXPECT_DOUBLE_EQ(8., item_above->property<double>(LayerElementItem::P_WIDTH));
     EXPECT_DOUBLE_EQ(8., item_middle->property<double>(LayerElementItem::P_X_POS));
     EXPECT_DOUBLE_EQ(3., first_handle_middle->rectangle().x());
@@ -976,8 +976,8 @@ TEST_F(LayerElementTest, testpropagation)
 
     move_arguments = spy_ctr_middle_roughness.takeLast();
     EXPECT_EQ(move_arguments.at(0).value<std::string>(), "middle");
-    EXPECT_DOUBLE_EQ(move_arguments.at(1).value<double>(), 2.);
-    EXPECT_DOUBLE_EQ(2., item_middle->property<double>(LayerElementItem::P_ROUGHNESS));
+    EXPECT_FLOAT_EQ(move_arguments.at(1).value<double>(), 2.); // DOUBLE_EQ not enough under Windows
+    EXPECT_FLOAT_EQ(2., item_middle->property<double>(LayerElementItem::P_ROUGHNESS));
 
     // Try standard roughness move right handle
     mouse_move_event->setPos(QPointF(adapter->toSceneX(-13), adapter->toSceneY(0)));
