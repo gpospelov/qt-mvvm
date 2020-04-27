@@ -41,30 +41,39 @@ DataImport::DataLoaderDialog::DataLoaderDialog(QWidget* parent): QDialog(parent)
     connect(button_box, SIGNAL(accepted()), this, SLOT(accept()));
     connect(button_box, SIGNAL(rejected()), this, SLOT(reject()));
 
+    // Set up the individual elements
+    setUpFileListSpace(file_list_space);
+    setUpParameterSpace(parameter_space);
+    setUpSelectionSpace(selection_space);
+
     // Manage the layout
     v_splitter->addWidget(file_list_space);
     v_splitter->addWidget(parameter_space);
     h_splitter->addWidget(v_splitter);
     h_splitter->addWidget(selection_space);
-    
+
     auto v_layout = new QVBoxLayout(this);
     v_layout->addWidget(h_splitter);
     v_layout->addWidget(button_box);
 
-    // Finally set up the individual elements
-    setUpFileListSpace(file_list_space);
-    setUpParameterSpace(parameter_space);
-    setUpSelectionSpace(selection_space);
+    v_splitter->setStretchFactor(0,0);
+    v_splitter->setStretchFactor(1,1);
+    h_splitter->setStretchFactor(0,0);
+    h_splitter->setStretchFactor(1,1);
+
 }
 
 //! Helper function to set up the file list area
 void DataImport::DataLoaderDialog::setUpFileListSpace(QGroupBox* conainer)
 {
-    conainer->setContentsMargins(0,0,0,0);
+    
     auto layout = new QVBoxLayout(conainer);
     p_import_file_list = new DataImport::ImportFileWidget(conainer);
     layout->addWidget(p_import_file_list);
+    layout->setContentsMargins(0,0,0,0);
     layout->setSpacing(0);
+    conainer->setMinimumHeight(p_import_file_list->minimumHeight());
+    conainer->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 
     connect(
         p_import_file_list, SIGNAL(filesChanged(std::vector<std::string>)),
@@ -80,11 +89,13 @@ void DataImport::DataLoaderDialog::setUpFileListSpace(QGroupBox* conainer)
 //! Helper function to set up the parameter area
 void DataImport::DataLoaderDialog::setUpParameterSpace(QGroupBox* conainer)
 {
-    conainer->setContentsMargins(0,0,0,0);
+    
     auto layout = new QVBoxLayout(conainer);
     p_parameter_dialog = new DataImport::ImportParameterWidget(p_data_import_logic.get(), conainer);
     layout->addWidget(p_parameter_dialog);
+    layout->setContentsMargins(0,0,0,0);
     layout->setSpacing(0);
+    conainer->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Expanding);
 
     connect(
         p_parameter_dialog, SIGNAL(parameterChanged()),

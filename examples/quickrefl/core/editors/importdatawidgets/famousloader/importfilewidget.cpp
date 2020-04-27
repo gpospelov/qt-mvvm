@@ -59,6 +59,9 @@ void DataImport::ImportFileWidget::createWidgets()
     side_layout->addStretch();
     main_layout->addLayout(side_layout);
 
+    // Set the size policy
+    p_list_view->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Ignored);
+
     // Connect the buttons
     connect(
         add_button, &QPushButton::clicked,

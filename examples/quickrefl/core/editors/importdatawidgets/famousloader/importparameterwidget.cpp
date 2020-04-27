@@ -361,6 +361,7 @@ void DataImport::ImportParameterWidget::setLayout()
     p_list_widget->setDragDropMode(QAbstractItemView::InternalMove);
     p_list_widget->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     p_list_widget->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    p_list_widget->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Expanding);
 
     // Set up the buttons
     auto add_button = new QPushButton(this);
@@ -386,6 +387,7 @@ void DataImport::ImportParameterWidget::setLayout()
     side_layout->addStretch();
     widget_layout->addWidget(p_list_widget);
     widget_layout->addLayout(side_layout);
+    setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Expanding);
 
     // Connect the buttons
     connect(
