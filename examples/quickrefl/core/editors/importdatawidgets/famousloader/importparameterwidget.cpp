@@ -117,7 +117,7 @@ void DataImport::LineBlockWidget::initComponents()
         editor_pixmap->setFixedWidth(p_active_checkbox->sizeHint().width());
 
     p_filter_name->setFixedWidth(p_active_checkbox->sizeHint().width());
-    p_filter_name->setText("Filter");
+     p_filter_name->setFocusPolicy(Qt::StrongFocus);
 
     p_type_select->addItems(QStringList{"Header","Units", "Data", "Comments", "Info"});
     p_range_start->addItems(QStringList{"Between lines", "At line"});
@@ -291,10 +291,6 @@ void DataImport::LineBlockWidget::connectSubcomponents()
             connect(
                 dynamic_cast<SwitchSpace::Switch*>(object), &SwitchSpace::Switch::stateChanged,
                 this, &DataImport::LineBlockWidget::dataChanged);
-        if (dynamic_cast<QLineEdit*>(object))
-            connect(
-                dynamic_cast<QLineEdit*>(object), &QLineEdit::textChanged,
-                this, &DataImport::LineBlockWidget::dataChanged);
         if (dynamic_cast<ModelView::ColorEditor*>(object))
             connect(
                 dynamic_cast<ModelView::ColorEditor*>(object), &ModelView::ColorEditor::dataChanged,
@@ -311,6 +307,13 @@ void DataImport::LineBlockWidget::dataChanged()
 {
     if (!p_line_block)
         return;
+
+    if (p_filter_name->text().toStdString() != p_line_block->name()){
+        emit nameChanged(p_filter_name->text().toStdString(), this);
+        return;
+    }
+
+    p_line_block->setName(p_filter_name->text().toStdString());
 
     if (p_line_start->value()>=p_line_end->value()){
         p_line_end->blockSignals(true);
@@ -332,12 +335,13 @@ void DataImport::LineBlockWidget::dataChanged()
         }
     }
 
-    p_line_block->setParameters(
-        p_active_checkbox->isChecked(), p_type_select->currentText().toStdString(), 
-        p_separators->currentText().toStdString(), 
-        p_color_editor->data().value<QColor>().name().toStdString(),
-        start, end);
-    
+    p_line_block->setActive(p_active_checkbox->isChecked());
+    p_line_block->setType(p_type_select->currentText().toStdString());
+    p_line_block->setSeparator(p_separators->currentText().toStdString());
+    p_line_block->setColor(p_color_editor->data().value<QColor>().name().toStdString());
+    p_line_block->setStart(start);
+    p_line_block->setEnd(end);
+
     emit parameterChanged();
 }
 
@@ -424,6 +428,11 @@ void DataImport::ImportParameterWidget::addLineBlock()
         [this](){emit parameterChanged();}
     );
 
+    connect(
+        temp_widget, &DataImport::LineBlockWidget::nameChanged,
+        this, &DataImport::ImportParameterWidget::processNameChanged
+    );
+
     emit parameterChanged();
 }
 
@@ -435,4 +444,14 @@ void DataImport::ImportParameterWidget::removeLineBlock()
         p_import_logic->removeLineBlock(dynamic_cast<DataImport::LineBlockWidget*>(p_list_widget->itemWidget(item))->lineBlock());
         delete p_list_widget->takeItem(p_list_widget->row(item));
     }
+}
+
+//! This manages the naming by allowing only dofferent names and sends it upstream if changed
+void DataImport::ImportParameterWidget::processNameChanged(std::string name, LineBlockWidget* widget)
+{
+    if (!p_import_logic->nameInBlocks(name)) {
+        widget->lineBlock()->setName(name);
+        emit namesChanged();
+    }
+    widget->grabFromLineBlock();
 }

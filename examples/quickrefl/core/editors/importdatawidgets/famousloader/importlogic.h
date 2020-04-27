@@ -20,6 +20,7 @@
 namespace DataImport
 {
 
+//! Helper method to split
 std::vector<std::string> split(const std::string &s, char delim);
 
 //! This is the class holding a text region
@@ -29,12 +30,13 @@ public:
     LineBlock(std::string name);
     ~LineBlock() = default;
 
-    void setParameters(bool active, std::string type_string, std::string separator_name, std::string color_string, int start_line, int end_line);
+    //! Public access
     void setSeparators(std::map<std::string, char>* separators); 
     std::vector<std::string> separatorNames() const;
     void processColors(std::vector<std::string> &color_vec) const;
     void processSeparator(std::vector<char> &separator_vec) const;
 
+    //! Getters
     const std::string& name() const;
     const bool& active() const;
     const std::string& type() const;
@@ -43,8 +45,8 @@ public:
     const int& start() const;
     const int& end() const;
 
-private:
-    void setName(bool active);
+    //! Setters
+    void setName(std::string);
     void setActive(bool active);
     void setType(std::string type_string);
     void setSeparator(std::string separator_name);
@@ -57,6 +59,9 @@ private:
     std::string m_separator_str;
     std::string m_type_string;
     std::string m_color;
+    
+    std::vector<char> m_ignore_characters;
+    std::vector<int> m_ignore_lines;
 
     bool m_active;
     char m_separator = ' ';
@@ -79,6 +84,7 @@ public:
     LineBlock* addLineBlock(std::string name);
     void removeLineBlock(LineBlock* block_ptr);
     std::string getPreview(int row) const;
+    bool nameInBlocks(const std::string &name) const;
 
 public slots:
     void setFiles(std::vector<std::string> file_paths);

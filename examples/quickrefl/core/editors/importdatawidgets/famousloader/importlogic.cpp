@@ -31,17 +31,6 @@ DataImport::LineBlock::LineBlock(std::string name)
 {
 }
 
-//! Set the parameters
-void DataImport::LineBlock::setParameters(bool active, std::string type_string, std::string separator_name, std::string color_string, int start_line, int end_line)
-{
-    setActive(active);
-    setType(type_string);
-    setSeparator(separator_name);
-    setColor(color_string);
-    setStart(start_line);
-    setEnd(end_line);
-}
-
 //! Return only the keys of the separators
 std::vector<std::string> DataImport::LineBlock::separatorNames() const
 {
@@ -129,12 +118,16 @@ const int& DataImport::LineBlock::end() const
     return m_end_line;
 }
 
-
-
 //! Build the separator string
 void DataImport::LineBlock::setSeparators(std::map<std::string, char>* separators)
 {
     m_separators = separators;
+}
+
+//! Set the start line
+void DataImport::LineBlock::setName(std::string name)
+{
+    m_name = name;
 }
 
 //! Set the start line
@@ -152,6 +145,7 @@ void DataImport::LineBlock::setType(std::string type_string)
 //! Set the start line
 void DataImport::LineBlock::setSeparator(std::string separator_name)
 {
+    m_separator_str = separator_name;
     m_separator = m_separators->at(separator_name);
 }
 
@@ -229,6 +223,15 @@ std::string DataImport::ImportLogic::getPreview(int row) const
         output += std::string("<div><font color=\"")+color_scheme.at(i)+std::string("\">") + formated_line+std::string("</font>")+ std::string("</div>");
     }
     return output;
+}
+
+//! Get the names of all the LineBlocks in place
+bool DataImport::ImportLogic::nameInBlocks(const std::string &name) const
+{
+    for (auto &line_block: m_line_blocks){
+        if (name == line_block->name()) return true;
+    }
+    return false;
 }
 
 //! build the preview string with html style

@@ -82,12 +82,13 @@ public:
     LineBlockWidget(LineBlock* line_block = nullptr, QWidget* parent = nullptr);
     ~LineBlockWidget() = default;
     LineBlock* lineBlock() const;
+    void grabFromLineBlock();
 
 signals:
     void parameterChanged();
+    void nameChanged(std::string name, LineBlockWidget*);
 
 private:
-    void grabFromLineBlock();
     void setEnabled();
     void typeChanged();
     void startRangeChanged();
@@ -140,6 +141,10 @@ public:
 
 signals:
     void parameterChanged();
+    void namesChanged();
+
+private slots:
+    void processNameChanged(std::string name, LineBlockWidget* widget);
     
 private:
     void setLayout();
