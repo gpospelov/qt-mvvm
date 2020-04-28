@@ -19,9 +19,13 @@
 
 namespace DataImport
 {
+// Convention
+using string_data = std::vector<std::vector<std::string>>;
 
 //! Helper method to split
 std::vector<std::string> split(const std::string &s, char delim);
+//! Helper method to clean a string vector
+void clean(std::vector<std::string>& input);
 
 //! This is the class holding a text region
 class LineBlock
@@ -35,6 +39,7 @@ public:
     std::vector<std::string> separatorNames() const;
     void processColors(std::vector<std::string> &color_vec) const;
     void processSeparator(std::vector<char> &separator_vec) const;
+    void processType(std::vector<std::string> &type_vec) const;
 
     //! Getters
     const std::string& name() const;
@@ -83,7 +88,8 @@ public:
 
     LineBlock* addLineBlock(std::string name);
     void removeLineBlock(LineBlock* block_ptr);
-    std::string getPreview(int row) const;
+    std::string getPreview(const int& row) const;
+    string_data getData(const int& row) const;
     LineBlock* nameInBlocks(const std::string &name) const;
     LineBlock* typeInBlocks(const std::string &type) const;
 
@@ -92,8 +98,9 @@ public slots:
 
 private:
     void initSeparators();
-    std::vector<std::string> getColorScheme(int length) const;
-    std::vector<char> getSeparatorScheme(int length) const;
+    std::vector<std::string> getColorScheme(const int& length) const;
+    std::vector<char> getSeparatorScheme(const int& length) const;
+    std::vector<std::string> getTypeScheme(const int& length) const;
 
 private:
     std::vector<std::unique_ptr<CSVFile>> m_files;

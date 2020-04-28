@@ -13,8 +13,9 @@
 #include <iostream>
 #include <numeric>
 
-//! Standat function to handle spinting
-std::vector<std::string> DataImport::split(const std::string &s, char delim) {
+//! Standard function to handle spinting
+std::vector<std::string> DataImport::split(const std::string &s, char delim) 
+{
   std::stringstream ss(s);
   std::string item;
   std::vector<std::string> elems;
@@ -22,6 +23,23 @@ std::vector<std::string> DataImport::split(const std::string &s, char delim) {
     elems.push_back(item);
   }
   return elems;
+}
+
+//! Cleans the vector of strings provided by removing empty parts
+void DataImport::clean(std::vector<std::string>& input) 
+{
+    std::vector<std::string>::iterator i = input.begin();
+    while(i != input.end())
+    {
+        if(*i == "")
+        {
+            i = input.erase(i);
+        }
+        else
+        {
+            ++i;
+        }
+    }
 }
 
 // -------------------------------------------------
@@ -73,6 +91,23 @@ void DataImport::LineBlock::processSeparator(std::vector<char> &separator_vec) c
 
     for (int i = start; i < ((end < separator_vec.size()) ? (end) : (separator_vec.size())); ++i){
         separator_vec.at(i) = m_separator;
+    }
+}
+
+//! Set the right type to the vector
+void DataImport::LineBlock::processType(std::vector<std::string> &type_vec) const
+{
+    if (!m_active)
+        return ;
+
+    int start = m_start_line;
+    int end = (m_end_line == -1) ? (type_vec.size()) : (m_end_line);
+
+    if (start > type_vec.size())
+        return ;
+
+    for (int i = start; i < ((end < type_vec.size()) ? (end) : (type_vec.size())); ++i){
+        type_vec.at(i) = m_type_string;
     }
 }
 
@@ -202,15 +237,14 @@ void DataImport::ImportLogic::setFiles(std::vector<std::string> file_paths)
 }
 
 //! build the preview string with html style
-std::string DataImport::ImportLogic::getPreview(int row) const
+std::string DataImport::ImportLogic::getPreview(const int& row) const
 {
     auto thumbnail = m_files.at(row)->thumbnail();
     std::vector<std::string> color_scheme = getColorScheme(thumbnail.size());
     std::vector<char> separator_scheme = getSeparatorScheme(thumbnail.size());
 
     std::string output;
-    for (int i = 0; i < thumbnail.size(); ++i)
-    {   
+    for (int i = 0; i < thumbnail.size(); ++i){   
         auto formated_line = thumbnail.at(i);
         if (separator_scheme.at(i) != '!'){
             auto temp_string_vec = DataImport::split(thumbnail.at(i), separator_scheme.at(i));
@@ -221,6 +255,25 @@ std::string DataImport::ImportLogic::getPreview(int row) const
             }
         }
         output += std::string("<div><font color=\"")+color_scheme.at(i)+std::string("\">") + formated_line+std::string("</font>")+ std::string("</div>");
+    }
+    return output;
+}
+
+//! build the preview string with html style
+DataImport::string_data DataImport::ImportLogic::getData(const int& row) const
+{
+    auto file_lines = m_files.at(row)->file();
+    std::vector<std::string> type_scheme = getTypeScheme(file_lines.size());
+    std::vector<char> separator_scheme = getSeparatorScheme(file_lines.size());
+
+    DataImport::string_data output;
+    for (int i = 0; i < file_lines.size(); ++i){
+        if (type_scheme.at(i) != "Data")
+            continue;
+        
+        auto temp_string_vec = DataImport::split(file_lines.at(i), separator_scheme.at(i));
+        DataImport::clean(temp_string_vec);
+        output.push_back(temp_string_vec);
     }
     return output;
 }
@@ -243,7 +296,6 @@ DataImport::LineBlock* DataImport::ImportLogic::typeInBlocks(const std::string &
     return nullptr;
 }
 
-
 //! build the preview string with html style
 void DataImport::ImportLogic::initSeparators()
 {
@@ -258,7 +310,7 @@ void DataImport::ImportLogic::initSeparators()
 }
 
 //! Get the color scheme
-std::vector<std::string> DataImport::ImportLogic::getColorScheme(int length) const
+std::vector<std::string> DataImport::ImportLogic::getColorScheme(const int& length) const
 {
     std::vector<std::string> output(length, "black");
     for (auto &line_block : m_line_blocks){
@@ -268,11 +320,21 @@ std::vector<std::string> DataImport::ImportLogic::getColorScheme(int length) con
 }
 
 //! Get the separator scheme
-std::vector<char> DataImport::ImportLogic::getSeparatorScheme(int length) const
+std::vector<char> DataImport::ImportLogic::getSeparatorScheme(const int& length) const
 {
     std::vector<char> output(length, '!');
     for (auto &line_block : m_line_blocks){
         line_block->processSeparator(output);
+    }
+    return output;
+}
+
+//! Get the type scheme
+std::vector<std::string> DataImport::ImportLogic::getTypeScheme(const int& length) const
+{
+    std::vector<std::string> output(length, "Comments");
+    for (auto &line_block : m_line_blocks){
+        line_block->processType(output);
     }
     return output;
 }
