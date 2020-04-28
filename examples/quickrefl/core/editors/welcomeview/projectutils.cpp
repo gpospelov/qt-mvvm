@@ -8,6 +8,8 @@
 // ************************************************************************** //
 
 #include "projectutils.h"
+#include "applicationmodelsinterface.h"
+#include "project.h"
 #include <cctype>
 #include <mvvm/model/sessionmodel.h>
 
@@ -26,3 +28,10 @@ std::string ProjectUtils::SuggestFileName(const ModelView::SessionModel& model)
     return result + json_extention;
 }
 
+//! Creates new untitled project.
+
+std::unique_ptr<ProjectInterface>
+ProjectUtils::CreateUtitledProject(ApplicationModelsInterface* models)
+{
+    return std::make_unique<Project>(models);
+}

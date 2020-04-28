@@ -9,6 +9,7 @@
 
 #include "google_test.h"
 #include "projectutils.h"
+#include "projectinterface.h"
 #include "test_utils.h"
 #include <mvvm/model/sessionmodel.h>
 
@@ -28,4 +29,10 @@ TEST_F(ProjectUtilsTest, SuggestFileName)
 {
     ModelView::SessionModel model("TestModel");
     EXPECT_EQ(std::string("testmodel.json"), ProjectUtils::SuggestFileName(model));
+}
+
+TEST_F(ProjectUtilsTest, CreateUtitledProject)
+{
+    auto project = ProjectUtils::CreateUtitledProject(nullptr);
+    EXPECT_TRUE(project->projectDir().empty());
 }
