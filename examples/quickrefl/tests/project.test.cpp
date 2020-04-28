@@ -72,6 +72,13 @@ public:
 
 ProjectTest::~ProjectTest() = default;
 
+TEST_F(ProjectTest, initialState)
+{
+    ApplicationModels models;
+    Project project(&models);
+    EXPECT_TRUE(project.projectDir().empty());
+}
+
 //! Testing saveModel.
 
 TEST_F(ProjectTest, saveModel)
@@ -82,6 +89,8 @@ TEST_F(ProjectTest, saveModel)
     // create project directory and save file
     auto project_dir = create_project_dir("Untitled1");
     project.save(project_dir);
+
+    EXPECT_EQ(project.projectDir(), project_dir);
 
     auto sample_json = ModelView::Utils::join(project_dir, get_json_filename(samplemodel_name));
     EXPECT_TRUE(ModelView::Utils::exists(sample_json));
@@ -109,6 +118,8 @@ TEST_F(ProjectTest, loadModel)
     auto project_dir = create_project_dir("Untitled2");
     project.save(project_dir);
 
+    EXPECT_EQ(project.projectDir(), project_dir);
+
     // cleaning models
     models.sample_model->clear();
     models.material_model->clear();
@@ -123,4 +134,6 @@ TEST_F(ProjectTest, loadModel)
     // checking identifiers
     EXPECT_EQ(models.sample_model->rootItem()->children()[0]->identifier(), item0_identifier);
     EXPECT_EQ(models.material_model->rootItem()->children()[0]->identifier(), item1_identifier);
+
+    EXPECT_EQ(project.projectDir(), project_dir);
 }

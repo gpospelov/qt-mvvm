@@ -25,6 +25,8 @@ public:
     Project(ApplicationModelsInterface* app_models);
     ~Project();
 
+    std::string projectDir() const override;
+
     bool save(const std::string& dirname) const override;
 
     bool load(const std::string& dirname) override;

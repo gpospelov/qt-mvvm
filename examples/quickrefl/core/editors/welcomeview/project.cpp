@@ -15,7 +15,9 @@
 #include <mvvm/utils/fileutils.h>
 
 struct Project::ProjectImpl {
-    ApplicationModelsInterface* app_models{nullptr};
+    ApplicationModelsInterface* app_models{nullptr};    
+    std::string project_dir;
+
     ProjectImpl(ApplicationModelsInterface* app_models) : app_models(app_models) {}
 
     //! Returns list of models which are subject to save/load.
@@ -33,6 +35,7 @@ struct Project::ProjectImpl {
             auto filename = ModelView::Utils::join(dirname, ProjectUtils::SuggestFileName(*model));
             std::invoke(method, document, filename);
         }
+        project_dir = dirname;
         return true;
     }
 };
@@ -40,6 +43,11 @@ struct Project::ProjectImpl {
 Project::Project(ApplicationModelsInterface* app_models)
     : p_impl(std::make_unique<ProjectImpl>(app_models))
 {
+}
+
+std::string Project::projectDir() const
+{
+    return p_impl->project_dir;
 }
 
 Project::~Project() = default;
