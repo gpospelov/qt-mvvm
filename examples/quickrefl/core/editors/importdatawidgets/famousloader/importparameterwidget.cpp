@@ -60,14 +60,36 @@ void DataImport::LineBlockWidget::grabFromLineBlock()
     foreach(QWidget* object, object_list) {
         object->blockSignals(true);
     }
+    int start = p_line_block->start();
+    int end = p_line_block->end();
 
-    if (p_line_block->active() != (p_active_checkbox->checkState()==Qt::Checked)) p_active_checkbox->setChecked(p_line_block->active());
+    if (start+1 == end) {
+        p_range_start->setCurrentText(QString::fromStdString("At line"));
+    }else{
+        p_range_start->setCurrentText(QString::fromStdString("Between lines"));
+    }
+
+    if (end == -1) {
+        p_range_end->setCurrentText(QString::fromStdString("and end of file."));
+    }else{
+        p_range_end->setCurrentText(QString::fromStdString("and"));
+    }
+
+    if (p_line_block->active() != p_active_checkbox->isChecked()){
+        p_active_checkbox->setChecked(p_line_block->active());
+        p_active_checkbox->init(p_line_block->active());
+    }
     p_type_select->setCurrentText(QString::fromStdString(p_line_block->type()));
     p_color_editor->setData(QColor(QString::fromStdString(p_line_block->color())));
     p_line_start->setValue(p_line_block->start());
     p_line_end->setValue(p_line_block->end());
     p_separators->setCurrentText(QString::fromStdString(p_line_block->separator()));
     p_filter_name->setText(QString::fromStdString(p_line_block->name()));
+
+    setEnabled();
+    typeVariation();
+    startRangeChanged();
+    endRangeChanged();
 
     foreach(QWidget* object, object_list) {
         object->blockSignals(false);
@@ -233,7 +255,6 @@ void DataImport::LineBlockWidget::connectAll()
 void DataImport::LineBlockWidget::setEnabled()
 {
     p_tab_widget->setEnabled(p_active_checkbox->isChecked());
-    p_color_editor->setEnabled(p_active_checkbox->isChecked());
     p_color_editor->setEnabled(p_active_checkbox->isChecked());
 }
 

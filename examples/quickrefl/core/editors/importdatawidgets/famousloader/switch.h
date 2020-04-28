@@ -81,18 +81,19 @@ class Switch : public SelectionControl
 
 public:
     explicit Switch(QWidget* parent = nullptr);
+    explicit Switch(bool state, QWidget* parent = nullptr);
     explicit Switch(const QString& text, QWidget* parent = nullptr);
     Switch(const QString& text, const QBrush&, QWidget* parent = nullptr);
     ~Switch();
 
     QSize sizeHint() const override;
+    void init(bool state = false);
 
 protected:
     void paintEvent(QPaintEvent*) override;
     void resizeEvent(QResizeEvent*) override;
     void toggle(Qt::CheckState) override;
 
-    void init();
     QRect indicatorRect();
     QRect textRect();
 

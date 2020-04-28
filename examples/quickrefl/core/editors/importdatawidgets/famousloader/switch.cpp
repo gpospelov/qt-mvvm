@@ -130,7 +130,7 @@ void SelectionControl::nextCheckState()
 
 // -------------------------------------------------
 //! The animation class
-void Switch::init()
+void Switch::init(bool state)
 {
     setFont(style.font);
     setObjectName("Switch");
@@ -146,12 +146,24 @@ void Switch::init()
                                style.thumbBrushAnimation.easing);
 
     /* set init values */
-    trackBrushAnimation->setStartValue(
-        colorFromOpacity(style.trackOffBrush, style.trackOffOpacity));
-    trackBrushAnimation->setEndValue(colorFromOpacity(style.trackOffBrush, style.trackOffOpacity));
-    thumbBrushAnimation->setStartValue(
-        colorFromOpacity(style.thumbOffBrush, style.thumbOffOpacity));
-    thumbBrushAnimation->setEndValue(colorFromOpacity(style.thumbOffBrush, style.thumbOffOpacity));
+    if (state){
+        thumbPosAniamtion->interpolate(
+            (style.indicatorMargin.left() + style.indicatorMargin.right() + 2) * 2, (style.indicatorMargin.left() + style.indicatorMargin.right() + 2) * 2);
+        trackBrushAnimation->setStartValue(
+            colorFromOpacity(style.trackOnBrush, style.trackOnOpacity));
+        trackBrushAnimation->setEndValue(colorFromOpacity(style.trackOnBrush, style.trackOnOpacity));
+        thumbBrushAnimation->setStartValue(
+            colorFromOpacity(style.thumbOnBrush, style.thumbOnOpacity));
+        thumbBrushAnimation->setEndValue(colorFromOpacity(style.thumbOnBrush, style.thumbOnOpacity));
+    }else{
+        thumbPosAniamtion->interpolate(0, 0);
+        trackBrushAnimation->setStartValue(
+            colorFromOpacity(style.trackOffBrush, style.trackOffOpacity));
+        trackBrushAnimation->setEndValue(colorFromOpacity(style.trackOffBrush, style.trackOffOpacity));
+        thumbBrushAnimation->setStartValue(
+            colorFromOpacity(style.thumbOffBrush, style.thumbOffOpacity));
+        thumbBrushAnimation->setEndValue(colorFromOpacity(style.thumbOffBrush, style.thumbOffOpacity));
+    }
 
     /* set standard palettes */
     auto p = palette();
@@ -177,6 +189,11 @@ QRect Switch::textRect()
 Switch::Switch(QWidget* parent) : SelectionControl(parent)
 {
     init();
+}
+
+Switch::Switch(bool state, QWidget* parent) : SelectionControl(parent)
+{
+    init(state);
 }
 
 Switch::Switch(const QString& text, QWidget* parent) : Switch(parent)
