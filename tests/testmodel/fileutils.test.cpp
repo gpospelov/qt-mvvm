@@ -31,6 +31,8 @@ FileUtilsTest::~FileUtilsTest() = default;
 TEST_F(FileUtilsTest, exists)
 {
     EXPECT_TRUE(Utils::exists(testDir()));
+    EXPECT_FALSE(Utils::exists(std::string()));
+    EXPECT_FALSE(Utils::exists(std::string("abc")));
 }
 
 TEST_F(FileUtilsTest, create_directory)
