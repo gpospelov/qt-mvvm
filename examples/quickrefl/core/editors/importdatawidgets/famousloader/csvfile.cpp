@@ -20,13 +20,32 @@
 //! The constructor
 DataImport::CSVFile::CSVFile(std::string path_to_file) : m_filepath(path_to_file) 
 {
+    loadFile();
     generateThumbnail();
 }
 
+//! Generate the thumbnail
+void DataImport::CSVFile::loadFile()
+{
+    m_file.clear();
+    std::ifstream file(m_filepath);
+    std::string line;
+	while(getline(file, line)){
+        m_file.push_back(line);;
+    };
+    file.close();
+}
+
 //! The getter for the thumbnail text
-std::vector<std::string> DataImport::CSVFile::thumbnail() const
+const std::vector<std::string>& DataImport::CSVFile::thumbnail() const
 {
     return m_thumbnail;
+}
+
+//! The getter for the thumbnail text
+const std::vector<std::string>& DataImport::CSVFile::file() const
+{
+    return m_file;
 }
 
 //! Generate the thumbnail
@@ -45,15 +64,9 @@ void DataImport::CSVFile::generateThumbnail()
 }
 
 //! Return a precise line
-std::string DataImport::CSVFile::line(int line_number) const
+const std::string& DataImport::CSVFile::line(int line_number) const
 {
-    std::ifstream file(m_filepath);
-    std::string output;
-    int counter = 0;
-    while (counter++ != m_thumbnail_length) {
-        getline(file, output);
-    };
-    file.close();
+    return m_file.at(line_number);
 }
 
 // std::string const& CSVRow::operator[](unsigned index) const

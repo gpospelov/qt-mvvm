@@ -101,11 +101,13 @@ public:
     CSVFile(std::string path_to_file);
     ~CSVFile() = default;
 
-    std::vector<std::string> thumbnail() const;
-    std::string line(int line_number) const;
+    const std::vector<std::string>& thumbnail() const;
+    const std::vector<std::string>& file() const;
+    const std::string& line(int line_number) const;
 
 private:
     void generateThumbnail();
+    void loadFile();
 
     // CSVFile(std::string path_to_file, char sep) : filepath(path_to_file), separator(sep) { Init(); }
     // CSVFile(std::string path_to_file, char sep, unsigned headRow)
@@ -129,6 +131,7 @@ private:
 private:
     std::string m_filepath;
     std::vector<std::string> m_thumbnail;
+    std::vector<std::string> m_file;
     int m_thumbnail_length = 40;
 };
 }
