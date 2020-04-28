@@ -14,7 +14,7 @@
 
 #include "importtableview.h"
 #include <mvvm/widgets/scientificspinbox.h>
-
+#include <iostream>
 using namespace ModelView;
 
 namespace
@@ -388,7 +388,8 @@ int ImportTableView::selectedColumn() const
     return col;
 }
 
-void ImportTableView::setData(csv::DataArray data)
+//! Set the table data
+void ImportTableView::setData(const string_data& data)
 {
     if (data.empty()) {
         clearContents();
@@ -413,7 +414,7 @@ void ImportTableView::setData(csv::DataArray data)
         }
     }
 
-    m_import_data->setData(std::move(data));
+    // m_import_data->setData(std::move(data));
     setMultiplierFields();
 }
 

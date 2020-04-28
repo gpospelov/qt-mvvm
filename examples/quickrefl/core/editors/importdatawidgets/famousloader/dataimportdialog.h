@@ -48,6 +48,7 @@ private:
     ImportTextView* p_text_view{nullptr};
     ImportTableView* p_table_view{nullptr};
     std::unique_ptr<ImportLogic> p_data_import_logic;
+    QTabWidget* p_selection_space{nullptr};
 };
 }
 

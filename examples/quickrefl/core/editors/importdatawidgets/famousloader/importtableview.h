@@ -32,6 +32,9 @@ typedef std::vector<std::string> DataColumn;
 namespace DataImport
 {
 
+// Convention
+using string_data = std::vector<std::vector<std::string>>;
+
 struct AxesUnitsWrap {
     enum AxesUnits { DEFAULT, NBINS, RADIANS, DEGREES, MM, QSPACE, QXQY, RQ4 };
 };
@@ -147,7 +150,7 @@ public:
     std::set<int> selectedRows() const;
     int selectedColumn() const;
 
-    void setData(csv::DataArray data);
+    void setData(const string_data& data);
     void setColumnAs(int col, csv::ColumnType type);
     void setFirstRow(size_t row);
     void setLastRow(size_t row);

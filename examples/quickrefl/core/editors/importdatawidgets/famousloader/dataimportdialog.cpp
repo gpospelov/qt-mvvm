@@ -34,7 +34,7 @@ DataImport::DataLoaderDialog::DataLoaderDialog(QWidget* parent): QDialog(parent)
 
     auto file_list_space = new QGroupBox("Selected Files:", v_splitter);
     auto parameter_space = new QGroupBox("Import parameters:", v_splitter);
-    auto selection_space = new QTabWidget(v_splitter);
+    p_selection_space = new QTabWidget(v_splitter);
 
     // The dialog buttons
     auto button_box = new QDialogButtonBox(QDialogButtonBox::Cancel | QDialogButtonBox::Ok);
@@ -44,13 +44,13 @@ DataImport::DataLoaderDialog::DataLoaderDialog(QWidget* parent): QDialog(parent)
     // Set up the individual elements
     setUpFileListSpace(file_list_space);
     setUpParameterSpace(parameter_space);
-    setUpSelectionSpace(selection_space);
+    setUpSelectionSpace(p_selection_space);
 
     // Manage the layout
     v_splitter->addWidget(file_list_space);
     v_splitter->addWidget(parameter_space);
     h_splitter->addWidget(v_splitter);
-    h_splitter->addWidget(selection_space);
+    h_splitter->addWidget(p_selection_space);
 
     auto v_layout = new QVBoxLayout(this);
     v_layout->addWidget(h_splitter);
@@ -119,6 +119,11 @@ void DataImport::DataLoaderDialog::setUpSelectionSpace(QTabWidget* tab_widget)
 
     tab_widget->addTab(first_tab, "Text view");
     tab_widget->addTab(second_tab, "Table view");
+
+    connect(
+        tab_widget, &QTabWidget::currentChanged,
+        this, &DataImport::DataLoaderDialog::selectedFileChanged
+    );
 }
 
 //! This function will manage the chnage of file selection
@@ -127,7 +132,12 @@ void DataImport::DataLoaderDialog::selectedFileChanged()
     int file_num = p_import_file_list->currentSelection();
     if (file_num<0){
         p_text_view->setHtml("");
+        p_table_view->setData(DataImport::string_data());
     }else{
-        p_text_view->setHtml(QString::fromStdString(p_data_import_logic->getPreview(file_num)));
+        if (p_selection_space->currentIndex() == 0){
+            p_text_view->setHtml(QString::fromStdString(p_data_import_logic->getPreview(file_num)));
+        } else if (p_selection_space->currentIndex() == 1){
+            p_table_view->setData(p_data_import_logic->getData(file_num));
+        }
     }
 }
