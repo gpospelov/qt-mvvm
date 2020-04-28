@@ -52,7 +52,7 @@ std::string Project::projectDir() const
 
 Project::~Project() = default;
 
-//! Saves all models to given directory.
+//! Saves all models to a given directory.
 bool Project::save(const std::string& dirname) const
 {
     return p_impl->process(dirname, &ModelView::ModelDocumentInterface::save);
