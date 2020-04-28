@@ -16,6 +16,9 @@ namespace
 const std::string json_extention = ".json";
 }
 
+//! Suggests file name which can be used to store json content of given model.
+//! Uses mode type: MaterialModel -> materialmodel.json
+
 std::string ProjectUtils::SuggestFileName(const ModelView::SessionModel& model)
 {
     std::string result = model.modelType();

@@ -23,7 +23,6 @@ class SessionModel;
 namespace ProjectUtils
 {
 
-//! Suggests file name which can be used to store json content of given model.
 std::string SuggestFileName(const ModelView::SessionModel& model);
 
 } // namespace ProjectUtils
