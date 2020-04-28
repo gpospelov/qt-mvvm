@@ -422,6 +422,27 @@ void DataImport::ImportParameterWidget::initialise()
     for (int i = 0; i < 2; ++i) {
         addLineBlock();
     }
+
+    DataImport::LineBlock* line_block;
+    QList<QListWidgetItem*> items = p_list_widget->findItems("*", Qt::MatchWildcard);
+
+    line_block= dynamic_cast<DataImport::LineBlockWidget*>(p_list_widget->itemWidget(items[0]))->lineBlock();
+    line_block->setType("Header");
+    line_block->setActive(true);
+    line_block->setStart(2);
+    line_block->setEnd(3);
+    line_block->setSeparator("Space ( )");
+    line_block->setColor("red");
+
+    line_block= dynamic_cast<DataImport::LineBlockWidget*>(p_list_widget->itemWidget(items[1]))->lineBlock();
+    line_block->setType("Data");
+    line_block->setActive(true);
+    line_block->setStart(3);
+    line_block->setEnd(-1);
+    line_block->setSeparator("Space ( )");
+    line_block->setColor("blue");
+
+    resetFromLineBlocks();
 }
 
 //! Add a line block with the according line block object in the ImportLogic
