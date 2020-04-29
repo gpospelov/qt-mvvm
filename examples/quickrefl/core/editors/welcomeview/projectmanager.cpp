@@ -56,7 +56,6 @@ struct ProjectManager::ProjectManagerImpl {
         // empty directory mean 'cancel'
         return save_dir.empty() ? failed : current_project->save(save_dir);
     }
-
 };
 
 ProjectManager::ProjectManager(ApplicationModelsInterface* app_models)
@@ -80,14 +79,16 @@ void ProjectManager::saveCurrentProject()
     p_impl->saveCurrentProject();
 }
 
-void ProjectManager::saveProjectAs()
-{
-
-}
+void ProjectManager::saveProjectAs() {}
 
 void ProjectManager::openExistingProject()
 {
     if (!p_impl->saveCurrentProject())
         return;
     p_impl->closeCurrentProject();
+}
+
+std::string ProjectManager::currentProjectDir() const
+{
+    return p_impl->current_project ? p_impl->current_project->projectDir() : std::string();
 }

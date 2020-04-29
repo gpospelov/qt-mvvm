@@ -23,15 +23,17 @@ class ProjectManager : public ProjectManagerInterface
     Q_OBJECT
 public:
     ProjectManager(ApplicationModelsInterface* app_models);
-    ~ProjectManager();
+    ~ProjectManager() override;
 
-    void createNewProject();
+    void createNewProject() override;
 
-    void saveCurrentProject();
+    void saveCurrentProject() override;
 
-    void saveProjectAs();
+    void saveProjectAs() override;
 
-    void openExistingProject();
+    void openExistingProject() override;
+
+    std::string currentProjectDir() const;
 
 private:
     struct ProjectManagerImpl;
