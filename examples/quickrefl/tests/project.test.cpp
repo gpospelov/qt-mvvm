@@ -55,12 +55,12 @@ public:
         };
     };
 
-    static inline const std::string test_dir = "test_QuickReflProject";
-    static void SetUpTestCase() { TestUtils::CreateTestDirectory(test_dir); }
-    std::string testDir() const { return {TestUtils::TestDirectoryPath(test_dir)}; }
+    static inline const std::string test_subdir = "test_QuickReflProject";
+    static void SetUpTestCase() { TestUtils::CreateTestDirectory(test_subdir); }
+    std::string testDir() const { return TestUtils::TestDirectoryPath(test_subdir); }
 
-    //! Create project directory in test directory.
-    //! Remove recursively previous one with same name, if exist.
+    //! Creates project directory in the test directory and returns full path.
+    //! Remove recursively previous one with the same name, if exist.
     std::string create_project_dir(const std::string& name)
     {
         auto path = ModelView::Utils::join(testDir(), name);

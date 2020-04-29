@@ -21,8 +21,14 @@ const bool failed = false;
 struct ProjectManager::ProjectManagerImpl {
     ApplicationModelsInterface* app_models{nullptr};
     std::unique_ptr<ProjectInterface> current_project;
+    selector_t open_dir;
+    selector_t create_dir;
 
-    ProjectManagerImpl(ApplicationModelsInterface* models) : app_models(models) {}
+    ProjectManagerImpl(ApplicationModelsInterface* models, selector_t open_dir,
+                       selector_t create_dir)
+        : app_models(models), open_dir(open_dir), create_dir(create_dir)
+    {
+    }
 
     //! Closes current project. Used in assumption that project was already saved.
     void closeCurrentProject()
@@ -48,18 +54,20 @@ struct ProjectManager::ProjectManagerImpl {
         return save_dir.empty() ? failed : current_project->save(save_dir);
     }
 
-    bool saveCurrentProjectAs()
+    //! Saves project into given directory.
+
+    bool saveCurrentProjectAs(const std::string& dirname )
     {
-        if (!current_project)
-            return succeeded;
-        auto save_dir = projectHasDir() ? current_project->projectDir() : acquireProjectDir();
-        // empty directory mean 'cancel'
-        return save_dir.empty() ? failed : current_project->save(save_dir);
+        return dirname.empty() ? failed : current_project->save(dirname);
     }
 };
 
-ProjectManager::ProjectManager(ApplicationModelsInterface* app_models)
-    : p_impl(std::make_unique<ProjectManagerImpl>(app_models))
+//! Constructor for ProjectManager. Requires ApplicationModels and two callbacks to open projects,
+//! and create new projects.
+
+ProjectManager::ProjectManager(ApplicationModelsInterface* app_models, selector_t open_dir,
+                               selector_t create_dir)
+    : p_impl(std::make_unique<ProjectManagerImpl>(app_models, open_dir, create_dir))
 {
     createNewProject();
 }
@@ -79,7 +87,14 @@ void ProjectManager::saveCurrentProject()
     p_impl->saveCurrentProject();
 }
 
-void ProjectManager::saveProjectAs() {}
+//! Saves project under the name provided by create_dir callback.
+//! Directory has to be created by the callback.
+
+void ProjectManager::saveProjectAs()
+{
+    auto dirname = p_impl->create_dir();
+    p_impl->saveCurrentProjectAs(dirname);
+}
 
 void ProjectManager::openExistingProject()
 {

@@ -12,6 +12,7 @@
 
 #include "projectmanagerinterface.h"
 #include <memory>
+#include <functional>
 
 class ApplicationModelsInterface;
 
@@ -22,8 +23,13 @@ class ProjectManager : public ProjectManagerInterface
 {
     Q_OBJECT
 public:
-    ProjectManager(ApplicationModelsInterface* app_models);
+    using selector_t = std::function<std::string()>;
+
+    ProjectManager(ApplicationModelsInterface* app_models, selector_t open_dir, selector_t create_dir);
     ~ProjectManager() override;
+
+    ProjectManager(const ProjectManager& other) = delete;
+    ProjectManager& operator=(const ProjectManager& other) = delete;
 
     void createNewProject() override;
 
