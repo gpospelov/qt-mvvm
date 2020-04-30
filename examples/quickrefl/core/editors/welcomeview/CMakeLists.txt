@@ -1,6 +1,8 @@
 set(library_name quickreflcore)
 
 target_sources(${library_name} PRIVATE
+    modelhaschangedcontroller.cpp
+    modelhaschangedcontroller.h
     project.cpp
     project.h
     projectinterface.h

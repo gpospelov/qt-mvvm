@@ -17,7 +17,8 @@ namespace ModelView
 
 class RealLimits;
 
-//! Holds single data property for complex SessionItems.
+//! Item to carry concrete editable entity (e.g. 'double' value with limits).
+//! Intended for use as a child or CompountItem, not expected to have own children.
 
 class CORE_EXPORT PropertyItem : public SessionItem
 {
