@@ -24,7 +24,7 @@ public:
     virtual std::string projectDir() const = 0;
     virtual bool save(const std::string& dirname) const = 0;
     virtual bool load(const std::string& dirname) = 0;
-
+    virtual bool isModified() const = 0;
 signals:
     void modified();
 };

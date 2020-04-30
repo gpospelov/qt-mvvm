@@ -77,6 +77,7 @@ TEST_F(ProjectTest, initialState)
     ApplicationModels models;
     Project project(&models);
     EXPECT_TRUE(project.projectDir().empty());
+    EXPECT_FALSE(project.isModified());
 }
 
 //! Testing saveModel.
@@ -91,6 +92,7 @@ TEST_F(ProjectTest, saveModel)
     project.save(project_dir);
 
     EXPECT_EQ(project.projectDir(), project_dir);
+    EXPECT_FALSE(project.isModified());
 
     auto sample_json = ModelView::Utils::join(project_dir, get_json_filename(samplemodel_name));
     EXPECT_TRUE(ModelView::Utils::exists(sample_json));
@@ -116,7 +118,10 @@ TEST_F(ProjectTest, loadModel)
 
     // create project directory and save file
     auto project_dir = create_project_dir("Untitled2");
+
+    EXPECT_TRUE(project.isModified());
     project.save(project_dir);
+    EXPECT_FALSE(project.isModified());
 
     EXPECT_EQ(project.projectDir(), project_dir);
 
@@ -125,6 +130,7 @@ TEST_F(ProjectTest, loadModel)
     models.material_model->clear();
     EXPECT_EQ(models.sample_model->rootItem()->childrenCount(), 0);
     EXPECT_EQ(models.material_model->rootItem()->childrenCount(), 0);
+    EXPECT_TRUE(project.isModified());
 
     // loading
     project.load(project_dir);
@@ -136,4 +142,5 @@ TEST_F(ProjectTest, loadModel)
     EXPECT_EQ(models.material_model->rootItem()->children()[0]->identifier(), item1_identifier);
 
     EXPECT_EQ(project.projectDir(), project_dir);
+    EXPECT_FALSE(project.isModified());
 }

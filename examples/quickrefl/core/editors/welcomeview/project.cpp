@@ -41,6 +41,7 @@ struct Project::ProjectImpl {
             std::invoke(method, document, filename);
         }
         project_dir = dirname;
+        change_controller.resetChanged();
         return true;
     }
 };
@@ -67,4 +68,9 @@ bool Project::save(const std::string& dirname) const
 bool Project::load(const std::string& dirname)
 {
     return p_impl->process(dirname, &ModelView::ModelDocumentInterface::load);
+}
+
+bool Project::isModified() const
+{
+    return p_impl->change_controller.hasChanged();
 }

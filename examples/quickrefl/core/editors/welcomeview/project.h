@@ -31,6 +31,8 @@ public:
 
     bool load(const std::string& dirname) override;
 
+    bool isModified() const override;
+
 private:
     struct ProjectImpl;
     std::unique_ptr<ProjectImpl> p_impl;
