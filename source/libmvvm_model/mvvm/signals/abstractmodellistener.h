@@ -10,6 +10,7 @@
 #ifndef MVVM_SIGNALS_ABSTRACTMODELLISTENER_H
 #define MVVM_SIGNALS_ABSTRACTMODELLISTENER_H
 
+#include <mvvm/core/export.h>
 #include <mvvm/signals/callback_types.h>
 
 namespace ModelView
@@ -21,7 +22,7 @@ class SessionModel;
 //! Automatically tracks the time of life of SessionModel. Unsubscribes from the model on
 //! own destruction.
 
-class AbstractModelListener
+class CORE_EXPORT AbstractModelListener
 {
 public:
     AbstractModelListener(SessionModel* model);
