@@ -31,7 +31,7 @@ std::string ProjectUtils::SuggestFileName(const ModelView::SessionModel& model)
 //! Creates new untitled project.
 
 std::unique_ptr<ProjectInterface>
-ProjectUtils::CreateUtitledProject(ApplicationModelsInterface* models)
+ProjectUtils::CreateUntitledProject(ApplicationModelsInterface* models)
 {
     return std::make_unique<Project>(models);
 }

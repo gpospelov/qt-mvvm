@@ -29,7 +29,7 @@ namespace ProjectUtils
 
 std::string SuggestFileName(const ModelView::SessionModel& model);
 
-std::unique_ptr<ProjectInterface> CreateUtitledProject(ApplicationModelsInterface* models);
+std::unique_ptr<ProjectInterface> CreateUntitledProject(ApplicationModelsInterface* models);
 
 } // namespace ProjectUtils
 

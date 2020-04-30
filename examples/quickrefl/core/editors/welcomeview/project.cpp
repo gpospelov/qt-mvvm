@@ -9,16 +9,21 @@
 
 #include "project.h"
 #include "applicationmodelsinterface.h"
+#include "projectchangecontroller.h"
 #include "projectutils.h"
 #include <functional>
 #include <mvvm/core/modeldocuments.h>
 #include <mvvm/utils/fileutils.h>
 
 struct Project::ProjectImpl {
-    ApplicationModelsInterface* app_models{nullptr};    
+    ApplicationModelsInterface* app_models{nullptr};
     std::string project_dir;
+    ProjectChangedController change_controller;
 
-    ProjectImpl(ApplicationModelsInterface* app_models) : app_models(app_models) {}
+    ProjectImpl(ApplicationModelsInterface* app_models)
+        : app_models(app_models), change_controller(app_models->persistent_models())
+    {
+    }
 
     //! Returns list of models which are subject to save/load.
     std::vector<ModelView::SessionModel*> models() const { return app_models->persistent_models(); }

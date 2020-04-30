@@ -7,9 +7,10 @@
 //
 // ************************************************************************** //
 
+#include "applicationmodelsinterface.h"
 #include "google_test.h"
-#include "projectutils.h"
 #include "projectinterface.h"
+#include "projectutils.h"
 #include "test_utils.h"
 #include <mvvm/model/sessionmodel.h>
 
@@ -19,6 +20,12 @@ class ProjectUtilsTest : public ::testing::Test
 {
 public:
     ~ProjectUtilsTest();
+
+    class ApplicationModels : public ApplicationModelsInterface
+    {
+    public:
+        std::vector<ModelView::SessionModel*> persistent_models() const override { return {}; };
+    };
 };
 
 ProjectUtilsTest::~ProjectUtilsTest() = default;
@@ -31,8 +38,9 @@ TEST_F(ProjectUtilsTest, SuggestFileName)
     EXPECT_EQ(std::string("testmodel.json"), ProjectUtils::SuggestFileName(model));
 }
 
-TEST_F(ProjectUtilsTest, CreateUtitledProject)
+TEST_F(ProjectUtilsTest, CreateUntitledProject)
 {
-    auto project = ProjectUtils::CreateUtitledProject(nullptr);
+    ApplicationModels models;
+    auto project = ProjectUtils::CreateUntitledProject(&models);
     EXPECT_TRUE(project->projectDir().empty());
 }

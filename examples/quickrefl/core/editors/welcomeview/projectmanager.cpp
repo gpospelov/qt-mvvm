@@ -79,7 +79,7 @@ void ProjectManager::createNewProject()
     if (!p_impl->saveCurrentProject())
         return;
     p_impl->closeCurrentProject();
-    p_impl->current_project = ProjectUtils::CreateUtitledProject(p_impl->app_models);
+    p_impl->current_project = ProjectUtils::CreateUntitledProject(p_impl->app_models);
 }
 
 void ProjectManager::saveCurrentProject()
