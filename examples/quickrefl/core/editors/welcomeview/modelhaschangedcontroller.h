@@ -26,6 +26,7 @@ public:
     void resetChanged();
 
 private:
+    void process_change();
     bool has_changed{false};
 };
 

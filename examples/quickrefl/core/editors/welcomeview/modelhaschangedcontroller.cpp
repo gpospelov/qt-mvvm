@@ -14,10 +14,10 @@ using namespace ModelView;
 ModelHasChangedController::ModelHasChangedController(ModelView::SessionModel* model)
     : ModelListener(model)
 {
-    setOnDataChange([this](auto, auto) { has_changed = true; });
-    setOnItemInserted([this](auto, auto) { has_changed = true; });
-    setOnItemRemoved([this](auto, auto) { has_changed = true; });
-    setOnModelReset([this](auto) { has_changed = true; });
+    setOnDataChange([this](auto, auto) { process_change(); });
+    setOnItemInserted([this](auto, auto) { process_change(); });
+    setOnItemRemoved([this](auto, auto) { process_change(); });
+    setOnModelReset([this](auto) { process_change(); });
 }
 
 //! Returns true if the model was changed in any way since last call of resetChanged.
@@ -32,4 +32,10 @@ bool ModelHasChangedController::hasChanged() const
 void ModelHasChangedController::resetChanged()
 {
     has_changed = false;
+}
+
+void ModelHasChangedController::process_change()
+{
+    has_changed = true;
+    // add also notification
 }
