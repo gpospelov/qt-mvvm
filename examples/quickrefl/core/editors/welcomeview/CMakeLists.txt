@@ -5,6 +5,8 @@ target_sources(${library_name} PRIVATE
     modelhaschangedcontroller.h
     project.cpp
     project.h
+    projectchangecontroller.cpp
+    projectchangecontroller.h
     projectinterface.h
     projectmanager.cpp
     projectmanager.h
