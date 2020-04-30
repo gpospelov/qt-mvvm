@@ -8,6 +8,8 @@
 // ************************************************************************** //
 
 #include "projectutils.h"
+#include "applicationmodelsinterface.h"
+#include "project.h"
 #include <cctype>
 #include <mvvm/model/sessionmodel.h>
 
@@ -16,6 +18,9 @@ namespace
 const std::string json_extention = ".json";
 }
 
+//! Suggests file name which can be used to store json content of given model.
+//! Uses the model type to construct a filename: MaterialModel -> materialmodel.json
+
 std::string ProjectUtils::SuggestFileName(const ModelView::SessionModel& model)
 {
     std::string result = model.modelType();
@@ -23,3 +28,10 @@ std::string ProjectUtils::SuggestFileName(const ModelView::SessionModel& model)
     return result + json_extention;
 }
 
+//! Creates new untitled project.
+
+std::unique_ptr<ProjectInterface>
+ProjectUtils::CreateUntitledProject(ApplicationModelsInterface* models)
+{
+    return std::make_unique<Project>(models);
+}

@@ -55,12 +55,12 @@ public:
         };
     };
 
-    static inline const std::string test_dir = "test_QuickReflProject";
-    static void SetUpTestCase() { TestUtils::CreateTestDirectory(test_dir); }
-    std::string testDir() const { return {TestUtils::TestDirectoryPath(test_dir)}; }
+    static inline const std::string test_subdir = "test_QuickReflProject";
+    static void SetUpTestCase() { TestUtils::CreateTestDirectory(test_subdir); }
+    std::string testDir() const { return TestUtils::TestDirectoryPath(test_subdir); }
 
-    //! Create project directory in test directory.
-    //! Remove recursively previous one with same name, if exist.
+    //! Creates project directory in the test directory and returns full path.
+    //! Remove recursively previous one with the same name, if exist.
     std::string create_project_dir(const std::string& name)
     {
         auto path = ModelView::Utils::join(testDir(), name);
@@ -72,6 +72,14 @@ public:
 
 ProjectTest::~ProjectTest() = default;
 
+TEST_F(ProjectTest, initialState)
+{
+    ApplicationModels models;
+    Project project(&models);
+    EXPECT_TRUE(project.projectDir().empty());
+    EXPECT_FALSE(project.isModified());
+}
+
 //! Testing saveModel.
 
 TEST_F(ProjectTest, saveModel)
@@ -82,6 +90,9 @@ TEST_F(ProjectTest, saveModel)
     // create project directory and save file
     auto project_dir = create_project_dir("Untitled1");
     project.save(project_dir);
+
+    EXPECT_EQ(project.projectDir(), project_dir);
+    EXPECT_FALSE(project.isModified());
 
     auto sample_json = ModelView::Utils::join(project_dir, get_json_filename(samplemodel_name));
     EXPECT_TRUE(ModelView::Utils::exists(sample_json));
@@ -107,13 +118,19 @@ TEST_F(ProjectTest, loadModel)
 
     // create project directory and save file
     auto project_dir = create_project_dir("Untitled2");
+
+    EXPECT_TRUE(project.isModified());
     project.save(project_dir);
+    EXPECT_FALSE(project.isModified());
+
+    EXPECT_EQ(project.projectDir(), project_dir);
 
     // cleaning models
     models.sample_model->clear();
     models.material_model->clear();
     EXPECT_EQ(models.sample_model->rootItem()->childrenCount(), 0);
     EXPECT_EQ(models.material_model->rootItem()->childrenCount(), 0);
+    EXPECT_TRUE(project.isModified());
 
     // loading
     project.load(project_dir);
@@ -123,4 +140,7 @@ TEST_F(ProjectTest, loadModel)
     // checking identifiers
     EXPECT_EQ(models.sample_model->rootItem()->children()[0]->identifier(), item0_identifier);
     EXPECT_EQ(models.material_model->rootItem()->children()[0]->identifier(), item1_identifier);
+
+    EXPECT_EQ(project.projectDir(), project_dir);
+    EXPECT_FALSE(project.isModified());
 }

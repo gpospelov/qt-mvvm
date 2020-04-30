@@ -8,5 +8,8 @@
 // ************************************************************************** //
 
 #include "welcomeview.h"
+#include "projectmanagerinterface.h"
 
 WelcomeView::WelcomeView(QWidget* parent) : QWidget(parent) {}
+
+WelcomeView::~WelcomeView() = default;
