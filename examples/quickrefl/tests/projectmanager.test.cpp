@@ -58,32 +58,30 @@ public:
         ModelView::Utils::create_directory(path);
         return path;
     }
-
-
 };
 
 ProjectManagerTest::~ProjectManagerTest() = default;
 
-//! Initial state of ProjectManager. Existing and unsaved Project.
+//! Initial state of ProjectManager. Project created, and not-saved.
 
 TEST_F(ProjectManagerTest, initialState)
 {
-    auto open_dir = []() -> std::string { return {};};
-    auto create_dir = []() -> std::string { return {};};
+    auto open_dir = []() -> std::string { return {}; };
+    auto create_dir = []() -> std::string { return {}; };
 
     ApplicationModels models;
     ProjectManager manager(&models, open_dir, create_dir);
     EXPECT_TRUE(manager.currentProjectDir().empty());
 }
 
-//! Starting from new document. Save
+//! Starting from new document. Save unsaved project under given name.
 
 TEST_F(ProjectManagerTest, saveProjectAs)
 {
     auto project_dir = create_project_dir("Project1");
 
-    auto open_dir = []() -> std::string { return {};};
-    auto create_dir = [&project_dir]() -> std::string { return project_dir;};
+    auto open_dir = []() -> std::string { return {}; };
+    auto create_dir = [&project_dir]() -> std::string { return project_dir; };
 
     ApplicationModels models;
     ProjectManager manager(&models, open_dir, create_dir);
@@ -96,7 +94,6 @@ TEST_F(ProjectManagerTest, saveProjectAs)
     EXPECT_EQ(manager.currentProjectDir(), project_dir);
 
     // project directory should contain a json file with the model
-    auto model_json = ModelView::Utils::join(project_dir, samplemodel_name+".json");
+    auto model_json = ModelView::Utils::join(project_dir, samplemodel_name + ".json");
     EXPECT_TRUE(ModelView::Utils::exists(model_json));
 }
-

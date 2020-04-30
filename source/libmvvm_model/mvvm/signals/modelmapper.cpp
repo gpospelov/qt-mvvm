@@ -55,6 +55,8 @@ void ModelMapper::setOnModelDestroyed(Callbacks::model_t f, Callbacks::slot_t ow
     m_on_model_destroyed.connect(std::move(f), owner);
 }
 
+//! Sets the callback to be notified after model was fully reset (root item recreated).
+
 void ModelMapper::setOnModelReset(Callbacks::model_t f, Callbacks::slot_t owner)
 {
     m_on_model_reset.connect(std::move(f), owner);

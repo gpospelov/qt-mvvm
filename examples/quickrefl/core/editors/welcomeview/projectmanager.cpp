@@ -54,7 +54,7 @@ struct ProjectManager::ProjectManagerImpl {
         return save_dir.empty() ? failed : current_project->save(save_dir);
     }
 
-    //! Saves project into given directory.
+    //! Saves the project into a given directory.
 
     bool saveCurrentProjectAs(const std::string& dirname )
     {
