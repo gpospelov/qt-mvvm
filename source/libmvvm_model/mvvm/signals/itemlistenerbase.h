@@ -24,7 +24,7 @@ class SessionItem;
 //! Automatically tracks the time of life of SessionItem. Unsubscribes from the item on
 //! own destruction. Can be switched from tracking one item to another of the same type.
 
-CORE_EXPORT class ItemListenerBase
+class CORE_EXPORT ItemListenerBase
 {
 public:
     explicit ItemListenerBase(SessionItem* item = nullptr);
