@@ -104,12 +104,12 @@ void GraphViewportPlotController::subscribe()
     auto on_item_inserted = [this](SessionItem* parent, TagRow tagrow) {
         p_impl->add_controller_for_item(parent, tagrow);
     };
-    currentItem()->mapper()->setOnItemInserted(on_item_inserted, this);
+    setOnItemInserted(on_item_inserted);
 
     auto on_about_to_remove_item = [this](SessionItem* parent, TagRow tagrow) {
         p_impl->remove_controller_for_item(parent, tagrow);
     };
-    currentItem()->mapper()->setOnAboutToRemoveItem(on_about_to_remove_item, this);
+    setOnAboutToRemoveItem(on_about_to_remove_item);
 
     p_impl->setup_components();
 }

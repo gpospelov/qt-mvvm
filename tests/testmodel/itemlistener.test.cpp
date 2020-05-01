@@ -30,7 +30,7 @@ public:
         void subscribe()
         {
             auto on_data_change = [this](SessionItem*, int) { ondata_change_call_count++; };
-            currentItem()->mapper()->setOnDataChange(on_data_change, this);
+            setOnDataChange(on_data_change);
         }
 
         void unsubscribe() { on_unsubscribe_call_count++; }

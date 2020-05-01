@@ -60,7 +60,7 @@ Data1DPlotController::~Data1DPlotController() = default;
 void Data1DPlotController::subscribe()
 {
     auto on_data_change = [this](SessionItem*, int) { p_impl->update_graph_points(this); };
-    currentItem()->mapper()->setOnDataChange(on_data_change, this);
+    setOnDataChange(on_data_change);
 
     p_impl->update_graph_points(this);
 }

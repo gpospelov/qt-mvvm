@@ -90,7 +90,7 @@ void ViewportAxisPlotController::subscribe()
 
         p_impl->axis->parentPlot()->replot();
     };
-    currentItem()->mapper()->setOnPropertyChange(on_property_change, this);
+    setOnPropertyChange(on_property_change);
 
     p_impl->setConnected();
 }

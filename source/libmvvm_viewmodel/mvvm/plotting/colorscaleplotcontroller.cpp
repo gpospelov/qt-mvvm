@@ -95,7 +95,7 @@ void ColorScalePlotController::subscribe()
         if (property_name == ViewportAxisItem::P_IS_LOG)
             p_impl->update_log_scale();
     };
-    currentItem()->mapper()->setOnPropertyChange(on_property_change, this);
+    setOnPropertyChange(on_property_change);
 
     p_impl->setup_components();
 }

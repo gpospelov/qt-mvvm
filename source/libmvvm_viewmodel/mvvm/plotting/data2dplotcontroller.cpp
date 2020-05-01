@@ -77,7 +77,7 @@ Data2DPlotController::~Data2DPlotController() = default;
 void Data2DPlotController::subscribe()
 {
     auto on_data_change = [this](SessionItem*, int) { p_impl->update_data_points(); };
-    currentItem()->mapper()->setOnDataChange(on_data_change, this);
+    setOnDataChange(on_data_change);
 
     p_impl->update_data_points();
 }
