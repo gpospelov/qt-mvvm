@@ -41,8 +41,8 @@ public:
     void setOnAboutToRemoveItem(Callbacks::item_tagrow_t f);
 
 protected:
-    virtual void subscribe() {}
-    virtual void unsubscribe() {}
+    virtual void subscribe() {} //! For necessary manipulations on new item.
+    virtual void unsubscribe() {} //! For necessary manipulations on unsubscription.
     SessionItem* item() const;
 
 private:

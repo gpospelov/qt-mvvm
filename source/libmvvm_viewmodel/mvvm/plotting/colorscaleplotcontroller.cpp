@@ -10,7 +10,6 @@
 #include "qcustomplot.h"
 #include <mvvm/plotting/colorscaleplotcontroller.h>
 #include <mvvm/plotting/viewportaxisplotcontroller.h>
-#include <mvvm/signals/itemmapper.h>
 #include <mvvm/standarditems/axisitems.h>
 
 using namespace ModelView;

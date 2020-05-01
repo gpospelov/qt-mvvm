@@ -12,7 +12,6 @@
 #include <mvvm/model/propertyitem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/signals/itemlistener.h>
-#include <mvvm/signals/itemmapper.h>
 
 using namespace ModelView;
 

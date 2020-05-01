@@ -10,7 +10,6 @@
 #include "qcustomplot.h"
 #include <mvvm/plotting/data1dplotcontroller.h>
 #include <mvvm/plotting/graphplotcontroller.h>
-#include <mvvm/signals/itemmapper.h>
 #include <mvvm/standarditems/data1ditem.h>
 #include <mvvm/standarditems/graphitem.h>
 

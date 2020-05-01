@@ -11,7 +11,6 @@
 #define MVVM_SIGNALS_ITEMLISTENER_H
 
 #include <mvvm/signals/itemlistenerbase.h>
-#include <mvvm/signals/itemmapper.h>
 
 namespace ModelView
 {
