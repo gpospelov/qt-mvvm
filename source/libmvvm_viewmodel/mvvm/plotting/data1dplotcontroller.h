@@ -11,7 +11,7 @@
 #define MVVM_PLOTTING_DATA1DPLOTCONTROLLER_H
 
 #include <memory>
-#include <mvvm/signals/itemcontroller.h>
+#include <mvvm/signals/itemlistener.h>
 
 class QCPGraph;
 

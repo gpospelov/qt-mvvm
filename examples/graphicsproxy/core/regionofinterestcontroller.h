@@ -11,7 +11,7 @@
 #define GRAPHICSPROXY_REGIONOFINTERESTCONTROLLER_H
 
 #include <memory>
-#include <mvvm/signals/itemcontroller.h>
+#include <mvvm/signals/itemlistener.h>
 
 namespace ModelView
 {
