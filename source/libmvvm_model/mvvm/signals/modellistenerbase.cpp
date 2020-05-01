@@ -7,19 +7,19 @@
 //
 // ************************************************************************** //
 
-#include "abstractmodellistener.h"
+#include "modellistenerbase.h"
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/signals/modelmapper.h>
 
 using namespace ModelView;
 
-AbstractModelListener::AbstractModelListener(SessionModel* model) : m_model(model)
+ModelListenerBase::ModelListenerBase(SessionModel* model) : m_model(model)
 {
     auto on_model_destroy = [this](SessionModel*) { m_model = nullptr; };
     m_model->mapper()->setOnModelDestroyed(on_model_destroy, this);
 }
 
-AbstractModelListener::~AbstractModelListener()
+ModelListenerBase::~ModelListenerBase()
 {
     if (m_model)
         m_model->mapper()->unsubscribe(this);
@@ -28,7 +28,7 @@ AbstractModelListener::~AbstractModelListener()
 //! Sets callback to be notified on item's data change.
 //! Callback will be called with (SessionItem*, data_role).
 
-void AbstractModelListener::setOnDataChange(ModelView::Callbacks::item_int_t f)
+void ModelListenerBase::setOnDataChange(ModelView::Callbacks::item_int_t f)
 {
     m_model->mapper()->setOnDataChange(f, this);
 }
@@ -37,7 +37,7 @@ void AbstractModelListener::setOnDataChange(ModelView::Callbacks::item_int_t f)
 //! Callback will be called with (SessionItem* parent, tagrow), where tagrow corresponds
 //! to the position of inserted child.
 
-void AbstractModelListener::setOnItemInserted(ModelView::Callbacks::item_tagrow_t f)
+void ModelListenerBase::setOnItemInserted(ModelView::Callbacks::item_tagrow_t f)
 {
     m_model->mapper()->setOnItemInserted(f, this);
 }
@@ -46,7 +46,7 @@ void AbstractModelListener::setOnItemInserted(ModelView::Callbacks::item_tagrow_
 //! Callback will be called with (SessionItem* parent, tagrow), where tagrow corresponds
 //! to position of the removed child.
 
-void AbstractModelListener::setOnItemRemoved(ModelView::Callbacks::item_tagrow_t f)
+void ModelListenerBase::setOnItemRemoved(ModelView::Callbacks::item_tagrow_t f)
 {
     m_model->mapper()->setOnItemRemoved(f, this);
 }
@@ -55,14 +55,14 @@ void AbstractModelListener::setOnItemRemoved(ModelView::Callbacks::item_tagrow_t
 //! Callback will be called with (SessionItem* parent, tagrow), where tagrow corresponds
 //! to the position of a child which going to be removed.
 
-void AbstractModelListener::setOnAboutToRemoveItem(ModelView::Callbacks::item_tagrow_t f)
+void ModelListenerBase::setOnAboutToRemoveItem(ModelView::Callbacks::item_tagrow_t f)
 {
     m_model->mapper()->setOnAboutToRemoveItem(f, this);
 }
 
 //! Sets the callback to be notified after model was fully reset (root item recreated).
 
-void AbstractModelListener::setOnModelReset(ModelView::Callbacks::model_t f)
+void ModelListenerBase::setOnModelReset(ModelView::Callbacks::model_t f)
 {
     m_model->mapper()->setOnModelReset(f, this);
 }

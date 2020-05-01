@@ -69,7 +69,7 @@ void ColorMapPlotController::subscribe()
         if (property_name == ColorMapItem::P_LINK)
             p_impl->update_data_controller();
     };
-    currentItem()->mapper()->setOnPropertyChange(on_property_change, this);
+    setOnPropertyChange(on_property_change);
 
     p_impl->update_colormap();
 }

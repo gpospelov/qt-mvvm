@@ -11,7 +11,7 @@
 #define MVVM_PLOTTING_DATA1DPLOTCONTROLLER_H
 
 #include <memory>
-#include <mvvm/signals/itemcontroller.h>
+#include <mvvm/signals/itemlistener.h>
 
 class QCPGraph;
 
@@ -27,7 +27,7 @@ class Data1DItem;
 Provide update of data points on QCPGraph when Graph1DItem is changed.
 */
 
-class CORE_EXPORT Data1DPlotController : public ItemController<Data1DItem>
+class CORE_EXPORT Data1DPlotController : public ItemListener<Data1DItem>
 {
 public:
     explicit Data1DPlotController(QCPGraph* graph);

@@ -10,7 +10,6 @@
 #include "qcustomplot.h"
 #include <mvvm/plotting/data1dplotcontroller.h>
 #include <mvvm/plotting/graphplotcontroller.h>
-#include <mvvm/signals/itemmapper.h>
 #include <mvvm/standarditems/data1ditem.h>
 #include <mvvm/standarditems/graphitem.h>
 
@@ -68,7 +67,7 @@ void GraphPlotController::subscribe()
         if (property_name == GraphItem::P_LINK)
             p_impl->update_data_controller();
     };
-    currentItem()->mapper()->setOnPropertyChange(on_property_change, this);
+    setOnPropertyChange(on_property_change);
 
     p_impl->update_graph();
 }

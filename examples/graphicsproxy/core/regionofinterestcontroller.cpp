@@ -165,7 +165,7 @@ void RegionOfInterestController::subscribe()
         p_impl->roi_view->update_geometry();
         p_impl->roi_view->update();
     };
-    currentItem()->mapper()->setOnPropertyChange(on_property_change, this);
+    setOnPropertyChange(on_property_change);
 
     p_impl->update_view_from_item();
 }

@@ -10,7 +10,7 @@
 #ifndef MVVM_PLOTTING_GRAPHVIEWPORTPLOTCONTROLLER_H
 #define MVVM_PLOTTING_GRAPHVIEWPORTPLOTCONTROLLER_H
 
-#include <mvvm/signals/itemcontroller.h>
+#include <mvvm/signals/itemlistener.h>
 
 class QCustomPlot;
 
@@ -26,7 +26,7 @@ class GraphViewportItem;
 Populates custom plot with all graphs found in GraphViewportItem.
 */
 
-class CORE_EXPORT GraphViewportPlotController : public ItemController<GraphViewportItem>
+class CORE_EXPORT GraphViewportPlotController : public ItemListener<GraphViewportItem>
 {
 public:
     explicit GraphViewportPlotController(QCustomPlot* plot);

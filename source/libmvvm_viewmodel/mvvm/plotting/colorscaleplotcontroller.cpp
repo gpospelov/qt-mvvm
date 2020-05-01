@@ -10,7 +10,6 @@
 #include "qcustomplot.h"
 #include <mvvm/plotting/colorscaleplotcontroller.h>
 #include <mvvm/plotting/viewportaxisplotcontroller.h>
-#include <mvvm/signals/itemmapper.h>
 #include <mvvm/standarditems/axisitems.h>
 
 using namespace ModelView;
@@ -95,7 +94,7 @@ void ColorScalePlotController::subscribe()
         if (property_name == ViewportAxisItem::P_IS_LOG)
             p_impl->update_log_scale();
     };
-    currentItem()->mapper()->setOnPropertyChange(on_property_change, this);
+    setOnPropertyChange(on_property_change);
 
     p_impl->setup_components();
 }

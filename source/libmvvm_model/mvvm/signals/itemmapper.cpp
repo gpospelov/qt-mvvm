@@ -55,7 +55,6 @@ void ItemMapper::setOnDataChange(Callbacks::item_int_t f, Callbacks::slot_t owne
 }
 
 //! Sets callback to be notified on item's property change.
-//!
 //! Callback will be called with (compound_item, property_name).
 
 void ItemMapper::setOnPropertyChange(Callbacks::item_str_t f, Callbacks::slot_t owner)

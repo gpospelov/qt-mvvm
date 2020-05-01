@@ -11,7 +11,6 @@
 #include <QObject>
 #include <mvvm/plotting/customplotutils.h>
 #include <mvvm/plotting/viewportaxisplotcontroller.h>
-#include <mvvm/signals/itemmapper.h>
 #include <mvvm/standarditems/axisitems.h>
 
 using namespace ModelView;
@@ -90,7 +89,7 @@ void ViewportAxisPlotController::subscribe()
 
         p_impl->axis->parentPlot()->replot();
     };
-    currentItem()->mapper()->setOnPropertyChange(on_property_change, this);
+    setOnPropertyChange(on_property_change);
 
     p_impl->setConnected();
 }
