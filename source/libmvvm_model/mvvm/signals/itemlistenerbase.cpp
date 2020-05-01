@@ -40,7 +40,7 @@ void ModelView::ItemListenerBase::setItem(ModelView::SessionItem* item)
     subscribe();
 }
 
-ModelView::SessionItem* ModelView::ItemListenerBase::item()
+ModelView::SessionItem* ModelView::ItemListenerBase::item() const
 {
     return m_item;
 }

@@ -32,7 +32,7 @@ public:
 protected:
     virtual void subscribe() {}
     virtual void unsubscribe() {}
-    SessionItem* item();
+    SessionItem* item() const;
 
 private:
     void unsubscribe_from_current();
