@@ -5,6 +5,8 @@ target_sources(mvvm_model PRIVATE
     itemcontroller.h
     itemmapper.cpp
     itemmapper.h
+    itemlistenerbase.cpp
+    itemlistenerbase.h
     modellistener.h
     modellistenerbase.cpp
     modellistenerbase.h
