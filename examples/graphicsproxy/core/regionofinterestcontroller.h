@@ -26,7 +26,7 @@ class QRectF;
 //! Provides updates of view position/appearance on graphics scene, when underlying item changes.
 //! Similarly, provides update of item's properties when view is moved/resized by the user.
 
-class RegionOfInterestController : public ModelView::ItemController<RegionOfInterestItem>
+class RegionOfInterestController : public ModelView::ItemListener<RegionOfInterestItem>
 {
 public:
     RegionOfInterestController(RegionOfInterestItem* item,

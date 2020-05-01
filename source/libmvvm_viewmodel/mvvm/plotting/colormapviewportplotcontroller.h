@@ -27,7 +27,7 @@ class ColorMapViewportItem;
 Populates custom plot with color map and tracks updates in items.
 */
 
-class CORE_EXPORT ColorMapViewportPlotController : public ItemController<ColorMapViewportItem>
+class CORE_EXPORT ColorMapViewportPlotController : public ItemListener<ColorMapViewportItem>
 {
 public:
     explicit ColorMapViewportPlotController(QCustomPlot* plot);

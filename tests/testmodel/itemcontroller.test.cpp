@@ -21,7 +21,7 @@ using namespace ModelView;
 class ItemControllerTest : public ::testing::Test
 {
 public:
-    class TestController : public ItemController<PropertyItem>
+    class TestController : public ItemListener<PropertyItem>
     {
     public:
         ~TestController();
