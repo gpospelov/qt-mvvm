@@ -1,6 +1,4 @@
 target_sources(mvvm_model PRIVATE
-    abstractmodellistener.cpp
-    abstractmodellistener.h
     callback_types.h
     callbackcontainer.h
     itemcontroller.cpp
@@ -8,6 +6,8 @@ target_sources(mvvm_model PRIVATE
     itemmapper.cpp
     itemmapper.h
     modellistener.h
+    modellistenerbase.cpp
+    modellistenerbase.h
     modelmapper.cpp
     modelmapper.h
     modelmapperinterface.h
