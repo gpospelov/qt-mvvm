@@ -17,9 +17,8 @@
 namespace ModelView
 {
 
-//! Provides navigation through SessionModel.
-//! Contains chain of row indexes which has to be used to reach desired SessionItem starting
-//! from root item.
+//! Supports navigation through SessionModel. It contains a chain of row indexes that have to
+//! be used to reach the desired SessionItem starting from the root item.
 
 class CORE_EXPORT Path
 {
@@ -35,7 +34,7 @@ public:
 
     static Path fromVector(const std::vector<int>& data);
 
-    std::string str();
+    std::string str() const;
 
     void append(PathElement element);
     void prepend(PathElement element);

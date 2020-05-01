@@ -10,9 +10,12 @@
 #include <algorithm>
 #include <iterator>
 #include <mvvm/model/path.h>
+#include <numeric>
 #include <sstream>
 
 using namespace ModelView;
+
+//! Constructs Path object from string containing sequence of integers ("0,0,1,3").
 
 Path Path::fromString(const std::string& str)
 {
@@ -21,40 +24,29 @@ Path Path::fromString(const std::string& str)
     std::string str_spaces(str);
     std::replace(str_spaces.begin(), str_spaces.end(), ',', ' ');
 
-    std::vector<std::string> parts;
-
     std::istringstream iss(str_spaces);
-    std::copy(std::istream_iterator<std::string>(iss), std::istream_iterator<std::string>(),
-              std::back_inserter(parts));
-
-    for (const auto& x : parts)
-        result.append(std::stoi(x));
-
+    std::for_each(std::istream_iterator<std::string>(iss), std::istream_iterator<std::string>(),
+                  [&result](auto x) { result.append(std::stoi(x)); });
     return result;
 }
+
+//! Constructs Path object from vector of integers..
 
 Path Path::fromVector(const std::vector<int>& data)
 {
     Path result;
-
-    for (auto x : data)
-        result.append(x);
-
+    std::for_each(data.begin(), data.end(), [&result](auto x) { result.append(x); });
     return result;
 }
 
-std::string Path::str()
+//! Returns string representing path ("0,0,1,3").
+
+std::string Path::str() const
 {
-    std::ostringstream str;
-    std::string result;
-
-    for (auto it = m_data.begin(); it != m_data.end(); ++it) {
-        str << std::to_string(*it);
-        if (std::next(it) != m_data.end())
-            str << ",";
-    }
-
-    return str.str();
+    auto comma_fold = [](std::string a, int b) { return std::move(a) + ',' + std::to_string(b); };
+    return m_data.empty() ? std::string()
+                          : std::accumulate(std::next(m_data.begin()), m_data.end(),
+                                            std::to_string(m_data[0]), comma_fold);
 }
 
 void Path::append(Path::PathElement element)
