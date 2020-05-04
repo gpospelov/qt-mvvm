@@ -38,9 +38,6 @@ struct ProjectManager::ProjectManagerImpl {
         current_project.reset();
     }
 
-    //! Defines
-    std::string acquireProjectDir() { return {}; }
-
     //! Returns true if the project has directory already defined.
     bool projectHasDir() const { return !current_project->projectDir().empty(); }
 
@@ -49,15 +46,15 @@ struct ProjectManager::ProjectManagerImpl {
     {
         if (!current_project)
             return succeeded;
-        auto save_dir = projectHasDir() ? current_project->projectDir() : acquireProjectDir();
-        // empty directory means 'cancel' during directory selection
-        return save_dir.empty() ? failed : current_project->save(save_dir);
+        auto save_dir = projectHasDir() ? current_project->projectDir() : create_dir();
+        return saveCurrentProjectAs(save_dir);
     }
 
     //! Saves the project into a given directory.
 
     bool saveCurrentProjectAs(const std::string& dirname )
     {
+        // empty directory means 'cancel' during directory selection
         return dirname.empty() ? failed : current_project->save(dirname);
     }
 };

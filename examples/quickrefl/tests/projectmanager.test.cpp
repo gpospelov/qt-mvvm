@@ -75,11 +75,36 @@ TEST_F(ProjectManagerTest, initialState)
 }
 
 //! Starting from new document (without project dir defined).
-//! Save under given name.
+//! Create new project in given directory.
 
-TEST_F(ProjectManagerTest, untitledEmptySaveAs)
+// TEST_F(ProjectManagerTest, untitledEmptyCreateNew)
+//{
+//    auto project_dir = create_project_dir("Project1");
+
+//    auto open_dir = []() -> std::string { return {}; };
+//    auto create_dir = [&project_dir]() -> std::string { return project_dir; };
+
+//    ApplicationModels models;
+//    ProjectManager manager(&models, open_dir, create_dir);
+//    EXPECT_TRUE(manager.currentProjectDir().empty());
+
+//    // saving new project to "Project1" directory.
+//    EXPECT_TRUE(manager.createNewProject());
+
+//    // checking that current projectDir has pointing to the right place
+//    EXPECT_EQ(manager.currentProjectDir(), project_dir);
+
+//    // project directory should contain a json file with the model
+//    auto model_json = ModelView::Utils::join(project_dir, samplemodel_name + ".json");
+//    EXPECT_TRUE(ModelView::Utils::exists(model_json));
+//}
+
+//! Starting from new document (without project dir defined).
+//! Saving project. Same behavior as SaveAs.
+
+TEST_F(ProjectManagerTest, untitledEmptySaveCurrentProject)
 {
-    auto project_dir = create_project_dir("Project1");
+    auto project_dir = create_project_dir("Project_untitledEmptySaveCurrentProject");
 
     auto open_dir = []() -> std::string { return {}; };
     auto create_dir = [&project_dir]() -> std::string { return project_dir; };
@@ -88,7 +113,32 @@ TEST_F(ProjectManagerTest, untitledEmptySaveAs)
     ProjectManager manager(&models, open_dir, create_dir);
     EXPECT_TRUE(manager.currentProjectDir().empty());
 
-    // saving new project to "Project1" directory.
+    // saving new project to 'project_dir' directory.
+    EXPECT_TRUE(manager.saveCurrentProject());
+
+    // checking that current projectDir has pointing to the right place
+    EXPECT_EQ(manager.currentProjectDir(), project_dir);
+
+    // project directory should contain a json file with the model
+    auto model_json = ModelView::Utils::join(project_dir, samplemodel_name + ".json");
+    EXPECT_TRUE(ModelView::Utils::exists(model_json));
+}
+
+//! Starting from new document (without project dir defined).
+//! Save under given name.
+
+TEST_F(ProjectManagerTest, untitledEmptySaveAs)
+{
+    auto project_dir = create_project_dir("Project_untitledEmptySaveAs");
+
+    auto open_dir = []() -> std::string { return {}; };
+    auto create_dir = [&project_dir]() -> std::string { return project_dir; };
+
+    ApplicationModels models;
+    ProjectManager manager(&models, open_dir, create_dir);
+    EXPECT_TRUE(manager.currentProjectDir().empty());
+
+    // saving new project to "project_dir" directory.
     EXPECT_TRUE(manager.saveProjectAs());
 
     // checking that current projectDir has pointing to the right place
@@ -97,4 +147,21 @@ TEST_F(ProjectManagerTest, untitledEmptySaveAs)
     // project directory should contain a json file with the model
     auto model_json = ModelView::Utils::join(project_dir, samplemodel_name + ".json");
     EXPECT_TRUE(ModelView::Utils::exists(model_json));
+}
+
+//! Starting from new document (without project dir defined).
+//! Attempt to save under empty name, immitating the user canceled directory selection dialog.
+
+TEST_F(ProjectManagerTest, untitledEmptySaveAsCancel)
+{
+    auto open_dir = []() -> std::string { return {}; };
+    auto create_dir = []() -> std::string { return {}; }; // empty name imitates canceling
+
+    ApplicationModels models;
+    ProjectManager manager(&models, open_dir, create_dir);
+    EXPECT_TRUE(manager.currentProjectDir().empty());
+
+    // saving new project to "project_dir" directory.
+    EXPECT_FALSE(manager.saveProjectAs());
+    EXPECT_TRUE(manager.currentProjectDir().empty());
 }
