@@ -135,6 +135,7 @@ void DataImport::LineFilterWidget::initComponents()
     p_tab_widget->tabBar()->setStyle(new CustomTabStyle());
     p_tab_widget->setStyle(new QProxyStyle("fusion"));
     p_tab_widget->setFixedHeight(p_tab_widget->widget(0)->sizeHint().height()+10);
+    p_tab_widget->setMinimumWidth(p_tab_widget->sizeHint().width());
     p_tab_widget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
 
     p_color_editor->setContentsMargins(0, 0, 0, 0);
@@ -150,7 +151,7 @@ void DataImport::LineFilterWidget::initComponents()
         editor_pixmap->setFixedWidth(p_active_checkbox->sizeHint().width());
 
     p_filter_name->setFixedWidth(p_active_checkbox->sizeHint().width());
-     p_filter_name->setFocusPolicy(Qt::StrongFocus);
+    p_filter_name->setFocusPolicy(Qt::StrongFocus);
 
     p_type_select->addItems(QStringList{"Header","Units", "Data", "Comments", "Info"});
     p_range_start->addItems(QStringList{"Between lines", "At line"});
@@ -193,9 +194,9 @@ void DataImport::LineFilterWidget::setTypeLayout()
     auto type_widget = new QWidget(p_tab_widget);
     p_type_layout = new QGridLayout(type_widget);
     
-    p_type_layout->addWidget(new QLabel("Type of the filter:"),0,0);
+    p_type_layout->addWidget(new QLabel("Filter type:"),0,0);
     p_type_layout->addWidget(p_type_select,0,1);
-    p_type_layout->addWidget(new QLabel("Separator character:"),1,0);
+    p_type_layout->addWidget(new QLabel("Separator:"),1,0);
     p_type_layout->addWidget(p_separators,1,1);
     p_type_layout->addWidget(new QLabel("Ignore strings:"),2,0);
     p_type_layout->addWidget(p_ignore_strings,2,1);
