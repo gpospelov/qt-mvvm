@@ -48,7 +48,7 @@ void ImportDataEditor::setup_toolbar()
     load_action->setIcon(QIcon(":/icons/aspect-ratio.svg"));
     toolbar->addAction(load_action);
     auto on_load_action = [this]() {
-        DataImportGui::DataLoaderDialog assistant(this);
+        DataImportGui::DataLoaderDialog assistant;
         assistant.exec();
     };
     connect(load_action, &QAction::triggered, on_load_action);
