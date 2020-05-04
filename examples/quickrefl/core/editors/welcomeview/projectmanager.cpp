@@ -74,33 +74,35 @@ ProjectManager::ProjectManager(ApplicationModelsInterface* app_models, selector_
 
 ProjectManager::~ProjectManager() = default;
 
-void ProjectManager::createNewProject()
+bool ProjectManager::createNewProject()
 {
     if (!p_impl->saveCurrentProject())
-        return;
+        return failed;
     p_impl->closeCurrentProject();
     p_impl->current_project = ProjectUtils::CreateUntitledProject(p_impl->app_models);
+    return succeeded;
 }
 
-void ProjectManager::saveCurrentProject()
+bool ProjectManager::saveCurrentProject()
 {
-    p_impl->saveCurrentProject();
+    return p_impl->saveCurrentProject();
 }
 
 //! Saves project under the name provided by create_dir callback.
 //! Directory has to be created by the callback.
 
-void ProjectManager::saveProjectAs()
+bool ProjectManager::saveProjectAs()
 {
     auto dirname = p_impl->create_dir();
-    p_impl->saveCurrentProjectAs(dirname);
+    return p_impl->saveCurrentProjectAs(dirname);
 }
 
-void ProjectManager::openExistingProject()
+bool ProjectManager::openExistingProject()
 {
-    if (!p_impl->saveCurrentProject())
-        return;
-    p_impl->closeCurrentProject();
+    return succeeded;
+//    if (!p_impl->saveCurrentProject())
+//        return;
+//    p_impl->closeCurrentProject();
 }
 
 std::string ProjectManager::currentProjectDir() const

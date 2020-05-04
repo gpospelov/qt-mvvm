@@ -74,9 +74,10 @@ TEST_F(ProjectManagerTest, initialState)
     EXPECT_TRUE(manager.currentProjectDir().empty());
 }
 
-//! Starting from new document. Save unsaved project under given name.
+//! Starting from new document (without project dir defined).
+//! Save under given name.
 
-TEST_F(ProjectManagerTest, saveProjectAs)
+TEST_F(ProjectManagerTest, untitledEmptySaveAs)
 {
     auto project_dir = create_project_dir("Project1");
 
@@ -88,7 +89,7 @@ TEST_F(ProjectManagerTest, saveProjectAs)
     EXPECT_TRUE(manager.currentProjectDir().empty());
 
     // saving new project to "Project1" directory.
-    manager.saveProjectAs();
+    EXPECT_TRUE(manager.saveProjectAs());
 
     // checking that current projectDir has pointing to the right place
     EXPECT_EQ(manager.currentProjectDir(), project_dir);

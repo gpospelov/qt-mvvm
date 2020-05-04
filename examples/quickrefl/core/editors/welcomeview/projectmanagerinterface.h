@@ -24,13 +24,13 @@ class ProjectManagerInterface : public QObject
     Q_OBJECT
 public:
 
-    virtual void createNewProject() = 0;
+    virtual bool createNewProject() = 0;
 
-    virtual void saveCurrentProject() = 0;
+    virtual bool saveCurrentProject() = 0;
 
-    virtual void saveProjectAs() = 0;
+    virtual bool saveProjectAs() = 0;
 
-    virtual void openExistingProject() = 0;
+    virtual bool openExistingProject() = 0;
 };
 
 #endif // PROJECTMANAGERINTERFACE_H
