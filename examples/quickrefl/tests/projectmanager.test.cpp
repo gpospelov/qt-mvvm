@@ -165,3 +165,19 @@ TEST_F(ProjectManagerTest, untitledEmptySaveAsCancel)
     EXPECT_FALSE(manager.saveProjectAs());
     EXPECT_TRUE(manager.currentProjectDir().empty());
 }
+
+//! Starting from new document (without project dir defined).
+//! Attempt to save in the non-existing directory.
+
+TEST_F(ProjectManagerTest, untitledEmptySaveAsWrongDir)
+{
+    auto open_dir = []() -> std::string { return {}; };
+    auto create_dir = []() -> std::string { return "non-existing"; }; // empty name imitates canceling
+
+    ApplicationModels models;
+    ProjectManager manager(&models, open_dir, create_dir);
+
+    // saving new project to "project_dir" directory.
+    EXPECT_FALSE(manager.saveProjectAs());
+    EXPECT_TRUE(manager.currentProjectDir().empty());
+}
