@@ -109,8 +109,8 @@ private:
     void generateThumbnail();
     void loadFile();
 
-    // CSVFile(std::string path_to_file, char sep) : filepath(path_to_file), separator(sep) { Init(); }
-    // CSVFile(std::string path_to_file, char sep, unsigned headRow)
+    // CSVFile(std::string path_to_file, char sep) : filepath(path_to_file), separator(sep) {
+    // Init(); } CSVFile(std::string path_to_file, char sep, unsigned headRow)
     //     : filepath(path_to_file), separator(sep), headersRow(headRow)
     // {
     //     Init();
@@ -134,6 +134,6 @@ private:
     std::vector<std::string> m_file;
     int m_thumbnail_length = 40;
 };
-}
+} // namespace DataImportLogic
 
 #endif // CSVFILE_H

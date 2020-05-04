@@ -21,7 +21,7 @@ namespace DataImportLogic
 {
 
 //! The constructor
-CSVFile::CSVFile(std::string path_to_file) : m_filepath(path_to_file) 
+CSVFile::CSVFile(std::string path_to_file) : m_filepath(path_to_file)
 {
     loadFile();
     generateThumbnail();
@@ -33,8 +33,9 @@ void CSVFile::loadFile()
     m_file.clear();
     std::ifstream file(m_filepath);
     std::string line;
-	while(getline(file, line)){
-        m_file.push_back(line);;
+    while (getline(file, line)) {
+        m_file.push_back(line);
+        ;
     };
     file.close();
 }
@@ -58,8 +59,8 @@ void CSVFile::generateThumbnail()
     m_thumbnail.resize(m_thumbnail_length);
 
     std::ifstream file(m_filepath);
-	int counter = 0;
-	while(counter != m_thumbnail_length){
+    int counter = 0;
+    while (counter != m_thumbnail_length) {
         getline(file, m_thumbnail[counter]);
         counter++;
     };
@@ -192,4 +193,4 @@ const std::string& CSVFile::line(int line_number) const
 //     return this->rows[i];
 // }
 
-} // End of namespace DataImportGui
+} // namespace DataImportLogic

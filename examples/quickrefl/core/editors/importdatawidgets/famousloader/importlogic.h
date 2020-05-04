@@ -7,29 +7,28 @@
 //
 // ************************************************************************** //
 
-
 #ifndef IMPORTLOGIC_H
 #define IMPORTLOGIC_H
 
 #include "csvfile.h"
 #include "importdatastructure.h"
 
-#include <memory>
-#include <QObject>
 #include <QColor>
+#include <QObject>
+#include <memory>
 
 namespace DataImportLogic
 {
 //! Helper method to split
-std::vector<std::string> split(const std::string &s, char delim);
+std::vector<std::string> split(const std::string& s, char delim);
 //! Helper method to clean a string vector
 void clean(std::vector<std::string>& input);
 //! Transpose method to turn lines into columns
-string_data transpose(const string_data &input);
+string_data transpose(const string_data& input);
 //! Erase All substrings
-void eraseSubStrings(std::string & main_string, const std::vector<std::string> & string_vector);
+void eraseSubStrings(std::string& main_string, const std::vector<std::string>& string_vector);
 //! Erase All occurences of substring
-void eraseAllSubString(std::string & main_string, const std::string & earase);
+void eraseAllSubString(std::string& main_string, const std::string& earase);
 
 //! This is the class holding a text region
 class LineFilter
@@ -39,12 +38,12 @@ public:
     ~LineFilter() = default;
 
     //! Public access
-    void setSeparators(std::map<std::string, char>* separators); 
+    void setSeparators(std::map<std::string, char>* separators);
     std::vector<std::string> separatorNames() const;
-    void processColors(std::vector<std::string> &color_vec) const;
-    void processSeparator(std::vector<char> &separator_vec) const;
-    void processType(std::vector<std::string> &type_vec) const;
-    void processIgnore(std::vector<std::vector<std::string>> &ignore_vec) const;
+    void processColors(std::vector<std::string>& color_vec) const;
+    void processSeparator(std::vector<char>& separator_vec) const;
+    void processType(std::vector<std::string>& type_vec) const;
+    void processIgnore(std::vector<std::vector<std::string>>& ignore_vec) const;
 
     //! Getters
     const std::string& name() const;
@@ -73,7 +72,7 @@ private:
     std::string m_separator_str;
     std::string m_type_string;
     std::string m_color;
-    
+
     std::vector<std::string> m_ignore_strings;
     std::vector<int> m_ignore_lines;
 
@@ -104,8 +103,8 @@ public:
     void updateData(const int& row);
     DataStructure* dataStructure() const;
 
-    LineFilter* nameInBlocks(const std::string &name) const;
-    LineFilter* typeInBlocks(const std::string &type) const;
+    LineFilter* nameInBlocks(const std::string& name) const;
+    LineFilter* typeInBlocks(const std::string& type) const;
 
 public slots:
     void setFiles(std::vector<std::string> file_paths);

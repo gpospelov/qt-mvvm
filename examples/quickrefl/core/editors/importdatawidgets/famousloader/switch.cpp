@@ -146,23 +146,28 @@ void Switch::init(bool state)
                                style.thumbBrushAnimation.easing);
 
     /* set init values */
-    if (state){
+    if (state) {
         thumbPosAniamtion->interpolate(
-            (style.indicatorMargin.left() + style.indicatorMargin.right() + 2) * 2, (style.indicatorMargin.left() + style.indicatorMargin.right() + 2) * 2);
+            (style.indicatorMargin.left() + style.indicatorMargin.right() + 2) * 2,
+            (style.indicatorMargin.left() + style.indicatorMargin.right() + 2) * 2);
         trackBrushAnimation->setStartValue(
             colorFromOpacity(style.trackOnBrush, style.trackOnOpacity));
-        trackBrushAnimation->setEndValue(colorFromOpacity(style.trackOnBrush, style.trackOnOpacity));
+        trackBrushAnimation->setEndValue(
+            colorFromOpacity(style.trackOnBrush, style.trackOnOpacity));
         thumbBrushAnimation->setStartValue(
             colorFromOpacity(style.thumbOnBrush, style.thumbOnOpacity));
-        thumbBrushAnimation->setEndValue(colorFromOpacity(style.thumbOnBrush, style.thumbOnOpacity));
-    }else{
+        thumbBrushAnimation->setEndValue(
+            colorFromOpacity(style.thumbOnBrush, style.thumbOnOpacity));
+    } else {
         thumbPosAniamtion->interpolate(0, 0);
         trackBrushAnimation->setStartValue(
             colorFromOpacity(style.trackOffBrush, style.trackOffOpacity));
-        trackBrushAnimation->setEndValue(colorFromOpacity(style.trackOffBrush, style.trackOffOpacity));
+        trackBrushAnimation->setEndValue(
+            colorFromOpacity(style.trackOffBrush, style.trackOffOpacity));
         thumbBrushAnimation->setStartValue(
             colorFromOpacity(style.thumbOffBrush, style.thumbOffOpacity));
-        thumbBrushAnimation->setEndValue(colorFromOpacity(style.thumbOffBrush, style.thumbOffOpacity));
+        thumbBrushAnimation->setEndValue(
+            colorFromOpacity(style.thumbOffBrush, style.thumbOffOpacity));
     }
 
     /* set standard palettes */
@@ -295,7 +300,8 @@ void Switch::paintEvent(QPaintEvent*)
 
 void Switch::resizeEvent(QResizeEvent* e)
 {
-    shadowPixmap = SwitchStyle::drawShadowEllipse(THUMB_RADIUS, SHADOW_ELEVATION, QColor(0, 0, 0, 70));
+    shadowPixmap =
+        SwitchStyle::drawShadowEllipse(THUMB_RADIUS, SHADOW_ELEVATION, QColor(0, 0, 0, 70));
     SelectionControl::resizeEvent(e);
 }
 
@@ -321,4 +327,4 @@ void Switch::toggle(Qt::CheckState state)
     }
 }
 
-}; // end SwitchSpace namespace
+}; // namespace SwitchSpace

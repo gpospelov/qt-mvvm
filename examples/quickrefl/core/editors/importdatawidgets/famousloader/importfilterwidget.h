@@ -7,15 +7,13 @@
 //
 // ************************************************************************** //
 
-
 #ifndef IMPORTFILTERWIDGET_H
 #define IMPORTFILTERWIDGET_H
 
 #include <QListWidgetItem>
+#include <QProxyStyle>
 #include <QWidget>
 #include <memory>
-#include <QWidget>
-#include <QProxyStyle>
 
 #include "importlogic.h"
 
@@ -34,12 +32,12 @@ QT_END_NAMESPACE
 
 namespace ModelView
 {
-    class ColorEditor;
+class ColorEditor;
 }
 
 namespace SwitchSpace
 {
-    class Switch;
+class Switch;
 }
 
 namespace DataImportGui
@@ -47,29 +45,33 @@ namespace DataImportGui
 
 // -------------------------------------------------
 //! This is the tab widget side style
-class CustomTabStyle : public QProxyStyle {
+class CustomTabStyle : public QProxyStyle
+{
 public:
     CustomTabStyle() : QProxyStyle("fusion"){};
-  QSize sizeFromContents(ContentsType type, const QStyleOption* option,
-                         const QSize& size, const QWidget* widget) const {
-    QSize s = QProxyStyle::sizeFromContents(type, option, size, widget);
-    if (type == QStyle::CT_TabBarTab) {
-      s.transpose();
+    QSize sizeFromContents(ContentsType type, const QStyleOption* option, const QSize& size,
+                           const QWidget* widget) const
+    {
+        QSize s = QProxyStyle::sizeFromContents(type, option, size, widget);
+        if (type == QStyle::CT_TabBarTab) {
+            s.transpose();
+        }
+        return s;
     }
-    return s;
-  }
 
-  void drawControl(ControlElement element, const QStyleOption* option, QPainter* painter, const QWidget* widget) const {
-    if (element == CE_TabBarTabLabel) {
-      if (const QStyleOptionTab* tab = qstyleoption_cast<const QStyleOptionTab*>(option)) {
-        QStyleOptionTab opt(*tab);
-        opt.shape = QTabBar::RoundedNorth;
-        QProxyStyle::drawControl(element, &opt, painter, widget);
-        return;
-      }
+    void drawControl(ControlElement element, const QStyleOption* option, QPainter* painter,
+                     const QWidget* widget) const
+    {
+        if (element == CE_TabBarTabLabel) {
+            if (const QStyleOptionTab* tab = qstyleoption_cast<const QStyleOptionTab*>(option)) {
+                QStyleOptionTab opt(*tab);
+                opt.shape = QTabBar::RoundedNorth;
+                QProxyStyle::drawControl(element, &opt, painter, widget);
+                return;
+            }
+        }
+        QProxyStyle::drawControl(element, option, painter, widget);
     }
-    QProxyStyle::drawControl(element, option, painter, widget);
-  }
 };
 
 // -------------------------------------------------
@@ -148,7 +150,7 @@ signals:
 private slots:
     void processNameChanged(std::string name, LineFilterWidget* widget);
     void processTypeChanged(std::string type, LineFilterWidget* widget);
-    
+
 private:
     void setLayout();
     void initialise();

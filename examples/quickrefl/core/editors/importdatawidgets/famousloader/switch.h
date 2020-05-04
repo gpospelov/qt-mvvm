@@ -116,6 +116,6 @@ private:
     QPointer<Animator> thumbPosAniamtion;
 };
 
-}; // end SwitchSpace namespace
+}; // namespace SwitchSpace
 
 #endif // SWITCH_H

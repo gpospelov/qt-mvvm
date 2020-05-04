@@ -9,22 +9,22 @@
 
 #include "importfilewidget.h"
 
-#include <QListView>
-#include <QStringListModel>
-#include <QHBoxLayout>
-#include <QToolButton>
-#include <QStyle>
-#include <QSizePolicy>
-#include <QIcon>
 #include <QFileDialog>
+#include <QHBoxLayout>
+#include <QIcon>
 #include <QItemSelectionModel>
+#include <QListView>
+#include <QSizePolicy>
+#include <QStringListModel>
+#include <QStyle>
+#include <QToolButton>
 
 namespace DataImportGui
 {
 
 //! This is the constructor
-ImportFileWidget::ImportFileWidget(QWidget* parent): QWidget(parent)
-{   
+ImportFileWidget::ImportFileWidget(QWidget* parent) : QWidget(parent)
+{
     createWidgets();
 }
 
@@ -60,18 +60,10 @@ void ImportFileWidget::createWidgets()
     p_list_view->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Ignored);
 
     // Connect the buttons
-    connect(
-        add_button, &QToolButton::clicked,
-        this, &ImportFileWidget::addFiles
-    );
-    connect(
-        reset_button, &QToolButton::clicked,
-        this, &ImportFileWidget::resetFiles
-    );
-    connect(
-        p_list_view->selectionModel(), &QItemSelectionModel::currentChanged,
-        [=](QModelIndex,QModelIndex){emit selectionChanged();}
-    );
+    connect(add_button, &QToolButton::clicked, this, &ImportFileWidget::addFiles);
+    connect(reset_button, &QToolButton::clicked, this, &ImportFileWidget::resetFiles);
+    connect(p_list_view->selectionModel(), &QItemSelectionModel::currentChanged,
+            [=](QModelIndex, QModelIndex) { emit selectionChanged(); });
 }
 
 //! Get the current selection
@@ -83,11 +75,8 @@ int ImportFileWidget::currentSelection() const
 //! This is the method called by the add file button
 void ImportFileWidget::addFiles()
 {
-    QStringList files = QFileDialog::getOpenFileNames(
-                        this,
-                        "Select one or more files to load",
-                        "/home",
-                        "Text (*.txt);; CSV (*.csv)");
+    QStringList files = QFileDialog::getOpenFileNames(this, "Select one or more files to load",
+                                                      "/home", "Text (*.txt);; CSV (*.csv)");
 
     p_list_model->setStringList(p_list_model->stringList() + files);
     emit filesChanged(currentFiles());
@@ -104,7 +93,7 @@ void ImportFileWidget::resetFiles()
 std::vector<std::string> ImportFileWidget::currentFiles() const
 {
     std::vector<std::string> string_vector;
-    foreach( QString str, p_list_model->stringList()) {
+    foreach (QString str, p_list_model->stringList()) {
         string_vector.push_back(str.toStdString());
     }
     return string_vector;

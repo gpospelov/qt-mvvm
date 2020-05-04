@@ -11,23 +11,24 @@
 
 #include "importfilewidget.h"
 #include "importfilterwidget.h"
-#include "importtextview.h"
 #include "importtableview.h"
+#include "importtextview.h"
 
+#include <QDialogButtonBox>
+#include <QHBoxLayout>
+#include <QSizePolicy>
 #include <QSplitter>
 #include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QDialogButtonBox>
-#include <QSizePolicy>
 
 namespace DataImportGui
 {
 
 //! This is the constructor
-DataLoaderDialog::DataLoaderDialog(QWidget* parent): QDialog(parent)
-{   
+DataLoaderDialog::DataLoaderDialog(QWidget* parent) : QDialog(parent)
+{
     // Init the main import logic
-    p_data_import_logic = std::unique_ptr<DataImportLogic::ImportLogic>(new DataImportLogic::ImportLogic());
+    p_data_import_logic =
+        std::unique_ptr<DataImportLogic::ImportLogic>(new DataImportLogic::ImportLogic());
 
     // The placeholders
     auto h_splitter = new QSplitter(this);
@@ -59,52 +60,42 @@ DataLoaderDialog::DataLoaderDialog(QWidget* parent): QDialog(parent)
     v_layout->addWidget(h_splitter);
     v_layout->addWidget(button_box);
 
-    v_splitter->setStretchFactor(0,0);
-    v_splitter->setStretchFactor(1,1);
-    h_splitter->setStretchFactor(0,0);
-    h_splitter->setStretchFactor(1,1);
-
+    v_splitter->setStretchFactor(0, 0);
+    v_splitter->setStretchFactor(1, 1);
+    h_splitter->setStretchFactor(0, 0);
+    h_splitter->setStretchFactor(1, 1);
 }
 
 //! Helper function to set up the file list area
 void DataLoaderDialog::setUpFileListSpace(QGroupBox* conainer)
 {
-    
+
     auto layout = new QVBoxLayout(conainer);
     p_import_file_list = new ImportFileWidget(conainer);
     layout->addWidget(p_import_file_list);
-    layout->setContentsMargins(0,0,0,0);
+    layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
     conainer->setMinimumHeight(p_import_file_list->minimumHeight());
     conainer->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 
-    connect(
-        p_import_file_list, SIGNAL(filesChanged(std::vector<std::string>)),
-        p_data_import_logic.get(), SLOT(setFiles(std::vector<std::string>))
-    );
+    connect(p_import_file_list, SIGNAL(filesChanged(std::vector<std::string>)),
+            p_data_import_logic.get(), SLOT(setFiles(std::vector<std::string>)));
 
-    connect(
-        p_import_file_list, SIGNAL(selectionChanged()),
-        this, SLOT(selectedFileChanged())
-    );
+    connect(p_import_file_list, SIGNAL(selectionChanged()), this, SLOT(selectedFileChanged()));
 }
 
 //! Helper function to set up the parameter area
 void DataLoaderDialog::setUpParameterSpace(QGroupBox* conainer)
 {
-    
+
     auto layout = new QVBoxLayout(conainer);
     p_parameter_dialog = new ImportFilterWidget(p_data_import_logic.get(), conainer);
     layout->addWidget(p_parameter_dialog);
-    layout->setContentsMargins(0,0,0,0);
+    layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
     conainer->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Expanding);
 
-    connect(
-        p_parameter_dialog, SIGNAL(parameterChanged()),
-        this, SLOT(selectedFileChanged())
-    );
-
+    connect(p_parameter_dialog, SIGNAL(parameterChanged()), this, SLOT(selectedFileChanged()));
 }
 
 //! Helper function to set up the selection area
@@ -124,23 +115,20 @@ void DataLoaderDialog::setUpSelectionSpace(QTabWidget* tab_widget)
     tab_widget->addTab(first_tab, "Text view");
     tab_widget->addTab(second_tab, "Table view");
 
-    connect(
-        tab_widget, &QTabWidget::currentChanged,
-        this, &DataLoaderDialog::selectedFileChanged
-    );
+    connect(tab_widget, &QTabWidget::currentChanged, this, &DataLoaderDialog::selectedFileChanged);
 }
 
 //! This function will manage the chnage of file selection
 void DataLoaderDialog::selectedFileChanged()
 {
     int file_num = p_import_file_list->currentSelection();
-    if (file_num<0){
+    if (file_num < 0) {
         p_text_view->setHtml("");
         p_table_view->model()->refreshFromDataStructure();
-    }else{
-        if (p_selection_space->currentIndex() == 0){
+    } else {
+        if (p_selection_space->currentIndex() == 0) {
             p_text_view->setHtml(QString::fromStdString(p_data_import_logic->getPreview(file_num)));
-        } else if (p_selection_space->currentIndex() == 1){
+        } else if (p_selection_space->currentIndex() == 1) {
             p_data_import_logic->updateData(file_num);
             p_table_view->model()->refreshFromDataStructure();
         }

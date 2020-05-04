@@ -11,28 +11,30 @@
 
 #include <cmath>
 
-namespace DataImportLogic 
+namespace DataImportLogic
 {
 
 // -------------------------------------------------
 //! This is the constructor of DataColumn
-DataColumn::DataColumn(): m_name("No Name"), m_type("Intensity"),m_header(""),m_unit("a.u."),m_multiplier(1.),m_column_num(0)
+DataColumn::DataColumn()
+    : m_name("No Name"), m_type("Intensity"), m_header(""), m_unit("a.u."), m_multiplier(1.),
+      m_column_num(0)
 {
-
 }
 
-DataColumn::DataColumn(const std::string &header): m_name("No Name"), m_type("Intensity"),m_header(header),m_unit("a.u."),m_multiplier(1.),m_column_num(0)
+DataColumn::DataColumn(const std::string& header)
+    : m_name("No Name"), m_type("Intensity"), m_header(header), m_unit("a.u."), m_multiplier(1.),
+      m_column_num(0)
 {
-
 }
 
 //! Setter for the values (str)
 void DataColumn::setValues(std::vector<std::string>& values)
 {
     clearValues();
-    for (const auto & value : values){
-        double value_double ;
-        try{
+    for (const auto& value : values) {
+        double value_double;
+        try {
             value_double = std::stod(value);
         } catch (std::exception& e) {
             value_double = std::nan("");
@@ -151,36 +153,33 @@ double DataColumn::multiplier() const
 
 // -------------------------------------------------
 //! This is the constructor of DataStructure
-DataStructure::DataStructure()
-{
-
-}
+DataStructure::DataStructure() {}
 
 //! This is the set data routine used if not header data is provided
-void DataStructure::setData(string_data &data)
+void DataStructure::setData(string_data& data)
 {
     clearColumnValues();
     processHeaders(data.size());
 
-    for (int i = 0; i < data.size(); ++i){
+    for (int i = 0; i < data.size(); ++i) {
         m_data_columns.at(i)->setValues(data.at(i));
     }
 }
 
 //! This is the set data routine used if header data is provided
-void DataStructure::setData(header_map &headers, string_data &data)
+void DataStructure::setData(header_map& headers, string_data& data)
 {
     std::vector<std::string> keys;
-    for(header_map::iterator it = headers.begin(); it != headers.end(); ++it) {
+    for (header_map::iterator it = headers.begin(); it != headers.end(); ++it) {
         keys.push_back(it->first);
     }
 
     clearColumnValues();
     processHeaders(keys);
-    
-    for (const auto &header : keys){
+
+    for (const auto& header : keys) {
         DataColumn* data_column = column(header);
-        if (headers[header]<data.size())
+        if (headers[header] < data.size())
             data_column->setValues(data.at(headers[header]));
     }
 }
@@ -188,7 +187,7 @@ void DataStructure::setData(header_map &headers, string_data &data)
 //! Process the headers (add columns if missmatch)
 void DataStructure::processHeaders(int num)
 {
-    for (int i = m_data_columns.size(); i < num; ++i){
+    for (int i = m_data_columns.size(); i < num; ++i) {
         addColumn("");
     }
 }
@@ -196,8 +195,8 @@ void DataStructure::processHeaders(int num)
 //! Process the headers (add columns if missmatch)
 void DataStructure::processHeaders(const std::vector<std::string>& headers)
 {
-    for (const auto &header : headers){
-        if (column(header)==nullptr){
+    for (const auto& header : headers) {
+        if (column(header) == nullptr) {
             addColumn(header);
         }
     }
@@ -206,9 +205,9 @@ void DataStructure::processHeaders(const std::vector<std::string>& headers)
 //! Check which header is present or not
 std::vector<bool> DataStructure::checkHeaders(const std::vector<std::string>& headers)
 {
-    std::vector<bool> output; 
-    for (const auto & header : headers){
-        output.push_back((column(header)==nullptr)?(false):(true));
+    std::vector<bool> output;
+    for (const auto& header : headers) {
+        output.push_back((column(header) == nullptr) ? (false) : (true));
     }
     return output;
 }
@@ -216,14 +215,16 @@ std::vector<bool> DataStructure::checkHeaders(const std::vector<std::string>& he
 //! Check that the headers coincide
 DataColumn* DataStructure::column(const std::string& header)
 {
-    auto found = std::find_if(m_data_columns.begin(), m_data_columns.end(),[header](const std::unique_ptr<DataColumn>& column) {return column->header() == header;});
-    return (found == m_data_columns.end())?(nullptr):((*found).get());
+    auto found = std::find_if(
+        m_data_columns.begin(), m_data_columns.end(),
+        [header](const std::unique_ptr<DataColumn>& column) { return column->header() == header; });
+    return (found == m_data_columns.end()) ? (nullptr) : ((*found).get());
 }
 
 //! Check that the headers coincide
 DataColumn* DataStructure::column(int column)
 {
-    return (column < m_data_columns.size())?(m_data_columns.at(column).get()):(nullptr);
+    return (column < m_data_columns.size()) ? (m_data_columns.at(column).get()) : (nullptr);
 }
 
 //! Check that the headers coincide
@@ -234,10 +235,7 @@ void DataStructure::addColumn(const std::string& header)
 }
 
 //! Check that the headers coincide TODO
-void DataStructure::delColumn(const std::string& header)
-{
-
-}
+void DataStructure::delColumn(const std::string& header) {}
 
 //! Clear the data content of the columns
 void DataStructure::clearColumnValues()
@@ -245,7 +243,7 @@ void DataStructure::clearColumnValues()
     if (m_data_columns.empty())
         return;
 
-    for (auto &column : m_data_columns){
+    for (auto& column : m_data_columns) {
         column->clearValues();
     }
 }
@@ -254,8 +252,8 @@ void DataStructure::clearColumnValues()
 int DataStructure::rowCount() const
 {
     int row_count = 0;
-    for (const auto &data_column : m_data_columns){
-        if(data_column->rowCount() > row_count)
+    for (const auto& data_column : m_data_columns) {
+        if (data_column->rowCount() > row_count)
             row_count = data_column->rowCount();
     }
     return row_count;

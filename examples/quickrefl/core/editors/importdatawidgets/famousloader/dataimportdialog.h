@@ -7,15 +7,14 @@
 //
 // ************************************************************************** //
 
-
 #ifndef IMPORTDIALOG_H
 #define IMPORTDIALOG_H
 
+#include "importlogic.h"
 #include <QDialog>
 #include <QGroupBox>
 #include <QTabWidget>
 #include <QTableView>
-#include "importlogic.h"
 
 namespace DataImportGui
 {

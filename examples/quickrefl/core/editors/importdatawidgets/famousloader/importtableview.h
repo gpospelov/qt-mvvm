@@ -18,9 +18,9 @@
 #include "importdatastructure.h"
 
 #include <QAbstractItemModel>
+#include <QModelIndex>
 #include <QStyledItemDelegate>
 #include <QTableView>
-#include <QModelIndex>
 #include <vector>
 
 namespace DataImportGui
@@ -31,7 +31,7 @@ namespace DataImportGui
 class ImportTableModel : public QAbstractItemModel
 {
     Q_OBJECT
-    
+
 public:
     ImportTableModel(QWidget* parent = nullptr);
 
@@ -39,26 +39,25 @@ public:
     DataImportLogic::DataStructure* dataStructure() const;
     void refreshFromDataStructure();
 
-    int columnCount(const QModelIndex &parent = QModelIndex()) const;
-    int rowCount(const QModelIndex &parent = QModelIndex()) const;
+    int columnCount(const QModelIndex& parent = QModelIndex()) const;
+    int rowCount(const QModelIndex& parent = QModelIndex()) const;
     int numUtilityRows() const;
     std::vector<DataImportLogic::InfoTypes> infoTypes() const;
-    QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const;
-    QModelIndex parent(const QModelIndex &index) const;
+    QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const;
+    QModelIndex parent(const QModelIndex& index) const;
 
-    Qt::ItemFlags flags(const QModelIndex &index) const;
-    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
-    bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
+    Qt::ItemFlags flags(const QModelIndex& index) const;
+    QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
+    bool setData(const QModelIndex& index, const QVariant& value, int role = Qt::EditRole);
     QVariant headerData(int section, Qt::Orientation orientation, int role) const;
 
 private:
-    DataImportLogic::DataStructure* p_data_structure {nullptr};
+    DataImportLogic::DataStructure* p_data_structure{nullptr};
     bool m_show_name;
     bool m_show_type;
     bool m_show_header;
     bool m_show_units;
     bool m_show_multiplier;
-
 };
 
 // -------------------------------------------------
@@ -68,13 +67,14 @@ class ImportTableDelegate : public QStyledItemDelegate
     Q_OBJECT
 
 public:
-    ImportTableDelegate(QObject *parent = nullptr);
+    ImportTableDelegate(QObject* parent = nullptr);
     ~ImportTableDelegate();
 
-    QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
-    void setEditorData(QWidget *editor, const QModelIndex &index) const override;
-    void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const override;
-
+    QWidget* createEditor(QWidget* parent, const QStyleOptionViewItem& option,
+                          const QModelIndex& index) const override;
+    void setEditorData(QWidget* editor, const QModelIndex& index) const override;
+    void setModelData(QWidget* editor, QAbstractItemModel* model,
+                      const QModelIndex& index) const override;
 };
 
 // -------------------------------------------------
@@ -88,7 +88,6 @@ public:
     ImportTableModel* model() const;
 
 private:
-
 };
 
 } // End of namespace DataImportGui

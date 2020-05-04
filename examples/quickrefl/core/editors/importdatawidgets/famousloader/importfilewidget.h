@@ -7,7 +7,6 @@
 //
 // ************************************************************************** //
 
-
 #ifndef IMPORTFILEWIDGET_H
 #define IMPORTFILEWIDGET_H
 
@@ -21,7 +20,7 @@ QT_END_NAMESPACE
 
 namespace DataImportGui
 {
-    
+
 //! This is the main dialog for the data loader
 class ImportFileWidget : public QWidget
 {
@@ -46,7 +45,6 @@ private:
 private:
     QListView* p_list_view{nullptr};
     QStringListModel* p_list_model{nullptr};
-
 };
 
 } // End of namespace DataImportGui
