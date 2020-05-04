@@ -120,7 +120,7 @@ private:
     QComboBox* p_separators;
 
     QLineEdit* p_filter_name;
-    QLineEdit* p_ignore_chars;
+    QLineEdit* p_ignore_strings;
     QLineEdit* p_ignore_lines;
 
     QGridLayout* p_type_layout;

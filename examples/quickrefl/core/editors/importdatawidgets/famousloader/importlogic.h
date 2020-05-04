@@ -26,6 +26,10 @@ std::vector<std::string> split(const std::string &s, char delim);
 void clean(std::vector<std::string>& input);
 //! Transpose method to turn lines into columns
 string_data transpose(const string_data &input);
+//! Erase All substrings
+void eraseSubStrings(std::string & main_string, const std::vector<std::string> & string_vector);
+//! Erase All occurences of substring
+void eraseAllSubString(std::string & main_string, const std::string & earase);
 
 //! This is the class holding a text region
 class LineFilter
@@ -40,6 +44,7 @@ public:
     void processColors(std::vector<std::string> &color_vec) const;
     void processSeparator(std::vector<char> &separator_vec) const;
     void processType(std::vector<std::string> &type_vec) const;
+    void processIgnore(std::vector<std::vector<std::string>> &ignore_vec) const;
 
     //! Getters
     const std::string& name() const;
@@ -47,6 +52,8 @@ public:
     const std::string& type() const;
     const std::string& separator() const;
     const std::string& color() const;
+    const std::vector<std::string>& ignoreStrings() const;
+    std::string ignoreString() const;
     const int& start() const;
     const int& end() const;
 
@@ -56,6 +63,8 @@ public:
     void setType(std::string type_string);
     void setSeparator(std::string separator_name);
     void setColor(std::string color_string);
+    void setIgnoreStrings(std::vector<std::string>& ignore_strings);
+    void setIgnoreString(std::string ignore_string);
     void setStart(int start_line);
     void setEnd(int end_line);
 
@@ -65,7 +74,7 @@ private:
     std::string m_type_string;
     std::string m_color;
     
-    std::vector<char> m_ignore_characters;
+    std::vector<std::string> m_ignore_strings;
     std::vector<int> m_ignore_lines;
 
     bool m_active;
@@ -106,6 +115,7 @@ private:
     std::vector<std::string> getColorScheme(const int& length) const;
     std::vector<char> getSeparatorScheme(const int& length) const;
     std::vector<std::string> getTypeScheme(const int& length) const;
+    std::vector<std::vector<std::string>> getIgnoreScheme(const int& length) const;
 
 private:
     std::vector<std::unique_ptr<CSVFile>> m_files;

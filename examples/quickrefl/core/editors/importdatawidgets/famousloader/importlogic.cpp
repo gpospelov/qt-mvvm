@@ -66,6 +66,26 @@ DataImport::string_data DataImport::transpose(const DataImport::string_data &out
     return temp_data;
 }
 
+//! Erase All substrings
+void DataImport::eraseSubStrings(std::string & main_string, const std::vector<std::string> & string_vector)
+{
+    std::for_each(string_vector.begin(), string_vector.end(), std::bind(DataImport::eraseAllSubString, std::ref(main_string), std::placeholders::_1));
+}
+
+//! Erase All occurences of substring
+void DataImport::eraseAllSubString(std::string & main_string, const std::string & to_erase)
+{   
+    if (to_erase == "")
+        return;
+        
+	// Search for the substring in string in a loop untill nothing is found
+    for (std::string::size_type i = main_string.find(to_erase);i != std::string::npos;i = main_string.find(to_erase))
+	{
+		// If found then erase it from string
+		main_string.erase(i, to_erase.length());
+	}
+}
+
 // -------------------------------------------------
 //! This is the constructor of LineFilter
 DataImport::LineFilter::LineFilter(std::string name)
@@ -135,6 +155,23 @@ void DataImport::LineFilter::processType(std::vector<std::string> &type_vec) con
     }
 }
 
+//! Set the right type to the vector
+void DataImport::LineFilter::processIgnore(std::vector<std::vector<std::string>> &ignore_vec) const
+{
+    if (!m_active)
+        return ;
+
+    int start = m_start_line;
+    int end = (m_end_line == -1) ? (ignore_vec.size()) : (m_end_line);
+
+    if (start > ignore_vec.size())
+        return ;
+
+    for (int i = start; i < ((end < ignore_vec.size()) ? (end) : (ignore_vec.size())); ++i){
+        ignore_vec.at(i) = m_ignore_strings;
+    }
+}
+
 //! Getter for the name
 const std::string& DataImport::LineFilter::name() const 
 {
@@ -165,6 +202,20 @@ const std::string& DataImport::LineFilter::color() const
     return m_color;
 }
 
+//! Getter for ignore string
+const std::vector<std::string>& DataImport::LineFilter::ignoreStrings() const
+{
+    return m_ignore_strings;
+}
+
+//! Getter for ignore string
+std::string DataImport::LineFilter::ignoreString() const
+{
+    std::string output;
+    for (const auto &piece : m_ignore_strings) output += piece;
+    return output;
+}
+
 //! Getter for the starting line integer
 const int& DataImport::LineFilter::start() const
 {
@@ -183,35 +234,55 @@ void DataImport::LineFilter::setSeparators(std::map<std::string, char>* separato
     m_separators = separators;
 }
 
-//! Set the start line
+//! Set the name
 void DataImport::LineFilter::setName(std::string name)
 {
     m_name = name;
 }
 
-//! Set the start line
+//! Set the active state
 void DataImport::LineFilter::setActive(bool active)
 {
     m_active = active;
 }
 
-//! Set the start line
+//! Set the type
 void DataImport::LineFilter::setType(std::string type_string)
 {
     m_type_string = type_string;
 }
 
-//! Set the start line
+//! Set the separator
 void DataImport::LineFilter::setSeparator(std::string separator_name)
 {
     m_separator_str = separator_name;
     m_separator = m_separators->at(separator_name);
 }
 
-//! Set the start line
+//! Set the color
 void DataImport::LineFilter::setColor(std::string color_string)
 {
     m_color = color_string;
+}
+
+//! Set the ignore strings from a vector of strings
+void DataImport::LineFilter::setIgnoreStrings(std::vector<std::string>& ignore_strings)
+{
+    m_ignore_strings = ignore_strings;
+}
+
+//! Set the ignore strings from a single string
+void DataImport::LineFilter::setIgnoreString(std::string ignore_string)
+{
+    std::stringstream ss(ignore_string);
+    std::vector<std::string> result;
+    while( ss.good() )
+    {
+        std::string substr;
+        getline( ss, substr, ',' );
+        result.push_back( substr );
+    }
+    setIgnoreStrings(result);
 }
 
 //! Set the start line
@@ -265,14 +336,19 @@ void DataImport::ImportLogic::setFiles(std::vector<std::string> file_paths)
 std::string DataImport::ImportLogic::getPreview(const int& row) const
 {
     auto thumbnail = m_files.at(row)->thumbnail();
+    std::vector<std::vector<std::string>> ignore_scheme = getIgnoreScheme(thumbnail.size());
     std::vector<std::string> color_scheme = getColorScheme(thumbnail.size());
     std::vector<char> separator_scheme = getSeparatorScheme(thumbnail.size());
 
     std::string output;
-    for (int i = 0; i < thumbnail.size(); ++i){   
+    for (int i = 0; i < thumbnail.size(); ++i){
+
         auto formated_line = thumbnail.at(i);
+        if (!ignore_scheme.at(i).empty())
+            DataImport::eraseSubStrings(formated_line,ignore_scheme.at(i));
+
         if (separator_scheme.at(i) != '!'){
-            auto temp_string_vec = DataImport::split(thumbnail.at(i), separator_scheme.at(i));
+            auto temp_string_vec = DataImport::split(formated_line, separator_scheme.at(i));
             formated_line = temp_string_vec.at(0);
             for (int j = 1; j < temp_string_vec.size(); ++j){
                 formated_line += std::string(std::string("<span style=\"background-color:")+color_scheme.at(i)+std::string("\">")+std::string(1,separator_scheme.at(i))+ std::string("</span>"));
@@ -288,6 +364,7 @@ std::string DataImport::ImportLogic::getPreview(const int& row) const
 DataImport::string_data DataImport::ImportLogic::getData(const int& row) const
 {
     auto file_lines = m_files.at(row)->file();
+    std::vector<std::vector<std::string>> ignore_scheme = getIgnoreScheme(file_lines.size());
     std::vector<std::string> type_scheme = getTypeScheme(file_lines.size());
     std::vector<char> separator_scheme = getSeparatorScheme(file_lines.size());
 
@@ -295,8 +372,12 @@ DataImport::string_data DataImport::ImportLogic::getData(const int& row) const
     for (int i = 0; i < file_lines.size(); ++i){
         if (type_scheme.at(i) != "Data")
             continue;
-        
-        auto temp_string_vec = DataImport::split(file_lines.at(i), separator_scheme.at(i));
+
+        auto line = file_lines.at(i);
+        if (!ignore_scheme.at(i).empty())
+            DataImport::eraseSubStrings(line,ignore_scheme.at(i));
+
+        auto temp_string_vec = DataImport::split(line, separator_scheme.at(i));
         DataImport::clean(temp_string_vec);
         output.push_back(temp_string_vec);
     }
@@ -307,13 +388,19 @@ DataImport::string_data DataImport::ImportLogic::getData(const int& row) const
 DataImport::header_map DataImport::ImportLogic::getHeader(const int& row) const
 {
     auto file_lines = m_files.at(row)->file();
+    std::vector<std::vector<std::string>> ignore_scheme = getIgnoreScheme(file_lines.size());
     std::vector<std::string> type_scheme = getTypeScheme(file_lines.size());
     std::vector<char> separator_scheme = getSeparatorScheme(file_lines.size());
 
     DataImport::header_map output;
     for (int i = 0; i < file_lines.size(); ++i){
         if (type_scheme.at(i) == "Header"){
-            auto temp_string_vec = DataImport::split(file_lines.at(i), separator_scheme.at(i));
+
+            auto line = file_lines.at(i);
+            if (!ignore_scheme.at(i).empty())
+                DataImport::eraseSubStrings(line,ignore_scheme.at(i));
+
+            auto temp_string_vec = DataImport::split(line, separator_scheme.at(i));
             DataImport::clean(temp_string_vec);
             for (int j = 0; j< temp_string_vec.size(); ++j){
                 output.insert(std::make_pair(temp_string_vec.at(j),j));
@@ -399,6 +486,16 @@ std::vector<std::string> DataImport::ImportLogic::getTypeScheme(const int& lengt
     std::vector<std::string> output(length, "Comments");
     for (auto &line_block : m_line_blocks){
         line_block->processType(output);
+    }
+    return output;
+}
+
+//! Get the type scheme
+std::vector<std::vector<std::string>> DataImport::ImportLogic::getIgnoreScheme(const int& length) const
+{
+    std::vector<std::vector<std::string>> output(length, std::vector<std::string>());
+    for (auto &line_block : m_line_blocks){
+        line_block->processIgnore(output);
     }
     return output;
 }

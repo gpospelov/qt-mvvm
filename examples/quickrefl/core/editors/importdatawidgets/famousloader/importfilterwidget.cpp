@@ -85,6 +85,7 @@ void DataImport::LineFilterWidget::grabFromLineFilter()
     p_line_end->setValue(p_line_block->end());
     p_separators->setCurrentText(QString::fromStdString(p_line_block->separator()));
     p_filter_name->setText(QString::fromStdString(p_line_block->name()));
+    p_ignore_strings->setText(QString::fromStdString(p_line_block->ignoreString()));
 
     setEnabled();
     typeVariation();
@@ -112,7 +113,7 @@ void DataImport::LineFilterWidget::createComponents()
     p_range_end = new QComboBox(this);
     p_separators = new QComboBox(this);
     p_filter_name = new QLineEdit(this);
-    p_ignore_chars = new QLineEdit(this);
+    p_ignore_strings = new QLineEdit(this);
     p_ignore_lines = new QLineEdit(this);
 
     // Set the coherent fusion style for the subcmponents
@@ -123,7 +124,7 @@ void DataImport::LineFilterWidget::createComponents()
     p_range_end->setStyle(new QProxyStyle("fusion"));
     p_separators->setStyle(new QProxyStyle("fusion"));
     p_filter_name->setStyle(new QProxyStyle("fusion"));
-    p_ignore_chars->setStyle(new QProxyStyle("fusion"));
+    p_ignore_strings->setStyle(new QProxyStyle("fusion"));
     p_ignore_lines->setStyle(new QProxyStyle("fusion"));
 }
 
@@ -196,8 +197,8 @@ void DataImport::LineFilterWidget::setTypeLayout()
     p_type_layout->addWidget(p_type_select,0,1);
     p_type_layout->addWidget(new QLabel("Separator character:"),1,0);
     p_type_layout->addWidget(p_separators,1,1);
-    p_type_layout->addWidget(new QLabel("Ignore characters:"),2,0);
-    p_type_layout->addWidget(p_ignore_chars,2,1);
+    p_type_layout->addWidget(new QLabel("Ignore strings:"),2,0);
+    p_type_layout->addWidget(p_ignore_strings,2,1);
 
     for (int i = 0; i < p_type_layout->rowCount(); ++i){
         auto label = dynamic_cast<QLabel*>(p_type_layout->itemAtPosition(i,0)->widget());
@@ -372,6 +373,7 @@ void DataImport::LineFilterWidget::dataChanged()
     p_line_block->setActive(p_active_checkbox->isChecked());
     p_line_block->setSeparator(p_separators->currentText().toStdString());
     p_line_block->setColor(p_color_editor->data().value<QColor>().name().toStdString());
+    p_line_block->setIgnoreString(p_ignore_strings->text().toStdString());
     p_line_block->setStart(start);
     p_line_block->setEnd(end);
 
