@@ -19,14 +19,17 @@
 #include <QFileDialog>
 #include <QItemSelectionModel>
 
+namespace DataImportGui
+{
+
 //! This is the constructor
-DataImport::ImportFileWidget::ImportFileWidget(QWidget* parent): QWidget(parent)
+ImportFileWidget::ImportFileWidget(QWidget* parent): QWidget(parent)
 {   
     createWidgets();
 }
 
 //! Create all the widget elements
-void DataImport::ImportFileWidget::createWidgets()
+void ImportFileWidget::createWidgets()
 {
     auto main_layout = new QHBoxLayout(this);
     auto side_layout = new QVBoxLayout();
@@ -59,11 +62,11 @@ void DataImport::ImportFileWidget::createWidgets()
     // Connect the buttons
     connect(
         add_button, &QToolButton::clicked,
-        this, &DataImport::ImportFileWidget::addFiles
+        this, &ImportFileWidget::addFiles
     );
     connect(
         reset_button, &QToolButton::clicked,
-        this, &DataImport::ImportFileWidget::resetFiles
+        this, &ImportFileWidget::resetFiles
     );
     connect(
         p_list_view->selectionModel(), &QItemSelectionModel::currentChanged,
@@ -72,13 +75,13 @@ void DataImport::ImportFileWidget::createWidgets()
 }
 
 //! Get the current selection
-int DataImport::ImportFileWidget::currentSelection() const
+int ImportFileWidget::currentSelection() const
 {
     return p_list_view->currentIndex().row();
 }
 
 //! This is the method called by the add file button
-void DataImport::ImportFileWidget::addFiles()
+void ImportFileWidget::addFiles()
 {
     QStringList files = QFileDialog::getOpenFileNames(
                         this,
@@ -91,14 +94,14 @@ void DataImport::ImportFileWidget::addFiles()
 }
 
 //! This is the method called by the reset file button
-void DataImport::ImportFileWidget::resetFiles()
+void ImportFileWidget::resetFiles()
 {
     p_list_model->setStringList(QStringList());
     emit filesChanged(currentFiles());
 }
 
 //! Return the string list formated as a vector of strings
-std::vector<std::string> DataImport::ImportFileWidget::currentFiles() const
+std::vector<std::string> ImportFileWidget::currentFiles() const
 {
     std::vector<std::string> string_vector;
     foreach( QString str, p_list_model->stringList()) {
@@ -106,3 +109,5 @@ std::vector<std::string> DataImport::ImportFileWidget::currentFiles() const
     }
     return string_vector;
 }
+
+} // End of namespace DataImportGui

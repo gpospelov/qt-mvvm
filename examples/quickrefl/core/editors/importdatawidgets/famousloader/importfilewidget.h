@@ -19,9 +19,9 @@ class QStringListModel;
 class QItemSelection;
 QT_END_NAMESPACE
 
-namespace DataImport
+namespace DataImportGui
 {
-
+    
 //! This is the main dialog for the data loader
 class ImportFileWidget : public QWidget
 {
@@ -48,6 +48,7 @@ private:
     QStringListModel* p_list_model{nullptr};
 
 };
-}
+
+} // End of namespace DataImportGui
 
 #endif // IMPORTFILEWIDGET_H

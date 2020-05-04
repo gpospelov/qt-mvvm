@@ -17,7 +17,7 @@
 #include <QTableView>
 #include "importlogic.h"
 
-namespace DataImport
+namespace DataImportGui
 {
 
 class ImportFileWidget;
@@ -47,9 +47,10 @@ private:
     ImportFilterWidget* p_parameter_dialog{nullptr};
     ImportTextView* p_text_view{nullptr};
     ImportTableView* p_table_view{nullptr};
-    std::unique_ptr<ImportLogic> p_data_import_logic;
+    std::unique_ptr<DataImportLogic::ImportLogic> p_data_import_logic;
     QTabWidget* p_selection_space{nullptr};
 };
-}
+
+} // End of namespace DataImportGui
 
 #endif // IMPORTDIALOG_H

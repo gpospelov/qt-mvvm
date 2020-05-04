@@ -13,8 +13,11 @@
 #include <iostream>
 #include <numeric>
 
+namespace DataImportLogic 
+{
+
 //! Standard function to handle spinting
-std::vector<std::string> DataImport::split(const std::string &s, char delim) 
+std::vector<std::string> split(const std::string &s, char delim) 
 {
   std::stringstream ss(s);
   std::string item;
@@ -26,7 +29,7 @@ std::vector<std::string> DataImport::split(const std::string &s, char delim)
 }
 
 //! Cleans the vector of strings provided by removing empty parts
-void DataImport::clean(std::vector<std::string>& input) 
+void clean(std::vector<std::string>& input) 
 {
     std::vector<std::string>::iterator i = input.begin();
     while(i != input.end())
@@ -43,9 +46,9 @@ void DataImport::clean(std::vector<std::string>& input)
 }
 
 //! Transpose the current data array
-DataImport::string_data DataImport::transpose(const DataImport::string_data &output)
+string_data transpose(const string_data &output)
 {
-    DataImport::string_data temp_data;
+    string_data temp_data;
     if (output.size() == 0)
         return temp_data;
 
@@ -67,17 +70,17 @@ DataImport::string_data DataImport::transpose(const DataImport::string_data &out
 }
 
 //! Erase All substrings
-void DataImport::eraseSubStrings(std::string & main_string, const std::vector<std::string> & string_vector)
+void eraseSubStrings(std::string & main_string, const std::vector<std::string> & string_vector)
 {
-    std::for_each(string_vector.begin(), string_vector.end(), std::bind(DataImport::eraseAllSubString, std::ref(main_string), std::placeholders::_1));
+    std::for_each(string_vector.begin(), string_vector.end(), std::bind(eraseAllSubString, std::ref(main_string), std::placeholders::_1));
 }
 
 //! Erase All occurences of substring
-void DataImport::eraseAllSubString(std::string & main_string, const std::string & to_erase)
+void eraseAllSubString(std::string & main_string, const std::string & to_erase)
 {   
     if (to_erase == "")
         return;
-        
+
 	// Search for the substring in string in a loop untill nothing is found
     for (std::string::size_type i = main_string.find(to_erase);i != std::string::npos;i = main_string.find(to_erase))
 	{
@@ -88,13 +91,13 @@ void DataImport::eraseAllSubString(std::string & main_string, const std::string 
 
 // -------------------------------------------------
 //! This is the constructor of LineFilter
-DataImport::LineFilter::LineFilter(std::string name)
+LineFilter::LineFilter(std::string name)
     : m_name(name), m_active(false), m_start_line(0), m_end_line(1), m_separator(' '),m_type_string("Data"),m_color("black")
 {
 }
 
 //! Return only the keys of the separators
-std::vector<std::string> DataImport::LineFilter::separatorNames() const
+std::vector<std::string> LineFilter::separatorNames() const
 {
     std::vector<std::string> output;
     for(auto const& element : *m_separators) {
@@ -105,7 +108,7 @@ std::vector<std::string> DataImport::LineFilter::separatorNames() const
 }
 
 //! Set the right colors in the vector
-void DataImport::LineFilter::processColors(std::vector<std::string> &color_vec) const
+void LineFilter::processColors(std::vector<std::string> &color_vec) const
 {
     if (!m_active)
         return ;
@@ -122,7 +125,7 @@ void DataImport::LineFilter::processColors(std::vector<std::string> &color_vec) 
 }
 
 //! Set the right separator in the vector
-void DataImport::LineFilter::processSeparator(std::vector<char> &separator_vec) const
+void LineFilter::processSeparator(std::vector<char> &separator_vec) const
 {
     if (!m_active)
         return ;
@@ -139,7 +142,7 @@ void DataImport::LineFilter::processSeparator(std::vector<char> &separator_vec) 
 }
 
 //! Set the right type to the vector
-void DataImport::LineFilter::processType(std::vector<std::string> &type_vec) const
+void LineFilter::processType(std::vector<std::string> &type_vec) const
 {
     if (!m_active)
         return ;
@@ -156,7 +159,7 @@ void DataImport::LineFilter::processType(std::vector<std::string> &type_vec) con
 }
 
 //! Set the right type to the vector
-void DataImport::LineFilter::processIgnore(std::vector<std::vector<std::string>> &ignore_vec) const
+void LineFilter::processIgnore(std::vector<std::vector<std::string>> &ignore_vec) const
 {
     if (!m_active)
         return ;
@@ -173,43 +176,43 @@ void DataImport::LineFilter::processIgnore(std::vector<std::vector<std::string>>
 }
 
 //! Getter for the name
-const std::string& DataImport::LineFilter::name() const 
+const std::string& LineFilter::name() const 
 {
     return m_name;
 }
 
 //! Getter for the active boolean
-const bool& DataImport::LineFilter::active() const
+const bool& LineFilter::active() const
 {
     return m_active;
 }
 
 //! Getter for the type string
-const std::string& DataImport::LineFilter::type() const
+const std::string& LineFilter::type() const
 {
     return m_type_string;
 }
 
 //! Getter for the separator key string
-const std::string& DataImport::LineFilter::separator() const
+const std::string& LineFilter::separator() const
 {
     return m_separator_str;
 }
 
 //! Getter for the color string
-const std::string& DataImport::LineFilter::color() const
+const std::string& LineFilter::color() const
 {
     return m_color;
 }
 
 //! Getter for ignore string
-const std::vector<std::string>& DataImport::LineFilter::ignoreStrings() const
+const std::vector<std::string>& LineFilter::ignoreStrings() const
 {
     return m_ignore_strings;
 }
 
 //! Getter for ignore string
-std::string DataImport::LineFilter::ignoreString() const
+std::string LineFilter::ignoreString() const
 {
     std::string output;
     for (const auto &piece : m_ignore_strings) output += piece;
@@ -217,62 +220,62 @@ std::string DataImport::LineFilter::ignoreString() const
 }
 
 //! Getter for the starting line integer
-const int& DataImport::LineFilter::start() const
+const int& LineFilter::start() const
 {
     return m_start_line;
 }
 
 //! Getter for the ending line integer
-const int& DataImport::LineFilter::end() const
+const int& LineFilter::end() const
 {
     return m_end_line;
 }
 
 //! Build the separator string
-void DataImport::LineFilter::setSeparators(std::map<std::string, char>* separators)
+void LineFilter::setSeparators(std::map<std::string, char>* separators)
 {
     m_separators = separators;
 }
 
 //! Set the name
-void DataImport::LineFilter::setName(std::string name)
+void LineFilter::setName(std::string name)
 {
     m_name = name;
 }
 
 //! Set the active state
-void DataImport::LineFilter::setActive(bool active)
+void LineFilter::setActive(bool active)
 {
     m_active = active;
 }
 
 //! Set the type
-void DataImport::LineFilter::setType(std::string type_string)
+void LineFilter::setType(std::string type_string)
 {
     m_type_string = type_string;
 }
 
 //! Set the separator
-void DataImport::LineFilter::setSeparator(std::string separator_name)
+void LineFilter::setSeparator(std::string separator_name)
 {
     m_separator_str = separator_name;
     m_separator = m_separators->at(separator_name);
 }
 
 //! Set the color
-void DataImport::LineFilter::setColor(std::string color_string)
+void LineFilter::setColor(std::string color_string)
 {
     m_color = color_string;
 }
 
 //! Set the ignore strings from a vector of strings
-void DataImport::LineFilter::setIgnoreStrings(std::vector<std::string>& ignore_strings)
+void LineFilter::setIgnoreStrings(std::vector<std::string>& ignore_strings)
 {
     m_ignore_strings = ignore_strings;
 }
 
 //! Set the ignore strings from a single string
-void DataImport::LineFilter::setIgnoreString(std::string ignore_string)
+void LineFilter::setIgnoreString(std::string ignore_string)
 {
     std::stringstream ss(ignore_string);
     std::vector<std::string> result;
@@ -286,29 +289,29 @@ void DataImport::LineFilter::setIgnoreString(std::string ignore_string)
 }
 
 //! Set the start line
-void DataImport::LineFilter::setStart(int start_line)
+void LineFilter::setStart(int start_line)
 {
     m_start_line = start_line;
 }
 
 //! Set the end line
-void DataImport::LineFilter::setEnd(int end_line)
+void LineFilter::setEnd(int end_line)
 {
     m_end_line = end_line;
 }
 
 // -------------------------------------------------
 //! This is the constructor
-DataImport::ImportLogic::ImportLogic() : QObject()
+ImportLogic::ImportLogic() : QObject()
 {
     initSeparators();
     p_data_structure = std::make_unique<DataStructure>();
 }
 
 //! This is the slot for adding files into the local memory 
-DataImport::LineFilter* DataImport::ImportLogic::addLineFilter(std::string name)
+LineFilter* ImportLogic::addLineFilter(std::string name)
 {
-    auto temp = std::make_unique<DataImport::LineFilter>(name);
+    auto temp = std::make_unique<LineFilter>(name);
     temp->setSeparators(&m_separators);
     auto address = temp.get();
     m_line_blocks.push_back(std::move(temp));
@@ -317,13 +320,13 @@ DataImport::LineFilter* DataImport::ImportLogic::addLineFilter(std::string name)
 }
 
 //! This is the method removing a particular block given its pointer
-void DataImport::ImportLogic::removeLineFilter(DataImport::LineFilter* block_ptr)
+void ImportLogic::removeLineFilter(LineFilter* block_ptr)
 {
     m_line_blocks.erase(std::remove_if(m_line_blocks.begin(), m_line_blocks.end(), [=](auto const& ptr){ return ptr.get() == block_ptr; }), m_line_blocks.end());
 }
 
 //! This is the slot for adding files into the local memory 
-void DataImport::ImportLogic::setFiles(std::vector<std::string> file_paths)
+void ImportLogic::setFiles(std::vector<std::string> file_paths)
 {
     m_files.clear();
     for (auto& file_path : file_paths) {
@@ -333,7 +336,7 @@ void DataImport::ImportLogic::setFiles(std::vector<std::string> file_paths)
 }
 
 //! build the preview string with html style
-std::string DataImport::ImportLogic::getPreview(const int& row) const
+std::string ImportLogic::getPreview(const int& row) const
 {
     auto thumbnail = m_files.at(row)->thumbnail();
     std::vector<std::vector<std::string>> ignore_scheme = getIgnoreScheme(thumbnail.size());
@@ -345,10 +348,10 @@ std::string DataImport::ImportLogic::getPreview(const int& row) const
 
         auto formated_line = thumbnail.at(i);
         if (!ignore_scheme.at(i).empty())
-            DataImport::eraseSubStrings(formated_line,ignore_scheme.at(i));
+            eraseSubStrings(formated_line,ignore_scheme.at(i));
 
         if (separator_scheme.at(i) != '!'){
-            auto temp_string_vec = DataImport::split(formated_line, separator_scheme.at(i));
+            auto temp_string_vec = split(formated_line, separator_scheme.at(i));
             formated_line = temp_string_vec.at(0);
             for (int j = 1; j < temp_string_vec.size(); ++j){
                 formated_line += std::string(std::string("<span style=\"background-color:")+color_scheme.at(i)+std::string("\">")+std::string(1,separator_scheme.at(i))+ std::string("</span>"));
@@ -361,47 +364,47 @@ std::string DataImport::ImportLogic::getPreview(const int& row) const
 }
 
 //! build the data string vector and return it for given file
-DataImport::string_data DataImport::ImportLogic::getData(const int& row) const
+string_data ImportLogic::getData(const int& row) const
 {
     auto file_lines = m_files.at(row)->file();
     std::vector<std::vector<std::string>> ignore_scheme = getIgnoreScheme(file_lines.size());
     std::vector<std::string> type_scheme = getTypeScheme(file_lines.size());
     std::vector<char> separator_scheme = getSeparatorScheme(file_lines.size());
 
-    DataImport::string_data output;
+    string_data output;
     for (int i = 0; i < file_lines.size(); ++i){
         if (type_scheme.at(i) != "Data")
             continue;
 
         auto line = file_lines.at(i);
         if (!ignore_scheme.at(i).empty())
-            DataImport::eraseSubStrings(line,ignore_scheme.at(i));
+            eraseSubStrings(line,ignore_scheme.at(i));
 
-        auto temp_string_vec = DataImport::split(line, separator_scheme.at(i));
-        DataImport::clean(temp_string_vec);
+        auto temp_string_vec = split(line, separator_scheme.at(i));
+        clean(temp_string_vec);
         output.push_back(temp_string_vec);
     }
     return output;
 }
 
 //! Build the map of headers in the file with their associated column
-DataImport::header_map DataImport::ImportLogic::getHeader(const int& row) const
+header_map ImportLogic::getHeader(const int& row) const
 {
     auto file_lines = m_files.at(row)->file();
     std::vector<std::vector<std::string>> ignore_scheme = getIgnoreScheme(file_lines.size());
     std::vector<std::string> type_scheme = getTypeScheme(file_lines.size());
     std::vector<char> separator_scheme = getSeparatorScheme(file_lines.size());
 
-    DataImport::header_map output;
+    header_map output;
     for (int i = 0; i < file_lines.size(); ++i){
         if (type_scheme.at(i) == "Header"){
 
             auto line = file_lines.at(i);
             if (!ignore_scheme.at(i).empty())
-                DataImport::eraseSubStrings(line,ignore_scheme.at(i));
+                eraseSubStrings(line,ignore_scheme.at(i));
 
-            auto temp_string_vec = DataImport::split(line, separator_scheme.at(i));
-            DataImport::clean(temp_string_vec);
+            auto temp_string_vec = split(line, separator_scheme.at(i));
+            clean(temp_string_vec);
             for (int j = 0; j< temp_string_vec.size(); ++j){
                 output.insert(std::make_pair(temp_string_vec.at(j),j));
             }
@@ -412,10 +415,10 @@ DataImport::header_map DataImport::ImportLogic::getHeader(const int& row) const
 }
 
 //! Grab the data and header internally and then populate the data structure
-void DataImport::ImportLogic::updateData(const int& row)
+void ImportLogic::updateData(const int& row)
 {
     auto headers = getHeader(row);
-    auto data = DataImport::transpose(getData(row));
+    auto data = transpose(getData(row));
 
     if (!headers.empty())
         p_data_structure->setData(headers, data);
@@ -424,13 +427,13 @@ void DataImport::ImportLogic::updateData(const int& row)
 }
 
 //! Grab the data and header internally and then populate the data structure
-DataImport::DataStructure* DataImport::ImportLogic::dataStructure() const
+DataStructure* ImportLogic::dataStructure() const
 {
     return p_data_structure.get();
 }
 
 //! Get the names of all the LineFilters in place
-DataImport::LineFilter* DataImport::ImportLogic::nameInBlocks(const std::string &name) const
+LineFilter* ImportLogic::nameInBlocks(const std::string &name) const
 {
     for (auto &line_block: m_line_blocks){
         if (name == line_block->name()) return line_block.get();
@@ -439,7 +442,7 @@ DataImport::LineFilter* DataImport::ImportLogic::nameInBlocks(const std::string 
 }
 
 //! Get the names of all the LineFilters in place
-DataImport::LineFilter* DataImport::ImportLogic::typeInBlocks(const std::string &type) const
+LineFilter* ImportLogic::typeInBlocks(const std::string &type) const
 {
     for (auto &line_block: m_line_blocks){
         if (type == line_block->type()) return line_block.get();
@@ -448,7 +451,7 @@ DataImport::LineFilter* DataImport::ImportLogic::typeInBlocks(const std::string 
 }
 
 //! build the preview string with html style
-void DataImport::ImportLogic::initSeparators()
+void ImportLogic::initSeparators()
 {
     m_separators.insert(std::pair<std::string, char>("Space ( )", ' '));
     m_separators.insert(std::pair<std::string, char>("Comma (,)", ','));
@@ -461,7 +464,7 @@ void DataImport::ImportLogic::initSeparators()
 }
 
 //! Get the color scheme
-std::vector<std::string> DataImport::ImportLogic::getColorScheme(const int& length) const
+std::vector<std::string> ImportLogic::getColorScheme(const int& length) const
 {
     std::vector<std::string> output(length, "black");
     for (auto &line_block : m_line_blocks){
@@ -471,7 +474,7 @@ std::vector<std::string> DataImport::ImportLogic::getColorScheme(const int& leng
 }
 
 //! Get the separator scheme
-std::vector<char> DataImport::ImportLogic::getSeparatorScheme(const int& length) const
+std::vector<char> ImportLogic::getSeparatorScheme(const int& length) const
 {
     std::vector<char> output(length, '!');
     for (auto &line_block : m_line_blocks){
@@ -481,7 +484,7 @@ std::vector<char> DataImport::ImportLogic::getSeparatorScheme(const int& length)
 }
 
 //! Get the type scheme
-std::vector<std::string> DataImport::ImportLogic::getTypeScheme(const int& length) const
+std::vector<std::string> ImportLogic::getTypeScheme(const int& length) const
 {
     std::vector<std::string> output(length, "Comments");
     for (auto &line_block : m_line_blocks){
@@ -491,7 +494,7 @@ std::vector<std::string> DataImport::ImportLogic::getTypeScheme(const int& lengt
 }
 
 //! Get the type scheme
-std::vector<std::vector<std::string>> DataImport::ImportLogic::getIgnoreScheme(const int& length) const
+std::vector<std::vector<std::string>> ImportLogic::getIgnoreScheme(const int& length) const
 {
     std::vector<std::vector<std::string>> output(length, std::vector<std::string>());
     for (auto &line_block : m_line_blocks){
@@ -499,3 +502,5 @@ std::vector<std::vector<std::string>> DataImport::ImportLogic::getIgnoreScheme(c
     }
     return output;
 }
+
+} // Emd of namespace DataImportLogic

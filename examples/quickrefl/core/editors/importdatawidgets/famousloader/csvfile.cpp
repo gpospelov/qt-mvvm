@@ -17,15 +17,18 @@
 #include <fstream>
 #include <iostream>
 
+namespace DataImportLogic
+{
+
 //! The constructor
-DataImport::CSVFile::CSVFile(std::string path_to_file) : m_filepath(path_to_file) 
+CSVFile::CSVFile(std::string path_to_file) : m_filepath(path_to_file) 
 {
     loadFile();
     generateThumbnail();
 }
 
 //! Generate the thumbnail
-void DataImport::CSVFile::loadFile()
+void CSVFile::loadFile()
 {
     m_file.clear();
     std::ifstream file(m_filepath);
@@ -37,19 +40,19 @@ void DataImport::CSVFile::loadFile()
 }
 
 //! The getter for the thumbnail text
-const std::vector<std::string>& DataImport::CSVFile::thumbnail() const
+const std::vector<std::string>& CSVFile::thumbnail() const
 {
     return m_thumbnail;
 }
 
 //! The getter for the thumbnail text
-const std::vector<std::string>& DataImport::CSVFile::file() const
+const std::vector<std::string>& CSVFile::file() const
 {
     return m_file;
 }
 
 //! Generate the thumbnail
-void DataImport::CSVFile::generateThumbnail()
+void CSVFile::generateThumbnail()
 {
     m_thumbnail.clear();
     m_thumbnail.resize(m_thumbnail_length);
@@ -64,7 +67,7 @@ void DataImport::CSVFile::generateThumbnail()
 }
 
 //! Return a precise line
-const std::string& DataImport::CSVFile::line(int line_number) const
+const std::string& CSVFile::line(int line_number) const
 {
     return m_file.at(line_number);
 }
@@ -189,3 +192,4 @@ const std::string& DataImport::CSVFile::line(int line_number) const
 //     return this->rows[i];
 // }
 
+} // End of namespace DataImportGui

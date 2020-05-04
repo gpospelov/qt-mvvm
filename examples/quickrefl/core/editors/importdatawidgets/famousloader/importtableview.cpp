@@ -20,7 +20,7 @@
 #include <QLineEdit>
 #include <QHeaderView>
 
-namespace DataImport
+namespace DataImportGui
 {
 
 // -------------------------------------------------
@@ -33,14 +33,14 @@ ImportTableModel::ImportTableModel(QWidget* parent)
 }
 
 //! This is the column count (override of pure virtual)
-void ImportTableModel::setDataStructure(DataStructure* data_structure)
+void ImportTableModel::setDataStructure(DataImportLogic::DataStructure* data_structure)
 {
     p_data_structure = data_structure;
     refreshFromDataStructure();
 }
 
 //! Getter for the current data structure
-DataStructure* ImportTableModel::dataStructure() const
+DataImportLogic::DataStructure* ImportTableModel::dataStructure() const
 {
     return p_data_structure;
 }
@@ -72,14 +72,14 @@ int ImportTableModel::numUtilityRows() const
 }
 
 //! Get the vector of visible info types
-std::vector<DataImport::InfoTypes> ImportTableModel::infoTypes() const
+std::vector<DataImportLogic::InfoTypes> ImportTableModel::infoTypes() const
 {
-    std::vector<DataImport::InfoTypes> info_types;
-    if (m_show_name) info_types.push_back(DataImport::InfoTypes::Name);
-    if (m_show_type) info_types.push_back(DataImport::InfoTypes::Type);
-    if (m_show_units) info_types.push_back(DataImport::InfoTypes::Unit);
-    if (m_show_multiplier) info_types.push_back(DataImport::InfoTypes::Multiplier);
-    if (m_show_header) info_types.push_back(DataImport::InfoTypes::Header);
+    std::vector<DataImportLogic::InfoTypes> info_types;
+    if (m_show_name) info_types.push_back(DataImportLogic::InfoTypes::Name);
+    if (m_show_type) info_types.push_back(DataImportLogic::InfoTypes::Type);
+    if (m_show_units) info_types.push_back(DataImportLogic::InfoTypes::Unit);
+    if (m_show_multiplier) info_types.push_back(DataImportLogic::InfoTypes::Multiplier);
+    if (m_show_header) info_types.push_back(DataImportLogic::InfoTypes::Header);
     return info_types;
 }
 
@@ -121,7 +121,7 @@ QVariant ImportTableModel::data(const QModelIndex &index, int role) const
     if (p_data_structure==nullptr)
         return QVariant();
     
-    DataColumn* column = p_data_structure->column(index.column());
+    DataImportLogic::DataColumn* column = p_data_structure->column(index.column());
     int utility_lines = numUtilityRows();
     if (index.row() >= utility_lines && index.row()< column->rowCount()+utility_lines){
         if (role == Qt::DisplayRole)
@@ -169,19 +169,19 @@ QVariant ImportTableModel::headerData(int section, Qt::Orientation orientation, 
             return QVariant(section-utility_lines);
     } else if (section < utility_lines) {
         if (role == Qt::DisplayRole)
-            if (info_types.at(section) == InfoTypes::Name){
+            if (info_types.at(section) == DataImportLogic::InfoTypes::Name){
                 return QVariant("Name");
             }
-            if (info_types.at(section) == InfoTypes::Type){
+            if (info_types.at(section) == DataImportLogic::InfoTypes::Type){
                 return QVariant("Type");
             }
-            if (info_types.at(section) == InfoTypes::Unit){
+            if (info_types.at(section) == DataImportLogic::InfoTypes::Unit){
                 return QVariant("Unit");
             }
-            if (info_types.at(section) == InfoTypes::Header){
+            if (info_types.at(section) == DataImportLogic::InfoTypes::Header){
                 return QVariant("Header");
             }
-            if (info_types.at(section) == InfoTypes::Multiplier){
+            if (info_types.at(section) == DataImportLogic::InfoTypes::Multiplier){
                 return QVariant("Multiplier");
             }
     }
@@ -210,27 +210,27 @@ QWidget *ImportTableDelegate::createEditor(QWidget *parent, const QStyleOptionVi
     const ImportTableModel* model = dynamic_cast<const ImportTableModel*>(index.model());
     int utility_rows = model->numUtilityRows();
     if (index.row() < utility_rows){
-        std::vector<InfoTypes> info_types = model->infoTypes();
-        if (info_types.at(index.row()) == InfoTypes::Name){
+        std::vector<DataImportLogic::InfoTypes> info_types = model->infoTypes();
+        if (info_types.at(index.row()) == DataImportLogic::InfoTypes::Name){
             QLineEdit *line_edit = new QLineEdit(parent);
             line_edit->setAlignment(Qt::AlignCenter);
             return line_edit;
         }
-        if (info_types.at(index.row()) == InfoTypes::Type){
+        if (info_types.at(index.row()) == DataImportLogic::InfoTypes::Type){
             QComboBox *combo_box = new QComboBox(parent);
             QList<QString> items;
-            std::for_each(Types.begin(), Types.end(), [&](const std::string& type){items.append(QString::fromStdString(type));});
+            std::for_each(DataImportLogic::Types.begin(), DataImportLogic::Types.end(), [&](const std::string& type){items.append(QString::fromStdString(type));});
             combo_box->addItems(items);
             return combo_box;
         }
-        if (info_types.at(index.row()) == InfoTypes::Unit){
+        if (info_types.at(index.row()) == DataImportLogic::InfoTypes::Unit){
             QComboBox *combo_box = new QComboBox(parent);
             QStringList items;
-            std::for_each(Units.begin(), Units.end(), [&](const std::string& unit){items.append(QString::fromStdString(unit));});
+            std::for_each(DataImportLogic::Units.begin(), DataImportLogic::Units.end(), [&](const std::string& unit){items.append(QString::fromStdString(unit));});
             combo_box->addItems(items);
             return combo_box;
         }
-        if (info_types.at(index.row()) == InfoTypes::Multiplier){
+        if (info_types.at(index.row()) == DataImportLogic::InfoTypes::Multiplier){
             ModelView::ScientificSpinBoxEditor *spin_box = new ModelView::ScientificSpinBoxEditor(parent);
             return spin_box;
         }
@@ -244,26 +244,26 @@ void ImportTableDelegate::setEditorData(QWidget *editor, const QModelIndex &inde
 {
     const ImportTableModel* model = dynamic_cast<const ImportTableModel*>(index.model());
     int utility_rows = model->numUtilityRows();
-    DataColumn* column = (model->dataStructure() == nullptr)?(nullptr):(model->dataStructure()->column(index.column()));
+    DataImportLogic::DataColumn* column = (model->dataStructure() == nullptr)?(nullptr):(model->dataStructure()->column(index.column()));
 
     if (!column)
         return;
 
     if (index.row() < utility_rows){
-        std::vector<InfoTypes> info_types = model->infoTypes();
-        if (info_types.at(index.row()) == InfoTypes::Name){
+        std::vector<DataImportLogic::InfoTypes> info_types = model->infoTypes();
+        if (info_types.at(index.row()) == DataImportLogic::InfoTypes::Name){
             QLineEdit *line_edit = dynamic_cast<QLineEdit*>(editor);
             line_edit->setText(QString::fromStdString(column->name()));
         }
-        if (info_types.at(index.row()) == InfoTypes::Type){
+        if (info_types.at(index.row()) == DataImportLogic::InfoTypes::Type){
             QComboBox *combo_box = dynamic_cast<QComboBox*>(editor);
             combo_box->setCurrentText(QString::fromStdString(column->type()));
         }
-        if (info_types.at(index.row()) == InfoTypes::Unit){
+        if (info_types.at(index.row()) == DataImportLogic::InfoTypes::Unit){
             QComboBox *combo_box = dynamic_cast<QComboBox*>(editor);
             combo_box->setCurrentText(QString::fromStdString(column->unit()));
         }
-        if (info_types.at(index.row()) == InfoTypes::Multiplier){
+        if (info_types.at(index.row()) == DataImportLogic::InfoTypes::Multiplier){
             ModelView::ScientificSpinBoxEditor *spin_box = dynamic_cast<ModelView::ScientificSpinBoxEditor*>(editor);
             spin_box->setData(column->multiplier());
         }
@@ -277,29 +277,29 @@ void ImportTableDelegate::setModelData(QWidget *editor, QAbstractItemModel *mode
 {
     const ImportTableModel* table_model = dynamic_cast<const ImportTableModel*>(model);
     int utility_rows = table_model->numUtilityRows();
-    DataColumn* column = (table_model->dataStructure() == nullptr)?(nullptr):(table_model->dataStructure()->column(index.column()));
+    DataImportLogic::DataColumn* column = (table_model->dataStructure() == nullptr)?(nullptr):(table_model->dataStructure()->column(index.column()));
 
     if (!column)
         return;
 
     if (index.row() < utility_rows){
-        std::vector<InfoTypes> info_types = table_model->infoTypes();
-        if (info_types.at(index.row()) == InfoTypes::Name){
+        std::vector<DataImportLogic::InfoTypes> info_types = table_model->infoTypes();
+        if (info_types.at(index.row()) == DataImportLogic::InfoTypes::Name){
             QLineEdit *line_edit = dynamic_cast<QLineEdit*>(editor);
             auto text = line_edit->text().toStdString();
             column->setName(text);
         }
-        if (info_types.at(index.row()) == InfoTypes::Type){
+        if (info_types.at(index.row()) == DataImportLogic::InfoTypes::Type){
             QComboBox *combo_box = dynamic_cast<QComboBox*>(editor);
             auto text = combo_box->currentText().toStdString();
             column->setType(text);
         }
-        if (info_types.at(index.row()) == InfoTypes::Unit){
+        if (info_types.at(index.row()) == DataImportLogic::InfoTypes::Unit){
             QComboBox *combo_box = dynamic_cast<QComboBox*>(editor);
             auto text = combo_box->currentText().toStdString();
             column->setUnit(text);
         }
-        if (info_types.at(index.row()) == InfoTypes::Multiplier){
+        if (info_types.at(index.row()) == DataImportLogic::InfoTypes::Multiplier){
             ModelView::ScientificSpinBoxEditor *spin_box = dynamic_cast<ModelView::ScientificSpinBoxEditor*>(editor);
             column->setMultiplier(spin_box->data().value<double>());
         }

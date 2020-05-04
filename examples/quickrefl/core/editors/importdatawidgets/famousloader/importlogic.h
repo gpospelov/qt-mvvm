@@ -18,7 +18,7 @@
 #include <QObject>
 #include <QColor>
 
-namespace DataImport
+namespace DataImportLogic
 {
 //! Helper method to split
 std::vector<std::string> split(const std::string &s, char delim);
@@ -124,6 +124,6 @@ private:
     std::unique_ptr<DataStructure> p_data_structure;
 };
 
-} // namespace DataImport
+} // namespace DataImportLogic
 
 #endif // IMPORTLOGIC_H

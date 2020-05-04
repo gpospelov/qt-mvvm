@@ -23,7 +23,7 @@
 #include <QModelIndex>
 #include <vector>
 
-namespace DataImport
+namespace DataImportGui
 {
 
 // -------------------------------------------------
@@ -35,14 +35,14 @@ class ImportTableModel : public QAbstractItemModel
 public:
     ImportTableModel(QWidget* parent = nullptr);
 
-    void setDataStructure(DataStructure* data_structure);
-    DataStructure* dataStructure() const;
+    void setDataStructure(DataImportLogic::DataStructure* data_structure);
+    DataImportLogic::DataStructure* dataStructure() const;
     void refreshFromDataStructure();
 
     int columnCount(const QModelIndex &parent = QModelIndex()) const;
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     int numUtilityRows() const;
-    std::vector<InfoTypes> infoTypes() const;
+    std::vector<DataImportLogic::InfoTypes> infoTypes() const;
     QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const;
     QModelIndex parent(const QModelIndex &index) const;
 
@@ -52,7 +52,7 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation, int role) const;
 
 private:
-    DataStructure* p_data_structure {nullptr};
+    DataImportLogic::DataStructure* p_data_structure {nullptr};
     bool m_show_name;
     bool m_show_type;
     bool m_show_header;
@@ -91,6 +91,6 @@ private:
 
 };
 
-}
+} // End of namespace DataImportGui
 
 #endif // IMPORTTABLEVIEW_H

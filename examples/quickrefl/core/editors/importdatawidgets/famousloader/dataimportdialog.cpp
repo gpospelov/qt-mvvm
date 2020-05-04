@@ -20,11 +20,14 @@
 #include <QDialogButtonBox>
 #include <QSizePolicy>
 
+namespace DataImportGui
+{
+
 //! This is the constructor
-DataImport::DataLoaderDialog::DataLoaderDialog(QWidget* parent): QDialog(parent)
+DataLoaderDialog::DataLoaderDialog(QWidget* parent): QDialog(parent)
 {   
     // Init the main import logic
-    p_data_import_logic = std::unique_ptr<DataImport::ImportLogic>(new DataImport::ImportLogic());
+    p_data_import_logic = std::unique_ptr<DataImportLogic::ImportLogic>(new DataImportLogic::ImportLogic());
 
     // The placeholders
     auto h_splitter = new QSplitter(this);
@@ -64,11 +67,11 @@ DataImport::DataLoaderDialog::DataLoaderDialog(QWidget* parent): QDialog(parent)
 }
 
 //! Helper function to set up the file list area
-void DataImport::DataLoaderDialog::setUpFileListSpace(QGroupBox* conainer)
+void DataLoaderDialog::setUpFileListSpace(QGroupBox* conainer)
 {
     
     auto layout = new QVBoxLayout(conainer);
-    p_import_file_list = new DataImport::ImportFileWidget(conainer);
+    p_import_file_list = new ImportFileWidget(conainer);
     layout->addWidget(p_import_file_list);
     layout->setContentsMargins(0,0,0,0);
     layout->setSpacing(0);
@@ -87,11 +90,11 @@ void DataImport::DataLoaderDialog::setUpFileListSpace(QGroupBox* conainer)
 }
 
 //! Helper function to set up the parameter area
-void DataImport::DataLoaderDialog::setUpParameterSpace(QGroupBox* conainer)
+void DataLoaderDialog::setUpParameterSpace(QGroupBox* conainer)
 {
     
     auto layout = new QVBoxLayout(conainer);
-    p_parameter_dialog = new DataImport::ImportFilterWidget(p_data_import_logic.get(), conainer);
+    p_parameter_dialog = new ImportFilterWidget(p_data_import_logic.get(), conainer);
     layout->addWidget(p_parameter_dialog);
     layout->setContentsMargins(0,0,0,0);
     layout->setSpacing(0);
@@ -105,7 +108,7 @@ void DataImport::DataLoaderDialog::setUpParameterSpace(QGroupBox* conainer)
 }
 
 //! Helper function to set up the selection area
-void DataImport::DataLoaderDialog::setUpSelectionSpace(QTabWidget* tab_widget)
+void DataLoaderDialog::setUpSelectionSpace(QTabWidget* tab_widget)
 {
     auto first_tab = new QWidget(tab_widget);
     auto first_layout = new QVBoxLayout(first_tab);
@@ -123,12 +126,12 @@ void DataImport::DataLoaderDialog::setUpSelectionSpace(QTabWidget* tab_widget)
 
     connect(
         tab_widget, &QTabWidget::currentChanged,
-        this, &DataImport::DataLoaderDialog::selectedFileChanged
+        this, &DataLoaderDialog::selectedFileChanged
     );
 }
 
 //! This function will manage the chnage of file selection
-void DataImport::DataLoaderDialog::selectedFileChanged()
+void DataLoaderDialog::selectedFileChanged()
 {
     int file_num = p_import_file_list->currentSelection();
     if (file_num<0){
@@ -143,3 +146,5 @@ void DataImport::DataLoaderDialog::selectedFileChanged()
         }
     }
 }
+
+} // End of namespace DataImportGui

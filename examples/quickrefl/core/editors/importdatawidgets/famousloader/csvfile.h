@@ -22,7 +22,7 @@
 #include <sstream>
 #include <vector>
 
-namespace DataImport
+namespace DataImportLogic
 {
 
 // class CSVRow

@@ -15,7 +15,7 @@
 #include <QAbstractTextDocumentLayout>
 #include <QScrollBar>
 
-namespace DataImport
+namespace DataImportGui
 {
 
 ImportTextView::ImportTextView(QWidget *parent) : QTextEdit(parent)

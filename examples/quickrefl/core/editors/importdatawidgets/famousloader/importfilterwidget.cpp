@@ -30,9 +30,12 @@
 #include "resources.h"
 #include <iostream>
 
+namespace DataImportGui
+{
+
 // -------------------------------------------------
 //! This is the constructor
-DataImport::LineFilterWidget::LineFilterWidget(LineFilter* line_block, QWidget* parent)
+LineFilterWidget::LineFilterWidget(DataImportLogic::LineFilter* line_block, QWidget* parent)
     : QWidget(parent), p_line_block(line_block)
 {
     createComponents();
@@ -45,13 +48,13 @@ DataImport::LineFilterWidget::LineFilterWidget(LineFilter* line_block, QWidget* 
 }
 
 //! Getter for the current lineblock
-DataImport::LineFilter* DataImport::LineFilterWidget::lineBlock() const
+DataImportLogic::LineFilter* LineFilterWidget::lineBlock() const
 {
     return p_line_block;
 }
 
 //! Grab from the line block item
-void DataImport::LineFilterWidget::grabFromLineFilter()
+void LineFilterWidget::grabFromLineFilter()
 {
     if (!p_line_block)
         return;
@@ -100,7 +103,7 @@ void DataImport::LineFilterWidget::grabFromLineFilter()
 }
 
 //! Create the subcomponents
-void DataImport::LineFilterWidget::createComponents()
+void LineFilterWidget::createComponents()
 {
     // Initialise all the widgets
     p_tab_widget = new QTabWidget(this);
@@ -129,7 +132,7 @@ void DataImport::LineFilterWidget::createComponents()
 }
 
 //! Initalize the components
-void DataImport::LineFilterWidget::initComponents()
+void LineFilterWidget::initComponents()
 {
     p_tab_widget->setTabPosition(QTabWidget::West);
     p_tab_widget->tabBar()->setStyle(new CustomTabStyle());
@@ -168,7 +171,7 @@ void DataImport::LineFilterWidget::initComponents()
 }
 
 //! Set the layout of the widget
-void DataImport::LineFilterWidget::setLayout()
+void LineFilterWidget::setLayout()
 {
     auto layout_item = new QHBoxLayout(this);
 
@@ -189,7 +192,7 @@ void DataImport::LineFilterWidget::setLayout()
 }
 
 //! Set the layout of the widget
-void DataImport::LineFilterWidget::setTypeLayout()
+void LineFilterWidget::setTypeLayout()
 {
     auto type_widget = new QWidget(p_tab_widget);
     p_type_layout = new QGridLayout(type_widget);
@@ -215,7 +218,7 @@ void DataImport::LineFilterWidget::setTypeLayout()
 }
 
 //! Set the layout of the widget
-void DataImport::LineFilterWidget::setRangeLayout()
+void LineFilterWidget::setRangeLayout()
 {
     auto range_widget = new QWidget(p_tab_widget);
     p_range_layout = new QGridLayout(range_widget);
@@ -241,27 +244,27 @@ void DataImport::LineFilterWidget::setRangeLayout()
 }
 
 //! Connect all the widgets of the layout
-void DataImport::LineFilterWidget::connectAll()
+void LineFilterWidget::connectAll()
 {
     connect(p_active_checkbox, &SwitchSpace::Switch::stateChanged, this,
-            &DataImport::LineFilterWidget::setEnabled);
+            &LineFilterWidget::setEnabled);
     connect(p_type_select, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
-            this, &DataImport::LineFilterWidget::typeVariation);
+            this, &LineFilterWidget::typeVariation);
     connect(p_range_start, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
-            this, &DataImport::LineFilterWidget::startRangeChanged);
+            this, &LineFilterWidget::startRangeChanged);
     connect(p_range_end, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
-            this, &DataImport::LineFilterWidget::endRangeChanged);
+            this, &LineFilterWidget::endRangeChanged);
 }
 
 //! Set enabled or disabled depending on the type
-void DataImport::LineFilterWidget::setEnabled()
+void LineFilterWidget::setEnabled()
 {
     p_tab_widget->setEnabled(p_active_checkbox->isChecked());
     p_color_editor->setEnabled(p_active_checkbox->isChecked());
 }
 
 //! Widget logic when the type changed
-void DataImport::LineFilterWidget::typeVariation()
+void LineFilterWidget::typeVariation()
 {
     bool visible = false;
     int current_index = p_type_select->currentIndex();
@@ -277,7 +280,7 @@ void DataImport::LineFilterWidget::typeVariation()
 }
 
 //! Widget logic for the start range options
-void DataImport::LineFilterWidget::startRangeChanged()
+void LineFilterWidget::startRangeChanged()
 {
     bool visible = false;
     (p_range_start->currentIndex() == 0) ? (visible = true) : (visible = false);
@@ -293,7 +296,7 @@ void DataImport::LineFilterWidget::startRangeChanged()
 }
 
 //! Widget logic for the end range options
-void DataImport::LineFilterWidget::endRangeChanged()
+void LineFilterWidget::endRangeChanged()
 {
     bool visible = false;
     (p_range_end->isVisible() && p_range_end->currentIndex() == 0) ? (visible = true)
@@ -306,7 +309,7 @@ void DataImport::LineFilterWidget::endRangeChanged()
 }
 
 //! Connect all the present subcomponents to the dataChanged method
-void DataImport::LineFilterWidget::connectSubcomponents()
+void LineFilterWidget::connectSubcomponents()
 {
     QList<QWidget*> object_list = this->findChildren<QWidget *>();
     foreach(QWidget* object, object_list) {
@@ -314,29 +317,29 @@ void DataImport::LineFilterWidget::connectSubcomponents()
             connect(
                 dynamic_cast<QComboBox*>(object), 
                 static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
-                this, &DataImport::LineFilterWidget::dataChanged);
+                this, &LineFilterWidget::dataChanged);
         if (dynamic_cast<QSpinBox*>(object))
             connect(
                 dynamic_cast<QSpinBox*>(object), 
                 static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),
-                this, &DataImport::LineFilterWidget::dataChanged);
+                this, &LineFilterWidget::dataChanged);
         if (dynamic_cast<SwitchSpace::Switch*>(object))
             connect(
                 dynamic_cast<SwitchSpace::Switch*>(object), &SwitchSpace::Switch::stateChanged,
-                this, &DataImport::LineFilterWidget::dataChanged);
+                this, &LineFilterWidget::dataChanged);
         if (dynamic_cast<ModelView::ColorEditor*>(object))
             connect(
                 dynamic_cast<ModelView::ColorEditor*>(object), &ModelView::ColorEditor::dataChanged,
-                this, &DataImport::LineFilterWidget::dataChanged);
+                this, &LineFilterWidget::dataChanged);
         if (dynamic_cast<QLineEdit*>(object))
             connect(
                 dynamic_cast<QLineEdit*>(object), &QLineEdit::editingFinished,
-                this, &DataImport::LineFilterWidget::dataChanged);
+                this, &LineFilterWidget::dataChanged);
     }
 }
 
 //! Submit the data change to the LineFilter element
-void DataImport::LineFilterWidget::dataChanged()
+void LineFilterWidget::dataChanged()
 {
     if (!p_line_block)
         return;
@@ -383,7 +386,7 @@ void DataImport::LineFilterWidget::dataChanged()
 
 // -------------------------------------------------
 //! This is the constructor
-DataImport::ImportFilterWidget::ImportFilterWidget(ImportLogic* import_logic, QWidget* parent)
+ImportFilterWidget::ImportFilterWidget(DataImportLogic::ImportLogic* import_logic, QWidget* parent)
     : QWidget(parent), p_import_logic(import_logic)
 {
     setLayout();
@@ -391,7 +394,7 @@ DataImport::ImportFilterWidget::ImportFilterWidget(ImportLogic* import_logic, QW
 }
 
 //! Set all the layouts and positioning of the items
-void DataImport::ImportFilterWidget::setLayout()
+void ImportFilterWidget::setLayout()
 {
     // Set up the QListWidget
     p_list_widget = new QListWidget(this);
@@ -427,25 +430,25 @@ void DataImport::ImportFilterWidget::setLayout()
     // Connect the buttons
     connect(
         add_button, &QToolButton::clicked,
-        this, &DataImport::ImportFilterWidget::addLineFilter
+        this, &ImportFilterWidget::addLineFilter
     );
     connect(
         remove_button, &QToolButton::clicked,
-        this, &DataImport::ImportFilterWidget::removeLineFilter
+        this, &ImportFilterWidget::removeLineFilter
     );
 }
 
 //! Initial display
-void DataImport::ImportFilterWidget::initialise()
+void ImportFilterWidget::initialise()
 {
     for (int i = 0; i < 2; ++i) {
         addLineFilter();
     }
 
-    DataImport::LineFilter* line_block;
+    DataImportLogic::LineFilter* line_block;
     QList<QListWidgetItem*> items = p_list_widget->findItems("*", Qt::MatchWildcard);
 
-    line_block= dynamic_cast<DataImport::LineFilterWidget*>(p_list_widget->itemWidget(items[0]))->lineBlock();
+    line_block= dynamic_cast<LineFilterWidget*>(p_list_widget->itemWidget(items[0]))->lineBlock();
     line_block->setType("Header");
     line_block->setActive(true);
     line_block->setStart(2);
@@ -453,7 +456,7 @@ void DataImport::ImportFilterWidget::initialise()
     line_block->setSeparator("Space ( )");
     line_block->setColor("red");
 
-    line_block= dynamic_cast<DataImport::LineFilterWidget*>(p_list_widget->itemWidget(items[1]))->lineBlock();
+    line_block= dynamic_cast<LineFilterWidget*>(p_list_widget->itemWidget(items[1]))->lineBlock();
     line_block->setType("Data");
     line_block->setActive(true);
     line_block->setStart(3);
@@ -465,7 +468,7 @@ void DataImport::ImportFilterWidget::initialise()
 }
 
 //! Add a line block with the according line block object in the ImportLogic
-void DataImport::ImportFilterWidget::addLineFilter()
+void ImportFilterWidget::addLineFilter()
 {
     auto line_block = p_import_logic->addLineFilter("Filter " +std::to_string(p_list_widget->count()));
 
@@ -484,44 +487,44 @@ void DataImport::ImportFilterWidget::addLineFilter()
     p_list_widget->setMinimumWidth(temp_widget->sizeHint().width()+qApp->style()->pixelMetric(QStyle::PM_ScrollBarExtent));
 
     connect(
-        temp_widget, &DataImport::LineFilterWidget::parameterChanged,
+        temp_widget, &LineFilterWidget::parameterChanged,
         [this](){emit parameterChanged();}
     );
 
     connect(
-        temp_widget, &DataImport::LineFilterWidget::nameChanged,
-        this, &DataImport::ImportFilterWidget::processNameChanged
+        temp_widget, &LineFilterWidget::nameChanged,
+        this, &ImportFilterWidget::processNameChanged
     );
 
     connect(
-        temp_widget, &DataImport::LineFilterWidget::typeChanged,
-        this, &DataImport::ImportFilterWidget::processTypeChanged
+        temp_widget, &LineFilterWidget::typeChanged,
+        this, &ImportFilterWidget::processTypeChanged
     );
 
     emit parameterChanged();
 }
 
 //! Remove the current line block with the according line block object in the ImportLogic
-void DataImport::ImportFilterWidget::removeLineFilter() 
+void ImportFilterWidget::removeLineFilter() 
 {
     QList<QListWidgetItem*> items = p_list_widget->selectedItems();
     foreach(QListWidgetItem * item, items){
-        p_import_logic->removeLineFilter(dynamic_cast<DataImport::LineFilterWidget*>(p_list_widget->itemWidget(item))->lineBlock());
+        p_import_logic->removeLineFilter(dynamic_cast<LineFilterWidget*>(p_list_widget->itemWidget(item))->lineBlock());
         delete p_list_widget->takeItem(p_list_widget->row(item));
     }
 }
 
 //! Reset all the info in the linblockwidgets from the linblock items
-void DataImport::ImportFilterWidget::resetFromLineFilters() const
+void ImportFilterWidget::resetFromLineFilters() const
 {
     QList<QListWidgetItem*> items = p_list_widget->findItems("*", Qt::MatchWildcard);
     foreach(QListWidgetItem * item, items){
-        dynamic_cast<DataImport::LineFilterWidget*>(p_list_widget->itemWidget(item))->grabFromLineFilter();
+        dynamic_cast<LineFilterWidget*>(p_list_widget->itemWidget(item))->grabFromLineFilter();
     }
 }
 
 //! This manages the naming by allowing only dofferent names and sends it upstream if changed
-void DataImport::ImportFilterWidget::processNameChanged(std::string name, LineFilterWidget* widget)
+void ImportFilterWidget::processNameChanged(std::string name, LineFilterWidget* widget)
 {
     if (!p_import_logic->nameInBlocks(name)) {
         widget->lineBlock()->setName(name);
@@ -531,7 +534,7 @@ void DataImport::ImportFilterWidget::processNameChanged(std::string name, LineFi
 }
 
 //! This manages the types as only one data type and one header type is allowed
-void DataImport::ImportFilterWidget::processTypeChanged(std::string type, LineFilterWidget* widget)
+void ImportFilterWidget::processTypeChanged(std::string type, LineFilterWidget* widget)
 {   
     auto line_block = p_import_logic->typeInBlocks(type);
     if (!line_block || type == "Comments" || type == "Info") {
@@ -543,3 +546,6 @@ void DataImport::ImportFilterWidget::processTypeChanged(std::string type, LineFi
     resetFromLineFilters();
     emit typesChanged();
 }
+
+} // End of namespace DataImportGui
+

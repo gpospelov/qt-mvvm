@@ -14,7 +14,7 @@
 #include <map>
 #include <string>
 
-namespace DataImport
+namespace DataImportLogic 
 {
 
 // Convention
@@ -99,6 +99,6 @@ private:
     std::vector<std::unique_ptr<DataColumn>> m_data_columns;
 };
 
-} // end of namespace DataImport
+} // end of namespace DataImportLogic
 
 #endif // IMPORTDATASTRUCTURE_H

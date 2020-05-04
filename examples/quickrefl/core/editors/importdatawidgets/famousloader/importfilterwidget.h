@@ -42,7 +42,7 @@ namespace SwitchSpace
     class Switch;
 }
 
-namespace DataImport
+namespace DataImportGui
 {
 
 // -------------------------------------------------
@@ -79,9 +79,9 @@ class LineFilterWidget : public QWidget
     Q_OBJECT
 
 public:
-    LineFilterWidget(LineFilter* line_block = nullptr, QWidget* parent = nullptr);
+    LineFilterWidget(DataImportLogic::LineFilter* line_block = nullptr, QWidget* parent = nullptr);
     ~LineFilterWidget() = default;
-    LineFilter* lineBlock() const;
+    DataImportLogic::LineFilter* lineBlock() const;
     void grabFromLineFilter();
 
 signals:
@@ -106,7 +106,7 @@ private:
     void dataChanged();
 
 private:
-    LineFilter* p_line_block;
+    DataImportLogic::LineFilter* p_line_block;
 
     QTabWidget* p_tab_widget;
     SwitchSpace::Switch* p_active_checkbox;
@@ -134,7 +134,7 @@ class ImportFilterWidget : public QWidget
     Q_OBJECT
 
 public:
-    ImportFilterWidget(ImportLogic* import_logic, QWidget* parent = nullptr);
+    ImportFilterWidget(DataImportLogic::ImportLogic* import_logic, QWidget* parent = nullptr);
     ~ImportFilterWidget() = default;
 
     void addLineFilter();
@@ -156,11 +156,12 @@ private:
     void resetFromLineFilters() const;
 
 private:
-    ImportLogic* p_import_logic;
+    DataImportLogic::ImportLogic* p_import_logic;
 
     std::vector<LineFilterWidget*> m_line_block_widgets;
     QListWidget* p_list_widget;
 };
-}
+
+} // End of namespace DataImportGui
 
 #endif // IMPORTFILTERWIDGET_H

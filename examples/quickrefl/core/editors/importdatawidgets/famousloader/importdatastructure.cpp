@@ -11,7 +11,7 @@
 
 #include <cmath>
 
-namespace DataImport
+namespace DataImportLogic 
 {
 
 // -------------------------------------------------
@@ -267,4 +267,4 @@ int DataStructure::columnCount() const
     return m_data_columns.size();
 }
 
-} // end of namespace DataImport
+} // end of namespace DataImportLogic

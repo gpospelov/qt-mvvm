@@ -19,7 +19,7 @@ class QSize;
 class QWidget;
 QT_END_NAMESPACE
 
-namespace DataImport
+namespace DataImportGui
 {
 
 
