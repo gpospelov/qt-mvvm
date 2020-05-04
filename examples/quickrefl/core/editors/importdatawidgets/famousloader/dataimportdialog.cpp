@@ -115,6 +115,7 @@ void DataImport::DataLoaderDialog::setUpSelectionSpace(QTabWidget* tab_widget)
     auto second_tab = new QWidget(tab_widget);
     auto second_layout = new QVBoxLayout(second_tab);
     p_table_view = new ImportTableView(second_tab);
+    p_table_view->model()->setDataStructure(p_data_import_logic->dataStructure());
     second_layout->addWidget(p_table_view);
 
     tab_widget->addTab(first_tab, "Text view");
@@ -132,12 +133,13 @@ void DataImport::DataLoaderDialog::selectedFileChanged()
     int file_num = p_import_file_list->currentSelection();
     if (file_num<0){
         p_text_view->setHtml("");
-        p_table_view->setData(DataImport::string_data());
+        p_table_view->model()->refreshFromDataStructure();
     }else{
         if (p_selection_space->currentIndex() == 0){
             p_text_view->setHtml(QString::fromStdString(p_data_import_logic->getPreview(file_num)));
         } else if (p_selection_space->currentIndex() == 1){
-            p_table_view->setData(p_data_import_logic->getData(file_num));
+            p_data_import_logic->updateData(file_num);
+            p_table_view->model()->refreshFromDataStructure();
         }
     }
 }

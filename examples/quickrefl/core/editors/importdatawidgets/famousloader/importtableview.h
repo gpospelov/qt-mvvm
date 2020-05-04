@@ -15,174 +15,80 @@
 #ifndef IMPORTTABLEVIEW_H
 #define IMPORTTABLEVIEW_H
 
-#include <QTableWidget>
-#include <memory>
-#include <set>
+#include "importdatastructure.h"
 
-namespace csv
-{
-enum ColumnType { _intensity_, _theta_, _q_ };
-const QStringList HeaderLabels{"Intensity", "theta", "q"};
-const QStringList UnitsLabels{"default", "bin", "rad", "deg", "mm", "1/nm"};
-typedef std::vector<std::vector<std::string>> DataArray;
-typedef std::vector<std::string> DataRow;
-typedef std::vector<std::string> DataColumn;
-} // namespace csv
+#include <QAbstractItemModel>
+#include <QStyledItemDelegate>
+#include <QTableView>
+#include <QModelIndex>
+#include <vector>
 
 namespace DataImport
 {
 
-// Convention
-using string_data = std::vector<std::vector<std::string>>;
-
-struct AxesUnitsWrap {
-    enum AxesUnits { DEFAULT, NBINS, RADIANS, DEGREES, MM, QSPACE, QXQY, RQ4 };
-};
-typedef AxesUnitsWrap::AxesUnits AxesUnits;
-
-class CsvIntensityColumn
-{
-public:
-    // Constructors:
-    CsvIntensityColumn();
-    CsvIntensityColumn(const CsvIntensityColumn& toCopy);
-    CsvIntensityColumn(int colNum, double multiplier, csv::DataColumn values);
-
-    // Getters:
-    int columnNumber() const;
-    double multiplier() const;
-    csv::DataColumn values() const;
-
-    // Setters:
-    void setColNum(int const colNum);
-    void setMultiplier(double const multiplier);
-    void setValues(csv::DataColumn const values);
-    void resetColumn(int colNum = -1, double multiplier = 1., csv::DataColumn values = {});
-
-private:
-    int m_colNum;
-    double m_multiplier;
-    csv::DataColumn m_values;
-};
-
-class CsvCoordinateColumn : public CsvIntensityColumn
-{
-public:
-    // Constructors:
-    CsvCoordinateColumn();
-    CsvCoordinateColumn(const CsvCoordinateColumn& toCopy);
-    CsvCoordinateColumn(int colNum, double multiplier, csv::DataColumn values, AxesUnits units);
-
-    // Getters:
-    AxesUnits units() const;
-    csv::ColumnType name() const { return m_name; }
-
-    // Setters:
-    void setUnits(AxesUnits const units);
-    void setName(csv::ColumnType const name);
-    void resetColumn(int colNum = -1, double multiplier = 1., csv::DataColumn values = {},
-                     AxesUnits units = AxesUnits::NBINS, csv::ColumnType name = csv::_intensity_);
-
-private:
-    AxesUnits m_units;
-    csv::ColumnType m_name;
-};
-
-class CsvImportData : public QObject
-{
-public:
-    // FIXME: move DATA_TYPE enumeration to csv namespace
-    enum DATA_TYPE { Intensity, Coordinate };
-
-    CsvImportData(QObject* parent = nullptr);
-
-    void setData(csv::DataArray data);
-    //! sets _type_ to a column _col_. Returns the
-    //! column number previously set to the type
-    int setColumnAs(int col, csv::ColumnType type);
-    void setMultiplier(DATA_TYPE type, double value);
-    void setFirstRow(size_t row);
-    void setLastRow(size_t row);
-    void toggleDiscardRows(std::set<int> rows);
-
-    // static methods
-    // FIXME: move to csv namespace or utilities
-    static std::vector<DATA_TYPE> availableTypes();
-    // accessors
-    const csv::DataArray& data() const;
-    int column(DATA_TYPE type) const;
-    csv::DataColumn values(int col) const;
-    csv::DataColumn multipliedValues(DATA_TYPE type) const;
-    double multiplier(DATA_TYPE type) const;
-    QString columnLabel(DATA_TYPE type) const;
-    QList<QString> availableCoordinateUnits() const;
-    std::set<int> rowsToDiscard() const { return m_discarded_rows; }
-    size_t nCols() const;
-    size_t nRows() const;
-    bool rowExcluded(int row);
-    size_t firstRow() { return m_n_header; }
-    size_t lastRow() { return m_n_footer + 1 >= nRows() ? 0 : nRows() - m_n_footer - 1; }
-
-    std::set<std::pair<int, int>> checkData();
-    void resetSelection();
-
-private:
-    //! Checks if selected data is suitable for import.
-    //! All values must be convertible to doubles, positive and
-    //! sorted in ascending order if _check_ordering_ is set to true.
-    //! Returns a set of rows where the check failed.
-    std::set<int> checkFormat(const csv::DataColumn& values, bool check_ordering);
-
-    std::unique_ptr<const csv::DataArray> m_data;
-    std::map<DATA_TYPE, CsvCoordinateColumn> m_selected_cols;
-    size_t m_n_header; //!< number of header rows
-    size_t m_n_footer; //!< number of footer rows
-    std::set<int> m_discarded_rows;
-};
-
-class ImportTableView : public QTableWidget
+// -------------------------------------------------
+// This is the area for the table model
+class ImportTableModel : public QAbstractItemModel
 {
     Q_OBJECT
+    
 public:
-    ImportTableView(QWidget* parent = nullptr);
+    ImportTableModel(QWidget* parent = nullptr);
 
-    int selectedRow() const;
-    std::set<int> selectedRows() const;
-    int selectedColumn() const;
+    void setDataStructure(DataStructure* data_structure);
+    DataStructure* dataStructure() const;
+    void refreshFromDataStructure();
 
-    void setData(const string_data& data);
-    void setColumnAs(int col, csv::ColumnType type);
-    void setFirstRow(size_t row);
-    void setLastRow(size_t row);
-    void discardRows(std::set<int> rows);
-    void resetSelection();
+    int columnCount(const QModelIndex &parent = QModelIndex()) const;
+    int rowCount(const QModelIndex &parent = QModelIndex()) const;
+    int numUtilityRows() const;
+    std::vector<InfoTypes> infoTypes() const;
+    QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const;
+    QModelIndex parent(const QModelIndex &index) const;
 
-    // accessors
-    int intensityColumn() const { return m_import_data->column(CsvImportData::Intensity); }
-    int coordinateColumn() const { return m_import_data->column(CsvImportData::Coordinate); }
-    double intensityMultiplier() const;
-    double coordinateMultiplier() const;
-    QList<QString> availableCoordinateUnits() const;
-    std::set<int> rowsToDiscard() const { return m_import_data->rowsToDiscard(); }
-    bool dataLooksGood() const { return m_data_is_suitable; }
-
-signals:
-    void dataSanityChanged();
+    Qt::ItemFlags flags(const QModelIndex &index) const;
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
+    bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
+    QVariant headerData(int section, Qt::Orientation orientation, int role) const;
 
 private:
-    void updateSelection();
-    void setHeaders();
-    void updateSelectedCols(); // replacement for applyMultipliers
-    void setMultiplierFields();
-    void greyoutDiscardedRows();
-    bool checkData();
-    void resetColumn(int col);
-    int rowOffset() const { return 1; } // this comes from the multipliers in the first row
+    DataStructure* p_data_structure {nullptr};
+    bool m_show_name;
+    bool m_show_type;
+    bool m_show_header;
+    bool m_show_units;
+    bool m_show_multiplier;
 
-    void markCell(int i, int j, Qt::GlobalColor color);
+};
 
-    CsvImportData* m_import_data;
-    bool m_data_is_suitable;
+// -------------------------------------------------
+// This is the area for the table view delegate
+class ImportTableDelegate : public QStyledItemDelegate
+{
+    Q_OBJECT
+
+public:
+    ImportTableDelegate(QObject *parent = nullptr);
+    ~ImportTableDelegate();
+
+    QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+    void setEditorData(QWidget *editor, const QModelIndex &index) const override;
+    void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const override;
+
+};
+
+// -------------------------------------------------
+// This is the area for the table view
+class ImportTableView : public QTableView
+{
+    Q_OBJECT
+
+public:
+    ImportTableView(QWidget* parent = nullptr);
+    ImportTableModel* model() const;
+
+private:
+
 };
 
 }

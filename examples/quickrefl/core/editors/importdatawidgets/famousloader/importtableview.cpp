@@ -13,572 +13,318 @@
 // ************************************************************************** //
 
 #include "importtableview.h"
-#include <mvvm/widgets/scientificspinbox.h>
-#include <iostream>
-using namespace ModelView;
 
-namespace
-{
+#include <mvvm/editors/scientificspinboxeditor.h>
 
-ScientificSpinBox* createMultiplierBox(double value = 1.0, bool enabled = false,
-                                       QWidget* parent = nullptr)
-{
-    auto result = new ScientificSpinBox(parent);
-    result->setValue(value);
-    result->setEnabled(enabled);
-    return result;
-}
-} // namespace
+#include <QComboBox>
+#include <QLineEdit>
+#include <QHeaderView>
 
 namespace DataImport
 {
 
-/*Csv Intensity Column*/
+// -------------------------------------------------
+// This is the area for the table model
 
-// Constructors:
-CsvIntensityColumn::CsvIntensityColumn() : m_colNum(-1), m_multiplier(1.0), m_values({}) {}
-
-CsvIntensityColumn::CsvIntensityColumn(const CsvIntensityColumn& toCopy)
-    : m_colNum(toCopy.columnNumber()), m_multiplier(toCopy.multiplier()), m_values(toCopy.values())
+//! This is the constructor
+ImportTableModel::ImportTableModel(QWidget* parent)
+    : QAbstractItemModel(parent), m_show_name(true),m_show_type(true), m_show_header(true), m_show_units(true), m_show_multiplier(true)
 {
 }
 
-CsvIntensityColumn::CsvIntensityColumn(int colNum, double multiplier, csv::DataColumn values)
-    : m_colNum(colNum), m_multiplier(multiplier), m_values(values)
+//! This is the column count (override of pure virtual)
+void ImportTableModel::setDataStructure(DataStructure* data_structure)
 {
+    p_data_structure = data_structure;
+    refreshFromDataStructure();
 }
 
-// Getters:
-int CsvIntensityColumn::columnNumber() const
+//! Getter for the current data structure
+DataStructure* ImportTableModel::dataStructure() const
 {
-    return m_colNum;
-}
-double CsvIntensityColumn::multiplier() const
-{
-    return m_multiplier;
-}
-csv::DataColumn CsvIntensityColumn::values() const
-{
-    return m_values;
+    return p_data_structure;
 }
 
-// Setters:
-void CsvIntensityColumn::setColNum(int const colNum)
+//! This is the column count (override of pure virtual)
+void ImportTableModel::refreshFromDataStructure()
 {
-    m_colNum = colNum;
-}
-void CsvIntensityColumn::setMultiplier(double const multiplier)
-{
-    m_multiplier = multiplier;
-}
-void CsvIntensityColumn::setValues(csv::DataColumn const values)
-{
-    m_values = std::move(values);
-}
-void CsvIntensityColumn::resetColumn(int colNum, double multiplier, csv::DataColumn values)
-{
-    m_colNum = colNum;
-    m_multiplier = multiplier;
-    m_values = std::move(values);
+    beginResetModel();
+    endResetModel();
 }
 
-/*Csv Coordinate Column*/
-
-// Constructors:
-CsvCoordinateColumn::CsvCoordinateColumn() : CsvIntensityColumn(), m_units(AxesUnits::NBINS) {}
-
-CsvCoordinateColumn::CsvCoordinateColumn(const CsvCoordinateColumn& toCopy)
-    : CsvIntensityColumn(toCopy), m_units(toCopy.units())
+//! This is the column count (override of pure virtual)
+int ImportTableModel::columnCount(const QModelIndex & /*parent*/) const
 {
+    return (p_data_structure==nullptr)?(0):(p_data_structure->columnCount());
 }
 
-CsvCoordinateColumn::CsvCoordinateColumn(int colNum, double multiplier, csv::DataColumn values,
-                                         AxesUnits units)
-
-    : CsvIntensityColumn(colNum, multiplier, values), m_units(units)
+//! This is the row count (override of pure virtual)
+int ImportTableModel::rowCount(const QModelIndex & /*parent*/) const
 {
-}
-// Getters:
-AxesUnits CsvCoordinateColumn::units() const
-{
-    return m_units;
-}
-// Setters:
-void CsvCoordinateColumn::setUnits(AxesUnits const units)
-{
-    m_units = units;
-}
-void CsvCoordinateColumn::setName(csv::ColumnType const name)
-{
-    m_name = name;
-}
-void CsvCoordinateColumn::resetColumn(int colNum, double multiplier, csv::DataColumn values,
-                                      AxesUnits units, csv::ColumnType name)
-{
-    CsvIntensityColumn::resetColumn(colNum, multiplier, values);
-    m_units = units;
-    m_name = name;
+    int extra_lines = m_show_name + m_show_type + m_show_header + m_show_units + m_show_multiplier;
+    return (p_data_structure==nullptr)?(numUtilityRows()):(p_data_structure->rowCount()+numUtilityRows());
 }
 
-CsvImportData::CsvImportData(QObject* parent)
-    : QObject(parent), m_data(new csv::DataArray), m_n_header(0), m_n_footer(0)
+//! Get the number of utility lines
+int ImportTableModel::numUtilityRows() const
 {
+    return m_show_name + m_show_type + m_show_header + m_show_units + m_show_multiplier;
 }
 
-void CsvImportData::setData(csv::DataArray data)
+//! Get the vector of visible info types
+std::vector<DataImport::InfoTypes> ImportTableModel::infoTypes() const
 {
-    m_data.reset(new csv::DataArray(std::move(data)));
-    m_selected_cols.clear();
-    m_n_header = 0;
-    m_n_footer = 0;
-    m_discarded_rows.clear();
+    std::vector<DataImport::InfoTypes> info_types;
+    if (m_show_name) info_types.push_back(DataImport::InfoTypes::Name);
+    if (m_show_type) info_types.push_back(DataImport::InfoTypes::Type);
+    if (m_show_units) info_types.push_back(DataImport::InfoTypes::Unit);
+    if (m_show_multiplier) info_types.push_back(DataImport::InfoTypes::Multiplier);
+    if (m_show_header) info_types.push_back(DataImport::InfoTypes::Header);
+    return info_types;
 }
 
-int CsvImportData::setColumnAs(int col, csv::ColumnType type)
+//! This is the index processing for a row, col and parent (override of pure virtual)
+QModelIndex ImportTableModel::index(int row, int column, const QModelIndex & /*parent*/) const
 {
-    DATA_TYPE role = type == csv::_intensity_ ? Intensity : Coordinate;
-
-    CsvCoordinateColumn& column = m_selected_cols[role];
-    const int prev_assigned = column.columnNumber();
-    if (prev_assigned == col && type == column.name())
-        return prev_assigned;
-
-    for (auto iter = m_selected_cols.begin(); iter != m_selected_cols.end();)
-        if (iter->second.columnNumber() == col && iter->first != role)
-            iter = m_selected_cols.erase(iter);
-        else
-            ++iter;
-
-    column.setColNum(col);
-    column.setMultiplier(1.0); // resetting multiplier value
-    column.setValues(values(col));
-    column.setName(type);
-    return prev_assigned;
+    return createIndex(row, column);
 }
 
-void CsvImportData::setMultiplier(CsvImportData::DATA_TYPE type, double value)
+//! This is the index processing for a row, col and parent (override of pure virtual)
+QModelIndex ImportTableModel::parent(const QModelIndex &index) const
 {
-    if (m_selected_cols.find(type) == m_selected_cols.end())
-        return;
-
-    m_selected_cols[type].setMultiplier(value);
+    return QModelIndex();
 }
 
-void CsvImportData::setFirstRow(size_t row)
+//! The flags
+Qt::ItemFlags ImportTableModel::flags(const QModelIndex &index) const
 {
-    if (row >= nRows())
-        return;
-    m_n_header = row;
-}
-
-void CsvImportData::setLastRow(size_t row)
-{
-    if (row + 1 >= nRows())
-        return;
-    m_n_footer = nRows() - row - 1;
-}
-
-void CsvImportData::toggleDiscardRows(std::set<int> rows)
-{
-    if (rows.empty()) {
-        m_discarded_rows.clear();
-        return;
+    int utility_lines = numUtilityRows();
+    if (index.row() >= utility_lines){
+        return Qt::ItemIsEnabled|Qt::ItemIsSelectable;
+    } else {
+        std::vector<Qt::ItemFlags> flags;
+        if (m_show_name) flags.push_back(Qt::ItemIsEnabled|Qt::ItemIsEditable);
+        if (m_show_type) flags.push_back(Qt::ItemIsEnabled|Qt::ItemIsEditable);
+        if (m_show_units) flags.push_back(Qt::ItemIsEnabled|Qt::ItemIsEditable);
+        if (m_show_multiplier) flags.push_back(Qt::ItemIsEnabled|Qt::ItemIsEditable);
+        if (m_show_header) flags.push_back(Qt::ItemIsEnabled);
+        return flags.at(index.row());
     }
-    for (auto row : rows) {
-        if (m_discarded_rows.find(row) != m_discarded_rows.end()) {
-            m_discarded_rows.erase(row);
-        } else {
-            m_discarded_rows.insert(row);
+}
+
+//! This is the data getter implementation (override of pure virtual)
+QVariant ImportTableModel::data(const QModelIndex &index, int role) const
+{
+    if (!index.isValid())
+        return QVariant();
+
+    if (p_data_structure==nullptr)
+        return QVariant();
+    
+    DataColumn* column = p_data_structure->column(index.column());
+    int utility_lines = numUtilityRows();
+    if (index.row() >= utility_lines && index.row()< column->rowCount()){
+        if (role == Qt::DisplayRole)
+            return QVariant(column->finalValue(index.row()-utility_lines));
+    } else if (index.row() < utility_lines) {
+        if (role == Qt::DisplayRole){
+            std::vector<QVariant> values;
+            if (m_show_name) values.push_back(QVariant(QString::fromStdString(column->name())));
+            if (m_show_type) values.push_back(QVariant(QString::fromStdString(column->type())));
+            if (m_show_units) values.push_back(QVariant(QString::fromStdString(column->unit())));
+            if (m_show_multiplier) values.push_back(QVariant(column->multiplier()));
+            if (m_show_header) values.push_back(QVariant(QString::fromStdString(column->header())));
+            return values.at(index.row());
+        }
+        if (role == Qt::BackgroundRole){
+            return QBrush(Qt::gray);
+        }
+        if (role == Qt::TextAlignmentRole){
+            return Qt::AlignCenter;
         }
     }
+
+    return QVariant();
 }
 
-std::vector<CsvImportData::DATA_TYPE> CsvImportData::availableTypes()
+//! This is the data setter implementation (TODO)
+bool ImportTableModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    return {Intensity, Coordinate};
+
+    return true;
 }
 
-const csv::DataArray& CsvImportData::data() const
+QVariant ImportTableModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    return *m_data.get();
-}
+    if (orientation == Qt::Horizontal)
+        return QVariant();
 
-int CsvImportData::column(DATA_TYPE type) const
-{
-    auto iter = m_selected_cols.find(type);
-    return iter == m_selected_cols.end() ? -1 : iter->second.columnNumber();
-}
-
-csv::DataColumn CsvImportData::values(int col) const
-{
-    if (col < 0 || col >= static_cast<int>(nCols()))
-        return {};
-
-    const size_t size = m_data->size();
-    csv::DataColumn result(size);
-    for (size_t i = 0; i < size; ++i)
-        result[i] = (*m_data)[i][static_cast<size_t>(col)];
-    return result;
-}
-
-csv::DataColumn CsvImportData::multipliedValues(DATA_TYPE type) const
-{
-    csv::DataColumn result;
-    const int col = column(type);
-    if (col < 0 || col >= static_cast<int>(nCols()))
-        return result;
-
-    double mult_value = multiplier(type);
-    csv::DataColumn col_values = values(col);
-    result.resize(col_values.size());
-    // FIXME: seems that csv::DataColumn and related
-    // classes can be based on QString
-    for (size_t i = 0; i < col_values.size(); i++) {
-        auto currentText = QString::fromStdString(col_values[i]);
-        double number = mult_value * currentText.toDouble();
-        // FIXME: find more elegant way to distinguish non-numerics
-        QString textToWrite = 0.0 == number ? currentText : QString::number(number);
-        result[i] = textToWrite.toStdString();
+    if (p_data_structure==nullptr)
+        return QVariant();
+    
+    int utility_lines = numUtilityRows();
+    auto info_types = infoTypes();
+    if (section >= utility_lines && section < rowCount()){
+        if (role == Qt::DisplayRole)
+            return QVariant(section-utility_lines);
+    } else if (section < utility_lines) {
+        if (role == Qt::DisplayRole)
+            if (info_types.at(section) == InfoTypes::Name){
+                return QVariant("Name");
+            }
+            if (info_types.at(section) == InfoTypes::Type){
+                return QVariant("Type");
+            }
+            if (info_types.at(section) == InfoTypes::Unit){
+                return QVariant("Unit");
+            }
+            if (info_types.at(section) == InfoTypes::Header){
+                return QVariant("Header");
+            }
+            if (info_types.at(section) == InfoTypes::Multiplier){
+                return QVariant("Multiplier");
+            }
     }
-    return result;
+
+    return QAbstractItemModel::headerData(section, orientation, role);
 }
 
-double CsvImportData::multiplier(CsvImportData::DATA_TYPE type) const
+
+// -------------------------------------------------
+// This is the area for the table view delegate
+
+//! This is the constructor
+ImportTableDelegate::ImportTableDelegate(QObject *parent)
+    : QStyledItemDelegate(parent)
 {
-    if (m_selected_cols.find(type) == m_selected_cols.end())
-        return 1.0;
-    return m_selected_cols.at(type).multiplier();
 }
 
-QString CsvImportData::columnLabel(CsvImportData::DATA_TYPE type) const
+//! This is the destructor
+ImportTableDelegate::~ImportTableDelegate()
 {
-    if (m_selected_cols.find(type) == m_selected_cols.end())
-        return QString();
-    return csv::HeaderLabels[m_selected_cols.at(type).name()];
 }
 
-QList<QString> CsvImportData::availableCoordinateUnits() const
+//! Create the initial widget
+QWidget *ImportTableDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    if (column(Coordinate) < 0)
-        return {csv::UnitsLabels[AxesUnits::NBINS]};
-
-    auto coordinate_type = m_selected_cols.at(Coordinate).name();
-    if (coordinate_type == csv::_q_)
-        return {csv::UnitsLabels[AxesUnits::QSPACE]};
-    else if (coordinate_type == csv::_theta_)
-        return {{csv::UnitsLabels[AxesUnits::DEGREES]}, {csv::UnitsLabels[AxesUnits::RADIANS]}};
-    return {csv::UnitsLabels[AxesUnits::NBINS]};
-}
-
-size_t CsvImportData::nCols() const
-{
-    if (nRows() == 0)
-        return 0;
-    return (*m_data)[0].size();
-}
-
-size_t CsvImportData::nRows() const
-{
-    return (*m_data).size();
-}
-
-bool CsvImportData::rowExcluded(int row)
-{
-    if (static_cast<size_t>(row) < m_n_header || static_cast<size_t>(row) + m_n_footer >= nRows())
-        return true;
-    if (m_discarded_rows.find(row) != m_discarded_rows.end())
-        return true;
-    return false;
-}
-
-std::set<std::pair<int, int>> CsvImportData::checkData()
-{
-    std::set<std::pair<int, int>> result;
-    for (auto type : availableTypes()) {
-        auto col_result = checkFormat(multipliedValues(type), type == Coordinate);
-        std::for_each(col_result.begin(), col_result.end(), [col = column(type), &result](int row) {
-            result.insert({row, col});
-        });
-    }
-    return result;
-}
-
-void CsvImportData::resetSelection()
-{
-    m_n_header = 0;
-    m_n_footer = 0;
-    m_selected_cols.clear();
-    m_discarded_rows.clear();
-}
-
-std::set<int> CsvImportData::checkFormat(const csv::DataColumn& values, bool check_ordering)
-{
-    std::set<int> result;
-    if (values.empty())
-        return result;
-
-    bool has_prev_value = false;
-    double prev_value = 0.0;
-    for (size_t i = m_n_header; i + m_n_footer < nRows(); ++i) {
-        if (m_discarded_rows.find(static_cast<int>(i)) != m_discarded_rows.end())
-            continue;
-
-        auto cellText = QString::fromStdString(values[i]);
-        bool is_double;
-        double number = cellText.toDouble(&is_double);
-        if (!is_double || number <= 0.0) {
-            result.insert(static_cast<int>(i));
-            continue;
+    const ImportTableModel* model = dynamic_cast<const ImportTableModel*>(index.model());
+    int utility_rows = model->numUtilityRows();
+    if (index.row() < utility_rows){
+        std::vector<InfoTypes> info_types = model->infoTypes();
+        if (info_types.at(index.row()) == InfoTypes::Name){
+            QLineEdit *line_edit = new QLineEdit(parent);
+            line_edit->setAlignment(Qt::AlignCenter);
+            return line_edit;
         }
-
-        if (!check_ordering)
-            continue;
-
-        if (has_prev_value && prev_value >= number) {
-            result.insert(static_cast<int>(i));
-            continue;
+        if (info_types.at(index.row()) == InfoTypes::Type){
+            QComboBox *combo_box = new QComboBox(parent);
+            QList<QString> items;
+            std::for_each(Types.begin(), Types.end(), [&](const std::string& type){items.append(QString::fromStdString(type));});
+            combo_box->addItems(items);
+            return combo_box;
         }
-        prev_value = number;
-        has_prev_value = true;
-    }
-    return result;
+        if (info_types.at(index.row()) == InfoTypes::Unit){
+            QComboBox *combo_box = new QComboBox(parent);
+            QStringList items;
+            std::for_each(Units.begin(), Units.end(), [&](const std::string& unit){items.append(QString::fromStdString(unit));});
+            combo_box->addItems(items);
+            return combo_box;
+        }
+        if (info_types.at(index.row()) == InfoTypes::Multiplier){
+            ModelView::ScientificSpinBoxEditor *spin_box = new ModelView::ScientificSpinBoxEditor(parent);
+            return spin_box;
+        }
+    } 
+
+    return QStyledItemDelegate::createEditor(parent, option, index);
 }
 
+//! Set the actual data of the widget
+void ImportTableDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
+{
+    const ImportTableModel* model = dynamic_cast<const ImportTableModel*>(index.model());
+    int utility_rows = model->numUtilityRows();
+    DataColumn* column = (model->dataStructure() == nullptr)?(nullptr):(model->dataStructure()->column(index.column()));
+
+    if (!column)
+        return;
+
+    if (index.row() < utility_rows){
+        std::vector<InfoTypes> info_types = model->infoTypes();
+        if (info_types.at(index.row()) == InfoTypes::Name){
+            QLineEdit *line_edit = dynamic_cast<QLineEdit*>(editor);
+            line_edit->setText(QString::fromStdString(column->name()));
+        }
+        if (info_types.at(index.row()) == InfoTypes::Type){
+            QComboBox *combo_box = dynamic_cast<QComboBox*>(editor);
+            combo_box->setCurrentText(QString::fromStdString(column->type()));
+        }
+        if (info_types.at(index.row()) == InfoTypes::Unit){
+            QComboBox *combo_box = dynamic_cast<QComboBox*>(editor);
+            combo_box->setCurrentText(QString::fromStdString(column->unit()));
+        }
+        if (info_types.at(index.row()) == InfoTypes::Multiplier){
+            ModelView::ScientificSpinBoxEditor *spin_box = dynamic_cast<ModelView::ScientificSpinBoxEditor*>(editor);
+            spin_box->setData(column->multiplier());
+        }
+    } else {
+        QStyledItemDelegate::setEditorData(editor, index);
+    }
+}
+
+//! Send the widget data to the model
+void ImportTableDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
+{
+    const ImportTableModel* table_model = dynamic_cast<const ImportTableModel*>(model);
+    int utility_rows = table_model->numUtilityRows();
+    DataColumn* column = (table_model->dataStructure() == nullptr)?(nullptr):(table_model->dataStructure()->column(index.column()));
+
+    if (!column)
+        return;
+
+    if (index.row() < utility_rows){
+        std::vector<InfoTypes> info_types = table_model->infoTypes();
+        if (info_types.at(index.row()) == InfoTypes::Name){
+            QLineEdit *line_edit = dynamic_cast<QLineEdit*>(editor);
+            auto text = line_edit->text().toStdString();
+            column->setName(text);
+        }
+        if (info_types.at(index.row()) == InfoTypes::Type){
+            QComboBox *combo_box = dynamic_cast<QComboBox*>(editor);
+            auto text = combo_box->currentText().toStdString();
+            column->setType(text);
+        }
+        if (info_types.at(index.row()) == InfoTypes::Unit){
+            QComboBox *combo_box = dynamic_cast<QComboBox*>(editor);
+            auto text = combo_box->currentText().toStdString();
+            column->setUnit(text);
+        }
+        if (info_types.at(index.row()) == InfoTypes::Multiplier){
+            ModelView::ScientificSpinBoxEditor *spin_box = dynamic_cast<ModelView::ScientificSpinBoxEditor*>(editor);
+            column->setMultiplier(spin_box->data().value<double>());
+        }
+    } else {
+        QStyledItemDelegate::setModelData(editor,model, index);
+    }
+}
+
+// -------------------------------------------------
+// This is the area for the table view
+
+//! This is the constructor
 ImportTableView::ImportTableView(QWidget* parent)
-    : QTableWidget(parent), m_import_data(new CsvImportData(this)), m_data_is_suitable(true)
+    : QTableView(parent)
 {
+    setModel(new ImportTableModel());
+    setItemDelegate(new ImportTableDelegate(this));
+    verticalHeader()->setDefaultAlignment(Qt::AlignRight);
+    verticalHeader()->resizeSections(QHeaderView::ResizeToContents);
 }
 
-int ImportTableView::selectedRow() const
+//! override the view to avoid writing dynamic casts elsewhere
+ImportTableModel* ImportTableView::model() const 
 {
-    auto selectedRanges = this->selectedRanges();
-    if (selectedRanges.empty())
-        return -1;
-    auto front = selectedRanges.front();
-    auto row = front.topRow();
-    return row - rowOffset();
-}
-
-std::set<int> ImportTableView::selectedRows() const
-{
-    std::set<int> accumulator;
-
-    auto selection = selectedRanges();
-    if (selection.empty())
-        return {};
-
-    int size = selection.size();
-    for (int rangenumber = 0; rangenumber < size; ++rangenumber) {
-        int row0 = selectedRanges()[rangenumber].topRow() - rowOffset();
-        int rowN = selectedRanges()[rangenumber].bottomRow() - rowOffset();
-        for (int r = row0; r <= rowN; ++r) {
-            accumulator.insert(r);
-        }
-    }
-    return accumulator;
-}
-
-int ImportTableView::selectedColumn() const
-{
-    auto selectedRanges = this->selectedRanges();
-    if (selectedRanges.empty())
-        return -1;
-    auto front = selectedRanges.front();
-    auto col = front.leftColumn();
-    return col;
-}
-
-//! Set the table data
-void ImportTableView::setData(const string_data& data)
-{
-    if (data.empty()) {
-        clearContents();
-        setRowCount(0);
-        m_import_data->setData(std::move(data));
-        return;
-    }
-
-    size_t nRows = data.size();
-    size_t nCols = data[0].size();
-    clearContents();
-    setColumnCount(int(nCols));
-    setRowCount(0);
-
-    insertRow(rowCount());
-
-    for (size_t i = 0; i < nRows; i++) {
-        insertRow(rowCount());
-        size_t I = size_t(rowCount()) - 1;
-        for (size_t j = 0; j < data[i].size(); j++) {
-            setItem(int(I), int(j), new QTableWidgetItem(QString::fromStdString(data[i][j])));
-        }
-    }
-
-    // m_import_data->setData(std::move(data));
-    setMultiplierFields();
-}
-
-void ImportTableView::setColumnAs(int col, csv::ColumnType type)
-{
-    int prev_col = m_import_data->setColumnAs(col, type);
-    resetColumn(prev_col);
-    updateSelection();
-}
-
-void ImportTableView::setFirstRow(size_t row)
-{
-    if (row == m_import_data->firstRow())
-        return;
-    m_import_data->setFirstRow(row);
-    updateSelection();
-}
-
-void ImportTableView::setLastRow(size_t row)
-{
-    if (row == m_import_data->lastRow())
-        return;
-    m_import_data->setLastRow(row);
-    updateSelection();
-}
-
-void ImportTableView::discardRows(std::set<int> rows)
-{
-    m_import_data->toggleDiscardRows(std::move(rows));
-    updateSelection();
-}
-
-void ImportTableView::resetSelection()
-{
-    m_import_data->resetSelection();
-    updateSelection();
-}
-
-double ImportTableView::intensityMultiplier() const
-{
-    return m_import_data->multiplier(CsvImportData::Intensity);
-}
-
-double ImportTableView::coordinateMultiplier() const
-{
-    return m_import_data->multiplier(CsvImportData::Coordinate);
-}
-
-QList<QString> ImportTableView::availableCoordinateUnits() const
-{
-    return m_import_data->availableCoordinateUnits();
-}
-
-void ImportTableView::updateSelection()
-{
-    setHeaders();
-    // FIXME: replace re-creation of all spin boxes with blocking/unlocking
-    setMultiplierFields();
-    updateSelectedCols();
-    greyoutDiscardedRows();
-    if (checkData() != m_data_is_suitable) {
-        m_data_is_suitable = !m_data_is_suitable;
-        emit dataSanityChanged();
-    }
-}
-
-// FIXME: put filling vertical headers here
-void ImportTableView::setHeaders()
-{
-    // Reset header labels
-    QStringList headers;
-
-    for (int j = 0; j < this->columnCount(); j++)
-        headers.append(QString::number(j + 1));
-    setHorizontalHeaderLabels(headers);
-
-    for (auto type : CsvImportData::availableTypes()) {
-        int col = m_import_data->column(type);
-        if (col < 0)
-            continue;
-        setHorizontalHeaderItem(col, new QTableWidgetItem(m_import_data->columnLabel(type)));
-    }
-}
-
-void ImportTableView::updateSelectedCols()
-{
-    // FIXME: replace recreation of sell items with value assignment
-    for (auto type : CsvImportData::availableTypes()) {
-        csv::DataColumn values = m_import_data->multipliedValues(type);
-        if (values.empty())
-            continue;
-        int col = m_import_data->column(type);
-        for (size_t i = 0; i < values.size(); ++i)
-            setItem(static_cast<int>(i) + rowOffset(), col,
-                    new QTableWidgetItem(QString::fromStdString(values[i])));
-    }
-}
-
-void ImportTableView::setMultiplierFields()
-{
-    const int n_cols = static_cast<int>(m_import_data->nCols());
-
-    for (int n = 0; n < n_cols; ++n)
-        setCellWidget(0, n, createMultiplierBox());
-
-    auto types = CsvImportData::availableTypes();
-    for (auto type : types)
-        if (m_import_data->column(type) >= 0) {
-            auto spin_box =
-                static_cast<ScientificSpinBox*>(cellWidget(0, m_import_data->column(type)));
-            spin_box->setEnabled(true);
-            spin_box->setValue(m_import_data->multiplier(type));
-            connect(spin_box, &ScientificSpinBox::editingFinished, this, [this, spin_box, type]() {
-                m_import_data->setMultiplier(type, spin_box->value());
-                updateSelection();
-            });
-        }
-
-    // FIXME: move row headers initialization elsewhere
-    int nRows = this->rowCount();
-
-    QStringList vhlabels;
-    vhlabels << "Multiplier: ";
-    for (int i = rowOffset(); i < nRows; i++)
-        vhlabels << QString::number(i);
-
-    this->setVerticalHeaderLabels(vhlabels);
-}
-
-void ImportTableView::greyoutDiscardedRows()
-{
-    int nRows = this->rowCount();
-    int nCols = this->columnCount();
-
-    for (int i = rowOffset(); i < nRows; i++) {
-        Qt::GlobalColor color = m_import_data->rowExcluded(i - rowOffset()) ? Qt::gray : Qt::white;
-        for (int j = 0; j < nCols; j++)
-            markCell(i, j, color);
-    }
-}
-
-bool ImportTableView::checkData()
-{
-    auto to_highlight = m_import_data->checkData();
-    for (auto index : to_highlight)
-        markCell(index.first + rowOffset(), index.second, Qt::red);
-    return to_highlight.empty();
-}
-
-void ImportTableView::resetColumn(int col)
-{
-    if (columnCount() >= col || col < 0)
-        return;
-
-    const csv::DataColumn data = m_import_data->values(col);
-    for (size_t i = 0; i < data.size(); i++) {
-        QString originalText = QString::fromStdString(data[i]);
-        setItem(static_cast<int>(i) + rowOffset(), int(col), new QTableWidgetItem(originalText));
-    }
-}
-
-void ImportTableView::markCell(int i, int j, Qt::GlobalColor color)
-{
-    item(i, j)->setBackground(color);
+    return dynamic_cast<ImportTableModel*>(QTableView::model());
 }
 
 }

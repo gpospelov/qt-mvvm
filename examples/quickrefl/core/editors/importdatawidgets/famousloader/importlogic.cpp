@@ -42,6 +42,30 @@ void DataImport::clean(std::vector<std::string>& input)
     }
 }
 
+//! Transpose the current data array
+DataImport::string_data DataImport::transpose(const DataImport::string_data &output)
+{
+    DataImport::string_data temp_data;
+    if (output.size() == 0)
+        return temp_data;
+        
+    std::vector<size_t> row_size(output.size());
+    for (int i = 0; i < output.size(); ++i){
+        row_size[i] = output.at(i).size();
+    }
+    size_t max = *std::max_element(row_size.begin(), row_size.end());
+
+    for (int i = 0; i < *std::max_element(row_size.begin(), row_size.end()); ++i){
+        std::vector<std::string> column(output.size(), "");
+        for (int j = 0; j <  output.size(); ++j){
+            if (i < row_size[j])
+                column[j] = output.at(j).at(i);
+        }
+        temp_data.push_back(column);
+    }
+    return temp_data;
+}
+
 // -------------------------------------------------
 //! This is the constructor of LineBlock
 DataImport::LineBlock::LineBlock(std::string name)
@@ -207,6 +231,7 @@ void DataImport::LineBlock::setEnd(int end_line)
 DataImport::ImportLogic::ImportLogic() : QObject()
 {
     initSeparators();
+    p_data_structure = std::make_unique<DataStructure>();
 }
 
 //! This is the slot for adding files into the local memory 
@@ -259,7 +284,7 @@ std::string DataImport::ImportLogic::getPreview(const int& row) const
     return output;
 }
 
-//! build the preview string with html style
+//! build the data string vector and return it for given file
 DataImport::string_data DataImport::ImportLogic::getData(const int& row) const
 {
     auto file_lines = m_files.at(row)->file();
@@ -276,6 +301,45 @@ DataImport::string_data DataImport::ImportLogic::getData(const int& row) const
         output.push_back(temp_string_vec);
     }
     return output;
+}
+
+//! Build the map of headers in the file with their associated column
+DataImport::header_map DataImport::ImportLogic::getHeader(const int& row) const
+{
+    auto file_lines = m_files.at(row)->file();
+    std::vector<std::string> type_scheme = getTypeScheme(file_lines.size());
+    std::vector<char> separator_scheme = getSeparatorScheme(file_lines.size());
+
+    DataImport::header_map output;
+    for (int i = 0; i < file_lines.size(); ++i){
+        if (type_scheme.at(i) == "Header"){
+            auto temp_string_vec = DataImport::split(file_lines.at(i), separator_scheme.at(i));
+            DataImport::clean(temp_string_vec);
+            for (int j = 0; j< temp_string_vec.size(); ++j){
+                output.insert(std::make_pair(temp_string_vec.at(j),j));
+            }
+            break;
+        }
+    }
+    return output;
+}
+
+//! Grab the data and header internally and then populate the data structure
+void DataImport::ImportLogic::updateData(const int& row)
+{
+    auto headers = getHeader(row);
+    auto data = DataImport::transpose(getData(row));
+
+    if (!headers.empty())
+        p_data_structure->setData(headers, data);
+    else
+        p_data_structure->setData(data);
+}
+
+//! Grab the data and header internally and then populate the data structure
+DataImport::DataStructure* DataImport::ImportLogic::dataStructure() const
+{
+    return p_data_structure.get();
 }
 
 //! Get the names of all the LineBlocks in place

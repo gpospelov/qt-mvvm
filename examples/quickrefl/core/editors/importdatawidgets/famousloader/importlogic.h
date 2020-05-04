@@ -11,21 +11,21 @@
 #ifndef IMPORTLOGIC_H
 #define IMPORTLOGIC_H
 
+#include "csvfile.h"
+#include "importdatastructure.h"
+
 #include <memory>
 #include <QObject>
 #include <QColor>
 
-#include "csvfile.h"
-
 namespace DataImport
 {
-// Convention
-using string_data = std::vector<std::vector<std::string>>;
-
 //! Helper method to split
 std::vector<std::string> split(const std::string &s, char delim);
 //! Helper method to clean a string vector
 void clean(std::vector<std::string>& input);
+//! Transpose method to turn lines into columns
+string_data transpose(const string_data &input);
 
 //! This is the class holding a text region
 class LineBlock
@@ -88,8 +88,13 @@ public:
 
     LineBlock* addLineBlock(std::string name);
     void removeLineBlock(LineBlock* block_ptr);
+
     std::string getPreview(const int& row) const;
     string_data getData(const int& row) const;
+    header_map getHeader(const int& row) const;
+    void updateData(const int& row);
+    DataStructure* dataStructure() const;
+
     LineBlock* nameInBlocks(const std::string &name) const;
     LineBlock* typeInBlocks(const std::string &type) const;
 
@@ -106,6 +111,7 @@ private:
     std::vector<std::unique_ptr<CSVFile>> m_files;
     std::vector<std::unique_ptr<LineBlock>> m_line_blocks;
     std::map<std::string, char> m_separators;
+    std::unique_ptr<DataStructure> p_data_structure;
 };
 
 } // namespace DataImport
