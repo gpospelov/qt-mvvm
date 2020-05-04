@@ -16,7 +16,7 @@
 #include <QHBoxLayout>
 #include <QIcon>
 #include <QLabel>
-#include <QPushButton>
+#include <QToolButton>
 #include <QSizePolicy>
 #include <QSpinBox>
 #include <QHBoxLayout>
@@ -401,20 +401,15 @@ void DataImport::ImportParameterWidget::setLayout()
     p_list_widget->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Expanding);
 
     // Set up the buttons
-    auto add_button = new QPushButton(this);
+    auto add_button = new QToolButton(this);
     QPixmap add_image(":/icons/plus-circle-outline.svg");
     QIcon add_ic(add_image);
-    add_button->setFlat(true);
     add_button->setIcon(add_ic);
-    add_button->setStyleSheet("QPushButton {border-style: outset; border-width: 0px;}");
-    add_button->setFixedSize(QSize(add_image.width(), add_image.height()));
 
-    auto remove_button = new QPushButton(this);
+    auto remove_button = new QToolButton(this);
     QPixmap remove_image(":/icons/beaker-remove-outline.svg");
     QIcon remove_ic(remove_image);
-    remove_button->setFlat(true);
     remove_button->setIcon(remove_ic);
-    remove_button->setFixedSize(QSize(remove_image.width(), remove_image.height()));
 
     // Set the layout
     auto widget_layout = new QHBoxLayout(this);
@@ -428,11 +423,11 @@ void DataImport::ImportParameterWidget::setLayout()
 
     // Connect the buttons
     connect(
-        add_button, &QPushButton::clicked,
+        add_button, &QToolButton::clicked,
         this, &DataImport::ImportParameterWidget::addLineBlock
     );
     connect(
-        remove_button, &QPushButton::clicked,
+        remove_button, &QToolButton::clicked,
         this, &DataImport::ImportParameterWidget::removeLineBlock
     );
 }

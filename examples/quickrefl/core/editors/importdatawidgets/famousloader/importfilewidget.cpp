@@ -12,7 +12,7 @@
 #include <QListView>
 #include <QStringListModel>
 #include <QHBoxLayout>
-#include <QPushButton>
+#include <QToolButton>
 #include <QStyle>
 #include <QSizePolicy>
 #include <QIcon>
@@ -38,19 +38,13 @@ void DataImport::ImportFileWidget::createWidgets()
     p_list_view->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     // Set up the buttons
-    auto add_button = new QPushButton(this);
+    auto add_button = new QToolButton(this);
     QIcon add_ic(style()->standardIcon(QStyle::SP_FileDialogNewFolder));
-    add_button->setFlat(true);
-    add_button->setFixedSize(add_ic.actualSize(add_ic.availableSizes().first()));
     add_button->setIcon(add_ic);
-    add_button->setIconSize(add_ic.availableSizes().first());
 
-    auto reset_button = new QPushButton(this);
+    auto reset_button = new QToolButton(this);
     QIcon reset_ic(style()->standardIcon(QStyle::SP_DialogResetButton));
-    reset_button->setFlat(true);
-    reset_button->setFixedSize(reset_ic.actualSize(reset_ic.availableSizes().first()));
     reset_button->setIcon(reset_ic);
-    reset_button->setIconSize(reset_ic.availableSizes().first());
 
     // Build the layout
     main_layout->addWidget(p_list_view);
@@ -64,11 +58,11 @@ void DataImport::ImportFileWidget::createWidgets()
 
     // Connect the buttons
     connect(
-        add_button, &QPushButton::clicked,
+        add_button, &QToolButton::clicked,
         this, &DataImport::ImportFileWidget::addFiles
     );
     connect(
-        reset_button, &QPushButton::clicked,
+        reset_button, &QToolButton::clicked,
         this, &DataImport::ImportFileWidget::resetFiles
     );
     connect(
