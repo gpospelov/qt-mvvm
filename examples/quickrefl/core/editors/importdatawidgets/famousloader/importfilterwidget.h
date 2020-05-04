@@ -112,7 +112,7 @@ private:
 
     QTabWidget* p_tab_widget;
     SwitchSpace::Switch* p_active_checkbox;
-    QComboBox* p_type_select;
+    ModelView::ColorEditor* p_color_editor;
     QSpinBox* p_line_start;
     QSpinBox* p_line_end;
 
