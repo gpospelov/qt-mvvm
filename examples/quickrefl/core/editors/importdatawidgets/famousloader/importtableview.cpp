@@ -123,7 +123,7 @@ QVariant ImportTableModel::data(const QModelIndex &index, int role) const
     
     DataColumn* column = p_data_structure->column(index.column());
     int utility_lines = numUtilityRows();
-    if (index.row() >= utility_lines && index.row()< column->rowCount()){
+    if (index.row() >= utility_lines && index.row()< column->rowCount()+utility_lines){
         if (role == Qt::DisplayRole)
             return QVariant(column->finalValue(index.row()-utility_lines));
     } else if (index.row() < utility_lines) {
