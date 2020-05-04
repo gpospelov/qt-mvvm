@@ -465,6 +465,14 @@ void DataImport::ImportFilterWidget::initialise()
 void DataImport::ImportFilterWidget::addLineFilter()
 {
     auto line_block = p_import_logic->addLineFilter("Filter " +std::to_string(p_list_widget->count()));
+
+    line_block->setType("Comments");
+    line_block->setActive(true);
+    line_block->setStart(0);
+    line_block->setEnd(1);
+    line_block->setSeparator("Space ( )");
+    line_block->setColor("green");
+
     auto temp_widget = new LineFilterWidget(line_block, p_list_widget);
     auto temp_item = new QListWidgetItem();
     temp_item->setSizeHint(temp_widget->sizeHint());
