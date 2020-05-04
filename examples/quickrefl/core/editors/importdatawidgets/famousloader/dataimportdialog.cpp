@@ -10,7 +10,7 @@
 #include "dataimportdialog.h"
 
 #include "importfilewidget.h"
-#include "importparameterwidget.h"
+#include "importfilterwidget.h"
 #include "importtextview.h"
 #include "importtableview.h"
 
@@ -91,7 +91,7 @@ void DataImport::DataLoaderDialog::setUpParameterSpace(QGroupBox* conainer)
 {
     
     auto layout = new QVBoxLayout(conainer);
-    p_parameter_dialog = new DataImport::ImportParameterWidget(p_data_import_logic.get(), conainer);
+    p_parameter_dialog = new DataImport::ImportFilterWidget(p_data_import_logic.get(), conainer);
     layout->addWidget(p_parameter_dialog);
     layout->setContentsMargins(0,0,0,0);
     layout->setSpacing(0);

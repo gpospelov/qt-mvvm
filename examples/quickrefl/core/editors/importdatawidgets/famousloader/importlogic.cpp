@@ -48,7 +48,7 @@ DataImport::string_data DataImport::transpose(const DataImport::string_data &out
     DataImport::string_data temp_data;
     if (output.size() == 0)
         return temp_data;
-        
+
     std::vector<size_t> row_size(output.size());
     for (int i = 0; i < output.size(); ++i){
         row_size[i] = output.at(i).size();
@@ -67,14 +67,14 @@ DataImport::string_data DataImport::transpose(const DataImport::string_data &out
 }
 
 // -------------------------------------------------
-//! This is the constructor of LineBlock
-DataImport::LineBlock::LineBlock(std::string name)
+//! This is the constructor of LineFilter
+DataImport::LineFilter::LineFilter(std::string name)
     : m_name(name), m_active(false), m_start_line(0), m_end_line(1), m_separator(' '),m_type_string("Data"),m_color("black")
 {
 }
 
 //! Return only the keys of the separators
-std::vector<std::string> DataImport::LineBlock::separatorNames() const
+std::vector<std::string> DataImport::LineFilter::separatorNames() const
 {
     std::vector<std::string> output;
     for(auto const& element : *m_separators) {
@@ -85,7 +85,7 @@ std::vector<std::string> DataImport::LineBlock::separatorNames() const
 }
 
 //! Set the right colors in the vector
-void DataImport::LineBlock::processColors(std::vector<std::string> &color_vec) const
+void DataImport::LineFilter::processColors(std::vector<std::string> &color_vec) const
 {
     if (!m_active)
         return ;
@@ -102,7 +102,7 @@ void DataImport::LineBlock::processColors(std::vector<std::string> &color_vec) c
 }
 
 //! Set the right separator in the vector
-void DataImport::LineBlock::processSeparator(std::vector<char> &separator_vec) const
+void DataImport::LineFilter::processSeparator(std::vector<char> &separator_vec) const
 {
     if (!m_active)
         return ;
@@ -119,7 +119,7 @@ void DataImport::LineBlock::processSeparator(std::vector<char> &separator_vec) c
 }
 
 //! Set the right type to the vector
-void DataImport::LineBlock::processType(std::vector<std::string> &type_vec) const
+void DataImport::LineFilter::processType(std::vector<std::string> &type_vec) const
 {
     if (!m_active)
         return ;
@@ -136,92 +136,92 @@ void DataImport::LineBlock::processType(std::vector<std::string> &type_vec) cons
 }
 
 //! Getter for the name
-const std::string& DataImport::LineBlock::name() const 
+const std::string& DataImport::LineFilter::name() const 
 {
     return m_name;
 }
 
 //! Getter for the active boolean
-const bool& DataImport::LineBlock::active() const
+const bool& DataImport::LineFilter::active() const
 {
     return m_active;
 }
 
 //! Getter for the type string
-const std::string& DataImport::LineBlock::type() const
+const std::string& DataImport::LineFilter::type() const
 {
     return m_type_string;
 }
 
 //! Getter for the separator key string
-const std::string& DataImport::LineBlock::separator() const
+const std::string& DataImport::LineFilter::separator() const
 {
     return m_separator_str;
 }
 
 //! Getter for the color string
-const std::string& DataImport::LineBlock::color() const
+const std::string& DataImport::LineFilter::color() const
 {
     return m_color;
 }
 
 //! Getter for the starting line integer
-const int& DataImport::LineBlock::start() const
+const int& DataImport::LineFilter::start() const
 {
     return m_start_line;
 }
 
 //! Getter for the ending line integer
-const int& DataImport::LineBlock::end() const
+const int& DataImport::LineFilter::end() const
 {
     return m_end_line;
 }
 
 //! Build the separator string
-void DataImport::LineBlock::setSeparators(std::map<std::string, char>* separators)
+void DataImport::LineFilter::setSeparators(std::map<std::string, char>* separators)
 {
     m_separators = separators;
 }
 
 //! Set the start line
-void DataImport::LineBlock::setName(std::string name)
+void DataImport::LineFilter::setName(std::string name)
 {
     m_name = name;
 }
 
 //! Set the start line
-void DataImport::LineBlock::setActive(bool active)
+void DataImport::LineFilter::setActive(bool active)
 {
     m_active = active;
 }
 
 //! Set the start line
-void DataImport::LineBlock::setType(std::string type_string)
+void DataImport::LineFilter::setType(std::string type_string)
 {
     m_type_string = type_string;
 }
 
 //! Set the start line
-void DataImport::LineBlock::setSeparator(std::string separator_name)
+void DataImport::LineFilter::setSeparator(std::string separator_name)
 {
     m_separator_str = separator_name;
     m_separator = m_separators->at(separator_name);
 }
 
 //! Set the start line
-void DataImport::LineBlock::setColor(std::string color_string)
+void DataImport::LineFilter::setColor(std::string color_string)
 {
     m_color = color_string;
 }
 
 //! Set the start line
-void DataImport::LineBlock::setStart(int start_line)
+void DataImport::LineFilter::setStart(int start_line)
 {
     m_start_line = start_line;
 }
 
 //! Set the end line
-void DataImport::LineBlock::setEnd(int end_line)
+void DataImport::LineFilter::setEnd(int end_line)
 {
     m_end_line = end_line;
 }
@@ -235,9 +235,9 @@ DataImport::ImportLogic::ImportLogic() : QObject()
 }
 
 //! This is the slot for adding files into the local memory 
-DataImport::LineBlock* DataImport::ImportLogic::addLineBlock(std::string name)
+DataImport::LineFilter* DataImport::ImportLogic::addLineFilter(std::string name)
 {
-    auto temp = std::make_unique<DataImport::LineBlock>(name);
+    auto temp = std::make_unique<DataImport::LineFilter>(name);
     temp->setSeparators(&m_separators);
     auto address = temp.get();
     m_line_blocks.push_back(std::move(temp));
@@ -246,7 +246,7 @@ DataImport::LineBlock* DataImport::ImportLogic::addLineBlock(std::string name)
 }
 
 //! This is the method removing a particular block given its pointer
-void DataImport::ImportLogic::removeLineBlock(DataImport::LineBlock* block_ptr)
+void DataImport::ImportLogic::removeLineFilter(DataImport::LineFilter* block_ptr)
 {
     m_line_blocks.erase(std::remove_if(m_line_blocks.begin(), m_line_blocks.end(), [=](auto const& ptr){ return ptr.get() == block_ptr; }), m_line_blocks.end());
 }
@@ -342,8 +342,8 @@ DataImport::DataStructure* DataImport::ImportLogic::dataStructure() const
     return p_data_structure.get();
 }
 
-//! Get the names of all the LineBlocks in place
-DataImport::LineBlock* DataImport::ImportLogic::nameInBlocks(const std::string &name) const
+//! Get the names of all the LineFilters in place
+DataImport::LineFilter* DataImport::ImportLogic::nameInBlocks(const std::string &name) const
 {
     for (auto &line_block: m_line_blocks){
         if (name == line_block->name()) return line_block.get();
@@ -351,8 +351,8 @@ DataImport::LineBlock* DataImport::ImportLogic::nameInBlocks(const std::string &
     return nullptr;
 }
 
-//! Get the names of all the LineBlocks in place
-DataImport::LineBlock* DataImport::ImportLogic::typeInBlocks(const std::string &type) const
+//! Get the names of all the LineFilters in place
+DataImport::LineFilter* DataImport::ImportLogic::typeInBlocks(const std::string &type) const
 {
     for (auto &line_block: m_line_blocks){
         if (type == line_block->type()) return line_block.get();

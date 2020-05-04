@@ -21,7 +21,7 @@ namespace DataImport
 {
 
 class ImportFileWidget;
-class ImportParameterWidget;
+class ImportFilterWidget;
 class ImportTextView;
 class ImportTableView;
 
@@ -44,7 +44,7 @@ private slots:
 
 private:
     ImportFileWidget* p_import_file_list{nullptr};
-    ImportParameterWidget* p_parameter_dialog{nullptr};
+    ImportFilterWidget* p_parameter_dialog{nullptr};
     ImportTextView* p_text_view{nullptr};
     ImportTableView* p_table_view{nullptr};
     std::unique_ptr<ImportLogic> p_data_import_logic;

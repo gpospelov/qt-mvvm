@@ -8,8 +8,8 @@
 // ************************************************************************** //
 
 
-#ifndef IMPORTPARAMETERWIDGET_H
-#define IMPORTPARAMETERWIDGET_H
+#ifndef IMPORTFILTERWIDGET_H
+#define IMPORTFILTERWIDGET_H
 
 #include <QListWidgetItem>
 #include <QWidget>
@@ -74,20 +74,20 @@ public:
 
 // -------------------------------------------------
 //! This is the main dialog for the data loader
-class LineBlockWidget : public QWidget
+class LineFilterWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    LineBlockWidget(LineBlock* line_block = nullptr, QWidget* parent = nullptr);
-    ~LineBlockWidget() = default;
-    LineBlock* lineBlock() const;
-    void grabFromLineBlock();
+    LineFilterWidget(LineFilter* line_block = nullptr, QWidget* parent = nullptr);
+    ~LineFilterWidget() = default;
+    LineFilter* lineBlock() const;
+    void grabFromLineFilter();
 
 signals:
     void parameterChanged();
-    void nameChanged(std::string name, LineBlockWidget*);
-    void typeChanged(std::string type, LineBlockWidget*);
+    void nameChanged(std::string name, LineFilterWidget*);
+    void typeChanged(std::string type, LineFilterWidget*);
 
 private:
     void setEnabled();
@@ -106,7 +106,7 @@ private:
     void dataChanged();
 
 private:
-    LineBlock* p_line_block;
+    LineFilter* p_line_block;
 
     QTabWidget* p_tab_widget;
     SwitchSpace::Switch* p_active_checkbox;
@@ -129,16 +129,16 @@ private:
 
 // -------------------------------------------------
 //! This is the main dialog for the data loader
-class ImportParameterWidget : public QWidget
+class ImportFilterWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    ImportParameterWidget(ImportLogic* import_logic, QWidget* parent = nullptr);
-    ~ImportParameterWidget() = default;
+    ImportFilterWidget(ImportLogic* import_logic, QWidget* parent = nullptr);
+    ~ImportFilterWidget() = default;
 
-    void addLineBlock();
-    void removeLineBlock();
+    void addLineFilter();
+    void removeLineFilter();
 
 signals:
     void parameterChanged();
@@ -146,21 +146,21 @@ signals:
     void typesChanged();
 
 private slots:
-    void processNameChanged(std::string name, LineBlockWidget* widget);
-    void processTypeChanged(std::string type, LineBlockWidget* widget);
+    void processNameChanged(std::string name, LineFilterWidget* widget);
+    void processTypeChanged(std::string type, LineFilterWidget* widget);
     
 private:
     void setLayout();
     void initialise();
     void connectAll();
-    void resetFromLineBlocks() const;
+    void resetFromLineFilters() const;
 
 private:
     ImportLogic* p_import_logic;
 
-    std::vector<LineBlockWidget*> m_line_block_widgets;
+    std::vector<LineFilterWidget*> m_line_block_widgets;
     QListWidget* p_list_widget;
 };
 }
 
-#endif // IMPORTPARAMETERWIDGET_H
+#endif // IMPORTFILTERWIDGET_H

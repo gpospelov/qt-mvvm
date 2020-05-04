@@ -28,11 +28,11 @@ void clean(std::vector<std::string>& input);
 string_data transpose(const string_data &input);
 
 //! This is the class holding a text region
-class LineBlock
+class LineFilter
 {
 public:
-    LineBlock(std::string name);
-    ~LineBlock() = default;
+    LineFilter(std::string name);
+    ~LineFilter() = default;
 
     //! Public access
     void setSeparators(std::map<std::string, char>* separators); 
@@ -86,8 +86,8 @@ public:
     ImportLogic();
     ~ImportLogic() = default;
 
-    LineBlock* addLineBlock(std::string name);
-    void removeLineBlock(LineBlock* block_ptr);
+    LineFilter* addLineFilter(std::string name);
+    void removeLineFilter(LineFilter* block_ptr);
 
     std::string getPreview(const int& row) const;
     string_data getData(const int& row) const;
@@ -95,8 +95,8 @@ public:
     void updateData(const int& row);
     DataStructure* dataStructure() const;
 
-    LineBlock* nameInBlocks(const std::string &name) const;
-    LineBlock* typeInBlocks(const std::string &type) const;
+    LineFilter* nameInBlocks(const std::string &name) const;
+    LineFilter* typeInBlocks(const std::string &type) const;
 
 public slots:
     void setFiles(std::vector<std::string> file_paths);
@@ -109,7 +109,7 @@ private:
 
 private:
     std::vector<std::unique_ptr<CSVFile>> m_files;
-    std::vector<std::unique_ptr<LineBlock>> m_line_blocks;
+    std::vector<std::unique_ptr<LineFilter>> m_line_blocks;
     std::map<std::string, char> m_separators;
     std::unique_ptr<DataStructure> p_data_structure;
 };
