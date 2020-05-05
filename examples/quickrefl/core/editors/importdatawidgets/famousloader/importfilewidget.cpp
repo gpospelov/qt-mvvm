@@ -20,6 +20,8 @@
 #include <QStyle>
 #include <QToolButton>
 
+#include <iostream>
+
 namespace DataImportGui
 {
 
@@ -97,8 +99,30 @@ void ImportFileWidget::addFiles()
     if (files.count() > 0)
         m_default_path = QFileInfo(files[0]).absoluteDir().absolutePath();
 
+    // Save the current string
+    QString current_input;
+    if (p_list_model->rowCount() != 0
+        && p_list_view->selectionModel()->selectedIndexes().count() != 0) {
+        current_input = p_list_model->data(p_list_view->selectionModel()->selectedIndexes()[0])
+                            .value<QString>();
+    }
+
+    // Refresh
     p_list_model->setStringList(p_list_model->stringList() + files);
     emit filesChanged(currentFiles());
+
+    // Set back the initial string is present
+    if (p_list_model->rowCount() != 0) {
+        auto to_select = p_list_model->index(0, 0);
+        for (int i = 0; i < p_list_model->rowCount(); ++i) {
+            if (current_input.toStdString()
+                == p_list_model->data(p_list_model->index(i, 0)).value<QString>().toStdString()) {
+                to_select = p_list_model->index(i, 0);
+                break;
+            }
+        }
+        p_list_view->setCurrentIndex(to_select);
+    }
 }
 
 //! This is the method called by the reset file button
