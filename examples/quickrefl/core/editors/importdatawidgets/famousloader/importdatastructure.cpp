@@ -221,13 +221,23 @@ DataColumn* DataStructure::column(const std::string& header)
     return (found == m_data_columns.end()) ? (nullptr) : ((*found).get());
 }
 
-//! Check that the headers coincide
-DataColumn* DataStructure::column(int column)
+//! Get the column associated to an index
+DataColumn* DataStructure::column(int column_num)
 {
-    return (column < m_data_columns.size()) ? (m_data_columns.at(column).get()) : (nullptr);
+    int column_idx = 0;
+    for (const auto& column : m_data_columns) {
+        if (column->rowCount() != 0) {
+            if (column_idx == column_num) {
+                return column.get();
+            } else {
+                ++column_idx;
+            }
+        }
+    }
+    return nullptr;
 }
 
-//! Check that the headers coincide
+//! Add a DataColumn item
 void DataStructure::addColumn(const std::string& header)
 {
     auto new_column = std::make_unique<DataColumn>(header);
@@ -262,7 +272,12 @@ int DataStructure::rowCount() const
 //! retrieve the column count
 int DataStructure::columnCount() const
 {
-    return m_data_columns.size();
+    int column_size = 0;
+    for (const auto& column : m_data_columns) {
+        if (column->rowCount() != 0)
+            ++column_size;
+    }
+    return column_size;
 }
 
 } // end of namespace DataImportLogic
