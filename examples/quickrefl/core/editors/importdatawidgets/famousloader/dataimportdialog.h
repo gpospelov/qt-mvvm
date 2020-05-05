@@ -38,8 +38,14 @@ private:
     void setUpParameterSpace(QGroupBox* conainer);
     void setUpSelectionSpace(QTabWidget* tab_widget);
 
+    void readSettings();
+    void writeSettings();
+
 private slots:
     void selectedFileChanged();
+
+protected:
+    void accept() override;
 
 private:
     ImportFileWidget* p_import_file_list{nullptr};

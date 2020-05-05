@@ -16,6 +16,7 @@ QT_BEGIN_NAMESPACE
 class QListView;
 class QStringListModel;
 class QItemSelection;
+class QSettings;
 QT_END_NAMESPACE
 
 namespace DataImportGui
@@ -32,6 +33,9 @@ public:
 
     int currentSelection() const;
 
+    void readSettings(QSettings& settings);
+    void writeSettings(QSettings& settings);
+
 signals:
     void filesChanged(std::vector<std::string> files);
     void selectionChanged();
@@ -45,6 +49,7 @@ private:
 private:
     QListView* p_list_view{nullptr};
     QStringListModel* p_list_model{nullptr};
+    QString m_default_path{""};
 };
 
 } // End of namespace DataImportGui

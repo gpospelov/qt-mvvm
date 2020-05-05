@@ -16,6 +16,7 @@
 
 #include <QDialogButtonBox>
 #include <QHBoxLayout>
+#include <QSettings>
 #include <QSizePolicy>
 #include <QSplitter>
 #include <QVBoxLayout>
@@ -64,6 +65,8 @@ DataLoaderDialog::DataLoaderDialog(QWidget* parent) : QDialog(parent)
     v_splitter->setStretchFactor(1, 1);
     h_splitter->setStretchFactor(0, 0);
     h_splitter->setStretchFactor(1, 1);
+
+    readSettings();
 }
 
 //! Helper function to set up the file list area
@@ -133,6 +136,38 @@ void DataLoaderDialog::selectedFileChanged()
             p_table_view->model()->refreshFromDataStructure();
         }
     }
+}
+
+//! Write the QSettings
+void DataLoaderDialog::writeSettings()
+{
+    QSettings settings("quickrefl", "ImportDialog");
+
+    settings.beginGroup("Geometry");
+    settings.setValue("size", size());
+    settings.setValue("pos", pos());
+    settings.endGroup();
+
+    p_import_file_list->writeSettings(settings);
+}
+
+//! read the Qsettings
+void DataLoaderDialog::readSettings()
+{
+    QSettings settings("quickrefl", "ImportDialog");
+
+    settings.beginGroup("Geometry");
+    resize(settings.value("size", QSize(400, 400)).toSize());
+    move(settings.value("pos", QPoint(200, 200)).toPoint());
+    settings.endGroup();
+
+    p_import_file_list->readSettings(settings);
+}
+
+void DataLoaderDialog::accept()
+{
+    writeSettings();
+    close();
 }
 
 } // End of namespace DataImportGui

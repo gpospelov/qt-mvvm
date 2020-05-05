@@ -14,6 +14,7 @@
 #include <QIcon>
 #include <QItemSelectionModel>
 #include <QListView>
+#include <QSettings>
 #include <QSizePolicy>
 #include <QStringListModel>
 #include <QStyle>
@@ -72,11 +73,29 @@ int ImportFileWidget::currentSelection() const
     return p_list_view->currentIndex().row();
 }
 
+//! Read the settings froma QSetting structure
+void ImportFileWidget::readSettings(QSettings& settings)
+{
+    settings.beginGroup("Files");
+    m_default_path = settings.value("last_path", ".").toString();
+    settings.endGroup();
+}
+
+//! Write the settings from a QSetting structure
+void ImportFileWidget::writeSettings(QSettings& settings)
+{
+    settings.beginGroup("Files");
+    settings.setValue("last_path", m_default_path);
+    settings.endGroup();
+}
+
 //! This is the method called by the add file button
 void ImportFileWidget::addFiles()
 {
     QStringList files = QFileDialog::getOpenFileNames(this, "Select one or more files to load",
-                                                      "/home", "Text (*.txt);; CSV (*.csv)");
+                                                      m_default_path, "Text (*.txt);; CSV (*.csv)");
+    if (files.count() > 0)
+        m_default_path = QFileInfo(files[0]).absoluteDir().absolutePath();
 
     p_list_model->setStringList(p_list_model->stringList() + files);
     emit filesChanged(currentFiles());
