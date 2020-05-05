@@ -312,7 +312,7 @@ LineFilter* ImportLogic::addLineFilter(std::string name)
     auto temp = std::make_unique<LineFilter>(name);
     temp->setSeparators(&m_separators);
     auto address = temp.get();
-    m_line_blocks.push_back(std::move(temp));
+    m_line_filters.push_back(std::move(temp));
 
     return address;
 }
@@ -320,9 +320,9 @@ LineFilter* ImportLogic::addLineFilter(std::string name)
 //! This is the method removing a particular block given its pointer
 void ImportLogic::removeLineFilter(LineFilter* block_ptr)
 {
-    m_line_blocks.erase(std::remove_if(m_line_blocks.begin(), m_line_blocks.end(),
-                                       [=](auto const& ptr) { return ptr.get() == block_ptr; }),
-                        m_line_blocks.end());
+    m_line_filters.erase(std::remove_if(m_line_filters.begin(), m_line_filters.end(),
+                                        [=](auto const& ptr) { return ptr.get() == block_ptr; }),
+                         m_line_filters.end());
 }
 
 //! This is the method reordering line filter
@@ -331,12 +331,12 @@ void ImportLogic::setLineFilterOrder(std::vector<LineFilter*> filter_order)
     std::vector<std::unique_ptr<LineFilter>> temp;
     for (LineFilter* line_filter_ptr : filter_order) {
         const auto found_ptr =
-            std::find_if(m_line_blocks.begin(), m_line_blocks.end(),
+            std::find_if(m_line_filters.begin(), m_line_filters.end(),
                          [=](auto const& ptr) { return ptr.get() == line_filter_ptr; });
         temp.push_back(std::move(*found_ptr));
-        m_line_blocks.erase(found_ptr);
+        m_line_filters.erase(found_ptr);
     }
-    std::move(temp.begin(), temp.end(), std::back_inserter(m_line_blocks));
+    std::move(temp.begin(), temp.end(), std::back_inserter(m_line_filters));
 }
 
 //! This is the slot for adding files into the local memory
@@ -453,9 +453,9 @@ DataStructure* ImportLogic::dataStructure() const
 //! Get the names of all the LineFilters in place
 LineFilter* ImportLogic::nameInBlocks(const std::string& name) const
 {
-    for (auto& line_block : m_line_blocks) {
-        if (name == line_block->name())
-            return line_block.get();
+    for (auto& line_filter : m_line_filters) {
+        if (name == line_filter->name())
+            return line_filter.get();
     }
     return nullptr;
 }
@@ -463,9 +463,9 @@ LineFilter* ImportLogic::nameInBlocks(const std::string& name) const
 //! Get the names of all the LineFilters in place
 LineFilter* ImportLogic::typeInBlocks(const std::string& type) const
 {
-    for (auto& line_block : m_line_blocks) {
-        if (type == line_block->type())
-            return line_block.get();
+    for (auto& line_filter : m_line_filters) {
+        if (type == line_filter->type())
+            return line_filter.get();
     }
     return nullptr;
 }
@@ -487,8 +487,8 @@ void ImportLogic::initSeparators()
 std::vector<std::string> ImportLogic::getColorScheme(const int& length) const
 {
     std::vector<std::string> output(length, "black");
-    for (auto& line_block : m_line_blocks) {
-        line_block->processColors(output);
+    for (auto& line_filter : m_line_filters) {
+        line_filter->processColors(output);
     }
     return output;
 }
@@ -497,8 +497,8 @@ std::vector<std::string> ImportLogic::getColorScheme(const int& length) const
 std::vector<char> ImportLogic::getSeparatorScheme(const int& length) const
 {
     std::vector<char> output(length, '!');
-    for (auto& line_block : m_line_blocks) {
-        line_block->processSeparator(output);
+    for (auto& line_filter : m_line_filters) {
+        line_filter->processSeparator(output);
     }
     return output;
 }
@@ -507,8 +507,8 @@ std::vector<char> ImportLogic::getSeparatorScheme(const int& length) const
 std::vector<std::string> ImportLogic::getTypeScheme(const int& length) const
 {
     std::vector<std::string> output(length, "Comments");
-    for (auto& line_block : m_line_blocks) {
-        line_block->processType(output);
+    for (auto& line_filter : m_line_filters) {
+        line_filter->processType(output);
     }
     return output;
 }
@@ -517,8 +517,8 @@ std::vector<std::string> ImportLogic::getTypeScheme(const int& length) const
 std::vector<std::vector<std::string>> ImportLogic::getIgnoreScheme(const int& length) const
 {
     std::vector<std::vector<std::string>> output(length, std::vector<std::string>());
-    for (auto& line_block : m_line_blocks) {
-        line_block->processIgnore(output);
+    for (auto& line_filter : m_line_filters) {
+        line_filter->processIgnore(output);
     }
     return output;
 }

@@ -81,7 +81,7 @@ class LineFilterWidget : public QWidget
     Q_OBJECT
 
 public:
-    LineFilterWidget(DataImportLogic::LineFilter* line_block = nullptr, QWidget* parent = nullptr);
+    LineFilterWidget(DataImportLogic::LineFilter* line_filter = nullptr, QWidget* parent = nullptr);
     ~LineFilterWidget() = default;
     DataImportLogic::LineFilter* lineBlock() const;
     void grabFromLineFilter();
@@ -108,7 +108,7 @@ private:
     void dataChanged();
 
 private:
-    DataImportLogic::LineFilter* p_line_block;
+    DataImportLogic::LineFilter* p_line_filter;
 
     QTabWidget* p_tab_widget;
     SwitchSpace::Switch* p_active_checkbox;
@@ -161,7 +161,7 @@ private:
 private:
     DataImportLogic::ImportLogic* p_import_logic;
 
-    std::vector<LineFilterWidget*> m_line_block_widgets;
+    std::vector<LineFilterWidget*> m_line_filter_widgets;
     QListWidget* p_list_widget;
 };
 

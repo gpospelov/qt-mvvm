@@ -34,8 +34,8 @@ namespace DataImportGui
 
 // -------------------------------------------------
 //! This is the constructor
-LineFilterWidget::LineFilterWidget(DataImportLogic::LineFilter* line_block, QWidget* parent)
-    : QWidget(parent), p_line_block(line_block)
+LineFilterWidget::LineFilterWidget(DataImportLogic::LineFilter* line_filter, QWidget* parent)
+    : QWidget(parent), p_line_filter(line_filter)
 {
     createComponents();
     setLayout();
@@ -49,21 +49,21 @@ LineFilterWidget::LineFilterWidget(DataImportLogic::LineFilter* line_block, QWid
 //! Getter for the current lineblock
 DataImportLogic::LineFilter* LineFilterWidget::lineBlock() const
 {
-    return p_line_block;
+    return p_line_filter;
 }
 
 //! Grab from the line block item
 void LineFilterWidget::grabFromLineFilter()
 {
-    if (!p_line_block)
+    if (!p_line_filter)
         return;
 
     QList<QWidget*> object_list = this->findChildren<QWidget*>();
     foreach (QWidget* object, object_list) {
         object->blockSignals(true);
     }
-    int start = p_line_block->start();
-    int end = p_line_block->end();
+    int start = p_line_filter->start();
+    int end = p_line_filter->end();
 
     if (start + 1 == end) {
         p_range_start->setCurrentText(QString::fromStdString("At line"));
@@ -77,17 +77,17 @@ void LineFilterWidget::grabFromLineFilter()
         p_range_end->setCurrentText(QString::fromStdString("and"));
     }
 
-    if (p_line_block->active() != p_active_checkbox->isChecked()) {
-        p_active_checkbox->setChecked(p_line_block->active());
-        p_active_checkbox->init(p_line_block->active());
+    if (p_line_filter->active() != p_active_checkbox->isChecked()) {
+        p_active_checkbox->setChecked(p_line_filter->active());
+        p_active_checkbox->init(p_line_filter->active());
     }
-    p_type_select->setCurrentText(QString::fromStdString(p_line_block->type()));
-    p_color_editor->setData(QColor(QString::fromStdString(p_line_block->color())));
-    p_line_start->setValue(p_line_block->start());
-    p_line_end->setValue(p_line_block->end());
-    p_separators->setCurrentText(QString::fromStdString(p_line_block->separator()));
-    p_filter_name->setText(QString::fromStdString(p_line_block->name()));
-    p_ignore_strings->setText(QString::fromStdString(p_line_block->ignoreString()));
+    p_type_select->setCurrentText(QString::fromStdString(p_line_filter->type()));
+    p_color_editor->setData(QColor(QString::fromStdString(p_line_filter->color())));
+    p_line_start->setValue(p_line_filter->start());
+    p_line_end->setValue(p_line_filter->end());
+    p_separators->setCurrentText(QString::fromStdString(p_line_filter->separator()));
+    p_filter_name->setText(QString::fromStdString(p_line_filter->name()));
+    p_ignore_strings->setText(QString::fromStdString(p_line_filter->ignoreString()));
 
     setEnabled();
     typeVariation();
@@ -160,8 +160,8 @@ void LineFilterWidget::initComponents()
     p_range_end->addItems(QStringList{"and", "and end of file."});
 
     QStringList separators;
-    if (p_line_block) {
-        auto separator_names = p_line_block->separatorNames();
+    if (p_line_filter) {
+        auto separator_names = p_line_filter->separatorNames();
         for (auto& separator_name : separator_names) {
             separators << QString::fromStdString(separator_name);
         }
@@ -334,15 +334,15 @@ void LineFilterWidget::connectSubcomponents()
 //! Submit the data change to the LineFilter element
 void LineFilterWidget::dataChanged()
 {
-    if (!p_line_block)
+    if (!p_line_filter)
         return;
 
-    if (p_filter_name->text().toStdString() != p_line_block->name()) {
+    if (p_filter_name->text().toStdString() != p_line_filter->name()) {
         emit nameChanged(p_filter_name->text().toStdString(), this);
         return;
     }
 
-    if (p_type_select->currentText().toStdString() != p_line_block->type()) {
+    if (p_type_select->currentText().toStdString() != p_line_filter->type()) {
         emit typeChanged(p_type_select->currentText().toStdString(), this);
         return;
     }
@@ -367,12 +367,12 @@ void LineFilterWidget::dataChanged()
         }
     }
 
-    p_line_block->setActive(p_active_checkbox->isChecked());
-    p_line_block->setSeparator(p_separators->currentText().toStdString());
-    p_line_block->setColor(p_color_editor->data().value<QColor>().name().toStdString());
-    p_line_block->setIgnoreString(p_ignore_strings->text().toStdString());
-    p_line_block->setStart(start);
-    p_line_block->setEnd(end);
+    p_line_filter->setActive(p_active_checkbox->isChecked());
+    p_line_filter->setSeparator(p_separators->currentText().toStdString());
+    p_line_filter->setColor(p_color_editor->data().value<QColor>().name().toStdString());
+    p_line_filter->setIgnoreString(p_ignore_strings->text().toStdString());
+    p_line_filter->setStart(start);
+    p_line_filter->setEnd(end);
 
     emit parameterChanged();
 }
@@ -434,24 +434,24 @@ void ImportFilterWidget::initialise()
         addLineFilter();
     }
 
-    DataImportLogic::LineFilter* line_block;
+    DataImportLogic::LineFilter* line_filter;
     QList<QListWidgetItem*> items = p_list_widget->findItems("*", Qt::MatchWildcard);
 
-    line_block = dynamic_cast<LineFilterWidget*>(p_list_widget->itemWidget(items[0]))->lineBlock();
-    line_block->setType("Header");
-    line_block->setActive(true);
-    line_block->setStart(2);
-    line_block->setEnd(3);
-    line_block->setSeparator("Space ( )");
-    line_block->setColor("red");
+    line_filter = dynamic_cast<LineFilterWidget*>(p_list_widget->itemWidget(items[0]))->lineBlock();
+    line_filter->setType("Header");
+    line_filter->setActive(true);
+    line_filter->setStart(2);
+    line_filter->setEnd(3);
+    line_filter->setSeparator("Space ( )");
+    line_filter->setColor("red");
 
-    line_block = dynamic_cast<LineFilterWidget*>(p_list_widget->itemWidget(items[1]))->lineBlock();
-    line_block->setType("Data");
-    line_block->setActive(true);
-    line_block->setStart(3);
-    line_block->setEnd(-1);
-    line_block->setSeparator("Space ( )");
-    line_block->setColor("blue");
+    line_filter = dynamic_cast<LineFilterWidget*>(p_list_widget->itemWidget(items[1]))->lineBlock();
+    line_filter->setType("Data");
+    line_filter->setActive(true);
+    line_filter->setStart(3);
+    line_filter->setEnd(-1);
+    line_filter->setSeparator("Space ( )");
+    line_filter->setColor("blue");
 
     resetFromLineFilters();
 }
@@ -459,17 +459,17 @@ void ImportFilterWidget::initialise()
 //! Add a line block with the according line block object in the ImportLogic
 void ImportFilterWidget::addLineFilter()
 {
-    auto line_block =
+    auto line_filter =
         p_import_logic->addLineFilter("Filter " + std::to_string(p_list_widget->count()));
 
-    line_block->setType("Comments");
-    line_block->setActive(true);
-    line_block->setStart(0);
-    line_block->setEnd(1);
-    line_block->setSeparator("Space ( )");
-    line_block->setColor("green");
+    line_filter->setType("Comments");
+    line_filter->setActive(true);
+    line_filter->setStart(0);
+    line_filter->setEnd(1);
+    line_filter->setSeparator("Space ( )");
+    line_filter->setColor("green");
 
-    auto temp_widget = new LineFilterWidget(line_block, p_list_widget);
+    auto temp_widget = new LineFilterWidget(line_filter, p_list_widget);
     auto temp_item = new QListWidgetItem();
     temp_item->setSizeHint(temp_widget->sizeHint());
     p_list_widget->addItem(temp_item);
@@ -535,11 +535,11 @@ void ImportFilterWidget::processNameChanged(std::string name, LineFilterWidget* 
 //! This manages the types as only one data type and one header type is allowed
 void ImportFilterWidget::processTypeChanged(std::string type, LineFilterWidget* widget)
 {
-    auto line_block = p_import_logic->typeInBlocks(type);
-    if (!line_block || type == "Comments" || type == "Info") {
+    auto line_filter = p_import_logic->typeInBlocks(type);
+    if (!line_filter || type == "Comments" || type == "Info") {
         widget->lineBlock()->setType(type);
     } else {
-        line_block->setType("Comments");
+        line_filter->setType("Comments");
         widget->lineBlock()->setType(type);
     }
     resetFromLineFilters();

@@ -119,7 +119,7 @@ private:
 
 private:
     std::vector<std::unique_ptr<CSVFile>> m_files;
-    std::vector<std::unique_ptr<LineFilter>> m_line_blocks;
+    std::vector<std::unique_ptr<LineFilter>> m_line_filters;
     std::map<std::string, char> m_separators;
     std::unique_ptr<DataStructure> p_data_structure;
 };
