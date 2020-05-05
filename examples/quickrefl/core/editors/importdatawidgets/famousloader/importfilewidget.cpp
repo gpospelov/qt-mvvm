@@ -108,7 +108,9 @@ void ImportFileWidget::addFiles()
     }
 
     // Refresh
-    p_list_model->setStringList(p_list_model->stringList() + files);
+    files = p_list_model->stringList() + files;
+    files.removeDuplicates();
+    p_list_model->setStringList(files);
     emit filesChanged(currentFiles());
 
     // Set back the initial string is present
