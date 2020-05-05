@@ -17,6 +17,7 @@
 #include <QIcon>
 #include <QLabel>
 #include <QLineEdit>
+#include <QSettings>
 #include <QSizePolicy>
 #include <QSpinBox>
 #include <QTabWidget>
@@ -383,7 +384,6 @@ ImportFilterWidget::ImportFilterWidget(DataImportLogic::ImportLogic* import_logi
     : QWidget(parent), p_import_logic(import_logic)
 {
     setLayout();
-    initialise();
 }
 
 //! Set all the layouts and positioning of the items
@@ -498,6 +498,65 @@ void ImportFilterWidget::removeLineFilter()
             dynamic_cast<LineFilterWidget*>(p_list_widget->itemWidget(item))->lineBlock());
         delete p_list_widget->takeItem(p_list_widget->row(item));
     }
+}
+
+//! Read the settings froma QSetting structure
+void ImportFilterWidget::readSettings(QSettings& settings)
+{
+    settings.beginGroup("Filters");
+    if (settings.childGroups().count() != 0) {
+        for (auto group_name : settings.childGroups()) {
+            addLineFilter();
+            auto line_filter =
+                dynamic_cast<LineFilterWidget*>(
+                    p_list_widget->itemWidget(p_list_widget->item(p_list_widget->count() - 1)))
+                    ->lineBlock();
+
+            settings.beginGroup(group_name);
+            line_filter->setName(settings.value("Name", "").toString().toStdString());
+            line_filter->setType(settings.value("Type", "Comments").toString().toStdString());
+            line_filter->setActive(settings.value("Active", true).toBool());
+            line_filter->setStart(settings.value("Start", 0).toInt());
+            line_filter->setEnd(settings.value("End", 1).toInt());
+            line_filter->setSeparator(
+                settings.value("Separator", "Space ( )").toString().toStdString());
+            line_filter->setColor(settings.value("Color", "black").toString().toStdString());
+            line_filter->setIgnoreString(
+                settings.value("IgnoreString", "").toString().toStdString());
+            settings.endGroup();
+        }
+        resetFromLineFilters();
+    } else {
+        initialise();
+    }
+    settings.endGroup();
+}
+
+//! Write the settings from a QSetting structure
+void ImportFilterWidget::writeSettings(QSettings& settings)
+{
+    settings.beginGroup("Filters");
+    settings.remove("");
+    settings.endGroup();
+
+    settings.beginGroup("Filters");
+    for (int row = 0; row < p_list_widget->count(); row++) {
+        auto item = p_list_widget->item(row);
+        auto widget = dynamic_cast<LineFilterWidget*>(p_list_widget->itemWidget(item));
+        auto line_filter = widget->lineBlock();
+
+        settings.beginGroup(QString::number(row));
+        settings.setValue("Name", QString::fromStdString(line_filter->name()));
+        settings.setValue("Type", QString::fromStdString(line_filter->type()));
+        settings.setValue("Active", line_filter->active());
+        settings.setValue("Start", line_filter->start());
+        settings.setValue("End", line_filter->end());
+        settings.setValue("Separator", QString::fromStdString(line_filter->separator()));
+        settings.setValue("Color", QString::fromStdString(line_filter->color()));
+        settings.setValue("IgnoreString", QString::fromStdString(line_filter->ignoreString()));
+        settings.endGroup();
+    }
+    settings.endGroup();
 }
 
 //! Reset all the info in the linblockwidgets from the linblock items

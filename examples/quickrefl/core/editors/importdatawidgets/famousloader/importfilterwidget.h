@@ -28,6 +28,7 @@ class QHBoxLayout;
 class QLineEdit;
 class QTabWidget;
 class QGridLayout;
+class QSettings;
 QT_END_NAMESPACE
 
 namespace ModelView
@@ -141,6 +142,8 @@ public:
 
     void addLineFilter();
     void removeLineFilter();
+    void readSettings(QSettings& settings);
+    void writeSettings(QSettings& settings);
 
 signals:
     void parameterChanged();

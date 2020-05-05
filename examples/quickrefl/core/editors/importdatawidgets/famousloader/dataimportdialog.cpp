@@ -149,6 +149,7 @@ void DataLoaderDialog::writeSettings()
     settings.endGroup();
 
     p_import_file_list->writeSettings(settings);
+    p_parameter_dialog->writeSettings(settings);
 }
 
 //! read the Qsettings
@@ -162,6 +163,7 @@ void DataLoaderDialog::readSettings()
     settings.endGroup();
 
     p_import_file_list->readSettings(settings);
+    p_parameter_dialog->readSettings(settings);
 }
 
 void DataLoaderDialog::accept()
