@@ -156,6 +156,7 @@ private:
     void initialise();
     void connectAll();
     void resetFromLineFilters() const;
+    void handleInternalMoveEvent();
 
 private:
     DataImportLogic::ImportLogic* p_import_logic;

@@ -325,6 +325,20 @@ void ImportLogic::removeLineFilter(LineFilter* block_ptr)
                         m_line_blocks.end());
 }
 
+//! This is the method reordering line filter
+void ImportLogic::setLineFilterOrder(std::vector<LineFilter*> filter_order)
+{
+    std::vector<std::unique_ptr<LineFilter>> temp;
+    for (LineFilter* line_filter_ptr : filter_order) {
+        const auto found_ptr =
+            std::find_if(m_line_blocks.begin(), m_line_blocks.end(),
+                         [=](auto const& ptr) { return ptr.get() == line_filter_ptr; });
+        temp.push_back(std::move(*found_ptr));
+        m_line_blocks.erase(found_ptr);
+    }
+    std::move(temp.begin(), temp.end(), std::back_inserter(m_line_blocks));
+}
+
 //! This is the slot for adding files into the local memory
 void ImportLogic::setFiles(std::vector<std::string> file_paths)
 {

@@ -96,6 +96,7 @@ public:
 
     LineFilter* addLineFilter(std::string name);
     void removeLineFilter(LineFilter* block_ptr);
+    void setLineFilterOrder(std::vector<LineFilter*> filter_order);
 
     std::string getPreview(const int& row) const;
     string_data getData(const int& row) const;

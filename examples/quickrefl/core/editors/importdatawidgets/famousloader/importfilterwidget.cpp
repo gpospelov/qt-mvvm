@@ -423,6 +423,8 @@ void ImportFilterWidget::setLayout()
     // Connect the buttons
     connect(add_button, &QToolButton::clicked, this, &ImportFilterWidget::addLineFilter);
     connect(remove_button, &QToolButton::clicked, this, &ImportFilterWidget::removeLineFilter);
+    connect(p_list_widget->model(), &QAbstractItemModel::rowsMoved, this,
+            &ImportFilterWidget::handleInternalMoveEvent);
 }
 
 //! Initial display
@@ -505,6 +507,19 @@ void ImportFilterWidget::resetFromLineFilters() const
     foreach (QListWidgetItem* item, items) {
         dynamic_cast<LineFilterWidget*>(p_list_widget->itemWidget(item))->grabFromLineFilter();
     }
+}
+
+//! Reset all the info in the linblockwidgets from the linblock items
+void ImportFilterWidget::handleInternalMoveEvent()
+{
+    std::vector<DataImportLogic::LineFilter*> filter_order;
+    for (int row = 0; row < p_list_widget->count(); row++) {
+        auto item = p_list_widget->item(row);
+        auto widget = dynamic_cast<LineFilterWidget*>(p_list_widget->itemWidget(item));
+        filter_order.push_back(widget->lineBlock());
+    }
+    p_import_logic->setLineFilterOrder(filter_order);
+    emit parameterChanged();
 }
 
 //! This manages the naming by allowing only dofferent names and sends it upstream if changed
