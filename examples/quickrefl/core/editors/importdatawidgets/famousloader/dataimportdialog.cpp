@@ -67,6 +67,7 @@ DataLoaderDialog::DataLoaderDialog(QWidget* parent) : QDialog(parent)
     h_splitter->setStretchFactor(1, 1);
 
     readSettings();
+    setWindowTitle("Data import dialog");
 }
 
 //! Helper function to set up the file list area
