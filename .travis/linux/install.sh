@@ -1,6 +1,6 @@
 # install qt
 sudo apt-get update
-sudo apt-get install -y -qq --no-install-recommends qt5-default qtbase5-dev
+sudo apt-add-repository -y ppa:beineri/opt-qt-5.12.8-bionic && travis_wait 30 sudo apt-get -qq update && sudo apt-get -qq install qt512tools qt512base && source /opt/qt512/bin/qt512-env.sh
 sudo apt-get -qq clean
 
 # install cmake
