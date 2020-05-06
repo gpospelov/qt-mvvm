@@ -1,9 +1,9 @@
 # install qt
-sudo apt-add-repository -y ppa:beineri/opt-qt-5.13.2-bionic
+sudo apt-add-repository -y ppa:beineri/opt-qt-5.14.2-bionic
 sudo apt-get -qq update 
-sudo apt-get install qt513base qt5133d qt513imageformats qt513svg  qt513tools -y
+sudo apt-get install qt514base qt514imageformats qt514svg  qt514tools -y
 sudo apt-get install libgl1-mesa-dev -y
-source /opt/qt513/bin/qt513-env.sh
+source /opt/qt514/bin/qt514-env.sh
 sudo apt-get -qq clean
 
 # install cmake
