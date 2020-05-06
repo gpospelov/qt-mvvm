@@ -31,13 +31,13 @@ public:
     ProjectManager(const ProjectManager& other) = delete;
     ProjectManager& operator=(const ProjectManager& other) = delete;
 
-    void createNewProject() override;
+    bool createNewProject() override;
 
-    void saveCurrentProject() override;
+    bool saveCurrentProject() override;
 
-    void saveProjectAs() override;
+    bool saveProjectAs() override;
 
-    void openExistingProject() override;
+    bool openExistingProject() override;
 
     std::string currentProjectDir() const;
 

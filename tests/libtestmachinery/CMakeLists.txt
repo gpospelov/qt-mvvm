@@ -3,8 +3,7 @@ set(library_name testmachinery)
 file(GLOB source_files "*.cpp")
 file(GLOB include_files "*.h")
 
-find_package(Qt5Core REQUIRED)
-find_package(Qt5Test REQUIRED)
+find_package(Qt5 COMPONENTS Widgets Core Test REQUIRED)
 
 if(WIN32)
     add_definitions(-DGTEST_LINKED_AS_SHARED_LIBRARY)
