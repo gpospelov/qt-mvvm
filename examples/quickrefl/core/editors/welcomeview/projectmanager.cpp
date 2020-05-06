@@ -26,7 +26,8 @@ struct ProjectManager::ProjectManagerImpl {
 
     ProjectManagerImpl(ApplicationModelsInterface* models, selector_t open_dir,
                        selector_t create_dir)
-        : app_models(models), open_dir(open_dir), create_dir(create_dir)
+        : app_models(models), current_project(ProjectUtils::CreateUntitledProject(models)),
+          open_dir(open_dir), create_dir(create_dir)
     {
     }
 
@@ -52,7 +53,7 @@ struct ProjectManager::ProjectManagerImpl {
 
     //! Saves the project into a given directory.
 
-    bool saveCurrentProjectAs(const std::string& dirname )
+    bool saveCurrentProjectAs(const std::string& dirname)
     {
         // empty directory means 'cancel' during directory selection
         return dirname.empty() ? failed : current_project->save(dirname);
@@ -66,7 +67,6 @@ ProjectManager::ProjectManager(ApplicationModelsInterface* app_models, selector_
                                selector_t create_dir)
     : p_impl(std::make_unique<ProjectManagerImpl>(app_models, open_dir, create_dir))
 {
-    createNewProject();
 }
 
 ProjectManager::~ProjectManager() = default;
@@ -97,9 +97,9 @@ bool ProjectManager::saveProjectAs()
 bool ProjectManager::openExistingProject()
 {
     return succeeded;
-//    if (!p_impl->saveCurrentProject())
-//        return;
-//    p_impl->closeCurrentProject();
+    //    if (!p_impl->saveCurrentProject())
+    //        return;
+    //    p_impl->closeCurrentProject();
 }
 
 std::string ProjectManager::currentProjectDir() const
