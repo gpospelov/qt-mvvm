@@ -1,7 +1,7 @@
 # install qt
 sudo apt-add-repository -y ppa:beineri/opt-qt-5.12.8-bionic
 sudo apt-get -qq update 
-sudo apt-get -qq install qt512tools qt512base 
+sudo apt-get -qq install libgl1-mesa-dev qt512tools qt512base qt512svg 
 source /opt/qt512/bin/qt512-env.sh
 sudo apt-get -qq clean
 
