@@ -8,7 +8,7 @@
 // ************************************************************************** //
 
 #include "importfilterwidget.h"
-
+#include "styleutils.h"
 #include "switch.h"
 
 #include <QCheckBox>
@@ -418,16 +418,12 @@ void ImportFilterWidget::setLayout()
 
     // Set up the buttons
     auto add_button = new QToolButton(this);
-    QPixmap add_image(":/icons/plus-circle-outline.svg");
-    QIcon add_ic(add_image);
-    add_button->setIcon(add_ic);
+    add_button->setIcon(QIcon(":/icons/playlist-plus.svg"));
     add_button->setToolTip("Add a seletion rule:\nSelection rules are meant to define the text "
                            "regions and their type.\n The order of these is relevant.");
 
     auto remove_button = new QToolButton(this);
-    QPixmap remove_image(":/icons/beaker-remove-outline.svg");
-    QIcon remove_ic(remove_image);
-    remove_button->setIcon(remove_ic);
+    remove_button->setIcon(QIcon(":/icons/playlist-remove.svg"));
     remove_button->setToolTip("Remove the selected selection rule.");
 
     // Set the layout

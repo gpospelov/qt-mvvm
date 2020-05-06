@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include "importfilewidget.h"
+#include "styleutils.h"
 
 #include <QFileDialog>
 #include <QHBoxLayout>
@@ -45,13 +46,11 @@ void ImportFileWidget::createWidgets()
 
     // Set up the buttons
     auto add_button = new QToolButton(this);
-    QIcon add_ic(style()->standardIcon(QStyle::SP_FileDialogNewFolder));
-    add_button->setIcon(add_ic);
+    add_button->setIcon(QIcon(":/icons/file-plus.svg"));
     add_button->setToolTip("Add further files to the import procedure.");
 
     auto reset_button = new QToolButton(this);
-    QIcon reset_ic(style()->standardIcon(QStyle::SP_DialogResetButton));
-    reset_button->setIcon(reset_ic);
+    reset_button->setIcon(QIcon(":/icons/file-remove.svg"));
     reset_button->setToolTip("Remove all currently selected files.");
 
     // Build the layout
