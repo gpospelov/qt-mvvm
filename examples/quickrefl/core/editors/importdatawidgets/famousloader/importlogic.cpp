@@ -12,6 +12,9 @@
 #include <iostream>
 #include <numeric>
 #include <sstream>
+#include <algorithm>
+#include <functional>
+#include <string>
 
 namespace DataImportLogic
 {

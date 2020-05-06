@@ -15,6 +15,7 @@
 #include <QGroupBox>
 #include <QTabWidget>
 #include <QTableView>
+#include <memory>
 
 namespace DataImportGui
 {

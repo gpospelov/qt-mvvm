@@ -19,6 +19,7 @@
 #include <QComboBox>
 #include <QHeaderView>
 #include <QLineEdit>
+#include <algorithm>
 
 namespace DataImportGui
 {

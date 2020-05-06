@@ -10,6 +10,7 @@
 #include "importdatastructure.h"
 
 #include <cmath>
+#include <algorithm>
 
 namespace DataImportLogic
 {
