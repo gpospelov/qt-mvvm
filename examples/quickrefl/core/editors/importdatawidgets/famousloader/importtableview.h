@@ -86,8 +86,6 @@ class ImportTableView : public QTableView
 public:
     ImportTableView(QWidget* parent = nullptr);
     ImportTableModel* model() const;
-
-private:
 };
 
 } // End of namespace DataImportGui

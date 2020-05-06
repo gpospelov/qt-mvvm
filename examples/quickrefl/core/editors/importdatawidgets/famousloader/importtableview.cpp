@@ -185,21 +185,22 @@ QVariant ImportTableModel::headerData(int section, Qt::Orientation orientation, 
         if (role == Qt::DisplayRole)
             return QVariant(section - utility_lines);
     } else if (section < utility_lines) {
-        if (role == Qt::DisplayRole)
+        if (role == Qt::DisplayRole) {
             if (info_types.at(section) == DataImportLogic::InfoTypes::Name) {
                 return QVariant("Name");
             }
-        if (info_types.at(section) == DataImportLogic::InfoTypes::Type) {
-            return QVariant("Type");
-        }
-        if (info_types.at(section) == DataImportLogic::InfoTypes::Unit) {
-            return QVariant("Unit");
-        }
-        if (info_types.at(section) == DataImportLogic::InfoTypes::Header) {
-            return QVariant("Header");
-        }
-        if (info_types.at(section) == DataImportLogic::InfoTypes::Multiplier) {
-            return QVariant("Multiplier");
+            if (info_types.at(section) == DataImportLogic::InfoTypes::Type) {
+                return QVariant("Type");
+            }
+            if (info_types.at(section) == DataImportLogic::InfoTypes::Unit) {
+                return QVariant("Unit");
+            }
+            if (info_types.at(section) == DataImportLogic::InfoTypes::Header) {
+                return QVariant("Header");
+            }
+            if (info_types.at(section) == DataImportLogic::InfoTypes::Multiplier) {
+                return QVariant("Multiplier");
+            }
         }
     }
 
@@ -341,8 +342,7 @@ ImportTableView::ImportTableView(QWidget* parent) : QTableView(parent)
 {
     setModel(new ImportTableModel());
     setItemDelegate(new ImportTableDelegate(this));
-    verticalHeader()->setDefaultAlignment(Qt::AlignRight);
-    verticalHeader()->resizeSections(QHeaderView::ResizeToContents);
+    verticalHeader()->setMaximumWidth(100);
 }
 
 //! override the view to avoid writing dynamic casts elsewhere
