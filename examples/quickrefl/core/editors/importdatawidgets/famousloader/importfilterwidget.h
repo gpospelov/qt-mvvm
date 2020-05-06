@@ -93,6 +93,7 @@ signals:
     void typeChanged(std::string type, LineFilterWidget*);
 
 private:
+    void setToolTips();
     void setEnabled();
     void typeVariation();
     void startRangeChanged();

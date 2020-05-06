@@ -38,7 +38,7 @@ DataLoaderDialog::DataLoaderDialog(QWidget* parent) : QDialog(parent)
     v_splitter->setChildrenCollapsible(false);
 
     auto file_list_space = new QGroupBox("Selected Files:", v_splitter);
-    auto parameter_space = new QGroupBox("Import parameters:", v_splitter);
+    auto parameter_space = new QGroupBox("Text Selection rules:", v_splitter);
     p_selection_space = new QTabWidget(v_splitter);
 
     // The dialog buttons

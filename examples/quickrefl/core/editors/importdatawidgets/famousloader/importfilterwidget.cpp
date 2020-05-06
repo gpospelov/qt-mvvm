@@ -39,6 +39,7 @@ LineFilterWidget::LineFilterWidget(DataImportLogic::LineFilter* line_filter, QWi
     : QWidget(parent), p_line_filter(line_filter)
 {
     createComponents();
+    setToolTips();
     setLayout();
     initComponents();
     connectAll();
@@ -129,6 +130,22 @@ void LineFilterWidget::createComponents()
     p_filter_name->setStyle(new QProxyStyle("fusion"));
     p_ignore_strings->setStyle(new QProxyStyle("fusion"));
     p_ignore_lines->setStyle(new QProxyStyle("fusion"));
+}
+
+//! Set the tool tips of all the components
+void LineFilterWidget::setToolTips()
+{
+    p_type_select->setToolTip("Select the type of this selection rule");
+    p_active_checkbox->setToolTip("Turn this selection rule on or off");
+    p_line_start->setToolTip("Select the starting line");
+    p_line_end->setToolTip("Select the delimiter line");
+    p_color_editor->setToolTip("Select the display color of this selection rul ein the text");
+    p_range_start->setToolTip("Select the type of range wanted");
+    p_range_end->setToolTip("Select the range type wanted");
+    p_separators->setToolTip("Chose the wanted delimiter character");
+    p_filter_name->setToolTip("Set a unique name for the selection rule");
+    p_ignore_strings->setToolTip("Select the characters or strings wanted separated by comas");
+    p_ignore_lines->setToolTip("Select the lines to ignore separated by comas");
 }
 
 //! Initalize the components
@@ -404,11 +421,14 @@ void ImportFilterWidget::setLayout()
     QPixmap add_image(":/icons/plus-circle-outline.svg");
     QIcon add_ic(add_image);
     add_button->setIcon(add_ic);
+    add_button->setToolTip("Add a seletion rule:\nSelection rules are meant to define the text "
+                           "regions and their type.\n The order of these is relevant.");
 
     auto remove_button = new QToolButton(this);
     QPixmap remove_image(":/icons/beaker-remove-outline.svg");
     QIcon remove_ic(remove_image);
     remove_button->setIcon(remove_ic);
+    remove_button->setToolTip("Remove the selected selection rule.");
 
     // Set the layout
     auto widget_layout = new QHBoxLayout(this);

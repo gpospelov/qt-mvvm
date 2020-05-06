@@ -159,6 +159,22 @@ QVariant ImportTableModel::data(const QModelIndex& index, int role) const
         if (role == Qt::TextAlignmentRole) {
             return Qt::AlignCenter;
         }
+        if (role == Qt::ToolTipRole) {
+            std::vector<QVariant> tooltips;
+            if (m_show_name)
+                tooltips.push_back(QVariant(
+                    QString("The name of the column that will be displayed in the loaded data")));
+            if (m_show_type)
+                tooltips.push_back(QVariant(QString("The import type of the data")));
+            if (m_show_units)
+                tooltips.push_back(QVariant(QString("The unit type of the data")));
+            if (m_show_multiplier)
+                tooltips.push_back(QVariant(QString("The multiplier for the data")));
+            if (m_show_header)
+                tooltips.push_back(
+                    QVariant(QString("The identified Header from the selection rules")));
+            return tooltips.at(index.row());
+        }
     }
 
     return QVariant();

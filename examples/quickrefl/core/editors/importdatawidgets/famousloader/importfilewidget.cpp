@@ -47,10 +47,12 @@ void ImportFileWidget::createWidgets()
     auto add_button = new QToolButton(this);
     QIcon add_ic(style()->standardIcon(QStyle::SP_FileDialogNewFolder));
     add_button->setIcon(add_ic);
+    add_button->setToolTip("Add further files to the import procedure.");
 
     auto reset_button = new QToolButton(this);
     QIcon reset_ic(style()->standardIcon(QStyle::SP_DialogResetButton));
     reset_button->setIcon(reset_ic);
+    reset_button->setToolTip("Remove all currently selected files.");
 
     // Build the layout
     main_layout->addWidget(p_list_view);
