@@ -11,9 +11,9 @@
 #define IMPORTDATASTRUCTURE_H
 
 #include <map>
+#include <memory>
 #include <string>
 #include <vector>
-#include <memory>
 
 namespace DataImportLogic
 {

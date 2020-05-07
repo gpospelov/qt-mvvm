@@ -9,11 +9,11 @@
 
 #include "importlogic.h"
 
+#include <algorithm>
+#include <functional>
 #include <iostream>
 #include <numeric>
 #include <sstream>
-#include <algorithm>
-#include <functional>
 #include <string>
 
 namespace DataImportLogic
@@ -303,7 +303,7 @@ void LineFilter::setEnd(int end_line)
 
 // -------------------------------------------------
 //! This is the constructor
-ImportLogic::ImportLogic() : QObject()
+ImportLogic::ImportLogic()
 {
     initSeparators();
     p_data_structure = std::make_unique<DataStructure>();
@@ -343,7 +343,7 @@ void ImportLogic::setLineFilterOrder(std::vector<LineFilter*> filter_order)
 }
 
 //! This is the slot for adding files into the local memory
-void ImportLogic::setFiles(std::vector<std::string> file_paths)
+void ImportLogic::setFiles(const std::vector<std::string>& file_paths)
 {
     m_files.clear();
     for (auto& file_path : file_paths) {
