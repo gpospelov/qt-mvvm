@@ -8,7 +8,7 @@
 // ************************************************************************** //
 
 #include "importdataeditor.h"
-#include "CsvImportAssistant.h"
+#include "dataimportdialog.h"
 #include "datasetitem.h"
 #include "realdatamodel.h"
 #include "styleutils.h"
@@ -48,8 +48,8 @@ void ImportDataEditor::setup_toolbar()
     load_action->setIcon(QIcon(":/icons/aspect-ratio.svg"));
     toolbar->addAction(load_action);
     auto on_load_action = [this]() {
-        QString fileName = QFileDialog::getOpenFileName(nullptr, "Open file");
-        CsvImportAssistant assistant(fileName, true);
+        DataImportGui::DataLoaderDialog assistant;
+        assistant.exec();
     };
     connect(load_action, &QAction::triggered, on_load_action);
 }
