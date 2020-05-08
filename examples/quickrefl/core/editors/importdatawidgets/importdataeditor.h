@@ -19,6 +19,11 @@ class TopItemsTreeView;
 class PropertyTreeView;
 } // namespace ModelView
 
+namespace DataImportLogic
+{
+class ImportOutput;
+}
+
 class RealDataModel;
 class QToolBar;
 class QBoxLayout;
@@ -36,6 +41,10 @@ private:
     void setup_views();
     QBoxLayout* create_bottom_layout();
 
+    void invokeImportDialog();
+    void onImportDialogAccept(DataImportLogic::ImportOutput import_output);
+
+private:
     RealDataModel* model{nullptr};
     QToolBar* toolbar{nullptr};
     ModelView::TopItemsTreeView* topitems_tree{nullptr};

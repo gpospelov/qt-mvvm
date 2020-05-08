@@ -10,15 +10,20 @@
 #include "importdataeditor.h"
 #include "dataimportdialog.h"
 #include "datasetitem.h"
+#include "importoutput.h"
 #include "realdatamodel.h"
 #include "styleutils.h"
+
 #include <QAction>
 #include <QDebug>
+#include <QDialog>
 #include <QFileDialog>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QToolBar>
 #include <QVBoxLayout>
+#include <iostream>
+
 #include <mvvm/model/modelutils.h>
 #include <mvvm/plotting/graphcanvas.h>
 #include <mvvm/standarditems/containeritem.h>
@@ -47,11 +52,7 @@ void ImportDataEditor::setup_toolbar()
     load_action->setToolTip("Summons the famous data loader.");
     load_action->setIcon(QIcon(":/icons/aspect-ratio.svg"));
     toolbar->addAction(load_action);
-    auto on_load_action = [this]() {
-        DataImportGui::DataLoaderDialog assistant;
-        assistant.exec();
-    };
-    connect(load_action, &QAction::triggered, on_load_action);
+    connect(load_action, &QAction::triggered, this, &ImportDataEditor::invokeImportDialog);
 }
 
 void ImportDataEditor::setup_views()
@@ -82,4 +83,22 @@ QBoxLayout* ImportDataEditor::create_bottom_layout()
     result->addWidget(graph_canvas, 5);
     result->addWidget(property_tree, 1);
     return result;
+}
+
+//! Invode the data load dialog and connect its state
+void ImportDataEditor::invokeImportDialog()
+{
+    DataImportGui::DataLoaderDialog assistant(this);
+    int dialog_code = assistant.exec();
+    if (dialog_code == QDialog::Accepted) {
+        onImportDialogAccept(assistant.result());
+    }
+}
+
+//! Process the accepted state
+void ImportDataEditor::onImportDialogAccept(DataImportLogic::ImportOutput import_output)
+{
+    for (auto& path : import_output.keys()) {
+        std::cout << path << std::endl;
+    }
 }
