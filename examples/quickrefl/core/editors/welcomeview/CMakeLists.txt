@@ -3,6 +3,8 @@ set(library_name quickreflcore)
 target_sources(${library_name} PRIVATE
     modelhaschangedcontroller.cpp
     modelhaschangedcontroller.h
+    openprojectwidget.cpp
+    openprojectwidget.h
     project.cpp
     project.h
     projectchangecontroller.cpp
@@ -13,6 +15,8 @@ target_sources(${library_name} PRIVATE
     projectmanagerinterface.h
     projectutils.cpp
     projectutils.h
+    recentprojectwidget.cpp
+    recentprojectwidget.h
     welcomeview.cpp
     welcomeview.h
 )

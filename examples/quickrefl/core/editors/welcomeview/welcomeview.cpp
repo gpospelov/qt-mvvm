@@ -9,7 +9,23 @@
 
 #include "welcomeview.h"
 #include "projectmanagerinterface.h"
+#include "recentprojectwidget.h"
+#include "openprojectwidget.h"
+#include <QHBoxLayout>
 
-WelcomeView::WelcomeView(QWidget* parent) : QWidget(parent) {}
+
+WelcomeView::WelcomeView(QWidget* parent) : QWidget(parent)
+{
+    QPalette palette;
+    palette.setColor(QPalette::Window, Qt::white);
+    setAutoFillBackground(true);
+    setPalette(palette);
+
+    auto layout = new QHBoxLayout(this);
+    layout->addSpacing(50);
+    layout->addWidget(new RecentProjectWidget);
+    layout->addWidget(new OpenProjectWidget);
+    layout->addSpacing(50);
+}
 
 WelcomeView::~WelcomeView() = default;
