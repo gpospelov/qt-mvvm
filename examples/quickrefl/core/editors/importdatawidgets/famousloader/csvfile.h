@@ -101,6 +101,7 @@ public:
     CSVFile(std::string path_to_file);
     ~CSVFile() = default;
 
+    const std::string& path() const;
     const std::vector<std::string>& thumbnail() const;
     const std::vector<std::string>& file() const;
     const std::string& line(int line_number) const;

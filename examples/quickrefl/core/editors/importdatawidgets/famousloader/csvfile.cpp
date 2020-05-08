@@ -40,6 +40,12 @@ void CSVFile::loadFile()
     file.close();
 }
 
+//! Retrieve the path
+const std::string& CSVFile::path() const
+{
+    return m_filepath;
+}
+
 //! The getter for the thumbnail text
 const std::vector<std::string>& CSVFile::thumbnail() const
 {
