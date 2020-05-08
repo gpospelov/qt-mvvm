@@ -10,6 +10,7 @@
 #include "importlogic.h"
 
 #include <algorithm>
+#include <filesystem>
 #include <functional>
 #include <iostream>
 #include <numeric>
@@ -350,6 +351,17 @@ void ImportLogic::setFiles(const std::vector<std::string>& file_paths)
         auto temp = std::make_unique<CSVFile>(file_path);
         m_files.push_back(std::move(temp));
     }
+}
+
+//! Process all files and then send the output
+ImportOutput ImportLogic::getFinalOutput()
+{
+    ImportOutput output;
+    for (int i = 0; i < m_files.size(); ++i) {
+        updateData(i);
+        output.freezData(m_files.at(i)->path(), *(p_data_structure.get()));
+    }
+    return output;
 }
 
 //! build the preview string with html style

@@ -12,6 +12,7 @@
 
 #include "csvfile.h"
 #include "importdatastructure.h"
+#include "importoutput.h"
 
 #include <memory>
 
@@ -103,6 +104,8 @@ public:
     LineFilter* nameInBlocks(const std::string& name) const;
     LineFilter* typeInBlocks(const std::string& type) const;
     void setFiles(const std::vector<std::string>& file_paths);
+
+    ImportOutput getFinalOutput();
 
 private:
     void initSeparators();
