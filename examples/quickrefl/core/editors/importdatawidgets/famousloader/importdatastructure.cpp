@@ -11,6 +11,7 @@
 
 #include <algorithm>
 #include <cmath>
+#include <functional>
 
 namespace DataImportLogic
 {
@@ -102,6 +103,15 @@ void DataColumn::setMultiplier(double multiplier)
 const std::vector<double>& DataColumn::values() const
 {
     return m_values;
+}
+
+//! Getter for the data values
+std::vector<double> DataColumn::finalValues() const
+{
+    auto output = std::vector<double>(m_values);
+    std::transform(output.begin(), output.end(), output.begin(),
+                   [=](auto& c) { return c * multiplier(); });
+    return output;
 }
 
 //! Getter for the data value at row

@@ -50,6 +50,7 @@ public:
     void setMultiplier(double multiplier);
 
     const std::vector<double>& values() const;
+    std::vector<double> finalValues() const;
     double value(int row) const;
     double finalValue(int row) const;
     const std::string& name() const;
