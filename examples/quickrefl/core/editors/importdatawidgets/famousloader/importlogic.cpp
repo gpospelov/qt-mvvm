@@ -372,7 +372,7 @@ std::string ImportLogic::getPreview(const int& row) const
     std::vector<std::string> color_scheme = getColorScheme(thumbnail.size());
     std::vector<char> separator_scheme = getSeparatorScheme(thumbnail.size());
 
-    std::string output;
+    std::string output = "";
     for (int i = 0; i < thumbnail.size(); ++i) {
 
         auto formated_line = thumbnail.at(i);
@@ -381,13 +381,15 @@ std::string ImportLogic::getPreview(const int& row) const
 
         if (separator_scheme.at(i) != '!') {
             auto temp_string_vec = split(formated_line, separator_scheme.at(i));
-            formated_line = temp_string_vec.at(0);
-            for (int j = 1; j < temp_string_vec.size(); ++j) {
-                formated_line +=
-                    std::string(std::string("<span style=\"background-color:") + color_scheme.at(i)
-                                + std::string("\">") + std::string(1, separator_scheme.at(i))
-                                + std::string("</span>"));
-                formated_line += temp_string_vec.at(j);
+            if (temp_string_vec.size() != 0){
+                formated_line = temp_string_vec.at(0);
+                for (int j = 1; j < temp_string_vec.size(); ++j) {
+                    formated_line +=
+                        std::string(std::string("<span style=\"background-color:") + color_scheme.at(i)
+                                    + std::string("\">") + std::string(1, separator_scheme.at(i))
+                                    + std::string("</span>"));
+                    formated_line += temp_string_vec.at(j);
+                }
             }
         }
         output += std::string("<div><font color=\"") + color_scheme.at(i) + std::string("\">")
