@@ -88,6 +88,7 @@ public:
     std::vector<bool> checkHeaders(const std::vector<std::string>& headers);
 
     DataColumn* column(const std::string& header);
+    const DataColumn* column(int column) const;
     DataColumn* column(int column);
 
     int rowCount() const;

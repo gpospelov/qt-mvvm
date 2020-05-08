@@ -239,6 +239,22 @@ DataColumn* DataStructure::column(const std::string& header)
     return (found == m_data_columns.end()) ? (nullptr) : ((*found).get());
 }
 
+//! Get the column associated to an index (! This is the const implementation)
+const DataColumn* DataStructure::column(int column_num) const
+{
+    int column_idx = 0;
+    for (const auto& column : m_data_columns) {
+        if (column->rowCount() != 0) {
+            if (column_idx == column_num) {
+                return column.get();
+            } else {
+                ++column_idx;
+            }
+        }
+    }
+    return nullptr;
+}
+
 //! Get the column associated to an index
 DataColumn* DataStructure::column(int column_num)
 {
