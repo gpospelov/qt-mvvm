@@ -35,6 +35,7 @@ class DataColumn
 public:
     DataColumn();
     DataColumn(const std::string& header);
+    DataColumn(const DataColumn* other);
     ~DataColumn() = default;
 
     void setValues(std::vector<std::string>& values);
