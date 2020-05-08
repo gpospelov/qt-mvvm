@@ -17,6 +17,11 @@
 #include <QTableView>
 #include <memory>
 
+namespace DataImportLogic
+{
+class ImportOutput;
+}
+
 namespace DataImportGui
 {
 
@@ -24,6 +29,7 @@ class ImportFileWidget;
 class ImportFilterWidget;
 class ImportTextView;
 class ImportTableView;
+class ImportOutput;
 
 //! This is the main dialog for the data loader
 class DataLoaderDialog : public QDialog
@@ -33,6 +39,7 @@ class DataLoaderDialog : public QDialog
 public:
     DataLoaderDialog(QWidget* parent = nullptr);
     ~DataLoaderDialog() = default;
+    DataImportLogic::ImportOutput result();
 
 private:
     void setUpFileListSpace(QGroupBox* conainer);

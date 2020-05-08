@@ -71,6 +71,12 @@ DataLoaderDialog::DataLoaderDialog(QWidget* parent) : QDialog(parent)
 }
 
 //! Helper function to set up the file list area
+DataImportLogic::ImportOutput DataLoaderDialog::result()
+{
+    return p_data_import_logic->getFinalOutput();
+}
+
+//! Helper function to set up the file list area
 void DataLoaderDialog::setUpFileListSpace(QGroupBox* conainer)
 {
 
@@ -171,6 +177,7 @@ void DataLoaderDialog::readSettings()
 
 void DataLoaderDialog::accept()
 {
+    QDialog::accept();
     writeSettings();
     close();
 }
