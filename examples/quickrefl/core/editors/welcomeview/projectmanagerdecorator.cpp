@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "projectmanager.h"
+#include "projectmanagerdecorator.h"
 #include "applicationmodelsinterface.h"
 #include "projectinterface.h"
 #include "projectutils.h"
@@ -18,7 +18,7 @@ const bool succeeded = true;
 const bool failed = false;
 } // namespace
 
-struct ProjectManager::ProjectManagerImpl {
+struct ProjectManagerDecorator::ProjectManagerImpl {
     ApplicationModelsInterface* app_models{nullptr};
     std::unique_ptr<ProjectInterface> current_project;
     selector_t open_dir;
@@ -63,15 +63,15 @@ struct ProjectManager::ProjectManagerImpl {
 //! Constructor for ProjectManager. Requires ApplicationModels and two callbacks to open projects,
 //! and create new projects.
 
-ProjectManager::ProjectManager(ApplicationModelsInterface* app_models, selector_t open_dir,
+ProjectManagerDecorator::ProjectManagerDecorator(ApplicationModelsInterface* app_models, selector_t open_dir,
                                selector_t create_dir)
     : p_impl(std::make_unique<ProjectManagerImpl>(app_models, open_dir, create_dir))
 {
 }
 
-ProjectManager::~ProjectManager() = default;
+ProjectManagerDecorator::~ProjectManagerDecorator() = default;
 
-bool ProjectManager::createNewProject(const std::string&)
+bool ProjectManagerDecorator::createNewProject(const std::string&)
 {
     if (!p_impl->saveCurrentProject())
         return failed;
@@ -80,7 +80,7 @@ bool ProjectManager::createNewProject(const std::string&)
     return succeeded;
 }
 
-bool ProjectManager::saveCurrentProject()
+bool ProjectManagerDecorator::saveCurrentProject()
 {
     return p_impl->saveCurrentProject();
 }
@@ -88,13 +88,13 @@ bool ProjectManager::saveCurrentProject()
 //! Saves project under the name provided by create_dir callback.
 //! Directory has to be created by the callback.
 
-bool ProjectManager::saveProjectAs(const std::string&)
+bool ProjectManagerDecorator::saveProjectAs(const std::string&)
 {
     auto dirname = p_impl->create_dir();
     return p_impl->saveCurrentProjectAs(dirname);
 }
 
-bool ProjectManager::openExistingProject(const std::string&)
+bool ProjectManagerDecorator::openExistingProject(const std::string&)
 {
     return succeeded;
     //    if (!p_impl->saveCurrentProject())
@@ -102,7 +102,7 @@ bool ProjectManager::openExistingProject(const std::string&)
     //    p_impl->closeCurrentProject();
 }
 
-std::string ProjectManager::currentProjectDir() const
+std::string ProjectManagerDecorator::currentProjectDir() const
 {
     return p_impl->current_project ? p_impl->current_project->projectDir() : std::string();
 }

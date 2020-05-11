@@ -9,7 +9,7 @@
 
 #include "applicationmodelsinterface.h"
 #include "google_test.h"
-#include "projectmanager.h"
+#include "projectmanagerdecorator.h"
 #include "test_utils.h"
 #include <cctype>
 #include <mvvm/model/propertyitem.h>
@@ -24,10 +24,10 @@ const std::string samplemodel_name = "samplemodel";
 
 //! Tests for ProjectManager class.
 
-class ProjectManagerTest : public ::testing::Test
+class ProjectManagerDecoratorTest : public ::testing::Test
 {
 public:
-    ~ProjectManagerTest();
+    ~ProjectManagerDecoratorTest();
 
     class ApplicationModels : public ApplicationModelsInterface
     {
@@ -60,24 +60,24 @@ public:
     }
 };
 
-ProjectManagerTest::~ProjectManagerTest() = default;
+ProjectManagerDecoratorTest::~ProjectManagerDecoratorTest() = default;
 
 //! Initial state of ProjectManager. Project created, and not-saved.
 
-TEST_F(ProjectManagerTest, initialState)
+TEST_F(ProjectManagerDecoratorTest, initialState)
 {
     auto open_dir = []() -> std::string { return {}; };
     auto create_dir = []() -> std::string { return {}; };
 
     ApplicationModels models;
-    ProjectManager manager(&models, open_dir, create_dir);
+    ProjectManagerDecorator manager(&models, open_dir, create_dir);
     EXPECT_TRUE(manager.currentProjectDir().empty());
 }
 
 //! Starting from new document (without project dir defined).
 //! Create new project in given directory.
 
-// TEST_F(ProjectManagerTest, untitledEmptyCreateNew)
+// TEST_F(ProjectManagerDecoratorTest, untitledEmptyCreateNew)
 //{
 //    auto project_dir = create_project_dir("Project_untitledEmptyCreateNew");
 
@@ -102,7 +102,7 @@ TEST_F(ProjectManagerTest, initialState)
 //! Starting from new document (without project dir defined).
 //! Saving project. Same behavior as SaveAs.
 
-TEST_F(ProjectManagerTest, untitledEmptySaveCurrentProject)
+TEST_F(ProjectManagerDecoratorTest, untitledEmptySaveCurrentProject)
 {
     auto project_dir = create_project_dir("Project_untitledEmptySaveCurrentProject");
 
@@ -110,7 +110,7 @@ TEST_F(ProjectManagerTest, untitledEmptySaveCurrentProject)
     auto create_dir = [&project_dir]() -> std::string { return project_dir; };
 
     ApplicationModels models;
-    ProjectManager manager(&models, open_dir, create_dir);
+    ProjectManagerDecorator manager(&models, open_dir, create_dir);
     EXPECT_TRUE(manager.currentProjectDir().empty());
 
     // saving new project to 'project_dir' directory.
@@ -127,7 +127,7 @@ TEST_F(ProjectManagerTest, untitledEmptySaveCurrentProject)
 //! Starting from new document (without project dir defined).
 //! Save under given name.
 
-TEST_F(ProjectManagerTest, untitledEmptySaveAs)
+TEST_F(ProjectManagerDecoratorTest, untitledEmptySaveAs)
 {
     auto project_dir = create_project_dir("Project_untitledEmptySaveAs");
 
@@ -135,7 +135,7 @@ TEST_F(ProjectManagerTest, untitledEmptySaveAs)
     auto create_dir = [&project_dir]() -> std::string { return project_dir; };
 
     ApplicationModels models;
-    ProjectManager manager(&models, open_dir, create_dir);
+    ProjectManagerDecorator manager(&models, open_dir, create_dir);
     EXPECT_TRUE(manager.currentProjectDir().empty());
 
     // saving new project to "project_dir" directory.
@@ -152,13 +152,13 @@ TEST_F(ProjectManagerTest, untitledEmptySaveAs)
 //! Starting from new document (without project dir defined).
 //! Attempt to save under empty name, immitating the user canceled directory selection dialog.
 
-TEST_F(ProjectManagerTest, untitledEmptySaveAsCancel)
+TEST_F(ProjectManagerDecoratorTest, untitledEmptySaveAsCancel)
 {
     auto open_dir = []() -> std::string { return {}; };
     auto create_dir = []() -> std::string { return {}; }; // empty name imitates canceling
 
     ApplicationModels models;
-    ProjectManager manager(&models, open_dir, create_dir);
+    ProjectManagerDecorator manager(&models, open_dir, create_dir);
     EXPECT_TRUE(manager.currentProjectDir().empty());
 
     // saving new project to "project_dir" directory.
@@ -169,13 +169,13 @@ TEST_F(ProjectManagerTest, untitledEmptySaveAsCancel)
 //! Starting from new document (without project dir defined).
 //! Attempt to save in the non-existing directory.
 
-TEST_F(ProjectManagerTest, untitledEmptySaveAsWrongDir)
+TEST_F(ProjectManagerDecoratorTest, untitledEmptySaveAsWrongDir)
 {
     auto open_dir = []() -> std::string { return {}; };
     auto create_dir = []() -> std::string { return "non-existing"; }; // empty name imitates canceling
 
     ApplicationModels models;
-    ProjectManager manager(&models, open_dir, create_dir);
+    ProjectManagerDecorator manager(&models, open_dir, create_dir);
 
     // saving new project to "project_dir" directory.
     EXPECT_FALSE(manager.saveProjectAs());

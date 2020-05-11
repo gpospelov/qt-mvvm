@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef PROJECTMANAGER_H
-#define PROJECTMANAGER_H
+#ifndef PROJECTMANAGERDECORATOR_H
+#define PROJECTMANAGERDECORATOR_H
 
 #include "projectmanagerinterface.h"
 #include <memory>
@@ -19,17 +19,17 @@ class ApplicationModelsInterface;
 //! Responsible for handling new/save/save-as/close project logic, where project mean collection
 //! of serialized application models in project directory.
 
-class ProjectManager : public ProjectManagerInterface
+class ProjectManagerDecorator : public ProjectManagerInterface
 {
     Q_OBJECT
 public:
     using selector_t = std::function<std::string()>;
 
-    ProjectManager(ApplicationModelsInterface* app_models, selector_t open_dir, selector_t create_dir);
-    ~ProjectManager() override;
+    ProjectManagerDecorator(ApplicationModelsInterface* app_models, selector_t open_dir, selector_t create_dir);
+    ~ProjectManagerDecorator() override;
 
-    ProjectManager(const ProjectManager& other) = delete;
-    ProjectManager& operator=(const ProjectManager& other) = delete;
+    ProjectManagerDecorator(const ProjectManagerDecorator& other) = delete;
+    ProjectManagerDecorator& operator=(const ProjectManagerDecorator& other) = delete;
 
     bool createNewProject(const std::string& dirname = {}) override;
 
@@ -46,4 +46,4 @@ private:
     std::unique_ptr<ProjectManagerImpl> p_impl;
 };
 
-#endif // PROJECTMANAGER_H
+#endif // PROJECTMANAGERDECORATOR_H

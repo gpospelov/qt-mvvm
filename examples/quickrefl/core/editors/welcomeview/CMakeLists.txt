@@ -10,8 +10,8 @@ target_sources(${library_name} PRIVATE
     projectchangecontroller.cpp
     projectchangecontroller.h
     projectinterface.h
-    projectmanager.cpp
-    projectmanager.h
+    projectmanagerdecorator.cpp
+    projectmanagerdecorator.h
     projectmanagerinterface.h
     projectutils.cpp
     projectutils.h
