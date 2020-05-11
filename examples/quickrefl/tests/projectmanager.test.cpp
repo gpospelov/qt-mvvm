@@ -209,3 +209,22 @@ TEST_F(ProjectManagerTest, titledUnmodifiedNew)
     auto model_json = ModelView::Utils::join(project_dir2, samplemodel_name + ".json");
     EXPECT_TRUE(ModelView::Utils::exists(model_json));
 }
+
+//! Saving of new project. Use untitled+modified project as a starting point.
+//! Should fail since project directory is not defined.
+
+TEST_F(ProjectManagerTest, titledModifiedSave)
+{
+    ApplicationModels models;
+    ProjectManager manager(&models);
+
+    const auto project_dir = create_project_dir("Project_titledModifiedSave");
+    EXPECT_TRUE(manager.saveProjectAs(project_dir));
+    EXPECT_EQ(manager.currentProjectDir(), project_dir);
+
+    // modifying the model
+    models.sample_model->insertItem<ModelView::PropertyItem>();
+
+    EXPECT_TRUE(manager.saveCurrentProject());
+    EXPECT_FALSE(manager.isModified());
+}
