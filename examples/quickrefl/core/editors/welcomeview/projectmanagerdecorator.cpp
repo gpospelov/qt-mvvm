@@ -106,3 +106,8 @@ std::string ProjectManagerDecorator::currentProjectDir() const
 {
     return p_impl->current_project ? p_impl->current_project->projectDir() : std::string();
 }
+
+bool ProjectManagerDecorator::isModified() const
+{
+    return p_impl->current_project->isModified();
+}

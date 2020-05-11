@@ -45,7 +45,7 @@ public:
     };
 
     static inline std::string test_dir = "not-yet-defined";
-    static inline const std::string test_subdir = "test_QuickReflProjectManager";
+    static inline const std::string test_subdir = "test_QuickReflProjectManagerDecorator";
     static void SetUpTestCase() { test_dir = TestUtils::CreateTestDirectory(test_subdir); }
     std::string testDir() const { return test_dir; }
 

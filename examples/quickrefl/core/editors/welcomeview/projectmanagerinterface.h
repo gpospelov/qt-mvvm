@@ -31,6 +31,8 @@ public:
     virtual bool saveProjectAs(const std::string& dirname = {}) = 0;
 
     virtual bool openExistingProject(const std::string& dirname = {}) = 0;
+
+    virtual bool isModified() const = 0;
 };
 
 #endif // PROJECTMANAGERINTERFACE_H

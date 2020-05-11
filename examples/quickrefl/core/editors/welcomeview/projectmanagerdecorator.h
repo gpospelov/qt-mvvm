@@ -41,6 +41,8 @@ public:
 
     std::string currentProjectDir() const;
 
+    bool isModified() const override;
+
 private:
     struct ProjectManagerImpl;
     std::unique_ptr<ProjectManagerImpl> p_impl;
