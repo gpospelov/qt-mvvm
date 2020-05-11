@@ -11,7 +11,7 @@
 #define PROJECTMANAGERINTERFACE_H
 
 #include <QObject>
-#include <memory>
+#include <string>
 
 class ApplicationModelsInterface;
 
@@ -24,13 +24,13 @@ class ProjectManagerInterface : public QObject
     Q_OBJECT
 public:
 
-    virtual bool createNewProject() = 0;
+    virtual bool createNewProject(const std::string& dirname = {}) = 0;
 
     virtual bool saveCurrentProject() = 0;
 
-    virtual bool saveProjectAs() = 0;
+    virtual bool saveProjectAs(const std::string& dirname = {}) = 0;
 
-    virtual bool openExistingProject() = 0;
+    virtual bool openExistingProject(const std::string& dirname = {}) = 0;
 };
 
 #endif // PROJECTMANAGERINTERFACE_H

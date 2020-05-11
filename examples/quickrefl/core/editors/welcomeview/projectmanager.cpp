@@ -71,7 +71,7 @@ ProjectManager::ProjectManager(ApplicationModelsInterface* app_models, selector_
 
 ProjectManager::~ProjectManager() = default;
 
-bool ProjectManager::createNewProject()
+bool ProjectManager::createNewProject(const std::string&)
 {
     if (!p_impl->saveCurrentProject())
         return failed;
@@ -88,13 +88,13 @@ bool ProjectManager::saveCurrentProject()
 //! Saves project under the name provided by create_dir callback.
 //! Directory has to be created by the callback.
 
-bool ProjectManager::saveProjectAs()
+bool ProjectManager::saveProjectAs(const std::string&)
 {
     auto dirname = p_impl->create_dir();
     return p_impl->saveCurrentProjectAs(dirname);
 }
 
-bool ProjectManager::openExistingProject()
+bool ProjectManager::openExistingProject(const std::string&)
 {
     return succeeded;
     //    if (!p_impl->saveCurrentProject())
