@@ -45,6 +45,8 @@ public:
 
     bool isModified() const override;
 
+    virtual void closeWithoutSaving() const;
+
 private:
     struct ProjectManagerImpl;
     std::unique_ptr<ProjectManagerImpl> p_impl;

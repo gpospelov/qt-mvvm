@@ -107,3 +107,8 @@ bool ProjectManager::isModified() const
 {
     return p_impl->isModified();
 }
+
+void ProjectManager::closeWithoutSaving() const
+{
+    p_impl->createNewProject();
+}
