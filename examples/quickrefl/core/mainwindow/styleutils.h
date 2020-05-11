@@ -11,6 +11,7 @@
 #define STYLEUTILS_H
 
 class QSize;
+class QFont;
 
 //! Namespace for central access to all theme styling.
 
@@ -25,6 +26,13 @@ QSize DockSizeHint();
 
 //! Hint on minimum size of docks on main reflectometry window.
 QSize DockMinimumSizeHint();
+
+//! Returns font for sections (25% large than system font).
+QFont sectionFont(bool bold = false);
+
+QSize SizeOfLetterM();
+
+int LargeButtonHeight();
 
 }; // namespace StyleUtils
 
