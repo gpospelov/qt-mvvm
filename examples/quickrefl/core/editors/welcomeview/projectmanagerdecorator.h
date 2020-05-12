@@ -11,25 +11,29 @@
 #define PROJECTMANAGERDECORATOR_H
 
 #include "projectmanagerinterface.h"
-#include <memory>
 #include <functional>
+#include <memory>
 
 class ApplicationModelsInterface;
 
-//! Responsible for handling new/save/save-as/close project logic, where project mean collection
-//! of serialized application models in project directory.
+//! Decorator for ProjectManager to provide interaction with the user on open/save-as request.
 
 class ProjectManagerDecorator : public ProjectManagerInterface
 {
     Q_OBJECT
 public:
+    enum SaveChangesAnswer { SAVE = 0, DISCARD = 1, CANCEL = 2 };
     using selector_t = std::function<std::string()>;
+    using answer_callback_t = std::function<SaveChangesAnswer()>;
 
-    ProjectManagerDecorator(ApplicationModelsInterface* app_models, selector_t open_dir, selector_t create_dir);
+    ProjectManagerDecorator(ApplicationModelsInterface* app_models, selector_t open_dir,
+                            selector_t create_dir);
     ~ProjectManagerDecorator() override;
 
     ProjectManagerDecorator(const ProjectManagerDecorator& other) = delete;
     ProjectManagerDecorator& operator=(const ProjectManagerDecorator& other) = delete;
+
+    void setSaveChangesAnswerCallback(answer_callback_t save_callback);
 
     bool createNewProject(const std::string& dirname = {}) override;
 
