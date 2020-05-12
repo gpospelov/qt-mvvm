@@ -42,11 +42,15 @@ QBoxLayout* OpenProjectWidget::createButtonLayout()
     new_project_button->setMinimumHeight(StyleUtils::LargeButtonHeight());
     new_project_button->setMinimumWidth(200);
     new_project_button->setFont(StyleUtils::sectionFont());
+    connect(new_project_button, &QPushButton::pressed, this,
+            &OpenProjectWidget::createNewProjectRequest);
 
     open_project_button = new QPushButton("Open");
     open_project_button->setMinimumHeight(StyleUtils::LargeButtonHeight());
     open_project_button->setMinimumWidth(200);
-    new_project_button->setFont(StyleUtils::sectionFont());
+    open_project_button->setFont(StyleUtils::sectionFont());
+    connect(open_project_button, &QPushButton::pressed, this,
+            &OpenProjectWidget::openExistingProjectRequest);
 
     result->addStretch(1);
     result->addWidget(new_project_button);

@@ -16,7 +16,8 @@
 #include <QHBoxLayout>
 
 WelcomeView::WelcomeView(ApplicationModels* models, QWidget* parent)
-    : QWidget(parent), m_models(models)
+    : QWidget(parent), m_models(models), m_recent_project_widget(new RecentProjectWidget),
+      m_open_project_widget(new OpenProjectWidget)
 {
     QPalette palette;
     palette.setColor(QPalette::Window, Qt::white);
@@ -25,11 +26,12 @@ WelcomeView::WelcomeView(ApplicationModels* models, QWidget* parent)
 
     auto layout = new QHBoxLayout(this);
     layout->addSpacing(50);
-    layout->addWidget(new RecentProjectWidget);
-    layout->addWidget(new OpenProjectWidget);
+    layout->addWidget(m_recent_project_widget);
+    layout->addWidget(m_open_project_widget);
     layout->addSpacing(50);
 
     init_project_manager();
+    setup_connections();
 }
 
 WelcomeView::~WelcomeView() = default;
@@ -85,4 +87,12 @@ void WelcomeView::init_project_manager()
     manager->setSaveChangesAnswerCallback(save_changes);
 
     m_project_manager = std::move(manager);
+}
+
+void WelcomeView::setup_connections()
+{
+    connect(m_open_project_widget, &OpenProjectWidget::openExistingProjectRequest, this,
+            &WelcomeView::onOpenExistingProject);
+    connect(m_open_project_widget, &OpenProjectWidget::createNewProjectRequest, this,
+            &WelcomeView::onCreateNewProject);
 }
