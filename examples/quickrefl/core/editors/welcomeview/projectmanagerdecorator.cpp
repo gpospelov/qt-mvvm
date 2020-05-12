@@ -35,7 +35,8 @@ struct ProjectManagerDecorator::ProjectManagerImpl {
     //! Returns true if the project has directory already defined.
     bool projectHasDir() const { return !project_manager->currentProjectDir().empty(); }
 
-    //    //! Saves project in project directory. If directory is not defined
+    //! Saves project in project directory. If directory is not defined, will acquire
+    //! directory susing callback provided.
     bool saveCurrentProject()
     {
         auto save_dir =
@@ -43,9 +44,10 @@ struct ProjectManagerDecorator::ProjectManagerImpl {
         return saveCurrentProjectAs(save_dir);
     }
 
+    //! Saves current project under directory selected.
     bool saveCurrentProjectAs(const std::string& dirname)
     {
-        // empty directory means 'cancel' during directory selection
+        // empty dirname varible means 'cancel' during directory selection
         return dirname.empty() ? failed : project_manager->saveProjectAs(dirname);
     }
 
@@ -53,6 +55,7 @@ struct ProjectManagerDecorator::ProjectManagerImpl {
 
     bool isModified() const { return project_manager->isModified(); }
 
+    //! Performs saving of previous project before creating a new one.
     bool saveBeforeClosing()
     {
         if (isModified()) {
@@ -60,7 +63,7 @@ struct ProjectManagerDecorator::ProjectManagerImpl {
             case SAVE:
                 return saveCurrentProject();
             case CANCEL:
-                return failed; // saving was interrupted by cancel
+                return failed; // saving was interrupted by the 'cancel' button
             case DISCARD:
                 project_manager->closeWithoutSaving();
                 return succeeded;
@@ -71,6 +74,7 @@ struct ProjectManagerDecorator::ProjectManagerImpl {
         return succeeded;
     }
 
+    //! Asks the user whether to save/cancel/discard the project using callback provided.
     SaveChangesAnswer acquireSaveChangesAnswer() const
     {
         if (!save_callback)
@@ -78,6 +82,7 @@ struct ProjectManagerDecorator::ProjectManagerImpl {
         return save_callback();
     }
 
+    //! Acquire the name of the new project directory using callback provided.
     std::string acquireNewProjectDir()
     {
         if (!create_dir)
@@ -85,6 +90,7 @@ struct ProjectManagerDecorator::ProjectManagerImpl {
         return create_dir();
     }
 
+    //! Acquire the name of the existing project directory using callback provided.
     std::string acquireExistingProjectDir()
     {
         if (!open_dir)
@@ -93,8 +99,8 @@ struct ProjectManagerDecorator::ProjectManagerImpl {
     }
 };
 
-//! Constructor for ProjectManager. Requires ApplicationModels and two callbacks to open projects,
-//! and create new projects.
+//! Constructor for ProjectManagerDecorator.
+//! Requires ApplicationModels and two callbacks to open projects, and create new projects.
 
 ProjectManagerDecorator::ProjectManagerDecorator(ApplicationModelsInterface* app_models,
                                                  selector_t open_dir, selector_t create_dir)
@@ -109,39 +115,56 @@ void ProjectManagerDecorator::setSaveChangesAnswerCallback(answer_callback_t sav
 
 ProjectManagerDecorator::~ProjectManagerDecorator() = default;
 
-bool ProjectManagerDecorator::createNewProject(const std::string&)
+//! Creates a new project in new directory 'dirname', returns 'true' in the case of success.
+//! If provided name is empty, will call directory selector dialog using callback provided.
+//! If current project is in unsaved state, will perform 'save-before-closing' procedure before
+//! proceeding further.
+
+bool ProjectManagerDecorator::createNewProject(const std::string& dirname)
 {
     if (!p_impl->saveBeforeClosing())
         return failed;
 
-    auto project_dir = p_impl->acquireNewProjectDir();
-    // empty dir denotes 'cancel' during directory creaion dialog
+    auto project_dir = dirname.empty() ? p_impl->acquireNewProjectDir() : dirname;
+    // empty project_dir string denotes 'cancel' during directory creation dialog
     return project_dir.empty() ? failed : p_impl->project_manager->createNewProject(project_dir);
 }
+
+//! Saves current project, returns 'true' in the case of success.
+//! The project should have a project directory defined, if it is not the sace, will lunch
+//! procedure of directory selection using callback provided.
 
 bool ProjectManagerDecorator::saveCurrentProject()
 {
     return p_impl->saveCurrentProject();
 }
 
-//! Saves project under the name provided by create_dir callback.
-//! Directory has to be created by the callback.
+//! Saves the project under a given directory, returns true in the case of success.
+//! The directory should exist already. If provided 'dirname' variable is empty,
+//! will acquire new project directory using dialog provided.
 
-bool ProjectManagerDecorator::saveProjectAs(const std::string&)
+bool ProjectManagerDecorator::saveProjectAs(const std::string& dirname)
 {
-    auto project_dir = p_impl->acquireNewProjectDir();
-    // empty dir denotes 'cancel' during directory creaion dialog
+    auto project_dir = dirname.empty() ? p_impl->acquireNewProjectDir() : dirname;
+    // empty project_dir variable denotes 'cancel' during directory creation dialog
     return project_dir.empty() ? failed : p_impl->saveCurrentProjectAs(project_dir);
 }
 
-bool ProjectManagerDecorator::openExistingProject(const std::string&)
+//! Opens existing project, returns 'true' in the case of success.
+//! If provided name is empty, will call directory selector dialog using callback provided.
+//! If current project is in unsaved state, will perform 'save-before-closing' procedure before
+//! proceeding further.
+
+bool ProjectManagerDecorator::openExistingProject(const std::string& dirname)
 {
     if (!p_impl->saveBeforeClosing())
         return failed;
-    auto project_dir = p_impl->acquireExistingProjectDir();
-    // empty dir denotes 'cancel' during directory creaion dialog
+    auto project_dir = dirname.empty() ? p_impl->acquireExistingProjectDir() : dirname;
+    // empty project_dir variable denotes 'cancel' during directory selection dialog
     return project_dir.empty() ? failed : p_impl->project_manager->openExistingProject(project_dir);
 }
+
+//! Returns current project directory.
 
 std::string ProjectManagerDecorator::currentProjectDir() const
 {

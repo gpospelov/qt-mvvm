@@ -16,7 +16,11 @@
 
 class ApplicationModelsInterface;
 
-//! Decorator for ProjectManager to provide interaction with the user on open/save-as request.
+//! Decorator for ProjectManager to provide interaction with the user on open/save-as requests.
+//! It relies on the same interface and adds additional logic related to "unsaved" data.
+
+//! For example, on createNewProject it will check if previous project is saved, and will
+//! call external dialog save/discard/cancel via provided callback.
 
 class ProjectManagerDecorator : public ProjectManagerInterface
 {

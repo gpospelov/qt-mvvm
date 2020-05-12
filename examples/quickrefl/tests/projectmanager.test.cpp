@@ -210,8 +210,13 @@ TEST_F(ProjectManagerTest, titledUnmodifiedNew)
     EXPECT_TRUE(ModelView::Utils::exists(model_json));
 }
 
-//! Saving of new project. Use untitled+modified project as a starting point.
-//! Should fail since project directory is not defined.
+
+// ----------------------------------------------------------------------------
+// Titled, modified
+// ----------------------------------------------------------------------------
+
+//! Saving of new project. Use titled+modified project as a starting point.
+//! Should succeed.
 
 TEST_F(ProjectManagerTest, titledModifiedSave)
 {

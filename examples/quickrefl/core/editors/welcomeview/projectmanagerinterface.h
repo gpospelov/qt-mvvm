@@ -15,15 +15,15 @@
 
 class ApplicationModelsInterface;
 
-//! Interface class for ProjectManager.
-//! Responsible for handling new/save/save-as/close project logic, where project mean collection
-//! of serialized application models in project directory.
+//! Interface class for ProjectManager family.
+
+//! Responsible for handling new/save/save-as/close Project logic, where the Project represents
+//! a collection of serialized application models in the project directory.
 
 class ProjectManagerInterface : public QObject
 {
     Q_OBJECT
 public:
-
     virtual bool createNewProject(const std::string& dirname = {}) = 0;
 
     virtual bool saveCurrentProject() = 0;

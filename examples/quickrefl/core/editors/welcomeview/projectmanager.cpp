@@ -96,17 +96,21 @@ bool ProjectManager::openExistingProject(const std::string& dirname)
     return p_impl->loadFrom(dirname);
 }
 
-//! Returns the directory under which the project is saved.
+//! Returns current project directory.
 
 std::string ProjectManager::currentProjectDir() const
 {
     return p_impl->current_project ? p_impl->current_project->projectDir() : std::string();
 }
 
+//! Returns true if project was modified since last save.
+
 bool ProjectManager::isModified() const
 {
     return p_impl->isModified();
 }
+
+//! Closes project without saving. New empty project will be created.
 
 void ProjectManager::closeWithoutSaving() const
 {
