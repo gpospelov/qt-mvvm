@@ -28,6 +28,8 @@ WelcomeView::WelcomeView(ApplicationModels* models, QWidget* parent)
     layout->addWidget(new RecentProjectWidget);
     layout->addWidget(new OpenProjectWidget);
     layout->addSpacing(50);
+
+    init_project_manager();
 }
 
 WelcomeView::~WelcomeView() = default;
@@ -73,9 +75,14 @@ void WelcomeView::onSaveCurrentProject()
 
 void WelcomeView::init_project_manager()
 {
-    auto on_existing_dir = [this]() { return onSelectDirRequest(); };
-    auto on_create_dir = [this]() { return onCreateDirRequest(); };
+    auto select_dir = [this]() { return onSelectDirRequest(); };
+    auto create_dir = [this]() { return onCreateDirRequest(); };
+    auto save_changes = [this]() {
+        return static_cast<ProjectManagerDecorator::SaveChangesAnswer>(onSaveChangesRequest());
+    };
 
-    m_project_manager =
-        std::make_unique<ProjectManagerDecorator>(m_models, on_existing_dir, on_create_dir);
+    auto manager = std::make_unique<ProjectManagerDecorator>(m_models, select_dir, create_dir);
+    manager->setSaveChangesAnswerCallback(save_changes);
+
+    m_project_manager = std::move(manager);
 }

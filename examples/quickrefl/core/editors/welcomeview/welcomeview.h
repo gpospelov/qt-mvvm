@@ -36,8 +36,8 @@ public slots:
 
 private:
     void init_project_manager();
-    std::unique_ptr<ProjectManagerInterface> m_project_manager;
     ApplicationModels* m_models{nullptr};
+    std::unique_ptr<ProjectManagerInterface> m_project_manager;
 };
 
 #endif // WELCOMEVIEW_H

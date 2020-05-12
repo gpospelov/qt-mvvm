@@ -27,17 +27,23 @@ class ProjectManagerDecorator : public ProjectManagerInterface
     Q_OBJECT
 public:
     enum SaveChangesAnswer { SAVE = 0, DISCARD = 1, CANCEL = 2 };
-    using selector_t = std::function<std::string()>;
+    using select_dir_callback_t = std::function<std::string()>;
+    using create_dir_callback_t = std::function<std::string()>;
     using answer_callback_t = std::function<SaveChangesAnswer()>;
 
-    ProjectManagerDecorator(ApplicationModelsInterface* app_models, selector_t open_dir,
-                            selector_t create_dir);
-    ~ProjectManagerDecorator() override;
+    ProjectManagerDecorator(ApplicationModelsInterface* app_models,
+                            select_dir_callback_t select_dir = {},
+                            create_dir_callback_t create_dir = {});
 
+    ~ProjectManagerDecorator() override;
     ProjectManagerDecorator(const ProjectManagerDecorator& other) = delete;
     ProjectManagerDecorator& operator=(const ProjectManagerDecorator& other) = delete;
 
-    void setSaveChangesAnswerCallback(answer_callback_t save_callback);
+    void setSelectDirCallback(select_dir_callback_t callback);
+
+    void setCreateDirCallback(create_dir_callback_t callback);
+
+    void setSaveChangesAnswerCallback(answer_callback_t callback);
 
     bool createNewProject(const std::string& dirname = {}) override;
 

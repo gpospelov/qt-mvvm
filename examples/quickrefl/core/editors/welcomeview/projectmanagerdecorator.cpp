@@ -21,14 +21,14 @@ const bool failed = false;
 struct ProjectManagerDecorator::ProjectManagerImpl {
     ApplicationModelsInterface* app_models{nullptr};
     std::unique_ptr<ProjectManager> project_manager;
-    selector_t open_dir;
-    selector_t create_dir;
+    select_dir_callback_t select_dir_callback;
+    create_dir_callback_t create_dir_callback;
     answer_callback_t save_callback;
 
-    ProjectManagerImpl(ApplicationModelsInterface* models, selector_t open_dir,
-                       selector_t create_dir)
+    ProjectManagerImpl(ApplicationModelsInterface* models, select_dir_callback_t select_dir,
+                       create_dir_callback_t create_dir)
         : app_models(models), project_manager(std::make_unique<ProjectManager>(models)),
-          open_dir(open_dir), create_dir(create_dir)
+          select_dir_callback(select_dir), create_dir_callback(create_dir)
     {
     }
 
@@ -85,17 +85,17 @@ struct ProjectManagerDecorator::ProjectManagerImpl {
     //! Acquire the name of the new project directory using callback provided.
     std::string acquireNewProjectDir()
     {
-        if (!create_dir)
+        if (!create_dir_callback)
             throw std::runtime_error("Error in ProjectManager: absent creat_dir callback.");
-        return create_dir();
+        return create_dir_callback();
     }
 
     //! Acquire the name of the existing project directory using callback provided.
     std::string acquireExistingProjectDir()
     {
-        if (!open_dir)
+        if (!select_dir_callback)
             throw std::runtime_error("Error in ProjectManager: absent open_dir callback.");
-        return open_dir();
+        return select_dir_callback();
     }
 };
 
@@ -103,14 +103,25 @@ struct ProjectManagerDecorator::ProjectManagerImpl {
 //! Requires ApplicationModels and two callbacks to open projects, and create new projects.
 
 ProjectManagerDecorator::ProjectManagerDecorator(ApplicationModelsInterface* app_models,
-                                                 selector_t open_dir, selector_t create_dir)
-    : p_impl(std::make_unique<ProjectManagerImpl>(app_models, open_dir, create_dir))
+                                                 select_dir_callback_t select_dir,
+                                                 create_dir_callback_t create_dir)
+    : p_impl(std::make_unique<ProjectManagerImpl>(app_models, select_dir, create_dir))
 {
 }
 
-void ProjectManagerDecorator::setSaveChangesAnswerCallback(answer_callback_t save_callback)
+void ProjectManagerDecorator::setSelectDirCallback(select_dir_callback_t callback)
 {
-    p_impl->save_callback = save_callback;
+    p_impl->select_dir_callback = callback;
+}
+
+void ProjectManagerDecorator::setCreateDirCallback(create_dir_callback_t callback)
+{
+    p_impl->create_dir_callback = callback;
+}
+
+void ProjectManagerDecorator::setSaveChangesAnswerCallback(answer_callback_t callback)
+{
+    p_impl->save_callback = callback;
 }
 
 ProjectManagerDecorator::~ProjectManagerDecorator() = default;
