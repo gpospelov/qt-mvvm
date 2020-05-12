@@ -51,14 +51,16 @@ Project::Project(ApplicationModelsInterface* app_models)
 {
 }
 
+Project::~Project() = default;
+
 std::string Project::projectDir() const
 {
     return p_impl->project_dir;
 }
 
-Project::~Project() = default;
+//! Saves all models to a given directory. Directory should exist.
+//! Provided name will become 'projectDir'.
 
-//! Saves all models to a given directory.
 bool Project::save(const std::string& dirname) const
 {
     return p_impl->process(dirname, &ModelView::ModelDocumentInterface::save);

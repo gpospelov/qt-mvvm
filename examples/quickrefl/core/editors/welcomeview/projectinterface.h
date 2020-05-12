@@ -20,7 +20,6 @@ class ProjectInterface : public QObject
 {
     Q_OBJECT
 public:
-
     virtual std::string projectDir() const = 0;
     virtual bool save(const std::string& dirname) const = 0;
     virtual bool load(const std::string& dirname) = 0;
