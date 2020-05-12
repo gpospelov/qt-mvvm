@@ -8,13 +8,15 @@
 // ************************************************************************** //
 
 #include "welcomeview.h"
-#include "projectmanagerinterface.h"
-#include "recentprojectwidget.h"
+#include "applicationmodels.h"
 #include "openprojectwidget.h"
+#include "projectmanagerdecorator.h"
+#include "recentprojectwidget.h"
+#include <QDebug>
 #include <QHBoxLayout>
 
-
-WelcomeView::WelcomeView(QWidget* parent) : QWidget(parent)
+WelcomeView::WelcomeView(ApplicationModels* models, QWidget* parent)
+    : QWidget(parent), m_models(models)
 {
     QPalette palette;
     palette.setColor(QPalette::Window, Qt::white);
@@ -29,3 +31,51 @@ WelcomeView::WelcomeView(QWidget* parent) : QWidget(parent)
 }
 
 WelcomeView::~WelcomeView() = default;
+
+//! Returns directory on disk selected by the user via QFileDialog.
+std::string WelcomeView::onSelectDirRequest()
+{
+    qDebug() << "WelcomeView::onSelectDirRequest()";
+    return {};
+}
+
+//! Returns new directory on disk created by the user via QFileDialog.
+std::string WelcomeView::onCreateDirRequest()
+{
+    qDebug() << "WelcomeView::onCreateDirRequest()";
+    return {};
+}
+
+//! Returns save/cancel/discard changes choice provided by the user.
+int WelcomeView::onSaveChangesRequest()
+{
+    qDebug() << "WelcomeView::onSaveChangesRequest()";
+    return 0;
+}
+
+void WelcomeView::onCreateNewProject()
+{
+    qDebug() << "WelcomeView::onCreateNewProject()";
+    m_project_manager->createNewProject();
+}
+
+void WelcomeView::onOpenExistingProject()
+{
+    qDebug() << "WelcomeView::onOpenExistingProject()";
+    m_project_manager->openExistingProject();
+}
+
+void WelcomeView::onSaveCurrentProject()
+{
+    qDebug() << "WelcomeView::onSaveCurrentProject()";
+    m_project_manager->saveCurrentProject();
+}
+
+void WelcomeView::init_project_manager()
+{
+    auto on_existing_dir = [this]() { return onSelectDirRequest(); };
+    auto on_create_dir = [this]() { return onCreateDirRequest(); };
+
+    m_project_manager =
+        std::make_unique<ProjectManagerDecorator>(m_models, on_existing_dir, on_create_dir);
+}
