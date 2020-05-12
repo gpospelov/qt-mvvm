@@ -11,35 +11,41 @@
 #define PROJECTMANAGER_H
 
 #include "projectmanagerinterface.h"
-#include <memory>
 #include <functional>
+#include <memory>
 
 class ApplicationModelsInterface;
 
-//! Responsible for handling new/save/save-as/close project logic, where project mean collection
-//! of serialized application models in project directory.
+//! Responsible for handling new/save/save-as/close Project logic, where the Project represents
+//! a collection of serialized application models in the project directory.
+
+//! This ProjectManager requires certain prerequisites to function properly: for example,
+//! the creation of a new project will be possible only if the old project is in a saved state. See
+//! description to the class methods.
 
 class ProjectManager : public ProjectManagerInterface
 {
     Q_OBJECT
 public:
-    using selector_t = std::function<std::string()>;
-
-    ProjectManager(ApplicationModelsInterface* app_models, selector_t open_dir, selector_t create_dir);
+    ProjectManager(ApplicationModelsInterface* app_models);
     ~ProjectManager() override;
 
     ProjectManager(const ProjectManager& other) = delete;
     ProjectManager& operator=(const ProjectManager& other) = delete;
 
-    bool createNewProject() override;
+    bool createNewProject(const std::string& dirname) override;
 
     bool saveCurrentProject() override;
 
-    bool saveProjectAs() override;
+    bool saveProjectAs(const std::string& dirname) override;
 
-    bool openExistingProject() override;
+    bool openExistingProject(const std::string& dirname) override;
 
     std::string currentProjectDir() const;
+
+    bool isModified() const override;
+
+    virtual void closeWithoutSaving() const override;
 
 private:
     struct ProjectManagerImpl;

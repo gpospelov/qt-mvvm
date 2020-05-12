@@ -21,6 +21,12 @@ Main features of the framework are:
 + Property editors.
 + Flexible layout of Qt's trees and tables.
 
+## Requirements
+
++ C++-17
++ CMake 3.14
++ Qt 5.12
+
 ## Installation instruction
 
 ```

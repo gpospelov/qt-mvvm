@@ -66,118 +66,170 @@ ProjectManagerTest::~ProjectManagerTest() = default;
 
 TEST_F(ProjectManagerTest, initialState)
 {
-    auto open_dir = []() -> std::string { return {}; };
-    auto create_dir = []() -> std::string { return {}; };
-
     ApplicationModels models;
-    ProjectManager manager(&models, open_dir, create_dir);
+    ProjectManager manager(&models);
     EXPECT_TRUE(manager.currentProjectDir().empty());
+    EXPECT_FALSE(manager.isModified());
 }
 
-//! Starting from new document (without project dir defined).
-//! Create new project in given directory.
+// ----------------------------------------------------------------------------
+// Untitled, empty project
+// ----------------------------------------------------------------------------
 
-// TEST_F(ProjectManagerTest, untitledEmptyCreateNew)
-//{
-//    auto project_dir = create_project_dir("Project_untitledEmptyCreateNew");
+//! Creating new project. Use untitled+empty project as a starting point.
+//! Should succeed, since old empty project doesn't need to be saved.
 
-//    auto open_dir = []() -> std::string { return {}; };
-//    auto create_dir = [&project_dir]() -> std::string { return project_dir; };
-
-//    ApplicationModels models;
-//    ProjectManager manager(&models, open_dir, create_dir);
-//    EXPECT_TRUE(manager.currentProjectDir().empty());
-
-//    // saving new project to 'project_dir' directory.
-//    EXPECT_TRUE(manager.createNewProject());
-
-//    // checking that current projectDir has pointing to the right place
-//    EXPECT_EQ(manager.currentProjectDir(), project_dir);
-
-//    // project directory should contain a json file with the model
-//    auto model_json = ModelView::Utils::join(project_dir, samplemodel_name + ".json");
-//    EXPECT_TRUE(ModelView::Utils::exists(model_json));
-//}
-
-//! Starting from new document (without project dir defined).
-//! Saving project. Same behavior as SaveAs.
-
-TEST_F(ProjectManagerTest, untitledEmptySaveCurrentProject)
+TEST_F(ProjectManagerTest, untitledEmptyNew)
 {
-    auto project_dir = create_project_dir("Project_untitledEmptySaveCurrentProject");
-
-    auto open_dir = []() -> std::string { return {}; };
-    auto create_dir = [&project_dir]() -> std::string { return project_dir; };
-
     ApplicationModels models;
-    ProjectManager manager(&models, open_dir, create_dir);
-    EXPECT_TRUE(manager.currentProjectDir().empty());
+    ProjectManager manager(&models);
 
-    // saving new project to 'project_dir' directory.
-    EXPECT_TRUE(manager.saveCurrentProject());
+    const auto project_dir = create_project_dir("Project_untitledEmptyNew");
+    EXPECT_TRUE(manager.createNewProject(project_dir));
 
-    // checking thaxt current projectDir has pointing to the right place
     EXPECT_EQ(manager.currentProjectDir(), project_dir);
+    EXPECT_FALSE(manager.isModified());
 
     // project directory should contain a json file with the model
     auto model_json = ModelView::Utils::join(project_dir, samplemodel_name + ".json");
     EXPECT_TRUE(ModelView::Utils::exists(model_json));
 }
 
-//! Starting from new document (without project dir defined).
-//! Save under given name.
+//! Saving of new project. Use untitled+empty project as a starting point.
+//! Should fail since project directory is not defined.
+
+TEST_F(ProjectManagerTest, untitledEmptySave)
+{
+    ApplicationModels models;
+    ProjectManager manager(&models);
+    EXPECT_FALSE(manager.saveCurrentProject());
+    EXPECT_FALSE(manager.isModified());
+}
+
+//! Saving of new project. Use untitled+empty project as a starting point.
+//! Should be saved, file sould appear on disk.
 
 TEST_F(ProjectManagerTest, untitledEmptySaveAs)
 {
-    auto project_dir = create_project_dir("Project_untitledEmptySaveAs");
-
-    auto open_dir = []() -> std::string { return {}; };
-    auto create_dir = [&project_dir]() -> std::string { return project_dir; };
-
     ApplicationModels models;
-    ProjectManager manager(&models, open_dir, create_dir);
-    EXPECT_TRUE(manager.currentProjectDir().empty());
+    ProjectManager manager(&models);
 
-    // saving new project to "project_dir" directory.
-    EXPECT_TRUE(manager.saveProjectAs());
-
-    // checking that current projectDir has pointing to the right place
-    EXPECT_EQ(manager.currentProjectDir(), project_dir);
+    const auto project_dir = create_project_dir("Project_untitledEmptySaveAs");
+    EXPECT_TRUE(manager.saveProjectAs(project_dir));
+    EXPECT_FALSE(manager.isModified());
 
     // project directory should contain a json file with the model
     auto model_json = ModelView::Utils::join(project_dir, samplemodel_name + ".json");
     EXPECT_TRUE(ModelView::Utils::exists(model_json));
 }
 
-//! Starting from new document (without project dir defined).
-//! Attempt to save under empty name, immitating the user canceled directory selection dialog.
+// ----------------------------------------------------------------------------
+// Untitled, modified
+// ----------------------------------------------------------------------------
 
-TEST_F(ProjectManagerTest, untitledEmptySaveAsCancel)
+//! Creating new project. Use untitled+modified project as a starting point.
+//! Should fail, since modified old project will prevent creation of the new one.
+
+TEST_F(ProjectManagerTest, untitledModifiedNew)
 {
-    auto open_dir = []() -> std::string { return {}; };
-    auto create_dir = []() -> std::string { return {}; }; // empty name imitates canceling
-
     ApplicationModels models;
-    ProjectManager manager(&models, open_dir, create_dir);
-    EXPECT_TRUE(manager.currentProjectDir().empty());
+    ProjectManager manager(&models);
 
-    // saving new project to "project_dir" directory.
-    EXPECT_FALSE(manager.saveProjectAs());
+    // modifying the model
+    models.sample_model->insertItem<ModelView::PropertyItem>();
+
+    EXPECT_TRUE(manager.isModified());
+
+    const auto project_dir = create_project_dir("Project_untitledModifiedNew");
+    EXPECT_FALSE(manager.createNewProject(project_dir));
+
     EXPECT_TRUE(manager.currentProjectDir().empty());
+    EXPECT_TRUE(manager.isModified());
+
+    // project directory should be empty
+    auto model_json = ModelView::Utils::join(project_dir, samplemodel_name + ".json");
+    EXPECT_FALSE(ModelView::Utils::exists(model_json));
 }
 
-//! Starting from new document (without project dir defined).
-//! Attempt to save in the non-existing directory.
+//! Saving of new project. Use untitled+modified project as a starting point.
+//! Should fail since project directory is not defined.
 
-TEST_F(ProjectManagerTest, untitledEmptySaveAsWrongDir)
+TEST_F(ProjectManagerTest, untitledModifiedSave)
 {
-    auto open_dir = []() -> std::string { return {}; };
-    auto create_dir = []() -> std::string { return "non-existing"; }; // empty name imitates canceling
-
     ApplicationModels models;
-    ProjectManager manager(&models, open_dir, create_dir);
+    ProjectManager manager(&models);
+    // modifying the model
+    models.sample_model->insertItem<ModelView::PropertyItem>();
 
-    // saving new project to "project_dir" directory.
-    EXPECT_FALSE(manager.saveProjectAs());
-    EXPECT_TRUE(manager.currentProjectDir().empty());
+    EXPECT_FALSE(manager.saveCurrentProject());
+    EXPECT_TRUE(manager.isModified());
+}
+
+//! Saving of new project. Use untitled+empty project as a starting point.
+//! Should be saved, file sould appear on disk.
+
+TEST_F(ProjectManagerTest, untitledModifiedSaveAs)
+{
+    ApplicationModels models;
+    ProjectManager manager(&models);
+    models.sample_model->insertItem<ModelView::PropertyItem>(); // modifying the model
+
+    const auto project_dir = create_project_dir("Project_untitledModifiedSaveAs");
+    EXPECT_TRUE(manager.saveProjectAs(project_dir));
+    EXPECT_FALSE(manager.isModified());
+
+    // project directory should contain a json file with the model
+    auto model_json = ModelView::Utils::join(project_dir, samplemodel_name + ".json");
+    EXPECT_TRUE(ModelView::Utils::exists(model_json));
+}
+
+// ----------------------------------------------------------------------------
+// Titled, unmodified
+// ----------------------------------------------------------------------------
+
+//! Creating new project. Use titled+unmodified project as a starting point.
+//! Should succeed, since old empty project doesn't need to be saved.
+
+TEST_F(ProjectManagerTest, titledUnmodifiedNew)
+{
+    ApplicationModels models;
+    ProjectManager manager(&models);
+
+    const auto project_dir = create_project_dir("Project_titledUnmodifiedNew");
+    EXPECT_TRUE(manager.saveProjectAs(project_dir));
+    EXPECT_EQ(manager.currentProjectDir(), project_dir);
+
+    const auto project_dir2 = create_project_dir("Project_titledUnmodifiedNew2");
+    EXPECT_TRUE(manager.createNewProject(project_dir2));
+
+    EXPECT_EQ(manager.currentProjectDir(), project_dir2);
+    EXPECT_FALSE(manager.isModified());
+
+    // project directory should contain a json file with the model
+    auto model_json = ModelView::Utils::join(project_dir2, samplemodel_name + ".json");
+    EXPECT_TRUE(ModelView::Utils::exists(model_json));
+}
+
+
+// ----------------------------------------------------------------------------
+// Titled, modified
+// ----------------------------------------------------------------------------
+
+//! Saving of new project. Use titled+modified project as a starting point.
+//! Should succeed.
+
+TEST_F(ProjectManagerTest, titledModifiedSave)
+{
+    ApplicationModels models;
+    ProjectManager manager(&models);
+
+    const auto project_dir = create_project_dir("Project_titledModifiedSave");
+    EXPECT_TRUE(manager.saveProjectAs(project_dir));
+    EXPECT_EQ(manager.currentProjectDir(), project_dir);
+
+    // modifying the model
+    models.sample_model->insertItem<ModelView::PropertyItem>();
+
+    EXPECT_TRUE(manager.saveCurrentProject());
+    EXPECT_FALSE(manager.isModified());
 }

@@ -15,6 +15,8 @@ int main(int argc, char** argv)
 {
     QLocale::setDefault(QLocale(QLocale::English, QLocale::UnitedStates));
 
+//    QApplication::setAttribute(Qt::AA_DisableHighDpiScaling);
+
     QApplication app(argc, argv);
 
     MainWindow win;
