@@ -22,8 +22,8 @@
 #include <QLabel>
 #include <QToolBar>
 #include <QVBoxLayout>
-#include <iostream>
 #include <filesystem>
+#include <iostream>
 
 #include <mvvm/model/modelutils.h>
 #include <mvvm/plotting/graphcanvas.h>
@@ -72,7 +72,6 @@ void ImportDataEditor::setup_views()
             graph_canvas->setItem(viewport);
     };
     connect(topitems_tree, &TopItemsTreeView::itemSelected, on_item_selected);
-
 }
 
 QBoxLayout* ImportDataEditor::create_bottom_layout()
@@ -99,10 +98,11 @@ void ImportDataEditor::onImportDialogAccept(DataImportLogic::ImportOutput import
 {
     DataCollectionItem* data_node;
     for (auto& path : import_output.keys()) {
-        if ((import_output.merge() && path == *(import_output.keys().begin()))||(!import_output.merge()))
+        if ((import_output.merge() && path == *(import_output.keys().begin()))
+            || (!import_output.merge()))
             data_node = model->insertDataNode();
         auto parsed_file_output = import_output[path];
-        for (int i = 0; i < parsed_file_output->dataCount(); ++i){
+        for (int i = 0; i < parsed_file_output->dataCount(); ++i) {
             auto data_struct = RealDataStruct();
 
             data_struct.name = std::filesystem::path(path).stem();
@@ -119,5 +119,4 @@ void ImportDataEditor::onImportDialogAccept(DataImportLogic::ImportOutput import
             model->addDataToNode(data_node, data_struct);
         }
     }
-    
 }

@@ -11,10 +11,10 @@
 #define IMPORTDIALOG_H
 
 #include "importlogic.h"
+#include <QCheckBox>
 #include <QDialog>
 #include <QGroupBox>
 #include <QTabWidget>
-#include <QCheckBox>
 #include <memory>
 
 namespace DataImportLogic

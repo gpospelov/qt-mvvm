@@ -115,7 +115,6 @@ const ParsedFileOutptut* ImportOutput::operator[](const std::string& key) const
     return m_parsed_outputs.at(key).get();
 }
 
-
 void ImportOutput::setMerge(bool merge)
 {
     m_merge = merge;
