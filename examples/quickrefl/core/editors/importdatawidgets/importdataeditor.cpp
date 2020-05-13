@@ -22,13 +22,12 @@
 #include <QLabel>
 #include <QToolBar>
 #include <QVBoxLayout>
-#include <filesystem>
-#include <iostream>
 
 #include <mvvm/model/modelutils.h>
 #include <mvvm/plotting/graphcanvas.h>
 #include <mvvm/standarditems/containeritem.h>
 #include <mvvm/standarditems/graphviewportitem.h>
+#include <mvvm/utils/fileutils.h>
 #include <mvvm/widgets/standardtreeviews.h>
 
 using namespace ModelView;
@@ -105,7 +104,7 @@ void ImportDataEditor::onImportDialogAccept(DataImportLogic::ImportOutput import
         for (int i = 0; i < parsed_file_output->dataCount(); ++i) {
             auto data_struct = RealDataStruct();
 
-            data_struct.name = std::filesystem::path(path).stem();
+            data_struct.name = Utils::base_name(path);
             data_struct.type = parsed_file_output->dataType(i);
 
             data_struct.axis = parsed_file_output->axis();
