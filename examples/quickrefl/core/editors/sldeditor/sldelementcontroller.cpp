@@ -147,7 +147,7 @@ void SLDElementController::clearScene()
 }
 
 //! Get the identifiers of all layeritems in the sample model in order of appearance
-string_vec SLDElementController::getIdentifierVector(SessionItem* item)
+SLDElementController::string_vec SLDElementController::getIdentifierVector(SessionItem* item)
 {
     string_vec output;
 
