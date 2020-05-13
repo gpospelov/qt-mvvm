@@ -15,11 +15,7 @@
 #ifndef CSVFILE_H
 #define CSVFILE_H
 
-#include <algorithm>
-#include <fstream>
-#include <iostream>
-#include <iterator>
-#include <sstream>
+#include <string>
 #include <vector>
 
 namespace DataImportLogic

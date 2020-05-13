@@ -21,8 +21,6 @@
 #include <QStyle>
 #include <QToolButton>
 
-#include <iostream>
-
 namespace DataImportGui
 {
 

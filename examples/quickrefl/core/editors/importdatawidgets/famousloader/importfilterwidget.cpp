@@ -28,7 +28,6 @@
 #include <mvvm/editors/styleutils.h>
 
 #include "resources.h"
-#include <iostream>
 
 namespace DataImportGui
 {
