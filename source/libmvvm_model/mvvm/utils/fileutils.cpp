@@ -75,7 +75,7 @@ std::string Utils::base_name(const std::string& path)
 #ifdef ENABLE_FILESYSTEM
     return std::filesystem::path(path).stem();
 #else
-    return QFileInfo(QString::fromStdString(path)).baseName().toStdString();
+    return QFileInfo(QString::fromStdString(path)).completeBaseName().toStdString();
 #endif
 }
 
