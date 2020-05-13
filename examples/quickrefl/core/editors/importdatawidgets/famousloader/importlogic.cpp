@@ -9,11 +9,10 @@
 
 #include "importlogic.h"
 
-#include <iostream>
-#include <numeric>
-#include <sstream>
 #include <algorithm>
 #include <functional>
+#include <numeric>
+#include <sstream>
 #include <string>
 
 namespace DataImportLogic
@@ -303,7 +302,7 @@ void LineFilter::setEnd(int end_line)
 
 // -------------------------------------------------
 //! This is the constructor
-ImportLogic::ImportLogic() : QObject()
+ImportLogic::ImportLogic()
 {
     initSeparators();
     p_data_structure = std::make_unique<DataStructure>();
@@ -343,13 +342,24 @@ void ImportLogic::setLineFilterOrder(std::vector<LineFilter*> filter_order)
 }
 
 //! This is the slot for adding files into the local memory
-void ImportLogic::setFiles(std::vector<std::string> file_paths)
+void ImportLogic::setFiles(const std::vector<std::string>& file_paths)
 {
     m_files.clear();
     for (auto& file_path : file_paths) {
         auto temp = std::make_unique<CSVFile>(file_path);
         m_files.push_back(std::move(temp));
     }
+}
+
+//! Process all files and then send the output
+ImportOutput ImportLogic::getFinalOutput()
+{
+    ImportOutput output;
+    for (int i = 0; i < m_files.size(); ++i) {
+        updateData(i);
+        output.freezData(m_files.at(i)->path(), *(p_data_structure.get()));
+    }
+    return output;
 }
 
 //! build the preview string with html style
@@ -360,7 +370,7 @@ std::string ImportLogic::getPreview(const int& row) const
     std::vector<std::string> color_scheme = getColorScheme(thumbnail.size());
     std::vector<char> separator_scheme = getSeparatorScheme(thumbnail.size());
 
-    std::string output;
+    std::string output = "";
     for (int i = 0; i < thumbnail.size(); ++i) {
 
         auto formated_line = thumbnail.at(i);
@@ -369,13 +379,15 @@ std::string ImportLogic::getPreview(const int& row) const
 
         if (separator_scheme.at(i) != '!') {
             auto temp_string_vec = split(formated_line, separator_scheme.at(i));
-            formated_line = temp_string_vec.at(0);
-            for (int j = 1; j < temp_string_vec.size(); ++j) {
-                formated_line +=
-                    std::string(std::string("<span style=\"background-color:") + color_scheme.at(i)
-                                + std::string("\">") + std::string(1, separator_scheme.at(i))
-                                + std::string("</span>"));
-                formated_line += temp_string_vec.at(j);
+            if (temp_string_vec.size() != 0) {
+                formated_line = temp_string_vec.at(0);
+                for (int j = 1; j < temp_string_vec.size(); ++j) {
+                    formated_line += std::string(std::string("<span style=\"background-color:")
+                                                 + color_scheme.at(i) + std::string("\">")
+                                                 + std::string(1, separator_scheme.at(i))
+                                                 + std::string("</span>"));
+                    formated_line += temp_string_vec.at(j);
+                }
             }
         }
         output += std::string("<div><font color=\"") + color_scheme.at(i) + std::string("\">")

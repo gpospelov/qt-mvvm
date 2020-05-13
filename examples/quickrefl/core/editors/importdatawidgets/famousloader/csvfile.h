@@ -15,11 +15,7 @@
 #ifndef CSVFILE_H
 #define CSVFILE_H
 
-#include <algorithm>
-#include <fstream>
-#include <iostream>
-#include <iterator>
-#include <sstream>
+#include <string>
 #include <vector>
 
 namespace DataImportLogic
@@ -101,6 +97,7 @@ public:
     CSVFile(std::string path_to_file);
     ~CSVFile() = default;
 
+    const std::string& path() const;
     const std::vector<std::string>& thumbnail() const;
     const std::vector<std::string>& file() const;
     const std::string& line(int line_number) const;

@@ -11,11 +11,16 @@
 #define IMPORTDIALOG_H
 
 #include "importlogic.h"
+#include <QCheckBox>
 #include <QDialog>
 #include <QGroupBox>
 #include <QTabWidget>
-#include <QTableView>
 #include <memory>
+
+namespace DataImportLogic
+{
+class ImportOutput;
+}
 
 namespace DataImportGui
 {
@@ -24,6 +29,7 @@ class ImportFileWidget;
 class ImportFilterWidget;
 class ImportTextView;
 class ImportTableView;
+class ImportOutput;
 
 //! This is the main dialog for the data loader
 class DataLoaderDialog : public QDialog
@@ -33,6 +39,7 @@ class DataLoaderDialog : public QDialog
 public:
     DataLoaderDialog(QWidget* parent = nullptr);
     ~DataLoaderDialog() = default;
+    DataImportLogic::ImportOutput result();
 
 private:
     void setUpFileListSpace(QGroupBox* conainer);
@@ -55,6 +62,7 @@ private:
     ImportTableView* p_table_view{nullptr};
     std::unique_ptr<DataImportLogic::ImportLogic> p_data_import_logic;
     QTabWidget* p_selection_space{nullptr};
+    QCheckBox* p_merge_check{nullptr};
 };
 
 } // End of namespace DataImportGui

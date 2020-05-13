@@ -9,8 +9,9 @@
 
 #include "importdatastructure.h"
 
-#include <cmath>
 #include <algorithm>
+#include <cmath>
+#include <functional>
 
 namespace DataImportLogic
 {
@@ -26,6 +27,13 @@ DataColumn::DataColumn()
 DataColumn::DataColumn(const std::string& header)
     : m_name("No Name"), m_type("Intensity"), m_header(header), m_unit("a.u."), m_multiplier(1.),
       m_column_num(0)
+{
+}
+
+DataColumn::DataColumn(const DataColumn* other)
+    : m_name(other->name()), m_type(other->type()), m_header(other->header()),
+      m_unit(other->unit()), m_multiplier(other->multiplier()), m_column_num(0),
+      m_values(other->values())
 {
 }
 
@@ -102,6 +110,15 @@ void DataColumn::setMultiplier(double multiplier)
 const std::vector<double>& DataColumn::values() const
 {
     return m_values;
+}
+
+//! Getter for the data values
+std::vector<double> DataColumn::finalValues() const
+{
+    auto output = std::vector<double>(m_values);
+    std::transform(output.begin(), output.end(), output.begin(),
+                   [=](auto& c) { return c * multiplier(); });
+    return output;
 }
 
 //! Getter for the data value at row
@@ -222,6 +239,22 @@ DataColumn* DataStructure::column(const std::string& header)
     return (found == m_data_columns.end()) ? (nullptr) : ((*found).get());
 }
 
+//! Get the column associated to an index (! This is the const implementation)
+const DataColumn* DataStructure::column(int column_num) const
+{
+    int column_idx = 0;
+    for (const auto& column : m_data_columns) {
+        if (column->rowCount() != 0) {
+            if (column_idx == column_num) {
+                return column.get();
+            } else {
+                ++column_idx;
+            }
+        }
+    }
+    return nullptr;
+}
+
 //! Get the column associated to an index
 DataColumn* DataStructure::column(int column_num)
 {
@@ -241,7 +274,15 @@ DataColumn* DataStructure::column(int column_num)
 //! Add a DataColumn item
 void DataStructure::addColumn(const std::string& header)
 {
-    auto new_column = std::make_unique<DataColumn>(header);
+    std::unique_ptr<DataColumn> new_column;
+    if (m_data_columns.empty()) {
+        new_column = std::make_unique<DataColumn>(header);
+        std::string type("Axis");
+        new_column->setType(type);
+    } else {
+        new_column = std::make_unique<DataColumn>(header);
+    }
+
     m_data_columns.push_back(std::move(new_column));
 }
 

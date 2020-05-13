@@ -10,19 +10,24 @@
 #include "importdataeditor.h"
 #include "dataimportdialog.h"
 #include "datasetitem.h"
+#include "importoutput.h"
 #include "realdatamodel.h"
 #include "styleutils.h"
+
 #include <QAction>
 #include <QDebug>
+#include <QDialog>
 #include <QFileDialog>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QToolBar>
 #include <QVBoxLayout>
+
 #include <mvvm/model/modelutils.h>
 #include <mvvm/plotting/graphcanvas.h>
 #include <mvvm/standarditems/containeritem.h>
 #include <mvvm/standarditems/graphviewportitem.h>
+#include <mvvm/utils/fileutils.h>
 #include <mvvm/widgets/standardtreeviews.h>
 
 using namespace ModelView;
@@ -47,18 +52,14 @@ void ImportDataEditor::setup_toolbar()
     load_action->setToolTip("Summons the famous data loader.");
     load_action->setIcon(QIcon(":/icons/aspect-ratio.svg"));
     toolbar->addAction(load_action);
-    auto on_load_action = [this]() {
-        DataImportGui::DataLoaderDialog assistant;
-        assistant.exec();
-    };
-    connect(load_action, &QAction::triggered, on_load_action);
+    connect(load_action, &QAction::triggered, this, &ImportDataEditor::invokeImportDialog);
 }
 
 void ImportDataEditor::setup_views()
 {
     // make left tree looking on container with viewports
-    auto dataset = ModelView::Utils::TopItem<DataSetItem>(model);
-    topitems_tree->setRootSessionItem(dataset->viewportContainer());
+    // auto root_item = model->insertItem<ModelView::SessionItem>();
+    topitems_tree->setRootSessionItem(model->rootItem());
 
     // make property tree showing the item selected
     auto on_item_selected = [this](SessionItem* item) {
@@ -70,9 +71,6 @@ void ImportDataEditor::setup_views()
             graph_canvas->setItem(viewport);
     };
     connect(topitems_tree, &TopItemsTreeView::itemSelected, on_item_selected);
-
-    // select container
-    topitems_tree->setSelected(dataset->viewportContainer());
 }
 
 QBoxLayout* ImportDataEditor::create_bottom_layout()
@@ -82,4 +80,42 @@ QBoxLayout* ImportDataEditor::create_bottom_layout()
     result->addWidget(graph_canvas, 5);
     result->addWidget(property_tree, 1);
     return result;
+}
+
+//! Invode the data load dialog and connect its state
+void ImportDataEditor::invokeImportDialog()
+{
+    DataImportGui::DataLoaderDialog assistant(this);
+    int dialog_code = assistant.exec();
+    if (dialog_code == QDialog::Accepted) {
+        onImportDialogAccept(assistant.result());
+    }
+}
+
+//! Process the accepted state
+void ImportDataEditor::onImportDialogAccept(DataImportLogic::ImportOutput import_output)
+{
+    DataCollectionItem* data_node;
+    for (auto& path : import_output.keys()) {
+        if ((import_output.merge() && path == *(import_output.keys().begin()))
+            || (!import_output.merge()))
+            data_node = model->insertDataNode();
+        auto parsed_file_output = import_output[path];
+        for (int i = 0; i < parsed_file_output->dataCount(); ++i) {
+            auto data_struct = RealDataStruct();
+
+            data_struct.name = Utils::base_name(path);
+            data_struct.type = parsed_file_output->dataType(i);
+
+            data_struct.axis = parsed_file_output->axis();
+            data_struct.axis_name = parsed_file_output->axisName();
+            data_struct.axis_unit = parsed_file_output->axisUnit();
+
+            data_struct.data = parsed_file_output->data(i);
+            data_struct.data_name = parsed_file_output->dataName(i);
+            data_struct.data_unit = parsed_file_output->dataUnit(i);
+
+            model->addDataToNode(data_node, data_struct);
+        }
+    }
 }

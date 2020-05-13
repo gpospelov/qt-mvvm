@@ -42,7 +42,10 @@ DataLoaderDialog::DataLoaderDialog(QWidget* parent) : QDialog(parent)
     p_selection_space = new QTabWidget(v_splitter);
 
     // The dialog buttons
+    p_merge_check = new QCheckBox("Merge into one dataset");
+    p_merge_check->setChecked(true);
     auto button_box = new QDialogButtonBox(QDialogButtonBox::Cancel | QDialogButtonBox::Ok);
+    dynamic_cast<QBoxLayout*>(button_box->layout())->insertWidget(0, p_merge_check);
     connect(button_box, SIGNAL(accepted()), this, SLOT(accept()));
     connect(button_box, SIGNAL(rejected()), this, SLOT(reject()));
 
@@ -71,6 +74,14 @@ DataLoaderDialog::DataLoaderDialog(QWidget* parent) : QDialog(parent)
 }
 
 //! Helper function to set up the file list area
+DataImportLogic::ImportOutput DataLoaderDialog::result()
+{
+    auto result = p_data_import_logic->getFinalOutput();
+    result.setMerge(p_merge_check->isChecked());
+    return result;
+}
+
+//! Helper function to set up the file list area
 void DataLoaderDialog::setUpFileListSpace(QGroupBox* conainer)
 {
 
@@ -82,8 +93,10 @@ void DataLoaderDialog::setUpFileListSpace(QGroupBox* conainer)
     conainer->setMinimumHeight(p_import_file_list->minimumHeight());
     conainer->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 
-    connect(p_import_file_list, SIGNAL(filesChanged(std::vector<std::string>)),
-            p_data_import_logic.get(), SLOT(setFiles(std::vector<std::string>)));
+    connect(p_import_file_list, &ImportFileWidget::filesChanged,
+            [this](const std::vector<std::string>& files) {
+                p_data_import_logic.get()->setFiles(files);
+            });
 
     connect(p_import_file_list, SIGNAL(selectionChanged()), this, SLOT(selectedFileChanged()));
 }
@@ -169,6 +182,7 @@ void DataLoaderDialog::readSettings()
 
 void DataLoaderDialog::accept()
 {
+    QDialog::accept();
     writeSettings();
     close();
 }

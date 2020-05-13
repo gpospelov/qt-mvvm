@@ -11,9 +11,9 @@
 #define IMPORTDATASTRUCTURE_H
 
 #include <map>
+#include <memory>
 #include <string>
 #include <vector>
-#include <memory>
 
 namespace DataImportLogic
 {
@@ -35,6 +35,7 @@ class DataColumn
 public:
     DataColumn();
     DataColumn(const std::string& header);
+    DataColumn(const DataColumn* other);
     ~DataColumn() = default;
 
     void setValues(std::vector<std::string>& values);
@@ -50,6 +51,7 @@ public:
     void setMultiplier(double multiplier);
 
     const std::vector<double>& values() const;
+    std::vector<double> finalValues() const;
     double value(int row) const;
     double finalValue(int row) const;
     const std::string& name() const;
@@ -86,6 +88,7 @@ public:
     std::vector<bool> checkHeaders(const std::vector<std::string>& headers);
 
     DataColumn* column(const std::string& header);
+    const DataColumn* column(int column) const;
     DataColumn* column(int column);
 
     int rowCount() const;

@@ -54,6 +54,14 @@ TEST_F(FileUtilsTest, remove_all)
     EXPECT_FALSE(Utils::exists(dirname));
 }
 
+TEST_F(FileUtilsTest, base_name)
+{
+    std::string filename = testDir() + std::string("/testmodel/fileutils.test.cpp");
+    std::string base_name = Utils::base_name(filename);
+
+    EXPECT_EQ("fileutils.test", base_name);
+}
+
 #include <QDebug>
 TEST_F(FileUtilsTest, FindFiles)
 {

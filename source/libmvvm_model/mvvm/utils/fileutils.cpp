@@ -70,6 +70,15 @@ void Utils::remove_all(const std::string& path)
 #endif
 }
 
+std::string Utils::base_name(const std::string& path)
+{
+#ifdef ENABLE_FILESYSTEM
+    return std::filesystem::path(path).stem().string();
+#else
+    return QFileInfo(QString::fromStdString(path)).completeBaseName().toStdString();
+#endif
+}
+
 #include <QDebug>
 std::vector<std::string> Utils::FindFiles(const std::string& dirname, const std::string& ext)
 {

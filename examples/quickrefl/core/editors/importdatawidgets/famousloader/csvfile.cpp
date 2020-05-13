@@ -40,6 +40,12 @@ void CSVFile::loadFile()
     file.close();
 }
 
+//! Retrieve the path
+const std::string& CSVFile::path() const
+{
+    return m_filepath;
+}
+
 //! The getter for the thumbnail text
 const std::vector<std::string>& CSVFile::thumbnail() const
 {
@@ -55,14 +61,12 @@ const std::vector<std::string>& CSVFile::file() const
 //! Generate the thumbnail
 void CSVFile::generateThumbnail()
 {
+    int size = (m_thumbnail_length < m_file.size()) ? (m_thumbnail_length) : (m_file.size());
     m_thumbnail.clear();
-    m_thumbnail.resize(m_thumbnail_length);
-
+    m_thumbnail.resize(size);
     std::ifstream file(m_filepath);
-    int counter = 0;
-    while (counter != m_thumbnail_length) {
-        getline(file, m_thumbnail[counter]);
-        counter++;
+    for (int i = 0; i < size; ++i) {
+        getline(file, m_thumbnail[i]);
     };
     file.close();
 }
