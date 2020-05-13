@@ -70,6 +70,12 @@ std::vector<double> ParsedFileOutptut::data(int column) const
     return m_value_colums.at(column)->finalValues();
 }
 
+//! This will return the type of the said column
+std::string ParsedFileOutptut::dataType(int column) const
+{
+    return m_value_colums.at(column)->type();
+}
+
 //! This will return th ename of the said column
 std::string ParsedFileOutptut::dataName(int column) const
 {
@@ -107,6 +113,17 @@ std::vector<std::string> ImportOutput::keys() const
 const ParsedFileOutptut* ImportOutput::operator[](const std::string& key) const
 {
     return m_parsed_outputs.at(key).get();
+}
+
+
+void ImportOutput::setMerge(bool merge)
+{
+    m_merge = merge;
+}
+
+bool ImportOutput::merge() const
+{
+    return m_merge;
 }
 
 } // namespace DataImportLogic

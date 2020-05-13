@@ -42,7 +42,10 @@ DataLoaderDialog::DataLoaderDialog(QWidget* parent) : QDialog(parent)
     p_selection_space = new QTabWidget(v_splitter);
 
     // The dialog buttons
+    p_merge_check = new QCheckBox("Merge into one dataset");
+    p_merge_check->setChecked(true);
     auto button_box = new QDialogButtonBox(QDialogButtonBox::Cancel | QDialogButtonBox::Ok);
+    dynamic_cast<QBoxLayout*>(button_box->layout())->insertWidget(0,p_merge_check);
     connect(button_box, SIGNAL(accepted()), this, SLOT(accept()));
     connect(button_box, SIGNAL(rejected()), this, SLOT(reject()));
 
@@ -73,7 +76,9 @@ DataLoaderDialog::DataLoaderDialog(QWidget* parent) : QDialog(parent)
 //! Helper function to set up the file list area
 DataImportLogic::ImportOutput DataLoaderDialog::result()
 {
-    return p_data_import_logic->getFinalOutput();
+    auto result = p_data_import_logic->getFinalOutput();
+    result.setMerge(p_merge_check->isChecked());
+    return result;
 }
 
 //! Helper function to set up the file list area

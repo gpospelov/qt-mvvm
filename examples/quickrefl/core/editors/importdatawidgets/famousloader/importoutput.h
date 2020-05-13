@@ -36,6 +36,7 @@ public:
 
     int dataCount() const;
     std::vector<double> data(int column) const;
+    std::string dataType(int column) const;
     std::string dataName(int column) const;
     std::string dataUnit(int column) const;
 
@@ -54,8 +55,12 @@ public:
     std::vector<std::string> keys() const;
     const ParsedFileOutptut* operator[](const std::string& key) const;
 
+    void setMerge(bool merge);
+    bool merge() const;
+
 private:
     std::map<std::string, std::unique_ptr<ParsedFileOutptut>> m_parsed_outputs;
+    bool m_merge{true};
 };
 
 } // namespace DataImportLogic
