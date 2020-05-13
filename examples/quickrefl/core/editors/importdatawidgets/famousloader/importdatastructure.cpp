@@ -274,7 +274,16 @@ DataColumn* DataStructure::column(int column_num)
 //! Add a DataColumn item
 void DataStructure::addColumn(const std::string& header)
 {
-    auto new_column = std::make_unique<DataColumn>(header);
+    std::unique_ptr<DataColumn> new_column;
+    if (m_data_columns.empty()) {
+        new_column = std::make_unique<DataColumn>(header);
+        std::string type("Axis");
+        new_column->setType(type);
+    } else {
+        new_column = std::make_unique<DataColumn>(header);
+    }
+    
+    
     m_data_columns.push_back(std::move(new_column));
 }
 
