@@ -60,6 +60,8 @@ struct ViewportAxisPlotController::AxesPlotControllerImpl {
     {
         Utils::SetLogarithmicScale(axis, controller->currentItem()->is_in_log());
     }
+
+    ~AxesPlotControllerImpl() {setDisconnected();}
 };
 
 ViewportAxisPlotController::ViewportAxisPlotController(QCPAxis* axis)
