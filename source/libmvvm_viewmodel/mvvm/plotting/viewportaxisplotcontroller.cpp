@@ -93,3 +93,8 @@ void ViewportAxisPlotController::subscribe()
 
     p_impl->setConnected();
 }
+
+void ViewportAxisPlotController::unsubscribe()
+{
+    p_impl->setDisconnected();
+}
