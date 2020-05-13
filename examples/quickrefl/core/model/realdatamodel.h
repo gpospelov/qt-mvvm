@@ -11,13 +11,23 @@
 #define REALDATAMODEL_H
 
 #include <mvvm/model/sessionmodel.h>
+#include <vector>
+
+class DataCollectionItem;
+class RealDataStruct;
+
+namespace ModelView
+{
+class SessionItem;
+}
 
 //! The model to store imported reflectometry data.
-
 class RealDataModel : public ModelView::SessionModel
 {
 public:
     RealDataModel();
+    DataCollectionItem* insertDataNode();
+    void addDataToNode(DataCollectionItem* data_set_item, RealDataStruct data_struct);
 };
 
 #endif //  REALDATAMODEL_H
