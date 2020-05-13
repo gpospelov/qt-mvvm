@@ -357,7 +357,7 @@ void ImportTableDelegate::setModelData(QWidget* editor, QAbstractItemModel* mode
 //! This is the constructor
 ImportTableView::ImportTableView(QWidget* parent) : QTableView(parent)
 {
-    setModel(new ImportTableModel());
+    setModel(new ImportTableModel(this));
     setItemDelegate(new ImportTableDelegate(this));
     verticalHeader()->setMaximumWidth(100);
 }
