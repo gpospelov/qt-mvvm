@@ -92,13 +92,17 @@ void ImportDataEditor::invokeImportDialog()
     }
 }
 
+
+// FIXME please consider function simplification.
+// It has too much knowledge about surrounding world.
+
 //! Process the accepted state
 void ImportDataEditor::onImportDialogAccept(DataImportLogic::ImportOutput import_output)
 {
     DataCollectionItem* data_node;
     for (auto& path : import_output.keys()) {
         if ((import_output.merge() && path == *(import_output.keys().begin()))
-            || (!import_output.merge()))
+            || (!import_output.merge())) // FIXME complicated statement
             data_node = model->insertDataNode();
         auto parsed_file_output = import_output[path];
         for (int i = 0; i < parsed_file_output->dataCount(); ++i) {
