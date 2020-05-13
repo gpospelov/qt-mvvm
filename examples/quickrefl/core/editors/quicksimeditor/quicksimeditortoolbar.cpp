@@ -26,8 +26,7 @@
 //} // namespace
 
 QuickSimEditorToolBar::QuickSimEditorToolBar(QWidget* parent)
-    : QToolBar(parent), live_checkbox(new QCheckBox), delay_spinbox(new QSpinBox),
-      progressbar(new QProgressBar), cancel_button(new QPushButton)
+    : QToolBar(parent), live_checkbox(new QCheckBox), progressbar(new QProgressBar)
 {
     const int toolbar_icon_size = 24;
     setIconSize(QSize(toolbar_icon_size, toolbar_icon_size));
@@ -70,7 +69,7 @@ void QuickSimEditorToolBar::setup_simulation_elements()
     addWidget(label);
 
     // run simulation
-    auto run_action = new QAction("Run");
+    auto run_action = new QAction("Run", this);
     run_action->setIcon(QIcon(":/icons/play-circle-outline.svg"));
     run_action->setToolTip("Run simulation for current multilayer state");
     connect(run_action, &QAction::triggered, this, &QuickSimEditorToolBar::runSimulationRequest);
@@ -82,14 +81,14 @@ void QuickSimEditorToolBar::setup_simulation_elements()
     addWidget(progressbar);
 
     // cancel simulation
-    auto cancel_action = new QAction("Cancel");
+    auto cancel_action = new QAction("Cancel", this);
     cancel_action->setIcon(QIcon(":/icons/close-circle-outline.svg"));
     cancel_action->setToolTip("Cancel running simulation");
     connect(cancel_action, &QAction::triggered, this, &QuickSimEditorToolBar::cancelPressed);
     addAction(cancel_action);
 
     // job settings
-    auto settings_action = new QAction("Setup");
+    auto settings_action = new QAction("Setup", this);
     settings_action->setIcon(QIcon(":/icons/alpha-s-circle-outline.svg"));
     settings_action->setToolTip("Specular instrument setup for quick simulations");
     connect(settings_action, &QAction::triggered, this,
@@ -101,13 +100,13 @@ void QuickSimEditorToolBar::setup_simulation_elements()
 
 void QuickSimEditorToolBar::setup_plot_elements()
 {
-    auto reset_view = new QAction("Reset");
+    auto reset_view = new QAction("Reset", this);
     reset_view->setToolTip("Set plot axes to default range");
     reset_view->setIcon(QIcon(":/icons/aspect-ratio.svg"));
     connect(reset_view, &QAction::triggered, this, &QuickSimEditorToolBar::resetViewRequest);
     addAction(reset_view);
 
-    auto plot_settings = new QAction("Plot");
+    auto plot_settings = new QAction("Plot", this);
     plot_settings->setToolTip("Plot settings");
     plot_settings->setIcon(QIcon(":/icons/cog-outline.svg"));
     connect(plot_settings, &QAction::triggered, this, &QuickSimEditorToolBar::plotSettingsRequest);

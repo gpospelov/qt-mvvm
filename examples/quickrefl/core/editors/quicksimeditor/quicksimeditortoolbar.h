@@ -44,9 +44,7 @@ private:
     void setup_plot_elements();
 
     QCheckBox* live_checkbox{nullptr};
-    QSpinBox* delay_spinbox{nullptr};    //! Factor defining how slow simulation is.
     QProgressBar* progressbar{nullptr};  //! Simulation progressbar.
-    QPushButton* cancel_button{nullptr}; //! Cancels simulation.
 };
 
 #endif // QUICKSIMEDITORTOOLBAR_H

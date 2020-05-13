@@ -48,7 +48,7 @@ void ImportDataEditor::setup_toolbar()
 {
     toolbar->setIconSize(StyleUtils::ToolBarIconSize());
     toolbar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-    auto load_action = new QAction("Famous Loader");
+    auto load_action = new QAction("Famous Loader", this);
     load_action->setToolTip("Summons the famous data loader.");
     load_action->setIcon(QIcon(":/icons/aspect-ratio.svg"));
     toolbar->addAction(load_action);

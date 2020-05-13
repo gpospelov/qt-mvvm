@@ -51,7 +51,7 @@ struct DocksController::DocksControllerImpl {
 //! DocksController c-tor.
 
 DocksController::DocksController(QMainWindow* main_window)
-    : p_impl(std::make_unique<DocksControllerImpl>(main_window))
+    : QObject(main_window), p_impl(std::make_unique<DocksControllerImpl>(main_window))
 {
 }
 
