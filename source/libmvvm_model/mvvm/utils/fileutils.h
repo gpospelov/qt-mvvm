@@ -36,6 +36,9 @@ CORE_EXPORT bool remove(const std::string& path);
 //! Removes directory with all its content.
 CORE_EXPORT void remove_all(const std::string& path);
 
+//! Provide the filename of a file path.
+CORE_EXPORT std::string base_name(const std::string& path);
+
 //! Returns list of files with given extention found in given directory.
 CORE_EXPORT std::vector<std::string> FindFiles(const std::string& dirname, const std::string& ext);
 
