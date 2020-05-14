@@ -10,23 +10,14 @@
 #ifndef IMPORTDATASTRUCTURE_H
 #define IMPORTDATASTRUCTURE_H
 
-#include <map>
+#include "importutils.h"
+
 #include <memory>
 #include <string>
 #include <vector>
 
 namespace DataImportLogic
 {
-
-// Convention
-using string_data = std::vector<std::vector<std::string>>;
-using header_map = std::map<std::string, int>;
-
-// global constants
-enum InfoTypes { Name, Type, Unit, Multiplier, Header };
-const std::vector<std::string> InfoNames{"Name", "Type", "Unit", "Multiplier", "Header"};
-const std::vector<std::string> Types{"Intensity", "Axis"};
-const std::vector<std::string> Units{"a.u.", "counts", "bin", "rad", "deg", "mm", "1/nm"};
 
 // -------------------------------------------------
 //! This is the column object for the data
@@ -80,8 +71,8 @@ public:
     ~DataStructure() = default;
 
     void setData(int row, int column);
-    void setData(string_data& data);
-    void setData(header_map& headers, string_data& data);
+    void setData(DataImportUtils::string_data& data);
+    void setData(DataImportUtils::header_map& headers, DataImportUtils::string_data& data);
 
     void processHeaders(int num);
     void processHeaders(const std::vector<std::string>& headers);

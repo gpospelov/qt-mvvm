@@ -18,16 +18,6 @@
 
 namespace DataImportLogic
 {
-//! Helper method to split
-std::vector<std::string> split(const std::string& s, char delim);
-//! Helper method to clean a string vector
-void clean(std::vector<std::string>& input);
-//! Transpose method to turn lines into columns
-string_data transpose(const string_data& input);
-//! Erase All substrings
-void eraseSubStrings(std::string& main_string, const std::vector<std::string>& string_vector);
-//! Erase All occurences of substring
-void eraseAllSubString(std::string& main_string, const std::string& earase);
 
 //! This is the class holding a text region
 class LineFilter
@@ -96,8 +86,8 @@ public:
     void setLineFilterOrder(std::vector<LineFilter*> filter_order);
 
     std::string getPreview(const int& row) const;
-    string_data getData(const int& row) const;
-    header_map getHeader(const int& row) const;
+    DataImportUtils::string_data getData(const int& row) const;
+    DataImportUtils::header_map getHeader(const int& row) const;
     void updateData(const int& row);
     DataStructure* dataStructure() const;
 

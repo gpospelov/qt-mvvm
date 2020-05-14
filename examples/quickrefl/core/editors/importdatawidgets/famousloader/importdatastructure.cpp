@@ -174,7 +174,7 @@ double DataColumn::multiplier() const
 DataStructure::DataStructure() {}
 
 //! This is the set data routine used if not header data is provided
-void DataStructure::setData(string_data& data)
+void DataStructure::setData(DataImportUtils::string_data& data)
 {
     clearColumnValues();
     processHeaders(data.size());
@@ -185,10 +185,10 @@ void DataStructure::setData(string_data& data)
 }
 
 //! This is the set data routine used if header data is provided
-void DataStructure::setData(header_map& headers, string_data& data)
+void DataStructure::setData(DataImportUtils::header_map& headers, DataImportUtils::string_data& data)
 {
     std::vector<std::string> keys;
-    for (header_map::iterator it = headers.begin(); it != headers.end(); ++it) {
+    for (DataImportUtils::header_map::iterator it = headers.begin(); it != headers.end(); ++it) {
         keys.push_back(it->first);
     }
 

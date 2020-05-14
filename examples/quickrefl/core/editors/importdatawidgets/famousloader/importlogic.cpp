@@ -8,85 +8,13 @@
 // ************************************************************************** //
 
 #include "importlogic.h"
+#include "importutils.h"
 
-#include <algorithm>
-#include <functional>
-#include <numeric>
-#include <sstream>
 #include <string>
+#include <sstream>
 
 namespace DataImportLogic
 {
-
-//! Standard function to handle spinting
-std::vector<std::string> split(const std::string& s, char delim)
-{
-    std::stringstream ss(s);
-    std::string item;
-    std::vector<std::string> elems;
-    while (std::getline(ss, item, delim)) {
-        elems.push_back(item);
-    }
-    return elems;
-}
-
-//! Cleans the vector of strings provided by removing empty parts
-void clean(std::vector<std::string>& input)
-{
-    std::vector<std::string>::iterator i = input.begin();
-    while (i != input.end()) {
-        if (*i == "") {
-            i = input.erase(i);
-        } else {
-            ++i;
-        }
-    }
-}
-
-//! Transpose the current data array
-string_data transpose(const string_data& output)
-{
-    string_data temp_data;
-    if (output.size() == 0)
-        return temp_data;
-
-    std::vector<size_t> row_size(output.size());
-    for (int i = 0; i < output.size(); ++i) {
-        row_size[i] = output.at(i).size();
-    }
-    size_t max = *std::max_element(row_size.begin(), row_size.end());
-
-    for (int i = 0; i < *std::max_element(row_size.begin(), row_size.end()); ++i) {
-        std::vector<std::string> column(output.size(), "");
-        for (int j = 0; j < output.size(); ++j) {
-            if (i < row_size[j])
-                column[j] = output.at(j).at(i);
-        }
-        temp_data.push_back(column);
-    }
-    return temp_data;
-}
-
-//! Erase All substrings
-void eraseSubStrings(std::string& main_string, const std::vector<std::string>& string_vector)
-{
-    std::for_each(string_vector.begin(), string_vector.end(),
-                  std::bind(eraseAllSubString, std::ref(main_string), std::placeholders::_1));
-}
-
-//! Erase All occurences of substring
-void eraseAllSubString(std::string& main_string, const std::string& to_erase)
-{
-    if (to_erase == "")
-        return;
-
-    // Search for the substring in string in a loop untill nothing is found
-    for (std::string::size_type i = main_string.find(to_erase); i != std::string::npos;
-         i = main_string.find(to_erase)) {
-        // If found then erase it from string
-        main_string.erase(i, to_erase.length());
-    }
-}
 
 // -------------------------------------------------
 //! This is the constructor of LineFilter
@@ -375,10 +303,10 @@ std::string ImportLogic::getPreview(const int& row) const
 
         auto formated_line = thumbnail.at(i);
         if (!ignore_scheme.at(i).empty())
-            eraseSubStrings(formated_line, ignore_scheme.at(i));
+            DataImportUtils::eraseSubStrings(formated_line, ignore_scheme.at(i));
 
         if (separator_scheme.at(i) != '!') {
-            auto temp_string_vec = split(formated_line, separator_scheme.at(i));
+            auto temp_string_vec = DataImportUtils::split(formated_line, separator_scheme.at(i));
             if (temp_string_vec.size() != 0) {
                 formated_line = temp_string_vec.at(0);
                 for (int j = 1; j < temp_string_vec.size(); ++j) {
@@ -397,47 +325,47 @@ std::string ImportLogic::getPreview(const int& row) const
 }
 
 //! build the data string vector and return it for given file
-string_data ImportLogic::getData(const int& row) const
+DataImportUtils::string_data ImportLogic::getData(const int& row) const
 {
     auto file_lines = m_files.at(row)->file();
     std::vector<std::vector<std::string>> ignore_scheme = getIgnoreScheme(file_lines.size());
     std::vector<std::string> type_scheme = getTypeScheme(file_lines.size());
     std::vector<char> separator_scheme = getSeparatorScheme(file_lines.size());
 
-    string_data output;
+    DataImportUtils::string_data output;
     for (int i = 0; i < file_lines.size(); ++i) {
         if (type_scheme.at(i) != "Data")
             continue;
 
         auto line = file_lines.at(i);
         if (!ignore_scheme.at(i).empty())
-            eraseSubStrings(line, ignore_scheme.at(i));
+            DataImportUtils::eraseSubStrings(line, ignore_scheme.at(i));
 
-        auto temp_string_vec = split(line, separator_scheme.at(i));
-        clean(temp_string_vec);
+        auto temp_string_vec = DataImportUtils::split(line, separator_scheme.at(i));
+        DataImportUtils::clean(temp_string_vec);
         output.push_back(temp_string_vec);
     }
     return output;
 }
 
 //! Build the map of headers in the file with their associated column
-header_map ImportLogic::getHeader(const int& row) const
+DataImportUtils::header_map ImportLogic::getHeader(const int& row) const
 {
     auto file_lines = m_files.at(row)->file();
     std::vector<std::vector<std::string>> ignore_scheme = getIgnoreScheme(file_lines.size());
     std::vector<std::string> type_scheme = getTypeScheme(file_lines.size());
     std::vector<char> separator_scheme = getSeparatorScheme(file_lines.size());
 
-    header_map output;
+    DataImportUtils::header_map output;
     for (int i = 0; i < file_lines.size(); ++i) {
         if (type_scheme.at(i) == "Header") {
 
             auto line = file_lines.at(i);
             if (!ignore_scheme.at(i).empty())
-                eraseSubStrings(line, ignore_scheme.at(i));
+                DataImportUtils::eraseSubStrings(line, ignore_scheme.at(i));
 
-            auto temp_string_vec = split(line, separator_scheme.at(i));
-            clean(temp_string_vec);
+            auto temp_string_vec = DataImportUtils::split(line, separator_scheme.at(i));
+            DataImportUtils::clean(temp_string_vec);
             for (int j = 0; j < temp_string_vec.size(); ++j) {
                 output.insert(std::make_pair(temp_string_vec.at(j), j));
             }
@@ -451,7 +379,7 @@ header_map ImportLogic::getHeader(const int& row) const
 void ImportLogic::updateData(const int& row)
 {
     auto headers = getHeader(row);
-    auto data = transpose(getData(row));
+    auto data = DataImportUtils::transpose(getData(row));
 
     if (!headers.empty())
         p_data_structure->setData(headers, data);
