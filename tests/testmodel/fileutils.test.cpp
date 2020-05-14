@@ -67,8 +67,12 @@ TEST_F(FileUtilsTest, FindFiles)
     TestUtils::CreateTestFile(testDir(), "a.txt");
     TestUtils::CreateTestFile(testDir(), "name0.json");
     TestUtils::CreateTestFile(testDir(), "name1.json");
-    ASSERT_EQ(Utils::FindFiles(testDir(), ".json").size(), 2);
-    EXPECT_EQ(Utils::FindFiles(testDir(), ".json")[0], Utils::join(testDir(), "name0.json"));
+
+    auto found_files = Utils::FindFiles(testDir(), ".json");
+
+    ASSERT_EQ(found_files.size(), 2);
+    EXPECT_NE(found_files.end(), std::find(found_files.begin(), found_files.end(),Utils::join(testDir(), "name0.json")));
+    EXPECT_NE(found_files.end(), std::find(found_files.begin(), found_files.end(),Utils::join(testDir(), "name1.json")));
 }
 
 TEST_F(FileUtilsTest, parent_path)
