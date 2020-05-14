@@ -174,3 +174,33 @@ TEST_F(GraphViewportPlotControllerTest, addMoreGraphs)
     model.insertItem<GraphItem>(viewport_item);
     EXPECT_EQ(custom_plot->graphCount(), 3);
 }
+
+//! Two GraphViewportItem's and switch between them.
+
+TEST_F(GraphViewportPlotControllerTest, switchBetweenTwoViewports)
+{
+    auto custom_plot = std::make_unique<QCustomPlot>();
+    GraphViewportPlotController controller(custom_plot.get());
+
+    // setting up controller with viewport item
+    SessionModel model;
+    auto viewport_item0 = model.insertItem<GraphViewportItem>();
+    auto viewport_item1 = model.insertItem<GraphViewportItem>();
+
+    auto data_item = model.insertItem<Data1DItem>();
+    const std::vector<double> expected_content = {1.0, 2.0, 3.0};
+    const std::vector<double> expected_centers = {0.5, 1.5, 2.5};
+    data_item->setAxis(FixedBinAxisItem::create(3, 0.0, 3.0));
+    data_item->setContent(expected_content);
+
+    auto graph_item = model.insertItem<GraphItem>(viewport_item0);
+    graph_item->setDataItem(data_item);
+    controller.setItem(viewport_item0);
+
+    // single graph on custom plot.
+    EXPECT_EQ(custom_plot->graphCount(), 1);
+
+    // switch to second (empty) viewport, QCustomPlot should have no graphs
+    controller.setItem(viewport_item1);
+    EXPECT_EQ(custom_plot->graphCount(), 0);
+}

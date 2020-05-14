@@ -147,7 +147,7 @@ void SLDElementController::clearScene()
 }
 
 //! Get the identifiers of all layeritems in the sample model in order of appearance
-string_vec SLDElementController::getIdentifierVector(SessionItem* item)
+SLDElementController::string_vec SLDElementController::getIdentifierVector(SessionItem* item)
 {
     string_vec output;
 
@@ -177,6 +177,7 @@ void SLDElementController::buildLayerControllers(string_vec& identifiers)
 
     for (auto& identifier : identifiers) {
         auto layer_element_item = p_sld_model->addLayer();
+        // FIXME memory leakage here, consider switch to vector<unique_ptr>
         auto layer_element_controller = new LayerElementController(layer_element_item);
         layer_element_controller->autoPopulate();
         layer_element_controller->setScene(p_scene_item);

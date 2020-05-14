@@ -38,7 +38,7 @@ void ImportFileWidget::createWidgets()
 
     // Set up the list
     p_list_view = new QListView(this);
-    p_list_model = new QStringListModel();
+    p_list_model = new QStringListModel(this);
     p_list_view->setModel(p_list_model);
     p_list_view->setEditTriggers(QAbstractItemView::NoEditTriggers);
 

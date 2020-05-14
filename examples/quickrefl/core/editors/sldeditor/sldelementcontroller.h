@@ -21,15 +21,15 @@ class SLDElementModel;
 class GraphicsScene;
 class LayerElementController;
 
-using string_vec = std::vector<std::string>;
-using layer_ctrl_vec = std::vector<LayerElementController*>;
-
 //! The controller of the sld layer visual representation
 class SLDElementController : public QObject
 {
     Q_OBJECT
 
 public:
+    using string_vec = std::vector<std::string>;
+    using layer_ctrl_vec = std::vector<LayerElementController*>;
+
     SLDElementController(MaterialModel* material_model, SampleModel* sample_model,
                          SLDElementModel* sld_model, GraphicsScene* scene_item);
     ~SLDElementController();

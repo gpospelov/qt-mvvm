@@ -103,6 +103,7 @@ public:
             middle_layer_item = view_model->addLayer();
             below_layer_item = view_model->addLayer();
 
+            // FIXME multiple memory leakages
             above_controller = new LayerElementController(above_layer_item);
             middle_controller = new LayerElementController(middle_layer_item);
             below_controller = new LayerElementController(below_layer_item);

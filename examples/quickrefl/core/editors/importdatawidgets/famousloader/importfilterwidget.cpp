@@ -120,6 +120,7 @@ void LineFilterWidget::createComponents()
     p_ignore_lines = new QLineEdit(this);
 
     // Set the coherent fusion style for the subcmponents
+    // FIXME This are all memory leakages. Please consider if custom style is necessary at all.
     p_type_select->setStyle(new QProxyStyle("fusion"));
     p_line_start->setStyle(new QProxyStyle("fusion"));
     p_line_end->setStyle(new QProxyStyle("fusion"));

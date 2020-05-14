@@ -38,13 +38,13 @@ LayerEditorToolBar::LayerEditorToolBar(LayerEditorActions* actions, QWidget* par
     connect(add_layer_button, &QToolButton::clicked,
             [layer_menu]() { layer_menu->defaultAction()->triggered(); });
 
-    auto action = new QAction("Clone");
+    auto action = new QAction("Clone", this);
     action->setIcon(QIcon(":/icons/plus-circle-multiple-outline.svg"));
     action->setToolTip("Clones selected layer");
     connect(action, &QAction::triggered, actions, &LayerEditorActions::onClone);
     addAction(action);
 
-    action = new QAction("Remove");
+    action = new QAction("Remove", this);
     action->setIcon(QIcon(":/icons/beaker-remove-outline.svg"));
     action->setToolTip("Removes selected layer");
     connect(action, &QAction::triggered, actions, &LayerEditorActions::onRemove);
@@ -52,13 +52,13 @@ LayerEditorToolBar::LayerEditorToolBar(LayerEditorActions* actions, QWidget* par
 
     addSeparator();
 
-    action = new QAction("Up");
+    action = new QAction("Up", this);
     action->setIcon(QIcon(":/icons/arrow-up-circle-outline.svg"));
     action->setToolTip("Moves selected layer up");
     connect(action, &QAction::triggered, actions, &LayerEditorActions::onMoveUp);
     addAction(action);
 
-    action = new QAction("Down");
+    action = new QAction("Down", this);
     action->setIcon(QIcon(":/icons/arrow-down-circle-outline.svg"));
     action->setToolTip("Moves selected layer down");
     connect(action, &QAction::triggered, actions, &LayerEditorActions::onMoveDown);
