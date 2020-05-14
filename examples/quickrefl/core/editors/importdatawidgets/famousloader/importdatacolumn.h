@@ -37,7 +37,6 @@ public:
     void setType(const std::string& type);
     void setHeader(const std::string& header);
     void setUnit(const std::string& unit);
-    void setColNum(int column_num);
     void setMultiplier(double multiplier);
 
     std::vector<double> values() const;
@@ -48,7 +47,6 @@ public:
     std::string type() const;
     std::string header() const;
     std::string unit() const;
-    int colNum() const;
     double multiplier() const;
 
 private:
@@ -57,7 +55,6 @@ private:
     std::string m_header;
     std::string m_unit;
     double m_multiplier;
-    int m_column_num;
     std::vector<double> m_values;
 };
 

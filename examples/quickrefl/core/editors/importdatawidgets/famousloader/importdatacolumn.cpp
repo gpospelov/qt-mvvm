@@ -18,20 +18,18 @@ namespace DataImportLogic
 
 //! This is the constructor of DataColumn
 DataColumn::DataColumn()
-    : m_name("No Name"), m_type("Intensity"), m_header(""), m_unit("a.u."), m_multiplier(1.),
-      m_column_num(0)
+    : m_name("No Name"), m_type("Intensity"), m_header(""), m_unit("a.u."), m_multiplier(1.)
 {
 }
 
 DataColumn::DataColumn(const std::string& header)
-    : m_name("No Name"), m_type("Intensity"), m_header(header), m_unit("a.u."), m_multiplier(1.),
-      m_column_num(0)
+    : m_name("No Name"), m_type("Intensity"), m_header(header), m_unit("a.u."), m_multiplier(1.)
 {
 }
 
 DataColumn::DataColumn(const DataColumn& other)
     : m_name(other.name()), m_type(other.type()), m_header(other.header()),
-      m_unit(other.unit()), m_multiplier(other.multiplier()), m_column_num(0),
+      m_unit(other.unit()), m_multiplier(other.multiplier()),
       m_values(other.values())
 {
 }
@@ -93,12 +91,6 @@ void DataColumn::setUnit(const std::string& unit)
     m_unit = unit;
 }
 
-//! Setter for the columns
-void DataColumn::setColNum(int column_num)
-{
-    m_column_num = column_num;
-}
-
 //! Setter for the multiplier
 void DataColumn::setMultiplier(double multiplier)
 {
@@ -154,12 +146,6 @@ std::string DataColumn::header() const
 std::string DataColumn::unit() const
 {
     return m_unit;
-}
-
-//! Getter for the column number
-int DataColumn::colNum() const
-{
-    return m_column_num;
 }
 
 //! Getter for the multiplier
