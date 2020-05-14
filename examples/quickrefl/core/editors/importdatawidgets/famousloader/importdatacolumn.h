@@ -25,7 +25,7 @@ class DataColumn
 public:
     DataColumn();
     DataColumn(const std::string& header);
-    DataColumn(const DataColumn* other);
+    DataColumn(const DataColumn& other);
     ~DataColumn() = default;
 
     void setValues(const std::vector<std::string>& values);

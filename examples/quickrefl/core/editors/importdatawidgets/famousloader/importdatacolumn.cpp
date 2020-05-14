@@ -29,10 +29,10 @@ DataColumn::DataColumn(const std::string& header)
 {
 }
 
-DataColumn::DataColumn(const DataColumn* other)
-    : m_name(other->name()), m_type(other->type()), m_header(other->header()),
-      m_unit(other->unit()), m_multiplier(other->multiplier()), m_column_num(0),
-      m_values(other->values())
+DataColumn::DataColumn(const DataColumn& other)
+    : m_name(other.name()), m_type(other.type()), m_header(other.header()),
+      m_unit(other.unit()), m_multiplier(other.multiplier()), m_column_num(0),
+      m_values(other.values())
 {
 }
 
