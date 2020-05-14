@@ -394,7 +394,7 @@ DataStructure* ImportLogic::dataStructure() const
 }
 
 //! Get the names of all the LineFilters in place
-LineFilter* ImportLogic::nameInBlocks(const std::string& name) const
+LineFilter* ImportLogic::nameInFilters(const std::string& name) const
 {
     for (auto& line_filter : m_line_filters) {
         if (name == line_filter->name())
@@ -404,7 +404,7 @@ LineFilter* ImportLogic::nameInBlocks(const std::string& name) const
 }
 
 //! Get the names of all the LineFilters in place
-LineFilter* ImportLogic::typeInBlocks(const std::string& type) const
+LineFilter* ImportLogic::typeInFilters(const std::string& type) const
 {
     for (auto& line_filter : m_line_filters) {
         if (type == line_filter->type())

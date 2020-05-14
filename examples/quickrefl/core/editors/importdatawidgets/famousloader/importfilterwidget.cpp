@@ -48,7 +48,7 @@ LineFilterWidget::LineFilterWidget(DataImportLogic::LineFilter* line_filter, QWi
 }
 
 //! Getter for the current lineblock
-DataImportLogic::LineFilter* LineFilterWidget::lineBlock() const
+DataImportLogic::LineFilter* LineFilterWidget::lineFilter() const
 {
     return p_line_filter;
 }
@@ -453,7 +453,7 @@ void ImportFilterWidget::initialise()
     DataImportLogic::LineFilter* line_filter;
     QList<QListWidgetItem*> items = p_list_widget->findItems("*", Qt::MatchWildcard);
 
-    line_filter = dynamic_cast<LineFilterWidget*>(p_list_widget->itemWidget(items[0]))->lineBlock();
+    line_filter = dynamic_cast<LineFilterWidget*>(p_list_widget->itemWidget(items[0]))->lineFilter();
     line_filter->setType("Header");
     line_filter->setActive(true);
     line_filter->setStart(2);
@@ -461,7 +461,7 @@ void ImportFilterWidget::initialise()
     line_filter->setSeparator("Space ( )");
     line_filter->setColor("red");
 
-    line_filter = dynamic_cast<LineFilterWidget*>(p_list_widget->itemWidget(items[1]))->lineBlock();
+    line_filter = dynamic_cast<LineFilterWidget*>(p_list_widget->itemWidget(items[1]))->lineFilter();
     line_filter->setType("Data");
     line_filter->setActive(true);
     line_filter->setStart(3);
@@ -511,7 +511,7 @@ void ImportFilterWidget::removeLineFilter()
     QList<QListWidgetItem*> items = p_list_widget->selectedItems();
     foreach (QListWidgetItem* item, items) {
         p_import_logic->removeLineFilter(
-            dynamic_cast<LineFilterWidget*>(p_list_widget->itemWidget(item))->lineBlock());
+            dynamic_cast<LineFilterWidget*>(p_list_widget->itemWidget(item))->lineFilter());
         delete p_list_widget->takeItem(p_list_widget->row(item));
     }
 }
@@ -526,7 +526,7 @@ void ImportFilterWidget::readSettings(QSettings& settings)
             auto line_filter =
                 dynamic_cast<LineFilterWidget*>(
                     p_list_widget->itemWidget(p_list_widget->item(p_list_widget->count() - 1)))
-                    ->lineBlock();
+                    ->lineFilter();
 
             settings.beginGroup(group_name);
             line_filter->setName(settings.value("Name", "").toString().toStdString());
@@ -559,7 +559,7 @@ void ImportFilterWidget::writeSettings(QSettings& settings)
     for (int row = 0; row < p_list_widget->count(); row++) {
         auto item = p_list_widget->item(row);
         auto widget = dynamic_cast<LineFilterWidget*>(p_list_widget->itemWidget(item));
-        auto line_filter = widget->lineBlock();
+        auto line_filter = widget->lineFilter();
 
         settings.beginGroup(QString::number(row));
         settings.setValue("Name", QString::fromStdString(line_filter->name()));
@@ -591,7 +591,7 @@ void ImportFilterWidget::handleInternalMoveEvent()
     for (int row = 0; row < p_list_widget->count(); row++) {
         auto item = p_list_widget->item(row);
         auto widget = dynamic_cast<LineFilterWidget*>(p_list_widget->itemWidget(item));
-        filter_order.push_back(widget->lineBlock());
+        filter_order.push_back(widget->lineFilter());
     }
     p_import_logic->setLineFilterOrder(filter_order);
     emit parameterChanged();
@@ -600,8 +600,8 @@ void ImportFilterWidget::handleInternalMoveEvent()
 //! This manages the naming by allowing only dofferent names and sends it upstream if changed
 void ImportFilterWidget::processNameChanged(std::string name, LineFilterWidget* widget)
 {
-    if (!p_import_logic->nameInBlocks(name)) {
-        widget->lineBlock()->setName(name);
+    if (!p_import_logic->nameInFilters(name)) {
+        widget->lineFilter()->setName(name);
         emit namesChanged();
     }
     widget->grabFromLineFilter();
@@ -610,12 +610,12 @@ void ImportFilterWidget::processNameChanged(std::string name, LineFilterWidget* 
 //! This manages the types as only one data type and one header type is allowed
 void ImportFilterWidget::processTypeChanged(std::string type, LineFilterWidget* widget)
 {
-    auto line_filter = p_import_logic->typeInBlocks(type);
+    auto line_filter = p_import_logic->typeInFilters(type);
     if (!line_filter || type == "Comments" || type == "Info") {
-        widget->lineBlock()->setType(type);
+        widget->lineFilter()->setType(type);
     } else {
         line_filter->setType("Comments");
-        widget->lineBlock()->setType(type);
+        widget->lineFilter()->setType(type);
     }
     resetFromLineFilters();
     emit typesChanged();

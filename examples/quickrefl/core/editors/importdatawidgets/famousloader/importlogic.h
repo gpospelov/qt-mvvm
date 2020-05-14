@@ -91,8 +91,8 @@ public:
     void updateData(const int& row);
     DataStructure* dataStructure() const;
 
-    LineFilter* nameInBlocks(const std::string& name) const;
-    LineFilter* typeInBlocks(const std::string& type) const;
+    LineFilter* nameInFilters(const std::string& name) const;
+    LineFilter* typeInFilters(const std::string& type) const;
     void setFiles(const std::vector<std::string>& file_paths);
 
     ImportOutput getFinalOutput();
