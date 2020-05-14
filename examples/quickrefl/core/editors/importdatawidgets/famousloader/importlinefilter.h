@@ -37,15 +37,15 @@ public:
     void processIgnore(std::vector<std::vector<std::string>>& ignore_vec) const;
 
     //! Getters
-    const std::string& name() const;
-    const bool& active() const;
-    const std::string& type() const;
-    const std::string& separator() const;
-    const std::string& color() const;
-    const std::vector<std::string>& ignoreStrings() const;
+    std::string name() const;
+    bool active() const;
+    std::string type() const;
+    std::string separator() const;
+    std::string color() const;
+    std::vector<std::string> ignoreStrings() const;
     std::string ignoreString() const;
-    const int& start() const;
-    const int& end() const;
+    int start() const;
+    int end() const;
 
     //! Setters
     void setName(std::string);

@@ -102,37 +102,37 @@ void LineFilter::processIgnore(std::vector<std::vector<std::string>>& ignore_vec
 }
 
 //! Getter for the name
-const std::string& LineFilter::name() const
+std::string LineFilter::name() const
 {
     return m_name;
 }
 
 //! Getter for the active boolean
-const bool& LineFilter::active() const
+bool LineFilter::active() const
 {
     return m_active;
 }
 
 //! Getter for the type string
-const std::string& LineFilter::type() const
+std::string LineFilter::type() const
 {
     return m_type_string;
 }
 
 //! Getter for the separator key string
-const std::string& LineFilter::separator() const
+std::string LineFilter::separator() const
 {
     return m_separator_str;
 }
 
 //! Getter for the color string
-const std::string& LineFilter::color() const
+std::string LineFilter::color() const
 {
     return m_color;
 }
 
 //! Getter for ignore string
-const std::vector<std::string>& LineFilter::ignoreStrings() const
+std::vector<std::string> LineFilter::ignoreStrings() const
 {
     return m_ignore_strings;
 }
@@ -147,13 +147,13 @@ std::string LineFilter::ignoreString() const
 }
 
 //! Getter for the starting line integer
-const int& LineFilter::start() const
+int LineFilter::start() const
 {
     return m_start_line;
 }
 
 //! Getter for the ending line integer
-const int& LineFilter::end() const
+int LineFilter::end() const
 {
     return m_end_line;
 }
