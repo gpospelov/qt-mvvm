@@ -37,7 +37,7 @@ DataColumn::DataColumn(const DataColumn* other)
 }
 
 //! Setter for the values (str)
-void DataColumn::setValues(std::vector<std::string>& values)
+void DataColumn::setValues(const std::vector<std::string>& values)
 {
     clearValues();
     for (const auto& value : values) {
@@ -52,7 +52,7 @@ void DataColumn::setValues(std::vector<std::string>& values)
 }
 
 //! Setter for the values (doubles)
-void DataColumn::setValues(std::vector<double>& values)
+void DataColumn::setValues(const std::vector<double>& values)
 {
     m_values = values;
 }
@@ -70,25 +70,25 @@ int DataColumn::rowCount()
 }
 
 //! Setter for the name
-void DataColumn::setName(std::string& name)
+void DataColumn::setName(const std::string& name)
 {
     m_name = name;
 }
 
 //! Setter for the type
-void DataColumn::setType(std::string& type)
+void DataColumn::setType(const std::string& type)
 {
     m_type = type;
 }
 
 //! Setter for the header
-void DataColumn::setHeader(std::string& header)
+void DataColumn::setHeader(const std::string& header)
 {
     m_header = header;
 }
 
 //! Setter for the units
-void DataColumn::setUnit(std::string& unit)
+void DataColumn::setUnit(const std::string& unit)
 {
     m_unit = unit;
 }
@@ -106,7 +106,7 @@ void DataColumn::setMultiplier(double multiplier)
 }
 
 //! Getter for the data values
-const std::vector<double>& DataColumn::values() const
+std::vector<double> DataColumn::values() const
 {
     return m_values;
 }
@@ -133,25 +133,25 @@ double DataColumn::finalValue(int row) const
 }
 
 //! Getter for the name
-const std::string& DataColumn::name() const
+std::string DataColumn::name() const
 {
     return m_name;
 }
 
 //! Getter for the type
-const std::string& DataColumn::type() const
+std::string DataColumn::type() const
 {
     return m_type;
 }
 
 //! Getter for the header
-const std::string& DataColumn::header() const
+std::string DataColumn::header() const
 {
     return m_header;
 }
 
 //! Getter for the unit
-const std::string& DataColumn::unit() const
+std::string DataColumn::unit() const
 {
     return m_unit;
 }

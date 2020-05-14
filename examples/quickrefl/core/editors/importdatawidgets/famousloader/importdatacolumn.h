@@ -28,26 +28,26 @@ public:
     DataColumn(const DataColumn* other);
     ~DataColumn() = default;
 
-    void setValues(std::vector<std::string>& values);
-    void setValues(std::vector<double>& values);
+    void setValues(const std::vector<std::string>& values);
+    void setValues(const std::vector<double>& values);
     void clearValues();
     int rowCount();
 
-    void setName(std::string& name);
-    void setType(std::string& type);
-    void setHeader(std::string& header);
-    void setUnit(std::string& unit);
+    void setName(const std::string& name);
+    void setType(const std::string& type);
+    void setHeader(const std::string& header);
+    void setUnit(const std::string& unit);
     void setColNum(int column_num);
     void setMultiplier(double multiplier);
 
-    const std::vector<double>& values() const;
+    std::vector<double> values() const;
     std::vector<double> finalValues() const;
     double value(int row) const;
     double finalValue(int row) const;
-    const std::string& name() const;
-    const std::string& type() const;
-    const std::string& header() const;
-    const std::string& unit() const;
+    std::string name() const;
+    std::string type() const;
+    std::string header() const;
+    std::string unit() const;
     int colNum() const;
     double multiplier() const;
 
