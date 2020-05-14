@@ -29,14 +29,9 @@ public:
     DataStructure();
     ~DataStructure() = default;
 
-    void setData(int row, int column);
     void setData(DataImportUtils::string_data& data);
     void setData(DataImportUtils::header_map& headers, DataImportUtils::string_data& data);
-
-    void processHeaders(int num);
-    void processHeaders(const std::vector<std::string>& headers);
-    std::vector<bool> checkHeaders(const std::vector<std::string>& headers);
-
+    
     DataColumn* column(const std::string& header);
     const DataColumn* column(int column) const;
     DataColumn* column(int column);
@@ -44,7 +39,10 @@ public:
     int rowCount() const;
     int columnCount() const;
 
-private:
+private:    
+    void processHeaders(int num);
+    void processHeaders(const std::vector<std::string>& headers);
+    std::vector<bool> checkHeaders(const std::vector<std::string>& headers);
     void addColumn(const std::string& header);
     void delColumn(const std::string& header);
     void clearColumnValues();
