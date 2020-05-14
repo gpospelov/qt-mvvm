@@ -11,6 +11,7 @@
 #define IMPORTDATASTRUCTURE_H
 
 #include "importutils.h"
+#include "importdatacolumn.h"
 
 #include <memory>
 #include <string>
@@ -19,50 +20,8 @@
 namespace DataImportLogic
 {
 
-// -------------------------------------------------
-//! This is the column object for the data
-class DataColumn
-{
-public:
-    DataColumn();
-    DataColumn(const std::string& header);
-    DataColumn(const DataColumn* other);
-    ~DataColumn() = default;
+class DataColumn;
 
-    void setValues(std::vector<std::string>& values);
-    void setValues(std::vector<double>& values);
-    void clearValues();
-    int rowCount();
-
-    void setName(std::string& name);
-    void setType(std::string& type);
-    void setHeader(std::string& header);
-    void setUnit(std::string& unit);
-    void setColNum(int column_num);
-    void setMultiplier(double multiplier);
-
-    const std::vector<double>& values() const;
-    std::vector<double> finalValues() const;
-    double value(int row) const;
-    double finalValue(int row) const;
-    const std::string& name() const;
-    const std::string& type() const;
-    const std::string& header() const;
-    const std::string& unit() const;
-    int colNum() const;
-    double multiplier() const;
-
-private:
-    std::string m_name;
-    std::string m_type;
-    std::string m_header;
-    std::string m_unit;
-    double m_multiplier;
-    int m_column_num;
-    std::vector<double> m_values;
-};
-
-// -------------------------------------------------
 //! This will manage all the column objects
 class DataStructure
 {

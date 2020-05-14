@@ -9,6 +9,7 @@
 
 #include "importlogic.h"
 #include "importutils.h"
+#include "importdatacolumn.h"
 
 #include <string>
 #include <sstream>

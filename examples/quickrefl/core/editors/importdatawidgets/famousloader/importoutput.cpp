@@ -14,6 +14,7 @@
 
 #include "importoutput.h"
 #include "importdatastructure.h"
+#include "importdatacolumn.h"
 
 namespace DataImportLogic
 {

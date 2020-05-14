@@ -13,6 +13,7 @@
 // ************************************************************************** //
 
 #include "importtableview.h"
+#include "importdatacolumn.h"
 
 #include <mvvm/editors/scientificspinboxeditor.h>
 
