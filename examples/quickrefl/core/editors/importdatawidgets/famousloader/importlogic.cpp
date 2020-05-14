@@ -57,7 +57,7 @@ void ImportLogic::setFiles(const std::vector<std::string>& file_paths)
 {
     m_files.clear();
     for (auto& file_path : file_paths) {
-        auto temp = std::make_unique<CSVFile>(file_path);
+        auto temp = std::make_unique<ImportFile>(file_path);
         m_files.push_back(std::move(temp));
     }
 }

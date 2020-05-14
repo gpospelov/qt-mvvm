@@ -10,7 +10,6 @@
 #ifndef IMPORTLINEFILTER_H
 #define IMPORTLINEFILTER_H
 
-#include "csvfile.h"
 #include "importdatastructure.h"
 #include "importoutput.h"
 

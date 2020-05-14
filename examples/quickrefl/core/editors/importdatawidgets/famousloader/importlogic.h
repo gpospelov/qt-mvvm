@@ -10,7 +10,7 @@
 #ifndef IMPORTLOGIC_H
 #define IMPORTLOGIC_H
 
-#include "csvfile.h"
+#include "importfile.h"
 #include "importlinefilter.h"
 #include "importdatastructure.h"
 #include "importoutput.h"
@@ -55,7 +55,7 @@ private:
     std::vector<std::vector<std::string>> getIgnoreScheme(const int& length) const;
 
 private:
-    std::vector<std::unique_ptr<CSVFile>> m_files;
+    std::vector<std::unique_ptr<ImportFile>> m_files;
     std::vector<std::unique_ptr<LineFilter>> m_line_filters;
     std::map<std::string, char> m_separators;
     std::unique_ptr<DataStructure> p_data_structure;
