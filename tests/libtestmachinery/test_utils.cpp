@@ -28,6 +28,11 @@ namespace
 void SaveDocument(const QJsonDocument& document, const std::string& fileName);
 }
 
+std::string TestUtils::TestOutputDir()
+{
+    return TestConfig::TestOutputDir(); // defined in auto-generated testconfig.h
+}
+
 std::string TestUtils::CreateTestDirectory(const std::string& test_sub_dir)
 {
     std::string result = TestDirectoryPath(test_sub_dir);
@@ -37,7 +42,7 @@ std::string TestUtils::CreateTestDirectory(const std::string& test_sub_dir)
 
 std::string TestUtils::TestDirectoryPath(const std::string& test_sub_dir)
 {
-    return std::string(TestConfig::TestOutputDir()) + std::string("/") + test_sub_dir;
+    return TestOutputDir() + std::string("/") + test_sub_dir;
 }
 
 std::string TestUtils::TestFileName(const std::string& test_sub_dir, const std::string& file_name)

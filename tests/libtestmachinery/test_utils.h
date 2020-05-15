@@ -30,7 +30,11 @@ class SessionModel;
 namespace TestUtils
 {
 
-//! Creates test directory in main test folder (CMAKE_BINARY_DIR/test_output) and returns full path.
+//! Returns full path to the main test folder, as defined by CMake at compile time.
+//! Shoud point to CMAKE_BINARY_DIR/test_output
+std::string TestOutputDir();
+
+//! Creates test directory in main test folder and returns full path.
 //! If directory exists, will do nothing.
 std::string CreateTestDirectory(const std::string& test_sub_dir);
 
