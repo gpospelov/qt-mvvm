@@ -56,7 +56,8 @@ QString ModelToJsonString(ModelView::SessionModel& model);
 QJsonDocument LoadJson(const std::string& fileName);
 
 //! Helper function to create test file in a given directory (directory should exist).
-void CreateTestFile(const std::string& dirname, const std::string& fileName);
+//! Returns full path of the file.
+std::string CreateTestFile(const std::string& dirname, const std::string& fileName);
 
 //! Deletes items in the container and cleans container afterwards.
 

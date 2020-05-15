@@ -84,7 +84,7 @@ QJsonDocument TestUtils::LoadJson(const std::string& fileName)
     return QJsonDocument().fromJson(jsonFile.readAll());
 }
 
-void TestUtils::CreateTestFile(const std::string& dirname, const std::string& fileName)
+std::string TestUtils::CreateTestFile(const std::string& dirname, const std::string& fileName)
 {
     std::string filename = dirname.empty() ? fileName : dirname + "/" + fileName;
 
@@ -96,6 +96,8 @@ void TestUtils::CreateTestFile(const std::string& dirname, const std::string& fi
     QTextStream out(&file);
     out << "Test file " << 42 << "\n";
     file.close();
+
+    return filename;
 }
 
 namespace
