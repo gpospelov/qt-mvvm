@@ -72,3 +72,14 @@ TEST_F(FileUtilsTest, FindFiles)
     qDebug() << "AAA" << QString::fromStdString(Utils::FindFiles(testDir(), ".json")[0]);
     EXPECT_EQ(Utils::FindFiles(testDir(), ".json")[0], Utils::join(testDir(), "name0.json"));
 }
+
+TEST_F(FileUtilsTest, parent_path)
+{
+    // parent path of testDir() is the main test folder
+    // "<build>/test_output/test_FileUtils" -> "<build>/test_output/"
+    EXPECT_EQ(Utils::parent_path(testDir()), TestUtils::TestOutputDir());
+
+    // "<build>/test_output/test_FileUtils/a.txt" -> "<build>/test_output/test_FileUtils/"
+    auto filename = TestUtils::CreateTestFile(testDir(), "a.txt");
+    EXPECT_EQ(Utils::parent_path(filename), testDir());
+}

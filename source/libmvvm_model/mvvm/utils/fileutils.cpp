@@ -79,11 +79,9 @@ std::string Utils::base_name(const std::string& path)
 #endif
 }
 
-#include <QDebug>
 std::vector<std::string> Utils::FindFiles(const std::string& dirname, const std::string& ext)
 {
 #ifdef ENABLE_FILESYSTEM
-    qDebug() << "1.2";
     std::vector<std::string> result;
     for (const auto& entry : std::filesystem::directory_iterator(dirname)) {
         const auto filenameStr = entry.path().filename().string();
@@ -92,7 +90,6 @@ std::vector<std::string> Utils::FindFiles(const std::string& dirname, const std:
     }
     return result;
 #else
-    qDebug() << "1.1";
     std::vector<std::string> result;
     QDir dir(QString::fromStdString(dirname));
     if (dir.exists()) {
@@ -103,5 +100,15 @@ std::vector<std::string> Utils::FindFiles(const std::string& dirname, const std:
         }
     }
     return result;
+#endif
+}
+
+std::string Utils::parent_path(const std::string &path)
+{
+#ifdef ENABLE_FILESYSTEM
+    return std::filesystem::path(path).parent_path().string();
+#else
+    QFileInfo info(QString::fromStdString(path));
+    return info.dir().path().toStdString();
 #endif
 }
