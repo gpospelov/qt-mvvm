@@ -17,6 +17,7 @@ class ApplicationModels;
 class ProjectManagerInterface;
 class RecentProjectWidget;
 class OpenProjectWidget;
+class WelcomeViewSettings;
 
 //! Welcome view. Main widget on first tab of MainWindow.
 
@@ -44,6 +45,7 @@ private:
     std::unique_ptr<ProjectManagerInterface> m_project_manager;
     RecentProjectWidget* m_recent_project_widget{nullptr};
     OpenProjectWidget* m_open_project_widget{nullptr};
+    std::unique_ptr<WelcomeViewSettings> m_settings;
 };
 
 #endif // WELCOMEVIEW_H

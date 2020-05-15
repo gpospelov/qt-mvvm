@@ -24,7 +24,7 @@ public:
 
     QString currentWorkdir() const;
 
-    void setCurrentWorkDir(const QString& dirname);
+    void updateWorkdirFromSelection(const QString& dirname);
 
 private:
     void writeSettings();

@@ -10,16 +10,16 @@
 #include "welcomeviewsettings.h"
 #include <QDir>
 #include <QSettings>
+#include <mvvm/utils/fileutils.h>
 
 namespace
 {
-const QString welcome_view_group = "WelcomeView";
-
-const QString current_wordkir_setting()
+const QString welcome_view_group = "welcomeview";
+const QString current_workdir_setting = "currentworkdir";
+const QString workdir_setting_name()
 {
-    return welcome_view_group + "/CurrentWorkdir";
+    return welcome_view_group + "/" + current_workdir_setting;
 }
-
 } // namespace
 
 WelcomeViewSettings::WelcomeViewSettings()
@@ -38,17 +38,21 @@ QString WelcomeViewSettings::currentWorkdir() const
     return m_current_workdir;
 }
 
-void WelcomeViewSettings::setCurrentWorkDir(const QString& dirname)
+//! Updates workdir from user selection.
+//! Workdir will be set as parent director of selected `dirname`.
+void WelcomeViewSettings::updateWorkdirFromSelection(const QString& dirname)
 {
-    m_current_workdir = dirname;
+    if (!dirname.isEmpty()) {
+        auto parent_path = ModelView::Utils::parent_path(dirname.toStdString());
+        m_current_workdir = QString::fromStdString(parent_path);
+    }
 }
 
 //! Write all settings to file.
 void WelcomeViewSettings::writeSettings()
 {
     QSettings settings;
-
-    settings.setValue(current_wordkir_setting(), m_current_workdir);
+    settings.setValue(workdir_setting_name(), m_current_workdir);
 }
 
 //! Reads all settings from file.
@@ -57,6 +61,6 @@ void WelcomeViewSettings::readSettings()
     QSettings settings;
     m_current_workdir = QDir::homePath();
 
-    if (settings.contains(current_wordkir_setting()))
-        m_current_workdir = settings.value(current_wordkir_setting()).toString();
+    if (settings.contains(workdir_setting_name()))
+        m_current_workdir = settings.value(workdir_setting_name()).toString();
 }
