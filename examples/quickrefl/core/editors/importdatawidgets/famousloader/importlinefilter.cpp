@@ -142,7 +142,8 @@ std::string LineFilter::ignoreString() const
 {
     std::string output;
     for (const auto& piece : m_ignore_strings)
-        output += piece;
+        output += ","+piece;
+    output.erase(0,1);
     return output;
 }
 
