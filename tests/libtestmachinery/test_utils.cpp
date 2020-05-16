@@ -22,7 +22,6 @@
 
 using namespace ModelView;
 
-
 namespace
 {
 void SaveDocument(const QJsonDocument& document, const std::string& fileName);
@@ -97,6 +96,17 @@ std::string TestUtils::CreateTestFile(const std::string& dirname, const std::str
     out << "Test file " << 42 << "\n";
     file.close();
 
+    return filename;
+}
+
+std::string TestUtils::CreateEmptyFile(const std::string& dirname, const std::string& fileName)
+{
+    std::string filename = dirname.empty() ? fileName : dirname + "/" + fileName;
+
+    QFile file(QString::fromStdString(filename));
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+        throw std::runtime_error("TestFileUtils::createTestFile() -> Error. "
+                                 "Can't create file");
     return filename;
 }
 

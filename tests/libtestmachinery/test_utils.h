@@ -59,6 +59,10 @@ QJsonDocument LoadJson(const std::string& fileName);
 //! Returns full path of the file.
 std::string CreateTestFile(const std::string& dirname, const std::string& fileName);
 
+//! Helper function to create empty file in a given directory (directory should exist).
+//! Returns full path of the file.
+std::string CreateEmptyFile(const std::string& dirname, const std::string& fileName);
+
 //! Deletes items in the container and cleans container afterwards.
 
 template <typename T> void clean_items(T& items)
