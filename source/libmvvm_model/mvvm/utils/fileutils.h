@@ -45,6 +45,9 @@ CORE_EXPORT std::vector<std::string> FindFiles(const std::string& dirname, const
 //! Returns the path to the parent directory.
 CORE_EXPORT std::string parent_path(const std::string& path);
 
+//! Returns true if the file indicated by 'path' refers to empty file or directory.
+CORE_EXPORT bool is_empty(const std::string& path);
+
 } // namespace Utils
 
 } // namespace ModelView

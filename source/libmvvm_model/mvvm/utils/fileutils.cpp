@@ -103,12 +103,28 @@ std::vector<std::string> Utils::FindFiles(const std::string& dirname, const std:
 #endif
 }
 
-std::string Utils::parent_path(const std::string &path)
+std::string Utils::parent_path(const std::string& path)
 {
 #ifdef ENABLE_FILESYSTEM
     return std::filesystem::path(path).parent_path().string();
 #else
     QFileInfo info(QString::fromStdString(path));
     return info.dir().path().toStdString();
+#endif
+}
+
+bool Utils::is_empty(const std::string& path)
+{
+#ifdef ENABLE_FILESYSTEM
+    return std::filesystem::is_empty(path);
+#else
+    QFileInfo info(QString::fromStdString(path));
+    if (info.isDir()) {
+        QDir dir(QString::fromStdString(path));
+        return dir.isEmpty();
+    } else {
+        return info.size() == 0;
+    }
+    return false;
 #endif
 }
