@@ -17,6 +17,8 @@ class ApplicationModels;
 class ProjectManagerInterface;
 class RecentProjectWidget;
 class OpenProjectWidget;
+class WelcomeViewSettings;
+class ProjectManagerInteractor;
 
 //! Welcome view. Main widget on first tab of MainWindow.
 
@@ -28,10 +30,6 @@ public:
     ~WelcomeView();
 
 public slots:
-    std::string onSelectDirRequest();
-    std::string onCreateDirRequest();
-    int onSaveChangesRequest();
-
     void onCreateNewProject();
     void onOpenExistingProject();
     void onSaveCurrentProject();
@@ -44,6 +42,8 @@ private:
     std::unique_ptr<ProjectManagerInterface> m_project_manager;
     RecentProjectWidget* m_recent_project_widget{nullptr};
     OpenProjectWidget* m_open_project_widget{nullptr};
+    std::unique_ptr<WelcomeViewSettings> m_settings;
+    std::unique_ptr<ProjectManagerInteractor> m_interactor;
 };
 
 #endif // WELCOMEVIEW_H

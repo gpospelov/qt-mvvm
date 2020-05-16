@@ -30,7 +30,11 @@ class SessionModel;
 namespace TestUtils
 {
 
-//! Creates test directory in main test folder (CMAKE_BINARY_DIR/test_output) and returns full path.
+//! Returns full path to the main test folder, as defined by CMake at compile time.
+//! Shoud point to CMAKE_BINARY_DIR/test_output
+std::string TestOutputDir();
+
+//! Creates test directory in main test folder and returns full path.
 //! If directory exists, will do nothing.
 std::string CreateTestDirectory(const std::string& test_sub_dir);
 
@@ -52,7 +56,12 @@ QString ModelToJsonString(ModelView::SessionModel& model);
 QJsonDocument LoadJson(const std::string& fileName);
 
 //! Helper function to create test file in a given directory (directory should exist).
-void CreateTestFile(const std::string& dirname, const std::string& fileName);
+//! Returns full path of the file.
+std::string CreateTestFile(const std::string& dirname, const std::string& fileName);
+
+//! Helper function to create empty file in a given directory (directory should exist).
+//! Returns full path of the file.
+std::string CreateEmptyFile(const std::string& dirname, const std::string& fileName);
 
 //! Deletes items in the container and cleans container afterwards.
 

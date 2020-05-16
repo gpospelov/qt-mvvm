@@ -26,12 +26,10 @@ const QString pos_key = "pos";
 } // namespace
 
 MainWindow::MainWindow()
-    : models(std::make_unique<ApplicationModels>()), welcome_view(new WelcomeView(models.get())),
-      import_window(new ImportWindow(models.get())), refl_window(new ReflDockWindow(models.get())),
-      bar_widget(new MainBarWidget)
+    : models(std::make_unique<ApplicationModels>())
 {
     init_application();
-    init_tabs();
+    init_views();
     setCentralWidget(bar_widget);
 }
 
@@ -58,8 +56,13 @@ void MainWindow::init_application()
     }
 }
 
-void MainWindow::init_tabs()
+void MainWindow::init_views()
 {
+    welcome_view = new WelcomeView(models.get());
+    import_window = new ImportWindow(models.get());
+    refl_window = new ReflDockWindow(models.get());
+    bar_widget = new MainBarWidget;
+
     bar_widget->addWidget(welcome_view, "Project");
     bar_widget->addWidget(import_window, "Data");
     bar_widget->addWidget(refl_window, "Simulation");

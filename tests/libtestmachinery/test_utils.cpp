@@ -22,10 +22,14 @@
 
 using namespace ModelView;
 
-
 namespace
 {
 void SaveDocument(const QJsonDocument& document, const std::string& fileName);
+}
+
+std::string TestUtils::TestOutputDir()
+{
+    return TestConfig::TestOutputDir(); // defined in auto-generated testconfig.h
 }
 
 std::string TestUtils::CreateTestDirectory(const std::string& test_sub_dir)
@@ -37,7 +41,7 @@ std::string TestUtils::CreateTestDirectory(const std::string& test_sub_dir)
 
 std::string TestUtils::TestDirectoryPath(const std::string& test_sub_dir)
 {
-    return std::string(TestConfig::TestOutputDir()) + std::string("/") + test_sub_dir;
+    return TestOutputDir() + std::string("/") + test_sub_dir;
 }
 
 std::string TestUtils::TestFileName(const std::string& test_sub_dir, const std::string& file_name)
@@ -79,7 +83,7 @@ QJsonDocument TestUtils::LoadJson(const std::string& fileName)
     return QJsonDocument().fromJson(jsonFile.readAll());
 }
 
-void TestUtils::CreateTestFile(const std::string& dirname, const std::string& fileName)
+std::string TestUtils::CreateTestFile(const std::string& dirname, const std::string& fileName)
 {
     std::string filename = dirname.empty() ? fileName : dirname + "/" + fileName;
 
@@ -91,6 +95,19 @@ void TestUtils::CreateTestFile(const std::string& dirname, const std::string& fi
     QTextStream out(&file);
     out << "Test file " << 42 << "\n";
     file.close();
+
+    return filename;
+}
+
+std::string TestUtils::CreateEmptyFile(const std::string& dirname, const std::string& fileName)
+{
+    std::string filename = dirname.empty() ? fileName : dirname + "/" + fileName;
+
+    QFile file(QString::fromStdString(filename));
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+        throw std::runtime_error("TestFileUtils::createTestFile() -> Error. "
+                                 "Can't create file");
+    return filename;
 }
 
 namespace

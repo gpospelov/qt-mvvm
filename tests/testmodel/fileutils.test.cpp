@@ -62,13 +62,43 @@ TEST_F(FileUtilsTest, base_name)
     EXPECT_EQ("fileutils.test", base_name);
 }
 
-#include <QDebug>
 TEST_F(FileUtilsTest, FindFiles)
 {
     TestUtils::CreateTestFile(testDir(), "a.txt");
     TestUtils::CreateTestFile(testDir(), "name0.json");
     TestUtils::CreateTestFile(testDir(), "name1.json");
     ASSERT_EQ(Utils::FindFiles(testDir(), ".json").size(), 2);
-    qDebug() << "AAA" << QString::fromStdString(Utils::FindFiles(testDir(), ".json")[0]);
     EXPECT_EQ(Utils::FindFiles(testDir(), ".json")[0], Utils::join(testDir(), "name0.json"));
+}
+
+TEST_F(FileUtilsTest, parent_path)
+{
+    // parent path of testDir() is the main test folder
+    // "<build>/test_output/test_FileUtils" -> "<build>/test_output/"
+    EXPECT_EQ(Utils::parent_path(testDir()), TestUtils::TestOutputDir());
+
+    // "<build>/test_output/test_FileUtils/a.txt" -> "<build>/test_output/test_FileUtils/"
+    auto filename = TestUtils::CreateTestFile(testDir(), "a.txt");
+    EXPECT_EQ(Utils::parent_path(filename), testDir());
+}
+
+TEST_F(FileUtilsTest, is_empty)
+{
+    // creating new empty directory
+    std::string dirname = testDir() + std::string("/") + "subdir_is_empty";
+    Utils::remove_all(dirname);
+    Utils::create_directory(dirname);
+
+    // it should be empty
+    EXPECT_TRUE(Utils::is_empty(dirname));
+
+    // creating file in it, directory should be not empty
+    auto filename = TestUtils::CreateTestFile(dirname, "a.txt");
+    EXPECT_FALSE(Utils::is_empty(dirname));
+    // file itself should be not empty
+    EXPECT_FALSE(Utils::is_empty(dirname));
+
+    // creating empty file
+    auto empty_filename = TestUtils::CreateEmptyFile(dirname, "a2.txt");
+    EXPECT_TRUE(Utils::is_empty(empty_filename));
 }
