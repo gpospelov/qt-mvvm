@@ -12,6 +12,7 @@
 
 #include <string>
 class QWidget;
+class WelcomeViewSettings;
 
 //! Provide save/discard/cancel and similar dialogs on user request.
 //! Intended to work in pair with ProjectManagerDecorator.
@@ -19,7 +20,7 @@ class QWidget;
 class ProjectManagerInteractor
 {
 public:
-    ProjectManagerInteractor(QWidget* parent);
+    ProjectManagerInteractor(QWidget* parent, WelcomeViewSettings* settings);
 
     std::string onSelectDirRequest();
 
@@ -29,6 +30,7 @@ public:
 
 private:
     QWidget* m_parent{nullptr};
+    WelcomeViewSettings* m_settings{nullptr};
 };
 
 #endif // PROJECTMANAGERINTERACTOR_H

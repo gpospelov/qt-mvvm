@@ -14,11 +14,11 @@
 
 namespace
 {
-const QString welcome_view_group = "welcomeview";
-const QString current_workdir_setting = "currentworkdir";
+const QString group_key = "welcomeview";
+const QString current_workdir_key = "currentworkdir";
 const QString workdir_setting_name()
 {
-    return welcome_view_group + "/" + current_workdir_setting;
+    return group_key + "/" + current_workdir_key;
 }
 } // namespace
 
@@ -32,13 +32,13 @@ WelcomeViewSettings::~WelcomeViewSettings()
     writeSettings();
 }
 
-//! Returns current workdir as selected by the user.
+//! Returns current workdir.
 QString WelcomeViewSettings::currentWorkdir() const
 {
     return m_current_workdir;
 }
 
-//! Updates workdir from user selection.
+//! Updates current workdir value from user selection.
 //! Workdir will be set as parent director of selected `dirname`.
 void WelcomeViewSettings::updateWorkdirFromSelection(const QString& dirname)
 {

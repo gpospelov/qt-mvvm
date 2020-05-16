@@ -11,6 +11,7 @@
 #include "applicationmodels.h"
 #include "openprojectwidget.h"
 #include "projectmanagerdecorator.h"
+#include "projectmanagerinteractor.h"
 #include "recentprojectwidget.h"
 #include "welcomeviewsettings.h"
 #include <QDebug>
@@ -20,7 +21,8 @@
 WelcomeView::WelcomeView(ApplicationModels* models, QWidget* parent)
     : QWidget(parent), m_models(models), m_recent_project_widget(new RecentProjectWidget),
       m_open_project_widget(new OpenProjectWidget),
-      m_settings(std::make_unique<WelcomeViewSettings>())
+      m_settings(std::make_unique<WelcomeViewSettings>()),
+      m_interactor(std::make_unique<ProjectManagerInteractor>(this, m_settings.get()))
 {
     QPalette palette;
     palette.setColor(QPalette::Window, Qt::white);
@@ -38,35 +40,6 @@ WelcomeView::WelcomeView(ApplicationModels* models, QWidget* parent)
 }
 
 WelcomeView::~WelcomeView() = default;
-
-//! Returns directory on disk selected by the user via QFileDialog.
-std::string WelcomeView::onSelectDirRequest()
-{
-
-    qDebug() << "WelcomeView::onSelectDirRequest()";
-    return {};
-}
-
-//! Returns new directory on disk created by the user via QFileDialog.
-std::string WelcomeView::onCreateDirRequest()
-{
-    qDebug() << "WelcomeView::onCreateDirRequest()" << m_settings->currentWorkdir();
-    QString dirname = QFileDialog::getExistingDirectory(
-        this, "Select directory", m_settings->currentWorkdir(),
-        QFileDialog::DontResolveSymlinks | QFileDialog::ShowDirsOnly);
-
-    qDebug() << "       dirname:"<<dirname;
-    m_settings->updateWorkdirFromSelection(dirname);
-
-    return dirname.toStdString();
-}
-
-//! Returns save/cancel/discard changes choice provided by the user.
-int WelcomeView::onSaveChangesRequest()
-{
-    qDebug() << "WelcomeView::onSaveChangesRequest()";
-    return 0;
-}
 
 void WelcomeView::onCreateNewProject()
 {
@@ -88,10 +61,10 @@ void WelcomeView::onSaveCurrentProject()
 
 void WelcomeView::init_project_manager()
 {
-    auto select_dir = [this]() { return onSelectDirRequest(); };
-    auto create_dir = [this]() { return onCreateDirRequest(); };
+    auto select_dir = [this]() { return m_interactor->onSelectDirRequest(); };
+    auto create_dir = [this]() { return m_interactor->onCreateDirRequest(); };
     auto save_changes = [this]() {
-        return static_cast<ProjectManagerDecorator::SaveChangesAnswer>(onSaveChangesRequest());
+        return static_cast<ProjectManagerDecorator::SaveChangesAnswer>(m_interactor->onSaveChangesRequest());
     };
 
     auto manager = std::make_unique<ProjectManagerDecorator>(m_models, select_dir, create_dir);
