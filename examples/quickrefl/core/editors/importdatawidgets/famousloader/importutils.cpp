@@ -9,7 +9,6 @@
 
 #include "importutils.h"
 
-#include <algorithm>
 #include <functional>
 #include <sstream>
 
@@ -39,30 +38,6 @@ void clean(std::vector<std::string>& input)
             ++i;
         }
     }
-}
-
-//! Transpose the current data array
-string_data transpose(const string_data& output)
-{
-    string_data temp_data;
-    if (output.size() == 0)
-        return temp_data;
-
-    std::vector<size_t> row_size(output.size());
-    for (int i = 0; i < output.size(); ++i) {
-        row_size[i] = output.at(i).size();
-    }
-    size_t max = *std::max_element(row_size.begin(), row_size.end());
-
-    for (int i = 0; i < *std::max_element(row_size.begin(), row_size.end()); ++i) {
-        std::vector<std::string> column(output.size(), "");
-        for (int j = 0; j < output.size(); ++j) {
-            if (i < row_size[j])
-                column[j] = output.at(j).at(i);
-        }
-        temp_data.push_back(column);
-    }
-    return temp_data;
 }
 
 //! Erase All substrings
