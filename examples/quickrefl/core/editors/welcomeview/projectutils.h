@@ -31,6 +31,8 @@ std::string SuggestFileName(const ModelView::SessionModel& model);
 
 std::unique_ptr<ProjectInterface> CreateUntitledProject(ApplicationModelsInterface* models);
 
+std::string ProjectWindowTitle(const ProjectInterface& project);
+
 } // namespace ProjectUtils
 
 #endif // PROJECTUTILS_H

@@ -16,7 +16,8 @@
 namespace
 {
 const std::string json_extention = ".json";
-}
+const std::string untitled_name = "Untitled";
+} // namespace
 
 //! Suggests file name which can be used to store json content of given model.
 //! Uses the model type to construct a filename: MaterialModel -> materialmodel.json
@@ -34,4 +35,17 @@ std::unique_ptr<ProjectInterface>
 ProjectUtils::CreateUntitledProject(ApplicationModelsInterface* models)
 {
     return std::make_unique<Project>(models);
+}
+
+//! Returns a title for MainWindow for given project.
+//! Project without projectDir will be "Untitled", modified project will be "*Untitled".
+//! Project with projectDir in "/home/user/project1" will get title "project1".
+
+std::string ProjectUtils::ProjectWindowTitle(const ProjectInterface& project)
+{
+    const auto project_dir = project.projectDir();
+    auto pos = project_dir.find_last_of("/");
+    auto project_name = (pos == std::string::npos ? untitled_name : project_dir.substr(pos + 1));
+    auto unsaved_status = project.isModified() ? "*" : "";
+    return unsaved_status + project_name;
 }
