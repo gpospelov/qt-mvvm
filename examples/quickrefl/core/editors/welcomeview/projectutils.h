@@ -33,6 +33,8 @@ std::unique_ptr<ProjectInterface> CreateUntitledProject(ApplicationModelsInterfa
 
 std::string ProjectWindowTitle(const ProjectInterface& project);
 
+std::string ProjectWindowTitle(const std::string& project_dir, bool is_modified);
+
 } // namespace ProjectUtils
 
 #endif // PROJECTUTILS_H

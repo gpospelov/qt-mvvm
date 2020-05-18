@@ -12,11 +12,26 @@
 #include "openprojectwidget.h"
 #include "projectmanagerdecorator.h"
 #include "projectmanagerinteractor.h"
+#include "projectutils.h"
 #include "recentprojectwidget.h"
 #include "welcomeviewsettings.h"
+#include <QApplication>
 #include <QDebug>
-#include <QHBoxLayout>
 #include <QFileDialog>
+#include <QHBoxLayout>
+#include <QMainWindow>
+
+namespace
+{
+QMainWindow* findMainWindow()
+{
+    for (auto widget : qApp->topLevelWidgets()) {
+        if (auto result = dynamic_cast<QMainWindow*>(widget); result)
+            return result;
+    }
+    return nullptr;
+}
+} // namespace
 
 WelcomeView::WelcomeView(ApplicationModels* models, QWidget* parent)
     : QWidget(parent), m_models(models), m_recent_project_widget(new RecentProjectWidget),
@@ -44,7 +59,8 @@ WelcomeView::~WelcomeView() = default;
 void WelcomeView::onCreateNewProject()
 {
     qDebug() << "WelcomeView::onCreateNewProject()";
-    m_project_manager->createNewProject();
+    if (m_project_manager->createNewProject())
+        update_current_project_name();
 }
 
 void WelcomeView::onOpenExistingProject()
@@ -64,7 +80,8 @@ void WelcomeView::init_project_manager()
     auto select_dir = [this]() { return m_interactor->onSelectDirRequest(); };
     auto create_dir = [this]() { return m_interactor->onCreateDirRequest(); };
     auto save_changes = [this]() {
-        return static_cast<ProjectManagerDecorator::SaveChangesAnswer>(m_interactor->onSaveChangesRequest());
+        return static_cast<ProjectManagerDecorator::SaveChangesAnswer>(
+            m_interactor->onSaveChangesRequest());
     };
 
     auto manager = std::make_unique<ProjectManagerDecorator>(m_models, select_dir, create_dir);
@@ -79,4 +96,14 @@ void WelcomeView::setup_connections()
             &WelcomeView::onOpenExistingProject);
     connect(m_open_project_widget, &OpenProjectWidget::createNewProjectRequest, this,
             &WelcomeView::onCreateNewProject);
+}
+
+//!
+
+void WelcomeView::update_current_project_name()
+{
+    auto title = ProjectUtils::ProjectWindowTitle(m_project_manager->currentProjectDir(),
+                                                  m_project_manager->isModified());
+    if (auto main_window = findMainWindow(); main_window)
+        main_window->setWindowTitle(QString::fromStdString(title));
 }
