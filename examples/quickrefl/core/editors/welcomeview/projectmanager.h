@@ -41,7 +41,7 @@ public:
 
     bool openExistingProject(const std::string& dirname) override;
 
-    std::string currentProjectDir() const;
+    std::string currentProjectDir() const override;
 
     bool isModified() const override;
 
