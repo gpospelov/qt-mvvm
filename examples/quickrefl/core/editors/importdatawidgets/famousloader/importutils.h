@@ -35,7 +35,7 @@ std::vector<std::string> split(const std::string& s, char delim);
 void clean(std::vector<std::string>& input);
 
 //! Transpose method to turn lines into columns
-template <typename T, class allocator_outer = std::allocator<std::vector<T>>, class allocator_inner = std::allocator<T>> std::vector<std::vector<T,allocator_inner>,allocator_outer> transpose(const  std::vector<std::vector<T,allocator_inner>,allocator_outer>& input)
+template <typename T> std::vector<std::vector<T>> transpose(const  std::vector<std::vector<T>>& input)
 {
     std::vector<std::vector<T>> temp_data;
     if (input.size() == 0)
