@@ -52,6 +52,17 @@ void ImportLogic::setLineFilterOrder(std::vector<LineFilter*> filter_order)
     std::move(temp.begin(), temp.end(), std::back_inserter(m_line_filters));
 }
 
+//! Return the current filter order
+std::vector<LineFilter*> ImportLogic::lineFilterOrder() const
+{
+    std::vector<LineFilter*> output;
+    for (const auto & filter_ptr: m_line_filters){
+        output.push_back(filter_ptr.get());
+    }
+    
+    return output;
+}
+
 //! This is the slot for adding files into the local memory
 void ImportLogic::setFiles(const std::vector<std::string>& file_paths)
 {
