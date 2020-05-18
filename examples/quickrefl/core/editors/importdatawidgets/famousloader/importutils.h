@@ -58,6 +58,30 @@ template <typename T> std::vector<std::vector<T>> transpose(const  std::vector<s
     return temp_data;
 }
 
+//! Transpose method to turn lines into columns
+template <typename T> T transpose2(const T& input)
+{
+    T temp_data;
+    if (input.size() == 0)
+        return temp_data;
+
+    std::vector<size_t> row_size(input.size());
+    for (int i = 0; i < input.size(); ++i) {
+        row_size[i] = input.at(i).size();
+    }
+    size_t max = *std::max_element(row_size.begin(), row_size.end());
+
+    for (int i = 0; i < *std::max_element(row_size.begin(), row_size.end()); ++i) {
+        typename T::value_type column(input.size());
+        for (int j = 0; j < input.size(); ++j) {
+            if (i < row_size[j])
+                column[j] = input.at(j).at(i);
+        }
+        temp_data.push_back(column);
+    }
+    return temp_data;
+}
+
 //! Erase All substrings
 void eraseSubStrings(std::string& main_string, const std::vector<std::string>& string_vector);
 

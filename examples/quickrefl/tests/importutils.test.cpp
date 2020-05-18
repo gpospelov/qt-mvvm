@@ -87,4 +87,6 @@ TEST_F(DataImportUtilsTest, transposeTest)
     string_data transposed = transpose(input);
 
     EXPECT_EQ(compare, transposed);
+    EXPECT_EQ(compare, transpose(input));
+    EXPECT_EQ(compare, transpose2(input));
 }
