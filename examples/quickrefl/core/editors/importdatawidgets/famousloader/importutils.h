@@ -35,7 +35,7 @@ std::vector<std::string> split(const std::string& s, char delim);
 void clean(std::vector<std::string>& input);
 
 //! Transpose method to turn lines into columns
-template <typename T, class allocator_outer = std::allocator<std::vector<T>>, class allocator_inner = std::allocator<T>> std::vector<std::vector<T,allocator_inner>,allocator_outer> transpose(const  std::vector<std::vector<T,allocator_inner>,allocator_outer>& input)
+template <typename T> std::vector<std::vector<T>> transpose(const  std::vector<std::vector<T>>& input)
 {
     std::vector<std::vector<T>> temp_data;
     if (input.size() == 0)
@@ -49,6 +49,30 @@ template <typename T, class allocator_outer = std::allocator<std::vector<T>>, cl
 
     for (int i = 0; i < *std::max_element(row_size.begin(), row_size.end()); ++i) {
         std::vector<T> column(input.size());
+        for (int j = 0; j < input.size(); ++j) {
+            if (i < row_size[j])
+                column[j] = input.at(j).at(i);
+        }
+        temp_data.push_back(column);
+    }
+    return temp_data;
+}
+
+//! Transpose method to turn lines into columns
+template <typename T> T transpose2(const T& input)
+{
+    T temp_data;
+    if (input.size() == 0)
+        return temp_data;
+
+    std::vector<size_t> row_size(input.size());
+    for (int i = 0; i < input.size(); ++i) {
+        row_size[i] = input.at(i).size();
+    }
+    size_t max = *std::max_element(row_size.begin(), row_size.end());
+
+    for (int i = 0; i < *std::max_element(row_size.begin(), row_size.end()); ++i) {
+        typename T::value_type column(input.size());
         for (int j = 0; j < input.size(); ++j) {
             if (i < row_size[j])
                 column[j] = input.at(j).at(i);
