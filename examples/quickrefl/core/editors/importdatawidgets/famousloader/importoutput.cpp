@@ -14,6 +14,7 @@
 
 #include "importoutput.h"
 #include "importdatastructure.h"
+#include "importdatacolumn.h"
 
 namespace DataImportLogic
 {
@@ -27,9 +28,9 @@ ParsedFileOutptut::ParsedFileOutptut(const DataStructure& data_structure) : m_ax
     for (int i = 0; i < data_structure.columnCount(); ++i) {
         auto column = data_structure.column(i);
         if (column->type() == "Axis") {
-            m_axis_colum = std::make_unique<DataColumn>(column);
+            m_axis_colum = std::make_unique<DataColumn>(*column);
         } else {
-            m_value_colums.push_back(std::make_unique<DataColumn>(column));
+            m_value_colums.push_back(std::make_unique<DataColumn>(*column));
         }
     }
 }

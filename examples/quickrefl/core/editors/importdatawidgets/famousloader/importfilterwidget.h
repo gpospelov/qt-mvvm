@@ -84,7 +84,7 @@ class LineFilterWidget : public QWidget
 public:
     LineFilterWidget(DataImportLogic::LineFilter* line_filter = nullptr, QWidget* parent = nullptr);
     ~LineFilterWidget() = default;
-    DataImportLogic::LineFilter* lineBlock() const;
+    DataImportLogic::LineFilter* lineFilter() const;
     void grabFromLineFilter();
 
 signals:

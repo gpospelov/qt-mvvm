@@ -16,6 +16,7 @@
 #define IMPORTTABLEVIEW_H
 
 #include "importdatastructure.h"
+#include "importutils.h"
 
 #include <QAbstractItemModel>
 #include <QModelIndex>
@@ -42,7 +43,7 @@ public:
     int columnCount(const QModelIndex& parent = QModelIndex()) const;
     int rowCount(const QModelIndex& parent = QModelIndex()) const;
     int numUtilityRows() const;
-    std::vector<DataImportLogic::InfoTypes> infoTypes() const;
+    std::vector<DataImportUtils::InfoTypes> infoTypes() const;
     QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const;
     QModelIndex parent(const QModelIndex& index) const;
 
