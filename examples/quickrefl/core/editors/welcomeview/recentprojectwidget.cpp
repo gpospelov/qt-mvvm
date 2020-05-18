@@ -13,14 +13,14 @@
 #include <QGuiApplication>
 #include <QLabel>
 #include <QScreen>
-#include <QVBoxLayout>
-#include <QTreeView>
-#include <QStandardItemModel>
 #include <QStandardItem>
+#include <QStandardItemModel>
+#include <QTreeView>
+#include <QVBoxLayout>
 
 RecentProjectWidget::RecentProjectWidget(QWidget* parent)
-    : QWidget(parent), m_current_project_label(new QLabel("Untitled")),
-      m_current_project_path(new QLabel("~/development/projects/Untitled"))
+    : QWidget(parent), m_current_project_title(new QLabel("Untitled")),
+      m_current_project_dir(new QLabel("~/development/projects/Untitled"))
 {
     QPalette palette;
     palette.setColor(QPalette::Window, Qt::darkGray);
@@ -42,6 +42,14 @@ QSize RecentProjectWidget::minimumSizeHint() const
     return StyleUtils::DockMinimumSizeHint();
 }
 
+void RecentProjectWidget::setCurrentProject(const std::string& project_title,
+                                            const std::string& project_dir)
+{
+    m_current_project_title->setText(QString::fromStdString(project_title));
+    m_current_project_dir->setText(QString::fromStdString(project_dir));
+    m_current_project_dir->setToolTip(QString::fromStdString(project_dir));
+}
+
 QBoxLayout* RecentProjectWidget::createCurrentProjectLayout() const
 {
     auto result = new QVBoxLayout;
@@ -50,8 +58,8 @@ QBoxLayout* RecentProjectWidget::createCurrentProjectLayout() const
     auto label = new QLabel("Current Project:");
     label->setFont(StyleUtils::sectionFont());
     result->addWidget(label);
-    result->addWidget(m_current_project_label);
-    result->addWidget(m_current_project_path);
+    result->addWidget(m_current_project_title);
+    result->addWidget(m_current_project_dir);
 
     return result;
 }

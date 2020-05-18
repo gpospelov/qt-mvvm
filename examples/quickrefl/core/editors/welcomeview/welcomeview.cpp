@@ -106,4 +106,6 @@ void WelcomeView::update_current_project_name()
                                                   m_project_manager->isModified());
     if (auto main_window = findMainWindow(); main_window)
         main_window->setWindowTitle(QString::fromStdString(title));
+
+    m_recent_project_widget->setCurrentProject(title, m_project_manager->currentProjectDir());
 }
