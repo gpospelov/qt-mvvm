@@ -21,12 +21,17 @@
 using namespace ModelView;
 
 // ----------------------------------------------------------------
-DataGroupItem::DataGroupItem(TypeUnit &type_unit) : GraphViewportItem()
+DataGroupItem::DataGroupItem() : GraphViewportItem(::Constants::DataGroupItemType)
+{
+    addProperty<ContainerItem>(P_DATA);
+}
+
+//! Set the type
+void DataGroupItem::setTypeUnit(TypeUnit &type_unit)
 {
     const std::string temp_name = type_unit.type+" ("+type_unit.unit_pair.first+"->"+type_unit.unit_pair.second+")";
     registerTag(TagInfo::universalTag(temp_name));
     setDisplayName(temp_name);
-    addProperty<ContainerItem>(P_DATA);
 }
 
 //! insert the data into the right places
@@ -50,7 +55,7 @@ void DataGroupItem::insertData(RealDataStruct& data_struct)
 }
 
 // ----------------------------------------------------------------
-DataCollectionItem::DataCollectionItem() : CompoundItem()
+DataCollectionItem::DataCollectionItem() : CompoundItem(::Constants::DataCollectionItemType)
 {
     const std::string data_group_tag = "data_groups";
     registerTag(TagInfo::universalTag(data_group_tag));
@@ -87,7 +92,8 @@ DataGroupItem* DataCollectionItem::hasTypeUnit(TypeUnit& type_unit) const
 //! Add a type unit sessionitem to the children
 DataGroupItem* DataCollectionItem::addTypeUnit(TypeUnit& type_unit)
 {
-    auto item = new DataGroupItem(type_unit);
+    auto item = new DataGroupItem();
+    item->setTypeUnit(type_unit);
     insertItem(item, {data_group_tag, -1});
     return item;
 }

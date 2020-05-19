@@ -25,6 +25,8 @@ namespace
 std::unique_ptr<ItemCatalogue> CreateItemCatalogue()
 {
     auto result = std::make_unique<ModelView::ItemCatalogue>();
+    result->registerItem<DataGroupItem>();
+    result->registerItem<DataCollectionItem>();
     return result;
 }
 

@@ -54,18 +54,8 @@ class DataGroupItem : public ModelView::GraphViewportItem
 public:
     static inline const std::string P_DATA = "P_DATA";
 
-    // FIXME 1)
-    // All items derived from SessionItem require unique modelType and registration on model side.
-    // ModelType should be passed to parent constructor.
-    // This is necessary for the serialization and undo/redo.
-
-    // See ViewportAxisItem as an example (it receives modelType from the derived class).
-    // It is not intended to act on its own, only serve as a base class.
-
-    // FIXME 2
-    // Because of the serialization and undo/redo, it is important not to have any custom constructors.
-
-    DataGroupItem(TypeUnit &type_unit);
+    DataGroupItem();
+    void setTypeUnit(TypeUnit &type_unit);
     void insertData(RealDataStruct& data_struct);
     int itemCount() const;
 
