@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include "applicationmodelsinterface.h"
+#include "folderbasedtest.h"
 #include "google_test.h"
 #include "projectmanager.h"
 #include "test_utils.h"

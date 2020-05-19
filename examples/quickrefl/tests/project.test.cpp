@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include "applicationmodelsinterface.h"
+#include "folderbasedtest.h"
 #include "google_test.h"
 #include "project.h"
 #include "test_utils.h"
@@ -36,7 +37,7 @@ std::string get_json_filename(const std::string& model_name)
 class ProjectTest : public FolderBasedTest
 {
 public:
-    ProjectTest() : FolderBasedTest("test_ProjectTest"){}
+    ProjectTest() : FolderBasedTest("test_ProjectTest") {}
     ~ProjectTest();
 
     class ApplicationModels : public ApplicationModelsInterface
