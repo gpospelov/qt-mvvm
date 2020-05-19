@@ -7,6 +7,7 @@
 //
 // ************************************************************************** //
 
+#include "folderbasedtest.h"
 #include "google_test.h"
 #include "test_utils.h"
 #include <QColor>
@@ -24,14 +25,11 @@ using namespace ModelView;
 
 //! Test convertion of QVariant from/to QJsonObject.
 
-class JsonVariantTest : public ::testing::Test
+class JsonVariantTest : public FolderBasedTest
 {
 public:
+    JsonVariantTest() : FolderBasedTest("test_JsonVariant") {}
     ~JsonVariantTest();
-
-    static inline const std::string test_dir = "test_JsonVariant";
-
-    static void SetUpTestCase() { TestUtils::CreateTestDirectory(test_dir); }
 
     static QVariant ToJsonAndBack(const QVariant& variant)
     {
@@ -299,7 +297,7 @@ TEST_F(JsonVariantTest, toFileAndBack)
         json_array.append(converter.get_json(var));
 
     // writing to file
-    auto fileName = TestUtils::TestFileName(test_dir, "variants.json");
+    auto fileName = TestUtils::TestFileName(testDir(), "variants.json");
     TestUtils::SaveJson(json_array, fileName);
 
     // reading variants from file

@@ -7,6 +7,7 @@
 //
 // ************************************************************************** //
 
+#include "folderbasedtest.h"
 #include "google_test.h"
 #include "test_utils.h"
 #include <QJsonArray>
@@ -20,14 +21,11 @@ using namespace ModelView;
 
 //! Test convertion of SessionItemData from/to QJsonObject.
 
-class JsonTagInfoTest : public ::testing::Test
+class JsonTagInfoTest : public FolderBasedTest
 {
 public:
+    JsonTagInfoTest() : FolderBasedTest("test_JsonTagInfo") {}
     ~JsonTagInfoTest();
-
-    static inline const std::string test_dir = "test_JsonTagInfo";
-
-    static void SetUpTestCase() { TestUtils::CreateTestDirectory(test_dir); }
 };
 
 JsonTagInfoTest::~JsonTagInfoTest() = default;
@@ -95,7 +93,7 @@ TEST_F(JsonTagInfoTest, tagInfoToFileAndBack)
     auto object = converter.to_json(tag);
 
     // saving object to file
-    auto fileName = TestUtils::TestFileName(test_dir, "taginfo.json");
+    auto fileName = TestUtils::TestFileName(testDir(), "taginfo.json");
     TestUtils::SaveJson(object, fileName);
 
     auto document = TestUtils::LoadJson(fileName);

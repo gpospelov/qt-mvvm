@@ -7,6 +7,7 @@
 //
 // ************************************************************************** //
 
+#include "folderbasedtest.h"
 #include "google_test.h"
 #include "test_utils.h"
 #include <QDir>
@@ -16,28 +17,25 @@
 
 using namespace ModelView;
 
-class FileUtilsTest : public ::testing::Test
+class FileUtilsTest : public FolderBasedTest
 {
 public:
+    FileUtilsTest() : FolderBasedTest("test_FileUtils") {}
     ~FileUtilsTest();
-
-    static inline const std::string test_dir = "test_FileUtils";
-    static void SetUpTestCase() { TestUtils::CreateTestDirectory(test_dir); }
-    std::string testDir() const { return TestUtils::TestDirectoryPath(test_dir); }
 };
 
 FileUtilsTest::~FileUtilsTest() = default;
 
 TEST_F(FileUtilsTest, exists)
 {
-    EXPECT_TRUE(Utils::exists(testDir()));
+    EXPECT_TRUE(Utils::exists(testPath()));
     EXPECT_FALSE(Utils::exists(std::string()));
     EXPECT_FALSE(Utils::exists(std::string("abc")));
 }
 
 TEST_F(FileUtilsTest, create_directory)
 {
-    std::string dirname = testDir() + std::string("/") + "subdir";
+    std::string dirname = testPath() + std::string("/") + "subdir";
     Utils::remove(dirname);
 
     EXPECT_TRUE(Utils::create_directory(dirname));
@@ -46,7 +44,7 @@ TEST_F(FileUtilsTest, create_directory)
 
 TEST_F(FileUtilsTest, remove_all)
 {
-    std::string dirname = testDir() + std::string("/") + "subdir2";
+    std::string dirname = testPath() + std::string("/") + "subdir2";
     Utils::create_directory(dirname);
 
     EXPECT_TRUE(Utils::exists(dirname));
@@ -56,7 +54,7 @@ TEST_F(FileUtilsTest, remove_all)
 
 TEST_F(FileUtilsTest, base_name)
 {
-    std::string filename = testDir() + std::string("/testmodel/fileutils.test.cpp");
+    std::string filename = testPath() + std::string("/testmodel/fileutils.test.cpp");
     std::string base_name = Utils::base_name(filename);
 
     EXPECT_EQ("fileutils.test", base_name);
@@ -64,32 +62,34 @@ TEST_F(FileUtilsTest, base_name)
 
 TEST_F(FileUtilsTest, FindFiles)
 {
-    TestUtils::CreateTestFile(testDir(), "a.txt");
-    TestUtils::CreateTestFile(testDir(), "name0.json");
-    TestUtils::CreateTestFile(testDir(), "name1.json");
+    TestUtils::CreateTestFile(testPath(), "a.txt");
+    TestUtils::CreateTestFile(testPath(), "name0.json");
+    TestUtils::CreateTestFile(testPath(), "name1.json");
 
-    auto found_files = Utils::FindFiles(testDir(), ".json");
+    auto found_files = Utils::FindFiles(testPath(), ".json");
 
     ASSERT_EQ(found_files.size(), 2);
-    EXPECT_NE(found_files.end(), std::find(found_files.begin(), found_files.end(),Utils::join(testDir(), "name0.json")));
-    EXPECT_NE(found_files.end(), std::find(found_files.begin(), found_files.end(),Utils::join(testDir(), "name1.json")));
+    EXPECT_NE(found_files.end(), std::find(found_files.begin(), found_files.end(),
+                                           Utils::join(testPath(), "name0.json")));
+    EXPECT_NE(found_files.end(), std::find(found_files.begin(), found_files.end(),
+                                           Utils::join(testPath(), "name1.json")));
 }
 
 TEST_F(FileUtilsTest, parent_path)
 {
-    // parent path of testDir() is the main test folder
+    // parent path of testPath() is the main test folder
     // "<build>/test_output/test_FileUtils" -> "<build>/test_output/"
-    EXPECT_EQ(Utils::parent_path(testDir()), TestUtils::TestOutputDir());
+    EXPECT_EQ(Utils::parent_path(testPath()), TestUtils::TestOutputDir());
 
     // "<build>/test_output/test_FileUtils/a.txt" -> "<build>/test_output/test_FileUtils/"
-    auto filename = TestUtils::CreateTestFile(testDir(), "a.txt");
-    EXPECT_EQ(Utils::parent_path(filename), testDir());
+    auto filename = TestUtils::CreateTestFile(testPath(), "a.txt");
+    EXPECT_EQ(Utils::parent_path(filename), testPath());
 }
 
 TEST_F(FileUtilsTest, is_empty)
 {
     // creating new empty directory
-    std::string dirname = testDir() + std::string("/") + "subdir_is_empty";
+    std::string dirname = testPath() + std::string("/") + "subdir_is_empty";
     Utils::remove_all(dirname);
     Utils::create_directory(dirname);
 

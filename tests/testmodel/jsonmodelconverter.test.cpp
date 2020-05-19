@@ -7,6 +7,7 @@
 //
 // ************************************************************************** //
 
+#include "folderbasedtest.h"
 #include "google_test.h"
 #include "test_utils.h"
 #include <QJsonArray>
@@ -23,14 +24,11 @@ using namespace ModelView;
 
 //! Checks JsonModel class and its ability to convert SessionModel to json and back.
 
-class JsonModelConverterTest : public ::testing::Test
+class JsonModelConverterTest : public FolderBasedTest
 {
 public:
+    JsonModelConverterTest() : FolderBasedTest("test_JsonModel") {}
     ~JsonModelConverterTest();
-
-    static inline const std::string test_dir = "test_JsonModel";
-
-    static void SetUpTestCase() { TestUtils::CreateTestDirectory(test_dir); }
 };
 
 JsonModelConverterTest::~JsonModelConverterTest() = default;
@@ -219,7 +217,7 @@ TEST_F(JsonModelConverterTest, parentAndChildToFileAndBack)
     converter.model_to_json(model, *object);
 
     // saving object to file
-    auto fileName = TestUtils::TestFileName(test_dir, "model.json");
+    auto fileName = TestUtils::TestFileName(testDir(), "model.json");
     TestUtils::SaveJson(*object, fileName);
     object.reset();
 

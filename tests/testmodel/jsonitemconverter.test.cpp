@@ -7,6 +7,7 @@
 //
 // ************************************************************************** //
 
+#include "folderbasedtest.h"
 #include "google_test.h"
 #include "test_utils.h"
 #include <QJsonArray>
@@ -22,15 +23,14 @@ using namespace ModelView;
 
 //! Checks JsonItem class and its ability to convert SessionItems to json and back.
 
-class JsonItemConverterTest : public ::testing::Test
+class JsonItemConverterTest : public FolderBasedTest
 {
 public:
-    JsonItemConverterTest() : m_model(std::make_unique<SessionModel>()) {}
+    JsonItemConverterTest()
+        : FolderBasedTest("test_JsonItemConverter"), m_model(std::make_unique<SessionModel>())
+    {
+    }
     ~JsonItemConverterTest();
-
-    static inline const std::string test_dir = "test_JsonItemConverter";
-
-    static void SetUpTestCase() { TestUtils::CreateTestDirectory(test_dir); }
 
     std::unique_ptr<JsonItemConverter> createConverter()
     {
@@ -135,7 +135,7 @@ TEST_F(JsonItemConverterTest, propertyItemToFileAndBack)
     auto object = converter->to_json(&item);
 
     // saving object to file
-    auto fileName = TestUtils::TestFileName(test_dir, "propertyitem.json");
+    auto fileName = TestUtils::TestFileName(testDir(), "propertyitem.json");
     TestUtils::SaveJson(object, fileName);
 
     auto document = TestUtils::LoadJson(fileName);
@@ -205,7 +205,7 @@ TEST_F(JsonItemConverterTest, parentAndChildToFileAndBack)
     EXPECT_TRUE(converter->isSessionItem(object));
 
     // saving object to file
-    auto fileName = TestUtils::TestFileName(test_dir, "parentandchild.json");
+    auto fileName = TestUtils::TestFileName(testDir(), "parentandchild.json");
     TestUtils::SaveJson(object, fileName);
 
     // converting document back to item
