@@ -27,8 +27,10 @@ struct ProjectManagerDecorator::ProjectManagerImpl {
     answer_callback_t save_callback;
 
     ProjectManagerImpl(ApplicationModelsInterface* models, select_dir_callback_t select_dir,
-                       create_dir_callback_t create_dir)
-        : app_models(models), project_manager(std::make_unique<ProjectManager>(models)),
+                       create_dir_callback_t create_dir,
+                       project_modified_callback_t modified_callback)
+        : app_models(models),
+          project_manager(std::make_unique<ProjectManager>(models, modified_callback)),
           select_dir_callback(select_dir), create_dir_callback(create_dir)
     {
     }
@@ -105,8 +107,10 @@ struct ProjectManagerDecorator::ProjectManagerImpl {
 
 ProjectManagerDecorator::ProjectManagerDecorator(ApplicationModelsInterface* app_models,
                                                  select_dir_callback_t select_dir,
-                                                 create_dir_callback_t create_dir)
-    : p_impl(std::make_unique<ProjectManagerImpl>(app_models, select_dir, create_dir))
+                                                 create_dir_callback_t create_dir,
+                                                 project_modified_callback_t modified_callback)
+    : p_impl(
+        std::make_unique<ProjectManagerImpl>(app_models, select_dir, create_dir, modified_callback))
 {
 }
 

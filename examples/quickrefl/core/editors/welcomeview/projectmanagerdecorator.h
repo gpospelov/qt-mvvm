@@ -29,10 +29,12 @@ public:
     using select_dir_callback_t = std::function<std::string()>;
     using create_dir_callback_t = std::function<std::string()>;
     using answer_callback_t = std::function<SaveChangesAnswer()>;
+    using project_modified_callback_t = std::function<void()>;
 
     ProjectManagerDecorator(ApplicationModelsInterface* app_models,
                             select_dir_callback_t select_dir = {},
-                            create_dir_callback_t create_dir = {});
+                            create_dir_callback_t create_dir = {},
+                            project_modified_callback_t modified_callback = {});
 
     ~ProjectManagerDecorator() override;
     ProjectManagerDecorator(const ProjectManagerDecorator& other) = delete;
