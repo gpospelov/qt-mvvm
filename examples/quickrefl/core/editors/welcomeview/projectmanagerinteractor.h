@@ -32,6 +32,8 @@ public:
     int onSaveChangesRequest();
 
 private:
+    std::string selectDir() const;
+
     QWidget* m_parent{nullptr};
     WelcomeViewSettings* m_settings{nullptr};
 };
