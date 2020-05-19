@@ -36,11 +36,7 @@ struct ProjectChangedController::ProjectChangedControllerImpl {
 
     bool hasChanged() const
     {
-        for (const auto& controller : change_controllers)
-            if (controller->hasChanged())
-                return true;
-
-        return false;
+        return m_project_has_changed;
     }
 
     void resetChanged()
