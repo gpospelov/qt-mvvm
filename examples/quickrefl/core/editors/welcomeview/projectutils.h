@@ -30,6 +30,8 @@ namespace ProjectUtils
 
 std::string SuggestFileName(const ModelView::SessionModel& model);
 
+bool IsPossibleProjectDir(const std::string& project_dir);
+
 std::unique_ptr<ProjectInterface>
 CreateUntitledProject(ApplicationModelsInterface* models,
                       std::function<void()> project_changed_callback = {});

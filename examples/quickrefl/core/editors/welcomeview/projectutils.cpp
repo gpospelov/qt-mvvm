@@ -12,6 +12,7 @@
 #include "project.h"
 #include <cctype>
 #include <mvvm/model/sessionmodel.h>
+#include <mvvm/utils/fileutils.h>
 
 namespace
 {
@@ -27,6 +28,14 @@ std::string ProjectUtils::SuggestFileName(const ModelView::SessionModel& model)
     std::string result = model.modelType();
     std::transform(result.begin(), result.end(), result.begin(), ::tolower);
     return result + json_extention;
+}
+
+//! Returns 'true' if given directory might be a project directory.
+//! This simplified check counts number of files with json extention.
+
+bool ProjectUtils::IsPossibleProjectDir(const std::string &project_dir)
+{
+    return !ModelView::Utils::FindFiles(project_dir, json_extention).empty();
 }
 
 //! Creates new untitled project.
