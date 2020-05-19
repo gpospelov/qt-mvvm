@@ -9,6 +9,7 @@
 
 #include "google_test.h"
 #include "test_utils.h"
+#include "folderbasedtest.h"
 #include <mvvm/model/propertyitem.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
@@ -19,9 +20,10 @@ using namespace ModelView;
 
 //! Tests JsonDocument class
 
-class JsonDocumentTest : public ::testing::Test
+class JsonDocumentTest : public FolderBasedTest
 {
 public:
+    JsonDocumentTest() : FolderBasedTest("test_JsonDocument"){}
     ~JsonDocumentTest();
 
     class TestModel1 : public SessionModel
@@ -37,10 +39,6 @@ public:
         TestModel2() : SessionModel("TestModel2") {}
         ~TestModel2();
     };
-
-    static inline const std::string test_dir = "test_JsonDocument";
-
-    static void SetUpTestCase() { TestUtils::CreateTestDirectory(test_dir); }
 };
 
 JsonDocumentTest::~JsonDocumentTest() = default;
@@ -51,7 +49,7 @@ JsonDocumentTest::TestModel2::~TestModel2() = default;
 
 TEST_F(JsonDocumentTest, saveLoadSingleModel)
 {
-    auto fileName = TestUtils::TestFileName(test_dir, "model.json");
+    auto fileName = TestUtils::TestFileName(testDir(), "model.json");
     SessionModel model("TestModel");
     JsonDocument document({&model});
 
@@ -105,7 +103,7 @@ TEST_F(JsonDocumentTest, saveLoadSingleModel)
 
 TEST_F(JsonDocumentTest, saveLoadTwoModels)
 {
-    auto fileName = TestUtils::TestFileName(test_dir, "models.json");
+    auto fileName = TestUtils::TestFileName(testDir(), "models.json");
     TestModel1 model1;
     TestModel1 model2;
     JsonDocument document({&model1, &model2});
@@ -147,7 +145,7 @@ TEST_F(JsonDocumentTest, saveLoadTwoModels)
 
 TEST_F(JsonDocumentTest, loadModelsInWrongOrder)
 {
-    auto fileName = TestUtils::TestFileName(test_dir, "models.json");
+    auto fileName = TestUtils::TestFileName(testDir(), "models.json");
     TestModel1 model1;
     TestModel2 model2;
 

@@ -17,6 +17,9 @@ class WelcomeViewSettings;
 //! Provide save/discard/cancel and similar dialogs on user request.
 //! Intended to work in pair with ProjectManagerDecorator.
 
+// FIXME consider turning into interface class and switch ProjectManagerDecorator to it
+// instead of all callbacks.
+
 class ProjectManagerInteractor
 {
 public:
@@ -29,6 +32,8 @@ public:
     int onSaveChangesRequest();
 
 private:
+    std::string selectDir() const;
+
     QWidget* m_parent{nullptr};
     WelcomeViewSettings* m_settings{nullptr};
 };

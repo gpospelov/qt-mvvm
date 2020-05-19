@@ -10,20 +10,17 @@
 #ifndef PROJECTMANAGERINTERFACE_H
 #define PROJECTMANAGERINTERFACE_H
 
-#include <QObject>
 #include <string>
-
-class ApplicationModelsInterface;
 
 //! Interface class for ProjectManager family.
 
 //! Responsible for handling new/save/save-as/close Project logic, where the Project represents
 //! a collection of serialized application models in the project directory.
 
-class ProjectManagerInterface : public QObject
+class ProjectManagerInterface
 {
-    Q_OBJECT
 public:
+    virtual ~ProjectManagerInterface() = default;
     virtual bool createNewProject(const std::string& dirname = {}) = 0;
 
     virtual bool saveCurrentProject() = 0;
@@ -31,6 +28,8 @@ public:
     virtual bool saveProjectAs(const std::string& dirname = {}) = 0;
 
     virtual bool openExistingProject(const std::string& dirname = {}) = 0;
+
+    virtual std::string currentProjectDir() const = 0;
 
     virtual bool isModified() const = 0;
 

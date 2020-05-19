@@ -33,10 +33,12 @@ public slots:
     void onCreateNewProject();
     void onOpenExistingProject();
     void onSaveCurrentProject();
+    void onSaveProjectAs();
 
 private:
     void init_project_manager();
     void setup_connections();
+    void update_current_project_name();
 
     ApplicationModels* m_models{nullptr};
     std::unique_ptr<ProjectManagerInterface> m_project_manager;

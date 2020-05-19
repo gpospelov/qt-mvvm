@@ -11,8 +11,12 @@
 
 using namespace ModelView;
 
-ModelHasChangedController::ModelHasChangedController(ModelView::SessionModel* model)
-    : ModelListener(model)
+//! Constructor of ModelHasChangedController.
+//! Acccept 'model' to listen, and a 'callback' to report about changes in a model.
+
+ModelHasChangedController::ModelHasChangedController(ModelView::SessionModel* model,
+                                                     callback_t callback)
+    : ModelListener(model), m_callback(callback)
 {
     setOnDataChange([this](auto, auto) { process_change(); });
     setOnItemInserted([this](auto, auto) { process_change(); });
@@ -20,22 +24,25 @@ ModelHasChangedController::ModelHasChangedController(ModelView::SessionModel* mo
     setOnModelReset([this](auto) { process_change(); });
 }
 
-//! Returns true if the model was changed in any way since last call of resetChanged.
+//! Returns true if the model was changed since last call of resetChanged.
 
 bool ModelHasChangedController::hasChanged() const
 {
-    return has_changed;
+    return m_has_changed;
 }
 
 //! Reset has_changed flag.
 
 void ModelHasChangedController::resetChanged()
 {
-    has_changed = false;
+    m_has_changed = false;
 }
+
+//! Sets 'has_changed' flag and reports back to client.
 
 void ModelHasChangedController::process_change()
 {
-    has_changed = true;
-    // add also notification
+    m_has_changed = true;
+    if (m_callback)
+        m_callback();
 }

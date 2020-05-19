@@ -20,8 +20,8 @@ struct Project::ProjectImpl {
     std::string project_dir;
     ProjectChangedController change_controller;
 
-    ProjectImpl(ApplicationModelsInterface* app_models)
-        : app_models(app_models), change_controller(app_models->persistent_models())
+    ProjectImpl(ApplicationModelsInterface* app_models, callback_t callback)
+        : app_models(app_models), change_controller(app_models->persistent_models(), callback)
     {
     }
 
@@ -46,8 +46,8 @@ struct Project::ProjectImpl {
     }
 };
 
-Project::Project(ApplicationModelsInterface* app_models)
-    : p_impl(std::make_unique<ProjectImpl>(app_models))
+Project::Project(ApplicationModelsInterface* app_models, callback_t project_changed_callback)
+    : p_impl(std::make_unique<ProjectImpl>(app_models, project_changed_callback))
 {
 }
 

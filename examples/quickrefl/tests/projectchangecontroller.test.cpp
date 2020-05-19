@@ -50,3 +50,28 @@ TEST_F(ProjectChangeControllerTest, twoModelsChange)
     controller.resetChanged();
     EXPECT_FALSE(controller.hasChanged());
 }
+
+TEST_F(ProjectChangeControllerTest, callback)
+{
+    int model_changed_count{0};
+
+    SessionModel sample_model("SampleModel");
+    SessionModel material_model("MaterialModel");
+    std::vector<SessionModel*> models = {&sample_model, &material_model};
+
+    auto on_model_changed = [&model_changed_count]() { ++model_changed_count;};
+    ProjectChangedController controller(models, on_model_changed);
+
+    // changing first model
+    sample_model.insertItem<PropertyItem>();
+    EXPECT_TRUE(controller.hasChanged());
+    EXPECT_EQ(model_changed_count, 1);
+
+    // changing second model
+    material_model.insertItem<PropertyItem>();
+    EXPECT_TRUE(controller.hasChanged());
+    EXPECT_EQ(model_changed_count, 1); // controller reports only once
+
+    controller.resetChanged();
+    EXPECT_FALSE(controller.hasChanged());
+}

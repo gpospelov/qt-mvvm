@@ -25,9 +25,9 @@ class ApplicationModelsInterface;
 
 class ProjectManager : public ProjectManagerInterface
 {
-    Q_OBJECT
 public:
-    ProjectManager(ApplicationModelsInterface* app_models);
+    using callback_t = std::function<void()>;
+    ProjectManager(ApplicationModelsInterface* app_models, callback_t project_changed = {});
     ~ProjectManager() override;
 
     ProjectManager(const ProjectManager& other) = delete;
@@ -41,7 +41,7 @@ public:
 
     bool openExistingProject(const std::string& dirname) override;
 
-    std::string currentProjectDir() const;
+    std::string currentProjectDir() const override;
 
     bool isModified() const override;
 

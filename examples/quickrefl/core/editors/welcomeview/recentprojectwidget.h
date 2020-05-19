@@ -28,10 +28,12 @@ public:
     QSize sizeHint() const override;
     QSize minimumSizeHint() const override;
 
+    void setCurrentProject(const std::string& project_title, const std::string& project_dir);
+
 private:
     QBoxLayout* createCurrentProjectLayout() const;
-    QLabel* m_current_project_label{nullptr};
-    QLabel* m_current_project_path{nullptr};
+    QLabel* m_current_project_title{nullptr};
+    QLabel* m_current_project_dir{nullptr};
 };
 
 #endif // RECENTPROJECTWIDGET_H

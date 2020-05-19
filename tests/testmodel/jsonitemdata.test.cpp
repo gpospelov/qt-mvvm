@@ -9,6 +9,7 @@
 
 #include "google_test.h"
 #include "test_utils.h"
+#include "folderbasedtest.h"
 #include <QJsonArray>
 #include <QJsonObject>
 #include <mvvm/model/customvariants.h>
@@ -21,14 +22,11 @@ using namespace ModelView;
 
 //! Test convertion of SessionItemData from/to QJsonObject.
 
-class JsonItemDataTest : public ::testing::Test
+class JsonItemDataTest : public FolderBasedTest
 {
 public:
+    JsonItemDataTest() : FolderBasedTest("test_JsonItemData") {}
     ~JsonItemDataTest();
-
-    static inline const std::string test_dir = "test_JsonItemData";
-
-    static void SetUpTestCase() { TestUtils::CreateTestDirectory(test_dir); }
 };
 
 JsonItemDataTest::~JsonItemDataTest() = default;
@@ -102,7 +100,7 @@ TEST_F(JsonItemDataTest, fromItemToJsonAndBack)
 
     // constructing json array from data
     QJsonArray array = converter.get_json(data);
-    auto fileName = TestUtils::TestFileName(test_dir, "itemdata.json");
+    auto fileName = TestUtils::TestFileName(testDir(), "itemdata.json");
     TestUtils::SaveJson(array, fileName);
 
     // constructing data from json array

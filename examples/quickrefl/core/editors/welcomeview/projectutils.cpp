@@ -12,11 +12,13 @@
 #include "project.h"
 #include <cctype>
 #include <mvvm/model/sessionmodel.h>
+#include <mvvm/utils/fileutils.h>
 
 namespace
 {
 const std::string json_extention = ".json";
-}
+const std::string untitled_name = "Untitled";
+} // namespace
 
 //! Suggests file name which can be used to store json content of given model.
 //! Uses the model type to construct a filename: MaterialModel -> materialmodel.json
@@ -28,10 +30,36 @@ std::string ProjectUtils::SuggestFileName(const ModelView::SessionModel& model)
     return result + json_extention;
 }
 
+//! Returns 'true' if given directory might be a project directory.
+//! This simplified check counts number of files with json extention.
+
+bool ProjectUtils::IsPossibleProjectDir(const std::string &project_dir)
+{
+    return !ModelView::Utils::FindFiles(project_dir, json_extention).empty();
+}
+
 //! Creates new untitled project.
 
 std::unique_ptr<ProjectInterface>
-ProjectUtils::CreateUntitledProject(ApplicationModelsInterface* models)
+ProjectUtils::CreateUntitledProject(ApplicationModelsInterface* models,
+                                    std::function<void()> project_changed_callback)
 {
-    return std::make_unique<Project>(models);
+    return std::make_unique<Project>(models, project_changed_callback);
+}
+
+//! Returns a title for MainWindow for given project.
+//! Project without projectDir will be "Untitled", modified project will be "*Untitled".
+//! Project with projectDir in "/home/user/project1" will get title "project1".
+
+std::string ProjectUtils::ProjectWindowTitle(const ProjectInterface& project)
+{
+    return ProjectWindowTitle(project.projectDir(), project.isModified());
+}
+
+std::string ProjectUtils::ProjectWindowTitle(const std::string& project_dir, bool is_modified)
+{
+    auto pos = project_dir.find_last_of("/");
+    auto project_name = (pos == std::string::npos ? untitled_name : project_dir.substr(pos + 1));
+    auto unsaved_status = is_modified ? "*" : "";
+    return unsaved_status + project_name;
 }
