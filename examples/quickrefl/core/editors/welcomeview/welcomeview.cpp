@@ -66,13 +66,15 @@ void WelcomeView::onCreateNewProject()
 void WelcomeView::onOpenExistingProject()
 {
     qDebug() << "WelcomeView::onOpenExistingProject()";
-    m_project_manager->openExistingProject();
+    if (m_project_manager->openExistingProject())
+        update_current_project_name();
 }
 
 void WelcomeView::onSaveCurrentProject()
 {
     qDebug() << "WelcomeView::onSaveCurrentProject()";
-    m_project_manager->saveCurrentProject();
+    if (m_project_manager->saveCurrentProject())
+        update_current_project_name();
 }
 
 void WelcomeView::init_project_manager()
@@ -83,8 +85,10 @@ void WelcomeView::init_project_manager()
         return static_cast<ProjectManagerDecorator::SaveChangesAnswer>(
             m_interactor->onSaveChangesRequest());
     };
+    auto on_modified = [this]() { update_current_project_name(); };
 
-    auto manager = std::make_unique<ProjectManagerDecorator>(m_models, select_dir, create_dir);
+    auto manager =
+        std::make_unique<ProjectManagerDecorator>(m_models, select_dir, create_dir, on_modified);
     manager->setSaveChangesAnswerCallback(save_changes);
 
     m_project_manager = std::move(manager);
@@ -98,7 +102,7 @@ void WelcomeView::setup_connections()
             &WelcomeView::onCreateNewProject);
 }
 
-//!
+//! Sets changed project name to all widgets which requires it.
 
 void WelcomeView::update_current_project_name()
 {
