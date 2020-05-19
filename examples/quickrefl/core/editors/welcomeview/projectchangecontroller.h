@@ -26,9 +26,8 @@ class ModelHasChangedController;
 //! This is intended to work together with the Project class. It will take care of calling
 //! resetChanged after own saving.
 
-//! To avoid extra signaling while being in already "changed" mode, the controller employs
-//! the following behavior. As soon as the first model reports it's changed state, the
-//! controller unsubscribes from listening and stays like that until "resetChanged" is called.
+//! To avoid extra signaling while being in already "changed" mode, the controller reports only
+//! once.
 
 class ProjectChangedController
 {

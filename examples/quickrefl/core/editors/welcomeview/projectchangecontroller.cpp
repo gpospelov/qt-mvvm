@@ -34,10 +34,7 @@ struct ProjectChangedController::ProjectChangedControllerImpl {
                 std::make_unique<ModelHasChangedController>(model, on_model_changed));
     }
 
-    bool hasChanged() const
-    {
-        return m_project_has_changed;
-    }
+    bool hasChanged() const { return m_project_has_changed; }
 
     void resetChanged()
     {
@@ -46,10 +43,13 @@ struct ProjectChangedController::ProjectChangedControllerImpl {
         m_project_has_changed = false;
     }
 
-    void onProjectHasChanged() {
-        m_project_has_changed = true;
-        if (m_project_changed_callback)
-            m_project_changed_callback();
+    void onProjectHasChanged()
+    {
+        if (!m_project_has_changed) {
+            m_project_has_changed = true;
+            if (m_project_changed_callback)
+                m_project_changed_callback();
+        }
     }
 };
 

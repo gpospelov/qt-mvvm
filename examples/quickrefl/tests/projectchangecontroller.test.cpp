@@ -70,7 +70,7 @@ TEST_F(ProjectChangeControllerTest, callback)
     // changing second model
     material_model.insertItem<PropertyItem>();
     EXPECT_TRUE(controller.hasChanged());
-    EXPECT_EQ(model_changed_count, 2);
+    EXPECT_EQ(model_changed_count, 1); // controller reports only once
 
     controller.resetChanged();
     EXPECT_FALSE(controller.hasChanged());

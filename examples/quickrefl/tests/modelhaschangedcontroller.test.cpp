@@ -108,3 +108,24 @@ TEST_F(ModelHasChangedControllerTest, callback)
     EXPECT_FALSE(controller.hasChanged());
     EXPECT_EQ(change_count, 1);
 }
+
+//! Tests callback functioning.
+
+TEST_F(ModelHasChangedControllerTest, timeOfLife)
+{
+    int change_count{0};
+    auto on_change = [&change_count]() { change_count++; };
+
+    SessionModel model;
+    auto controller = std::make_unique<ModelHasChangedController>(&model, on_change);
+
+    // change the model, check controller
+    model.insertItem<PropertyItem>();
+    EXPECT_TRUE(controller->hasChanged());
+    EXPECT_EQ(change_count, 1);
+
+    // remove controller, change the model
+    controller.reset();
+    model.insertItem<PropertyItem>();
+    EXPECT_EQ(change_count, 1);
+}
