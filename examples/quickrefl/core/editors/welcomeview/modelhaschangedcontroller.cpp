@@ -11,8 +11,9 @@
 
 using namespace ModelView;
 
-ModelHasChangedController::ModelHasChangedController(ModelView::SessionModel* model)
-    : ModelListener(model)
+ModelHasChangedController::ModelHasChangedController(ModelView::SessionModel* model,
+                                                     callback_t callback)
+    : ModelListener(model), m_callback(callback)
 {
     setOnDataChange([this](auto, auto) { process_change(); });
     setOnItemInserted([this](auto, auto) { process_change(); });
@@ -37,5 +38,6 @@ void ModelHasChangedController::resetChanged()
 void ModelHasChangedController::process_change()
 {
     has_changed = true;
-    // add also notification
+    if (m_callback)
+        m_callback();
 }

@@ -89,3 +89,22 @@ TEST_F(ModelHasChangedControllerTest, modelReset)
     model.clear();
     EXPECT_TRUE(controller.hasChanged());
 }
+
+//! Tests callback functioning.
+
+TEST_F(ModelHasChangedControllerTest, callback)
+{
+    int change_count{0};
+    auto on_change = [&change_count]() { change_count++; };
+
+    SessionModel model;
+    ModelHasChangedController controller(&model, on_change);
+
+    model.insertItem<PropertyItem>();
+    EXPECT_TRUE(controller.hasChanged());
+    EXPECT_EQ(change_count, 1);
+
+    controller.resetChanged();
+    EXPECT_FALSE(controller.hasChanged());
+    EXPECT_EQ(change_count, 1);
+}
