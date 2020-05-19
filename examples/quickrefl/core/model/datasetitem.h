@@ -56,9 +56,7 @@ public:
 
     DataGroupItem();
     void setTypeUnit(TypeUnit &type_unit);
-    void insertData(RealDataStruct& data_struct);
     int itemCount() const;
-
 };
 
 // ----------------------------------------------------------------
@@ -68,13 +66,9 @@ class DataCollectionItem : public ModelView::CompoundItem
 public:
     DataCollectionItem();
     void insertData(RealDataStruct& data_struct);
+    DataGroupItem* getDataGroup(const std::string tag) const;
 
-private:
-    DataGroupItem* hasTypeUnit(TypeUnit& type_unit) const;
-    DataGroupItem* addTypeUnit(TypeUnit& type_unit);
-
-private:
-    const std::string data_group_tag = "data_groups";
+    inline static const std::string data_group_tag = "data_groups";
 };
 
 #endif // DATASETITEM_H
