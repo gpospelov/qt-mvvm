@@ -25,7 +25,6 @@ class ApplicationModelsInterface;
 
 class ProjectManager : public ProjectManagerInterface
 {
-    Q_OBJECT
 public:
     ProjectManager(ApplicationModelsInterface* app_models);
     ~ProjectManager() override;

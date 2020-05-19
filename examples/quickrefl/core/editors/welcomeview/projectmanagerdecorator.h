@@ -24,7 +24,6 @@ class ApplicationModelsInterface;
 
 class ProjectManagerDecorator : public ProjectManagerInterface
 {
-    Q_OBJECT
 public:
     enum SaveChangesAnswer { SAVE = 0, DISCARD = 1, CANCEL = 2 };
     using select_dir_callback_t = std::function<std::string()>;

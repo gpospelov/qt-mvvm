@@ -11,6 +11,7 @@
 #include "applicationmodelsinterface.h"
 #include "projectinterface.h"
 #include "projectmanager.h"
+#include <stdexcept>
 
 namespace
 {
