@@ -22,6 +22,7 @@ OpenProjectWidget::OpenProjectWidget(QWidget* parent) : QWidget(parent)
 
     auto layout = new QVBoxLayout(this);
     layout->addLayout(createButtonLayout());
+    layout->addLayout(createTempButtonLayout());
 }
 
 QSize OpenProjectWidget::sizeHint() const
@@ -58,4 +59,32 @@ QBoxLayout* OpenProjectWidget::createButtonLayout()
     result->addStretch(1);
 
     return result;
+}
+
+//! Temporary layou for save and save-as buttons.
+QBoxLayout *OpenProjectWidget::createTempButtonLayout()
+{
+    auto result = new QHBoxLayout;
+
+    save_project_button = new QPushButton("Save");
+    save_project_button->setMinimumHeight(StyleUtils::LargeButtonHeight());
+    save_project_button->setMinimumWidth(200);
+    save_project_button->setFont(StyleUtils::sectionFont());
+    connect(save_project_button, &QPushButton::pressed, this,
+            &OpenProjectWidget::saveProjectRequest);
+
+    saveas_project_button = new QPushButton("Open");
+    saveas_project_button->setMinimumHeight(StyleUtils::LargeButtonHeight());
+    saveas_project_button->setMinimumWidth(200);
+    saveas_project_button->setFont(StyleUtils::sectionFont());
+    connect(saveas_project_button, &QPushButton::pressed, this,
+            &OpenProjectWidget::saveAsProjectRequest);
+
+    result->addStretch(1);
+    result->addWidget(save_project_button);
+    result->addWidget(saveas_project_button);
+    result->addStretch(1);
+
+    return result;
+
 }

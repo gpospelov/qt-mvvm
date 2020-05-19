@@ -31,12 +31,17 @@ public:
 signals:
     void createNewProjectRequest();
     void openExistingProjectRequest();
+    void saveProjectRequest();
+    void saveAsProjectRequest();
 
 private:
     QBoxLayout* createButtonLayout();
+    QBoxLayout* createTempButtonLayout();
 
     QPushButton* new_project_button{nullptr};
     QPushButton* open_project_button{nullptr};
+    QPushButton* save_project_button{nullptr};
+    QPushButton* saveas_project_button{nullptr};
 };
 
 #endif // OPENPROJECTWIDGET_H
