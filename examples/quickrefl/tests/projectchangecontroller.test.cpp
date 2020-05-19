@@ -62,9 +62,13 @@ TEST_F(ProjectChangeControllerTest, callback)
     auto on_model_changed = [&model_changed_count]() { ++model_changed_count;};
     ProjectChangedController controller(models, on_model_changed);
 
+    // changing first model
     sample_model.insertItem<PropertyItem>();
-    material_model.insertItem<PropertyItem>();
+    EXPECT_TRUE(controller.hasChanged());
+    EXPECT_EQ(model_changed_count, 1);
 
+    // changing second model
+    material_model.insertItem<PropertyItem>();
     EXPECT_TRUE(controller.hasChanged());
     EXPECT_EQ(model_changed_count, 2);
 
