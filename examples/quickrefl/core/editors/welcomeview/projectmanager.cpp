@@ -21,14 +21,19 @@ const bool failed = false;
 struct ProjectManager::ProjectManagerImpl {
     ApplicationModelsInterface* app_models{nullptr};
     std::unique_ptr<ProjectInterface> current_project;
+    callback_t m_project_changed;
 
-    ProjectManagerImpl(ApplicationModelsInterface* models) : app_models(models)
+    ProjectManagerImpl(ApplicationModelsInterface* models, callback_t project_changed)
+        : app_models(models), m_project_changed(project_changed)
     {
         createNewProject();
     }
 
     //! Closes current project. Used in assumption that project was already saved.
-    void createNewProject() { current_project = ProjectUtils::CreateUntitledProject(app_models); }
+    void createNewProject()
+    {
+        current_project = ProjectUtils::CreateUntitledProject(app_models, m_project_changed);
+    }
 
     //! Returns true if the project has directory already defined.
     bool projectHasDir() const { return !current_project->projectDir().empty(); }
@@ -49,8 +54,8 @@ struct ProjectManager::ProjectManagerImpl {
 //! Constructor for ProjectManager. Requires ApplicationModels and two callbacks to open projects,
 //! and create new projects.
 
-ProjectManager::ProjectManager(ApplicationModelsInterface* app_models)
-    : p_impl(std::make_unique<ProjectManagerImpl>(app_models))
+ProjectManager::ProjectManager(ApplicationModelsInterface* app_models, callback_t project_changed)
+    : p_impl(std::make_unique<ProjectManagerImpl>(app_models, project_changed))
 {
 }
 

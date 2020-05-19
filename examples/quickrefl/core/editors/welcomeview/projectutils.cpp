@@ -32,9 +32,10 @@ std::string ProjectUtils::SuggestFileName(const ModelView::SessionModel& model)
 //! Creates new untitled project.
 
 std::unique_ptr<ProjectInterface>
-ProjectUtils::CreateUntitledProject(ApplicationModelsInterface* models)
+ProjectUtils::CreateUntitledProject(ApplicationModelsInterface* models,
+                                    std::function<void()> project_changed_callback)
 {
-    return std::make_unique<Project>(models);
+    return std::make_unique<Project>(models, project_changed_callback);
 }
 
 //! Returns a title for MainWindow for given project.

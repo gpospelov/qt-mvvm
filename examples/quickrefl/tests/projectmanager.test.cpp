@@ -210,7 +210,6 @@ TEST_F(ProjectManagerTest, titledUnmodifiedNew)
     EXPECT_TRUE(ModelView::Utils::exists(model_json));
 }
 
-
 // ----------------------------------------------------------------------------
 // Titled, modified
 // ----------------------------------------------------------------------------
@@ -232,4 +231,39 @@ TEST_F(ProjectManagerTest, titledModifiedSave)
 
     EXPECT_TRUE(manager.saveCurrentProject());
     EXPECT_FALSE(manager.isModified());
+}
+
+// ----------------------------------------------------------------------------
+// Callbacks
+// ----------------------------------------------------------------------------
+
+TEST_F(ProjectManagerTest, callback)
+{
+    int project_modified_count{0};
+    auto on_modified = [&project_modified_count]() { ++project_modified_count; };
+
+    ApplicationModels models;
+    ProjectManager manager(&models, on_modified);
+
+    EXPECT_EQ(project_modified_count, 0);
+
+    // saving the project
+    const auto project_dir = create_project_dir("Project_callback");
+    EXPECT_TRUE(manager.saveProjectAs(project_dir));
+    EXPECT_EQ(manager.currentProjectDir(), project_dir);
+    EXPECT_EQ(project_modified_count, 0);
+
+    // modifying the model
+    models.sample_model->insertItem<ModelView::PropertyItem>();
+    EXPECT_EQ(project_modified_count, 1);
+    EXPECT_TRUE(manager.isModified());
+
+    // modifying the model second time
+    models.sample_model->insertItem<ModelView::PropertyItem>();
+    EXPECT_EQ(project_modified_count, 1); // do not sum up
+    EXPECT_TRUE(manager.isModified());
+
+    EXPECT_TRUE(manager.saveCurrentProject());
+    EXPECT_FALSE(manager.isModified());
+    EXPECT_EQ(project_modified_count, 1);
 }

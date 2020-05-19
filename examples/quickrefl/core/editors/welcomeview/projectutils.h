@@ -10,6 +10,7 @@
 #ifndef PROJECTUTILS_H
 #define PROJECTUTILS_H
 
+#include <functional>
 #include <memory>
 #include <string>
 #include <vector>
@@ -29,7 +30,9 @@ namespace ProjectUtils
 
 std::string SuggestFileName(const ModelView::SessionModel& model);
 
-std::unique_ptr<ProjectInterface> CreateUntitledProject(ApplicationModelsInterface* models);
+std::unique_ptr<ProjectInterface>
+CreateUntitledProject(ApplicationModelsInterface* models,
+                      std::function<void()> project_changed_callback = {});
 
 std::string ProjectWindowTitle(const ProjectInterface& project);
 

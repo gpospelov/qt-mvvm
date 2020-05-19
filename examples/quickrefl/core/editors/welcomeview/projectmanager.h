@@ -26,7 +26,8 @@ class ApplicationModelsInterface;
 class ProjectManager : public ProjectManagerInterface
 {
 public:
-    ProjectManager(ApplicationModelsInterface* app_models);
+    using callback_t = std::function<void()>;
+    ProjectManager(ApplicationModelsInterface* app_models, callback_t project_changed = {});
     ~ProjectManager() override;
 
     ProjectManager(const ProjectManager& other) = delete;
