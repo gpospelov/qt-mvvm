@@ -54,8 +54,8 @@ struct ProjectChangedController::ProjectChangedControllerImpl {
 };
 
 ProjectChangedController::ProjectChangedController(const std::vector<SessionModel*>& models,
-                                                   callback_t callback)
-    : p_impl(std::make_unique<ProjectChangedControllerImpl>(models, callback))
+                                                   callback_t project_changed_callback)
+    : p_impl(std::make_unique<ProjectChangedControllerImpl>(models, project_changed_callback))
 {
 }
 

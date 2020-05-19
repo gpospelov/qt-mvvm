@@ -20,7 +20,6 @@ class ApplicationModelsInterface;
 
 class Project : public ProjectInterface
 {
-    Q_OBJECT
 public:
     Project(ApplicationModelsInterface* app_models);
     ~Project();

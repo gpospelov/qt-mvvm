@@ -34,7 +34,7 @@ class ProjectChangedController
 public:
     using callback_t = std::function<void()>;
     ProjectChangedController(const std::vector<ModelView::SessionModel*>& models,
-                             callback_t callback = {});
+                             callback_t project_changed_callback = {});
     ~ProjectChangedController();
 
     bool hasChanged() const;
