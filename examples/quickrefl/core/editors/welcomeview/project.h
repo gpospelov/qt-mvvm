@@ -11,6 +11,7 @@
 #define PROJECT_H
 
 #include "projectinterface.h"
+#include <functional>
 #include <memory>
 
 class ApplicationModelsInterface;
@@ -21,7 +22,8 @@ class ApplicationModelsInterface;
 class Project : public ProjectInterface
 {
 public:
-    Project(ApplicationModelsInterface* app_models);
+    using callback_t = std::function<void()>;
+    Project(ApplicationModelsInterface* app_models, callback_t project_changed_callback = {});
     ~Project();
 
     std::string projectDir() const override;
