@@ -42,6 +42,9 @@ struct ProjectManagerDecorator::ProjectManagerImpl {
     //! directory susing callback provided.
     bool saveCurrentProject()
     {
+        // Feature FIXME?: already saved project (i.e. isModified=false) will be saved again.
+        // Files will be same, but creation date will be changed.
+
         auto save_dir =
             projectHasDir() ? project_manager->currentProjectDir() : acquireNewProjectDir();
         return saveCurrentProjectAs(save_dir);
