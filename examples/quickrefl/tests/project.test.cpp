@@ -33,9 +33,10 @@ std::string get_json_filename(const std::string& model_name)
 
 //! Tests for Project class.
 
-class ProjectTest : public ::testing::Test
+class ProjectTest : public FolderBasedTest
 {
 public:
+    ProjectTest() : FolderBasedTest("test_ProjectTest"){}
     ~ProjectTest();
 
     class ApplicationModels : public ApplicationModelsInterface
@@ -54,20 +55,6 @@ public:
             return {sample_model.get(), material_model.get()};
         };
     };
-
-    static inline const std::string test_subdir = "test_QuickReflProject";
-    static void SetUpTestCase() { TestUtils::CreateTestDirectory(test_subdir); }
-    std::string testDir() const { return TestUtils::TestDirectoryPath(test_subdir); }
-
-    //! Creates project directory in the test directory and returns full path.
-    //! Remove recursively previous one with the same name, if exist.
-    std::string create_project_dir(const std::string& name)
-    {
-        auto path = ModelView::Utils::join(testDir(), name);
-        ModelView::Utils::remove_all(path);
-        ModelView::Utils::create_directory(path);
-        return path;
-    }
 };
 
 ProjectTest::~ProjectTest() = default;
@@ -88,7 +75,7 @@ TEST_F(ProjectTest, saveModel)
     Project project(&models);
 
     // create project directory and save file
-    auto project_dir = create_project_dir("Untitled1");
+    auto project_dir = createEmptyDir("Untitled1");
     project.save(project_dir);
 
     EXPECT_EQ(project.projectDir(), project_dir);
@@ -117,7 +104,7 @@ TEST_F(ProjectTest, loadModel)
     auto item1_identifier = item1->identifier();
 
     // create project directory and save file
-    auto project_dir = create_project_dir("Untitled2");
+    auto project_dir = createEmptyDir("Untitled2");
 
     EXPECT_TRUE(project.isModified());
     project.save(project_dir);

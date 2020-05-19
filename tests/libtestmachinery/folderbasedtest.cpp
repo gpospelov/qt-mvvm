@@ -16,9 +16,14 @@ FolderBasedTest::FolderBasedTest(const std::string& test_dir) : m_test_dir(test_
     TestUtils::CreateTestDirectory(m_test_dir);
 }
 
+std::string FolderBasedTest::testDir() const
+{
+    return m_test_dir;
+}
+
 //! Return full path to the test folder. Located in CMAKE_BINARY_DIR/test_output/<m_test_dir>.
 
-std::string FolderBasedTest::testDir() const
+std::string FolderBasedTest::testPath() const
 {
     return TestUtils::TestDirectoryPath(m_test_dir);
 }
@@ -28,7 +33,7 @@ std::string FolderBasedTest::testDir() const
 
 std::string FolderBasedTest::createEmptyDir(const std::string& subdir) const
 {
-    auto path = ModelView::Utils::join(testDir(), subdir);
+    auto path = ModelView::Utils::join(testPath(), subdir);
     ModelView::Utils::remove_all(path);
     ModelView::Utils::create_directory(path);
     return path;

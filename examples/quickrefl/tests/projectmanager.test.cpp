@@ -24,9 +24,10 @@ const std::string samplemodel_name = "samplemodel";
 
 //! Tests for ProjectManager class.
 
-class ProjectManagerTest : public ::testing::Test
+class ProjectManagerTest : public FolderBasedTest
 {
 public:
+    ProjectManagerTest() : FolderBasedTest("test_ProjectManager") {}
     ~ProjectManagerTest();
 
     class ApplicationModels : public ApplicationModelsInterface
@@ -43,21 +44,6 @@ public:
             return {sample_model.get()};
         };
     };
-
-    static inline std::string test_dir = "not-yet-defined";
-    static inline const std::string test_subdir = "test_QuickReflProjectManager";
-    static void SetUpTestCase() { test_dir = TestUtils::CreateTestDirectory(test_subdir); }
-    std::string testDir() const { return test_dir; }
-
-    //! Creates project directory in the test directory and returns full path.
-    //! Remove recursively previous one with the same name, if exist.
-    std::string create_project_dir(const std::string& name)
-    {
-        auto path = ModelView::Utils::join(testDir(), name);
-        ModelView::Utils::remove_all(path);
-        ModelView::Utils::create_directory(path);
-        return path;
-    }
 };
 
 ProjectManagerTest::~ProjectManagerTest() = default;
@@ -84,7 +70,7 @@ TEST_F(ProjectManagerTest, untitledEmptyNew)
     ApplicationModels models;
     ProjectManager manager(&models);
 
-    const auto project_dir = create_project_dir("Project_untitledEmptyNew");
+    const auto project_dir = createEmptyDir("Project_untitledEmptyNew");
     EXPECT_TRUE(manager.createNewProject(project_dir));
 
     EXPECT_EQ(manager.currentProjectDir(), project_dir);
@@ -114,7 +100,7 @@ TEST_F(ProjectManagerTest, untitledEmptySaveAs)
     ApplicationModels models;
     ProjectManager manager(&models);
 
-    const auto project_dir = create_project_dir("Project_untitledEmptySaveAs");
+    const auto project_dir = createEmptyDir("Project_untitledEmptySaveAs");
     EXPECT_TRUE(manager.saveProjectAs(project_dir));
     EXPECT_FALSE(manager.isModified());
 
@@ -140,7 +126,7 @@ TEST_F(ProjectManagerTest, untitledModifiedNew)
 
     EXPECT_TRUE(manager.isModified());
 
-    const auto project_dir = create_project_dir("Project_untitledModifiedNew");
+    const auto project_dir = createEmptyDir("Project_untitledModifiedNew");
     EXPECT_FALSE(manager.createNewProject(project_dir));
 
     EXPECT_TRUE(manager.currentProjectDir().empty());
@@ -174,7 +160,7 @@ TEST_F(ProjectManagerTest, untitledModifiedSaveAs)
     ProjectManager manager(&models);
     models.sample_model->insertItem<ModelView::PropertyItem>(); // modifying the model
 
-    const auto project_dir = create_project_dir("Project_untitledModifiedSaveAs");
+    const auto project_dir = createEmptyDir("Project_untitledModifiedSaveAs");
     EXPECT_TRUE(manager.saveProjectAs(project_dir));
     EXPECT_FALSE(manager.isModified());
 
@@ -195,11 +181,11 @@ TEST_F(ProjectManagerTest, titledUnmodifiedNew)
     ApplicationModels models;
     ProjectManager manager(&models);
 
-    const auto project_dir = create_project_dir("Project_titledUnmodifiedNew");
+    const auto project_dir = createEmptyDir("Project_titledUnmodifiedNew");
     EXPECT_TRUE(manager.saveProjectAs(project_dir));
     EXPECT_EQ(manager.currentProjectDir(), project_dir);
 
-    const auto project_dir2 = create_project_dir("Project_titledUnmodifiedNew2");
+    const auto project_dir2 = createEmptyDir("Project_titledUnmodifiedNew2");
     EXPECT_TRUE(manager.createNewProject(project_dir2));
 
     EXPECT_EQ(manager.currentProjectDir(), project_dir2);
@@ -222,7 +208,7 @@ TEST_F(ProjectManagerTest, titledModifiedSave)
     ApplicationModels models;
     ProjectManager manager(&models);
 
-    const auto project_dir = create_project_dir("Project_titledModifiedSave");
+    const auto project_dir = createEmptyDir("Project_titledModifiedSave");
     EXPECT_TRUE(manager.saveProjectAs(project_dir));
     EXPECT_EQ(manager.currentProjectDir(), project_dir);
 
@@ -248,7 +234,7 @@ TEST_F(ProjectManagerTest, callback)
     EXPECT_EQ(project_modified_count, 0);
 
     // saving the project
-    const auto project_dir = create_project_dir("Project_callback");
+    const auto project_dir = createEmptyDir("Project_callback");
     EXPECT_TRUE(manager.saveProjectAs(project_dir));
     EXPECT_EQ(manager.currentProjectDir(), project_dir);
     EXPECT_EQ(project_modified_count, 0);

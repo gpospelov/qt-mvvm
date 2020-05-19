@@ -23,6 +23,8 @@ public:
 
     std::string testDir() const;
 
+    std::string testPath() const;
+
     std::string createEmptyDir(const std::string& subdir) const;
 
 protected:

@@ -10,7 +10,6 @@
 #include "applicationmodelsinterface.h"
 #include "google_test.h"
 #include "projectmanagerdecorator.h"
-#include "test_utils.h"
 #include <cctype>
 #include <mvvm/model/propertyitem.h>
 #include <mvvm/model/sessionmodel.h>
@@ -24,9 +23,10 @@ const std::string samplemodel_name = "samplemodel";
 
 //! Tests for ProjectManager class.
 
-class ProjectManagerDecoratorTest : public ::testing::Test
+class ProjectManagerDecoratorTest : public FolderBasedTest
 {
 public:
+    ProjectManagerDecoratorTest() : FolderBasedTest("test_ProjectManagerDecorator") {}
     ~ProjectManagerDecoratorTest();
 
     class ApplicationModels : public ApplicationModelsInterface
@@ -43,21 +43,6 @@ public:
             return {sample_model.get()};
         };
     };
-
-    static inline std::string test_dir = "not-yet-defined";
-    static inline const std::string test_subdir = "test_QuickReflProjectManagerDecorator";
-    static void SetUpTestCase() { test_dir = TestUtils::CreateTestDirectory(test_subdir); }
-    std::string testDir() const { return test_dir; }
-
-    //! Creates project directory in the test directory and returns full path.
-    //! Remove recursively previous one with the same name, if exist.
-    std::string create_project_dir(const std::string& name)
-    {
-        auto path = ModelView::Utils::join(testDir(), name);
-        ModelView::Utils::remove_all(path);
-        ModelView::Utils::create_directory(path);
-        return path;
-    }
 };
 
 ProjectManagerDecoratorTest::~ProjectManagerDecoratorTest() = default;
@@ -79,7 +64,7 @@ TEST_F(ProjectManagerDecoratorTest, initialState)
 
 TEST_F(ProjectManagerDecoratorTest, untitledEmptyCreateNew)
 {
-    const auto project_dir = create_project_dir("Project_untitledEmptyCreateNew");
+    const auto project_dir = createEmptyDir("Project_untitledEmptyCreateNew");
 
     auto open_dir = []() -> std::string { return {}; };
     auto create_dir = [&project_dir]() -> std::string { return project_dir; };
@@ -104,7 +89,7 @@ TEST_F(ProjectManagerDecoratorTest, untitledEmptyCreateNew)
 
 TEST_F(ProjectManagerDecoratorTest, untitledEmptySaveCurrentProject)
 {
-    const auto project_dir = create_project_dir("Project_untitledEmptySaveCurrentProject");
+    const auto project_dir = createEmptyDir("Project_untitledEmptySaveCurrentProject");
 
     auto open_dir = []() -> std::string { return {}; };
     auto create_dir = [&project_dir]() -> std::string { return project_dir; };
@@ -129,7 +114,7 @@ TEST_F(ProjectManagerDecoratorTest, untitledEmptySaveCurrentProject)
 
 TEST_F(ProjectManagerDecoratorTest, untitledEmptySaveAs)
 {
-    const auto project_dir = create_project_dir("Project_untitledEmptySaveAs");
+    const auto project_dir = createEmptyDir("Project_untitledEmptySaveAs");
 
     auto open_dir = []() -> std::string { return {}; };
     auto create_dir = [&project_dir]() -> std::string { return project_dir; };
@@ -191,8 +176,8 @@ TEST_F(ProjectManagerDecoratorTest, untitledEmptySaveAsWrongDir)
 TEST_F(ProjectManagerDecoratorTest, untitledModifiedOpenExisting)
 {
     ApplicationModels models;
-    const auto existing_project_dir = create_project_dir("Project_untitledModifiedOpenExisting1");
-    const auto unsaved_project_dir = create_project_dir("Project_untitledModifiedOpenExisting2");
+    const auto existing_project_dir = createEmptyDir("Project_untitledModifiedOpenExisting1");
+    const auto unsaved_project_dir = createEmptyDir("Project_untitledModifiedOpenExisting2");
 
     // create "existing project"
     {

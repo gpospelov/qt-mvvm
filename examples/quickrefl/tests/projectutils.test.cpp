@@ -18,9 +18,10 @@
 
 //! Tests of ProjectUtils namespace functions.
 
-class ProjectUtilsTest : public ::testing::Test
+class ProjectUtilsTest : public FolderBasedTest
 {
 public:
+    ProjectUtilsTest() : FolderBasedTest("test_ProjectUtils") {}
     ~ProjectUtilsTest();
 
     class ApplicationModels : public ApplicationModelsInterface
@@ -36,23 +37,6 @@ public:
             return {sample_model.get()};
         };
     };
-
-    static inline const std::string test_subdir = "test_ProjectUtilsTest";
-    static void SetUpTestCase() { TestUtils::CreateTestDirectory(test_subdir); }
-    std::string testDir() const { return TestUtils::TestDirectoryPath(test_subdir); }
-
-
-    //! Creates project directory in the test directory and returns full path.
-    //! Remove recursively previous one with the same name, if exist.
-    //! FIXME remove duplication
-    std::string create_project_dir(const std::string& name)
-    {
-        auto path = ModelView::Utils::join(testDir(), name);
-        ModelView::Utils::remove_all(path);
-        ModelView::Utils::create_directory(path);
-        return path;
-    }
-
 };
 
 ProjectUtilsTest::~ProjectUtilsTest() = default;
@@ -84,12 +68,12 @@ TEST_F(ProjectUtilsTest, ProjectWindowTitle)
     EXPECT_EQ(ProjectUtils::ProjectWindowTitle(*project), "*Untitled");
 
     // saving in a project directory
-    project->save(testDir());
-    EXPECT_EQ(ProjectUtils::ProjectWindowTitle(*project), test_subdir);
+    project->save(testPath());
+    EXPECT_EQ(ProjectUtils::ProjectWindowTitle(*project), testDir());
 
     // modifying
     models.sample_model->insertItem<ModelView::PropertyItem>();
-    EXPECT_EQ(ProjectUtils::ProjectWindowTitle(*project), "*" + test_subdir);
+    EXPECT_EQ(ProjectUtils::ProjectWindowTitle(*project), "*" + testDir());
 }
 
 TEST_F(ProjectUtilsTest, IsPossibleProjectDir)
@@ -98,7 +82,7 @@ TEST_F(ProjectUtilsTest, IsPossibleProjectDir)
     auto project = ProjectUtils::CreateUntitledProject(&models);
 
     // empty directory can't be a project directory
-    auto dirname = create_project_dir("test_IsPossibleProjectDir");
+    auto dirname = createEmptyDir("test_IsPossibleProjectDir");
     EXPECT_FALSE(ProjectUtils::IsPossibleProjectDir(dirname));
 
     project->save(dirname);
