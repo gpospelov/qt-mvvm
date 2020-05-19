@@ -12,6 +12,7 @@
 #include "datasetitem.h"
 #include "importoutput.h"
 #include "realdatamodel.h"
+#include "datasetconvenience.h"
 #include "styleutils.h"
 
 #include <QAction>

@@ -16,46 +16,21 @@
 
 namespace ModelView
 {
-    class ContainerItem;
+class ContainerItem;
 }
 
-// ----------------------------------------------------------------
-
-// FIXME to disantangle ModelView and FamousLoader these structures should be in separate file.
-
-//! Convenience data transfer header information
-struct TypeUnit
-{
-    std::string type;
-    std::pair<std::string,std::string> unit_pair;
-};
+class TypeUnit;
+class RealDataStruct;
 
 // ----------------------------------------------------------------
-//! Convenience data transfer structure
-struct RealDataStruct 
-{
-public:
-    std::string type;
-    std::string name;
-
-    std::vector<double> axis;
-    std::string axis_name;
-    std::string axis_unit;
-
-    std::vector<double> data;
-    std::string data_name;
-    std::string data_unit;
-};
-
-// ----------------------------------------------------------------
-//! This will hold the data for one particular type (and pair of intensity and axis units) 
+//! This will hold the data for one particular type (and pair of intensity and axis units)
 class DataGroupItem : public ModelView::GraphViewportItem
 {
 public:
     static inline const std::string P_DATA = "P_DATA";
 
     DataGroupItem();
-    void setTypeUnit(TypeUnit &type_unit);
+    void setTypeUnit(TypeUnit& type_unit);
     int itemCount() const;
 };
 

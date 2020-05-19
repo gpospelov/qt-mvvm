@@ -35,7 +35,6 @@ private:
     DataGroupItem* hasTypeUnit(DataCollectionItem* data_node, TypeUnit& type_unit) const;
     DataGroupItem* addGroupItem(DataCollectionItem* data_node);
     void addDataToGroup(DataGroupItem* data_group, RealDataStruct& data_struct);
-
 };
 
 #endif //  REALDATAMODEL_H
