@@ -16,8 +16,10 @@ using namespace ModelView;
 struct ProjectChangedController::ProjectChangedControllerImpl {
     std::vector<SessionModel*> m_models;
     std::vector<std::unique_ptr<ModelHasChangedController>> change_controllers;
+    callback_t m_callback;
 
-    ProjectChangedControllerImpl(const std::vector<SessionModel*>& models) : m_models(models)
+    ProjectChangedControllerImpl(const std::vector<SessionModel*>& models, callback_t callback)
+        : m_models(models), m_callback(callback)
     {
         create_controllers();
     }
@@ -45,14 +47,16 @@ struct ProjectChangedController::ProjectChangedControllerImpl {
     }
 };
 
-ProjectChangedController::ProjectChangedController(const std::vector<SessionModel*>& models)
-    : p_impl(std::make_unique<ProjectChangedControllerImpl>(models))
+ProjectChangedController::ProjectChangedController(const std::vector<SessionModel*>& models,
+                                                   callback_t callback)
+    : p_impl(std::make_unique<ProjectChangedControllerImpl>(models, callback))
 {
 }
 
 ProjectChangedController::~ProjectChangedController() = default;
 
-//! Returns true if the change in the models has been registered since the last call of resetChanged.
+//! Returns true if the change in the models has been registered since the last call of
+//! resetChanged.
 
 bool ProjectChangedController::hasChanged() const
 {
