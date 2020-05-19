@@ -29,7 +29,7 @@ public:
 
 private:
     void process_change();
-    bool has_changed{false};
+    bool m_has_changed{false};
     callback_t m_callback; //! informs the user about change in the model
 };
 

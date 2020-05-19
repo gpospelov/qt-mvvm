@@ -28,21 +28,21 @@ ModelHasChangedController::ModelHasChangedController(ModelView::SessionModel* mo
 
 bool ModelHasChangedController::hasChanged() const
 {
-    return has_changed;
+    return m_has_changed;
 }
 
 //! Reset has_changed flag.
 
 void ModelHasChangedController::resetChanged()
 {
-    has_changed = false;
+    m_has_changed = false;
 }
 
 //! Sets 'has_changed' flag and reports back to client.
 
 void ModelHasChangedController::process_change()
 {
-    has_changed = true;
+    m_has_changed = true;
     if (m_callback)
         m_callback();
 }
