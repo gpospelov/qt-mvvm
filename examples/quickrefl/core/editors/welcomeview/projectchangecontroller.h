@@ -34,7 +34,8 @@ public:
     void resetChanged();
 
 private:
-    std::vector<std::unique_ptr<ModelHasChangedController>> change_controllers;
+    struct ProjectChangedControllerImpl;
+    std::unique_ptr<ProjectChangedControllerImpl> p_impl;
 };
 
 #endif // PROJECTCHANGECONTROLLER_H
