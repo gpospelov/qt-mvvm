@@ -33,6 +33,7 @@ public slots:
     void onCreateNewProject();
     void onOpenExistingProject();
     void onSaveCurrentProject();
+    void onSaveProjectAs();
 
 private:
     void init_project_manager();

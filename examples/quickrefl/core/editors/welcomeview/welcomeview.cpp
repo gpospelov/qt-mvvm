@@ -77,6 +77,13 @@ void WelcomeView::onSaveCurrentProject()
         update_current_project_name();
 }
 
+void WelcomeView::onSaveProjectAs()
+{
+    qDebug() << "WelcomeView::onSaveProjectAs()";
+    if (m_project_manager->saveProjectAs())
+        update_current_project_name();
+}
+
 void WelcomeView::init_project_manager()
 {
     auto select_dir = [this]() { return m_interactor->onSelectDirRequest(); };
@@ -102,6 +109,8 @@ void WelcomeView::setup_connections()
             &WelcomeView::onCreateNewProject);
     connect(m_open_project_widget, &OpenProjectWidget::saveProjectRequest, this,
             &WelcomeView::onSaveCurrentProject);
+    connect(m_open_project_widget, &OpenProjectWidget::saveProjectAsRequest, this,
+            &WelcomeView::onSaveProjectAs);
 }
 
 //! Sets changed project name to all widgets which requires it.

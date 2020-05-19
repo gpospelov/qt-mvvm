@@ -73,12 +73,12 @@ QBoxLayout *OpenProjectWidget::createTempButtonLayout()
     connect(save_project_button, &QPushButton::pressed, this,
             &OpenProjectWidget::saveProjectRequest);
 
-    saveas_project_button = new QPushButton("Open");
+    saveas_project_button = new QPushButton("Save As");
     saveas_project_button->setMinimumHeight(StyleUtils::LargeButtonHeight());
     saveas_project_button->setMinimumWidth(200);
     saveas_project_button->setFont(StyleUtils::sectionFont());
     connect(saveas_project_button, &QPushButton::pressed, this,
-            &OpenProjectWidget::saveAsProjectRequest);
+            &OpenProjectWidget::saveProjectAsRequest);
 
     result->addStretch(1);
     result->addWidget(save_project_button);

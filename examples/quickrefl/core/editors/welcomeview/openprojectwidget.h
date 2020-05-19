@@ -32,7 +32,7 @@ signals:
     void createNewProjectRequest();
     void openExistingProjectRequest();
     void saveProjectRequest();
-    void saveAsProjectRequest();
+    void saveProjectAsRequest();
 
 private:
     QBoxLayout* createButtonLayout();
