@@ -100,6 +100,8 @@ void WelcomeView::setup_connections()
             &WelcomeView::onOpenExistingProject);
     connect(m_open_project_widget, &OpenProjectWidget::createNewProjectRequest, this,
             &WelcomeView::onCreateNewProject);
+    connect(m_open_project_widget, &OpenProjectWidget::saveProjectRequest, this,
+            &WelcomeView::onSaveCurrentProject);
 }
 
 //! Sets changed project name to all widgets which requires it.
