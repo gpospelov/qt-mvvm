@@ -13,6 +13,7 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 #include "testconfig.h"
+#include "folderbasedtest.h"
 #include <mvvm/model/customvariants.h>
 #include <mvvm/model/comparators.h>
 
