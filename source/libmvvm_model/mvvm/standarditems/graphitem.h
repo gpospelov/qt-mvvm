@@ -31,7 +31,7 @@ public:
     static inline const std::string P_LINK = "P_LINK";
     static inline const std::string P_COLOR = "P_COLOR";
     static inline const std::string P_GRAPH_TITLE = "P_GRAPH_TITLE";
-    GraphItem();
+    GraphItem(const std::string& model_type = Constants::GraphItemType);
 
     void setDataItem(const Data1DItem* item);
 
