@@ -55,6 +55,13 @@ void ModelMapper::setOnModelDestroyed(Callbacks::model_t f, Callbacks::slot_t ow
     m_on_model_destroyed.connect(std::move(f), owner);
 }
 
+//! Sets the callback to be notified just before the beginning of the reset (root item recreated).
+
+void ModelMapper::setOnModelAboutToBeReset(Callbacks::model_t f, Callbacks::slot_t owner)
+{
+    m_on_model_about_reset.connect(std::move(f), owner);
+}
+
 //! Sets the callback to be notified after model was fully reset (root item recreated).
 
 void ModelMapper::setOnModelReset(Callbacks::model_t f, Callbacks::slot_t owner)
@@ -78,6 +85,7 @@ void ModelMapper::unsubscribe(Callbacks::slot_t client)
     m_on_item_removed.remove_client(client);
     m_on_item_about_removed.remove_client(client);
     m_on_model_destroyed.remove_client(client);
+    m_on_model_about_reset.remove_client(client);
     m_on_model_reset.remove_client(client);
 }
 
@@ -112,6 +120,11 @@ void ModelMapper::callOnItemAboutToBeRemoved(SessionItem* parent, TagRow tagrow)
 void ModelMapper::callOnModelDestroyed()
 {
     m_on_model_destroyed(m_model);
+}
+
+void ModelMapper::callOnModelAboutToBeReset()
+{
+    m_on_model_about_reset(m_model);
 }
 
 void ModelMapper::callOnModelReset()
