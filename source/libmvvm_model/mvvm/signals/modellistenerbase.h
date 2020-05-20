@@ -22,6 +22,8 @@ class SessionModel;
 //! Automatically tracks the time of life of SessionModel. Unsubscribes from the model on
 //! own destruction.
 
+// FIXME introduce pure interface and share together with ModelMapper
+
 class CORE_EXPORT ModelListenerBase
 {
 public:
@@ -32,6 +34,7 @@ public:
     void setOnItemInserted(Callbacks::item_tagrow_t f);
     void setOnItemRemoved(Callbacks::item_tagrow_t f);
     void setOnAboutToRemoveItem(Callbacks::item_tagrow_t f);
+    void setOnModelAboutToBeReset(Callbacks::model_t f);
     void setOnModelReset(Callbacks::model_t f);
 
 protected:
