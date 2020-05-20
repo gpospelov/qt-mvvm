@@ -160,6 +160,7 @@ ModelMapper* SessionModel::mapper()
 
 void SessionModel::clear()
 {
+    mapper()->callOnModelAboutToBeReset();
     createRootItem();
     mapper()->callOnModelReset();
 }
