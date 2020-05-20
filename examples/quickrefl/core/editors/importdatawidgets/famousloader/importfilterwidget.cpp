@@ -120,16 +120,16 @@ void LineFilterWidget::createComponents()
     p_ignore_lines = new QLineEdit(this);
 
     // Set the coherent fusion style for the subcmponents
-    // FIXME This are all memory leakages. Please consider if custom style is necessary at all.
-    p_type_select->setStyle(new QProxyStyle("fusion"));
-    p_line_start->setStyle(new QProxyStyle("fusion"));
-    p_line_end->setStyle(new QProxyStyle("fusion"));
-    p_range_start->setStyle(new QProxyStyle("fusion"));
-    p_range_end->setStyle(new QProxyStyle("fusion"));
-    p_separators->setStyle(new QProxyStyle("fusion"));
-    p_filter_name->setStyle(new QProxyStyle("fusion"));
-    p_ignore_strings->setStyle(new QProxyStyle("fusion"));
-    p_ignore_lines->setStyle(new QProxyStyle("fusion"));
+    p_style = std::make_unique<QProxyStyle>("fusion");
+    p_type_select->setStyle(p_style.get());
+    p_line_start->setStyle(p_style.get());
+    p_line_end->setStyle(p_style.get());
+    p_range_start->setStyle(p_style.get());
+    p_range_end->setStyle(p_style.get());
+    p_separators->setStyle(p_style.get());
+    p_filter_name->setStyle(p_style.get());
+    p_ignore_strings->setStyle(p_style.get());
+    p_ignore_lines->setStyle(p_style.get());
 }
 
 //! Set the tool tips of all the components
@@ -153,7 +153,7 @@ void LineFilterWidget::initComponents()
 {
     p_tab_widget->setTabPosition(QTabWidget::West);
     p_tab_widget->tabBar()->setStyle(new CustomTabStyle());
-    p_tab_widget->setStyle(new QProxyStyle("fusion"));
+    p_tab_widget->setStyle(p_style.get());
     p_tab_widget->setFixedHeight(p_tab_widget->widget(0)->sizeHint().height() + 10);
     p_tab_widget->setMinimumWidth(p_tab_widget->sizeHint().width());
     p_tab_widget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);

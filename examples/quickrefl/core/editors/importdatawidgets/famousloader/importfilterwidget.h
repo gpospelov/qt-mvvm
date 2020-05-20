@@ -29,6 +29,7 @@ class QLineEdit;
 class QTabWidget;
 class QGridLayout;
 class QSettings;
+class QProxyStyle;
 QT_END_NAMESPACE
 
 namespace ModelView
@@ -111,6 +112,7 @@ private:
 
 private:
     DataImportLogic::LineFilter* p_line_filter;
+    std::unique_ptr<QProxyStyle> p_style;
 
     QTabWidget* p_tab_widget;
     SwitchSpace::Switch* p_active_checkbox;
