@@ -9,10 +9,12 @@
 
 #include "google_test.h"
 #include <QDebug>
+#include <QJsonObject>
 #include <QSignalSpy>
 #include <mvvm/model/compounditem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/model/taginfo.h>
+#include <mvvm/serialization/jsonmodelconverter.h>
 #include <mvvm/standarditems/vectoritem.h>
 #include <mvvm/viewmodel/defaultviewmodel.h>
 #include <mvvm/viewmodel/standardviewitems.h>
@@ -487,4 +489,43 @@ TEST_F(DefaultViewModelTest, horizontalLabels)
     EXPECT_EQ(viewModel.headerData(0, Qt::Horizontal, Qt::DisplayRole).toString(), QString("Name"));
     EXPECT_EQ(viewModel.headerData(1, Qt::Horizontal, Qt::DisplayRole).toString(),
               QString("Value"));
+}
+
+//! Testing ViewModel signals while loading data with the help of json loader.
+//! Model is empty.
+
+TEST_F(DefaultViewModelTest, jsonConverterEmptyModel)
+{
+    JsonModelConverter converter;
+    auto object = std::make_unique<QJsonObject>();
+
+    // preparing jsob object
+    {
+        SessionModel model("TestModel");
+        model.insertItem<PropertyItem>();
+        JsonModelConverter converter;
+        // writing model to json
+        converter.model_to_json(model, *object);
+    }
+
+    // loading model
+    SessionModel model("TestModel");
+    DefaultViewModel viewmodel(&model);
+    EXPECT_EQ(viewmodel.rowCount(), 0);
+    EXPECT_EQ(viewmodel.columnCount(), 0);
+
+    QSignalSpy spyInsert(&viewmodel, &DefaultViewModel::rowsInserted);
+    QSignalSpy spyRemove(&viewmodel, &DefaultViewModel::rowsRemoved);
+    QSignalSpy spyAboutReset(&viewmodel, &DefaultViewModel::modelAboutToBeReset);
+    QSignalSpy spyReset(&viewmodel, &DefaultViewModel::modelReset);
+
+    converter.json_to_model(*object, model);
+
+    EXPECT_EQ(spyInsert.count(), 1);
+    EXPECT_EQ(spyRemove.count(), 0);
+    EXPECT_EQ(spyAboutReset.count(), 0);
+    EXPECT_EQ(spyReset.count(), 0);
+
+    EXPECT_EQ(viewmodel.rowCount(), 1);
+    EXPECT_EQ(viewmodel.columnCount(), 2);
 }
