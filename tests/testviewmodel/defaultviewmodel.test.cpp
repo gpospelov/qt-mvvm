@@ -602,13 +602,11 @@ TEST_F(DefaultViewModelTest, jsonDocumentLoadModel)
 
     document.load(fileName);
 
+    EXPECT_EQ(spyInsert.count(), 1);
+    EXPECT_EQ(spyRemove.count(), 0);
+    EXPECT_EQ(spyAboutReset.count(), 1);
+    EXPECT_EQ(spyReset.count(), 1);
 
-    // FIXME restore
-//    EXPECT_EQ(spyInsert.count(), 0);
-//    EXPECT_EQ(spyRemove.count(), 0);
-//    EXPECT_EQ(spyAboutReset.count(), 1);
-//    EXPECT_EQ(spyReset.count(), 1);
-
-//    EXPECT_EQ(viewmodel.rowCount(), 1);
-//    EXPECT_EQ(viewmodel.columnCount(), 2);
+    EXPECT_EQ(viewmodel.rowCount(), 1);
+    EXPECT_EQ(viewmodel.columnCount(), 2);
 }
