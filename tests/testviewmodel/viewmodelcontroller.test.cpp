@@ -375,7 +375,7 @@ TEST_F(ViewModelControllerTest, setCompoundAsRootItem)
     EXPECT_EQ(view_model.columnCount(index_of_vector_item), 2);
 }
 
-//! On model destroyed.
+//! On model reset.
 
 TEST_F(ViewModelControllerTest, onModelReset)
 {
@@ -389,14 +389,36 @@ TEST_F(ViewModelControllerTest, onModelReset)
     auto controller = create_controller(&session_model, &view_model);
     EXPECT_EQ(controller->rootSessionItem(), session_model.rootItem());
 
-    QSignalSpy spyRset(&view_model, &ViewModelBase::modelReset);
+    QSignalSpy spyReset(&view_model, &ViewModelBase::modelReset);
 
     session_model.clear();
 
-    EXPECT_EQ(spyRset.count(), 1);
+    EXPECT_EQ(spyReset.count(), 1);
     EXPECT_EQ(view_model.rowCount(), 0);
     EXPECT_EQ(view_model.columnCount(), 0);
     EXPECT_EQ(controller->rootSessionItem(), session_model.rootItem());
+}
+
+//! Real life scenario: initially empty SessionModel, apply ::clean, and then start to insert item.
+
+TEST_F(ViewModelControllerTest, onEmptyModelResetAndContinue)
+{
+    SessionModel session_model;
+
+    // constructing viewmodel and its controller
+    ViewModelBase view_model;
+    auto controller = create_controller(&session_model, &view_model);
+
+    QSignalSpy spyReset(&view_model, &ViewModelBase::modelReset);
+    session_model.clear();
+
+    EXPECT_EQ(spyReset.count(), 1);
+
+    // inserting new item
+    QSignalSpy spyInsert(&view_model, &ViewModelBase::rowsInserted);
+    session_model.insertItem<SessionItem>();
+
+    EXPECT_EQ(spyInsert.count(), 0); // FIXME should '1' here
 }
 
 //! On model destroyed.
