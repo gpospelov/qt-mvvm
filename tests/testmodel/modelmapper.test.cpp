@@ -44,6 +44,7 @@ TEST(ModelMapperTest, onDataChange)
     EXPECT_CALL(widget, onAboutToRemoveItem(_, _)).Times(0);
     EXPECT_CALL(widget, onItemRemoved(_, _)).Times(0);
     EXPECT_CALL(widget, onModelDestroyed(_)).Times(0);
+    EXPECT_CALL(widget, onModelAboutToBeReset(_)).Times(0);
     EXPECT_CALL(widget, onModelReset(_)).Times(0);
     model.setData(item, 42.0, ItemDataRole::DATA); // perform action
 
@@ -53,6 +54,7 @@ TEST(ModelMapperTest, onDataChange)
     EXPECT_CALL(widget, onItemRemoved(_, _)).Times(0);
     EXPECT_CALL(widget, onAboutToRemoveItem(_, _)).Times(0);
     EXPECT_CALL(widget, onModelDestroyed(_)).Times(0);
+    EXPECT_CALL(widget, onModelAboutToBeReset(_)).Times(0);
     EXPECT_CALL(widget, onModelReset(_)).Times(0);
     model.setData(item, 42.0, ItemDataRole::DATA); // perform action
 
@@ -62,6 +64,7 @@ TEST(ModelMapperTest, onDataChange)
     EXPECT_CALL(widget, onItemRemoved(_, _)).Times(0);
     EXPECT_CALL(widget, onAboutToRemoveItem(_, _)).Times(0);
     EXPECT_CALL(widget, onModelDestroyed(_)).Times(0);
+    EXPECT_CALL(widget, onModelAboutToBeReset(_)).Times(0);
     EXPECT_CALL(widget, onModelReset(_)).Times(0);
     item->setData(43.0); // perform action
 }
@@ -85,6 +88,7 @@ TEST(ModelMapperTest, onDataChangeUnsubscribe)
     EXPECT_CALL(widget, onAboutToRemoveItem(_, _)).Times(0);
     EXPECT_CALL(widget, onItemRemoved(_, _)).Times(0);
     EXPECT_CALL(widget, onModelDestroyed(_)).Times(0);
+    EXPECT_CALL(widget, onModelAboutToBeReset(_)).Times(0);
     EXPECT_CALL(widget, onModelReset(_)).Times(0);
 
     item->setData(43.0); // perform action
@@ -115,6 +119,7 @@ TEST(ModelMapperTest, onDataChangeMultipleUnsubscribe)
     EXPECT_CALL(widget, onAboutToRemoveItem(_, _)).Times(0);
     EXPECT_CALL(widget, onItemRemoved(_, _)).Times(0);
     EXPECT_CALL(widget, onModelDestroyed(_)).Times(0);
+    EXPECT_CALL(widget, onModelAboutToBeReset(_)).Times(0);
     EXPECT_CALL(widget, onModelReset(_)).Times(0);
     model.setData(item, 42.0, ItemDataRole::DATA); // perform action
 }
@@ -132,6 +137,7 @@ TEST(ModelMapperTest, onItemInserted)
     EXPECT_CALL(widget, onItemRemoved(_, _)).Times(0);
     EXPECT_CALL(widget, onAboutToRemoveItem(_, _)).Times(0);
     EXPECT_CALL(widget, onModelDestroyed(_)).Times(0);
+    EXPECT_CALL(widget, onModelAboutToBeReset(_)).Times(0);
     EXPECT_CALL(widget, onModelReset(_)).Times(0);
 
     // perform action
@@ -154,6 +160,7 @@ TEST(ModelMapperTest, onItemRemoved)
     EXPECT_CALL(widget, onItemRemoved(model.rootItem(), expected_tagrow)).Times(1);
     EXPECT_CALL(widget, onAboutToRemoveItem(model.rootItem(), expected_tagrow)).Times(1);
     EXPECT_CALL(widget, onModelDestroyed(_)).Times(0);
+    EXPECT_CALL(widget, onModelAboutToBeReset(_)).Times(0);
     EXPECT_CALL(widget, onModelReset(_)).Times(0);
     // perform action
     model.removeItem(model.rootItem(), expected_tagrow);
@@ -170,6 +177,7 @@ TEST(ModelMapperTest, onModelDestroyed)
     EXPECT_CALL(*widget, onItemInserted(_, _)).Times(0);
     EXPECT_CALL(*widget, onItemRemoved(_, _)).Times(0);
     EXPECT_CALL(*widget, onAboutToRemoveItem(_, _)).Times(0);
+    EXPECT_CALL(*widget, onModelAboutToBeReset(_)).Times(0);
     EXPECT_CALL(*widget, onModelReset(_)).Times(0);
     EXPECT_CALL(*widget, onModelDestroyed(model.get())).Times(1);
 
@@ -189,6 +197,7 @@ TEST(ModelMapperTest, onModelReset)
     EXPECT_CALL(*widget, onItemRemoved(_, _)).Times(0);
     EXPECT_CALL(*widget, onAboutToRemoveItem(_, _)).Times(0);
     EXPECT_CALL(*widget, onModelDestroyed(_)).Times(0);
+    EXPECT_CALL(*widget, onModelAboutToBeReset(_)).Times(1);
     EXPECT_CALL(*widget, onModelReset(model.get())).Times(1);
 
     // perform action
