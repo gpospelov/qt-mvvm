@@ -172,7 +172,7 @@ struct ViewModelController::RefViewModelControllerImpl {
         session_model->mapper()->setOnModelDestroyed(on_model_destroyed, controller);
 
         auto on_model_reset = [this](SessionModel*) {
-            view_model->setRootViewItem(std::make_unique<RootViewItem>(session_model->rootItem()));
+            controller->setRootSessionItem(session_model->rootItem());
         };
         session_model->mapper()->setOnModelReset(on_model_reset, controller);
     }

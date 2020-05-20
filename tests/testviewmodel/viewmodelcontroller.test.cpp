@@ -15,10 +15,10 @@
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/standarditems/vectoritem.h>
 #include <mvvm/viewmodel/labeldatarowstrategy.h>
+#include <mvvm/viewmodel/standardchildrenstrategies.h>
 #include <mvvm/viewmodel/standardviewitems.h>
 #include <mvvm/viewmodel/viewmodelbase.h>
 #include <mvvm/viewmodel/viewmodelcontroller.h>
-#include <mvvm/viewmodel/standardchildrenstrategies.h>
 
 using namespace ModelView;
 
@@ -418,7 +418,7 @@ TEST_F(ViewModelControllerTest, onEmptyModelResetAndContinue)
     QSignalSpy spyInsert(&view_model, &ViewModelBase::rowsInserted);
     session_model.insertItem<SessionItem>();
 
-    EXPECT_EQ(spyInsert.count(), 0); // FIXME should '1' here
+    EXPECT_EQ(spyInsert.count(), 1);
 }
 
 //! On model destroyed.
