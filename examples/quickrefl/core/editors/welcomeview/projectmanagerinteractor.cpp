@@ -9,6 +9,7 @@
 
 #include "projectmanagerinteractor.h"
 #include "welcomeviewsettings.h"
+#include "projectutils.h"
 #include <QDebug>
 #include <QFileDialog>
 #include <QMessageBox>
@@ -28,8 +29,17 @@ std::string ProjectManagerInteractor::onSelectDirRequest()
     if (dirname.empty()) // no valid selection
         return {};
 
+    qDebug() << "   onSelectDirRequest() 1.1";
+    if (!ProjectUtils::IsPossibleProjectDir(dirname)) {
+        qDebug() << "   onSelectDirRequest() 1.2";
+        QMessageBox msgBox;
+        msgBox.setText("Selected directory doesn't look like a project directory, choose another one");
+        msgBox.exec();
+        return {};
+    }
 
-    return {};
+    qDebug() << "   onSelectDirRequest() 1.3" << QString::fromStdString(dirname);
+    return dirname;
 }
 
 //! Returns new directory on disk created by the user via QFileDialog.
