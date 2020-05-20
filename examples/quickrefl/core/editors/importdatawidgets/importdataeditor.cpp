@@ -93,34 +93,42 @@ void ImportDataEditor::invokeImportDialog()
     }
 }
 
-
-// FIXME please consider function simplification.
-// It has too much knowledge about surrounding world.
-
 //! Process the accepted state
 void ImportDataEditor::onImportDialogAccept(DataImportLogic::ImportOutput import_output)
 {
     DataCollectionItem* data_node;
     for (auto& path : import_output.keys()) {
-        if ((import_output.merge() && path == *(import_output.keys().begin()))
-            || (!import_output.merge())) // FIXME complicated statement
+
+        // Create only data_node if (first and merge) or (not merge)
+        bool merge = import_output.merge();
+        bool first = (path == *(import_output.keys().begin()));
+        if ((merge && first) || (!merge) )
             data_node = model->insertDataNode();
+
+        // Populate the data into the node
         auto parsed_file_output = import_output[path];
         for (int i = 0; i < parsed_file_output->dataCount(); ++i) {
-            auto data_struct = RealDataStruct();
-
-            data_struct.name = Utils::base_name(path);
-            data_struct.type = parsed_file_output->dataType(i);
-
-            data_struct.axis = parsed_file_output->axis();
-            data_struct.axis_name = parsed_file_output->axisName();
-            data_struct.axis_unit = parsed_file_output->axisUnit();
-
-            data_struct.data = parsed_file_output->data(i);
-            data_struct.data_name = parsed_file_output->dataName(i);
-            data_struct.data_unit = parsed_file_output->dataUnit(i);
-
+            auto data_struct = convertToRealDataStruct(path, parsed_file_output, i);
             model->addDataToNode(data_node, data_struct);
         }
     }
+}
+
+//! Convert data column to RealDatastructure
+RealDataStruct ImportDataEditor::convertToRealDataStruct(const std::string& path, const DataImportLogic::ParsedFileOutptut* import_output, const int column)
+{
+    auto data_struct = RealDataStruct();
+
+    data_struct.name = Utils::base_name(path);
+    data_struct.type = import_output->dataType(column);
+
+    data_struct.axis = import_output->axis();
+    data_struct.axis_name = import_output->axisName();
+    data_struct.axis_unit = import_output->axisUnit();
+
+    data_struct.data = import_output->data(column);
+    data_struct.data_name = import_output->dataName(column);
+    data_struct.data_unit = import_output->dataUnit(column);
+
+    return data_struct;
 }
