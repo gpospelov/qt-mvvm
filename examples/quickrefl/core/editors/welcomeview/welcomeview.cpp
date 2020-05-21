@@ -88,10 +88,7 @@ void WelcomeView::init_project_manager()
 {
     auto select_dir = [this]() { return m_interactor->onSelectDirRequest(); };
     auto create_dir = [this]() { return m_interactor->onCreateDirRequest(); };
-    auto save_changes = [this]() {
-        return static_cast<ProjectManagerDecorator::SaveChangesAnswer>(
-            m_interactor->onSaveChangesRequest());
-    };
+    auto save_changes = [this]() { return m_interactor->onSaveChangesRequest(); };
     auto on_modified = [this]() { update_current_project_name(); };
 
     auto manager =

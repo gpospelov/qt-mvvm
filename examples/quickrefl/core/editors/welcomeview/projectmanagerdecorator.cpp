@@ -11,6 +11,7 @@
 #include "applicationmodelsinterface.h"
 #include "projectinterface.h"
 #include "projectmanager.h"
+#include "project_types.h"
 #include <stdexcept>
 
 namespace
@@ -66,11 +67,11 @@ struct ProjectManagerDecorator::ProjectManagerImpl {
     {
         if (isModified()) {
             switch (acquireSaveChangesAnswer()) {
-            case SAVE:
+            case SaveChangesAnswer::SAVE:
                 return saveCurrentProject();
-            case CANCEL:
+            case SaveChangesAnswer::CANCEL:
                 return failed; // saving was interrupted by the 'cancel' button
-            case DISCARD:
+            case SaveChangesAnswer::DISCARD:
                 project_manager->closeWithoutSaving();
                 return succeeded;
             default:

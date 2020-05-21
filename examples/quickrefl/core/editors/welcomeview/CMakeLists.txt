@@ -7,6 +7,7 @@ target_sources(${library_name} PRIVATE
     openprojectwidget.h
     project.cpp
     project.h
+    project_types.h
     projectchangecontroller.cpp
     projectchangecontroller.h
     projectinterface.h
