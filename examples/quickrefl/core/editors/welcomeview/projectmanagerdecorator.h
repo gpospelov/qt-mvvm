@@ -58,6 +58,8 @@ public:
 
     bool isModified() const override;
 
+    bool closeCurrentProject() const override;
+
 private:
     struct ProjectManagerImpl;
     std::unique_ptr<ProjectManagerImpl> p_impl;

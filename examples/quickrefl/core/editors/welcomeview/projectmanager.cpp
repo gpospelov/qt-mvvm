@@ -14,6 +14,7 @@
 
 namespace
 {
+const bool succeeded = true;
 const bool failed = false;
 } // namespace
 
@@ -114,9 +115,12 @@ bool ProjectManager::isModified() const
     return p_impl->isModified();
 }
 
-//! Closes project without saving. New empty project will be created.
+//! Closes current project (without saving).
+//! No checks whether it is modified or not being performed.
 
-void ProjectManager::closeWithoutSaving() const
+bool ProjectManager::closeCurrentProject() const
 {
-    p_impl->createNewProject();
+    // no special operation is required to close the project
+    p_impl->createNewProject(); // ready for further actions
+    return succeeded;
 }

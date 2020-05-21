@@ -72,7 +72,7 @@ struct ProjectManagerDecorator::ProjectManagerImpl {
             case SaveChangesAnswer::CANCEL:
                 return failed; // saving was interrupted by the 'cancel' button
             case SaveChangesAnswer::DISCARD:
-                project_manager->closeWithoutSaving();
+                project_manager->closeCurrentProject();
                 return succeeded;
             default:
                 throw std::runtime_error("Error in ProjectManager: unexpected answer.");
@@ -201,7 +201,20 @@ std::string ProjectManagerDecorator::currentProjectDir() const
     return p_impl->currentProjectDir();
 }
 
+//! Returns true if project was modified since last save.
+
 bool ProjectManagerDecorator::isModified() const
 {
     return p_impl->isModified();
+}
+
+//! Closes current project, returns 'true' if succeeded.
+//! Will show the dialog, via callback provided, asking the user whether to save/discard/cancel.
+//! Returns 'false' only if user has selected 'cancel' button.
+
+bool ProjectManagerDecorator::closeCurrentProject() const
+{
+    if (!p_impl->saveBeforeClosing())
+        return failed;
+    return succeeded;
 }

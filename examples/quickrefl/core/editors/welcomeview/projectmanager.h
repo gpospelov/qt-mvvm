@@ -45,7 +45,7 @@ public:
 
     bool isModified() const override;
 
-    virtual void closeWithoutSaving() const override;
+    bool closeCurrentProject() const override;
 
 private:
     struct ProjectManagerImpl;
