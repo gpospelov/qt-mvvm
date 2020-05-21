@@ -56,6 +56,14 @@ WelcomeView::WelcomeView(ApplicationModels* models, QWidget* parent)
 
 WelcomeView::~WelcomeView() = default;
 
+//! Returns 'true' if current project can be closed.
+//! Internally will perform check for unsaved data, and proceed via save/discard/cancel dialog.
+
+bool WelcomeView::canCloseProject() const
+{
+    return m_project_manager->closeCurrentProject();
+}
+
 void WelcomeView::onCreateNewProject()
 {
     qDebug() << "WelcomeView::onCreateNewProject()";

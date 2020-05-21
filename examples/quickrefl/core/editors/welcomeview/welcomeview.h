@@ -29,6 +29,8 @@ public:
     WelcomeView(ApplicationModels* models, QWidget* parent = nullptr);
     ~WelcomeView();
 
+    bool canCloseProject() const;
+
 public slots:
     void onCreateNewProject();
     void onOpenExistingProject();

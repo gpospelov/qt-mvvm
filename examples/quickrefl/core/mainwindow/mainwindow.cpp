@@ -13,6 +13,7 @@
 #include "mainbarwidget.h"
 #include "refldockwindow.h"
 #include "welcomeview.h"
+#include <QCloseEvent>
 #include <QCoreApplication>
 #include <QFileDialog>
 #include <QMenuBar>
@@ -25,8 +26,7 @@ const QString size_key = "size";
 const QString pos_key = "pos";
 } // namespace
 
-MainWindow::MainWindow()
-    : models(std::make_unique<ApplicationModels>())
+MainWindow::MainWindow() : models(std::make_unique<ApplicationModels>())
 {
     init_application();
     init_views();
@@ -37,8 +37,12 @@ MainWindow::~MainWindow() = default;
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {
-    write_settings();
-    QMainWindow::closeEvent(event);
+    if (welcome_view->canCloseProject()) {
+        write_settings();
+        event->accept();
+    } else {
+        event->ignore();
+    }
 }
 
 void MainWindow::init_application()
