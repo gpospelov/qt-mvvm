@@ -8,21 +8,28 @@
 // ************************************************************************** //
 
 #include "google_test.h"
+#include "test_utils.h"
 #include <QDebug>
+#include <QJsonObject>
 #include <QSignalSpy>
+#include "folderbasedtest.h"
 #include <mvvm/model/compounditem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/model/taginfo.h>
+#include <mvvm/serialization/jsonmodelconverter.h>
 #include <mvvm/standarditems/vectoritem.h>
 #include <mvvm/viewmodel/defaultviewmodel.h>
 #include <mvvm/viewmodel/standardviewitems.h>
 #include <mvvm/viewmodel/viewmodelutils.h>
+#include <mvvm/serialization/jsondocument.h>
+
 
 using namespace ModelView;
 
-class DefaultViewModelTest : public ::testing::Test
+class DefaultViewModelTest : public FolderBasedTest
 {
 public:
+    DefaultViewModelTest() : FolderBasedTest("test_DefaultViewModel"){}
     ~DefaultViewModelTest();
 };
 
@@ -487,4 +494,119 @@ TEST_F(DefaultViewModelTest, horizontalLabels)
     EXPECT_EQ(viewModel.headerData(0, Qt::Horizontal, Qt::DisplayRole).toString(), QString("Name"));
     EXPECT_EQ(viewModel.headerData(1, Qt::Horizontal, Qt::DisplayRole).toString(),
               QString("Value"));
+}
+
+//! Testing ViewModel signals while loading data with the help of json loader.
+
+TEST_F(DefaultViewModelTest, jsonConverterLoadModel)
+{
+    JsonModelConverter converter;
+    auto object = std::make_unique<QJsonObject>();
+
+    // preparing jsob object
+    {
+        SessionModel model("TestModel");
+        model.insertItem<PropertyItem>();
+        JsonModelConverter converter;
+        // writing model to json
+        converter.model_to_json(model, *object);
+    }
+
+    // loading model
+    SessionModel model("TestModel");
+    DefaultViewModel viewmodel(&model);
+    EXPECT_EQ(viewmodel.rowCount(), 0);
+    EXPECT_EQ(viewmodel.columnCount(), 0);
+
+    QSignalSpy spyInsert(&viewmodel, &DefaultViewModel::rowsInserted);
+    QSignalSpy spyRemove(&viewmodel, &DefaultViewModel::rowsRemoved);
+    QSignalSpy spyAboutReset(&viewmodel, &DefaultViewModel::modelAboutToBeReset);
+    QSignalSpy spyReset(&viewmodel, &DefaultViewModel::modelReset);
+
+    converter.json_to_model(*object, model);
+
+    EXPECT_EQ(spyInsert.count(), 1);
+    EXPECT_EQ(spyRemove.count(), 0);
+    EXPECT_EQ(spyAboutReset.count(), 0);
+    EXPECT_EQ(spyReset.count(), 0);
+
+    EXPECT_EQ(viewmodel.rowCount(), 1);
+    EXPECT_EQ(viewmodel.columnCount(), 2);
+}
+
+//! Testing ViewModel signals while loading data with the help of json document.
+//! Model is empty.
+
+TEST_F(DefaultViewModelTest, jsonDocumentLoadEmptyModel)
+{
+    auto fileName = TestUtils::TestFileName(testDir(), "jsonDocumentLoadEmptyModel.json");
+
+    // preparing jsob object
+    {
+        SessionModel model("TestModel");
+        JsonDocument document({&model});
+        document.save(fileName);
+    }
+
+    // loading model
+    SessionModel model("TestModel");
+    DefaultViewModel viewmodel(&model);
+    EXPECT_EQ(viewmodel.rowCount(), 0);
+    EXPECT_EQ(viewmodel.columnCount(), 0);
+
+    JsonDocument document({&model});
+
+    QSignalSpy spyInsert(&viewmodel, &DefaultViewModel::rowsInserted);
+    QSignalSpy spyRemove(&viewmodel, &DefaultViewModel::rowsRemoved);
+    QSignalSpy spyAboutReset(&viewmodel, &DefaultViewModel::modelAboutToBeReset);
+    QSignalSpy spyReset(&viewmodel, &DefaultViewModel::modelReset);
+
+    document.load(fileName);
+
+    EXPECT_EQ(spyInsert.count(), 0);
+    EXPECT_EQ(spyRemove.count(), 0);
+    EXPECT_EQ(spyAboutReset.count(), 1);
+    EXPECT_EQ(spyReset.count(), 1);
+
+    EXPECT_EQ(viewmodel.rowCount(), 0);
+    EXPECT_EQ(viewmodel.columnCount(), 0);
+}
+
+//! Testing ViewModel signals while loading data with the help of json document.
+//! Model is empty.
+
+TEST_F(DefaultViewModelTest, jsonDocumentLoadModel)
+{
+    auto fileName = TestUtils::TestFileName(testDir(), "jsonDocumentLoadModel.json");
+
+    // preparing jsob object
+    {
+        SessionModel model("TestModel");
+        JsonDocument document({&model});
+        model.insertItem<PropertyItem>();
+        document.save(fileName);
+    }
+
+    // loading model
+    SessionModel model("TestModel");
+    DefaultViewModel viewmodel(&model);
+    EXPECT_EQ(viewmodel.rowCount(), 0);
+    EXPECT_EQ(viewmodel.columnCount(), 0);
+
+    JsonDocument document({&model});
+
+    QSignalSpy spyInsert(&viewmodel, &DefaultViewModel::rowsInserted);
+    QSignalSpy spyRemove(&viewmodel, &DefaultViewModel::rowsRemoved);
+    QSignalSpy spyAboutReset(&viewmodel, &DefaultViewModel::modelAboutToBeReset);
+    QSignalSpy spyReset(&viewmodel, &DefaultViewModel::modelReset);
+
+    document.load(fileName);
+
+    EXPECT_EQ(spyInsert.count(), 1);
+    EXPECT_EQ(spyRemove.count(), 0);
+    EXPECT_EQ(spyAboutReset.count(), 1);
+    EXPECT_EQ(spyReset.count(), 1);
+
+    EXPECT_EQ(viewmodel.rowCount(), 1);
+    EXPECT_EQ(viewmodel.columnCount(), 2);
 }

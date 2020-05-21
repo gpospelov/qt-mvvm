@@ -40,6 +40,7 @@ public:
     virtual ~ModelTestWidgetInterface();
 
     virtual void onModelDestroyed(ModelView::SessionModel*) = 0;
+    virtual void onModelAboutToBeReset(ModelView::SessionModel*) = 0;
     virtual void onModelReset(ModelView::SessionModel*) = 0;
     virtual void onDataChange(ModelView::SessionItem*, int) = 0;
     virtual void onItemInserted(ModelView::SessionItem*, ModelView::TagRow) = 0;

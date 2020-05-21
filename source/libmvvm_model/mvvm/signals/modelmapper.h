@@ -33,6 +33,7 @@ public:
     void setOnItemRemoved(Callbacks::item_tagrow_t f, Callbacks::slot_t owner);
     void setOnAboutToRemoveItem(Callbacks::item_tagrow_t f, Callbacks::slot_t owner);
     void setOnModelDestroyed(Callbacks::model_t f, Callbacks::slot_t owner);
+    void setOnModelAboutToBeReset(Callbacks::model_t f, Callbacks::slot_t owner);
     void setOnModelReset(Callbacks::model_t f, Callbacks::slot_t owner);
 
     void setActive(bool value);
@@ -48,6 +49,7 @@ private:
     void callOnItemRemoved(SessionItem* parent, TagRow tagrow);
     void callOnItemAboutToBeRemoved(SessionItem* parent, TagRow tagrow);
     void callOnModelDestroyed();
+    void callOnModelAboutToBeReset();
     void callOnModelReset();
 
     Signal<Callbacks::item_int_t> m_on_data_change;
@@ -55,6 +57,7 @@ private:
     Signal<Callbacks::item_tagrow_t> m_on_item_removed;
     Signal<Callbacks::item_tagrow_t> m_on_item_about_removed;
     Signal<Callbacks::model_t> m_on_model_destroyed;
+    Signal<Callbacks::model_t> m_on_model_about_reset;
     Signal<Callbacks::model_t> m_on_model_reset;
 
     bool m_active;

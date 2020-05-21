@@ -130,6 +130,9 @@ void MockWidgetForModel::setModel(ModelView::SessionModel* model)
     };
     m_model->mapper()->setOnModelDestroyed(on_model_destroyed, this);
 
+    auto on_model_about_reset = [this](ModelView::SessionModel* model) { onModelAboutToBeReset(model); };
+    m_model->mapper()->setOnModelAboutToBeReset(on_model_about_reset, this);
+
     auto on_model_reset = [this](ModelView::SessionModel* model) { onModelReset(model); };
     m_model->mapper()->setOnModelReset(on_model_reset, this);
 }

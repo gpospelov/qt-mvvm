@@ -11,6 +11,7 @@
 #define PROJECTMANAGERINTERACTOR_H
 
 #include <string>
+#include "project_types.h"
 class QWidget;
 class WelcomeViewSettings;
 
@@ -29,7 +30,7 @@ public:
 
     std::string onCreateDirRequest();
 
-    int onSaveChangesRequest();
+    SaveChangesAnswer onSaveChangesRequest();
 
 private:
     std::string selectDir() const;

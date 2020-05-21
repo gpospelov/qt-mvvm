@@ -33,7 +33,7 @@ public:
 
     virtual bool isModified() const = 0;
 
-    virtual void closeWithoutSaving() const {};
+    virtual bool closeCurrentProject() const = 0;
 };
 
 #endif // PROJECTMANAGERINTERFACE_H

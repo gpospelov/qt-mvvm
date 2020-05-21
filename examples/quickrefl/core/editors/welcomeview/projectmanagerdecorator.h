@@ -13,6 +13,7 @@
 #include "projectmanagerinterface.h"
 #include <functional>
 #include <memory>
+#include "project_types.h"
 
 class ApplicationModelsInterface;
 
@@ -25,7 +26,6 @@ class ApplicationModelsInterface;
 class ProjectManagerDecorator : public ProjectManagerInterface
 {
 public:
-    enum SaveChangesAnswer { SAVE = 0, DISCARD = 1, CANCEL = 2 };
     using select_dir_callback_t = std::function<std::string()>;
     using create_dir_callback_t = std::function<std::string()>;
     using answer_callback_t = std::function<SaveChangesAnswer()>;
@@ -57,6 +57,8 @@ public:
     std::string currentProjectDir() const override;
 
     bool isModified() const override;
+
+    bool closeCurrentProject() const override;
 
 private:
     struct ProjectManagerImpl;

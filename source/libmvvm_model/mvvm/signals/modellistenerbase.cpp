@@ -60,6 +60,13 @@ void ModelListenerBase::setOnAboutToRemoveItem(ModelView::Callbacks::item_tagrow
     m_model->mapper()->setOnAboutToRemoveItem(f, this);
 }
 
+//! Sets the callback to be notified before model's full reset (root item recreated).
+
+void ModelListenerBase::setOnModelAboutToBeReset(Callbacks::model_t f)
+{
+    m_model->mapper()->setOnModelAboutToBeReset(f, this);
+}
+
 //! Sets the callback to be notified after model was fully reset (root item recreated).
 
 void ModelListenerBase::setOnModelReset(ModelView::Callbacks::model_t f)

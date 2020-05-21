@@ -27,7 +27,7 @@ using namespace ModelView;
 class JsonModelConverterTest : public FolderBasedTest
 {
 public:
-    JsonModelConverterTest() : FolderBasedTest("test_JsonModel") {}
+    JsonModelConverterTest() : FolderBasedTest("test_JsonModelConverter") {}
     ~JsonModelConverterTest();
 };
 
