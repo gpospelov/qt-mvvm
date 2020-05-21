@@ -47,14 +47,16 @@ ProjectUtils::CreateUntitledProject(ApplicationModelsInterface* models,
     return std::make_unique<Project>(models, project_changed_callback);
 }
 
-//! Returns a title for MainWindow for given project.
-//! Project without projectDir will be "Untitled", modified project will be "*Untitled".
-//! Project with projectDir in "/home/user/project1" will get title "project1".
+//! Returns a MainWindow title for given project.
 
 std::string ProjectUtils::ProjectWindowTitle(const ProjectInterface& project)
 {
     return ProjectWindowTitle(project.projectDir(), project.isModified());
 }
+
+//! Returns a title composed from last part of project path, and `is_modified` flag.
+//! Project without projectDir will be "Untitled", modified project will be "*Untitled".
+//! Project with projectDir in "/home/user/project1" will get title "project1".
 
 std::string ProjectUtils::ProjectWindowTitle(const std::string& project_dir, bool is_modified)
 {
