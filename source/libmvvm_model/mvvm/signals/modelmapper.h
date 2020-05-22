@@ -10,6 +10,7 @@
 #ifndef MVVM_SIGNALS_MODELMAPPER_H
 #define MVVM_SIGNALS_MODELMAPPER_H
 
+#include <mvvm/interfaces/modellistenerinterface.h>
 #include <mvvm/signals/callbackcontainer.h>
 
 namespace ModelView
@@ -19,26 +20,24 @@ class SessionItem;
 class SessionModel;
 
 //! Provides notifications on various SessionModel changes.
-//!
-//! Used to notify QAbstractItemModel to set the bridge with Qt signal and slots.
-//! Used to notify ItemMapper about activity in relatives of specific item.
+//! Allows to subscribe to SessionModel's changes, and triggers notifications.
 
-class CORE_EXPORT ModelMapper
+class CORE_EXPORT ModelMapper : public ModelListenerInterface
 {
 public:
     ModelMapper(SessionModel* item);
 
-    void setOnDataChange(Callbacks::item_int_t f, Callbacks::slot_t owner);
-    void setOnItemInserted(Callbacks::item_tagrow_t f, Callbacks::slot_t owner);
-    void setOnItemRemoved(Callbacks::item_tagrow_t f, Callbacks::slot_t owner);
-    void setOnAboutToRemoveItem(Callbacks::item_tagrow_t f, Callbacks::slot_t owner);
-    void setOnModelDestroyed(Callbacks::model_t f, Callbacks::slot_t owner);
-    void setOnModelAboutToBeReset(Callbacks::model_t f, Callbacks::slot_t owner);
-    void setOnModelReset(Callbacks::model_t f, Callbacks::slot_t owner);
+    void setOnDataChange(Callbacks::item_int_t f, Callbacks::slot_t owner) override;
+    void setOnItemInserted(Callbacks::item_tagrow_t f, Callbacks::slot_t owner) override;
+    void setOnItemRemoved(Callbacks::item_tagrow_t f, Callbacks::slot_t owner) override;
+    void setOnAboutToRemoveItem(Callbacks::item_tagrow_t f, Callbacks::slot_t owner) override;
+    void setOnModelDestroyed(Callbacks::model_t f, Callbacks::slot_t owner) override;
+    void setOnModelAboutToBeReset(Callbacks::model_t f, Callbacks::slot_t owner) override;
+    void setOnModelReset(Callbacks::model_t f, Callbacks::slot_t owner) override;
 
     void setActive(bool value);
 
-    void unsubscribe(Callbacks::slot_t client);
+    void unsubscribe(Callbacks::slot_t client) override;
 
 private:
     friend class SessionModel;
