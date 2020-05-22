@@ -11,5 +11,4 @@ target_sources(mvvm_model PRIVATE
     modellistenerbase.h
     modelmapper.cpp
     modelmapper.h
-    modelmapperinterface.h
 )

@@ -1,5 +1,6 @@
 add_subdirectory(commands)
 add_subdirectory(core)
+add_subdirectory(interfaces)
 add_subdirectory(model)
 add_subdirectory(serialization)
 add_subdirectory(signals)
