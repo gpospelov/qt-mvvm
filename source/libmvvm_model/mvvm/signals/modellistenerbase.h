@@ -27,7 +27,7 @@ public:
     ModelListenerBase(SessionModel* model);
     ~ModelListenerBase() override;
 
-    // 'callback' is not used here, since 'this' is used
+    // 'client' is not used here, since 'this' is used
 
     void setOnDataChange(Callbacks::item_int_t f, Callbacks::slot_t client = {}) override;
     void setOnItemInserted(Callbacks::item_tagrow_t f, Callbacks::slot_t client = {}) override;

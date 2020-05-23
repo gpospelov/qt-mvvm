@@ -27,13 +27,13 @@ class CORE_EXPORT ModelMapper : public ModelListenerInterface
 public:
     ModelMapper(SessionModel* item);
 
-    void setOnDataChange(Callbacks::item_int_t f, Callbacks::slot_t owner) override;
-    void setOnItemInserted(Callbacks::item_tagrow_t f, Callbacks::slot_t owner) override;
-    void setOnItemRemoved(Callbacks::item_tagrow_t f, Callbacks::slot_t owner) override;
-    void setOnAboutToRemoveItem(Callbacks::item_tagrow_t f, Callbacks::slot_t owner) override;
-    void setOnModelDestroyed(Callbacks::model_t f, Callbacks::slot_t owner) override;
-    void setOnModelAboutToBeReset(Callbacks::model_t f, Callbacks::slot_t owner) override;
-    void setOnModelReset(Callbacks::model_t f, Callbacks::slot_t owner) override;
+    void setOnDataChange(Callbacks::item_int_t f, Callbacks::slot_t client) override;
+    void setOnItemInserted(Callbacks::item_tagrow_t f, Callbacks::slot_t client) override;
+    void setOnItemRemoved(Callbacks::item_tagrow_t f, Callbacks::slot_t client) override;
+    void setOnAboutToRemoveItem(Callbacks::item_tagrow_t f, Callbacks::slot_t client) override;
+    void setOnModelDestroyed(Callbacks::model_t f, Callbacks::slot_t client) override;
+    void setOnModelAboutToBeReset(Callbacks::model_t f, Callbacks::slot_t client) override;
+    void setOnModelReset(Callbacks::model_t f, Callbacks::slot_t client) override;
 
     void setActive(bool value);
 

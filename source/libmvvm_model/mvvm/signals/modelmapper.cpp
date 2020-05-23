@@ -16,54 +16,54 @@ ModelMapper::ModelMapper(SessionModel* item) : m_active(true), m_model(item) {}
 //! Sets callback to be notified on item's data change. The callback will be called
 //! with (SessionItem*, data_role).
 
-void ModelMapper::setOnDataChange(Callbacks::item_int_t f, Callbacks::slot_t owner)
+void ModelMapper::setOnDataChange(Callbacks::item_int_t f, Callbacks::slot_t client)
 {
-    m_on_data_change.connect(std::move(f), owner);
+    m_on_data_change.connect(std::move(f), client);
 }
 
 //! Sets callback to be notified on item insert. The callback will be called with
 //! (SessionItem* parent, tagrow), where 'tagrow' denotes inserted child position.
 
-void ModelMapper::setOnItemInserted(Callbacks::item_tagrow_t f, Callbacks::slot_t owner)
+void ModelMapper::setOnItemInserted(Callbacks::item_tagrow_t f, Callbacks::slot_t client)
 {
-    m_on_item_inserted.connect(std::move(f), owner);
+    m_on_item_inserted.connect(std::move(f), client);
 }
 
 //! Sets callback to be notified on item remove. The callback will be called with
 //! (SessionItem* parent, tagrow), where 'tagrow' denotes child position before the removal.
 
-void ModelMapper::setOnItemRemoved(Callbacks::item_tagrow_t f, Callbacks::slot_t owner)
+void ModelMapper::setOnItemRemoved(Callbacks::item_tagrow_t f, Callbacks::slot_t client)
 {
-    m_on_item_removed.connect(std::move(f), owner);
+    m_on_item_removed.connect(std::move(f), client);
 }
 
 //! Sets callback to be notified when the item is about to be removed. The callback will be called
 //! with (SessionItem* parent, tagrow), where 'tagrow' denotes child position being removed.
 
-void ModelMapper::setOnAboutToRemoveItem(Callbacks::item_tagrow_t f, Callbacks::slot_t owner)
+void ModelMapper::setOnAboutToRemoveItem(Callbacks::item_tagrow_t f, Callbacks::slot_t client)
 {
-    m_on_item_about_removed.connect(std::move(f), owner);
+    m_on_item_about_removed.connect(std::move(f), client);
 }
 
 //! Sets the callback for notifications on model destruction.
 
-void ModelMapper::setOnModelDestroyed(Callbacks::model_t f, Callbacks::slot_t owner)
+void ModelMapper::setOnModelDestroyed(Callbacks::model_t f, Callbacks::slot_t client)
 {
-    m_on_model_destroyed.connect(std::move(f), owner);
+    m_on_model_destroyed.connect(std::move(f), client);
 }
 
 //! Sets the callback to be notified just before the reset of the root item.
 
-void ModelMapper::setOnModelAboutToBeReset(Callbacks::model_t f, Callbacks::slot_t owner)
+void ModelMapper::setOnModelAboutToBeReset(Callbacks::model_t f, Callbacks::slot_t client)
 {
-    m_on_model_about_reset.connect(std::move(f), owner);
+    m_on_model_about_reset.connect(std::move(f), client);
 }
 
 //! Sets the callback to be notified right after the root item recreation.
 
-void ModelMapper::setOnModelReset(Callbacks::model_t f, Callbacks::slot_t owner)
+void ModelMapper::setOnModelReset(Callbacks::model_t f, Callbacks::slot_t client)
 {
-    m_on_model_reset.connect(std::move(f), owner);
+    m_on_model_reset.connect(std::move(f), client);
 }
 
 //! Sets activity flag to given value. Will disable all callbacks if false.
