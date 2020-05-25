@@ -12,6 +12,7 @@
 
 #include <QWidget>
 #include <memory>
+#include <vector>
 
 class QBoxLayout;
 class ProjectPaneWidget;
@@ -32,7 +33,10 @@ public:
 
 private:
     QBoxLayout* createCurrentProjectLayout() const;
+    QBoxLayout* createRecentProjectLayout();
     ProjectPaneWidget* m_current_project_pane;
+    std::vector<ProjectPaneWidget*> m_recent_project_panes;
+
 };
 
 #endif // RECENTPROJECTWIDGET_H

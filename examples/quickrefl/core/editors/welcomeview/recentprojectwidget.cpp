@@ -19,6 +19,10 @@
 #include <QTreeView>
 #include <QVBoxLayout>
 
+namespace {
+    int max_recent_project_count = 10;
+}
+
 RecentProjectWidget::RecentProjectWidget(QWidget* parent)
     : QWidget(parent), m_current_project_pane(new ProjectPaneWidget)
 {
@@ -28,7 +32,10 @@ RecentProjectWidget::RecentProjectWidget(QWidget* parent)
     setPalette(palette);
 
     auto layout = new QVBoxLayout(this);
+    layout->setContentsMargins(20, 0, 10, 0);
     layout->addLayout(createCurrentProjectLayout());
+    layout->addSpacing(StyleUtils::SizeOfLetterM().height());
+    layout->addLayout(createRecentProjectLayout());
     layout->addStretch(1);
 }
 
@@ -51,12 +58,24 @@ void RecentProjectWidget::setCurrentProject(const std::string& project_title,
 QBoxLayout* RecentProjectWidget::createCurrentProjectLayout() const
 {
     auto result = new QVBoxLayout;
-    result->setContentsMargins(30, 0, 0, 0);
-
-    auto label = new QLabel("Current Project:");
+    auto label = new QLabel("Current Project");
     label->setFont(StyleUtils::sectionFont());
     result->addWidget(label);
     result->addWidget(m_current_project_pane);
+    return result;
+}
 
+QBoxLayout* RecentProjectWidget::createRecentProjectLayout()
+{
+    auto result = new QVBoxLayout;
+    auto label = new QLabel("Recent Projects");
+    label->setFont(StyleUtils::sectionFont());
+    result->addWidget(label);
+
+    for (int i=0; i<max_recent_project_count; ++i) {
+        auto widget = new ProjectPaneWidget;
+        m_recent_project_panes.push_back(widget);
+        result->addWidget(widget);
+    }
     return result;
 }
