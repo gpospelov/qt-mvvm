@@ -203,3 +203,34 @@ TEST(ModelMapperTest, onModelReset)
     // perform action
     model->clear();
 }
+
+//! Testing signals on swapping two root items.
+
+TEST(ModelMapperTest, onRootSwap)
+{
+    auto model1 = std::make_unique<SessionModel>();
+    auto model2 = std::make_unique<SessionModel>();
+    model1->insertItem<SessionItem>();
+
+    auto widget1 = std::make_unique<MockWidgetForModel>(model1.get());
+    auto widget2 = std::make_unique<MockWidgetForModel>(model2.get());
+
+    EXPECT_CALL(*widget1, onDataChange(_, _)).Times(0);
+    EXPECT_CALL(*widget1, onItemInserted(_, _)).Times(0);
+    EXPECT_CALL(*widget1, onItemRemoved(_, _)).Times(0);
+    EXPECT_CALL(*widget1, onAboutToRemoveItem(_, _)).Times(0);
+    EXPECT_CALL(*widget1, onModelDestroyed(_)).Times(0);
+    EXPECT_CALL(*widget1, onModelAboutToBeReset(_)).Times(1);
+    EXPECT_CALL(*widget1, onModelReset(model1.get())).Times(1);
+
+    EXPECT_CALL(*widget2, onDataChange(_, _)).Times(0);
+    EXPECT_CALL(*widget2, onItemInserted(_, _)).Times(0);
+    EXPECT_CALL(*widget2, onItemRemoved(_, _)).Times(0);
+    EXPECT_CALL(*widget2, onAboutToRemoveItem(_, _)).Times(0);
+    EXPECT_CALL(*widget2, onModelDestroyed(_)).Times(0);
+    EXPECT_CALL(*widget2, onModelAboutToBeReset(_)).Times(1);
+    EXPECT_CALL(*widget2, onModelReset(model2.get())).Times(1);
+
+    // perform action
+    model1->swapRootItems(*model2);
+}
