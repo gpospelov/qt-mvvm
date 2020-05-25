@@ -12,6 +12,7 @@
 
 #include <mvvm/interfaces/modellistenerinterface.h>
 #include <mvvm/signals/callbackcontainer.h>
+#include <memory>
 
 namespace ModelView
 {
@@ -26,6 +27,7 @@ class CORE_EXPORT ModelMapper : public ModelListenerInterface
 {
 public:
     ModelMapper(SessionModel* item);
+    ~ModelMapper();
 
     void setOnDataChange(Callbacks::item_int_t f, Callbacks::slot_t client) override;
     void setOnItemInserted(Callbacks::item_tagrow_t f, Callbacks::slot_t client) override;
@@ -50,6 +52,9 @@ private:
     void callOnModelDestroyed();
     void callOnModelAboutToBeReset();
     void callOnModelReset();
+
+    struct ModelMapperImpl;
+    std::unique_ptr<ModelMapperImpl> p_impl;
 
     Signal<Callbacks::item_int_t> m_on_data_change;
     Signal<Callbacks::item_tagrow_t> m_on_item_inserted;

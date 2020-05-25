@@ -11,7 +11,15 @@
 
 using namespace ModelView;
 
-ModelMapper::ModelMapper(SessionModel* item) : m_active(true), m_model(item) {}
+struct ModelMapper::ModelMapperImpl {
+};
+
+ModelMapper::ModelMapper(SessionModel* item)
+    : p_impl(std::make_unique<ModelMapperImpl>()), m_active(true), m_model(item)
+{
+}
+
+ModelMapper::~ModelMapper() = default;
 
 //! Sets callback to be notified on item's data change. The callback will be called
 //! with (SessionItem*, data_role).
