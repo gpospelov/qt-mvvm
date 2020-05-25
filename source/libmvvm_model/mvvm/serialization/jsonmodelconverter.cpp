@@ -59,9 +59,6 @@ void JsonModelConverter::json_to_model(const QJsonObject& json, SessionModel& mo
     if (!model.rootItem())
         throw std::runtime_error("JsonModel::json_to_model() -> Error. Model is not initialized.");
 
-    if (model.rootItem()->childrenCount())
-        throw std::runtime_error("JsonModel::json_to_model() -> Error. Model is not empty.");
-
     if (!isSessionModel(json))
         throw std::runtime_error("JsonModel::json_to_model() -> Error. Invalid json object.");
 
@@ -70,11 +67,15 @@ void JsonModelConverter::json_to_model(const QJsonObject& json, SessionModel& mo
 
     auto converter = std::make_unique<JsonItemConverter>(model.factory());
 
-    auto parent = model.rootItem();
+    SessionModel for_content_from_file;
+    auto parent = for_content_from_file.rootItem();
+
     for (const auto ref : json[itemsKey].toArray()) {
         auto item = converter->from_json(ref.toObject());
         parent->insertItem(item.release(), TagRow::append());
     }
+
+    model.swapRootItems(for_content_from_file);
 }
 
 bool JsonModelConverter::isSessionModel(const QJsonObject& object) const

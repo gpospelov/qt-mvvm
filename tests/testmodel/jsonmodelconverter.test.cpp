@@ -83,7 +83,7 @@ TEST_F(JsonModelConverterTest, emptyModelToJsonAndBack)
     // attempt to reconstruct non-empty model
     SessionModel target2("TestModel");
     target2.insertItem<SessionItem>();
-    EXPECT_THROW(converter.json_to_model(object, target2), std::runtime_error);
+    EXPECT_NO_THROW(converter.json_to_model(object, target2));
 
     // succesfull reconstruction
     SessionModel target3("TestModel");
