@@ -25,14 +25,19 @@ public:
 
 WidgetUtilsTest::~WidgetUtilsTest() = default;
 
-//! Initial state.
+//! Test of WithTildeHomePath function.
 
-TEST_F(WidgetUtilsTest, initialState)
+TEST_F(WidgetUtilsTest, WithTildeHomePath)
 {
-    auto home_path = QDir::homePath();
-    auto test_dir = QString::fromStdString(TestUtils::TestOutputDir());
-    auto expected = QString("~") + test_dir.mid(home_path.size());
+    if (ModelView::Utils::IsWindowsHost()) {
+        auto test_dir = QString::fromStdString(TestUtils::TestOutputDir());
+        EXPECT_EQ(Utils::WithTildeHomePath(test_dir), test_dir);
+    } else {
+        auto home_path = QDir::homePath();
+        auto test_dir = QString::fromStdString(TestUtils::TestOutputDir());
+        auto expected = QString("~") + test_dir.mid(home_path.size());
 
-    // "/home/user/build-debug/test_output" -> ~/build-debug/test_output"
-    EXPECT_EQ(Utils::WithTildeHomePath(test_dir).toStdString(), expected.toStdString());
+        // "/home/user/build-debug/test_output" -> ~/build-debug/test_output"
+        EXPECT_EQ(Utils::WithTildeHomePath(test_dir).toStdString(), expected.toStdString());
+    }
 }
