@@ -13,6 +13,7 @@
 #include <mvvm/core/export.h>
 
 class QColor;
+class QString;
 
 namespace ModelView
 {
@@ -24,6 +25,12 @@ namespace Utils
 
 //! Returns random color.
 CORE_EXPORT QColor random_color();
+
+//! Returns true if it is Windows.
+CORE_EXPORT bool IsWindowsHost();
+
+//! Returns a string where path to the file striped using '~'.
+CORE_EXPORT QString WithTildeHomePath(const QString& path);
 
 } // namespace Utils
 
