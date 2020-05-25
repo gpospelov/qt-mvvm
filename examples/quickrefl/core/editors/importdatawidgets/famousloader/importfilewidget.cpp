@@ -44,10 +44,12 @@ void ImportFileWidget::createWidgets()
 
     // Set up the buttons
     auto add_button = new QToolButton(this);
+    add_button->setObjectName("add_file_button");
     add_button->setIcon(QIcon(":/icons/file-plus.svg"));
     add_button->setToolTip("Add further files to the import procedure.");
 
     auto reset_button = new QToolButton(this);
+    add_button->setObjectName("reset_file_button");
     reset_button->setIcon(QIcon(":/icons/file-remove.svg"));
     reset_button->setToolTip("Remove all currently selected files.");
 

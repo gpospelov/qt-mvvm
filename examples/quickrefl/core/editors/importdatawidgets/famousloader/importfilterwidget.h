@@ -94,7 +94,9 @@ signals:
     void typeChanged(std::string type, LineFilterWidget*);
 
 private:
-    void setToolTips();
+    void setSubwidgetStyles();
+    void setSubwidgetNames();
+    void setSubwidgetToolTips();
     void setEnabled();
     void typeVariation();
     void startRangeChanged();

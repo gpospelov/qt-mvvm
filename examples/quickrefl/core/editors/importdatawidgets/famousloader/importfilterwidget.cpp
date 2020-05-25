@@ -38,7 +38,6 @@ LineFilterWidget::LineFilterWidget(DataImportLogic::LineFilter* line_filter, QWi
     : QWidget(parent), p_line_filter(line_filter)
 {
     createComponents();
-    setToolTips();
     setLayout();
     initComponents();
     connectAll();
@@ -119,7 +118,14 @@ void LineFilterWidget::createComponents()
     p_ignore_strings = new QLineEdit(this);
     p_ignore_lines = new QLineEdit(this);
 
-    // Set the coherent fusion style for the subcmponents
+    setSubwidgetsStylesetSubwidgetStyles();
+    setSubwidgetNames();
+    setToolTips();
+}
+
+//! Set the style of the subwidgets
+void LineFilterWidget::setSubwidgetStyles()
+{
     p_style = std::make_unique<QProxyStyle>("fusion");
     p_type_select->setStyle(p_style.get());
     p_line_start->setStyle(p_style.get());
@@ -132,8 +138,22 @@ void LineFilterWidget::createComponents()
     p_ignore_lines->setStyle(p_style.get());
 }
 
+//! Set the nam eof the ocmponents (moslty for testing)
+void LineFilterWidget::setSubwidgetNames()
+{
+    p_type_select->setObjectName("line_filter_type_select");
+    p_line_start->setObjectName("line_filter_line_start");
+    p_line_end->setObjectName("line_filter_line_end");
+    p_range_start->setObjectName("line_filter_range_start");
+    p_range_end->setObjectName("line_filter_range_end");
+    p_separators->setObjectName("line_filter_seprator_select");
+    p_filter_name->setObjectName("line_filter_name");
+    p_ignore_strings->setObjectName("line_filter_ignore_string");
+    p_ignore_lines->setObjectName("line_filter_ignore_lines");
+}
+
 //! Set the tool tips of all the components
-void LineFilterWidget::setToolTips()
+void LineFilterWidget::setSubwidgetToolTips()
 {
     p_type_select->setToolTip("Select the type of this selection rule");
     p_active_checkbox->setToolTip("Turn this selection rule on or off");
@@ -408,6 +428,7 @@ void ImportFilterWidget::setLayout()
 {
     // Set up the QListWidget
     p_list_widget = new QListWidget(this);
+    p_list_widget->setObjectName("filter_list_widget");
     p_list_widget->setSpacing(0);
     p_list_widget->resize(LineFilterWidget().sizeHint().width() + 10, p_list_widget->height());
     p_list_widget->setAlternatingRowColors(true);
@@ -418,11 +439,13 @@ void ImportFilterWidget::setLayout()
 
     // Set up the buttons
     auto add_button = new QToolButton(this);
+    add_button->setObjectName("add_filter_button");
     add_button->setIcon(QIcon(":/icons/playlist-plus.svg"));
     add_button->setToolTip("Add a seletion rule:\nSelection rules are meant to define the text "
                            "regions and their type.\n The order of these is relevant.");
 
     auto remove_button = new QToolButton(this);
+    remove_button->setObjectName("remove_filter_button");
     remove_button->setIcon(QIcon(":/icons/playlist-remove.svg"));
     remove_button->setToolTip("Remove the selected selection rule.");
 
