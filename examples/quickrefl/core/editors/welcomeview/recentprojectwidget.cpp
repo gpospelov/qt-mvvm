@@ -28,10 +28,10 @@ int max_recent_project_count = 7;
 RecentProjectWidget::RecentProjectWidget(QWidget* parent)
     : QWidget(parent), m_current_project_pane(new ProjectPaneWidget)
 {
-    QPalette palette;
-    palette.setColor(QPalette::Window, Qt::darkGray);
-    setAutoFillBackground(true);
-    setPalette(palette);
+//    QPalette palette;
+//    palette.setColor(QPalette::Window, Qt::lightGray);
+//    setAutoFillBackground(true);
+//    setPalette(palette);
 
     auto layout = new QVBoxLayout(this);
     layout->setContentsMargins(20, 0, 10, 0);
@@ -63,13 +63,14 @@ void RecentProjectWidget::setRecentProjectsList(const QStringList& projects)
 {
     int widget_index{0};
     for (auto widget : m_recent_project_panes) {
+        std::string project_dir{};
+        std::string title{};
         if (widget_index < projects.size()) {
-            auto project_dir = projects.at(widget_index).toStdString();
-            auto title = ProjectUtils::ProjectWindowTitle(project_dir, /*is_modified*/ false);
-            widget->setCurrentProject(title, project_dir);
-        } else {
-            widget->setCurrentProject({}, {});
+            project_dir = projects.at(widget_index).toStdString();
+            title = ProjectUtils::ProjectWindowTitle(project_dir, /*is_modified*/ false);
         }
+        widget->setCurrentProject(title, project_dir);
+        widget->setActive(project_dir.empty() ? false : true);
 
         ++widget_index;
     }

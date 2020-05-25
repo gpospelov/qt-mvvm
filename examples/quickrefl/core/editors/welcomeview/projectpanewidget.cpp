@@ -10,6 +10,7 @@
 #include "projectpanewidget.h"
 #include "styleutils.h"
 #include <QLabel>
+#include <QPainter>
 #include <QVBoxLayout>
 #include <mvvm/widgets/widgetutils.h>
 
@@ -23,16 +24,10 @@ int widget_height()
 
 ProjectPaneWidget::ProjectPaneWidget(QWidget* parent)
     : QWidget(parent), m_current_project_title(new QLabel(" ")),
-      m_current_project_dir(new QLabel(" "))
+      m_current_project_dir(new QLabel(" ")), m_widget_color(QColor(Qt::white))
 {
     setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
     setFixedHeight(widget_height());
-
-    QPalette palette;
-    palette.setColor(QPalette::Window, Qt::darkGreen);
-    setAutoFillBackground(true);
-    setPalette(palette);
-
     auto layout = new QVBoxLayout(this);
     layout->addWidget(m_current_project_title);
     layout->addWidget(m_current_project_dir);
@@ -58,4 +53,31 @@ void ProjectPaneWidget::setCurrentProject(const std::string& project_title,
     auto project_dir_str = QString::fromStdString(project_dir);
     m_current_project_dir->setText(ModelView::Utils::WithTildeHomePath(project_dir_str));
     m_current_project_dir->setToolTip(project_dir_str);
+}
+
+//! Sets active flag, where 'true' means that widget can send signals on mouse click,
+//! and change the color on mouse hover.
+
+void ProjectPaneWidget::setActive(bool value)
+{
+    m_active = value;
+}
+
+void ProjectPaneWidget::paintEvent(QPaintEvent*)
+{
+    QPainter painter(this);
+    painter.fillRect(0, 0, size().width(), size().height(), m_widget_color);
+}
+
+void ProjectPaneWidget::enterEvent(QEvent*)
+{
+    if (m_active)
+        m_widget_color = QColor(Qt::lightGray);
+    update();
+}
+
+void ProjectPaneWidget::leaveEvent(QEvent*)
+{
+    m_widget_color = QColor(Qt::white);
+    update();
 }

@@ -27,9 +27,18 @@ public:
 
     void setCurrentProject(const std::string& project_title, const std::string& project_dir);
 
+    void setActive(bool value);
+
+protected:
+    void paintEvent(QPaintEvent*) override;
+    void enterEvent(QEvent *) override;
+    void leaveEvent(QEvent *) override;
+
 private:
     QLabel* m_current_project_title{nullptr};
     QLabel* m_current_project_dir{nullptr};
+    QColor m_widget_color;
+    bool m_active{false};
 };
 
 #endif // PROJECTPANEWIDGET_H
