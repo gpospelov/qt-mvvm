@@ -12,7 +12,6 @@
 
 #include <memory>
 #include <mvvm/interfaces/modellistenerinterface.h>
-#include <mvvm/signals/callbackcontainer.h>
 
 namespace ModelView
 {
