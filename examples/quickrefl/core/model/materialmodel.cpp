@@ -14,7 +14,7 @@
 #include <mvvm/model/externalproperty.h>
 #include <mvvm/model/itemcatalogue.h>
 #include <mvvm/model/modelutils.h>
-#include <mvvm/widgets/utils.h>
+#include <mvvm/widgets/widgetutils.h>
 
 using namespace ModelView;
 
