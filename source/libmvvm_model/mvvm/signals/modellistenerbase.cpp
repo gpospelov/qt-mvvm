@@ -15,61 +15,70 @@ using namespace ModelView;
 
 ModelListenerBase::ModelListenerBase(SessionModel* model) : m_model(model)
 {
-    auto on_model_destroy = [this](SessionModel*) { m_model = nullptr; };
-    m_model->mapper()->setOnModelDestroyed(on_model_destroy, this);
+    setOnModelDestroyed([this](SessionModel*) { m_model = nullptr; });
 }
 
 ModelListenerBase::~ModelListenerBase()
 {
-    if (m_model)
-        m_model->mapper()->unsubscribe(this);
+    unsubscribe();
 }
 
-//! Sets callback to be notified on item's data change.
-//! Callback will be called with (SessionItem*, data_role).
+//! Sets callback to be notified on item's data change. The callback will be called
+//! with (SessionItem*, data_role).
 
-void ModelListenerBase::setOnDataChange(ModelView::Callbacks::item_int_t f)
+void ModelListenerBase::setOnDataChange(ModelView::Callbacks::item_int_t f, Callbacks::slot_t)
 {
     m_model->mapper()->setOnDataChange(f, this);
 }
 
-//! Sets callback to be notified on item insert.
-//! Callback will be called with (SessionItem* parent, tagrow), where tagrow corresponds
-//! to the position of inserted child.
+//! Sets callback to be notified on item insert. The callback will be called with
+//! (SessionItem* parent, tagrow), where 'tagrow' denotes inserted child position.
 
-void ModelListenerBase::setOnItemInserted(ModelView::Callbacks::item_tagrow_t f)
+void ModelListenerBase::setOnItemInserted(ModelView::Callbacks::item_tagrow_t f, Callbacks::slot_t)
 {
     m_model->mapper()->setOnItemInserted(f, this);
 }
 
-//! Sets callback to be notified on removed item.
-//! Callback will be called with (SessionItem* parent, tagrow), where tagrow corresponds
-//! to position of the removed child.
+//! Sets callback to be notified on item remove. The callback will be called with
+//! (SessionItem* parent, tagrow), where 'tagrow' denotes child position before the removal.
 
-void ModelListenerBase::setOnItemRemoved(ModelView::Callbacks::item_tagrow_t f)
+void ModelListenerBase::setOnItemRemoved(ModelView::Callbacks::item_tagrow_t f, Callbacks::slot_t)
 {
     m_model->mapper()->setOnItemRemoved(f, this);
 }
 
-//! Sets callback to be notified when item is about to be removed.
-//! Callback will be called with (SessionItem* parent, tagrow), where tagrow corresponds
-//! to the position of a child which going to be removed.
+//! Sets callback to be notified when the item is about to be removed. The callback will be called
+//! with (SessionItem* parent, tagrow), where 'tagrow' denotes child position being removed.
 
-void ModelListenerBase::setOnAboutToRemoveItem(ModelView::Callbacks::item_tagrow_t f)
+void ModelListenerBase::setOnAboutToRemoveItem(ModelView::Callbacks::item_tagrow_t f,
+                                               Callbacks::slot_t)
 {
     m_model->mapper()->setOnAboutToRemoveItem(f, this);
 }
 
+//! Sets the callback for notifications on model destruction.
+
+void ModelListenerBase::setOnModelDestroyed(Callbacks::model_t f, Callbacks::slot_t)
+{
+    m_model->mapper()->setOnModelDestroyed(f, this);
+}
+
 //! Sets the callback to be notified before model's full reset (root item recreated).
 
-void ModelListenerBase::setOnModelAboutToBeReset(Callbacks::model_t f)
+void ModelListenerBase::setOnModelAboutToBeReset(Callbacks::model_t f, Callbacks::slot_t)
 {
     m_model->mapper()->setOnModelAboutToBeReset(f, this);
 }
 
 //! Sets the callback to be notified after model was fully reset (root item recreated).
 
-void ModelListenerBase::setOnModelReset(ModelView::Callbacks::model_t f)
+void ModelListenerBase::setOnModelReset(ModelView::Callbacks::model_t f, Callbacks::slot_t)
 {
     m_model->mapper()->setOnModelReset(f, this);
+}
+
+void ModelListenerBase::unsubscribe(Callbacks::slot_t)
+{
+    if (m_model)
+        m_model->mapper()->unsubscribe(this);
 }

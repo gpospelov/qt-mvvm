@@ -14,6 +14,7 @@
 #include <QTreeView>
 #include <QVBoxLayout>
 #include <mvvm/model/modelutils.h>
+#include <mvvm/signals/modelmapper.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/viewmodel/viewmodeldelegate.h>
 
@@ -33,7 +34,11 @@ MaterialTableWidget::MaterialTableWidget(MaterialModel* material_model, QWidget*
     m_treeView->setEditTriggers(QAbstractItemView::AllEditTriggers); // provide one click editing
     m_treeView->setAlternatingRowColors(true);
 
-    setItem(Utils::TopItem<MaterialContainerItem>(material_model));
+    auto on_model_reset = [this, material_model](auto){
+        setItem(Utils::TopItem<MaterialContainerItem>(material_model));
+    };
+    material_model->mapper()->setOnModelReset(on_model_reset, this);
+    on_model_reset(material_model);
 }
 
 void MaterialTableWidget::setItem(SessionItem* material_container)

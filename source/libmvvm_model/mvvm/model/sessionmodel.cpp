@@ -188,11 +188,27 @@ const ItemFactoryInterface* SessionModel::factory() const
     return m_item_manager->factory();
 }
 
-//!  Returns SessionItem for given identifier.
+//! Returns SessionItem for given identifier.
 
 SessionItem* SessionModel::findItem(const identifier_type& id)
 {
     return m_item_manager->findItem(id);
+}
+
+//! Swaps two root items. The rest (factories, signaling, etc) will remain unchainged.
+//! Intended for load-from-file context.
+
+void SessionModel::swapRootItems(SessionModel& other)
+{
+    mapper()->callOnModelAboutToBeReset();
+    other.mapper()->callOnModelAboutToBeReset();
+
+    std::swap(m_root_item, other.m_root_item);
+    m_root_item->setModel(this);
+    other.m_root_item->setModel(&other);
+
+    mapper()->callOnModelReset();
+    other.mapper()->callOnModelReset();
 }
 
 //! Creates root item.

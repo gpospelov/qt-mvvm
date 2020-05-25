@@ -10,8 +10,7 @@
 #ifndef MVVM_SIGNALS_MODELLISTENERBASE_H
 #define MVVM_SIGNALS_MODELLISTENERBASE_H
 
-#include <mvvm/core/export.h>
-#include <mvvm/signals/callback_types.h>
+#include <mvvm/interfaces/modellistenerinterface.h>
 
 namespace ModelView
 {
@@ -22,20 +21,23 @@ class SessionModel;
 //! Automatically tracks the time of life of SessionModel. Unsubscribes from the model on
 //! own destruction.
 
-// FIXME introduce pure interface and share together with ModelMapper
-
-class CORE_EXPORT ModelListenerBase
+class CORE_EXPORT ModelListenerBase : public ModelListenerInterface
 {
 public:
     ModelListenerBase(SessionModel* model);
-    virtual ~ModelListenerBase();
+    ~ModelListenerBase() override;
 
-    void setOnDataChange(Callbacks::item_int_t f);
-    void setOnItemInserted(Callbacks::item_tagrow_t f);
-    void setOnItemRemoved(Callbacks::item_tagrow_t f);
-    void setOnAboutToRemoveItem(Callbacks::item_tagrow_t f);
-    void setOnModelAboutToBeReset(Callbacks::model_t f);
-    void setOnModelReset(Callbacks::model_t f);
+    // 'client' is not used here, since 'this' is used
+
+    void setOnDataChange(Callbacks::item_int_t f, Callbacks::slot_t client = {}) override;
+    void setOnItemInserted(Callbacks::item_tagrow_t f, Callbacks::slot_t client = {}) override;
+    void setOnItemRemoved(Callbacks::item_tagrow_t f, Callbacks::slot_t client = {}) override;
+    void setOnAboutToRemoveItem(Callbacks::item_tagrow_t f, Callbacks::slot_t client = {}) override;
+    void setOnModelDestroyed(Callbacks::model_t f, Callbacks::slot_t client = {}) override;
+    void setOnModelAboutToBeReset(Callbacks::model_t f, Callbacks::slot_t client = {}) override;
+    void setOnModelReset(Callbacks::model_t f, Callbacks::slot_t client = {}) override;
+
+    void unsubscribe(Callbacks::slot_t client = {}) override;
 
 protected:
     SessionModel* m_model{nullptr};

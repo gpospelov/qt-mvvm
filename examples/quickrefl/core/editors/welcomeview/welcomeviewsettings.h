@@ -11,6 +11,7 @@
 #define WELCOMEVIEWSETTINGS_H
 
 #include <QString>
+#include <QStringList>
 
 //! Collection of settings for WelcomeView.
 //! Used to save last directory selected by the user, and similar.
@@ -22,15 +23,21 @@ public:
     WelcomeViewSettings();
     ~WelcomeViewSettings();
 
+    // FIXME consider switch from QString to std::string
     QString currentWorkdir() const;
 
     void updateWorkdirFromSelection(const QString& dirname);
+
+    QStringList recentProjects();
+
+    void addToRecentProjects(const QString& dirname);
 
 private:
     void writeSettings();
     void readSettings();
 
     QString m_current_workdir;
+    QStringList m_recent_projects;
 };
 
 #endif // WELCOMEVIEWSETTINGS_H

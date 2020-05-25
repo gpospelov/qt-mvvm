@@ -525,10 +525,10 @@ TEST_F(DefaultViewModelTest, jsonConverterLoadModel)
 
     converter.json_to_model(*object, model);
 
-    EXPECT_EQ(spyInsert.count(), 1);
+    EXPECT_EQ(spyInsert.count(), 1); // FIXME shouldn't it be '0'?
     EXPECT_EQ(spyRemove.count(), 0);
-    EXPECT_EQ(spyAboutReset.count(), 0);
-    EXPECT_EQ(spyReset.count(), 0);
+    EXPECT_EQ(spyAboutReset.count(), 1);
+    EXPECT_EQ(spyReset.count(), 1);
 
     EXPECT_EQ(viewmodel.rowCount(), 1);
     EXPECT_EQ(viewmodel.columnCount(), 2);

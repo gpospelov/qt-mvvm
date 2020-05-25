@@ -12,7 +12,7 @@
 #include <QColor>
 #include <mvvm/model/itemcatalogue.h>
 #include <mvvm/utils/numericutils.h>
-#include <mvvm/widgets/utils.h>
+#include <mvvm/widgets/widgetutils.h>
 
 namespace
 {

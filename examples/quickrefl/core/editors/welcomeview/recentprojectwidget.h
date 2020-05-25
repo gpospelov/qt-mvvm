@@ -12,9 +12,10 @@
 
 #include <QWidget>
 #include <memory>
+#include <vector>
 
-class QLabel;
 class QBoxLayout;
+class ProjectPaneWidget;
 
 //! Widget with the name of current project and tree of recent projects.
 //! Occupies left part of WelcomeView.
@@ -30,10 +31,14 @@ public:
 
     void setCurrentProject(const std::string& project_title, const std::string& project_dir);
 
+    void setRecentProjectsList(const QStringList& projects);
+
 private:
     QBoxLayout* createCurrentProjectLayout() const;
-    QLabel* m_current_project_title{nullptr};
-    QLabel* m_current_project_dir{nullptr};
+    QBoxLayout* createRecentProjectLayout();
+    ProjectPaneWidget* m_current_project_pane;
+    std::vector<ProjectPaneWidget*> m_recent_project_panes;
+
 };
 
 #endif // RECENTPROJECTWIDGET_H

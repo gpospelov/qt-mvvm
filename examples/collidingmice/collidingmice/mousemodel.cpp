@@ -15,7 +15,7 @@
 #include <mvvm/core/modeldocuments.h>
 #include <mvvm/model/itemcatalogue.h>
 #include <mvvm/utils/reallimits.h>
-#include <mvvm/widgets/utils.h>
+#include <mvvm/widgets/widgetutils.h>
 
 namespace
 {

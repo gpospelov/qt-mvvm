@@ -10,7 +10,8 @@
 #ifndef MVVM_SIGNALS_MODELMAPPER_H
 #define MVVM_SIGNALS_MODELMAPPER_H
 
-#include <mvvm/signals/callbackcontainer.h>
+#include <memory>
+#include <mvvm/interfaces/modellistenerinterface.h>
 
 namespace ModelView
 {
@@ -19,26 +20,28 @@ class SessionItem;
 class SessionModel;
 
 //! Provides notifications on various SessionModel changes.
-//!
-//! Used to notify QAbstractItemModel to set the bridge with Qt signal and slots.
-//! Used to notify ItemMapper about activity in relatives of specific item.
+//! Allows to subscribe to SessionModel's changes, and triggers notifications.
 
-class CORE_EXPORT ModelMapper
+class CORE_EXPORT ModelMapper : public ModelListenerInterface
 {
 public:
-    ModelMapper(SessionModel* item);
+    ModelMapper(SessionModel* model);
+    ~ModelMapper();
 
-    void setOnDataChange(Callbacks::item_int_t f, Callbacks::slot_t owner);
-    void setOnItemInserted(Callbacks::item_tagrow_t f, Callbacks::slot_t owner);
-    void setOnItemRemoved(Callbacks::item_tagrow_t f, Callbacks::slot_t owner);
-    void setOnAboutToRemoveItem(Callbacks::item_tagrow_t f, Callbacks::slot_t owner);
-    void setOnModelDestroyed(Callbacks::model_t f, Callbacks::slot_t owner);
-    void setOnModelAboutToBeReset(Callbacks::model_t f, Callbacks::slot_t owner);
-    void setOnModelReset(Callbacks::model_t f, Callbacks::slot_t owner);
+    ModelMapper(const ModelMapper& other) = delete;
+    ModelMapper& operator=(const ModelMapper& other) = delete;
+
+    void setOnDataChange(Callbacks::item_int_t f, Callbacks::slot_t client) override;
+    void setOnItemInserted(Callbacks::item_tagrow_t f, Callbacks::slot_t client) override;
+    void setOnItemRemoved(Callbacks::item_tagrow_t f, Callbacks::slot_t client) override;
+    void setOnAboutToRemoveItem(Callbacks::item_tagrow_t f, Callbacks::slot_t client) override;
+    void setOnModelDestroyed(Callbacks::model_t f, Callbacks::slot_t client) override;
+    void setOnModelAboutToBeReset(Callbacks::model_t f, Callbacks::slot_t client) override;
+    void setOnModelReset(Callbacks::model_t f, Callbacks::slot_t client) override;
 
     void setActive(bool value);
 
-    void unsubscribe(Callbacks::slot_t client);
+    void unsubscribe(Callbacks::slot_t client) override;
 
 private:
     friend class SessionModel;
@@ -52,16 +55,8 @@ private:
     void callOnModelAboutToBeReset();
     void callOnModelReset();
 
-    Signal<Callbacks::item_int_t> m_on_data_change;
-    Signal<Callbacks::item_tagrow_t> m_on_item_inserted;
-    Signal<Callbacks::item_tagrow_t> m_on_item_removed;
-    Signal<Callbacks::item_tagrow_t> m_on_item_about_removed;
-    Signal<Callbacks::model_t> m_on_model_destroyed;
-    Signal<Callbacks::model_t> m_on_model_about_reset;
-    Signal<Callbacks::model_t> m_on_model_reset;
-
-    bool m_active;
-    SessionModel* m_model;
+    struct ModelMapperImpl;
+    std::unique_ptr<ModelMapperImpl> p_impl;
 };
 
 } // namespace ModelView

@@ -18,6 +18,8 @@ target_sources(${library_name} PRIVATE
     projectmanagerinteractor.cpp
     projectmanagerinteractor.h
     projectmanagerinterface.h
+    projectpanewidget.cpp
+    projectpanewidget.h
     projectutils.cpp
     projectutils.h
     recentprojectwidget.cpp
