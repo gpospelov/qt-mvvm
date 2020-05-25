@@ -13,8 +13,8 @@
 #include <QWidget>
 #include <memory>
 
-class QLabel;
 class QBoxLayout;
+class ProjectPaneWidget;
 
 //! Widget with the name of current project and tree of recent projects.
 //! Occupies left part of WelcomeView.
@@ -32,8 +32,7 @@ public:
 
 private:
     QBoxLayout* createCurrentProjectLayout() const;
-    QLabel* m_current_project_title{nullptr};
-    QLabel* m_current_project_dir{nullptr};
+    ProjectPaneWidget* m_current_project_pane;
 };
 
 #endif // RECENTPROJECTWIDGET_H

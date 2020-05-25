@@ -9,6 +9,7 @@
 
 #include "recentprojectwidget.h"
 #include "styleutils.h"
+#include "projectpanewidget.h"
 #include <QDebug>
 #include <QGuiApplication>
 #include <QLabel>
@@ -19,8 +20,7 @@
 #include <QVBoxLayout>
 
 RecentProjectWidget::RecentProjectWidget(QWidget* parent)
-    : QWidget(parent), m_current_project_title(new QLabel("Untitled")),
-      m_current_project_dir(new QLabel("~/development/projects/Untitled"))
+    : QWidget(parent), m_current_project_pane(new ProjectPaneWidget)
 {
     QPalette palette;
     palette.setColor(QPalette::Window, Qt::darkGray);
@@ -45,9 +45,7 @@ QSize RecentProjectWidget::minimumSizeHint() const
 void RecentProjectWidget::setCurrentProject(const std::string& project_title,
                                             const std::string& project_dir)
 {
-    m_current_project_title->setText(QString::fromStdString(project_title));
-    m_current_project_dir->setText(QString::fromStdString(project_dir));
-    m_current_project_dir->setToolTip(QString::fromStdString(project_dir));
+    m_current_project_pane->setCurrentProject(project_title, project_dir);
 }
 
 QBoxLayout* RecentProjectWidget::createCurrentProjectLayout() const
@@ -58,8 +56,7 @@ QBoxLayout* RecentProjectWidget::createCurrentProjectLayout() const
     auto label = new QLabel("Current Project:");
     label->setFont(StyleUtils::sectionFont());
     result->addWidget(label);
-    result->addWidget(m_current_project_title);
-    result->addWidget(m_current_project_dir);
+    result->addWidget(m_current_project_pane);
 
     return result;
 }
