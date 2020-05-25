@@ -52,6 +52,7 @@ WelcomeView::WelcomeView(ApplicationModels* models, QWidget* parent)
 
     init_project_manager();
     setup_connections();
+    update_recent_project_names();
 }
 
 WelcomeView::~WelcomeView() = default;
@@ -136,11 +137,10 @@ void WelcomeView::update_current_project_name()
     m_recent_project_widget->setCurrentProject(title, m_project_manager->currentProjectDir());
 }
 
-//!
+//! Update all panes with titles and project dir for all recent projetcs.
 
 void WelcomeView::update_recent_project_names()
 {
     m_settings->addToRecentProjects(QString::fromStdString(m_project_manager->currentProjectDir()));
     m_recent_project_widget->setRecentProjectsList(m_settings->recentProjects());
-
 }

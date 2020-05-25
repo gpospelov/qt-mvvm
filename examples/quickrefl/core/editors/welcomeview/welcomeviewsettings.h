@@ -13,9 +13,8 @@
 #include <QString>
 #include <QStringList>
 
-//! Collection of settings for WelcomeView.
-//! Used to save last directory selected by the user, and similar.
-//! Relies on QSettings machinery.
+//! Collection of settings for WelcomeView. Used to save last directory selected by the user,
+//! and similar. Relies on QSettings machinery.
 
 class WelcomeViewSettings
 {
@@ -23,7 +22,6 @@ public:
     WelcomeViewSettings();
     ~WelcomeViewSettings();
 
-    // FIXME consider switch from QString to std::string
     QString currentWorkdir() const;
 
     void updateWorkdirFromSelection(const QString& dirname);
