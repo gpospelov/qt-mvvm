@@ -22,8 +22,8 @@ class ProjectPaneWidget : public QWidget
 public:
     explicit ProjectPaneWidget(QWidget* parent = nullptr);
 
-//    QSize sizeHint() const override;
-//    QSize minimumSizeHint() const override;
+    QSize sizeHint() const override;
+    QSize minimumSizeHint() const override;
 
     void setCurrentProject(const std::string& project_title, const std::string& project_dir);
 

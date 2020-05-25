@@ -20,7 +20,7 @@
 #include <QVBoxLayout>
 
 namespace {
-    int max_recent_project_count = 10;
+    int max_recent_project_count = 7;
 }
 
 RecentProjectWidget::RecentProjectWidget(QWidget* parent)
