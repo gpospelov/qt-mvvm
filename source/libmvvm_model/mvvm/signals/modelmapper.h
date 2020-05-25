@@ -10,9 +10,9 @@
 #ifndef MVVM_SIGNALS_MODELMAPPER_H
 #define MVVM_SIGNALS_MODELMAPPER_H
 
+#include <memory>
 #include <mvvm/interfaces/modellistenerinterface.h>
 #include <mvvm/signals/callbackcontainer.h>
-#include <memory>
 
 namespace ModelView
 {
@@ -26,8 +26,11 @@ class SessionModel;
 class CORE_EXPORT ModelMapper : public ModelListenerInterface
 {
 public:
-    ModelMapper(SessionModel* item);
+    ModelMapper(SessionModel* model);
     ~ModelMapper();
+
+    ModelMapper(const ModelMapper& other) = delete;
+    ModelMapper& operator=(const ModelMapper& other) = delete;
 
     void setOnDataChange(Callbacks::item_int_t f, Callbacks::slot_t client) override;
     void setOnItemInserted(Callbacks::item_tagrow_t f, Callbacks::slot_t client) override;
@@ -55,17 +58,6 @@ private:
 
     struct ModelMapperImpl;
     std::unique_ptr<ModelMapperImpl> p_impl;
-
-    Signal<Callbacks::item_int_t> m_on_data_change;
-    Signal<Callbacks::item_tagrow_t> m_on_item_inserted;
-    Signal<Callbacks::item_tagrow_t> m_on_item_removed;
-    Signal<Callbacks::item_tagrow_t> m_on_item_about_removed;
-    Signal<Callbacks::model_t> m_on_model_destroyed;
-    Signal<Callbacks::model_t> m_on_model_about_reset;
-    Signal<Callbacks::model_t> m_on_model_reset;
-
-    bool m_active;
-    SessionModel* m_model;
 };
 
 } // namespace ModelView
