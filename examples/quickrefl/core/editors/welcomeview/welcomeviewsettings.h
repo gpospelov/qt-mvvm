@@ -23,6 +23,7 @@ public:
     WelcomeViewSettings();
     ~WelcomeViewSettings();
 
+    // FIXME consider switch from QString to std::string
     QString currentWorkdir() const;
 
     void updateWorkdirFromSelection(const QString& dirname);

@@ -31,6 +31,8 @@ public:
 
     void setCurrentProject(const std::string& project_title, const std::string& project_dir);
 
+    void setRecentProjectsList(const QStringList& projects);
+
 private:
     QBoxLayout* createCurrentProjectLayout() const;
     QBoxLayout* createRecentProjectLayout();

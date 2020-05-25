@@ -41,6 +41,7 @@ private:
     void init_project_manager();
     void setup_connections();
     void update_current_project_name();
+    void update_recent_project_names();
 
     ApplicationModels* m_models{nullptr};
     std::unique_ptr<ProjectManagerInterface> m_project_manager;

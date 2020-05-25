@@ -74,22 +74,28 @@ void WelcomeView::onCreateNewProject()
 void WelcomeView::onOpenExistingProject()
 {
     qDebug() << "WelcomeView::onOpenExistingProject()";
-    if (m_project_manager->openExistingProject())
+    if (m_project_manager->openExistingProject()) {
         update_current_project_name();
+        update_recent_project_names();
+    }
 }
 
 void WelcomeView::onSaveCurrentProject()
 {
     qDebug() << "WelcomeView::onSaveCurrentProject()";
-    if (m_project_manager->saveCurrentProject())
+    if (m_project_manager->saveCurrentProject()) {
         update_current_project_name();
+        update_recent_project_names();
+    }
 }
 
 void WelcomeView::onSaveProjectAs()
 {
     qDebug() << "WelcomeView::onSaveProjectAs()";
-    if (m_project_manager->saveProjectAs())
+    if (m_project_manager->saveProjectAs()) {
         update_current_project_name();
+        update_recent_project_names();
+    }
 }
 
 void WelcomeView::init_project_manager()
@@ -128,4 +134,13 @@ void WelcomeView::update_current_project_name()
         main_window->setWindowTitle(QString::fromStdString(title));
 
     m_recent_project_widget->setCurrentProject(title, m_project_manager->currentProjectDir());
+}
+
+//!
+
+void WelcomeView::update_recent_project_names()
+{
+    m_settings->addToRecentProjects(QString::fromStdString(m_project_manager->currentProjectDir()));
+    m_recent_project_widget->setRecentProjectsList(m_settings->recentProjects());
+
 }
