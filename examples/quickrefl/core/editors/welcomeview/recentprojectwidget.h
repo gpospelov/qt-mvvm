@@ -29,7 +29,7 @@ public:
     QSize sizeHint() const override;
     QSize minimumSizeHint() const override;
 
-    void setCurrentProject(const std::string& project_title, const std::string& project_dir);
+    void setCurrentProject(const QString& project_dir, bool is_modified);
 
     void setRecentProjectsList(const QStringList& projects);
 
@@ -41,7 +41,6 @@ private:
     QBoxLayout* createRecentProjectLayout();
     ProjectPaneWidget* m_current_project_pane;
     std::vector<ProjectPaneWidget*> m_recent_project_panes;
-    std::string m_project_dir;
 };
 
 #endif // RECENTPROJECTWIDGET_H

@@ -52,10 +52,9 @@ QSize RecentProjectWidget::minimumSizeHint() const
 }
 
 //! Set current project title and label on appropriate widget.
-void RecentProjectWidget::setCurrentProject(const std::string& project_title,
-                                            const std::string& project_dir)
+void RecentProjectWidget::setCurrentProject(const QString &project_dir, bool is_modified)
 {
-    m_current_project_pane->setCurrentProject(project_title, project_dir);
+    m_current_project_pane->setCurrentProject(project_dir, is_modified);
 }
 
 //! Set name of all recent projects to appropriate widgets.
@@ -63,14 +62,10 @@ void RecentProjectWidget::setRecentProjectsList(const QStringList& projects)
 {
     int widget_index{0};
     for (auto widget : m_recent_project_panes) {
-        std::string project_dir{};
-        std::string title{};
-        if (widget_index < projects.size()) {
-            project_dir = projects.at(widget_index).toStdString();
-            title = ProjectUtils::ProjectWindowTitle(project_dir, /*is_modified*/ false);
-        }
-        widget->setCurrentProject(title, project_dir);
-        widget->setActive(project_dir.empty() ? false : true);
+        if (widget_index < projects.size())
+            widget->setCurrentProject(projects.at(widget_index), false);
+         else
+            widget->clear();
 
         ++widget_index;
     }

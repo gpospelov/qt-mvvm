@@ -25,9 +25,9 @@ public:
     QSize sizeHint() const override;
     QSize minimumSizeHint() const override;
 
-    void setCurrentProject(const std::string& project_title, const std::string& project_dir);
+    void setCurrentProject(const QString& project_dir, bool is_modified = false);
 
-    void setActive(bool value);
+    void clear();
 
 signals:
     void projectSelected(const QString& project_dir);
@@ -43,6 +43,7 @@ private:
     QLabel* m_current_project_dir{nullptr};
     QColor m_widget_color;
     bool m_active{false};
+    QString m_project_dir;
 };
 
 #endif // PROJECTPANEWIDGET_H

@@ -46,22 +46,30 @@ QSize ProjectPaneWidget::minimumSizeHint() const
     return QSize(characterisic_size.width(), widget_height());
 }
 
-void ProjectPaneWidget::setCurrentProject(const std::string& project_title,
-                                          const std::string& project_dir)
-{
-    m_current_project_title->setText(QString::fromStdString(project_title));
+//! Sets current project dir to 'project_dir', adjust title according to 'is_modified'.
 
-    auto project_dir_str = QString::fromStdString(project_dir);
-    m_current_project_dir->setText(ModelView::Utils::WithTildeHomePath(project_dir_str));
-    m_current_project_dir->setToolTip(project_dir_str);
+void ProjectPaneWidget::setCurrentProject(const QString& project_dir, bool is_modified)
+{
+    m_active = true;
+    m_project_dir = project_dir;
+
+    auto trimmed_project_dir = ModelView::Utils::WithTildeHomePath(project_dir);
+    auto project_title = ModelView::Utils::ProjectWindowTitle(project_dir, is_modified);
+
+    m_current_project_dir->setText(trimmed_project_dir);
+    m_current_project_dir->setToolTip(m_project_dir);
+    m_current_project_title->setText(project_title);
 }
 
-//! Sets active flag, where 'true' means that widget can send signals on mouse click,
-//! and change the color on mouse hover.
+//! Clear content of widget and make it inactive.
 
-void ProjectPaneWidget::setActive(bool value)
+void ProjectPaneWidget::clear()
 {
-    m_active = value;
+    m_active = false;
+    m_project_dir.clear();
+    m_current_project_dir->setText({});
+    m_current_project_dir->setToolTip({});
+    m_current_project_title->setText({});
 }
 
 void ProjectPaneWidget::paintEvent(QPaintEvent*)
