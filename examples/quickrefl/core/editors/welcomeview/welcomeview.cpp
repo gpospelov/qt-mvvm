@@ -69,8 +69,10 @@ bool WelcomeView::canCloseProject() const
 void WelcomeView::onCreateNewProject()
 {
     qDebug() << "WelcomeView::onCreateNewProject()";
-    if (m_project_manager->createNewProject())
+    if (m_project_manager->createNewProject()) {
         update_current_project_name();
+        update_recent_project_names();
+    }
 }
 
 void WelcomeView::onOpenExistingProject(const QString& dirname)
