@@ -41,3 +41,24 @@ TEST_F(WidgetUtilsTest, WithTildeHomePath)
         EXPECT_EQ(Utils::WithTildeHomePath(test_dir).toStdString(), expected.toStdString());
     }
 }
+
+TEST_F(WidgetUtilsTest, ProjectWindowTitle)
+{
+    // untitled and unmodified project
+    EXPECT_EQ(Utils::ProjectWindowTitle(QString(""), false), "Untitled");
+
+    // untitled and modified project
+    EXPECT_EQ(Utils::ProjectWindowTitle(QString(""), true), "*Untitled");
+
+    // unmodified project without projectDir
+    EXPECT_EQ(Utils::ProjectWindowTitle(QString("Untitled"), false), "Untitled");
+
+    // modified project without projectDir
+    EXPECT_EQ(Utils::ProjectWindowTitle(QString("Untitled"), true), "*Untitled");
+
+    // unmodified project with projectDir
+    EXPECT_EQ(Utils::ProjectWindowTitle(QString("/home/user/project1"), false), "project1");
+
+    // modified project with projectDir
+    EXPECT_EQ(Utils::ProjectWindowTitle(QString("/home/user/project1"), true), "*project1");
+}
