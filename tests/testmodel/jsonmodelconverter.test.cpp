@@ -253,17 +253,17 @@ TEST_F(JsonModelConverterTest, parentAndChildToFileAndBack)
 //! Creation of json object (single item in a model), then writing same json object back
 //! to model without emptying it. Real bug case: check if unsubscribtion mechanism works.
 
-TEST_F(JsonModelConverterTest, singleItemToJsonAndBackToSameModel)
-{
-    JsonModelConverter converter;
-    SessionModel model("TestModel");
+//TEST_F(JsonModelConverterTest, singleItemToJsonAndBackToSameModel)
+//{
+//    JsonModelConverter converter;
+//    SessionModel model("TestModel");
 
-    auto item = model.insertItem<SessionItem>();
-    auto expected_identifier = item->identifier();
+//    auto item = model.insertItem<SessionItem>();
+//    auto expected_identifier = item->identifier();
 
-    QJsonObject object;
-    converter.model_to_json(model, object);
+//    QJsonObject object;
+//    converter.model_to_json(model, object);
 
-    // filling new model
-    converter.json_to_model(object, model);
-}
+//    // filling new model
+//    converter.json_to_model(object, model);
+//}
