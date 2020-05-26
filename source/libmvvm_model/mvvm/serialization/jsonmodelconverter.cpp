@@ -67,15 +67,13 @@ void JsonModelConverter::json_to_model(const QJsonObject& json, SessionModel& mo
 
     auto converter = std::make_unique<JsonItemConverter>(model.factory());
 
-    SessionModel for_content_from_file;
-    auto parent = for_content_from_file.rootItem();
-
-    for (const auto ref : json[itemsKey].toArray()) {
-        auto item = converter->from_json(ref.toObject());
-        parent->insertItem(item.release(), TagRow::append());
-    }
-
-    model.swapRootItems(for_content_from_file);
+    auto rebuild_root = [&json, &converter](auto parent) {
+        for (const auto ref : json[itemsKey].toArray()) {
+            auto item = converter->from_json(ref.toObject());
+            parent->insertItem(item.release(), TagRow::append());
+        }
+    };
+    model.clear(rebuild_root);
 }
 
 bool JsonModelConverter::isSessionModel(const QJsonObject& object) const

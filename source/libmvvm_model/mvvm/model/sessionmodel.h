@@ -75,7 +75,7 @@ public:
 
     ModelMapper* mapper();
 
-    void clear();
+    void clear(std::function<void(SessionItem *)> callback = {});
 
     std::unique_ptr<ItemBackupStrategy> itemBackupStrategy() const;
 
@@ -86,6 +86,8 @@ public:
     SessionItem* findItem(const identifier_type& id);
 
     void swapRootItems(SessionModel& other);
+
+//    void rebuildModel(std::function<void(SessionItem *)> callback);
 
 protected:
     std::unique_ptr<ItemManager> m_item_manager;

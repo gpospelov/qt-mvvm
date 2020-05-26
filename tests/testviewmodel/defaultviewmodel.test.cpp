@@ -645,6 +645,6 @@ TEST_F(DefaultViewModelTest, vectorItemInJsonDocument)
     EXPECT_EQ(spyAboutReset.count(), 1);
     EXPECT_EQ(spyReset.count(), 1);
 
-//    EXPECT_EQ(viewmodel.rowCount(), 1);
-//    EXPECT_EQ(viewmodel.columnCount(), 2);
+    EXPECT_EQ(viewmodel.rowCount(), 1);
+    EXPECT_EQ(viewmodel.columnCount(), 2);
 }
