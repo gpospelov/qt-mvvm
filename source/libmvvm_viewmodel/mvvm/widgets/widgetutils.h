@@ -32,6 +32,9 @@ CORE_EXPORT bool IsWindowsHost();
 //! Returns a string where path to the file striped using '~'.
 CORE_EXPORT QString WithTildeHomePath(const QString& path);
 
+//! Returns a title composed from last part of project path, and `is_modified` flag.
+CORE_EXPORT QString ProjectWindowTitle(const QString& project_dir, bool is_modified);
+
 } // namespace Utils
 
 } // namespace ModelView

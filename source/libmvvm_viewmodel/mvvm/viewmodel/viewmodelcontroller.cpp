@@ -45,6 +45,7 @@ struct ViewModelController::RefViewModelControllerImpl {
     std::unique_ptr<ChildrenStrategyInterface> children_strategy;
     std::unique_ptr<RowStrategyInterface> row_strategy;
     std::map<SessionItem*, ViewItem*> item_to_view; //! correspondence of item and its view
+    Path root_item_path;
 
     RefViewModelControllerImpl(ViewModelController* controller, SessionModel* session_model,
                                ViewModelBase* view_model)
@@ -172,7 +173,8 @@ struct ViewModelController::RefViewModelControllerImpl {
         session_model->mapper()->setOnModelDestroyed(on_model_destroyed, controller);
 
         auto on_model_reset = [this](SessionModel*) {
-            controller->setRootSessionItem(session_model->rootItem());
+            auto root_item = session_model->itemFromPath(root_item_path);
+            controller->setRootSessionItem(root_item ? root_item : session_model->rootItem());
         };
         session_model->mapper()->setOnModelReset(on_model_reset, controller);
     }
@@ -224,8 +226,11 @@ SessionModel* ViewModelController::sessionModel() const
 
 void ViewModelController::setRootSessionItem(SessionItem* item)
 {
+    p_impl->view_model->beginResetModel();
+    p_impl->root_item_path = p_impl->session_model->pathFromItem(item);
     p_impl->view_model->setRootViewItem(std::make_unique<RootViewItem>(item));
     p_impl->init_view_model();
+    p_impl->view_model->endResetModel();
 }
 
 SessionItem* ViewModelController::rootSessionItem() const

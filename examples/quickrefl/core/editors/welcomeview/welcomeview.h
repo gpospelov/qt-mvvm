@@ -33,7 +33,7 @@ public:
 
 public slots:
     void onCreateNewProject();
-    void onOpenExistingProject();
+    void onOpenExistingProject(const QString &dirname = {});
     void onSaveCurrentProject();
     void onSaveProjectAs();
 

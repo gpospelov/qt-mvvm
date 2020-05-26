@@ -62,9 +62,8 @@ void WelcomeViewSettings::updateWorkdirFromSelection(const QString& dirname)
 QStringList WelcomeViewSettings::recentProjects()
 {
     QStringList updatedList;
-    for (QString fileName : m_recent_projects) {
-        QFile fin(fileName);
-        if (fin.exists())
+    for (const auto& fileName : m_recent_projects) {
+        if (ModelView::Utils::exists(fileName.toStdString()))
             updatedList.append(fileName);
     }
     m_recent_projects = updatedList;

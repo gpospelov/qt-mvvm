@@ -157,11 +157,14 @@ ModelMapper* SessionModel::mapper()
 }
 
 //! Removes all items from the model.
+//! If callback is provided, use it to rebuild content of root item.
 
-void SessionModel::clear()
+void SessionModel::clear(std::function<void(SessionItem *)> callback)
 {
     mapper()->callOnModelAboutToBeReset();
     createRootItem();
+    if (callback)
+        callback(rootItem());
     mapper()->callOnModelReset();
 }
 
@@ -193,22 +196,6 @@ const ItemFactoryInterface* SessionModel::factory() const
 SessionItem* SessionModel::findItem(const identifier_type& id)
 {
     return m_item_manager->findItem(id);
-}
-
-//! Swaps two root items. The rest (factories, signaling, etc) will remain unchainged.
-//! Intended for load-from-file context.
-
-void SessionModel::swapRootItems(SessionModel& other)
-{
-    mapper()->callOnModelAboutToBeReset();
-    other.mapper()->callOnModelAboutToBeReset();
-
-    std::swap(m_root_item, other.m_root_item);
-    m_root_item->setModel(this);
-    other.m_root_item->setModel(&other);
-
-    mapper()->callOnModelReset();
-    other.mapper()->callOnModelReset();
 }
 
 //! Creates root item.

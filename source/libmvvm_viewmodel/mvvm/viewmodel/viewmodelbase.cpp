@@ -26,7 +26,9 @@ struct ViewModelBase::RefViewModelImpl {
 ViewModelBase::ViewModelBase(QObject* parent)
     : QAbstractItemModel(parent), p_impl(std::make_unique<RefViewModelImpl>(this))
 {
+    beginResetModel();
     setRootViewItem(std::make_unique<RootViewItem>(nullptr));
+    endResetModel();
 }
 
 ViewModelBase::~ViewModelBase() = default;
@@ -170,7 +172,7 @@ Qt::ItemFlags ViewModelBase::flags(const QModelIndex& index) const
 
 void ViewModelBase::setRootViewItem(std::unique_ptr<ViewItem> root_item)
 {
-    beginResetModel();
+//    beginResetModel();
     p_impl->root = std::move(root_item);
-    endResetModel();
+//    endResetModel();
 }

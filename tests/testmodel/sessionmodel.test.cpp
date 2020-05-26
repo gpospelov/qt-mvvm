@@ -254,6 +254,31 @@ TEST_F(SessionModelTest, clearModel)
     EXPECT_EQ(pool->size(), 1);
 }
 
+TEST_F(SessionModelTest, clearRebuildModel)
+{
+    auto pool = std::make_shared<ItemPool>();
+    SessionModel model("test", pool);
+
+    EXPECT_EQ(pool->size(), 1);
+
+    auto first_root = model.rootItem();
+
+    EXPECT_EQ(model.rootItem()->childrenCount(), 0);
+    model.insertItem<SessionItem>();
+    model.insertItem<SessionItem>();
+    EXPECT_EQ(model.rootItem()->childrenCount(), 2);
+
+    auto new_item = new SessionItem;
+    auto rebuild = [new_item](auto parent) { parent->insertItem(new_item, TagRow::append()); };
+
+    model.clear(rebuild);
+    EXPECT_EQ(model.rootItem()->childrenCount(), 1);
+    EXPECT_FALSE(model.rootItem() == first_root);
+    EXPECT_EQ(pool->key_for_item(first_root), "");
+    EXPECT_EQ(pool->size(), 2);
+    EXPECT_EQ(pool->key_for_item(new_item), new_item->identifier());
+}
+
 //! Tests item copy when from root item to root item.
 
 TEST_F(SessionModelTest, copyModelItemRootContext)
@@ -381,32 +406,4 @@ TEST_F(SessionModelTest, findItemInAlienModel)
     EXPECT_EQ(model2.findItem(id1), nullptr);
     EXPECT_EQ(model1.findItem(id2), parent2);
     EXPECT_EQ(model2.findItem(id2), parent2);
-}
-
-//! CHeck swapping of two root items.
-TEST_F(SessionModelTest, swapRootItems)
-{
-    SessionModel model1("Test1");
-    auto item0_1 = model1.insertItem<PropertyItem>();
-    SessionModel model2("Test2");
-    auto item0_2 = model2.insertItem<PropertyItem>();
-    auto item1_2 = model2.insertItem<PropertyItem>();
-
-    auto root1 = model1.rootItem();
-    auto root2 = model2.rootItem();
-
-    // swapping two root items
-    model1.swapRootItems(model2);
-
-    // model1 should have an old content of model2
-    EXPECT_EQ(model1.rootItem(), root2);
-    EXPECT_EQ(model1.rootItem()->childrenCount(), 2);
-    std::vector<SessionItem*> expected = {item0_2, item1_2};
-    EXPECT_EQ(model1.rootItem()->children(), expected);
-
-    // model2 should have an old content of model1
-    EXPECT_EQ(model2.rootItem(), root1);
-    EXPECT_EQ(model2.rootItem()->childrenCount(), 1);
-    expected = {item0_1};
-    EXPECT_EQ(model2.rootItem()->children(), expected);
 }

@@ -249,3 +249,32 @@ TEST_F(JsonModelConverterTest, parentAndChildToFileAndBack)
     EXPECT_EQ(reco_child->identifier(), child->identifier());
     EXPECT_EQ(reco_child->defaultTag(), "");
 }
+
+//! Creation of json object (single item in a model), then writing same json object back
+//! to model without emptying it. Real bug case: check if unsubscribtion mechanism works.
+
+TEST_F(JsonModelConverterTest, singleItemToJsonAndBackToSameModel)
+{
+    auto pool = std::make_shared<ItemPool>();
+
+    JsonModelConverter converter;
+    SessionModel model("TestModel", pool);
+    auto item = model.insertItem<SessionItem>();
+
+    auto root_item = model.rootItem();
+    auto root_id = root_item->identifier();
+    auto item_id = item->identifier();
+
+    QJsonObject object;
+    converter.model_to_json(model, object);
+
+    // filling new model
+    converter.json_to_model(object, model);
+
+    EXPECT_EQ(pool->size(), 2);
+    EXPECT_FALSE(pool->item_for_key(root_id) == model.rootItem()); // old root identifier has gone
+    EXPECT_TRUE(model.rootItem() != root_item);                    // old root item gone
+
+    auto new_item = model.rootItem()->children().at(0);
+    EXPECT_EQ(pool->item_for_key(item_id), new_item);
+}

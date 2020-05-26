@@ -204,33 +204,22 @@ TEST(ModelMapperTest, onModelReset)
     model->clear();
 }
 
-//! Testing signals on swapping two root items.
+//! Testing signals on cleaning the model using rebuild function.
 
-TEST(ModelMapperTest, onRootSwap)
+TEST(ModelMapperTest, onClearRebuild)
 {
-    auto model1 = std::make_unique<SessionModel>();
-    auto model2 = std::make_unique<SessionModel>();
-    model1->insertItem<SessionItem>();
+    auto model = std::make_unique<SessionModel>();
 
-    auto widget1 = std::make_unique<MockWidgetForModel>(model1.get());
-    auto widget2 = std::make_unique<MockWidgetForModel>(model2.get());
+    auto widget = std::make_unique<MockWidgetForModel>(model.get());
 
-    EXPECT_CALL(*widget1, onDataChange(_, _)).Times(0);
-    EXPECT_CALL(*widget1, onItemInserted(_, _)).Times(0);
-    EXPECT_CALL(*widget1, onItemRemoved(_, _)).Times(0);
-    EXPECT_CALL(*widget1, onAboutToRemoveItem(_, _)).Times(0);
-    EXPECT_CALL(*widget1, onModelDestroyed(_)).Times(0);
-    EXPECT_CALL(*widget1, onModelAboutToBeReset(_)).Times(1);
-    EXPECT_CALL(*widget1, onModelReset(model1.get())).Times(1);
+    EXPECT_CALL(*widget, onDataChange(_, _)).Times(0);
+    EXPECT_CALL(*widget, onItemInserted(_, _)).Times(1);
+    EXPECT_CALL(*widget, onItemRemoved(_, _)).Times(0);
+    EXPECT_CALL(*widget, onAboutToRemoveItem(_, _)).Times(0);
+    EXPECT_CALL(*widget, onModelDestroyed(_)).Times(0);
+    EXPECT_CALL(*widget, onModelAboutToBeReset(_)).Times(1);
+    EXPECT_CALL(*widget, onModelReset(model.get())).Times(1);
 
-    EXPECT_CALL(*widget2, onDataChange(_, _)).Times(0);
-    EXPECT_CALL(*widget2, onItemInserted(_, _)).Times(0);
-    EXPECT_CALL(*widget2, onItemRemoved(_, _)).Times(0);
-    EXPECT_CALL(*widget2, onAboutToRemoveItem(_, _)).Times(0);
-    EXPECT_CALL(*widget2, onModelDestroyed(_)).Times(0);
-    EXPECT_CALL(*widget2, onModelAboutToBeReset(_)).Times(1);
-    EXPECT_CALL(*widget2, onModelReset(model2.get())).Times(1);
-
-    // perform action
-    model1->swapRootItems(*model2);
+    auto rebuild = [](auto item) { item->insertItem(new SessionItem, TagRow::append()); };
+    model->clear(rebuild);
 }

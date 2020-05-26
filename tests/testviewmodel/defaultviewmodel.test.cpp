@@ -7,29 +7,28 @@
 //
 // ************************************************************************** //
 
+#include "folderbasedtest.h"
 #include "google_test.h"
 #include "test_utils.h"
 #include <QDebug>
 #include <QJsonObject>
 #include <QSignalSpy>
-#include "folderbasedtest.h"
 #include <mvvm/model/compounditem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/model/taginfo.h>
+#include <mvvm/serialization/jsondocument.h>
 #include <mvvm/serialization/jsonmodelconverter.h>
 #include <mvvm/standarditems/vectoritem.h>
 #include <mvvm/viewmodel/defaultviewmodel.h>
 #include <mvvm/viewmodel/standardviewitems.h>
 #include <mvvm/viewmodel/viewmodelutils.h>
-#include <mvvm/serialization/jsondocument.h>
-
 
 using namespace ModelView;
 
 class DefaultViewModelTest : public FolderBasedTest
 {
 public:
-    DefaultViewModelTest() : FolderBasedTest("test_DefaultViewModel"){}
+    DefaultViewModelTest() : FolderBasedTest("test_DefaultViewModel") {}
     ~DefaultViewModelTest();
 };
 
@@ -608,5 +607,86 @@ TEST_F(DefaultViewModelTest, jsonDocumentLoadModel)
     EXPECT_EQ(spyReset.count(), 1);
 
     EXPECT_EQ(viewmodel.rowCount(), 1);
+    EXPECT_EQ(viewmodel.columnCount(), 2);
+}
+
+//! Testing view model after restoring from json document.
+
+TEST_F(DefaultViewModelTest, vectorItemInJsonDocument)
+{
+    auto fileName = TestUtils::TestFileName(testDir(), "vectorItemInJsonDocument.json");
+
+    SessionModel model;
+    auto vectorItem = model.insertItem<VectorItem>();
+
+    // constructing viewModel from sample model
+    DefaultViewModel viewmodel(&model);
+
+    // root item should have one child, item looking at our vectorItem
+    EXPECT_EQ(viewmodel.rowCount(), 1);
+    EXPECT_EQ(viewmodel.columnCount(), 2);
+
+    JsonDocument document({&model});
+    document.save(fileName);
+
+    // cleaning original model
+    model.clear();
+
+    QSignalSpy spyInsert(&viewmodel, &DefaultViewModel::rowsInserted);
+    QSignalSpy spyRemove(&viewmodel, &DefaultViewModel::rowsRemoved);
+    QSignalSpy spyAboutReset(&viewmodel, &DefaultViewModel::modelAboutToBeReset);
+    QSignalSpy spyReset(&viewmodel, &DefaultViewModel::modelReset);
+
+    document.load(fileName);
+
+    EXPECT_EQ(spyInsert.count(), 4);
+    EXPECT_EQ(spyRemove.count(), 0);
+    EXPECT_EQ(spyAboutReset.count(), 1);
+    EXPECT_EQ(spyReset.count(), 1);
+
+    EXPECT_EQ(viewmodel.rowCount(), 1);
+    EXPECT_EQ(viewmodel.columnCount(), 2);
+}
+
+//! Testing view model after restoring from json document.
+//! VectorItem is made root item. Test demonstrates that controller is capable
+//! to restore old rootSessionItem on onModelReset signal
+
+TEST_F(DefaultViewModelTest, vectorItemAsRootInJsonDocument)
+{
+    auto fileName = TestUtils::TestFileName(testDir(), "vectorItemInJsonDocument.json");
+
+    SessionModel model;
+    auto vectorItem = model.insertItem<VectorItem>();
+
+    // constructing viewModel from sample model
+    DefaultViewModel viewmodel(&model);
+    viewmodel.setRootSessionItem(vectorItem);
+
+    // root item should have one child, item looking at our vectorItem
+    EXPECT_EQ(viewmodel.rowCount(), 3);
+    EXPECT_EQ(viewmodel.columnCount(), 2);
+    EXPECT_EQ(viewmodel.rootSessionItem(), vectorItem);
+
+    JsonDocument document({&model});
+    document.save(fileName);
+
+    //    model.clear(); // if we uncomment this, information about rootSessionItem will be lost
+
+    QSignalSpy spyInsert(&viewmodel, &DefaultViewModel::rowsInserted);
+    QSignalSpy spyRemove(&viewmodel, &DefaultViewModel::rowsRemoved);
+    QSignalSpy spyAboutReset(&viewmodel, &DefaultViewModel::modelAboutToBeReset);
+    QSignalSpy spyReset(&viewmodel, &DefaultViewModel::modelReset);
+
+    document.load(fileName);
+
+    EXPECT_EQ(spyInsert.count(), 3);
+    EXPECT_EQ(spyRemove.count(), 0);
+    EXPECT_EQ(spyAboutReset.count(), 1);
+    EXPECT_EQ(spyReset.count(), 1);
+
+    EXPECT_EQ(viewmodel.rootSessionItem(), model.rootItem()->children().at(0)); // vectorItem
+
+    EXPECT_EQ(viewmodel.rowCount(), 3);
     EXPECT_EQ(viewmodel.columnCount(), 2);
 }
