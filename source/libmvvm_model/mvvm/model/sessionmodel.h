@@ -85,10 +85,6 @@ public:
 
     SessionItem* findItem(const identifier_type& id);
 
-    void swapRootItems(SessionModel& other);
-
-//    void rebuildModel(std::function<void(SessionItem *)> callback);
-
 protected:
     std::unique_ptr<ItemManager> m_item_manager;
 

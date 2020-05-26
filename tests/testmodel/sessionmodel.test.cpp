@@ -254,6 +254,31 @@ TEST_F(SessionModelTest, clearModel)
     EXPECT_EQ(pool->size(), 1);
 }
 
+TEST_F(SessionModelTest, clearRebuildModel)
+{
+    auto pool = std::make_shared<ItemPool>();
+    SessionModel model("test", pool);
+
+    EXPECT_EQ(pool->size(), 1);
+
+    auto first_root = model.rootItem();
+
+    EXPECT_EQ(model.rootItem()->childrenCount(), 0);
+    model.insertItem<SessionItem>();
+    model.insertItem<SessionItem>();
+    EXPECT_EQ(model.rootItem()->childrenCount(), 2);
+
+    auto new_item = new SessionItem;
+    auto rebuild = [new_item](auto parent) { parent->insertItem(new_item, TagRow::append()); };
+
+    model.clear(rebuild);
+    EXPECT_EQ(model.rootItem()->childrenCount(), 1);
+    EXPECT_FALSE(model.rootItem() == first_root);
+    EXPECT_EQ(pool->key_for_item(first_root), "");
+    EXPECT_EQ(pool->size(), 2);
+    EXPECT_EQ(pool->key_for_item(new_item), new_item->identifier());
+}
+
 //! Tests item copy when from root item to root item.
 
 TEST_F(SessionModelTest, copyModelItemRootContext)
@@ -381,108 +406,4 @@ TEST_F(SessionModelTest, findItemInAlienModel)
     EXPECT_EQ(model2.findItem(id1), nullptr);
     EXPECT_EQ(model1.findItem(id2), parent2);
     EXPECT_EQ(model2.findItem(id2), parent2);
-}
-
-//! CHeck swapping of two root items.
-TEST_F(SessionModelTest, swapRootItems)
-{
-    SessionModel model1("Test1");
-    auto item0_1 = model1.insertItem<PropertyItem>();
-    SessionModel model2("Test2");
-    auto item0_2 = model2.insertItem<PropertyItem>();
-    auto item1_2 = model2.insertItem<PropertyItem>();
-
-    auto root1 = model1.rootItem();
-    auto root2 = model2.rootItem();
-
-    // swapping two root items
-    model1.swapRootItems(model2);
-
-    // model1 should have an old content of model2
-    EXPECT_EQ(model1.rootItem(), root2);
-    EXPECT_EQ(model1.rootItem()->childrenCount(), 2);
-    std::vector<SessionItem*> expected = {item0_2, item1_2};
-    EXPECT_EQ(model1.rootItem()->children(), expected);
-
-    // model2 should have an old content of model1
-    EXPECT_EQ(model2.rootItem(), root1);
-    EXPECT_EQ(model2.rootItem()->childrenCount(), 1);
-    expected = {item0_1};
-    EXPECT_EQ(model2.rootItem()->children(), expected);
-}
-
-//! Check swapping of two root items with same pool.
-TEST_F(SessionModelTest, swapRootItemsSamePool)
-{
-    auto pool = std::make_shared<ItemPool>();
-
-    SessionModel model1("Test1", pool);
-    auto item0_1 = model1.insertItem<PropertyItem>();
-    SessionModel model2("Test2", pool);
-    auto item0_2 = model2.insertItem<PropertyItem>();
-    auto item1_2 = model2.insertItem<PropertyItem>();
-
-    EXPECT_EQ(pool->size(), 5); // two root items and children
-
-    auto root1 = model1.rootItem();
-    auto root2 = model2.rootItem();
-
-    // swapping two root items
-    model1.swapRootItems(model2);
-
-    // model1 should have an old content of model2
-    EXPECT_EQ(model1.rootItem(), root2);
-    EXPECT_EQ(model1.rootItem()->childrenCount(), 2);
-    std::vector<SessionItem*> expected = {item0_2, item1_2};
-    EXPECT_EQ(model1.rootItem()->children(), expected);
-
-    // model2 should have an old content of model1
-    EXPECT_EQ(model2.rootItem(), root1);
-    EXPECT_EQ(model2.rootItem()->childrenCount(), 1);
-    expected = {item0_1};
-    EXPECT_EQ(model2.rootItem()->children(), expected);
-
-    EXPECT_EQ(pool->size(), 5); // two root items and children
-}
-
-TEST_F(SessionModelTest, swapRootItemsDifferentPool)
-{
-    auto pool1 = std::make_shared<ItemPool>();
-    auto pool2 = std::make_shared<ItemPool>();
-
-    {
-        SessionModel model1("Test1", pool1);
-        auto id_root1 = model1.rootItem()->identifier();
-        auto item1 = model1.insertItem<PropertyItem>();
-        auto id_item1 = item1->identifier();
-
-        SessionModel model2("Test2", pool2);
-        auto id_root2 = model2.rootItem()->identifier();
-        auto item2 = model2.insertItem<PropertyItem>();
-        auto id_item2 = item2->identifier();
-
-        EXPECT_EQ(pool1->size(), 2);
-        EXPECT_EQ(pool2->size(), 2);
-
-        // swapping two root items
-        model1.swapRootItems(model2);
-
-        EXPECT_EQ(pool1->size(), 2);
-        EXPECT_EQ(pool2->size(), 2);
-
-        // old items have changed pools
-        EXPECT_EQ(pool1->item_for_key(id_root1), nullptr);
-        EXPECT_EQ(pool1->item_for_key(id_item1), nullptr);
-        EXPECT_EQ(pool2->item_for_key(id_root2), nullptr);
-        EXPECT_EQ(pool2->item_for_key(id_item2), nullptr);
-
-        EXPECT_EQ(pool1->item_for_key(id_root2), model1.rootItem());
-        EXPECT_EQ(pool1->item_for_key(id_item2), item2);
-        EXPECT_EQ(pool2->item_for_key(id_root1), model2.rootItem());
-        EXPECT_EQ(pool2->item_for_key(id_item1), item1);
-    }
-
-    // after model destruction pool should be empty
-    EXPECT_EQ(pool1->size(), 0);
-    EXPECT_EQ(pool2->size(), 0);
 }
