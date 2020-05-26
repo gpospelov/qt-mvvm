@@ -410,3 +410,37 @@ TEST_F(SessionModelTest, swapRootItems)
     expected = {item0_1};
     EXPECT_EQ(model2.rootItem()->children(), expected);
 }
+
+//! CHeck swapping of two root items.
+TEST_F(SessionModelTest, swapRootItemsWithPool)
+{
+    auto pool = std::make_shared<ItemPool>();
+
+    SessionModel model1("Test1", pool);
+    auto item0_1 = model1.insertItem<PropertyItem>();
+    SessionModel model2("Test2", pool);
+    auto item0_2 = model2.insertItem<PropertyItem>();
+    auto item1_2 = model2.insertItem<PropertyItem>();
+
+    EXPECT_EQ(pool->size(), 5); // two root items and children
+
+    auto root1 = model1.rootItem();
+    auto root2 = model2.rootItem();
+
+    // swapping two root items
+    model1.swapRootItems(model2);
+
+    // model1 should have an old content of model2
+    EXPECT_EQ(model1.rootItem(), root2);
+    EXPECT_EQ(model1.rootItem()->childrenCount(), 2);
+    std::vector<SessionItem*> expected = {item0_2, item1_2};
+    EXPECT_EQ(model1.rootItem()->children(), expected);
+
+    // model2 should have an old content of model1
+    EXPECT_EQ(model2.rootItem(), root1);
+    EXPECT_EQ(model2.rootItem()->childrenCount(), 1);
+    expected = {item0_1};
+    EXPECT_EQ(model2.rootItem()->children(), expected);
+
+    EXPECT_EQ(pool->size(), 5); // two root items and children
+}
