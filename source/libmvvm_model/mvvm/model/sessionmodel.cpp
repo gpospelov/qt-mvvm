@@ -203,7 +203,11 @@ void SessionModel::swapRootItems(SessionModel& other)
     mapper()->callOnModelAboutToBeReset();
     other.mapper()->callOnModelAboutToBeReset();
 
+    m_root_item->setModel(nullptr);
+    other.m_root_item->setModel(nullptr);
+
     std::swap(m_root_item, other.m_root_item);
+
     m_root_item->setModel(this);
     other.m_root_item->setModel(&other);
 
