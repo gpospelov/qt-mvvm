@@ -224,8 +224,10 @@ SessionModel* ViewModelController::sessionModel() const
 
 void ViewModelController::setRootSessionItem(SessionItem* item)
 {
+    p_impl->view_model->beginResetModel();
     p_impl->view_model->setRootViewItem(std::make_unique<RootViewItem>(item));
     p_impl->init_view_model();
+    p_impl->view_model->endResetModel();
 }
 
 SessionItem* ViewModelController::rootSessionItem() const
