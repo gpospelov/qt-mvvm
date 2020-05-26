@@ -29,6 +29,8 @@ public:
 
     void clear();
 
+    void setActive(bool value);
+
 signals:
     void projectSelected(const QString& project_dir);
 

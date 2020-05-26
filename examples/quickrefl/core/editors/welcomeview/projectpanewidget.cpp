@@ -65,11 +65,20 @@ void ProjectPaneWidget::setCurrentProject(const QString& project_dir, bool is_mo
 
 void ProjectPaneWidget::clear()
 {
-    m_active = false;
+    setActive(false);
     m_project_dir.clear();
     m_current_project_dir->setText({});
     m_current_project_dir->setToolTip({});
     m_current_project_title->setText({});
+}
+
+//! Set 'active' flag to the given value. 'False' means that the widget only shows the project
+//! title, but doesn't react on mouse clicks and doesn't change the background on mouse
+//! hover events.
+void ProjectPaneWidget::setActive(bool value)
+{
+    m_active = value;
+    update();
 }
 
 void ProjectPaneWidget::paintEvent(QPaintEvent*)
@@ -94,5 +103,5 @@ void ProjectPaneWidget::leaveEvent(QEvent*)
 void ProjectPaneWidget::mousePressEvent(QMouseEvent* event)
 {
     if (event->button() == Qt::LeftButton)
-        projectSelected(m_current_project_dir->text());
+        projectSelected(m_project_dir);
 }

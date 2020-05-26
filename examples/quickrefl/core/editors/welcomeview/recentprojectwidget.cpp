@@ -55,6 +55,7 @@ QSize RecentProjectWidget::minimumSizeHint() const
 void RecentProjectWidget::setCurrentProject(const QString &project_dir, bool is_modified)
 {
     m_current_project_pane->setCurrentProject(project_dir, is_modified);
+    m_current_project_pane->setActive(false);
 }
 
 //! Set name of all recent projects to appropriate widgets.
