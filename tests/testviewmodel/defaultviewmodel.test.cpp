@@ -610,3 +610,41 @@ TEST_F(DefaultViewModelTest, jsonDocumentLoadModel)
     EXPECT_EQ(viewmodel.rowCount(), 1);
     EXPECT_EQ(viewmodel.columnCount(), 2);
 }
+
+//! Testing view model after restoring from json document.
+
+TEST_F(DefaultViewModelTest, vectorItemInJsonDocument)
+{
+    auto fileName = TestUtils::TestFileName(testDir(), "vectorItemInJsonDocument.json");
+
+    SessionModel model;
+    auto vectorItem = model.insertItem<VectorItem>();
+
+    // constructing viewModel from sample model
+    DefaultViewModel viewmodel(&model);
+
+    // root item should have one child, item looking at our vectorItem
+    EXPECT_EQ(viewmodel.rowCount(), 1);
+    EXPECT_EQ(viewmodel.columnCount(), 2);
+
+    JsonDocument document({&model});
+    document.save(fileName);
+
+    // cleaning original model
+    model.clear();
+
+    QSignalSpy spyInsert(&viewmodel, &DefaultViewModel::rowsInserted);
+    QSignalSpy spyRemove(&viewmodel, &DefaultViewModel::rowsRemoved);
+    QSignalSpy spyAboutReset(&viewmodel, &DefaultViewModel::modelAboutToBeReset);
+    QSignalSpy spyReset(&viewmodel, &DefaultViewModel::modelReset);
+
+    document.load(fileName);
+
+    EXPECT_EQ(spyInsert.count(), 4);
+    EXPECT_EQ(spyRemove.count(), 0);
+    EXPECT_EQ(spyAboutReset.count(), 1);
+    EXPECT_EQ(spyReset.count(), 1);
+
+//    EXPECT_EQ(viewmodel.rowCount(), 1);
+//    EXPECT_EQ(viewmodel.columnCount(), 2);
+}
