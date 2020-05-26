@@ -102,6 +102,6 @@ void ProjectPaneWidget::leaveEvent(QEvent*)
 
 void ProjectPaneWidget::mousePressEvent(QMouseEvent* event)
 {
-    if (event->button() == Qt::LeftButton)
+    if (m_active && event->button() == Qt::LeftButton)
         projectSelected(m_project_dir);
 }
