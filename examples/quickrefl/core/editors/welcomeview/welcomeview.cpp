@@ -20,6 +20,7 @@
 #include <QFileDialog>
 #include <QHBoxLayout>
 #include <QMainWindow>
+#include <mvvm/widgets/widgetutils.h>
 
 namespace
 {
@@ -72,7 +73,7 @@ void WelcomeView::onCreateNewProject()
         update_current_project_name();
 }
 
-void WelcomeView::onOpenExistingProject(const QString &dirname)
+void WelcomeView::onOpenExistingProject(const QString& dirname)
 {
     qDebug() << "WelcomeView::onOpenExistingProject()" << dirname;
     if (m_project_manager->openExistingProject(dirname.toStdString())) {
@@ -115,28 +116,31 @@ void WelcomeView::init_project_manager()
 
 void WelcomeView::setup_connections()
 {
-    auto open_existing_project = [this]() {onOpenExistingProject();};
-    connect(m_open_project_widget, &OpenProjectWidget::openExistingProjectRequest, open_existing_project);
+    auto open_existing_project = [this]() { onOpenExistingProject(); };
+    connect(m_open_project_widget, &OpenProjectWidget::openExistingProjectRequest,
+            open_existing_project);
     connect(m_open_project_widget, &OpenProjectWidget::createNewProjectRequest, this,
             &WelcomeView::onCreateNewProject);
     connect(m_open_project_widget, &OpenProjectWidget::saveProjectRequest, this,
             &WelcomeView::onSaveCurrentProject);
     connect(m_open_project_widget, &OpenProjectWidget::saveProjectAsRequest, this,
             &WelcomeView::onSaveProjectAs);
-//    auto on_project_selected = [this](auto name) {onOpenExistingProject(name.toStdString());};
-    connect(m_recent_project_widget, &RecentProjectWidget::projectSelected, this, &WelcomeView::onOpenExistingProject);
+    connect(m_recent_project_widget, &RecentProjectWidget::projectSelected, this,
+            &WelcomeView::onOpenExistingProject);
 }
 
 //! Sets changed project name to all widgets which requires it.
 
 void WelcomeView::update_current_project_name()
 {
-    auto title = ProjectUtils::ProjectWindowTitle(m_project_manager->currentProjectDir(),
-                                                  m_project_manager->isModified());
-    if (auto main_window = findMainWindow(); main_window)
-        main_window->setWindowTitle(QString::fromStdString(title));
+    const auto current_project_dir = QString::fromStdString(m_project_manager->currentProjectDir());
+    const auto is_modified = m_project_manager->isModified();
 
-    m_recent_project_widget->setCurrentProject(title, m_project_manager->currentProjectDir());
+    auto title = ModelView::Utils::ProjectWindowTitle(current_project_dir, is_modified);
+    if (auto main_window = findMainWindow(); main_window)
+        main_window->setWindowTitle(title);
+
+    m_recent_project_widget->setCurrentProject(current_project_dir, is_modified);
 }
 
 //! Update all panes with titles and project dir for all recent projetcs.
