@@ -10,6 +10,7 @@
 #include "projectpanewidget.h"
 #include "styleutils.h"
 #include <QLabel>
+#include <QMouseEvent>
 #include <QPainter>
 #include <QVBoxLayout>
 #include <mvvm/widgets/widgetutils.h>
@@ -80,4 +81,10 @@ void ProjectPaneWidget::leaveEvent(QEvent*)
 {
     m_widget_color = QColor(Qt::white);
     update();
+}
+
+void ProjectPaneWidget::mousePressEvent(QMouseEvent* event)
+{
+    if (event->button() == Qt::LeftButton)
+        projectSelected(m_current_project_dir->text());
 }

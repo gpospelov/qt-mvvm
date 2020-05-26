@@ -33,12 +33,15 @@ public:
 
     void setRecentProjectsList(const QStringList& projects);
 
+signals:
+    void projectSelected(const QString& project_dir);
+
 private:
     QBoxLayout* createCurrentProjectLayout() const;
     QBoxLayout* createRecentProjectLayout();
     ProjectPaneWidget* m_current_project_pane;
     std::vector<ProjectPaneWidget*> m_recent_project_panes;
-
+    std::string m_project_dir;
 };
 
 #endif // RECENTPROJECTWIDGET_H

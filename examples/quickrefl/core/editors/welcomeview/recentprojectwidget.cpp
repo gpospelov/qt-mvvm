@@ -28,10 +28,10 @@ int max_recent_project_count = 7;
 RecentProjectWidget::RecentProjectWidget(QWidget* parent)
     : QWidget(parent), m_current_project_pane(new ProjectPaneWidget)
 {
-//    QPalette palette;
-//    palette.setColor(QPalette::Window, Qt::lightGray);
-//    setAutoFillBackground(true);
-//    setPalette(palette);
+    //    QPalette palette;
+    //    palette.setColor(QPalette::Window, Qt::lightGray);
+    //    setAutoFillBackground(true);
+    //    setPalette(palette);
 
     auto layout = new QVBoxLayout(this);
     layout->setContentsMargins(20, 0, 10, 0);
@@ -95,6 +95,8 @@ QBoxLayout* RecentProjectWidget::createRecentProjectLayout()
 
     for (int i = 0; i < max_recent_project_count; ++i) {
         auto widget = new ProjectPaneWidget;
+        connect(widget, &ProjectPaneWidget::projectSelected, this,
+                &RecentProjectWidget::projectSelected);
         m_recent_project_panes.push_back(widget);
         result->addWidget(widget);
     }

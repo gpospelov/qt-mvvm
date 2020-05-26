@@ -29,10 +29,14 @@ public:
 
     void setActive(bool value);
 
+signals:
+    void projectSelected(const QString& project_dir);
+
 protected:
     void paintEvent(QPaintEvent*) override;
     void enterEvent(QEvent *) override;
     void leaveEvent(QEvent *) override;
+    void mousePressEvent(QMouseEvent *event) override;
 
 private:
     QLabel* m_current_project_title{nullptr};
