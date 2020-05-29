@@ -176,6 +176,9 @@ void LineFilterWidget::initComponents()
     p_color_editor->setAutoFillBackground(false);
     p_color_editor->layout()->takeAt(1);
 
+    p_line_start->setMaximum(1e6);
+    p_line_end->setMaximum(1e6);
+
     auto editor_pixmap = dynamic_cast<QLabel*>(p_color_editor->layout()->itemAt(0)->widget());
     if (editor_pixmap)
         editor_pixmap->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
