@@ -19,6 +19,7 @@
 #include <mvvm/standarditems/graphviewportitem.h>
 
 #include <algorithm>
+#include <cmath>
 
 using namespace ModelView;
 
@@ -72,11 +73,21 @@ void RealDataModel::addDataToGroup(DataGroupItem* data_group, RealDataStruct& da
         std::iota(data_struct.axis.begin(), data_struct.axis.end(), 0);
     }
 
+    std::vector<double> axis_vec;
+    std::vector<double> data_vec;
+
+    for (int i = 0; i < data_struct.data.size(); ++i){
+        if (!std::isnan(data_struct.axis.at(i)) && !std::isnan(data_struct.data.at(i))){
+            axis_vec.push_back(data_struct.axis.at(i));
+            data_vec.push_back(data_struct.data.at(i));
+        }
+    }
+
     auto data = insertItem<Data1DItem>(
         data_group->item<ContainerItem>(DataGroupItem::P_DATA),
         {data_group->item<ContainerItem>(DataGroupItem::P_DATA)->defaultTag(), -1});
-    data->setAxis(PointwiseAxisItem::create(data_struct.axis));
-    data->setContent(data_struct.data);
+    data->setAxis(PointwiseAxisItem::create(axis_vec));
+    data->setContent(data_vec);
 
     auto graph = insertItem<GraphItem>(data_group, {GraphViewportItem::T_ITEMS, -1});
     graph->setDisplayName(data_struct.name);
