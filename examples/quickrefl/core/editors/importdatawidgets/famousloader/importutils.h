@@ -25,7 +25,7 @@ using header_map = std::map<std::string, int>;
 // global constants
 enum InfoTypes { Name, Type, Unit, Multiplier, Header };
 const std::vector<std::string> InfoNames{"Name", "Type", "Unit", "Multiplier", "Header"};
-const std::vector<std::string> Types{"Intensity", "Axis"};
+const std::vector<std::string> Types{"Intensity", "Axis", "Ignore"};
 const std::vector<std::string> Units{"a.u.", "counts", "bin", "rad", "deg", "mm", "1/nm"};
 
 //! Helper method to split
