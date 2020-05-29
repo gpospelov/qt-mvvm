@@ -39,6 +39,9 @@ public:
     int rowCount() const;
     int columnCount() const;
 
+    void setColumnHistory(DataImportUtils::string_data history);
+    DataImportUtils::string_data columnHistory() const;
+
 private:    
     void processHeaders(int num);
     void processHeaders(const std::vector<std::string>& headers);
@@ -49,6 +52,7 @@ private:
 
 private:
     std::vector<std::unique_ptr<DataColumn>> m_data_columns;
+    DataImportUtils::string_data m_history;
 };
 
 } // end of namespace DataImportLogic

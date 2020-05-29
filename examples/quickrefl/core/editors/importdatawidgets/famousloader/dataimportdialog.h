@@ -15,6 +15,7 @@
 #include <QDialog>
 #include <QGroupBox>
 #include <QTabWidget>
+#include <QSettings>
 #include <memory>
 
 namespace DataImportLogic
@@ -48,6 +49,9 @@ private:
 
     void readSettings();
     void writeSettings();
+
+    void readImportLogicSettings(QSettings &settings);
+    void writeImportLogicSettings(QSettings &settings);
 
 private slots:
     void selectedFileChanged();

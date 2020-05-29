@@ -9,6 +9,7 @@
 
 #include "dataimportdialog.h"
 
+#include "importutils.h"
 #include "importfilewidget.h"
 #include "importfilterwidget.h"
 #include "importtableview.h"
@@ -16,7 +17,6 @@
 
 #include <QDialogButtonBox>
 #include <QHBoxLayout>
-#include <QSettings>
 #include <QSizePolicy>
 #include <QSplitter>
 #include <QVBoxLayout>
@@ -164,6 +164,7 @@ void DataLoaderDialog::writeSettings()
 
     p_import_file_list->writeSettings(settings);
     p_parameter_dialog->writeSettings(settings);
+    writeImportLogicSettings(settings);
 }
 
 //! read the Qsettings
@@ -178,6 +179,49 @@ void DataLoaderDialog::readSettings()
 
     p_import_file_list->readSettings(settings);
     p_parameter_dialog->readSettings(settings);
+    readImportLogicSettings(settings);
+}
+
+//! Write the QSettings related to the import logic
+void DataLoaderDialog::writeImportLogicSettings(QSettings &settings)
+{
+    settings.beginGroup("ColumnHistory");
+    settings.remove("");
+    settings.endGroup();
+
+    auto history = p_data_import_logic->dataStructure()->columnHistory();
+    settings.beginGroup("ColumnHistory");
+    for (int i = 0 ; i < history.size(); ++i){
+        settings.beginGroup(QString::number(i));
+        settings.setValue("Name", QString::fromStdString(history.at(i).at(0)));
+        settings.setValue("Type", QString::fromStdString(history.at(i).at(1)));
+        settings.setValue("Unit", QString::fromStdString(history.at(i).at(2)));
+        settings.setValue("Multiplier", QString::fromStdString(history.at(i).at(3)));
+        settings.endGroup();
+    }
+    settings.endGroup();
+}
+
+//! read the Qsettings for the import logic
+void DataLoaderDialog::readImportLogicSettings(QSettings &settings)
+{
+    DataImportUtils::string_data history;
+    settings.beginGroup("ColumnHistory");
+    if (settings.childGroups().count() != 0) {
+        for (auto group_name : settings.childGroups()) {
+            settings.beginGroup(group_name);
+            history.push_back(std::vector<std::string> {
+                settings.value("Name", "").toString().toStdString(),
+                settings.value("Type", "").toString().toStdString(),
+                settings.value("Unit", "").toString().toStdString(),
+                settings.value("Multiplier", "").toString().toStdString(),
+            });
+            settings.endGroup();
+        }
+    }
+    settings.endGroup();
+
+    p_data_import_logic->dataStructure()->setColumnHistory(history);
 }
 
 void DataLoaderDialog::accept()
