@@ -90,7 +90,7 @@ void RealDataModel::addDataToGroup(DataGroupItem* data_group, RealDataStruct& da
     data->setContent(data_vec);
 
     auto graph = insertItem<GraphItem>(data_group, {GraphViewportItem::T_ITEMS, -1});
-    graph->setDisplayName(data_struct.name);
+    graph->setDisplayName(data_struct.data_name + "(" + data_struct.name + ")");
 
     graph->setDataItem(data);
 }
