@@ -8,7 +8,7 @@
 // ************************************************************************** //
 
 #include "projectutils.h"
-#include "applicationmodelsinterface.h"
+#include <mvvm/interfaces/applicationmodelsinterface.h>
 #include "project.h"
 #include <cctype>
 #include <mvvm/model/sessionmodel.h>

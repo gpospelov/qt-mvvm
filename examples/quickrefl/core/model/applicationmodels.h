@@ -10,7 +10,7 @@
 #ifndef APPLICATIONMODELS_H
 #define APPLICATIONMODELS_H
 
-#include "applicationmodelsinterface.h"
+#include <mvvm/interfaces/applicationmodelsinterface.h>
 #include <memory>
 
 namespace ModelView

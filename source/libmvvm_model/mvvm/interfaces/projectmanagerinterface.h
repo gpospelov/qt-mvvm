@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef PROJECTMANAGERINTERFACE_H
-#define PROJECTMANAGERINTERFACE_H
+#ifndef MVVM_INTERFACES_PROJECTMANAGERINTERFACE_H
+#define MVVM_INTERFACES_PROJECTMANAGERINTERFACE_H
 
 #include <mvvm/core/export.h>
 #include <string>
@@ -37,4 +37,4 @@ public:
     virtual bool closeCurrentProject() const = 0;
 };
 
-#endif // PROJECTMANAGERINTERFACE_H
+#endif // MVVM_INTERFACES_PROJECTMANAGERINTERFACE_H

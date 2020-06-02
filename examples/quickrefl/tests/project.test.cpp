@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "applicationmodelsinterface.h"
+#include <mvvm/interfaces/applicationmodelsinterface.h>
 #include "folderbasedtest.h"
 #include "google_test.h"
 #include "project.h"

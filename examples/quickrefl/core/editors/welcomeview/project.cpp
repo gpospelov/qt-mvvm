@@ -8,7 +8,7 @@
 // ************************************************************************** //
 
 #include "project.h"
-#include "applicationmodelsinterface.h"
+#include <mvvm/interfaces/applicationmodelsinterface.h>
 #include "projectchangecontroller.h"
 #include "projectutils.h"
 #include <functional>

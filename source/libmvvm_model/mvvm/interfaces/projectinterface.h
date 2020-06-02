@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef PROJECTINTERFACE_H
-#define PROJECTINTERFACE_H
+#ifndef MVVM_INTERFACES_PROJECTINTERFACE_H
+#define MVVM_INTERFACES_PROJECTINTERFACE_H
 
 #include <mvvm/core/export.h>
 #include <string>
@@ -25,4 +25,4 @@ public:
     virtual bool isModified() const = 0;
 };
 
-#endif // PROJECTINTERFACE_H
+#endif // MVVM_INTERFACES_PROJECTINTERFACE_H
