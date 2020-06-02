@@ -93,7 +93,8 @@ void ImportFileWidget::writeSettings(QSettings& settings)
 void ImportFileWidget::addFiles()
 {
     QStringList files = QFileDialog::getOpenFileNames(this, "Select one or more files to load",
-                                                      m_default_path, "Text (*.txt);; CSV (*.csv)");
+                                                      m_default_path, "Text (*.txt);; CSV (*.csv)",
+                                                      nullptr, QFileDialog::DontUseNativeDialog);
     if (files.count() > 0)
         m_default_path = QFileInfo(files[0]).absoluteDir().absolutePath();
 
