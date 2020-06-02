@@ -10,7 +10,6 @@ target_sources(${library_name} PRIVATE
     project_types.h
     projectchangecontroller.cpp
     projectchangecontroller.h
-    projectinterface.h
     projectmanager.cpp
     projectmanager.h
     projectmanagerdecorator.cpp

@@ -10,7 +10,7 @@
 #include "applicationmodelsinterface.h"
 #include "folderbasedtest.h"
 #include "google_test.h"
-#include "projectinterface.h"
+#include <mvvm/interfaces/projectinterface.h>
 #include "projectutils.h"
 #include "test_utils.h"
 #include <mvvm/model/propertyitem.h>

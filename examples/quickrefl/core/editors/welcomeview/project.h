@@ -10,7 +10,7 @@
 #ifndef PROJECT_H
 #define PROJECT_H
 
-#include "projectinterface.h"
+#include <mvvm/interfaces/projectinterface.h>
 #include <functional>
 #include <memory>
 

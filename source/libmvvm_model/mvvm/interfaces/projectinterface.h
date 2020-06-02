@@ -10,12 +10,13 @@
 #ifndef PROJECTINTERFACE_H
 #define PROJECTINTERFACE_H
 
+#include <mvvm/core/export.h>
 #include <string>
 
 //! Interface to manipulate projects on disk.
 //! Project represents content of all application models in a folder on disk.
 
-class ProjectInterface
+class CORE_EXPORT ProjectInterface
 {
 public:
     virtual std::string projectDir() const = 0;

@@ -9,7 +9,7 @@
 
 #include "projectmanagerdecorator.h"
 #include "applicationmodelsinterface.h"
-#include "projectinterface.h"
+#include <mvvm/interfaces/projectinterface.h>
 #include "projectmanager.h"
 #include "project_types.h"
 #include <stdexcept>
