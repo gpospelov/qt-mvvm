@@ -3,11 +3,6 @@ set(library_name quickreflcore)
 target_sources(${library_name} PRIVATE
     openprojectwidget.cpp
     openprojectwidget.h
-    project_types.h
-    projectmanager.cpp
-    projectmanager.h
-    projectmanagerdecorator.cpp
-    projectmanagerdecorator.h
     projectmanagerinteractor.cpp
     projectmanagerinteractor.h
     projectpanewidget.cpp

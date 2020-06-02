@@ -11,7 +11,7 @@
 #define PROJECTMANAGERINTERACTOR_H
 
 #include <string>
-#include "project_types.h"
+#include <mvvm/project/project_types.h>
 class QWidget;
 class WelcomeViewSettings;
 

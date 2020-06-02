@@ -8,7 +8,7 @@
 // ************************************************************************** //
 
 #include "projectmanagerinteractor.h"
-#include "project_types.h"
+#include <mvvm/project/project_types.h>
 #include <mvvm/project/projectutils.h>
 #include "welcomeviewsettings.h"
 #include <QDebug>
