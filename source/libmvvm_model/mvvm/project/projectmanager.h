@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef PROJECTMANAGER_H
-#define PROJECTMANAGER_H
+#ifndef MVVM_PROJECT_PROJECTMANAGER_H
+#define MVVM_PROJECT_PROJECTMANAGER_H
 
 #include <mvvm/interfaces/projectmanagerinterface.h>
 #include <functional>
@@ -54,4 +54,4 @@ private:
     std::unique_ptr<ProjectManagerImpl> p_impl;
 };
 
-#endif // PROJECTMANAGER_H
+#endif // MVVM_PROJECT_PROJECTMANAGER_H

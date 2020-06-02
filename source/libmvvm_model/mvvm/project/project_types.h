@@ -7,10 +7,10 @@
 //
 // ************************************************************************** //
 
-#ifndef PROJECT_TYPES_H
-#define PROJECT_TYPES_H
+#ifndef MVVM_PROJECT_PROJECT_TYPES_H
+#define MVVM_PROJECT_PROJECT_TYPES_H
 
 //! Possible user answers on question "Project was modified".
 enum class SaveChangesAnswer { SAVE = 0, DISCARD = 1, CANCEL = 2 };
 
-#endif // PROJECT_TYPES_H
+#endif // MVVM_PROJECT_PROJECT_TYPES_H

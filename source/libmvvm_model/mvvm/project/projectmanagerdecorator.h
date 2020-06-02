@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef PROJECTMANAGERDECORATOR_H
-#define PROJECTMANAGERDECORATOR_H
+#ifndef MVVM_PROJECT_PROJECTMANAGERDECORATOR_H
+#define MVVM_PROJECT_PROJECTMANAGERDECORATOR_H
 
 #include "project_types.h"
 #include <functional>
@@ -68,4 +68,4 @@ private:
     std::unique_ptr<ProjectManagerImpl> p_impl;
 };
 
-#endif // PROJECTMANAGERDECORATOR_H
+#endif // MVVM_PROJECT_PROJECTMANAGERDECORATOR_H

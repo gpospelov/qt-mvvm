@@ -7,14 +7,14 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/interfaces/applicationmodelsinterface.h>
 #include "folderbasedtest.h"
 #include "google_test.h"
-#include <mvvm/project/projectmanager.h>
 #include "test_utils.h"
 #include <cctype>
+#include <mvvm/interfaces/applicationmodelsinterface.h>
 #include <mvvm/model/propertyitem.h>
 #include <mvvm/model/sessionmodel.h>
+#include <mvvm/project/projectmanager.h>
 #include <mvvm/utils/fileutils.h>
 
 namespace

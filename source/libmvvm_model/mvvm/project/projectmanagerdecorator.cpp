@@ -7,11 +7,11 @@
 //
 // ************************************************************************** //
 
-#include "projectmanagerdecorator.h"
-#include "project_types.h"
-#include "projectmanager.h"
 #include <mvvm/interfaces/applicationmodelsinterface.h>
 #include <mvvm/interfaces/projectinterface.h>
+#include <mvvm/project/project_types.h>
+#include <mvvm/project/projectmanager.h>
+#include <mvvm/project/projectmanagerdecorator.h>
 #include <stdexcept>
 
 namespace

@@ -7,10 +7,10 @@
 //
 // ************************************************************************** //
 
-#include "projectmanager.h"
-#include <mvvm/project/projectutils.h>
 #include <mvvm/interfaces/applicationmodelsinterface.h>
 #include <mvvm/interfaces/projectinterface.h>
+#include <mvvm/project/projectmanager.h>
+#include <mvvm/project/projectutils.h>
 
 using namespace ModelView;
 
@@ -56,8 +56,7 @@ struct ProjectManager::ProjectManagerImpl {
 //! Constructor for ProjectManager. Requires ApplicationModels and two callbacks to open projects,
 //! and create new projects.
 
-ProjectManager::ProjectManager(ApplicationModelsInterface* app_models,
-                               callback_t project_changed)
+ProjectManager::ProjectManager(ApplicationModelsInterface* app_models, callback_t project_changed)
     : p_impl(std::make_unique<ProjectManagerImpl>(app_models, project_changed))
 {
 }
