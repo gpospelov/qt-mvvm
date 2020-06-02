@@ -7,11 +7,11 @@
 //
 // ************************************************************************** //
 
-#ifndef MODELHASCHANGEDCONTROLLER_H
-#define MODELHASCHANGEDCONTROLLER_H
+#ifndef MVVM_PROJECT_MODELHASCHANGEDCONTROLLER_H
+#define MVVM_PROJECT_MODELHASCHANGEDCONTROLLER_H
 
-#include <mvvm/signals/modellistener.h>
 #include <functional>
+#include <mvvm/signals/modellistener.h>
 
 //! Tracks changes in the model.
 //! Allows to check if model has been changed (e.g. modified, inserted or removed items) since last
@@ -33,4 +33,4 @@ private:
     callback_t m_callback; //! informs the user about change in the model
 };
 
-#endif // MODELHASCHANGEDCONTROLLER_H
+#endif // MVVM_PROJECT_MODELHASCHANGEDCONTROLLER_H

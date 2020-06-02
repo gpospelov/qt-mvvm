@@ -8,11 +8,11 @@
 // ************************************************************************** //
 
 #include "project.h"
-#include <mvvm/interfaces/applicationmodelsinterface.h>
 #include "projectchangecontroller.h"
 #include "projectutils.h"
 #include <functional>
 #include <mvvm/core/modeldocuments.h>
+#include <mvvm/interfaces/applicationmodelsinterface.h>
 #include <mvvm/utils/fileutils.h>
 
 struct Project::ProjectImpl {
@@ -46,7 +46,8 @@ struct Project::ProjectImpl {
     }
 };
 
-Project::Project(ModelView::ApplicationModelsInterface* app_models, callback_t project_changed_callback)
+Project::Project(ModelView::ApplicationModelsInterface* app_models,
+                 callback_t project_changed_callback)
     : p_impl(std::make_unique<ProjectImpl>(app_models, project_changed_callback))
 {
 }

@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef PROJECTCHANGECONTROLLER_H
-#define PROJECTCHANGECONTROLLER_H
+#ifndef MVVM_PROJECT_PROJECTCHANGECONTROLLER_H
+#define MVVM_PROJECT_PROJECTCHANGECONTROLLER_H
 
 #include <functional>
 #include <memory>
@@ -46,4 +46,4 @@ private:
     std::unique_ptr<ProjectChangedControllerImpl> p_impl;
 };
 
-#endif // PROJECTCHANGECONTROLLER_H
+#endif // MVVM_PROJECT_PROJECTCHANGECONTROLLER_H

@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef PROJECTUTILS_H
-#define PROJECTUTILS_H
+#ifndef MVVM_PROJECT_PROJECTUTILS_H
+#define MVVM_PROJECT_PROJECTUTILS_H
 
 #include <functional>
 #include <memory>
@@ -20,7 +20,7 @@ namespace ModelView
 class SessionModel;
 class ApplicationModelsInterface;
 class ProjectInterface;
-}
+} // namespace ModelView
 
 //! Collection of utility functions to handle project saving and loading.
 
@@ -41,4 +41,4 @@ std::string ProjectWindowTitle(const std::string& project_dir, bool is_modified)
 
 } // namespace ProjectUtils
 
-#endif // PROJECTUTILS_H
+#endif // MVVM_PROJECT_PROJECTUTILS_H
