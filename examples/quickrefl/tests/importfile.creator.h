@@ -16,6 +16,7 @@
 #include <random>
 #include <sstream>
 #include <string>
+#include <QFile>
 
 namespace CreateTestFiles
 {
@@ -159,6 +160,20 @@ FileInput createSpaceCSVFile(const std::string& name)
 FileInput createSemicolumnCSVFile(const std::string& name)
 {
     return writeDataFile(name, ';');
+}
+
+//! Remove a file with the ollowing input
+void removeFile(FileInput &file_input)
+{
+    QFile(QString::fromStdString(file_input.path)).remove();
+}
+
+//! Remove all files within the following vector
+void removeFiles(std::vector<FileInput> file_inputs)
+{
+    for ( auto &file_input:file_inputs){
+        removeFile(file_input);
+    }
 }
 
 } // End of namespace CreateTestFiles
