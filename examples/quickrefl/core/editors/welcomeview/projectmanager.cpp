@@ -8,9 +8,9 @@
 // ************************************************************************** //
 
 #include "projectmanager.h"
+#include "projectutils.h"
 #include <mvvm/interfaces/applicationmodelsinterface.h>
 #include <mvvm/interfaces/projectinterface.h>
-#include "projectutils.h"
 
 namespace
 {
@@ -19,11 +19,11 @@ const bool failed = false;
 } // namespace
 
 struct ProjectManager::ProjectManagerImpl {
-    ApplicationModelsInterface* app_models{nullptr};
-    std::unique_ptr<ProjectInterface> current_project;
+    ModelView::ApplicationModelsInterface* app_models{nullptr};
+    std::unique_ptr<ModelView::ProjectInterface> current_project;
     callback_t m_project_changed;
 
-    ProjectManagerImpl(ApplicationModelsInterface* models, callback_t project_changed)
+    ProjectManagerImpl(ModelView::ApplicationModelsInterface* models, callback_t project_changed)
         : app_models(models), m_project_changed(project_changed)
     {
         createNewProject();
@@ -54,7 +54,8 @@ struct ProjectManager::ProjectManagerImpl {
 //! Constructor for ProjectManager. Requires ApplicationModels and two callbacks to open projects,
 //! and create new projects.
 
-ProjectManager::ProjectManager(ApplicationModelsInterface* app_models, callback_t project_changed)
+ProjectManager::ProjectManager(ModelView::ApplicationModelsInterface* app_models,
+                               callback_t project_changed)
     : p_impl(std::make_unique<ProjectManagerImpl>(app_models, project_changed))
 {
 }

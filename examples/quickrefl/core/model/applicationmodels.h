@@ -27,7 +27,7 @@ class RealDataModel;
 
 //!  Main class to holds all models of GUI session.
 
-class ApplicationModels : public ApplicationModelsInterface
+class ApplicationModels : public ModelView::ApplicationModelsInterface
 {
 public:
     ApplicationModels();

@@ -13,6 +13,9 @@
 #include <mvvm/core/export.h>
 #include <string>
 
+namespace ModelView
+{
+
 //! Interface class for ProjectManager family.
 
 //! Responsible for handling new/save/save-as/close Project logic, where the Project represents
@@ -36,5 +39,7 @@ public:
 
     virtual bool closeCurrentProject() const = 0;
 };
+
+} // namespace ModelView
 
 #endif // MVVM_INTERFACES_PROJECTMANAGERINTERFACE_H

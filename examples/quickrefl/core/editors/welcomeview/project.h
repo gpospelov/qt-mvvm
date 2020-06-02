@@ -14,16 +14,18 @@
 #include <functional>
 #include <memory>
 
+namespace ModelView {
 class ApplicationModelsInterface;
+}
 
 //! Project represents content of all application models in a folder on disk.
 //! Responsible for saving/loading application models to/from disk.
 
-class Project : public ProjectInterface
+class Project : public ModelView::ProjectInterface
 {
 public:
     using callback_t = std::function<void()>;
-    Project(ApplicationModelsInterface* app_models, callback_t project_changed_callback = {});
+    Project(ModelView::ApplicationModelsInterface* app_models, callback_t project_changed_callback = {});
     ~Project();
 
     std::string projectDir() const override;

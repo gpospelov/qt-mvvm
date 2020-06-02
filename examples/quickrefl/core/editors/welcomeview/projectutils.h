@@ -18,10 +18,9 @@
 namespace ModelView
 {
 class SessionModel;
-}
-
-class ProjectInterface;
 class ApplicationModelsInterface;
+class ProjectInterface;
+}
 
 //! Collection of utility functions to handle project saving and loading.
 
@@ -32,11 +31,11 @@ std::string SuggestFileName(const ModelView::SessionModel& model);
 
 bool IsPossibleProjectDir(const std::string& project_dir);
 
-std::unique_ptr<ProjectInterface>
-CreateUntitledProject(ApplicationModelsInterface* models,
+std::unique_ptr<ModelView::ProjectInterface>
+CreateUntitledProject(ModelView::ApplicationModelsInterface* models,
                       std::function<void()> project_changed_callback = {});
 
-std::string ProjectWindowTitle(const ProjectInterface& project);
+std::string ProjectWindowTitle(const ModelView::ProjectInterface& project);
 
 std::string ProjectWindowTitle(const std::string& project_dir, bool is_modified);
 

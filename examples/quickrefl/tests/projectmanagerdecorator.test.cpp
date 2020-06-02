@@ -31,7 +31,7 @@ public:
     ProjectManagerDecoratorTest() : FolderBasedTest("test_ProjectManagerDecorator") {}
     ~ProjectManagerDecoratorTest();
 
-    class ApplicationModels : public ApplicationModelsInterface
+    class ApplicationModels : public ModelView::ApplicationModelsInterface
     {
     public:
         std::unique_ptr<ModelView::SessionModel> sample_model;

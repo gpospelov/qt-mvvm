@@ -13,6 +13,9 @@
 #include <mvvm/core/export.h>
 #include <string>
 
+namespace ModelView
+{
+
 //! Interface to manipulate projects on disk.
 //! Project represents content of all application models in a folder on disk.
 
@@ -24,5 +27,7 @@ public:
     virtual bool load(const std::string& dirname) = 0;
     virtual bool isModified() const = 0;
 };
+
+} // namespace ModelView
 
 #endif // MVVM_INTERFACES_PROJECTINTERFACE_H

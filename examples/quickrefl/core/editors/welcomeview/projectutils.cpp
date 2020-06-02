@@ -40,8 +40,8 @@ bool ProjectUtils::IsPossibleProjectDir(const std::string &project_dir)
 
 //! Creates new untitled project.
 
-std::unique_ptr<ProjectInterface>
-ProjectUtils::CreateUntitledProject(ApplicationModelsInterface* models,
+std::unique_ptr<ModelView::ProjectInterface>
+ProjectUtils::CreateUntitledProject(ModelView::ApplicationModelsInterface* models,
                                     std::function<void()> project_changed_callback)
 {
     return std::make_unique<Project>(models, project_changed_callback);
@@ -49,7 +49,7 @@ ProjectUtils::CreateUntitledProject(ApplicationModelsInterface* models,
 
 //! Returns a MainWindow title for given project.
 
-std::string ProjectUtils::ProjectWindowTitle(const ProjectInterface& project)
+std::string ProjectUtils::ProjectWindowTitle(const ModelView::ProjectInterface& project)
 {
     return ProjectWindowTitle(project.projectDir(), project.isModified());
 }

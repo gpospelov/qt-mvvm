@@ -15,8 +15,8 @@
 
 namespace ModelView
 {
+
 class SessionModel;
-}
 
 //! Interface to access application's model list for further manipulation.
 //! Used in the context of save/load projects.
@@ -25,7 +25,9 @@ class CORE_EXPORT ApplicationModelsInterface
 {
 public:
     //! Returns vector of models intended for saving on disk.
-    virtual std::vector<ModelView::SessionModel*> persistent_models() const = 0;
+    virtual std::vector<SessionModel*> persistent_models() const = 0;
 };
+
+} // namespace ModelView
 
 #endif //  MVVM_INTERFACES_APPLICATIONMODELSINTERFACE_H

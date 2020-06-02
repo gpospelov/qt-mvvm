@@ -10,12 +10,15 @@
 #ifndef PROJECTMANAGERDECORATOR_H
 #define PROJECTMANAGERDECORATOR_H
 
-#include <mvvm/interfaces/projectmanagerinterface.h>
+#include "project_types.h"
 #include <functional>
 #include <memory>
-#include "project_types.h"
+#include <mvvm/interfaces/projectmanagerinterface.h>
 
+namespace ModelView
+{
 class ApplicationModelsInterface;
+}
 
 //! Decorator for ProjectManager to provide interaction with the user on open/save-as requests.
 //! It relies on the same interface and adds additional logic related to "unsaved" data.
@@ -23,7 +26,7 @@ class ApplicationModelsInterface;
 //! For example, on createNewProject it will check if previous project is saved, and will
 //! call external dialog save/discard/cancel via provided callback.
 
-class ProjectManagerDecorator : public ProjectManagerInterface
+class ProjectManagerDecorator : public ModelView::ProjectManagerInterface
 {
 public:
     using select_dir_callback_t = std::function<std::string()>;
@@ -31,7 +34,7 @@ public:
     using answer_callback_t = std::function<SaveChangesAnswer()>;
     using project_modified_callback_t = std::function<void()>;
 
-    ProjectManagerDecorator(ApplicationModelsInterface* app_models,
+    ProjectManagerDecorator(ModelView::ApplicationModelsInterface* app_models,
                             select_dir_callback_t select_dir = {},
                             create_dir_callback_t create_dir = {},
                             project_modified_callback_t modified_callback = {});
