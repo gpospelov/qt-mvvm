@@ -10,7 +10,7 @@
 #ifndef PROJECTMANAGERDECORATOR_H
 #define PROJECTMANAGERDECORATOR_H
 
-#include "projectmanagerinterface.h"
+#include <mvvm/interfaces/projectmanagerinterface.h>
 #include <functional>
 #include <memory>
 #include "project_types.h"

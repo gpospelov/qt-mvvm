@@ -16,7 +16,6 @@ target_sources(${library_name} PRIVATE
     projectmanagerdecorator.h
     projectmanagerinteractor.cpp
     projectmanagerinteractor.h
-    projectmanagerinterface.h
     projectpanewidget.cpp
     projectpanewidget.h
     projectutils.cpp

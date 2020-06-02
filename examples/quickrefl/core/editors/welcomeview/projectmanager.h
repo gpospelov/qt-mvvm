@@ -10,7 +10,7 @@
 #ifndef PROJECTMANAGER_H
 #define PROJECTMANAGER_H
 
-#include "projectmanagerinterface.h"
+#include <mvvm/interfaces/projectmanagerinterface.h>
 #include <functional>
 #include <memory>
 
