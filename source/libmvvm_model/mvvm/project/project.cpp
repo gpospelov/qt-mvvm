@@ -15,7 +15,7 @@
 #include <mvvm/interfaces/applicationmodelsinterface.h>
 #include <mvvm/utils/fileutils.h>
 
-struct Project::ProjectImpl {
+struct ModelView::Project::ProjectImpl {
     ModelView::ApplicationModelsInterface* app_models{nullptr};
     std::string project_dir;
     ProjectChangedController change_controller;
@@ -46,15 +46,15 @@ struct Project::ProjectImpl {
     }
 };
 
-Project::Project(ModelView::ApplicationModelsInterface* app_models,
-                 callback_t project_changed_callback)
+ModelView::Project::Project(ModelView::ApplicationModelsInterface* app_models,
+                            callback_t project_changed_callback)
     : p_impl(std::make_unique<ProjectImpl>(app_models, project_changed_callback))
 {
 }
 
-Project::~Project() = default;
+ModelView::Project::~Project() = default;
 
-std::string Project::projectDir() const
+std::string ModelView::Project::projectDir() const
 {
     return p_impl->project_dir;
 }
@@ -62,18 +62,18 @@ std::string Project::projectDir() const
 //! Saves all models to a given directory. Directory should exist.
 //! Provided name will become 'projectDir'.
 
-bool Project::save(const std::string& dirname) const
+bool ModelView::Project::save(const std::string& dirname) const
 {
     return p_impl->process(dirname, &ModelView::ModelDocumentInterface::save);
 }
 
 //! Loads all models from the given directory.
-bool Project::load(const std::string& dirname)
+bool ModelView::Project::load(const std::string& dirname)
 {
     return p_impl->process(dirname, &ModelView::ModelDocumentInterface::load);
 }
 
-bool Project::isModified() const
+bool ModelView::Project::isModified() const
 {
     return p_impl->change_controller.hasChanged();
 }

@@ -17,7 +17,6 @@
 namespace ModelView
 {
 class ApplicationModelsInterface;
-}
 
 //! Project represents content of all application models in a folder on disk.
 //! Responsible for saving/loading application models to/from disk.
@@ -42,5 +41,7 @@ private:
     struct ProjectImpl;
     std::unique_ptr<ProjectImpl> p_impl;
 };
+
+} // ModelView
 
 #endif // MVVM_PROJECT_PROJECT_H

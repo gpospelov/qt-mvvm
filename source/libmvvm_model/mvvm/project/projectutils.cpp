@@ -44,7 +44,7 @@ std::unique_ptr<ModelView::ProjectInterface>
 ProjectUtils::CreateUntitledProject(ModelView::ApplicationModelsInterface* models,
                                     std::function<void()> project_changed_callback)
 {
-    return std::make_unique<Project>(models, project_changed_callback);
+    return std::make_unique<ModelView::Project>(models, project_changed_callback);
 }
 
 //! Returns a MainWindow title for given project.
