@@ -11,7 +11,7 @@
 #include "folderbasedtest.h"
 #include "google_test.h"
 #include <mvvm/interfaces/projectinterface.h>
-#include "projectutils.h"
+#include <mvvm/project/projectutils.h>
 #include "test_utils.h"
 #include <mvvm/model/propertyitem.h>
 #include <mvvm/model/sessionmodel.h>

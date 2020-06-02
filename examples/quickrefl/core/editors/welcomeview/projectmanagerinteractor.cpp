@@ -9,7 +9,7 @@
 
 #include "projectmanagerinteractor.h"
 #include "project_types.h"
-#include "projectutils.h"
+#include <mvvm/project/projectutils.h>
 #include "welcomeviewsettings.h"
 #include <QDebug>
 #include <QFileDialog>

@@ -9,7 +9,7 @@
 
 #include "recentprojectwidget.h"
 #include "projectpanewidget.h"
-#include "projectutils.h"
+#include <mvvm/project/projectutils.h>
 #include "styleutils.h"
 #include <QDebug>
 #include <QGuiApplication>

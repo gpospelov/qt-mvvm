@@ -8,7 +8,7 @@
 // ************************************************************************** //
 
 #include "projectmanager.h"
-#include "projectutils.h"
+#include <mvvm/project/projectutils.h>
 #include <mvvm/interfaces/applicationmodelsinterface.h>
 #include <mvvm/interfaces/projectinterface.h>
 
