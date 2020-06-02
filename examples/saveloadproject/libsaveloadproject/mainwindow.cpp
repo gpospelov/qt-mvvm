@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include "mainwindow.h"
+#include "actionmanager.h"
 #include <QCloseEvent>
 #include <QCoreApplication>
 #include <QSettings>
@@ -19,7 +20,7 @@ const QString size_key = "size";
 const QString pos_key = "pos";
 } // namespace
 
-MainWindow::MainWindow()
+MainWindow::MainWindow() : m_actionManager(new ActionManager(this))
 {
     init_application();
     setCentralWidget(new QWidget);

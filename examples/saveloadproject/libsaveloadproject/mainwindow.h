@@ -12,6 +12,8 @@
 
 #include <QMainWindow>
 
+class ActionManager;
+
 //! Application main window.
 
 class MainWindow : public QMainWindow
@@ -28,6 +30,8 @@ private:
     void init_application();
     void init_views();
     void write_settings();
+
+    ActionManager* m_actionManager{nullptr};
 };
 
 #endif //  MAINWINDOW_H

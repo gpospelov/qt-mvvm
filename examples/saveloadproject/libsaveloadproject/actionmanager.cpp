@@ -10,10 +10,24 @@
 #include "actionmanager.h"
 #include <QAction>
 #include <QDebug>
+#include <QMainWindow>
+#include <QMenuBar>
 
-ActionManager::ActionManager(QObject* parent) : QObject(parent)
+ActionManager::ActionManager(QMainWindow *mainwindow) : QObject(mainwindow), m_mainWindow(mainwindow)
 {
     createActions();
+    createMenus(m_mainWindow->menuBar());
+}
+
+void ActionManager::createMenus(QMenuBar* menubar)
+{
+    auto fileMenu = menubar->addMenu("&File");
+    fileMenu->addAction(m_createNewProjectAction);
+    fileMenu->addAction(m_openExistingProjectAction);
+
+    fileMenu->addSeparator();
+    fileMenu->addAction(m_saveCurrentProjectAction);
+    fileMenu->addAction(m_saveProjectAsAction);
 }
 
 void ActionManager::onCreateNewProject()
@@ -23,7 +37,7 @@ void ActionManager::onCreateNewProject()
 
 void ActionManager::onOpenExistingProject(const QString& dirname)
 {
-    qDebug() << "ActionManager::onOpenExistingProject()" , dirname;
+    qDebug() << "ActionManager::onOpenExistingProject()" << dirname;
 }
 
 void ActionManager::onSaveCurrentProject()
@@ -62,5 +76,5 @@ void ActionManager::createActions()
     m_saveProjectAsAction = new QAction("Save &As...", this);
     m_saveProjectAsAction->setShortcuts(QKeySequence::SaveAs);
     m_saveProjectAsAction->setStatusTip("Save project under different name");
-    connect(m_saveProjectAsAction, &QAction::triggered, this, &ActionManager::onSaveCurrentProject);
+    connect(m_saveProjectAsAction, &QAction::triggered, this, &ActionManager::onSaveProjectAs);
 }
