@@ -17,6 +17,7 @@
 
 namespace ModelView
 {
+
 class SessionModel;
 class ApplicationModelsInterface;
 class ProjectInterface;

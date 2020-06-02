@@ -16,9 +16,9 @@
 
 namespace ModelView
 {
+
 class SessionModel;
 class ModelHasChangedController;
-}
 
 //! Tracks changes in all models.
 //! Allows to check if one or more models have been changed since last call of ::resetChanged().
@@ -32,7 +32,7 @@ class ProjectChangedController
 {
 public:
     using callback_t = std::function<void()>;
-    ProjectChangedController(const std::vector<ModelView::SessionModel*>& models,
+    ProjectChangedController(const std::vector<SessionModel*>& models,
                              callback_t project_changed_callback = {});
     ~ProjectChangedController();
 
@@ -44,5 +44,7 @@ private:
     struct ProjectChangedControllerImpl;
     std::unique_ptr<ProjectChangedControllerImpl> p_impl;
 };
+
+} // namespace ModelView
 
 #endif // MVVM_PROJECT_PROJECTCHANGECONTROLLER_H
