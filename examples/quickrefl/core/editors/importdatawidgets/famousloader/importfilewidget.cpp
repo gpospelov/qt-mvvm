@@ -60,9 +60,6 @@ void ImportFileWidget::createWidgets()
     side_layout->addStretch();
     main_layout->addLayout(side_layout);
 
-    // Set the size policy
-    p_list_view->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Ignored);
-
     // Connect the buttons
     connect(add_button, &QToolButton::clicked, this, &ImportFileWidget::addFiles);
     connect(reset_button, &QToolButton::clicked, this, &ImportFileWidget::resetFiles);

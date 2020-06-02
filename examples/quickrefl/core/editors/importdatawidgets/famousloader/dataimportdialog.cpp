@@ -91,7 +91,6 @@ void DataLoaderDialog::setUpFileListSpace(QGroupBox* conainer)
     layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
     conainer->setMinimumHeight(p_import_file_list->minimumHeight());
-    conainer->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 
     connect(p_import_file_list, &ImportFileWidget::filesChanged,
             [this](const std::vector<std::string>& files) {
