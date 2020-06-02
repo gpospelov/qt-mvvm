@@ -15,6 +15,8 @@
 
 class DataCollectionItem;
 class RealDataStruct;
+class TypeUnit;
+class DataGroupItem;
 
 namespace ModelView
 {
@@ -27,7 +29,12 @@ class RealDataModel : public ModelView::SessionModel
 public:
     RealDataModel();
     DataCollectionItem* insertDataNode();
-    void addDataToNode(DataCollectionItem* data_set_item, RealDataStruct data_struct);
+    void addDataToNode(DataCollectionItem* data_node, RealDataStruct data_struct);
+
+private:
+    DataGroupItem* hasTypeUnit(DataCollectionItem* data_node, TypeUnit& type_unit) const;
+    DataGroupItem* addGroupItem(DataCollectionItem* data_node);
+    void addDataToGroup(DataGroupItem* data_group, RealDataStruct& data_struct);
 };
 
 #endif //  REALDATAMODEL_H

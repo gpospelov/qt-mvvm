@@ -44,10 +44,12 @@ void ImportFileWidget::createWidgets()
 
     // Set up the buttons
     auto add_button = new QToolButton(this);
+    add_button->setObjectName("add_file_button");
     add_button->setIcon(QIcon(":/icons/file-plus.svg"));
     add_button->setToolTip("Add further files to the import procedure.");
 
     auto reset_button = new QToolButton(this);
+    add_button->setObjectName("reset_file_button");
     reset_button->setIcon(QIcon(":/icons/file-remove.svg"));
     reset_button->setToolTip("Remove all currently selected files.");
 
@@ -57,9 +59,6 @@ void ImportFileWidget::createWidgets()
     side_layout->addWidget(reset_button);
     side_layout->addStretch();
     main_layout->addLayout(side_layout);
-
-    // Set the size policy
-    p_list_view->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Ignored);
 
     // Connect the buttons
     connect(add_button, &QToolButton::clicked, this, &ImportFileWidget::addFiles);
@@ -75,16 +74,20 @@ int ImportFileWidget::currentSelection() const
 }
 
 //! Read the settings froma QSetting structure
-void ImportFileWidget::readSettings(QSettings& settings)
+void ImportFileWidget::readSettings()
 {
+    QSettings settings;
+
     settings.beginGroup("Files");
     m_default_path = settings.value("last_path", ".").toString();
     settings.endGroup();
 }
 
 //! Write the settings from a QSetting structure
-void ImportFileWidget::writeSettings(QSettings& settings)
+void ImportFileWidget::writeSettings()
 {
+    QSettings settings;
+
     settings.beginGroup("Files");
     settings.setValue("last_path", m_default_path);
     settings.endGroup();
@@ -94,7 +97,8 @@ void ImportFileWidget::writeSettings(QSettings& settings)
 void ImportFileWidget::addFiles()
 {
     QStringList files = QFileDialog::getOpenFileNames(this, "Select one or more files to load",
-                                                      m_default_path, "Text (*.txt);; CSV (*.csv)");
+                                                      m_default_path, "Text (*.txt);; CSV (*.csv)",
+                                                      nullptr, QFileDialog::DontUseNativeDialog);
     if (files.count() > 0)
         m_default_path = QFileInfo(files[0]).absoluteDir().absolutePath();
 

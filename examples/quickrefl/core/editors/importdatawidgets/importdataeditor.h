@@ -11,6 +11,7 @@
 #define IMPORTDATAEDITOR_H
 
 #include <QWidget>
+#include <string>
 
 namespace ModelView
 {
@@ -22,11 +23,13 @@ class PropertyTreeView;
 namespace DataImportLogic
 {
 class ImportOutput;
+class ParsedFileOutptut;
 }
 
 class RealDataModel;
 class QToolBar;
 class QBoxLayout;
+class RealDataStruct;
 
 //! Main editor to import user data.
 
@@ -43,6 +46,7 @@ private:
 
     void invokeImportDialog();
     void onImportDialogAccept(DataImportLogic::ImportOutput import_output);
+    RealDataStruct convertToRealDataStruct(const std::string& path, const DataImportLogic::ParsedFileOutptut* import_output, const int column);
 
 private:
     RealDataModel* model{nullptr};

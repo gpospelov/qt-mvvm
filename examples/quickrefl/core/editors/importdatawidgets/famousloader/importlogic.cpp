@@ -112,8 +112,14 @@ std::string ImportLogic::getPreview(const int& row) const
                 }
             }
         }
-        output += std::string("<div><font color=\"") + color_scheme.at(i) + std::string("\">")
-                  + formated_line + std::string("</font>") + std::string("</div>");
+        
+        if (formated_line == ""){
+            output += "<hr>";
+        } else {
+            output += std::string("<div><font color=\"") + color_scheme.at(i) + std::string("\">")
+                    + formated_line + std::string("</font>") + std::string("</div>");
+        }
+
     }
     return output;
 }

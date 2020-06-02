@@ -37,7 +37,7 @@ template <typename T> auto get_min_max(const std::vector<GraphItem*>& graphs, T 
 
 } // namespace
 
-GraphViewportItem::GraphViewportItem() : ViewportItem(Constants::GraphViewportItemType)
+GraphViewportItem::GraphViewportItem(const std::string& model_type) : ViewportItem(model_type)
 {
     register_xy_axes();
     registerTag(TagInfo::universalTag(T_ITEMS, {Constants::GraphItemType}), /*set_default*/ true);

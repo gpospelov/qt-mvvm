@@ -25,7 +25,7 @@ class GraphItem;
 class CORE_EXPORT GraphViewportItem : public ViewportItem
 {
 public:
-    GraphViewportItem();
+    GraphViewportItem(const std::string& model_type = Constants::GraphViewportItemType);
 
     std::vector<GraphItem*> graphItems() const;
 

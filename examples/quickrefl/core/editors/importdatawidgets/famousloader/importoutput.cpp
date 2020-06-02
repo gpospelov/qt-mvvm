@@ -27,6 +27,11 @@ ParsedFileOutptut::ParsedFileOutptut(const DataStructure& data_structure) : m_ax
 {
     for (int i = 0; i < data_structure.columnCount(); ++i) {
         auto column = data_structure.column(i);
+
+        // Ignore the columns marked as such
+        if (column->type() == "Ignore")
+            continue;
+
         if (column->type() == "Axis") {
             m_axis_colum = std::make_unique<DataColumn>(*column);
         } else {

@@ -16,59 +16,22 @@
 
 namespace ModelView
 {
-    class ContainerItem;
+class ContainerItem;
 }
 
-// ----------------------------------------------------------------
-
-// FIXME to disantangle ModelView and FamousLoader these structures should be in separate file.
-
-//! Convenience data transfer header information
-struct TypeUnit
-{
-    std::string type;
-    std::pair<std::string,std::string> unit_pair;
-};
+class TypeUnit;
+class RealDataStruct;
 
 // ----------------------------------------------------------------
-//! Convenience data transfer structure
-struct RealDataStruct 
-{
-public:
-    std::string type;
-    std::string name;
-
-    std::vector<double> axis;
-    std::string axis_name;
-    std::string axis_unit;
-
-    std::vector<double> data;
-    std::string data_name;
-    std::string data_unit;
-};
-
-// ----------------------------------------------------------------
-//! This will hold the data for one particular type (and pair of intensity and axis units) 
+//! This will hold the data for one particular type (and pair of intensity and axis units)
 class DataGroupItem : public ModelView::GraphViewportItem
 {
 public:
     static inline const std::string P_DATA = "P_DATA";
 
-    // FIXME 1)
-    // All items derived from SessionItem require unique modelType and registration on model side.
-    // ModelType should be passed to parent constructor.
-    // This is necessary for the serialization and undo/redo.
-
-    // See ViewportAxisItem as an example (it receives modelType from the derived class).
-    // It is not intended to act on its own, only serve as a base class.
-
-    // FIXME 2
-    // Because of the serialization and undo/redo, it is important not to have any custom constructors.
-
-    DataGroupItem(TypeUnit &type_unit);
-    void insertData(RealDataStruct& data_struct);
+    DataGroupItem();
+    void setTypeUnit(TypeUnit& type_unit);
     int itemCount() const;
-
 };
 
 // ----------------------------------------------------------------
@@ -78,13 +41,9 @@ class DataCollectionItem : public ModelView::CompoundItem
 public:
     DataCollectionItem();
     void insertData(RealDataStruct& data_struct);
+    DataGroupItem* getDataGroup(const std::string tag) const;
 
-private:
-    DataGroupItem* hasTypeUnit(TypeUnit& type_unit) const;
-    DataGroupItem* addTypeUnit(TypeUnit& type_unit);
-
-private:
-    const std::string data_group_tag = "data_groups";
+    inline static const std::string data_group_tag = "data_groups";
 };
 
 #endif // DATASETITEM_H

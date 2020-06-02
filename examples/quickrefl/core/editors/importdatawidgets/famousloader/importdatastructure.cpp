@@ -127,6 +127,13 @@ void DataStructure::addColumn(const std::string& header)
         new_column = std::make_unique<DataColumn>(header);
     }
 
+    if (m_history.size()>m_data_columns.size()+1){
+        new_column->setName(m_history.at(m_data_columns.size()).at(0));
+        new_column->setType(m_history.at(m_data_columns.size()).at(1));
+        new_column->setUnit(m_history.at(m_data_columns.size()).at(2));
+        new_column->setMultiplier(std::stod(m_history.at(m_data_columns.size()).at(3)));
+    }
+
     m_data_columns.push_back(std::move(new_column));
 }
 
@@ -164,6 +171,29 @@ int DataStructure::columnCount() const
             ++column_size;
     }
     return column_size;
+}
+
+//! This will set the column history to remember loading
+void DataStructure::setColumnHistory(DataImportUtils::string_data history)
+{
+    m_history = history;
+}
+
+//! This provide the column history meant to be stored in QSettings
+DataImportUtils::string_data DataStructure::columnHistory() const
+{
+    DataImportUtils::string_data history;
+
+    for (int i = 0; i < columnCount(); ++i){
+        history.push_back(std::vector<std::string> {
+            column(i)->name(),
+            column(i)->type(),
+            column(i)->unit(),
+            std::to_string(column(i)->multiplier())
+        });
+    }
+
+    return history;
 }
 
 } // end of namespace DataImportLogic

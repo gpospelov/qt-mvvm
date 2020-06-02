@@ -15,7 +15,7 @@
 
 using namespace ModelView;
 
-GraphItem::GraphItem() : CompoundItem(Constants::GraphItemType)
+GraphItem::GraphItem(const std::string& model_type) : CompoundItem(model_type)
 {
     addProperty<LinkedItem>(P_LINK)->setDisplayName("Link");
     addProperty<TextItem>(P_GRAPH_TITLE)->setDisplayName("Graph title");

@@ -9,6 +9,7 @@
 
 #include "dataimportdialog.h"
 
+#include "importutils.h"
 #include "importfilewidget.h"
 #include "importfilterwidget.h"
 #include "importtableview.h"
@@ -16,7 +17,6 @@
 
 #include <QDialogButtonBox>
 #include <QHBoxLayout>
-#include <QSettings>
 #include <QSizePolicy>
 #include <QSplitter>
 #include <QVBoxLayout>
@@ -42,10 +42,7 @@ DataLoaderDialog::DataLoaderDialog(QWidget* parent) : QDialog(parent)
     p_selection_space = new QTabWidget(v_splitter);
 
     // The dialog buttons
-    p_merge_check = new QCheckBox("Merge into one dataset");
-    p_merge_check->setChecked(true);
     auto button_box = new QDialogButtonBox(QDialogButtonBox::Cancel | QDialogButtonBox::Ok);
-    dynamic_cast<QBoxLayout*>(button_box->layout())->insertWidget(0, p_merge_check);
     connect(button_box, SIGNAL(accepted()), this, SLOT(accept()));
     connect(button_box, SIGNAL(rejected()), this, SLOT(reject()));
 
@@ -77,7 +74,6 @@ DataLoaderDialog::DataLoaderDialog(QWidget* parent) : QDialog(parent)
 DataImportLogic::ImportOutput DataLoaderDialog::result()
 {
     auto result = p_data_import_logic->getFinalOutput();
-    result.setMerge(p_merge_check->isChecked());
     return result;
 }
 
@@ -91,7 +87,6 @@ void DataLoaderDialog::setUpFileListSpace(QGroupBox* conainer)
     layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
     conainer->setMinimumHeight(p_import_file_list->minimumHeight());
-    conainer->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 
     connect(p_import_file_list, &ImportFileWidget::filesChanged,
             [this](const std::vector<std::string>& files) {
@@ -162,8 +157,9 @@ void DataLoaderDialog::writeSettings()
     settings.setValue("pos", pos());
     settings.endGroup();
 
-    p_import_file_list->writeSettings(settings);
-    p_parameter_dialog->writeSettings(settings);
+    p_import_file_list->writeSettings();
+    p_parameter_dialog->writeSettings();
+    writeImportLogicSettings();
 }
 
 //! read the Qsettings
@@ -176,8 +172,54 @@ void DataLoaderDialog::readSettings()
     move(settings.value("pos", QPoint(200, 200)).toPoint());
     settings.endGroup();
 
-    p_import_file_list->readSettings(settings);
-    p_parameter_dialog->readSettings(settings);
+    p_import_file_list->readSettings();
+    p_parameter_dialog->readSettings();
+    readImportLogicSettings();
+}
+
+//! Write the QSettings related to the import logic
+void DataLoaderDialog::writeImportLogicSettings()
+{
+    QSettings settings;
+
+    settings.beginGroup("ColumnHistory");
+    settings.remove("");
+    settings.endGroup();
+
+    auto history = p_data_import_logic->dataStructure()->columnHistory();
+    settings.beginGroup("ColumnHistory");
+    for (int i = 0 ; i < history.size(); ++i){
+        settings.beginGroup(QString::number(i));
+        settings.setValue("Name", QString::fromStdString(history.at(i).at(0)));
+        settings.setValue("Type", QString::fromStdString(history.at(i).at(1)));
+        settings.setValue("Unit", QString::fromStdString(history.at(i).at(2)));
+        settings.setValue("Multiplier", QString::fromStdString(history.at(i).at(3)));
+        settings.endGroup();
+    }
+    settings.endGroup();
+}
+
+//! read the Qsettings for the import logic
+void DataLoaderDialog::readImportLogicSettings()
+{
+    QSettings settings;
+    DataImportUtils::string_data history;
+    settings.beginGroup("ColumnHistory");
+    if (settings.childGroups().count() != 0) {
+        for (auto group_name : settings.childGroups()) {
+            settings.beginGroup(group_name);
+            history.push_back(std::vector<std::string> {
+                settings.value("Name", "").toString().toStdString(),
+                settings.value("Type", "").toString().toStdString(),
+                settings.value("Unit", "").toString().toStdString(),
+                settings.value("Multiplier", "").toString().toStdString(),
+            });
+            settings.endGroup();
+        }
+    }
+    settings.endGroup();
+
+    p_data_import_logic->dataStructure()->setColumnHistory(history);
 }
 
 void DataLoaderDialog::accept()
