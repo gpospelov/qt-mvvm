@@ -14,6 +14,8 @@
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/utils/fileutils.h>
 
+using namespace ModelView;
+
 namespace
 {
 const std::string json_extention = ".json";
@@ -23,7 +25,7 @@ const std::string untitled_name = "Untitled";
 //! Suggests file name which can be used to store json content of given model.
 //! Uses the model type to construct a filename: MaterialModel -> materialmodel.json
 
-std::string ProjectUtils::SuggestFileName(const ModelView::SessionModel& model)
+std::string ProjectUtils::SuggestFileName(const SessionModel& model)
 {
     std::string result = model.modelType();
     std::transform(result.begin(), result.end(), result.begin(), ::tolower);
@@ -35,21 +37,21 @@ std::string ProjectUtils::SuggestFileName(const ModelView::SessionModel& model)
 
 bool ProjectUtils::IsPossibleProjectDir(const std::string& project_dir)
 {
-    return !ModelView::Utils::FindFiles(project_dir, json_extention).empty();
+    return !Utils::FindFiles(project_dir, json_extention).empty();
 }
 
 //! Creates new untitled project.
 
-std::unique_ptr<ModelView::ProjectInterface>
-ProjectUtils::CreateUntitledProject(ModelView::ApplicationModelsInterface* models,
+std::unique_ptr<ProjectInterface>
+ProjectUtils::CreateUntitledProject(ApplicationModelsInterface* models,
                                     std::function<void()> project_changed_callback)
 {
-    return std::make_unique<ModelView::Project>(models, project_changed_callback);
+    return std::make_unique<Project>(models, project_changed_callback);
 }
 
 //! Returns a MainWindow title for given project.
 
-std::string ProjectUtils::ProjectWindowTitle(const ModelView::ProjectInterface& project)
+std::string ProjectUtils::ProjectWindowTitle(const ProjectInterface& project)
 {
     return ProjectWindowTitle(project.projectDir(), project.isModified());
 }

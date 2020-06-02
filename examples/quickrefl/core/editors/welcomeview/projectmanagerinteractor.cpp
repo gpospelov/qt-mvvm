@@ -45,7 +45,7 @@ std::string ProjectManagerInteractor::onSelectDirRequest()
         return {};
 
     qDebug() << "   onSelectDirRequest() 1.1";
-    if (!ProjectUtils::IsPossibleProjectDir(dirname)) {
+    if (!ModelView::ProjectUtils::IsPossibleProjectDir(dirname)) {
         qDebug() << "   onSelectDirRequest() 1.2";
         QMessageBox msgBox;
         msgBox.setText(
