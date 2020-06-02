@@ -9,10 +9,10 @@
 
 #include "importdataeditor.h"
 #include "dataimportdialog.h"
+#include "datasetconvenience.h"
 #include "datasetitem.h"
 #include "importoutput.h"
 #include "realdatamodel.h"
-#include "datasetconvenience.h"
 #include "styleutils.h"
 
 #include <QAction>
@@ -29,6 +29,7 @@
 #include <mvvm/standarditems/containeritem.h>
 #include <mvvm/standarditems/graphviewportitem.h>
 #include <mvvm/utils/fileutils.h>
+#include <mvvm/viewmodel/viewmodel.h>
 #include <mvvm/widgets/standardtreeviews.h>
 
 using namespace ModelView;
@@ -43,6 +44,9 @@ ImportDataEditor::ImportDataEditor(RealDataModel* model, QWidget* parent)
     layout->addLayout(create_bottom_layout());
     setup_toolbar();
     setup_views();
+
+    topitems_tree->viewModel()->setRootSessionItem(
+        ModelView::Utils::TopItem<DataCollectionItem>(model));
 }
 
 void ImportDataEditor::setup_toolbar()
@@ -96,16 +100,8 @@ void ImportDataEditor::invokeImportDialog()
 //! Process the accepted state
 void ImportDataEditor::onImportDialogAccept(DataImportLogic::ImportOutput import_output)
 {
-    DataCollectionItem* data_node;
+    DataCollectionItem* data_node = ModelView::Utils::TopItem<DataCollectionItem>(model);
     for (auto& path : import_output.keys()) {
-
-        // Create only data_node if (first and merge) or (not merge)
-        bool merge = import_output.merge();
-        bool first = (path == *(import_output.keys().begin()));
-        if ((merge && first) || (!merge) )
-            data_node = model->insertDataNode();
-
-        // Populate the data into the node
         auto parsed_file_output = import_output[path];
         for (int i = 0; i < parsed_file_output->dataCount(); ++i) {
             auto data_struct = convertToRealDataStruct(path, parsed_file_output, i);
@@ -115,7 +111,10 @@ void ImportDataEditor::onImportDialogAccept(DataImportLogic::ImportOutput import
 }
 
 //! Convert data column to RealDatastructure
-RealDataStruct ImportDataEditor::convertToRealDataStruct(const std::string& path, const DataImportLogic::ParsedFileOutptut* import_output, const int column)
+RealDataStruct
+ImportDataEditor::convertToRealDataStruct(const std::string& path,
+                                          const DataImportLogic::ParsedFileOutptut* import_output,
+                                          const int column)
 {
     auto data_struct = RealDataStruct();
 

@@ -39,6 +39,7 @@ std::unique_ptr<ItemCatalogue> CreateItemCatalogue()
 RealDataModel::RealDataModel() : SessionModel("RealDataModel")
 {
     setItemCatalogue(CreateItemCatalogue());
+    insertDataNode();
 }
 
 //! Create a new data node
@@ -76,8 +77,8 @@ void RealDataModel::addDataToGroup(DataGroupItem* data_group, RealDataStruct& da
     std::vector<double> axis_vec;
     std::vector<double> data_vec;
 
-    for (int i = 0; i < data_struct.data.size(); ++i){
-        if (!std::isnan(data_struct.axis.at(i)) && !std::isnan(data_struct.data.at(i))){
+    for (int i = 0; i < data_struct.data.size(); ++i) {
+        if (!std::isnan(data_struct.axis.at(i)) && !std::isnan(data_struct.data.at(i))) {
             axis_vec.push_back(data_struct.axis.at(i));
             data_vec.push_back(data_struct.data.at(i));
         }
