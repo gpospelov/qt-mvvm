@@ -17,9 +17,8 @@
 namespace ModelView
 {
 class SessionModel;
-}
-
 class ModelHasChangedController;
+}
 
 //! Tracks changes in all models.
 //! Allows to check if one or more models have been changed since last call of ::resetChanged().
