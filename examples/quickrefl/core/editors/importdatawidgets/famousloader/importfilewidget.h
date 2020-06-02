@@ -33,8 +33,8 @@ public:
 
     int currentSelection() const;
 
-    void readSettings(QSettings& settings);
-    void writeSettings(QSettings& settings);
+    void readSettings();
+    void writeSettings();
 
 signals:
     void filesChanged(std::vector<std::string> files);

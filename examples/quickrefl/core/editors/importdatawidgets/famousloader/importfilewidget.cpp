@@ -74,16 +74,20 @@ int ImportFileWidget::currentSelection() const
 }
 
 //! Read the settings froma QSetting structure
-void ImportFileWidget::readSettings(QSettings& settings)
+void ImportFileWidget::readSettings()
 {
+    QSettings settings;
+
     settings.beginGroup("Files");
     m_default_path = settings.value("last_path", ".").toString();
     settings.endGroup();
 }
 
 //! Write the settings from a QSetting structure
-void ImportFileWidget::writeSettings(QSettings& settings)
+void ImportFileWidget::writeSettings()
 {
+    QSettings settings;
+
     settings.beginGroup("Files");
     settings.setValue("last_path", m_default_path);
     settings.endGroup();

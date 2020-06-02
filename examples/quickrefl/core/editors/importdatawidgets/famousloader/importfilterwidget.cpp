@@ -150,8 +150,10 @@ void ImportFilterWidget::removeLineFilter()
 }
 
 //! Read the settings froma QSetting structure
-void ImportFilterWidget::readSettings(QSettings& settings)
+void ImportFilterWidget::readSettings()
 {
+    QSettings settings;
+
     settings.beginGroup("Filters");
     if (settings.childGroups().count() != 0) {
         for (auto group_name : settings.childGroups()) {
@@ -182,8 +184,10 @@ void ImportFilterWidget::readSettings(QSettings& settings)
 }
 
 //! Write the settings from a QSetting structure
-void ImportFilterWidget::writeSettings(QSettings& settings)
+void ImportFilterWidget::writeSettings()
 {
+    QSettings settings;
+    
     settings.beginGroup("Filters");
     settings.remove("");
     settings.endGroup();

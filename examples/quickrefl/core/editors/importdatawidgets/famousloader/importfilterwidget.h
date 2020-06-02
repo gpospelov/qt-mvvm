@@ -41,8 +41,9 @@ public:
 
     void addLineFilter();
     void removeLineFilter();
-    void readSettings(QSettings& settings);
-    void writeSettings(QSettings& settings);
+    
+    void readSettings();
+    void writeSettings();
 
 signals:
     void parameterChanged();

@@ -157,9 +157,9 @@ void DataLoaderDialog::writeSettings()
     settings.setValue("pos", pos());
     settings.endGroup();
 
-    p_import_file_list->writeSettings(settings);
-    p_parameter_dialog->writeSettings(settings);
-    writeImportLogicSettings(settings);
+    p_import_file_list->writeSettings();
+    p_parameter_dialog->writeSettings();
+    writeImportLogicSettings();
 }
 
 //! read the Qsettings
@@ -172,14 +172,16 @@ void DataLoaderDialog::readSettings()
     move(settings.value("pos", QPoint(200, 200)).toPoint());
     settings.endGroup();
 
-    p_import_file_list->readSettings(settings);
-    p_parameter_dialog->readSettings(settings);
-    readImportLogicSettings(settings);
+    p_import_file_list->readSettings();
+    p_parameter_dialog->readSettings();
+    readImportLogicSettings();
 }
 
 //! Write the QSettings related to the import logic
-void DataLoaderDialog::writeImportLogicSettings(QSettings &settings)
+void DataLoaderDialog::writeImportLogicSettings()
 {
+    QSettings settings;
+
     settings.beginGroup("ColumnHistory");
     settings.remove("");
     settings.endGroup();
@@ -198,8 +200,9 @@ void DataLoaderDialog::writeImportLogicSettings(QSettings &settings)
 }
 
 //! read the Qsettings for the import logic
-void DataLoaderDialog::readImportLogicSettings(QSettings &settings)
+void DataLoaderDialog::readImportLogicSettings()
 {
+    QSettings settings;
     DataImportUtils::string_data history;
     settings.beginGroup("ColumnHistory");
     if (settings.childGroups().count() != 0) {

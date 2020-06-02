@@ -50,8 +50,8 @@ private:
     void readSettings();
     void writeSettings();
 
-    void readImportLogicSettings(QSettings &settings);
-    void writeImportLogicSettings(QSettings &settings);
+    void readImportLogicSettings();
+    void writeImportLogicSettings();
 
 private slots:
     void selectedFileChanged();
