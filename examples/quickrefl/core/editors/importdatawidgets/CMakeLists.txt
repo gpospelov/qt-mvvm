@@ -1,6 +1,8 @@
 # Static library: quickreflcore.
 
 target_sources(quickreflcore PRIVATE
+    dataselectionmodel.cpp
+    dataselectionmodel.h
     importdataeditor.cpp
     importdataeditor.h
 )
