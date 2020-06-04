@@ -27,6 +27,7 @@
 #include <mvvm/model/modelutils.h>
 #include <mvvm/plotting/graphcanvas.h>
 #include <mvvm/standarditems/containeritem.h>
+#include <mvvm/standarditems/graphitem.h>
 #include <mvvm/standarditems/graphviewportitem.h>
 #include <mvvm/utils/fileutils.h>
 #include <mvvm/viewmodel/viewmodel.h>
@@ -63,17 +64,19 @@ void ImportDataEditor::setup_toolbar()
 void ImportDataEditor::setup_views()
 {
     // make left tree looking on container with viewports
-    // auto root_item = model->insertItem<ModelView::SessionItem>();
     topitems_tree->setRootSessionItem(model->rootItem());
 
     // make property tree showing the item selected
     auto on_item_selected = [this](SessionItem* item) {
         property_tree->setItem(item);
-        // FIXME if viewport contains lots of graphs we probably would like to show only single
-        // graph on graph selection. For that we have to implement for GraphViewportItem
-        // corresponding functionality (hide items not from the list, for example).
-        if (auto viewport = dynamic_cast<ModelView::GraphViewportItem*>(item); viewport)
+        if (auto viewport = dynamic_cast<ModelView::GraphViewportItem*>(item); viewport) {
+            viewport->resetSelected();
             graph_canvas->setItem(viewport);
+        } else if (auto graph_item = dynamic_cast<ModelView::GraphItem*>(item); graph_item) {
+            auto viewport = dynamic_cast<ModelView::GraphViewportItem*>(graph_item->parent());
+            viewport->setSelected(std::vector<ModelView::GraphItem*>{graph_item});
+            graph_canvas->setItem(viewport);
+        }
     };
     connect(topitems_tree, &TopItemsTreeView::itemSelected, on_item_selected);
 }
