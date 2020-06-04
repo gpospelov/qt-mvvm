@@ -20,6 +20,7 @@ GraphItem::GraphItem(const std::string& model_type) : CompoundItem(model_type)
     addProperty<LinkedItem>(P_LINK)->setDisplayName("Link");
     addProperty<TextItem>(P_GRAPH_TITLE)->setDisplayName("Graph title");
     addProperty(P_COLOR, QColor(Qt::black))->setDisplayName("Color");
+    addProperty(P_DISPLAYED, true)->setDisplayName("Displayed");
 }
 
 //! Sets link to the data item.
