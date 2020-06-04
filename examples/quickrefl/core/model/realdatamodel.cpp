@@ -12,6 +12,7 @@
 #include "datasetitem.h"
 
 #include <mvvm/model/itemcatalogue.h>
+#include <mvvm/model/modelutils.h>
 #include <mvvm/standarditems/axisitems.h>
 #include <mvvm/standarditems/containeritem.h>
 #include <mvvm/standarditems/data1ditem.h>
@@ -96,6 +97,30 @@ void RealDataModel::addDataToGroup(DataGroupItem* data_group, RealDataStruct& da
     graph->setDataItem(data);
 }
 
+//! Insert the data into the group item
+void RealDataModel::removeAllDataFromNode(DataCollectionItem* data_node)
+{
+    for (auto item: data_node->children()){
+        removeItem(item->parent(), item->parent()->tagRowOfItem(item));
+    }
+}
+
+//! Insert the data into the group item
+void RealDataModel::removeDataFromNode(std::vector<ModelView::SessionItem*> item_to_remove)
+{
+    for (auto item: item_to_remove){
+        if (auto group_item = dynamic_cast<DataGroupItem*>(item)){
+            for (auto temp_item: group_item->children()){
+                if (auto sub_item = dynamic_cast<GraphItem*>(temp_item))
+                    removeDataFromGroup(sub_item);
+            }
+            removeItem(group_item->parent(), group_item->parent()->tagRowOfItem(group_item));
+        } else if (auto subitem  = dynamic_cast<GraphItem*>(item)){
+            removeDataFromGroup(subitem);
+        }
+    }
+}
+
 //! Returns true on a h presence of a type
 DataGroupItem* RealDataModel::hasTypeUnit(DataCollectionItem* data_node, TypeUnit& type_unit) const
 {
@@ -109,4 +134,11 @@ DataGroupItem* RealDataModel::addGroupItem(DataCollectionItem* data_node)
 {
     auto item = insertItem<DataGroupItem>(data_node, {DataCollectionItem::data_group_tag, -1});
     return item;
+}
+
+//! Remove Graph and data items from the model
+void RealDataModel::removeDataFromGroup(GraphItem* item)
+{
+    removeItem(item->dataItem()->parent(), item->dataItem()->parent()->tagRowOfItem(item->dataItem()));
+    removeItem(item->parent(), item->parent()->tagRowOfItem(item));
 }

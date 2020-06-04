@@ -28,5 +28,7 @@
         <file>icons/file-remove.svg</file>
         <file>icons/playlist-plus.svg</file>
         <file>icons/playlist-remove.svg</file>
+        <file>icons/redo.svg</file>
+        <file>icons/undo.svg</file>
     </qresource>
 </RCC>
