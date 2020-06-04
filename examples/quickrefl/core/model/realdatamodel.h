@@ -22,7 +22,7 @@ namespace ModelView
 {
 class SessionItem;
 class GraphItem;
-}
+} // namespace ModelView
 
 //! The model to store imported reflectometry data.
 class RealDataModel : public ModelView::SessionModel

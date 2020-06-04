@@ -100,7 +100,7 @@ void RealDataModel::addDataToGroup(DataGroupItem* data_group, RealDataStruct& da
 //! Insert the data into the group item
 void RealDataModel::removeAllDataFromNode(DataCollectionItem* data_node)
 {
-    for (auto item: data_node->children()){
+    for (auto item : data_node->children()) {
         removeItem(item->parent(), item->parent()->tagRowOfItem(item));
     }
 }
@@ -108,14 +108,14 @@ void RealDataModel::removeAllDataFromNode(DataCollectionItem* data_node)
 //! Insert the data into the group item
 void RealDataModel::removeDataFromNode(std::vector<ModelView::SessionItem*> item_to_remove)
 {
-    for (auto item: item_to_remove){
-        if (auto group_item = dynamic_cast<DataGroupItem*>(item)){
-            for (auto temp_item: group_item->children()){
+    for (auto item : item_to_remove) {
+        if (auto group_item = dynamic_cast<DataGroupItem*>(item)) {
+            for (auto temp_item : group_item->children()) {
                 if (auto sub_item = dynamic_cast<GraphItem*>(temp_item))
                     removeDataFromGroup(sub_item);
             }
             removeItem(group_item->parent(), group_item->parent()->tagRowOfItem(group_item));
-        } else if (auto subitem  = dynamic_cast<GraphItem*>(item)){
+        } else if (auto subitem = dynamic_cast<GraphItem*>(item)) {
             removeDataFromGroup(subitem);
         }
     }
@@ -139,6 +139,7 @@ DataGroupItem* RealDataModel::addGroupItem(DataCollectionItem* data_node)
 //! Remove Graph and data items from the model
 void RealDataModel::removeDataFromGroup(GraphItem* item)
 {
-    removeItem(item->dataItem()->parent(), item->dataItem()->parent()->tagRowOfItem(item->dataItem()));
+    removeItem(item->dataItem()->parent(),
+               item->dataItem()->parent()->tagRowOfItem(item->dataItem()));
     removeItem(item->parent(), item->parent()->tagRowOfItem(item));
 }
