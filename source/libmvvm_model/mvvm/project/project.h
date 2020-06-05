@@ -22,7 +22,7 @@ class ApplicationModelsInterface;
 //! Project represents content of all application models in a folder on disk.
 //! Responsible for saving/loading application models to/from disk.
 
-class Project : public ModelView::ProjectInterface
+class CORE_EXPORT Project : public ModelView::ProjectInterface
 {
 public:
     using callback_t = std::function<void()>;
