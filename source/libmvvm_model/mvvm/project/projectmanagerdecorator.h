@@ -10,10 +10,10 @@
 #ifndef MVVM_PROJECT_PROJECTMANAGERDECORATOR_H
 #define MVVM_PROJECT_PROJECTMANAGERDECORATOR_H
 
-#include "project_types.h"
 #include <functional>
 #include <memory>
 #include <mvvm/interfaces/projectmanagerinterface.h>
+#include <mvvm/project/project_types.h>
 
 namespace ModelView
 {
@@ -26,7 +26,7 @@ class ApplicationModelsInterface;
 //! For example, on createNewProject it will check if previous project is saved, and will
 //! call external dialog save/discard/cancel via provided callback.
 
-class ProjectManagerDecorator : public ModelView::ProjectManagerInterface
+class CORE_EXPORT ProjectManagerDecorator : public ModelView::ProjectManagerInterface
 {
 public:
     using select_dir_callback_t = std::function<std::string()>;

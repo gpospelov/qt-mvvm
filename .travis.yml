@@ -4,8 +4,7 @@ sudo: required
 matrix:
   include:
     - os: linux
-      dist: bionic
-      services: xvfb
+      services: docker
       env: BUILD_TYPE=Release TESTS_AUTODISCOVERY=OFF CMAKE_DIRNAME="cmake_install"
     - os: osx
       osx_image: xcode11.3

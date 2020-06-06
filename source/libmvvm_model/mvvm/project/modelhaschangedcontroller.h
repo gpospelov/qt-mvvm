@@ -20,7 +20,7 @@ namespace ModelView
 //! Allows to check if model has been changed (e.g. modified, inserted or removed items) since last
 //! call of ::resetChanged().
 
-class ModelHasChangedController : public ModelListener<SessionModel>
+class CORE_EXPORT ModelHasChangedController : public ModelListener<SessionModel>
 {
 public:
     using callback_t = std::function<void()>;

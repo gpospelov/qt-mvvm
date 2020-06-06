@@ -133,3 +133,6 @@ Developers of larger GUI should know better what they need and probably
 have already implemented similar machinery.
 
 The project is under active development.
+
+.
+

@@ -10,11 +10,12 @@
 #ifndef MVVM_PROJECT_PROJECTMANAGER_H
 #define MVVM_PROJECT_PROJECTMANAGER_H
 
-#include <mvvm/interfaces/projectmanagerinterface.h>
 #include <functional>
 #include <memory>
+#include <mvvm/interfaces/projectmanagerinterface.h>
 
-namespace ModelView {
+namespace ModelView
+{
 class ApplicationModelsInterface;
 }
 
@@ -25,11 +26,12 @@ class ApplicationModelsInterface;
 //! the creation of a new project will be possible only if the old project is in a saved state. See
 //! description to the class methods.
 
-class ProjectManager : public ModelView::ProjectManagerInterface
+class CORE_EXPORT ProjectManager : public ModelView::ProjectManagerInterface
 {
 public:
     using callback_t = std::function<void()>;
-    ProjectManager(ModelView::ApplicationModelsInterface* app_models, callback_t project_changed = {});
+    ProjectManager(ModelView::ApplicationModelsInterface* app_models,
+                   callback_t project_changed = {});
     ~ProjectManager() override;
 
     ProjectManager(const ProjectManager& other) = delete;
