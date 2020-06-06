@@ -12,4 +12,3 @@ tar -zxf cmake-3.14.6-Linux-x86_64.tar.gz
 mv ./cmake-3.14.6-Linux-x86_64 ./${CMAKE_DIRNAME}
 rm cmake-3.14.6-Linux-x86_64.tar.gz
 cd ${TRAVIS_BUILD_DIR}
-
