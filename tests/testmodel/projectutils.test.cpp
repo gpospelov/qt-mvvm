@@ -7,15 +7,17 @@
 //
 // ************************************************************************** //
 
-#include "applicationmodelsinterface.h"
+#include <mvvm/interfaces/applicationmodelsinterface.h>
 #include "folderbasedtest.h"
 #include "google_test.h"
-#include "projectinterface.h"
-#include "projectutils.h"
+#include <mvvm/interfaces/projectinterface.h>
+#include <mvvm/project/projectutils.h>
 #include "test_utils.h"
 #include <mvvm/model/propertyitem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/utils/fileutils.h>
+
+using namespace ModelView;
 
 //! Tests of ProjectUtils namespace functions.
 
@@ -28,12 +30,12 @@ public:
     class ApplicationModels : public ApplicationModelsInterface
     {
     public:
-        std::unique_ptr<ModelView::SessionModel> sample_model;
-        ApplicationModels() : sample_model(std::make_unique<ModelView::SessionModel>("SampleModel"))
+        std::unique_ptr<SessionModel> sample_model;
+        ApplicationModels() : sample_model(std::make_unique<SessionModel>("SampleModel"))
         {
         }
 
-        std::vector<ModelView::SessionModel*> persistent_models() const override
+        std::vector<SessionModel*> persistent_models() const override
         {
             return {sample_model.get()};
         };
@@ -46,7 +48,7 @@ ProjectUtilsTest::~ProjectUtilsTest() = default;
 
 TEST_F(ProjectUtilsTest, SuggestFileName)
 {
-    ModelView::SessionModel model("TestModel");
+    SessionModel model("TestModel");
     EXPECT_EQ(std::string("testmodel.json"), ProjectUtils::SuggestFileName(model));
 }
 
@@ -65,7 +67,7 @@ TEST_F(ProjectUtilsTest, ProjectWindowTitle)
     // unmodified project without projectDir
     EXPECT_EQ(ProjectUtils::ProjectWindowTitle(*project), "Untitled");
 
-    models.sample_model->insertItem<ModelView::PropertyItem>();
+    models.sample_model->insertItem<PropertyItem>();
     EXPECT_EQ(ProjectUtils::ProjectWindowTitle(*project), "*Untitled");
 
     // saving in a project directory
@@ -73,7 +75,7 @@ TEST_F(ProjectUtilsTest, ProjectWindowTitle)
     EXPECT_EQ(ProjectUtils::ProjectWindowTitle(*project), testDir());
 
     // modifying
-    models.sample_model->insertItem<ModelView::PropertyItem>();
+    models.sample_model->insertItem<PropertyItem>();
     EXPECT_EQ(ProjectUtils::ProjectWindowTitle(*project), "*" + testDir());
 }
 

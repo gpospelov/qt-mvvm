@@ -7,14 +7,14 @@
 //
 // ************************************************************************** //
 
-#include "applicationmodelsinterface.h"
 #include "folderbasedtest.h"
 #include "google_test.h"
-#include "projectmanager.h"
 #include "test_utils.h"
 #include <cctype>
+#include <mvvm/interfaces/applicationmodelsinterface.h>
 #include <mvvm/model/propertyitem.h>
 #include <mvvm/model/sessionmodel.h>
+#include <mvvm/project/projectmanager.h>
 #include <mvvm/utils/fileutils.h>
 
 namespace
@@ -31,7 +31,7 @@ public:
     ProjectManagerTest() : FolderBasedTest("test_ProjectManager") {}
     ~ProjectManagerTest();
 
-    class ApplicationModels : public ApplicationModelsInterface
+    class ApplicationModels : public ModelView::ApplicationModelsInterface
     {
     public:
         std::unique_ptr<ModelView::SessionModel> sample_model;

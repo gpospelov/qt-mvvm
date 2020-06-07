@@ -7,13 +7,15 @@
 //
 // ************************************************************************** //
 
-#include "project.h"
-#include "applicationmodelsinterface.h"
-#include "projectchangecontroller.h"
-#include "projectutils.h"
 #include <functional>
 #include <mvvm/core/modeldocuments.h>
+#include <mvvm/interfaces/applicationmodelsinterface.h>
+#include <mvvm/project/project.h>
+#include <mvvm/project/projectchangecontroller.h>
+#include <mvvm/project/projectutils.h>
 #include <mvvm/utils/fileutils.h>
+
+using namespace ModelView;
 
 struct Project::ProjectImpl {
     ApplicationModelsInterface* app_models{nullptr};
@@ -26,18 +28,18 @@ struct Project::ProjectImpl {
     }
 
     //! Returns list of models which are subject to save/load.
-    std::vector<ModelView::SessionModel*> models() const { return app_models->persistent_models(); }
+    std::vector<SessionModel*> models() const { return app_models->persistent_models(); }
 
     //! Processes all models one by one and either save or load them to/from given directory.
     //! Template parameter `method` specifies ModelDocumentInterface's method to use.
     template <typename T> bool process(const std::string& dirname, T method)
     {
-        if (!ModelView::Utils::exists(dirname))
+        if (!Utils::exists(dirname))
             return false;
 
         for (auto model : models()) {
-            auto document = ModelView::CreateJsonDocument({model});
-            auto filename = ModelView::Utils::join(dirname, ProjectUtils::SuggestFileName(*model));
+            auto document = CreateJsonDocument({model});
+            auto filename = Utils::join(dirname, ProjectUtils::SuggestFileName(*model));
             std::invoke(method, document, filename);
         }
         project_dir = dirname;
@@ -63,13 +65,13 @@ std::string Project::projectDir() const
 
 bool Project::save(const std::string& dirname) const
 {
-    return p_impl->process(dirname, &ModelView::ModelDocumentInterface::save);
+    return p_impl->process(dirname, &ModelDocumentInterface::save);
 }
 
 //! Loads all models from the given directory.
 bool Project::load(const std::string& dirname)
 {
-    return p_impl->process(dirname, &ModelView::ModelDocumentInterface::load);
+    return p_impl->process(dirname, &ModelDocumentInterface::load);
 }
 
 bool Project::isModified() const

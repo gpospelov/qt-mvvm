@@ -3,7 +3,6 @@
 target_sources(quickreflcore PRIVATE
     applicationmodels.cpp
     applicationmodels.h
-    applicationmodelsinterface.h
     datasetitem.cpp
     datasetitem.h
     item_constants.h

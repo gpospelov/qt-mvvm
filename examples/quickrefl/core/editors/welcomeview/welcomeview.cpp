@@ -10,9 +10,9 @@
 #include "welcomeview.h"
 #include "applicationmodels.h"
 #include "openprojectwidget.h"
-#include "projectmanagerdecorator.h"
+#include <mvvm/project/projectmanagerdecorator.h>
 #include "projectmanagerinteractor.h"
-#include "projectutils.h"
+#include <mvvm/project/projectutils.h>
 #include "recentprojectwidget.h"
 #include "welcomeviewsettings.h"
 #include <QApplication>

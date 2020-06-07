@@ -7,11 +7,11 @@
 //
 // ************************************************************************** //
 
-#include "projectmanagerdecorator.h"
-#include "applicationmodelsinterface.h"
-#include "projectinterface.h"
-#include "projectmanager.h"
-#include "project_types.h"
+#include <mvvm/interfaces/applicationmodelsinterface.h>
+#include <mvvm/interfaces/projectinterface.h>
+#include <mvvm/project/project_types.h>
+#include <mvvm/project/projectmanager.h>
+#include <mvvm/project/projectmanagerdecorator.h>
 #include <stdexcept>
 
 namespace
@@ -21,14 +21,14 @@ const bool failed = false;
 } // namespace
 
 struct ProjectManagerDecorator::ProjectManagerImpl {
-    ApplicationModelsInterface* app_models{nullptr};
+    ModelView::ApplicationModelsInterface* app_models{nullptr};
     std::unique_ptr<ProjectManager> project_manager;
     select_dir_callback_t select_dir_callback;
     create_dir_callback_t create_dir_callback;
     answer_callback_t save_callback;
 
-    ProjectManagerImpl(ApplicationModelsInterface* models, select_dir_callback_t select_dir,
-                       create_dir_callback_t create_dir,
+    ProjectManagerImpl(ModelView::ApplicationModelsInterface* models,
+                       select_dir_callback_t select_dir, create_dir_callback_t create_dir,
                        project_modified_callback_t modified_callback)
         : app_models(models),
           project_manager(std::make_unique<ProjectManager>(models, modified_callback)),
@@ -109,7 +109,7 @@ struct ProjectManagerDecorator::ProjectManagerImpl {
 //! Constructor for ProjectManagerDecorator.
 //! Requires ApplicationModels and two callbacks to open projects, and create new projects.
 
-ProjectManagerDecorator::ProjectManagerDecorator(ApplicationModelsInterface* app_models,
+ProjectManagerDecorator::ProjectManagerDecorator(ModelView::ApplicationModelsInterface* app_models,
                                                  select_dir_callback_t select_dir,
                                                  create_dir_callback_t create_dir,
                                                  project_modified_callback_t modified_callback)

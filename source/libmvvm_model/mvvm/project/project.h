@@ -7,23 +7,27 @@
 //
 // ************************************************************************** //
 
-#ifndef PROJECT_H
-#define PROJECT_H
+#ifndef MVVM_PROJECT_PROJECT_H
+#define MVVM_PROJECT_PROJECT_H
 
-#include "projectinterface.h"
 #include <functional>
 #include <memory>
+#include <mvvm/interfaces/projectinterface.h>
+
+namespace ModelView
+{
 
 class ApplicationModelsInterface;
 
 //! Project represents content of all application models in a folder on disk.
 //! Responsible for saving/loading application models to/from disk.
 
-class Project : public ProjectInterface
+class CORE_EXPORT Project : public ModelView::ProjectInterface
 {
 public:
     using callback_t = std::function<void()>;
-    Project(ApplicationModelsInterface* app_models, callback_t project_changed_callback = {});
+    Project(ModelView::ApplicationModelsInterface* app_models,
+            callback_t project_changed_callback = {});
     ~Project();
 
     std::string projectDir() const override;
@@ -39,4 +43,6 @@ private:
     std::unique_ptr<ProjectImpl> p_impl;
 };
 
-#endif // PROJECT_H
+} // namespace ModelView
+
+#endif // MVVM_PROJECT_PROJECT_H

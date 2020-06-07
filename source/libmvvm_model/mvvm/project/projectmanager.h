@@ -7,14 +7,17 @@
 //
 // ************************************************************************** //
 
-#ifndef PROJECTMANAGER_H
-#define PROJECTMANAGER_H
+#ifndef MVVM_PROJECT_PROJECTMANAGER_H
+#define MVVM_PROJECT_PROJECTMANAGER_H
 
-#include "projectmanagerinterface.h"
 #include <functional>
 #include <memory>
+#include <mvvm/interfaces/projectmanagerinterface.h>
 
+namespace ModelView
+{
 class ApplicationModelsInterface;
+}
 
 //! Responsible for handling new/save/save-as/close Project logic, where the Project represents
 //! a collection of serialized application models in the project directory.
@@ -23,11 +26,12 @@ class ApplicationModelsInterface;
 //! the creation of a new project will be possible only if the old project is in a saved state. See
 //! description to the class methods.
 
-class ProjectManager : public ProjectManagerInterface
+class CORE_EXPORT ProjectManager : public ModelView::ProjectManagerInterface
 {
 public:
     using callback_t = std::function<void()>;
-    ProjectManager(ApplicationModelsInterface* app_models, callback_t project_changed = {});
+    ProjectManager(ModelView::ApplicationModelsInterface* app_models,
+                   callback_t project_changed = {});
     ~ProjectManager() override;
 
     ProjectManager(const ProjectManager& other) = delete;
@@ -52,4 +56,4 @@ private:
     std::unique_ptr<ProjectManagerImpl> p_impl;
 };
 
-#endif // PROJECTMANAGER_H
+#endif // MVVM_PROJECT_PROJECTMANAGER_H

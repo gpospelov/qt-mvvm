@@ -7,10 +7,12 @@
 //
 // ************************************************************************** //
 
-#include "projectmanager.h"
-#include "applicationmodelsinterface.h"
-#include "projectinterface.h"
-#include "projectutils.h"
+#include <mvvm/interfaces/applicationmodelsinterface.h>
+#include <mvvm/interfaces/projectinterface.h>
+#include <mvvm/project/projectmanager.h>
+#include <mvvm/project/projectutils.h>
+
+using namespace ModelView;
 
 namespace
 {

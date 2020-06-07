@@ -13,8 +13,12 @@
 #include <QWidget>
 #include <memory>
 
-class ApplicationModels;
+namespace ModelView
+{
 class ProjectManagerInterface;
+}
+
+class ApplicationModels;
 class RecentProjectWidget;
 class OpenProjectWidget;
 class WelcomeViewSettings;
@@ -44,7 +48,7 @@ private:
     void update_recent_project_names();
 
     ApplicationModels* m_models{nullptr};
-    std::unique_ptr<ProjectManagerInterface> m_project_manager;
+    std::unique_ptr<ModelView::ProjectManagerInterface> m_project_manager;
     RecentProjectWidget* m_recent_project_widget{nullptr};
     OpenProjectWidget* m_open_project_widget{nullptr};
     std::unique_ptr<WelcomeViewSettings> m_settings;

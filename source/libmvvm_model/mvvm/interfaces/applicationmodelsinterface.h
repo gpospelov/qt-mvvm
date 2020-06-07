@@ -7,24 +7,27 @@
 //
 // ************************************************************************** //
 
-#ifndef APPLICATIONMODELSINTERFACE_H
-#define APPLICATIONMODELSINTERFACE_H
+#ifndef MVVM_INTERFACES_APPLICATIONMODELSINTERFACE_H
+#define MVVM_INTERFACES_APPLICATIONMODELSINTERFACE_H
 
+#include <mvvm/core/export.h>
 #include <vector>
 
 namespace ModelView
 {
+
 class SessionModel;
-}
 
 //! Interface to access application's model list for further manipulation.
 //! Used in the context of save/load projects.
 
-class ApplicationModelsInterface
+class CORE_EXPORT ApplicationModelsInterface
 {
 public:
     //! Returns vector of models intended for saving on disk.
-    virtual std::vector<ModelView::SessionModel*> persistent_models() const = 0;
+    virtual std::vector<SessionModel*> persistent_models() const = 0;
 };
 
-#endif //  APPLICATIONMODELSINTERFACE_H
+} // namespace ModelView
+
+#endif //  MVVM_INTERFACES_APPLICATIONMODELSINTERFACE_H

@@ -8,8 +8,8 @@
 // ************************************************************************** //
 
 #include "projectmanagerinteractor.h"
-#include "project_types.h"
-#include "projectutils.h"
+#include <mvvm/project/project_types.h>
+#include <mvvm/project/projectutils.h>
 #include "welcomeviewsettings.h"
 #include <QDebug>
 #include <QFileDialog>
@@ -45,7 +45,7 @@ std::string ProjectManagerInteractor::onSelectDirRequest()
         return {};
 
     qDebug() << "   onSelectDirRequest() 1.1";
-    if (!ProjectUtils::IsPossibleProjectDir(dirname)) {
+    if (!ModelView::ProjectUtils::IsPossibleProjectDir(dirname)) {
         qDebug() << "   onSelectDirRequest() 1.2";
         QMessageBox msgBox;
         msgBox.setText(

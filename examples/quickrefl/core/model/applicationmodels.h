@@ -10,7 +10,7 @@
 #ifndef APPLICATIONMODELS_H
 #define APPLICATIONMODELS_H
 
-#include "applicationmodelsinterface.h"
+#include <mvvm/interfaces/applicationmodelsinterface.h>
 #include <memory>
 
 namespace ModelView
@@ -27,7 +27,7 @@ class RealDataModel;
 
 //!  Main class to holds all models of GUI session.
 
-class ApplicationModels : public ApplicationModelsInterface
+class ApplicationModels : public ModelView::ApplicationModelsInterface
 {
 public:
     ApplicationModels();

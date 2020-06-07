@@ -7,12 +7,14 @@
 //
 // ************************************************************************** //
 
-#include "projectutils.h"
-#include "applicationmodelsinterface.h"
-#include "project.h"
 #include <cctype>
+#include <mvvm/interfaces/applicationmodelsinterface.h>
 #include <mvvm/model/sessionmodel.h>
+#include <mvvm/project/project.h>
+#include <mvvm/project/projectutils.h>
 #include <mvvm/utils/fileutils.h>
+
+using namespace ModelView;
 
 namespace
 {
@@ -23,7 +25,7 @@ const std::string untitled_name = "Untitled";
 //! Suggests file name which can be used to store json content of given model.
 //! Uses the model type to construct a filename: MaterialModel -> materialmodel.json
 
-std::string ProjectUtils::SuggestFileName(const ModelView::SessionModel& model)
+std::string ProjectUtils::SuggestFileName(const SessionModel& model)
 {
     std::string result = model.modelType();
     std::transform(result.begin(), result.end(), result.begin(), ::tolower);
@@ -33,9 +35,9 @@ std::string ProjectUtils::SuggestFileName(const ModelView::SessionModel& model)
 //! Returns 'true' if given directory might be a project directory.
 //! This simplified check counts number of files with json extention.
 
-bool ProjectUtils::IsPossibleProjectDir(const std::string &project_dir)
+bool ProjectUtils::IsPossibleProjectDir(const std::string& project_dir)
 {
-    return !ModelView::Utils::FindFiles(project_dir, json_extention).empty();
+    return !Utils::FindFiles(project_dir, json_extention).empty();
 }
 
 //! Creates new untitled project.

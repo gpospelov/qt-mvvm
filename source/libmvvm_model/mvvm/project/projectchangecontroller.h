@@ -7,18 +7,18 @@
 //
 // ************************************************************************** //
 
-#ifndef PROJECTCHANGECONTROLLER_H
-#define PROJECTCHANGECONTROLLER_H
+#ifndef MVVM_PROJECT_PROJECTCHANGECONTROLLER_H
+#define MVVM_PROJECT_PROJECTCHANGECONTROLLER_H
 
 #include <functional>
 #include <memory>
+#include <mvvm/core/export.h>
 #include <vector>
 
 namespace ModelView
 {
-class SessionModel;
-}
 
+class SessionModel;
 class ModelHasChangedController;
 
 //! Tracks changes in all models.
@@ -29,11 +29,11 @@ class ModelHasChangedController;
 //! To avoid extra signaling while being in already "changed" mode, the controller reports only
 //! once.
 
-class ProjectChangedController
+class CORE_EXPORT ProjectChangedController
 {
 public:
     using callback_t = std::function<void()>;
-    ProjectChangedController(const std::vector<ModelView::SessionModel*>& models,
+    ProjectChangedController(const std::vector<SessionModel*>& models,
                              callback_t project_changed_callback = {});
     ~ProjectChangedController();
 
@@ -46,4 +46,6 @@ private:
     std::unique_ptr<ProjectChangedControllerImpl> p_impl;
 };
 
-#endif // PROJECTCHANGECONTROLLER_H
+} // namespace ModelView
+
+#endif // MVVM_PROJECT_PROJECTCHANGECONTROLLER_H

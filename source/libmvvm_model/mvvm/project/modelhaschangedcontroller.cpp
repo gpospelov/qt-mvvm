@@ -7,15 +7,14 @@
 //
 // ************************************************************************** //
 
-#include "modelhaschangedcontroller.h"
+#include <mvvm/project/modelhaschangedcontroller.h>
 
 using namespace ModelView;
 
 //! Constructor of ModelHasChangedController.
 //! Acccept 'model' to listen, and a 'callback' to report about changes in a model.
 
-ModelHasChangedController::ModelHasChangedController(ModelView::SessionModel* model,
-                                                     callback_t callback)
+ModelHasChangedController::ModelHasChangedController(SessionModel* model, callback_t callback)
     : ModelListener(model), m_callback(callback)
 {
     setOnDataChange([this](auto, auto) { process_change(); });

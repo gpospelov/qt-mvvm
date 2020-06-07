@@ -17,7 +17,7 @@
 class QBoxLayout;
 class ProjectPaneWidget;
 
-//! Widget with the name of current project and tree of recent projects.
+//! Widget with the name of current project and collection of recent projects.
 //! Occupies left part of WelcomeView.
 
 class RecentProjectWidget : public QWidget

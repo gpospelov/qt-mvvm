@@ -7,39 +7,41 @@
 //
 // ************************************************************************** //
 
-#ifndef PROJECTUTILS_H
-#define PROJECTUTILS_H
+#ifndef MVVM_PROJECT_PROJECTUTILS_H
+#define MVVM_PROJECT_PROJECTUTILS_H
 
 #include <functional>
 #include <memory>
+#include <mvvm/core/export.h>
 #include <string>
 #include <vector>
 
 namespace ModelView
 {
-class SessionModel;
-}
 
-class ProjectInterface;
+class SessionModel;
 class ApplicationModelsInterface;
+class ProjectInterface;
 
 //! Collection of utility functions to handle project saving and loading.
 
 namespace ProjectUtils
 {
 
-std::string SuggestFileName(const ModelView::SessionModel& model);
+CORE_EXPORT std::string SuggestFileName(const SessionModel& model);
 
-bool IsPossibleProjectDir(const std::string& project_dir);
+CORE_EXPORT bool IsPossibleProjectDir(const std::string& project_dir);
 
-std::unique_ptr<ProjectInterface>
+CORE_EXPORT std::unique_ptr<ProjectInterface>
 CreateUntitledProject(ApplicationModelsInterface* models,
                       std::function<void()> project_changed_callback = {});
 
-std::string ProjectWindowTitle(const ProjectInterface& project);
+CORE_EXPORT std::string ProjectWindowTitle(const ProjectInterface& project);
 
-std::string ProjectWindowTitle(const std::string& project_dir, bool is_modified);
+CORE_EXPORT std::string ProjectWindowTitle(const std::string& project_dir, bool is_modified);
 
 } // namespace ProjectUtils
 
-#endif // PROJECTUTILS_H
+} // namespace ModelView
+
+#endif // MVVM_PROJECT_PROJECTUTILS_H

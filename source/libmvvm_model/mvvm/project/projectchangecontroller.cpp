@@ -7,9 +7,9 @@
 //
 // ************************************************************************** //
 
-#include "projectchangecontroller.h"
-#include "modelhaschangedcontroller.h"
 #include <mvvm/model/sessionmodel.h>
+#include <mvvm/project/modelhaschangedcontroller.h>
+#include <mvvm/project/projectchangecontroller.h>
 
 using namespace ModelView;
 

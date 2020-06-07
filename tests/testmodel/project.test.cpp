@@ -7,15 +7,17 @@
 //
 // ************************************************************************** //
 
-#include "applicationmodelsinterface.h"
 #include "folderbasedtest.h"
 #include "google_test.h"
-#include "project.h"
 #include "test_utils.h"
 #include <cctype>
+#include <mvvm/interfaces/applicationmodelsinterface.h>
 #include <mvvm/model/propertyitem.h>
 #include <mvvm/model/sessionmodel.h>
+#include <mvvm/project/project.h>
 #include <mvvm/utils/fileutils.h>
+
+using namespace ModelView;
 
 namespace
 {
@@ -43,15 +45,15 @@ public:
     class ApplicationModels : public ApplicationModelsInterface
     {
     public:
-        std::unique_ptr<ModelView::SessionModel> sample_model;
-        std::unique_ptr<ModelView::SessionModel> material_model;
+        std::unique_ptr<SessionModel> sample_model;
+        std::unique_ptr<SessionModel> material_model;
         ApplicationModels()
-            : sample_model(std::make_unique<ModelView::SessionModel>(samplemodel_name)),
-              material_model(std::make_unique<ModelView::SessionModel>(materialmodel_name))
+            : sample_model(std::make_unique<SessionModel>(samplemodel_name)),
+              material_model(std::make_unique<SessionModel>(materialmodel_name))
         {
         }
 
-        std::vector<ModelView::SessionModel*> persistent_models() const override
+        std::vector<SessionModel*> persistent_models() const override
         {
             return {sample_model.get(), material_model.get()};
         };
@@ -82,11 +84,11 @@ TEST_F(ProjectTest, saveModel)
     EXPECT_EQ(project.projectDir(), project_dir);
     EXPECT_FALSE(project.isModified());
 
-    auto sample_json = ModelView::Utils::join(project_dir, get_json_filename(samplemodel_name));
-    EXPECT_TRUE(ModelView::Utils::exists(sample_json));
+    auto sample_json = Utils::join(project_dir, get_json_filename(samplemodel_name));
+    EXPECT_TRUE(Utils::exists(sample_json));
 
-    auto material_json = ModelView::Utils::join(project_dir, get_json_filename(materialmodel_name));
-    EXPECT_TRUE(ModelView::Utils::exists(material_json));
+    auto material_json = Utils::join(project_dir, get_json_filename(materialmodel_name));
+    EXPECT_TRUE(Utils::exists(material_json));
 }
 
 //! Testing loadModel.
@@ -96,11 +98,11 @@ TEST_F(ProjectTest, loadModel)
     ApplicationModels models;
     Project project(&models);
 
-    auto item0 = models.sample_model->insertItem<ModelView::PropertyItem>();
+    auto item0 = models.sample_model->insertItem<PropertyItem>();
     item0->setData(std::string("sample_model_item"));
     auto item0_identifier = item0->identifier();
 
-    auto item1 = models.material_model->insertItem<ModelView::PropertyItem>();
+    auto item1 = models.material_model->insertItem<PropertyItem>();
     item1->setData(std::string("material_model_item"));
     auto item1_identifier = item1->identifier();
 
