@@ -1,6 +1,7 @@
 # install qt
-sudo add-apt-repository ppa:ymshenyu/qt514
-sudo apt-get update
+sudo add-apt-repository -y ppa:ymshenyu/qt514
+sudo apt-get -qq update 
+
 sudo apt-get install qt5-default libqt5designercomponents5 qttools5-dev libqt5svg5-dev libqt5opengl5-dev libgl1-mesa-dev -y
 
 # install cmake
