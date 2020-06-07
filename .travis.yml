@@ -5,7 +5,7 @@ matrix:
   include:
     - os: linux
       services: docker
-      env: QT_QPA_PLATFORM=offscreen BUILD_TYPE=Release TESTS_AUTODISCOVERY=OFF CMAKE_DIRNAME="cmake_install"
+      env: QT_DEBUG_PLUGINS=1 QT_QPA_PLATFORM=offscreen BUILD_TYPE=Release TESTS_AUTODISCOVERY=OFF CMAKE_DIRNAME="cmake_install"
     - os: osx
       osx_image: xcode11.3
       compiler: clang
