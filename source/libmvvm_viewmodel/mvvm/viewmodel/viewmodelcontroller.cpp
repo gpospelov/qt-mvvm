@@ -38,7 +38,7 @@ bool isValidItemRole(const ViewItem* view, int item_role)
 
 } // namespace
 
-struct ViewModelController::RefViewModelControllerImpl {
+struct ViewModelController::ViewModelControllerImpl {
     ViewModelController* controller;
     SessionModel* session_model{nullptr};
     ViewModelBase* view_model{nullptr};
@@ -47,7 +47,7 @@ struct ViewModelController::RefViewModelControllerImpl {
     std::map<SessionItem*, ViewItem*> item_to_view; //! correspondence of item and its view
     Path root_item_path;
 
-    RefViewModelControllerImpl(ViewModelController* controller, SessionModel* session_model,
+    ViewModelControllerImpl(ViewModelController* controller, SessionModel* session_model,
                                ViewModelBase* view_model)
         : controller(controller), view_model(view_model)
     {
@@ -56,7 +56,7 @@ struct ViewModelController::RefViewModelControllerImpl {
 
     void check_initialization()
     {
-        const std::string msg("Error in RefViewModelController: ");
+        const std::string msg("Error in ViewModelController: ");
         if (!view_model)
             throw std::runtime_error(msg + "ViewModel is not defined");
 
@@ -196,7 +196,7 @@ struct ViewModelController::RefViewModelControllerImpl {
 };
 
 ViewModelController::ViewModelController(SessionModel* session_model, ViewModelBase* view_model)
-    : p_impl(std::make_unique<RefViewModelControllerImpl>(this, session_model, view_model))
+    : p_impl(std::make_unique<ViewModelControllerImpl>(this, session_model, view_model))
 {
 }
 

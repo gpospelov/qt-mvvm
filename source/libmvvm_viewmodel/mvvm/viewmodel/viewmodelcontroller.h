@@ -62,8 +62,8 @@ protected:
     void update_branch(const SessionItem* item);
 
 private:
-    struct RefViewModelControllerImpl;
-    std::unique_ptr<RefViewModelControllerImpl> p_impl;
+    struct ViewModelControllerImpl;
+    std::unique_ptr<ViewModelControllerImpl> p_impl;
 };
 
 } // namespace ModelView

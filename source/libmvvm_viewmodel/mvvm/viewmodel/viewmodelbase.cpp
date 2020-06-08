@@ -12,10 +12,10 @@
 
 using namespace ModelView;
 
-struct ViewModelBase::RefViewModelImpl {
+struct ViewModelBase::ViewModelBaseImpl {
     ViewModelBase* model{nullptr};
     std::unique_ptr<ViewItem> root;
-    RefViewModelImpl(ViewModelBase* model) : model(model) {}
+    ViewModelBaseImpl(ViewModelBase* model) : model(model) {}
 
     bool item_belongs_to_model(ViewItem* item)
     {
@@ -24,7 +24,7 @@ struct ViewModelBase::RefViewModelImpl {
 };
 
 ViewModelBase::ViewModelBase(QObject* parent)
-    : QAbstractItemModel(parent), p_impl(std::make_unique<RefViewModelImpl>(this))
+    : QAbstractItemModel(parent), p_impl(std::make_unique<ViewModelBaseImpl>(this))
 {
     beginResetModel();
     setRootViewItem(std::make_unique<RootViewItem>(nullptr));
@@ -118,7 +118,7 @@ QModelIndex ViewModelBase::indexFromItem(const ViewItem* item) const
 void ViewModelBase::removeRow(ViewItem* parent, int row)
 {
     if (!p_impl->item_belongs_to_model(parent))
-        throw std::runtime_error("Error in RefViewModel: attempt to use parent from another model");
+        throw std::runtime_error("Error in ViewModelBase: attempt to use parent from another model");
 
     beginRemoveRows(indexFromItem(parent), row, row);
     parent->removeRow(row);
@@ -128,7 +128,7 @@ void ViewModelBase::removeRow(ViewItem* parent, int row)
 void ViewModelBase::clearRows(ViewItem* parent)
 {
     if (!p_impl->item_belongs_to_model(parent))
-        throw std::runtime_error("Error in RefViewModel: attempt to use parent from another model");
+        throw std::runtime_error("Error in ViewModelBase: attempt to use parent from another model");
 
     if (!parent->rowCount())
         return;
@@ -144,7 +144,7 @@ void ViewModelBase::insertRow(ViewItem* parent, int row,
                               std::vector<std::unique_ptr<ViewItem>> items)
 {
     if (!p_impl->item_belongs_to_model(parent))
-        throw std::runtime_error("Error in RefViewModel: attempt to use parent from another model");
+        throw std::runtime_error("Error in ViewModelBase: attempt to use parent from another model");
 
     beginInsertRows(indexFromItem(parent), row, row);
     parent->insertRow(row, std::move(items));
