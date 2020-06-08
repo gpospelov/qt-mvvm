@@ -80,7 +80,7 @@ TEST_F(ViewModelBaseTest, standardItemModel)
     // item are the same
 }
 
-//! Initial state of empty RefViewModel.
+//! Initial state of empty ViewModelBase.
 
 TEST_F(ViewModelBaseTest, initialState)
 {

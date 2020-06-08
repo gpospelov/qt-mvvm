@@ -119,3 +119,15 @@ SessionItem* Utils::FindNextItemToSelect(SessionItem* item)
     auto closest = next ? next : FindPreviousSibling(item);
     return closest ? closest : item->parent();
 }
+
+bool Utils::IsItemAncestor(const SessionItem* item, const SessionItem* candidate)
+{
+    const SessionItem* parent = item->parent();
+    while (parent) {
+        if (parent == candidate)
+            return true;
+        else
+            parent = parent->parent();
+    }
+    return false;
+}

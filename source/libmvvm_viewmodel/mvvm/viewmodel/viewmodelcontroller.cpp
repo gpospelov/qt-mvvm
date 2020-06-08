@@ -9,6 +9,7 @@
 
 #include <QDebug>
 #include <map>
+#include <mvvm/model/itemutils.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/signals/modelmapper.h>
@@ -38,7 +39,7 @@ bool isValidItemRole(const ViewItem* view, int item_role)
 
 } // namespace
 
-struct ViewModelController::RefViewModelControllerImpl {
+struct ViewModelController::ViewModelControllerImpl {
     ViewModelController* controller;
     SessionModel* session_model{nullptr};
     ViewModelBase* view_model{nullptr};
@@ -47,8 +48,8 @@ struct ViewModelController::RefViewModelControllerImpl {
     std::map<SessionItem*, ViewItem*> item_to_view; //! correspondence of item and its view
     Path root_item_path;
 
-    RefViewModelControllerImpl(ViewModelController* controller, SessionModel* session_model,
-                               ViewModelBase* view_model)
+    ViewModelControllerImpl(ViewModelController* controller, SessionModel* session_model,
+                            ViewModelBase* view_model)
         : controller(controller), view_model(view_model)
     {
         setSessionModel(session_model);
@@ -56,7 +57,7 @@ struct ViewModelController::RefViewModelControllerImpl {
 
     void check_initialization()
     {
-        const std::string msg("Error in RefViewModelController: ");
+        const std::string msg("Error in ViewModelController: ");
         if (!view_model)
             throw std::runtime_error(msg + "ViewModel is not defined");
 
@@ -196,7 +197,7 @@ struct ViewModelController::RefViewModelControllerImpl {
 };
 
 ViewModelController::ViewModelController(SessionModel* session_model, ViewModelBase* view_model)
-    : p_impl(std::make_unique<RefViewModelControllerImpl>(this, session_model, view_model))
+    : p_impl(std::make_unique<ViewModelControllerImpl>(this, session_model, view_model))
 {
 }
 
@@ -270,7 +271,19 @@ void ViewModelController::onItemRemoved(SessionItem*, TagRow) {}
 
 void ViewModelController::onAboutToRemoveItem(SessionItem* parent, TagRow tagrow)
 {
-    p_impl->remove_row_of_views(parent->getItem(tagrow.tag, tagrow.row));
+    auto item_to_remove = parent->getItem(tagrow.tag, tagrow.row);
+    if (item_to_remove == rootSessionItem()
+        || Utils::IsItemAncestor(rootSessionItem(), item_to_remove)) {
+        // special case when user removes SessionItem which is one of ancestors of our root item
+        // or root item iteslf
+        p_impl->view_model->beginResetModel();
+        p_impl->view_model->setRootViewItem(std::make_unique<RootViewItem>(nullptr));
+        p_impl->item_to_view.clear();
+        p_impl->root_item_path = {};
+        p_impl->view_model->endResetModel();
+    } else {
+        p_impl->remove_row_of_views(item_to_remove);
+    }
 }
 
 void ViewModelController::update_branch(const SessionItem* item)

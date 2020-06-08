@@ -67,8 +67,8 @@ public:
 private:    
     void setRootViewItem(std::unique_ptr<ViewItem> root_item);
     friend class ViewModelController;
-    struct RefViewModelImpl;
-    std::unique_ptr<RefViewModelImpl> p_impl;
+    struct ViewModelBaseImpl;
+    std::unique_ptr<ViewModelBaseImpl> p_impl;
 };
 
 }; // namespace ModelView
