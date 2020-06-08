@@ -15,6 +15,7 @@
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/model/taginfo.h>
+#include <mvvm/standarditems/vectoritem.h>
 
 using namespace ModelView;
 
@@ -229,4 +230,27 @@ TEST_F(ItemUtilsTest, FindNextItemToSelect)
     EXPECT_EQ(Utils::FindNextItemToSelect(child2), child1);
     EXPECT_EQ(Utils::FindNextItemToSelect(property), parent);
     EXPECT_EQ(Utils::FindNextItemToSelect(parent), model.rootItem());
+}
+
+//! Looking for previous item.
+
+TEST_F(ItemUtilsTest, IsItemAncestor)
+{
+    SessionModel model;
+    EXPECT_FALSE(Utils::IsItemAncestor(model.rootItem(), model.rootItem()));
+
+    // rootItem in ancestor of vectorItem, but not vice versa
+    auto vector_item = model.insertItem<VectorItem>();
+    EXPECT_TRUE(Utils::IsItemAncestor(vector_item, model.rootItem()));
+    EXPECT_FALSE(Utils::IsItemAncestor(model.rootItem(), vector_item));
+
+    auto x_item = vector_item->getItem(VectorItem::P_X);
+
+    EXPECT_TRUE(Utils::IsItemAncestor(x_item, model.rootItem()));
+    EXPECT_TRUE(Utils::IsItemAncestor(x_item, vector_item));
+    EXPECT_FALSE(Utils::IsItemAncestor(model.rootItem(), x_item));
+    EXPECT_FALSE(Utils::IsItemAncestor(vector_item, x_item));
+
+    auto y_item = vector_item->getItem(VectorItem::P_Y);
+    EXPECT_FALSE(Utils::IsItemAncestor(x_item, y_item));
 }

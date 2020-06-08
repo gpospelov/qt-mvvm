@@ -63,6 +63,9 @@ CORE_EXPORT SessionItem* FindPreviousSibling(SessionItem* item);
 
 CORE_EXPORT SessionItem* FindNextItemToSelect(SessionItem* item);
 
+//! Returns true if 'candidate' is one of ancestor of given item.
+CORE_EXPORT bool IsItemAncestor(const SessionItem* item, const SessionItem* candidate);
+
 } // namespace Utils
 
 } // namespace ModelView
