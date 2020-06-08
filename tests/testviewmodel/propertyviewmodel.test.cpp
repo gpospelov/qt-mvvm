@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include "google_test.h"
+#include "toy_includes.h"
 #include <mvvm/model/propertyitem.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
@@ -85,4 +86,26 @@ TEST_F(PropertyViewModelTest, vectorItem)
     viewModel.setRootSessionItem(parent);
     EXPECT_EQ(viewModel.rowCount(), 3);
     EXPECT_EQ(viewModel.columnCount(), 2);
+}
+
+//! LayerItem in a MultiLayer.
+
+TEST_F(PropertyViewModelTest, layerInMultiLayerAsRootItem)
+{
+    SessionModel model;
+    auto multilayer = model.insertItem<ToyItems::MultiLayerItem>();
+    auto layer = model.insertItem<ToyItems::LayerItem>(multilayer);
+
+    PropertyViewModel viewmodel(&model);
+    viewmodel.setRootSessionItem(layer);
+
+    // check layer thickness and color
+    EXPECT_EQ(viewmodel.rowCount(), 2);
+    EXPECT_EQ(viewmodel.columnCount(), 2);
+
+    // remove multilayer
+    model.removeItem(model.rootItem(), {"", 0});
+
+    EXPECT_EQ(viewmodel.rowCount(), 0);
+    EXPECT_EQ(viewmodel.columnCount(), 0);
 }

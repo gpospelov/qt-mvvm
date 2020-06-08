@@ -9,6 +9,7 @@
 
 #include <QDebug>
 #include <map>
+#include <mvvm/model/itemutils.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/signals/modelmapper.h>
@@ -48,7 +49,7 @@ struct ViewModelController::ViewModelControllerImpl {
     Path root_item_path;
 
     ViewModelControllerImpl(ViewModelController* controller, SessionModel* session_model,
-                               ViewModelBase* view_model)
+                            ViewModelBase* view_model)
         : controller(controller), view_model(view_model)
     {
         setSessionModel(session_model);
@@ -270,7 +271,19 @@ void ViewModelController::onItemRemoved(SessionItem*, TagRow) {}
 
 void ViewModelController::onAboutToRemoveItem(SessionItem* parent, TagRow tagrow)
 {
-    p_impl->remove_row_of_views(parent->getItem(tagrow.tag, tagrow.row));
+    auto item_to_remove = parent->getItem(tagrow.tag, tagrow.row);
+    if (item_to_remove == rootSessionItem()
+        || Utils::IsItemAncestor(rootSessionItem(), item_to_remove)) {
+        // special case when user removes SessionItem which is one of ancestors of our root item
+        // or root item iteslf
+        p_impl->view_model->beginResetModel();
+        p_impl->view_model->setRootViewItem(std::make_unique<RootViewItem>(nullptr));
+        p_impl->item_to_view.clear();
+        p_impl->root_item_path = {};
+        p_impl->view_model->endResetModel();
+    } else {
+        p_impl->remove_row_of_views(item_to_remove);
+    }
 }
 
 void ViewModelController::update_branch(const SessionItem* item)
