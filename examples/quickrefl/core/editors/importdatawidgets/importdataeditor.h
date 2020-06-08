@@ -24,12 +24,13 @@ namespace DataImportLogic
 {
 class ImportOutput;
 class ParsedFileOutptut;
-}
+} // namespace DataImportLogic
 
 class RealDataModel;
 class QToolBar;
 class QBoxLayout;
 class RealDataStruct;
+class DataSelectionModel;
 
 //! Main editor to import user data.
 
@@ -40,20 +41,27 @@ public:
     ImportDataEditor(RealDataModel* model, QWidget* parent = nullptr);
 
 private:
-    void setup_toolbar();
-    void setup_views();
-    QBoxLayout* create_bottom_layout();
+    void setupDataToolBar();
+    void setupGraphToolBar();
+    void setupViews();
+    void setupLayout();
 
     void invokeImportDialog();
     void onImportDialogAccept(DataImportLogic::ImportOutput import_output);
-    RealDataStruct convertToRealDataStruct(const std::string& path, const DataImportLogic::ParsedFileOutptut* import_output, const int column);
+    RealDataStruct convertToRealDataStruct(const std::string& path,
+                                           const DataImportLogic::ParsedFileOutptut* import_output,
+                                           const int column);
+    void deleteItem();
+    void resetAll();
 
 private:
-    RealDataModel* model{nullptr};
-    QToolBar* toolbar{nullptr};
-    ModelView::TopItemsTreeView* topitems_tree{nullptr};
-    ModelView::GraphCanvas* graph_canvas{nullptr};
-    ModelView::PropertyTreeView* property_tree{nullptr};
+    RealDataModel* p_model{nullptr};
+    ModelView::TopItemsTreeView* p_topitems_tree{nullptr};
+    DataSelectionModel* p_data_selection_model{nullptr};
+    QToolBar* p_data_toolbar{nullptr};
+    QToolBar* p_graph_toolbar{nullptr};
+    ModelView::PropertyTreeView* p_property_tree{nullptr};
+    ModelView::GraphCanvas* p_graph_canvas{nullptr};
 };
 
 #endif // IMPORTDATAEDITOR_H

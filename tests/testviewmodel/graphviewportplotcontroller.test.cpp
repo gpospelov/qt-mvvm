@@ -175,6 +175,48 @@ TEST_F(GraphViewportPlotControllerTest, addMoreGraphs)
     EXPECT_EQ(custom_plot->graphCount(), 3);
 }
 
+//! Checks The fucntionality of selection in the viewport
+
+TEST_F(GraphViewportPlotControllerTest, checkVisible)
+{
+    // Convenience
+    struct FindVisible {
+        static std::vector<QCPAbstractPlottable*> findVisible(const QCustomPlot* custom_plot)
+        {
+            std::vector<QCPAbstractPlottable*> output;
+            for (int i = 0; i < custom_plot->graphCount(); ++i) {
+                if (custom_plot->graph(i)->visible())
+                    output.push_back(custom_plot->graph(i));
+            }
+            return output;
+        }
+    };
+
+    // custom plot setup
+    auto custom_plot = std::make_unique<QCustomPlot>();
+    GraphViewportPlotController controller(custom_plot.get());
+
+    // setting up controller with viewport item
+    SessionModel model;
+    auto viewport_item = model.insertItem<GraphViewportItem>();
+    controller.setItem(viewport_item);
+
+    // adding graph item to viewport
+    auto first_plot = model.insertItem<GraphItem>(viewport_item);
+    auto second_plot = model.insertItem<GraphItem>(viewport_item);
+    auto third_plot = model.insertItem<GraphItem>(viewport_item);
+    EXPECT_EQ(custom_plot->graphCount(), 3);
+
+    viewport_item->setSelected(std::vector<GraphItem*>{first_plot});
+    EXPECT_EQ(FindVisible::findVisible(custom_plot.get()).size(), 1);
+
+    viewport_item->setSelected(std::vector<GraphItem*>{second_plot, third_plot});
+    EXPECT_EQ(FindVisible::findVisible(custom_plot.get()).size(), 2);
+
+    viewport_item->resetSelected();
+    EXPECT_EQ(FindVisible::findVisible(custom_plot.get()).size(), 3);
+}
+
 //! Two GraphViewportItem's and switch between them.
 
 TEST_F(GraphViewportPlotControllerTest, switchBetweenTwoViewports)

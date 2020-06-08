@@ -38,6 +38,7 @@ struct GraphPlotController::GraphItemControllerImpl {
     {
         update_data_controller();
         update_graph_pen();
+        update_visible();
     }
 
     void update_data_controller() { data_controller->setItem(graph_item()->dataItem()); }
@@ -48,6 +49,13 @@ struct GraphPlotController::GraphItemControllerImpl {
     {
         auto color = graph_item()->property<QColor>(GraphItem::P_COLOR);
         graph->setPen(QPen(color));
+        custom_plot->replot();
+    }
+
+    //! Update visible
+    void update_visible()
+    {
+        graph->setVisible(graph_item()->property<bool>(GraphItem::P_DISPLAYED));
         custom_plot->replot();
     }
 };
@@ -66,6 +74,9 @@ void GraphPlotController::subscribe()
 
         if (property_name == GraphItem::P_LINK)
             p_impl->update_data_controller();
+
+        if (property_name == GraphItem::P_DISPLAYED)
+            p_impl->update_visible();
     };
     setOnPropertyChange(on_property_change);
 
