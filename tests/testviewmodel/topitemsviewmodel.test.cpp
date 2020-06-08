@@ -135,5 +135,5 @@ TEST_F(TopItemsViewModelTest, multuLayerAsRooItem)
     EXPECT_EQ(spyInsert.count(), 1);
 
     // removing multilayer
-//    model.removeItem(model.rootItem(), {"", 0});
+    model.removeItem(model.rootItem(), {"", 0});
 }
