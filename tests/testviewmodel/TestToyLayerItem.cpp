@@ -148,21 +148,3 @@ TEST_F(ToyLayerItemTest, setRootItemContext)
     EXPECT_EQ(viewModel.sessionItemFromIndex(thicknessIndex),
               layer->getItem(ToyItems::LayerItem::P_THICKNESS));
 }
-
-//! LayerItem as rootItem.
-
-TEST_F(ToyLayerItemTest, inTopItemsViewModelContext)
-{
-    ToyItems::SampleModel model;
-    auto layer = model.insertItem<ToyItems::LayerItem>();
-
-    TopItemsViewModel viewModel(&model);
-    viewModel.setRootSessionItem(layer);
-
-    EXPECT_EQ(viewModel.rowCount(QModelIndex()), 0);
-    EXPECT_EQ(viewModel.columnCount(QModelIndex()), 0);
-
-    model.insertItem<ToyItems::ParticleItem>(layer);
-    EXPECT_EQ(viewModel.rowCount(QModelIndex()), 1);
-    EXPECT_EQ(viewModel.columnCount(QModelIndex()), 2);
-}
