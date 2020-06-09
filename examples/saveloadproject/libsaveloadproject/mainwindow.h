@@ -28,7 +28,7 @@ protected:
 
 private:
     void init_application();
-    void init_views();
+    void init_widgets();
     void write_settings();
 
     ActionManager* m_actionManager{nullptr};

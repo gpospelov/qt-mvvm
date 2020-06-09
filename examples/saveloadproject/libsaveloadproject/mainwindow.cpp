@@ -9,8 +9,11 @@
 
 #include "mainwindow.h"
 #include "actionmanager.h"
+#include "projectwidget.h"
+#include "tablewidget.h"
 #include <QCloseEvent>
 #include <QCoreApplication>
+#include <QHBoxLayout>
 #include <QSettings>
 
 namespace
@@ -23,7 +26,7 @@ const QString pos_key = "pos";
 MainWindow::MainWindow() : m_actionManager(new ActionManager(this))
 {
     init_application();
-    setCentralWidget(new QWidget);
+    init_widgets();
 }
 
 MainWindow::~MainWindow() = default;
@@ -47,6 +50,19 @@ void MainWindow::init_application()
         move(settings.value(pos_key, QPoint(200, 200)).toPoint());
         settings.endGroup();
     }
+}
+
+void MainWindow::init_widgets()
+{
+    auto central_widget = new QWidget;
+    auto central_layout = new QVBoxLayout(central_widget);
+
+    auto project_widget = new ProjectWidget;
+    auto table_widget = new TabletWidget;
+    central_layout->addWidget(project_widget);
+    central_layout->addWidget(table_widget);
+
+    setCentralWidget(central_widget);
 }
 
 void MainWindow::write_settings()
