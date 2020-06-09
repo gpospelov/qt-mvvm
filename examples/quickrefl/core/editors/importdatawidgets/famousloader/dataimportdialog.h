@@ -14,8 +14,8 @@
 #include <QCheckBox>
 #include <QDialog>
 #include <QGroupBox>
-#include <QTabWidget>
 #include <QSettings>
+#include <QTabWidget>
 #include <memory>
 
 namespace DataImportLogic
@@ -66,6 +66,7 @@ private:
     ImportTableView* p_table_view{nullptr};
     std::unique_ptr<DataImportLogic::ImportLogic> p_data_import_logic;
     QTabWidget* p_selection_space{nullptr};
+    QCheckBox* p_merge_check{nullptr};
 };
 
 } // End of namespace DataImportGui

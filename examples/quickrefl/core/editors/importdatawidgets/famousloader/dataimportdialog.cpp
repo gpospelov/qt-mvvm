@@ -9,11 +9,11 @@
 
 #include "dataimportdialog.h"
 
-#include "importutils.h"
 #include "importfilewidget.h"
 #include "importfilterwidget.h"
 #include "importtableview.h"
 #include "importtextview.h"
+#include "importutils.h"
 
 #include <QDialogButtonBox>
 #include <QHBoxLayout>
@@ -42,7 +42,10 @@ DataLoaderDialog::DataLoaderDialog(QWidget* parent) : QDialog(parent)
     p_selection_space = new QTabWidget(v_splitter);
 
     // The dialog buttons
+    p_merge_check = new QCheckBox("Merge into the current dataset");
+    p_merge_check->setChecked(true);
     auto button_box = new QDialogButtonBox(QDialogButtonBox::Cancel | QDialogButtonBox::Ok);
+    dynamic_cast<QBoxLayout*>(button_box->layout())->insertWidget(0, p_merge_check);
     connect(button_box, SIGNAL(accepted()), this, SLOT(accept()));
     connect(button_box, SIGNAL(rejected()), this, SLOT(reject()));
 
@@ -74,6 +77,7 @@ DataLoaderDialog::DataLoaderDialog(QWidget* parent) : QDialog(parent)
 DataImportLogic::ImportOutput DataLoaderDialog::result()
 {
     auto result = p_data_import_logic->getFinalOutput();
+    result.setMerge(p_merge_check->isChecked());
     return result;
 }
 
@@ -188,7 +192,7 @@ void DataLoaderDialog::writeImportLogicSettings()
 
     auto history = p_data_import_logic->dataStructure()->columnHistory();
     settings.beginGroup("ColumnHistory");
-    for (int i = 0 ; i < history.size(); ++i){
+    for (int i = 0; i < history.size(); ++i) {
         settings.beginGroup(QString::number(i));
         settings.setValue("Name", QString::fromStdString(history.at(i).at(0)));
         settings.setValue("Type", QString::fromStdString(history.at(i).at(1)));
@@ -208,7 +212,7 @@ void DataLoaderDialog::readImportLogicSettings()
     if (settings.childGroups().count() != 0) {
         for (auto group_name : settings.childGroups()) {
             settings.beginGroup(group_name);
-            history.push_back(std::vector<std::string> {
+            history.push_back(std::vector<std::string>{
                 settings.value("Name", "").toString().toStdString(),
                 settings.value("Type", "").toString().toStdString(),
                 settings.value("Unit", "").toString().toStdString(),
