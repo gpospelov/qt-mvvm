@@ -14,6 +14,7 @@
 
 class QColor;
 class QString;
+class QSize;
 
 namespace ModelView
 {
@@ -34,6 +35,12 @@ CORE_EXPORT QString WithTildeHomePath(const QString& path);
 
 //! Returns a title composed from last part of project path, and `is_modified` flag.
 CORE_EXPORT QString ProjectWindowTitle(const QString& project_dir, bool is_modified);
+
+//! Returns size corresponding to actual size of letter `M` basing on current font metrics.
+CORE_EXPORT QSize SizeOfLetterM();
+
+//! Returns size in points of default system font.
+CORE_EXPORT int SystemPointSize();
 
 } // namespace Utils
 
