@@ -9,4 +9,4 @@
 
 #include "tablewidget.h"
 
-TabletWidget::TabletWidget(QWidget* parent) : QWidget(parent) {}
+TableWidget::TableWidget(QWidget* parent) : QWidget(parent) {}

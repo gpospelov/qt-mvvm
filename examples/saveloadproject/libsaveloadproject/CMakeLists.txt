@@ -10,8 +10,10 @@ target_sources(${library_name} PRIVATE
     actionmanager.h
     mainwindow.cpp
     mainwindow.h
-    projectwidget.cpp
-    projectwidget.h
+    projectpanewidget.cpp
+    projectpanewidget.h
+    recentprojectwidget.cpp
+    recentprojectwidget.h
     tablewidget.cpp
     tablewidget.h
 )

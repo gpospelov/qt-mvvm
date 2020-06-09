@@ -12,11 +12,11 @@
 
 #include <QWidget>
 
-class TabletWidget : public QWidget
+class TableWidget : public QWidget
 {
     Q_OBJECT
 public:
-    TabletWidget(QWidget* parent = nullptr);
+    TableWidget(QWidget* parent = nullptr);
 };
 
 #endif

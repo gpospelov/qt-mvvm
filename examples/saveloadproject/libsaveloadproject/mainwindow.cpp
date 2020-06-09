@@ -9,7 +9,7 @@
 
 #include "mainwindow.h"
 #include "actionmanager.h"
-#include "projectwidget.h"
+#include "recentprojectwidget.h"
 #include "tablewidget.h"
 #include <QCloseEvent>
 #include <QCoreApplication>
@@ -57,8 +57,8 @@ void MainWindow::init_widgets()
     auto central_widget = new QWidget;
     auto central_layout = new QVBoxLayout(central_widget);
 
-    auto project_widget = new ProjectWidget;
-    auto table_widget = new TabletWidget;
+    auto project_widget = new RecentProjectWidget;
+    auto table_widget = new TableWidget;
     central_layout->addWidget(project_widget);
     central_layout->addWidget(table_widget);
 
