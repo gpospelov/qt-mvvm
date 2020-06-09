@@ -28,29 +28,12 @@ int max_recent_project_count = 7;
 RecentProjectWidget::RecentProjectWidget(QWidget* parent)
     : QWidget(parent), m_current_project_pane(new ProjectPaneWidget)
 {
-    //    QPalette palette;
-    //    palette.setColor(QPalette::Window, Qt::lightGray);
-    //    setAutoFillBackground(true);
-    //    setPalette(palette);
-
     auto layout = new QVBoxLayout(this);
     layout->setContentsMargins(20, 0, 10, 0);
     layout->addLayout(createCurrentProjectLayout());
     layout->addSpacing(ModelView::Utils::SizeOfLetterM().height());
     layout->addLayout(createRecentProjectLayout());
     layout->addStretch(1);
-}
-
-QSize RecentProjectWidget::sizeHint() const
-{
-    return {};
-//    return StyleUtils::DockSizeHint();
-}
-
-QSize RecentProjectWidget::minimumSizeHint() const
-{
-    return {};
-//    return StyleUtils::DockMinimumSizeHint();
 }
 
 //! Set current project title and label on appropriate widget.

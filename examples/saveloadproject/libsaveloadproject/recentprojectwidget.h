@@ -26,9 +26,6 @@ class RecentProjectWidget : public QWidget
 public:
     explicit RecentProjectWidget(QWidget* parent = nullptr);
 
-    QSize sizeHint() const override;
-    QSize minimumSizeHint() const override;
-
     void setCurrentProject(const QString& project_dir, bool is_modified);
 
     void setRecentProjectsList(const QStringList& projects);

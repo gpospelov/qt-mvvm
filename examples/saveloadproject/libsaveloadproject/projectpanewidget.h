@@ -14,16 +14,13 @@
 
 class QLabel;
 
-//! Holds project name and project dir. Part of RecentProjectsWidget.
+//! Panel with labels to hold project name and project dir. Part of RecentProjectsWidget.
 
 class ProjectPaneWidget : public QWidget
 {
     Q_OBJECT
 public:
     explicit ProjectPaneWidget(QWidget* parent = nullptr);
-
-    QSize sizeHint() const override;
-    QSize minimumSizeHint() const override;
 
     void setCurrentProject(const QString& project_dir, bool is_modified = false);
 
