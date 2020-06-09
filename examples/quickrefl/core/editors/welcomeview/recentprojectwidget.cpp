@@ -10,8 +10,8 @@
 #include "recentprojectwidget.h"
 #include "projectpanewidget.h"
 #include <mvvm/project/projectutils.h>
+#include <mvvm/widgets/widgetutils.h>
 #include "styleutils.h"
-#include <QDebug>
 #include <QGuiApplication>
 #include <QLabel>
 #include <QScreen>
@@ -36,7 +36,7 @@ RecentProjectWidget::RecentProjectWidget(QWidget* parent)
     auto layout = new QVBoxLayout(this);
     layout->setContentsMargins(20, 0, 10, 0);
     layout->addLayout(createCurrentProjectLayout());
-    layout->addSpacing(StyleUtils::SizeOfLetterM().height());
+    layout->addSpacing(ModelView::Utils::SizeOfLetterM().height());
     layout->addLayout(createRecentProjectLayout());
     layout->addStretch(1);
 }

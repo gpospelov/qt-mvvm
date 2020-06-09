@@ -30,8 +30,6 @@ QSize DockMinimumSizeHint();
 //! Returns font for sections (25% large than system font).
 QFont sectionFont(bool bold = false);
 
-QSize SizeOfLetterM();
-
 int LargeButtonHeight();
 
 }; // namespace StyleUtils

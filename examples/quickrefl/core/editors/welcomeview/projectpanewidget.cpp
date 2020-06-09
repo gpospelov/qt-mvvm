@@ -9,6 +9,7 @@
 
 #include "projectpanewidget.h"
 #include "styleutils.h"
+#include <mvvm/widgets/widgetutils.h>
 #include <QLabel>
 #include <QMouseEvent>
 #include <QPainter>
@@ -19,7 +20,7 @@ namespace
 {
 int widget_height()
 {
-    return StyleUtils::SizeOfLetterM().height() * 3;
+    return ModelView::Utils::SizeOfLetterM().height() * 3;
 }
 } // namespace
 
