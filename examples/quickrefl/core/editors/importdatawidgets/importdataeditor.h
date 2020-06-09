@@ -41,8 +41,7 @@ public:
     ImportDataEditor(RealDataModel* model, QWidget* parent = nullptr);
 
 private:
-    void setupDataToolBar();
-    void setupGraphToolBar();
+    void setupToolBar();
     void setupViews();
     void setupLayout();
 
@@ -58,8 +57,7 @@ private:
     RealDataModel* p_model{nullptr};
     ModelView::TopItemsTreeView* p_topitems_tree{nullptr};
     DataSelectionModel* p_data_selection_model{nullptr};
-    QToolBar* p_data_toolbar{nullptr};
-    QToolBar* p_graph_toolbar{nullptr};
+    QToolBar* p_toolbar{nullptr};
     ModelView::PropertyTreeView* p_property_tree{nullptr};
     ModelView::GraphCanvas* p_graph_canvas{nullptr};
 };

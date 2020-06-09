@@ -43,11 +43,10 @@ ImportDataEditor::ImportDataEditor(RealDataModel* model, QWidget* parent)
     : QWidget(parent), p_model(model), p_topitems_tree(new TopItemsTreeView(model)),
       p_data_selection_model(
           new DataSelectionModel(p_topitems_tree->viewModel(), p_topitems_tree->treeView())),
-      p_data_toolbar(new QToolBar), p_graph_toolbar(new QToolBar), p_graph_canvas(new GraphCanvas),
+      p_toolbar(new QToolBar), p_graph_canvas(new GraphCanvas),
       p_property_tree(new PropertyTreeView)
 {
-    setupDataToolBar();
-    setupGraphToolBar();
+    setupToolBar();
     setupLayout();
     setupViews();
 
@@ -57,7 +56,7 @@ ImportDataEditor::ImportDataEditor(RealDataModel* model, QWidget* parent)
 }
 
 //! Set up the toolbar for the data management
-void ImportDataEditor::setupDataToolBar()
+void ImportDataEditor::setupToolBar()
 {
     auto load_action = new QAction("Data Loader", this);
     load_action->setToolTip("Opens the data loading dialog ...");
@@ -79,32 +78,28 @@ void ImportDataEditor::setupDataToolBar()
     redo_action->setToolTip("Redo the action ust performed.");
     redo_action->setIcon(QIcon(":/icons/redo.svg"));
 
-    p_data_toolbar->setIconSize(StyleUtils::ToolBarIconSize());
-    p_data_toolbar->setOrientation(Qt::Vertical);
-    p_data_toolbar->addAction(load_action);
-    p_data_toolbar->addSeparator();
-    p_data_toolbar->addAction(delete_action);
-    p_data_toolbar->addAction(reset_action);
-    p_data_toolbar->addSeparator();
-    p_data_toolbar->addAction(undo_action);
-    p_data_toolbar->addAction(redo_action);
-
-    connect(load_action, &QAction::triggered, this, &ImportDataEditor::invokeImportDialog);
-    connect(delete_action, &QAction::triggered, this, &ImportDataEditor::deleteItem);
-    connect(reset_action, &QAction::triggered, this, &ImportDataEditor::resetAll);
-}
-
-//! Set up the toolbar for the graph management
-void ImportDataEditor::setupGraphToolBar()
-{
     auto reset_graph_action = new QAction("Reset Aspect ratio", this);
     reset_graph_action->setToolTip("Reset the graph aspect ratio");
     reset_graph_action->setIcon(QIcon(":/icons/aspect-ratio.svg"));
 
-    p_graph_toolbar->setIconSize(StyleUtils::ToolBarIconSize());
-    p_graph_toolbar->setOrientation(Qt::Vertical);
-    p_graph_toolbar->addAction(reset_graph_action);
+    p_toolbar->setIconSize(StyleUtils::ToolBarIconSize());
+    p_toolbar->setOrientation(Qt::Horizontal);
+    p_toolbar->addAction(load_action);
+    p_toolbar->addSeparator();
+    p_toolbar->addAction(delete_action);
+    p_toolbar->addAction(reset_action);
+    p_toolbar->addSeparator();
+    p_toolbar->addAction(undo_action);
+    p_toolbar->addAction(redo_action);
 
+    auto empty = new QWidget(p_toolbar);
+    empty->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    p_toolbar->addWidget(empty);
+    p_toolbar->addAction(reset_graph_action);
+
+    connect(load_action, &QAction::triggered, this, &ImportDataEditor::invokeImportDialog);
+    connect(delete_action, &QAction::triggered, this, &ImportDataEditor::deleteItem);
+    connect(reset_action, &QAction::triggered, this, &ImportDataEditor::resetAll);
     connect(reset_graph_action, &QAction::triggered, p_graph_canvas,
             &ModelView::GraphCanvas::update_viewport);
 }
@@ -134,7 +129,7 @@ void ImportDataEditor::setupViews()
 //! Set up the layout of the widget
 void ImportDataEditor::setupLayout()
 {
-    auto main_layout = new QHBoxLayout(this);
+    auto main_layout = new QVBoxLayout(this);
     auto main_splitter = new QSplitter(this);
 
     auto sub_data_widget = new QWidget(main_splitter);
@@ -151,17 +146,15 @@ void ImportDataEditor::setupLayout()
     left_splitter->setStretchFactor(0, 1);
     left_splitter->setStretchFactor(1, 0);
 
-    sub_data_layout->addWidget(p_data_toolbar);
     sub_data_layout->addWidget(left_splitter);
-
     sub_graph_layout->addWidget(p_graph_canvas);
-    sub_graph_layout->addWidget(p_graph_toolbar);
 
     main_splitter->addWidget(sub_data_widget);
     main_splitter->addWidget(sub_graph_widget);
     main_splitter->setStretchFactor(0, 0);
     main_splitter->setStretchFactor(1, 1);
 
+    main_layout->addWidget(p_toolbar);
     main_layout->addWidget(main_splitter);
 }
 
