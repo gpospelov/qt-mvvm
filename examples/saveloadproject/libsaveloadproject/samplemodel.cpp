@@ -12,9 +12,9 @@
 #include <QColor>
 #include <mvvm/model/itemcatalogue.h>
 #include <mvvm/model/sessionitemcontainer.h>
+#include <mvvm/standarditems/containeritem.h>
 #include <mvvm/utils/numericutils.h>
 #include <mvvm/widgets/widgetutils.h>
-#include <mvvm/standarditems/containeritem.h>
 
 namespace
 {
@@ -62,10 +62,6 @@ void SampleModel::init_model_content()
 {
     auto container = insertItem<ModelView::ContainerItem>();
     append_random_item(container);
-    append_random_item(container);
-    append_random_item(container);
-
-    container = insertItem<ModelView::ContainerItem>();
     append_random_item(container);
     append_random_item(container);
 }

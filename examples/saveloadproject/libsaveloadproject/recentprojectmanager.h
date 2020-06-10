@@ -13,7 +13,14 @@
 #include <QObject>
 #include <memory>
 
+namespace ModelView
+{
+class ProjectManagerInterface;
+}
+
 class RecentProjectSettings;
+class UserInteractor;
+class SampleModel;
 
 //! Main class to coordinate all activity on user's request to create new project,
 //! open existing one, or choose one of recent projects on disk.
@@ -32,8 +39,14 @@ public slots:
     void onSaveProjectAs();
 
 private:
+    void init_project_manager();
+    void update_current_project_name();
+    void update_recent_project_names();
+
     std::unique_ptr<RecentProjectSettings> m_recentProjectSettings;
+    std::unique_ptr<UserInteractor> m_userInteractor;
+    std::unique_ptr<ModelView::ProjectManagerInterface> m_projectManager;
+    SampleModel* m_model{nullptr};
 };
 
 #endif // RECENTPROJECTMANAGER_H
-
