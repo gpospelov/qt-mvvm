@@ -9,15 +9,15 @@
 
 #include "mainwindow.h"
 #include "actionmanager.h"
+#include "containereditorwidget.h"
+#include "recentprojectmanager.h"
 #include "recentprojectwidget.h"
 #include "samplemodel.h"
-#include "containereditorwidget.h"
-#include "samplemodel.h"
-#include <mvvm/model/modelutils.h>
 #include <QCloseEvent>
 #include <QCoreApplication>
 #include <QHBoxLayout>
 #include <QSettings>
+#include <mvvm/model/modelutils.h>
 
 namespace
 {
@@ -27,7 +27,9 @@ const QString pos_key = "pos";
 } // namespace
 
 MainWindow::MainWindow()
-    : m_actionManager(new ActionManager(this)), m_sample_model(std::make_unique<SampleModel>())
+    : m_actionManager(new ActionManager(this)),
+      m_recentProjectManager(new RecentProjectManager(this)),
+      m_sample_model(std::make_unique<SampleModel>())
 {
     init_application();
     init_widgets();
