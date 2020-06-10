@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include "dataviewmodel.h"
+#include "datarowstrategy.h"
 #include "item_constants.h"
 #include "realdatamodel.h"
 
@@ -18,6 +19,7 @@
 
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
+#include <mvvm/viewmodel/viewmodelcontroller.h>
 #include <mvvm/viewmodel/viewmodelutils.h>
 
 #include <algorithm>
@@ -49,6 +51,8 @@ using namespace ModelView;
 DataViewModel::DataViewModel(RealDataModel* model, QObject* parent)
     : TopItemsViewModel(model, parent)
 {
+    auto controller = viewModelController();
+    controller->setRowStrategy(std::make_unique<DataRowStrategy>());
 }
 
 //! Return the Qt flags depending on the provided modelindex
@@ -58,11 +62,11 @@ Qt::ItemFlags DataViewModel::flags(const QModelIndex& index) const
 
     if (index.isValid())
         if (dynamic_cast<RealDataModel*>(sessionModel())->dragEnabled(sessionItemFromIndex(index)))
-            defaultFlags =  Qt::ItemIsDragEnabled | defaultFlags;
-        if (dynamic_cast<RealDataModel*>(sessionModel())->dropEnabled(sessionItemFromIndex(index)))
-            defaultFlags =  Qt::ItemIsDropEnabled | defaultFlags;
-        if (dynamic_cast<RealDataModel*>(sessionModel())->itemEditable(sessionItemFromIndex(index)))
-            defaultFlags =  Qt::ItemIsEditable | defaultFlags;
+            defaultFlags = Qt::ItemIsDragEnabled | defaultFlags;
+    if (dynamic_cast<RealDataModel*>(sessionModel())->dropEnabled(sessionItemFromIndex(index)))
+        defaultFlags = Qt::ItemIsDropEnabled | defaultFlags;
+    if (dynamic_cast<RealDataModel*>(sessionModel())->itemEditable(sessionItemFromIndex(index)))
+        defaultFlags = Qt::ItemIsEditable | defaultFlags;
 
     return defaultFlags;
 }

@@ -5,6 +5,8 @@ target_sources(quickreflcore PRIVATE
     dataselectionmodel.h
     dataviewmodel.cpp
     dataviewmodel.h
+    datarowstrategy.cpp
+    datarowstrategy.h
     importdataeditor.cpp
     importdataeditor.h
 )
