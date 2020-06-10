@@ -11,7 +11,12 @@
 #define PROJECTMANAGERINTERACTOR_H
 
 #include <string>
-#include <mvvm/project/project_types.h>
+
+namespace ModelView
+{
+    enum class SaveChangesAnswer;
+}
+
 class QWidget;
 class WelcomeViewSettings;
 
@@ -30,7 +35,7 @@ public:
 
     std::string onCreateDirRequest();
 
-    SaveChangesAnswer onSaveChangesRequest();
+    ModelView::SaveChangesAnswer onSaveChangesRequest();
 
 private:
     std::string selectDir() const;

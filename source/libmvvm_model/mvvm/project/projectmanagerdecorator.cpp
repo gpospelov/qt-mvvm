@@ -67,11 +67,11 @@ struct ProjectManagerDecorator::ProjectManagerImpl {
     {
         if (isModified()) {
             switch (acquireSaveChangesAnswer()) {
-            case SaveChangesAnswer::SAVE:
+            case ModelView::SaveChangesAnswer::SAVE:
                 return saveCurrentProject();
-            case SaveChangesAnswer::CANCEL:
+            case ModelView::SaveChangesAnswer::CANCEL:
                 return failed; // saving was interrupted by the 'cancel' button
-            case SaveChangesAnswer::DISCARD:
+            case ModelView::SaveChangesAnswer::DISCARD:
                 project_manager->closeCurrentProject();
                 return succeeded;
             default:
@@ -82,7 +82,7 @@ struct ProjectManagerDecorator::ProjectManagerImpl {
     }
 
     //! Asks the user whether to save/cancel/discard the project using callback provided.
-    SaveChangesAnswer acquireSaveChangesAnswer() const
+    ModelView::SaveChangesAnswer acquireSaveChangesAnswer() const
     {
         if (!save_callback)
             throw std::runtime_error("Error in ProjectManager: absent save_callback");

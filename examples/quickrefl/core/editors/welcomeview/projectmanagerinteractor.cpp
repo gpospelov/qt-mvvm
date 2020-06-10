@@ -17,6 +17,8 @@
 #include <map>
 #include <mvvm/utils/fileutils.h>
 
+using namespace ModelView;
+
 namespace
 {
 //! Map of standard Qt answeres to what ProjectManager expects.

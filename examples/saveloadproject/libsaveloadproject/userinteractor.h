@@ -10,8 +10,12 @@
 #ifndef USERINTERACTOR_H
 #define USERINTERACTOR_H
 
-#include <mvvm/project/project_types.h>
 #include <string>
+
+namespace ModelView
+{
+enum class SaveChangesAnswer;
+}
 
 class QWidget;
 class RecentProjectSettings;
@@ -28,7 +32,7 @@ public:
 
     std::string onCreateDirRequest();
 
-    SaveChangesAnswer onSaveChangesRequest();
+    ModelView::SaveChangesAnswer onSaveChangesRequest();
 
 private:
     std::string selectDir() const;
