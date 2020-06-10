@@ -10,7 +10,7 @@
 #include "mainwindow.h"
 #include "actionmanager.h"
 #include "containereditorwidget.h"
-#include "recentprojectmanager.h"
+#include "projecthandler.h"
 #include "recentprojectwidget.h"
 #include "samplemodel.h"
 #include <QCloseEvent>
@@ -28,7 +28,7 @@ const QString pos_key = "pos";
 
 MainWindow::MainWindow()
     : m_actionManager(new ActionManager(this)),
-      m_recentProjectManager(new RecentProjectManager(this)),
+      m_projectHandler(new ProjectHandler(this)),
       m_sample_model(std::make_unique<SampleModel>())
 {
     init_application();
@@ -77,14 +77,14 @@ void MainWindow::init_widgets()
 
 void MainWindow::init_connections()
 {
-    connect(m_actionManager, &ActionManager::createNewProjectRequest, m_recentProjectManager,
-            &RecentProjectManager::onCreateNewProject);
-    connect(m_actionManager, &ActionManager::openExistingProjectRequest, m_recentProjectManager,
-            &RecentProjectManager::onOpenExistingProject);
-    connect(m_actionManager, &ActionManager::saveCurrentProjectRequest, m_recentProjectManager,
-            &RecentProjectManager::onSaveCurrentProject);
-    connect(m_actionManager, &ActionManager::saveProjectAsRequest, m_recentProjectManager,
-            &RecentProjectManager::onSaveProjectAs);
+    connect(m_actionManager, &ActionManager::createNewProjectRequest, m_projectHandler,
+            &ProjectHandler::onCreateNewProject);
+    connect(m_actionManager, &ActionManager::openExistingProjectRequest, m_projectHandler,
+            &ProjectHandler::onOpenExistingProject);
+    connect(m_actionManager, &ActionManager::saveCurrentProjectRequest, m_projectHandler,
+            &ProjectHandler::onSaveCurrentProject);
+    connect(m_actionManager, &ActionManager::saveProjectAsRequest, m_projectHandler,
+            &ProjectHandler::onSaveProjectAs);
 }
 
 void MainWindow::write_settings()

@@ -14,10 +14,10 @@ target_sources(${library_name} PRIVATE
     items.h
     mainwindow.cpp
     mainwindow.h
+    projecthandler.cpp
+    projecthandler.h
     projectpanewidget.cpp
     projectpanewidget.h
-    recentprojectmanager.cpp
-    recentprojectmanager.h
     recentprojectsettings.cpp
     recentprojectsettings.h
     recentprojectwidget.cpp

@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef RECENTPROJECTMANAGER_H
-#define RECENTPROJECTMANAGER_H
+#ifndef PROJECTHANDLER_H
+#define PROJECTHANDLER_H
 
 #include <QObject>
 #include <memory>
@@ -25,12 +25,12 @@ class SampleModel;
 //! Main class to coordinate all activity on user's request to create new project,
 //! open existing one, or choose one of recent projects on disk.
 
-class RecentProjectManager : public QObject
+class ProjectHandler : public QObject
 {
     Q_OBJECT
 public:
-    explicit RecentProjectManager(QObject* parent = nullptr);
-    ~RecentProjectManager() override;
+    explicit ProjectHandler(QObject* parent = nullptr);
+    ~ProjectHandler() override;
 
 public slots:
     void onCreateNewProject();
@@ -49,4 +49,4 @@ private:
     SampleModel* m_model{nullptr};
 };
 
-#endif // RECENTPROJECTMANAGER_H
+#endif // PROJECTHANDLER_H

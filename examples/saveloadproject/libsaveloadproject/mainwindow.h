@@ -15,7 +15,7 @@
 
 class ActionManager;
 class SampleModel;
-class RecentProjectManager;
+class ProjectHandler;
 
 //! Application main window.
 
@@ -36,7 +36,7 @@ private:
     void write_settings();
 
     ActionManager* m_actionManager{nullptr};
-    RecentProjectManager* m_recentProjectManager{nullptr};
+    ProjectHandler* m_projectHandler{nullptr};
     std::unique_ptr<SampleModel> m_sample_model;
 };
 

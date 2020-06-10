@@ -7,31 +7,31 @@
 //
 // ************************************************************************** //
 
-#include "recentprojectmanager.h"
+#include "projecthandler.h"
 #include "recentprojectsettings.h"
 #include "userinteractor.h"
 #include <mvvm/project/projectmanagerdecorator.h>
 
 using namespace ModelView;
 
-RecentProjectManager::RecentProjectManager(QObject* parent)
+ProjectHandler::ProjectHandler(QObject* parent)
     : QObject(parent), m_recentProjectSettings(std::make_unique<RecentProjectSettings>()),
       m_userInteractor(std::unique_ptr<UserInteractor>())
 {
     init_project_manager();
 }
 
-RecentProjectManager::~RecentProjectManager() = default;
+ProjectHandler::~ProjectHandler() = default;
 
-void RecentProjectManager::onCreateNewProject() {}
+void ProjectHandler::onCreateNewProject() {}
 
-void RecentProjectManager::onOpenExistingProject(const QString& dirname) {}
+void ProjectHandler::onOpenExistingProject(const QString& dirname) {}
 
-void RecentProjectManager::onSaveCurrentProject() {}
+void ProjectHandler::onSaveCurrentProject() {}
 
-void RecentProjectManager::onSaveProjectAs() {}
+void ProjectHandler::onSaveProjectAs() {}
 
-void RecentProjectManager::init_project_manager()
+void ProjectHandler::init_project_manager()
 {
     auto select_dir = [this]() { return m_userInteractor->onSelectDirRequest(); };
     auto create_dir = [this]() { return m_userInteractor->onCreateDirRequest(); };
@@ -45,12 +45,12 @@ void RecentProjectManager::init_project_manager()
 //    m_projectManager = std::move(manager);
 }
 
-void RecentProjectManager::update_current_project_name()
+void ProjectHandler::update_current_project_name()
 {
 
 }
 
-void RecentProjectManager::update_recent_project_names()
+void ProjectHandler::update_recent_project_names()
 {
 
 }
