@@ -11,12 +11,13 @@
 #define DATASETITEM_H
 
 #include <mvvm/model/compounditem.h>
+#include <mvvm/standarditems/containeritem.h>
 #include <mvvm/standarditems/graphviewportitem.h>
 #include <string>
 
 namespace ModelView
 {
-class ContainerItem;
+class Data1DItem;
 }
 
 class TypeUnit;
@@ -27,10 +28,7 @@ class RealDataStruct;
 class DataGroupItem : public ModelView::GraphViewportItem
 {
 public:
-    static inline const std::string P_DATA = "P_DATA";
-
     DataGroupItem();
-    void setTypeUnit(TypeUnit& type_unit);
     int itemCount() const;
 };
 
@@ -44,6 +42,14 @@ public:
     DataGroupItem* getDataGroup(const std::string tag) const;
 
     inline static const std::string data_group_tag = "data_groups";
+};
+
+// ----------------------------------------------------------------
+//! This will hold all the data1Ditems unordered
+class RealDataContainer : public ModelView::ContainerItem
+{
+public:
+    RealDataContainer();
 };
 
 #endif // DATASETITEM_H
