@@ -73,6 +73,20 @@ void MainWindow::init_widgets()
     table_widget->setModel(m_sample_model.get(), ModelView::Utils::TopItem(m_sample_model.get()));
 }
 
+//! Setup main connections.
+
+void MainWindow::init_connections()
+{
+    connect(m_actionManager, &ActionManager::createNewProjectRequest, m_recentProjectManager,
+            &RecentProjectManager::onCreateNewProject);
+    connect(m_actionManager, &ActionManager::openExistingProjectRequest, m_recentProjectManager,
+            &RecentProjectManager::onOpenExistingProject);
+    connect(m_actionManager, &ActionManager::saveCurrentProjectRequest, m_recentProjectManager,
+            &RecentProjectManager::onSaveCurrentProject);
+    connect(m_actionManager, &ActionManager::saveProjectAsRequest, m_recentProjectManager,
+            &RecentProjectManager::onSaveProjectAs);
+}
+
 void MainWindow::write_settings()
 {
     QSettings settings;

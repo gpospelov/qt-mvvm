@@ -8,5 +8,31 @@
 // ************************************************************************** //
 
 #include "recentprojectmanager.h"
+#include "recentprojectsettings.h"
 
-RecentProjectManager::RecentProjectManager(QObject* parent) : QObject(parent) {}
+RecentProjectManager::RecentProjectManager(QObject* parent)
+    : QObject(parent), m_recentProjectSettings(std::make_unique<RecentProjectSettings>())
+{
+}
+
+RecentProjectManager::~RecentProjectManager() = default;
+
+void RecentProjectManager::onCreateNewProject()
+{
+
+}
+
+void RecentProjectManager::onOpenExistingProject(const QString &dirname)
+{
+
+}
+
+void RecentProjectManager::onSaveCurrentProject()
+{
+
+}
+
+void RecentProjectManager::onSaveProjectAs()
+{
+
+}

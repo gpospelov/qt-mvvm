@@ -36,6 +36,12 @@ public slots:
     void onSaveCurrentProject();
     void onSaveProjectAs();
 
+signals:
+    void createNewProjectRequest();
+    void openExistingProjectRequest(const QString& dirname);
+    void saveCurrentProjectRequest();
+    void saveProjectAsRequest();
+
 private:
     void createMenus(QMenuBar* menubar);
     void createActions();

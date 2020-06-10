@@ -13,7 +13,8 @@
 #include <QMainWindow>
 #include <QMenuBar>
 
-ActionManager::ActionManager(QMainWindow *mainwindow) : QObject(mainwindow), m_mainWindow(mainwindow)
+ActionManager::ActionManager(QMainWindow* mainwindow)
+    : QObject(mainwindow), m_mainWindow(mainwindow)
 {
     createActions();
     createMenus(m_mainWindow->menuBar());
@@ -33,21 +34,25 @@ void ActionManager::createMenus(QMenuBar* menubar)
 void ActionManager::onCreateNewProject()
 {
     qDebug() << "ActionManager::onCreateNewProject()";
+    createNewProjectRequest();
 }
 
 void ActionManager::onOpenExistingProject(const QString& dirname)
 {
     qDebug() << "ActionManager::onOpenExistingProject()" << dirname;
+    openExistingProjectRequest(dirname);
 }
 
 void ActionManager::onSaveCurrentProject()
 {
     qDebug() << "ActionManager::onSaveCurrentProject()";
+    saveCurrentProjectRequest();
 }
 
 void ActionManager::onSaveProjectAs()
 {
     qDebug() << "ActionManager::onSaveProjectAs()";
+    saveProjectAsRequest();
 }
 
 //! Creates application-wise actions to create, open, save, and save-as projects.

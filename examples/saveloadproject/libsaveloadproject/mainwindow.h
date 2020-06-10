@@ -32,6 +32,7 @@ protected:
 private:
     void init_application();
     void init_widgets();
+    void init_connections();
     void write_settings();
 
     ActionManager* m_actionManager{nullptr};
