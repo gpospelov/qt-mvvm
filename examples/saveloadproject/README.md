@@ -1,4 +1,4 @@
-# Example "saveloadprojects".
+# Example "saveloadproject".
 
 The example shows how to save/load projects on disk.
 The project is a collection of `json` files representing application models in a folder on disk.

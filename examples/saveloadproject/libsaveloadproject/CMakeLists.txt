@@ -8,12 +8,18 @@ target_link_libraries(${library_name} PUBLIC mvvm_viewmodel Qt5::Core Qt5::Gui Q
 target_sources(${library_name} PRIVATE
     actionmanager.cpp
     actionmanager.h
+    containereditorwidget.cpp
+    containereditorwidget.h
+    items.cpp
+    items.h
     mainwindow.cpp
     mainwindow.h
     projectpanewidget.cpp
     projectpanewidget.h
     recentprojectwidget.cpp
     recentprojectwidget.h
+    samplemodel.cpp
+    samplemodel.h
     tablewidget.cpp
     tablewidget.h
 )
