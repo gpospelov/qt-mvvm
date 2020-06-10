@@ -15,7 +15,7 @@
 
 using namespace ModelView;
 
-ProjectHandler::ProjectHandler(SampleModel *sample_model, QObject* parent)
+ProjectHandler::ProjectHandler(SampleModel* sample_model, QObject* parent)
     : QObject(parent), m_recentProjectSettings(std::make_unique<RecentProjectSettings>()),
       m_userInteractor(std::unique_ptr<UserInteractor>()), m_model(sample_model)
 {
@@ -24,19 +24,42 @@ ProjectHandler::ProjectHandler(SampleModel *sample_model, QObject* parent)
 
 std::vector<SessionModel*> ProjectHandler::persistent_models() const
 {
-
     return {m_model};
 }
 
 ProjectHandler::~ProjectHandler() = default;
 
-void ProjectHandler::onCreateNewProject() {}
+void ProjectHandler::onCreateNewProject()
+{
+    if (m_projectManager->createNewProject()) {
+        update_current_project_name();
+        update_recent_project_names();
+    }
+}
 
-void ProjectHandler::onOpenExistingProject(const QString& dirname) {}
+void ProjectHandler::onOpenExistingProject(const QString& dirname)
+{
+    if (m_projectManager->openExistingProject(dirname.toStdString())) {
+        update_current_project_name();
+        update_recent_project_names();
+    }
+}
 
-void ProjectHandler::onSaveCurrentProject() {}
+void ProjectHandler::onSaveCurrentProject()
+{
+    if (m_projectManager->saveCurrentProject()) {
+        update_current_project_name();
+        update_recent_project_names();
+    }
+}
 
-void ProjectHandler::onSaveProjectAs() {}
+void ProjectHandler::onSaveProjectAs()
+{
+    if (m_projectManager->saveProjectAs()) {
+        update_current_project_name();
+        update_recent_project_names();
+    }
+}
 
 void ProjectHandler::init_project_manager()
 {
