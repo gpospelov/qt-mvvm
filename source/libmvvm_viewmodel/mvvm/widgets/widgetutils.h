@@ -15,6 +15,7 @@
 class QColor;
 class QString;
 class QSize;
+class QMainWindow;
 
 namespace ModelView
 {
@@ -44,6 +45,9 @@ CORE_EXPORT QSize SizeOfLetterM();
 
 //! Returns size in points of default system font.
 CORE_EXPORT int SystemPointSize();
+
+//! Finds main window.
+QMainWindow* FindMainWindow();
 
 } // namespace Utils
 

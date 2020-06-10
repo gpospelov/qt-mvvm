@@ -11,6 +11,7 @@
 #include <QColor>
 #include <QDir>
 #include <QFontMetrics>
+#include <QMainWindow>
 #include <QSize>
 #include <mvvm/utils/numericutils.h>
 #include <mvvm/widgets/widgetutils.h>
@@ -90,4 +91,13 @@ QSize ModelView::Utils::SizeOfLetterM()
 int ModelView::Utils::SystemPointSize()
 {
     return QApplication::font().pointSize();
+}
+
+QMainWindow* ModelView::Utils::FindMainWindow()
+{
+    for (auto widget : qApp->topLevelWidgets()) {
+        if (auto result = dynamic_cast<QMainWindow*>(widget); result)
+            return result;
+    }
+    return nullptr;
 }
