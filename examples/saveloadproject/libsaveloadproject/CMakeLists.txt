@@ -16,6 +16,8 @@ target_sources(${library_name} PRIVATE
     mainwindow.h
     projectpanewidget.cpp
     projectpanewidget.h
+    recentprojectsettings.cpp
+    recentprojectsettings.h
     recentprojectwidget.cpp
     recentprojectwidget.h
     samplemodel.cpp
