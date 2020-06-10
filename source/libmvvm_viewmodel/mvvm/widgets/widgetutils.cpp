@@ -76,6 +76,11 @@ QString ModelView::Utils::ProjectWindowTitle(const QString& project_dir, bool is
     return unsaved_status + project_name;
 }
 
+int ModelView::Utils::WidthOfLetterM()
+{
+    return ModelView::Utils::SizeOfLetterM().width();
+}
+
 QSize ModelView::Utils::SizeOfLetterM()
 {
     static QSize result = FindSizeOfLetterM();
