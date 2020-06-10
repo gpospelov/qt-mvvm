@@ -47,7 +47,7 @@ CORE_EXPORT QSize SizeOfLetterM();
 CORE_EXPORT int SystemPointSize();
 
 //! Finds main window.
-QMainWindow* FindMainWindow();
+CORE_EXPORT QMainWindow* FindMainWindow();
 
 } // namespace Utils
 
