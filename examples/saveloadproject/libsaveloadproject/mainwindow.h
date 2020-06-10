@@ -16,6 +16,7 @@
 class ActionManager;
 class SampleModel;
 class ProjectHandler;
+class RecentProjectWidget;
 
 //! Application main window.
 
@@ -38,6 +39,7 @@ private:
     std::unique_ptr<SampleModel> m_sampleModel;
     ActionManager* m_actionManager{nullptr};
     ProjectHandler* m_projectHandler{nullptr};
+    RecentProjectWidget* m_recentProjectWidget{nullptr};
 };
 
 #endif //  MAINWINDOW_H

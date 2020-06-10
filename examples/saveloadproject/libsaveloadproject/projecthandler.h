@@ -38,6 +38,10 @@ public:
 
     std::vector<ModelView::SessionModel*> persistent_models() const override;
 
+signals:
+    void currentProjectModified(const QString& project_dir, bool is_modified);
+    void recentProjectsListModified(const QStringList& projects);
+
 public slots:
     void onCreateNewProject();
     void onOpenExistingProject(const QString& dirname = {});

@@ -63,9 +63,9 @@ void MainWindow::init_widgets()
     auto central_widget = new QWidget;
     auto central_layout = new QHBoxLayout(central_widget);
 
-    auto project_widget = new RecentProjectWidget;
+    m_recentProjectWidget = new RecentProjectWidget;
     auto table_widget = new ContainerEditorWidget;
-    central_layout->addWidget(project_widget);
+    central_layout->addWidget(m_recentProjectWidget);
     central_layout->addWidget(table_widget);
 
     setCentralWidget(central_widget);
