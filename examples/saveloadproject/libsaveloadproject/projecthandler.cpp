@@ -11,7 +11,9 @@
 #include "recentprojectsettings.h"
 #include "samplemodel.h"
 #include "userinteractor.h"
+#include <QMainWindow>
 #include <mvvm/project/projectmanagerdecorator.h>
+#include <mvvm/widgets/widgetutils.h>
 
 using namespace ModelView;
 
@@ -75,6 +77,27 @@ void ProjectHandler::init_project_manager()
     m_projectManager = std::move(manager);
 }
 
-void ProjectHandler::update_current_project_name() {}
+//! Updates the name of the current project on main window, notifies the world.
 
-void ProjectHandler::update_recent_project_names() {}
+void ProjectHandler::update_current_project_name()
+{
+    const auto current_project_dir = QString::fromStdString(m_projectManager->currentProjectDir());
+    const auto is_modified = m_projectManager->isModified();
+
+    // set main window title
+    auto title = ModelView::Utils::ProjectWindowTitle(current_project_dir, is_modified);
+    if (auto main_window = ModelView::Utils::FindMainWindow(); main_window)
+        main_window->setWindowTitle(title);
+
+    // notifies the world
+    currentProjectModified(current_project_dir, is_modified);
+}
+
+//! Update recent project list in settings, notifies the world.
+
+void ProjectHandler::update_recent_project_names()
+{
+    m_recentProjectSettings->addToRecentProjects(
+        QString::fromStdString(m_projectManager->currentProjectDir()));
+    recentProjectsListModified(m_recentProjectSettings->recentProjects());
+}

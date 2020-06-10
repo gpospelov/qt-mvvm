@@ -77,6 +77,7 @@ void MainWindow::init_widgets()
 
 void MainWindow::init_connections()
 {
+    // connect ActionManager signals with ProjectHandler slots
     connect(m_actionManager, &ActionManager::createNewProjectRequest, m_projectHandler,
             &ProjectHandler::onCreateNewProject);
     connect(m_actionManager, &ActionManager::openExistingProjectRequest, m_projectHandler,
@@ -85,6 +86,12 @@ void MainWindow::init_connections()
             &ProjectHandler::onSaveCurrentProject);
     connect(m_actionManager, &ActionManager::saveProjectAsRequest, m_projectHandler,
             &ProjectHandler::onSaveProjectAs);
+
+    // connect ProjectHandler slots with RecentProjectWidget
+    connect(m_projectHandler, &ProjectHandler::currentProjectModified, m_recentProjectWidget,
+            &RecentProjectWidget::setCurrentProject);
+    connect(m_projectHandler, &ProjectHandler::recentProjectsListModified, m_recentProjectWidget,
+            &RecentProjectWidget::setRecentProjectsList);
 }
 
 void MainWindow::write_settings()
