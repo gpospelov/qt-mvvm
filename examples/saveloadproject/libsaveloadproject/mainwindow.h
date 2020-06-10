@@ -11,8 +11,10 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <memory>
 
 class ActionManager;
+class SampleModel;
 
 //! Application main window.
 
@@ -32,6 +34,7 @@ private:
     void write_settings();
 
     ActionManager* m_actionManager{nullptr};
+    std::unique_ptr<SampleModel> m_sample_model;
 };
 
 #endif //  MAINWINDOW_H

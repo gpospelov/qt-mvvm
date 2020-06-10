@@ -10,7 +10,11 @@
 #include "mainwindow.h"
 #include "actionmanager.h"
 #include "recentprojectwidget.h"
+#include "samplemodel.h"
 #include "tablewidget.h"
+#include "containereditorwidget.h"
+#include "samplemodel.h"
+#include <mvvm/model/modelutils.h>
 #include <QCloseEvent>
 #include <QCoreApplication>
 #include <QHBoxLayout>
@@ -23,7 +27,8 @@ const QString size_key = "size";
 const QString pos_key = "pos";
 } // namespace
 
-MainWindow::MainWindow() : m_actionManager(new ActionManager(this))
+MainWindow::MainWindow()
+    : m_actionManager(new ActionManager(this)), m_sample_model(std::make_unique<SampleModel>())
 {
     init_application();
     init_widgets();
@@ -58,11 +63,13 @@ void MainWindow::init_widgets()
     auto central_layout = new QVBoxLayout(central_widget);
 
     auto project_widget = new RecentProjectWidget;
-    auto table_widget = new TableWidget;
+    auto table_widget = new ContainerEditorWidget;
     central_layout->addWidget(project_widget);
     central_layout->addWidget(table_widget);
 
     setCentralWidget(central_widget);
+
+    table_widget->setModel(m_sample_model.get(), ModelView::Utils::TopItem(m_sample_model.get()));
 }
 
 void MainWindow::write_settings()
