@@ -9,22 +9,25 @@
 
 #include "projecthandler.h"
 #include "recentprojectsettings.h"
+#include "recentprojectwidget.h"
 #include "samplemodel.h"
 #include "userinteractor.h"
-#include "recentprojectwidget.h"
 #include <QMainWindow>
 #include <mvvm/project/projectmanagerdecorator.h>
 #include <mvvm/widgets/widgetutils.h>
 
 using namespace ModelView;
 
-ProjectHandler::ProjectHandler(SampleModel* sample_model, RecentProjectWidget *project_widget)
+ProjectHandler::ProjectHandler(SampleModel* sample_model, RecentProjectWidget* project_widget)
     : QObject(project_widget), m_recentProjectSettings(std::make_unique<RecentProjectSettings>()),
-      m_userInteractor(std::make_unique<UserInteractor>(project_widget, m_recentProjectSettings.get())),
+      m_userInteractor(
+          std::make_unique<UserInteractor>(project_widget, m_recentProjectSettings.get())),
       m_recentProjectWidget(project_widget), m_model(sample_model)
 {
     init_project_manager();
     update_recent_project_names();
+    connect(m_recentProjectWidget, &RecentProjectWidget::projectSelected, this,
+            &ProjectHandler::onOpenExistingProject);
 }
 
 std::vector<SessionModel*> ProjectHandler::persistent_models() const
