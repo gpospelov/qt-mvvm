@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "mainwindow.h"
+#include <celleditorscore/mainwindow.h>
 #include <QApplication>
 #include <QLocale>
 
