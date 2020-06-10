@@ -27,9 +27,9 @@ const QString pos_key = "pos";
 } // namespace
 
 MainWindow::MainWindow()
-    : m_actionManager(new ActionManager(this)),
-      m_projectHandler(new ProjectHandler(this)),
-      m_sample_model(std::make_unique<SampleModel>())
+    : m_sampleModel(std::make_unique<SampleModel>()), m_actionManager(new ActionManager(this)),
+      m_projectHandler(new ProjectHandler(m_sampleModel.get(), this))
+
 {
     init_application();
     init_widgets();
@@ -70,7 +70,7 @@ void MainWindow::init_widgets()
 
     setCentralWidget(central_widget);
 
-    table_widget->setModel(m_sample_model.get(), ModelView::Utils::TopItem(m_sample_model.get()));
+    table_widget->setModel(m_sampleModel.get(), ModelView::Utils::TopItem(m_sampleModel.get()));
 }
 
 //! Setup main connections.

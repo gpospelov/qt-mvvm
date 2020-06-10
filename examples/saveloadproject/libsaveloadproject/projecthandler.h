@@ -33,7 +33,7 @@ class ProjectHandler : public QObject, public ModelView::ApplicationModelsInterf
 {
     Q_OBJECT
 public:
-    explicit ProjectHandler(QObject* parent = nullptr);
+    explicit ProjectHandler(SampleModel* sample_model, QObject* parent = nullptr);
     ~ProjectHandler() override;
 
     std::vector<ModelView::SessionModel*> persistent_models() const override;

@@ -35,9 +35,9 @@ private:
     void init_connections();
     void write_settings();
 
+    std::unique_ptr<SampleModel> m_sampleModel;
     ActionManager* m_actionManager{nullptr};
     ProjectHandler* m_projectHandler{nullptr};
-    std::unique_ptr<SampleModel> m_sample_model;
 };
 
 #endif //  MAINWINDOW_H
