@@ -27,12 +27,10 @@ const QString pos_key = "pos";
 } // namespace
 
 MainWindow::MainWindow()
-    : m_sampleModel(std::make_unique<SampleModel>()), m_actionManager(new ActionManager(this)),
-      m_projectHandler(new ProjectHandler(m_sampleModel.get(), this))
-
+    : m_sampleModel(std::make_unique<SampleModel>()), m_actionManager(new ActionManager(this))
 {
     init_application();
-    init_widgets();
+    init_components();
     init_connections();
 }
 
@@ -43,6 +41,9 @@ void MainWindow::closeEvent(QCloseEvent* event)
     write_settings();
     QMainWindow::closeEvent(event);
 }
+
+//! Inits application. It should be called first, to make all possible usages of QSettings
+//! consistent among all widgets which relies on it.
 
 void MainWindow::init_application()
 {
@@ -59,12 +60,16 @@ void MainWindow::init_application()
     }
 }
 
-void MainWindow::init_widgets()
+//! Inits all main window components.
+
+void MainWindow::init_components()
 {
     auto central_widget = new QWidget;
     auto central_layout = new QHBoxLayout(central_widget);
 
-    m_recentProjectWidget = new RecentProjectWidget;
+    m_recentProjectWidget = new RecentProjectWidget(this);
+    m_projectHandler = new ProjectHandler(m_sampleModel.get(), m_recentProjectWidget);
+
     auto table_widget = new ContainerEditorWidget;
     central_layout->addWidget(m_recentProjectWidget);
     central_layout->addWidget(table_widget);
@@ -87,12 +92,6 @@ void MainWindow::init_connections()
             &ProjectHandler::onSaveCurrentProject);
     connect(m_actionManager, &ActionManager::saveProjectAsRequest, m_projectHandler,
             &ProjectHandler::onSaveProjectAs);
-
-    // connect ProjectHandler slots with RecentProjectWidget
-    connect(m_projectHandler, &ProjectHandler::currentProjectModified, m_recentProjectWidget,
-            &RecentProjectWidget::setCurrentProject);
-    connect(m_projectHandler, &ProjectHandler::recentProjectsListModified, m_recentProjectWidget,
-            &RecentProjectWidget::setRecentProjectsList);
 }
 
 void MainWindow::write_settings()

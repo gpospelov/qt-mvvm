@@ -32,14 +32,14 @@ protected:
 
 private:
     void init_application();
-    void init_widgets();
+    void init_components();
     void init_connections();
     void write_settings();
 
     std::unique_ptr<SampleModel> m_sampleModel;
     ActionManager* m_actionManager{nullptr};
-    ProjectHandler* m_projectHandler{nullptr};
     RecentProjectWidget* m_recentProjectWidget{nullptr};
+    ProjectHandler* m_projectHandler{nullptr};
 };
 
 #endif //  MAINWINDOW_H

@@ -11,18 +11,20 @@
 #include "recentprojectsettings.h"
 #include "samplemodel.h"
 #include "userinteractor.h"
+#include "recentprojectwidget.h"
 #include <QMainWindow>
 #include <mvvm/project/projectmanagerdecorator.h>
 #include <mvvm/widgets/widgetutils.h>
 
 using namespace ModelView;
 
-ProjectHandler::ProjectHandler(SampleModel* sample_model, QMainWindow* parent)
-    : QObject(parent), m_recentProjectSettings(std::make_unique<RecentProjectSettings>()),
-      m_userInteractor(std::make_unique<UserInteractor>(parent, m_recentProjectSettings.get())),
-      m_model(sample_model)
+ProjectHandler::ProjectHandler(SampleModel* sample_model, RecentProjectWidget *project_widget)
+    : QObject(project_widget), m_recentProjectSettings(std::make_unique<RecentProjectSettings>()),
+      m_userInteractor(std::make_unique<UserInteractor>(project_widget, m_recentProjectSettings.get())),
+      m_recentProjectWidget(project_widget), m_model(sample_model)
 {
     init_project_manager();
+    update_recent_project_names();
 }
 
 std::vector<SessionModel*> ProjectHandler::persistent_models() const
@@ -91,7 +93,7 @@ void ProjectHandler::update_current_project_name()
         main_window->setWindowTitle(title);
 
     // notifies the world
-    currentProjectModified(current_project_dir, is_modified);
+    m_recentProjectWidget->setCurrentProject(current_project_dir, is_modified);
 }
 
 //! Update recent project list in settings, notifies the world.
@@ -100,5 +102,5 @@ void ProjectHandler::update_recent_project_names()
 {
     m_recentProjectSettings->addToRecentProjects(
         QString::fromStdString(m_projectManager->currentProjectDir()));
-    recentProjectsListModified(m_recentProjectSettings->recentProjects());
+    m_recentProjectWidget->setRecentProjectsList(m_recentProjectSettings->recentProjects());
 }
