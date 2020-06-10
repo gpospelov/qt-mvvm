@@ -15,7 +15,9 @@
 
 namespace ModelView
 {
+class SessionItem;
 class GraphCanvas;
+class GraphViewportItem;
 class TopItemsTreeView;
 class PropertyTreeView;
 } // namespace ModelView
@@ -45,6 +47,11 @@ private:
     void setupViews();
     void setupLayout();
 
+    void selectionChanged();
+    void setMergeEnabled(bool enabled);
+
+    void addDataGroup();
+    void mergeDataGroups();
     void invokeImportDialog();
     void onImportDialogAccept(DataImportLogic::ImportOutput import_output);
     RealDataStruct convertToRealDataStruct(const std::string& path,

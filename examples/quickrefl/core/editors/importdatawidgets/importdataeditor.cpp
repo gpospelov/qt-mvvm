@@ -53,11 +53,22 @@ ImportDataEditor::ImportDataEditor(RealDataModel* model, QWidget* parent)
     p_topitems_tree->viewModel()->setRootSessionItem(
         ModelView::Utils::TopItem<DataCollectionItem>(model));
     p_topitems_tree->treeView()->setSelectionModel(p_data_selection_model);
+    p_topitems_tree->treeView()->setSelectionMode(QAbstractItemView::ExtendedSelection);
+    p_topitems_tree->treeView()->setSelectionBehavior(QAbstractItemView::SelectRows);
 }
 
 //! Set up the toolbar for the data management
 void ImportDataEditor::setupToolBar()
 {
+    auto add_group_action = new QAction("Add a data group", this);
+    add_group_action->setToolTip("Add a data group to manage loaded items.");
+    add_group_action->setIcon(QIcon(":/icons/plus-box-outline.svg"));
+
+    auto merge_group_action = new QAction("Merge data groups", this);
+    merge_group_action->setToolTip("Merge selected data groups into one.");
+    merge_group_action->setIcon(QIcon(":/icons/set-merge.svg"));
+    merge_group_action->setObjectName("merge_group_action");
+
     auto load_action = new QAction("Data Loader", this);
     load_action->setToolTip("Opens the data loading dialog ...");
     load_action->setIcon(QIcon(":/icons/import.svg"));
@@ -71,11 +82,11 @@ void ImportDataEditor::setupToolBar()
     reset_action->setIcon(QIcon(":/icons/beaker-remove-outline.svg"));
 
     auto undo_action = new QAction("Undo data action", this);
-    undo_action->setToolTip("Undo the action kust performed.");
+    undo_action->setToolTip("Undo the action last performed.");
     undo_action->setIcon(QIcon(":/icons/undo.svg"));
 
     auto redo_action = new QAction("Redo data action", this);
-    redo_action->setToolTip("Redo the action ust performed.");
+    redo_action->setToolTip("Redo the action just performed.");
     redo_action->setIcon(QIcon(":/icons/redo.svg"));
 
     auto reset_graph_action = new QAction("Reset Aspect ratio", this);
@@ -84,6 +95,9 @@ void ImportDataEditor::setupToolBar()
 
     p_toolbar->setIconSize(StyleUtils::ToolBarIconSize());
     p_toolbar->setOrientation(Qt::Horizontal);
+
+    p_toolbar->addAction(add_group_action);
+    p_toolbar->addAction(merge_group_action);
     p_toolbar->addAction(load_action);
     p_toolbar->addSeparator();
     p_toolbar->addAction(delete_action);
@@ -97,6 +111,8 @@ void ImportDataEditor::setupToolBar()
     p_toolbar->addWidget(empty);
     p_toolbar->addAction(reset_graph_action);
 
+    connect(add_group_action, &QAction::triggered, this, &ImportDataEditor::addDataGroup);
+    connect(merge_group_action, &QAction::triggered, this, &ImportDataEditor::mergeDataGroups);
     connect(load_action, &QAction::triggered, this, &ImportDataEditor::invokeImportDialog);
     connect(delete_action, &QAction::triggered, this, &ImportDataEditor::deleteItem);
     connect(reset_action, &QAction::triggered, this, &ImportDataEditor::resetAll);
@@ -107,23 +123,8 @@ void ImportDataEditor::setupToolBar()
 //! Set up all the view items
 void ImportDataEditor::setupViews()
 {
-    // make property tree showing the item selected
-    auto on_item_selected = [this]() {
-        auto items = p_data_selection_model->selectedItems();
-        if (items.size() == 0)
-            return;
-        auto item = items.at(0);
-        p_property_tree->setItem(item);
-        if (auto viewport = dynamic_cast<ModelView::GraphViewportItem*>(item); viewport) {
-            viewport->resetSelected();
-            p_graph_canvas->setItem(viewport);
-        } else if (auto graph_item = dynamic_cast<ModelView::GraphItem*>(item); graph_item) {
-            auto viewport = dynamic_cast<ModelView::GraphViewportItem*>(graph_item->parent());
-            viewport->setSelected(std::vector<ModelView::GraphItem*>{graph_item});
-            p_graph_canvas->setItem(viewport);
-        }
-    };
-    connect(p_data_selection_model, &DataSelectionModel::selectionChanged, on_item_selected);
+    connect(p_data_selection_model, &DataSelectionModel::selectionChanged, this,
+            &ImportDataEditor::selectionChanged);
 }
 
 //! Set up the layout of the widget
@@ -158,7 +159,57 @@ void ImportDataEditor::setupLayout()
     main_layout->addWidget(main_splitter);
 }
 
-//! Invode the data load dialog and connect its state
+//! Manage a selection change of the treeview
+void ImportDataEditor::selectionChanged()
+{
+    auto items = p_data_selection_model->selectedItems();
+    items.erase(std::remove(begin(items), end(items), nullptr), end(items));
+    setMergeEnabled((items.size() > 1) ? (p_model->checkAllGroup(items)) : (false));
+
+    if (items.size() == 0)
+        return;
+
+    if (auto viewport = p_model->checkAllGraph(items); viewport) {
+        std::vector<ModelView::GraphItem*> graph_items;
+        for (std::vector<ModelView::SessionItem*>::iterator it = items.begin(); it != items.end();
+             ++it) {
+            graph_items.push_back(dynamic_cast<ModelView::GraphItem*>(*it));
+        }
+        viewport->setSelected(graph_items);
+        p_graph_canvas->setItem(viewport);
+        return;
+    }
+
+    auto item = items.at(0);
+    p_property_tree->setItem(item);
+    if (auto viewport = dynamic_cast<ModelView::GraphViewportItem*>(item); viewport) {
+        viewport->resetSelected();
+        p_graph_canvas->setItem(viewport);
+    } else if (auto graph_item = dynamic_cast<ModelView::GraphItem*>(item); graph_item) {
+        auto viewport = dynamic_cast<ModelView::GraphViewportItem*>(graph_item->parent());
+        viewport->setSelected(std::vector<ModelView::GraphItem*>{graph_item});
+        p_graph_canvas->setItem(viewport);
+    }
+}
+
+//! check itf all items are DataGroupItems, if yes return true
+void ImportDataEditor::setMergeEnabled(bool enabled)
+{
+    auto action = findChild<QAction*>("merge_group_action");
+    action->setEnabled(enabled);
+}
+
+//! Create a new data grou item in the current data collection item
+void ImportDataEditor::addDataGroup()
+{
+    DataCollectionItem* data_node = ModelView::Utils::TopItem<DataCollectionItem>(p_model);
+    p_model->addDataToCollection(RealDataStruct(), data_node, nullptr);
+}
+
+//! Merge the selected actions
+void ImportDataEditor::mergeDataGroups() {}
+
+//! Invoke the data load dialog and connect its state
 void ImportDataEditor::invokeImportDialog()
 {
     DataImportGui::DataLoaderDialog assistant(this);
@@ -172,11 +223,12 @@ void ImportDataEditor::invokeImportDialog()
 void ImportDataEditor::onImportDialogAccept(DataImportLogic::ImportOutput import_output)
 {
     DataCollectionItem* data_node = ModelView::Utils::TopItem<DataCollectionItem>(p_model);
+    DataGroupItem* data_group = nullptr;
     for (auto& path : import_output.keys()) {
         auto parsed_file_output = import_output[path];
         for (int i = 0; i < parsed_file_output->dataCount(); ++i) {
             auto data_struct = convertToRealDataStruct(path, parsed_file_output, i);
-            p_model->addDataToNode(data_node, data_struct);
+            data_group = p_model->addDataToCollection(data_struct, data_node, data_group);
         }
     }
 }
@@ -207,7 +259,7 @@ ImportDataEditor::convertToRealDataStruct(const std::string& path,
 void ImportDataEditor::deleteItem()
 {
     std::vector<SessionItem*> items_to_delete = p_data_selection_model->selectedItems();
-    p_model->removeDataFromNode(items_to_delete);
+    p_model->removeDataFromCollection(items_to_delete);
 }
 
 //! Reset all items
@@ -223,6 +275,6 @@ void ImportDataEditor::resetAll()
 
     if (ret == QMessageBox::Yes) {
         DataCollectionItem* data_node = ModelView::Utils::TopItem<DataCollectionItem>(p_model);
-        p_model->removeAllDataFromNode(data_node);
+        p_model->removeAllDataFromCollection(data_node);
     }
 }
