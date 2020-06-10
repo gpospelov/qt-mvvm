@@ -9,6 +9,7 @@
 
 #include "projecthandler.h"
 #include "recentprojectsettings.h"
+#include "samplemodel.h"
 #include "userinteractor.h"
 #include <mvvm/project/projectmanagerdecorator.h>
 
@@ -19,6 +20,12 @@ ProjectHandler::ProjectHandler(QObject* parent)
       m_userInteractor(std::unique_ptr<UserInteractor>())
 {
     init_project_manager();
+}
+
+std::vector<SessionModel*> ProjectHandler::persistent_models() const
+{
+
+    return {m_model};
 }
 
 ProjectHandler::~ProjectHandler() = default;
@@ -38,19 +45,13 @@ void ProjectHandler::init_project_manager()
     auto save_changes = [this]() { return m_userInteractor->onSaveChangesRequest(); };
     auto on_modified = [this]() { update_current_project_name(); };
 
-//    auto manager =
-//        std::make_unique<ProjectManagerDecorator>(m_model, select_dir, create_dir, on_modified);
-//    manager->setSaveChangesAnswerCallback(save_changes);
+    auto manager =
+        std::make_unique<ProjectManagerDecorator>(this, select_dir, create_dir, on_modified);
+    manager->setSaveChangesAnswerCallback(save_changes);
 
-//    m_projectManager = std::move(manager);
+    m_projectManager = std::move(manager);
 }
 
-void ProjectHandler::update_current_project_name()
-{
+void ProjectHandler::update_current_project_name() {}
 
-}
-
-void ProjectHandler::update_recent_project_names()
-{
-
-}
+void ProjectHandler::update_recent_project_names() {}
