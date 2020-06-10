@@ -38,6 +38,11 @@ public:
 
     bool checkAllGroup(std::vector<ModelView::SessionItem*>& items) const;
     ModelView::GraphViewportItem* checkAllGraph(std::vector<ModelView::SessionItem*>& items) const;
+    bool itemEditable(ModelView::SessionItem* item) const;
+    bool dragEnabled(ModelView::SessionItem* item) const;
+    bool dropEnabled(ModelView::SessionItem* item) const;
+    bool dragDropItem(ModelView::SessionItem* item, ModelView::SessionItem* target, int row = -1);
+    bool mergeItems(std::vector<ModelView::SessionItem*> items);
 
 private:
     RealDataContainer* insertDataContainer();

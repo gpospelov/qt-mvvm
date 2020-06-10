@@ -21,6 +21,7 @@
 
 #include <algorithm>
 #include <cmath>
+#include <iostream>
 
 using namespace ModelView;
 
@@ -182,4 +183,64 @@ RealDataModel::checkAllGraph(std::vector<ModelView::SessionItem*>& items) const
     }
 
     return parent;
+}
+
+//! Check if an item should be editable or not
+bool RealDataModel::itemEditable(ModelView::SessionItem* item) const
+{
+    if (dynamic_cast<GraphItem*>(item))
+        return true;
+    if (dynamic_cast<DataGroupItem*>(item))
+        return true;
+    if (dynamic_cast<DataCollectionItem*>(item))
+        return true;
+    return false;
+}
+
+//! Check if an item should be allowed to be dragged
+bool RealDataModel::dragEnabled(ModelView::SessionItem* item) const
+{
+    if (dynamic_cast<GraphItem*>(item))
+        return true;
+    return false;
+}
+
+//! Check if an item should be allowed to be receive drops
+bool RealDataModel::dropEnabled(ModelView::SessionItem* item) const
+{
+    if (dynamic_cast<DataGroupItem*>(item))
+        return true;
+    return false;
+}
+
+//! process to the move of an item
+bool RealDataModel::dragDropItem(ModelView::SessionItem* item, ModelView::SessionItem* target,
+                                 int row)
+{
+    if (dynamic_cast<GraphItem*>(item) && dynamic_cast<DataGroupItem*>(target)
+        && target != item->parent()) {
+        moveItem(dynamic_cast<GraphItem*>(item), dynamic_cast<DataGroupItem*>(target),
+                 {dynamic_cast<DataGroupItem*>(target)->defaultTag(), row});
+        return true;
+    }
+
+    return false;
+}
+
+//! Merges all items present into the first of the vector
+bool RealDataModel::mergeItems(std::vector<ModelView::SessionItem*> items)
+{
+    if (items.size() < 1)
+        return false;
+
+    for (int i = 1; i < items.size(); ++i) {
+        for (auto child : items.at(i)->children()) {
+            if (child->parent()->isSinglePropertyTag(child->parent()->tagOfItem(child)))
+                continue;
+            moveItem(child, items.at(0), {child->parent()->tagOfItem(child), -1});
+        }
+        removeItem(items.at(i)->parent(), items.at(i)->parent()->tagRowOfItem(items.at(i)));
+    }
+
+    return true;
 }

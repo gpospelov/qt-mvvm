@@ -30,9 +30,11 @@ class ParsedFileOutptut;
 
 class RealDataModel;
 class QToolBar;
+class QTreeView;
 class QBoxLayout;
 class RealDataStruct;
 class DataSelectionModel;
+class DataViewModel;
 
 //! Main editor to import user data.
 
@@ -61,8 +63,9 @@ private:
     void resetAll();
 
 private:
+    QTreeView* p_tree_view{nullptr};
     RealDataModel* p_model{nullptr};
-    ModelView::TopItemsTreeView* p_topitems_tree{nullptr};
+    DataViewModel* p_view_model{nullptr};
     DataSelectionModel* p_data_selection_model{nullptr};
     QToolBar* p_toolbar{nullptr};
     ModelView::PropertyTreeView* p_property_tree{nullptr};

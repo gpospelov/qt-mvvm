@@ -12,6 +12,7 @@
 #include "dataselectionmodel.h"
 #include "datasetconvenience.h"
 #include "datasetitem.h"
+#include "dataviewmodel.h"
 #include "importoutput.h"
 #include "realdatamodel.h"
 #include "styleutils.h"
@@ -40,9 +41,9 @@
 using namespace ModelView;
 
 ImportDataEditor::ImportDataEditor(RealDataModel* model, QWidget* parent)
-    : QWidget(parent), p_model(model), p_topitems_tree(new TopItemsTreeView(model)),
-      p_data_selection_model(
-          new DataSelectionModel(p_topitems_tree->viewModel(), p_topitems_tree->treeView())),
+    : QWidget(parent), p_tree_view(new QTreeView(this)), p_model(model),
+      p_view_model(new DataViewModel(model)),
+      p_data_selection_model(new DataSelectionModel(p_view_model, p_tree_view)),
       p_toolbar(new QToolBar), p_graph_canvas(new GraphCanvas),
       p_property_tree(new PropertyTreeView)
 {
@@ -50,11 +51,12 @@ ImportDataEditor::ImportDataEditor(RealDataModel* model, QWidget* parent)
     setupLayout();
     setupViews();
 
-    p_topitems_tree->viewModel()->setRootSessionItem(
-        ModelView::Utils::TopItem<DataCollectionItem>(model));
-    p_topitems_tree->treeView()->setSelectionModel(p_data_selection_model);
-    p_topitems_tree->treeView()->setSelectionMode(QAbstractItemView::ExtendedSelection);
-    p_topitems_tree->treeView()->setSelectionBehavior(QAbstractItemView::SelectRows);
+    p_view_model->setRootSessionItem(ModelView::Utils::TopItem<DataCollectionItem>(model));
+    p_tree_view->setModel(p_view_model);
+    p_tree_view->setSelectionModel(p_data_selection_model);
+    p_tree_view->setSelectionMode(QAbstractItemView::ExtendedSelection);
+    p_tree_view->setDragDropMode(QAbstractItemView::InternalMove);
+    p_tree_view->setDragEnabled(true);
 }
 
 //! Set up the toolbar for the data management
@@ -142,7 +144,7 @@ void ImportDataEditor::setupLayout()
     auto left_splitter = new QSplitter(sub_data_widget);
 
     left_splitter->setOrientation(Qt::Vertical);
-    left_splitter->addWidget(p_topitems_tree);
+    left_splitter->addWidget(p_tree_view);
     left_splitter->addWidget(p_property_tree);
     left_splitter->setStretchFactor(0, 1);
     left_splitter->setStretchFactor(1, 0);
@@ -207,7 +209,15 @@ void ImportDataEditor::addDataGroup()
 }
 
 //! Merge the selected actions
-void ImportDataEditor::mergeDataGroups() {}
+void ImportDataEditor::mergeDataGroups()
+{
+    auto items = p_data_selection_model->selectedItems();
+    items.erase(std::remove(begin(items), end(items), nullptr), end(items));
+    if (!p_model->checkAllGroup(items))
+        return;
+
+    p_model->mergeItems(items);
+}
 
 //! Invoke the data load dialog and connect its state
 void ImportDataEditor::invokeImportDialog()
