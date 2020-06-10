@@ -11,8 +11,12 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <memory>
 
 class ActionManager;
+class SampleModel;
+class ProjectHandler;
+class RecentProjectWidget;
 
 //! Application main window.
 
@@ -28,10 +32,14 @@ protected:
 
 private:
     void init_application();
-    void init_views();
+    void init_components();
+    void init_connections();
     void write_settings();
 
+    std::unique_ptr<SampleModel> m_sampleModel;
     ActionManager* m_actionManager{nullptr};
+    RecentProjectWidget* m_recentProjectWidget{nullptr};
+    ProjectHandler* m_projectHandler{nullptr};
 };
 
 #endif //  MAINWINDOW_H

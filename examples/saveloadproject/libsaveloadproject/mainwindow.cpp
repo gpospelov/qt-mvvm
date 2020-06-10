@@ -9,9 +9,15 @@
 
 #include "mainwindow.h"
 #include "actionmanager.h"
+#include "containereditorwidget.h"
+#include "projecthandler.h"
+#include "recentprojectwidget.h"
+#include "samplemodel.h"
 #include <QCloseEvent>
 #include <QCoreApplication>
+#include <QHBoxLayout>
 #include <QSettings>
+#include <mvvm/model/modelutils.h>
 
 namespace
 {
@@ -20,10 +26,12 @@ const QString size_key = "size";
 const QString pos_key = "pos";
 } // namespace
 
-MainWindow::MainWindow() : m_actionManager(new ActionManager(this))
+MainWindow::MainWindow()
+    : m_sampleModel(std::make_unique<SampleModel>()), m_actionManager(new ActionManager(this))
 {
     init_application();
-    setCentralWidget(new QWidget);
+    init_components();
+    init_connections();
 }
 
 MainWindow::~MainWindow() = default;
@@ -33,6 +41,9 @@ void MainWindow::closeEvent(QCloseEvent* event)
     write_settings();
     QMainWindow::closeEvent(event);
 }
+
+//! Inits application. It should be called first, to make all possible usages of QSettings
+//! consistent among all widgets which relies on it.
 
 void MainWindow::init_application()
 {
@@ -47,6 +58,40 @@ void MainWindow::init_application()
         move(settings.value(pos_key, QPoint(200, 200)).toPoint());
         settings.endGroup();
     }
+}
+
+//! Inits all main window components.
+
+void MainWindow::init_components()
+{
+    auto central_widget = new QWidget;
+    auto central_layout = new QHBoxLayout(central_widget);
+
+    m_recentProjectWidget = new RecentProjectWidget(this);
+    m_projectHandler = new ProjectHandler(m_sampleModel.get(), m_recentProjectWidget);
+
+    auto table_widget = new ContainerEditorWidget;
+    central_layout->addWidget(m_recentProjectWidget);
+    central_layout->addWidget(table_widget);
+
+    setCentralWidget(central_widget);
+
+    table_widget->setModel(m_sampleModel.get(), ModelView::Utils::TopItem(m_sampleModel.get()));
+}
+
+//! Setup main connections.
+
+void MainWindow::init_connections()
+{
+    // connect ActionManager signals with ProjectHandler slots
+    connect(m_actionManager, &ActionManager::createNewProjectRequest, m_projectHandler,
+            &ProjectHandler::onCreateNewProject);
+    connect(m_actionManager, &ActionManager::openExistingProjectRequest, m_projectHandler,
+            &ProjectHandler::onOpenExistingProject);
+    connect(m_actionManager, &ActionManager::saveCurrentProjectRequest, m_projectHandler,
+            &ProjectHandler::onSaveCurrentProject);
+    connect(m_actionManager, &ActionManager::saveProjectAsRequest, m_projectHandler,
+            &ProjectHandler::onSaveProjectAs);
 }
 
 void MainWindow::write_settings()

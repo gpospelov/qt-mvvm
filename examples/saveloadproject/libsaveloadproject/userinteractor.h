@@ -7,29 +7,26 @@
 //
 // ************************************************************************** //
 
-#ifndef PROJECTMANAGERINTERACTOR_H
-#define PROJECTMANAGERINTERACTOR_H
+#ifndef USERINTERACTOR_H
+#define USERINTERACTOR_H
 
 #include <string>
 
 namespace ModelView
 {
-    enum class SaveChangesAnswer;
+enum class SaveChangesAnswer;
 }
 
 class QWidget;
-class WelcomeViewSettings;
+class RecentProjectSettings;
 
 //! Provide save/discard/cancel and similar dialogs on user request.
 //! Intended to work in pair with ProjectManagerDecorator.
 
-// FIXME consider turning into interface class and switch ProjectManagerDecorator to it
-// instead of all callbacks.
-
-class ProjectManagerInteractor
+class UserInteractor
 {
 public:
-    ProjectManagerInteractor(QWidget* parent, WelcomeViewSettings* settings);
+    UserInteractor(QWidget* parent, RecentProjectSettings* settings);
 
     std::string onSelectDirRequest();
 
@@ -41,7 +38,7 @@ private:
     std::string selectDir() const;
 
     QWidget* m_parent{nullptr};
-    WelcomeViewSettings* m_settings{nullptr};
+    RecentProjectSettings* m_settings{nullptr};
 };
 
-#endif // PROJECTMANAGERINTERACTOR_H
+#endif // USERINTERACTOR_H

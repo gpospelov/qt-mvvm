@@ -9,9 +9,7 @@
 
 #include "recentprojectwidget.h"
 #include "projectpanewidget.h"
-#include <mvvm/project/projectutils.h>
-#include <mvvm/widgets/widgetutils.h>
-#include "styleutils.h"
+#include <QDebug>
 #include <QGuiApplication>
 #include <QLabel>
 #include <QScreen>
@@ -19,6 +17,8 @@
 #include <QStandardItemModel>
 #include <QTreeView>
 #include <QVBoxLayout>
+#include <mvvm/project/projectutils.h>
+#include <mvvm/widgets/widgetutils.h>
 
 namespace
 {
@@ -28,10 +28,7 @@ int max_recent_project_count = 7;
 RecentProjectWidget::RecentProjectWidget(QWidget* parent)
     : QWidget(parent), m_current_project_pane(new ProjectPaneWidget)
 {
-    //    QPalette palette;
-    //    palette.setColor(QPalette::Window, Qt::lightGray);
-    //    setAutoFillBackground(true);
-    //    setPalette(palette);
+    setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Expanding);
 
     auto layout = new QVBoxLayout(this);
     layout->setContentsMargins(20, 0, 10, 0);
@@ -41,18 +38,8 @@ RecentProjectWidget::RecentProjectWidget(QWidget* parent)
     layout->addStretch(1);
 }
 
-QSize RecentProjectWidget::sizeHint() const
-{
-    return StyleUtils::DockSizeHint();
-}
-
-QSize RecentProjectWidget::minimumSizeHint() const
-{
-    return StyleUtils::DockMinimumSizeHint();
-}
-
 //! Set current project title and label on appropriate widget.
-void RecentProjectWidget::setCurrentProject(const QString &project_dir, bool is_modified)
+void RecentProjectWidget::setCurrentProject(const QString& project_dir, bool is_modified)
 {
     m_current_project_pane->setCurrentProject(project_dir, is_modified);
     m_current_project_pane->setActive(false);
@@ -65,18 +52,30 @@ void RecentProjectWidget::setRecentProjectsList(const QStringList& projects)
     for (auto widget : m_recent_project_panes) {
         if (widget_index < projects.size())
             widget->setCurrentProject(projects.at(widget_index), false);
-         else
+        else
             widget->clear();
 
         ++widget_index;
     }
 }
 
+QSize RecentProjectWidget::sizeHint() const
+{
+    const auto panel_width = ModelView::Utils::WidthOfLetterM() * 32;
+    return QSize(panel_width, panel_width * 2);
+}
+
+QSize RecentProjectWidget::minimumSizeHint() const
+{
+    const auto minimum_panel_width = ModelView::Utils::WidthOfLetterM() * 16;
+    return QSize(minimum_panel_width, minimum_panel_width * 2);
+}
+
 QBoxLayout* RecentProjectWidget::createCurrentProjectLayout() const
 {
     auto result = new QVBoxLayout;
     auto label = new QLabel("Current Project");
-    label->setFont(StyleUtils::sectionFont());
+    //    label->setFont(StyleUtils::sectionFont());
     result->addWidget(label);
     result->addWidget(m_current_project_pane);
     return result;
@@ -86,7 +85,7 @@ QBoxLayout* RecentProjectWidget::createRecentProjectLayout()
 {
     auto result = new QVBoxLayout;
     auto label = new QLabel("Recent Projects");
-    label->setFont(StyleUtils::sectionFont());
+    //    label->setFont(StyleUtils::sectionFont());
     result->addWidget(label);
 
     for (int i = 0; i < max_recent_project_count; ++i) {

@@ -8,7 +8,6 @@
 // ************************************************************************** //
 
 #include "projectpanewidget.h"
-#include "styleutils.h"
 #include <mvvm/widgets/widgetutils.h>
 #include <QLabel>
 #include <QMouseEvent>
@@ -35,18 +34,6 @@ ProjectPaneWidget::ProjectPaneWidget(QWidget* parent)
     layout->addWidget(m_current_project_dir);
 }
 
-QSize ProjectPaneWidget::sizeHint() const
-{
-    auto characterisic_size = StyleUtils::DockSizeHint();
-    return QSize(characterisic_size.width(), widget_height());
-}
-
-QSize ProjectPaneWidget::minimumSizeHint() const
-{
-    auto characterisic_size = StyleUtils::DockMinimumSizeHint();
-    return QSize(characterisic_size.width(), widget_height());
-}
-
 //! Sets current project dir to 'project_dir', adjust title according to 'is_modified'.
 
 void ProjectPaneWidget::setCurrentProject(const QString& project_dir, bool is_modified)
@@ -62,7 +49,8 @@ void ProjectPaneWidget::setCurrentProject(const QString& project_dir, bool is_mo
     m_current_project_title->setText(project_title);
 }
 
-//! Clear content of widget and make it inactive.
+//! Clear content of widget and make it inactive. Inactive widget doesnt' send signals when
+//! user click on it.
 
 void ProjectPaneWidget::clear()
 {

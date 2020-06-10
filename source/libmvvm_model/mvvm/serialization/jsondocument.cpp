@@ -68,7 +68,7 @@ void JsonDocument::load(const std::string& file_name)
     if (array.size() != static_cast<int>(p_impl->models.size())) {
         std::ostringstream ostr;
         ostr << "Error in JsonDocument: number of application models " << p_impl->models.size()
-             << " and number of json models " << array.size() << " doesn;t match";
+             << " and number of json models " << array.size() << " doesn't match";
         throw std::runtime_error(ostr.str());
     }
 

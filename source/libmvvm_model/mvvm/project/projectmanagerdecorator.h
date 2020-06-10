@@ -31,7 +31,7 @@ class CORE_EXPORT ProjectManagerDecorator : public ModelView::ProjectManagerInte
 public:
     using select_dir_callback_t = std::function<std::string()>;
     using create_dir_callback_t = std::function<std::string()>;
-    using answer_callback_t = std::function<SaveChangesAnswer()>;
+    using answer_callback_t = std::function<ModelView::SaveChangesAnswer()>;
     using project_modified_callback_t = std::function<void()>;
 
     ProjectManagerDecorator(ModelView::ApplicationModelsInterface* app_models,

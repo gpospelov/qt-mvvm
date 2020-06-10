@@ -193,10 +193,10 @@ TEST_F(ProjectManagerDecoratorTest, untitledModifiedOpenExisting)
     // preparing manager with untitled, unmodified project
     auto open_dir = [&existing_project_dir]() -> std::string { return existing_project_dir; };
     auto create_dir = [&unsaved_project_dir]() -> std::string { return unsaved_project_dir; };
-    SaveChangesAnswer result = SaveChangesAnswer::DISCARD;
+    auto result = ModelView::SaveChangesAnswer::DISCARD;
     auto ask_create = [&result]() {
-        result = SaveChangesAnswer::SAVE;
-        return SaveChangesAnswer::SAVE;
+        result = ModelView::SaveChangesAnswer::SAVE;
+        return ModelView::SaveChangesAnswer::SAVE;
     };
     ProjectManagerDecorator manager(&models, open_dir, create_dir);
     manager.setSaveChangesAnswerCallback(ask_create);
@@ -210,7 +210,7 @@ TEST_F(ProjectManagerDecoratorTest, untitledModifiedOpenExisting)
     manager.openExistingProject();
 
     // check if user was asked and his answer coincide with expectation
-    EXPECT_EQ(result, SaveChangesAnswer::SAVE);
+    EXPECT_EQ(result, ModelView::SaveChangesAnswer::SAVE);
 
     // check that previous project was saved
     auto model_json = ModelView::Utils::join(unsaved_project_dir, samplemodel_name + ".json");

@@ -7,15 +7,27 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_PROJECT_PROJECT_TYPES_H
-#define MVVM_PROJECT_PROJECT_TYPES_H
+#ifndef SAMPLEMODEL_H
+#define SAMPLEMODEL_H
+
+#include <mvvm/model/sessionmodel.h>
 
 namespace ModelView
 {
+class SessionItem;
+}
 
-//! Possible user answers on question "Project was modified".
-enum class SaveChangesAnswer { SAVE = 0, DISCARD = 1, CANCEL = 2 };
+//! Main application model.
 
-} // namespace ModelView
+class SampleModel : public ModelView::SessionModel
+{
+public:
+    SampleModel();
 
-#endif // MVVM_PROJECT_PROJECT_TYPES_H
+    void append_random_item(ModelView::SessionItem* container);
+
+private:
+    void init_model_content();
+};
+
+#endif

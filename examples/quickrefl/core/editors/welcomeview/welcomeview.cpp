@@ -22,18 +22,6 @@
 #include <QMainWindow>
 #include <mvvm/widgets/widgetutils.h>
 
-namespace
-{
-QMainWindow* findMainWindow()
-{
-    for (auto widget : qApp->topLevelWidgets()) {
-        if (auto result = dynamic_cast<QMainWindow*>(widget); result)
-            return result;
-    }
-    return nullptr;
-}
-} // namespace
-
 WelcomeView::WelcomeView(ApplicationModels* models, QWidget* parent)
     : QWidget(parent), m_models(models), m_recent_project_widget(new RecentProjectWidget),
       m_open_project_widget(new OpenProjectWidget),
@@ -139,7 +127,7 @@ void WelcomeView::update_current_project_name()
     const auto is_modified = m_project_manager->isModified();
 
     auto title = ModelView::Utils::ProjectWindowTitle(current_project_dir, is_modified);
-    if (auto main_window = findMainWindow(); main_window)
+    if (auto main_window = ModelView::Utils::FindMainWindow(); main_window)
         main_window->setWindowTitle(title);
 
     m_recent_project_widget->setCurrentProject(current_project_dir, is_modified);

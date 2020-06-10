@@ -1,4 +1,4 @@
-# Executable: quickrefl
+# Executable: saveloadproject
 
 add_subdirectory(libsaveloadproject)
 
