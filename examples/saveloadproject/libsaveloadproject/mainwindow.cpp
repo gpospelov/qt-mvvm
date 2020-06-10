@@ -11,7 +11,6 @@
 #include "actionmanager.h"
 #include "recentprojectwidget.h"
 #include "samplemodel.h"
-#include "tablewidget.h"
 #include "containereditorwidget.h"
 #include "samplemodel.h"
 #include <mvvm/model/modelutils.h>
@@ -60,7 +59,7 @@ void MainWindow::init_application()
 void MainWindow::init_widgets()
 {
     auto central_widget = new QWidget;
-    auto central_layout = new QVBoxLayout(central_widget);
+    auto central_layout = new QHBoxLayout(central_widget);
 
     auto project_widget = new RecentProjectWidget;
     auto table_widget = new ContainerEditorWidget;

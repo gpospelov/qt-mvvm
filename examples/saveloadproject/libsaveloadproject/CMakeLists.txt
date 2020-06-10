@@ -20,8 +20,6 @@ target_sources(${library_name} PRIVATE
     recentprojectwidget.h
     samplemodel.cpp
     samplemodel.h
-    tablewidget.cpp
-    tablewidget.h
 )
 
 target_include_directories(${library_name} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>)
