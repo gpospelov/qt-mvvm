@@ -33,6 +33,7 @@ MainWindow::MainWindow()
 {
     init_application();
     init_widgets();
+    init_connections();
 }
 
 MainWindow::~MainWindow() = default;

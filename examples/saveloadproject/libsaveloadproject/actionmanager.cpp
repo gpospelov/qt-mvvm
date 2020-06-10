@@ -34,25 +34,25 @@ void ActionManager::createMenus(QMenuBar* menubar)
 void ActionManager::onCreateNewProject()
 {
     qDebug() << "ActionManager::onCreateNewProject()";
-    createNewProjectRequest();
+    emit createNewProjectRequest();
 }
 
 void ActionManager::onOpenExistingProject(const QString& dirname)
 {
     qDebug() << "ActionManager::onOpenExistingProject()" << dirname;
-    openExistingProjectRequest(dirname);
+    emit openExistingProjectRequest(dirname);
 }
 
 void ActionManager::onSaveCurrentProject()
 {
     qDebug() << "ActionManager::onSaveCurrentProject()";
-    saveCurrentProjectRequest();
+    emit saveCurrentProjectRequest();
 }
 
 void ActionManager::onSaveProjectAs()
 {
     qDebug() << "ActionManager::onSaveProjectAs()";
-    saveProjectAsRequest();
+    emit saveProjectAsRequest();
 }
 
 //! Creates application-wise actions to create, open, save, and save-as projects.
