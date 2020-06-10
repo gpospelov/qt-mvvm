@@ -30,6 +30,10 @@ public:
 
     void setRecentProjectsList(const QStringList& projects);
 
+    QSize sizeHint() const override;
+
+    QSize minimumSizeHint() const override;
+
 signals:
     void projectSelected(const QString& project_dir);
 

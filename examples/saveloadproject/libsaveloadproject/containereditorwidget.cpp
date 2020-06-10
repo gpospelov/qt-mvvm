@@ -14,9 +14,10 @@
 #include <QPushButton>
 #include <QTreeView>
 #include <mvvm/model/modelutils.h>
+#include <mvvm/viewmodel/propertytableviewmodel.h>
 #include <mvvm/viewmodel/viewmodeldelegate.h>
 #include <mvvm/viewmodel/viewmodelutils.h>
-#include <mvvm/viewmodel/propertytableviewmodel.h>
+#include <mvvm/widgets/widgetutils.h>
 
 using namespace ModelView;
 
@@ -24,6 +25,8 @@ ContainerEditorWidget::ContainerEditorWidget(QWidget* parent)
     : QWidget(parent), m_treeView(new QTreeView), m_delegate(std::make_unique<ViewModelDelegate>()),
       m_container(nullptr), m_model(nullptr)
 {
+    setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Expanding);
+
     auto mainLayout = new QVBoxLayout;
     mainLayout->setSpacing(10);
 
@@ -56,6 +59,18 @@ void ContainerEditorWidget::setModel(SampleModel* model, SessionItem* root_item)
     m_treeView->setDragEnabled(true);
     m_treeView->viewport()->setAcceptDrops(true);
     m_treeView->setDropIndicatorShown(true);
+}
+
+QSize ContainerEditorWidget::sizeHint() const
+{
+    const auto panel_width = ModelView::Utils::WidthOfLetterM() * 32;
+    return QSize(panel_width, panel_width * 2);
+}
+
+QSize ContainerEditorWidget::minimumSizeHint() const
+{
+    const auto minimum_panel_width = ModelView::Utils::WidthOfLetterM() * 16;
+    return QSize(minimum_panel_width, minimum_panel_width * 2);
 }
 
 void ContainerEditorWidget::onAdd()

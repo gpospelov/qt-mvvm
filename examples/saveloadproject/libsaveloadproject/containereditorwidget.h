@@ -40,6 +40,10 @@ public:
 
     void setModel(SampleModel* model, ModelView::SessionItem* root_item = nullptr);
 
+    QSize sizeHint() const override;
+
+    QSize minimumSizeHint() const override;
+
 private slots:
     void onAdd();
     void onCopy();
