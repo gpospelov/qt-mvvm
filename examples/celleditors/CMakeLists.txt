@@ -1,8 +1,8 @@
-# executable: celleditors
+set(executable celleditors)
 
 add_subdirectory(celleditorscore)
 
-add_executable(celleditors main.cpp)
-target_link_libraries(celleditors PRIVATE celleditorscore Qt5::Widgets)
+add_executable(${executable} main.cpp)
+target_link_libraries(${executable} PRIVATE celleditorscore Qt5::Widgets)
 
-target_include_directories(celleditors PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>)
+target_include_directories(${executable} PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>)

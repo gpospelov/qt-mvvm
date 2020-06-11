@@ -7,7 +7,6 @@
 //
 // ************************************************************************** //
 
-#include "colormapmodel.h"
 #include <cmath>
 #include <mvvm/model/modelutils.h>
 #include <mvvm/standarditems/axisitems.h>
@@ -15,6 +14,7 @@
 #include <mvvm/standarditems/colormapviewportitem.h>
 #include <mvvm/standarditems/containeritem.h>
 #include <mvvm/standarditems/data2ditem.h>
+#include <plotcolormap/colormapmodel.h>
 
 using namespace ModelView;
 

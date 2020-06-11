@@ -7,13 +7,13 @@
 //
 // ************************************************************************** //
 
-#include "colormappropertywidget.h"
-#include "colormapmodel.h"
 #include <QBoxLayout>
 #include <QPushButton>
 #include <QSlider>
 #include <mvvm/viewmodel/standardviewmodels.h>
 #include <mvvm/widgets/itemstreeview.h>
+#include <plotcolormap/colormapmodel.h>
+#include <plotcolormap/colormappropertywidget.h>
 
 using namespace ModelView;
 
