@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "mainwindow.h"
+#include <flateditorcore/mainwindow.h>
 #include <QApplication>
 #include <QLocale>
 
