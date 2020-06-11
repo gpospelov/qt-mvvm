@@ -1,8 +1,8 @@
-# executable: concurrentplot
+set(executable_name concurrentplot)
 
 add_subdirectory(concurrentplotcore)
 
-add_executable(concurrentplot main.cpp)
-target_link_libraries(concurrentplot PRIVATE concurrentplotcore Qt5::Widgets)
+add_executable(${executable_name} main.cpp)
+target_link_libraries(${executable_name} PRIVATE concurrentplotcore Qt5::Widgets)
 
-target_include_directories(concurrentplot PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>)
+target_include_directories(${executable_name} PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>)

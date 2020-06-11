@@ -14,7 +14,7 @@
 #include <mvvm/model/modelutils.h>
 #include <mvvm/plotting/colormapcanvas.h>
 #include <mvvm/standarditems/colormapviewportitem.h>
-#include <plotcolormap/colormapmodel.h>
+#include "colormapmodel.h"
 #include <plotcolormap/colormappropertywidget.h>
 #include <plotcolormap/colormapwidget.h>
 

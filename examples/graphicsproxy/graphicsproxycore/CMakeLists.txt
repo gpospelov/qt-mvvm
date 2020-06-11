@@ -27,7 +27,4 @@ target_sources(${library_name} PRIVATE
     scenewidget.h
     sizehandleelement.cpp
     sizehandleelement.h
-
 )
-
-target_include_directories(${library_name} PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>)

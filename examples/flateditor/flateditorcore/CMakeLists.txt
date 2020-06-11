@@ -14,5 +14,3 @@ target_sources(${library_name} PRIVATE
     samplemodel.cpp
     samplemodel.h
 )
-
-target_include_directories(${library_name} PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>)

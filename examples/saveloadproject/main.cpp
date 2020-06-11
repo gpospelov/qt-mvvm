@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "mainwindow.h"
+#include <saveloadproject/mainwindow.h>
 #include <QApplication>
 #include <QLocale>
 

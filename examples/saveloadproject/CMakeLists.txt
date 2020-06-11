@@ -1,6 +1,8 @@
-# Executable: saveloadproject
+set(executable_name saveloadproject)
 
-add_subdirectory(libsaveloadproject)
+add_subdirectory(saveloadproject)
 
-add_executable(saveloadproject main.cpp)
-target_link_libraries(saveloadproject PRIVATE saveloadprojectcore)
+add_executable(${executable_name} main.cpp)
+target_link_libraries(${executable_name} PRIVATE saveloadprojectcore Qt5::Widgets)
+
+target_include_directories(${executable_name} PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>)
