@@ -7,17 +7,12 @@
 //
 // ************************************************************************** //
 
-#include "mainwindow.h"
-#include <QApplication>
-#include <QLocale>
+#include "MaterialTableViewModel.h"
+#include <mvvm/viewmodel/standardviewmodelcontrollers.h>
 
-int main(int argc, char** argv)
+using namespace ModelView;
+
+MaterialTableViewModel::MaterialTableViewModel(ModelView::SessionModel* model, QObject* parent)
+    : ViewModel(std::make_unique<PropertyTableViewModelController>(model, this), parent)
 {
-    QLocale::setDefault(QLocale(QLocale::English, QLocale::UnitedStates));
-    QApplication app(argc, argv);
-
-    MainWindow win;
-    win.show();
-
-    return app.exec();
 }
