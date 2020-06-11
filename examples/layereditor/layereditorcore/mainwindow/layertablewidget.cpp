@@ -10,15 +10,15 @@
 #include <QHeaderView>
 #include <QTreeView>
 #include <QVBoxLayout>
-#include <mainwindow/LayerTableWidget.h>
-#include <model/ApplicationModels.h>
-#include <model/LayerItems.h>
-#include <model/SampleModel.h>
+#include <mainwindow/layertablewidget.h>
+#include <model/applicationmodels.h>
+#include <model/layeritems.h>
+#include <model/samplemodel.h>
 #include <mvvm/model/modelutils.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/viewmodel/viewmodel.h>
-#include <viewmodel/CustomModelDelegate.h>
-#include <viewmodel/LayerTableViewModel.h>
+#include <viewmodel/custommodeldelegate.h>
+#include <viewmodel/layertableviewmodel.h>
 
 using namespace ModelView;
 

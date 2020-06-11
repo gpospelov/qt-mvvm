@@ -7,13 +7,12 @@
 //
 // ************************************************************************** //
 
-#include "CustomModelDelegate.h"
-#include "CustomEditorFactory.h"
+#include <viewmodel/layertableviewmodel.h>
+#include <viewmodel/layertableviewmodelcontroller.h>
 
 using namespace ModelView;
 
-CustomModelDelegate::CustomModelDelegate(ApplicationModels* models, QObject* parent)
-    : ViewModelDelegate(parent)
+LayerTableViewModel::LayerTableViewModel(SessionModel* model, QObject* parent)
+    : ViewModel(std::make_unique<LayerTableViewModelController>(model, this), parent)
 {
-    setEditorFactory(std::make_unique<CustomEditorFactory>(models));
 }

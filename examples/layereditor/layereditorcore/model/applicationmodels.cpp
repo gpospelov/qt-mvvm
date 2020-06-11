@@ -7,10 +7,10 @@
 //
 // ************************************************************************** //
 
-#include "ApplicationModels.h"
-#include "MaterialModel.h"
-#include "MaterialPropertyController.h"
-#include "SampleModel.h"
+#include "applicationmodels.h"
+#include "materialmodel.h"
+#include "materialpropertycontroller.h"
+#include "samplemodel.h"
 #include <mvvm/core/modeldocuments.h>
 #include <mvvm/model/sessionitem.h>
 

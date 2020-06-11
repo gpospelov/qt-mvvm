@@ -9,14 +9,14 @@
 
 #include <QTreeView>
 #include <QVBoxLayout>
-#include <mainwindow/MaterialTableWidget.h>
-#include <model/MaterialItems.h>
-#include <model/MaterialModel.h>
-#include <viewmodel/MaterialTableViewModel.h>
+#include <mainwindow/materialtablewidget.h>
+#include <model/materialitems.h>
+#include <model/materialmodel.h>
 #include <mvvm/model/modelutils.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/signals/modelmapper.h>
 #include <mvvm/viewmodel/viewmodeldelegate.h>
+#include <viewmodel/materialtableviewmodel.h>
 
 using namespace ModelView;
 

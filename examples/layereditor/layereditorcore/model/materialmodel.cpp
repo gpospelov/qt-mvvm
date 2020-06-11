@@ -7,9 +7,9 @@
 //
 // ************************************************************************** //
 
-#include "MaterialModel.h"
-#include "MaterialItems.h"
 #include <QColor>
+#include <model/materialitems.h>
+#include <model/materialmodel.h>
 #include <mvvm/model/externalproperty.h>
 #include <mvvm/model/itemcatalogue.h>
 

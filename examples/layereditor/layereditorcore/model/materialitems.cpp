@@ -7,9 +7,9 @@
 //
 // ************************************************************************** //
 
-#include "MaterialItems.h"
-#include "item_constants.h"
 #include <QColor>
+#include <model/item_constants.h>
+#include <model/materialitems.h>
 #include <mvvm/standarditems/vectoritem.h>
 
 using namespace ModelView;

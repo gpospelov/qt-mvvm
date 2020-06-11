@@ -7,9 +7,9 @@
 //
 // ************************************************************************** //
 
-#include "LayerItems.h"
-#include "MaterialModel.h"
-#include "item_constants.h"
+#include <model/layeritems.h>
+#include <model/materialmodel.h>
+#include <model/item_constants.h>
 #include <QVariant>
 #include <mvvm/model/externalproperty.h>
 

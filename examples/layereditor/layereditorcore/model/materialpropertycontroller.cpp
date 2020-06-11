@@ -7,10 +7,10 @@
 //
 // ************************************************************************** //
 
-#include "MaterialPropertyController.h"
-#include "LayerItems.h"
-#include "MaterialModel.h"
-#include "SampleModel.h"
+#include <model/layeritems.h>
+#include <model/materialmodel.h>
+#include <model/materialpropertycontroller.h>
+#include <model/samplemodel.h>
 #include <mvvm/model/externalproperty.h>
 #include <mvvm/model/modelutils.h>
 #include <mvvm/signals/modelmapper.h>

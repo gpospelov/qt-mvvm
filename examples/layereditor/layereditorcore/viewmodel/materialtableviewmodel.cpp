@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "MaterialTableViewModel.h"
+#include <viewmodel/materialtableviewmodel.h>
 #include <mvvm/viewmodel/standardviewmodelcontrollers.h>
 
 using namespace ModelView;

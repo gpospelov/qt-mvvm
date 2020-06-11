@@ -7,14 +7,14 @@
 //
 // ************************************************************************** //
 
-#include <mainwindow/SampleWidget.h>
-#include <model/ApplicationModels.h>
-#include <mainwindow/LayerTableWidget.h>
-#include <model/MaterialModel.h>
-#include <mainwindow/MaterialTableWidget.h>
-#include <model/SampleModel.h>
 #include <QTreeView>
 #include <QVBoxLayout>
+#include <mainwindow/layertablewidget.h>
+#include <mainwindow/materialtablewidget.h>
+#include <mainwindow/samplewidget.h>
+#include <model/applicationmodels.h>
+#include <model/materialmodel.h>
+#include <model/samplemodel.h>
 #include <mvvm/viewmodel/standardviewmodels.h>
 #include <mvvm/widgets/itemstreeview.h>
 
