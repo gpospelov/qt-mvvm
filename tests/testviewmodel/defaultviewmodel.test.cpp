@@ -22,7 +22,10 @@
 #include <mvvm/viewmodel/defaultviewmodel.h>
 #include <mvvm/viewmodel/standardviewitems.h>
 #include <mvvm/viewmodel/viewmodelutils.h>
+#include <mvvm/utils/fileutils.h>
+#include <chrono>
 
+using namespace std::chrono_literals;
 using namespace ModelView;
 
 class DefaultViewModelTest : public FolderBasedTest
@@ -655,6 +658,7 @@ TEST_F(DefaultViewModelTest, vectorItemInJsonDocument)
 TEST_F(DefaultViewModelTest, vectorItemAsRootInJsonDocument)
 {
     auto fileName = TestUtils::TestFileName(testDir(), "vectorItemInJsonDocument.json");
+    ModelView::Utils::remove(fileName);
 
     SessionModel model;
     auto vectorItem = model.insertItem<VectorItem>();
@@ -671,7 +675,7 @@ TEST_F(DefaultViewModelTest, vectorItemAsRootInJsonDocument)
     JsonDocument document({&model});
     document.save(fileName);
 
-    //    model.clear(); // if we uncomment this, information about rootSessionItem will be lost
+    std::this_thread::sleep_for(1s); // occasional failing in the case of btrfs without this
 
     QSignalSpy spyInsert(&viewmodel, &DefaultViewModel::rowsInserted);
     QSignalSpy spyRemove(&viewmodel, &DefaultViewModel::rowsRemoved);

@@ -7,13 +7,14 @@
 //
 // ************************************************************************** //
 
-#include <saveloadprojectcore/mainwindow.h>
 #include <QApplication>
 #include <QLocale>
+#include <plotgraphscore/mainwindow.h>
 
 int main(int argc, char** argv)
 {
     QLocale::setDefault(QLocale(QLocale::English, QLocale::UnitedStates));
+
     QApplication app(argc, argv);
 
     MainWindow win;
