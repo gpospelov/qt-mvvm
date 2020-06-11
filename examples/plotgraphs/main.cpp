@@ -7,9 +7,9 @@
 //
 // ************************************************************************** //
 
-#include "mainwindow.h"
 #include <QApplication>
 #include <QLocale>
+#include <plotgraphs/mainwindow.h>
 
 int main(int argc, char** argv)
 {
