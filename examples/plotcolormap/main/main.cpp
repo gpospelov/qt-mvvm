@@ -14,6 +14,7 @@
 int main(int argc, char** argv)
 {
     QLocale::setDefault(QLocale(QLocale::English, QLocale::UnitedStates));
+
     QApplication app(argc, argv);
 
     MainWindow win;

@@ -11,7 +11,7 @@ add_subdirectory(layereditor)
 add_subdirectory(plotcolormap)
 add_subdirectory(plotgraphs)
 add_subdirectory(quickrefl)
-#add_subdirectory(sampleview)
+add_subdirectory(sampleview)
 add_subdirectory(saveloadproject)
 add_subdirectory(treeviews)
 
