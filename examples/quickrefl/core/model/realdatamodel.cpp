@@ -21,7 +21,6 @@
 
 #include <algorithm>
 #include <cmath>
-#include <iostream>
 
 using namespace ModelView;
 
@@ -141,9 +140,11 @@ void RealDataModel::addDataToGroup(DataGroupItem* data_group, RealDataStruct& da
     data->setContent(data_vec);
 
     auto graph = insertItem<GraphItem>(data_group, {GraphViewportItem::T_ITEMS, -1});
-    graph->setDisplayName(data_struct.data_name + "(" + data_struct.name + ")");
-
+    graph->setDisplayName(data_struct.data_name);
+    graph->setData(data_struct.name);
     graph->setDataItem(data);
+    // TODO hack to refresh the ViewDataItem display (please fix)
+    moveItem(graph, graph->parent(), graph->parent()->tagRowOfItem(graph));
 }
 
 //! Remove Graph and data items from the model
