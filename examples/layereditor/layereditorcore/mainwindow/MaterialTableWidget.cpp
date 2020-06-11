@@ -7,15 +7,15 @@
 //
 // ************************************************************************** //
 
-#include "MaterialTableWidget.h"
-#include "MaterialItems.h"
-#include "MaterialModel.h"
-#include "MaterialTableViewModel.h"
 #include <QTreeView>
 #include <QVBoxLayout>
+#include <mainwindow/MaterialTableWidget.h>
+#include <model/MaterialItems.h>
+#include <model/MaterialModel.h>
+#include <viewmodel/MaterialTableViewModel.h>
 #include <mvvm/model/modelutils.h>
-#include <mvvm/signals/modelmapper.h>
 #include <mvvm/model/sessionitem.h>
+#include <mvvm/signals/modelmapper.h>
 #include <mvvm/viewmodel/viewmodeldelegate.h>
 
 using namespace ModelView;
@@ -34,7 +34,7 @@ MaterialTableWidget::MaterialTableWidget(MaterialModel* material_model, QWidget*
     m_treeView->setEditTriggers(QAbstractItemView::AllEditTriggers); // provide one click editing
     m_treeView->setAlternatingRowColors(true);
 
-    auto on_model_reset = [this, material_model](auto){
+    auto on_model_reset = [this, material_model](auto) {
         setItem(Utils::TopItem<MaterialContainerItem>(material_model));
     };
     material_model->mapper()->setOnModelReset(on_model_reset, this);

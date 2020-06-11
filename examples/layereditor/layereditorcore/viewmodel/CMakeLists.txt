@@ -1,6 +1,4 @@
-set(library_name layereditorcore)
-
-target_sources(${library_name} PRIVATE
+target_sources(layereditorcore PRIVATE
     CustomEditorFactory.cpp
     CustomEditorFactory.h
     CustomModelDelegate.cpp
@@ -12,5 +10,3 @@ target_sources(${library_name} PRIVATE
     MaterialTableViewModel.cpp
     MaterialTableViewModel.h
 )
-
-target_include_directories(${library_name} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>)

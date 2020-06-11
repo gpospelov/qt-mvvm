@@ -1,6 +1,4 @@
-set(library_name layereditorcore)
-
-target_sources(${library_name} PRIVATE
+target_sources(layereditorcore PRIVATE
     LayerTableWidget.cpp
     LayerTableWidget.h
     mainwindow.cpp
@@ -10,5 +8,3 @@ target_sources(${library_name} PRIVATE
     SampleWidget.cpp
     SampleWidget.h
 )
-
-target_include_directories(${library_name} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>)

@@ -7,18 +7,18 @@
 //
 // ************************************************************************** //
 
-#include "LayerTableWidget.h"
-#include "ApplicationModels.h"
-#include "CustomModelDelegate.h"
-#include "LayerItems.h"
-#include "LayerTableViewModel.h"
-#include "SampleModel.h"
 #include <QHeaderView>
 #include <QTreeView>
 #include <QVBoxLayout>
+#include <mainwindow/LayerTableWidget.h>
+#include <model/ApplicationModels.h>
+#include <model/LayerItems.h>
+#include <model/SampleModel.h>
 #include <mvvm/model/modelutils.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/viewmodel/viewmodel.h>
+#include <viewmodel/CustomModelDelegate.h>
+#include <viewmodel/LayerTableViewModel.h>
 
 using namespace ModelView;
 

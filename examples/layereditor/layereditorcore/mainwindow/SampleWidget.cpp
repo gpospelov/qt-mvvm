@@ -7,12 +7,12 @@
 //
 // ************************************************************************** //
 
-#include "SampleWidget.h"
-#include "ApplicationModels.h"
-#include "LayerTableWidget.h"
-#include "MaterialModel.h"
-#include "MaterialTableWidget.h"
-#include "SampleModel.h"
+#include <mainwindow/SampleWidget.h>
+#include <model/ApplicationModels.h>
+#include <mainwindow/LayerTableWidget.h>
+#include <model/MaterialModel.h>
+#include <mainwindow/MaterialTableWidget.h>
+#include <model/SampleModel.h>
 #include <QTreeView>
 #include <QVBoxLayout>
 #include <mvvm/viewmodel/standardviewmodels.h>

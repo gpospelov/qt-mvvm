@@ -1,6 +1,4 @@
-set(library_name layereditorcore)
-
-target_sources(${library_name} PRIVATE
+target_sources(layereditorcore PRIVATE
     ApplicationModels.cpp
     ApplicationModels.h
     item_constants.h
@@ -15,5 +13,3 @@ target_sources(${library_name} PRIVATE
     SampleModel.cpp
     SampleModel.h
 )
-
-target_include_directories(${library_name} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>)

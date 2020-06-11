@@ -7,13 +7,13 @@
 //
 // ************************************************************************** //
 
-#include "CustomEditorFactory.h"
-#include "ApplicationModels.h"
-#include "MaterialModel.h"
 #include <QModelIndex>
+#include <model/ApplicationModels.h>
+#include <model/MaterialModel.h>
 #include <mvvm/editors/externalpropertycomboeditor.h>
 #include <mvvm/model/customvariants.h>
 #include <mvvm/model/externalproperty.h>
+#include <viewmodel/CustomEditorFactory.h>
 
 using namespace ModelView;
 

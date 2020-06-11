@@ -7,15 +7,15 @@
 //
 // ************************************************************************** //
 
-#include "mainwindow.h"
-#include "ApplicationModels.h"
-#include "SampleWidget.h"
 #include <QAction>
 #include <QCoreApplication>
 #include <QFileDialog>
 #include <QMenuBar>
 #include <QSettings>
 #include <QTabWidget>
+#include <mainwindow/SampleWidget.h>
+#include <mainwindow/mainwindow.h>
+#include <model/ApplicationModels.h>
 
 namespace
 {

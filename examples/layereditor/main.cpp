@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "mainwindow.h"
+#include <layereditorcore/mainwindow/mainwindow.h>
 #include <QApplication>
 #include <QLocale>
 
