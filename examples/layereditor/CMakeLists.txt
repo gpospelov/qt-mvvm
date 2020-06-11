@@ -1,6 +1,6 @@
 set(executable layereditor)
 
-add_subdirectory(layereditorcore)
+add_subdirectory(layereditor)
 
 add_executable(${executable} main.cpp)
 target_link_libraries(${executable} PRIVATE layereditorcore Qt5::Widgets)

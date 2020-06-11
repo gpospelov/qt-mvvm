@@ -7,10 +7,10 @@
 //
 // ************************************************************************** //
 
-#include <model/layeritems.h>
-#include <model/materialmodel.h>
-#include <model/item_constants.h>
 #include <QVariant>
+#include <layereditor/model/item_constants.h>
+#include <layereditor/model/layeritems.h>
+#include <layereditor/model/materialmodel.h>
 #include <mvvm/model/externalproperty.h>
 
 using namespace ModelView;

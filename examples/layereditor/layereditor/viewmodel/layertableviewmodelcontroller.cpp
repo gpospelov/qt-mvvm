@@ -7,12 +7,12 @@
 //
 // ************************************************************************** //
 
-#include <model/layeritems.h>
+#include <layereditor/model/layeritems.h>
+#include <layereditor/viewmodel/layertableviewmodelcontroller.h>
 #include <mvvm/viewmodel/rowstrategyinterface.h>
 #include <mvvm/viewmodel/standardchildrenstrategies.h>
 #include <mvvm/viewmodel/standardviewitems.h>
 #include <mvvm/viewmodel/viewmodel.h>
-#include <viewmodel/layertableviewmodelcontroller.h>
 
 using namespace ModelView;
 

@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#include <model/layeritems.h>
-#include <model/samplemodel.h>
+#include <layereditor/model/layeritems.h>
+#include <layereditor/model/samplemodel.h>
 #include <mvvm/model/itemcatalogue.h>
 
 using namespace ModelView;

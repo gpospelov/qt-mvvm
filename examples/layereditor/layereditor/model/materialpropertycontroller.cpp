@@ -7,10 +7,10 @@
 //
 // ************************************************************************** //
 
-#include <model/layeritems.h>
-#include <model/materialmodel.h>
-#include <model/materialpropertycontroller.h>
-#include <model/samplemodel.h>
+#include <layereditor/model/layeritems.h>
+#include <layereditor/model/materialmodel.h>
+#include <layereditor/model/materialpropertycontroller.h>
+#include <layereditor/model/samplemodel.h>
 #include <mvvm/model/externalproperty.h>
 #include <mvvm/model/modelutils.h>
 #include <mvvm/signals/modelmapper.h>

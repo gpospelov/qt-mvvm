@@ -8,8 +8,8 @@
 // ************************************************************************** //
 
 #include <QColor>
-#include <model/item_constants.h>
-#include <model/materialitems.h>
+#include <layereditor/model/item_constants.h>
+#include <layereditor/model/materialitems.h>
 #include <mvvm/standarditems/vectoritem.h>
 
 using namespace ModelView;
