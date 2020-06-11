@@ -9,7 +9,7 @@
 
 #include <QApplication>
 #include <QLocale>
-#include <plotgraphs/mainwindow.h>
+#include <plotgraphscore/mainwindow.h>
 
 int main(int argc, char** argv)
 {

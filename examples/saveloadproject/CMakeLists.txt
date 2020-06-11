@@ -1,6 +1,6 @@
 set(executable_name saveloadproject)
 
-add_subdirectory(saveloadproject)
+add_subdirectory(saveloadprojectcore)
 
 add_executable(${executable_name} main.cpp)
 target_link_libraries(${executable_name} PRIVATE saveloadprojectcore Qt5::Widgets)

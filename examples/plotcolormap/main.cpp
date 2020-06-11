@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include <plotcolormap/mainwindow.h>
+#include <plotcolormapcore/mainwindow.h>
 #include <QApplication>
 #include <QLocale>
 

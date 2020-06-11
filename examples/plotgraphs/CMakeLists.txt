@@ -1,6 +1,6 @@
 set(executable_name plotgraphs)
 
-add_subdirectory(plotgraphs)
+add_subdirectory(plotgraphscore)
 
 add_executable(${executable_name} main.cpp)
 target_link_libraries(${executable_name} PRIVATE plotgraphscore Qt5::Widgets)

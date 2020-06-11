@@ -7,12 +7,12 @@
 //
 // ************************************************************************** //
 
+#include "mainwindow.h"
+#include "colormapmodel.h"
+#include "colormapwidget.h"
 #include <QCoreApplication>
 #include <QSettings>
 #include <QTabWidget>
-#include <plotcolormap/colormapmodel.h>
-#include <plotcolormap/colormapwidget.h>
-#include <plotcolormap/mainwindow.h>
 
 namespace
 {

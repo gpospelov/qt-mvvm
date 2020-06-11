@@ -1,6 +1,6 @@
 set(executable plotcolormap)
 
-add_subdirectory(plotcolormap)
+add_subdirectory(plotcolormapcore)
 
 add_executable(${executable} main.cpp)
 target_link_libraries(${executable} PRIVATE plotcolormapcore Qt5::Widgets)
