@@ -15,6 +15,7 @@
 class QMainWindow;
 class QAction;
 class QMenuBar;
+class QToolBar;
 
 //! Actions for MainWindow. Equips toolbar and menubar with actions to create, open, save,
 //! and save-as projects. It doesn't have logic and simply forwards requests further.
@@ -33,7 +34,8 @@ signals:
 
 private:
     void createActions();
-    void createMenus(QMenuBar* menubar);
+    void setupMenus(QMenuBar* menubar);
+    void setupToolBar(QToolBar* toolbar);
 
     QMainWindow* m_mainWindow{nullptr};
 
