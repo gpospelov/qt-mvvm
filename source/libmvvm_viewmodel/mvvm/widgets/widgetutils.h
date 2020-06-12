@@ -31,14 +31,17 @@ CORE_EXPORT QColor random_color();
 //! Returns true if it is Windows.
 CORE_EXPORT bool IsWindowsHost();
 
-//! Returns a string where path to the file striped using '~'.
+//! Returns a string where Linux path to the file is striped using '~/'.
 CORE_EXPORT QString WithTildeHomePath(const QString& path);
 
 //! Returns a title composed from last part of project path, and `is_modified` flag.
 CORE_EXPORT QString ProjectWindowTitle(const QString& project_dir, bool is_modified);
 
-//! Returns width corresponding to width size of letter `M` basing on current font metrics.
+//! Returns width of the letter 'M' deduced from current font metrics.
 CORE_EXPORT int WidthOfLetterM();
+
+//! Returns height of the letter 'M' deduced from current font metrics.
+CORE_EXPORT int HeightOfLetterM();
 
 //! Returns size corresponding to actual size of letter `M` basing on current font metrics.
 CORE_EXPORT QSize SizeOfLetterM();
