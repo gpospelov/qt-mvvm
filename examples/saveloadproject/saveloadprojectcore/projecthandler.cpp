@@ -18,16 +18,14 @@
 
 using namespace ModelView;
 
-ProjectHandler::ProjectHandler(SampleModel* sample_model, RecentProjectWidget* project_widget)
-    : QObject(project_widget), m_recentProjectSettings(std::make_unique<RecentProjectSettings>()),
+ProjectHandler::ProjectHandler(SampleModel* sample_model, QMainWindow *main_window)
+    : QObject(main_window), m_recentProjectSettings(std::make_unique<RecentProjectSettings>()),
       m_userInteractor(
-          std::make_unique<UserInteractor>(project_widget, m_recentProjectSettings.get())),
-      m_recentProjectWidget(project_widget), m_model(sample_model)
+          std::make_unique<UserInteractor>(main_window, m_recentProjectSettings.get())),
+      m_model(sample_model)
 {
     initProjectManager();
     updateRecentProjectNames();
-    connect(m_recentProjectWidget, &RecentProjectWidget::projectSelected, this,
-            &ProjectHandler::onOpenExistingProject);
 }
 
 ProjectHandler::~ProjectHandler() = default;
@@ -35,6 +33,14 @@ ProjectHandler::~ProjectHandler() = default;
 std::vector<SessionModel*> ProjectHandler::persistent_models() const
 {
     return {m_model};
+}
+
+//! Update names (name of the current project, recent project name list, notifies the world).
+
+void ProjectHandler::updateNames()
+{
+    updateCurrentProjectName();
+    updateRecentProjectNames();
 }
 
 //! Returns 'true' if current project can be closed.
@@ -83,14 +89,6 @@ void ProjectHandler::initProjectManager()
     m_projectManager = std::move(manager);
 }
 
-//! Update names (name of the current project, recent project name list, notifies the world).
-
-void ProjectHandler::updateNames()
-{
-    updateCurrentProjectName();
-    updateRecentProjectNames();
-}
-
 //! Updates the name of the current project on main window, notifies the world.
 
 void ProjectHandler::updateCurrentProjectName()
@@ -103,8 +101,7 @@ void ProjectHandler::updateCurrentProjectName()
     if (auto main_window = ModelView::Utils::FindMainWindow(); main_window)
         main_window->setWindowTitle(title);
 
-    // notifies the world
-    m_recentProjectWidget->setCurrentProject(current_project_dir, is_modified);
+    currentProjectModified(current_project_dir, is_modified);
 }
 
 //! Update recent project list in settings, notifies the world.
@@ -113,5 +110,5 @@ void ProjectHandler::updateRecentProjectNames()
 {
     m_recentProjectSettings->addToRecentProjects(
         QString::fromStdString(m_projectManager->currentProjectDir()));
-    m_recentProjectWidget->setRecentProjectsList(m_recentProjectSettings->recentProjects());
+    recentProjectsListModified(m_recentProjectSettings->recentProjects());
 }
