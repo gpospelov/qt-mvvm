@@ -55,6 +55,6 @@ Handles toolbar and menu. It doesn't have the logic related to project saving, o
 **ProjectHandler**
 
 The main class of this application. It wires together
-`ProjectManager` and `ProjectHandler`. It also caries all bookkeeping related to the recent project list.
+`ProjectManager` and `UserInteractor`. It also caries all bookkeeping related to the recent project list.
 
 
