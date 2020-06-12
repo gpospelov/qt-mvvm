@@ -9,50 +9,16 @@
 
 #include "actionmanager.h"
 #include <QAction>
-#include <QDebug>
 #include <QMainWindow>
 #include <QMenuBar>
+#include <QToolBar>
 
 ActionManager::ActionManager(QMainWindow* mainwindow)
     : QObject(mainwindow), m_mainWindow(mainwindow)
 {
     createActions();
-    createMenus(m_mainWindow->menuBar());
-}
-
-void ActionManager::createMenus(QMenuBar* menubar)
-{
-    auto fileMenu = menubar->addMenu("&File");
-    fileMenu->addAction(m_createNewProjectAction);
-    fileMenu->addAction(m_openExistingProjectAction);
-
-    fileMenu->addSeparator();
-    fileMenu->addAction(m_saveCurrentProjectAction);
-    fileMenu->addAction(m_saveProjectAsAction);
-}
-
-void ActionManager::onCreateNewProject()
-{
-    qDebug() << "ActionManager::onCreateNewProject()";
-    emit createNewProjectRequest();
-}
-
-void ActionManager::onOpenExistingProject(const QString& dirname)
-{
-    qDebug() << "ActionManager::onOpenExistingProject()" << dirname;
-    emit openExistingProjectRequest(dirname);
-}
-
-void ActionManager::onSaveCurrentProject()
-{
-    qDebug() << "ActionManager::onSaveCurrentProject()";
-    emit saveCurrentProjectRequest();
-}
-
-void ActionManager::onSaveProjectAs()
-{
-    qDebug() << "ActionManager::onSaveProjectAs()";
-    emit saveProjectAsRequest();
+    setupMenus(m_mainWindow->menuBar());
+    setupToolBar(m_mainWindow->addToolBar("toolbar"));
 }
 
 //! Creates application-wise actions to create, open, save, and save-as projects.
@@ -63,23 +29,43 @@ void ActionManager::createActions()
     m_createNewProjectAction->setShortcuts(QKeySequence::New);
     m_createNewProjectAction->setStatusTip("Create a new project");
     connect(m_createNewProjectAction, &QAction::triggered, this,
-            &ActionManager::onCreateNewProject);
+            &ActionManager::createNewProjectRequest);
 
     m_openExistingProjectAction = new QAction("&Open Project", this);
     m_openExistingProjectAction->setShortcuts(QKeySequence::Open);
     m_openExistingProjectAction->setStatusTip("Open an existing project");
     connect(m_openExistingProjectAction, &QAction::triggered,
-            [this]() { onOpenExistingProject(); });
+            [this]() { openExistingProjectRequest({}); });
 
     m_saveCurrentProjectAction = new QAction("&Save Project", this);
     m_saveCurrentProjectAction->setShortcuts(QKeySequence::Save);
     m_saveCurrentProjectAction->setStatusTip("Save project");
     m_saveCurrentProjectAction->setShortcutContext(Qt::ApplicationShortcut);
     connect(m_saveCurrentProjectAction, &QAction::triggered, this,
-            &ActionManager::onSaveCurrentProject);
+            &ActionManager::saveCurrentProjectRequest);
 
     m_saveProjectAsAction = new QAction("Save &As...", this);
     m_saveProjectAsAction->setShortcuts(QKeySequence::SaveAs);
     m_saveProjectAsAction->setStatusTip("Save project under different name");
-    connect(m_saveProjectAsAction, &QAction::triggered, this, &ActionManager::onSaveProjectAs);
+    connect(m_saveProjectAsAction, &QAction::triggered, this, &ActionManager::saveProjectAsRequest);
+}
+
+//! Equips menu with actions.
+
+void ActionManager::setupMenus(QMenuBar* menubar)
+{
+    auto fileMenu = menubar->addMenu("&File");
+    fileMenu->addAction(m_createNewProjectAction);
+    fileMenu->addAction(m_openExistingProjectAction);
+
+    fileMenu->addSeparator();
+    fileMenu->addAction(m_saveCurrentProjectAction);
+    fileMenu->addAction(m_saveProjectAsAction);
+}
+
+void ActionManager::setupToolBar(QToolBar *toolbar)
+{
+    toolbar->addAction(m_createNewProjectAction);
+    toolbar->addSeparator();
+    toolbar->addAction(m_openExistingProjectAction);
 }

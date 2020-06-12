@@ -26,7 +26,7 @@ class RecentProjectSettings;
 class UserInteractor
 {
 public:
-    UserInteractor(QWidget* parent, RecentProjectSettings* settings);
+    UserInteractor(RecentProjectSettings* settings, QWidget* parent);
 
     std::string onSelectDirRequest();
 
@@ -37,8 +37,8 @@ public:
 private:
     std::string selectDir() const;
 
-    QWidget* m_parent{nullptr};
     RecentProjectSettings* m_settings{nullptr};
+    QWidget* m_parent{nullptr};
 };
 
 #endif // USERINTERACTOR_H

@@ -60,9 +60,14 @@
 
 <hr>
 
+### [Saveloadproject: how to save project on disk and how to handle all this typical save/save-as/new and select-recent logic.](saveloadproject/README.md)
+
+![saveloadproject](../doc/saveloadproject.png)
+
+<hr>
+
 ### Under development
 
-+ saveloadprojects
 + sampleview
 + quickrefl
 

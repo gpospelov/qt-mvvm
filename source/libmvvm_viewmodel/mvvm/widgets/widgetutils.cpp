@@ -82,6 +82,11 @@ int ModelView::Utils::WidthOfLetterM()
     return ModelView::Utils::SizeOfLetterM().width();
 }
 
+int ModelView::Utils::HeightOfLetterM()
+{
+    return ModelView::Utils::SizeOfLetterM().height();
+}
+
 QSize ModelView::Utils::SizeOfLetterM()
 {
     static QSize result = FindSizeOfLetterM();

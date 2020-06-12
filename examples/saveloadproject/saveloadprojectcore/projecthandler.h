@@ -24,6 +24,7 @@ class RecentProjectSettings;
 class UserInteractor;
 class SampleModel;
 class RecentProjectWidget;
+class QMainWindow;
 
 //! Main class to coordinate all activity on user's request to create new project,
 //! open existing one, or choose one of recent projects on disk.
@@ -34,7 +35,7 @@ class ProjectHandler : public QObject, public ModelView::ApplicationModelsInterf
 {
     Q_OBJECT
 public:
-    explicit ProjectHandler(SampleModel* sample_model, RecentProjectWidget* project_widget);
+    explicit ProjectHandler(SampleModel* sample_model, QMainWindow* main_window);
     ~ProjectHandler() override;
 
     std::vector<ModelView::SessionModel*> persistent_models() const override;
@@ -44,20 +45,21 @@ signals:
     void recentProjectsListModified(const QStringList& projects);
 
 public slots:
+    void updateNames();
+    bool canCloseProject() const;
     void onCreateNewProject();
     void onOpenExistingProject(const QString& dirname = {});
     void onSaveCurrentProject();
     void onSaveProjectAs();
 
 private:
-    void init_project_manager();
-    void update_current_project_name();
-    void update_recent_project_names();
+    void initProjectManager();
+    void updateCurrentProjectName();
+    void updateRecentProjectNames();
 
     std::unique_ptr<RecentProjectSettings> m_recentProjectSettings;
     std::unique_ptr<UserInteractor> m_userInteractor;
     std::unique_ptr<ModelView::ProjectManagerInterface> m_projectManager;
-    RecentProjectWidget* m_recentProjectWidget;
     SampleModel* m_model{nullptr};
 };
 

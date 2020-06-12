@@ -33,8 +33,8 @@ private:
     void writeSettings();
     void readSettings();
 
-    QString m_current_workdir;
-    QStringList m_recent_projects;
+    QString m_currentWorkdir;
+    QStringList m_recentProjects;
 };
 
 #endif // RECENTPROJECTSETTINGS_H

@@ -38,8 +38,12 @@ MainWindow::~MainWindow() = default;
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {
-    write_settings();
-    QMainWindow::closeEvent(event);
+    if (m_projectHandler->canCloseProject()) {
+        write_settings();
+        event->accept();
+    } else {
+        event->ignore();
+    }
 }
 
 //! Inits application. It should be called first, to make all possible usages of QSettings
@@ -54,7 +58,7 @@ void MainWindow::init_application()
     QSettings settings;
     if (settings.childGroups().contains(main_window_group)) {
         settings.beginGroup(main_window_group);
-        resize(settings.value(size_key, QSize(400, 400)).toSize());
+        resize(settings.value(size_key, QSize(800, 600)).toSize());
         move(settings.value(pos_key, QPoint(200, 200)).toPoint());
         settings.endGroup();
     }
@@ -68,7 +72,7 @@ void MainWindow::init_components()
     auto central_layout = new QHBoxLayout(central_widget);
 
     m_recentProjectWidget = new RecentProjectWidget(this);
-    m_projectHandler = new ProjectHandler(m_sampleModel.get(), m_recentProjectWidget);
+    m_projectHandler = new ProjectHandler(m_sampleModel.get(), this);
 
     auto table_widget = new ContainerEditorWidget;
     central_layout->addWidget(m_recentProjectWidget);
@@ -92,6 +96,17 @@ void MainWindow::init_connections()
             &ProjectHandler::onSaveCurrentProject);
     connect(m_actionManager, &ActionManager::saveProjectAsRequest, m_projectHandler,
             &ProjectHandler::onSaveProjectAs);
+
+    // connect ProjectHandler with RecentProjectWidget
+    connect(m_projectHandler, &ProjectHandler::currentProjectModified, m_recentProjectWidget,
+            &RecentProjectWidget::setCurrentProject);
+    connect(m_projectHandler, &ProjectHandler::recentProjectsListModified, m_recentProjectWidget,
+            &RecentProjectWidget::setRecentProjectsList);
+
+    connect(m_recentProjectWidget, &RecentProjectWidget::projectSelected, m_projectHandler,
+            &ProjectHandler::onOpenExistingProject);
+
+    m_projectHandler->updateNames();
 }
 
 void MainWindow::write_settings()
