@@ -75,7 +75,7 @@ QSize ContainerEditorWidget::minimumSizeHint() const
 
 void ContainerEditorWidget::onAdd()
 {
-    m_model->append_random_item(m_container);
+    m_model->appendNewItem(m_container);
 }
 
 void ContainerEditorWidget::onCopy()

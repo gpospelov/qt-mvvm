@@ -44,11 +44,11 @@ std::string random_name()
 SampleModel::SampleModel() : SessionModel("SampleModel")
 {
     setItemCatalogue(CreateToyItemCatalogue());
-    init_model_content();
+    initModelContent();
     setUndoRedoEnabled(true);
 }
 
-void SampleModel::append_random_item(ModelView::SessionItem* container)
+void SampleModel::appendNewItem(ModelView::SessionItem* container)
 {
     auto item = insertItem<DemoItem>(container);
     item->setProperty(DemoItem::P_COLOR_PROPERTY, ModelView::Utils::random_color());
@@ -58,10 +58,10 @@ void SampleModel::append_random_item(ModelView::SessionItem* container)
 
 //! Generates initial model content.
 
-void SampleModel::init_model_content()
+void SampleModel::initModelContent()
 {
     auto container = insertItem<ModelView::ContainerItem>();
-    append_random_item(container);
-    append_random_item(container);
-    append_random_item(container);
+    appendNewItem(container);
+    appendNewItem(container);
+    appendNewItem(container);
 }
