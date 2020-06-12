@@ -60,9 +60,14 @@
 
 <hr>
 
+### [Saveandloadproject: how to save project on disk and how to handle all this typical save/save-as/new and `select-recent` logic.](saveandloadproject/README.md)
+
+![concurrentplot](../doc/saveandloadproject.png)
+
+<hr>
+
 ### Under development
 
-+ saveloadprojects
 + sampleview
 + quickrefl
 
