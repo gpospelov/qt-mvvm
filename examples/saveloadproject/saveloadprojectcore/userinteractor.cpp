@@ -31,8 +31,8 @@ std::map<QMessageBox::StandardButton, SaveChangesAnswer> answer_map()
 }
 } // namespace
 
-UserInteractor::UserInteractor(QWidget* parent, RecentProjectSettings* settings)
-    : m_parent(parent), m_settings(settings)
+UserInteractor::UserInteractor(RecentProjectSettings* settings, QWidget* parent)
+    : m_settings(settings), m_parent(parent)
 {
 }
 

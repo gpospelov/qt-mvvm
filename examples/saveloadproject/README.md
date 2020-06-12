@@ -13,3 +13,6 @@ Standard scenarios are taken care of:
 + User tries to create a new project while having unsaved changes.
 
 And many other similar combinations.
+Application tracks the list of recent projects and last selected directory in QSettings.
+
+

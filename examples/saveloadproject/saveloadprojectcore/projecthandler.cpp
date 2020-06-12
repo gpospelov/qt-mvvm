@@ -18,10 +18,10 @@
 
 using namespace ModelView;
 
-ProjectHandler::ProjectHandler(SampleModel* sample_model, QMainWindow *main_window)
+ProjectHandler::ProjectHandler(SampleModel* sample_model, QMainWindow* main_window)
     : QObject(main_window), m_recentProjectSettings(std::make_unique<RecentProjectSettings>()),
       m_userInteractor(
-          std::make_unique<UserInteractor>(main_window, m_recentProjectSettings.get())),
+          std::make_unique<UserInteractor>(m_recentProjectSettings.get(), main_window)),
       m_model(sample_model)
 {
     initProjectManager();
