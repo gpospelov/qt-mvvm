@@ -51,9 +51,10 @@ public slots:
     void onSaveProjectAs();
 
 private:
-    void init_project_manager();
-    void update_current_project_name();
-    void update_recent_project_names();
+    void initProjectManager();
+    void updateNames();
+    void updateCurrentProjectName();
+    void updateRecentProjectNames();
 
     std::unique_ptr<RecentProjectSettings> m_recentProjectSettings;
     std::unique_ptr<UserInteractor> m_userInteractor;
