@@ -44,6 +44,7 @@ signals:
     void recentProjectsListModified(const QStringList& projects);
 
 public slots:
+    bool canCloseProject() const;
     void onCreateNewProject();
     void onOpenExistingProject(const QString& dirname = {});
     void onSaveCurrentProject();

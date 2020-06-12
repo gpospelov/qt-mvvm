@@ -38,6 +38,13 @@ MainWindow::~MainWindow() = default;
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {
+    if (m_projectHandler->canCloseProject()) {
+        write_settings();
+        event->accept();
+    } else {
+        event->ignore();
+    }
+
     write_settings();
     QMainWindow::closeEvent(event);
 }
@@ -54,7 +61,7 @@ void MainWindow::init_application()
     QSettings settings;
     if (settings.childGroups().contains(main_window_group)) {
         settings.beginGroup(main_window_group);
-        resize(settings.value(size_key, QSize(400, 400)).toSize());
+        resize(settings.value(size_key, QSize(800, 600)).toSize());
         move(settings.value(pos_key, QPoint(200, 200)).toPoint());
         settings.endGroup();
     }

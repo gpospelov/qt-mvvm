@@ -30,12 +30,20 @@ ProjectHandler::ProjectHandler(SampleModel* sample_model, RecentProjectWidget* p
             &ProjectHandler::onOpenExistingProject);
 }
 
+ProjectHandler::~ProjectHandler() = default;
+
 std::vector<SessionModel*> ProjectHandler::persistent_models() const
 {
     return {m_model};
 }
 
-ProjectHandler::~ProjectHandler() = default;
+//! Returns 'true' if current project can be closed.
+//! Internally will perform check for unsaved data, and proceed via save/discard/cancel dialog.
+
+bool ProjectHandler::canCloseProject() const
+{
+    return m_projectManager->closeCurrentProject();
+}
 
 void ProjectHandler::onCreateNewProject()
 {
