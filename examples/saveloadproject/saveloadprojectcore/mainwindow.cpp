@@ -44,9 +44,6 @@ void MainWindow::closeEvent(QCloseEvent* event)
     } else {
         event->ignore();
     }
-
-    write_settings();
-    QMainWindow::closeEvent(event);
 }
 
 //! Inits application. It should be called first, to make all possible usages of QSettings
