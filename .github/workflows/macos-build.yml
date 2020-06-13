@@ -77,10 +77,4 @@ jobs:
       with:
          name: LastTest.log
          path: ./build/Testing/Temporary/LastTest.log  
-
-    # - name: Functional test output
-    #   if: failure()
-    #   run: |
-    #     cd $GITHUB_WORKSPACE/build
-    #     cat Testing/Temporary/LastTest.log        
                  
