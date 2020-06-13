@@ -31,11 +31,11 @@ responsibilities.
 
 **ProjectManager**
 
-This is the main class that handles all logic related to the saving on disk. The user has to provide it with the list of models to save it into the project
+This is the main class that handles all logic related to the saving on disk. The user has to provide the list of models to be saved into the project
 directory. The same list will be used while reading
 `JSON` content from the directory and rebuilding models.
 
-Additionally, the user has to provide it with few callbacks, which will be used 
+Additionally, the user has to provide few callbacks, which will be used 
 
 + to select a new directory
 + to select an existing directory
