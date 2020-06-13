@@ -1,8 +1,8 @@
 # Model View ViewModel framework for large C++ Qt applications
 
-[![Linux](https://github.com/gpospelov/qt-mvvm/workflows/linux-build/badge.svg?branch=master)](https://github.com/gpospelov/qt-mvvm/actions?query=workflow%3ALinux)
-[![Windows](https://github.com/gpospelov/qt-mvvm/workflows/windows-build/badge.svg?branch=master)](https://github.com/gpospelov/qt-mvvm/actions?query=workflow%3AWindows)
-[![Mac OS](https://github.com/gpospelov/qt-mvvm/workflows/macos-build/badge.svg?branch=master)](https://github.com/gpospelov/qt-mvvm/actions?query=workflow%3AMacOS)
+[![Linux](https://github.com/gpospelov/qt-mvvm/workflows/Linux/badge.svg?branch=master)](https://github.com/gpospelov/qt-mvvm/actions?query=workflow%3ALinux)
+[![Windows](https://github.com/gpospelov/qt-mvvm/workflows/Windows/badge.svg?branch=master)](https://github.com/gpospelov/qt-mvvm/actions?query=workflow%3AWindows)
+[![Mac OS](https://github.com/gpospelov/qt-mvvm/workflows/MacOS/badge.svg?branch=master)](https://github.com/gpospelov/qt-mvvm/actions?query=workflow%3AMacOS)
 
 ## Overview
 
