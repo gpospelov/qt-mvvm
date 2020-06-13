@@ -1,0 +1,79 @@
+name: macos-build
+
+on:
+  push:
+    branches: [ ci-test ]    
+  pull_request:
+    branches: [ ci-test ]
+
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: macos-latest
+    strategy:
+      max-parallel: 3
+
+    steps:
+    - uses: actions/checkout@v2
+      with: 
+        submodules: true    
+
+    - name: setup dependencies
+      run: |
+        brew install cmake qt5 ccache
+        echo "Qt5 is installed to"
+        echo $QTDIR
+        
+    - name: Prepare ccache timestamp
+      id: ccache_cache_timestamp
+      shell: cmake -P {0}
+      run: |
+        string(TIMESTAMP current_date "%Y-%m-%d-%H;%M;%S" UTC)
+        message("::set-output name=timestamp::${current_date}")
+        
+    - name: ccache files
+      uses: actions/cache@v1.1.0
+      with:
+        path: .ccache
+        key: qtmvvm-macos-ccache-${{ steps.ccache_cache_timestamp.outputs.timestamp }}
+        restore-keys: |
+          qtmvvm-macos-ccache-
+          
+    - name: build
+      env:
+        CCACHE_DIR: $GITHUB_WORKSPACE/.ccache
+        CCACHE_COMPRESS: "true"
+        CCACHE_COMPRESSLEVEL: "6"
+        CCACHE_MAXSIZE: "400M"
+        CXX: clang++
+        USE_CPP: 17
+        CMAKE_CXX_STANDARD: 17
+        LLVM_BC_GENERATOR: /usr/bin/clang++
+        LDFLAGS: "-L/usr/local/opt/qt/lib"
+        CPPFLAGS: "-I/usr/local/opt/qt/include"
+      run: |
+        echo 'export PATH="/usr/local/opt/qt/bin:$PATH"' >> /Users/runner/.bash_profile
+        cd $GITHUB_WORKSPACE
+        pwd
+        ls
+        mkdir build && cd build
+        cmake -DCMAKE_PREFIX_PATH=/usr/local/opt/qt \
+          -DCMAKE_C_COMPILER_LAUNCHER=ccache \
+          -DCMAKE_CXX_COMPILER_LAUNCHER=ccache ../
+        make -j4
+        
+    - name: ctest
+      if: success()
+      shell: bash
+      run: |
+        cd $GITHUB_WORKSPACE/build
+        ccache -s
+        ctest -j4
+
+    - name: Functional test output
+      if: failure()
+      run: |
+        cd $GITHUB_WORKSPACE/build
+        cat Testing/Temporary/LastTest.log        
+                 

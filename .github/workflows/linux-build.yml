@@ -1,4 +1,4 @@
-name: qt-mvvm Linux build
+name: linux-build
 
 on:
   push:
@@ -16,6 +16,7 @@ jobs:
     - uses: actions/checkout@v2
       with: 
         submodules: true    
+
     - name: setup apt dependencies
       run: |
         sudo apt-get update
@@ -50,18 +51,24 @@ jobs:
         cmake -DCMAKE_C_COMPILER_LAUNCHER=ccache \
           -DCMAKE_CXX_COMPILER_LAUNCHER=ccache ../
         make -j4        
-        ccache -s
         
     - name: ctest
       env:
         QT_QPA_PLATFORM: offscreen        
       run: |
         cd $GITHUB_WORKSPACE/build
+        ccache -s
         ctest -j4
 
-    - name: Functional test output
-      if: failure()
-      run: |
-        cd $GITHUB_WORKSPACE\build
-        cat Testing\Temporary\LastTest.log        
+    # - name: Functional test output
+    #   if: failure()
+    #   run: |
+    #     cd $GITHUB_WORKSPACE/build
+    #     cat Testing/Temporary/LastTest.log        
         
+    - name: upload test logs
+      uses: actions/upload-artifact@v2
+      if: failure()
+      with:
+         name: LastTest.log
+         path: /home/runner/work/qt-mvvm/qt-mvvm/build/Testing/Temporary/LastTest.log  

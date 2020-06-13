@@ -1,4 +1,4 @@
-name: qt-mvvm Windows build
+name: windows-build
 
 env:
   CCACHE_VERSION: 3.7.7
@@ -82,12 +82,14 @@ jobs:
         cmake --build . --config Release -j4
         
     - name: Run functional tests
+      if: success()
       shell: cmd
       run: |
         echo %QTDIR%
         set PATH=%QTDIR%\bin;%PATH%
         echo %PATH%
         cd ${{github.workspace}}\build
+        ccache -s
         ctest --output-on-failure
 
     - name: Functional test output

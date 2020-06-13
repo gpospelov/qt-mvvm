@@ -16,6 +16,7 @@
 #include <mvvm/model/taginfo.h>
 #include <mvvm/serialization/jsondocument.h>
 #include <stdexcept>
+#include <QTest>
 
 using namespace ModelView;
 
@@ -122,6 +123,8 @@ TEST_F(JsonDocumentTest, saveLoadTwoModels)
     // modifying model further
     model1.removeItem(model1.rootItem(), {"", 0});
     model2.removeItem(model2.rootItem(), {"", 0});
+
+    QTest::qWait(1000); // attempt to fix rare failure
 
     // loading model from file
     document.load(fileName);
