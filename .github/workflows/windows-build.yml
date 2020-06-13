@@ -1,4 +1,4 @@
-name: windows-build
+name: Windows
 
 env:
   CCACHE_VERSION: 3.7.7

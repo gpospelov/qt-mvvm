@@ -63,7 +63,9 @@ void JsonModelConverter::json_to_model(const QJsonObject& json, SessionModel& mo
         throw std::runtime_error("JsonModel::json_to_model() -> Error. Invalid json object.");
 
     if (json[modelKey].toString() != QString::fromStdString(model.modelType()))
-        throw std::runtime_error("JsonModel::json_to_model() -> Unexpected model type.");
+        throw std::runtime_error("JsonModel::json_to_model() -> Unexpected model type '"
+                                 + model.modelType() + "', json key '"
+                                 + json[modelKey].toString().toStdString() + "'");
 
     auto converter = std::make_unique<JsonItemConverter>(model.factory());
 

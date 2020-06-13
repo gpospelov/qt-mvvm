@@ -1,4 +1,4 @@
-name: macos-build
+name: MacOS
 
 on:
   push:
@@ -71,9 +71,16 @@ jobs:
         ccache -s
         ctest -j4
 
-    - name: Functional test output
+    - name: upload test logs
+      uses: actions/upload-artifact@v2
       if: failure()
-      run: |
-        cd $GITHUB_WORKSPACE/build
-        cat Testing/Temporary/LastTest.log        
+      with:
+         name: LastTest.log
+         path: ./build/Testing/Temporary/LastTest.log  
+
+    # - name: Functional test output
+    #   if: failure()
+    #   run: |
+    #     cd $GITHUB_WORKSPACE/build
+    #     cat Testing/Temporary/LastTest.log        
                  

@@ -75,8 +75,10 @@ void JsonDocument::load(const std::string& file_name)
 
     ModelView::JsonModelConverter converter;
     int index(0);
-    for (auto model : p_impl->models)
-        converter.json_to_model(array.at(index++).toObject(), *model);
+    for (auto model : p_impl->models) {
+        converter.json_to_model(array.at(index).toObject(), *model);
+        ++index;
+    }
 
     file.close();
 }
