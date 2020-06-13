@@ -16,6 +16,7 @@
 #include <mvvm/editors/styleutils.h>
 #include <mvvm/model/customvariants.h>
 #include <mvvm/model/externalproperty.h>
+#include <stdexcept>
 
 using namespace ModelView;
 

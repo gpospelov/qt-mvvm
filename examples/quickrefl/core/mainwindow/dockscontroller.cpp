@@ -11,6 +11,8 @@
 #include <QDockWidget>
 #include <QMainWindow>
 #include <map>
+#include <stdexcept>
+
 
 //! Keeps together info about the dock, the area it occupies and widget it holds.
 

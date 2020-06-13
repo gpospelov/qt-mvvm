@@ -20,6 +20,7 @@
 #include <mvvm/serialization/jsonitemconverter.h>
 #include <mvvm/serialization/jsonitemdata.h>
 #include <mvvm/serialization/jsontaginfo.h>
+#include <stdexcept>
 
 namespace
 {

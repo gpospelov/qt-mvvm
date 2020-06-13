@@ -10,6 +10,7 @@
 #include "qcustomplot.h"
 #include <mvvm/plotting/data1dplotcontroller.h>
 #include <mvvm/standarditems/data1ditem.h>
+#include <stdexcept>
 
 namespace {
 template<typename T>

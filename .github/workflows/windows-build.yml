@@ -1,0 +1,100 @@
+name: Windows
+
+env:
+  CCACHE_VERSION: 3.7.7
+  NINJA_VERSION: 1.10.0
+
+on:
+  push:
+    branches: [ master ]    
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    strategy:
+      max-parallel: 3
+
+    steps:
+    - uses: actions/checkout@v2
+      with: 
+        submodules: true    
+                
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v2
+      with:
+        version: '5.14.2'
+        host: 'windows'
+        target: 'desktop'
+        arch: 'win64_msvc2017_64'
+        dir: '${{ github.workspace }}/qt5/'
+        install-deps: 'true'
+        mirror: 'http://mirrors.ocf.berkeley.edu/qt/'
+        cached: 'false'
+
+    - name: Download ccache and Ninja
+      id: ccache
+      shell: cmake -P {0}
+      run: |
+        set(ccache_url "https://github.com/cristianadam/ccache/releases/download/v$ENV{CCACHE_VERSION}/${{ runner.os }}.tar.xz")
+        file(DOWNLOAD "${ccache_url}" ./ccache.tar.xz SHOW_PROGRESS)
+        execute_process(COMMAND ${CMAKE_COMMAND} -E tar xvf ./ccache.tar.xz)
+        
+        set(ninja_url "https://github.com/ninja-build/ninja/releases/download/v$ENV{NINJA_VERSION}/ninja-win.zip")
+        file(DOWNLOAD "${ninja_url}" ./ninja.zip SHOW_PROGRESS)
+        execute_process(COMMAND ${CMAKE_COMMAND} -E tar xvf ./ninja.zip)
+
+    - name: Prepare ccache timestamp
+      id: ccache_cache_timestamp
+      shell: cmake -P {0}
+      run: |
+        string(TIMESTAMP current_date "%Y-%m-%d-%H;%M;%S" UTC)
+        message("::set-output name=timestamp::${current_date}")
+        
+    - name: Prepare ccache files 
+      uses: actions/cache@v1.1.0
+      with:
+        path: .ccache
+        key: qtmvvm-win-ccache-${{ steps.ccache_cache_timestamp.outputs.timestamp }}
+        restore-keys: |
+          qtmvvm-win-ccache-
+          
+    - name: Build
+      shell: cmd
+      env:
+        CCACHE_BASEDIR: $GITHUB_WORKSPACE
+        CCACHE_DIR: $GITHUB_WORKSPACE/.ccache
+        CCACHE_COMPRESS: "true"
+        CCACHE_COMPRESSLEVEL: "6"
+        CCACHE_MAXSIZE: "1000M"
+      run: |
+        call "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat"
+        set QTDIR=${{github.workspace}}\qt5\Qt\5.14.2\msvc2017_64
+        set PATH=${{github.workspace}};%QTDIR%\bin;%PATH%
+        cd ${{github.workspace}}
+        dir
+        mkdir build
+        cd build
+        cmake -G "Visual Studio 16 2019" -G Ninja -DCMAKE_MAKE_PROGRAM=ninja -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER="cl.exe" -DCMAKE_CXX_COMPILER="cl.exe" ..
+        ccache -z
+        ccache -p
+        cmake --build . --config Release -j4
+        
+    - name: Run functional tests
+      if: success()
+      shell: cmd
+      run: |
+        echo %QTDIR%
+        set PATH=%QTDIR%\bin;%PATH%
+        echo %PATH%
+        cd ${{github.workspace}}\build
+        ccache -s
+        ctest --output-on-failure
+
+    - name: Functional test output
+      if: failure()
+      shell: cmd
+      run: |
+        cd ${{github.workspace}}\build
+        type Testing\Temporary\LastTest.log

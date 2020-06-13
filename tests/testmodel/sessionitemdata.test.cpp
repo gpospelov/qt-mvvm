@@ -11,6 +11,7 @@
 #include <mvvm/model/comboproperty.h>
 #include <mvvm/model/mvvm_types.h>
 #include <mvvm/model/sessionitemdata.h>
+#include <stdexcept>
 
 using namespace ModelView;
 

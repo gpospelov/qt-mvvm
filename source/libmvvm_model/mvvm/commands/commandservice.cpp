@@ -15,6 +15,7 @@
 #include <mvvm/commands/setvaluecommand.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
+#include <stdexcept>
 
 using namespace ModelView;
 

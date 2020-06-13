@@ -14,6 +14,7 @@
 #include <mvvm/model/itemutils.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/taginfo.h>
+#include <stdexcept>
 
 using namespace ModelView;
 

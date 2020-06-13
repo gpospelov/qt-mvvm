@@ -14,6 +14,7 @@
 #include <mvvm/editors/customeventfilters.h>
 #include <mvvm/editors/styleutils.h>
 #include <mvvm/model/customvariants.h>
+#include <stdexcept>
 
 using namespace ModelView;
 

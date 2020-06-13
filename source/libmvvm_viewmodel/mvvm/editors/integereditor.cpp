@@ -10,6 +10,7 @@
 #include <QSpinBox>
 #include <QVBoxLayout>
 #include <mvvm/editors/integereditor.h>
+#include <stdexcept>
 
 using namespace ModelView;
 

@@ -15,6 +15,7 @@
 #include <mvvm/serialization/jsondocument.h>
 #include <mvvm/serialization/jsonmodelconverter.h>
 #include <sstream>
+#include <stdexcept>
 #include <vector>
 
 using namespace ModelView;
@@ -32,13 +33,14 @@ JsonDocument::JsonDocument(std::initializer_list<ModelView::SessionModel*> model
 }
 
 //! Saves models on disk.
-
+#include <iostream>
 void JsonDocument::save(const std::string& file_name) const
 {
     ModelView::JsonModelConverter converter;
     QJsonArray array;
 
     for (auto model : p_impl->models) {
+        std::cout << "xxx writing" << model->modelType() << "\n";
         QJsonObject object;
         converter.model_to_json(*model, object);
         array.push_back(object);
@@ -74,8 +76,11 @@ void JsonDocument::load(const std::string& file_name)
 
     ModelView::JsonModelConverter converter;
     int index(0);
-    for (auto model : p_impl->models)
-        converter.json_to_model(array.at(index++).toObject(), *model);
+    for (auto model : p_impl->models) {
+        std::cout << "xxx reading" << model->modelType() << "\n";
+        converter.json_to_model(array.at(index).toObject(), *model);
+        ++index;
+    }
 
     file.close();
 }

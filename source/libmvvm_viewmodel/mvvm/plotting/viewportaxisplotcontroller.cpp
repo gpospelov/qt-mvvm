@@ -12,6 +12,7 @@
 #include <mvvm/plotting/customplotutils.h>
 #include <mvvm/plotting/viewportaxisplotcontroller.h>
 #include <mvvm/standarditems/axisitems.h>
+#include <stdexcept>
 
 using namespace ModelView;
 

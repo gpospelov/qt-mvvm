@@ -11,6 +11,7 @@
 #include <mvvm/editors/scientificspinboxeditor.h>
 #include <mvvm/utils/numericutils.h>
 #include <mvvm/widgets/scientificspinbox.h>
+#include <stdexcept>
 
 using namespace ModelView;
 

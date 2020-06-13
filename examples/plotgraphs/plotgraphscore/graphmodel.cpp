@@ -18,6 +18,7 @@
 #include <mvvm/standarditems/graphitem.h>
 #include <mvvm/standarditems/graphviewportitem.h>
 #include <mvvm/utils/numericutils.h>
+#include <stdexcept>
 
 namespace
 {

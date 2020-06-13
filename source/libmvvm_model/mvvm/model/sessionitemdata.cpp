@@ -11,6 +11,7 @@
 #include <mvvm/model/customvariants.h>
 #include <mvvm/model/sessionitemdata.h>
 #include <sstream>
+#include <stdexcept>
 
 using namespace ModelView;
 

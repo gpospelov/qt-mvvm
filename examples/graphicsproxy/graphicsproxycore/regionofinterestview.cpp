@@ -11,10 +11,10 @@
 #include "regionofinterestcontroller.h"
 #include "sceneitems.h"
 #include "sizehandleelement.h"
-#include <QDebug>
 #include <QGraphicsSceneMouseEvent>
 #include <QPainter>
 #include <mvvm/plotting/sceneadapterinterface.h>
+#include <stdexcept>
 
 namespace
 {

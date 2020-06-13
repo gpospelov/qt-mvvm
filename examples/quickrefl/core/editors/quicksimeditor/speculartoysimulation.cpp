@@ -12,6 +12,7 @@
 #include "materialprofile.h"
 #include <mvvm/utils/containerutils.h>
 #include <thread>
+#include <stdexcept>
 
 namespace
 {
