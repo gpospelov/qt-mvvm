@@ -2,9 +2,9 @@ name: MacOS
 
 on:
   push:
-    branches: [ ci-test ]    
+    branches: [ master ]    
   pull_request:
-    branches: [ ci-test ]
+    branches: [ master ]
 
 jobs:
   # This workflow contains a single job called "build"
