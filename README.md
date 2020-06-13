@@ -1,5 +1,7 @@
 # Model View ViewModel framework for large C++ Qt applications
 
+[![Linux](https://github.com/gpospelov/qt-mvvm/workflows/linux-build/badge.svg)](https://github.com/gpospelov/qt-mvvm/actions)
+
 [![Travis-CI Build Status](https://travis-ci.org/gpospelov/qt-mvvm.svg?branch=master)](https://travis-ci.org/gpospelov/qt-mvvm)
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/gpospelov/qt-mvvm?branch=master&svg=true)](https://ci.appveyor.com/project/gpospelov/qt-mvvm)
 

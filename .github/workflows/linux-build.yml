@@ -1,0 +1,67 @@
+name: qt-mvvm Linux build
+
+on:
+  push:
+    branches: [ ci-test ]    
+  pull_request:
+    branches: [ ci-test ]
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    strategy:
+      max-parallel: 3
+
+    steps:
+    - uses: actions/checkout@v2
+      with: 
+        submodules: true    
+    - name: setup apt dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential cmake ccache \
+          cmake qt5-default qttools5-dev libqt5svg5-dev libx11-xcb1
+        
+    - name: Prepare ccache timestamp
+      id: ccache_cache_timestamp
+      shell: cmake -P {0}
+      run: |
+        string(TIMESTAMP current_date "%Y-%m-%d-%H;%M;%S" UTC)
+        message("::set-output name=timestamp::${current_date}")
+        
+    - name: ccache files
+      uses: actions/cache@v1.1.0
+      with:
+        path: .ccache
+        key: qtmvvm-ubuntu-ccache-${{ steps.ccache_cache_timestamp.outputs.timestamp }}
+        restore-keys: |
+          qtmvvm-ubuntu-ccache-
+          
+    - name: make
+      env:
+        CCACHE_DIR: $GITHUB_WORKSPACE/.ccache
+        CCACHE_COMPRESS: "true"
+        CCACHE_COMPRESSLEVEL: "6"
+        CCACHE_MAXSIZE: "400M"
+        QT_QPA_PLATFORM: offscreen        
+      run: |
+        cd $GITHUB_WORKSPACE && pwd && ls
+        mkdir build && cd build
+        cmake -DCMAKE_C_COMPILER_LAUNCHER=ccache \
+          -DCMAKE_CXX_COMPILER_LAUNCHER=ccache ../
+        make -j4        
+        ccache -s
+        
+    - name: ctest
+      env:
+        QT_QPA_PLATFORM: offscreen        
+      run: |
+        cd $GITHUB_WORKSPACE/build
+        ctest -j4
+
+    - name: Functional test output
+      if: failure()
+      run: |
+        cd $GITHUB_WORKSPACE\build
+        cat Testing\Temporary\LastTest.log        
+        
