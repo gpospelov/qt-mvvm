@@ -14,6 +14,7 @@
 #include <mvvm/serialization/jsonmodelconverter.h>
 #include <mvvm/serialization/jsonutils.h>
 #include <mvvm/utils/reallimits.h>
+#include <stdexcept>
 
 namespace
 {

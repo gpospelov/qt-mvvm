@@ -11,6 +11,7 @@
 #include <QVBoxLayout>
 #include <mvvm/editors/doubleeditor.h>
 #include <mvvm/utils/numericutils.h>
+#include <stdexcept>
 
 using namespace ModelView;
 

@@ -80,7 +80,6 @@ jobs:
         ccache -z
         ccache -p
         cmake --build . --config Release -j4
-        ccache -s
         
     - name: Run functional tests
       shell: cmd

@@ -19,6 +19,7 @@
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/model/taginfo.h>
 #include <mvvm/serialization/jsonmodelconverter.h>
+#include <stdexcept>
 
 using namespace ModelView;
 

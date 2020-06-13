@@ -12,6 +12,7 @@
 #include <mvvm/model/propertyitem.h>
 #include <mvvm/standarditems/standarditemcatalogue.h>
 #include <mvvm/standarditems/vectoritem.h>
+#include <stdexcept>
 
 using namespace ModelView;
 

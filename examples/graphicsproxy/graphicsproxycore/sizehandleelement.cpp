@@ -13,6 +13,7 @@
 #include <QPainter>
 #include <functional>
 #include <map>
+#include <stdexcept>
 
 namespace
 {

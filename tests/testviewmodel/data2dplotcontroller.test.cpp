@@ -15,6 +15,7 @@
 #include <mvvm/plotting/data2dplotcontroller.h>
 #include <mvvm/standarditems/axisitems.h>
 #include <mvvm/standarditems/data2ditem.h>
+#include <stdexcept>
 
 using namespace ModelView;
 

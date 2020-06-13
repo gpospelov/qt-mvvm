@@ -9,6 +9,7 @@
 
 #include <mvvm/viewmodel/standardviewitems.h>
 #include <mvvm/viewmodel/viewmodelbase.h>
+#include <stdexcept>
 
 using namespace ModelView;
 

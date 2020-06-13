@@ -11,6 +11,7 @@
 #include <mvvm/plotting/mousemovereporter.h>
 #include <mvvm/plotting/mouseposinfo.h>
 #include <qcustomplot.h>
+#include <stdexcept>
 
 using namespace ModelView;
 

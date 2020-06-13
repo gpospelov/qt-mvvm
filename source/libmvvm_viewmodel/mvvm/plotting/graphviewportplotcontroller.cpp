@@ -15,6 +15,7 @@
 #include <mvvm/standarditems/graphitem.h>
 #include <mvvm/standarditems/graphviewportitem.h>
 #include <qcustomplot.h>
+#include <stdexcept>
 
 using namespace ModelView;
 

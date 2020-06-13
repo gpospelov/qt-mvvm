@@ -13,6 +13,7 @@
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/signals/itemmapper.h>
+#include <stdexcept>
 
 using namespace ModelView;
 using ::testing::_;

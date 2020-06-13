@@ -15,6 +15,7 @@
 #include <mvvm/serialization/jsondocument.h>
 #include <mvvm/serialization/jsonmodelconverter.h>
 #include <sstream>
+#include <stdexcept>
 #include <vector>
 
 using namespace ModelView;

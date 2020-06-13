@@ -13,6 +13,7 @@
 #include "materialitems.h"
 #include <mvvm/model/externalproperty.h>
 #include <mvvm/model/sessionmodel.h>
+#include <stdexcept>
 
 namespace
 {

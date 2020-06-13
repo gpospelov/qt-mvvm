@@ -20,6 +20,7 @@
 #include <mvvm/viewmodel/viewmodelbase.h>
 #include <mvvm/viewmodel/viewmodelcontroller.h>
 #include <mvvm/viewmodel/viewmodelutils.h>
+#include <stdexcept>
 
 using namespace ModelView;
 

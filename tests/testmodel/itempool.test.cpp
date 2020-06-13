@@ -11,6 +11,7 @@
 #include <memory>
 #include <mvvm/model/itempool.h>
 #include <mvvm/model/sessionitem.h>
+#include <stdexcept>
 
 using namespace ModelView;
 

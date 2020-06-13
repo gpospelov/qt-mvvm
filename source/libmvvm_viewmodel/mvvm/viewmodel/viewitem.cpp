@@ -14,6 +14,7 @@
 #include <mvvm/viewmodel/viewitem.h>
 #include <mvvm/viewmodel/viewmodelutils.h>
 #include <vector>
+#include <stdexcept>
 
 using namespace ModelView;
 

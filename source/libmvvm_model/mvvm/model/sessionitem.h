@@ -18,6 +18,8 @@
 #include <mvvm/model/tagrow.h>
 #include <type_traits>
 #include <vector>
+#include <stdexcept>
+
 
 namespace ModelView
 {

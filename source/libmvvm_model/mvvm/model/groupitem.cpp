@@ -11,6 +11,7 @@
 #include <mvvm/model/groupitem.h>
 #include <mvvm/model/taginfo.h>
 #include <mvvm/utils/containerutils.h>
+#include <stdexcept>
 
 namespace
 {
