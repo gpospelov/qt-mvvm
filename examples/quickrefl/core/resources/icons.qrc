@@ -30,5 +30,6 @@
         <file>icons/playlist-remove.svg</file>
         <file>icons/redo.svg</file>
         <file>icons/undo.svg</file>
+        <file>icons/set-merge.svg</file>
     </qresource>
 </RCC>

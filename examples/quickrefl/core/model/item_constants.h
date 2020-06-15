@@ -21,8 +21,11 @@ const std::string RoughnessItemType = "Roughness";
 const std::string SLDMaterialItemType = "SLDMaterial";
 const std::string MaterialContainerItemType = "MaterialContainer";
 const std::string JobItemType = "Job";
-const std::string DataGroupItemType = "DataGroup";
+const std::string DataGroupItemType = "DataGroupItem";
+const std::string DataContainerItemType = "DataContainerItemType";
 const std::string DataCollectionItemType = "DataCollectionItem";
+const std::string RawDataMimeType = "quickrefl/moveDataItem";
+
 } // namespace Constants
 
 #endif //  ITEM_CONSTANTS_H

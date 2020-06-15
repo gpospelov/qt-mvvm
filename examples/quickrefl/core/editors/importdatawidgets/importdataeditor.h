@@ -15,7 +15,9 @@
 
 namespace ModelView
 {
+class SessionItem;
 class GraphCanvas;
+class GraphViewportItem;
 class TopItemsTreeView;
 class PropertyTreeView;
 } // namespace ModelView
@@ -28,9 +30,11 @@ class ParsedFileOutptut;
 
 class RealDataModel;
 class QToolBar;
+class QTreeView;
 class QBoxLayout;
 class RealDataStruct;
 class DataSelectionModel;
+class DataViewModel;
 
 //! Main editor to import user data.
 
@@ -41,12 +45,17 @@ public:
     ImportDataEditor(RealDataModel* model, QWidget* parent = nullptr);
 
 private:
-    void setupDataToolBar();
-    void setupGraphToolBar();
+    void setupToolBar();
     void setupViews();
     void setupLayout();
 
+    void selectionChanged();
+    void setMergeEnabled(bool enabled);
+
+    void addDataGroup();
+    void mergeDataGroups();
     void invokeImportDialog();
+    std::string selectedDataGroupItem() const;
     void onImportDialogAccept(DataImportLogic::ImportOutput import_output);
     RealDataStruct convertToRealDataStruct(const std::string& path,
                                            const DataImportLogic::ParsedFileOutptut* import_output,
@@ -55,11 +64,11 @@ private:
     void resetAll();
 
 private:
+    QTreeView* p_tree_view{nullptr};
     RealDataModel* p_model{nullptr};
-    ModelView::TopItemsTreeView* p_topitems_tree{nullptr};
+    DataViewModel* p_view_model{nullptr};
     DataSelectionModel* p_data_selection_model{nullptr};
-    QToolBar* p_data_toolbar{nullptr};
-    QToolBar* p_graph_toolbar{nullptr};
+    QToolBar* p_toolbar{nullptr};
     ModelView::PropertyTreeView* p_property_tree{nullptr};
     ModelView::GraphCanvas* p_graph_canvas{nullptr};
 };
