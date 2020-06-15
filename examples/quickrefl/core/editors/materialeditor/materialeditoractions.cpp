@@ -29,7 +29,7 @@ struct MaterialEditorActions::MaterialEditorActionsImpl {
         auto all_selected = selection_model->selectedMaterials();
         auto selected = all_selected.empty() ? nullptr : all_selected.back();
         if (selected)
-            return {selected->parent(), selected->parent()->tagRowOfItem(selected).next()};
+            return {selected->parent(), selected->tagRow().next()};
         return {root_item(), TagRow{}};
     }
 

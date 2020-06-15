@@ -22,6 +22,7 @@ namespace ModelView
 class CORE_EXPORT ProjectInterface
 {
 public:
+    virtual ~ProjectInterface() = default;
     virtual std::string projectDir() const = 0;
     virtual bool save(const std::string& dirname) const = 0;
     virtual bool load(const std::string& dirname) = 0;

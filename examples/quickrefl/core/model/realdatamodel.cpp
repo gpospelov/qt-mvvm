@@ -110,7 +110,7 @@ void RealDataModel::removeDataFromCollection(std::vector<ModelView::SessionItem*
                 if (auto sub_item = dynamic_cast<GraphItem*>(temp_item))
                     removeDataFromGroup(sub_item);
             }
-            removeItem(group_item->parent(), group_item->parent()->tagRowOfItem(group_item));
+            removeItem(group_item->parent(), group_item->tagRow());
         } else if (auto subitem = dynamic_cast<GraphItem*>(item)) {
             removeDataFromGroup(subitem);
         }
@@ -156,15 +156,14 @@ void RealDataModel::addDataToGroup(DataGroupItem* data_group, RealDataStruct& da
     graph->setData(data_struct.name);
     graph->setDataItem(data);
     // TODO hack to refresh the ViewDataItem display (please fix)
-    moveItem(graph, graph->parent(), graph->parent()->tagRowOfItem(graph));
+    moveItem(graph, graph->parent(), graph->tagRow());
 }
 
 //! Remove Graph and data items from the model
 void RealDataModel::removeDataFromGroup(GraphItem* item)
 {
-    removeItem(item->dataItem()->parent(),
-               item->dataItem()->parent()->tagRowOfItem(item->dataItem()));
-    removeItem(item->parent(), item->parent()->tagRowOfItem(item));
+    removeItem(item->dataItem()->parent(), item->dataItem()->tagRow());
+    removeItem(item->parent(), item->tagRow());
 }
 
 //! check if all items are DataGroupItems, if yes return true
@@ -256,11 +255,11 @@ bool RealDataModel::mergeItems(std::vector<ModelView::SessionItem*> items)
 
     for (int i = 1; i < items.size(); ++i) {
         for (auto child : items.at(i)->children()) {
-            if (child->parent()->isSinglePropertyTag(child->parent()->tagOfItem(child)))
+            if (child->parent()->isSinglePropertyTag(child->tag()))
                 continue;
-            moveItem(child, items.at(0), {child->parent()->tagOfItem(child), -1});
+            moveItem(child, items.at(0), {child->tag(), -1});
         }
-        removeItem(items.at(i)->parent(), items.at(i)->parent()->tagRowOfItem(items.at(i)));
+        removeItem(items.at(i)->parent(), items.at(i)->tagRow());
     }
 
     return true;

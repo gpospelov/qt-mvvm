@@ -31,7 +31,7 @@ struct LayerEditorActions::LayerEditorActionsImpl {
         auto all_selected = selection_model->selectedItems();
         auto selected = all_selected.empty() ? nullptr : all_selected.back();
         if (selected)
-            return {selected->parent(), selected->parent()->tagRowOfItem(selected).next()};
+            return {selected->parent(), selected->tagRow().next()};
         return {root_item(), TagRow{}};
     }
 
@@ -73,11 +73,9 @@ void LayerEditorActions::onClone()
         return;
 
     std::vector<ModelView::SessionItem*> new_selection;
-    for (auto to_clone : items) {
-        auto parent = to_clone->parent();
-        const auto tagrow = parent->tagRowOfItem(to_clone);
-        new_selection.push_back(p_impl->model->copyItem(to_clone, parent, tagrow.next()));
-    }
+    for (auto to_clone : items)
+        new_selection.push_back(
+            p_impl->model->copyItem(to_clone, to_clone->parent(), to_clone->tagRow().next()));
 
     p_impl->selection_model->selectItems(new_selection);
 }

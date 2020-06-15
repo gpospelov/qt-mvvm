@@ -117,7 +117,7 @@ ExternalProperty MaterialModel::material_property(const std::string& id, std::st
 
 MaterialBaseItem* MaterialModel::cloneMaterial(const MaterialBaseItem* item)
 {
-    auto tagrow = item->parent()->tagRowOfItem(item).next();
+    auto tagrow = item->tagRow().next();
     return static_cast<MaterialBaseItem*>(SessionModel::copyItem(item, item->parent(), tagrow));
 }
 

@@ -100,7 +100,7 @@ SessionItem* Utils::FindNextSibling(SessionItem* item)
     auto parent = item ? item->parent() : nullptr;
     if (!parent)
         return nullptr;
-    auto tagrow = parent->tagRowOfItem(item);
+    auto tagrow = item->tagRow();
     return parent->getItem(tagrow.tag, tagrow.row + 1);
 }
 
