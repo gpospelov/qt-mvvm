@@ -207,6 +207,20 @@ bool SessionItem::isTag(const std::string& name) const
     return p_impl->m_tags->isTag(name);
 }
 
+//! Returns tag of this item under which it is accessible for its parent.
+
+std::string SessionItem::tag() const
+{
+    return tagRow().tag;
+}
+
+//! Returns TagRow of this item under which it is accessible for its parent.
+
+TagRow SessionItem::tagRow() const
+{
+    return parent() ? parent()->tagRowOfItem(this) : TagRow();
+}
+
 //! Returns number of items in given tag.
 
 int SessionItem::itemCount(const std::string& tag) const

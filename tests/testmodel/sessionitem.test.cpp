@@ -504,7 +504,43 @@ TEST_F(SessionItemTest, tagModelTypes)
     EXPECT_EQ(parent->getItems(tag2), expected);
 }
 
-TEST_F(SessionItemTest, tagFromItem)
+//! Testing method ::tag.
+
+TEST_F(SessionItemTest, tag)
+{
+    const std::string tag1 = "tag1";
+    const std::string tag2 = "tag2";
+
+    // creating parent with one tag
+    auto parent = std::make_unique<SessionItem>();
+    parent->registerTag(TagInfo::universalTag(tag1));
+    parent->registerTag(TagInfo::universalTag(tag2));
+
+    // inserting two children
+    auto child_t1_a = new SessionItem;
+    auto child_t1_b = new SessionItem;
+    auto child_t2_a = new SessionItem;
+    auto child_t2_b = new SessionItem;
+    auto child_t2_c = new SessionItem;
+    parent->insertItem(child_t2_a, {tag2, -1});
+    parent->insertItem(child_t2_c, {tag2, -1});
+    parent->insertItem(child_t1_a, {tag1, -1});
+    parent->insertItem(child_t1_b, {tag1, -1});
+    parent->insertItem(child_t2_b, {tag2, 1}); // between child_t2_a and child_t2_c
+
+    EXPECT_EQ(child_t1_a->tag(), "tag1");
+    EXPECT_EQ(child_t1_b->tag(), "tag1");
+    EXPECT_EQ(child_t2_a->tag(), "tag2");
+    EXPECT_EQ(child_t2_b->tag(), "tag2");
+    EXPECT_EQ(child_t2_c->tag(), "tag2");
+
+    SessionItem parentless_item;
+    EXPECT_EQ(parentless_item.tag(), "");
+}
+
+//! Testing method tagOfItem.
+
+TEST_F(SessionItemTest, tagOfItem)
 {
     const std::string tag1 = "tag1";
     const std::string tag2 = "tag2";
@@ -539,7 +575,44 @@ TEST_F(SessionItemTest, tagFromItem)
 
 //! Checks row of item in its tag
 
-TEST_F(SessionItemTest, tagRowFromItem)
+TEST_F(SessionItemTest, tagRow)
+{
+    const std::string tag1 = "tag1";
+    const std::string tag2 = "tag2";
+
+    // creating parent with one tag
+    auto parent = std::make_unique<SessionItem>();
+    parent->registerTag(TagInfo::universalTag(tag1));
+    parent->registerTag(TagInfo::universalTag(tag2));
+
+    // inserting two children
+    auto child_t1_a = new SessionItem;
+    auto child_t1_b = new SessionItem;
+    auto child_t2_a = new SessionItem;
+    auto child_t2_b = new SessionItem;
+    auto child_t2_c = new SessionItem;
+    parent->insertItem(child_t2_a, {tag2, -1}); // 0
+    parent->insertItem(child_t2_c, {tag2, -1}); // 2
+    parent->insertItem(child_t1_a, {tag1, -1}); // 0
+    parent->insertItem(child_t1_b, {tag1, -1}); // 1
+    parent->insertItem(child_t2_b, {tag2, 1});  // 1 between child_t2_a and child_t2_c
+
+    EXPECT_EQ(child_t1_a->tagRow().row, 0);
+    EXPECT_EQ(child_t1_b->tagRow().row, 1);
+    EXPECT_EQ(child_t2_a->tagRow().row, 0);
+    EXPECT_EQ(child_t2_b->tagRow().row, 1);
+    EXPECT_EQ(child_t2_c->tagRow().row, 2);
+
+    EXPECT_EQ(child_t1_a->tagRow().tag, "tag1");
+    EXPECT_EQ(child_t1_b->tagRow().tag, "tag1");
+    EXPECT_EQ(child_t2_a->tagRow().tag, "tag2");
+    EXPECT_EQ(child_t2_b->tagRow().tag, "tag2");
+    EXPECT_EQ(child_t2_c->tagRow().tag, "tag2");
+}
+
+//! Checks row of item in its tag
+
+TEST_F(SessionItemTest, tagRowOfItem)
 {
     const std::string tag1 = "tag1";
     const std::string tag2 = "tag2";
