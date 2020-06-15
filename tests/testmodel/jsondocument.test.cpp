@@ -16,7 +16,6 @@
 #include <mvvm/model/taginfo.h>
 #include <mvvm/serialization/jsondocument.h>
 #include <stdexcept>
-#include <QTest>
 
 using namespace ModelView;
 
@@ -103,7 +102,6 @@ TEST_F(JsonDocumentTest, saveLoadSingleModel)
 
 //! Saving two models with content into document and restoring it after.
 
-#include <iostream>
 TEST_F(JsonDocumentTest, saveLoadTwoModels)
 {
     auto fileName = TestUtils::TestFileName(testDir(), "saveLoadTwoModels.json");
@@ -111,7 +109,6 @@ TEST_F(JsonDocumentTest, saveLoadTwoModels)
     TestModel2 model2;
     JsonDocument document({&model1, &model2});
 
-    std::cout << "aaaaa" << (&model1) << " " << (&model2) << std::endl;;
     // filling models
     auto parent1 = model1.insertItem<SessionItem>();
     const auto parent_identifier1 = parent1->identifier();
@@ -125,8 +122,6 @@ TEST_F(JsonDocumentTest, saveLoadTwoModels)
     // modifying model further
     model1.removeItem(model1.rootItem(), {"", 0});
     model2.removeItem(model2.rootItem(), {"", 0});
-
-    QTest::qWait(1000); // attempt to fix rare failure
 
     // loading model from file
     document.load(fileName);
