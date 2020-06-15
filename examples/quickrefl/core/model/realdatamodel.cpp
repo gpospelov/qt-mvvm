@@ -215,6 +215,8 @@ bool RealDataModel::dragEnabled(ModelView::SessionItem* item) const
 {
     if (dynamic_cast<GraphItem*>(item))
         return true;
+    if (dynamic_cast<DataGroupItem*>(item))
+        return true;
     return false;
 }
 
@@ -234,6 +236,12 @@ bool RealDataModel::dragDropItem(ModelView::SessionItem* item, ModelView::Sessio
         && target != item->parent()) {
         moveItem(dynamic_cast<GraphItem*>(item), dynamic_cast<DataGroupItem*>(target),
                  {dynamic_cast<DataGroupItem*>(target)->defaultTag(), row});
+        return true;
+    }
+
+    if (dynamic_cast<DataGroupItem*>(item) && dynamic_cast<DataGroupItem*>(target)
+        && target != item->parent()) {
+        mergeItems(std::vector<ModelView::SessionItem*>{target, item});
         return true;
     }
 
