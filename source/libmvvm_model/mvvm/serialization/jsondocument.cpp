@@ -18,6 +18,8 @@
 #include <stdexcept>
 #include <vector>
 
+#include <iostream>
+
 using namespace ModelView;
 
 struct JsonDocument::JsonDocumentImpl {
@@ -30,17 +32,19 @@ struct JsonDocument::JsonDocumentImpl {
 JsonDocument::JsonDocument(std::initializer_list<ModelView::SessionModel*> models)
     : p_impl(std::make_unique<JsonDocumentImpl>(models))
 {
+    std::cout << "xxxx constructing" << std::endl;
+    for(auto model : models)
+        std::cout << "xxxx constructing model" << model << " " << model->modelType()<< std::endl;
 }
 
 //! Saves models on disk.
-#include <iostream>
 void JsonDocument::save(const std::string& file_name) const
 {
     ModelView::JsonModelConverter converter;
     QJsonArray array;
 
     for (auto model : p_impl->models) {
-        std::cout << "xxx writing" << model->modelType() << "\n";
+        std::cout << "xxx writing" << model << " " << model->modelType() << "\n";
         QJsonObject object;
         converter.model_to_json(*model, object);
         array.push_back(object);
@@ -77,7 +81,7 @@ void JsonDocument::load(const std::string& file_name)
     ModelView::JsonModelConverter converter;
     int index(0);
     for (auto model : p_impl->models) {
-        std::cout << "xxx reading" << model->modelType() << "\n";
+        std::cout << "xxx reading" << model << " " << model->modelType() << "\n";
         converter.json_to_model(array.at(index).toObject(), *model);
         ++index;
     }
