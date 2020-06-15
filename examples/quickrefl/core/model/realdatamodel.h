@@ -35,6 +35,7 @@ public:
                                        DataGroupItem* data_group = nullptr);
     void removeAllDataFromCollection(DataCollectionItem* data_node);
     void removeDataFromCollection(std::vector<ModelView::SessionItem*> item_to_remove);
+    std::vector<std::pair<std::string, std::string>> dataGroupNames() const;
 
     bool checkAllGroup(std::vector<ModelView::SessionItem*>& items) const;
     ModelView::GraphViewportItem* checkAllGraph(std::vector<ModelView::SessionItem*>& items) const;

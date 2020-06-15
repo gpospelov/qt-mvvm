@@ -55,12 +55,12 @@ public:
     std::vector<std::string> keys() const;
     const ParsedFileOutptut* operator[](const std::string& key) const;
 
-    void setMerge(bool merge);
-    bool merge() const;
+    void setTarget(std::string);
+    std::string target() const;
 
 private:
     std::map<std::string, std::unique_ptr<ParsedFileOutptut>> m_parsed_outputs;
-    bool m_merge{true};
+    std::string m_target;
 };
 
 } // namespace DataImportLogic

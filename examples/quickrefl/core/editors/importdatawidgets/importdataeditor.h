@@ -55,6 +55,7 @@ private:
     void addDataGroup();
     void mergeDataGroups();
     void invokeImportDialog();
+    std::string selectedDataGroupItem() const;
     void onImportDialogAccept(DataImportLogic::ImportOutput import_output);
     RealDataStruct convertToRealDataStruct(const std::string& path,
                                            const DataImportLogic::ParsedFileOutptut* import_output,

@@ -223,17 +223,31 @@ void ImportDataEditor::mergeDataGroups()
 void ImportDataEditor::invokeImportDialog()
 {
     DataImportGui::DataLoaderDialog assistant(this);
+    assistant.setTargets(p_model->dataGroupNames(), selectedDataGroupItem());
     int dialog_code = assistant.exec();
     if (dialog_code == QDialog::Accepted) {
         onImportDialogAccept(assistant.result());
     }
 }
 
+//! Find the first selected data group item is present and return his name
+std::string ImportDataEditor::selectedDataGroupItem() const
+{
+    auto items = p_data_selection_model->selectedItems();
+    items.erase(std::remove(begin(items), end(items), nullptr), end(items));
+    for (auto item : items) {
+        if (dynamic_cast<DataGroupItem*>(item))
+            return item->displayName();
+    }
+    return "";
+}
+
 //! Process the accepted state
 void ImportDataEditor::onImportDialogAccept(DataImportLogic::ImportOutput import_output)
 {
     DataCollectionItem* data_node = ModelView::Utils::TopItem<DataCollectionItem>(p_model);
-    DataGroupItem* data_group = nullptr;
+    DataGroupItem* data_group =
+        dynamic_cast<DataGroupItem*>(p_model->findItem(import_output.target()));
     for (auto& path : import_output.keys()) {
         auto parsed_file_output = import_output[path];
         for (int i = 0; i < parsed_file_output->dataCount(); ++i) {

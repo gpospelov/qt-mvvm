@@ -13,8 +13,8 @@
 // ************************************************************************** //
 
 #include "importoutput.h"
-#include "importdatastructure.h"
 #include "importdatacolumn.h"
+#include "importdatastructure.h"
 
 namespace DataImportLogic
 {
@@ -96,7 +96,7 @@ std::string ParsedFileOutptut::dataUnit(int column) const
 
 // -------------------------------------------------
 //! This is the import structure for multiple files
-ImportOutput::ImportOutput() {}
+ImportOutput::ImportOutput() : m_target("New group ...") {}
 
 //! Freez the data
 void ImportOutput::freezData(const std::string& name, const DataStructure& data_structure)
@@ -121,14 +121,14 @@ const ParsedFileOutptut* ImportOutput::operator[](const std::string& key) const
     return m_parsed_outputs.at(key).get();
 }
 
-void ImportOutput::setMerge(bool merge)
+void ImportOutput::setTarget(std::string target)
 {
-    m_merge = merge;
+    m_target = target;
 }
 
-bool ImportOutput::merge() const
+std::string ImportOutput::target() const
 {
-    return m_merge;
+    return m_target;
 }
 
 } // namespace DataImportLogic

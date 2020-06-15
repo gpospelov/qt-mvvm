@@ -118,6 +118,18 @@ void RealDataModel::removeDataFromCollection(std::vector<ModelView::SessionItem*
 }
 
 //! Insert the data into the group item
+std::vector<std::pair<std::string, std::string>> RealDataModel::dataGroupNames() const
+{
+    auto items = Utils::FindItems<DataGroupItem>(this);
+    std::vector<std::pair<std::string, std::string>> output;
+    for (auto item : items) {
+        output.push_back(
+            std::make_pair<std::string, std::string>(item->displayName(), item->identifier()));
+    }
+    return output;
+}
+
+//! Insert the data into the group item
 void RealDataModel::addDataToGroup(DataGroupItem* data_group, RealDataStruct& data_struct)
 {
     if (data_struct.axis.empty()) {
