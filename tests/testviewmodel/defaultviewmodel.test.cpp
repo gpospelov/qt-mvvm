@@ -617,7 +617,7 @@ TEST_F(DefaultViewModelTest, vectorItemInJsonDocument)
     auto fileName = TestUtils::TestFileName(testDir(), "vectorItemInJsonDocument.json");
 
     SessionModel model;
-    auto vectorItem = model.insertItem<VectorItem>();
+    model.insertItem<VectorItem>();
 
     // constructing viewModel from sample model
     DefaultViewModel viewmodel(&model);
@@ -654,7 +654,7 @@ TEST_F(DefaultViewModelTest, vectorItemInJsonDocument)
 
 TEST_F(DefaultViewModelTest, vectorItemAsRootInJsonDocument)
 {
-    auto fileName = TestUtils::TestFileName(testDir(), "vectorItemInJsonDocument.json");
+    auto fileName = TestUtils::TestFileName(testDir(), "vectorItemAsRootInJsonDocument.json");
 
     SessionModel model;
     auto vectorItem = model.insertItem<VectorItem>();
