@@ -97,7 +97,7 @@ DataGroupItem* RealDataModel::addDataToCollection(RealDataStruct data_struct,
 void RealDataModel::removeAllDataFromCollection(DataCollectionItem* data_node)
 {
     for (auto item : data_node->children()) {
-        removeItem(item->parent(), item->parent()->tagRowOfItem(item));
+        removeDataFromCollection({item});
     }
 }
 

@@ -14,8 +14,8 @@
 #include "importlinefilter.h"
 #include "importlogic.h"
 
-#include <cmath>
 #include <chrono>
+#include <cmath>
 #include <map>
 #include <string>
 #include <vector>
@@ -64,8 +64,12 @@ std::vector<CreateTestFiles::FileInput> ImportLogicTest::generateFiles(char sepa
 {
     std::vector<CreateTestFiles::FileInput> file_inputs;
     for (int i = 0; i < 10; ++i) {
-        std::string path = "file_" + std::to_string(std::chrono::duration_cast<std::chrono::nanoseconds>
-              (std::chrono::high_resolution_clock::now().time_since_epoch()).count()) + ".txt";
+        std::string path =
+            "file_"
+            + std::to_string(std::chrono::duration_cast<std::chrono::nanoseconds>(
+                                 std::chrono::high_resolution_clock::now().time_since_epoch())
+                                 .count())
+            + ".txt";
         file_inputs.push_back(CreateTestFiles::writeDataFile(path, separator));
     }
     return file_inputs;
@@ -83,12 +87,6 @@ ImportLogicTest::getPaths(const std::vector<CreateTestFiles::FileInput>& file_in
 }
 
 ImportLogicTest::~ImportLogicTest() = default;
-
-//! Test default constructor
-TEST_F(ImportLogicTest, defaultContructor)
-{
-    CreateTestFiles::createSpaceCSVFile("SpaceTest.txt");
-}
 
 //! Test the add/remove filter
 TEST_F(ImportLogicTest, lineFilterAddRemoveTest)
@@ -171,6 +169,7 @@ TEST_F(ImportLogicTest, setFilesTest)
         file_inputs = generateFiles(it->second);
         import_logic.setFiles(getPaths(file_inputs));
         EXPECT_EQ(file_inputs.size(), import_logic.getFinalOutput().keys().size());
+        CreateTestFiles::removeFiles(file_inputs);
     }
 }
 
@@ -193,6 +192,8 @@ TEST_F(ImportLogicTest, lineFiltersHeaderTest)
         for (const auto& file_input : file_inputs) {
             EXPECT_EQ(file_input.header, import_logic.getHeader(i++));
         }
+
+        CreateTestFiles::removeFiles(file_inputs);
     }
 }
 
@@ -217,6 +218,7 @@ TEST_F(ImportLogicTest, lineFiltersDataTest)
         for (const auto& file_input : file_inputs) {
             EXPECT_EQ(file_input.data, import_logic.getData(i++));
         }
+        CreateTestFiles::removeFiles(file_inputs);
     }
 }
 
@@ -253,6 +255,7 @@ TEST_F(ImportLogicTest, totalFiltersResultTest)
                     stringToDouble(DataImportUtils::transpose(file_inputs[i].data).at(j + 1));
                 EXPECT_EQ(data, output_item->data(j));
             }
+            CreateTestFiles::removeFiles(file_inputs);
         }
     }
 }
