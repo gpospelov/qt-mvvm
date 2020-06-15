@@ -119,7 +119,7 @@ bool DataViewModel::dropMimeData(const QMimeData* data, Qt::DropAction action, i
         deserialize(data->data(QString::fromStdString(::Constants::RawDataMimeType)));
     for (auto id : identifiers) {
         auto item = sessionModel()->findItem(id.toStdString());
-        auto tag = item->parent()->tagRowOfItem(item).tag;
+        auto tag = item->tag();
         int row = std::clamp(
             requested_row, 0,
             sessionItemFromIndex(parent)->itemCount(sessionItemFromIndex(parent)->defaultTag())

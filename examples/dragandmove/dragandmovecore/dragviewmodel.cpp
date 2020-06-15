@@ -108,8 +108,7 @@ bool DragViewModel::dropMimeData(const QMimeData* data, Qt::DropAction action, i
         auto item = sessionModel()->findItem(id.toStdString());
 
         qDebug() << "going to move" << id << item << requested_row;
-        auto tag = item->parent()->tagRowOfItem(item).tag;
-        int row = std::clamp(requested_row, 0, item->parent()->itemCount(tag) - 1);
+        int row = std::clamp(requested_row, 0, item->parent()->itemCount(item->tag()) - 1);
         sessionModel()->moveItem(item, rootSessionItem(), {"", row});
     }
 
