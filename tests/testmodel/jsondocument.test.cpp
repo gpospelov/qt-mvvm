@@ -51,7 +51,7 @@ JsonDocumentTest::TestModel2::~TestModel2() = default;
 
 TEST_F(JsonDocumentTest, saveLoadSingleModel)
 {
-    auto fileName = TestUtils::TestFileName(testDir(), "model.json");
+    auto fileName = TestUtils::TestFileName(testDir(), "saveLoadSingleModel.json");
     SessionModel model("TestModel");
     JsonDocument document({&model});
 
@@ -106,9 +106,9 @@ TEST_F(JsonDocumentTest, saveLoadSingleModel)
 #include <iostream>
 TEST_F(JsonDocumentTest, saveLoadTwoModels)
 {
-    auto fileName = TestUtils::TestFileName(testDir(), "models.json");
+    auto fileName = TestUtils::TestFileName(testDir(), "saveLoadTwoModels.json");
     TestModel1 model1;
-    TestModel1 model2;
+    TestModel2 model2;
     JsonDocument document({&model1, &model2});
 
     std::cout << "aaaaa" << (&model1) << " " << (&model2) << std::endl;;
@@ -151,7 +151,7 @@ TEST_F(JsonDocumentTest, saveLoadTwoModels)
 
 TEST_F(JsonDocumentTest, loadModelsInWrongOrder)
 {
-    auto fileName = TestUtils::TestFileName(testDir(), "models.json");
+    auto fileName = TestUtils::TestFileName(testDir(), "loadModelsInWrongOrder.json");
     TestModel1 model1;
     TestModel2 model2;
 
