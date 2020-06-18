@@ -9,9 +9,11 @@
 
 #include "openprojectwidget.h"
 #include "styleutils.h"
+#include <mvvm/core/version.h>
 #include <QHBoxLayout>
 #include <QPushButton>
 #include <QVBoxLayout>
+#include <QLabel>
 
 OpenProjectWidget::OpenProjectWidget(QWidget* parent) : QWidget(parent)
 {
@@ -20,7 +22,10 @@ OpenProjectWidget::OpenProjectWidget(QWidget* parent) : QWidget(parent)
     setAutoFillBackground(true);
     setPalette(palette);
 
+    qDebug() << "xxx" << ModelView::ProjectVersion();
+
     auto layout = new QVBoxLayout(this);
+    layout->addWidget(new QLabel(QString::fromStdString(ModelView::ProjectVersion())));
     layout->addLayout(createButtonLayout());
     layout->addLayout(createTempButtonLayout());
 }
