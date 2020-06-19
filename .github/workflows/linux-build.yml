@@ -2,9 +2,9 @@ name: Linux
 
 on:
   push:
-    branches: [ master ]    
+    branches: [ master, develop ]    
   pull_request:
-    branches: [ master ]
+    branches: [ master, develop ]
 
 jobs:
   build:
@@ -17,13 +17,13 @@ jobs:
       with: 
         submodules: true    
 
-    - name: setup apt dependencies
+    - name: setup dependencies
       run: |
         sudo apt-get update
         sudo apt-get install -y build-essential cmake ccache \
           cmake qt5-default qttools5-dev libqt5svg5-dev libx11-xcb1
         
-    - name: Prepare ccache timestamp
+    - name: ccache timestamp
       id: ccache_cache_timestamp
       shell: cmake -P {0}
       run: |
@@ -38,7 +38,7 @@ jobs:
         restore-keys: |
           qtmvvm-ubuntu-ccache-
           
-    - name: make
+    - name: build
       env:
         CCACHE_DIR: $GITHUB_WORKSPACE/.ccache
         CCACHE_COMPRESS: "true"

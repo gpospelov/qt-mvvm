@@ -3,6 +3,7 @@
 [![Linux](https://github.com/gpospelov/qt-mvvm/workflows/Linux/badge.svg?branch=master)](https://github.com/gpospelov/qt-mvvm/actions?query=workflow%3ALinux)
 [![Windows](https://github.com/gpospelov/qt-mvvm/workflows/Windows/badge.svg?branch=master)](https://github.com/gpospelov/qt-mvvm/actions?query=workflow%3AWindows)
 [![Mac OS](https://github.com/gpospelov/qt-mvvm/workflows/MacOS/badge.svg?branch=master)](https://github.com/gpospelov/qt-mvvm/actions?query=workflow%3AMacOS)
+![version](https://img.shields.io/badge/version-0.1.0-blue)
 
 ## Overview
 

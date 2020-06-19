@@ -27,4 +27,8 @@ message(STATUS " Qt5 Includes  : ${Qt5Widgets_INCLUDE_DIRS}")
 configure_file(${CMAKE_SOURCE_DIR}/cmake/scripts/testconfig.h.in  ${BUILD_INC_DIR}/testconfig.h @ONLY)
 add_definitions(-I${BUILD_INC_DIR})
 
+if (MVVM_BUMP_VERSION)
+    configure_file(${CMAKE_SOURCE_DIR}/cmake/scripts/mvvm_version.h.in  ${CMAKE_SOURCE_DIR}/source/libmvvm_model/mvvm/core/version.h @ONLY)
+endif()
+
 add_compile_options($<$<CXX_COMPILER_ID:MSVC>:/MP>)

@@ -2,14 +2,12 @@ name: MacOS
 
 on:
   push:
-    branches: [ master ]    
+    branches: [ master, develop ]    
   pull_request:
-    branches: [ master ]
+    branches: [ master, develop ]
 
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
     runs-on: macos-latest
     strategy:
       max-parallel: 3
@@ -19,13 +17,13 @@ jobs:
       with: 
         submodules: true    
 
-    - name: setup dependencies
+    - name: dependencies
       run: |
         brew install cmake qt5 ccache
         echo "Qt5 is installed to"
         echo $QTDIR
         
-    - name: Prepare ccache timestamp
+    - name: ccache timestamp
       id: ccache_cache_timestamp
       shell: cmake -P {0}
       run: |
@@ -54,9 +52,7 @@ jobs:
         CPPFLAGS: "-I/usr/local/opt/qt/include"
       run: |
         echo 'export PATH="/usr/local/opt/qt/bin:$PATH"' >> /Users/runner/.bash_profile
-        cd $GITHUB_WORKSPACE
-        pwd
-        ls
+        cd $GITHUB_WORKSPACE && pwd && ls
         mkdir build && cd build
         cmake -DCMAKE_PREFIX_PATH=/usr/local/opt/qt \
           -DCMAKE_C_COMPILER_LAUNCHER=ccache \
@@ -71,7 +67,7 @@ jobs:
         ccache -s
         ctest -j4
 
-    - name: upload test logs
+    - name: ctest output
       uses: actions/upload-artifact@v2
       if: failure()
       with:

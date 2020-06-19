@@ -10,17 +10,15 @@
 #include "openprojectwidget.h"
 #include "styleutils.h"
 #include <QHBoxLayout>
+#include <QLabel>
 #include <QPushButton>
 #include <QVBoxLayout>
+#include <mvvm/core/version.h>
 
 OpenProjectWidget::OpenProjectWidget(QWidget* parent) : QWidget(parent)
 {
-    QPalette palette;
-    palette.setColor(QPalette::Window, Qt::darkBlue);
-    setAutoFillBackground(true);
-    setPalette(palette);
-
     auto layout = new QVBoxLayout(this);
+    layout->addWidget(new QLabel(QString::fromStdString(ModelView::ProjectVersion())));
     layout->addLayout(createButtonLayout());
     layout->addLayout(createTempButtonLayout());
 }
@@ -62,7 +60,7 @@ QBoxLayout* OpenProjectWidget::createButtonLayout()
 }
 
 //! Temporary layou for save and save-as buttons.
-QBoxLayout *OpenProjectWidget::createTempButtonLayout()
+QBoxLayout* OpenProjectWidget::createTempButtonLayout()
 {
     auto result = new QHBoxLayout;
 
@@ -86,5 +84,4 @@ QBoxLayout *OpenProjectWidget::createTempButtonLayout()
     result->addStretch(1);
 
     return result;
-
 }

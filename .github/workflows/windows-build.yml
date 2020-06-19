@@ -6,9 +6,9 @@ env:
 
 on:
   push:
-    branches: [ master ]    
+    branches: [ master, develop ]    
   pull_request:
-    branches: [ master ]
+    branches: [ master, develop ]
 
 jobs:
   build:
@@ -45,14 +45,14 @@ jobs:
         file(DOWNLOAD "${ninja_url}" ./ninja.zip SHOW_PROGRESS)
         execute_process(COMMAND ${CMAKE_COMMAND} -E tar xvf ./ninja.zip)
 
-    - name: Prepare ccache timestamp
+    - name: ccache timestamp
       id: ccache_cache_timestamp
       shell: cmake -P {0}
       run: |
         string(TIMESTAMP current_date "%Y-%m-%d-%H;%M;%S" UTC)
         message("::set-output name=timestamp::${current_date}")
         
-    - name: Prepare ccache files 
+    - name: ccache files 
       uses: actions/cache@v1.1.0
       with:
         path: .ccache
@@ -60,7 +60,7 @@ jobs:
         restore-keys: |
           qtmvvm-win-ccache-
           
-    - name: Build
+    - name: build
       shell: cmd
       env:
         CCACHE_BASEDIR: $GITHUB_WORKSPACE
@@ -81,7 +81,7 @@ jobs:
         ccache -p
         cmake --build . --config Release -j4
         
-    - name: Run functional tests
+    - name: ctest
       if: success()
       shell: cmd
       run: |
@@ -92,7 +92,7 @@ jobs:
         ccache -s
         ctest --output-on-failure
 
-    - name: Functional test output
+    - name: ctest output
       if: failure()
       shell: cmd
       run: |

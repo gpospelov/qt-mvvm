@@ -1,0 +1,51 @@
+// ************************************************************************** //
+//
+//  Model-view-view-model framework for large GUI applications
+//
+//! @license   GNU General Public License v3 or higher (see COPYING)
+//! @authors   see AUTHORS
+//
+// ************************************************************************** //
+
+#ifndef MVVM_CORE_VERSION_H
+#define MVVM_CORE_VERSION_H
+
+//! @file version.h
+//! Automatically generated from mvvm_version.h.in
+
+#include <string>
+
+namespace ModelView
+{
+
+//! Returns major project version.
+inline int ProjectVersionMajor()
+{
+    const int project_version_major = @PROJECT_VERSION_MAJOR@;
+    return project_version_major;
+}
+
+//! Returns minor project version.
+inline int ProjectVersionMinor()
+{
+    const int project_version_minor = @PROJECT_VERSION_MINOR@;
+    return project_version_minor;
+}
+
+//! Returns patch project version.
+inline int ProjectVersionPatch()
+{
+    const int project_version_path = @PROJECT_VERSION_PATCH@;
+    return project_version_path;
+}
+
+//! Returns project version string
+inline std::string ProjectVersion()
+{
+    const std::string project_version = "@PROJECT_VERSION@";
+    return project_version;
+}
+
+} // namespace ModelView
+
+#endif // MVVM_CORE_VERSION_H
