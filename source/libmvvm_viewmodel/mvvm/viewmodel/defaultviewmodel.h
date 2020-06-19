@@ -25,6 +25,7 @@ correspondence as in the original SessionModel.
 
 class CORE_EXPORT DefaultViewModel : public ViewModel
 {
+    Q_OBJECT
 public:
     DefaultViewModel(SessionModel* model, QObject* parent = nullptr);
 };
