@@ -7,5 +7,5 @@ add_subdirectory(model)
 add_subdirectory(editors)
 add_subdirectory(resources)
 
-target_link_libraries(${library_name} PUBLIC mvvm_viewmodel Qt5::Core Qt5::Gui Qt5::Widgets)
+target_link_libraries(${library_name} PUBLIC mvvm_view Qt5::Core Qt5::Gui Qt5::Widgets)
 

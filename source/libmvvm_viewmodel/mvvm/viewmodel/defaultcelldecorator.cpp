@@ -13,7 +13,7 @@
 #include <mvvm/model/customvariants.h>
 #include <mvvm/model/externalproperty.h>
 #include <mvvm/viewmodel/defaultcelldecorator.h>
-#include <mvvm/widgets/scientificspinbox.h>
+#include <mvvm/editors/scientificspinbox.h>
 
 using namespace ModelView;
 

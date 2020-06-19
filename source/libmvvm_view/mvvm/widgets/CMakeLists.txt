@@ -1,4 +1,4 @@
-target_sources(mvvm_viewmodel PRIVATE
+target_sources(${library_name} PRIVATE
     allitemstreeview.cpp
     allitemstreeview.h
     itemstreeview.cpp
@@ -10,8 +10,6 @@ target_sources(mvvm_viewmodel PRIVATE
     propertyflatview.h
     propertytreeview.cpp
     propertytreeview.h
-    scientificspinbox.cpp
-    scientificspinbox.h
     standardtreeviews.h
     statuslabel.cpp
     statuslabel.h

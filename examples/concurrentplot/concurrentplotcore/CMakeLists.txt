@@ -2,7 +2,7 @@
 set(library_name concurrentplotcore)
 
 add_library(${library_name} STATIC "")
-target_link_libraries(${library_name} PRIVATE mvvm_viewmodel)
+target_link_libraries(${library_name} PRIVATE mvvm_view)
 
 target_sources(${library_name} PRIVATE
     graphmodel.cpp

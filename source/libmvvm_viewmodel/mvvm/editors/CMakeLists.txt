@@ -24,6 +24,8 @@ target_sources(mvvm_viewmodel PRIVATE
     integereditor.h
     scientificdoubleeditor.cpp
     scientificdoubleeditor.h
+    scientificspinbox.cpp
+    scientificspinbox.h
     scientificspinboxeditor.cpp
     scientificspinboxeditor.h
     styleutils.cpp
