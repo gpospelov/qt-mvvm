@@ -9,7 +9,7 @@
 
 #include "layerelementitem.h"
 
-#include <mvvm/core/modeldocuments.h>
+#include <mvvm/factories/modeldocuments.h>
 #include <mvvm/model/externalproperty.h>
 #include <mvvm/model/itemcatalogue.h>
 #include <mvvm/utils/numericutils.h>

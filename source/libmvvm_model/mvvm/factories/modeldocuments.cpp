@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/core/modeldocuments.h>
+#include <mvvm/factories/modeldocuments.h>
 #include <mvvm/serialization/jsondocument.h>
 
 namespace ModelView

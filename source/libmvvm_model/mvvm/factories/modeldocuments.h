@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_CORE_MODELDOCUMENTS_H
-#define MVVM_CORE_MODELDOCUMENTS_H
+#ifndef MVVM_FACTORIES_MODELDOCUMENTS_H
+#define MVVM_FACTORIES_MODELDOCUMENTS_H
 
 #include <initializer_list>
 #include <memory>
@@ -26,4 +26,4 @@ CreateJsonDocument(std::initializer_list<SessionModel*> models);
 
 } // namespace ModelView
 
-#endif // MVVM_CORE_MODELDOCUMENTINTERFACE_H
+#endif // MVVM_FACTORIES_MODELDOCUMENTS_H

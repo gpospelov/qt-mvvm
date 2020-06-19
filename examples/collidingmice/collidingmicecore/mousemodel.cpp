@@ -12,7 +12,7 @@
 #include <QUndoStack>
 #include <algorithm>
 #include <cmath>
-#include <mvvm/core/modeldocuments.h>
+#include <mvvm/factories/modeldocuments.h>
 #include <mvvm/model/itemcatalogue.h>
 #include <mvvm/utils/reallimits.h>
 #include <mvvm/widgets/widgetutils.h>
