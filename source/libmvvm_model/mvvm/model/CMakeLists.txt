@@ -1,4 +1,4 @@
-target_sources(mvvm_model PRIVATE
+target_sources(${library_name} PRIVATE
     comboproperty.cpp
     comboproperty.h
     comparators.cpp

@@ -1,4 +1,4 @@
-target_sources(collidingmice PRIVATE
+target_sources(${executable_name} PRIVATE
     mainwindow.h
     mainwindow.cpp
     mouse.h
