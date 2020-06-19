@@ -20,6 +20,7 @@ namespace ModelView
 
 class CORE_EXPORT PropertyFlatViewModel : public ViewModel
 {
+    Q_OBJECT
 public:
     PropertyFlatViewModel(SessionModel* model, QObject* parent = nullptr);
 };

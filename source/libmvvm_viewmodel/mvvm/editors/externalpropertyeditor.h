@@ -25,6 +25,8 @@ class LostFocusFilter;
 
 class CORE_EXPORT ExternalPropertyEditor : public CustomEditor
 {
+    Q_OBJECT
+
 public:
     explicit ExternalPropertyEditor(QWidget* parent = nullptr);
 

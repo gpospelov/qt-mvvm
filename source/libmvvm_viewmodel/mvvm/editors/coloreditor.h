@@ -23,6 +23,8 @@ class LostFocusFilter;
 
 class CORE_EXPORT ColorEditor : public CustomEditor
 {
+    Q_OBJECT
+
 public:
     explicit ColorEditor(QWidget* parent = nullptr);
 

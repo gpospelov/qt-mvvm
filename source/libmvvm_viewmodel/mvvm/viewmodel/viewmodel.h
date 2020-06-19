@@ -24,6 +24,8 @@ class ViewModelController;
 
 class CORE_EXPORT ViewModel : public ViewModelBase
 {
+    Q_OBJECT
+
 public:
     ViewModel(std::unique_ptr<ViewModelController> controller, QObject* parent = nullptr);
     ~ViewModel() override;

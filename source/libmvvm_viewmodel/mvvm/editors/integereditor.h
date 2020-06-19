@@ -21,6 +21,8 @@ namespace ModelView
 
 class CORE_EXPORT IntegerEditor : public CustomEditor
 {
+    Q_OBJECT
+
 public:
     explicit IntegerEditor(QWidget* parent = nullptr);
 

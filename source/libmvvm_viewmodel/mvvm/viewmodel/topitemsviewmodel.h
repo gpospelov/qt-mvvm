@@ -28,6 +28,7 @@ All property items (i.e. "thickness", "color" etc) will be filtered out, top lev
 
 class CORE_EXPORT TopItemsViewModel : public ViewModel
 {
+    Q_OBJECT
 public:
     TopItemsViewModel(SessionModel* model, QObject* parent = nullptr);
 };

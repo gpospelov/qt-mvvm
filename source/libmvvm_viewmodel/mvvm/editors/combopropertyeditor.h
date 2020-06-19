@@ -21,6 +21,8 @@ namespace ModelView
 
 class CORE_EXPORT ComboPropertyEditor : public CustomEditor
 {
+    Q_OBJECT
+
 public:
     explicit ComboPropertyEditor(QWidget* parent = nullptr);
 

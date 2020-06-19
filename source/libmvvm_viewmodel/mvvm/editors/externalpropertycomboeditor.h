@@ -27,6 +27,8 @@ class ExternalProperty;
 
 class CORE_EXPORT ExternalPropertyComboEditor : public ModelView::CustomEditor
 {
+    Q_OBJECT
+
 public:
     using callback_t = std::function<std::vector<ModelView::ExternalProperty>()>;
     ExternalPropertyComboEditor(callback_t callback, QWidget* parent = nullptr);

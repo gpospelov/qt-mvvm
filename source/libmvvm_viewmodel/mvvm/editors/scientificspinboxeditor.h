@@ -21,6 +21,8 @@ class ScientificSpinBox;
 
 class CORE_EXPORT ScientificSpinBoxEditor : public CustomEditor
 {
+    Q_OBJECT
+
 public:
     explicit ScientificSpinBoxEditor(QWidget* parent = nullptr);
 

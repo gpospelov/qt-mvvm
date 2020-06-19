@@ -21,6 +21,8 @@ namespace ModelView
 
 class CORE_EXPORT DoubleEditor : public CustomEditor
 {
+    Q_OBJECT
+
 public:
     explicit DoubleEditor(QWidget* parent = nullptr);
 
