@@ -7,11 +7,11 @@
 //
 // ************************************************************************** //
 
-#ifndef SCRIPTS_MVVM_VERSION_H
-#define SCRIPTS_MVVM_VERSION_H
+#ifndef MVVM_CORE_VERSION_H
+#define MVVM_CORE_VERSION_H
 
-//! @file mvvm_version.h
-//! Automatically generated in <builddir>/inc from mvvm_version.h.in
+//! @file version.h
+//! Automatically generated from mvvm_version.h.in
 
 #include <string>
 
@@ -48,4 +48,4 @@ inline std::string ProjectVersion()
 
 } // namespace ModelView
 
-#endif // BAVERSION_H
+#endif // MVVM_CORE_VERSION_H
