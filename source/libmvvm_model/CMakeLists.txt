@@ -4,7 +4,7 @@ add_library(${library_name} SHARED "")
 
 add_subdirectory(mvvm)
 
-target_link_libraries(${library_name} PUBLIC Qt5::Widgets Threads::Threads PRIVATE qcustomplot)
+target_link_libraries(${library_name} PUBLIC Qt5::Widgets Threads::Threads)
 
 target_include_directories(${library_name} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>)
 
