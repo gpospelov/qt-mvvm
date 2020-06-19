@@ -12,7 +12,7 @@
 
 #include <initializer_list>
 #include <memory>
-#include <mvvm/core/modeldocumentinterface.h>
+#include <mvvm/interfaces/modeldocumentinterface.h>
 
 namespace ModelView
 {
