@@ -24,6 +24,8 @@ class CellDecoratorInterface;
 
 class CORE_EXPORT ViewModelDelegate : public QStyledItemDelegate
 {
+    Q_OBJECT
+
 public:
     explicit ViewModelDelegate(QObject* parent = nullptr);
     ~ViewModelDelegate() override;

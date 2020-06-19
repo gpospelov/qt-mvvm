@@ -1,6 +1,9 @@
 # Library: mvvm_viewmodel
 
 set(library_name mvvm_viewmodel)
+
+set(CMAKE_AUTOMOC ON)
+
 add_library(${library_name} SHARED "")
 
 add_subdirectory(mvvm)

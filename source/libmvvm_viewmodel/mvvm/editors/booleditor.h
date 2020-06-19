@@ -21,6 +21,8 @@ namespace ModelView
 
 class CORE_EXPORT BoolEditor : public CustomEditor
 {
+    Q_OBJECT
+
 public:
     explicit BoolEditor(QWidget* parent = nullptr);
 
