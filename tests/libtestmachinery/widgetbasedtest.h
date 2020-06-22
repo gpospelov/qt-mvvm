@@ -20,9 +20,10 @@ class WidgetBasedTest : public ::testing::Test
 {
 public:
     WidgetBasedTest();
-    ~WidgetBasedTest();
 
     static void SetUpTestSuite();
+
+    static void TearDownTestSuite();
 
 protected:
     static QApplication* m_app;

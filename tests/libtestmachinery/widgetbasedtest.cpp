@@ -22,12 +22,13 @@ int argc = 1;
 
 WidgetBasedTest::WidgetBasedTest() {}
 
-WidgetBasedTest::~WidgetBasedTest()
-{
-    delete m_app;
-}
-
 void WidgetBasedTest::SetUpTestSuite()
 {
     m_app = new QApplication(argc, argv);
+}
+
+void WidgetBasedTest::TearDownTestSuite()
+{
+    delete m_app;
+    m_app = 0;
 }
