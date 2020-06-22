@@ -10,7 +10,7 @@
 #ifndef MVVM_MODEL_SESSIONITEMDATA_H
 #define MVVM_MODEL_SESSIONITEMDATA_H
 
-#include <mvvm/core/export.h>
+#include <mvvm_model_export.h>
 #include <mvvm/model/datarole.h>
 #include <vector>
 
@@ -19,7 +19,7 @@ namespace ModelView
 
 //! Handles data roles for SessionItem.
 
-class CORE_EXPORT SessionItemData
+class MVVM_MODEL_EXPORT SessionItemData
 {
 public:
     using container_type = std::vector<DataRole>;

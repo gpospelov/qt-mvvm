@@ -25,7 +25,7 @@ Includes coordinates of mouse pointer in viewport axes coordinates, add bins inf
 QCPColorMap beneath.
 */
 
-class CORE_EXPORT ColorMapInfoFormatter : public StatusStringFormatterInterface
+class MVVM_VIEW_EXPORT ColorMapInfoFormatter : public StatusStringFormatterInterface
 {
 public:
     //! Returns status string representing data in color map.

@@ -21,7 +21,7 @@ class ItemFactoryInterface;
 
 //! Provide SessionItem copying using json based strategy.
 
-class CORE_EXPORT JsonItemCopyStrategy : public ItemCopyStrategy
+class MVVM_MODEL_EXPORT JsonItemCopyStrategy : public ItemCopyStrategy
 {
 public:
     JsonItemCopyStrategy(const ItemFactoryInterface* item_factory);

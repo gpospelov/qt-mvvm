@@ -13,7 +13,7 @@
 #include <QUndoStack>
 #include <memory>
 #include <mvvm/commands/commandadapter.h>
-#include <mvvm/core/export.h>
+#include <mvvm_model_export.h>
 #include <mvvm/model/function_types.h>
 
 class QUndoCommand;
@@ -28,7 +28,7 @@ class TagRow;
 
 //! Provides undo/redo for all commands of SessionModel.
 
-class CORE_EXPORT CommandService
+class MVVM_MODEL_EXPORT CommandService
 {
 public:
     CommandService(SessionModel* model);

@@ -12,7 +12,7 @@
 
 #include <QWidget>
 #include <memory>
-#include <mvvm/core/export.h>
+#include <mvvm_view_export.h>
 
 namespace ModelView
 {
@@ -27,7 +27,7 @@ class SceneAdapterInterface;
 Contains embedded QCustomPlot widget, shows content of ColorMapViewportItem.
 */
 
-class CORE_EXPORT ColorMapCanvas : public QWidget
+class MVVM_VIEW_EXPORT ColorMapCanvas : public QWidget
 {
 public:
     explicit ColorMapCanvas(QWidget* parent = nullptr);

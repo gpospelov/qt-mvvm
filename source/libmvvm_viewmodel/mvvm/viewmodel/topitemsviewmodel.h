@@ -26,7 +26,7 @@ All property items (i.e. "thickness", "color" etc) will be filtered out, top lev
 //!
 //! Only top level items are shown, all property items are filtered out.
 
-class CORE_EXPORT TopItemsViewModel : public ViewModel
+class MVVM_VIEWMODEL_EXPORT TopItemsViewModel : public ViewModel
 {
     Q_OBJECT
 public:

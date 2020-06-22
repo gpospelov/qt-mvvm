@@ -26,7 +26,7 @@ Values are stored in Data2DItem itself, axes are attached as children. Correspon
 properties will be served by ColorMapItem.
 */
 
-class CORE_EXPORT Data2DItem : public CompoundItem
+class MVVM_MODEL_EXPORT Data2DItem : public CompoundItem
 {
 public:
     static inline const std::string T_XAXIS = "T_XAXIS";

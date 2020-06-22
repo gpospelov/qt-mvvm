@@ -20,7 +20,7 @@ class TagRow;
 
 //! Command for unddo/redo framework to remove item from a model using child's tag and row.
 
-class CORE_EXPORT RemoveItemCommand : public AbstractItemCommand
+class MVVM_MODEL_EXPORT RemoveItemCommand : public AbstractItemCommand
 {
 public:
     using result_t = bool;

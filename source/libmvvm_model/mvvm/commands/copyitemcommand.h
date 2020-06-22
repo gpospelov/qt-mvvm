@@ -20,7 +20,7 @@ class TagRow;
 
 //! Command to copy an item.
 
-class CORE_EXPORT CopyItemCommand : public AbstractItemCommand
+class MVVM_MODEL_EXPORT CopyItemCommand : public AbstractItemCommand
 {
 public:
     using result_t = SessionItem*;

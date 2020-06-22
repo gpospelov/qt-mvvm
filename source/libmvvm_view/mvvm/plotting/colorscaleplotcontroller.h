@@ -12,6 +12,7 @@
 
 #include <memory>
 #include <mvvm/signals/itemlistener.h>
+#include <mvvm_view_export.h>
 
 class QCPColorScale;
 
@@ -25,7 +26,7 @@ class ViewportAxisItem;
 @brief Establishes communication between QCPColorScale and ViewportAxisItem.
 */
 
-class CORE_EXPORT ColorScalePlotController : public ItemListener<ViewportAxisItem>
+class MVVM_VIEW_EXPORT ColorScalePlotController : public ItemListener<ViewportAxisItem>
 {
 public:
     explicit ColorScalePlotController(QCPColorScale* color_scale);

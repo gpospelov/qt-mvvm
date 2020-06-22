@@ -12,7 +12,7 @@
 
 #include <QVariant>
 #include <memory>
-#include <mvvm/core/export.h>
+#include <mvvm_viewmodel_export.h>
 #include <vector>
 
 namespace ModelView
@@ -22,7 +22,7 @@ class SessionItem;
 
 //! Represents the view of SessionItem's data in single cell of ViewModel.
 
-class CORE_EXPORT ViewItem
+class MVVM_VIEWMODEL_EXPORT ViewItem
 {
 public:
     virtual ~ViewItem();

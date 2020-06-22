@@ -12,7 +12,7 @@
 
 #include <functional>
 #include <memory>
-#include <mvvm/core/export.h>
+#include <mvvm_view_export.h>
 
 class QCustomPlot;
 
@@ -29,7 +29,7 @@ Notifies client about mouse moves and corresponding pointer coordinates expresse
 at current zoom level.
 */
 
-class CORE_EXPORT MouseMoveReporter
+class MVVM_VIEW_EXPORT MouseMoveReporter
 {
 public:
     using callback_t = std::function<void(const MousePosInfo& pos_info)>;

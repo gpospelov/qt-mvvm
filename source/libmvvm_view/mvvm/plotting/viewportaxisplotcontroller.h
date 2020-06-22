@@ -12,6 +12,7 @@
 
 #include <memory>
 #include <mvvm/signals/itemlistener.h>
+#include <mvvm_view_export.h>
 
 class QCPAxis;
 
@@ -27,7 +28,7 @@ class ViewportAxisItem;
 Provide mutual update of axis parameters (min, max, title) for two axes representations.
 */
 
-class CORE_EXPORT ViewportAxisPlotController : public ItemListener<ViewportAxisItem>
+class MVVM_VIEW_EXPORT ViewportAxisPlotController : public ItemListener<ViewportAxisItem>
 {
 public:
     explicit ViewportAxisPlotController(QCPAxis* axis);

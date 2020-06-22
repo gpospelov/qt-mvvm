@@ -11,12 +11,12 @@
 #define MVVM_WIDGETS_SCIENTIFICSPINBOX_H
 
 #include <QAbstractSpinBox>
-#include <mvvm/core/export.h>
+#include <mvvm_viewmodel_export.h>
 
 namespace ModelView
 {
 
-class CORE_EXPORT ScientificSpinBox : public QAbstractSpinBox
+class MVVM_VIEWMODEL_EXPORT ScientificSpinBox : public QAbstractSpinBox
 {
     Q_OBJECT
 

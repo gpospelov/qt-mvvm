@@ -19,7 +19,7 @@ class SessionItem;
 
 //! Represents root item.
 
-class CORE_EXPORT RootViewItem : public ViewItem
+class MVVM_VIEWMODEL_EXPORT RootViewItem : public ViewItem
 {
 public:
     explicit RootViewItem(SessionItem* item);
@@ -27,7 +27,7 @@ public:
 
 //! Represents empty cell of tree or table.
 
-class CORE_EXPORT ViewEmptyItem : public ViewItem
+class MVVM_VIEWMODEL_EXPORT ViewEmptyItem : public ViewItem
 {
 public:
     ViewEmptyItem();
@@ -36,7 +36,7 @@ public:
 
 //! Represents display name of SessionItem in any cell of Qt's trees and tables.
 
-class CORE_EXPORT ViewLabelItem : public ViewItem
+class MVVM_VIEWMODEL_EXPORT ViewLabelItem : public ViewItem
 {
 public:
     explicit ViewLabelItem(SessionItem* item);
@@ -46,7 +46,7 @@ public:
 
 //! Represents data role of SessionItem in any cell of Qt's trees and tables.
 
-class CORE_EXPORT ViewDataItem : public ViewItem
+class MVVM_VIEWMODEL_EXPORT ViewDataItem : public ViewItem
 {
 public:
     explicit ViewDataItem(SessionItem* item);

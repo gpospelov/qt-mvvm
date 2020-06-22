@@ -22,7 +22,7 @@ class SessionItem;
 //! Constructs row of QStandardItem's for given SessionItem.
 //! Row consists of columns with all PropertyItem's of given SessionItem.
 
-class CORE_EXPORT PropertiesRowStrategy : public RowStrategyInterface
+class MVVM_VIEWMODEL_EXPORT PropertiesRowStrategy : public RowStrategyInterface
 {
 public:
     PropertiesRowStrategy(std::vector<std::string> labels = {});

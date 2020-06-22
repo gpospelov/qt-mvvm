@@ -25,7 +25,7 @@ Contains plot properties (i.e. color, line type etc) and link to Data1DItem, whi
 actual data to plot. GraphItem is intended for plotting only via GraphViewportItem.
 */
 
-class CORE_EXPORT GraphItem : public CompoundItem
+class MVVM_MODEL_EXPORT GraphItem : public CompoundItem
 {
 public:
     static inline const std::string P_LINK = "P_LINK";

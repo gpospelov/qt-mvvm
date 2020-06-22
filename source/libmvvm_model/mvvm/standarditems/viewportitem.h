@@ -24,7 +24,7 @@ class ViewportAxisItem;
 Used to define x,y axis for graphs and 2d colormaps, intended for use in QCustomPlot context.
 */
 
-class CORE_EXPORT ViewportItem : public CompoundItem
+class MVVM_MODEL_EXPORT ViewportItem : public CompoundItem
 {
 public:
     static inline const std::string P_XAXIS = "P_XAXIS";

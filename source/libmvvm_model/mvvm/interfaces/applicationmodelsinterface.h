@@ -10,7 +10,7 @@
 #ifndef MVVM_INTERFACES_APPLICATIONMODELSINTERFACE_H
 #define MVVM_INTERFACES_APPLICATIONMODELSINTERFACE_H
 
-#include <mvvm/core/export.h>
+#include <mvvm_model_export.h>
 #include <vector>
 
 namespace ModelView
@@ -21,7 +21,7 @@ class SessionModel;
 //! Interface to access application's model list for further manipulation.
 //! Used in the context of save/load projects.
 
-class CORE_EXPORT ApplicationModelsInterface
+class MVVM_MODEL_EXPORT ApplicationModelsInterface
 {
 public:
     //! Returns vector of models intended for saving on disk.

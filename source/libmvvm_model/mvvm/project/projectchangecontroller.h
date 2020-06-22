@@ -12,7 +12,7 @@
 
 #include <functional>
 #include <memory>
-#include <mvvm/core/export.h>
+#include <mvvm_model_export.h>
 #include <vector>
 
 namespace ModelView
@@ -29,7 +29,7 @@ class ModelHasChangedController;
 //! To avoid extra signaling while being in already "changed" mode, the controller reports only
 //! once.
 
-class CORE_EXPORT ProjectChangedController
+class MVVM_MODEL_EXPORT ProjectChangedController
 {
 public:
     using callback_t = std::function<void()>;

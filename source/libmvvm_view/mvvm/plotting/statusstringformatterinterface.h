@@ -10,7 +10,7 @@
 #ifndef MVVM_PLOTTING_STATUSSTRINGFORMATTERINTERFACE_H
 #define MVVM_PLOTTING_STATUSSTRINGFORMATTERINTERFACE_H
 
-#include <mvvm/core/export.h>
+#include <mvvm_view_export.h>
 #include <string>
 
 class QCustomPlot;
@@ -24,7 +24,7 @@ namespace ModelView
 position on QCustomPlot.
 */
 
-class CORE_EXPORT StatusStringFormatterInterface
+class MVVM_VIEW_EXPORT StatusStringFormatterInterface
 {
 public:
     virtual ~StatusStringFormatterInterface() = default;

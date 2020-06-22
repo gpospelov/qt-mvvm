@@ -11,7 +11,7 @@
 #define MVVM_WIDGETS_STATUSLABEL_H
 
 #include <QFrame>
-#include <mvvm/core/export.h>
+#include <mvvm_view_export.h>
 
 class QPaintEvent;
 
@@ -26,7 +26,7 @@ Opposite to QLabel, doesn't trigger layout resize, being happy with place it has
 is too long for current size, it will be clipped.
 */
 
-class CORE_EXPORT StatusLabel : public QFrame
+class MVVM_VIEW_EXPORT StatusLabel : public QFrame
 {
     Q_OBJECT
 

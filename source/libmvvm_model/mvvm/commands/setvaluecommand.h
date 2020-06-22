@@ -21,7 +21,7 @@ class SessionItem;
 
 //! Command for unddo/redo framework to set the data of SessionItem.
 
-class CORE_EXPORT SetValueCommand : public AbstractItemCommand
+class MVVM_MODEL_EXPORT SetValueCommand : public AbstractItemCommand
 {
 public:
     using result_t = bool;

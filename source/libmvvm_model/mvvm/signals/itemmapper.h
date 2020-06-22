@@ -24,7 +24,7 @@ class SessionModel;
 //! signals which are related to given item. Notifies all interested subscribers about things
 //! going with given item and its relatives.
 
-class CORE_EXPORT ItemMapper
+class MVVM_MODEL_EXPORT ItemMapper
 {
     friend class SessionItem;
 

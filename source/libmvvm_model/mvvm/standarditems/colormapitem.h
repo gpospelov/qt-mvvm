@@ -25,7 +25,7 @@ Contains plot properties (i.e. color, gradient etc) and link to Data2DItem, whic
 actual data to plot. ColorMapItem is intended for plotting only via ColorMapViewportItem.
 */
 
-class CORE_EXPORT ColorMapItem : public CompoundItem
+class MVVM_MODEL_EXPORT ColorMapItem : public CompoundItem
 {
 public:
     static inline const std::string P_LINK = "P_LINK";

@@ -22,7 +22,7 @@ class SessionModel;
 @brief Widget holding standard QTreeView and intended for displaying all items of SessionModel.
 */
 
-class CORE_EXPORT AllItemsTreeView : public ItemsTreeView
+class MVVM_VIEW_EXPORT AllItemsTreeView : public ItemsTreeView
 {
     Q_OBJECT
 public:

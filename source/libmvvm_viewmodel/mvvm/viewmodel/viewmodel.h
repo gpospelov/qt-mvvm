@@ -22,7 +22,7 @@ class ViewModelController;
 
 //! Main class to represent content of SessionModel in Qt's trees and tables.
 
-class CORE_EXPORT ViewModel : public ViewModelBase
+class MVVM_VIEWMODEL_EXPORT ViewModel : public ViewModelBase
 {
     Q_OBJECT
 

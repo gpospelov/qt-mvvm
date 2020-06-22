@@ -10,7 +10,7 @@
 #ifndef MVVM_MODEL_TAGINFO_H
 #define MVVM_MODEL_TAGINFO_H
 
-#include <mvvm/core/export.h>
+#include <mvvm_model_export.h>
 #include <string>
 #include <vector>
 
@@ -19,7 +19,7 @@ namespace ModelView
 
 //! Holds info about single tag for SessionItem.
 
-class CORE_EXPORT TagInfo
+class MVVM_MODEL_EXPORT TagInfo
 {
 public:
     TagInfo();

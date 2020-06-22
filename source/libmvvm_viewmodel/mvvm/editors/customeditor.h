@@ -12,14 +12,14 @@
 
 #include <QVariant>
 #include <QWidget>
-#include <mvvm/core/export.h>
+#include <mvvm_viewmodel_export.h>
 
 namespace ModelView
 {
 
 //! Base class for all custom variant editors.
 
-class CORE_EXPORT CustomEditor : public QWidget
+class MVVM_VIEWMODEL_EXPORT CustomEditor : public QWidget
 {
     Q_OBJECT
     Q_PROPERTY(QVariant value MEMBER m_data READ data WRITE setData NOTIFY dataChanged USER true)

@@ -19,7 +19,7 @@ namespace ModelView
 
 //! Custom editor for QVariant based on double with possibility to set limits.
 
-class CORE_EXPORT DoubleEditor : public CustomEditor
+class MVVM_VIEWMODEL_EXPORT DoubleEditor : public CustomEditor
 {
     Q_OBJECT
 

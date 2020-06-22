@@ -10,7 +10,7 @@
 #ifndef MVVM_MODEL_UNIQUEIDGENERATOR_H
 #define MVVM_MODEL_UNIQUEIDGENERATOR_H
 
-#include <mvvm/core/export.h>
+#include <mvvm_model_export.h>
 #include <mvvm/core/types.h>
 
 namespace ModelView
@@ -26,7 +26,7 @@ generated during dynamic session. For the moment though, we rely on zero-probabi
 such event.
 */
 
-class CORE_EXPORT UniqueIdGenerator
+class MVVM_MODEL_EXPORT UniqueIdGenerator
 {
 public:
     static identifier_type generate();

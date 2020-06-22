@@ -11,7 +11,7 @@
 #define MVVM_VIEWMODEL_REFVIEWMODELCONTROLLER_H
 
 #include <memory>
-#include <mvvm/core/export.h>
+#include <mvvm_viewmodel_export.h>
 #include <mvvm/model/tagrow.h>
 #include <vector>
 #include <QStringList>
@@ -33,7 +33,7 @@ class RowStrategyInterface;
 @brief Propagates changes from SessionModel to its ViewModelBase.
 */
 
-class CORE_EXPORT ViewModelController
+class MVVM_VIEWMODEL_EXPORT ViewModelController
 {
 public:
     ViewModelController(SessionModel* session_model, ViewModelBase* view_model);

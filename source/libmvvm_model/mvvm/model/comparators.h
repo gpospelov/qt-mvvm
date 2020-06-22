@@ -10,14 +10,14 @@
 #ifndef MVVM_MODEL_COMPARATORS_H
 #define MVVM_MODEL_COMPARATORS_H
 
-#include <mvvm/core/export.h>
+#include <mvvm_model_export.h>
 
 namespace ModelView
 {
 
 //! Helper class to register variant comparators.
 
-class CORE_EXPORT Comparators
+class MVVM_MODEL_EXPORT Comparators
 {
 public:
     static void registerComparators();

@@ -11,7 +11,7 @@
 #define MVVM_EDITORS_EDITORFACTORYINTERFACE_H
 
 #include <memory>
-#include <mvvm/core/export.h>
+#include <mvvm_viewmodel_export.h>
 #include <string>
 
 class QModelIndex;
@@ -25,7 +25,7 @@ class CustomEditor;
 //! Interface for custom editor factory.
 //! Intended for editor construction in cells of tables and trees in the context of delegate.
 
-class CORE_EXPORT EditorFactoryInterface
+class MVVM_VIEWMODEL_EXPORT EditorFactoryInterface
 {
 public:
     virtual ~EditorFactoryInterface() = default;

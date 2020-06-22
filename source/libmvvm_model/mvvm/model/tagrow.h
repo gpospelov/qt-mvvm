@@ -10,7 +10,7 @@
 #ifndef MVVM_MODEL_TAGROW_H
 #define MVVM_MODEL_TAGROW_H
 
-#include <mvvm/core/export.h>
+#include <mvvm_model_export.h>
 #include <string>
 
 namespace ModelView
@@ -18,7 +18,7 @@ namespace ModelView
 
 //! Aggregate to hold (tag, row) information for SessionModel.
 
-class CORE_EXPORT TagRow
+class MVVM_MODEL_EXPORT TagRow
 {
 public:
     std::string tag = {};

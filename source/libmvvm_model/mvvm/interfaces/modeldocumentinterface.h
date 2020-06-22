@@ -10,7 +10,7 @@
 #ifndef MVVM_CORE_MODELDOCUMENTINTERFACE_H
 #define MVVM_CORE_MODELDOCUMENTINTERFACE_H
 
-#include <mvvm/core/export.h>
+#include <mvvm_model_export.h>
 #include <string>
 
 namespace ModelView
@@ -24,7 +24,7 @@ Single ModelDocument corresponds to a single file on disk. It can contain arbitr
 of models.
 */
 
-class CORE_EXPORT ModelDocumentInterface
+class MVVM_MODEL_EXPORT ModelDocumentInterface
 {
 public:
     virtual ~ModelDocumentInterface() = default;

@@ -12,7 +12,7 @@
 
 #include <QVariant>
 #include <memory>
-#include <mvvm/core/export.h>
+#include <mvvm_model_export.h>
 #include <mvvm/model/customvariants.h>
 #include <mvvm/model/mvvm_types.h>
 #include <mvvm/model/tagrow.h>
@@ -28,7 +28,7 @@ class SessionModel;
 class TagInfo;
 class ItemMapper;
 
-class CORE_EXPORT SessionItem
+class MVVM_MODEL_EXPORT SessionItem
 {
 public:
     explicit SessionItem(model_type modelType = Constants::BaseType);

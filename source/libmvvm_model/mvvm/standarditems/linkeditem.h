@@ -24,7 +24,7 @@ Identifier of linked item is stored as DataRole on board of LinkedItem and can b
 to find corresponding item via SessionModel::findItem machinery.
 */
 
-class CORE_EXPORT LinkedItem : public SessionItem
+class MVVM_MODEL_EXPORT LinkedItem : public SessionItem
 {
 public:
     LinkedItem();

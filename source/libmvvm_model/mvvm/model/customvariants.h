@@ -15,7 +15,7 @@
 
 #include <QMetaType>
 #include <QVariant>
-#include <mvvm/core/export.h>
+#include <mvvm_model_export.h>
 #include <mvvm/utils/reallimits.h>
 #include <string>
 #include <vector>
@@ -26,49 +26,49 @@ namespace Utils
 {
 
 //! Returns name of variant.
-CORE_EXPORT std::string VariantName(const QVariant& variant);
+MVVM_MODEL_EXPORT std::string VariantName(const QVariant& variant);
 
 //! Returns type of variant (additionally checks for user type).
-CORE_EXPORT int VariantType(const QVariant& variant);
+MVVM_MODEL_EXPORT int VariantType(const QVariant& variant);
 
 //! Returns true if variants has compatible types.
-CORE_EXPORT bool CompatibleVariantTypes(const QVariant& oldValue, const QVariant& newValue);
+MVVM_MODEL_EXPORT bool CompatibleVariantTypes(const QVariant& oldValue, const QVariant& newValue);
 
 //! Returns true if given variants have same type and value.
-CORE_EXPORT bool IsTheSame(const QVariant& var1, const QVariant& var2);
+MVVM_MODEL_EXPORT bool IsTheSame(const QVariant& var1, const QVariant& var2);
 
 //! Converts custom variant to standard variant which Qt views will understand.
-CORE_EXPORT QVariant toQtVariant(const QVariant& custom);
+MVVM_MODEL_EXPORT QVariant toQtVariant(const QVariant& custom);
 
 //! Converts Qt variant to custom variant on board of SessionItem.
-CORE_EXPORT QVariant toCustomVariant(const QVariant& standard);
+MVVM_MODEL_EXPORT QVariant toCustomVariant(const QVariant& standard);
 
 //! Returns true in the case of double value based variant.
-CORE_EXPORT bool IsBoolVariant(const QVariant& variant);
+MVVM_MODEL_EXPORT bool IsBoolVariant(const QVariant& variant);
 
 //! Returns true in the case of double value based variant.
-CORE_EXPORT bool IsIntVariant(const QVariant& variant);
+MVVM_MODEL_EXPORT bool IsIntVariant(const QVariant& variant);
 
 //! Returns true in the case of double value based variant.
-CORE_EXPORT bool IsDoubleVariant(const QVariant& variant);
+MVVM_MODEL_EXPORT bool IsDoubleVariant(const QVariant& variant);
 
 //! Returns true in the case of double value based variant.
-CORE_EXPORT bool IsComboVariant(const QVariant& variant);
+MVVM_MODEL_EXPORT bool IsComboVariant(const QVariant& variant);
 
 //! Returns true in the case of double value based variant.
-CORE_EXPORT bool IsStdStringVariant(const QVariant& variant);
+MVVM_MODEL_EXPORT bool IsStdStringVariant(const QVariant& variant);
 
 //! Returns true in the case of variant based on std::vector<double>.
-CORE_EXPORT bool IsDoubleVectorVariant(const QVariant& variant);
+MVVM_MODEL_EXPORT bool IsDoubleVectorVariant(const QVariant& variant);
 
 //! Returns true in the case of QColor based variant.
-CORE_EXPORT bool IsColorVariant(const QVariant& variant);
+MVVM_MODEL_EXPORT bool IsColorVariant(const QVariant& variant);
 
 //! Returns true in the case of ExternalProperty based variant.
-CORE_EXPORT bool IsExtPropertyVariant(const QVariant& variant);
+MVVM_MODEL_EXPORT bool IsExtPropertyVariant(const QVariant& variant);
 
 //! Returns true in the case of RealLimits based variant.
-CORE_EXPORT bool IsRealLimitsVariant(const QVariant& variant);
+MVVM_MODEL_EXPORT bool IsRealLimitsVariant(const QVariant& variant);
 
 } // namespace Utils
 } // namespace ModelView

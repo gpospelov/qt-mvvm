@@ -10,7 +10,7 @@
 #ifndef MVVM_PLOTTING_CUSTOMPLOTUTILS_H
 #define MVVM_PLOTTING_CUSTOMPLOTUTILS_H
 
-#include <mvvm/core/export.h>
+#include <mvvm_view_export.h>
 
 class QCPColorScale;
 class QCPAxis;
@@ -23,11 +23,11 @@ namespace Utils
 
 //! Switch axis to logarithmic scale mode.
 
-CORE_EXPORT void SetLogarithmicScale(QCPColorScale* axis, bool is_log_scale);
+MVVM_VIEW_EXPORT void SetLogarithmicScale(QCPColorScale* axis, bool is_log_scale);
 
 //! Switch axis to logarithmic scale mode.
 
-CORE_EXPORT void SetLogarithmicScale(QCPAxis* axis, bool is_log_scale);
+MVVM_VIEW_EXPORT void SetLogarithmicScale(QCPAxis* axis, bool is_log_scale);
 
 } // namespace Utils
 

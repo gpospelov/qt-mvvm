@@ -19,7 +19,7 @@ class ScientificSpinBox;
 
 //! Custom editor for QVariant based on double with scientific notation support.
 
-class CORE_EXPORT ScientificSpinBoxEditor : public CustomEditor
+class MVVM_VIEWMODEL_EXPORT ScientificSpinBoxEditor : public CustomEditor
 {
     Q_OBJECT
 

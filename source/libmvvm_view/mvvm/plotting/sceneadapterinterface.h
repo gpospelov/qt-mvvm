@@ -10,7 +10,7 @@
 #ifndef MVVM_PLOTTING_SCENEADAPTERINTERFACE_H
 #define MVVM_PLOTTING_SCENEADAPTERINTERFACE_H
 
-#include <mvvm/core/export.h>
+#include <mvvm_view_export.h>
 
 class QRectF;
 
@@ -25,7 +25,7 @@ Used in the context of QCustomPlot being embedded into QGraphicsScene. Converts 
 coordinates in the coordinates of local system of QCustomPlot and vice versa.
 */
 
-class CORE_EXPORT SceneAdapterInterface
+class MVVM_VIEW_EXPORT SceneAdapterInterface
 {
 public:
     virtual ~SceneAdapterInterface() = default;

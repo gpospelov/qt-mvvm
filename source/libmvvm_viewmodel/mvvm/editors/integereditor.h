@@ -19,7 +19,7 @@ namespace ModelView
 
 //! Custom editor for QVariant based on integer with possibility to set limits.
 
-class CORE_EXPORT IntegerEditor : public CustomEditor
+class MVVM_VIEWMODEL_EXPORT IntegerEditor : public CustomEditor
 {
     Q_OBJECT
 

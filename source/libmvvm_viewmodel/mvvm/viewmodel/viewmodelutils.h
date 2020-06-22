@@ -14,7 +14,7 @@
 #include <QModelIndexList>
 #include <QVector>
 #include <functional>
-#include <mvvm/core/export.h>
+#include <mvvm_viewmodel_export.h>
 #include <vector>
 
 class QStandardItemModel;
@@ -31,29 +31,29 @@ namespace Utils
 {
 
 //! Iterates through QAbstractItem model
-CORE_EXPORT void iterate_model(const QAbstractItemModel* model, const QModelIndex& parent,
+MVVM_VIEWMODEL_EXPORT void iterate_model(const QAbstractItemModel* model, const QModelIndex& parent,
                                const std::function<void(const QModelIndex& child)>& fun);
 
 //! Returns vector of Qt roles corresponding to given ItemDataRole.
-CORE_EXPORT QVector<int> item_role_to_qt(int role);
+MVVM_VIEWMODEL_EXPORT QVector<int> item_role_to_qt(int role);
 
 //! Returns text color for given item.
-CORE_EXPORT QVariant TextColorRole(const SessionItem& item);
+MVVM_VIEWMODEL_EXPORT QVariant TextColorRole(const SessionItem& item);
 
 //! Returns check state role of given item.
-CORE_EXPORT QVariant CheckStateRole(const SessionItem& item);
+MVVM_VIEWMODEL_EXPORT QVariant CheckStateRole(const SessionItem& item);
 
 //! Returns decoration role for given item.
-CORE_EXPORT QVariant DecorationRole(const SessionItem& item);
+MVVM_VIEWMODEL_EXPORT QVariant DecorationRole(const SessionItem& item);
 
 //! Returns vector of underlying SessionItem's for given index list.
-CORE_EXPORT std::vector<SessionItem*> ItemsFromIndex(const QModelIndexList& index_list);
+MVVM_VIEWMODEL_EXPORT std::vector<SessionItem*> ItemsFromIndex(const QModelIndexList& index_list);
 
 //! Returns vector of parent items from given index list.
 //! Finds all SessionItems corresponding to given index list and collect their parents.
 //! Function is usefull in the context of table-like views when we want to find compound items
 //! (i.e. Layers) from table cells containing LayerItem's properties (i.e. thickness).
-CORE_EXPORT std::vector<SessionItem*> ParentItemsFromIndex(const QModelIndexList& index_list);
+MVVM_VIEWMODEL_EXPORT std::vector<SessionItem*> ParentItemsFromIndex(const QModelIndexList& index_list);
 
 } // namespace Utils
 

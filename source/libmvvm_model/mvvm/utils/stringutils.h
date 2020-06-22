@@ -10,7 +10,7 @@
 #ifndef MVVM_UTILS_STRINGUTILS_H
 #define MVVM_UTILS_STRINGUTILS_H
 
-#include <mvvm/core/export.h>
+#include <mvvm_model_export.h>
 #include <string>
 
 namespace ModelView
@@ -20,10 +20,10 @@ namespace Utils
 {
 
 //! Returns string representation of double with given precision.
-CORE_EXPORT std::string DoubleToString(double input, int precision = 12);
+MVVM_MODEL_EXPORT std::string DoubleToString(double input, int precision = 12);
 
 //! Returns string representation of scientific double
-CORE_EXPORT std::string ScientificDoubleToString(double input, int precision = 6);
+MVVM_MODEL_EXPORT std::string ScientificDoubleToString(double input, int precision = 6);
 
 } // namespace Utils
 

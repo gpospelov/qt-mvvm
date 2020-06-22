@@ -21,7 +21,7 @@ class TagRow;
 
 //! Command for unddo/redo to insert new item.
 
-class CORE_EXPORT InsertNewItemCommand : public AbstractItemCommand
+class MVVM_MODEL_EXPORT InsertNewItemCommand : public AbstractItemCommand
 {
 public:
     using result_t = SessionItem*;

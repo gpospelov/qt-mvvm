@@ -12,7 +12,7 @@
 
 #include <QWidget>
 #include <memory>
-#include <mvvm/core/export.h>
+#include <mvvm_view_export.h>
 
 namespace ModelView
 {
@@ -25,7 +25,7 @@ class SessionItem;
 SessionItem.
 */
 
-class CORE_EXPORT PropertyFlatView : public QWidget
+class MVVM_VIEW_EXPORT PropertyFlatView : public QWidget
 {
     Q_OBJECT
 public:

@@ -19,7 +19,7 @@ namespace ModelView
 
 //! Custom editor for QVariant based on ComboProperty.
 
-class CORE_EXPORT ComboPropertyEditor : public CustomEditor
+class MVVM_VIEWMODEL_EXPORT ComboPropertyEditor : public CustomEditor
 {
     Q_OBJECT
 

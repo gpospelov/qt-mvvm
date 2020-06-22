@@ -12,7 +12,7 @@
 
 #include <QAbstractItemModel>
 #include <memory>
-#include <mvvm/core/export.h>
+#include <mvvm_viewmodel_export.h>
 
 namespace ModelView
 {
@@ -28,7 +28,7 @@ of SessionItem. ViewModelBase doesn't have own logic and needs ViewModelControll
 SessionModel changes.
 */
 
-class CORE_EXPORT ViewModelBase : public QAbstractItemModel
+class MVVM_VIEWMODEL_EXPORT ViewModelBase : public QAbstractItemModel
 {
     Q_OBJECT
 public:

@@ -20,7 +20,7 @@ namespace ModelView
 //! Default editor factory for custom variants.
 //! Used in context of trees and tables via ViewModelDelegate.
 
-class CORE_EXPORT DefaultEditorFactory : public EditorFactoryInterface
+class MVVM_VIEWMODEL_EXPORT DefaultEditorFactory : public EditorFactoryInterface
 {
 public:
     DefaultEditorFactory();

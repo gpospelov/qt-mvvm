@@ -12,7 +12,7 @@
 
 #include <QVariant>
 #include <memory>
-#include <mvvm/core/export.h>
+#include <mvvm_model_export.h>
 #include <mvvm/core/types.h>
 #include <mvvm/model/function_types.h>
 #include <mvvm/model/path.h>
@@ -34,7 +34,7 @@ class ItemBackupStrategy;
 class ItemFactoryInterface;
 class ItemCopyStrategy;
 
-class CORE_EXPORT SessionModel
+class MVVM_MODEL_EXPORT SessionModel
 {
 public:
     explicit SessionModel(std::string model_type = {});

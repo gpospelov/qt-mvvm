@@ -11,13 +11,13 @@
 #define MVVM_PLOTTING_CUSTOMPLOTPROXYWIDGET_H
 
 #include <QGraphicsProxyWidget>
-#include <mvvm/core/export.h>
+#include <mvvm_view_export.h>
 
 class QWidget;
 
 //! Custom proxy widget to embed color map in graphics scene.
 
-class CORE_EXPORT CustomPlotProxyWidget : public QGraphicsProxyWidget
+class MVVM_VIEW_EXPORT CustomPlotProxyWidget : public QGraphicsProxyWidget
 {
     Q_OBJECT
 public:

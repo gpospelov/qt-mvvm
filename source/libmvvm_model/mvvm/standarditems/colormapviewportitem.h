@@ -22,7 +22,7 @@ class Data2DItem;
 @brief Container with viewport and collection of ColorMapItem's to plot.
 */
 
-class CORE_EXPORT ColorMapViewportItem : public ViewportItem
+class MVVM_MODEL_EXPORT ColorMapViewportItem : public ViewportItem
 {
 public:
     static inline const std::string P_ZAXIS = "P_ZAXIS";

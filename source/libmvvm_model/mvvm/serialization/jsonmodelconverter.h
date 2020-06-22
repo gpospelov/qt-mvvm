@@ -20,7 +20,7 @@ namespace ModelView
 
 class SessionModel;
 
-class CORE_EXPORT JsonModelConverter : public JsonModelConverterInterface
+class MVVM_MODEL_EXPORT JsonModelConverter : public JsonModelConverterInterface
 {
 public:
     static const QString modelKey;

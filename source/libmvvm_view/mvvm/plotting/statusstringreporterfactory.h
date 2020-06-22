@@ -17,7 +17,7 @@
 
 #include <functional>
 #include <memory>
-#include <mvvm/core/export.h>
+#include <mvvm_view_export.h>
 
 class QCustomPlot;
 
@@ -27,11 +27,11 @@ namespace ModelView
 class StatusStringReporter;
 
 //! Creates reporter for status string in QCustomPlot containing graphs.
-CORE_EXPORT std::unique_ptr<StatusStringReporter>
+MVVM_VIEW_EXPORT std::unique_ptr<StatusStringReporter>
 CreateGraphReporter(QCustomPlot* custom_plot, std::function<void(const std::string&)> callback);
 
 //! Creates reporter for status string in QCustomPlot containing QCPColorMap.
-CORE_EXPORT std::unique_ptr<StatusStringReporter>
+MVVM_VIEW_EXPORT std::unique_ptr<StatusStringReporter>
 CreateColorMapReporter(QCustomPlot* custom_plot, std::function<void(const std::string&)> callback);
 
 } // namespace ModelView

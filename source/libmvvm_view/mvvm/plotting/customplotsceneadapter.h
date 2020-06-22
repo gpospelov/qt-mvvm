@@ -24,7 +24,7 @@ namespace ModelView
 and vice versa.
 */
 
-class CORE_EXPORT CustomPlotSceneAdapter : public SceneAdapterInterface
+class MVVM_VIEW_EXPORT CustomPlotSceneAdapter : public SceneAdapterInterface
 {
 public:
     explicit CustomPlotSceneAdapter(QCustomPlot* custom_plot);

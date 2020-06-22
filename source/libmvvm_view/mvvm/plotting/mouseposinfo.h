@@ -10,7 +10,7 @@
 #ifndef MVVM_PLOTTING_MOUSEPOSINFO_H
 #define MVVM_PLOTTING_MOUSEPOSINFO_H
 
-#include <mvvm/core/export.h>
+#include <mvvm_view_export.h>
 
 class QCustomPlot;
 
@@ -24,7 +24,7 @@ namespace ModelView
 Position is given in axis coordinates corresponding to the current zoom level.
 */
 
-struct CORE_EXPORT MousePosInfo {
+struct MVVM_VIEW_EXPORT MousePosInfo {
     double xpos{0.0};
     double ypos{0.0};
     bool in_axes_range{false};

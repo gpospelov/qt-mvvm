@@ -27,7 +27,7 @@ namespace ModelView
 Has min, max defined, but nothing else.
 */
 
-class CORE_EXPORT BasicAxisItem : public CompoundItem
+class MVVM_MODEL_EXPORT BasicAxisItem : public CompoundItem
 {
 public:
     static inline const std::string P_MIN = "P_MIN";
@@ -47,7 +47,7 @@ ViewportAxisItem serve as a counterpart of QCPAxis from QCustomPlot.
 Intended to cary title, fonts etc.
 */
 
-class CORE_EXPORT ViewportAxisItem : public BasicAxisItem
+class MVVM_MODEL_EXPORT ViewportAxisItem : public BasicAxisItem
 {
 public:
     static inline const std::string P_TITLE = "P_TITLE";
@@ -72,7 +72,7 @@ size, etc) and thus not intended for direct plotting.
 
 //!
 
-class CORE_EXPORT BinnedAxisItem : public BasicAxisItem
+class MVVM_MODEL_EXPORT BinnedAxisItem : public BasicAxisItem
 {
 public:
     explicit BinnedAxisItem(const std::string& model_type);
@@ -91,7 +91,7 @@ public:
 Defines an axis with equidistant binning.
 */
 
-class CORE_EXPORT FixedBinAxisItem : public BinnedAxisItem
+class MVVM_MODEL_EXPORT FixedBinAxisItem : public BinnedAxisItem
 {
 public:
     static inline const std::string P_NBINS = "P_NBINS";
@@ -113,7 +113,7 @@ public:
 Defines an axis via array of points representing point coordinates.
 */
 
-class CORE_EXPORT PointwiseAxisItem : public BinnedAxisItem
+class MVVM_MODEL_EXPORT PointwiseAxisItem : public BinnedAxisItem
 {
 public:
     PointwiseAxisItem();
