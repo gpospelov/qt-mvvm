@@ -56,9 +56,9 @@ jobs:
       uses: actions/cache@v1.1.0
       with:
         path: .ccache
-        key: qtmvvm-win-ccache3-${{ steps.ccache_cache_timestamp.outputs.timestamp }}
+        key: qtmvvm-win-ccache-${{ steps.ccache_cache_timestamp.outputs.timestamp }}
         restore-keys: |
-          qtmvvm-win-ccache3-
+          qtmvvm-win-ccache-
           
     - name: build
       shell: cmd
