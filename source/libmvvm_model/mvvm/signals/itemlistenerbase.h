@@ -10,7 +10,7 @@
 #ifndef MVVM_SIGNALS_ITEMLISTENERBASE_H
 #define MVVM_SIGNALS_ITEMLISTENERBASE_H
 
-#include <mvvm/core/export.h>
+#include <mvvm_model_export.h>
 #include <mvvm/signals/callback_types.h>
 
 namespace ModelView
@@ -24,7 +24,7 @@ class SessionItem;
 //! Automatically tracks the time of life of SessionItem. Unsubscribes from the item on
 //! own destruction. Can be switched from tracking one item to another of the same type.
 
-class CORE_EXPORT ItemListenerBase
+class MVVM_MODEL_EXPORT ItemListenerBase
 {
 public:
     explicit ItemListenerBase(SessionItem* item = nullptr);

@@ -12,7 +12,7 @@
 
 #include <initializer_list>
 #include <memory>
-#include <mvvm/core/modeldocumentinterface.h>
+#include <mvvm/interfaces/modeldocumentinterface.h>
 
 namespace ModelView
 {
@@ -24,7 +24,7 @@ class SessionModel;
 @brief Saves and restores list of SessionModel's to/from disk using json format.
 */
 
-class CORE_EXPORT JsonDocument : public ModelDocumentInterface
+class MVVM_MODEL_EXPORT JsonDocument : public ModelDocumentInterface
 {
 public:
     JsonDocument(std::initializer_list<SessionModel*> models);

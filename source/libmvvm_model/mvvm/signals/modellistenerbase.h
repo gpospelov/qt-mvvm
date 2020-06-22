@@ -21,7 +21,7 @@ class SessionModel;
 //! Automatically tracks the time of life of SessionModel. Unsubscribes from the model on
 //! own destruction.
 
-class CORE_EXPORT ModelListenerBase : public ModelListenerInterface
+class MVVM_MODEL_EXPORT ModelListenerBase : public ModelListenerInterface
 {
 public:
     ModelListenerBase(SessionModel* model);

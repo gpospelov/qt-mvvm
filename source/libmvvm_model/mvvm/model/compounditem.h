@@ -21,7 +21,7 @@ namespace ModelView
 
 //! Complex item holding mixed SessionItem types (single properties and other CompountItems).
 
-class CORE_EXPORT CompoundItem : public SessionItem
+class MVVM_MODEL_EXPORT CompoundItem : public SessionItem
 {
 public:
     CompoundItem(const std::string& modelType = Constants::CompoundItemType);

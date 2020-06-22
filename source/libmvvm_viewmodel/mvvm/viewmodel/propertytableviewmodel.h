@@ -23,8 +23,9 @@ Given view model is intended to show registered properties of items in table-lik
 Registered properties will form columns of the table, top level items will form table rows.
 */
 
-class CORE_EXPORT PropertyTableViewModel : public ViewModel
+class MVVM_VIEWMODEL_EXPORT PropertyTableViewModel : public ViewModel
 {
+    Q_OBJECT
 public:
     PropertyTableViewModel(SessionModel* model, QObject* parent = nullptr);
 };

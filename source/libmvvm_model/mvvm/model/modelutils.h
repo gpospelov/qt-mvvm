@@ -10,7 +10,7 @@
 #ifndef MVVM_MODEL_MODELUTILS_H
 #define MVVM_MODEL_MODELUTILS_H
 
-#include <mvvm/core/export.h>
+#include <mvvm_model_export.h>
 #include <mvvm/model/itemutils.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
@@ -59,9 +59,9 @@ template <typename T = SessionItem> std::vector<T*> FindItems(const SessionModel
     return result;
 }
 
-void CORE_EXPORT DeleteItemFromModel(SessionItem* item);
-void CORE_EXPORT MoveUp(SessionItem* item);
-void CORE_EXPORT MoveDown(SessionItem* item);
+void MVVM_MODEL_EXPORT DeleteItemFromModel(SessionItem* item);
+void MVVM_MODEL_EXPORT MoveUp(SessionItem* item);
+void MVVM_MODEL_EXPORT MoveDown(SessionItem* item);
 
 } // namespace Utils
 } // namespace ModelView

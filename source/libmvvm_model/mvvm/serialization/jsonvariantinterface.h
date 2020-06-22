@@ -10,7 +10,7 @@
 #ifndef MVVM_SERIALIZATION_JSONVARIANTINTERFACE_H
 #define MVVM_SERIALIZATION_JSONVARIANTINTERFACE_H
 
-#include <mvvm/core/export.h>
+#include <mvvm_model_export.h>
 
 class QJsonObject;
 class QVariant;
@@ -20,7 +20,7 @@ namespace ModelView
 
 //! Base class for all supported converters of QVariant to/from json object
 
-class CORE_EXPORT JsonVariantInterface
+class MVVM_MODEL_EXPORT JsonVariantInterface
 {
 public:
     virtual ~JsonVariantInterface() = default;

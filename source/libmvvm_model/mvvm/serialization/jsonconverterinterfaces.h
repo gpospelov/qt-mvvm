@@ -11,7 +11,7 @@
 #define MVVM_SERIALIZATION_JSONCONVERTERINTERFACES_H
 
 #include <memory>
-#include <mvvm/core/export.h>
+#include <mvvm_model_export.h>
 #include <string>
 
 class QJsonObject;
@@ -29,7 +29,7 @@ class TagInfo;
 
 //! Base class for all converters of TagInfo to/from json object
 
-class CORE_EXPORT JsonTagInfoInterface
+class MVVM_MODEL_EXPORT JsonTagInfoInterface
 {
 public:
     virtual ~JsonTagInfoInterface() = default;
@@ -41,7 +41,7 @@ public:
 
 //! Base class for all converters of SessionItemData to/from json object
 
-class CORE_EXPORT JsonItemDataInterface
+class MVVM_MODEL_EXPORT JsonItemDataInterface
 {
 public:
     virtual ~JsonItemDataInterface() = default;
@@ -53,7 +53,7 @@ public:
 
 //! Base class for all converters of SessionItem to/from json object.
 
-class CORE_EXPORT JsonItemConverterInterface
+class MVVM_MODEL_EXPORT JsonItemConverterInterface
 {
 public:
     virtual ~JsonItemConverterInterface() = default;
@@ -65,7 +65,7 @@ public:
 
 //! Base class for all converters of SessionModel to/from json object.
 
-class CORE_EXPORT JsonModelConverterInterface
+class MVVM_MODEL_EXPORT JsonModelConverterInterface
 {
 public:
     virtual ~JsonModelConverterInterface() = default;

@@ -1,12 +1,17 @@
-# -----------------------------------------------------------------------------
 # Library: mvvm_viewmodel
-# -----------------------------------------------------------------------------
-add_library(mvvm_viewmodel SHARED "")
+
+set(library_name mvvm_viewmodel)
+
+set(CMAKE_AUTOMOC ON)
+
+add_library(${library_name} SHARED "")
 
 add_subdirectory(mvvm)
 
-target_link_libraries(mvvm_viewmodel PUBLIC mvvm_model Qt5::Widgets PRIVATE qcustomplot)
-target_include_directories(mvvm_viewmodel PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>)
+generate_export_header(${library_name})
+
+target_link_libraries(${library_name} PUBLIC mvvm_model Qt5::Widgets)
+target_include_directories(${library_name} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}> $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>)
 
 # to make clang code model in Qt creator happy
-target_compile_features(mvvm_viewmodel PUBLIC cxx_std_17)
+target_compile_features(${library_name} PUBLIC cxx_std_17)

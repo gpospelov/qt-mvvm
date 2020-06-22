@@ -17,7 +17,7 @@ namespace ModelView
 
 //! Vector item with three x,y,z property items.
 
-class CORE_EXPORT VectorItem : public CompoundItem
+class MVVM_MODEL_EXPORT VectorItem : public CompoundItem
 {
 public:
     static inline const std::string P_X = "P_X";

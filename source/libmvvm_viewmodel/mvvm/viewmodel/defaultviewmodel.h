@@ -23,8 +23,9 @@ Given view model provides two column tree with label/data, with one-to-one child
 correspondence as in the original SessionModel.
 */
 
-class CORE_EXPORT DefaultViewModel : public ViewModel
+class MVVM_VIEWMODEL_EXPORT DefaultViewModel : public ViewModel
 {
+    Q_OBJECT
 public:
     DefaultViewModel(SessionModel* model, QObject* parent = nullptr);
 };

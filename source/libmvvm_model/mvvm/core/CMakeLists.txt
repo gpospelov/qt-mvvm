@@ -1,9 +1,5 @@
-target_sources(mvvm_model PRIVATE
-    export.h
+target_sources(${library_name} PRIVATE
     filesystem.h
-    modeldocumentinterface.h
-    modeldocuments.cpp
-    modeldocuments.h
     types.h
     uniqueidgenerator.cpp
     uniqueidgenerator.h

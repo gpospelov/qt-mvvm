@@ -10,7 +10,7 @@
 #ifndef MVVM_EDITORS_STYLEUTILS_H
 #define MVVM_EDITORS_STYLEUTILS_H
 
-#include <mvvm/core/export.h>
+#include <mvvm_viewmodel_export.h>
 
 namespace ModelView
 {
@@ -19,13 +19,13 @@ namespace Style
 {
 
 //! Returns int value corresponding to pixmap in standard Qt table/tree decorations.
-CORE_EXPORT int DefaultPixmapSize();
+MVVM_VIEWMODEL_EXPORT int DefaultPixmapSize();
 
 //! Returns default height of info bar
-CORE_EXPORT int DefaultInfoBarHeight();
+MVVM_VIEWMODEL_EXPORT int DefaultInfoBarHeight();
 
 //! Returns default size of text on info bar.
-CORE_EXPORT int DefaultInfoBarTextSize();
+MVVM_VIEWMODEL_EXPORT int DefaultInfoBarTextSize();
 
 } // namespace Style
 

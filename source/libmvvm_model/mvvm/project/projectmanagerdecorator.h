@@ -26,7 +26,7 @@ class ApplicationModelsInterface;
 //! For example, on createNewProject it will check if previous project is saved, and will
 //! call external dialog save/discard/cancel via provided callback.
 
-class CORE_EXPORT ProjectManagerDecorator : public ModelView::ProjectManagerInterface
+class MVVM_MODEL_EXPORT ProjectManagerDecorator : public ModelView::ProjectManagerInterface
 {
 public:
     using select_dir_callback_t = std::function<std::string()>;

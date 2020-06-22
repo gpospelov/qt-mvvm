@@ -23,6 +23,7 @@ class RealDataModel;
 
 class DataViewModel : public ModelView::TopItemsViewModel
 {
+    Q_OBJECT
 public:
     DataViewModel(RealDataModel* model, QObject* parent = nullptr);
 

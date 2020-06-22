@@ -25,8 +25,10 @@ class ExternalProperty;
 //! Custom editor for table/tree cells to select ExternalProperty from the list of
 //! external properties. Uses callbacks to retrieve vector of possible properties.
 
-class CORE_EXPORT ExternalPropertyComboEditor : public ModelView::CustomEditor
+class MVVM_VIEWMODEL_EXPORT ExternalPropertyComboEditor : public ModelView::CustomEditor
 {
+    Q_OBJECT
+
 public:
     using callback_t = std::function<std::vector<ModelView::ExternalProperty>()>;
     ExternalPropertyComboEditor(callback_t callback, QWidget* parent = nullptr);

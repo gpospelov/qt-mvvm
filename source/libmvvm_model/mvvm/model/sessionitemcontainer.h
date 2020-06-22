@@ -10,7 +10,7 @@
 #ifndef MVVM_MODEL_SESSIONITEMCONTAINER_H
 #define MVVM_MODEL_SESSIONITEMCONTAINER_H
 
-#include <mvvm/core/export.h>
+#include <mvvm_model_export.h>
 #include <mvvm/model/taginfo.h>
 #include <vector>
 
@@ -21,7 +21,7 @@ class SessionItem;
 
 //! Holds collection of SessionItem objects related to the same tag.
 
-class CORE_EXPORT SessionItemContainer
+class MVVM_MODEL_EXPORT SessionItemContainer
 {
 public:
     using container_t = std::vector<SessionItem*>;

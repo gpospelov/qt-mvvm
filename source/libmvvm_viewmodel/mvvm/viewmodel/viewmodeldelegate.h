@@ -12,7 +12,7 @@
 
 #include <QStyledItemDelegate>
 #include <memory>
-#include <mvvm/core/export.h>
+#include <mvvm_viewmodel_export.h>
 
 namespace ModelView
 {
@@ -22,8 +22,10 @@ class CellDecoratorInterface;
 
 //! Model delegate to provide editing/painting for custom variants.
 
-class CORE_EXPORT ViewModelDelegate : public QStyledItemDelegate
+class MVVM_VIEWMODEL_EXPORT ViewModelDelegate : public QStyledItemDelegate
 {
+    Q_OBJECT
+
 public:
     explicit ViewModelDelegate(QObject* parent = nullptr);
     ~ViewModelDelegate() override;

@@ -10,7 +10,7 @@
 #ifndef MVVM_MODEL_ITEMCATALOGUE_H
 #define MVVM_MODEL_ITEMCATALOGUE_H
 
-#include <mvvm/core/export.h>
+#include <mvvm_model_export.h>
 #include <mvvm/model/function_types.h>
 #include <string>
 #include <vector>
@@ -22,7 +22,7 @@ class SessionItem;
 
 //! Catalogue for item constructions.
 
-class CORE_EXPORT ItemCatalogue
+class MVVM_MODEL_EXPORT ItemCatalogue
 {
 public:
     ItemCatalogue();

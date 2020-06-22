@@ -11,7 +11,7 @@
 #define MVVM_VIEWMODEL_STANDARDVIEWMODELS_H
 
 #include <memory>
-#include <mvvm/core/export.h>
+#include <mvvm_viewmodel_export.h>
 #include <mvvm/viewmodel/viewmodel.h>
 
 namespace ModelView
@@ -25,25 +25,25 @@ namespace Utils
 
 //! Creates view model to represent SessionModel for Qt views.
 //! The model has two columns, all items are shown.
-CORE_EXPORT std::unique_ptr<ViewModel> CreateDefaultViewModel(SessionModel* model);
+MVVM_VIEWMODEL_EXPORT std::unique_ptr<ViewModel> CreateDefaultViewModel(SessionModel* model);
 
 //! Creates view model to represent SessionModel for Qt views.
 //! The model has two columns, shows only property items and simplified group items.
-CORE_EXPORT std::unique_ptr<ViewModel> CreatePropertyViewModel(SessionModel* model);
+MVVM_VIEWMODEL_EXPORT std::unique_ptr<ViewModel> CreatePropertyViewModel(SessionModel* model);
 
 //! Creates view model to represent SessionModel for Qt views.
 //! Shows all properties of CompoundItem in columns of the table, rows of the table represent
 //! different CompoundItems. Items of same type and table like structure of the model are expected.
-CORE_EXPORT std::unique_ptr<ViewModel> CreatePropertyTableViewModel(SessionModel* model);
+MVVM_VIEWMODEL_EXPORT std::unique_ptr<ViewModel> CreatePropertyTableViewModel(SessionModel* model);
 
 //! Creates view model to represent SessionModel for Qt views.
 //! Shows only top items.
-CORE_EXPORT std::unique_ptr<ViewModel> CreateTopItemsViewModel(SessionModel* model);
+MVVM_VIEWMODEL_EXPORT std::unique_ptr<ViewModel> CreateTopItemsViewModel(SessionModel* model);
 
 //! Creates view model to represent SessionModel for Qt views.
 //! The model has two columns, shows only property items and simplified group items.
 //! Subproperties of group item moved one level up.
-CORE_EXPORT std::unique_ptr<ViewModel> CreatePropertyFlatViewModel(SessionModel* model);
+MVVM_VIEWMODEL_EXPORT std::unique_ptr<ViewModel> CreatePropertyFlatViewModel(SessionModel* model);
 
 } // namespace Utils
 

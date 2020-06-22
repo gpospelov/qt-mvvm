@@ -11,14 +11,14 @@
 #define MVVM_MODEL_DATAROLE_H
 
 #include <QVariant>
-#include <mvvm/core/export.h>
+#include <mvvm_model_export.h>
 
 namespace ModelView
 {
 
 //! Represents pair of data,role for SessionItemData.
 
-class CORE_EXPORT DataRole
+class MVVM_MODEL_EXPORT DataRole
 {
 public:
     DataRole(QVariant data = QVariant(), int role = -1);

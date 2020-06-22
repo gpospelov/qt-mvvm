@@ -13,6 +13,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules)
 include(CTest)
 include(configuration)
 include(CodeTools)
+include(GenerateExportHeader)
 
 add_subdirectory(source)
 add_subdirectory(examples)

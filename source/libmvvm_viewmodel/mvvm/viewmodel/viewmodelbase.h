@@ -12,7 +12,7 @@
 
 #include <QAbstractItemModel>
 #include <memory>
-#include <mvvm/core/export.h>
+#include <mvvm_viewmodel_export.h>
 
 namespace ModelView
 {
@@ -24,11 +24,11 @@ class ViewItem;
 @brief Base class for all view models to show content of SessionModel in Qt views.
 
 ViewModelBase is made of ViewItems, where each ViewItem represents some concrete data role
-of SessionItem. ViewModelBase dosn't have own logic and needs ViewModelController to listen for
+of SessionItem. ViewModelBase doesn't have own logic and needs ViewModelController to listen for
 SessionModel changes.
 */
 
-class CORE_EXPORT ViewModelBase : public QAbstractItemModel
+class MVVM_VIEWMODEL_EXPORT ViewModelBase : public QAbstractItemModel
 {
     Q_OBJECT
 public:

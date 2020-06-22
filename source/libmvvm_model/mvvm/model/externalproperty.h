@@ -12,7 +12,7 @@
 
 #include <QColor>
 #include <QVariant>
-#include <mvvm/core/export.h>
+#include <mvvm_model_export.h>
 #include <string>
 
 namespace ModelView
@@ -21,7 +21,7 @@ namespace ModelView
 //! Property for QVariant to carry text, color and identifier. Can be used to link items with each
 //! other.
 
-class CORE_EXPORT ExternalProperty
+class MVVM_MODEL_EXPORT ExternalProperty
 {
 public:
     ExternalProperty();

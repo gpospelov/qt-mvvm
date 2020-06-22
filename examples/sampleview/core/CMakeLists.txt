@@ -29,5 +29,5 @@ add_library(${library_name} STATIC ${source_files} ${include_files} ${resource_f
 
 target_include_directories(${library_name} PUBLIC ${include_dirs})
 
-target_link_libraries(${library_name} mvvm_viewmodel Qt5::Core Qt5::Gui Qt5::Widgets)
+target_link_libraries(${library_name} mvvm_view Qt5::Core Qt5::Gui Qt5::Widgets)
 

@@ -11,7 +11,7 @@
 #define MVVM_SERIALIZATION_ITEMBACKUPSTRATEGY_H
 
 #include <memory>
-#include <mvvm/core/export.h>
+#include <mvvm_model_export.h>
 
 namespace ModelView
 {
@@ -20,7 +20,7 @@ class SessionItem;
 
 //! Interface to backup items for later restore.
 
-class CORE_EXPORT ItemBackupStrategy
+class MVVM_MODEL_EXPORT ItemBackupStrategy
 {
 public:
     virtual ~ItemBackupStrategy() = default;

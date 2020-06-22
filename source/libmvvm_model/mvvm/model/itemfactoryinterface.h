@@ -11,7 +11,7 @@
 #define MVVM_MODEL_ITEMFACTORYINTERFACE_H
 
 #include <memory>
-#include <mvvm/core/export.h>
+#include <mvvm_model_export.h>
 #include <mvvm/model/mvvm_types.h>
 
 namespace ModelView
@@ -21,7 +21,7 @@ class SessionItem;
 
 //! Interface class for all factories capable of producing SessionItem's.
 
-class CORE_EXPORT ItemFactoryInterface
+class MVVM_MODEL_EXPORT ItemFactoryInterface
 {
 public:
     virtual ~ItemFactoryInterface() = default;

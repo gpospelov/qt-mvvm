@@ -19,7 +19,7 @@ namespace ModelView
 
 //! Group item holds collection of predefined items.
 
-class CORE_EXPORT GroupItem : public SessionItem
+class MVVM_MODEL_EXPORT GroupItem : public SessionItem
 {
 public:
     GroupItem(model_type modelType = Constants::GroupItemType);

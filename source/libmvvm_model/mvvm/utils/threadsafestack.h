@@ -12,7 +12,7 @@
 
 #include <memory>
 #include <mutex>
-#include <mvvm/core/export.h>
+#include <mvvm_model_export.h>
 #include <stack>
 #include <stdexcept>
 #include <thread>

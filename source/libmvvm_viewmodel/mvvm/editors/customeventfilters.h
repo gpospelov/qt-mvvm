@@ -11,14 +11,14 @@
 #define MVVM_EDITORS_CUSTOMEVENTFILTERS_H
 
 #include <QObject>
-#include <mvvm/core/export.h>
+#include <mvvm_viewmodel_export.h>
 
 namespace ModelView
 {
 
 //! Event filter to prevent lost of focus by custom material editor.
 
-class CORE_EXPORT LostFocusFilter : public QObject
+class MVVM_VIEWMODEL_EXPORT LostFocusFilter : public QObject
 {
     Q_OBJECT
 public:

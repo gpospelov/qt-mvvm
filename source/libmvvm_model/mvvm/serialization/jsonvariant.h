@@ -20,7 +20,7 @@ class QJsonVariant;
 namespace ModelView
 {
 
-class CORE_EXPORT JsonVariant : public JsonVariantInterface
+class MVVM_MODEL_EXPORT JsonVariant : public JsonVariantInterface
 {
 public:
     JsonVariant();

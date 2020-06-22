@@ -11,7 +11,7 @@
 #define MVVM_VIEWMODEL_ROWSTRATEGYINTERFACE_H
 
 #include <QList>
-#include <mvvm/core/export.h>
+#include <mvvm_viewmodel_export.h>
 #include <vector>
 #include <memory>
 #include <stdexcept>
@@ -31,7 +31,7 @@ class ViewItem;
 Used in context of AbstractViewModel while exposing SessionModel to Qt.
 */
 
-class CORE_EXPORT RowStrategyInterface
+class MVVM_VIEWMODEL_EXPORT RowStrategyInterface
 {
 public:
     virtual ~RowStrategyInterface() = default;

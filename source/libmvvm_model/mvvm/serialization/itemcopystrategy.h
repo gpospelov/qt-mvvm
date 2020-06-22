@@ -11,7 +11,7 @@
 #define MVVM_SERIALIZATION_ITEMCOPYSTRATEGY_H
 
 #include <memory>
-#include <mvvm/core/export.h>
+#include <mvvm_model_export.h>
 
 namespace ModelView
 {
@@ -20,7 +20,7 @@ class SessionItem;
 
 //! Interface to copy items within context.
 
-class CORE_EXPORT ItemCopyStrategy
+class MVVM_MODEL_EXPORT ItemCopyStrategy
 {
 public:
     virtual ~ItemCopyStrategy() = default;

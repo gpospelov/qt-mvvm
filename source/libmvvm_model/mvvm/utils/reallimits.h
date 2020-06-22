@@ -10,7 +10,7 @@
 #ifndef MVVM_UTILS_REALLIMITS_H
 #define MVVM_UTILS_REALLIMITS_H
 
-#include <mvvm/core/export.h>
+#include <mvvm_model_export.h>
 
 namespace ModelView
 {
@@ -18,7 +18,7 @@ namespace ModelView
 //! Limits for double.
 //! @ingroup fitting
 
-class CORE_EXPORT RealLimits
+class MVVM_MODEL_EXPORT RealLimits
 {
 public:
     RealLimits();

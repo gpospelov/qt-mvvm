@@ -11,7 +11,7 @@
 #define MVVM_MODEL_ITEMPOOL_H
 
 #include <map>
-#include <mvvm/core/export.h>
+#include <mvvm_model_export.h>
 #include <mvvm/model/mvvm_types.h>
 
 namespace ModelView
@@ -22,7 +22,7 @@ class SessionItem;
 //! Provides registration of SessionItem pointers and their unique identifiers
 //! in global memory pool.
 
-class CORE_EXPORT ItemPool
+class MVVM_MODEL_EXPORT ItemPool
 {
 public:
     ItemPool() = default;
