@@ -30,7 +30,7 @@ QCustomPlot plottables, when controller is created, and removed from plottables,
 is destroyed.
 */
 
-class CORE_EXPORT ColorMapPlotController : public ItemListener<ColorMapItem>
+class MVVM_VIEW_EXPORT ColorMapPlotController : public ItemListener<ColorMapItem>
 {
 public:
     explicit ColorMapPlotController(QCustomPlot* plot, QCPColorScale* color_scale = nullptr);

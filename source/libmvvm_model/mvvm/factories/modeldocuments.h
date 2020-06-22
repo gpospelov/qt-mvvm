@@ -20,7 +20,7 @@ namespace ModelView
 class SessionModel;
 
 //! Creates JsonDocument to save and load models.
-CORE_EXPORT std::unique_ptr<ModelDocumentInterface>
+MVVM_MODEL_EXPORT std::unique_ptr<ModelDocumentInterface>
 CreateJsonDocument(std::initializer_list<SessionModel*> models);
 
 } // namespace ModelView

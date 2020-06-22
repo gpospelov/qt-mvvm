@@ -24,7 +24,7 @@ namespace ModelView
 position on QCustomPlot.
 */
 
-class CORE_EXPORT StatusStringFormatterInterface
+class MVVM_VIEW_EXPORT StatusStringFormatterInterface
 {
 public:
     virtual ~StatusStringFormatterInterface() = default;

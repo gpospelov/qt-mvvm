@@ -20,7 +20,7 @@ namespace ModelView
 
 //! Custom editor for QVariant based on double with scientific notation support.
 
-class CORE_EXPORT ScientificDoubleEditor : public CustomEditor
+class MVVM_VIEWMODEL_EXPORT ScientificDoubleEditor : public CustomEditor
 {
     Q_OBJECT
 

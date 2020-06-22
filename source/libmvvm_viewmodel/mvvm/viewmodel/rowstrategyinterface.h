@@ -31,7 +31,7 @@ class ViewItem;
 Used in context of AbstractViewModel while exposing SessionModel to Qt.
 */
 
-class CORE_EXPORT RowStrategyInterface
+class MVVM_VIEWMODEL_EXPORT RowStrategyInterface
 {
 public:
     virtual ~RowStrategyInterface() = default;

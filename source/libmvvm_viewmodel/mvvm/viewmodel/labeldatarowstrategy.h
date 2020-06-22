@@ -23,7 +23,7 @@ class SessionItem;
 //! Row consists of two columns, ViewLabelItem for SessionItem's display role and
 //! ViewDataItem for Session's item data role.
 
-class CORE_EXPORT LabelDataRowStrategy : public RowStrategyInterface
+class MVVM_VIEWMODEL_EXPORT LabelDataRowStrategy : public RowStrategyInterface
 {
 public:
     QStringList horizontalHeaderLabels() const  override;

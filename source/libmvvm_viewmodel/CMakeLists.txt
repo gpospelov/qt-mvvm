@@ -13,3 +13,5 @@ target_include_directories(${library_name} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURR
 
 # to make clang code model in Qt creator happy
 target_compile_features(${library_name} PUBLIC cxx_std_17)
+
+generate_export_header(${library_name})

@@ -59,9 +59,9 @@ template <typename T = SessionItem> std::vector<T*> FindItems(const SessionModel
     return result;
 }
 
-void CORE_EXPORT DeleteItemFromModel(SessionItem* item);
-void CORE_EXPORT MoveUp(SessionItem* item);
-void CORE_EXPORT MoveDown(SessionItem* item);
+void MVVM_MODEL_EXPORT DeleteItemFromModel(SessionItem* item);
+void MVVM_MODEL_EXPORT MoveUp(SessionItem* item);
+void MVVM_MODEL_EXPORT MoveDown(SessionItem* item);
 
 } // namespace Utils
 } // namespace ModelView

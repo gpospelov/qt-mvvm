@@ -18,7 +18,7 @@ namespace ModelView
 
 //! Represents pair of data,role for SessionItemData.
 
-class CORE_EXPORT DataRole
+class MVVM_MODEL_EXPORT DataRole
 {
 public:
     DataRole(QVariant data = QVariant(), int role = -1);

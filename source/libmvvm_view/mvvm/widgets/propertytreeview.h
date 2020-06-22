@@ -21,7 +21,7 @@ namespace ModelView
 SessionItem.
 */
 
-class CORE_EXPORT PropertyTreeView : public ItemsTreeView
+class MVVM_VIEW_EXPORT PropertyTreeView : public ItemsTreeView
 {
     Q_OBJECT
 public:

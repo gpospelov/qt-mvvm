@@ -25,7 +25,7 @@ Includes coordinates of mouse pointer in viewport axes coordinates, add graph in
 one nearby.
 */
 
-class CORE_EXPORT GraphInfoFormatter : public StatusStringFormatterInterface
+class MVVM_VIEW_EXPORT GraphInfoFormatter : public StatusStringFormatterInterface
 {
 public:
     //! Returns status string representing graph nearby.

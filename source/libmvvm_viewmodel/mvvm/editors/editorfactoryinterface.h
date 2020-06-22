@@ -25,7 +25,7 @@ class CustomEditor;
 //! Interface for custom editor factory.
 //! Intended for editor construction in cells of tables and trees in the context of delegate.
 
-class CORE_EXPORT EditorFactoryInterface
+class MVVM_VIEWMODEL_EXPORT EditorFactoryInterface
 {
 public:
     virtual ~EditorFactoryInterface() = default;

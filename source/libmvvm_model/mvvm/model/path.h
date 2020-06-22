@@ -20,7 +20,7 @@ namespace ModelView
 //! Supports navigation through SessionModel. It contains a chain of row indexes that have to
 //! be used to reach the desired SessionItem starting from the root item.
 
-class CORE_EXPORT Path
+class MVVM_MODEL_EXPORT Path
 {
 public:
     using PathElement = int;

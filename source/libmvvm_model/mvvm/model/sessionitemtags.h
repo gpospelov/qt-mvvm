@@ -24,7 +24,7 @@ class SessionItem;
 
 //! Collection of SessionItem's containers according to their tags.
 
-class CORE_EXPORT SessionItemTags
+class MVVM_MODEL_EXPORT SessionItemTags
 {
 public:
     using container_t = std::vector<SessionItemContainer*>;

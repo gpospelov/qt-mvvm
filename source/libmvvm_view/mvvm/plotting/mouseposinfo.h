@@ -24,7 +24,7 @@ namespace ModelView
 Position is given in axis coordinates corresponding to the current zoom level.
 */
 
-struct CORE_EXPORT MousePosInfo {
+struct MVVM_VIEW_EXPORT MousePosInfo {
     double xpos{0.0};
     double ypos{0.0};
     bool in_axes_range{false};

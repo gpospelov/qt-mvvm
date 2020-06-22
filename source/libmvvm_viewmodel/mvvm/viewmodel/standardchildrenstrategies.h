@@ -29,7 +29,7 @@ class SessionItem;
 @brief Strategy to find children of given item: gives all actual children back.
 */
 
-class CORE_EXPORT AllChildrenStrategy : public ChildrenStrategyInterface
+class MVVM_VIEWMODEL_EXPORT AllChildrenStrategy : public ChildrenStrategyInterface
 {
 public:
     std::vector<SessionItem*> children(const SessionItem* item) const override;
@@ -41,7 +41,7 @@ public:
 property items will be filtered out.
 */
 
-class CORE_EXPORT TopItemsStrategy : public ChildrenStrategyInterface
+class MVVM_VIEWMODEL_EXPORT TopItemsStrategy : public ChildrenStrategyInterface
 {
 public:
     std::vector<SessionItem*> children(const SessionItem* item) const override;
@@ -70,7 +70,7 @@ Particle
         Radius
 */
 
-class CORE_EXPORT PropertyItemsStrategy : public ChildrenStrategyInterface
+class MVVM_VIEWMODEL_EXPORT PropertyItemsStrategy : public ChildrenStrategyInterface
 {
 public:
     std::vector<SessionItem*> children(const SessionItem* item) const override;
@@ -100,7 +100,7 @@ Particle
     Radius
 */
 
-class CORE_EXPORT PropertyItemsFlatStrategy : public ChildrenStrategyInterface
+class MVVM_VIEWMODEL_EXPORT PropertyItemsFlatStrategy : public ChildrenStrategyInterface
 {
 public:
     std::vector<SessionItem*> children(const SessionItem* item) const override;

@@ -25,7 +25,7 @@ class SessionItem;
 SessionItem.
 */
 
-class CORE_EXPORT PropertyFlatView : public QWidget
+class MVVM_VIEW_EXPORT PropertyFlatView : public QWidget
 {
     Q_OBJECT
 public:

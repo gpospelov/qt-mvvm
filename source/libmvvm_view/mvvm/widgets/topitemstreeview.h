@@ -26,7 +26,7 @@ All property items (i.e. "thickness", "color" etc) will be filtered out, top lev
 (i.e. Layer, MultiLayer, ...) will be presented as simple parent/child tree.
 */
 
-class CORE_EXPORT TopItemsTreeView : public ItemsTreeView
+class MVVM_VIEW_EXPORT TopItemsTreeView : public ItemsTreeView
 {
     Q_OBJECT
 public:

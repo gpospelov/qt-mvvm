@@ -20,7 +20,7 @@ class SessionItem;
 
 //! Interface to backup items for later restore.
 
-class CORE_EXPORT ItemBackupStrategy
+class MVVM_MODEL_EXPORT ItemBackupStrategy
 {
 public:
     virtual ~ItemBackupStrategy() = default;

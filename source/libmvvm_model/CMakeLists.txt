@@ -14,3 +14,5 @@ target_compile_features(${library_name} PUBLIC cxx_std_17)
 if (MVVM_ENABLE_FILESYSTEM)
     add_definitions(-DENABLE_FILESYSTEM)
 endif()
+
+generate_export_header(${library_name})

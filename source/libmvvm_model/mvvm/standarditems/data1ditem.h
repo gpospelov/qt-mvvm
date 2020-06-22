@@ -26,7 +26,7 @@ Values are stored in Data1DItem itself, axis is attached as a child. Correspondi
 properties will be served by GraphItem.
 */
 
-class CORE_EXPORT Data1DItem : public CompoundItem
+class MVVM_MODEL_EXPORT Data1DItem : public CompoundItem
 {
 public:
     static inline const std::string T_AXIS = "T_AXIS";

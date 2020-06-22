@@ -27,7 +27,7 @@ class SceneAdapterInterface;
 Contains embedded QCustomPlot widget, shows content of GraphViewportItem.
 */
 
-class CORE_EXPORT GraphCanvas : public QWidget
+class MVVM_VIEW_EXPORT GraphCanvas : public QWidget
 {
 public:
     explicit GraphCanvas(QWidget* parent = nullptr);

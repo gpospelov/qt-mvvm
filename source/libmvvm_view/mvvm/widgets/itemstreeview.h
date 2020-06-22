@@ -29,7 +29,7 @@ class ViewModelDelegate;
 //!
 //! Provides notification mechanism for SessionItem selections, use custom delegate.
 
-class CORE_EXPORT ItemsTreeView : public QWidget
+class MVVM_VIEW_EXPORT ItemsTreeView : public QWidget
 {
     Q_OBJECT
 

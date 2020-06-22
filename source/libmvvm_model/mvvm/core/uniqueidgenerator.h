@@ -26,7 +26,7 @@ generated during dynamic session. For the moment though, we rely on zero-probabi
 such event.
 */
 
-class CORE_EXPORT UniqueIdGenerator
+class MVVM_MODEL_EXPORT UniqueIdGenerator
 {
 public:
     static identifier_type generate();

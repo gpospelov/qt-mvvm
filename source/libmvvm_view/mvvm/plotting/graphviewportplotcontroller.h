@@ -27,7 +27,7 @@ class GraphViewportItem;
 Populates custom plot with all graphs found in GraphViewportItem.
 */
 
-class CORE_EXPORT GraphViewportPlotController : public ItemListener<GraphViewportItem>
+class MVVM_VIEW_EXPORT GraphViewportPlotController : public ItemListener<GraphViewportItem>
 {
 public:
     explicit GraphViewportPlotController(QCustomPlot* plot);

@@ -19,7 +19,7 @@ namespace ModelView
 
 //! Handles data roles for SessionItem.
 
-class CORE_EXPORT SessionItemData
+class MVVM_MODEL_EXPORT SessionItemData
 {
 public:
     using container_type = std::vector<DataRole>;

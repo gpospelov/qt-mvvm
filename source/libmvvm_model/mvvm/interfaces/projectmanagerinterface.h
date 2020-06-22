@@ -21,7 +21,7 @@ namespace ModelView
 //! Responsible for handling new/save/save-as/close Project logic, where the Project represents
 //! a collection of serialized application models in the project directory.
 
-class CORE_EXPORT ProjectManagerInterface
+class MVVM_MODEL_EXPORT ProjectManagerInterface
 {
 public:
     virtual ~ProjectManagerInterface() = default;

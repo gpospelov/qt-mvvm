@@ -21,7 +21,7 @@ namespace ModelView
 //! Custom property to define list of string values with multiple selections.
 //! Intended for QVariant.
 
-class CORE_EXPORT ComboProperty
+class MVVM_MODEL_EXPORT ComboProperty
 {
 public:
     ComboProperty();

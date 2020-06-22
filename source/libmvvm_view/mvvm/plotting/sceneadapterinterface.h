@@ -25,7 +25,7 @@ Used in the context of QCustomPlot being embedded into QGraphicsScene. Converts 
 coordinates in the coordinates of local system of QCustomPlot and vice versa.
 */
 
-class CORE_EXPORT SceneAdapterInterface
+class MVVM_VIEW_EXPORT SceneAdapterInterface
 {
 public:
     virtual ~SceneAdapterInterface() = default;

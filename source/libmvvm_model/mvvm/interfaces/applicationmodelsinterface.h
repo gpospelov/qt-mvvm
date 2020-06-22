@@ -21,7 +21,7 @@ class SessionModel;
 //! Interface to access application's model list for further manipulation.
 //! Used in the context of save/load projects.
 
-class CORE_EXPORT ApplicationModelsInterface
+class MVVM_MODEL_EXPORT ApplicationModelsInterface
 {
 public:
     //! Returns vector of models intended for saving on disk.

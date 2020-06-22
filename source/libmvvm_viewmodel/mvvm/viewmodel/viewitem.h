@@ -22,7 +22,7 @@ class SessionItem;
 
 //! Represents the view of SessionItem's data in single cell of ViewModel.
 
-class CORE_EXPORT ViewItem
+class MVVM_VIEWMODEL_EXPORT ViewItem
 {
 public:
     virtual ~ViewItem();

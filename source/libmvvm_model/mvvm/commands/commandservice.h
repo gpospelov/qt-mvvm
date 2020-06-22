@@ -28,7 +28,7 @@ class TagRow;
 
 //! Provides undo/redo for all commands of SessionModel.
 
-class CORE_EXPORT CommandService
+class MVVM_MODEL_EXPORT CommandService
 {
 public:
     CommandService(SessionModel* model);

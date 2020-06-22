@@ -22,7 +22,7 @@ class CellDecoratorInterface;
 
 //! Model delegate to provide editing/painting for custom variants.
 
-class CORE_EXPORT ViewModelDelegate : public QStyledItemDelegate
+class MVVM_VIEWMODEL_EXPORT ViewModelDelegate : public QStyledItemDelegate
 {
     Q_OBJECT
 

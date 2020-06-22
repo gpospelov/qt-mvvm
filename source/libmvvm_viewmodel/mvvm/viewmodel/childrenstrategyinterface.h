@@ -26,7 +26,7 @@ class SessionItem;
 //! The strategy is used in context of AbstractViewModel while exposing SessionModel to Qt.
 //! Thanks to this strategy ViewModel decides which items to visit.
 
-class CORE_EXPORT ChildrenStrategyInterface
+class MVVM_VIEWMODEL_EXPORT ChildrenStrategyInterface
 {
 public:
     virtual ~ChildrenStrategyInterface() = default;

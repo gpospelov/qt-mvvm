@@ -21,7 +21,7 @@ class ItemCatalogue;
 
 //! Default SessionItem factory.
 
-class CORE_EXPORT ItemFactory : public ItemFactoryInterface
+class MVVM_MODEL_EXPORT ItemFactory : public ItemFactoryInterface
 {
 public:
     ItemFactory(std::unique_ptr<ItemCatalogue> catalogue);

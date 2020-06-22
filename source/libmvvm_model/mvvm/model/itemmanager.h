@@ -23,7 +23,7 @@ class ItemFactoryInterface;
 
 //! Manages item creation/registration for SessionModel.
 
-class CORE_EXPORT ItemManager
+class MVVM_MODEL_EXPORT ItemManager
 {
 public:
     ItemManager();

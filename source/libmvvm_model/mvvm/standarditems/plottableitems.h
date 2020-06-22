@@ -23,7 +23,7 @@ namespace ModelView
 @brief Represent text item on plot.
 */
 
-class CORE_EXPORT TextItem : public CompoundItem
+class MVVM_MODEL_EXPORT TextItem : public CompoundItem
 {
 public:
     static inline const std::string P_TEXT = "P_TEXT";

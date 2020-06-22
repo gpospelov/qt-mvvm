@@ -22,7 +22,7 @@ class SessionItem;
 
 //! Catalogue for item constructions.
 
-class CORE_EXPORT ItemCatalogue
+class MVVM_MODEL_EXPORT ItemCatalogue
 {
 public:
     ItemCatalogue();

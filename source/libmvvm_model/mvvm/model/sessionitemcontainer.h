@@ -21,7 +21,7 @@ class SessionItem;
 
 //! Holds collection of SessionItem objects related to the same tag.
 
-class CORE_EXPORT SessionItemContainer
+class MVVM_MODEL_EXPORT SessionItemContainer
 {
 public:
     using container_t = std::vector<SessionItem*>;

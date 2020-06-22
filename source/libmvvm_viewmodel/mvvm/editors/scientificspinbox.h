@@ -16,7 +16,7 @@
 namespace ModelView
 {
 
-class CORE_EXPORT ScientificSpinBox : public QAbstractSpinBox
+class MVVM_VIEWMODEL_EXPORT ScientificSpinBox : public QAbstractSpinBox
 {
     Q_OBJECT
 

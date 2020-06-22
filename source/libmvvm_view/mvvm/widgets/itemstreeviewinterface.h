@@ -25,7 +25,7 @@ class SessionModel;
 @brief Saves and restores list of SessionModel's to/from disk using json format.
 */
 
-class CORE_EXPORT ItemsTreeViewInterface : public QWidget
+class MVVM_VIEW_EXPORT ItemsTreeViewInterface : public QWidget
 {
 public:
     virtual void setSessionModel(SessionModel* model) = 0;

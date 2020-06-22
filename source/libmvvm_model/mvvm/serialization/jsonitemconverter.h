@@ -26,7 +26,7 @@ class ItemFactoryInterface;
 
 //! Default converter between SessionItem and json object.
 
-class CORE_EXPORT JsonItemConverter : public JsonItemConverterInterface
+class MVVM_MODEL_EXPORT JsonItemConverter : public JsonItemConverterInterface
 {
 public:
     static const QString modelKey;

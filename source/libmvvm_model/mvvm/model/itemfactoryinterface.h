@@ -21,7 +21,7 @@ class SessionItem;
 
 //! Interface class for all factories capable of producing SessionItem's.
 
-class CORE_EXPORT ItemFactoryInterface
+class MVVM_MODEL_EXPORT ItemFactoryInterface
 {
 public:
     virtual ~ItemFactoryInterface() = default;

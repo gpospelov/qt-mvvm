@@ -26,7 +26,7 @@ Opposite to QLabel, doesn't trigger layout resize, being happy with place it has
 is too long for current size, it will be clipped.
 */
 
-class CORE_EXPORT StatusLabel : public QFrame
+class MVVM_VIEW_EXPORT StatusLabel : public QFrame
 {
     Q_OBJECT
 

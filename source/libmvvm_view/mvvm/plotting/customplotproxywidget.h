@@ -17,7 +17,7 @@ class QWidget;
 
 //! Custom proxy widget to embed color map in graphics scene.
 
-class CORE_EXPORT CustomPlotProxyWidget : public QGraphicsProxyWidget
+class MVVM_VIEW_EXPORT CustomPlotProxyWidget : public QGraphicsProxyWidget
 {
     Q_OBJECT
 public:

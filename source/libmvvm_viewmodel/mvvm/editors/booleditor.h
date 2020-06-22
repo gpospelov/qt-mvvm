@@ -19,7 +19,7 @@ namespace ModelView
 
 //! Custom editor for QVariant based on bool values.
 
-class CORE_EXPORT BoolEditor : public CustomEditor
+class MVVM_VIEWMODEL_EXPORT BoolEditor : public CustomEditor
 {
     Q_OBJECT
 

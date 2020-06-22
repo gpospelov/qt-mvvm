@@ -22,7 +22,7 @@ class GraphItem;
 @brief Container with viewport and collection of GraphItem's to plot.
 */
 
-class CORE_EXPORT GraphViewportItem : public ViewportItem
+class MVVM_MODEL_EXPORT GraphViewportItem : public ViewportItem
 {
 public:
     GraphViewportItem(const std::string& model_type = Constants::GraphViewportItemType);

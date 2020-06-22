@@ -34,7 +34,7 @@ class ItemBackupStrategy;
 class ItemFactoryInterface;
 class ItemCopyStrategy;
 
-class CORE_EXPORT SessionModel
+class MVVM_MODEL_EXPORT SessionModel
 {
 public:
     explicit SessionModel(std::string model_type = {});

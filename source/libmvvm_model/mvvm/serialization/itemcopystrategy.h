@@ -20,7 +20,7 @@ class SessionItem;
 
 //! Interface to copy items within context.
 
-class CORE_EXPORT ItemCopyStrategy
+class MVVM_MODEL_EXPORT ItemCopyStrategy
 {
 public:
     virtual ~ItemCopyStrategy() = default;

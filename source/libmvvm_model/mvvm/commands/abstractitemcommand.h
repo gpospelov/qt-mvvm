@@ -23,7 +23,7 @@ class Path;
 
 //! Abstract command interface to manipulate SessionItem in model context.
 
-class CORE_EXPORT AbstractItemCommand
+class MVVM_MODEL_EXPORT AbstractItemCommand
 {
 public:
     explicit AbstractItemCommand(SessionItem* receiver);

@@ -20,7 +20,7 @@ namespace ModelView
 
 //! Base class for all supported converters of QVariant to/from json object
 
-class CORE_EXPORT JsonVariantInterface
+class MVVM_MODEL_EXPORT JsonVariantInterface
 {
 public:
     virtual ~JsonVariantInterface() = default;

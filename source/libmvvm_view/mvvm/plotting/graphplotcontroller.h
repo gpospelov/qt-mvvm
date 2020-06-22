@@ -29,7 +29,7 @@ QCPGraph is added to QCustomPlot plottables, when controller is created, and rem
 plottables when controller is destroyed.
 */
 
-class CORE_EXPORT GraphPlotController : public ItemListener<GraphItem>
+class MVVM_VIEW_EXPORT GraphPlotController : public ItemListener<GraphItem>
 {
 public:
     explicit GraphPlotController(QCustomPlot* plot);

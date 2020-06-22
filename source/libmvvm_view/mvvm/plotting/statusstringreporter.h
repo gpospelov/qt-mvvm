@@ -29,7 +29,7 @@ class StatusStringFormatterInterface;
 Doesn't report if cursor is outside of the axes range.
 */
 
-class CORE_EXPORT StatusStringReporter
+class MVVM_VIEW_EXPORT StatusStringReporter
 {
 public:
     using callback_t = std::function<void(const std::string&)>;

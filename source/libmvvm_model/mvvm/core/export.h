@@ -7,22 +7,11 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_CORE_EXPORT_H
-#define MVVM_CORE_EXPORT_H
+#ifndef MVVM_MVVM_MODEL_EXPORT_H
+#define MVVM_MVVM_MODEL_EXPORT_H
 
-#ifdef _WIN32
+#include <mvvm/core/mvvm_model_export.h>
+#include <mvvm/core/mvvm_view_export.h>
+#include <mvvm/core/mvvm_viewmodel_export.h>
 
-#ifdef CORE_BUILD_DLL
-
-#define CORE_EXPORT __declspec(dllexport)
-#else
-#define CORE_EXPORT __declspec(dllimport)
-#endif // CORE_BUILD_DLL
-
-#endif // _WIN32
-
-#ifndef CORE_EXPORT
-#define CORE_EXPORT
-#endif
-
-#endif // MVVM_CORE_EXPORT_H
+#endif // MVVM_MVVM_MODEL_EXPORT_H

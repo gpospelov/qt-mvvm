@@ -21,7 +21,7 @@ class TagRow;
 
 //! Command for unddo/redo framework to move item from one parent to another.
 
-class CORE_EXPORT MoveItemCommand : public AbstractItemCommand
+class MVVM_MODEL_EXPORT MoveItemCommand : public AbstractItemCommand
 {
 public:
     using result_t = bool;

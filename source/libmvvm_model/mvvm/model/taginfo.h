@@ -19,7 +19,7 @@ namespace ModelView
 
 //! Holds info about single tag for SessionItem.
 
-class CORE_EXPORT TagInfo
+class MVVM_MODEL_EXPORT TagInfo
 {
 public:
     TagInfo();

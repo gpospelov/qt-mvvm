@@ -21,7 +21,7 @@ class LostFocusFilter;
 
 //! Custom editor for QVariant based on QColor.
 
-class CORE_EXPORT ColorEditor : public CustomEditor
+class MVVM_VIEWMODEL_EXPORT ColorEditor : public CustomEditor
 {
     Q_OBJECT
 

@@ -27,7 +27,7 @@ class Data1DItem;
 Provide update of data points on QCPGraph when Graph1DItem is changed.
 */
 
-class CORE_EXPORT Data1DPlotController : public ItemListener<Data1DItem>
+class MVVM_VIEW_EXPORT Data1DPlotController : public ItemListener<Data1DItem>
 {
 public:
     explicit Data1DPlotController(QCPGraph* graph);

@@ -24,7 +24,7 @@ Single ModelDocument corresponds to a single file on disk. It can contain arbitr
 of models.
 */
 
-class CORE_EXPORT ModelDocumentInterface
+class MVVM_MODEL_EXPORT ModelDocumentInterface
 {
 public:
     virtual ~ModelDocumentInterface() = default;

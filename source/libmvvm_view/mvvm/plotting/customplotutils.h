@@ -23,11 +23,11 @@ namespace Utils
 
 //! Switch axis to logarithmic scale mode.
 
-CORE_EXPORT void SetLogarithmicScale(QCPColorScale* axis, bool is_log_scale);
+MVVM_VIEW_EXPORT void SetLogarithmicScale(QCPColorScale* axis, bool is_log_scale);
 
 //! Switch axis to logarithmic scale mode.
 
-CORE_EXPORT void SetLogarithmicScale(QCPAxis* axis, bool is_log_scale);
+MVVM_VIEW_EXPORT void SetLogarithmicScale(QCPAxis* axis, bool is_log_scale);
 
 } // namespace Utils
 
