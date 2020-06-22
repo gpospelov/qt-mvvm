@@ -4,7 +4,7 @@ project(qt-mvvm VERSION 0.1.0 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 
 option(MVVM_BUMP_VERSION "Propagate version number" ON)
-option(MVVM_GTEST_DISCOVER_TESTS "Auto discover tests and add to ctest, otherwise will run at compile time" ON)
+option(MVVM_DISCOVER_TESTS "Auto discover tests and add to ctest, otherwise will run at compile time" ON)
 option(MVVM_ENABLE_FILESYSTEM "Enable <filesystem> (requires modern compiler), otherwise rely on Qt" ON)
 option(MVVM_BUILD_EXAMPLES "Build user examples" ON)
 

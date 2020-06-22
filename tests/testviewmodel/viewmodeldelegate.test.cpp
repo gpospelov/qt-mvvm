@@ -10,6 +10,7 @@
 #include "google_test.h"
 #include <QDataWidgetMapper>
 #include <QStyleOptionViewItem>
+#include "widgetbasedtest.h"
 #include <mvvm/editors/customeditor.h>
 #include <mvvm/model/propertyitem.h>
 #include <mvvm/model/sessionmodel.h>
@@ -21,7 +22,7 @@ using namespace ModelView;
 
 //! Tests of ViewModelDelegate class.
 
-class ViewModelDelegateTest : public ::testing::Test
+class ViewModelDelegateTest : public WidgetBasedTest
 {
 public:
     ~ViewModelDelegateTest();

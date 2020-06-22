@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include "google_test.h"
+#include "widgetbasedtest.h"
 #include <mvvm/editors/booleditor.h>
 #include <mvvm/editors/coloreditor.h>
 #include <mvvm/editors/combopropertyeditor.h>
@@ -26,7 +27,7 @@
 
 using namespace ModelView;
 
-class DefaultEditorFactoryTest : public ::testing::Test
+class DefaultEditorFactoryTest : public WidgetBasedTest
 {
 public:
     DefaultEditorFactoryTest() : m_factory(std::make_unique<DefaultEditorFactory>()) {}
