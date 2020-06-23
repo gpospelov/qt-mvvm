@@ -1,13 +1,16 @@
-#get_filename_component(MVVM_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+get_filename_component(MVVM_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
 include(CMakeFindDependencyMacro)
 
-#list(APPEND CMAKE_MODULE_PATH ${MVVM_CMAKE_DIR})
+list(APPEND CMAKE_MODULE_PATH ${MVVM_CMAKE_DIR})
+
+# Had to use find_package because find_dependency does not support COMPONENTS or MODULE until 3.8.0
 
 find_dependency(Qt5::Widgets REQUIRED)
 
-#list(REMOVE_AT CMAKE_MODULE_PATH -1)
+list(REMOVE_AT CMAKE_MODULE_PATH -1)
 
-#include("${MVVM_CMAKE_DIR}/MVVMTargets.cmake")
-include("${CMAKE_CURRENT_LIST_DIR}/MVVMTargets.cmake")
+#if(NOT TARGET FancyLib::FancyLib)
+    include("${MVVM_CMAKE_DIR}/FancyLibTargets.cmake")
+#endif()
 
-#set(MVVM_LIBRARIES MVVM::MVVM)
+set(MVVM_LIBRARIES MVVM::MVVM)
