@@ -9,12 +9,7 @@ option(MVVM_ENABLE_FILESYSTEM "Enable <filesystem> (requires modern compiler), o
 option(MVVM_BUILD_EXAMPLES "Build user examples" ON)
 
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules)
-
-include(CTest)
 include(configuration)
-include(CodeTools)
-include(GenerateExportHeader)
-include(GNUInstallDirs)
 
 add_subdirectory(source)
 add_subdirectory(examples)
