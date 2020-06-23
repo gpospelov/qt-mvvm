@@ -14,6 +14,7 @@ include(CTest)
 include(configuration)
 include(CodeTools)
 include(GenerateExportHeader)
+include(GNUInstallDirs)
 
 add_subdirectory(source)
 add_subdirectory(examples)
@@ -22,3 +23,5 @@ add_subdirectory(tests)
 
 # Defines new 'clangformat' target. See CodeTools.cmake for details.
 # project_clangformat_setup()
+
+include(installation)
