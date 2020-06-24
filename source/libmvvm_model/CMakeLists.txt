@@ -9,7 +9,6 @@ add_library(MVVM::Model ALIAS ${library_name}) # alias for build-tree usage
 
 # -- Generate header for export --
 
-generate_export_header(${library_name})
 set(export_filename ${MVVM_AUTOGEN_DIR}/mvvm/model_export.h)
 generate_export_header(${library_name} EXPORT_FILE_NAME ${export_filename})
 
@@ -19,7 +18,7 @@ target_link_libraries(${library_name} PUBLIC Qt5::Widgets Threads::Threads)
 target_include_directories(${library_name}
     PUBLIC
     $<INSTALL_INTERFACE:include>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}> $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}> $<BUILD_INTERFACE:${MVVM_AUTOGEN_DIR}>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}> $<BUILD_INTERFACE:${MVVM_AUTOGEN_DIR}>
     )
 
 # -- Definitions --

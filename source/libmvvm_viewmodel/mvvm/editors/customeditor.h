@@ -12,7 +12,7 @@
 
 #include <QVariant>
 #include <QWidget>
-#include <mvvm_viewmodel_export.h>
+#include <mvvm/viewmodel_export.h>
 
 namespace ModelView
 {
