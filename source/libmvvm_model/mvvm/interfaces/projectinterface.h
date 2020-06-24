@@ -10,7 +10,7 @@
 #ifndef MVVM_INTERFACES_PROJECTINTERFACE_H
 #define MVVM_INTERFACES_PROJECTINTERFACE_H
 
-#include <mvvm_model_export.h>
+#include <mvvm/model_export.h>
 #include <string>
 
 namespace ModelView

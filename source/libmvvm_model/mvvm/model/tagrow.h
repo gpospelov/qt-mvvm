@@ -10,7 +10,7 @@
 #ifndef MVVM_MODEL_TAGROW_H
 #define MVVM_MODEL_TAGROW_H
 
-#include <mvvm_model_export.h>
+#include <mvvm/model_export.h>
 #include <string>
 
 namespace ModelView

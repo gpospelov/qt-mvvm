@@ -12,7 +12,7 @@
 
 #include <QVariant>
 #include <memory>
-#include <mvvm_model_export.h>
+#include <mvvm/model_export.h>
 #include <mvvm/model/customvariants.h>
 #include <mvvm/model/mvvm_types.h>
 #include <mvvm/model/tagrow.h>

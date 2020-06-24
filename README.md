@@ -87,7 +87,7 @@ Given library is an attempt to understand how to deal with the application data.
 
 ## More explanations
 
-The framework consists of two libraries: `libmvvm_model.so` and `libmvvm_viewmodel.so`.
+The framework consists of three libraries: `libmvvm_model.so`, `libmvvm_viewmodel.so`, and `libmvvm_view.so`.
 
 `libmvvm_model.so` defines tree-like structure `SessionModel` to store
 any data of the GUI session. This part of the framework 
@@ -116,10 +116,11 @@ by the user. In practice, it allows generating Qt tables and trees with arbitrar
 `QAbstractProxyModel`.
 Particularly, the aforementioned machinery allows having something in the line of the ancient [Qt property browser framework](https://doc.qt.io/archives/qq/qq18-propertybrowser.html). 
 
+Third library, `libmmv_view.so`, contains few widgets for plotting and property editing.
 
 ## Size of the framework
 
-+ 15k loc of libraries (libmvvm_model.so and libmmv_viewmodel.so)
++ 20k loc of libraries (`libmvvm_model.so`, `libmmv_viewmodel.so` and `libmmv_view.so`)
 + 15k loc of tests
 + 10k of user examples
 
@@ -128,13 +129,13 @@ Particularly, the aforementioned machinery allows having something in the line o
 The library is intended for large GUI applications.
 The definition of `large` is quite arbitrary and means something 
 in the range 20k - 200k lines of code. 
-The main logic here is that using the additional library for smaller Qt applications 
-is redundant, Qt has everything that may be required. If small GUI becomes
+The main logic here is that using the additional library for smaller Qt applications is redundant, Qt has everything that may be required. If small GUI becomes
 messy with time, it can always be refactored or even rewritten from scratch.
-Developers of larger GUI should know better what they need and probably 
+
+However, when the number of views to show the same data is getting large, and the GUI enters the range 20k - 200k, this is were a given library might help in proper separation of data, logic, and UI. When the GUI grows even further, well,
+developers of such large GUI know already what they need and probably 
 have already implemented similar machinery.
 
 The project is under active development.
 
-.
 

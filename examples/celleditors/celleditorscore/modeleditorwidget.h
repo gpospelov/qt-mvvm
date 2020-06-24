@@ -34,7 +34,7 @@ class ModelEditorWidget : public QWidget
     Q_OBJECT
 public:
     explicit ModelEditorWidget(SampleModel* model = nullptr, QWidget* parent = nullptr);
-    ~ModelEditorWidget();
+    virtual ~ModelEditorWidget() override;
 
     void setModel(SampleModel* model);
 

@@ -11,7 +11,7 @@
 #define MVVM_VIEWMODEL_ROWSTRATEGYINTERFACE_H
 
 #include <QList>
-#include <mvvm_viewmodel_export.h>
+#include <mvvm/viewmodel_export.h>
 #include <vector>
 #include <memory>
 #include <stdexcept>

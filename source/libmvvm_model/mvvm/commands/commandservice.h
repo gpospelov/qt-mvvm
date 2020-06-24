@@ -13,7 +13,7 @@
 #include <QUndoStack>
 #include <memory>
 #include <mvvm/commands/commandadapter.h>
-#include <mvvm_model_export.h>
+#include <mvvm/model_export.h>
 #include <mvvm/model/function_types.h>
 
 class QUndoCommand;

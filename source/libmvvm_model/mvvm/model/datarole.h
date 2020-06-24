@@ -11,7 +11,7 @@
 #define MVVM_MODEL_DATAROLE_H
 
 #include <QVariant>
-#include <mvvm_model_export.h>
+#include <mvvm/model_export.h>
 
 namespace ModelView
 {

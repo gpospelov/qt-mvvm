@@ -12,7 +12,7 @@
 
 #include <QColor>
 #include <QVariant>
-#include <mvvm_model_export.h>
+#include <mvvm/model_export.h>
 #include <string>
 
 namespace ModelView

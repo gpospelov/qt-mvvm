@@ -11,7 +11,7 @@
 #define MVVM_MODEL_ITEMFACTORY_H
 
 #include <memory>
-#include <mvvm_model_export.h>
+#include <mvvm/model_export.h>
 #include <mvvm/model/itemfactoryinterface.h>
 
 namespace ModelView

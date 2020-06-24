@@ -11,7 +11,7 @@
 #define MVVM_VIEWMODEL_CHILDRENSTRATEGYINTERFACE_H
 
 #include <QList>
-#include <mvvm_viewmodel_export.h>
+#include <mvvm/viewmodel_export.h>
 
 class QStandardItem;
 

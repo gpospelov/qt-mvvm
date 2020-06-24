@@ -11,7 +11,7 @@
 #define MVVM_VIEWMODEL_REFVIEWMODELCONTROLLER_H
 
 #include <memory>
-#include <mvvm_viewmodel_export.h>
+#include <mvvm/viewmodel_export.h>
 #include <mvvm/model/tagrow.h>
 #include <vector>
 #include <QStringList>

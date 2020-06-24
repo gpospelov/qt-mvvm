@@ -11,7 +11,7 @@
 #define MVVM_PLOTTING_CUSTOMPLOTPROXYWIDGET_H
 
 #include <QGraphicsProxyWidget>
-#include <mvvm_view_export.h>
+#include <mvvm/view_export.h>
 
 class QWidget;
 

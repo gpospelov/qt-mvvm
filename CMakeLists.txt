@@ -9,16 +9,14 @@ option(MVVM_ENABLE_FILESYSTEM "Enable <filesystem> (requires modern compiler), o
 option(MVVM_BUILD_EXAMPLES "Build user examples" ON)
 
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules)
-
-include(CTest)
 include(configuration)
-include(CodeTools)
-include(GenerateExportHeader)
 
 add_subdirectory(source)
-add_subdirectory(examples)
 add_subdirectory(thirdparty)
 add_subdirectory(tests)
+
+include(installation)
+add_subdirectory(examples)
 
 # Defines new 'clangformat' target. See CodeTools.cmake for details.
 # project_clangformat_setup()

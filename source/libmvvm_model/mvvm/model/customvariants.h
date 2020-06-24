@@ -15,7 +15,7 @@
 
 #include <QMetaType>
 #include <QVariant>
-#include <mvvm_model_export.h>
+#include <mvvm/model_export.h>
 #include <mvvm/utils/reallimits.h>
 #include <string>
 #include <vector>

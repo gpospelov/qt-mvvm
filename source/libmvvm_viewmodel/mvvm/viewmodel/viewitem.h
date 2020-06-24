@@ -12,7 +12,7 @@
 
 #include <QVariant>
 #include <memory>
-#include <mvvm_viewmodel_export.h>
+#include <mvvm/viewmodel_export.h>
 #include <vector>
 
 namespace ModelView
