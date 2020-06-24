@@ -9,7 +9,7 @@ find_package(Qt5Core REQUIRED)
 find_package(Qt5Test REQUIRED)
 
 # necessary for Qt creator and clang code model
-include_directories(${BUILD_INC_DIR} ${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
+include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
 set(CMAKE_AUTOMOC ON)
 add_executable(${test} ${source_files} ${include_files})
