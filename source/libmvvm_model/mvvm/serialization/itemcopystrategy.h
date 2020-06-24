@@ -11,7 +11,7 @@
 #define MVVM_SERIALIZATION_ITEMCOPYSTRATEGY_H
 
 #include <memory>
-#include <mvvm_model_export.h>
+#include <mvvm/model_export.h>
 
 namespace ModelView
 {

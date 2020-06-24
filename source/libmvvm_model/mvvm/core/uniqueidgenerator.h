@@ -10,7 +10,7 @@
 #ifndef MVVM_MODEL_UNIQUEIDGENERATOR_H
 #define MVVM_MODEL_UNIQUEIDGENERATOR_H
 
-#include <mvvm_model_export.h>
+#include <mvvm/model_export.h>
 #include <mvvm/core/types.h>
 
 namespace ModelView

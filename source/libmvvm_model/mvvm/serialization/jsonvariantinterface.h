@@ -10,7 +10,7 @@
 #ifndef MVVM_SERIALIZATION_JSONVARIANTINTERFACE_H
 #define MVVM_SERIALIZATION_JSONVARIANTINTERFACE_H
 
-#include <mvvm_model_export.h>
+#include <mvvm/model_export.h>
 
 class QJsonObject;
 class QVariant;

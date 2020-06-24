@@ -14,7 +14,7 @@
 #include <complex>
 #include <iterator>
 #include <memory>
-#include <mvvm_model_export.h>
+#include <mvvm/model_export.h>
 #include <string>
 #include <type_traits>
 #include <vector>
