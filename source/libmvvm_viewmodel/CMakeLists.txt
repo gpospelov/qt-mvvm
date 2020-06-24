@@ -13,8 +13,11 @@ add_library(MVVM::ViewModel ALIAS ${library_name})
 generate_export_header(${library_name})
 
 target_link_libraries(${library_name} PUBLIC mvvm_model Qt5::Widgets)
-target_include_directories(${library_name} PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}> $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>)
+target_include_directories(${library_name}
+    PUBLIC
+    $<INSTALL_INTERFACE:include>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}> $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+    )
 
 # to make clang code model in Qt creator happy
 target_compile_features(${library_name} PUBLIC cxx_std_17)

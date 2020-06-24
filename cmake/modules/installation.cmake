@@ -14,9 +14,10 @@ install(EXPORT mvvm-targets FILE MVVMTargets.cmake NAMESPACE MVVM:: DESTINATION 
 # -----------------------------------------------------------------------------
 
 # Add all targets to the build-tree export set
-export(TARGETS mvvm_model mvvm_viewmodel mvvm_view NAMESPACE MVVM:: FILE MVVMTargets.cmake)
+export(TARGETS mvvm_model mvvm_viewmodel mvvm_view NAMESPACE MVVM:: FILE "${PROJECT_BINARY_DIR}/MVVMTargets.cmake")
 
 # Export the package for use from the build-tree (goes to $HOME/.cmake)
+set(CMAKE_EXPORT_PACKAGE_REGISTRY ON)
 export(PACKAGE MVVM)
 
 # -----------------------------------------------------------------------------
@@ -25,11 +26,13 @@ export(PACKAGE MVVM)
 
 include(CMakePackageConfigHelpers)
 
+# to use in the build tree
 configure_package_config_file(${CMAKE_SOURCE_DIR}/cmake/scripts/MVVMConfig.cmake.in
     ${CMAKE_CURRENT_BINARY_DIR}/MVVMConfig.cmake
     INSTALL_DESTINATION ${INSTALL_CONFIGDIR}
 )
 
+# to use in install tree
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/MVVMConfig.cmake DESTINATION ${INSTALL_CONFIGDIR})
 
 # -----------------------------------------------------------------------------

@@ -1,16 +1,21 @@
+#  MVVM_INCLUDE_DIRS - include directories for qt-mvvm
+#  MVVM_LIBRARIES    - libraries to link against
+
 get_filename_component(MVVM_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+
 include(CMakeFindDependencyMacro)
+find_dependency(Qt5 5.12 COMPONENTS Widgets REQUIRED)
+find_dependency(Threads)
 
-list(APPEND CMAKE_MODULE_PATH ${MVVM_CMAKE_DIR})
+if(TARGET MVVM::Model OR TARGET MVVM::ViewModel OR TARGET MVVM::View)
+else()
+    message(STATUS "MVVMConfig.cmake including ${MVVM_CMAKE_DIR}/MVVMTargets.cmake")
+   include("${MVVM_CMAKE_DIR}/MVVMTargets.cmake")
+endif()
 
-# Had to use find_package because find_dependency does not support COMPONENTS or MODULE until 3.8.0
+set(MVVM_LIBRARIES MVVM::Model MVVM::ViewModel MVVM::View)
 
-find_dependency(Qt5::Widgets REQUIRED)
+message(STATUS "MVVMConfig.cmake in ${CMAKE_CURRENT_LIST_FILE}")
+message(STATUS " MVVM_LIBRARIES ${MVVM_LIBRARIES}")
 
-list(REMOVE_AT CMAKE_MODULE_PATH -1)
 
-#if(NOT TARGET FancyLib::FancyLib)
-    include("${MVVM_CMAKE_DIR}/FancyLibTargets.cmake")
-#endif()
-
-set(MVVM_LIBRARIES MVVM::MVVM)
