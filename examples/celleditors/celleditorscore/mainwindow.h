@@ -23,10 +23,10 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 public:
     MainWindow();
-    ~MainWindow();
+    virtual ~MainWindow() override;
 
 protected:
-    void closeEvent(QCloseEvent* event);
+    void closeEvent(QCloseEvent* event) override;
 
 private:
     void write_settings();

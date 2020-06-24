@@ -1,7 +1,9 @@
 # library: celleditorscore
 set(library_name celleditorscore)
 
-add_library(${library_name} STATIC "")
+set(CMAKE_AUTOMOC ON)
+
+add_library(${library_name} SHARED "")
 target_link_libraries(${library_name} PRIVATE MVVM::View)
 
 target_sources(${library_name} PRIVATE
