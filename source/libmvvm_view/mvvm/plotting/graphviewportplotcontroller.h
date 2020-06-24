@@ -12,7 +12,7 @@
 
 #include <mvvm/signals/itemlistener.h>
 #include <memory>
-#include <mvvm_view_export.h>
+#include <mvvm/view_export.h>
 
 class QCustomPlot;
 

@@ -12,7 +12,7 @@
 
 #include <functional>
 #include <memory>
-#include <mvvm_view_export.h>
+#include <mvvm/view_export.h>
 #include <string>
 
 class QCustomPlot;

@@ -11,7 +11,7 @@
 #define MVVM_WIDGETS_ITEMSTREEVIEWINTERFACE_H
 
 #include <QWidget>
-#include <mvvm_view_export.h>
+#include <mvvm/view_export.h>
 
 class QTreeView;
 

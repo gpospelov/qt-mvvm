@@ -10,7 +10,7 @@
 #ifndef MVVM_WIDGETS_UTILS_H
 #define MVVM_WIDGETS_UTILS_H
 
-#include <mvvm_view_export.h>
+#include <mvvm/view_export.h>
 
 class QColor;
 class QString;

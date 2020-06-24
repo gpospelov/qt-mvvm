@@ -10,7 +10,7 @@
 #ifndef MVVM_PLOTTING_SCENEADAPTERINTERFACE_H
 #define MVVM_PLOTTING_SCENEADAPTERINTERFACE_H
 
-#include <mvvm_view_export.h>
+#include <mvvm/view_export.h>
 
 class QRectF;
 
