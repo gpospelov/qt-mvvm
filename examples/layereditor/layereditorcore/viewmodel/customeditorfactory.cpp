@@ -8,9 +8,9 @@
 // ************************************************************************** //
 
 #include <QModelIndex>
-#include <layereditor/model/applicationmodels.h>
-#include <layereditor/model/materialmodel.h>
-#include <layereditor/viewmodel/customeditorfactory.h>
+#include <layereditorcore/model/applicationmodels.h>
+#include <layereditorcore/model/materialmodel.h>
+#include <layereditorcore/viewmodel/customeditorfactory.h>
 #include <mvvm/editors/externalpropertycomboeditor.h>
 #include <mvvm/model/customvariants.h>
 #include <mvvm/model/externalproperty.h>

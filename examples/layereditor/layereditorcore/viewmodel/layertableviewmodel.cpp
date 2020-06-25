@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#include <layereditor/viewmodel/layertableviewmodel.h>
-#include <layereditor/viewmodel/layertableviewmodelcontroller.h>
+#include <layereditorcore/viewmodel/layertableviewmodel.h>
+#include <layereditorcore/viewmodel/layertableviewmodelcontroller.h>
 
 using namespace ModelView;
 

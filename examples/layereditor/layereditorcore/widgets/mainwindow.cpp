@@ -13,9 +13,9 @@
 #include <QMenuBar>
 #include <QSettings>
 #include <QTabWidget>
-#include <layereditor/model/applicationmodels.h>
-#include <layereditor/widgets/mainwindow.h>
-#include <layereditor/widgets/samplewidget.h>
+#include <layereditorcore/model/applicationmodels.h>
+#include <layereditorcore/widgets/mainwindow.h>
+#include <layereditorcore/widgets/samplewidget.h>
 
 namespace
 {

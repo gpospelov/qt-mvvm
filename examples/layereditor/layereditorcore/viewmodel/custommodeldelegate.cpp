@@ -7,12 +7,13 @@
 //
 // ************************************************************************** //
 
-#include <layereditor/viewmodel/materialtableviewmodel.h>
-#include <mvvm/viewmodel/standardviewmodelcontrollers.h>
+#include <layereditorcore/viewmodel/customeditorfactory.h>
+#include <layereditorcore/viewmodel/custommodeldelegate.h>
 
 using namespace ModelView;
 
-MaterialTableViewModel::MaterialTableViewModel(ModelView::SessionModel* model, QObject* parent)
-    : ViewModel(std::make_unique<PropertyTableViewModelController>(model, this), parent)
+CustomModelDelegate::CustomModelDelegate(ApplicationModels* models, QObject* parent)
+    : ViewModelDelegate(parent)
 {
+    setEditorFactory(std::make_unique<CustomEditorFactory>(models));
 }

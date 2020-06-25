@@ -8,8 +8,8 @@
 // ************************************************************************** //
 
 #include <QColor>
-#include <layereditor/model/materialitems.h>
-#include <layereditor/model/materialmodel.h>
+#include <layereditorcore/model/materialitems.h>
+#include <layereditorcore/model/materialmodel.h>
 #include <mvvm/model/externalproperty.h>
 #include <mvvm/model/itemcatalogue.h>
 

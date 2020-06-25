@@ -9,12 +9,12 @@
 
 #include <QTreeView>
 #include <QVBoxLayout>
-#include <layereditor/model/applicationmodels.h>
-#include <layereditor/model/materialmodel.h>
-#include <layereditor/model/samplemodel.h>
-#include <layereditor/widgets/layertablewidget.h>
-#include <layereditor/widgets/materialtablewidget.h>
-#include <layereditor/widgets/samplewidget.h>
+#include <layereditorcore/model/applicationmodels.h>
+#include <layereditorcore/model/materialmodel.h>
+#include <layereditorcore/model/samplemodel.h>
+#include <layereditorcore/widgets/layertablewidget.h>
+#include <layereditorcore/widgets/materialtablewidget.h>
+#include <layereditorcore/widgets/samplewidget.h>
 #include <mvvm/viewmodel/standardviewmodels.h>
 #include <mvvm/widgets/itemstreeview.h>
 

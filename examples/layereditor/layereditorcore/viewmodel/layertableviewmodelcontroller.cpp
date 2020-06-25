@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#include <layereditor/model/layeritems.h>
-#include <layereditor/viewmodel/layertableviewmodelcontroller.h>
+#include <layereditorcore/model/layeritems.h>
+#include <layereditorcore/viewmodel/layertableviewmodelcontroller.h>
 #include <mvvm/viewmodel/rowstrategyinterface.h>
 #include <mvvm/viewmodel/standardchildrenstrategies.h>
 #include <mvvm/viewmodel/standardviewitems.h>
