@@ -1,8 +1,10 @@
 # library: plotgraphscore
 set(library_name plotgraphscore)
 
+set(CMAKE_AUTOMOC ON)
+
 add_library(${library_name} STATIC "")
-target_link_libraries(${library_name} PRIVATE mvvm_view)
+target_link_libraries(${library_name} PRIVATE MVVM::View)
 
 target_sources(${library_name} PRIVATE
     graphmodel.cpp
@@ -14,4 +16,3 @@ target_sources(${library_name} PRIVATE
     mainwindow.cpp
     mainwindow.h
 )
-
