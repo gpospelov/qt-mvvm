@@ -15,5 +15,7 @@ if (MVVM_BUILD_EXAMPLES)
     add_subdirectory(treeviews)
 endif()
 
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/examples DESTINATION share/mvvm)
+
 
 
