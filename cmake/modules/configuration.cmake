@@ -10,6 +10,13 @@ include(GenerateExportHeader)
 include(GNUInstallDirs)
 
 # -----------------------------------------------------------------------------
+# Variables
+# -----------------------------------------------------------------------------
+
+set(MVVM_SOVERSION ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR})
+set(MVVM_BUILDVERSION ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH})
+
+# -----------------------------------------------------------------------------
 # Directories
 # -----------------------------------------------------------------------------
 

@@ -65,9 +65,3 @@
 ![saveloadproject](../doc/saveloadproject.png)
 
 <hr>
-
-### Under development
-
-+ sampleview
-+ quickrefl
-

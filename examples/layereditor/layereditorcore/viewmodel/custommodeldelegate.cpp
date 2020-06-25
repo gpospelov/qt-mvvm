@@ -7,18 +7,13 @@
 //
 // ************************************************************************** //
 
-#include <layereditorcore/widgets/mainwindow.h>
-#include <QApplication>
-#include <QLocale>
+#include <layereditorcore/viewmodel/customeditorfactory.h>
+#include <layereditorcore/viewmodel/custommodeldelegate.h>
 
-int main(int argc, char** argv)
+using namespace ModelView;
+
+CustomModelDelegate::CustomModelDelegate(ApplicationModels* models, QObject* parent)
+    : ViewModelDelegate(parent)
 {
-    QLocale::setDefault(QLocale(QLocale::English, QLocale::UnitedStates));
-
-    QApplication app(argc, argv);
-
-    MainWindow win;
-    win.show();
-
-    return app.exec();
+    setEditorFactory(std::make_unique<CustomEditorFactory>(models));
 }

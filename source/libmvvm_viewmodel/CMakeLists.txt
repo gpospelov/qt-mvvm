@@ -28,6 +28,6 @@ target_compile_features(${library_name} PUBLIC cxx_std_17)
 # -- Installation --
 
 install(TARGETS ${library_name} EXPORT mvvm-targets LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
-set_target_properties(${library_name} PROPERTIES EXPORT_NAME ViewModel)
+set_target_properties(${library_name} PROPERTIES EXPORT_NAME ViewModel SOVERSION ${MVVM_SOVERSION} VERSION ${MVVM_BUILDVERSION})
 install(DIRECTORY mvvm/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/mvvm FILES_MATCHING PATTERN "*.h")
 install(FILES ${export_filename} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/mvvm)

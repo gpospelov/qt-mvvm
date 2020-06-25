@@ -4,7 +4,6 @@ if (MVVM_BUILD_EXAMPLES)
     add_subdirectory(celleditors)
     add_subdirectory(collidingmice)
     add_subdirectory(concurrentplot)
-    add_subdirectory(defaultqt)
     add_subdirectory(dragandmove)
     add_subdirectory(flateditor)
     add_subdirectory(graphicsproxy)
@@ -12,10 +11,11 @@ if (MVVM_BUILD_EXAMPLES)
     add_subdirectory(plotcolormap)
     add_subdirectory(plotgraphs)
     add_subdirectory(quickrefl)
-    #add_subdirectory(sampleview)
     add_subdirectory(saveloadproject)
     add_subdirectory(treeviews)
 endif()
+
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/examples DESTINATION share/mvvm)
 
 
 

@@ -7,18 +7,12 @@
 //
 // ************************************************************************** //
 
-#include <layereditorcore/widgets/mainwindow.h>
-#include <QApplication>
-#include <QLocale>
+#include <layereditorcore/viewmodel/layertableviewmodel.h>
+#include <layereditorcore/viewmodel/layertableviewmodelcontroller.h>
 
-int main(int argc, char** argv)
+using namespace ModelView;
+
+LayerTableViewModel::LayerTableViewModel(SessionModel* model, QObject* parent)
+    : ViewModel(std::make_unique<LayerTableViewModelController>(model, this), parent)
 {
-    QLocale::setDefault(QLocale(QLocale::English, QLocale::UnitedStates));
-
-    QApplication app(argc, argv);
-
-    MainWindow win;
-    win.show();
-
-    return app.exec();
 }
