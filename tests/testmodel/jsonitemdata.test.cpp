@@ -7,9 +7,9 @@
 //
 // ************************************************************************** //
 
+#include "folderbasedtest.h"
 #include "google_test.h"
 #include "test_utils.h"
-#include "folderbasedtest.h"
 #include <QJsonArray>
 #include <QJsonObject>
 #include <mvvm/model/customvariants.h>

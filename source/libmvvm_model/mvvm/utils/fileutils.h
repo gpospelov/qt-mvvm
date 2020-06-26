@@ -40,7 +40,8 @@ MVVM_MODEL_EXPORT void remove_all(const std::string& path);
 MVVM_MODEL_EXPORT std::string base_name(const std::string& path);
 
 //! Returns list of files with given extention found in given directory.
-MVVM_MODEL_EXPORT std::vector<std::string> FindFiles(const std::string& dirname, const std::string& ext);
+MVVM_MODEL_EXPORT std::vector<std::string> FindFiles(const std::string& dirname,
+                                                     const std::string& ext);
 
 //! Returns the path to the parent directory.
 MVVM_MODEL_EXPORT std::string parent_path(const std::string& path);

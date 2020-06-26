@@ -32,7 +32,7 @@ namespace Utils
 
 //! Iterates through QAbstractItem model
 MVVM_VIEWMODEL_EXPORT void iterate_model(const QAbstractItemModel* model, const QModelIndex& parent,
-                               const std::function<void(const QModelIndex& child)>& fun);
+                                         const std::function<void(const QModelIndex& child)>& fun);
 
 //! Returns vector of Qt roles corresponding to given ItemDataRole.
 MVVM_VIEWMODEL_EXPORT QVector<int> item_role_to_qt(int role);
@@ -53,7 +53,8 @@ MVVM_VIEWMODEL_EXPORT std::vector<SessionItem*> ItemsFromIndex(const QModelIndex
 //! Finds all SessionItems corresponding to given index list and collect their parents.
 //! Function is usefull in the context of table-like views when we want to find compound items
 //! (i.e. Layers) from table cells containing LayerItem's properties (i.e. thickness).
-MVVM_VIEWMODEL_EXPORT std::vector<SessionItem*> ParentItemsFromIndex(const QModelIndexList& index_list);
+MVVM_VIEWMODEL_EXPORT std::vector<SessionItem*>
+ParentItemsFromIndex(const QModelIndexList& index_list);
 
 } // namespace Utils
 

@@ -54,8 +54,10 @@ std::vector<GraphItem*> GraphViewportItem::visibleGraphItems() const
 {
     std::vector<GraphItem*> all_items = items<GraphItem>(T_ITEMS);
     std::vector<GraphItem*> visible_items;
-    std::copy_if(all_items.begin(), all_items.end(), 
-        std::back_inserter(visible_items), [](const GraphItem* graph_item){return graph_item->property<bool>(GraphItem::P_DISPLAYED);});
+    std::copy_if(all_items.begin(), all_items.end(), std::back_inserter(visible_items),
+                 [](const GraphItem* graph_item) {
+                     return graph_item->property<bool>(GraphItem::P_DISPLAYED);
+                 });
     return visible_items;
 }
 
@@ -64,7 +66,8 @@ void GraphViewportItem::setSelected(std::vector<GraphItem*> selected_graph_items
 {
     std::vector<GraphItem*> output;
     for (auto graph_item : items<GraphItem>(T_ITEMS)) {
-        if (std::find(selected_graph_items.begin(), selected_graph_items.end(), graph_item) != selected_graph_items.end())
+        if (std::find(selected_graph_items.begin(), selected_graph_items.end(), graph_item)
+            != selected_graph_items.end())
             graph_item->setProperty(GraphItem::P_DISPLAYED, true);
         else
             graph_item->setProperty(GraphItem::P_DISPLAYED, false);

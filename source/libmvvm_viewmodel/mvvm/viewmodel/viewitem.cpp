@@ -13,8 +13,8 @@
 #include <mvvm/utils/containerutils.h>
 #include <mvvm/viewmodel/viewitem.h>
 #include <mvvm/viewmodel/viewmodelutils.h>
-#include <vector>
 #include <stdexcept>
+#include <vector>
 
 using namespace ModelView;
 

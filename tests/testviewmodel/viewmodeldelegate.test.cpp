@@ -8,9 +8,9 @@
 // ************************************************************************** //
 
 #include "google_test.h"
+#include "widgetbasedtest.h"
 #include <QDataWidgetMapper>
 #include <QStyleOptionViewItem>
-#include "widgetbasedtest.h"
 #include <mvvm/editors/customeditor.h>
 #include <mvvm/model/propertyitem.h>
 #include <mvvm/model/sessionmodel.h>

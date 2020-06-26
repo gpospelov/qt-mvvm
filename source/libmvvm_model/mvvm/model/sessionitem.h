@@ -12,14 +12,13 @@
 
 #include <QVariant>
 #include <memory>
-#include <mvvm/model_export.h>
 #include <mvvm/model/customvariants.h>
 #include <mvvm/model/mvvm_types.h>
 #include <mvvm/model/tagrow.h>
+#include <mvvm/model_export.h>
+#include <stdexcept>
 #include <type_traits>
 #include <vector>
-#include <stdexcept>
-
 
 namespace ModelView
 {

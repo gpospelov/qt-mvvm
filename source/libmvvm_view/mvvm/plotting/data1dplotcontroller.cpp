@@ -12,9 +12,9 @@
 #include <mvvm/standarditems/data1ditem.h>
 #include <stdexcept>
 
-namespace {
-template<typename T>
-QVector<T> fromStdVector(const std::vector<T>& vec)
+namespace
+{
+template <typename T> QVector<T> fromStdVector(const std::vector<T>& vec)
 {
 #if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
     return QVector<T>(vec.begin(), vec.end());
@@ -22,7 +22,7 @@ QVector<T> fromStdVector(const std::vector<T>& vec)
     return QVector<T>::fromStdVector(vec);
 #endif
 }
-}
+} // namespace
 
 using namespace ModelView;
 

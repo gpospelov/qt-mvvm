@@ -8,9 +8,9 @@
 // ************************************************************************** //
 
 #include "google_test.h"
-#include <mvvm/project/modelhaschangedcontroller.h>
 #include <mvvm/model/propertyitem.h>
 #include <mvvm/model/sessionmodel.h>
+#include <mvvm/project/modelhaschangedcontroller.h>
 
 using namespace ModelView;
 

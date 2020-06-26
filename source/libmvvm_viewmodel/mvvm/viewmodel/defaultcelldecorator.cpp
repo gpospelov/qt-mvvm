@@ -9,11 +9,11 @@
 
 #include <QModelIndex>
 #include <QStyleOptionViewItem>
+#include <mvvm/editors/scientificspinbox.h>
 #include <mvvm/model/comboproperty.h>
 #include <mvvm/model/customvariants.h>
 #include <mvvm/model/externalproperty.h>
 #include <mvvm/viewmodel/defaultcelldecorator.h>
-#include <mvvm/editors/scientificspinbox.h>
 
 using namespace ModelView;
 

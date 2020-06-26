@@ -15,9 +15,9 @@
 #include <mvvm/editors/defaulteditorfactory.h>
 #include <mvvm/model/groupitem.h>
 #include <mvvm/model/sessionitem.h>
-#include <mvvm/viewmodel/viewmodel.h>
-#include <mvvm/viewmodel/standardviewmodels.h>
 #include <mvvm/viewmodel/standardviewitems.h>
+#include <mvvm/viewmodel/standardviewmodels.h>
+#include <mvvm/viewmodel/viewmodel.h>
 #include <mvvm/viewmodel/viewmodeldelegate.h>
 #include <mvvm/widgets/layoututils.h>
 #include <mvvm/widgets/propertyflatview.h>

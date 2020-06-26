@@ -10,8 +10,8 @@
 #ifndef MVVM_VIEWMODEL_STANDARDVIEWMODELCONTROLLERS_H
 #define MVVM_VIEWMODEL_STANDARDVIEWMODELCONTROLLERS_H
 
-#include <mvvm/viewmodel/viewmodelcontroller.h>
 #include <mvvm/viewmodel/viewmodel.h>
+#include <mvvm/viewmodel/viewmodelcontroller.h>
 #include <string>
 #include <vector>
 
@@ -91,7 +91,8 @@ moves subproperties of group item under parent of group item.
 class MVVM_VIEWMODEL_EXPORT PropertyFlatViewModelController : public ViewModelController
 {
 public:
-    explicit PropertyFlatViewModelController(SessionModel* session_model, ViewModelBase* view_model);
+    explicit PropertyFlatViewModelController(SessionModel* session_model,
+                                             ViewModelBase* view_model);
 
 protected:
     void onDataChange(SessionItem* item, int role) override;

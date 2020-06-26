@@ -10,9 +10,9 @@
 #include "qcustomplot.h"
 #include <mvvm/plotting/colormapcanvas.h>
 #include <mvvm/plotting/colormapviewportplotcontroller.h>
+#include <mvvm/plotting/customplotsceneadapter.h>
 #include <mvvm/plotting/statusstringreporter.h>
 #include <mvvm/plotting/statusstringreporterfactory.h>
-#include <mvvm/plotting/customplotsceneadapter.h>
 #include <mvvm/standarditems/colormapviewportitem.h>
 #include <mvvm/widgets/statuslabel.h>
 

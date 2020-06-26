@@ -159,7 +159,7 @@ ModelMapper* SessionModel::mapper()
 //! Removes all items from the model.
 //! If callback is provided, use it to rebuild content of root item.
 
-void SessionModel::clear(std::function<void(SessionItem *)> callback)
+void SessionModel::clear(std::function<void(SessionItem*)> callback)
 {
     mapper()->callOnModelAboutToBeReset();
     createRootItem();

@@ -7,9 +7,9 @@
 //
 // ************************************************************************** //
 
+#include "folderbasedtest.h"
 #include "google_test.h"
 #include "test_utils.h"
-#include "folderbasedtest.h"
 #include <mvvm/model/propertyitem.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
@@ -24,7 +24,7 @@ using namespace ModelView;
 class JsonDocumentTest : public FolderBasedTest
 {
 public:
-    JsonDocumentTest() : FolderBasedTest("test_JsonDocument"){}
+    JsonDocumentTest() : FolderBasedTest("test_JsonDocument") {}
     ~JsonDocumentTest();
 
     class TestModel1 : public SessionModel

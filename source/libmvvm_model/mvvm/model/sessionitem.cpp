@@ -53,7 +53,6 @@ struct SessionItem::SessionItemImpl {
             m_model->mapper()->callOnDataChange(m_this_item, role);
         return result;
     }
-
 };
 
 SessionItem::SessionItem(model_type modelType) : p_impl(std::make_unique<SessionItemImpl>(this))

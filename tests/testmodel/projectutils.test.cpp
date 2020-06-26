@@ -7,14 +7,14 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/interfaces/applicationmodelsinterface.h>
 #include "folderbasedtest.h"
 #include "google_test.h"
-#include <mvvm/interfaces/projectinterface.h>
-#include <mvvm/project/projectutils.h>
 #include "test_utils.h"
+#include <mvvm/interfaces/applicationmodelsinterface.h>
+#include <mvvm/interfaces/projectinterface.h>
 #include <mvvm/model/propertyitem.h>
 #include <mvvm/model/sessionmodel.h>
+#include <mvvm/project/projectutils.h>
 #include <mvvm/utils/fileutils.h>
 
 using namespace ModelView;
@@ -31,9 +31,7 @@ public:
     {
     public:
         std::unique_ptr<SessionModel> sample_model;
-        ApplicationModels() : sample_model(std::make_unique<SessionModel>("SampleModel"))
-        {
-        }
+        ApplicationModels() : sample_model(std::make_unique<SessionModel>("SampleModel")) {}
 
         std::vector<SessionModel*> persistent_models() const override
         {
