@@ -10,8 +10,8 @@
 #ifndef MVVM_MODEL_SESSIONITEMCONTAINER_H
 #define MVVM_MODEL_SESSIONITEMCONTAINER_H
 
-#include <mvvm/model_export.h>
 #include <mvvm/model/taginfo.h>
+#include <mvvm/model_export.h>
 #include <vector>
 
 namespace ModelView

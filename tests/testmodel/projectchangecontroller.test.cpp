@@ -8,9 +8,9 @@
 // ************************************************************************** //
 
 #include "google_test.h"
-#include <mvvm/project/projectchangecontroller.h>
 #include <mvvm/model/propertyitem.h>
 #include <mvvm/model/sessionmodel.h>
+#include <mvvm/project/projectchangecontroller.h>
 
 using namespace ModelView;
 
@@ -59,7 +59,7 @@ TEST_F(ProjectChangeControllerTest, callback)
     SessionModel material_model("MaterialModel");
     std::vector<SessionModel*> models = {&sample_model, &material_model};
 
-    auto on_model_changed = [&model_changed_count]() { ++model_changed_count;};
+    auto on_model_changed = [&model_changed_count]() { ++model_changed_count; };
     ProjectChangedController controller(models, on_model_changed);
 
     // changing first model

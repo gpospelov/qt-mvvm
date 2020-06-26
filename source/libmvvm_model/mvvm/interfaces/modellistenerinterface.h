@@ -34,8 +34,9 @@ public:
     //! (SessionItem* parent, tagrow), where 'tagrow' denotes child position before the removal.
     virtual void setOnItemRemoved(Callbacks::item_tagrow_t f, Callbacks::slot_t client) = 0;
 
-    //! Sets callback to be notified when the item is about to be removed. The callback will be called
-    //! with (SessionItem* parent, tagrow), where 'tagrow' denotes child position being removed.
+    //! Sets callback to be notified when the item is about to be removed. The callback will be
+    //! called with (SessionItem* parent, tagrow), where 'tagrow' denotes child position being
+    //! removed.
     virtual void setOnAboutToRemoveItem(Callbacks::item_tagrow_t f, Callbacks::slot_t client) = 0;
 
     //! Sets the callback for notifications on model destruction.

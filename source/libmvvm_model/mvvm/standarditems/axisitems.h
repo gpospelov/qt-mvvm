@@ -79,7 +79,7 @@ public:
 
     virtual std::pair<double, double> range() const = 0;
 
-    virtual int size() const= 0;
+    virtual int size() const = 0;
 
     virtual std::vector<double> binCenters() const = 0;
 };

@@ -55,7 +55,8 @@ QVariant Utils::toQtVariant(const QVariant& custom)
     if (custom.typeName() == Constants::string_type_name) {
         return QVariant(QString::fromStdString(custom.value<std::string>()));
     } else if (IsDoubleVectorVariant(custom)) {
-        QString str = QString("vector of %1 elements").arg(custom.value<std::vector<double>>().size());
+        QString str =
+            QString("vector of %1 elements").arg(custom.value<std::vector<double>>().size());
         return QVariant(str);
     }
 

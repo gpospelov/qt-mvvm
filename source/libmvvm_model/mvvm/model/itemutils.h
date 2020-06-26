@@ -28,7 +28,7 @@ MVVM_MODEL_EXPORT void iterate(SessionItem* item, const std::function<void(Sessi
 //! Iterates through all model indices and calls user function.
 //! If function returns false for given index, iteration will not go down to children.
 MVVM_MODEL_EXPORT void iterate_if(const SessionItem* item,
-                            const std::function<bool(const SessionItem*)>& fun);
+                                  const std::function<bool(const SessionItem*)>& fun);
 
 //! Returns copy number of given item in it's parent hierarchy. Takes into account only items with
 //! same modelType.

@@ -19,8 +19,7 @@
 using namespace ModelView;
 
 ColorEditor::ColorEditor(QWidget* parent)
-    : CustomEditor(parent), m_pixmapLabel(new QLabel),
-      m_focusFilter(new LostFocusFilter(this))
+    : CustomEditor(parent), m_pixmapLabel(new QLabel), m_focusFilter(new LostFocusFilter(this))
 
 {
     setMouseTracking(true);
@@ -30,7 +29,7 @@ ColorEditor::ColorEditor(QWidget* parent)
     layout->setContentsMargins(4, 0, 0, 0);
 
     layout->addWidget(m_pixmapLabel);
-//    layout->addWidget(m_textLabel); // no color name, only color rectangle
+    //    layout->addWidget(m_textLabel); // no color name, only color rectangle
     layout->addStretch(1);
     setFocusPolicy(Qt::StrongFocus);
     setAttribute(Qt::WA_InputMethodEnabled);
@@ -65,6 +64,6 @@ void ColorEditor::update_components()
 
     QPixmap pixmap(Style::DefaultPixmapSize(), Style::DefaultPixmapSize());
     pixmap.fill(currentColor());
-//    m_textLabel->setText(currentColor().name());
+    //    m_textLabel->setText(currentColor().name());
     m_pixmapLabel->setPixmap(pixmap);
 }

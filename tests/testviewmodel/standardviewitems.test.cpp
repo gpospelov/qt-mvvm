@@ -49,7 +49,8 @@ TEST_F(StandardViewItemsTest, ViewLabelItem_data)
     // initialize viewItem with sessionItem and check the data
     ViewLabelItem viewItem(&item);
     EXPECT_EQ(Utils::toCustomVariant(viewItem.data(Qt::EditRole)), QVariant::fromValue(expected));
-    EXPECT_EQ(Utils::toCustomVariant(viewItem.data(Qt::DisplayRole)), QVariant::fromValue(expected));
+    EXPECT_EQ(Utils::toCustomVariant(viewItem.data(Qt::DisplayRole)),
+              QVariant::fromValue(expected));
 }
 
 //! ViewLabelItem::setData
@@ -70,7 +71,8 @@ TEST_F(StandardViewItemsTest, ViewLabelItem_setData)
     EXPECT_EQ(viewItem.data(Qt::EditRole), new_data);    // new data
 
     // SessionItem itself should have new data
-    EXPECT_EQ(item.data<QVariant>(ItemDataRole::DISPLAY), Utils::toCustomVariant(new_data)); // new data
+    EXPECT_EQ(item.data<QVariant>(ItemDataRole::DISPLAY),
+              Utils::toCustomVariant(new_data)); // new data
 
     // it is not allowed to set another type of data to ViewLabelItem
     QVariant not_allowed_value(42);

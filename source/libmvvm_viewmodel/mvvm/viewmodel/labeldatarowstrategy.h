@@ -26,10 +26,9 @@ class SessionItem;
 class MVVM_VIEWMODEL_EXPORT LabelDataRowStrategy : public RowStrategyInterface
 {
 public:
-    QStringList horizontalHeaderLabels() const  override;
+    QStringList horizontalHeaderLabels() const override;
 
-    std::vector<std::unique_ptr<ViewItem>> constructRefRow(SessionItem*)  override;
-
+    std::vector<std::unique_ptr<ViewItem>> constructRefRow(SessionItem*) override;
 };
 
 } // namespace ModelView

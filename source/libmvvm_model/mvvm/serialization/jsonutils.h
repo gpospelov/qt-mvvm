@@ -28,7 +28,8 @@ MVVM_MODEL_EXPORT std::string ModelToJsonString(const SessionModel& model);
 //! Returns string representation of RealLimits.
 MVVM_MODEL_EXPORT std::string ToString(const RealLimits& limits);
 
-MVVM_MODEL_EXPORT RealLimits CreateLimits(const std::string& text, double min = 0.0, double max = 0.0);
+MVVM_MODEL_EXPORT RealLimits CreateLimits(const std::string& text, double min = 0.0,
+                                          double max = 0.0);
 
 } // namespace JsonUtils
 

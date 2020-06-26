@@ -115,5 +115,3 @@ TEST_F(PropertyFlatViewModelTest, particleItem)
     EXPECT_EQ(viewModel.rowCount(), 3);
     EXPECT_EQ(viewModel.columnCount(), 2);
 }
-
-

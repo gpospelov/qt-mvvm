@@ -43,3 +43,30 @@ write_basic_package_version_file(${CMAKE_CURRENT_BINARY_DIR}/MVVMConfigVersion.c
     ${PROJECT_VERSION} COMPATIBILITY AnyNewerVersion)
 
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/MVVMConfigVersion.cmake DESTINATION ${INSTALL_CONFIGDIR})
+
+
+# -----------------------------------------------------------------------------
+# TarBall
+# -----------------------------------------------------------------------------
+
+# Generating the source package
+set(CPACK_SOURCE_GENERATOR "TGZ")
+set(CPACK_SOURCE_PACKAGE_FILE_NAME "qt-mvvm-${MVVM_BUILDVERSION}")
+
+set(CPACK_SOURCE_IGNORE_FILES
+    ${CPACK_SOURCE_IGNORE_FILES} # first take the default parameters
+    "/\\\\.git/"
+    "/\\\\.gitattributes$"
+    "/\\\\.github/"
+    "/\\\\.gitmodules"
+    "/\\\\.gitignore$"
+    "/\\\\.tokeignore$"
+    "/\\\\.clang-format"
+    "/\\\\.clang-tidy"
+    "qt-mvvm.code*"
+    "CMakeLists.txt.user"
+    "build/"
+    "/\\\\.ccache"
+)
+
+include(CPack)

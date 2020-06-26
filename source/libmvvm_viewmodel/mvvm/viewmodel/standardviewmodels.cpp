@@ -9,8 +9,8 @@
 
 #include <mvvm/viewmodel/defaultviewmodel.h>
 #include <mvvm/viewmodel/propertyflatviewmodel.h>
-#include <mvvm/viewmodel/propertyviewmodel.h>
 #include <mvvm/viewmodel/propertytableviewmodel.h>
+#include <mvvm/viewmodel/propertyviewmodel.h>
 #include <mvvm/viewmodel/standardviewmodels.h>
 #include <mvvm/viewmodel/topitemsviewmodel.h>
 
@@ -40,4 +40,3 @@ std::unique_ptr<ViewModel> Utils::CreatePropertyFlatViewModel(SessionModel* mode
 {
     return std::make_unique<PropertyFlatViewModel>(model);
 }
-

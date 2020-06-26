@@ -72,24 +72,24 @@ TEST_F(ModelListenerTest, modelDeletedBeforeListener)
 
 //! Checks that the listenerr can be deleted before the model.
 
- TEST_F(ModelListenerTest, listenerDeletedBeforeTheModel)
+TEST_F(ModelListenerTest, listenerDeletedBeforeTheModel)
 {
-     // create model and its listener
-     auto model = std::make_unique<SessionModel>();
-     auto listener = std::make_unique<TestListener>(model.get());
+    // create model and its listener
+    auto model = std::make_unique<SessionModel>();
+    auto listener = std::make_unique<TestListener>(model.get());
 
-     // assign to data-changed event
-     int counter{0};
-     auto on_data_change = [&counter](SessionItem*, int) { counter++; };
-     listener->setOnDataChange(on_data_change);
+    // assign to data-changed event
+    int counter{0};
+    auto on_data_change = [&counter](SessionItem*, int) { counter++; };
+    listener->setOnDataChange(on_data_change);
 
-     // changing the data and checking the listener
-     auto item = model->insertItem<PropertyItem>();
-     item->setData(42.0);
-     EXPECT_EQ(counter, 1);
+    // changing the data and checking the listener
+    auto item = model->insertItem<PropertyItem>();
+    item->setData(42.0);
+    EXPECT_EQ(counter, 1);
 
-     // deleting the listener and trying to change the data again
-     listener.reset();
-     item->setData(43.0);
-     EXPECT_EQ(counter, 1);
+    // deleting the listener and trying to change the data again
+    listener.reset();
+    item->setData(43.0);
+    EXPECT_EQ(counter, 1);
 }

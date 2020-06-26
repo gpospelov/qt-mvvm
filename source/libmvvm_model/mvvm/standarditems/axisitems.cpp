@@ -107,7 +107,7 @@ PointwiseAxisItem::PointwiseAxisItem() : BinnedAxisItem(Constants::PointwiseAxis
 {
     // vector of points matching default xmin, xmax
     setData(std::vector<double>{default_axis_min, default_axis_max});
-    setEditable(false);  // prevent editing in widgets, since there is no corresponding editor
+    setEditable(false); // prevent editing in widgets, since there is no corresponding editor
 }
 
 std::unique_ptr<PointwiseAxisItem> PointwiseAxisItem::create(const std::vector<double>& data)

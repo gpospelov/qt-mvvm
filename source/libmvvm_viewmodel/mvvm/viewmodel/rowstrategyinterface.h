@@ -11,10 +11,10 @@
 #define MVVM_VIEWMODEL_ROWSTRATEGYINTERFACE_H
 
 #include <QList>
-#include <mvvm/viewmodel_export.h>
-#include <vector>
 #include <memory>
+#include <mvvm/viewmodel_export.h>
 #include <stdexcept>
+#include <vector>
 
 class QStandardItem;
 

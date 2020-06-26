@@ -12,11 +12,11 @@
 
 #include <QVariant>
 #include <memory>
-#include <mvvm/model_export.h>
 #include <mvvm/core/types.h>
 #include <mvvm/model/function_types.h>
 #include <mvvm/model/path.h>
 #include <mvvm/model/tagrow.h>
+#include <mvvm/model_export.h>
 #include <string>
 
 class QUndoStack;
@@ -75,7 +75,7 @@ public:
 
     ModelMapper* mapper();
 
-    void clear(std::function<void(SessionItem *)> callback = {});
+    void clear(std::function<void(SessionItem*)> callback = {});
 
     std::unique_ptr<ItemBackupStrategy> itemBackupStrategy() const;
 

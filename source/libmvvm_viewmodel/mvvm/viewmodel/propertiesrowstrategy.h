@@ -27,9 +27,9 @@ class MVVM_VIEWMODEL_EXPORT PropertiesRowStrategy : public RowStrategyInterface
 public:
     PropertiesRowStrategy(std::vector<std::string> labels = {});
 
-    QStringList horizontalHeaderLabels() const  override;
+    QStringList horizontalHeaderLabels() const override;
 
-    std::vector<std::unique_ptr<ViewItem>> constructRefRow(SessionItem*item) override;
+    std::vector<std::unique_ptr<ViewItem>> constructRefRow(SessionItem* item) override;
 
 private:
     void update_column_labels(std::vector<ModelView::SessionItem*> items);

@@ -28,7 +28,8 @@ Data2DItem::Data2DItem() : CompoundItem(Constants::Data2DItemType)
 {
     registerTag(TagInfo(T_XAXIS, 0, 1, {Constants::FixedBinAxisItemType}));
     registerTag(TagInfo(T_YAXIS, 0, 1, {Constants::FixedBinAxisItemType}));
-    setContent(std::vector<double>());  // prevent editing in widgets, since there is no corresponding editor
+    setContent(std::vector<double>()); // prevent editing in widgets, since there is no
+                                       // corresponding editor
 }
 
 //! Sets axes and put data points to zero.

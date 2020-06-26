@@ -10,14 +10,14 @@
 #ifndef MVVM_UTILS_THREADSAFESTACK_H
 #define MVVM_UTILS_THREADSAFESTACK_H
 
+#include <atomic>
+#include <condition_variable>
 #include <memory>
 #include <mutex>
 #include <mvvm/model_export.h>
 #include <stack>
 #include <stdexcept>
 #include <thread>
-#include <condition_variable>
-#include <atomic>
 
 //! @file threadsafestack.h
 //! @brief Thread-safe stack borrowed from Anthony Williams, C++ Concurrency in Action, Second
@@ -73,7 +73,7 @@ public:
     void wait_and_pop(T& value)
     {
         std::unique_lock<std::mutex> lock(m);
-        data_condition.wait(lock, [this]{ return !data.empty() || !in_waiting_state;});
+        data_condition.wait(lock, [this] { return !data.empty() || !in_waiting_state; });
         if (data.empty())
             throw empty_stack();
         value = std::move(data.top());
@@ -83,7 +83,7 @@ public:
     std::shared_ptr<T> wait_and_pop()
     {
         std::unique_lock<std::mutex> lock(m);
-        data_condition.wait(lock, [this]{ return !data.empty() || !in_waiting_state;});
+        data_condition.wait(lock, [this] { return !data.empty() || !in_waiting_state; });
         if (data.empty())
             throw empty_stack();
         std::shared_ptr<T> const res(std::make_shared<T>(std::move(data.top())));

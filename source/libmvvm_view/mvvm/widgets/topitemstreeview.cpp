@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/viewmodel/viewmodel.h>
 #include <mvvm/viewmodel/standardviewmodels.h>
+#include <mvvm/viewmodel/viewmodel.h>
 #include <mvvm/widgets/topitemstreeview.h>
 
 namespace ModelView

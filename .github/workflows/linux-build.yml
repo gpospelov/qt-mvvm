@@ -50,8 +50,16 @@ jobs:
         mkdir build && cd build
         cmake -DCMAKE_C_COMPILER_LAUNCHER=ccache \
           -DCMAKE_CXX_COMPILER_LAUNCHER=ccache ../
+        make package_source
         make -j4        
         
+    - name: Upload tarball
+      uses: actions/upload-artifact@v2
+      if: success()
+      with:
+         name: qt-mvvm
+         path: ./build/qt-mvvm-*.tar.gz  
+
     - name: ctest
       env:
         QT_QPA_PLATFORM: offscreen        
