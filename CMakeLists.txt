@@ -8,7 +8,7 @@ option(MVVM_DISCOVER_TESTS "Auto discover tests and add to ctest, otherwise will
 option(MVVM_ENABLE_FILESYSTEM "Enable <filesystem> (requires modern compiler), otherwise rely on Qt" ON)
 option(MVVM_BUILD_EXAMPLES "Build user examples" ON)
 
-set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules)
+set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake/modules)
 include(configuration)
 
 add_subdirectory(source)
