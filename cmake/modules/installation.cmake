@@ -65,6 +65,8 @@ set(CPACK_SOURCE_IGNORE_FILES
     "/\\\\.clang-tidy"
     "qt-mvvm.code*"
     "CMakeLists.txt.user"
+    "build/"
+    "/\\\\.ccache"
 )
 
 include(CPack)

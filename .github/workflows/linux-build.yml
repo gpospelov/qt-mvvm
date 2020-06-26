@@ -57,7 +57,7 @@ jobs:
       uses: actions/upload-artifact@v2
       if: success()
       with:
-         name: QtMVVMTar
+         name: qt-mvvm
          path: ./build/qt-mvvm-*.tar.gz  
 
     - name: ctest
