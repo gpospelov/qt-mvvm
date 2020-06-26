@@ -27,7 +27,7 @@ export(PACKAGE MVVM)
 include(CMakePackageConfigHelpers)
 
 # to use in the build tree
-configure_package_config_file(${CMAKE_SOURCE_DIR}/cmake/scripts/MVVMConfig.cmake.in
+configure_package_config_file(${MVVM_PROJECT_DIR}/cmake/scripts/MVVMConfig.cmake.in
     ${CMAKE_CURRENT_BINARY_DIR}/MVVMConfig.cmake
     INSTALL_DESTINATION ${INSTALL_CONFIGDIR}
 )
