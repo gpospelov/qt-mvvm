@@ -1,4 +1,6 @@
 target_sources(mvvm_model PRIVATE
+    binutils.cpp
+    binutils.h
     containerutils.cpp
     containerutils.h
     fileutils.cpp
