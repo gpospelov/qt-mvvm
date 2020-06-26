@@ -13,6 +13,7 @@ include(GNUInstallDirs)
 # Variables
 # -----------------------------------------------------------------------------
 
+set(MVVM_PROJECT_DIR ${CMAKE_CURRENT_LIST_DIR}/../..)
 set(MVVM_SOVERSION ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR})
 set(MVVM_BUILDVERSION ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH})
 
@@ -53,10 +54,10 @@ message(STATUS " Qt5 Includes  : ${Qt5Widgets_INCLUDE_DIRS}")
 # Generating config files
 # -----------------------------------------------------------------------------
 
-configure_file(${CMAKE_CURRENT_LIST_DIR}/../scripts/testconfig.h.in  ${MVVM_AUTOGEN_DIR}/testconfig.h @ONLY)
+configure_file(${MVVM_PROJECT_DIR}/cmake/scripts/testconfig.h.in  ${MVVM_AUTOGEN_DIR}/testconfig.h @ONLY)
 
 if (MVVM_BUMP_VERSION)
-    configure_file(${CMAKE_CURRENT_LIST_DIR}/../scripts/mvvm_version.h.in  ${CMAKE_CURRENT_LIST_DIR}/../../source/libmvvm_model/mvvm/core/version.h @ONLY)
+    configure_file(${MVVM_PROJECT_DIR}/cmake/scripts/mvvm_version.h.in  ${MVVM_PROJECT_DIR}/source/libmvvm_model/mvvm/core/version.h @ONLY)
 endif()
 
 # -----------------------------------------------------------------------------
