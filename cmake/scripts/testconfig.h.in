@@ -17,10 +17,9 @@
 
 namespace TestConfig {
 
-inline std::string TestOutputDir() { return "@TEST_OUTPUT_DIR@"; }
+inline std::string TestOutputDir() { return "@MVVM_TESTOUTPUT_DIR@"; }
 
 }
-
 
 #endif
 
