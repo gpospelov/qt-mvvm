@@ -17,7 +17,6 @@
 namespace ModelView
 {
 class ApplicationModelsInterface;
-}
 
 //! Responsible for handling new/save/save-as/close Project logic, where the Project represents
 //! a collection of serialized application models in the project directory.
@@ -55,5 +54,7 @@ private:
     struct ProjectManagerImpl;
     std::unique_ptr<ProjectManagerImpl> p_impl;
 };
+
+} // namespace ModelView
 
 #endif // MVVM_PROJECT_PROJECTMANAGER_H

@@ -17,6 +17,8 @@
 #include <mvvm/project/projectmanagerdecorator.h>
 #include <mvvm/utils/fileutils.h>
 
+using namespace ModelView;
+
 namespace
 {
 const std::string samplemodel_name = "samplemodel";
@@ -31,16 +33,13 @@ public:
     ProjectManagerDecoratorTest() : FolderBasedTest("test_ProjectManagerDecorator") {}
     ~ProjectManagerDecoratorTest();
 
-    class ApplicationModels : public ModelView::ApplicationModelsInterface
+    class ApplicationModels : public ApplicationModelsInterface
     {
     public:
-        std::unique_ptr<ModelView::SessionModel> sample_model;
-        ApplicationModels()
-            : sample_model(std::make_unique<ModelView::SessionModel>(samplemodel_name))
-        {
-        }
+        std::unique_ptr<SessionModel> sample_model;
+        ApplicationModels() : sample_model(std::make_unique<SessionModel>(samplemodel_name)) {}
 
-        std::vector<ModelView::SessionModel*> persistent_models() const override
+        std::vector<SessionModel*> persistent_models() const override
         {
             return {sample_model.get()};
         };
@@ -82,8 +81,8 @@ TEST_F(ProjectManagerDecoratorTest, untitledEmptyCreateNew)
     EXPECT_EQ(manager.currentProjectDir(), project_dir);
 
     // project directory should contain a json file with the model
-    auto model_json = ModelView::Utils::join(project_dir, samplemodel_name + ".json");
-    EXPECT_TRUE(ModelView::Utils::exists(model_json));
+    auto model_json = Utils::join(project_dir, samplemodel_name + ".json");
+    EXPECT_TRUE(Utils::exists(model_json));
 }
 
 //! Starting from new document (without project dir defined).
@@ -107,8 +106,8 @@ TEST_F(ProjectManagerDecoratorTest, untitledEmptySaveCurrentProject)
     EXPECT_EQ(manager.currentProjectDir(), project_dir);
 
     // project directory should contain a json file with the model
-    auto model_json = ModelView::Utils::join(project_dir, samplemodel_name + ".json");
-    EXPECT_TRUE(ModelView::Utils::exists(model_json));
+    auto model_json = Utils::join(project_dir, samplemodel_name + ".json");
+    EXPECT_TRUE(Utils::exists(model_json));
 }
 
 //! Starting from new document (without project dir defined).
@@ -132,8 +131,8 @@ TEST_F(ProjectManagerDecoratorTest, untitledEmptySaveAs)
     EXPECT_EQ(manager.currentProjectDir(), project_dir);
 
     // project directory should contain a json file with the model
-    auto model_json = ModelView::Utils::join(project_dir, samplemodel_name + ".json");
-    EXPECT_TRUE(ModelView::Utils::exists(model_json));
+    auto model_json = Utils::join(project_dir, samplemodel_name + ".json");
+    EXPECT_TRUE(Utils::exists(model_json));
 }
 
 //! Starting from new document (without project dir defined).
@@ -193,16 +192,16 @@ TEST_F(ProjectManagerDecoratorTest, untitledModifiedOpenExisting)
     // preparing manager with untitled, unmodified project
     auto open_dir = [&existing_project_dir]() -> std::string { return existing_project_dir; };
     auto create_dir = [&unsaved_project_dir]() -> std::string { return unsaved_project_dir; };
-    auto result = ModelView::SaveChangesAnswer::DISCARD;
+    auto result = SaveChangesAnswer::DISCARD;
     auto ask_create = [&result]() {
-        result = ModelView::SaveChangesAnswer::SAVE;
-        return ModelView::SaveChangesAnswer::SAVE;
+        result = SaveChangesAnswer::SAVE;
+        return SaveChangesAnswer::SAVE;
     };
     ProjectManagerDecorator manager(&models, open_dir, create_dir);
     manager.setSaveChangesAnswerCallback(ask_create);
 
     // modifying untitled project
-    models.sample_model->insertItem<ModelView::PropertyItem>();
+    models.sample_model->insertItem<PropertyItem>();
     EXPECT_TRUE(manager.isModified());
     EXPECT_TRUE(manager.currentProjectDir().empty());
 
@@ -210,11 +209,11 @@ TEST_F(ProjectManagerDecoratorTest, untitledModifiedOpenExisting)
     manager.openExistingProject();
 
     // check if user was asked and his answer coincide with expectation
-    EXPECT_EQ(result, ModelView::SaveChangesAnswer::SAVE);
+    EXPECT_EQ(result, SaveChangesAnswer::SAVE);
 
     // check that previous project was saved
-    auto model_json = ModelView::Utils::join(unsaved_project_dir, samplemodel_name + ".json");
-    EXPECT_TRUE(ModelView::Utils::exists(model_json));
+    auto model_json = Utils::join(unsaved_project_dir, samplemodel_name + ".json");
+    EXPECT_TRUE(Utils::exists(model_json));
 
     // currently manager is pointing to existing project
     EXPECT_FALSE(manager.isModified());

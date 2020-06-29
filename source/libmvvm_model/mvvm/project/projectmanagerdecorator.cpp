@@ -14,6 +14,8 @@
 #include <mvvm/project/projectmanagerdecorator.h>
 #include <stdexcept>
 
+using namespace ModelView;
+
 namespace
 {
 const bool succeeded = true;
@@ -21,14 +23,14 @@ const bool failed = false;
 } // namespace
 
 struct ProjectManagerDecorator::ProjectManagerImpl {
-    ModelView::ApplicationModelsInterface* app_models{nullptr};
+    ApplicationModelsInterface* app_models{nullptr};
     std::unique_ptr<ProjectManager> project_manager;
     select_dir_callback_t select_dir_callback;
     create_dir_callback_t create_dir_callback;
     answer_callback_t save_callback;
 
-    ProjectManagerImpl(ModelView::ApplicationModelsInterface* models,
-                       select_dir_callback_t select_dir, create_dir_callback_t create_dir,
+    ProjectManagerImpl(ApplicationModelsInterface* models, select_dir_callback_t select_dir,
+                       create_dir_callback_t create_dir,
                        project_modified_callback_t modified_callback)
         : app_models(models),
           project_manager(std::make_unique<ProjectManager>(models, modified_callback)),
@@ -67,11 +69,11 @@ struct ProjectManagerDecorator::ProjectManagerImpl {
     {
         if (isModified()) {
             switch (acquireSaveChangesAnswer()) {
-            case ModelView::SaveChangesAnswer::SAVE:
+            case SaveChangesAnswer::SAVE:
                 return saveCurrentProject();
-            case ModelView::SaveChangesAnswer::CANCEL:
+            case SaveChangesAnswer::CANCEL:
                 return failed; // saving was interrupted by the 'cancel' button
-            case ModelView::SaveChangesAnswer::DISCARD:
+            case SaveChangesAnswer::DISCARD:
                 project_manager->closeCurrentProject();
                 return succeeded;
             default:
@@ -82,7 +84,7 @@ struct ProjectManagerDecorator::ProjectManagerImpl {
     }
 
     //! Asks the user whether to save/cancel/discard the project using callback provided.
-    ModelView::SaveChangesAnswer acquireSaveChangesAnswer() const
+    SaveChangesAnswer acquireSaveChangesAnswer() const
     {
         if (!save_callback)
             throw std::runtime_error("Error in ProjectManager: absent save_callback");
@@ -109,7 +111,7 @@ struct ProjectManagerDecorator::ProjectManagerImpl {
 //! Constructor for ProjectManagerDecorator.
 //! Requires ApplicationModels and two callbacks to open projects, and create new projects.
 
-ProjectManagerDecorator::ProjectManagerDecorator(ModelView::ApplicationModelsInterface* app_models,
+ProjectManagerDecorator::ProjectManagerDecorator(ApplicationModelsInterface* app_models,
                                                  select_dir_callback_t select_dir,
                                                  create_dir_callback_t create_dir,
                                                  project_modified_callback_t modified_callback)

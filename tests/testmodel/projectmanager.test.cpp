@@ -17,6 +17,8 @@
 #include <mvvm/project/projectmanager.h>
 #include <mvvm/utils/fileutils.h>
 
+using namespace ModelView;
+
 namespace
 {
 const std::string samplemodel_name = "samplemodel";
@@ -78,8 +80,8 @@ TEST_F(ProjectManagerTest, untitledEmptyNew)
     EXPECT_FALSE(manager.isModified());
 
     // project directory should contain a json file with the model
-    auto model_json = ModelView::Utils::join(project_dir, samplemodel_name + ".json");
-    EXPECT_TRUE(ModelView::Utils::exists(model_json));
+    auto model_json = Utils::join(project_dir, samplemodel_name + ".json");
+    EXPECT_TRUE(Utils::exists(model_json));
 }
 
 //! Saving of new project. Use untitled+empty project as a starting point.
@@ -106,8 +108,8 @@ TEST_F(ProjectManagerTest, untitledEmptySaveAs)
     EXPECT_FALSE(manager.isModified());
 
     // project directory should contain a json file with the model
-    auto model_json = ModelView::Utils::join(project_dir, samplemodel_name + ".json");
-    EXPECT_TRUE(ModelView::Utils::exists(model_json));
+    auto model_json = Utils::join(project_dir, samplemodel_name + ".json");
+    EXPECT_TRUE(Utils::exists(model_json));
 }
 
 // ----------------------------------------------------------------------------
@@ -123,7 +125,7 @@ TEST_F(ProjectManagerTest, untitledModifiedNew)
     ProjectManager manager(&models);
 
     // modifying the model
-    models.sample_model->insertItem<ModelView::PropertyItem>();
+    models.sample_model->insertItem<PropertyItem>();
 
     EXPECT_TRUE(manager.isModified());
 
@@ -134,8 +136,8 @@ TEST_F(ProjectManagerTest, untitledModifiedNew)
     EXPECT_TRUE(manager.isModified());
 
     // project directory should be empty
-    auto model_json = ModelView::Utils::join(project_dir, samplemodel_name + ".json");
-    EXPECT_FALSE(ModelView::Utils::exists(model_json));
+    auto model_json = Utils::join(project_dir, samplemodel_name + ".json");
+    EXPECT_FALSE(Utils::exists(model_json));
 }
 
 //! Saving of new project. Use untitled+modified project as a starting point.
@@ -146,7 +148,7 @@ TEST_F(ProjectManagerTest, untitledModifiedSave)
     ApplicationModels models;
     ProjectManager manager(&models);
     // modifying the model
-    models.sample_model->insertItem<ModelView::PropertyItem>();
+    models.sample_model->insertItem<PropertyItem>();
 
     EXPECT_FALSE(manager.saveCurrentProject());
     EXPECT_TRUE(manager.isModified());
@@ -159,15 +161,15 @@ TEST_F(ProjectManagerTest, untitledModifiedSaveAs)
 {
     ApplicationModels models;
     ProjectManager manager(&models);
-    models.sample_model->insertItem<ModelView::PropertyItem>(); // modifying the model
+    models.sample_model->insertItem<PropertyItem>(); // modifying the model
 
     const auto project_dir = createEmptyDir("Project_untitledModifiedSaveAs");
     EXPECT_TRUE(manager.saveProjectAs(project_dir));
     EXPECT_FALSE(manager.isModified());
 
     // project directory should contain a json file with the model
-    auto model_json = ModelView::Utils::join(project_dir, samplemodel_name + ".json");
-    EXPECT_TRUE(ModelView::Utils::exists(model_json));
+    auto model_json = Utils::join(project_dir, samplemodel_name + ".json");
+    EXPECT_TRUE(Utils::exists(model_json));
 }
 
 // ----------------------------------------------------------------------------
@@ -193,8 +195,8 @@ TEST_F(ProjectManagerTest, titledUnmodifiedNew)
     EXPECT_FALSE(manager.isModified());
 
     // project directory should contain a json file with the model
-    auto model_json = ModelView::Utils::join(project_dir2, samplemodel_name + ".json");
-    EXPECT_TRUE(ModelView::Utils::exists(model_json));
+    auto model_json = Utils::join(project_dir2, samplemodel_name + ".json");
+    EXPECT_TRUE(Utils::exists(model_json));
 }
 
 // ----------------------------------------------------------------------------
@@ -214,7 +216,7 @@ TEST_F(ProjectManagerTest, titledModifiedSave)
     EXPECT_EQ(manager.currentProjectDir(), project_dir);
 
     // modifying the model
-    models.sample_model->insertItem<ModelView::PropertyItem>();
+    models.sample_model->insertItem<PropertyItem>();
 
     EXPECT_TRUE(manager.saveCurrentProject());
     EXPECT_FALSE(manager.isModified());
@@ -241,12 +243,12 @@ TEST_F(ProjectManagerTest, callback)
     EXPECT_EQ(project_modified_count, 0);
 
     // modifying the model
-    models.sample_model->insertItem<ModelView::PropertyItem>();
+    models.sample_model->insertItem<PropertyItem>();
     EXPECT_EQ(project_modified_count, 1);
     EXPECT_TRUE(manager.isModified());
 
     // modifying the model second time
-    models.sample_model->insertItem<ModelView::PropertyItem>();
+    models.sample_model->insertItem<PropertyItem>();
     EXPECT_EQ(project_modified_count, 1); // do not sum up
     EXPECT_TRUE(manager.isModified());
 
