@@ -22,6 +22,7 @@ namespace ModelView
 class SessionModel;
 class ApplicationModelsInterface;
 class ProjectInterface;
+class ProjectContext;
 
 //! Collection of utility functions to handle project saving and loading.
 
@@ -32,9 +33,7 @@ MVVM_MODEL_EXPORT std::string SuggestFileName(const SessionModel& model);
 
 MVVM_MODEL_EXPORT bool IsPossibleProjectDir(const std::string& project_dir);
 
-MVVM_MODEL_EXPORT std::unique_ptr<ProjectInterface>
-CreateUntitledProject(ApplicationModelsInterface* models,
-                      std::function<void()> project_changed_callback = {});
+MVVM_MODEL_EXPORT std::unique_ptr<ProjectInterface> CreateUntitledProject(const ProjectContext& context);
 
 MVVM_MODEL_EXPORT std::string ProjectWindowTitle(const ProjectInterface& project);
 

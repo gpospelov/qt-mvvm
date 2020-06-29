@@ -11,6 +11,7 @@
 #include <mvvm/interfaces/projectinterface.h>
 #include <mvvm/project/projectmanager.h>
 #include <mvvm/project/projectutils.h>
+#include <mvvm/project/project_types.h>
 
 using namespace ModelView;
 
@@ -34,7 +35,10 @@ struct ProjectManager::ProjectManagerImpl {
     //! Closes current project. Used in assumption that project was already saved.
     void createNewProject()
     {
-        current_project = ProjectUtils::CreateUntitledProject(app_models, m_project_changed);
+        ProjectContext context;
+        context.m_models_callback = [this]() { return app_models->persistent_models();};
+        context.m_modified_callback = m_project_changed;
+        current_project = ProjectUtils::CreateUntitledProject(context);
     }
 
     //! Returns true if the project has directory already defined.

@@ -9,7 +9,6 @@
 
 #include <functional>
 #include <mvvm/factories/modeldocuments.h>
-#include <mvvm/interfaces/applicationmodelsinterface.h>
 #include <mvvm/project/project.h>
 #include <mvvm/project/project_types.h>
 #include <mvvm/project/projectchangecontroller.h>
@@ -19,22 +18,18 @@
 using namespace ModelView;
 
 struct Project::ProjectImpl {
-    ApplicationModelsInterface* app_models{nullptr};
     std::string project_dir;
+    ProjectContext m_context;
     ProjectChangedController change_controller;
 
-    ProjectImpl(ApplicationModelsInterface* app_models, callback_t callback)
-        : app_models(app_models), change_controller(app_models->persistent_models(), callback)
-    {
-    }
-
     ProjectImpl(const ProjectContext& context)
-        : app_models(nullptr), change_controller(context.m_models_callback(), context.m_modified_callback)
+        : m_context(context),
+          change_controller(context.m_models_callback(), context.m_modified_callback)
     {
     }
 
     //! Returns list of models which are subject to save/load.
-    std::vector<SessionModel*> models() const { return app_models->persistent_models(); }
+    std::vector<SessionModel*> models() const { return m_context.m_models_callback(); }
 
     //! Processes all models one by one and either save or load them to/from given directory.
     //! Template parameter `method` specifies ModelDocumentInterface's method to use.
@@ -54,16 +49,7 @@ struct Project::ProjectImpl {
     }
 };
 
-Project::Project(ApplicationModelsInterface* app_models, callback_t project_changed_callback)
-    : p_impl(std::make_unique<ProjectImpl>(app_models, project_changed_callback))
-{
-}
-
-Project::Project(const ProjectContext& context)
-    : p_impl(std::make_unique<ProjectImpl>(context))
-{
-
-}
+Project::Project(const ProjectContext& context) : p_impl(std::make_unique<ProjectImpl>(context)) {}
 
 Project::~Project() = default;
 
