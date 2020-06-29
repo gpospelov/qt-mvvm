@@ -13,6 +13,7 @@
 #include <functional>
 #include <memory>
 #include <mvvm/interfaces/projectinterface.h>
+#include <mvvm/project/project_types.h>
 
 namespace ModelView
 {
@@ -28,6 +29,8 @@ public:
     using callback_t = std::function<void()>;
     Project(ModelView::ApplicationModelsInterface* app_models,
             callback_t project_changed_callback = {});
+
+    Project(const ProjectContext& context);
     ~Project();
 
     std::string projectDir() const override;

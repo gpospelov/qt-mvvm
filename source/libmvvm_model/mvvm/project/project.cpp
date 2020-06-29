@@ -11,6 +11,7 @@
 #include <mvvm/factories/modeldocuments.h>
 #include <mvvm/interfaces/applicationmodelsinterface.h>
 #include <mvvm/project/project.h>
+#include <mvvm/project/project_types.h>
 #include <mvvm/project/projectchangecontroller.h>
 #include <mvvm/project/projectutils.h>
 #include <mvvm/utils/fileutils.h>
@@ -24,6 +25,11 @@ struct Project::ProjectImpl {
 
     ProjectImpl(ApplicationModelsInterface* app_models, callback_t callback)
         : app_models(app_models), change_controller(app_models->persistent_models(), callback)
+    {
+    }
+
+    ProjectImpl(const ProjectContext& context)
+        : app_models(nullptr), change_controller(context.m_models_callback(), context.m_modified_callback)
     {
     }
 
@@ -51,6 +57,12 @@ struct Project::ProjectImpl {
 Project::Project(ApplicationModelsInterface* app_models, callback_t project_changed_callback)
     : p_impl(std::make_unique<ProjectImpl>(app_models, project_changed_callback))
 {
+}
+
+Project::Project(const ProjectContext& context)
+    : p_impl(std::make_unique<ProjectImpl>(context))
+{
+
 }
 
 Project::~Project() = default;
