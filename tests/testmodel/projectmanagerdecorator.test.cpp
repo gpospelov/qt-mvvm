@@ -10,7 +10,6 @@
 #include "folderbasedtest.h"
 #include "google_test.h"
 #include <cctype>
-#include <mvvm/interfaces/applicationmodelsinterface.h>
 #include <mvvm/model/propertyitem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/project/project_types.h>
@@ -30,20 +29,32 @@ const std::string samplemodel_name = "samplemodel";
 class ProjectManagerDecoratorTest : public FolderBasedTest
 {
 public:
-    ProjectManagerDecoratorTest() : FolderBasedTest("test_ProjectManagerDecorator") {}
+    ProjectManagerDecoratorTest()
+        : FolderBasedTest("test_ProjectManagerDecorator"),
+          sample_model(std::make_unique<ModelView::SessionModel>(samplemodel_name))
+    {
+    }
     ~ProjectManagerDecoratorTest();
 
-    class ApplicationModels : public ApplicationModelsInterface
-    {
-    public:
-        std::unique_ptr<SessionModel> sample_model;
-        ApplicationModels() : sample_model(std::make_unique<SessionModel>(samplemodel_name)) {}
+    std::vector<SessionModel*> models() const { return {sample_model.get()}; };
 
-        std::vector<SessionModel*> persistent_models() const override
-        {
-            return {sample_model.get()};
-        };
-    };
+    ProjectContext projectContext()
+    {
+        ProjectContext result;
+        result.m_models_callback = [this]() { return models(); };
+        return result;
+    }
+
+    UserInteractionContext userContext(const std::string& create_dir = {},
+                                       const std::string& select_dir = {})
+    {
+        UserInteractionContext result;
+        result.m_create_dir_callback = [create_dir]() -> std::string { return create_dir; };
+        result.m_select_dir_callback = [select_dir]() -> std::string { return select_dir; };
+        return result;
+    }
+
+    std::unique_ptr<SessionModel> sample_model;
 };
 
 ProjectManagerDecoratorTest::~ProjectManagerDecoratorTest() = default;
@@ -52,11 +63,7 @@ ProjectManagerDecoratorTest::~ProjectManagerDecoratorTest() = default;
 
 TEST_F(ProjectManagerDecoratorTest, initialState)
 {
-    auto open_dir = []() -> std::string { return {}; };
-    auto create_dir = []() -> std::string { return {}; };
-
-    ApplicationModels models;
-    ProjectManagerDecorator manager(&models, open_dir, create_dir);
+    ProjectManagerDecorator manager(projectContext(), userContext());
     EXPECT_TRUE(manager.currentProjectDir().empty());
 }
 
@@ -67,11 +74,7 @@ TEST_F(ProjectManagerDecoratorTest, untitledEmptyCreateNew)
 {
     const auto project_dir = createEmptyDir("Project_untitledEmptyCreateNew");
 
-    auto open_dir = []() -> std::string { return {}; };
-    auto create_dir = [&project_dir]() -> std::string { return project_dir; };
-
-    ApplicationModels models;
-    ProjectManagerDecorator manager(&models, open_dir, create_dir);
+    ProjectManagerDecorator manager(projectContext(), userContext(project_dir, {}));
     EXPECT_TRUE(manager.currentProjectDir().empty());
 
     // saving new project to 'project_dir' directory.
@@ -92,11 +95,7 @@ TEST_F(ProjectManagerDecoratorTest, untitledEmptySaveCurrentProject)
 {
     const auto project_dir = createEmptyDir("Project_untitledEmptySaveCurrentProject");
 
-    auto open_dir = []() -> std::string { return {}; };
-    auto create_dir = [&project_dir]() -> std::string { return project_dir; };
-
-    ApplicationModels models;
-    ProjectManagerDecorator manager(&models, open_dir, create_dir);
+    ProjectManagerDecorator manager(projectContext(), userContext(project_dir, {}));
     EXPECT_TRUE(manager.currentProjectDir().empty());
 
     // saving new project to 'project_dir' directory.
@@ -117,11 +116,7 @@ TEST_F(ProjectManagerDecoratorTest, untitledEmptySaveAs)
 {
     const auto project_dir = createEmptyDir("Project_untitledEmptySaveAs");
 
-    auto open_dir = []() -> std::string { return {}; };
-    auto create_dir = [&project_dir]() -> std::string { return project_dir; };
-
-    ApplicationModels models;
-    ProjectManagerDecorator manager(&models, open_dir, create_dir);
+    ProjectManagerDecorator manager(projectContext(), userContext(project_dir, {}));
     EXPECT_TRUE(manager.currentProjectDir().empty());
 
     // saving new project to "project_dir" directory.
@@ -140,11 +135,7 @@ TEST_F(ProjectManagerDecoratorTest, untitledEmptySaveAs)
 
 TEST_F(ProjectManagerDecoratorTest, untitledEmptySaveAsCancel)
 {
-    auto open_dir = []() -> std::string { return {}; };
-    auto create_dir = []() -> std::string { return {}; }; // empty name imitates canceling
-
-    ApplicationModels models;
-    ProjectManagerDecorator manager(&models, open_dir, create_dir);
+    ProjectManagerDecorator manager(projectContext(), userContext({}, {})); // immitates canceling
     EXPECT_TRUE(manager.currentProjectDir().empty());
 
     // saving new project to "project_dir" directory.
@@ -157,13 +148,7 @@ TEST_F(ProjectManagerDecoratorTest, untitledEmptySaveAsCancel)
 
 TEST_F(ProjectManagerDecoratorTest, untitledEmptySaveAsWrongDir)
 {
-    auto open_dir = []() -> std::string { return {}; };
-    auto create_dir = []() -> std::string {
-        return "non-existing";
-    }; // empty name imitates canceling
-
-    ApplicationModels models;
-    ProjectManagerDecorator manager(&models, open_dir, create_dir);
+    ProjectManagerDecorator manager(projectContext(), userContext("non-existing", {}));
 
     // saving new project to "project_dir" directory.
     EXPECT_FALSE(manager.saveProjectAs());
@@ -176,16 +161,12 @@ TEST_F(ProjectManagerDecoratorTest, untitledEmptySaveAsWrongDir)
 
 TEST_F(ProjectManagerDecoratorTest, untitledModifiedOpenExisting)
 {
-    ApplicationModels models;
     const auto existing_project_dir = createEmptyDir("Project_untitledModifiedOpenExisting1");
     const auto unsaved_project_dir = createEmptyDir("Project_untitledModifiedOpenExisting2");
 
     // create "existing project"
     {
-        auto open_dir = []() -> std::string { return {}; };
-        auto create_dir = [&existing_project_dir]() -> std::string { return existing_project_dir; };
-
-        ProjectManagerDecorator manager(&models, open_dir, create_dir);
+        ProjectManagerDecorator manager(projectContext(), userContext(existing_project_dir, {}));
         manager.saveProjectAs();
     }
 
@@ -197,11 +178,14 @@ TEST_F(ProjectManagerDecoratorTest, untitledModifiedOpenExisting)
         result = SaveChangesAnswer::SAVE;
         return SaveChangesAnswer::SAVE;
     };
-    ProjectManagerDecorator manager(&models, open_dir, create_dir);
-    manager.setSaveChangesAnswerCallback(ask_create);
+    auto user_context = userContext({}, {});
+    user_context.m_create_dir_callback = create_dir;
+    user_context.m_select_dir_callback = open_dir;
+    user_context.m_answer_callback = ask_create;
+    ProjectManagerDecorator manager(projectContext(), user_context);
 
     // modifying untitled project
-    models.sample_model->insertItem<PropertyItem>();
+    sample_model->insertItem<PropertyItem>();
     EXPECT_TRUE(manager.isModified());
     EXPECT_TRUE(manager.currentProjectDir().empty());
 

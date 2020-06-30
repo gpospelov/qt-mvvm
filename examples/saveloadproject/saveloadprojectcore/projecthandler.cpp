@@ -13,6 +13,7 @@
 #include "samplemodel.h"
 #include "userinteractor.h"
 #include <QMainWindow>
+#include <mvvm/project/project_types.h>
 #include <mvvm/project/projectmanagerdecorator.h>
 #include <mvvm/widgets/widgetutils.h>
 
@@ -77,14 +78,23 @@ void ProjectHandler::onSaveProjectAs()
 
 void ProjectHandler::initProjectManager()
 {
-    auto select_dir = [this]() { return m_userInteractor->onSelectDirRequest(); };
-    auto create_dir = [this]() { return m_userInteractor->onCreateDirRequest(); };
-    auto save_changes = [this]() { return m_userInteractor->onSaveChangesRequest(); };
-    auto on_modified = [this]() { updateCurrentProjectName(); };
+    ProjectContext project_context;
+    project_context.m_modified_callback = [this]() { updateCurrentProjectName(); };
+    project_context.m_models_callback = [this]() -> std::vector<SessionModel*> {
+        return {m_model};
+    };
 
-    auto manager =
-        std::make_unique<ProjectManagerDecorator>(this, select_dir, create_dir, on_modified);
-    manager->setSaveChangesAnswerCallback(save_changes);
+    UserInteractionContext user_context;
+    user_context.m_select_dir_callback = [this]() {
+        return m_userInteractor->onSelectDirRequest();
+    };
+    user_context.m_create_dir_callback = [this]() {
+        return m_userInteractor->onCreateDirRequest();
+    };
+    user_context.m_answer_callback = [this]() { return m_userInteractor->onSaveChangesRequest(); };
+    ;
+
+    auto manager = std::make_unique<ProjectManagerDecorator>(project_context, user_context);
 
     m_projectManager = std::move(manager);
 }

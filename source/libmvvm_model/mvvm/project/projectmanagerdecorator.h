@@ -17,7 +17,6 @@
 
 namespace ModelView
 {
-class ApplicationModelsInterface;
 
 //! Decorator for ProjectManager to provide interaction with the user on open/save-as requests.
 //! It relies on the same interface and adds additional logic related to "unsaved" data.
@@ -28,25 +27,12 @@ class ApplicationModelsInterface;
 class MVVM_MODEL_EXPORT ProjectManagerDecorator : public ProjectManagerInterface
 {
 public:
-    using select_dir_callback_t = std::function<std::string()>;
-    using create_dir_callback_t = std::function<std::string()>;
-    using answer_callback_t = std::function<SaveChangesAnswer()>;
-    using project_modified_callback_t = std::function<void()>;
-
-    ProjectManagerDecorator(ApplicationModelsInterface* app_models,
-                            select_dir_callback_t select_dir = {},
-                            create_dir_callback_t create_dir = {},
-                            project_modified_callback_t modified_callback = {});
+    ProjectManagerDecorator(const ProjectContext& project_context,
+                            const UserInteractionContext& user_context);
 
     ~ProjectManagerDecorator() override;
     ProjectManagerDecorator(const ProjectManagerDecorator& other) = delete;
     ProjectManagerDecorator& operator=(const ProjectManagerDecorator& other) = delete;
-
-    void setSelectDirCallback(select_dir_callback_t callback);
-
-    void setCreateDirCallback(create_dir_callback_t callback);
-
-    void setSaveChangesAnswerCallback(answer_callback_t callback);
 
     bool createNewProject(const std::string& dirname = {}) override;
 

@@ -23,19 +23,15 @@ const bool failed = false;
 } // namespace
 
 struct ProjectManagerDecorator::ProjectManagerImpl {
-    ApplicationModelsInterface* app_models{nullptr};
+    ProjectContext m_project_context;
+    UserInteractionContext m_user_context;
     std::unique_ptr<ProjectManager> project_manager;
-    select_dir_callback_t select_dir_callback;
-    create_dir_callback_t create_dir_callback;
-    answer_callback_t save_callback;
 
-    ProjectManagerImpl(ApplicationModelsInterface* models, select_dir_callback_t select_dir,
-                       create_dir_callback_t create_dir,
-                       project_modified_callback_t modified_callback)
-        : app_models(models),
-          project_manager(std::make_unique<ProjectManager>(models, modified_callback)),
-          select_dir_callback(select_dir), create_dir_callback(create_dir)
+    ProjectManagerImpl(const ProjectContext& project_context,
+                       const UserInteractionContext& user_context)
+        : m_project_context(project_context), m_user_context(user_context)
     {
+        project_manager = std::make_unique<ProjectManager>(m_project_context);
     }
 
     //! Returns true if the project has directory already defined.
@@ -86,62 +82,34 @@ struct ProjectManagerDecorator::ProjectManagerImpl {
     //! Asks the user whether to save/cancel/discard the project using callback provided.
     SaveChangesAnswer acquireSaveChangesAnswer() const
     {
-        if (!save_callback)
+        if (!m_user_context.m_answer_callback)
             throw std::runtime_error("Error in ProjectManager: absent save_callback");
-        return save_callback();
+        return m_user_context.m_answer_callback();
     }
 
     //! Acquire the name of the new project directory using callback provided.
     std::string acquireNewProjectDir()
     {
-        if (!create_dir_callback)
+        if (!m_user_context.m_create_dir_callback)
             throw std::runtime_error("Error in ProjectManager: absent creat_dir callback.");
-        return create_dir_callback();
+        return m_user_context.m_create_dir_callback();
     }
 
     //! Acquire the name of the existing project directory using callback provided.
     std::string acquireExistingProjectDir()
     {
-        if (!select_dir_callback)
+        if (!m_user_context.m_select_dir_callback)
             throw std::runtime_error("Error in ProjectManager: absent open_dir callback.");
-        return select_dir_callback();
+        return m_user_context.m_select_dir_callback();
     }
 };
 
 //! Constructor for ProjectManagerDecorator.
-//! Requires ApplicationModels and two callbacks to open projects, and create new projects.
 
-ProjectManagerDecorator::ProjectManagerDecorator(ApplicationModelsInterface* app_models,
-                                                 select_dir_callback_t select_dir,
-                                                 create_dir_callback_t create_dir,
-                                                 project_modified_callback_t modified_callback)
-    : p_impl(
-        std::make_unique<ProjectManagerImpl>(app_models, select_dir, create_dir, modified_callback))
+ProjectManagerDecorator::ProjectManagerDecorator(const ProjectContext& project_context,
+                                                 const UserInteractionContext& user_context)
+    : p_impl(std::make_unique<ProjectManagerImpl>(project_context, user_context))
 {
-}
-
-//! Sets a callback that will be used when the logic requires asking the user to select a
-//! existing directory.
-
-void ProjectManagerDecorator::setSelectDirCallback(select_dir_callback_t callback)
-{
-    p_impl->select_dir_callback = callback;
-}
-
-//! Sets a callback that will be used when the logic requires asking the user to create a
-//! new directory.
-
-void ProjectManagerDecorator::setCreateDirCallback(create_dir_callback_t callback)
-{
-    p_impl->create_dir_callback = callback;
-}
-
-//! Sets a callback that will be used when the logic requires asking the user wheather to
-//! save/discard changes, or cancel the whole procedure.
-
-void ProjectManagerDecorator::setSaveChangesAnswerCallback(answer_callback_t callback)
-{
-    p_impl->save_callback = callback;
 }
 
 ProjectManagerDecorator::~ProjectManagerDecorator() = default;
