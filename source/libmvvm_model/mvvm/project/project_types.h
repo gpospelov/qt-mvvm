@@ -13,6 +13,7 @@
 #include <functional>
 #include <string>
 #include <vector>
+#include <mvvm/model_export.h>
 
 namespace ModelView
 {
@@ -24,7 +25,7 @@ enum class SaveChangesAnswer { SAVE = 0, DISCARD = 1, CANCEL = 2 };
 
 //! Provides necessary information for Project construction.
 
-struct ProjectContext {
+struct MVVM_MODEL_EXPORT ProjectContext {
     //!< To notify about the change of the project with respect to what was written on disk.
     using modified_callback_t = std::function<void()>;
 
@@ -40,7 +41,7 @@ struct ProjectContext {
 //! Defines the context to interact with the user regarding save/save-as/create-new project
 //! scenarious.
 
-struct UserInteractionContext {
+struct MVVM_MODEL_EXPORT UserInteractionContext {
     //!< To ask the user to select existing directory, returns full path to the directory.
     using select_dir_callback_t = std::function<std::string()>;
 
