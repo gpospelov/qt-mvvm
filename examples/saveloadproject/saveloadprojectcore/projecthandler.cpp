@@ -31,11 +31,6 @@ ProjectHandler::ProjectHandler(SampleModel* sample_model, QMainWindow* main_wind
 
 ProjectHandler::~ProjectHandler() = default;
 
-std::vector<SessionModel*> ProjectHandler::persistent_models() const
-{
-    return {m_model};
-}
-
 //! Update names (name of the current project, recent project name list, notifies the world).
 
 void ProjectHandler::updateNames()
