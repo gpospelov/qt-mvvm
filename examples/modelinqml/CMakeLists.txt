@@ -7,8 +7,8 @@ set(CMAKE_AUTORCC ON)
 find_package(MVVM REQUIRED)
 
 set(executable_name modelinqml)
-#add_subdirectory(modelinqmlcore)
+add_subdirectory(modelinqmlcore)
 add_executable(${executable_name} main.cpp ${CMAKE_CURRENT_LIST_DIR}/qml/app.qrc)
 
-target_link_libraries(${executable_name}  Qt5::Widgets Qt5::Qml)
+target_link_libraries(${executable_name} modelinqmlcore Qt5::Widgets Qt5::Qml)
 target_include_directories(${executable_name} PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>)
