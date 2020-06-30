@@ -12,6 +12,7 @@
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/project/project.h>
 #include <mvvm/project/projectutils.h>
+#include <mvvm/project/project_types.h>
 #include <mvvm/utils/fileutils.h>
 
 using namespace ModelView;
