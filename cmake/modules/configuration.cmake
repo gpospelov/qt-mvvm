@@ -42,7 +42,7 @@ file(MAKE_DIRECTORY ${MVVM_AUTOGEN_DIR})
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-find_package(Qt5 5.12 COMPONENTS Widgets Core Gui PrintSupport REQUIRED)
+find_package(Qt5 5.12 COMPONENTS Widgets Core Gui PrintSupport Qml REQUIRED)
 find_package(Threads)
 
 get_target_property(Qt5Widgets_location Qt5::Widgets LOCATION_Release)
