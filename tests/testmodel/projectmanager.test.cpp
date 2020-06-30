@@ -11,9 +11,9 @@
 #include "google_test.h"
 #include "test_utils.h"
 #include <cctype>
-#include <mvvm/interfaces/applicationmodelsinterface.h>
 #include <mvvm/model/propertyitem.h>
 #include <mvvm/model/sessionmodel.h>
+#include <mvvm/project/project_types.h>
 #include <mvvm/project/projectmanager.h>
 #include <mvvm/utils/fileutils.h>
 
@@ -30,23 +30,23 @@ const std::string samplemodel_name = "samplemodel";
 class ProjectManagerTest : public FolderBasedTest
 {
 public:
-    ProjectManagerTest() : FolderBasedTest("test_ProjectManager") {}
+    ProjectManagerTest()
+        : FolderBasedTest("test_ProjectManager"),
+          sample_model(std::make_unique<ModelView::SessionModel>(samplemodel_name))
+    {
+    }
     ~ProjectManagerTest();
 
-    class ApplicationModels : public ModelView::ApplicationModelsInterface
-    {
-    public:
-        std::unique_ptr<ModelView::SessionModel> sample_model;
-        ApplicationModels()
-            : sample_model(std::make_unique<ModelView::SessionModel>(samplemodel_name))
-        {
-        }
+    std::vector<SessionModel*> models() const { return {sample_model.get()}; };
 
-        std::vector<ModelView::SessionModel*> persistent_models() const override
-        {
-            return {sample_model.get()};
-        };
-    };
+    ProjectContext createContext()
+    {
+        ProjectContext result;
+        result.m_models_callback = [this]() { return models(); };
+        return result;
+    }
+
+    std::unique_ptr<SessionModel> sample_model;
 };
 
 ProjectManagerTest::~ProjectManagerTest() = default;
@@ -55,8 +55,7 @@ ProjectManagerTest::~ProjectManagerTest() = default;
 
 TEST_F(ProjectManagerTest, initialState)
 {
-    ApplicationModels models;
-    ProjectManager manager(&models);
+    ProjectManager manager(createContext());
     EXPECT_TRUE(manager.currentProjectDir().empty());
     EXPECT_FALSE(manager.isModified());
 }
@@ -70,8 +69,7 @@ TEST_F(ProjectManagerTest, initialState)
 
 TEST_F(ProjectManagerTest, untitledEmptyNew)
 {
-    ApplicationModels models;
-    ProjectManager manager(&models);
+    ProjectManager manager(createContext());
 
     const auto project_dir = createEmptyDir("Project_untitledEmptyNew");
     EXPECT_TRUE(manager.createNewProject(project_dir));
@@ -89,8 +87,7 @@ TEST_F(ProjectManagerTest, untitledEmptyNew)
 
 TEST_F(ProjectManagerTest, untitledEmptySave)
 {
-    ApplicationModels models;
-    ProjectManager manager(&models);
+    ProjectManager manager(createContext());
     EXPECT_FALSE(manager.saveCurrentProject());
     EXPECT_FALSE(manager.isModified());
 }
@@ -100,8 +97,7 @@ TEST_F(ProjectManagerTest, untitledEmptySave)
 
 TEST_F(ProjectManagerTest, untitledEmptySaveAs)
 {
-    ApplicationModels models;
-    ProjectManager manager(&models);
+    ProjectManager manager(createContext());
 
     const auto project_dir = createEmptyDir("Project_untitledEmptySaveAs");
     EXPECT_TRUE(manager.saveProjectAs(project_dir));
@@ -121,11 +117,10 @@ TEST_F(ProjectManagerTest, untitledEmptySaveAs)
 
 TEST_F(ProjectManagerTest, untitledModifiedNew)
 {
-    ApplicationModels models;
-    ProjectManager manager(&models);
+    ProjectManager manager(createContext());
 
     // modifying the model
-    models.sample_model->insertItem<PropertyItem>();
+    sample_model->insertItem<PropertyItem>();
 
     EXPECT_TRUE(manager.isModified());
 
@@ -145,10 +140,9 @@ TEST_F(ProjectManagerTest, untitledModifiedNew)
 
 TEST_F(ProjectManagerTest, untitledModifiedSave)
 {
-    ApplicationModels models;
-    ProjectManager manager(&models);
+    ProjectManager manager(createContext());
     // modifying the model
-    models.sample_model->insertItem<PropertyItem>();
+    sample_model->insertItem<PropertyItem>();
 
     EXPECT_FALSE(manager.saveCurrentProject());
     EXPECT_TRUE(manager.isModified());
@@ -159,9 +153,8 @@ TEST_F(ProjectManagerTest, untitledModifiedSave)
 
 TEST_F(ProjectManagerTest, untitledModifiedSaveAs)
 {
-    ApplicationModels models;
-    ProjectManager manager(&models);
-    models.sample_model->insertItem<PropertyItem>(); // modifying the model
+    ProjectManager manager(createContext());
+    sample_model->insertItem<PropertyItem>(); // modifying the model
 
     const auto project_dir = createEmptyDir("Project_untitledModifiedSaveAs");
     EXPECT_TRUE(manager.saveProjectAs(project_dir));
@@ -181,8 +174,7 @@ TEST_F(ProjectManagerTest, untitledModifiedSaveAs)
 
 TEST_F(ProjectManagerTest, titledUnmodifiedNew)
 {
-    ApplicationModels models;
-    ProjectManager manager(&models);
+    ProjectManager manager(createContext());
 
     const auto project_dir = createEmptyDir("Project_titledUnmodifiedNew");
     EXPECT_TRUE(manager.saveProjectAs(project_dir));
@@ -208,15 +200,14 @@ TEST_F(ProjectManagerTest, titledUnmodifiedNew)
 
 TEST_F(ProjectManagerTest, titledModifiedSave)
 {
-    ApplicationModels models;
-    ProjectManager manager(&models);
+    ProjectManager manager(createContext());
 
     const auto project_dir = createEmptyDir("Project_titledModifiedSave");
     EXPECT_TRUE(manager.saveProjectAs(project_dir));
     EXPECT_EQ(manager.currentProjectDir(), project_dir);
 
     // modifying the model
-    models.sample_model->insertItem<PropertyItem>();
+    sample_model->insertItem<PropertyItem>();
 
     EXPECT_TRUE(manager.saveCurrentProject());
     EXPECT_FALSE(manager.isModified());
@@ -229,10 +220,11 @@ TEST_F(ProjectManagerTest, titledModifiedSave)
 TEST_F(ProjectManagerTest, callback)
 {
     int project_modified_count{0};
-    auto on_modified = [&project_modified_count]() { ++project_modified_count; };
 
-    ApplicationModels models;
-    ProjectManager manager(&models, on_modified);
+    auto context = createContext();
+    context.m_modified_callback = [&project_modified_count]() { ++project_modified_count; };
+
+    ProjectManager manager(context);
 
     EXPECT_EQ(project_modified_count, 0);
 
@@ -243,12 +235,12 @@ TEST_F(ProjectManagerTest, callback)
     EXPECT_EQ(project_modified_count, 0);
 
     // modifying the model
-    models.sample_model->insertItem<PropertyItem>();
+    sample_model->insertItem<PropertyItem>();
     EXPECT_EQ(project_modified_count, 1);
     EXPECT_TRUE(manager.isModified());
 
     // modifying the model second time
-    models.sample_model->insertItem<PropertyItem>();
+    sample_model->insertItem<PropertyItem>();
     EXPECT_EQ(project_modified_count, 1); // do not sum up
     EXPECT_TRUE(manager.isModified());
 

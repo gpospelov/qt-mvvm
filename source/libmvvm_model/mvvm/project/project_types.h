@@ -27,7 +27,10 @@ enum class SaveChangesAnswer { SAVE = 0, DISCARD = 1, CANCEL = 2 };
 struct ProjectContext {
     //!< To notify about the change of the project with respect to what was written on disk.
     using modified_callback_t = std::function<void()>;
+
     //! To ask for a vector of models to save/load to/from disk.
+    //! This is intentionally obtained via callback since save request might come after
+    //! the Project construction.
     using models_callback_t = std::function<std::vector<SessionModel*>()>;
 
     modified_callback_t m_modified_callback;
@@ -40,8 +43,10 @@ struct ProjectContext {
 struct UserInteractionContext {
     //!< To ask the user to select existing directory, returns full path to the directory.
     using select_dir_callback_t = std::function<std::string()>;
+
     //!< To ask the user to create a new directory, returns full path to the directory.
     using create_dir_callback_t = std::function<std::string()>;
+
     //!< To ask the user what to do with modified project.
     using answer_callback_t = std::function<SaveChangesAnswer()>;
 
