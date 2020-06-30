@@ -18,13 +18,13 @@
 using namespace ModelView;
 
 struct Project::ProjectImpl {
-    std::string project_dir;
+    std::string m_project_dir;
     ProjectContext m_context;
-    ProjectChangedController change_controller;
+    ProjectChangedController m_change_controller;
 
     ProjectImpl(const ProjectContext& context)
         : m_context(context),
-          change_controller(context.m_models_callback(), context.m_modified_callback)
+          m_change_controller(context.m_models_callback(), context.m_modified_callback)
     {
     }
 
@@ -43,8 +43,8 @@ struct Project::ProjectImpl {
             auto filename = Utils::join(dirname, ProjectUtils::SuggestFileName(*model));
             std::invoke(method, document, filename);
         }
-        project_dir = dirname;
-        change_controller.resetChanged();
+        m_project_dir = dirname;
+        m_change_controller.resetChanged();
         return true;
     }
 };
@@ -53,9 +53,12 @@ Project::Project(const ProjectContext& context) : p_impl(std::make_unique<Projec
 
 Project::~Project() = default;
 
+//! Returns the full path to a project directory. It is a name where the project has been last time saved,
+//! or loaded from.
+
 std::string Project::projectDir() const
 {
-    return p_impl->project_dir;
+    return p_impl->m_project_dir;
 }
 
 //! Saves all models to a given directory. Directory should exist.
@@ -74,5 +77,5 @@ bool Project::load(const std::string& dirname)
 
 bool Project::isModified() const
 {
-    return p_impl->change_controller.hasChanged();
+    return p_impl->m_change_controller.hasChanged();
 }

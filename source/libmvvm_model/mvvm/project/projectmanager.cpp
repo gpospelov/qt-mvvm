@@ -7,7 +7,6 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/interfaces/applicationmodelsinterface.h>
 #include <mvvm/interfaces/projectinterface.h>
 #include <mvvm/project/project_types.h>
 #include <mvvm/project/projectmanager.h>
@@ -22,7 +21,7 @@ const bool failed = false;
 } // namespace
 
 struct ProjectManager::ProjectManagerImpl {
-    std::unique_ptr<ProjectInterface> current_project;
+    std::unique_ptr<ProjectInterface> m_current_project;
     ProjectContext m_project_context;
 
     ProjectManagerImpl(const ProjectContext& context) : m_project_context(context)
@@ -33,23 +32,23 @@ struct ProjectManager::ProjectManagerImpl {
     //! Closes current project. Used in assumption that project was already saved.
     void createNewProject()
     {
-        current_project = ProjectUtils::CreateUntitledProject(m_project_context);
+        m_current_project = ProjectUtils::CreateUntitledProject(m_project_context);
     }
 
     //! Returns true if the project has directory already defined.
-    bool projectHasDir() const { return !current_project->projectDir().empty(); }
+    bool projectHasDir() const { return !m_current_project->projectDir().empty(); }
 
     //! Saves project in project directory. If directory is not defined
-    bool saveCurrentProject() { return saveCurrentProjectAs(current_project->projectDir()); }
+    bool saveCurrentProject() { return saveCurrentProjectAs(m_current_project->projectDir()); }
 
     //! Saves the project into a given directory.
-    bool saveCurrentProjectAs(const std::string& dirname) { return current_project->save(dirname); }
+    bool saveCurrentProjectAs(const std::string& dirname) { return m_current_project->save(dirname); }
 
     //! Loads the project from a given directory.
-    bool loadFrom(const std::string& dirname) { return current_project->load(dirname); }
+    bool loadFrom(const std::string& dirname) { return m_current_project->load(dirname); }
 
     //! Returns true if project has been modified after the last save.
-    bool isModified() const { return current_project->isModified(); }
+    bool isModified() const { return m_current_project->isModified(); }
 };
 
 //! Constructor for ProjectManager.
@@ -105,7 +104,7 @@ bool ProjectManager::openExistingProject(const std::string& dirname)
 
 std::string ProjectManager::currentProjectDir() const
 {
-    return p_impl->current_project ? p_impl->current_project->projectDir() : std::string();
+    return p_impl->m_current_project ? p_impl->m_current_project->projectDir() : std::string();
 }
 
 //! Returns true if project was modified since last save.

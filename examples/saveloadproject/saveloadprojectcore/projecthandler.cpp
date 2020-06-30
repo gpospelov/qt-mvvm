@@ -13,8 +13,8 @@
 #include "samplemodel.h"
 #include "userinteractor.h"
 #include <QMainWindow>
+#include <mvvm/factories/projectmanagerfactory.h>
 #include <mvvm/project/project_types.h>
-#include <mvvm/project/projectmanagerdecorator.h>
 #include <mvvm/widgets/widgetutils.h>
 
 using namespace ModelView;
@@ -73,25 +73,16 @@ void ProjectHandler::onSaveProjectAs()
 
 void ProjectHandler::initProjectManager()
 {
-    ProjectContext project_context;
-    project_context.m_modified_callback = [this]() { updateCurrentProjectName(); };
-    project_context.m_models_callback = [this]() -> std::vector<SessionModel*> {
-        return {m_model};
-    };
+    auto modified_callback = [this]() { updateCurrentProjectName(); };
+    auto models_callback = [this]() -> std::vector<SessionModel*> { return {m_model}; };
+    ProjectContext project_context{modified_callback, models_callback};
 
-    UserInteractionContext user_context;
-    user_context.m_select_dir_callback = [this]() {
-        return m_userInteractor->onSelectDirRequest();
-    };
-    user_context.m_create_dir_callback = [this]() {
-        return m_userInteractor->onCreateDirRequest();
-    };
-    user_context.m_answer_callback = [this]() { return m_userInteractor->onSaveChangesRequest(); };
-    ;
+    auto select_dir_callback = [this]() { return m_userInteractor->onSelectDirRequest(); };
+    auto create_dir_callback = [this]() { return m_userInteractor->onCreateDirRequest(); };
+    auto answer_callback = [this]() { return m_userInteractor->onSaveChangesRequest(); };
+    UserInteractionContext user_context{select_dir_callback, create_dir_callback, answer_callback};
 
-    auto manager = std::make_unique<ProjectManagerDecorator>(project_context, user_context);
-
-    m_projectManager = std::move(manager);
+    m_projectManager = CreateProjectManager(project_context, user_context);
 }
 
 //! Updates the name of the current project on main window, notifies the world.
