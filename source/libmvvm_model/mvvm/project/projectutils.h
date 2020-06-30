@@ -10,7 +10,6 @@
 #ifndef MVVM_PROJECT_PROJECTUTILS_H
 #define MVVM_PROJECT_PROJECTUTILS_H
 
-#include <functional>
 #include <memory>
 #include <mvvm/model_export.h>
 #include <string>
@@ -20,7 +19,6 @@ namespace ModelView
 {
 
 class SessionModel;
-class ApplicationModelsInterface;
 class ProjectInterface;
 class ProjectContext;
 
@@ -33,7 +31,8 @@ MVVM_MODEL_EXPORT std::string SuggestFileName(const SessionModel& model);
 
 MVVM_MODEL_EXPORT bool IsPossibleProjectDir(const std::string& project_dir);
 
-MVVM_MODEL_EXPORT std::unique_ptr<ProjectInterface> CreateUntitledProject(const ProjectContext& context);
+MVVM_MODEL_EXPORT std::unique_ptr<ProjectInterface>
+CreateUntitledProject(const ProjectContext& context);
 
 MVVM_MODEL_EXPORT std::string ProjectWindowTitle(const ProjectInterface& project);
 

@@ -10,13 +10,14 @@
 #ifndef MVVM_PROJECT_PROJECTMANAGERDECORATOR_H
 #define MVVM_PROJECT_PROJECTMANAGERDECORATOR_H
 
-#include <functional>
 #include <memory>
 #include <mvvm/interfaces/projectmanagerinterface.h>
-#include <mvvm/project/project_types.h>
 
 namespace ModelView
 {
+
+class ProjectContext;
+class UserInteractionContext;
 
 //! Decorator for ProjectManager to provide interaction with the user on open/save-as requests.
 //! It relies on the same interface and adds additional logic related to "unsaved" data.

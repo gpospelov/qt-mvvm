@@ -11,17 +11,18 @@
 #include <mvvm/interfaces/applicationmodelsinterface.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/project/project.h>
-#include <mvvm/project/projectutils.h>
 #include <mvvm/project/project_types.h>
+#include <mvvm/project/projectutils.h>
 #include <mvvm/utils/fileutils.h>
-
-using namespace ModelView;
 
 namespace
 {
 const std::string json_extention = ".json";
 const std::string untitled_name = "Untitled";
 } // namespace
+
+namespace ModelView
+{
 
 //! Suggests file name which can be used to store json content of given model.
 //! Uses the model type to construct a filename: MaterialModel -> materialmodel.json
@@ -66,3 +67,5 @@ std::string ProjectUtils::ProjectWindowTitle(const std::string& project_dir, boo
     auto unsaved_status = is_modified ? "*" : "";
     return unsaved_status + project_name;
 }
+
+} // namespace ModelView
