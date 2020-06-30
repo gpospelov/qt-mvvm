@@ -13,7 +13,8 @@
 #include "samplemodel.h"
 #include "userinteractor.h"
 #include <QMainWindow>
-#include <mvvm/project/projectmanagerdecorator.h>
+#include <mvvm/factories/projectmanagerfactory.h>
+#include <mvvm/project/project_types.h>
 #include <mvvm/widgets/widgetutils.h>
 
 using namespace ModelView;
@@ -29,11 +30,6 @@ ProjectHandler::ProjectHandler(SampleModel* sample_model, QMainWindow* main_wind
 }
 
 ProjectHandler::~ProjectHandler() = default;
-
-std::vector<SessionModel*> ProjectHandler::persistent_models() const
-{
-    return {m_model};
-}
 
 //! Update names (name of the current project, recent project name list, notifies the world).
 
@@ -77,16 +73,16 @@ void ProjectHandler::onSaveProjectAs()
 
 void ProjectHandler::initProjectManager()
 {
-    auto select_dir = [this]() { return m_userInteractor->onSelectDirRequest(); };
-    auto create_dir = [this]() { return m_userInteractor->onCreateDirRequest(); };
-    auto save_changes = [this]() { return m_userInteractor->onSaveChangesRequest(); };
-    auto on_modified = [this]() { updateCurrentProjectName(); };
+    auto modified_callback = [this]() { updateCurrentProjectName(); };
+    auto models_callback = [this]() -> std::vector<SessionModel*> { return {m_model}; };
+    ProjectContext project_context{modified_callback, models_callback};
 
-    auto manager =
-        std::make_unique<ProjectManagerDecorator>(this, select_dir, create_dir, on_modified);
-    manager->setSaveChangesAnswerCallback(save_changes);
+    auto select_dir_callback = [this]() { return m_userInteractor->onSelectDirRequest(); };
+    auto create_dir_callback = [this]() { return m_userInteractor->onCreateDirRequest(); };
+    auto answer_callback = [this]() { return m_userInteractor->onSaveChangesRequest(); };
+    UserInteractionContext user_context{select_dir_callback, create_dir_callback, answer_callback};
 
-    m_projectManager = std::move(manager);
+    m_projectManager = CreateProjectManager(project_context, user_context);
 }
 
 //! Updates the name of the current project on main window, notifies the world.

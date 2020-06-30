@@ -10,14 +10,13 @@
 #ifndef MVVM_PROJECT_PROJECT_H
 #define MVVM_PROJECT_PROJECT_H
 
-#include <functional>
 #include <memory>
 #include <mvvm/interfaces/projectinterface.h>
 
 namespace ModelView
 {
 
-class ApplicationModelsInterface;
+class ProjectContext;
 
 //! Project represents content of all application models in a folder on disk.
 //! Responsible for saving/loading application models to/from disk.
@@ -25,9 +24,7 @@ class ApplicationModelsInterface;
 class MVVM_MODEL_EXPORT Project : public ModelView::ProjectInterface
 {
 public:
-    using callback_t = std::function<void()>;
-    Project(ModelView::ApplicationModelsInterface* app_models,
-            callback_t project_changed_callback = {});
+    Project(const ProjectContext& context);
     ~Project();
 
     std::string projectDir() const override;

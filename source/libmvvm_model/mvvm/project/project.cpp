@@ -9,8 +9,8 @@
 
 #include <functional>
 #include <mvvm/factories/modeldocuments.h>
-#include <mvvm/interfaces/applicationmodelsinterface.h>
 #include <mvvm/project/project.h>
+#include <mvvm/project/project_types.h>
 #include <mvvm/project/projectchangecontroller.h>
 #include <mvvm/project/projectutils.h>
 #include <mvvm/utils/fileutils.h>
@@ -18,17 +18,18 @@
 using namespace ModelView;
 
 struct Project::ProjectImpl {
-    ApplicationModelsInterface* app_models{nullptr};
-    std::string project_dir;
-    ProjectChangedController change_controller;
+    std::string m_project_dir;
+    ProjectContext m_context;
+    ProjectChangedController m_change_controller;
 
-    ProjectImpl(ApplicationModelsInterface* app_models, callback_t callback)
-        : app_models(app_models), change_controller(app_models->persistent_models(), callback)
+    ProjectImpl(const ProjectContext& context)
+        : m_context(context),
+          m_change_controller(context.m_models_callback(), context.m_modified_callback)
     {
     }
 
     //! Returns list of models which are subject to save/load.
-    std::vector<SessionModel*> models() const { return app_models->persistent_models(); }
+    std::vector<SessionModel*> models() const { return m_context.m_models_callback(); }
 
     //! Processes all models one by one and either save or load them to/from given directory.
     //! Template parameter `method` specifies ModelDocumentInterface's method to use.
@@ -42,22 +43,22 @@ struct Project::ProjectImpl {
             auto filename = Utils::join(dirname, ProjectUtils::SuggestFileName(*model));
             std::invoke(method, document, filename);
         }
-        project_dir = dirname;
-        change_controller.resetChanged();
+        m_project_dir = dirname;
+        m_change_controller.resetChanged();
         return true;
     }
 };
 
-Project::Project(ApplicationModelsInterface* app_models, callback_t project_changed_callback)
-    : p_impl(std::make_unique<ProjectImpl>(app_models, project_changed_callback))
-{
-}
+Project::Project(const ProjectContext& context) : p_impl(std::make_unique<ProjectImpl>(context)) {}
 
 Project::~Project() = default;
 
+//! Returns the full path to a project directory. It is a name where the project has been last time saved,
+//! or loaded from.
+
 std::string Project::projectDir() const
 {
-    return p_impl->project_dir;
+    return p_impl->m_project_dir;
 }
 
 //! Saves all models to a given directory. Directory should exist.
@@ -76,5 +77,5 @@ bool Project::load(const std::string& dirname)
 
 bool Project::isModified() const
 {
-    return p_impl->change_controller.hasChanged();
+    return p_impl->m_change_controller.hasChanged();
 }

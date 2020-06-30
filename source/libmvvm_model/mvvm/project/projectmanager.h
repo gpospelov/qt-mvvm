@@ -10,14 +10,13 @@
 #ifndef MVVM_PROJECT_PROJECTMANAGER_H
 #define MVVM_PROJECT_PROJECTMANAGER_H
 
-#include <functional>
 #include <memory>
 #include <mvvm/interfaces/projectmanagerinterface.h>
 
 namespace ModelView
 {
-class ApplicationModelsInterface;
-}
+
+class ProjectContext;
 
 //! Responsible for handling new/save/save-as/close Project logic, where the Project represents
 //! a collection of serialized application models in the project directory.
@@ -29,9 +28,7 @@ class ApplicationModelsInterface;
 class MVVM_MODEL_EXPORT ProjectManager : public ModelView::ProjectManagerInterface
 {
 public:
-    using callback_t = std::function<void()>;
-    ProjectManager(ModelView::ApplicationModelsInterface* app_models,
-                   callback_t project_changed = {});
+    ProjectManager(const ProjectContext& context);
     ~ProjectManager() override;
 
     ProjectManager(const ProjectManager& other) = delete;
@@ -55,5 +52,7 @@ private:
     struct ProjectManagerImpl;
     std::unique_ptr<ProjectManagerImpl> p_impl;
 };
+
+} // namespace ModelView
 
 #endif // MVVM_PROJECT_PROJECTMANAGER_H
