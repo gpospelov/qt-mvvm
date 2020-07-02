@@ -1,4 +1,6 @@
 target_sources(${library_name} PRIVATE
+    adjustingscrollarea.cpp
+    adjustingscrollarea.h
     allitemstreeview.cpp
     allitemstreeview.h
     itemstreeview.cpp

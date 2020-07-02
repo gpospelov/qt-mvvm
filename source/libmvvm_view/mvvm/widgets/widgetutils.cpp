@@ -11,13 +11,12 @@
 #include <QColor>
 #include <QDir>
 #include <QFontMetrics>
+#include <QLabel>
 #include <QMainWindow>
 #include <QSize>
 #include <mvvm/utils/numericutils.h>
 #include <mvvm/widgets/widgetutils.h>
 
-namespace
-{
 namespace
 {
 
@@ -30,9 +29,9 @@ QSize FindSizeOfLetterM()
     auto fontAscent = fontMetric.ascent();
     return QSize(em, fontAscent);
 }
-} // namespace
 
 const QString untitled_name = "Untitled";
+
 } // namespace
 
 QColor ModelView::Utils::random_color()
@@ -105,4 +104,16 @@ QMainWindow* ModelView::Utils::FindMainWindow()
             return result;
     }
     return nullptr;
+}
+
+QString ModelView::Utils::ClickableText(const QString& text, const QString& tag)
+{
+    return QString("<a href=\"%1\">%2</a>").arg(tag.isEmpty() ? text : tag, text);
+}
+
+void ModelView::Utils::ScaleLabelFont(QLabel* label, double scale)
+{
+    QFont font = label->font();
+    font.setPointSize(ModelView::Utils::SystemPointSize() * scale);
+    label->setFont(font);
 }
