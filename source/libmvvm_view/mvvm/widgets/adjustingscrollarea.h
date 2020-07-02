@@ -12,6 +12,9 @@
 
 #include <QScrollArea>
 
+namespace ModelView
+{
+
 //! Modification of standard scroll area, which makes widget with dynamic layout occupy the whole
 //! available space.
 
@@ -28,5 +31,7 @@ public:
 private:
     bool eventFilter(QObject* obj, QEvent* ev);
 };
+
+} // namespace ModelView
 
 #endif // MVVM_WIDGETS_ADJUSTINGSCROLLAREA_H
