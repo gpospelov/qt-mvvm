@@ -1,6 +1,6 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
-import modelinqmlcore 0.1
+import TableModel 0.1
 
 ApplicationWindow {
     width: 540
