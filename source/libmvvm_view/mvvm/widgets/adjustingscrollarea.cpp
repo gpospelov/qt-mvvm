@@ -11,6 +11,8 @@
 #include <QScrollBar>
 #include <mvvm/widgets/adjustingscrollarea.h>
 
+using namespace ModelView;
+
 AdjustingScrollArea::AdjustingScrollArea(QWidget* parent) : QScrollArea(parent)
 {
     setObjectName("AdjustingScrollArea");
