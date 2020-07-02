@@ -62,3 +62,8 @@ TEST_F(WidgetUtilsTest, ProjectWindowTitle)
     // modified project with projectDir
     EXPECT_EQ(Utils::ProjectWindowTitle(QString("/home/user/project1"), true), "*project1");
 }
+
+TEST_F(WidgetUtilsTest, ClickableText)
+{
+    EXPECT_EQ(Utils::ClickableText("abc", "site.com"), QString("<a href=\"site.com\">abc</a>"));
+}

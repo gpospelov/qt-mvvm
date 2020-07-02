@@ -11,9 +11,9 @@
 #define MVVM_WIDGETS_UTILS_H
 
 #include <mvvm/view_export.h>
+#include <QString>
 
 class QColor;
-class QString;
 class QSize;
 class QMainWindow;
 
@@ -51,6 +51,10 @@ MVVM_VIEW_EXPORT int SystemPointSize();
 
 //! Finds main window.
 MVVM_VIEW_EXPORT QMainWindow* FindMainWindow();
+
+//! Returns text wrapped into 'href' tag to provide clickable links in QLabel.
+//! Example: <a href="tag">text</a>, if 'tag' is empty, 'text' will be used instead.
+MVVM_VIEW_EXPORT QString ClickableText(const QString& text, const QString& tag = {});
 
 } // namespace Utils
 

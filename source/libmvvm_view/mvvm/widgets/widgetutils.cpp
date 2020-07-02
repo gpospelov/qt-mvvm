@@ -106,3 +106,8 @@ QMainWindow* ModelView::Utils::FindMainWindow()
     }
     return nullptr;
 }
+
+QString ModelView::Utils::ClickableText(const QString& text, const QString& tag)
+{
+    return QString("<a href=\"%1\">%2</a>").arg(tag.isEmpty() ? text : tag, text);
+}
