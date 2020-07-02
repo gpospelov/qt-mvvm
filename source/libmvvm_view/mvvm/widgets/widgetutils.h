@@ -16,6 +16,7 @@
 class QColor;
 class QSize;
 class QMainWindow;
+class QLabel;
 
 namespace ModelView
 {
@@ -55,6 +56,9 @@ MVVM_VIEW_EXPORT QMainWindow* FindMainWindow();
 //! Returns text wrapped into 'href' tag to provide clickable links in QLabel.
 //! Example: <a href="tag">text</a>, if 'tag' is empty, 'text' will be used instead.
 MVVM_VIEW_EXPORT QString ClickableText(const QString& text, const QString& tag = {});
+
+//! Set label's font size to system font size scaled by given factor.
+MVVM_VIEW_EXPORT void ScaleLabelFont(QLabel* label, double scale);
 
 } // namespace Utils
 
