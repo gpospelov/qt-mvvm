@@ -9,6 +9,8 @@ target_link_libraries(${library_name} PRIVATE MVVM::View Qt5::Qml)
 
 target_sources(${library_name} PRIVATE
     tablemodel.h
+    backend.cpp
+    backend.h
     modelinqmlcore.qrc
 )
 
@@ -22,3 +24,5 @@ add_custom_command(
         ${CMAKE_CURRENT_LIST_DIR}/qmldir
         $<TARGET_FILE_DIR:modelinqmlcore>/qmldir
 )
+
+target_include_directories(${library_name} PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>/..)

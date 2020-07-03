@@ -1,6 +1,5 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
-import TableModel 0.1
 
 ApplicationWindow {
     width: 540
@@ -13,7 +12,7 @@ ApplicationWindow {
         rowSpacing: 1
         clip: true
 
-        model: TableModel {}
+        model: {BackEnd.tableModel();}
 
         delegate: Rectangle {
             implicitWidth: 100

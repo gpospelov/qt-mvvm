@@ -1,6 +1,17 @@
-#include <qqml.h>
-#include <QAbstractTableModel>
+// ************************************************************************** //
+//
+//  Model-view-view-model framework for large GUI applications
+//
+//! @license   GNU General Public License v3 or higher (see COPYING)
+//! @authors   see AUTHORS
+//
+// ************************************************************************** //
 
+#ifndef MODELINQMLCORE_TABLEMODEL_H
+#define MODELINQMLCORE_TABLEMODEL_H
+
+#include <QAbstractTableModel>
+#include <qqml.h>
 
 class TableModel : public QAbstractTableModel
 {
@@ -9,30 +20,23 @@ class TableModel : public QAbstractTableModel
     QML_ADDED_IN_MINOR_VERSION(1)
 
 public:
-    int rowCount(const QModelIndex & = QModelIndex()) const override
-    {
-        return 200;
-    }
+    int rowCount(const QModelIndex& = QModelIndex()) const override { return 200; }
 
-    int columnCount(const QModelIndex & = QModelIndex()) const override
-    {
-        return 200;
-    }
+    int columnCount(const QModelIndex& = QModelIndex()) const override { return 200; }
 
-    QVariant data(const QModelIndex &index, int role) const override
+    QVariant data(const QModelIndex& index, int role) const override
     {
         switch (role) {
-            case Qt::DisplayRole:
-                return QString("%1, %2").arg(index.column()).arg(index.row());
-            default:
-                break;
+        case Qt::DisplayRole:
+            return QString("%1, %2").arg(index.column()).arg(index.row());
+        default:
+            break;
         }
 
         return QVariant();
     }
 
-    QHash<int, QByteArray> roleNames() const override
-    {
-        return { {Qt::DisplayRole, "display"} };
-    }
+    QHash<int, QByteArray> roleNames() const override { return {{Qt::DisplayRole, "display"}}; }
 };
+
+#endif // MODELINQMLCORE_TABLEMODEL_H
