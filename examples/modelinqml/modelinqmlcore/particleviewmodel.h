@@ -18,7 +18,6 @@ class ParticleModel;
 class ParticleViewModel : public ModelView::PropertyViewModel
 {
     Q_OBJECT
-    QML_ELEMENT
 
 public:
     ParticleViewModel(ParticleModel* model = nullptr);
