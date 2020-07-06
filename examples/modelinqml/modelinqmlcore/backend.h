@@ -16,6 +16,7 @@
 #include <qqml.h>
 
 class TableModel;
+class ViewModel;
 
 class BackEnd : public QObject
 {

@@ -8,12 +8,27 @@
 // ************************************************************************** //
 
 #include <modelinqmlcore/backend.h>
+#include <modelinqmlcore/particlemodel.h>
+#include <modelinqmlcore/particleviewmodel.h>
 #include <modelinqmlcore/tablemodel.h>
+#include <mvvm/model/modelutils.h>
+#include <mvvm/viewmodel/standardviewmodels.h>
+#include <mvvm/viewmodel/viewmodel.h>
+
+using namespace ModelView;
 
 struct BackEnd::BackEndImpl {
+    std::unique_ptr<ParticleModel> m_model;
+    std::unique_ptr<ParticleViewModel> m_viewModel;
     TableModel* m_tableModel{nullptr};
 
-    BackEndImpl() : m_tableModel(new TableModel) {}
+    BackEndImpl()
+        : m_model(std::make_unique<ParticleModel>()),
+          m_viewModel(std::make_unique<ParticleViewModel>(m_model.get())),
+          m_tableModel(new TableModel)
+    {
+        m_viewModel->setRootSessionItem(Utils::TopItem(m_model.get()));
+    }
 };
 
 BackEnd::BackEnd(QObject* parent) : QObject(parent), p_impl(std::make_unique<BackEndImpl>()) {}

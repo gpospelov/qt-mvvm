@@ -14,6 +14,8 @@ target_sources(${library_name} PRIVATE
     modelinqmlcore.qrc
     particlemodel.cpp
     particlemodel.h
+    particleviewmodel.cpp
+    particleviewmodel.h
 )
 
 # During plugin searching Qt will be looking for 'qmldir' file
