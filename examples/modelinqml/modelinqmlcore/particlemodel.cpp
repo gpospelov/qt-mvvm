@@ -38,8 +38,9 @@ std::unique_ptr<ModelView::ItemCatalogue> CreateToyItemCatalogue()
 
 ParticleItem::ParticleItem() : CompoundItem(ParticleType)
 {
-    addProperty<VectorItem>(P_POSITION);
-    addProperty<ShapeGroupItem>(P_SHAPES);
+//    addProperty<VectorItem>(P_POSITION);
+//    addProperty<ShapeGroupItem>(P_SHAPES);
+    addProperty("Radius", 42);
 }
 
 CylinderItem::CylinderItem() : CompoundItem(CylinderType)
