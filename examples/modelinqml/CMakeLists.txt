@@ -5,6 +5,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
 find_package(MVVM REQUIRED)
+find_package(Qt5 5.12 COMPONENTS Widgets Core Gui PrintSupport Quick Qml REQUIRED)
 
 set(executable_name modelinqml)
 add_subdirectory(modelinqmlcore)
