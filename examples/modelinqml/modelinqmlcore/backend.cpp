@@ -10,12 +10,17 @@
 #include <modelinqmlcore/backend.h>
 #include <modelinqmlcore/tablemodel.h>
 
-BackEnd::BackEnd(QObject* parent) : QObject(parent), m_tableModel(new TableModel)
-{
+struct BackEnd::BackEndImpl {
+    TableModel* m_tableModel{nullptr};
 
-}
+    BackEndImpl() : m_tableModel(new TableModel) {}
+};
+
+BackEnd::BackEnd(QObject* parent) : QObject(parent), p_impl(std::make_unique<BackEndImpl>()) {}
+
+BackEnd::~BackEnd() = default;
 
 TableModel* BackEnd::tableModel() const
 {
-    return m_tableModel;
+    return p_impl->m_tableModel;
 }

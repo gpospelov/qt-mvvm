@@ -12,6 +12,7 @@
 
 #include <QObject>
 #include <QString>
+#include <memory>
 #include <qqml.h>
 
 class TableModel;
@@ -22,15 +23,14 @@ class BackEnd : public QObject
     QML_ELEMENT
 
 public:
-    explicit BackEnd(QObject *parent = nullptr);
+    explicit BackEnd(QObject* parent = nullptr);
+    ~BackEnd() override;
 
     Q_INVOKABLE TableModel* tableModel() const;
 
 private:
-    TableModel* m_tableModel{nullptr};
+    struct BackEndImpl;
+    std::unique_ptr<BackEndImpl> p_impl;
 };
 
 #endif // MODELINQMLCORE_BACKEND_H
-
-
-
