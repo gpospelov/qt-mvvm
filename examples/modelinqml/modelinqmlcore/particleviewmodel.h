@@ -19,7 +19,6 @@ class ParticleViewModel : public ModelView::PropertyViewModel
 {
     Q_OBJECT
     QML_ELEMENT
-    QML_ADDED_IN_MINOR_VERSION(1)
 
 public:
     ParticleViewModel(ParticleModel* model = nullptr);
