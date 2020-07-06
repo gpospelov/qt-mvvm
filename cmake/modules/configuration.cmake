@@ -13,7 +13,8 @@ include(GNUInstallDirs)
 # Variables
 # -----------------------------------------------------------------------------
 
-set(MVVM_PROJECT_DIR ${CMAKE_CURRENT_LIST_DIR}/../..)
+get_filename_component(MVVM_PROJECT_DIR "${CMAKE_CURRENT_LIST_DIR}/../.." ABSOLUTE)
+
 set(MVVM_SOVERSION ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR})
 set(MVVM_BUILDVERSION ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH})
 set(MVVM_TESTOUTPUT_DIR ${CMAKE_BINARY_DIR}/test_output_mvvm)
@@ -42,7 +43,7 @@ file(MAKE_DIRECTORY ${MVVM_AUTOGEN_DIR})
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-find_package(Qt5 5.12 COMPONENTS Widgets Core Gui PrintSupport Quick Qml REQUIRED)
+find_package(Qt5 5.12 COMPONENTS Widgets Core Gui PrintSupport REQUIRED)
 find_package(Threads)
 
 get_target_property(Qt5Widgets_location Qt5::Widgets LOCATION_Release)
