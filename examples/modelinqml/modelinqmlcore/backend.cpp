@@ -39,3 +39,8 @@ TableModel* BackEnd::tableModel() const
 {
     return p_impl->m_tableModel;
 }
+
+ParticleViewModel* BackEnd::particleViewModel() const
+{
+    return p_impl->m_viewModel.get();
+}

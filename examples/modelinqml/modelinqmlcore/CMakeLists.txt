@@ -5,7 +5,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
 add_library(${library_name} SHARED "")
-target_link_libraries(${library_name} PRIVATE MVVM::View Qt5::Qml)
+target_link_libraries(${library_name} PUBLIC MVVM::View Qt5::Qml)
 
 target_sources(${library_name} PRIVATE
     tablemodel.h

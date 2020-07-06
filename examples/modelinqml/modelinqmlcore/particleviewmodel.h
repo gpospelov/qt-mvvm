@@ -22,7 +22,7 @@ class ParticleViewModel : public ModelView::PropertyViewModel
     QML_ADDED_IN_MINOR_VERSION(1)
 
 public:
-    ParticleViewModel(ParticleModel* model);
+    ParticleViewModel(ParticleModel* model = nullptr);
 };
 
 #endif // MODELINQMLCORE_PARTICLEVIEWMODEL_H

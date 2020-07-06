@@ -16,7 +16,7 @@
 #include <qqml.h>
 
 class TableModel;
-class ViewModel;
+class ParticleViewModel;
 
 class BackEnd : public QObject
 {
@@ -28,6 +28,7 @@ public:
     ~BackEnd() override;
 
     Q_INVOKABLE TableModel* tableModel() const;
+    Q_INVOKABLE ParticleViewModel* particleViewModel() const;
 
 private:
     struct BackEndImpl;
