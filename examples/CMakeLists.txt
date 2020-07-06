@@ -12,7 +12,7 @@ if (MVVM_BUILD_EXAMPLES)
     add_subdirectory(plotgraphs)
     add_subdirectory(saveloadproject)
     add_subdirectory(treeviews)
-    add_subdirectory(modelinqml)
+#    add_subdirectory(modelinqml)
 endif()
 
 install(DIRECTORY ${CMAKE_SOURCE_DIR}/examples DESTINATION share/mvvm)
