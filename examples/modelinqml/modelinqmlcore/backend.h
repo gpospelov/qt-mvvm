@@ -13,7 +13,6 @@
 #include <QObject>
 #include <QString>
 #include <memory>
-#include <qqml.h>
 
 class TableModel;
 class ParticleViewModel;
@@ -21,7 +20,6 @@ class ParticleViewModel;
 class BackEnd : public QObject
 {
     Q_OBJECT
-    QML_ELEMENT
 
 public:
     explicit BackEnd(QObject* parent = nullptr);
