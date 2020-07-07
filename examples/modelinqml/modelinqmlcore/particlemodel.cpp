@@ -40,7 +40,9 @@ ParticleItem::ParticleItem() : CompoundItem(ParticleType)
 {
 //    addProperty<VectorItem>(P_POSITION);
 //    addProperty<ShapeGroupItem>(P_SHAPES);
-    addProperty("Radius", 42);
+    addProperty("Radius", 42.0);
+    addProperty("Height", 10.0);
+    addProperty("Alpha", 11.0);
 }
 
 CylinderItem::CylinderItem() : CompoundItem(CylinderType)
