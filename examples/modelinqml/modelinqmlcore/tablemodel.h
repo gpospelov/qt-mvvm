@@ -11,7 +11,6 @@
 #define MODELINQMLCORE_TABLEMODEL_H
 
 #include <QAbstractTableModel>
-#include <qqml.h>
 
 class TableModel : public QAbstractTableModel
 {

@@ -1,10 +1,9 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
-import ParticleViewModel 0.1
 
 ApplicationWindow {
     width: 540
-    height: 960
+    height: 560
     visible: true
 
     TableView {
@@ -14,6 +13,7 @@ ApplicationWindow {
         clip: true
 
         model: backEnd.particleViewModel()
+        //model: backEnd.tableModel()
 
         delegate: Rectangle {
             implicitWidth: 100

@@ -11,7 +11,6 @@
 #define MODELINQMLCORE_PARTICLEVIEWMODEL_H
 
 #include <mvvm/viewmodel/propertyviewmodel.h>
-#include <qqml.h>
 
 class ParticleModel;
 
