@@ -15,7 +15,7 @@ int main(int argc, char* argv[])
     qmlRegisterType<ParticleViewModel>("ParticleViewModel", 0, 1, "ParticleViewModel");
 
     QQmlApplicationEngine engine;
-    engine.rootContext()->setContextProperty("BackEnd", &backend);
+    engine.rootContext()->setContextProperty("backEnd", &backend);
     engine.load("qrc:/main.qml");
 
     engine.addImportPath("./plugins");

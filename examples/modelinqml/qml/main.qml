@@ -13,7 +13,7 @@ ApplicationWindow {
         rowSpacing: 1
         clip: true
 
-        model: BackEnd.particleViewModel()
+        model: backEnd.particleViewModel()
 
         delegate: Rectangle {
             implicitWidth: 100
