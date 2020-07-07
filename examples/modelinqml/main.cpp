@@ -2,22 +2,19 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <modelinqmlcore/backend.h>
-#include <modelinqmlcore/tablemodel.h>
-#include <modelinqmlcore/particleviewmodel.h>
 
 int main(int argc, char* argv[])
 {
-    QGuiApplication app(argc, argv);
-
+    qRegisterMetaType<TableModel*>("TableModel*");
+    qRegisterMetaType<ParticleViewModel*>("ParticleViewModel*");
     BackEnd backend;
 
-    qmlRegisterType<TableModel>("TableModel", 0, 1, "TableModel");
-    qmlRegisterType<ParticleViewModel>("ParticleViewModel", 0, 1, "ParticleViewModel");
+    QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("backEnd", &backend);
     engine.load("qrc:/main.qml");
 
-    engine.addImportPath("./plugins");
+    //engine.addImportPath("./plugins");
     return app.exec();
 }

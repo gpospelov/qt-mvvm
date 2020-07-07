@@ -13,9 +13,11 @@
 #include <QObject>
 #include <QString>
 #include <memory>
+#include "tablemodel.h"
+#include "particleviewmodel.h"
 
-class TableModel;
-class ParticleViewModel;
+//class TableModel;
+//class ParticleViewModel;
 
 class BackEnd : public QObject
 {
