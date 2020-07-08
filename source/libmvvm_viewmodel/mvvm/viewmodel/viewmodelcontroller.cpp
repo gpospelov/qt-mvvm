@@ -7,12 +7,10 @@
 //
 // ************************************************************************** //
 
-#include <QDebug>
 #include <map>
 #include <mvvm/model/itemutils.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
-#include <mvvm/signals/modelmapper.h>
 #include <mvvm/utils/containerutils.h>
 #include <mvvm/viewmodel/childrenstrategyinterface.h>
 #include <mvvm/viewmodel/rowstrategyinterface.h>
@@ -42,18 +40,15 @@ bool isValidItemRole(const ViewItem* view, int item_role)
 
 struct ViewModelController::ViewModelControllerImpl {
     ViewModelController* controller;
-    SessionModel* session_model{nullptr};
     ViewModelBase* view_model{nullptr};
     std::unique_ptr<ChildrenStrategyInterface> children_strategy;
     std::unique_ptr<RowStrategyInterface> row_strategy;
     std::map<SessionItem*, ViewItem*> item_to_view; //! correspondence of item and its view
     Path root_item_path;
 
-    ViewModelControllerImpl(ViewModelController* controller, SessionModel* session_model,
-                            ViewModelBase* view_model)
+    ViewModelControllerImpl(ViewModelController* controller, ViewModelBase* view_model)
         : controller(controller), view_model(view_model)
     {
-        setSessionModel(session_model);
     }
 
     void check_initialization()
@@ -61,9 +56,6 @@ struct ViewModelController::ViewModelControllerImpl {
         const std::string msg("Error in ViewModelController: ");
         if (!view_model)
             throw std::runtime_error(msg + "ViewModel is not defined");
-
-        if (!session_model)
-            throw std::runtime_error(msg + "SessionModel is not defined");
 
         if (!row_strategy)
             throw std::runtime_error(msg + "RowStrategy is not defined");
@@ -144,47 +136,6 @@ struct ViewModelController::ViewModelControllerImpl {
         }
     }
 
-    void setSessionModel(SessionModel* model)
-    {
-        session_model = model;
-
-        auto on_data_change = [this](SessionItem* item, int role) {
-            controller->onDataChange(item, role);
-        };
-        session_model->mapper()->setOnDataChange(on_data_change, controller);
-
-        auto on_item_inserted = [this](SessionItem* item, TagRow tagrow) {
-            controller->onItemInserted(item, tagrow);
-        };
-        session_model->mapper()->setOnItemInserted(on_item_inserted, controller);
-
-        auto on_item_removed = [this](SessionItem* item, TagRow tagrow) {
-            controller->onItemRemoved(item, tagrow);
-        };
-        session_model->mapper()->setOnItemRemoved(on_item_removed, controller);
-
-        auto on_about_to_remove = [this](SessionItem* item, TagRow tagrow) {
-            controller->onAboutToRemoveItem(item, tagrow);
-        };
-        session_model->mapper()->setOnAboutToRemoveItem(on_about_to_remove, controller);
-
-        auto on_model_destroyed = [this](SessionModel*) {
-            session_model = nullptr;
-            view_model->setRootViewItem(std::make_unique<RootViewItem>(nullptr));
-        };
-        session_model->mapper()->setOnModelDestroyed(on_model_destroyed, controller);
-
-        auto on_model_reset = [this](SessionModel*) {
-            auto root_item = session_model->itemFromPath(root_item_path);
-            setRootSessionItemIntern(root_item ? root_item : session_model->rootItem());
-            view_model->endResetModel();
-        };
-        session_model->mapper()->setOnModelReset(on_model_reset, controller);
-
-        auto on_model_about_to_be_reset = [this](SessionModel*) { view_model->beginResetModel(); };
-        session_model->mapper()->setOnModelAboutToBeReset(on_model_about_to_be_reset, controller);
-    }
-
     std::vector<ViewItem*> findViews(const SessionItem* item) const
     {
         if (item == view_model->rootItem()->item())
@@ -202,22 +153,51 @@ struct ViewModelController::ViewModelControllerImpl {
 
     void setRootSessionItemIntern(SessionItem* item)
     {
-        root_item_path = session_model->pathFromItem(item);
+        root_item_path = controller->model()->pathFromItem(item);
         view_model->setRootViewItem(std::make_unique<RootViewItem>(item));
         init_view_model();
     }
 };
 
 ViewModelController::ViewModelController(SessionModel* session_model, ViewModelBase* view_model)
-    : p_impl(std::make_unique<ViewModelControllerImpl>(this, session_model, view_model))
+    : ModelListener(session_model),
+      p_impl(std::make_unique<ViewModelControllerImpl>(this, view_model))
 {
+    auto on_data_change = [this](SessionItem* item, int role) { onDataChange(item, role); };
+    setOnDataChange(on_data_change);
+
+    auto on_item_inserted = [this](SessionItem* item, TagRow tagrow) {
+        onItemInserted(item, tagrow);
+    };
+    setOnItemInserted(on_item_inserted);
+
+    auto on_item_removed = [this](SessionItem* item, TagRow tagrow) {
+        onItemRemoved(item, tagrow);
+    };
+    setOnItemRemoved(on_item_removed);
+
+    auto on_about_to_remove = [this](SessionItem* item, TagRow tagrow) {
+        onAboutToRemoveItem(item, tagrow);
+    };
+    setOnAboutToRemoveItem(on_about_to_remove);
+
+    auto on_model_destroyed = [this](auto) {
+        p_impl->view_model->setRootViewItem(std::make_unique<RootViewItem>(nullptr));
+    };
+    setOnModelDestroyed(on_model_destroyed);
+
+    auto on_model_reset = [this](auto) {
+        auto root_item = model()->itemFromPath(p_impl->root_item_path);
+        p_impl->setRootSessionItemIntern(root_item ? root_item : model()->rootItem());
+        p_impl->view_model->endResetModel();
+    };
+    setOnModelReset(on_model_reset);
+
+    auto on_model_about_to_be_reset = [this](auto) { p_impl->view_model->beginResetModel(); };
+    setOnModelAboutToBeReset(on_model_about_to_be_reset);
 }
 
-ViewModelController::~ViewModelController()
-{
-    if (p_impl->session_model)
-        p_impl->session_model->mapper()->unsubscribe(this);
-}
+ViewModelController::~ViewModelController() = default;
 
 void ViewModelController::setChildrenStrategy(
     std::unique_ptr<ChildrenStrategyInterface> children_strategy)
@@ -234,7 +214,7 @@ void ViewModelController::setRowStrategy(std::unique_ptr<RowStrategyInterface> r
 
 SessionModel* ViewModelController::sessionModel() const
 {
-    return p_impl->session_model;
+    return model();
 }
 
 void ViewModelController::setRootSessionItem(SessionItem* item)
