@@ -18,15 +18,4 @@ target_sources(${library_name} PRIVATE
     particleviewmodel.h
 )
 
-# During plugin searching Qt will be looking for 'qmldir' file
-# So we should place it next to our plugin lib.
-add_custom_command(
-    TARGET modelinqmlcore
-    POST_BUILD
-    COMMAND
-        ${CMAKE_COMMAND} -E copy
-        ${CMAKE_CURRENT_LIST_DIR}/qmldir
-        $<TARGET_FILE_DIR:modelinqmlcore>/qmldir
-)
-
 target_include_directories(${library_name} PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>/..)
