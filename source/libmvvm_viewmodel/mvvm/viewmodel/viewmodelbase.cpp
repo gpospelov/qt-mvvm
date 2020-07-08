@@ -176,7 +176,5 @@ Qt::ItemFlags ViewModelBase::flags(const QModelIndex& index) const
 
 void ViewModelBase::setRootViewItem(std::unique_ptr<ViewItem> root_item)
 {
-    //    beginResetModel();
     p_impl->root = std::move(root_item);
-    //    endResetModel();
 }
