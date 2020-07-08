@@ -176,9 +176,13 @@ struct ViewModelController::ViewModelControllerImpl {
 
         auto on_model_reset = [this](SessionModel*) {
             auto root_item = session_model->itemFromPath(root_item_path);
-            controller->setRootSessionItem(root_item ? root_item : session_model->rootItem());
+            setRootSessionItemIntern(root_item ? root_item : session_model->rootItem());
+            view_model->endResetModel();
         };
         session_model->mapper()->setOnModelReset(on_model_reset, controller);
+
+        auto on_model_about_to_be_reset = [this](SessionModel*) { view_model->beginResetModel(); };
+        session_model->mapper()->setOnModelAboutToBeReset(on_model_about_to_be_reset, controller);
     }
 
     std::vector<ViewItem*> findViews(const SessionItem* item) const
@@ -194,6 +198,13 @@ struct ViewModelController::ViewModelControllerImpl {
         };
         Utils::iterate_model(view_model, QModelIndex(), on_index);
         return result;
+    }
+
+    void setRootSessionItemIntern(SessionItem* item)
+    {
+        root_item_path = session_model->pathFromItem(item);
+        view_model->setRootViewItem(std::make_unique<RootViewItem>(item));
+        init_view_model();
     }
 };
 
@@ -229,9 +240,7 @@ SessionModel* ViewModelController::sessionModel() const
 void ViewModelController::setRootSessionItem(SessionItem* item)
 {
     p_impl->view_model->beginResetModel();
-    p_impl->root_item_path = p_impl->session_model->pathFromItem(item);
-    p_impl->view_model->setRootViewItem(std::make_unique<RootViewItem>(item));
-    p_impl->init_view_model();
+    p_impl->setRootSessionItemIntern(item);
     p_impl->view_model->endResetModel();
 }
 
