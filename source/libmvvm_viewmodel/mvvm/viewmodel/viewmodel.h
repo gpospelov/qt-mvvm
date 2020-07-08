@@ -35,8 +35,6 @@ public:
 
     SessionModel* sessionModel() const;
 
-    ViewModelController* viewModelController() const;
-
     SessionItem* rootSessionItem();
 
     void setRootSessionItem(SessionItem* item);
