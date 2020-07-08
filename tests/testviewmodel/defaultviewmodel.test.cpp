@@ -376,12 +376,18 @@ TEST_F(DefaultViewModelTest, setRootItem)
     SessionModel model;
     DefaultViewModel viewModel(&model);
 
+    QSignalSpy spyAboutReset(&viewModel, &DefaultViewModel::modelAboutToBeReset);
+    QSignalSpy spyReset(&viewModel, &DefaultViewModel::modelReset);
+
     auto item = model.insertItem<PropertyItem>();
     viewModel.setRootSessionItem(item);
 
     // new root item doesn't have children
     EXPECT_EQ(viewModel.rowCount(), 0);
     EXPECT_EQ(viewModel.columnCount(), 0);
+
+    EXPECT_EQ(spyAboutReset.count(), 1);
+    EXPECT_EQ(spyReset.count(), 1);
 }
 
 //! Setting top level item as ROOT item (case parent and children).
@@ -417,9 +423,16 @@ TEST_F(DefaultViewModelTest, onModelReset)
     model->insertItem<SessionItem>();
 
     DefaultViewModel viewModel(model.get());
+
+    QSignalSpy spyAboutReset(&viewModel, &DefaultViewModel::modelAboutToBeReset);
+    QSignalSpy spyReset(&viewModel, &DefaultViewModel::modelReset);
+
     model->clear();
     EXPECT_EQ(viewModel.rowCount(), 0);
     EXPECT_EQ(viewModel.columnCount(), 0);
+
+    EXPECT_EQ(spyAboutReset.count(), 1);
+    EXPECT_EQ(spyReset.count(), 1);
 }
 
 //! On model destroyed.

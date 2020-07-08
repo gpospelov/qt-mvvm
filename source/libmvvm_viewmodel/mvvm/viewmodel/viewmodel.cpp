@@ -36,11 +36,6 @@ SessionModel* ViewModel::sessionModel() const
     return m_controller->sessionModel();
 }
 
-ViewModelController* ViewModel::viewModelController() const
-{
-    return m_controller.get();
-}
-
 SessionItem* ViewModel::rootSessionItem()
 {
     return m_controller->rootSessionItem();
