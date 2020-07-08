@@ -15,6 +15,5 @@ int main(int argc, char* argv[])
     engine.rootContext()->setContextProperty("backEnd", &backend);
     engine.load("qrc:/main.qml");
 
-    //engine.addImportPath("./plugins");
     return app.exec();
 }
