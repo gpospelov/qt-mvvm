@@ -10,7 +10,7 @@
 #ifndef MVVM_VIEWMODEL_DEFAULTCELLDECORATOR_H
 #define MVVM_VIEWMODEL_DEFAULTCELLDECORATOR_H
 
-#include <mvvm/viewmodel/celldecoratorinterface.h>
+#include <mvvm/interfaces/celldecoratorinterface.h>
 #include <optional>
 
 namespace ModelView

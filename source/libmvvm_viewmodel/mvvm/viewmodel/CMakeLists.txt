@@ -1,5 +1,4 @@
 target_sources(${library_name} PRIVATE
-    celldecoratorinterface.h
     childrenstrategyinterface.h
     defaultcelldecorator.cpp
     defaultcelldecorator.h
