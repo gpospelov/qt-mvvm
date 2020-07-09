@@ -9,7 +9,6 @@
 
 #include "google_test.h"
 #include "test_utils.h"
-#include <QDebug>
 #include <QSignalSpy>
 #include <mvvm/model/propertyitem.h>
 #include <mvvm/model/sessionmodel.h>
@@ -41,9 +40,20 @@ public:
 
 ViewModelControllerTest::~ViewModelControllerTest() = default;
 
-//! Initial state of the controller. Empty SessionModel, empty ViewModel.
+//! Initial state of the controller. It is in working state only after setRootItem.
 
 TEST_F(ViewModelControllerTest, initialState)
+{
+    SessionModel session_model;
+    ViewModelBase view_model;
+    auto controller = std::make_unique<ViewModelController>(&session_model, &view_model);
+    EXPECT_EQ(controller->sessionModel(), &session_model);
+    EXPECT_EQ(controller->rootSessionItem(), nullptr);
+}
+
+//! Initial state of the controller. Empty SessionModel, empty ViewModel.
+
+TEST_F(ViewModelControllerTest, create_controller)
 {
     SessionModel session_model;
     ViewModelBase view_model;

@@ -12,8 +12,8 @@
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/utils/containerutils.h>
-#include <mvvm/viewmodel/childrenstrategyinterface.h>
-#include <mvvm/viewmodel/rowstrategyinterface.h>
+#include <mvvm/interfaces/childrenstrategyinterface.h>
+#include <mvvm/interfaces/rowstrategyinterface.h>
 #include <mvvm/viewmodel/standardviewitems.h>
 #include <mvvm/viewmodel/viewmodelbase.h>
 #include <mvvm/viewmodel/viewmodelcontroller.h>
