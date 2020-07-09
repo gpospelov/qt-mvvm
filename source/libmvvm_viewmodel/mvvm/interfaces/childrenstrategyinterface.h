@@ -7,13 +7,11 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_VIEWMODEL_CHILDRENSTRATEGYINTERFACE_H
-#define MVVM_VIEWMODEL_CHILDRENSTRATEGYINTERFACE_H
+#ifndef MVVM_INTERFACES_CHILDRENSTRATEGYINTERFACE_H
+#define MVVM_INTERFACES_CHILDRENSTRATEGYINTERFACE_H
 
-#include <QList>
 #include <mvvm/viewmodel_export.h>
-
-class QStandardItem;
+#include <vector>
 
 namespace ModelView
 {
@@ -21,7 +19,7 @@ namespace ModelView
 class SessionItem;
 
 //! Base class for strategies to find children, actual of fictional, of given item.
-//!
+
 //! Reported vector of children might be different from actual children of given item.
 //! The strategy is used in context of AbstractViewModel while exposing SessionModel to Qt.
 //! Thanks to this strategy ViewModel decides which items to visit.
@@ -37,4 +35,4 @@ public:
 
 } // namespace ModelView
 
-#endif // MVVM_VIEWMODEL_CHILDRENSTRATEGYINTERFACE_H
+#endif // MVVM_INTERFACES_CHILDRENSTRATEGYINTERFACE_H

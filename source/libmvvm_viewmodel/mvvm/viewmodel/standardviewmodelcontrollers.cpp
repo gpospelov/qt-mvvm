@@ -57,6 +57,8 @@ void PropertyViewModelController::onDataChange(SessionItem* item, int role)
 
 // ----------------------------------------------------------------------------
 
+// FIXME What to do with group property?
+
 PropertyTableViewModelController::PropertyTableViewModelController(
     SessionModel* session_model, ViewModelBase* view_model, const std::vector<std::string>& labels)
     : ViewModelController(session_model, view_model)

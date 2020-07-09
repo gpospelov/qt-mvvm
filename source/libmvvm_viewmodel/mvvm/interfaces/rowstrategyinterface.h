@@ -7,16 +7,13 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_VIEWMODEL_ROWSTRATEGYINTERFACE_H
-#define MVVM_VIEWMODEL_ROWSTRATEGYINTERFACE_H
+#ifndef MVVM_INTERFACES_ROWSTRATEGYINTERFACE_H
+#define MVVM_INTERFACES_ROWSTRATEGYINTERFACE_H
 
-#include <QList>
+#include <QStringList>
 #include <memory>
 #include <mvvm/viewmodel_export.h>
-#include <stdexcept>
 #include <vector>
-
-class QStandardItem;
 
 namespace ModelView
 {
@@ -24,12 +21,8 @@ namespace ModelView
 class SessionItem;
 class ViewItem;
 
-/*!
-@class RowStrategyInterface
-@brief Base class to construct row of QStandardItems from given SessionItem.
-
-Used in context of AbstractViewModel while exposing SessionModel to Qt.
-*/
+//! Base class to construct row of ViewItem's from given SessionItem.
+//! Used in context of AbstractViewModel while exposing SessionModel to Qt.
 
 class MVVM_VIEWMODEL_EXPORT RowStrategyInterface
 {
@@ -43,4 +36,4 @@ public:
 
 } // namespace ModelView
 
-#endif // MVVM_VIEWMODEL_ROWSTRATEGYINTERFACE_H
+#endif // MVVM_INTERFACES_ROWSTRATEGYINTERFACE_H
