@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_FACTORIES_VIEWMODELCONTROLLERFACTORY_H
-#define MVVM_FACTORIES_VIEWMODELCONTROLLERFACTORY_H
+#ifndef MVVM_FACTORIES_VIEWMODELCONTROLLERBUILDER_H
+#define MVVM_FACTORIES_VIEWMODELCONTROLLERBUILDER_H
 
 #include <memory>
 #include <mvvm/viewmodel_export.h>
@@ -22,6 +22,8 @@ class ChildrenStrategyInterface;
 class RowStrategyInterface;
 class ViewModelController;
 
+//! Builder class for ViewModelController.
+
 class ViewModelControllerBuilder
 {
 public:
@@ -29,7 +31,6 @@ public:
 
     ViewModelControllerBuilder();
     ~ViewModelControllerBuilder();
-
     ViewModelControllerBuilder(const ViewModelControllerBuilder& other) = delete;
     ViewModelControllerBuilder& operator=(const ViewModelControllerBuilder& other) = delete;
 
@@ -41,6 +42,8 @@ public:
     operator std::unique_ptr<ViewModelController>();
 
 private:
+
+    //! Components necessary to build ViewModelController
     struct Context {
         SessionModel* model{nullptr};
         ViewModelBase* view_model{nullptr};
@@ -53,4 +56,4 @@ private:
 
 } // namespace ModelView
 
-#endif // MVVM_FACTORIES_VIEWMODELCONTROLLERFACTORY_H
+#endif // MVVM_FACTORIES_VIEWMODELCONTROLLERBUILDER_H

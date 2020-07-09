@@ -7,10 +7,10 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/factories/viewmodelcontrollerfactory.h>
+#include <mvvm/factories/viewmodelcontrollerbuilder.h>
 #include <mvvm/interfaces/childrenstrategyinterface.h>
 #include <mvvm/interfaces/rowstrategyinterface.h>
-#include <mvvm/viewmodel/standardviewmodelcontrollers.h>
+#include <mvvm/viewmodel/viewmodelcontroller.h>
 #include <stdexcept>
 
 namespace ModelView
