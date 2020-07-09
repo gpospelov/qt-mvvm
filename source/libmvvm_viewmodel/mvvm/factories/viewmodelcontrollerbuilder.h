@@ -24,13 +24,14 @@ class ViewModelController;
 
 //! Builder class for ViewModelController.
 
-class ViewModelControllerBuilder
+class MVVM_VIEWMODEL_EXPORT ViewModelControllerBuilder
 {
 public:
     using self = ViewModelControllerBuilder;
 
     ViewModelControllerBuilder();
     ~ViewModelControllerBuilder();
+
     ViewModelControllerBuilder(const ViewModelControllerBuilder& other) = delete;
     ViewModelControllerBuilder& operator=(const ViewModelControllerBuilder& other) = delete;
 
