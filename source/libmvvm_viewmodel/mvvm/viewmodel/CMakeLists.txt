@@ -1,5 +1,4 @@
 target_sources(${library_name} PRIVATE
-    childrenstrategyinterface.h
     defaultcelldecorator.cpp
     defaultcelldecorator.h
     defaultviewmodel.cpp
@@ -14,7 +13,6 @@ target_sources(${library_name} PRIVATE
     propertytableviewmodel.h
     propertyviewmodel.cpp
     propertyviewmodel.h
-    rowstrategyinterface.h
     standardchildrenstrategies.cpp
     standardchildrenstrategies.h
     standardviewitems.cpp
