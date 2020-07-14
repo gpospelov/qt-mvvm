@@ -8,10 +8,11 @@
 // ************************************************************************** //
 
 #include <QColor>
-#include <layereditorcore/model/materialitems.h>
-#include <layereditorcore/model/materialmodel.h>
+#include <layereditorcore/materialmodel.h>
 #include <mvvm/model/externalproperty.h>
 #include <mvvm/model/itemcatalogue.h>
+#include <mvvm/standarditems/vectoritem.h>
+#include <mvvm/standarditems/containeritem.h>
 
 using namespace ModelView;
 
@@ -20,11 +21,33 @@ namespace
 std::unique_ptr<ItemCatalogue> CreateItemCatalogue()
 {
     auto result = std::make_unique<ModelView::ItemCatalogue>();
-    result->registerItem<MaterialContainerItem>();
     result->registerItem<SLDMaterialItem>();
     return result;
 }
+
+const std::string SLDMaterialType = "SLDMaterial";
+
 } // namespace
+
+using namespace ModelView;
+
+SLDMaterialItem::SLDMaterialItem() : ModelView::CompoundItem(SLDMaterialType)
+{
+    addProperty(P_NAME, "Unnamed")->setDisplayName("Name");
+    addProperty(P_COLOR, QColor(Qt::green))->setDisplayName("Color");
+    addProperty(P_SLD_REAL, 1e-06)->setDisplayName("SLD, real");
+    addProperty(P_SLD_IMAG, 1e-08)->setDisplayName("SLD, imag");
+    addProperty<VectorItem>("Magnetization");
+}
+
+void SLDMaterialItem::set_properties(const std::string& name, const QColor& color, double real,
+                                     double imag)
+{
+    setProperty(P_NAME, name);
+    setProperty(P_COLOR, color);
+    setProperty(P_SLD_REAL, real);
+    setProperty(P_SLD_IMAG, imag);
+}
 
 MaterialModel::MaterialModel() : SessionModel("MaterialModel")
 {
@@ -76,7 +99,7 @@ ExternalProperty MaterialModel::material_property(const std::string& id)
 
 void MaterialModel::init_model()
 {
-    auto container = insertItem<MaterialContainerItem>();
+    auto container = insertItem<ModelView::ContainerItem>();
     auto material = insertItem<SLDMaterialItem>(container);
     material->set_properties("Air", QColor(Qt::blue), 1e-06, 1e-07);
 

@@ -25,8 +25,7 @@ public:
 private:
     void update_all();
 
-    MaterialModel* m_material_model;
-    SampleModel* m_sample_model;
+    SampleModel* m_sample_model{nullptr};
 };
 
 #endif //  MATERIALPROPERTYCONTROLLER_H

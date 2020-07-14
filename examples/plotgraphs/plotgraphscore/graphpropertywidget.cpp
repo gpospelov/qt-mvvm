@@ -11,7 +11,7 @@
 #include "graphmodel.h"
 #include <QBoxLayout>
 #include <QPushButton>
-#include <mvvm/viewmodel/standardviewmodels.h>
+#include <mvvm/factories/viewmodelfactory.h>
 #include <mvvm/viewmodel/viewmodel.h>
 #include <mvvm/widgets/itemstreeview.h>
 
@@ -36,7 +36,7 @@ void GraphPropertyWidget::setModel(GraphModel* model)
 
     m_model = model;
 
-    m_treeView->setViewModel(Utils::CreateDefaultViewModel(model));
+    m_treeView->setViewModel(Factory::CreateDefaultViewModel(model));
 }
 
 QBoxLayout* GraphPropertyWidget::create_button_layout()

@@ -11,6 +11,7 @@
 #define MVVM_VIEWMODEL_STANDARDVIEWMODELS_H
 
 #include <memory>
+#include <mvvm/factories/viewmodelcontrollerfactory.h>
 #include <mvvm/viewmodel/viewmodel.h>
 #include <mvvm/viewmodel_export.h>
 
@@ -20,7 +21,7 @@ namespace ModelView
 class SessionModel;
 class ViewModel;
 
-namespace Utils
+namespace Factory
 {
 
 //! Creates view model to represent SessionModel for Qt views.
@@ -45,7 +46,25 @@ MVVM_VIEWMODEL_EXPORT std::unique_ptr<ViewModel> CreateTopItemsViewModel(Session
 //! Subproperties of group item moved one level up.
 MVVM_VIEWMODEL_EXPORT std::unique_ptr<ViewModel> CreatePropertyFlatViewModel(SessionModel* model);
 
-} // namespace Utils
+//! Creates view model to represent SessionModel for Qt views.
+//! Use user provided types for ChildrenStrategy and RowStrategy.
+template <typename ChildrenStrategy, typename RowStrategy>
+std::unique_ptr<ViewModel> CreateViewModel(SessionModel* session_model)
+{
+    auto controller = CreateController<ChildrenStrategy, RowStrategy>(session_model, nullptr);
+    return std::make_unique<ViewModel>(std::move(controller));
+}
+
+//! Creates view model to represent SessionModel for Qt views.
+//! Use user provided controller type.
+template <typename ViewModelController>
+std::unique_ptr<ViewModel> CreateViewModel(SessionModel* session_model)
+{
+    auto controller = std::make_unique<ViewModelController>(session_model);
+    return std::make_unique<ViewModel>(std::move(controller));
+}
+
+} // namespace Factory
 
 } // namespace ModelView
 

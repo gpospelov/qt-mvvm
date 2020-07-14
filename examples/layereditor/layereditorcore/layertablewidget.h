@@ -14,19 +14,16 @@
 #include <memory>
 
 class QTreeView;
-class CustomModelDelegate;
 class ApplicationModels;
 
 namespace ModelView
 {
 class ViewModel;
 class SessionItem;
+class ViewModelDelegate;
 } // namespace ModelView
 
-/*!
-@class LayerTableWidget
-@brief Shows content of multi layer in a tree view in special "flat" form.
-*/
+//! Shows content of multi layer in a tree view in special "flat" form.
 
 class LayerTableWidget : public QWidget
 {
@@ -39,7 +36,7 @@ public:
 private:
     QTreeView* m_treeView;
     std::unique_ptr<ModelView::ViewModel> m_viewModel;
-    std::unique_ptr<CustomModelDelegate> m_delegate;
+    std::unique_ptr<ModelView::ViewModelDelegate> m_delegate;
 };
 
 #endif // LAYERTABLEWIDGET_H

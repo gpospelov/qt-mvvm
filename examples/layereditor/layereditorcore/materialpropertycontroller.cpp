@@ -7,10 +7,9 @@
 //
 // ************************************************************************** //
 
-#include <layereditorcore/model/layeritems.h>
-#include <layereditorcore/model/materialmodel.h>
-#include <layereditorcore/model/materialpropertycontroller.h>
-#include <layereditorcore/model/samplemodel.h>
+#include <layereditorcore/materialmodel.h>
+#include <layereditorcore/materialpropertycontroller.h>
+#include <layereditorcore/samplemodel.h>
 #include <mvvm/model/externalproperty.h>
 #include <mvvm/model/modelutils.h>
 #include <mvvm/signals/modelmapper.h>
@@ -19,7 +18,7 @@ using namespace ModelView;
 
 MaterialPropertyController::MaterialPropertyController(MaterialModel* material_model,
                                                        SampleModel* sample_model)
-    : ModelListener(material_model), m_material_model(material_model), m_sample_model(sample_model)
+    : ModelListener(material_model), m_sample_model(sample_model)
 {
     setOnDataChange([this](auto, auto) { update_all(); });
     setOnItemInserted([this](auto, auto) { update_all(); });
@@ -34,7 +33,7 @@ void MaterialPropertyController::update_all()
 {
     for (auto layer : Utils::FindItems<LayerItem>(m_sample_model)) {
         auto property = layer->property<ExternalProperty>(LayerItem::P_MATERIAL);
-        auto updated = m_material_model->material_property(property.identifier());
+        auto updated = model()->material_property(property.identifier());
         if (property != updated)
             layer->setProperty(LayerItem::P_MATERIAL, updated);
     }

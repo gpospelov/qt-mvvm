@@ -34,8 +34,10 @@ class RowStrategyInterface;
 class MVVM_VIEWMODEL_EXPORT ViewModelController : public ModelListener<SessionModel>
 {
 public:
-    ViewModelController(SessionModel* session_model, ViewModelBase* view_model);
+    ViewModelController(SessionModel* session_model, ViewModelBase* view_model = nullptr);
     ~ViewModelController();
+
+    void setViewModel(ViewModelBase* view_model);
 
     void setChildrenStrategy(std::unique_ptr<ChildrenStrategyInterface> children_strategy);
 

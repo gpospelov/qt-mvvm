@@ -9,13 +9,13 @@
 
 #include <QTreeView>
 #include <QVBoxLayout>
-#include <layereditorcore/model/applicationmodels.h>
-#include <layereditorcore/model/materialmodel.h>
-#include <layereditorcore/model/samplemodel.h>
-#include <layereditorcore/widgets/layertablewidget.h>
-#include <layereditorcore/widgets/materialtablewidget.h>
-#include <layereditorcore/widgets/samplewidget.h>
-#include <mvvm/viewmodel/standardviewmodels.h>
+#include <layereditorcore/applicationmodels.h>
+#include <layereditorcore/materialmodel.h>
+#include <layereditorcore/samplemodel.h>
+#include <layereditorcore/layertablewidget.h>
+#include <layereditorcore/materialtablewidget.h>
+#include <layereditorcore/samplewidget.h>
+#include <mvvm/factories/viewmodelfactory.h>
 #include <mvvm/widgets/itemstreeview.h>
 
 using namespace ModelView;
@@ -38,8 +38,8 @@ QBoxLayout* SampleWidget::create_top_layout()
 {
     auto result = new QHBoxLayout;
 
-    m_materialTree->setViewModel(Utils::CreateDefaultViewModel(m_models->materialModel()));
-    m_sampleTree->setViewModel(Utils::CreateDefaultViewModel(m_models->sampleModel()));
+    m_materialTree->setViewModel(Factory::CreateDefaultViewModel(m_models->materialModel()));
+    m_sampleTree->setViewModel(Factory::CreateDefaultViewModel(m_models->sampleModel()));
 
     result->addWidget(m_materialTree);
     result->addWidget(m_sampleTree);

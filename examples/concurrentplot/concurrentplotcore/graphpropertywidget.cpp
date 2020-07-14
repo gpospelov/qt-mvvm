@@ -10,7 +10,7 @@
 #include "graphpropertywidget.h"
 #include "graphmodel.h"
 #include <QBoxLayout>
-#include <mvvm/viewmodel/standardviewmodels.h>
+#include <mvvm/factories/viewmodelfactory.h>
 #include <mvvm/viewmodel/viewmodel.h>
 #include <mvvm/widgets/itemstreeview.h>
 
@@ -32,5 +32,5 @@ void GraphPropertyWidget::setModel(GraphModel* model)
     if (!model)
         return;
 
-    m_treeView->setViewModel(Utils::CreateDefaultViewModel(model));
+    m_treeView->setViewModel(Factory::CreateDefaultViewModel(model));
 }

@@ -9,7 +9,7 @@
 
 #include <QTreeView>
 #include <mvvm/model/sessionitem.h>
-#include <mvvm/viewmodel/standardviewmodels.h>
+#include <mvvm/factories/viewmodelfactory.h>
 #include <mvvm/viewmodel/viewmodel.h>
 #include <mvvm/widgets/propertytreeview.h>
 
@@ -25,7 +25,7 @@ PropertyTreeView::PropertyTreeView(QWidget* parent) : ItemsTreeView(parent)
 
 void PropertyTreeView::setItem(SessionItem* item)
 {
-    setViewModel(Utils::CreatePropertyViewModel(item->model()));
+    setViewModel(Factory::CreatePropertyViewModel(item->model()));
     viewModel()->setRootSessionItem(item);
     treeView()->setRootIsDecorated(false);
     treeView()->expandAll();

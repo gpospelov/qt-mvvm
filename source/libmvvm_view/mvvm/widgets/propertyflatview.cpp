@@ -16,7 +16,7 @@
 #include <mvvm/model/groupitem.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/viewmodel/standardviewitems.h>
-#include <mvvm/viewmodel/standardviewmodels.h>
+#include <mvvm/factories/viewmodelfactory.h>
 #include <mvvm/viewmodel/viewmodel.h>
 #include <mvvm/viewmodel/viewmodeldelegate.h>
 #include <mvvm/widgets/layoututils.h>
@@ -151,7 +151,7 @@ PropertyFlatView::~PropertyFlatView() = default;
 
 void PropertyFlatView::setItem(SessionItem* item)
 {
-    p_impl->view_model = Utils::CreatePropertyFlatViewModel(item->model());
+    p_impl->view_model = Factory::CreatePropertyFlatViewModel(item->model());
     p_impl->view_model->setRootSessionItem(item);
     p_impl->connect_model();
     p_impl->update_grid_layout();

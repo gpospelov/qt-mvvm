@@ -16,13 +16,8 @@ class MaterialModel;
 class SampleModel;
 class QString;
 
-/*!
-@class ApplicationModels
-@brief Container class to hold all SessionModel's used during GUI session.
-
-Given class holds SampleModel with multilayer structure and MaterialModel with collection
-of materials.
-*/
+//! Container class to hold all SessionModel's used during GUI session.
+//! Holds SampleModel with multilayer structure and MaterialModel with collection of materials.
 
 class ApplicationModels
 {

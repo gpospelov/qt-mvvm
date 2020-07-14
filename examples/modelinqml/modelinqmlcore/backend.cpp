@@ -12,7 +12,7 @@
 #include <modelinqmlcore/particleviewmodel.h>
 #include <modelinqmlcore/tablemodel.h>
 #include <mvvm/model/modelutils.h>
-#include <mvvm/viewmodel/standardviewmodels.h>
+#include <mvvm/factories/viewmodelfactory.h>
 #include <mvvm/viewmodel/viewmodel.h>
 
 using namespace ModelView;

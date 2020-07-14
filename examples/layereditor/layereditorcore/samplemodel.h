@@ -7,20 +7,13 @@
 //
 // ************************************************************************** //
 
-#ifndef LAYERITEMS_H
-#define LAYERITEMS_H
-
-/*!
-@file LayerItems.h
-@brief Collection of layer and multi-layer items to populate SampleModel.
-*/
+#ifndef SAMPLEMODEL_H
+#define SAMPLEMODEL_H
 
 #include <mvvm/model/compounditem.h>
+#include <mvvm/model/sessionmodel.h>
 
-/*!
-@class LayerItem
-@brief Layer with name, thickness and reference to material.
-*/
+//! Layer with name, thickness and reference to material.
 
 class LayerItem : public ModelView::CompoundItem
 {
@@ -31,10 +24,7 @@ public:
     LayerItem();
 };
 
-/*!
-@class MultiLayerItem
-@brief Multi layer capable of holding layers and other multi-layers.
-*/
+//! Multi layer capable of holding layers and other multi-layers.
 
 class MultiLayerItem : public ModelView::CompoundItem
 {
@@ -44,4 +34,15 @@ public:
     MultiLayerItem();
 };
 
-#endif // LAYERITEM_H
+//! Model to hold layers and multi-layers.
+
+class SampleModel : public ModelView::SessionModel
+{
+public:
+    SampleModel();
+
+private:
+    void init_model();
+};
+
+#endif //  SAMPLEMODEL_H
