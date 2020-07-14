@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/viewmodel/standardviewmodels.h>
+#include <mvvm/factories/viewmodelfactory.h>
 #include <mvvm/viewmodel/viewmodel.h>
 #include <mvvm/widgets/topitemstreeview.h>
 

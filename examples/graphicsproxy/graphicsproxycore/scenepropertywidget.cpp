@@ -12,7 +12,7 @@
 #include <QBoxLayout>
 #include <QPushButton>
 #include <QSlider>
-#include <mvvm/viewmodel/standardviewmodels.h>
+#include <mvvm/factories/viewmodelfactory.h>
 #include <mvvm/widgets/itemstreeview.h>
 
 using namespace ModelView;

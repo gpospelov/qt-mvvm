@@ -15,7 +15,7 @@
 #include <layereditorcore/widgets/layertablewidget.h>
 #include <layereditorcore/widgets/materialtablewidget.h>
 #include <layereditorcore/widgets/samplewidget.h>
-#include <mvvm/viewmodel/standardviewmodels.h>
+#include <mvvm/factories/viewmodelfactory.h>
 #include <mvvm/widgets/itemstreeview.h>
 
 using namespace ModelView;

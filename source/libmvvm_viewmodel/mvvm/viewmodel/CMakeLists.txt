@@ -19,8 +19,6 @@ target_sources(${library_name} PRIVATE
     standardviewitems.h
     standardviewmodelcontrollers.cpp
     standardviewmodelcontrollers.h
-    standardviewmodels.cpp
-    standardviewmodels.h
     topitemsviewmodel.cpp
     topitemsviewmodel.h
     viewitem.cpp
