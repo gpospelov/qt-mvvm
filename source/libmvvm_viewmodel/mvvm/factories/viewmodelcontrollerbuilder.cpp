@@ -10,8 +10,8 @@
 #include <mvvm/factories/viewmodelcontrollerbuilder.h>
 #include <mvvm/interfaces/childrenstrategyinterface.h>
 #include <mvvm/interfaces/rowstrategyinterface.h>
-#include <mvvm/viewmodel/viewmodelcontroller.h>
 #include <mvvm/model/sessionmodel.h>
+#include <mvvm/viewmodel/viewmodelcontroller.h>
 #include <stdexcept>
 
 namespace ModelView
@@ -23,8 +23,8 @@ ViewModelControllerBuilder::~ViewModelControllerBuilder() = default;
 
 ViewModelControllerBuilder::operator std::unique_ptr<ViewModelController>()
 {
-    if (!context.model || !context.view_model)
-        throw std::runtime_error("Error in ViewModelController: undefined models");
+    if (!context.model)
+        throw std::runtime_error("Error in ViewModelController: undefined model");
 
     if (!context.children_strategy)
         throw std::runtime_error("Error in ViewModelController: no children strategy defined.");
@@ -36,7 +36,9 @@ ViewModelControllerBuilder::operator std::unique_ptr<ViewModelController>()
     result->setChildrenStrategy(std::move(context.children_strategy));
     result->setRowStrategy(std::move(context.row_strategy));
 
-    result->setRootSessionItem(context.model->rootItem());
+    // FIXME very unelegant
+    if (context.view_model)
+        result->setRootSessionItem(context.model->rootItem());
 
     return result;
 }

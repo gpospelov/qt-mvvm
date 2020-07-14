@@ -12,6 +12,7 @@
 
 #include <memory>
 #include <mvvm/viewmodel_export.h>
+#include <mvvm/viewmodel/viewmodelcontroller.h>
 
 namespace ModelView
 {
@@ -20,7 +21,6 @@ class SessionModel;
 class ViewModelBase;
 class ChildrenStrategyInterface;
 class RowStrategyInterface;
-class ViewModelController;
 
 //! Builder class for ViewModelController.
 

@@ -12,6 +12,7 @@
 
 #include <memory>
 #include <mvvm/viewmodel/viewmodel.h>
+#include <mvvm/factories/viewmodelcontrollerfactory.h>
 #include <mvvm/viewmodel_export.h>
 
 namespace ModelView
@@ -44,6 +45,16 @@ MVVM_VIEWMODEL_EXPORT std::unique_ptr<ViewModel> CreateTopItemsViewModel(Session
 //! The model has two columns, shows only property items and simplified group items.
 //! Subproperties of group item moved one level up.
 MVVM_VIEWMODEL_EXPORT std::unique_ptr<ViewModel> CreatePropertyFlatViewModel(SessionModel* model);
+
+//! Creates view model to represent SessionModel for Qt views.
+//! Use user provided types for ChildrenStrategy and RowStrategy.
+template <typename ChildrenStrategy, typename RowStrategy>
+std::unique_ptr<ViewModel> CreateViewModel(SessionModel* session_model)
+{
+    auto controller = CreateController<ChildrenStrategy, RowStrategy>(session_model, nullptr);
+    return std::make_unique<ViewModel>(std::move(controller));
+}
+
 
 } // namespace Utils
 
