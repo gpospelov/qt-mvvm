@@ -21,14 +21,6 @@ namespace ModelView
 class ExternalProperty;
 }
 
-//! Container to hold MaterialItems.
-
-class MaterialContainerItem : public ModelView::CompoundItem
-{
-public:
-    MaterialContainerItem();
-};
-
 //! Represents material based on scattering length density.
 
 class SLDMaterialItem : public ModelView::CompoundItem

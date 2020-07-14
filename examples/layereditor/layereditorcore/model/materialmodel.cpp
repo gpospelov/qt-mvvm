@@ -12,6 +12,7 @@
 #include <mvvm/model/externalproperty.h>
 #include <mvvm/model/itemcatalogue.h>
 #include <mvvm/standarditems/vectoritem.h>
+#include <mvvm/standarditems/containeritem.h>
 
 using namespace ModelView;
 
@@ -20,47 +21,20 @@ namespace
 std::unique_ptr<ItemCatalogue> CreateItemCatalogue()
 {
     auto result = std::make_unique<ModelView::ItemCatalogue>();
-    result->registerItem<MaterialContainerItem>();
     result->registerItem<SLDMaterialItem>();
     return result;
 }
 
 const std::string SLDMaterialType = "SLDMaterial";
-const std::string MaterialContainerType = "MaterialContainer";
 
 } // namespace
 
 using namespace ModelView;
 
-MaterialContainerItem::MaterialContainerItem() : ModelView::CompoundItem(MaterialContainerType)
-{
-    registerTag(TagInfo::universalTag("materials", {SLDMaterialType}),
-                /*set_as_default*/ true);
-}
-
-// ----------------------------------------------------------------------------
-
-MaterialBaseItem::MaterialBaseItem(const std::string& model_type)
-    : ModelView::CompoundItem(model_type)
-{
-}
-
-void MaterialBaseItem::register_name()
+SLDMaterialItem::SLDMaterialItem() : ModelView::CompoundItem(SLDMaterialType)
 {
     addProperty(P_NAME, "Unnamed")->setDisplayName("Name");
-}
-
-void MaterialBaseItem::register_color()
-{
     addProperty(P_COLOR, QColor(Qt::green))->setDisplayName("Color");
-}
-
-// ----------------------------------------------------------------------------
-
-SLDMaterialItem::SLDMaterialItem() : MaterialBaseItem(SLDMaterialType)
-{
-    register_name();
-    register_color();
     addProperty(P_SLD_REAL, 1e-06)->setDisplayName("SLD, real");
     addProperty(P_SLD_IMAG, 1e-08)->setDisplayName("SLD, imag");
     addProperty<VectorItem>("Magnetization");
@@ -125,7 +99,7 @@ ExternalProperty MaterialModel::material_property(const std::string& id)
 
 void MaterialModel::init_model()
 {
-    auto container = insertItem<MaterialContainerItem>();
+    auto container = insertItem<ModelView::ContainerItem>();
     auto material = insertItem<SLDMaterialItem>(container);
     material->set_properties("Air", QColor(Qt::blue), 1e-06, 1e-07);
 
