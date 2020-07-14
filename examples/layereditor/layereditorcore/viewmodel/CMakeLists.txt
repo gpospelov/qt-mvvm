@@ -3,8 +3,5 @@ target_sources(layereditorcore PRIVATE
     customeditorfactory.h
     custommodeldelegate.cpp
     custommodeldelegate.h
-    layertableviewmodelcontroller.cpp
-    layertableviewmodelcontroller.h
-    layertableviewmodel.cpp
-    layertableviewmodel.h
+    customlayerrowstrategy.h
 )

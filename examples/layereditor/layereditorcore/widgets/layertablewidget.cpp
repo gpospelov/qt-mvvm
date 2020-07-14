@@ -13,11 +13,13 @@
 #include <layereditorcore/model/applicationmodels.h>
 #include <layereditorcore/model/layeritems.h>
 #include <layereditorcore/model/samplemodel.h>
+#include <layereditorcore/viewmodel/customlayerrowstrategy.h>
 #include <layereditorcore/viewmodel/custommodeldelegate.h>
-#include <layereditorcore/viewmodel/layertableviewmodel.h>
 #include <layereditorcore/widgets/layertablewidget.h>
+#include <mvvm/factories/viewmodelfactory.h>
 #include <mvvm/model/modelutils.h>
 #include <mvvm/model/sessionitem.h>
+#include <mvvm/viewmodel/standardchildrenstrategies.h>
 #include <mvvm/viewmodel/viewmodel.h>
 
 using namespace ModelView;
@@ -44,7 +46,8 @@ void LayerTableWidget::setItem(ModelView::SessionItem* multilayer)
     if (!multilayer)
         return;
 
-    m_viewModel = std::make_unique<LayerTableViewModel>(multilayer->model());
+    m_viewModel =
+        Factory::CreateViewModel<TopItemsStrategy, CustomLayerRowStrategy>(multilayer->model());
     m_viewModel->setRootSessionItem(multilayer);
 
     m_treeView->setModel(m_viewModel.get());
