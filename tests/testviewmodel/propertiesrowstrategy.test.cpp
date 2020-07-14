@@ -28,7 +28,7 @@ PropertiesRowStrategyTest::~PropertiesRowStrategyTest() = default;
 TEST_F(PropertiesRowStrategyTest, initialState)
 {
     PropertiesRowStrategy strategy;
-    EXPECT_EQ(strategy.constructRefRow(nullptr).size(), 0);
+    EXPECT_EQ(strategy.constructRow(nullptr).size(), 0);
     EXPECT_EQ(strategy.horizontalHeaderLabels(), QStringList());
 }
 
@@ -39,7 +39,7 @@ TEST_F(PropertiesRowStrategyTest, topLevelItem)
     SessionItem item("model_type");
 
     PropertiesRowStrategy strategy;
-    auto items = strategy.constructRefRow(&item);
+    auto items = strategy.constructRow(&item);
     EXPECT_EQ(items.size(), 0);
     EXPECT_EQ(strategy.horizontalHeaderLabels(), QStringList());
 }
@@ -52,7 +52,7 @@ TEST_F(PropertiesRowStrategyTest, propertyItem)
     item.setData(42.0);
 
     PropertiesRowStrategy strategy;
-    auto items = strategy.constructRefRow(&item);
+    auto items = strategy.constructRow(&item);
     EXPECT_EQ(items.size(), 0);
     EXPECT_EQ(strategy.horizontalHeaderLabels(), QStringList());
 }
@@ -69,7 +69,7 @@ TEST_F(PropertiesRowStrategyTest, vectorItemCustomLabels)
     EXPECT_EQ(item.property<double>(VectorItem::P_Z), 0.0);
 
     PropertiesRowStrategy strategy({"a", "b", "c"});
-    auto items = strategy.constructRefRow(&item);
+    auto items = strategy.constructRow(&item);
 
     EXPECT_EQ(items.size(), 3);
     EXPECT_EQ(strategy.horizontalHeaderLabels(), QStringList() << "a"
@@ -102,7 +102,7 @@ TEST_F(PropertiesRowStrategyTest, vectorItemAutoLabels)
                                          << "Z";
 
     PropertiesRowStrategy strategy;
-    auto items = strategy.constructRefRow(&item);
+    auto items = strategy.constructRow(&item);
     EXPECT_EQ(strategy.horizontalHeaderLabels(), expected);
 }
 
@@ -113,11 +113,11 @@ TEST_F(PropertiesRowStrategyTest, baseItemInModelContext)
     SessionModel model;
 
     PropertiesRowStrategy strategy;
-    auto items = strategy.constructRefRow(model.rootItem());
+    auto items = strategy.constructRow(model.rootItem());
     EXPECT_EQ(items.size(), 0);
 
     model.insertItem<SessionItem>();
-    items = strategy.constructRefRow(model.rootItem());
+    items = strategy.constructRow(model.rootItem());
     EXPECT_EQ(items.size(), 0);
 }
 
@@ -135,13 +135,13 @@ TEST_F(PropertiesRowStrategyTest, propertyItemTree)
     model.insertItem<PropertyItem>(parent, "property_tag");
 
     PropertiesRowStrategy strategy;
-    auto items = strategy.constructRefRow(model.rootItem());
+    auto items = strategy.constructRow(model.rootItem());
 
     // root item doesn't have properties
     EXPECT_EQ(items.size(), 0);
 
     // parent has one registered property.
-    items = strategy.constructRefRow(parent);
+    items = strategy.constructRow(parent);
     EXPECT_EQ(items.size(), 1);
 }
 
@@ -153,6 +153,6 @@ TEST_F(PropertiesRowStrategyTest, vectorItemInModelContext)
     model.insertItem<VectorItem>();
 
     PropertiesRowStrategy strategy;
-    auto items = strategy.constructRefRow(model.rootItem());
+    auto items = strategy.constructRow(model.rootItem());
     EXPECT_EQ(items.size(), 0);
 }

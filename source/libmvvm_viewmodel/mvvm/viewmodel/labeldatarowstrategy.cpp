@@ -23,7 +23,7 @@ QStringList LabelDataRowStrategy::horizontalHeaderLabels() const
                          << "Value";
 }
 
-std::vector<std::unique_ptr<ViewItem>> LabelDataRowStrategy::constructRefRow(SessionItem* item)
+std::vector<std::unique_ptr<ViewItem>> LabelDataRowStrategy::constructRow(SessionItem* item)
 {
     std::vector<std::unique_ptr<ViewItem>> result;
 

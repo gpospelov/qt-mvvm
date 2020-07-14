@@ -31,7 +31,7 @@ public:
 
     virtual QStringList horizontalHeaderLabels() const = 0;
 
-    virtual std::vector<std::unique_ptr<ViewItem>> constructRefRow(SessionItem*) = 0;
+    virtual std::vector<std::unique_ptr<ViewItem>> constructRow(SessionItem*) = 0;
 };
 
 } // namespace ModelView

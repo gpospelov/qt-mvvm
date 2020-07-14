@@ -76,7 +76,7 @@ struct ViewModelController::ViewModelControllerImpl {
     {
         ViewItem* origParent(parent);
         for (auto child : children_strategy->children(item)) {
-            auto row = row_strategy->constructRefRow(child);
+            auto row = row_strategy->constructRow(child);
             if (!row.empty()) {
                 auto next_parent = row.at(0).get();
                 view_model->appendRow(parent, std::move(row));
@@ -126,7 +126,7 @@ struct ViewModelController::ViewModelControllerImpl {
 
         auto parent_view = pos->second;
 
-        auto row = row_strategy->constructRefRow(child);
+        auto row = row_strategy->constructRow(child);
         if (!row.empty()) {
             auto next_parent = row.at(0).get();
             view_model->insertRow(parent_view, index, std::move(row));

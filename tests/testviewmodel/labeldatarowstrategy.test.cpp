@@ -33,7 +33,7 @@ LabelDataRowStrategyTest::~LabelDataRowStrategyTest() = default;
 TEST_F(LabelDataRowStrategyTest, initialState)
 {
     LabelDataRowStrategy constructor;
-    EXPECT_EQ(constructor.constructRefRow(nullptr).size(), 0);
+    EXPECT_EQ(constructor.constructRow(nullptr).size(), 0);
     EXPECT_EQ(constructor.horizontalHeaderLabels(), expected_labels);
 }
 
@@ -44,7 +44,7 @@ TEST_F(LabelDataRowStrategyTest, topLevelItem)
     SessionItem item("model_type");
 
     LabelDataRowStrategy constructor;
-    auto items = constructor.constructRefRow(&item);
+    auto items = constructor.constructRow(&item);
     EXPECT_EQ(items.size(), expected_column_count); // label and empty items
     EXPECT_EQ(constructor.horizontalHeaderLabels(), expected_labels);
 
@@ -65,7 +65,7 @@ TEST_F(LabelDataRowStrategyTest, propertyItem)
     item.setData(42.0);
 
     LabelDataRowStrategy constructor;
-    auto items = constructor.constructRefRow(&item);
+    auto items = constructor.constructRow(&item);
     EXPECT_EQ(items.size(), expected_column_count);
     EXPECT_EQ(constructor.horizontalHeaderLabels(), expected_labels);
 
