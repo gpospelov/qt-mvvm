@@ -11,6 +11,7 @@
 #include <mvvm/interfaces/childrenstrategyinterface.h>
 #include <mvvm/interfaces/rowstrategyinterface.h>
 #include <mvvm/viewmodel/viewmodelcontroller.h>
+#include <mvvm/model/sessionmodel.h>
 #include <stdexcept>
 
 namespace ModelView
@@ -34,6 +35,9 @@ ViewModelControllerBuilder::operator std::unique_ptr<ViewModelController>()
     auto result = std::make_unique<ViewModelController>(context.model, context.view_model);
     result->setChildrenStrategy(std::move(context.children_strategy));
     result->setRowStrategy(std::move(context.row_strategy));
+
+    result->setRootSessionItem(context.model->rootItem());
+
     return result;
 }
 
