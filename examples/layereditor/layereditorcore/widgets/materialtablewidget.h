@@ -23,10 +23,7 @@ class ViewModelDelegate;
 class SessionItem;
 } // namespace ModelView
 
-/*!
-@class MaterialTableWidget
-@brief Shows content of material container in table-like view.
-*/
+//! Shows content of material container in table-like view.
 
 class MaterialTableWidget : public QWidget
 {

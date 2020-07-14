@@ -11,16 +11,13 @@
 #include <QTreeView>
 #include <QVBoxLayout>
 #include <layereditorcore/model/applicationmodels.h>
-#include <layereditorcore/model/layeritems.h>
 #include <layereditorcore/model/samplemodel.h>
 #include <layereditorcore/viewmodel/customeditorfactory.h>
 #include <layereditorcore/viewmodel/customlayerrowstrategy.h>
 #include <layereditorcore/widgets/layertablewidget.h>
 #include <mvvm/factories/viewmodelfactory.h>
 #include <mvvm/model/modelutils.h>
-#include <mvvm/model/sessionitem.h>
 #include <mvvm/viewmodel/standardchildrenstrategies.h>
-#include <mvvm/viewmodel/viewmodel.h>
 #include <mvvm/viewmodel/viewmodeldelegate.h>
 
 using namespace ModelView;

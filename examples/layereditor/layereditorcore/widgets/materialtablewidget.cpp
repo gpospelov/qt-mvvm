@@ -12,7 +12,6 @@
 #include <layereditorcore/model/materialmodel.h>
 #include <layereditorcore/widgets/materialtablewidget.h>
 #include <mvvm/model/modelutils.h>
-#include <mvvm/model/sessionitem.h>
 #include <mvvm/signals/modelmapper.h>
 #include <mvvm/viewmodel/viewmodeldelegate.h>
 #include <mvvm/factories/viewmodelfactory.h>

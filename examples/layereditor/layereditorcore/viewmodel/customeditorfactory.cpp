@@ -12,7 +12,6 @@
 #include <layereditorcore/model/materialmodel.h>
 #include <layereditorcore/viewmodel/customeditorfactory.h>
 #include <mvvm/editors/externalpropertycomboeditor.h>
-#include <mvvm/model/customvariants.h>
 #include <mvvm/model/externalproperty.h>
 
 using namespace ModelView;

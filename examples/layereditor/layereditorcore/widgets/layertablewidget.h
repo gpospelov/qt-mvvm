@@ -23,10 +23,7 @@ class SessionItem;
 class ViewModelDelegate;
 } // namespace ModelView
 
-/*!
-@class LayerTableWidget
-@brief Shows content of multi layer in a tree view in special "flat" form.
-*/
+//! Shows content of multi layer in a tree view in special "flat" form.
 
 class LayerTableWidget : public QWidget
 {
