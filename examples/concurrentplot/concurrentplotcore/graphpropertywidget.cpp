@@ -32,5 +32,5 @@ void GraphPropertyWidget::setModel(GraphModel* model)
     if (!model)
         return;
 
-    m_treeView->setViewModel(Utils::CreateDefaultViewModel(model));
+    m_treeView->setViewModel(Factory::CreateDefaultViewModel(model));
 }

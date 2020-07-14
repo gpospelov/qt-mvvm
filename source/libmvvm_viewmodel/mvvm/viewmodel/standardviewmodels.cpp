@@ -16,27 +16,27 @@
 
 using namespace ModelView;
 
-std::unique_ptr<ViewModel> Utils::CreateDefaultViewModel(ModelView::SessionModel* model)
+std::unique_ptr<ViewModel> Factory::CreateDefaultViewModel(ModelView::SessionModel* model)
 {
     return std::make_unique<DefaultViewModel>(model);
 }
 
-std::unique_ptr<ViewModel> Utils::CreatePropertyViewModel(SessionModel* model)
+std::unique_ptr<ViewModel> Factory::CreatePropertyViewModel(SessionModel* model)
 {
     return std::make_unique<PropertyViewModel>(model);
 }
 
-std::unique_ptr<ViewModel> Utils::CreatePropertyTableViewModel(SessionModel* model)
+std::unique_ptr<ViewModel> Factory::CreatePropertyTableViewModel(SessionModel* model)
 {
     return std::make_unique<PropertyTableViewModel>(model);
 }
 
-std::unique_ptr<ViewModel> Utils::CreateTopItemsViewModel(SessionModel* model)
+std::unique_ptr<ViewModel> Factory::CreateTopItemsViewModel(SessionModel* model)
 {
     return std::make_unique<TopItemsViewModel>(model);
 }
 
-std::unique_ptr<ViewModel> Utils::CreatePropertyFlatViewModel(SessionModel* model)
+std::unique_ptr<ViewModel> Factory::CreatePropertyFlatViewModel(SessionModel* model)
 {
     return std::make_unique<PropertyFlatViewModel>(model);
 }

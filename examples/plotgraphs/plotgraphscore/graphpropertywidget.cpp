@@ -36,7 +36,7 @@ void GraphPropertyWidget::setModel(GraphModel* model)
 
     m_model = model;
 
-    m_treeView->setViewModel(Utils::CreateDefaultViewModel(model));
+    m_treeView->setViewModel(Factory::CreateDefaultViewModel(model));
 }
 
 QBoxLayout* GraphPropertyWidget::create_button_layout()

@@ -38,8 +38,8 @@ QBoxLayout* SampleWidget::create_top_layout()
 {
     auto result = new QHBoxLayout;
 
-    m_materialTree->setViewModel(Utils::CreateDefaultViewModel(m_models->materialModel()));
-    m_sampleTree->setViewModel(Utils::CreateDefaultViewModel(m_models->sampleModel()));
+    m_materialTree->setViewModel(Factory::CreateDefaultViewModel(m_models->materialModel()));
+    m_sampleTree->setViewModel(Factory::CreateDefaultViewModel(m_models->sampleModel()));
 
     result->addWidget(m_materialTree);
     result->addWidget(m_sampleTree);

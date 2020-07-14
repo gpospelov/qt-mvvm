@@ -15,7 +15,7 @@ namespace ModelView
 {
 AllItemsTreeView::AllItemsTreeView(SessionModel* model, QWidget* parent) : ItemsTreeView(parent)
 {
-    setViewModel(Utils::CreateDefaultViewModel(model));
+    setViewModel(Factory::CreateDefaultViewModel(model));
 }
 
 AllItemsTreeView::~AllItemsTreeView() = default;

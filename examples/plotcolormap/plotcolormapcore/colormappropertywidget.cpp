@@ -35,7 +35,7 @@ void ColorMapPropertyWidget::setModel(ColorMapModel* model)
 
     m_model = model;
 
-    m_treeView->setViewModel(Utils::CreateDefaultViewModel(model));
+    m_treeView->setViewModel(Factory::CreateDefaultViewModel(model));
 }
 
 //! Slider to regenerate the data in the model.

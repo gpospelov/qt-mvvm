@@ -20,7 +20,7 @@ namespace ModelView
 class SessionModel;
 class ViewModel;
 
-namespace Utils
+namespace Factory
 {
 
 //! Creates view model to represent SessionModel for Qt views.
