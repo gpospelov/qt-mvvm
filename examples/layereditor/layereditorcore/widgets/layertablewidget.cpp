@@ -13,26 +13,29 @@
 #include <layereditorcore/model/applicationmodels.h>
 #include <layereditorcore/model/layeritems.h>
 #include <layereditorcore/model/samplemodel.h>
+#include <layereditorcore/viewmodel/customeditorfactory.h>
 #include <layereditorcore/viewmodel/customlayerrowstrategy.h>
-#include <layereditorcore/viewmodel/custommodeldelegate.h>
 #include <layereditorcore/widgets/layertablewidget.h>
 #include <mvvm/factories/viewmodelfactory.h>
 #include <mvvm/model/modelutils.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/viewmodel/standardchildrenstrategies.h>
 #include <mvvm/viewmodel/viewmodel.h>
+#include <mvvm/viewmodel/viewmodeldelegate.h>
 
 using namespace ModelView;
 
 LayerTableWidget::LayerTableWidget(ApplicationModels* models, QWidget* parent)
     : QWidget(parent), m_treeView(new QTreeView),
-      m_delegate(std::make_unique<CustomModelDelegate>(models))
+      m_delegate(std::make_unique<ViewModelDelegate>())
 {
     auto layout = new QVBoxLayout;
     layout->setMargin(0);
     layout->setSpacing(0);
     layout->addWidget(m_treeView);
     setLayout(layout);
+
+    m_delegate->setEditorFactory(std::make_unique<CustomEditorFactory>(models));
 
     m_treeView->setItemDelegate(m_delegate.get());
     m_treeView->setEditTriggers(QAbstractItemView::AllEditTriggers); // provide one click editing
