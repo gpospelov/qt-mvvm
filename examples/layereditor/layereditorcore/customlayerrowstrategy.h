@@ -11,7 +11,6 @@
 #define CUSTOMLAYERROWSTRATEGY_H
 
 #include <QStringList>
-#include <layereditorcore/model/layeritems.h>
 #include <mvvm/interfaces/rowstrategyinterface.h>
 #include <mvvm/viewmodel/standardviewitems.h>
 #include <mvvm/viewmodel/viewitem.h>

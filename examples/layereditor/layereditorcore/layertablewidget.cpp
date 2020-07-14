@@ -10,11 +10,11 @@
 #include <QHeaderView>
 #include <QTreeView>
 #include <QVBoxLayout>
-#include <layereditorcore/model/applicationmodels.h>
-#include <layereditorcore/model/samplemodel.h>
-#include <layereditorcore/viewmodel/customeditorfactory.h>
-#include <layereditorcore/viewmodel/customlayerrowstrategy.h>
-#include <layereditorcore/widgets/layertablewidget.h>
+#include <layereditorcore/applicationmodels.h>
+#include <layereditorcore/samplemodel.h>
+#include <layereditorcore/customeditorfactory.h>
+#include <layereditorcore/customlayerrowstrategy.h>
+#include <layereditorcore/layertablewidget.h>
 #include <mvvm/factories/viewmodelfactory.h>
 #include <mvvm/model/modelutils.h>
 #include <mvvm/viewmodel/standardchildrenstrategies.h>

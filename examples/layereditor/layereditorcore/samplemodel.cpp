@@ -8,8 +8,8 @@
 // ************************************************************************** //
 
 #include <QVariant>
-#include <layereditorcore/model/materialmodel.h>
-#include <layereditorcore/model/samplemodel.h>
+#include <layereditorcore/materialmodel.h>
+#include <layereditorcore/samplemodel.h>
 #include <mvvm/model/externalproperty.h>
 #include <mvvm/model/itemcatalogue.h>
 

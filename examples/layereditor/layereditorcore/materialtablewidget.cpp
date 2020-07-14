@@ -9,8 +9,8 @@
 
 #include <QTreeView>
 #include <QVBoxLayout>
-#include <layereditorcore/model/materialmodel.h>
-#include <layereditorcore/widgets/materialtablewidget.h>
+#include <layereditorcore/materialmodel.h>
+#include <layereditorcore/materialtablewidget.h>
 #include <mvvm/model/modelutils.h>
 #include <mvvm/signals/modelmapper.h>
 #include <mvvm/viewmodel/viewmodeldelegate.h>
