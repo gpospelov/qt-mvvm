@@ -18,6 +18,7 @@ using namespace ModelView;
 ViewModel::ViewModel(std::unique_ptr<ViewModelController> controller, QObject* parent)
     : ViewModelBase(parent), m_controller(std::move(controller))
 {
+    m_controller->setViewModel(this);
     m_controller->setRootSessionItem(sessionModel()->rootItem());
 }
 

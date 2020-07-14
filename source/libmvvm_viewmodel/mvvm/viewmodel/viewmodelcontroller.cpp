@@ -197,6 +197,11 @@ ViewModelController::ViewModelController(SessionModel* session_model, ViewModelB
     setOnModelAboutToBeReset(on_model_about_to_be_reset);
 }
 
+void ViewModelController::setViewModel(ViewModelBase* view_model)
+{
+    p_impl->view_model = view_model;
+}
+
 ViewModelController::~ViewModelController() = default;
 
 void ViewModelController::setChildrenStrategy(
