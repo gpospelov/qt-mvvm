@@ -10,12 +10,31 @@
 #ifndef SAMPLEMODEL_H
 #define SAMPLEMODEL_H
 
+#include <mvvm/model/compounditem.h>
 #include <mvvm/model/sessionmodel.h>
 
-/*!
-@class SampleModel
-@brief Model to hold layers and multi-layers.
-*/
+//! Layer with name, thickness and reference to material.
+
+class LayerItem : public ModelView::CompoundItem
+{
+public:
+    static inline const std::string P_NAME = "P_NAME";
+    static inline const std::string P_MATERIAL = "P_MATERIAL";
+    static inline const std::string P_THICKNESS = "P_THICKNESS";
+    LayerItem();
+};
+
+//! Multi layer capable of holding layers and other multi-layers.
+
+class MultiLayerItem : public ModelView::CompoundItem
+{
+public:
+    static inline const std::string T_LAYERS = "T_LAYERS";
+    static inline const std::string P_NREPETITIONS = "P_NREPETITIONS";
+    MultiLayerItem();
+};
+
+//! Model to hold layers and multi-layers.
 
 class SampleModel : public ModelView::SessionModel
 {
