@@ -18,13 +18,29 @@
 
 using namespace ModelView;
 
+namespace
+{
+std::unique_ptr<ViewModelController> createController(SessionModel* model, ViewModelBase* viewModel)
+{
+    return Factory::CreateController<TopItemsStrategy, LabelDataRowStrategy>(model, viewModel);
+}
+} // namespace
+
 class ViewModelFactoryTest : public ::testing::Test
 {
 public:
     ~ViewModelFactoryTest();
+
+    class CustomModel : public ViewModel
+    {
+    public:
+        CustomModel(SessionModel* model) : ViewModel(createController(model, this), nullptr) {}
+    };
 };
 
 ViewModelFactoryTest::~ViewModelFactoryTest() = default;
+
+//! Creating DefaultViewModel using strategies.
 
 TEST_F(ViewModelFactoryTest, createDefaultViewModelInitial)
 {
@@ -36,7 +52,7 @@ TEST_F(ViewModelFactoryTest, createDefaultViewModelInitial)
     EXPECT_EQ(viewModel->sessionItemFromIndex(QModelIndex()), model.rootItem());
 }
 
-//! Single property item in a model.
+//! Creating DefaultViewModel using strategies, validating behaviour on single item in SessionModel.
 
 TEST_F(ViewModelFactoryTest, createDefaultViewModelUseProperty)
 {
@@ -59,6 +75,33 @@ TEST_F(ViewModelFactoryTest, createDefaultViewModelUseProperty)
     EXPECT_EQ(labelItem->item(), propertyItem);
 
     auto dataItem = dynamic_cast<ViewDataItem*>(viewModel->itemFromIndex(dataIndex));
+    ASSERT_TRUE(dataItem != nullptr);
+    EXPECT_EQ(dataItem->item(), propertyItem);
+}
+
+//! Creating DefaultViewModel using strategies, validating behaviour on single item in SessionModel.
+
+TEST_F(ViewModelFactoryTest, createCustomViewModel)
+{
+    SessionModel model;
+    auto propertyItem = model.insertItem<PropertyItem>();
+    propertyItem->setData(42.0);
+
+    CustomModel viewModel(&model);
+
+    EXPECT_EQ(viewModel.rowCount(), 1);
+    EXPECT_EQ(viewModel.columnCount(), 2);
+
+    // accessing first child under the root item
+    QModelIndex labelIndex = viewModel.index(0, 0);
+    QModelIndex dataIndex = viewModel.index(0, 1);
+
+    // it should be ViewLabelItem looking at our PropertyItem item
+    auto labelItem = dynamic_cast<ViewLabelItem*>(viewModel.itemFromIndex(labelIndex));
+    ASSERT_TRUE(labelItem != nullptr);
+    EXPECT_EQ(labelItem->item(), propertyItem);
+
+    auto dataItem = dynamic_cast<ViewDataItem*>(viewModel.itemFromIndex(dataIndex));
     ASSERT_TRUE(dataItem != nullptr);
     EXPECT_EQ(dataItem->item(), propertyItem);
 }

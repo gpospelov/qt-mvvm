@@ -36,10 +36,6 @@ ViewModelControllerBuilder::operator std::unique_ptr<ViewModelController>()
     result->setChildrenStrategy(std::move(context.children_strategy));
     result->setRowStrategy(std::move(context.row_strategy));
 
-    // FIXME very unelegant
-    if (context.view_model)
-        result->setRootSessionItem(context.model->rootItem());
-
     return result;
 }
 

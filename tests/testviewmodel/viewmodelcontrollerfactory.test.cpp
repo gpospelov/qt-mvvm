@@ -34,6 +34,9 @@ TEST_F(ViewModelControllerFactoryTest, allItemsControllerBuild)
 
     auto controller = Factory::CreateController<AllChildrenStrategy, LabelDataRowStrategy>(
         &session_model, &view_model);
+
+    controller->setRootSessionItem(session_model.rootItem());
+
     EXPECT_EQ(controller->sessionModel(), &session_model);
     EXPECT_EQ(controller->rootSessionItem(), session_model.rootItem());
     EXPECT_EQ(view_model.columnCount(), 0);
