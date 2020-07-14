@@ -4,8 +4,6 @@ target_sources(layereditorcore PRIVATE
     item_constants.h
     layeritems.cpp
     layeritems.h
-    materialitems.cpp
-    materialitems.h
     materialmodel.cpp
     materialmodel.h
     materialpropertycontroller.cpp

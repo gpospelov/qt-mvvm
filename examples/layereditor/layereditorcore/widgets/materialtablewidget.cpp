@@ -9,7 +9,6 @@
 
 #include <QTreeView>
 #include <QVBoxLayout>
-#include <layereditorcore/model/materialitems.h>
 #include <layereditorcore/model/materialmodel.h>
 #include <layereditorcore/widgets/materialtablewidget.h>
 #include <mvvm/model/modelutils.h>
