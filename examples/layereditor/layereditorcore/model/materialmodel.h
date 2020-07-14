@@ -10,8 +10,8 @@
 #ifndef MATERIALMODEL_H
 #define MATERIALMODEL_H
 
-#include <mvvm/model/sessionmodel.h>
 #include <mvvm/model/compounditem.h>
+#include <mvvm/model/sessionmodel.h>
 #include <vector>
 
 class QColor;
@@ -29,25 +29,13 @@ public:
     MaterialContainerItem();
 };
 
-//! Base class with all materials with name and color defined.
+//! Represents material based on scattering length density.
 
-class MaterialBaseItem : public ModelView::CompoundItem
+class SLDMaterialItem : public ModelView::CompoundItem
 {
 public:
     static inline const std::string P_NAME = "P_NAME";
     static inline const std::string P_COLOR = "P_COLOR";
-    MaterialBaseItem(const std::string& model_type);
-
-protected:
-    void register_name();
-    void register_color();
-};
-
-//! Represents material based on scattering length density.
-
-class SLDMaterialItem : public MaterialBaseItem
-{
-public:
     static inline const std::string P_SLD_REAL = "P_SLD_REAL";
     static inline const std::string P_SLD_IMAG = "P_SLD_IMAG";
 
