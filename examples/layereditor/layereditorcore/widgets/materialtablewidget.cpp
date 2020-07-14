@@ -11,12 +11,12 @@
 #include <QVBoxLayout>
 #include <layereditorcore/model/materialitems.h>
 #include <layereditorcore/model/materialmodel.h>
-#include <layereditorcore/viewmodel/materialtableviewmodel.h>
 #include <layereditorcore/widgets/materialtablewidget.h>
 #include <mvvm/model/modelutils.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/signals/modelmapper.h>
 #include <mvvm/viewmodel/viewmodeldelegate.h>
+#include <mvvm/factories/viewmodelfactory.h>
 
 using namespace ModelView;
 
@@ -43,7 +43,7 @@ MaterialTableWidget::MaterialTableWidget(MaterialModel* material_model, QWidget*
 
 void MaterialTableWidget::setItem(SessionItem* material_container)
 {
-    m_viewModel = std::make_unique<MaterialTableViewModel>(material_container->model());
+    m_viewModel = Factory::CreatePropertyTableViewModel(material_container->model());
     m_viewModel->setRootSessionItem(material_container);
     m_treeView->setModel(m_viewModel.get());
     m_treeView->expandAll();

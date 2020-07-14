@@ -7,6 +7,4 @@ target_sources(layereditorcore PRIVATE
     layertableviewmodelcontroller.h
     layertableviewmodel.cpp
     layertableviewmodel.h
-    materialtableviewmodel.cpp
-    materialtableviewmodel.h
 )

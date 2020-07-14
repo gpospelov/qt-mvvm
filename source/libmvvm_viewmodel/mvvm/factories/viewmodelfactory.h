@@ -11,8 +11,8 @@
 #define MVVM_VIEWMODEL_STANDARDVIEWMODELS_H
 
 #include <memory>
-#include <mvvm/viewmodel/viewmodel.h>
 #include <mvvm/factories/viewmodelcontrollerfactory.h>
+#include <mvvm/viewmodel/viewmodel.h>
 #include <mvvm/viewmodel_export.h>
 
 namespace ModelView
@@ -55,8 +55,16 @@ std::unique_ptr<ViewModel> CreateViewModel(SessionModel* session_model)
     return std::make_unique<ViewModel>(std::move(controller));
 }
 
+//! Creates view model to represent SessionModel for Qt views.
+//! Use user provided controller type.
+template <typename ViewModelController>
+std::unique_ptr<ViewModel> CreateViewModel(SessionModel* session_model)
+{
+    auto controller = std::make_unique<ViewModelController>(session_model);
+    return std::make_unique<ViewModel>(std::move(controller));
+}
 
-} // namespace Utils
+} // namespace Factory
 
 } // namespace ModelView
 
