@@ -58,16 +58,13 @@ TEST_F(ExternalPropertyTest, equalityOperators)
 TEST_F(ExternalPropertyTest, variantEquality)
 {
     if (Comparators::registered()) {
-        EXPECT_EQ(1, 1);
         ExternalProperty prop1a;
         ExternalProperty prop1b;
         EXPECT_TRUE(QVariant::fromValue(prop1a) == QVariant::fromValue(prop1b));
-        EXPECT_FALSE(QVariant::fromValue(prop1a) < QVariant::fromValue(prop1b));
 
         ExternalProperty prop2a("text", QColor(Qt::red));
         ExternalProperty prop2b("text", QColor(Qt::red));
         EXPECT_TRUE(QVariant::fromValue(prop2a) == QVariant::fromValue(prop2b));
-        EXPECT_FALSE(QVariant::fromValue(prop2a) < QVariant::fromValue(prop2b));
 
         EXPECT_FALSE(QVariant::fromValue(prop1a) == QVariant::fromValue(prop2a));
     }

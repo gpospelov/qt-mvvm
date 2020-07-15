@@ -15,18 +15,19 @@
 namespace ModelView
 {
 
-/*!
-@class ContainerItem
-@brief Simple container to store any type of children.
-
-Used as convenience item to create branch with uniform children beneath.
-*/
+//! Simple container to store any type of children.
+//! Used as convenience item to create branch with uniform children beneath.
 
 class MVVM_MODEL_EXPORT ContainerItem : public CompoundItem
 {
 public:
     static inline const std::string T_ITEMS = "T_ITEMS";
-    ContainerItem();
+
+    ContainerItem(const std::string& modelType = Constants::ContainerItemType);
+
+    bool empty() const;
+
+    size_t size() const;
 };
 
 } // namespace ModelView

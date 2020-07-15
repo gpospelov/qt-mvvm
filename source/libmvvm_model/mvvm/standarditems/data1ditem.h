@@ -18,18 +18,15 @@ namespace ModelView
 
 class BinnedAxisItem;
 
-/*!
-@class Data1DItem
-@brief Represents bare one-dimensional data (axis and values).
-
-Values are stored in Data1DItem itself, axis is attached as a child. Corresponding plot
-properties will be served by GraphItem.
-*/
+//! Represents one-dimensional data (axis and values).
+//! Values are stored in Data1DItem itself, axis is attached as a child. Corresponding plot
+//! properties will be served by GraphItem.
 
 class MVVM_MODEL_EXPORT Data1DItem : public CompoundItem
 {
 public:
     static inline const std::string T_AXIS = "T_AXIS";
+
     Data1DItem();
 
     void setAxis(std::unique_ptr<BinnedAxisItem> axis);
