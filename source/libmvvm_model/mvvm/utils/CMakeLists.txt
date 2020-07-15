@@ -1,4 +1,6 @@
 target_sources(${library_name} PRIVATE
+    binutils.cpp
+    binutils.h
     containerutils.cpp
     containerutils.h
     fileutils.cpp
