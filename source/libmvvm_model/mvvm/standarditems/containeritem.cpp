@@ -16,4 +16,12 @@ ContainerItem::ContainerItem(const std::string& modelType) : CompoundItem(modelT
     registerTag(ModelView::TagInfo::universalTag(T_ITEMS), /*set_as_default*/ true);
 }
 
-// FIXME implement empty() const and tests
+bool ContainerItem::empty() const
+{
+    return childrenCount() == 0;
+}
+
+size_t ContainerItem::size() const
+{
+    return static_cast<size_t>(childrenCount());
+}

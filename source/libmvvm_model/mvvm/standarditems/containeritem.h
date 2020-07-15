@@ -24,6 +24,10 @@ public:
     static inline const std::string T_ITEMS = "T_ITEMS";
 
     ContainerItem(const std::string& modelType = Constants::ContainerItemType);
+
+    bool empty() const;
+
+    size_t size() const;
 };
 
 } // namespace ModelView
