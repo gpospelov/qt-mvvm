@@ -11,7 +11,7 @@
 
 using namespace ModelView;
 
-ContainerItem::ContainerItem() : CompoundItem(Constants::ContainerItemType)
+ContainerItem::ContainerItem(const std::string& modelType) : CompoundItem(modelType)
 {
     registerTag(ModelView::TagInfo::universalTag(T_ITEMS), /*set_as_default*/ true);
 }

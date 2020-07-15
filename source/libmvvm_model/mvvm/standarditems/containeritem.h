@@ -22,7 +22,8 @@ class MVVM_MODEL_EXPORT ContainerItem : public CompoundItem
 {
 public:
     static inline const std::string T_ITEMS = "T_ITEMS";
-    ContainerItem();
+
+    ContainerItem(const std::string& modelType = Constants::ContainerItemType);
 };
 
 } // namespace ModelView
