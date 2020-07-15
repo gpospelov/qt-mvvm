@@ -15,12 +15,8 @@
 namespace ModelView
 {
 
-/*!
-@class ContainerItem
-@brief Simple container to store any type of children.
-
-Used as convenience item to create branch with uniform children beneath.
-*/
+//! Simple container to store any type of children.
+//! Used as convenience item to create branch with uniform children beneath.
 
 class MVVM_MODEL_EXPORT ContainerItem : public CompoundItem
 {

@@ -17,10 +17,7 @@ namespace ModelView
 
 class GraphItem;
 
-/*!
-@class GraphViewportItem
-@brief Container with viewport and collection of GraphItem's to plot.
-*/
+//! Container with viewport and collection of GraphItem's to plot.
 
 class MVVM_MODEL_EXPORT GraphViewportItem : public ViewportItem
 {

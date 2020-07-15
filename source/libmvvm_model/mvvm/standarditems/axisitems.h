@@ -20,12 +20,7 @@
 namespace ModelView
 {
 
-/*!
-@class BasicAxisItem
-@brief Base class for all axes items.
-
-Has min, max defined, but nothing else.
-*/
+//! Base class for all axes items. Has min, max defined, but nothing else.
 
 class MVVM_MODEL_EXPORT BasicAxisItem : public CompoundItem
 {
@@ -39,13 +34,8 @@ protected:
     void register_min_max();
 };
 
-/*!
-@class ViewportAxisItem
-@brief Item to represent viewport axis.
-
-ViewportAxisItem serve as a counterpart of QCPAxis from QCustomPlot.
-Intended to cary title, fonts etc.
-*/
+//! Item to represent viewport axis.
+//! Serves as a counterpart of QCPAxis from QCustomPlot. Intended to cary title, fonts etc.
 
 class MVVM_MODEL_EXPORT ViewportAxisItem : public BasicAxisItem
 {
@@ -61,16 +51,10 @@ public:
     bool is_in_log() const;
 };
 
-/*!
-@class BinnedAxisItem
-@brief Item to represent an axis with arbitrary binning.
-
-Base class to define an axis with specific binning (fixed, variable). Used in Data1DItem and
-Data2Ditem to store 1d and 2d data.  Doesn't carry any appearance info (e.g. axis title, label
-size, etc) and thus not intended for direct plotting.
-*/
-
-//!
+//! Item to represent an axis with arbitrary binning.
+//! Base class to define an axis with specific binning (fixed, variable). Used in Data1DItem and
+//! Data2Ditem to store 1d and 2d data.  Doesn't carry any appearance info (e.g. axis title, label
+//! size, etc) and thus not intended for direct plotting.
 
 class MVVM_MODEL_EXPORT BinnedAxisItem : public BasicAxisItem
 {
@@ -84,12 +68,8 @@ public:
     virtual std::vector<double> binCenters() const = 0;
 };
 
-/*!
-@class FixedBinAxisItem
-@brief Item to represent fixed bin axis.
-
-Defines an axis with equidistant binning.
-*/
+//! Item to represent fixed bin axis.
+//! Defines an axis with equidistant binning.
 
 class MVVM_MODEL_EXPORT FixedBinAxisItem : public BinnedAxisItem
 {
@@ -106,12 +86,8 @@ public:
     std::vector<double> binCenters() const override;
 };
 
-/*!
-@class PointwiseAxisItem
-@brief Item to represent pointwise axis.
-
-Defines an axis via array of points representing point coordinates.
-*/
+//! Item to represent pointwise axis.
+//! Defines an axis via array of points representing point coordinates.
 
 class MVVM_MODEL_EXPORT PointwiseAxisItem : public BinnedAxisItem
 {
