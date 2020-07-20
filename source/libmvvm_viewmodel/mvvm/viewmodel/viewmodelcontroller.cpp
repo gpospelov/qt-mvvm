@@ -8,12 +8,12 @@
 // ************************************************************************** //
 
 #include <map>
+#include <mvvm/interfaces/childrenstrategyinterface.h>
+#include <mvvm/interfaces/rowstrategyinterface.h>
 #include <mvvm/model/itemutils.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/utils/containerutils.h>
-#include <mvvm/interfaces/childrenstrategyinterface.h>
-#include <mvvm/interfaces/rowstrategyinterface.h>
 #include <mvvm/viewmodel/standardviewitems.h>
 #include <mvvm/viewmodel/viewmodelbase.h>
 #include <mvvm/viewmodel/viewmodelcontroller.h>
@@ -224,6 +224,14 @@ SessionModel* ViewModelController::sessionModel() const
 
 void ViewModelController::setRootSessionItem(SessionItem* item)
 {
+    if (!item)
+        throw std::runtime_error(
+            "Error in ViewModelController: atttemp to set nulptr as root item");
+
+    if (item->model() != model())
+        throw std::runtime_error(
+            "Error in ViewModelController: atttemp to use item from alien model as new root.");
+
     p_impl->view_model->beginResetModel();
     p_impl->setRootSessionItemIntern(item);
     p_impl->view_model->endResetModel();

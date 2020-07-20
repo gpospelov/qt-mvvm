@@ -388,6 +388,13 @@ TEST_F(DefaultViewModelTest, setRootItem)
 
     EXPECT_EQ(spyAboutReset.count(), 1);
     EXPECT_EQ(spyReset.count(), 1);
+
+    // attempt to use nullptr as root item
+    EXPECT_THROW(viewModel.setRootSessionItem(nullptr), std::runtime_error);
+
+    // attempt to use alien model
+    SessionModel model2;
+    EXPECT_THROW(viewModel.setRootSessionItem(model2.rootItem()), std::runtime_error);
 }
 
 //! Setting top level item as ROOT item (case parent and children).

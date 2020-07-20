@@ -46,6 +46,8 @@ ViewModel::~ViewModel() = default;
 
 void ViewModel::setRootSessionItem(SessionItem* item)
 {
+    if (!item)
+        throw std::runtime_error("Error in ViewModel: atttemp to set nulptr as root item");
     m_controller->setRootSessionItem(item);
 }
 
