@@ -25,6 +25,11 @@ PropertyTreeView::PropertyTreeView(QWidget* parent) : ItemsTreeView(parent)
 
 void PropertyTreeView::setItem(SessionItem* item)
 {
+    if (!item) {
+        treeView()->setModel(nullptr);
+        return;
+    }
+
     setViewModel(Factory::CreatePropertyViewModel(item->model()));
     viewModel()->setRootSessionItem(item);
     treeView()->setRootIsDecorated(false);
