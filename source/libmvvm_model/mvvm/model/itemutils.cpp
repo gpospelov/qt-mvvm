@@ -10,6 +10,7 @@
 #include <iterator>
 #include <mvvm/model/itemutils.h>
 #include <mvvm/model/sessionitem.h>
+#include <mvvm/utils/containerutils.h>
 
 using namespace ModelView;
 
@@ -130,4 +131,13 @@ bool Utils::IsItemAncestor(const SessionItem* item, const SessionItem* candidate
             parent = parent->parent();
     }
     return false;
+}
+
+std::vector<SessionItem*> Utils::UniqueItems(const std::vector<SessionItem*>& items)
+{
+    auto filtered = Utils::UniqueWithOrder(items);
+    std::vector<SessionItem*> result;
+    std::copy_if(filtered.begin(), filtered.end(), std::back_inserter(result),
+                 [](auto x) { return x != nullptr; });
+    return result;
 }
