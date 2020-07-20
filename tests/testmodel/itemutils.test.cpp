@@ -254,3 +254,14 @@ TEST_F(ItemUtilsTest, IsItemAncestor)
     auto y_item = vector_item->getItem(VectorItem::P_Y);
     EXPECT_FALSE(Utils::IsItemAncestor(x_item, y_item));
 }
+
+TEST_F(ItemUtilsTest, UniqueItems)
+{
+    SessionModel model;
+    auto item0 = model.insertItem<SessionItem>(model.rootItem());
+    auto item1 = model.insertItem<SessionItem>(model.rootItem());
+    auto item2 = model.insertItem<SessionItem>(model.rootItem());
+    std::vector<SessionItem*> data = {nullptr, item0, item1, item2, item0, item2, nullptr};
+    std::vector<SessionItem*> expected = {item0, item1, item2};
+    EXPECT_EQ(Utils::UniqueItems(data), expected);
+}

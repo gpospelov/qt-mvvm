@@ -66,6 +66,10 @@ MVVM_MODEL_EXPORT SessionItem* FindNextItemToSelect(SessionItem* item);
 //! Returns true if 'candidate' is one of ancestor of given item.
 MVVM_MODEL_EXPORT bool IsItemAncestor(const SessionItem* item, const SessionItem* candidate);
 
+//! Returns vector with duplicates and 'nullptr' filtered out.
+MVVM_MODEL_EXPORT std::vector<SessionItem*> UniqueItems(const std::vector<SessionItem*>& items);
+
+
 } // namespace Utils
 
 } // namespace ModelView
