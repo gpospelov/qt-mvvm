@@ -64,3 +64,9 @@ TEST_F(ContainerUtilsTest, Real)
     EXPECT_EQ(Utils::Real(data), (std::vector<double>{1.0, 2.0}));
     EXPECT_EQ(Utils::Imag(data), (std::vector<double>{10.0, 20.0}));
 }
+
+TEST_F(ContainerUtilsTest, UniqueWithOrder)
+{
+    std::vector<int> data = {1, 42, 1, 6, 43, 6};
+    EXPECT_EQ(Utils::UniqueWithOrder(data), (std::vector<int>{1, 42, 6, 43}));
+}

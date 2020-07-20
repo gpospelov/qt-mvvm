@@ -18,6 +18,7 @@
 #include <string>
 #include <type_traits>
 #include <vector>
+#include <unordered_set>
 
 namespace ModelView
 {
@@ -77,6 +78,21 @@ template <typename C> std::vector<double> Imag(const C& container)
 {
     return Apply(std::begin(container), std::end(container),
                  [](const auto& x) { return std::imag(x); });
+}
+
+//! Returns copy of container with all duplicated elements filtered our. The order is preserved.
+
+template<typename C> C UniqueWithOrder(const C& container)
+{
+    C result;
+
+    using valueType = typename C::value_type;
+    std::unordered_set<valueType> unique;
+
+    std::copy_if(container.begin(), container.end(), std::back_inserter(result),
+                 [&unique](auto x) { return unique.insert(x).second; });
+
+    return result;
 }
 
 } // namespace Utils
