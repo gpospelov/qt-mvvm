@@ -1,6 +1,7 @@
 # CMakeLists.txt with user examples
 
 if (MVVM_BUILD_EXAMPLES)
+    add_subdirectory(helloworld)
     add_subdirectory(celleditors)
     add_subdirectory(collidingmice)
     add_subdirectory(concurrentplot)
