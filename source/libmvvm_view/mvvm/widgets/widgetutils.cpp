@@ -49,6 +49,24 @@ bool ModelView::Utils::IsWindowsHost()
 #endif
 }
 
+bool ModelView::Utils::IsMacHost()
+{
+#if defined(Q_OS_MAC)
+    return true;
+#else
+    return false;
+#endif
+}
+
+bool ModelView::Utils::IsLinuxHost()
+{
+#if defined(Q_OS_LINUX)
+    return true;
+#else
+    return false;
+#endif
+}
+
 QString ModelView::Utils::WithTildeHomePath(const QString& path)
 {
     if (ModelView::Utils::IsWindowsHost())

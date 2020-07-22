@@ -10,8 +10,8 @@
 #ifndef MVVM_WIDGETS_UTILS_H
 #define MVVM_WIDGETS_UTILS_H
 
-#include <mvvm/view_export.h>
 #include <QString>
+#include <mvvm/view_export.h>
 
 class QColor;
 class QSize;
@@ -31,6 +31,12 @@ MVVM_VIEW_EXPORT QColor random_color();
 
 //! Returns true if it is Windows.
 MVVM_VIEW_EXPORT bool IsWindowsHost();
+
+//! Returns true if it is Mac.
+MVVM_VIEW_EXPORT bool IsMacHost();
+
+//! Returns true if it is Linux.
+MVVM_VIEW_EXPORT bool IsLinuxHost();
 
 //! Returns a string where Linux path to the file is striped using '~/'.
 MVVM_VIEW_EXPORT QString WithTildeHomePath(const QString& path);
