@@ -22,7 +22,7 @@ class SessionModel;
 //! Provides notifications on various SessionModel changes.
 //! Allows to subscribe to SessionModel's changes, and triggers notifications.
 
-class MVVM_MODEL_EXPORT ModelMapper : private ModelListenerInterface
+class MVVM_MODEL_EXPORT ModelMapper : public ModelListenerInterface
 {
 public:
     ModelMapper(SessionModel* model);
