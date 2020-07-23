@@ -10,7 +10,6 @@
 #include "graphmodel.h"
 #include "toysimulation.h"
 #include <QColor>
-#include <mvvm/model/modelutils.h>
 #include <mvvm/standarditems/axisitems.h>
 #include <mvvm/standarditems/containeritem.h>
 #include <mvvm/standarditems/data1ditem.h>
@@ -42,7 +41,7 @@ GraphModel::GraphModel() : SessionModel("GraphModel")
 
 void GraphModel::set_data(const std::vector<double>& data)
 {
-    auto item = Utils::TopItem<ContainerItem>(this)->item<Data1DItem>(ContainerItem::T_ITEMS);
+    auto item = topItem<ContainerItem>()->item<Data1DItem>(ContainerItem::T_ITEMS);
     item->setContent(data);
 }
 

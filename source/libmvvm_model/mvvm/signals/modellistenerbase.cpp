@@ -10,11 +10,14 @@
 #include <mvvm/signals/modellistenerbase.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/signals/modelmapper.h>
+#include <stdexcept>
 
 using namespace ModelView;
 
 ModelListenerBase::ModelListenerBase(SessionModel* model) : m_model(model)
 {
+    if (!m_model)
+        throw std::runtime_error("Error in ModelListenerBase: no model defined");
     setOnModelDestroyed([this](SessionModel*) { m_model = nullptr; });
 }
 

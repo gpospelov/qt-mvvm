@@ -15,9 +15,9 @@
 #include <mvvm/core/types.h>
 #include <mvvm/model/function_types.h>
 #include <mvvm/model/path.h>
+#include <mvvm/model/sessionitem.h>
 #include <mvvm/model/tagrow.h>
 #include <mvvm/model_export.h>
-#include <string>
 
 class QUndoStack;
 
@@ -85,6 +85,10 @@ public:
 
     SessionItem* findItem(const identifier_type& id);
 
+    template <typename T = SessionItem> std::vector<T*> topItems() const;
+
+    template <typename T = SessionItem> T* topItem() const;
+
 protected:
     std::unique_ptr<ItemManager> m_item_manager;
 
@@ -102,6 +106,29 @@ private:
 template <typename T> T* SessionModel::insertItem(SessionItem* parent, const TagRow& tagrow)
 {
     return static_cast<T*>(intern_insert([]() { return std::make_unique<T>(); }, parent, tagrow));
+}
+
+//! Returns top item of the given type. If more than one item exists, return the first one.
+//! The top item is an item that is a child of an invisible root item.
+
+template <typename T> std::vector<T*> SessionModel::topItems() const
+{
+    std::vector<T*> result;
+    for (auto child : rootItem()->children()) {
+        if (auto item = dynamic_cast<T*>(child))
+            result.push_back(item);
+    }
+
+    return result;
+}
+
+//! Returns top items of the given type.
+//! The top item is an item that is a child of an invisible root item.
+
+template <typename T> T* SessionModel::topItem() const
+{
+    auto items = topItems<T>();
+    return items.empty() ? nullptr : items.front();
 }
 
 } // namespace ModelView

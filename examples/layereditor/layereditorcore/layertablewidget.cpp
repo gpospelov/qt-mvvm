@@ -11,20 +11,18 @@
 #include <QTreeView>
 #include <QVBoxLayout>
 #include <layereditorcore/applicationmodels.h>
-#include <layereditorcore/samplemodel.h>
 #include <layereditorcore/customeditorfactory.h>
 #include <layereditorcore/customlayerrowstrategy.h>
 #include <layereditorcore/layertablewidget.h>
+#include <layereditorcore/samplemodel.h>
 #include <mvvm/factories/viewmodelfactory.h>
-#include <mvvm/model/modelutils.h>
 #include <mvvm/viewmodel/standardchildrenstrategies.h>
 #include <mvvm/viewmodel/viewmodeldelegate.h>
 
 using namespace ModelView;
 
 LayerTableWidget::LayerTableWidget(ApplicationModels* models, QWidget* parent)
-    : QWidget(parent), m_treeView(new QTreeView),
-      m_delegate(std::make_unique<ViewModelDelegate>())
+    : QWidget(parent), m_treeView(new QTreeView), m_delegate(std::make_unique<ViewModelDelegate>())
 {
     auto layout = new QVBoxLayout;
     layout->setMargin(0);
@@ -38,7 +36,7 @@ LayerTableWidget::LayerTableWidget(ApplicationModels* models, QWidget* parent)
     m_treeView->setEditTriggers(QAbstractItemView::AllEditTriggers); // provide one click editing
     m_treeView->setAlternatingRowColors(true);
 
-    setItem(Utils::TopItem<MultiLayerItem>(models->sampleModel()));
+    setItem(models->sampleModel()->topItem<MultiLayerItem>());
 }
 
 void LayerTableWidget::setItem(ModelView::SessionItem* multilayer)

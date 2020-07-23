@@ -13,7 +13,6 @@
 #include "graphwidgettoolbar.h"
 #include "jobmanager.h"
 #include <QBoxLayout>
-#include <mvvm/model/modelutils.h>
 #include <mvvm/plotting/graphcanvas.h>
 #include <mvvm/standarditems/graphviewportitem.h>
 
@@ -44,7 +43,7 @@ void GraphWidget::setModel(GraphModel* model)
         return;
     m_model = model;
     m_propertyWidget->setModel(model);
-    m_graphCanvas->setItem(Utils::TopItem<GraphViewportItem>(model));
+    m_graphCanvas->setItem(model->topItem<GraphViewportItem>());
 }
 
 //! Takes simulation results from JobManager and write into the model.

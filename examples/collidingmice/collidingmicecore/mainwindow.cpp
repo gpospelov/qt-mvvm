@@ -143,6 +143,6 @@ void MainWindow::init_menu()
 void MainWindow::populate_scene()
 {
     scene->clear();
-    for (auto item : ModelView::Utils::TopItems<MouseItem>(mouse_model.get()))
+    for (auto item : mouse_model->topItems<MouseItem>())
         scene->addItem(new Mouse(item));
 }

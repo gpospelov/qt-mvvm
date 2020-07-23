@@ -17,7 +17,6 @@
 #include <QCoreApplication>
 #include <QHBoxLayout>
 #include <QSettings>
-#include <mvvm/model/modelutils.h>
 
 namespace
 {
@@ -80,7 +79,7 @@ void MainWindow::init_components()
 
     setCentralWidget(central_widget);
 
-    table_widget->setModel(m_sampleModel.get(), ModelView::Utils::TopItem(m_sampleModel.get()));
+    table_widget->setModel(m_sampleModel.get(), m_sampleModel->topItem());
 }
 
 //! Setup main connections.
