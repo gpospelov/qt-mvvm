@@ -28,7 +28,6 @@ struct ItemMapper::ItemMapperImpl {
 
     bool m_active{true};
     SessionItem* m_item{nullptr};
-    SessionModel* m_model{nullptr};
 
     ItemMapperImpl(ItemMapper* item_mapper) : m_itemMapper(item_mapper) {}
 
@@ -45,7 +44,7 @@ struct ItemMapper::ItemMapperImpl {
 
     int nestlingDepth(SessionItem* item, int level = 0)
     {
-        if (item == nullptr || item == m_model->rootItem())
+        if (item == nullptr || item == m_itemMapper->model()->rootItem())
             return -1;
         if (item == m_item)
             return level;
@@ -150,7 +149,6 @@ ItemMapper::ItemMapper(SessionItem* item)
         throw std::runtime_error("ItemMapper::ItemMapper() -> Item doesn't have model");
 
     p_impl->m_item = item;
-    p_impl->m_model = item->model();
 
     auto on_data_change = [this](auto item, auto role) { p_impl->processDataChange(item, role); };
     ModelListener::setOnDataChange(on_data_change);
