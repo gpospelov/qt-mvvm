@@ -23,7 +23,7 @@ class SessionItem;
 //! signals which are related to the given item. Notifies all interested subscribers about things
 //! going with the item and its relatives.
 
-class MVVM_MODEL_EXPORT ItemMapper : ModelListener<SessionModel>
+class MVVM_MODEL_EXPORT ItemMapper : private ModelListener<SessionModel>
 {
 public:
     ItemMapper(SessionItem* item);
