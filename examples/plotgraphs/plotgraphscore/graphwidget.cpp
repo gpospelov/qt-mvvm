@@ -14,7 +14,6 @@
 #include <QBoxLayout>
 #include <QToolBar>
 #include <QToolButton>
-#include <mvvm/model/modelutils.h>
 #include <mvvm/plotting/graphcanvas.h>
 #include <mvvm/standarditems/graphviewportitem.h>
 
@@ -51,7 +50,7 @@ void GraphWidget::setModel(GraphModel* model)
 
     m_propertyWidget->setModel(model);
 
-    m_graphCanvas->setItem(Utils::TopItem<GraphViewportItem>(model));
+    m_graphCanvas->setItem(model->topItem<GraphViewportItem>());
 }
 
 void GraphWidget::init_actions()
@@ -61,7 +60,7 @@ void GraphWidget::init_actions()
 
     m_resetViewportAction = new QAction("Reset view", this);
     auto on_reset = [this]() {
-        auto viewport = Utils::TopItem<GraphViewportItem>(m_model);
+        auto viewport = m_model->topItem<GraphViewportItem>();
         viewport->update_viewport();
     };
     connect(m_resetViewportAction, &QAction::triggered, on_reset);

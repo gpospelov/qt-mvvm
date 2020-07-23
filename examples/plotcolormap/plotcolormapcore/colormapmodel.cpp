@@ -9,7 +9,6 @@
 
 #include "colormapmodel.h"
 #include <cmath>
-#include <mvvm/model/modelutils.h>
 #include <mvvm/standarditems/axisitems.h>
 #include <mvvm/standarditems/colormapitem.h>
 #include <mvvm/standarditems/colormapviewportitem.h>
@@ -68,7 +67,7 @@ void ColorMapModel::add_colormap()
 
 ContainerItem* ColorMapModel::data_container()
 {
-    return Utils::TopItem<ContainerItem>(this);
+    return topItem<ContainerItem>();
 }
 
 void ColorMapModel::init_model()

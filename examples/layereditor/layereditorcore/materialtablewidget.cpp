@@ -11,11 +11,10 @@
 #include <QVBoxLayout>
 #include <layereditorcore/materialmodel.h>
 #include <layereditorcore/materialtablewidget.h>
-#include <mvvm/model/modelutils.h>
-#include <mvvm/signals/modelmapper.h>
-#include <mvvm/viewmodel/viewmodeldelegate.h>
 #include <mvvm/factories/viewmodelfactory.h>
+#include <mvvm/signals/modelmapper.h>
 #include <mvvm/standarditems/containeritem.h>
+#include <mvvm/viewmodel/viewmodeldelegate.h>
 
 using namespace ModelView;
 
@@ -34,7 +33,7 @@ MaterialTableWidget::MaterialTableWidget(MaterialModel* material_model, QWidget*
     m_treeView->setAlternatingRowColors(true);
 
     auto on_model_reset = [this, material_model](auto) {
-        setItem(Utils::TopItem<ModelView::ContainerItem>(material_model));
+        setItem(material_model->topItem<ModelView::ContainerItem>());
     };
     material_model->mapper()->setOnModelReset(on_model_reset, this);
     on_model_reset(material_model);

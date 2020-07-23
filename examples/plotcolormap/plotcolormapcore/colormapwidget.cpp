@@ -14,7 +14,6 @@
 #include <QBoxLayout>
 #include <QToolBar>
 #include <QToolButton>
-#include <mvvm/model/modelutils.h>
 #include <mvvm/plotting/colormapcanvas.h>
 #include <mvvm/standarditems/colormapviewportitem.h>
 
@@ -51,7 +50,7 @@ void ColorMapWidget::setModel(ColorMapModel* model)
 
     m_propertyWidget->setModel(model);
 
-    m_colorMapCanvas->setItem(Utils::TopItem<ColorMapViewportItem>(model));
+    m_colorMapCanvas->setItem(model->topItem<ColorMapViewportItem>());
 }
 
 void ColorMapWidget::init_actions()
@@ -61,7 +60,7 @@ void ColorMapWidget::init_actions()
 
     m_resetViewportAction = new QAction("Reset view", this);
     auto on_reset = [this]() {
-        auto viewport = Utils::TopItem<ColorMapViewportItem>(m_model);
+        auto viewport = m_model->topItem<ColorMapViewportItem>();
         viewport->update_viewport();
     };
     connect(m_resetViewportAction, &QAction::triggered, on_reset);

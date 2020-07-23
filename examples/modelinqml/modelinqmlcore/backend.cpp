@@ -11,7 +11,6 @@
 #include <modelinqmlcore/particlemodel.h>
 #include <modelinqmlcore/particleviewmodel.h>
 #include <modelinqmlcore/tablemodel.h>
-#include <mvvm/model/modelutils.h>
 #include <mvvm/factories/viewmodelfactory.h>
 #include <mvvm/viewmodel/viewmodel.h>
 
@@ -27,7 +26,7 @@ struct BackEnd::BackEndImpl {
           m_viewModel(std::make_unique<ParticleViewModel>(m_model.get())),
           m_tableModel(new TableModel)
     {
-        m_viewModel->setRootSessionItem(Utils::TopItem(m_model.get()));
+        m_viewModel->setRootSessionItem(m_model->topItem());
     }
 };
 

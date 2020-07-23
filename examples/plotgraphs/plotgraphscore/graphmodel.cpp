@@ -10,7 +10,6 @@
 #include "graphmodel.h"
 #include <QColor>
 #include <cmath>
-#include <mvvm/model/modelutils.h>
 #include <mvvm/model/mvvm_types.h>
 #include <mvvm/standarditems/axisitems.h>
 #include <mvvm/standarditems/containeritem.h>
@@ -97,14 +96,14 @@ void GraphModel::randomize_graphs()
 
 GraphViewportItem* GraphModel::viewport()
 {
-    return Utils::TopItem<GraphViewportItem>(this);
+    return topItem<GraphViewportItem>();
 }
 
 //! Returns container with data items.
 
 ContainerItem* GraphModel::data_container()
 {
-    return Utils::TopItem<ContainerItem>(this);
+    return topItem<ContainerItem>();
 }
 
 void GraphModel::init_model()
