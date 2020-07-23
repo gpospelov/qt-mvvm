@@ -10,7 +10,8 @@
 #ifndef MVVM_SIGNALS_ITEMMAPPER_H
 #define MVVM_SIGNALS_ITEMMAPPER_H
 
-#include <mvvm/signals/callbackcontainer.h>
+#include <memory>
+#include <mvvm/interfaces/modellistenerinterface.h>
 
 namespace ModelView
 {
@@ -31,8 +32,6 @@ class MVVM_MODEL_EXPORT ItemMapper
 public:
     ItemMapper(SessionItem* item);
     ~ItemMapper();
-
-    void setModel(SessionModel* model);
 
     void setOnItemDestroy(Callbacks::item_t f, Callbacks::slot_t owner);
     void setOnDataChange(Callbacks::item_int_t f, Callbacks::slot_t owner);
@@ -63,17 +62,8 @@ private:
     void callOnItemRemoved(SessionItem* parent, TagRow tagrow);
     void callOnAboutToRemoveItem(SessionItem* parent, TagRow tagrow);
 
-    Signal<Callbacks::item_t> m_on_item_destroy;
-    Signal<Callbacks::item_int_t> m_on_data_change;
-    Signal<Callbacks::item_str_t> m_on_property_change;
-    Signal<Callbacks::item_str_t> m_on_child_property_change;
-    Signal<Callbacks::item_tagrow_t> m_on_item_inserted;
-    Signal<Callbacks::item_tagrow_t> m_on_item_removed;
-    Signal<Callbacks::item_tagrow_t> m_on_about_to_remove_item;
-
-    bool m_active;
-    SessionItem* m_item;
-    SessionModel* m_model;
+    struct ItemMapperImpl;
+    std::unique_ptr<ItemMapperImpl> p_impl;
 };
 
 } // namespace ModelView

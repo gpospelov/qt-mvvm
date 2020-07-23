@@ -9,21 +9,39 @@
 
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
+#include <mvvm/signals/callbackcontainer.h>
 #include <mvvm/signals/itemmapper.h>
 #include <mvvm/signals/modelmapper.h>
 #include <stdexcept>
 
 using namespace ModelView;
 
-ItemMapper::ItemMapper(SessionItem* item) : m_active(true), m_item(item), m_model(nullptr)
+struct ItemMapper::ItemMapperImpl {
+    Signal<Callbacks::item_t> m_on_item_destroy;
+    Signal<Callbacks::item_int_t> m_on_data_change;
+    Signal<Callbacks::item_str_t> m_on_property_change;
+    Signal<Callbacks::item_str_t> m_on_child_property_change;
+    Signal<Callbacks::item_tagrow_t> m_on_item_inserted;
+    Signal<Callbacks::item_tagrow_t> m_on_item_removed;
+    Signal<Callbacks::item_tagrow_t> m_on_about_to_remove_item;
+
+    bool m_active{true};
+    SessionItem* m_item{nullptr};
+    SessionModel* m_model{nullptr};
+};
+
+ItemMapper::ItemMapper(SessionItem* item) : p_impl(std::make_unique<ItemMapperImpl>())
 {
-    if (!m_item)
+    if (!item)
         throw std::runtime_error("ItemMapper::ItemMapper() -> Not initialized item");
 
-    if (!m_item->model())
+    if (!item->model())
         throw std::runtime_error("ItemMapper::ItemMapper() -> Item doesn't have model");
 
-    setModel(item->model());
+    p_impl->m_item = item;
+    p_impl->m_model = item->model();
+
+    subscribe_to_model();
 }
 
 ItemMapper::~ItemMapper()
@@ -31,20 +49,9 @@ ItemMapper::~ItemMapper()
     unsubscribe_from_model();
 }
 
-void ItemMapper::setModel(SessionModel* model)
-{
-    if (m_model)
-        unsubscribe_from_model();
-
-    m_model = model;
-
-    if (m_model)
-        subscribe_to_model();
-}
-
 void ItemMapper::setOnItemDestroy(Callbacks::item_t f, Callbacks::slot_t owner)
 {
-    m_on_item_destroy.connect(std::move(f), owner);
+    p_impl->m_on_item_destroy.connect(std::move(f), owner);
 }
 
 //! Sets callback to be notified on item's data change.
@@ -52,7 +59,7 @@ void ItemMapper::setOnItemDestroy(Callbacks::item_t f, Callbacks::slot_t owner)
 
 void ItemMapper::setOnDataChange(Callbacks::item_int_t f, Callbacks::slot_t owner)
 {
-    m_on_data_change.connect(std::move(f), owner);
+    p_impl->m_on_data_change.connect(std::move(f), owner);
 }
 
 //! Sets callback to be notified on item's property change.
@@ -60,7 +67,7 @@ void ItemMapper::setOnDataChange(Callbacks::item_int_t f, Callbacks::slot_t owne
 
 void ItemMapper::setOnPropertyChange(Callbacks::item_str_t f, Callbacks::slot_t owner)
 {
-    m_on_property_change.connect(std::move(f), owner);
+    p_impl->m_on_property_change.connect(std::move(f), owner);
 }
 
 /*!
@@ -73,7 +80,7 @@ layer with "thickness" property, the signal will be triggered on thickness chang
 
 void ItemMapper::setOnChildPropertyChange(Callbacks::item_str_t f, Callbacks::slot_t owner)
 {
-    m_on_child_property_change.connect(std::move(f), owner);
+    p_impl->m_on_child_property_change.connect(std::move(f), owner);
 }
 
 /*!
@@ -86,7 +93,7 @@ tag, the signal will be triggered on layer insertion with
 
 void ItemMapper::setOnItemInserted(Callbacks::item_tagrow_t f, Callbacks::slot_t owner)
 {
-    m_on_item_inserted.connect(std::move(f), owner);
+    p_impl->m_on_item_inserted.connect(std::move(f), owner);
 }
 
 /*!
@@ -99,7 +106,7 @@ tag, the signal will be triggered on layer removal with
 
 void ItemMapper::setOnItemRemoved(Callbacks::item_tagrow_t f, Callbacks::slot_t owner)
 {
-    m_on_item_removed.connect(std::move(f), owner);
+    p_impl->m_on_item_removed.connect(std::move(f), owner);
 }
 
 /*!
@@ -112,25 +119,25 @@ tag, the signal will be triggered on layer deletion with
 
 void ItemMapper::setOnAboutToRemoveItem(Callbacks::item_tagrow_t f, Callbacks::slot_t owner)
 {
-    m_on_about_to_remove_item.connect(std::move(f), owner);
+    p_impl->m_on_about_to_remove_item.connect(std::move(f), owner);
 }
 
 //! Sets activity flag to given value. Will disable all callbacks if false.
 
 void ItemMapper::setActive(bool value)
 {
-    m_active = value;
+    p_impl->m_active = value;
 }
 
 void ItemMapper::unsubscribe(Callbacks::slot_t client)
 {
-    m_on_item_destroy.remove_client(client);
-    m_on_data_change.remove_client(client);
-    m_on_property_change.remove_client(client);
-    m_on_child_property_change.remove_client(client);
-    m_on_item_inserted.remove_client(client);
-    m_on_item_removed.remove_client(client);
-    m_on_about_to_remove_item.remove_client(client);
+    p_impl->m_on_item_destroy.remove_client(client);
+    p_impl->m_on_data_change.remove_client(client);
+    p_impl->m_on_property_change.remove_client(client);
+    p_impl->m_on_child_property_change.remove_client(client);
+    p_impl->m_on_item_inserted.remove_client(client);
+    p_impl->m_on_item_removed.remove_client(client);
+    p_impl->m_on_about_to_remove_item.remove_client(client);
 }
 
 //! Processes signals from the model when item data changed.
@@ -145,7 +152,7 @@ void ItemMapper::processDataChange(SessionItem* item, int role)
 
     // data of item's property changed
     if (nestling == 1)
-        callOnPropertyChange(m_item, m_item->tagOfItem(item));
+        callOnPropertyChange(p_impl->m_item, p_impl->m_item->tagOfItem(item));
 
     // child property changed
     if (nestling == 2) {
@@ -156,20 +163,20 @@ void ItemMapper::processDataChange(SessionItem* item, int role)
 
 void ItemMapper::processItemInserted(SessionItem* parent, TagRow tagrow)
 {
-    if (parent == m_item)
-        callOnItemInserted(m_item, tagrow);
+    if (parent == p_impl->m_item)
+        callOnItemInserted(p_impl->m_item, tagrow);
 }
 
 void ItemMapper::processItemRemoved(SessionItem* parent, TagRow tagrow)
 {
-    if (parent == m_item)
-        callOnItemRemoved(m_item, tagrow);
+    if (parent == p_impl->m_item)
+        callOnItemRemoved(p_impl->m_item, tagrow);
 }
 
 void ItemMapper::processAboutToRemoveItem(SessionItem* parent, TagRow tagrow)
 {
-    if (parent == m_item)
-        callOnAboutToRemoveItem(m_item, tagrow);
+    if (parent == p_impl->m_item)
+        callOnAboutToRemoveItem(p_impl->m_item, tagrow);
 }
 
 //! Subscribes to model signals.
@@ -179,36 +186,36 @@ void ItemMapper::subscribe_to_model()
     auto on_data_change = [this](ModelView::SessionItem* item, int role) {
         processDataChange(item, role);
     };
-    m_model->mapper()->setOnDataChange(on_data_change, this);
+    p_impl->m_model->mapper()->setOnDataChange(on_data_change, this);
 
     auto on_item_inserted = [this](ModelView::SessionItem* item, TagRow tagrow) {
         processItemInserted(item, tagrow);
     };
-    m_model->mapper()->setOnItemInserted(on_item_inserted, this);
+    p_impl->m_model->mapper()->setOnItemInserted(on_item_inserted, this);
 
     auto on_item_removed = [this](ModelView::SessionItem* item, TagRow tagrow) {
         processItemRemoved(item, tagrow);
     };
-    m_model->mapper()->setOnItemRemoved(on_item_removed, this);
+    p_impl->m_model->mapper()->setOnItemRemoved(on_item_removed, this);
 
     auto on_about_to_remove_item = [this](ModelView::SessionItem* item, ModelView::TagRow tagrow) {
         processAboutToRemoveItem(item, tagrow);
     };
-    m_model->mapper()->setOnAboutToRemoveItem(on_about_to_remove_item, this);
+    p_impl->m_model->mapper()->setOnAboutToRemoveItem(on_about_to_remove_item, this);
 }
 
 //! Unsubscribes from model signals.
 
 void ItemMapper::unsubscribe_from_model()
 {
-    m_model->mapper()->unsubscribe(this);
+    p_impl->m_model->mapper()->unsubscribe(this);
 }
 
 int ItemMapper::nestlingDepth(SessionItem* item, int level)
 {
-    if (item == nullptr || item == m_model->rootItem())
+    if (item == nullptr || item == p_impl->m_model->rootItem())
         return -1;
-    if (item == m_item)
+    if (item == p_impl->m_item)
         return level;
     return nestlingDepth(item->parent(), level + 1);
 }
@@ -217,54 +224,54 @@ int ItemMapper::nestlingDepth(SessionItem* item, int level)
 
 void ItemMapper::callOnItemDestroy()
 {
-    if (m_active)
-        m_on_item_destroy(m_item);
+    if (p_impl->m_active)
+        p_impl->m_on_item_destroy(p_impl->m_item);
 }
 
 //! Notifies all callbacks subscribed to "item data is changed" event.
 
 void ItemMapper::callOnDataChange(SessionItem* item, int role)
 {
-    if (m_active)
-        m_on_data_change(item, role);
+    if (p_impl->m_active)
+        p_impl->m_on_data_change(item, role);
 }
 
 //! Notifies all callbacks subscribed to "item property is changed" event.
 
 void ItemMapper::callOnPropertyChange(SessionItem* item, std::string property_name)
 {
-    if (m_active)
-        m_on_property_change(item, property_name);
+    if (p_impl->m_active)
+        p_impl->m_on_property_change(item, property_name);
 }
 
 //! Notifies all callbacks subscribed to "child property changed" event.
 
 void ItemMapper::callOnChildPropertyChange(SessionItem* item, std::string property_name)
 {
-    if (m_active)
-        m_on_child_property_change(item, property_name);
+    if (p_impl->m_active)
+        p_impl->m_on_child_property_change(item, property_name);
 }
 
 //! Notifies all callbacks subscribed to "on row inserted" event.
 
 void ItemMapper::callOnItemInserted(SessionItem* parent, TagRow tagrow)
 {
-    if (m_active)
-        m_on_item_inserted(parent, tagrow);
+    if (p_impl->m_active)
+        p_impl->m_on_item_inserted(parent, tagrow);
 }
 
 //! Notifies all callbacks subscribed to "on row removed" event.
 
 void ItemMapper::callOnItemRemoved(SessionItem* parent, TagRow tagrow)
 {
-    if (m_active)
-        m_on_item_removed(parent, tagrow);
+    if (p_impl->m_active)
+        p_impl->m_on_item_removed(parent, tagrow);
 }
 
 //! Notifies all callbacks subscribed to "on row about to be removed".
 
 void ItemMapper::callOnAboutToRemoveItem(SessionItem* parent, TagRow tagrow)
 {
-    if (m_active)
-        m_on_about_to_remove_item(parent, tagrow);
+    if (p_impl->m_active)
+        p_impl->m_on_about_to_remove_item(parent, tagrow);
 }
