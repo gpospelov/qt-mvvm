@@ -152,22 +152,20 @@ ItemMapper::ItemMapper(SessionItem* item)
     p_impl->m_item = item;
     p_impl->m_model = item->model();
 
-    auto on_data_change = [this](ModelView::SessionItem* item, int role) {
-        p_impl->processDataChange(item, role);
-    };
+    auto on_data_change = [this](auto item, auto role) { p_impl->processDataChange(item, role); };
     ModelListener::setOnDataChange(on_data_change);
 
-    auto on_item_inserted = [this](ModelView::SessionItem* item, TagRow tagrow) {
+    auto on_item_inserted = [this](auto item, auto tagrow) {
         p_impl->processItemInserted(item, tagrow);
     };
     ModelListener::setOnItemInserted(on_item_inserted, this);
 
-    auto on_item_removed = [this](ModelView::SessionItem* item, TagRow tagrow) {
+    auto on_item_removed = [this](auto item, auto tagrow) {
         p_impl->processItemRemoved(item, tagrow);
     };
     ModelListener::setOnItemRemoved(on_item_removed, this);
 
-    auto on_about_to_remove_item = [this](ModelView::SessionItem* item, ModelView::TagRow tagrow) {
+    auto on_about_to_remove_item = [this](auto item, auto tagrow) {
         p_impl->processAboutToRemoveItem(item, tagrow);
     };
     ModelListener::setOnAboutToRemoveItem(on_about_to_remove_item, this);
