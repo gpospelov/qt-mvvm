@@ -28,6 +28,17 @@ struct ItemMapper::ItemMapperImpl {
     bool m_active{true};
     SessionItem* m_item{nullptr};
     SessionModel* m_model{nullptr};
+
+    void unsubscribe(Callbacks::slot_t client)
+    {
+        m_on_item_destroy.remove_client(client);
+        m_on_data_change.remove_client(client);
+        m_on_property_change.remove_client(client);
+        m_on_child_property_change.remove_client(client);
+        m_on_item_inserted.remove_client(client);
+        m_on_item_removed.remove_client(client);
+        m_on_about_to_remove_item.remove_client(client);
+    }
 };
 
 ItemMapper::ItemMapper(SessionItem* item) : p_impl(std::make_unique<ItemMapperImpl>())
@@ -131,13 +142,7 @@ void ItemMapper::setActive(bool value)
 
 void ItemMapper::unsubscribe(Callbacks::slot_t client)
 {
-    p_impl->m_on_item_destroy.remove_client(client);
-    p_impl->m_on_data_change.remove_client(client);
-    p_impl->m_on_property_change.remove_client(client);
-    p_impl->m_on_child_property_change.remove_client(client);
-    p_impl->m_on_item_inserted.remove_client(client);
-    p_impl->m_on_item_removed.remove_client(client);
-    p_impl->m_on_about_to_remove_item.remove_client(client);
+    p_impl->unsubscribe(client);
 }
 
 //! Processes signals from the model when item data changed.
