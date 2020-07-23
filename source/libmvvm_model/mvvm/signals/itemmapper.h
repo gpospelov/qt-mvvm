@@ -11,6 +11,7 @@
 #define MVVM_SIGNALS_ITEMMAPPER_H
 
 #include <memory>
+#include <mvvm/interfaces/itemlistenerinterface.h>
 #include <mvvm/signals/modellistener.h>
 
 namespace ModelView
@@ -23,23 +24,24 @@ class SessionItem;
 //! signals which are related to the given item. Notifies all interested subscribers about things
 //! going with the item and its relatives.
 
-class MVVM_MODEL_EXPORT ItemMapper : private ModelListener<SessionModel>
+class MVVM_MODEL_EXPORT ItemMapper : public ItemListenerInterface,
+                                     private ModelListener<SessionModel>
 {
 public:
     ItemMapper(SessionItem* item);
     ~ItemMapper();
 
-    void setOnItemDestroy(Callbacks::item_t f, Callbacks::slot_t owner);
-    void setOnDataChange(Callbacks::item_int_t f, Callbacks::slot_t owner);
-    void setOnPropertyChange(Callbacks::item_str_t f, Callbacks::slot_t owner);
-    void setOnChildPropertyChange(Callbacks::item_str_t f, Callbacks::slot_t owner);
-    void setOnItemInserted(Callbacks::item_tagrow_t f, Callbacks::slot_t owner);
-    void setOnItemRemoved(Callbacks::item_tagrow_t f, Callbacks::slot_t owner);
-    void setOnAboutToRemoveItem(Callbacks::item_tagrow_t f, Callbacks::slot_t owner);
+    void setOnItemDestroy(Callbacks::item_t f, Callbacks::slot_t owner) override;
+    void setOnDataChange(Callbacks::item_int_t f, Callbacks::slot_t owner) override;
+    void setOnPropertyChange(Callbacks::item_str_t f, Callbacks::slot_t owner) override;
+    void setOnChildPropertyChange(Callbacks::item_str_t f, Callbacks::slot_t owner) override;
+    void setOnItemInserted(Callbacks::item_tagrow_t f, Callbacks::slot_t owner) override;
+    void setOnItemRemoved(Callbacks::item_tagrow_t f, Callbacks::slot_t owner) override;
+    void setOnAboutToRemoveItem(Callbacks::item_tagrow_t f, Callbacks::slot_t owner) override;
+
+    void unsubscribe(Callbacks::slot_t client) override;
 
     void setActive(bool value);
-
-    void unsubscribe(Callbacks::slot_t client);
 
 private:
     friend class SessionItem;

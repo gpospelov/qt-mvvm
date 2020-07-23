@@ -176,72 +176,39 @@ void ItemMapper::setOnItemDestroy(Callbacks::item_t f, Callbacks::slot_t owner)
     p_impl->m_on_item_destroy.connect(std::move(f), owner);
 }
 
-//! Sets callback to be notified on item's data change.
-//! Callback will be called with (SessionItem*, data_role).
-
 void ItemMapper::setOnDataChange(Callbacks::item_int_t f, Callbacks::slot_t owner)
 {
     p_impl->m_on_data_change.connect(std::move(f), owner);
 }
-
-//! Sets callback to be notified on item's property change.
-//! Callback will be called with (compound_item, property_name).
 
 void ItemMapper::setOnPropertyChange(Callbacks::item_str_t f, Callbacks::slot_t owner)
 {
     p_impl->m_on_property_change.connect(std::move(f), owner);
 }
 
-/*!
-@brief Sets callback to be notified on item's children property change.
-
-Callback will be called with (compound_item, property_name). For MultiLayer containing the
-layer with "thickness" property, the signal will be triggered on thickness change using
-(layeritem*, "thickness") as callback parameters.
-*/
-
 void ItemMapper::setOnChildPropertyChange(Callbacks::item_str_t f, Callbacks::slot_t owner)
 {
     p_impl->m_on_child_property_change.connect(std::move(f), owner);
 }
-
-/*!
-@brief Sets callback to be notified on child insertion.
-
-Callback will be called with (compound_item, tag, row). For MultiLayer containing the T_LAYERS
-tag, the signal will be triggered on layer insertion with
-(multilayer*, {T_LAYER, row}) as callback parameters.
-*/
 
 void ItemMapper::setOnItemInserted(Callbacks::item_tagrow_t f, Callbacks::slot_t owner)
 {
     p_impl->m_on_item_inserted.connect(std::move(f), owner);
 }
 
-/*!
-@brief Sets callback to be notified on child removal.
-
-Callback will be called with (compound_item, tag, row). For MultiLayer containing the T_LAYERS
-tag, the signal will be triggered on layer removal with
-(multilayer*, {T_LAYER, oldrow}) as callback parameters.
-*/
-
 void ItemMapper::setOnItemRemoved(Callbacks::item_tagrow_t f, Callbacks::slot_t owner)
 {
     p_impl->m_on_item_removed.connect(std::move(f), owner);
 }
 
-/*!
-@brief Sets callback to be notified when row is about to be removed.
-
-Callback will be called with (compound_item, tagrow). For MultiLayer containing the T_LAYERS
-tag, the signal will be triggered on layer deletion with
-(multilayer*, {T_LAYER, row}) as callback parameters.
-*/
-
 void ItemMapper::setOnAboutToRemoveItem(Callbacks::item_tagrow_t f, Callbacks::slot_t owner)
 {
     p_impl->m_on_about_to_remove_item.connect(std::move(f), owner);
+}
+
+void ItemMapper::unsubscribe(Callbacks::slot_t client)
+{
+    p_impl->unsubscribe(client);
 }
 
 //! Sets activity flag to given value. Will disable all callbacks if false.
@@ -249,11 +216,6 @@ void ItemMapper::setOnAboutToRemoveItem(Callbacks::item_tagrow_t f, Callbacks::s
 void ItemMapper::setActive(bool value)
 {
     p_impl->m_active = value;
-}
-
-void ItemMapper::unsubscribe(Callbacks::slot_t client)
-{
-    p_impl->unsubscribe(client);
 }
 
 //! Calls all callbacks subscribed to "item is destroyed" event.
