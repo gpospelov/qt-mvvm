@@ -54,7 +54,7 @@ void ModelEditorWidget::setModel(SampleModel* model)
 
     m_model = model;
 
-    auto containers = Utils::TopItems(m_model);
+    auto containers = m_model->topItems();
     assert(containers.size() == 2);
 
     m_leftWidget->setModel(m_model, containers[0]);
