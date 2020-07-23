@@ -173,10 +173,7 @@ ItemMapper::ItemMapper(SessionItem* item)
     ModelListener::setOnAboutToRemoveItem(on_about_to_remove_item, this);
 }
 
-ItemMapper::~ItemMapper()
-{
-    unsubscribe_from_model();
-}
+ItemMapper::~ItemMapper() = default;
 
 void ItemMapper::setOnItemDestroy(Callbacks::item_t f, Callbacks::slot_t owner)
 {
@@ -261,13 +258,6 @@ void ItemMapper::setActive(bool value)
 void ItemMapper::unsubscribe(Callbacks::slot_t client)
 {
     p_impl->unsubscribe(client);
-}
-
-//! Unsubscribes from model signals.
-
-void ItemMapper::unsubscribe_from_model()
-{
-    p_impl->m_model->mapper()->unsubscribe(this);
 }
 
 //! Calls all callbacks subscribed to "item is destroyed" event.

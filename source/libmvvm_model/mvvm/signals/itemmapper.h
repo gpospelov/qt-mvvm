@@ -17,7 +17,6 @@ namespace ModelView
 {
 
 class SessionItem;
-class SessionModel;
 
 //! Provides notifications on various changes for a specific item.
 //! ItemMapper listens signals coming from the model (i.e. via ModelMapper) and processes only whose
@@ -44,9 +43,6 @@ public:
 
 private:
     friend class SessionItem;
-
-    void unsubscribe_from_model();
-
     void callOnItemDestroy();
 
     struct ItemMapperImpl;
