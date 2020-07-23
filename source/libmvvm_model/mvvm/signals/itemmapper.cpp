@@ -73,13 +73,11 @@ struct ItemMapper::ItemMapperImpl {
         }
     }
 
-
     void processItemInserted(SessionItem* parent, TagRow tagrow)
     {
         if (parent == m_item)
             callOnItemInserted(m_item, tagrow);
     }
-
 
     void processItemRemoved(SessionItem* parent, TagRow tagrow)
     {
@@ -87,13 +85,11 @@ struct ItemMapper::ItemMapperImpl {
             callOnItemRemoved(m_item, tagrow);
     }
 
-
     void processAboutToRemoveItem(SessionItem* parent, TagRow tagrow)
     {
         if (parent == m_item)
             callOnAboutToRemoveItem(m_item, tagrow);
     }
-
 
     //! Notifies all callbacks subscribed to "item data is changed" event.
 
@@ -142,11 +138,10 @@ struct ItemMapper::ItemMapperImpl {
         if (m_active)
             m_on_about_to_remove_item(parent, tagrow);
     }
-
-
 };
 
-ItemMapper::ItemMapper(SessionItem* item) : ModelListener(item->model()), p_impl(std::make_unique<ItemMapperImpl>(this))
+ItemMapper::ItemMapper(SessionItem* item)
+    : ModelListener(item->model()), p_impl(std::make_unique<ItemMapperImpl>(this))
 {
     if (!item)
         throw std::runtime_error("ItemMapper::ItemMapper() -> Not initialized item");
@@ -157,7 +152,25 @@ ItemMapper::ItemMapper(SessionItem* item) : ModelListener(item->model()), p_impl
     p_impl->m_item = item;
     p_impl->m_model = item->model();
 
-    subscribe_to_model();
+    auto on_data_change = [this](ModelView::SessionItem* item, int role) {
+        p_impl->processDataChange(item, role);
+    };
+    ModelListener::setOnDataChange(on_data_change);
+
+    auto on_item_inserted = [this](ModelView::SessionItem* item, TagRow tagrow) {
+        p_impl->processItemInserted(item, tagrow);
+    };
+    ModelListener::setOnItemInserted(on_item_inserted, this);
+
+    auto on_item_removed = [this](ModelView::SessionItem* item, TagRow tagrow) {
+        p_impl->processItemRemoved(item, tagrow);
+    };
+    ModelListener::setOnItemRemoved(on_item_removed, this);
+
+    auto on_about_to_remove_item = [this](ModelView::SessionItem* item, ModelView::TagRow tagrow) {
+        p_impl->processAboutToRemoveItem(item, tagrow);
+    };
+    ModelListener::setOnAboutToRemoveItem(on_about_to_remove_item, this);
 }
 
 ItemMapper::~ItemMapper()
@@ -248,32 +261,6 @@ void ItemMapper::setActive(bool value)
 void ItemMapper::unsubscribe(Callbacks::slot_t client)
 {
     p_impl->unsubscribe(client);
-}
-
-
-//! Subscribes to model signals.
-
-void ItemMapper::subscribe_to_model()
-{
-    auto on_data_change = [this](ModelView::SessionItem* item, int role) {
-        p_impl->processDataChange(item, role);
-    };
-    p_impl->m_model->mapper()->setOnDataChange(on_data_change, this);
-
-    auto on_item_inserted = [this](ModelView::SessionItem* item, TagRow tagrow) {
-        p_impl->processItemInserted(item, tagrow);
-    };
-    p_impl->m_model->mapper()->setOnItemInserted(on_item_inserted, this);
-
-    auto on_item_removed = [this](ModelView::SessionItem* item, TagRow tagrow) {
-        p_impl->processItemRemoved(item, tagrow);
-    };
-    p_impl->m_model->mapper()->setOnItemRemoved(on_item_removed, this);
-
-    auto on_about_to_remove_item = [this](ModelView::SessionItem* item, ModelView::TagRow tagrow) {
-        p_impl->processAboutToRemoveItem(item, tagrow);
-    };
-    p_impl->m_model->mapper()->setOnAboutToRemoveItem(on_about_to_remove_item, this);
 }
 
 //! Unsubscribes from model signals.

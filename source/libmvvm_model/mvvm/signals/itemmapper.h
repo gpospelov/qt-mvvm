@@ -45,7 +45,6 @@ public:
 private:
     friend class SessionItem;
 
-    void subscribe_to_model();
     void unsubscribe_from_model();
 
     void callOnItemDestroy();
