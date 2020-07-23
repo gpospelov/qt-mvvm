@@ -52,6 +52,49 @@ struct ItemMapper::ItemMapperImpl {
         return nestlingDepth(item->parent(), level + 1);
     }
 
+    //! Processes signals from the model when item data changed.
+
+    void processDataChange(SessionItem* item, int role)
+    {
+        int nestling = nestlingDepth(item);
+
+        // own item data changed
+        if (nestling == 0)
+            callOnDataChange(item, role);
+
+        // data of item's property changed
+        if (nestling == 1)
+            callOnPropertyChange(m_item, m_item->tagOfItem(item));
+
+        // child property changed
+        if (nestling == 2) {
+            if (auto parent = item->parent())
+                callOnChildPropertyChange(parent, parent->tagOfItem(item));
+        }
+    }
+
+
+    void processItemInserted(SessionItem* parent, TagRow tagrow)
+    {
+        if (parent == m_item)
+            callOnItemInserted(m_item, tagrow);
+    }
+
+
+    void processItemRemoved(SessionItem* parent, TagRow tagrow)
+    {
+        if (parent == m_item)
+            callOnItemRemoved(m_item, tagrow);
+    }
+
+
+    void processAboutToRemoveItem(SessionItem* parent, TagRow tagrow)
+    {
+        if (parent == m_item)
+            callOnAboutToRemoveItem(m_item, tagrow);
+    }
+
+
     //! Notifies all callbacks subscribed to "item data is changed" event.
 
     void callOnDataChange(SessionItem* item, int role)
@@ -99,6 +142,8 @@ struct ItemMapper::ItemMapperImpl {
         if (m_active)
             m_on_about_to_remove_item(parent, tagrow);
     }
+
+
 };
 
 ItemMapper::ItemMapper(SessionItem* item) : p_impl(std::make_unique<ItemMapperImpl>(this))
@@ -205,66 +250,28 @@ void ItemMapper::unsubscribe(Callbacks::slot_t client)
     p_impl->unsubscribe(client);
 }
 
-//! Processes signals from the model when item data changed.
-
-void ItemMapper::processDataChange(SessionItem* item, int role)
-{
-    int nestling = p_impl->nestlingDepth(item);
-
-    // own item data changed
-    if (nestling == 0)
-        p_impl->callOnDataChange(item, role);
-
-    // data of item's property changed
-    if (nestling == 1)
-        p_impl->callOnPropertyChange(p_impl->m_item, p_impl->m_item->tagOfItem(item));
-
-    // child property changed
-    if (nestling == 2) {
-        if (auto parent = item->parent())
-            p_impl->callOnChildPropertyChange(parent, parent->tagOfItem(item));
-    }
-}
-
-void ItemMapper::processItemInserted(SessionItem* parent, TagRow tagrow)
-{
-    if (parent == p_impl->m_item)
-        p_impl->callOnItemInserted(p_impl->m_item, tagrow);
-}
-
-void ItemMapper::processItemRemoved(SessionItem* parent, TagRow tagrow)
-{
-    if (parent == p_impl->m_item)
-        p_impl->callOnItemRemoved(p_impl->m_item, tagrow);
-}
-
-void ItemMapper::processAboutToRemoveItem(SessionItem* parent, TagRow tagrow)
-{
-    if (parent == p_impl->m_item)
-        p_impl->callOnAboutToRemoveItem(p_impl->m_item, tagrow);
-}
 
 //! Subscribes to model signals.
 
 void ItemMapper::subscribe_to_model()
 {
     auto on_data_change = [this](ModelView::SessionItem* item, int role) {
-        processDataChange(item, role);
+        p_impl->processDataChange(item, role);
     };
     p_impl->m_model->mapper()->setOnDataChange(on_data_change, this);
 
     auto on_item_inserted = [this](ModelView::SessionItem* item, TagRow tagrow) {
-        processItemInserted(item, tagrow);
+        p_impl->processItemInserted(item, tagrow);
     };
     p_impl->m_model->mapper()->setOnItemInserted(on_item_inserted, this);
 
     auto on_item_removed = [this](ModelView::SessionItem* item, TagRow tagrow) {
-        processItemRemoved(item, tagrow);
+        p_impl->processItemRemoved(item, tagrow);
     };
     p_impl->m_model->mapper()->setOnItemRemoved(on_item_removed, this);
 
     auto on_about_to_remove_item = [this](ModelView::SessionItem* item, ModelView::TagRow tagrow) {
-        processAboutToRemoveItem(item, tagrow);
+        p_impl->processAboutToRemoveItem(item, tagrow);
     };
     p_impl->m_model->mapper()->setOnAboutToRemoveItem(on_about_to_remove_item, this);
 }
