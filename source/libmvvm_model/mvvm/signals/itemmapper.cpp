@@ -146,7 +146,7 @@ struct ItemMapper::ItemMapperImpl {
 
 };
 
-ItemMapper::ItemMapper(SessionItem* item) : p_impl(std::make_unique<ItemMapperImpl>(this))
+ItemMapper::ItemMapper(SessionItem* item) : ModelListener(item->model()), p_impl(std::make_unique<ItemMapperImpl>(this))
 {
     if (!item)
         throw std::runtime_error("ItemMapper::ItemMapper() -> Not initialized item");

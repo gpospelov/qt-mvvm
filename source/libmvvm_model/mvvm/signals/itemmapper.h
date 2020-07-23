@@ -11,7 +11,7 @@
 #define MVVM_SIGNALS_ITEMMAPPER_H
 
 #include <memory>
-#include <mvvm/interfaces/modellistenerinterface.h>
+#include <mvvm/signals/modellistener.h>
 
 namespace ModelView
 {
@@ -24,7 +24,7 @@ class SessionModel;
 //! signals which are related to the given item. Notifies all interested subscribers about things
 //! going with the item and its relatives.
 
-class MVVM_MODEL_EXPORT ItemMapper
+class MVVM_MODEL_EXPORT ItemMapper : ModelListener<SessionModel>
 {
 public:
     ItemMapper(SessionItem* item);
