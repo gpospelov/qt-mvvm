@@ -27,8 +27,6 @@ class SessionModel;
 
 class MVVM_MODEL_EXPORT ItemMapper
 {
-    friend class SessionItem;
-
 public:
     ItemMapper(SessionItem* item);
     ~ItemMapper();
@@ -46,13 +44,14 @@ public:
     void unsubscribe(Callbacks::slot_t client);
 
 private:
+    friend class SessionItem;
+
     void processDataChange(SessionItem* item, int role);
     void processItemInserted(SessionItem* parent, TagRow tagrow);
     void processItemRemoved(SessionItem* parent, TagRow tagrow);
     void processAboutToRemoveItem(SessionItem* parent, TagRow tagrow);
     void subscribe_to_model();
     void unsubscribe_from_model();
-    int nestlingDepth(SessionItem* item, int level = 0);
 
     void callOnItemDestroy();
     void callOnDataChange(SessionItem* item, int role);

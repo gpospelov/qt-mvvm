@@ -39,6 +39,16 @@ struct ItemMapper::ItemMapperImpl {
         m_on_item_removed.remove_client(client);
         m_on_about_to_remove_item.remove_client(client);
     }
+
+    int nestlingDepth(SessionItem* item, int level = 0)
+    {
+        if (item == nullptr || item == m_model->rootItem())
+            return -1;
+        if (item == m_item)
+            return level;
+        return nestlingDepth(item->parent(), level + 1);
+    }
+
 };
 
 ItemMapper::ItemMapper(SessionItem* item) : p_impl(std::make_unique<ItemMapperImpl>())
@@ -149,7 +159,7 @@ void ItemMapper::unsubscribe(Callbacks::slot_t client)
 
 void ItemMapper::processDataChange(SessionItem* item, int role)
 {
-    int nestling = nestlingDepth(item);
+    int nestling = p_impl->nestlingDepth(item);
 
     // own item data changed
     if (nestling == 0)
@@ -214,15 +224,6 @@ void ItemMapper::subscribe_to_model()
 void ItemMapper::unsubscribe_from_model()
 {
     p_impl->m_model->mapper()->unsubscribe(this);
-}
-
-int ItemMapper::nestlingDepth(SessionItem* item, int level)
-{
-    if (item == nullptr || item == p_impl->m_model->rootItem())
-        return -1;
-    if (item == p_impl->m_item)
-        return level;
-    return nestlingDepth(item->parent(), level + 1);
 }
 
 //! Calls all callbacks subscribed to "item is destroyed" event.
