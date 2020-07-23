@@ -17,6 +17,7 @@
 using namespace ModelView;
 
 struct ItemMapper::ItemMapperImpl {
+    ItemMapper* m_itemMapper{nullptr};
     Signal<Callbacks::item_t> m_on_item_destroy;
     Signal<Callbacks::item_int_t> m_on_data_change;
     Signal<Callbacks::item_str_t> m_on_property_change;
@@ -28,6 +29,8 @@ struct ItemMapper::ItemMapperImpl {
     bool m_active{true};
     SessionItem* m_item{nullptr};
     SessionModel* m_model{nullptr};
+
+    ItemMapperImpl(ItemMapper* item_mapper) : m_itemMapper(item_mapper) {}
 
     void unsubscribe(Callbacks::slot_t client)
     {
@@ -49,9 +52,56 @@ struct ItemMapper::ItemMapperImpl {
         return nestlingDepth(item->parent(), level + 1);
     }
 
+    //! Notifies all callbacks subscribed to "item data is changed" event.
+
+    void callOnDataChange(SessionItem* item, int role)
+    {
+        if (m_active)
+            m_on_data_change(item, role);
+    }
+
+    //! Notifies all callbacks subscribed to "item property is changed" event.
+
+    void callOnPropertyChange(SessionItem* item, std::string property_name)
+    {
+        if (m_active)
+            m_on_property_change(item, property_name);
+    }
+
+    //! Notifies all callbacks subscribed to "child property changed" event.
+
+    void callOnChildPropertyChange(SessionItem* item, std::string property_name)
+    {
+        if (m_active)
+            m_on_child_property_change(item, property_name);
+    }
+
+    //! Notifies all callbacks subscribed to "on row inserted" event.
+
+    void callOnItemInserted(SessionItem* parent, TagRow tagrow)
+    {
+        if (m_active)
+            m_on_item_inserted(parent, tagrow);
+    }
+
+    //! Notifies all callbacks subscribed to "on row removed" event.
+
+    void callOnItemRemoved(SessionItem* parent, TagRow tagrow)
+    {
+        if (m_active)
+            m_on_item_removed(parent, tagrow);
+    }
+
+    //! Notifies all callbacks subscribed to "on row about to be removed".
+
+    void callOnAboutToRemoveItem(SessionItem* parent, TagRow tagrow)
+    {
+        if (m_active)
+            m_on_about_to_remove_item(parent, tagrow);
+    }
 };
 
-ItemMapper::ItemMapper(SessionItem* item) : p_impl(std::make_unique<ItemMapperImpl>())
+ItemMapper::ItemMapper(SessionItem* item) : p_impl(std::make_unique<ItemMapperImpl>(this))
 {
     if (!item)
         throw std::runtime_error("ItemMapper::ItemMapper() -> Not initialized item");
@@ -163,35 +213,35 @@ void ItemMapper::processDataChange(SessionItem* item, int role)
 
     // own item data changed
     if (nestling == 0)
-        callOnDataChange(item, role);
+        p_impl->callOnDataChange(item, role);
 
     // data of item's property changed
     if (nestling == 1)
-        callOnPropertyChange(p_impl->m_item, p_impl->m_item->tagOfItem(item));
+        p_impl->callOnPropertyChange(p_impl->m_item, p_impl->m_item->tagOfItem(item));
 
     // child property changed
     if (nestling == 2) {
         if (auto parent = item->parent())
-            callOnChildPropertyChange(parent, parent->tagOfItem(item));
+            p_impl->callOnChildPropertyChange(parent, parent->tagOfItem(item));
     }
 }
 
 void ItemMapper::processItemInserted(SessionItem* parent, TagRow tagrow)
 {
     if (parent == p_impl->m_item)
-        callOnItemInserted(p_impl->m_item, tagrow);
+        p_impl->callOnItemInserted(p_impl->m_item, tagrow);
 }
 
 void ItemMapper::processItemRemoved(SessionItem* parent, TagRow tagrow)
 {
     if (parent == p_impl->m_item)
-        callOnItemRemoved(p_impl->m_item, tagrow);
+        p_impl->callOnItemRemoved(p_impl->m_item, tagrow);
 }
 
 void ItemMapper::processAboutToRemoveItem(SessionItem* parent, TagRow tagrow)
 {
     if (parent == p_impl->m_item)
-        callOnAboutToRemoveItem(p_impl->m_item, tagrow);
+        p_impl->callOnAboutToRemoveItem(p_impl->m_item, tagrow);
 }
 
 //! Subscribes to model signals.
@@ -232,52 +282,4 @@ void ItemMapper::callOnItemDestroy()
 {
     if (p_impl->m_active)
         p_impl->m_on_item_destroy(p_impl->m_item);
-}
-
-//! Notifies all callbacks subscribed to "item data is changed" event.
-
-void ItemMapper::callOnDataChange(SessionItem* item, int role)
-{
-    if (p_impl->m_active)
-        p_impl->m_on_data_change(item, role);
-}
-
-//! Notifies all callbacks subscribed to "item property is changed" event.
-
-void ItemMapper::callOnPropertyChange(SessionItem* item, std::string property_name)
-{
-    if (p_impl->m_active)
-        p_impl->m_on_property_change(item, property_name);
-}
-
-//! Notifies all callbacks subscribed to "child property changed" event.
-
-void ItemMapper::callOnChildPropertyChange(SessionItem* item, std::string property_name)
-{
-    if (p_impl->m_active)
-        p_impl->m_on_child_property_change(item, property_name);
-}
-
-//! Notifies all callbacks subscribed to "on row inserted" event.
-
-void ItemMapper::callOnItemInserted(SessionItem* parent, TagRow tagrow)
-{
-    if (p_impl->m_active)
-        p_impl->m_on_item_inserted(parent, tagrow);
-}
-
-//! Notifies all callbacks subscribed to "on row removed" event.
-
-void ItemMapper::callOnItemRemoved(SessionItem* parent, TagRow tagrow)
-{
-    if (p_impl->m_active)
-        p_impl->m_on_item_removed(parent, tagrow);
-}
-
-//! Notifies all callbacks subscribed to "on row about to be removed".
-
-void ItemMapper::callOnAboutToRemoveItem(SessionItem* parent, TagRow tagrow)
-{
-    if (p_impl->m_active)
-        p_impl->m_on_about_to_remove_item(parent, tagrow);
 }

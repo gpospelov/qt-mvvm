@@ -19,11 +19,10 @@ namespace ModelView
 class SessionItem;
 class SessionModel;
 
-//! Provides notifications on varios changes for specific item.
-//!
+//! Provides notifications on various changes for a specific item.
 //! ItemMapper listens signals coming from the model (i.e. via ModelMapper) and processes only whose
-//! signals which are related to given item. Notifies all interested subscribers about things
-//! going with given item and its relatives.
+//! signals which are related to the given item. Notifies all interested subscribers about things
+//! going with the item and its relatives.
 
 class MVVM_MODEL_EXPORT ItemMapper
 {
@@ -54,12 +53,6 @@ private:
     void unsubscribe_from_model();
 
     void callOnItemDestroy();
-    void callOnDataChange(SessionItem* item, int role);
-    void callOnPropertyChange(SessionItem* item, std::string property_name);
-    void callOnChildPropertyChange(SessionItem* item, std::string property_name);
-    void callOnItemInserted(SessionItem* parent, TagRow tagrow);
-    void callOnItemRemoved(SessionItem* parent, TagRow tagrow);
-    void callOnAboutToRemoveItem(SessionItem* parent, TagRow tagrow);
 
     struct ItemMapperImpl;
     std::unique_ptr<ItemMapperImpl> p_impl;
