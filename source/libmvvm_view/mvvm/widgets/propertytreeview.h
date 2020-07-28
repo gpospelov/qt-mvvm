@@ -15,11 +15,8 @@
 namespace ModelView
 {
 
-/*!
-@class PropertyTreeView
-@brief Widget holding standard QTreeView and intended for displaying all properties of given
-SessionItem.
-*/
+//! Widget holding standard QTreeView and intended for displaying all properties of given
+//! SessionItem.
 
 class MVVM_VIEW_EXPORT PropertyTreeView : public ItemsTreeView
 {

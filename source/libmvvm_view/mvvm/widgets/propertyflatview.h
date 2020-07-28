@@ -19,11 +19,8 @@ namespace ModelView
 
 class SessionItem;
 
-/*!
-@class PropertyFlatView
-@brief Widget holding grid layout with editors and intended for displaying all properties of given
-SessionItem.
-*/
+//! Widget holding grid layout with editors and intended for displaying all properties of given
+//! SessionItem.
 
 class MVVM_VIEW_EXPORT PropertyFlatView : public QWidget
 {
