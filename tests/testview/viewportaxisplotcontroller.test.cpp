@@ -165,6 +165,26 @@ TEST_F(ViewportAxisPlotControllerTest, changeViewportAxisItem)
     EXPECT_EQ(custom_plot->xAxis->range().upper, expected_max);
 }
 
+//! Set ViewportAxisItem logz, subscribe controller and check that QCPAxis has it.
+
+TEST_F(ViewportAxisPlotControllerTest, viewportLogz)
+{
+    auto custom_plot = std::make_unique<QCustomPlot>();
+
+    // creating the model with single ViewportAxisItem
+    SessionModel model;
+    auto axisItem = model.insertItem<ViewportAxisItem>();
+    axisItem->setProperty(ViewportAxisItem::P_IS_LOG, true);
+
+    // setting up QCustomPlot and item controller.
+    auto qcp_axis = custom_plot->xAxis;
+    ViewportAxisPlotController controller(qcp_axis);
+    controller.setItem(axisItem);
+
+    // QCPAxis should switch to logarithmic
+    EXPECT_EQ(qcp_axis->scaleType(), QCPAxis::stLogarithmic);
+}
+
 //! Controller subscribed to ViewportAxisItem.
 //! Change ViewportAxisItem logz and check that QCPAxis got new values.
 
