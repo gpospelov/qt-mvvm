@@ -21,12 +21,8 @@ namespace ModelView
 
 class ViewportAxisItem;
 
-/*!
-@class ViewportAxisPlotController
-@brief Establishes communication between QCPAxis and ViewportAxisItem.
-
-Provide mutual update of axis parameters (min, max, title) for two axes representations.
-*/
+//! Establishes communication between QCPAxis and ViewportAxisItem.
+//! Provide mutual update of axis parameters (min, max, title) for two axes representations.
 
 class MVVM_VIEW_EXPORT ViewportAxisPlotController : public ItemListener<ViewportAxisItem>
 {

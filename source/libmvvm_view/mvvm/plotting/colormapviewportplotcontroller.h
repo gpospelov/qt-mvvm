@@ -21,12 +21,8 @@ namespace ModelView
 
 class ColorMapViewportItem;
 
-/*!
-@class ColorMapViewportPlotController
-@brief Establishes communications and mutual updates for ColorMapViewportItem and QCutomPlot.
-
-Populates custom plot with color map and tracks updates in items.
-*/
+//! Establishes communications and mutual updates for ColorMapViewportItem and QCutomPlot.
+//! Populates custom plot with color map and tracks updates in items.
 
 class MVVM_VIEW_EXPORT ColorMapViewportPlotController : public ItemListener<ColorMapViewportItem>
 {

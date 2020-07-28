@@ -18,11 +18,8 @@ class QCustomPlot;
 namespace ModelView
 {
 
-/*!
-@class CustomPlotSceneAdapter
-@brief Converts QGraphicsScene coordinates in the coordinates of local system of QCustomPlot
-and vice versa.
-*/
+//! Converts QGraphicsScene coordinates in the coordinates of local system of QCustomPlot
+//! and vice versa.
 
 class MVVM_VIEW_EXPORT CustomPlotSceneAdapter : public SceneAdapterInterface
 {

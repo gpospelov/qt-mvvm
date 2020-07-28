@@ -10,10 +10,7 @@
 #ifndef MVVM_PLOTTING_STATUSSTRINGREPORTERFACTORY_H
 #define MVVM_PLOTTING_STATUSSTRINGREPORTERFACTORY_H
 
-/*!
-@file statusstringreporterfactory.h
-@brief Contains factory methods to create StatusStringReporter
-*/
+//! Contains factory methods to create StatusStringReporter
 
 #include <functional>
 #include <memory>
