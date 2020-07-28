@@ -25,11 +25,14 @@ public:
     GraphViewportItem(const std::string& model_type = Constants::GraphViewportItemType);
 
     std::vector<GraphItem*> graphItems() const;
+
     std::vector<GraphItem*> visibleGraphItems() const;
-    void setSelected(std::vector<GraphItem*> selected_graph_items);
+
+    void setSelected(const std::vector<GraphItem*>& selected_graph_items);
+
     void resetSelected();
 
-private:
+protected:
     std::pair<double, double> data_xaxis_range() const override;
     std::pair<double, double> data_yaxis_range() const override;
 };

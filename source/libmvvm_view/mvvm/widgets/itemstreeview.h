@@ -26,7 +26,6 @@ class ViewModel;
 class ViewModelDelegate;
 
 //! Tree view to show items of SessionModel via ViewModel mechanism.
-//!
 //! Provides notification mechanism for SessionItem selections, use custom delegate.
 
 class MVVM_VIEW_EXPORT ItemsTreeView : public QWidget
@@ -58,7 +57,7 @@ private:
 
     void set_connected(bool flag);
 
-    QTreeView* m_treeView;
+    QTreeView* m_treeView{nullptr};
     std::unique_ptr<ViewModel> m_viewModel;
     std::unique_ptr<ViewModelDelegate> m_delegate;
     bool m_block_selection;

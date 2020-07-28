@@ -62,7 +62,7 @@ std::vector<GraphItem*> GraphViewportItem::visibleGraphItems() const
 }
 
 //! Set the graph selection
-void GraphViewportItem::setSelected(std::vector<GraphItem*> selected_graph_items)
+void GraphViewportItem::setSelected(const std::vector<GraphItem*>& selected_graph_items)
 {
     std::vector<GraphItem*> output;
     for (auto graph_item : items<GraphItem>(T_ITEMS)) {

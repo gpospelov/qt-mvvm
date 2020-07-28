@@ -21,12 +21,8 @@ namespace ModelView
 
 class GraphViewportItem;
 
-/*!
-@class GraphViewportPlotController
-@brief Establishes communications and mutual updates for GraphViewportItem and QCutomPlot.
-
-Populates custom plot with all graphs found in GraphViewportItem.
-*/
+//! Establishes communications and mutual updates for GraphViewportItem and QCutomPlot.
+//! Populates custom plot with all graphs found in GraphViewportItem.
 
 class MVVM_VIEW_EXPORT GraphViewportPlotController : public ItemListener<GraphViewportItem>
 {

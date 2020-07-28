@@ -17,14 +17,11 @@ namespace ModelView
 
 class SessionModel;
 
-/*!
-@class TopItemsTreeView
-@brief Widget holding standard QTreeView and intended for displaying all top level
-items of SessionModel.
+//! Widget holding standard QTreeView and intended for displaying all top level
+//! items of SessionModel.
 
-All property items (i.e. "thickness", "color" etc) will be filtered out, top level items
-(i.e. Layer, MultiLayer, ...) will be presented as simple parent/child tree.
-*/
+//! All property items (i.e. "thickness", "color" etc) will be filtered out, top level items
+//! (i.e. Layer, MultiLayer, ...) will be presented as simple parent/child tree.
 
 class MVVM_VIEW_EXPORT TopItemsTreeView : public ItemsTreeView
 {

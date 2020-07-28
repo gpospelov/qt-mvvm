@@ -17,10 +17,7 @@ namespace ModelView
 
 class SessionModel;
 
-/*!
-@class AllItemsTreeView
-@brief Widget holding standard QTreeView and intended for displaying all items of SessionModel.
-*/
+//! Widget holding standard QTreeView and intended for displaying all items of SessionModel.
 
 class MVVM_VIEW_EXPORT AllItemsTreeView : public ItemsTreeView
 {

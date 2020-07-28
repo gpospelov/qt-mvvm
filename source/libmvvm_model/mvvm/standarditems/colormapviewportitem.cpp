@@ -40,14 +40,6 @@ void ColorMapViewportItem::update_viewport()
     update_data_range();
 }
 
-//! Returns Data2DItem if exists.
-
-Data2DItem* ColorMapViewportItem::data_item() const
-{
-    auto colormap_item = item<ColorMapItem>(T_ITEMS);
-    return colormap_item ? colormap_item->dataItem() : nullptr;
-}
-
 //! Returns range of x-axis as defined in underlying Data2DItem.
 
 std::pair<double, double> ColorMapViewportItem::data_xaxis_range() const
@@ -62,6 +54,14 @@ std::pair<double, double> ColorMapViewportItem::data_yaxis_range() const
 {
     auto dataItem = data_item();
     return dataItem && dataItem->yAxis() ? dataItem->yAxis()->range() : default_axis_range;
+}
+
+//! Returns Data2DItem if exists.
+
+Data2DItem* ColorMapViewportItem::data_item() const
+{
+    auto colormap_item = item<ColorMapItem>(T_ITEMS);
+    return colormap_item ? colormap_item->dataItem() : nullptr;
 }
 
 //! Updates zAxis to lower, upper values over all data points.

@@ -95,6 +95,8 @@ void ViewportAxisPlotController::subscribe()
     setOnPropertyChange(on_property_change);
 
     p_impl->setConnected();
+
+    p_impl->update_log_scale();
 }
 
 void ViewportAxisPlotController::unsubscribe()

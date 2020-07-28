@@ -72,6 +72,5 @@
 
 ### Under development
 
-+ helloworld
 + modelinqml
 

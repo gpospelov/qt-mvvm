@@ -20,12 +20,8 @@ namespace ModelView
 class GraphViewportItem;
 class SceneAdapterInterface;
 
-/*!
-@class GraphCanvas
-@brief Widget to show scientific figure with multiple 1D graphs.
-
-Contains embedded QCustomPlot widget, shows content of GraphViewportItem.
-*/
+//! Widget to show scientific figure with multiple 1D graphs.
+//! Contains embedded QCustomPlot widget, shows content of GraphViewportItem.
 
 class MVVM_VIEW_EXPORT GraphCanvas : public QWidget
 {

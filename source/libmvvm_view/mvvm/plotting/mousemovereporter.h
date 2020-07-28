@@ -21,13 +21,9 @@ namespace ModelView
 
 class MousePosInfo;
 
-/*!
-@class MouseMoveReporter
-@brief Tracks mouse moves in QCustomPlot canvas.
-
-Notifies client about mouse moves and corresponding pointer coordinates expressed in axes units
-at current zoom level.
-*/
+//! Tracks mouse moves in QCustomPlot canvas.
+//! Notifies client about mouse moves and corresponding pointer coordinates expressed in axes units
+//! at current zoom level.
 
 class MVVM_VIEW_EXPORT MouseMoveReporter
 {

@@ -21,10 +21,7 @@ namespace ModelView
 
 class ViewportAxisItem;
 
-/*!
-@class ColorScalePlotController
-@brief Establishes communication between QCPColorScale and ViewportAxisItem.
-*/
+//! Establishes communication between QCPColorScale and ViewportAxisItem.
 
 class MVVM_VIEW_EXPORT ColorScalePlotController : public ItemListener<ViewportAxisItem>
 {
