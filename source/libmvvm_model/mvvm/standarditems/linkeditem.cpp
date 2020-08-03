@@ -12,7 +12,10 @@
 
 using namespace ModelView;
 
-LinkedItem::LinkedItem() : SessionItem(Constants::LinkedItemType) {}
+LinkedItem::LinkedItem() : SessionItem(Constants::LinkedItemType)
+{
+    setEditable(false); // prevent editing in widgets, link is set programmatically.
+}
 
 //! Set link to given item.
 
