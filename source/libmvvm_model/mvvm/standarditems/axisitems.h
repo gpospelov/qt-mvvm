@@ -75,7 +75,7 @@ class MVVM_MODEL_EXPORT FixedBinAxisItem : public BinnedAxisItem
 {
 public:
     static inline const std::string P_NBINS = "P_NBINS";
-    FixedBinAxisItem();
+    FixedBinAxisItem(const std::string& model_type = Constants::FixedBinAxisItemType);
 
     static std::unique_ptr<FixedBinAxisItem> create(int nbins, double xmin, double xmax);
 
@@ -92,7 +92,7 @@ public:
 class MVVM_MODEL_EXPORT PointwiseAxisItem : public BinnedAxisItem
 {
 public:
-    PointwiseAxisItem();
+    PointwiseAxisItem(const std::string& model_type = Constants::PointwiseAxisItemType);
 
     static std::unique_ptr<PointwiseAxisItem> create(const std::vector<double>& data);
 

@@ -61,7 +61,7 @@ BinnedAxisItem::BinnedAxisItem(const std::string& model_type) : BasicAxisItem(mo
 
 // --- FixedBinAxisItem ------------------------------------------------------
 
-FixedBinAxisItem::FixedBinAxisItem() : BinnedAxisItem(Constants::FixedBinAxisItemType)
+FixedBinAxisItem::FixedBinAxisItem(const std::string& model_type) : BinnedAxisItem(model_type)
 {
     addProperty(P_NBINS, 1)->setDisplayName("Nbins");
     register_min_max();
@@ -103,7 +103,7 @@ std::vector<double> FixedBinAxisItem::binCenters() const
 
 // --- PointwiseAxisItem ------------------------------------------------------
 
-PointwiseAxisItem::PointwiseAxisItem() : BinnedAxisItem(Constants::PointwiseAxisItemType)
+PointwiseAxisItem::PointwiseAxisItem(const std::string& model_type) : BinnedAxisItem(model_type)
 {
     // vector of points matching default xmin, xmax
     setData(std::vector<double>{default_axis_min, default_axis_max});
