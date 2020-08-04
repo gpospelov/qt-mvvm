@@ -87,10 +87,10 @@ public:
     ItemMapper* mapper();
 
     bool isEditable() const;
-    void setEditable(bool value);
+    SessionItem* setEditable(bool value);
 
     bool isEnabled() const;
-    void setEnabled(bool value);
+    SessionItem* setEnabled(bool value);
 
     bool isSinglePropertyTag(const std::string& tag) const;
 
