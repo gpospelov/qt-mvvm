@@ -48,14 +48,14 @@ builder_t BoolEditorBuilder()
     return builder;
 }
 
+
 builder_t IntegerEditorBuilder()
 {
     auto builder = [](const SessionItem* item) -> std::unique_ptr<CustomEditor> {
         auto editor = std::make_unique<IntegerEditor>();
         if (item->hasData(ItemDataRole::LIMITS)) {
-            auto limits = item->data<RealLimits>();
-            editor->setRange(static_cast<int>(limits.lowerLimit()),
-                             static_cast<int>(limits.upperLimit()));
+            auto limits = item->data<RealLimits>(ItemDataRole::LIMITS);
+            editor->setRange(limits.lowerLimit(), limits.upperLimit());
         }
         return std::move(editor);
     };
@@ -67,7 +67,7 @@ builder_t DoubleEditorBuilder()
     auto builder = [](const SessionItem* item) -> std::unique_ptr<CustomEditor> {
         auto editor = std::make_unique<DoubleEditor>();
         if (item->hasData(ItemDataRole::LIMITS)) {
-            auto limits = item->data<RealLimits>();
+            auto limits = item->data<RealLimits>(ItemDataRole::LIMITS);
             editor->setRange(limits.lowerLimit(), limits.upperLimit());
             editor->setSingleStep(singleStep(default_decimals));
             editor->setDecimals(default_decimals);
@@ -82,7 +82,7 @@ builder_t ScientificDoubleEditorBuilder()
     auto builder = [](const SessionItem* item) -> std::unique_ptr<CustomEditor> {
         auto editor = std::make_unique<ScientificDoubleEditor>();
         if (item->hasData(ItemDataRole::LIMITS)) {
-            auto limits = item->data<RealLimits>();
+            auto limits = item->data<RealLimits>(ItemDataRole::LIMITS);
             editor->setRange(limits.lowerLimit(), limits.upperLimit());
         }
         return std::move(editor);
@@ -95,7 +95,7 @@ builder_t ScientificSpinBoxEditorBuilder()
     auto builder = [](const SessionItem* item) -> std::unique_ptr<CustomEditor> {
         auto editor = std::make_unique<ScientificSpinBoxEditor>();
         if (item->hasData(ItemDataRole::LIMITS)) {
-            auto limits = item->data<RealLimits>();
+            auto limits = item->data<RealLimits>(ItemDataRole::LIMITS);
             editor->setRange(limits.lowerLimit(), limits.upperLimit());
         }
         editor->setSingleStep(getStep(item->data<double>()));
