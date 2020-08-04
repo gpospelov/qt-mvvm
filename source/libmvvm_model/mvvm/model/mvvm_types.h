@@ -28,9 +28,14 @@ const int DATA = 1;
 const int DISPLAY = 2;
 const int APPEARANCE = 3;
 const int LIMITS = 4;
+const int TOOLTIP = 5;
 }; // namespace ItemDataRole
 
-enum Appearance { NOFLAGS = 0x000, ENABLED = 0x001, EDITABLE = 0x002 };
+enum Appearance {
+    NOFLAGS = 0x000,
+    ENABLED = 0x001, // enabled in Qt widgets; when disabled, will be shown in gray
+    EDITABLE = 0x002 // editable in Qt widgets; readonly otherwise
+};
 
 namespace Constants
 {

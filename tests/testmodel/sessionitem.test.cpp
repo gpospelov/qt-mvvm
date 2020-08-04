@@ -89,6 +89,7 @@ TEST_F(SessionItemTest, hasData)
     EXPECT_TRUE(item.hasData(ItemDataRole::DISPLAY));
     EXPECT_FALSE(item.hasData(ItemDataRole::APPEARANCE));
     EXPECT_FALSE(item.hasData(ItemDataRole::LIMITS));
+    EXPECT_FALSE(item.hasData(ItemDataRole::TOOLTIP));
 
     item.setData(42.0);
     EXPECT_TRUE(item.hasData());
@@ -674,6 +675,20 @@ TEST_F(SessionItemTest, appearance)
     item.setEditable(false);
     EXPECT_FALSE(item.isEnabled());
     EXPECT_FALSE(item.isEditable());
+}
+
+//! Checks item appearance (enabled/disabled and editable/readonly).
+
+TEST_F(SessionItemTest, tooltip)
+{
+    SessionItem item("Model");
+
+    EXPECT_EQ(item.toolTip(), "");
+    EXPECT_FALSE(item.hasData(ItemDataRole::TOOLTIP));
+
+    EXPECT_EQ(item.setToolTip("abc"), &item);
+    EXPECT_TRUE(item.hasData(ItemDataRole::TOOLTIP));
+    EXPECT_EQ(item.toolTip(), "abc");
 }
 
 TEST_F(SessionItemTest, itemsInTag)

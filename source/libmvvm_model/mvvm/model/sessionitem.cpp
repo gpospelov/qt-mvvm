@@ -267,9 +267,10 @@ bool SessionItem::isEditable() const
     return appearance(*this) & Appearance::EDITABLE;
 }
 
-void SessionItem::setEditable(bool value)
+SessionItem* SessionItem::setEditable(bool value)
 {
     setAppearanceFlag(Appearance::EDITABLE, value);
+    return this;
 }
 
 bool SessionItem::isEnabled() const
@@ -277,9 +278,26 @@ bool SessionItem::isEnabled() const
     return appearance(*this) & Appearance::ENABLED;
 }
 
-void SessionItem::setEnabled(bool value)
+SessionItem* SessionItem::setEnabled(bool value)
 {
     setAppearanceFlag(Appearance::ENABLED, value);
+    return this;
+}
+
+//! Returns item's tooltip.
+
+std::string SessionItem::toolTip() const
+{
+    return hasData(ItemDataRole::TOOLTIP) ? data<std::string>(ItemDataRole::TOOLTIP)
+                                          : std::string();
+}
+
+//! Sets item tooltip.
+
+SessionItem* SessionItem::setToolTip(const std::string& tooltip)
+{
+    setData(tooltip, ItemDataRole::TOOLTIP);
+    return this;
 }
 
 //! Returns true if given tag is related to single property tags.
