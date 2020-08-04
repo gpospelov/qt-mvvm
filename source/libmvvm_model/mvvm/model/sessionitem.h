@@ -92,6 +92,9 @@ public:
     bool isEnabled() const;
     SessionItem* setEnabled(bool value);
 
+    std::string toolTip() const;
+    SessionItem* setToolTip(const std::string& tooltip);
+
     bool isSinglePropertyTag(const std::string& tag) const;
 
     template <typename T> T property(const std::string& tag) const;

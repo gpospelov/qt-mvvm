@@ -284,6 +284,22 @@ SessionItem* SessionItem::setEnabled(bool value)
     return this;
 }
 
+//! Returns item's tooltip.
+
+std::string SessionItem::toolTip() const
+{
+    return hasData(ItemDataRole::TOOLTIP) ? data<std::string>(ItemDataRole::TOOLTIP)
+                                          : std::string();
+}
+
+//! Sets item tooltip.
+
+SessionItem* SessionItem::setToolTip(const std::string& tooltip)
+{
+    setData(tooltip, ItemDataRole::TOOLTIP);
+    return this;
+}
+
 //! Returns true if given tag is related to single property tags.
 
 bool SessionItem::isSinglePropertyTag(const std::string& tag) const

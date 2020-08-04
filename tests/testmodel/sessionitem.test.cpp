@@ -677,6 +677,20 @@ TEST_F(SessionItemTest, appearance)
     EXPECT_FALSE(item.isEditable());
 }
 
+//! Checks item appearance (enabled/disabled and editable/readonly).
+
+TEST_F(SessionItemTest, tooltip)
+{
+    SessionItem item("Model");
+
+    EXPECT_EQ(item.toolTip(), "");
+    EXPECT_FALSE(item.hasData(ItemDataRole::TOOLTIP));
+
+    EXPECT_EQ(item.setToolTip("abc"), &item);
+    EXPECT_TRUE(item.hasData(ItemDataRole::TOOLTIP));
+    EXPECT_EQ(item.toolTip(), "abc");
+}
+
 TEST_F(SessionItemTest, itemsInTag)
 {
     const std::string tag1 = "tag1";
