@@ -89,6 +89,7 @@ TEST_F(SessionItemTest, hasData)
     EXPECT_TRUE(item.hasData(ItemDataRole::DISPLAY));
     EXPECT_FALSE(item.hasData(ItemDataRole::APPEARANCE));
     EXPECT_FALSE(item.hasData(ItemDataRole::LIMITS));
+    EXPECT_FALSE(item.hasData(ItemDataRole::TOOLTIP));
 
     item.setData(42.0);
     EXPECT_TRUE(item.hasData());
