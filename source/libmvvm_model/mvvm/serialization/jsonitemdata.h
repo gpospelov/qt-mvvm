@@ -24,7 +24,7 @@ class JsonVariantConverterInterface;
 
 //! Default converter of SessionItemData to/from json object.
 
-class MVVM_MODEL_EXPORT JsonItemData : public JsonItemDataInterface
+class MVVM_MODEL_EXPORT JsonItemData : public JsonItemDataConverterInterface
 {
 public:
     static const QString roleKey;

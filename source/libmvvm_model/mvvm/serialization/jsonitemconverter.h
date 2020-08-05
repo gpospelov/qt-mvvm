@@ -58,7 +58,7 @@ private:
     std::unique_ptr<SessionItemTags> json_to_tags(const QJsonObject& json,
                                                   SessionItem* parent) const;
 
-    std::unique_ptr<JsonItemDataInterface> m_itemdata_converter;
+    std::unique_ptr<JsonItemDataConverterInterface> m_itemdata_converter;
     std::unique_ptr<JsonTagInfoInterface> m_taginfo_converter;
     const ItemFactoryInterface* m_factory;
     bool m_generate_new_identifiers;

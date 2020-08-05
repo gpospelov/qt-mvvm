@@ -41,10 +41,10 @@ public:
 
 //! Base class for all converters of SessionItemData to/from json object
 
-class MVVM_MODEL_EXPORT JsonItemDataInterface
+class MVVM_MODEL_EXPORT JsonItemDataConverterInterface
 {
 public:
-    virtual ~JsonItemDataInterface() = default;
+    virtual ~JsonItemDataConverterInterface() = default;
 
     virtual QJsonArray get_json(const SessionItemData&) = 0;
 
