@@ -12,7 +12,8 @@
 
 #include <functional>
 #include <map>
-#include <mvvm/serialization/jsonvariantinterface.h>
+#include <string>
+#include <mvvm/serialization/jsonvariantconverterinterface.h>
 
 class QJsonObject;
 class QJsonVariant;
@@ -20,7 +21,7 @@ class QJsonVariant;
 namespace ModelView
 {
 
-class MVVM_MODEL_EXPORT JsonVariant : public JsonVariantInterface
+class MVVM_MODEL_EXPORT JsonVariant : public JsonVariantConverterInterface
 {
 public:
     JsonVariant();

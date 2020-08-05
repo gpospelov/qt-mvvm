@@ -20,5 +20,5 @@ target_sources(${library_name} PRIVATE
     jsonutils.h
     jsonvariant.cpp
     jsonvariant.h
-    jsonvariantinterface.h
+    jsonvariantconverterinterface.h
 )

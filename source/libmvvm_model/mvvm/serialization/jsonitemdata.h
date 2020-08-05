@@ -20,7 +20,7 @@ class QJsonObject;
 namespace ModelView
 {
 
-class JsonVariantInterface;
+class JsonVariantConverterInterface;
 
 //! Default converter of SessionItemData to/from json object.
 
@@ -44,7 +44,7 @@ public:
     bool role_to_save(int role) const;
 
 private:
-    std::unique_ptr<JsonVariantInterface> m_variant_converter;
+    std::unique_ptr<JsonVariantConverterInterface> m_variant_converter;
     //!< List of roles to filter while writing to json.
     std::vector<int> m_roles_to_filter;
 };
