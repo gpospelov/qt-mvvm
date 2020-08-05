@@ -29,10 +29,10 @@ class TagInfo;
 
 //! Base class for all converters of TagInfo to/from json object
 
-class MVVM_MODEL_EXPORT JsonTagInfoInterface
+class MVVM_MODEL_EXPORT JsonTagInfoConverterInterface
 {
 public:
-    virtual ~JsonTagInfoInterface() = default;
+    virtual ~JsonTagInfoConverterInterface() = default;
 
     virtual QJsonObject to_json(const TagInfo&) = 0;
 

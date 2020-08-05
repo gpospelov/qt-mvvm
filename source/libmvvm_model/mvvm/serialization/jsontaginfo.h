@@ -20,7 +20,7 @@ namespace ModelView
 
 //! Default converter between TagInfo and json object.
 
-class MVVM_MODEL_EXPORT JsonTagInfo : public JsonTagInfoInterface
+class MVVM_MODEL_EXPORT JsonTagInfo : public JsonTagInfoConverterInterface
 {
 public:
     static const QString nameKey;
