@@ -14,7 +14,7 @@
 #include <QJsonObject>
 #include <mvvm/model/customvariants.h>
 #include <mvvm/model/sessionitemdata.h>
-#include <mvvm/serialization/jsonitemdata.h>
+#include <mvvm/serialization/jsonitemdataconverter.h>
 #include <mvvm/serialization/jsonvariantconverter.h>
 #include <string>
 
@@ -22,46 +22,46 @@ using namespace ModelView;
 
 //! Test convertion of SessionItemData from/to QJsonObject.
 
-class JsonItemDataTest : public FolderBasedTest
+class JsonItemDataConverterTest : public FolderBasedTest
 {
 public:
-    JsonItemDataTest() : FolderBasedTest("test_JsonItemData") {}
-    ~JsonItemDataTest();
+    JsonItemDataConverterTest() : FolderBasedTest("test_JsonItemData") {}
+    ~JsonItemDataConverterTest();
 };
 
-JsonItemDataTest::~JsonItemDataTest() = default;
+JsonItemDataConverterTest::~JsonItemDataConverterTest() = default;
 
 //! Checks if json object is correctly identified as representing DataRole.
 
-TEST_F(JsonItemDataTest, isValidDataRole)
+TEST_F(JsonItemDataConverterTest, isValidDataRole)
 {
-    JsonItemData converter;
+    JsonItemDataConverter converter;
     JsonVariantConverter variant_converter;
 
     // valid json object representing DataRole
     QJsonObject object;
-    object[JsonItemData::roleKey] = 42;
-    object[JsonItemData::variantKey] = variant_converter.get_json(QVariant(1.23));
+    object[JsonItemDataConverter::roleKey] = 42;
+    object[JsonItemDataConverter::variantKey] = variant_converter.get_json(QVariant(1.23));
     EXPECT_TRUE(converter.is_item_data(object));
 
     // invalid json object which can't represent DataRole
     QJsonObject object2;
-    object2[JsonItemData::roleKey] = 42;
+    object2[JsonItemDataConverter::roleKey] = 42;
     EXPECT_FALSE(converter.is_item_data(object2));
 
     // another invalid json object
     QJsonObject object3;
-    object3[JsonItemData::roleKey] = 42;
-    object3[JsonItemData::variantKey] = variant_converter.get_json(QVariant(1.23));
+    object3[JsonItemDataConverter::roleKey] = 42;
+    object3[JsonItemDataConverter::variantKey] = variant_converter.get_json(QVariant(1.23));
     object3["abc"] = variant_converter.get_json(QVariant::fromValue(std::string("xxx")));
     EXPECT_FALSE(converter.is_item_data(object3));
 }
 
 //! Creating QJsonArray from SessionItemData.
 
-TEST_F(JsonItemDataTest, getJson)
+TEST_F(JsonItemDataConverterTest, getJson)
 {
-    JsonItemData converter;
+    JsonItemDataConverter converter;
 
     // construction SessionItem data
     SessionItemData data;
@@ -84,9 +84,9 @@ TEST_F(JsonItemDataTest, getJson)
 
 //! From SessionItemData to json and back.
 
-TEST_F(JsonItemDataTest, fromItemToJsonAndBack)
+TEST_F(JsonItemDataConverterTest, fromItemToJsonAndBack)
 {
-    JsonItemData converter;
+    JsonItemDataConverter converter;
 
     // initial data
     const std::vector<int> roles = {1, 2, 3};
@@ -115,7 +115,7 @@ TEST_F(JsonItemDataTest, fromItemToJsonAndBack)
 
 //! Filtering certain roles while writing to json.
 
-TEST_F(JsonItemDataTest, filteredRoles)
+TEST_F(JsonItemDataConverterTest, filteredRoles)
 {
     // initial data
     const std::vector<int> roles = {1, 2, 3};
@@ -128,7 +128,7 @@ TEST_F(JsonItemDataTest, filteredRoles)
         data.setData(variants[i], roles[i]);
 
     // constructing json array from data
-    JsonItemData converter;
+    JsonItemDataConverter converter;
     converter.set_role_filter({1, 3});
     QJsonArray array = converter.get_json(data);
 

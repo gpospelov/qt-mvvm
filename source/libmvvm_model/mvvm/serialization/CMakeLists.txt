@@ -10,8 +10,8 @@ target_sources(${library_name} PRIVATE
     jsonitemconverter.h
     jsonitemcopystrategy.cpp
     jsonitemcopystrategy.h
-    jsonitemdata.cpp
-    jsonitemdata.h
+    jsonitemdataconverter.cpp
+    jsonitemdataconverter.h
     jsonmodelconverter.cpp
     jsonmodelconverter.h
     jsontaginfo.cpp

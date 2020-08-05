@@ -10,14 +10,14 @@
 #include <QJsonArray>
 #include <QJsonObject>
 #include <mvvm/model/sessionitemdata.h>
-#include <mvvm/serialization/jsonitemdata.h>
+#include <mvvm/serialization/jsonitemdataconverter.h>
 #include <mvvm/serialization/jsonvariantconverter.h>
 #include <stdexcept>
 
 using namespace ModelView;
 
-const QString ModelView::JsonItemData::roleKey = "role";
-const QString ModelView::JsonItemData::variantKey = "variant";
+const QString ModelView::JsonItemDataConverter::roleKey = "role";
+const QString ModelView::JsonItemDataConverter::variantKey = "variant";
 
 namespace
 {
@@ -28,11 +28,11 @@ QJsonValue keyValue(const QJsonValue& parent_value, const QString& key)
 }
 } // namespace
 
-JsonItemData::JsonItemData() : m_variant_converter(new JsonVariantConverter) {}
+JsonItemDataConverter::JsonItemDataConverter() : m_variant_converter(new JsonVariantConverter) {}
 
-JsonItemData::~JsonItemData() = default;
+JsonItemDataConverter::~JsonItemDataConverter() = default;
 
-QJsonArray JsonItemData::get_json(const SessionItemData& data)
+QJsonArray JsonItemDataConverter::get_json(const SessionItemData& data)
 {
     QJsonArray result;
 
@@ -48,7 +48,7 @@ QJsonArray JsonItemData::get_json(const SessionItemData& data)
     return result;
 }
 
-std::unique_ptr<SessionItemData> JsonItemData::get_data(const QJsonArray& object)
+std::unique_ptr<SessionItemData> JsonItemDataConverter::get_data(const QJsonArray& object)
 {
     auto result = std::make_unique<SessionItemData>();
 
@@ -65,7 +65,7 @@ std::unique_ptr<SessionItemData> JsonItemData::get_data(const QJsonArray& object
 
 //! Returns true if it is valid DataRole.
 
-bool JsonItemData::is_item_data(const QJsonObject& json)
+bool JsonItemDataConverter::is_item_data(const QJsonObject& json)
 {
     static const QStringList expected = QStringList() << roleKey << variantKey;
     return json.keys() == expected;
@@ -73,14 +73,14 @@ bool JsonItemData::is_item_data(const QJsonObject& json)
 
 //! Sets the list of roles which should be excluded from json.
 
-void JsonItemData::set_role_filter(const std::vector<int>& roles)
+void JsonItemDataConverter::set_role_filter(const std::vector<int>& roles)
 {
     m_roles_to_filter = roles;
 }
 
 //! Returns true if given role should be saved in json file.
 
-bool JsonItemData::role_to_save(int role) const
+bool JsonItemDataConverter::role_to_save(int role) const
 {
     bool role_in_list = std::find(m_roles_to_filter.begin(), m_roles_to_filter.end(), role)
                         != m_roles_to_filter.end();

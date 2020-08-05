@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_SERIALIZATION_JSONITEMDATA_H
-#define MVVM_SERIALIZATION_JSONITEMDATA_H
+#ifndef MVVM_SERIALIZATION_JSONITEMDATACONVERTER_H
+#define MVVM_SERIALIZATION_JSONITEMDATACONVERTER_H
 
 #include <QString>
 #include <memory>
@@ -24,14 +24,14 @@ class JsonVariantConverterInterface;
 
 //! Default converter of SessionItemData to/from json object.
 
-class MVVM_MODEL_EXPORT JsonItemData : public JsonItemDataConverterInterface
+class MVVM_MODEL_EXPORT JsonItemDataConverter : public JsonItemDataConverterInterface
 {
 public:
     static const QString roleKey;
     static const QString variantKey;
 
-    JsonItemData();
-    ~JsonItemData() override;
+    JsonItemDataConverter();
+    ~JsonItemDataConverter() override;
 
     QJsonArray get_json(const SessionItemData& data) override;
 
@@ -51,4 +51,4 @@ private:
 
 } // namespace ModelView
 
-#endif // MVVM_SERIALIZATION_JSONITEMDATA_H
+#endif // MVVM_SERIALIZATION_JSONITEMDATACONVERTER_H
