@@ -14,7 +14,7 @@
 #include <mvvm/model/externalproperty.h>
 #include <mvvm/model/variant-constants.h>
 #include <mvvm/serialization/jsonutils.h>
-#include <mvvm/serialization/jsonvariant.h>
+#include <mvvm/serialization/jsonvariantconverter.h>
 #include <mvvm/utils/reallimits.h>
 #include <stdexcept>
 
@@ -68,7 +68,7 @@ QVariant to_reallimits(const QJsonObject& object);
 
 } // namespace
 
-JsonVariant::JsonVariant()
+JsonVariantConverter::JsonVariantConverter()
 {
     m_converters[Constants::invalid_type_name] = {from_invalid, to_invalid};
     m_converters[Constants::bool_type_name] = {from_bool, to_bool};
@@ -82,7 +82,7 @@ JsonVariant::JsonVariant()
     m_converters[Constants::reallimits_type_name] = {from_reallimits, to_reallimits};
 }
 
-QJsonObject JsonVariant::get_json(const QVariant& variant)
+QJsonObject JsonVariantConverter::get_json(const QVariant& variant)
 {
     const std::string type_name = Utils::VariantName(variant);
 
@@ -93,7 +93,7 @@ QJsonObject JsonVariant::get_json(const QVariant& variant)
     return m_converters[type_name].variant_to_json(variant);
 }
 
-QVariant JsonVariant::get_variant(const QJsonObject& object)
+QVariant JsonVariantConverter::get_variant(const QJsonObject& object)
 {
     if (!isVariant(object))
         throw std::runtime_error("json::get_variant() -> Error. Invalid json object");
@@ -108,7 +108,7 @@ QVariant JsonVariant::get_variant(const QJsonObject& object)
 
 //! Returns true if given json object represents variant.
 
-bool JsonVariant::isVariant(const QJsonObject& object) const
+bool JsonVariantConverter::isVariant(const QJsonObject& object) const
 {
     static const QStringList expected = expected_variant_keys();
     return object.keys() == expected;

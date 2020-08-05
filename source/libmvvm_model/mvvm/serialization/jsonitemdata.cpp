@@ -11,7 +11,7 @@
 #include <QJsonObject>
 #include <mvvm/model/sessionitemdata.h>
 #include <mvvm/serialization/jsonitemdata.h>
-#include <mvvm/serialization/jsonvariant.h>
+#include <mvvm/serialization/jsonvariantconverter.h>
 #include <stdexcept>
 
 using namespace ModelView;
@@ -28,7 +28,7 @@ QJsonValue keyValue(const QJsonValue& parent_value, const QString& key)
 }
 } // namespace
 
-JsonItemData::JsonItemData() : m_variant_converter(new JsonVariant) {}
+JsonItemData::JsonItemData() : m_variant_converter(new JsonVariantConverter) {}
 
 JsonItemData::~JsonItemData() = default;
 

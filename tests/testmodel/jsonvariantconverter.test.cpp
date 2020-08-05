@@ -17,7 +17,7 @@
 #include <mvvm/model/comboproperty.h>
 #include <mvvm/model/customvariants.h>
 #include <mvvm/model/externalproperty.h>
-#include <mvvm/serialization/jsonvariant.h>
+#include <mvvm/serialization/jsonvariantconverter.h>
 #include <mvvm/utils/reallimits.h>
 #include <vector>
 
@@ -25,27 +25,27 @@ using namespace ModelView;
 
 //! Test convertion of QVariant from/to QJsonObject.
 
-class JsonVariantTest : public FolderBasedTest
+class JsonVariantConverterTest : public FolderBasedTest
 {
 public:
-    JsonVariantTest() : FolderBasedTest("test_JsonVariant") {}
-    ~JsonVariantTest();
+    JsonVariantConverterTest() : FolderBasedTest("test_JsonVariant") {}
+    ~JsonVariantConverterTest();
 
     static QVariant ToJsonAndBack(const QVariant& variant)
     {
-        JsonVariant converter;
+        JsonVariantConverter converter;
         auto json = converter.get_json(variant);
         return converter.get_variant(json);
     }
 };
 
-JsonVariantTest::~JsonVariantTest() = default;
+JsonVariantConverterTest::~JsonVariantConverterTest() = default;
 
 //! Invalid QVariant conversion.
 
-TEST_F(JsonVariantTest, invalidVariant)
+TEST_F(JsonVariantConverterTest, invalidVariant)
 {
-    JsonVariant converter;
+    JsonVariantConverter converter;
 
     QVariant variant;
 
@@ -61,9 +61,9 @@ TEST_F(JsonVariantTest, invalidVariant)
 
 //! Bool QVariant conversion.
 
-TEST_F(JsonVariantTest, boolVariant)
+TEST_F(JsonVariantConverterTest, boolVariant)
 {
-    JsonVariant converter;
+    JsonVariantConverter converter;
 
     const bool value(true);
     QVariant variant(value);
@@ -84,9 +84,9 @@ TEST_F(JsonVariantTest, boolVariant)
 
 //! Int QVariant conversion.
 
-TEST_F(JsonVariantTest, intVariant)
+TEST_F(JsonVariantConverterTest, intVariant)
 {
-    JsonVariant converter;
+    JsonVariantConverter converter;
 
     const int value(42);
     QVariant variant(value);
@@ -104,9 +104,9 @@ TEST_F(JsonVariantTest, intVariant)
 
 //! QVariant(std::string) conversion.
 
-TEST_F(JsonVariantTest, stringVariant)
+TEST_F(JsonVariantConverterTest, stringVariant)
 {
-    JsonVariant converter;
+    JsonVariantConverter converter;
 
     const std::string value("abc");
     QVariant variant = QVariant::fromValue(value);
@@ -125,9 +125,9 @@ TEST_F(JsonVariantTest, stringVariant)
 
 //! QVariant(double) conversion.
 
-TEST_F(JsonVariantTest, doubleVariant)
+TEST_F(JsonVariantConverterTest, doubleVariant)
 {
-    JsonVariant converter;
+    JsonVariantConverter converter;
 
     double value(42.3);
     QVariant variant = QVariant::fromValue(value);
@@ -153,9 +153,9 @@ TEST_F(JsonVariantTest, doubleVariant)
 
 //! QVariant(std::vector<double>) conversion.
 
-TEST_F(JsonVariantTest, vectorOfDoubleVariant)
+TEST_F(JsonVariantConverterTest, vectorOfDoubleVariant)
 {
-    JsonVariant converter;
+    JsonVariantConverter converter;
 
     const std::vector<double> value = {42.0, 43.0, 44.0};
     QVariant variant = QVariant::fromValue(value);
@@ -173,9 +173,9 @@ TEST_F(JsonVariantTest, vectorOfDoubleVariant)
 
 //! QVariant(ComboProperty) conversion.
 
-TEST_F(JsonVariantTest, comboPropertyVariant)
+TEST_F(JsonVariantConverterTest, comboPropertyVariant)
 {
-    JsonVariant converter;
+    JsonVariantConverter converter;
 
     ComboProperty value = ComboProperty::createFrom(std::vector<std::string>({"a1", "a2", "a3"}));
     value.setSelected("a1", false);
@@ -197,9 +197,9 @@ TEST_F(JsonVariantTest, comboPropertyVariant)
 
 //! QVariant(QColor) conversion.
 
-TEST_F(JsonVariantTest, colorVariant)
+TEST_F(JsonVariantConverterTest, colorVariant)
 {
-    JsonVariant converter;
+    JsonVariantConverter converter;
 
     const QColor value(Qt::red);
     QVariant variant = QVariant::fromValue(value);
@@ -217,9 +217,9 @@ TEST_F(JsonVariantTest, colorVariant)
 
 //! QVariant(ExternalProperty) conversion.
 
-TEST_F(JsonVariantTest, extPropVariant)
+TEST_F(JsonVariantConverterTest, extPropVariant)
 {
-    JsonVariant converter;
+    JsonVariantConverter converter;
 
     const ExternalProperty value("abc", QColor(Qt::green), "123");
     QVariant variant = QVariant::fromValue(value);
@@ -237,9 +237,9 @@ TEST_F(JsonVariantTest, extPropVariant)
 
 //! QVariant(RealLimits) convertion.
 
-TEST_F(JsonVariantTest, realLimitsVariant)
+TEST_F(JsonVariantConverterTest, realLimitsVariant)
 {
-    JsonVariant converter;
+    JsonVariantConverter converter;
 
     RealLimits value = RealLimits::limited(1.0, 2.0);
     QVariant variant = QVariant::fromValue(value);
@@ -265,7 +265,7 @@ TEST_F(JsonVariantTest, realLimitsVariant)
 
 //! Writing variants to file and reading them back.
 
-TEST_F(JsonVariantTest, toFileAndBack)
+TEST_F(JsonVariantConverterTest, toFileAndBack)
 {
     const std::string string_value("abc");
     const std::vector<double> vector_value = {42.1, 42.2, 42.3};
@@ -291,7 +291,7 @@ TEST_F(JsonVariantTest, toFileAndBack)
                                       QVariant::fromValue(RealLimits::limited(1.12, 2.32))};
 
     // preparing array of json objects
-    JsonVariant converter;
+    JsonVariantConverter converter;
     QJsonArray json_array;
     for (auto var : variants)
         json_array.append(converter.get_json(var));

@@ -15,7 +15,7 @@
 #include <mvvm/model/customvariants.h>
 #include <mvvm/model/sessionitemdata.h>
 #include <mvvm/serialization/jsonitemdata.h>
-#include <mvvm/serialization/jsonvariant.h>
+#include <mvvm/serialization/jsonvariantconverter.h>
 #include <string>
 
 using namespace ModelView;
@@ -36,7 +36,7 @@ JsonItemDataTest::~JsonItemDataTest() = default;
 TEST_F(JsonItemDataTest, isValidDataRole)
 {
     JsonItemData converter;
-    JsonVariant variant_converter;
+    JsonVariantConverter variant_converter;
 
     // valid json object representing DataRole
     QJsonObject object;

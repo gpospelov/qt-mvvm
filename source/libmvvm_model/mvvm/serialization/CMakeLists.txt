@@ -18,7 +18,7 @@ target_sources(${library_name} PRIVATE
     jsontaginfo.h
     jsonutils.cpp
     jsonutils.h
-    jsonvariant.cpp
-    jsonvariant.h
+    jsonvariantconverter.cpp
+    jsonvariantconverter.h
     jsonvariantconverterinterface.h
 )
