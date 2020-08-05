@@ -12,6 +12,7 @@
 
 #include <memory>
 #include <mvvm/model_export.h>
+#include <mvvm/serialization/jsonitemdataconverterinterface.h>
 #include <string>
 
 class QJsonObject;
@@ -37,18 +38,6 @@ public:
     virtual QJsonObject to_json(const TagInfo&) = 0;
 
     virtual TagInfo from_json(const QJsonObject&) = 0;
-};
-
-//! Base class for all converters of SessionItemData to/from json object
-
-class MVVM_MODEL_EXPORT JsonItemDataConverterInterface
-{
-public:
-    virtual ~JsonItemDataConverterInterface() = default;
-
-    virtual QJsonArray get_json(const SessionItemData&) = 0;
-
-    virtual std::unique_ptr<SessionItemData> get_data(const QJsonArray&) = 0;
 };
 
 //! Base class for all converters of SessionItem to/from json object.

@@ -17,9 +17,6 @@
 
 using namespace ModelView;
 
-const QString ModelView::JsonItemDataConverter::roleKey = "role";
-const QString ModelView::JsonItemDataConverter::variantKey = "variant";
-
 namespace
 {
 QJsonValue keyValue(const QJsonValue& parent_value, const QString& key)

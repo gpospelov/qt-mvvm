@@ -11,8 +11,7 @@
 #define MVVM_SERIALIZATION_JSONITEMDATACONVERTER_H
 
 #include <QString>
-#include <memory>
-#include <mvvm/serialization/jsonconverterinterfaces.h>
+#include <mvvm/serialization/jsonitemdataconverterinterface.h>
 #include <vector>
 
 class QJsonObject;
@@ -27,8 +26,8 @@ class JsonVariantConverterInterface;
 class MVVM_MODEL_EXPORT JsonItemDataConverter : public JsonItemDataConverterInterface
 {
 public:
-    static const QString roleKey;
-    static const QString variantKey;
+    static inline const QString roleKey = "role";
+    static inline const QString variantKey = "variant";
 
     JsonItemDataConverter();
     ~JsonItemDataConverter() override;
@@ -41,9 +40,9 @@ public:
 
     void set_role_filter(const std::vector<int>& roles);
 
+private:
     bool role_to_save(int role) const;
 
-private:
     std::unique_ptr<JsonVariantConverterInterface> m_variant_converter;
     //!< List of roles to filter while writing to json.
     std::vector<int> m_roles_to_filter;
