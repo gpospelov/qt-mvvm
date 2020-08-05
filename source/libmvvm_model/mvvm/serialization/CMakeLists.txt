@@ -1,4 +1,6 @@
 target_sources(${library_name} PRIVATE
+    compatibilityutils.cpp
+    compatibilityutils.h
     itembackupstrategy.h
     itemcopystrategy.h
     jsonconverterinterfaces.h
