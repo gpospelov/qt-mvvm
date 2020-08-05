@@ -14,8 +14,8 @@ target_sources(${library_name} PRIVATE
     jsonitemdataconverter.h
     jsonmodelconverter.cpp
     jsonmodelconverter.h
-    jsontaginfo.cpp
-    jsontaginfo.h
+    jsontaginfoconverter.cpp
+    jsontaginfoconverter.h
     jsonutils.cpp
     jsonutils.h
     jsonvariantconverter.cpp

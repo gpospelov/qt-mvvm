@@ -19,7 +19,7 @@
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/serialization/jsonitemconverter.h>
 #include <mvvm/serialization/jsonitemdataconverter.h>
-#include <mvvm/serialization/jsontaginfo.h>
+#include <mvvm/serialization/jsontaginfoconverter.h>
 #include <stdexcept>
 
 namespace
@@ -48,7 +48,7 @@ const QString JsonItemConverter::itemsKey = "items";
 
 JsonItemConverter::JsonItemConverter(const ItemFactoryInterface* factory, bool new_id_flag)
     : m_itemdata_converter(std::make_unique<JsonItemDataConverter>()),
-      m_taginfo_converter(std::make_unique<JsonTagInfo>()), m_factory(factory),
+      m_taginfo_converter(std::make_unique<JsonTagInfoConverter>()), m_factory(factory),
       m_generate_new_identifiers(new_id_flag)
 {
 }

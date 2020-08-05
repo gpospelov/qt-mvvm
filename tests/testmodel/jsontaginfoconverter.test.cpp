@@ -14,48 +14,48 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <mvvm/model/taginfo.h>
-#include <mvvm/serialization/jsontaginfo.h>
+#include <mvvm/serialization/jsontaginfoconverter.h>
 #include <string>
 
 using namespace ModelView;
 
-//! Test convertion of SessionItemData from/to QJsonObject.
+//! Test convertion of TagInfo from/to QJsonObject.
 
-class JsonTagInfoTest : public FolderBasedTest
+class JsonTagInfoConverterTest : public FolderBasedTest
 {
 public:
-    JsonTagInfoTest() : FolderBasedTest("test_JsonTagInfo") {}
-    ~JsonTagInfoTest();
+    JsonTagInfoConverterTest() : FolderBasedTest("test_JsonTagInfoConverter") {}
+    ~JsonTagInfoConverterTest();
 };
 
-JsonTagInfoTest::~JsonTagInfoTest() = default;
+JsonTagInfoConverterTest::~JsonTagInfoConverterTest() = default;
 
 //! Checks if json object is correctly identified as representing TagInfo.
 
-TEST_F(JsonTagInfoTest, isItemTag)
+TEST_F(JsonTagInfoConverterTest, isItemTag)
 {
-    JsonTagInfo converter;
+    JsonTagInfoConverter converter;
 
     // valid json object representing DataRole
     QJsonObject object;
-    object[JsonTagInfo::nameKey] = QString::fromStdString("tag1");
-    object[JsonTagInfo::minKey] = 0;
-    object[JsonTagInfo::maxKey] = 1;
-    object[JsonTagInfo::modelsKey] = QJsonArray();
+    object[JsonTagInfoConverter::nameKey] = QString::fromStdString("tag1");
+    object[JsonTagInfoConverter::minKey] = 0;
+    object[JsonTagInfoConverter::maxKey] = 1;
+    object[JsonTagInfoConverter::modelsKey] = QJsonArray();
 
     EXPECT_TRUE(converter.isTagInfo(object));
 
     // invalid (not fully constructed) json object which can't represent TagInfo
     QJsonObject object2;
-    object2[JsonTagInfo::minKey] = 42;
+    object2[JsonTagInfoConverter::minKey] = 42;
     EXPECT_FALSE(converter.isTagInfo(object2));
 }
 
 //! Creating QJsonArray from TagInfo.
 
-TEST_F(JsonTagInfoTest, toJson)
+TEST_F(JsonTagInfoConverterTest, toJson)
 {
-    JsonTagInfo converter;
+    JsonTagInfoConverter converter;
 
     TagInfo tag("tag1", 0, -1, std::vector<std::string>() = {});
     auto object = converter.to_json(tag);
@@ -66,9 +66,9 @@ TEST_F(JsonTagInfoTest, toJson)
 
 //! From TagInfo to json and back.
 
-TEST_F(JsonTagInfoTest, tagInfoToJsonAndBack)
+TEST_F(JsonTagInfoConverterTest, tagInfoToJsonAndBack)
 {
-    JsonTagInfo converter;
+    JsonTagInfoConverter converter;
 
     TagInfo tag("tag", 0, 42, std::vector<std::string>() = {"aaa", "bbb"});
     auto object = converter.to_json(tag);
@@ -83,11 +83,11 @@ TEST_F(JsonTagInfoTest, tagInfoToJsonAndBack)
 
 //! To file and back.
 
-TEST_F(JsonTagInfoTest, tagInfoToFileAndBack)
+TEST_F(JsonTagInfoConverterTest, tagInfoToFileAndBack)
 {
     const std::string tag_name("tag");
     const std::string model_type("model");
-    JsonTagInfo converter;
+    JsonTagInfoConverter converter;
 
     TagInfo tag = TagInfo::propertyTag(tag_name, model_type);
     auto object = converter.to_json(tag);

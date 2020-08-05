@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_SERIALIZATION_JSONTAGINFO_H
-#define MVVM_SERIALIZATION_JSONTAGINFO_H
+#ifndef MVVM_SERIALIZATION_JSONTAGINFOCONVERTER_H
+#define MVVM_SERIALIZATION_JSONTAGINFOCONVERTER_H
 
 #include <QString>
 #include <mvvm/serialization/jsonconverterinterfaces.h>
@@ -20,7 +20,7 @@ namespace ModelView
 
 //! Default converter between TagInfo and json object.
 
-class MVVM_MODEL_EXPORT JsonTagInfo : public JsonTagInfoConverterInterface
+class MVVM_MODEL_EXPORT JsonTagInfoConverter : public JsonTagInfoConverterInterface
 {
 public:
     static const QString nameKey;
@@ -37,4 +37,4 @@ public:
 
 } // namespace ModelView
 
-#endif // MVVM_SERIALIZATION_JSONTAGINFO_H
+#endif // MVVM_SERIALIZATION_JSONTAGINFOCONVERTER_H
