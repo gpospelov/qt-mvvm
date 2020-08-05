@@ -135,7 +135,7 @@ TEST_F(JsonItemConverterTest, propertyItemToFileAndBack)
     auto object = converter->to_json(&item);
 
     // saving object to file
-    auto fileName = TestUtils::TestFileName(testDir(), "propertyitem.json");
+    auto fileName = TestUtils::TestFileName(testDir(), "propertyItemToFileAndBack.json");
     TestUtils::SaveJson(object, fileName);
 
     auto document = TestUtils::LoadJson(fileName);
@@ -205,7 +205,7 @@ TEST_F(JsonItemConverterTest, parentAndChildToFileAndBack)
     EXPECT_TRUE(converter->isSessionItem(object));
 
     // saving object to file
-    auto fileName = TestUtils::TestFileName(testDir(), "parentandchild.json");
+    auto fileName = TestUtils::TestFileName(testDir(), "parentAndChildToFileAndBack.json");
     TestUtils::SaveJson(object, fileName);
 
     // converting document back to item

@@ -9,6 +9,7 @@
 
 #include <QJsonArray>
 #include <QJsonObject>
+#include <mvvm/model/mvvm_types.h>
 #include <mvvm/model/sessionitemdata.h>
 #include <mvvm/serialization/jsonitemdataconverter.h>
 #include <mvvm/serialization/jsonvariantconverter.h>
@@ -28,7 +29,10 @@ QJsonValue keyValue(const QJsonValue& parent_value, const QString& key)
 }
 } // namespace
 
-JsonItemDataConverter::JsonItemDataConverter() : m_variant_converter(new JsonVariantConverter) {}
+JsonItemDataConverter::JsonItemDataConverter() : m_variant_converter(new JsonVariantConverter)
+{
+    set_role_filter({ItemDataRole::TOOLTIP});
+}
 
 JsonItemDataConverter::~JsonItemDataConverter() = default;
 

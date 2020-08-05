@@ -14,6 +14,7 @@
 #include <QJsonObject>
 #include <mvvm/model/customvariants.h>
 #include <mvvm/model/sessionitemdata.h>
+#include <mvvm/model/mvvm_types.h>
 #include <mvvm/serialization/jsonitemdataconverter.h>
 #include <mvvm/serialization/jsonvariantconverter.h>
 #include <string>
@@ -136,4 +137,21 @@ TEST_F(JsonItemDataConverterTest, filteredRoles)
     auto data2 = converter.get_data(array);
     EXPECT_EQ(data2->roles().size(), 1u);
     EXPECT_EQ(data2->data(2).value<double>(), 1.23);
+}
+
+//! By default tooltip role is filtered out.
+
+TEST_F(JsonItemDataConverterTest, tooltipRole)
+{
+    // initial data
+    SessionItemData data;
+    data.setData(QVariant::fromValue(std::string("tooltip")), ItemDataRole::TOOLTIP);
+
+    // constructing json array from data
+    JsonItemDataConverter converter;
+    QJsonArray array = converter.get_json(data);
+
+    // constructing data from json array
+    auto data2 = converter.get_data(array);
+    EXPECT_EQ(data2->roles().size(), 0u);
 }
