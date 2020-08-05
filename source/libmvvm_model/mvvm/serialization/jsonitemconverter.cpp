@@ -17,6 +17,7 @@
 #include <mvvm/model/sessionitemdata.h>
 #include <mvvm/model/sessionitemtags.h>
 #include <mvvm/model/sessionmodel.h>
+#include <mvvm/serialization/compatibilityutils.h>
 #include <mvvm/serialization/jsonitemconverter.h>
 #include <mvvm/serialization/jsonitemdataconverter.h>
 #include <mvvm/serialization/jsontaginfoconverter.h>
@@ -176,8 +177,11 @@ std::unique_ptr<SessionItem> JsonItemConverter::json_to_item(const QJsonObject& 
     auto result = m_factory->createItem(modelType);
     result->setParent(parent);
 
-    result->setDataAndTags(m_itemdata_converter->get_data(json[itemDataKey].toArray()),
-                           json_to_tags(json[itemTagsKey].toObject(), result.get()));
+    auto persistent_tags = json_to_tags(json[itemTagsKey].toObject(), result.get());
+    auto persistent_data = m_itemdata_converter->get_data(json[itemDataKey].toArray());
+    auto combined = Compatibility::CombineItemData(*result->itemData(), *persistent_data.get());
+
+    result->setDataAndTags(std::move(combined), std::move(persistent_tags));
 
     if (m_generate_new_identifiers)
         result->setData(UniqueIdGenerator::generate(), ItemDataRole::IDENTIFIER);
