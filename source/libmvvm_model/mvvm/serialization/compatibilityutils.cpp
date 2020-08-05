@@ -9,6 +9,7 @@
 
 #include <mvvm/model/sessionitemdata.h>
 #include <mvvm/serialization/compatibilityutils.h>
+#include <set>
 
 namespace ModelView
 {
@@ -35,13 +36,19 @@ std::unique_ptr<SessionItemData> CombineItemData(const SessionItemData& runtime,
 {
     std::unique_ptr<SessionItemData> result = std::make_unique<SessionItemData>();
 
-    for (const auto& x : runtime) {
+    auto runtime_roles = runtime.roles();
+    auto persistent_roles = persistent.roles();
+
+    std::set<int> roles(runtime_roles.begin(), runtime_roles.end());
+    roles.insert(persistent_roles.begin(), persistent_roles.end());
+
+    for(auto role : roles) {
         // all roles existing in `persistent` will be taken from there
         // the order of roles will be as in `runtime`
-        if (persistent.hasData(x.m_role))
-            result->setData(persistent.data(x.m_role), x.m_role);
+        if (persistent.hasData(role))
+            result->setData(persistent.data(role), role);
         else
-            result->setData(x.m_data, x.m_role);
+            result->setData(runtime.data(role), role);
     }
 
     return result;

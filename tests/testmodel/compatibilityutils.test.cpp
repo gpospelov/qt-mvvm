@@ -55,7 +55,6 @@ TEST_F(CompatibilityUtilsTest, combineItemDataPersistentEmpty)
 }
 
 //! Testing CombineItemData when `persistent` source has data, and `runtime` source is empty.
-//! Result should be empty too. This is  a scenario, when saved data contains some absolute roles.
 
 TEST_F(CompatibilityUtilsTest, combineItemDataRuntimeEmpty)
 {
@@ -67,7 +66,10 @@ TEST_F(CompatibilityUtilsTest, combineItemDataRuntimeEmpty)
 
     auto result = Compatibility::CombineItemData(runtime, persistent);
 
-    EXPECT_TRUE(result->roles().empty());
+    std::vector<int> expected{ItemDataRole::IDENTIFIER, ItemDataRole::DATA};
+    EXPECT_EQ(result->roles(), expected);
+    EXPECT_EQ(result->data(ItemDataRole::IDENTIFIER).value<std::string>(), std::string("abc"));
+    EXPECT_EQ(result->data(ItemDataRole::DATA).value<int>(), 42);
 }
 
 //! Testing CombineItemData when `persistent` source and `runtime` both have data (identifier and
