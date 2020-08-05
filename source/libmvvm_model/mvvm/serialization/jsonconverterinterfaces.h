@@ -40,17 +40,6 @@ public:
     virtual TagInfo from_json(const QJsonObject&) = 0;
 };
 
-//! Base class for all converters of SessionItem to/from json object.
-
-class MVVM_MODEL_EXPORT JsonItemConverterInterface
-{
-public:
-    virtual ~JsonItemConverterInterface() = default;
-
-    virtual QJsonObject to_json(const SessionItem* item) const = 0;
-
-    virtual std::unique_ptr<SessionItem> from_json(const QJsonObject&) const = 0;
-};
 
 //! Base class for all converters of SessionModel to/from json object.
 

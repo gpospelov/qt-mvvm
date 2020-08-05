@@ -12,17 +12,18 @@
 
 #include <QString>
 #include <memory>
-#include <mvvm/serialization/jsonconverterinterfaces.h>
+#include <mvvm/serialization/jsonitemconverterinterface.h>
 
 class QJsonObject;
 
 namespace ModelView
 {
 
-class SessionItem;
 class SessionItemContainer;
 class SessionItemTags;
 class ItemFactoryInterface;
+class JsonItemDataConverterInterface;
+class JsonTagInfoConverterInterface;
 
 //! Default converter between SessionItem and json object.
 
