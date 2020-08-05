@@ -72,6 +72,8 @@ bool JsonItemDataConverter::is_item_data(const QJsonObject& json)
 }
 
 //! Sets the list of roles which should be excluded from json.
+//! It is used, for example, to not to serialize tooltips. Tooltips are set by the GUI, no need
+//! to read older tooltips.
 
 void JsonItemDataConverter::set_role_filter(const std::vector<int>& roles)
 {
