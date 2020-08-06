@@ -11,6 +11,7 @@
 #define MVVM_SERIALIZATION_JSONITEMDATACONVERTER_H
 
 #include <QString>
+#include <memory>
 #include <mvvm/serialization/jsonitemdataconverterinterface.h>
 #include <vector>
 

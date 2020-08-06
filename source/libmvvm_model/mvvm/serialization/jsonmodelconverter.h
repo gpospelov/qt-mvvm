@@ -20,6 +20,8 @@ namespace ModelView
 
 class SessionModel;
 
+//! Default converter of SessionModel to/from json object.
+
 class MVVM_MODEL_EXPORT JsonModelConverter : public JsonModelConverterInterface
 {
 public:
