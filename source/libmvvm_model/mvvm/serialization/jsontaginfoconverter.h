@@ -21,10 +21,10 @@ namespace ModelView
 class MVVM_MODEL_EXPORT JsonTagInfoConverter : public JsonTagInfoConverterInterface
 {
 public:
-    static const QString nameKey;
-    static const QString minKey;
-    static const QString maxKey;
-    static const QString modelsKey;
+    static inline const QString nameKey = "name";
+    static inline const QString minKey = "min";
+    static inline const QString maxKey = "max";
+    static inline const QString modelsKey = "models";
 
     QJsonObject to_json(const TagInfo& tag) override;
 

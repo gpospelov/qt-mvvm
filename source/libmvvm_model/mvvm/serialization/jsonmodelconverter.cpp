@@ -29,10 +29,6 @@ QStringList expected_model_keys()
 
 } // namespace
 
-const QString ModelView::JsonModelConverter::modelKey = "model";
-const QString ModelView::JsonModelConverter::itemsKey = "items";
-const QString ModelView::JsonModelConverter::versionKey = "version";
-
 JsonModelConverter::JsonModelConverter() = default;
 
 JsonModelConverter::~JsonModelConverter() = default;

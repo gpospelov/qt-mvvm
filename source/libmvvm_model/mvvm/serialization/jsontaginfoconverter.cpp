@@ -14,17 +14,19 @@
 #include <mvvm/serialization/jsontaginfoconverter.h>
 #include <stdexcept>
 
-namespace
-{
-QStringList expected_taginfo_keys();
-}
-
 using namespace ModelView;
 
-const QString JsonTagInfoConverter::nameKey = "name";
-const QString JsonTagInfoConverter::minKey = "min";
-const QString JsonTagInfoConverter::maxKey = "max";
-const QString JsonTagInfoConverter::modelsKey = "models";
+namespace
+{
+QStringList expected_taginfo_keys()
+{
+    QStringList result = QStringList()
+                         << JsonTagInfoConverter::nameKey << JsonTagInfoConverter::minKey
+                         << JsonTagInfoConverter::maxKey << JsonTagInfoConverter::modelsKey;
+    std::sort(result.begin(), result.end());
+    return result;
+}
+} // namespace
 
 QJsonObject JsonTagInfoConverter::to_json(const ModelView::TagInfo& tag)
 {
@@ -69,14 +71,3 @@ bool JsonTagInfoConverter::isTagInfo(const QJsonObject& object)
 
     return true;
 }
-
-namespace
-{
-QStringList expected_taginfo_keys()
-{
-    QStringList result = QStringList() << JsonTagInfoConverter::nameKey << JsonTagInfoConverter::minKey
-                                       << JsonTagInfoConverter::maxKey << JsonTagInfoConverter::modelsKey;
-    std::sort(result.begin(), result.end());
-    return result;
-}
-} // namespace

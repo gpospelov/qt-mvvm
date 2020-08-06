@@ -25,9 +25,9 @@ class SessionModel;
 class MVVM_MODEL_EXPORT JsonModelConverter : public JsonModelConverterInterface
 {
 public:
-    static const QString modelKey;
-    static const QString itemsKey;
-    static const QString versionKey;
+    static inline const QString modelKey = "model";
+    static inline const QString itemsKey = "items";
+    static inline const QString versionKey = "version";
 
     JsonModelConverter();
     ~JsonModelConverter() override;
