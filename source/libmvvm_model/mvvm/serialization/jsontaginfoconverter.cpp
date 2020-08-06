@@ -11,22 +11,24 @@
 #include <QJsonObject>
 #include <QStringList>
 #include <mvvm/model/taginfo.h>
-#include <mvvm/serialization/jsontaginfo.h>
+#include <mvvm/serialization/jsontaginfoconverter.h>
 #include <stdexcept>
-
-namespace
-{
-QStringList expected_taginfo_keys();
-}
 
 using namespace ModelView;
 
-const QString JsonTagInfo::nameKey = "name";
-const QString JsonTagInfo::minKey = "min";
-const QString JsonTagInfo::maxKey = "max";
-const QString JsonTagInfo::modelsKey = "models";
+namespace
+{
+QStringList expected_taginfo_keys()
+{
+    QStringList result = QStringList()
+                         << JsonTagInfoConverter::nameKey << JsonTagInfoConverter::minKey
+                         << JsonTagInfoConverter::maxKey << JsonTagInfoConverter::modelsKey;
+    std::sort(result.begin(), result.end());
+    return result;
+}
+} // namespace
 
-QJsonObject JsonTagInfo::to_json(const ModelView::TagInfo& tag)
+QJsonObject JsonTagInfoConverter::to_json(const ModelView::TagInfo& tag)
 {
     QJsonObject result;
     result[nameKey] = QString::fromStdString(tag.name());
@@ -40,7 +42,7 @@ QJsonObject JsonTagInfo::to_json(const ModelView::TagInfo& tag)
     return result;
 }
 
-TagInfo JsonTagInfo::from_json(const QJsonObject& object)
+TagInfo JsonTagInfoConverter::from_json(const QJsonObject& object)
 {
     if (!isTagInfo(object))
         throw std::runtime_error("JsonTagInfo::get_tags() -> Invalid json object.");
@@ -57,7 +59,7 @@ TagInfo JsonTagInfo::from_json(const QJsonObject& object)
 
 //! Returns true if given json object represents TagInfo object.
 
-bool JsonTagInfo::isTagInfo(const QJsonObject& object)
+bool JsonTagInfoConverter::isTagInfo(const QJsonObject& object)
 {
     static const QStringList expected = expected_taginfo_keys();
 
@@ -69,14 +71,3 @@ bool JsonTagInfo::isTagInfo(const QJsonObject& object)
 
     return true;
 }
-
-namespace
-{
-QStringList expected_taginfo_keys()
-{
-    QStringList result = QStringList() << JsonTagInfo::nameKey << JsonTagInfo::minKey
-                                       << JsonTagInfo::maxKey << JsonTagInfo::modelsKey;
-    std::sort(result.begin(), result.end());
-    return result;
-}
-} // namespace

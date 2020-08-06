@@ -1,0 +1,37 @@
+// ************************************************************************** //
+//
+//  Model-view-view-model framework for large GUI applications
+//
+//! @license   GNU General Public License v3 or higher (see COPYING)
+//! @authors   see AUTHORS
+//
+// ************************************************************************** //
+
+#ifndef MVVM_SERIALIZATION_JSONITEMCONVERTERINTERFACE_H
+#define MVVM_SERIALIZATION_JSONITEMCONVERTERINTERFACE_H
+
+#include <memory>
+#include <mvvm/model_export.h>
+
+class QJsonObject;
+
+namespace ModelView
+{
+
+class SessionItem;
+
+//! Base class for all converters of SessionItem to/from json object.
+
+class MVVM_MODEL_EXPORT JsonItemConverterInterface
+{
+public:
+    virtual ~JsonItemConverterInterface() = default;
+
+    virtual QJsonObject to_json(const SessionItem* item) const = 0;
+
+    virtual std::unique_ptr<SessionItem> from_json(const QJsonObject&) const = 0;
+};
+
+} // namespace ModelView
+
+#endif // MVVM_SERIALIZATION_JSONITEMCONVERTERINTERFACE_H

@@ -11,7 +11,7 @@
 #define MVVM_SERIALIZATION_JSONMODELCONVERTER_H
 
 #include <QString>
-#include <mvvm/serialization/jsonconverterinterfaces.h>
+#include <mvvm/serialization/jsonmodelconverterinterface.h>
 
 class QJsonObject;
 
@@ -20,12 +20,14 @@ namespace ModelView
 
 class SessionModel;
 
+//! Default converter of SessionModel to/from json object.
+
 class MVVM_MODEL_EXPORT JsonModelConverter : public JsonModelConverterInterface
 {
 public:
-    static const QString modelKey;
-    static const QString itemsKey;
-    static const QString versionKey;
+    static inline const QString modelKey = "model";
+    static inline const QString itemsKey = "items";
+    static inline const QString versionKey = "version";
 
     JsonModelConverter();
     ~JsonModelConverter() override;

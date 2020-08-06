@@ -7,12 +7,13 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_SERIALIZATION_JSONVARIANT_H
-#define MVVM_SERIALIZATION_JSONVARIANT_H
+#ifndef MVVM_SERIALIZATION_JSONVARIANTCONVERTER_H
+#define MVVM_SERIALIZATION_JSONVARIANTCONVERTER_H
 
 #include <functional>
 #include <map>
-#include <mvvm/serialization/jsonvariantinterface.h>
+#include <string>
+#include <mvvm/serialization/jsonvariantconverterinterface.h>
 
 class QJsonObject;
 class QJsonVariant;
@@ -20,10 +21,12 @@ class QJsonVariant;
 namespace ModelView
 {
 
-class MVVM_MODEL_EXPORT JsonVariant : public JsonVariantInterface
+//! Default converter between supported variants and json objects.
+
+class MVVM_MODEL_EXPORT JsonVariantConverter : public JsonVariantConverterInterface
 {
 public:
-    JsonVariant();
+    JsonVariantConverter();
 
     QJsonObject get_json(const QVariant& variant) override;
 
@@ -42,4 +45,4 @@ private:
 
 } // namespace ModelView
 
-#endif // MVVM_SERIALIZATION_JSONVARIANT_H
+#endif // MVVM_SERIALIZATION_JSONVARIANTCONVERTER_H

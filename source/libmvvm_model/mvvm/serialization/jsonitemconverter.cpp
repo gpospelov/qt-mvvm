@@ -17,9 +17,10 @@
 #include <mvvm/model/sessionitemdata.h>
 #include <mvvm/model/sessionitemtags.h>
 #include <mvvm/model/sessionmodel.h>
+#include <mvvm/serialization/compatibilityutils.h>
 #include <mvvm/serialization/jsonitemconverter.h>
-#include <mvvm/serialization/jsonitemdata.h>
-#include <mvvm/serialization/jsontaginfo.h>
+#include <mvvm/serialization/jsonitemdataconverter.h>
+#include <mvvm/serialization/jsontaginfoconverter.h>
 #include <stdexcept>
 
 namespace
@@ -47,8 +48,8 @@ const QString JsonItemConverter::itemsKey = "items";
 //! identifiers if true.
 
 JsonItemConverter::JsonItemConverter(const ItemFactoryInterface* factory, bool new_id_flag)
-    : m_itemdata_converter(std::make_unique<JsonItemData>()),
-      m_taginfo_converter(std::make_unique<JsonTagInfo>()), m_factory(factory),
+    : m_itemdata_converter(std::make_unique<JsonItemDataConverter>()),
+      m_taginfo_converter(std::make_unique<JsonTagInfoConverter>()), m_factory(factory),
       m_generate_new_identifiers(new_id_flag)
 {
 }
@@ -176,8 +177,11 @@ std::unique_ptr<SessionItem> JsonItemConverter::json_to_item(const QJsonObject& 
     auto result = m_factory->createItem(modelType);
     result->setParent(parent);
 
-    result->setDataAndTags(m_itemdata_converter->get_data(json[itemDataKey].toArray()),
-                           json_to_tags(json[itemTagsKey].toObject(), result.get()));
+    auto persistent_tags = json_to_tags(json[itemTagsKey].toObject(), result.get());
+    auto persistent_data = m_itemdata_converter->get_data(json[itemDataKey].toArray());
+    auto combined = Compatibility::CombineItemData(*result->itemData(), *persistent_data.get());
+
+    result->setDataAndTags(std::move(combined), std::move(persistent_tags));
 
     if (m_generate_new_identifiers)
         result->setData(UniqueIdGenerator::generate(), ItemDataRole::IDENTIFIER);

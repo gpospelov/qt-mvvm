@@ -79,14 +79,6 @@ void ItemManager::unregister_item(SessionItem* item)
         m_item_pool->unregister_item(item);
 }
 
-//! Replacing existing registration in item pool with new id.
-
-void ItemManager::fix_registration(SessionItem* item, const identifier_type& id)
-{
-    m_item_pool->unregister_item(item);
-    m_item_pool->register_item(item, id);
-}
-
 const ItemFactoryInterface* ItemManager::factory() const
 {
     return m_item_factory.get();

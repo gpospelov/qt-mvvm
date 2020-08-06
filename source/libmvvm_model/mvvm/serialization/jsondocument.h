@@ -19,10 +19,7 @@ namespace ModelView
 
 class SessionModel;
 
-/*!
-@class JsonDocument
-@brief Saves and restores list of SessionModel's to/from disk using json format.
-*/
+//! Saves and restores list of SessionModel's to/from disk using json format.
 
 class MVVM_MODEL_EXPORT JsonDocument : public ModelDocumentInterface
 {

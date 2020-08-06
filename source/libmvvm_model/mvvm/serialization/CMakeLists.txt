@@ -1,4 +1,6 @@
 target_sources(${library_name} PRIVATE
+    compatibilityutils.cpp
+    compatibilityutils.h
     itembackupstrategy.h
     itemcopystrategy.h
     jsonconverterinterfaces.h
@@ -8,17 +10,21 @@ target_sources(${library_name} PRIVATE
     jsonitembackupstrategy.h
     jsonitemconverter.cpp
     jsonitemconverter.h
+    jsonitemconverterinterface.h
     jsonitemcopystrategy.cpp
     jsonitemcopystrategy.h
-    jsonitemdata.cpp
-    jsonitemdata.h
+    jsonitemdataconverter.cpp
+    jsonitemdataconverter.h
+    jsonitemdataconverterinterface.h
     jsonmodelconverter.cpp
     jsonmodelconverter.h
-    jsontaginfo.cpp
-    jsontaginfo.h
+    jsonmodelconverterinterface.h
+    jsontaginfoconverter.cpp
+    jsontaginfoconverter.h
+    jsontaginfoconverterinterface.h
     jsonutils.cpp
     jsonutils.h
-    jsonvariant.cpp
-    jsonvariant.h
-    jsonvariantinterface.h
+    jsonvariantconverter.cpp
+    jsonvariantconverter.h
+    jsonvariantconverterinterface.h
 )
