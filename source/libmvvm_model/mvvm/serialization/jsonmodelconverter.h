@@ -11,7 +11,7 @@
 #define MVVM_SERIALIZATION_JSONMODELCONVERTER_H
 
 #include <QString>
-#include <mvvm/serialization/jsonconverterinterfaces.h>
+#include <mvvm/serialization/jsonmodelconverterinterface.h>
 
 class QJsonObject;
 
