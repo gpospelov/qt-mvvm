@@ -12,11 +12,6 @@
 
 #include <mvvm/editors/defaulteditorfactory.h>
 
-namespace ModelView
-{
-class CustomEditor;
-}
-
 class ApplicationModels;
 
 //! Editor factory with custom editors.

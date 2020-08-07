@@ -13,7 +13,7 @@
 #include <layereditorcore/applicationmodels.h>
 #include <layereditorcore/customeditorfactory.h>
 #include <layereditorcore/customlayerrowstrategy.h>
-#include <layereditorcore/layertablewidget.h>
+#include <layereditorcore/multilayertreeview.h>
 #include <layereditorcore/samplemodel.h>
 #include <mvvm/factories/viewmodelfactory.h>
 #include <mvvm/viewmodel/standardchildrenstrategies.h>
@@ -21,7 +21,7 @@
 
 using namespace ModelView;
 
-LayerTableWidget::LayerTableWidget(ApplicationModels* models, QWidget* parent)
+MultiLayerTreeView::MultiLayerTreeView(ApplicationModels* models, QWidget* parent)
     : QWidget(parent), m_treeView(new QTreeView), m_delegate(std::make_unique<ViewModelDelegate>())
 {
     auto layout = new QVBoxLayout;
@@ -39,7 +39,7 @@ LayerTableWidget::LayerTableWidget(ApplicationModels* models, QWidget* parent)
     setItem(models->sampleModel()->topItem<MultiLayerItem>());
 }
 
-void LayerTableWidget::setItem(ModelView::SessionItem* multilayer)
+void MultiLayerTreeView::setItem(ModelView::SessionItem* multilayer)
 {
     if (!multilayer)
         return;
@@ -53,4 +53,4 @@ void LayerTableWidget::setItem(ModelView::SessionItem* multilayer)
     m_treeView->header()->setSectionResizeMode(QHeaderView::Stretch);
 }
 
-LayerTableWidget::~LayerTableWidget() = default;
+MultiLayerTreeView::~MultiLayerTreeView() = default;

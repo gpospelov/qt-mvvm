@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef LAYERTABLEWIDGET_H
-#define LAYERTABLEWIDGET_H
+#ifndef MULTILAYERTREEVIEW_H
+#define MULTILAYERTREEVIEW_H
 
 #include <QWidget>
 #include <memory>
@@ -25,11 +25,11 @@ class ViewModelDelegate;
 
 //! Shows content of multi layer in a tree view in special "flat" form.
 
-class LayerTableWidget : public QWidget
+class MultiLayerTreeView : public QWidget
 {
 public:
-    explicit LayerTableWidget(ApplicationModels* models, QWidget* parent = nullptr);
-    ~LayerTableWidget();
+    explicit MultiLayerTreeView(ApplicationModels* models, QWidget* parent = nullptr);
+    ~MultiLayerTreeView();
 
     void setItem(ModelView::SessionItem* multilayer);
 
@@ -39,4 +39,4 @@ private:
     std::unique_ptr<ModelView::ViewModelDelegate> m_delegate;
 };
 
-#endif // LAYERTABLEWIDGET_H
+#endif // MULTILAYERTREEVIEW_H

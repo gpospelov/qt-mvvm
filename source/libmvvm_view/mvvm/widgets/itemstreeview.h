@@ -40,6 +40,8 @@ public:
 
     void setViewModel(std::unique_ptr<ViewModel> viewModel);
 
+    void setViewModelDelegate(std::unique_ptr<ViewModelDelegate> delegate);
+
     void setSelected(SessionItem* item);
 
     void setRootSessionItem(SessionItem* item);

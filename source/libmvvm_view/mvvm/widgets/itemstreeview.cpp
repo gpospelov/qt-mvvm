@@ -38,6 +38,11 @@ void ItemsTreeView::setViewModel(std::unique_ptr<ViewModel> viewModel)
     set_connected(true);
 }
 
+void ItemsTreeView::setViewModelDelegate(std::unique_ptr<ViewModelDelegate> delegate)
+{
+    m_delegate = std::move(delegate);
+}
+
 //! Make given item selected in QTreeView.
 
 void ItemsTreeView::setSelected(SessionItem* item)
