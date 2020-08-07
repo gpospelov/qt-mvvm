@@ -27,6 +27,8 @@ public:
     ExternalProperty();
     ExternalProperty(std::string text, QColor color, std::string id = {});
 
+    static ExternalProperty undefined();
+
     std::string text() const;
 
     QColor color() const;
