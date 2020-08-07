@@ -12,8 +12,8 @@ target_sources(${library_name} PRIVATE
     customeditorfactory.cpp
     customeditorfactory.h
     customlayerrowstrategy.h
-    layertablewidget.cpp
-    layertablewidget.h
+    multilayertreeview.cpp
+    multilayertreeview.h
     mainwindow.cpp
     mainwindow.h
     materialmodel.cpp
