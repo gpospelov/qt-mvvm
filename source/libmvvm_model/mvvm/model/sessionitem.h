@@ -106,6 +106,7 @@ public:
 private:
     friend class SessionModel;
     friend class JsonItemConverter;
+    friend class JsonItemConverterV2;
     virtual void activate() {}
     bool set_data_internal(QVariant value, int role);
     QVariant data_internal(int role) const;
