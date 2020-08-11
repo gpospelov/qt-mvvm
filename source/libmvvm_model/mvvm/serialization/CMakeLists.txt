@@ -18,6 +18,8 @@ target_sources(${library_name} PRIVATE
     jsonitemdataconverter.cpp
     jsonitemdataconverter.h
     jsonitemdataconverterinterface.h
+    jsonitemformatassistant.cpp
+    jsonitemformatassistant.h
     jsonmodelconverter.cpp
     jsonmodelconverter.h
     jsonmodelconverterinterface.h

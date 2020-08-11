@@ -10,7 +10,6 @@
 #ifndef MVVM_SERIALIZATION_JSONITEMCONVERTER_V2_H
 #define MVVM_SERIALIZATION_JSONITEMCONVERTER_V2_H
 
-#include <memory>
 #include <mvvm/serialization/jsonitemconverterinterface.h>
 
 namespace ModelView
@@ -18,7 +17,10 @@ namespace ModelView
 
 class ItemFactoryInterface;
 
-//! Default converter between SessionItem and json object.
+//! Converter between SessionItem and JSON object.
+//! This is an experimental version with the focus on back compatibility. It tries to reuse
+//! item's properties (as they were created by the item constructor), and update from JSON
+//! only certain parts.
 
 class MVVM_MODEL_EXPORT JsonItemConverterV2 : public JsonItemConverterInterface
 {
