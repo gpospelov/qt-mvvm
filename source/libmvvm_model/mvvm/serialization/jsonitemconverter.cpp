@@ -20,15 +20,9 @@
 #include <mvvm/serialization/compatibilityutils.h>
 #include <mvvm/serialization/jsonitemconverter.h>
 #include <mvvm/serialization/jsonitemdataconverter.h>
+#include <mvvm/serialization/jsonitemformatassistant.h>
 #include <mvvm/serialization/jsontaginfoconverter.h>
 #include <stdexcept>
-
-namespace
-{
-QStringList expected_item_keys();
-QStringList expected_tags_keys();
-QStringList expected_itemcontainer_keys();
-} // namespace
 
 using namespace ModelView;
 
@@ -57,57 +51,6 @@ QJsonObject JsonItemConverter::to_json(const SessionItem* item) const
 std::unique_ptr<SessionItem> JsonItemConverter::from_json(const QJsonObject& json) const
 {
     return json_to_item(json);
-}
-
-//! Returns true if given json object represents SessionItem.
-
-bool JsonItemConverter::isSessionItem(const QJsonObject& json) const
-{
-    static const QStringList expected = expected_item_keys();
-
-    if (json.keys() != expected)
-        return false;
-
-    if (!json[itemDataKey].isArray())
-        return false;
-
-    if (!json[itemTagsKey].isObject())
-        return false;
-
-    return true;
-}
-
-//! Returns true if given json object represents SessionItemTags.
-
-bool JsonItemConverter::isSessionItemTags(const QJsonObject& json) const
-{
-    static const QStringList expected = expected_tags_keys();
-
-    if (json.keys() != expected)
-        return false;
-
-    if (!json[containerKey].isArray())
-        return false;
-
-    return true;
-}
-
-//! Returns true if given json object represents SessionItemContainer.
-
-bool JsonItemConverter::isSessionItemContainer(const QJsonObject& json) const
-{
-    static const QStringList expected = expected_itemcontainer_keys();
-
-    if (json.keys() != expected)
-        return false;
-
-    if (!json[tagInfoKey].isObject())
-        return false;
-
-    if (!json[itemsKey].isArray())
-        return false;
-
-    return true;
 }
 
 // --- to json --------------------------------------------------------
@@ -159,7 +102,9 @@ QJsonObject JsonItemConverter::container_to_json(const SessionItemContainer& con
 std::unique_ptr<SessionItem> JsonItemConverter::json_to_item(const QJsonObject& json,
                                                              SessionItem* parent) const
 {
-    if (!isSessionItem(json))
+    static JsonItemFormatAssistant assistant;
+
+    if (!assistant.isSessionItem(json))
         throw std::runtime_error(
             "JsonItem::from_json() -> Error. Given json object can't represent an SessionItem.");
 
@@ -182,7 +127,9 @@ std::unique_ptr<SessionItem> JsonItemConverter::json_to_item(const QJsonObject& 
 std::unique_ptr<SessionItemTags> JsonItemConverter::json_to_tags(const QJsonObject& json,
                                                                  SessionItem* parent) const
 {
-    if (!isSessionItemTags(json))
+    static JsonItemFormatAssistant assistant;
+
+    if (!assistant.isSessionItemTags(json))
         throw std::runtime_error("JsonItem::json_to_tags() -> Error. Given json object can't "
                                  "represent an SessionItemTags.");
 
@@ -201,41 +148,3 @@ std::unique_ptr<SessionItemTags> JsonItemConverter::json_to_tags(const QJsonObje
 
     return result;
 }
-
-// --- Utilities --------------------------------------------------------------
-
-namespace
-{
-
-//! Returns list of keys which should be in QJsonObject to represent SessionItem.
-
-QStringList expected_item_keys()
-{
-    QStringList result = QStringList()
-                         << JsonItemConverter::modelKey << JsonItemConverter::itemDataKey
-                         << JsonItemConverter::itemTagsKey;
-    std::sort(result.begin(), result.end());
-    return result;
-}
-
-//! Returns list of keys which should be in QJsonObject to represent SessionItemTags.
-
-QStringList expected_tags_keys()
-{
-    QStringList result = QStringList()
-                         << JsonItemConverter::defaultTagKey << JsonItemConverter::containerKey;
-    std::sort(result.begin(), result.end());
-    return result;
-}
-
-//! Returns list of keys which should be in QJsonObject to represent SessionItemContainer.
-
-QStringList expected_itemcontainer_keys()
-{
-    QStringList result = QStringList()
-                         << JsonItemConverter::tagInfoKey << JsonItemConverter::itemsKey;
-    std::sort(result.begin(), result.end());
-    return result;
-}
-
-} // namespace

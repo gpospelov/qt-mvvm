@@ -34,7 +34,7 @@ public:
     static inline const QString itemDataKey = "itemData";
     static inline const QString itemTagsKey = "itemTags";
     static inline const QString defaultTagKey = "defaultTag";
-    static inline const QString containerKey= "containers";
+    static inline const QString containerKey = "containers";
     static inline const QString tagInfoKey = "tagInfo";
     static inline const QString itemsKey = "items";
 
@@ -44,10 +44,6 @@ public:
     QJsonObject to_json(const SessionItem* item) const override;
 
     std::unique_ptr<SessionItem> from_json(const QJsonObject& json) const override;
-
-    bool isSessionItem(const QJsonObject& json) const;
-    bool isSessionItemTags(const QJsonObject& json) const;
-    bool isSessionItemContainer(const QJsonObject& json) const;
 
 private:
     QJsonObject item_to_json(const SessionItem& item) const;

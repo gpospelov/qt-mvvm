@@ -19,6 +19,7 @@
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/model/taginfo.h>
 #include <mvvm/serialization/jsonitemconverter.h>
+#include <mvvm/serialization/jsonitemformatassistant.h>
 #include <mvvm/model/itemcatalogue.h>
 
 using namespace ModelView;
@@ -67,59 +68,6 @@ private:
 
 JsonItemConverterTest::~JsonItemConverterTest() = default;
 
-//! Checks the validity of json object representing SessionItem.
-
-TEST_F(JsonItemConverterTest, isSessionItem)
-{
-    auto converter = createConverter();
-
-    // empty json object is not valid
-    QJsonObject object;
-    EXPECT_FALSE(converter->isSessionItem(object));
-
-    // it also should contain array
-    object[JsonItemConverter::modelKey] = "abc";
-    object[JsonItemConverter::itemDataKey] = QJsonArray();
-    object[JsonItemConverter::itemTagsKey] = 42; // intentionally incorrect
-    EXPECT_FALSE(converter->isSessionItem(object));
-
-    // correctly constructed
-    object[JsonItemConverter::itemTagsKey] = QJsonObject();
-    EXPECT_TRUE(converter->isSessionItem(object));
-}
-
-//! Checks the validity of json object representing SessionItemTags.
-
-TEST_F(JsonItemConverterTest, isSessionItemTags)
-{
-    auto converter = createConverter();
-
-    // empty json object is not valid
-    QJsonObject object;
-    EXPECT_FALSE(converter->isSessionItemTags(object));
-
-    // it also should contain array
-    object[JsonItemConverter::defaultTagKey] = "abc";
-    object[JsonItemConverter::containerKey] = QJsonArray();
-    EXPECT_TRUE(converter->isSessionItemTags(object));
-}
-
-//! Checks the validity of json object representing SessionItemContainer.
-
-TEST_F(JsonItemConverterTest, isSessionItemContainer)
-{
-    auto converter = createConverter();
-
-    // empty json object is not valid
-    QJsonObject object;
-    EXPECT_FALSE(converter->isSessionItemContainer(object));
-
-    // it also should contain array
-    object[JsonItemConverter::tagInfoKey] = QJsonObject();
-    object[JsonItemConverter::itemsKey] = QJsonArray();
-    EXPECT_TRUE(converter->isSessionItemContainer(object));
-}
-
 //! PropertyItem to json object.
 
 TEST_F(JsonItemConverterTest, propertyItemToJson)
@@ -130,7 +78,8 @@ TEST_F(JsonItemConverterTest, propertyItemToJson)
     auto object = converter->to_json(&item);
 
     // this object represents SessionItem
-    EXPECT_TRUE(converter->isSessionItem(object));
+    JsonItemFormatAssistant assistant;
+    EXPECT_TRUE(assistant.isSessionItem(object));
 }
 
 //! PropertyItem to json object and back.
@@ -190,7 +139,8 @@ TEST_F(JsonItemConverterTest, parentAndChildToJsonAndBack)
 
     // converting to json
     auto object = converter->to_json(parent.get());
-    EXPECT_TRUE(converter->isSessionItem(object));
+    JsonItemFormatAssistant assistant;
+    EXPECT_TRUE(assistant.isSessionItem(object));
 
     // converting json back to item
     auto reco_parent = converter->from_json(object);
@@ -229,7 +179,8 @@ TEST_F(JsonItemConverterTest, parentAndChildToFileAndBack)
 
     // converting to json
     auto object = converter->to_json(parent.get());
-    EXPECT_TRUE(converter->isSessionItem(object));
+    JsonItemFormatAssistant assistant;
+    EXPECT_TRUE(assistant.isSessionItem(object));
 
     // saving object to file
     auto fileName = TestUtils::TestFileName(testDir(), "parentAndChildToFileAndBack.json");
