@@ -140,9 +140,9 @@ bool SessionItemTags::isSinglePropertyTag(const std::string& tag) const
     return cont ? cont->tagInfo().isSinglePropertyTag() : false;
 }
 
-size_t SessionItemTags::size() const
+int SessionItemTags::tagsCount() const
 {
-    return m_containers.size();
+    return static_cast<int>(m_containers.size());
 }
 
 //! Returns container corresponding to given tag name. If name is empty,

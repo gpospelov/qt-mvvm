@@ -69,7 +69,7 @@ public:
 
     bool isSinglePropertyTag(const std::string& tag) const;
 
-    size_t size() const;
+    int tagsCount() const;
 
 private:
     SessionItemContainer* container(const std::string& tag_name) const;
