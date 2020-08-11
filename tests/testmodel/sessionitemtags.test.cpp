@@ -35,6 +35,8 @@ TEST_F(SessionItemTagsTest, initialState)
     EXPECT_EQ(tag.defaultTag(), "");
 
     EXPECT_FALSE(tag.isTag("abc"));
+
+    EXPECT_EQ(tag.size(), 0);
 }
 
 //! Registering tags.
@@ -47,6 +49,7 @@ TEST_F(SessionItemTagsTest, registerTag)
     tag.registerTag(TagInfo::universalTag("abc"));
     EXPECT_TRUE(tag.isTag("abc"));
     EXPECT_EQ(tag.defaultTag(), "");
+    EXPECT_EQ(tag.size(), 1);
 
     // registering default tag
     tag.registerTag(TagInfo::universalTag("abc2"), /*set_as_default*/ true);
@@ -73,6 +76,8 @@ TEST_F(SessionItemTagsTest, insertItem)
     // registering tags
     tag.registerTag(TagInfo::universalTag(tag1));
     tag.registerTag(TagInfo::universalTag(tag2));
+
+    EXPECT_EQ(tag.size(), 2);
 
     // inserting items
     auto child_t1_a = new SessionItem;
