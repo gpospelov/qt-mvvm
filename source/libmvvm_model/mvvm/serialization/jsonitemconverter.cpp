@@ -32,16 +32,6 @@ QStringList expected_itemcontainer_keys();
 
 using namespace ModelView;
 
-const QString JsonItemConverter::modelKey = "model";
-const QString JsonItemConverter::itemDataKey = "itemData";
-const QString JsonItemConverter::itemTagsKey = "itemTags";
-
-const QString JsonItemConverter::defaultTagKey = "defaultTag";
-const QString JsonItemConverter::containerKey = "containers";
-
-const QString JsonItemConverter::tagInfoKey = "tagInfo";
-const QString JsonItemConverter::itemsKey = "items";
-
 //! Constructor of item/json converter.
 //! @param factory: SessionItem factory.
 //! @param new_id_flag: generates exact item clones if false, generates new item's unique

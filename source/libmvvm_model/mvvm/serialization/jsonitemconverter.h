@@ -30,13 +30,13 @@ class JsonTagInfoConverterInterface;
 class MVVM_MODEL_EXPORT JsonItemConverter : public JsonItemConverterInterface
 {
 public:
-    static const QString modelKey;
-    static const QString itemDataKey;
-    static const QString itemTagsKey;
-    static const QString defaultTagKey;
-    static const QString containerKey;
-    static const QString tagInfoKey;
-    static const QString itemsKey;
+    static inline const QString modelKey = "model";
+    static inline const QString itemDataKey = "itemData";
+    static inline const QString itemTagsKey = "itemTags";
+    static inline const QString defaultTagKey = "defaultTag";
+    static inline const QString containerKey= "containers";
+    static inline const QString tagInfoKey = "tagInfo";
+    static inline const QString itemsKey = "items";
 
     JsonItemConverter(const ItemFactoryInterface* factory, bool new_id_flag = false);
     ~JsonItemConverter() override;
