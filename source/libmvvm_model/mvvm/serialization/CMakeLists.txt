@@ -8,6 +8,8 @@ target_sources(${library_name} PRIVATE
     jsondocument.h
     jsonitembackupstrategy.cpp
     jsonitembackupstrategy.h
+    jsonitemcontainerconverter.cpp
+    jsonitemcontainerconverter.h
     jsonitemconverter.cpp
     jsonitemconverter.h
     jsonitemconverter_v2.cpp
@@ -20,6 +22,8 @@ target_sources(${library_name} PRIVATE
     jsonitemdataconverterinterface.h
     jsonitemformatassistant.cpp
     jsonitemformatassistant.h
+    jsonitemtagsconverter.cpp
+    jsonitemtagsconverter.h
     jsonmodelconverter.cpp
     jsonmodelconverter.h
     jsonmodelconverterinterface.h
