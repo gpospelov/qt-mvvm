@@ -105,8 +105,8 @@ std::unique_ptr<SessionItem> JsonItemConverter::json_to_item(const QJsonObject& 
     static JsonItemFormatAssistant assistant;
 
     if (!assistant.isSessionItem(json))
-        throw std::runtime_error(
-            "JsonItem::from_json() -> Error. Given json object can't represent an SessionItem.");
+        throw std::runtime_error("JsonItemConverter::from_json() -> Error. Given json object can't "
+                                 "represent an SessionItem.");
 
     auto modelType = json[modelKey].toString().toStdString();
     auto result = m_factory->createItem(modelType);
@@ -130,8 +130,9 @@ std::unique_ptr<SessionItemTags> JsonItemConverter::json_to_tags(const QJsonObje
     static JsonItemFormatAssistant assistant;
 
     if (!assistant.isSessionItemTags(json))
-        throw std::runtime_error("JsonItem::json_to_tags() -> Error. Given json object can't "
-                                 "represent an SessionItemTags.");
+        throw std::runtime_error(
+            "JsonItemConverter::json_to_tags() -> Error. Given json object can't "
+            "represent an SessionItemTags.");
 
     auto result = std::make_unique<SessionItemTags>();
     result->setDefaultTag(json[defaultTagKey].toString().toStdString());
