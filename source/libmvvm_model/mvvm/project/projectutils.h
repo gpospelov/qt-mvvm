@@ -20,7 +20,7 @@ namespace ModelView
 
 class SessionModel;
 class ProjectInterface;
-class ProjectContext;
+struct ProjectContext;
 
 //! Collection of utility functions to handle project saving and loading.
 

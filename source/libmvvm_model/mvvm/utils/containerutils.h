@@ -95,6 +95,14 @@ template<typename C> C UniqueWithOrder(const C& container)
     return result;
 }
 
+//! Returns true if container contains a given element.
+
+template <typename A, typename B> bool Contains(const A& container, const B& element)
+{
+    return std::find(container.begin(), container.end(), element) != container.end();
+}
+
+
 } // namespace Utils
 
 } // namespace ModelView

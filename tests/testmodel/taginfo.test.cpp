@@ -61,3 +61,31 @@ TEST_F(TagInfoTest, propertyTag)
     EXPECT_TRUE(tag.isValidChild("model_type"));
     EXPECT_FALSE(tag.isValidChild("abc"));
 }
+
+//! Testing equality operators.
+
+TEST_F(TagInfoTest, equalityOperator)
+{
+    // default constructor
+    TagInfo tag1, tag2;
+    EXPECT_TRUE(tag1 == tag2);
+    EXPECT_FALSE(tag1 != tag2);
+
+    // same property tag
+    TagInfo tag3 = TagInfo::propertyTag("name", "model_type");
+    TagInfo tag4 = TagInfo::propertyTag("name", "model_type");
+    EXPECT_TRUE(tag3 == tag4);
+    EXPECT_FALSE(tag3 != tag4);
+
+    // same universal tag
+    TagInfo tag5 = TagInfo::universalTag("name");
+    TagInfo tag6 = TagInfo::universalTag("name");
+    EXPECT_TRUE(tag5 == tag6);
+    EXPECT_FALSE(tag5 != tag6);
+
+    // different tag
+    TagInfo tag7("tag7", 0, 1, std::vector<std::string>());
+    TagInfo tag8("tag8", 0, 1, std::vector<std::string>());
+    EXPECT_FALSE(tag7 == tag8);
+    EXPECT_TRUE(tag7 != tag8);
+}

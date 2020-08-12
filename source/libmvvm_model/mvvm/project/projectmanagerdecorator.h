@@ -16,8 +16,8 @@
 namespace ModelView
 {
 
-class ProjectContext;
-class UserInteractionContext;
+struct ProjectContext;
+struct UserInteractionContext;
 
 //! Decorator for ProjectManager to provide interaction with the user on open/save-as requests.
 //! It relies on the same interface and adds additional logic related to "unsaved" data.

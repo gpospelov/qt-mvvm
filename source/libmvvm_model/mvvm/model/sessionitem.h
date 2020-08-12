@@ -26,6 +26,7 @@ namespace ModelView
 class SessionModel;
 class TagInfo;
 class ItemMapper;
+class SessionItemData;
 
 class MVVM_MODEL_EXPORT SessionItem
 {
@@ -103,9 +104,14 @@ public:
 
     void setProperty(const std::string& tag, const char* value);
 
+    // FIXME refactor converter access to item internals
+    SessionItemData* itemData();
+    const SessionItemData* itemData() const;
+
 private:
     friend class SessionModel;
     friend class JsonItemConverter;
+    friend class JsonItemConverterV2;
     virtual void activate() {}
     bool set_data_internal(QVariant value, int role);
     QVariant data_internal(int role) const;
@@ -113,8 +119,6 @@ private:
     void setModel(SessionModel* model);
     void setAppearanceFlag(int flag, bool value);
 
-    // FIXME refactor converter access to item internals
-    class SessionItemData* itemData() const;
     class SessionItemTags* itemTags() const;
     void setDataAndTags(std::unique_ptr<SessionItemData> data,
                         std::unique_ptr<SessionItemTags> tags);

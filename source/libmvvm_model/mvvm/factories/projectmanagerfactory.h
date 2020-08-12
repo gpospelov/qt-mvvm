@@ -16,8 +16,8 @@
 namespace ModelView
 {
 
-class ProjectContext;
-class UserInteractionContext;
+struct ProjectContext;
+struct UserInteractionContext;
 
 //! Creates default ProjectManager to save and load models.
 MVVM_MODEL_EXPORT std::unique_ptr<ProjectManagerInterface>

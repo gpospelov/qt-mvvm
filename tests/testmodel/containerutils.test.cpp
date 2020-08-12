@@ -70,3 +70,10 @@ TEST_F(ContainerUtilsTest, UniqueWithOrder)
     std::vector<int> data = {1, 42, 1, 6, 43, 6};
     EXPECT_EQ(Utils::UniqueWithOrder(data), (std::vector<int>{1, 42, 6, 43}));
 }
+
+TEST_F(ContainerUtilsTest, Contains)
+{
+    std::vector<int> data = {1, 42, 1, 6, 43, 6};
+    EXPECT_TRUE(Utils::Contains(data, 42));
+    EXPECT_FALSE(Utils::Contains(data, 99));
+}

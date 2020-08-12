@@ -19,11 +19,6 @@ const std::string selection_separator = ",";
 const std::string multiple_label = "Multiple";
 const std::string none_label = "None";
 
-template <typename C, typename T> int contains(const C& container, const T& item)
-{
-    return find(container.begin(), container.end(), item) != container.end();
-}
-
 template <typename C, typename T> std::string toString(const C& container, const T& delim)
 {
     std::stringstream result;
@@ -79,7 +74,7 @@ std::string ComboProperty::value() const
 
 void ComboProperty::setValue(const std::string& name)
 {
-    if (!contains(m_values, name))
+    if (!Utils::Contains(m_values, name))
         throw std::runtime_error("ComboProperty::setValue() -> Error. Combo doesn't contain "
                                  "value "
                                  + name);
@@ -100,7 +95,7 @@ void ComboProperty::setValues(const std::vector<std::string>& values)
 
     auto current = value();
     m_values = values;
-    setCurrentIndex(contains(m_values, current) ? Utils::IndexOfItem(m_values, current) : 0);
+    setCurrentIndex(Utils::Contains(m_values, current) ? Utils::IndexOfItem(m_values, current) : 0);
 }
 
 //! returns list of tool tips for all values
@@ -176,7 +171,7 @@ void ComboProperty::setStringOfValues(const std::string& values)
 {
     auto current = value();
     m_values = tokenize(values, value_separator);
-    setCurrentIndex(contains(m_values, current) ? Utils::IndexOfItem(m_values, current) : 0);
+    setCurrentIndex(Utils::Contains(m_values, current) ? Utils::IndexOfItem(m_values, current) : 0);
 }
 
 //! Returns vector of selected indices.
