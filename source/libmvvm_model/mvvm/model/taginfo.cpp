@@ -9,16 +9,9 @@
 
 #include <algorithm>
 #include <mvvm/model/taginfo.h>
+#include <mvvm/utils/containerutils.h>
 #include <sstream>
 #include <stdexcept>
-
-namespace
-{
-template <typename A, typename B> bool contains(const A& container, const B& element)
-{
-    return std::find(container.begin(), container.end(), element) != container.end();
-}
-} // namespace
 
 ModelView::TagInfo::TagInfo() : m_min(0), m_max(-1) {}
 
@@ -66,7 +59,7 @@ std::vector<std::string> ModelView::TagInfo::modelTypes() const
 
 bool ModelView::TagInfo::isValidChild(const std::string& child) const
 {
-    return m_modelTypes.empty() ? true : contains(m_modelTypes, child);
+    return m_modelTypes.empty() ? true : Utils::Contains(m_modelTypes, child);
 }
 
 bool ModelView::TagInfo::isSinglePropertyTag() const
