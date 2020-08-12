@@ -21,11 +21,13 @@ namespace ModelView
 
 class SessionItem;
 class SessionItemContainer;
+class ConverterContext;
 
 class MVVM_MODEL_EXPORT JsonItemContainerConverter
 {
 public:
     JsonItemContainerConverter();
+    JsonItemContainerConverter(ConverterContext context);
     ~JsonItemContainerConverter();
 
     QJsonObject to_json(const SessionItemContainer& container);

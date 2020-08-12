@@ -25,7 +25,7 @@ struct JsonItemContainerConverter::JsonItemContainerConverterImpl {
     std::unique_ptr<JsonTagInfoConverterInterface> m_taginfo_converter;
     ConverterContext m_context;
 
-    JsonItemContainerConverterImpl()
+    JsonItemContainerConverterImpl(ConverterContext context = {}) : m_context(std::move(context))
     {
         m_taginfo_converter = std::make_unique<JsonTagInfoConverter>();
     }
@@ -44,6 +44,11 @@ struct JsonItemContainerConverter::JsonItemContainerConverterImpl {
 
 JsonItemContainerConverter::JsonItemContainerConverter()
     : p_impl(std::make_unique<JsonItemContainerConverterImpl>())
+{
+}
+
+JsonItemContainerConverter::JsonItemContainerConverter(ConverterContext context)
+    : p_impl(std::make_unique<JsonItemContainerConverterImpl>(std::move(context)))
 {
 }
 

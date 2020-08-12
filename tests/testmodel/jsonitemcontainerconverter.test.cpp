@@ -14,6 +14,7 @@
 #include <mvvm/model/mvvm_types.h>
 #include <mvvm/model/propertyitem.h>
 #include <mvvm/model/sessionitemcontainer.h>
+#include <mvvm/serialization/jsonitem_types.h>
 #include <mvvm/serialization/jsonitemcontainerconverter.h>
 #include <mvvm/serialization/jsonitemformatassistant.h>
 
@@ -28,7 +29,20 @@ class JsonItemContainerConverterTest : public FolderBasedTest
 public:
     JsonItemContainerConverterTest() : FolderBasedTest("test_JsonItemContainerConverterTest") {}
 
-    std::unique_ptr<JsonItemContainerConverter> createConverter() const { return {}; }
+    std::unique_ptr<JsonItemContainerConverter> createConverter() const
+    {
+        ConverterContext context;
+
+        auto to_json = [](const SessionItem& item) {
+            QJsonObject result;
+            result[JsonItemFormatAssistant::modelKey] = QString::fromStdString(item.modelType());
+            return result;
+        };
+
+        context.m_item_to_json = to_json;
+
+        return std::make_unique<JsonItemContainerConverter>(context);
+    }
 
     ~JsonItemContainerConverterTest();
 };
@@ -56,8 +70,8 @@ TEST_F(JsonItemContainerConverterTest, propertyContainerToFile)
     SessionItemContainer container(tag);
     EXPECT_TRUE(container.insertItem(new PropertyItem, 0));
 
-    JsonItemContainerConverter converter;
-    auto json = converter.to_json(container);
+    auto converter = createConverter();
+    auto json = converter->to_json(container);
 
     // saving object to file
     auto fileName = TestUtils::TestFileName(testDir(), "propertyContainerToFileAndBack.json");
