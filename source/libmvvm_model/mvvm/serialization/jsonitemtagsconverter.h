@@ -21,15 +21,13 @@ namespace ModelView
 
 class SessionItem;
 class SessionItemTags;
+class ConverterContext;
 
 class MVVM_MODEL_EXPORT JsonItemTagsConverter
 {
 public:
-    using item_to_json_t = std::function<QJsonObject(const SessionItem&)>;
-    using json_to_item_update_t = std::function<void(const QJsonObject& json, SessionItem* item)>;
-    using json_to_item_t = std::function<std::unique_ptr<SessionItem*>(const QJsonObject& json)>;
-
     JsonItemTagsConverter();
+    JsonItemTagsConverter(ConverterContext context);
     ~JsonItemTagsConverter();
 
     QJsonObject to_json(const SessionItemTags& item);

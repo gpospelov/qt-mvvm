@@ -9,41 +9,36 @@
 
 #include <QJsonArray>
 #include <QJsonObject>
-#include <mvvm/model/sessionitemcontainer.h>
-#include <mvvm/model/sessionitemtags.h>
 #include <mvvm/model/sessionitem.h>
-#include <mvvm/model/tagrow.h>
+#include <mvvm/model/sessionitemtags.h>
+#include <mvvm/serialization/jsonitem_types.h>
+#include <mvvm/serialization/jsonitemcontainerconverter.h>
 #include <mvvm/serialization/jsonitemformatassistant.h>
 #include <mvvm/serialization/jsonitemtagsconverter.h>
-#include <mvvm/serialization/jsontaginfoconverter.h>
 
 using namespace ModelView;
 
 struct JsonItemTagsConverter::JsonItemTagsConverterImpl {
-    std::unique_ptr<JsonTagInfoConverterInterface> m_taginfo_converter;
-    item_to_json_t item_to_json;
-    json_to_item_update_t json_to_item_update;
-    json_to_item_t json_to_item;
+    std::unique_ptr<JsonItemContainerConverter> m_container_converter;
 
-    JsonItemTagsConverterImpl() { m_taginfo_converter = std::make_unique<JsonTagInfoConverter>(); }
-
-    QJsonObject container_to_json(const SessionItemContainer& container) const
+    JsonItemTagsConverterImpl(ConverterContext context = {})
     {
-        QJsonObject result;
-        result[JsonItemFormatAssistant::tagInfoKey] =
-            m_taginfo_converter->to_json(container.tagInfo());
+        m_container_converter = std::make_unique<JsonItemContainerConverter>(std::move(context));
+    }
 
-        QJsonArray itemArray;
-        for (auto item : container)
-            itemArray.append(item_to_json(*item));
-        result[JsonItemFormatAssistant::itemsKey] = itemArray;
-
-        return result;
+    void populate_container(const QJsonObject& json, SessionItemContainer& container)
+    {
+        m_container_converter->from_json(json, container);
     }
 };
 
 JsonItemTagsConverter::JsonItemTagsConverter()
     : p_impl(std::make_unique<JsonItemTagsConverterImpl>())
+{
+}
+
+JsonItemTagsConverter::JsonItemTagsConverter(ConverterContext context)
+    : p_impl(std::make_unique<JsonItemTagsConverterImpl>(context))
 {
 }
 
@@ -56,7 +51,7 @@ QJsonObject JsonItemTagsConverter::to_json(const SessionItemTags& tags)
 
     QJsonArray containerArray;
     for (auto container : tags)
-        containerArray.append(p_impl->container_to_json(*container));
+        containerArray.append(p_impl->m_container_converter->to_json(*container));
     result[JsonItemFormatAssistant::containerKey] = containerArray;
 
     return result;
@@ -69,7 +64,7 @@ void JsonItemTagsConverter::from_json(const QJsonObject& json, SessionItemTags& 
     if (!assistant.isSessionItemTags(json))
         throw std::runtime_error(
             "JsonItemTagsConverter::from_json() -> Error. Given json object can't "
-            "represent an SessionItemTags.");
+            "represent a SessionItemTags.");
 
     auto default_tag = json[JsonItemFormatAssistant::defaultTagKey].toString().toStdString();
 
@@ -77,31 +72,17 @@ void JsonItemTagsConverter::from_json(const QJsonObject& json, SessionItemTags& 
         throw std::runtime_error("Default tag mismatch");
 
     auto container_array = json[JsonItemFormatAssistant::containerKey].toArray();
-    if (container_array.size() != item_tags.tagsCount())
-        throw std::runtime_error("Number of tags mismatch");
 
+    // FIXME: JSON contains SessionItemContainers not presented at runtime, what to do?
+    // If user register tags after object construction, shell it be serialized, or not?
+    // It is easy to recreate, but what about back compatibility?
+    // Consider container recreation.
+    if (container_array.size() != item_tags.tagsCount())
+        throw std::runtime_error("Error in JsonItemTagsConverter: number of tags mismatch.");
+
+    int index(0);
     for (const auto ref : container_array) {
         QJsonObject json_container = ref.toObject();
-        TagInfo tagInfo = p_impl->m_taginfo_converter->from_json(
-            json_container[JsonItemFormatAssistant::tagInfoKey].toObject());
-
-        if (!item_tags.isTag(tagInfo.name()))
-            throw std::runtime_error("No such tag registered");
-
-        if (item_tags.isSinglePropertyTag(tagInfo.name())) {
-        } else {
-//            for (const auto obj : json_container[JsonItemFormatAssistant::itemsKey].toArray()) {
-//                auto item = p_impl->json_to_item(obj.toObject());
-//                item_tags.insertItem(item.release(), TagRow::append(tagInfo.name()));
-//            }
-
-        }
-
-        //        result->registerTag(tagInfo);
-        //        for (const auto obj : json_container[JsonItemFormatAssistant::itemsKey].toArray())
-        //        {
-        //            auto item = json_to_item(obj.toObject(), parent);
-        //            result->insertItem(item.release(), TagRow::append(tagInfo.name()));
-        //        }
+        p_impl->populate_container(json_container, item_tags.at(++index));
     }
 }
