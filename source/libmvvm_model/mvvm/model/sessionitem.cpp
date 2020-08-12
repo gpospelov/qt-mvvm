@@ -353,10 +353,17 @@ void SessionItem::setAppearanceFlag(int flag, bool value)
     setData(flags, ItemDataRole::APPEARANCE);
 }
 
-SessionItemData* SessionItem::itemData() const
+const SessionItemData* SessionItem::itemData() const
 {
     return p_impl->m_data.get();
 }
+
+SessionItemData* SessionItem::itemData()
+{
+    return p_impl->m_data.get();
+}
+
+
 
 SessionItemTags* SessionItem::itemTags() const
 {
