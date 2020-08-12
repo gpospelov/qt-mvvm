@@ -6,6 +6,7 @@ target_sources(${library_name} PRIVATE
     jsonconverterinterfaces.h
     jsondocument.cpp
     jsondocument.h
+    jsonitem_types.h
     jsonitembackupstrategy.cpp
     jsonitembackupstrategy.h
     jsonitemcontainerconverter.cpp

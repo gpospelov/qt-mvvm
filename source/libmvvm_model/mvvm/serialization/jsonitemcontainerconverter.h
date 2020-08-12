@@ -25,10 +25,6 @@ class SessionItemContainer;
 class MVVM_MODEL_EXPORT JsonItemContainerConverter
 {
 public:
-    using item_to_json_t = std::function<QJsonObject(const SessionItem&)>;
-    using json_to_item_update_t = std::function<void(const QJsonObject& json, SessionItem* item)>;
-    using json_to_item_t = std::function<std::unique_ptr<SessionItem*>(const QJsonObject& json)>;
-
     JsonItemContainerConverter();
     ~JsonItemContainerConverter();
 
