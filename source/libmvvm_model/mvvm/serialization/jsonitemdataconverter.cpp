@@ -64,6 +64,17 @@ std::unique_ptr<SessionItemData> JsonItemDataConverter::get_data(const QJsonArra
     return result;
 }
 
+//! Updates existing data with JSON content.
+
+void JsonItemDataConverter::from_json(const QJsonArray& object, SessionItemData& data)
+{
+    auto persistent_data = get_data(object);
+
+    for (auto role : data.roles())
+        if (persistent_data->hasData(role))
+            data.setData(persistent_data->data(role), role);
+}
+
 //! Returns true if it is valid DataRole.
 
 bool JsonItemDataConverter::is_item_data(const QJsonObject& json)

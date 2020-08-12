@@ -13,8 +13,8 @@
 #include <QJsonArray>
 #include <QJsonObject>
 #include <mvvm/model/customvariants.h>
-#include <mvvm/model/sessionitemdata.h>
 #include <mvvm/model/mvvm_types.h>
+#include <mvvm/model/sessionitemdata.h>
 #include <mvvm/serialization/jsonitemdataconverter.h>
 #include <mvvm/serialization/jsonvariantconverter.h>
 #include <string>
@@ -154,4 +154,38 @@ TEST_F(JsonItemDataConverterTest, tooltipRole)
     // constructing data from json array
     auto data2 = converter.get_data(array);
     EXPECT_EQ(data2->roles().size(), 0u);
+}
+
+//! Update SessionItemData from json obtained from another JsonItemData.
+
+TEST_F(JsonItemDataConverterTest, updateFromJson)
+{
+    const std::vector<int> roles = {ItemDataRole::IDENTIFIER, ItemDataRole::DATA,
+                                    ItemDataRole::TOOLTIP};
+    const std::vector<QVariant> variants = {QVariant::fromValue(std::string("identifier1")),
+                                            QVariant::fromValue(42),
+                                            QVariant::fromValue(std::string("tooltip1"))};
+
+    // initial data
+    SessionItemData data1;
+    for (size_t i=0; i<roles.size(); ++i)
+        data1.setData(variants[i], roles[i]);
+
+    // data intended for serialization
+    SessionItemData data2;
+    data1.setData(QVariant::fromValue(43), ItemDataRole::DATA);
+    data1.setData(QVariant::fromValue(std::string("identifier2")), ItemDataRole::IDENTIFIER);
+
+    // constructing json array from data
+    JsonItemDataConverter converter;
+    QJsonArray array = converter.get_json(data2);
+
+    // updating data1 from json array
+    converter.from_json(array, data1);
+
+    // roles as in initial object, id+data as in data2, tooltip as in data1
+    EXPECT_EQ(data1.roles(), roles);
+    EXPECT_EQ(data1.data(ItemDataRole::IDENTIFIER).value<std::string>(), std::string("identifier2"));
+    EXPECT_EQ(data1.data(ItemDataRole::DATA).value<int>(), 43);
+    EXPECT_EQ(data1.data(ItemDataRole::TOOLTIP).value<std::string>(), std::string("tooltip1"));
 }
