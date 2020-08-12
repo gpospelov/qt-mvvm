@@ -34,7 +34,7 @@ public:
 
     QJsonObject to_json(const SessionItemContainer& container);
 
-    void from_json(const QJsonObject& json, SessionItemContainer& item_tags);
+    void from_json(const QJsonObject& json, SessionItemContainer& container);
 
 private:
     struct JsonItemContainerConverterImpl;

@@ -16,19 +16,31 @@
 #include <mvvm/serialization/jsonitemcontainerconverter.h>
 #include <mvvm/serialization/jsonitemformatassistant.h>
 #include <mvvm/serialization/jsontaginfoconverter.h>
+#include <mvvm/serialization/compatibilityutils.h>
 
 using namespace ModelView;
 
 struct JsonItemContainerConverter::JsonItemContainerConverterImpl {
     std::unique_ptr<JsonTagInfoConverterInterface> m_taginfo_converter;
-    item_to_json_t item_to_json;
-    json_to_item_update_t json_to_item_update;
-    json_to_item_t json_to_item;
+    item_to_json_t m_item_to_json;
+    json_to_item_update_t m_json_to_item_update;
+    json_to_item_t m_json_to_item;
 
     JsonItemContainerConverterImpl()
     {
         m_taginfo_converter = std::make_unique<JsonTagInfoConverter>();
     }
+
+    QJsonObject item_to_json(const SessionItem& item) {
+        return m_item_to_json ? m_item_to_json(item) : QJsonObject();
+    }
+
+    void json_to_item_update(const QJsonObject& json, SessionItem* item) {
+        if (m_json_to_item_update)
+            m_json_to_item_update(json, item);
+    }
+
+
 };
 
 JsonItemContainerConverter::JsonItemContainerConverter()
@@ -52,7 +64,7 @@ QJsonObject JsonItemContainerConverter::to_json(const SessionItemContainer& cont
     return result;
 }
 
-void JsonItemContainerConverter::from_json(const QJsonObject& json, SessionItemContainer& item_tags)
+void JsonItemContainerConverter::from_json(const QJsonObject& json, SessionItemContainer& container)
 {
     static JsonItemFormatAssistant assistant;
 
@@ -62,4 +74,8 @@ void JsonItemContainerConverter::from_json(const QJsonObject& json, SessionItemC
 
     TagInfo tagInfo = p_impl->m_taginfo_converter->from_json(
         json[JsonItemFormatAssistant::tagInfoKey].toObject());
+
+    if (Compatibility::IsCompatibleSingleProperty(container, tagInfo))
+        p_impl->json_to_item_update(json, container.itemAt(0));
+
 }

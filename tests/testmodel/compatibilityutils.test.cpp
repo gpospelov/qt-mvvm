@@ -10,7 +10,10 @@
 #include "google_test.h"
 #include <mvvm/model/mvvm_types.h>
 #include <mvvm/model/sessionitemdata.h>
+#include <mvvm/model/propertyitem.h>
+#include <mvvm/model/sessionitemcontainer.h>
 #include <mvvm/serialization/compatibilityutils.h>
+#include <mvvm/model/mvvm_types.h>
 
 using namespace ModelView;
 
@@ -97,4 +100,19 @@ TEST_F(CompatibilityUtilsTest, combineItemDataTypicalScenario)
     EXPECT_EQ(result->data(ItemDataRole::DATA).value<int>(), 43);
     // roles from `runtime` source
     EXPECT_EQ(result->data(ItemDataRole::TOOLTIP).value<std::string>(), std::string("tooltip"));
+}
+
+//! Testing IsCompatibleSingleProperty.
+
+TEST_F(CompatibilityUtilsTest, IsCompatibleSingleProperty)
+{
+    const std::string name("tag");
+    TagInfo tag = TagInfo::propertyTag("thickness", Constants::PropertyType);
+    SessionItemContainer container(tag);
+
+    // to be compatible, container should have PropertyItem in it already
+    EXPECT_FALSE(Compatibility::IsCompatibleSingleProperty(container, tag));
+
+    EXPECT_TRUE(container.insertItem(new PropertyItem, 0));
+    EXPECT_TRUE(Compatibility::IsCompatibleSingleProperty(container, tag));
 }

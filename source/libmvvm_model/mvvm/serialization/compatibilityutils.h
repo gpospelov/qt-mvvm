@@ -20,6 +20,8 @@ namespace ModelView
 {
 
 class SessionItemData;
+class SessionItemContainer;
+class TagInfo;
 
 namespace Compatibility
 {
@@ -29,6 +31,19 @@ namespace Compatibility
 
 MVVM_MODEL_EXPORT std::unique_ptr<SessionItemData>
 CombineItemData(const SessionItemData& runtime, const SessionItemData& persistent);
+
+//! Returns `true` if given TagInfo is compatible with given container.
+//! See explanations in the code.
+
+MVVM_MODEL_EXPORT
+bool IsCompatibleTagInfo(const SessionItemContainer& container, const TagInfo& taginfo);
+
+//! Returns `true` if given TagInfo is a single property tag which is compatible with given
+//! container. See more explanations in the code.
+
+MVVM_MODEL_EXPORT
+bool IsCompatibleSingleProperty(const SessionItemContainer& container, const TagInfo& taginfo);
+
 
 } // namespace Compatibility
 
