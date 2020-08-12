@@ -39,8 +39,6 @@ public:
 
     std::unique_ptr<JsonItemContainerConverter> createConverter() const
     {
-        ConverterContext context;
-
         //! Simplified method to convert SessionItem to JSON object.
         auto to_json = [this](const SessionItem& item) {
             QJsonObject result;
@@ -65,10 +63,7 @@ public:
             return result;
         };
 
-        context.m_item_to_json = to_json;
-        context.m_json_to_item_update = update_item;
-        context.m_json_to_item = create_item;
-
+        ConverterContext context{to_json, update_item, create_item};
         return std::make_unique<JsonItemContainerConverter>(context);
     }
 
