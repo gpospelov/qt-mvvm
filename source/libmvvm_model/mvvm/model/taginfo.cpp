@@ -74,18 +74,6 @@ bool ModelView::TagInfo::isSinglePropertyTag() const
     return m_min == 1 && m_max == 1;
 }
 
-std::string ModelView::TagInfo::toString() const
-{
-    std::ostringstream ostr;
-    ostr << "TagInfo> name:'" << name() << "', min:" << min() << ", max:" << max()
-         << ", modelTypes:{";
-    for (const auto& model_type : modelTypes()) {
-        ostr << model_type << " ";
-    }
-    ostr << "}";
-    return ostr.str();
-}
-
 bool ModelView::TagInfo::operator==(const ModelView::TagInfo& other) const
 {
     return m_name == other.m_name && m_min == other.m_min && m_max == other.m_max
