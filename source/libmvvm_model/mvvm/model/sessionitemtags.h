@@ -71,6 +71,8 @@ public:
 
     int tagsCount() const;
 
+    SessionItemContainer& at(int index);
+
 private:
     SessionItemContainer* container(const std::string& tag_name) const;
     SessionItemContainer* find_container(const std::string& tag_name) const;

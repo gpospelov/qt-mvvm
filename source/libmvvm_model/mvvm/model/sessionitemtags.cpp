@@ -145,6 +145,13 @@ int SessionItemTags::tagsCount() const
     return static_cast<int>(m_containers.size());
 }
 
+SessionItemContainer& SessionItemTags::at(int index)
+{
+    if (index < 0 || index >= tagsCount())
+        throw std::runtime_error("Error it SessionItemTags: wrong container index");
+    return *m_containers.at(index);
+}
+
 //! Returns container corresponding to given tag name. If name is empty,
 //! default tag will be used. Exception is thrown if no such tag exists.
 
