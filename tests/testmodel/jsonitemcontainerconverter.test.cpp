@@ -11,11 +11,13 @@
 #include "google_test.h"
 #include "test_utils.h"
 #include <QJsonObject>
+#include <QJsonArray>
 #include <mvvm/model/mvvm_types.h>
 #include <mvvm/model/propertyitem.h>
 #include <mvvm/model/sessionitemcontainer.h>
 #include <mvvm/serialization/jsonitem_types.h>
 #include <mvvm/serialization/jsonitemcontainerconverter.h>
+#include <mvvm/serialization/jsonitemdataconverter.h>
 #include <mvvm/serialization/jsonitemformatassistant.h>
 
 using namespace ModelView;
@@ -27,15 +29,21 @@ using namespace ModelView;
 class JsonItemContainerConverterTest : public FolderBasedTest
 {
 public:
-    JsonItemContainerConverterTest() : FolderBasedTest("test_JsonItemContainerConverterTest") {}
+    JsonItemContainerConverterTest()
+        : FolderBasedTest("test_JsonItemContainerConverterTest"),
+          m_itemdata_converter(std::make_unique<JsonItemDataConverter>())
+    {
+    }
 
     std::unique_ptr<JsonItemContainerConverter> createConverter() const
     {
         ConverterContext context;
 
-        auto to_json = [](const SessionItem& item) {
+        //! Toy method to convert SessionItem to JSON object.
+        auto to_json = [this](const SessionItem& item) {
             QJsonObject result;
             result[JsonItemFormatAssistant::modelKey] = QString::fromStdString(item.modelType());
+//            result[JsonItemFormatAssistant::itemDataKey] = m_itemdata_converter->get_json(item.itemData());
             return result;
         };
 
@@ -45,6 +53,8 @@ public:
     }
 
     ~JsonItemContainerConverterTest();
+
+    std::unique_ptr<JsonItemDataConverterInterface> m_itemdata_converter;
 };
 
 JsonItemContainerConverterTest::~JsonItemContainerConverterTest() = default;

@@ -73,7 +73,7 @@ exactly same tag, and property item ready for update.
 */
 
 
-bool IsCompatibleSingleProperty(const SessionItemContainer& container, const TagInfo& taginfo)
+bool IsCompatibleSinglePropertyTag(const SessionItemContainer& container, const TagInfo& taginfo)
 {
     auto container_taginfo = container.tagInfo();
 

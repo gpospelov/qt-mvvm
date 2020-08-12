@@ -42,7 +42,7 @@ bool IsCompatibleTagInfo(const SessionItemContainer& container, const TagInfo& t
 //! container. See more explanations in the code.
 
 MVVM_MODEL_EXPORT
-bool IsCompatibleSingleProperty(const SessionItemContainer& container, const TagInfo& taginfo);
+bool IsCompatibleSinglePropertyTag(const SessionItemContainer& container, const TagInfo& taginfo);
 
 
 } // namespace Compatibility

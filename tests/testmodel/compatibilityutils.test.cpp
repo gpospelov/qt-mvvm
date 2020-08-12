@@ -111,8 +111,8 @@ TEST_F(CompatibilityUtilsTest, IsCompatibleSingleProperty)
     SessionItemContainer container(tag);
 
     // to be compatible, container should have PropertyItem in it already
-    EXPECT_FALSE(Compatibility::IsCompatibleSingleProperty(container, tag));
+    EXPECT_FALSE(Compatibility::IsCompatibleSinglePropertyTag(container, tag));
 
     EXPECT_TRUE(container.insertItem(new PropertyItem, 0));
-    EXPECT_TRUE(Compatibility::IsCompatibleSingleProperty(container, tag));
+    EXPECT_TRUE(Compatibility::IsCompatibleSinglePropertyTag(container, tag));
 }

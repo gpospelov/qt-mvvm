@@ -79,6 +79,6 @@ void JsonItemContainerConverter::from_json(const QJsonObject& json, SessionItemC
     TagInfo tagInfo = p_impl->m_taginfo_converter->from_json(
         json[JsonItemFormatAssistant::tagInfoKey].toObject());
 
-    if (Compatibility::IsCompatibleSingleProperty(container, tagInfo))
+    if (Compatibility::IsCompatibleSinglePropertyTag(container, tagInfo))
         p_impl->json_to_item_update(json, container.itemAt(0));
 }
