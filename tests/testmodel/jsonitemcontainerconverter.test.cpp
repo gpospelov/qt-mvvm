@@ -10,11 +10,13 @@
 #include "folderbasedtest.h"
 #include "google_test.h"
 #include "test_utils.h"
-#include <QJsonObject>
 #include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
 #include <mvvm/model/mvvm_types.h>
 #include <mvvm/model/propertyitem.h>
 #include <mvvm/model/sessionitemcontainer.h>
+#include <mvvm/model/sessionitemdata.h>
 #include <mvvm/serialization/jsonitem_types.h>
 #include <mvvm/serialization/jsonitemcontainerconverter.h>
 #include <mvvm/serialization/jsonitemdataconverter.h>
@@ -39,51 +41,162 @@ public:
     {
         ConverterContext context;
 
-        //! Toy method to convert SessionItem to JSON object.
+        //! Simplified method to convert SessionItem to JSON object.
         auto to_json = [this](const SessionItem& item) {
             QJsonObject result;
             result[JsonItemFormatAssistant::modelKey] = QString::fromStdString(item.modelType());
-//            result[JsonItemFormatAssistant::itemDataKey] = m_itemdata_converter->get_json(item.itemData());
+            result[JsonItemFormatAssistant::itemDataKey] =
+                m_itemdata_converter->get_json(*item.itemData());
+            result[JsonItemFormatAssistant::itemTagsKey] = QJsonObject();
+            return result;
+        };
+
+        //! Simplified method to update SessionItem from JSON object
+        auto update_item = [this](const QJsonObject& json, SessionItem* item) {
+            m_itemdata_converter->from_json(json[JsonItemFormatAssistant::itemDataKey].toArray(),
+                                            *item->itemData());
+        };
+
+        //! Simplified method to create SessionItem from JSON object
+        auto create_item = [this](const QJsonObject& json) {
+            std::unique_ptr<SessionItem> result = std::make_unique<PropertyItem>();
+            m_itemdata_converter->from_json(json[JsonItemFormatAssistant::itemDataKey].toArray(),
+                                            *result->itemData());
             return result;
         };
 
         context.m_item_to_json = to_json;
+        context.m_json_to_item_update = update_item;
+        context.m_json_to_item = create_item;
 
         return std::make_unique<JsonItemContainerConverter>(context);
     }
 
     ~JsonItemContainerConverterTest();
 
-    std::unique_ptr<JsonItemDataConverterInterface> m_itemdata_converter;
+    std::unique_ptr<JsonItemDataConverter> m_itemdata_converter;
 };
 
 JsonItemContainerConverterTest::~JsonItemContainerConverterTest() = default;
 
-//! PropertyItem to json object.
+//! SessionItemContainer (with single property item) to json object.
 
 TEST_F(JsonItemContainerConverterTest, propertyContainerToJson)
 {
+    // creating container
     TagInfo tag = TagInfo::propertyTag("thickness", Constants::PropertyType);
     SessionItemContainer container(tag);
-    EXPECT_TRUE(container.insertItem(new PropertyItem, 0));
 
-    JsonItemContainerConverter converter;
-    auto json = converter.to_json(container);
+    // inserting single property item
+    auto item = new PropertyItem;
+    item->setData(42);
+    EXPECT_TRUE(container.insertItem(item, 0));
+
+    // converting top JSON and checking that it is valid JSON object
+    auto converter = createConverter();
+    auto json = converter->to_json(container);
 
     JsonItemFormatAssistant assistant;
     EXPECT_TRUE(assistant.isSessionItemContainer(json));
 }
 
-TEST_F(JsonItemContainerConverterTest, propertyContainerToFile)
+//! SessionItemContainer (with single property item) to json object and back.
+
+TEST_F(JsonItemContainerConverterTest, propertyContainerToJsonAndBack)
 {
+    // creating container
     TagInfo tag = TagInfo::propertyTag("thickness", Constants::PropertyType);
     SessionItemContainer container(tag);
-    EXPECT_TRUE(container.insertItem(new PropertyItem, 0));
 
+    // inserting single property item
+    auto item = new PropertyItem;
+    item->setData(42);
+    EXPECT_TRUE(container.insertItem(item, 0));
+
+    // converting top JSON
+    auto converter = createConverter();
+    auto json = converter->to_json(container);
+
+    // creating second container with same layout, and updating it from JSON
+    SessionItemContainer container2(tag);
+    auto item2 = new PropertyItem;
+    item2->setData(43);
+    EXPECT_TRUE(container2.insertItem(item2, 0));
+    converter->from_json(json, container2);
+
+    // Checking that item in container2 has been reused, and get same properties as item.
+    EXPECT_EQ(container2.itemAt(0), item2);
+    EXPECT_EQ(item->displayName(), item2->displayName());
+    EXPECT_EQ(item->identifier(), item2->identifier());
+    EXPECT_EQ(42, item2->data<int>());
+}
+
+//! SessionItemContainer (with single property item) to json file and back.
+
+TEST_F(JsonItemContainerConverterTest, propertyContainerToFileAndBack)
+{
+    // creating container
+    TagInfo tag = TagInfo::propertyTag("thickness", Constants::PropertyType);
+    SessionItemContainer container(tag);
+
+    // inserting single property item
+    auto item = new PropertyItem;
+    item->setData(42);
+    EXPECT_TRUE(container.insertItem(item, 0));
+
+    // converting top JSON and checking that it is valid JSON object
     auto converter = createConverter();
     auto json = converter->to_json(container);
 
     // saving object to file
     auto fileName = TestUtils::TestFileName(testDir(), "propertyContainerToFileAndBack.json");
     TestUtils::SaveJson(json, fileName);
+
+    // loading from file
+    auto document = TestUtils::LoadJson(fileName);
+
+    // creating second container with same layout, and updating it from JSON
+    SessionItemContainer container2(tag);
+    auto item2 = new PropertyItem;
+    item2->setData(43);
+    EXPECT_TRUE(container2.insertItem(item2, 0));
+    converter->from_json(document.object(), container2);
+
+    // Checking that item in container2 has been reused, and get same properties as item.
+    EXPECT_EQ(container2.itemAt(0), item2);
+    EXPECT_EQ(item->displayName(), item2->displayName());
+    EXPECT_EQ(item->identifier(), item2->identifier());
+    EXPECT_EQ(42, item2->data<int>());
+}
+
+//! SessionItemContainer (with universal tag and several items) to json object and back.
+
+TEST_F(JsonItemContainerConverterTest, universalContainerToJsonAndBack)
+{
+    // creating container
+    TagInfo tag = TagInfo::universalTag("items");
+    SessionItemContainer container(tag);
+
+    // inserting single property item
+    const int n_max_items = 3;
+    for (int i = 0; i < n_max_items; ++i) {
+        auto item = new PropertyItem;
+        item->setData(i + 42);
+        EXPECT_TRUE(container.insertItem(item, 0));
+    }
+
+    // converting top JSON
+    auto converter = createConverter();
+    auto json = converter->to_json(container);
+
+    // creating second container with same layout, but without items
+    SessionItemContainer container2(tag);
+    converter->from_json(json, container2);
+
+    // Checking that container2 got same content as container
+    EXPECT_EQ(container2.itemCount(), n_max_items);
+    for (int i = 0; i < n_max_items; ++i) {
+        EXPECT_EQ(container.itemAt(i)->identifier(), container2.itemAt(i)->identifier());
+        EXPECT_EQ(container.itemAt(i)->data<int>(), container2.itemAt(i)->data<int>());
+    }
 }

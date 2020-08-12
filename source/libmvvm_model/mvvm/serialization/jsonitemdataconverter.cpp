@@ -13,6 +13,7 @@
 #include <mvvm/model/sessionitemdata.h>
 #include <mvvm/serialization/jsonitemdataconverter.h>
 #include <mvvm/serialization/jsonvariantconverter.h>
+#include <set>
 #include <stdexcept>
 
 using namespace ModelView;
@@ -70,9 +71,17 @@ void JsonItemDataConverter::from_json(const QJsonArray& object, SessionItemData&
 {
     auto persistent_data = get_data(object);
 
-    for (auto role : data.roles())
+    auto runtime_roles = data.roles();
+    auto persistent_roles = persistent_data->roles();
+
+    std::set<int> roles(runtime_roles.begin(), runtime_roles.end());
+    roles.insert(persistent_roles.begin(), persistent_roles.end());
+
+    for (auto role : roles) {
+        // all roles existing in `persistent` will be taken from there
         if (persistent_data->hasData(role))
             data.setData(persistent_data->data(role), role);
+    }
 }
 
 //! Returns true if it is valid DataRole.

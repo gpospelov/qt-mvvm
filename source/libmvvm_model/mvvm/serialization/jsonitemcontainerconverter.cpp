@@ -40,6 +40,27 @@ struct JsonItemContainerConverter::JsonItemContainerConverterImpl {
         if (m_context.m_json_to_item_update)
             m_context.m_json_to_item_update(json, item);
     }
+
+    std::unique_ptr<SessionItem> json_to_item(const QJsonObject& json)
+    {
+        return m_context.m_json_to_item ? m_context.m_json_to_item(json)
+                                        : std::unique_ptr<SessionItem>();
+    }
+
+    void process_single_property_tag(const QJsonObject& json, SessionItemContainer& container)
+    {
+        for (const auto obj : json[JsonItemFormatAssistant::itemsKey].toArray())
+            json_to_item_update(obj.toObject(), container.itemAt(0));
+    }
+
+    void process_universal_property_tag(const QJsonObject& json, SessionItemContainer& container)
+    {
+        for (const auto obj : json[JsonItemFormatAssistant::itemsKey].toArray()) {
+            auto item = json_to_item(obj.toObject());
+            if (item)
+                container.insertItem(item.release(), container.itemCount());
+        }
+    }
 };
 
 JsonItemContainerConverter::JsonItemContainerConverter()
@@ -80,5 +101,11 @@ void JsonItemContainerConverter::from_json(const QJsonObject& json, SessionItemC
         json[JsonItemFormatAssistant::tagInfoKey].toObject());
 
     if (Compatibility::IsCompatibleSinglePropertyTag(container, tagInfo))
-        p_impl->json_to_item_update(json, container.itemAt(0));
+        p_impl->process_single_property_tag(json, container);
+
+    else if (Compatibility::IsCompatibleUniversalTag(container, tagInfo))
+        p_impl->process_universal_property_tag(json, container);
+
+    else
+        throw std::runtime_error("Error in JsonItemContainerConverter: can't convert json");
 }

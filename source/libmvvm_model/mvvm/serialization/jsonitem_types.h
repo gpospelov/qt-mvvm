@@ -36,7 +36,7 @@ struct MVVM_MODEL_EXPORT ConverterContext {
     using json_to_item_update_t = std::function<void(const QJsonObject&, SessionItem*)>;
 
     //! Creates new SessionItem from JSON object.
-    using json_to_item_t = std::function<std::unique_ptr<SessionItem*>(const QJsonObject&)>;
+    using json_to_item_t = std::function<std::unique_ptr<SessionItem>(const QJsonObject&)>;
 
     item_to_json_t m_item_to_json;
     json_to_item_update_t m_json_to_item_update;
