@@ -9,6 +9,7 @@
 
 #include <QJsonObject>
 #include <mvvm/serialization/jsonitemformatassistant.h>
+#include <QStringList>
 
 using namespace ModelView;
 
