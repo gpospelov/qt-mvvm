@@ -85,3 +85,14 @@ std::string ModelView::TagInfo::toString() const
     ostr << "}";
     return ostr.str();
 }
+
+bool ModelView::TagInfo::operator==(const ModelView::TagInfo& other) const
+{
+    return m_name == other.m_name && m_min == other.m_min && m_max == other.m_max
+           && m_modelTypes == other.m_modelTypes;
+}
+
+bool ModelView::TagInfo::operator!=(const ModelView::TagInfo& other) const
+{
+    return !(*this == other);
+}
