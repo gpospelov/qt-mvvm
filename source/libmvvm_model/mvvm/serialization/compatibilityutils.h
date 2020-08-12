@@ -36,7 +36,7 @@ CombineItemData(const SessionItemData& runtime, const SessionItemData& persisten
 //! See explanations in the code.
 
 MVVM_MODEL_EXPORT
-bool IsCompatibleTagInfo(const SessionItemContainer& container, const TagInfo& taginfo);
+bool IsCompatibleUniversalTag(const SessionItemContainer& container, const TagInfo& taginfo);
 
 //! Returns `true` if given TagInfo is a single property tag which is compatible with given
 //! container. See more explanations in the code.

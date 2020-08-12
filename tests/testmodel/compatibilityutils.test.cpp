@@ -9,11 +9,10 @@
 
 #include "google_test.h"
 #include <mvvm/model/mvvm_types.h>
-#include <mvvm/model/sessionitemdata.h>
 #include <mvvm/model/propertyitem.h>
 #include <mvvm/model/sessionitemcontainer.h>
+#include <mvvm/model/sessionitemdata.h>
 #include <mvvm/serialization/compatibilityutils.h>
-#include <mvvm/model/mvvm_types.h>
 
 using namespace ModelView;
 
@@ -104,7 +103,7 @@ TEST_F(CompatibilityUtilsTest, combineItemDataTypicalScenario)
 
 //! Testing IsCompatibleSingleProperty.
 
-TEST_F(CompatibilityUtilsTest, IsCompatibleSingleProperty)
+TEST_F(CompatibilityUtilsTest, IsCompatibleSinglePropertyTag)
 {
     const std::string name("tag");
     TagInfo tag = TagInfo::propertyTag("thickness", Constants::PropertyType);
@@ -115,4 +114,19 @@ TEST_F(CompatibilityUtilsTest, IsCompatibleSingleProperty)
 
     EXPECT_TRUE(container.insertItem(new PropertyItem, 0));
     EXPECT_TRUE(Compatibility::IsCompatibleSinglePropertyTag(container, tag));
+}
+
+//! Testing IsCompatibleSingleProperty.
+
+TEST_F(CompatibilityUtilsTest, IsCompatibleUniversalTag)
+{
+    const std::string name("tag");
+    TagInfo tag = TagInfo::universalTag("layers");
+    SessionItemContainer container(tag);
+
+    // to be compatible, container should be empty
+    EXPECT_TRUE(Compatibility::IsCompatibleUniversalTag(container, tag));
+
+    EXPECT_TRUE(container.insertItem(new PropertyItem, 0));
+    EXPECT_FALSE(Compatibility::IsCompatibleUniversalTag(container, tag));
 }

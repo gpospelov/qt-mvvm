@@ -56,13 +56,22 @@ std::unique_ptr<SessionItemData> CombineItemData(const SessionItemData& runtime,
 }
 
 /*
-
-
+Returns `true` if given TagInfo is compatible with given container.
+Here, `container` is what exists at runtime, `taginfo` has been obtained from the serialization.
+Container is considered to be compatible (i.e. can be updated from serialized content), if it has
+exactly same tag, and it is empty.
 */
 
-bool IsCompatibleTagInfo(const SessionItemContainer& container, const TagInfo& taginfo)
+bool IsCompatibleUniversalTag(const SessionItemContainer& container, const TagInfo& taginfo)
 {
-    return false;
+    auto container_taginfo = container.tagInfo();
+
+    bool is_empty = container.empty();
+    bool both_are_universal =
+        !container_taginfo.isSinglePropertyTag() && !taginfo.isSinglePropertyTag();
+    bool same_tags = container_taginfo == taginfo;
+
+    return both_are_universal && same_tags && is_empty;
 }
 
 /*
@@ -71,7 +80,6 @@ Here, `container` is what exists at runtime, `taginfo` has been obtained from th
 Container is considered to be compatible (i.e. can be updated from serialized content), if it has
 exactly same tag, and property item ready for update.
 */
-
 
 bool IsCompatibleSinglePropertyTag(const SessionItemContainer& container, const TagInfo& taginfo)
 {
