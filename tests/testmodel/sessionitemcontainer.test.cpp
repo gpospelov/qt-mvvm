@@ -32,6 +32,7 @@ TEST_F(SessionItemContainerTest, initialState)
     SessionItemContainer tag(TagInfo::universalTag(name));
 
     EXPECT_EQ(tag.itemCount(), 0);
+    EXPECT_TRUE(tag.empty());
     EXPECT_EQ(tag.name(), name);
     EXPECT_EQ(tag.items(), std::vector<SessionItem*>());
 }
@@ -53,6 +54,7 @@ TEST_F(SessionItemContainerTest, insertItem)
     EXPECT_TRUE(tag.insertItem(child1, tag.itemCount()));
     EXPECT_TRUE(tag.insertItem(child2, tag.itemCount()));
     EXPECT_EQ(tag.itemCount(), 2);
+    EXPECT_FALSE(tag.empty());
     std::vector<SessionItem*> expected = {child1, child2};
     EXPECT_EQ(tag.items(), expected);
 
