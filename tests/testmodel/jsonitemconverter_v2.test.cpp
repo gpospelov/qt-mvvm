@@ -58,21 +58,21 @@ TEST_F(JsonItemConverterV2Test, propertyItemToJson)
     EXPECT_TRUE(assistant.isSessionItem(object));
 }
 
-////! PropertyItem to json object and back.
+//! PropertyItem to json object and back.
 
-//TEST_F(JsonItemConverterV2Test, propertyItemToJsonAndBack)
-//{
-//    auto converter = createConverter();
+TEST_F(JsonItemConverterV2Test, propertyItemToJsonAndBack)
+{
+    auto converter = createConverter();
 
-//    PropertyItem item;
-//    item.setToolTip("abc");
-//    auto object = converter->to_json(&item);
+    PropertyItem item;
+    item.setToolTip("abc");
+    auto object = converter->to_json(&item);
 
-//    auto reco = converter->from_json(object);
+    auto reco = converter->from_json(object);
 
-//    EXPECT_EQ(reco->modelType(), item.modelType());
-//    EXPECT_EQ(reco->displayName(), item.displayName());
-//    EXPECT_EQ(reco->identifier(), item.identifier());
+    EXPECT_EQ(reco->modelType(), item.modelType());
+    EXPECT_EQ(reco->displayName(), item.displayName());
+    EXPECT_EQ(reco->identifier(), item.identifier());
 
-//    EXPECT_EQ(reco->toolTip(), std::string()); // tooltip is not preserved
-//}
+    EXPECT_EQ(reco->toolTip(), std::string()); // tooltip is not preserved
+}

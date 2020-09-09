@@ -49,16 +49,14 @@ struct JsonItemConverterV2::JsonItemConverterV2Impl {
 
     const ItemFactoryInterface* factory() { return m_factory; }
 
-    void populate_item_data(const QJsonObject& json, SessionItemData& item_data)
+    void populate_item_data(const QJsonArray& json, SessionItemData& item_data)
     {
-        m_itemdata_converter->from_json(json[JsonItemFormatAssistant::itemDataKey].toArray(),
-                                        item_data);
+        m_itemdata_converter->from_json(json, item_data);
     }
 
     void populate_item_tags(const QJsonObject& json, SessionItemTags& item_tags)
     {
-        m_itemtags_converter->from_json(json[JsonItemFormatAssistant::itemTagsKey].toObject(),
-                                        item_tags);
+        m_itemtags_converter->from_json(json, item_tags);
     }
 
     void populate_item(const QJsonObject& json, SessionItem& item)
@@ -68,8 +66,8 @@ struct JsonItemConverterV2::JsonItemConverterV2Impl {
         if (modelType != item.modelType())
             throw std::runtime_error("Item model mismatch");
 
-        populate_item_data(json[JsonItemFormatAssistant::itemDataKey].toObject(), *item.itemData());
         populate_item_tags(json[JsonItemFormatAssistant::itemTagsKey].toObject(), *item.itemTags());
+        populate_item_data(json[JsonItemFormatAssistant::itemDataKey].toArray(), *item.itemData());
     }
 
     QJsonObject item_to_json(const SessionItem& item) const
