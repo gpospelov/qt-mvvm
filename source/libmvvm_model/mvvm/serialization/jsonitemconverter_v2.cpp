@@ -71,6 +71,18 @@ struct JsonItemConverterV2::JsonItemConverterV2Impl {
         populate_item_data(json[JsonItemFormatAssistant::itemDataKey].toObject(), *item.itemData());
         populate_item_tags(json[JsonItemFormatAssistant::itemTagsKey].toObject(), *item.itemTags());
     }
+
+    QJsonObject item_to_json(const SessionItem& item) const
+    {
+        QJsonObject result;
+        result[JsonItemFormatAssistant::modelKey] = QString::fromStdString(item.modelType());
+        result[JsonItemFormatAssistant::itemDataKey] =
+            m_itemdata_converter->get_json(*item.itemData());
+        result[JsonItemFormatAssistant::itemTagsKey] =
+            m_itemtags_converter->to_json(*item.itemTags());
+
+        return result;
+    }
 };
 
 JsonItemConverterV2::JsonItemConverterV2(const ItemFactoryInterface* factory, bool new_id_flag)
@@ -82,9 +94,9 @@ JsonItemConverterV2::JsonItemConverterV2(const ItemFactoryInterface* factory, bo
 
 JsonItemConverterV2::~JsonItemConverterV2() = default;
 
-QJsonObject JsonItemConverterV2::to_json(const SessionItem* /*item*/) const
+QJsonObject JsonItemConverterV2::to_json(const SessionItem* item) const
 {
-    return {};
+    return item ? p_impl->item_to_json(*item) : QJsonObject();
 }
 
 std::unique_ptr<SessionItem> JsonItemConverterV2::from_json(const QJsonObject& json) const
