@@ -28,19 +28,13 @@ class SessionItem;
 //! Provides necessary callbacks to convert SessionItem to JSON and back.
 
 struct MVVM_MODEL_EXPORT ConverterContext {
-
-    //! Converts SessionItem to JSON object.
     using item_to_json_t = std::function<QJsonObject(const SessionItem&)>;
-
-    //! Updates existing SessionItem from JSON object.
     using json_to_item_update_t = std::function<void(const QJsonObject&, SessionItem*)>;
-
-    //! Creates new SessionItem from JSON object.
     using json_to_item_t = std::function<std::unique_ptr<SessionItem>(const QJsonObject&)>;
 
-    item_to_json_t m_item_to_json;
-    json_to_item_update_t m_json_to_item_update;
-    json_to_item_t m_json_to_item;
+    item_to_json_t m_item_to_json; //! converts SessionItem to JSON object
+    json_to_item_update_t m_json_to_item_update;//! updates existing SessionItem from JSON object
+    json_to_item_t m_json_to_item; //! creates new SessionItem from JSON object
 };
 
 } // namespace ModelView
