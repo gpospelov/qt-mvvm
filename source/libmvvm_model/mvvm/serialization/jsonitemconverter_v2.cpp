@@ -49,16 +49,14 @@ struct JsonItemConverterV2::JsonItemConverterV2Impl {
 
     const ItemFactoryInterface* factory() { return m_factory; }
 
-    void populate_item_data(const QJsonObject& json, SessionItemData& item_data)
+    void populate_item_data(const QJsonArray& json, SessionItemData& item_data)
     {
-        m_itemdata_converter->from_json(json[JsonItemFormatAssistant::itemDataKey].toArray(),
-                                        item_data);
+        m_itemdata_converter->from_json(json, item_data);
     }
 
     void populate_item_tags(const QJsonObject& json, SessionItemTags& item_tags)
     {
-        m_itemtags_converter->from_json(json[JsonItemFormatAssistant::itemTagsKey].toObject(),
-                                        item_tags);
+        m_itemtags_converter->from_json(json, item_tags);
     }
 
     void populate_item(const QJsonObject& json, SessionItem& item)
@@ -68,8 +66,23 @@ struct JsonItemConverterV2::JsonItemConverterV2Impl {
         if (modelType != item.modelType())
             throw std::runtime_error("Item model mismatch");
 
-        populate_item_data(json[JsonItemFormatAssistant::itemDataKey].toObject(), *item.itemData());
         populate_item_tags(json[JsonItemFormatAssistant::itemTagsKey].toObject(), *item.itemTags());
+        populate_item_data(json[JsonItemFormatAssistant::itemDataKey].toArray(), *item.itemData());
+
+        for (auto child: item.children())
+            child->setParent(&item);
+    }
+
+    QJsonObject item_to_json(const SessionItem& item) const
+    {
+        QJsonObject result;
+        result[JsonItemFormatAssistant::modelKey] = QString::fromStdString(item.modelType());
+        result[JsonItemFormatAssistant::itemDataKey] =
+            m_itemdata_converter->get_json(*item.itemData());
+        result[JsonItemFormatAssistant::itemTagsKey] =
+            m_itemtags_converter->to_json(*item.itemTags());
+
+        return result;
     }
 };
 
@@ -82,9 +95,9 @@ JsonItemConverterV2::JsonItemConverterV2(const ItemFactoryInterface* factory, bo
 
 JsonItemConverterV2::~JsonItemConverterV2() = default;
 
-QJsonObject JsonItemConverterV2::to_json(const SessionItem* /*item*/) const
+QJsonObject JsonItemConverterV2::to_json(const SessionItem* item) const
 {
-    return {};
+    return item ? p_impl->item_to_json(*item) : QJsonObject();
 }
 
 std::unique_ptr<SessionItem> JsonItemConverterV2::from_json(const QJsonObject& json) const

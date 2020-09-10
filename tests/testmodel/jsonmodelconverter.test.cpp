@@ -19,6 +19,7 @@
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/model/taginfo.h>
 #include <mvvm/serialization/jsonmodelconverter.h>
+#include <mvvm/serialization/jsonitemformatassistant.h>
 #include <stdexcept>
 
 using namespace ModelView;
@@ -34,23 +35,6 @@ public:
 
 JsonModelConverterTest::~JsonModelConverterTest() = default;
 
-//! Validity of json object representing SessionModel.
-
-TEST_F(JsonModelConverterTest, isValidModel)
-{
-    JsonModelConverter converter;
-
-    // empty json object is not valid
-    QJsonObject object;
-    EXPECT_FALSE(converter.isSessionModel(object));
-
-    // json object representing valid SessionModel
-    QJsonObject object2;
-    object2[JsonModelConverter::modelKey] = "abc";
-    object2[JsonModelConverter::itemsKey] = QJsonArray();
-    EXPECT_TRUE(converter.isSessionModel(object2));
-}
-
 //! Creation of json object: empty model.
 
 TEST_F(JsonModelConverterTest, emptyModel)
@@ -61,10 +45,11 @@ TEST_F(JsonModelConverterTest, emptyModel)
     QJsonObject object;
     converter.model_to_json(model, object);
 
-    EXPECT_EQ(object[JsonModelConverter::modelKey], "TestModel");
-    EXPECT_EQ(object[JsonModelConverter::itemsKey].toArray().size(), 0);
+    EXPECT_EQ(object[JsonItemFormatAssistant::sessionModelKey], "TestModel");
+    EXPECT_EQ(object[JsonItemFormatAssistant::itemsKey].toArray().size(), 0);
 
-    EXPECT_TRUE(converter.isSessionModel(object));
+    JsonItemFormatAssistant assistant;
+    EXPECT_TRUE(assistant.isSessionModel(object));
 }
 
 //! Empty model to json and back.

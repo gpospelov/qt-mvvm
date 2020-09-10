@@ -8,8 +8,8 @@
 // ************************************************************************** //
 
 #include <QJsonObject>
-#include <mvvm/serialization/jsonitemformatassistant.h>
 #include <QStringList>
+#include <mvvm/serialization/jsonitemformatassistant.h>
 
 using namespace ModelView;
 
@@ -40,6 +40,16 @@ QStringList expected_tags_keys()
 QStringList expected_itemcontainer_keys()
 {
     QStringList result = QStringList() << JsonItemFormatAssistant::tagInfoKey
+                                       << JsonItemFormatAssistant::itemsKey;
+    std::sort(result.begin(), result.end());
+    return result;
+}
+
+//! Returns list of keys which should be in QJsonObject to represent SessionModel.
+
+QStringList expected_sessionmodel_keys()
+{
+    QStringList result = QStringList() << JsonItemFormatAssistant::sessionModelKey
                                        << JsonItemFormatAssistant::itemsKey;
     std::sort(result.begin(), result.end());
     return result;
@@ -91,6 +101,19 @@ bool JsonItemFormatAssistant::isSessionItemContainer(const QJsonObject& json) co
         return false;
 
     if (!json[itemsKey].isArray())
+        return false;
+
+    return true;
+}
+
+bool JsonItemFormatAssistant::isSessionModel(const QJsonObject& object) const
+{
+    static const QStringList expected = expected_sessionmodel_keys();
+
+    if (object.keys() != expected)
+        return false;
+
+    if (!object[itemsKey].isArray())
         return false;
 
     return true;

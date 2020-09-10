@@ -25,10 +25,6 @@ class SessionModel;
 class MVVM_MODEL_EXPORT JsonModelConverter : public JsonModelConverterInterface
 {
 public:
-    static inline const QString modelKey = "model";
-    static inline const QString itemsKey = "items";
-    static inline const QString versionKey = "version";
-
     JsonModelConverter();
     ~JsonModelConverter() override;
 
@@ -37,9 +33,6 @@ public:
 
     //! Reads json object and build the model.
     void json_to_model(const QJsonObject& json, SessionModel& model) const override;
-
-    //! Returns true if given json object represents SessionModel.
-    bool isSessionModel(const QJsonObject& object) const;
 };
 
 } // namespace ModelView
