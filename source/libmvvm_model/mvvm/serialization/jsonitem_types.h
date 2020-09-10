@@ -27,7 +27,7 @@ class SessionItem;
 
 //! Provides necessary callbacks to convert SessionItem to JSON and back.
 
-struct MVVM_MODEL_EXPORT ConverterContext {
+struct MVVM_MODEL_EXPORT ConverterCallbacks {
     using item_to_json_t = std::function<QJsonObject(const SessionItem&)>;
     using json_to_item_update_t = std::function<void(const QJsonObject&, SessionItem*)>;
     using json_to_item_t = std::function<std::unique_ptr<SessionItem>(const QJsonObject&)>;

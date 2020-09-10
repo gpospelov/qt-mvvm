@@ -63,8 +63,8 @@ public:
             return result;
         };
 
-        ConverterContext context{to_json, update_item, create_item};
-        return std::make_unique<JsonItemContainerConverter>(context);
+        ConverterCallbacks callbacks{to_json, update_item, create_item};
+        return std::make_unique<JsonItemContainerConverter>(callbacks);
     }
 
     ~JsonItemContainerConverterTest();

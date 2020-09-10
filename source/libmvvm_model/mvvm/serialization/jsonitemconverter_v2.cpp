@@ -41,10 +41,10 @@ struct JsonItemConverterV2::JsonItemConverterV2Impl {
         //! Simplified method to create SessionItem from JSON object
         auto create_item = [this](const QJsonObject& json) { return m_parent->from_json(json); };
 
-        ConverterContext context{to_json, update_item, create_item};
+        ConverterCallbacks callbacks{to_json, update_item, create_item};
 
         m_itemdata_converter = std::make_unique<JsonItemDataConverter>();
-        m_itemtags_converter = std::make_unique<JsonItemTagsConverter>(context);
+        m_itemtags_converter = std::make_unique<JsonItemTagsConverter>(callbacks);
     }
 
     const ItemFactoryInterface* factory() { return m_factory; }
@@ -71,6 +71,8 @@ struct JsonItemConverterV2::JsonItemConverterV2Impl {
 
         for (auto child: item.children())
             child->setParent(&item);
+
+
     }
 
     QJsonObject item_to_json(const SessionItem& item) const

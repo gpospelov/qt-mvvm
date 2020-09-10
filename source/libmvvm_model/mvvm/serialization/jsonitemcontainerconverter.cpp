@@ -23,28 +23,30 @@ using namespace ModelView;
 
 struct JsonItemContainerConverter::JsonItemContainerConverterImpl {
     std::unique_ptr<JsonTagInfoConverterInterface> m_taginfo_converter;
-    ConverterContext m_context;
+    ConverterCallbacks m_converter_callbacks;
 
-    JsonItemContainerConverterImpl(ConverterContext context = {}) : m_context(std::move(context))
+    JsonItemContainerConverterImpl(ConverterCallbacks callbacks = {})
+        : m_converter_callbacks(std::move(callbacks))
     {
         m_taginfo_converter = std::make_unique<JsonTagInfoConverter>();
     }
 
     QJsonObject item_to_json(const SessionItem& item)
     {
-        return m_context.m_item_to_json ? m_context.m_item_to_json(item) : QJsonObject();
+        return m_converter_callbacks.m_item_to_json ? m_converter_callbacks.m_item_to_json(item)
+                                                    : QJsonObject();
     }
 
     void json_to_item_update(const QJsonObject& json, SessionItem* item)
     {
-        if (m_context.m_json_to_item_update)
-            m_context.m_json_to_item_update(json, item);
+        if (m_converter_callbacks.m_json_to_item_update)
+            m_converter_callbacks.m_json_to_item_update(json, item);
     }
 
     std::unique_ptr<SessionItem> json_to_item(const QJsonObject& json)
     {
-        return m_context.m_json_to_item ? m_context.m_json_to_item(json)
-                                        : std::unique_ptr<SessionItem>();
+        return m_converter_callbacks.m_json_to_item ? m_converter_callbacks.m_json_to_item(json)
+                                                    : std::unique_ptr<SessionItem>();
     }
 
     void process_single_property_tag(const QJsonObject& json, SessionItemContainer& container)
@@ -68,8 +70,8 @@ JsonItemContainerConverter::JsonItemContainerConverter()
 {
 }
 
-JsonItemContainerConverter::JsonItemContainerConverter(ConverterContext context)
-    : p_impl(std::make_unique<JsonItemContainerConverterImpl>(std::move(context)))
+JsonItemContainerConverter::JsonItemContainerConverter(ConverterCallbacks callbacks)
+    : p_impl(std::make_unique<JsonItemContainerConverterImpl>(std::move(callbacks)))
 {
 }
 
