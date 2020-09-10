@@ -68,6 +68,9 @@ struct JsonItemConverterV2::JsonItemConverterV2Impl {
 
         populate_item_tags(json[JsonItemFormatAssistant::itemTagsKey].toObject(), *item.itemTags());
         populate_item_data(json[JsonItemFormatAssistant::itemDataKey].toArray(), *item.itemData());
+
+        for (auto child: item.children())
+            child->setParent(&item);
     }
 
     QJsonObject item_to_json(const SessionItem& item) const
