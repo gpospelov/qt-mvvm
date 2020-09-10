@@ -33,10 +33,12 @@ public:
     static inline const QString containerKey = "containers";
     static inline const QString tagInfoKey = "tagInfo";
     static inline const QString itemsKey = "items";
+    static inline const QString versionKey = "version";
 
     bool isSessionItem(const QJsonObject& json) const;
     bool isSessionItemTags(const QJsonObject& json) const;
     bool isSessionItemContainer(const QJsonObject& json) const;
+    bool isSessionModel(const QJsonObject& object) const;
 };
 
 } // namespace ModelView

@@ -76,3 +76,20 @@ TEST_F(JsonItemFormatAssistantTest, isSessionItemContainer)
     object[JsonItemFormatAssistant::itemsKey] = QJsonArray();
     EXPECT_TRUE(assistant.isSessionItemContainer(object));
 }
+
+//! Validity of json object representing SessionModel.
+
+TEST_F(JsonItemFormatAssistantTest, isValidSessionModel)
+{
+    JsonItemFormatAssistant assistant;
+
+    // empty json object is not valid
+    QJsonObject object;
+    EXPECT_FALSE(assistant.isSessionModel(object));
+
+    // json object representing valid SessionModel
+    QJsonObject object2;
+    object2[JsonItemFormatAssistant::modelKey] = "abc";
+    object2[JsonItemFormatAssistant::itemsKey] = QJsonArray();
+    EXPECT_TRUE(assistant.isSessionModel(object2));
+}

@@ -12,22 +12,11 @@
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/serialization/jsonitemconverter.h>
+#include <mvvm/serialization/jsonitemformatassistant.h>
 #include <mvvm/serialization/jsonmodelconverter.h>
 #include <stdexcept>
 
 using namespace ModelView;
-
-namespace
-{
-QStringList expected_model_keys()
-{
-    QStringList result = QStringList()
-                         << JsonModelConverter::modelKey << JsonModelConverter::itemsKey;
-    std::sort(result.begin(), result.end());
-    return result;
-}
-
-} // namespace
 
 JsonModelConverter::JsonModelConverter() = default;
 
@@ -38,7 +27,7 @@ void JsonModelConverter::model_to_json(const SessionModel& model, QJsonObject& j
     if (!model.rootItem())
         throw std::runtime_error("JsonModel::to_json() -> Error. Model is not initialized.");
 
-    json[modelKey] = QString::fromStdString(model.modelType());
+    json[JsonItemFormatAssistant::modelKey] = QString::fromStdString(model.modelType());
 
     QJsonArray itemArray;
 
@@ -47,7 +36,7 @@ void JsonModelConverter::model_to_json(const SessionModel& model, QJsonObject& j
     for (auto item : model.rootItem()->children())
         itemArray.append(converter->to_json(item));
 
-    json[itemsKey] = itemArray;
+    json[JsonItemFormatAssistant::itemsKey] = itemArray;
 }
 
 void JsonModelConverter::json_to_model(const QJsonObject& json, SessionModel& model) const
@@ -55,34 +44,24 @@ void JsonModelConverter::json_to_model(const QJsonObject& json, SessionModel& mo
     if (!model.rootItem())
         throw std::runtime_error("JsonModel::json_to_model() -> Error. Model is not initialized.");
 
-    if (!isSessionModel(json))
+    JsonItemFormatAssistant assistant;
+    if (!assistant.isSessionModel(json))
         throw std::runtime_error("JsonModel::json_to_model() -> Error. Invalid json object.");
 
-    if (json[modelKey].toString() != QString::fromStdString(model.modelType()))
+    if (json[JsonItemFormatAssistant::modelKey].toString()
+        != QString::fromStdString(model.modelType()))
         throw std::runtime_error("JsonModel::json_to_model() -> Unexpected model type '"
                                  + model.modelType() + "', json key '"
-                                 + json[modelKey].toString().toStdString() + "'");
+                                 + json[JsonItemFormatAssistant::modelKey].toString().toStdString()
+                                 + "'");
 
     auto converter = std::make_unique<JsonItemConverter>(model.factory());
 
     auto rebuild_root = [&json, &converter](auto parent) {
-        for (const auto ref : json[itemsKey].toArray()) {
+        for (const auto ref : json[JsonItemFormatAssistant::itemsKey].toArray()) {
             auto item = converter->from_json(ref.toObject());
             parent->insertItem(item.release(), TagRow::append());
         }
     };
     model.clear(rebuild_root);
-}
-
-bool JsonModelConverter::isSessionModel(const QJsonObject& object) const
-{
-    static const QStringList expected = expected_model_keys();
-
-    if (object.keys() != expected)
-        return false;
-
-    if (!object[itemsKey].isArray())
-        return false;
-
-    return true;
 }
