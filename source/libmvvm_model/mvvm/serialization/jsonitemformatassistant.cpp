@@ -49,8 +49,8 @@ QStringList expected_itemcontainer_keys()
 
 QStringList expected_sessionmodel_keys()
 {
-    QStringList result = QStringList()
-                         << JsonItemFormatAssistant::modelKey << JsonItemFormatAssistant::itemsKey;
+    QStringList result = QStringList() << JsonItemFormatAssistant::sessionModelKey
+                                       << JsonItemFormatAssistant::itemsKey;
     std::sort(result.begin(), result.end());
     return result;
 }

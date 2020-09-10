@@ -89,7 +89,7 @@ TEST_F(JsonItemFormatAssistantTest, isValidSessionModel)
 
     // json object representing valid SessionModel
     QJsonObject object2;
-    object2[JsonItemFormatAssistant::modelKey] = "abc";
+    object2[JsonItemFormatAssistant::sessionModelKey] = "abc";
     object2[JsonItemFormatAssistant::itemsKey] = QJsonArray();
     EXPECT_TRUE(assistant.isSessionModel(object2));
 }

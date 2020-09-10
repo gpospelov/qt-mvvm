@@ -45,7 +45,7 @@ TEST_F(JsonModelConverterTest, emptyModel)
     QJsonObject object;
     converter.model_to_json(model, object);
 
-    EXPECT_EQ(object[JsonItemFormatAssistant::modelKey], "TestModel");
+    EXPECT_EQ(object[JsonItemFormatAssistant::sessionModelKey], "TestModel");
     EXPECT_EQ(object[JsonItemFormatAssistant::itemsKey].toArray().size(), 0);
 
     JsonItemFormatAssistant assistant;
