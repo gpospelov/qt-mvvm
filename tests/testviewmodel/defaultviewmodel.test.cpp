@@ -520,7 +520,7 @@ TEST_F(DefaultViewModelTest, horizontalLabels)
 TEST_F(DefaultViewModelTest, jsonConverterLoadModel)
 {
     JsonModelConverter converter;
-    auto object = std::make_unique<QJsonObject>();
+    QJsonObject object;
 
     // preparing jsob object
     {
@@ -528,7 +528,7 @@ TEST_F(DefaultViewModelTest, jsonConverterLoadModel)
         model.insertItem<PropertyItem>();
         JsonModelConverter converter;
         // writing model to json
-        converter.model_to_json(model, *object);
+        object = converter.to_json(model);
     }
 
     // loading model
@@ -542,7 +542,7 @@ TEST_F(DefaultViewModelTest, jsonConverterLoadModel)
     QSignalSpy spyAboutReset(&viewmodel, &DefaultViewModel::modelAboutToBeReset);
     QSignalSpy spyReset(&viewmodel, &DefaultViewModel::modelReset);
 
-    converter.json_to_model(*object, model);
+    converter.from_json(object, model);
 
     EXPECT_EQ(spyInsert.count(), 1); // FIXME shouldn't it be '0'?
     EXPECT_EQ(spyRemove.count(), 0);

@@ -26,12 +26,6 @@ class TagInfo;
 namespace Compatibility
 {
 
-//! Create SessionItemData by combining two sources, runtime and persistent.
-//! See explanations in the code.
-
-MVVM_MODEL_EXPORT std::unique_ptr<SessionItemData>
-CombineItemData(const SessionItemData& runtime, const SessionItemData& persistent);
-
 //! Returns `true` if given TagInfo is compatible with given container.
 //! See explanations in the code.
 

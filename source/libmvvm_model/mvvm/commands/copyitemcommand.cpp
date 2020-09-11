@@ -11,8 +11,8 @@
 #include <mvvm/model/path.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
-#include <mvvm/serialization/itembackupstrategy.h>
-#include <mvvm/serialization/itemcopystrategy.h>
+#include <mvvm/interfaces/itembackupstrategy.h>
+#include <mvvm/interfaces/itemcopystrategy.h>
 #include <sstream>
 
 using namespace ModelView;

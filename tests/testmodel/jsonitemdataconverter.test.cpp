@@ -115,33 +115,7 @@ TEST_F(JsonItemDataConverterTest, fromItemToJsonAndBack)
     }
 }
 
-//! Filtering certain roles while writing to json.
-
-TEST_F(JsonItemDataConverterTest, filteredRoles)
-{
-    // initial data
-    const std::vector<int> roles = {1, 2, 3};
-    const std::vector<QVariant> variants = {QVariant::fromValue(42), QVariant::fromValue(1.23),
-                                            QVariant::fromValue(std::string("abc"))};
-
-    // constructing SessionItemData
-    SessionItemData data;
-    for (size_t i = 0; i < roles.size(); ++i)
-        data.setData(variants[i], roles[i]);
-
-    // constructing json array from data
-    JsonItemDataConverter converter;
-    converter.set_role_filter({1, 3});
-    QJsonArray array = converter.to_json(data);
-
-    // constructing data from json array
-    SessionItemData data2;
-    converter.from_json(array, data2);
-    EXPECT_EQ(data2.roles().size(), 1u);
-    EXPECT_EQ(data2.data(2).value<double>(), 1.23);
-}
-
-//! By default tooltip role is filtered out.
+//! By default tooltip role is enabled for read and write.
 
 TEST_F(JsonItemDataConverterTest, tooltipRole)
 {
@@ -156,12 +130,65 @@ TEST_F(JsonItemDataConverterTest, tooltipRole)
     // constructing data from json array
     SessionItemData data2;
     converter.from_json(array, data2);
-    EXPECT_EQ(data2.roles().size(), 0u);
+    EXPECT_EQ(data2.roles().size(), 1u);
+    EXPECT_EQ(data2.data(ItemDataRole::TOOLTIP).value<std::string>(), "tooltip");
 }
+
+//! Write filtered roles, read all into empty SessionItemData.
+
+TEST_F(JsonItemDataConverterTest, writeFilteredReadAll)
+{
+    // initial data
+    SessionItemData data;
+    data.setData(QVariant::fromValue(std::string("abc")), ItemDataRole::IDENTIFIER);
+    data.setData(42, ItemDataRole::DATA);
+    data.setData(QVariant::fromValue(std::string("abc")), ItemDataRole::DISPLAY);
+    data.setData(QVariant::fromValue(std::string("tooltip")), ItemDataRole::TOOLTIP);
+
+    // constructing json array from data
+    auto to_json_accept = [](auto role) { return role != ItemDataRole::TOOLTIP; };
+
+    JsonItemDataConverter converter(to_json_accept, {});
+    QJsonArray array = converter.to_json(data);
+
+    // constructing data from json array
+    SessionItemData data2;
+    converter.from_json(array, data2);
+    EXPECT_EQ(data2.roles().size(), 3u);
+    EXPECT_FALSE(data2.hasData(ItemDataRole::TOOLTIP));
+}
+
+//! Write all roles, read filtered into empty SessionItemData.
+
+TEST_F(JsonItemDataConverterTest, writeAllReadFiltered)
+{
+    // initial data
+    SessionItemData data;
+    data.setData(QVariant::fromValue(std::string("abc")), ItemDataRole::IDENTIFIER);
+    data.setData(42, ItemDataRole::DATA);
+    data.setData(QVariant::fromValue(std::string("abc")), ItemDataRole::DISPLAY);
+    data.setData(QVariant::fromValue(std::string("tooltip")), ItemDataRole::TOOLTIP);
+
+    // constructing json array from data
+    auto from_json_accept = [](auto role) { return role == ItemDataRole::TOOLTIP; };
+
+    JsonItemDataConverter converter({}, from_json_accept);
+    QJsonArray array = converter.to_json(data);
+
+    // constructing data from json array
+    SessionItemData data2;
+    converter.from_json(array, data2);
+
+    // while array itself has 4 elements, restored data has only TOOLTIPS as defined in filter
+    EXPECT_EQ(array.size(), 4u);
+    EXPECT_EQ(data2.roles().size(), 1u);
+    EXPECT_TRUE(data2.hasData(ItemDataRole::TOOLTIP));
+}
+
 
 //! Update SessionItemData from json obtained from another JsonItemData.
 
-TEST_F(JsonItemDataConverterTest, updateFromJson)
+ TEST_F(JsonItemDataConverterTest, updateFromJson)
 {
     const std::vector<int> roles = {ItemDataRole::IDENTIFIER, ItemDataRole::DATA,
                                     ItemDataRole::TOOLTIP};
@@ -188,7 +215,7 @@ TEST_F(JsonItemDataConverterTest, updateFromJson)
 
     // roles as in initial object, id+data as in data2, tooltip as in data1
     EXPECT_EQ(data1.roles(), roles);
-    EXPECT_EQ(data1.data(ItemDataRole::IDENTIFIER).value<std::string>(), std::string("identifier2"));
-    EXPECT_EQ(data1.data(ItemDataRole::DATA).value<int>(), 43);
+    EXPECT_EQ(data1.data(ItemDataRole::IDENTIFIER).value<std::string>(),
+    std::string("identifier2")); EXPECT_EQ(data1.data(ItemDataRole::DATA).value<int>(), 43);
     EXPECT_EQ(data1.data(ItemDataRole::TOOLTIP).value<std::string>(), std::string("tooltip1"));
 }
