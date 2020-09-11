@@ -27,9 +27,12 @@ QJsonValue keyValue(const QJsonValue& parent_value, const QString& key)
 }
 } // namespace
 
-JsonItemDataConverter::JsonItemDataConverter() : m_variant_converter(new JsonVariantConverter)
+JsonItemDataConverter::JsonItemDataConverter() : m_variant_converter(std::make_unique<JsonVariantConverter>()) {}
+
+JsonItemDataConverter::JsonItemDataConverter(accept_strategy_t to_json_accept,
+                                             accept_strategy_t from_json_accept)
+    : m_to_json_accept(to_json_accept), m_from_json_accept(from_json_accept), m_variant_converter(std::make_unique<JsonVariantConverter>())
 {
-//    set_role_filter({ItemDataRole::TOOLTIP});
 }
 
 JsonItemDataConverter::~JsonItemDataConverter() = default;
@@ -40,7 +43,7 @@ QJsonArray JsonItemDataConverter::to_json(const SessionItemData& data)
 
     for (const auto& x : data) {
         QJsonObject object;
-        if (role_to_save(x.m_role)) {
+        if (isRoleToJson(x.m_role)) {
             object[roleKey] = x.m_role;
             object[variantKey] = m_variant_converter->get_json(x.m_data);
             result.append(object);
@@ -85,20 +88,16 @@ bool JsonItemDataConverter::is_item_data(const QJsonObject& json)
     return json.keys() == expected;
 }
 
-//! Sets the list of roles which should be excluded from json.
-//! It is used, for example, to not to serialize tooltips. Tooltips are set by the GUI, no need
-//! to read older tooltips.
+//! Returns true if given role should be saved in json object.
 
-void JsonItemDataConverter::set_role_filter(const std::vector<int>& roles)
+bool JsonItemDataConverter::isRoleToJson(int role) const
 {
-    m_roles_to_filter = roles;
+    return m_to_json_accept ? m_to_json_accept(role) : true;
 }
 
-//! Returns true if given role should be saved in json file.
+//! Returns true if given role should be parsed from json object.
 
-bool JsonItemDataConverter::role_to_save(int role) const
+bool JsonItemDataConverter::isRoleFromJson(int role) const
 {
-    bool role_in_list = std::find(m_roles_to_filter.begin(), m_roles_to_filter.end(), role)
-                        != m_roles_to_filter.end();
-    return !role_in_list;
+    return m_from_json_accept ? m_from_json_accept(role) : true;
 }
