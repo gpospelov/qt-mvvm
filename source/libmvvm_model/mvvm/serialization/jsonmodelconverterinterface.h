@@ -26,9 +26,9 @@ class MVVM_MODEL_EXPORT JsonModelConverterInterface
 public:
     virtual ~JsonModelConverterInterface() = default;
 
-    virtual void model_to_json(const SessionModel&, QJsonObject&) const = 0;
+    virtual void to_json(const SessionModel&, QJsonObject&) const = 0;
 
-    virtual void json_to_model(const QJsonObject&, SessionModel&) const = 0;
+    virtual void from_json(const QJsonObject&, SessionModel&) const = 0;
 };
 
 } // namespace ModelView

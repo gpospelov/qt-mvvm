@@ -40,7 +40,7 @@ void JsonDocument::save(const std::string& file_name) const
 
     for (auto model : p_impl->models) {
         QJsonObject object;
-        converter.model_to_json(*model, object);
+        converter.to_json(*model, object);
         array.push_back(object);
     }
 
@@ -75,7 +75,7 @@ void JsonDocument::load(const std::string& file_name)
     ModelView::JsonModelConverter converter;
     int index(0);
     for (auto model : p_impl->models) {
-        converter.json_to_model(array.at(index).toObject(), *model);
+        converter.from_json(array.at(index).toObject(), *model);
         ++index;
     }
 

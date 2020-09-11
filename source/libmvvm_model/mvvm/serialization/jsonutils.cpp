@@ -32,7 +32,7 @@ std::string JsonUtils::ModelToJsonString(const ModelView::SessionModel& model)
 {
     QJsonObject json_source;
     JsonModelConverter converter;
-    converter.model_to_json(model, json_source);
+    converter.to_json(model, json_source);
     QJsonDocument document(json_source);
     return QString(document.toJson(QJsonDocument::Indented)).toStdString();
 }

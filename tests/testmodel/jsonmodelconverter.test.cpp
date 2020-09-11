@@ -43,7 +43,7 @@ TEST_F(JsonModelConverterTest, emptyModel)
     SessionModel model("TestModel");
 
     QJsonObject object;
-    converter.model_to_json(model, object);
+    converter.to_json(model, object);
 
     EXPECT_EQ(object[JsonItemFormatAssistant::sessionModelKey], "TestModel");
     EXPECT_EQ(object[JsonItemFormatAssistant::itemsKey].toArray().size(), 0);
@@ -60,20 +60,20 @@ TEST_F(JsonModelConverterTest, emptyModelToJsonAndBack)
     SessionModel model("TestModel");
 
     QJsonObject object;
-    converter.model_to_json(model, object);
+    converter.to_json(model, object);
 
     // attempt to reconstruct model of different type.
     SessionModel target1("NewModel");
-    EXPECT_THROW(converter.json_to_model(object, target1), std::runtime_error);
+    EXPECT_THROW(converter.from_json(object, target1), std::runtime_error);
 
     // attempt to reconstruct non-empty model
     SessionModel target2("TestModel");
     target2.insertItem<SessionItem>();
-    EXPECT_NO_THROW(converter.json_to_model(object, target2));
+    EXPECT_NO_THROW(converter.from_json(object, target2));
 
     // succesfull reconstruction
     SessionModel target3("TestModel");
-    EXPECT_NO_THROW(converter.json_to_model(object, target3));
+    EXPECT_NO_THROW(converter.from_json(object, target3));
     EXPECT_EQ(target3.rootItem()->childrenCount(), 0u);
 }
 
@@ -87,11 +87,11 @@ TEST_F(JsonModelConverterTest, singleItemToJsonAndBack)
     auto item = model.insertItem<SessionItem>();
 
     QJsonObject object;
-    converter.model_to_json(model, object);
+    converter.to_json(model, object);
 
     // filling new model
     SessionModel target("TestModel");
-    converter.json_to_model(object, target);
+    converter.from_json(object, target);
     EXPECT_EQ(target.rootItem()->childrenCount(), 1u);
     auto reco_item = target.rootItem()->getItem("", 0);
     EXPECT_EQ(reco_item->parent(), target.rootItem());
@@ -116,11 +116,11 @@ TEST_F(JsonModelConverterTest, parentAndChildToJsonAndBack)
 
     // writing model to json
     QJsonObject object;
-    converter.model_to_json(model, object);
+    converter.to_json(model, object);
 
     // reading model from json
     SessionModel target("TestModel");
-    converter.json_to_model(object, target);
+    converter.from_json(object, target);
 
     // accessing reconstructed parent and child
     auto reco_parent = target.rootItem()->getItem("", 0);
@@ -157,12 +157,12 @@ TEST_F(JsonModelConverterTest, identifiers)
     SessionModel source("SourceModel", pool1);
     auto parent1 = source.insertItem<SessionItem>();
     QJsonObject json_source;
-    converter.model_to_json(source, json_source);
+    converter.to_json(source, json_source);
 
     // creating source and filling it from json
     auto pool2 = std::make_shared<ItemPool>();
     SessionModel target("SourceModel", pool2);
-    converter.json_to_model(json_source, target);
+    converter.from_json(json_source, target);
     auto reco_parent = target.rootItem()->getItem("", 0);
 
     // comparing identifiers of two items from different models
@@ -172,7 +172,7 @@ TEST_F(JsonModelConverterTest, identifiers)
 
     // saving target in its own json
     QJsonObject json_target;
-    converter.model_to_json(target, json_target);
+    converter.to_json(target, json_target);
 
     // comparing text representations of two json
     EXPECT_EQ(TestUtils::JsonToString(json_source), TestUtils::JsonToString(json_target));
@@ -200,7 +200,7 @@ TEST_F(JsonModelConverterTest, parentAndChildToFileAndBack)
 
     // writing model to json
     auto object = std::make_unique<QJsonObject>();
-    converter.model_to_json(model, *object);
+    converter.to_json(model, *object);
 
     // saving object to file
     auto fileName = TestUtils::TestFileName(testDir(), "model.json");
@@ -210,7 +210,7 @@ TEST_F(JsonModelConverterTest, parentAndChildToFileAndBack)
     // converting document back to item
     auto document = TestUtils::LoadJson(fileName);
     SessionModel target("TestModel");
-    converter.json_to_model(document.object(), target);
+    converter.from_json(document.object(), target);
 
     // accessing reconstructed parent and child
     auto reco_parent = target.rootItem()->getItem("", 0);
@@ -252,10 +252,10 @@ TEST_F(JsonModelConverterTest, singleItemToJsonAndBackToSameModel)
     auto item_id = item->identifier();
 
     QJsonObject object;
-    converter.model_to_json(model, object);
+    converter.to_json(model, object);
 
     // filling new model
-    converter.json_to_model(object, model);
+    converter.from_json(object, model);
 
     EXPECT_EQ(pool->size(), 2);
     EXPECT_FALSE(pool->item_for_key(root_id) == model.rootItem()); // old root identifier has gone

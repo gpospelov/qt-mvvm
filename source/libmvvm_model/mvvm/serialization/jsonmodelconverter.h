@@ -29,10 +29,10 @@ public:
     ~JsonModelConverter() override;
 
     //! Writes content of model into json.
-    void model_to_json(const SessionModel& model, QJsonObject& json) const override;
+    void to_json(const SessionModel& model, QJsonObject& json) const override;
 
     //! Reads json object and build the model.
-    void json_to_model(const QJsonObject& json, SessionModel& model) const override;
+    void from_json(const QJsonObject& json, SessionModel& model) const override;
 };
 
 } // namespace ModelView

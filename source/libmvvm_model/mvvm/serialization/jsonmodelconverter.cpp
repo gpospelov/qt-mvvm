@@ -22,7 +22,7 @@ JsonModelConverter::JsonModelConverter() = default;
 
 JsonModelConverter::~JsonModelConverter() = default;
 
-void JsonModelConverter::model_to_json(const SessionModel& model, QJsonObject& json) const
+void JsonModelConverter::to_json(const SessionModel& model, QJsonObject& json) const
 {
     if (!model.rootItem())
         throw std::runtime_error("JsonModel::to_json() -> Error. Model is not initialized.");
@@ -39,7 +39,7 @@ void JsonModelConverter::model_to_json(const SessionModel& model, QJsonObject& j
     json[JsonItemFormatAssistant::itemsKey] = itemArray;
 }
 
-void JsonModelConverter::json_to_model(const QJsonObject& json, SessionModel& model) const
+void JsonModelConverter::from_json(const QJsonObject& json, SessionModel& model) const
 {
     if (!model.rootItem())
         throw std::runtime_error("JsonModel::json_to_model() -> Error. Model is not initialized.");
