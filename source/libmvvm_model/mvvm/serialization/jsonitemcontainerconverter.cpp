@@ -65,11 +65,6 @@ struct JsonItemContainerConverter::JsonItemContainerConverterImpl {
     }
 };
 
-JsonItemContainerConverter::JsonItemContainerConverter()
-    : p_impl(std::make_unique<JsonItemContainerConverterImpl>())
-{
-}
-
 JsonItemContainerConverter::JsonItemContainerConverter(ConverterCallbacks callbacks)
     : p_impl(std::make_unique<JsonItemContainerConverterImpl>(std::move(callbacks)))
 {
@@ -93,12 +88,14 @@ QJsonObject JsonItemContainerConverter::to_json(const SessionItemContainer& cont
 
 // FIXME restore functionality
 
-//void JsonItemContainerConverter::from_json(const QJsonObject& json, SessionItemContainer& container)
+// void JsonItemContainerConverter::from_json(const QJsonObject& json, SessionItemContainer&
+// container)
 //{
 //    static JsonItemFormatAssistant assistant;
 
 //    if (!assistant.isSessionItemContainer(json))
-//        throw std::runtime_error("Error in JsonItemContainerConverter: given JSON can't represent "
+//        throw std::runtime_error("Error in JsonItemContainerConverter: given JSON can't represent
+//        "
 //                                 "SessionItemContainer.");
 
 //    TagInfo tagInfo = p_impl->m_taginfo_converter->from_json(

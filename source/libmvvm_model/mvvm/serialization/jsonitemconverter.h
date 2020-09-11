@@ -18,9 +18,6 @@ namespace ModelView
 class ItemFactoryInterface;
 
 //! Converter between SessionItem and JSON object.
-//! This is an experimental version with the focus on back compatibility. It tries to reuse
-//! item's properties (as they were created by the item constructor), and update from JSON
-//! only certain parts.
 
 class MVVM_MODEL_EXPORT JsonItemConverter : public JsonItemConverterInterface
 {

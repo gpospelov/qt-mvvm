@@ -9,6 +9,7 @@
 
 #include <QJsonArray>
 #include <QJsonObject>
+#include <mvvm/core/uniqueidgenerator.h>
 #include <mvvm/model/itemfactoryinterface.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionitemdata.h>
@@ -18,7 +19,6 @@
 #include <mvvm/serialization/jsonitemdataconverter.h>
 #include <mvvm/serialization/jsonitemformatassistant.h>
 #include <mvvm/serialization/jsonitemtagsconverter.h>
-#include <mvvm/core/uniqueidgenerator.h>
 
 using namespace ModelView;
 
@@ -75,7 +75,7 @@ struct JsonItemConverter::JsonItemConverterImpl {
         populate_item_tags(json[JsonItemFormatAssistant::itemTagsKey].toObject(), *item.itemTags());
         populate_item_data(json[JsonItemFormatAssistant::itemDataKey].toArray(), *item.itemData());
 
-        for (auto child: item.children())
+        for (auto child : item.children())
             child->setParent(&item);
 
         if (m_is_new_id)

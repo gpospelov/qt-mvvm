@@ -26,7 +26,6 @@ class ConverterCallbacks;
 class MVVM_MODEL_EXPORT JsonItemContainerConverter
 {
 public:
-    JsonItemContainerConverter();
     JsonItemContainerConverter(ConverterCallbacks callbacks);
     ~JsonItemContainerConverter();
 

@@ -36,11 +36,6 @@ struct JsonItemTagsConverter::JsonItemTagsConverterImpl {
     }
 };
 
-JsonItemTagsConverter::JsonItemTagsConverter()
-    : p_impl(std::make_unique<JsonItemTagsConverterImpl>())
-{
-}
-
 JsonItemTagsConverter::JsonItemTagsConverter(ConverterCallbacks callbacks)
     : p_impl(std::make_unique<JsonItemTagsConverterImpl>(callbacks))
 {
