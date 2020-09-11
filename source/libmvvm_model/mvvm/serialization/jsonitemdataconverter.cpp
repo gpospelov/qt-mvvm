@@ -29,7 +29,7 @@ QJsonValue keyValue(const QJsonValue& parent_value, const QString& key)
 
 JsonItemDataConverter::JsonItemDataConverter() : m_variant_converter(new JsonVariantConverter)
 {
-    set_role_filter({ItemDataRole::TOOLTIP});
+//    set_role_filter({ItemDataRole::TOOLTIP});
 }
 
 JsonItemDataConverter::~JsonItemDataConverter() = default;
