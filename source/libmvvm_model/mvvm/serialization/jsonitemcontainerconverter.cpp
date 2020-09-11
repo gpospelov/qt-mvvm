@@ -91,6 +91,29 @@ QJsonObject JsonItemContainerConverter::to_json(const SessionItemContainer& cont
     return result;
 }
 
+// FIXME restore functionality
+
+//void JsonItemContainerConverter::from_json(const QJsonObject& json, SessionItemContainer& container)
+//{
+//    static JsonItemFormatAssistant assistant;
+
+//    if (!assistant.isSessionItemContainer(json))
+//        throw std::runtime_error("Error in JsonItemContainerConverter: given JSON can't represent "
+//                                 "SessionItemContainer.");
+
+//    TagInfo tagInfo = p_impl->m_taginfo_converter->from_json(
+//        json[JsonItemFormatAssistant::tagInfoKey].toObject());
+
+//    if (Compatibility::IsCompatibleSinglePropertyTag(container, tagInfo))
+//        p_impl->process_single_property_tag(json, container);
+
+//    else if (Compatibility::IsCompatibleUniversalTag(container, tagInfo))
+//        p_impl->process_universal_property_tag(json, container);
+
+//    else
+//        throw std::runtime_error("Error in JsonItemContainerConverter: can't convert json");
+//}
+
 void JsonItemContainerConverter::from_json(const QJsonObject& json, SessionItemContainer& container)
 {
     static JsonItemFormatAssistant assistant;
@@ -102,12 +125,9 @@ void JsonItemContainerConverter::from_json(const QJsonObject& json, SessionItemC
     TagInfo tagInfo = p_impl->m_taginfo_converter->from_json(
         json[JsonItemFormatAssistant::tagInfoKey].toObject());
 
-    if (Compatibility::IsCompatibleSinglePropertyTag(container, tagInfo))
-        p_impl->process_single_property_tag(json, container);
-
-    else if (Compatibility::IsCompatibleUniversalTag(container, tagInfo))
-        p_impl->process_universal_property_tag(json, container);
-
-    else
-        throw std::runtime_error("Error in JsonItemContainerConverter: can't convert json");
+    for (const auto obj : json[JsonItemFormatAssistant::itemsKey].toArray()) {
+        auto item = p_impl->json_to_item(obj.toObject());
+        if (item)
+            container.insertItem(item.release(), container.itemCount());
+    }
 }
