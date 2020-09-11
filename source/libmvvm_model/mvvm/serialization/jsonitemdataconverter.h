@@ -33,10 +33,9 @@ public:
     JsonItemDataConverter();
     ~JsonItemDataConverter() override;
 
-    QJsonArray get_json(const SessionItemData& data) override;
+    QJsonArray to_json(const SessionItemData& data) override;
 
-    std::unique_ptr<SessionItemData> get_data(const QJsonArray& object) override;
-    void from_json(const QJsonArray& object, SessionItemData& data);
+    void from_json(const QJsonArray& object, SessionItemData& data) override;
 
     bool is_item_data(const QJsonObject& json);
 

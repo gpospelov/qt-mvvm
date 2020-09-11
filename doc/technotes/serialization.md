@@ -20,6 +20,10 @@ via `SessionItem`'s constructor.
 + we do not serialize content which is unlikely to change (tooltips)  (+)
 + same algorithm can be used for save/load (see below) (+)
 
+## ItemCopyStrategy within CopyItemCommand
+
+Same as above, except identifier: copied item mush have new identifier.
+
 ## Project save/load
 
 `Project` save/load is done using `JsonModelConverter`. The result

@@ -15,7 +15,7 @@
 using namespace ModelView;
 
 struct JsonItemBackupStrategy::JsonItemBackupStrategyImpl {
-    std::unique_ptr<JsonItemConverter> m_converter;
+    std::unique_ptr<JsonItemConverterInterface> m_converter;
     QJsonObject m_json;
 };
 

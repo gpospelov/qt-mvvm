@@ -71,7 +71,7 @@ TEST_F(JsonItemDataConverterTest, getJson)
     data.setData(QVariant::fromValue(std::string("abc")), role + 2);
 
     // creating json object out of it
-    QJsonArray array = converter.get_json(data);
+    QJsonArray array = converter.to_json(data);
 
     // it should contain two json objects
     EXPECT_EQ(array.size(), 2);
@@ -100,17 +100,18 @@ TEST_F(JsonItemDataConverterTest, fromItemToJsonAndBack)
         data.setData(expected[i], roles[i]);
 
     // constructing json array from data
-    QJsonArray array = converter.get_json(data);
+    QJsonArray array = converter.to_json(data);
     auto fileName = TestUtils::TestFileName(testDir(), "itemdata.json");
     TestUtils::SaveJson(array, fileName);
 
     // constructing data from json array
-    auto data2 = converter.get_data(array);
-    EXPECT_EQ(data2->roles().size(), 3u);
+    SessionItemData data2;
+    converter.from_json(array, data2);
+    EXPECT_EQ(data2.roles().size(), 3u);
 
-    EXPECT_EQ(data2->roles(), roles);
+    EXPECT_EQ(data2.roles(), roles);
     for (auto role : roles) {
-        EXPECT_EQ(data2->data(role), expected[role - 1]);
+        EXPECT_EQ(data2.data(role), expected[role - 1]);
     }
 }
 
@@ -131,12 +132,13 @@ TEST_F(JsonItemDataConverterTest, filteredRoles)
     // constructing json array from data
     JsonItemDataConverter converter;
     converter.set_role_filter({1, 3});
-    QJsonArray array = converter.get_json(data);
+    QJsonArray array = converter.to_json(data);
 
     // constructing data from json array
-    auto data2 = converter.get_data(array);
-    EXPECT_EQ(data2->roles().size(), 1u);
-    EXPECT_EQ(data2->data(2).value<double>(), 1.23);
+    SessionItemData data2;
+    converter.from_json(array, data2);
+    EXPECT_EQ(data2.roles().size(), 1u);
+    EXPECT_EQ(data2.data(2).value<double>(), 1.23);
 }
 
 //! By default tooltip role is filtered out.
@@ -149,11 +151,12 @@ TEST_F(JsonItemDataConverterTest, tooltipRole)
 
     // constructing json array from data
     JsonItemDataConverter converter;
-    QJsonArray array = converter.get_json(data);
+    QJsonArray array = converter.to_json(data);
 
     // constructing data from json array
-    auto data2 = converter.get_data(array);
-    EXPECT_EQ(data2->roles().size(), 0u);
+    SessionItemData data2;
+    converter.from_json(array, data2);
+    EXPECT_EQ(data2.roles().size(), 0u);
 }
 
 //! Update SessionItemData from json obtained from another JsonItemData.
@@ -178,7 +181,7 @@ TEST_F(JsonItemDataConverterTest, updateFromJson)
 
     // constructing json array from data
     JsonItemDataConverter converter;
-    QJsonArray array = converter.get_json(data2);
+    QJsonArray array = converter.to_json(data2);
 
     // updating data1 from json array
     converter.from_json(array, data1);

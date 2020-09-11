@@ -21,13 +21,12 @@ namespace ModelView
 
 class SessionItem;
 class SessionItemTags;
-class ConverterContext;
+class ConverterCallbacks;
 
 class MVVM_MODEL_EXPORT JsonItemTagsConverter
 {
 public:
-    JsonItemTagsConverter();
-    JsonItemTagsConverter(ConverterContext context);
+    JsonItemTagsConverter(ConverterCallbacks callbacks);
     ~JsonItemTagsConverter();
 
     QJsonObject to_json(const SessionItemTags& item);

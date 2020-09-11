@@ -23,28 +23,30 @@ using namespace ModelView;
 
 struct JsonItemContainerConverter::JsonItemContainerConverterImpl {
     std::unique_ptr<JsonTagInfoConverterInterface> m_taginfo_converter;
-    ConverterContext m_context;
+    ConverterCallbacks m_converter_callbacks;
 
-    JsonItemContainerConverterImpl(ConverterContext context = {}) : m_context(std::move(context))
+    JsonItemContainerConverterImpl(ConverterCallbacks callbacks = {})
+        : m_converter_callbacks(std::move(callbacks))
     {
         m_taginfo_converter = std::make_unique<JsonTagInfoConverter>();
     }
 
     QJsonObject item_to_json(const SessionItem& item)
     {
-        return m_context.m_item_to_json ? m_context.m_item_to_json(item) : QJsonObject();
+        return m_converter_callbacks.m_create_json ? m_converter_callbacks.m_create_json(item)
+                                                   : QJsonObject();
     }
 
     void json_to_item_update(const QJsonObject& json, SessionItem* item)
     {
-        if (m_context.m_json_to_item_update)
-            m_context.m_json_to_item_update(json, item);
+        if (m_converter_callbacks.m_update_item)
+            m_converter_callbacks.m_update_item(json, item);
     }
 
     std::unique_ptr<SessionItem> json_to_item(const QJsonObject& json)
     {
-        return m_context.m_json_to_item ? m_context.m_json_to_item(json)
-                                        : std::unique_ptr<SessionItem>();
+        return m_converter_callbacks.m_create_item ? m_converter_callbacks.m_create_item(json)
+                                                   : std::unique_ptr<SessionItem>();
     }
 
     void process_single_property_tag(const QJsonObject& json, SessionItemContainer& container)
@@ -63,13 +65,8 @@ struct JsonItemContainerConverter::JsonItemContainerConverterImpl {
     }
 };
 
-JsonItemContainerConverter::JsonItemContainerConverter()
-    : p_impl(std::make_unique<JsonItemContainerConverterImpl>())
-{
-}
-
-JsonItemContainerConverter::JsonItemContainerConverter(ConverterContext context)
-    : p_impl(std::make_unique<JsonItemContainerConverterImpl>(std::move(context)))
+JsonItemContainerConverter::JsonItemContainerConverter(ConverterCallbacks callbacks)
+    : p_impl(std::make_unique<JsonItemContainerConverterImpl>(std::move(callbacks)))
 {
 }
 
@@ -89,6 +86,31 @@ QJsonObject JsonItemContainerConverter::to_json(const SessionItemContainer& cont
     return result;
 }
 
+// FIXME restore functionality
+
+// void JsonItemContainerConverter::from_json(const QJsonObject& json, SessionItemContainer&
+// container)
+//{
+//    static JsonItemFormatAssistant assistant;
+
+//    if (!assistant.isSessionItemContainer(json))
+//        throw std::runtime_error("Error in JsonItemContainerConverter: given JSON can't represent
+//        "
+//                                 "SessionItemContainer.");
+
+//    TagInfo tagInfo = p_impl->m_taginfo_converter->from_json(
+//        json[JsonItemFormatAssistant::tagInfoKey].toObject());
+
+//    if (Compatibility::IsCompatibleSinglePropertyTag(container, tagInfo))
+//        p_impl->process_single_property_tag(json, container);
+
+//    else if (Compatibility::IsCompatibleUniversalTag(container, tagInfo))
+//        p_impl->process_universal_property_tag(json, container);
+
+//    else
+//        throw std::runtime_error("Error in JsonItemContainerConverter: can't convert json");
+//}
+
 void JsonItemContainerConverter::from_json(const QJsonObject& json, SessionItemContainer& container)
 {
     static JsonItemFormatAssistant assistant;
@@ -100,12 +122,9 @@ void JsonItemContainerConverter::from_json(const QJsonObject& json, SessionItemC
     TagInfo tagInfo = p_impl->m_taginfo_converter->from_json(
         json[JsonItemFormatAssistant::tagInfoKey].toObject());
 
-    if (Compatibility::IsCompatibleSinglePropertyTag(container, tagInfo))
-        p_impl->process_single_property_tag(json, container);
-
-    else if (Compatibility::IsCompatibleUniversalTag(container, tagInfo))
-        p_impl->process_universal_property_tag(json, container);
-
-    else
-        throw std::runtime_error("Error in JsonItemContainerConverter: can't convert json");
+    for (const auto obj : json[JsonItemFormatAssistant::itemsKey].toArray()) {
+        auto item = p_impl->json_to_item(obj.toObject());
+        if (item)
+            container.insertItem(item.release(), container.itemCount());
+    }
 }

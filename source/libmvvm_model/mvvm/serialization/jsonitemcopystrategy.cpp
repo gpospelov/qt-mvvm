@@ -15,7 +15,7 @@
 using namespace ModelView;
 
 struct JsonItemCopyStrategy::JsonItemCopyStrategyImpl {
-    std::unique_ptr<JsonItemConverter> m_converter;
+    std::unique_ptr<JsonItemConverterInterface> m_converter;
 };
 
 JsonItemCopyStrategy::JsonItemCopyStrategy(const ItemFactoryInterface* item_factory)
