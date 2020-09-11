@@ -29,7 +29,7 @@ public:
     ~JsonModelConverter() override;
 
     //! Writes content of model into json.
-    void to_json(const SessionModel& model, QJsonObject& json) const override;
+    QJsonObject to_json(const SessionModel& model) const override;
 
     //! Reads json object and build the model.
     void from_json(const QJsonObject& json, SessionModel& model) const override;

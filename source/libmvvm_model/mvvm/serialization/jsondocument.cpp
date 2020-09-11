@@ -38,11 +38,8 @@ void JsonDocument::save(const std::string& file_name) const
     ModelView::JsonModelConverter converter;
     QJsonArray array;
 
-    for (auto model : p_impl->models) {
-        QJsonObject object;
-        converter.to_json(*model, object);
-        array.push_back(object);
-    }
+    for (auto model : p_impl->models)
+        array.push_back(converter.to_json(*model));
 
     QJsonDocument document(array);
     QFile file(QString::fromStdString(file_name));
