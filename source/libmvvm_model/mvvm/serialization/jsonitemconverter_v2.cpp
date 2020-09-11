@@ -18,6 +18,7 @@
 #include <mvvm/serialization/jsonitemdataconverter.h>
 #include <mvvm/serialization/jsonitemformatassistant.h>
 #include <mvvm/serialization/jsonitemtagsconverter.h>
+#include <mvvm/core/uniqueidgenerator.h>
 
 using namespace ModelView;
 
@@ -31,7 +32,7 @@ struct JsonItemConverterV2::JsonItemConverterV2Impl {
     JsonItemConverterV2Impl(JsonItemConverterV2* parent) : m_parent(parent)
     {
         //! Callback to convert SessionItem to JSON object.
-        auto to_json = [this](const SessionItem& item) { return m_parent->to_json(&item); };
+        auto create_json = [this](const SessionItem& item) { return m_parent->to_json(&item); };
 
         //! Callback to update SessionItem from JSON object
         auto update_item = [this](const QJsonObject& json, SessionItem* item) {
@@ -41,7 +42,7 @@ struct JsonItemConverterV2::JsonItemConverterV2Impl {
         //! Simplified method to create SessionItem from JSON object
         auto create_item = [this](const QJsonObject& json) { return m_parent->from_json(json); };
 
-        ConverterCallbacks callbacks{to_json, update_item, create_item};
+        ConverterCallbacks callbacks{create_json, update_item, create_item};
 
         m_itemdata_converter = std::make_unique<JsonItemDataConverter>();
         m_itemtags_converter = std::make_unique<JsonItemTagsConverter>(callbacks);
@@ -66,13 +67,19 @@ struct JsonItemConverterV2::JsonItemConverterV2Impl {
         if (modelType != item.modelType())
             throw std::runtime_error("Item model mismatch");
 
+        auto data = std::make_unique<SessionItemData>();
+        auto tags = std::make_unique<SessionItemTags>();
+
+        item.setDataAndTags(std::move(data), std::move(tags));
+
         populate_item_tags(json[JsonItemFormatAssistant::itemTagsKey].toObject(), *item.itemTags());
         populate_item_data(json[JsonItemFormatAssistant::itemDataKey].toArray(), *item.itemData());
 
         for (auto child: item.children())
             child->setParent(&item);
 
-
+        if (m_is_new_id)
+            item.setData(UniqueIdGenerator::generate(), ItemDataRole::IDENTIFIER);
     }
 
     QJsonObject item_to_json(const SessionItem& item) const
