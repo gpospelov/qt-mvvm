@@ -119,8 +119,9 @@ void JsonItemContainerConverter::from_json(const QJsonObject& json, SessionItemC
         throw std::runtime_error("Error in JsonItemContainerConverter: given JSON can't represent "
                                  "SessionItemContainer.");
 
-    TagInfo tagInfo = p_impl->m_taginfo_converter->from_json(
-        json[JsonItemFormatAssistant::tagInfoKey].toObject());
+    if (!container.empty())
+        throw std::runtime_error(
+            "Error in JsonItemContainerConverter: intended for empty container.");
 
     for (const auto obj : json[JsonItemFormatAssistant::itemsKey].toArray()) {
         auto item = p_impl->json_to_item(obj.toObject());
