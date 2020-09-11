@@ -115,82 +115,107 @@ TEST_F(JsonItemDataConverterTest, fromItemToJsonAndBack)
     }
 }
 
-// FIXME enable tests
+//! By default tooltip role is enabled for read and write.
 
-//! Filtering certain roles while writing to json.
+TEST_F(JsonItemDataConverterTest, tooltipRole)
+{
+    // initial data
+    SessionItemData data;
+    data.setData(QVariant::fromValue(std::string("tooltip")), ItemDataRole::TOOLTIP);
 
-//TEST_F(JsonItemDataConverterTest, filteredRoles)
-//{
-//    // initial data
-//    const std::vector<int> roles = {1, 2, 3};
-//    const std::vector<QVariant> variants = {QVariant::fromValue(42), QVariant::fromValue(1.23),
-//                                            QVariant::fromValue(std::string("abc"))};
+    // constructing json array from data
+    JsonItemDataConverter converter;
+    QJsonArray array = converter.to_json(data);
 
-//    // constructing SessionItemData
-//    SessionItemData data;
-//    for (size_t i = 0; i < roles.size(); ++i)
-//        data.setData(variants[i], roles[i]);
+    // constructing data from json array
+    SessionItemData data2;
+    converter.from_json(array, data2);
+    EXPECT_EQ(data2.roles().size(), 1u);
+    EXPECT_EQ(data2.data(ItemDataRole::TOOLTIP).value<std::string>(), "tooltip");
+}
 
-//    // constructing json array from data
-//    JsonItemDataConverter converter;
-//    converter.set_role_filter({1, 3});
-//    QJsonArray array = converter.to_json(data);
+//! Write filtered roles, read all into empty SessionItemData.
 
-//    // constructing data from json array
-//    SessionItemData data2;
-//    converter.from_json(array, data2);
-//    EXPECT_EQ(data2.roles().size(), 1u);
-//    EXPECT_EQ(data2.data(2).value<double>(), 1.23);
-//}
+TEST_F(JsonItemDataConverterTest, writeFilteredReadAll)
+{
+    // initial data
+    SessionItemData data;
+    data.setData(QVariant::fromValue(std::string("abc")), ItemDataRole::IDENTIFIER);
+    data.setData(42, ItemDataRole::DATA);
+    data.setData(QVariant::fromValue(std::string("abc")), ItemDataRole::DISPLAY);
+    data.setData(QVariant::fromValue(std::string("tooltip")), ItemDataRole::TOOLTIP);
 
-////! By default tooltip role is filtered out.
+    // constructing json array from data
+    auto to_json_accept = [](auto role) { return role != ItemDataRole::TOOLTIP; };
 
-//TEST_F(JsonItemDataConverterTest, tooltipRole)
-//{
-//    // initial data
-//    SessionItemData data;
-//    data.setData(QVariant::fromValue(std::string("tooltip")), ItemDataRole::TOOLTIP);
+    JsonItemDataConverter converter(to_json_accept, {});
+    QJsonArray array = converter.to_json(data);
 
-//    // constructing json array from data
-//    JsonItemDataConverter converter;
-//    QJsonArray array = converter.to_json(data);
+    // constructing data from json array
+    SessionItemData data2;
+    converter.from_json(array, data2);
+    EXPECT_EQ(data2.roles().size(), 3u);
+    EXPECT_FALSE(data2.hasData(ItemDataRole::TOOLTIP));
+}
 
-//    // constructing data from json array
-//    SessionItemData data2;
-//    converter.from_json(array, data2);
-//    EXPECT_EQ(data2.roles().size(), 0u);
-//}
+//! Write all roles, read filtered into empty SessionItemData.
 
-////! Update SessionItemData from json obtained from another JsonItemData.
+TEST_F(JsonItemDataConverterTest, writeAllReadFiltered)
+{
+    // initial data
+    SessionItemData data;
+    data.setData(QVariant::fromValue(std::string("abc")), ItemDataRole::IDENTIFIER);
+    data.setData(42, ItemDataRole::DATA);
+    data.setData(QVariant::fromValue(std::string("abc")), ItemDataRole::DISPLAY);
+    data.setData(QVariant::fromValue(std::string("tooltip")), ItemDataRole::TOOLTIP);
 
-//TEST_F(JsonItemDataConverterTest, updateFromJson)
-//{
-//    const std::vector<int> roles = {ItemDataRole::IDENTIFIER, ItemDataRole::DATA,
-//                                    ItemDataRole::TOOLTIP};
-//    const std::vector<QVariant> variants = {QVariant::fromValue(std::string("identifier1")),
-//                                            QVariant::fromValue(42),
-//                                            QVariant::fromValue(std::string("tooltip1"))};
+    // constructing json array from data
+    auto from_json_accept = [](auto role) { return role == ItemDataRole::TOOLTIP; };
 
-//    // initial data
-//    SessionItemData data1;
-//    for (size_t i=0; i<roles.size(); ++i)
-//        data1.setData(variants[i], roles[i]);
+    JsonItemDataConverter converter({}, from_json_accept);
+    QJsonArray array = converter.to_json(data);
 
-//    // data intended for serialization
-//    SessionItemData data2;
-//    data1.setData(QVariant::fromValue(43), ItemDataRole::DATA);
-//    data1.setData(QVariant::fromValue(std::string("identifier2")), ItemDataRole::IDENTIFIER);
+    // constructing data from json array
+    SessionItemData data2;
+    converter.from_json(array, data2);
 
-//    // constructing json array from data
-//    JsonItemDataConverter converter;
-//    QJsonArray array = converter.to_json(data2);
+    // while array itself has 4 elements, restored data has only TOOLTIPS as defined in filter
+    EXPECT_EQ(array.size(), 4u);
+    EXPECT_EQ(data2.roles().size(), 1u);
+    EXPECT_TRUE(data2.hasData(ItemDataRole::TOOLTIP));
+}
 
-//    // updating data1 from json array
-//    converter.from_json(array, data1);
 
-//    // roles as in initial object, id+data as in data2, tooltip as in data1
-//    EXPECT_EQ(data1.roles(), roles);
-//    EXPECT_EQ(data1.data(ItemDataRole::IDENTIFIER).value<std::string>(), std::string("identifier2"));
-//    EXPECT_EQ(data1.data(ItemDataRole::DATA).value<int>(), 43);
-//    EXPECT_EQ(data1.data(ItemDataRole::TOOLTIP).value<std::string>(), std::string("tooltip1"));
-//}
+//! Update SessionItemData from json obtained from another JsonItemData.
+
+ TEST_F(JsonItemDataConverterTest, updateFromJson)
+{
+    const std::vector<int> roles = {ItemDataRole::IDENTIFIER, ItemDataRole::DATA,
+                                    ItemDataRole::TOOLTIP};
+    const std::vector<QVariant> variants = {QVariant::fromValue(std::string("identifier1")),
+                                            QVariant::fromValue(42),
+                                            QVariant::fromValue(std::string("tooltip1"))};
+
+    // initial data
+    SessionItemData data1;
+    for (size_t i=0; i<roles.size(); ++i)
+        data1.setData(variants[i], roles[i]);
+
+    // data intended for serialization
+    SessionItemData data2;
+    data1.setData(QVariant::fromValue(43), ItemDataRole::DATA);
+    data1.setData(QVariant::fromValue(std::string("identifier2")), ItemDataRole::IDENTIFIER);
+
+    // constructing json array from data
+    JsonItemDataConverter converter;
+    QJsonArray array = converter.to_json(data2);
+
+    // updating data1 from json array
+    converter.from_json(array, data1);
+
+    // roles as in initial object, id+data as in data2, tooltip as in data1
+    EXPECT_EQ(data1.roles(), roles);
+    EXPECT_EQ(data1.data(ItemDataRole::IDENTIFIER).value<std::string>(),
+    std::string("identifier2")); EXPECT_EQ(data1.data(ItemDataRole::DATA).value<int>(), 43);
+    EXPECT_EQ(data1.data(ItemDataRole::TOOLTIP).value<std::string>(), std::string("tooltip1"));
+}

@@ -14,7 +14,6 @@
 #include <functional>
 #include <memory>
 #include <mvvm/serialization/jsonitemdataconverterinterface.h>
-#include <vector>
 
 class QJsonObject;
 
@@ -49,7 +48,7 @@ private:
     bool isRoleFromJson(int role) const;
 
     accept_strategy_t m_to_json_accept;   //!< callback to find whether to write role to json
-    accept_strategy_t m_from_json_accept; //!< callback to find  whether to read role from json
+    accept_strategy_t m_from_json_accept; //!< callback to find whether to read role from json
     std::unique_ptr<JsonVariantConverterInterface> m_variant_converter;
 };
 

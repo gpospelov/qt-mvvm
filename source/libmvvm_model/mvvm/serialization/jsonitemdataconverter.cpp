@@ -27,11 +27,15 @@ QJsonValue keyValue(const QJsonValue& parent_value, const QString& key)
 }
 } // namespace
 
-JsonItemDataConverter::JsonItemDataConverter() : m_variant_converter(std::make_unique<JsonVariantConverter>()) {}
+JsonItemDataConverter::JsonItemDataConverter()
+    : m_variant_converter(std::make_unique<JsonVariantConverter>())
+{
+}
 
 JsonItemDataConverter::JsonItemDataConverter(accept_strategy_t to_json_accept,
                                              accept_strategy_t from_json_accept)
-    : m_to_json_accept(to_json_accept), m_from_json_accept(from_json_accept), m_variant_converter(std::make_unique<JsonVariantConverter>())
+    : m_to_json_accept(to_json_accept), m_from_json_accept(from_json_accept),
+      m_variant_converter(std::make_unique<JsonVariantConverter>())
 {
 }
 
@@ -64,7 +68,8 @@ void JsonItemDataConverter::from_json(const QJsonArray& object, SessionItemData&
             throw std::runtime_error("JsonItemData::get_data() -> Invalid json object.");
         auto role = keyValue(x, roleKey).toInt();
         auto variant = m_variant_converter->get_variant(keyValue(x, variantKey).toObject());
-        persistent_data->setData(variant, role);
+        if (isRoleFromJson(role))
+            persistent_data->setData(variant, role);
     }
 
     auto runtime_roles = data.roles();
