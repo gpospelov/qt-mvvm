@@ -9,7 +9,6 @@
 
 #include <QJsonObject>
 #include <mvvm/model/sessionitem.h>
-#include <mvvm/serialization/jsonitemconverter.h>
 #include <mvvm/serialization/jsonitemconverter_v2.h>
 #include <mvvm/serialization/jsonitemcopystrategy.h>
 
