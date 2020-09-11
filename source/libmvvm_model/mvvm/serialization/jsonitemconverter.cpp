@@ -14,7 +14,7 @@
 #include <mvvm/model/sessionitemdata.h>
 #include <mvvm/model/sessionitemtags.h>
 #include <mvvm/serialization/jsonitem_types.h>
-#include <mvvm/serialization/jsonitemconverter_v2.h>
+#include <mvvm/serialization/jsonitemconverter.h>
 #include <mvvm/serialization/jsonitemdataconverter.h>
 #include <mvvm/serialization/jsonitemformatassistant.h>
 #include <mvvm/serialization/jsonitemtagsconverter.h>
@@ -22,14 +22,14 @@
 
 using namespace ModelView;
 
-struct JsonItemConverterV2::JsonItemConverterV2Impl {
-    JsonItemConverterV2* m_parent{nullptr};
+struct JsonItemConverter::JsonItemConverterImpl {
+    JsonItemConverter* m_parent{nullptr};
     const ItemFactoryInterface* m_factory{nullptr};
     bool m_is_new_id{false};
     std::unique_ptr<JsonItemDataConverter> m_itemdata_converter;
     std::unique_ptr<JsonItemTagsConverter> m_itemtags_converter;
 
-    JsonItemConverterV2Impl(JsonItemConverterV2* parent) : m_parent(parent)
+    JsonItemConverterImpl(JsonItemConverter* parent) : m_parent(parent)
     {
         //! Callback to convert SessionItem to JSON object.
         auto create_json = [this](const SessionItem& item) { return m_parent->to_json(&item); };
@@ -95,21 +95,21 @@ struct JsonItemConverterV2::JsonItemConverterV2Impl {
     }
 };
 
-JsonItemConverterV2::JsonItemConverterV2(const ItemFactoryInterface* factory, bool new_id_flag)
-    : p_impl(std::make_unique<JsonItemConverterV2Impl>(this))
+JsonItemConverter::JsonItemConverter(const ItemFactoryInterface* factory, bool new_id_flag)
+    : p_impl(std::make_unique<JsonItemConverterImpl>(this))
 {
     p_impl->m_factory = factory;
     p_impl->m_is_new_id = new_id_flag;
 }
 
-JsonItemConverterV2::~JsonItemConverterV2() = default;
+JsonItemConverter::~JsonItemConverter() = default;
 
-QJsonObject JsonItemConverterV2::to_json(const SessionItem* item) const
+QJsonObject JsonItemConverter::to_json(const SessionItem* item) const
 {
     return item ? p_impl->item_to_json(*item) : QJsonObject();
 }
 
-std::unique_ptr<SessionItem> JsonItemConverterV2::from_json(const QJsonObject& json) const
+std::unique_ptr<SessionItem> JsonItemConverter::from_json(const QJsonObject& json) const
 {
     static JsonItemFormatAssistant assistant;
 

@@ -11,8 +11,8 @@ target_sources(${library_name} PRIVATE
     jsonitembackupstrategy.h
     jsonitemcontainerconverter.cpp
     jsonitemcontainerconverter.h
-    jsonitemconverter_v2.cpp
-    jsonitemconverter_v2.h
+    jsonitemconverter.cpp
+    jsonitemconverter.h
     jsonitemconverterinterface.h
     jsonitemcopystrategy.cpp
     jsonitemcopystrategy.h

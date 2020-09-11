@@ -10,7 +10,7 @@
 #include <QJsonObject>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/serialization/jsonitembackupstrategy.h>
-#include <mvvm/serialization/jsonitemconverter_v2.h>
+#include <mvvm/serialization/jsonitemconverter.h>
 
 using namespace ModelView;
 
@@ -22,7 +22,7 @@ struct JsonItemBackupStrategy::JsonItemBackupStrategyImpl {
 JsonItemBackupStrategy::JsonItemBackupStrategy(const ItemFactoryInterface* item_factory)
     : p_impl(std::make_unique<JsonItemBackupStrategyImpl>())
 {
-    p_impl->m_converter = std::make_unique<JsonItemConverterV2>(item_factory);
+    p_impl->m_converter = std::make_unique<JsonItemConverter>(item_factory);
 }
 
 JsonItemBackupStrategy::~JsonItemBackupStrategy() = default;

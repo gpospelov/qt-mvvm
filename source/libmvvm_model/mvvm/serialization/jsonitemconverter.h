@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_SERIALIZATION_JSONITEMCONVERTER_V2_H
-#define MVVM_SERIALIZATION_JSONITEMCONVERTER_V2_H
+#ifndef MVVM_SERIALIZATION_JSONITEMCONVERTER_H
+#define MVVM_SERIALIZATION_JSONITEMCONVERTER_H
 
 #include <mvvm/serialization/jsonitemconverterinterface.h>
 
@@ -22,19 +22,19 @@ class ItemFactoryInterface;
 //! item's properties (as they were created by the item constructor), and update from JSON
 //! only certain parts.
 
-class MVVM_MODEL_EXPORT JsonItemConverterV2 : public JsonItemConverterInterface
+class MVVM_MODEL_EXPORT JsonItemConverter : public JsonItemConverterInterface
 {
 public:
-    JsonItemConverterV2(const ItemFactoryInterface* factory, bool new_id_flag = false);
-    ~JsonItemConverterV2() override;
+    JsonItemConverter(const ItemFactoryInterface* factory, bool new_id_flag = false);
+    ~JsonItemConverter() override;
 
     QJsonObject to_json(const SessionItem* item) const override;
 
     std::unique_ptr<SessionItem> from_json(const QJsonObject& json) const override;
 
 private:
-    struct JsonItemConverterV2Impl;
-    std::unique_ptr<JsonItemConverterV2Impl> p_impl;
+    struct JsonItemConverterImpl;
+    std::unique_ptr<JsonItemConverterImpl> p_impl;
 };
 
 } // namespace ModelView
