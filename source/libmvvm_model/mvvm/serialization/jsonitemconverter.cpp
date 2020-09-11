@@ -87,7 +87,7 @@ struct JsonItemConverter::JsonItemConverterImpl {
         QJsonObject result;
         result[JsonItemFormatAssistant::modelKey] = QString::fromStdString(item.modelType());
         result[JsonItemFormatAssistant::itemDataKey] =
-            m_itemdata_converter->get_json(*item.itemData());
+            m_itemdata_converter->to_json(*item.itemData());
         result[JsonItemFormatAssistant::itemTagsKey] =
             m_itemtags_converter->to_json(*item.itemTags());
 

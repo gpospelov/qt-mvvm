@@ -33,7 +33,7 @@ public:
     JsonItemDataConverter();
     ~JsonItemDataConverter() override;
 
-    QJsonArray get_json(const SessionItemData& data) override;
+    QJsonArray to_json(const SessionItemData& data) override;
 
     void from_json(const QJsonArray& object, SessionItemData& data) override;
 

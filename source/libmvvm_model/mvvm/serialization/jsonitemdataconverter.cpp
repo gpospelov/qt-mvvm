@@ -34,7 +34,7 @@ JsonItemDataConverter::JsonItemDataConverter() : m_variant_converter(new JsonVar
 
 JsonItemDataConverter::~JsonItemDataConverter() = default;
 
-QJsonArray JsonItemDataConverter::get_json(const SessionItemData& data)
+QJsonArray JsonItemDataConverter::to_json(const SessionItemData& data)
 {
     QJsonArray result;
 

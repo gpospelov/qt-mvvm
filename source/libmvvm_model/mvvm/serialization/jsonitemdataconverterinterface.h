@@ -27,7 +27,7 @@ class MVVM_MODEL_EXPORT JsonItemDataConverterInterface
 public:
     virtual ~JsonItemDataConverterInterface() = default;
 
-    virtual QJsonArray get_json(const SessionItemData&) = 0;
+    virtual QJsonArray to_json(const SessionItemData&) = 0;
 
     virtual void from_json(const QJsonArray& object, SessionItemData& data) = 0;
 };
