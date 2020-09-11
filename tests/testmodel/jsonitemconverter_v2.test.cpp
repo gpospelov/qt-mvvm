@@ -14,10 +14,10 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <mvvm/model/compounditem.h>
+#include <mvvm/model/itemcatalogue.h>
 #include <mvvm/model/propertyitem.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
-#include <mvvm/model/itemcatalogue.h>
 #include <mvvm/serialization/jsonitemconverter_v2.h>
 #include <mvvm/serialization/jsonitemformatassistant.h>
 
@@ -28,11 +28,13 @@ using namespace ModelView;
 class JsonItemConverterV2Test : public FolderBasedTest
 {
 public:
-    class TestItem : public CompoundItem {
+    class TestItem : public CompoundItem
+    {
     public:
-        TestItem() : CompoundItem("TestItem") {
+        TestItem() : CompoundItem("TestItem")
+        {
             setToolTip("compound");
-//            addProperty("Thickness", 42)->setToolTip("thickness");
+            //            addProperty("Thickness", 42)->setToolTip("thickness");
         }
     };
 
@@ -46,7 +48,6 @@ public:
             setItemCatalogue(std::move(catalogue));
         }
     };
-
 
     JsonItemConverterV2Test()
         : FolderBasedTest("test_JsonItemConverter"), m_model(std::make_unique<TestModel>())
@@ -225,9 +226,10 @@ TEST_F(JsonItemConverterV2Test, testItemToFileAndBack)
     EXPECT_EQ(reco->modelType(), item.modelType());
     EXPECT_EQ(reco->displayName(), item.displayName());
     EXPECT_EQ(reco->identifier(), item.identifier());
-//    EXPECT_EQ(reco->toolTip(), "compound");
-// FIXME restore test with tooltips
-    // tooltip was preserved after the serialization
-//    EXPECT_EQ(reco->getItem("Thickness")->toolTip(), "thickness");
-}
 
+    // FIXME restore test with tooltips
+
+    //    EXPECT_EQ(reco->toolTip(), "compound");
+    // tooltip was preserved after the serialization
+    //    EXPECT_EQ(reco->getItem("Thickness")->toolTip(), "thickness");
+}

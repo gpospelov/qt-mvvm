@@ -11,18 +11,19 @@
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/serialization/jsonitembackupstrategy.h>
 #include <mvvm/serialization/jsonitemconverter.h>
+#include <mvvm/serialization/jsonitemconverter_v2.h>
 
 using namespace ModelView;
 
 struct JsonItemBackupStrategy::JsonItemBackupStrategyImpl {
-    std::unique_ptr<JsonItemConverter> m_converter;
+    std::unique_ptr<JsonItemConverterInterface> m_converter;
     QJsonObject m_json;
 };
 
 JsonItemBackupStrategy::JsonItemBackupStrategy(const ItemFactoryInterface* item_factory)
     : p_impl(std::make_unique<JsonItemBackupStrategyImpl>())
 {
-    p_impl->m_converter = std::make_unique<JsonItemConverter>(item_factory);
+    p_impl->m_converter = std::make_unique<JsonItemConverterV2>(item_factory);
 }
 
 JsonItemBackupStrategy::~JsonItemBackupStrategy() = default;
