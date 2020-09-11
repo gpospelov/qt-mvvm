@@ -50,26 +50,19 @@ QJsonArray JsonItemDataConverter::get_json(const SessionItemData& data)
     return result;
 }
 
-std::unique_ptr<SessionItemData> JsonItemDataConverter::get_data(const QJsonArray& object)
+//! Updates existing data with JSON content.
+
+void JsonItemDataConverter::from_json(const QJsonArray& object, SessionItemData& data)
 {
-    auto result = std::make_unique<SessionItemData>();
+    auto persistent_data = std::make_unique<SessionItemData>();
 
     for (const auto& x : object) {
         if (!is_item_data(x.toObject()))
             throw std::runtime_error("JsonItemData::get_data() -> Invalid json object.");
         auto role = keyValue(x, roleKey).toInt();
         auto variant = m_variant_converter->get_variant(keyValue(x, variantKey).toObject());
-        result->setData(variant, role);
+        persistent_data->setData(variant, role);
     }
-
-    return result;
-}
-
-//! Updates existing data with JSON content.
-
-void JsonItemDataConverter::from_json(const QJsonArray& object, SessionItemData& data)
-{
-    auto persistent_data = get_data(object);
 
     auto runtime_roles = data.roles();
     auto persistent_roles = persistent_data->roles();

@@ -105,12 +105,13 @@ TEST_F(JsonItemDataConverterTest, fromItemToJsonAndBack)
     TestUtils::SaveJson(array, fileName);
 
     // constructing data from json array
-    auto data2 = converter.get_data(array);
-    EXPECT_EQ(data2->roles().size(), 3u);
+    SessionItemData data2;
+    converter.from_json(array, data2);
+    EXPECT_EQ(data2.roles().size(), 3u);
 
-    EXPECT_EQ(data2->roles(), roles);
+    EXPECT_EQ(data2.roles(), roles);
     for (auto role : roles) {
-        EXPECT_EQ(data2->data(role), expected[role - 1]);
+        EXPECT_EQ(data2.data(role), expected[role - 1]);
     }
 }
 
@@ -134,9 +135,10 @@ TEST_F(JsonItemDataConverterTest, filteredRoles)
     QJsonArray array = converter.get_json(data);
 
     // constructing data from json array
-    auto data2 = converter.get_data(array);
-    EXPECT_EQ(data2->roles().size(), 1u);
-    EXPECT_EQ(data2->data(2).value<double>(), 1.23);
+    SessionItemData data2;
+    converter.from_json(array, data2);
+    EXPECT_EQ(data2.roles().size(), 1u);
+    EXPECT_EQ(data2.data(2).value<double>(), 1.23);
 }
 
 //! By default tooltip role is filtered out.
@@ -152,8 +154,9 @@ TEST_F(JsonItemDataConverterTest, tooltipRole)
     QJsonArray array = converter.get_json(data);
 
     // constructing data from json array
-    auto data2 = converter.get_data(array);
-    EXPECT_EQ(data2->roles().size(), 0u);
+    SessionItemData data2;
+    converter.from_json(array, data2);
+    EXPECT_EQ(data2.roles().size(), 0u);
 }
 
 //! Update SessionItemData from json obtained from another JsonItemData.
