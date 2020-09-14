@@ -26,9 +26,24 @@ class CustomVariantsTest : public ::testing::Test
 {
 public:
     ~CustomVariantsTest();
+
+    template <typename T> QVariant variantFromArgument(const T& value)
+    {
+        return QVariant::fromValue(value);
+    }
 };
 
 CustomVariantsTest::~CustomVariantsTest() = default;
+
+//! To keep under control implicit type conversion.
+
+TEST_F(CustomVariantsTest, VariantFromTemplateArgument)
+{
+    EXPECT_EQ(variantFromArgument(true).typeName(), Constants::bool_type_name);
+    EXPECT_EQ(variantFromArgument(1).typeName(), Constants::int_type_name);
+    EXPECT_EQ(variantFromArgument(42.0).typeName(), Constants::double_type_name);
+    EXPECT_EQ(variantFromArgument(std::string("abc")).typeName(), Constants::string_type_name);
+}
 
 //! Variant compatibility.
 

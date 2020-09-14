@@ -190,7 +190,9 @@ QJsonObject from_double(const QVariant& variant)
 
 QVariant to_double(const QJsonObject& object)
 {
-    return object[variantValueKey].toVariant();
+    // deliberately recreating variant, otherwise it is changing type to qlonglong for
+    // numbers like 43.0
+    return object[variantValueKey].toVariant().value<double>();
 }
 
 // --- std::vector<double> ------

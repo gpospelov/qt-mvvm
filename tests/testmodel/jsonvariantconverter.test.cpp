@@ -19,6 +19,7 @@
 #include <mvvm/model/externalproperty.h>
 #include <mvvm/serialization/jsonvariantconverter.h>
 #include <mvvm/utils/reallimits.h>
+#include <mvvm/model/variant-constants.h>
 #include <vector>
 
 using namespace ModelView;
@@ -76,6 +77,7 @@ TEST_F(JsonVariantConverterTest, boolVariant)
     QVariant reco_variant = converter.get_variant(object);
     EXPECT_TRUE(Utils::IsBoolVariant(reco_variant));
     EXPECT_EQ(reco_variant.value<bool>(), value);
+    EXPECT_EQ(reco_variant.typeName(), Constants::bool_type_name);
     EXPECT_EQ(variant, reco_variant);
 
     EXPECT_EQ(ToJsonAndBack(true).value<bool>(), true);
@@ -99,6 +101,7 @@ TEST_F(JsonVariantConverterTest, intVariant)
     QVariant reco_variant = converter.get_variant(object);
     EXPECT_TRUE(Utils::IsIntVariant(reco_variant));
     EXPECT_EQ(reco_variant.value<int>(), value);
+    EXPECT_EQ(reco_variant.typeName(), Constants::int_type_name);
     EXPECT_EQ(variant, reco_variant);
 }
 
@@ -118,6 +121,7 @@ TEST_F(JsonVariantConverterTest, stringVariant)
     // from json object to variant
     QVariant reco_variant = converter.get_variant(object);
     EXPECT_TRUE(Utils::IsStdStringVariant(reco_variant));
+    EXPECT_EQ(reco_variant.typeName(), Constants::string_type_name);
     EXPECT_EQ(reco_variant.value<std::string>(), value);
 
     EXPECT_EQ(variant, reco_variant);
@@ -129,8 +133,9 @@ TEST_F(JsonVariantConverterTest, doubleVariant)
 {
     JsonVariantConverter converter;
 
-    double value(42.3);
+    double value(43.2);
     QVariant variant = QVariant::fromValue(value);
+    EXPECT_EQ(variant.typeName(), Constants::double_type_name);
 
     // from variant to json object
     auto object = converter.get_json(variant);
@@ -149,6 +154,28 @@ TEST_F(JsonVariantConverterTest, doubleVariant)
     EXPECT_DOUBLE_EQ(ToJsonAndBack(value).value<double>(), value);
     value = 3.14159265359;
     EXPECT_DOUBLE_EQ(ToJsonAndBack(value).value<double>(), value);
+}
+
+//! QVariant(double) conversion. Special value 43.0 which Qt likes to cast to int based variant.
+
+TEST_F(JsonVariantConverterTest, doubleVariantWhichLooksAsInt)
+{
+    JsonVariantConverter converter;
+
+    double value(43.0); // special value which Qt like to cast to int-based variant
+    QVariant variant = QVariant::fromValue(value);
+    EXPECT_EQ(variant.typeName(), Constants::double_type_name);
+    EXPECT_TRUE(Utils::IsDoubleVariant(variant));
+
+    // from variant to json object
+    auto object = converter.get_json(variant);
+    EXPECT_TRUE(converter.isVariant(object));
+
+    // from json object to variant
+    QVariant reco_variant = converter.get_variant(object);
+    EXPECT_TRUE(Utils::IsDoubleVariant(reco_variant));
+    EXPECT_EQ(reco_variant.value<double>(), value);
+    EXPECT_EQ(variant, reco_variant);
 }
 
 //! QVariant(std::vector<double>) conversion.
@@ -280,6 +307,8 @@ TEST_F(JsonVariantConverterTest, toFileAndBack)
                                       QVariant(true),
                                       QVariant(42),
                                       QVariant(42.3),
+                                      QVariant(43.0),
+                                      QVariant(43.1),
                                       QVariant(0.99e-7),
                                       QVariant(3.14159265359),
                                       QVariant::fromValue(string_value),
