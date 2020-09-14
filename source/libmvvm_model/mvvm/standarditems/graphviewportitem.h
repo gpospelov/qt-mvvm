@@ -17,7 +17,9 @@ namespace ModelView
 
 class GraphItem;
 
-//! Container with viewport and collection of GraphItem's to plot.
+//! 2D viewport specialized for showing multiple GraphItem's.
+//! Provides calculation of viewport's x-axis and y-axis range basing on GraphItem data.
+//! Provides functionality to hide selected graphs.
 
 class MVVM_MODEL_EXPORT GraphViewportItem : public ViewportItem
 {
@@ -28,9 +30,9 @@ public:
 
     std::vector<GraphItem*> visibleGraphItems() const;
 
-    void setSelected(const std::vector<GraphItem*>& selected_graph_items);
+    void setVisible(const std::vector<GraphItem*>& visible_graph_items);
 
-    void resetSelected();
+    void setAllVisible();
 
 protected:
     std::pair<double, double> data_xaxis_range() const override;
