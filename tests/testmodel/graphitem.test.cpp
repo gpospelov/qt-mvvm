@@ -14,6 +14,7 @@
 #include <mvvm/standarditems/data1ditem.h>
 #include <mvvm/standarditems/graphitem.h>
 #include <mvvm/standarditems/linkeditem.h>
+#include <QColor>
 
 using namespace ModelView;
 using ::testing::_;
@@ -112,4 +113,26 @@ TEST_F(GraphItemTest, onSetDataItem)
 
     // performing action
     graph_item->setDataItem(data_item);
+}
+
+TEST_F(GraphItemTest, setFromGraphItem)
+{
+    SessionModel model;
+    auto data_item = model.insertItem<Data1DItem>();
+    auto graph_item = model.insertItem<GraphItem>();
+    auto graph_item2 = model.insertItem<GraphItem>();
+
+    std::vector<double> expected_content = {1.0, 2.0, 3.0};
+    std::vector<double> expected_centers = {0.5, 1.5, 2.5};
+    data_item->setAxis(FixedBinAxisItem::create(3, 0.0, 3.0));
+    data_item->setContent(expected_content);
+
+    graph_item->setDataItem(data_item);
+    graph_item->setProperty(GraphItem::P_COLOR, QColor(Qt::red));
+
+    graph_item2->setFromGraphItem(graph_item);
+
+    EXPECT_EQ(graph_item2->binValues(), expected_content);
+    EXPECT_EQ(graph_item2->binCenters(), expected_centers);
+    EXPECT_EQ(graph_item2->property<QColor>(GraphItem::P_COLOR), QColor(Qt::red));
 }

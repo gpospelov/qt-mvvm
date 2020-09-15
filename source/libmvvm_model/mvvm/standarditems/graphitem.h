@@ -33,6 +33,8 @@ public:
 
     void setDataItem(const Data1DItem* item);
 
+    void setFromGraphItem(const GraphItem* item);
+
     Data1DItem* dataItem() const;
 
     std::vector<double> binCenters() const;

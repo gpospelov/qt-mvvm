@@ -30,6 +30,15 @@ void GraphItem::setDataItem(const Data1DItem* data_item)
     item<LinkedItem>(P_LINK)->setLink(data_item);
 }
 
+//! Update item from the content of given graph. Link to the data will be set
+//! as in given item, other properties copied.
+
+void GraphItem::setFromGraphItem(const GraphItem* item)
+{
+    setDataItem(item->dataItem());
+    setProperty(P_COLOR, item->property<QColor>(P_COLOR));
+}
+
 //! Returns data item linked to the given GraphItem.
 
 Data1DItem* GraphItem::dataItem() const
