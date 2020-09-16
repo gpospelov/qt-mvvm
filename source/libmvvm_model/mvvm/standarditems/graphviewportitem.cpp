@@ -43,13 +43,15 @@ GraphViewportItem::GraphViewportItem(const std::string& model_type) : ViewportIt
     registerTag(TagInfo::universalTag(T_ITEMS, {Constants::GraphItemType}), /*set_default*/ true);
 }
 
-//! Returns the selected graph items
+//! Returns the selected graph items.
+
 std::vector<GraphItem*> GraphViewportItem::graphItems() const
 {
     return items<GraphItem>(T_ITEMS);
 }
 
-//! Returns the selected graph items
+//! Returns the selected graph items.
+
 std::vector<GraphItem*> GraphViewportItem::visibleGraphItems() const
 {
     std::vector<GraphItem*> all_items = items<GraphItem>(T_ITEMS);
@@ -61,26 +63,26 @@ std::vector<GraphItem*> GraphViewportItem::visibleGraphItems() const
     return visible_items;
 }
 
-//! Set the graph selection
-void GraphViewportItem::setSelected(const std::vector<GraphItem*>& selected_graph_items)
+//! Set the graph selection.
+
+void GraphViewportItem::setVisible(const std::vector<GraphItem*>& visible_graph_items)
 {
     std::vector<GraphItem*> output;
     for (auto graph_item : items<GraphItem>(T_ITEMS)) {
-        if (std::find(selected_graph_items.begin(), selected_graph_items.end(), graph_item)
-            != selected_graph_items.end())
+        if (std::find(visible_graph_items.begin(), visible_graph_items.end(), graph_item)
+            != visible_graph_items.end())
             graph_item->setProperty(GraphItem::P_DISPLAYED, true);
         else
             graph_item->setProperty(GraphItem::P_DISPLAYED, false);
     }
 }
 
-//! Reset the graph selection
-void GraphViewportItem::resetSelected()
+//! Reset the graph selection.
+
+void GraphViewportItem::setAllVisible()
 {
-    auto graph_items = items<GraphItem>(T_ITEMS);
-    for (auto graph_item : graph_items) {
+    for (auto graph_item : items<GraphItem>(T_ITEMS))
         graph_item->setProperty(GraphItem::P_DISPLAYED, true);
-    }
 }
 
 //! Returns lower, upper range on x-axis occupied by all data points of all graphs.

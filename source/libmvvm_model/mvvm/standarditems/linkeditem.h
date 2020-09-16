@@ -16,9 +16,12 @@
 namespace ModelView
 {
 
-//! Item to store a link to other arbitrary item.
-//! Identifier of linked item is stored as DataRole on board of LinkedItem and can be used
-//! to find corresponding item via SessionModel::findItem machinery.
+//! Item to store a persistent link to other arbitrary items.
+
+//! The identifier of the item intended for linking is stored as DataRole on board of LinkedItem
+//! and can be used to find the corresponding item via SessionModel::findItem machinery.
+//! Provided mechanism is persistent and outlive serialization. Can be used to find items in
+//! different models. For that being the case, models should use same ItemPool.
 
 class MVVM_MODEL_EXPORT LinkedItem : public SessionItem
 {

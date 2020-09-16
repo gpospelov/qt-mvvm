@@ -33,6 +33,7 @@ TEST_F(LinkedItemTest, initialState)
 {
     LinkedItem item;
     EXPECT_EQ(item.get(), nullptr);
+    EXPECT_EQ(item.data<std::string>(), std::string());
 }
 
 //! Link in single model context.
@@ -118,5 +119,6 @@ TEST_F(LinkedItemTest, setNullAsLink)
     // still null link
     link->setLink(nullptr);
     EXPECT_EQ(link->get(), nullptr);
-    EXPECT_FALSE(link->data<QVariant>().isValid());
+    EXPECT_TRUE(link->data<QVariant>().isValid());
+    EXPECT_EQ(link->data<std::string>(), std::string());
 }

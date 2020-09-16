@@ -207,13 +207,13 @@ TEST_F(GraphViewportPlotControllerTest, checkVisible)
     auto third_plot = model.insertItem<GraphItem>(viewport_item);
     EXPECT_EQ(custom_plot->graphCount(), 3);
 
-    viewport_item->setSelected(std::vector<GraphItem*>{first_plot});
+    viewport_item->setVisible(std::vector<GraphItem*>{first_plot});
     EXPECT_EQ(FindVisible::findVisible(custom_plot.get()).size(), 1);
 
-    viewport_item->setSelected(std::vector<GraphItem*>{second_plot, third_plot});
+    viewport_item->setVisible(std::vector<GraphItem*>{second_plot, third_plot});
     EXPECT_EQ(FindVisible::findVisible(custom_plot.get()).size(), 2);
 
-    viewport_item->resetSelected();
+    viewport_item->setAllVisible();
     EXPECT_EQ(FindVisible::findVisible(custom_plot.get()).size(), 3);
 }
 
