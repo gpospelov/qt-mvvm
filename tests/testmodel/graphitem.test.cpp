@@ -115,6 +115,8 @@ TEST_F(GraphItemTest, onSetDataItem)
     graph_item->setDataItem(data_item);
 }
 
+//! Sets GraphItem from another GraphItem
+
 TEST_F(GraphItemTest, setFromGraphItem)
 {
     SessionModel model;
