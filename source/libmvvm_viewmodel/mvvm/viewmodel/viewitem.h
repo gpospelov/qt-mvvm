@@ -10,8 +10,8 @@
 #ifndef MVVM_VIEWMODEL_VIEWITEM_H
 #define MVVM_VIEWMODEL_VIEWITEM_H
 
-#include <QVariant>
 #include <memory>
+#include <mvvm/core/variant.h>
 #include <mvvm/viewmodel_export.h>
 #include <vector>
 

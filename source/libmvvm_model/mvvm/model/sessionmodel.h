@@ -10,9 +10,9 @@
 #ifndef MVVM_MODEL_SESSIONMODEL_H
 #define MVVM_MODEL_SESSIONMODEL_H
 
-#include <QVariant>
 #include <memory>
 #include <mvvm/core/types.h>
+#include <mvvm/core/variant.h>
 #include <mvvm/model/function_types.h>
 #include <mvvm/model/path.h>
 #include <mvvm/model/sessionitem.h>

@@ -10,8 +10,8 @@
 #ifndef MVVM_MODEL_SESSIONITEM_H
 #define MVVM_MODEL_SESSIONITEM_H
 
-#include <QVariant>
 #include <memory>
+#include <mvvm/core/variant.h>
 #include <mvvm/model/customvariants.h>
 #include <mvvm/model/mvvm_types.h>
 #include <mvvm/model/tagrow.h>

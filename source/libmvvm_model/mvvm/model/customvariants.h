@@ -14,7 +14,7 @@
 //! Registrations and translations for custom variants.
 
 #include <QMetaType>
-#include <QVariant>
+#include <mvvm/core/variant.h>
 #include <mvvm/model_export.h>
 #include <mvvm/utils/reallimits.h>
 #include <string>

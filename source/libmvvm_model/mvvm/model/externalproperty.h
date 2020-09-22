@@ -11,7 +11,7 @@
 #define MVVM_MODEL_EXTERNALPROPERTY_H
 
 #include <QColor>
-#include <QVariant>
+#include <mvvm/core/variant.h>
 #include <mvvm/model_export.h>
 #include <string>
 
