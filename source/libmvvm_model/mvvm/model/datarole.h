@@ -21,8 +21,8 @@ namespace ModelView
 class MVVM_MODEL_EXPORT DataRole
 {
 public:
-    DataRole(QVariant data = QVariant(), int role = -1);
-    QVariant m_data;
+    DataRole(Variant data = Variant(), int role = -1);
+    Variant m_data;
     int m_role;
     bool operator==(const DataRole& other) const;
 };
