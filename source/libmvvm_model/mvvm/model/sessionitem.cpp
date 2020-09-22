@@ -46,7 +46,7 @@ struct SessionItem::SessionItemImpl {
     }
 
     //! Sets the data for given role, notifies the model.
-    bool setData(const QVariant& variant, int role)
+    bool setData(const Variant& variant, int role)
     {
         bool result = m_data->setData(variant, role);
         if (result && m_model)
@@ -310,15 +310,14 @@ bool SessionItem::isSinglePropertyTag(const std::string& tag) const
 //! Sets the data for given role.
 //! Method invented to hide implementaiton details.
 
-bool SessionItem::set_data_internal(QVariant value, int role)
+bool SessionItem::set_data_internal(Variant value, int role)
 {
     return model() ? model()->setData(this, value, role) : setDataIntern(value, role);
 }
 
-//! Returns data in the form of QVariant for given role.
-//! Method invented to hide implementaiton details.
+//! Returns data for given role. Method invented to hide implementaiton details.
 
-QVariant SessionItem::data_internal(int role) const
+Variant SessionItem::data_internal(int role) const
 {
     return p_impl->m_data->data(role);
 }
@@ -377,7 +376,7 @@ void SessionItem::setDataAndTags(std::unique_ptr<SessionItemData> data,
     p_impl->m_tags = std::move(tags);
 }
 
-bool SessionItem::setDataIntern(const QVariant& variant, int role)
+bool SessionItem::setDataIntern(const Variant &variant, int role)
 {
     return p_impl->setData(variant, role);
 }

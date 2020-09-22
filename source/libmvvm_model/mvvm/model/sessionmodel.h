@@ -10,9 +10,9 @@
 #ifndef MVVM_MODEL_SESSIONMODEL_H
 #define MVVM_MODEL_SESSIONMODEL_H
 
-#include <QVariant>
 #include <memory>
 #include <mvvm/core/types.h>
+#include <mvvm/core/variant.h>
 #include <mvvm/model/function_types.h>
 #include <mvvm/model/path.h>
 #include <mvvm/model/sessionitem.h>
@@ -55,9 +55,9 @@ public:
 
     SessionItem* rootItem() const;
 
-    QVariant data(SessionItem* item, int role) const;
+    Variant data(SessionItem* item, int role) const;
 
-    bool setData(SessionItem* item, const QVariant& value, int role);
+    bool setData(SessionItem* item, const Variant &value, int role);
 
     Path pathFromItem(const SessionItem* item) const;
     SessionItem* itemFromPath(const Path& path) const;

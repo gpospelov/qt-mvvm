@@ -7,6 +7,7 @@
 //
 // ************************************************************************** //
 
+#include <mvvm/core/variant.h>
 #include <mvvm/commands/setvaluecommand.h>
 #include <mvvm/model/path.h>
 #include <mvvm/model/sessionitem.h>
@@ -20,11 +21,11 @@ std::string generate_description(const std::string& str);
 using namespace ModelView;
 
 struct SetValueCommand::SetValueCommandImpl {
-    QVariant m_value; //! Value to set as a result of command execution.
+    Variant m_value; //! Value to set as a result of command execution.
     int m_role;
     result_t m_result;
     Path m_item_path;
-    SetValueCommandImpl(QVariant value, int role)
+    SetValueCommandImpl(Variant value, int role)
         : m_value(std::move(value)), m_role(role), m_result(false)
     {
     }
@@ -32,7 +33,7 @@ struct SetValueCommand::SetValueCommandImpl {
 
 // ----------------------------------------------------------------------------
 
-SetValueCommand::SetValueCommand(SessionItem* item, QVariant value, int role)
+SetValueCommand::SetValueCommand(SessionItem* item, Variant value, int role)
     : AbstractItemCommand(item),
       p_impl(std::make_unique<SetValueCommandImpl>(std::move(value), role))
 {
@@ -55,7 +56,7 @@ void SetValueCommand::execute_command()
 void SetValueCommand::swap_values()
 {
     auto item = itemFromPath(p_impl->m_item_path);
-    auto old = item->data<QVariant>(p_impl->m_role);
+    auto old = item->data<Variant>(p_impl->m_role);
     p_impl->m_result = item->setDataIntern(p_impl->m_value, p_impl->m_role);
     setObsolete(!p_impl->m_result);
     p_impl->m_value = old;

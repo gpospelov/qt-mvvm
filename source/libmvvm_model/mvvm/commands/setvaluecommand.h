@@ -11,8 +11,7 @@
 #define MVVM_COMMANDS_SETVALUECOMMAND_H
 
 #include <mvvm/commands/abstractitemcommand.h>
-
-class QVariant;
+#include <mvvm/core/variant.h>
 
 namespace ModelView
 {
@@ -25,7 +24,7 @@ class MVVM_MODEL_EXPORT SetValueCommand : public AbstractItemCommand
 {
 public:
     using result_t = bool;
-    SetValueCommand(SessionItem* item, QVariant value, int role);
+    SetValueCommand(SessionItem* item, Variant value, int role);
     ~SetValueCommand() override;
 
     result_t result() const;

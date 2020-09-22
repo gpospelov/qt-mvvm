@@ -7,14 +7,14 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/model/customvariants.h>
-#include <mvvm/model/datarole.h>
+#ifndef MVVM_MODEL_VARIANT_H
+#define MVVM_MODEL_VARIANT_H
 
-using namespace ModelView;
+//! @file variant.h
+//! Defines variant type (intermediate step toward migration from QVariant to std::variant).
 
-DataRole::DataRole(Variant data, int role) : m_data(std::move(data)), m_role(role) {}
+#include <QVariant>
 
-bool DataRole::operator==(const DataRole& other) const
-{
-    return m_role == other.m_role && Utils::IsTheSame(m_data, other.m_data);
-}
+using Variant = QVariant;
+
+#endif // MVVM_MODEL_UNIQUEIDGENERATOR_H

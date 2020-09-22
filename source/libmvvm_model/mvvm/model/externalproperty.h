@@ -11,15 +11,15 @@
 #define MVVM_MODEL_EXTERNALPROPERTY_H
 
 #include <QColor>
-#include <QVariant>
+#include <mvvm/core/variant.h>
 #include <mvvm/model_export.h>
 #include <string>
 
 namespace ModelView
 {
 
-//! Property for QVariant to carry text, color and identifier. Can be used to link items with each
-//! other.
+//! Property to carry text, color and identifier.
+//! Can be used to link items with each other.
 
 class MVVM_MODEL_EXPORT ExternalProperty
 {

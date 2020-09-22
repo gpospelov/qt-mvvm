@@ -10,8 +10,8 @@
 #ifndef MVVM_MODEL_SESSIONITEM_H
 #define MVVM_MODEL_SESSIONITEM_H
 
-#include <QVariant>
 #include <memory>
+#include <mvvm/core/variant.h>
 #include <mvvm/model/customvariants.h>
 #include <mvvm/model/mvvm_types.h>
 #include <mvvm/model/tagrow.h>
@@ -44,7 +44,7 @@ public:
     std::string identifier() const;
 
     template <typename T> bool setData(const T& value, int role = ItemDataRole::DATA);
-    bool setDataIntern(const QVariant& variant, int role);
+    bool setDataIntern(const Variant& variant, int role);
 
     bool hasData(int role = ItemDataRole::DATA) const;
 
@@ -113,8 +113,8 @@ private:
     friend class JsonItemConverter;
     friend class JsonItemConverterV2;
     virtual void activate() {}
-    bool set_data_internal(QVariant value, int role);
-    QVariant data_internal(int role) const;
+    bool set_data_internal(Variant value, int role);
+    Variant data_internal(int role) const;
     void setParent(SessionItem* parent);
     void setModel(SessionModel* model);
     void setAppearanceFlag(int flag, bool value);
@@ -131,16 +131,16 @@ private:
 
 template <typename T> inline bool SessionItem::setData(const T& value, int role)
 {
-    if constexpr (std::is_same<T, QVariant>::value)
+    if constexpr (std::is_same<T, Variant>::value)
         return set_data_internal(value, role);
-    return set_data_internal(QVariant::fromValue(value), role);
+    return set_data_internal(Variant::fromValue(value), role);
 }
 
 //! Returns data of given type T for given role.
 
 template <typename T> inline T SessionItem::data(int role) const
 {
-    if constexpr (std::is_same<T, QVariant>::value)
+    if constexpr (std::is_same<T, Variant>::value)
         return data_internal(role);
     return data_internal(role).value<T>();
 }

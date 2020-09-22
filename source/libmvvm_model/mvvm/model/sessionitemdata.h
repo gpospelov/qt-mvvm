@@ -27,9 +27,9 @@ public:
 
     std::vector<int> roles() const;
 
-    QVariant data(int role) const;
+    Variant data(int role) const;
 
-    bool setData(const QVariant& value, int role);
+    bool setData(const Variant& value, int role);
 
     const_iterator begin() const;
     const_iterator end() const;
@@ -37,7 +37,7 @@ public:
     bool hasData(int role) const;
 
 private:
-    void assure_validity(const QVariant& variant, int role);
+    void assure_validity(const Variant& variant, int role);
     container_type m_values;
 };
 

@@ -12,8 +12,9 @@
 
 #include <functional>
 #include <map>
-#include <string>
+#include <mvvm/core/variant.h>
 #include <mvvm/serialization/jsonvariantconverterinterface.h>
+#include <string>
 
 class QJsonObject;
 class QJsonVariant;
@@ -28,16 +29,16 @@ class MVVM_MODEL_EXPORT JsonVariantConverter : public JsonVariantConverterInterf
 public:
     JsonVariantConverter();
 
-    QJsonObject get_json(const QVariant& variant) override;
+    QJsonObject get_json(const Variant& variant) override;
 
-    QVariant get_variant(const QJsonObject& object) override;
+    Variant get_variant(const QJsonObject& object) override;
 
     bool isVariant(const QJsonObject& object) const;
 
 private:
     struct Converters {
-        std::function<QJsonObject(const QVariant& variant)> variant_to_json;
-        std::function<QVariant(const QJsonObject& json)> json_to_variant;
+        std::function<QJsonObject(const Variant& variant)> variant_to_json;
+        std::function<Variant(const QJsonObject& json)> json_to_variant;
     };
 
     std::map<std::string, Converters> m_converters;
