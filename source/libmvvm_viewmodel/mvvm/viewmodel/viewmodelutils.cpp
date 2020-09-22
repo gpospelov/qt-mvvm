@@ -52,6 +52,8 @@ QVector<int> Utils::ItemRoleToQtRole(int role)
 #else
         result = {Qt::TextColorRole};
 #endif
+    else if (role == ItemDataRole::TOOLTIP)
+        result = {Qt::ToolTipRole};
 
     return result;
 }

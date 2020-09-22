@@ -70,7 +70,7 @@ TEST_F(ViewModelUtilsTest, iterate)
 
 TEST_F(ViewModelUtilsTest, ItemRoleToQtRole)
 {
-    // DATA role of SessionItem should be translated to two Qt roles (edit and siplay)
+    // DATA role of SessionItem should be translated to two Qt roles (edit and display)
     auto roles = Utils::ItemRoleToQtRole(ItemDataRole::DATA);
     QVector<int> expected = {Qt::DisplayRole, Qt::EditRole};
     EXPECT_EQ(roles, expected);
@@ -82,6 +82,11 @@ TEST_F(ViewModelUtilsTest, ItemRoleToQtRole)
 #else
     expected = {Qt::TextColorRole};
 #endif
+    EXPECT_EQ(roles, expected);
+
+    // tooltip role
+    roles = Utils::ItemRoleToQtRole(ItemDataRole::TOOLTIP);
+    expected = {Qt::ToolTipRole};
     EXPECT_EQ(roles, expected);
 }
 
