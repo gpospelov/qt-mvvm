@@ -14,7 +14,7 @@ using namespace ModelView;
 
 namespace
 {
-const QVariant empty_link = QVariant::fromValue(std::string());
+const Variant empty_link = Variant::fromValue(std::string());
 }
 
 LinkedItem::LinkedItem() : SessionItem(Constants::LinkedItemType)
@@ -27,5 +27,5 @@ LinkedItem::LinkedItem() : SessionItem(Constants::LinkedItemType)
 
 void LinkedItem::setLink(const SessionItem* item)
 {
-    setData(item ? QVariant::fromValue(item->identifier()) : empty_link);
+    setData(item ? Variant::fromValue(item->identifier()) : empty_link);
 }
