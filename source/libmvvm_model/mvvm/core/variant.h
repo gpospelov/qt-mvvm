@@ -11,8 +11,10 @@
 #define MVVM_MODEL_VARIANT_H
 
 //! @file variant.h
-//! Defines variant type (intermediate step toward QVariant ==> std::variant migration).
+//! Defines variant type (intermediate step toward migration from QVariant to std::variant).
 
 #include <QVariant>
+
+using Variant = QVariant;
 
 #endif // MVVM_MODEL_UNIQUEIDGENERATOR_H

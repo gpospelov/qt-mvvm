@@ -13,11 +13,11 @@
 #include <QUndoStack>
 #include <memory>
 #include <mvvm/commands/commandadapter.h>
+#include <mvvm/core/variant.h>
 #include <mvvm/model/function_types.h>
 #include <mvvm/model_export.h>
 
 class QUndoCommand;
-class QVariant;
 
 namespace ModelView
 {
@@ -40,7 +40,7 @@ public:
 
     SessionItem* copyItem(const SessionItem* item, SessionItem* parent, const TagRow& tagrow);
 
-    bool setData(SessionItem* item, const QVariant& value, int role);
+    bool setData(SessionItem* item, const Variant& value, int role);
 
     void removeItem(SessionItem* parent, const TagRow& tagrow);
 
