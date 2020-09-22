@@ -40,7 +40,7 @@ void Utils::iterate_model(const QAbstractItemModel* model, const QModelIndex& pa
 
 //! Translates SessionItem's data role to vector of Qt roles.
 
-QVector<int> Utils::item_role_to_qt(int role)
+QVector<int> Utils::ItemRoleToQtRole(int role)
 {
     QVector<int> result;
     // In Qt when we are editing the data in a view two roles are emmited.

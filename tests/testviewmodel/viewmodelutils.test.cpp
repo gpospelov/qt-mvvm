@@ -68,15 +68,15 @@ TEST_F(ViewModelUtilsTest, iterate)
 
 //! Translation of item role to Qt roles.
 
-TEST_F(ViewModelUtilsTest, itemRoleToQtRole)
+TEST_F(ViewModelUtilsTest, ItemRoleToQtRole)
 {
     // DATA role of SessionItem should be translated to two Qt roles (edit and siplay)
-    auto roles = Utils::item_role_to_qt(ItemDataRole::DATA);
+    auto roles = Utils::ItemRoleToQtRole(ItemDataRole::DATA);
     QVector<int> expected = {Qt::DisplayRole, Qt::EditRole};
     EXPECT_EQ(roles, expected);
 
     // APPEARANCE roles of SessionItem on Qt site means color
-    roles = Utils::item_role_to_qt(ItemDataRole::APPEARANCE);
+    roles = Utils::ItemRoleToQtRole(ItemDataRole::APPEARANCE);
 #if QT_VERSION >= QT_VERSION_CHECK(5, 13, 0)
     expected = {Qt::ForegroundRole};
 #else

@@ -35,7 +35,7 @@ MVVM_VIEWMODEL_EXPORT void iterate_model(const QAbstractItemModel* model, const 
                                          const std::function<void(const QModelIndex& child)>& fun);
 
 //! Returns vector of Qt roles corresponding to given ItemDataRole.
-MVVM_VIEWMODEL_EXPORT QVector<int> item_role_to_qt(int role);
+MVVM_VIEWMODEL_EXPORT QVector<int> ItemRoleToQtRole(int role);
 
 //! Returns text color for given item.
 MVVM_VIEWMODEL_EXPORT QVariant TextColorRole(const SessionItem& item);
