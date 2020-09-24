@@ -19,14 +19,10 @@ namespace ModelView
 
 class ViewItem;
 
-/*!
-@class ViewModelBase
-@brief Base class for all view models to show content of SessionModel in Qt views.
-
-ViewModelBase is made of ViewItems, where each ViewItem represents some concrete data role
-of SessionItem. ViewModelBase doesn't have own logic and needs ViewModelController to listen for
-SessionModel changes.
-*/
+//! Base class for all view models to show content of SessionModel in Qt views.
+//! ViewModelBase is made of ViewItems, where each ViewItem represents some concrete data role
+//!  of SessionItem. ViewModelBase doesn't have own logic and needs ViewModelController to listen
+//! for SessionModel changes.
 
 class MVVM_VIEWMODEL_EXPORT ViewModelBase : public QAbstractItemModel
 {
