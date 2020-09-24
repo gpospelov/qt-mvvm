@@ -91,6 +91,19 @@ TEST_F(StandardViewItemsTest, ViewLabelItem_flags)
     EXPECT_FALSE(viewItem.flags() & Qt::ItemIsEditable);
 }
 
+//! Testing tooltip tole.
+
+TEST_F(StandardViewItemsTest, ViewLabelItem_toolTipRole)
+{
+    SessionItem item;
+
+    ViewLabelItem viewItem(&item);
+    EXPECT_FALSE(viewItem.data(Qt::ToolTipRole).isValid());
+
+    item.setToolTip("abc");
+    EXPECT_EQ(viewItem.data(Qt::ToolTipRole).toString(), QString("abc"));
+}
+
 // ----------------------------------------------------------------------------
 // Tests for ViewDataItem
 // ----------------------------------------------------------------------------
@@ -213,4 +226,17 @@ TEST_F(StandardViewItemsTest, ViewDataItem_flags)
 
     ViewDataItem viewItem(&item);
     EXPECT_TRUE(viewItem.flags() & Qt::ItemIsEditable);
+}
+
+//! Testing tooltip tole.
+
+TEST_F(StandardViewItemsTest, ViewDataItem_toolTipRole)
+{
+    SessionItem item;
+
+    ViewDataItem viewItem(&item);
+    EXPECT_FALSE(viewItem.data(Qt::ToolTipRole).isValid());
+
+    item.setToolTip("abc");
+    EXPECT_EQ(viewItem.data(Qt::ToolTipRole).toString(), QString("abc"));
 }

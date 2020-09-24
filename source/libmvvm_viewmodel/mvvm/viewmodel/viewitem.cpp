@@ -204,7 +204,8 @@ QVariant ViewItem::data(int qt_role) const
     else if (qt_role == Qt::TextColorRole)
 #endif
         return Utils::TextColorRole(*p_impl->item);
-
+    else if (qt_role == Qt::ToolTipRole)
+        return Utils::ToolTipRole(*p_impl->item);
     else
         return QVariant();
 }
