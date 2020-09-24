@@ -31,7 +31,7 @@ bool isValidItemRole(const ViewItem* view, int item_role)
     if (view->item_role() == item_role)
         return true;
 
-    if (item_role == ModelView::ItemDataRole::APPEARANCE)
+    if (item_role == ItemDataRole::APPEARANCE || item_role == ItemDataRole::TOOLTIP)
         return true;
     return false;
 }
