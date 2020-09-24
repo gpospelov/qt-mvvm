@@ -25,10 +25,7 @@ class ItemsTreeView;
 class GraphCanvas;
 } // namespace ModelView
 
-/*!
-@class GraphWidget
-@brief Shows canvas with plots on the left and property editor on the right.
-*/
+//! Shows canvas with plots on the left and property editor on the right.
 
 class GraphWidget : public QWidget
 {
@@ -45,14 +42,14 @@ private:
     QBoxLayout* create_left_layout();
     QBoxLayout* create_right_layout();
 
-    QToolBar* m_toolBar;
-    QAction* m_resetViewportAction;
-    QAction* m_addGraphAction;
-    QAction* m_removeGraphAction;
+    QToolBar* m_toolBar{nullptr};
+    QAction* m_resetViewportAction{nullptr};
+    QAction* m_addGraphAction{nullptr};
+    QAction* m_removeGraphAction{nullptr};
 
-    ModelView::GraphCanvas* m_graphCanvas;
-    GraphPropertyWidget* m_propertyWidget;
-    GraphModel* m_model;
+    ModelView::GraphCanvas* m_graphCanvas{nullptr};
+    GraphPropertyWidget* m_propertyWidget{nullptr};
+    GraphModel* m_model{nullptr};
 };
 
 #endif // GRAPHWIDGET_H

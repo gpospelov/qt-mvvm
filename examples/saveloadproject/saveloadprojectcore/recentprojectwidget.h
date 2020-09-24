@@ -39,7 +39,7 @@ signals:
 private:
     QBoxLayout* createCurrentProjectLayout() const;
     QBoxLayout* createRecentProjectLayout();
-    ProjectPaneWidget* m_currentProjectPane;
+    ProjectPaneWidget* m_currentProjectPane{nullptr};
     std::vector<ProjectPaneWidget*> m_recentProjectPanes;
 };
 

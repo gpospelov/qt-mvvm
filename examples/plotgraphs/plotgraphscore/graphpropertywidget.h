@@ -22,10 +22,7 @@ namespace ModelView
 class ItemsTreeView;
 } // namespace ModelView
 
-/*!
-@class GraphPropertyWidget
-@brief Shows model content in standard tree view.
-*/
+//! Shows model content in standard tree view.
 
 class GraphPropertyWidget : public QWidget
 {
@@ -37,8 +34,9 @@ public:
 
 private:
     QBoxLayout* create_button_layout();
-    ModelView::ItemsTreeView* m_treeView;
-    GraphModel* m_model;
+
+    ModelView::ItemsTreeView* m_treeView{nullptr};
+    GraphModel* m_model{nullptr};
 };
 
 #endif // GRAPHPROPERTYWIDGET_H

@@ -26,10 +26,7 @@ class ViewModelDelegate;
 class SessionItem;
 } // namespace ModelView
 
-/*!
-@class ContainerEditor
-@brief Shows content of container and provide functionality to add, copy and move items.
-*/
+//! Shows content of container and provide functionality to add, copy and move items.
 
 class ContainerEditorWidget : public QWidget
 {
@@ -55,10 +52,10 @@ private:
     std::vector<ModelView::SessionItem*> selected_items() const;
     QBoxLayout* create_button_layout();
 
-    QTreeView* m_treeView;
+    QTreeView* m_treeView{nullptr};
     std::unique_ptr<ModelView::ViewModel> m_viewModel;
     std::unique_ptr<ModelView::ViewModelDelegate> m_delegate;
-    SampleModel* m_model;
+    SampleModel* m_model{nullptr};
 };
 
 #endif // CONTAINEREDITORWIDGET_H

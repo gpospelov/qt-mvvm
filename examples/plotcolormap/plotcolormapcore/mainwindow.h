@@ -16,6 +16,8 @@
 class ColorMapModel;
 class QTabWidget;
 
+//! The main window of this application.
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT

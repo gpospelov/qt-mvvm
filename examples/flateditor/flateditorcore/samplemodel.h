@@ -12,10 +12,7 @@
 
 #include <mvvm/model/sessionmodel.h>
 
-/*!
-@class SampleModel
-@brief Main application model.
-*/
+//! Main application model.
 
 class SampleModel : public ModelView::SessionModel
 {

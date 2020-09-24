@@ -23,10 +23,7 @@ namespace ModelView
 class ItemsTreeView;
 } // namespace ModelView
 
-/*!
-@class ColorMapPropertyWidget
-@brief Shows model content in standard tree view.
-*/
+//! Shows model content in standard tree view.
 
 class ScenePropertyWidget : public QWidget
 {
@@ -40,9 +37,9 @@ private:
     void setup_slider();
 
     QBoxLayout* create_button_layout();
-    QSlider* m_slider;
-    ModelView::ItemsTreeView* m_treeView;
-    SceneModel* m_model;
+    QSlider* m_slider{nullptr};
+    ModelView::ItemsTreeView* m_treeView{nullptr};
+    SceneModel* m_model{nullptr};
 };
 
 #endif // GRAPHICSPROXY_SCENEPROPERTYWIDGET_H

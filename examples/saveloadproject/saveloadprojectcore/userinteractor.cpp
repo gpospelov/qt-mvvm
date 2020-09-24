@@ -20,7 +20,7 @@ using namespace ModelView;
 
 namespace
 {
-//! Map of standard Qt answeres to what ProjectManager expects.
+//! Map of standard Qt answers to what ProjectManager expects.
 std::map<QMessageBox::StandardButton, SaveChangesAnswer> answer_map()
 {
     std::map<QMessageBox::StandardButton, SaveChangesAnswer> result = {

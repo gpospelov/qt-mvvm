@@ -17,10 +17,7 @@
 #include <mvvm/model/groupitem.h>
 #include <string>
 
-/*!
-@class MultiLayer
-@brief A multi layer with possibility to attach layers.
-*/
+//! A multi layer with possibility to attach layers.
 
 class MultiLayer : public ModelView::CompoundItem
 {
@@ -29,10 +26,7 @@ public:
     MultiLayer();
 };
 
-/*!
-@class LayerItem
-@brief A layer with thickness, color property and possibility to attach particles.
-*/
+//! A layer with thickness, color property and possibility to attach particles.
 
 class LayerItem : public ModelView::CompoundItem
 {
@@ -43,12 +37,8 @@ public:
     LayerItem();
 };
 
-/*!
-@class ParticleItem
-@brief A particle with position and shape group.
-
-Demonstrates how to create group of properties.
-*/
+//! A particle with position and shape group.
+//! Demonstrates how to create group of properties.
 
 class ParticleItem : public ModelView::CompoundItem
 {
@@ -58,12 +48,8 @@ public:
     ParticleItem();
 };
 
-/*!
-@class InterferenceFunctionItem
-@brief Interference function with bool, double and combo on board.
-
-Demonstrates how to syncronize properties between each other.
-*/
+//! Interference function with bool, double and combo on board.
+//! Demonstrates how to syncronize properties between each other.
 
 class InterferenceFunctionItem : public ModelView::CompoundItem
 {
@@ -80,10 +66,7 @@ private:
     void update_appearance();
 };
 
-/*!
-@class CylinderItem
-@brief Simple cylinder with radius and height.
-*/
+//! Simple cylinder with radius and height.
 
 class CylinderItem : public ModelView::CompoundItem
 {
@@ -93,10 +76,7 @@ public:
     CylinderItem();
 };
 
-/*!
-@class SphereItem
-@brief Simple spherer with radius.
-*/
+//! Simple spherer with radius.
 
 class SphereItem : public ModelView::CompoundItem
 {
@@ -105,10 +85,7 @@ public:
     SphereItem();
 };
 
-/*!
-@class AnysoPyramidItem
-@brief Pyramid with 4 parameters.
-*/
+//! Pyramid with 4 parameters.
 
 class AnysoPyramidItem : public ModelView::CompoundItem
 {
@@ -120,10 +97,7 @@ public:
     AnysoPyramidItem();
 };
 
-/*!
-@class ShapeGroupItem
-@brief Special group of shapes.
-*/
+//! Special group of shapes.
 
 class ShapeGroupItem : public ModelView::GroupItem
 {

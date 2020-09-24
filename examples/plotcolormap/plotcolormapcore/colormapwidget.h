@@ -24,10 +24,7 @@ class ItemsTreeView;
 class ColorMapCanvas;
 } // namespace ModelView
 
-/*!
-@class ColorMapWidget
-@brief Shows canvas with plots on the left and property editor on the right.
-*/
+//! Shows canvas with plots on the left and property editor on the right.
 
 class ColorMapWidget : public QWidget
 {

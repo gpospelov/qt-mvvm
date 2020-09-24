@@ -17,10 +17,7 @@ namespace ModelView
 class ContainerItem;
 }
 
-/*!
-@class ColorMapModel
-@brief Main application model to demonstrate how to plot data.
-*/
+//! Main application model to demonstrate how to plot data.
 
 class ColorMapModel : public ModelView::SessionModel
 {

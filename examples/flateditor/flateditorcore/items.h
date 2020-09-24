@@ -26,10 +26,7 @@ const std::string DistributionGroupItemType = "DistributionGroup";
 
 } // namespace Constants
 
-/*!
-@class BeamItem
-@brief Item to represent x-ray or neutron beam with properties to setup.
-*/
+//! Item to represent x-ray or neutron beam with properties to setup.
 
 class BeamItem : public ModelView::CompoundItem
 {
@@ -47,10 +44,7 @@ private:
     void update_appearance();
 };
 
-/*!
-@class DistributionNoneItem
-@brief Item to represent fixed value.
-*/
+//! Item to represent fixed value.
 
 class DistributionNoneItem : public ModelView::CompoundItem
 {
@@ -59,10 +53,7 @@ public:
     DistributionNoneItem();
 };
 
-/*!
-@class DistributionGaussianItem
-@brief Item to represent gaussian distribution.
-*/
+//! Item to represent gaussian distribution.
 
 class DistributionGaussianItem : public ModelView::CompoundItem
 {
@@ -73,10 +64,7 @@ public:
     DistributionGaussianItem();
 };
 
-/*!
-@class DistributionLogNormalItem
-@brief Item to represent log normal distribution.
-*/
+//! Item to represent log normal distribution.
 
 class DistributionLogNormalItem : public ModelView::CompoundItem
 {
@@ -88,10 +76,7 @@ public:
     DistributionLogNormalItem();
 };
 
-/*!
-@class DistributionTrapezoidItem
-@brief Item to represent trapezoid distribution.
-*/
+//! Item to represent trapezoid distribution.
 
 class DistributionTrapezoidItem : public ModelView::CompoundItem
 {
@@ -104,10 +89,7 @@ public:
     DistributionTrapezoidItem();
 };
 
-/*!
-@class DistributionGroupItem
-@brief Group to hold probability distribution items.
-*/
+//! Group to hold probability distribution items.
 
 class DistributionGroupItem : public ModelView::GroupItem
 {
