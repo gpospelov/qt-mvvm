@@ -18,13 +18,9 @@ class ContainerEditorWidget;
 class QToolBar;
 class QAction;
 
-/*!
-@class ModelEditorWidget
-@brief Shows model content as two table-like trees.
-
-It is expected that model has two containers with demo items, left tree shows first container,
-right tree the second. It is possible to drag-and-drop items between two containers.
-*/
+//! Shows model content as two table-like trees.
+//! It is expected that model has two containers with demo items, left tree shows first container,
+//! right tree the second. It is possible to drag-and-drop items between two containers.
 
 class ModelEditorWidget : public QWidget
 {
@@ -41,12 +37,12 @@ private slots:
 private:
     void init_actions();
 
-    QToolBar* m_toolBar;
-    ContainerEditorWidget* m_leftWidget;
-    ContainerEditorWidget* m_rightWidget;
-    QAction* m_undoAction;
-    QAction* m_redoAction;
-    SampleModel* m_model;
+    QToolBar* m_toolBar{nullptr};
+    ContainerEditorWidget* m_leftWidget{nullptr};
+    ContainerEditorWidget* m_rightWidget{nullptr};
+    QAction* m_undoAction{nullptr};
+    QAction* m_redoAction{nullptr};
+    SampleModel* m_model{nullptr};
 };
 
 #endif // MODELEDITORWIDGET_H

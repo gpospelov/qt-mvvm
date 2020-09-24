@@ -20,7 +20,7 @@ namespace ModelView
 
 class SessionItem;
 
-//! Represents the view of SessionItem's data in single cell of ViewModel.
+//! Represents the view of SessionItem's data in a single cell of ViewModel.
 
 class MVVM_VIEWMODEL_EXPORT ViewItem
 {

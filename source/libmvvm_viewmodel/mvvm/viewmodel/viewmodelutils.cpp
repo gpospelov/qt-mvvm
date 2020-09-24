@@ -40,7 +40,7 @@ void Utils::iterate_model(const QAbstractItemModel* model, const QModelIndex& pa
 
 //! Translates SessionItem's data role to vector of Qt roles.
 
-QVector<int> Utils::item_role_to_qt(int role)
+QVector<int> Utils::ItemRoleToQtRole(int role)
 {
     QVector<int> result;
     // In Qt when we are editing the data in a view two roles are emmited.
@@ -52,6 +52,8 @@ QVector<int> Utils::item_role_to_qt(int role)
 #else
         result = {Qt::TextColorRole};
 #endif
+    else if (role == ItemDataRole::TOOLTIP)
+        result = {Qt::ToolTipRole};
 
     return result;
 }
@@ -77,6 +79,12 @@ QVariant Utils::DecorationRole(const SessionItem& item)
     else if (Utils::IsExtPropertyVariant(value))
         return value.value<ExternalProperty>().color();
     return QVariant();
+}
+
+QVariant Utils::ToolTipRole(const SessionItem& item)
+{
+    return item.hasData(ItemDataRole::TOOLTIP) ? Variant(QString::fromStdString(item.toolTip()))
+                                               : QVariant();
 }
 
 std::vector<SessionItem*> Utils::ItemsFromIndex(const QModelIndexList& index_list)

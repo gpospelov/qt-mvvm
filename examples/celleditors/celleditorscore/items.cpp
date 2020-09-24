@@ -17,7 +17,7 @@ using namespace ModelView;
 
 DemoPropertiesItem::DemoPropertiesItem() : CompoundItem(::Constants::DemoPropertiesType)
 {
-    addProperty(P_BOOL_PROPERTY, true)->setDisplayName("Bool");
+    addProperty(P_BOOL_PROPERTY, true)->setDisplayName("Bool")->setToolTip("tooltip");
     addProperty(P_INTEGER_PROPERTY, 42)->setDisplayName("Integer");
     addProperty(P_STRING_PROPERTY, "abc")->setDisplayName("String");
     addProperty(P_DOUBLE_PROPERTY, 42.1)->setDisplayName("Double");

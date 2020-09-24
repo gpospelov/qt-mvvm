@@ -43,11 +43,11 @@ private:
     QAction* m_resetViewportAction{nullptr};
     QAction* m_setViewportToRoiAction{nullptr};
 
-    ScenePropertyWidget* m_propertyWidget;
-    ModelView::ColorMapCanvas* m_colorMapCanvas;
-    GraphicsScene* graphics_scene;
-    GraphicsView* graphics_view;
-    SceneModel* m_model;
+    ScenePropertyWidget* m_propertyWidget{nullptr};
+    ModelView::ColorMapCanvas* m_colorMapCanvas{nullptr};
+    GraphicsScene* graphics_scene{nullptr};
+    GraphicsView* graphics_view{nullptr};
+    SceneModel* m_model{nullptr};
 };
 
 #endif // GRAPHICSPROXY_SCENEWIDGET_H

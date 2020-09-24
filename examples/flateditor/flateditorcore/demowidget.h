@@ -23,10 +23,7 @@ class PropertyFlatView;
 
 class QBoxLayout;
 
-/*!
-@class DemoWidget
-@brief Demonstrates usage of PropertyFlatView.
-*/
+//! Demonstrates usage of PropertyFlatView.
 
 class DemoWidget : public QWidget
 {
@@ -41,10 +38,10 @@ private:
 
     void connect_views();
 
-    ModelView::AllItemsTreeView* m_defaultTreeView;
-    ModelView::PropertyTreeView* m_propertyTreeView;
-    ModelView::PropertyFlatView* m_propertyFlatView;
-    ModelView::SessionModel* m_sessionModel;
+    ModelView::AllItemsTreeView* m_defaultTreeView{nullptr};
+    ModelView::PropertyTreeView* m_propertyTreeView{nullptr};
+    ModelView::PropertyFlatView* m_propertyFlatView{nullptr};
+    ModelView::SessionModel* m_sessionModel{nullptr};
 };
 
 #endif // FLATEDITORCORE_DEMOWIDGET_H

@@ -27,6 +27,24 @@ std::vector<SessionItem*> TopItemsStrategy::children(const SessionItem* item) co
 
 // ----------------------------------------------------------------------------
 
+/*
+PropertyItemsStrategy example: if group property has Cylinder active:
+
+Particle
+    ShapeGroup
+        Sphere
+            Radius
+        Cylinder
+            Height
+            Radius
+
+will become:
+Particle
+    ShapeGroup -> Cylinder
+        Height
+        Radius
+*/
+
 std::vector<SessionItem*> PropertyItemsStrategy::children(const SessionItem* item) const
 {
     if (!item)
@@ -38,6 +56,24 @@ std::vector<SessionItem*> PropertyItemsStrategy::children(const SessionItem* ite
 }
 
 // ----------------------------------------------------------------------------
+
+/*
+PropertyItemsFlatStrategy example: if group property has Cylinder active:
+
+Particle
+    ShapeGroup
+        Sphere
+            Radius
+        Cylinder
+            Height
+            Radius
+
+will become:
+Particle
+    ShapeGroup -> Cylinder
+    Height
+    Radius
+*/
 
 std::vector<SessionItem*> PropertyItemsFlatStrategy::children(const SessionItem* item) const
 {

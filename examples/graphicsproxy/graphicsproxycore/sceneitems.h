@@ -10,10 +10,8 @@
 #ifndef GRAPHICSPROXY_SCENEITEMS_H
 #define GRAPHICSPROXY_SCENEITEMS_H
 
-/*!
-@file sceneitems.h
-@brief Collection of items for graphics scene.
-*/
+//! @file sceneitems.h
+//! Collection of items for graphics scene.
 
 #include <mvvm/model/compounditem.h>
 

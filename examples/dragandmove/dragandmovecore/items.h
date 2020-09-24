@@ -10,18 +10,13 @@
 #ifndef ITEMS_H
 #define ITEMS_H
 
-/*!
-@file items.h
-@brief Collection of items for our application model.
-*/
+//! @file items.h
+//! Collection of items for our application model.
 
 #include <mvvm/model/compounditem.h>
 #include <string>
 
-/*!
-@class DemoItem
-@brief Demo item which demonstrates all supported properties.
-*/
+//! Demo item which demonstrating supported properties.
 
 class DemoItem : public ModelView::CompoundItem
 {
@@ -36,10 +31,7 @@ public:
     DemoItem();
 };
 
-/*!
-@class DemoContainerItem
-@brief Container to hold demo items
-*/
+//! Container to hold demo items
 
 class DemoContainerItem : public ModelView::CompoundItem
 {

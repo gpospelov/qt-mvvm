@@ -31,7 +31,7 @@ bool isValidItemRole(const ViewItem* view, int item_role)
     if (view->item_role() == item_role)
         return true;
 
-    if (item_role == ModelView::ItemDataRole::APPEARANCE)
+    if (item_role == ItemDataRole::APPEARANCE || item_role == ItemDataRole::TOOLTIP)
         return true;
     return false;
 }
@@ -260,7 +260,7 @@ void ViewModelController::onDataChange(SessionItem* item, int role)
         // inform corresponding LabelView and DataView
         if (isValidItemRole(view, role)) {
             auto index = p_impl->view_model->indexFromItem(view);
-            p_impl->view_model->dataChanged(index, index, Utils::item_role_to_qt(role));
+            p_impl->view_model->dataChanged(index, index, Utils::ItemRoleToQtRole(role));
         }
     }
 }

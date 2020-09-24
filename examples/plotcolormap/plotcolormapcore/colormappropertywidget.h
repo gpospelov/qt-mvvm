@@ -23,10 +23,7 @@ namespace ModelView
 class ItemsTreeView;
 } // namespace ModelView
 
-/*!
-@class ColorMapPropertyWidget
-@brief Shows model content in standard tree view.
-*/
+//! Shows model content in standard tree view.
 
 class ColorMapPropertyWidget : public QWidget
 {
