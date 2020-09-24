@@ -137,6 +137,19 @@ TEST_F(ViewModelUtilsTest, itemDecorationRole)
     EXPECT_EQ(Utils::DecorationRole(item).value<QColor>(), expected);
 }
 
+//! Testing tooltip role of the item.
+
+TEST_F(ViewModelUtilsTest, itemToolTipRole)
+{
+    SessionItem item("Something");
+
+    auto variant = Utils::ToolTipRole(item);
+    EXPECT_FALSE(variant.isValid());
+
+    item.setToolTip("abc");
+    EXPECT_EQ(Utils::ToolTipRole(item).toString(), QString("abc"));
+}
+
 //! Check ItemsFromIndex in PropertyTableViewModel context.
 //! ViewItem with its three property x, y, z forms one row. All corresponding
 //! indices of (x,y,z) should give us pointers to VectorItem's properties.

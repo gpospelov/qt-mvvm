@@ -81,6 +81,12 @@ QVariant Utils::DecorationRole(const SessionItem& item)
     return QVariant();
 }
 
+QVariant Utils::ToolTipRole(const SessionItem& item)
+{
+    return item.hasData(ItemDataRole::TOOLTIP) ? Variant(QString::fromStdString(item.toolTip()))
+                                               : QVariant();
+}
+
 std::vector<SessionItem*> Utils::ItemsFromIndex(const QModelIndexList& index_list)
 {
     if (index_list.empty())
