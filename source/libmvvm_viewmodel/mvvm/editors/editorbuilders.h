@@ -25,7 +25,8 @@ class SessionItem;
 namespace EditorBuilders
 {
 
-using builder_t = std::function<std::unique_ptr<CustomEditor>(const SessionItem*)>;
+using editor_t = std::unique_ptr<CustomEditor>;
+using builder_t = std::function<editor_t(const SessionItem*)>;
 
 //! Builder for boolean property editor.
 MVVM_VIEWMODEL_EXPORT builder_t BoolEditorBuilder();
@@ -50,6 +51,9 @@ MVVM_VIEWMODEL_EXPORT builder_t ComboPropertyEditorBuilder();
 
 //! Builder for external property editor.
 MVVM_VIEWMODEL_EXPORT builder_t ExternalPropertyEditorBuilder();
+
+//! Builder for ComboProperty editor with multi-selection functionality.
+MVVM_VIEWMODEL_EXPORT builder_t SelectableComboPropertyEditorBuilder();
 
 } // namespace EditorBuilders
 

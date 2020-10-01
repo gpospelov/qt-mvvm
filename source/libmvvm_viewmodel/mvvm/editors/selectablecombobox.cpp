@@ -16,14 +16,14 @@
 #include <QAbstractItemView>
 #include <QComboBox>
 #include <QLineEdit>
+#include <QMouseEvent>
+#include <QStandardItem>
 #include <QStandardItemModel>
 #include <QStyledItemDelegate>
 #include <QVBoxLayout>
-#include <QMouseEvent>
-#include <QStandardItem>
 #include <mvvm/editors/customeventfilters.h>
-#include <mvvm/model/comboproperty.h>
 #include <mvvm/editors/selectablecombobox.h>
+#include <mvvm/model/comboproperty.h>
 #include <mvvm/utils/containerutils.h>
 
 using namespace ModelView;
@@ -88,7 +88,7 @@ QSize SelectableComboBox::minimumSizeHint() const
 //! Propagate check state from the model to ComboProperty.
 
 void SelectableComboBox::onModelDataChanged(const QModelIndex& topLeft, const QModelIndex&,
-                                                  const QVector<int>&)
+                                            const QVector<int>&)
 {
     // on Qt 5.9 roles remains empty for checked state. It will stop working if uncomment.
     //    if (!roles.contains(Qt::CheckStateRole))
@@ -103,7 +103,7 @@ void SelectableComboBox::onModelDataChanged(const QModelIndex& topLeft, const QM
     comboProperty.setSelected(topLeft.row(), state);
 
     updateBoxLabel();
-//    setDataIntern(QVariant::fromValue<ComboProperty>(comboProperty));
+    setDataIntern(QVariant::fromValue<ComboProperty>(comboProperty));
 }
 
 //! Processes press event in QComboBox's underlying list view.
