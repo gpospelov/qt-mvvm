@@ -22,6 +22,7 @@ class SessionItem;
 
 //! Collection of methods to build custom editors for trees/tables cells.
 //! Used to edit SessionItem data in the context of DefaultEditorFactory.
+
 namespace EditorBuilders
 {
 
