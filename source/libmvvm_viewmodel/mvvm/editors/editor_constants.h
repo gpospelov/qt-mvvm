@@ -20,6 +20,7 @@ namespace ModelView
 
 namespace Constants
 {
+
 const std::string BoolEditorType = "BoolEditor";
 const std::string ColorEditorType = "ColorEditor";
 const std::string ComboPropertyEditorType = "ComboPropertyEditor";
@@ -29,6 +30,7 @@ const std::string IntegerEditorType = "IntegerEditor";
 const std::string ScientficDoubleEditorType = "ScientficDoubleEditor";
 const std::string ScientficSpinBoxEditorType = "ScientficSpinBoxEditor";
 const std::string SelectableComboPropertyEditorType = "SelectableComboPropertyEditor";
+
 } // namespace Constants
 
 } // namespace ModelView
