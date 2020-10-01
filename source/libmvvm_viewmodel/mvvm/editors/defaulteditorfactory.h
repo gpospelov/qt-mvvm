@@ -12,7 +12,7 @@
 
 #include <map>
 #include <mvvm/editors/editorbuilders.h>
-#include <mvvm/editors/editorfactoryinterface.h>
+#include <mvvm/interfaces/editorfactoryinterface.h>
 
 namespace ModelView
 {

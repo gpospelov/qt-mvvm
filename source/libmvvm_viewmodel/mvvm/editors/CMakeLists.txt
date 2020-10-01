@@ -16,7 +16,6 @@ target_sources(${library_name} PRIVATE
     editor_constants.h
     editorbuilders.cpp
     editorbuilders.h
-    editorfactoryinterface.h
     externalpropertycomboeditor.cpp
     externalpropertycomboeditor.h
     externalpropertyeditor.cpp
