@@ -29,9 +29,11 @@ public:
     std::unique_ptr<CustomEditor> createEditor(const QModelIndex& index) const override;
 
 protected:
-    void registerBuilder(const std::string& name, EditorBuilders::builder_t strategy);
-    EditorBuilders::builder_t findBuilder(const std::string& name) const;
-    std::map<std::string, EditorBuilders::builder_t> m_editor_builders;
+    void registerBuilderForVariant(const std::string& variant_name,
+                                   EditorBuilders::builder_t builder);
+    EditorBuilders::builder_t findBuilderForVariant(const std::string& variant_name) const;
+
+    std::map<std::string, EditorBuilders::builder_t> m_variantNameToBuilderMap;
 };
 
 } // namespace ModelView
