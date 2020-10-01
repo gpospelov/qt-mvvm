@@ -28,6 +28,8 @@ target_sources(${library_name} PRIVATE
     scientificspinbox.h
     scientificspinboxeditor.cpp
     scientificspinboxeditor.h
+    selectablecombobox.cpp
+    selectablecombobox.h
     styleutils.cpp
     styleutils.h
 )
