@@ -101,7 +101,6 @@ TEST_F(SessionItemTest, setDataAndImplicitConversion)
     }
 }
 
-
 TEST_F(SessionItemTest, hasData)
 {
     SessionItem item;
@@ -113,6 +112,7 @@ TEST_F(SessionItemTest, hasData)
     EXPECT_FALSE(item.hasData(ItemDataRole::APPEARANCE));
     EXPECT_FALSE(item.hasData(ItemDataRole::LIMITS));
     EXPECT_FALSE(item.hasData(ItemDataRole::TOOLTIP));
+    EXPECT_FALSE(item.hasData(ItemDataRole::EDITORTYPE));
 
     item.setData(42.0);
     EXPECT_TRUE(item.hasData());
@@ -700,7 +700,7 @@ TEST_F(SessionItemTest, appearance)
     EXPECT_FALSE(item.isEditable());
 }
 
-//! Checks item appearance (enabled/disabled and editable/readonly).
+//! Checks item tooltip.
 
 TEST_F(SessionItemTest, tooltip)
 {
@@ -712,6 +712,20 @@ TEST_F(SessionItemTest, tooltip)
     EXPECT_EQ(item.setToolTip("abc"), &item);
     EXPECT_TRUE(item.hasData(ItemDataRole::TOOLTIP));
     EXPECT_EQ(item.toolTip(), "abc");
+}
+
+//! Checks item's editor type.
+
+TEST_F(SessionItemTest, editorType)
+{
+    SessionItem item("Model");
+
+    EXPECT_EQ(item.editorType(), "");
+    EXPECT_FALSE(item.hasData(ItemDataRole::EDITORTYPE));
+
+    EXPECT_EQ(item.setEditorType("abc"), &item);
+    EXPECT_TRUE(item.hasData(ItemDataRole::EDITORTYPE));
+    EXPECT_EQ(item.editorType(), "abc");
 }
 
 TEST_F(SessionItemTest, itemsInTag)
