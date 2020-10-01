@@ -11,7 +11,7 @@
 #include <mvvm/editors/defaulteditorfactory.h>
 #include <mvvm/model/customvariants.h>
 #include <mvvm/model/sessionitem.h>
-#include <mvvm/model/variant-constants.h>
+#include <mvvm/model/variant_constants.h>
 #include <mvvm/viewmodel/viewmodel.h>
 
 using namespace ModelView;

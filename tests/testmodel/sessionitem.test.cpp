@@ -14,7 +14,7 @@
 #include <mvvm/model/itemutils.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/taginfo.h>
-#include <mvvm/model/variant-constants.h>
+#include <mvvm/model/variant_constants.h>
 #include <stdexcept>
 
 using namespace ModelView;
