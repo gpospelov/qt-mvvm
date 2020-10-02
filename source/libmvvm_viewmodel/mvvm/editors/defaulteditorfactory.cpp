@@ -113,7 +113,7 @@ DefaultEditorFactory::DefaultEditorFactory()
 {
 }
 
-//! Creates editor for given model index.
+//! Creates editor for given model index basing either on editorType() or specific variant name.
 
 std::unique_ptr<CustomEditor> DefaultEditorFactory::createEditor(const QModelIndex& index) const
 {

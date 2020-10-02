@@ -10,6 +10,9 @@
 #ifndef MVVM_EDITORS_DEFAULTEDITORFACTORY_H
 #define MVVM_EDITORS_DEFAULTEDITORFACTORY_H
 
+//! @file defaulteditorfactory.h
+//! Defines DefaultEditorFactory and auxiliary classes for custom view model delegates.
+
 #include <map>
 #include <memory>
 #include <mvvm/editors/editorbuilders.h>
@@ -19,7 +22,7 @@ namespace ModelView
 {
 
 //! Abstract editor factory for ViewModelDelegate.
-//! Creates cell editors for Qt trees and tables basing on model index. Cell editor is
+//! Creates cell editors for Qt trees and tables from model index. Cell editor is
 //! Qt widget intended for editing DATA role of some SessionItem.
 
 class MVVM_VIEWMODEL_EXPORT AbstractEditorFactory : public EditorFactoryInterface

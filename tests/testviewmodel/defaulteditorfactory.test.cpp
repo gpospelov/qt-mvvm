@@ -15,11 +15,13 @@
 #include <mvvm/editors/coloreditor.h>
 #include <mvvm/editors/combopropertyeditor.h>
 #include <mvvm/editors/defaulteditorfactory.h>
+#include <mvvm/editors/editor_constants.h>
 #include <mvvm/editors/externalpropertyeditor.h>
 #include <mvvm/editors/integereditor.h>
 #include <mvvm/editors/scientificdoubleeditor.h>
 #include <mvvm/editors/scientificspinbox.h>
 #include <mvvm/editors/scientificspinboxeditor.h>
+#include <mvvm/editors/selectablecombobox.h>
 #include <mvvm/model/comboproperty.h>
 #include <mvvm/model/externalproperty.h>
 #include <mvvm/model/propertyitem.h>
@@ -38,7 +40,8 @@ public:
 
     //! Helper function to build temporary model and create editor for cell.
     std::unique_ptr<CustomEditor> createEditor(const QVariant& variant,
-                                               RealLimits limits = RealLimits::limitless())
+                                               RealLimits limits = RealLimits::limitless(),
+                                               const std::string& editor_type = {})
     {
         // populating model with data
         SessionModel model;
@@ -46,6 +49,8 @@ public:
         propertyItem->setData(variant);
         if (limits.hasLowerLimit() || limits.hasUpperLimit())
             propertyItem->setLimits(limits);
+        if (!editor_type.empty())
+            propertyItem->setEditorType(editor_type);
 
         // create view model and use index of data cell to create an editor
         DefaultViewModel viewModel(&model);
@@ -161,4 +166,13 @@ TEST_F(DefaultEditorFactoryTest, unsupportedProperty)
 
     // special case of invalid index
     EXPECT_EQ(m_factory->createEditor(QModelIndex()), nullptr);
+}
+
+//! Create test editor using EDITOR role.
+
+TEST_F(DefaultEditorFactoryTest, editorType)
+{
+    auto editor = createEditor(QVariant::fromValue(ComboProperty()), RealLimits(),
+                               Constants::SelectableComboPropertyEditorType);
+    EXPECT_TRUE(dynamic_cast<SelectableComboBox*>(editor.get()));
 }
