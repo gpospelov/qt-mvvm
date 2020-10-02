@@ -28,6 +28,80 @@ const SessionItem* itemFromIndex(const QModelIndex& index)
 
 } // namespace
 
+// ----------------------------------------------------------------------------
+
+std::unique_ptr<CustomEditor> EditorFactory::createEditor(const QModelIndex& index) const
+{
+    auto item = itemFromIndex(index);
+    return item ? createEditor(*item) : std::unique_ptr<CustomEditor>();
+}
+
+void EditorFactory::registerBuilder(const std::string& name, EditorBuilders::builder_t builder)
+{
+    m_nameToBuilderMap[name] = std::move(builder);
+}
+
+EditorBuilders::builder_t EditorFactory::findBuilder(const std::string& name) const
+{
+    auto it = m_nameToBuilderMap.find(name);
+    return it != m_nameToBuilderMap.end() ? it->second : EditorBuilders::builder_t();
+}
+
+// ----------------------------------------------------------------------------
+
+VariantDependentEditorFactory::VariantDependentEditorFactory()
+{
+    registerBuilder(Constants::bool_type_name, EditorBuilders::BoolEditorBuilder());
+    registerBuilder(Constants::int_type_name, EditorBuilders::IntegerEditorBuilder());
+    registerBuilder(Constants::double_type_name, EditorBuilders::ScientificSpinBoxEditorBuilder());
+    registerBuilder(Constants::qcolor_type_name, EditorBuilders::ColorEditorBuilder());
+    registerBuilder(Constants::comboproperty_type_name,
+                    EditorBuilders::ComboPropertyEditorBuilder());
+    registerBuilder(Constants::extproperty_type_name,
+                    EditorBuilders::ExternalPropertyEditorBuilder());
+}
+
+//! Creates cell editor basing on variant name.
+
+std::unique_ptr<CustomEditor>
+VariantDependentEditorFactory::createEditor(const SessionItem& item) const
+{
+    auto value = item.data<QVariant>();
+    auto builder = findBuilder(Utils::VariantName(value));
+    return builder ? builder(&item) : std::unique_ptr<CustomEditor>();
+}
+
+// ----------------------------------------------------------------------------
+
+RoleDependentEditorFactory::RoleDependentEditorFactory()
+{
+    registerBuilder(Constants::BoolEditorType, EditorBuilders::BoolEditorBuilder());
+    registerBuilder(Constants::ColorEditorType, EditorBuilders::ColorEditorBuilder());
+    registerBuilder(Constants::ComboPropertyEditorType,
+                    EditorBuilders::ComboPropertyEditorBuilder());
+    registerBuilder(Constants::DoubleEditorType, EditorBuilders::DoubleEditorBuilder());
+    registerBuilder(Constants::ExternalPropertyEditorType,
+                    EditorBuilders::ExternalPropertyEditorBuilder());
+    registerBuilder(Constants::IntegerEditorType, EditorBuilders::IntegerEditorBuilder());
+    registerBuilder(Constants::ScientficDoubleEditorType,
+                    EditorBuilders::ScientificDoubleEditorBuilder());
+    registerBuilder(Constants::ScientficSpinBoxEditorType,
+                    EditorBuilders::ScientificSpinBoxEditorBuilder());
+    registerBuilder(Constants::SelectableComboPropertyEditorType,
+                    EditorBuilders::SelectableComboPropertyEditorBuilder());
+}
+
+//! Creates cell editor basing on variant name.
+
+std::unique_ptr<CustomEditor>
+RoleDependentEditorFactory::createEditor(const SessionItem& item) const
+{
+    auto builder = findBuilder(item.editorType());
+    return builder ? builder(&item) : std::unique_ptr<CustomEditor>();
+}
+
+// ----------------------------------------------------------------------------
+
 DefaultEditorFactory::~DefaultEditorFactory() = default;
 
 DefaultEditorFactory::DefaultEditorFactory()
@@ -107,7 +181,8 @@ DefaultEditorFactory::findBuilderForVariant(const std::string& variant_name) con
 
 //! Returns builder for editor with given name.
 
-EditorBuilders::builder_t DefaultEditorFactory::findBuilderForEditor(const std::string &editor_type) const
+EditorBuilders::builder_t
+DefaultEditorFactory::findBuilderForEditor(const std::string& editor_type) const
 {
     auto it = m_editorTypeToBuilderMap.find(editor_type);
     return it != m_editorTypeToBuilderMap.end() ? it->second : EditorBuilders::builder_t();
