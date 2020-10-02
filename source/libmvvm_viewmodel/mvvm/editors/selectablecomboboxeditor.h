@@ -32,6 +32,8 @@ public:
     QSize sizeHint() const override;
     QSize minimumSizeHint() const override;
 
+    bool is_persistent() const override;
+
 protected slots:
     void onModelDataChanged(const QModelIndex&, const QModelIndex&, const QVector<int>&);
 

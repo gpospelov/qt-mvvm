@@ -27,6 +27,7 @@ public:
     static inline const std::string P_DOUBLE_PROPERTY = "P_DOUBLE_PROPERTY";
     static inline const std::string P_COLOR_PROPERTY = "P_COLOR_PROPERTY";
     static inline const std::string P_COMBO_PROPERTY = "P_COMBO_PROPERTY";
+    static inline const std::string P_SELECTABLE_COMBO_PROPERTY = "P_SELECTABLE_COMBO_PROPERTY";
     static inline const std::string P_EXTERNAL_PROPERTY = "P_EXTERNAL_PROPERTY";
 
     DemoPropertiesItem();

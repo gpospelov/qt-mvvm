@@ -85,14 +85,21 @@ QSize SelectableComboBoxEditor::minimumSizeHint() const
     return m_box->minimumSizeHint();
 }
 
+bool SelectableComboBoxEditor::is_persistent() const
+{
+    return true;
+}
+
 //! Propagate check state from the model to ComboProperty.
 
 void SelectableComboBoxEditor::onModelDataChanged(const QModelIndex& topLeft, const QModelIndex&,
-                                            const QVector<int>&)
+                                                  const QVector<int>& roles)
 {
-    // on Qt 5.9 roles remains empty for checked state. It will stop working if uncomment.
-    //    if (!roles.contains(Qt::CheckStateRole))
-    //        return;
+#if QT_VERSION > QT_VERSION_CHECK(5, 9, 0)
+    // for older versions this role is always empty
+    if (!roles.contains(Qt::CheckStateRole))
+        return;
+#endif
 
     auto item = m_model->itemFromIndex(topLeft);
     if (!item)
