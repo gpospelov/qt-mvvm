@@ -22,7 +22,7 @@
 #include <QStyledItemDelegate>
 #include <QVBoxLayout>
 #include <mvvm/editors/customeventfilters.h>
-#include <mvvm/editors/selectablecombobox.h>
+#include <mvvm/editors/selectablecomboboxeditor.h>
 #include <mvvm/model/comboproperty.h>
 #include <mvvm/utils/containerutils.h>
 
@@ -46,14 +46,14 @@ public:
 
 // ----------------------------------------------------------------------------
 
-SelectableComboBox::SelectableComboBox(QWidget* parent)
-    : CustomEditor(parent), m_box(new QComboBox), m_wheel_event_filter(new WheelEventFilter(this)),
+SelectableComboBoxEditor::SelectableComboBoxEditor(QWidget* parent)
+    : CustomEditor(parent), m_box(new QComboBox), m_wheelEventFilter(new WheelEventFilter(this)),
       m_model(new QStandardItemModel(this))
 {
     setAutoFillBackground(true);
     setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 
-    m_box->installEventFilter(m_wheel_event_filter);
+    m_box->installEventFilter(m_wheelEventFilter);
     m_box->view()->viewport()->installEventFilter(this);
 
     // Editable mode will be used to have None/Multiple labels on top
@@ -75,19 +75,19 @@ SelectableComboBox::SelectableComboBox(QWidget* parent)
     setConnected(true);
 }
 
-QSize SelectableComboBox::sizeHint() const
+QSize SelectableComboBoxEditor::sizeHint() const
 {
     return m_box->sizeHint();
 }
 
-QSize SelectableComboBox::minimumSizeHint() const
+QSize SelectableComboBoxEditor::minimumSizeHint() const
 {
     return m_box->minimumSizeHint();
 }
 
 //! Propagate check state from the model to ComboProperty.
 
-void SelectableComboBox::onModelDataChanged(const QModelIndex& topLeft, const QModelIndex&,
+void SelectableComboBoxEditor::onModelDataChanged(const QModelIndex& topLeft, const QModelIndex&,
                                             const QVector<int>&)
 {
     // on Qt 5.9 roles remains empty for checked state. It will stop working if uncomment.
@@ -108,7 +108,7 @@ void SelectableComboBox::onModelDataChanged(const QModelIndex& topLeft, const QM
 
 //! Processes press event in QComboBox's underlying list view.
 
-void SelectableComboBox::onClickedList(const QModelIndex& index)
+void SelectableComboBoxEditor::onClickedList(const QModelIndex& index)
 {
     if (auto item = m_model->itemFromIndex(index)) {
         auto state = item->checkState() == Qt::Checked ? Qt::Unchecked : Qt::Checked;
@@ -118,7 +118,7 @@ void SelectableComboBox::onClickedList(const QModelIndex& index)
 
 //! Handles mouse clicks on QComboBox elements.
 
-bool SelectableComboBox::eventFilter(QObject* obj, QEvent* event)
+bool SelectableComboBoxEditor::eventFilter(QObject* obj, QEvent* event)
 {
     if (isClickToSelect(obj, event)) {
         // Handles mouse clicks on QListView when it is expanded from QComboBox
@@ -141,7 +141,7 @@ bool SelectableComboBox::eventFilter(QObject* obj, QEvent* event)
     }
 }
 
-void SelectableComboBox::update_components()
+void SelectableComboBoxEditor::update_components()
 {
     if (!m_data.canConvert<ComboProperty>())
         return;
@@ -168,31 +168,31 @@ void SelectableComboBox::update_components()
     updateBoxLabel();
 }
 
-void SelectableComboBox::setConnected(bool isConnected)
+void SelectableComboBoxEditor::setConnected(bool isConnected)
 {
     if (isConnected) {
         connect(m_model, &QStandardItemModel::dataChanged, this,
-                &SelectableComboBox::onModelDataChanged);
+                &SelectableComboBoxEditor::onModelDataChanged);
     } else {
         disconnect(m_model, &QStandardItemModel::dataChanged, this,
-                   &SelectableComboBox::onModelDataChanged);
+                   &SelectableComboBoxEditor::onModelDataChanged);
     }
 }
 
 //! Update text on QComboBox with the label provided by combo property.
 
-void SelectableComboBox::updateBoxLabel()
+void SelectableComboBoxEditor::updateBoxLabel()
 {
     ComboProperty combo = m_data.value<ComboProperty>();
     m_box->setCurrentText(QString::fromStdString(combo.label()));
 }
 
-bool SelectableComboBox::isClickToSelect(QObject* obj, QEvent* event) const
+bool SelectableComboBoxEditor::isClickToSelect(QObject* obj, QEvent* event) const
 {
     return obj == m_box->view()->viewport() && event->type() == QEvent::MouseButtonRelease;
 }
 
-bool SelectableComboBox::isClickToExpand(QObject* obj, QEvent* event) const
+bool SelectableComboBoxEditor::isClickToExpand(QObject* obj, QEvent* event) const
 {
     return obj == m_box->lineEdit() && event->type() == QEvent::MouseButtonRelease;
 }

@@ -17,7 +17,7 @@
 #include <mvvm/editors/integereditor.h>
 #include <mvvm/editors/scientificdoubleeditor.h>
 #include <mvvm/editors/scientificspinboxeditor.h>
-#include <mvvm/editors/selectablecombobox.h>
+#include <mvvm/editors/selectablecomboboxeditor.h>
 #include <mvvm/model/customvariants.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/utils/reallimits.h>
@@ -128,7 +128,7 @@ builder_t ExternalPropertyEditorBuilder()
 builder_t SelectableComboPropertyEditorBuilder()
 {
     auto builder = [](const SessionItem*) -> editor_t {
-        return std::make_unique<SelectableComboBox>();
+        return std::make_unique<SelectableComboBoxEditor>();
     };
     return builder;
 

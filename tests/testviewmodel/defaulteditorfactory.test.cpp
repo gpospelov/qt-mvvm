@@ -21,7 +21,7 @@
 #include <mvvm/editors/scientificdoubleeditor.h>
 #include <mvvm/editors/scientificspinbox.h>
 #include <mvvm/editors/scientificspinboxeditor.h>
-#include <mvvm/editors/selectablecombobox.h>
+#include <mvvm/editors/selectablecomboboxeditor.h>
 #include <mvvm/model/comboproperty.h>
 #include <mvvm/model/externalproperty.h>
 #include <mvvm/model/propertyitem.h>
@@ -174,5 +174,5 @@ TEST_F(DefaultEditorFactoryTest, editorType)
 {
     auto editor = createEditor(QVariant::fromValue(ComboProperty()), RealLimits(),
                                Constants::SelectableComboPropertyEditorType);
-    EXPECT_TRUE(dynamic_cast<SelectableComboBox*>(editor.get()));
+    EXPECT_TRUE(dynamic_cast<SelectableComboBoxEditor*>(editor.get()));
 }

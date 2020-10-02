@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_EDITORS_SELECTABLECOMBOBOX_H
-#define MVVM_EDITORS_SELECTABLECOMBOBOX_H
+#ifndef MVVM_EDITORS_SELECTABLECOMBOBOXEDITOR_H
+#define MVVM_EDITORS_SELECTABLECOMBOBOXEDITOR_H
 
 #include <mvvm/editors/customeditor.h>
 
@@ -22,12 +22,12 @@ class WheelEventFilter;
 
 //! Adds multi-selection capabilities to QComboBox.
 
-class MVVM_VIEWMODEL_EXPORT SelectableComboBox : public CustomEditor
+class MVVM_VIEWMODEL_EXPORT SelectableComboBoxEditor : public CustomEditor
 {
     Q_OBJECT
 
 public:
-    explicit SelectableComboBox(QWidget* parent = nullptr);
+    explicit SelectableComboBoxEditor(QWidget* parent = nullptr);
 
     QSize sizeHint() const override;
     QSize minimumSizeHint() const override;
@@ -49,10 +49,10 @@ private:
     bool isClickToExpand(QObject* obj, QEvent* event) const;
 
     QComboBox* m_box{nullptr};
-    WheelEventFilter* m_wheel_event_filter{nullptr};
+    WheelEventFilter* m_wheelEventFilter{nullptr};
     QStandardItemModel* m_model{nullptr};
 };
 
 } // namespace ModelView
 
-#endif // MVVM_EDITORS_SELECTABLECOMBOBOX_H
+#endif // MVVM_EDITORS_SELECTABLECOMBOBOXEDITOR_H
