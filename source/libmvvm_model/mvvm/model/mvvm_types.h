@@ -23,12 +23,13 @@ class SessionModel;
 
 namespace ItemDataRole
 {
-const int IDENTIFIER = 0;
-const int DATA = 1;
-const int DISPLAY = 2;
-const int APPEARANCE = 3;
-const int LIMITS = 4;
-const int TOOLTIP = 5;
+const int IDENTIFIER = 0; //!< unique identifier
+const int DATA = 1;       //!< main data role
+const int DISPLAY = 2;    //!< display name
+const int APPEARANCE = 3; //!< appearance flag
+const int LIMITS = 4;     //!< possibly limits on item's data
+const int TOOLTIP = 5;    //!< tooltip for item's data
+const int EDITORTYPE = 6; //!< type of custom editor for the data role
 }; // namespace ItemDataRole
 
 enum Appearance {

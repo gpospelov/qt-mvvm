@@ -13,9 +13,9 @@ target_sources(${library_name} PRIVATE
     defaulteditorfactory.h
     doubleeditor.cpp
     doubleeditor.h
+    editor_constants.h
     editorbuilders.cpp
     editorbuilders.h
-    editorfactoryinterface.h
     externalpropertycomboeditor.cpp
     externalpropertycomboeditor.h
     externalpropertyeditor.cpp
@@ -28,6 +28,8 @@ target_sources(${library_name} PRIVATE
     scientificspinbox.h
     scientificspinboxeditor.cpp
     scientificspinboxeditor.h
+    selectablecomboboxeditor.cpp
+    selectablecomboboxeditor.h
     styleutils.cpp
     styleutils.h
 )

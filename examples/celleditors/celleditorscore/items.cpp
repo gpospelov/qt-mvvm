@@ -10,6 +10,7 @@
 #include "items.h"
 #include "item_constants.h"
 #include <QColor>
+#include <mvvm/editors/editor_constants.h>
 #include <mvvm/model/comboproperty.h>
 #include <mvvm/model/externalproperty.h>
 
@@ -25,6 +26,10 @@ DemoPropertiesItem::DemoPropertiesItem() : CompoundItem(::Constants::DemoPropert
 
     auto combo = ComboProperty::createFrom({"option 1", "option 2", "option 3"});
     addProperty(P_COMBO_PROPERTY, combo)->setDisplayName("Combo");
+
+    addProperty(P_SELECTABLE_COMBO_PROPERTY, combo)
+        ->setDisplayName("Selectable")
+        ->setEditorType(ModelView::Constants::SelectableComboPropertyEditorType);
 
     ExternalProperty ext_prop("Gold", QColor(Qt::darkYellow), "some id");
     addProperty(P_EXTERNAL_PROPERTY, ext_prop)->setDisplayName("External");

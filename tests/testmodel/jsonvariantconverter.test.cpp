@@ -19,7 +19,7 @@
 #include <mvvm/model/externalproperty.h>
 #include <mvvm/serialization/jsonvariantconverter.h>
 #include <mvvm/utils/reallimits.h>
-#include <mvvm/model/variant-constants.h>
+#include <mvvm/model/variant_constants.h>
 #include <vector>
 
 using namespace ModelView;

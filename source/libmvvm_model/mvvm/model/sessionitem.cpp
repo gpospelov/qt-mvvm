@@ -300,6 +300,22 @@ SessionItem* SessionItem::setToolTip(const std::string& tooltip)
     return this;
 }
 
+//! Returns editor type.
+
+std::string SessionItem::editorType() const
+{
+    return hasData(ItemDataRole::EDITORTYPE) ? data<std::string>(ItemDataRole::EDITORTYPE)
+                                          : std::string();
+}
+
+//! Sets editor type. Allows creating custom editors in the cells of Qt trees and tables.
+
+SessionItem* SessionItem::setEditorType(const std::string &editor_type)
+{
+    setData(editor_type, ItemDataRole::EDITORTYPE);
+    return this;
+}
+
 //! Returns true if given tag is related to single property tags.
 
 bool SessionItem::isSinglePropertyTag(const std::string& tag) const

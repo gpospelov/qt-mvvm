@@ -17,6 +17,7 @@
 #include <mvvm/editors/integereditor.h>
 #include <mvvm/editors/scientificdoubleeditor.h>
 #include <mvvm/editors/scientificspinboxeditor.h>
+#include <mvvm/editors/selectablecomboboxeditor.h>
 #include <mvvm/model/customvariants.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/utils/reallimits.h>
@@ -42,16 +43,13 @@ namespace ModelView ::EditorBuilders
 
 builder_t BoolEditorBuilder()
 {
-    auto builder = [](const SessionItem*) -> std::unique_ptr<CustomEditor> {
-        return std::make_unique<BoolEditor>();
-    };
+    auto builder = [](const SessionItem*) -> editor_t { return std::make_unique<BoolEditor>(); };
     return builder;
 }
 
-
 builder_t IntegerEditorBuilder()
 {
-    auto builder = [](const SessionItem* item) -> std::unique_ptr<CustomEditor> {
+    auto builder = [](const SessionItem* item) -> editor_t {
         auto editor = std::make_unique<IntegerEditor>();
         if (item->hasData(ItemDataRole::LIMITS)) {
             auto limits = item->data<RealLimits>(ItemDataRole::LIMITS);
@@ -64,7 +62,7 @@ builder_t IntegerEditorBuilder()
 
 builder_t DoubleEditorBuilder()
 {
-    auto builder = [](const SessionItem* item) -> std::unique_ptr<CustomEditor> {
+    auto builder = [](const SessionItem* item) -> editor_t {
         auto editor = std::make_unique<DoubleEditor>();
         if (item->hasData(ItemDataRole::LIMITS)) {
             auto limits = item->data<RealLimits>(ItemDataRole::LIMITS);
@@ -79,7 +77,7 @@ builder_t DoubleEditorBuilder()
 
 builder_t ScientificDoubleEditorBuilder()
 {
-    auto builder = [](const SessionItem* item) -> std::unique_ptr<CustomEditor> {
+    auto builder = [](const SessionItem* item) -> editor_t {
         auto editor = std::make_unique<ScientificDoubleEditor>();
         if (item->hasData(ItemDataRole::LIMITS)) {
             auto limits = item->data<RealLimits>(ItemDataRole::LIMITS);
@@ -92,7 +90,7 @@ builder_t ScientificDoubleEditorBuilder()
 
 builder_t ScientificSpinBoxEditorBuilder()
 {
-    auto builder = [](const SessionItem* item) -> std::unique_ptr<CustomEditor> {
+    auto builder = [](const SessionItem* item) -> editor_t {
         auto editor = std::make_unique<ScientificSpinBoxEditor>();
         if (item->hasData(ItemDataRole::LIMITS)) {
             auto limits = item->data<RealLimits>(ItemDataRole::LIMITS);
@@ -107,15 +105,13 @@ builder_t ScientificSpinBoxEditorBuilder()
 
 builder_t ColorEditorBuilder()
 {
-    auto builder = [](const SessionItem*) -> std::unique_ptr<CustomEditor> {
-        return std::make_unique<ColorEditor>();
-    };
+    auto builder = [](const SessionItem*) -> editor_t { return std::make_unique<ColorEditor>(); };
     return builder;
 }
 
 builder_t ComboPropertyEditorBuilder()
 {
-    auto builder = [](const SessionItem*) -> std::unique_ptr<CustomEditor> {
+    auto builder = [](const SessionItem*) -> editor_t {
         return std::make_unique<ComboPropertyEditor>();
     };
     return builder;
@@ -123,10 +119,19 @@ builder_t ComboPropertyEditorBuilder()
 
 builder_t ExternalPropertyEditorBuilder()
 {
-    auto builder = [](const SessionItem*) -> std::unique_ptr<CustomEditor> {
+    auto builder = [](const SessionItem*) -> editor_t {
         return std::make_unique<ExternalPropertyEditor>();
     };
     return builder;
+}
+
+builder_t SelectableComboPropertyEditorBuilder()
+{
+    auto builder = [](const SessionItem*) -> editor_t {
+        return std::make_unique<SelectableComboBoxEditor>();
+    };
+    return builder;
+
 }
 
 } // namespace ModelView::EditorBuilders
