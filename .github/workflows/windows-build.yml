@@ -3,6 +3,7 @@ name: Windows
 env:
   CCACHE_VERSION: 3.7.7
   NINJA_VERSION: 1.10.0
+  QT_VERSION: 5.15.1
 
 on:
   push:
@@ -26,9 +27,9 @@ jobs:
         python -m pip install --upgrade pip
 
     - name: Install Qt
-      uses: jurplel/install-qt-action@v2.9.0
+      uses: jurplel/install-qt-action@v2
       with:
-        version: '5.15.1'
+        version: '$ENV{QT_VERSION}'
         host: 'windows'
         target: 'desktop'
         arch: 'win64_msvc2017_64'
@@ -73,7 +74,7 @@ jobs:
         CCACHE_MAXSIZE: "1000M"
       run: |
         call "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat"
-        set QTDIR=${{github.workspace}}\qt5\Qt\5.14.2\msvc2017_64
+        set QTDIR=${{github.workspace}}\qt5\Qt\$ENV{QT_VERSION}\msvc2017_64
         set PATH=${{github.workspace}};%QTDIR%\bin;%PATH%
         cd ${{github.workspace}}
         dir
