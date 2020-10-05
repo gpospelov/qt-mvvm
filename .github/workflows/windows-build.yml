@@ -24,13 +24,12 @@ jobs:
     - name: Install Qt
       uses: jurplel/install-qt-action@v2
       with:
-        version: '5.14.2'
+        version: '5.15.1'
         host: 'windows'
         target: 'desktop'
         arch: 'win64_msvc2017_64'
         dir: '${{ github.workspace }}/qt5/'
         install-deps: 'true'
-        mirror: 'http://mirrors.ocf.berkeley.edu/qt/'
         cached: 'false'
 
     - name: Download ccache and Ninja
