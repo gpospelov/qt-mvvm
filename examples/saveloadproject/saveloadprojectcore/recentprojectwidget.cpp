@@ -33,9 +33,6 @@ RecentProjectWidget::RecentProjectWidget(QWidget* parent)
 
     auto layout = new QVBoxLayout(this);
     layout->setContentsMargins(20, 0, 10, 0);
-    layout->addSpacing(ModelView::Utils::HeightOfLetterM());
-    layout->addLayout(createCurrentProjectLayout());
-    layout->addSpacing(ModelView::Utils::HeightOfLetterM());
     layout->addWidget(createRecentProjectScrollArea());
     layout->addStretch(1);
 }
