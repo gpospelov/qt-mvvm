@@ -22,9 +22,9 @@ jobs:
         submodules: true    
                 
     - name: Install Qt
-      uses: jurplel/install-qt-action@v2
+      uses: jurplel/install-qt-action@v2.8.0
       with:
-        version: '5.15.1'
+        version: '5.15'
         host: 'windows'
         target: 'desktop'
         arch: 'win64_msvc2017_64'
