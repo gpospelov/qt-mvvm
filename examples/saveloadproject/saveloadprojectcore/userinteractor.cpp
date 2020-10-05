@@ -41,7 +41,7 @@ UserInteractor::UserInteractor(RecentProjectSettings* settings, QWidget* parent)
 
 std::string UserInteractor::onSelectDirRequest()
 {
-    auto dirname = selectDir();
+    auto dirname = getExistingDirectory();
 
     if (dirname.empty()) // no valid selection
         return {};
@@ -62,7 +62,7 @@ std::string UserInteractor::onSelectDirRequest()
 std::string UserInteractor::onCreateDirRequest()
 
 {
-    auto dirname = selectDir();
+    auto dirname = getExistingDirectory();
 
     if (dirname.empty()) // no valid selection
         return {};
@@ -95,7 +95,7 @@ SaveChangesAnswer UserInteractor::onSaveChangesRequest()
 //! Summon dialog to select directory on disk. If selection is not empty,
 //! save parent directory for later re-use.
 
-std::string UserInteractor::selectDir() const
+std::string UserInteractor::getExistingDirectory() const
 {
     QString dirname = QFileDialog::getExistingDirectory(
         m_parent, "Select directory", m_settings->currentWorkdir(),
