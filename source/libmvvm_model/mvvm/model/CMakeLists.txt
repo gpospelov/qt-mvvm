@@ -18,7 +18,6 @@ target_sources(${library_name} PRIVATE
     itemcatalogue.h
     itemfactory.cpp
     itemfactory.h
-    itemfactoryinterface.h
     itemmanager.cpp
     itemmanager.h
     itempool.cpp

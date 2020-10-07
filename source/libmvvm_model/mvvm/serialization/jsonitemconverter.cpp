@@ -10,7 +10,7 @@
 #include <QJsonArray>
 #include <QJsonObject>
 #include <mvvm/core/uniqueidgenerator.h>
-#include <mvvm/model/itemfactoryinterface.h>
+#include <mvvm/interfaces/itemfactoryinterface.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionitemdata.h>
 #include <mvvm/model/sessionitemtags.h>
