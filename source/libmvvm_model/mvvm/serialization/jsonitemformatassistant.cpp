@@ -57,6 +57,8 @@ QStringList expected_sessionmodel_keys()
 
 } // namespace
 
+//! Returns true if given json object represents SessionItem.
+
 bool JsonItemFormatAssistant::isSessionItem(const QJsonObject& json) const
 {
     static const QStringList expected = expected_item_keys();
@@ -105,6 +107,8 @@ bool JsonItemFormatAssistant::isSessionItemContainer(const QJsonObject& json) co
 
     return true;
 }
+
+//! Returns true if given json object represents SessionModel.
 
 bool JsonItemFormatAssistant::isSessionModel(const QJsonObject& object) const
 {

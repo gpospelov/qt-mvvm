@@ -30,9 +30,25 @@ struct JsonItemTagsConverter::JsonItemTagsConverterImpl {
         m_taginfo_converter = std::make_unique<JsonTagInfoConverter>();
     }
 
-    void populate_container(const QJsonObject& json, SessionItemContainer& container)
+    //! Create containers from JSON. SessionItemTags should be empty.
+
+    void create_containers(const QJsonObject& json, SessionItemTags& item_tags)
     {
-        m_container_converter->from_json(json, container);
+        if (item_tags.tagsCount())
+            throw std::runtime_error("Error in JsonItemTagsConverter: no containers expected.");
+
+        auto default_tag = json[JsonItemFormatAssistant::defaultTagKey].toString().toStdString();
+        item_tags.setDefaultTag(default_tag);
+
+        auto container_array = json[JsonItemFormatAssistant::containerKey].toArray();
+
+        for (const auto ref : container_array) {
+            QJsonObject json_container = ref.toObject();
+            QJsonObject json_taginfo =
+                json_container[JsonItemFormatAssistant::tagInfoKey].toObject();
+            TagInfo tagInfo = m_taginfo_converter->from_json(json_taginfo);
+            item_tags.registerTag(tagInfo);
+        }
     }
 
     //! Populate containers from JSON. Container must be already created.
@@ -117,17 +133,6 @@ void JsonItemTagsConverter::from_json(const QJsonObject& json, SessionItemTags& 
         throw std::runtime_error(
             "Error in JsonItemTagsConverter: given json object can't represent a SessionItemTags.");
 
-    auto default_tag = json[JsonItemFormatAssistant::defaultTagKey].toString().toStdString();
-    item_tags.setDefaultTag(default_tag);
-
-    auto container_array = json[JsonItemFormatAssistant::containerKey].toArray();
-
-    for (const auto ref : container_array) {
-        QJsonObject json_container = ref.toObject();
-        QJsonObject json_taginfo = json_container[JsonItemFormatAssistant::tagInfoKey].toObject();
-        TagInfo tagInfo = p_impl->m_taginfo_converter->from_json(json_taginfo);
-        item_tags.registerTag(tagInfo);
-    }
-
+    p_impl->create_containers(json, item_tags);
     p_impl->populate_containers(json, item_tags);
 }
