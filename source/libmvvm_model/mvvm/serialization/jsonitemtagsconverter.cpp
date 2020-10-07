@@ -34,6 +34,19 @@ struct JsonItemTagsConverter::JsonItemTagsConverterImpl {
     {
         m_container_converter->from_json(json, container);
     }
+
+    //! Populate containers from JSON. Container must be already created.
+
+    void populate_containers(const QJsonObject& json, SessionItemTags& item_tags)
+    {
+        if (json.size() != item_tags.tagsCount())
+            throw std::runtime_error("Error in JsonItemTagsConverter: mismatch in number of tags");
+
+        auto container_array = json[JsonItemFormatAssistant::containerKey].toArray();
+        int index(0);
+        for (const auto container_ref : container_array)
+            m_container_converter->from_json(container_ref.toObject(), item_tags.at(index++));
+    }
 };
 
 JsonItemTagsConverter::JsonItemTagsConverter(ConverterCallbacks callbacks)
@@ -88,6 +101,13 @@ QJsonObject JsonItemTagsConverter::to_json(const SessionItemTags& tags)
 //    }
 //}
 
+//! Reconstructs SessionItemTags from the content of JSON object.
+//! Can work in two modes:
+//! + If SessionItemTags is empty, all tags will be reconstructed as in JSON, and then populated
+//!   with the content.
+//! + If SessionItemTags contains some tags already, they will be populated from JSON. in this
+//!   case it will be assumed, that tag names matching JSON.
+
 void JsonItemTagsConverter::from_json(const QJsonObject& json, SessionItemTags& item_tags)
 {
     static JsonItemFormatAssistant assistant;
@@ -109,7 +129,7 @@ void JsonItemTagsConverter::from_json(const QJsonObject& json, SessionItemTags& 
         TagInfo tagInfo = p_impl->m_taginfo_converter->from_json(
             json_container[JsonItemFormatAssistant::tagInfoKey].toObject());
 
-        if (!item_tags.isTag(tagInfo.name()))
+//        if (!item_tags.isTag(tagInfo.name()))
             item_tags.registerTag(tagInfo);
 
         p_impl->populate_container(json_container, item_tags.at(index));
