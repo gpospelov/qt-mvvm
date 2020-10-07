@@ -50,7 +50,7 @@ enum class ConverterFlags : int {
     //!< deep copy of SessionItem (all item's ID will be regenerated)
     COPY_MODE = COPY_JSON_TAGS | COPY_JSON_DATA,
 
-    //!< clone of SessionItem (including item's ID) for backup purposes
+    //!< exact clone of SessionItem (including item's ID) for backup purposes
     CLONE_MODE = USE_JSON_ID | COPY_JSON_TAGS | COPY_JSON_DATA,
 
     //! for loading project from disk (tags and data updated from JSON)
