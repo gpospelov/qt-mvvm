@@ -24,7 +24,6 @@ JsonItemTypesTest::~JsonItemTypesTest() = default;
 
 TEST_F(JsonItemTypesTest, initialState)
 {
-    ConverterFlags flag = ConverterFlags::COPY_MODE;
-    EXPECT_TRUE(flag == ConverterFlags::COPY_MODE);
+    EXPECT_FALSE(hasFlag(ConverterFlags::COPY_MODE, ConverterFlags::USE_JSON_ID));
+    EXPECT_TRUE((ConverterFlags::COPY_MODE & ConverterFlags::USE_JSON_ID) == ConverterFlags::NONE);
 }
-

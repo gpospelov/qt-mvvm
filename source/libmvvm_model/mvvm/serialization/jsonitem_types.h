@@ -24,6 +24,7 @@ namespace ModelView
 {
 
 class SessionItem;
+class ItemFactoryInterface;
 
 //! Provides necessary callbacks to convert SessionItem to JSON and back.
 
@@ -56,15 +57,27 @@ enum class ConverterFlags : int {
     PROJECT_MODE = USE_JSON_ID
 };
 
-inline bool operator&(ConverterFlags x, ConverterFlags y)
+inline ConverterFlags operator&(ConverterFlags x, ConverterFlags y)
 {
-    return static_cast<int>(x) & static_cast<int>(y);
+    return static_cast<ConverterFlags>(static_cast<int>(x) & static_cast<int>(y));
 }
 
 inline constexpr ConverterFlags operator|(ConverterFlags x, ConverterFlags y)
 {
     return static_cast<ConverterFlags>(static_cast<int>(x) | static_cast<int>(y));
 }
+
+inline bool hasFlag(ConverterFlags arg, ConverterFlags flag)
+{
+    return (arg & flag) != ConverterFlags::NONE;
+}
+
+//! Collection of input paramters for SessionItemConverter
+
+struct MVVM_MODEL_EXPORT ConverterContext {
+    const ItemFactoryInterface* m_factory{nullptr};
+    ConverterFlags m_flags = ConverterFlags::NONE;
+};
 
 } // namespace ModelView
 
