@@ -19,6 +19,7 @@
 #include <mvvm/serialization/jsonitemdataconverter.h>
 #include <mvvm/serialization/jsonitemformatassistant.h>
 #include <mvvm/serialization/jsonitemtagsconverter.h>
+#include <mvvm/serialization/jsonitem_types.h>
 
 using namespace ModelView;
 
@@ -28,8 +29,9 @@ struct JsonItemConverter::JsonItemConverterImpl {
     bool m_is_new_id{false};
     std::unique_ptr<JsonItemDataConverter> m_itemdata_converter;
     std::unique_ptr<JsonItemTagsConverter> m_itemtags_converter;
+    ConverterContext m_context;
 
-    JsonItemConverterImpl(JsonItemConverter* parent) : m_parent(parent)
+    JsonItemConverterImpl(JsonItemConverter* parent, const ConverterContext& context={}) : m_parent(parent), m_context(context)
     {
         //! Callback to convert SessionItem to JSON object.
         auto create_json = [this](const SessionItem& item) { return m_parent->to_json(&item); };
@@ -100,6 +102,13 @@ JsonItemConverter::JsonItemConverter(const ItemFactoryInterface* factory, bool n
 {
     p_impl->m_factory = factory;
     p_impl->m_is_new_id = new_id_flag;
+}
+
+JsonItemConverter::JsonItemConverter(const ConverterContext& context)
+    : p_impl(std::make_unique<JsonItemConverterImpl>(this, context))
+{
+    p_impl->m_factory = context.m_factory;
+    p_impl->m_is_new_id = context.m_is_new_id;
 }
 
 JsonItemConverter::~JsonItemConverter() = default;

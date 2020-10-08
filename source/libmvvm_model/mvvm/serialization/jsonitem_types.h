@@ -77,7 +77,7 @@ inline bool hasFlag(ConverterFlags arg, ConverterFlags flag)
 struct MVVM_MODEL_EXPORT ConverterContext {
     const ItemFactoryInterface* m_factory{nullptr};
     ConverterFlags m_flags = ConverterFlags::NONE;
-    bool m_generate_id{false};
+    bool m_is_new_id{false};
     bool m_reset_item_data_and_tags{false};
 };
 

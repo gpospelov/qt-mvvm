@@ -16,6 +16,7 @@ namespace ModelView
 {
 
 class ItemFactoryInterface;
+class ConverterContext;
 
 //! Converter between SessionItem and JSON object.
 
@@ -23,6 +24,8 @@ class MVVM_MODEL_EXPORT JsonItemConverter : public JsonItemConverterInterface
 {
 public:
     JsonItemConverter(const ItemFactoryInterface* factory, bool new_id_flag = false);
+    JsonItemConverter(const ConverterContext& context);
+
     ~JsonItemConverter() override;
 
     QJsonObject to_json(const SessionItem* item) const override;
