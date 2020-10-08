@@ -134,9 +134,8 @@ void JsonItemContainerConverter::from_json(const QJsonObject& json, SessionItemC
         throw std::runtime_error("Error in JsonItemContainerConverter: attempt to update "
                                  "container from JSON representing another container.");
 
-    if (!container.empty())
-        throw std::runtime_error(
-            "Error in JsonItemContainerConverter: intended for empty container.");
-
-    p_impl->populate_container(json, container);
+    if (container.empty())
+        p_impl->populate_container(json, container);
+    else
+        p_impl->update_container(json, container);
 }
