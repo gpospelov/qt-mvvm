@@ -27,11 +27,6 @@ QJsonValue keyValue(const QJsonValue& parent_value, const QString& key)
 }
 } // namespace
 
-JsonItemDataConverter::JsonItemDataConverter()
-    : m_variant_converter(std::make_unique<JsonVariantConverter>())
-{
-}
-
 JsonItemDataConverter::JsonItemDataConverter(accept_strategy_t to_json_accept,
                                              accept_strategy_t from_json_accept)
     : m_to_json_accept(to_json_accept), m_from_json_accept(from_json_accept),

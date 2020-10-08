@@ -26,26 +26,26 @@ namespace
 {
 
 //! Returns true if flags requires generation of new ID instead of using the one stored in JSON.
+
 bool isRegenerateID(const ConverterFlags& flags)
 {
-    // absence of ConverterFlags::USE_JSON_ID flag means that we have to generate new ID
     return !hasFlag(flags, ConverterFlags::USE_JSON_ID);
 }
 
 //! Returns true if flags requires reset of item data and tags.
+
 bool isResetItemDataAndTags(const ConverterFlags& flags)
 {
-    // presence of COPY_JSON_TAGS and COPY_JSON_DATA flag means that we have to clear item before
-    // loading its content from JSON
     return hasFlag(flags, ConverterFlags::COPY_JSON_DATA)
            && hasFlag(flags, ConverterFlags::COPY_JSON_TAGS);
 }
 
-//! Creates
+//! Creates converter for SessionItemData/JSON.
 
 std::unique_ptr<JsonItemDataConverter> createDataConverter(const ConverterFlags& flags)
 {
     if (flags == ConverterFlags::PROJECT_MODE) {
+        // PROJECT_MODE assumes that we are serializing only certain roles
         auto accept_roles = [](auto role) {
             return role == ItemDataRole::IDENTIFIER || role == ItemDataRole::DATA;
         };
