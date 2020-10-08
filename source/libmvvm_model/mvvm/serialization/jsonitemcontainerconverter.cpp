@@ -31,34 +31,34 @@ struct JsonItemContainerConverter::JsonItemContainerConverterImpl {
         m_taginfo_converter = std::make_unique<JsonTagInfoConverter>();
     }
 
-    QJsonObject item_to_json(const SessionItem& item)
+    QJsonObject create_json(const SessionItem& item)
     {
         return m_converter_callbacks.m_create_json ? m_converter_callbacks.m_create_json(item)
                                                    : QJsonObject();
     }
 
-    void json_to_item_update(const QJsonObject& json, SessionItem* item)
-    {
-        if (m_converter_callbacks.m_update_item)
-            m_converter_callbacks.m_update_item(json, item);
-    }
-
-    std::unique_ptr<SessionItem> json_to_item(const QJsonObject& json)
+    std::unique_ptr<SessionItem> create_item(const QJsonObject& json)
     {
         return m_converter_callbacks.m_create_item ? m_converter_callbacks.m_create_item(json)
                                                    : std::unique_ptr<SessionItem>();
     }
 
+    void update_item(const QJsonObject& json, SessionItem* item)
+    {
+        if (m_converter_callbacks.m_update_item)
+            m_converter_callbacks.m_update_item(json, item);
+    }
+
     void process_single_property_tag(const QJsonObject& json, SessionItemContainer& container)
     {
         for (const auto obj : json[JsonItemFormatAssistant::itemsKey].toArray())
-            json_to_item_update(obj.toObject(), container.itemAt(0));
+            update_item(obj.toObject(), container.itemAt(0));
     }
 
     void process_universal_property_tag(const QJsonObject& json, SessionItemContainer& container)
     {
         for (const auto obj : json[JsonItemFormatAssistant::itemsKey].toArray()) {
-            auto item = json_to_item(obj.toObject());
+            auto item = create_item(obj.toObject());
             if (item)
                 container.insertItem(item.release(), container.itemCount());
         }
@@ -80,7 +80,7 @@ QJsonObject JsonItemContainerConverter::to_json(const SessionItemContainer& cont
 
     QJsonArray itemArray;
     for (auto item : container)
-        itemArray.append(p_impl->item_to_json(*item));
+        itemArray.append(p_impl->create_json(*item));
     result[JsonItemFormatAssistant::itemsKey] = itemArray;
 
     return result;
@@ -124,7 +124,7 @@ void JsonItemContainerConverter::from_json(const QJsonObject& json, SessionItemC
             "Error in JsonItemContainerConverter: intended for empty container.");
 
     for (const auto obj : json[JsonItemFormatAssistant::itemsKey].toArray()) {
-        auto item = p_impl->json_to_item(obj.toObject());
+        auto item = p_impl->create_item(obj.toObject());
         if (item)
             container.insertItem(item.release(), container.itemCount());
     }
