@@ -11,7 +11,8 @@
 #include <mvvm/serialization/jsonitem_types.h>
 #include <mvvm/serialization/jsonitemconverter.h>
 
-using namespace ModelView;
+namespace ModelView
+{
 
 //! Creates JSON item converter intended for item cloning.
 //! Saves full deep copy of item to JSON. When restoring from JSON, reconstruct everything,
@@ -50,3 +51,5 @@ CreateItemProjectConverter(const ItemFactoryInterface* item_factory)
     ConverterContext context{item_factory, ConverterFlags::PROJECT_MODE};
     return std::make_unique<JsonItemConverter>(context);
 }
+
+} // namespace ModelView
