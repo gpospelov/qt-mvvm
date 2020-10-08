@@ -8,6 +8,8 @@
 // ************************************************************************** //
 
 #include <mvvm/factories/itemconverterfactory.h>
+#include <mvvm/serialization/jsonitem_types.h>
+#include <mvvm/serialization/jsonitemconverter.h>
 
 using namespace ModelView;
 
@@ -16,9 +18,10 @@ using namespace ModelView;
 //! including item's unique ID. Used for backup.
 
 std::unique_ptr<JsonItemConverterInterface>
-CreateItemCloneConverter(const ItemFactoryInterface* /*item_factory*/)
+CreateItemCloneConverter(const ItemFactoryInterface* item_factory)
 {
-    return {};
+    ConverterContext context{item_factory, ConverterFlags::CLONE_MODE};
+    return std::make_unique<JsonItemConverter>(context);
 }
 
 //! Creates JSON item converter intended for item copying.
@@ -26,9 +29,10 @@ CreateItemCloneConverter(const ItemFactoryInterface* /*item_factory*/)
 //! to make it unique. Used for copying of item together with its children.
 
 std::unique_ptr<JsonItemConverterInterface>
-CreateItemCopyConverter(const ItemFactoryInterface* /*item_factory*/)
+CreateItemCopyConverter(const ItemFactoryInterface* item_factory)
 {
-    return {};
+    ConverterContext context{item_factory, ConverterFlags::COPY_MODE};
+    return std::make_unique<JsonItemConverter>(context);
 }
 
 //! Creates JSON item converter intended for saving on disk.
@@ -41,7 +45,8 @@ CreateItemCopyConverter(const ItemFactoryInterface* /*item_factory*/)
 //! + Property tags are updated, universal tags reconstructed
 
 std::unique_ptr<JsonItemConverterInterface>
-CreateItemProjectConverter(const ItemFactoryInterface* /*item_factory*/)
+CreateItemProjectConverter(const ItemFactoryInterface* item_factory)
 {
-    return {};
+    ConverterContext context{item_factory, ConverterFlags::PROJECT_MODE};
+    return std::make_unique<JsonItemConverter>(context);
 }

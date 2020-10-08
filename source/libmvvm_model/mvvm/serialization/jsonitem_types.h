@@ -47,13 +47,13 @@ enum class ConverterFlags : int {
     COPY_JSON_TAGS = 4, //!< copy tags from serialized content, all existing tags will be rewritten
     COPY_JSON_DATA = 8, //!< copy item's data from serialized content
 
-    //!< deep copy of SessionItem (all item's ID will be regenerated)
-    COPY_MODE = COPY_JSON_TAGS | COPY_JSON_DATA,
-
     //!< exact clone of SessionItem (including item's ID) for backup purposes
     CLONE_MODE = USE_JSON_ID | COPY_JSON_TAGS | COPY_JSON_DATA,
 
-    //! for loading project from disk (tags and data updated from JSON)
+    //!< deep copy of SessionItem (acts like clone with all item's ID regenerated)
+    COPY_MODE = COPY_JSON_TAGS | COPY_JSON_DATA,
+
+    //! for loading project from disk (tags and data created by item, updated from JSON)
     PROJECT_MODE = USE_JSON_ID
 };
 
@@ -77,8 +77,6 @@ inline bool hasFlag(ConverterFlags arg, ConverterFlags flag)
 struct MVVM_MODEL_EXPORT ConverterContext {
     const ItemFactoryInterface* m_factory{nullptr};
     ConverterFlags m_flags = ConverterFlags::NONE;
-    bool m_is_new_id{false};
-    bool m_reset_item_data_and_tags{false};
 };
 
 } // namespace ModelView

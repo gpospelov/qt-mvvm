@@ -23,6 +23,14 @@
 
 using namespace ModelView;
 
+namespace {
+bool isRegenerateID(const ConverterFlags& flags)
+{
+    // absence of ConverterFlags::USE_JSON_ID flag means that we have to generate new ID
+    return (flags & ConverterFlags::USE_JSON_ID) == ConverterFlags::NONE;
+}
+}
+
 struct JsonItemConverter::JsonItemConverterImpl {
     JsonItemConverter* m_parent{nullptr};
     const ItemFactoryInterface* m_factory{nullptr};
@@ -108,7 +116,7 @@ JsonItemConverter::JsonItemConverter(const ConverterContext& context)
     : p_impl(std::make_unique<JsonItemConverterImpl>(this, context))
 {
     p_impl->m_factory = context.m_factory;
-    p_impl->m_is_new_id = context.m_is_new_id;
+    p_impl->m_is_new_id = isRegenerateID(context.m_flags);
 }
 
 JsonItemConverter::~JsonItemConverter() = default;
