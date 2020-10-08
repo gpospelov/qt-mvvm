@@ -44,6 +44,7 @@ bool isResetItemDataAndTags(const ConverterFlags& flags)
 
 std::unique_ptr<JsonItemDataConverter> createDataConverter(const ConverterFlags& flags)
 {
+
     if (flags == ConverterFlags::PROJECT_MODE) {
         // PROJECT_MODE assumes that we are serializing only certain roles
         auto accept_roles = [](auto role) {
@@ -102,9 +103,10 @@ struct JsonItemConverter::JsonItemConverterImpl {
         if (modelType != item.modelType())
             throw std::runtime_error("Item model mismatch");
 
-        if (isResetItemDataAndTags(m_context.m_flags))
+        if (isResetItemDataAndTags(m_context.m_flags)) {
             item.setDataAndTags(std::make_unique<SessionItemData>(),
                                 std::make_unique<SessionItemTags>());
+        }
 
         populate_item_data(json[JsonItemFormatAssistant::itemDataKey].toArray(), *item.itemData());
         populate_item_tags(json[JsonItemFormatAssistant::itemTagsKey].toObject(), *item.itemTags());
