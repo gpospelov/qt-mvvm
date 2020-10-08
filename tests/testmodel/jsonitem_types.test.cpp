@@ -22,8 +22,14 @@ public:
 
 JsonItemTypesTest::~JsonItemTypesTest() = default;
 
-TEST_F(JsonItemTypesTest, initialState)
+TEST_F(JsonItemTypesTest, logicalAnd)
 {
     EXPECT_FALSE(hasFlag(ConverterFlags::COPY_MODE, ConverterFlags::USE_JSON_ID));
     EXPECT_TRUE((ConverterFlags::COPY_MODE & ConverterFlags::USE_JSON_ID) == ConverterFlags::NONE);
+
+    ConverterFlags flags = ConverterFlags::USE_JSON_ID | ConverterFlags::COPY_JSON_DATA | ConverterFlags::COPY_JSON_TAGS;
+    EXPECT_TRUE((flags & (ConverterFlags::COPY_JSON_DATA | ConverterFlags::COPY_JSON_TAGS)) != ConverterFlags::NONE);
+
+    flags = ConverterFlags::COPY_JSON_DATA | ConverterFlags::COPY_JSON_TAGS;
+    EXPECT_TRUE((flags & (ConverterFlags::COPY_JSON_DATA | ConverterFlags::COPY_JSON_TAGS)) != ConverterFlags::NONE);
 }

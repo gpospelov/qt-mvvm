@@ -24,11 +24,23 @@ using namespace ModelView;
 
 namespace
 {
+
+//! Returns true if flags requires generation of new ID instead of using the one stored in JSON.
 bool isRegenerateID(const ConverterFlags& flags)
 {
     // absence of ConverterFlags::USE_JSON_ID flag means that we have to generate new ID
-    return (flags & ConverterFlags::USE_JSON_ID) == ConverterFlags::NONE;
+    return !hasFlag(flags, ConverterFlags::USE_JSON_ID);
 }
+
+//! Returns true if flags requires reset of item data and tags.
+bool isResetItemDataAndTags(const ConverterFlags& flags)
+{
+    // presence of COPY_JSON_TAGS and COPY_JSON_DATA flag means that we have to clear item before
+    // loading its content from JSON
+    return hasFlag(flags, ConverterFlags::COPY_JSON_DATA)
+           && hasFlag(flags, ConverterFlags::COPY_JSON_TAGS);
+}
+
 } // namespace
 
 struct JsonItemConverter::JsonItemConverterImpl {
@@ -76,10 +88,11 @@ struct JsonItemConverter::JsonItemConverterImpl {
         if (modelType != item.modelType())
             throw std::runtime_error("Item model mismatch");
 
-        auto data = std::make_unique<SessionItemData>();
-        auto tags = std::make_unique<SessionItemTags>();
-
-        item.setDataAndTags(std::move(data), std::move(tags));
+        if (isResetItemDataAndTags(m_context.m_flags)) {
+            auto data = std::make_unique<SessionItemData>();
+            auto tags = std::make_unique<SessionItemTags>();
+            item.setDataAndTags(std::move(data), std::move(tags));
+        }
 
         populate_item_tags(json[JsonItemFormatAssistant::itemTagsKey].toObject(), *item.itemTags());
         populate_item_data(json[JsonItemFormatAssistant::itemDataKey].toArray(), *item.itemData());
@@ -122,7 +135,7 @@ std::unique_ptr<SessionItem> JsonItemConverter::from_json(const QJsonObject& jso
 
     if (!assistant.isSessionItem(json))
         throw std::runtime_error("JsonItemConverterV2::from_json() -> Error. Given json object "
-                                 "can't represent an SessionItem.");
+                                 "can't represent a SessionItem.");
 
     auto modelType = json[JsonItemFormatAssistant::modelKey].toString().toStdString();
     auto result = p_impl->factory()->createItem(modelType);
