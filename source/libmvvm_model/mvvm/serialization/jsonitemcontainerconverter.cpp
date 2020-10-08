@@ -58,8 +58,28 @@ struct JsonItemContainerConverter::JsonItemContainerConverterImpl {
     void process_universal_property_tag(const QJsonObject& json, SessionItemContainer& container)
     {
         for (const auto obj : json[JsonItemFormatAssistant::itemsKey].toArray()) {
-            auto item = create_item(obj.toObject());
-            if (item)
+            if (auto item = create_item(obj.toObject()); item)
+                container.insertItem(item.release(), container.itemCount());
+        }
+    }
+
+    //! Populates container with content reconstructed from JSON object. Container must be empty.
+
+    void populate_container(const QJsonObject& json, SessionItemContainer& container)
+    {
+        if (!container.empty())
+            throw std::runtime_error(
+                "Error in JsonItemContainerConverter: container is not empty.");
+
+        TagInfo tagInfo =
+            m_taginfo_converter->from_json(json[JsonItemFormatAssistant::tagInfoKey].toObject());
+
+        if (tagInfo.name() != container.tagInfo().name())
+            throw std::runtime_error("Error in JsonItemContainerConverter: attempt to update "
+                                     "container from JSON representing another container.");
+
+        for (const auto obj : json[JsonItemFormatAssistant::itemsKey].toArray()) {
+            if (auto item = create_item(obj.toObject()); item)
                 container.insertItem(item.release(), container.itemCount());
         }
     }
@@ -111,6 +131,11 @@ QJsonObject JsonItemContainerConverter::to_json(const SessionItemContainer& cont
 //        throw std::runtime_error("Error in JsonItemContainerConverter: can't convert json");
 //}
 
+//! Reconstructs SessionItemContainer from the content of JSON object. Can work in two modes:
+//! + If SessionItemContainer is empty, the content will be reconstructed from JSON
+//! + If SessionItemContainer contains some items already, they will be populated from JSON.
+//! Second mode is used when loading project from disk to allow back compatibility.
+
 void JsonItemContainerConverter::from_json(const QJsonObject& json, SessionItemContainer& container)
 {
     static JsonItemFormatAssistant assistant;
@@ -123,9 +148,5 @@ void JsonItemContainerConverter::from_json(const QJsonObject& json, SessionItemC
         throw std::runtime_error(
             "Error in JsonItemContainerConverter: intended for empty container.");
 
-    for (const auto obj : json[JsonItemFormatAssistant::itemsKey].toArray()) {
-        auto item = p_impl->create_item(obj.toObject());
-        if (item)
-            container.insertItem(item.release(), container.itemCount());
-    }
+    p_impl->populate_container(json, container);
 }
