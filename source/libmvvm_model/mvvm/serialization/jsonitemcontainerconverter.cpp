@@ -55,7 +55,7 @@ struct JsonItemContainerConverter::JsonItemContainerConverterImpl {
             update_item(obj.toObject(), container.itemAt(0));
     }
 
-    void process_universal_property_tag(const QJsonObject& json, SessionItemContainer& container)
+    void create_items(const QJsonObject& json, SessionItemContainer& container)
     {
         for (const auto obj : json[JsonItemFormatAssistant::itemsKey].toArray()) {
             if (auto item = create_item(obj.toObject()); item)
@@ -71,18 +71,9 @@ struct JsonItemContainerConverter::JsonItemContainerConverterImpl {
             throw std::runtime_error(
                 "Error in JsonItemContainerConverter: container is not empty.");
 
-        TagInfo tagInfo =
-            m_taginfo_converter->from_json(json[JsonItemFormatAssistant::tagInfoKey].toObject());
-
-        if (tagInfo.name() != container.tagInfo().name())
-            throw std::runtime_error("Error in JsonItemContainerConverter: attempt to update "
-                                     "container from JSON representing another container.");
-
-        for (const auto obj : json[JsonItemFormatAssistant::itemsKey].toArray()) {
-            if (auto item = create_item(obj.toObject()); item)
-                container.insertItem(item.release(), container.itemCount());
-        }
+        create_items(json, container);
     }
+
 };
 
 JsonItemContainerConverter::JsonItemContainerConverter(ConverterCallbacks callbacks)
@@ -143,6 +134,13 @@ void JsonItemContainerConverter::from_json(const QJsonObject& json, SessionItemC
     if (!assistant.isSessionItemContainer(json))
         throw std::runtime_error("Error in JsonItemContainerConverter: given JSON can't represent "
                                  "SessionItemContainer.");
+
+    TagInfo tagInfo =
+        p_impl->m_taginfo_converter->from_json(json[JsonItemFormatAssistant::tagInfoKey].toObject());
+
+    if (tagInfo.name() != container.tagInfo().name())
+        throw std::runtime_error("Error in JsonItemContainerConverter: attempt to update "
+                                 "container from JSON representing another container.");
 
     if (!container.empty())
         throw std::runtime_error(
