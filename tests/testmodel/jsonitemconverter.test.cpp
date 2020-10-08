@@ -18,6 +18,7 @@
 #include <mvvm/model/propertyitem.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
+#include <mvvm/serialization/jsonitem_types.h>
 #include <mvvm/serialization/jsonitemconverter.h>
 #include <mvvm/serialization/jsonitemformatassistant.h>
 
@@ -57,7 +58,8 @@ public:
 
     std::unique_ptr<JsonItemConverter> createConverter()
     {
-        return std::make_unique<JsonItemConverter>(m_model->factory());
+        ConverterContext context{m_model->factory(), ConverterFlags::CLONE_MODE};
+        return std::make_unique<JsonItemConverter>(context);
     }
 
 private:
@@ -96,8 +98,8 @@ TEST_F(JsonItemConverterTest, propertyItemToJsonAndBack)
     EXPECT_EQ(reco->displayName(), item.displayName());
     EXPECT_EQ(reco->identifier(), item.identifier());
 
-// FIXME denable test
-//    EXPECT_EQ(reco->toolTip(), std::string()); // tooltip is not preserved
+    // FIXME denable test
+    //    EXPECT_EQ(reco->toolTip(), std::string()); // tooltip is not preserved
 }
 
 //! PropertyItem to json file and back.

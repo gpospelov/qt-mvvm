@@ -23,7 +23,6 @@ class ConverterContext;
 class MVVM_MODEL_EXPORT JsonItemConverter : public JsonItemConverterInterface
 {
 public:
-    JsonItemConverter(const ItemFactoryInterface* factory, bool new_id_flag = false);
     JsonItemConverter(const ConverterContext& context);
 
     ~JsonItemConverter() override;

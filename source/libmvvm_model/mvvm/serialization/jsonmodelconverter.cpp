@@ -14,6 +14,7 @@
 #include <mvvm/serialization/jsonitemconverter.h>
 #include <mvvm/serialization/jsonitemformatassistant.h>
 #include <mvvm/serialization/jsonmodelconverter.h>
+#include <mvvm/factories/itemconverterfactory.h>
 #include <stdexcept>
 
 using namespace ModelView;
@@ -33,7 +34,7 @@ QJsonObject JsonModelConverter::to_json(const SessionModel& model) const
 
     QJsonArray itemArray;
 
-    auto converter = std::make_unique<JsonItemConverter>(model.factory());
+    auto converter = CreateItemCloneConverter(model.factory());
 
     for (auto item : model.rootItem()->children())
         itemArray.append(converter->to_json(item));
@@ -59,7 +60,7 @@ void JsonModelConverter::from_json(const QJsonObject& json, SessionModel& model)
             + "', json key '"
             + json[JsonItemFormatAssistant::sessionModelKey].toString().toStdString() + "'");
 
-    auto converter = std::make_unique<JsonItemConverter>(model.factory());
+    auto converter = CreateItemCloneConverter(model.factory());
 
     auto rebuild_root = [&json, &converter](auto parent) {
         for (const auto ref : json[JsonItemFormatAssistant::itemsKey].toArray()) {

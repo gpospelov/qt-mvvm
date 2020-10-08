@@ -19,17 +19,17 @@
 #include <mvvm/serialization/jsonitemdataconverter.h>
 #include <mvvm/serialization/jsonitemformatassistant.h>
 #include <mvvm/serialization/jsonitemtagsconverter.h>
-#include <mvvm/serialization/jsonitem_types.h>
 
 using namespace ModelView;
 
-namespace {
+namespace
+{
 bool isRegenerateID(const ConverterFlags& flags)
 {
     // absence of ConverterFlags::USE_JSON_ID flag means that we have to generate new ID
     return (flags & ConverterFlags::USE_JSON_ID) == ConverterFlags::NONE;
 }
-}
+} // namespace
 
 struct JsonItemConverter::JsonItemConverterImpl {
     JsonItemConverter* m_parent{nullptr};
@@ -39,7 +39,8 @@ struct JsonItemConverter::JsonItemConverterImpl {
     std::unique_ptr<JsonItemTagsConverter> m_itemtags_converter;
     ConverterContext m_context;
 
-    JsonItemConverterImpl(JsonItemConverter* parent, const ConverterContext& context={}) : m_parent(parent), m_context(context)
+    JsonItemConverterImpl(JsonItemConverter* parent, const ConverterContext& context)
+        : m_parent(parent), m_context(context)
     {
         //! Callback to convert SessionItem to JSON object.
         auto create_json = [this](const SessionItem& item) { return m_parent->to_json(&item); };
@@ -104,13 +105,6 @@ struct JsonItemConverter::JsonItemConverterImpl {
         return result;
     }
 };
-
-JsonItemConverter::JsonItemConverter(const ItemFactoryInterface* factory, bool new_id_flag)
-    : p_impl(std::make_unique<JsonItemConverterImpl>(this))
-{
-    p_impl->m_factory = factory;
-    p_impl->m_is_new_id = new_id_flag;
-}
 
 JsonItemConverter::JsonItemConverter(const ConverterContext& context)
     : p_impl(std::make_unique<JsonItemConverterImpl>(this, context))
