@@ -49,7 +49,7 @@ struct JsonItemContainerConverter::JsonItemContainerConverterImpl {
             m_converter_callbacks.m_update_item(json, item);
     }
 
-    void process_single_property_tag(const QJsonObject& json, SessionItemContainer& container)
+    void update_items(const QJsonObject& json, SessionItemContainer& container)
     {
         for (const auto obj : json[JsonItemFormatAssistant::itemsKey].toArray())
             update_item(obj.toObject(), container.itemAt(0));
@@ -74,6 +74,23 @@ struct JsonItemContainerConverter::JsonItemContainerConverterImpl {
         create_items(json, container);
     }
 
+    //! Update container with content reconstructed from JSON object.
+    //! It is assumed, that container has some items already created.
+
+    void update_container(const QJsonObject& json, SessionItemContainer& container)
+    {
+        TagInfo tagInfo =
+            m_taginfo_converter->from_json(json[JsonItemFormatAssistant::tagInfoKey].toObject());
+
+        if (Compatibility::IsCompatibleSinglePropertyTag(container, tagInfo))
+            update_items(json, container);
+
+        else if (Compatibility::IsCompatibleUniversalTag(container, tagInfo))
+            create_items(json, container);
+
+        else
+            throw std::runtime_error("Error in JsonItemContainerConverter: can't convert json");
+    }
 };
 
 JsonItemContainerConverter::JsonItemContainerConverter(ConverterCallbacks callbacks)
@@ -97,31 +114,6 @@ QJsonObject JsonItemContainerConverter::to_json(const SessionItemContainer& cont
     return result;
 }
 
-// FIXME restore functionality
-
-// void JsonItemContainerConverter::from_json(const QJsonObject& json, SessionItemContainer&
-// container)
-//{
-//    static JsonItemFormatAssistant assistant;
-
-//    if (!assistant.isSessionItemContainer(json))
-//        throw std::runtime_error("Error in JsonItemContainerConverter: given JSON can't represent
-//        "
-//                                 "SessionItemContainer.");
-
-//    TagInfo tagInfo = p_impl->m_taginfo_converter->from_json(
-//        json[JsonItemFormatAssistant::tagInfoKey].toObject());
-
-//    if (Compatibility::IsCompatibleSinglePropertyTag(container, tagInfo))
-//        p_impl->process_single_property_tag(json, container);
-
-//    else if (Compatibility::IsCompatibleUniversalTag(container, tagInfo))
-//        p_impl->process_universal_property_tag(json, container);
-
-//    else
-//        throw std::runtime_error("Error in JsonItemContainerConverter: can't convert json");
-//}
-
 //! Reconstructs SessionItemContainer from the content of JSON object. Can work in two modes:
 //! + If SessionItemContainer is empty, the content will be reconstructed from JSON
 //! + If SessionItemContainer contains some items already, they will be populated from JSON.
@@ -135,8 +127,8 @@ void JsonItemContainerConverter::from_json(const QJsonObject& json, SessionItemC
         throw std::runtime_error("Error in JsonItemContainerConverter: given JSON can't represent "
                                  "SessionItemContainer.");
 
-    TagInfo tagInfo =
-        p_impl->m_taginfo_converter->from_json(json[JsonItemFormatAssistant::tagInfoKey].toObject());
+    TagInfo tagInfo = p_impl->m_taginfo_converter->from_json(
+        json[JsonItemFormatAssistant::tagInfoKey].toObject());
 
     if (tagInfo.name() != container.tagInfo().name())
         throw std::runtime_error("Error in JsonItemContainerConverter: attempt to update "
