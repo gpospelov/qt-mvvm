@@ -94,7 +94,7 @@ QJsonObject JsonItemTagsConverter::to_json(const SessionItemTags& tags)
 //! + If SessionItemTags is empty, all tags will be reconstructed as in JSON, and then populated
 //!   with the content.
 //! + If SessionItemTags contains some tags already, they will be populated from JSON. in this
-//!   case it will be assumed, that tag names matching JSON.
+//!   case it will be assumed, that existing item's tags are matching JSON.
 
 void JsonItemTagsConverter::from_json(const QJsonObject& json, SessionItemTags& item_tags)
 {

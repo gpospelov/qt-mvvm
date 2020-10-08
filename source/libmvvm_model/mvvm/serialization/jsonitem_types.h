@@ -30,12 +30,12 @@ class ItemFactoryInterface;
 
 struct MVVM_MODEL_EXPORT ConverterCallbacks {
     using create_json_t = std::function<QJsonObject(const SessionItem&)>;
-    using update_item_t = std::function<void(const QJsonObject&, SessionItem*)>;
     using create_item_t = std::function<std::unique_ptr<SessionItem>(const QJsonObject&)>;
+    using update_item_t = std::function<void(const QJsonObject&, SessionItem*)>;
 
     create_json_t m_create_json; //! creates JSON object from session item
-    update_item_t m_update_item; //! updates existing SessionItem from JSON object
     create_item_t m_create_item; //! creates new SessionItem from JSON object
+    update_item_t m_update_item; //! updates existing SessionItem from JSON object
 };
 
 //! Flags to define converter behavior on the way from JSON to SessionItem.
@@ -77,6 +77,8 @@ inline bool hasFlag(ConverterFlags arg, ConverterFlags flag)
 struct MVVM_MODEL_EXPORT ConverterContext {
     const ItemFactoryInterface* m_factory{nullptr};
     ConverterFlags m_flags = ConverterFlags::NONE;
+    bool m_generate_id{false};
+    bool m_reset_item_data_and_tags{false};
 };
 
 } // namespace ModelView

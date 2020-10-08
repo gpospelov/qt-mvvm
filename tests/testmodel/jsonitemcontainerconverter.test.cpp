@@ -49,12 +49,6 @@ public:
             return result;
         };
 
-        //! Simplified method to update SessionItem from JSON object
-        auto update_item = [this](const QJsonObject& json, SessionItem* item) {
-            m_itemdata_converter->from_json(json[JsonItemFormatAssistant::itemDataKey].toArray(),
-                                            *item->itemData());
-        };
-
         //! Simplified method to create SessionItem from JSON object
         auto create_item = [this](const QJsonObject& json) {
             std::unique_ptr<SessionItem> result = std::make_unique<PropertyItem>();
@@ -63,7 +57,13 @@ public:
             return result;
         };
 
-        ConverterCallbacks callbacks{to_json, update_item, create_item};
+        //! Simplified method to update SessionItem from JSON object
+        auto update_item = [this](const QJsonObject& json, SessionItem* item) {
+            m_itemdata_converter->from_json(json[JsonItemFormatAssistant::itemDataKey].toArray(),
+                                            *item->itemData());
+        };
+
+        ConverterCallbacks callbacks{to_json, create_item, update_item};
         return std::make_unique<JsonItemContainerConverter>(callbacks);
     }
 

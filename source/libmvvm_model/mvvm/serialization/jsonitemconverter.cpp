@@ -34,15 +34,15 @@ struct JsonItemConverter::JsonItemConverterImpl {
         //! Callback to convert SessionItem to JSON object.
         auto create_json = [this](const SessionItem& item) { return m_parent->to_json(&item); };
 
+        //! Simplified method to create SessionItem from JSON object
+        auto create_item = [this](const QJsonObject& json) { return m_parent->from_json(json); };
+
         //! Callback to update SessionItem from JSON object
         auto update_item = [this](const QJsonObject& json, SessionItem* item) {
             populate_item(json, *item);
         };
 
-        //! Simplified method to create SessionItem from JSON object
-        auto create_item = [this](const QJsonObject& json) { return m_parent->from_json(json); };
-
-        ConverterCallbacks callbacks{create_json, update_item, create_item};
+        ConverterCallbacks callbacks{create_json, create_item, update_item};
 
         m_itemdata_converter = std::make_unique<JsonItemDataConverter>();
         m_itemtags_converter = std::make_unique<JsonItemTagsConverter>(callbacks);
