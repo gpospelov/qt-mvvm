@@ -35,7 +35,7 @@ public:
         TestItem() : CompoundItem("TestItem")
         {
             setToolTip("compound");
-            //            addProperty("Thickness", 42)->setToolTip("thickness");
+            addProperty("Thickness", 42)->setToolTip("thickness");
         }
     };
 
@@ -97,9 +97,7 @@ TEST_F(JsonItemConverterTest, propertyItemToJsonAndBack)
     EXPECT_EQ(reco->modelType(), item.modelType());
     EXPECT_EQ(reco->displayName(), item.displayName());
     EXPECT_EQ(reco->identifier(), item.identifier());
-
-    // FIXME denable test
-    //    EXPECT_EQ(reco->toolTip(), std::string()); // tooltip is not preserved
+    EXPECT_EQ(reco->toolTip(), std::string("abc"));
 }
 
 //! PropertyItem to json file and back.
@@ -230,9 +228,7 @@ TEST_F(JsonItemConverterTest, testItemToFileAndBack)
     EXPECT_EQ(reco->displayName(), item.displayName());
     EXPECT_EQ(reco->identifier(), item.identifier());
 
-    // FIXME restore test with tooltips
-
-    //    EXPECT_EQ(reco->toolTip(), "compound");
+    EXPECT_EQ(reco->toolTip(), "compound");
     // tooltip was preserved after the serialization
-    //    EXPECT_EQ(reco->getItem("Thickness")->toolTip(), "thickness");
+    EXPECT_EQ(reco->getItem("Thickness")->toolTip(), "thickness");
 }
