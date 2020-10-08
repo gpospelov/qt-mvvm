@@ -27,8 +27,10 @@ class MVVM_MODEL_EXPORT JsonItemConverterInterface
 public:
     virtual ~JsonItemConverterInterface() = default;
 
+    //! Converts item to JSON.
     virtual QJsonObject to_json(const SessionItem* item) const = 0;
 
+    //! Creates item from JSON.
     virtual std::unique_ptr<SessionItem> from_json(const QJsonObject&) const = 0;
 };
 

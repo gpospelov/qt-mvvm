@@ -41,6 +41,20 @@ bool isResetItemDataAndTags(const ConverterFlags& flags)
            && hasFlag(flags, ConverterFlags::COPY_JSON_TAGS);
 }
 
+//! Creates
+
+std::unique_ptr<JsonItemDataConverter> createDataConverter(const ConverterFlags& flags)
+{
+    if (flags == ConverterFlags::PROJECT_MODE) {
+        auto accept_roles = [](auto role) {
+            return role == ItemDataRole::IDENTIFIER || role == ItemDataRole::DATA;
+        };
+        return std::make_unique<JsonItemDataConverter>(accept_roles, accept_roles);
+    } else {
+        return std::make_unique<JsonItemDataConverter>();
+    }
+}
+
 } // namespace
 
 struct JsonItemConverter::JsonItemConverterImpl {
@@ -55,17 +69,17 @@ struct JsonItemConverter::JsonItemConverterImpl {
         //! Callback to convert SessionItem to JSON object.
         auto create_json = [this](const SessionItem& item) { return m_parent->to_json(&item); };
 
-        //! Simplified method to create SessionItem from JSON object
+        //! Callback to create SessionItem from JSON object.
         auto create_item = [this](const QJsonObject& json) { return m_parent->from_json(json); };
 
-        //! Callback to update SessionItem from JSON object
+        //! Callback to update SessionItem from JSON object.
         auto update_item = [this](const QJsonObject& json, SessionItem* item) {
             populate_item(json, *item);
         };
 
         ConverterCallbacks callbacks{create_json, create_item, update_item};
 
-        m_itemdata_converter = std::make_unique<JsonItemDataConverter>();
+        m_itemdata_converter = createDataConverter(m_context.m_flags);
         m_itemtags_converter = std::make_unique<JsonItemTagsConverter>(callbacks);
     }
 
@@ -88,14 +102,12 @@ struct JsonItemConverter::JsonItemConverterImpl {
         if (modelType != item.modelType())
             throw std::runtime_error("Item model mismatch");
 
-        if (isResetItemDataAndTags(m_context.m_flags)) {
-            auto data = std::make_unique<SessionItemData>();
-            auto tags = std::make_unique<SessionItemTags>();
-            item.setDataAndTags(std::move(data), std::move(tags));
-        }
+        if (isResetItemDataAndTags(m_context.m_flags))
+            item.setDataAndTags(std::make_unique<SessionItemData>(),
+                                std::make_unique<SessionItemTags>());
 
-        populate_item_tags(json[JsonItemFormatAssistant::itemTagsKey].toObject(), *item.itemTags());
         populate_item_data(json[JsonItemFormatAssistant::itemDataKey].toArray(), *item.itemData());
+        populate_item_tags(json[JsonItemFormatAssistant::itemTagsKey].toObject(), *item.itemTags());
 
         for (auto child : item.children())
             child->setParent(&item);
