@@ -33,8 +33,6 @@ bool isRegenerateID(const ConverterFlags& flags)
 
 struct JsonItemConverter::JsonItemConverterImpl {
     JsonItemConverter* m_parent{nullptr};
-    const ItemFactoryInterface* m_factory{nullptr};
-    bool m_is_new_id{false};
     std::unique_ptr<JsonItemDataConverter> m_itemdata_converter;
     std::unique_ptr<JsonItemTagsConverter> m_itemtags_converter;
     ConverterContext m_context;
@@ -59,7 +57,7 @@ struct JsonItemConverter::JsonItemConverterImpl {
         m_itemtags_converter = std::make_unique<JsonItemTagsConverter>(callbacks);
     }
 
-    const ItemFactoryInterface* factory() { return m_factory; }
+    const ItemFactoryInterface* factory() { return m_context.m_factory; }
 
     void populate_item_data(const QJsonArray& json, SessionItemData& item_data)
     {
@@ -89,7 +87,7 @@ struct JsonItemConverter::JsonItemConverterImpl {
         for (auto child : item.children())
             child->setParent(&item);
 
-        if (m_is_new_id)
+        if (isRegenerateID(m_context.m_flags))
             item.setData(UniqueIdGenerator::generate(), ItemDataRole::IDENTIFIER);
     }
 
@@ -109,8 +107,6 @@ struct JsonItemConverter::JsonItemConverterImpl {
 JsonItemConverter::JsonItemConverter(const ConverterContext& context)
     : p_impl(std::make_unique<JsonItemConverterImpl>(this, context))
 {
-    p_impl->m_factory = context.m_factory;
-    p_impl->m_is_new_id = isRegenerateID(context.m_flags);
 }
 
 JsonItemConverter::~JsonItemConverter() = default;
