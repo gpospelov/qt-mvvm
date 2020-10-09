@@ -20,7 +20,7 @@ namespace ModelView
 
 class SessionItem;
 
-//! Base class for all converters of SessionItem to/from json object.
+//! Base class for all converters of SessionItem to/from JSON object.
 
 class MVVM_MODEL_EXPORT JsonItemConverterInterface
 {

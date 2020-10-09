@@ -38,6 +38,10 @@ public:
 
     void from_json(const QJsonArray& object, SessionItemData& data) override;
 
+    static std::unique_ptr<JsonItemDataConverterInterface> createCopyConverter();
+
+    static std::unique_ptr<JsonItemDataConverterInterface> createProjectConverter();
+
 private:
     bool isRoleToJson(int role) const;
     bool isRoleFromJson(int role) const;

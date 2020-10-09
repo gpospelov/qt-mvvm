@@ -20,15 +20,17 @@ namespace ModelView
 
 class SessionItemData;
 
-//! Base class for all converters of SessionItemData to/from json object
+//! Base class for all converters of SessionItemData to/from JSON object.
 
 class MVVM_MODEL_EXPORT JsonItemDataConverterInterface
 {
 public:
     virtual ~JsonItemDataConverterInterface() = default;
 
+    //! Converts SessionItemData to JSON;
     virtual QJsonArray to_json(const SessionItemData&) = 0;
 
+    //! Converts SessionItemData from JSON;
     virtual void from_json(const QJsonArray& object, SessionItemData& data) = 0;
 };
 

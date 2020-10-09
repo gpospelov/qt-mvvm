@@ -83,6 +83,24 @@ void JsonItemDataConverter::from_json(const QJsonArray& object, SessionItemData&
     }
 }
 
+//! Creates JSON data converter intended for simple data copying. Nothing is filtered out.
+
+std::unique_ptr<JsonItemDataConverterInterface> JsonItemDataConverter::createCopyConverter()
+{
+    return std::make_unique<JsonItemDataConverter>();
+}
+
+//! Creates JSON data converter intended for project saving. Only IDENTIFIER and DATA gous to/from
+//! JSON.
+
+std::unique_ptr<JsonItemDataConverterInterface> JsonItemDataConverter::createProjectConverter()
+{
+    auto accept_roles = [](auto role) {
+        return role == ItemDataRole::IDENTIFIER || role == ItemDataRole::DATA;
+    };
+    return std::make_unique<JsonItemDataConverter>(accept_roles, accept_roles);
+}
+
 //! Returns true if given role should be saved in json object.
 
 bool JsonItemDataConverter::isRoleToJson(int role) const

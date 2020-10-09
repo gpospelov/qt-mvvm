@@ -16,8 +16,8 @@
 #include <mvvm/model/mvvm_types.h>
 #include <mvvm/model/sessionitemdata.h>
 #include <mvvm/serialization/jsonitemdataconverter.h>
-#include <mvvm/serialization/jsonvariantconverter.h>
 #include <mvvm/serialization/jsonitemformatassistant.h>
+#include <mvvm/serialization/jsonvariantconverter.h>
 #include <string>
 
 using namespace ModelView;
@@ -161,10 +161,9 @@ TEST_F(JsonItemDataConverterTest, writeAllReadFiltered)
     EXPECT_TRUE(data2.hasData(ItemDataRole::TOOLTIP));
 }
 
-
 //! Update SessionItemData from json obtained from another JsonItemData.
 
- TEST_F(JsonItemDataConverterTest, updateFromJson)
+TEST_F(JsonItemDataConverterTest, updateFromJson)
 {
     const std::vector<int> roles = {ItemDataRole::IDENTIFIER, ItemDataRole::DATA,
                                     ItemDataRole::TOOLTIP};
@@ -174,7 +173,7 @@ TEST_F(JsonItemDataConverterTest, writeAllReadFiltered)
 
     // initial data
     SessionItemData data1;
-    for (size_t i=0; i<roles.size(); ++i)
+    for (size_t i = 0; i < roles.size(); ++i)
         data1.setData(variants[i], roles[i]);
 
     // data intended for serialization
@@ -192,6 +191,65 @@ TEST_F(JsonItemDataConverterTest, writeAllReadFiltered)
     // roles as in initial object, id+data as in data2, tooltip as in data1
     EXPECT_EQ(data1.roles(), roles);
     EXPECT_EQ(data1.data(ItemDataRole::IDENTIFIER).value<std::string>(),
-    std::string("identifier2")); EXPECT_EQ(data1.data(ItemDataRole::DATA).value<int>(), 43);
+              std::string("identifier2"));
+    EXPECT_EQ(data1.data(ItemDataRole::DATA).value<int>(), 43);
     EXPECT_EQ(data1.data(ItemDataRole::TOOLTIP).value<std::string>(), std::string("tooltip1"));
+}
+
+//! Checking factory method to create copying converter.
+//! It is used normally in the situation, when the item data is fully serialized to JSON, and then
+//! desirialized into empty item data.
+
+TEST_F(JsonItemDataConverterTest, createCopyConverter)
+{
+    auto converter = JsonItemDataConverter::createCopyConverter();
+
+    SessionItemData data;
+    data.setData(QVariant::fromValue(std::string("identifier")), ItemDataRole::IDENTIFIER);
+    data.setData(42, ItemDataRole::DATA);
+    data.setData(QVariant::fromValue(std::string("display")), ItemDataRole::DISPLAY);
+    data.setData(QVariant::fromValue(std::string("tooltip")), ItemDataRole::TOOLTIP);
+
+    QJsonArray array = converter->to_json(data);
+
+    SessionItemData data2;
+    converter->from_json(array, data2);
+
+    //! Empty data should become the same.
+    EXPECT_EQ(data.roles(), data2.roles());
+    EXPECT_EQ(data2.data(ItemDataRole::IDENTIFIER).value<std::string>(), "identifier");
+    EXPECT_EQ(data2.data(ItemDataRole::DATA).value<int>(), 42);
+    EXPECT_EQ(data2.data(ItemDataRole::DISPLAY).value<std::string>(), "display");
+    EXPECT_EQ(data2.data(ItemDataRole::TOOLTIP).value<std::string>(), "tooltip");
+}
+
+//! Checking factory method for typical scenario for copying whole data while writing, and updating
+//! on reading. This is a repetition of previous test.
+
+TEST_F(JsonItemDataConverterTest, createProjectConverter)
+{
+    auto converter = JsonItemDataConverter::createProjectConverter();
+
+    SessionItemData data;
+    data.setData(QVariant::fromValue(std::string("identifier")), ItemDataRole::IDENTIFIER);
+    data.setData(42, ItemDataRole::DATA);
+    data.setData(QVariant::fromValue(std::string("display")), ItemDataRole::DISPLAY);
+    data.setData(QVariant::fromValue(std::string("tooltip")), ItemDataRole::TOOLTIP);
+    auto expected_roles = data.roles();
+
+    QJsonArray array = converter->to_json(data);
+
+    // changing data
+    data.setData(QVariant::fromValue(std::string("identifier_new")), ItemDataRole::IDENTIFIER);
+    data.setData(43, ItemDataRole::DATA);
+
+    // deserializing back
+    converter->from_json(array, data);
+
+    //! DATA and IDENTIFIER roles should be as before the serialization
+    EXPECT_EQ(data.roles(), expected_roles);
+    EXPECT_EQ(data.data(ItemDataRole::IDENTIFIER).value<std::string>(), "identifier");
+    EXPECT_EQ(data.data(ItemDataRole::DATA).value<int>(), 42);
+    EXPECT_EQ(data.data(ItemDataRole::DISPLAY).value<std::string>(), "display");
+    EXPECT_EQ(data.data(ItemDataRole::TOOLTIP).value<std::string>(), "tooltip");
 }
