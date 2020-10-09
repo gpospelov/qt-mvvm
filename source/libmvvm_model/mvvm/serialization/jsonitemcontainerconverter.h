@@ -23,6 +23,8 @@ class SessionItem;
 class SessionItemContainer;
 class ConverterCallbacks;
 
+//! Converter between SessionItemContainer and JSON object.
+
 class MVVM_MODEL_EXPORT JsonItemContainerConverter
 {
 public:

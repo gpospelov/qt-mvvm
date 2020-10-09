@@ -49,12 +49,6 @@ public:
             return result;
         };
 
-        //! Simplified method to update SessionItem from JSON object
-        auto update_item = [this](const QJsonObject& json, SessionItem* item) {
-            m_itemdata_converter->from_json(json[JsonItemFormatAssistant::itemDataKey].toArray(),
-                                            *item->itemData());
-        };
-
         //! Simplified method to create SessionItem from JSON object
         auto create_item = [this](const QJsonObject& json) {
             std::unique_ptr<SessionItem> result = std::make_unique<PropertyItem>();
@@ -63,7 +57,13 @@ public:
             return result;
         };
 
-        ConverterCallbacks callbacks{to_json, update_item, create_item};
+        //! Simplified method to update SessionItem from JSON object
+        auto update_item = [this](const QJsonObject& json, SessionItem* item) {
+            m_itemdata_converter->from_json(json[JsonItemFormatAssistant::itemDataKey].toArray(),
+                                            *item->itemData());
+        };
+
+        ConverterCallbacks callbacks{to_json, create_item, update_item};
         return std::make_unique<JsonItemContainerConverter>(callbacks);
     }
 
@@ -95,80 +95,74 @@ TEST_F(JsonItemContainerConverterTest, propertyContainerToJson)
     EXPECT_TRUE(assistant.isSessionItemContainer(json));
 }
 
-// FIXME restore tests
-
 //! SessionItemContainer (with single property item) to json object and back.
 
-//TEST_F(JsonItemContainerConverterTest, propertyContainerToJsonAndBack)
-//{
-//    // creating container
-//    TagInfo tag = TagInfo::propertyTag("thickness", Constants::PropertyType);
-//    SessionItemContainer container(tag);
+TEST_F(JsonItemContainerConverterTest, propertyContainerToJsonAndBack)
+{
+    // creating container
+    TagInfo tag = TagInfo::propertyTag("thickness", Constants::PropertyType);
+    SessionItemContainer container(tag);
 
-//    // inserting single property item
-//    auto item = new PropertyItem;
-//    item->setData(42);
-//    EXPECT_TRUE(container.insertItem(item, 0));
+    // inserting single property item
+    auto item = new PropertyItem;
+    item->setData(42);
+    EXPECT_TRUE(container.insertItem(item, 0));
 
-//    // converting top JSON
-//    auto converter = createConverter();
-//    auto json = converter->to_json(container);
+    // converting top JSON
+    auto converter = createConverter();
+    auto json = converter->to_json(container);
 
-//    // creating second container with same layout, and updating it from JSON
-//    SessionItemContainer container2(tag);
-//    auto item2 = new PropertyItem;
-//    item2->setData(43);
-//    EXPECT_TRUE(container2.insertItem(item2, 0));
-//    converter->from_json(json, container2);
+    // creating second container with same layout, and updating it from JSON
+    SessionItemContainer container2(tag);
+    auto item2 = new PropertyItem;
+    item2->setData(43);
+    EXPECT_TRUE(container2.insertItem(item2, 0));
+    converter->from_json(json, container2);
 
-//    // FIXME restore tests
+    // Checking that item in container2 has been reused, and get same properties as item.
+    EXPECT_EQ(container2.itemAt(0), item2);
+    EXPECT_EQ(item->displayName(), item2->displayName());
+    EXPECT_EQ(item->identifier(), item2->identifier());
+    EXPECT_EQ(42, item2->data<int>());
+}
 
-////    // Checking that item in container2 has been reused, and get same properties as item.
-////    EXPECT_EQ(container2.itemAt(0), item2);
-////    EXPECT_EQ(item->displayName(), item2->displayName());
-////    EXPECT_EQ(item->identifier(), item2->identifier());
-////    EXPECT_EQ(42, item2->data<int>());
-//}
+//! SessionItemContainer (with single property item) to json file and back.
 
-////! SessionItemContainer (with single property item) to json file and back.
+TEST_F(JsonItemContainerConverterTest, propertyContainerToFileAndBack)
+{
+    // creating container
+    TagInfo tag = TagInfo::propertyTag("thickness", Constants::PropertyType);
+    SessionItemContainer container(tag);
 
-//TEST_F(JsonItemContainerConverterTest, propertyContainerToFileAndBack)
-//{
-//    // creating container
-//    TagInfo tag = TagInfo::propertyTag("thickness", Constants::PropertyType);
-//    SessionItemContainer container(tag);
+    // inserting single property item
+    auto item = new PropertyItem;
+    item->setData(42);
+    EXPECT_TRUE(container.insertItem(item, 0));
 
-//    // inserting single property item
-//    auto item = new PropertyItem;
-//    item->setData(42);
-//    EXPECT_TRUE(container.insertItem(item, 0));
+    // converting top JSON and checking that it is valid JSON object
+    auto converter = createConverter();
+    auto json = converter->to_json(container);
 
-//    // converting top JSON and checking that it is valid JSON object
-//    auto converter = createConverter();
-//    auto json = converter->to_json(container);
+    // saving object to file
+    auto fileName = TestUtils::TestFileName(testDir(), "propertyContainerToFileAndBack.json");
+    TestUtils::SaveJson(json, fileName);
 
-//    // saving object to file
-//    auto fileName = TestUtils::TestFileName(testDir(), "propertyContainerToFileAndBack.json");
-//    TestUtils::SaveJson(json, fileName);
+    // loading from file
+    auto document = TestUtils::LoadJson(fileName);
 
-//    // loading from file
-//    auto document = TestUtils::LoadJson(fileName);
+    // creating second container with same layout, and updating it from JSON
+    SessionItemContainer container2(tag);
+    auto item2 = new PropertyItem;
+    item2->setData(43);
+    EXPECT_TRUE(container2.insertItem(item2, 0));
+    converter->from_json(document.object(), container2);
 
-//    // creating second container with same layout, and updating it from JSON
-//    SessionItemContainer container2(tag);
-//    auto item2 = new PropertyItem;
-//    item2->setData(43);
-//    EXPECT_TRUE(container2.insertItem(item2, 0));
-//    converter->from_json(document.object(), container2);
-
-//    // FIXME restore tests
-
-////    // Checking that item in container2 has been reused, and get same properties as item.
-////    EXPECT_EQ(container2.itemAt(0), item2);
-////    EXPECT_EQ(item->displayName(), item2->displayName());
-////    EXPECT_EQ(item->identifier(), item2->identifier());
-////    EXPECT_EQ(42, item2->data<int>());
-//}
+    // Checking that item in container2 has been reused, and get same properties as item.
+    EXPECT_EQ(container2.itemAt(0), item2);
+    EXPECT_EQ(item->displayName(), item2->displayName());
+    EXPECT_EQ(item->identifier(), item2->identifier());
+    EXPECT_EQ(42, item2->data<int>());
+}
 
 //! SessionItemContainer (with universal tag and several items) to json object and back.
 

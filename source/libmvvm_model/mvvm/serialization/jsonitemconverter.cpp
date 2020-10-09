@@ -10,7 +10,7 @@
 #include <QJsonArray>
 #include <QJsonObject>
 #include <mvvm/core/uniqueidgenerator.h>
-#include <mvvm/model/itemfactoryinterface.h>
+#include <mvvm/interfaces/itemfactoryinterface.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionitemdata.h>
 #include <mvvm/model/sessionitemtags.h>
@@ -22,33 +22,69 @@
 
 using namespace ModelView;
 
+namespace
+{
+
+//! Returns true if flags requires generation of new ID instead of using the one stored in JSON.
+
+bool isRegenerateID(const ConverterFlags& flags)
+{
+    return !hasFlag(flags, ConverterFlags::USE_JSON_ID);
+}
+
+//! Returns true if flags requires reset of item data and tags.
+
+bool isResetItemDataAndTags(const ConverterFlags& flags)
+{
+    return hasFlag(flags, ConverterFlags::COPY_JSON_DATA)
+           && hasFlag(flags, ConverterFlags::COPY_JSON_TAGS);
+}
+
+//! Creates converter for SessionItemData/JSON.
+
+std::unique_ptr<JsonItemDataConverter> createDataConverter(const ConverterFlags& flags)
+{
+
+    if (flags == ConverterFlags::PROJECT_MODE) {
+        // PROJECT_MODE assumes that we are serializing only certain roles
+        auto accept_roles = [](auto role) {
+            return role == ItemDataRole::IDENTIFIER || role == ItemDataRole::DATA;
+        };
+        return std::make_unique<JsonItemDataConverter>(accept_roles, accept_roles);
+    } else {
+        return std::make_unique<JsonItemDataConverter>();
+    }
+}
+
+} // namespace
+
 struct JsonItemConverter::JsonItemConverterImpl {
     JsonItemConverter* m_parent{nullptr};
-    const ItemFactoryInterface* m_factory{nullptr};
-    bool m_is_new_id{false};
     std::unique_ptr<JsonItemDataConverter> m_itemdata_converter;
     std::unique_ptr<JsonItemTagsConverter> m_itemtags_converter;
+    ConverterContext m_context;
 
-    JsonItemConverterImpl(JsonItemConverter* parent) : m_parent(parent)
+    JsonItemConverterImpl(JsonItemConverter* parent, const ConverterContext& context)
+        : m_parent(parent), m_context(context)
     {
         //! Callback to convert SessionItem to JSON object.
         auto create_json = [this](const SessionItem& item) { return m_parent->to_json(&item); };
 
-        //! Callback to update SessionItem from JSON object
+        //! Callback to create SessionItem from JSON object.
+        auto create_item = [this](const QJsonObject& json) { return m_parent->from_json(json); };
+
+        //! Callback to update SessionItem from JSON object.
         auto update_item = [this](const QJsonObject& json, SessionItem* item) {
             populate_item(json, *item);
         };
 
-        //! Simplified method to create SessionItem from JSON object
-        auto create_item = [this](const QJsonObject& json) { return m_parent->from_json(json); };
+        ConverterCallbacks callbacks{create_json, create_item, update_item};
 
-        ConverterCallbacks callbacks{create_json, update_item, create_item};
-
-        m_itemdata_converter = std::make_unique<JsonItemDataConverter>();
+        m_itemdata_converter = createDataConverter(m_context.m_flags);
         m_itemtags_converter = std::make_unique<JsonItemTagsConverter>(callbacks);
     }
 
-    const ItemFactoryInterface* factory() { return m_factory; }
+    const ItemFactoryInterface* factory() { return m_context.m_factory; }
 
     void populate_item_data(const QJsonArray& json, SessionItemData& item_data)
     {
@@ -67,18 +103,18 @@ struct JsonItemConverter::JsonItemConverterImpl {
         if (modelType != item.modelType())
             throw std::runtime_error("Item model mismatch");
 
-        auto data = std::make_unique<SessionItemData>();
-        auto tags = std::make_unique<SessionItemTags>();
+        if (isResetItemDataAndTags(m_context.m_flags)) {
+            item.setDataAndTags(std::make_unique<SessionItemData>(),
+                                std::make_unique<SessionItemTags>());
+        }
 
-        item.setDataAndTags(std::move(data), std::move(tags));
-
-        populate_item_tags(json[JsonItemFormatAssistant::itemTagsKey].toObject(), *item.itemTags());
         populate_item_data(json[JsonItemFormatAssistant::itemDataKey].toArray(), *item.itemData());
+        populate_item_tags(json[JsonItemFormatAssistant::itemTagsKey].toObject(), *item.itemTags());
 
         for (auto child : item.children())
             child->setParent(&item);
 
-        if (m_is_new_id)
+        if (isRegenerateID(m_context.m_flags))
             item.setData(UniqueIdGenerator::generate(), ItemDataRole::IDENTIFIER);
     }
 
@@ -95,11 +131,9 @@ struct JsonItemConverter::JsonItemConverterImpl {
     }
 };
 
-JsonItemConverter::JsonItemConverter(const ItemFactoryInterface* factory, bool new_id_flag)
-    : p_impl(std::make_unique<JsonItemConverterImpl>(this))
+JsonItemConverter::JsonItemConverter(const ConverterContext& context)
+    : p_impl(std::make_unique<JsonItemConverterImpl>(this, context))
 {
-    p_impl->m_factory = factory;
-    p_impl->m_is_new_id = new_id_flag;
 }
 
 JsonItemConverter::~JsonItemConverter() = default;
@@ -115,7 +149,7 @@ std::unique_ptr<SessionItem> JsonItemConverter::from_json(const QJsonObject& jso
 
     if (!assistant.isSessionItem(json))
         throw std::runtime_error("JsonItemConverterV2::from_json() -> Error. Given json object "
-                                 "can't represent an SessionItem.");
+                                 "can't represent a SessionItem.");
 
     auto modelType = json[JsonItemFormatAssistant::modelKey].toString().toStdString();
     auto result = p_impl->factory()->createItem(modelType);

@@ -32,8 +32,8 @@ public:
     static inline const QString roleKey = "role";
     static inline const QString variantKey = "variant";
 
-    JsonItemDataConverter();
-    JsonItemDataConverter(accept_strategy_t to_json_accept, accept_strategy_t from_json_accept);
+    JsonItemDataConverter(accept_strategy_t to_json_accept = {},
+                          accept_strategy_t from_json_accept = {});
 
     ~JsonItemDataConverter() override;
 

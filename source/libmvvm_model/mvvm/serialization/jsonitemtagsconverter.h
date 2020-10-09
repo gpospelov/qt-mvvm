@@ -23,6 +23,8 @@ class SessionItem;
 class SessionItemTags;
 class ConverterCallbacks;
 
+//! Converter between SessionItemTags and JSON object.
+
 class MVVM_MODEL_EXPORT JsonItemTagsConverter
 {
 public:
