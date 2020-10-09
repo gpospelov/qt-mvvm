@@ -38,8 +38,6 @@ public:
 
     void from_json(const QJsonArray& object, SessionItemData& data) override;
 
-    bool is_item_data(const QJsonObject& json);
-
 private:
     bool isRoleToJson(int role) const;
     bool isRoleFromJson(int role) const;

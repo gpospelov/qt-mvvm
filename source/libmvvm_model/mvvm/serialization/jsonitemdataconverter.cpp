@@ -57,10 +57,11 @@ QJsonArray JsonItemDataConverter::to_json(const SessionItemData& data)
 
 void JsonItemDataConverter::from_json(const QJsonArray& object, SessionItemData& data)
 {
+    static JsonItemFormatAssistant assistant;
     auto persistent_data = std::make_unique<SessionItemData>();
 
     for (const auto& x : object) {
-        if (!is_item_data(x.toObject()))
+        if (!assistant.isSessionItemData(x.toObject()))
             throw std::runtime_error("JsonItemData::get_data() -> Invalid json object.");
         auto role = keyValue(x, JsonItemFormatAssistant::roleKey).toInt();
         auto variant = m_variant_converter->get_variant(keyValue(x, JsonItemFormatAssistant::variantKey).toObject());
@@ -79,14 +80,6 @@ void JsonItemDataConverter::from_json(const QJsonArray& object, SessionItemData&
         if (persistent_data->hasData(role))
             data.setData(persistent_data->data(role), role);
     }
-}
-
-//! Returns true if it is valid DataRole.
-
-bool JsonItemDataConverter::is_item_data(const QJsonObject& json)
-{
-    static const QStringList expected = QStringList() << JsonItemFormatAssistant::roleKey << JsonItemFormatAssistant::variantKey;
-    return json.keys() == expected;
 }
 
 //! Returns true if given role should be saved in json object.

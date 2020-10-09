@@ -33,36 +33,11 @@ public:
 
 JsonItemDataConverterTest::~JsonItemDataConverterTest() = default;
 
-//! Checks if json object is correctly identified as representing DataRole.
-
-TEST_F(JsonItemDataConverterTest, isValidDataRole)
-{
-    JsonItemDataConverter converter;
-    JsonVariantConverter variant_converter;
-
-    // valid json object representing DataRole
-    QJsonObject object;
-    object[JsonItemFormatAssistant::roleKey] = 42;
-    object[JsonItemFormatAssistant::variantKey] = variant_converter.get_json(QVariant(1.23));
-    EXPECT_TRUE(converter.is_item_data(object));
-
-    // invalid json object which can't represent DataRole
-    QJsonObject object2;
-    object2[JsonItemFormatAssistant::roleKey] = 42;
-    EXPECT_FALSE(converter.is_item_data(object2));
-
-    // another invalid json object
-    QJsonObject object3;
-    object3[JsonItemFormatAssistant::roleKey] = 42;
-    object3[JsonItemFormatAssistant::variantKey] = variant_converter.get_json(QVariant(1.23));
-    object3["abc"] = variant_converter.get_json(QVariant::fromValue(std::string("xxx")));
-    EXPECT_FALSE(converter.is_item_data(object3));
-}
-
 //! Creating QJsonArray from SessionItemData.
 
 TEST_F(JsonItemDataConverterTest, getJson)
 {
+    JsonItemFormatAssistant assistant;
     JsonItemDataConverter converter;
 
     // construction SessionItem data
@@ -80,8 +55,8 @@ TEST_F(JsonItemDataConverterTest, getJson)
     EXPECT_TRUE(array[1].isObject());
 
     // and these objects repesent DataRole
-    EXPECT_TRUE(converter.is_item_data(array[0].toObject()));
-    EXPECT_TRUE(converter.is_item_data(array[1].toObject()));
+    EXPECT_TRUE(assistant.isSessionItemData(array[0].toObject()));
+    EXPECT_TRUE(assistant.isSessionItemData(array[1].toObject()));
 }
 
 //! From SessionItemData to json and back.
