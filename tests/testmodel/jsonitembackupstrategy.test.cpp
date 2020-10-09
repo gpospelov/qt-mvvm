@@ -12,7 +12,7 @@
 #include <mvvm/model/itemfactory.h>
 #include <mvvm/model/propertyitem.h>
 #include <mvvm/serialization/jsonitembackupstrategy.h>
-#include <mvvm/factories/standarditemcatalogue.h>
+#include <mvvm/factories/itemcataloguefactory.h>
 
 using namespace ModelView;
 
