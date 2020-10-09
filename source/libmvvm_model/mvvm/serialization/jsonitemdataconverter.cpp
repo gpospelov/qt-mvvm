@@ -12,8 +12,8 @@
 #include <mvvm/model/mvvm_types.h>
 #include <mvvm/model/sessionitemdata.h>
 #include <mvvm/serialization/jsonitemdataconverter.h>
-#include <mvvm/serialization/jsonvariantconverter.h>
 #include <mvvm/serialization/jsonitemformatassistant.h>
+#include <mvvm/serialization/jsonvariantconverter.h>
 #include <set>
 #include <stdexcept>
 
@@ -64,7 +64,8 @@ void JsonItemDataConverter::from_json(const QJsonArray& object, SessionItemData&
         if (!assistant.isSessionItemData(x.toObject()))
             throw std::runtime_error("JsonItemData::get_data() -> Invalid json object.");
         auto role = keyValue(x, JsonItemFormatAssistant::roleKey).toInt();
-        auto variant = m_variant_converter->get_variant(keyValue(x, JsonItemFormatAssistant::variantKey).toObject());
+        auto variant = m_variant_converter->get_variant(
+            keyValue(x, JsonItemFormatAssistant::variantKey).toObject());
         if (isRoleFromJson(role))
             persistent_data->setData(variant, role);
     }
