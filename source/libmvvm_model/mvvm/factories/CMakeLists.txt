@@ -5,4 +5,6 @@ target_sources(${library_name} PRIVATE
     modeldocuments.h
     projectmanagerfactory.cpp
     projectmanagerfactory.h
+    standarditemcatalogue.cpp
+    standarditemcatalogue.h
 )

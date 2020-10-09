@@ -19,7 +19,7 @@
 #include <mvvm/standarditems/graphviewportitem.h>
 #include <mvvm/standarditems/linkeditem.h>
 #include <mvvm/standarditems/plottableitems.h>
-#include <mvvm/standarditems/standarditemcatalogue.h>
+#include <mvvm/factories/standarditemcatalogue.h>
 #include <mvvm/standarditems/vectoritem.h>
 
 using namespace ModelView;
