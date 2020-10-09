@@ -42,25 +42,17 @@ bool isResetItemDataAndTags(const ConverterFlags& flags)
 
 //! Creates converter for SessionItemData/JSON.
 
-std::unique_ptr<JsonItemDataConverter> createDataConverter(const ConverterFlags& flags)
+std::unique_ptr<JsonItemDataConverterInterface> createDataConverter(const ConverterFlags& flags)
 {
-
-    if (flags == ConverterFlags::PROJECT_MODE) {
-        // PROJECT_MODE assumes that we are serializing only certain roles
-        auto accept_roles = [](auto role) {
-            return role == ItemDataRole::IDENTIFIER || role == ItemDataRole::DATA;
-        };
-        return std::make_unique<JsonItemDataConverter>(accept_roles, accept_roles);
-    } else {
-        return std::make_unique<JsonItemDataConverter>();
-    }
+    return flags == ConverterFlags::PROJECT_MODE ? JsonItemDataConverter::createProjectConverter()
+                                                 : JsonItemDataConverter::createCopyConverter();
 }
 
 } // namespace
 
 struct JsonItemConverter::JsonItemConverterImpl {
     JsonItemConverter* m_parent{nullptr};
-    std::unique_ptr<JsonItemDataConverter> m_itemdata_converter;
+    std::unique_ptr<JsonItemDataConverterInterface> m_itemdata_converter;
     std::unique_ptr<JsonItemTagsConverter> m_itemtags_converter;
     ConverterContext m_context;
 

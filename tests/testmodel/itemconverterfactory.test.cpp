@@ -123,7 +123,7 @@ TEST_F(ItemConverterFactoryTest, testItemCloneConverter)
 
     EXPECT_EQ(reco->modelType(), item.modelType());
     EXPECT_EQ(reco->displayName(), item.displayName());
-    EXPECT_EQ(reco->toolTip(), std::string("abc"));
+    EXPECT_EQ(reco->toolTip(), std::string("abc")); // updated tooltip is preserved
     EXPECT_EQ(reco->roles(), item.roles());
     EXPECT_TRUE(reco->identifier() == item.identifier()); // identifier preserved
     EXPECT_EQ(reco->getItem("Thickness")->toolTip(), "thickness");
@@ -135,7 +135,6 @@ TEST_F(ItemConverterFactoryTest, testItemCloneConverter)
 
 TEST_F(ItemConverterFactoryTest, testItemProjectConverter)
 {
-    std::cout << "xxx 1.0\n";
     auto converter = CreateItemProjectConverter(factory());
 
     TestItem item;
@@ -146,9 +145,9 @@ TEST_F(ItemConverterFactoryTest, testItemProjectConverter)
 
     EXPECT_EQ(reco->modelType(), item.modelType());
     EXPECT_EQ(reco->displayName(), item.displayName());
-//    EXPECT_EQ(reco->toolTip(), std::string("abc"));
-//    EXPECT_EQ(reco->roles(), item.roles());
-//    EXPECT_TRUE(reco->identifier() == item.identifier()); // identifier preserved
-//    EXPECT_EQ(reco->getItem("Thickness")->toolTip(), "thickness");
-//    EXPECT_EQ(reco->getItem("Thickness")->identifier(), item.getItem("Thickness")->identifier());
+    EXPECT_EQ(reco->toolTip(), std::string("compound")); // initial tooltip exist
+    EXPECT_EQ(reco->roles(), item.roles());
+    EXPECT_TRUE(reco->identifier() == item.identifier()); // identifier preserved
+    EXPECT_EQ(reco->getItem("Thickness")->toolTip(), "thickness");
+    EXPECT_EQ(reco->getItem("Thickness")->identifier(), item.getItem("Thickness")->identifier());
 }

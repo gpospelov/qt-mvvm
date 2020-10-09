@@ -126,7 +126,7 @@ TEST_F(JsonModelConverterTest, parentAndChildToJsonAndBack)
     EXPECT_EQ(reco_parent->model(), &target);
     EXPECT_EQ(reco_parent->modelType(), Constants::BaseType);
     EXPECT_EQ(reco_parent->parent(), target.rootItem());
-    EXPECT_EQ(reco_parent->displayName(), "parent_name");
+    EXPECT_EQ(reco_parent->displayName(), "SessionItem"); // Name changed because of ProjectConverter
     EXPECT_EQ(reco_parent->childrenCount(), 1);
     EXPECT_EQ(reco_parent->identifier(), parent->identifier());
     EXPECT_EQ(reco_parent->defaultTag(), "defaultTag");
@@ -136,7 +136,7 @@ TEST_F(JsonModelConverterTest, parentAndChildToJsonAndBack)
     EXPECT_EQ(reco_child->model(), &target);
     EXPECT_EQ(reco_child->modelType(), Constants::PropertyType);
     EXPECT_EQ(reco_child->parent(), reco_parent);
-    EXPECT_EQ(reco_child->displayName(), "child_name");
+    EXPECT_EQ(reco_child->displayName(), "Property"); // // Name changed because of ProjectConverter
     EXPECT_EQ(reco_child->childrenCount(), 0);
     EXPECT_EQ(reco_child->identifier(), child->identifier());
     EXPECT_EQ(reco_child->defaultTag(), "");
@@ -212,7 +212,7 @@ TEST_F(JsonModelConverterTest, parentAndChildToFileAndBack)
     EXPECT_EQ(reco_parent->model(), &target);
     EXPECT_EQ(reco_parent->modelType(), Constants::BaseType);
     EXPECT_EQ(reco_parent->parent(), target.rootItem());
-    EXPECT_EQ(reco_parent->displayName(), "parent_name");
+    EXPECT_EQ(reco_parent->displayName(), "SessionItem");
     EXPECT_EQ(reco_parent->childrenCount(), 1);
     EXPECT_EQ(reco_parent->identifier(), parent->identifier());
     EXPECT_EQ(reco_parent->defaultTag(), "defaultTag");
@@ -222,7 +222,7 @@ TEST_F(JsonModelConverterTest, parentAndChildToFileAndBack)
     EXPECT_EQ(reco_child->model(), &target);
     EXPECT_EQ(reco_child->modelType(), Constants::PropertyType);
     EXPECT_EQ(reco_child->parent(), reco_parent);
-    EXPECT_EQ(reco_child->displayName(), "child_name");
+    EXPECT_EQ(reco_child->displayName(), "Property");
     EXPECT_EQ(reco_child->childrenCount(), 0);
     EXPECT_EQ(reco_child->identifier(), child->identifier());
     EXPECT_EQ(reco_child->defaultTag(), "");

@@ -12,6 +12,7 @@
 #include <mvvm/model/mvvm_types.h>
 #include <mvvm/model/sessionitemdata.h>
 #include <mvvm/serialization/jsonitemdataconverter.h>
+#include <mvvm/serialization/jsonitemformatassistant.h>
 #include <mvvm/serialization/jsonvariantconverter.h>
 #include <set>
 #include <stdexcept>
@@ -43,8 +44,8 @@ QJsonArray JsonItemDataConverter::to_json(const SessionItemData& data)
     for (const auto& x : data) {
         QJsonObject object;
         if (isRoleToJson(x.m_role)) {
-            object[roleKey] = x.m_role;
-            object[variantKey] = m_variant_converter->get_json(x.m_data);
+            object[JsonItemFormatAssistant::roleKey] = x.m_role;
+            object[JsonItemFormatAssistant::variantKey] = m_variant_converter->get_json(x.m_data);
             result.append(object);
         }
     }
@@ -56,13 +57,15 @@ QJsonArray JsonItemDataConverter::to_json(const SessionItemData& data)
 
 void JsonItemDataConverter::from_json(const QJsonArray& object, SessionItemData& data)
 {
+    static JsonItemFormatAssistant assistant;
     auto persistent_data = std::make_unique<SessionItemData>();
 
     for (const auto& x : object) {
-        if (!is_item_data(x.toObject()))
+        if (!assistant.isSessionItemData(x.toObject()))
             throw std::runtime_error("JsonItemData::get_data() -> Invalid json object.");
-        auto role = keyValue(x, roleKey).toInt();
-        auto variant = m_variant_converter->get_variant(keyValue(x, variantKey).toObject());
+        auto role = keyValue(x, JsonItemFormatAssistant::roleKey).toInt();
+        auto variant = m_variant_converter->get_variant(
+            keyValue(x, JsonItemFormatAssistant::variantKey).toObject());
         if (isRoleFromJson(role))
             persistent_data->setData(variant, role);
     }
@@ -80,12 +83,22 @@ void JsonItemDataConverter::from_json(const QJsonArray& object, SessionItemData&
     }
 }
 
-//! Returns true if it is valid DataRole.
+//! Creates JSON data converter intended for simple data copying. Nothing is filtered out.
 
-bool JsonItemDataConverter::is_item_data(const QJsonObject& json)
+std::unique_ptr<JsonItemDataConverterInterface> JsonItemDataConverter::createCopyConverter()
 {
-    static const QStringList expected = QStringList() << roleKey << variantKey;
-    return json.keys() == expected;
+    return std::make_unique<JsonItemDataConverter>();
+}
+
+//! Creates JSON data converter intended for project saving. Only IDENTIFIER and DATA gous to/from
+//! JSON.
+
+std::unique_ptr<JsonItemDataConverterInterface> JsonItemDataConverter::createProjectConverter()
+{
+    auto accept_roles = [](auto role) {
+        return role == ItemDataRole::IDENTIFIER || role == ItemDataRole::DATA;
+    };
+    return std::make_unique<JsonItemDataConverter>(accept_roles, accept_roles);
 }
 
 //! Returns true if given role should be saved in json object.

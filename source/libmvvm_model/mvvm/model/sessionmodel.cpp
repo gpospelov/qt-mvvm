@@ -21,7 +21,7 @@
 #include <mvvm/serialization/jsonitembackupstrategy.h>
 #include <mvvm/serialization/jsonitemcopystrategy.h>
 #include <mvvm/signals/modelmapper.h>
-#include <mvvm/standarditems/standarditemcatalogue.h>
+#include <mvvm/factories/itemcataloguefactory.h>
 
 using namespace ModelView;
 

@@ -11,7 +11,7 @@
 #include <mvvm/model/itemmanager.h>
 #include <mvvm/model/itempool.h>
 #include <mvvm/model/sessionitem.h>
-#include <mvvm/standarditems/standarditemcatalogue.h>
+#include <mvvm/factories/itemcataloguefactory.h>
 
 namespace
 {

@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_STANDARDITEMS_STANDARDITEMCATALOGUE_H
-#define MVVM_STANDARDITEMS_STANDARDITEMCATALOGUE_H
+#ifndef MVVM_FACTORIES_STANDARDITEMCATALOGUE_H
+#define MVVM_FACTORIES_STANDARDITEMCATALOGUE_H
 
 #include <mvvm/model/itemcatalogue.h>
 
@@ -19,4 +19,4 @@ MVVM_MODEL_EXPORT std::unique_ptr<ItemCatalogue> CreateStandardItemCatalogue();
 
 }
 
-#endif // MVVM_STANDARDITEMS_STANDARDITEMCATALOGUE_H
+#endif // MVVM_FACTORIES_STANDARDITEMCATALOGUE_H

@@ -7,6 +7,7 @@
 //
 // ************************************************************************** //
 
+#include <mvvm/factories/itemcataloguefactory.h>
 #include <mvvm/model/compounditem.h>
 #include <mvvm/model/propertyitem.h>
 #include <mvvm/standarditems/axisitems.h>
@@ -19,7 +20,6 @@
 #include <mvvm/standarditems/graphviewportitem.h>
 #include <mvvm/standarditems/linkeditem.h>
 #include <mvvm/standarditems/plottableitems.h>
-#include <mvvm/standarditems/standarditemcatalogue.h>
 #include <mvvm/standarditems/vectoritem.h>
 
 using namespace ModelView;

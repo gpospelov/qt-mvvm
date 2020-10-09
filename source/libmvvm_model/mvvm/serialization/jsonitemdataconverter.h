@@ -29,9 +29,6 @@ class MVVM_MODEL_EXPORT JsonItemDataConverter : public JsonItemDataConverterInte
 public:
     using accept_strategy_t = std::function<bool(int)>;
 
-    static inline const QString roleKey = "role";
-    static inline const QString variantKey = "variant";
-
     JsonItemDataConverter(accept_strategy_t to_json_accept = {},
                           accept_strategy_t from_json_accept = {});
 
@@ -41,7 +38,9 @@ public:
 
     void from_json(const QJsonArray& object, SessionItemData& data) override;
 
-    bool is_item_data(const QJsonObject& json);
+    static std::unique_ptr<JsonItemDataConverterInterface> createCopyConverter();
+
+    static std::unique_ptr<JsonItemDataConverterInterface> createProjectConverter();
 
 private:
     bool isRoleToJson(int role) const;

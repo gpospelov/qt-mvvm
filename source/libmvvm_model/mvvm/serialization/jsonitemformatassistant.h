@@ -35,8 +35,11 @@ public:
     static inline const QString itemsKey = "items";
     static inline const QString sessionModelKey = "sessionmodel";
     static inline const QString versionKey = "version";
+    static inline const QString roleKey = "role";
+    static inline const QString variantKey = "variant";
 
     bool isSessionItem(const QJsonObject& json) const;
+    bool isSessionItemData(const QJsonObject& json) const;
     bool isSessionItemTags(const QJsonObject& json) const;
     bool isSessionItemContainer(const QJsonObject& json) const;
     bool isSessionModel(const QJsonObject& object) const;
