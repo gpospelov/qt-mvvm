@@ -18,7 +18,7 @@ class QJsonObject;
 namespace ModelView
 {
 
-struct ItemFactoryInterface;
+class ItemFactoryInterface;
 
 //! Creates JSON item converter intended for item cloning.
 

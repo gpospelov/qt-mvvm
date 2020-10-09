@@ -24,6 +24,8 @@ class MVVM_MODEL_EXPORT JsonItemConverter : public JsonItemConverterInterface
 {
 public:
     JsonItemConverter(const ConverterContext& context);
+    JsonItemConverter(const JsonItemConverter&) = delete;
+    JsonItemConverter& operator=(const JsonItemConverter&) = delete;
 
     ~JsonItemConverter() override;
 
