@@ -84,7 +84,7 @@ TEST_F(JsonDocumentTest, saveLoadSingleModel)
     EXPECT_EQ(reco_parent->model(), &model);
     EXPECT_EQ(reco_parent->modelType(), Constants::BaseType);
     EXPECT_EQ(reco_parent->parent(), model.rootItem());
-    EXPECT_EQ(reco_parent->displayName(), "parent_name");
+    EXPECT_EQ(reco_parent->displayName(), "SessionItem"); // name changed becase of ProjectConverter
     EXPECT_EQ(reco_parent->childrenCount(), 1);
     EXPECT_EQ(reco_parent->identifier(), parent_identifier);
     EXPECT_EQ(reco_parent->defaultTag(), "defaultTag");
@@ -94,7 +94,7 @@ TEST_F(JsonDocumentTest, saveLoadSingleModel)
     EXPECT_EQ(reco_child->model(), &model);
     EXPECT_EQ(reco_child->modelType(), Constants::PropertyType);
     EXPECT_EQ(reco_child->parent(), reco_parent);
-    EXPECT_EQ(reco_child->displayName(), "child_name");
+    EXPECT_EQ(reco_child->displayName(), "Property");
     EXPECT_EQ(reco_child->childrenCount(), 0);
     EXPECT_EQ(reco_child->identifier(), child_identifier);
     EXPECT_EQ(reco_child->defaultTag(), "");

@@ -34,7 +34,7 @@ QJsonObject JsonModelConverter::to_json(const SessionModel& model) const
 
     QJsonArray itemArray;
 
-    auto converter = CreateItemCloneConverter(model.factory());
+    auto converter = CreateItemProjectConverter(model.factory());
 
     for (auto item : model.rootItem()->children())
         itemArray.append(converter->to_json(item));
@@ -60,7 +60,7 @@ void JsonModelConverter::from_json(const QJsonObject& json, SessionModel& model)
             + "', json key '"
             + json[JsonItemFormatAssistant::sessionModelKey].toString().toStdString() + "'");
 
-    auto converter = CreateItemCloneConverter(model.factory());
+    auto converter = CreateItemProjectConverter(model.factory());
 
     auto rebuild_root = [&json, &converter](auto parent) {
         for (const auto ref : json[JsonItemFormatAssistant::itemsKey].toArray()) {
