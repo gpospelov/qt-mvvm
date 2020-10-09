@@ -13,6 +13,7 @@
 #include <mvvm/model/sessionitemdata.h>
 #include <mvvm/serialization/jsonitemdataconverter.h>
 #include <mvvm/serialization/jsonvariantconverter.h>
+#include <mvvm/serialization/jsonitemformatassistant.h>
 #include <set>
 #include <stdexcept>
 
@@ -43,8 +44,8 @@ QJsonArray JsonItemDataConverter::to_json(const SessionItemData& data)
     for (const auto& x : data) {
         QJsonObject object;
         if (isRoleToJson(x.m_role)) {
-            object[roleKey] = x.m_role;
-            object[variantKey] = m_variant_converter->get_json(x.m_data);
+            object[JsonItemFormatAssistant::roleKey] = x.m_role;
+            object[JsonItemFormatAssistant::variantKey] = m_variant_converter->get_json(x.m_data);
             result.append(object);
         }
     }
@@ -61,8 +62,8 @@ void JsonItemDataConverter::from_json(const QJsonArray& object, SessionItemData&
     for (const auto& x : object) {
         if (!is_item_data(x.toObject()))
             throw std::runtime_error("JsonItemData::get_data() -> Invalid json object.");
-        auto role = keyValue(x, roleKey).toInt();
-        auto variant = m_variant_converter->get_variant(keyValue(x, variantKey).toObject());
+        auto role = keyValue(x, JsonItemFormatAssistant::roleKey).toInt();
+        auto variant = m_variant_converter->get_variant(keyValue(x, JsonItemFormatAssistant::variantKey).toObject());
         if (isRoleFromJson(role))
             persistent_data->setData(variant, role);
     }
@@ -84,7 +85,7 @@ void JsonItemDataConverter::from_json(const QJsonArray& object, SessionItemData&
 
 bool JsonItemDataConverter::is_item_data(const QJsonObject& json)
 {
-    static const QStringList expected = QStringList() << roleKey << variantKey;
+    static const QStringList expected = QStringList() << JsonItemFormatAssistant::roleKey << JsonItemFormatAssistant::variantKey;
     return json.keys() == expected;
 }
 
