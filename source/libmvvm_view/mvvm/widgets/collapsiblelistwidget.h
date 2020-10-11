@@ -11,6 +11,7 @@
 #define MVVM_WIDGETS_COLLAPSIBLELISTWIDGET_H
 
 #include <QWidget>
+#include <mvvm/view_export.h>
 
 class QSplitter;
 class QString;
@@ -22,7 +23,7 @@ namespace ModelView
 //! Each panel contains user widget and can be collapsed/expanded. When expanded,
 //! the place occupied by the panel can be changed by draging a splitter.
 
-class CollapsibleListWidget : public QWidget
+class MVVM_VIEW_EXPORT CollapsibleListWidget : public QWidget
 {
     Q_OBJECT
 public:
