@@ -138,7 +138,8 @@ double ScientificSpinBox::toDouble(QString text, const QDoubleValidator& validat
 
 double ScientificSpinBox::round(double val, int decimals)
 {
-    return QString::number(val, 'e', decimals).toDouble();
+    char notation = useExponentialNotation(val) ? 'e' : 'f';
+    return QString::number(val, notation, decimals).toDouble();
 }
 
 QAbstractSpinBox::StepEnabled ScientificSpinBox::stepEnabled() const

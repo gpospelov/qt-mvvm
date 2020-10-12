@@ -119,6 +119,6 @@ TEST_F(ScientificSpinBoxTest, round)
 {
     auto round_3 = [](double val) { return ScientificSpinBox::round(val, 3); };
     EXPECT_DOUBLE_EQ(1.232e-12, round_3(1.2323e-12));
-    EXPECT_DOUBLE_EQ(0.1232, round_3(0.12323));
-    EXPECT_DOUBLE_EQ(1.002e+2, round_3(100.23));
+    EXPECT_DOUBLE_EQ(0.123, round_3(0.1232));
+    EXPECT_DOUBLE_EQ(1.002e+2, round_3(100.2));
 }
