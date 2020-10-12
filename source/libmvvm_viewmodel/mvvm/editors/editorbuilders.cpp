@@ -12,6 +12,7 @@
 #include <mvvm/editors/coloreditor.h>
 #include <mvvm/editors/combopropertyeditor.h>
 #include <mvvm/editors/doubleeditor.h>
+#include <mvvm/editors/editor_constants.h>
 #include <mvvm/editors/editorbuilders.h>
 #include <mvvm/editors/externalpropertyeditor.h>
 #include <mvvm/editors/integereditor.h>
@@ -21,7 +22,6 @@
 #include <mvvm/model/customvariants.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/utils/reallimits.h>
-#include <mvvm/editors/editor_constants.h>
 
 namespace
 {
@@ -29,6 +29,11 @@ double singleStep(int decimals)
 {
     // For item with decimals=3 (i.e. 0.001) single step will be 0.1
     return 1. / std::pow(10., decimals - 1);
+}
+
+double getStep(double val)
+{
+    return val == 0.0 ? 1.0 : val / 100.;
 }
 
 } // namespace
@@ -91,7 +96,7 @@ builder_t ScientificSpinBoxEditorBuilder()
             auto limits = item->data<RealLimits>(ItemDataRole::LIMITS);
             editor->setRange(limits.lowerLimit(), limits.upperLimit());
         }
-        editor->setSingleStep(singleStep(Constants::default_double_decimals));
+        editor->setSingleStep(getStep(item->data<double>()));
         editor->setDecimals(Constants::default_double_decimals);
         return std::move(editor);
     };
