@@ -25,10 +25,6 @@
 namespace
 {
 const int default_decimals = 3;
-double getStep(double val)
-{
-    return val == 0.0 ? 1.0 : val / 100.;
-}
 
 double singleStep(int decimals)
 {
@@ -96,7 +92,7 @@ builder_t ScientificSpinBoxEditorBuilder()
             auto limits = item->data<RealLimits>(ItemDataRole::LIMITS);
             editor->setRange(limits.lowerLimit(), limits.upperLimit());
         }
-        editor->setSingleStep(getStep(item->data<double>()));
+        editor->setSingleStep(singleStep(default_decimals));
         editor->setDecimals(default_decimals);
         return std::move(editor);
     };
@@ -131,7 +127,6 @@ builder_t SelectableComboPropertyEditorBuilder()
         return std::make_unique<SelectableComboBoxEditor>();
     };
     return builder;
-
 }
 
 } // namespace ModelView::EditorBuilders
