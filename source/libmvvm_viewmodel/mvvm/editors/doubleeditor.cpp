@@ -39,8 +39,7 @@ DoubleEditor::DoubleEditor(QWidget* parent)
 
 void DoubleEditor::setRange(double minimum, double maximum)
 {
-    m_doubleEditor->setMinimum(minimum);
-    m_doubleEditor->setMaximum(maximum);
+    m_doubleEditor->setRange(minimum, maximum);
 }
 
 void DoubleEditor::setDecimals(int decimals)

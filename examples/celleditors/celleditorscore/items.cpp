@@ -13,6 +13,7 @@
 #include <mvvm/editors/editor_constants.h>
 #include <mvvm/model/comboproperty.h>
 #include <mvvm/model/externalproperty.h>
+#include <mvvm/utils/reallimits.h>
 
 using namespace ModelView;
 
@@ -21,7 +22,9 @@ DemoPropertiesItem::DemoPropertiesItem() : CompoundItem(::Constants::DemoPropert
     addProperty(P_BOOL_PROPERTY, true)->setDisplayName("Bool")->setToolTip("tooltip");
     addProperty(P_INTEGER_PROPERTY, 42)->setDisplayName("Integer");
     addProperty(P_STRING_PROPERTY, "abc")->setDisplayName("String");
-    addProperty(P_DOUBLE_PROPERTY, 42.1)->setDisplayName("Double");
+    addProperty(P_DOUBLE_PROPERTY, 42.1234)
+        ->setDisplayName("Double")
+        ->setLimits(RealLimits::limitless());
     addProperty(P_COLOR_PROPERTY, QColor(Qt::green))->setDisplayName("Color");
 
     auto combo = ComboProperty::createFrom({"option 1", "option 2", "option 3"});

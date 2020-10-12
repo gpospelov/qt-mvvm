@@ -12,6 +12,7 @@
 #include <mvvm/editors/coloreditor.h>
 #include <mvvm/editors/combopropertyeditor.h>
 #include <mvvm/editors/doubleeditor.h>
+#include <mvvm/editors/editor_constants.h>
 #include <mvvm/editors/editorbuilders.h>
 #include <mvvm/editors/externalpropertyeditor.h>
 #include <mvvm/editors/integereditor.h>
@@ -24,16 +25,15 @@
 
 namespace
 {
-const int default_decimals = 3;
-double getStep(double val)
-{
-    return val == 0.0 ? 1.0 : val / 100.;
-}
-
 double singleStep(int decimals)
 {
     // For item with decimals=3 (i.e. 0.001) single step will be 0.1
     return 1. / std::pow(10., decimals - 1);
+}
+
+double getStep(double val)
+{
+    return val == 0.0 ? 1.0 : val / 100.;
 }
 
 } // namespace
@@ -67,8 +67,8 @@ builder_t DoubleEditorBuilder()
         if (item->hasData(ItemDataRole::LIMITS)) {
             auto limits = item->data<RealLimits>(ItemDataRole::LIMITS);
             editor->setRange(limits.lowerLimit(), limits.upperLimit());
-            editor->setSingleStep(singleStep(default_decimals));
-            editor->setDecimals(default_decimals);
+            editor->setSingleStep(singleStep(Constants::default_double_decimals));
+            editor->setDecimals(Constants::default_double_decimals);
         }
         return std::move(editor);
     };
@@ -97,7 +97,7 @@ builder_t ScientificSpinBoxEditorBuilder()
             editor->setRange(limits.lowerLimit(), limits.upperLimit());
         }
         editor->setSingleStep(getStep(item->data<double>()));
-        editor->setDecimals(default_decimals);
+        editor->setDecimals(Constants::default_double_decimals);
         return std::move(editor);
     };
     return builder;
@@ -131,7 +131,6 @@ builder_t SelectableComboPropertyEditorBuilder()
         return std::make_unique<SelectableComboBoxEditor>();
     };
     return builder;
-
 }
 
 } // namespace ModelView::EditorBuilders
