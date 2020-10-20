@@ -10,6 +10,7 @@
 #include "google_test.h"
 #include "widgetbasedtest.h"
 #include <QSpinBox>
+#include <QStandardItemModel>
 #include <limits>
 #include <mvvm/editors/booleditor.h>
 #include <mvvm/editors/coloreditor.h>
@@ -29,6 +30,7 @@
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/utils/reallimits.h>
 #include <mvvm/viewmodel/defaultviewmodel.h>
+#include <mvvm/viewmodel/viewmodeldelegate.h>
 
 using namespace ModelView;
 
@@ -175,4 +177,20 @@ TEST_F(DefaultEditorFactoryTest, editorType)
     auto editor = createEditor(QVariant::fromValue(ComboProperty()), RealLimits(),
                                Constants::SelectableComboPropertyEditorType);
     EXPECT_TRUE(dynamic_cast<SelectableComboBoxEditor*>(editor.get()));
+}
+
+//! Tests editor creation on combo property in QStandardItemModel with our variant.
+
+TEST_F(DefaultEditorFactoryTest, comboPropertyInStandardModel)
+{
+    QStandardItemModel model;
+    auto parent = model.invisibleRootItem();
+    QList<QStandardItem*> children{new QStandardItem};
+    parent->appendRow(children);
+
+    auto item = model.item(0, 0);
+    item->setData(QVariant::fromValue(ComboProperty()), Qt::EditRole);
+
+    auto editor = m_factory->createEditor(model.index(0, 0));
+    EXPECT_TRUE(dynamic_cast<ComboPropertyEditor*>(editor.get()));
 }
