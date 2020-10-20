@@ -31,7 +31,7 @@ public:
     std::unique_ptr<CustomEditor> createEditor(const QModelIndex& index) const override;
 
 protected:
-    virtual std::unique_ptr<CustomEditor> createItemEditor(const SessionItem& item) const = 0;
+    virtual std::unique_ptr<CustomEditor> createItemEditor(const SessionItem* item) const = 0;
 
     void registerBuilder(const std::string& name, EditorBuilders::builder_t builder);
     EditorBuilders::builder_t findBuilder(const std::string& name) const;
@@ -48,7 +48,7 @@ public:
     RoleDependentEditorFactory();
 
 protected:
-    std::unique_ptr<CustomEditor> createItemEditor(const SessionItem& item) const override;
+    std::unique_ptr<CustomEditor> createItemEditor(const SessionItem* item) const override;
 };
 
 //! Editor factory for cell editors in Qt trees and tables, relies on variant type stored as
@@ -60,7 +60,7 @@ public:
     VariantDependentEditorFactory();
 
 protected:
-    std::unique_ptr<CustomEditor> createItemEditor(const SessionItem& item) const override;
+    std::unique_ptr<CustomEditor> createItemEditor(const SessionItem* item) const override;
 };
 
 //! Default editor factory for cell editors in Qt trees and tables.

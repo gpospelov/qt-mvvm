@@ -35,7 +35,7 @@ const SessionItem* itemFromIndex(const QModelIndex& index)
 std::unique_ptr<CustomEditor> AbstractEditorFactory::createEditor(const QModelIndex& index) const
 {
     auto item = itemFromIndex(index);
-    return item ? createItemEditor(*item) : std::unique_ptr<CustomEditor>();
+    return item ? createItemEditor(item) : std::unique_ptr<CustomEditor>();
 }
 
 void AbstractEditorFactory::registerBuilder(const std::string& name,
@@ -74,10 +74,10 @@ RoleDependentEditorFactory::RoleDependentEditorFactory()
 //! Creates cell editor basing on editor type.
 
 std::unique_ptr<CustomEditor>
-RoleDependentEditorFactory::createItemEditor(const SessionItem& item) const
+RoleDependentEditorFactory::createItemEditor(const SessionItem* item) const
 {
-    auto builder = findBuilder(item.editorType());
-    return builder ? builder(&item) : std::unique_ptr<CustomEditor>();
+    auto builder = findBuilder(item->editorType());
+    return builder ? builder(item) : std::unique_ptr<CustomEditor>();
 }
 
 // ----------------------------------------------------------------------------
@@ -98,11 +98,11 @@ VariantDependentEditorFactory::VariantDependentEditorFactory()
 //! Creates cell editor basing on variant name.
 
 std::unique_ptr<CustomEditor>
-VariantDependentEditorFactory::createItemEditor(const SessionItem& item) const
+VariantDependentEditorFactory::createItemEditor(const SessionItem* item) const
 {
-    auto value = item.data<QVariant>();
+    auto value = item->data<QVariant>();
     auto builder = findBuilder(Utils::VariantName(value));
-    return builder ? builder(&item) : std::unique_ptr<CustomEditor>();
+    return builder ? builder(item) : std::unique_ptr<CustomEditor>();
 }
 
 // ----------------------------------------------------------------------------
