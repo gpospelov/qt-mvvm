@@ -27,12 +27,7 @@ namespace ModelView
 
 class MVVM_VIEWMODEL_EXPORT AbstractEditorFactory : public EditorFactoryInterface
 {
-public:
-    std::unique_ptr<CustomEditor> createEditor(const QModelIndex& index) const override;
-
 protected:
-    virtual std::unique_ptr<CustomEditor> createItemEditor(const SessionItem* item) const = 0;
-
     void registerBuilder(const std::string& name, EditorBuilders::builder_t builder);
     EditorBuilders::builder_t findBuilder(const std::string& name) const;
 
@@ -47,8 +42,10 @@ class MVVM_VIEWMODEL_EXPORT RoleDependentEditorFactory : public AbstractEditorFa
 public:
     RoleDependentEditorFactory();
 
+    std::unique_ptr<CustomEditor> createEditor(const QModelIndex& index) const override;
+
 protected:
-    std::unique_ptr<CustomEditor> createItemEditor(const SessionItem* item) const override;
+    std::unique_ptr<CustomEditor> createItemEditor(const SessionItem* item) const;
 };
 
 //! Editor factory for cell editors in Qt trees and tables, relies on variant type stored as
@@ -59,8 +56,7 @@ class MVVM_VIEWMODEL_EXPORT VariantDependentEditorFactory : public AbstractEdito
 public:
     VariantDependentEditorFactory();
 
-protected:
-    std::unique_ptr<CustomEditor> createItemEditor(const SessionItem* item) const override;
+    std::unique_ptr<CustomEditor> createEditor(const QModelIndex& index) const override;
 };
 
 //! Default editor factory for cell editors in Qt trees and tables.

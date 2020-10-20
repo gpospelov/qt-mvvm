@@ -30,14 +30,6 @@ const SessionItem* itemFromIndex(const QModelIndex& index)
 
 // ----------------------------------------------------------------------------
 
-//! Creates editor for given model index. It is expected that the index belongs to a ViewModel.
-
-std::unique_ptr<CustomEditor> AbstractEditorFactory::createEditor(const QModelIndex& index) const
-{
-    auto item = itemFromIndex(index);
-    return item ? createItemEditor(item) : std::unique_ptr<CustomEditor>();
-}
-
 void AbstractEditorFactory::registerBuilder(const std::string& name,
                                             EditorBuilders::builder_t builder)
 {
@@ -71,6 +63,15 @@ RoleDependentEditorFactory::RoleDependentEditorFactory()
                     EditorBuilders::SelectableComboPropertyEditorBuilder());
 }
 
+//! Creates cell editor basing on item role. It is expected that the index belongs to a ViewModel.
+
+std::unique_ptr<CustomEditor>
+RoleDependentEditorFactory::createEditor(const QModelIndex& index) const
+{
+    auto item = itemFromIndex(index);
+    return item ? createItemEditor(item) : std::unique_ptr<CustomEditor>();
+}
+
 //! Creates cell editor basing on editor type.
 
 std::unique_ptr<CustomEditor>
@@ -98,9 +99,10 @@ VariantDependentEditorFactory::VariantDependentEditorFactory()
 //! Creates cell editor basing on variant name.
 
 std::unique_ptr<CustomEditor>
-VariantDependentEditorFactory::createItemEditor(const SessionItem* item) const
+VariantDependentEditorFactory::createEditor(const QModelIndex& index) const
 {
-    auto value = item->data<QVariant>();
+    auto item = itemFromIndex(index);
+    auto value = item ? item->data<QVariant>() : index.data(Qt::EditRole);
     auto builder = findBuilder(Utils::VariantName(value));
     return builder ? builder(item) : std::unique_ptr<CustomEditor>();
 }
