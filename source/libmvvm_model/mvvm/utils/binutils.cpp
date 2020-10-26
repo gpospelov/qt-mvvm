@@ -34,36 +34,22 @@ namespace ModelView ::Utils
 
 bool is_binary(const std::string& filename)
 {
-
-    int* buffer;
+    int buffer[BYTE_LENGTH];
 
     // get buffer size
     int buffer_size = get_buffer_size(filename);
-
-    // size zero means text file
-    if (buffer_size == 0) {
+    if (buffer_size == 0)
         return false;
-    }
 
     // buffer allocation
-    buffer = new int[buffer_size];
     get_buffer_data(filename, buffer, buffer_size);
 
     // control character check
-    int count = 0;
-    while (count < buffer_size) {
-        if (is_control_char(buffer[count])) {
+    for (int count = 0; count < buffer_size; ++count)
+        if (is_control_char(buffer[count]))
             return true;
-        }
-        count++;
-    }
 
-    // null bytes check
-    if (null_check(buffer, buffer_size)) {
-        return true;
-    }
-
-    return false;
+    return null_check(buffer, buffer_size);
 }
 
 bool is_text(const std::string& filename)
@@ -84,19 +70,14 @@ int get_buffer_size(const std::string& filename)
     mySource.seekg(0, std::ios_base::end);
     int size = mySource.tellg();
     mySource.close();
-    int byte_length = (size > BYTE_LENGTH) ? (BYTE_LENGTH) : (size);
-
-    return byte_length;
+    return (size > BYTE_LENGTH) ? BYTE_LENGTH : size;
 }
 
 void get_buffer_data(const std::string& filename, int* buffer, int byte_length)
 {
-
     std::ifstream fstr(filename, std::ios::in | std::ios::binary);
-
-    for (int i = 0; i < byte_length; i++) {
+    for (int i = 0; i < byte_length; i++)
         buffer[i] = fstr.get();
-    }
 }
 
 bool is_control_char(int ch)
@@ -106,16 +87,9 @@ bool is_control_char(int ch)
 
 bool null_check(int* buffer, int buffer_size)
 {
-
-    int count = 1;
-    while (count < buffer_size) {
-        // checking consecutive null chars
-        if (buffer[count] == NULL_CHR && buffer[count - 1] == NULL_CHR) {
+    for (int i = 1; i < buffer_size; ++i)
+        if (buffer[i] == NULL_CHR && buffer[i - 1] == NULL_CHR)
             return true;
-        }
-        count++;
-    }
-
     return false;
 }
 } // namespace
