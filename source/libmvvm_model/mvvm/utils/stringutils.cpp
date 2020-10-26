@@ -14,6 +14,20 @@
 
 using namespace ModelView;
 
+std::string Utils::DoubleToString(double input, int precision)
+{
+    std::ostringstream inter;
+    inter << std::setprecision(precision);
+    if (std::abs(input) < std::numeric_limits<double>::epsilon()) {
+        inter << "0.0";
+        return inter.str();
+    }
+    inter << input;
+    if (inter.str().find('e') == std::string::npos && inter.str().find('.') == std::string::npos)
+        inter << ".0";
+    return inter.str();
+}
+
 std::string Utils::ScientificDoubleToString(double input, int precision)
 {
     std::ostringstream inter;
@@ -33,18 +47,4 @@ std::string Utils::ScientificDoubleToString(double input, int precision)
         part1 += "0";
 
     return part1 + part2;
-}
-
-std::string Utils::DoubleToString(double input, int precision)
-{
-    std::ostringstream inter;
-    inter << std::setprecision(precision);
-    if (std::abs(input) < std::numeric_limits<double>::epsilon()) {
-        inter << "0.0";
-        return inter.str();
-    }
-    inter << input;
-    if (inter.str().find('e') == std::string::npos && inter.str().find('.') == std::string::npos)
-        inter << ".0";
-    return inter.str();
 }

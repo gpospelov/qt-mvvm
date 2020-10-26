@@ -20,9 +20,11 @@ namespace Utils
 {
 
 //! Returns string representation of double with given precision.
+//! Provides additional formatting on top of iomanip, so "double x{0}" becomes "0.0".
 MVVM_MODEL_EXPORT std::string DoubleToString(double input, int precision = 12);
 
-//! Returns string representation of scientific double
+//! Returns string representation of scientific double.
+//! Provides additional formatting on top of iomanip, so "double x{1}" becomes "1.0e+00".
 MVVM_MODEL_EXPORT std::string ScientificDoubleToString(double input, int precision = 6);
 
 } // namespace Utils
