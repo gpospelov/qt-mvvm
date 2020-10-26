@@ -2,6 +2,21 @@
 #include <iostream>
 #include <mvvm/utils/binutils.h>
 
+namespace
+{
+//! Returns buffer size
+int get_buffer_size(const std::string& filename);
+
+//! Returns part of file content in a buffer
+void get_buffer_data(const std::string& filename, int* buffer, int buffer_size);
+
+//! Returns true if the interger is control character as defined above
+bool is_control_char(int ch);
+
+//! Returns true if there is two null bytes in the buffer
+bool null_check(int* buffer, int buffer_size);
+} // namespace
+
 namespace ModelView ::Utils
 {
 
@@ -17,19 +32,7 @@ namespace ModelView ::Utils
 #define CR 13
 #define SUB 26
 
-//! Returns buffer size
-int get_buffer_size(std::string filename);
-
-//! Returns part of file content in a buffer
-void get_buffer_data(std::string filename, int* buffer, int buffer_size);
-
-//! Returns true if the interger is control character as defined above
-bool is_control_char(int ch);
-
-//! Returns true if there is two null bytes in the buffer
-bool null_check(int* buffer, int buffer_size);
-
-bool is_binary(std::string filename)
+bool is_binary(const std::string& filename)
 {
 
     int* buffer;
@@ -63,15 +66,19 @@ bool is_binary(std::string filename)
     return false;
 }
 
-bool is_text(std::string filename)
+bool is_text(const std::string& filename)
 {
 
-    return (!Utils::is_binary(filename));
+    return (!is_binary(filename));
 }
 
-int get_buffer_size(std::string filename)
+} // namespace ModelView::Utils
+
+namespace
 {
 
+int get_buffer_size(const std::string& filename)
+{
     std::ifstream mySource;
     mySource.open(filename, std::ios_base::binary);
     mySource.seekg(0, std::ios_base::end);
@@ -82,7 +89,7 @@ int get_buffer_size(std::string filename)
     return byte_length;
 }
 
-void get_buffer_data(std::string filename, int* buffer, int byte_length)
+void get_buffer_data(const std::string& filename, int* buffer, int byte_length)
 {
 
     std::ifstream fstr(filename, std::ios::in | std::ios::binary);
@@ -111,5 +118,4 @@ bool null_check(int* buffer, int buffer_size)
 
     return false;
 }
-
-} // namespace ModelView::Utils
+} // namespace
