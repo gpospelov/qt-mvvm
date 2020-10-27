@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include <QColor>
+#include <mvvm/model/comboproperty.h>
 #include <mvvm/standarditems/data1ditem.h>
 #include <mvvm/standarditems/graphitem.h>
 #include <mvvm/standarditems/linkeditem.h>
@@ -15,11 +16,18 @@
 
 using namespace ModelView;
 
+namespace
+{
+const ComboProperty penStyleCombo = ComboProperty::createFrom(
+    {"SolidLine", "DashLine", "DotLine", "DashDotLine", "DashDotDotLine"});
+} // namespace
+
 GraphItem::GraphItem(const std::string& model_type) : CompoundItem(model_type)
 {
     addProperty<LinkedItem>(P_LINK)->setDisplayName("Link");
     addProperty<TextItem>(P_GRAPH_TITLE)->setDisplayName("Graph title");
     addProperty(P_COLOR, QColor(Qt::black))->setDisplayName("Color");
+    addProperty(P_PENSTYLE, penStyleCombo)->setDisplayName("Pen style");
     addProperty(P_DISPLAYED, true)->setDisplayName("Displayed");
 }
 
