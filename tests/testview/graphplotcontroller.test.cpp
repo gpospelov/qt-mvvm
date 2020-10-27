@@ -60,7 +60,6 @@ TEST_F(GraphPlotControllerTest, setItem)
 
     // setup graph item
     auto graph_item = model.insertItem<GraphItem>();
-    graph_item->setProperty(GraphItem::P_COLOR, QColor(Qt::red));
     graph_item->setDataItem(data_item);
 
     // initializing controller
@@ -71,8 +70,9 @@ TEST_F(GraphPlotControllerTest, setItem)
     auto graph = custom_plot->graph();
     EXPECT_EQ(TestUtils::binCenters(graph), expected_centers);
     EXPECT_EQ(TestUtils::binValues(graph), expected_values);
-    EXPECT_EQ(graph->pen().color(), QColor(Qt::red));
+    EXPECT_EQ(graph->pen().color(), QColor(Qt::black));
     EXPECT_EQ(graph->pen().style(), Qt::SolidLine);
+    EXPECT_EQ(graph->pen().width(), 1);
 }
 
 TEST_F(GraphPlotControllerTest, changeGraphAppearance)
@@ -101,10 +101,12 @@ TEST_F(GraphPlotControllerTest, changeGraphAppearance)
     auto styleCombo = graph_item->property<ComboProperty>(GraphItem::P_PENSTYLE);
     styleCombo.setCurrentIndex(2);
     graph_item->setProperty(GraphItem::P_PENSTYLE, styleCombo);
+    graph_item->setProperty(GraphItem::P_PENWIDTH, 2);
 
     auto graph = custom_plot->graph();
     EXPECT_EQ(graph->pen().color(), QColor(Qt::red));
     EXPECT_EQ(graph->pen().style(), Qt::DashLine);
+    EXPECT_EQ(graph->pen().width(), 2);
 }
 
 //! Setting GraphItem with data and checking that plottable contains correct data.
