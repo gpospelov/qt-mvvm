@@ -8,10 +8,21 @@
 // ************************************************************************** //
 
 #include "qcustomplot.h"
+#include <mvvm/model/comboproperty.h>
 #include <mvvm/plotting/data1dplotcontroller.h>
 #include <mvvm/plotting/graphplotcontroller.h>
 #include <mvvm/standarditems/data1ditem.h>
 #include <mvvm/standarditems/graphitem.h>
+
+namespace
+{
+//! Returns Qt pen style from current ComboProperty index.
+Qt::PenStyle getQtPenFromComboIndex(int index)
+{
+    // our ComboProperty for pens coincide with Qt definition
+    return static_cast<Qt::PenStyle>(index);
+}
+} // namespace
 
 using namespace ModelView;
 
@@ -48,7 +59,13 @@ struct GraphPlotController::GraphItemControllerImpl {
     void update_graph_pen()
     {
         auto color = graph_item()->property<QColor>(GraphItem::P_COLOR);
-        graph->setPen(QPen(color));
+        auto pencombo = graph_item()->property<ComboProperty>(GraphItem::P_PENSTYLE);
+
+        QPen pen;
+        pen.setColor(color);
+        pen.setStyle(getQtPenFromComboIndex(pencombo.currentIndex()));
+        graph->setPen(pen);
+
         custom_plot->replot();
     }
 
@@ -69,7 +86,7 @@ void GraphPlotController::subscribe()
 {
     auto on_property_change = [this](SessionItem* item, const std::string& property_name) {
         Q_UNUSED(item)
-        if (property_name == GraphItem::P_COLOR)
+        if (property_name == GraphItem::P_COLOR || property_name == GraphItem::P_PENSTYLE)
             p_impl->update_graph_pen();
 
         if (property_name == GraphItem::P_LINK)
