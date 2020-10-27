@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include <QColor>
+#include <mvvm/model/comboproperty.h>
 #include <mvvm/standarditems/data1ditem.h>
 #include <mvvm/standarditems/graphitem.h>
 #include <mvvm/standarditems/linkeditem.h>
@@ -15,11 +16,22 @@
 
 using namespace ModelView;
 
+namespace
+{
+const ComboProperty penStyleCombo = ComboProperty::createFrom(
+    {"NoPen", "SolidLine", "DashLine", "DotLine", "DashDotLine", "DashDotDotLine"}, "SolidLine");
+} // namespace
+
 GraphItem::GraphItem(const std::string& model_type) : CompoundItem(model_type)
 {
     addProperty<LinkedItem>(P_LINK)->setDisplayName("Link");
     addProperty<TextItem>(P_GRAPH_TITLE)->setDisplayName("Graph title");
-    addProperty(P_COLOR, QColor(Qt::black))->setDisplayName("Color");
+    addProperty(P_COLOR, QColor(Qt::black))->setDisplayName("Color")->setToolTip("Line color");
+    addProperty(P_PENSTYLE, penStyleCombo)->setDisplayName("Pen style")->setToolTip("Pen style");
+    addProperty(P_PENWIDTH, 1)
+        ->setDisplayName("Pen width")
+        ->setLimits(RealLimits::limited(0, 7))
+        ->setToolTip("Pen width");
     addProperty(P_DISPLAYED, true)->setDisplayName("Displayed");
 }
 
@@ -37,6 +49,8 @@ void GraphItem::setFromGraphItem(const GraphItem* item)
 {
     setDataItem(item->dataItem());
     setProperty(P_COLOR, item->property<QColor>(P_COLOR));
+    setProperty(P_PENSTYLE, item->property<ComboProperty>(P_PENSTYLE));
+    setProperty(P_PENWIDTH, item->property<int>(P_PENWIDTH));
 }
 
 //! Returns data item linked to the given GraphItem.

@@ -11,6 +11,7 @@
 #include "google_test.h"
 #include "qcustomplot.h"
 #include <QSignalSpy>
+#include <mvvm/model/comboproperty.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/plotting/graphplotcontroller.h>
 #include <mvvm/standarditems/axisitems.h>
@@ -59,7 +60,6 @@ TEST_F(GraphPlotControllerTest, setItem)
 
     // setup graph item
     auto graph_item = model.insertItem<GraphItem>();
-    graph_item->setProperty(GraphItem::P_COLOR, QColor(Qt::red));
     graph_item->setDataItem(data_item);
 
     // initializing controller
@@ -70,7 +70,43 @@ TEST_F(GraphPlotControllerTest, setItem)
     auto graph = custom_plot->graph();
     EXPECT_EQ(TestUtils::binCenters(graph), expected_centers);
     EXPECT_EQ(TestUtils::binValues(graph), expected_values);
+    EXPECT_EQ(graph->pen().color(), QColor(Qt::black));
+    EXPECT_EQ(graph->pen().style(), Qt::SolidLine);
+    EXPECT_EQ(graph->pen().width(), 1);
+}
+
+TEST_F(GraphPlotControllerTest, changeGraphAppearance)
+{
+    auto custom_plot = std::make_unique<QCustomPlot>();
+    GraphPlotController controller(custom_plot.get());
+
+    // setup model and single data item in it
+    SessionModel model;
+    auto data_item = model.insertItem<Data1DItem>();
+    data_item->setAxis(FixedBinAxisItem::create(2, 0.0, 2.0));
+    std::vector<double> expected_centers = {0.5, 1.5};
+    std::vector<double> expected_values = {42.0, 43.0};
+    data_item->setContent(expected_values);
+
+    // setup graph item
+    auto graph_item = model.insertItem<GraphItem>();
+    graph_item->setDataItem(data_item);
+
+    // initializing controller
+    controller.setItem(graph_item);
+
+    // changing appearance properties
+    graph_item->setProperty(GraphItem::P_COLOR, QColor(Qt::red));
+
+    auto styleCombo = graph_item->property<ComboProperty>(GraphItem::P_PENSTYLE);
+    styleCombo.setCurrentIndex(2);
+    graph_item->setProperty(GraphItem::P_PENSTYLE, styleCombo);
+    graph_item->setProperty(GraphItem::P_PENWIDTH, 2);
+
+    auto graph = custom_plot->graph();
     EXPECT_EQ(graph->pen().color(), QColor(Qt::red));
+    EXPECT_EQ(graph->pen().style(), Qt::DashLine);
+    EXPECT_EQ(graph->pen().width(), 2);
 }
 
 //! Setting GraphItem with data and checking that plottable contains correct data.
