@@ -24,7 +24,7 @@ struct ProjectManager::ProjectManagerImpl {
     std::unique_ptr<ProjectInterface> m_current_project;
     ProjectContext m_project_context;
 
-    ProjectManagerImpl(const ProjectContext& context) : m_project_context(context)
+    ProjectManagerImpl(ProjectContext context) : m_project_context(std::move(context))
     {
         createNewProject();
     }

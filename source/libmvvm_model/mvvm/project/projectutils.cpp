@@ -62,7 +62,7 @@ std::string ProjectUtils::ProjectWindowTitle(const ProjectInterface& project)
 
 std::string ProjectUtils::ProjectWindowTitle(const std::string& project_dir, bool is_modified)
 {
-    auto pos = project_dir.find_last_of("/");
+    auto pos = project_dir.find_last_of('/');
     auto project_name = (pos == std::string::npos ? untitled_name : project_dir.substr(pos + 1));
     auto unsaved_status = is_modified ? "*" : "";
     return unsaved_status + project_name;

@@ -18,7 +18,7 @@ ProgressHandler::ProgressHandler(ProgressHandler::callback_t callback, size_t ma
 
 void ProgressHandler::subscribe(ProgressHandler::callback_t callback)
 {
-    runner_callback = callback;
+    runner_callback = std::move(callback);
 }
 
 //! Sets expected ticks count, representing progress of a computation.

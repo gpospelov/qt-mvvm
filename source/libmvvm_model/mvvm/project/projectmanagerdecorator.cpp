@@ -26,9 +26,8 @@ struct ProjectManagerDecorator::ProjectManagerImpl {
     UserInteractionContext m_user_context;
     std::unique_ptr<ProjectManager> project_manager;
 
-    ProjectManagerImpl(const ProjectContext& project_context,
-                       const UserInteractionContext& user_context)
-        : m_project_context(project_context), m_user_context(user_context)
+    ProjectManagerImpl(ProjectContext project_context, UserInteractionContext user_context)
+        : m_project_context(std::move(project_context)), m_user_context(std::move(user_context))
     {
         project_manager = std::make_unique<ProjectManager>(m_project_context);
     }

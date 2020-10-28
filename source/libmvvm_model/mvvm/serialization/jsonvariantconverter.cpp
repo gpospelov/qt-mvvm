@@ -202,7 +202,7 @@ QJsonObject from_vector_double(const Variant& variant)
     QJsonObject result;
     result[variantTypeKey] = QString::fromStdString(Constants::vector_double_type_name);
     QJsonArray array;
-    std::vector<double> data = variant.value<std::vector<double>>();
+    auto data = variant.value<std::vector<double>>();
     std::copy(data.begin(), data.end(), std::back_inserter(array));
     result[variantValueKey] = array;
     return result;

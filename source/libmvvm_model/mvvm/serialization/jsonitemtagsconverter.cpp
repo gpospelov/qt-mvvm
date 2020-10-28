@@ -77,13 +77,13 @@ JsonItemTagsConverter::JsonItemTagsConverter(ConverterCallbacks callbacks)
 
 JsonItemTagsConverter::~JsonItemTagsConverter() = default;
 
-QJsonObject JsonItemTagsConverter::to_json(const SessionItemTags& tags)
+QJsonObject JsonItemTagsConverter::to_json(const SessionItemTags& item_tags)
 {
     QJsonObject result;
-    result[JsonItemFormatAssistant::defaultTagKey] = QString::fromStdString(tags.defaultTag());
+    result[JsonItemFormatAssistant::defaultTagKey] = QString::fromStdString(item_tags.defaultTag());
 
     QJsonArray containerArray;
-    for (auto container : tags)
+    for (auto container : item_tags)
         containerArray.append(p_impl->m_container_converter->to_json(*container));
     result[JsonItemFormatAssistant::containerKey] = containerArray;
 
