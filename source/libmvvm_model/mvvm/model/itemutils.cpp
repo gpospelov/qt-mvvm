@@ -73,9 +73,7 @@ SessionItem* Utils::ChildAt(const SessionItem* parent, int index)
 
 int Utils::IndexOfChild(const SessionItem* parent, const SessionItem* child)
 {
-    auto container = parent->children();
-    auto pos = find(container.begin(), container.end(), child);
-    return pos == container.end() ? -1 : static_cast<int>(std::distance(container.begin(), pos));
+    return Utils::IndexOfItem(parent->children(), child);
 }
 
 std::vector<SessionItem*> Utils::TopLevelItems(const SessionItem& item)
