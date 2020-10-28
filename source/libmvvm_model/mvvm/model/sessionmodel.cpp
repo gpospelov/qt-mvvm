@@ -25,17 +25,15 @@
 
 using namespace ModelView;
 
-SessionModel::SessionModel(std::string model_type)
-    : SessionModel(std::move(model_type), std::make_shared<ItemPool>())
-{
-}
-
 SessionModel::SessionModel(std::string model_type, std::shared_ptr<ItemPool> pool)
     : m_item_manager(std::make_unique<ItemManager>()),
       m_commands(std::make_unique<CommandService>(this)), m_model_type(std::move(model_type)),
       m_mapper(std::make_unique<ModelMapper>(this))
 {
-    m_item_manager->setItemPool(std::move(pool));
+    if (pool)
+        m_item_manager->setItemPool(std::move(pool));
+    else
+        m_item_manager->setItemPool(std::make_shared<ItemPool>());
     createRootItem();
 }
 
