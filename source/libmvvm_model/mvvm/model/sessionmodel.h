@@ -37,8 +37,7 @@ class ItemCopyStrategy;
 class MVVM_MODEL_EXPORT SessionModel
 {
 public:
-    explicit SessionModel(std::string model_type = {});
-    SessionModel(std::string model_type, std::shared_ptr<ItemPool> pool);
+    explicit SessionModel(std::string model_type = {}, std::shared_ptr<ItemPool> pool = {});
 
     virtual ~SessionModel();
 

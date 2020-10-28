@@ -12,9 +12,7 @@
 #include <mvvm/serialization/compatibilityutils.h>
 #include <set>
 
-namespace ModelView
-{
-namespace Compatibility
+namespace ModelView ::Compatibility
 {
 
 /*
@@ -55,5 +53,4 @@ bool IsCompatibleSinglePropertyTag(const SessionItemContainer& container, const 
     return both_are_properties && same_tags && has_item;
 }
 
-} // namespace Compatibility
-} // namespace ModelView
+} // namespace ModelView::Compatibility

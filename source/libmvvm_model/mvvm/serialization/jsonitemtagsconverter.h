@@ -31,7 +31,7 @@ public:
     JsonItemTagsConverter(ConverterCallbacks callbacks);
     ~JsonItemTagsConverter();
 
-    QJsonObject to_json(const SessionItemTags& item);
+    QJsonObject to_json(const SessionItemTags& item_tags);
 
     void from_json(const QJsonObject& json, SessionItemTags& item_tags);
 
