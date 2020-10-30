@@ -12,7 +12,7 @@
 #include <mvvm/utils/stringutils.h>
 
 using namespace ModelView;
-using TestUtils::toStringVector;
+using namespace TestUtils;
 
 class StringUtilsTest : public ::testing::Test
 {
@@ -120,25 +120,6 @@ TEST_F(StringUtilsTest, StringToInteger)
     EXPECT_EQ(StringToInteger("42").value(), 42);
 }
 
-//! Testing local utility function.
-
-TEST_F(StringUtilsTest, toStringVector)
-{
-    std::vector<std::string> expected;
-
-    expected = {};
-    EXPECT_EQ(toStringVector(), expected);
-
-    expected = {"a"};
-    EXPECT_EQ(toStringVector("a"), expected);
-
-    expected = {"a", "b"};
-    EXPECT_EQ(toStringVector("a", "b"), expected);
-
-    expected = {"aaa", "bbb", ""};
-    EXPECT_EQ(toStringVector("aaa", "bbb", ""), expected);
-}
-
 //! Testing SplitString method.
 //! Carefully checking that it is reproduces Python behavior, as promised in comments to the method.
 
@@ -147,25 +128,26 @@ TEST_F(StringUtilsTest, SplitString)
     using Utils::SplitString;
 
     EXPECT_THROW(SplitString("", ""), std::runtime_error);
-    EXPECT_EQ(SplitString("", " "), toStringVector());
-    EXPECT_EQ(SplitString("", ","), toStringVector());
-    EXPECT_EQ(SplitString(" ", " "), toStringVector("", ""));
-    EXPECT_EQ(SplitString("a", " "), toStringVector("a"));
-    EXPECT_EQ(SplitString("a ", " "), toStringVector("a", ""));
+    EXPECT_EQ(SplitString("", " "), toVector<std::string>());
+    EXPECT_EQ(SplitString("", ","), toVector<std::string>());
+    EXPECT_EQ(SplitString(" ", " "), toVector<std::string>("", ""));
+    EXPECT_EQ(SplitString("a", " "), toVector<std::string>("a"));
+    EXPECT_EQ(SplitString("a ", " "), toVector<std::string>("a", ""));
 
-    EXPECT_EQ(SplitString("a b", " "), toStringVector("a", "b"));
-    EXPECT_EQ(SplitString("a  b", " "), toStringVector("a", "", "b"));
+    EXPECT_EQ(SplitString("a b", " "), toVector<std::string>("a", "b"));
+    EXPECT_EQ(SplitString("a  b", " "), toVector<std::string>("a", "", "b"));
 
-    EXPECT_EQ(SplitString("a", "-"), toStringVector("a"));
+    EXPECT_EQ(SplitString("a", "-"), toVector<std::string>("a"));
 
-    EXPECT_EQ(SplitString("aa", "a"), toStringVector("", "", ""));
+    EXPECT_EQ(SplitString("aa", "a"), toVector<std::string>("", "", ""));
 
-    EXPECT_EQ(SplitString("a,b", ","), toStringVector("a", "b"));
-    EXPECT_EQ(SplitString("a, b", ","), toStringVector("a", " b"));
+    EXPECT_EQ(SplitString("a,b", ","), toVector<std::string>("a", "b"));
+    EXPECT_EQ(SplitString("a, b", ","), toVector<std::string>("a", " b"));
 
-    EXPECT_EQ(SplitString("a,b,", ","), toStringVector("a", "b", ""));
-    EXPECT_EQ(SplitString(",a,b,", ","), toStringVector("", "a", "b", ""));
-    EXPECT_EQ(SplitString("aabbcc", "bb"), toStringVector("aa", "cc"));
+    EXPECT_EQ(SplitString("a,b,", ","), toVector<std::string>("a", "b", ""));
+    EXPECT_EQ(SplitString(",a,b,", ","), toVector<std::string>("", "a", "b", ""));
+    EXPECT_EQ(SplitString("aabbcc", "bb"), toVector<std::string>("aa", "cc"));
+    EXPECT_EQ(SplitString("aabbcc", "bb"), toVector<std::string>("aa", "cc"));
 }
 
 //! Testing ParseSpaceSeparatedDoubles.

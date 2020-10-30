@@ -92,18 +92,9 @@ template <typename T> auto create_pointers(const std::vector<std::unique_ptr<T>>
     return result;
 }
 
-//! Creates vector of strings from argument list.
-
-template <typename T = std::string, typename... Args> std::vector<T> toStringVector(Args&&... args)
-{
-    std::vector<T> v;
-    (v.push_back(std::string(args)), ...);
-    return v;
-}
-
 //! Creates vector of T from argument list. Used in EXPECT_EQ macros for convenience.
 
-template <typename T = std::string, typename... Args> std::vector<T> toVector(Args&&... args)
+template <typename T, typename... Args> std::vector<T> toVector(Args&&... args)
 {
     std::vector<T> v;
     (v.push_back(T(args)), ...);
