@@ -11,7 +11,10 @@
 #define MVVM_WIDGETS_UTILS_H
 
 #include <QString>
+#include <QStringList>
 #include <mvvm/view_export.h>
+#include <string>
+#include <vector>
 
 class QColor;
 class QSize;
@@ -65,6 +68,12 @@ MVVM_VIEW_EXPORT QString ClickableText(const QString& text, const QString& tag =
 
 //! Set label's font size to system font size scaled by given factor.
 MVVM_VIEW_EXPORT void ScaleLabelFont(QLabel* label, double scale);
+
+//! Converts vector of strings to QStringList.
+MVVM_VIEW_EXPORT QStringList toStringList(const std::vector<std::string>& vec);
+
+//! Converts vector of strings to QStringList.
+MVVM_VIEW_EXPORT std::vector<std::string> fromStringList(const QStringList& string_list);
 
 } // namespace Utils
 

@@ -135,3 +135,19 @@ void ModelView::Utils::ScaleLabelFont(QLabel* label, double scale)
     font.setPointSize(ModelView::Utils::SystemPointSize() * scale);
     label->setFont(font);
 }
+
+QStringList ModelView::Utils::toStringList(const std::vector<std::string>& vec)
+{
+    QStringList result;
+    for (const auto& x : vec)
+        result.push_back(QString::fromStdString(x));
+    return result;
+}
+
+std::vector<std::string> ModelView::Utils::fromStringList(const QStringList& string_list)
+{
+    std::vector<std::string> result;
+    for (const auto& x : string_list)
+        result.push_back(x.toStdString());
+    return result;
+}
