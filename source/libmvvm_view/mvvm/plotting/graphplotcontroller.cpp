@@ -35,6 +35,9 @@ struct GraphPlotController::GraphItemControllerImpl {
     GraphItemControllerImpl(GraphPlotController* master, QCustomPlot* plot)
         : master(master), custom_plot(plot)
     {
+    }
+
+    void init_graph() {
         graph = custom_plot->addGraph();
         data_controller = std::make_unique<Data1DPlotController>(graph);
     }
@@ -77,6 +80,15 @@ struct GraphPlotController::GraphItemControllerImpl {
         graph->setVisible(graph_item()->property<bool>(GraphItem::P_DISPLAYED));
         custom_plot->replot();
     }
+
+    void reset_graph()
+    {
+        data_controller->setItem(nullptr);
+        custom_plot->removePlottable(graph);
+        graph = nullptr;
+        custom_plot->replot();
+    }
+
 };
 
 GraphPlotController::GraphPlotController(QCustomPlot* custom_plot)
@@ -86,6 +98,8 @@ GraphPlotController::GraphPlotController(QCustomPlot* custom_plot)
 
 void GraphPlotController::subscribe()
 {
+    p_impl->init_graph();
+
     auto on_property_change = [this](SessionItem* item, const std::string& property_name) {
         Q_UNUSED(item)
         if (property_name == GraphItem::P_COLOR || property_name == GraphItem::P_PENSTYLE
@@ -105,7 +119,7 @@ void GraphPlotController::subscribe()
 
 void GraphPlotController::unsubscribe()
 {
-    p_impl->data_controller->setItem(nullptr);
+    p_impl->reset_graph();
 }
 
 GraphPlotController::~GraphPlotController() = default;

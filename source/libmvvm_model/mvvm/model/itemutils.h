@@ -69,6 +69,16 @@ MVVM_MODEL_EXPORT bool IsItemAncestor(const SessionItem* item, const SessionItem
 //! Returns vector with duplicates and 'nullptr' filtered out.
 MVVM_MODEL_EXPORT std::vector<SessionItem*> UniqueItems(const std::vector<SessionItem*>& items);
 
+//! Returns vector of items casted to given type.
+template <typename T> std::vector<T*> CastedItems(const std::vector<SessionItem*>& items)
+{
+    std::vector<T*> result;
+    for (auto item : items)
+        if (auto casted_item = dynamic_cast<T*>(item); casted_item)
+            result.push_back(casted_item);
+
+    return result;
+}
 
 } // namespace Utils
 

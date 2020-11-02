@@ -37,10 +37,7 @@ TEST_F(GraphPlotControllerTest, initialState)
     auto custom_plot = std::make_unique<QCustomPlot>();
     GraphPlotController controller(custom_plot.get());
     EXPECT_EQ(controller.currentItem(), nullptr);
-    EXPECT_EQ(custom_plot->graphCount(), 1);
-    auto graph = custom_plot->graph();
-    EXPECT_EQ(TestUtils::binCenters(graph), std::vector<double>());
-    EXPECT_EQ(TestUtils::binValues(graph), std::vector<double>());
+    EXPECT_EQ(custom_plot->graphCount(), 0);
 }
 
 //! Setting GraphItem with data and checking that plottable contains correct data.
@@ -209,9 +206,9 @@ TEST_F(GraphPlotControllerTest, unlinkFromItem)
     EXPECT_EQ(TestUtils::binValues(graph), std::vector<double>());
     EXPECT_EQ(graph->pen().color(), QColor(Qt::red));
 
-    // unlinking from graph item should leave GraphItem intact.
+    // unlinking from graph item should remove Graph from CustomPlot
     controller.setItem(nullptr);
-    EXPECT_EQ(custom_plot->graphCount(), 1);
+    EXPECT_EQ(custom_plot->graphCount(), 0);
 }
 
 //! Deletion of controller should lead to graph removal.
@@ -235,5 +232,28 @@ TEST_F(GraphPlotControllerTest, controllerDelete)
 
     // deleting controller should lead to graph removal
     controller.reset();
+    EXPECT_EQ(custom_plot->graphCount(), 0);
+}
+
+//! Deletion of graphItem should lead to the dissapearance of graph.
+
+TEST_F(GraphPlotControllerTest, graphDelete)
+{
+    auto custom_plot = std::make_unique<QCustomPlot>();
+    auto controller = std::make_unique<GraphPlotController>(custom_plot.get());
+
+    // setup model and single data item in it
+    SessionModel model;
+    auto data_item = model.insertItem<Data1DItem>();
+
+    // setup graph item
+    auto graph_item = model.insertItem<GraphItem>();
+    graph_item->setDataItem(data_item);
+
+    // initializing controller
+    controller->setItem(graph_item);
+    EXPECT_EQ(custom_plot->graphCount(), 1);
+
+    model.removeItem(graph_item->parent(), graph_item->tagRow());
     EXPECT_EQ(custom_plot->graphCount(), 0);
 }

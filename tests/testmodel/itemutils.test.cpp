@@ -265,3 +265,14 @@ TEST_F(ItemUtilsTest, UniqueItems)
     std::vector<SessionItem*> expected = {item0, item1, item2};
     EXPECT_EQ(Utils::UniqueItems(data), expected);
 }
+
+TEST_F(ItemUtilsTest, CastedItems)
+{
+    SessionModel model;
+    auto item0 = model.insertItem<SessionItem>(model.rootItem());
+    auto item1 = model.insertItem<PropertyItem>(model.rootItem());
+    auto item2 = model.insertItem<VectorItem>(model.rootItem());
+    std::vector<SessionItem*> data = {nullptr, item0, item1, item2, item0, item1, item2, nullptr};
+
+    EXPECT_EQ(Utils::CastedItems<PropertyItem>(data), std::vector<PropertyItem*>({item1, item1}));
+}

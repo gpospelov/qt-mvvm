@@ -52,6 +52,10 @@ MVVM_VIEWMODEL_EXPORT QVariant ToolTipRole(const SessionItem& item);
 //! Returns vector of underlying SessionItem's for given index list.
 MVVM_VIEWMODEL_EXPORT std::vector<SessionItem*> ItemsFromIndex(const QModelIndexList& index_list);
 
+//! Returns vector of underlying SessionItem's for given index list. Removes repetitions
+MVVM_VIEWMODEL_EXPORT std::vector<SessionItem*>
+UniqueItemsFromIndex(const QModelIndexList& index_list);
+
 //! Returns vector of parent items from given index list.
 //! Finds all SessionItems corresponding to given index list and collect their parents.
 //! Function is usefull in the context of table-like views when we want to find compound items

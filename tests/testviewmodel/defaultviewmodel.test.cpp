@@ -18,6 +18,11 @@
 #include <mvvm/model/taginfo.h>
 #include <mvvm/serialization/jsondocument.h>
 #include <mvvm/serialization/jsonmodelconverter.h>
+#include <mvvm/standarditems/axisitems.h>
+#include <mvvm/standarditems/containeritem.h>
+#include <mvvm/standarditems/data1ditem.h>
+#include <mvvm/standarditems/graphitem.h>
+#include <mvvm/standarditems/graphviewportitem.h>
 #include <mvvm/standarditems/vectoritem.h>
 #include <mvvm/viewmodel/defaultviewmodel.h>
 #include <mvvm/viewmodel/standardviewitems.h>
@@ -418,9 +423,9 @@ TEST_F(DefaultViewModelTest, tooltipChanged)
     EXPECT_EQ(roles, expected_roles);
 }
 
-//! Setting top level item as ROOT item
+//! Setting property item as ROOT item.
 
-TEST_F(DefaultViewModelTest, setRootItem)
+TEST_F(DefaultViewModelTest, setPropertyItemAsRoot)
 {
     SessionModel model;
     DefaultViewModel viewModel(&model);
@@ -429,6 +434,37 @@ TEST_F(DefaultViewModelTest, setRootItem)
     QSignalSpy spyReset(&viewModel, &DefaultViewModel::modelReset);
 
     auto item = model.insertItem<PropertyItem>();
+    viewModel.setRootSessionItem(item);
+
+    // new root item doesn't have children
+    EXPECT_EQ(viewModel.rowCount(), 0);
+    EXPECT_EQ(viewModel.columnCount(), 0);
+
+    EXPECT_EQ(spyAboutReset.count(), 1);
+    EXPECT_EQ(spyReset.count(), 1);
+
+    // attempt to use nullptr as root item
+    EXPECT_THROW(viewModel.setRootSessionItem(nullptr), std::runtime_error);
+
+    // attempt to use alien model
+    SessionModel model2;
+    EXPECT_THROW(viewModel.setRootSessionItem(model2.rootItem()), std::runtime_error);
+}
+
+//! Setting property item as ROOT item.
+//! Same as above, only view model was initialized after.
+
+TEST_F(DefaultViewModelTest, setPropertyItemAsRootAfter)
+{
+    SessionModel model;
+    auto item = model.insertItem<PropertyItem>();
+
+    DefaultViewModel viewModel(&model);
+    EXPECT_EQ(viewModel.rowCount(), 1);
+    EXPECT_EQ(viewModel.columnCount(), 2);
+
+    QSignalSpy spyAboutReset(&viewModel, &DefaultViewModel::modelAboutToBeReset);
+    QSignalSpy spyReset(&viewModel, &DefaultViewModel::modelReset);
     viewModel.setRootSessionItem(item);
 
     // new root item doesn't have children
@@ -467,6 +503,20 @@ TEST_F(DefaultViewModelTest, setCompoundAsRootItem)
     auto index_of_vector_item = viewModel.index(1, 0);
     EXPECT_EQ(viewModel.rowCount(index_of_vector_item), 3);
     EXPECT_EQ(viewModel.columnCount(index_of_vector_item), 2);
+}
+
+//! Setting vector item as ROOT item.
+
+TEST_F(DefaultViewModelTest, setVectorItemAsRoot)
+{
+    SessionModel model;
+    auto vectorItem = model.insertItem<VectorItem>();
+
+    DefaultViewModel viewModel(&model);
+    viewModel.setRootSessionItem(vectorItem);
+
+    EXPECT_EQ(viewModel.rowCount(), 3);
+    EXPECT_EQ(viewModel.columnCount(), 2);
 }
 
 //! On model destroyed.
@@ -758,4 +808,40 @@ TEST_F(DefaultViewModelTest, vectorItemAsRootInJsonDocument)
 
     EXPECT_EQ(viewmodel.rowCount(), 3);
     EXPECT_EQ(viewmodel.columnCount(), 2);
+}
+
+//! Real life bug. One container with Data1DItem's, one ViewportItem with single graph.
+//! DefaultViewModel is looking on ViewPortItem. Graph is deleted first.
+
+TEST_F(DefaultViewModelTest, deleteGraphVromViewport)
+{
+    SessionModel model;
+
+    // creating data container and single Data1DItem in it
+    auto data_container = model.insertItem<ContainerItem>();
+    auto data_item = model.insertItem<Data1DItem>(data_container);
+    data_item->setAxis(FixedBinAxisItem::create(3, 0.0, 3.0));
+    data_item->setContent(std::vector<double>({1.0, 2.0, 3.0}));
+
+    // creating Viewport with single graph
+    auto viewport_item = model.insertItem<GraphViewportItem>();
+    auto graph_item = model.insertItem<GraphItem>(viewport_item);
+    graph_item->setDataItem(data_item);
+
+    DefaultViewModel viewmodel(&model);
+    viewmodel.setRootSessionItem(viewport_item);
+
+    // validating that we see graph at propeer index
+    EXPECT_EQ(viewmodel.rowCount(), 3); // X, Y and Graph
+    QModelIndex graph_index = viewmodel.index(2, 0);
+    auto graphLabel = dynamic_cast<ViewLabelItem*>(viewmodel.itemFromIndex(graph_index));
+    ASSERT_TRUE( graphLabel != nullptr);
+    EXPECT_EQ(graphLabel->item(), graph_item);
+
+    // removing graph item
+    model.removeItem(graph_item->parent(), graph_item->tagRow());
+    EXPECT_EQ(viewmodel.rowCount(), 2); // X, Y
+
+    graph_item = model.insertItem<GraphItem>(viewport_item);
+    EXPECT_EQ(viewmodel.rowCount(), 3); // X, Y
 }
