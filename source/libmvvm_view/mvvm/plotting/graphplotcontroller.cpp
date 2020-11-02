@@ -42,7 +42,7 @@ struct GraphPlotController::GraphItemControllerImpl {
         data_controller = std::make_unique<Data1DPlotController>(graph);
     }
 
-    ~GraphItemControllerImpl() { custom_plot->removePlottable(graph); }
+    ~GraphItemControllerImpl() { if (graph) custom_plot->removePlottable(graph); }
 
     GraphItem* graph_item() { return master->currentItem(); }
 
