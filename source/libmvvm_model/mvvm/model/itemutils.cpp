@@ -121,6 +121,8 @@ SessionItem* Utils::FindNextItemToSelect(SessionItem* item)
 
 bool Utils::IsItemAncestor(const SessionItem* item, const SessionItem* candidate)
 {
+    if (!item || !candidate)
+        return false;
     const SessionItem* parent = item->parent();
     while (parent) {
         if (parent == candidate)
