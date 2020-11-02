@@ -16,6 +16,7 @@
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/standarditems/vectoritem.h>
 #include <mvvm/viewmodel/propertytableviewmodel.h>
+#include <mvvm/viewmodel/standardviewitems.h>
 #include <mvvm/viewmodel/viewmodelutils.h>
 
 namespace
@@ -178,6 +179,31 @@ TEST_F(ViewModelUtilsTest, itemsFromIndex)
                                           parent->getItem(VectorItem::P_Y),
                                           parent->getItem(VectorItem::P_Z)};
     EXPECT_EQ(Utils::ItemsFromIndex(index_list), expected);
+    EXPECT_EQ(Utils::UniqueItemsFromIndex(index_list), expected);
+}
+
+//! Check UniqueItemsFromIndex for artificially constructed viewmodel.
+
+TEST_F(ViewModelUtilsTest, UniqueItemsFromIndex)
+{
+    SessionItem item1;
+    item1.setData(42, ItemDataRole::DATA);
+    SessionItem item2;
+    item2.setData(42, ItemDataRole::DATA);
+
+    ViewModelBase viewmodel;
+    std::vector<std::unique_ptr<ViewItem>> items;
+    items.emplace_back(std::make_unique<ViewLabelItem>(&item1));
+    items.emplace_back(std::make_unique<ViewLabelItem>(&item2));
+    items.emplace_back(std::make_unique<ViewDataItem>(&item1));
+    items.emplace_back(std::make_unique<ViewDataItem>(&item2));
+    viewmodel.insertRow(viewmodel.rootItem(), 0, std::move(items));
+
+    QModelIndexList index_list = {viewmodel.index(0, 0), viewmodel.index(0, 1),
+                                  viewmodel.index(0, 2), viewmodel.index(0, 3)};
+
+    EXPECT_EQ(Utils::ItemsFromIndex(index_list), std::vector<SessionItem*>({&item1, &item2, &item1, &item2}));
+    EXPECT_EQ(Utils::UniqueItemsFromIndex(index_list), std::vector<SessionItem*>({&item1, &item2}));
 }
 
 //! Check ParentItemsFromIndex in PropertyTableViewModel context.
