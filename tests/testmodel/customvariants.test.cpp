@@ -170,27 +170,38 @@ TEST_F(CustomVariantsTest, IsTheSameComboProperty)
     EXPECT_FALSE(Utils::IsTheSame(v1, v2));
 }
 
-//! Test translation of variants
+//! Test toQtVAriant function.
 
-TEST_F(CustomVariantsTest, variantTranslation)
+TEST_F(CustomVariantsTest, toQtVariant)
 {
     // from Variant based on std::string to variant based on QString
     QVariant stdstring_variant = QVariant::fromValue(std::string("abc"));
-    QVariant qstring_variant = Utils::toQtVariant(stdstring_variant);
-    QVariant expected("abc");
-    EXPECT_FALSE(qstring_variant == stdstring_variant);
-    EXPECT_TRUE(qstring_variant == expected);
+    QVariant qstring_variant = QVariant::fromValue(QString("abc"));
+    QVariant converted = Utils::toQtVariant(stdstring_variant);
 
-    // from variant based on QString to variant based on std::string
-    qstring_variant = QVariant::fromValue(QString("qwerty"));
-    stdstring_variant = Utils::toCustomVariant(qstring_variant);
-    expected = QVariant::fromValue(std::string("qwerty"));
-    EXPECT_TRUE(stdstring_variant == expected);
+    EXPECT_FALSE(qstring_variant == stdstring_variant);
+    EXPECT_TRUE(qstring_variant == converted);
+
+    // Double variant should be unchanged
+    QVariant value(42.0);
+    EXPECT_TRUE(Utils::toQtVariant(value) == QVariant::fromValue(42.0));
+}
+
+//! Test translation of variants
+
+TEST_F(CustomVariantsTest, toCustomVariant)
+{
+    // from Variant based on QString to variant based on std::string
+    QVariant stdstring_variant = QVariant::fromValue(std::string("abc"));
+    QVariant qstring_variant = QVariant::fromValue(QString("abc"));
+    QVariant converted = Utils::toCustomVariant(qstring_variant);
+
+    EXPECT_FALSE(qstring_variant == stdstring_variant);
+    EXPECT_TRUE(stdstring_variant == converted);
 
     // Double variant should be unchanged
     QVariant value(42.0);
     EXPECT_TRUE(Utils::toCustomVariant(value) == QVariant::fromValue(42.0));
-    EXPECT_TRUE(Utils::toQtVariant(value) == QVariant::fromValue(42.0));
 }
 
 //! Checks all functions related to variant types.
