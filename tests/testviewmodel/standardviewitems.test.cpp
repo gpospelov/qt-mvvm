@@ -251,5 +251,15 @@ TEST_F(StandardViewItemsTest, ViewDataItem_invalidTheValidData)
 
     // initially data is invalid, and non-editable
     EXPECT_FALSE(viewItem.flags() & Qt::ItemIsEditable);
+    EXPECT_FALSE(viewItem.data(Qt::EditRole).isValid());
 
+    // current behavior that setting data is still possible
+    EXPECT_TRUE(viewItem.setData(QVariant::fromValue(42.0), Qt::EditRole));
+
+    // setting data to original item
+    item.setData(43.0);
+
+    // data became editable via ViewDataItem
+    EXPECT_TRUE(viewItem.flags() & Qt::ItemIsEditable);
+    EXPECT_EQ(viewItem.data(Qt::EditRole), QVariant::fromValue(43.0));
 }
