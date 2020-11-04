@@ -161,10 +161,11 @@ TEST_F(ViewModelControllerTest, initThenInsertProperty)
     // it should be ViewLabelItem and ViewDataItem looking at our PropertyItem item
     EXPECT_EQ(view_model.itemFromIndex(labelIndex)->item_role(), ItemDataRole::DISPLAY);
     EXPECT_EQ(view_model.itemFromIndex(labelIndex)->item(), propertyItem);
-    // Feature: since our PropertyItem got it's value after ViewModel was initialized, the model
-    // still holds ViewEmptyItem and not ViewDataItem.
-    EXPECT_EQ(view_model.itemFromIndex(dataIndex)->item_role(), 0);
-    EXPECT_EQ(view_model.itemFromIndex(dataIndex)->item(), nullptr);
+
+    // Our PropertyItem got it's value after ViewModel was initialized, however,
+    // underlying ViewDataItem should see updated values
+    EXPECT_EQ(view_model.itemFromIndex(dataIndex)->item_role(), ItemDataRole::DATA);
+    EXPECT_EQ(view_model.itemFromIndex(dataIndex)->item(), propertyItem);
 }
 
 //! Insert three property items in a model, inserted after controller was setup.

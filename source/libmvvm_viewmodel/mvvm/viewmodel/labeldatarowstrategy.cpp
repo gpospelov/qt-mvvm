@@ -31,9 +31,6 @@ std::vector<std::unique_ptr<ViewItem>> LabelDataRowStrategy::constructRow(Sessio
         return result;
 
     result.emplace_back(std::make_unique<ViewLabelItem>(item));
-    if (item->hasData())
-        result.emplace_back(std::make_unique<ViewDataItem>(item));
-    else
-        result.emplace_back(std::make_unique<ViewEmptyItem>());
+    result.emplace_back(std::make_unique<ViewDataItem>(item));
     return result;
 }

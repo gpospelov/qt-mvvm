@@ -81,7 +81,7 @@ TEST_F(ToyMultilayerItemTest, findMultiLayerView)
     DefaultViewModel viewModel(&model);
 
     auto views = viewModel.findViews(multiLayerItem);
-    EXPECT_EQ(views.size(), 1);
+    EXPECT_EQ(views.size(), 2);
     EXPECT_EQ(views.at(0)->item(), multiLayerItem);
 }
 
