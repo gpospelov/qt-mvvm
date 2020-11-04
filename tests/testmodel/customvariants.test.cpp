@@ -185,6 +185,9 @@ TEST_F(CustomVariantsTest, toQtVariant)
     // Double variant should be unchanged
     QVariant value(42.0);
     EXPECT_TRUE(Utils::toQtVariant(value) == QVariant::fromValue(42.0));
+
+    QVariant invalid;
+    EXPECT_FALSE(Utils::toQtVariant(invalid).isValid());
 }
 
 //! Test translation of variants
@@ -202,6 +205,9 @@ TEST_F(CustomVariantsTest, toCustomVariant)
     // Double variant should be unchanged
     QVariant value(42.0);
     EXPECT_TRUE(Utils::toCustomVariant(value) == QVariant::fromValue(42.0));
+
+    QVariant invalid;
+    EXPECT_FALSE(Utils::toCustomVariant(invalid).isValid());
 }
 
 //! Checks all functions related to variant types.

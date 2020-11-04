@@ -12,6 +12,10 @@
 #include <mvvm/model/externalproperty.h>
 #include <mvvm/model/variant_constants.h>
 
+namespace {
+const QString qstring_name = "QString";
+}
+
 using namespace ModelView;
 
 std::string Utils::VariantName(const Variant& variant)
@@ -51,6 +55,9 @@ bool Utils::IsTheSame(const Variant& var1, const Variant& var2)
 
 Variant Utils::toQtVariant(const Variant& custom)
 {
+    if (!custom.isValid())
+        return custom;
+
     // converts variant based on std::string to variant based on QString
     if (custom.typeName() == Constants::string_type_name) {
         return Variant(QString::fromStdString(custom.value<std::string>()));
@@ -66,7 +73,8 @@ Variant Utils::toQtVariant(const Variant& custom)
 
 Variant Utils::toCustomVariant(const Variant& standard)
 {
-    const QString qstring_name = "QString";
+    if (!standard.isValid())
+        return standard;
 
     // converts variant based on std::string to variant based on QString
     if (standard.typeName() == qstring_name)
