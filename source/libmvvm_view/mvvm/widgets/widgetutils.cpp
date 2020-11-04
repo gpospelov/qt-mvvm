@@ -151,3 +151,20 @@ std::vector<std::string> ModelView::Utils::fromStringList(const QStringList& str
         result.push_back(x.toStdString());
     return result;
 }
+
+QByteArray ModelView::Utils::serialize(const QStringList& data)
+{
+    QByteArray byteArray;
+    QDataStream out(&byteArray, QIODevice::WriteOnly);
+    out << data;
+    return byteArray;
+}
+
+QStringList ModelView::Utils::deserialize(const QByteArray& byteArray)
+{
+    QByteArray array = byteArray;
+    QStringList result;
+    QDataStream in(&array, QIODevice::ReadOnly);
+    in >> result;
+    return result;
+}

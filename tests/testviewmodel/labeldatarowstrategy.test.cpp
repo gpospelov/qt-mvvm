@@ -50,11 +50,11 @@ TEST_F(LabelDataRowStrategyTest, topLevelItem)
 
     // checking that it is label and data
     auto labelItem = dynamic_cast<ViewLabelItem*>(items.at(0).get());
-    auto emptyItem = dynamic_cast<ViewEmptyItem*>(items.at(1).get());
+    auto dataItem = dynamic_cast<ViewDataItem*>(items.at(1).get());
     ASSERT_TRUE(labelItem != nullptr);
     EXPECT_EQ(labelItem->item(), &item);
-    ASSERT_TRUE(emptyItem != nullptr);
-    EXPECT_EQ(emptyItem->item(), nullptr);
+    ASSERT_TRUE(dataItem != nullptr);
+    EXPECT_EQ(dataItem->item(), &item);
 }
 
 //! Checks row construction for property item.

@@ -75,6 +75,12 @@ MVVM_VIEW_EXPORT QStringList toStringList(const std::vector<std::string>& vec);
 //! Converts vector of strings to QStringList.
 MVVM_VIEW_EXPORT std::vector<std::string> fromStringList(const QStringList& string_list);
 
+//! Converts vector of strings to byte array.
+MVVM_VIEW_EXPORT QByteArray serialize(const QStringList& data);
+
+//! Converts byte array to vector of strings.
+MVVM_VIEW_EXPORT QStringList deserialize(const QByteArray& byteArray);
+
 } // namespace Utils
 
 } // namespace ModelView

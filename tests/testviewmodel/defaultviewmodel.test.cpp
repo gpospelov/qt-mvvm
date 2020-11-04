@@ -98,7 +98,7 @@ TEST_F(DefaultViewModelTest, initThenInsert)
 
     // Feature: since our PropertyItem got it's value after ViewModel was initialized, the model
     // still holds ViewEmptyItem and not ViewDataItem.
-    auto dataItem = dynamic_cast<ViewEmptyItem*>(viewModel.itemFromIndex(dataIndex));
+    auto dataItem = dynamic_cast<ViewDataItem*>(viewModel.itemFromIndex(dataIndex));
     ASSERT_TRUE(dataItem != nullptr);
 }
 
