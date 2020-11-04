@@ -38,7 +38,7 @@ ViewDataItem::ViewDataItem(SessionItem* item) : ViewItem(item, ItemDataRole::DAT
 Qt::ItemFlags ViewDataItem::flags() const
 {
     Qt::ItemFlags result = ViewItem::flags();
-    if (item() && item()->isEditable() && item()->isEnabled())
+    if (item() && item()->isEditable() && item()->isEnabled() && item()->data<QVariant>().isValid())
         result |= Qt::ItemIsEditable;
 
     return result;

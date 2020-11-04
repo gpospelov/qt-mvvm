@@ -240,3 +240,16 @@ TEST_F(StandardViewItemsTest, ViewDataItem_toolTipRole)
     item.setToolTip("abc");
     EXPECT_EQ(viewItem.data(Qt::ToolTipRole).toString(), QString("abc"));
 }
+
+//! Behavior of ViewDataItem with SessionItem which initially contains invalid data.
+//! It should be possible to set data after.
+
+TEST_F(StandardViewItemsTest, ViewDataItem_invalidTheValidData)
+{
+    SessionItem item;
+    ViewDataItem viewItem(&item);
+
+    // initially data is invalid, and non-editable
+    EXPECT_FALSE(viewItem.flags() & Qt::ItemIsEditable);
+
+}
