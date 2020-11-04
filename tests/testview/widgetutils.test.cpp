@@ -81,3 +81,13 @@ TEST_F(WidgetUtilsTest, fromStringList)
     EXPECT_EQ(Utils::fromStringList(QStringList()), vec_t());
     EXPECT_EQ(Utils::fromStringList(QStringList({"abc", "cde"})), vec_t({"abc", "cde"}));
 }
+
+TEST_F(WidgetUtilsTest, toFromByteArray)
+{
+    QStringList expected = QStringList() << "aaa"
+                                         << "bbb"
+                                         << "ccc";
+
+    auto array = Utils::serialize(expected);
+    EXPECT_EQ(Utils::deserialize(array), expected);
+}
