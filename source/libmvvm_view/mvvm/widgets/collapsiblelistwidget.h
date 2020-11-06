@@ -26,6 +26,7 @@ namespace ModelView
 class MVVM_VIEW_EXPORT CollapsibleListWidget : public QWidget
 {
     Q_OBJECT
+
 public:
     CollapsibleListWidget(QWidget* parent = nullptr);
 

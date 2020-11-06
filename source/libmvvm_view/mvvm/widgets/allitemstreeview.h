@@ -22,6 +22,7 @@ class SessionModel;
 class MVVM_VIEW_EXPORT AllItemsTreeView : public ItemsTreeView
 {
     Q_OBJECT
+
 public:
     AllItemsTreeView(SessionModel* model, QWidget* parent = nullptr);
     ~AllItemsTreeView() override;
