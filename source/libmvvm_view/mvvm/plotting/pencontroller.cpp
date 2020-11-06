@@ -45,6 +45,8 @@ struct PenController::PenControllerImpl {
         pen.setStyle(getQtPenFromComboIndex(pencombo));
         pen.setWidth(penwidth);
         m_graph->setPen(pen);
+
+        m_graph->parentPlot()->replot();
     }
 };
 

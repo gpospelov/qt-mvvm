@@ -9,12 +9,13 @@
 
 #include "MockWidgets.h"
 #include "google_test.h"
+#include <QColor>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/standarditems/axisitems.h>
 #include <mvvm/standarditems/data1ditem.h>
 #include <mvvm/standarditems/graphitem.h>
 #include <mvvm/standarditems/linkeditem.h>
-#include <QColor>
+#include <mvvm/standarditems/plottableitems.h>
 
 using namespace ModelView;
 using ::testing::_;
@@ -130,11 +131,12 @@ TEST_F(GraphItemTest, setFromGraphItem)
     data_item->setContent(expected_content);
 
     graph_item->setDataItem(data_item);
-    graph_item->setProperty(GraphItem::P_COLOR, QColor(Qt::red));
+    graph_item->item<PenItem>(GraphItem::P_PEN)->setProperty(PenItem::P_COLOR, QColor(Qt::red));
 
     graph_item2->setFromGraphItem(graph_item);
 
     EXPECT_EQ(graph_item2->binValues(), expected_content);
     EXPECT_EQ(graph_item2->binCenters(), expected_centers);
-    EXPECT_EQ(graph_item2->property<QColor>(GraphItem::P_COLOR), QColor(Qt::red));
+    EXPECT_EQ(graph_item2->item<PenItem>(GraphItem::P_PEN)->property<QColor>(PenItem::P_COLOR),
+              QColor(Qt::red));
 }

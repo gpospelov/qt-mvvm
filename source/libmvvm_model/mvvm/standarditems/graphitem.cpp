@@ -26,12 +26,12 @@ GraphItem::GraphItem(const std::string& model_type) : CompoundItem(model_type)
 {
     addProperty<LinkedItem>(P_LINK)->setDisplayName("Link");
     addProperty<TextItem>(P_GRAPH_TITLE)->setDisplayName("Graph title");
-    addProperty(P_COLOR, QColor(Qt::black))->setDisplayName("Color")->setToolTip("Line color");
-    addProperty(P_PENSTYLE, penStyleCombo)->setDisplayName("Pen style")->setToolTip("Pen style");
-    addProperty(P_PENWIDTH, 1)
-        ->setDisplayName("Pen width")
-        ->setLimits(RealLimits::limited(0, 7))
-        ->setToolTip("Pen width");
+//    addProperty(P_COLOR, QColor(Qt::black))->setDisplayName("Color")->setToolTip("Line color");
+//    addProperty(P_PENSTYLE, penStyleCombo)->setDisplayName("Pen style")->setToolTip("Pen style");
+//    addProperty(P_PENWIDTH, 1)
+//        ->setDisplayName("Pen width")
+//        ->setLimits(RealLimits::limited(0, 7))
+//        ->setToolTip("Pen width");
     addProperty<PenItem>(P_PEN)->setDisplayName("Pen");
     addProperty(P_DISPLAYED, true)->setDisplayName("Displayed");
 }
@@ -46,12 +46,14 @@ void GraphItem::setDataItem(const Data1DItem* data_item)
 //! Update item from the content of given graph. Link to the data will be set
 //! as in given item, other properties copied.
 
-void GraphItem::setFromGraphItem(const GraphItem* item)
+void GraphItem::setFromGraphItem(const GraphItem* graph_item)
 {
-    setDataItem(item->dataItem());
-    setProperty(P_COLOR, item->property<QColor>(P_COLOR));
-    setProperty(P_PENSTYLE, item->property<ComboProperty>(P_PENSTYLE));
-    setProperty(P_PENWIDTH, item->property<int>(P_PENWIDTH));
+    setDataItem(graph_item->dataItem());
+    auto pen = item<PenItem>(P_PEN);
+    auto source_pen = graph_item->item<PenItem>(P_PEN);
+    pen->setProperty(PenItem::P_COLOR, source_pen->property<QColor>(PenItem::P_COLOR));
+    pen->setProperty(PenItem::P_STYLE, source_pen->property<ComboProperty>(PenItem::P_STYLE));
+    pen->setProperty(PenItem::P_WIDTH, source_pen->property<int>(PenItem::P_WIDTH));
 }
 
 //! Returns data item linked to the given GraphItem.
