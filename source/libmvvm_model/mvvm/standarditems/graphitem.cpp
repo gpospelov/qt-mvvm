@@ -32,6 +32,7 @@ GraphItem::GraphItem(const std::string& model_type) : CompoundItem(model_type)
         ->setDisplayName("Pen width")
         ->setLimits(RealLimits::limited(0, 7))
         ->setToolTip("Pen width");
+    addProperty<PenItem>(P_PEN)->setDisplayName("Pen");
     addProperty(P_DISPLAYED, true)->setDisplayName("Displayed");
 }
 

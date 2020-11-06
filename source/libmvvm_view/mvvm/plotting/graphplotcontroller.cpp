@@ -37,23 +37,24 @@ struct GraphPlotController::GraphItemControllerImpl {
     {
     }
 
-    void init_graph() {
+    //! Setups controllers and updates graph properties.
+
+    void init_graph()
+    {
         graph = custom_plot->addGraph();
         data_controller = std::make_unique<Data1DPlotController>(graph);
-    }
-
-    ~GraphItemControllerImpl() { if (graph) custom_plot->removePlottable(graph); }
-
-    GraphItem* graph_item() { return master->currentItem(); }
-
-    //! Updates data controller and graph properties.
-
-    void update_graph()
-    {
         update_data_controller();
         update_graph_pen();
         update_visible();
     }
+
+    ~GraphItemControllerImpl()
+    {
+        if (graph)
+            custom_plot->removePlottable(graph);
+    }
+
+    GraphItem* graph_item() { return master->currentItem(); }
 
     void update_data_controller() { data_controller->setItem(graph_item()->dataItem()); }
 
@@ -88,7 +89,6 @@ struct GraphPlotController::GraphItemControllerImpl {
         graph = nullptr;
         custom_plot->replot();
     }
-
 };
 
 GraphPlotController::GraphPlotController(QCustomPlot* custom_plot)
@@ -98,8 +98,6 @@ GraphPlotController::GraphPlotController(QCustomPlot* custom_plot)
 
 void GraphPlotController::subscribe()
 {
-    p_impl->init_graph();
-
     auto on_property_change = [this](SessionItem* item, const std::string& property_name) {
         Q_UNUSED(item)
         if (property_name == GraphItem::P_COLOR || property_name == GraphItem::P_PENSTYLE
@@ -114,7 +112,7 @@ void GraphPlotController::subscribe()
     };
     setOnPropertyChange(on_property_change);
 
-    p_impl->update_graph();
+    p_impl->init_graph();
 }
 
 void GraphPlotController::unsubscribe()
