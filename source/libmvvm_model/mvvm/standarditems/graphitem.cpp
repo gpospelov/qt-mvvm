@@ -16,22 +16,10 @@
 
 using namespace ModelView;
 
-namespace
-{
-const ComboProperty penStyleCombo = ComboProperty::createFrom(
-    {"NoPen", "SolidLine", "DashLine", "DotLine", "DashDotLine", "DashDotDotLine"}, "SolidLine");
-} // namespace
-
 GraphItem::GraphItem(const std::string& model_type) : CompoundItem(model_type)
 {
     addProperty<LinkedItem>(P_LINK)->setDisplayName("Link");
     addProperty<TextItem>(P_GRAPH_TITLE)->setDisplayName("Graph title");
-//    addProperty(P_COLOR, QColor(Qt::black))->setDisplayName("Color")->setToolTip("Line color");
-//    addProperty(P_PENSTYLE, penStyleCombo)->setDisplayName("Pen style")->setToolTip("Pen style");
-//    addProperty(P_PENWIDTH, 1)
-//        ->setDisplayName("Pen width")
-//        ->setLimits(RealLimits::limited(0, 7))
-//        ->setToolTip("Pen width");
     addProperty<PenItem>(P_PEN)->setDisplayName("Pen");
     addProperty(P_DISPLAYED, true)->setDisplayName("Displayed");
 }
