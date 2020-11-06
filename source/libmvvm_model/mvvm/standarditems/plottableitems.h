@@ -40,6 +40,8 @@ public:
     static inline const std::string P_WIDTH = "P_WIDTH";
 
     PenItem();
+
+    void setSelected(bool is_selected);
 };
 
 } // namespace ModelView

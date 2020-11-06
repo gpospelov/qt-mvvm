@@ -37,6 +37,7 @@ std::unique_ptr<ItemCatalogue> ModelView::CreateStandardItemCatalogue()
     result->registerItem<GraphItem>();
     result->registerItem<GraphViewportItem>();
     result->registerItem<LinkedItem>();
+    result->registerItem<PenItem>();
     result->registerItem<PointwiseAxisItem>();
     result->registerItem<PropertyItem>();
     result->registerItem<SessionItem>();

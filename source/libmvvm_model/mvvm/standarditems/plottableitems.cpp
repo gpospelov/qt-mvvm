@@ -20,7 +20,9 @@ const ComboProperty penStyleCombo = ComboProperty::createFrom(
     {"NoPen", "SolidLine", "DashLine", "DotLine", "DashDotLine", "DashDotDotLine"}, "SolidLine");
 const int pen_default_width = 1;
 const int pen_min_width = 0;
-const int pen_max_width = 0;
+const int pen_max_width = 7;
+const int penstyle_index_solid = 1;
+const int penstyle_index_dashline = 2;
 } // namespace
 
 TextItem::TextItem() : CompoundItem(Constants::TextItemType)
@@ -38,4 +40,13 @@ PenItem::PenItem() : CompoundItem(Constants::PenItemType)
         ->setDisplayName("Width")
         ->setLimits(RealLimits::limited(pen_min_width, pen_max_width))
         ->setToolTip("Pen width");
+}
+
+//! Sets style of the pen to represent selected object (dash line).
+
+void PenItem::setSelected(bool is_selected)
+{
+    auto combo = penStyleCombo;
+    combo.setCurrentIndex(is_selected ? penstyle_index_dashline : penstyle_index_solid);
+    setProperty(P_STYLE, combo);
 }
