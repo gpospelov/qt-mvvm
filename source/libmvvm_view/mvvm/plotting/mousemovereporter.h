@@ -19,7 +19,7 @@ class QCustomPlot;
 namespace ModelView
 {
 
-class MousePosInfo;
+struct MousePosInfo;
 
 //! Tracks mouse moves in QCustomPlot canvas.
 //! Notifies client about mouse moves and corresponding pointer coordinates expressed in axes units
