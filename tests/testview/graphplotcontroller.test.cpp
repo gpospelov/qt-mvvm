@@ -17,6 +17,7 @@
 #include <mvvm/standarditems/axisitems.h>
 #include <mvvm/standarditems/data1ditem.h>
 #include <mvvm/standarditems/graphitem.h>
+#include <mvvm/standarditems/plottableitems.h>
 
 using namespace ModelView;
 
@@ -93,12 +94,13 @@ TEST_F(GraphPlotControllerTest, changeGraphAppearance)
     controller.setItem(graph_item);
 
     // changing appearance properties
-    graph_item->setProperty(GraphItem::P_COLOR, QColor(Qt::red));
+    auto pen_item = graph_item->item<PenItem>(GraphItem::P_PEN);
+    pen_item->setProperty(PenItem::P_COLOR, QColor(Qt::red));
 
-    auto styleCombo = graph_item->property<ComboProperty>(GraphItem::P_PENSTYLE);
+    auto styleCombo = pen_item->property<ComboProperty>(PenItem::P_STYLE);
     styleCombo.setCurrentIndex(2);
-    graph_item->setProperty(GraphItem::P_PENSTYLE, styleCombo);
-    graph_item->setProperty(GraphItem::P_PENWIDTH, 2);
+    pen_item->setProperty(PenItem::P_STYLE, styleCombo);
+    pen_item->setProperty(PenItem::P_WIDTH, 2);
 
     auto graph = custom_plot->graph();
     EXPECT_EQ(graph->pen().color(), QColor(Qt::red));
@@ -125,7 +127,8 @@ TEST_F(GraphPlotControllerTest, setPointwiseItem)
 
     // setup graph item
     auto graph_item = model.insertItem<GraphItem>();
-    graph_item->setProperty(GraphItem::P_COLOR, QColor(Qt::red));
+    auto pen_item = graph_item->item<PenItem>(GraphItem::P_PEN);
+    pen_item->setProperty(PenItem::P_COLOR, QColor(Qt::red));
     graph_item->setDataItem(data_item);
 
     // initializing controller
@@ -189,7 +192,8 @@ TEST_F(GraphPlotControllerTest, unlinkFromItem)
 
     // setup graph item
     auto graph_item = model.insertItem<GraphItem>();
-    graph_item->setProperty(GraphItem::P_COLOR, QColor(Qt::red));
+    auto pen_item = graph_item->item<PenItem>(GraphItem::P_PEN);
+    pen_item->setProperty(PenItem::P_COLOR, QColor(Qt::red));
     graph_item->setDataItem(data_item);
 
     // initializing controller

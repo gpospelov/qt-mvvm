@@ -25,6 +25,7 @@ namespace ModelView
 class MVVM_VIEW_EXPORT CollapsibleBar : public QFrame
 {
     Q_OBJECT
+
 public:
     CollapsibleBar(QWidget* parent = nullptr);
 

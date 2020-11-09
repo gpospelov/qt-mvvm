@@ -21,6 +21,7 @@ namespace ModelView
 class MVVM_VIEW_EXPORT PropertyTreeView : public ItemsTreeView
 {
     Q_OBJECT
+
 public:
     PropertyTreeView(QWidget* parent = nullptr);
     ~PropertyTreeView();

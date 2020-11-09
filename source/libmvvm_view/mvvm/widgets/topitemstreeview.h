@@ -26,6 +26,7 @@ class SessionModel;
 class MVVM_VIEW_EXPORT TopItemsTreeView : public ItemsTreeView
 {
     Q_OBJECT
+
 public:
     TopItemsTreeView(SessionModel* model, QWidget* parent = nullptr);
     ~TopItemsTreeView();

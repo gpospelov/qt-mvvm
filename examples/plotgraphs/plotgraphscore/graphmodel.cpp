@@ -16,6 +16,8 @@
 #include <mvvm/standarditems/data1ditem.h>
 #include <mvvm/standarditems/graphitem.h>
 #include <mvvm/standarditems/graphviewportitem.h>
+#include <mvvm/standarditems/plottableitems.h>
+#include <mvvm/widgets/widgetutils.h>
 #include <mvvm/utils/numericutils.h>
 #include <stdexcept>
 
@@ -59,9 +61,10 @@ void GraphModel::add_graph()
 
     auto graph = insertItem<GraphItem>(viewport());
     graph->setDataItem(data);
-    auto rndm = []() -> int { return ModelView::Utils::RandInt(0, 255); };
-    graph->setProperty(GraphItem::P_COLOR, QColor(rndm(), rndm(), rndm()));
+    graph->item<PenItem>(GraphItem::P_PEN)
+        ->setProperty(PenItem::P_COLOR, ModelView::Utils::random_color());
 }
+
 
 //! Remove last graph and data item.
 

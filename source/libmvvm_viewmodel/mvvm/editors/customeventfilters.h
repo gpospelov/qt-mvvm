@@ -24,6 +24,7 @@ namespace ModelView
 class MVVM_VIEWMODEL_EXPORT LostFocusFilter : public QObject
 {
     Q_OBJECT
+
 public:
     LostFocusFilter(QObject* parent = nullptr);
 
@@ -37,6 +38,7 @@ protected:
 class MVVM_VIEWMODEL_EXPORT WheelEventFilter : public QObject
 {
     Q_OBJECT
+
 public:
     WheelEventFilter(QObject* parent = nullptr);
 

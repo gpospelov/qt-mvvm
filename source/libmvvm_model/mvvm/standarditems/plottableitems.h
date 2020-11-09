@@ -30,6 +30,20 @@ public:
     TextItem();
 };
 
+//! Represents basics settings of QPen.
+
+class MVVM_MODEL_EXPORT PenItem : public CompoundItem
+{
+public:
+    static inline const std::string P_COLOR = "P_COLOR";
+    static inline const std::string P_STYLE = "P_STYLE";
+    static inline const std::string P_WIDTH = "P_WIDTH";
+
+    PenItem();
+
+    void setSelected(bool is_selected);
+};
+
 } // namespace ModelView
 
 #endif // MVVM_STANDARDITEMS_PLOTTABLEITEMS_H

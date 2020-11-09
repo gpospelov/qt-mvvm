@@ -30,6 +30,8 @@ target_sources(${library_name} PRIVATE
     mousemovereporter.cpp
     mousemovereporter.h
     mouseposinfo.h
+    pencontroller.cpp
+    pencontroller.h
     sceneadapterinterface.h
     statusstringformatterinterface.h
     statusstringreporter.cpp

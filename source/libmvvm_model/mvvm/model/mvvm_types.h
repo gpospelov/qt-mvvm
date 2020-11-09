@@ -52,6 +52,7 @@ const model_type GraphItemType = "Graph";
 const model_type GraphViewportItemType = "GraphViewport";
 const model_type GroupItemType = "Group";
 const model_type LinkedItemType = "Linked";
+const model_type PenItemType = "Pen";
 const model_type PointwiseAxisItemType = "PointwiseAxis";
 const model_type PropertyType = "Property";
 const model_type TextItemType = "Text";

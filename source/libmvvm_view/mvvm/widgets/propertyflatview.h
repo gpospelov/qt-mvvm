@@ -25,6 +25,7 @@ class SessionItem;
 class MVVM_VIEW_EXPORT PropertyFlatView : public QWidget
 {
     Q_OBJECT
+
 public:
     PropertyFlatView(QWidget* parent = nullptr);
     ~PropertyFlatView();

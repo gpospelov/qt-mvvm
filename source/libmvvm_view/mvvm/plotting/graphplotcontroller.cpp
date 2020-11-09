@@ -11,18 +11,10 @@
 #include <mvvm/model/comboproperty.h>
 #include <mvvm/plotting/data1dplotcontroller.h>
 #include <mvvm/plotting/graphplotcontroller.h>
+#include <mvvm/plotting/pencontroller.h>
 #include <mvvm/standarditems/data1ditem.h>
 #include <mvvm/standarditems/graphitem.h>
-
-namespace
-{
-//! Returns Qt pen style from current ComboProperty index.
-Qt::PenStyle getQtPenFromComboIndex(int index)
-{
-    // our ComboProperty for pens coincide with Qt definition
-    return static_cast<Qt::PenStyle>(index);
-}
-} // namespace
+#include <mvvm/standarditems/plottableitems.h>
 
 using namespace ModelView;
 
@@ -31,29 +23,33 @@ struct GraphPlotController::GraphItemControllerImpl {
     QCustomPlot* custom_plot{nullptr};
     QCPGraph* graph{nullptr};
     std::unique_ptr<Data1DPlotController> data_controller;
+    std::unique_ptr<PenController> pen_controller;
 
     GraphItemControllerImpl(GraphPlotController* master, QCustomPlot* plot)
         : master(master), custom_plot(plot)
     {
     }
 
-    void init_graph() {
+    //! Setups controllers and updates graph properties.
+
+    void init_graph()
+    {
         graph = custom_plot->addGraph();
         data_controller = std::make_unique<Data1DPlotController>(graph);
-    }
+        pen_controller = std::make_unique<PenController>(graph);
 
-    ~GraphItemControllerImpl() { if (graph) custom_plot->removePlottable(graph); }
-
-    GraphItem* graph_item() { return master->currentItem(); }
-
-    //! Updates data controller and graph properties.
-
-    void update_graph()
-    {
         update_data_controller();
         update_graph_pen();
         update_visible();
     }
+
+    ~GraphItemControllerImpl()
+    {
+        if (graph)
+            custom_plot->removePlottable(graph);
+    }
+
+    GraphItem* graph_item() { return master->currentItem(); }
 
     void update_data_controller() { data_controller->setItem(graph_item()->dataItem()); }
 
@@ -61,17 +57,7 @@ struct GraphPlotController::GraphItemControllerImpl {
 
     void update_graph_pen()
     {
-        auto color = graph_item()->property<QColor>(GraphItem::P_COLOR);
-        auto pencombo = graph_item()->property<ComboProperty>(GraphItem::P_PENSTYLE);
-        auto penwidth = graph_item()->property<int>(GraphItem::P_PENWIDTH);
-
-        QPen pen;
-        pen.setColor(color);
-        pen.setStyle(getQtPenFromComboIndex(pencombo.currentIndex()));
-        pen.setWidth(penwidth);
-        graph->setPen(pen);
-
-        custom_plot->replot();
+        pen_controller->setItem(graph_item()->item<PenItem>(GraphItem::P_PEN));
     }
 
     //! Update visible
@@ -84,11 +70,11 @@ struct GraphPlotController::GraphItemControllerImpl {
     void reset_graph()
     {
         data_controller->setItem(nullptr);
+        pen_controller->setItem(nullptr);
         custom_plot->removePlottable(graph);
         graph = nullptr;
         custom_plot->replot();
     }
-
 };
 
 GraphPlotController::GraphPlotController(QCustomPlot* custom_plot)
@@ -98,14 +84,7 @@ GraphPlotController::GraphPlotController(QCustomPlot* custom_plot)
 
 void GraphPlotController::subscribe()
 {
-    p_impl->init_graph();
-
-    auto on_property_change = [this](SessionItem* item, const std::string& property_name) {
-        Q_UNUSED(item)
-        if (property_name == GraphItem::P_COLOR || property_name == GraphItem::P_PENSTYLE
-            || property_name == GraphItem::P_PENWIDTH)
-            p_impl->update_graph_pen();
-
+    auto on_property_change = [this](SessionItem*, const std::string& property_name) {
         if (property_name == GraphItem::P_LINK)
             p_impl->update_data_controller();
 
@@ -114,7 +93,7 @@ void GraphPlotController::subscribe()
     };
     setOnPropertyChange(on_property_change);
 
-    p_impl->update_graph();
+    p_impl->init_graph();
 }
 
 void GraphPlotController::unsubscribe()
