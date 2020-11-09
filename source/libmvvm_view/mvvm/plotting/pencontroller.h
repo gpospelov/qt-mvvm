@@ -13,7 +13,6 @@
 #include <memory>
 #include <mvvm/signals/itemlistener.h>
 #include <mvvm/view_export.h>
-#include <mvvm/standarditems/plottableitems.h>
 
 class QCPGraph;
 
@@ -30,9 +29,6 @@ class MVVM_VIEW_EXPORT PenController : public ItemListener<PenItem>
 public:
     explicit PenController(QCPGraph* graph);
     ~PenController() override;
-
-    PenController& operator=(const PenController& other) = delete;
-    PenController(const PenController& other) = delete;
 
 protected:
     void subscribe() override;
