@@ -15,7 +15,7 @@
 
 namespace
 {
-const double max_val = 65536;
+const int max_val = 65536;
 const int min_val = -max_val;
 } // namespace
 

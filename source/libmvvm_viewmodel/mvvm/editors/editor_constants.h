@@ -31,7 +31,7 @@ const std::string ScientficDoubleEditorType = "ScientficDoubleEditor";
 const std::string ScientficSpinBoxEditorType = "ScientficSpinBoxEditor";
 const std::string SelectableComboPropertyEditorType = "SelectableComboPropertyEditor";
 
-const double default_double_decimals = 4; //! number of digits after decimal points
+const int default_double_decimals = 4; //! number of digits after decimal points
 
 } // namespace Constants
 
