@@ -28,8 +28,8 @@ const int penstyle_index_dashline = 2;
 TextItem::TextItem() : CompoundItem(Constants::TextItemType)
 {
     addProperty(P_TEXT, "")->setDisplayName("Text");
-    addProperty(P_FONT, "Helvetica")->setDisplayName("Font");
-    addProperty(P_SIZE, 12)->setDisplayName("Size");
+    addProperty(P_FONT, "Noto Sans")->setDisplayName("Font");
+    addProperty(P_SIZE, 10)->setDisplayName("Size");
 }
 
 PenItem::PenItem() : CompoundItem(Constants::PenItemType)

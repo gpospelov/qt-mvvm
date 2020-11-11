@@ -11,6 +11,7 @@
 #include <mvvm/plotting/axistitlecontroller.h>
 #include <mvvm/standarditems/plottableitems.h>
 #include <stdexcept>
+#include <QDebug>
 
 using namespace ModelView;
 
@@ -23,7 +24,16 @@ struct AxisTitleController::AxisTitleControllerImpl {
             throw std::runtime_error("AxisTitleController: axis is not initialized.");
     }
 
-    void updateAxisFromItem(TextItem* item) {}
+    void updateAxisFromItem(TextItem* item)
+    {
+        auto font = m_axis->labelFont();
+        qDebug() << font.pointSize() << font.family();
+
+        font.setPointSize(item->property<int>(TextItem::P_SIZE));
+        font.setFamily(QString::fromStdString(item->property<std::string>(TextItem::P_FONT)));
+        m_axis->setLabel(QString::fromStdString(item->property<std::string>(TextItem::P_TEXT)));
+        m_axis->setLabelFont(font);
+    }
 };
 
 AxisTitleController::AxisTitleController(QCPAxis* axis)
