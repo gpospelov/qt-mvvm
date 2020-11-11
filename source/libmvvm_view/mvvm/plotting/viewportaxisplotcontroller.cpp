@@ -13,19 +13,21 @@
 #include <mvvm/plotting/customplotutils.h>
 #include <mvvm/plotting/viewportaxisplotcontroller.h>
 #include <mvvm/standarditems/axisitems.h>
+#include <mvvm/standarditems/plottableitems.h>
 #include <stdexcept>
 
 using namespace ModelView;
 
 struct ViewportAxisPlotController::AxesPlotControllerImpl {
 
-    ViewportAxisPlotController* m_controller{nullptr};
+    ViewportAxisPlotController* m_master{nullptr};
     QCPAxis* m_axis{nullptr};
     bool m_blockUpdate{false};
     std::unique_ptr<QMetaObject::Connection> m_axisConn;
+    std::unique_ptr<AxisTitleController> m_titleController;
 
     AxesPlotControllerImpl(ViewportAxisPlotController* controller, QCPAxis* axis)
-        : m_controller(controller), m_axis(axis)
+        : m_master(controller), m_axis(axis)
     {
         if (!axis)
             throw std::runtime_error("AxisPlotController: axis is not initialized.");
@@ -35,10 +37,9 @@ struct ViewportAxisPlotController::AxesPlotControllerImpl {
     //! Connects QCustomPlot signals with controller methods.
     void setConnected()
     {
-
         auto on_axis_range = [this](const QCPRange& newRange) {
             m_blockUpdate = true;
-            auto item = m_controller->currentItem();
+            auto item = m_master->currentItem();
             item->set_range(newRange.lower, newRange.upper);
             m_blockUpdate = false;
         };
@@ -55,7 +56,7 @@ struct ViewportAxisPlotController::AxesPlotControllerImpl {
     //! Sets axesRange from SessionItem.
     void setAxisRangeFromItem()
     {
-        auto [lower, upper] = m_controller->currentItem()->range();
+        auto [lower, upper] = m_master->currentItem()->range();
         m_axis->setRange(QCPRange(lower, upper));
     }
 
@@ -63,13 +64,16 @@ struct ViewportAxisPlotController::AxesPlotControllerImpl {
 
     void setAxisLogScaleFromItem()
     {
-        Utils::SetLogarithmicScale(m_axis, m_controller->currentItem()->is_in_log());
+        Utils::SetLogarithmicScale(m_axis, m_master->currentItem()->is_in_log());
     }
 
     //! Init axis from item and setup connections.
 
     void init_axis()
     {
+        m_titleController = std::make_unique<AxisTitleController>(m_axis);
+        auto text_item = m_master->currentItem()->item<TextItem>(ViewportAxisItem::P_TITLE);
+        m_titleController->setItem(text_item);
         setAxisRangeFromItem();
         setAxisLogScaleFromItem();
         setConnected();
