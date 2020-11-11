@@ -132,7 +132,7 @@ void ViewItem::appendRow(std::vector<std::unique_ptr<ViewItem>> items)
 void ViewItem::insertRow(int row, std::vector<std::unique_ptr<ViewItem>> items)
 {
     for (auto& x : items)
-        x.get()->setParent(this);
+        x->setParent(this);
     p_impl->insertRow(row, std::move(items));
 }
 
