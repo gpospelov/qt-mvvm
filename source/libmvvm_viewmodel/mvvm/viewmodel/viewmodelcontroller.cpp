@@ -167,17 +167,17 @@ ViewModelController::ViewModelController(SessionModel* session_model, ViewModelB
     setOnDataChange(on_data_change);
 
     auto on_item_inserted = [this](SessionItem* item, TagRow tagrow) {
-        onItemInserted(item, tagrow);
+        onItemInserted(item, std::move(tagrow));
     };
     setOnItemInserted(on_item_inserted);
 
     auto on_item_removed = [this](SessionItem* item, TagRow tagrow) {
-        onItemRemoved(item, tagrow);
+        onItemRemoved(item, std::move(tagrow));
     };
     setOnItemRemoved(on_item_removed);
 
     auto on_about_to_remove = [this](SessionItem* item, TagRow tagrow) {
-        onAboutToRemoveItem(item, tagrow);
+        onAboutToRemoveItem(item, std::move(tagrow));
     };
     setOnAboutToRemoveItem(on_about_to_remove);
 

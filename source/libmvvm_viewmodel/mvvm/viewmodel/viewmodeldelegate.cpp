@@ -14,6 +14,11 @@
 #include <mvvm/viewmodel/defaultcelldecorator.h>
 #include <mvvm/viewmodel/viewmodeldelegate.h>
 
+namespace
+{
+const double scale_default_height_factor{1.2};
+}
+
 using namespace ModelView;
 
 ViewModelDelegate::ViewModelDelegate(QObject* parent)
@@ -42,9 +47,8 @@ QWidget* ViewModelDelegate::createEditor(QWidget* parent, const QStyleOptionView
         connect(editor.get(), &CustomEditor::dataChanged, this,
                 &ViewModelDelegate::onCustomEditorDataChanged);
         return editor.release();
-    } else {
-        return QStyledItemDelegate::createEditor(parent, option, index);
     }
+    return QStyledItemDelegate::createEditor(parent, option, index);
 }
 
 void ViewModelDelegate::setEditorData(QWidget* editor, const QModelIndex& index) const
@@ -77,7 +81,7 @@ QSize ViewModelDelegate::sizeHint(const QStyleOptionViewItem& option,
                                   const QModelIndex& index) const
 {
     QSize result = QStyledItemDelegate::sizeHint(option, index);
-    result.setHeight(static_cast<int>(result.height() * 1.2));
+    result.setHeight(static_cast<int>(result.height() * scale_default_height_factor));
     return result;
 }
 

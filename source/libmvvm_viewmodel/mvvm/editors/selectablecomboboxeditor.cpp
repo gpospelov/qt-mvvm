@@ -36,7 +36,7 @@ public:
     QCheckListStyledItemDelegate(QObject* parent = nullptr) : QStyledItemDelegate(parent) {}
 
     void paint(QPainter* painter, const QStyleOptionViewItem& option,
-               const QModelIndex& index) const
+               const QModelIndex& index) const override
     {
         auto styleOption = const_cast<QStyleOptionViewItem&>(option);
         styleOption.showDecorationSelected = false;

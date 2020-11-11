@@ -23,13 +23,18 @@ const int pen_min_width = 0;
 const int pen_max_width = 7;
 const int penstyle_index_solid = 1;
 const int penstyle_index_dashline = 2;
+
+// We do not want to depend from widgetutils.h to get App default font size. Let's stick to
+// hardcoded value for the moment, even if on different systems it can be not-optimal.
+const int default_title_size = 10;
+const std::string default_title_family = "Noto Sans";
 } // namespace
 
 TextItem::TextItem() : CompoundItem(Constants::TextItemType)
 {
     addProperty(P_TEXT, "")->setDisplayName("Text");
-    addProperty(P_FONT, "Helvetica")->setDisplayName("Font");
-    addProperty(P_SIZE, 12)->setDisplayName("Size");
+    addProperty(P_FONT, default_title_family)->setDisplayName("Font");
+    addProperty(P_SIZE, default_title_size)->setDisplayName("Size");
 }
 
 PenItem::PenItem() : CompoundItem(Constants::PenItemType)

@@ -31,6 +31,7 @@ class MVVM_VIEWMODEL_EXPORT ExternalPropertyComboEditor : public CustomEditor
 
 public:
     using callback_t = std::function<std::vector<ModelView::ExternalProperty>()>;
+
     ExternalPropertyComboEditor(callback_t callback, QWidget* parent = nullptr);
 
     QSize sizeHint() const override;
@@ -43,9 +44,10 @@ private:
     int internIndex();
     void setConnected(bool isConnected);
     void update_components() override;
-    callback_t get_properties;
-    QComboBox* m_box;
-    QStandardItemModel* m_combo_model;
+
+    callback_t m_getPropertiesCallback;
+    QComboBox* m_box{nullptr};
+    QStandardItemModel* m_comboModel{nullptr};
 };
 
 } // namespace ModelView

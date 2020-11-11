@@ -13,6 +13,7 @@
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/plotting/viewportaxisplotcontroller.h>
 #include <mvvm/standarditems/axisitems.h>
+#include <mvvm/standarditems/plottableitems.h>
 
 using namespace ModelView;
 
@@ -307,4 +308,30 @@ TEST_F(ViewportAxisPlotControllerTest, oneControllerTwoAxisItems)
     // destroying controller, no UB
     controller.reset();
     custom_plot->xAxis->setRange(2.0, 3.0);
+}
+
+//! Controller subscribed to ViewportAxisItem.
+//! Change ViewportAxisItem title and check that QCPAxis got new values.
+
+TEST_F(ViewportAxisPlotControllerTest, changeAxisTitle)
+{
+    auto custom_plot = std::make_unique<QCustomPlot>();
+
+    // creating the model with single ViewportAxisItem
+    SessionModel model;
+    auto axisItem = model.insertItem<ViewportAxisItem>();
+
+    // setting up QCustomPlot and item controller.
+    auto qcp_axis = custom_plot->xAxis;
+    ViewportAxisPlotController controller(qcp_axis);
+    controller.setItem(axisItem);
+
+    // changing title
+    auto textItem = axisItem->item<TextItem>(ViewportAxisItem::P_TITLE);
+    textItem->setProperty(TextItem::P_TEXT, "abc");
+
+    // no need to change title size and font (checked in axistitlecontroller.test)
+
+    // QCPAxis should switch to logarithmic
+    EXPECT_EQ(qcp_axis->label(), QString("abc"));
 }

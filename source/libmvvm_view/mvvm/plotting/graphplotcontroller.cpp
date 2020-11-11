@@ -19,14 +19,14 @@
 using namespace ModelView;
 
 struct GraphPlotController::GraphItemControllerImpl {
-    GraphPlotController* master{nullptr};
-    QCustomPlot* custom_plot{nullptr};
-    QCPGraph* graph{nullptr};
-    std::unique_ptr<Data1DPlotController> data_controller;
-    std::unique_ptr<PenController> pen_controller;
+    GraphPlotController* m_master{nullptr};
+    QCustomPlot* m_customPlot{nullptr};
+    QCPGraph* m_graph{nullptr};
+    std::unique_ptr<Data1DPlotController> m_dataController;
+    std::unique_ptr<PenController> m_penController;
 
     GraphItemControllerImpl(GraphPlotController* master, QCustomPlot* plot)
-        : master(master), custom_plot(plot)
+        : m_master(master), m_customPlot(plot)
     {
     }
 
@@ -34,9 +34,9 @@ struct GraphPlotController::GraphItemControllerImpl {
 
     void init_graph()
     {
-        graph = custom_plot->addGraph();
-        data_controller = std::make_unique<Data1DPlotController>(graph);
-        pen_controller = std::make_unique<PenController>(graph);
+        m_graph = m_customPlot->addGraph();
+        m_dataController = std::make_unique<Data1DPlotController>(m_graph);
+        m_penController = std::make_unique<PenController>(m_graph);
 
         update_data_controller();
         update_graph_pen();
@@ -45,35 +45,35 @@ struct GraphPlotController::GraphItemControllerImpl {
 
     ~GraphItemControllerImpl()
     {
-        if (graph)
-            custom_plot->removePlottable(graph);
+        if (m_graph)
+            m_customPlot->removePlottable(m_graph);
     }
 
-    GraphItem* graph_item() { return master->currentItem(); }
+    GraphItem* graph_item() { return m_master->currentItem(); }
 
-    void update_data_controller() { data_controller->setItem(graph_item()->dataItem()); }
+    void update_data_controller() { m_dataController->setItem(graph_item()->dataItem()); }
 
     //! Updates graph pen from GraphItem.
 
     void update_graph_pen()
     {
-        pen_controller->setItem(graph_item()->item<PenItem>(GraphItem::P_PEN));
+        m_penController->setItem(graph_item()->item<PenItem>(GraphItem::P_PEN));
     }
 
     //! Update visible
     void update_visible()
     {
-        graph->setVisible(graph_item()->property<bool>(GraphItem::P_DISPLAYED));
-        custom_plot->replot();
+        m_graph->setVisible(graph_item()->property<bool>(GraphItem::P_DISPLAYED));
+        m_customPlot->replot();
     }
 
     void reset_graph()
     {
-        data_controller->setItem(nullptr);
-        pen_controller->setItem(nullptr);
-        custom_plot->removePlottable(graph);
-        graph = nullptr;
-        custom_plot->replot();
+        m_dataController->setItem(nullptr);
+        m_penController->setItem(nullptr);
+        m_customPlot->removePlottable(m_graph);
+        m_graph = nullptr;
+        m_customPlot->replot();
     }
 };
 

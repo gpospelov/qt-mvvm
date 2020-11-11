@@ -1,4 +1,6 @@
 target_sources(${library_name} PRIVATE
+    axistitlecontroller.cpp
+    axistitlecontroller.h
     colormapcanvas.cpp
     colormapcanvas.h
     colormapinfoformatter.cpp
