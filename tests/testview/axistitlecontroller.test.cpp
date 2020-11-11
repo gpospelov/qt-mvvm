@@ -49,8 +49,13 @@ TEST_F(AxisTitleControllerTest, setTextItem)
     auto textItem = model.insertItem<TextItem>();
 
     auto axis = custom_plot->xAxis;
-    auto expected_pointSize = axis->labelFont().pointSize();
-    auto expected_family = axis->labelFont().family();
+//    auto expected_pointSize = axis->labelFont().pointSize();
+//    auto expected_family = axis->labelFont().family();
+
+    // this a values hardcoded in plottableitems.cpp. Shell we provide some customized way to create
+    // TextItem with font/size suitable for QCPAxis ?
+    const int expected_pointSize = 10;
+    const std::string expected_family = "Noto Sans";
 
     // controller shouldn''t change axis range
     AxisTitleController controller(axis);
@@ -58,7 +63,7 @@ TEST_F(AxisTitleControllerTest, setTextItem)
     EXPECT_EQ(controller.currentItem(), textItem);
 
     EXPECT_EQ(axis->label(), QString());
-    EXPECT_EQ(axis->labelFont().family(), expected_family);
+    EXPECT_EQ(axis->labelFont().family().toStdString(), expected_family);
     EXPECT_EQ(axis->labelFont().pointSize(), expected_pointSize);
 }
 
