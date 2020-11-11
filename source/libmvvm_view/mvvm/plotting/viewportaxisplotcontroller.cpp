@@ -9,6 +9,7 @@
 
 #include "qcustomplot.h"
 #include <QObject>
+#include <mvvm/plotting/axistitlecontroller.h>
 #include <mvvm/plotting/customplotutils.h>
 #include <mvvm/plotting/viewportaxisplotcontroller.h>
 #include <mvvm/standarditems/axisitems.h>
@@ -18,17 +19,17 @@ using namespace ModelView;
 
 struct ViewportAxisPlotController::AxesPlotControllerImpl {
 
-    ViewportAxisPlotController* controller{nullptr};
-    QCPAxis* axis{nullptr};
-    bool block_update{false};
-    std::unique_ptr<QMetaObject::Connection> axis_conn;
+    ViewportAxisPlotController* m_controller{nullptr};
+    QCPAxis* m_axis{nullptr};
+    bool m_blockUpdate{false};
+    std::unique_ptr<QMetaObject::Connection> m_axisConn;
 
     AxesPlotControllerImpl(ViewportAxisPlotController* controller, QCPAxis* axis)
-        : controller(controller), axis(axis)
+        : m_controller(controller), m_axis(axis)
     {
         if (!axis)
             throw std::runtime_error("AxisPlotController: axis is not initialized.");
-        axis_conn = std::make_unique<QMetaObject::Connection>();
+        m_axisConn = std::make_unique<QMetaObject::Connection>();
     }
 
     //! Connects QCustomPlot signals with controller methods.
@@ -36,30 +37,42 @@ struct ViewportAxisPlotController::AxesPlotControllerImpl {
     {
 
         auto on_axis_range = [this](const QCPRange& newRange) {
-            block_update = true;
-            auto item = controller->currentItem();
+            m_blockUpdate = true;
+            auto item = m_controller->currentItem();
             item->set_range(newRange.lower, newRange.upper);
-            block_update = false;
+            m_blockUpdate = false;
         };
 
-        *axis_conn = QObject::connect(
-            axis, static_cast<void (QCPAxis::*)(const QCPRange&)>(&QCPAxis::rangeChanged),
+        *m_axisConn = QObject::connect(
+            m_axis, static_cast<void (QCPAxis::*)(const QCPRange&)>(&QCPAxis::rangeChanged),
             on_axis_range);
     }
 
     //! Disonnects QCustomPlot signals.
-    void setDisconnected() { QObject::disconnect(*axis_conn); }
+
+    void setDisconnected() { QObject::disconnect(*m_axisConn); }
 
     //! Sets axesRange from SessionItem.
     void setAxisRangeFromItem()
     {
-        auto [lower, upper] = controller->currentItem()->range();
-        axis->setRange(QCPRange(lower, upper));
+        auto [lower, upper] = m_controller->currentItem()->range();
+        m_axis->setRange(QCPRange(lower, upper));
     }
 
-    void update_log_scale()
+    //! Sets log scale from item.
+
+    void setAxisLogScaleFromItem()
     {
-        Utils::SetLogarithmicScale(axis, controller->currentItem()->is_in_log());
+        Utils::SetLogarithmicScale(m_axis, m_controller->currentItem()->is_in_log());
+    }
+
+    //! Init axis from item and setup connections.
+
+    void init_axis()
+    {
+        setAxisRangeFromItem();
+        setAxisLogScaleFromItem();
+        setConnected();
     }
 
     ~AxesPlotControllerImpl() { setDisconnected(); }
@@ -75,28 +88,24 @@ ViewportAxisPlotController::~ViewportAxisPlotController() = default;
 
 void ViewportAxisPlotController::subscribe()
 {
-    p_impl->setAxisRangeFromItem();
-
     auto on_property_change = [this](SessionItem* item, std::string name) {
-        if (p_impl->block_update)
+        if (p_impl->m_blockUpdate)
             return;
 
         if (name == ViewportAxisItem::P_MIN)
-            p_impl->axis->setRangeLower(item->property<double>(name));
+            p_impl->m_axis->setRangeLower(item->property<double>(name));
 
         if (name == ViewportAxisItem::P_MAX)
-            p_impl->axis->setRangeUpper(item->property<double>(name));
+            p_impl->m_axis->setRangeUpper(item->property<double>(name));
 
         if (name == ViewportAxisItem::P_IS_LOG)
-            p_impl->update_log_scale();
+            p_impl->setAxisLogScaleFromItem();
 
-        p_impl->axis->parentPlot()->replot();
+        p_impl->m_axis->parentPlot()->replot();
     };
     setOnPropertyChange(on_property_change);
 
-    p_impl->setConnected();
-
-    p_impl->update_log_scale();
+    p_impl->init_axis();
 }
 
 void ViewportAxisPlotController::unsubscribe()
