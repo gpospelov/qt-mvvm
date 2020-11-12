@@ -24,11 +24,12 @@ size_t total_bin_count(Data1DItem* item)
 
 Data1DItem::Data1DItem() : CompoundItem(Constants::Data1DItemType)
 {
-    addProperty(P_VALUES, std::vector<double>())->setDisplayName("Values");
+    // prevent editing in widgets, since there is no corresponding editor
+    addProperty(P_VALUES, std::vector<double>())->setDisplayName("Values")->setEditable(false);
+
     registerTag(
         TagInfo(T_AXIS, 0, 1, {Constants::FixedBinAxisItemType, Constants::PointwiseAxisItemType}));
     setContent(std::vector<double>());
-    setEditable(false); // prevent editing in widgets, since there is no corresponding editor
 }
 
 //! Sets axis. Bin content will be set to zero.
@@ -50,7 +51,7 @@ void Data1DItem::setContent(const std::vector<double>& data)
     if (total_bin_count(this) != data.size())
         throw std::runtime_error("Data1DItem::setContent() -> Data doesn't match size of axis");
 
-    setData(data);
+    setProperty(P_VALUES, data);
 }
 
 //! Returns coordinates of bin centers.
@@ -65,5 +66,5 @@ std::vector<double> Data1DItem::binCenters() const
 
 std::vector<double> Data1DItem::binValues() const
 {
-    return data<std::vector<double>>();
+    return property<std::vector<double>>(P_VALUES);
 }

@@ -60,8 +60,11 @@ Data1DPlotController::~Data1DPlotController() = default;
 
 void Data1DPlotController::subscribe()
 {
-    auto on_data_change = [this](SessionItem*, int) { p_impl->update_graph_points(this); };
-    setOnDataChange(on_data_change);
+    auto on_property_change = [this](SessionItem*, std::string property_name) {
+        if (property_name == Data1DItem::P_VALUES)
+            p_impl->update_graph_points(this);
+    };
+    setOnPropertyChange(on_property_change);
 
     p_impl->update_graph_points(this);
 }
