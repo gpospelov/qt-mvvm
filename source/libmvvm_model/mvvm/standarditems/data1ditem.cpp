@@ -24,6 +24,7 @@ size_t total_bin_count(Data1DItem* item)
 
 Data1DItem::Data1DItem() : CompoundItem(Constants::Data1DItemType)
 {
+    addProperty(P_VALUES, std::vector<double>())->setDisplayName("Values");
     registerTag(
         TagInfo(T_AXIS, 0, 1, {Constants::FixedBinAxisItemType, Constants::PointwiseAxisItemType}));
     setContent(std::vector<double>());
