@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/core/variant.h>
 #include <mvvm/commands/setvaluecommand.h>
+#include <mvvm/core/variant.h>
 #include <mvvm/model/path.h>
 #include <mvvm/model/sessionitem.h>
 #include <sstream>
@@ -34,8 +34,8 @@ struct SetValueCommand::SetValueCommandImpl {
 // ----------------------------------------------------------------------------
 
 SetValueCommand::SetValueCommand(SessionItem* item, Variant value, int role)
-    : AbstractItemCommand(item),
-      p_impl(std::make_unique<SetValueCommandImpl>(std::move(value), role))
+    : AbstractItemCommand(item)
+    , p_impl(std::make_unique<SetValueCommandImpl>(std::move(value), role))
 {
     setDescription(generate_description(p_impl->m_value.toString().toStdString()));
     p_impl->m_item_path = pathFromItem(item);

@@ -23,8 +23,8 @@ struct Project::ProjectImpl {
     ProjectChangedController m_change_controller;
 
     ProjectImpl(const ProjectContext& context)
-        : m_context(context),
-          m_change_controller(context.m_models_callback(), context.m_modified_callback)
+        : m_context(context)
+        , m_change_controller(context.m_models_callback(), context.m_modified_callback)
     {
     }
 
@@ -53,8 +53,8 @@ Project::Project(const ProjectContext& context) : p_impl(std::make_unique<Projec
 
 Project::~Project() = default;
 
-//! Returns the full path to a project directory. It is a name where the project has been last time saved,
-//! or loaded from.
+//! Returns the full path to a project directory. It is a name where the project has been last time
+//! saved, or loaded from.
 
 std::string Project::projectDir() const
 {

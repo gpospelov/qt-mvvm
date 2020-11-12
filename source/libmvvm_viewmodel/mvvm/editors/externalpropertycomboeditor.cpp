@@ -17,8 +17,10 @@
 using namespace ModelView;
 
 ExternalPropertyComboEditor::ExternalPropertyComboEditor(callback_t callback, QWidget* parent)
-    : CustomEditor(parent), m_getPropertiesCallback(std::move(callback)), m_box(new QComboBox),
-      m_comboModel(new QStandardItemModel(this))
+    : CustomEditor(parent)
+    , m_getPropertiesCallback(std::move(callback))
+    , m_box(new QComboBox)
+    , m_comboModel(new QStandardItemModel(this))
 {
     setAutoFillBackground(true);
     setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);

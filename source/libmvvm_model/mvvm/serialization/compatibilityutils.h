@@ -38,7 +38,6 @@ bool IsCompatibleUniversalTag(const SessionItemContainer& container, const TagIn
 MVVM_MODEL_EXPORT
 bool IsCompatibleSinglePropertyTag(const SessionItemContainer& container, const TagInfo& taginfo);
 
-
 } // namespace Compatibility
 
 } // namespace ModelView

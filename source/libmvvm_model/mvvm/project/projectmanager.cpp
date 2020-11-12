@@ -42,7 +42,10 @@ struct ProjectManager::ProjectManagerImpl {
     bool saveCurrentProject() { return saveCurrentProjectAs(m_current_project->projectDir()); }
 
     //! Saves the project into a given directory.
-    bool saveCurrentProjectAs(const std::string& dirname) { return m_current_project->save(dirname); }
+    bool saveCurrentProjectAs(const std::string& dirname)
+    {
+        return m_current_project->save(dirname);
+    }
 
     //! Loads the project from a given directory.
     bool loadFrom(const std::string& dirname) { return m_current_project->load(dirname); }

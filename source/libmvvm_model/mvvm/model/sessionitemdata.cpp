@@ -35,7 +35,7 @@ Variant SessionItemData::data(int role) const
 //! Sets the data for given role. Returns true if data was changed.
 //! If variant is invalid, corresponding role will be removed.
 
-bool SessionItemData::setData(const Variant &value, int role)
+bool SessionItemData::setData(const Variant& value, int role)
 {
     assure_validity(value, role);
 
@@ -75,7 +75,7 @@ bool SessionItemData::hasData(int role) const
 
 //! Check if variant is compatible
 
-void SessionItemData::assure_validity(const Variant &variant, int role)
+void SessionItemData::assure_validity(const Variant& variant, int role)
 {
     if (variant.typeName() == QStringLiteral("QString"))
         throw std::runtime_error("Attempt to set QString based variant");

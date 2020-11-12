@@ -14,8 +14,8 @@
 #include <mvvm/model/itemutils.h>
 #include <mvvm/model/mvvm_types.h>
 #include <mvvm/model/sessionitem.h>
-#include <mvvm/viewmodel/viewmodel.h>
 #include <mvvm/viewmodel/viewitem.h>
+#include <mvvm/viewmodel/viewmodel.h>
 #include <mvvm/viewmodel/viewmodelutils.h>
 #include <set>
 

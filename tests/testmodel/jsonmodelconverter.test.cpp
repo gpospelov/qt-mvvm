@@ -18,8 +18,8 @@
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/model/taginfo.h>
-#include <mvvm/serialization/jsonmodelconverter.h>
 #include <mvvm/serialization/jsonitemformatassistant.h>
+#include <mvvm/serialization/jsonmodelconverter.h>
 #include <stdexcept>
 
 using namespace ModelView;
@@ -126,7 +126,8 @@ TEST_F(JsonModelConverterTest, parentAndChildToJsonAndBack)
     EXPECT_EQ(reco_parent->model(), &target);
     EXPECT_EQ(reco_parent->modelType(), Constants::BaseType);
     EXPECT_EQ(reco_parent->parent(), target.rootItem());
-    EXPECT_EQ(reco_parent->displayName(), "SessionItem"); // Name changed because of ProjectConverter
+    EXPECT_EQ(reco_parent->displayName(),
+              "SessionItem"); // Name changed because of ProjectConverter
     EXPECT_EQ(reco_parent->childrenCount(), 1);
     EXPECT_EQ(reco_parent->identifier(), parent->identifier());
     EXPECT_EQ(reco_parent->defaultTag(), "defaultTag");

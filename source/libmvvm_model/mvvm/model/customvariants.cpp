@@ -12,7 +12,8 @@
 #include <mvvm/model/externalproperty.h>
 #include <mvvm/model/variant_constants.h>
 
-namespace {
+namespace
+{
 const QString qstring_name = "QString";
 }
 

@@ -32,8 +32,8 @@ class JsonItemContainerConverterTest : public FolderBasedTest
 {
 public:
     JsonItemContainerConverterTest()
-        : FolderBasedTest("test_JsonItemContainerConverterTest"),
-          m_itemdata_converter(std::make_unique<JsonItemDataConverter>())
+        : FolderBasedTest("test_JsonItemContainerConverterTest")
+        , m_itemdata_converter(std::make_unique<JsonItemDataConverter>())
     {
     }
 

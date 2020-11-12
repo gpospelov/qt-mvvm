@@ -8,9 +8,9 @@
 // ************************************************************************** //
 
 #include <mvvm/commands/removeitemcommand.h>
+#include <mvvm/interfaces/itembackupstrategy.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
-#include <mvvm/interfaces/itembackupstrategy.h>
 #include <sstream>
 
 using namespace ModelView;
@@ -29,8 +29,8 @@ struct RemoveItemCommand::RemoveItemCommandImpl {
 };
 
 RemoveItemCommand::RemoveItemCommand(SessionItem* parent, TagRow tagrow)
-    : AbstractItemCommand(parent),
-      p_impl(std::make_unique<RemoveItemCommandImpl>(std::move(tagrow)))
+    : AbstractItemCommand(parent)
+    , p_impl(std::make_unique<RemoveItemCommandImpl>(std::move(tagrow)))
 {
     setDescription(generate_description(p_impl->tagrow));
     p_impl->backup_strategy = parent->model()->itemBackupStrategy();

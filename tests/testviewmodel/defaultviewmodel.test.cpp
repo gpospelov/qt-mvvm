@@ -835,7 +835,7 @@ TEST_F(DefaultViewModelTest, deleteGraphVromViewport)
     EXPECT_EQ(viewmodel.rowCount(), 3); // X, Y and Graph
     QModelIndex graph_index = viewmodel.index(2, 0);
     auto graphLabel = dynamic_cast<ViewLabelItem*>(viewmodel.itemFromIndex(graph_index));
-    ASSERT_TRUE( graphLabel != nullptr);
+    ASSERT_TRUE(graphLabel != nullptr);
     EXPECT_EQ(graphLabel->item(), graph_item);
 
     // removing graph item

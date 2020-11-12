@@ -17,8 +17,8 @@
 #include <mvvm/model_export.h>
 #include <string>
 #include <type_traits>
-#include <vector>
 #include <unordered_set>
+#include <vector>
 
 namespace ModelView
 {
@@ -82,7 +82,7 @@ template <typename C> std::vector<double> Imag(const C& container)
 
 //! Returns copy of container with all duplicated elements filtered our. The order is preserved.
 
-template<typename C> C UniqueWithOrder(const C& container)
+template <typename C> C UniqueWithOrder(const C& container)
 {
     C result;
 
@@ -101,7 +101,6 @@ template <typename A, typename B> bool Contains(const A& container, const B& ele
 {
     return std::find(container.begin(), container.end(), element) != container.end();
 }
-
 
 } // namespace Utils
 

@@ -55,7 +55,7 @@ SessionItem* CommandService::copyItem(const SessionItem* item, SessionItem* pare
     return process_command<CopyItemCommand>(item, parent, TagRow{tagrow.tag, actual_row});
 }
 
-bool CommandService::setData(SessionItem* item, const Variant &value, int role)
+bool CommandService::setData(SessionItem* item, const Variant& value, int role)
 {
     if (!item)
         return false;

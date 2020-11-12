@@ -11,9 +11,9 @@
 #define MVVM_PROJECT_PROJECT_TYPES_H
 
 #include <functional>
+#include <mvvm/model_export.h>
 #include <string>
 #include <vector>
-#include <mvvm/model_export.h>
 
 namespace ModelView
 {

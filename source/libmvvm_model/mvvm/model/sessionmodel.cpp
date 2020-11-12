@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include <mvvm/commands/commandservice.h>
+#include <mvvm/factories/itemcataloguefactory.h>
 #include <mvvm/model/customvariants.h>
 #include <mvvm/model/itemcatalogue.h>
 #include <mvvm/model/itemfactory.h>
@@ -21,14 +22,14 @@
 #include <mvvm/serialization/jsonitembackupstrategy.h>
 #include <mvvm/serialization/jsonitemcopystrategy.h>
 #include <mvvm/signals/modelmapper.h>
-#include <mvvm/factories/itemcataloguefactory.h>
 
 using namespace ModelView;
 
 SessionModel::SessionModel(std::string model_type, std::shared_ptr<ItemPool> pool)
-    : m_item_manager(std::make_unique<ItemManager>()),
-      m_commands(std::make_unique<CommandService>(this)), m_model_type(std::move(model_type)),
-      m_mapper(std::make_unique<ModelMapper>(this))
+    : m_item_manager(std::make_unique<ItemManager>())
+    , m_commands(std::make_unique<CommandService>(this))
+    , m_model_type(std::move(model_type))
+    , m_mapper(std::make_unique<ModelMapper>(this))
 {
     if (pool)
         m_item_manager->setItemPool(std::move(pool));

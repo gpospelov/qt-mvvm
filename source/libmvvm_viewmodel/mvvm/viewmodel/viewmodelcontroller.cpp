@@ -160,8 +160,8 @@ struct ViewModelController::ViewModelControllerImpl {
 };
 
 ViewModelController::ViewModelController(SessionModel* session_model, ViewModelBase* view_model)
-    : ModelListener(session_model),
-      p_impl(std::make_unique<ViewModelControllerImpl>(this, view_model))
+    : ModelListener(session_model)
+    , p_impl(std::make_unique<ViewModelControllerImpl>(this, view_model))
 {
     auto on_data_change = [this](SessionItem* item, int role) { onDataChange(item, role); };
     setOnDataChange(on_data_change);

@@ -8,8 +8,8 @@
 // ************************************************************************** //
 
 #include "google_test.h"
-#include <testconfig.h>
 #include <mvvm/utils/binutils.h>
+#include <testconfig.h>
 
 using namespace ModelView;
 
@@ -27,8 +27,8 @@ BinUtilsTest::~BinUtilsTest() = default;
 
 TEST_F(BinUtilsTest, testBinaryFiles)
 {
-    std::string root_path =  TestConfig::TestData();
-    
+    std::string root_path = TestConfig::TestData();
+
     std::string binary_file1 = root_path + std::string("/") + "pdf_file";
     std::string binary_file2 = root_path + std::string("/") + "png_file.png";
     std::string binary_file3 = root_path + std::string("/") + "word_file";
@@ -46,14 +46,13 @@ TEST_F(BinUtilsTest, testBinaryFiles)
     EXPECT_FALSE(Utils::is_text(binary_file3));
     EXPECT_FALSE(Utils::is_text(binary_file4));
     EXPECT_FALSE(Utils::is_text(binary_file5));
-
 }
 
 //! Testing text files
 
 TEST_F(BinUtilsTest, testTextFiles)
 {
-    std::string root_path =  TestConfig::TestData();
+    std::string root_path = TestConfig::TestData();
 
     std::string text_file1 = root_path + std::string("/") + "text_UTF-8.txt";
     std::string text_file2 = root_path + std::string("/") + "text_UTF-8-BOM.txt";
@@ -63,5 +62,4 @@ TEST_F(BinUtilsTest, testTextFiles)
 
     EXPECT_FALSE(Utils::is_binary(text_file1));
     EXPECT_FALSE(Utils::is_binary(text_file2));
-
 }

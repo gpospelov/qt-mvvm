@@ -8,9 +8,9 @@
 // ************************************************************************** //
 
 #include "google_test.h"
+#include <mvvm/factories/itemcataloguefactory.h>
 #include <mvvm/model/itemcatalogue.h>
 #include <mvvm/model/propertyitem.h>
-#include <mvvm/factories/itemcataloguefactory.h>
 #include <mvvm/standarditems/vectoritem.h>
 #include <stdexcept>
 

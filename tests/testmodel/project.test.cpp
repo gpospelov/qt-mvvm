@@ -40,9 +40,9 @@ class ProjectTest : public FolderBasedTest
 {
 public:
     ProjectTest()
-        : FolderBasedTest("test_ProjectTest"),
-          sample_model(std::make_unique<SessionModel>(samplemodel_name)),
-          material_model(std::make_unique<SessionModel>(materialmodel_name))
+        : FolderBasedTest("test_ProjectTest")
+        , sample_model(std::make_unique<SessionModel>(samplemodel_name))
+        , material_model(std::make_unique<SessionModel>(materialmodel_name))
     {
     }
     ~ProjectTest();

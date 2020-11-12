@@ -202,7 +202,8 @@ TEST_F(ViewModelUtilsTest, UniqueItemsFromIndex)
     QModelIndexList index_list = {viewmodel.index(0, 0), viewmodel.index(0, 1),
                                   viewmodel.index(0, 2), viewmodel.index(0, 3)};
 
-    EXPECT_EQ(Utils::ItemsFromIndex(index_list), std::vector<SessionItem*>({&item1, &item2, &item1, &item2}));
+    EXPECT_EQ(Utils::ItemsFromIndex(index_list),
+              std::vector<SessionItem*>({&item1, &item2, &item1, &item2}));
     EXPECT_EQ(Utils::UniqueItemsFromIndex(index_list), std::vector<SessionItem*>({&item1, &item2}));
 }
 

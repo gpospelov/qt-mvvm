@@ -16,8 +16,10 @@
 using namespace ModelView;
 
 ItemsTreeView::ItemsTreeView(QWidget* parent)
-    : QWidget(parent), m_treeView(new QTreeView), m_delegate(std::make_unique<ViewModelDelegate>()),
-      m_block_selection(false)
+    : QWidget(parent)
+    , m_treeView(new QTreeView)
+    , m_delegate(std::make_unique<ViewModelDelegate>())
+    , m_block_selection(false)
 {
     auto layout = new QVBoxLayout;
     layout->setMargin(0);
