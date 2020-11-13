@@ -71,10 +71,10 @@ TEST_F(GraphViewportPlotControllerTest, addGraphAndSetItem)
     auto viewport_item = model.insertItem<GraphViewportItem>();
 
     auto data_item = model.insertItem<Data1DItem>();
-    const std::vector<double> expected_content = {1.0, 2.0, 3.0};
+    const std::vector<double> expected_values = {1.0, 2.0, 3.0};
     const std::vector<double> expected_centers = {0.5, 1.5, 2.5};
     data_item->setAxis(FixedBinAxisItem::create(3, 0.0, 3.0));
-    data_item->setContent(expected_content);
+    data_item->setValues(expected_values);
 
     auto graph_item = model.insertItem<GraphItem>(viewport_item);
     graph_item->setDataItem(data_item);
@@ -86,8 +86,8 @@ TEST_F(GraphViewportPlotControllerTest, addGraphAndSetItem)
     // QCustomPlot axis should correspond to
     EXPECT_DOUBLE_EQ(custom_plot->xAxis->range().lower, expected_centers[0]);
     EXPECT_DOUBLE_EQ(custom_plot->xAxis->range().upper, expected_centers[2]);
-    EXPECT_DOUBLE_EQ(custom_plot->yAxis->range().lower, expected_content[0]);
-    EXPECT_DOUBLE_EQ(custom_plot->yAxis->range().upper, expected_content[2]);
+    EXPECT_DOUBLE_EQ(custom_plot->yAxis->range().lower, expected_values[0]);
+    EXPECT_DOUBLE_EQ(custom_plot->yAxis->range().upper, expected_values[2]);
 }
 
 //! Checks consequitive graph adding/removal
@@ -107,15 +107,15 @@ TEST_F(GraphViewportPlotControllerTest, addAndRemoveGraphs)
 
     // Populating with data items
     auto data1 = model.insertItem<Data1DItem>();
-    const std::vector<double> expected_content1 = {1.0, 2.0, 3.0};
+    const std::vector<double> expected_values1 = {1.0, 2.0, 3.0};
     const std::vector<double> expected_centers = {0.5, 1.5, 2.5};
     data1->setAxis(FixedBinAxisItem::create(3, 0.0, 3.0));
-    data1->setContent(expected_content1);
+    data1->setValues(expected_values1);
 
     auto data2 = model.insertItem<Data1DItem>();
-    const std::vector<double> expected_content2 = {4.0, 5.0, 6.0};
+    const std::vector<double> expected_values2 = {4.0, 5.0, 6.0};
     data2->setAxis(FixedBinAxisItem::create(3, 0.0, 3.0));
-    data2->setContent(expected_content2);
+    data2->setValues(expected_values2);
 
     // adding graph item to viewport
     auto graph_item1 = model.insertItem<GraphItem>(viewport_item, {"", 0});
@@ -139,8 +139,8 @@ TEST_F(GraphViewportPlotControllerTest, addAndRemoveGraphs)
     viewport_item->update_viewport();
     EXPECT_DOUBLE_EQ(custom_plot->xAxis->range().lower, expected_centers[0]);
     EXPECT_DOUBLE_EQ(custom_plot->xAxis->range().upper, expected_centers[2]);
-    EXPECT_DOUBLE_EQ(custom_plot->yAxis->range().lower, expected_content1[0]);
-    EXPECT_DOUBLE_EQ(custom_plot->yAxis->range().upper, expected_content2[2]);
+    EXPECT_DOUBLE_EQ(custom_plot->yAxis->range().lower, expected_values1[0]);
+    EXPECT_DOUBLE_EQ(custom_plot->yAxis->range().upper, expected_values2[2]);
 
     // removing one GraphItem
     model.removeItem(viewport_item, {ViewportItem::T_ITEMS, 1});
@@ -230,10 +230,10 @@ TEST_F(GraphViewportPlotControllerTest, switchBetweenTwoViewports)
     auto viewport_item1 = model.insertItem<GraphViewportItem>();
 
     auto data_item = model.insertItem<Data1DItem>();
-    const std::vector<double> expected_content = {1.0, 2.0, 3.0};
+    const std::vector<double> expected_values = {1.0, 2.0, 3.0};
     const std::vector<double> expected_centers = {0.5, 1.5, 2.5};
     data_item->setAxis(FixedBinAxisItem::create(3, 0.0, 3.0));
-    data_item->setContent(expected_content);
+    data_item->setValues(expected_values);
 
     auto graph_item = model.insertItem<GraphItem>(viewport_item0);
     graph_item->setDataItem(data_item);

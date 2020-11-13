@@ -61,14 +61,14 @@ TEST_F(GraphItemTest, binCenters)
     auto data_item = model.insertItem<Data1DItem>();
     auto graph_item = model.insertItem<GraphItem>();
 
-    std::vector<double> expected_content = {1.0, 2.0, 3.0};
+    std::vector<double> expected_values = {1.0, 2.0, 3.0};
     std::vector<double> expected_centers = {0.5, 1.5, 2.5};
     data_item->setAxis(FixedBinAxisItem::create(3, 0.0, 3.0));
-    data_item->setContent(expected_content);
+    data_item->setValues(expected_values);
 
     graph_item->setDataItem(data_item);
 
-    EXPECT_EQ(graph_item->binValues(), expected_content);
+    EXPECT_EQ(graph_item->binValues(), expected_values);
     EXPECT_EQ(graph_item->binCenters(), expected_centers);
 }
 
@@ -81,10 +81,10 @@ TEST_F(GraphItemTest, setNullData)
     auto graph_item = model.insertItem<GraphItem>();
 
     // preparing data item
-    std::vector<double> expected_content = {1.0, 2.0, 3.0};
+    std::vector<double> expected_values = {1.0, 2.0, 3.0};
     std::vector<double> expected_centers = {0.5, 1.5, 2.5};
     data_item->setAxis(FixedBinAxisItem::create(3, 0.0, 3.0));
-    data_item->setContent(expected_content);
+    data_item->setValues(expected_values);
 
     graph_item->setDataItem(data_item);
     EXPECT_EQ(graph_item->dataItem(), data_item);
@@ -125,17 +125,17 @@ TEST_F(GraphItemTest, setFromGraphItem)
     auto graph_item = model.insertItem<GraphItem>();
     auto graph_item2 = model.insertItem<GraphItem>();
 
-    std::vector<double> expected_content = {1.0, 2.0, 3.0};
+    std::vector<double> expected_values = {1.0, 2.0, 3.0};
     std::vector<double> expected_centers = {0.5, 1.5, 2.5};
     data_item->setAxis(FixedBinAxisItem::create(3, 0.0, 3.0));
-    data_item->setContent(expected_content);
+    data_item->setValues(expected_values);
 
     graph_item->setDataItem(data_item);
     graph_item->item<PenItem>(GraphItem::P_PEN)->setProperty(PenItem::P_COLOR, QColor(Qt::red));
 
     graph_item2->setFromGraphItem(graph_item);
 
-    EXPECT_EQ(graph_item2->binValues(), expected_content);
+    EXPECT_EQ(graph_item2->binValues(), expected_values);
     EXPECT_EQ(graph_item2->binCenters(), expected_centers);
     EXPECT_EQ(graph_item2->item<PenItem>(GraphItem::P_PEN)->property<QColor>(PenItem::P_COLOR),
               QColor(Qt::red));

@@ -36,8 +36,8 @@ TEST_F(Data1DItemTest, initialState)
     EXPECT_EQ(item.getItem(Data1DItem::T_AXIS), nullptr);
     EXPECT_EQ(item.binCenters(), std::vector<double>());
     EXPECT_EQ(item.binValues(), std::vector<double>());
+    EXPECT_EQ(item.binErrors(), std::vector<double>());
     EXPECT_FALSE(item.hasData());
-    EXPECT_TRUE(item.property<std::vector<double>>(Data1DItem::P_VALUES).empty());
 }
 
 //! Checking the method ::setFixedBinAxis.
@@ -73,10 +73,10 @@ TEST_F(Data1DItemTest, setContent)
 
     // check that it is not possible to set content to uninitialized axis
     std::vector<double> expected_content = {1.0, 2.0, 3.0};
-    EXPECT_THROW(item.setContent(expected_content), std::runtime_error);
+    EXPECT_THROW(item.setValues(expected_content), std::runtime_error);
 
     item.setAxis(FixedBinAxisItem::create(3, 0.0, 3.0));
-    item.setContent(expected_content);
+    item.setValues(expected_content);
     EXPECT_EQ(item.binValues(), expected_content);
 }
 
@@ -119,5 +119,5 @@ TEST_F(Data1DItemTest, checkSignalsOnContentChange)
     EXPECT_CALL(widget, onAboutToRemoveItem(_, _)).Times(0);
 
     // trigger change
-    item->setContent(std::vector<double>{1.0, 2.0, 3.0});
+    item->setValues(std::vector<double>{1.0, 2.0, 3.0});
 }

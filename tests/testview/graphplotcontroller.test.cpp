@@ -54,7 +54,7 @@ TEST_F(GraphPlotControllerTest, setItem)
     data_item->setAxis(FixedBinAxisItem::create(2, 0.0, 2.0));
     std::vector<double> expected_centers = {0.5, 1.5};
     std::vector<double> expected_values = {42.0, 43.0};
-    data_item->setContent(expected_values);
+    data_item->setValues(expected_values);
 
     // setup graph item
     auto graph_item = model.insertItem<GraphItem>();
@@ -84,7 +84,7 @@ TEST_F(GraphPlotControllerTest, changeGraphAppearance)
     data_item->setAxis(FixedBinAxisItem::create(2, 0.0, 2.0));
     std::vector<double> expected_centers = {0.5, 1.5};
     std::vector<double> expected_values = {42.0, 43.0};
-    data_item->setContent(expected_values);
+    data_item->setValues(expected_values);
 
     // setup graph item
     auto graph_item = model.insertItem<GraphItem>();
@@ -123,7 +123,7 @@ TEST_F(GraphPlotControllerTest, setPointwiseItem)
     SessionModel model;
     auto data_item = model.insertItem<Data1DItem>();
     data_item->setAxis(PointwiseAxisItem::create(expected_centers));
-    data_item->setContent(expected_values);
+    data_item->setValues(expected_values);
 
     // setup graph item
     auto graph_item = model.insertItem<GraphItem>();
@@ -165,7 +165,7 @@ TEST_F(GraphPlotControllerTest, setDataAfter)
     data_item->setAxis(FixedBinAxisItem::create(2, 0.0, 2.0));
     std::vector<double> expected_centers = {0.5, 1.5};
     std::vector<double> expected_values = {42.0, 43.0};
-    data_item->setContent(expected_values);
+    data_item->setValues(expected_values);
 
     graph_item->setDataItem(data_item);
 
@@ -188,7 +188,7 @@ TEST_F(GraphPlotControllerTest, unlinkFromItem)
     data_item->setAxis(FixedBinAxisItem::create(2, 0.0, 2.0));
     std::vector<double> expected_centers = {0.5, 1.5};
     std::vector<double> expected_values = {42.0, 43.0};
-    data_item->setContent(expected_values);
+    data_item->setValues(expected_values);
 
     // setup graph item
     auto graph_item = model.insertItem<GraphItem>();

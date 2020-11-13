@@ -43,7 +43,7 @@ GraphModel::GraphModel() : SessionModel("GraphModel")
 void GraphModel::set_data(const std::vector<double>& data)
 {
     auto item = topItem<ContainerItem>()->item<Data1DItem>(ContainerItem::T_ITEMS);
-    item->setContent(data);
+    item->setValues(data);
 }
 
 //! Creates data container, Data1DItem, viewport and GraphItem.
@@ -68,7 +68,7 @@ void GraphModel::add_graph(ModelView::ContainerItem* container,
 
     auto data = insertItem<Data1DItem>(container);
     data->setAxis(FixedBinAxisItem::create(static_cast<int>(points.size()), xmin, xmax));
-    data->setContent(points);
+    data->setValues(points);
 
     auto graph = insertItem<GraphItem>(viewport);
     graph->setDataItem(data);
