@@ -33,12 +33,12 @@ public:
 
     void setAxis(std::unique_ptr<BinnedAxisItem> axis);
 
-    void setValues(const std::vector<double>& data);
-
     std::vector<double> binCenters() const;
 
+    void setValues(const std::vector<double>& data);
     std::vector<double> binValues() const;
 
+    void setErrors(const std::vector<double>& errors);
     std::vector<double> binErrors() const;
 };
 

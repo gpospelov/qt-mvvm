@@ -60,3 +60,8 @@ std::vector<double> GraphItem::binValues() const
 {
     return dataItem() ? dataItem()->binValues() : std::vector<double>();
 }
+
+std::vector<double> GraphItem::binErrors() const
+{
+    return dataItem() ? dataItem()->binErrors() : std::vector<double>();
+}

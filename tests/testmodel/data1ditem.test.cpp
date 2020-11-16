@@ -65,9 +65,9 @@ TEST_F(Data1DItemTest, setFixedBinAxis)
     EXPECT_EQ(item.binValues(), expected_values);
 }
 
-//! Checking the method ::setContent.
+//! Checking the method ::setValues.
 
-TEST_F(Data1DItemTest, setContent)
+TEST_F(Data1DItemTest, setValues)
 {
     Data1DItem item;
 
@@ -78,6 +78,23 @@ TEST_F(Data1DItemTest, setContent)
     item.setAxis(FixedBinAxisItem::create(3, 0.0, 3.0));
     item.setValues(expected_content);
     EXPECT_EQ(item.binValues(), expected_content);
+}
+
+//! Checking the method ::setErrors.
+
+TEST_F(Data1DItemTest, setErrors)
+{
+    Data1DItem item;
+
+    // check that it is not possible to errors to uninitialized axis
+    std::vector<double> expected_errors = {10.0, 20.0, 30.0};
+
+    EXPECT_THROW(item.setErrors(expected_errors), std::runtime_error);
+
+    item.setAxis(FixedBinAxisItem::create(3, 0.0, 3.0));
+    item.setErrors(expected_errors);
+
+    EXPECT_EQ(item.binErrors(), expected_errors);
 }
 
 //! Checking the signals when axes changed.
@@ -102,9 +119,9 @@ TEST_F(Data1DItemTest, checkSignalsOnAxisChange)
     item->setAxis(FixedBinAxisItem::create(3, 0.0, 3.0));
 }
 
-//! Checking the signals when content changed.
+//! Checking the signals when bin values changed.
 
-TEST_F(Data1DItemTest, checkSignalsOnContentChange)
+TEST_F(Data1DItemTest, checkSignalsOnBinValuesChange)
 {
     SessionModel model;
     auto item = model.insertItem<Data1DItem>();
