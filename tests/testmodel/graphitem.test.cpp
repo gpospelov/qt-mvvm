@@ -38,6 +38,7 @@ TEST_F(GraphItemTest, initialState)
     EXPECT_TRUE(item.dataItem() == nullptr);
     EXPECT_EQ(item.binCenters(), std::vector<double>{});
     EXPECT_EQ(item.binValues(), std::vector<double>{});
+    EXPECT_EQ(item.binErrors(), std::vector<double>{});
 }
 
 //! Setting dataItem in model context.
@@ -55,7 +56,7 @@ TEST_F(GraphItemTest, setDataItem)
 
 //! Setting dataItem in model context.
 
-TEST_F(GraphItemTest, binCenters)
+TEST_F(GraphItemTest, binValues)
 {
     SessionModel model;
     auto data_item = model.insertItem<Data1DItem>();
@@ -70,6 +71,28 @@ TEST_F(GraphItemTest, binCenters)
 
     EXPECT_EQ(graph_item->binValues(), expected_values);
     EXPECT_EQ(graph_item->binCenters(), expected_centers);
+}
+
+//! Setting dataItem with errors
+
+TEST_F(GraphItemTest, binErrors)
+{
+    SessionModel model;
+    auto data_item = model.insertItem<Data1DItem>();
+    auto graph_item = model.insertItem<GraphItem>();
+
+    std::vector<double> expected_values = {1.0, 2.0, 3.0};
+    std::vector<double> expected_centers = {0.5, 1.5, 2.5};
+    std::vector<double> expected_errors = {0.1, 0.2, 0.3};
+    data_item->setAxis(FixedBinAxisItem::create(3, 0.0, 3.0));
+    data_item->setValues(expected_values);
+    data_item->setErrors(expected_errors);
+
+    graph_item->setDataItem(data_item);
+
+    EXPECT_EQ(graph_item->binValues(), expected_values);
+    EXPECT_EQ(graph_item->binCenters(), expected_centers);
+    EXPECT_EQ(graph_item->binErrors(), expected_errors);
 }
 
 //! Check unlinking when nullptr is set as Data1DItem.
@@ -94,6 +117,7 @@ TEST_F(GraphItemTest, setNullData)
     EXPECT_TRUE(graph_item->dataItem() == nullptr);
     EXPECT_EQ(graph_item->binCenters(), std::vector<double>{});
     EXPECT_EQ(graph_item->binValues(), std::vector<double>{});
+    EXPECT_EQ(graph_item->binErrors(), std::vector<double>{});
 }
 
 //! Check signaling on set data item.
