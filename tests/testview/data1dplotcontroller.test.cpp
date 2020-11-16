@@ -65,6 +65,7 @@ TEST_F(Data1DPlotControllerTest, dataItemInInitialState)
 
     EXPECT_EQ(std::vector<double>(), TestUtils::binCenters(graph));
     EXPECT_EQ(std::vector<double>(), TestUtils::binValues(graph));
+    EXPECT_EQ(std::vector<double>(), TestUtils::binErrors(graph));
 }
 
 //! Testing controller when Data1DItem get it's axis after controller setup.
@@ -87,6 +88,7 @@ TEST_F(Data1DPlotControllerTest, axisAfter)
     data_item->setAxis(FixedBinAxisItem::create(1, 1.0, 2.0));
     EXPECT_EQ(data_item->binCenters(), TestUtils::binCenters(graph));
     EXPECT_EQ(data_item->binValues(), TestUtils::binValues(graph));
+    EXPECT_EQ(std::vector<double>(), TestUtils::binErrors(graph));
 }
 
 //! Testing graph points update.
@@ -109,11 +111,40 @@ TEST_F(Data1DPlotControllerTest, dataPoints)
     // checking that QCPGraph now has data points as in Data1DItem
     EXPECT_EQ(data_item->binCenters(), TestUtils::binCenters(graph));
     EXPECT_EQ(data_item->binValues(), TestUtils::binValues(graph));
+    EXPECT_EQ(data_item->binErrors(), TestUtils::binErrors(graph));
 
     // Setting item to nullptr. Current convention is that graph stays intact, but points disappear.
     controller.setItem(nullptr);
     EXPECT_EQ(std::vector<double>(), TestUtils::binCenters(graph));
     EXPECT_EQ(std::vector<double>(), TestUtils::binValues(graph));
+    EXPECT_EQ(std::vector<double>(), TestUtils::binErrors(graph));
+}
+
+//! Testing graph errors update.
+
+TEST_F(Data1DPlotControllerTest, errorBars)
+{
+    // creating custom plot and empty graph on it
+    auto custom_plot = std::make_unique<QCustomPlot>();
+    auto graph = custom_plot->addGraph();
+
+    // creating data item with single point
+    SessionModel model;
+    auto data_item = model.insertItem<Data1DItem>();
+    data_item->setAxis(FixedBinAxisItem::create(2, 1.0, 2.0));
+
+    // creating controller and point it to Data1DItem
+    Data1DPlotController controller(graph);
+    controller.setItem(data_item);
+
+    std::vector<double> expected_errors = {0.1, 0.2};
+    data_item->setErrors(expected_errors);
+    EXPECT_EQ(TestUtils::binErrors(graph), expected_errors);
+
+    // setting new errors
+    expected_errors = {0.3, 0.4};
+    data_item->setErrors(expected_errors);
+    EXPECT_EQ(TestUtils::binErrors(graph), expected_errors);
 }
 
 //! Testing two graph scenario.
