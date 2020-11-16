@@ -17,8 +17,8 @@
 #include <mvvm/standarditems/graphitem.h>
 #include <mvvm/standarditems/graphviewportitem.h>
 #include <mvvm/standarditems/plottableitems.h>
-#include <mvvm/widgets/widgetutils.h>
 #include <mvvm/utils/numericutils.h>
+#include <mvvm/widgets/widgetutils.h>
 #include <stdexcept>
 
 namespace
@@ -41,7 +41,6 @@ std::vector<double> bin_values(double amp_factor = 1.0)
     }
     return result;
 }
-
 } // namespace
 
 using namespace ModelView;
@@ -57,14 +56,13 @@ void GraphModel::add_graph()
 {
     auto data = insertItem<Data1DItem>(data_container());
     data->setAxis(FixedBinAxisItem::create(npoints, xmin, xmax));
-    data->setContent(bin_values(ModelView::Utils::RandDouble(0.5, 1.0)));
+    data->setValues(bin_values(ModelView::Utils::RandDouble(0.5, 1.0)));
 
     auto graph = insertItem<GraphItem>(viewport());
     graph->setDataItem(data);
     graph->item<PenItem>(GraphItem::P_PEN)
         ->setProperty(PenItem::P_COLOR, ModelView::Utils::random_color());
 }
-
 
 //! Remove last graph and data item.
 
@@ -91,7 +89,7 @@ void GraphModel::randomize_graphs()
         auto values = item->binValues();
         std::transform(std::begin(values), std::end(values), std::begin(values),
                        [](auto x) { return x * ModelView::Utils::RandDouble(0.8, 1.2); });
-        item->setContent(values);
+        item->setValues(values);
     }
 }
 

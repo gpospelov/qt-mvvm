@@ -47,8 +47,10 @@ public:
 // ----------------------------------------------------------------------------
 
 SelectableComboBoxEditor::SelectableComboBoxEditor(QWidget* parent)
-    : CustomEditor(parent), m_box(new QComboBox), m_wheelEventFilter(new WheelEventFilter(this)),
-      m_model(new QStandardItemModel(this))
+    : CustomEditor(parent)
+    , m_box(new QComboBox)
+    , m_wheelEventFilter(new WheelEventFilter(this))
+    , m_model(new QStandardItemModel(this))
 {
     setAutoFillBackground(true);
     setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);

@@ -36,8 +36,8 @@ TEST_F(Data1DItemTest, initialState)
     EXPECT_EQ(item.getItem(Data1DItem::T_AXIS), nullptr);
     EXPECT_EQ(item.binCenters(), std::vector<double>());
     EXPECT_EQ(item.binValues(), std::vector<double>());
-    EXPECT_TRUE(item.hasData());
-    EXPECT_TRUE(item.data<std::vector<double>>().empty());
+    EXPECT_EQ(item.binErrors(), std::vector<double>());
+    EXPECT_FALSE(item.hasData());
 }
 
 //! Checking the method ::setFixedBinAxis.
@@ -65,19 +65,36 @@ TEST_F(Data1DItemTest, setFixedBinAxis)
     EXPECT_EQ(item.binValues(), expected_values);
 }
 
-//! Checking the method ::setContent.
+//! Checking the method ::setValues.
 
-TEST_F(Data1DItemTest, setContent)
+TEST_F(Data1DItemTest, setValues)
 {
     Data1DItem item;
 
     // check that it is not possible to set content to uninitialized axis
     std::vector<double> expected_content = {1.0, 2.0, 3.0};
-    EXPECT_THROW(item.setContent(expected_content), std::runtime_error);
+    EXPECT_THROW(item.setValues(expected_content), std::runtime_error);
 
     item.setAxis(FixedBinAxisItem::create(3, 0.0, 3.0));
-    item.setContent(expected_content);
+    item.setValues(expected_content);
     EXPECT_EQ(item.binValues(), expected_content);
+}
+
+//! Checking the method ::setErrors.
+
+TEST_F(Data1DItemTest, setErrors)
+{
+    Data1DItem item;
+
+    // check that it is not possible to errors to uninitialized axis
+    std::vector<double> expected_errors = {10.0, 20.0, 30.0};
+
+    EXPECT_THROW(item.setErrors(expected_errors), std::runtime_error);
+
+    item.setAxis(FixedBinAxisItem::create(3, 0.0, 3.0));
+    item.setErrors(expected_errors);
+
+    EXPECT_EQ(item.binErrors(), expected_errors);
 }
 
 //! Checking the signals when axes changed.
@@ -89,20 +106,22 @@ TEST_F(Data1DItemTest, checkSignalsOnAxisChange)
 
     MockWidgetForItem widget(item);
 
-    const TagRow expected_tagrow{Data1DItem::T_AXIS, 0};
-    EXPECT_CALL(widget, onDataChange(item, ItemDataRole::DATA)).Times(1); // values should change
-    EXPECT_CALL(widget, onPropertyChange(_, _)).Times(0);
+    const std::string expected_value_tag{Data1DItem::P_VALUES};
+    const TagRow expected_axis_tagrow{Data1DItem::T_AXIS, 0};
+
+    EXPECT_CALL(widget, onDataChange(_, _)).Times(0);
+    EXPECT_CALL(widget, onPropertyChange(item, expected_value_tag)).Times(1);
     EXPECT_CALL(widget, onChildPropertyChange(_, _)).Times(0);
-    EXPECT_CALL(widget, onItemInserted(item, expected_tagrow)).Times(1);
+    EXPECT_CALL(widget, onItemInserted(item, expected_axis_tagrow)).Times(1);
     EXPECT_CALL(widget, onAboutToRemoveItem(_, _)).Times(0);
 
     // trigger change
     item->setAxis(FixedBinAxisItem::create(3, 0.0, 3.0));
 }
 
-//! Checking the signals when content changed.
+//! Checking the signals when bin values changed.
 
-TEST_F(Data1DItemTest, checkSignalsOnContentChange)
+TEST_F(Data1DItemTest, checkSignalsOnBinValuesChange)
 {
     SessionModel model;
     auto item = model.insertItem<Data1DItem>();
@@ -110,12 +129,12 @@ TEST_F(Data1DItemTest, checkSignalsOnContentChange)
 
     MockWidgetForItem widget(item);
 
-    EXPECT_CALL(widget, onDataChange(item, ItemDataRole::DATA)).Times(1); // values should change
-    EXPECT_CALL(widget, onPropertyChange(_, _)).Times(0);
+    EXPECT_CALL(widget, onDataChange(_, _)).Times(0);
+    EXPECT_CALL(widget, onPropertyChange(item, Data1DItem::P_VALUES)).Times(1);
     EXPECT_CALL(widget, onChildPropertyChange(_, _)).Times(0);
     EXPECT_CALL(widget, onItemInserted(_, _)).Times(0);
     EXPECT_CALL(widget, onAboutToRemoveItem(_, _)).Times(0);
 
     // trigger change
-    item->setContent(std::vector<double>{1.0, 2.0, 3.0});
+    item->setValues(std::vector<double>{1.0, 2.0, 3.0});
 }

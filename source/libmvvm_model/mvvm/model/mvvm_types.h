@@ -30,7 +30,7 @@ const int APPEARANCE = 3; //!< appearance flag
 const int LIMITS = 4;     //!< possibly limits on item's data
 const int TOOLTIP = 5;    //!< tooltip for item's data
 const int EDITORTYPE = 6; //!< type of custom editor for the data role
-}; // namespace ItemDataRole
+};                        // namespace ItemDataRole
 
 enum Appearance {
     NOFLAGS = 0x000,

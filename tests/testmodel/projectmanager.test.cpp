@@ -31,8 +31,8 @@ class ProjectManagerTest : public FolderBasedTest
 {
 public:
     ProjectManagerTest()
-        : FolderBasedTest("test_ProjectManager"),
-          sample_model(std::make_unique<ModelView::SessionModel>(samplemodel_name))
+        : FolderBasedTest("test_ProjectManager")
+        , sample_model(std::make_unique<ModelView::SessionModel>(samplemodel_name))
     {
     }
     ~ProjectManagerTest();

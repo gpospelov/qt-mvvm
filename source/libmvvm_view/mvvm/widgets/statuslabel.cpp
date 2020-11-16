@@ -57,7 +57,7 @@ void StatusLabel::paintEvent(QPaintEvent* event)
     painter.setFont(m_font);
 
     QRect bbox(0, 0, geometry().width(), geometry().height());
-    const int gap(Utils::WidthOfLetterM()/2); // make it smaller
+    const int gap(Utils::WidthOfLetterM() / 2); // make it smaller
     auto textRect = bbox.adjusted(gap, 0, gap, 0);
 
     painter.fillRect(bbox, QColor(Qt::white));

@@ -19,3 +19,14 @@ std::vector<double> TestUtils::binValues(const QCPGraph* graph)
 {
     return get_values(graph, [](auto x) { return x.value; });
 }
+
+std::vector<double> TestUtils::binErrors(const QCPGraph* graph)
+{
+    std::vector<double> result;
+    if (auto errorBars = GetPlottable<QCPErrorBars>(graph->parentPlot()); errorBars) {
+        auto container = errorBars->data();
+        std::transform(container->begin(), container->end(), std::back_inserter(result),
+                       [](auto x) { return x.errorPlus; });
+    };
+    return result;
+}

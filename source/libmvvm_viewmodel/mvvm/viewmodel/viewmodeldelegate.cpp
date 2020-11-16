@@ -22,8 +22,9 @@ const double scale_default_height_factor{1.2};
 using namespace ModelView;
 
 ViewModelDelegate::ViewModelDelegate(QObject* parent)
-    : QStyledItemDelegate(parent), m_editor_factory(std::make_unique<DefaultEditorFactory>()),
-      m_cell_decoration(std::make_unique<DefaultCellDecorator>())
+    : QStyledItemDelegate(parent)
+    , m_editor_factory(std::make_unique<DefaultEditorFactory>())
+    , m_cell_decoration(std::make_unique<DefaultCellDecorator>())
 {
 }
 

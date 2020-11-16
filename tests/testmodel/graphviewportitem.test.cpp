@@ -48,10 +48,10 @@ TEST_F(GraphViewportItemTest, addItem)
     auto graph_item = model.insertItem<GraphItem>(viewport_item);
     auto data_item = model.insertItem<Data1DItem>();
 
-    const std::vector<double> expected_content = {1.0, 2.0, 3.0};
+    const std::vector<double> expected_values = {1.0, 2.0, 3.0};
     const std::vector<double> expected_centers = {0.5, 1.5, 2.5};
     data_item->setAxis(FixedBinAxisItem::create(3, 0.0, 3.0));
-    data_item->setContent(expected_content);
+    data_item->setValues(expected_values);
 
     graph_item->setDataItem(data_item);
     EXPECT_EQ(viewport_item->graphItems().size(), 1);
@@ -67,7 +67,7 @@ TEST_F(GraphViewportItemTest, addItem)
     // y-axis of viewport should be set to min/max of expected_content
     auto yaxis = viewport_item->yAxis();
     auto [expected_amin, expected_amax] =
-        std::minmax_element(std::begin(expected_content), std::end(expected_content));
+        std::minmax_element(std::begin(expected_values), std::end(expected_values));
     EXPECT_DOUBLE_EQ(yaxis->property<double>(ViewportAxisItem::P_MIN), *expected_amin);
     EXPECT_DOUBLE_EQ(yaxis->property<double>(ViewportAxisItem::P_MAX), *expected_amax);
 }
@@ -101,10 +101,10 @@ TEST_F(GraphViewportItemTest, onSetDataItem)
 
     // setting upda tata item
     auto data_item = model.insertItem<Data1DItem>();
-    const std::vector<double> expected_content = {1.0, 2.0, 3.0};
+    const std::vector<double> expected_values = {1.0, 2.0, 3.0};
     const std::vector<double> expected_centers = {0.5, 1.5, 2.5};
     data_item->setAxis(FixedBinAxisItem::create(3, 0.0, 3.0));
-    data_item->setContent(expected_content);
+    data_item->setValues(expected_values);
 
     // inserting graph item
     auto graph_item = model.insertItem<GraphItem>(viewport_item);

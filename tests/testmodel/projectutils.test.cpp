@@ -26,8 +26,8 @@ class ProjectUtilsTest : public FolderBasedTest
 {
 public:
     ProjectUtilsTest()
-        : FolderBasedTest("test_ProjectUtils"),
-          sample_model(std::make_unique<SessionModel>("SampleModel"))
+        : FolderBasedTest("test_ProjectUtils")
+        , sample_model(std::make_unique<SessionModel>("SampleModel"))
     {
     }
 

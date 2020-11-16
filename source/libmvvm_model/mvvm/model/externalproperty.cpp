@@ -20,7 +20,7 @@ ExternalProperty::ExternalProperty(std::string text, QColor color, std::string i
 
 ExternalProperty ExternalProperty::undefined()
 {
-    return ExternalProperty("Undefined",  QColor(Qt::red));
+    return ExternalProperty("Undefined", QColor(Qt::red));
 }
 
 std::string ExternalProperty::text() const

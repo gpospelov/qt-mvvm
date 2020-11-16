@@ -821,7 +821,7 @@ TEST_F(DefaultViewModelTest, deleteGraphVromViewport)
     auto data_container = model.insertItem<ContainerItem>();
     auto data_item = model.insertItem<Data1DItem>(data_container);
     data_item->setAxis(FixedBinAxisItem::create(3, 0.0, 3.0));
-    data_item->setContent(std::vector<double>({1.0, 2.0, 3.0}));
+    data_item->setValues(std::vector<double>({1.0, 2.0, 3.0}));
 
     // creating Viewport with single graph
     auto viewport_item = model.insertItem<GraphViewportItem>();
@@ -835,7 +835,7 @@ TEST_F(DefaultViewModelTest, deleteGraphVromViewport)
     EXPECT_EQ(viewmodel.rowCount(), 3); // X, Y and Graph
     QModelIndex graph_index = viewmodel.index(2, 0);
     auto graphLabel = dynamic_cast<ViewLabelItem*>(viewmodel.itemFromIndex(graph_index));
-    ASSERT_TRUE( graphLabel != nullptr);
+    ASSERT_TRUE(graphLabel != nullptr);
     EXPECT_EQ(graphLabel->item(), graph_item);
 
     // removing graph item

@@ -110,8 +110,8 @@ VariantDependentEditorFactory::createEditor(const QModelIndex& index) const
 // ----------------------------------------------------------------------------
 
 DefaultEditorFactory::DefaultEditorFactory()
-    : m_roleDependentFactory(std::make_unique<RoleDependentEditorFactory>()),
-      m_variantDependentFactory(std::make_unique<VariantDependentEditorFactory>())
+    : m_roleDependentFactory(std::make_unique<RoleDependentEditorFactory>())
+    , m_variantDependentFactory(std::make_unique<VariantDependentEditorFactory>())
 {
 }
 

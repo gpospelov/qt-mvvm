@@ -10,8 +10,8 @@
 #include <QLineEdit>
 #include <cmath>
 #include <limits>
-#include <mvvm/editors/scientificspinbox.h>
 #include <mvvm/editors/editor_constants.h>
+#include <mvvm/editors/scientificspinbox.h>
 
 namespace
 {
@@ -26,8 +26,12 @@ bool useExponentialNotation(double val);
 using namespace ModelView;
 
 ScientificSpinBox::ScientificSpinBox(QWidget* parent)
-    : QAbstractSpinBox(parent), m_value(0.0), m_min(-max_val), m_max(max_val), m_step(1.0),
-      m_decimals(Constants::default_double_decimals)
+    : QAbstractSpinBox(parent)
+    , m_value(0.0)
+    , m_min(-max_val)
+    , m_max(max_val)
+    , m_step(1.0)
+    , m_decimals(Constants::default_double_decimals)
 {
     QLocale locale;
     locale.setNumberOptions(QLocale::RejectGroupSeparator);

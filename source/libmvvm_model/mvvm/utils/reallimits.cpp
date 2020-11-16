@@ -27,8 +27,10 @@ RealLimits::RealLimits()
 
 RealLimits::RealLimits(bool has_lower_limit, bool has_upper_limit, double lower_limit,
                        double upper_limit)
-    : m_has_lower_limit(has_lower_limit), m_has_upper_limit(has_upper_limit),
-      m_lower_limit(lower_limit), m_upper_limit(upper_limit)
+    : m_has_lower_limit(has_lower_limit)
+    , m_has_upper_limit(has_upper_limit)
+    , m_lower_limit(lower_limit)
+    , m_upper_limit(upper_limit)
 {
 }
 

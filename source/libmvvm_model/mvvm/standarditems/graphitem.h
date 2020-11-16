@@ -40,6 +40,8 @@ public:
     std::vector<double> binCenters() const;
 
     std::vector<double> binValues() const;
+
+    std::vector<double> binErrors() const;
 };
 
 } // namespace ModelView

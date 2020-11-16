@@ -9,12 +9,12 @@
 
 #include <QJsonArray>
 #include <QJsonObject>
+#include <mvvm/factories/itemconverterfactory.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/serialization/jsonitemconverter.h>
 #include <mvvm/serialization/jsonitemformatassistant.h>
 #include <mvvm/serialization/jsonmodelconverter.h>
-#include <mvvm/factories/itemconverterfactory.h>
 #include <stdexcept>
 
 using namespace ModelView;

@@ -49,8 +49,8 @@ TEST_F(AxisTitleControllerTest, setTextItem)
     auto textItem = model.insertItem<TextItem>();
 
     auto axis = custom_plot->xAxis;
-//    auto expected_pointSize = axis->labelFont().pointSize();
-//    auto expected_family = axis->labelFont().family();
+    //    auto expected_pointSize = axis->labelFont().pointSize();
+    //    auto expected_family = axis->labelFont().family();
 
     // this a values hardcoded in plottableitems.cpp. Shell we provide some customized way to create
     // TextItem with font/size suitable for QCPAxis ?

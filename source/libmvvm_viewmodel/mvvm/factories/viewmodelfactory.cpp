@@ -7,11 +7,11 @@
 //
 // ************************************************************************** //
 
+#include <mvvm/factories/viewmodelfactory.h>
 #include <mvvm/viewmodel/defaultviewmodel.h>
 #include <mvvm/viewmodel/propertyflatviewmodel.h>
 #include <mvvm/viewmodel/propertytableviewmodel.h>
 #include <mvvm/viewmodel/propertyviewmodel.h>
-#include <mvvm/factories/viewmodelfactory.h>
 #include <mvvm/viewmodel/topitemsviewmodel.h>
 
 using namespace ModelView;

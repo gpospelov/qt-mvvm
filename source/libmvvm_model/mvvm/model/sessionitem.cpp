@@ -40,8 +40,9 @@ struct SessionItem::SessionItemImpl {
     model_type m_modelType;
 
     SessionItemImpl(SessionItem* this_item)
-        : m_this_item(this_item), m_data(std::make_unique<SessionItemData>()),
-          m_tags(std::make_unique<SessionItemTags>())
+        : m_this_item(this_item)
+        , m_data(std::make_unique<SessionItemData>())
+        , m_tags(std::make_unique<SessionItemTags>())
     {
     }
 
@@ -305,12 +306,12 @@ SessionItem* SessionItem::setToolTip(const std::string& tooltip)
 std::string SessionItem::editorType() const
 {
     return hasData(ItemDataRole::EDITORTYPE) ? data<std::string>(ItemDataRole::EDITORTYPE)
-                                          : std::string();
+                                             : std::string();
 }
 
 //! Sets editor type. Allows creating custom editors in the cells of Qt trees and tables.
 
-SessionItem* SessionItem::setEditorType(const std::string &editor_type)
+SessionItem* SessionItem::setEditorType(const std::string& editor_type)
 {
     setData(editor_type, ItemDataRole::EDITORTYPE);
     return this;
@@ -378,8 +379,6 @@ SessionItemData* SessionItem::itemData()
     return p_impl->m_data.get();
 }
 
-
-
 SessionItemTags* SessionItem::itemTags() const
 {
     return p_impl->m_tags.get();
@@ -392,7 +391,7 @@ void SessionItem::setDataAndTags(std::unique_ptr<SessionItemData> data,
     p_impl->m_tags = std::move(tags);
 }
 
-bool SessionItem::setDataIntern(const Variant &variant, int role)
+bool SessionItem::setDataIntern(const Variant& variant, int role)
 {
     return p_impl->setData(variant, role);
 }

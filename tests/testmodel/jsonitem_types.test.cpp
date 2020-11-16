@@ -38,5 +38,5 @@ TEST_F(JsonItemTypesTest, logicalAnd)
 
     flags = ConverterFlags::PROJECT_MODE;
     EXPECT_FALSE(hasFlag(flags, ConverterFlags::COPY_JSON_DATA)
-                && hasFlag(flags, ConverterFlags::COPY_JSON_TAGS));
+                 && hasFlag(flags, ConverterFlags::COPY_JSON_TAGS));
 }

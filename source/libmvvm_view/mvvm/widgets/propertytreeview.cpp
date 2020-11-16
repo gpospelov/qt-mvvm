@@ -8,8 +8,8 @@
 // ************************************************************************** //
 
 #include <QTreeView>
-#include <mvvm/model/sessionitem.h>
 #include <mvvm/factories/viewmodelfactory.h>
+#include <mvvm/model/sessionitem.h>
 #include <mvvm/viewmodel/viewmodel.h>
 #include <mvvm/widgets/propertytreeview.h>
 
