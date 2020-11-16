@@ -34,17 +34,15 @@ struct Data1DPlotController::Data1DPlotControllerImpl {
             throw std::runtime_error("Uninitialised graph in Data1DPlotController");
     }
 
-    void update_graph_points(Data1DPlotController* controller)
+    void updateGraphPointsFromItem(Data1DItem* item)
     {
-        auto data_item = controller->currentItem();
-        if (data_item) {
-            m_graph->setData(fromStdVector<double>(data_item->binCenters()),
-                             fromStdVector<double>(data_item->binValues()));
-            m_graph->parentPlot()->replot();
-        }
+        assert(item);
+        m_graph->setData(fromStdVector<double>(item->binCenters()),
+                         fromStdVector<double>(item->binValues()));
+        m_graph->parentPlot()->replot();
     }
 
-    void reset_graph()
+    void resetGraph()
     {
         m_graph->setData(QVector<double>{}, QVector<double>{});
         m_graph->parentPlot()->replot();
@@ -62,14 +60,14 @@ void Data1DPlotController::subscribe()
 {
     auto on_property_change = [this](SessionItem*, std::string property_name) {
         if (property_name == Data1DItem::P_VALUES)
-            p_impl->update_graph_points(this);
+            p_impl->updateGraphPointsFromItem(currentItem());
     };
     setOnPropertyChange(on_property_change);
 
-    p_impl->update_graph_points(this);
+    p_impl->updateGraphPointsFromItem(currentItem());
 }
 
 void Data1DPlotController::unsubscribe()
 {
-    p_impl->reset_graph();
+    p_impl->resetGraph();
 }
