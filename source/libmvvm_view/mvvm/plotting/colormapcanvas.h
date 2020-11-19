@@ -25,6 +25,8 @@ class SceneAdapterInterface;
 
 class MVVM_VIEW_EXPORT ColorMapCanvas : public QWidget
 {
+    Q_OBJECT
+
 public:
     explicit ColorMapCanvas(QWidget* parent = nullptr);
     ~ColorMapCanvas() override;

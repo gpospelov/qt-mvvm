@@ -24,6 +24,8 @@ class SessionModel;
 
 class MVVM_VIEW_EXPORT ItemsTreeViewInterface : public QWidget
 {
+    Q_OBJECT
+
 public:
     virtual void setSessionModel(SessionModel* model) = 0;
 

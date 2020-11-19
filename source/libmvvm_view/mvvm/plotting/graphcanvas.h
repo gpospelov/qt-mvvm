@@ -25,6 +25,8 @@ class SceneAdapterInterface;
 
 class MVVM_VIEW_EXPORT GraphCanvas : public QWidget
 {
+    Q_OBJECT
+
 public:
     explicit GraphCanvas(QWidget* parent = nullptr);
     ~GraphCanvas() override;

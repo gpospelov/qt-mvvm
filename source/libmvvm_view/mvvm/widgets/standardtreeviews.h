@@ -10,10 +10,8 @@
 #ifndef MVVM_WIDGETS_STANDARDTREEVIEWS_H
 #define MVVM_WIDGETS_STANDARDTREEVIEWS_H
 
-/*!
-@file standardtreeviews.h
-@brief Collection of includes to get all standard tree views.
-*/
+//! @file standardtreeviews.h
+//! @brief Collection of includes to get all standard tree views.
 
 #include <mvvm/widgets/allitemstreeview.h>
 #include <mvvm/widgets/propertytreeview.h>
