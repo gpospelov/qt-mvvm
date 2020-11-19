@@ -40,6 +40,11 @@ QColor ModelView::Utils::RandomColor()
     return QColor(rndm(), rndm(), rndm());
 }
 
+std::string ModelView::Utils::RandomNamedColor()
+{
+    return RandomColor().name().toStdString();
+}
+
 bool ModelView::Utils::IsWindowsHost()
 {
 #if defined(Q_OS_WIN)
