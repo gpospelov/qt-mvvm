@@ -35,7 +35,7 @@ struct PenController::PenControllerImpl {
 
     void update_graph_from_item(PenItem* item)
     {
-        auto color = item->property<QColor>(PenItem::P_COLOR);
+        QColor color(QString::fromStdString(item->colorName()));
         auto pencombo = item->property<ComboProperty>(PenItem::P_STYLE);
         auto penwidth = item->property<int>(PenItem::P_WIDTH);
 

@@ -98,4 +98,8 @@ TEST_F(PenControllerTest, setColorAndWidth)
     EXPECT_EQ(graph->pen().color(), QColor(Qt::red));
     EXPECT_EQ(graph->pen().style(), Qt::SolidLine);
     EXPECT_EQ(graph->pen().width(), 2);
+
+    // set color via named color machinery
+    pen_item->setNamedColor("azure");
+    EXPECT_EQ(graph->pen().color().name(), QString("#f0ffff"));
 }
