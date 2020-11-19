@@ -30,7 +30,7 @@ namespace Utils
 {
 
 //! Returns random color.
-MVVM_VIEW_EXPORT QColor random_color();
+MVVM_VIEW_EXPORT QColor RandomColor();
 
 //! Returns true if it is Windows.
 MVVM_VIEW_EXPORT bool IsWindowsHost();

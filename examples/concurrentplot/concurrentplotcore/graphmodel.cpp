@@ -73,5 +73,5 @@ void GraphModel::add_graph(ModelView::ContainerItem* container,
     auto graph = insertItem<GraphItem>(viewport);
     graph->setDataItem(data);
     graph->item<PenItem>(GraphItem::P_PEN)
-        ->setProperty(PenItem::P_COLOR, ModelView::Utils::random_color());
+        ->setProperty(PenItem::P_COLOR, ModelView::Utils::RandomColor());
 }

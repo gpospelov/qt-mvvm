@@ -60,8 +60,9 @@ void GraphModel::add_graph()
 
     auto graph = insertItem<GraphItem>(viewport());
     graph->setDataItem(data);
+    graph->setNamedColor(ModelView::Utils::RandomColor().name().toStdString());
     graph->item<PenItem>(GraphItem::P_PEN)
-        ->setProperty(PenItem::P_COLOR, ModelView::Utils::random_color());
+        ->setProperty(PenItem::P_COLOR, ModelView::Utils::RandomColor());
 }
 
 //! Remove last graph and data item.
