@@ -16,7 +16,28 @@
 #include <mvvm/plotting/statusstringreporterfactory.h>
 #include <mvvm/standarditems/graphviewportitem.h>
 #include <mvvm/widgets/statuslabel.h>
-#include <QDebug>
+
+namespace
+{
+
+//! Returns policy to which side of the axes box margins can be applied.
+//! If number is negative, this side will be callulated automatically.
+
+// FIXME move to utils, provide unit tests
+QCP::MarginSides autoMarginPolicy(int left, int top, int right, int bottom)
+{
+    QCP::MarginSides result{QCP::msAll};
+    if (left >= 0)
+        result &= ~QCP::msLeft;
+    if (top >= 0)
+        result &= ~QCP::msTop;
+    if (right >= 0)
+        result &= ~QCP::msRight;
+    if (bottom >= 0)
+        result &= ~QCP::msBottom;
+    return result;
+}
+} // namespace
 
 using namespace ModelView;
 
@@ -64,7 +85,6 @@ GraphCanvas::GraphCanvas(QWidget* parent)
 
     auto on_replot = [this]() {
         QMargins margins = p_impl->customPlot()->axisRect()->margins();
-        qDebug() << "xxx " << margins;
         axisMarginsChanged(margins.left(), margins.top(), margins.right(), margins.bottom());
     };
     connect(p_impl->customPlot(), &QCustomPlot::afterReplot, this, on_replot);
@@ -88,16 +108,19 @@ void GraphCanvas::update_viewport()
 }
 
 //! Set margins between axes rectangle and widget borders.
-//! If the value is negative, leave old margin intact.
+//! If the value is negative, leave old margin intact and allow automatic margin adjustment.
 
 void GraphCanvas::setAxisMargins(int left, int top, int right, int bottom)
 {
     auto customPlot = p_impl->customPlot();
+    customPlot->axisRect()->setAutoMargins(autoMarginPolicy(left, top, right, bottom));
+
     QMargins orig = customPlot->axisRect()->margins();
     int new_left = left >= 0 ? left : orig.left();
     int new_top = top >= 0 ? top : orig.top();
     int new_right = right >= 0 ? right : orig.right();
     int new_bottom = bottom >= 0 ? bottom : orig.bottom();
     customPlot->axisRect()->setMargins(QMargins(new_left, new_top, new_right, new_bottom));
+
     customPlot->replot();
 }

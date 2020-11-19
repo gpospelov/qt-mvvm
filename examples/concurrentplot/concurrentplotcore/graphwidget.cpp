@@ -19,8 +19,12 @@
 using namespace ModelView;
 
 GraphWidget::GraphWidget(GraphModel* model, QWidget* parent)
-    : QWidget(parent), toolbar(new GraphWidgetToolBar), m_graphCanvas(new GraphCanvas),
-      m_propertyWidget(new GraphPropertyWidget), m_model(nullptr), job_manager(new JobManager(this))
+    : QWidget(parent)
+    , m_toolbar(new GraphWidgetToolBar)
+    , m_graphCanvas(new GraphCanvas)
+    , m_propertyWidget(new GraphPropertyWidget)
+    , m_model(nullptr)
+    , m_jobManager(new JobManager(this))
 {
     auto mainLayout = new QVBoxLayout;
     mainLayout->setSpacing(10);
@@ -28,7 +32,7 @@ GraphWidget::GraphWidget(GraphModel* model, QWidget* parent)
     auto centralLayout = new QHBoxLayout;
     centralLayout->addWidget(m_graphCanvas, 3);
     centralLayout->addWidget(m_propertyWidget, 1);
-    mainLayout->addWidget(toolbar);
+    mainLayout->addWidget(m_toolbar);
     mainLayout->addLayout(centralLayout);
     setLayout(mainLayout);
 
@@ -50,7 +54,7 @@ void GraphWidget::setModel(GraphModel* model)
 
 void GraphWidget::onSimulationCompleted()
 {
-    auto data = job_manager->simulationResult();
+    auto data = m_jobManager->simulationResult();
     if (!data.empty())
         m_model->set_data(data);
 }
@@ -60,14 +64,14 @@ void GraphWidget::onSimulationCompleted()
 void GraphWidget::init_toolbar_connections()
 {
     // Change in amplitude is propagated from toolbar to JobManager.
-    connect(toolbar, &GraphWidgetToolBar::valueChanged, job_manager,
+    connect(m_toolbar, &GraphWidgetToolBar::valueChanged, m_jobManager,
             &JobManager::requestSimulation);
 
     // simulation delay factor is propagated from toolbar to JobManager
-    connect(toolbar, &GraphWidgetToolBar::delayChanged, job_manager, &JobManager::setDelay);
+    connect(m_toolbar, &GraphWidgetToolBar::delayChanged, m_jobManager, &JobManager::setDelay);
 
     // cancel click is propagated from toolbar to JobManager
-    connect(toolbar, &GraphWidgetToolBar::cancelPressed, job_manager,
+    connect(m_toolbar, &GraphWidgetToolBar::cancelPressed, m_jobManager,
             &JobManager::onInterruptRequest);
 }
 
@@ -78,10 +82,10 @@ void GraphWidget::init_toolbar_connections()
 void GraphWidget::init_jobmanager_connections()
 {
     // Simulation progress is propagated from JobManager to toolbar.
-    connect(job_manager, &JobManager::progressChanged, toolbar,
+    connect(m_jobManager, &JobManager::progressChanged, m_toolbar,
             &GraphWidgetToolBar::onProgressChanged, Qt::QueuedConnection);
 
     // Notification about completed simulation from jobManager to GraphWidget.
-    connect(job_manager, &JobManager::simulationCompleted, this,
+    connect(m_jobManager, &JobManager::simulationCompleted, this,
             &GraphWidget::onSimulationCompleted, Qt::QueuedConnection);
 }

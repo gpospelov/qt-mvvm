@@ -20,9 +20,14 @@
 using namespace ModelView;
 
 GraphWidget::GraphWidget(GraphModel* model, QWidget* parent)
-    : QWidget(parent), m_toolBar(new QToolBar), m_resetViewportAction(nullptr),
-      m_addGraphAction(nullptr), m_removeGraphAction(nullptr), m_graphCanvas(new GraphCanvas),
-      m_propertyWidget(new GraphPropertyWidget), m_model(nullptr)
+    : QWidget(parent)
+    , m_toolBar(new QToolBar)
+    , m_resetViewportAction(nullptr)
+    , m_addGraphAction(nullptr)
+    , m_removeGraphAction(nullptr)
+    , m_graphCanvas(new GraphCanvas)
+    , m_propertyWidget(new GraphPropertyWidget)
+    , m_model(nullptr)
 {
     auto mainLayout = new QVBoxLayout;
     mainLayout->setSpacing(10);
