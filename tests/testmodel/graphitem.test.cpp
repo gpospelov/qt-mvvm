@@ -39,6 +39,7 @@ TEST_F(GraphItemTest, initialState)
     EXPECT_EQ(item.binCenters(), std::vector<double>{});
     EXPECT_EQ(item.binValues(), std::vector<double>{});
     EXPECT_EQ(item.binErrors(), std::vector<double>{});
+    EXPECT_EQ(item.colorName(), std::string("#000000"));
 }
 
 //! Setting dataItem in model context.
@@ -163,4 +164,11 @@ TEST_F(GraphItemTest, setFromGraphItem)
     EXPECT_EQ(graph_item2->binCenters(), expected_centers);
     EXPECT_EQ(graph_item2->item<PenItem>(GraphItem::P_PEN)->property<QColor>(PenItem::P_COLOR),
               QColor(Qt::red));
+}
+
+TEST_F(GraphItemTest, penItem_setNamedColor)
+{
+    GraphItem item;
+    item.setNamedColor("mediumaquamarine");
+    EXPECT_EQ(item.colorName(), std::string("#66cdaa"));
 }

@@ -55,3 +55,20 @@ void PenItem::setSelected(bool is_selected)
     combo.setCurrentIndex(is_selected ? penstyle_index_dashline : penstyle_index_solid);
     setProperty(P_STYLE, combo);
 }
+
+//! Returns color name in #RRGGBB format.
+//! We do not want to expose QColor itself since it will be eventually removed.
+
+std::string PenItem::colorName() const
+{
+    return property<QColor>(P_COLOR).name().toStdString();
+}
+
+//! Sets named color following schema from https://www.w3.org/TR/css-color-3/#svg-color.
+//! e.g. "mediumaquamarine"
+//! We do not want to expose QColor itself since it will be eventually removed.
+
+void PenItem::setNamedColor(const std::string& named_color)
+{
+    setProperty(P_COLOR, QColor(QString::fromStdString(named_color)));
+}

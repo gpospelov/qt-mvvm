@@ -65,3 +65,18 @@ std::vector<double> GraphItem::binErrors() const
 {
     return dataItem() ? dataItem()->binErrors() : std::vector<double>();
 }
+
+//! Returns color name in #RRGGBB format.
+
+std::string GraphItem::colorName() const
+{
+    return item<PenItem>(P_PEN)->colorName();
+}
+
+//! Sets named color following schema from https://www.w3.org/TR/css-color-3/#svg-color.
+//! e.g. "mediumaquamarine"
+
+void GraphItem::setNamedColor(const std::string& named_color)
+{
+    item<PenItem>(P_PEN)->setNamedColor(named_color);
+}
