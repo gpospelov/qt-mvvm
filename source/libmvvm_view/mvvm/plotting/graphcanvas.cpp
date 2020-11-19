@@ -16,6 +16,7 @@
 #include <mvvm/plotting/statusstringreporterfactory.h>
 #include <mvvm/standarditems/graphviewportitem.h>
 #include <mvvm/widgets/statuslabel.h>
+#include <QDebug>
 
 using namespace ModelView;
 
@@ -60,7 +61,16 @@ GraphCanvas::GraphCanvas(QWidget* parent)
     p_impl->customPlot()->setMouseTracking(true);
     p_impl->customPlot()->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom);
     p_impl->customPlot()->axisRect()->setupFullAxesBox(true);
+
+    auto on_replot = [this]() {
+        QMargins margins = p_impl->customPlot()->axisRect()->margins();
+        qDebug() << "xxx " << margins;
+        axisMarginsChanged(margins.left(), margins.top(), margins.right(), margins.bottom());
+    };
+    connect(p_impl->customPlot(), &QCustomPlot::afterReplot, this, on_replot);
 }
+
+GraphCanvas::~GraphCanvas() = default;
 
 void GraphCanvas::setItem(GraphViewportItem* viewport_item)
 {
@@ -77,4 +87,17 @@ void GraphCanvas::update_viewport()
     p_impl->update_viewport();
 }
 
-GraphCanvas::~GraphCanvas() = default;
+//! Set margins between axes rectangle and widget borders.
+//! If the value is negative, leave old margin intact.
+
+void GraphCanvas::setAxisMargins(int left, int top, int right, int bottom)
+{
+    auto customPlot = p_impl->customPlot();
+    QMargins orig = customPlot->axisRect()->margins();
+    int new_left = left >= 0 ? left : orig.left();
+    int new_top = top >= 0 ? top : orig.top();
+    int new_right = right >= 0 ? right : orig.right();
+    int new_bottom = bottom >= 0 ? bottom : orig.bottom();
+    customPlot->axisRect()->setMargins(QMargins(new_left, new_top, new_right, new_bottom));
+    customPlot->replot();
+}

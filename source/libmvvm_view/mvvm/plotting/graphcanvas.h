@@ -37,6 +37,11 @@ public:
 
     void update_viewport();
 
+    void setAxisMargins(int left, int top, int right, int bottom);
+
+signals:
+    void axisMarginsChanged(int left, int top, int right, int bottom);
+
 private:
     struct GraphCanvasImpl;
     std::unique_ptr<GraphCanvasImpl> p_impl;
