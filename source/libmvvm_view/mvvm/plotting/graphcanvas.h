@@ -25,6 +25,8 @@ class SceneAdapterInterface;
 
 class MVVM_VIEW_EXPORT GraphCanvas : public QWidget
 {
+    Q_OBJECT
+
 public:
     explicit GraphCanvas(QWidget* parent = nullptr);
     ~GraphCanvas() override;
@@ -34,6 +36,11 @@ public:
     std::unique_ptr<SceneAdapterInterface> createSceneAdapter() const;
 
     void update_viewport();
+
+    void setAxisMargins(int left, int top, int right, int bottom);
+
+signals:
+    void axisMarginsChanged(int left, int top, int right, int bottom);
 
 private:
     struct GraphCanvasImpl;

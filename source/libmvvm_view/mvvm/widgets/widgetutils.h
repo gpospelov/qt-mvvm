@@ -30,7 +30,10 @@ namespace Utils
 {
 
 //! Returns random color.
-MVVM_VIEW_EXPORT QColor random_color();
+MVVM_VIEW_EXPORT QColor RandomColor();
+
+//! Returns the name of random color.
+MVVM_VIEW_EXPORT std::string RandomNamedColor();
 
 //! Returns true if it is Windows.
 MVVM_VIEW_EXPORT bool IsWindowsHost();

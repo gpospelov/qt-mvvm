@@ -34,10 +34,15 @@ const QString untitled_name = "Untitled";
 
 } // namespace
 
-QColor ModelView::Utils::random_color()
+QColor ModelView::Utils::RandomColor()
 {
     auto rndm = []() -> int { return ModelView::Utils::RandInt(0, 255); };
     return QColor(rndm(), rndm(), rndm());
+}
+
+std::string ModelView::Utils::RandomNamedColor()
+{
+    return RandomColor().name().toStdString();
 }
 
 bool ModelView::Utils::IsWindowsHost()

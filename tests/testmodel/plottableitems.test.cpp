@@ -44,3 +44,10 @@ TEST_F(PlottableItemsTest, penItem_setSelected)
     item.setSelected(false);
     EXPECT_EQ(item.property<ComboProperty>(PenItem::P_STYLE).currentIndex(), Qt::SolidLine);
 }
+
+TEST_F(PlottableItemsTest, penItem_setNamedColor)
+{
+    PenItem item;
+    item.setNamedColor("mediumaquamarine");
+    EXPECT_EQ(item.colorName(), std::string("#66cdaa"));
+}

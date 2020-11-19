@@ -42,6 +42,9 @@ public:
     std::vector<double> binValues() const;
 
     std::vector<double> binErrors() const;
+
+    std::string colorName() const;
+    void setNamedColor(const std::string& named_color);
 };
 
 } // namespace ModelView

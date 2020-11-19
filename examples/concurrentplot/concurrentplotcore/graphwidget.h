@@ -12,7 +12,6 @@
 
 #include <QWidget>
 
-class QBoxLayout;
 class GraphModel;
 class GraphPropertyWidget;
 class GraphWidgetToolBar;
@@ -42,11 +41,11 @@ private:
     void init_toolbar_connections();
     void init_jobmanager_connections();
 
-    GraphWidgetToolBar* toolbar{nullptr};
+    GraphWidgetToolBar* m_toolbar{nullptr};
     ModelView::GraphCanvas* m_graphCanvas{nullptr};
     GraphPropertyWidget* m_propertyWidget{nullptr};
     GraphModel* m_model{nullptr};
-    JobManager* job_manager{nullptr};
+    JobManager* m_jobManager{nullptr};
 };
 
 #endif // GRAPHWIDGET_H

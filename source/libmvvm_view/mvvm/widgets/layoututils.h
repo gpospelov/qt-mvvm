@@ -16,13 +16,10 @@ class QLayout;
 class QGridLayout;
 class QWidget;
 
-/*!
-@namespace LayoutUtils
-@brief Utility functions to add/remove widgets to the layout on the fly.
-
-Taken from https://stackoverflow.com/questions/5395266/removing-widgets-from-qgridlayout
-Caveat: according to explanations given, grid layouts can only grow and never shrink.
-*/
+//! @namespace LayoutUtils
+//! @brief Utility functions to add/remove widgets to the layout on the fly.
+//! Taken from https://stackoverflow.com/questions/5395266/removing-widgets-from-qgridlayout
+//! Caveat: according to explanations given, grid layouts can only grow and never shrink.
 
 namespace LayoutUtils
 {
