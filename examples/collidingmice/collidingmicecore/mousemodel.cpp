@@ -15,7 +15,7 @@
 #include <mvvm/model/itemcatalogue.h>
 #include <mvvm/utils/reallimits.h>
 #include <mvvm/widgets/widgetutils.h>
-#include <mvvm/commands/undostack.h>
+#include <mvvm/interfaces/undostackinterface.h>
 
 namespace
 {

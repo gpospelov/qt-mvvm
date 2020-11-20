@@ -10,7 +10,7 @@
 #include "google_test.h"
 #include "toy_includes.h"
 #include "toy_items.h"
-#include <mvvm/commands/undostack.h>
+#include <mvvm/interfaces/undostackinterface.h>
 #include <mvvm/model/itemutils.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>

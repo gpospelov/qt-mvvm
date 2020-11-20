@@ -12,7 +12,7 @@
 
 #include <memory>
 #include <mvvm/commands/commandadapter.h>
-#include <mvvm/commands/undostack.h>
+#include <mvvm/interfaces/undostackinterface.h>
 #include <mvvm/core/variant.h>
 #include <mvvm/model/function_types.h>
 #include <mvvm/model_export.h>

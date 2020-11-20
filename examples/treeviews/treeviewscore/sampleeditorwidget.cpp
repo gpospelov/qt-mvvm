@@ -13,7 +13,7 @@
 #include <QMenu>
 #include <QTreeView>
 #include <QUndoView>
-#include <mvvm/commands/undostack.h>
+#include <mvvm/interfaces/undostackinterface.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/viewmodel/defaultviewmodel.h>

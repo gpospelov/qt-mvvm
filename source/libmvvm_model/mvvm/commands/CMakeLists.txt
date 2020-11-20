@@ -15,5 +15,4 @@ target_sources(${library_name} PRIVATE
     removeitemcommand.h
     setvaluecommand.cpp
     setvaluecommand.h
-    undostack.h
 )

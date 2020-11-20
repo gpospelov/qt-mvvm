@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_COMMANDS_UNDDOSTACK_H
-#define MVVM_COMMANDS_UNDDOSTACK_H
+#ifndef MVVM_INTERFACES_UNDDOSTACKINTERFACE_H
+#define MVVM_INTERFACES_UNDDOSTACKINTERFACE_H
 
 #include <QUndoStack>
 
@@ -21,4 +21,4 @@ class UndoStackInterface : public QUndoStack
 
 } // namespace ModelView
 
-#endif // MVVM_COMMANDS_UNDDOSTACK_H
+#endif // MVVM_INTERFACES_UNDDOSTACKINTERFACE_H
