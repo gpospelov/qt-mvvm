@@ -9,10 +9,10 @@ target_sources(${library_name} PRIVATE
     item_constants.h
     mainwindow.cpp
     mainwindow.h
-    samplemodel.cpp
-    samplemodel.h
+    sampleeditorwidget.cpp
+    sampleeditorwidget.h
     sampleitems.cpp
     sampleitems.h
-    testwidget.cpp
-    testwidget.h
+    samplemodel.cpp
+    samplemodel.h
 )

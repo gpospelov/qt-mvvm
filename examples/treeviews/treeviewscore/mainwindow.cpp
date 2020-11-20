@@ -9,7 +9,7 @@
 
 #include "mainwindow.h"
 #include "samplemodel.h"
-#include "testwidget.h"
+#include "sampleeditorwidget.h"
 #include <QCoreApplication>
 #include <QSettings>
 #include <QTabWidget>
@@ -23,7 +23,7 @@ const QString pos_key = "pos";
 
 MainWindow::MainWindow() : m_sample_model(std::make_unique<SampleModel>())
 {
-    auto central_widget = new TestWidget(m_sample_model.get());
+    auto central_widget = new SampleEditorWdiget(m_sample_model.get());
     setCentralWidget(central_widget);
     init_application();
 }

@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef TESTWIDGET_H
-#define TESTWIDGET_H
+#ifndef SAMPLEEDITORWIDGET_H
+#define SAMPLEEDITORWIDGET_H
 
 #include <QWidget>
 #include <memory>
@@ -28,12 +28,12 @@ class QBoxLayout;
 
 //! Collection of tree editors.
 
-class TestWidget : public QWidget
+class SampleEditorWdiget : public QWidget
 {
     Q_OBJECT
 public:
-    TestWidget(ModelView::SessionModel* model, QWidget* parent = nullptr);
-    ~TestWidget();
+    SampleEditorWdiget(ModelView::SessionModel* model, QWidget* parent = nullptr);
+    ~SampleEditorWdiget();
 
 private slots:
     void onContextMenuRequest(const QPoint& point);
@@ -41,18 +41,18 @@ private slots:
 private:
     ModelView::SessionItem* item_from_view(QTreeView* view, const QPoint& point);
 
-    QBoxLayout* create_left_layout();
-    QBoxLayout* create_middle_layout();
-    QBoxLayout* create_right_layout();
+    QBoxLayout* createLeftLayout();
+    QBoxLayout* createMiddleLayout();
+    QBoxLayout* createRightLayout();
 
     void connect_views();
 
-    QUndoView* m_undoView;
-    ModelView::AllItemsTreeView* m_defaultTreeView;
-    ModelView::TopItemsTreeView* m_topItemView;
-    ModelView::AllItemsTreeView* m_subsetTreeView;
-    ModelView::PropertyTreeView* m_propertyTreeView;
-    ModelView::SessionModel* m_sessionModel;
+    QUndoView* m_undoView{nullptr};
+    ModelView::AllItemsTreeView* m_defaultTreeView{nullptr};
+    ModelView::TopItemsTreeView* m_topItemView{nullptr};
+    ModelView::AllItemsTreeView* m_subsetTreeView{nullptr};
+    ModelView::PropertyTreeView* m_propertyTreeView{nullptr};
+    ModelView::SessionModel* m_sessionModel{nullptr};
 };
 
-#endif // TESTWIDGET_H
+#endif // SAMPLEEDITORWIDGET_H
