@@ -26,6 +26,9 @@ class QTreeView;
 class QUndoView;
 class QBoxLayout;
 
+namespace TreeViews
+{
+
 //! Collection of tree editors.
 
 class SampleEditorWdiget : public QWidget
@@ -54,5 +57,7 @@ private:
     ModelView::PropertyTreeView* m_propertyTreeView{nullptr};
     ModelView::SessionModel* m_sessionModel{nullptr};
 };
+
+} // namespace TreeViews
 
 #endif // SAMPLEEDITORWIDGET_H

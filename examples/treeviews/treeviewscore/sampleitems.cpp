@@ -17,6 +17,9 @@
 
 using namespace ModelView;
 
+namespace TreeViews
+{
+
 MultiLayer::MultiLayer() : CompoundItem(::Constants::MultiLayerType)
 {
     registerTag(TagInfo::universalTag(T_LAYERS, {::Constants::LayerType}),
@@ -104,3 +107,5 @@ ShapeGroupItem::ShapeGroupItem() : GroupItem(::Constants::ShapeGroupType)
     registerItem<AnysoPyramidItem>("Anysotropical pyramid");
     init_group();
 }
+
+} // namespace TreeViews

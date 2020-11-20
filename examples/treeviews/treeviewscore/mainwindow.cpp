@@ -21,6 +21,9 @@ const QString size_key = "size";
 const QString pos_key = "pos";
 } // namespace
 
+namespace TreeViews
+{
+
 MainWindow::MainWindow() : m_sample_model(std::make_unique<SampleModel>())
 {
     auto central_widget = new SampleEditorWdiget(m_sample_model.get());
@@ -59,3 +62,6 @@ void MainWindow::write_settings()
     settings.setValue(pos_key, pos());
     settings.endGroup();
 }
+
+}
+

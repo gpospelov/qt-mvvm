@@ -23,6 +23,9 @@
 
 using namespace ModelView;
 
+namespace TreeViews
+{
+
 SampleEditorWdiget::SampleEditorWdiget(SessionModel* model, QWidget* parent)
     : QWidget(parent)
     , m_undoView(new QUndoView)
@@ -121,4 +124,6 @@ QBoxLayout* SampleEditorWdiget::createRightLayout()
     result->addWidget(m_undoView);
     result->addWidget(m_propertyTreeView);
     return result;
+}
+
 }

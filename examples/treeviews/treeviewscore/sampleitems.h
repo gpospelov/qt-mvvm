@@ -17,6 +17,9 @@
 #include <mvvm/model/groupitem.h>
 #include <string>
 
+namespace TreeViews
+{
+
 //! A multi layer with possibility to attach layers.
 
 class MultiLayer : public ModelView::CompoundItem
@@ -104,5 +107,7 @@ class ShapeGroupItem : public ModelView::GroupItem
 public:
     ShapeGroupItem();
 };
+
+} // namespace TreeViews
 
 #endif // SAMPLEITEMS_H
