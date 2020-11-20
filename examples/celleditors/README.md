@@ -1,13 +1,13 @@
 # Example "celleditors".
 
-The example shows how to create editable properties and use various editors
-in cells of Qt trees and tables.
+The example shows how to create editable properties and use various editors in
+cells of Qt trees and tables.
 
-The application model contains a collection of `DemoPropertyItem's`, each having 8 properties of 
-various types. The tree on the left shows application data in the form of a
-standard two-column `name/value` tree. Tree view and table view on the right r
-epresent the same data, where rows are formed by `DemoPropertyItem's` and 
-columns are made of their properties.
+The application model contains a collection of `DemoPropertyItem's`, each having
+8 properties of various types. The tree on the left shows application data in
+the form of a standard two-column `name/value` tree. Tree view and table view on
+the right r epresent the same data, where rows are formed by
+`DemoPropertyItem's` and columns are made of their properties.
 
 ![celleditors](../../doc/celleditors.png)
 

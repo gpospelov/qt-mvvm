@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef ITEMS_H
-#define ITEMS_H
+#ifndef SAMPLEITEMS_H
+#define SAMPLEITEMS_H
 
 //! @file items.h
 //! Collection of test items for our sample model.
@@ -105,4 +105,4 @@ public:
     ShapeGroupItem();
 };
 
-#endif // ITEMS_H
+#endif // SAMPLEITEMS_H

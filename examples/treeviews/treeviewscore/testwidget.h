@@ -26,7 +26,7 @@ class QTreeView;
 class QUndoView;
 class QBoxLayout;
 
-//! Playground to test basics of ViewModel.
+//! Collection of tree editors.
 
 class TestWidget : public QWidget
 {
