@@ -31,7 +31,7 @@ class ItemPool;
 class ItemBackupStrategy;
 class ItemFactoryInterface;
 class ItemCopyStrategy;
-class UndoStack;
+class UndoStackInterface;
 
 class MVVM_MODEL_EXPORT SessionModel
 {
@@ -62,7 +62,7 @@ public:
 
     void setUndoRedoEnabled(bool value);
 
-    UndoStack* undoStack() const;
+    UndoStackInterface* undoStack() const;
 
     void removeItem(SessionItem* parent, const TagRow& tagrow);
 

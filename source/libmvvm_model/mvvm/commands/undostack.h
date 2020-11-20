@@ -15,7 +15,7 @@
 namespace ModelView
 {
 
-class UndoStack : public QUndoStack
+class UndoStackInterface : public QUndoStack
 {
 };
 

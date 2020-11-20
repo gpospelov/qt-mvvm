@@ -24,7 +24,7 @@ CommandService::CommandService(SessionModel* model) : m_model(model), m_pause_re
 void CommandService::setUndoRedoEnabled(bool value)
 {
     if (value)
-        m_commands = std::make_unique<UndoStack>();
+        m_commands = std::make_unique<UndoStackInterface>();
     else
         m_commands.reset();
 }
@@ -87,7 +87,7 @@ void CommandService::moveItem(SessionItem* item, SessionItem* new_parent, const 
     process_command<MoveItemCommand>(item, new_parent, TagRow{tagrow.tag, actual_row});
 }
 
-UndoStack* CommandService::undoStack() const
+UndoStackInterface* CommandService::undoStack() const
 {
     return m_commands.get();
 }

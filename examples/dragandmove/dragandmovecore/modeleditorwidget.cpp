@@ -96,10 +96,10 @@ void ModelEditorWidget::init_actions()
         auto can_undo_changed = [this]() {
             m_undoAction->setEnabled(m_model->undoStack()->canUndo());
         };
-        connect(m_model->undoStack(), &UndoStack::canUndoChanged, can_undo_changed);
+        connect(m_model->undoStack(), &UndoStackInterface::canUndoChanged, can_undo_changed);
         auto can_redo_changed = [this]() {
             m_redoAction->setEnabled(m_model->undoStack()->canRedo());
         };
-        connect(m_model->undoStack(), &UndoStack::canUndoChanged, can_redo_changed);
+        connect(m_model->undoStack(), &UndoStackInterface::canUndoChanged, can_redo_changed);
     }
 }

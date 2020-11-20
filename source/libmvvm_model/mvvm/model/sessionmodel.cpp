@@ -119,7 +119,7 @@ void SessionModel::setUndoRedoEnabled(bool value)
     m_commands->setUndoRedoEnabled(value);
 }
 
-UndoStack* SessionModel::undoStack() const
+UndoStackInterface* SessionModel::undoStack() const
 {
     return m_commands->undoStack();
 }
