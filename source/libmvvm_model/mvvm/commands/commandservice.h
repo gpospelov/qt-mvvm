@@ -10,9 +10,9 @@
 #ifndef MVVM_COMMANDS_COMMANDSERVICE_H
 #define MVVM_COMMANDS_COMMANDSERVICE_H
 
-#include <QUndoStack>
 #include <memory>
 #include <mvvm/commands/commandadapter.h>
+#include <mvvm/commands/undostack.h>
 #include <mvvm/core/variant.h>
 #include <mvvm/model/function_types.h>
 #include <mvvm/model_export.h>
