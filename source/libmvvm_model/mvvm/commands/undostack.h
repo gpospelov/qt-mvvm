@@ -12,4 +12,9 @@
 
 #include <QUndoStack>
 
+class UndoStack : public QUndoStack
+{
+
+};
+
 #endif // MVVM_COMMANDS_UNDDOSTACK_H

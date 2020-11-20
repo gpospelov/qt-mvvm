@@ -46,7 +46,7 @@ public:
 
     void moveItem(SessionItem* item, SessionItem* new_parent, const TagRow& tagrow);
 
-    QUndoStack* undoStack() const;
+    UndoStack* undoStack() const;
 
     void setCommandRecordPause(bool value);
 
@@ -56,7 +56,7 @@ private:
     bool provideUndo() const;
 
     SessionModel* m_model;
-    std::unique_ptr<QUndoStack> m_commands;
+    std::unique_ptr<UndoStack> m_commands;
     bool m_pause_record;
 };
 

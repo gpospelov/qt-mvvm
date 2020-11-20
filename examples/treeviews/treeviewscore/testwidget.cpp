@@ -19,6 +19,7 @@
 #include <mvvm/viewmodel/topitemsviewmodel.h>
 #include <mvvm/viewmodel/viewitem.h>
 #include <mvvm/widgets/standardtreeviews.h>
+#include <mvvm/commands/undostack.h>
 
 using namespace ModelView;
 

@@ -19,7 +19,7 @@
 #include <mvvm/model/tagrow.h>
 #include <mvvm/model_export.h>
 
-class QUndoStack;
+class UndoStack;
 
 namespace ModelView
 {
@@ -63,7 +63,7 @@ public:
 
     void setUndoRedoEnabled(bool value);
 
-    QUndoStack* undoStack() const;
+    UndoStack* undoStack() const;
 
     void removeItem(SessionItem* parent, const TagRow& tagrow);
 
