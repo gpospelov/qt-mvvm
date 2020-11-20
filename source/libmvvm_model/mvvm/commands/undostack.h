@@ -12,9 +12,13 @@
 
 #include <QUndoStack>
 
-class UndoStack : public QUndoStack
+namespace ModelView
 {
 
+class UndoStack : public QUndoStack
+{
 };
+
+} // namespace ModelView
 
 #endif // MVVM_COMMANDS_UNDDOSTACK_H

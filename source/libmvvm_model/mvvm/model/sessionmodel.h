@@ -19,8 +19,6 @@
 #include <mvvm/model/tagrow.h>
 #include <mvvm/model_export.h>
 
-class UndoStack;
-
 namespace ModelView
 {
 
@@ -33,6 +31,7 @@ class ItemPool;
 class ItemBackupStrategy;
 class ItemFactoryInterface;
 class ItemCopyStrategy;
+class UndoStack;
 
 class MVVM_MODEL_EXPORT SessionModel
 {
