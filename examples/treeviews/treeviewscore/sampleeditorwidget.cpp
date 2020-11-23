@@ -44,7 +44,8 @@ SampleEditorWdiget::SampleEditorWdiget(SessionModel* model, QWidget* parent)
     connect_views();
 
     m_sessionModel->setUndoRedoEnabled(true);
-    m_undoView->setStack(m_sessionModel->undoStack());
+    // FIXME FIXME FIXME
+//    m_undoView->setStack(m_sessionModel->undoStack());
 }
 
 SampleEditorWdiget::~SampleEditorWdiget() = default;
