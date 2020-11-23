@@ -15,6 +15,7 @@
 #include <QHBoxLayout>
 #include <QToolBar>
 #include <QToolButton>
+#include <QUndoStack>
 #include <mvvm/interfaces/undostackinterface.h>
 #include <cassert>
 #include <mvvm/model/modelutils.h>

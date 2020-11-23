@@ -10,28 +10,27 @@
 #ifndef MVVM_INTERFACES_UNDDOSTACKINTERFACE_H
 #define MVVM_INTERFACES_UNDDOSTACKINTERFACE_H
 
-#include <QUndoStack>
+class QUndoStack;
+class QUndoCommand;
 
 namespace ModelView
 {
 
-class UndoStackInterface : private QUndoStack
+class UndoStackInterface
 {
 public:
-    void push(QUndoCommand* cmd) { QUndoStack::push(cmd); }
-    bool isActive() const { return QUndoStack::isActive(); }
-    bool canUndo() const { return QUndoStack::canUndo(); }
-    bool canRedo() const { return QUndoStack::canRedo(); }
-    int index() const { return QUndoStack::index(); }
-    int count() const { return QUndoStack::count(); }
-    void undo() { return QUndoStack::undo(); }
-    void redo() { return QUndoStack::redo(); }
-    void clear() { return QUndoStack::clear(); }
-    void setUndoLimit(int limit) { return QUndoStack::setUndoLimit(limit); }
-
-    QUndoStack* qUndoStack() {
-        return this;
-    }
+    virtual ~UndoStackInterface() = default;
+    virtual void push(QUndoCommand* cmd) = 0;
+    virtual bool isActive() const = 0;
+    virtual bool canUndo() const  = 0;
+    virtual bool canRedo() const  = 0;
+    virtual int index() const  = 0;
+    virtual int count() const  = 0;
+    virtual void undo() = 0;
+    virtual void redo() = 0;
+    virtual void clear() = 0;
+    virtual void setUndoLimit(int limit) = 0;
+    virtual QUndoStack* qUndoStack() = 0;
 };
 
 } // namespace ModelView
