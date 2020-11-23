@@ -17,9 +17,9 @@
 namespace ModelView
 {
 
-//! Default undo stack implementation.
-//! It relies on QUndoStack and serves two goals: a) hides Qt usage
-//! b) simplifies future refactoring toward Qt-independent libmvvm_model library.
+//! Default undo stack implementation. Internally relies on QUndoStack.
+//! It serves two goals: a) hides Qt usage b) simplifies future refactoring toward Qt-independent
+//! libmvvm_model library.
 
 class MVVM_MODEL_EXPORT UndoStack : public UndoStackInterface
 {
@@ -37,8 +37,6 @@ public:
     void redo() override;
     void clear() override;
     void setUndoLimit(int limit) override;
-
-    QUndoStack* qUndoStack() override;
 
     static QUndoStack* qtUndoStack(UndoStackInterface* stack_interface);
 

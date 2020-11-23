@@ -72,11 +72,6 @@ void UndoStack::setUndoLimit(int limit)
     return p_impl->stack()->setUndoLimit(limit);
 }
 
-QUndoStack* UndoStack::qUndoStack()
-{
-    return p_impl->stack();
-}
-
 //! Returns underlying QUndoStack if given object can be casted to UndoStack instance.
 
 QUndoStack* UndoStack::qtUndoStack(UndoStackInterface* stack_interface)
