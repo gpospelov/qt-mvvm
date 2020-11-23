@@ -24,7 +24,7 @@ CommandService::CommandService(SessionModel* model) : m_model(model), m_pause_re
 void CommandService::setUndoRedoEnabled(bool value)
 {
     if (value)
-        m_commands = std::make_unique<UndoStackInterface>();
+        m_commands = std::make_unique<UndoStack>();
     else
         m_commands.reset();
 }
