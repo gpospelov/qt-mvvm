@@ -13,7 +13,7 @@
 #include <QMenu>
 #include <QTreeView>
 #include <QUndoView>
-#include <mvvm/interfaces/undostackinterface.h>
+#include <mvvm/commands/undostack.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/viewmodel/defaultviewmodel.h>
@@ -44,7 +44,7 @@ SampleEditorWdiget::SampleEditorWdiget(SessionModel* model, QWidget* parent)
     connect_views();
 
     m_sessionModel->setUndoRedoEnabled(true);
-    m_undoView->setStack(m_sessionModel->undoStack()->qUndoStack());
+    m_undoView->setStack(UndoStack::qtUndoStack(m_sessionModel->undoStack()));
 }
 
 SampleEditorWdiget::~SampleEditorWdiget() = default;

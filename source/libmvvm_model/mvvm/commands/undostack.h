@@ -40,6 +40,8 @@ public:
 
     QUndoStack* qUndoStack() override;
 
+    static QUndoStack* qtUndoStack(UndoStackInterface* stack_interface);
+
 private:
     struct UndoStackImpl;
     std::unique_ptr<UndoStackImpl> p_impl;

@@ -76,3 +76,12 @@ QUndoStack* UndoStack::qUndoStack()
 {
     return p_impl->stack();
 }
+
+//! Returns underlying QUndoStack if given object can be casted to UndoStack instance.
+
+QUndoStack* UndoStack::qtUndoStack(UndoStackInterface* stack_interface)
+{
+    if (auto stack = dynamic_cast<UndoStack*>(stack_interface); stack)
+        return stack->p_impl->stack();
+    return nullptr;
+}

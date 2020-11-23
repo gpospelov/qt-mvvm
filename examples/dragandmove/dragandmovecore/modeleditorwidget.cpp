@@ -16,16 +16,20 @@
 #include <QToolBar>
 #include <QToolButton>
 #include <QUndoStack>
-#include <mvvm/interfaces/undostackinterface.h>
 #include <cassert>
+#include <mvvm/commands/undostack.h>
 #include <mvvm/model/modelutils.h>
 
 using namespace ModelView;
 
 ModelEditorWidget::ModelEditorWidget(SampleModel* model, QWidget* parent)
-    : QWidget(parent), m_toolBar(new QToolBar), m_leftWidget(new ContainerEditorWidget),
-      m_rightWidget(new ContainerEditorWidget), m_undoAction(nullptr), m_redoAction(nullptr),
-      m_model(nullptr)
+    : QWidget(parent)
+    , m_toolBar(new QToolBar)
+    , m_leftWidget(new ContainerEditorWidget)
+    , m_rightWidget(new ContainerEditorWidget)
+    , m_undoAction(nullptr)
+    , m_redoAction(nullptr)
+    , m_model(nullptr)
 {
     auto mainLayout = new QVBoxLayout;
     mainLayout->setSpacing(10);
@@ -97,10 +101,12 @@ void ModelEditorWidget::init_actions()
         auto can_undo_changed = [this]() {
             m_undoAction->setEnabled(m_model->undoStack()->canUndo());
         };
-        connect(m_model->undoStack()->qUndoStack(), &QUndoStack::canUndoChanged, can_undo_changed);
+        connect(UndoStack::qtUndoStack(m_model->undoStack()), &QUndoStack::canUndoChanged,
+                can_undo_changed);
         auto can_redo_changed = [this]() {
             m_redoAction->setEnabled(m_model->undoStack()->canRedo());
         };
-        connect(m_model->undoStack()->qUndoStack(), &QUndoStack::canUndoChanged, can_redo_changed);
+        connect(UndoStack::qtUndoStack(m_model->undoStack()), &QUndoStack::canUndoChanged,
+                can_redo_changed);
     }
 }

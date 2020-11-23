@@ -16,6 +16,8 @@ class QUndoCommand;
 namespace ModelView
 {
 
+//! Interface class for undo/redo stack.
+
 class UndoStackInterface
 {
 public:
