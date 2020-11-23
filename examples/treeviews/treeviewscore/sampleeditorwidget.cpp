@@ -44,8 +44,7 @@ SampleEditorWdiget::SampleEditorWdiget(SessionModel* model, QWidget* parent)
     connect_views();
 
     m_sessionModel->setUndoRedoEnabled(true);
-    // FIXME FIXME FIXME
-//    m_undoView->setStack(m_sessionModel->undoStack());
+    m_undoView->setStack(m_sessionModel->undoStack()->qUndoStack());
 }
 
 SampleEditorWdiget::~SampleEditorWdiget() = default;
@@ -127,4 +126,4 @@ QBoxLayout* SampleEditorWdiget::createRightLayout()
     return result;
 }
 
-}
+} // namespace TreeViews
