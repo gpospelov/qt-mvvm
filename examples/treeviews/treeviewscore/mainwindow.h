@@ -13,6 +13,9 @@
 #include <QMainWindow>
 #include <memory>
 
+namespace TreeViews
+{
+
 class SampleModel;
 
 //! The main window of this application.
@@ -34,5 +37,7 @@ private:
 
     std::unique_ptr<SampleModel> m_sample_model;
 };
+
+} // namespace TreeViews
 
 #endif //  MAINWINDOW_H

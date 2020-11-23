@@ -10,9 +10,9 @@
 #ifndef MVVM_COMMANDS_COMMANDSERVICE_H
 #define MVVM_COMMANDS_COMMANDSERVICE_H
 
-#include <QUndoStack>
 #include <memory>
 #include <mvvm/commands/commandadapter.h>
+#include <mvvm/commands/undostack.h>
 #include <mvvm/core/variant.h>
 #include <mvvm/model/function_types.h>
 #include <mvvm/model_export.h>
@@ -46,7 +46,7 @@ public:
 
     void moveItem(SessionItem* item, SessionItem* new_parent, const TagRow& tagrow);
 
-    QUndoStack* undoStack() const;
+    UndoStackInterface* undoStack() const;
 
     void setCommandRecordPause(bool value);
 
@@ -56,7 +56,7 @@ private:
     bool provideUndo() const;
 
     SessionModel* m_model;
-    std::unique_ptr<QUndoStack> m_commands;
+    std::unique_ptr<UndoStackInterface> m_commands;
     bool m_pause_record;
 };
 

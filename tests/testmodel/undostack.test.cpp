@@ -10,7 +10,7 @@
 #include "google_test.h"
 #include "toy_includes.h"
 #include "toy_items.h"
-#include <QUndoStack>
+#include <mvvm/interfaces/undostackinterface.h>
 #include <mvvm/model/itemutils.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
@@ -18,15 +18,15 @@
 
 using namespace ModelView;
 
-class TestUndoRedo : public ::testing::Test
+class UndoStackTest : public ::testing::Test
 {
 public:
-    ~TestUndoRedo();
+    ~UndoStackTest();
 };
 
-TestUndoRedo::~TestUndoRedo() = default;
+UndoStackTest::~UndoStackTest() = default;
 
-TEST_F(TestUndoRedo, initialState)
+TEST_F(UndoStackTest, initialState)
 {
     SessionModel model;
 
@@ -45,7 +45,7 @@ TEST_F(TestUndoRedo, initialState)
     EXPECT_EQ(stack->index(), 0);
 }
 
-TEST_F(TestUndoRedo, insertNewItem)
+TEST_F(UndoStackTest, insertNewItem)
 {
     const model_type modelType(Constants::BaseType);
     SessionModel model;
@@ -89,7 +89,7 @@ TEST_F(TestUndoRedo, insertNewItem)
 
 //! Undo/redo scenario when few items inserted.
 
-TEST_F(TestUndoRedo, insertParentAndChild)
+TEST_F(UndoStackTest, insertParentAndChild)
 {
     SessionModel model;
     model.setUndoRedoEnabled(true);
@@ -126,7 +126,7 @@ TEST_F(TestUndoRedo, insertParentAndChild)
 
 //! Undo/redo scenario when item inserted and data set few times.
 
-TEST_F(TestUndoRedo, setData)
+TEST_F(UndoStackTest, setData)
 {
     const int role = ItemDataRole::DATA;
     SessionModel model;
@@ -167,7 +167,7 @@ TEST_F(TestUndoRedo, setData)
 
 //! Undo/redo scenario when item data changed through item and not the model.
 
-TEST_F(TestUndoRedo, setDataThroughItem)
+TEST_F(UndoStackTest, setDataThroughItem)
 {
     const int role = ItemDataRole::DATA;
     const QVariant value(42.0);
@@ -196,7 +196,7 @@ TEST_F(TestUndoRedo, setDataThroughItem)
 
 //! Undo/redo scenario when we set same data. Undo stack should be empty.
 
-TEST_F(TestUndoRedo, setSameData)
+TEST_F(UndoStackTest, setSameData)
 {
     SessionModel model;
     auto item = model.insertItem<PropertyItem>();
@@ -217,7 +217,7 @@ TEST_F(TestUndoRedo, setSameData)
 
 //! Checks if we insert item, set data and undo everything we can get back to the data.
 
-TEST_F(TestUndoRedo, insertAndSetData)
+TEST_F(UndoStackTest, insertAndSetData)
 {
     const int role = ItemDataRole::DATA;
     SessionModel model;
@@ -254,7 +254,7 @@ TEST_F(TestUndoRedo, insertAndSetData)
 
 //! Inserting item, setting the data, removing row, undoing, checking item and data.
 
-TEST_F(TestUndoRedo, removeRow)
+TEST_F(UndoStackTest, removeRow)
 {
     const int role = ItemDataRole::DATA;
     const QVariant data(42);
@@ -292,7 +292,7 @@ TEST_F(TestUndoRedo, removeRow)
 
 //! Inserting parent and child, setting data to them, removing parent, undoing and checking.
 
-TEST_F(TestUndoRedo, removeParentAndChild)
+TEST_F(UndoStackTest, removeParentAndChild)
 {
     const int role1(ItemDataRole::DATA), role2(ItemDataRole::DISPLAY);
     const QVariant data1(42);
@@ -335,7 +335,7 @@ TEST_F(TestUndoRedo, removeParentAndChild)
 
 //! Insert item, remove row, undo and check item id.
 
-TEST_F(TestUndoRedo, itemIdentifierOnRemove)
+TEST_F(UndoStackTest, itemIdentifierOnRemove)
 {
 
     SessionModel model;
@@ -368,7 +368,7 @@ TEST_F(TestUndoRedo, itemIdentifierOnRemove)
 //! Create multilayer, add two layers, remove everything and undo.
 //! Toy models are used here.
 
-TEST_F(TestUndoRedo, multiLayer)
+TEST_F(UndoStackTest, multiLayer)
 {
     auto pool = std::make_shared<ItemPool>();
 
@@ -429,7 +429,7 @@ TEST_F(TestUndoRedo, multiLayer)
 
 //! Move single layer from multilayer to another empty multilayer.
 
-TEST_F(TestUndoRedo, moveLayerFromMultiLayer)
+TEST_F(UndoStackTest, moveLayerFromMultiLayer)
 {
     auto pool = std::make_shared<ItemPool>();
 
@@ -466,7 +466,7 @@ TEST_F(TestUndoRedo, moveLayerFromMultiLayer)
 //! Move single layer from multilayer to another empty multilayer.
 //! Delete second multilayer and undo.
 
-TEST_F(TestUndoRedo, moveLayerFromMLDeleteSecond)
+TEST_F(UndoStackTest, moveLayerFromMLDeleteSecond)
 {
     auto pool = std::make_shared<ItemPool>();
 
@@ -517,7 +517,7 @@ TEST_F(TestUndoRedo, moveLayerFromMLDeleteSecond)
 //! Create 2 multilayers, 3 layers each. Move layer from one multilayer to another.
 //! Deleting everything and undoing.
 
-TEST_F(TestUndoRedo, moveLayerFromMLDeleteAll)
+TEST_F(UndoStackTest, moveLayerFromMLDeleteAll)
 {
     auto pool = std::make_shared<ItemPool>();
 
@@ -589,7 +589,7 @@ TEST_F(TestUndoRedo, moveLayerFromMLDeleteAll)
 
 //! Creating two multilayers. Copying layer from one multilayer to another.
 
-TEST_F(TestUndoRedo, copyLayerFromMultilayer)
+TEST_F(UndoStackTest, copyLayerFromMultilayer)
 {
     auto pool = std::make_shared<ItemPool>();
     ToyItems::SampleModel model(pool);

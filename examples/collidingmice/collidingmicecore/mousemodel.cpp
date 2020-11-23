@@ -9,13 +9,13 @@
 
 #include "mousemodel.h"
 #include <QColor>
-#include <QUndoStack>
 #include <algorithm>
 #include <cmath>
 #include <mvvm/factories/modeldocuments.h>
 #include <mvvm/model/itemcatalogue.h>
 #include <mvvm/utils/reallimits.h>
 #include <mvvm/widgets/widgetutils.h>
+#include <mvvm/interfaces/undostackinterface.h>
 
 namespace
 {

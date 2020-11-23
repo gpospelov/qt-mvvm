@@ -7,12 +7,13 @@
 //
 // ************************************************************************** //
 
-#include "testwidget.h"
+#include "sampleeditorwidget.h"
 #include <QBoxLayout>
 #include <QLabel>
 #include <QMenu>
 #include <QTreeView>
 #include <QUndoView>
+#include <mvvm/commands/undostack.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/viewmodel/defaultviewmodel.h>
@@ -22,26 +23,33 @@
 
 using namespace ModelView;
 
-TestWidget::TestWidget(SessionModel* model, QWidget* parent)
-    : QWidget(parent), m_undoView(new QUndoView), m_defaultTreeView(new AllItemsTreeView(model)),
-      m_topItemView(new TopItemsTreeView(model)), m_subsetTreeView(new AllItemsTreeView(model)),
-      m_propertyTreeView(new PropertyTreeView), m_sessionModel(model)
+namespace TreeViews
+{
+
+SampleEditorWdiget::SampleEditorWdiget(SessionModel* model, QWidget* parent)
+    : QWidget(parent)
+    , m_undoView(new QUndoView)
+    , m_defaultTreeView(new AllItemsTreeView(model))
+    , m_topItemView(new TopItemsTreeView(model))
+    , m_subsetTreeView(new AllItemsTreeView(model))
+    , m_propertyTreeView(new PropertyTreeView)
+    , m_sessionModel(model)
 {
     auto layout = new QHBoxLayout;
-    layout->addLayout(create_left_layout());
-    layout->addLayout(create_middle_layout());
-    layout->addLayout(create_right_layout());
+    layout->addLayout(createLeftLayout());
+    layout->addLayout(createMiddleLayout());
+    layout->addLayout(createRightLayout());
     setLayout(layout);
 
     connect_views();
 
     m_sessionModel->setUndoRedoEnabled(true);
-    m_undoView->setStack(m_sessionModel->undoStack());
+    m_undoView->setStack(UndoStack::qtUndoStack(m_sessionModel->undoStack()));
 }
 
-TestWidget::~TestWidget() = default;
+SampleEditorWdiget::~SampleEditorWdiget() = default;
 
-void TestWidget::onContextMenuRequest(const QPoint& point)
+void SampleEditorWdiget::onContextMenuRequest(const QPoint& point)
 {
     auto treeView = qobject_cast<QTreeView*>(sender());
 
@@ -67,7 +75,7 @@ void TestWidget::onContextMenuRequest(const QPoint& point)
 
 //! Returns SessionItem corresponding to given coordinate in a view.
 
-SessionItem* TestWidget::item_from_view(QTreeView* view, const QPoint& point)
+SessionItem* SampleEditorWdiget::item_from_view(QTreeView* view, const QPoint& point)
 {
     QModelIndex index = view->indexAt(point);
     auto view_item = m_defaultTreeView->viewModel()->itemFromIndex(index);
@@ -76,7 +84,7 @@ SessionItem* TestWidget::item_from_view(QTreeView* view, const QPoint& point)
 
 //! Connect tree views to provide mutual item selection.
 
-void TestWidget::connect_views()
+void SampleEditorWdiget::connect_views()
 {
     // select items in other views when selection in m_defaultTreeView has changed
     auto on_item_selected = [this](SessionItem* item) {
@@ -88,21 +96,21 @@ void TestWidget::connect_views()
 
     m_defaultTreeView->treeView()->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(m_defaultTreeView->treeView(), &QTreeView::customContextMenuRequested, this,
-            &TestWidget::onContextMenuRequest);
+            &SampleEditorWdiget::onContextMenuRequest);
 
     // will notify m_defaultTreeView
     auto on_top_item_selected = [this](SessionItem* item) { m_defaultTreeView->setSelected(item); };
     connect(m_topItemView, &TopItemsTreeView::itemSelected, on_top_item_selected);
 }
 
-QBoxLayout* TestWidget::create_left_layout()
+QBoxLayout* SampleEditorWdiget::createLeftLayout()
 {
     auto result = new QVBoxLayout;
     result->addWidget(m_defaultTreeView);
     return result;
 }
 
-QBoxLayout* TestWidget::create_middle_layout()
+QBoxLayout* SampleEditorWdiget::createMiddleLayout()
 {
     auto result = new QVBoxLayout;
     result->addWidget(m_topItemView);
@@ -110,10 +118,12 @@ QBoxLayout* TestWidget::create_middle_layout()
     return result;
 }
 
-QBoxLayout* TestWidget::create_right_layout()
+QBoxLayout* SampleEditorWdiget::createRightLayout()
 {
     auto result = new QVBoxLayout;
     result->addWidget(m_undoView);
     result->addWidget(m_propertyTreeView);
     return result;
 }
+
+} // namespace TreeViews

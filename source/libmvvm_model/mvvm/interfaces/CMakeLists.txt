@@ -8,4 +8,5 @@ target_sources(${library_name} PRIVATE
     modellistenerinterface.h
     projectinterface.h
     projectmanagerinterface.h
+    undostackinterface.h
 )

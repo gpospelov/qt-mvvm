@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "items.h"
+#include "sampleitems.h"
 #include "item_constants.h"
 #include <QColor>
 #include <mvvm/model/comboproperty.h>
@@ -16,6 +16,9 @@
 #include <mvvm/standarditems/vectoritem.h>
 
 using namespace ModelView;
+
+namespace TreeViews
+{
 
 MultiLayer::MultiLayer() : CompoundItem(::Constants::MultiLayerType)
 {
@@ -104,3 +107,5 @@ ShapeGroupItem::ShapeGroupItem() : GroupItem(::Constants::ShapeGroupType)
     registerItem<AnysoPyramidItem>("Anysotropical pyramid");
     init_group();
 }
+
+} // namespace TreeViews

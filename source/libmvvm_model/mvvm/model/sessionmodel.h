@@ -19,8 +19,6 @@
 #include <mvvm/model/tagrow.h>
 #include <mvvm/model_export.h>
 
-class QUndoStack;
-
 namespace ModelView
 {
 
@@ -33,6 +31,7 @@ class ItemPool;
 class ItemBackupStrategy;
 class ItemFactoryInterface;
 class ItemCopyStrategy;
+class UndoStackInterface;
 
 class MVVM_MODEL_EXPORT SessionModel
 {
@@ -63,7 +62,7 @@ public:
 
     void setUndoRedoEnabled(bool value);
 
-    QUndoStack* undoStack() const;
+    UndoStackInterface* undoStack() const;
 
     void removeItem(SessionItem* parent, const TagRow& tagrow);
 

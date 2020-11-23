@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef ITEMS_H
-#define ITEMS_H
+#ifndef SAMPLEITEMS_H
+#define SAMPLEITEMS_H
 
 //! @file items.h
 //! Collection of test items for our sample model.
@@ -16,6 +16,9 @@
 #include <mvvm/model/compounditem.h>
 #include <mvvm/model/groupitem.h>
 #include <string>
+
+namespace TreeViews
+{
 
 //! A multi layer with possibility to attach layers.
 
@@ -105,4 +108,6 @@ public:
     ShapeGroupItem();
 };
 
-#endif // ITEMS_H
+} // namespace TreeViews
+
+#endif // SAMPLEITEMS_H
