@@ -12,6 +12,7 @@
 
 #include <memory>
 #include <mvvm/commands/undostack.h>
+#include <mvvm/commands/commandresult.h>
 #include <mvvm/core/variant.h>
 #include <mvvm/model/function_types.h>
 #include <mvvm/model_export.h>
@@ -50,7 +51,7 @@ public:
     void setCommandRecordPause(bool value);
 
 private:
-    template <typename C, typename... Args> typename C::result_t process_command(Args&&... args);
+    template <typename C, typename... Args> CommandResult process_command(Args&&... args);
 
     bool provideUndo() const;
 
@@ -62,22 +63,18 @@ private:
 //! Creates and processes command of given type using given argument list.
 
 template <typename C, typename... Args>
-typename C::result_t CommandService::process_command(Args&&... args)
+CommandResult CommandService::process_command(Args&&... args)
 {
-    typename C::result_t result;
-
     if (provideUndo()) {
         // making shared because underlying QUndoStack requires ownership
         auto command = std::make_shared<C>(std::forward<Args>(args)...);
         m_commands->execute(command);
-        result = command->result();
+        return command->commandResult();
     } else {
         auto command = std::make_unique<C>(std::forward<Args>(args)...);
         command->execute();
-        result = command->result();
+        return command->commandResult();
     }
-
-    return result;
 }
 
 } // namespace ModelView

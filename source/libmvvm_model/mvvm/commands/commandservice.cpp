@@ -37,7 +37,8 @@ SessionItem* CommandService::insertNewItem(const item_factory_func_t& func, Sess
 
     int actual_row = tagrow.row < 0 ? parent->itemCount(tagrow.tag) : tagrow.row;
 
-    return process_command<InsertNewItemCommand>(func, parent, TagRow{tagrow.tag, actual_row});
+    return std::get<SessionItem*>(
+        process_command<InsertNewItemCommand>(func, parent, TagRow{tagrow.tag, actual_row}));
 }
 
 SessionItem* CommandService::copyItem(const SessionItem* item, SessionItem* parent,
@@ -52,7 +53,8 @@ SessionItem* CommandService::copyItem(const SessionItem* item, SessionItem* pare
 
     int actual_row = tagrow.row < 0 ? parent->itemCount(tagrow.tag) : tagrow.row;
 
-    return process_command<CopyItemCommand>(item, parent, TagRow{tagrow.tag, actual_row});
+    return std::get<SessionItem*>(
+        process_command<CopyItemCommand>(item, parent, TagRow{tagrow.tag, actual_row}));
 }
 
 bool CommandService::setData(SessionItem* item, const Variant& value, int role)
@@ -60,7 +62,7 @@ bool CommandService::setData(SessionItem* item, const Variant& value, int role)
     if (!item)
         return false;
 
-    return process_command<SetValueCommand>(item, value, role);
+    return std::get<bool>(process_command<SetValueCommand>(item, value, role));
 }
 
 void CommandService::removeItem(SessionItem* parent, const TagRow& tagrow)

@@ -60,8 +60,9 @@ void CopyItemCommand::execute_command()
     auto parent = itemFromPath(p_impl->item_path);
     auto item = p_impl->backup_strategy->restoreItem();
     if (parent->insertItem(item.get(), p_impl->tagrow)) {
-        p_impl->result = item.release();
-        setCommandResult(item.release());
+        auto result = item.release();
+        p_impl->result = result;
+        setCommandResult(result);
     } else {
         setCommandResult(nullptr);
         p_impl->result = nullptr;
