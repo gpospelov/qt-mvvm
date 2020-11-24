@@ -22,10 +22,9 @@ std::string generate_description(const TagRow& tagrow);
 
 struct RemoveItemCommand::RemoveItemCommandImpl {
     TagRow tagrow;
-    result_t result;
     std::unique_ptr<ItemBackupStrategy> backup_strategy;
     Path item_path;
-    RemoveItemCommandImpl(TagRow tagrow) : tagrow(std::move(tagrow)), result(false) {}
+    RemoveItemCommandImpl(TagRow tagrow) : tagrow(std::move(tagrow)) {}
 };
 
 RemoveItemCommand::RemoveItemCommand(SessionItem* parent, TagRow tagrow)
@@ -54,18 +53,11 @@ void RemoveItemCommand::execute_command()
     if (auto child = parent->takeItem(p_impl->tagrow); child) {
         p_impl->backup_strategy->saveItem(child);
         delete child;
-        p_impl->result = true;
         setCommandResult(true);
     } else {
-        p_impl->result = false;
         setCommandResult(false);
         setObsolete(true);
     }
-}
-
-RemoveItemCommand::result_t RemoveItemCommand::result() const
-{
-    return p_impl->result;
 }
 
 namespace
