@@ -11,7 +11,6 @@
 #define MVVM_COMMANDS_COMMANDSERVICE_H
 
 #include <memory>
-#include <mvvm/commands/commandadapter.h>
 #include <mvvm/commands/undostack.h>
 #include <mvvm/core/variant.h>
 #include <mvvm/model/function_types.h>
@@ -69,8 +68,7 @@ typename C::result_t CommandService::process_command(Args&&... args)
 
     if (provideUndo()) {
         auto command = std::make_shared<C>(std::forward<Args>(args)...);
-        auto adapter = new CommandAdapter(command);
-        m_commands->push(adapter);
+        m_commands->execute(command);
         result = command->result();
     } else {
         auto command = std::make_unique<C>(std::forward<Args>(args)...);

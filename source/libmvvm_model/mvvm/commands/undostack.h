@@ -14,6 +14,8 @@
 #include <mvvm/interfaces/undostackinterface.h>
 #include <mvvm/model_export.h>
 
+class QUndoStack;
+
 namespace ModelView
 {
 
@@ -26,6 +28,9 @@ class MVVM_MODEL_EXPORT UndoStack : public UndoStackInterface
 public:
     UndoStack();
     ~UndoStack() override;
+
+    //! Executes the command, then pushes it in the stack for possible undo.
+    void execute(std::shared_ptr<AbstractItemCommand> command) override;
 
     void push(QUndoCommand* cmd) override;
     bool isActive() const override;
