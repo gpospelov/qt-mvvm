@@ -32,6 +32,8 @@ RemoveItemCommand::RemoveItemCommand(SessionItem* parent, TagRow tagrow)
     : AbstractItemCommand(parent)
     , p_impl(std::make_unique<RemoveItemCommandImpl>(std::move(tagrow)))
 {
+    setCommandResult(false);
+
     setDescription(generate_description(p_impl->tagrow));
     p_impl->backup_strategy = parent->model()->itemBackupStrategy();
     p_impl->item_path = pathFromItem(parent);
@@ -53,8 +55,10 @@ void RemoveItemCommand::execute_command()
         p_impl->backup_strategy->saveItem(child);
         delete child;
         p_impl->result = true;
+        setCommandResult(true);
     } else {
         p_impl->result = false;
+        setCommandResult(false);
         setObsolete(true);
     }
 }
