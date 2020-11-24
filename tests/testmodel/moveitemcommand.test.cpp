@@ -39,7 +39,7 @@ TEST_F(MoveItemCommandTest, rootContextNext)
     // moving item1 to the next position
     MoveItemCommand command(item1, model.rootItem(), {"", 2});
     command.execute();
-    EXPECT_EQ(std::get<bool>(command.commandResult()), true);
+    EXPECT_EQ(std::get<bool>(command.result()), true);
 
     // expecting new order of items
     expected = {item0, item2, item1, item3};
@@ -47,13 +47,13 @@ TEST_F(MoveItemCommandTest, rootContextNext)
 
     // undoing command
     command.undo();
-    EXPECT_EQ(std::get<bool>(command.commandResult()), true);
+    EXPECT_EQ(std::get<bool>(command.result()), true);
     expected = {item0, item1, item2, item3};
     EXPECT_EQ(model.rootItem()->children(), expected);
 
     // redoing
     command.execute();
-    EXPECT_EQ(std::get<bool>(command.commandResult()), true);
+    EXPECT_EQ(std::get<bool>(command.result()), true);
     EXPECT_EQ(command.isObsolete(), false);
 
     expected = {item0, item2, item1, item3};
@@ -75,7 +75,7 @@ TEST_F(MoveItemCommandTest, rootContextSamePos)
     // moving item1 to the same position
     MoveItemCommand command(item1, model.rootItem(), {"", 1});
     command.execute();
-    EXPECT_EQ(std::get<bool>(command.commandResult()), true);
+    EXPECT_EQ(std::get<bool>(command.result()), true);
     EXPECT_EQ(command.isObsolete(), false);
 
     // expecting new order of items
@@ -84,7 +84,7 @@ TEST_F(MoveItemCommandTest, rootContextSamePos)
 
     // undoing command
     command.undo();
-    EXPECT_EQ(std::get<bool>(command.commandResult()), true);
+    EXPECT_EQ(std::get<bool>(command.result()), true);
     EXPECT_EQ(command.isObsolete(), false);
 
     expected = {item0, item1, item2, item3};
@@ -106,7 +106,7 @@ TEST_F(MoveItemCommandTest, rootContextPrev)
     // moving item2 to item1's place
     MoveItemCommand command(item2, model.rootItem(), {"", 1});
     command.execute();
-    EXPECT_EQ(std::get<bool>(command.commandResult()), true);
+    EXPECT_EQ(std::get<bool>(command.result()), true);
     EXPECT_EQ(command.isObsolete(), false);
 
     // expecting new order of items
@@ -115,7 +115,7 @@ TEST_F(MoveItemCommandTest, rootContextPrev)
 
     // undoing command
     command.undo();
-    EXPECT_EQ(std::get<bool>(command.commandResult()), true);
+    EXPECT_EQ(std::get<bool>(command.result()), true);
     EXPECT_EQ(command.isObsolete(), false);
 
     expected = {item0, item1, item2, item3};
@@ -137,7 +137,7 @@ TEST_F(MoveItemCommandTest, rootContextLast)
     // moving item0 in the back of the list
     MoveItemCommand command(item0, model.rootItem(), {"", model.rootItem()->childrenCount() - 1});
     command.execute();
-    EXPECT_EQ(std::get<bool>(command.commandResult()), true);
+    EXPECT_EQ(std::get<bool>(command.result()), true);
     EXPECT_EQ(command.isObsolete(), false);
 
     // expecting new order of items
@@ -146,7 +146,7 @@ TEST_F(MoveItemCommandTest, rootContextLast)
 
     // undoing command
     command.undo();
-    EXPECT_EQ(std::get<bool>(command.commandResult()), true);
+    EXPECT_EQ(std::get<bool>(command.result()), true);
     EXPECT_EQ(command.isObsolete(), false);
 
     expected = {item0, item1, item2, item3};
@@ -168,7 +168,7 @@ TEST_F(MoveItemCommandTest, rootContextLast2)
     // moving item0 in the back of the list
     MoveItemCommand command(item0, model.rootItem(), {"", 3});
     command.execute();
-    EXPECT_EQ(std::get<bool>(command.commandResult()), true);
+    EXPECT_EQ(std::get<bool>(command.result()), true);
     EXPECT_EQ(command.isObsolete(), false);
 
     // expecting new order of items
@@ -177,7 +177,7 @@ TEST_F(MoveItemCommandTest, rootContextLast2)
 
     // undoing command
     command.undo();
-    EXPECT_EQ(std::get<bool>(command.commandResult()), true);
+    EXPECT_EQ(std::get<bool>(command.result()), true);
     EXPECT_EQ(command.isObsolete(), false);
 
     expected = {item0, item1, item2, item3};
@@ -205,7 +205,7 @@ TEST_F(MoveItemCommandTest, fromRootToParent)
     // moving item0 from root to parent
     MoveItemCommand command(item0, parent, {"", 1});
     command.execute();
-    EXPECT_EQ(std::get<bool>(command.commandResult()), true);
+    EXPECT_EQ(std::get<bool>(command.result()), true);
     EXPECT_EQ(command.isObsolete(), false);
 
     // expected items for root item
@@ -218,7 +218,7 @@ TEST_F(MoveItemCommandTest, fromRootToParent)
 
     // undoing command
     command.undo();
-    EXPECT_EQ(std::get<bool>(command.commandResult()), true);
+    EXPECT_EQ(std::get<bool>(command.result()), true);
     EXPECT_EQ(command.isObsolete(), false);
 
     // expected items for root item
@@ -251,7 +251,7 @@ TEST_F(MoveItemCommandTest, fromParentToRoot)
     // moving child0 from parent to root
     MoveItemCommand command(child0, model.rootItem(), {"", 0});
     command.execute();
-    EXPECT_EQ(std::get<bool>(command.commandResult()), true);
+    EXPECT_EQ(std::get<bool>(command.result()), true);
     EXPECT_EQ(command.isObsolete(), false);
 
     // expected items for root item
@@ -264,7 +264,7 @@ TEST_F(MoveItemCommandTest, fromParentToRoot)
 
     // undoing command
     command.undo();
-    EXPECT_EQ(std::get<bool>(command.commandResult()), true);
+    EXPECT_EQ(std::get<bool>(command.result()), true);
     EXPECT_EQ(command.isObsolete(), false);
 
     // expected items for root item
@@ -299,7 +299,7 @@ TEST_F(MoveItemCommandTest, betweenParentTags)
     // moving child2 to another tag
     MoveItemCommand command(child2, parent, {"tag1", 0});
     command.execute();
-    EXPECT_EQ(std::get<bool>(command.commandResult()), true);
+    EXPECT_EQ(std::get<bool>(command.result()), true);
     EXPECT_EQ(command.isObsolete(), false);
 
     // expected items for root item
@@ -316,7 +316,7 @@ TEST_F(MoveItemCommandTest, betweenParentTags)
 
     // undoing command
     command.undo();
-    EXPECT_EQ(std::get<bool>(command.commandResult()), true);
+    EXPECT_EQ(std::get<bool>(command.result()), true);
     EXPECT_EQ(command.isObsolete(), false);
 
     // expected items for root item

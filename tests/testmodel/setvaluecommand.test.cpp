@@ -39,13 +39,13 @@ TEST_F(SetValueCommandTest, setValueCommand)
 
     // executing command
     command->execute();
-    EXPECT_TRUE(std::get<bool>(command->commandResult())); // value was changed
+    EXPECT_TRUE(std::get<bool>(command->result())); // value was changed
     EXPECT_EQ(command->isObsolete(), false);
     EXPECT_EQ(model.data(item, role), expected);
 
     // undoing command
     command->undo();
-    EXPECT_TRUE(std::get<bool>(command->commandResult())); // value was changed
+    EXPECT_TRUE(std::get<bool>(command->result())); // value was changed
     EXPECT_FALSE(model.data(item, role).isValid());
     EXPECT_EQ(command->isObsolete(), false);
 }
@@ -67,7 +67,7 @@ TEST_F(SetValueCommandTest, setSameValueCommand)
 
     // executing command
     command->execute();
-    EXPECT_FALSE(std::get<bool>(command->commandResult())); // value wasn't changed
+    EXPECT_FALSE(std::get<bool>(command->result())); // value wasn't changed
     EXPECT_EQ(model.data(item, role), expected);
     EXPECT_EQ(command->isObsolete(), true);
 

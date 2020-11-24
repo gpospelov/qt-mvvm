@@ -83,7 +83,7 @@ std::string AbstractItemCommand::description() const
     return p_impl->text;
 }
 
-CommandResult AbstractItemCommand::commandResult() const
+CommandResult AbstractItemCommand::result() const
 {
     return p_impl->m_result;
 }

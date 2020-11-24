@@ -69,11 +69,11 @@ CommandResult CommandService::process_command(Args&&... args)
         // making shared because underlying QUndoStack requires ownership
         auto command = std::make_shared<C>(std::forward<Args>(args)...);
         m_commands->execute(command);
-        return command->commandResult();
+        return command->result();
     } else {
         C command(std::forward<Args>(args)...);
         command.execute();
-        return command.commandResult();
+        return command.result();
     }
 }
 

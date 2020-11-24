@@ -44,7 +44,7 @@ TEST_F(CopyItemCommandTest, copyChild)
     command->execute();
 
     // checking that parent has now three children
-    auto copy = std::get<SessionItem*>(command->commandResult());
+    auto copy = std::get<SessionItem*>(command->result());
     EXPECT_FALSE(command->isObsolete());
     EXPECT_TRUE(copy != nullptr);
     EXPECT_EQ(parent->childrenCount(), 3);
@@ -79,7 +79,7 @@ TEST_F(CopyItemCommandTest, invalidCopyAttempt)
 
     // checking that parent has now three children
     EXPECT_TRUE(command->isObsolete());
-    EXPECT_EQ(std::get<SessionItem*>(command->commandResult()), nullptr);
+    EXPECT_EQ(std::get<SessionItem*>(command->result()), nullptr);
 
     // undoing of obsolete command is not possible
     EXPECT_THROW(command->undo(), std::runtime_error);

@@ -38,7 +38,7 @@ public:
 
     std::string description() const;
 
-    CommandResult commandResult() const;
+    CommandResult result() const;
 
 protected:
     void setObsolete(bool flag);
