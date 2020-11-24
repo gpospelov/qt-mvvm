@@ -7,6 +7,7 @@ target_sources(${library_name} PRIVATE
     commandservice.h
     copyitemcommand.cpp
     copyitemcommand.h
+    commandresult.h
     insertnewitemcommand.cpp
     insertnewitemcommand.h
     moveitemcommand.cpp

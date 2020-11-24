@@ -22,6 +22,7 @@ struct AbstractItemCommand::AbstractItemCommandImpl {
     EStatus status{INITIAL};
     SessionModel* model{nullptr};
     AbstractItemCommand* parent_impl{nullptr};
+    CommandResult m_result;
     AbstractItemCommandImpl(AbstractItemCommand* parent) : parent_impl(parent) {}
 
     void set_after_execute() { status = AFTER_EXECUTE; }
@@ -82,6 +83,11 @@ std::string AbstractItemCommand::description() const
     return p_impl->text;
 }
 
+CommandResult AbstractItemCommand::commandResult() const
+{
+    return p_impl->m_result;
+}
+
 //! Sets command obsolete flag.
 
 void AbstractItemCommand::setObsolete(bool flag)
@@ -109,4 +115,9 @@ SessionItem* AbstractItemCommand::itemFromPath(const Path& path) const
 SessionModel* AbstractItemCommand::model() const
 {
     return p_impl->model;
+}
+
+void AbstractItemCommand::setCommandResult(const CommandResult& command_result)
+{
+    p_impl->m_result = command_result;
 }

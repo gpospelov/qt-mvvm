@@ -12,6 +12,7 @@
 
 #include <memory>
 #include <mvvm/model_export.h>
+#include <mvvm/commands/commandresult.h>
 #include <string>
 
 namespace ModelView
@@ -37,12 +38,15 @@ public:
 
     std::string description() const;
 
+    CommandResult commandResult() const;
+
 protected:
     void setObsolete(bool flag);
     void setDescription(const std::string& text);
     Path pathFromItem(SessionItem* item) const;
     SessionItem* itemFromPath(const Path& path) const;
     SessionModel* model() const;
+    void setCommandResult(const CommandResult& command_result);
 
 private:
     virtual void execute_command() = 0;
