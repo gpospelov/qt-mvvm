@@ -26,8 +26,7 @@ struct MoveItemCommand::MoveItemCommandImpl {
     Path target_parent_path;
     Path original_parent_path;
     TagRow original_tagrow;
-    result_t result;
-    MoveItemCommandImpl(TagRow tagrow) : target_tagrow(std::move(tagrow)), result(true)
+    MoveItemCommandImpl(TagRow tagrow) : target_tagrow(std::move(tagrow))
     {
         if (target_tagrow.row < 0)
             throw std::runtime_error("MoveItemCommand() -> Error. Uninitialized target row");
@@ -37,6 +36,8 @@ struct MoveItemCommand::MoveItemCommandImpl {
 MoveItemCommand::MoveItemCommand(SessionItem* item, SessionItem* new_parent, TagRow tagrow)
     : AbstractItemCommand(new_parent), p_impl(std::make_unique<MoveItemCommandImpl>(tagrow))
 {
+    setResult(true);
+
     check_input_data(item, new_parent);
     setDescription(generate_description(p_impl->target_tagrow));
 
@@ -93,11 +94,6 @@ void MoveItemCommand::execute_command()
     // adjusting new addresses
     p_impl->target_parent_path = pathFromItem(target_parent);
     p_impl->original_parent_path = pathFromItem(original_parent);
-}
-
-MoveItemCommand::result_t MoveItemCommand::result() const
-{
-    return p_impl->result;
 }
 
 namespace

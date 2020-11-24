@@ -24,12 +24,8 @@ class TagRow;
 class MVVM_MODEL_EXPORT MoveItemCommand : public AbstractItemCommand
 {
 public:
-    using result_t = bool;
-
     MoveItemCommand(SessionItem* item, SessionItem* new_parent, TagRow tagrow);
     ~MoveItemCommand() override;
-
-    result_t result() const;
 
 private:
     void undo_command() override;

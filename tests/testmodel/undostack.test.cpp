@@ -622,3 +622,40 @@ TEST_F(UndoStackTest, copyLayerFromMultilayer)
     EXPECT_EQ(multilayer1->itemCount(ToyItems::MultiLayerItem::T_LAYERS), 1);
     EXPECT_EQ(multilayer1->getItems(ToyItems::MultiLayerItem::T_LAYERS)[0]->identifier(), id);
 }
+
+TEST_F(UndoStackTest, beginMacrosEndMacros)
+{
+    const int role = ItemDataRole::DATA;
+    const QVariant data(42);
+
+    SessionModel model;
+    model.setUndoRedoEnabled(true);
+    auto stack = model.undoStack();
+
+    stack->beginMacro("macro1");
+    auto item = model.insertItem<SessionItem>();
+    item->setData(data, role);
+    stack->endMacro();
+
+    // initial state before removing the row
+    EXPECT_EQ(stack->count(), 1); // insert and setData commands
+    EXPECT_EQ(stack->index(), 1); // insert and setData commands
+    EXPECT_FALSE(model.undoStack()->canRedo());
+    EXPECT_TRUE(model.undoStack()->canUndo());
+    EXPECT_EQ(item->data<QVariant>(role), data);
+    EXPECT_EQ(model.rootItem()->childrenCount(), 1);
+
+    // undoing and checking the data
+    stack->undo();
+    EXPECT_EQ(stack->count(), 1);
+    EXPECT_EQ(stack->index(), 0);
+    EXPECT_EQ(model.rootItem()->childrenCount(), 0);
+
+    // redoing
+    stack->redo();
+    EXPECT_EQ(stack->count(), 1);
+    EXPECT_EQ(stack->index(), 1);
+    EXPECT_EQ(model.rootItem()->childrenCount(), 1);
+    item = Utils::ChildAt(model.rootItem(), 0);
+    EXPECT_EQ(model.data(item, role).value<double>(), 42.0);
+}

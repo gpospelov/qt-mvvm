@@ -11,7 +11,7 @@
 #define MVVM_COMMANDS_COMMANDSERVICE_H
 
 #include <memory>
-#include <mvvm/commands/commandadapter.h>
+#include <mvvm/commands/commandresult.h>
 #include <mvvm/commands/undostack.h>
 #include <mvvm/core/variant.h>
 #include <mvvm/model/function_types.h>
@@ -51,7 +51,7 @@ public:
     void setCommandRecordPause(bool value);
 
 private:
-    template <typename C, typename... Args> typename C::result_t process_command(Args&&... args);
+    template <typename C, typename... Args> CommandResult process_command(Args&&... args);
 
     bool provideUndo() const;
 
@@ -63,22 +63,18 @@ private:
 //! Creates and processes command of given type using given argument list.
 
 template <typename C, typename... Args>
-typename C::result_t CommandService::process_command(Args&&... args)
+CommandResult CommandService::process_command(Args&&... args)
 {
-    typename C::result_t result;
-
     if (provideUndo()) {
+        // making shared because underlying QUndoStack requires ownership
         auto command = std::make_shared<C>(std::forward<Args>(args)...);
-        auto adapter = new CommandAdapter(command);
-        m_commands->push(adapter);
-        result = command->result();
+        m_commands->execute(command);
+        return command->result();
     } else {
-        auto command = std::make_unique<C>(std::forward<Args>(args)...);
-        command->execute();
-        result = command->result();
+        C command(std::forward<Args>(args)...);
+        command.execute();
+        return command.result();
     }
-
-    return result;
 }
 
 } // namespace ModelView
