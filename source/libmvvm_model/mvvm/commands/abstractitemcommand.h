@@ -46,7 +46,7 @@ protected:
     Path pathFromItem(SessionItem* item) const;
     SessionItem* itemFromPath(const Path& path) const;
     SessionModel* model() const;
-    void setCommandResult(const CommandResult& command_result);
+    void setResult(const CommandResult& command_result);
 
 private:
     virtual void execute_command() = 0;

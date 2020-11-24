@@ -33,7 +33,7 @@ InsertNewItemCommand::InsertNewItemCommand(item_factory_func_t func, SessionItem
                                            const TagRow& tagrow)
     : AbstractItemCommand(parent), p_impl(std::make_unique<InsertNewItemCommandImpl>(func, tagrow))
 {
-    setCommandResult(nullptr);
+    setResult(nullptr);
     p_impl->item_path = pathFromItem(parent);
 }
 
@@ -43,7 +43,7 @@ void InsertNewItemCommand::undo_command()
 {
     auto parent = itemFromPath(p_impl->item_path);
     delete parent->takeItem(p_impl->tagrow);
-    setCommandResult(nullptr);
+    setResult(nullptr);
 }
 
 void InsertNewItemCommand::execute_command()
@@ -52,7 +52,7 @@ void InsertNewItemCommand::execute_command()
     auto child = p_impl->factory_func().release();
     setDescription(generate_description(child->modelType(), p_impl->tagrow));
     if (parent->insertItem(child, p_impl->tagrow)) {
-        setCommandResult(child);
+        setResult(child);
     } else {
         delete child;
         setObsolete(true);

@@ -32,7 +32,7 @@ struct CopyItemCommand::CopyItemCommandImpl {
 CopyItemCommand::CopyItemCommand(const SessionItem* item, SessionItem* parent, TagRow tagrow)
     : AbstractItemCommand(parent), p_impl(std::make_unique<CopyItemCommandImpl>(std::move(tagrow)))
 {
-    setCommandResult(nullptr);
+    setResult(nullptr);
 
     setDescription(generate_description(item->modelType(), p_impl->tagrow));
     p_impl->backup_strategy = parent->model()->itemBackupStrategy();
@@ -50,7 +50,7 @@ void CopyItemCommand::undo_command()
 {
     auto parent = itemFromPath(p_impl->item_path);
     delete parent->takeItem(p_impl->tagrow);
-    setCommandResult(nullptr);
+    setResult(nullptr);
 }
 
 void CopyItemCommand::execute_command()
@@ -59,9 +59,9 @@ void CopyItemCommand::execute_command()
     auto item = p_impl->backup_strategy->restoreItem();
     if (parent->insertItem(item.get(), p_impl->tagrow)) {
         auto result = item.release();
-        setCommandResult(result);
+        setResult(result);
     } else {
-        setCommandResult(nullptr);
+        setResult(nullptr);
         setObsolete(true);
     }
 }

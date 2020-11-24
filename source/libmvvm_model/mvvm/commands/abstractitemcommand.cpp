@@ -117,7 +117,7 @@ SessionModel* AbstractItemCommand::model() const
     return p_impl->model;
 }
 
-void AbstractItemCommand::setCommandResult(const CommandResult& command_result)
+void AbstractItemCommand::setResult(const CommandResult& command_result)
 {
     p_impl->m_result = command_result;
 }
