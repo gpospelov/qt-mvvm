@@ -23,11 +23,8 @@ class SessionItem;
 class MVVM_MODEL_EXPORT SetValueCommand : public AbstractItemCommand
 {
 public:
-    using result_t = bool;
     SetValueCommand(SessionItem* item, Variant value, int role);
     ~SetValueCommand() override;
-
-    result_t result() const;
 
 private:
     void undo_command() override;

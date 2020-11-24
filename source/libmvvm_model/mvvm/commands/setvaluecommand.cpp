@@ -23,12 +23,8 @@ using namespace ModelView;
 struct SetValueCommand::SetValueCommandImpl {
     Variant m_value; //! Value to set as a result of command execution.
     int m_role;
-    result_t m_result;
     Path m_item_path;
-    SetValueCommandImpl(Variant value, int role)
-        : m_value(std::move(value)), m_role(role), m_result(false)
-    {
-    }
+    SetValueCommandImpl(Variant value, int role) : m_value(std::move(value)), m_role(role) {}
 };
 
 // ----------------------------------------------------------------------------
@@ -60,18 +56,9 @@ void SetValueCommand::swap_values()
     auto item = itemFromPath(p_impl->m_item_path);
     auto old = item->data<Variant>(p_impl->m_role);
     auto result = item->setDataIntern(p_impl->m_value, p_impl->m_role);
-    p_impl->m_result = result;
     setCommandResult(result);
     setObsolete(!result);
     p_impl->m_value = old;
-}
-
-//! Returns result of the command, which is bool value denoting that the value was set succesfully.
-//! The value 'false' means that the data is the same and no change was required.
-
-SetValueCommand::result_t SetValueCommand::result() const
-{
-    return p_impl->m_result;
 }
 
 namespace
