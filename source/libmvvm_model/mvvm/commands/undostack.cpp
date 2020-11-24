@@ -84,3 +84,13 @@ QUndoStack* UndoStack::qtUndoStack(UndoStackInterface* stack_interface)
         return stack->p_impl->undoStack();
     return nullptr;
 }
+
+void UndoStack::beginMacro(const std::string& name)
+{
+    p_impl->undoStack()->beginMacro(QString::fromStdString(name));
+}
+
+void UndoStack::endMacro()
+{
+    p_impl->undoStack()->endMacro();
+}

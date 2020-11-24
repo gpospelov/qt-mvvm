@@ -67,6 +67,7 @@ typename C::result_t CommandService::process_command(Args&&... args)
     typename C::result_t result;
 
     if (provideUndo()) {
+        // making shared because underlying QUndoStack requires ownership
         auto command = std::make_shared<C>(std::forward<Args>(args)...);
         m_commands->execute(command);
         result = command->result();

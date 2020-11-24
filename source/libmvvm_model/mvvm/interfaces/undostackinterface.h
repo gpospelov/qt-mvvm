@@ -11,6 +11,7 @@
 #define MVVM_INTERFACES_UNDDOSTACKINTERFACE_H
 
 #include <memory>
+#include <string>
 
 class QUndoCommand;
 
@@ -42,6 +43,9 @@ public:
     virtual void redo() = 0;
     virtual void clear() = 0;
     virtual void setUndoLimit(int limit) = 0;
+
+    virtual void beginMacro(const std::string& name) = 0;
+    virtual void endMacro() = 0;
 };
 
 } // namespace ModelView
