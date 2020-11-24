@@ -29,11 +29,6 @@ void UndoStack::execute(std::shared_ptr<AbstractItemCommand> command)
 
 UndoStack::~UndoStack() = default;
 
-void UndoStack::push(QUndoCommand* cmd)
-{
-    p_impl->undoStack()->push(cmd);
-}
-
 bool UndoStack::isActive() const
 {
     return p_impl->undoStack()->isActive();

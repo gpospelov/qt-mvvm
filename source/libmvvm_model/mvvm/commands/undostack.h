@@ -32,7 +32,6 @@ public:
     //! Executes the command, then pushes it in the stack for possible undo.
     void execute(std::shared_ptr<AbstractItemCommand> command) override;
 
-    void push(QUndoCommand* cmd) override;
     bool isActive() const override;
     bool canUndo() const override;
     bool canRedo() const override;

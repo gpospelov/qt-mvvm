@@ -33,8 +33,6 @@ public:
     //! c) to bypass QUndoStack behavior which wants to have an ownership
     virtual void execute(std::shared_ptr<AbstractItemCommand> command) = 0;
 
-    virtual void push(QUndoCommand* cmd) = 0;
-
     virtual bool isActive() const = 0;
     virtual bool canUndo() const = 0;
     virtual bool canRedo() const = 0;
