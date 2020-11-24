@@ -23,12 +23,8 @@ class TagRow;
 class MVVM_MODEL_EXPORT CopyItemCommand : public AbstractItemCommand
 {
 public:
-    using result_t = SessionItem*;
-
     CopyItemCommand(const SessionItem* item, SessionItem* parent, TagRow tagrow);
     ~CopyItemCommand() override;
-
-    result_t result() const;
 
 private:
     void undo_command() override;

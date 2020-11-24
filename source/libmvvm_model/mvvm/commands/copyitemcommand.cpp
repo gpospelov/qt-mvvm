@@ -24,10 +24,9 @@ std::string generate_description(const std::string& modelType, const TagRow& tag
 
 struct CopyItemCommand::CopyItemCommandImpl {
     TagRow tagrow;
-    result_t result;
     std::unique_ptr<ItemBackupStrategy> backup_strategy;
     Path item_path;
-    CopyItemCommandImpl(TagRow tagrow) : tagrow(std::move(tagrow)), result(nullptr) {}
+    CopyItemCommandImpl(TagRow tagrow) : tagrow(std::move(tagrow)) {}
 };
 
 CopyItemCommand::CopyItemCommand(const SessionItem* item, SessionItem* parent, TagRow tagrow)
@@ -52,7 +51,6 @@ void CopyItemCommand::undo_command()
     auto parent = itemFromPath(p_impl->item_path);
     delete parent->takeItem(p_impl->tagrow);
     setCommandResult(nullptr);
-    p_impl->result = nullptr;
 }
 
 void CopyItemCommand::execute_command()
@@ -61,18 +59,11 @@ void CopyItemCommand::execute_command()
     auto item = p_impl->backup_strategy->restoreItem();
     if (parent->insertItem(item.get(), p_impl->tagrow)) {
         auto result = item.release();
-        p_impl->result = result;
         setCommandResult(result);
     } else {
         setCommandResult(nullptr);
-        p_impl->result = nullptr;
         setObsolete(true);
     }
-}
-
-CopyItemCommand::result_t CopyItemCommand::result() const
-{
-    return p_impl->result;
 }
 
 namespace

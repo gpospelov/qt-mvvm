@@ -11,8 +11,8 @@
 #define MVVM_COMMANDS_COMMANDSERVICE_H
 
 #include <memory>
-#include <mvvm/commands/undostack.h>
 #include <mvvm/commands/commandresult.h>
+#include <mvvm/commands/undostack.h>
 #include <mvvm/core/variant.h>
 #include <mvvm/model/function_types.h>
 #include <mvvm/model_export.h>
@@ -71,9 +71,9 @@ CommandResult CommandService::process_command(Args&&... args)
         m_commands->execute(command);
         return command->commandResult();
     } else {
-        auto command = std::make_unique<C>(std::forward<Args>(args)...);
-        command->execute();
-        return command->commandResult();
+        C command(std::forward<Args>(args)...);
+        command.execute();
+        return command.commandResult();
     }
 }
 
