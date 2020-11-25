@@ -10,6 +10,7 @@
 #include "graphmodel.h"
 #include <QColor>
 #include <cmath>
+#include <mvvm/interfaces/undostackinterface.h>
 #include <mvvm/model/mvvm_types.h>
 #include <mvvm/standarditems/axisitems.h>
 #include <mvvm/standarditems/containeritem.h>
@@ -56,6 +57,9 @@ GraphModel::GraphModel() : SessionModel("GraphModel")
 
 void GraphModel::add_graph()
 {
+    if (undoStack())
+        undoStack()->beginMacro("addGraph");
+
     auto data = insertItem<Data1DItem>(data_container());
     data->setAxis(FixedBinAxisItem::create(npoints, xmin, xmax));
     data->setValues(bin_values(ModelView::Utils::RandDouble(0.5, 1.0)));
@@ -63,12 +67,18 @@ void GraphModel::add_graph()
     auto graph = insertItem<GraphItem>(viewport());
     graph->setDataItem(data);
     graph->setNamedColor(ModelView::Utils::RandomNamedColor());
+
+    if (undoStack())
+        undoStack()->endMacro();
 }
 
 //! Remove last graph and data item.
 
 void GraphModel::remove_graph()
 {
+    if (undoStack())
+        undoStack()->beginMacro("removeGraph");
+
     const int graph_count = viewport()->itemCount(ViewportItem::T_ITEMS);
     const int data_count = data_container()->itemCount(ContainerItem::T_ITEMS);
 
@@ -80,6 +90,9 @@ void GraphModel::remove_graph()
 
     if (data_count)
         removeItem(data_container(), {"", data_count - 1});
+
+    if (undoStack())
+        undoStack()->endMacro();
 }
 
 //! Put random noise to graph.
@@ -92,6 +105,18 @@ void GraphModel::randomize_graphs()
                        [](auto x) { return x * ModelView::Utils::RandDouble(0.8, 1.2); });
         item->setValues(values);
     }
+}
+
+void GraphModel::undo()
+{
+    if(undoStack())
+        undoStack()->undo();
+}
+
+void GraphModel::redo()
+{
+    if(undoStack())
+        undoStack()->redo();
 }
 
 //! Returns viewport item containig graph items.
@@ -116,6 +141,8 @@ void GraphModel::init_model()
     auto viewport = insertItem<GraphViewportItem>();
     viewport->setDisplayName("Graph container");
     add_graph();
+
+    setUndoRedoEnabled(true);
 }
 
 } // namespace PlotGraphs

@@ -36,6 +36,10 @@ public:
 
     void randomize_graphs();
 
+    void undo();
+
+    void redo();
+
 private:
     ModelView::GraphViewportItem* viewport();
     ModelView::ContainerItem* data_container();
