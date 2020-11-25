@@ -23,6 +23,7 @@ struct InsertNewItemCommand::InsertNewItemCommandImpl {
     item_factory_func_t factory_func;
     TagRow tagrow;
     Path item_path;
+    std::string initial_identifier;
     InsertNewItemCommandImpl(item_factory_func_t func, TagRow tagrow)
         : factory_func(std::move(func)), tagrow(std::move(tagrow))
     {
@@ -42,7 +43,11 @@ InsertNewItemCommand::~InsertNewItemCommand() = default;
 void InsertNewItemCommand::undo_command()
 {
     auto parent = itemFromPath(p_impl->item_path);
-    delete parent->takeItem(p_impl->tagrow);
+    auto item = parent->takeItem(p_impl->tagrow);
+    // saving identifier for later redo
+    if (p_impl->initial_identifier.empty())
+        p_impl->initial_identifier = item->identifier();
+    delete item;
     setResult(nullptr);
 }
 
@@ -52,6 +57,10 @@ void InsertNewItemCommand::execute_command()
     auto child = p_impl->factory_func().release();
     setDescription(generate_description(child->modelType(), p_impl->tagrow));
     if (parent->insertItem(child, p_impl->tagrow)) {
+        // here we restore original identifier to get exactly same item on consequitive undo/redo
+        if (!p_impl->initial_identifier.empty())
+            child->setDataIntern(QVariant::fromValue(p_impl->initial_identifier),
+                                 ItemDataRole::IDENTIFIER);
         setResult(child);
     } else {
         delete child;
@@ -68,4 +77,3 @@ std::string generate_description(const std::string& modelType, const TagRow& tag
     return ostr.str();
 }
 } // namespace
-

@@ -149,3 +149,28 @@ TEST_F(InsertNewItemCommandTest, attemptInsertSecondProperty)
     // undoing failed command shouldn't be possible
     EXPECT_THROW(command2.undo(), std::runtime_error);
 }
+
+//! Insert new item through InsertNewItemCommand command.
+//! We validate that undoing, and then redoing, would restore very first unique identifier.
+
+TEST_F(InsertNewItemCommandTest, insertNewPropertyItemPreservedId)
+{
+    SessionModel model;
+    // command to insert second property
+    auto factory_func = [&model]() { return model.factory()->createItem(Constants::PropertyType); };
+
+    EXPECT_EQ(model.rootItem()->childrenCount(), 0);
+
+    InsertNewItemCommand command1(factory_func, model.rootItem(), TagRow{"", 0});
+    command1.execute();
+
+    EXPECT_EQ(model.rootItem()->childrenCount(), 1);
+    auto orig_identifier = model.rootItem()->children()[0]->identifier();
+
+    command1.undo();
+    EXPECT_EQ(model.rootItem()->childrenCount(), 0);
+
+    command1.execute();
+    EXPECT_EQ(model.rootItem()->childrenCount(), 1);
+    EXPECT_EQ(model.rootItem()->children()[0]->identifier(), orig_identifier);
+}
