@@ -14,8 +14,6 @@
 #include <memory>
 
 class QBoxLayout;
-class GraphModel;
-class GraphPropertyWidget;
 class QToolBar;
 class QAction;
 
@@ -24,6 +22,12 @@ namespace ModelView
 class ItemsTreeView;
 class GraphCanvas;
 } // namespace ModelView
+
+namespace PlotGraphs
+{
+
+class GraphModel;
+class GraphPropertyWidget;
 
 //! Shows canvas with plots on the left and property editor on the right.
 
@@ -51,5 +55,7 @@ private:
     GraphPropertyWidget* m_propertyWidget{nullptr};
     GraphModel* m_model{nullptr};
 };
+
+} // namespace PlotGraphs
 
 #endif // GRAPHWIDGET_H

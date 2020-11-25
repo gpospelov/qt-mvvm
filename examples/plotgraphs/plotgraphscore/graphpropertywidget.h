@@ -14,19 +14,23 @@
 #include <memory>
 
 class QBoxLayout;
-class GraphModel;
-class QBoxLayout;
 
 namespace ModelView
 {
 class ItemsTreeView;
 } // namespace ModelView
 
+namespace PlotGraphs
+{
+
+class GraphModel;
+
 //! Shows model content in standard tree view.
 
 class GraphPropertyWidget : public QWidget
 {
     Q_OBJECT
+
 public:
     explicit GraphPropertyWidget(GraphModel* model = nullptr, QWidget* parent = nullptr);
 
@@ -38,5 +42,7 @@ private:
     ModelView::ItemsTreeView* m_treeView{nullptr};
     GraphModel* m_model{nullptr};
 };
+
+} // namespace PlotGraphs
 
 #endif // GRAPHPROPERTYWIDGET_H

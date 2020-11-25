@@ -19,6 +19,9 @@
 
 using namespace ModelView;
 
+namespace PlotGraphs
+{
+
 GraphWidget::GraphWidget(GraphModel* model, QWidget* parent)
     : QWidget(parent)
     , m_toolBar(new QToolBar)
@@ -98,3 +101,5 @@ QBoxLayout* GraphWidget::create_right_layout()
     result->addWidget(m_propertyWidget);
     return result;
 }
+
+} // namespace PlotGraphs

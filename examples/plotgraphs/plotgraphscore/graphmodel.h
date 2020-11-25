@@ -18,6 +18,9 @@ class GraphViewportItem;
 class ContainerItem;
 } // namespace ModelView
 
+namespace PlotGraphs
+{
+
 //! Main application model to demonstrate how to plot data.
 //! Contains few Data1DItem's, GraphItem's and ViewPortItem. Provides functionality to easily
 //! add and remove graphs.
@@ -39,5 +42,7 @@ private:
 
     void init_model();
 };
+
+} // namespace PlotGraphs
 
 #endif // GRAPHMODEL_H

@@ -44,6 +44,9 @@ std::vector<double> bin_values(double amp_factor = 1.0)
 
 using namespace ModelView;
 
+namespace PlotGraphs
+{
+
 GraphModel::GraphModel() : SessionModel("GraphModel")
 {
     init_model();
@@ -114,3 +117,5 @@ void GraphModel::init_model()
     viewport->setDisplayName("Graph container");
     add_graph();
 }
+
+} // namespace PlotGraphs
