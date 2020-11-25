@@ -140,9 +140,9 @@ void GraphModel::init_model()
 
     auto viewport = insertItem<GraphViewportItem>();
     viewport->setDisplayName("Graph container");
-    add_graph();
 
     setUndoRedoEnabled(true);
+//    add_graph();
 }
 
 } // namespace PlotGraphs

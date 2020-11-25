@@ -15,6 +15,7 @@
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/model/taginfo.h>
+#include <mvvm/standarditems/data1ditem.h>
 
 using namespace ModelView;
 
@@ -86,6 +87,32 @@ TEST_F(UndoStackTest, insertNewItem)
     EXPECT_EQ(model.rootItem()->childrenCount(), 1);
     EXPECT_EQ(Utils::ChildAt(model.rootItem(), 0)->modelType(), modelType);
 }
+
+//! Add remove data item and checkint preserved identifier.
+
+TEST_F(UndoStackTest, insertPropertyItemID)
+{
+    SessionModel model;
+    model.setUndoRedoEnabled(true);
+    auto stack = model.undoStack();
+
+    auto item = model.insertItem<PropertyItem>();
+    auto original_id = item->identifier();
+
+    EXPECT_EQ(stack->index(), 1);
+    EXPECT_EQ(stack->count(), 1);
+
+    model.undoStack()->undo();
+    EXPECT_EQ(model.rootItem()->childrenCount(), 0);
+
+    model.undoStack()->redo();
+    EXPECT_EQ(model.rootItem()->childrenCount(), 1);
+
+    auto restored_data1d_item = Utils::ChildAt(model.rootItem(), 0);
+    EXPECT_EQ(restored_data1d_item->modelType(), Constants::PropertyType);
+    EXPECT_EQ(restored_data1d_item->identifier(), original_id);
+}
+
 
 //! Undo/redo scenario when few items inserted.
 
@@ -337,7 +364,6 @@ TEST_F(UndoStackTest, removeParentAndChild)
 
 TEST_F(UndoStackTest, itemIdentifierOnRemove)
 {
-
     SessionModel model;
     model.setUndoRedoEnabled(true);
     auto stack = model.undoStack();
@@ -622,6 +648,8 @@ TEST_F(UndoStackTest, copyLayerFromMultilayer)
     EXPECT_EQ(multilayer1->itemCount(ToyItems::MultiLayerItem::T_LAYERS), 1);
     EXPECT_EQ(multilayer1->getItems(ToyItems::MultiLayerItem::T_LAYERS)[0]->identifier(), id);
 }
+
+//! Add item and changing its data from macros.
 
 TEST_F(UndoStackTest, beginMacrosEndMacros)
 {
