@@ -19,6 +19,9 @@
 
 using namespace ModelView;
 
+namespace PlotGraphs
+{
+
 GraphWidget::GraphWidget(GraphModel* model, QWidget* parent)
     : QWidget(parent)
     , m_toolBar(new QToolBar)
@@ -81,6 +84,16 @@ void GraphWidget::init_actions()
     m_toolBar->addAction(m_resetViewportAction);
     m_toolBar->addAction(m_addGraphAction);
     m_toolBar->addAction(m_removeGraphAction);
+
+    m_toolBar->addSeparator();
+
+    auto undo_action = new QAction("Undo", this);
+    connect(undo_action, &QAction::triggered, [this]() { m_model->undo(); });
+    m_toolBar->addAction(undo_action);
+
+    auto redo_action = new QAction("Redo", this);
+    connect(redo_action, &QAction::triggered, [this]() { m_model->redo(); });
+    m_toolBar->addAction(redo_action);
 }
 
 GraphWidget::~GraphWidget() = default;
@@ -98,3 +111,5 @@ QBoxLayout* GraphWidget::create_right_layout()
     result->addWidget(m_propertyWidget);
     return result;
 }
+
+} // namespace PlotGraphs

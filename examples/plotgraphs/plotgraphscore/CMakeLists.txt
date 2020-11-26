@@ -1,4 +1,3 @@
-# library: plotgraphscore
 set(library_name plotgraphscore)
 
 set(CMAKE_AUTOMOC ON)

@@ -17,6 +17,9 @@
 
 using namespace ModelView;
 
+namespace PlotGraphs
+{
+
 GraphPropertyWidget::GraphPropertyWidget(GraphModel* model, QWidget* parent)
     : QWidget(parent), m_treeView(new ItemsTreeView), m_model(model)
 {
@@ -56,3 +59,5 @@ QBoxLayout* GraphPropertyWidget::create_button_layout()
 
     return result;
 }
+
+} // namespace PlotGraphs

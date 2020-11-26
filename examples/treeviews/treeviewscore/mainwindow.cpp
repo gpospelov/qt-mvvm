@@ -8,8 +8,8 @@
 // ************************************************************************** //
 
 #include "mainwindow.h"
-#include "samplemodel.h"
 #include "sampleeditorwidget.h"
+#include "samplemodel.h"
 #include <QCoreApplication>
 #include <QSettings>
 #include <QTabWidget>
@@ -63,5 +63,4 @@ void MainWindow::write_settings()
     settings.endGroup();
 }
 
-}
-
+} // namespace TreeViews
