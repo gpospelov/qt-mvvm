@@ -14,7 +14,6 @@
 #include <memory>
 
 class QBoxLayout;
-class ColorMapModel;
 class QBoxLayout;
 class QSlider;
 
@@ -22,6 +21,11 @@ namespace ModelView
 {
 class ItemsTreeView;
 } // namespace ModelView
+
+namespace PlotColorMap
+{
+
+class ColorMapModel;
 
 //! Shows model content in standard tree view.
 
@@ -39,5 +43,7 @@ private:
     ModelView::ItemsTreeView* m_treeView;
     ColorMapModel* m_model;
 };
+
+} // namespace PlotColorMap
 
 #endif // COLORMAPPROPERTYWIDGET_H

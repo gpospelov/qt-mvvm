@@ -13,8 +13,12 @@
 #include <QMainWindow>
 #include <memory>
 
-class ColorMapModel;
 class QTabWidget;
+
+namespace PlotColorMap
+{
+
+class ColorMapModel;
 
 //! The main window of this application.
 
@@ -36,5 +40,7 @@ private:
     QTabWidget* m_tabWidget;
     std::unique_ptr<ColorMapModel> m_model;
 };
+
+} // namespace PlotColorMap
 
 #endif //  MAINWINDOW_H

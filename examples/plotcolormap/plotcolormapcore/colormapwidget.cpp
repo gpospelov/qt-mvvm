@@ -19,6 +19,9 @@
 
 using namespace ModelView;
 
+namespace PlotColorMap
+{
+
 ColorMapWidget::ColorMapWidget(ColorMapModel* model, QWidget* parent)
     : QWidget(parent)
     , m_toolBar(new QToolBar)
@@ -84,3 +87,5 @@ QBoxLayout* ColorMapWidget::create_right_layout()
     result->addWidget(m_propertyWidget);
     return result;
 }
+
+} // namespace PlotColorMap
