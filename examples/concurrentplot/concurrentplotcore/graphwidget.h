@@ -29,6 +29,7 @@ class GraphCanvas;
 class GraphWidget : public QWidget
 {
     Q_OBJECT
+
 public:
     explicit GraphWidget(GraphModel* model = nullptr, QWidget* parent = nullptr);
 

@@ -40,6 +40,9 @@ void fill_data(Data2DItem* data_item, double scale = 1.0)
 }
 } // namespace
 
+namespace PlotColorMap
+{
+
 ColorMapModel::ColorMapModel() : SessionModel("ColorMapModel")
 {
     init_model();
@@ -77,3 +80,5 @@ void ColorMapModel::init_model()
 
     add_colormap();
 }
+
+} // namespace PlotColorMap

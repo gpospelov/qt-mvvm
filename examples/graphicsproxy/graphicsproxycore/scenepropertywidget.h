@@ -28,6 +28,7 @@ class ItemsTreeView;
 class ScenePropertyWidget : public QWidget
 {
     Q_OBJECT
+
 public:
     explicit ScenePropertyWidget(SceneModel* model = nullptr, QWidget* parent = nullptr);
 

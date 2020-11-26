@@ -34,6 +34,7 @@ namespace TreeViews
 class SampleEditorWdiget : public QWidget
 {
     Q_OBJECT
+
 public:
     SampleEditorWdiget(ModelView::SessionModel* model, QWidget* parent = nullptr);
     ~SampleEditorWdiget();

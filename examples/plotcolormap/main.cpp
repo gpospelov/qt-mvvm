@@ -7,9 +7,9 @@
 //
 // ************************************************************************** //
 
-#include <plotcolormapcore/mainwindow.h>
 #include <QApplication>
 #include <QLocale>
+#include <plotcolormapcore/mainwindow.h>
 
 int main(int argc, char** argv)
 {
@@ -17,7 +17,7 @@ int main(int argc, char** argv)
 
     QApplication app(argc, argv);
 
-    MainWindow win;
+    PlotColorMap::MainWindow win;
     win.show();
 
     return app.exec();

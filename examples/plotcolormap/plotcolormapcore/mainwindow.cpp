@@ -21,6 +21,9 @@ const QString size_key = "size";
 const QString pos_key = "pos";
 } // namespace
 
+namespace PlotColorMap
+{
+
 MainWindow::MainWindow() : m_tabWidget(new QTabWidget), m_model(std::make_unique<ColorMapModel>())
 {
     m_tabWidget->addTab(new ColorMapWidget(m_model.get()), "Color Map");
@@ -62,3 +65,5 @@ void MainWindow::write_settings()
     settings.setValue(pos_key, pos());
     settings.endGroup();
 }
+
+} // namespace PlotColorMap

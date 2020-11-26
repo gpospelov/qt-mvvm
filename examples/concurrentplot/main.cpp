@@ -7,9 +7,9 @@
 //
 // ************************************************************************** //
 
-#include <concurrentplotcore/mainwindow.h>
 #include <QApplication>
 #include <QLocale>
+#include <concurrentplotcore/mainwindow.h>
 
 int main(int argc, char** argv)
 {

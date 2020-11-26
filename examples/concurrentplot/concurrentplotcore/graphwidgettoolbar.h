@@ -22,6 +22,7 @@ class QProgressBar;
 class GraphWidgetToolBar : public QToolBar
 {
     Q_OBJECT
+
 public:
     explicit GraphWidgetToolBar(QWidget* parent = nullptr);
 

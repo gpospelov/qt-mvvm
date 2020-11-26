@@ -14,6 +14,7 @@
 #include <mvvm/standarditems/colormapitem.h>
 #include <mvvm/standarditems/data2ditem.h>
 #include <mvvm/standarditems/linkeditem.h>
+#include <mvvm/model/comboproperty.h>
 
 using namespace ModelView;
 using ::testing::_;
@@ -35,6 +36,7 @@ TEST_F(ColorMapItemTest, initialState)
     ColorMapItem item;
     EXPECT_TRUE(item.dataItem() == nullptr);
     EXPECT_TRUE(item.property<bool>(ColorMapItem::P_INTERPOLATION));
+    EXPECT_EQ(item.property<ComboProperty>(ColorMapItem::P_GRADIENT).value(), "Polar");
 }
 
 //! Setting dataItem in model context.

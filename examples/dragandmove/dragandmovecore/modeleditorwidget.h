@@ -25,6 +25,7 @@ class QAction;
 class ModelEditorWidget : public QWidget
 {
     Q_OBJECT
+
 public:
     explicit ModelEditorWidget(SampleModel* model = nullptr, QWidget* parent = nullptr);
 

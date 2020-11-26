@@ -19,6 +19,7 @@
 class JobManager : public QObject
 {
     Q_OBJECT
+
 public:
     JobManager(QObject* parent = nullptr);
     ~JobManager() override;

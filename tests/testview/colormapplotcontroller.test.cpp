@@ -11,6 +11,7 @@
 #include "google_test.h"
 #include "qcustomplot.h"
 #include <QSignalSpy>
+#include <mvvm/model/comboproperty.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/plotting/colormapplotcontroller.h>
 #include <mvvm/standarditems/axisitems.h>
@@ -179,4 +180,31 @@ TEST_F(ColorMapPlotControllerTest, controllerDelete)
     // deleting controller should lead to QCPColorMap removal
     controller.reset();
     EXPECT_EQ(custom_plot->plottableCount(), 0);
+}
+
+//! Deletion of controller should lead to graph removal.
+
+TEST_F(ColorMapPlotControllerTest, setGradient)
+{
+    auto custom_plot = std::make_unique<QCustomPlot>();
+    auto controller = std::make_unique<ColorMapPlotController>(custom_plot.get());
+
+    // setup model and single data item in it
+    SessionModel model;
+    auto data_item = model.insertItem<Data2DItem>();
+
+    // creating colormap item
+    auto colormap_item = model.insertItem<ColorMapItem>();
+    colormap_item->setDataItem(data_item);
+
+    controller->setItem(colormap_item);
+
+    auto color_map = TestUtils::GetPlottable<QCPColorMap>(custom_plot.get());
+
+    EXPECT_EQ(color_map->gradient(), QCPColorGradient::gpPolar);
+
+    auto combo = colormap_item->property<ComboProperty>(ColorMapItem::P_GRADIENT);
+    combo.setValue("Hot");
+    colormap_item->setProperty(ColorMapItem::P_GRADIENT, combo);
+    EXPECT_EQ(color_map->gradient(), QCPColorGradient::gpHot);
 }

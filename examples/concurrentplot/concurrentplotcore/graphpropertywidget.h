@@ -27,6 +27,7 @@ class ItemsTreeView;
 class GraphPropertyWidget : public QWidget
 {
     Q_OBJECT
+
 public:
     explicit GraphPropertyWidget(GraphModel* model = nullptr, QWidget* parent = nullptr);
     ~GraphPropertyWidget();

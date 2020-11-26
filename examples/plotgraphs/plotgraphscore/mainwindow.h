@@ -25,6 +25,7 @@ class GraphModel;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
+
 public:
     MainWindow();
     ~MainWindow();
