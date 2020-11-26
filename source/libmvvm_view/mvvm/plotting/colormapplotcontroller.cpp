@@ -9,11 +9,11 @@
 
 #include "qcustomplot.h"
 #include <map>
+#include <mvvm/model/comboproperty.h>
 #include <mvvm/plotting/colormapplotcontroller.h>
 #include <mvvm/plotting/data2dplotcontroller.h>
 #include <mvvm/standarditems/colormapitem.h>
 #include <mvvm/standarditems/data2ditem.h>
-#include <mvvm/model/comboproperty.h>
 
 namespace
 {
@@ -88,7 +88,8 @@ struct ColorMapPlotController::ColorMapPlotControllerImpl {
         color_map->setInterpolate(is_interpolated);
     }
 
-    void update_gradient() {
+    void update_gradient()
+    {
         auto combo = colormap_item()->property<ComboProperty>(ColorMapItem::P_GRADIENT);
         color_map->setGradient(getGradient(combo.value()));
     }
@@ -112,7 +113,6 @@ void ColorMapPlotController::subscribe()
             p_impl->update_data_controller();
 
         p_impl->custom_plot->replot();
-
     };
     setOnPropertyChange(on_property_change);
 
