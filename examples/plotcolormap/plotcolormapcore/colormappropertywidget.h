@@ -32,6 +32,7 @@ class ColorMapModel;
 class ColorMapPropertyWidget : public QWidget
 {
     Q_OBJECT
+
 public:
     explicit ColorMapPropertyWidget(ColorMapModel* model = nullptr, QWidget* parent = nullptr);
 
@@ -39,9 +40,9 @@ public:
 
 private:
     void setup_slider();
-    QSlider* m_slider;
-    ModelView::ItemsTreeView* m_treeView;
-    ColorMapModel* m_model;
+    QSlider* m_slider{nullptr};
+    ModelView::ItemsTreeView* m_treeView{nullptr};
+    ColorMapModel* m_model{nullptr};
 };
 
 } // namespace PlotColorMap
