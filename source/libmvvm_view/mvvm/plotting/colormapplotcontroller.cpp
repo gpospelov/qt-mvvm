@@ -8,10 +8,44 @@
 // ************************************************************************** //
 
 #include "qcustomplot.h"
+#include <map>
 #include <mvvm/plotting/colormapplotcontroller.h>
 #include <mvvm/plotting/data2dplotcontroller.h>
 #include <mvvm/standarditems/colormapitem.h>
 #include <mvvm/standarditems/data2ditem.h>
+#include <mvvm/model/comboproperty.h>
+
+namespace
+{
+using gradient_map_t = std::map<std::string, QCPColorGradient::GradientPreset>;
+gradient_map_t createGradientMap()
+{
+    gradient_map_t result;
+
+    result["Grayscale"] = QCPColorGradient::gpGrayscale;
+    result["Hot"] = QCPColorGradient::gpHot;
+    result["Cold"] = QCPColorGradient::gpCold;
+    result["Night"] = QCPColorGradient::gpNight;
+    result["Candy"] = QCPColorGradient::gpCandy;
+    result["Geography"] = QCPColorGradient::gpGeography;
+    result["Ion"] = QCPColorGradient::gpIon;
+    result["Thermal"] = QCPColorGradient::gpThermal;
+    result["Polar"] = QCPColorGradient::gpPolar;
+    result["Spectrum"] = QCPColorGradient::gpSpectrum;
+    result["Jet"] = QCPColorGradient::gpJet;
+    result["Hues"] = QCPColorGradient::gpHues;
+
+    return result;
+}
+
+QCPColorGradient getGradient(const std::string& gradientName)
+{
+    static gradient_map_t gradient_map = createGradientMap();
+    auto it = gradient_map.find(gradientName);
+    return it != gradient_map.end() ? QCPColorGradient(it->second) : QCPColorGradient::gpSpectrum;
+}
+
+} // namespace
 
 using namespace ModelView;
 
@@ -40,7 +74,8 @@ struct ColorMapPlotController::ColorMapPlotControllerImpl {
     {
         update_data_controller();
         update_interpolation();
-        color_map->setGradient(QCPColorGradient::gpPolar);
+        update_gradient();
+        custom_plot->replot();
     }
 
     void update_data_controller() { data_controller->setItem(colormap_item()->dataItem()); }
@@ -51,7 +86,11 @@ struct ColorMapPlotController::ColorMapPlotControllerImpl {
     {
         auto is_interpolated = colormap_item()->property<bool>(ColorMapItem::P_INTERPOLATION);
         color_map->setInterpolate(is_interpolated);
-        custom_plot->replot();
+    }
+
+    void update_gradient() {
+        auto combo = colormap_item()->property<ComboProperty>(ColorMapItem::P_GRADIENT);
+        color_map->setGradient(getGradient(combo.value()));
     }
 };
 
@@ -66,8 +105,14 @@ void ColorMapPlotController::subscribe()
         if (property_name == ColorMapItem::P_INTERPOLATION)
             p_impl->update_interpolation();
 
+        if (property_name == ColorMapItem::P_GRADIENT)
+            p_impl->update_gradient();
+
         if (property_name == ColorMapItem::P_LINK)
             p_impl->update_data_controller();
+
+        p_impl->custom_plot->replot();
+
     };
     setOnPropertyChange(on_property_change);
 
