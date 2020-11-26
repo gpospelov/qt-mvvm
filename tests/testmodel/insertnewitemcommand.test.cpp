@@ -15,6 +15,7 @@
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/model/taginfo.h>
+#include <mvvm/model/itempool.h>
 #include <stdexcept>
 
 using namespace ModelView;
@@ -174,3 +175,36 @@ TEST_F(InsertNewItemCommandTest, insertNewPropertyItemPreservedId)
     EXPECT_EQ(model.rootItem()->childrenCount(), 1);
     EXPECT_EQ(model.rootItem()->children()[0]->identifier(), orig_identifier);
 }
+
+//! Insert new item through InsertNewItemCommand command.
+//! We validate that undoing, and then redoing, would restore very first unique identifier.
+//! Same as above, but we additionally controling item pool.
+
+TEST_F(InsertNewItemCommandTest, insertNewPropertyItemIdInPool)
+{
+    auto pool = std::make_shared<ItemPool>();
+    SessionModel model("Model", pool);
+    // command to insert second property
+    auto factory_func = [&model]() { return model.factory()->createItem(Constants::PropertyType); };
+
+    EXPECT_EQ(model.rootItem()->childrenCount(), 0);
+    EXPECT_EQ(pool->size(), 1); // rootItem
+
+    InsertNewItemCommand command1(factory_func, model.rootItem(), TagRow{"", 0});
+    command1.execute();
+
+    EXPECT_EQ(model.rootItem()->childrenCount(), 1);
+    auto orig_identifier = model.rootItem()->children()[0]->identifier();
+    EXPECT_EQ(pool->size(), 2);
+
+    command1.undo();
+    EXPECT_EQ(model.rootItem()->childrenCount(), 0);
+
+    command1.execute();
+    EXPECT_EQ(model.rootItem()->childrenCount(), 1);
+    auto restored_item = model.rootItem()->children()[0];
+    EXPECT_EQ(restored_item->identifier(), orig_identifier);
+    EXPECT_EQ(model.findItem(orig_identifier), restored_item);
+    EXPECT_EQ(pool->item_for_key(orig_identifier), restored_item);
+}
+

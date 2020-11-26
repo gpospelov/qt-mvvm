@@ -55,12 +55,13 @@ void InsertNewItemCommand::execute_command()
 {
     auto parent = itemFromPath(p_impl->item_path);
     auto child = p_impl->factory_func().release();
+    // here we restore original identifier to get exactly same item on consequitive undo/redo
+    if (!p_impl->initial_identifier.empty())
+        child->setDataIntern(QVariant::fromValue(p_impl->initial_identifier),
+                             ItemDataRole::IDENTIFIER);
+
     setDescription(generate_description(child->modelType(), p_impl->tagrow));
     if (parent->insertItem(child, p_impl->tagrow)) {
-        // here we restore original identifier to get exactly same item on consequitive undo/redo
-        if (!p_impl->initial_identifier.empty())
-            child->setDataIntern(QVariant::fromValue(p_impl->initial_identifier),
-                                 ItemDataRole::IDENTIFIER);
         setResult(child);
     } else {
         delete child;
