@@ -61,8 +61,8 @@ public:
 
 protected:
     void paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*) override;
-    void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
+    void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
 
 private:
     SizeHandleElement(HandleInfo info, RegionOfInterestView* view);

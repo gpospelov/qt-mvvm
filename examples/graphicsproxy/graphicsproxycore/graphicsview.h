@@ -23,7 +23,7 @@ public:
     GraphicsView(GraphicsScene* scene, QWidget* parent);
 
 protected:
-    void resizeEvent(QResizeEvent *event);
+    void resizeEvent(QResizeEvent* event);
 
 private:
     GraphicsScene* scene{nullptr};

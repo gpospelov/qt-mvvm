@@ -9,7 +9,7 @@ the form of a standard two-column `name/value` tree. Tree view and table view on
 the right r epresent the same data, where rows are formed by
 `DemoPropertyItem's` and columns are made of their properties.
 
-![celleditors](../../doc/celleditors.png)
+![celleditors](../../doc/assets/celleditors.png)
 
 For the moment following cell editors are supported.
 

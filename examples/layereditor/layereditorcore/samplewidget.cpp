@@ -11,9 +11,9 @@
 #include <QVBoxLayout>
 #include <layereditorcore/applicationmodels.h>
 #include <layereditorcore/materialmodel.h>
-#include <layereditorcore/samplemodel.h>
-#include <layereditorcore/multilayertreeview.h>
 #include <layereditorcore/materialtablewidget.h>
+#include <layereditorcore/multilayertreeview.h>
+#include <layereditorcore/samplemodel.h>
 #include <layereditorcore/samplewidget.h>
 #include <mvvm/factories/viewmodelfactory.h>
 #include <mvvm/widgets/itemstreeview.h>
@@ -21,9 +21,12 @@
 using namespace ModelView;
 
 SampleWidget::SampleWidget(ApplicationModels* models, QWidget* parent)
-    : QWidget(parent), m_materialTree(new ItemsTreeView), m_sampleTree(new ItemsTreeView),
-      m_materialTableWidget(new MaterialTableWidget(models->materialModel())),
-      m_multiLayerTreeView(new MultiLayerTreeView(models)), m_models(models)
+    : QWidget(parent)
+    , m_materialTree(new ItemsTreeView)
+    , m_sampleTree(new ItemsTreeView)
+    , m_materialTableWidget(new MaterialTableWidget(models->materialModel()))
+    , m_multiLayerTreeView(new MultiLayerTreeView(models))
+    , m_models(models)
 {
     auto mainLayout = new QVBoxLayout;
     mainLayout->setSpacing(10);

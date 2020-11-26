@@ -21,9 +21,11 @@
 using namespace ModelView;
 
 DemoWidget::DemoWidget(SessionModel* model, QWidget* parent)
-    : QWidget(parent), m_defaultTreeView(new AllItemsTreeView(model)),
-      m_propertyTreeView(new PropertyTreeView), m_propertyFlatView(new PropertyFlatView),
-      m_sessionModel(model)
+    : QWidget(parent)
+    , m_defaultTreeView(new AllItemsTreeView(model))
+    , m_propertyTreeView(new PropertyTreeView)
+    , m_propertyFlatView(new PropertyFlatView)
+    , m_sessionModel(model)
 {
 
     auto layout = new QHBoxLayout;

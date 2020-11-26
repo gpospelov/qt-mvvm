@@ -8,7 +8,6 @@
 // ************************************************************************** //
 
 #include "projectpanewidget.h"
-#include <mvvm/widgets/widgetutils.h>
 #include <QLabel>
 #include <QMouseEvent>
 #include <QPainter>
@@ -24,8 +23,10 @@ int widget_height()
 } // namespace
 
 ProjectPaneWidget::ProjectPaneWidget(QWidget* parent)
-    : QWidget(parent), m_current_project_title(new QLabel(" ")),
-      m_current_project_dir(new QLabel(" ")), m_widget_color(QColor(Qt::white))
+    : QWidget(parent)
+    , m_current_project_title(new QLabel(" "))
+    , m_current_project_dir(new QLabel(" "))
+    , m_widget_color(QColor(Qt::white))
 {
     setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
     setFixedHeight(widget_height());

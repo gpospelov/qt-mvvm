@@ -24,8 +24,12 @@ const int max_value = 100;
 } // namespace
 
 GraphWidgetToolBar::GraphWidgetToolBar(QWidget* parent)
-    : QToolBar(parent), value_box(new QSpinBox), value_slider(new QSlider),
-      delay_spinbox(new QSpinBox), progressbar(new QProgressBar), cancel_button(new QPushButton)
+    : QToolBar(parent)
+    , value_box(new QSpinBox)
+    , value_slider(new QSlider)
+    , delay_spinbox(new QSpinBox)
+    , progressbar(new QProgressBar)
+    , cancel_button(new QPushButton)
 {
     const int toolbar_icon_size = 24;
     setIconSize(QSize(toolbar_icon_size, toolbar_icon_size));
@@ -86,9 +90,7 @@ void GraphWidgetToolBar::init_value_elements()
     value_slider->setToolTip(tooltip);
     addWidget(value_slider);
 
-    auto on_slider_changed = [this](int value) {
-        value_box->setValue(value);
-    };
+    auto on_slider_changed = [this](int value) { value_box->setValue(value); };
     connect(value_slider, &QSlider::valueChanged, on_slider_changed);
 }
 

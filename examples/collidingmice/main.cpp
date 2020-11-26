@@ -7,19 +7,18 @@
 //
 // ************************************************************************** //
 
-#include <collidingmicecore/mainwindow.h>
 #include <QApplication>
 #include <QLocale>
+#include <collidingmicecore/mainwindow.h>
 
 void messageHandler(QtMsgType, const QMessageLogContext&, const QString&) {}
-
 
 int main(int argc, char** argv)
 {
     QLocale::setDefault(QLocale(QLocale::English, QLocale::UnitedStates));
 
     QApplication app(argc, argv);
-qInstallMessageHandler(messageHandler);
+    qInstallMessageHandler(messageHandler);
     MainWindow win;
     win.show();
 

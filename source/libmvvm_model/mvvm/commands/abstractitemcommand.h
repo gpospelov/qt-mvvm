@@ -11,8 +11,8 @@
 #define MVVM_COMMANDS_ABSTRACTITEMCOMMAND_H
 
 #include <memory>
-#include <mvvm/model_export.h>
 #include <mvvm/commands/commandresult.h>
+#include <mvvm/model_export.h>
 #include <string>
 
 namespace ModelView

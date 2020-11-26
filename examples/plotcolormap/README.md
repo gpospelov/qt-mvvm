@@ -3,7 +3,7 @@
 The example shows how to plot a two-dimensional intensity map as a colormap
 using wrappers around `qcustomplot` library. 
 
-![plotgraphs](../../doc/plotcolormap.png)
+![plotgraphs](../../doc/assets/plotcolormap.png)
 
 The application model contains a collection of various items to 
 properly separate `scientific data` from `presentation data`. 

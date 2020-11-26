@@ -21,8 +21,11 @@
 using namespace ModelView;
 
 ContainerEditorWidget::ContainerEditorWidget(QWidget* parent)
-    : QWidget(parent), m_treeView(new QTreeView), m_delegate(std::make_unique<ViewModelDelegate>()),
-      m_container(nullptr), m_model(nullptr)
+    : QWidget(parent)
+    , m_treeView(new QTreeView)
+    , m_delegate(std::make_unique<ViewModelDelegate>())
+    , m_container(nullptr)
+    , m_model(nullptr)
 {
     auto mainLayout = new QVBoxLayout;
     mainLayout->setSpacing(10);

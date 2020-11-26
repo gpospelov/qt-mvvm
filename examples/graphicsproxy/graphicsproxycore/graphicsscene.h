@@ -17,7 +17,7 @@ namespace ModelView
 {
 class ColorMapCanvas;
 class SceneAdapterInterface;
-}
+} // namespace ModelView
 
 class CustomPlotProxyWidget;
 class RegionOfInterestItem;

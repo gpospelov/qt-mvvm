@@ -12,10 +12,10 @@
 #include <algorithm>
 #include <cmath>
 #include <mvvm/factories/modeldocuments.h>
+#include <mvvm/interfaces/undostackinterface.h>
 #include <mvvm/model/itemcatalogue.h>
 #include <mvvm/utils/reallimits.h>
 #include <mvvm/widgets/widgetutils.h>
-#include <mvvm/interfaces/undostackinterface.h>
 
 namespace
 {
@@ -86,6 +86,6 @@ void MouseModel::populate_model()
         auto item = insertItem<MouseItem>();
         item->setProperty(MouseItem::P_XPOS, std::sin((i * 6.28) / MouseCount) * 200);
         item->setProperty(MouseItem::P_YPOS, std::cos((i * 6.28) / MouseCount) * 200);
-        item->setProperty(MouseItem::P_COLOR,ModelView::Utils::RandomColor());
+        item->setProperty(MouseItem::P_COLOR, ModelView::Utils::RandomColor());
     }
 }

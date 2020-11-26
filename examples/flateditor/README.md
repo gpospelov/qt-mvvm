@@ -2,7 +2,7 @@
 
 The example shows how to automatically populate the grid layout from the application model content.
 
-![flateditor](../../doc/flateditor.png)
+![flateditor](../../doc/assets/flateditor.png)
 
 
 Application model contains a collection of toy items representing

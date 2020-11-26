@@ -33,9 +33,9 @@ signals:
 
 protected:
     void paintEvent(QPaintEvent*) override;
-    void enterEvent(QEvent *) override;
-    void leaveEvent(QEvent *) override;
-    void mousePressEvent(QMouseEvent *event) override;
+    void enterEvent(QEvent*) override;
+    void leaveEvent(QEvent*) override;
+    void mousePressEvent(QMouseEvent* event) override;
 
 private:
     QLabel* m_current_project_title{nullptr};

@@ -20,9 +20,12 @@
 using namespace ModelView;
 
 ColorMapWidget::ColorMapWidget(ColorMapModel* model, QWidget* parent)
-    : QWidget(parent), m_toolBar(new QToolBar), m_resetViewportAction(nullptr),
-      m_propertyWidget(new ColorMapPropertyWidget), m_colorMapCanvas(new ColorMapCanvas),
-      m_model(nullptr)
+    : QWidget(parent)
+    , m_toolBar(new QToolBar)
+    , m_resetViewportAction(nullptr)
+    , m_propertyWidget(new ColorMapPropertyWidget)
+    , m_colorMapCanvas(new ColorMapCanvas)
+    , m_model(nullptr)
 {
     auto mainLayout = new QVBoxLayout;
     mainLayout->setSpacing(10);

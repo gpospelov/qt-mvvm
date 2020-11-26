@@ -7,7 +7,7 @@ This application represents a simplified multi-layer editor, where the user defi
 All application data is stored in two independent models: `MaterialModel` for 
 materials and `SampleModel` for layers and multi-layers.
 
-![layereditor](../../doc/layereditor.png)
+![layereditor](../../doc/assets/layereditor.png)
 
 Each model is represented by two tree views: a standard tree with two columns (`property name` and `property value`) and custom tree with several columns looking at different parts of the original model.
 

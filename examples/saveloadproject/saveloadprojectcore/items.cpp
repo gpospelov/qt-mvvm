@@ -12,7 +12,8 @@
 #include <mvvm/model/comboproperty.h>
 #include <mvvm/model/externalproperty.h>
 
-namespace {
+namespace
+{
 const std::string DemoItemType = "DemoItem";
 }
 
@@ -26,4 +27,3 @@ DemoItem::DemoItem() : CompoundItem(DemoItemType)
     addProperty(P_STRING_PROPERTY, "abc")->setDisplayName("String");
     addProperty(P_DOUBLE_PROPERTY, 42.1)->setDisplayName("Double");
 }
-
