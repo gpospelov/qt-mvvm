@@ -5,7 +5,7 @@ a model, add property items to it, implement simple business logic, and
 show the content of the model in Qt widgets by adapting it for 
 `QAbstractItemModel` interface.
 
-![helloworld](../../doc/helloworld.png)
+![helloworld](../../doc/assets/helloworld.png)
 
 In this example, the main window contains a tree view with a simple model in it.
 The content of one cell is reacting to changes in another cell. This was achieved in the following way:

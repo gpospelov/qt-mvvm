@@ -2,7 +2,7 @@
 
 Running heavy simulations in a separate thread and plotting from the main thread.
 
-![concurrentplot](../../doc/concurrentplot.png)
+![concurrentplot](../../doc/assets/concurrentplot.png)
 
 Toy simulation is triggered every time the user changes `Amplitude` using a
 slider or corresponding spinbox. The duration of the simulation (i.e. CPU

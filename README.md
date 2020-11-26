@@ -47,7 +47,7 @@ If you are familiar with Qt's reach example section you might saw
 it's funny `collidingmice` example showing basics of
 `QGraphicsScene`.
 
-![alt text](doc/colliding-mice-before.png)
+![alt text](doc/assets/colliding-mice-before.png)
 
 To demonstrate the idea behind `qt-mvvm` library the code of the example was 
 slightly modified. The mice data has been moved into the dedicated model, 
@@ -57,7 +57,7 @@ the session back with saved mice positions. Additionally, it is possible to go
 back in time and watch how mice are moving in opposite directions by dragging a 
 slider:
 
-![alt text](doc/colliding-mice-after.png)
+![alt text](doc/assets/colliding-mice-after.png)
 
 The demo shows that `qt-mvvm` library allows 
 to equip the GUI with the serialization and undo/redo and to provide proper 
