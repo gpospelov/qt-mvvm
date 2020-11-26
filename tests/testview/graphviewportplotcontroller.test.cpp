@@ -7,17 +7,16 @@
 //
 // ************************************************************************** //
 
+#include "customplot_test_utils.h"
 #include "google_test.h"
 #include "qcustomplot.h"
+#include <mvvm/interfaces/undostackinterface.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/plotting/graphviewportplotcontroller.h>
 #include <mvvm/standarditems/axisitems.h>
 #include <mvvm/standarditems/data1ditem.h>
 #include <mvvm/standarditems/graphitem.h>
 #include <mvvm/standarditems/graphviewportitem.h>
-#include <mvvm/interfaces/undostackinterface.h>
-#include "customplot_test_utils.h"
-
 
 using namespace ModelView;
 
@@ -378,26 +377,9 @@ TEST_F(GraphViewportPlotControllerTest, addGraphUndoRedoMacro)
     EXPECT_EQ(viewport_item->graphItems().size(), 1);
 
     EXPECT_EQ(model.topItem<Data1DItem>()->identifier(), data_identifier);
-//    EXPECT_EQ(viewport_item->graphItems()[0]->dataItem(), model.topItem<Data1DItem>());
+    EXPECT_EQ(viewport_item->graphItems()[0]->dataItem(), model.topItem<Data1DItem>());
 
-//    EXPECT_EQ(TestUtils::binCenters(custom_plot->graph()), expected_centers);
-//    EXPECT_EQ(TestUtils::binValues(custom_plot->graph()), expected_values);
-
-
-    //    // graph is still there, but empty
-//    EXPECT_EQ(custom_plot->graphCount(), 1);
-//    EXPECT_EQ(TestUtils::binCenters(custom_plot->graph()), std::vector<double>());
-//    EXPECT_EQ(TestUtils::binValues(custom_plot->graph()), std::vector<double>());
-//    EXPECT_EQ(graph_item->dataItem(), nullptr);
-
-//    // redoing data assignment
-//    model.undoStack()->redo();
-//    EXPECT_EQ(model.undoStack()->index(), 2);
-//    EXPECT_EQ(model.undoStack()->count(), 2);
-
-//    EXPECT_EQ(graph_item->dataItem(), data1);
-//    EXPECT_EQ(custom_plot->graphCount(), 1);
-//    EXPECT_EQ(TestUtils::binCenters(custom_plot->graph()), expected_centers);
-//    EXPECT_EQ(TestUtils::binValues(custom_plot->graph()), expected_values);
+    // FIXME restore
+    //    EXPECT_EQ(TestUtils::binCenters(custom_plot->graph()), expected_centers);
+    //    EXPECT_EQ(TestUtils::binValues(custom_plot->graph()), expected_values);
 }
-

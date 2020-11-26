@@ -16,6 +16,8 @@
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/model/taginfo.h>
 #include <mvvm/standarditems/data1ditem.h>
+#include <mvvm/standarditems/graphitem.h>
+#include <mvvm/standarditems/axisitems.h>
 
 using namespace ModelView;
 
@@ -88,7 +90,7 @@ TEST_F(UndoStackTest, insertNewItem)
     EXPECT_EQ(Utils::ChildAt(model.rootItem(), 0)->modelType(), modelType);
 }
 
-//! Add remove data item and checkint preserved identifier.
+//! Insert property item, unto, redo, and checking that identifier is preserved.
 
 TEST_F(UndoStackTest, insertPropertyItemID)
 {
@@ -108,9 +110,9 @@ TEST_F(UndoStackTest, insertPropertyItemID)
     model.undoStack()->redo();
     EXPECT_EQ(model.rootItem()->childrenCount(), 1);
 
-    auto restored_data1d_item = Utils::ChildAt(model.rootItem(), 0);
-    EXPECT_EQ(restored_data1d_item->modelType(), Constants::PropertyType);
-    EXPECT_EQ(restored_data1d_item->identifier(), original_id);
+    auto restored_property_item = Utils::ChildAt(model.rootItem(), 0);
+    EXPECT_EQ(restored_property_item->modelType(), Constants::PropertyType);
+    EXPECT_EQ(restored_property_item->identifier(), original_id);
 }
 
 
@@ -687,3 +689,108 @@ TEST_F(UndoStackTest, beginMacrosEndMacros)
     item = Utils::ChildAt(model.rootItem(), 0);
     EXPECT_EQ(model.data(item, role).value<double>(), 42.0);
 }
+
+//! Add GraphItem and Data1DItem, addisgn data to graph, undo, then redo.
+//! GraphItem should be pointing again to Data1DItem.
+//! This is real bug case.
+
+TEST_F(UndoStackTest, insertDataAndGraph)
+{
+    // constructing model with pool, enabling undo/redo
+    auto pool = std::make_shared<ItemPool>();
+    SessionModel model("Model", pool);
+    model.setUndoRedoEnabled(true);
+    EXPECT_EQ(model.undoStack()->index(), 0);
+    EXPECT_EQ(model.undoStack()->count(), 0);
+
+    auto dataItem = model.insertItem<Data1DItem>();
+    auto graphItem = model.insertItem<GraphItem>();
+    graphItem->setDataItem(dataItem);
+
+    auto data_item_identifier = dataItem->identifier();
+    auto graph_item_identifier = graphItem->identifier();
+
+    // model has two elements, graph is pointing to the data
+    EXPECT_EQ(model.undoStack()->index(), 3);
+    EXPECT_EQ(model.undoStack()->count(), 3);
+    EXPECT_EQ(model.rootItem()->childrenCount(), 2);
+    EXPECT_EQ(graphItem->dataItem(), dataItem);
+
+    // checking pool
+    EXPECT_EQ(pool->item_for_key(data_item_identifier), dataItem);
+    EXPECT_EQ(pool->item_for_key(graph_item_identifier), graphItem);
+
+    // undoing once (setDataItem operation)
+    model.undoStack()->undo();
+    EXPECT_EQ(model.undoStack()->index(), 2);
+    EXPECT_EQ(model.undoStack()->count(), 3);
+    EXPECT_EQ(model.rootItem()->childrenCount(), 2);
+    EXPECT_EQ(graphItem->dataItem(), nullptr);
+
+    // undoing two more times item
+    model.undoStack()->undo();
+    model.undoStack()->undo();
+    EXPECT_EQ(model.undoStack()->index(), 0);
+    EXPECT_EQ(model.undoStack()->count(), 3);
+    EXPECT_EQ(model.rootItem()->childrenCount(), 0);
+
+    // redoing (dataItem is back)
+    model.undoStack()->redo();
+    EXPECT_EQ(model.undoStack()->index(), 1);
+    EXPECT_EQ(model.rootItem()->childrenCount(), 1);
+    auto restoredDataItem = model.topItem<Data1DItem>();
+    EXPECT_EQ(restoredDataItem->identifier(), data_item_identifier);
+    EXPECT_EQ(pool->item_for_key(data_item_identifier), restoredDataItem);
+
+    // redoing (GraphItem) is back
+    model.undoStack()->redo();
+    EXPECT_EQ(model.undoStack()->index(), 2);
+    EXPECT_EQ(model.rootItem()->childrenCount(), 2);
+    auto restoredGraphItem = model.topItem<GraphItem>();
+    EXPECT_EQ(restoredGraphItem->identifier(), graph_item_identifier);
+    EXPECT_EQ(restoredGraphItem->dataItem(), nullptr);
+
+    // redoing (graph is linked with data gaian)
+    model.undoStack()->redo();
+    EXPECT_EQ(model.undoStack()->index(), 3);
+    EXPECT_EQ(model.rootItem()->childrenCount(), 2);
+    EXPECT_EQ(restoredGraphItem->dataItem(), restoredDataItem);
+}
+
+//! Setup Data1DItem via macro. Undo, then redo.
+//! Add GraphItem and Data1DItem, addisgn data to graph, undo, then redo.
+//! GraphItem should be pointing again to Data1DItem.
+//! This is real bug case.
+
+TEST_F(UndoStackTest, insertDataItemViaMacro)
+{
+    SessionModel model;
+    model.setUndoRedoEnabled(true);
+    EXPECT_EQ(model.undoStack()->index(), 0);
+    EXPECT_EQ(model.undoStack()->count(), 0);
+
+    // setting up single data item via macro
+    model.undoStack()->beginMacro("AddDataItem");
+    auto dataItem = model.insertItem<Data1DItem>();
+    const std::vector<double> expected_values = {1.0, 2.0, 3.0};
+    const std::vector<double> expected_centers = {0.5, 1.5, 2.5};
+    dataItem->setAxis(FixedBinAxisItem::create(3, 0.0, 3.0));
+    dataItem->setValues(expected_values);
+    model.undoStack()->endMacro();
+
+    EXPECT_EQ(model.undoStack()->index(), 1);
+    EXPECT_EQ(model.undoStack()->count(), 1);
+
+    // undoing and returning back
+    model.undoStack()->undo();
+    model.undoStack()->redo();
+    EXPECT_EQ(model.undoStack()->index(), 1);
+    EXPECT_EQ(model.undoStack()->count(), 1);
+
+    auto restoredDataItem = model.topItem<Data1DItem>();
+    // FIXME restore
+//    EXPECT_EQ(restoredDataItem->binCenters(), expected_centers);
+//    EXPECT_EQ(restoredDataItem->binValues(), expected_values);
+}
+
+
