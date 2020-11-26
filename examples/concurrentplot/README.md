@@ -1,6 +1,7 @@
 # Example "concurrentplot".
 
-Running heavy simulations in a separate thread and plotting from the main thread.
+Running heavy simulations in a separate thread and plotting from the main
+thread.
 
 ![concurrentplot](../../doc/assets/concurrentplot.png)
 
