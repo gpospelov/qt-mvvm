@@ -11,10 +11,10 @@
 #define CUSTOMLAYERROWSTRATEGY_H
 
 #include <QStringList>
+#include <layereditorcore/samplemodel.h>
 #include <mvvm/interfaces/rowstrategyinterface.h>
 #include <mvvm/viewmodel/standardviewitems.h>
 #include <mvvm/viewmodel/viewitem.h>
-#include <layereditorcore/samplemodel.h>
 #include <vector>
 
 //! Custom strategy to form table rows for nested multilayers and layers.

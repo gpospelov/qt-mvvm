@@ -109,13 +109,13 @@ void GraphModel::randomize_graphs()
 
 void GraphModel::undo()
 {
-    if(undoStack())
+    if (undoStack())
         undoStack()->undo();
 }
 
 void GraphModel::redo()
 {
-    if(undoStack())
+    if (undoStack())
         undoStack()->redo();
 }
 
@@ -142,7 +142,7 @@ void GraphModel::init_model()
     viewport->setDisplayName("Graph container");
 
     setUndoRedoEnabled(true);
-//    add_graph();
+    //    add_graph();
 }
 
 } // namespace PlotGraphs

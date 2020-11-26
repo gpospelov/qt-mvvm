@@ -15,9 +15,9 @@
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/model/taginfo.h>
+#include <mvvm/standarditems/axisitems.h>
 #include <mvvm/standarditems/data1ditem.h>
 #include <mvvm/standarditems/graphitem.h>
-#include <mvvm/standarditems/axisitems.h>
 
 using namespace ModelView;
 
@@ -114,7 +114,6 @@ TEST_F(UndoStackTest, insertPropertyItemID)
     EXPECT_EQ(restored_property_item->modelType(), Constants::PropertyType);
     EXPECT_EQ(restored_property_item->identifier(), original_id);
 }
-
 
 //! Undo/redo scenario when few items inserted.
 
@@ -789,8 +788,6 @@ TEST_F(UndoStackTest, insertDataItemViaMacro)
 
     auto restoredDataItem = model.topItem<Data1DItem>();
     // FIXME restore
-//    EXPECT_EQ(restoredDataItem->binCenters(), expected_centers);
-//    EXPECT_EQ(restoredDataItem->binValues(), expected_values);
+    //    EXPECT_EQ(restoredDataItem->binCenters(), expected_centers);
+    //    EXPECT_EQ(restoredDataItem->binValues(), expected_values);
 }
-
-

@@ -13,10 +13,10 @@
 #include <QDataStream>
 #include <QDebug>
 #include <QMimeData>
+#include <algorithm>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/viewmodel/viewmodelutils.h>
-#include <algorithm>
 
 namespace
 {

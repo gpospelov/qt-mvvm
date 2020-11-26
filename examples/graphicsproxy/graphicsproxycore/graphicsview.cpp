@@ -11,8 +11,8 @@
 #include "graphicsscene.h"
 #include <QResizeEvent>
 
-GraphicsView::GraphicsView(GraphicsScene* scene, QWidget* parent) : QGraphicsView(scene, parent),
-    scene(scene)
+GraphicsView::GraphicsView(GraphicsScene* scene, QWidget* parent)
+    : QGraphicsView(scene, parent), scene(scene)
 {
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 }

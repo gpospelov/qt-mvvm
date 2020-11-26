@@ -45,7 +45,7 @@ protected:
     void paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;
     QVariant itemChange(GraphicsItemChange change, const QVariant& value) override;
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
 
 private:
     void create_size_handle_elements();

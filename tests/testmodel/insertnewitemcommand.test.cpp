@@ -11,11 +11,11 @@
 #include <mvvm/commands/insertnewitemcommand.h>
 #include <mvvm/interfaces/itemfactoryinterface.h>
 #include <mvvm/model/compounditem.h>
+#include <mvvm/model/itempool.h>
 #include <mvvm/model/itemutils.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/model/taginfo.h>
-#include <mvvm/model/itempool.h>
 #include <stdexcept>
 
 using namespace ModelView;
@@ -207,4 +207,3 @@ TEST_F(InsertNewItemCommandTest, insertNewPropertyItemIdInPool)
     EXPECT_EQ(model.findItem(orig_identifier), restored_item);
     EXPECT_EQ(pool->item_for_key(orig_identifier), restored_item);
 }
-

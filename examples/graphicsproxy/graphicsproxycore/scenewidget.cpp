@@ -24,10 +24,14 @@
 using namespace ModelView;
 
 SceneWidget::SceneWidget(SceneModel* model, QWidget* parent)
-    : QWidget(parent), m_toolBar(new QToolBar), m_resetViewportAction(nullptr),
-      m_propertyWidget(new ScenePropertyWidget), m_colorMapCanvas(new ColorMapCanvas),
-      graphics_scene(new GraphicsScene(this)),
-      graphics_view(new GraphicsView(graphics_scene, this)), m_model(model)
+    : QWidget(parent)
+    , m_toolBar(new QToolBar)
+    , m_resetViewportAction(nullptr)
+    , m_propertyWidget(new ScenePropertyWidget)
+    , m_colorMapCanvas(new ColorMapCanvas)
+    , graphics_scene(new GraphicsScene(this))
+    , graphics_view(new GraphicsView(graphics_scene, this))
+    , m_model(model)
 {
     auto mainLayout = new QVBoxLayout;
     mainLayout->setSpacing(10);
