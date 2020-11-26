@@ -31,6 +31,7 @@ class SessionItem;
 class ContainerEditorWidget : public QWidget
 {
     Q_OBJECT
+
 public:
     explicit ContainerEditorWidget(QWidget* parent = nullptr);
     ~ContainerEditorWidget();

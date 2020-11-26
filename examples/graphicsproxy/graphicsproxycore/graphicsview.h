@@ -19,6 +19,7 @@ class GraphicsScene;
 class GraphicsView : public QGraphicsView
 {
     Q_OBJECT
+
 public:
     GraphicsView(GraphicsScene* scene, QWidget* parent);
 

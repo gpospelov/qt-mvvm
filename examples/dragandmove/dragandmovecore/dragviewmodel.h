@@ -23,6 +23,7 @@ class SessionModel;
 class DragViewModel : public ModelView::PropertyTableViewModel
 {
     Q_OBJECT
+
 public:
     DragViewModel(ModelView::SessionModel* model, QObject* parent = nullptr);
 

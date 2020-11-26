@@ -28,6 +28,7 @@ class QBoxLayout;
 class DemoWidget : public QWidget
 {
     Q_OBJECT
+
 public:
     DemoWidget(ModelView::SessionModel* model, QWidget* parent = nullptr);
     ~DemoWidget();

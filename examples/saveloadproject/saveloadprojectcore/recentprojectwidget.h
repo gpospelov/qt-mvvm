@@ -22,6 +22,7 @@ class ProjectPaneWidget;
 class RecentProjectWidget : public QWidget
 {
     Q_OBJECT
+
 public:
     explicit RecentProjectWidget(QWidget* parent = nullptr);
 

@@ -27,6 +27,7 @@ class RegionOfInterestItem;
 class GraphicsScene : public QGraphicsScene
 {
     Q_OBJECT
+
 public:
     GraphicsScene(QObject* parent);
     ~GraphicsScene() override;

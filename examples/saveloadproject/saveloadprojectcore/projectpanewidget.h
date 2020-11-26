@@ -19,6 +19,7 @@ class QLabel;
 class ProjectPaneWidget : public QWidget
 {
     Q_OBJECT
+
 public:
     explicit ProjectPaneWidget(QWidget* parent = nullptr);
 

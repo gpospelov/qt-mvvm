@@ -27,6 +27,7 @@ class ItemsTreeView;
 class SampleWidget : public QWidget
 {
     Q_OBJECT
+
 public:
     SampleWidget(ApplicationModels* models, QWidget* parent = nullptr);
 

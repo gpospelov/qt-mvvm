@@ -30,6 +30,7 @@ class ColorMapCanvas;
 class SceneWidget : public QWidget
 {
     Q_OBJECT
+
 public:
     explicit SceneWidget(SceneModel* model = nullptr, QWidget* parent = nullptr);
 
