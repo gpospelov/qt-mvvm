@@ -773,7 +773,7 @@ TEST_F(UndoStackTest, insertDataItemViaMacro)
     auto dataItem = model.insertItem<Data1DItem>();
     const std::vector<double> expected_values = {1.0, 2.0, 3.0};
     const std::vector<double> expected_centers = {0.5, 1.5, 2.5};
-    dataItem->setAxis(FixedBinAxisItem::create(3, 0.0, 3.0));
+    dataItem->setAxis<FixedBinAxisItem>(3, 0.0, 3.0);
     dataItem->setValues(expected_values);
     model.undoStack()->endMacro();
 
@@ -787,7 +787,6 @@ TEST_F(UndoStackTest, insertDataItemViaMacro)
     EXPECT_EQ(model.undoStack()->count(), 1);
 
     auto restoredDataItem = model.topItem<Data1DItem>();
-    // FIXME restore
-    //    EXPECT_EQ(restoredDataItem->binCenters(), expected_centers);
-    //    EXPECT_EQ(restoredDataItem->binValues(), expected_values);
+    EXPECT_EQ(restoredDataItem->binCenters(), expected_centers);
+    EXPECT_EQ(restoredDataItem->binValues(), expected_values);
 }
