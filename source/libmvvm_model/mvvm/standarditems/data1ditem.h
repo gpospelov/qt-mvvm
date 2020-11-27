@@ -11,6 +11,7 @@
 #define MVVM_STANDARDITEMS_DATA1DITEM_H
 
 #include <mvvm/model/compounditem.h>
+#include <mvvm/model/sessionmodel.h>
 #include <vector>
 
 namespace ModelView
@@ -42,19 +43,18 @@ public:
     std::vector<double> binErrors() const;
 
     template <typename T, typename... Args> T* setAxis(Args&&... args);
-
-private:
-    void removeCurrentAxis();
 };
 
 template<typename T, typename... Args>
 T* Data1DItem::setAxis(Args&&... args)
 {
-    return nullptr;
     if (model()) {
-
+        auto axis = model()->insertItem<T>(this);
+        axis->setParameters(std::forward<Args>(args)...);
+        setValues(std::vector<double>(axis->size(), 0.0));
+        return axis;
     }
-
+    return nullptr;
 }
 } // namespace ModelView
 

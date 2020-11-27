@@ -30,7 +30,8 @@ Data1DItem::Data1DItem() : CompoundItem(Constants::Data1DItemType)
     addProperty(P_ERRORS, std::vector<double>())->setDisplayName("Errors")->setEditable(false);
 
     registerTag(
-        TagInfo(T_AXIS, 0, 1, {Constants::FixedBinAxisItemType, Constants::PointwiseAxisItemType}));
+        TagInfo(T_AXIS, 0, 1, {Constants::FixedBinAxisItemType, Constants::PointwiseAxisItemType}),
+        true);
     setValues(std::vector<double>());
 }
 
@@ -38,7 +39,11 @@ Data1DItem::Data1DItem() : CompoundItem(Constants::Data1DItemType)
 
 void Data1DItem::setAxis(std::unique_ptr<BinnedAxisItem> axis)
 {
-    removeCurrentAxis();
+    // we disable possibility to re-create axis to facilitate undo/redo
+
+    if (getItem(T_AXIS, 0))
+        throw std::runtime_error("Axis was already set. Currently we do not support axis change");
+
     insertItem(axis.release(), {T_AXIS, 0});
     setValues(std::vector<double>(total_bin_count(this), 0.0));
 }
@@ -84,12 +89,4 @@ void Data1DItem::setErrors(const std::vector<double>& errors)
 std::vector<double> Data1DItem::binErrors() const
 {
     return property<std::vector<double>>(P_ERRORS);
-}
-
-//! Removes current axis.
-
-void Data1DItem::removeCurrentAxis()
-{
-    if (auto axis = getItem(T_AXIS, 0))
-        delete takeItem({T_AXIS, 0});
 }

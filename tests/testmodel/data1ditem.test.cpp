@@ -58,11 +58,12 @@ TEST_F(Data1DItemTest, setFixedBinAxis)
     EXPECT_EQ(item.binValues(), expected_values);
 
     // setting another axis
-    item.setAxis(FixedBinAxisItem::create(1, 1.0, 2.0));
-    expected_centers = {1.5};
-    EXPECT_EQ(item.binCenters(), expected_centers);
-    expected_values = {0.0};
-    EXPECT_EQ(item.binValues(), expected_values);
+    // for the moment we have disabled possibility to re-create axes to faciltate undo/redo
+//    item.setAxis(FixedBinAxisItem::create(1, 1.0, 2.0));
+//    expected_centers = {1.5};
+//    EXPECT_EQ(item.binCenters(), expected_centers);
+//    expected_values = {0.0};
+//    EXPECT_EQ(item.binValues(), expected_values);
 }
 
 //! Sets fixed bin axis via templated method.
