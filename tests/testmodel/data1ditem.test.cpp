@@ -65,6 +65,32 @@ TEST_F(Data1DItemTest, setFixedBinAxis)
     EXPECT_EQ(item.binValues(), expected_values);
 }
 
+//! Sets fixed bin axis via templated method.
+
+TEST_F(Data1DItemTest, setTemplatedFixedBinAxis)
+{
+    Data1DItem item;
+
+    auto axis = item.setAxis<FixedBinAxisItem>(5, 0.0, 5.0);
+
+//    // check type of the axis
+//    EXPECT_TRUE(item.item<FixedBinAxisItem>(Data1DItem::T_AXIS) != nullptr);
+
+//    // check bin centers and values
+//    std::vector<double> expected_centers = {0.5, 1.5, 2.5, 3.5, 4.5};
+//    EXPECT_EQ(item.binCenters(), expected_centers);
+//    std::vector<double> expected_values = std::vector<double>(expected_centers.size(), 0.0);
+//    EXPECT_EQ(item.binValues(), expected_values);
+
+//    // setting another axis
+//    item.setAxis(FixedBinAxisItem::create(1, 1.0, 2.0));
+//    expected_centers = {1.5};
+//    EXPECT_EQ(item.binCenters(), expected_centers);
+//    expected_values = {0.0};
+//    EXPECT_EQ(item.binValues(), expected_values);
+}
+
+
 //! Checking the method ::setValues.
 
 TEST_F(Data1DItemTest, setValues)

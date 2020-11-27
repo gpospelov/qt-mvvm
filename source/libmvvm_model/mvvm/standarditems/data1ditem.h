@@ -40,8 +40,22 @@ public:
 
     void setErrors(const std::vector<double>& errors);
     std::vector<double> binErrors() const;
+
+    template <typename T, typename... Args> T* setAxis(Args&&... args);
+
+private:
+    void removeCurrentAxis();
 };
 
+template<typename T, typename... Args>
+T* Data1DItem::setAxis(Args&&... args)
+{
+    return nullptr;
+    if (model()) {
+
+    }
+
+}
 } // namespace ModelView
 
 #endif // MVVM_STANDARDITEMS_DATA1DITEM_H

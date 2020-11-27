@@ -38,9 +38,7 @@ Data1DItem::Data1DItem() : CompoundItem(Constants::Data1DItemType)
 
 void Data1DItem::setAxis(std::unique_ptr<BinnedAxisItem> axis)
 {
-    if (auto axis = getItem(T_AXIS, 0))
-        delete takeItem({T_AXIS, 0});
-
+    removeCurrentAxis();
     insertItem(axis.release(), {T_AXIS, 0});
     setValues(std::vector<double>(total_bin_count(this), 0.0));
 }
@@ -86,4 +84,12 @@ void Data1DItem::setErrors(const std::vector<double>& errors)
 std::vector<double> Data1DItem::binErrors() const
 {
     return property<std::vector<double>>(P_ERRORS);
+}
+
+//! Removes current axis.
+
+void Data1DItem::removeCurrentAxis()
+{
+    if (auto axis = getItem(T_AXIS, 0))
+        delete takeItem({T_AXIS, 0});
 }
