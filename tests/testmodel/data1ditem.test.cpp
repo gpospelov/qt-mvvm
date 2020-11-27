@@ -59,11 +59,11 @@ TEST_F(Data1DItemTest, setFixedBinAxis)
 
     // setting another axis
     // for the moment we have disabled possibility to re-create axes to faciltate undo/redo
-//    item.setAxis(FixedBinAxisItem::create(1, 1.0, 2.0));
-//    expected_centers = {1.5};
-//    EXPECT_EQ(item.binCenters(), expected_centers);
-//    expected_values = {0.0};
-//    EXPECT_EQ(item.binValues(), expected_values);
+    //    item.setAxis(FixedBinAxisItem::create(1, 1.0, 2.0));
+    //    expected_centers = {1.5};
+    //    EXPECT_EQ(item.binCenters(), expected_centers);
+    //    expected_values = {0.0};
+    //    EXPECT_EQ(item.binValues(), expected_values);
 }
 
 //! Sets fixed bin axis via templated method.
@@ -74,23 +74,54 @@ TEST_F(Data1DItemTest, setTemplatedFixedBinAxis)
 
     auto axis = item.setAxis<FixedBinAxisItem>(5, 0.0, 5.0);
 
-//    // check type of the axis
-//    EXPECT_TRUE(item.item<FixedBinAxisItem>(Data1DItem::T_AXIS) != nullptr);
+    // check type of the axis
+    EXPECT_EQ(item.item<FixedBinAxisItem>(Data1DItem::T_AXIS), axis);
 
-//    // check bin centers and values
-//    std::vector<double> expected_centers = {0.5, 1.5, 2.5, 3.5, 4.5};
-//    EXPECT_EQ(item.binCenters(), expected_centers);
-//    std::vector<double> expected_values = std::vector<double>(expected_centers.size(), 0.0);
-//    EXPECT_EQ(item.binValues(), expected_values);
-
-//    // setting another axis
-//    item.setAxis(FixedBinAxisItem::create(1, 1.0, 2.0));
-//    expected_centers = {1.5};
-//    EXPECT_EQ(item.binCenters(), expected_centers);
-//    expected_values = {0.0};
-//    EXPECT_EQ(item.binValues(), expected_values);
+    // check bin centers and values
+    std::vector<double> expected_centers = {0.5, 1.5, 2.5, 3.5, 4.5};
+    EXPECT_EQ(item.binCenters(), expected_centers);
+    std::vector<double> expected_values = std::vector<double>(expected_centers.size(), 0.0);
+    EXPECT_EQ(item.binValues(), expected_values);
 }
 
+//! Sets fixed bin axis via templated method.
+
+TEST_F(Data1DItemTest, setTemplatedFixedBinAxisInModelContext)
+{
+    SessionModel model;
+    auto dataItem = model.insertItem<Data1DItem>();
+
+    auto axis = dataItem->setAxis<FixedBinAxisItem>(5, 0.0, 5.0);
+
+    // check type of the axis
+    EXPECT_EQ(dataItem->item<FixedBinAxisItem>(Data1DItem::T_AXIS), axis);
+
+    // check bin centers and values
+    std::vector<double> expected_centers = {0.5, 1.5, 2.5, 3.5, 4.5};
+    EXPECT_EQ(dataItem->binCenters(), expected_centers);
+    std::vector<double> expected_values = std::vector<double>(expected_centers.size(), 0.0);
+    EXPECT_EQ(dataItem->binValues(), expected_values);
+}
+
+//! Sets fixed bin axis via model context.
+// FIXME Not clear if this method should be used
+
+TEST_F(Data1DItemTest, setFixedBinAxisInModel)
+{
+    SessionModel model;
+
+    auto dataItem = model.insertItem<Data1DItem>();
+    model.insertItem<FixedBinAxisItem>(dataItem)->setParameters(5, 0.0, 5.0);
+
+    // check type of the axis
+    EXPECT_TRUE(dataItem->item<FixedBinAxisItem>(Data1DItem::T_AXIS) != nullptr);
+
+    // check bin centers and values
+    std::vector<double> expected_centers = {0.5, 1.5, 2.5, 3.5, 4.5};
+    EXPECT_EQ(dataItem->binCenters(), expected_centers);
+    std::vector<double> expected_values = std::vector<double>(expected_centers.size(), 0.0);
+    EXPECT_TRUE(dataItem->binValues().empty());
+}
 
 //! Checking the method ::setValues.
 

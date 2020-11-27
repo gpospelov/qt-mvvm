@@ -42,20 +42,34 @@ public:
     void setErrors(const std::vector<double>& errors);
     std::vector<double> binErrors() const;
 
+    //! Inserts axis of given type.
     template <typename T, typename... Args> T* setAxis(Args&&... args);
 };
+
+// FIXME Consider redesign of the method below. Should the axis exist from the beginning
+// or added later? It is not clear how to create axis a) via Data1DItem::setAxis
+// b) via model directly c) in constructor?
 
 template<typename T, typename... Args>
 T* Data1DItem::setAxis(Args&&... args)
 {
+    // we disable possibility to re-create axis to facilitate undo/redo
+    if (getItem(T_AXIS, 0))
+        throw std::runtime_error("Axis was already set. Currently we do not support axis change");
+
+    T* result{nullptr};
     if (model()) {
-        auto axis = model()->insertItem<T>(this);
-        axis->setParameters(std::forward<Args>(args)...);
-        setValues(std::vector<double>(axis->size(), 0.0));
-        return axis;
+        // acting through the model to enable undo/redo
+        result = model()->insertItem<T>(this);
+    } else {
+        result = new T;
+        insertItem(result, {T_AXIS, 0});
     }
-    return nullptr;
+    result->setParameters(std::forward<Args>(args)...);
+    setValues(std::vector<double>(result->size(), 0.0));
+    return result;
 }
+
 } // namespace ModelView
 
 #endif // MVVM_STANDARDITEMS_DATA1DITEM_H
