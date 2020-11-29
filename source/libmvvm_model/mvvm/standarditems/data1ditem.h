@@ -32,7 +32,7 @@ public:
 
     Data1DItem();
 
-    void setAxis(std::unique_ptr<BinnedAxisItem> axis);
+//    void setAxis(std::unique_ptr<BinnedAxisItem> axis);
 
     std::vector<double> binCenters() const;
 

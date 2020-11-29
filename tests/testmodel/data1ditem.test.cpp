@@ -46,7 +46,7 @@ TEST_F(Data1DItemTest, setFixedBinAxis)
 {
     Data1DItem item;
 
-    item.setAxis(FixedBinAxisItem::create(5, 0.0, 5.0));
+    item.setAxis<FixedBinAxisItem>(5, 0.0, 5.0);
 
     // check type of the axis
     EXPECT_TRUE(item.item<FixedBinAxisItem>(Data1DItem::T_AXIS) != nullptr);
@@ -133,7 +133,7 @@ TEST_F(Data1DItemTest, setValues)
     std::vector<double> expected_content = {1.0, 2.0, 3.0};
     EXPECT_THROW(item.setValues(expected_content), std::runtime_error);
 
-    item.setAxis(FixedBinAxisItem::create(3, 0.0, 3.0));
+    item.setAxis<FixedBinAxisItem>(3, 0.0, 3.0);
     item.setValues(expected_content);
     EXPECT_EQ(item.binValues(), expected_content);
 }
@@ -149,7 +149,7 @@ TEST_F(Data1DItemTest, setErrors)
 
     EXPECT_THROW(item.setErrors(expected_errors), std::runtime_error);
 
-    item.setAxis(FixedBinAxisItem::create(3, 0.0, 3.0));
+    item.setAxis<FixedBinAxisItem>(3, 0.0, 3.0);
     item.setErrors(expected_errors);
 
     EXPECT_EQ(item.binErrors(), expected_errors);
@@ -169,12 +169,12 @@ TEST_F(Data1DItemTest, checkSignalsOnAxisChange)
 
     EXPECT_CALL(widget, onDataChange(_, _)).Times(0);
     EXPECT_CALL(widget, onPropertyChange(item, expected_value_tag)).Times(1);
-    EXPECT_CALL(widget, onChildPropertyChange(_, _)).Times(0);
+    EXPECT_CALL(widget, onChildPropertyChange(_, _)).Times(2);
     EXPECT_CALL(widget, onItemInserted(item, expected_axis_tagrow)).Times(1);
     EXPECT_CALL(widget, onAboutToRemoveItem(_, _)).Times(0);
 
     // trigger change
-    item->setAxis(FixedBinAxisItem::create(3, 0.0, 3.0));
+    item->setAxis<FixedBinAxisItem>(3, 0.0, 3.0);
 }
 
 //! Checking the signals when bin values changed.
@@ -183,7 +183,7 @@ TEST_F(Data1DItemTest, checkSignalsOnBinValuesChange)
 {
     SessionModel model;
     auto item = model.insertItem<Data1DItem>();
-    item->setAxis(FixedBinAxisItem::create(3, 0.0, 3.0));
+    item->setAxis<FixedBinAxisItem>(3, 0.0, 3.0);
 
     MockWidgetForItem widget(item);
 

@@ -66,7 +66,7 @@ void GraphModel::add_graph(ModelView::ContainerItem* container,
     auto [xmin, xmax, points] = simulation_result(ModelView::Utils::RandDouble(0.5, 1.0));
 
     auto data = insertItem<Data1DItem>(container);
-    data->setAxis(FixedBinAxisItem::create(static_cast<int>(points.size()), xmin, xmax));
+    data->setAxis<FixedBinAxisItem>(static_cast<int>(points.size()), xmin, xmax);
     data->setValues(points);
 
     auto graph = insertItem<GraphItem>(viewport);
