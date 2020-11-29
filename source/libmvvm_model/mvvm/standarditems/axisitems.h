@@ -77,6 +77,8 @@ public:
     static inline const std::string P_NBINS = "P_NBINS";
     FixedBinAxisItem(const std::string& model_type = Constants::FixedBinAxisItemType);
 
+    void setParameters(int nbins, double xmin, double xmax);
+
     static std::unique_ptr<FixedBinAxisItem> create(int nbins, double xmin, double xmax);
 
     std::pair<double, double> range() const override;
@@ -93,6 +95,8 @@ class MVVM_MODEL_EXPORT PointwiseAxisItem : public BinnedAxisItem
 {
 public:
     PointwiseAxisItem(const std::string& model_type = Constants::PointwiseAxisItemType);
+
+    void setParameters(const std::vector<double>& data);
 
     static std::unique_ptr<PointwiseAxisItem> create(const std::vector<double>& data);
 

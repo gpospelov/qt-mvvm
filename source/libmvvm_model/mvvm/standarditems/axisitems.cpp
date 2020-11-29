@@ -67,12 +67,17 @@ FixedBinAxisItem::FixedBinAxisItem(const std::string& model_type) : BinnedAxisIt
     register_min_max();
 }
 
+void FixedBinAxisItem::setParameters(int nbins, double xmin, double xmax)
+{
+    setProperty(P_NBINS, nbins);
+    setProperty(P_MIN, xmin);
+    setProperty(P_MAX, xmax);
+}
+
 std::unique_ptr<FixedBinAxisItem> FixedBinAxisItem::create(int nbins, double xmin, double xmax)
 {
     auto result = std::make_unique<FixedBinAxisItem>();
-    result->setProperty(P_NBINS, nbins);
-    result->setProperty(P_MIN, xmin);
-    result->setProperty(P_MAX, xmax);
+    result->setParameters(nbins, xmin, xmax);
     return result;
 }
 
@@ -110,10 +115,15 @@ PointwiseAxisItem::PointwiseAxisItem(const std::string& model_type) : BinnedAxis
     setEditable(false); // prevent editing in widgets, since there is no corresponding editor
 }
 
+void PointwiseAxisItem::setParameters(const std::vector<double>& data)
+{
+    setData(data);
+}
+
 std::unique_ptr<PointwiseAxisItem> PointwiseAxisItem::create(const std::vector<double>& data)
 {
     auto result = std::make_unique<PointwiseAxisItem>();
-    result->setData(data);
+    result->setParameters(data);
     return result;
 }
 

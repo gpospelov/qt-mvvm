@@ -85,7 +85,7 @@ TEST_F(Data1DPlotControllerTest, axisAfter)
     controller.setItem(data_item);
 
     // setting correct axis
-    data_item->setAxis(FixedBinAxisItem::create(1, 1.0, 2.0));
+    data_item->setAxis<FixedBinAxisItem>(1, 1.0, 2.0);
     EXPECT_EQ(data_item->binCenters(), TestUtils::binCenters(graph));
     EXPECT_EQ(data_item->binValues(), TestUtils::binValues(graph));
     EXPECT_EQ(std::vector<double>(), TestUtils::binErrors(graph));
@@ -102,7 +102,7 @@ TEST_F(Data1DPlotControllerTest, dataPoints)
     // creating data item with single point
     SessionModel model;
     auto data_item = model.insertItem<Data1DItem>();
-    data_item->setAxis(FixedBinAxisItem::create(1, 1.0, 2.0));
+    data_item->setAxis<FixedBinAxisItem>(1, 1.0, 2.0);
 
     // creating controller and point it to Data1DItem
     Data1DPlotController controller(graph);
@@ -131,7 +131,7 @@ TEST_F(Data1DPlotControllerTest, errorBars)
     // creating data item with single point
     SessionModel model;
     auto data_item = model.insertItem<Data1DItem>();
-    data_item->setAxis(FixedBinAxisItem::create(2, 1.0, 2.0));
+    data_item->setAxis<FixedBinAxisItem>(2, 1.0, 2.0);
 
     // creating controller and point it to Data1DItem
     Data1DPlotController controller(graph);
@@ -158,9 +158,9 @@ TEST_F(Data1DPlotControllerTest, twoDataItems)
     // creating two data items
     SessionModel model;
     auto data_item1 = model.insertItem<Data1DItem>();
-    data_item1->setAxis(FixedBinAxisItem::create(1, 1.0, 2.0));
+    data_item1->setAxis<FixedBinAxisItem>(1, 1.0, 2.0);
     auto data_item2 = model.insertItem<Data1DItem>();
-    data_item2->setAxis(FixedBinAxisItem::create(2, 0.0, 2.0));
+    data_item2->setAxis<FixedBinAxisItem>(2, 0.0, 2.0);
 
     // creating controller and point it to first item
     Data1DPlotController controller(graph);

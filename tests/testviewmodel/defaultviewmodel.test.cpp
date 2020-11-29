@@ -820,7 +820,7 @@ TEST_F(DefaultViewModelTest, deleteGraphVromViewport)
     // creating data container and single Data1DItem in it
     auto data_container = model.insertItem<ContainerItem>();
     auto data_item = model.insertItem<Data1DItem>(data_container);
-    data_item->setAxis(FixedBinAxisItem::create(3, 0.0, 3.0));
+    data_item->setAxis<FixedBinAxisItem>(3, 0.0, 3.0);
     data_item->setValues(std::vector<double>({1.0, 2.0, 3.0}));
 
     // creating Viewport with single graph

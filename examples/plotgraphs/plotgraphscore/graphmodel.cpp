@@ -61,7 +61,7 @@ void GraphModel::add_graph()
         undoStack()->beginMacro("addGraph");
 
     auto data = insertItem<Data1DItem>(data_container());
-    data->setAxis(FixedBinAxisItem::create(npoints, xmin, xmax));
+    data->setAxis<FixedBinAxisItem>(npoints, xmin, xmax);
     data->setValues(bin_values(ModelView::Utils::RandDouble(0.5, 1.0)));
 
     auto graph = insertItem<GraphItem>(viewport());
@@ -141,8 +141,8 @@ void GraphModel::init_model()
     auto viewport = insertItem<GraphViewportItem>();
     viewport->setDisplayName("Graph container");
 
+    add_graph();
     setUndoRedoEnabled(true);
-    //    add_graph();
 }
 
 } // namespace PlotGraphs

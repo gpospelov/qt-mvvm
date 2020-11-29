@@ -30,20 +30,23 @@ Data1DItem::Data1DItem() : CompoundItem(Constants::Data1DItemType)
     addProperty(P_ERRORS, std::vector<double>())->setDisplayName("Errors")->setEditable(false);
 
     registerTag(
-        TagInfo(T_AXIS, 0, 1, {Constants::FixedBinAxisItemType, Constants::PointwiseAxisItemType}));
+        TagInfo(T_AXIS, 0, 1, {Constants::FixedBinAxisItemType, Constants::PointwiseAxisItemType}),
+        true);
     setValues(std::vector<double>());
 }
 
 //! Sets axis. Bin content will be set to zero.
 
-void Data1DItem::setAxis(std::unique_ptr<BinnedAxisItem> axis)
-{
-    if (auto axis = getItem(T_AXIS, 0))
-        delete takeItem({T_AXIS, 0});
+//void Data1DItem::setAxis(std::unique_ptr<BinnedAxisItem> axis)
+//{
+//    // we disable possibility to re-create axis to facilitate undo/redo
 
-    insertItem(axis.release(), {T_AXIS, 0});
-    setValues(std::vector<double>(total_bin_count(this), 0.0));
-}
+//    if (getItem(T_AXIS, 0))
+//        throw std::runtime_error("Axis was already set. Currently we do not support axis change");
+
+//    insertItem(axis.release(), {T_AXIS, 0});
+//    setValues(std::vector<double>(total_bin_count(this), 0.0));
+//}
 
 //! Returns coordinates of bin centers.
 

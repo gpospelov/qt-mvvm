@@ -51,7 +51,7 @@ TEST_F(GraphPlotControllerTest, setItem)
     // setup model and single data item in it
     SessionModel model;
     auto data_item = model.insertItem<Data1DItem>();
-    data_item->setAxis(FixedBinAxisItem::create(2, 0.0, 2.0));
+    data_item->setAxis<FixedBinAxisItem>(2, 0.0, 2.0);
     std::vector<double> expected_centers = {0.5, 1.5};
     std::vector<double> expected_values = {42.0, 43.0};
     data_item->setValues(expected_values);
@@ -81,7 +81,7 @@ TEST_F(GraphPlotControllerTest, changeGraphAppearance)
     // setup model and single data item in it
     SessionModel model;
     auto data_item = model.insertItem<Data1DItem>();
-    data_item->setAxis(FixedBinAxisItem::create(2, 0.0, 2.0));
+    data_item->setAxis<FixedBinAxisItem>(2, 0.0, 2.0);
     std::vector<double> expected_centers = {0.5, 1.5};
     std::vector<double> expected_values = {42.0, 43.0};
     data_item->setValues(expected_values);
@@ -122,7 +122,7 @@ TEST_F(GraphPlotControllerTest, setPointwiseItem)
 
     SessionModel model;
     auto data_item = model.insertItem<Data1DItem>();
-    data_item->setAxis(PointwiseAxisItem::create(expected_centers));
+    data_item->setAxis<PointwiseAxisItem>(expected_centers);
     data_item->setValues(expected_values);
 
     // setup graph item
@@ -162,7 +162,7 @@ TEST_F(GraphPlotControllerTest, setDataAfter)
 
     // setup Data1DItem and assign to GraphItem
     auto data_item = model.insertItem<Data1DItem>();
-    data_item->setAxis(FixedBinAxisItem::create(2, 0.0, 2.0));
+    data_item->setAxis<FixedBinAxisItem>(2, 0.0, 2.0);
     std::vector<double> expected_centers = {0.5, 1.5};
     std::vector<double> expected_values = {42.0, 43.0};
     data_item->setValues(expected_values);
@@ -185,7 +185,7 @@ TEST_F(GraphPlotControllerTest, unlinkFromItem)
     // setup model and single data item in it
     SessionModel model;
     auto data_item = model.insertItem<Data1DItem>();
-    data_item->setAxis(FixedBinAxisItem::create(2, 0.0, 2.0));
+    data_item->setAxis<FixedBinAxisItem>(2, 0.0, 2.0);
     std::vector<double> expected_centers = {0.5, 1.5};
     std::vector<double> expected_values = {42.0, 43.0};
     data_item->setValues(expected_values);
