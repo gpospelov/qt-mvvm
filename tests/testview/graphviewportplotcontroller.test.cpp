@@ -138,7 +138,7 @@ TEST_F(GraphViewportPlotControllerTest, addAndRemoveGraphs)
     EXPECT_EQ(custom_plot->graphCount(), 2);
 
     // Checking that viewport min, max adjusted to both graphs when manually call update_viewport()
-    viewport_item->update_viewport();
+    viewport_item->setViewportToContent();
     EXPECT_DOUBLE_EQ(custom_plot->xAxis->range().lower, expected_centers[0]);
     EXPECT_DOUBLE_EQ(custom_plot->xAxis->range().upper, expected_centers[2]);
     EXPECT_DOUBLE_EQ(custom_plot->yAxis->range().lower, expected_values1[0]);

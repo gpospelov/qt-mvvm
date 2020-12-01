@@ -62,7 +62,7 @@ struct GraphCanvas::GraphCanvasImpl {
     {
         if (!viewport_controller->currentItem())
             return;
-        viewport_controller->currentItem()->update_viewport();
+        viewport_controller->currentItem()->setViewportToContent();
     }
 
     QCustomPlot* customPlot() { return custom_plot; }

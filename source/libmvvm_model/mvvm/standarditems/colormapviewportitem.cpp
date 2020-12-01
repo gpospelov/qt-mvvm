@@ -34,9 +34,9 @@ ViewportAxisItem* ColorMapViewportItem::zAxis() const
     return item<ViewportAxisItem>(P_ZAXIS);
 }
 
-void ColorMapViewportItem::update_viewport()
+void ColorMapViewportItem::setViewportToContent()
 {
-    ViewportItem::update_viewport();
+    ViewportItem::setViewportToContent();
     update_data_range();
 }
 

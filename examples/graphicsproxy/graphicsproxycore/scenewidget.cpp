@@ -61,7 +61,7 @@ void SceneWidget::init_actions()
     m_resetViewportAction = new QAction("Reset view", this);
     auto on_reset = [this]() {
         auto viewport = m_model->topItem<ColorMapViewportItem>();
-        viewport->update_viewport();
+        viewport->setViewportToContent();
     };
     connect(m_resetViewportAction, &QAction::triggered, on_reset);
     m_toolBar->addAction(m_resetViewportAction);

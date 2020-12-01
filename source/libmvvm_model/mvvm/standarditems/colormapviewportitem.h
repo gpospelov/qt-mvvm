@@ -28,7 +28,7 @@ public:
 
     ViewportAxisItem* zAxis() const;
 
-    void update_viewport() override;
+    void setViewportToContent() override;
 
 protected:
     virtual std::pair<double, double> data_xaxis_range() const override;

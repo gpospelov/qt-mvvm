@@ -57,7 +57,7 @@ TEST_F(GraphViewportItemTest, addItem)
     EXPECT_EQ(viewport_item->graphItems().size(), 1);
 
     // updating viewport to graph
-    viewport_item->update_viewport();
+    viewport_item->setViewportToContent();
 
     // x-axis of viewport should be set to FixedBinAxis of DataItem
     auto xaxis = viewport_item->xAxis();
