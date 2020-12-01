@@ -70,7 +70,7 @@ std::vector<double> GraphItem::binErrors() const
 
 std::string GraphItem::colorName() const
 {
-    return item<PenItem>(P_PEN)->colorName();
+    return penItem()->colorName();
 }
 
 //! Sets named color following schema from https://www.w3.org/TR/css-color-3/#svg-color.
@@ -78,5 +78,10 @@ std::string GraphItem::colorName() const
 
 void GraphItem::setNamedColor(const std::string& named_color)
 {
-    item<PenItem>(P_PEN)->setNamedColor(named_color);
+    penItem()->setNamedColor(named_color);
+}
+
+PenItem* GraphItem::penItem() const
+{
+    return item<PenItem>(P_PEN);
 }

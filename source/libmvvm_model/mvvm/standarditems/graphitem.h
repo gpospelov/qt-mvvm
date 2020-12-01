@@ -16,6 +16,7 @@ namespace ModelView
 {
 
 class Data1DItem;
+class PenItem;
 
 //! One-dimensional graph representation of Data1DItem.
 //! Contains plot properties (i.e. color, line type etc) and link to Data1DItem, which will provide
@@ -45,6 +46,8 @@ public:
 
     std::string colorName() const;
     void setNamedColor(const std::string& named_color);
+
+    PenItem* penItem() const;
 };
 
 } // namespace ModelView

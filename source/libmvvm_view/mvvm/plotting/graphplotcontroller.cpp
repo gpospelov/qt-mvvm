@@ -57,7 +57,7 @@ struct GraphPlotController::GraphItemControllerImpl {
 
     void update_graph_pen()
     {
-        m_penController->setItem(graph_item()->item<PenItem>(GraphItem::P_PEN));
+        m_penController->setItem(graph_item()->penItem());
     }
 
     //! Update visible

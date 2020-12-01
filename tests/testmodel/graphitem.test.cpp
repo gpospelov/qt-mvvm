@@ -156,14 +156,13 @@ TEST_F(GraphItemTest, setFromGraphItem)
     data_item->setValues(expected_values);
 
     graph_item->setDataItem(data_item);
-    graph_item->item<PenItem>(GraphItem::P_PEN)->setProperty(PenItem::P_COLOR, QColor(Qt::red));
+    graph_item->penItem()->setProperty(PenItem::P_COLOR, QColor(Qt::red));
 
     graph_item2->setFromGraphItem(graph_item);
 
     EXPECT_EQ(graph_item2->binValues(), expected_values);
     EXPECT_EQ(graph_item2->binCenters(), expected_centers);
-    EXPECT_EQ(graph_item2->item<PenItem>(GraphItem::P_PEN)->property<QColor>(PenItem::P_COLOR),
-              QColor(Qt::red));
+    EXPECT_EQ(graph_item2->penItem()->property<QColor>(PenItem::P_COLOR), QColor(Qt::red));
 }
 
 TEST_F(GraphItemTest, penItem_setNamedColor)
