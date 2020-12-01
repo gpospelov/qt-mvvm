@@ -51,7 +51,7 @@ void GraphicsScene::update_size(const QSize& newSize)
 void GraphicsScene::create_colormap_proxy(ModelView::ColorMapCanvas* colormap)
 {
     scene_adapter = colormap->createSceneAdapter();
-    colormap_proxy = new CustomPlotProxyWidget(colormap);
+    colormap_proxy = new ModelView::CustomPlotProxyWidget(colormap);
     addItem(colormap_proxy);
 }
 

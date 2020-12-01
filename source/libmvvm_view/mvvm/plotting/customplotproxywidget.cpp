@@ -14,6 +14,8 @@
 #include <QWidget>
 #include <mvvm/plotting/customplotproxywidget.h>
 
+using namespace ModelView;
+
 CustomPlotProxyWidget::CustomPlotProxyWidget(QWidget* colormap)
 {
     setWidget(colormap);
