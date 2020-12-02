@@ -9,6 +9,7 @@
 
 #include "google_test.h"
 #include "qcustomplot.h"
+#include "customplot_test_utils.h"
 #include <QSignalSpy>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/plotting/viewportaxisplotcontroller.h>
@@ -28,6 +29,12 @@ public:
     {
         return std::make_unique<QSignalSpy>(
             axis, static_cast<void (QCPAxis::*)(const QCPRange&)>(&QCPAxis::rangeChanged));
+    }
+
+    std::unique_ptr<QSignalSpy> createSpy2(QCPAxis* axis)
+    {
+        return std::make_unique<QSignalSpy>(
+            axis, static_cast<void (QCPAxis::*)(const QCPRange&, const QCPRange&)>(&QCPAxis::rangeChanged));
     }
 };
 
@@ -165,6 +172,58 @@ TEST_F(ViewportAxisPlotControllerTest, changeViewportAxisItem)
     EXPECT_EQ(custom_plot->xAxis->range().lower, expected_min);
     EXPECT_EQ(custom_plot->xAxis->range().upper, expected_max);
 }
+
+//! Controller subscribed to ViewportAxisItem.
+//! Change ViewportAxisItem and check that QCPAxis got new values.
+//! Check correctness of signals issued by QCPAxisItem.
+
+TEST_F(ViewportAxisPlotControllerTest, changeViewportAxisItemSignaling)
+{
+    auto custom_plot = std::make_unique<QCustomPlot>();
+
+    // creating the model with single ViewportAxisItem
+    SessionModel model;
+    auto axisItem = model.insertItem<ViewportAxisItem>();
+    axisItem->setProperty(ViewportAxisItem::P_MIN, 1.0);
+    axisItem->setProperty(ViewportAxisItem::P_MAX, 2.0);
+
+    // setting up QCustomPlot and item controller.
+    ViewportAxisPlotController controller(custom_plot->xAxis);
+    controller.setItem(axisItem);
+
+    // initial condition
+    EXPECT_EQ(custom_plot->xAxis->range().lower, 1.0);
+    EXPECT_EQ(custom_plot->xAxis->range().upper, 2.0);
+
+    auto rangeChanged = createSpy(custom_plot->xAxis);
+    auto rangeChanged2 = createSpy2(custom_plot->xAxis);
+
+    // making a change
+    const double expected_max = 20.0;
+    axisItem->setProperty(ViewportAxisItem::P_MAX, expected_max);
+
+    // Checking QCPAxis
+    EXPECT_EQ(rangeChanged->count(), 1);
+    EXPECT_EQ(rangeChanged2->count(), 1);
+    EXPECT_EQ(custom_plot->xAxis->range().lower, 1.0);
+    EXPECT_EQ(custom_plot->xAxis->range().upper, expected_max);
+
+    QList<QVariant> arguments = rangeChanged->takeFirst();
+    EXPECT_EQ(arguments.size(), 1);
+    auto reportedRange = arguments.at(0).value<QCPRange>();
+    EXPECT_EQ(reportedRange.lower, 1.0);
+    EXPECT_EQ(reportedRange.upper, 20.0);
+
+    arguments = rangeChanged2->takeFirst();
+    EXPECT_EQ(arguments.size(), 2);
+    auto newRange = arguments.at(0).value<QCPRange>();
+    auto oldRange = arguments.at(1).value<QCPRange>();
+    EXPECT_EQ(newRange.lower, 1.0);
+    EXPECT_EQ(newRange.upper, 20.0);
+    EXPECT_EQ(oldRange.lower, 1.0);
+    EXPECT_EQ(oldRange.upper, 2.0);
+}
+
 
 //! Set ViewportAxisItem logz, subscribe controller and check that QCPAxis has it.
 

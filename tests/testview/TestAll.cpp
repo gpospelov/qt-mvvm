@@ -9,6 +9,7 @@
 
 #include "google_test.h"
 #include "qcustomplot.h"
+#include "customplot_test_utils.h"
 #include <QApplication>
 #include <QStandardItem>
 

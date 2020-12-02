@@ -50,4 +50,6 @@ template <typename T> T* GetPlottable(QCustomPlot* custom_plot)
 }
 } // namespace TestUtils
 
+Q_DECLARE_METATYPE(QCPRange)
+
 #endif
