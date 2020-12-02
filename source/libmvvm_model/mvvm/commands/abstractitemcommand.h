@@ -30,6 +30,9 @@ public:
     explicit AbstractItemCommand(SessionItem* receiver);
     virtual ~AbstractItemCommand();
 
+    AbstractItemCommand(const AbstractItemCommand& other) = delete;
+    AbstractItemCommand& operator=(const AbstractItemCommand& other) = delete;
+
     void execute();
 
     void undo();
