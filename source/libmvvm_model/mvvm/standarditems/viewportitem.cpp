@@ -7,6 +7,7 @@
 //
 // ************************************************************************** //
 
+#include <mvvm/model/modelutils.h>
 #include <mvvm/standarditems/axisitems.h>
 #include <mvvm/standarditems/viewportitem.h>
 
@@ -32,22 +33,26 @@ ViewportAxisItem* ViewportItem::yAxis() const
 
 void ViewportItem::setViewportToContent(double left, double top, double right, double bottom)
 {
+    Utils::BeginMacros(this, "setViewportToContent");
     auto [xmin, xmax] = data_xaxis_range();
     xAxis()->set_range(xmin - (xmax - xmin) * left, xmax + (xmax - xmin) * right);
 
     auto [ymin, ymax] = data_yaxis_range();
     yAxis()->set_range(ymin - (ymax - ymin) * bottom, ymax + (ymax - ymin) * top);
+    Utils::EndMacros(this);
 }
 
 //! Sets range of x,y window to show all data.
 
 void ViewportItem::setViewportToContent()
 {
+    Utils::BeginMacros(this, "setViewportToContent");
     auto [xmin, xmax] = data_xaxis_range();
     xAxis()->set_range(xmin, xmax);
 
     auto [ymin, ymax] = data_yaxis_range();
     yAxis()->set_range(ymin, ymax);
+    Utils::EndMacros(this);
 }
 
 void ViewportItem::register_xy_axes()

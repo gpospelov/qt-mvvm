@@ -7,6 +7,7 @@
 //
 // ************************************************************************** //
 
+#include <mvvm/interfaces/undostackinterface.h>
 #include <mvvm/model/modelutils.h>
 
 using namespace ModelView;
@@ -40,4 +41,22 @@ void Utils::MoveDown(SessionItem* item)
     if (tagrow.row == item->parent()->itemCount(tagrow.tag) - 1)
         return; // item already at the buttom
     item->model()->moveItem(item, item->parent(), tagrow.next());
+}
+
+void Utils::BeginMacros(const SessionItem* item, const std::string& macro_name)
+{
+    if (!item->model())
+        return;
+
+    if (auto stack = item->model()->undoStack(); stack)
+        stack->beginMacro(macro_name);
+}
+
+void Utils::EndMacros(const SessionItem* item)
+{
+    if (!item->model())
+        return;
+
+    if (auto stack = item->model()->undoStack(); stack)
+        stack->endMacro();
 }
