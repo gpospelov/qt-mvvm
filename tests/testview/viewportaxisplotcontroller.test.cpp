@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include "google_test.h"
+#include "MockWidgets.h"
 #include "qcustomplot.h"
 #include "customplot_test_utils.h"
 #include <QSignalSpy>
@@ -17,6 +18,7 @@
 #include <mvvm/standarditems/plottableitems.h>
 
 using namespace ModelView;
+using ::testing::_;
 
 //! Testing AxisPlotControllers.
 
@@ -224,6 +226,38 @@ TEST_F(ViewportAxisPlotControllerTest, changeViewportAxisItemSignaling)
     EXPECT_EQ(oldRange.upper, 2.0);
 }
 
+//! Controller subscribed to ViewportAxisItem.
+//! Change ViewportAxisItem and check that QCPAxis got new values.
+//! Check correctness that there is not extra looping and item doesn't start changing many times
+
+TEST_F(ViewportAxisPlotControllerTest, changeViewportAxisItemMapping)
+{
+    auto custom_plot = std::make_unique<QCustomPlot>();
+
+    // creating the model with single ViewportAxisItem
+    SessionModel model;
+    auto axisItem = model.insertItem<ViewportAxisItem>();
+    axisItem->setProperty(ViewportAxisItem::P_MIN, 1.0);
+    axisItem->setProperty(ViewportAxisItem::P_MAX, 2.0);
+
+    // setting up QCustomPlot and item controller.
+    ViewportAxisPlotController controller(custom_plot->xAxis);
+    controller.setItem(axisItem);
+
+    MockWidgetForItem widget(axisItem);
+    EXPECT_CALL(widget, onDataChange(_, _)).Times(0);
+    EXPECT_CALL(widget, onPropertyChange(axisItem, ViewportAxisItem::P_MAX)).Times(1);
+    EXPECT_CALL(widget, onChildPropertyChange(_, _)).Times(0);
+    EXPECT_CALL(widget, onItemInserted(_, _)).Times(0);
+    EXPECT_CALL(widget, onAboutToRemoveItem(_, _)).Times(0);
+
+    // making a change
+    const double expected_max = 20.0;
+    axisItem->setProperty(ViewportAxisItem::P_MAX, expected_max);
+
+    EXPECT_EQ(custom_plot->xAxis->range().lower, 1.0);
+    EXPECT_EQ(custom_plot->xAxis->range().upper, expected_max);
+}
 
 //! Set ViewportAxisItem logz, subscribe controller and check that QCPAxis has it.
 
