@@ -44,8 +44,8 @@ public:
 
     static QUndoStack* qtUndoStack(UndoStackInterface* stack_interface);
 
-    void beginMacro(const std::string& name);
-    void endMacro();
+    void beginMacro(const std::string& name) override;
+    void endMacro() override;
 
 private:
     struct UndoStackImpl;

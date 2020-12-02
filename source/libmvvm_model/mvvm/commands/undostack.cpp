@@ -24,7 +24,8 @@ UndoStack::UndoStack() : p_impl(std::make_unique<UndoStackImpl>()) {}
 void UndoStack::execute(std::shared_ptr<AbstractItemCommand> command)
 {
     // Wrapping command for Qt. It will be executed by Qt after push.
-    p_impl->undoStack()->push(new CommandAdapter(command));
+    auto adapter = new CommandAdapter(std::move(command));
+    p_impl->undoStack()->push(adapter);
 }
 
 UndoStack::~UndoStack() = default;
