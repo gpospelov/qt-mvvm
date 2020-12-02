@@ -33,6 +33,8 @@ public:
 
     ViewportAxisItem* yAxis() const;
 
+    virtual void setViewportToContent(double left, double top, double right, double bottom);
+
     virtual void setViewportToContent();
 
 protected:
