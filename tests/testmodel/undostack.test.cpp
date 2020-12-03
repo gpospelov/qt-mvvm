@@ -104,6 +104,54 @@ TEST_F(UndoStackTest, commandTimeOfLife)
     }
 }
 
+//! Checking time of life of the command during undo/redo.
+//! Same as above, but command is trying to set same value. It makes it "expired" and it should
+//! be removed from the stack.
+
+TEST_F(UndoStackTest, expiredCommandTimeOfLife)
+{
+    SessionModel model;
+    auto item = model.insertItem<PropertyItem>();
+    item->setData(42);
+
+    std::weak_ptr<SetValueCommand> pw_command; // to trace command time of life
+
+    UndoStack stack;
+
+    {
+        // creating command which sets the same value
+        auto command =
+            std::make_shared<SetValueCommand>(item, QVariant::fromValue(42), ItemDataRole::DATA);
+        pw_command = command;
+        EXPECT_EQ(pw_command.use_count(), 1);
+
+        // checking state of item, stack and command
+        EXPECT_EQ(item->data<int>(), 42);
+        EXPECT_FALSE(stack.canRedo());
+        EXPECT_FALSE(stack.canUndo());
+        EXPECT_EQ(stack.index(), 0);
+        EXPECT_EQ(stack.count(), 0);
+        EXPECT_EQ(command->isObsolete(), false);
+        EXPECT_FALSE(std::get<bool>(command->result()));
+
+        // adding command to the stack, it will lead to command execution
+        stack.execute(command);
+        EXPECT_EQ(pw_command.use_count(), 1); // was already deleted from the stack
+
+        // checking state of item, stack and command
+        EXPECT_EQ(item->data<int>(), 42);
+        EXPECT_FALSE(stack.canRedo());
+        EXPECT_FALSE(stack.canUndo());
+        EXPECT_EQ(stack.index(), 0);
+        EXPECT_EQ(stack.count(), 0);
+        EXPECT_EQ(command->isObsolete(), true);
+        EXPECT_FALSE(std::get<bool>(command->result()));
+    }
+
+    EXPECT_EQ(pw_command.use_count(), 0);
+    EXPECT_EQ(pw_command.lock(), nullptr);
+}
+
 TEST_F(UndoStackTest, initialState)
 {
     SessionModel model;
