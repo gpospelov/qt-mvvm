@@ -1,16 +1,10 @@
 set(test testview)
 
-include(GoogleTest)
-
 file(GLOB source_files "*.cpp")
 file(GLOB include_files "*.h")
 
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Test REQUIRED)
-
-if(WIN32)
-    add_definitions(-DGTEST_LINKED_AS_SHARED_LIBRARY)
-endif()
 
 # necessary for Qt creator and clang code model
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
