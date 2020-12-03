@@ -64,7 +64,7 @@ struct GraphViewportPlotController::GraphViewportPlotControllerImpl {
             controller->setItem(graph_item);
             graph_controllers.push_back(std::move(controller));
         }
-        viewport->update_viewport();
+        viewport->setViewportToContent();
     }
 
     //! Adds controller for item.

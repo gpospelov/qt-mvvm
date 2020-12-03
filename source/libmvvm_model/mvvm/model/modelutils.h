@@ -63,6 +63,14 @@ void MVVM_MODEL_EXPORT DeleteItemFromModel(SessionItem* item);
 void MVVM_MODEL_EXPORT MoveUp(SessionItem* item);
 void MVVM_MODEL_EXPORT MoveDown(SessionItem* item);
 
+//! Begin undo/redo macros with given name. Works only if item belongs to the model, and model has
+//! undo/redo enabled. Otherwise, do nothing.
+void MVVM_MODEL_EXPORT BeginMacros(const SessionItem* item, const std::string& macro_name);
+
+//! Finishes undo/redo macros. Works only if item belongs to the model, and model has undo/redo
+//! enabled. Otherwise, do nothing.
+void MVVM_MODEL_EXPORT EndMacros(const SessionItem* item);
+
 } // namespace Utils
 } // namespace ModelView
 

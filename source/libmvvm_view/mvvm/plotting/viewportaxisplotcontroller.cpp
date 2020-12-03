@@ -20,14 +20,14 @@ using namespace ModelView;
 
 struct ViewportAxisPlotController::AxesPlotControllerImpl {
 
-    ViewportAxisPlotController* m_master{nullptr};
+    ViewportAxisPlotController* m_self{nullptr};
     QCPAxis* m_axis{nullptr};
     bool m_blockUpdate{false};
     std::unique_ptr<QMetaObject::Connection> m_axisConn;
     std::unique_ptr<AxisTitleController> m_titleController;
 
     AxesPlotControllerImpl(ViewportAxisPlotController* controller, QCPAxis* axis)
-        : m_master(controller), m_axis(axis)
+        : m_self(controller), m_axis(axis)
     {
         if (!axis)
             throw std::runtime_error("AxisPlotController: axis is not initialized.");
@@ -39,7 +39,7 @@ struct ViewportAxisPlotController::AxesPlotControllerImpl {
     {
         auto on_axis_range = [this](const QCPRange& newRange) {
             m_blockUpdate = true;
-            auto item = m_master->currentItem();
+            auto item = m_self->currentItem();
             item->set_range(newRange.lower, newRange.upper);
             m_blockUpdate = false;
         };
@@ -56,7 +56,7 @@ struct ViewportAxisPlotController::AxesPlotControllerImpl {
     //! Sets axesRange from SessionItem.
     void setAxisRangeFromItem()
     {
-        auto [lower, upper] = m_master->currentItem()->range();
+        auto [lower, upper] = m_self->currentItem()->range();
         m_axis->setRange(QCPRange(lower, upper));
     }
 
@@ -64,7 +64,7 @@ struct ViewportAxisPlotController::AxesPlotControllerImpl {
 
     void setAxisLogScaleFromItem()
     {
-        Utils::SetLogarithmicScale(m_axis, m_master->currentItem()->is_in_log());
+        Utils::SetLogarithmicScale(m_axis, m_self->currentItem()->is_in_log());
     }
 
     //! Init axis from item and setup connections.
@@ -72,10 +72,24 @@ struct ViewportAxisPlotController::AxesPlotControllerImpl {
     void init_axis()
     {
         m_titleController = std::make_unique<AxisTitleController>(m_axis);
-        auto text_item = m_master->currentItem()->item<TextItem>(ViewportAxisItem::P_TITLE);
+        auto text_item = m_self->currentItem()->item<TextItem>(ViewportAxisItem::P_TITLE);
         m_titleController->setItem(text_item);
         setAxisRangeFromItem();
         setAxisLogScaleFromItem();
+        setConnected();
+    }
+
+    void updateLowerRange(const ViewportAxisItem* item)
+    {
+        setDisconnected();
+        m_axis->setRangeLower(item->property<double>(ViewportAxisItem::P_MIN));
+        setConnected();
+    }
+
+    void updateUpperRange(const ViewportAxisItem* item)
+    {
+        setDisconnected();
+        m_axis->setRangeUpper(item->property<double>(ViewportAxisItem::P_MAX));
         setConnected();
     }
 
@@ -92,15 +106,15 @@ ViewportAxisPlotController::~ViewportAxisPlotController() = default;
 
 void ViewportAxisPlotController::subscribe()
 {
-    auto on_property_change = [this](SessionItem* item, std::string name) {
+    auto on_property_change = [this](SessionItem*, std::string name) {
         if (p_impl->m_blockUpdate)
             return;
 
         if (name == ViewportAxisItem::P_MIN)
-            p_impl->m_axis->setRangeLower(item->property<double>(name));
+            p_impl->updateLowerRange(currentItem());
 
         if (name == ViewportAxisItem::P_MAX)
-            p_impl->m_axis->setRangeUpper(item->property<double>(name));
+            p_impl->updateUpperRange(currentItem());
 
         if (name == ViewportAxisItem::P_IS_LOG)
             p_impl->setAxisLogScaleFromItem();

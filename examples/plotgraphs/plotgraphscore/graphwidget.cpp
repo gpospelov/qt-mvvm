@@ -69,7 +69,7 @@ void GraphWidget::init_actions()
     m_resetViewportAction = new QAction("Reset view", this);
     auto on_reset = [this]() {
         auto viewport = m_model->topItem<GraphViewportItem>();
-        viewport->update_viewport();
+        viewport->setViewportToContent(0.0, 0.1, 0.0, 0.1);
     };
     connect(m_resetViewportAction, &QAction::triggered, on_reset);
 

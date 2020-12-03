@@ -47,7 +47,7 @@ TEST_F(ColorMapViewportItemTest, uninitializedViewportUpdate)
 
     auto viewport_item = model.insertItem<ColorMapViewportItem>();
 
-    viewport_item->update_viewport();
+    viewport_item->setViewportToContent();
 
     // x-axis of viewport should be set Data2DItem
     auto [xmin, xmax] = viewport_item->xAxis()->range();
@@ -84,7 +84,7 @@ TEST_F(ColorMapViewportItemTest, addItem)
     EXPECT_EQ(viewport_item->items<ColorMapItem>(ColorMapViewportItem::T_ITEMS).size(), 1);
 
     // updating viewport to graph
-    viewport_item->update_viewport();
+    viewport_item->setViewportToContent();
 
     // x-axis of viewport should be set Data2DItem
     auto [xmin, xmax] = viewport_item->xAxis()->range();

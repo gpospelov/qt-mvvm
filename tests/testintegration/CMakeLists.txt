@@ -1,4 +1,4 @@
-set(test testviewmodel)
+set(test testintegration)
 
 file(GLOB source_files "*.cpp")
 file(GLOB include_files "*.h")
@@ -11,7 +11,7 @@ include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
 set(CMAKE_AUTOMOC ON)
 add_executable(${test} ${source_files} ${include_files})
-target_link_libraries(${test} gtest gmock Qt5::Core Qt5::Test mvvm_viewmodel testmachinery qcustomplot)
+target_link_libraries(${test} gtest gmock Qt5::Core Qt5::Test mvvm_view testmachinery qcustomplot)
 
 if (MVVM_DISCOVER_TESTS)
     gtest_discover_tests(${test})

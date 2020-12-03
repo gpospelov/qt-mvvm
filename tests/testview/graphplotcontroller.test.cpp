@@ -94,7 +94,7 @@ TEST_F(GraphPlotControllerTest, changeGraphAppearance)
     controller.setItem(graph_item);
 
     // changing appearance properties
-    auto pen_item = graph_item->item<PenItem>(GraphItem::P_PEN);
+    auto pen_item = graph_item->penItem();
     pen_item->setProperty(PenItem::P_COLOR, QColor(Qt::red));
 
     auto styleCombo = pen_item->property<ComboProperty>(PenItem::P_STYLE);
@@ -127,7 +127,7 @@ TEST_F(GraphPlotControllerTest, setPointwiseItem)
 
     // setup graph item
     auto graph_item = model.insertItem<GraphItem>();
-    auto pen_item = graph_item->item<PenItem>(GraphItem::P_PEN);
+    auto pen_item = graph_item->penItem();
     pen_item->setProperty(PenItem::P_COLOR, QColor(Qt::red));
     graph_item->setDataItem(data_item);
 
@@ -192,7 +192,7 @@ TEST_F(GraphPlotControllerTest, unlinkFromItem)
 
     // setup graph item
     auto graph_item = model.insertItem<GraphItem>();
-    auto pen_item = graph_item->item<PenItem>(GraphItem::P_PEN);
+    auto pen_item = graph_item->penItem();
     pen_item->setProperty(PenItem::P_COLOR, QColor(Qt::red));
     graph_item->setDataItem(data_item);
 
