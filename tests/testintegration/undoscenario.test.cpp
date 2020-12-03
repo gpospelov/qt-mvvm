@@ -71,12 +71,11 @@ TEST_F(UndoScenarioTest, undoViewportSetRange)
     EXPECT_EQ(custom_plot.xAxis->range().upper, 2.0);
 
     // redoing
-    // FIXME uncomment tests below, there is segfault
-    //    stack->redo();
-    //    EXPECT_FALSE(stack->canRedo());
-    //    EXPECT_TRUE(stack->canUndo());
-    //    EXPECT_EQ(stack->index(), 1);
-    //    EXPECT_EQ(stack->count(), 1);
-    //    EXPECT_EQ(custom_plot.xAxis->range().lower, 1.0);
-    //    EXPECT_EQ(custom_plot.xAxis->range().upper, 20.0);
+    stack->redo();
+    EXPECT_FALSE(stack->canRedo());
+    EXPECT_TRUE(stack->canUndo());
+    EXPECT_EQ(stack->index(), 1);
+    EXPECT_EQ(stack->count(), 1);
+    EXPECT_EQ(custom_plot.xAxis->range().lower, 1.0);
+    EXPECT_EQ(custom_plot.xAxis->range().upper, 20.0);
 }

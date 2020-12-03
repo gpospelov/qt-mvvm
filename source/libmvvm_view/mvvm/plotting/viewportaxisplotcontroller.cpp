@@ -79,6 +79,20 @@ struct ViewportAxisPlotController::AxesPlotControllerImpl {
         setConnected();
     }
 
+    void updateLowerRange(const ViewportAxisItem* item)
+    {
+        setDisconnected();
+        m_axis->setRangeLower(item->property<double>(ViewportAxisItem::P_MIN));
+        setConnected();
+    }
+
+    void updateUpperRange(const ViewportAxisItem* item)
+    {
+        setDisconnected();
+        m_axis->setRangeUpper(item->property<double>(ViewportAxisItem::P_MAX));
+        setConnected();
+    }
+
     ~AxesPlotControllerImpl() { setDisconnected(); }
 };
 
@@ -92,15 +106,15 @@ ViewportAxisPlotController::~ViewportAxisPlotController() = default;
 
 void ViewportAxisPlotController::subscribe()
 {
-    auto on_property_change = [this](SessionItem* item, std::string name) {
+    auto on_property_change = [this](SessionItem*, std::string name) {
         if (p_impl->m_blockUpdate)
             return;
 
         if (name == ViewportAxisItem::P_MIN)
-            p_impl->m_axis->setRangeLower(item->property<double>(name));
+            p_impl->updateLowerRange(currentItem());
 
         if (name == ViewportAxisItem::P_MAX)
-            p_impl->m_axis->setRangeUpper(item->property<double>(name));
+            p_impl->updateUpperRange(currentItem());
 
         if (name == ViewportAxisItem::P_IS_LOG)
             p_impl->setAxisLogScaleFromItem();
