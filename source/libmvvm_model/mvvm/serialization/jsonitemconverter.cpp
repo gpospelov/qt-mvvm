@@ -51,19 +51,19 @@ std::unique_ptr<JsonItemDataConverterInterface> createDataConverter(const Conver
 } // namespace
 
 struct JsonItemConverter::JsonItemConverterImpl {
-    JsonItemConverter* m_parent{nullptr};
+    JsonItemConverter* m_self{nullptr};
     std::unique_ptr<JsonItemDataConverterInterface> m_itemdata_converter;
     std::unique_ptr<JsonItemTagsConverter> m_itemtags_converter;
     ConverterContext m_context;
 
     JsonItemConverterImpl(JsonItemConverter* parent, const ConverterContext& context)
-        : m_parent(parent), m_context(context)
+        : m_self(parent), m_context(context)
     {
         //! Callback to convert SessionItem to JSON object.
-        auto create_json = [this](const SessionItem& item) { return m_parent->to_json(&item); };
+        auto create_json = [this](const SessionItem& item) { return m_self->to_json(&item); };
 
         //! Callback to create SessionItem from JSON object.
-        auto create_item = [this](const QJsonObject& json) { return m_parent->from_json(json); };
+        auto create_item = [this](const QJsonObject& json) { return m_self->from_json(json); };
 
         //! Callback to update SessionItem from JSON object.
         auto update_item = [this](const QJsonObject& json, SessionItem* item) {

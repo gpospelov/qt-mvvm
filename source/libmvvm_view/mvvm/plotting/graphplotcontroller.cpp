@@ -19,14 +19,14 @@
 using namespace ModelView;
 
 struct GraphPlotController::GraphItemControllerImpl {
-    GraphPlotController* m_master{nullptr};
+    GraphPlotController* m_self{nullptr};
     QCustomPlot* m_customPlot{nullptr};
     QCPGraph* m_graph{nullptr};
     std::unique_ptr<Data1DPlotController> m_dataController;
     std::unique_ptr<PenController> m_penController;
 
     GraphItemControllerImpl(GraphPlotController* master, QCustomPlot* plot)
-        : m_master(master), m_customPlot(plot)
+        : m_self(master), m_customPlot(plot)
     {
     }
 
@@ -49,7 +49,7 @@ struct GraphPlotController::GraphItemControllerImpl {
             m_customPlot->removePlottable(m_graph);
     }
 
-    GraphItem* graph_item() { return m_master->currentItem(); }
+    GraphItem* graph_item() { return m_self->currentItem(); }
 
     void update_data_controller() { m_dataController->setItem(graph_item()->dataItem()); }
 
