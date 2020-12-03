@@ -54,32 +54,28 @@ struct ViewportAxisPlotController::AxesPlotControllerImpl {
     void setDisconnected() { QObject::disconnect(*m_axisConn); }
 
     //! Sets axesRange from SessionItem.
-    void setAxisRangeFromItem(const ViewportAxisItem* item)
+    void setAxisRangeFromItem()
     {
-        setDisconnected();
-        auto [lower, upper] = item->range();
+        auto [lower, upper] = m_self->currentItem()->range();
         m_axis->setRange(QCPRange(lower, upper));
-        setConnected();
     }
 
     //! Sets log scale from item.
 
-    void setAxisLogScaleFromItem(const ViewportAxisItem* item)
+    void setAxisLogScaleFromItem()
     {
-        setDisconnected();
-        Utils::SetLogarithmicScale(m_axis, item->is_in_log());
-        setConnected();
+        Utils::SetLogarithmicScale(m_axis, m_self->currentItem()->is_in_log());
     }
 
     //! Init axis from item and setup connections.
 
-    void init_axis(const ViewportAxisItem* item)
+    void init_axis()
     {
         m_titleController = std::make_unique<AxisTitleController>(m_axis);
-        auto text_item = item->item<TextItem>(ViewportAxisItem::P_TITLE);
+        auto text_item = m_self->currentItem()->item<TextItem>(ViewportAxisItem::P_TITLE);
         m_titleController->setItem(text_item);
-        setAxisRangeFromItem(item);
-        setAxisLogScaleFromItem(item);
+        setAxisRangeFromItem();
+        setAxisLogScaleFromItem();
         setConnected();
     }
 
@@ -121,13 +117,13 @@ void ViewportAxisPlotController::subscribe()
             p_impl->updateUpperRange(currentItem());
 
         if (name == ViewportAxisItem::P_IS_LOG)
-            p_impl->setAxisLogScaleFromItem(currentItem());
+            p_impl->setAxisLogScaleFromItem();
 
         p_impl->m_axis->parentPlot()->replot();
     };
     setOnPropertyChange(on_property_change);
 
-    p_impl->init_axis(currentItem());
+    p_impl->init_axis();
 }
 
 void ViewportAxisPlotController::unsubscribe()
