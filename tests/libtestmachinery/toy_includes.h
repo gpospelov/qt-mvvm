@@ -13,7 +13,7 @@
 //! Collection of toy items and models for testing purposes.
 
 #include "toyitems.h"
-#include "toy_models.h"
+#include "toymodel.h"
 
 #endif // TOYFACTORIES_H
 

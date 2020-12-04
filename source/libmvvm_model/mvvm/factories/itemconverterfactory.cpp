@@ -43,7 +43,7 @@ CreateItemCopyConverter(const ItemFactoryInterface* item_factory)
 //! When loading from disk:
 //! + Only selected roles are taken from JSON (i.e. DATA, IDENTIFIER), other roles (e.g. TOOLTIPS)
 //!   are taken from memory.
-//! + Property tags are updated, universal tags reconstructed
+//! + Property tags are updated, universal tags reconstructed.
 
 std::unique_ptr<JsonItemConverterInterface>
 CreateItemProjectConverter(const ItemFactoryInterface* item_factory)

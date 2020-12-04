@@ -9,7 +9,7 @@
 
 #include "google_test.h"
 #include "toy_includes.h"
-#include "toy_models.h"
+#include "toymodel.h"
 #include <QJsonObject>
 #include <mvvm/serialization/jsonmodelconverter.h>
 

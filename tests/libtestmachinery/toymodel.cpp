@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "toy_models.h"
+#include "toymodel.h"
 #include <mvvm/model/itemcatalogue.h>
 #include "toyitems.h"
 

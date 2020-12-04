@@ -9,7 +9,7 @@
 
 #include "google_test.h"
 #include "toyitems.h"
-#include "toy_models.h"
+#include "toymodel.h"
 #include <mvvm/model/modelutils.h>
 
 using namespace ModelView;
