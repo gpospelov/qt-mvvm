@@ -12,6 +12,7 @@
 #include <mvvm/model/propertyitem.h>
 #include <mvvm/model/sessionitemcontainer.h>
 #include <mvvm/model/sessionitemdata.h>
+#include <mvvm/model/groupitem.h>
 #include <mvvm/serialization/compatibilityutils.h>
 
 using namespace ModelView;
@@ -30,7 +31,6 @@ CompatibilityUtilsTest::~CompatibilityUtilsTest() = default;
 
 TEST_F(CompatibilityUtilsTest, IsCompatibleSinglePropertyTag)
 {
-    const std::string name("tag");
     TagInfo tag = TagInfo::propertyTag("thickness", Constants::PropertyType);
     SessionItemContainer container(tag);
 
@@ -45,7 +45,6 @@ TEST_F(CompatibilityUtilsTest, IsCompatibleSinglePropertyTag)
 
 TEST_F(CompatibilityUtilsTest, IsCompatibleUniversalTag)
 {
-    const std::string name("tag");
     TagInfo tag = TagInfo::universalTag("layers");
     SessionItemContainer container(tag);
 
@@ -54,4 +53,18 @@ TEST_F(CompatibilityUtilsTest, IsCompatibleUniversalTag)
 
     EXPECT_TRUE(container.insertItem(new PropertyItem, 0));
     EXPECT_FALSE(Compatibility::IsCompatibleUniversalTag(container, tag));
+}
+
+//! Testing IsCompatibleSingleProperty.
+
+TEST_F(CompatibilityUtilsTest, IsCompatibleGroupTag)
+{
+    TagInfo tag = TagInfo::universalTag(GroupItem::T_GROUP_ITEMS);
+    SessionItemContainer container(tag);
+
+    // to be compatible, container should be non-empty
+    EXPECT_FALSE(Compatibility::IsCompatibleGroupTag(container, tag));
+
+    EXPECT_TRUE(container.insertItem(new PropertyItem, 0));
+    EXPECT_TRUE(Compatibility::IsCompatibleGroupTag(container, tag));
 }
