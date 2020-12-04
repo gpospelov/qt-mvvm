@@ -22,6 +22,8 @@ namespace ModelView
 class MVVM_MODEL_EXPORT GroupItem : public SessionItem
 {
 public:
+    static inline const std::string T_GROUP_ITEMS = "T_GROUP_ITEMS";
+
     GroupItem(model_type modelType = Constants::GroupItemType);
     ~GroupItem() override;
 
