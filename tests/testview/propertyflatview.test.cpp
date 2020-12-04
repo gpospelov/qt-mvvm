@@ -8,7 +8,8 @@
 // ************************************************************************** //
 
 #include "google_test.h"
-#include "toy_includes.h"
+#include "toyitems.h"
+#include "toymodel.h"
 #include <QGridLayout>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/standarditems/vectoritem.h>

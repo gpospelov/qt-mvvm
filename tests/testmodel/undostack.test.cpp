@@ -8,7 +8,8 @@
 // ************************************************************************** //
 
 #include "google_test.h"
-#include "toy_includes.h"
+#include "toyitems.h"
+#include "toymodel.h"
 #include "toyitems.h"
 #include <mvvm/commands/commandadapter.h>
 #include <mvvm/commands/setvaluecommand.h>

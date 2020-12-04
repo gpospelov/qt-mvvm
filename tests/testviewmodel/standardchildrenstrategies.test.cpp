@@ -8,8 +8,8 @@
 // ************************************************************************** //
 
 #include "google_test.h"
-#include "toy_includes.h"
-#include <QDebug>
+#include "toyitems.h"
+#include "toymodel.h"
 #include <mvvm/model/compounditem.h>
 #include <mvvm/model/propertyitem.h>
 #include <mvvm/model/sessionitem.h>

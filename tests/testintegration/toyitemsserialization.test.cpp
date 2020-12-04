@@ -8,7 +8,7 @@
 // ************************************************************************** //
 
 #include "google_test.h"
-#include "toy_includes.h"
+#include "toyitems.h"
 #include "toymodel.h"
 #include <QJsonObject>
 #include <mvvm/serialization/jsonmodelconverter.h>
