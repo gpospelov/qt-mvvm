@@ -9,7 +9,7 @@
 
 #include "google_test.h"
 #include "toy_includes.h"
-#include "toy_items.h"
+#include "toyitems.h"
 #include <mvvm/commands/commandadapter.h>
 #include <mvvm/commands/setvaluecommand.h>
 #include <mvvm/commands/undostack.h>

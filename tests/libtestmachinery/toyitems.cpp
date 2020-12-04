@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "toy_items.h"
+#include "toyitems.h"
 #include <QColor>
 #include <mvvm/model/comboproperty.h>
 #include <mvvm/model/taginfo.h>
