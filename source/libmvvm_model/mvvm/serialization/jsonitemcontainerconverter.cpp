@@ -91,6 +91,9 @@ struct JsonItemContainerConverter::JsonItemContainerConverterImpl {
         if (Compatibility::IsCompatibleSinglePropertyTag(container, tagInfo))
             update_items(json, container);
 
+        else if (Compatibility::IsCompatibleGroupTag(container, tagInfo))
+            update_items(json, container);
+
         else if (Compatibility::IsCompatibleUniversalTag(container, tagInfo))
             create_items(json, container);
 
