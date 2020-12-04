@@ -19,6 +19,7 @@ target_sources(${library_name} PRIVATE
     linkeditem.h
     plottableitems.cpp
     plottableitems.h
+    standarditemincludes.h
     vectoritem.cpp
     vectoritem.h
     viewportitem.cpp

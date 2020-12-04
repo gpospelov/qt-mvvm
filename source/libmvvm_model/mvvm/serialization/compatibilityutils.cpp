@@ -7,6 +7,7 @@
 //
 // ************************************************************************** //
 
+#include <mvvm/model/groupitem.h>
 #include <mvvm/model/sessionitemcontainer.h>
 #include <mvvm/model/sessionitemdata.h>
 #include <mvvm/serialization/compatibilityutils.h>
@@ -51,6 +52,24 @@ bool IsCompatibleSinglePropertyTag(const SessionItemContainer& container, const 
     bool same_tags = container_taginfo == taginfo;
 
     return both_are_properties && same_tags && has_item;
+}
+
+/*
+Returns `true` if given TagInfo is compatible with given container.
+Here, `container` is what exists at runtime, `taginfo` has been obtained from the serialization.
+Container is considered to be compatible (i.e. can be updated from serialized content),
+if it has exactly same tag, and it's name corresponds to GroupItem.
+*/
+
+bool IsCompatibleGroupTag(const SessionItemContainer& container, const TagInfo& taginfo)
+{
+    auto container_taginfo = container.tagInfo();
+    bool has_item = !container.empty();
+    bool same_tags = container_taginfo == taginfo;
+    bool both_are_universal =
+        !container_taginfo.isSinglePropertyTag() && !taginfo.isSinglePropertyTag();
+    bool valid_tag_name = taginfo.name() == GroupItem::T_GROUP_ITEMS;
+    return both_are_universal && same_tags && has_item && valid_tag_name;
 }
 
 } // namespace ModelView::Compatibility

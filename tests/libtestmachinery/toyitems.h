@@ -12,6 +12,8 @@
 
 #include <mvvm/model/compounditem.h>
 #include <mvvm/model/groupitem.h>
+#include <mvvm/model/sessionmodel.h>
+#include <mvvm/model/itempool.h>
 #include <string>
 
 //! Collection of toy items and models for testing purposes.
@@ -34,7 +36,8 @@ const ModelView::model_type AnysoPyramidItemType = "AnysoPyramid";
 const ModelView::model_type ShapeGroupItemType = "ShapeGroup";
 } // namespace Constants
 
-// ----------------------------------------------------------------------------
+
+//! Represents multilayer with collection of layers.
 
 class MultiLayerItem : public ModelView::CompoundItem
 {
@@ -43,7 +46,7 @@ public:
     MultiLayerItem();
 };
 
-// ----------------------------------------------------------------------------
+//! Represents a layer, with thickness and color, and possibly populated with particles.
 
 class LayerItem : public ModelView::CompoundItem
 {
@@ -54,7 +57,7 @@ public:
     LayerItem();
 };
 
-// ----------------------------------------------------------------------------
+//! Represents a particle, with a position, and a selection of possible shapes.
 
 class ParticleItem : public ModelView::CompoundItem
 {
@@ -65,7 +68,7 @@ public:
     ParticleItem();
 };
 
-// ----------------------------------------------------------------------------
+//! Represents a lattice.
 
 class InterferenceFunctionItem : public ModelView::CompoundItem
 {
@@ -82,7 +85,7 @@ private:
     void update_appearance();
 };
 
-// ----------------------------------------------------------------------------
+//! Represents a cylindrical shape.
 
 class CylinderItem : public ModelView::CompoundItem
 {
@@ -93,6 +96,8 @@ public:
     CylinderItem();
 };
 
+//! Represents a shpere.
+
 class SphereItem : public ModelView::CompoundItem
 {
 public:
@@ -100,6 +105,8 @@ public:
 
     SphereItem();
 };
+
+//! Represents an anysotropical pyramid.
 
 class AnysoPyramidItem : public ModelView::CompoundItem
 {
@@ -111,6 +118,8 @@ public:
 
     AnysoPyramidItem();
 };
+
+//! Represents a group item holding a collection of shapes.
 
 class ShapeGroupItem : public ModelView::GroupItem
 {

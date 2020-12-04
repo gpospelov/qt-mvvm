@@ -15,8 +15,9 @@
 namespace ModelView
 {
 
+//! Creates a catalog of items supported by SessionModel out-of-the-box.
 MVVM_MODEL_EXPORT std::unique_ptr<ItemCatalogue> CreateStandardItemCatalogue();
 
-}
+} // namespace ModelView
 
 #endif // MVVM_FACTORIES_STANDARDITEMCATALOGUE_H

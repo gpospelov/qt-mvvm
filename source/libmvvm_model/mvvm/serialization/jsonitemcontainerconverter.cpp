@@ -49,10 +49,16 @@ struct JsonItemContainerConverter::JsonItemContainerConverterImpl {
             m_converter_callbacks.m_update_item(json, item);
     }
 
+    //! Update container from json content. Number of existing container items should match size
+    //! of json array.
     void update_items(const QJsonObject& json, SessionItemContainer& container)
     {
-        for (const auto obj : json[JsonItemFormatAssistant::itemsKey].toArray())
-            update_item(obj.toObject(), container.itemAt(0));
+        auto array = json[JsonItemFormatAssistant::itemsKey].toArray();
+        if (array.size() != container.itemCount())
+            throw std::runtime_error("Error in JsonItemContainerConverter: size is different");
+        int index{0};
+        for (const auto obj : array)
+            update_item(obj.toObject(), container.itemAt(index++));
     }
 
     void create_items(const QJsonObject& json, SessionItemContainer& container)
@@ -83,6 +89,9 @@ struct JsonItemContainerConverter::JsonItemContainerConverterImpl {
             m_taginfo_converter->from_json(json[JsonItemFormatAssistant::tagInfoKey].toObject());
 
         if (Compatibility::IsCompatibleSinglePropertyTag(container, tagInfo))
+            update_items(json, container);
+
+        else if (Compatibility::IsCompatibleGroupTag(container, tagInfo))
             update_items(json, container);
 
         else if (Compatibility::IsCompatibleUniversalTag(container, tagInfo))

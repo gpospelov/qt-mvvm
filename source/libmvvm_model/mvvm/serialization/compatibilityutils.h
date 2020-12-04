@@ -38,6 +38,12 @@ bool IsCompatibleUniversalTag(const SessionItemContainer& container, const TagIn
 MVVM_MODEL_EXPORT
 bool IsCompatibleSinglePropertyTag(const SessionItemContainer& container, const TagInfo& taginfo);
 
+//! Returns `true` if given TagInfo is a tag from GroupItem which is compatible with given
+//! container. See more explanations in the code.
+
+MVVM_MODEL_EXPORT bool IsCompatibleGroupTag(const SessionItemContainer& container,
+                                            const TagInfo& taginfo);
+
 } // namespace Compatibility
 
 } // namespace ModelView

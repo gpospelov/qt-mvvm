@@ -8,8 +8,8 @@
 // ************************************************************************** //
 
 #include "google_test.h"
-#include "toy_items.h"
-#include "toy_models.h"
+#include "toyitems.h"
+#include "toymodel.h"
 #include <mvvm/model/modelutils.h>
 
 using namespace ModelView;

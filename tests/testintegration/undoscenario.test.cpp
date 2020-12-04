@@ -26,7 +26,7 @@ public:
 
 UndoScenarioTest::~UndoScenarioTest() = default;
 
-//! Check undo/redo of ViewportAxisItem range, when it is listened by controller.
+//! Check undo/redo of ViewportAxisItem range, when it is listened by the controller.
 //! Real-life bug.
 
 TEST_F(UndoScenarioTest, undoViewportSetRange)
