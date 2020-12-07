@@ -35,7 +35,9 @@ public:
 
     std::unique_ptr<SceneAdapterInterface> createSceneAdapter() const;
 
-    void update_viewport();
+    void setViewportToContent(double left, double top, double right, double bottom);
+
+    void setViewportToContent();
 
     void setAxisMargins(int left, int top, int right, int bottom);
 
