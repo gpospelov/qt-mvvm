@@ -14,6 +14,7 @@
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/model_export.h>
+#include <memory>
 #include <vector>
 
 namespace ModelView
@@ -56,6 +57,17 @@ template <typename T = SessionItem> std::vector<T*> FindItems(const SessionModel
 
     iterate(model->rootItem(), func);
 
+    return result;
+}
+
+//! Populate empty model with content of target model. Utility function for CreateCopy model.
+void MVVM_MODEL_EXPORT PopulateEmptyModel(const SessionModel& source, SessionModel& target);
+
+//! Creates model full copy.
+template <typename T = SessionModel> std::unique_ptr<T> CreateCopy(const T& model)
+{
+    auto result = std::make_unique<T>();
+    PopulateEmptyModel(model, *result.get());
     return result;
 }
 
