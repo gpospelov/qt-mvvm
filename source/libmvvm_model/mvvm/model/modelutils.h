@@ -59,9 +59,20 @@ template <typename T = SessionItem> std::vector<T*> FindItems(const SessionModel
     return result;
 }
 
+//! Removes and deletes item from its model.
 void MVVM_MODEL_EXPORT DeleteItemFromModel(SessionItem* item);
+
+//! Moves item up (decrements row of the item). Works on children belonging to single tag.
 void MVVM_MODEL_EXPORT MoveUp(SessionItem* item);
+
+//! Moves item down (increments row of the item). Works on children belonging to single tag.
 void MVVM_MODEL_EXPORT MoveDown(SessionItem* item);
+
+//! Undo last model operation. If not undo/redo enabled, will do nothing.
+void MVVM_MODEL_EXPORT Undo(SessionModel& model);
+
+//! Redo model operation which was undone just before. If not undo/redo enabled, will do nothing.
+void MVVM_MODEL_EXPORT Redo(SessionModel& model);
 
 //! Begin undo/redo macros with given name. Works only if item belongs to the model, and model has
 //! undo/redo enabled. Otherwise, do nothing.

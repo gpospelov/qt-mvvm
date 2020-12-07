@@ -12,8 +12,6 @@
 
 using namespace ModelView;
 
-//! Removes and deletes item from its model.
-
 void Utils::DeleteItemFromModel(SessionItem* item)
 {
     auto model = item->model();
@@ -23,8 +21,6 @@ void Utils::DeleteItemFromModel(SessionItem* item)
     model->removeItem(item->parent(), item->tagRow());
 }
 
-//! Moves item up (decrements row of the item). Works on children belonging to single tag.
-
 void Utils::MoveUp(SessionItem* item)
 {
     auto tagrow = item->tagRow();
@@ -33,14 +29,24 @@ void Utils::MoveUp(SessionItem* item)
     item->model()->moveItem(item, item->parent(), tagrow.prev());
 }
 
-//! Moves item down (increments row of the item). Works on children belonging to single tag.
-
 void Utils::MoveDown(SessionItem* item)
 {
     auto tagrow = item->tagRow();
     if (tagrow.row == item->parent()->itemCount(tagrow.tag) - 1)
         return; // item already at the buttom
     item->model()->moveItem(item, item->parent(), tagrow.next());
+}
+
+void Utils::Undo(SessionModel& model)
+{
+    if (auto stack = model.undoStack(); stack)
+        stack->undo();
+}
+
+void Utils::Redo(SessionModel& model)
+{
+    if (auto stack = model.undoStack(); stack)
+        stack->redo();
 }
 
 void Utils::BeginMacros(const SessionItem* item, const std::string& macro_name)
