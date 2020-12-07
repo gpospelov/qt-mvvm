@@ -12,6 +12,7 @@
 #include <QJsonObject>
 #include <mvvm/serialization/jsonmodelconverter.h>
 #include <mvvm/standarditems/standarditemincludes.h>
+#include <mvvm/model/modelutils.h>
 
 using namespace ModelView;
 
@@ -20,16 +21,6 @@ using namespace ModelView;
 class StandardItemsSerializationTest : public ::testing::Test
 {
 public:
-    //! Returns copy of model obtrained via json serialization.
-    std::unique_ptr<SessionModel> createCopy(const SessionModel& model)
-    {
-        auto result = std::make_unique<SessionModel>();
-        JsonModelConverter converter;
-        QJsonObject object = converter.to_json(model);
-        converter.from_json(object, *result);
-        return result;
-    }
-
     ~StandardItemsSerializationTest();
 };
 
@@ -58,7 +49,7 @@ TEST_F(StandardItemsSerializationTest, allItems)
     model.insertItem<VectorItem>();
     model.insertItem<ViewportAxisItem>();
 
-    auto modelCopy = createCopy(model);
+    auto modelCopy = Utils::CreateCopy(model);
     EXPECT_EQ(model.rootItem()->childrenCount(), modelCopy->rootItem()->childrenCount());
 }
 
@@ -77,7 +68,7 @@ TEST_F(StandardItemsSerializationTest, GraphItemAndDataSerialization)
     graph_item->setDataItem(data_item);
 
     // accessing copied items
-    auto modelCopy = createCopy(model);
+    auto modelCopy = Utils::CreateCopy(model);
     EXPECT_EQ(model.rootItem()->childrenCount(), modelCopy->rootItem()->childrenCount());
 
     auto graphCopy = modelCopy->topItem<GraphItem>();
@@ -110,7 +101,7 @@ TEST_F(StandardItemsSerializationTest, graphViewPortItemSerialization)
     viewport_item->setViewportToContent();
 
     // accessing copied items
-    auto modelCopy = createCopy(model);
+    auto modelCopy = Utils::CreateCopy(model);
     EXPECT_EQ(model.rootItem()->childrenCount(), modelCopy->rootItem()->childrenCount());
     auto viewportCopy = modelCopy->topItem<GraphViewportItem>();
     ASSERT_EQ(viewportCopy->graphItems().size(), 1);

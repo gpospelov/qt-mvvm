@@ -11,6 +11,7 @@
 #include "toyitems.h"
 #include "toymodel.h"
 #include <QJsonObject>
+#include <mvvm/model/modelutils.h>
 #include <mvvm/serialization/jsonmodelconverter.h>
 
 using namespace ModelView;
@@ -21,16 +22,6 @@ using namespace ToyItems;
 class ToyItemsSerializationTest : public ::testing::Test
 {
 public:
-    //! Returns copy of model obtrained via json serialization.
-    std::unique_ptr<SampleModel> createCopy(const SampleModel& model)
-    {
-        auto result = std::make_unique<SampleModel>();
-        JsonModelConverter converter;
-        QJsonObject object = converter.to_json(model);
-        converter.from_json(object, *result);
-        return result;
-    }
-
     ~ToyItemsSerializationTest();
 };
 
@@ -46,7 +37,7 @@ TEST_F(ToyItemsSerializationTest, defaultShapeGroupItemInModel)
     auto group = model.insertItem<ShapeGroupItem>();
 
     // copy of model
-    auto modelCopy = createCopy(model);
+    auto modelCopy = Utils::CreateCopy(model);
     auto groupCopy = modelCopy->topItem<ShapeGroupItem>();
 
     // basic properties in copied item should be the same
@@ -69,7 +60,7 @@ TEST_F(ToyItemsSerializationTest, modifiedShapeGroupItemInModel)
     group->children().at(2)->setProperty(AnysoPyramidItem::P_LENGTH, 44.0);
 
     // creating copy
-    auto modelCopy = createCopy(model);
+    auto modelCopy = Utils::CreateCopy(model);
     auto groupCopy = modelCopy->topItem<ShapeGroupItem>();
 
     // checking properties of
@@ -94,6 +85,6 @@ TEST_F(ToyItemsSerializationTest, allItemsInAModel)
     model.insertItem<ToyItems::AnysoPyramidItem>();
     model.insertItem<ToyItems::ShapeGroupItem>();
 
-    auto modelCopy = createCopy(model);
+    auto modelCopy = Utils::CreateCopy(model);
     EXPECT_EQ(model.rootItem()->childrenCount(), modelCopy->rootItem()->childrenCount());
 }
