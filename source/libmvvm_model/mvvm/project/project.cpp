@@ -8,7 +8,7 @@
 // ************************************************************************** //
 
 #include <functional>
-#include <mvvm/factories/modeldocuments.h>
+#include <mvvm/factories/modeldocumentfactory.h>
 #include <mvvm/project/project.h>
 #include <mvvm/project/project_types.h>
 #include <mvvm/project/projectchangecontroller.h>

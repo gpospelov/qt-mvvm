@@ -10,7 +10,7 @@
 #ifndef MOCKWIDGETS_H
 #define MOCKWIDGETS_H
 
-#include "MockInterfaces.h"
+#include "mockinterfaces.h"
 #include <gmock/gmock.h>
 
 namespace ModelView

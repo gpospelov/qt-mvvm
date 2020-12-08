@@ -58,11 +58,19 @@ struct GraphCanvas::GraphCanvasImpl {
     }
 
     //! Updates viewport.
-    void update_viewport()
+    void setViewportToContent()
     {
         if (!viewport_controller->currentItem())
             return;
         viewport_controller->currentItem()->setViewportToContent();
+    }
+
+    //! Updates viewport.
+    void setViewportToContent(double left, double top, double right, double bottom)
+    {
+        if (!viewport_controller->currentItem())
+            return;
+        viewport_controller->currentItem()->setViewportToContent(left, top, right, bottom);
     }
 
     QCustomPlot* customPlot() { return custom_plot; }
@@ -102,9 +110,14 @@ std::unique_ptr<SceneAdapterInterface> GraphCanvas::createSceneAdapter() const
     return std::make_unique<CustomPlotSceneAdapter>(p_impl->customPlot());
 }
 
-void GraphCanvas::update_viewport()
+void GraphCanvas::setViewportToContent(double left, double top, double right, double bottom)
 {
-    p_impl->update_viewport();
+    p_impl->setViewportToContent(left, top, right, bottom);
+}
+
+void GraphCanvas::setViewportToContent()
+{
+    p_impl->setViewportToContent();
 }
 
 //! Set margins between axes rectangle and widget borders.

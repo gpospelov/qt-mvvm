@@ -7,9 +7,15 @@
 //
 // ************************************************************************** //
 
-#include "MockInterfaces.h"
-#include <mvvm/model/sessionitem.h>
+#include <mvvm/factories/modeldocumentfactory.h>
+#include <mvvm/serialization/jsondocument.h>
 
-ItemTestWidgetInterface::~ItemTestWidgetInterface() = default;
+namespace ModelView
+{
 
-ModelTestWidgetInterface::~ModelTestWidgetInterface() = default;
+std::unique_ptr<ModelDocumentInterface> CreateJsonDocument(const std::vector<SessionModel*>& models)
+{
+    return std::make_unique<JsonDocument>(models);
+}
+
+} // namespace ModelView

@@ -14,6 +14,7 @@
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/model_export.h>
+#include <memory>
 #include <vector>
 
 namespace ModelView
@@ -59,9 +60,31 @@ template <typename T = SessionItem> std::vector<T*> FindItems(const SessionModel
     return result;
 }
 
+//! Populate empty model with content of target model. Utility function for CreateCopy model.
+void MVVM_MODEL_EXPORT PopulateEmptyModel(const SessionModel& source, SessionModel& target);
+
+//! Creates model full copy.
+template <typename T = SessionModel> std::unique_ptr<T> CreateCopy(const T& model)
+{
+    auto result = std::make_unique<T>();
+    PopulateEmptyModel(model, *result.get());
+    return result;
+}
+
+//! Removes and deletes item from its model.
 void MVVM_MODEL_EXPORT DeleteItemFromModel(SessionItem* item);
+
+//! Moves item up (decrements row of the item). Works on children belonging to single tag.
 void MVVM_MODEL_EXPORT MoveUp(SessionItem* item);
+
+//! Moves item down (increments row of the item). Works on children belonging to single tag.
 void MVVM_MODEL_EXPORT MoveDown(SessionItem* item);
+
+//! Undo last model operation. If not undo/redo enabled, will do nothing.
+void MVVM_MODEL_EXPORT Undo(SessionModel& model);
+
+//! Redo model operation which was undone just before. If not undo/redo enabled, will do nothing.
+void MVVM_MODEL_EXPORT Redo(SessionModel& model);
 
 //! Begin undo/redo macros with given name. Works only if item belongs to the model, and model has
 //! undo/redo enabled. Otherwise, do nothing.

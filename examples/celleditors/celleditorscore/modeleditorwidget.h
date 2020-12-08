@@ -14,7 +14,6 @@
 #include <memory>
 
 class QBoxLayout;
-class SampleModel;
 class QTreeView;
 class QTableView;
 
@@ -23,6 +22,11 @@ namespace ModelView
 class ViewModel;
 class ViewModelDelegate;
 } // namespace ModelView
+
+namespace CellEditors
+{
+
+class SampleModel;
 
 //! Shows content of the model as vertical tree, horizontal tree and table.
 
@@ -40,13 +44,15 @@ private:
     QBoxLayout* create_left_layout();
     QBoxLayout* create_right_layout();
 
-    QTreeView* m_verticalTree;
-    QTreeView* m_horizontalTree;
-    QTableView* m_tableView;
+    QTreeView* m_verticalTree{nullptr};
+    QTreeView* m_horizontalTree{nullptr};
+    QTableView* m_tableView{nullptr};
 
     std::unique_ptr<ModelView::ViewModel> m_verticalViewModel;
     std::unique_ptr<ModelView::ViewModel> m_horizontalViewModel;
     std::unique_ptr<ModelView::ViewModelDelegate> m_delegate;
 };
+
+} // namespace CellEditors
 
 #endif // MODELEDITORWIDGET_H

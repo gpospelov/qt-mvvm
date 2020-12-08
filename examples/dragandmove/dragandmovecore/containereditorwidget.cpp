@@ -20,6 +20,9 @@
 
 using namespace ModelView;
 
+namespace DragAndView
+{
+
 ContainerEditorWidget::ContainerEditorWidget(QWidget* parent)
     : QWidget(parent)
     , m_treeView(new QTreeView)
@@ -129,3 +132,5 @@ QBoxLayout* ContainerEditorWidget::create_button_layout()
 
     return result;
 }
+
+} // namespace DragAndView

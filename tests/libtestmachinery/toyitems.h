@@ -27,7 +27,7 @@ namespace Constants
 const ModelView::model_type MultiLayerItemType = "MultiLayer";
 const ModelView::model_type LayerItemType = "Layer";
 const ModelView::model_type ParticleItemType = "Particle";
-const ModelView::model_type InterferenceItemType = "Interference";
+const ModelView::model_type LatticeItemType = "Lattice";
 
 const ModelView::model_type CylinderItemType = "Cylinder";
 const ModelView::model_type SphereItemType = "Sphere";
@@ -70,14 +70,14 @@ public:
 
 //! Represents a lattice.
 
-class InterferenceFunctionItem : public ModelView::CompoundItem
+class LatticeItem : public ModelView::CompoundItem
 {
 public:
     static inline const std::string P_ROTATION_ANLE = "Rotation";
     static inline const std::string P_INTEGRATION = "Integration";
     static inline const std::string P_LATTICE_TYPE = "Lattice type";
 
-    InterferenceFunctionItem();
+    LatticeItem();
 
     void activate() override;
 

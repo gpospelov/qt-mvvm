@@ -11,7 +11,7 @@
 #include "materialmodel.h"
 #include "materialpropertycontroller.h"
 #include "samplemodel.h"
-#include <mvvm/factories/modeldocuments.h>
+#include <mvvm/factories/modeldocumentfactory.h>
 #include <mvvm/model/sessionitem.h>
 
 using namespace ModelView;

@@ -38,6 +38,11 @@ const SessionItem* GroupItem::currentItem() const
     return is_valid_index() ? getItem("", currentIndex()) : nullptr;
 }
 
+SessionItem* GroupItem::currentItem()
+{
+    return const_cast<SessionItem*>(static_cast<const GroupItem*>(this)->currentItem());
+}
+
 std::string GroupItem::currentType() const
 {
     return is_valid_index() ? m_catalogue->modelTypes()[static_cast<size_t>(currentIndex())] : "";

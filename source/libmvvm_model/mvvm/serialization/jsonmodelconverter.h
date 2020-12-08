@@ -10,9 +10,7 @@
 #ifndef MVVM_SERIALIZATION_JSONMODELCONVERTER_H
 #define MVVM_SERIALIZATION_JSONMODELCONVERTER_H
 
-#include <QString>
 #include <mvvm/serialization/jsonmodelconverterinterface.h>
-
 class QJsonObject;
 
 namespace ModelView
@@ -21,11 +19,14 @@ namespace ModelView
 class SessionModel;
 
 //! Default converter of SessionModel to/from json object.
+//! `COPY_MODE` is used to make a full copy of given model, `PROJECT_MODE` is used
+//! for selective saving of model on disk.
 
 class MVVM_MODEL_EXPORT JsonModelConverter : public JsonModelConverterInterface
 {
 public:
-    JsonModelConverter();
+    enum class ConverterMode {PROJECT_MODE, COPY_MODE};
+    JsonModelConverter(ConverterMode mode = ConverterMode::PROJECT_MODE);
     ~JsonModelConverter() override;
 
     //! Writes content of model into json.
@@ -33,6 +34,9 @@ public:
 
     //! Reads json object and build the model.
     void from_json(const QJsonObject& json, SessionModel& model) const override;
+
+private:
+    ConverterMode m_mode;
 };
 
 } // namespace ModelView

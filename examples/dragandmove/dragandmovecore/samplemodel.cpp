@@ -8,11 +8,14 @@
 // ************************************************************************** //
 
 #include "samplemodel.h"
-#include "items.h"
+#include "sampleitems.h"
 #include <QColor>
 #include <mvvm/model/itemcatalogue.h>
 #include <mvvm/utils/numericutils.h>
 #include <mvvm/widgets/widgetutils.h>
+
+namespace DragAndView
+{
 
 namespace
 {
@@ -68,3 +71,5 @@ void SampleModel::init_model_content()
     append_random_item(container);
     append_random_item(container);
 }
+
+} // namespace DragAndView

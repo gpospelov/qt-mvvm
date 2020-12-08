@@ -7,12 +7,19 @@
 //
 // ************************************************************************** //
 
+#include <QJsonObject>
+#include <mvvm/factories/modelconverterfactory.h>
 #include <mvvm/interfaces/undostackinterface.h>
 #include <mvvm/model/modelutils.h>
 
 using namespace ModelView;
 
-//! Removes and deletes item from its model.
+void Utils::PopulateEmptyModel(const SessionModel& source, SessionModel& target)
+{
+    auto converter = CreateModelCopyConverter();
+    QJsonObject object = converter->to_json(source);
+    converter->from_json(object, target);
+}
 
 void Utils::DeleteItemFromModel(SessionItem* item)
 {
@@ -23,8 +30,6 @@ void Utils::DeleteItemFromModel(SessionItem* item)
     model->removeItem(item->parent(), item->tagRow());
 }
 
-//! Moves item up (decrements row of the item). Works on children belonging to single tag.
-
 void Utils::MoveUp(SessionItem* item)
 {
     auto tagrow = item->tagRow();
@@ -33,14 +38,24 @@ void Utils::MoveUp(SessionItem* item)
     item->model()->moveItem(item, item->parent(), tagrow.prev());
 }
 
-//! Moves item down (increments row of the item). Works on children belonging to single tag.
-
 void Utils::MoveDown(SessionItem* item)
 {
     auto tagrow = item->tagRow();
     if (tagrow.row == item->parent()->itemCount(tagrow.tag) - 1)
         return; // item already at the buttom
     item->model()->moveItem(item, item->parent(), tagrow.next());
+}
+
+void Utils::Undo(SessionModel& model)
+{
+    if (auto stack = model.undoStack(); stack)
+        stack->undo();
+}
+
+void Utils::Redo(SessionModel& model)
+{
+    if (auto stack = model.undoStack(); stack)
+        stack->redo();
 }
 
 void Utils::BeginMacros(const SessionItem* item, const std::string& macro_name)

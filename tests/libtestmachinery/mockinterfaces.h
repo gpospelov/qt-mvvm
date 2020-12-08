@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef ITEMTESTWIDGET_H
-#define ITEMTESTWIDGET_H
+#ifndef MOCKINTERFACES_h
+#define MOCKINTERFACES_h
 
 #include <string>
 #include <mvvm/model/tagrow.h>
@@ -24,7 +24,7 @@ class SessionModel;
 
 class ItemTestWidgetInterface {
 public:
-    virtual ~ItemTestWidgetInterface();
+    virtual ~ItemTestWidgetInterface() = default;
 
     virtual void onItemDestroy(ModelView::SessionItem* item) = 0;
     virtual void onDataChange(ModelView::SessionItem* item, int role) = 0;
@@ -37,7 +37,7 @@ public:
 
 class ModelTestWidgetInterface {
 public:
-    virtual ~ModelTestWidgetInterface();
+    virtual ~ModelTestWidgetInterface() = default;
 
     virtual void onModelDestroyed(ModelView::SessionModel*) = 0;
     virtual void onModelAboutToBeReset(ModelView::SessionModel*) = 0;
@@ -48,4 +48,4 @@ public:
     virtual void onAboutToRemoveItem(ModelView::SessionItem*, ModelView::TagRow) = 0;
 };
 
-#endif // ITEMTESTWIDGET_H
+#endif // MOCKINTERFACES_h

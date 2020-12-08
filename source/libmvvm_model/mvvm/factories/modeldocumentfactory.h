@@ -7,12 +7,12 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_FACTORIES_MODELDOCUMENTS_H
-#define MVVM_FACTORIES_MODELDOCUMENTS_H
+#ifndef MVVM_FACTORIES_MODELDOCUMENTFACTORY_H
+#define MVVM_FACTORIES_MODELDOCUMENTFACTORY_H
 
-#include <initializer_list>
 #include <memory>
 #include <mvvm/interfaces/modeldocumentinterface.h>
+#include <vector>
 
 namespace ModelView
 {
@@ -21,8 +21,8 @@ class SessionModel;
 
 //! Creates JsonDocument to save and load models.
 MVVM_MODEL_EXPORT std::unique_ptr<ModelDocumentInterface>
-CreateJsonDocument(std::initializer_list<SessionModel*> models);
+CreateJsonDocument(const std::vector<SessionModel*>& models);
 
 } // namespace ModelView
 
-#endif // MVVM_FACTORIES_MODELDOCUMENTS_H
+#endif // MVVM_FACTORIES_MODELDOCUMENTFACTORY_H

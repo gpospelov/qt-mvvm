@@ -8,7 +8,7 @@
 // ************************************************************************** //
 
 #include "samplemodel.h"
-#include "items.h"
+#include "sampleitems.h"
 #include <mvvm/model/itemcatalogue.h>
 
 using namespace ModelView;

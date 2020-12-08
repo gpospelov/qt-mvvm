@@ -10,10 +10,11 @@
 #ifndef MVVM_FACTORIES_ITEMCONVERTERFACTORY_H
 #define MVVM_FACTORIES_ITEMCONVERTERFACTORY_H
 
+//! @file itemconverterfactory.h
+//! Collection of factory functions to create SessionItem converters to/from serialized content.
+
 #include <memory>
 #include <mvvm/serialization/jsonitemconverterinterface.h>
-
-class QJsonObject;
 
 namespace ModelView
 {

@@ -41,7 +41,7 @@ ParticleItem::ParticleItem() : CompoundItem(Constants::ParticleItemType)
 
 // ----------------------------------------------------------------------------
 
-InterferenceFunctionItem::InterferenceFunctionItem() : CompoundItem(Constants::InterferenceItemType)
+LatticeItem::LatticeItem() : CompoundItem(Constants::LatticeItemType)
 {
     addProperty(P_ROTATION_ANLE, 90.0);
     addProperty(P_INTEGRATION, true);
@@ -52,7 +52,7 @@ InterferenceFunctionItem::InterferenceFunctionItem() : CompoundItem(Constants::I
     update_appearance();
 }
 
-void InterferenceFunctionItem::activate()
+void LatticeItem::activate()
 {
     auto onIntegrationFlagChange = [this](SessionItem*, std::string property) {
         if (property == P_INTEGRATION)
@@ -61,7 +61,7 @@ void InterferenceFunctionItem::activate()
     mapper()->setOnPropertyChange(onIntegrationFlagChange, this);
 }
 
-void InterferenceFunctionItem::update_appearance()
+void LatticeItem::update_appearance()
 {
     auto angle_item = getItem(P_ROTATION_ANLE);
     angle_item->setEnabled(!property<bool>(P_INTEGRATION));

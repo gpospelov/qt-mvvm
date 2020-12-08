@@ -17,6 +17,9 @@ namespace ModelView
 class SessionItem;
 }
 
+namespace DragAndView
+{
+
 //! Main application model.
 
 class SampleModel : public ModelView::SessionModel
@@ -29,5 +32,7 @@ public:
 private:
     void init_model_content();
 };
+
+} // namespace DragAndView
 
 #endif

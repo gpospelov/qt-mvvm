@@ -3,8 +3,10 @@ target_sources(${library_name} PRIVATE
     itemcataloguefactory.h
     itemconverterfactory.cpp
     itemconverterfactory.h
-    modeldocuments.cpp
-    modeldocuments.h
+    modelconverterfactory.cpp
+    modelconverterfactory.h
+    modeldocumentfactory.cpp
+    modeldocumentfactory.h
     projectmanagerfactory.cpp
     projectmanagerfactory.h
 )

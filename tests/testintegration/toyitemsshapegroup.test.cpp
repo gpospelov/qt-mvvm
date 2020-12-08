@@ -20,17 +20,17 @@ using namespace ModelView;
 
 //! Tests of toy ShapeGroup in the context of model and viewmodel.
 
-class ToyShapeGroupItemTest : public ::testing::Test
+class ToyItemsShapeGroupTest : public ::testing::Test
 {
 public:
-    ~ToyShapeGroupItemTest();
+    ~ToyItemsShapeGroupTest();
 };
 
-ToyShapeGroupItemTest::~ToyShapeGroupItemTest() = default;
+ToyItemsShapeGroupTest::~ToyItemsShapeGroupTest() = default;
 
 //! Toy multilayer as produced bo toy SampleModel.
 
-TEST_F(ToyShapeGroupItemTest, initialState)
+TEST_F(ToyItemsShapeGroupTest, initialState)
 {
     ToyItems::ShapeGroupItem item;
 
@@ -53,7 +53,7 @@ TEST_F(ToyShapeGroupItemTest, initialState)
               std::vector<std::string>({"Cylinder", "Full sphere", "Anysotropical pyramid"}));
 }
 
-TEST_F(ToyShapeGroupItemTest, setCurrentType)
+TEST_F(ToyItemsShapeGroupTest, setCurrentType)
 {
     ToyItems::ShapeGroupItem item;
     item.setCurrentType(ToyItems::Constants::CylinderItemType);
@@ -72,7 +72,14 @@ TEST_F(ToyShapeGroupItemTest, setCurrentType)
               std::vector<std::string>({"Cylinder", "Full sphere", "Anysotropical pyramid"}));
 }
 
-TEST_F(ToyShapeGroupItemTest, inModelContext)
+TEST_F(ToyItemsShapeGroupTest, currentItemNoConst)
+{
+    ToyItems::ShapeGroupItem item;
+    item.currentItem()->setProperty(ToyItems::SphereItem::P_RADIUS, 42.0);
+    EXPECT_EQ(item.currentItem()->property<double>(ToyItems::SphereItem::P_RADIUS), 42.0);
+}
+
+TEST_F(ToyItemsShapeGroupTest, inModelContext)
 {
     ToyItems::SampleModel model;
     auto item = model.insertItem<ToyItems::ShapeGroupItem>();
@@ -95,7 +102,7 @@ TEST_F(ToyShapeGroupItemTest, inModelContext)
     EXPECT_EQ(item->children().at(2)->model(), &model);
 }
 
-TEST_F(ToyShapeGroupItemTest, setDataInModelContext)
+TEST_F(ToyItemsShapeGroupTest, setDataInModelContext)
 {
     ToyItems::SampleModel model;
     auto item = model.insertItem<ToyItems::ShapeGroupItem>();
@@ -117,7 +124,7 @@ TEST_F(ToyShapeGroupItemTest, setDataInModelContext)
 
 //! ViewLabelItem and ViewDataItem from ShapeItem.
 
-TEST_F(ToyShapeGroupItemTest, viewItemsFromShapeGroup)
+TEST_F(ToyItemsShapeGroupTest, viewItemsFromShapeGroup)
 {
     ToyItems::SampleModel model;
 
@@ -133,7 +140,7 @@ TEST_F(ToyShapeGroupItemTest, viewItemsFromShapeGroup)
 
 //! ShapeGroup item in DefaultViewModel.
 
-TEST_F(ToyShapeGroupItemTest, inDefaultViewModelContext)
+TEST_F(ToyItemsShapeGroupTest, inDefaultViewModelContext)
 {
     ToyItems::SampleModel model;
     auto groupItem = model.insertItem<ToyItems::ShapeGroupItem>();
@@ -184,7 +191,7 @@ TEST_F(ToyShapeGroupItemTest, inDefaultViewModelContext)
 
 //! ShapeGroup item in PropertyViewModel.
 
-TEST_F(ToyShapeGroupItemTest, inPropertyViewModelContext)
+TEST_F(ToyItemsShapeGroupTest, inPropertyViewModelContext)
 {
     ToyItems::SampleModel model;
     auto parent = model.insertItem<SessionItem>();

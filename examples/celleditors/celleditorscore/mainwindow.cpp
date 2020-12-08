@@ -9,7 +9,6 @@
 
 #include "mainwindow.h"
 #include "item_constants.h"
-#include "items.h"
 #include "modeleditorwidget.h"
 #include "samplemodel.h"
 #include <QCoreApplication>
@@ -22,6 +21,9 @@ const QString main_window_group = "MainWindow";
 const QString size_key = "size";
 const QString pos_key = "pos";
 } // namespace
+
+namespace CellEditors
+{
 
 MainWindow::MainWindow() : m_tabWidget(new QTabWidget), m_model(std::make_unique<SampleModel>())
 {
@@ -73,3 +75,5 @@ void MainWindow::init_models()
     m_tabWidget->addTab(new ModelEditorWidget(m_model.get()), "Available properties");
     m_tabWidget->setCurrentIndex(m_tabWidget->count() - 1);
 }
+
+} // namespace CellEditors

@@ -7,13 +7,12 @@
 //
 // ************************************************************************** //
 
-
-#include "MockWidgets.h"
-#include <mvvm/signals/itemmapper.h>
-#include <mvvm/signals/modelmapper.h>
+#include "mockwidgets.h"
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/model/tagrow.h>
+#include <mvvm/signals/itemmapper.h>
+#include <mvvm/signals/modelmapper.h>
 
 // ----------------------------------------------------------------------------
 
@@ -130,7 +129,9 @@ void MockWidgetForModel::setModel(ModelView::SessionModel* model)
     };
     m_model->mapper()->setOnModelDestroyed(on_model_destroyed, this);
 
-    auto on_model_about_reset = [this](ModelView::SessionModel* model) { onModelAboutToBeReset(model); };
+    auto on_model_about_reset = [this](ModelView::SessionModel* model) {
+        onModelAboutToBeReset(model);
+    };
     m_model->mapper()->setOnModelAboutToBeReset(on_model_about_reset, this);
 
     auto on_model_reset = [this](ModelView::SessionModel* model) { onModelReset(model); };

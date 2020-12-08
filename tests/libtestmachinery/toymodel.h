@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef TOYMODELS_H
-#define TOYMODELS_H
+#ifndef TOYMODEL_H
+#define TOYMODEL_H
 
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/model/itempool.h>
@@ -27,4 +27,4 @@ public:
 
 } // namespace ToyItems
 
-#endif // TOYMODELS_H
+#endif // TOYMODEL_H
