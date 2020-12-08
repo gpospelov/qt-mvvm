@@ -30,11 +30,11 @@ children and children's properties are hidden in the property editor.
 
 ## Business logic
 
-Item `Interference` demonstrates how to implement business logic. Every time the
+Item `Lattice` demonstrates how to implement business logic. Every time the
 user clicks on its `Integration flag` property, the property `Rotation` gets
 either enabled or disabled.
 
 ![treeviews](../../doc/assets/treeviews2.png)
 
-Business logic is implemented via lambda's on board of `InterferenceItem` (see
+Business logic is implemented via lambda's on board of `LatticeItem` (see
 code for details).
