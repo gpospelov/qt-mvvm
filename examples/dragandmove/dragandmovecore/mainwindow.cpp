@@ -8,7 +8,6 @@
 // ************************************************************************** //
 
 #include "mainwindow.h"
-#include "item_constants.h"
 #include "modeleditorwidget.h"
 #include "samplemodel.h"
 #include <QCoreApplication>

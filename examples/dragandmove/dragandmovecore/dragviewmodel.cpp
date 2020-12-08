@@ -8,7 +8,6 @@
 // ************************************************************************** //
 
 #include "dragviewmodel.h"
-#include "item_constants.h"
 #include <QByteArray>
 #include <QDataStream>
 #include <QMimeData>

@@ -7,15 +7,22 @@
 //
 // ************************************************************************** //
 
-#include "item_constants.h"
 #include "sampleitems.h"
 #include <QColor>
 #include <mvvm/model/comboproperty.h>
 #include <mvvm/model/externalproperty.h>
 
+namespace
+{
+
+const std::string DemoItemType = "DemoItem";
+const std::string DemoContainerItemType = "DemoItemContainer";
+
+} // namespace
+
 using namespace ModelView;
 
-DemoItem::DemoItem() : CompoundItem(::Constants::DemoItemType)
+DemoItem::DemoItem() : CompoundItem(DemoItemType)
 {
     addProperty(P_COLOR_PROPERTY, QColor(Qt::green))->setDisplayName("Color");
     addProperty(P_BOOL_PROPERTY, true)->setDisplayName("Bool");
@@ -24,7 +31,7 @@ DemoItem::DemoItem() : CompoundItem(::Constants::DemoItemType)
     addProperty(P_DOUBLE_PROPERTY, 42.1)->setDisplayName("Double");
 }
 
-DemoContainerItem::DemoContainerItem() : CompoundItem(::Constants::DemoContainerItemType)
+DemoContainerItem::DemoContainerItem() : CompoundItem(DemoContainerItemType)
 {
-    registerTag(TagInfo::universalTag(T_ITEMS, {::Constants::DemoItemType}), /*set_default*/ true);
+    registerTag(TagInfo::universalTag(T_ITEMS, {DemoItemType}), /*set_default*/ true);
 }
