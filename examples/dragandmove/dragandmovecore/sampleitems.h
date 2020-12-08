@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef ITEMS_H
-#define ITEMS_H
+#ifndef SAMPLEITEMS_H
+#define SAMPLEITEMS_H
 
 //! @file items.h
 //! Collection of items for our application model.
@@ -41,4 +41,4 @@ public:
     DemoContainerItem();
 };
 
-#endif // ITEMS_H
+#endif // SAMPLEITEMS_H

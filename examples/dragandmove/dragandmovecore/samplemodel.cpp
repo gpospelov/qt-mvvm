@@ -8,7 +8,7 @@
 // ************************************************************************** //
 
 #include "samplemodel.h"
-#include "items.h"
+#include "sampleitems.h"
 #include <QColor>
 #include <mvvm/model/itemcatalogue.h>
 #include <mvvm/utils/numericutils.h>
