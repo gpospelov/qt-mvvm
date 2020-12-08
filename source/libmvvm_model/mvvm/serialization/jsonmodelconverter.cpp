@@ -19,7 +19,7 @@
 
 using namespace ModelView;
 
-JsonModelConverter::JsonModelConverter() = default;
+JsonModelConverter::JsonModelConverter(ConverterMode mode) : m_mode(mode) {}
 
 JsonModelConverter::~JsonModelConverter() = default;
 
@@ -34,10 +34,11 @@ QJsonObject JsonModelConverter::to_json(const SessionModel& model) const
 
     QJsonArray itemArray;
 
-    auto converter = CreateItemProjectConverter(model.factory());
+    std::unique_ptr<JsonItemConverterInterface> itemConverter =
+        CreateItemProjectConverter(model.factory());
 
     for (auto item : model.rootItem()->children())
-        itemArray.append(converter->to_json(item));
+        itemArray.append(itemConverter->to_json(item));
 
     result[JsonItemFormatAssistant::itemsKey] = itemArray;
 
@@ -60,11 +61,12 @@ void JsonModelConverter::from_json(const QJsonObject& json, SessionModel& model)
             + "', json key '"
             + json[JsonItemFormatAssistant::sessionModelKey].toString().toStdString() + "'");
 
-    auto converter = CreateItemProjectConverter(model.factory());
+    std::unique_ptr<JsonItemConverterInterface> itemConverter =
+        CreateItemProjectConverter(model.factory());
 
-    auto rebuild_root = [&json, &converter](auto parent) {
+    auto rebuild_root = [&json, &itemConverter](auto parent) {
         for (const auto ref : json[JsonItemFormatAssistant::itemsKey].toArray()) {
-            auto item = converter->from_json(ref.toObject());
+            auto item = itemConverter->from_json(ref.toObject());
             parent->insertItem(item.release(), TagRow::append());
         }
     };

@@ -10,9 +10,7 @@
 #ifndef MVVM_SERIALIZATION_JSONMODELCONVERTER_H
 #define MVVM_SERIALIZATION_JSONMODELCONVERTER_H
 
-#include <QString>
 #include <mvvm/serialization/jsonmodelconverterinterface.h>
-
 class QJsonObject;
 
 namespace ModelView
@@ -25,7 +23,8 @@ class SessionModel;
 class MVVM_MODEL_EXPORT JsonModelConverter : public JsonModelConverterInterface
 {
 public:
-    JsonModelConverter();
+    enum class ConverterMode {COPY_MODE, PROJECT_MODE};
+    JsonModelConverter(ConverterMode mode = ConverterMode::COPY_MODE);
     ~JsonModelConverter() override;
 
     //! Writes content of model into json.
@@ -33,6 +32,9 @@ public:
 
     //! Reads json object and build the model.
     void from_json(const QJsonObject& json, SessionModel& model) const override;
+
+private:
+    ConverterMode m_mode;
 };
 
 } // namespace ModelView
