@@ -10,11 +10,11 @@
 #ifndef MVVM_MODEL_MODELUTILS_H
 #define MVVM_MODEL_MODELUTILS_H
 
+#include <memory>
 #include <mvvm/model/itemutils.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/model_export.h>
-#include <memory>
 #include <vector>
 
 namespace ModelView
@@ -29,7 +29,7 @@ template <typename T = SessionItem> std::vector<T*> TopItems(const SessionModel*
 {
     std::vector<T*> result;
     for (auto child : model->rootItem()->children()) {
-        if (auto item = dynamic_cast<T*>(child))
+        if (auto item = dynamic_cast<T*>(child); item)
             result.push_back(item);
     }
 
@@ -51,7 +51,7 @@ template <typename T = SessionItem> std::vector<T*> FindItems(const SessionModel
     std::vector<T*> result;
 
     auto func = [&result](SessionItem* item) {
-        if (auto concrete = dynamic_cast<T*>(item))
+        if (auto concrete = dynamic_cast<T*>(item); concrete)
             result.push_back(concrete);
     };
 
