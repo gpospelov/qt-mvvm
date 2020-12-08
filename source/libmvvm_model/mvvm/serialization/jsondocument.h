@@ -10,7 +10,7 @@
 #ifndef MVVM_SERIALIZATION_JSONDOCUMENT_H
 #define MVVM_SERIALIZATION_JSONDOCUMENT_H
 
-#include <initializer_list>
+#include <vector>
 #include <memory>
 #include <mvvm/interfaces/modeldocumentinterface.h>
 
@@ -25,7 +25,7 @@ class SessionModel;
 class MVVM_MODEL_EXPORT JsonDocument : public ModelDocumentInterface
 {
 public:
-    JsonDocument(std::initializer_list<SessionModel*> models);
+    JsonDocument(const std::vector<SessionModel*>& models);
     ~JsonDocument() override;
 
     void save(const std::string& file_name) const override;

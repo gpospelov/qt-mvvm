@@ -16,18 +16,15 @@
 #include <mvvm/serialization/jsondocument.h>
 #include <sstream>
 #include <stdexcept>
-#include <vector>
 
 using namespace ModelView;
 
 struct JsonDocument::JsonDocumentImpl {
     std::vector<SessionModel*> models;
-    JsonDocumentImpl(const std::initializer_list<ModelView::SessionModel*>& models) : models(models)
-    {
-    }
+    JsonDocumentImpl(const std::vector<SessionModel*>& models) : models(models) {}
 };
 
-JsonDocument::JsonDocument(std::initializer_list<ModelView::SessionModel*> models)
+JsonDocument::JsonDocument(const std::vector<SessionModel*>& models)
     : p_impl(std::make_unique<JsonDocumentImpl>(models))
 {
 }
