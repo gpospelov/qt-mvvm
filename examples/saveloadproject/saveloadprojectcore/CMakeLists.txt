@@ -10,8 +10,6 @@ target_sources(${library_name} PRIVATE
     actionmanager.h
     containereditorwidget.cpp
     containereditorwidget.h
-    items.cpp
-    items.h
     mainwindow.cpp
     mainwindow.h
     projecthandler.cpp
