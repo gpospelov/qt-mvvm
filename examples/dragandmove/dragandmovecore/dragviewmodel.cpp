@@ -15,27 +15,11 @@
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/viewmodel/viewmodelutils.h>
+#include <mvvm/widgets/widgetutils.h>
 
 namespace
 {
 const QString AppMimeType = "application/org.bornagainproject.moveitem";
-
-QByteArray serialize(const QStringList& data)
-{
-    QByteArray byteArray;
-    QDataStream out(&byteArray, QIODevice::WriteOnly);
-    out << data;
-    return byteArray;
-}
-
-QStringList deserialize(QByteArray byteArray)
-{
-    QStringList result;
-    QDataStream in(&byteArray, QIODevice::ReadOnly);
-    in >> result;
-    return result;
-}
-
 } // namespace
 
 using namespace ModelView;
@@ -69,7 +53,7 @@ QMimeData* DragViewModel::mimeData(const QModelIndexList& index_list) const
     for (auto item : Utils::ParentItemsFromIndex(index_list))
         identifiers.append(QString::fromStdString(item->identifier()));
 
-    mimeData->setData(AppMimeType, serialize(identifiers));
+    mimeData->setData(AppMimeType, Utils::serialize(identifiers));
     return mimeData;
 }
 
@@ -101,7 +85,7 @@ bool DragViewModel::dropMimeData(const QMimeData* data, Qt::DropAction action, i
     int requested_row = parent.isValid() ? parent.row() : row;
 
     // retrieving list of item identifiers and accessing items
-    auto identifiers = deserialize(data->data(AppMimeType));
+    auto identifiers = Utils::deserialize(data->data(AppMimeType));
     for (auto id : identifiers) {
         auto item = sessionModel()->findItem(id.toStdString());
 

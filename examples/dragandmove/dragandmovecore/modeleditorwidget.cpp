@@ -71,18 +71,12 @@ void ModelEditorWidget::setModel(SampleModel* model)
 
 void ModelEditorWidget::onUndo()
 {
-    if (!m_model->undoStack())
-        return;
-
-    m_model->undoStack()->undo();
+    Utils::Undo(*m_model);
 }
 
 void ModelEditorWidget::onRedo()
 {
-    if (!m_model->undoStack())
-        return;
-
-    m_model->undoStack()->redo();
+    Utils::Redo(*m_model);
 }
 
 void ModelEditorWidget::init_actions()
