@@ -11,7 +11,7 @@
 #include <QColor>
 #include <algorithm>
 #include <cmath>
-#include <mvvm/factories/modeldocuments.h>
+#include <mvvm/factories/modeldocumentfactory.h>
 #include <mvvm/interfaces/undostackinterface.h>
 #include <mvvm/model/itemcatalogue.h>
 #include <mvvm/utils/reallimits.h>

@@ -5,8 +5,8 @@ target_sources(${library_name} PRIVATE
     itemconverterfactory.h
     modelconverterfactory.cpp
     modelconverterfactory.h
-    modeldocuments.cpp
-    modeldocuments.h
+    modeldocumentfactory.cpp
+    modeldocumentfactory.h
     projectmanagerfactory.cpp
     projectmanagerfactory.h
 )
