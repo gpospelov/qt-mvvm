@@ -11,7 +11,6 @@
 #include "item_constants.h"
 #include <QByteArray>
 #include <QDataStream>
-#include <QDebug>
 #include <QMimeData>
 #include <algorithm>
 #include <mvvm/model/sessionitem.h>
@@ -20,7 +19,7 @@
 
 namespace
 {
-const QString LinkMimeType = "application/org.bornagainproject.fittinglink";
+const QString AppMimeType = "application/org.bornagainproject.moveitem";
 
 QByteArray serialize(const QStringList& data)
 {
@@ -68,7 +67,7 @@ QMimeData* DragViewModel::mimeData(const QModelIndexList& index_list) const
     for (auto item : Utils::ParentItemsFromIndex(index_list))
         identifiers.append(QString::fromStdString(item->identifier()));
 
-    mimeData->setData(QString::fromStdString(::Constants::AppMimeType), serialize(identifiers));
+    mimeData->setData(AppMimeType, serialize(identifiers));
     return mimeData;
 }
 
@@ -82,11 +81,10 @@ Qt::DropActions DragViewModel::supportedDropActions() const
     return Qt::TargetMoveAction;
 }
 
-bool DragViewModel::canDropMimeData(const QMimeData* data, Qt::DropAction action, int row,
-                                    int column, const QModelIndex& parent) const
+bool DragViewModel::canDropMimeData(const QMimeData* data, Qt::DropAction, int, int,
+                                    const QModelIndex&) const
 {
-    qDebug() << "DragViewModel::canDropMimeData" << data << action << row << column << parent;
-    if (!data->hasFormat(QString::fromStdString(::Constants::AppMimeType)))
+    if (!data->hasFormat(AppMimeType))
         return false;
 
     return true;
@@ -98,16 +96,13 @@ bool DragViewModel::dropMimeData(const QMimeData* data, Qt::DropAction action, i
     if (!canDropMimeData(data, action, row, column, parent))
         return false;
 
-    qDebug() << "DragViewModel::dropMimeData" << data << action << row << column << parent;
-
     int requested_row = parent.isValid() ? parent.row() : row;
 
     // retrieving list of item identifiers and accessing items
-    auto identifiers = deserialize(data->data(QString::fromStdString(::Constants::AppMimeType)));
+    auto identifiers = deserialize(data->data(AppMimeType));
     for (auto id : identifiers) {
         auto item = sessionModel()->findItem(id.toStdString());
 
-        qDebug() << "going to move" << id << item << requested_row;
         int row = std::clamp(requested_row, 0, item->parent()->itemCount(item->tag()) - 1);
         sessionModel()->moveItem(item, rootSessionItem(), {"", row});
     }
