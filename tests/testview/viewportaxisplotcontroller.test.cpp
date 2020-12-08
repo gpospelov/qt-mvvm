@@ -7,10 +7,10 @@
 //
 // ************************************************************************** //
 
-#include "google_test.h"
-#include "MockWidgets.h"
-#include "qcustomplot.h"
 #include "customplot_test_utils.h"
+#include "google_test.h"
+#include "mockwidgets.h"
+#include "qcustomplot.h"
 #include <QSignalSpy>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/plotting/viewportaxisplotcontroller.h>
@@ -36,7 +36,8 @@ public:
     std::unique_ptr<QSignalSpy> createSpy2(QCPAxis* axis)
     {
         return std::make_unique<QSignalSpy>(
-            axis, static_cast<void (QCPAxis::*)(const QCPRange&, const QCPRange&)>(&QCPAxis::rangeChanged));
+            axis, static_cast<void (QCPAxis::*)(const QCPRange&, const QCPRange&)>(
+                      &QCPAxis::rangeChanged));
     }
 };
 

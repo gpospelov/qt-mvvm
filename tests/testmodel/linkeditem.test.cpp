@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#include "MockWidgets.h"
 #include "google_test.h"
+#include "mockwidgets.h"
 #include <mvvm/model/itempool.h>
 #include <mvvm/model/propertyitem.h>
 #include <mvvm/model/sessionmodel.h>
