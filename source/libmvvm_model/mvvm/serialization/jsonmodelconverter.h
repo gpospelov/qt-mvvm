@@ -25,8 +25,8 @@ class SessionModel;
 class MVVM_MODEL_EXPORT JsonModelConverter : public JsonModelConverterInterface
 {
 public:
-    enum class ConverterMode {COPY_MODE, PROJECT_MODE};
-    JsonModelConverter(ConverterMode mode = ConverterMode::COPY_MODE);
+    enum class ConverterMode {PROJECT_MODE, COPY_MODE};
+    JsonModelConverter(ConverterMode mode = ConverterMode::PROJECT_MODE);
     ~JsonModelConverter() override;
 
     //! Writes content of model into json.
