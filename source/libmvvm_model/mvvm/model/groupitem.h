@@ -30,6 +30,7 @@ public:
     int currentIndex() const;
 
     const SessionItem* currentItem() const;
+    SessionItem* currentItem();
 
     std::string currentType() const;
     void setCurrentType(const std::string& model_type);
