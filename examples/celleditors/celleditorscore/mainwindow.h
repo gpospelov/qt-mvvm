@@ -14,6 +14,10 @@
 #include <memory>
 
 class QTabWidget;
+
+namespace CellEditors
+{
+
 class SampleModel;
 
 //! A main window. Contain two sample models and tabs with two model editors.
@@ -34,8 +38,10 @@ private:
     void init_application();
     void init_models();
 
-    QTabWidget* m_tabWidget;
+    QTabWidget* m_tabWidget{nullptr};
     std::unique_ptr<SampleModel> m_model;
 };
+
+} // namespace CellEditors
 
 #endif //  MAINWINDOW_H

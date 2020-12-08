@@ -19,6 +19,9 @@
 
 using namespace ModelView;
 
+namespace CellEditors
+{
+
 ModelEditorWidget::ModelEditorWidget(SampleModel* model, QWidget* parent)
     : QWidget(parent)
     , m_verticalTree(new QTreeView)
@@ -77,3 +80,5 @@ QBoxLayout* ModelEditorWidget::create_right_layout()
     result->addWidget(m_tableView);
     return result;
 }
+
+} // namespace CellEditors
