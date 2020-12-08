@@ -16,13 +16,7 @@
 namespace ModelView
 {
 
-/*!
-@class ModelDocumentInterface
-@brief Base class to save and restore session models to/from disk.
-
-Single ModelDocument corresponds to a single file on disk. It can contain arbitrary number
-of models.
-*/
+//! Pure virtual interface to save and restore session models to/from disk.
 
 class MVVM_MODEL_EXPORT ModelDocumentInterface
 {
