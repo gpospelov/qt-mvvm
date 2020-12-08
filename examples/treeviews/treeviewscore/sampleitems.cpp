@@ -20,25 +20,25 @@ using namespace ModelView;
 namespace TreeViews
 {
 
-MultiLayer::MultiLayer() : CompoundItem(::Constants::MultiLayerType)
+MultiLayer::MultiLayer() : CompoundItem(::Constants::MultiLayerItemType)
 {
-    registerTag(TagInfo::universalTag(T_LAYERS, {::Constants::LayerType}),
+    registerTag(TagInfo::universalTag(T_LAYERS, {::Constants::LayerItemType}),
                 /*set_as_default*/ true);
 }
 
 // ----------------------------------------------------------------------------
 
-LayerItem::LayerItem() : CompoundItem(::Constants::LayerType)
+LayerItem::LayerItem() : CompoundItem(::Constants::LayerItemType)
 {
     addProperty(P_THICKNESS, 42.0);
     addProperty(P_COLOR, QColor(Qt::green));
-    registerTag(TagInfo::universalTag(T_PARTICLES, {::Constants::ParticleType}),
+    registerTag(TagInfo::universalTag(T_PARTICLES, {::Constants::ParticleItemType}),
                 /*set_as_default*/ true);
 }
 
 // ----------------------------------------------------------------------------
 
-ParticleItem::ParticleItem() : CompoundItem(::Constants::ParticleType)
+ParticleItem::ParticleItem() : CompoundItem(::Constants::ParticleItemType)
 {
     addProperty<VectorItem>(P_POSITION);
     addProperty<ShapeGroupItem>(P_SHAPES);
@@ -46,7 +46,7 @@ ParticleItem::ParticleItem() : CompoundItem(::Constants::ParticleType)
 
 // ----------------------------------------------------------------------------
 
-InterferenceFunctionItem::InterferenceFunctionItem() : CompoundItem(::Constants::InterferenceType)
+LatticeItem::LatticeItem() : CompoundItem(::Constants::LatticeItemType)
 {
     addProperty(P_ROTATION_ANLE, 90.0);
     addProperty(P_INTEGRATION, true);
@@ -57,7 +57,7 @@ InterferenceFunctionItem::InterferenceFunctionItem() : CompoundItem(::Constants:
     update_appearance();
 }
 
-void InterferenceFunctionItem::activate()
+void LatticeItem::activate()
 {
     auto onIntegrationFlagChange = [this](SessionItem*, std::string property) {
         if (property == P_INTEGRATION)
@@ -67,7 +67,7 @@ void InterferenceFunctionItem::activate()
     mapper()->setOnPropertyChange(onIntegrationFlagChange, this);
 }
 
-void InterferenceFunctionItem::update_appearance()
+void LatticeItem::update_appearance()
 {
     auto angle_item = getItem(P_ROTATION_ANLE);
     angle_item->setEnabled(!property<bool>(P_INTEGRATION));
@@ -75,7 +75,7 @@ void InterferenceFunctionItem::update_appearance()
 
 // ----------------------------------------------------------------------------
 
-CylinderItem::CylinderItem() : CompoundItem(::Constants::CylinderType)
+CylinderItem::CylinderItem() : CompoundItem(::Constants::CylinderItemType)
 {
     addProperty(P_RADIUS, 8.0);
     addProperty(P_HEIGHT, 10.0);
@@ -83,14 +83,14 @@ CylinderItem::CylinderItem() : CompoundItem(::Constants::CylinderType)
 
 // ----------------------------------------------------------------------------
 
-SphereItem::SphereItem() : CompoundItem(::Constants::SphereType)
+SphereItem::SphereItem() : CompoundItem(::Constants::SphereItemType)
 {
     addProperty(P_RADIUS, 8.0);
 }
 
 // ----------------------------------------------------------------------------
 
-AnysoPyramidItem::AnysoPyramidItem() : CompoundItem(::Constants::AnysoPyramidType)
+AnysoPyramidItem::AnysoPyramidItem() : CompoundItem(::Constants::AnysoPyramidItemType)
 {
     addProperty(P_LENGTH, 8.0);
     addProperty(P_WIDTH, 9.0);
@@ -100,7 +100,7 @@ AnysoPyramidItem::AnysoPyramidItem() : CompoundItem(::Constants::AnysoPyramidTyp
 
 // ----------------------------------------------------------------------------
 
-ShapeGroupItem::ShapeGroupItem() : GroupItem(::Constants::ShapeGroupType)
+ShapeGroupItem::ShapeGroupItem() : GroupItem(::Constants::ShapeGroupItemType)
 {
     registerItem<CylinderItem>("Cylinder");
     registerItem<SphereItem>("Full sphere", /*make_selected*/ true);

@@ -21,7 +21,7 @@ std::unique_ptr<ModelView::ItemCatalogue> CreateToyItemCatalogue()
     result->registerItem<TreeViews::MultiLayer>();
     result->registerItem<TreeViews::LayerItem>();
     result->registerItem<TreeViews::ParticleItem>();
-    result->registerItem<TreeViews::InterferenceFunctionItem>();
+    result->registerItem<TreeViews::LatticeItem>();
     result->registerItem<TreeViews::SphereItem>();
     result->registerItem<TreeViews::CylinderItem>();
     result->registerItem<TreeViews::AnysoPyramidItem>();
@@ -49,7 +49,7 @@ void SampleModel::init_model()
 
     insertItem<LayerItem>(multi_layer);
 
-    insertItem<InterferenceFunctionItem>();
+    insertItem<LatticeItem>();
 }
 
 } // namespace TreeViews

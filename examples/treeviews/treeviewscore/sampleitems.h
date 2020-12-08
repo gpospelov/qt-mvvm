@@ -51,17 +51,17 @@ public:
     ParticleItem();
 };
 
-//! Interference function with bool, double and combo on board.
+//! Lattice with bool, double and combo on board.
 //! Demonstrates how to syncronize properties between each other.
 
-class InterferenceFunctionItem : public ModelView::CompoundItem
+class LatticeItem : public ModelView::CompoundItem
 {
 public:
     static inline const std::string P_ROTATION_ANLE = "Rotation";
     static inline const std::string P_INTEGRATION = "Integration";
     static inline const std::string P_LATTICE_TYPE = "Lattice";
 
-    InterferenceFunctionItem();
+    LatticeItem();
 
     void activate() override;
 
