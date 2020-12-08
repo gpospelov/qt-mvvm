@@ -8,17 +8,17 @@
 // ************************************************************************** //
 
 #include <QJsonObject>
+#include <mvvm/factories/modelconverterfactory.h>
 #include <mvvm/interfaces/undostackinterface.h>
 #include <mvvm/model/modelutils.h>
-#include <mvvm/serialization/jsonmodelconverter.h>
 
 using namespace ModelView;
 
 void Utils::PopulateEmptyModel(const SessionModel& source, SessionModel& target)
 {
-    JsonModelConverter converter;
-    QJsonObject object = converter.to_json(source);
-    converter.from_json(object, target);
+    auto converter = CreateModelCopyConverter();
+    QJsonObject object = converter->to_json(source);
+    converter->from_json(object, target);
 }
 
 void Utils::DeleteItemFromModel(SessionItem* item)
