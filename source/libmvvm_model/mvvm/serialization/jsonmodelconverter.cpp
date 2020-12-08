@@ -19,6 +19,21 @@
 
 using namespace ModelView;
 
+namespace
+{
+std::unique_ptr<JsonItemConverterInterface>
+CreateConverter(const ItemFactoryInterface* factory, const JsonModelConverter::ConverterMode& mode)
+{
+    if (mode == JsonModelConverter::ConverterMode::COPY_MODE)
+        return CreateItemProjectConverter(factory); // FIXME switch to copy
+    else if (mode == JsonModelConverter::ConverterMode::PROJECT_MODE)
+        return CreateItemProjectConverter(factory);
+    else
+        throw std::runtime_error("Error in JsonModelConverter: unknown converter mode");
+}
+
+} // namespace
+
 JsonModelConverter::JsonModelConverter(ConverterMode mode) : m_mode(mode) {}
 
 JsonModelConverter::~JsonModelConverter() = default;
@@ -34,8 +49,7 @@ QJsonObject JsonModelConverter::to_json(const SessionModel& model) const
 
     QJsonArray itemArray;
 
-    std::unique_ptr<JsonItemConverterInterface> itemConverter =
-        CreateItemProjectConverter(model.factory());
+    auto itemConverter = CreateConverter(model.factory(), m_mode);
 
     for (auto item : model.rootItem()->children())
         itemArray.append(itemConverter->to_json(item));
@@ -61,8 +75,7 @@ void JsonModelConverter::from_json(const QJsonObject& json, SessionModel& model)
             + "', json key '"
             + json[JsonItemFormatAssistant::sessionModelKey].toString().toStdString() + "'");
 
-    std::unique_ptr<JsonItemConverterInterface> itemConverter =
-        CreateItemProjectConverter(model.factory());
+    auto itemConverter = CreateConverter(model.factory(), m_mode);
 
     auto rebuild_root = [&json, &itemConverter](auto parent) {
         for (const auto ref : json[JsonItemFormatAssistant::itemsKey].toArray()) {

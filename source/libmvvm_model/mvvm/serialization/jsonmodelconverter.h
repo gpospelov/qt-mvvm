@@ -19,6 +19,8 @@ namespace ModelView
 class SessionModel;
 
 //! Default converter of SessionModel to/from json object.
+//! `COPY_MODE` is used to make a full copy of given model, `PROJECT_MODE` is used
+//! for selective saving of model on disk.
 
 class MVVM_MODEL_EXPORT JsonModelConverter : public JsonModelConverterInterface
 {

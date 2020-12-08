@@ -13,11 +13,10 @@
 
 std::unique_ptr<ModelView::JsonModelConverterInterface> ModelView::CreateModelCopyConverter()
 {
-    // FIXME
-    return std::make_unique<JsonModelConverter>();
+    return std::make_unique<JsonModelConverter>(JsonModelConverter::ConverterMode::COPY_MODE);
 }
 
 std::unique_ptr<ModelView::JsonModelConverterInterface> ModelView::CreateModelProjectConverter()
 {
-    return std::make_unique<JsonModelConverter>();
+    return std::make_unique<JsonModelConverter>(JsonModelConverter::ConverterMode::PROJECT_MODE);
 }
