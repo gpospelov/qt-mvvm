@@ -8,35 +8,33 @@
 // ************************************************************************** //
 
 #include "google_test.h"
-#include "toymodel.h"
 #include "toyitems.h"
+#include "toymodel.h"
 
 using namespace ModelView;
 
 //! Tests of toy interference item in the context of model and viewmodel.
 
-class ToyInterferenceFunctionItemTest : public ::testing::Test
+class ToyLatticeItemTest : public ::testing::Test
 {
 public:
-    ~ToyInterferenceFunctionItemTest();
+    ~ToyLatticeItemTest();
 };
 
-ToyInterferenceFunctionItemTest::~ToyInterferenceFunctionItemTest() = default;
+ToyLatticeItemTest::~ToyLatticeItemTest() = default;
 
 //! Interference function (enabled/disabled).
 
-TEST_F(ToyInterferenceFunctionItemTest, rotationAngleEnabled)
+TEST_F(ToyLatticeItemTest, rotationAngleEnabled)
 {
     ToyItems::SampleModel model;
-    auto interference = model.insertItem<ToyItems::InterferenceFunctionItem>();
+    auto lattice = model.insertItem<ToyItems::LatticeItem>();
 
     // by default integration flag is ON, rotation angle is disabled
-    EXPECT_TRUE(interference->property<bool>(ToyItems::InterferenceFunctionItem::P_INTEGRATION));
-    EXPECT_FALSE(
-        interference->getItem(ToyItems::InterferenceFunctionItem::P_ROTATION_ANLE)->isEnabled());
+    EXPECT_TRUE(lattice->property<bool>(ToyItems::LatticeItem::P_INTEGRATION));
+    EXPECT_FALSE(lattice->getItem(ToyItems::LatticeItem::P_ROTATION_ANLE)->isEnabled());
 
     // switching integration OFF, checking that rotation is enabled
-    interference->setProperty(ToyItems::InterferenceFunctionItem::P_INTEGRATION, false);
-    EXPECT_TRUE(
-        interference->getItem(ToyItems::InterferenceFunctionItem::P_ROTATION_ANLE)->isEnabled());
+    lattice->setProperty(ToyItems::LatticeItem::P_INTEGRATION, false);
+    EXPECT_TRUE(lattice->getItem(ToyItems::LatticeItem::P_ROTATION_ANLE)->isEnabled());
 }

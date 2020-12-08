@@ -79,7 +79,7 @@ TEST_F(ToyItemsSerializationTest, allItemsInAModel)
     model.insertItem<ToyItems::MultiLayerItem>();
     model.insertItem<ToyItems::LayerItem>();
     model.insertItem<ToyItems::ParticleItem>();
-    model.insertItem<ToyItems::InterferenceFunctionItem>();
+    model.insertItem<ToyItems::LatticeItem>();
     model.insertItem<ToyItems::SphereItem>();
     model.insertItem<ToyItems::CylinderItem>();
     model.insertItem<ToyItems::AnysoPyramidItem>();

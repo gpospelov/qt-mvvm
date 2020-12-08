@@ -8,25 +8,25 @@
 // ************************************************************************** //
 
 #include "toymodel.h"
-#include <mvvm/model/itemcatalogue.h>
 #include "toyitems.h"
+#include <mvvm/model/itemcatalogue.h>
 
-namespace  {
+namespace
+{
 std::unique_ptr<ModelView::ItemCatalogue> CreateToyItemCatalogue()
 {
     auto result = std::make_unique<ModelView::ItemCatalogue>();
     result->registerItem<ToyItems::MultiLayerItem>();
     result->registerItem<ToyItems::LayerItem>();
     result->registerItem<ToyItems::ParticleItem>();
-    result->registerItem<ToyItems::InterferenceFunctionItem>();
+    result->registerItem<ToyItems::LatticeItem>();
     result->registerItem<ToyItems::SphereItem>();
     result->registerItem<ToyItems::CylinderItem>();
     result->registerItem<ToyItems::AnysoPyramidItem>();
     result->registerItem<ToyItems::ShapeGroupItem>();
     return result;
 }
-}
-
+} // namespace
 
 ToyItems::SampleModel::SampleModel() : SessionModel("ToyModel")
 {
