@@ -15,17 +15,17 @@ using namespace ModelView;
 
 //! Tests of toy interference item in the context of model and viewmodel.
 
-class ToyLatticeItemTest : public ::testing::Test
+class ToyItemsLatticeTest : public ::testing::Test
 {
 public:
-    ~ToyLatticeItemTest();
+    ~ToyItemsLatticeTest();
 };
 
-ToyLatticeItemTest::~ToyLatticeItemTest() = default;
+ToyItemsLatticeTest::~ToyItemsLatticeTest() = default;
 
 //! Interference function (enabled/disabled).
 
-TEST_F(ToyLatticeItemTest, rotationAngleEnabled)
+TEST_F(ToyItemsLatticeTest, ToyItemsLatticeTest)
 {
     ToyItems::SampleModel model;
     auto lattice = model.insertItem<ToyItems::LatticeItem>();
