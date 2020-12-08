@@ -17,6 +17,9 @@ namespace ModelView
 class SessionModel;
 }
 
+namespace DragAndView
+{
+
 //! View model with drag-and-drop support. Relies on PropertyTableViewModel to show
 //! properties of DemoItem in table-like views.
 
@@ -36,5 +39,7 @@ public:
     bool dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column,
                       const QModelIndex& parent) override;
 };
+
+} // namespace DragAndView
 
 #endif // DRAGVIEWMODEL_H

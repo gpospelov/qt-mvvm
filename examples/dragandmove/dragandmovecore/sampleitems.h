@@ -16,6 +16,9 @@
 #include <mvvm/model/compounditem.h>
 #include <string>
 
+namespace DragAndView
+{
+
 //! Demo item which demonstrating supported properties.
 
 class DemoItem : public ModelView::CompoundItem
@@ -40,5 +43,7 @@ public:
 
     DemoContainerItem();
 };
+
+} // namespace DragAndView
 
 #endif // SAMPLEITEMS_H

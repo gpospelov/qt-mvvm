@@ -40,6 +40,9 @@ QStringList deserialize(QByteArray byteArray)
 
 using namespace ModelView;
 
+namespace DragAndView
+{
+
 DragViewModel::DragViewModel(SessionModel* model, QObject* parent)
     : PropertyTableViewModel(model, parent)
 {
@@ -108,3 +111,5 @@ bool DragViewModel::dropMimeData(const QMimeData* data, Qt::DropAction action, i
 
     return false;
 }
+
+} // namespace DragAndView

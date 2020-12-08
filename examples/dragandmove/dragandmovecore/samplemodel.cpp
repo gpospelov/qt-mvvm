@@ -14,6 +14,9 @@
 #include <mvvm/utils/numericutils.h>
 #include <mvvm/widgets/widgetutils.h>
 
+namespace DragAndView
+{
+
 namespace
 {
 std::unique_ptr<ModelView::ItemCatalogue> CreateToyItemCatalogue()
@@ -68,3 +71,5 @@ void SampleModel::init_model_content()
     append_random_item(container);
     append_random_item(container);
 }
+
+} // namespace DragAndView

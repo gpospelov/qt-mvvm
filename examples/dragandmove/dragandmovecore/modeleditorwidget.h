@@ -13,10 +13,14 @@
 #include <QWidget>
 #include <memory>
 
-class SampleModel;
-class ContainerEditorWidget;
 class QToolBar;
 class QAction;
+
+namespace DragAndView
+{
+
+class SampleModel;
+class ContainerEditorWidget;
 
 //! Shows model content as two table-like trees.
 //! It is expected that model has two containers with demo items, left tree shows first container,
@@ -45,5 +49,7 @@ private:
     QAction* m_redoAction{nullptr};
     SampleModel* m_model{nullptr};
 };
+
+} // namespace DragAndView
 
 #endif // MODELEDITORWIDGET_H

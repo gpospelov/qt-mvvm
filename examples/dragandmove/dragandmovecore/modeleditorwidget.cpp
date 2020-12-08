@@ -22,6 +22,9 @@
 
 using namespace ModelView;
 
+namespace DragAndView
+{
+
 ModelEditorWidget::ModelEditorWidget(SampleModel* model, QWidget* parent)
     : QWidget(parent)
     , m_toolBar(new QToolBar)
@@ -110,3 +113,5 @@ void ModelEditorWidget::init_actions()
                 can_redo_changed);
     }
 }
+
+} // namespace DragAndView

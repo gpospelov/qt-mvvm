@@ -21,6 +21,9 @@ const QString size_key = "size";
 const QString pos_key = "pos";
 } // namespace
 
+namespace DragAndView
+{
+
 MainWindow::MainWindow() : m_tabWidget(new QTabWidget), m_model(std::make_unique<SampleModel>())
 {
     setCentralWidget(m_tabWidget);
@@ -61,3 +64,5 @@ void MainWindow::init_application()
         settings.endGroup();
     }
 }
+
+} // namespace DragAndView

@@ -22,6 +22,9 @@ const std::string DemoContainerItemType = "DemoItemContainer";
 
 using namespace ModelView;
 
+namespace DragAndView
+{
+
 DemoItem::DemoItem() : CompoundItem(DemoItemType)
 {
     addProperty(P_COLOR_PROPERTY, QColor(Qt::green))->setDisplayName("Color");
@@ -35,3 +38,5 @@ DemoContainerItem::DemoContainerItem() : CompoundItem(DemoContainerItemType)
 {
     registerTag(TagInfo::universalTag(T_ITEMS, {DemoItemType}), /*set_default*/ true);
 }
+
+} // namespace DragAndView

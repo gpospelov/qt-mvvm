@@ -14,7 +14,6 @@
 #include <memory>
 #include <vector>
 
-class SampleModel;
 class QTreeView;
 class QBoxLayout;
 class QItemSelectionModel;
@@ -25,6 +24,11 @@ class ViewModel;
 class ViewModelDelegate;
 class SessionItem;
 } // namespace ModelView
+
+namespace DragAndView
+{
+
+class SampleModel;
 
 //! Shows content of container and provide functionality to add, copy and move items.
 
@@ -55,5 +59,7 @@ private:
     ModelView::SessionItem* m_container{nullptr};
     SampleModel* m_model{nullptr};
 };
+
+} // namespace DragAndView
 
 #endif // CONTAINEREDITORWIDGET_H
