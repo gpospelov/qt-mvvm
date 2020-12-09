@@ -25,27 +25,12 @@ using namespace ModelView;
 namespace
 {
 
-//! Returns true if flags requires generation of new ID instead of using the one stored in JSON.
-
-bool isRegenerateID(const ConverterFlags& flags)
-{
-    return !hasFlag(flags, ConverterFlags::USE_JSON_ID);
-}
-
-//! Returns true if flags requires reset of item data and tags.
-
-bool isResetItemDataAndTags(const ConverterFlags& flags)
-{
-    return hasFlag(flags, ConverterFlags::COPY_JSON_DATA)
-           && hasFlag(flags, ConverterFlags::COPY_JSON_TAGS);
-}
-
 //! Creates converter for SessionItemData/JSON.
 
-std::unique_ptr<JsonItemDataConverterInterface> createDataConverter(const ConverterFlags& flags)
+std::unique_ptr<JsonItemDataConverterInterface> createDataConverter(const ConverterMode& mode)
 {
-    return flags == ConverterFlags::PROJECT_MODE ? JsonItemDataConverter::createProjectConverter()
-                                                 : JsonItemDataConverter::createCopyConverter();
+    return mode == ConverterMode::project ? JsonItemDataConverter::createProjectConverter()
+                                          : JsonItemDataConverter::createCopyConverter();
 }
 
 } // namespace
@@ -72,7 +57,7 @@ struct JsonItemConverter::JsonItemConverterImpl {
 
         ConverterCallbacks callbacks{create_json, create_item, update_item};
 
-        m_itemdata_converter = createDataConverter(m_context.m_flags);
+        m_itemdata_converter = createDataConverter(m_context.m_mode);
         m_itemtags_converter = std::make_unique<JsonItemTagsConverter>(callbacks);
     }
 
@@ -95,7 +80,7 @@ struct JsonItemConverter::JsonItemConverterImpl {
         if (modelType != item.modelType())
             throw std::runtime_error("Item model mismatch");
 
-        if (isResetItemDataAndTags(m_context.m_flags)) {
+        if (isRebuildItemDataAndTagFromJson(m_context.m_mode)) {
             item.setDataAndTags(std::make_unique<SessionItemData>(),
                                 std::make_unique<SessionItemTags>());
         }
@@ -106,7 +91,7 @@ struct JsonItemConverter::JsonItemConverterImpl {
         for (auto child : item.children())
             child->setParent(&item);
 
-        if (isRegenerateID(m_context.m_flags))
+        if (isRegenerateIdWhenBackFromJson(m_context.m_mode))
             item.setData(UniqueIdGenerator::generate(), ItemDataRole::IDENTIFIER);
     }
 
