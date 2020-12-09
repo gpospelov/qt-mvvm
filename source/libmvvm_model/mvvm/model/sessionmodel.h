@@ -28,9 +28,7 @@ class CommandService;
 class ModelMapper;
 class ItemCatalogue;
 class ItemPool;
-class ItemBackupStrategy;
 class ItemFactoryInterface;
-class ItemCopyStrategy;
 class UndoStackInterface;
 
 class MVVM_MODEL_EXPORT SessionModel
@@ -74,10 +72,6 @@ public:
     ModelMapper* mapper();
 
     void clear(std::function<void(SessionItem*)> callback = {});
-
-    std::unique_ptr<ItemBackupStrategy> itemBackupStrategy() const;
-
-    std::unique_ptr<ItemCopyStrategy> itemCopyStrategy() const;
 
     const ItemFactoryInterface* factory() const;
 

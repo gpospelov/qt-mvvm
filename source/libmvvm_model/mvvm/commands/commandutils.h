@@ -22,11 +22,15 @@ namespace ModelView
 
 class SessionModel;
 
-//! Creates default strategy for item backup.
-std::unique_ptr<ItemBackupStrategy> CreateItemBackupStrategy(const SessionModel* model);
+//! Creates strategy suitable for item saving/restoring. Restored item will have same identifiers
+//! as original.
 
-//! Creates default strategy for item copying.
-std::unique_ptr<ItemCopyStrategy> CreateItemCopyStrategy(const SessionModel* model);
+MVVM_MODEL_EXPORT std::unique_ptr<ItemBackupStrategy> CreateItemBackupStrategy(const SessionModel* model);
+
+//! Returns strategy for item copying. Identifiers of the copy will be different from identifiers
+//! of the original.
+
+MVVM_MODEL_EXPORT std::unique_ptr<ItemCopyStrategy> CreateItemCopyStrategy(const SessionModel* model);
 
 } // namespace ModelView
 

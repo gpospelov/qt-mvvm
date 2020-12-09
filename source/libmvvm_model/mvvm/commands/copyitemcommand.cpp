@@ -7,6 +7,7 @@
 //
 // ************************************************************************** //
 
+#include <mvvm/commands/commandutils.h>
 #include <mvvm/commands/copyitemcommand.h>
 #include <mvvm/interfaces/itembackupstrategy.h>
 #include <mvvm/interfaces/itemcopystrategy.h>
@@ -35,10 +36,10 @@ CopyItemCommand::CopyItemCommand(const SessionItem* item, SessionItem* parent, T
     setResult(nullptr);
 
     setDescription(generate_description(item->modelType(), p_impl->tagrow));
-    p_impl->backup_strategy = parent->model()->itemBackupStrategy();
+    p_impl->backup_strategy = CreateItemBackupStrategy(parent->model());
     p_impl->item_path = pathFromItem(parent);
 
-    auto copy_strategy = parent->model()->itemCopyStrategy(); // to modify id's
+    auto copy_strategy = CreateItemCopyStrategy(parent->model()); // to modify id's
     auto item_copy = copy_strategy->createCopy(item);
 
     p_impl->backup_strategy->saveItem(item_copy.get());
