@@ -17,6 +17,7 @@
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/model/taginfo.h>
 #include <mvvm/serialization/jsondocument.h>
+#include <mvvm/serialization/jsonitem_types.h>
 #include <mvvm/serialization/jsonmodelconverter.h>
 #include <mvvm/standarditems/axisitems.h>
 #include <mvvm/standarditems/containeritem.h>
@@ -618,14 +619,14 @@ TEST_F(DefaultViewModelTest, horizontalLabels)
 
 TEST_F(DefaultViewModelTest, jsonConverterLoadModel)
 {
-    JsonModelConverter converter(JsonModelConverter::ConverterMode::PROJECT_MODE);
+    JsonModelConverter converter(ConverterMode::project);
     QJsonObject object;
 
     // preparing jsob object
     {
         SessionModel model("TestModel");
         model.insertItem<PropertyItem>();
-        JsonModelConverter converter(JsonModelConverter::ConverterMode::PROJECT_MODE);
+        JsonModelConverter converter(ConverterMode::project);
         // writing model to json
         object = converter.to_json(model);
     }

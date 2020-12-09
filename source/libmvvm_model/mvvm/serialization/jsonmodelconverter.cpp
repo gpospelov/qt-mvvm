@@ -12,6 +12,7 @@
 #include <mvvm/factories/itemconverterfactory.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
+#include <mvvm/serialization/jsonitem_types.h>
 #include <mvvm/serialization/jsonitemconverter.h>
 #include <mvvm/serialization/jsonitemformatassistant.h>
 #include <mvvm/serialization/jsonmodelconverter.h>
@@ -21,14 +22,14 @@ using namespace ModelView;
 
 namespace
 {
-std::unique_ptr<JsonItemConverterInterface>
-CreateConverter(const ItemFactoryInterface* factory, const JsonModelConverter::ConverterMode& mode)
+std::unique_ptr<JsonItemConverterInterface> CreateConverter(const ItemFactoryInterface* factory,
+                                                            ConverterMode mode)
 {
-    if (mode == JsonModelConverter::ConverterMode::CLONE_MODE)
+    if (mode == ConverterMode::clone)
         return CreateItemCloneConverter(factory);
-    else if (mode == JsonModelConverter::ConverterMode::COPY_MODE)
+    else if (mode == ConverterMode::copy)
         return CreateItemCopyConverter(factory);
-    else if (mode == JsonModelConverter::ConverterMode::PROJECT_MODE)
+    else if (mode == ConverterMode::project)
         return CreateItemProjectConverter(factory);
     else
         throw std::runtime_error("Error in JsonModelConverter: unknown converter mode");

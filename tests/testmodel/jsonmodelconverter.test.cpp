@@ -18,6 +18,7 @@
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/model/taginfo.h>
+#include <mvvm/serialization/jsonitem_types.h>
 #include <mvvm/serialization/jsonitemformatassistant.h>
 #include <mvvm/serialization/jsonmodelconverter.h>
 #include <stdexcept>
@@ -39,7 +40,7 @@ JsonModelConverterTest::~JsonModelConverterTest() = default;
 
 TEST_F(JsonModelConverterTest, emptyModel)
 {
-    JsonModelConverter converter(JsonModelConverter::ConverterMode::PROJECT_MODE);
+    JsonModelConverter converter(ConverterMode::project);
     SessionModel model("TestModel");
 
     QJsonObject object = converter.to_json(model);
@@ -55,7 +56,7 @@ TEST_F(JsonModelConverterTest, emptyModel)
 
 TEST_F(JsonModelConverterTest, emptyModelToJsonAndBack)
 {
-    JsonModelConverter converter(JsonModelConverter::ConverterMode::PROJECT_MODE);
+    JsonModelConverter converter(ConverterMode::project);
     SessionModel model("TestModel");
 
     QJsonObject object = converter.to_json(model);
@@ -79,7 +80,7 @@ TEST_F(JsonModelConverterTest, emptyModelToJsonAndBack)
 
 TEST_F(JsonModelConverterTest, singleItemToJsonAndBack)
 {
-    JsonModelConverter converter(JsonModelConverter::ConverterMode::PROJECT_MODE);
+    JsonModelConverter converter(ConverterMode::project);
     SessionModel model("TestModel");
 
     auto item = model.insertItem<SessionItem>();
@@ -99,7 +100,7 @@ TEST_F(JsonModelConverterTest, singleItemToJsonAndBack)
 
 TEST_F(JsonModelConverterTest, parentAndChildToJsonAndBack)
 {
-    JsonModelConverter converter(JsonModelConverter::ConverterMode::PROJECT_MODE);
+    JsonModelConverter converter(ConverterMode::project);
     SessionModel model("TestModel");
 
     // filling original model with content
@@ -147,7 +148,7 @@ TEST_F(JsonModelConverterTest, parentAndChildToJsonAndBack)
 
 TEST_F(JsonModelConverterTest, identifiers)
 {
-    JsonModelConverter converter(JsonModelConverter::ConverterMode::PROJECT_MODE);
+    JsonModelConverter converter(ConverterMode::project);
     auto pool1 = std::make_shared<ItemPool>();
 
     // creating model and converting it to json
@@ -181,7 +182,7 @@ TEST_F(JsonModelConverterTest, identifiers)
 
 TEST_F(JsonModelConverterTest, parentAndChildToFileAndBack)
 {
-    JsonModelConverter converter(JsonModelConverter::ConverterMode::PROJECT_MODE);
+    JsonModelConverter converter(ConverterMode::project);
     SessionModel model("TestModel");
 
     // filling original model with content
@@ -236,7 +237,7 @@ TEST_F(JsonModelConverterTest, singleItemToJsonAndBackToSameModel)
 {
     auto pool = std::make_shared<ItemPool>();
 
-    JsonModelConverter converter(JsonModelConverter::ConverterMode::PROJECT_MODE);
+    JsonModelConverter converter(ConverterMode::project);
     SessionModel model("TestModel", pool);
     auto item = model.insertItem<SessionItem>();
 

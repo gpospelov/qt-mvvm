@@ -9,6 +9,7 @@
 
 #include <mvvm/factories/itemconverterfactory.h>
 #include <mvvm/factories/modelconverterfactory.h>
+#include <mvvm/serialization/jsonitem_types.h>
 #include <mvvm/serialization/jsonmodelconverter.h>
 
 //! Creates a JSON model converter intended for model cloning.
@@ -17,7 +18,7 @@
 
 std::unique_ptr<ModelView::JsonModelConverterInterface> ModelView::CreateModelCloneConverter()
 {
-    return std::make_unique<JsonModelConverter>(JsonModelConverter::ConverterMode::CLONE_MODE);
+    return std::make_unique<JsonModelConverter>(ConverterMode::clone);
 }
 
 //! Creates a JSON model converter intended for model copying.
@@ -26,7 +27,7 @@ std::unique_ptr<ModelView::JsonModelConverterInterface> ModelView::CreateModelCl
 
 std::unique_ptr<ModelView::JsonModelConverterInterface> ModelView::CreateModelCopyConverter()
 {
-    return std::make_unique<JsonModelConverter>(JsonModelConverter::ConverterMode::COPY_MODE);
+    return std::make_unique<JsonModelConverter>(ConverterMode::copy);
 }
 
 //! Creates a JSON model converter intended for save/load of the project on disk.
@@ -35,5 +36,5 @@ std::unique_ptr<ModelView::JsonModelConverterInterface> ModelView::CreateModelCo
 
 std::unique_ptr<ModelView::JsonModelConverterInterface> ModelView::CreateModelProjectConverter()
 {
-    return std::make_unique<JsonModelConverter>(JsonModelConverter::ConverterMode::PROJECT_MODE);
+    return std::make_unique<JsonModelConverter>(ConverterMode::project);
 }

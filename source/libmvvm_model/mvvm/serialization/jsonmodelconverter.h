@@ -11,21 +11,20 @@
 #define MVVM_SERIALIZATION_JSONMODELCONVERTER_H
 
 #include <mvvm/serialization/jsonmodelconverterinterface.h>
+
 class QJsonObject;
 
 namespace ModelView
 {
 
 class SessionModel;
+enum class ConverterMode;
 
-//! Default converter of SessionModel to/from json object.
-//! `COPY_MODE` is used to make a full copy of given model, `PROJECT_MODE` is used
-//! for selective saving of model on disk.
+//! Converter of SessionModel to/from json object with posibility to select one of convertion modes.
 
 class MVVM_MODEL_EXPORT JsonModelConverter : public JsonModelConverterInterface
 {
 public:
-    enum class ConverterMode {CLONE_MODE, COPY_MODE, PROJECT_MODE};
     JsonModelConverter(ConverterMode mode);
     ~JsonModelConverter() override;
 
