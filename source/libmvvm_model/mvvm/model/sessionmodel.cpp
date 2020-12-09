@@ -19,16 +19,14 @@
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/model/taginfo.h>
 #include <mvvm/model/tagrow.h>
-#include <mvvm/serialization/jsonitembackupstrategy.h>
-#include <mvvm/serialization/jsonitemcopystrategy.h>
 #include <mvvm/signals/modelmapper.h>
 
 using namespace ModelView;
 
 SessionModel::SessionModel(std::string model_type, std::shared_ptr<ItemPool> pool)
-    : m_item_manager(std::make_unique<ItemManager>())
+    : m_model_type(std::move(model_type))
+    , m_item_manager(std::make_unique<ItemManager>())
     , m_commands(std::make_unique<CommandService>(this))
-    , m_model_type(std::move(model_type))
     , m_mapper(std::make_unique<ModelMapper>(this))
 {
     if (pool)
@@ -155,8 +153,8 @@ ModelMapper* SessionModel::mapper()
     return m_mapper.get();
 }
 
-//! Removes all items from the model.
-//! If callback is provided, use it to rebuild content of root item.
+//! Removes all items from the model. If callback is provided, use it to rebuild content of root
+//! item. Used while restoring the model from serialized content.
 
 void SessionModel::clear(std::function<void(SessionItem*)> callback)
 {
@@ -165,22 +163,6 @@ void SessionModel::clear(std::function<void(SessionItem*)> callback)
     if (callback)
         callback(rootItem());
     mapper()->callOnModelReset();
-}
-
-//! Returns strategy suitable for saving/restoring SessionItem.
-//! Restored item will have same identifiers as original.
-
-std::unique_ptr<ItemBackupStrategy> SessionModel::itemBackupStrategy() const
-{
-    return std::make_unique<JsonItemBackupStrategy>(factory());
-}
-
-//! Returns strategy for copying items.
-//! Identifiers of the copy will be different from identifiers of the original.
-
-std::unique_ptr<ItemCopyStrategy> SessionModel::itemCopyStrategy() const
-{
-    return std::make_unique<JsonItemCopyStrategy>(factory());
 }
 
 //! Returns pointer to ItemFactory which can generate all items supported by this model,

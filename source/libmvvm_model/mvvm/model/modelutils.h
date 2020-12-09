@@ -10,11 +10,12 @@
 #ifndef MVVM_MODEL_MODELUTILS_H
 #define MVVM_MODEL_MODELUTILS_H
 
+#include <memory>
+#include <mvvm/factories/modelconverterfactory.h>
 #include <mvvm/model/itemutils.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/model_export.h>
-#include <memory>
 #include <vector>
 
 namespace ModelView
@@ -29,7 +30,7 @@ template <typename T = SessionItem> std::vector<T*> TopItems(const SessionModel*
 {
     std::vector<T*> result;
     for (auto child : model->rootItem()->children()) {
-        if (auto item = dynamic_cast<T*>(child))
+        if (auto item = dynamic_cast<T*>(child); item)
             result.push_back(item);
     }
 
@@ -51,7 +52,7 @@ template <typename T = SessionItem> std::vector<T*> FindItems(const SessionModel
     std::vector<T*> result;
 
     auto func = [&result](SessionItem* item) {
-        if (auto concrete = dynamic_cast<T*>(item))
+        if (auto concrete = dynamic_cast<T*>(item); concrete)
             result.push_back(concrete);
     };
 
@@ -60,14 +61,26 @@ template <typename T = SessionItem> std::vector<T*> FindItems(const SessionModel
     return result;
 }
 
-//! Populate empty model with content of target model. Utility function for CreateCopy model.
-void MVVM_MODEL_EXPORT PopulateEmptyModel(const SessionModel& source, SessionModel& target);
+//! Populate empty model with content of target model using provided converter.
+//! Serves as auxiliary function for model copying and cloning.
+void MVVM_MODEL_EXPORT PopulateEmptyModel(const JsonModelConverterInterface* converter,
+                                          const SessionModel& source, SessionModel& target);
 
-//! Creates model full copy.
+//! Creates full deep copy of given model. All item's ID will be generated.
 template <typename T = SessionModel> std::unique_ptr<T> CreateCopy(const T& model)
 {
     auto result = std::make_unique<T>();
-    PopulateEmptyModel(model, *result.get());
+    auto converter = CreateModelCopyConverter();
+    PopulateEmptyModel(converter.get(), model, *result.get());
+    return result;
+}
+
+//! Creates exact clone of given model. All item's ID will be preserved.
+template <typename T = SessionModel> std::unique_ptr<T> CreateClone(const T& model)
+{
+    auto result = std::make_unique<T>();
+    auto converter = CreateModelCloneConverter();
+    PopulateEmptyModel(converter.get(), model, *result.get());
     return result;
 }
 

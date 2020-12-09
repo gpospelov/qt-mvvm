@@ -8,15 +8,13 @@
 // ************************************************************************** //
 
 #include <QJsonObject>
-#include <mvvm/factories/modelconverterfactory.h>
 #include <mvvm/interfaces/undostackinterface.h>
 #include <mvvm/model/modelutils.h>
 
 using namespace ModelView;
 
-void Utils::PopulateEmptyModel(const SessionModel& source, SessionModel& target)
+void Utils::PopulateEmptyModel(const JsonModelConverterInterface* converter, const SessionModel& source, SessionModel& target)
 {
-    auto converter = CreateModelCopyConverter();
     QJsonObject object = converter->to_json(source);
     converter->from_json(object, target);
 }

@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include <mvvm/commands/removeitemcommand.h>
+#include <mvvm/commands/commandutils.h>
 #include <mvvm/interfaces/itembackupstrategy.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
@@ -34,7 +35,7 @@ RemoveItemCommand::RemoveItemCommand(SessionItem* parent, TagRow tagrow)
     setResult(false);
 
     setDescription(generate_description(p_impl->tagrow));
-    p_impl->backup_strategy = parent->model()->itemBackupStrategy();
+    p_impl->backup_strategy = CreateItemBackupStrategy(parent->model());
     p_impl->item_path = pathFromItem(parent);
 }
 

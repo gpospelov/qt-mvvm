@@ -10,9 +10,9 @@
 #include "google_test.h"
 #include <QDebug>
 #include <QJsonObject>
+#include <mvvm/model/modelutils.h>
 #include <mvvm/serialization/jsonmodelconverter.h>
 #include <mvvm/standarditems/standarditemincludes.h>
-#include <mvvm/model/modelutils.h>
 
 using namespace ModelView;
 
@@ -68,16 +68,16 @@ TEST_F(StandardItemsSerializationTest, GraphItemAndDataSerialization)
     graph_item->setDataItem(data_item);
 
     // accessing copied items
-    auto modelCopy = Utils::CreateCopy(model);
-    EXPECT_EQ(model.rootItem()->childrenCount(), modelCopy->rootItem()->childrenCount());
+    auto modelClone = Utils::CreateClone(model);
+    EXPECT_EQ(model.rootItem()->childrenCount(), modelClone->rootItem()->childrenCount());
 
-    auto graphCopy = modelCopy->topItem<GraphItem>();
-    auto dataCopy = modelCopy->topItem<Data1DItem>();
+    auto graphClone = modelClone->topItem<GraphItem>();
+    auto dataClone = modelClone->topItem<Data1DItem>();
 
     // analyzing copies
-    EXPECT_EQ(graphCopy->dataItem(), dataCopy);
-    EXPECT_EQ(dataCopy->binCenters(), expected_centers);
-    EXPECT_EQ(dataCopy->binValues(), expected_values);
+    EXPECT_EQ(graphClone->dataItem(), dataClone);
+    EXPECT_EQ(dataClone->binCenters(), expected_centers);
+    EXPECT_EQ(dataClone->binValues(), expected_values);
 }
 
 //! Creating viewport with one graph. Serializing and restoring the model.
@@ -100,19 +100,19 @@ TEST_F(StandardItemsSerializationTest, graphViewPortItemSerialization)
     // updating viewport to graph
     viewport_item->setViewportToContent();
 
-    // accessing copied items
-    auto modelCopy = Utils::CreateCopy(model);
-    EXPECT_EQ(model.rootItem()->childrenCount(), modelCopy->rootItem()->childrenCount());
-    auto viewportCopy = modelCopy->topItem<GraphViewportItem>();
+    // accessing cloned items
+    auto modelClone = Utils::CreateClone(model);
+    EXPECT_EQ(model.rootItem()->childrenCount(), modelClone->rootItem()->childrenCount());
+    auto viewportCopy = modelClone->topItem<GraphViewportItem>();
     ASSERT_EQ(viewportCopy->graphItems().size(), 1);
-    auto graphCopy = viewportCopy->graphItems().at(0);
-    auto dataCopy = modelCopy->topItem<Data1DItem>();
+    auto graphClone = viewportCopy->graphItems().at(0);
+    auto dataClone = modelClone->topItem<Data1DItem>();
 
-    // analyzing copies
-    EXPECT_EQ(graphCopy->dataItem(), dataCopy);
-    EXPECT_EQ(graphCopy->dataItem(), dataCopy);
-    EXPECT_EQ(dataCopy->binCenters(), expected_centers);
-    EXPECT_EQ(dataCopy->binValues(), expected_values);
+    // analyzing clones
+    EXPECT_EQ(graphClone->dataItem(), dataClone);
+    EXPECT_EQ(graphClone->dataItem(), dataClone);
+    EXPECT_EQ(dataClone->binCenters(), expected_centers);
+    EXPECT_EQ(dataClone->binValues(), expected_values);
 
     EXPECT_DOUBLE_EQ(viewportCopy->xAxis()->property<double>(ViewportAxisItem::P_MIN),
                      expected_centers[0]);

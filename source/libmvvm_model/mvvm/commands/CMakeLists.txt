@@ -3,11 +3,13 @@ target_sources(${library_name} PRIVATE
     abstractitemcommand.h
     commandadapter.cpp
     commandadapter.h
+    commandresult.h
     commandservice.cpp
     commandservice.h
+    commandutils.cpp
+    commandutils.h
     copyitemcommand.cpp
     copyitemcommand.h
-    commandresult.h
     insertnewitemcommand.cpp
     insertnewitemcommand.h
     moveitemcommand.cpp

@@ -28,9 +28,7 @@ class CommandService;
 class ModelMapper;
 class ItemCatalogue;
 class ItemPool;
-class ItemBackupStrategy;
 class ItemFactoryInterface;
-class ItemCopyStrategy;
 class UndoStackInterface;
 
 class MVVM_MODEL_EXPORT SessionModel
@@ -75,10 +73,6 @@ public:
 
     void clear(std::function<void(SessionItem*)> callback = {});
 
-    std::unique_ptr<ItemBackupStrategy> itemBackupStrategy() const;
-
-    std::unique_ptr<ItemCopyStrategy> itemCopyStrategy() const;
-
     const ItemFactoryInterface* factory() const;
 
     SessionItem* findItem(const identifier_type& id);
@@ -87,16 +81,14 @@ public:
 
     template <typename T = SessionItem> T* topItem() const;
 
-protected:
-    std::unique_ptr<ItemManager> m_item_manager;
-
 private:
     void createRootItem();
     SessionItem* intern_insert(const item_factory_func_t& func, SessionItem* parent,
                                const TagRow& tagrow);
 
-    std::unique_ptr<CommandService> m_commands;
     std::string m_model_type;
+    std::unique_ptr<ItemManager> m_item_manager;
+    std::unique_ptr<CommandService> m_commands;
     std::unique_ptr<ModelMapper> m_mapper;
     std::unique_ptr<SessionItem> m_root_item;
 };

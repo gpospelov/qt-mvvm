@@ -18,7 +18,7 @@ namespace ModelView
 
 class SessionItem;
 
-//! Interface to copy items within context.
+//! Interface for deep item copying.
 
 class MVVM_MODEL_EXPORT ItemCopyStrategy
 {
