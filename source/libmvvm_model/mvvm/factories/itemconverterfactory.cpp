@@ -21,7 +21,7 @@ namespace ModelView
 std::unique_ptr<JsonItemConverterInterface>
 CreateItemCloneConverter(const ItemFactoryInterface* item_factory)
 {
-    ConverterContext context{item_factory, ConverterMode::clone, ConverterFlags::CLONE_MODE};
+    ConverterContext context{item_factory, ConverterMode::clone};
     return std::make_unique<JsonItemConverter>(context);
 }
 
@@ -32,7 +32,7 @@ CreateItemCloneConverter(const ItemFactoryInterface* item_factory)
 std::unique_ptr<JsonItemConverterInterface>
 CreateItemCopyConverter(const ItemFactoryInterface* item_factory)
 {
-    ConverterContext context{item_factory, ConverterMode::copy, ConverterFlags::COPY_MODE};
+    ConverterContext context{item_factory, ConverterMode::copy};
     return std::make_unique<JsonItemConverter>(context);
 }
 
@@ -48,7 +48,7 @@ CreateItemCopyConverter(const ItemFactoryInterface* item_factory)
 std::unique_ptr<JsonItemConverterInterface>
 CreateItemProjectConverter(const ItemFactoryInterface* item_factory)
 {
-    ConverterContext context{item_factory, ConverterMode::project, ConverterFlags::PROJECT_MODE};
+    ConverterContext context{item_factory, ConverterMode::project};
     return std::make_unique<JsonItemConverter>(context);
 }
 

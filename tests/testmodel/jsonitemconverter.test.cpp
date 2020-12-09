@@ -58,7 +58,7 @@ public:
 
     std::unique_ptr<JsonItemConverter> createConverter()
     {
-        ConverterContext context{m_model->factory(), ConverterMode::clone, ConverterFlags::CLONE_MODE};
+        ConverterContext context{m_model->factory(), ConverterMode::clone};
         return std::make_unique<JsonItemConverter>(context);
     }
 

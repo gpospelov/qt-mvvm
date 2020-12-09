@@ -22,21 +22,18 @@ public:
 
 JsonItemTypesTest::~JsonItemTypesTest() = default;
 
-TEST_F(JsonItemTypesTest, logicalAnd)
+TEST_F(JsonItemTypesTest, isRegenerateIdWhenBackFromJson)
 {
-    EXPECT_FALSE(hasFlag(ConverterFlags::COPY_MODE, ConverterFlags::USE_JSON_ID));
-    EXPECT_TRUE((ConverterFlags::COPY_MODE & ConverterFlags::USE_JSON_ID) == ConverterFlags::NONE);
+    EXPECT_FALSE(isRegenerateIdWhenBackFromJson(ConverterMode::none));
+    EXPECT_FALSE(isRegenerateIdWhenBackFromJson(ConverterMode::clone));
+    EXPECT_TRUE(isRegenerateIdWhenBackFromJson(ConverterMode::copy));
+    EXPECT_FALSE(isRegenerateIdWhenBackFromJson(ConverterMode::project));
+}
 
-    ConverterFlags flags = ConverterFlags::USE_JSON_ID | ConverterFlags::COPY_JSON_DATA
-                           | ConverterFlags::COPY_JSON_TAGS;
-    EXPECT_TRUE((flags & (ConverterFlags::COPY_JSON_DATA | ConverterFlags::COPY_JSON_TAGS))
-                != ConverterFlags::NONE);
-
-    flags = ConverterFlags::COPY_JSON_DATA | ConverterFlags::COPY_JSON_TAGS;
-    EXPECT_TRUE((flags & (ConverterFlags::COPY_JSON_DATA | ConverterFlags::COPY_JSON_TAGS))
-                != ConverterFlags::NONE);
-
-    flags = ConverterFlags::PROJECT_MODE;
-    EXPECT_FALSE(hasFlag(flags, ConverterFlags::COPY_JSON_DATA)
-                 && hasFlag(flags, ConverterFlags::COPY_JSON_TAGS));
+TEST_F(JsonItemTypesTest, isRebuildItemDataAndTagFromJson)
+{
+    EXPECT_TRUE(isRebuildItemDataAndTagFromJson(ConverterMode::none));
+    EXPECT_TRUE(isRebuildItemDataAndTagFromJson(ConverterMode::clone));
+    EXPECT_TRUE(isRebuildItemDataAndTagFromJson(ConverterMode::copy));
+    EXPECT_FALSE(isRebuildItemDataAndTagFromJson(ConverterMode::project));
 }
