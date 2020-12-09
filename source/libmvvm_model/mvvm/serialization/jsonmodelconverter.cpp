@@ -27,7 +27,7 @@ CreateConverter(const ItemFactoryInterface* factory, const JsonModelConverter::C
     if (mode == JsonModelConverter::ConverterMode::CLONE_MODE)
         return CreateItemCloneConverter(factory);
     else if (mode == JsonModelConverter::ConverterMode::COPY_MODE)
-        return CreateItemProjectConverter(factory); // FIXME switch to copy
+        return CreateItemCopyConverter(factory);
     else if (mode == JsonModelConverter::ConverterMode::PROJECT_MODE)
         return CreateItemProjectConverter(factory);
     else
