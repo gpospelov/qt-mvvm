@@ -102,8 +102,12 @@ TEST_F(ModelUtilsTest, CreateClone)
     EXPECT_EQ(layerCopy->property<double>(ToyItems::LayerItem::P_THICKNESS), 42.0);
 
     // Copied model has unique identifiers
-//    EXPECT_TRUE(model.rootItem()->identifier() == modelCopy->rootItem()->identifier());
     EXPECT_TRUE(layerCopy->identifier() == layer->identifier());
+
+    // root item by current conveniton still has unique identifier event for cloned model
+    // probably for the uniformity this has to be changed, and test below changed to EXPECT_TRUE
+    // This will require change in JsonModelConverter
+    EXPECT_FALSE(model.rootItem()->identifier() == modelCopy->rootItem()->identifier());
 }
 
 TEST_F(ModelUtilsTest, DeleteItemFromModel)
