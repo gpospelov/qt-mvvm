@@ -26,9 +26,9 @@
 using namespace ModelView;
 
 SessionModel::SessionModel(std::string model_type, std::shared_ptr<ItemPool> pool)
-    : m_item_manager(std::make_unique<ItemManager>())
+    : m_model_type(std::move(model_type))
+    , m_item_manager(std::make_unique<ItemManager>())
     , m_commands(std::make_unique<CommandService>(this))
-    , m_model_type(std::move(model_type))
     , m_mapper(std::make_unique<ModelMapper>(this))
 {
     if (pool)
@@ -155,8 +155,8 @@ ModelMapper* SessionModel::mapper()
     return m_mapper.get();
 }
 
-//! Removes all items from the model.
-//! If callback is provided, use it to rebuild content of root item.
+//! Removes all items from the model. If callback is provided, use it to rebuild content of root
+//! item. Used while restoring the model from serialized content.
 
 void SessionModel::clear(std::function<void(SessionItem*)> callback)
 {
