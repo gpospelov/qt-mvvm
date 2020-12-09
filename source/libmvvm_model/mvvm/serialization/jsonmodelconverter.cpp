@@ -24,7 +24,9 @@ namespace
 std::unique_ptr<JsonItemConverterInterface>
 CreateConverter(const ItemFactoryInterface* factory, const JsonModelConverter::ConverterMode& mode)
 {
-    if (mode == JsonModelConverter::ConverterMode::COPY_MODE)
+    if (mode == JsonModelConverter::ConverterMode::CLONE_MODE)
+        return CreateItemProjectConverter(factory); // FIXME switch to clone
+    else if (mode == JsonModelConverter::ConverterMode::COPY_MODE)
         return CreateItemProjectConverter(factory); // FIXME switch to copy
     else if (mode == JsonModelConverter::ConverterMode::PROJECT_MODE)
         return CreateItemProjectConverter(factory);
