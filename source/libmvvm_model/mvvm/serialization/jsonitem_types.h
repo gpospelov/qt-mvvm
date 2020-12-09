@@ -72,10 +72,33 @@ inline bool hasFlag(ConverterFlags arg, ConverterFlags flag)
     return (arg & flag) != ConverterFlags::NONE;
 }
 
+//! Flags to define converter behavior on the way from SessionItem to JSON and back.
+
+enum class ConverterMode {
+    none,   //!< undefined converter mode
+    clone,  //!< full deep copying with item identifiers preserved
+    copy,   //!< full deep copying with item identifiers regenerated
+    project //!< selective copying for saving/loading the project (tags and data created by item,
+            //!< updated from JSON)
+};
+
+//! Returns true if given mode requires ID regeneration instead of using the one stored in JSON.
+inline bool isRegenerateIdWhenBackFromJson(ConverterMode mode)
+{
+    return mode == ConverterMode::copy;
+}
+
+//! Returns true if item content should be reconstructed from JSON
+inline bool isRebuildItemDataAndTagFromJson(ConverterMode mode)
+{
+    return mode != ConverterMode::project;
+}
+
 //! Collection of input paramters for SessionItemConverter
 
 struct MVVM_MODEL_EXPORT ConverterContext {
     const ItemFactoryInterface* m_factory{nullptr};
+    ConverterMode m_mode = ConverterMode::none;
     ConverterFlags m_flags = ConverterFlags::NONE;
 };
 
