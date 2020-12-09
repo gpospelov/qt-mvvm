@@ -26,7 +26,7 @@ class MVVM_MODEL_EXPORT JsonModelConverter : public JsonModelConverterInterface
 {
 public:
     enum class ConverterMode {CLONE_MODE, COPY_MODE, PROJECT_MODE};
-    JsonModelConverter(ConverterMode mode = ConverterMode::PROJECT_MODE);
+    JsonModelConverter(ConverterMode mode);
     ~JsonModelConverter() override;
 
     //! Writes content of model into json.

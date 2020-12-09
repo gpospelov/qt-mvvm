@@ -618,14 +618,14 @@ TEST_F(DefaultViewModelTest, horizontalLabels)
 
 TEST_F(DefaultViewModelTest, jsonConverterLoadModel)
 {
-    JsonModelConverter converter;
+    JsonModelConverter converter(JsonModelConverter::ConverterMode::PROJECT_MODE);
     QJsonObject object;
 
     // preparing jsob object
     {
         SessionModel model("TestModel");
         model.insertItem<PropertyItem>();
-        JsonModelConverter converter;
+        JsonModelConverter converter(JsonModelConverter::ConverterMode::PROJECT_MODE);
         // writing model to json
         object = converter.to_json(model);
     }
