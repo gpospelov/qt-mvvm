@@ -23,7 +23,7 @@ const std::string SphereType = "Sphere";
 const std::string AnysoPyramidType = "AnysoPyramid";
 const std::string ShapeGroupType = "ShapeGroup";
 
-std::unique_ptr<ModelView::ItemCatalogue> CreateToyItemCatalogue()
+std::unique_ptr<ModelView::ItemCatalogue> CreateItemCatalogue()
 {
     auto result = std::make_unique<ItemCatalogue>();
     result->registerItem<ParticleItem>();
@@ -76,6 +76,6 @@ ShapeGroupItem::ShapeGroupItem() : GroupItem(ShapeGroupType)
 
 ParticleModel::ParticleModel() : SessionModel("ParticleModel")
 {
-    setItemCatalogue(CreateToyItemCatalogue());
+    setItemCatalogue(CreateItemCatalogue());
     insertItem<ParticleItem>();
 }

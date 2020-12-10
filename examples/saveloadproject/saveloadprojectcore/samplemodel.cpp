@@ -17,7 +17,7 @@
 
 namespace
 {
-std::unique_ptr<ModelView::ItemCatalogue> CreateToyItemCatalogue()
+std::unique_ptr<ModelView::ItemCatalogue> CreateItemCatalogue()
 {
     auto result = std::make_unique<ModelView::ItemCatalogue>();
     result->registerItem<DemoItem>();
@@ -56,7 +56,7 @@ DemoItem::DemoItem() : CompoundItem(DemoItemType)
 
 SampleModel::SampleModel() : SessionModel("SampleModel")
 {
-    setItemCatalogue(CreateToyItemCatalogue());
+    setItemCatalogue(CreateItemCatalogue());
     initModelContent();
     setUndoRedoEnabled(true);
 }

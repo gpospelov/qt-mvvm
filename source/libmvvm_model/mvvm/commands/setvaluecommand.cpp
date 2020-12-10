@@ -11,11 +11,12 @@
 #include <mvvm/core/variant.h>
 #include <mvvm/model/path.h>
 #include <mvvm/model/sessionitem.h>
+#include <mvvm/model/modelutils.h>
 #include <sstream>
 
 namespace
 {
-std::string generate_description(const std::string& str);
+std::string generate_description(const std::string& str, int role);
 } // namespace
 
 using namespace ModelView;
@@ -35,7 +36,7 @@ SetValueCommand::SetValueCommand(SessionItem* item, Variant value, int role)
 {
     setResult(false);
 
-    setDescription(generate_description(p_impl->m_value.toString().toStdString()));
+    setDescription(generate_description(p_impl->m_value.toString().toStdString(), role));
     p_impl->m_item_path = pathFromItem(item);
 }
 
@@ -63,10 +64,10 @@ void SetValueCommand::swap_values()
 
 namespace
 {
-std::string generate_description(const std::string& str)
+std::string generate_description(const std::string& str, int role)
 {
     std::ostringstream ostr;
-    ostr << "Set value " << str;
+    ostr << "Set value: " << str << ", role:" << role;
     return ostr.str();
 }
 } // namespace

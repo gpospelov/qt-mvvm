@@ -114,7 +114,6 @@ public:
 private:
     friend class SessionModel;
     friend class JsonItemConverter;
-    friend class JsonItemConverterV2;
     virtual void activate() {}
     bool set_data_internal(Variant value, int role);
     Variant data_internal(int role) const;
