@@ -366,7 +366,10 @@ void SessionItem::setAppearanceFlag(int flag, bool value)
     else
         flags &= ~flag;
 
-    setData(flags, ItemDataRole::APPEARANCE);
+    // By setting data with internal method we are bypassing the model, and so undo/redo.
+    // So current convention is to not invoke undo when changing appearance properties.
+    // Shall we change it?
+    setDataIntern(flags, ItemDataRole::APPEARANCE);
 }
 
 const SessionItemData* SessionItem::itemData() const
