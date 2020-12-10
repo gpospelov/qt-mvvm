@@ -35,7 +35,7 @@ public:
     ModelView::SaveChangesAnswer onSaveChangesRequest();
 
 private:
-    std::string selectDir() const;
+    std::string getExistingDirectory() const;
 
     RecentProjectSettings* m_settings{nullptr};
     QWidget* m_parent{nullptr};

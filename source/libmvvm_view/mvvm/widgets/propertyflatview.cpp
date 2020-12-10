@@ -13,10 +13,10 @@
 #include <QLabel>
 #include <mvvm/editors/customeditor.h>
 #include <mvvm/editors/defaulteditorfactory.h>
+#include <mvvm/factories/viewmodelfactory.h>
 #include <mvvm/model/groupitem.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/viewmodel/standardviewitems.h>
-#include <mvvm/viewmodel/standardviewmodels.h>
 #include <mvvm/viewmodel/viewmodel.h>
 #include <mvvm/viewmodel/viewmodeldelegate.h>
 #include <mvvm/widgets/layoututils.h>
@@ -33,8 +33,9 @@ struct PropertyFlatView::PropertyFlatViewImpl {
 
     QGridLayout* grid_layout{nullptr};
     PropertyFlatViewImpl()
-        : m_delegate(std::make_unique<ViewModelDelegate>()),
-          editor_factory(std::make_unique<DefaultEditorFactory>()), grid_layout(new QGridLayout)
+        : m_delegate(std::make_unique<ViewModelDelegate>())
+        , editor_factory(std::make_unique<DefaultEditorFactory>())
+        , grid_layout(new QGridLayout)
     {
     }
 
@@ -151,7 +152,7 @@ PropertyFlatView::~PropertyFlatView() = default;
 
 void PropertyFlatView::setItem(SessionItem* item)
 {
-    p_impl->view_model = Utils::CreatePropertyFlatViewModel(item->model());
+    p_impl->view_model = Factory::CreatePropertyFlatViewModel(item->model());
     p_impl->view_model->setRootSessionItem(item);
     p_impl->connect_model();
     p_impl->update_grid_layout();

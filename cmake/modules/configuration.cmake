@@ -13,7 +13,8 @@ include(GNUInstallDirs)
 # Variables
 # -----------------------------------------------------------------------------
 
-set(MVVM_PROJECT_DIR ${CMAKE_CURRENT_LIST_DIR}/../..)
+get_filename_component(MVVM_PROJECT_DIR "${CMAKE_CURRENT_LIST_DIR}/../.." ABSOLUTE)
+
 set(MVVM_SOVERSION ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR})
 set(MVVM_BUILDVERSION ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH})
 set(MVVM_TESTOUTPUT_DIR ${CMAKE_BINARY_DIR}/test_output_mvvm)

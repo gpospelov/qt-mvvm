@@ -10,7 +10,7 @@
 #ifndef MVVM_VIEWMODEL_LABELDATAROWSTRATEGY_H
 #define MVVM_VIEWMODEL_LABELDATAROWSTRATEGY_H
 
-#include <mvvm/viewmodel/rowstrategyinterface.h>
+#include <mvvm/interfaces/rowstrategyinterface.h>
 
 class QStandardItem;
 
@@ -28,7 +28,7 @@ class MVVM_VIEWMODEL_EXPORT LabelDataRowStrategy : public RowStrategyInterface
 public:
     QStringList horizontalHeaderLabels() const override;
 
-    std::vector<std::unique_ptr<ViewItem>> constructRefRow(SessionItem*) override;
+    std::vector<std::unique_ptr<ViewItem>> constructRow(SessionItem*) override;
 };
 
 } // namespace ModelView

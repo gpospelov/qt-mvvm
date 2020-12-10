@@ -17,14 +17,22 @@
 #include <QToolButton>
 #include <QUndoStack>
 #include <cassert>
+#include <mvvm/commands/undostack.h>
 #include <mvvm/model/modelutils.h>
 
 using namespace ModelView;
 
+namespace DragAndView
+{
+
 ModelEditorWidget::ModelEditorWidget(SampleModel* model, QWidget* parent)
-    : QWidget(parent), m_toolBar(new QToolBar), m_leftWidget(new ContainerEditorWidget),
-      m_rightWidget(new ContainerEditorWidget), m_undoAction(nullptr), m_redoAction(nullptr),
-      m_model(nullptr)
+    : QWidget(parent)
+    , m_toolBar(new QToolBar)
+    , m_leftWidget(new ContainerEditorWidget)
+    , m_rightWidget(new ContainerEditorWidget)
+    , m_undoAction(nullptr)
+    , m_redoAction(nullptr)
+    , m_model(nullptr)
 {
     auto mainLayout = new QVBoxLayout;
     mainLayout->setSpacing(10);
@@ -54,7 +62,7 @@ void ModelEditorWidget::setModel(SampleModel* model)
 
     m_model = model;
 
-    auto containers = Utils::TopItems(m_model);
+    auto containers = m_model->topItems();
     assert(containers.size() == 2);
 
     m_leftWidget->setModel(m_model, containers[0]);
@@ -63,18 +71,12 @@ void ModelEditorWidget::setModel(SampleModel* model)
 
 void ModelEditorWidget::onUndo()
 {
-    if (!m_model->undoStack())
-        return;
-
-    m_model->undoStack()->undo();
+    Utils::Undo(*m_model);
 }
 
 void ModelEditorWidget::onRedo()
 {
-    if (!m_model->undoStack())
-        return;
-
-    m_model->undoStack()->redo();
+    Utils::Redo(*m_model);
 }
 
 void ModelEditorWidget::init_actions()
@@ -96,10 +98,14 @@ void ModelEditorWidget::init_actions()
         auto can_undo_changed = [this]() {
             m_undoAction->setEnabled(m_model->undoStack()->canUndo());
         };
-        connect(m_model->undoStack(), &QUndoStack::canUndoChanged, can_undo_changed);
+        connect(UndoStack::qtUndoStack(m_model->undoStack()), &QUndoStack::canUndoChanged,
+                can_undo_changed);
         auto can_redo_changed = [this]() {
             m_redoAction->setEnabled(m_model->undoStack()->canRedo());
         };
-        connect(m_model->undoStack(), &QUndoStack::canUndoChanged, can_redo_changed);
+        connect(UndoStack::qtUndoStack(m_model->undoStack()), &QUndoStack::canUndoChanged,
+                can_redo_changed);
     }
 }
+
+} // namespace DragAndView

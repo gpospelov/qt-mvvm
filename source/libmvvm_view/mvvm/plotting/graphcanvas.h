@@ -20,15 +20,13 @@ namespace ModelView
 class GraphViewportItem;
 class SceneAdapterInterface;
 
-/*!
-@class GraphCanvas
-@brief Widget to show scientific figure with multiple 1D graphs.
-
-Contains embedded QCustomPlot widget, shows content of GraphViewportItem.
-*/
+//! Widget to show scientific figure with multiple 1D graphs.
+//! Contains embedded QCustomPlot widget, shows content of GraphViewportItem.
 
 class MVVM_VIEW_EXPORT GraphCanvas : public QWidget
 {
+    Q_OBJECT
+
 public:
     explicit GraphCanvas(QWidget* parent = nullptr);
     ~GraphCanvas() override;
@@ -37,7 +35,14 @@ public:
 
     std::unique_ptr<SceneAdapterInterface> createSceneAdapter() const;
 
-    void update_viewport();
+    void setViewportToContent(double left, double top, double right, double bottom);
+
+    void setViewportToContent();
+
+    void setAxisMargins(int left, int top, int right, int bottom);
+
+signals:
+    void axisMarginsChanged(int left, int top, int right, int bottom);
 
 private:
     struct GraphCanvasImpl;

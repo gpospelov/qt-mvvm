@@ -10,7 +10,7 @@
 #ifndef MVVM_VIEWMODEL_PROPERTIESROWSTRATEGY_H
 #define MVVM_VIEWMODEL_PROPERTIESROWSTRATEGY_H
 
-#include <mvvm/viewmodel/rowstrategyinterface.h>
+#include <mvvm/interfaces/rowstrategyinterface.h>
 
 class QStandardItem;
 
@@ -29,7 +29,7 @@ public:
 
     QStringList horizontalHeaderLabels() const override;
 
-    std::vector<std::unique_ptr<ViewItem>> constructRefRow(SessionItem* item) override;
+    std::vector<std::unique_ptr<ViewItem>> constructRow(SessionItem* item) override;
 
 private:
     void update_column_labels(std::vector<ModelView::SessionItem*> items);

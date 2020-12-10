@@ -16,8 +16,10 @@
 using namespace ModelView;
 
 ItemsTreeView::ItemsTreeView(QWidget* parent)
-    : QWidget(parent), m_treeView(new QTreeView), m_delegate(std::make_unique<ViewModelDelegate>()),
-      m_block_selection(false)
+    : QWidget(parent)
+    , m_treeView(new QTreeView)
+    , m_delegate(std::make_unique<ViewModelDelegate>())
+    , m_block_selection(false)
 {
     auto layout = new QVBoxLayout;
     layout->setMargin(0);
@@ -36,6 +38,11 @@ void ItemsTreeView::setViewModel(std::unique_ptr<ViewModel> viewModel)
     m_treeView->expandAll();
     m_treeView->resizeColumnToContents(0);
     set_connected(true);
+}
+
+void ItemsTreeView::setViewModelDelegate(std::unique_ptr<ViewModelDelegate> delegate)
+{
+    m_delegate = std::move(delegate);
 }
 
 //! Make given item selected in QTreeView.

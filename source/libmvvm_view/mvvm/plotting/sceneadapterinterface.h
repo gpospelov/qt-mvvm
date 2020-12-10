@@ -17,13 +17,9 @@ class QRectF;
 namespace ModelView
 {
 
-/*!
-@class SceneAdapterInterface
-@brief Interface to convert coordinates of "scene" to coordinates of "widget".
-
-Used in the context of QCustomPlot being embedded into QGraphicsScene. Converts QGraphicsScene
-coordinates in the coordinates of local system of QCustomPlot and vice versa.
-*/
+//! Interface to convert coordinates of "scene" to coordinates of "widget".
+//! Used in the context of QCustomPlot being embedded into QGraphicsScene. Converts QGraphicsScene
+//! coordinates in the coordinates of local system of QCustomPlot and vice versa.
 
 class MVVM_VIEW_EXPORT SceneAdapterInterface
 {

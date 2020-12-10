@@ -21,6 +21,9 @@ const QString size_key = "size";
 const QString pos_key = "pos";
 } // namespace
 
+namespace PlotGraphs
+{
+
 MainWindow::MainWindow()
     : m_tabWidget(new QTabWidget), m_graph_model(std::make_unique<GraphModel>())
 {
@@ -63,3 +66,5 @@ void MainWindow::write_settings()
     settings.setValue(pos_key, pos());
     settings.endGroup();
 }
+
+} // namespace PlotGraphs

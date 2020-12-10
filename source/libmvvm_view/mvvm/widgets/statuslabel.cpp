@@ -12,6 +12,7 @@
 #include <QPainter>
 #include <mvvm/editors/styleutils.h>
 #include <mvvm/widgets/statuslabel.h>
+#include <mvvm/widgets/widgetutils.h>
 
 using namespace ModelView;
 
@@ -56,9 +57,9 @@ void StatusLabel::paintEvent(QPaintEvent* event)
     painter.setFont(m_font);
 
     QRect bbox(0, 0, geometry().width(), geometry().height());
-    const int gap(-2); // make it smaller
-    auto textRect = bbox.adjusted(gap, gap, gap, gap);
+    const int gap(Utils::WidthOfLetterM() / 2); // make it smaller
+    auto textRect = bbox.adjusted(gap, 0, gap, 0);
 
-    painter.fillRect(textRect, QColor(Qt::white));
+    painter.fillRect(bbox, QColor(Qt::white));
     painter.drawText(textRect, static_cast<int>(m_alignment), m_text);
 }

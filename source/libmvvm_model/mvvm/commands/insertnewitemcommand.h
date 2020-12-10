@@ -24,12 +24,8 @@ class TagRow;
 class MVVM_MODEL_EXPORT InsertNewItemCommand : public AbstractItemCommand
 {
 public:
-    using result_t = SessionItem*;
-
     InsertNewItemCommand(item_factory_func_t func, SessionItem* parent, const TagRow& tagrow);
     ~InsertNewItemCommand() override;
-
-    result_t result() const;
 
 private:
     void undo_command() override;

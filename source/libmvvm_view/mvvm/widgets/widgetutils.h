@@ -10,12 +10,16 @@
 #ifndef MVVM_WIDGETS_UTILS_H
 #define MVVM_WIDGETS_UTILS_H
 
+#include <QString>
+#include <QStringList>
 #include <mvvm/view_export.h>
+#include <string>
+#include <vector>
 
 class QColor;
-class QString;
 class QSize;
 class QMainWindow;
+class QLabel;
 
 namespace ModelView
 {
@@ -26,10 +30,19 @@ namespace Utils
 {
 
 //! Returns random color.
-MVVM_VIEW_EXPORT QColor random_color();
+MVVM_VIEW_EXPORT QColor RandomColor();
+
+//! Returns the name of random color.
+MVVM_VIEW_EXPORT std::string RandomNamedColor();
 
 //! Returns true if it is Windows.
 MVVM_VIEW_EXPORT bool IsWindowsHost();
+
+//! Returns true if it is Mac.
+MVVM_VIEW_EXPORT bool IsMacHost();
+
+//! Returns true if it is Linux.
+MVVM_VIEW_EXPORT bool IsLinuxHost();
 
 //! Returns a string where Linux path to the file is striped using '~/'.
 MVVM_VIEW_EXPORT QString WithTildeHomePath(const QString& path);
@@ -51,6 +64,25 @@ MVVM_VIEW_EXPORT int SystemPointSize();
 
 //! Finds main window.
 MVVM_VIEW_EXPORT QMainWindow* FindMainWindow();
+
+//! Returns text wrapped into 'href' tag to provide clickable links in QLabel.
+//! Example: <a href="tag">text</a>, if 'tag' is empty, 'text' will be used instead.
+MVVM_VIEW_EXPORT QString ClickableText(const QString& text, const QString& tag = {});
+
+//! Set label's font size to system font size scaled by given factor.
+MVVM_VIEW_EXPORT void ScaleLabelFont(QLabel* label, double scale);
+
+//! Converts vector of strings to QStringList.
+MVVM_VIEW_EXPORT QStringList toStringList(const std::vector<std::string>& vec);
+
+//! Converts vector of strings to QStringList.
+MVVM_VIEW_EXPORT std::vector<std::string> fromStringList(const QStringList& string_list);
+
+//! Converts vector of strings to byte array.
+MVVM_VIEW_EXPORT QByteArray serialize(const QStringList& data);
+
+//! Converts byte array to vector of strings.
+MVVM_VIEW_EXPORT QStringList deserialize(const QByteArray& byteArray);
 
 } // namespace Utils
 

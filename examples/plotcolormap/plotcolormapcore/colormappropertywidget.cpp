@@ -12,10 +12,13 @@
 #include <QBoxLayout>
 #include <QPushButton>
 #include <QSlider>
-#include <mvvm/viewmodel/standardviewmodels.h>
+#include <mvvm/factories/viewmodelfactory.h>
 #include <mvvm/widgets/itemstreeview.h>
 
 using namespace ModelView;
+
+namespace PlotColorMap
+{
 
 ColorMapPropertyWidget::ColorMapPropertyWidget(ColorMapModel* model, QWidget* parent)
     : QWidget(parent), m_slider(new QSlider), m_treeView(new ItemsTreeView), m_model(model)
@@ -35,7 +38,7 @@ void ColorMapPropertyWidget::setModel(ColorMapModel* model)
 
     m_model = model;
 
-    m_treeView->setViewModel(Utils::CreateDefaultViewModel(model));
+    m_treeView->setViewModel(Factory::CreateDefaultViewModel(model));
 }
 
 //! Slider to regenerate the data in the model.
@@ -49,3 +52,5 @@ void ColorMapPropertyWidget::setup_slider()
     auto on_value_changed = [this](int value) { m_model->update_data(value / 10.0); };
     connect(m_slider, &QSlider::valueChanged, on_value_changed);
 }
+
+} // namespace PlotColorMap

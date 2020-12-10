@@ -10,7 +10,6 @@
 #include "graphmodel.h"
 #include "toysimulation.h"
 #include <QColor>
-#include <mvvm/model/modelutils.h>
 #include <mvvm/standarditems/axisitems.h>
 #include <mvvm/standarditems/containeritem.h>
 #include <mvvm/standarditems/data1ditem.h>
@@ -42,8 +41,8 @@ GraphModel::GraphModel() : SessionModel("GraphModel")
 
 void GraphModel::set_data(const std::vector<double>& data)
 {
-    auto item = Utils::TopItem<ContainerItem>(this)->item<Data1DItem>(ContainerItem::T_ITEMS);
-    item->setContent(data);
+    auto item = topItem<ContainerItem>()->item<Data1DItem>(ContainerItem::T_ITEMS);
+    item->setValues(data);
 }
 
 //! Creates data container, Data1DItem, viewport and GraphItem.
@@ -67,10 +66,10 @@ void GraphModel::add_graph(ModelView::ContainerItem* container,
     auto [xmin, xmax, points] = simulation_result(ModelView::Utils::RandDouble(0.5, 1.0));
 
     auto data = insertItem<Data1DItem>(container);
-    data->setAxis(FixedBinAxisItem::create(static_cast<int>(points.size()), xmin, xmax));
-    data->setContent(points);
+    data->setAxis<FixedBinAxisItem>(static_cast<int>(points.size()), xmin, xmax);
+    data->setValues(points);
 
     auto graph = insertItem<GraphItem>(viewport);
     graph->setDataItem(data);
-    graph->setProperty(GraphItem::P_COLOR, ModelView::Utils::random_color());
+    graph->setNamedColor(ModelView::Utils::RandomNamedColor());
 }

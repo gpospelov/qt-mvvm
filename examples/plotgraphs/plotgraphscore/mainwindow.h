@@ -13,12 +13,19 @@
 #include <QMainWindow>
 #include <memory>
 
-class GraphModel;
 class QTabWidget;
+
+namespace PlotGraphs
+{
+
+class GraphModel;
+
+//! The main window of this application.
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
+
 public:
     MainWindow();
     ~MainWindow();
@@ -31,8 +38,10 @@ private:
     void write_settings();
     void init_model();
 
-    QTabWidget* m_tabWidget;
+    QTabWidget* m_tabWidget{nullptr};
     std::unique_ptr<GraphModel> m_graph_model;
 };
+
+} // namespace PlotGraphs
 
 #endif //  MAINWINDOW_H

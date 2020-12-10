@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/viewmodel/standardviewmodels.h>
+#include <mvvm/factories/viewmodelfactory.h>
 #include <mvvm/viewmodel/viewmodel.h>
 #include <mvvm/widgets/topitemstreeview.h>
 
@@ -15,7 +15,7 @@ namespace ModelView
 {
 TopItemsTreeView::TopItemsTreeView(SessionModel* model, QWidget* parent) : ItemsTreeView(parent)
 {
-    setViewModel(Utils::CreateTopItemsViewModel(model));
+    setViewModel(Factory::CreateTopItemsViewModel(model));
 }
 
 TopItemsTreeView::~TopItemsTreeView() = default;

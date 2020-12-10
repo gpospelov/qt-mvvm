@@ -13,8 +13,6 @@
 #include <QWidget>
 
 class QBoxLayout;
-class ColorMapModel;
-class ColorMapPropertyWidget;
 class QToolBar;
 class QAction;
 
@@ -24,14 +22,18 @@ class ItemsTreeView;
 class ColorMapCanvas;
 } // namespace ModelView
 
-/*!
-@class ColorMapWidget
-@brief Shows canvas with plots on the left and property editor on the right.
-*/
+namespace PlotColorMap
+{
+
+class ColorMapModel;
+class ColorMapPropertyWidget;
+
+//! Shows canvas with plots on the left and property editor on the right.
 
 class ColorMapWidget : public QWidget
 {
     Q_OBJECT
+
 public:
     explicit ColorMapWidget(ColorMapModel* model = nullptr, QWidget* parent = nullptr);
 
@@ -43,12 +45,14 @@ private:
     QBoxLayout* create_left_layout();
     QBoxLayout* create_right_layout();
 
-    QToolBar* m_toolBar;
-    QAction* m_resetViewportAction;
+    QToolBar* m_toolBar{nullptr};
+    QAction* m_resetViewportAction{nullptr};
 
-    ColorMapPropertyWidget* m_propertyWidget;
-    ModelView::ColorMapCanvas* m_colorMapCanvas;
-    ColorMapModel* m_model;
+    ColorMapPropertyWidget* m_propertyWidget{nullptr};
+    ModelView::ColorMapCanvas* m_colorMapCanvas{nullptr};
+    ColorMapModel* m_model{nullptr};
 };
+
+} // namespace PlotColorMap
 
 #endif // COLORMAPWIDGET_H

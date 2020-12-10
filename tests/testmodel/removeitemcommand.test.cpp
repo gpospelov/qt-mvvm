@@ -36,7 +36,7 @@ TEST_F(RemoveItemCommandTest, removeAtCommand)
     auto command = std::make_unique<RemoveItemCommand>(model.rootItem(), TagRow{"", 0});
     command->execute(); // removal
 
-    EXPECT_EQ(command->result(), true);
+    EXPECT_EQ(std::get<bool>(command->result()), true);
     EXPECT_EQ(model.rootItem()->childrenCount(), 0);
     EXPECT_FALSE(command->isObsolete());
 
@@ -66,7 +66,7 @@ TEST_F(RemoveItemCommandTest, removeAtCommandChild)
 
     // check that one child was removed
     EXPECT_FALSE(command->isObsolete());
-    EXPECT_EQ(command->result(), true);
+    EXPECT_EQ(std::get<bool>(command->result()), true);
     EXPECT_EQ(parent->childrenCount(), 1);
 
     // undo command
@@ -98,7 +98,7 @@ TEST_F(RemoveItemCommandTest, removeAtCommandParentWithChild)
     EXPECT_FALSE(command->isObsolete());
 
     // check that one child was removed
-    EXPECT_EQ(command->result(), true);
+    EXPECT_EQ(std::get<bool>(command->result()), true);
     EXPECT_EQ(model.rootItem()->childrenCount(), 0);
 
     // undo command
@@ -144,7 +144,7 @@ TEST_F(RemoveItemCommandTest, removeAtCommandMultitag)
 
     // check that one child was removed
     EXPECT_FALSE(command->isObsolete());
-    EXPECT_EQ(command->result(), true);
+    EXPECT_EQ(std::get<bool>(command->result()), true);
     EXPECT_EQ(parent->childrenCount(), 2);
 
     // undo command
@@ -173,5 +173,5 @@ TEST_F(RemoveItemCommandTest, attemptToRemoveItem)
     command->execute();
 
     EXPECT_TRUE(command->isObsolete());
-    EXPECT_EQ(command->result(), false);
+    EXPECT_EQ(std::get<bool>(command->result()), false);
 }

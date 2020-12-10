@@ -11,23 +11,20 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <mvvm/factories/modelconverterfactory.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/serialization/jsondocument.h>
-#include <mvvm/serialization/jsonmodelconverter.h>
 #include <sstream>
 #include <stdexcept>
-#include <vector>
 
 using namespace ModelView;
 
 struct JsonDocument::JsonDocumentImpl {
     std::vector<SessionModel*> models;
-    JsonDocumentImpl(const std::initializer_list<ModelView::SessionModel*>& models) : models(models)
-    {
-    }
+    JsonDocumentImpl(const std::vector<SessionModel*>& models) : models(models) {}
 };
 
-JsonDocument::JsonDocument(std::initializer_list<ModelView::SessionModel*> models)
+JsonDocument::JsonDocument(const std::vector<SessionModel*>& models)
     : p_impl(std::make_unique<JsonDocumentImpl>(models))
 {
 }
@@ -35,14 +32,11 @@ JsonDocument::JsonDocument(std::initializer_list<ModelView::SessionModel*> model
 //! Saves models on disk.
 void JsonDocument::save(const std::string& file_name) const
 {
-    ModelView::JsonModelConverter converter;
+    auto converter = ModelView::CreateModelProjectConverter();
     QJsonArray array;
 
-    for (auto model : p_impl->models) {
-        QJsonObject object;
-        converter.model_to_json(*model, object);
-        array.push_back(object);
-    }
+    for (auto model : p_impl->models)
+        array.push_back(converter->to_json(*model));
 
     QJsonDocument document(array);
     QFile file(QString::fromStdString(file_name));
@@ -72,10 +66,10 @@ void JsonDocument::load(const std::string& file_name)
         throw std::runtime_error(ostr.str());
     }
 
-    ModelView::JsonModelConverter converter;
+    auto converter = ModelView::CreateModelProjectConverter();
     int index(0);
     for (auto model : p_impl->models) {
-        converter.json_to_model(array.at(index).toObject(), *model);
+        converter->from_json(array.at(index).toObject(), *model);
         ++index;
     }
 

@@ -7,6 +7,7 @@
 //
 // ************************************************************************** //
 
+#include <mvvm/model/comboproperty.h>
 #include <mvvm/standarditems/colormapitem.h>
 #include <mvvm/standarditems/data2ditem.h>
 #include <mvvm/standarditems/linkeditem.h>
@@ -14,11 +15,19 @@
 
 using namespace ModelView;
 
+namespace
+{
+const ComboProperty gradientCombo =
+    ComboProperty::createFrom({"Grayscale", "Hot", "Cold", "Night", "Candy", "Geography", "Ion",
+                               "Thermal", "Polar", "Spectrum", "Jet", "Hues"},
+                              "Polar");
+}
+
 ColorMapItem::ColorMapItem() : CompoundItem(Constants::ColorMapItemType)
 {
     addProperty<LinkedItem>(P_LINK)->setDisplayName("Link");
     addProperty<TextItem>(P_TITLE)->setDisplayName("Title");
-    addProperty(P_GRADIENT, "undefined")->setDisplayName("Gradient");
+    addProperty(P_GRADIENT, gradientCombo)->setDisplayName("Gradient");
     addProperty(P_INTERPOLATION, true)->setDisplayName("Interpolation");
 }
 

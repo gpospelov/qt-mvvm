@@ -17,7 +17,11 @@
 
 namespace TestConfig {
 
+inline std::string CMakeSourceDir() { return "@CMAKE_SOURCE_DIR@"; }
+inline std::string CMakeBinaryDir() { return "@CMAKE_BINARY_DIR@"; }
 inline std::string TestOutputDir() { return "@MVVM_TESTOUTPUT_DIR@"; }
+inline std::string ProjectSourceDir() { return "@MVVM_PROJECT_DIR@"; }
+inline std::string TestData() { return "@MVVM_PROJECT_DIR@/tests/data"; }
 
 }
 

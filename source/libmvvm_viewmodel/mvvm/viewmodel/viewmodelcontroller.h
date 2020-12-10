@@ -13,6 +13,7 @@
 #include <QStringList>
 #include <memory>
 #include <mvvm/model/tagrow.h>
+#include <mvvm/signals/modellistener.h>
 #include <mvvm/viewmodel_export.h>
 #include <vector>
 
@@ -28,16 +29,15 @@ class ViewItem;
 class ChildrenStrategyInterface;
 class RowStrategyInterface;
 
-/*!
-@class ViewModelController
-@brief Propagates changes from SessionModel to its ViewModelBase.
-*/
+//! Propagates changes from SessionModel to its ViewModelBase.
 
-class MVVM_VIEWMODEL_EXPORT ViewModelController
+class MVVM_VIEWMODEL_EXPORT ViewModelController : public ModelListener<SessionModel>
 {
 public:
-    ViewModelController(SessionModel* session_model, ViewModelBase* view_model);
-    virtual ~ViewModelController();
+    ViewModelController(SessionModel* session_model, ViewModelBase* view_model = nullptr);
+    ~ViewModelController();
+
+    void setViewModel(ViewModelBase* view_model);
 
     void setChildrenStrategy(std::unique_ptr<ChildrenStrategyInterface> children_strategy);
 

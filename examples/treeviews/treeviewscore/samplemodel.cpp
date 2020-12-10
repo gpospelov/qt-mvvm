@@ -8,31 +8,34 @@
 // ************************************************************************** //
 
 #include "samplemodel.h"
-#include "items.h"
+#include "sampleitems.h"
 #include <mvvm/model/itemcatalogue.h>
 
 using namespace ModelView;
 
 namespace
 {
-std::unique_ptr<ModelView::ItemCatalogue> CreateToyItemCatalogue()
+std::unique_ptr<ModelView::ItemCatalogue> CreateItemCatalogue()
 {
     auto result = std::make_unique<ItemCatalogue>();
-    result->registerItem<MultiLayer>();
-    result->registerItem<LayerItem>();
-    result->registerItem<ParticleItem>();
-    result->registerItem<InterferenceFunctionItem>();
-    result->registerItem<SphereItem>();
-    result->registerItem<CylinderItem>();
-    result->registerItem<AnysoPyramidItem>();
-    result->registerItem<ShapeGroupItem>();
+    result->registerItem<TreeViews::MultiLayer>();
+    result->registerItem<TreeViews::LayerItem>();
+    result->registerItem<TreeViews::ParticleItem>();
+    result->registerItem<TreeViews::LatticeItem>();
+    result->registerItem<TreeViews::SphereItem>();
+    result->registerItem<TreeViews::CylinderItem>();
+    result->registerItem<TreeViews::AnysoPyramidItem>();
+    result->registerItem<TreeViews::ShapeGroupItem>();
     return result;
 }
 } // namespace
 
+namespace TreeViews
+{
+
 SampleModel::SampleModel() : SessionModel("SampleModel")
 {
-    setItemCatalogue(CreateToyItemCatalogue());
+    setItemCatalogue(CreateItemCatalogue());
     init_model();
 }
 
@@ -46,5 +49,7 @@ void SampleModel::init_model()
 
     insertItem<LayerItem>(multi_layer);
 
-    insertItem<InterferenceFunctionItem>();
+    insertItem<LatticeItem>();
 }
+
+} // namespace TreeViews

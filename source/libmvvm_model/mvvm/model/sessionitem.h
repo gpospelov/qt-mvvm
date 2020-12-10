@@ -10,8 +10,8 @@
 #ifndef MVVM_MODEL_SESSIONITEM_H
 #define MVVM_MODEL_SESSIONITEM_H
 
-#include <QVariant>
 #include <memory>
+#include <mvvm/core/variant.h>
 #include <mvvm/model/customvariants.h>
 #include <mvvm/model/mvvm_types.h>
 #include <mvvm/model/tagrow.h>
@@ -26,6 +26,7 @@ namespace ModelView
 class SessionModel;
 class TagInfo;
 class ItemMapper;
+class SessionItemData;
 
 class MVVM_MODEL_EXPORT SessionItem
 {
@@ -43,7 +44,7 @@ public:
     std::string identifier() const;
 
     template <typename T> bool setData(const T& value, int role = ItemDataRole::DATA);
-    bool setDataIntern(const QVariant& variant, int role);
+    bool setDataIntern(const Variant& variant, int role);
 
     bool hasData(int role = ItemDataRole::DATA) const;
 
@@ -87,10 +88,16 @@ public:
     ItemMapper* mapper();
 
     bool isEditable() const;
-    void setEditable(bool value);
+    SessionItem* setEditable(bool value);
 
     bool isEnabled() const;
-    void setEnabled(bool value);
+    SessionItem* setEnabled(bool value);
+
+    std::string toolTip() const;
+    SessionItem* setToolTip(const std::string& tooltip);
+
+    std::string editorType() const;
+    SessionItem* setEditorType(const std::string& editor_type);
 
     bool isSinglePropertyTag(const std::string& tag) const;
 
@@ -100,18 +107,20 @@ public:
 
     void setProperty(const std::string& tag, const char* value);
 
+    // FIXME refactor converter access to item internals
+    SessionItemData* itemData();
+    const SessionItemData* itemData() const;
+
 private:
     friend class SessionModel;
     friend class JsonItemConverter;
     virtual void activate() {}
-    bool set_data_internal(QVariant value, int role);
-    QVariant data_internal(int role) const;
+    bool set_data_internal(Variant value, int role);
+    Variant data_internal(int role) const;
     void setParent(SessionItem* parent);
     void setModel(SessionModel* model);
     void setAppearanceFlag(int flag, bool value);
 
-    // FIXME refactor converter access to item internals
-    class SessionItemData* itemData() const;
     class SessionItemTags* itemTags() const;
     void setDataAndTags(std::unique_ptr<SessionItemData> data,
                         std::unique_ptr<SessionItemTags> tags);
@@ -124,16 +133,16 @@ private:
 
 template <typename T> inline bool SessionItem::setData(const T& value, int role)
 {
-    if constexpr (std::is_same<T, QVariant>::value)
+    if constexpr (std::is_same<T, Variant>::value)
         return set_data_internal(value, role);
-    return set_data_internal(QVariant::fromValue(value), role);
+    return set_data_internal(Variant::fromValue(value), role);
 }
 
 //! Returns data of given type T for given role.
 
 template <typename T> inline T SessionItem::data(int role) const
 {
-    if constexpr (std::is_same<T, QVariant>::value)
+    if constexpr (std::is_same<T, Variant>::value)
         return data_internal(role);
     return data_internal(role).value<T>();
 }

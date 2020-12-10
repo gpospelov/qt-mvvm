@@ -12,7 +12,7 @@
 
 using namespace ModelView;
 
-DataRole::DataRole(QVariant data, int role) : m_data(std::move(data)), m_role(role) {}
+DataRole::DataRole(Variant data, int role) : m_data(std::move(data)), m_role(role) {}
 
 bool DataRole::operator==(const DataRole& other) const
 {

@@ -9,6 +9,7 @@
 
 #include "google_test.h"
 #include <memory>
+#include <mvvm/model/compounditem.h>
 #include <mvvm/model/itempool.h>
 #include <mvvm/model/itemutils.h>
 #include <mvvm/model/propertyitem.h>
@@ -407,4 +408,38 @@ TEST_F(SessionModelTest, findItemInAlienModel)
     EXPECT_EQ(model2.findItem(id1), nullptr);
     EXPECT_EQ(model1.findItem(id2), parent2);
     EXPECT_EQ(model2.findItem(id2), parent2);
+}
+
+TEST_F(SessionModelTest, topItem)
+{
+    SessionModel model;
+    EXPECT_EQ(model.topItem<>(), nullptr);
+    EXPECT_EQ(model.topItem(), nullptr);
+
+    auto property = model.insertItem<PropertyItem>();
+    auto compound = model.insertItem<CompoundItem>();
+    EXPECT_EQ(model.topItem<>(), property);
+    EXPECT_EQ(model.topItem(), property);
+    EXPECT_EQ(model.topItem<CompoundItem>(), compound);
+}
+
+TEST_F(SessionModelTest, topItems)
+{
+    std::vector<SessionItem*> expected;
+
+    SessionModel model;
+    EXPECT_EQ(model.topItems<>(), expected);
+    EXPECT_EQ(model.topItems(), expected);
+
+    auto property1 = model.insertItem<PropertyItem>();
+    auto compound1 = model.insertItem<CompoundItem>();
+    auto property2 = model.insertItem<PropertyItem>();
+    auto compound2 = model.insertItem<CompoundItem>();
+
+    expected = {property1, compound1, property2, compound2};
+    EXPECT_EQ(model.topItems<>(), expected);
+    EXPECT_EQ(model.topItems(), expected);
+
+    std::vector<CompoundItem*> expected2 = {compound1, compound2};
+    EXPECT_EQ(model.topItems<CompoundItem>(), expected2);
 }

@@ -8,7 +8,6 @@
 // ************************************************************************** //
 
 #include "samplemodel.h"
-#include "items.h"
 #include <QColor>
 #include <mvvm/model/itemcatalogue.h>
 #include <mvvm/model/sessionitemcontainer.h>
@@ -18,7 +17,7 @@
 
 namespace
 {
-std::unique_ptr<ModelView::ItemCatalogue> CreateToyItemCatalogue()
+std::unique_ptr<ModelView::ItemCatalogue> CreateItemCatalogue()
 {
     auto result = std::make_unique<ModelView::ItemCatalogue>();
     result->registerItem<DemoItem>();
@@ -39,11 +38,25 @@ std::string random_name()
 
     return result;
 }
+
+const std::string DemoItemType = "DemoItem";
+
 } // namespace
+
+using namespace ModelView;
+
+DemoItem::DemoItem() : CompoundItem(DemoItemType)
+{
+    addProperty(P_COLOR_PROPERTY, QColor(Qt::green))->setDisplayName("Color");
+    addProperty(P_BOOL_PROPERTY, true)->setDisplayName("Bool");
+    addProperty(P_INTEGER_PROPERTY, 42)->setDisplayName("Integer");
+    addProperty(P_STRING_PROPERTY, "abc")->setDisplayName("String");
+    addProperty(P_DOUBLE_PROPERTY, 42.1)->setDisplayName("Double");
+}
 
 SampleModel::SampleModel() : SessionModel("SampleModel")
 {
-    setItemCatalogue(CreateToyItemCatalogue());
+    setItemCatalogue(CreateItemCatalogue());
     initModelContent();
     setUndoRedoEnabled(true);
 }
@@ -51,7 +64,7 @@ SampleModel::SampleModel() : SessionModel("SampleModel")
 void SampleModel::appendNewItem(ModelView::SessionItem* container)
 {
     auto item = insertItem<DemoItem>(container);
-    item->setProperty(DemoItem::P_COLOR_PROPERTY, ModelView::Utils::random_color());
+    item->setProperty(DemoItem::P_COLOR_PROPERTY, ModelView::Utils::RandomColor());
     item->setProperty(DemoItem::P_STRING_PROPERTY, random_name());
     item->setProperty(DemoItem::P_INTEGER_PROPERTY, ModelView::Utils::RandInt(0, 10));
 }

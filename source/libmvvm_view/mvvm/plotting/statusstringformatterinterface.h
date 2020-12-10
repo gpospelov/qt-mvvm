@@ -18,11 +18,8 @@ class QCustomPlot;
 namespace ModelView
 {
 
-/*!
-@class StatusStringFormatterInterface
-@brief Pure virtual interface to format string with status info corresponding to the current mouse
-position on QCustomPlot.
-*/
+//! Pure virtual interface to format string with status info corresponding to the current mouse
+//! position on QCustomPlot.
 
 class MVVM_VIEW_EXPORT StatusStringFormatterInterface
 {

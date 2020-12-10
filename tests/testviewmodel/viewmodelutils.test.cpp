@@ -16,6 +16,7 @@
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/standarditems/vectoritem.h>
 #include <mvvm/viewmodel/propertytableviewmodel.h>
+#include <mvvm/viewmodel/standardviewitems.h>
 #include <mvvm/viewmodel/viewmodelutils.h>
 
 namespace
@@ -68,20 +69,25 @@ TEST_F(ViewModelUtilsTest, iterate)
 
 //! Translation of item role to Qt roles.
 
-TEST_F(ViewModelUtilsTest, itemRoleToQtRole)
+TEST_F(ViewModelUtilsTest, ItemRoleToQtRole)
 {
-    // DATA role of SessionItem should be translated to two Qt roles (edit and siplay)
-    auto roles = Utils::item_role_to_qt(ItemDataRole::DATA);
+    // DATA role of SessionItem should be translated to two Qt roles (edit and display)
+    auto roles = Utils::ItemRoleToQtRole(ItemDataRole::DATA);
     QVector<int> expected = {Qt::DisplayRole, Qt::EditRole};
     EXPECT_EQ(roles, expected);
 
     // APPEARANCE roles of SessionItem on Qt site means color
-    roles = Utils::item_role_to_qt(ItemDataRole::APPEARANCE);
+    roles = Utils::ItemRoleToQtRole(ItemDataRole::APPEARANCE);
 #if QT_VERSION >= QT_VERSION_CHECK(5, 13, 0)
     expected = {Qt::ForegroundRole};
 #else
     expected = {Qt::TextColorRole};
 #endif
+    EXPECT_EQ(roles, expected);
+
+    // tooltip role
+    roles = Utils::ItemRoleToQtRole(ItemDataRole::TOOLTIP);
+    expected = {Qt::ToolTipRole};
     EXPECT_EQ(roles, expected);
 }
 
@@ -132,6 +138,19 @@ TEST_F(ViewModelUtilsTest, itemDecorationRole)
     EXPECT_EQ(Utils::DecorationRole(item).value<QColor>(), expected);
 }
 
+//! Testing tooltip role of the item.
+
+TEST_F(ViewModelUtilsTest, itemToolTipRole)
+{
+    SessionItem item("Something");
+
+    auto variant = Utils::ToolTipRole(item);
+    EXPECT_FALSE(variant.isValid());
+
+    item.setToolTip("abc");
+    EXPECT_EQ(Utils::ToolTipRole(item).toString(), QString("abc"));
+}
+
 //! Check ItemsFromIndex in PropertyTableViewModel context.
 //! ViewItem with its three property x, y, z forms one row. All corresponding
 //! indices of (x,y,z) should give us pointers to VectorItem's properties.
@@ -160,6 +179,32 @@ TEST_F(ViewModelUtilsTest, itemsFromIndex)
                                           parent->getItem(VectorItem::P_Y),
                                           parent->getItem(VectorItem::P_Z)};
     EXPECT_EQ(Utils::ItemsFromIndex(index_list), expected);
+    EXPECT_EQ(Utils::UniqueItemsFromIndex(index_list), expected);
+}
+
+//! Check UniqueItemsFromIndex for artificially constructed viewmodel.
+
+TEST_F(ViewModelUtilsTest, UniqueItemsFromIndex)
+{
+    SessionItem item1;
+    item1.setData(42, ItemDataRole::DATA);
+    SessionItem item2;
+    item2.setData(42, ItemDataRole::DATA);
+
+    ViewModelBase viewmodel;
+    std::vector<std::unique_ptr<ViewItem>> items;
+    items.emplace_back(std::make_unique<ViewLabelItem>(&item1));
+    items.emplace_back(std::make_unique<ViewLabelItem>(&item2));
+    items.emplace_back(std::make_unique<ViewDataItem>(&item1));
+    items.emplace_back(std::make_unique<ViewDataItem>(&item2));
+    viewmodel.insertRow(viewmodel.rootItem(), 0, std::move(items));
+
+    QModelIndexList index_list = {viewmodel.index(0, 0), viewmodel.index(0, 1),
+                                  viewmodel.index(0, 2), viewmodel.index(0, 3)};
+
+    EXPECT_EQ(Utils::ItemsFromIndex(index_list),
+              std::vector<SessionItem*>({&item1, &item2, &item1, &item2}));
+    EXPECT_EQ(Utils::UniqueItemsFromIndex(index_list), std::vector<SessionItem*>({&item1, &item2}));
 }
 
 //! Check ParentItemsFromIndex in PropertyTableViewModel context.

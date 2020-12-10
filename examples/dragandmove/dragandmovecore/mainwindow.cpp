@@ -8,7 +8,6 @@
 // ************************************************************************** //
 
 #include "mainwindow.h"
-#include "item_constants.h"
 #include "modeleditorwidget.h"
 #include "samplemodel.h"
 #include <QCoreApplication>
@@ -21,6 +20,9 @@ const QString main_window_group = "MainWindow";
 const QString size_key = "size";
 const QString pos_key = "pos";
 } // namespace
+
+namespace DragAndView
+{
 
 MainWindow::MainWindow() : m_tabWidget(new QTabWidget), m_model(std::make_unique<SampleModel>())
 {
@@ -62,3 +64,5 @@ void MainWindow::init_application()
         settings.endGroup();
     }
 }
+
+} // namespace DragAndView

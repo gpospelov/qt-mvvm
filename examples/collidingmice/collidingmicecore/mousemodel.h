@@ -13,10 +13,7 @@
 #include <mvvm/model/compounditem.h>
 #include <mvvm/model/sessionmodel.h>
 
-/*!
-@class MouseItem
-@brief Domain object to hold mouse info.
-*/
+//! Domain object to hold mouse info.
 
 class MouseItem : public ModelView::CompoundItem
 {
@@ -30,10 +27,7 @@ public:
     MouseItem();
 };
 
-/*!
-@class MouseModel
-@brief Holds collection of mice.
-*/
+//! Holds collection of mice.
 
 class MouseModel : public ModelView::SessionModel
 {

@@ -7,6 +7,7 @@
 //
 // ************************************************************************** //
 
+#include <mvvm/model/modelutils.h>
 #include <mvvm/standarditems/axisitems.h>
 #include <mvvm/standarditems/viewportitem.h>
 
@@ -24,15 +25,34 @@ ViewportAxisItem* ViewportItem::yAxis() const
     return item<ViewportAxisItem>(P_YAXIS);
 }
 
-//! Updates range of x,y window to show all data.
+//! Sets range of x,y window to show all data.
+//! Allows adding an additional margin to automatically calculated axis range. Margins are
+//! given in relative units wrt calculated axis range.
+//! Example: setViewportToContent(0.0, 0.1, 0.0, 0.1) will set axes to show all graphs with 10% gap
+//! above and below graph's max and min.
 
-void ViewportItem::update_viewport()
+void ViewportItem::setViewportToContent(double left, double top, double right, double bottom)
 {
+    Utils::BeginMacros(this, "setViewportToContent");
+    auto [xmin, xmax] = data_xaxis_range();
+    xAxis()->set_range(xmin - (xmax - xmin) * left, xmax + (xmax - xmin) * right);
+
+    auto [ymin, ymax] = data_yaxis_range();
+    yAxis()->set_range(ymin - (ymax - ymin) * bottom, ymax + (ymax - ymin) * top);
+    Utils::EndMacros(this);
+}
+
+//! Sets range of x,y window to show all data.
+
+void ViewportItem::setViewportToContent()
+{
+    Utils::BeginMacros(this, "setViewportToContent");
     auto [xmin, xmax] = data_xaxis_range();
     xAxis()->set_range(xmin, xmax);
 
     auto [ymin, ymax] = data_yaxis_range();
     yAxis()->set_range(ymin, ymax);
+    Utils::EndMacros(this);
 }
 
 void ViewportItem::register_xy_axes()

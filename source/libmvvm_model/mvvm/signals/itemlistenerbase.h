@@ -30,6 +30,9 @@ public:
     explicit ItemListenerBase(SessionItem* item = nullptr);
     virtual ~ItemListenerBase();
 
+    ItemListenerBase& operator=(const ItemListenerBase& other) = delete;
+    ItemListenerBase(const ItemListenerBase& other) = delete;
+
     void setItem(SessionItem* item);
 
     void setOnItemDestroy(Callbacks::item_t f);

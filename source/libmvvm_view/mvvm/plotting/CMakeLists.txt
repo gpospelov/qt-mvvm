@@ -1,4 +1,6 @@
 target_sources(${library_name} PRIVATE
+    axistitlecontroller.cpp
+    axistitlecontroller.h
     colormapcanvas.cpp
     colormapcanvas.h
     colormapinfoformatter.cpp
@@ -30,6 +32,8 @@ target_sources(${library_name} PRIVATE
     mousemovereporter.cpp
     mousemovereporter.h
     mouseposinfo.h
+    pencontroller.cpp
+    pencontroller.h
     sceneadapterinterface.h
     statusstringformatterinterface.h
     statusstringreporter.cpp

@@ -13,7 +13,6 @@
 #include <QObject>
 #include <memory>
 #include <vector>
-#include <mvvm/interfaces/applicationmodelsinterface.h>
 
 namespace ModelView
 {
@@ -29,16 +28,13 @@ class QMainWindow;
 //! Main class to coordinate all activity on user's request to create new project,
 //! open existing one, or choose one of recent projects on disk.
 
-// FIXME remove multiple inheritance when callback in Document will be implemented
-
-class ProjectHandler : public QObject, public ModelView::ApplicationModelsInterface
+class ProjectHandler : public QObject
 {
     Q_OBJECT
+
 public:
     explicit ProjectHandler(SampleModel* sample_model, QMainWindow* main_window);
     ~ProjectHandler() override;
-
-    std::vector<ModelView::SessionModel*> persistent_models() const override;
 
 signals:
     void currentProjectModified(const QString& project_dir, bool is_modified);

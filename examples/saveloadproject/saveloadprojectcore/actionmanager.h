@@ -23,6 +23,7 @@ class QToolBar;
 class ActionManager : public QObject
 {
     Q_OBJECT
+
 public:
     ActionManager(QMainWindow* mainwindow = nullptr);
 

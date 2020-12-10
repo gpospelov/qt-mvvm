@@ -11,10 +11,10 @@
 #include "google_test.h"
 #include "test_utils.h"
 #include <cctype>
-#include <mvvm/interfaces/applicationmodelsinterface.h>
 #include <mvvm/model/propertyitem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/project/project.h>
+#include <mvvm/project/project_types.h>
 #include <mvvm/utils/fileutils.h>
 
 using namespace ModelView;
@@ -39,33 +39,35 @@ std::string get_json_filename(const std::string& model_name)
 class ProjectTest : public FolderBasedTest
 {
 public:
-    ProjectTest() : FolderBasedTest("test_ProjectTest") {}
+    ProjectTest()
+        : FolderBasedTest("test_ProjectTest")
+        , sample_model(std::make_unique<SessionModel>(samplemodel_name))
+        , material_model(std::make_unique<SessionModel>(materialmodel_name))
+    {
+    }
     ~ProjectTest();
 
-    class ApplicationModels : public ApplicationModelsInterface
+    std::vector<SessionModel*> models() const
     {
-    public:
-        std::unique_ptr<SessionModel> sample_model;
-        std::unique_ptr<SessionModel> material_model;
-        ApplicationModels()
-            : sample_model(std::make_unique<SessionModel>(samplemodel_name)),
-              material_model(std::make_unique<SessionModel>(materialmodel_name))
-        {
-        }
-
-        std::vector<SessionModel*> persistent_models() const override
-        {
-            return {sample_model.get(), material_model.get()};
-        };
+        return {sample_model.get(), material_model.get()};
     };
+
+    ProjectContext createContext()
+    {
+        ProjectContext result;
+        result.m_models_callback = [this]() { return models(); };
+        return result;
+    }
+
+    std::unique_ptr<SessionModel> sample_model;
+    std::unique_ptr<SessionModel> material_model;
 };
 
 ProjectTest::~ProjectTest() = default;
 
 TEST_F(ProjectTest, initialState)
 {
-    ApplicationModels models;
-    Project project(&models);
+    Project project(createContext());
     EXPECT_TRUE(project.projectDir().empty());
     EXPECT_FALSE(project.isModified());
 }
@@ -74,8 +76,7 @@ TEST_F(ProjectTest, initialState)
 
 TEST_F(ProjectTest, saveModel)
 {
-    ApplicationModels models;
-    Project project(&models);
+    Project project(createContext());
 
     // create project directory and save file
     auto project_dir = createEmptyDir("Untitled1");
@@ -95,14 +96,13 @@ TEST_F(ProjectTest, saveModel)
 
 TEST_F(ProjectTest, loadModel)
 {
-    ApplicationModels models;
-    Project project(&models);
+    Project project(createContext());
 
-    auto item0 = models.sample_model->insertItem<PropertyItem>();
+    auto item0 = sample_model->insertItem<PropertyItem>();
     item0->setData(std::string("sample_model_item"));
     auto item0_identifier = item0->identifier();
 
-    auto item1 = models.material_model->insertItem<PropertyItem>();
+    auto item1 = material_model->insertItem<PropertyItem>();
     item1->setData(std::string("material_model_item"));
     auto item1_identifier = item1->identifier();
 
@@ -116,20 +116,20 @@ TEST_F(ProjectTest, loadModel)
     EXPECT_EQ(project.projectDir(), project_dir);
 
     // cleaning models
-    models.sample_model->clear();
-    models.material_model->clear();
-    EXPECT_EQ(models.sample_model->rootItem()->childrenCount(), 0);
-    EXPECT_EQ(models.material_model->rootItem()->childrenCount(), 0);
+    sample_model->clear();
+    material_model->clear();
+    EXPECT_EQ(sample_model->rootItem()->childrenCount(), 0);
+    EXPECT_EQ(material_model->rootItem()->childrenCount(), 0);
     EXPECT_TRUE(project.isModified());
 
     // loading
     project.load(project_dir);
-    EXPECT_EQ(models.sample_model->rootItem()->childrenCount(), 1);
-    EXPECT_EQ(models.material_model->rootItem()->childrenCount(), 1);
+    EXPECT_EQ(sample_model->rootItem()->childrenCount(), 1);
+    EXPECT_EQ(material_model->rootItem()->childrenCount(), 1);
 
     // checking identifiers
-    EXPECT_EQ(models.sample_model->rootItem()->children()[0]->identifier(), item0_identifier);
-    EXPECT_EQ(models.material_model->rootItem()->children()[0]->identifier(), item1_identifier);
+    EXPECT_EQ(sample_model->rootItem()->children()[0]->identifier(), item0_identifier);
+    EXPECT_EQ(material_model->rootItem()->children()[0]->identifier(), item1_identifier);
 
     EXPECT_EQ(project.projectDir(), project_dir);
     EXPECT_FALSE(project.isModified());

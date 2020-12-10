@@ -18,6 +18,7 @@ using namespace ModelView;
 ViewModel::ViewModel(std::unique_ptr<ViewModelController> controller, QObject* parent)
     : ViewModelBase(parent), m_controller(std::move(controller))
 {
+    m_controller->setViewModel(this);
     m_controller->setRootSessionItem(sessionModel()->rootItem());
 }
 
@@ -36,11 +37,6 @@ SessionModel* ViewModel::sessionModel() const
     return m_controller->sessionModel();
 }
 
-ViewModelController* ViewModel::viewModelController() const
-{
-    return m_controller.get();
-}
-
 SessionItem* ViewModel::rootSessionItem()
 {
     return m_controller->rootSessionItem();
@@ -50,6 +46,8 @@ ViewModel::~ViewModel() = default;
 
 void ViewModel::setRootSessionItem(SessionItem* item)
 {
+    if (!item)
+        throw std::runtime_error("Error in ViewModel: atttemp to set nulptr as root item");
     m_controller->setRootSessionItem(item);
 }
 

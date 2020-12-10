@@ -17,8 +17,10 @@
 using namespace ModelView;
 
 ExternalPropertyComboEditor::ExternalPropertyComboEditor(callback_t callback, QWidget* parent)
-    : CustomEditor(parent), get_properties(callback), m_box(new QComboBox),
-      m_combo_model(new QStandardItemModel(this))
+    : CustomEditor(parent)
+    , m_getPropertiesCallback(std::move(callback))
+    , m_box(new QComboBox)
+    , m_comboModel(new QStandardItemModel(this))
 {
     setAutoFillBackground(true);
     setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
@@ -29,7 +31,7 @@ ExternalPropertyComboEditor::ExternalPropertyComboEditor(callback_t callback, QW
     layout->addWidget(m_box);
     setLayout(layout);
 
-    m_box->setModel(m_combo_model);
+    m_box->setModel(m_comboModel);
 
     setConnected(true);
 }
@@ -47,7 +49,7 @@ QSize ExternalPropertyComboEditor::minimumSizeHint() const
 void ExternalPropertyComboEditor::onIndexChanged(int index)
 {
     auto property = m_data.value<ModelView::ExternalProperty>();
-    auto mdata = get_properties();
+    auto mdata = m_getPropertiesCallback();
 
     if (index >= 0 && index < static_cast<int>(mdata.size())) {
         if (property != mdata[static_cast<size_t>(index)])
@@ -59,10 +61,10 @@ void ExternalPropertyComboEditor::update_components()
 {
     setConnected(false);
 
-    m_combo_model->clear();
+    m_comboModel->clear();
 
-    QStandardItem* parentItem = m_combo_model->invisibleRootItem();
-    for (auto prop : get_properties()) {
+    QStandardItem* parentItem = m_comboModel->invisibleRootItem();
+    for (auto prop : m_getPropertiesCallback()) {
         auto item = new QStandardItem(QString::fromStdString(prop.text()));
         parentItem->appendRow(item);
         item->setData(prop.color(), Qt::DecorationRole);
@@ -82,7 +84,7 @@ int ExternalPropertyComboEditor::internIndex()
 
     auto property = m_data.value<ModelView::ExternalProperty>();
     int result(-1);
-    for (auto prop : get_properties()) {
+    for (auto prop : m_getPropertiesCallback()) {
         ++result;
         if (property.identifier() == prop.identifier())
             return result;

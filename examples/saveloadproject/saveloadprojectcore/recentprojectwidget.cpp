@@ -18,6 +18,7 @@
 #include <QTreeView>
 #include <QVBoxLayout>
 #include <mvvm/project/projectutils.h>
+#include <mvvm/widgets/adjustingscrollarea.h>
 #include <mvvm/widgets/widgetutils.h>
 
 namespace
@@ -32,10 +33,7 @@ RecentProjectWidget::RecentProjectWidget(QWidget* parent)
 
     auto layout = new QVBoxLayout(this);
     layout->setContentsMargins(20, 0, 10, 0);
-    layout->addSpacing(ModelView::Utils::HeightOfLetterM());
-    layout->addLayout(createCurrentProjectLayout());
-    layout->addSpacing(ModelView::Utils::HeightOfLetterM());
-    layout->addLayout(createRecentProjectLayout());
+    layout->addWidget(createRecentProjectScrollArea());
     layout->addStretch(1);
 }
 
@@ -94,5 +92,20 @@ QBoxLayout* RecentProjectWidget::createRecentProjectLayout()
         m_recentProjectPanes.push_back(widget);
         result->addWidget(widget);
     }
+    return result;
+}
+
+QWidget* RecentProjectWidget::createRecentProjectScrollArea()
+{
+    auto result = new ModelView::AdjustingScrollArea;
+
+    auto content = new QWidget;
+    auto layout = new QVBoxLayout;
+    layout->addLayout(createCurrentProjectLayout());
+    layout->addSpacing(ModelView::Utils::SizeOfLetterM().height());
+    layout->addLayout(createRecentProjectLayout());
+    content->setLayout(layout);
+
+    result->setWidget(content);
     return result;
 }

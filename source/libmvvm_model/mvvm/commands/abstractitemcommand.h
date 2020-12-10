@@ -11,6 +11,7 @@
 #define MVVM_COMMANDS_ABSTRACTITEMCOMMAND_H
 
 #include <memory>
+#include <mvvm/commands/commandresult.h>
 #include <mvvm/model_export.h>
 #include <string>
 
@@ -29,6 +30,9 @@ public:
     explicit AbstractItemCommand(SessionItem* receiver);
     virtual ~AbstractItemCommand();
 
+    AbstractItemCommand(const AbstractItemCommand& other) = delete;
+    AbstractItemCommand& operator=(const AbstractItemCommand& other) = delete;
+
     void execute();
 
     void undo();
@@ -37,12 +41,15 @@ public:
 
     std::string description() const;
 
+    CommandResult result() const;
+
 protected:
     void setObsolete(bool flag);
     void setDescription(const std::string& text);
     Path pathFromItem(SessionItem* item) const;
     SessionItem* itemFromPath(const Path& path) const;
     SessionModel* model() const;
+    void setResult(const CommandResult& command_result);
 
 private:
     virtual void execute_command() = 0;

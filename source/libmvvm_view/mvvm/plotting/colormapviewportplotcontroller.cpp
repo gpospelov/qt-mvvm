@@ -20,44 +20,44 @@
 using namespace ModelView;
 
 struct ColorMapViewportPlotController::ColorMapViewportPlotControllerImpl {
-    ColorMapViewportPlotController* master{nullptr};
-    QCustomPlot* custom_plot{nullptr};
-    QCPColorScale* color_scale{nullptr};
-    std::unique_ptr<ViewportAxisPlotController> xAxisController;
-    std::unique_ptr<ViewportAxisPlotController> yAxisController;
-    std::unique_ptr<ColorScalePlotController> colorScaleController;
-    std::unique_ptr<ColorMapPlotController> colorMapController;
+    ColorMapViewportPlotController* m_self{nullptr};
+    QCustomPlot* m_customPlot{nullptr};
+    QCPColorScale* m_colorScale{nullptr};
+    std::unique_ptr<ViewportAxisPlotController> m_xAxisController;
+    std::unique_ptr<ViewportAxisPlotController> m_yAxisController;
+    std::unique_ptr<ColorScalePlotController> m_colorScaleController;
+    std::unique_ptr<ColorMapPlotController> m_colorMapController;
 
     ColorMapViewportPlotControllerImpl(ColorMapViewportPlotController* master, QCustomPlot* plot)
-        : master(master), custom_plot(plot), color_scale(new QCPColorScale(custom_plot))
+        : m_self(master), m_customPlot(plot), m_colorScale(new QCPColorScale(m_customPlot))
     {
-        xAxisController = std::make_unique<ViewportAxisPlotController>(custom_plot->xAxis);
-        yAxisController = std::make_unique<ViewportAxisPlotController>(custom_plot->yAxis);
-        colorScaleController = std::make_unique<ColorScalePlotController>(color_scale);
-        colorMapController = std::make_unique<ColorMapPlotController>(custom_plot, color_scale);
+        m_xAxisController = std::make_unique<ViewportAxisPlotController>(m_customPlot->xAxis);
+        m_yAxisController = std::make_unique<ViewportAxisPlotController>(m_customPlot->yAxis);
+        m_colorScaleController = std::make_unique<ColorScalePlotController>(m_colorScale);
+        m_colorMapController = std::make_unique<ColorMapPlotController>(m_customPlot, m_colorScale);
     }
 
-    ColorMapViewportItem* viewport_item() { return master->currentItem(); }
+    ColorMapViewportItem* viewportItem() { return m_self->currentItem(); }
 
     //! Setup controller components.
 
     void setup_components()
     {
-        auto viewport = viewport_item();
-        xAxisController->setItem(viewport->xAxis());
-        yAxisController->setItem(viewport->yAxis());
-        colorScaleController->setItem(viewport->zAxis());
-        auto colormap_item = viewport_item()->item<ColorMapItem>(ColorMapViewportItem::T_ITEMS);
-        colorMapController->setItem(colormap_item);
-        viewport_item()->update_viewport();
+        auto viewport = viewportItem();
+        m_xAxisController->setItem(viewport->xAxis());
+        m_yAxisController->setItem(viewport->yAxis());
+        m_colorScaleController->setItem(viewport->zAxis());
+        auto colormap_item = viewportItem()->item<ColorMapItem>(ColorMapViewportItem::T_ITEMS);
+        m_colorMapController->setItem(colormap_item);
+        viewportItem()->setViewportToContent();
     }
 
     void unsubscribe_components()
     {
-        xAxisController->setItem(nullptr);
-        yAxisController->setItem(nullptr);
-        colorScaleController->setItem(nullptr);
-        colorMapController->setItem(nullptr);
+        m_xAxisController->setItem(nullptr);
+        m_yAxisController->setItem(nullptr);
+        m_colorScaleController->setItem(nullptr);
+        m_colorMapController->setItem(nullptr);
     }
 };
 

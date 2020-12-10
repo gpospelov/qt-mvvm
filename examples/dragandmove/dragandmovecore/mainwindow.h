@@ -14,6 +14,10 @@
 #include <memory>
 
 class QTabWidget;
+
+namespace DragAndView
+{
+
 class SampleModel;
 
 //! A main window. Contain two sample models and tabs with two model editors.
@@ -21,6 +25,7 @@ class SampleModel;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
+
 public:
     MainWindow();
     ~MainWindow();
@@ -35,5 +40,7 @@ private:
     QTabWidget* m_tabWidget;
     std::unique_ptr<SampleModel> m_model;
 };
+
+} // namespace DragAndView
 
 #endif //  MAINWINDOW_H

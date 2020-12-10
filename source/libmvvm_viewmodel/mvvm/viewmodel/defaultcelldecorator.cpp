@@ -9,6 +9,7 @@
 
 #include <QModelIndex>
 #include <QStyleOptionViewItem>
+#include <mvvm/editors/editor_constants.h>
 #include <mvvm/editors/scientificspinbox.h>
 #include <mvvm/model/comboproperty.h>
 #include <mvvm/model/customvariants.h>
@@ -41,7 +42,9 @@ std::optional<std::string> DefaultCellDecorator::cellText(const QModelIndex& ind
 
     else if (Utils::IsDoubleVariant(variant))
         return std::optional<std::string>{
-            ScientificSpinBox::toString(index.data(Qt::EditRole).value<double>(), 4).toStdString()};
+            ScientificSpinBox::toString(index.data(Qt::EditRole).value<double>(),
+                                        Constants::default_double_decimals)
+                .toStdString()};
 
     return {};
 }

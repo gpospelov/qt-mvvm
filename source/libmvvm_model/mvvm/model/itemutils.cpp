@@ -10,6 +10,7 @@
 #include <iterator>
 #include <mvvm/model/itemutils.h>
 #include <mvvm/model/sessionitem.h>
+#include <mvvm/utils/containerutils.h>
 
 using namespace ModelView;
 
@@ -72,9 +73,7 @@ SessionItem* Utils::ChildAt(const SessionItem* parent, int index)
 
 int Utils::IndexOfChild(const SessionItem* parent, const SessionItem* child)
 {
-    auto container = parent->children();
-    auto pos = find(container.begin(), container.end(), child);
-    return pos == container.end() ? -1 : static_cast<int>(std::distance(container.begin(), pos));
+    return Utils::IndexOfItem(parent->children(), child);
 }
 
 std::vector<SessionItem*> Utils::TopLevelItems(const SessionItem& item)
@@ -122,6 +121,8 @@ SessionItem* Utils::FindNextItemToSelect(SessionItem* item)
 
 bool Utils::IsItemAncestor(const SessionItem* item, const SessionItem* candidate)
 {
+    if (!item || !candidate)
+        return false;
     const SessionItem* parent = item->parent();
     while (parent) {
         if (parent == candidate)
@@ -130,4 +131,13 @@ bool Utils::IsItemAncestor(const SessionItem* item, const SessionItem* candidate
             parent = parent->parent();
     }
     return false;
+}
+
+std::vector<SessionItem*> Utils::UniqueItems(const std::vector<SessionItem*>& items)
+{
+    auto filtered = Utils::UniqueWithOrder(items);
+    std::vector<SessionItem*> result;
+    std::copy_if(filtered.begin(), filtered.end(), std::back_inserter(result),
+                 [](auto x) { return x != nullptr; });
+    return result;
 }

@@ -10,70 +10,45 @@
 #ifndef MVVM_SIGNALS_ITEMMAPPER_H
 #define MVVM_SIGNALS_ITEMMAPPER_H
 
-#include <mvvm/signals/callbackcontainer.h>
+#include <memory>
+#include <mvvm/interfaces/itemlistenerinterface.h>
+#include <mvvm/signals/modellistener.h>
 
 namespace ModelView
 {
 
 class SessionItem;
-class SessionModel;
 
-//! Provides notifications on varios changes for specific item.
-//!
+//! Provides notifications on various changes for a specific item.
 //! ItemMapper listens signals coming from the model (i.e. via ModelMapper) and processes only whose
-//! signals which are related to given item. Notifies all interested subscribers about things
-//! going with given item and its relatives.
+//! signals which are related to the given item. Notifies all interested subscribers about things
+//! going with the item and its relatives.
 
-class MVVM_MODEL_EXPORT ItemMapper
+class MVVM_MODEL_EXPORT ItemMapper : public ItemListenerInterface,
+                                     private ModelListener<SessionModel>
 {
-    friend class SessionItem;
-
 public:
     ItemMapper(SessionItem* item);
     ~ItemMapper();
 
-    void setModel(SessionModel* model);
+    void setOnItemDestroy(Callbacks::item_t f, Callbacks::slot_t owner) override;
+    void setOnDataChange(Callbacks::item_int_t f, Callbacks::slot_t owner) override;
+    void setOnPropertyChange(Callbacks::item_str_t f, Callbacks::slot_t owner) override;
+    void setOnChildPropertyChange(Callbacks::item_str_t f, Callbacks::slot_t owner) override;
+    void setOnItemInserted(Callbacks::item_tagrow_t f, Callbacks::slot_t owner) override;
+    void setOnItemRemoved(Callbacks::item_tagrow_t f, Callbacks::slot_t owner) override;
+    void setOnAboutToRemoveItem(Callbacks::item_tagrow_t f, Callbacks::slot_t owner) override;
 
-    void setOnItemDestroy(Callbacks::item_t f, Callbacks::slot_t owner);
-    void setOnDataChange(Callbacks::item_int_t f, Callbacks::slot_t owner);
-    void setOnPropertyChange(Callbacks::item_str_t f, Callbacks::slot_t owner);
-    void setOnChildPropertyChange(Callbacks::item_str_t f, Callbacks::slot_t owner);
-    void setOnItemInserted(Callbacks::item_tagrow_t f, Callbacks::slot_t owner);
-    void setOnItemRemoved(Callbacks::item_tagrow_t f, Callbacks::slot_t owner);
-    void setOnAboutToRemoveItem(Callbacks::item_tagrow_t f, Callbacks::slot_t owner);
+    void unsubscribe(Callbacks::slot_t client) override;
 
     void setActive(bool value);
 
-    void unsubscribe(Callbacks::slot_t client);
-
 private:
-    void processDataChange(SessionItem* item, int role);
-    void processItemInserted(SessionItem* parent, TagRow tagrow);
-    void processItemRemoved(SessionItem* parent, TagRow tagrow);
-    void processAboutToRemoveItem(SessionItem* parent, TagRow tagrow);
-    void subscribe_to_model();
-    void unsubscribe_from_model();
-    int nestlingDepth(SessionItem* item, int level = 0);
-
+    friend class SessionItem;
     void callOnItemDestroy();
-    void callOnDataChange(SessionItem* item, int role);
-    void callOnPropertyChange(SessionItem* item, std::string property_name);
-    void callOnChildPropertyChange(SessionItem* item, std::string property_name);
-    void callOnItemInserted(SessionItem* parent, TagRow tagrow);
-    void callOnItemRemoved(SessionItem* parent, TagRow tagrow);
-    void callOnAboutToRemoveItem(SessionItem* parent, TagRow tagrow);
 
-    Signal<Callbacks::item_t> m_on_item_destroy;
-    Signal<Callbacks::item_int_t> m_on_data_change;
-    Signal<Callbacks::item_str_t> m_on_property_change;
-    Signal<Callbacks::item_str_t> m_on_child_property_change;
-    Signal<Callbacks::item_tagrow_t> m_on_item_inserted;
-    Signal<Callbacks::item_tagrow_t> m_on_item_removed;
-    Signal<Callbacks::item_tagrow_t> m_on_about_to_remove_item;
-
-    bool m_active;
-    SessionItem* m_item;
-    SessionModel* m_model;
+    struct ItemMapperImpl;
+    std::unique_ptr<ItemMapperImpl> p_impl;
 };
 
 } // namespace ModelView

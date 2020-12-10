@@ -10,24 +10,18 @@
 #ifndef MVVM_VIEWMODEL_STANDARDCHILDRENSTRATEGIES_H
 #define MVVM_VIEWMODEL_STANDARDCHILDRENSTRATEGIES_H
 
-/*!
-@file childrenstrategies.h
-@brief Collection of strategies to find children, actual of fictional, of given SessionItem.
+//! @file childrenstrategies.h
+//! @brief Collection of strategies to find children, actual of fictional, of given SessionItem.
+//! Used for ViewModel generation when underlying SessionModel changes its layout.
 
-Used for ViewModel generation when underlying SessionModel changes its layout.
-*/
-
-#include <mvvm/viewmodel/childrenstrategyinterface.h>
+#include <mvvm/interfaces/childrenstrategyinterface.h>
 
 namespace ModelView
 {
 
 class SessionItem;
 
-/*!
-@class AllChildrenStrategy
-@brief Strategy to find children of given item: gives all actual children back.
-*/
+//! Strategy to find children of given item: gives all actual children back.
 
 class MVVM_VIEWMODEL_EXPORT AllChildrenStrategy : public ChildrenStrategyInterface
 {
@@ -35,11 +29,8 @@ public:
     std::vector<SessionItem*> children(const SessionItem* item) const override;
 };
 
-/*!
-@class TopItemsStrategy
-@brief Strategy to find children of given item: only top level items will be given, all
-property items will be filtered out.
-*/
+//! Strategy to find children of given item: only top level items will be given, all
+//! property items will be filtered out.
 
 class MVVM_VIEWMODEL_EXPORT TopItemsStrategy : public ChildrenStrategyInterface
 {
@@ -47,28 +38,9 @@ public:
     std::vector<SessionItem*> children(const SessionItem* item) const override;
 };
 
-/*!
-@class PropertyItemsStrategy
-@brief Strategy to find children of given item: only property item will be given,
-all top level items will be filtered out, all inactive children of GroupItem will
-be filtered out.
-
-For example: if group property has Cylinder active:
-
-Particle
-    ShapeGroup
-        Sphere
-            Radius
-        Cylinder
-            Height
-            Radius
-
-will become:
-Particle
-    ShapeGroup -> Cylinder
-        Height
-        Radius
-*/
+//! Strategy to find children of given item: only property item will be given, all top level items
+//! will be filtered out, all inactive children of GroupItem will be filtered out. See example
+//! in code.
 
 class MVVM_VIEWMODEL_EXPORT PropertyItemsStrategy : public ChildrenStrategyInterface
 {
@@ -76,29 +48,9 @@ public:
     std::vector<SessionItem*> children(const SessionItem* item) const override;
 };
 
-/*!
-@class PropertyItemsFlatStrategy
-@brief Strategy to find children of given item.
-
-Acts as PropertyItemStrategy, with the difference that active subproperties of
-GroupItem are moved to the same parent, as GroupItem itself.
-
-For example: if group property has Cylinder active:
-
-Particle
-    ShapeGroup
-        Sphere
-            Radius
-        Cylinder
-            Height
-            Radius
-
-will become:
-Particle
-    ShapeGroup -> Cylinder
-    Height
-    Radius
-*/
+//! Strategy to find children of given item: flat alignment.
+//! Acts as PropertyItemStrategy, with the difference that active subproperties of
+//! GroupItem are moved to the same parent, as GroupItem itself. See example in code.
 
 class MVVM_VIEWMODEL_EXPORT PropertyItemsFlatStrategy : public ChildrenStrategyInterface
 {

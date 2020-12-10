@@ -8,7 +8,8 @@
 // ************************************************************************** //
 
 #include "google_test.h"
-#include "toy_includes.h"
+#include "toyitems.h"
+#include "toymodel.h"
 #include <QSignalSpy>
 #include <mvvm/viewmodel/defaultviewmodel.h>
 #include <mvvm/viewmodel/standardviewitems.h>
@@ -81,7 +82,7 @@ TEST_F(ToyMultilayerItemTest, findMultiLayerView)
     DefaultViewModel viewModel(&model);
 
     auto views = viewModel.findViews(multiLayerItem);
-    EXPECT_EQ(views.size(), 1);
+    EXPECT_EQ(views.size(), 2);
     EXPECT_EQ(views.at(0)->item(), multiLayerItem);
 }
 

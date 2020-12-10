@@ -12,10 +12,10 @@
 
 #include <mvvm/model/sessionmodel.h>
 
-/*!
-@class SampleModel
-@brief Main application model.
-*/
+namespace TreeViews
+{
+
+//! Main application model.
 
 class SampleModel : public ModelView::SessionModel
 {
@@ -25,5 +25,7 @@ public:
 private:
     void init_model();
 };
+
+} // namespace TreeViews
 
 #endif

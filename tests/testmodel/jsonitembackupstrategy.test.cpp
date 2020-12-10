@@ -8,11 +8,11 @@
 // ************************************************************************** //
 
 #include "google_test.h"
+#include <mvvm/factories/itemcataloguefactory.h>
 #include <mvvm/model/compounditem.h>
 #include <mvvm/model/itemfactory.h>
 #include <mvvm/model/propertyitem.h>
 #include <mvvm/serialization/jsonitembackupstrategy.h>
-#include <mvvm/standarditems/standarditemcatalogue.h>
 
 using namespace ModelView;
 

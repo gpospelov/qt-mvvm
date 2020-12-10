@@ -9,7 +9,6 @@
 
 #include "colormapmodel.h"
 #include <cmath>
-#include <mvvm/model/modelutils.h>
 #include <mvvm/standarditems/axisitems.h>
 #include <mvvm/standarditems/colormapitem.h>
 #include <mvvm/standarditems/colormapviewportitem.h>
@@ -41,6 +40,9 @@ void fill_data(Data2DItem* data_item, double scale = 1.0)
 }
 } // namespace
 
+namespace PlotColorMap
+{
+
 ColorMapModel::ColorMapModel() : SessionModel("ColorMapModel")
 {
     init_model();
@@ -68,7 +70,7 @@ void ColorMapModel::add_colormap()
 
 ContainerItem* ColorMapModel::data_container()
 {
-    return Utils::TopItem<ContainerItem>(this);
+    return topItem<ContainerItem>();
 }
 
 void ColorMapModel::init_model()
@@ -78,3 +80,5 @@ void ColorMapModel::init_model()
 
     add_colormap();
 }
+
+} // namespace PlotColorMap

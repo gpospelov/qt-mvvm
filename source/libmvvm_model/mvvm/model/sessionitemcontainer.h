@@ -32,6 +32,8 @@ public:
     SessionItemContainer& operator=(const SessionItemContainer&) = delete;
     ~SessionItemContainer();
 
+    bool empty() const;
+
     int itemCount() const;
 
     std::vector<SessionItem*> items() const;

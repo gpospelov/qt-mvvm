@@ -58,7 +58,8 @@ void ColorMapCanvas::setItem(ColorMapViewportItem* viewport_item)
     p_impl->viewport_controller->setItem(viewport_item);
 }
 
-//! Creates
+//! Creates adapter to convert widget coordinates, to QCustomPlot internal coordinate system
+//! (defined by its axes).
 
 std::unique_ptr<SceneAdapterInterface> ColorMapCanvas::createSceneAdapter() const
 {

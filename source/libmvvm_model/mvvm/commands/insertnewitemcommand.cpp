@@ -22,10 +22,10 @@ std::string generate_description(const std::string& modelType, const TagRow& tag
 struct InsertNewItemCommand::InsertNewItemCommandImpl {
     item_factory_func_t factory_func;
     TagRow tagrow;
-    result_t result;
     Path item_path;
+    std::string initial_identifier;
     InsertNewItemCommandImpl(item_factory_func_t func, TagRow tagrow)
-        : factory_func(std::move(func)), tagrow(std::move(tagrow)), result(nullptr)
+        : factory_func(std::move(func)), tagrow(std::move(tagrow))
     {
     }
 };
@@ -34,6 +34,7 @@ InsertNewItemCommand::InsertNewItemCommand(item_factory_func_t func, SessionItem
                                            const TagRow& tagrow)
     : AbstractItemCommand(parent), p_impl(std::make_unique<InsertNewItemCommandImpl>(func, tagrow))
 {
+    setResult(nullptr);
     p_impl->item_path = pathFromItem(parent);
 }
 
@@ -42,26 +43,30 @@ InsertNewItemCommand::~InsertNewItemCommand() = default;
 void InsertNewItemCommand::undo_command()
 {
     auto parent = itemFromPath(p_impl->item_path);
-    delete parent->takeItem(p_impl->tagrow);
-    p_impl->result = nullptr;
+    auto item = parent->takeItem(p_impl->tagrow);
+    // saving identifier for later redo
+    if (p_impl->initial_identifier.empty())
+        p_impl->initial_identifier = item->identifier();
+    delete item;
+    setResult(nullptr);
 }
 
 void InsertNewItemCommand::execute_command()
 {
     auto parent = itemFromPath(p_impl->item_path);
     auto child = p_impl->factory_func().release();
+    // here we restore original identifier to get exactly same item on consequitive undo/redo
+    if (!p_impl->initial_identifier.empty())
+        child->setDataIntern(QVariant::fromValue(p_impl->initial_identifier),
+                             ItemDataRole::IDENTIFIER);
+
     setDescription(generate_description(child->modelType(), p_impl->tagrow));
     if (parent->insertItem(child, p_impl->tagrow)) {
-        p_impl->result = child;
+        setResult(child);
     } else {
         delete child;
         setObsolete(true);
     }
-}
-
-InsertNewItemCommand::result_t InsertNewItemCommand::result() const
-{
-    return p_impl->result;
 }
 
 namespace

@@ -9,7 +9,6 @@
 
 #include "google_test.h"
 #include "test_utils.h"
-#include <QDebug>
 #include <QSignalSpy>
 #include <mvvm/model/propertyitem.h>
 #include <mvvm/model/sessionmodel.h>
@@ -41,9 +40,20 @@ public:
 
 ViewModelControllerTest::~ViewModelControllerTest() = default;
 
-//! Initial state of the controller. Empty SessionModel, empty ViewModel.
+//! Initial state of the controller. It is in working state only after setRootItem.
 
 TEST_F(ViewModelControllerTest, initialState)
+{
+    SessionModel session_model;
+    ViewModelBase view_model;
+    auto controller = std::make_unique<ViewModelController>(&session_model, &view_model);
+    EXPECT_EQ(controller->sessionModel(), &session_model);
+    EXPECT_EQ(controller->rootSessionItem(), nullptr);
+}
+
+//! Initial state of the controller. Empty SessionModel, empty ViewModel.
+
+TEST_F(ViewModelControllerTest, create_controller)
 {
     SessionModel session_model;
     ViewModelBase view_model;
@@ -151,10 +161,11 @@ TEST_F(ViewModelControllerTest, initThenInsertProperty)
     // it should be ViewLabelItem and ViewDataItem looking at our PropertyItem item
     EXPECT_EQ(view_model.itemFromIndex(labelIndex)->item_role(), ItemDataRole::DISPLAY);
     EXPECT_EQ(view_model.itemFromIndex(labelIndex)->item(), propertyItem);
-    // Feature: since our PropertyItem got it's value after ViewModel was initialized, the model
-    // still holds ViewEmptyItem and not ViewDataItem.
-    EXPECT_EQ(view_model.itemFromIndex(dataIndex)->item_role(), 0);
-    EXPECT_EQ(view_model.itemFromIndex(dataIndex)->item(), nullptr);
+
+    // Our PropertyItem got it's value after ViewModel was initialized, however,
+    // underlying ViewDataItem should see updated values
+    EXPECT_EQ(view_model.itemFromIndex(dataIndex)->item_role(), ItemDataRole::DATA);
+    EXPECT_EQ(view_model.itemFromIndex(dataIndex)->item(), propertyItem);
 }
 
 //! Insert three property items in a model, inserted after controller was setup.

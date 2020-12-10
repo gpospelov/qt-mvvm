@@ -15,13 +15,10 @@
 namespace ModelView
 {
 
-/*!
-@class PropertyTableViewModel
-@brief View model to show content of SessionModel in Qt widgets: all item properties as a table row.
+//! View model to show content of SessionModel in Qt widgets: all item properties as a table row.
 
-Given view model is intended to show registered properties of items in table-like view.
-Registered properties will form columns of the table, top level items will form table rows.
-*/
+//! Intended to show registered properties of items in table-like view.
+//! Registered properties will form columns of the table, top level items will form table rows.
 
 class MVVM_VIEWMODEL_EXPORT PropertyTableViewModel : public ViewModel
 {

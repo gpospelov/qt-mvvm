@@ -10,11 +10,12 @@
 #include <QLineEdit>
 #include <cmath>
 #include <limits>
+#include <mvvm/editors/editor_constants.h>
 #include <mvvm/editors/scientificspinbox.h>
 
 namespace
 {
-const double upper_switch = 100;
+const double upper_switch = 1000;
 const double lower_switch = 0.1;
 const double min_val = std::numeric_limits<double>::min();
 const double max_val = std::numeric_limits<double>::max();
@@ -25,8 +26,12 @@ bool useExponentialNotation(double val);
 using namespace ModelView;
 
 ScientificSpinBox::ScientificSpinBox(QWidget* parent)
-    : QAbstractSpinBox(parent), m_value(0.0), m_min(-max_val), m_max(max_val), m_step(1.0),
-      m_decimals(3)
+    : QAbstractSpinBox(parent)
+    , m_value(0.0)
+    , m_min(-max_val)
+    , m_max(max_val)
+    , m_step(1.0)
+    , m_decimals(Constants::default_double_decimals)
 {
     QLocale locale;
     locale.setNumberOptions(QLocale::RejectGroupSeparator);
@@ -137,7 +142,8 @@ double ScientificSpinBox::toDouble(QString text, const QDoubleValidator& validat
 
 double ScientificSpinBox::round(double val, int decimals)
 {
-    return QString::number(val, 'e', decimals).toDouble();
+    char notation = useExponentialNotation(val) ? 'e' : 'f';
+    return QString::number(val, notation, decimals).toDouble();
 }
 
 QAbstractSpinBox::StepEnabled ScientificSpinBox::stepEnabled() const

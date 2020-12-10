@@ -10,7 +10,7 @@
 #include "jobmanager.h"
 #include "toysimulation.h"
 
-JobManager::JobManager(QObject *parent) : QObject(parent), is_running(true)
+JobManager::JobManager(QObject* parent) : QObject(parent), is_running(true)
 {
     // starting thread to run consequent simulations
     sim_thread = std::thread{&JobManager::wait_and_run, this};

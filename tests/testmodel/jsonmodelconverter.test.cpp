@@ -18,6 +18,8 @@
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/model/taginfo.h>
+#include <mvvm/serialization/jsonitem_types.h>
+#include <mvvm/serialization/jsonitemformatassistant.h>
 #include <mvvm/serialization/jsonmodelconverter.h>
 #include <stdexcept>
 
@@ -34,61 +36,43 @@ public:
 
 JsonModelConverterTest::~JsonModelConverterTest() = default;
 
-//! Validity of json object representing SessionModel.
-
-TEST_F(JsonModelConverterTest, isValidModel)
-{
-    JsonModelConverter converter;
-
-    // empty json object is not valid
-    QJsonObject object;
-    EXPECT_FALSE(converter.isSessionModel(object));
-
-    // json object representing valid SessionModel
-    QJsonObject object2;
-    object2[JsonModelConverter::modelKey] = "abc";
-    object2[JsonModelConverter::itemsKey] = QJsonArray();
-    EXPECT_TRUE(converter.isSessionModel(object2));
-}
-
 //! Creation of json object: empty model.
 
 TEST_F(JsonModelConverterTest, emptyModel)
 {
-    JsonModelConverter converter;
+    JsonModelConverter converter(ConverterMode::project);
     SessionModel model("TestModel");
 
-    QJsonObject object;
-    converter.model_to_json(model, object);
+    QJsonObject object = converter.to_json(model);
 
-    EXPECT_EQ(object[JsonModelConverter::modelKey], "TestModel");
-    EXPECT_EQ(object[JsonModelConverter::itemsKey].toArray().size(), 0);
+    EXPECT_EQ(object[JsonItemFormatAssistant::sessionModelKey], "TestModel");
+    EXPECT_EQ(object[JsonItemFormatAssistant::itemsKey].toArray().size(), 0);
 
-    EXPECT_TRUE(converter.isSessionModel(object));
+    JsonItemFormatAssistant assistant;
+    EXPECT_TRUE(assistant.isSessionModel(object));
 }
 
 //! Empty model to json and back.
 
 TEST_F(JsonModelConverterTest, emptyModelToJsonAndBack)
 {
-    JsonModelConverter converter;
+    JsonModelConverter converter(ConverterMode::project);
     SessionModel model("TestModel");
 
-    QJsonObject object;
-    converter.model_to_json(model, object);
+    QJsonObject object = converter.to_json(model);
 
     // attempt to reconstruct model of different type.
     SessionModel target1("NewModel");
-    EXPECT_THROW(converter.json_to_model(object, target1), std::runtime_error);
+    EXPECT_THROW(converter.from_json(object, target1), std::runtime_error);
 
     // attempt to reconstruct non-empty model
     SessionModel target2("TestModel");
     target2.insertItem<SessionItem>();
-    EXPECT_NO_THROW(converter.json_to_model(object, target2));
+    EXPECT_NO_THROW(converter.from_json(object, target2));
 
     // succesfull reconstruction
     SessionModel target3("TestModel");
-    EXPECT_NO_THROW(converter.json_to_model(object, target3));
+    EXPECT_NO_THROW(converter.from_json(object, target3));
     EXPECT_EQ(target3.rootItem()->childrenCount(), 0u);
 }
 
@@ -96,17 +80,16 @@ TEST_F(JsonModelConverterTest, emptyModelToJsonAndBack)
 
 TEST_F(JsonModelConverterTest, singleItemToJsonAndBack)
 {
-    JsonModelConverter converter;
+    JsonModelConverter converter(ConverterMode::project);
     SessionModel model("TestModel");
 
     auto item = model.insertItem<SessionItem>();
 
-    QJsonObject object;
-    converter.model_to_json(model, object);
+    QJsonObject object = converter.to_json(model);
 
     // filling new model
     SessionModel target("TestModel");
-    converter.json_to_model(object, target);
+    converter.from_json(object, target);
     EXPECT_EQ(target.rootItem()->childrenCount(), 1u);
     auto reco_item = target.rootItem()->getItem("", 0);
     EXPECT_EQ(reco_item->parent(), target.rootItem());
@@ -117,7 +100,7 @@ TEST_F(JsonModelConverterTest, singleItemToJsonAndBack)
 
 TEST_F(JsonModelConverterTest, parentAndChildToJsonAndBack)
 {
-    JsonModelConverter converter;
+    JsonModelConverter converter(ConverterMode::project);
     SessionModel model("TestModel");
 
     // filling original model with content
@@ -130,12 +113,11 @@ TEST_F(JsonModelConverterTest, parentAndChildToJsonAndBack)
     child->setDisplayName("child_name");
 
     // writing model to json
-    QJsonObject object;
-    converter.model_to_json(model, object);
+    QJsonObject object = converter.to_json(model);
 
     // reading model from json
     SessionModel target("TestModel");
-    converter.json_to_model(object, target);
+    converter.from_json(object, target);
 
     // accessing reconstructed parent and child
     auto reco_parent = target.rootItem()->getItem("", 0);
@@ -145,7 +127,8 @@ TEST_F(JsonModelConverterTest, parentAndChildToJsonAndBack)
     EXPECT_EQ(reco_parent->model(), &target);
     EXPECT_EQ(reco_parent->modelType(), Constants::BaseType);
     EXPECT_EQ(reco_parent->parent(), target.rootItem());
-    EXPECT_EQ(reco_parent->displayName(), "parent_name");
+    EXPECT_EQ(reco_parent->displayName(),
+              "SessionItem"); // Name changed because of ProjectConverter
     EXPECT_EQ(reco_parent->childrenCount(), 1);
     EXPECT_EQ(reco_parent->identifier(), parent->identifier());
     EXPECT_EQ(reco_parent->defaultTag(), "defaultTag");
@@ -155,7 +138,7 @@ TEST_F(JsonModelConverterTest, parentAndChildToJsonAndBack)
     EXPECT_EQ(reco_child->model(), &target);
     EXPECT_EQ(reco_child->modelType(), Constants::PropertyType);
     EXPECT_EQ(reco_child->parent(), reco_parent);
-    EXPECT_EQ(reco_child->displayName(), "child_name");
+    EXPECT_EQ(reco_child->displayName(), "Property"); // // Name changed because of ProjectConverter
     EXPECT_EQ(reco_child->childrenCount(), 0);
     EXPECT_EQ(reco_child->identifier(), child->identifier());
     EXPECT_EQ(reco_child->defaultTag(), "");
@@ -165,19 +148,18 @@ TEST_F(JsonModelConverterTest, parentAndChildToJsonAndBack)
 
 TEST_F(JsonModelConverterTest, identifiers)
 {
-    JsonModelConverter converter;
+    JsonModelConverter converter(ConverterMode::project);
     auto pool1 = std::make_shared<ItemPool>();
 
     // creating model and converting it to json
     SessionModel source("SourceModel", pool1);
     auto parent1 = source.insertItem<SessionItem>();
-    QJsonObject json_source;
-    converter.model_to_json(source, json_source);
+    QJsonObject json_source = converter.to_json(source);
 
     // creating source and filling it from json
     auto pool2 = std::make_shared<ItemPool>();
     SessionModel target("SourceModel", pool2);
-    converter.json_to_model(json_source, target);
+    converter.from_json(json_source, target);
     auto reco_parent = target.rootItem()->getItem("", 0);
 
     // comparing identifiers of two items from different models
@@ -186,8 +168,7 @@ TEST_F(JsonModelConverterTest, identifiers)
     EXPECT_EQ(id1, id2);
 
     // saving target in its own json
-    QJsonObject json_target;
-    converter.model_to_json(target, json_target);
+    QJsonObject json_target = converter.to_json(target);
 
     // comparing text representations of two json
     EXPECT_EQ(TestUtils::JsonToString(json_source), TestUtils::JsonToString(json_target));
@@ -201,7 +182,7 @@ TEST_F(JsonModelConverterTest, identifiers)
 
 TEST_F(JsonModelConverterTest, parentAndChildToFileAndBack)
 {
-    JsonModelConverter converter;
+    JsonModelConverter converter(ConverterMode::project);
     SessionModel model("TestModel");
 
     // filling original model with content
@@ -214,18 +195,16 @@ TEST_F(JsonModelConverterTest, parentAndChildToFileAndBack)
     child->setDisplayName("child_name");
 
     // writing model to json
-    auto object = std::make_unique<QJsonObject>();
-    converter.model_to_json(model, *object);
+    auto object = converter.to_json(model);
 
     // saving object to file
     auto fileName = TestUtils::TestFileName(testDir(), "model.json");
-    TestUtils::SaveJson(*object, fileName);
-    object.reset();
+    TestUtils::SaveJson(object, fileName);
 
     // converting document back to item
     auto document = TestUtils::LoadJson(fileName);
     SessionModel target("TestModel");
-    converter.json_to_model(document.object(), target);
+    converter.from_json(document.object(), target);
 
     // accessing reconstructed parent and child
     auto reco_parent = target.rootItem()->getItem("", 0);
@@ -235,7 +214,7 @@ TEST_F(JsonModelConverterTest, parentAndChildToFileAndBack)
     EXPECT_EQ(reco_parent->model(), &target);
     EXPECT_EQ(reco_parent->modelType(), Constants::BaseType);
     EXPECT_EQ(reco_parent->parent(), target.rootItem());
-    EXPECT_EQ(reco_parent->displayName(), "parent_name");
+    EXPECT_EQ(reco_parent->displayName(), "SessionItem");
     EXPECT_EQ(reco_parent->childrenCount(), 1);
     EXPECT_EQ(reco_parent->identifier(), parent->identifier());
     EXPECT_EQ(reco_parent->defaultTag(), "defaultTag");
@@ -245,7 +224,7 @@ TEST_F(JsonModelConverterTest, parentAndChildToFileAndBack)
     EXPECT_EQ(reco_child->model(), &target);
     EXPECT_EQ(reco_child->modelType(), Constants::PropertyType);
     EXPECT_EQ(reco_child->parent(), reco_parent);
-    EXPECT_EQ(reco_child->displayName(), "child_name");
+    EXPECT_EQ(reco_child->displayName(), "Property");
     EXPECT_EQ(reco_child->childrenCount(), 0);
     EXPECT_EQ(reco_child->identifier(), child->identifier());
     EXPECT_EQ(reco_child->defaultTag(), "");
@@ -258,7 +237,7 @@ TEST_F(JsonModelConverterTest, singleItemToJsonAndBackToSameModel)
 {
     auto pool = std::make_shared<ItemPool>();
 
-    JsonModelConverter converter;
+    JsonModelConverter converter(ConverterMode::project);
     SessionModel model("TestModel", pool);
     auto item = model.insertItem<SessionItem>();
 
@@ -266,11 +245,10 @@ TEST_F(JsonModelConverterTest, singleItemToJsonAndBackToSameModel)
     auto root_id = root_item->identifier();
     auto item_id = item->identifier();
 
-    QJsonObject object;
-    converter.model_to_json(model, object);
+    QJsonObject object = converter.to_json(model);
 
     // filling new model
-    converter.json_to_model(object, model);
+    converter.from_json(object, model);
 
     EXPECT_EQ(pool->size(), 2);
     EXPECT_FALSE(pool->item_for_key(root_id) == model.rootItem()); // old root identifier has gone

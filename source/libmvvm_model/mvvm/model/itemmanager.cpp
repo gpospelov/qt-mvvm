@@ -7,11 +7,11 @@
 //
 // ************************************************************************** //
 
+#include <mvvm/factories/itemcataloguefactory.h>
 #include <mvvm/model/itemfactory.h>
 #include <mvvm/model/itemmanager.h>
 #include <mvvm/model/itempool.h>
 #include <mvvm/model/sessionitem.h>
-#include <mvvm/standarditems/standarditemcatalogue.h>
 
 namespace
 {
@@ -77,14 +77,6 @@ void ItemManager::unregister_item(SessionItem* item)
 {
     if (m_item_pool)
         m_item_pool->unregister_item(item);
-}
-
-//! Replacing existing registration in item pool with new id.
-
-void ItemManager::fix_registration(SessionItem* item, const identifier_type& id)
-{
-    m_item_pool->unregister_item(item);
-    m_item_pool->register_item(item, id);
 }
 
 const ItemFactoryInterface* ItemManager::factory() const

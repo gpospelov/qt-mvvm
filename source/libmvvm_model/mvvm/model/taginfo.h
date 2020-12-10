@@ -46,7 +46,8 @@ public:
 
     bool isSinglePropertyTag() const;
 
-    std::string toString() const;
+    bool operator==(const TagInfo& other) const;
+    bool operator!=(const TagInfo& other) const;
 
 private:
     std::string m_name;

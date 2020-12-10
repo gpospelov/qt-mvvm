@@ -29,7 +29,7 @@ QStringList PropertiesRowStrategy::horizontalHeaderLabels() const
     return result;
 }
 
-std::vector<std::unique_ptr<ViewItem>> PropertiesRowStrategy::constructRefRow(SessionItem* item)
+std::vector<std::unique_ptr<ViewItem>> PropertiesRowStrategy::constructRow(SessionItem* item)
 {
     std::vector<std::unique_ptr<ViewItem>> result;
 

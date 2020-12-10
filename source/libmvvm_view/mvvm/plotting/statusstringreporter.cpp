@@ -26,8 +26,10 @@ struct StatusStringReporter::StatusStringReporterImpl {
     StatusStringReporterImpl(StatusStringReporter* parent, QCustomPlot* custom_plot,
                              callback_t callback,
                              std::unique_ptr<StatusStringFormatterInterface> formatter)
-        : parent(parent), custom_plot(custom_plot), callback(std::move(callback)),
-          fmt(std::move(formatter))
+        : parent(parent)
+        , custom_plot(custom_plot)
+        , callback(std::move(callback))
+        , fmt(std::move(formatter))
     {
         if (!custom_plot)
             throw std::runtime_error("StatusStringReporter: not initialized custom plot.");

@@ -2,7 +2,7 @@
 
 The example shows how to plot one-dimensional graphs using wrappers around `qcustomplot` library. 
 
-![plotgraphs](../../doc/plotgraphs.png)
+![plotgraphs](../../doc/assets/plotgraphs.png)
 
 The  application model contains a collection of various items to 
 properly separate `scientific data` from `presentation data`. 

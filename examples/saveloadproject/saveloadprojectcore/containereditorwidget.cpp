@@ -22,8 +22,10 @@
 using namespace ModelView;
 
 ContainerEditorWidget::ContainerEditorWidget(QWidget* parent)
-    : QWidget(parent), m_treeView(new QTreeView), m_delegate(std::make_unique<ViewModelDelegate>()),
-      m_model(nullptr)
+    : QWidget(parent)
+    , m_treeView(new QTreeView)
+    , m_delegate(std::make_unique<ViewModelDelegate>())
+    , m_model(nullptr)
 {
     setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Expanding);
 

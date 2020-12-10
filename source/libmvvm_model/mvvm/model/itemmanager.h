@@ -46,8 +46,6 @@ public:
     void register_item(SessionItem* item);
     void unregister_item(SessionItem* item);
 
-    void fix_registration(SessionItem* item, const identifier_type& id);
-
     const ItemFactoryInterface* factory() const;
 
 private:

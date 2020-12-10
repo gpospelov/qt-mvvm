@@ -19,6 +19,7 @@ class QLabel;
 class ProjectPaneWidget : public QWidget
 {
     Q_OBJECT
+
 public:
     explicit ProjectPaneWidget(QWidget* parent = nullptr);
 
@@ -33,9 +34,9 @@ signals:
 
 protected:
     void paintEvent(QPaintEvent*) override;
-    void enterEvent(QEvent *) override;
-    void leaveEvent(QEvent *) override;
-    void mousePressEvent(QMouseEvent *event) override;
+    void enterEvent(QEvent*) override;
+    void leaveEvent(QEvent*) override;
+    void mousePressEvent(QMouseEvent* event) override;
 
 private:
     QLabel* m_current_project_title{nullptr};

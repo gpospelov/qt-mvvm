@@ -8,8 +8,8 @@
 // ************************************************************************** //
 
 #include "mainwindow.h"
+#include "sampleeditorwidget.h"
 #include "samplemodel.h"
-#include "testwidget.h"
 #include <QCoreApplication>
 #include <QSettings>
 #include <QTabWidget>
@@ -21,9 +21,12 @@ const QString size_key = "size";
 const QString pos_key = "pos";
 } // namespace
 
+namespace TreeViews
+{
+
 MainWindow::MainWindow() : m_sample_model(std::make_unique<SampleModel>())
 {
-    auto central_widget = new TestWidget(m_sample_model.get());
+    auto central_widget = new SampleEditorWdiget(m_sample_model.get());
     setCentralWidget(central_widget);
     init_application();
 }
@@ -59,3 +62,5 @@ void MainWindow::write_settings()
     settings.setValue(pos_key, pos());
     settings.endGroup();
 }
+
+} // namespace TreeViews

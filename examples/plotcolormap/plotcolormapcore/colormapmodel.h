@@ -17,10 +17,10 @@ namespace ModelView
 class ContainerItem;
 }
 
-/*!
-@class ColorMapModel
-@brief Main application model to demonstrate how to plot data.
-*/
+namespace PlotColorMap
+{
+
+//! Main application model to demonstrate how to plot data.
 
 class ColorMapModel : public ModelView::SessionModel
 {
@@ -34,5 +34,7 @@ private:
     void init_model();
     void add_colormap();
 };
+
+} // namespace PlotColorMap
 
 #endif // COLORMAPMODEL_H

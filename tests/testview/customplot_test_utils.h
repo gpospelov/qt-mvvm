@@ -36,6 +36,9 @@ std::vector<double> binCenters(const QCPGraph* graph);
 //! Returns vector representing y-values on QCPgraph.
 std::vector<double> binValues(const QCPGraph* graph);
 
+//! Returns vector representing bin errors of QCPGraph.
+std::vector<double> binErrors(const QCPGraph* graph);
+
 //! Finds and returns specific plottable in QCustomPlot canvas.
 template <typename T> T* GetPlottable(QCustomPlot* custom_plot)
 {
@@ -46,5 +49,7 @@ template <typename T> T* GetPlottable(QCustomPlot* custom_plot)
     return nullptr;
 }
 } // namespace TestUtils
+
+Q_DECLARE_METATYPE(QCPRange)
 
 #endif

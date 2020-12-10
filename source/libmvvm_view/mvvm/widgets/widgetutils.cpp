@@ -11,13 +11,12 @@
 #include <QColor>
 #include <QDir>
 #include <QFontMetrics>
+#include <QLabel>
 #include <QMainWindow>
 #include <QSize>
 #include <mvvm/utils/numericutils.h>
 #include <mvvm/widgets/widgetutils.h>
 
-namespace
-{
 namespace
 {
 
@@ -30,20 +29,43 @@ QSize FindSizeOfLetterM()
     auto fontAscent = fontMetric.ascent();
     return QSize(em, fontAscent);
 }
-} // namespace
 
 const QString untitled_name = "Untitled";
+
 } // namespace
 
-QColor ModelView::Utils::random_color()
+QColor ModelView::Utils::RandomColor()
 {
     auto rndm = []() -> int { return ModelView::Utils::RandInt(0, 255); };
     return QColor(rndm(), rndm(), rndm());
 }
 
+std::string ModelView::Utils::RandomNamedColor()
+{
+    return RandomColor().name().toStdString();
+}
+
 bool ModelView::Utils::IsWindowsHost()
 {
 #if defined(Q_OS_WIN)
+    return true;
+#else
+    return false;
+#endif
+}
+
+bool ModelView::Utils::IsMacHost()
+{
+#if defined(Q_OS_MAC)
+    return true;
+#else
+    return false;
+#endif
+}
+
+bool ModelView::Utils::IsLinuxHost()
+{
+#if defined(Q_OS_LINUX)
     return true;
 #else
     return false;
@@ -105,4 +127,49 @@ QMainWindow* ModelView::Utils::FindMainWindow()
             return result;
     }
     return nullptr;
+}
+
+QString ModelView::Utils::ClickableText(const QString& text, const QString& tag)
+{
+    return QString("<a href=\"%1\">%2</a>").arg(tag.isEmpty() ? text : tag, text);
+}
+
+void ModelView::Utils::ScaleLabelFont(QLabel* label, double scale)
+{
+    QFont font = label->font();
+    font.setPointSize(ModelView::Utils::SystemPointSize() * scale);
+    label->setFont(font);
+}
+
+QStringList ModelView::Utils::toStringList(const std::vector<std::string>& vec)
+{
+    QStringList result;
+    for (const auto& x : vec)
+        result.push_back(QString::fromStdString(x));
+    return result;
+}
+
+std::vector<std::string> ModelView::Utils::fromStringList(const QStringList& string_list)
+{
+    std::vector<std::string> result;
+    for (const auto& x : string_list)
+        result.push_back(x.toStdString());
+    return result;
+}
+
+QByteArray ModelView::Utils::serialize(const QStringList& data)
+{
+    QByteArray byteArray;
+    QDataStream out(&byteArray, QIODevice::WriteOnly);
+    out << data;
+    return byteArray;
+}
+
+QStringList ModelView::Utils::deserialize(const QByteArray& byteArray)
+{
+    QByteArray array = byteArray;
+    QStringList result;
+    QDataStream in(&array, QIODevice::ReadOnly);
+    in >> result;
+    return result;
 }

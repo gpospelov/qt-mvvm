@@ -7,8 +7,9 @@
 //
 // ************************************************************************** //
 
-#include "MockWidgets.h"
 #include "google_test.h"
+#include "mockwidgets.h"
+#include <mvvm/model/comboproperty.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/standarditems/axisitems.h>
 #include <mvvm/standarditems/colormapitem.h>
@@ -35,6 +36,7 @@ TEST_F(ColorMapItemTest, initialState)
     ColorMapItem item;
     EXPECT_TRUE(item.dataItem() == nullptr);
     EXPECT_TRUE(item.property<bool>(ColorMapItem::P_INTERPOLATION));
+    EXPECT_EQ(item.property<ComboProperty>(ColorMapItem::P_GRADIENT).value(), "Polar");
 }
 
 //! Setting dataItem in model context.

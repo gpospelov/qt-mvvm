@@ -10,14 +10,14 @@
 #ifndef MVVM_COMMANDS_COMMANDSERVICE_H
 #define MVVM_COMMANDS_COMMANDSERVICE_H
 
-#include <QUndoStack>
 #include <memory>
-#include <mvvm/commands/commandadapter.h>
+#include <mvvm/commands/commandresult.h>
+#include <mvvm/commands/undostack.h>
+#include <mvvm/core/variant.h>
 #include <mvvm/model/function_types.h>
 #include <mvvm/model_export.h>
 
 class QUndoCommand;
-class QVariant;
 
 namespace ModelView
 {
@@ -40,45 +40,41 @@ public:
 
     SessionItem* copyItem(const SessionItem* item, SessionItem* parent, const TagRow& tagrow);
 
-    bool setData(SessionItem* item, const QVariant& value, int role);
+    bool setData(SessionItem* item, const Variant& value, int role);
 
     void removeItem(SessionItem* parent, const TagRow& tagrow);
 
     void moveItem(SessionItem* item, SessionItem* new_parent, const TagRow& tagrow);
 
-    QUndoStack* undoStack() const;
+    UndoStackInterface* undoStack() const;
 
     void setCommandRecordPause(bool value);
 
 private:
-    template <typename C, typename... Args> typename C::result_t process_command(Args&&... args);
+    template <typename C, typename... Args> CommandResult process_command(Args&&... args);
 
     bool provideUndo() const;
 
     SessionModel* m_model;
-    std::unique_ptr<QUndoStack> m_commands;
+    std::unique_ptr<UndoStackInterface> m_commands;
     bool m_pause_record;
 };
 
 //! Creates and processes command of given type using given argument list.
 
 template <typename C, typename... Args>
-typename C::result_t CommandService::process_command(Args&&... args)
+CommandResult CommandService::process_command(Args&&... args)
 {
-    typename C::result_t result;
-
     if (provideUndo()) {
+        // making shared because underlying QUndoStack requires ownership
         auto command = std::make_shared<C>(std::forward<Args>(args)...);
-        auto adapter = new CommandAdapter(command);
-        m_commands->push(adapter);
-        result = command->result();
+        m_commands->execute(command);
+        return command->result();
     } else {
-        auto command = std::make_unique<C>(std::forward<Args>(args)...);
-        command->execute();
-        result = command->result();
+        C command(std::forward<Args>(args)...);
+        command.execute();
+        return command.result();
     }
-
-    return result;
 }
 
 } // namespace ModelView

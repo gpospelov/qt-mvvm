@@ -9,8 +9,15 @@
 
 #include <QSpinBox>
 #include <QVBoxLayout>
+#include <cmath>
 #include <mvvm/editors/integereditor.h>
 #include <stdexcept>
+
+namespace
+{
+const int max_val = 65536;
+const int min_val = -max_val;
+} // namespace
 
 using namespace ModelView;
 
@@ -19,6 +26,7 @@ IntegerEditor::IntegerEditor(QWidget* parent) : CustomEditor(parent), m_intEdito
     setAutoFillBackground(true);
     m_intEditor->setFocusPolicy(Qt::StrongFocus);
     m_intEditor->setKeyboardTracking(false);
+    m_intEditor->setRange(min_val, max_val);
 
     auto layout = new QVBoxLayout;
     layout->setMargin(0);
@@ -36,8 +44,7 @@ IntegerEditor::IntegerEditor(QWidget* parent) : CustomEditor(parent), m_intEdito
 
 void IntegerEditor::setRange(int minimum, int maximum)
 {
-    m_intEditor->setMinimum(minimum);
-    m_intEditor->setMaximum(maximum);
+    m_intEditor->setRange(minimum, maximum);
 }
 
 void IntegerEditor::onEditingFinished()

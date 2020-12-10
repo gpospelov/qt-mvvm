@@ -8,14 +8,14 @@
 // ************************************************************************** //
 
 #include "samplemodel.h"
-#include "items.h"
+#include "sampleitems.h"
 #include <mvvm/model/itemcatalogue.h>
 
 using namespace ModelView;
 
 namespace
 {
-std::unique_ptr<ModelView::ItemCatalogue> CreateToyItemCatalogue()
+std::unique_ptr<ModelView::ItemCatalogue> CreateItemCatalogue()
 {
     auto result = std::make_unique<ItemCatalogue>();
     result->registerItem<BeamItem>();
@@ -30,7 +30,7 @@ std::unique_ptr<ModelView::ItemCatalogue> CreateToyItemCatalogue()
 
 SampleModel::SampleModel() : SessionModel("SampleModel")
 {
-    setItemCatalogue(CreateToyItemCatalogue());
+    setItemCatalogue(CreateItemCatalogue());
     init_model();
 }
 

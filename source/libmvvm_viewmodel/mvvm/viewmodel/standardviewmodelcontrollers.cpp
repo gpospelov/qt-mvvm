@@ -22,8 +22,8 @@ DefaultViewModelController::DefaultViewModelController(SessionModel* session_mod
                                                        ViewModelBase* view_model)
     : ViewModelController(session_model, view_model)
 {
-    setRowStrategy(std::make_unique<LabelDataRowStrategy>());
     setChildrenStrategy(std::make_unique<AllChildrenStrategy>());
+    setRowStrategy(std::make_unique<LabelDataRowStrategy>());
 }
 
 // ----------------------------------------------------------------------------
@@ -32,8 +32,8 @@ TopItemsViewModelController::TopItemsViewModelController(SessionModel* session_m
                                                          ViewModelBase* view_model)
     : ViewModelController(session_model, view_model)
 {
-    setRowStrategy(std::make_unique<LabelDataRowStrategy>());
     setChildrenStrategy(std::make_unique<TopItemsStrategy>());
+    setRowStrategy(std::make_unique<LabelDataRowStrategy>());
 }
 
 // ----------------------------------------------------------------------------
@@ -42,8 +42,8 @@ PropertyViewModelController::PropertyViewModelController(SessionModel* session_m
                                                          ViewModelBase* view_model)
     : ViewModelController(session_model, view_model)
 {
-    setRowStrategy(std::make_unique<LabelDataRowStrategy>());
     setChildrenStrategy(std::make_unique<PropertyItemsStrategy>());
+    setRowStrategy(std::make_unique<LabelDataRowStrategy>());
 }
 
 void PropertyViewModelController::onDataChange(SessionItem* item, int role)
@@ -57,12 +57,14 @@ void PropertyViewModelController::onDataChange(SessionItem* item, int role)
 
 // ----------------------------------------------------------------------------
 
+// FIXME What to do with group property?
+
 PropertyTableViewModelController::PropertyTableViewModelController(
     SessionModel* session_model, ViewModelBase* view_model, const std::vector<std::string>& labels)
     : ViewModelController(session_model, view_model)
 {
-    setRowStrategy(std::make_unique<PropertiesRowStrategy>(labels));
     setChildrenStrategy(std::make_unique<TopItemsStrategy>());
+    setRowStrategy(std::make_unique<PropertiesRowStrategy>(labels));
 }
 
 // ----------------------------------------------------------------------------
@@ -71,8 +73,8 @@ PropertyFlatViewModelController::PropertyFlatViewModelController(SessionModel* s
                                                                  ViewModelBase* view_model)
     : ViewModelController(session_model, view_model)
 {
-    setRowStrategy(std::make_unique<LabelDataRowStrategy>());
     setChildrenStrategy(std::make_unique<PropertyItemsFlatStrategy>());
+    setRowStrategy(std::make_unique<LabelDataRowStrategy>());
 }
 
 void PropertyFlatViewModelController::onDataChange(SessionItem* item, int role)

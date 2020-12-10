@@ -23,12 +23,8 @@ class TagRow;
 class MVVM_MODEL_EXPORT RemoveItemCommand : public AbstractItemCommand
 {
 public:
-    using result_t = bool;
-
     RemoveItemCommand(SessionItem* parent, TagRow tagrow);
     ~RemoveItemCommand() override;
-
-    result_t result() const;
 
 private:
     void undo_command() override;

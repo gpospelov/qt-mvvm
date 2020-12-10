@@ -8,13 +8,16 @@
 // ************************************************************************** //
 
 #include "google_test.h"
+#include <gmock/gmock.h>
 #include "qcustomplot.h"
+#include "customplot_test_utils.h"
 #include <QApplication>
 #include <QStandardItem>
 
 int main(int argc, char** argv)
 {
     ::testing::InitGoogleTest(&argc, argv);
+    ::testing::InitGoogleMock(&argc, argv);
 
     ModelView::Comparators::registerComparators();
     qRegisterMetaType<QStandardItem*>("QStandardItem*");

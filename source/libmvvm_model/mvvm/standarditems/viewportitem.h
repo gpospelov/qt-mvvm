@@ -17,12 +17,8 @@ namespace ModelView
 
 class ViewportAxisItem;
 
-/*!
-@class ViewportItem
-@brief Base class to represent 2D viewport.
-
-Used to define x,y axis for graphs and 2d colormaps, intended for use in QCustomPlot context.
-*/
+//! Base class to represent 2D viewport.
+//! Contains x,y axis, indended to display graphs or 2d colormaps.
 
 class MVVM_MODEL_EXPORT ViewportItem : public CompoundItem
 {
@@ -30,18 +26,21 @@ public:
     static inline const std::string P_XAXIS = "P_XAXIS";
     static inline const std::string P_YAXIS = "P_YAXIS";
     static inline const std::string T_ITEMS = "T_ITEMS";
+
     ViewportItem(const model_type& model);
 
     ViewportAxisItem* xAxis() const;
 
     ViewportAxisItem* yAxis() const;
 
-    virtual void update_viewport();
+    virtual void setViewportToContent(double left, double top, double right, double bottom);
+
+    virtual void setViewportToContent();
 
 protected:
     void register_xy_axes();
 
-private:
+protected:
     virtual std::pair<double, double> data_xaxis_range() const = 0;
     virtual std::pair<double, double> data_yaxis_range() const = 0;
 };

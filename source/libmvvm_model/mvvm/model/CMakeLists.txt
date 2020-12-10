@@ -18,7 +18,6 @@ target_sources(${library_name} PRIVATE
     itemcatalogue.h
     itemfactory.cpp
     itemfactory.h
-    itemfactoryinterface.h
     itemmanager.cpp
     itemmanager.h
     itempool.cpp
@@ -46,5 +45,5 @@ target_sources(${library_name} PRIVATE
     taginfo.h
     tagrow.cpp
     tagrow.h
-    variant-constants.h
+    variant_constants.h
 )

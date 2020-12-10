@@ -1,6 +1,12 @@
 target_sources(${library_name} PRIVATE
+    adjustingscrollarea.cpp
+    adjustingscrollarea.h
     allitemstreeview.cpp
     allitemstreeview.h
+    collapsiblebar.cpp
+    collapsiblebar.h
+    collapsiblelistwidget.cpp
+    collapsiblelistwidget.h
     itemstreeview.cpp
     itemstreeview.h
     itemstreeviewinterface.h

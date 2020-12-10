@@ -63,7 +63,7 @@ void ActionManager::setupMenus(QMenuBar* menubar)
     fileMenu->addAction(m_saveProjectAsAction);
 }
 
-void ActionManager::setupToolBar(QToolBar *toolbar)
+void ActionManager::setupToolBar(QToolBar* toolbar)
 {
     toolbar->addAction(m_createNewProjectAction);
     toolbar->addSeparator();

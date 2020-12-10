@@ -11,7 +11,6 @@
 #include "sceneitems.h"
 #include <cmath>
 #include <mvvm/model/itemcatalogue.h>
-#include <mvvm/model/modelutils.h>
 #include <mvvm/standarditems/axisitems.h>
 #include <mvvm/standarditems/colormapitem.h>
 #include <mvvm/standarditems/colormapviewportitem.h>
@@ -42,7 +41,7 @@ void fill_data(Data2DItem* data_item, double scale = 1.0)
     data_item->setContent(values);
 }
 
-std::unique_ptr<ModelView::ItemCatalogue> CreateToyItemCatalogue()
+std::unique_ptr<ModelView::ItemCatalogue> CreateItemCatalogue()
 {
     auto result = std::make_unique<ItemCatalogue>();
     result->registerItem<RegionOfInterestItem>();
@@ -53,7 +52,7 @@ std::unique_ptr<ModelView::ItemCatalogue> CreateToyItemCatalogue()
 
 SceneModel::SceneModel() : SessionModel("ColorMapModel")
 {
-    setItemCatalogue(CreateToyItemCatalogue());
+    setItemCatalogue(CreateItemCatalogue());
 
     create_roi();
     create_data();
@@ -64,7 +63,7 @@ SceneModel::SceneModel() : SessionModel("ColorMapModel")
 
 void SceneModel::update_data(double scale)
 {
-    fill_data(Utils::TopItem<Data2DItem>(this), scale);
+    fill_data(topItem<Data2DItem>(), scale);
 }
 
 //! Creates item representing region of interest in the context of color map and graphics scene.
@@ -94,5 +93,5 @@ void SceneModel::create_colormap()
 {
     auto viewport_item = insertItem<ColorMapViewportItem>();
     auto colormap_item = insertItem<ColorMapItem>(viewport_item);
-    colormap_item->setDataItem(Utils::TopItem<Data2DItem>(this));
+    colormap_item->setDataItem(topItem<Data2DItem>());
 }

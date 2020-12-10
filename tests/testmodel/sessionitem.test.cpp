@@ -14,6 +14,7 @@
 #include <mvvm/model/itemutils.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/taginfo.h>
+#include <mvvm/model/variant_constants.h>
 #include <stdexcept>
 
 using namespace ModelView;
@@ -53,6 +54,8 @@ TEST_F(SessionItemTest, modelType)
     EXPECT_EQ(item2.modelType(), "Layer");
 }
 
+//! Validating ::setData and appearance of roles.
+
 TEST_F(SessionItemTest, setData)
 {
     SessionItem item;
@@ -79,6 +82,25 @@ TEST_F(SessionItemTest, setData)
     EXPECT_EQ(item.data<QVariant>(role), QVariant::fromValue(43.0));
 }
 
+//! Validating ::setData in the context of implicit conversion.
+
+TEST_F(SessionItemTest, setDataAndImplicitConversion)
+{
+    {
+        SessionItem item;
+        const int role = ItemDataRole::DATA;
+        EXPECT_TRUE(item.setData(43.0, ItemDataRole::DATA));
+        EXPECT_EQ(item.data<QVariant>(role).typeName(), Constants::double_type_name);
+    }
+
+    {
+        SessionItem item;
+        const int role = ItemDataRole::DATA;
+        EXPECT_TRUE(item.setData(43, ItemDataRole::DATA));
+        EXPECT_EQ(item.data<QVariant>(role).typeName(), Constants::int_type_name);
+    }
+}
+
 TEST_F(SessionItemTest, hasData)
 {
     SessionItem item;
@@ -89,6 +111,8 @@ TEST_F(SessionItemTest, hasData)
     EXPECT_TRUE(item.hasData(ItemDataRole::DISPLAY));
     EXPECT_FALSE(item.hasData(ItemDataRole::APPEARANCE));
     EXPECT_FALSE(item.hasData(ItemDataRole::LIMITS));
+    EXPECT_FALSE(item.hasData(ItemDataRole::TOOLTIP));
+    EXPECT_FALSE(item.hasData(ItemDataRole::EDITORTYPE));
 
     item.setData(42.0);
     EXPECT_TRUE(item.hasData());
@@ -674,6 +698,34 @@ TEST_F(SessionItemTest, appearance)
     item.setEditable(false);
     EXPECT_FALSE(item.isEnabled());
     EXPECT_FALSE(item.isEditable());
+}
+
+//! Checks item tooltip.
+
+TEST_F(SessionItemTest, tooltip)
+{
+    SessionItem item("Model");
+
+    EXPECT_EQ(item.toolTip(), "");
+    EXPECT_FALSE(item.hasData(ItemDataRole::TOOLTIP));
+
+    EXPECT_EQ(item.setToolTip("abc"), &item);
+    EXPECT_TRUE(item.hasData(ItemDataRole::TOOLTIP));
+    EXPECT_EQ(item.toolTip(), "abc");
+}
+
+//! Checks item's editor type.
+
+TEST_F(SessionItemTest, editorType)
+{
+    SessionItem item("Model");
+
+    EXPECT_EQ(item.editorType(), "");
+    EXPECT_FALSE(item.hasData(ItemDataRole::EDITORTYPE));
+
+    EXPECT_EQ(item.setEditorType("abc"), &item);
+    EXPECT_TRUE(item.hasData(ItemDataRole::EDITORTYPE));
+    EXPECT_EQ(item.editorType(), "abc");
 }
 
 TEST_F(SessionItemTest, itemsInTag)

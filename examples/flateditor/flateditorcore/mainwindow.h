@@ -16,9 +16,12 @@
 class SampleModel;
 class QTabWidget;
 
+//! The main window of this application.
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
+
 public:
     MainWindow();
     ~MainWindow();
@@ -30,7 +33,7 @@ private:
     void init_application();
     void write_settings();
 
-    QTabWidget* m_tabWidget;
+    QTabWidget* m_tabWidget{nullptr};
     std::unique_ptr<SampleModel> m_sample_model;
 };
 

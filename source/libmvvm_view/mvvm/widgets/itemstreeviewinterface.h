@@ -20,13 +20,12 @@ namespace ModelView
 
 class SessionModel;
 
-/*!
-@class ItemsTreeViewInterface
-@brief Saves and restores list of SessionModel's to/from disk using json format.
-*/
+//! Saves and restores list of SessionModel's to/from disk using json format.
 
 class MVVM_VIEW_EXPORT ItemsTreeViewInterface : public QWidget
 {
+    Q_OBJECT
+
 public:
     virtual void setSessionModel(SessionModel* model) = 0;
 

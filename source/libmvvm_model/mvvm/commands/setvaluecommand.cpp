@@ -8,35 +8,35 @@
 // ************************************************************************** //
 
 #include <mvvm/commands/setvaluecommand.h>
+#include <mvvm/core/variant.h>
 #include <mvvm/model/path.h>
 #include <mvvm/model/sessionitem.h>
+#include <mvvm/model/modelutils.h>
 #include <sstream>
 
 namespace
 {
-std::string generate_description(const std::string& str);
+std::string generate_description(const std::string& str, int role);
 } // namespace
 
 using namespace ModelView;
 
 struct SetValueCommand::SetValueCommandImpl {
-    QVariant m_value; //! Value to set as a result of command execution.
+    Variant m_value; //! Value to set as a result of command execution.
     int m_role;
-    result_t m_result;
     Path m_item_path;
-    SetValueCommandImpl(QVariant value, int role)
-        : m_value(std::move(value)), m_role(role), m_result(false)
-    {
-    }
+    SetValueCommandImpl(Variant value, int role) : m_value(std::move(value)), m_role(role) {}
 };
 
 // ----------------------------------------------------------------------------
 
-SetValueCommand::SetValueCommand(SessionItem* item, QVariant value, int role)
-    : AbstractItemCommand(item),
-      p_impl(std::make_unique<SetValueCommandImpl>(std::move(value), role))
+SetValueCommand::SetValueCommand(SessionItem* item, Variant value, int role)
+    : AbstractItemCommand(item)
+    , p_impl(std::make_unique<SetValueCommandImpl>(std::move(value), role))
 {
-    setDescription(generate_description(p_impl->m_value.toString().toStdString()));
+    setResult(false);
+
+    setDescription(generate_description(p_impl->m_value.toString().toStdString(), role));
     p_impl->m_item_path = pathFromItem(item);
 }
 
@@ -55,26 +55,19 @@ void SetValueCommand::execute_command()
 void SetValueCommand::swap_values()
 {
     auto item = itemFromPath(p_impl->m_item_path);
-    auto old = item->data<QVariant>(p_impl->m_role);
-    p_impl->m_result = item->setDataIntern(p_impl->m_value, p_impl->m_role);
-    setObsolete(!p_impl->m_result);
+    auto old = item->data<Variant>(p_impl->m_role);
+    auto result = item->setDataIntern(p_impl->m_value, p_impl->m_role);
+    setResult(result);
+    setObsolete(!result);
     p_impl->m_value = old;
-}
-
-//! Returns result of the command, which is bool value denoting that the value was set succesfully.
-//! The value 'false' means that the data is the same and no change was required.
-
-SetValueCommand::result_t SetValueCommand::result() const
-{
-    return p_impl->m_result;
 }
 
 namespace
 {
-std::string generate_description(const std::string& str)
+std::string generate_description(const std::string& str, int role)
 {
     std::ostringstream ostr;
-    ostr << "Set value " << str;
+    ostr << "Set value: " << str << ", role:" << role;
     return ostr.str();
 }
 } // namespace

@@ -20,15 +20,13 @@ namespace ModelView
 class ColorMapViewportItem;
 class SceneAdapterInterface;
 
-/*!
-@class ColorMapCanvas
-@brief Widget to show 2D data as color map.
-
-Contains embedded QCustomPlot widget, shows content of ColorMapViewportItem.
-*/
+//! Widget to show 2D data as color map.
+//! Contains embedded QCustomPlot widget, shows content of ColorMapViewportItem.
 
 class MVVM_VIEW_EXPORT ColorMapCanvas : public QWidget
 {
+    Q_OBJECT
+
 public:
     explicit ColorMapCanvas(QWidget* parent = nullptr);
     ~ColorMapCanvas() override;

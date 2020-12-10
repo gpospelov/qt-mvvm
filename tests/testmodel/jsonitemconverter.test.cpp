@@ -13,11 +13,14 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <mvvm/model/compounditem.h>
+#include <mvvm/model/itemcatalogue.h>
 #include <mvvm/model/propertyitem.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
-#include <mvvm/model/taginfo.h>
+#include <mvvm/serialization/jsonitem_types.h>
 #include <mvvm/serialization/jsonitemconverter.h>
+#include <mvvm/serialization/jsonitemformatassistant.h>
 
 using namespace ModelView;
 
@@ -26,15 +29,37 @@ using namespace ModelView;
 class JsonItemConverterTest : public FolderBasedTest
 {
 public:
+    class TestItem : public CompoundItem
+    {
+    public:
+        TestItem() : CompoundItem("TestItem")
+        {
+            setToolTip("compound");
+            addProperty("Thickness", 42)->setToolTip("thickness");
+        }
+    };
+
+    class TestModel : public SessionModel
+    {
+    public:
+        TestModel() : SessionModel("TestModel")
+        {
+            auto catalogue = std::make_unique<ModelView::ItemCatalogue>();
+            catalogue->registerItem<TestItem>();
+            setItemCatalogue(std::move(catalogue));
+        }
+    };
+
     JsonItemConverterTest()
-        : FolderBasedTest("test_JsonItemConverter"), m_model(std::make_unique<SessionModel>())
+        : FolderBasedTest("test_JsonItemConverter"), m_model(std::make_unique<TestModel>())
     {
     }
     ~JsonItemConverterTest();
 
     std::unique_ptr<JsonItemConverter> createConverter()
     {
-        return std::make_unique<JsonItemConverter>(m_model->factory());
+        ConverterContext context{m_model->factory(), ConverterMode::clone};
+        return std::make_unique<JsonItemConverter>(context);
     }
 
 private:
@@ -42,59 +67,6 @@ private:
 };
 
 JsonItemConverterTest::~JsonItemConverterTest() = default;
-
-//! Checks the validity of json object representing SessionItem.
-
-TEST_F(JsonItemConverterTest, isSessionItem)
-{
-    auto converter = createConverter();
-
-    // empty json object is not valid
-    QJsonObject object;
-    EXPECT_FALSE(converter->isSessionItem(object));
-
-    // it also should contain array
-    object[JsonItemConverter::modelKey] = "abc";
-    object[JsonItemConverter::itemDataKey] = QJsonArray();
-    object[JsonItemConverter::itemTagsKey] = 42; // intentionally incorrect
-    EXPECT_FALSE(converter->isSessionItem(object));
-
-    // correctly constructed
-    object[JsonItemConverter::itemTagsKey] = QJsonObject();
-    EXPECT_TRUE(converter->isSessionItem(object));
-}
-
-//! Checks the validity of json object representing SessionItemTags.
-
-TEST_F(JsonItemConverterTest, isSessionItemTags)
-{
-    auto converter = createConverter();
-
-    // empty json object is not valid
-    QJsonObject object;
-    EXPECT_FALSE(converter->isSessionItemTags(object));
-
-    // it also should contain array
-    object[JsonItemConverter::defaultTagKey] = "abc";
-    object[JsonItemConverter::containerKey] = QJsonArray();
-    EXPECT_TRUE(converter->isSessionItemTags(object));
-}
-
-//! Checks the validity of json object representing SessionItemContainer.
-
-TEST_F(JsonItemConverterTest, isSessionItemContainer)
-{
-    auto converter = createConverter();
-
-    // empty json object is not valid
-    QJsonObject object;
-    EXPECT_FALSE(converter->isSessionItemContainer(object));
-
-    // it also should contain array
-    object[JsonItemConverter::tagInfoKey] = QJsonObject();
-    object[JsonItemConverter::itemsKey] = QJsonArray();
-    EXPECT_TRUE(converter->isSessionItemContainer(object));
-}
 
 //! PropertyItem to json object.
 
@@ -106,7 +78,8 @@ TEST_F(JsonItemConverterTest, propertyItemToJson)
     auto object = converter->to_json(&item);
 
     // this object represents SessionItem
-    EXPECT_TRUE(converter->isSessionItem(object));
+    JsonItemFormatAssistant assistant;
+    EXPECT_TRUE(assistant.isSessionItem(object));
 }
 
 //! PropertyItem to json object and back.
@@ -116,6 +89,7 @@ TEST_F(JsonItemConverterTest, propertyItemToJsonAndBack)
     auto converter = createConverter();
 
     PropertyItem item;
+    item.setToolTip("abc");
     auto object = converter->to_json(&item);
 
     auto reco = converter->from_json(object);
@@ -123,6 +97,7 @@ TEST_F(JsonItemConverterTest, propertyItemToJsonAndBack)
     EXPECT_EQ(reco->modelType(), item.modelType());
     EXPECT_EQ(reco->displayName(), item.displayName());
     EXPECT_EQ(reco->identifier(), item.identifier());
+    EXPECT_EQ(reco->toolTip(), std::string("abc"));
 }
 
 //! PropertyItem to json file and back.
@@ -135,7 +110,7 @@ TEST_F(JsonItemConverterTest, propertyItemToFileAndBack)
     auto object = converter->to_json(&item);
 
     // saving object to file
-    auto fileName = TestUtils::TestFileName(testDir(), "propertyitem.json");
+    auto fileName = TestUtils::TestFileName(testDir(), "propertyItemToFileAndBack.json");
     TestUtils::SaveJson(object, fileName);
 
     auto document = TestUtils::LoadJson(fileName);
@@ -163,7 +138,8 @@ TEST_F(JsonItemConverterTest, parentAndChildToJsonAndBack)
 
     // converting to json
     auto object = converter->to_json(parent.get());
-    EXPECT_TRUE(converter->isSessionItem(object));
+    JsonItemFormatAssistant assistant;
+    EXPECT_TRUE(assistant.isSessionItem(object));
 
     // converting json back to item
     auto reco_parent = converter->from_json(object);
@@ -202,10 +178,11 @@ TEST_F(JsonItemConverterTest, parentAndChildToFileAndBack)
 
     // converting to json
     auto object = converter->to_json(parent.get());
-    EXPECT_TRUE(converter->isSessionItem(object));
+    JsonItemFormatAssistant assistant;
+    EXPECT_TRUE(assistant.isSessionItem(object));
 
     // saving object to file
-    auto fileName = TestUtils::TestFileName(testDir(), "parentandchild.json");
+    auto fileName = TestUtils::TestFileName(testDir(), "parentAndChildToFileAndBack.json");
     TestUtils::SaveJson(object, fileName);
 
     // converting document back to item
@@ -228,4 +205,30 @@ TEST_F(JsonItemConverterTest, parentAndChildToFileAndBack)
     EXPECT_EQ(reco_child->displayName(), "child_name");
     EXPECT_EQ(reco_child->identifier(), child->identifier());
     EXPECT_EQ(reco_child->defaultTag(), "");
+}
+
+//! TestItem to json file and back.
+
+TEST_F(JsonItemConverterTest, testItemToFileAndBack)
+{
+    auto converter = createConverter();
+
+    TestItem item;
+    auto object = converter->to_json(&item);
+
+    // saving object to file
+    auto fileName = TestUtils::TestFileName(testDir(), "testItemToFileAndBack.json");
+    TestUtils::SaveJson(object, fileName);
+
+    auto document = TestUtils::LoadJson(fileName);
+    auto reco = converter->from_json(document.object());
+
+    EXPECT_EQ(reco->parent(), nullptr);
+    EXPECT_EQ(reco->modelType(), item.modelType());
+    EXPECT_EQ(reco->displayName(), item.displayName());
+    EXPECT_EQ(reco->identifier(), item.identifier());
+
+    EXPECT_EQ(reco->toolTip(), "compound");
+    // tooltip was preserved after the serialization
+    EXPECT_EQ(reco->getItem("Thickness")->toolTip(), "thickness");
 }

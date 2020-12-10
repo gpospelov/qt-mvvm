@@ -1,7 +1,5 @@
 set(test testviewmodel)
 
-include(GoogleTest)
-
 file(GLOB source_files "*.cpp")
 file(GLOB include_files "*.h")
 

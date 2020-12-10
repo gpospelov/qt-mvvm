@@ -13,20 +13,16 @@
 #include <mvvm/utils/containerutils.h>
 #include <stdexcept>
 
-namespace
-{
-std::string tag_name = "group_items";
-}
-
 using namespace ModelView;
 
 GroupItem::~GroupItem() = default;
 
 GroupItem::GroupItem(model_type modelType)
-    : SessionItem(std::move(modelType)), m_catalogue(std::make_unique<ItemCatalogue>()),
-      m_default_selected_index(0)
+    : SessionItem(std::move(modelType))
+    , m_catalogue(std::make_unique<ItemCatalogue>())
+    , m_default_selected_index(0)
 {
-    registerTag(TagInfo::universalTag(tag_name), /*set_as_default*/ true);
+    registerTag(TagInfo::universalTag(T_GROUP_ITEMS), /*set_as_default*/ true);
     setData(ComboProperty());
 }
 
@@ -40,6 +36,11 @@ int GroupItem::currentIndex() const
 const SessionItem* GroupItem::currentItem() const
 {
     return is_valid_index() ? getItem("", currentIndex()) : nullptr;
+}
+
+SessionItem* GroupItem::currentItem()
+{
+    return const_cast<SessionItem*>(static_cast<const GroupItem*>(this)->currentItem());
 }
 
 std::string GroupItem::currentType() const
@@ -82,5 +83,5 @@ void GroupItem::init_group()
     combo.setCurrentIndex(m_default_selected_index);
     setData(combo, ItemDataRole::DATA);
     for (const auto& x : m_catalogue->modelTypes())
-        insertItem(m_catalogue->create(x).release(), TagRow::append(tag_name));
+        insertItem(m_catalogue->create(x).release(), TagRow::append(T_GROUP_ITEMS));
 }

@@ -10,7 +10,7 @@
 #include "graphmodel.h"
 #include <QColor>
 #include <cmath>
-#include <mvvm/model/modelutils.h>
+#include <mvvm/interfaces/undostackinterface.h>
 #include <mvvm/model/mvvm_types.h>
 #include <mvvm/standarditems/axisitems.h>
 #include <mvvm/standarditems/containeritem.h>
@@ -18,6 +18,7 @@
 #include <mvvm/standarditems/graphitem.h>
 #include <mvvm/standarditems/graphviewportitem.h>
 #include <mvvm/utils/numericutils.h>
+#include <mvvm/widgets/widgetutils.h>
 #include <stdexcept>
 
 namespace
@@ -40,10 +41,12 @@ std::vector<double> bin_values(double amp_factor = 1.0)
     }
     return result;
 }
-
 } // namespace
 
 using namespace ModelView;
+
+namespace PlotGraphs
+{
 
 GraphModel::GraphModel() : SessionModel("GraphModel")
 {
@@ -54,20 +57,28 @@ GraphModel::GraphModel() : SessionModel("GraphModel")
 
 void GraphModel::add_graph()
 {
+    if (undoStack())
+        undoStack()->beginMacro("addGraph");
+
     auto data = insertItem<Data1DItem>(data_container());
-    data->setAxis(FixedBinAxisItem::create(npoints, xmin, xmax));
-    data->setContent(bin_values(ModelView::Utils::RandDouble(0.5, 1.0)));
+    data->setAxis<FixedBinAxisItem>(npoints, xmin, xmax);
+    data->setValues(bin_values(ModelView::Utils::RandDouble(0.5, 1.0)));
 
     auto graph = insertItem<GraphItem>(viewport());
     graph->setDataItem(data);
-    auto rndm = []() -> int { return ModelView::Utils::RandInt(0, 255); };
-    graph->setProperty(GraphItem::P_COLOR, QColor(rndm(), rndm(), rndm()));
+    graph->setNamedColor(ModelView::Utils::RandomNamedColor());
+
+    if (undoStack())
+        undoStack()->endMacro();
 }
 
 //! Remove last graph and data item.
 
 void GraphModel::remove_graph()
 {
+    if (undoStack())
+        undoStack()->beginMacro("removeGraph");
+
     const int graph_count = viewport()->itemCount(ViewportItem::T_ITEMS);
     const int data_count = data_container()->itemCount(ContainerItem::T_ITEMS);
 
@@ -79,6 +90,9 @@ void GraphModel::remove_graph()
 
     if (data_count)
         removeItem(data_container(), {"", data_count - 1});
+
+    if (undoStack())
+        undoStack()->endMacro();
 }
 
 //! Put random noise to graph.
@@ -89,22 +103,34 @@ void GraphModel::randomize_graphs()
         auto values = item->binValues();
         std::transform(std::begin(values), std::end(values), std::begin(values),
                        [](auto x) { return x * ModelView::Utils::RandDouble(0.8, 1.2); });
-        item->setContent(values);
+        item->setValues(values);
     }
+}
+
+void GraphModel::undo()
+{
+    if (undoStack())
+        undoStack()->undo();
+}
+
+void GraphModel::redo()
+{
+    if (undoStack())
+        undoStack()->redo();
 }
 
 //! Returns viewport item containig graph items.
 
 GraphViewportItem* GraphModel::viewport()
 {
-    return Utils::TopItem<GraphViewportItem>(this);
+    return topItem<GraphViewportItem>();
 }
 
 //! Returns container with data items.
 
 ContainerItem* GraphModel::data_container()
 {
-    return Utils::TopItem<ContainerItem>(this);
+    return topItem<ContainerItem>();
 }
 
 void GraphModel::init_model()
@@ -114,5 +140,9 @@ void GraphModel::init_model()
 
     auto viewport = insertItem<GraphViewportItem>();
     viewport->setDisplayName("Graph container");
+
     add_graph();
+    setUndoRedoEnabled(true);
 }
+
+} // namespace PlotGraphs

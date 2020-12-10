@@ -22,6 +22,7 @@ class ProjectPaneWidget;
 class RecentProjectWidget : public QWidget
 {
     Q_OBJECT
+
 public:
     explicit RecentProjectWidget(QWidget* parent = nullptr);
 
@@ -39,7 +40,8 @@ signals:
 private:
     QBoxLayout* createCurrentProjectLayout() const;
     QBoxLayout* createRecentProjectLayout();
-    ProjectPaneWidget* m_currentProjectPane;
+    QWidget* createRecentProjectScrollArea();
+    ProjectPaneWidget* m_currentProjectPane{nullptr};
     std::vector<ProjectPaneWidget*> m_recentProjectPanes;
 };
 

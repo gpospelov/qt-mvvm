@@ -7,14 +7,18 @@
 //
 // ************************************************************************** //
 
+#include "customplot_test_utils.h"
 #include "google_test.h"
+#include "mockwidgets.h"
 #include "qcustomplot.h"
 #include <QSignalSpy>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/plotting/viewportaxisplotcontroller.h>
 #include <mvvm/standarditems/axisitems.h>
+#include <mvvm/standarditems/plottableitems.h>
 
 using namespace ModelView;
+using ::testing::_;
 
 //! Testing AxisPlotControllers.
 
@@ -27,6 +31,13 @@ public:
     {
         return std::make_unique<QSignalSpy>(
             axis, static_cast<void (QCPAxis::*)(const QCPRange&)>(&QCPAxis::rangeChanged));
+    }
+
+    std::unique_ptr<QSignalSpy> createSpy2(QCPAxis* axis)
+    {
+        return std::make_unique<QSignalSpy>(
+            axis, static_cast<void (QCPAxis::*)(const QCPRange&, const QCPRange&)>(
+                      &QCPAxis::rangeChanged));
     }
 };
 
@@ -166,6 +177,110 @@ TEST_F(ViewportAxisPlotControllerTest, changeViewportAxisItem)
 }
 
 //! Controller subscribed to ViewportAxisItem.
+//! Change ViewportAxisItem and check that QCPAxis got new values.
+//! Check correctness of signals issued by QCPAxisItem.
+
+TEST_F(ViewportAxisPlotControllerTest, changeViewportAxisItemSignaling)
+{
+    auto custom_plot = std::make_unique<QCustomPlot>();
+
+    // creating the model with single ViewportAxisItem
+    SessionModel model;
+    auto axisItem = model.insertItem<ViewportAxisItem>();
+    axisItem->setProperty(ViewportAxisItem::P_MIN, 1.0);
+    axisItem->setProperty(ViewportAxisItem::P_MAX, 2.0);
+
+    // setting up QCustomPlot and item controller.
+    ViewportAxisPlotController controller(custom_plot->xAxis);
+    controller.setItem(axisItem);
+
+    // initial condition
+    EXPECT_EQ(custom_plot->xAxis->range().lower, 1.0);
+    EXPECT_EQ(custom_plot->xAxis->range().upper, 2.0);
+
+    auto rangeChanged = createSpy(custom_plot->xAxis);
+    auto rangeChanged2 = createSpy2(custom_plot->xAxis);
+
+    // making a change
+    const double expected_max = 20.0;
+    axisItem->setProperty(ViewportAxisItem::P_MAX, expected_max);
+
+    // Checking QCPAxis
+    EXPECT_EQ(rangeChanged->count(), 1);
+    EXPECT_EQ(rangeChanged2->count(), 1);
+    EXPECT_EQ(custom_plot->xAxis->range().lower, 1.0);
+    EXPECT_EQ(custom_plot->xAxis->range().upper, expected_max);
+
+    QList<QVariant> arguments = rangeChanged->takeFirst();
+    EXPECT_EQ(arguments.size(), 1);
+    auto reportedRange = arguments.at(0).value<QCPRange>();
+    EXPECT_EQ(reportedRange.lower, 1.0);
+    EXPECT_EQ(reportedRange.upper, 20.0);
+
+    arguments = rangeChanged2->takeFirst();
+    EXPECT_EQ(arguments.size(), 2);
+    auto newRange = arguments.at(0).value<QCPRange>();
+    auto oldRange = arguments.at(1).value<QCPRange>();
+    EXPECT_EQ(newRange.lower, 1.0);
+    EXPECT_EQ(newRange.upper, 20.0);
+    EXPECT_EQ(oldRange.lower, 1.0);
+    EXPECT_EQ(oldRange.upper, 2.0);
+}
+
+//! Controller subscribed to ViewportAxisItem.
+//! Change ViewportAxisItem and check that QCPAxis got new values.
+//! Check correctness that there is not extra looping and item doesn't start changing many times
+
+TEST_F(ViewportAxisPlotControllerTest, changeViewportAxisItemMapping)
+{
+    auto custom_plot = std::make_unique<QCustomPlot>();
+
+    // creating the model with single ViewportAxisItem
+    SessionModel model;
+    auto axisItem = model.insertItem<ViewportAxisItem>();
+    axisItem->setProperty(ViewportAxisItem::P_MIN, 1.0);
+    axisItem->setProperty(ViewportAxisItem::P_MAX, 2.0);
+
+    // setting up QCustomPlot and item controller.
+    ViewportAxisPlotController controller(custom_plot->xAxis);
+    controller.setItem(axisItem);
+
+    MockWidgetForItem widget(axisItem);
+    EXPECT_CALL(widget, onDataChange(_, _)).Times(0);
+    EXPECT_CALL(widget, onPropertyChange(axisItem, ViewportAxisItem::P_MAX)).Times(1);
+    EXPECT_CALL(widget, onChildPropertyChange(_, _)).Times(0);
+    EXPECT_CALL(widget, onItemInserted(_, _)).Times(0);
+    EXPECT_CALL(widget, onAboutToRemoveItem(_, _)).Times(0);
+
+    // making a change
+    const double expected_max = 20.0;
+    axisItem->setProperty(ViewportAxisItem::P_MAX, expected_max);
+
+    EXPECT_EQ(custom_plot->xAxis->range().lower, 1.0);
+    EXPECT_EQ(custom_plot->xAxis->range().upper, expected_max);
+}
+
+//! Set ViewportAxisItem logz, subscribe controller and check that QCPAxis has it.
+
+TEST_F(ViewportAxisPlotControllerTest, viewportLogz)
+{
+    auto custom_plot = std::make_unique<QCustomPlot>();
+
+    // creating the model with single ViewportAxisItem
+    SessionModel model;
+    auto axisItem = model.insertItem<ViewportAxisItem>();
+    axisItem->setProperty(ViewportAxisItem::P_IS_LOG, true);
+
+    // setting up QCustomPlot and item controller.
+    auto qcp_axis = custom_plot->xAxis;
+    ViewportAxisPlotController controller(qcp_axis);
+    controller.setItem(axisItem);
+
+    // QCPAxis should switch to logarithmic
+    EXPECT_EQ(qcp_axis->scaleType(), QCPAxis::stLogarithmic);
+}
+
+//! Controller subscribed to ViewportAxisItem.
 //! Change ViewportAxisItem logz and check that QCPAxis got new values.
 
 TEST_F(ViewportAxisPlotControllerTest, changeViewportLogz)
@@ -287,4 +402,30 @@ TEST_F(ViewportAxisPlotControllerTest, oneControllerTwoAxisItems)
     // destroying controller, no UB
     controller.reset();
     custom_plot->xAxis->setRange(2.0, 3.0);
+}
+
+//! Controller subscribed to ViewportAxisItem.
+//! Change ViewportAxisItem title and check that QCPAxis got new values.
+
+TEST_F(ViewportAxisPlotControllerTest, changeAxisTitle)
+{
+    auto custom_plot = std::make_unique<QCustomPlot>();
+
+    // creating the model with single ViewportAxisItem
+    SessionModel model;
+    auto axisItem = model.insertItem<ViewportAxisItem>();
+
+    // setting up QCustomPlot and item controller.
+    auto qcp_axis = custom_plot->xAxis;
+    ViewportAxisPlotController controller(qcp_axis);
+    controller.setItem(axisItem);
+
+    // changing title
+    auto textItem = axisItem->item<TextItem>(ViewportAxisItem::P_TITLE);
+    textItem->setProperty(TextItem::P_TEXT, "abc");
+
+    // no need to change title size and font (checked in axistitlecontroller.test)
+
+    // QCPAxis should switch to logarithmic
+    EXPECT_EQ(qcp_axis->label(), QString("abc"));
 }

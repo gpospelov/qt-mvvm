@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include <mvvm/commands/commandservice.h>
+#include <mvvm/factories/itemcataloguefactory.h>
 #include <mvvm/model/customvariants.h>
 #include <mvvm/model/itemcatalogue.h>
 #include <mvvm/model/itemfactory.h>
@@ -18,24 +19,20 @@
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/model/taginfo.h>
 #include <mvvm/model/tagrow.h>
-#include <mvvm/serialization/jsonitembackupstrategy.h>
-#include <mvvm/serialization/jsonitemcopystrategy.h>
 #include <mvvm/signals/modelmapper.h>
-#include <mvvm/standarditems/standarditemcatalogue.h>
 
 using namespace ModelView;
 
-SessionModel::SessionModel(std::string model_type)
-    : SessionModel(std::move(model_type), std::make_shared<ItemPool>())
-{
-}
-
 SessionModel::SessionModel(std::string model_type, std::shared_ptr<ItemPool> pool)
-    : m_item_manager(std::make_unique<ItemManager>()),
-      m_commands(std::make_unique<CommandService>(this)), m_model_type(std::move(model_type)),
-      m_mapper(std::make_unique<ModelMapper>(this))
+    : m_model_type(std::move(model_type))
+    , m_item_manager(std::make_unique<ItemManager>())
+    , m_commands(std::make_unique<CommandService>(this))
+    , m_mapper(std::make_unique<ModelMapper>(this))
 {
-    m_item_manager->setItemPool(std::move(pool));
+    if (pool)
+        m_item_manager->setItemPool(std::move(pool));
+    else
+        m_item_manager->setItemPool(std::make_shared<ItemPool>());
     createRootItem();
 }
 
@@ -79,12 +76,12 @@ SessionItem* SessionModel::rootItem() const
     return m_root_item.get();
 }
 
-QVariant SessionModel::data(SessionItem* item, int role) const
+Variant SessionModel::data(SessionItem* item, int role) const
 {
-    return item->data<QVariant>(role);
+    return item->data<Variant>(role);
 }
 
-bool SessionModel::setData(SessionItem* item, const QVariant& value, int role)
+bool SessionModel::setData(SessionItem* item, const Variant& value, int role)
 {
     return m_commands->setData(item, value, role);
 }
@@ -120,7 +117,7 @@ void SessionModel::setUndoRedoEnabled(bool value)
     m_commands->setUndoRedoEnabled(value);
 }
 
-QUndoStack* SessionModel::undoStack() const
+UndoStackInterface* SessionModel::undoStack() const
 {
     return m_commands->undoStack();
 }
@@ -156,8 +153,8 @@ ModelMapper* SessionModel::mapper()
     return m_mapper.get();
 }
 
-//! Removes all items from the model.
-//! If callback is provided, use it to rebuild content of root item.
+//! Removes all items from the model. If callback is provided, use it to rebuild content of root
+//! item. Used while restoring the model from serialized content.
 
 void SessionModel::clear(std::function<void(SessionItem*)> callback)
 {
@@ -166,22 +163,6 @@ void SessionModel::clear(std::function<void(SessionItem*)> callback)
     if (callback)
         callback(rootItem());
     mapper()->callOnModelReset();
-}
-
-//! Returns strategy suitable for saving/restoring SessionItem.
-//! Restored item will have same identifiers as original.
-
-std::unique_ptr<ItemBackupStrategy> SessionModel::itemBackupStrategy() const
-{
-    return std::make_unique<JsonItemBackupStrategy>(factory());
-}
-
-//! Returns strategy for copying items.
-//! Identifiers of the copy will be different from identifiers of the original.
-
-std::unique_ptr<ItemCopyStrategy> SessionModel::itemCopyStrategy() const
-{
-    return std::make_unique<JsonItemCopyStrategy>(factory());
 }
 
 //! Returns pointer to ItemFactory which can generate all items supported by this model,

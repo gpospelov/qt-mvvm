@@ -91,6 +91,19 @@ TEST_F(StandardViewItemsTest, ViewLabelItem_flags)
     EXPECT_FALSE(viewItem.flags() & Qt::ItemIsEditable);
 }
 
+//! Testing tooltip tole.
+
+TEST_F(StandardViewItemsTest, ViewLabelItem_toolTipRole)
+{
+    SessionItem item;
+
+    ViewLabelItem viewItem(&item);
+    EXPECT_FALSE(viewItem.data(Qt::ToolTipRole).isValid());
+
+    item.setToolTip("abc");
+    EXPECT_EQ(viewItem.data(Qt::ToolTipRole).toString(), QString("abc"));
+}
+
 // ----------------------------------------------------------------------------
 // Tests for ViewDataItem
 // ----------------------------------------------------------------------------
@@ -213,4 +226,40 @@ TEST_F(StandardViewItemsTest, ViewDataItem_flags)
 
     ViewDataItem viewItem(&item);
     EXPECT_TRUE(viewItem.flags() & Qt::ItemIsEditable);
+}
+
+//! Testing tooltip tole.
+
+TEST_F(StandardViewItemsTest, ViewDataItem_toolTipRole)
+{
+    SessionItem item;
+
+    ViewDataItem viewItem(&item);
+    EXPECT_FALSE(viewItem.data(Qt::ToolTipRole).isValid());
+
+    item.setToolTip("abc");
+    EXPECT_EQ(viewItem.data(Qt::ToolTipRole).toString(), QString("abc"));
+}
+
+//! Behavior of ViewDataItem with SessionItem which initially contains invalid data.
+//! It should be possible to set data after.
+
+TEST_F(StandardViewItemsTest, ViewDataItem_invalidTheValidData)
+{
+    SessionItem item;
+    ViewDataItem viewItem(&item);
+
+    // initially data is invalid, and non-editable
+    EXPECT_FALSE(viewItem.flags() & Qt::ItemIsEditable);
+    EXPECT_FALSE(viewItem.data(Qt::EditRole).isValid());
+
+    // current behavior that setting data is still possible
+    EXPECT_TRUE(viewItem.setData(QVariant::fromValue(42.0), Qt::EditRole));
+
+    // setting data to original item
+    item.setData(43.0);
+
+    // data became editable via ViewDataItem
+    EXPECT_TRUE(viewItem.flags() & Qt::ItemIsEditable);
+    EXPECT_EQ(viewItem.data(Qt::EditRole), QVariant::fromValue(43.0));
 }

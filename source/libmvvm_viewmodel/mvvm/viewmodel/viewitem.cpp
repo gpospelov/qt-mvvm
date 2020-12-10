@@ -132,7 +132,7 @@ void ViewItem::appendRow(std::vector<std::unique_ptr<ViewItem>> items)
 void ViewItem::insertRow(int row, std::vector<std::unique_ptr<ViewItem>> items)
 {
     for (auto& x : items)
-        x.get()->setParent(this);
+        x->setParent(this);
     p_impl->insertRow(row, std::move(items));
 }
 
@@ -204,7 +204,8 @@ QVariant ViewItem::data(int qt_role) const
     else if (qt_role == Qt::TextColorRole)
 #endif
         return Utils::TextColorRole(*p_impl->item);
-
+    else if (qt_role == Qt::ToolTipRole)
+        return Utils::ToolTipRole(*p_impl->item);
     else
         return QVariant();
 }

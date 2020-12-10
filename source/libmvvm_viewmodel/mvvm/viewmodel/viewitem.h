@@ -10,8 +10,8 @@
 #ifndef MVVM_VIEWMODEL_VIEWITEM_H
 #define MVVM_VIEWMODEL_VIEWITEM_H
 
-#include <QVariant>
 #include <memory>
+#include <mvvm/core/variant.h>
 #include <mvvm/viewmodel_export.h>
 #include <vector>
 
@@ -20,7 +20,7 @@ namespace ModelView
 
 class SessionItem;
 
-//! Represents the view of SessionItem's data in single cell of ViewModel.
+//! Represents the view of SessionItem's data in a single cell of ViewModel.
 
 class MVVM_VIEWMODEL_EXPORT ViewItem
 {

@@ -21,8 +21,10 @@
 using namespace ModelView;
 
 ExternalPropertyEditor::ExternalPropertyEditor(QWidget* parent)
-    : CustomEditor(parent), m_textLabel(new QLabel), m_pixmapLabel(new QLabel),
-      m_focusFilter(new LostFocusFilter(this))
+    : CustomEditor(parent)
+    , m_textLabel(new QLabel)
+    , m_pixmapLabel(new QLabel)
+    , m_focusFilter(new LostFocusFilter(this))
 
 {
     setMouseTracking(true);

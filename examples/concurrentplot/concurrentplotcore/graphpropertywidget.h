@@ -22,14 +22,12 @@ namespace ModelView
 class ItemsTreeView;
 } // namespace ModelView
 
-/*!
-@class GraphPropertyWidget
-@brief Shows model content in standard tree view.
-*/
+//! Shows model content in standard tree view.
 
 class GraphPropertyWidget : public QWidget
 {
     Q_OBJECT
+
 public:
     explicit GraphPropertyWidget(GraphModel* model = nullptr, QWidget* parent = nullptr);
     ~GraphPropertyWidget();
@@ -37,7 +35,7 @@ public:
     void setModel(GraphModel* model);
 
 private:
-    ModelView::ItemsTreeView* m_treeView;
+    ModelView::ItemsTreeView* m_treeView{nullptr};
 };
 
 #endif // GRAPHPROPERTYWIDGET_H

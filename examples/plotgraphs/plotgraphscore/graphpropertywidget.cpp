@@ -11,11 +11,14 @@
 #include "graphmodel.h"
 #include <QBoxLayout>
 #include <QPushButton>
-#include <mvvm/viewmodel/standardviewmodels.h>
+#include <mvvm/factories/viewmodelfactory.h>
 #include <mvvm/viewmodel/viewmodel.h>
 #include <mvvm/widgets/itemstreeview.h>
 
 using namespace ModelView;
+
+namespace PlotGraphs
+{
 
 GraphPropertyWidget::GraphPropertyWidget(GraphModel* model, QWidget* parent)
     : QWidget(parent), m_treeView(new ItemsTreeView), m_model(model)
@@ -36,7 +39,7 @@ void GraphPropertyWidget::setModel(GraphModel* model)
 
     m_model = model;
 
-    m_treeView->setViewModel(Utils::CreateDefaultViewModel(model));
+    m_treeView->setViewModel(Factory::CreateDefaultViewModel(model));
 }
 
 QBoxLayout* GraphPropertyWidget::create_button_layout()
@@ -56,3 +59,5 @@ QBoxLayout* GraphPropertyWidget::create_button_layout()
 
     return result;
 }
+
+} // namespace PlotGraphs

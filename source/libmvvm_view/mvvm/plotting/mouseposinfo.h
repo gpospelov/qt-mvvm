@@ -17,12 +17,8 @@ class QCustomPlot;
 namespace ModelView
 {
 
-/*!
-@struct MousePoseInfo
-@brief Aggregate to hold mouse position info in QCustomPlot context.
-
-Position is given in axis coordinates corresponding to the current zoom level.
-*/
+//! Aggregate to hold mouse position info in QCustomPlot context.
+//! Position is given in axis coordinates corresponding to the current zoom level.
 
 struct MVVM_VIEW_EXPORT MousePosInfo {
     double xpos{0.0};

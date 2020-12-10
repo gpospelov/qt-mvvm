@@ -9,8 +9,9 @@
 
 #include "google_test.h"
 #include <mvvm/commands/insertnewitemcommand.h>
+#include <mvvm/interfaces/itemfactoryinterface.h>
 #include <mvvm/model/compounditem.h>
-#include <mvvm/model/itemfactoryinterface.h>
+#include <mvvm/model/itempool.h>
 #include <mvvm/model/itemutils.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
@@ -47,19 +48,19 @@ TEST_F(InsertNewItemCommandTest, insertNewItemCommand)
     // executing command
     command->execute();
     EXPECT_EQ(model.rootItem()->childrenCount(), 1);
-    EXPECT_EQ(command->result(), model.rootItem()->getItem("", 0));
+    EXPECT_EQ(std::get<SessionItem*>(command->result()), model.rootItem()->getItem("", 0));
     EXPECT_EQ(command->isObsolete(), false);
 
     // undoing command
     command->undo();
     EXPECT_EQ(model.rootItem()->childrenCount(), 0);
-    EXPECT_EQ(command->result(), nullptr);
+    EXPECT_EQ(std::get<SessionItem*>(command->result()), nullptr);
     EXPECT_EQ(command->isObsolete(), false);
 
     // executing again
     command->execute();
     EXPECT_EQ(model.rootItem()->childrenCount(), 1);
-    EXPECT_EQ(command->result(), model.rootItem()->getItem("", 0));
+    EXPECT_EQ(std::get<SessionItem*>(command->result()), model.rootItem()->getItem("", 0));
     EXPECT_EQ(command->isObsolete(), false);
 }
 
@@ -74,7 +75,7 @@ TEST_F(InsertNewItemCommandTest, insertNewItemWithTagCommand)
     command1->execute(); // insertion
     EXPECT_EQ(command1->isObsolete(), false);
 
-    auto parent = command1->result();
+    auto parent = std::get<SessionItem*>(command1->result());
     parent->registerTag(TagInfo::universalTag("tag1"), /*set_as_default*/ true);
     EXPECT_EQ(parent->childrenCount(), 0);
 
@@ -84,12 +85,12 @@ TEST_F(InsertNewItemCommandTest, insertNewItemWithTagCommand)
     EXPECT_EQ(command2->isObsolete(), false);
 
     EXPECT_EQ(parent->childrenCount(), 1);
-    EXPECT_EQ(Utils::ChildAt(parent, 0), command2->result());
+    EXPECT_EQ(Utils::ChildAt(parent, 0), std::get<SessionItem*>(command2->result()));
 
     // undoing command
     command2->undo();
     EXPECT_EQ(parent->childrenCount(), 0);
-    EXPECT_EQ(nullptr, command2->result());
+    EXPECT_EQ(nullptr, std::get<SessionItem*>(command2->result()));
     EXPECT_EQ(command2->isObsolete(), false);
 }
 
@@ -138,14 +139,71 @@ TEST_F(InsertNewItemCommandTest, attemptInsertSecondProperty)
     InsertNewItemCommand command1(factory_func, parent, TagRow{"radius", -1});
     EXPECT_NO_THROW(command1.execute());
     EXPECT_FALSE(command1.isObsolete());
-    EXPECT_EQ(command1.result(), parent->getItem("radius"));
+    EXPECT_EQ(std::get<SessionItem*>(command1.result()), parent->getItem("radius"));
 
     // adding second property to the same tag is not possible. Command should be in obsolete state
     InsertNewItemCommand command2(factory_func, parent, TagRow{"radius", -1});
     EXPECT_NO_THROW(command2.execute());
     EXPECT_TRUE(command2.isObsolete());
-    EXPECT_EQ(command2.result(), nullptr);
+    EXPECT_EQ(std::get<SessionItem*>(command2.result()), nullptr);
 
     // undoing failed command shouldn't be possible
     EXPECT_THROW(command2.undo(), std::runtime_error);
+}
+
+//! Insert new item through InsertNewItemCommand command.
+//! We validate that undoing, and then redoing, would restore very first unique identifier.
+
+TEST_F(InsertNewItemCommandTest, insertNewPropertyItemPreservedId)
+{
+    SessionModel model;
+    // command to insert second property
+    auto factory_func = [&model]() { return model.factory()->createItem(Constants::PropertyType); };
+
+    EXPECT_EQ(model.rootItem()->childrenCount(), 0);
+
+    InsertNewItemCommand command1(factory_func, model.rootItem(), TagRow{"", 0});
+    command1.execute();
+
+    EXPECT_EQ(model.rootItem()->childrenCount(), 1);
+    auto orig_identifier = model.rootItem()->children()[0]->identifier();
+
+    command1.undo();
+    EXPECT_EQ(model.rootItem()->childrenCount(), 0);
+
+    command1.execute();
+    EXPECT_EQ(model.rootItem()->childrenCount(), 1);
+    EXPECT_EQ(model.rootItem()->children()[0]->identifier(), orig_identifier);
+}
+
+//! Insert new item through InsertNewItemCommand command.
+//! We validate that undoing, and then redoing, would restore very first unique identifier.
+//! Same as above, but we additionally controling item pool.
+
+TEST_F(InsertNewItemCommandTest, insertNewPropertyItemIdInPool)
+{
+    auto pool = std::make_shared<ItemPool>();
+    SessionModel model("Model", pool);
+    // command to insert second property
+    auto factory_func = [&model]() { return model.factory()->createItem(Constants::PropertyType); };
+
+    EXPECT_EQ(model.rootItem()->childrenCount(), 0);
+    EXPECT_EQ(pool->size(), 1); // rootItem
+
+    InsertNewItemCommand command1(factory_func, model.rootItem(), TagRow{"", 0});
+    command1.execute();
+
+    EXPECT_EQ(model.rootItem()->childrenCount(), 1);
+    auto orig_identifier = model.rootItem()->children()[0]->identifier();
+    EXPECT_EQ(pool->size(), 2);
+
+    command1.undo();
+    EXPECT_EQ(model.rootItem()->childrenCount(), 0);
+
+    command1.execute();
+    EXPECT_EQ(model.rootItem()->childrenCount(), 1);
+    auto restored_item = model.rootItem()->children()[0];
+    EXPECT_EQ(restored_item->identifier(), orig_identifier);
+    EXPECT_EQ(model.findItem(orig_identifier), restored_item);
+    EXPECT_EQ(pool->item_for_key(orig_identifier), restored_item);
 }

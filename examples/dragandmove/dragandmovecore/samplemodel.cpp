@@ -8,11 +8,14 @@
 // ************************************************************************** //
 
 #include "samplemodel.h"
-#include "items.h"
+#include "sampleitems.h"
 #include <QColor>
 #include <mvvm/model/itemcatalogue.h>
 #include <mvvm/utils/numericutils.h>
 #include <mvvm/widgets/widgetutils.h>
+
+namespace DragAndView
+{
 
 namespace
 {
@@ -50,7 +53,7 @@ SampleModel::SampleModel() : SessionModel("SampleModel")
 void SampleModel::append_random_item(ModelView::SessionItem* container)
 {
     auto item = insertItem<DemoItem>(container);
-    item->setProperty(DemoItem::P_COLOR_PROPERTY, ModelView::Utils::random_color());
+    item->setProperty(DemoItem::P_COLOR_PROPERTY, ModelView::Utils::RandomColor());
     item->setProperty(DemoItem::P_STRING_PROPERTY, random_name());
     item->setProperty(DemoItem::P_INTEGER_PROPERTY, ModelView::Utils::RandInt(0, 10));
 }
@@ -68,3 +71,5 @@ void SampleModel::init_model_content()
     append_random_item(container);
     append_random_item(container);
 }
+
+} // namespace DragAndView

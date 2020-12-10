@@ -37,7 +37,7 @@ public:
 
     // tag
 
-    void registerTag(const ModelView::TagInfo& tagInfo, bool set_as_default = false);
+    void registerTag(const TagInfo& tagInfo, bool set_as_default = false);
 
     bool isTag(const std::string& name) const;
 
@@ -68,6 +68,10 @@ public:
     const_iterator end() const;
 
     bool isSinglePropertyTag(const std::string& tag) const;
+
+    int tagsCount() const;
+
+    SessionItemContainer& at(int index);
 
 private:
     SessionItemContainer* container(const std::string& tag_name) const;

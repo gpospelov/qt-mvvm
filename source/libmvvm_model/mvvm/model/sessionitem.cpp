@@ -40,13 +40,14 @@ struct SessionItem::SessionItemImpl {
     model_type m_modelType;
 
     SessionItemImpl(SessionItem* this_item)
-        : m_this_item(this_item), m_data(std::make_unique<SessionItemData>()),
-          m_tags(std::make_unique<SessionItemTags>())
+        : m_this_item(this_item)
+        , m_data(std::make_unique<SessionItemData>())
+        , m_tags(std::make_unique<SessionItemTags>())
     {
     }
 
     //! Sets the data for given role, notifies the model.
-    bool setData(const QVariant& variant, int role)
+    bool setData(const Variant& variant, int role)
     {
         bool result = m_data->setData(variant, role);
         if (result && m_model)
@@ -267,9 +268,10 @@ bool SessionItem::isEditable() const
     return appearance(*this) & Appearance::EDITABLE;
 }
 
-void SessionItem::setEditable(bool value)
+SessionItem* SessionItem::setEditable(bool value)
 {
     setAppearanceFlag(Appearance::EDITABLE, value);
+    return this;
 }
 
 bool SessionItem::isEnabled() const
@@ -277,9 +279,42 @@ bool SessionItem::isEnabled() const
     return appearance(*this) & Appearance::ENABLED;
 }
 
-void SessionItem::setEnabled(bool value)
+SessionItem* SessionItem::setEnabled(bool value)
 {
     setAppearanceFlag(Appearance::ENABLED, value);
+    return this;
+}
+
+//! Returns item's tooltip.
+
+std::string SessionItem::toolTip() const
+{
+    return hasData(ItemDataRole::TOOLTIP) ? data<std::string>(ItemDataRole::TOOLTIP)
+                                          : std::string();
+}
+
+//! Sets item tooltip.
+
+SessionItem* SessionItem::setToolTip(const std::string& tooltip)
+{
+    setData(tooltip, ItemDataRole::TOOLTIP);
+    return this;
+}
+
+//! Returns editor type.
+
+std::string SessionItem::editorType() const
+{
+    return hasData(ItemDataRole::EDITORTYPE) ? data<std::string>(ItemDataRole::EDITORTYPE)
+                                             : std::string();
+}
+
+//! Sets editor type. Allows creating custom editors in the cells of Qt trees and tables.
+
+SessionItem* SessionItem::setEditorType(const std::string& editor_type)
+{
+    setData(editor_type, ItemDataRole::EDITORTYPE);
+    return this;
 }
 
 //! Returns true if given tag is related to single property tags.
@@ -292,15 +327,14 @@ bool SessionItem::isSinglePropertyTag(const std::string& tag) const
 //! Sets the data for given role.
 //! Method invented to hide implementaiton details.
 
-bool SessionItem::set_data_internal(QVariant value, int role)
+bool SessionItem::set_data_internal(Variant value, int role)
 {
     return model() ? model()->setData(this, value, role) : setDataIntern(value, role);
 }
 
-//! Returns data in the form of QVariant for given role.
-//! Method invented to hide implementaiton details.
+//! Returns data for given role. Method invented to hide implementaiton details.
 
-QVariant SessionItem::data_internal(int role) const
+Variant SessionItem::data_internal(int role) const
 {
     return p_impl->m_data->data(role);
 }
@@ -332,10 +366,18 @@ void SessionItem::setAppearanceFlag(int flag, bool value)
     else
         flags &= ~flag;
 
-    setData(flags, ItemDataRole::APPEARANCE);
+    // By setting data with internal method we are bypassing the model, and so undo/redo.
+    // So current convention is to not invoke undo when changing appearance properties.
+    // Shall we change it?
+    setDataIntern(flags, ItemDataRole::APPEARANCE);
 }
 
-SessionItemData* SessionItem::itemData() const
+const SessionItemData* SessionItem::itemData() const
+{
+    return p_impl->m_data.get();
+}
+
+SessionItemData* SessionItem::itemData()
 {
     return p_impl->m_data.get();
 }
@@ -352,7 +394,7 @@ void SessionItem::setDataAndTags(std::unique_ptr<SessionItemData> data,
     p_impl->m_tags = std::move(tags);
 }
 
-bool SessionItem::setDataIntern(const QVariant& variant, int role)
+bool SessionItem::setDataIntern(const Variant& variant, int role)
 {
     return p_impl->setData(variant, role);
 }

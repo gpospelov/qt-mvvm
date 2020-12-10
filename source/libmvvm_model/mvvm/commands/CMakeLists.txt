@@ -3,8 +3,11 @@ target_sources(${library_name} PRIVATE
     abstractitemcommand.h
     commandadapter.cpp
     commandadapter.h
+    commandresult.h
     commandservice.cpp
     commandservice.h
+    commandutils.cpp
+    commandutils.h
     copyitemcommand.cpp
     copyitemcommand.h
     insertnewitemcommand.cpp
@@ -15,4 +18,6 @@ target_sources(${library_name} PRIVATE
     removeitemcommand.h
     setvaluecommand.cpp
     setvaluecommand.h
+    undostack.cpp
+    undostack.h
 )

@@ -17,7 +17,6 @@
 #include <QBoxLayout>
 #include <QToolBar>
 #include <QToolButton>
-#include <mvvm/model/modelutils.h>
 #include <mvvm/plotting/colormapcanvas.h>
 #include <mvvm/standarditems/axisitems.h>
 #include <mvvm/standarditems/colormapviewportitem.h>
@@ -25,10 +24,14 @@
 using namespace ModelView;
 
 SceneWidget::SceneWidget(SceneModel* model, QWidget* parent)
-    : QWidget(parent), m_toolBar(new QToolBar), m_resetViewportAction(nullptr),
-      m_propertyWidget(new ScenePropertyWidget), m_colorMapCanvas(new ColorMapCanvas),
-      graphics_scene(new GraphicsScene(this)),
-      graphics_view(new GraphicsView(graphics_scene, this)), m_model(model)
+    : QWidget(parent)
+    , m_toolBar(new QToolBar)
+    , m_resetViewportAction(nullptr)
+    , m_propertyWidget(new ScenePropertyWidget)
+    , m_colorMapCanvas(new ColorMapCanvas)
+    , graphics_scene(new GraphicsScene(this))
+    , graphics_view(new GraphicsView(graphics_scene, this))
+    , m_model(model)
 {
     auto mainLayout = new QVBoxLayout;
     mainLayout->setSpacing(10);
@@ -44,10 +47,10 @@ SceneWidget::SceneWidget(SceneModel* model, QWidget* parent)
     setLayout(mainLayout);
 
     m_propertyWidget->setModel(model);
-    m_colorMapCanvas->setItem(Utils::TopItem<ColorMapViewportItem>(model));
+    m_colorMapCanvas->setItem(model->topItem<ColorMapViewportItem>());
     init_actions();
 
-    graphics_scene->setContext(m_colorMapCanvas, Utils::TopItem<RegionOfInterestItem>(model));
+    graphics_scene->setContext(m_colorMapCanvas, model->topItem<RegionOfInterestItem>());
 }
 
 void SceneWidget::init_actions()
@@ -57,16 +60,16 @@ void SceneWidget::init_actions()
 
     m_resetViewportAction = new QAction("Reset view", this);
     auto on_reset = [this]() {
-        auto viewport = Utils::TopItem<ColorMapViewportItem>(m_model);
-        viewport->update_viewport();
+        auto viewport = m_model->topItem<ColorMapViewportItem>();
+        viewport->setViewportToContent();
     };
     connect(m_resetViewportAction, &QAction::triggered, on_reset);
     m_toolBar->addAction(m_resetViewportAction);
 
     m_setViewportToRoiAction = new QAction("Set to ROI", this);
     auto on_set_to_roi = [this]() {
-        auto viewport = Utils::TopItem<ColorMapViewportItem>(m_model);
-        auto roi = Utils::TopItem<RegionOfInterestItem>(m_model);
+        auto viewport = m_model->topItem<ColorMapViewportItem>();
+        auto roi = m_model->topItem<RegionOfInterestItem>();
         viewport->xAxis()->set_range(roi->property<double>(RegionOfInterestItem::P_XLOW),
                                      roi->property<double>(RegionOfInterestItem::P_XUP));
         viewport->yAxis()->set_range(roi->property<double>(RegionOfInterestItem::P_YLOW),

@@ -31,9 +31,12 @@ const int max_slider_value = 100;
 } // namespace
 
 MainWindow::MainWindow()
-    : scene(new QGraphicsScene), view(new QGraphicsView(scene)), timer(new QTimer),
-      slider(new QSlider), mouse_model(std::make_unique<MouseModel>()),
-      itemsTreeView(new ModelView::AllItemsTreeView(mouse_model.get()))
+    : scene(new QGraphicsScene)
+    , view(new QGraphicsView(scene))
+    , timer(new QTimer)
+    , slider(new QSlider)
+    , mouse_model(std::make_unique<MouseModel>())
+    , itemsTreeView(new ModelView::AllItemsTreeView(mouse_model.get()))
 {
     create_central_widget();
     init_scene();
@@ -143,6 +146,6 @@ void MainWindow::init_menu()
 void MainWindow::populate_scene()
 {
     scene->clear();
-    for (auto item : ModelView::Utils::TopItems<MouseItem>(mouse_model.get()))
+    for (auto item : mouse_model->topItems<MouseItem>())
         scene->addItem(new Mouse(item));
 }

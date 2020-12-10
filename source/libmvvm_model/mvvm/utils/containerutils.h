@@ -17,6 +17,7 @@
 #include <mvvm/model_export.h>
 #include <string>
 #include <type_traits>
+#include <unordered_set>
 #include <vector>
 
 namespace ModelView
@@ -77,6 +78,28 @@ template <typename C> std::vector<double> Imag(const C& container)
 {
     return Apply(std::begin(container), std::end(container),
                  [](const auto& x) { return std::imag(x); });
+}
+
+//! Returns copy of container with all duplicated elements filtered our. The order is preserved.
+
+template <typename C> C UniqueWithOrder(const C& container)
+{
+    C result;
+
+    using valueType = typename C::value_type;
+    std::unordered_set<valueType> unique;
+
+    std::copy_if(container.begin(), container.end(), std::back_inserter(result),
+                 [&unique](auto x) { return unique.insert(x).second; });
+
+    return result;
+}
+
+//! Returns true if container contains a given element.
+
+template <typename A, typename B> bool Contains(const A& container, const B& element)
+{
+    return std::find(container.begin(), container.end(), element) != container.end();
 }
 
 } // namespace Utils

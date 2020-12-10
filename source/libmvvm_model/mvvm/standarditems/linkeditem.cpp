@@ -12,11 +12,20 @@
 
 using namespace ModelView;
 
-LinkedItem::LinkedItem() : SessionItem(Constants::LinkedItemType) {}
+namespace
+{
+const Variant empty_link = Variant::fromValue(std::string());
+}
+
+LinkedItem::LinkedItem() : SessionItem(Constants::LinkedItemType)
+{
+    setData(empty_link);
+    setEditable(false); // prevent editing in widgets, link is set programmatically.
+}
 
 //! Set link to given item.
 
 void LinkedItem::setLink(const SessionItem* item)
 {
-    setData(item ? QVariant::fromValue(item->identifier()) : QVariant());
+    setData(item ? Variant::fromValue(item->identifier()) : empty_link);
 }

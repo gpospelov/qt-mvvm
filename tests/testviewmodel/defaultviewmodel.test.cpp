@@ -17,7 +17,13 @@
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/model/taginfo.h>
 #include <mvvm/serialization/jsondocument.h>
+#include <mvvm/serialization/jsonitem_types.h>
 #include <mvvm/serialization/jsonmodelconverter.h>
+#include <mvvm/standarditems/axisitems.h>
+#include <mvvm/standarditems/containeritem.h>
+#include <mvvm/standarditems/data1ditem.h>
+#include <mvvm/standarditems/graphitem.h>
+#include <mvvm/standarditems/graphviewportitem.h>
 #include <mvvm/standarditems/vectoritem.h>
 #include <mvvm/viewmodel/defaultviewmodel.h>
 #include <mvvm/viewmodel/standardviewitems.h>
@@ -93,7 +99,7 @@ TEST_F(DefaultViewModelTest, initThenInsert)
 
     // Feature: since our PropertyItem got it's value after ViewModel was initialized, the model
     // still holds ViewEmptyItem and not ViewDataItem.
-    auto dataItem = dynamic_cast<ViewEmptyItem*>(viewModel.itemFromIndex(dataIndex));
+    auto dataItem = dynamic_cast<ViewDataItem*>(viewModel.itemFromIndex(dataIndex));
     ASSERT_TRUE(dataItem != nullptr);
 }
 
@@ -369,12 +375,64 @@ TEST_F(DefaultViewModelTest, propertyItemAppearanceChanged)
     EXPECT_EQ(roles, expected_roles);
 }
 
-//! Setting top level item as ROOT item
+//! Signals in ViewModel when property item changes its tooltips.
 
-TEST_F(DefaultViewModelTest, setRootItem)
+TEST_F(DefaultViewModelTest, tooltipChanged)
+{
+    SessionModel model;
+
+    // default item
+    auto item = model.insertItem<PropertyItem>();
+    item->setData(42.0);
+    item->setToolTip("abc");
+
+    // setting up ViewModel and spying it's dataChanged signals
+    DefaultViewModel viewModel(&model);
+    auto labelView = viewModel.itemFromIndex(viewModel.index(0, 0));
+    auto dataView = viewModel.itemFromIndex(viewModel.index(0, 1));
+
+    EXPECT_EQ(viewModel.data(viewModel.index(0, 0), Qt::ToolTipRole).toString(), QString("abc"));
+    EXPECT_EQ(viewModel.data(viewModel.index(0, 1), Qt::ToolTipRole).toString(), QString("abc"));
+
+    QSignalSpy spyDataChanged(&viewModel, &DefaultViewModel::dataChanged);
+
+    // Changing tooltip
+    item->setToolTip("abc2");
+    EXPECT_EQ(spyDataChanged.count(), 2); // change in LabelView and DataView
+
+    // first pack of arguments is related to ViewLabelItem
+    QList<QVariant> arguments = spyDataChanged.takeFirst();
+    EXPECT_EQ(arguments.size(), 3); // QModelIndex &parent, int first, int last
+    auto index1 = arguments.at(0).value<QModelIndex>();
+    auto index2 = arguments.at(1).value<QModelIndex>();
+    auto roles = arguments.at(2).value<QVector<int>>();
+    EXPECT_EQ(index1, viewModel.indexFromItem(labelView));
+    EXPECT_EQ(index2, viewModel.indexFromItem(labelView));
+    QVector<int> expected_roles = {Qt::ToolTipRole};
+    EXPECT_EQ(roles, expected_roles);
+
+    // second pack of arguments is related to ViewDataItem
+    arguments = spyDataChanged.takeFirst();
+    EXPECT_EQ(arguments.size(), 3); // QModelIndex &parent, int first, int last
+    index1 = arguments.at(0).value<QModelIndex>();
+    index2 = arguments.at(1).value<QModelIndex>();
+    roles = arguments.at(2).value<QVector<int>>();
+    EXPECT_EQ(index1, viewModel.indexFromItem(dataView));
+    EXPECT_EQ(index2, viewModel.indexFromItem(dataView));
+
+    expected_roles = {Qt::ToolTipRole};
+    EXPECT_EQ(roles, expected_roles);
+}
+
+//! Setting property item as ROOT item.
+
+TEST_F(DefaultViewModelTest, setPropertyItemAsRoot)
 {
     SessionModel model;
     DefaultViewModel viewModel(&model);
+
+    QSignalSpy spyAboutReset(&viewModel, &DefaultViewModel::modelAboutToBeReset);
+    QSignalSpy spyReset(&viewModel, &DefaultViewModel::modelReset);
 
     auto item = model.insertItem<PropertyItem>();
     viewModel.setRootSessionItem(item);
@@ -382,6 +440,47 @@ TEST_F(DefaultViewModelTest, setRootItem)
     // new root item doesn't have children
     EXPECT_EQ(viewModel.rowCount(), 0);
     EXPECT_EQ(viewModel.columnCount(), 0);
+
+    EXPECT_EQ(spyAboutReset.count(), 1);
+    EXPECT_EQ(spyReset.count(), 1);
+
+    // attempt to use nullptr as root item
+    EXPECT_THROW(viewModel.setRootSessionItem(nullptr), std::runtime_error);
+
+    // attempt to use alien model
+    SessionModel model2;
+    EXPECT_THROW(viewModel.setRootSessionItem(model2.rootItem()), std::runtime_error);
+}
+
+//! Setting property item as ROOT item.
+//! Same as above, only view model was initialized after.
+
+TEST_F(DefaultViewModelTest, setPropertyItemAsRootAfter)
+{
+    SessionModel model;
+    auto item = model.insertItem<PropertyItem>();
+
+    DefaultViewModel viewModel(&model);
+    EXPECT_EQ(viewModel.rowCount(), 1);
+    EXPECT_EQ(viewModel.columnCount(), 2);
+
+    QSignalSpy spyAboutReset(&viewModel, &DefaultViewModel::modelAboutToBeReset);
+    QSignalSpy spyReset(&viewModel, &DefaultViewModel::modelReset);
+    viewModel.setRootSessionItem(item);
+
+    // new root item doesn't have children
+    EXPECT_EQ(viewModel.rowCount(), 0);
+    EXPECT_EQ(viewModel.columnCount(), 0);
+
+    EXPECT_EQ(spyAboutReset.count(), 1);
+    EXPECT_EQ(spyReset.count(), 1);
+
+    // attempt to use nullptr as root item
+    EXPECT_THROW(viewModel.setRootSessionItem(nullptr), std::runtime_error);
+
+    // attempt to use alien model
+    SessionModel model2;
+    EXPECT_THROW(viewModel.setRootSessionItem(model2.rootItem()), std::runtime_error);
 }
 
 //! Setting top level item as ROOT item (case parent and children).
@@ -407,6 +506,20 @@ TEST_F(DefaultViewModelTest, setCompoundAsRootItem)
     EXPECT_EQ(viewModel.columnCount(index_of_vector_item), 2);
 }
 
+//! Setting vector item as ROOT item.
+
+TEST_F(DefaultViewModelTest, setVectorItemAsRoot)
+{
+    SessionModel model;
+    auto vectorItem = model.insertItem<VectorItem>();
+
+    DefaultViewModel viewModel(&model);
+    viewModel.setRootSessionItem(vectorItem);
+
+    EXPECT_EQ(viewModel.rowCount(), 3);
+    EXPECT_EQ(viewModel.columnCount(), 2);
+}
+
 //! On model destroyed.
 
 TEST_F(DefaultViewModelTest, onModelReset)
@@ -417,9 +530,16 @@ TEST_F(DefaultViewModelTest, onModelReset)
     model->insertItem<SessionItem>();
 
     DefaultViewModel viewModel(model.get());
+
+    QSignalSpy spyAboutReset(&viewModel, &DefaultViewModel::modelAboutToBeReset);
+    QSignalSpy spyReset(&viewModel, &DefaultViewModel::modelReset);
+
     model->clear();
     EXPECT_EQ(viewModel.rowCount(), 0);
     EXPECT_EQ(viewModel.columnCount(), 0);
+
+    EXPECT_EQ(spyAboutReset.count(), 1);
+    EXPECT_EQ(spyReset.count(), 1);
 }
 
 //! On model destroyed.
@@ -499,16 +619,16 @@ TEST_F(DefaultViewModelTest, horizontalLabels)
 
 TEST_F(DefaultViewModelTest, jsonConverterLoadModel)
 {
-    JsonModelConverter converter;
-    auto object = std::make_unique<QJsonObject>();
+    JsonModelConverter converter(ConverterMode::project);
+    QJsonObject object;
 
     // preparing jsob object
     {
         SessionModel model("TestModel");
         model.insertItem<PropertyItem>();
-        JsonModelConverter converter;
+        JsonModelConverter converter(ConverterMode::project);
         // writing model to json
-        converter.model_to_json(model, *object);
+        object = converter.to_json(model);
     }
 
     // loading model
@@ -522,7 +642,7 @@ TEST_F(DefaultViewModelTest, jsonConverterLoadModel)
     QSignalSpy spyAboutReset(&viewmodel, &DefaultViewModel::modelAboutToBeReset);
     QSignalSpy spyReset(&viewmodel, &DefaultViewModel::modelReset);
 
-    converter.json_to_model(*object, model);
+    converter.from_json(object, model);
 
     EXPECT_EQ(spyInsert.count(), 1); // FIXME shouldn't it be '0'?
     EXPECT_EQ(spyRemove.count(), 0);
@@ -689,4 +809,40 @@ TEST_F(DefaultViewModelTest, vectorItemAsRootInJsonDocument)
 
     EXPECT_EQ(viewmodel.rowCount(), 3);
     EXPECT_EQ(viewmodel.columnCount(), 2);
+}
+
+//! Real life bug. One container with Data1DItem's, one ViewportItem with single graph.
+//! DefaultViewModel is looking on ViewPortItem. Graph is deleted first.
+
+TEST_F(DefaultViewModelTest, deleteGraphVromViewport)
+{
+    SessionModel model;
+
+    // creating data container and single Data1DItem in it
+    auto data_container = model.insertItem<ContainerItem>();
+    auto data_item = model.insertItem<Data1DItem>(data_container);
+    data_item->setAxis<FixedBinAxisItem>(3, 0.0, 3.0);
+    data_item->setValues(std::vector<double>({1.0, 2.0, 3.0}));
+
+    // creating Viewport with single graph
+    auto viewport_item = model.insertItem<GraphViewportItem>();
+    auto graph_item = model.insertItem<GraphItem>(viewport_item);
+    graph_item->setDataItem(data_item);
+
+    DefaultViewModel viewmodel(&model);
+    viewmodel.setRootSessionItem(viewport_item);
+
+    // validating that we see graph at propeer index
+    EXPECT_EQ(viewmodel.rowCount(), 3); // X, Y and Graph
+    QModelIndex graph_index = viewmodel.index(2, 0);
+    auto graphLabel = dynamic_cast<ViewLabelItem*>(viewmodel.itemFromIndex(graph_index));
+    ASSERT_TRUE(graphLabel != nullptr);
+    EXPECT_EQ(graphLabel->item(), graph_item);
+
+    // removing graph item
+    model.removeItem(graph_item->parent(), graph_item->tagRow());
+    EXPECT_EQ(viewmodel.rowCount(), 2); // X, Y
+
+    graph_item = model.insertItem<GraphItem>(viewport_item);
+    EXPECT_EQ(viewmodel.rowCount(), 3); // X, Y
 }

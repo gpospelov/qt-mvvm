@@ -24,6 +24,11 @@ SessionItemContainer::~SessionItemContainer()
         delete item;
 }
 
+bool SessionItemContainer::empty() const
+{
+    return m_items.empty();
+}
+
 //! Returns number of items in given tag.
 
 int SessionItemContainer::itemCount() const
