@@ -13,7 +13,7 @@
 
 namespace
 {
-std::unique_ptr<ModelView::ItemCatalogue> CreateToyItemCatalogue()
+std::unique_ptr<ModelView::ItemCatalogue> CreateItemCatalogue()
 {
     auto result = std::make_unique<ModelView::ItemCatalogue>();
     result->registerItem<ToyItems::MultiLayerItem>();
@@ -30,11 +30,11 @@ std::unique_ptr<ModelView::ItemCatalogue> CreateToyItemCatalogue()
 
 ToyItems::SampleModel::SampleModel() : SessionModel("ToyModel")
 {
-    setItemCatalogue(CreateToyItemCatalogue());
+    setItemCatalogue(CreateItemCatalogue());
 }
 
 ToyItems::SampleModel::SampleModel(std::shared_ptr<ModelView::ItemPool> pool)
     : SessionModel("ToyModel", pool)
 {
-    setItemCatalogue(CreateToyItemCatalogue());
+    setItemCatalogue(CreateItemCatalogue());
 }

@@ -15,7 +15,7 @@ using namespace ModelView;
 
 namespace
 {
-std::unique_ptr<ModelView::ItemCatalogue> CreateToyItemCatalogue()
+std::unique_ptr<ModelView::ItemCatalogue> CreateItemCatalogue()
 {
     auto result = std::make_unique<ItemCatalogue>();
     result->registerItem<TreeViews::MultiLayer>();
@@ -35,7 +35,7 @@ namespace TreeViews
 
 SampleModel::SampleModel() : SessionModel("SampleModel")
 {
-    setItemCatalogue(CreateToyItemCatalogue());
+    setItemCatalogue(CreateItemCatalogue());
     init_model();
 }
 

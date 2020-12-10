@@ -41,7 +41,7 @@ void fill_data(Data2DItem* data_item, double scale = 1.0)
     data_item->setContent(values);
 }
 
-std::unique_ptr<ModelView::ItemCatalogue> CreateToyItemCatalogue()
+std::unique_ptr<ModelView::ItemCatalogue> CreateItemCatalogue()
 {
     auto result = std::make_unique<ItemCatalogue>();
     result->registerItem<RegionOfInterestItem>();
@@ -52,7 +52,7 @@ std::unique_ptr<ModelView::ItemCatalogue> CreateToyItemCatalogue()
 
 SceneModel::SceneModel() : SessionModel("ColorMapModel")
 {
-    setItemCatalogue(CreateToyItemCatalogue());
+    setItemCatalogue(CreateItemCatalogue());
 
     create_roi();
     create_data();
