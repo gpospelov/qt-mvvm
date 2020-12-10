@@ -59,7 +59,7 @@ class LatticeItem : public ModelView::CompoundItem
 public:
     static inline const std::string P_ROTATION_ANLE = "Rotation";
     static inline const std::string P_INTEGRATION = "Integration";
-    static inline const std::string P_LATTICE_TYPE = "Lattice";
+    static inline const std::string P_LATTICE_TYPE = "Type";
 
     LatticeItem();
 
