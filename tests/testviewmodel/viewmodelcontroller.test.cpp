@@ -257,8 +257,8 @@ TEST_F(ViewModelControllerTest, insertChildToParent)
 
     auto parent = session_model.insertItem<CompoundItem>();
     parent->registerTag(TagInfo::universalTag("children"), /*set_as_default*/ true);
-    auto child = session_model.insertItem<SessionItem>(parent);
-    child = session_model.insertItem<SessionItem>(parent);
+    session_model.insertItem<SessionItem>(parent);
+    session_model.insertItem<SessionItem>(parent);
 
     // checking signaling
     EXPECT_EQ(spyInsert.count(), 3);

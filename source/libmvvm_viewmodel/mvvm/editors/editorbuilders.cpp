@@ -55,7 +55,7 @@ builder_t IntegerEditorBuilder()
             auto limits = item->data<RealLimits>(ItemDataRole::LIMITS);
             editor->setRange(limits.lowerLimit(), limits.upperLimit());
         }
-        return std::move(editor);
+        return editor;
     };
     return builder;
 }
@@ -70,7 +70,7 @@ builder_t DoubleEditorBuilder()
             editor->setSingleStep(singleStep(Constants::default_double_decimals));
             editor->setDecimals(Constants::default_double_decimals);
         }
-        return std::move(editor);
+        return editor;
     };
     return builder;
 }
@@ -83,7 +83,7 @@ builder_t ScientificDoubleEditorBuilder()
             auto limits = item->data<RealLimits>(ItemDataRole::LIMITS);
             editor->setRange(limits.lowerLimit(), limits.upperLimit());
         }
-        return std::move(editor);
+        return editor;
     };
     return builder;
 }
@@ -100,7 +100,7 @@ builder_t ScientificSpinBoxEditorBuilder()
             editor->setSingleStep(getStep(item->data<double>()));
         }
         editor->setDecimals(Constants::default_double_decimals);
-        return std::move(editor);
+        return editor;
     };
     return builder;
 }

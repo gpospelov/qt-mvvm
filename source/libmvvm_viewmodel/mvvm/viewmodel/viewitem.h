@@ -68,6 +68,6 @@ private:
     std::unique_ptr<ViewItemImpl> p_impl;
 };
 
-}; // namespace ModelView
+} // namespace ModelView
 
 #endif // MVVM_VIEWMODEL_VIEWITEM_H

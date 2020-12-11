@@ -75,8 +75,8 @@ std::vector<double> Data2DItem::content() const
 
 void Data2DItem::insert_axis(std::unique_ptr<BinnedAxisItem> axis, const std::string& tag)
 {
-    // removing previous axis
-    if (auto axis = getItem(tag, 0))
+    // removing current axis
+    if (getItem(tag, 0))
         delete takeItem({tag, 0});
 
     insertItem(axis.release(), {tag, 0});

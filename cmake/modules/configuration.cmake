@@ -65,3 +65,10 @@ endif()
 # -----------------------------------------------------------------------------
 
 add_compile_options($<$<CXX_COMPILER_ID:MSVC>:/MP>)
+
+# warning level
+if (MSVC)
+    add_compile_options(/W2)
+else()
+    add_compile_options(-Wall -Wextra -pedantic)
+endif()
