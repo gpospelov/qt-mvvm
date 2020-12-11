@@ -28,6 +28,7 @@ public:
 
     ViewportAxisItem* zAxis() const;
 
+    using ViewportItem::setViewportToContent;
     void setViewportToContent() override;
 
 protected:
