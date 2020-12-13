@@ -17,8 +17,16 @@
 namespace ModelView
 {
 
-//! Supports navigation through SessionModel. It contains a chain of row indexes that have to
-//! be used to reach the desired SessionItem starting from the root item.
+//! Supports navigation through SessionModel. Contains a chain of indexes that have to
+//! be used to reach the desired SessionItem starting from the root item. Path class plays
+//! a role of simplified QModelIndex for SessionModel. Used for undo/redo only.
+
+//! Example of tree:
+//! - root              path:""
+//!   - child           path:"0"
+//!     - grandchild    path:"0,0"
+//!     - grandchild    path:"0,1"
+//!   - child           path:"1"
 
 class MVVM_MODEL_EXPORT Path
 {

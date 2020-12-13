@@ -62,15 +62,15 @@ TEST_F(PathTest, pathFromItem)
     // unexisting path
     EXPECT_TRUE(model.pathFromItem(nullptr).str().empty());
     // yet another unexisting path
-    std::unique_ptr<SessionItem> xx(new SessionItem);
-    EXPECT_TRUE(model.pathFromItem(xx.get()).str().empty());
+    auto alienItem = std::make_unique<SessionItem>();
+    EXPECT_TRUE(model.pathFromItem(alienItem.get()).str().empty());
 
     // three children beneeth root item
-    SessionItem* item0 = model.insertItem<SessionItem>();
+    auto item0 = model.insertItem<SessionItem>();
     item0->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
-    SessionItem* item1 = model.insertItem<SessionItem>();
+    auto item1 = model.insertItem<SessionItem>();
     item1->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
-    SessionItem* item2 = model.insertItem<SessionItem>();
+    auto item2 = model.insertItem<SessionItem>();
     item2->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
 
     EXPECT_EQ(model.pathFromItem(item0).str(), "0");
@@ -78,18 +78,18 @@ TEST_F(PathTest, pathFromItem)
     EXPECT_EQ(model.pathFromItem(item2).str(), "2");
 
     // adding granchildren to item0
-    SessionItem* child00 = model.insertItem<SessionItem>(item0);
-    SessionItem* child01 = model.insertItem<SessionItem>(item0);
+    auto child00 = model.insertItem<SessionItem>(item0);
+    auto child01 = model.insertItem<SessionItem>(item0);
 
     EXPECT_EQ(model.pathFromItem(child00).str(), "0,0");
     EXPECT_EQ(model.pathFromItem(child01).str(), "0,1");
 
     // adding grandchildren to item2
-    SessionItem* child20 = model.insertItem<SessionItem>(item2);
+    auto child20 = model.insertItem<SessionItem>(item2);
     child20->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
 
-    SessionItem* child200 = model.insertItem<SessionItem>(child20);
-    SessionItem* child201 = model.insertItem<SessionItem>(child20);
+    auto child200 = model.insertItem<SessionItem>(child20);
+    auto child201 = model.insertItem<SessionItem>(child20);
 
     EXPECT_EQ(model.pathFromItem(child200).str(), "2,0,0");
     EXPECT_EQ(model.pathFromItem(child201).str(), "2,0,1");
@@ -104,21 +104,21 @@ TEST_F(PathTest, itemFromPath)
     non_existing.append(8);
     EXPECT_EQ(model.itemFromPath(non_existing), nullptr);
 
-    SessionItem* item0 = model.insertItem<SessionItem>();
+    auto item0 = model.insertItem<SessionItem>();
     item0->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
-    SessionItem* item1 = model.insertItem<SessionItem>();
+    auto item1 = model.insertItem<SessionItem>();
     item1->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
-    SessionItem* item2 = model.insertItem<SessionItem>();
+    auto item2 = model.insertItem<SessionItem>();
     item2->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
 
     EXPECT_EQ(model.itemFromPath(Path::fromVector({0})), item0);
     EXPECT_EQ(model.itemFromPath(Path::fromVector({1})), item1);
     EXPECT_EQ(model.itemFromPath(Path::fromVector({2})), item2);
 
-    SessionItem* child20 = model.insertItem<SessionItem>(item2);
+    auto child20 = model.insertItem<SessionItem>(item2);
     child20->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
-    SessionItem* child200 = model.insertItem<SessionItem>(child20);
-    SessionItem* child201 = model.insertItem<SessionItem>(child20);
+    auto child200 = model.insertItem<SessionItem>(child20);
+    auto child201 = model.insertItem<SessionItem>(child20);
 
     EXPECT_EQ(model.itemFromPath(Path::fromVector({2, 0})), child20);
     EXPECT_EQ(model.itemFromPath(Path::fromVector({2, 0, 0})), child200);
