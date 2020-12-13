@@ -17,4 +17,4 @@
 
 using Variant = QVariant;
 
-#endif // MVVM_MODEL_UNIQUEIDGENERATOR_H
+#endif // MVVM_MODEL_VARIANT_H

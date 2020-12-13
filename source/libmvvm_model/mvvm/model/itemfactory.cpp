@@ -24,8 +24,3 @@ std::unique_ptr<SessionItem> ItemFactory::createItem(const model_type& modelType
 {
     return m_catalogue->create(modelType);
 }
-
-std::unique_ptr<SessionItem> ItemFactory::createEmptyItem() const
-{
-    return std::make_unique<SessionItem>();
-}

@@ -29,8 +29,6 @@ public:
 
     std::unique_ptr<SessionItem> createItem(const model_type& modelType) const override;
 
-    std::unique_ptr<SessionItem> createEmptyItem() const override;
-
 protected:
     std::unique_ptr<ItemCatalogue> m_catalogue;
 };
