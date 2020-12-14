@@ -67,13 +67,13 @@ ItemPool* ItemManager::itemPool()
     return m_item_pool.get();
 }
 
-void ItemManager::register_item(SessionItem* item)
+void ItemManager::registerInPool(SessionItem* item)
 {
     if (m_item_pool)
         m_item_pool->register_item(item, item->identifier());
 }
 
-void ItemManager::unregister_item(SessionItem* item)
+void ItemManager::unregisterFromPool(SessionItem* item)
 {
     if (m_item_pool)
         m_item_pool->unregister_item(item);

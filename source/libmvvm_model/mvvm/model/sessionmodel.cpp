@@ -174,16 +174,6 @@ void SessionModel::setUndoRedoEnabled(bool value)
     p_impl->m_commands->setUndoRedoEnabled(value);
 }
 
-void SessionModel::register_item(SessionItem* item)
-{
-    p_impl->m_itemManager->register_item(item);
-    item->activate(); // activates buisiness logic
-}
-
-void SessionModel::unregister_item(SessionItem* item)
-{
-    p_impl->m_itemManager->unregister_item(item);
-}
 //! Removes all items from the model. If callback is provided, use it to rebuild content of root
 //! item. Used while restoring the model from serialized content.
 
@@ -200,4 +190,17 @@ SessionItem* SessionModel::intern_insert(const item_factory_func_t& func, Sessio
                                          const TagRow& tagrow)
 {
     return p_impl->m_commands->insertNewItem(func, parent, tagrow);
+}
+
+//!
+
+void SessionModel::registerInPool(SessionItem* item)
+{
+    p_impl->m_itemManager->registerInPool(item);
+    item->activate(); // activates buisiness logic
+}
+
+void SessionModel::unregisterFromPool(SessionItem* item)
+{
+    p_impl->m_itemManager->unregisterFromPool(item);
 }

@@ -69,7 +69,7 @@ SessionItem::~SessionItem()
         p_impl->m_mapper->callOnItemDestroy();
 
     if (p_impl->m_model)
-        p_impl->m_model->unregister_item(this);
+        p_impl->m_model->unregisterFromPool(this);
 }
 
 model_type SessionItem::modelType() const
@@ -347,12 +347,12 @@ void SessionItem::setParent(SessionItem* parent)
 void SessionItem::setModel(SessionModel* model)
 {
     if (p_impl->m_model)
-        p_impl->m_model->unregister_item(this);
+        p_impl->m_model->unregisterFromPool(this);
 
     p_impl->m_model = model;
 
     if (p_impl->m_model)
-        p_impl->m_model->register_item(this);
+        p_impl->m_model->registerInPool(this);
 
     for (auto child : children())
         child->setModel(model);

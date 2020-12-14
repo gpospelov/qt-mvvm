@@ -79,25 +79,28 @@ public:
 
     void setUndoRedoEnabled(bool value);
 
-    void register_item(SessionItem* item);
-    void unregister_item(SessionItem* item);
-
     void clear(std::function<void(SessionItem*)> callback = {});
 
 private:
+    friend class SessionItem;
     SessionItem* intern_insert(const item_factory_func_t& func, SessionItem* parent,
                                const TagRow& tagrow);
+
+    void registerInPool(SessionItem* item);
+    void unregisterFromPool(SessionItem* item);
 
     struct SessionModelImpl;
     std::unique_ptr<SessionModelImpl> p_impl;
 };
+
+//! Inserts item into given parent under given tagrow.
 
 template <typename T> T* SessionModel::insertItem(SessionItem* parent, const TagRow& tagrow)
 {
     return static_cast<T*>(intern_insert([]() { return std::make_unique<T>(); }, parent, tagrow));
 }
 
-//! Returns top item of the given type. If more than one item exists, return the first one.
+//! Returns top items of the given type.
 //! The top item is an item that is a child of an invisible root item.
 
 template <typename T> std::vector<T*> SessionModel::topItems() const
@@ -111,7 +114,7 @@ template <typename T> std::vector<T*> SessionModel::topItems() const
     return result;
 }
 
-//! Returns top items of the given type.
+//! Returns top item of the given type. If more than one item exists, return the first one.
 //! The top item is an item that is a child of an invisible root item.
 
 template <typename T> T* SessionModel::topItem() const

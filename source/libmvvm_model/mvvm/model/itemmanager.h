@@ -43,8 +43,8 @@ public:
     const ItemPool* itemPool() const;
     ItemPool* itemPool();
 
-    void register_item(SessionItem* item);
-    void unregister_item(SessionItem* item);
+    void registerInPool(SessionItem* item);
+    void unregisterFromPool(SessionItem* item);
 
     const ItemFactoryInterface* factory() const;
 
