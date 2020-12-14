@@ -13,7 +13,6 @@
 #include <mvvm/editors/editor_constants.h>
 #include <mvvm/model/comboproperty.h>
 #include <mvvm/model/externalproperty.h>
-#include <mvvm/model/itemcatalogue.h>
 #include <mvvm/utils/reallimits.h>
 
 using namespace ModelView;
@@ -44,10 +43,7 @@ DemoPropertiesItem::DemoPropertiesItem() : CompoundItem(::Constants::DemoPropert
 
 SampleModel::SampleModel() : SessionModel("SampleModel")
 {
-    auto catalogue = std::make_unique<ModelView::ItemCatalogue>();
-    catalogue->registerItem<DemoPropertiesItem>();
-
-    setItemCatalogue(std::move(catalogue));
+    registerItem<DemoPropertiesItem>();
 }
 
 } // namespace CellEditors

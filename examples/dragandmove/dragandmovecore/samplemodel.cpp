@@ -10,7 +10,6 @@
 #include "samplemodel.h"
 #include "sampleitems.h"
 #include <QColor>
-#include <mvvm/model/itemcatalogue.h>
 #include <mvvm/utils/numericutils.h>
 #include <mvvm/widgets/widgetutils.h>
 
@@ -19,14 +18,6 @@ namespace DragAndView
 
 namespace
 {
-std::unique_ptr<ModelView::ItemCatalogue> CreateToyItemCatalogue()
-{
-    auto result = std::make_unique<ModelView::ItemCatalogue>();
-    result->registerItem<DemoItem>();
-    result->registerItem<DemoContainerItem>();
-    return result;
-}
-
 std::string random_name()
 {
     static const std::string alphabet = "abcdefgh";
@@ -45,7 +36,8 @@ std::string random_name()
 
 SampleModel::SampleModel() : SessionModel("SampleModel")
 {
-    setItemCatalogue(CreateToyItemCatalogue());
+    registerItem<DemoItem>();
+    registerItem<DemoContainerItem>();
     init_model_content();
     setUndoRedoEnabled(true);
 }

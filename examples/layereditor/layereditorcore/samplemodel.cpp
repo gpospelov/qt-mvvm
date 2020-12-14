@@ -11,23 +11,13 @@
 #include <layereditorcore/materialmodel.h>
 #include <layereditorcore/samplemodel.h>
 #include <mvvm/model/externalproperty.h>
-#include <mvvm/model/itemcatalogue.h>
 
 using namespace ModelView;
 
 namespace
 {
-std::unique_ptr<ItemCatalogue> CreateItemCatalogue()
-{
-    auto result = std::make_unique<ItemCatalogue>();
-    result->registerItem<MultiLayerItem>();
-    result->registerItem<LayerItem>();
-    return result;
-}
-
 const std::string MultiLayerType = "MultiLayer";
 const std::string LayerType = "Layer";
-
 } // namespace
 
 using namespace ModelView;
@@ -48,7 +38,9 @@ MultiLayerItem::MultiLayerItem() : CompoundItem(MultiLayerType)
 
 SampleModel::SampleModel() : SessionModel("SampleModel")
 {
-    setItemCatalogue(CreateItemCatalogue());
+    registerItem<MultiLayerItem>();
+    registerItem<LayerItem>();
+
     init_model();
 }
 

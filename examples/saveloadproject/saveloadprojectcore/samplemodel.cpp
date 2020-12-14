@@ -9,7 +9,6 @@
 
 #include "samplemodel.h"
 #include <QColor>
-#include <mvvm/model/itemcatalogue.h>
 #include <mvvm/model/sessionitemcontainer.h>
 #include <mvvm/standarditems/containeritem.h>
 #include <mvvm/utils/numericutils.h>
@@ -17,13 +16,6 @@
 
 namespace
 {
-std::unique_ptr<ModelView::ItemCatalogue> CreateItemCatalogue()
-{
-    auto result = std::make_unique<ModelView::ItemCatalogue>();
-    result->registerItem<DemoItem>();
-    return result;
-}
-
 std::string random_name()
 {
     static const std::string alphabet = "abcdefgh";
@@ -56,7 +48,7 @@ DemoItem::DemoItem() : CompoundItem(DemoItemType)
 
 SampleModel::SampleModel() : SessionModel("SampleModel")
 {
-    setItemCatalogue(CreateItemCatalogue());
+    registerItem<DemoItem>();
     initModelContent();
     setUndoRedoEnabled(true);
 }

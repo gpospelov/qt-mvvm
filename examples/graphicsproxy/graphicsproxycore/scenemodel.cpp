@@ -10,7 +10,6 @@
 #include "scenemodel.h"
 #include "sceneitems.h"
 #include <cmath>
-#include <mvvm/model/itemcatalogue.h>
 #include <mvvm/standarditems/axisitems.h>
 #include <mvvm/standarditems/colormapitem.h>
 #include <mvvm/standarditems/colormapviewportitem.h>
@@ -41,18 +40,11 @@ void fill_data(Data2DItem* data_item, double scale = 1.0)
     data_item->setContent(values);
 }
 
-std::unique_ptr<ModelView::ItemCatalogue> CreateItemCatalogue()
-{
-    auto result = std::make_unique<ItemCatalogue>();
-    result->registerItem<RegionOfInterestItem>();
-    return result;
-}
-
 } // namespace
 
 SceneModel::SceneModel() : SessionModel("ColorMapModel")
 {
-    setItemCatalogue(CreateItemCatalogue());
+    registerItem<RegionOfInterestItem>();
 
     create_roi();
     create_data();
