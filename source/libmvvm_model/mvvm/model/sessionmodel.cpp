@@ -215,4 +215,5 @@ SessionItem* SessionModel::intern_insert(const item_factory_func_t& func, Sessio
 void SessionModel::intern_register(const model_type& modelType, const item_factory_func_t& func,
                                    const std::string& label)
 {
+    p_impl->m_itemManager->factory()->registerItem(modelType, func, label);
 }
