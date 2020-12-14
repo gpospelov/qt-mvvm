@@ -11,6 +11,7 @@
 #include <mvvm/model/path.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
+#include <mvvm/model/modelutils.h>
 #include <stdexcept>
 
 using namespace ModelView;
@@ -104,12 +105,12 @@ void AbstractItemCommand::setDescription(const std::string& text)
 
 Path AbstractItemCommand::pathFromItem(SessionItem* item) const
 {
-    return p_impl->model->pathFromItem(item);
+    return Utils::PathFromItem(item);
 }
 
 SessionItem* AbstractItemCommand::itemFromPath(const Path& path) const
 {
-    return p_impl->model->itemFromPath(path);
+    return Utils::ItemFromPath(*p_impl->model, path);
 }
 
 SessionModel* AbstractItemCommand::model() const

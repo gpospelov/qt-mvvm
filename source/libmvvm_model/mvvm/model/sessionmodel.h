@@ -55,9 +55,6 @@ public:
 
     bool setData(SessionItem* item, const Variant& value, int role);
 
-    Path pathFromItem(const SessionItem* item) const;
-    SessionItem* itemFromPath(const Path& path) const;
-
     void setUndoRedoEnabled(bool value);
 
     UndoStackInterface* undoStack() const;

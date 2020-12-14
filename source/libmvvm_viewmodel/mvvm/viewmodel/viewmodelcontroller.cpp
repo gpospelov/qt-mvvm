@@ -11,6 +11,7 @@
 #include <mvvm/interfaces/childrenstrategyinterface.h>
 #include <mvvm/interfaces/rowstrategyinterface.h>
 #include <mvvm/model/itemutils.h>
+#include <mvvm/model/modelutils.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/utils/containerutils.h>
@@ -153,7 +154,7 @@ struct ViewModelController::ViewModelControllerImpl {
 
     void setRootSessionItemIntern(SessionItem* item)
     {
-        root_item_path = controller->model()->pathFromItem(item);
+        root_item_path = Utils::PathFromItem(item);
         view_model->setRootViewItem(std::make_unique<RootViewItem>(item));
         init_view_model();
     }
@@ -187,7 +188,7 @@ ViewModelController::ViewModelController(SessionModel* session_model, ViewModelB
     setOnModelDestroyed(on_model_destroyed);
 
     auto on_model_reset = [this](auto) {
-        auto root_item = model()->itemFromPath(p_impl->root_item_path);
+        auto root_item = Utils::ItemFromPath(*model(), p_impl->root_item_path);
         p_impl->setRootSessionItemIntern(root_item ? root_item : model()->rootItem());
         p_impl->view_model->endResetModel();
     };

@@ -86,32 +86,6 @@ bool SessionModel::setData(SessionItem* item, const Variant& value, int role)
     return m_commands->setData(item, value, role);
 }
 
-//! Returns path from item.
-
-Path SessionModel::pathFromItem(const SessionItem* item) const
-{
-    Path result;
-    const SessionItem* current(item);
-    while (current && current->parent()) {
-        result.prepend(Utils::IndexOfChild(current->parent(), current));
-        current = current->parent();
-    }
-    return result;
-}
-
-//! Returns item from path.
-
-SessionItem* SessionModel::itemFromPath(const Path& path) const
-{
-    SessionItem* result(rootItem());
-    for (const auto& x : path) {
-        result = Utils::ChildAt(result, x);
-        if (!result)
-            break;
-    }
-    return result;
-}
-
 void SessionModel::setUndoRedoEnabled(bool value)
 {
     m_commands->setUndoRedoEnabled(value);
