@@ -38,7 +38,7 @@ public:
 
     SessionItem* findItem(const identifier_type& id) const;
 
-    identifier_type findIdentifier(SessionItem* item) const;
+    identifier_type findIdentifier(const SessionItem* item) const;
 
     const ItemPool* itemPool() const;
     ItemPool* itemPool();

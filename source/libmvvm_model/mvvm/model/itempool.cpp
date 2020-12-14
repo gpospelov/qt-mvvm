@@ -55,9 +55,9 @@ void ItemPool::unregister_item(SessionItem* item)
     m_key_to_item.erase(it2);
 }
 
-identifier_type ItemPool::key_for_item(SessionItem* item) const
+identifier_type ItemPool::key_for_item(const SessionItem* item) const
 {
-    auto it = m_item_to_key.find(item);
+    const auto it = m_item_to_key.find(item);
     if (it != m_item_to_key.end())
         return it->second;
 

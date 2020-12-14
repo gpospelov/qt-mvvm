@@ -52,7 +52,7 @@ SessionItem* ItemManager::findItem(const identifier_type& id) const
     return m_item_pool ? m_item_pool->item_for_key(id) : nullptr;
 }
 
-identifier_type ItemManager::findIdentifier(SessionItem* item) const
+identifier_type ItemManager::findIdentifier(const SessionItem* item) const
 {
     return m_item_pool ? m_item_pool->key_for_item(item) : identifier_type();
 }
