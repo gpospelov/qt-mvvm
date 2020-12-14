@@ -17,19 +17,19 @@
 using namespace ModelView;
 
 struct AbstractItemCommand::AbstractItemCommandImpl {
-    enum EStatus { initial, afterexecute, afterundo };
+    enum class Status { initial, after_execute, after_undo };
     bool m_isObsolete{false};
     std::string m_text;
-    EStatus m_status{initial};
+    Status m_status{Status::initial};
     SessionModel* m_model{nullptr};
     AbstractItemCommand* m_self{nullptr};
     CommandResult m_result;
     AbstractItemCommandImpl(AbstractItemCommand* parent) : m_self(parent) {}
 
-    void set_after_execute() { m_status = afterexecute; }
-    void set_after_undo() { m_status = afterundo; }
-    bool can_execute() const { return m_status != afterexecute; }
-    bool can_undo() const { return m_status == afterexecute && !m_self->isObsolete(); }
+    void set_after_execute() { m_status = Status::after_execute; }
+    void set_after_undo() { m_status = Status::after_undo; }
+    bool can_execute() const { return m_status != Status::after_execute; }
+    bool can_undo() const { return m_status == Status::after_execute && !m_self->isObsolete(); }
 };
 
 AbstractItemCommand::AbstractItemCommand(SessionItem* receiver)
