@@ -40,11 +40,11 @@ ItemCatalogue& ItemCatalogue::operator=(const ItemCatalogue& other)
     return *this;
 }
 
-void ItemCatalogue::add(const std::string& model_type, item_factory_func_t func,
-                        const std::string& label)
+void ItemCatalogue::registerItem(const std::string& modelType, item_factory_func_t func,
+                                 const std::string& label)
 {
-    p_impl->factory.add(model_type, func);
-    p_impl->m_info.push_back({model_type, label});
+    p_impl->factory.add(modelType, func);
+    p_impl->m_info.push_back({modelType, label});
 }
 
 ItemCatalogue::~ItemCatalogue() = default;
@@ -90,7 +90,7 @@ void ItemCatalogue::merge(const ItemCatalogue& other)
             throw std::runtime_error(
                 "ItemCatalogue::add() -> Catalogue contains duplicated records");
 
-        add(it.first, it.second, other.p_impl->m_info[index].item_label);
+        registerItem(it.first, it.second, other.p_impl->m_info[index].item_label);
         ++index;
     }
 }

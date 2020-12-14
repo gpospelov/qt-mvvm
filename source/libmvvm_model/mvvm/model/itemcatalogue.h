@@ -20,7 +20,8 @@ namespace ModelView
 
 class SessionItem;
 
-//! Catalogue for item constructions.
+//! Catalogue for item constructions. Contains collection of factory functions associated with
+//! item's modelType and optional label.
 
 class MVVM_MODEL_EXPORT ItemCatalogue
 {
@@ -32,6 +33,9 @@ public:
     ItemCatalogue& operator=(const ItemCatalogue& other);
 
     template <typename T> void registerItem(const std::string& label = {});
+
+    void registerItem(const std::string& modelType, item_factory_func_t func,
+                      const std::string& label);
 
     bool contains(const std::string& model_type) const;
 
@@ -45,14 +49,13 @@ public:
     void merge(const ItemCatalogue& other);
 
 private:
-    void add(const std::string& model_type, item_factory_func_t func, const std::string& label);
     struct ItemCatalogueImpl;
     std::unique_ptr<ItemCatalogueImpl> p_impl;
 };
 
 template <typename T> void ItemCatalogue::registerItem(const std::string& label)
 {
-    add(T().modelType(), ItemFactoryFunction<T>(), label);
+    registerItem(T().modelType(), ItemFactoryFunction<T>(), label);
 }
 
 } // namespace ModelView

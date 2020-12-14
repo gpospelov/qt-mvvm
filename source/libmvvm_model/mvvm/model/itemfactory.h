@@ -27,6 +27,9 @@ public:
     ItemFactory(std::unique_ptr<ItemCatalogue> catalogue);
     ~ItemFactory() override;
 
+    void registerItem(const std::string& modelType, item_factory_func_t func,
+                         const std::string& label) override;
+
     std::unique_ptr<SessionItem> createItem(const model_type& modelType) const override;
 
 protected:
