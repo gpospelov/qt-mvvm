@@ -82,11 +82,12 @@ private:
     SessionItem* intern_insert(const item_factory_func_t& func, SessionItem* parent,
                                const TagRow& tagrow);
 
-    std::string m_model_type;
     std::unique_ptr<ItemManager> m_item_manager;
     std::unique_ptr<CommandService> m_commands;
     std::unique_ptr<ModelMapper> m_mapper;
     std::unique_ptr<SessionItem> m_root_item;
+    struct SessionModelImpl;
+    std::unique_ptr<SessionModelImpl> p_impl;
 };
 
 template <typename T> T* SessionModel::insertItem(SessionItem* parent, const TagRow& tagrow)

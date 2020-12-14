@@ -23,11 +23,16 @@
 
 using namespace ModelView;
 
+struct SessionModel::SessionModelImpl {
+    std::string m_modelType;
+    SessionModelImpl(std::string modelType) : m_modelType(std::move(modelType)) {}
+};
+
 SessionModel::SessionModel(std::string model_type, std::shared_ptr<ItemPool> pool)
-    : m_model_type(std::move(model_type))
-    , m_item_manager(std::make_unique<ItemManager>())
+    : m_item_manager(std::make_unique<ItemManager>())
     , m_commands(std::make_unique<CommandService>(this))
     , m_mapper(std::make_unique<ModelMapper>(this))
+    , p_impl(std::make_unique<SessionModelImpl>(std::move(model_type)))
 {
     if (pool)
         m_item_manager->setItemPool(std::move(pool));
@@ -51,7 +56,7 @@ void SessionModel::setItemCatalogue(std::unique_ptr<ItemCatalogue> catalogue)
 
 std::string SessionModel::modelType() const
 {
-    return m_model_type;
+    return p_impl->m_modelType;
 }
 
 SessionItem* SessionModel::insertNewItem(const model_type& modelType, SessionItem* parent,
