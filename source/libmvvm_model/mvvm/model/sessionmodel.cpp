@@ -70,18 +70,7 @@ SessionModel::~SessionModel()
     p_impl->m_mapper->callOnModelDestroyed();
 }
 
-void SessionModel::setItemCatalogue(std::unique_ptr<ItemCatalogue> catalogue)
-{
-    // adding standard items to the user catalogue
-    std::unique_ptr<ItemCatalogue> full_catalogue = std::move(catalogue);
-    full_catalogue->merge(*CreateStandardItemCatalogue());
-    p_impl->m_itemManager->setItemFactory(std::make_unique<ItemFactory>(std::move(full_catalogue)));
-}
-
-std::string SessionModel::modelType() const
-{
-    return p_impl->m_modelType;
-}
+//! Insert new item using item's modelType.
 
 SessionItem* SessionModel::insertNewItem(const model_type& modelType, SessionItem* parent,
                                          const TagRow& tagrow)
@@ -89,40 +78,6 @@ SessionItem* SessionModel::insertNewItem(const model_type& modelType, SessionIte
     // intentionally passing by value inside lambda
     auto create_func = [this, modelType]() { return factory()->createItem(modelType); };
     return intern_insert(create_func, parent, tagrow);
-}
-
-//! Copy item and insert it in parent's tag and row.
-//! Item could belong to any model/parent.
-
-SessionItem* SessionModel::copyItem(const SessionItem* item, SessionItem* parent,
-                                    const TagRow& tagrow)
-{
-    return p_impl->m_commands->copyItem(item, parent, tagrow);
-}
-
-SessionItem* SessionModel::rootItem() const
-{
-    return p_impl->m_root_item.get();
-}
-
-Variant SessionModel::data(SessionItem* item, int role) const
-{
-    return item->data<Variant>(role);
-}
-
-bool SessionModel::setData(SessionItem* item, const Variant& value, int role)
-{
-    return p_impl->m_commands->setData(item, value, role);
-}
-
-void SessionModel::setUndoRedoEnabled(bool value)
-{
-    p_impl->m_commands->setUndoRedoEnabled(value);
-}
-
-UndoStackInterface* SessionModel::undoStack() const
-{
-    return p_impl->m_commands->undoStack();
 }
 
 //! Removes given row from parent.
@@ -140,35 +95,57 @@ void SessionModel::moveItem(SessionItem* item, SessionItem* new_parent, const Ta
     p_impl->m_commands->moveItem(item, new_parent, tagrow);
 }
 
-void SessionModel::register_item(SessionItem* item)
+//! Copy item and insert it in parent's tag and row. Item could belong to any model/parent.
+
+SessionItem* SessionModel::copyItem(const SessionItem* item, SessionItem* parent,
+                                    const TagRow& tagrow)
 {
-    p_impl->m_itemManager->register_item(item);
-    item->activate(); // activates buisiness logic
+    return p_impl->m_commands->copyItem(item, parent, tagrow);
 }
 
-void SessionModel::unregister_item(SessionItem* item)
+//! Returns the data for given item and role.
+
+Variant SessionModel::data(SessionItem* item, int role) const
 {
-    p_impl->m_itemManager->unregister_item(item);
+    return item->data<Variant>(role);
 }
+
+//! Sets the data for given item.
+
+bool SessionModel::setData(SessionItem* item, const Variant& value, int role)
+{
+    return p_impl->m_commands->setData(item, value, role);
+}
+
+//! Returns model type.
+
+std::string SessionModel::modelType() const
+{
+    return p_impl->m_modelType;
+}
+
+//! Returns root item of the model.
+
+SessionItem* SessionModel::rootItem() const
+{
+    return p_impl->m_root_item.get();
+}
+
+//! Returns model mapper. Can be used to subscribe to various model's signal.
 
 ModelMapper* SessionModel::mapper()
 {
     return p_impl->m_mapper.get();
 }
 
-//! Removes all items from the model. If callback is provided, use it to rebuild content of root
-//! item. Used while restoring the model from serialized content.
+//! Returns command stack to perform undo/redo.
 
-void SessionModel::clear(std::function<void(SessionItem*)> callback)
+UndoStackInterface* SessionModel::undoStack() const
 {
-    mapper()->callOnModelAboutToBeReset();
-    p_impl->createRootItem();
-    if (callback)
-        callback(rootItem());
-    mapper()->callOnModelReset();
+    return p_impl->m_commands->undoStack();
 }
 
-//! Returns pointer to ItemFactory which can generate all items supported by this model,
+//! Returns item factory which can generate all items supported by this model.
 
 const ItemFactoryInterface* SessionModel::factory() const
 {
@@ -180,6 +157,43 @@ const ItemFactoryInterface* SessionModel::factory() const
 SessionItem* SessionModel::findItem(const identifier_type& id)
 {
     return p_impl->m_itemManager->findItem(id);
+}
+
+//!
+
+void SessionModel::setItemCatalogue(std::unique_ptr<ItemCatalogue> catalogue)
+{
+    // adding standard items to the user catalogue
+    std::unique_ptr<ItemCatalogue> full_catalogue = std::move(catalogue);
+    full_catalogue->merge(*CreateStandardItemCatalogue());
+    p_impl->m_itemManager->setItemFactory(std::make_unique<ItemFactory>(std::move(full_catalogue)));
+}
+
+void SessionModel::setUndoRedoEnabled(bool value)
+{
+    p_impl->m_commands->setUndoRedoEnabled(value);
+}
+
+void SessionModel::register_item(SessionItem* item)
+{
+    p_impl->m_itemManager->register_item(item);
+    item->activate(); // activates buisiness logic
+}
+
+void SessionModel::unregister_item(SessionItem* item)
+{
+    p_impl->m_itemManager->unregister_item(item);
+}
+//! Removes all items from the model. If callback is provided, use it to rebuild content of root
+//! item. Used while restoring the model from serialized content.
+
+void SessionModel::clear(std::function<void(SessionItem*)> callback)
+{
+    mapper()->callOnModelAboutToBeReset();
+    p_impl->createRootItem();
+    if (callback)
+        callback(rootItem());
+    mapper()->callOnModelReset();
 }
 
 SessionItem* SessionModel::intern_insert(const item_factory_func_t& func, SessionItem* parent,
