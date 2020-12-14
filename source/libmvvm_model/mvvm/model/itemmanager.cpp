@@ -83,3 +83,8 @@ const ItemFactoryInterface* ItemManager::factory() const
 {
     return m_item_factory.get();
 }
+
+ItemFactoryInterface* ItemManager::factory()
+{
+    return const_cast<ItemFactoryInterface*>(static_cast<const ItemManager*>(this)->factory());
+}

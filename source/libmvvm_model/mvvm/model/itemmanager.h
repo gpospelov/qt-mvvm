@@ -48,6 +48,8 @@ public:
 
     const ItemFactoryInterface* factory() const;
 
+    ItemFactoryInterface* factory();
+
 private:
     std::shared_ptr<ItemPool> m_item_pool;
     std::unique_ptr<ItemFactoryInterface> m_item_factory;
