@@ -10,6 +10,7 @@
 #include <QJsonObject>
 #include <mvvm/interfaces/undostackinterface.h>
 #include <mvvm/model/modelutils.h>
+#include <mvvm/model/path.h>
 
 using namespace ModelView;
 
