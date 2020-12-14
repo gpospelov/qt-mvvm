@@ -23,16 +23,20 @@
 
 using namespace ModelView;
 
+//! Pimpl class for SessionModel.
+
 struct SessionModel::SessionModelImpl {
     SessionModel* m_self{nullptr};
     std::string m_modelType;
     std::unique_ptr<ItemManager> m_itemManager;
+    std::unique_ptr<CommandService> m_commands;
     std::unique_ptr<ModelMapper> m_mapper;
     std::unique_ptr<SessionItem> m_root_item;
     SessionModelImpl(SessionModel* self, std::string modelType, std::shared_ptr<ItemPool> pool)
         : m_self(self)
         , m_modelType(std::move(modelType))
         , m_itemManager(std::make_unique<ItemManager>())
+        , m_commands(std::make_unique<CommandService>(self))
         , m_mapper(std::make_unique<ModelMapper>(self))
     {
         setItemPool(pool);
@@ -42,14 +46,23 @@ struct SessionModel::SessionModelImpl {
     {
         m_itemManager->setItemPool(pool ? std::move(pool) : std::make_shared<ItemPool>());
     }
+
+    //! Creates root item.
+    void createRootItem()
+    {
+        m_root_item = m_itemManager->createRootItem();
+        m_root_item->setModel(m_self);
+        m_root_item->registerTag(TagInfo::universalTag("rootTag"), /*set_as_default*/ true);
+    }
 };
 
+//! Main c-tor.
+
 SessionModel::SessionModel(std::string model_type, std::shared_ptr<ItemPool> pool)
-    : m_commands(std::make_unique<CommandService>(this))
-    , p_impl(std::make_unique<SessionModelImpl>(this, std::move(model_type), std::move(pool)))
+    : p_impl(std::make_unique<SessionModelImpl>(this, std::move(model_type), std::move(pool)))
 
 {
-    createRootItem();
+    p_impl->createRootItem();
 }
 
 SessionModel::~SessionModel()
@@ -84,7 +97,7 @@ SessionItem* SessionModel::insertNewItem(const model_type& modelType, SessionIte
 SessionItem* SessionModel::copyItem(const SessionItem* item, SessionItem* parent,
                                     const TagRow& tagrow)
 {
-    return m_commands->copyItem(item, parent, tagrow);
+    return p_impl->m_commands->copyItem(item, parent, tagrow);
 }
 
 SessionItem* SessionModel::rootItem() const
@@ -99,24 +112,24 @@ Variant SessionModel::data(SessionItem* item, int role) const
 
 bool SessionModel::setData(SessionItem* item, const Variant& value, int role)
 {
-    return m_commands->setData(item, value, role);
+    return p_impl->m_commands->setData(item, value, role);
 }
 
 void SessionModel::setUndoRedoEnabled(bool value)
 {
-    m_commands->setUndoRedoEnabled(value);
+    p_impl->m_commands->setUndoRedoEnabled(value);
 }
 
 UndoStackInterface* SessionModel::undoStack() const
 {
-    return m_commands->undoStack();
+    return p_impl->m_commands->undoStack();
 }
 
 //! Removes given row from parent.
 
 void SessionModel::removeItem(SessionItem* parent, const TagRow& tagrow)
 {
-    m_commands->removeItem(parent, tagrow);
+    p_impl->m_commands->removeItem(parent, tagrow);
 }
 
 //! Move item from it's current parent to a new parent under given tag and row.
@@ -124,7 +137,7 @@ void SessionModel::removeItem(SessionItem* parent, const TagRow& tagrow)
 
 void SessionModel::moveItem(SessionItem* item, SessionItem* new_parent, const TagRow& tagrow)
 {
-    m_commands->moveItem(item, new_parent, tagrow);
+    p_impl->m_commands->moveItem(item, new_parent, tagrow);
 }
 
 void SessionModel::register_item(SessionItem* item)
@@ -149,7 +162,7 @@ ModelMapper* SessionModel::mapper()
 void SessionModel::clear(std::function<void(SessionItem*)> callback)
 {
     mapper()->callOnModelAboutToBeReset();
-    createRootItem();
+    p_impl->createRootItem();
     if (callback)
         callback(rootItem());
     mapper()->callOnModelReset();
@@ -169,17 +182,8 @@ SessionItem* SessionModel::findItem(const identifier_type& id)
     return p_impl->m_itemManager->findItem(id);
 }
 
-//! Creates root item.
-
-void SessionModel::createRootItem()
-{
-    p_impl->m_root_item = p_impl->m_itemManager->createRootItem();
-    p_impl->m_root_item->setModel(this);
-    p_impl->m_root_item->registerTag(TagInfo::universalTag("rootTag"), /*set_as_default*/ true);
-}
-
 SessionItem* SessionModel::intern_insert(const item_factory_func_t& func, SessionItem* parent,
                                          const TagRow& tagrow)
 {
-    return m_commands->insertNewItem(func, parent, tagrow);
+    return p_impl->m_commands->insertNewItem(func, parent, tagrow);
 }

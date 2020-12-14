@@ -22,10 +22,9 @@ namespace ModelView
 {
 
 class SessionItem;
-class CommandService;
-class ModelMapper;
 class ItemCatalogue;
 class ItemPool;
+class ModelMapper;
 class ItemFactoryInterface;
 class UndoStackInterface;
 
@@ -77,11 +76,9 @@ public:
     template <typename T = SessionItem> T* topItem() const;
 
 private:
-    void createRootItem();
     SessionItem* intern_insert(const item_factory_func_t& func, SessionItem* parent,
                                const TagRow& tagrow);
 
-    std::unique_ptr<CommandService> m_commands;
     struct SessionModelImpl;
     std::unique_ptr<SessionModelImpl> p_impl;
 };
