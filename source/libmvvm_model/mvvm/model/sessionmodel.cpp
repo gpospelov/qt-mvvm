@@ -159,7 +159,8 @@ SessionItem* SessionModel::findItem(const identifier_type& id)
     return p_impl->m_itemManager->findItem(id);
 }
 
-//!
+//! Sets brand new catalog of user-defined items. They become available for undo/redo and
+//! serialization. Internally user catalog will be merged with the catalog of standard items.
 
 void SessionModel::setItemCatalogue(std::unique_ptr<ItemCatalogue> catalogue)
 {
@@ -169,13 +170,15 @@ void SessionModel::setItemCatalogue(std::unique_ptr<ItemCatalogue> catalogue)
     p_impl->m_itemManager->setItemFactory(std::make_unique<ItemFactory>(std::move(full_catalogue)));
 }
 
+//! Sets undo/redo either enabled or disabled. By default undo/redo is disabled.
+
 void SessionModel::setUndoRedoEnabled(bool value)
 {
     p_impl->m_commands->setUndoRedoEnabled(value);
 }
 
 //! Removes all items from the model. If callback is provided, use it to rebuild content of root
-//! item. Used while restoring the model from serialized content.
+//! item (used while restoring the model from serialized content).
 
 void SessionModel::clear(std::function<void(SessionItem*)> callback)
 {
@@ -186,13 +189,7 @@ void SessionModel::clear(std::function<void(SessionItem*)> callback)
     mapper()->callOnModelReset();
 }
 
-SessionItem* SessionModel::intern_insert(const item_factory_func_t& func, SessionItem* parent,
-                                         const TagRow& tagrow)
-{
-    return p_impl->m_commands->insertNewItem(func, parent, tagrow);
-}
-
-//!
+//! Registers item in pool. This will allow to find item pointer using its unique identifier.
 
 void SessionModel::registerInPool(SessionItem* item)
 {
@@ -200,7 +197,22 @@ void SessionModel::registerInPool(SessionItem* item)
     item->activate(); // activates buisiness logic
 }
 
+//! Unregister item from pool.
+
 void SessionModel::unregisterFromPool(SessionItem* item)
 {
     p_impl->m_itemManager->unregisterFromPool(item);
+}
+
+//! Insert new item into given parent using factory function provided.
+
+SessionItem* SessionModel::intern_insert(const item_factory_func_t& func, SessionItem* parent,
+                                         const TagRow& tagrow)
+{
+    return p_impl->m_commands->insertNewItem(func, parent, tagrow);
+}
+
+void SessionModel::intern_register(const model_type& modelType, const item_factory_func_t& func,
+                                   const std::string& label)
+{
 }

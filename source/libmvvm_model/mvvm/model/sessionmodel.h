@@ -81,13 +81,16 @@ public:
 
     void clear(std::function<void(SessionItem*)> callback = {});
 
+    template <typename T> void registerItem(const std::string& label = {});
+
 private:
     friend class SessionItem;
-    SessionItem* intern_insert(const item_factory_func_t& func, SessionItem* parent,
-                               const TagRow& tagrow);
-
     void registerInPool(SessionItem* item);
     void unregisterFromPool(SessionItem* item);
+    SessionItem* intern_insert(const item_factory_func_t& func, SessionItem* parent,
+                               const TagRow& tagrow);
+    void intern_register(const model_type& modelType, const item_factory_func_t& func,
+                         const std::string& label);
 
     struct SessionModelImpl;
     std::unique_ptr<SessionModelImpl> p_impl;
@@ -97,7 +100,7 @@ private:
 
 template <typename T> T* SessionModel::insertItem(SessionItem* parent, const TagRow& tagrow)
 {
-    return static_cast<T*>(intern_insert([]() { return std::make_unique<T>(); }, parent, tagrow));
+    return static_cast<T*>(intern_insert(ItemFactoryFunction<T>(), parent, tagrow));
 }
 
 //! Returns top items of the given type.
@@ -121,6 +124,14 @@ template <typename T> T* SessionModel::topItem() const
 {
     auto items = topItems<T>();
     return items.empty() ? nullptr : items.front();
+}
+
+//! Register used defined item to use with the model. It will become possible to undo/redo
+//! operations with this item, as well as serialize it to/from JSON.
+
+template <typename T> void SessionModel::registerItem(const std::string& label)
+{
+    intern_register(T().modelType(), ItemFactoryFunction<T>(), label);
 }
 
 } // namespace ModelView
