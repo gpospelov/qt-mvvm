@@ -12,6 +12,7 @@
 #include <mvvm/interfaces/rowstrategyinterface.h>
 #include <mvvm/model/itemutils.h>
 #include <mvvm/model/modelutils.h>
+#include <mvvm/model/path.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/utils/containerutils.h>
@@ -19,7 +20,6 @@
 #include <mvvm/viewmodel/viewmodelbase.h>
 #include <mvvm/viewmodel/viewmodelcontroller.h>
 #include <mvvm/viewmodel/viewmodelutils.h>
-#include <mvvm/model/path.h>
 #include <stdexcept>
 
 using namespace ModelView;
@@ -41,48 +41,48 @@ bool isValidItemRole(const ViewItem* view, int item_role)
 } // namespace
 
 struct ViewModelController::ViewModelControllerImpl {
-    ViewModelController* controller;
-    ViewModelBase* view_model{nullptr};
-    std::unique_ptr<ChildrenStrategyInterface> children_strategy;
-    std::unique_ptr<RowStrategyInterface> row_strategy;
-    std::map<SessionItem*, ViewItem*> item_to_view; //! correspondence of item and its view
-    Path root_item_path;
+    ViewModelController* m_self;
+    ViewModelBase* m_viewModel{nullptr};
+    std::unique_ptr<ChildrenStrategyInterface> m_childrenStrategy;
+    std::unique_ptr<RowStrategyInterface> m_rowStrategy;
+    std::map<SessionItem*, ViewItem*> m_itemToVview; //! correspondence of item and its view
+    Path m_rootItemPath;
 
     ViewModelControllerImpl(ViewModelController* controller, ViewModelBase* view_model)
-        : controller(controller), view_model(view_model)
+        : m_self(controller), m_viewModel(view_model)
     {
     }
 
     void check_initialization()
     {
         const std::string msg("Error in ViewModelController: ");
-        if (!view_model)
+        if (!m_viewModel)
             throw std::runtime_error(msg + "ViewModel is not defined");
 
-        if (!row_strategy)
+        if (!m_rowStrategy)
             throw std::runtime_error(msg + "RowStrategy is not defined");
 
-        if (!children_strategy)
+        if (!m_childrenStrategy)
             throw std::runtime_error(msg + "Children is not defined");
     }
 
     void init_view_model()
     {
         check_initialization();
-        item_to_view.clear();
-        item_to_view[controller->rootSessionItem()] = view_model->rootItem();
-        iterate(controller->rootSessionItem(), view_model->rootItem());
+        m_itemToVview.clear();
+        m_itemToVview[m_self->rootSessionItem()] = m_viewModel->rootItem();
+        iterate(m_self->rootSessionItem(), m_viewModel->rootItem());
     }
 
     void iterate(const SessionItem* item, ViewItem* parent)
     {
         ViewItem* origParent(parent);
-        for (auto child : children_strategy->children(item)) {
-            auto row = row_strategy->constructRow(child);
+        for (auto child : m_childrenStrategy->children(item)) {
+            auto row = m_rowStrategy->constructRow(child);
             if (!row.empty()) {
                 auto next_parent = row.at(0).get();
-                view_model->appendRow(parent, std::move(row));
-                item_to_view[child] = next_parent;
+                m_viewModel->appendRow(parent, std::move(row));
+                m_itemToVview[child] = next_parent;
                 parent = next_parent; // labelItem
                 iterate(child, parent);
             }
@@ -94,45 +94,45 @@ struct ViewModelController::ViewModelControllerImpl {
 
     void remove_row_of_views(SessionItem* item)
     {
-        auto pos = item_to_view.find(item);
-        if (pos != item_to_view.end()) {
+        auto pos = m_itemToVview.find(item);
+        if (pos != m_itemToVview.end()) {
             auto view = pos->second;
-            view_model->removeRow(view->parent(), view->row());
-            item_to_view.erase(pos);
+            m_viewModel->removeRow(view->parent(), view->row());
+            m_itemToVview.erase(pos);
         }
     }
 
     void remove_children_of_view(ViewItem* view)
     {
         for (auto child : view->children()) {
-            auto pos = std::find_if(item_to_view.begin(), item_to_view.end(),
+            auto pos = std::find_if(m_itemToVview.begin(), m_itemToVview.end(),
                                     [child](const auto& it) { return it.second == child; });
-            if (pos != item_to_view.end())
-                item_to_view.erase(pos);
+            if (pos != m_itemToVview.end())
+                m_itemToVview.erase(pos);
         }
 
-        view_model->clearRows(view);
+        m_viewModel->clearRows(view);
     }
 
     void insert_view(SessionItem* parent, const TagRow& tagrow)
     {
         auto child = parent->getItem(tagrow.tag, tagrow.row);
-        auto children = children_strategy->children(parent);
+        auto children = m_childrenStrategy->children(parent);
         auto index = Utils::IndexOfItem(children, child);
         if (index == -1)
             return;
 
-        auto pos = item_to_view.find(parent);
-        if (pos == item_to_view.end())
+        auto pos = m_itemToVview.find(parent);
+        if (pos == m_itemToVview.end())
             return;
 
         auto parent_view = pos->second;
 
-        auto row = row_strategy->constructRow(child);
+        auto row = m_rowStrategy->constructRow(child);
         if (!row.empty()) {
             auto next_parent = row.at(0).get();
-            view_model->insertRow(parent_view, index, std::move(row));
-            item_to_view[child] = next_parent;
+            m_viewModel->insertRow(parent_view, index, std::move(row));
+            m_itemToVview[child] = next_parent;
             parent_view = next_parent; // labelItem
             iterate(child, parent_view);
         }
@@ -140,23 +140,23 @@ struct ViewModelController::ViewModelControllerImpl {
 
     std::vector<ViewItem*> findViews(const SessionItem* item) const
     {
-        if (item == view_model->rootItem()->item())
-            return {view_model->rootItem()};
+        if (item == m_viewModel->rootItem()->item())
+            return {m_viewModel->rootItem()};
 
         std::vector<ViewItem*> result;
         auto on_index = [&](const QModelIndex& index) {
-            auto view_item = view_model->itemFromIndex(index);
+            auto view_item = m_viewModel->itemFromIndex(index);
             if (view_item->item() == item)
                 result.push_back(view_item);
         };
-        Utils::iterate_model(view_model, QModelIndex(), on_index);
+        Utils::iterate_model(m_viewModel, QModelIndex(), on_index);
         return result;
     }
 
     void setRootSessionItemIntern(SessionItem* item)
     {
-        root_item_path = Utils::PathFromItem(item);
-        view_model->setRootViewItem(std::make_unique<RootViewItem>(item));
+        m_rootItemPath = Utils::PathFromItem(item);
+        m_viewModel->setRootViewItem(std::make_unique<RootViewItem>(item));
         init_view_model();
     }
 };
@@ -184,24 +184,24 @@ ViewModelController::ViewModelController(SessionModel* session_model, ViewModelB
     setOnAboutToRemoveItem(on_about_to_remove);
 
     auto on_model_destroyed = [this](auto) {
-        p_impl->view_model->setRootViewItem(std::make_unique<RootViewItem>(nullptr));
+        p_impl->m_viewModel->setRootViewItem(std::make_unique<RootViewItem>(nullptr));
     };
     setOnModelDestroyed(on_model_destroyed);
 
     auto on_model_reset = [this](auto) {
-        auto root_item = Utils::ItemFromPath(*model(), p_impl->root_item_path);
+        auto root_item = Utils::ItemFromPath(*model(), p_impl->m_rootItemPath);
         p_impl->setRootSessionItemIntern(root_item ? root_item : model()->rootItem());
-        p_impl->view_model->endResetModel();
+        p_impl->m_viewModel->endResetModel();
     };
     setOnModelReset(on_model_reset);
 
-    auto on_model_about_to_be_reset = [this](auto) { p_impl->view_model->beginResetModel(); };
+    auto on_model_about_to_be_reset = [this](auto) { p_impl->m_viewModel->beginResetModel(); };
     setOnModelAboutToBeReset(on_model_about_to_be_reset);
 }
 
 void ViewModelController::setViewModel(ViewModelBase* view_model)
 {
-    p_impl->view_model = view_model;
+    p_impl->m_viewModel = view_model;
 }
 
 ViewModelController::~ViewModelController() = default;
@@ -209,12 +209,12 @@ ViewModelController::~ViewModelController() = default;
 void ViewModelController::setChildrenStrategy(
     std::unique_ptr<ChildrenStrategyInterface> children_strategy)
 {
-    p_impl->children_strategy = std::move(children_strategy);
+    p_impl->m_childrenStrategy = std::move(children_strategy);
 }
 
 void ViewModelController::setRowStrategy(std::unique_ptr<RowStrategyInterface> row_strategy)
 {
-    p_impl->row_strategy = std::move(row_strategy);
+    p_impl->m_rowStrategy = std::move(row_strategy);
 }
 
 //! Returns SessionModel handled by this controller.
@@ -234,14 +234,14 @@ void ViewModelController::setRootSessionItem(SessionItem* item)
         throw std::runtime_error(
             "Error in ViewModelController: atttemp to use item from alien model as new root.");
 
-    p_impl->view_model->beginResetModel();
+    p_impl->m_viewModel->beginResetModel();
     p_impl->setRootSessionItemIntern(item);
-    p_impl->view_model->endResetModel();
+    p_impl->m_viewModel->endResetModel();
 }
 
 SessionItem* ViewModelController::rootSessionItem() const
 {
-    return p_impl->view_model->rootItem()->item();
+    return p_impl->m_viewModel->rootItem()->item();
 }
 
 //! Returns all ViewItem's displaying given SessionItem.
@@ -253,7 +253,7 @@ std::vector<ViewItem*> ViewModelController::findViews(const SessionItem* item) c
 
 QStringList ViewModelController::horizontalHeaderLabels() const
 {
-    return p_impl->row_strategy->horizontalHeaderLabels();
+    return p_impl->m_rowStrategy->horizontalHeaderLabels();
 }
 
 void ViewModelController::onDataChange(SessionItem* item, int role)
@@ -261,8 +261,8 @@ void ViewModelController::onDataChange(SessionItem* item, int role)
     for (auto view : findViews(item)) {
         // inform corresponding LabelView and DataView
         if (isValidItemRole(view, role)) {
-            auto index = p_impl->view_model->indexFromItem(view);
-            p_impl->view_model->dataChanged(index, index, Utils::ItemRoleToQtRole(role));
+            auto index = p_impl->m_viewModel->indexFromItem(view);
+            p_impl->m_viewModel->dataChanged(index, index, Utils::ItemRoleToQtRole(role));
         }
     }
 }
@@ -281,11 +281,11 @@ void ViewModelController::onAboutToRemoveItem(SessionItem* parent, TagRow tagrow
         || Utils::IsItemAncestor(rootSessionItem(), item_to_remove)) {
         // special case when user removes SessionItem which is one of ancestors of our root item
         // or root item iteslf
-        p_impl->view_model->beginResetModel();
-        p_impl->view_model->setRootViewItem(std::make_unique<RootViewItem>(nullptr));
-        p_impl->item_to_view.clear();
-        p_impl->root_item_path = {};
-        p_impl->view_model->endResetModel();
+        p_impl->m_viewModel->beginResetModel();
+        p_impl->m_viewModel->setRootViewItem(std::make_unique<RootViewItem>(nullptr));
+        p_impl->m_itemToVview.clear();
+        p_impl->m_rootItemPath = {};
+        p_impl->m_viewModel->endResetModel();
     } else {
         p_impl->remove_row_of_views(item_to_remove);
     }
