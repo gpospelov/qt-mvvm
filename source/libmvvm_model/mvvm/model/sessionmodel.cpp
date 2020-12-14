@@ -24,26 +24,37 @@
 using namespace ModelView;
 
 struct SessionModel::SessionModelImpl {
+    SessionModel* m_self{nullptr};
     std::string m_modelType;
-    SessionModelImpl(std::string modelType) : m_modelType(std::move(modelType)) {}
+    std::unique_ptr<ItemManager> m_itemManager;
+    std::unique_ptr<ModelMapper> m_mapper;
+    std::unique_ptr<SessionItem> m_root_item;
+    SessionModelImpl(SessionModel* self, std::string modelType, std::shared_ptr<ItemPool> pool)
+        : m_self(self)
+        , m_modelType(std::move(modelType))
+        , m_itemManager(std::make_unique<ItemManager>())
+        , m_mapper(std::make_unique<ModelMapper>(self))
+    {
+        setItemPool(pool);
+    }
+
+    void setItemPool(std::shared_ptr<ItemPool> pool)
+    {
+        m_itemManager->setItemPool(pool ? std::move(pool) : std::make_shared<ItemPool>());
+    }
 };
 
 SessionModel::SessionModel(std::string model_type, std::shared_ptr<ItemPool> pool)
-    : m_item_manager(std::make_unique<ItemManager>())
-    , m_commands(std::make_unique<CommandService>(this))
-    , m_mapper(std::make_unique<ModelMapper>(this))
-    , p_impl(std::make_unique<SessionModelImpl>(std::move(model_type)))
+    : m_commands(std::make_unique<CommandService>(this))
+    , p_impl(std::make_unique<SessionModelImpl>(this, std::move(model_type), std::move(pool)))
+
 {
-    if (pool)
-        m_item_manager->setItemPool(std::move(pool));
-    else
-        m_item_manager->setItemPool(std::make_shared<ItemPool>());
     createRootItem();
 }
 
 SessionModel::~SessionModel()
 {
-    m_mapper->callOnModelDestroyed();
+    p_impl->m_mapper->callOnModelDestroyed();
 }
 
 void SessionModel::setItemCatalogue(std::unique_ptr<ItemCatalogue> catalogue)
@@ -51,7 +62,7 @@ void SessionModel::setItemCatalogue(std::unique_ptr<ItemCatalogue> catalogue)
     // adding standard items to the user catalogue
     std::unique_ptr<ItemCatalogue> full_catalogue = std::move(catalogue);
     full_catalogue->merge(*CreateStandardItemCatalogue());
-    m_item_manager->setItemFactory(std::make_unique<ItemFactory>(std::move(full_catalogue)));
+    p_impl->m_itemManager->setItemFactory(std::make_unique<ItemFactory>(std::move(full_catalogue)));
 }
 
 std::string SessionModel::modelType() const
@@ -78,7 +89,7 @@ SessionItem* SessionModel::copyItem(const SessionItem* item, SessionItem* parent
 
 SessionItem* SessionModel::rootItem() const
 {
-    return m_root_item.get();
+    return p_impl->m_root_item.get();
 }
 
 Variant SessionModel::data(SessionItem* item, int role) const
@@ -118,18 +129,18 @@ void SessionModel::moveItem(SessionItem* item, SessionItem* new_parent, const Ta
 
 void SessionModel::register_item(SessionItem* item)
 {
-    m_item_manager->register_item(item);
+    p_impl->m_itemManager->register_item(item);
     item->activate(); // activates buisiness logic
 }
 
 void SessionModel::unregister_item(SessionItem* item)
 {
-    m_item_manager->unregister_item(item);
+    p_impl->m_itemManager->unregister_item(item);
 }
 
 ModelMapper* SessionModel::mapper()
 {
-    return m_mapper.get();
+    return p_impl->m_mapper.get();
 }
 
 //! Removes all items from the model. If callback is provided, use it to rebuild content of root
@@ -148,23 +159,23 @@ void SessionModel::clear(std::function<void(SessionItem*)> callback)
 
 const ItemFactoryInterface* SessionModel::factory() const
 {
-    return m_item_manager->factory();
+    return p_impl->m_itemManager->factory();
 }
 
 //! Returns SessionItem for given identifier.
 
 SessionItem* SessionModel::findItem(const identifier_type& id)
 {
-    return m_item_manager->findItem(id);
+    return p_impl->m_itemManager->findItem(id);
 }
 
 //! Creates root item.
 
 void SessionModel::createRootItem()
 {
-    m_root_item = m_item_manager->createRootItem();
-    m_root_item->setModel(this);
-    m_root_item->registerTag(TagInfo::universalTag("rootTag"), /*set_as_default*/ true);
+    p_impl->m_root_item = p_impl->m_itemManager->createRootItem();
+    p_impl->m_root_item->setModel(this);
+    p_impl->m_root_item->registerTag(TagInfo::universalTag("rootTag"), /*set_as_default*/ true);
 }
 
 SessionItem* SessionModel::intern_insert(const item_factory_func_t& func, SessionItem* parent,
