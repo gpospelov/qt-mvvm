@@ -37,11 +37,12 @@ public:
     void registerItem(const std::string& modelType, item_factory_func_t func,
                       const std::string& label);
 
-    bool contains(const std::string& model_type) const;
+    bool contains(const std::string& modelType) const;
 
-    std::unique_ptr<SessionItem> create(const std::string& model_type) const;
+    std::unique_ptr<SessionItem> create(const std::string& modelType) const;
 
     std::vector<std::string> modelTypes() const;
+
     std::vector<std::string> labels() const;
 
     int itemCount() const;

@@ -49,14 +49,14 @@ void ItemCatalogue::registerItem(const std::string& modelType, item_factory_func
 
 ItemCatalogue::~ItemCatalogue() = default;
 
-bool ItemCatalogue::contains(const std::string& model_type) const
+bool ItemCatalogue::contains(const std::string& modelType) const
 {
-    return p_impl->factory.contains(model_type);
+    return p_impl->factory.contains(modelType);
 }
 
-std::unique_ptr<SessionItem> ItemCatalogue::create(const std::string& model_type) const
+std::unique_ptr<SessionItem> ItemCatalogue::create(const std::string& modelType) const
 {
-    return p_impl->factory.create(model_type);
+    return p_impl->factory.create(modelType);
 }
 
 std::vector<std::string> ItemCatalogue::modelTypes() const
