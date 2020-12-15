@@ -58,7 +58,7 @@ jobs:
           -DCMAKE_C_COMPILER_LAUNCHER=ccache \
           -DCMAKE_CXX_COMPILER_LAUNCHER=ccache ../
         make -j4
-        ulimit -c unlimited && (-- ./bin/testmodel --gtest_catch_exceptions=0 || (lldb --batch -o 'thread backtrace all' -o 'quit' && exit 1))
+        ulimit -c unlimited && (./bin/testmodel || (lldb --batch -o 'thread backtrace all' -o 'quit' && exit 1))
 
         
     - name: ctest
