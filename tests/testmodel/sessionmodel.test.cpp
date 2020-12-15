@@ -24,6 +24,12 @@ class SessionModelTest : public ::testing::Test
 {
 public:
     ~SessionModelTest();
+
+    class TestItem : public SessionItem {
+    public:
+        TestItem() : SessionItem("TestItemType"){};
+    };
+
 };
 
 SessionModelTest::~SessionModelTest() = default;
@@ -443,3 +449,17 @@ TEST_F(SessionModelTest, topItems)
     std::vector<CompoundItem*> expected2 = {compound1, compound2};
     EXPECT_EQ(model.topItems<CompoundItem>(), expected2);
 }
+
+TEST_F(SessionModelTest, registerItem)
+{
+    const std::string expectedModelType("TestItemType");
+
+    SessionModel model;
+    model.registerItem<TestItem>();
+
+    auto item = model.insertNewItem(expectedModelType);
+    ASSERT_TRUE(item != nullptr);
+    ASSERT_TRUE(dynamic_cast<TestItem*>(item) != nullptr);
+    EXPECT_EQ(item->modelType(), expectedModelType);
+}
+

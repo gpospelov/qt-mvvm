@@ -38,15 +38,17 @@ public:
 
     SessionItem* findItem(const identifier_type& id) const;
 
-    identifier_type findIdentifier(SessionItem* item) const;
+    identifier_type findIdentifier(const SessionItem* item) const;
 
     const ItemPool* itemPool() const;
     ItemPool* itemPool();
 
-    void register_item(SessionItem* item);
-    void unregister_item(SessionItem* item);
+    void registerInPool(SessionItem* item);
+    void unregisterFromPool(SessionItem* item);
 
     const ItemFactoryInterface* factory() const;
+
+    ItemFactoryInterface* factory();
 
 private:
     std::shared_ptr<ItemPool> m_item_pool;

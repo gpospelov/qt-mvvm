@@ -21,7 +21,7 @@ namespace ModelView
 
 class SessionItem;
 class SessionItemContainer;
-class ConverterCallbacks;
+struct ConverterCallbacks;
 
 //! Converter between SessionItemContainer and JSON object.
 

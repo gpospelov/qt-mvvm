@@ -11,7 +11,8 @@
 #define MVVM_MODEL_ITEMFACTORYINTERFACE_H
 
 #include <memory>
-#include <mvvm/model/mvvm_types.h>
+#include <mvvm/model/function_types.h>
+#include <mvvm/core/types.h>
 #include <mvvm/model_export.h>
 
 namespace ModelView
@@ -26,9 +27,10 @@ class MVVM_MODEL_EXPORT ItemFactoryInterface
 public:
     virtual ~ItemFactoryInterface() = default;
 
-    virtual std::unique_ptr<SessionItem> createItem(const model_type& modelType) const = 0;
+    virtual void registerItem(const std::string& modelType, item_factory_func_t func,
+                         const std::string& label) = 0;
 
-    virtual std::unique_ptr<SessionItem> createEmptyItem() const = 0;
+    virtual std::unique_ptr<SessionItem> createItem(const model_type& modelType) const = 0;
 };
 
 } // namespace ModelView

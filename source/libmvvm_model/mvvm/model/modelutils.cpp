@@ -10,10 +10,37 @@
 #include <QJsonObject>
 #include <mvvm/interfaces/undostackinterface.h>
 #include <mvvm/model/modelutils.h>
+#include <mvvm/model/path.h>
 
 using namespace ModelView;
 
-void Utils::PopulateEmptyModel(const JsonModelConverterInterface* converter, const SessionModel& source, SessionModel& target)
+Path Utils::PathFromItem(const SessionItem* item)
+{
+    if (!item || !item->model())
+        return {};
+
+    Path result;
+    const SessionItem* current(item);
+    while (current && current->parent()) {
+        result.prepend(Utils::IndexOfChild(current->parent(), current));
+        current = current->parent();
+    }
+    return result;
+}
+
+SessionItem* Utils::ItemFromPath(const SessionModel& model, const Path& path)
+{
+    SessionItem* result(model.rootItem());
+    for (const auto& x : path) {
+        result = Utils::ChildAt(result, x);
+        if (!result)
+            break;
+    }
+    return result;
+}
+
+void Utils::PopulateEmptyModel(const JsonModelConverterInterface* converter,
+                               const SessionModel& source, SessionModel& target)
 {
     QJsonObject object = converter->to_json(source);
     converter->from_json(object, target);

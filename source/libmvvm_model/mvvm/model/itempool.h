@@ -36,13 +36,13 @@ public:
     identifier_type register_item(SessionItem* item, identifier_type key = {});
     void unregister_item(SessionItem* item);
 
-    identifier_type key_for_item(SessionItem* item) const;
+    identifier_type key_for_item(const SessionItem* item) const;
 
     SessionItem* item_for_key(const identifier_type& key) const;
 
 private:
     std::map<identifier_type, SessionItem*> m_key_to_item;
-    std::map<SessionItem*, identifier_type> m_item_to_key;
+    std::map<const SessionItem*, identifier_type> m_item_to_key;
 };
 
 } // namespace ModelView

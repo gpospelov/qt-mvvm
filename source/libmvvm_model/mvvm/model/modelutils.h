@@ -21,6 +21,8 @@
 namespace ModelView
 {
 
+class Path;
+
 namespace Utils
 {
 
@@ -61,9 +63,15 @@ template <typename T = SessionItem> std::vector<T*> FindItems(const SessionModel
     return result;
 }
 
+//! Constructs path to find given item. Item must belong to a model.
+MVVM_MODEL_EXPORT Path PathFromItem(const SessionItem* item);
+
+//! Returns item found in the model following given Path.
+MVVM_MODEL_EXPORT SessionItem* ItemFromPath(const SessionModel& moodel, const Path& path);
+
 //! Populate empty model with content of target model using provided converter.
 //! Serves as auxiliary function for model copying and cloning.
-void MVVM_MODEL_EXPORT PopulateEmptyModel(const JsonModelConverterInterface* converter,
+MVVM_MODEL_EXPORT void PopulateEmptyModel(const JsonModelConverterInterface* converter,
                                           const SessionModel& source, SessionModel& target);
 
 //! Creates full deep copy of given model. All item's ID will be generated.
@@ -85,27 +93,27 @@ template <typename T = SessionModel> std::unique_ptr<T> CreateClone(const T& mod
 }
 
 //! Removes and deletes item from its model.
-void MVVM_MODEL_EXPORT DeleteItemFromModel(SessionItem* item);
+MVVM_MODEL_EXPORT void DeleteItemFromModel(SessionItem* item);
 
 //! Moves item up (decrements row of the item). Works on children belonging to single tag.
-void MVVM_MODEL_EXPORT MoveUp(SessionItem* item);
+MVVM_MODEL_EXPORT void MoveUp(SessionItem* item);
 
 //! Moves item down (increments row of the item). Works on children belonging to single tag.
-void MVVM_MODEL_EXPORT MoveDown(SessionItem* item);
+MVVM_MODEL_EXPORT void MoveDown(SessionItem* item);
 
 //! Undo last model operation. If not undo/redo enabled, will do nothing.
-void MVVM_MODEL_EXPORT Undo(SessionModel& model);
+MVVM_MODEL_EXPORT void Undo(SessionModel& model);
 
 //! Redo model operation which was undone just before. If not undo/redo enabled, will do nothing.
-void MVVM_MODEL_EXPORT Redo(SessionModel& model);
+MVVM_MODEL_EXPORT void Redo(SessionModel& model);
 
 //! Begin undo/redo macros with given name. Works only if item belongs to the model, and model has
 //! undo/redo enabled. Otherwise, do nothing.
-void MVVM_MODEL_EXPORT BeginMacros(const SessionItem* item, const std::string& macro_name);
+MVVM_MODEL_EXPORT void BeginMacros(const SessionItem* item, const std::string& macro_name);
 
 //! Finishes undo/redo macros. Works only if item belongs to the model, and model has undo/redo
 //! enabled. Otherwise, do nothing.
-void MVVM_MODEL_EXPORT EndMacros(const SessionItem* item);
+MVVM_MODEL_EXPORT void EndMacros(const SessionItem* item);
 
 } // namespace Utils
 } // namespace ModelView

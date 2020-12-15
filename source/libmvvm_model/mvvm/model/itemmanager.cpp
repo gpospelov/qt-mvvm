@@ -44,7 +44,7 @@ std::unique_ptr<SessionItem> ItemManager::createItem(const model_type& modelType
 
 std::unique_ptr<SessionItem> ItemManager::createRootItem() const
 {
-    return m_item_factory->createEmptyItem();
+    return std::make_unique<SessionItem>();
 }
 
 SessionItem* ItemManager::findItem(const identifier_type& id) const
@@ -52,7 +52,7 @@ SessionItem* ItemManager::findItem(const identifier_type& id) const
     return m_item_pool ? m_item_pool->item_for_key(id) : nullptr;
 }
 
-identifier_type ItemManager::findIdentifier(SessionItem* item) const
+identifier_type ItemManager::findIdentifier(const SessionItem* item) const
 {
     return m_item_pool ? m_item_pool->key_for_item(item) : identifier_type();
 }
@@ -67,13 +67,13 @@ ItemPool* ItemManager::itemPool()
     return m_item_pool.get();
 }
 
-void ItemManager::register_item(SessionItem* item)
+void ItemManager::registerInPool(SessionItem* item)
 {
     if (m_item_pool)
         m_item_pool->register_item(item, item->identifier());
 }
 
-void ItemManager::unregister_item(SessionItem* item)
+void ItemManager::unregisterFromPool(SessionItem* item)
 {
     if (m_item_pool)
         m_item_pool->unregister_item(item);
@@ -82,4 +82,9 @@ void ItemManager::unregister_item(SessionItem* item)
 const ItemFactoryInterface* ItemManager::factory() const
 {
     return m_item_factory.get();
+}
+
+ItemFactoryInterface* ItemManager::factory()
+{
+    return const_cast<ItemFactoryInterface*>(static_cast<const ItemManager*>(this)->factory());
 }

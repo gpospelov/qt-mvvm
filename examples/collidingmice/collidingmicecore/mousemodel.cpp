@@ -13,21 +13,12 @@
 #include <cmath>
 #include <mvvm/factories/modeldocumentfactory.h>
 #include <mvvm/interfaces/undostackinterface.h>
-#include <mvvm/model/itemcatalogue.h>
 #include <mvvm/utils/reallimits.h>
 #include <mvvm/widgets/widgetutils.h>
 
 namespace
 {
 static const int MouseCount = 7;
-
-std::unique_ptr<ModelView::ItemCatalogue> CreateItemCatalogue()
-{
-    auto result = std::make_unique<ModelView::ItemCatalogue>();
-    result->registerItem<MouseItem>();
-    return result;
-}
-
 } // namespace
 
 MouseItem::MouseItem() : ModelView::CompoundItem("MouseItem")
@@ -47,9 +38,8 @@ MouseItem::MouseItem() : ModelView::CompoundItem("MouseItem")
 
 MouseModel::MouseModel() : ModelView::SessionModel("MouseModel")
 {
-    setItemCatalogue(CreateItemCatalogue());
+    registerItem<MouseItem>();
     populate_model();
-
     setUndoRedoEnabled(true);
     const int max_commands_to_keep = 1000;
     undoStack()->setUndoLimit(max_commands_to_keep);

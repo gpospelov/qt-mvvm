@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include <mvvm/commands/abstractitemcommand.h>
+#include <mvvm/model/modelutils.h>
 #include <mvvm/model/path.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
@@ -16,19 +17,19 @@
 using namespace ModelView;
 
 struct AbstractItemCommand::AbstractItemCommandImpl {
-    enum EStatus { INITIAL, AFTER_EXECUTE, AFTER_UNDO };
-    bool is_obsolete{false};
-    std::string text;
-    EStatus status{INITIAL};
-    SessionModel* model{nullptr};
-    AbstractItemCommand* parent_impl{nullptr};
+    enum class Status { initial, after_execute, after_undo };
+    bool m_isObsolete{false};
+    std::string m_text;
+    Status m_status{Status::initial};
+    SessionModel* m_model{nullptr};
+    AbstractItemCommand* m_self{nullptr};
     CommandResult m_result;
-    AbstractItemCommandImpl(AbstractItemCommand* parent) : parent_impl(parent) {}
+    AbstractItemCommandImpl(AbstractItemCommand* parent) : m_self(parent) {}
 
-    void set_after_execute() { status = AFTER_EXECUTE; }
-    void set_after_undo() { status = AFTER_UNDO; }
-    bool can_execute() const { return status != AFTER_EXECUTE; }
-    bool can_undo() const { return status == AFTER_EXECUTE && !parent_impl->isObsolete(); }
+    void set_after_execute() { m_status = Status::after_execute; }
+    void set_after_undo() { m_status = Status::after_undo; }
+    bool can_execute() const { return m_status != Status::after_execute; }
+    bool can_undo() const { return m_status == Status::after_execute && !m_self->isObsolete(); }
 };
 
 AbstractItemCommand::AbstractItemCommand(SessionItem* receiver)
@@ -40,7 +41,7 @@ AbstractItemCommand::AbstractItemCommand(SessionItem* receiver)
     if (!receiver->model())
         throw std::runtime_error("Item doesn't have a model");
 
-    p_impl->model = receiver->model();
+    p_impl->m_model = receiver->model();
 }
 
 AbstractItemCommand::~AbstractItemCommand() = default;
@@ -73,14 +74,14 @@ void AbstractItemCommand::undo()
 
 bool AbstractItemCommand::isObsolete() const
 {
-    return p_impl->is_obsolete;
+    return p_impl->m_isObsolete;
 }
 
 //! Returns command description.
 
 std::string AbstractItemCommand::description() const
 {
-    return p_impl->text;
+    return p_impl->m_text;
 }
 
 CommandResult AbstractItemCommand::result() const
@@ -92,29 +93,29 @@ CommandResult AbstractItemCommand::result() const
 
 void AbstractItemCommand::setObsolete(bool flag)
 {
-    p_impl->is_obsolete = flag;
+    p_impl->m_isObsolete = flag;
 }
 
 //! Sets command description.
 
 void AbstractItemCommand::setDescription(const std::string& text)
 {
-    p_impl->text = text;
+    p_impl->m_text = text;
 }
 
 Path AbstractItemCommand::pathFromItem(SessionItem* item) const
 {
-    return p_impl->model->pathFromItem(item);
+    return Utils::PathFromItem(item);
 }
 
 SessionItem* AbstractItemCommand::itemFromPath(const Path& path) const
 {
-    return p_impl->model->itemFromPath(path);
+    return Utils::ItemFromPath(*p_impl->m_model, path);
 }
 
 SessionModel* AbstractItemCommand::model() const
 {
-    return p_impl->model;
+    return p_impl->m_model;
 }
 
 void AbstractItemCommand::setResult(const CommandResult& command_result)
