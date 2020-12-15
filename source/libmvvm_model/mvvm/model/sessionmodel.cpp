@@ -67,6 +67,12 @@ SessionModel::SessionModel(std::string model_type, std::shared_ptr<ItemPool> poo
 
 SessionModel::~SessionModel()
 {
+    // Explicitely call root item's destructor. It uses p_impl pointer during own descruction
+    // and we have to keep pimpl pointer intact. Without line below will crash on MacOS because
+    // of pecularities of MacOS libc++. See explanations here:
+    // http://ibob.github.io/blog/2019/11/07/dont-use-unique_ptr-for-pimpl/
+    p_impl->m_root_item.reset();
+
     p_impl->m_mapper->callOnModelDestroyed();
 }
 
