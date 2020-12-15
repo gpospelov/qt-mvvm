@@ -54,10 +54,12 @@ jobs:
         echo 'export PATH="/usr/local/opt/qt/bin:$PATH"' >> /Users/runner/.bash_profile
         cd $GITHUB_WORKSPACE && pwd && ls
         mkdir build && cd build
-        cmake -DCMAKE_PREFIX_PATH=/usr/local/opt/qt \
+        cmake -DCMAKE_PREFIX_PATH=/usr/local/opt/qt -DCMAKE_BUILD_TYPE=Debug \
           -DCMAKE_C_COMPILER_LAUNCHER=ccache \
           -DCMAKE_CXX_COMPILER_LAUNCHER=ccache ../
         make -j4
+        ulimit -c unlimited && (./bin/testmodel --gtest_catch_exceptions=0 || (lldb --batch -o 'thread backtrace all' -o 'quit' && exit 1))
+
         
     - name: ctest
       if: success()
