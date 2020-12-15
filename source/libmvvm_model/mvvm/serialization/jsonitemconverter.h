@@ -16,7 +16,7 @@ namespace ModelView
 {
 
 class ItemFactoryInterface;
-class ConverterContext;
+struct ConverterContext;
 
 //! Converter between SessionItem and JSON object.
 

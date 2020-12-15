@@ -12,7 +12,7 @@
 
 #include <memory>
 #include <mvvm/model/function_types.h>
-#include <mvvm/model/mvvm_types.h>
+#include <mvvm/core/types.h>
 #include <mvvm/model_export.h>
 
 namespace ModelView
