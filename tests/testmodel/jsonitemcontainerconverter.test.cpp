@@ -51,7 +51,7 @@ public:
 
         //! Simplified method to create SessionItem from JSON object
         auto create_item = [this](const QJsonObject& json) {
-            std::unique_ptr<SessionItem> result = std::make_unique<PropertyItem>();
+            auto result = std::make_unique<SessionItem>();
             m_itemdata_converter->from_json(json[JsonItemFormatAssistant::itemDataKey].toArray(),
                                             *result->itemData());
             return result;
