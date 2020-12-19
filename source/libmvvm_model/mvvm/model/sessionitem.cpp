@@ -372,12 +372,17 @@ const SessionItemData* SessionItem::itemData() const
 
 SessionItemData* SessionItem::itemData()
 {
-    return p_impl->m_data.get();
+    return const_cast<SessionItemData*>(static_cast<const SessionItem*>(this)->itemData());
 }
 
-SessionItemTags* SessionItem::itemTags() const
+const SessionItemTags* SessionItem::itemTags() const
 {
     return p_impl->m_tags.get();
+}
+
+SessionItemTags* SessionItem::itemTags()
+{
+    return const_cast<SessionItemTags*>(static_cast<const SessionItem*>(this)->itemTags());
 }
 
 void SessionItem::setDataAndTags(std::unique_ptr<SessionItemData> data,

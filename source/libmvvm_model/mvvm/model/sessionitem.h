@@ -26,6 +26,7 @@ class SessionModel;
 class TagInfo;
 class ItemMapper;
 class SessionItemData;
+class SessionItemTags;
 
 class MVVM_MODEL_EXPORT SessionItem
 {
@@ -106,9 +107,11 @@ public:
 
     void setProperty(const std::string& tag, const char* value);
 
-    // FIXME refactor converter access to item internals
     SessionItemData* itemData();
     const SessionItemData* itemData() const;
+
+    SessionItemTags* itemTags();
+    const SessionItemTags* itemTags() const;
 
 private:
     friend class SessionModel;
@@ -120,7 +123,6 @@ private:
     void setModel(SessionModel* model);
     void setAppearanceFlag(int flag, bool value);
 
-    class SessionItemTags* itemTags() const;
     void setDataAndTags(std::unique_ptr<SessionItemData> data,
                         std::unique_ptr<SessionItemTags> tags);
 
