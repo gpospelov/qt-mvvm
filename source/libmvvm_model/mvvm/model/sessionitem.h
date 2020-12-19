@@ -17,7 +17,6 @@
 #include <mvvm/model/tagrow.h>
 #include <mvvm/model_export.h>
 #include <stdexcept>
-#include <type_traits>
 #include <vector>
 
 namespace ModelView
@@ -115,7 +114,7 @@ private:
     friend class SessionModel;
     friend class JsonItemConverter;
     virtual void activate() {}
-    bool set_data_internal(Variant value, int role);
+    bool set_data_internal(const Variant& value, int role);
     Variant data_internal(int role) const;
     void setParent(SessionItem* parent);
     void setModel(SessionModel* model);
@@ -133,8 +132,6 @@ private:
 
 template <typename T> inline bool SessionItem::setData(const T& value, int role)
 {
-    if constexpr (std::is_same<T, Variant>::value)
-        return set_data_internal(value, role);
     return set_data_internal(Variant::fromValue(value), role);
 }
 
@@ -142,8 +139,6 @@ template <typename T> inline bool SessionItem::setData(const T& value, int role)
 
 template <typename T> inline T SessionItem::data(int role) const
 {
-    if constexpr (std::is_same<T, Variant>::value)
-        return data_internal(role);
     return data_internal(role).value<T>();
 }
 

@@ -318,12 +318,14 @@ bool SessionItem::isSinglePropertyTag(const std::string& tag) const
 //! Sets the data for given role.
 //! Method invented to hide implementaiton details.
 
-bool SessionItem::set_data_internal(Variant value, int role)
+bool SessionItem::set_data_internal(const Variant& value, int role)
 {
-    return model() ? model()->setData(this, value, role) : setDataIntern(value, role);
+    return model() && model()->undoStack() ? model()->setData(this, value, role)
+                                           : setDataIntern(value, role);
 }
 
-//! Returns data for given role. Method invented to hide implementaiton details.
+//! Returns data for given role. Method invented to hide implementaiton details and avoid
+//! placing sessionitemdata.h into 'sessionitem.h' header.
 
 Variant SessionItem::data_internal(int role) const
 {
