@@ -31,7 +31,7 @@ int appearance(const ModelView::SessionItem& item)
 } // namespace
 
 struct SessionItem::SessionItemImpl {
-    SessionItem* m_this_item{nullptr};
+    SessionItem* m_self{nullptr};
     SessionItem* m_parent{nullptr};
     SessionModel* m_model{nullptr};
     std::unique_ptr<ItemMapper> m_mapper;
@@ -40,19 +40,10 @@ struct SessionItem::SessionItemImpl {
     model_type m_modelType;
 
     SessionItemImpl(SessionItem* this_item)
-        : m_this_item(this_item)
+        : m_self(this_item)
         , m_data(std::make_unique<SessionItemData>())
         , m_tags(std::make_unique<SessionItemTags>())
     {
-    }
-
-    //! Sets the data for given role, notifies the model.
-    bool setData(const Variant& variant, int role)
-    {
-        bool result = m_data->setData(variant, role);
-        if (result && m_model)
-            m_model->mapper()->callOnDataChange(m_this_item, role);
-        return result;
     }
 };
 
@@ -394,7 +385,12 @@ void SessionItem::setDataAndTags(std::unique_ptr<SessionItemData> data,
     p_impl->m_tags = std::move(tags);
 }
 
+//! Sets the data for given role, notifies the model.
+
 bool SessionItem::setDataIntern(const Variant& variant, int role)
 {
-    return p_impl->setData(variant, role);
+    bool result = p_impl->m_data->setData(variant, role);
+    if (result && model())
+        model()->mapper()->callOnDataChange(this, role);
+    return result;
 }
