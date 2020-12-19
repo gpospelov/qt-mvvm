@@ -45,7 +45,8 @@ readability-uniqueptr-delete-release,
 readability-uppercase-literal-suffix,
 -modernize-use-trailing-return-type,
 -modernize-use-nodiscard,
--cppcoreguidelines-pro-type-const-cast
+-cppcoreguidelines-pro-type-const-cast,
+-bugprone-reserved-identifier
 '
 CheckOptions:
   - key:             misc-non-private-member-variables-in-classes.IgnoreClassesWithAllMemberVariablesBeingPublic

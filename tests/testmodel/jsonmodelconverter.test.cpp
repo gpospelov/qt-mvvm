@@ -16,6 +16,7 @@
 #include <mvvm/model/itempool.h>
 #include <mvvm/model/propertyitem.h>
 #include <mvvm/model/sessionitem.h>
+#include <mvvm/model/sessionitemtags.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/model/taginfo.h>
 #include <mvvm/serialization/jsonitem_types.h>
@@ -131,7 +132,7 @@ TEST_F(JsonModelConverterTest, parentAndChildToJsonAndBack)
               "SessionItem"); // Name changed because of ProjectConverter
     EXPECT_EQ(reco_parent->childrenCount(), 1);
     EXPECT_EQ(reco_parent->identifier(), parent->identifier());
-    EXPECT_EQ(reco_parent->defaultTag(), "defaultTag");
+    EXPECT_EQ(reco_parent->itemTags()->defaultTag(), "defaultTag");
     EXPECT_EQ(reco_parent->data<int>(), 42);
 
     // checking child reconstruction
@@ -141,7 +142,7 @@ TEST_F(JsonModelConverterTest, parentAndChildToJsonAndBack)
     EXPECT_EQ(reco_child->displayName(), "Property"); // // Name changed because of ProjectConverter
     EXPECT_EQ(reco_child->childrenCount(), 0);
     EXPECT_EQ(reco_child->identifier(), child->identifier());
-    EXPECT_EQ(reco_child->defaultTag(), "");
+    EXPECT_EQ(reco_child->itemTags()->defaultTag(), "");
 }
 
 //! Item in a model to json and back: how persistent are identifiers.
@@ -217,7 +218,7 @@ TEST_F(JsonModelConverterTest, parentAndChildToFileAndBack)
     EXPECT_EQ(reco_parent->displayName(), "SessionItem");
     EXPECT_EQ(reco_parent->childrenCount(), 1);
     EXPECT_EQ(reco_parent->identifier(), parent->identifier());
-    EXPECT_EQ(reco_parent->defaultTag(), "defaultTag");
+    EXPECT_EQ(reco_parent->itemTags()->defaultTag(), "defaultTag");
     EXPECT_EQ(reco_parent->data<int>(), 42);
 
     // checking child reconstruction
@@ -227,7 +228,7 @@ TEST_F(JsonModelConverterTest, parentAndChildToFileAndBack)
     EXPECT_EQ(reco_child->displayName(), "Property");
     EXPECT_EQ(reco_child->childrenCount(), 0);
     EXPECT_EQ(reco_child->identifier(), child->identifier());
-    EXPECT_EQ(reco_child->defaultTag(), "");
+    EXPECT_EQ(reco_child->itemTags()->defaultTag(), "");
 }
 
 //! Creation of json object (single item in a model), then writing same json object back

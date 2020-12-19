@@ -13,6 +13,7 @@
 #include <mvvm/model/itempool.h>
 #include <mvvm/model/itemutils.h>
 #include <mvvm/model/sessionitem.h>
+#include <mvvm/model/sessionitemtags.h>
 #include <mvvm/model/taginfo.h>
 #include <mvvm/model/variant_constants.h>
 #include <stdexcept>
@@ -222,7 +223,7 @@ TEST_F(SessionItemTest, registerItem)
 TEST_F(SessionItemTest, defaultTag)
 {
     SessionItem item;
-    EXPECT_EQ(item.defaultTag(), std::string());
+    EXPECT_EQ(item.itemTags()->defaultTag(), std::string());
     EXPECT_FALSE(item.isTag("defaultTag"));
 }
 
@@ -247,7 +248,7 @@ TEST_F(SessionItemTest, registerDefaultTag)
 {
     SessionItem item;
     item.registerTag(TagInfo::universalTag("tagname"), /*set_as_default*/ true);
-    EXPECT_EQ(item.defaultTag(), "tagname");
+    EXPECT_EQ(item.itemTags()->defaultTag(), "tagname");
 }
 
 //! Simple child insert.

@@ -10,6 +10,7 @@
 #include "google_test.h"
 #include "mockwidgets.h"
 #include <mvvm/model/sessionitem.h>
+#include <mvvm/model/sessionitemtags.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/model/tagrow.h>
 #include <mvvm/signals/modelmapper.h>
@@ -132,7 +133,7 @@ TEST(ModelMapperTest, onItemInserted)
     MockWidgetForModel widget(&model);
 
     EXPECT_CALL(widget, onDataChange(_, _)).Times(0);
-    const TagRow expected_tagrow{model.rootItem()->defaultTag(), 0};
+    const TagRow expected_tagrow{model.rootItem()->itemTags()->defaultTag(), 0};
     EXPECT_CALL(widget, onItemInserted(model.rootItem(), expected_tagrow)).Times(1);
     EXPECT_CALL(widget, onItemRemoved(_, _)).Times(0);
     EXPECT_CALL(widget, onAboutToRemoveItem(_, _)).Times(0);
@@ -151,7 +152,7 @@ TEST(ModelMapperTest, onItemRemoved)
     SessionModel model;
     MockWidgetForModel widget(&model);
 
-    const TagRow expected_tagrow{model.rootItem()->defaultTag(), 0};
+    const TagRow expected_tagrow{model.rootItem()->itemTags()->defaultTag(), 0};
     EXPECT_CALL(widget, onItemInserted(model.rootItem(), expected_tagrow)).Times(1);
     model.insertItem<SessionItem>(model.rootItem(), expected_tagrow);
 

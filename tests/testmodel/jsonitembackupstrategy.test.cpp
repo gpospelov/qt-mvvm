@@ -12,6 +12,7 @@
 #include <mvvm/model/compounditem.h>
 #include <mvvm/model/itemfactory.h>
 #include <mvvm/model/propertyitem.h>
+#include <mvvm/model/sessionitemtags.h>
 #include <mvvm/serialization/jsonitembackupstrategy.h>
 
 using namespace ModelView;
@@ -94,7 +95,7 @@ TEST_F(JsonItemBackupStrategyTest, customItem)
     EXPECT_EQ(reco_parent->modelType(), model_type);
     EXPECT_EQ(reco_parent->displayName(), "parent_name");
     EXPECT_EQ(reco_parent->identifier(), parent->identifier());
-    EXPECT_EQ(reco_parent->defaultTag(), "defaultTag");
+    EXPECT_EQ(reco_parent->itemTags()->defaultTag(), "defaultTag");
     EXPECT_EQ(reco_parent->model(), nullptr);
 
     // checking child reconstruction
@@ -104,5 +105,5 @@ TEST_F(JsonItemBackupStrategyTest, customItem)
     EXPECT_EQ(reco_child->modelType(), model_type);
     EXPECT_EQ(reco_child->displayName(), "child_name");
     EXPECT_EQ(reco_child->identifier(), child->identifier());
-    EXPECT_EQ(reco_child->defaultTag(), "");
+    EXPECT_EQ(reco_child->itemTags()->defaultTag(), "");
 }

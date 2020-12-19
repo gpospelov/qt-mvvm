@@ -12,6 +12,7 @@
 #include "test_utils.h"
 #include <mvvm/model/propertyitem.h>
 #include <mvvm/model/sessionitem.h>
+#include <mvvm/model/sessionitemtags.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/model/taginfo.h>
 #include <mvvm/serialization/jsondocument.h>
@@ -87,7 +88,7 @@ TEST_F(JsonDocumentTest, saveLoadSingleModel)
     EXPECT_EQ(reco_parent->displayName(), "SessionItem"); // name changed becase of ProjectConverter
     EXPECT_EQ(reco_parent->childrenCount(), 1);
     EXPECT_EQ(reco_parent->identifier(), parent_identifier);
-    EXPECT_EQ(reco_parent->defaultTag(), "defaultTag");
+    EXPECT_EQ(reco_parent->itemTags()->defaultTag(), "defaultTag");
     EXPECT_EQ(reco_parent->data<int>(), 42);
 
     // checking child reconstruction
@@ -97,7 +98,7 @@ TEST_F(JsonDocumentTest, saveLoadSingleModel)
     EXPECT_EQ(reco_child->displayName(), "Property");
     EXPECT_EQ(reco_child->childrenCount(), 0);
     EXPECT_EQ(reco_child->identifier(), child_identifier);
-    EXPECT_EQ(reco_child->defaultTag(), "");
+    EXPECT_EQ(reco_child->itemTags()->defaultTag(), "");
 }
 
 //! Saving two models with content into document and restoring it after.

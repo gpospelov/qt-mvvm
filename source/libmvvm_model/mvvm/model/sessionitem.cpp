@@ -170,20 +170,6 @@ std::vector<int> SessionItem::roles() const
     return p_impl->m_data->roles();
 }
 
-//! Returns the name of the default tag.
-
-std::string SessionItem::defaultTag() const
-{
-    return p_impl->m_tags->defaultTag();
-}
-
-//! Sets the default tag.
-
-void SessionItem::setDefaultTag(const std::string& tag)
-{
-    p_impl->m_tags->setDefaultTag(tag);
-}
-
 //! Registers tag to hold items under given name.
 
 void SessionItem::registerTag(const TagInfo& tagInfo, bool set_as_default)
