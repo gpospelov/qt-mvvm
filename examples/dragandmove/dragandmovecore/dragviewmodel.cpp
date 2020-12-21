@@ -35,11 +35,9 @@ DragViewModel::DragViewModel(SessionModel* model, QObject* parent)
 Qt::ItemFlags DragViewModel::flags(const QModelIndex& index) const
 {
     Qt::ItemFlags defaultFlags = PropertyTableViewModel::flags(index);
-
     if (index.isValid())
         return Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled | defaultFlags;
-    else
-        return Qt::ItemIsDropEnabled | defaultFlags;
+    return Qt::ItemIsDropEnabled | defaultFlags;
 }
 
 QMimeData* DragViewModel::mimeData(const QModelIndexList& index_list) const
@@ -70,10 +68,7 @@ Qt::DropActions DragViewModel::supportedDropActions() const
 bool DragViewModel::canDropMimeData(const QMimeData* data, Qt::DropAction, int, int,
                                     const QModelIndex&) const
 {
-    if (!data->hasFormat(AppMimeType))
-        return false;
-
-    return true;
+    return data->hasFormat(AppMimeType);
 }
 
 bool DragViewModel::dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column,
@@ -86,10 +81,10 @@ bool DragViewModel::dropMimeData(const QMimeData* data, Qt::DropAction action, i
 
     // retrieving list of item identifiers and accessing items
     auto identifiers = Utils::deserialize(data->data(AppMimeType));
-    for (auto id : identifiers) {
+    for (const auto& id : identifiers) {
         auto item = sessionModel()->findItem(id.toStdString());
 
-        int row = std::clamp(requested_row, 0, item->parent()->itemCount(item->tag()) - 1);
+        int row = std::clamp(requested_row, 0, item->parent()->itemCount(item->tagRow().tag) - 1);
         sessionModel()->moveItem(item, rootSessionItem(), {"", row});
     }
 

@@ -553,14 +553,14 @@ TEST_F(SessionItemTest, tag)
     parent->insertItem(child_t1_b, {tag1, -1});
     parent->insertItem(child_t2_b, {tag2, 1}); // between child_t2_a and child_t2_c
 
-    EXPECT_EQ(child_t1_a->tag(), "tag1");
-    EXPECT_EQ(child_t1_b->tag(), "tag1");
-    EXPECT_EQ(child_t2_a->tag(), "tag2");
-    EXPECT_EQ(child_t2_b->tag(), "tag2");
-    EXPECT_EQ(child_t2_c->tag(), "tag2");
+    EXPECT_EQ(child_t1_a->tagRow().tag, "tag1");
+    EXPECT_EQ(child_t1_b->tagRow().tag, "tag1");
+    EXPECT_EQ(child_t2_a->tagRow().tag, "tag2");
+    EXPECT_EQ(child_t2_b->tagRow().tag, "tag2");
+    EXPECT_EQ(child_t2_c->tagRow().tag, "tag2");
 
     SessionItem parentless_item;
-    EXPECT_EQ(parentless_item.tag(), "");
+    EXPECT_EQ(parentless_item.tagRow().tag, "");
 }
 
 //! Checks row of item in its tag

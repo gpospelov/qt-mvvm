@@ -69,8 +69,6 @@ public:
 
     bool isTag(const std::string& name) const;
 
-    std::string tag() const;
-
     TagRow tagRow() const;
 
     // access tagged items
