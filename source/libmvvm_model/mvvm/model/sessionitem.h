@@ -96,8 +96,6 @@ public:
     std::string editorType() const;
     SessionItem* setEditorType(const std::string& editor_type);
 
-    bool isSinglePropertyTag(const std::string& tag) const;
-
     template <typename T> T property(const std::string& tag) const;
 
     template <typename T> void setProperty(const std::string& tag, const T& value);

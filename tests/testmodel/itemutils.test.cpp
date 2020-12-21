@@ -128,6 +128,18 @@ TEST_F(ItemUtilsTest, itemCopyNumber)
     EXPECT_EQ(Utils::CopyNumber(child3), -1);
 }
 
+//! Checks method ::IsSinglePropertyTag.
+
+TEST_F(ItemUtilsTest, IsSinglePropertyTag)
+{
+    SessionItem item;
+    item.registerTag(TagInfo::universalTag("default_tag"), /*set_as_default*/ true);
+    item.registerTag(TagInfo::propertyTag("property_tag", Constants::PropertyType));
+
+    EXPECT_FALSE(Utils::IsSinglePropertyTag(item , "default_tag"));
+    EXPECT_TRUE(Utils::IsSinglePropertyTag(item , "property_tag"));
+}
+
 //! Check access to top level and property items.
 
 TEST_F(ItemUtilsTest, TopLevelItems)

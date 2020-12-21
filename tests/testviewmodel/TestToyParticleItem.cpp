@@ -32,8 +32,8 @@ ToyParticleItemTest::~ToyParticleItemTest() = default;
 TEST_F(ToyParticleItemTest, initialState)
 {
     ToyItems::ParticleItem item;
-    EXPECT_TRUE(item.isSinglePropertyTag(ToyItems::ParticleItem::P_POSITION));
-    EXPECT_TRUE(item.isSinglePropertyTag(ToyItems::ParticleItem::P_SHAPES));
+    EXPECT_TRUE(Utils::IsSinglePropertyTag(item, ToyItems::ParticleItem::P_POSITION));
+    EXPECT_TRUE(Utils::IsSinglePropertyTag(item, ToyItems::ParticleItem::P_SHAPES));
 }
 
 TEST_F(ToyParticleItemTest, TopLevelItems)

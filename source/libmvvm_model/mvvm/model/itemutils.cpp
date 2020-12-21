@@ -10,6 +10,7 @@
 #include <iterator>
 #include <mvvm/model/itemutils.h>
 #include <mvvm/model/sessionitem.h>
+#include <mvvm/model/sessionitemtags.h>
 #include <mvvm/utils/containerutils.h>
 
 using namespace ModelView;
@@ -76,11 +77,16 @@ int Utils::IndexOfChild(const SessionItem* parent, const SessionItem* child)
     return Utils::IndexOfItem(parent->children(), child);
 }
 
+bool Utils::IsSinglePropertyTag(const SessionItem& item, const std::string& tag)
+{
+    return item.itemTags()->isSinglePropertyTag(tag);
+}
+
 std::vector<SessionItem*> Utils::TopLevelItems(const SessionItem& item)
 {
     std::vector<SessionItem*> result;
     for (auto child : item.children())
-        if (!item.isSinglePropertyTag(item.tagOfItem(child)))
+        if (!IsSinglePropertyTag(item, item.tagOfItem(child)))
             result.push_back(child);
     return result;
 }
@@ -89,7 +95,7 @@ std::vector<SessionItem*> Utils::SinglePropertyItems(const SessionItem& item)
 {
     std::vector<SessionItem*> result;
     for (auto child : item.children())
-        if (item.isSinglePropertyTag(item.tagOfItem(child)))
+        if (IsSinglePropertyTag(item, item.tagOfItem(child)))
             result.push_back(child);
     return result;
 }
@@ -141,3 +147,4 @@ std::vector<SessionItem*> Utils::UniqueItems(const std::vector<SessionItem*>& it
                  [](auto x) { return x != nullptr; });
     return result;
 }
+

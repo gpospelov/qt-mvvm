@@ -294,13 +294,6 @@ SessionItem* SessionItem::setEditorType(const std::string& editor_type)
     return this;
 }
 
-//! Returns true if given tag is related to single property tags.
-
-bool SessionItem::isSinglePropertyTag(const std::string& tag) const
-{
-    return p_impl->m_tags->isSinglePropertyTag(tag);
-}
-
 //! Sets the data for given role.
 //! Method invented to hide implementaiton details.
 
