@@ -77,6 +77,11 @@ int Utils::IndexOfChild(const SessionItem* parent, const SessionItem* child)
     return Utils::IndexOfItem(parent->children(), child);
 }
 
+bool Utils::HasTag(const SessionItem& item, const std::string& tag)
+{
+    return item.itemTags()->isTag(tag);
+}
+
 bool Utils::IsSinglePropertyTag(const SessionItem& item, const std::string& tag)
 {
     return item.itemTags()->isSinglePropertyTag(tag);
@@ -147,4 +152,3 @@ std::vector<SessionItem*> Utils::UniqueItems(const std::vector<SessionItem*>& it
                  [](auto x) { return x != nullptr; });
     return result;
 }
-

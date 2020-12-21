@@ -177,13 +177,6 @@ void SessionItem::registerTag(const TagInfo& tagInfo, bool set_as_default)
     p_impl->m_tags->registerTag(tagInfo, set_as_default);
 }
 
-//! Returns true if tag with given name exists.
-
-bool SessionItem::isTag(const std::string& name) const
-{
-    return p_impl->m_tags->isTag(name);
-}
-
 //! Returns TagRow of this item under which it is accessible for its parent.
 
 TagRow SessionItem::tagRow() const
@@ -329,20 +322,28 @@ void SessionItem::setAppearanceFlag(int flag, bool value)
     setDataIntern(flags, ItemDataRole::APPEARANCE);
 }
 
+//! Returns pointer to item's data container (const version).
+
 const SessionItemData* SessionItem::itemData() const
 {
     return p_impl->m_data.get();
 }
+
+//! Returns pointer to item's data container (non-const version).
 
 SessionItemData* SessionItem::itemData()
 {
     return const_cast<SessionItemData*>(static_cast<const SessionItem*>(this)->itemData());
 }
 
+//! Returns pointer to internal collection of tag-registered items (const version).
+
 const SessionItemTags* SessionItem::itemTags() const
 {
     return p_impl->m_tags.get();
 }
+
+//! Returns pointer to internal collection of tag-registered items (non-const version).
 
 SessionItemTags* SessionItem::itemTags()
 {

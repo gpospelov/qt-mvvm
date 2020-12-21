@@ -224,7 +224,7 @@ TEST_F(SessionItemTest, defaultTag)
 {
     SessionItem item;
     EXPECT_EQ(item.itemTags()->defaultTag(), std::string());
-    EXPECT_FALSE(item.isTag("defaultTag"));
+    EXPECT_FALSE(Utils::HasTag(item, "defaultTag"));
 }
 
 //! Registering tags
@@ -233,7 +233,7 @@ TEST_F(SessionItemTest, registerTag)
 {
     SessionItem item;
     item.registerTag(TagInfo::universalTag("tagname"));
-    EXPECT_TRUE(item.isTag("tagname"));
+    EXPECT_TRUE(Utils::HasTag(item, "tagname"));
 
     // registering of tag with same name forbidden
     EXPECT_THROW(item.registerTag(TagInfo::universalTag("tagname")), std::runtime_error);
@@ -369,7 +369,7 @@ TEST_F(SessionItemTest, singleTagAndItems)
     // creating parent with one tag
     auto parent = std::make_unique<SessionItem>();
     parent->registerTag(TagInfo::universalTag(tag1));
-    EXPECT_TRUE(parent->isTag(tag1));
+    EXPECT_TRUE(Utils::HasTag(*parent, tag1));
 
     // inserting two children
     auto child1 = new SessionItem;
@@ -414,8 +414,8 @@ TEST_F(SessionItemTest, twoTagsAndItems)
     auto parent = std::make_unique<SessionItem>();
     parent->registerTag(TagInfo::universalTag(tag1));
     parent->registerTag(TagInfo::universalTag(tag2));
-    EXPECT_TRUE(parent->isTag(tag1));
-    EXPECT_TRUE(parent->isTag(tag2));
+    EXPECT_TRUE(Utils::HasTag(*parent, tag1));
+    EXPECT_TRUE(Utils::HasTag(*parent, tag2));
 
     // inserting two children
     auto child_t1_a = new SessionItem;

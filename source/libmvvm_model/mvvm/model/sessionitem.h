@@ -67,8 +67,6 @@ public:
     // tags
     void registerTag(const TagInfo& tagInfo, bool set_as_default = false);
 
-    bool isTag(const std::string& name) const;
-
     TagRow tagRow() const;
 
     // access tagged items

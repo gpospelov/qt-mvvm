@@ -130,6 +130,17 @@ TEST_F(ItemUtilsTest, itemCopyNumber)
 
 //! Checks method ::IsSinglePropertyTag.
 
+TEST_F(ItemUtilsTest, HasTag)
+{
+    SessionItem item;
+    item.registerTag(TagInfo::universalTag("default_tag"), /*set_as_default*/ true);
+
+    EXPECT_TRUE(Utils::HasTag(item , "default_tag"));
+    EXPECT_FALSE(Utils::HasTag(item , "nonexisting_tag"));
+}
+
+//! Checks method ::IsSinglePropertyTag.
+
 TEST_F(ItemUtilsTest, IsSinglePropertyTag)
 {
     SessionItem item;
