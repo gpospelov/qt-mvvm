@@ -10,6 +10,7 @@
 #include <mvvm/commands/moveitemcommand.h>
 #include <mvvm/model/path.h>
 #include <mvvm/model/sessionitem.h>
+#include <mvvm/model/itemutils.h>
 #include <sstream>
 #include <stdexcept>
 
@@ -45,10 +46,10 @@ MoveItemCommand::MoveItemCommand(SessionItem* item, SessionItem* new_parent, Tag
     p_impl->original_parent_path = pathFromItem(item->parent());
     p_impl->original_tagrow = item->tagRow();
 
-    if (item->parent()->isSinglePropertyTag(p_impl->original_tagrow.tag))
+    if (Utils::IsSinglePropertyTag(*item->parent(), p_impl->original_tagrow.tag))
         throw std::runtime_error("MoveItemCommand::MoveItemCommand() -> Single property tag.");
 
-    if (new_parent->isSinglePropertyTag(p_impl->target_tagrow.tag))
+    if (Utils::IsSinglePropertyTag(*new_parent, p_impl->target_tagrow.tag))
         throw std::runtime_error("MoveItemCommand::MoveItemCommand() -> Single property tag.");
 
     if (item->parent() == new_parent) {

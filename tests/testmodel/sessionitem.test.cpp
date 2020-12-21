@@ -13,6 +13,8 @@
 #include <mvvm/model/itempool.h>
 #include <mvvm/model/itemutils.h>
 #include <mvvm/model/sessionitem.h>
+#include <mvvm/model/sessionitemtags.h>
+#include <mvvm/model/sessionitemdata.h>
 #include <mvvm/model/taginfo.h>
 #include <mvvm/model/variant_constants.h>
 #include <stdexcept>
@@ -42,7 +44,7 @@ TEST_F(SessionItemTest, initialState)
 
     // Initially item has already an identifier defined.
     std::vector<int> expected_roles = {ItemDataRole::IDENTIFIER, ItemDataRole::DISPLAY};
-    EXPECT_EQ(item.roles(), expected_roles);
+    EXPECT_EQ(item.itemData()->roles(), expected_roles);
 
     // Identifier is not zero
     EXPECT_FALSE(item.identifier().empty());
@@ -68,17 +70,17 @@ TEST_F(SessionItemTest, setData)
 
     std::vector<int> expected_roles = {ItemDataRole::IDENTIFIER, ItemDataRole::DISPLAY,
                                        ItemDataRole::DATA};
-    EXPECT_EQ(item.roles(), expected_roles);
+    EXPECT_EQ(item.itemData()->roles(), expected_roles);
     EXPECT_EQ(item.data<QVariant>(role), expected);
 
     // setting another value
     EXPECT_TRUE(item.setData(43.0, role));
-    EXPECT_EQ(item.roles(), expected_roles);
+    EXPECT_EQ(item.itemData()->roles(), expected_roles);
     EXPECT_EQ(item.data<QVariant>(role), QVariant::fromValue(43.0));
 
     // setting same value
     EXPECT_FALSE(item.setData(43.0, role));
-    EXPECT_EQ(item.roles(), expected_roles);
+    EXPECT_EQ(item.itemData()->roles(), expected_roles);
     EXPECT_EQ(item.data<QVariant>(role), QVariant::fromValue(43.0));
 }
 
@@ -183,7 +185,7 @@ TEST_F(SessionItemTest, variantMismatch)
 
     std::vector<int> expected_roles = {ItemDataRole::IDENTIFIER, ItemDataRole::DISPLAY,
                                        ItemDataRole::DATA};
-    EXPECT_EQ(item.roles(), expected_roles);
+    EXPECT_EQ(item.itemData()->roles(), expected_roles);
     EXPECT_EQ(item.data<QVariant>(role), expected);
 
     // attempt to rewrite variant with another type
@@ -191,7 +193,7 @@ TEST_F(SessionItemTest, variantMismatch)
 
     // removing value by passing invalid variant
     EXPECT_NO_THROW(item.setData(QVariant(), role));
-    EXPECT_EQ(item.roles().size(), 2);
+    EXPECT_EQ(item.itemData()->roles().size(), 2);
 }
 
 //! Item registration in a pool.
@@ -200,7 +202,7 @@ TEST_F(SessionItemTest, registerItem)
 {
     auto item = std::make_unique<SessionItem>();
     auto item_id = item->identifier();
-    EXPECT_EQ(item->roles().size(), 2u);
+    EXPECT_EQ(item->itemData()->roles().size(), 2u);
 
     std::shared_ptr<ItemPool> pool;
 
@@ -213,7 +215,7 @@ TEST_F(SessionItemTest, registerItem)
     // registration key should coincide with item identifier
     auto key = pool->key_for_item(item.get());
     std::vector<int> expected_roles = {ItemDataRole::IDENTIFIER, ItemDataRole::DISPLAY};
-    EXPECT_EQ(item->roles(), expected_roles);
+    EXPECT_EQ(item->itemData()->roles(), expected_roles);
     EXPECT_EQ(item_id, key);
 }
 
@@ -222,8 +224,8 @@ TEST_F(SessionItemTest, registerItem)
 TEST_F(SessionItemTest, defaultTag)
 {
     SessionItem item;
-    EXPECT_EQ(item.defaultTag(), std::string());
-    EXPECT_FALSE(item.isTag("defaultTag"));
+    EXPECT_EQ(item.itemTags()->defaultTag(), std::string());
+    EXPECT_FALSE(Utils::HasTag(item, "defaultTag"));
 }
 
 //! Registering tags
@@ -232,7 +234,7 @@ TEST_F(SessionItemTest, registerTag)
 {
     SessionItem item;
     item.registerTag(TagInfo::universalTag("tagname"));
-    EXPECT_TRUE(item.isTag("tagname"));
+    EXPECT_TRUE(Utils::HasTag(item, "tagname"));
 
     // registering of tag with same name forbidden
     EXPECT_THROW(item.registerTag(TagInfo::universalTag("tagname")), std::runtime_error);
@@ -247,7 +249,7 @@ TEST_F(SessionItemTest, registerDefaultTag)
 {
     SessionItem item;
     item.registerTag(TagInfo::universalTag("tagname"), /*set_as_default*/ true);
-    EXPECT_EQ(item.defaultTag(), "tagname");
+    EXPECT_EQ(item.itemTags()->defaultTag(), "tagname");
 }
 
 //! Simple child insert.
@@ -368,7 +370,7 @@ TEST_F(SessionItemTest, singleTagAndItems)
     // creating parent with one tag
     auto parent = std::make_unique<SessionItem>();
     parent->registerTag(TagInfo::universalTag(tag1));
-    EXPECT_TRUE(parent->isTag(tag1));
+    EXPECT_TRUE(Utils::HasTag(*parent, tag1));
 
     // inserting two children
     auto child1 = new SessionItem;
@@ -413,8 +415,8 @@ TEST_F(SessionItemTest, twoTagsAndItems)
     auto parent = std::make_unique<SessionItem>();
     parent->registerTag(TagInfo::universalTag(tag1));
     parent->registerTag(TagInfo::universalTag(tag2));
-    EXPECT_TRUE(parent->isTag(tag1));
-    EXPECT_TRUE(parent->isTag(tag2));
+    EXPECT_TRUE(Utils::HasTag(*parent, tag1));
+    EXPECT_TRUE(Utils::HasTag(*parent, tag2));
 
     // inserting two children
     auto child_t1_a = new SessionItem;
@@ -552,49 +554,14 @@ TEST_F(SessionItemTest, tag)
     parent->insertItem(child_t1_b, {tag1, -1});
     parent->insertItem(child_t2_b, {tag2, 1}); // between child_t2_a and child_t2_c
 
-    EXPECT_EQ(child_t1_a->tag(), "tag1");
-    EXPECT_EQ(child_t1_b->tag(), "tag1");
-    EXPECT_EQ(child_t2_a->tag(), "tag2");
-    EXPECT_EQ(child_t2_b->tag(), "tag2");
-    EXPECT_EQ(child_t2_c->tag(), "tag2");
+    EXPECT_EQ(child_t1_a->tagRow().tag, "tag1");
+    EXPECT_EQ(child_t1_b->tagRow().tag, "tag1");
+    EXPECT_EQ(child_t2_a->tagRow().tag, "tag2");
+    EXPECT_EQ(child_t2_b->tagRow().tag, "tag2");
+    EXPECT_EQ(child_t2_c->tagRow().tag, "tag2");
 
     SessionItem parentless_item;
-    EXPECT_EQ(parentless_item.tag(), "");
-}
-
-//! Testing method tagOfItem.
-
-TEST_F(SessionItemTest, tagOfItem)
-{
-    const std::string tag1 = "tag1";
-    const std::string tag2 = "tag2";
-
-    // creating parent with one tag
-    auto parent = std::make_unique<SessionItem>();
-    parent->registerTag(TagInfo::universalTag(tag1));
-    parent->registerTag(TagInfo::universalTag(tag2));
-
-    // inserting two children
-    auto child_t1_a = new SessionItem;
-    auto child_t1_b = new SessionItem;
-    auto child_t2_a = new SessionItem;
-    auto child_t2_b = new SessionItem;
-    auto child_t2_c = new SessionItem;
-    parent->insertItem(child_t2_a, {tag2, -1});
-    parent->insertItem(child_t2_c, {tag2, -1});
-    parent->insertItem(child_t1_a, {tag1, -1});
-    parent->insertItem(child_t1_b, {tag1, -1});
-    parent->insertItem(child_t2_b, {tag2, 1}); // between child_t2_a and child_t2_c
-
-    EXPECT_EQ(parent->tagOfItem(child_t1_a), "tag1");
-    EXPECT_EQ(parent->tagOfItem(child_t1_b), "tag1");
-    EXPECT_EQ(parent->tagOfItem(child_t2_a), "tag2");
-    EXPECT_EQ(parent->tagOfItem(child_t2_b), "tag2");
-    EXPECT_EQ(parent->tagOfItem(child_t2_c), "tag2");
-
-    auto child = new SessionItem;
-    EXPECT_EQ(parent->tagOfItem(child), "");
-    delete child;
+    EXPECT_EQ(parentless_item.tagRow().tag, "");
 }
 
 //! Checks row of item in its tag

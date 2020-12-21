@@ -22,6 +22,7 @@ namespace ModelView
 class MVVM_VIEWMODEL_EXPORT TopItemsViewModel : public ViewModel
 {
     Q_OBJECT
+
 public:
     TopItemsViewModel(SessionModel* model, QObject* parent = nullptr);
 };

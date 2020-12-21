@@ -63,12 +63,12 @@ struct ItemMapper::ItemMapperImpl {
 
         // data of item's property changed
         if (nestling == 1)
-            callOnPropertyChange(m_item, m_item->tagOfItem(item));
+            callOnPropertyChange(m_item, m_item->tagRowOfItem(item).tag);
 
         // child property changed
         if (nestling == 2) {
             if (auto parent = item->parent())
-                callOnChildPropertyChange(parent, parent->tagOfItem(item));
+                callOnChildPropertyChange(parent, parent->tagRowOfItem(item).tag);
         }
     }
 
