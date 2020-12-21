@@ -62,8 +62,6 @@ public:
 
     std::vector<SessionItem*> children() const;
 
-    std::vector<int> roles() const;
-
     // tags
     void registerTag(const TagInfo& tagInfo, bool set_as_default = false);
 

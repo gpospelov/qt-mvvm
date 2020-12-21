@@ -14,6 +14,7 @@
 #include <mvvm/model/itemutils.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionitemtags.h>
+#include <mvvm/model/sessionitemdata.h>
 #include <mvvm/model/taginfo.h>
 #include <mvvm/model/variant_constants.h>
 #include <stdexcept>
@@ -43,7 +44,7 @@ TEST_F(SessionItemTest, initialState)
 
     // Initially item has already an identifier defined.
     std::vector<int> expected_roles = {ItemDataRole::IDENTIFIER, ItemDataRole::DISPLAY};
-    EXPECT_EQ(item.roles(), expected_roles);
+    EXPECT_EQ(item.itemData()->roles(), expected_roles);
 
     // Identifier is not zero
     EXPECT_FALSE(item.identifier().empty());
@@ -69,17 +70,17 @@ TEST_F(SessionItemTest, setData)
 
     std::vector<int> expected_roles = {ItemDataRole::IDENTIFIER, ItemDataRole::DISPLAY,
                                        ItemDataRole::DATA};
-    EXPECT_EQ(item.roles(), expected_roles);
+    EXPECT_EQ(item.itemData()->roles(), expected_roles);
     EXPECT_EQ(item.data<QVariant>(role), expected);
 
     // setting another value
     EXPECT_TRUE(item.setData(43.0, role));
-    EXPECT_EQ(item.roles(), expected_roles);
+    EXPECT_EQ(item.itemData()->roles(), expected_roles);
     EXPECT_EQ(item.data<QVariant>(role), QVariant::fromValue(43.0));
 
     // setting same value
     EXPECT_FALSE(item.setData(43.0, role));
-    EXPECT_EQ(item.roles(), expected_roles);
+    EXPECT_EQ(item.itemData()->roles(), expected_roles);
     EXPECT_EQ(item.data<QVariant>(role), QVariant::fromValue(43.0));
 }
 
@@ -184,7 +185,7 @@ TEST_F(SessionItemTest, variantMismatch)
 
     std::vector<int> expected_roles = {ItemDataRole::IDENTIFIER, ItemDataRole::DISPLAY,
                                        ItemDataRole::DATA};
-    EXPECT_EQ(item.roles(), expected_roles);
+    EXPECT_EQ(item.itemData()->roles(), expected_roles);
     EXPECT_EQ(item.data<QVariant>(role), expected);
 
     // attempt to rewrite variant with another type
@@ -192,7 +193,7 @@ TEST_F(SessionItemTest, variantMismatch)
 
     // removing value by passing invalid variant
     EXPECT_NO_THROW(item.setData(QVariant(), role));
-    EXPECT_EQ(item.roles().size(), 2);
+    EXPECT_EQ(item.itemData()->roles().size(), 2);
 }
 
 //! Item registration in a pool.
@@ -201,7 +202,7 @@ TEST_F(SessionItemTest, registerItem)
 {
     auto item = std::make_unique<SessionItem>();
     auto item_id = item->identifier();
-    EXPECT_EQ(item->roles().size(), 2u);
+    EXPECT_EQ(item->itemData()->roles().size(), 2u);
 
     std::shared_ptr<ItemPool> pool;
 
@@ -214,7 +215,7 @@ TEST_F(SessionItemTest, registerItem)
     // registration key should coincide with item identifier
     auto key = pool->key_for_item(item.get());
     std::vector<int> expected_roles = {ItemDataRole::IDENTIFIER, ItemDataRole::DISPLAY};
-    EXPECT_EQ(item->roles(), expected_roles);
+    EXPECT_EQ(item->itemData()->roles(), expected_roles);
     EXPECT_EQ(item_id, key);
 }
 

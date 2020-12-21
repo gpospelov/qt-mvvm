@@ -163,13 +163,6 @@ std::vector<SessionItem*> SessionItem::children() const
     return p_impl->m_tags->allitems();
 }
 
-//! Return vector of data roles which this item currently holds.
-
-std::vector<int> SessionItem::roles() const
-{
-    return p_impl->m_data->roles();
-}
-
 //! Registers tag to hold items under given name.
 
 void SessionItem::registerTag(const TagInfo& tagInfo, bool set_as_default)

@@ -15,6 +15,7 @@
 #include <mvvm/model/itemcatalogue.h>
 #include <mvvm/model/propertyitem.h>
 #include <mvvm/model/sessionitem.h>
+#include <mvvm/model/sessionitemdata.h>
 #include <mvvm/model/sessionmodel.h>
 
 using namespace ModelView;
@@ -67,7 +68,7 @@ TEST_F(ItemConverterFactoryTest, propertyItemCloneConverter)
     EXPECT_EQ(reco->modelType(), item.modelType());
     EXPECT_EQ(reco->displayName(), item.displayName());
     EXPECT_EQ(reco->toolTip(), std::string("abc"));
-    EXPECT_EQ(reco->roles(), item.roles());
+    EXPECT_EQ(reco->itemData()->roles(), item.itemData()->roles());
     EXPECT_TRUE(reco->identifier() == item.identifier()); // identifier preserved
 }
 
@@ -86,7 +87,7 @@ TEST_F(ItemConverterFactoryTest, propertyItemCopyConverter)
     EXPECT_EQ(reco->modelType(), item.modelType());
     EXPECT_EQ(reco->displayName(), item.displayName());
     EXPECT_EQ(reco->toolTip(), std::string("abc"));
-    EXPECT_EQ(reco->roles(), item.roles());
+    EXPECT_EQ(reco->itemData()->roles(), item.itemData()->roles());
     EXPECT_FALSE(reco->identifier() == item.identifier()); // identifier has changed
 }
 
@@ -124,7 +125,7 @@ TEST_F(ItemConverterFactoryTest, testItemCloneConverter)
     EXPECT_EQ(reco->modelType(), item.modelType());
     EXPECT_EQ(reco->displayName(), item.displayName());
     EXPECT_EQ(reco->toolTip(), std::string("abc")); // updated tooltip is preserved
-    EXPECT_EQ(reco->roles(), item.roles());
+    EXPECT_EQ(reco->itemData()->roles(), item.itemData()->roles());
     EXPECT_TRUE(reco->identifier() == item.identifier()); // identifier preserved
     EXPECT_EQ(reco->getItem("Thickness")->toolTip(), "thickness");
     EXPECT_EQ(reco->getItem("Thickness")->identifier(), item.getItem("Thickness")->identifier());
@@ -146,7 +147,7 @@ TEST_F(ItemConverterFactoryTest, testItemProjectConverter)
     EXPECT_EQ(reco->modelType(), item.modelType());
     EXPECT_EQ(reco->displayName(), item.displayName());
     EXPECT_EQ(reco->toolTip(), std::string("compound")); // initial tooltip exist
-    EXPECT_EQ(reco->roles(), item.roles());
+    EXPECT_EQ(reco->itemData()->roles(), item.itemData()->roles());
     EXPECT_TRUE(reco->identifier() == item.identifier()); // identifier preserved
     EXPECT_EQ(reco->getItem("Thickness")->toolTip(), "thickness");
     EXPECT_EQ(reco->getItem("Thickness")->identifier(), item.getItem("Thickness")->identifier());
