@@ -36,46 +36,62 @@ public:
     SessionItem(const SessionItem&) = delete;
     SessionItem& operator=(const SessionItem&) = delete;
 
-    model_type modelType() const;
+    // basic item properties
 
-    virtual std::string displayName() const;
-    virtual SessionItem* setDisplayName(const std::string& name);
+    model_type modelType() const;
 
     std::string identifier() const;
 
-    template <typename T> bool setData(const T& value, int role = ItemDataRole::DATA);
-    bool setDataIntern(const Variant& variant, int role);
-
-    bool hasData(int role = ItemDataRole::DATA) const;
-
-    template <typename T> T data(int role = ItemDataRole::DATA) const;
+    virtual SessionItem* setDisplayName(const std::string& name);
+    virtual std::string displayName() const;
 
     SessionModel* model() const;
 
     SessionItem* parent() const;
 
+    TagRow tagRow() const;
+
+    // methods to deal with item data
+
+    bool hasData(int role = ItemDataRole::DATA) const;
+
+    template <typename T> T data(int role = ItemDataRole::DATA) const;
+
+    template <typename T> bool setData(const T& value, int role = ItemDataRole::DATA);
+    bool setDataIntern(const Variant& variant, int role);
+
+    SessionItemData* itemData();
+    const SessionItemData* itemData() const;
+
+    // children access
+
     int childrenCount() const;
+
+    std::vector<SessionItem*> children() const;
+
+    int itemCount(const std::string& tag) const;
+
+    SessionItem* getItem(const std::string& tag, int row = 0) const;
+
+    std::vector<SessionItem*> getItems(const std::string& tag) const;
+
+    template <typename T> T* item(const std::string& tag) const;
+    template <typename T = SessionItem> std::vector<T*> items(const std::string& tag) const;
+
+    TagRow tagRowOfItem(const SessionItem* item) const;
+
+    void registerTag(const TagInfo& tagInfo, bool set_as_default = false);
+
+    SessionItemTags* itemTags();
+    const SessionItemTags* itemTags() const;
+
+    // item manipulation
 
     bool insertItem(SessionItem* item, const TagRow& tagrow);
 
     SessionItem* takeItem(const TagRow& tagrow);
 
-    std::vector<SessionItem*> children() const;
-
-    // tags
-    void registerTag(const TagInfo& tagInfo, bool set_as_default = false);
-
-    TagRow tagRow() const;
-
-    // access tagged items
-    int itemCount(const std::string& tag) const;
-    SessionItem* getItem(const std::string& tag, int row = 0) const; // FIXME TagRow?
-    std::vector<SessionItem*> getItems(const std::string& tag) const;
-    template <typename T> T* item(const std::string& tag) const;
-    template <typename T = SessionItem> std::vector<T*> items(const std::string& tag) const;
-    TagRow tagRowOfItem(const SessionItem* item) const;
-
-    ItemMapper* mapper();
+    // more convenience methods
 
     bool isEditable() const;
     SessionItem* setEditable(bool value);
@@ -90,16 +106,10 @@ public:
     SessionItem* setEditorType(const std::string& editor_type);
 
     template <typename T> T property(const std::string& tag) const;
-
     template <typename T> void setProperty(const std::string& tag, const T& value);
-
     void setProperty(const std::string& tag, const char* value);
 
-    SessionItemData* itemData();
-    const SessionItemData* itemData() const;
-
-    SessionItemTags* itemTags();
-    const SessionItemTags* itemTags() const;
+    ItemMapper* mapper();
 
 private:
     friend class SessionModel;
@@ -132,6 +142,31 @@ template <typename T> inline T SessionItem::data(int role) const
     return data_internal(role).value<T>();
 }
 
+//! Returns first item under given tag casted to a specified type.
+//! Returns nullptr, if item doesn't exist. If item exists but can't be casted will throw.
+
+template <typename T> inline T* SessionItem::item(const std::string& tag) const
+{
+    if (auto item = getItem(tag); item) {
+        T* tag_item = dynamic_cast<T*>(item);
+        if (!tag_item)
+            throw std::runtime_error("Can't cast an item to given type");
+        return tag_item;
+    }
+    return nullptr;
+}
+
+//! Returns all items under given tag casted to specific type.
+
+template <typename T> std::vector<T*> SessionItem::items(const std::string& tag) const
+{
+    std::vector<T*> result;
+    for (auto item : getItems(tag))
+        if (auto casted = dynamic_cast<T*>(item); casted)
+            result.push_back(casted);
+    return result;
+}
+
 //! Returns data stored in property item.
 //! Property is single item registered under certain tag via CompoundItem::addProperty method.
 
@@ -156,33 +191,6 @@ template <typename T> inline void SessionItem::setProperty(const std::string& ta
 inline void SessionItem::setProperty(const std::string& tag, const char* value)
 {
     setProperty(tag, std::string(value));
-}
-
-//! Returns first item under given tag casted to a specified type.
-//! Returns nullptr, if item doesn't exist. If item exists but can't be casted will throw.
-
-template <typename T> inline T* SessionItem::item(const std::string& tag) const
-{
-    if (auto item = getItem(tag); item) {
-        T* tag_item = dynamic_cast<T*>(item);
-        if (!tag_item)
-            throw std::runtime_error("Can't cast an item to given type");
-        return tag_item;
-    }
-
-    return nullptr;
-}
-
-//! Returns all items under given tag casted to specific type.
-
-template <typename T> std::vector<T*> SessionItem::items(const std::string& tag) const
-{
-    std::vector<T*> result;
-    for (auto item : getItems(tag))
-        if (auto casted = dynamic_cast<T*>(item); casted)
-            result.push_back(casted);
-
-    return result;
 }
 
 } // namespace ModelView

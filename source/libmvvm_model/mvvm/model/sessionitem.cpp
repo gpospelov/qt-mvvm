@@ -63,15 +63,28 @@ SessionItem::~SessionItem()
         p_impl->m_model->unregisterFromPool(this);
 }
 
+//! Returns item's model type.
+
 model_type SessionItem::modelType() const
 {
     return p_impl->m_modelType;
 }
 
+//! Returns unique identifier.
+
+std::string SessionItem::identifier() const
+{
+    return data<std::string>(ItemDataRole::IDENTIFIER);
+}
+
+//! Returns display name.
+
 std::string SessionItem::displayName() const
 {
     return data<std::string>(ItemDataRole::DISPLAY);
 }
+
+//! Sets display name (fluent interface).
 
 SessionItem* SessionItem::setDisplayName(const std::string& name)
 {
@@ -79,9 +92,26 @@ SessionItem* SessionItem::setDisplayName(const std::string& name)
     return this;
 }
 
-std::string SessionItem::identifier() const
+//! Returns the model to which given item belongs to. Will return nullptr if item doesn't have a
+//! model.
+
+SessionModel* SessionItem::model() const
 {
-    return data<std::string>(ItemDataRole::IDENTIFIER);
+    return p_impl->m_model;
+}
+
+//! Returns parent item. Will return nullptr if item doesn't have a parent.
+
+SessionItem* SessionItem::parent() const
+{
+    return p_impl->m_parent;
+}
+
+//! Returns TagRow of this item under which it is accessible through its parent.
+
+TagRow SessionItem::tagRow() const
+{
+    return parent() ? parent()->tagRowOfItem(this) : TagRow();
 }
 
 //! Returns true if item has data on board with given role.
@@ -91,19 +121,92 @@ bool SessionItem::hasData(int role) const
     return p_impl->m_data->hasData(role);
 }
 
-SessionModel* SessionItem::model() const
+//! Sets the data for given role, notifies the model.
+
+bool SessionItem::setDataIntern(const Variant& variant, int role)
 {
-    return p_impl->m_model;
+    bool result = p_impl->m_data->setData(variant, role);
+    if (result && model())
+        model()->mapper()->callOnDataChange(this, role);
+    return result;
 }
 
-SessionItem* SessionItem::parent() const
+//! Returns pointer to item's data container (const version).
+
+const SessionItemData* SessionItem::itemData() const
 {
-    return p_impl->m_parent;
+    return p_impl->m_data.get();
 }
+
+//! Returns pointer to item's data container (non-const version).
+
+SessionItemData* SessionItem::itemData()
+{
+    return const_cast<SessionItemData*>(static_cast<const SessionItem*>(this)->itemData());
+}
+
+//! Returns total number of children in all tags.
 
 int SessionItem::childrenCount() const
 {
     return static_cast<int>(children().size());
+}
+
+//! Returns vector of children formed from all chidlren from all tags.
+
+std::vector<SessionItem*> SessionItem::children() const
+{
+    return p_impl->m_tags->allitems();
+}
+
+//! Returns number of items in given tag.
+
+int SessionItem::itemCount(const std::string& tag) const
+{
+    return p_impl->m_tags->itemCount(tag);
+}
+
+//! Returns item at given row of given tag.
+
+SessionItem* SessionItem::getItem(const std::string& tag, int row) const
+{
+    return p_impl->m_tags->getItem({tag, row});
+}
+
+//! Returns all children stored at given tag.
+
+std::vector<SessionItem*> SessionItem::getItems(const std::string& tag) const
+{
+    return p_impl->m_tags->getItems(tag);
+}
+
+//! Returns pair of tag and row corresponding to given item.
+//! Returns {"", -1} if given item doesn't belong to children.
+
+TagRow SessionItem::tagRowOfItem(const SessionItem* item) const
+{
+    return p_impl->m_tags->tagRowOfItem(item);
+}
+
+//! Returns pointer to internal collection of tag-registered items (const version).
+
+const SessionItemTags* SessionItem::itemTags() const
+{
+    return p_impl->m_tags.get();
+}
+
+//! Registers tag to hold items under given name.
+
+void SessionItem::registerTag(const TagInfo& tagInfo, bool set_as_default)
+{
+    p_impl->m_tags->registerTag(tagInfo, set_as_default);
+}
+
+//! Returns pointer to internal collection of tag-registered items (non-const version).
+
+SessionItemTags* SessionItem::itemTags()
+{
+    return const_cast<SessionItemTags*>(static_cast<const SessionItem*>(this)->itemTags());
 }
 
 //! Insert item into given tag under the given row.
@@ -156,65 +259,15 @@ SessionItem* SessionItem::takeItem(const TagRow& tagrow)
     return result;
 }
 
-//! Returns vector of children formed from all chidlren from all tags.
-
-std::vector<SessionItem*> SessionItem::children() const
-{
-    return p_impl->m_tags->allitems();
-}
-
-//! Registers tag to hold items under given name.
-
-void SessionItem::registerTag(const TagInfo& tagInfo, bool set_as_default)
-{
-    p_impl->m_tags->registerTag(tagInfo, set_as_default);
-}
-
-//! Returns TagRow of this item under which it is accessible for its parent.
-
-TagRow SessionItem::tagRow() const
-{
-    return parent() ? parent()->tagRowOfItem(this) : TagRow();
-}
-
-//! Returns number of items in given tag.
-
-int SessionItem::itemCount(const std::string& tag) const
-{
-    return p_impl->m_tags->itemCount(tag);
-}
-
-//! Returns item at given row of given tag.
-
-SessionItem* SessionItem::getItem(const std::string& tag, int row) const
-{
-    return p_impl->m_tags->getItem({tag, row});
-}
-
-std::vector<SessionItem*> SessionItem::getItems(const std::string& tag) const
-{
-    return p_impl->m_tags->getItems(tag);
-}
-
-//! Returns pair of tag and row corresponding to given item.
-//! Returns {"", -1} if item doesn't belong to children.
-
-TagRow SessionItem::tagRowOfItem(const SessionItem* item) const
-{
-    return p_impl->m_tags->tagRowOfItem(item);
-}
-
-ItemMapper* SessionItem::mapper()
-{
-    if (!p_impl->m_mapper)
-        p_impl->m_mapper = std::make_unique<ItemMapper>(this);
-    return p_impl->m_mapper.get();
-}
+//! Returns true if this item has `editable` flag set.
+//! The data value of an editable item normally can be changed when it appears in trees and tables.
 
 bool SessionItem::isEditable() const
 {
     return appearance(*this) & Appearance::EDITABLE;
 }
+
+//! Sets `editable` flag to given value (fluent interface).
 
 SessionItem* SessionItem::setEditable(bool value)
 {
@@ -222,10 +275,15 @@ SessionItem* SessionItem::setEditable(bool value)
     return this;
 }
 
+//! Returns true if this item has `enabled` flag set.
+//! Enabled items appear in normal color, disabled items are grayed out.
+
 bool SessionItem::isEnabled() const
 {
     return appearance(*this) & Appearance::ENABLED;
 }
+
+//! Sets `enabled` flag to given value (fluent interface).
 
 SessionItem* SessionItem::setEnabled(bool value)
 {
@@ -233,7 +291,7 @@ SessionItem* SessionItem::setEnabled(bool value)
     return this;
 }
 
-//! Returns item's tooltip.
+//! Returns item tooltip, if exists.
 
 std::string SessionItem::toolTip() const
 {
@@ -241,7 +299,7 @@ std::string SessionItem::toolTip() const
                                           : std::string();
 }
 
-//! Sets item tooltip.
+//! Sets item tooltip (fluent interface).
 
 SessionItem* SessionItem::setToolTip(const std::string& tooltip)
 {
@@ -257,7 +315,8 @@ std::string SessionItem::editorType() const
                                              : std::string();
 }
 
-//! Sets editor type. Allows creating custom editors in the cells of Qt trees and tables.
+//! Sets editor type (fluent interface).
+//! Allows creating custom editors in the cells of Qt trees and tables.
 
 SessionItem* SessionItem::setEditorType(const std::string& editor_type)
 {
@@ -315,32 +374,13 @@ void SessionItem::setAppearanceFlag(int flag, bool value)
     setDataIntern(flags, ItemDataRole::APPEARANCE);
 }
 
-//! Returns pointer to item's data container (const version).
+//! Returns item mapper. Allows subscribing to various events happening to the item.
 
-const SessionItemData* SessionItem::itemData() const
+ItemMapper* SessionItem::mapper()
 {
-    return p_impl->m_data.get();
-}
-
-//! Returns pointer to item's data container (non-const version).
-
-SessionItemData* SessionItem::itemData()
-{
-    return const_cast<SessionItemData*>(static_cast<const SessionItem*>(this)->itemData());
-}
-
-//! Returns pointer to internal collection of tag-registered items (const version).
-
-const SessionItemTags* SessionItem::itemTags() const
-{
-    return p_impl->m_tags.get();
-}
-
-//! Returns pointer to internal collection of tag-registered items (non-const version).
-
-SessionItemTags* SessionItem::itemTags()
-{
-    return const_cast<SessionItemTags*>(static_cast<const SessionItem*>(this)->itemTags());
+    if (!p_impl->m_mapper)
+        p_impl->m_mapper = std::make_unique<ItemMapper>(this);
+    return p_impl->m_mapper.get();
 }
 
 void SessionItem::setDataAndTags(std::unique_ptr<SessionItemData> data,
@@ -348,14 +388,4 @@ void SessionItem::setDataAndTags(std::unique_ptr<SessionItemData> data,
 {
     p_impl->m_data = std::move(data);
     p_impl->m_tags = std::move(tags);
-}
-
-//! Sets the data for given role, notifies the model.
-
-bool SessionItem::setDataIntern(const Variant& variant, int role)
-{
-    bool result = p_impl->m_data->setData(variant, role);
-    if (result && model())
-        model()->mapper()->callOnDataChange(this, role);
-    return result;
 }
