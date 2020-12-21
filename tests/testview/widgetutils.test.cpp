@@ -35,10 +35,15 @@ TEST_F(WidgetUtilsTest, WithTildeHomePath)
     } else {
         auto home_path = QDir::homePath();
         auto test_dir = QString::fromStdString(TestUtils::TestOutputDir());
-        auto expected = QString("~") + test_dir.mid(home_path.size());
+        auto expected = test_dir.startsWith(home_path)
+                            ? QString("~") + test_dir.mid(home_path.size())
+                            : test_dir;
 
         // "/home/user/build-debug/test_output" -> ~/build-debug/test_output"
         EXPECT_EQ(Utils::WithTildeHomePath(test_dir).toStdString(), expected.toStdString());
+
+        EXPECT_EQ(Utils::WithTildeHomePath("/opt/sw/build").toStdString(),
+                  std::string("/opt/sw/build"));
     }
 }
 
