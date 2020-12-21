@@ -563,41 +563,6 @@ TEST_F(SessionItemTest, tag)
     EXPECT_EQ(parentless_item.tag(), "");
 }
 
-//! Testing method tagOfItem.
-
-TEST_F(SessionItemTest, tagOfItem)
-{
-    const std::string tag1 = "tag1";
-    const std::string tag2 = "tag2";
-
-    // creating parent with one tag
-    auto parent = std::make_unique<SessionItem>();
-    parent->registerTag(TagInfo::universalTag(tag1));
-    parent->registerTag(TagInfo::universalTag(tag2));
-
-    // inserting two children
-    auto child_t1_a = new SessionItem;
-    auto child_t1_b = new SessionItem;
-    auto child_t2_a = new SessionItem;
-    auto child_t2_b = new SessionItem;
-    auto child_t2_c = new SessionItem;
-    parent->insertItem(child_t2_a, {tag2, -1});
-    parent->insertItem(child_t2_c, {tag2, -1});
-    parent->insertItem(child_t1_a, {tag1, -1});
-    parent->insertItem(child_t1_b, {tag1, -1});
-    parent->insertItem(child_t2_b, {tag2, 1}); // between child_t2_a and child_t2_c
-
-    EXPECT_EQ(parent->tagOfItem(child_t1_a), "tag1");
-    EXPECT_EQ(parent->tagOfItem(child_t1_b), "tag1");
-    EXPECT_EQ(parent->tagOfItem(child_t2_a), "tag2");
-    EXPECT_EQ(parent->tagOfItem(child_t2_b), "tag2");
-    EXPECT_EQ(parent->tagOfItem(child_t2_c), "tag2");
-
-    auto child = new SessionItem;
-    EXPECT_EQ(parent->tagOfItem(child), "");
-    delete child;
-}
-
 //! Checks row of item in its tag
 
 TEST_F(SessionItemTest, tagRow)

@@ -217,14 +217,6 @@ std::vector<SessionItem*> SessionItem::getItems(const std::string& tag) const
     return p_impl->m_tags->getItems(tag);
 }
 
-//! Returns tag corresponding to given item.
-//! Returns "" if item doesn't belong to children.
-
-std::string SessionItem::tagOfItem(const SessionItem* item) const
-{
-    return tagRowOfItem(item).tag;
-}
-
 //! Returns pair of tag and row corresponding to given item.
 //! Returns {"", -1} if item doesn't belong to children.
 

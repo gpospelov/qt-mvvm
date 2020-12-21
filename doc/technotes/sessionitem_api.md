@@ -159,7 +159,7 @@ SessionItem::takeItem
     ItemMapper* mapper();
 
     // 7 matches ( 4 mvvm, 0 darefl)
-    // REFACTOR (move to utils?)
+    // ?
     bool isEditable() const;
 
     // 8 matches (7 mvvm, 0 darefl)
@@ -175,6 +175,7 @@ SessionItem::takeItem
     SessionItem* setEnabled(bool value);
 
     // 12 matches (3 mvvm, 0 darefl)
+    // ?
     std::string toolTip() const;
 
     // 18 matches (6 mvvm, 1 darefl)
@@ -190,7 +191,7 @@ SessionItem::takeItem
     SessionItem* setEditorType(const std::string& editor_type);
 
     // 15 matches (6 mvvm, 0 darefl)
-    // REMOVE
+    // DONE: REMOVE
     bool isSinglePropertyTag(const std::string& tag) const;
 
     // 86 matches (47 mvvm, 84 darefl)
