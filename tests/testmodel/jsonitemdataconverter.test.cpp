@@ -11,12 +11,12 @@
 
 #include "folderbasedtest.h"
 #include "google_test.h"
+#include "test_utils.h"
 #include "mvvm/model/customvariants.h"
 #include "mvvm/model/mvvm_types.h"
 #include "mvvm/model/sessionitemdata.h"
 #include "mvvm/serialization/jsonitemformatassistant.h"
 #include "mvvm/serialization/jsonvariantconverter.h"
-#include "test_utils.h"
 #include <QJsonArray>
 #include <QJsonObject>
 #include <string>

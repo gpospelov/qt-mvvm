@@ -8,10 +8,10 @@
 // ************************************************************************** //
 
 #include "regionofinterestview.h"
-#include "mvvm/plotting/sceneadapterinterface.h"
 #include "regionofinterestcontroller.h"
 #include "sceneitems.h"
 #include "sizehandleelement.h"
+#include "mvvm/plotting/sceneadapterinterface.h"
 #include <QGraphicsSceneMouseEvent>
 #include <QPainter>
 #include <stdexcept>

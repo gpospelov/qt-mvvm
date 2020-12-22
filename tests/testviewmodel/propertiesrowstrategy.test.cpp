@@ -10,11 +10,11 @@
 #include "mvvm/viewmodel/propertiesrowstrategy.h"
 
 #include "google_test.h"
+#include "test_utils.h"
 #include "mvvm/model/sessionitem.h"
 #include "mvvm/model/sessionmodel.h"
 #include "mvvm/standarditems/vectoritem.h"
 #include "mvvm/viewmodel/standardviewitems.h"
-#include "test_utils.h"
 
 using namespace ModelView;
 

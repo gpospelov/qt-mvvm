@@ -10,12 +10,12 @@
 #include "scenewidget.h"
 #include "graphicsscene.h"
 #include "graphicsview.h"
-#include "mvvm/plotting/colormapcanvas.h"
-#include "mvvm/standarditems/axisitems.h"
-#include "mvvm/standarditems/colormapviewportitem.h"
 #include "sceneitems.h"
 #include "scenemodel.h"
 #include "scenepropertywidget.h"
+#include "mvvm/plotting/colormapcanvas.h"
+#include "mvvm/standarditems/axisitems.h"
+#include "mvvm/standarditems/colormapviewportitem.h"
 #include <QAction>
 #include <QBoxLayout>
 #include <QToolBar>

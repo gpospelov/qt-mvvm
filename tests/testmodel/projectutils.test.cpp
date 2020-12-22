@@ -11,13 +11,13 @@
 
 #include "folderbasedtest.h"
 #include "google_test.h"
+#include "test_utils.h"
 #include "mvvm/interfaces/applicationmodelsinterface.h"
 #include "mvvm/interfaces/projectinterface.h"
 #include "mvvm/model/propertyitem.h"
 #include "mvvm/model/sessionmodel.h"
 #include "mvvm/project/project_types.h"
 #include "mvvm/utils/fileutils.h"
-#include "test_utils.h"
 
 using namespace ModelView;
 

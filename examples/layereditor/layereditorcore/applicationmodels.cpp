@@ -10,9 +10,9 @@
 #include "applicationmodels.h"
 #include "materialmodel.h"
 #include "materialpropertycontroller.h"
+#include "samplemodel.h"
 #include "mvvm/factories/modeldocumentfactory.h"
 #include "mvvm/model/sessionitem.h"
-#include "samplemodel.h"
 
 using namespace ModelView;
 

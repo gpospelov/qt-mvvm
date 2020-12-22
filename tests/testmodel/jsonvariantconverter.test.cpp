@@ -11,12 +11,12 @@
 
 #include "folderbasedtest.h"
 #include "google_test.h"
+#include "test_utils.h"
 #include "mvvm/model/comboproperty.h"
 #include "mvvm/model/customvariants.h"
 #include "mvvm/model/externalproperty.h"
 #include "mvvm/model/variant_constants.h"
 #include "mvvm/utils/reallimits.h"
-#include "test_utils.h"
 #include <QColor>
 #include <QJsonArray>
 #include <QJsonDocument>

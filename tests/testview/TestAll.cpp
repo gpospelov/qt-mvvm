@@ -9,8 +9,8 @@
 
 #include "customplot_test_utils.h"
 #include "google_test.h"
-#include <qcustomplot.h>
 #include <gmock/gmock.h>
+#include <qcustomplot.h>
 #include <QApplication>
 #include <QStandardItem>
 

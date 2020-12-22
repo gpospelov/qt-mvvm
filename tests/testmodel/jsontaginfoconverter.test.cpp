@@ -11,8 +11,8 @@
 
 #include "folderbasedtest.h"
 #include "google_test.h"
-#include "mvvm/model/taginfo.h"
 #include "test_utils.h"
+#include "mvvm/model/taginfo.h"
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>

@@ -10,10 +10,10 @@
 #include "mvvm/widgets/propertyflatview.h"
 
 #include "google_test.h"
-#include "mvvm/model/sessionmodel.h"
-#include "mvvm/standarditems/vectoritem.h"
 #include "toyitems.h"
 #include "toymodel.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/standarditems/vectoritem.h"
 #include <QGridLayout>
 
 using namespace ModelView;

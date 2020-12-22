@@ -10,9 +10,9 @@
 #include "mvvm/viewmodel/viewmodelbase.h"
 
 #include "google_test.h"
+#include "test_utils.h"
 #include "mvvm/model/sessionitem.h"
 #include "mvvm/viewmodel/standardviewitems.h"
-#include "test_utils.h"
 #include <QSignalSpy>
 #include <QStandardItemModel>
 
