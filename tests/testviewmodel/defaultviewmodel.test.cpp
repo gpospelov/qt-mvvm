@@ -7,6 +7,8 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/viewmodel/defaultviewmodel.h"
+
 #include "folderbasedtest.h"
 #include "google_test.h"
 #include "mvvm/model/compounditem.h"
@@ -21,7 +23,6 @@
 #include "mvvm/standarditems/graphitem.h"
 #include "mvvm/standarditems/graphviewportitem.h"
 #include "mvvm/standarditems/vectoritem.h"
-#include "mvvm/viewmodel/defaultviewmodel.h"
 #include "mvvm/viewmodel/standardviewitems.h"
 #include "mvvm/viewmodel/viewmodelutils.h"
 #include "test_utils.h"

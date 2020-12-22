@@ -49,7 +49,8 @@ TEST_F(ColorMapPlotControllerTest, setItem)
     // creating data item
     SessionModel model;
     auto data_item = model.insertItem<Data2DItem>();
-    const int nx = 3, ny = 2;
+    const int nx = 3;
+    const int ny = 2;
     data_item->setAxes(FixedBinAxisItem::create(nx, 0.0, 3.0),
                        FixedBinAxisItem::create(ny, 0.0, 2.0));
     std::vector<double> expected = {1.0, 2.0, 3.0, 4.0, 5.0, 6.0};

@@ -7,11 +7,12 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/plotting/viewportaxisplotcontroller.h"
+
 #include "customplot_test_utils.h"
 #include "google_test.h"
 #include "mockwidgets.h"
 #include "mvvm/model/sessionmodel.h"
-#include "mvvm/plotting/viewportaxisplotcontroller.h"
 #include "mvvm/standarditems/axisitems.h"
 #include "mvvm/standarditems/plottableitems.h"
 #include <qcustomplot.h>
@@ -47,7 +48,8 @@ TEST_F(ViewportAxisPlotControllerTest, initialState)
     auto axis = custom_plot->xAxis;
 
     // checking initial defaults
-    const double customplot_default_lower(0.0), customplot_default_upper(5.0);
+    const double customplot_default_lower(0.0);
+    const double customplot_default_upper(5.0);
     EXPECT_EQ(axis->range().lower, customplot_default_lower);
     EXPECT_EQ(axis->range().upper, customplot_default_upper);
 
