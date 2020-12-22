@@ -7,21 +7,21 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/editors/editorbuilders.h"
+#include "mvvm/editors/booleditor.h"
+#include "mvvm/editors/coloreditor.h"
+#include "mvvm/editors/combopropertyeditor.h"
+#include "mvvm/editors/doubleeditor.h"
+#include "mvvm/editors/editor_constants.h"
+#include "mvvm/editors/externalpropertyeditor.h"
+#include "mvvm/editors/integereditor.h"
+#include "mvvm/editors/scientificdoubleeditor.h"
+#include "mvvm/editors/scientificspinboxeditor.h"
+#include "mvvm/editors/selectablecomboboxeditor.h"
+#include "mvvm/model/customvariants.h"
+#include "mvvm/model/sessionitem.h"
+#include "mvvm/utils/reallimits.h"
 #include <cmath>
-#include <mvvm/editors/booleditor.h>
-#include <mvvm/editors/coloreditor.h>
-#include <mvvm/editors/combopropertyeditor.h>
-#include <mvvm/editors/doubleeditor.h>
-#include <mvvm/editors/editor_constants.h>
-#include <mvvm/editors/editorbuilders.h>
-#include <mvvm/editors/externalpropertyeditor.h>
-#include <mvvm/editors/integereditor.h>
-#include <mvvm/editors/scientificdoubleeditor.h>
-#include <mvvm/editors/scientificspinboxeditor.h>
-#include <mvvm/editors/selectablecomboboxeditor.h>
-#include <mvvm/model/customvariants.h>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/utils/reallimits.h>
 
 namespace {
 double singleStep(int decimals)

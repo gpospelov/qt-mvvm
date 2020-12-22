@@ -7,9 +7,9 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/factories/itemconverterfactory.h>
-#include <mvvm/serialization/jsonitem_types.h>
-#include <mvvm/serialization/jsonitemconverter.h>
+#include "mvvm/factories/itemconverterfactory.h"
+#include "mvvm/serialization/jsonitem_types.h"
+#include "mvvm/serialization/jsonitemconverter.h"
 
 namespace ModelView {
 

@@ -10,7 +10,7 @@
 #ifndef MVVM_VIEWMODEL_PROPERTYFLATVIEWMODEL_H
 #define MVVM_VIEWMODEL_PROPERTYFLATVIEWMODEL_H
 
-#include <mvvm/viewmodel/viewmodel.h>
+#include "mvvm/viewmodel/viewmodel.h"
 
 namespace ModelView {
 

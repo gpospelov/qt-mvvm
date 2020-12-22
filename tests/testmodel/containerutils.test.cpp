@@ -8,9 +8,9 @@
 // ************************************************************************** //
 
 #include "google_test.h"
+#include "mvvm/model/sessionitem.h"
+#include "mvvm/utils/containerutils.h"
 #include <complex>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/utils/containerutils.h>
 
 using namespace ModelView;
 

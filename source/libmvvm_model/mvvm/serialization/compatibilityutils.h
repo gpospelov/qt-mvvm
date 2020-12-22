@@ -13,8 +13,8 @@
 //! @file compatibilityutils.h
 //! @brief Place for utils to fix back compatibility of serialized projects.
 
+#include "mvvm/model_export.h"
 #include <memory>
-#include <mvvm/model_export.h>
 
 namespace ModelView {
 

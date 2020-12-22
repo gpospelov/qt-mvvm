@@ -10,8 +10,8 @@
 #ifndef MVVM_SERIALIZATION_ITEMCOPYSTRATEGY_H
 #define MVVM_SERIALIZATION_ITEMCOPYSTRATEGY_H
 
+#include "mvvm/model_export.h"
 #include <memory>
-#include <mvvm/model_export.h>
 
 namespace ModelView {
 

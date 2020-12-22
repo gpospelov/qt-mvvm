@@ -10,7 +10,7 @@
 #ifndef MVVM_SERIALIZATION_JSONMODELCONVERTERINTERFACE_H
 #define MVVM_SERIALIZATION_JSONMODELCONVERTERINTERFACE_H
 
-#include <mvvm/model_export.h>
+#include "mvvm/model_export.h"
 
 class QJsonObject;
 

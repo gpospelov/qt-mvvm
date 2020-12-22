@@ -10,8 +10,8 @@
 #ifndef MVVM_WIDGETS_ITEMSTREEVIEWINTERFACE_H
 #define MVVM_WIDGETS_ITEMSTREEVIEWINTERFACE_H
 
+#include "mvvm/view_export.h"
 #include <QWidget>
-#include <mvvm/view_export.h>
 
 class QTreeView;
 

@@ -10,9 +10,9 @@
 #ifndef MVVM_COMMANDS_ABSTRACTITEMCOMMAND_H
 #define MVVM_COMMANDS_ABSTRACTITEMCOMMAND_H
 
+#include "mvvm/commands/commandresult.h"
+#include "mvvm/model_export.h"
 #include <memory>
-#include <mvvm/commands/commandresult.h>
-#include <mvvm/model_export.h>
 #include <string>
 
 namespace ModelView {

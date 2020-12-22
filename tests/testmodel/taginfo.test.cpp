@@ -8,7 +8,7 @@
 // ************************************************************************** //
 
 #include "google_test.h"
-#include <mvvm/model/taginfo.h>
+#include "mvvm/model/taginfo.h"
 
 using namespace ModelView;
 

@@ -10,8 +10,8 @@
 #ifndef MVVM_PROJECT_PROJECTMANAGER_H
 #define MVVM_PROJECT_PROJECTMANAGER_H
 
+#include "mvvm/interfaces/projectmanagerinterface.h"
 #include <memory>
-#include <mvvm/interfaces/projectmanagerinterface.h>
 
 namespace ModelView {
 

@@ -10,7 +10,7 @@
 #ifndef MOCKINTERFACES_h
 #define MOCKINTERFACES_h
 
-#include <mvvm/model/tagrow.h>
+#include "mvvm/model/tagrow.h"
 #include <string>
 
 //! Various common utils for unit tests.

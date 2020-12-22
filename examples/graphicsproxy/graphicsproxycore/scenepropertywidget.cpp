@@ -8,12 +8,12 @@
 // ************************************************************************** //
 
 #include "scenepropertywidget.h"
+#include "mvvm/factories/viewmodelfactory.h"
+#include "mvvm/widgets/itemstreeview.h"
 #include "scenemodel.h"
 #include <QBoxLayout>
 #include <QPushButton>
 #include <QSlider>
-#include <mvvm/factories/viewmodelfactory.h>
-#include <mvvm/widgets/itemstreeview.h>
 
 using namespace ModelView;
 

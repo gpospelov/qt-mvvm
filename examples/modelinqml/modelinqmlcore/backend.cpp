@@ -11,8 +11,8 @@
 #include <modelinqmlcore/particlemodel.h>
 #include <modelinqmlcore/particleviewmodel.h>
 #include <modelinqmlcore/tablemodel.h>
-#include <mvvm/factories/viewmodelfactory.h>
-#include <mvvm/viewmodel/viewmodel.h>
+#include "mvvm/factories/viewmodelfactory.h"
+#include "mvvm/viewmodel/viewmodel.h"
 
 using namespace ModelView;
 

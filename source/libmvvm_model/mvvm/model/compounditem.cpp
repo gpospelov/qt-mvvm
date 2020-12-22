@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/model/compounditem.h>
-#include <mvvm/model/itemutils.h>
+#include "mvvm/model/compounditem.h"
+#include "mvvm/model/itemutils.h"
 
 using namespace ModelView;
 

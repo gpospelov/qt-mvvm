@@ -10,7 +10,7 @@
 #ifndef MVVM_UTILS_FILEUTILS_H
 #define MVVM_UTILS_FILEUTILS_H
 
-#include <mvvm/model_export.h>
+#include "mvvm/model_export.h"
 #include <string>
 #include <vector>
 

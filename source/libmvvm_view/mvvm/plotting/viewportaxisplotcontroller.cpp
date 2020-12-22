@@ -7,13 +7,13 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/plotting/viewportaxisplotcontroller.h"
+#include "mvvm/plotting/axistitlecontroller.h"
+#include "mvvm/plotting/customplotutils.h"
+#include "mvvm/standarditems/axisitems.h"
+#include "mvvm/standarditems/plottableitems.h"
 #include "qcustomplot.h"
 #include <QObject>
-#include <mvvm/plotting/axistitlecontroller.h>
-#include <mvvm/plotting/customplotutils.h>
-#include <mvvm/plotting/viewportaxisplotcontroller.h>
-#include <mvvm/standarditems/axisitems.h>
-#include <mvvm/standarditems/plottableitems.h>
 #include <stdexcept>
 
 using namespace ModelView;

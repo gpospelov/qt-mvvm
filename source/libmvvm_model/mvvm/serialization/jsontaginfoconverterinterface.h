@@ -10,7 +10,7 @@
 #ifndef MVVM_SERIALIZATION_JSONTAGINFOCONVERTERINTERFACE_H
 #define MVVM_SERIALIZATION_JSONTAGINFOCONVERTERINTERFACE_H
 
-#include <mvvm/model_export.h>
+#include "mvvm/model_export.h"
 
 class QJsonObject;
 

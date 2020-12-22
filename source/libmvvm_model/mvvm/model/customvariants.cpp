@@ -7,10 +7,10 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/model/comboproperty.h>
-#include <mvvm/model/customvariants.h>
-#include <mvvm/model/externalproperty.h>
-#include <mvvm/model/variant_constants.h>
+#include "mvvm/model/customvariants.h"
+#include "mvvm/model/comboproperty.h"
+#include "mvvm/model/externalproperty.h"
+#include "mvvm/model/variant_constants.h"
 
 namespace {
 const QString qstring_name = "QString";

@@ -7,9 +7,9 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/model/itemcatalogue.h>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/utils/ifactory.h>
+#include "mvvm/model/itemcatalogue.h"
+#include "mvvm/model/sessionitem.h"
+#include "mvvm/utils/ifactory.h"
 #include <stdexcept>
 
 using namespace ModelView;

@@ -10,9 +10,9 @@
 #ifndef MVVM_PLOTTING_DATA2DPLOTCONTROLLER_H
 #define MVVM_PLOTTING_DATA2DPLOTCONTROLLER_H
 
+#include "mvvm/signals/itemlistener.h"
+#include "mvvm/view_export.h"
 #include <memory>
-#include <mvvm/signals/itemlistener.h>
-#include <mvvm/view_export.h>
 
 class QCPColorMap;
 

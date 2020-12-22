@@ -12,7 +12,7 @@
 
 #include <QString>
 #include <memory>
-#include <mvvm/model/customvariants.h>
+#include "mvvm/model/customvariants.h"
 
 //! @file test_utils.h
 //! @brief Collection of utility functions for various unit tests.

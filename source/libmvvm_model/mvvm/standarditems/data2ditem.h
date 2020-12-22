@@ -10,7 +10,7 @@
 #ifndef MVVM_STANDARDITEMS_DATA2DITEM_H
 #define MVVM_STANDARDITEMS_DATA2DITEM_H
 
-#include <mvvm/model/compounditem.h>
+#include "mvvm/model/compounditem.h"
 #include <vector>
 
 namespace ModelView {

@@ -10,8 +10,8 @@
 #ifndef SAMPLEMODEL_H
 #define SAMPLEMODEL_H
 
-#include <mvvm/model/compounditem.h>
-#include <mvvm/model/sessionmodel.h>
+#include "mvvm/model/compounditem.h"
+#include "mvvm/model/sessionmodel.h"
 #include <string>
 
 namespace CellEditors {

@@ -7,14 +7,14 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/utils/fileutils.h"
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
-#include <mvvm/utils/fileutils.h>
 #include <stdexcept>
 
 #ifdef ENABLE_FILESYSTEM
-#include <mvvm/core/filesystem.h>
+#include "mvvm/core/filesystem.h"
 #endif
 
 using namespace ModelView;

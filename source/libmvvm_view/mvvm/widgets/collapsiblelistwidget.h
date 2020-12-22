@@ -10,8 +10,8 @@
 #ifndef MVVM_WIDGETS_COLLAPSIBLELISTWIDGET_H
 #define MVVM_WIDGETS_COLLAPSIBLELISTWIDGET_H
 
+#include "mvvm/view_export.h"
 #include <QWidget>
-#include <mvvm/view_export.h>
 
 class QSplitter;
 class QString;

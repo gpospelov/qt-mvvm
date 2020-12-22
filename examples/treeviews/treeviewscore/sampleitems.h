@@ -13,8 +13,8 @@
 //! @file items.h
 //! Collection of test items for our sample model.
 
-#include <mvvm/model/compounditem.h>
-#include <mvvm/model/groupitem.h>
+#include "mvvm/model/compounditem.h"
+#include "mvvm/model/groupitem.h"
 #include <string>
 
 namespace TreeViews {

@@ -7,11 +7,11 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/commands/setvaluecommand.h>
-#include <mvvm/core/variant.h>
-#include <mvvm/model/modelutils.h>
-#include <mvvm/model/path.h>
-#include <mvvm/model/sessionitem.h>
+#include "mvvm/commands/setvaluecommand.h"
+#include "mvvm/core/variant.h"
+#include "mvvm/model/modelutils.h"
+#include "mvvm/model/path.h"
+#include "mvvm/model/sessionitem.h"
 #include <sstream>
 
 namespace {

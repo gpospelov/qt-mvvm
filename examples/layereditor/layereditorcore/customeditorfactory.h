@@ -10,7 +10,7 @@
 #ifndef CUSTOMEDITORFACTORY_H
 #define CUSTOMEDITORFACTORY_H
 
-#include <mvvm/editors/defaulteditorfactory.h>
+#include "mvvm/editors/defaulteditorfactory.h"
 
 class ApplicationModels;
 

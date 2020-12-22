@@ -7,10 +7,10 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/model/itemutils.h>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/viewmodel/propertiesrowstrategy.h>
-#include <mvvm/viewmodel/standardviewitems.h>
+#include "mvvm/viewmodel/propertiesrowstrategy.h"
+#include "mvvm/model/itemutils.h"
+#include "mvvm/model/sessionitem.h"
+#include "mvvm/viewmodel/standardviewitems.h"
 
 using namespace ModelView;
 

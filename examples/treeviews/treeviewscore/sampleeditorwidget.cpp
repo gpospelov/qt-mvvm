@@ -8,18 +8,18 @@
 // ************************************************************************** //
 
 #include "sampleeditorwidget.h"
+#include "mvvm/commands/undostack.h"
+#include "mvvm/model/sessionitem.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/viewmodel/defaultviewmodel.h"
+#include "mvvm/viewmodel/topitemsviewmodel.h"
+#include "mvvm/viewmodel/viewitem.h"
+#include "mvvm/widgets/standardtreeviews.h"
 #include <QBoxLayout>
 #include <QLabel>
 #include <QMenu>
 #include <QTreeView>
 #include <QUndoView>
-#include <mvvm/commands/undostack.h>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/viewmodel/defaultviewmodel.h>
-#include <mvvm/viewmodel/topitemsviewmodel.h>
-#include <mvvm/viewmodel/viewitem.h>
-#include <mvvm/widgets/standardtreeviews.h>
 
 using namespace ModelView;
 

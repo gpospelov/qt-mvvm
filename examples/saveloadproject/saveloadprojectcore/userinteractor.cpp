@@ -8,13 +8,13 @@
 // ************************************************************************** //
 
 #include "userinteractor.h"
+#include "mvvm/project/project_types.h"
+#include "mvvm/project/projectutils.h"
+#include "mvvm/utils/fileutils.h"
 #include "recentprojectsettings.h"
 #include <QFileDialog>
 #include <QMessageBox>
 #include <map>
-#include <mvvm/project/project_types.h>
-#include <mvvm/project/projectutils.h>
-#include <mvvm/utils/fileutils.h>
 
 using namespace ModelView;
 

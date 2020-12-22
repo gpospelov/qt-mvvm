@@ -10,8 +10,8 @@
 #ifndef MVVM_SIGNALS_ITEMLISTENERBASE_H
 #define MVVM_SIGNALS_ITEMLISTENERBASE_H
 
-#include <mvvm/model_export.h>
-#include <mvvm/signals/callback_types.h>
+#include "mvvm/model_export.h"
+#include "mvvm/signals/callback_types.h"
 
 namespace ModelView {
 

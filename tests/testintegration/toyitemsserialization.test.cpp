@@ -11,8 +11,8 @@
 #include "toyitems.h"
 #include "toymodel.h"
 #include <QJsonObject>
-#include <mvvm/model/modelutils.h>
-#include <mvvm/serialization/jsonmodelconverter.h>
+#include "mvvm/model/modelutils.h"
+#include "mvvm/serialization/jsonmodelconverter.h"
 
 using namespace ModelView;
 using namespace ToyItems;

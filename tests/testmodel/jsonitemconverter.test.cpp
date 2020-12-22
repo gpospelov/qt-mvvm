@@ -9,19 +9,19 @@
 
 #include "folderbasedtest.h"
 #include "google_test.h"
+#include "mvvm/model/compounditem.h"
+#include "mvvm/model/itemcatalogue.h"
+#include "mvvm/model/propertyitem.h"
+#include "mvvm/model/sessionitem.h"
+#include "mvvm/model/sessionitemtags.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/serialization/jsonitem_types.h"
+#include "mvvm/serialization/jsonitemconverter.h"
+#include "mvvm/serialization/jsonitemformatassistant.h"
 #include "test_utils.h"
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
-#include <mvvm/model/compounditem.h>
-#include <mvvm/model/itemcatalogue.h>
-#include <mvvm/model/propertyitem.h>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/model/sessionitemtags.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/serialization/jsonitem_types.h>
-#include <mvvm/serialization/jsonitemconverter.h>
-#include <mvvm/serialization/jsonitemformatassistant.h>
 
 using namespace ModelView;
 

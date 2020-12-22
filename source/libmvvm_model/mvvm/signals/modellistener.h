@@ -10,7 +10,7 @@
 #ifndef MVVM_SIGNALS_MODELLISTENER_H
 #define MVVM_SIGNALS_MODELLISTENER_H
 
-#include <mvvm/signals/modellistenerbase.h>
+#include "mvvm/signals/modellistenerbase.h"
 
 namespace ModelView {
 

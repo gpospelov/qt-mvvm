@@ -8,10 +8,10 @@
 // ************************************************************************** //
 
 #include "samplemodel.h"
+#include "mvvm/utils/numericutils.h"
+#include "mvvm/widgets/widgetutils.h"
 #include "sampleitems.h"
 #include <QColor>
-#include <mvvm/utils/numericutils.h>
-#include <mvvm/widgets/widgetutils.h>
 
 namespace DragAndView {
 

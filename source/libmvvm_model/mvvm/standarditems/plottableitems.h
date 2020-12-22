@@ -13,7 +13,7 @@
 //! @file plottableitems.h
 //! Collection of items to plot in QCustomPlot context.
 
-#include <mvvm/model/compounditem.h>
+#include "mvvm/model/compounditem.h"
 
 namespace ModelView {
 

@@ -8,12 +8,12 @@
 // ************************************************************************** //
 
 #include "google_test.h"
-#include <mvvm/factories/itemcataloguefactory.h>
-#include <mvvm/model/compounditem.h>
-#include <mvvm/model/itemfactory.h>
-#include <mvvm/model/propertyitem.h>
-#include <mvvm/model/sessionitemtags.h>
-#include <mvvm/serialization/jsonitemcopystrategy.h>
+#include "mvvm/factories/itemcataloguefactory.h"
+#include "mvvm/model/compounditem.h"
+#include "mvvm/model/itemfactory.h"
+#include "mvvm/model/propertyitem.h"
+#include "mvvm/model/sessionitemtags.h"
+#include "mvvm/serialization/jsonitemcopystrategy.h"
 
 using namespace ModelView;
 

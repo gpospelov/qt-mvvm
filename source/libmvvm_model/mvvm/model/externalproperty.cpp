@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/model/externalproperty.h>
+#include "mvvm/model/externalproperty.h"
 
 using namespace ModelView;
 

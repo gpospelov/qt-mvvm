@@ -10,8 +10,8 @@
 #ifndef MVVM_MODEL_DATAROLE_H
 #define MVVM_MODEL_DATAROLE_H
 
-#include <mvvm/core/variant.h>
-#include <mvvm/model_export.h>
+#include "mvvm/core/variant.h"
+#include "mvvm/model_export.h"
 
 namespace ModelView {
 

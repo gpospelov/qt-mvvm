@@ -9,6 +9,8 @@
 
 #include "modeleditorwidget.h"
 #include "containereditorwidget.h"
+#include "mvvm/commands/undostack.h"
+#include "mvvm/model/modelutils.h"
 #include "samplemodel.h"
 #include <QAction>
 #include <QDebug>
@@ -17,8 +19,6 @@
 #include <QToolButton>
 #include <QUndoStack>
 #include <cassert>
-#include <mvvm/commands/undostack.h>
-#include <mvvm/model/modelutils.h>
 
 using namespace ModelView;
 

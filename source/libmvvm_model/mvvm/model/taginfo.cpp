@@ -7,9 +7,9 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/model/taginfo.h"
+#include "mvvm/utils/containerutils.h"
 #include <algorithm>
-#include <mvvm/model/taginfo.h>
-#include <mvvm/utils/containerutils.h>
 #include <sstream>
 #include <stdexcept>
 

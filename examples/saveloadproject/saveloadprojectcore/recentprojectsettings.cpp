@@ -8,9 +8,9 @@
 // ************************************************************************** //
 
 #include "recentprojectsettings.h"
+#include "mvvm/utils/fileutils.h"
 #include <QDir>
 #include <QSettings>
-#include <mvvm/utils/fileutils.h>
 
 namespace {
 const int max_recent_projects = 10;

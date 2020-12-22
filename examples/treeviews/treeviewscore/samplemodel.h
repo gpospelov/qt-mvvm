@@ -10,7 +10,7 @@
 #ifndef SAMPLEMODEL_H
 #define SAMPLEMODEL_H
 
-#include <mvvm/model/sessionmodel.h>
+#include "mvvm/model/sessionmodel.h"
 
 namespace TreeViews {
 

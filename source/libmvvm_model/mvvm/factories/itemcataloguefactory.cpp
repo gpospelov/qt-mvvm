@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/factories/itemcataloguefactory.h>
-#include <mvvm/standarditems/standarditemincludes.h>
+#include "mvvm/factories/itemcataloguefactory.h"
+#include "mvvm/standarditems/standarditemincludes.h"
 
 using namespace ModelView;
 

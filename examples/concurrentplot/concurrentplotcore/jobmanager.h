@@ -10,9 +10,9 @@
 #ifndef JOBMANAGER_H
 #define JOBMANAGER_H
 
+#include "mvvm/utils/threadsafestack.h"
 #include "toysimulation.h"
 #include <QObject>
-#include <mvvm/utils/threadsafestack.h>
 
 //! Handles all thread activity for running job simulation in the background.
 

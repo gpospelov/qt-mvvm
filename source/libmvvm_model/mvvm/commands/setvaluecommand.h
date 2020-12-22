@@ -10,8 +10,8 @@
 #ifndef MVVM_COMMANDS_SETVALUECOMMAND_H
 #define MVVM_COMMANDS_SETVALUECOMMAND_H
 
-#include <mvvm/commands/abstractitemcommand.h>
-#include <mvvm/core/variant.h>
+#include "mvvm/commands/abstractitemcommand.h"
+#include "mvvm/core/variant.h"
 
 namespace ModelView {
 

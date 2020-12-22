@@ -10,7 +10,7 @@
 #ifndef MVVM_WIDGETS_PROPERTYTREEVIEW_H
 #define MVVM_WIDGETS_PROPERTYTREEVIEW_H
 
-#include <mvvm/widgets/itemstreeview.h>
+#include "mvvm/widgets/itemstreeview.h"
 
 namespace ModelView {
 

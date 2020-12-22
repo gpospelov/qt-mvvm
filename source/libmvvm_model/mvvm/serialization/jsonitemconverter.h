@@ -10,7 +10,7 @@
 #ifndef MVVM_SERIALIZATION_JSONITEMCONVERTER_H
 #define MVVM_SERIALIZATION_JSONITEMCONVERTER_H
 
-#include <mvvm/serialization/jsonitemconverterinterface.h>
+#include "mvvm/serialization/jsonitemconverterinterface.h"
 
 namespace ModelView {
 

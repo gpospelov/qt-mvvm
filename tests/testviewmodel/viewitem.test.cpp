@@ -8,8 +8,8 @@
 // ************************************************************************** //
 
 #include "google_test.h"
+#include "mvvm/viewmodel/viewitem.h"
 #include "test_utils.h"
-#include <mvvm/viewmodel/viewitem.h>
 #include <stdexcept>
 
 using namespace ModelView;

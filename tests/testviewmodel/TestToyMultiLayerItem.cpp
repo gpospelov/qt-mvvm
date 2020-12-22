@@ -8,13 +8,13 @@
 // ************************************************************************** //
 
 #include "google_test.h"
+#include "mvvm/model/itemutils.h"
+#include "mvvm/viewmodel/defaultviewmodel.h"
+#include "mvvm/viewmodel/standardviewitems.h"
+#include "mvvm/viewmodel/viewmodelutils.h"
 #include "toyitems.h"
 #include "toymodel.h"
 #include <QSignalSpy>
-#include <mvvm/model/itemutils.h>
-#include <mvvm/viewmodel/defaultviewmodel.h>
-#include <mvvm/viewmodel/standardviewitems.h>
-#include <mvvm/viewmodel/viewmodelutils.h>
 
 using namespace ModelView;
 

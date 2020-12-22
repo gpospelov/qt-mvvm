@@ -10,8 +10,8 @@
 #ifndef MVVM_SERIALIZATION_JSONDOCUMENT_H
 #define MVVM_SERIALIZATION_JSONDOCUMENT_H
 
+#include "mvvm/interfaces/modeldocumentinterface.h"
 #include <memory>
-#include <mvvm/interfaces/modeldocumentinterface.h>
 #include <vector>
 
 namespace ModelView {

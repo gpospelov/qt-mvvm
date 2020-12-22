@@ -13,7 +13,7 @@
 //! @file items.h
 //! Collection of items for our application model.
 
-#include <mvvm/model/compounditem.h>
+#include "mvvm/model/compounditem.h"
 #include <string>
 
 namespace DragAndView {

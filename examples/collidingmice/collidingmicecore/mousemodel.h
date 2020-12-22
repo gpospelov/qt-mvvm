@@ -10,8 +10,8 @@
 #ifndef MOUSEMODEL_H
 #define MOUSEMODEL_H
 
-#include <mvvm/model/compounditem.h>
-#include <mvvm/model/sessionmodel.h>
+#include "mvvm/model/compounditem.h"
+#include "mvvm/model/sessionmodel.h"
 
 //! Domain object to hold mouse info.
 

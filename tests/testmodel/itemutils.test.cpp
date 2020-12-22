@@ -8,14 +8,14 @@
 // ************************************************************************** //
 
 #include "google_test.h"
+#include "mvvm/model/customvariants.h"
+#include "mvvm/model/itemutils.h"
+#include "mvvm/model/propertyitem.h"
+#include "mvvm/model/sessionitem.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/model/taginfo.h"
+#include "mvvm/standarditems/vectoritem.h"
 #include <memory>
-#include <mvvm/model/customvariants.h>
-#include <mvvm/model/itemutils.h>
-#include <mvvm/model/propertyitem.h>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/model/taginfo.h>
-#include <mvvm/standarditems/vectoritem.h>
 
 using namespace ModelView;
 

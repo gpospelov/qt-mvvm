@@ -8,11 +8,11 @@
 // ************************************************************************** //
 
 #include "projectpanewidget.h"
+#include "mvvm/widgets/widgetutils.h"
 #include <QLabel>
 #include <QMouseEvent>
 #include <QPainter>
 #include <QVBoxLayout>
-#include <mvvm/widgets/widgetutils.h>
 
 namespace {
 int widget_height()

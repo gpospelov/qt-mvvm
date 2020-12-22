@@ -10,8 +10,8 @@
 #ifndef MVVM_PROJECT_PROJECT_TYPES_H
 #define MVVM_PROJECT_PROJECT_TYPES_H
 
+#include "mvvm/model_export.h"
 #include <functional>
-#include <mvvm/model_export.h>
 #include <string>
 #include <vector>
 

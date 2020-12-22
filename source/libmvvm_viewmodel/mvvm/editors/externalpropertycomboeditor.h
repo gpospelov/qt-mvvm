@@ -10,8 +10,8 @@
 #ifndef EXTERNALPROPERTYCOMBOEDITOR_H
 #define EXTERNALPROPERTYCOMBOEDITOR_H
 
+#include "mvvm/editors/customeditor.h"
 #include <functional>
-#include <mvvm/editors/customeditor.h>
 #include <vector>
 
 class QComboBox;

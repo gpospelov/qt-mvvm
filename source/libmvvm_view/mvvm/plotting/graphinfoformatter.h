@@ -10,7 +10,7 @@
 #ifndef MVVM_PLOTTING_GRAPHINFOFORMATTER_H
 #define MVVM_PLOTTING_GRAPHINFOFORMATTER_H
 
-#include <mvvm/plotting/statusstringformatterinterface.h>
+#include "mvvm/plotting/statusstringformatterinterface.h"
 
 class QCustomPlot;
 

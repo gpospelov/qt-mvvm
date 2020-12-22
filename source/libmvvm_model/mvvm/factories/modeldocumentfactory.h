@@ -10,8 +10,8 @@
 #ifndef MVVM_FACTORIES_MODELDOCUMENTFACTORY_H
 #define MVVM_FACTORIES_MODELDOCUMENTFACTORY_H
 
+#include "mvvm/interfaces/modeldocumentinterface.h"
 #include <memory>
-#include <mvvm/interfaces/modeldocumentinterface.h>
 #include <vector>
 
 namespace ModelView {

@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/model/comboproperty.h>
-#include <mvvm/utils/containerutils.h>
+#include "mvvm/model/comboproperty.h"
+#include "mvvm/utils/containerutils.h"
 #include <sstream>
 #include <stdexcept>
 

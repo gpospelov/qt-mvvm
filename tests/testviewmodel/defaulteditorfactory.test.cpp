@@ -8,29 +8,29 @@
 // ************************************************************************** //
 
 #include "google_test.h"
+#include "mvvm/editors/booleditor.h"
+#include "mvvm/editors/coloreditor.h"
+#include "mvvm/editors/combopropertyeditor.h"
+#include "mvvm/editors/defaulteditorfactory.h"
+#include "mvvm/editors/editor_constants.h"
+#include "mvvm/editors/externalpropertyeditor.h"
+#include "mvvm/editors/integereditor.h"
+#include "mvvm/editors/scientificdoubleeditor.h"
+#include "mvvm/editors/scientificspinbox.h"
+#include "mvvm/editors/scientificspinboxeditor.h"
+#include "mvvm/editors/selectablecomboboxeditor.h"
+#include "mvvm/model/comboproperty.h"
+#include "mvvm/model/externalproperty.h"
+#include "mvvm/model/propertyitem.h"
+#include "mvvm/model/sessionitem.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/utils/reallimits.h"
+#include "mvvm/viewmodel/defaultviewmodel.h"
+#include "mvvm/viewmodel/viewmodeldelegate.h"
 #include "widgetbasedtest.h"
 #include <QSpinBox>
 #include <QStandardItemModel>
 #include <limits>
-#include <mvvm/editors/booleditor.h>
-#include <mvvm/editors/coloreditor.h>
-#include <mvvm/editors/combopropertyeditor.h>
-#include <mvvm/editors/defaulteditorfactory.h>
-#include <mvvm/editors/editor_constants.h>
-#include <mvvm/editors/externalpropertyeditor.h>
-#include <mvvm/editors/integereditor.h>
-#include <mvvm/editors/scientificdoubleeditor.h>
-#include <mvvm/editors/scientificspinbox.h>
-#include <mvvm/editors/scientificspinboxeditor.h>
-#include <mvvm/editors/selectablecomboboxeditor.h>
-#include <mvvm/model/comboproperty.h>
-#include <mvvm/model/externalproperty.h>
-#include <mvvm/model/propertyitem.h>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/utils/reallimits.h>
-#include <mvvm/viewmodel/defaultviewmodel.h>
-#include <mvvm/viewmodel/viewmodeldelegate.h>
 
 using namespace ModelView;
 

@@ -11,10 +11,10 @@
 #include "toyitems.h"
 #include "toymodel.h"
 #include <QSignalSpy>
-#include <mvvm/model/comboproperty.h>
-#include <mvvm/viewmodel/defaultviewmodel.h>
-#include <mvvm/viewmodel/propertyviewmodel.h>
-#include <mvvm/viewmodel/standardviewitems.h>
+#include "mvvm/model/comboproperty.h"
+#include "mvvm/viewmodel/defaultviewmodel.h"
+#include "mvvm/viewmodel/propertyviewmodel.h"
+#include "mvvm/viewmodel/standardviewitems.h"
 
 using namespace ModelView;
 

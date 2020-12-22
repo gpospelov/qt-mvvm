@@ -7,13 +7,13 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/editors/customeditor.h>
-#include <mvvm/editors/defaulteditorfactory.h>
-#include <mvvm/editors/editor_constants.h>
-#include <mvvm/model/customvariants.h>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/model/variant_constants.h>
-#include <mvvm/viewmodel/viewmodel.h>
+#include "mvvm/editors/defaulteditorfactory.h"
+#include "mvvm/editors/customeditor.h"
+#include "mvvm/editors/editor_constants.h"
+#include "mvvm/model/customvariants.h"
+#include "mvvm/model/sessionitem.h"
+#include "mvvm/model/variant_constants.h"
+#include "mvvm/viewmodel/viewmodel.h"
 
 using namespace ModelView;
 

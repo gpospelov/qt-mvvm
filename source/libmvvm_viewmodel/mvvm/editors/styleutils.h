@@ -10,7 +10,7 @@
 #ifndef MVVM_EDITORS_STYLEUTILS_H
 #define MVVM_EDITORS_STYLEUTILS_H
 
-#include <mvvm/viewmodel_export.h>
+#include "mvvm/viewmodel_export.h"
 
 namespace ModelView::Style {
 

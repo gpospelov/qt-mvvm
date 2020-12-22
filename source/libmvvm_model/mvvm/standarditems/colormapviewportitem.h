@@ -10,7 +10,7 @@
 #ifndef MVVM_STANDARDITEMS_COLORMAPVIEWPORTITEM_H
 #define MVVM_STANDARDITEMS_COLORMAPVIEWPORTITEM_H
 
-#include <mvvm/standarditems/viewportitem.h>
+#include "mvvm/standarditems/viewportitem.h"
 
 namespace ModelView {
 

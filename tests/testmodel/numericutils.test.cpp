@@ -8,8 +8,8 @@
 // ************************************************************************** //
 
 #include "google_test.h"
+#include "mvvm/utils/numericutils.h"
 #include <cmath>
-#include <mvvm/utils/numericutils.h>
 
 using namespace ModelView;
 

@@ -8,8 +8,8 @@
 // ************************************************************************** //
 
 #include "google_test.h"
+#include "mvvm/utils/stringutils.h"
 #include "test_utils.h"
-#include <mvvm/utils/stringutils.h>
 
 using namespace ModelView;
 using namespace TestUtils;

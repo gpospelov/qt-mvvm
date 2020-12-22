@@ -8,10 +8,10 @@
 // ************************************************************************** //
 
 #include "google_test.h"
+#include "mvvm/model/propertyitem.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/signals/modellistener.h"
 #include <memory>
-#include <mvvm/model/propertyitem.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/signals/modellistener.h>
 
 using namespace ModelView;
 
