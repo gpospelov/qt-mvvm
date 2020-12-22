@@ -10,7 +10,7 @@
 #ifndef MVVM_MODEL_MVVM_TYPES_H
 #define MVVM_MODEL_MVVM_TYPES_H
 
-#include <mvvm/core/types.h>
+#include "mvvm/core/types.h"
 #include <string>
 
 namespace ModelView {

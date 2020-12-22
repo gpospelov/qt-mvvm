@@ -9,9 +9,9 @@
 
 #include <QTreeView>
 #include <QVBoxLayout>
-#include <mvvm/viewmodel/viewmodel.h>
-#include <mvvm/viewmodel/viewmodeldelegate.h>
-#include <mvvm/widgets/itemstreeview.h>
+#include "mvvm/viewmodel/viewmodel.h"
+#include "mvvm/viewmodel/viewmodeldelegate.h"
+#include "mvvm/widgets/itemstreeview.h"
 
 using namespace ModelView;
 

@@ -10,7 +10,7 @@
 #include <algorithm>
 #include <cmath>
 #include <limits>
-#include <mvvm/utils/numericutils.h>
+#include "mvvm/utils/numericutils.h"
 #include <random>
 
 using namespace ModelView;

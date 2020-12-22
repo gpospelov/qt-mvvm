@@ -14,7 +14,7 @@
 #include <QModelIndexList>
 #include <QVector>
 #include <functional>
-#include <mvvm/viewmodel_export.h>
+#include "mvvm/viewmodel_export.h"
 #include <vector>
 
 class QStandardItemModel;

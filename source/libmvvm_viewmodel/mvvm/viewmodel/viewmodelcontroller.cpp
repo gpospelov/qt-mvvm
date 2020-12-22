@@ -8,18 +8,18 @@
 // ************************************************************************** //
 
 #include <map>
-#include <mvvm/interfaces/childrenstrategyinterface.h>
-#include <mvvm/interfaces/rowstrategyinterface.h>
-#include <mvvm/model/itemutils.h>
-#include <mvvm/model/modelutils.h>
-#include <mvvm/model/path.h>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/utils/containerutils.h>
-#include <mvvm/viewmodel/standardviewitems.h>
-#include <mvvm/viewmodel/viewmodelbase.h>
-#include <mvvm/viewmodel/viewmodelcontroller.h>
-#include <mvvm/viewmodel/viewmodelutils.h>
+#include "mvvm/interfaces/childrenstrategyinterface.h"
+#include "mvvm/interfaces/rowstrategyinterface.h"
+#include "mvvm/model/itemutils.h"
+#include "mvvm/model/modelutils.h"
+#include "mvvm/model/path.h"
+#include "mvvm/model/sessionitem.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/utils/containerutils.h"
+#include "mvvm/viewmodel/standardviewitems.h"
+#include "mvvm/viewmodel/viewmodelbase.h"
+#include "mvvm/viewmodel/viewmodelcontroller.h"
+#include "mvvm/viewmodel/viewmodelutils.h"
 #include <stdexcept>
 
 using namespace ModelView;

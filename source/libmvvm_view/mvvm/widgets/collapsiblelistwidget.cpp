@@ -9,8 +9,8 @@
 
 #include <QSplitter>
 #include <QVBoxLayout>
-#include <mvvm/widgets/collapsiblebar.h>
-#include <mvvm/widgets/collapsiblelistwidget.h>
+#include "mvvm/widgets/collapsiblebar.h"
+#include "mvvm/widgets/collapsiblelistwidget.h"
 
 using namespace ModelView;
 

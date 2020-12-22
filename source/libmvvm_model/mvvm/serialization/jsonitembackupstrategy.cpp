@@ -8,9 +8,9 @@
 // ************************************************************************** //
 
 #include <QJsonObject>
-#include <mvvm/factories/itemconverterfactory.h>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/serialization/jsonitembackupstrategy.h>
+#include "mvvm/factories/itemconverterfactory.h"
+#include "mvvm/model/sessionitem.h"
+#include "mvvm/serialization/jsonitembackupstrategy.h"
 
 using namespace ModelView;
 

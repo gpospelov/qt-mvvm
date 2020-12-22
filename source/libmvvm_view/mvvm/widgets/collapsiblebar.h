@@ -11,7 +11,7 @@
 #define MVVM_WIDGETS_COLLAPSIBLEBAR_H
 
 #include <QFrame>
-#include <mvvm/view_export.h>
+#include "mvvm/view_export.h"
 
 class QLabel;
 class QString;

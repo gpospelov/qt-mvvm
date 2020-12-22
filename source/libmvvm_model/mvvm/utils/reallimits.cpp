@@ -8,8 +8,8 @@
 // ************************************************************************** //
 
 #include <limits>
-#include <mvvm/utils/numericutils.h>
-#include <mvvm/utils/reallimits.h>
+#include "mvvm/utils/numericutils.h"
+#include "mvvm/utils/reallimits.h"
 
 namespace {
 const double lmin = std::numeric_limits<double>::lowest();

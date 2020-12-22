@@ -14,8 +14,8 @@
 //! Collection of various utility functions for command service.
 
 #include <memory>
-#include <mvvm/interfaces/itembackupstrategy.h>
-#include <mvvm/interfaces/itemcopystrategy.h>
+#include "mvvm/interfaces/itembackupstrategy.h"
+#include "mvvm/interfaces/itemcopystrategy.h"
 
 namespace ModelView {
 

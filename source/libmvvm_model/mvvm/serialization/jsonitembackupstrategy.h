@@ -11,7 +11,7 @@
 #define MVVM_SERIALIZATION_JSONITEMBACKUPSTRATEGY_H
 
 #include <memory>
-#include <mvvm/interfaces/itembackupstrategy.h>
+#include "mvvm/interfaces/itembackupstrategy.h"
 
 namespace ModelView {
 

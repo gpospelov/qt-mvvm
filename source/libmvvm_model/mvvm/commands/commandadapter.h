@@ -12,7 +12,7 @@
 
 #include <QUndoCommand>
 #include <memory>
-#include <mvvm/model_export.h>
+#include "mvvm/model_export.h"
 
 namespace ModelView {
 

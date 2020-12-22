@@ -11,7 +11,7 @@
 #define MVVM_PROJECT_PROJECTUTILS_H
 
 #include <memory>
-#include <mvvm/model_export.h>
+#include "mvvm/model_export.h"
 #include <string>
 #include <vector>
 

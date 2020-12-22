@@ -11,8 +11,8 @@
 #define MVVM_FACTORIES_VIEWMODELCONTROLLERBUILDER_H
 
 #include <memory>
-#include <mvvm/viewmodel/viewmodelcontroller.h>
-#include <mvvm/viewmodel_export.h>
+#include "mvvm/viewmodel/viewmodelcontroller.h"
+#include "mvvm/viewmodel_export.h"
 
 namespace ModelView {
 

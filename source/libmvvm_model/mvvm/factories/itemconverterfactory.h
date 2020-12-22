@@ -14,7 +14,7 @@
 //! Collection of factory functions to create SessionItem converters to/from serialized content.
 
 #include <memory>
-#include <mvvm/serialization/jsonitemconverterinterface.h>
+#include "mvvm/serialization/jsonitemconverterinterface.h"
 
 namespace ModelView {
 

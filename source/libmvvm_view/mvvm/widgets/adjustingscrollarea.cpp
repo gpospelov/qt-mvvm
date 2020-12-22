@@ -9,7 +9,7 @@
 
 #include <QEvent>
 #include <QScrollBar>
-#include <mvvm/widgets/adjustingscrollarea.h>
+#include "mvvm/widgets/adjustingscrollarea.h"
 
 using namespace ModelView;
 

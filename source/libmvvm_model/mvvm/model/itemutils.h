@@ -11,7 +11,7 @@
 #define MVVM_MODEL_ITEMUTILS_H
 
 #include <functional>
-#include <mvvm/model_export.h>
+#include "mvvm/model_export.h"
 #include <string>
 #include <vector>
 

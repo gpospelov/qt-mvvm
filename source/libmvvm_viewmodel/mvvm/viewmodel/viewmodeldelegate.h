@@ -12,7 +12,7 @@
 
 #include <QStyledItemDelegate>
 #include <memory>
-#include <mvvm/viewmodel_export.h>
+#include "mvvm/viewmodel_export.h"
 
 namespace ModelView {
 

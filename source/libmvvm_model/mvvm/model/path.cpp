@@ -9,7 +9,7 @@
 
 #include <algorithm>
 #include <iterator>
-#include <mvvm/model/path.h>
+#include "mvvm/model/path.h"
 #include <numeric>
 #include <sstream>
 

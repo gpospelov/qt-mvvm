@@ -10,11 +10,11 @@
 #ifndef MVVM_MODEL_COMPOUNDITEM_H
 #define MVVM_MODEL_COMPOUNDITEM_H
 
-#include <mvvm/model/customvariants.h>
-#include <mvvm/model/propertyitem.h>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/model/taginfo.h>
-#include <mvvm/utils/reallimits.h>
+#include "mvvm/model/customvariants.h"
+#include "mvvm/model/propertyitem.h"
+#include "mvvm/model/sessionitem.h"
+#include "mvvm/model/taginfo.h"
+#include "mvvm/utils/reallimits.h"
 
 namespace ModelView {
 

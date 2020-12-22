@@ -12,8 +12,8 @@
 
 #include <functional>
 #include <map>
-#include <mvvm/core/variant.h>
-#include <mvvm/serialization/jsonvariantconverterinterface.h>
+#include "mvvm/core/variant.h"
+#include "mvvm/serialization/jsonvariantconverterinterface.h"
 #include <string>
 
 class QJsonObject;

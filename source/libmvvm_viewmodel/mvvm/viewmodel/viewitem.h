@@ -11,8 +11,8 @@
 #define MVVM_VIEWMODEL_VIEWITEM_H
 
 #include <memory>
-#include <mvvm/core/variant.h>
-#include <mvvm/viewmodel_export.h>
+#include "mvvm/core/variant.h"
+#include "mvvm/viewmodel_export.h"
 #include <vector>
 
 namespace ModelView {

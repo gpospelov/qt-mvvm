@@ -11,7 +11,7 @@
 #define MVVM_SERIALIZATION_JSONDOCUMENT_H
 
 #include <memory>
-#include <mvvm/interfaces/modeldocumentinterface.h>
+#include "mvvm/interfaces/modeldocumentinterface.h"
 #include <vector>
 
 namespace ModelView {

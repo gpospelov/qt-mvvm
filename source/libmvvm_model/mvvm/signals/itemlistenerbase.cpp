@@ -8,8 +8,8 @@
 // ************************************************************************** //
 
 #include "itemlistenerbase.h"
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/signals/itemmapper.h>
+#include "mvvm/model/sessionitem.h"
+#include "mvvm/signals/itemmapper.h"
 
 ModelView::ItemListenerBase::ItemListenerBase(ModelView::SessionItem* item)
 {

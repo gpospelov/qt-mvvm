@@ -11,11 +11,11 @@
 #define MVVM_MODEL_MODELUTILS_H
 
 #include <memory>
-#include <mvvm/factories/modelconverterfactory.h>
-#include <mvvm/model/itemutils.h>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/model_export.h>
+#include "mvvm/factories/modelconverterfactory.h"
+#include "mvvm/model/itemutils.h"
+#include "mvvm/model/sessionitem.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/model_export.h"
 #include <vector>
 
 namespace ModelView {

@@ -10,7 +10,7 @@
 #ifndef MVVM_COMMANDS_COPYITEMCOMMAND_H
 #define MVVM_COMMANDS_COPYITEMCOMMAND_H
 
-#include <mvvm/commands/abstractitemcommand.h>
+#include "mvvm/commands/abstractitemcommand.h"
 
 namespace ModelView {
 

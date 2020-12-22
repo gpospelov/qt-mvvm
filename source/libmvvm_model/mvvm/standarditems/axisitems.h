@@ -14,7 +14,7 @@
 //! Collection of axis items for 1D and 2D data/plotting support.
 
 #include <memory>
-#include <mvvm/model/compounditem.h>
+#include "mvvm/model/compounditem.h"
 #include <vector>
 
 namespace ModelView {

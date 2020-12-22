@@ -11,7 +11,7 @@
 #define MVVM_SIGNALS_MODELMAPPER_H
 
 #include <memory>
-#include <mvvm/interfaces/modellistenerinterface.h>
+#include "mvvm/interfaces/modellistenerinterface.h"
 
 namespace ModelView {
 

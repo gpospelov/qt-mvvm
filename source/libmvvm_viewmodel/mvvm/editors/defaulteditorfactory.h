@@ -15,8 +15,8 @@
 
 #include <map>
 #include <memory>
-#include <mvvm/editors/editorbuilders.h>
-#include <mvvm/interfaces/editorfactoryinterface.h>
+#include "mvvm/editors/editorbuilders.h"
+#include "mvvm/interfaces/editorfactoryinterface.h"
 
 namespace ModelView {
 

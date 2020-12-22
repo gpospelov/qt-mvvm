@@ -9,10 +9,10 @@
 
 #include <QJsonDocument>
 #include <QJsonObject>
-#include <mvvm/factories/modelconverterfactory.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/serialization/jsonutils.h>
-#include <mvvm/utils/reallimits.h>
+#include "mvvm/factories/modelconverterfactory.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/serialization/jsonutils.h"
+#include "mvvm/utils/reallimits.h"
 #include <stdexcept>
 
 namespace {

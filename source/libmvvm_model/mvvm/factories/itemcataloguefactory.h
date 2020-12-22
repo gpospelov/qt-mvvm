@@ -10,7 +10,7 @@
 #ifndef MVVM_FACTORIES_STANDARDITEMCATALOGUE_H
 #define MVVM_FACTORIES_STANDARDITEMCATALOGUE_H
 
-#include <mvvm/model/itemcatalogue.h>
+#include "mvvm/model/itemcatalogue.h"
 
 namespace ModelView {
 

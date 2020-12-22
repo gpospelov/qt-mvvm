@@ -10,7 +10,7 @@
 #ifndef MVVM_EDITORS_COLOREDITOR_H
 #define MVVM_EDITORS_COLOREDITOR_H
 
-#include <mvvm/editors/customeditor.h>
+#include "mvvm/editors/customeditor.h"
 
 class QLabel;
 

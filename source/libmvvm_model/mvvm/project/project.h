@@ -11,7 +11,7 @@
 #define MVVM_PROJECT_PROJECT_H
 
 #include <memory>
-#include <mvvm/interfaces/projectinterface.h>
+#include "mvvm/interfaces/projectinterface.h"
 
 namespace ModelView {
 

@@ -11,7 +11,7 @@
 #define MVVM_SERIALIZATION_JSONITEMDATACONVERTERINTERFACE_H
 
 #include <memory>
-#include <mvvm/model_export.h>
+#include "mvvm/model_export.h"
 
 class QJsonArray;
 

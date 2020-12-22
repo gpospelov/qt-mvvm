@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/plotting/customplotutils.h>
+#include "mvvm/plotting/customplotutils.h"
 #include <qcustomplot.h>
 
 void ModelView::Utils::SetLogarithmicScale(QCPColorScale* axis, bool is_log_scale)

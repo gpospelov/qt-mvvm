@@ -10,7 +10,7 @@
 #ifndef MVVM_EDITORS_SCIENTIFICSPINBOXEDITOR_H
 #define MVVM_EDITORS_SCIENTIFICSPINBOXEDITOR_H
 
-#include <mvvm/editors/customeditor.h>
+#include "mvvm/editors/customeditor.h"
 
 namespace ModelView {
 

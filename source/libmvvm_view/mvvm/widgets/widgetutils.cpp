@@ -14,8 +14,8 @@
 #include <QLabel>
 #include <QMainWindow>
 #include <QSize>
-#include <mvvm/utils/numericutils.h>
-#include <mvvm/widgets/widgetutils.h>
+#include "mvvm/utils/numericutils.h"
+#include "mvvm/widgets/widgetutils.h"
 
 namespace {
 

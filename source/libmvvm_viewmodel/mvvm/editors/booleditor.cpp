@@ -9,7 +9,7 @@
 
 #include <QCheckBox>
 #include <QHBoxLayout>
-#include <mvvm/editors/booleditor.h>
+#include "mvvm/editors/booleditor.h"
 #include <stdexcept>
 
 namespace {

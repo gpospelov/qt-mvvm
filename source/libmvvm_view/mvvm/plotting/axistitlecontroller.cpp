@@ -8,8 +8,8 @@
 // ************************************************************************** //
 
 #include "qcustomplot.h"
-#include <mvvm/plotting/axistitlecontroller.h>
-#include <mvvm/standarditems/plottableitems.h>
+#include "mvvm/plotting/axistitlecontroller.h"
+#include "mvvm/standarditems/plottableitems.h"
 #include <stdexcept>
 
 using namespace ModelView;

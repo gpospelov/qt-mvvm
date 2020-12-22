@@ -11,7 +11,7 @@
 #define MVVM_SERIALIZATION_JSONTAGINFOCONVERTER_H
 
 #include <QString>
-#include <mvvm/serialization/jsontaginfoconverterinterface.h>
+#include "mvvm/serialization/jsontaginfoconverterinterface.h"
 
 namespace ModelView {
 

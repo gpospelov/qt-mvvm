@@ -10,7 +10,7 @@
 #include <QSpinBox>
 #include <QVBoxLayout>
 #include <cmath>
-#include <mvvm/editors/integereditor.h>
+#include "mvvm/editors/integereditor.h"
 #include <stdexcept>
 
 namespace {

@@ -10,8 +10,8 @@
 #ifndef MVVM_VIEWMODEL_STANDARDVIEWMODELCONTROLLERS_H
 #define MVVM_VIEWMODEL_STANDARDVIEWMODELCONTROLLERS_H
 
-#include <mvvm/viewmodel/viewmodel.h>
-#include <mvvm/viewmodel/viewmodelcontroller.h>
+#include "mvvm/viewmodel/viewmodel.h"
+#include "mvvm/viewmodel/viewmodelcontroller.h"
 #include <string>
 #include <vector>
 

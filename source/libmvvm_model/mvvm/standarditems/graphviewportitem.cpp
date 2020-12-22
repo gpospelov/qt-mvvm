@@ -8,8 +8,8 @@
 // ************************************************************************** //
 
 #include <algorithm>
-#include <mvvm/standarditems/graphitem.h>
-#include <mvvm/standarditems/graphviewportitem.h>
+#include "mvvm/standarditems/graphitem.h"
+#include "mvvm/standarditems/graphviewportitem.h"
 #include <vector>
 
 using namespace ModelView;

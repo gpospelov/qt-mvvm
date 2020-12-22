@@ -12,7 +12,7 @@
 
 #include <QString>
 #include <QStringList>
-#include <mvvm/view_export.h>
+#include "mvvm/view_export.h"
 #include <string>
 #include <vector>
 

@@ -11,7 +11,7 @@
 #define MVVM_PLOTTING_CUSTOMPLOTSCENEADAPTER_H
 
 #include <memory>
-#include <mvvm/plotting/sceneadapterinterface.h>
+#include "mvvm/plotting/sceneadapterinterface.h"
 
 class QCustomPlot;
 

@@ -11,8 +11,8 @@
 #define MVVM_SIGNALS_ITEMMAPPER_H
 
 #include <memory>
-#include <mvvm/interfaces/itemlistenerinterface.h>
-#include <mvvm/signals/modellistener.h>
+#include "mvvm/interfaces/itemlistenerinterface.h"
+#include "mvvm/signals/modellistener.h"
 
 namespace ModelView {
 

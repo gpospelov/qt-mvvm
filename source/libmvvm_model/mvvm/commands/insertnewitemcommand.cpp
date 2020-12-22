@@ -7,9 +7,9 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/commands/insertnewitemcommand.h>
-#include <mvvm/model/path.h>
-#include <mvvm/model/sessionitem.h>
+#include "mvvm/commands/insertnewitemcommand.h"
+#include "mvvm/model/path.h"
+#include "mvvm/model/sessionitem.h"
 #include <sstream>
 
 using namespace ModelView;

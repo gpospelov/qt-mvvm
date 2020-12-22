@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/standarditems/containeritem.h>
+#include "mvvm/standarditems/containeritem.h"
 
 using namespace ModelView;
 

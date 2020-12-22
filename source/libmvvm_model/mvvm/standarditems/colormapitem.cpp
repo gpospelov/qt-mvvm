@@ -7,11 +7,11 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/model/comboproperty.h>
-#include <mvvm/standarditems/colormapitem.h>
-#include <mvvm/standarditems/data2ditem.h>
-#include <mvvm/standarditems/linkeditem.h>
-#include <mvvm/standarditems/plottableitems.h>
+#include "mvvm/model/comboproperty.h"
+#include "mvvm/standarditems/colormapitem.h"
+#include "mvvm/standarditems/data2ditem.h"
+#include "mvvm/standarditems/linkeditem.h"
+#include "mvvm/standarditems/plottableitems.h"
 
 using namespace ModelView;
 

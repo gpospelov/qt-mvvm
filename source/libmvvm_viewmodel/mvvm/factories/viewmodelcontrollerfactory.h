@@ -11,8 +11,8 @@
 #define MVVM_FACTORIES_VIEWMODELCONTROLLERFACTORY_H
 
 #include <memory>
-#include <mvvm/factories/viewmodelcontrollerbuilder.h>
-#include <mvvm/viewmodel_export.h>
+#include "mvvm/factories/viewmodelcontrollerbuilder.h"
+#include "mvvm/viewmodel_export.h"
 
 namespace ModelView {
 

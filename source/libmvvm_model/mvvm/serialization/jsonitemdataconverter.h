@@ -13,7 +13,7 @@
 #include <QString>
 #include <functional>
 #include <memory>
-#include <mvvm/serialization/jsonitemdataconverterinterface.h>
+#include "mvvm/serialization/jsonitemdataconverterinterface.h"
 
 class QJsonObject;
 

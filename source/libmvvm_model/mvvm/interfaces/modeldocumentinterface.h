@@ -10,7 +10,7 @@
 #ifndef MVVM_CORE_MODELDOCUMENTINTERFACE_H
 #define MVVM_CORE_MODELDOCUMENTINTERFACE_H
 
-#include <mvvm/model_export.h>
+#include "mvvm/model_export.h"
 #include <string>
 
 namespace ModelView {

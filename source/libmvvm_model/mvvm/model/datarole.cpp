@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/model/customvariants.h>
-#include <mvvm/model/datarole.h>
+#include "mvvm/model/customvariants.h"
+#include "mvvm/model/datarole.h"
 
 using namespace ModelView;
 

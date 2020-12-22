@@ -7,10 +7,10 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/model/comboproperty.h>
-#include <mvvm/model/groupitem.h>
-#include <mvvm/model/taginfo.h>
-#include <mvvm/utils/containerutils.h>
+#include "mvvm/model/comboproperty.h"
+#include "mvvm/model/groupitem.h"
+#include "mvvm/model/taginfo.h"
+#include "mvvm/utils/containerutils.h"
 #include <stdexcept>
 
 using namespace ModelView;

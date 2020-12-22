@@ -7,10 +7,10 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/commands/moveitemcommand.h>
-#include <mvvm/model/itemutils.h>
-#include <mvvm/model/path.h>
-#include <mvvm/model/sessionitem.h>
+#include "mvvm/commands/moveitemcommand.h"
+#include "mvvm/model/itemutils.h"
+#include "mvvm/model/path.h"
+#include "mvvm/model/sessionitem.h"
 #include <sstream>
 #include <stdexcept>
 

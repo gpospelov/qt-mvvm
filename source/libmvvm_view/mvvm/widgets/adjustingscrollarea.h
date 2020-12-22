@@ -11,7 +11,7 @@
 #define MVVM_WIDGETS_ADJUSTINGSCROLLAREA_H
 
 #include <QScrollArea>
-#include <mvvm/view_export.h>
+#include "mvvm/view_export.h"
 
 namespace ModelView {
 

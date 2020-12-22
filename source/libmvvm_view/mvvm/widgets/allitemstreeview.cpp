@@ -7,9 +7,9 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/factories/viewmodelfactory.h>
-#include <mvvm/viewmodel/viewmodel.h>
-#include <mvvm/widgets/allitemstreeview.h>
+#include "mvvm/factories/viewmodelfactory.h"
+#include "mvvm/viewmodel/viewmodel.h"
+#include "mvvm/widgets/allitemstreeview.h"
 
 namespace ModelView {
 AllItemsTreeView::AllItemsTreeView(SessionModel* model, QWidget* parent) : ItemsTreeView(parent)

@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/model/customvariants.h>
-#include <mvvm/standarditems/linkeditem.h>
+#include "mvvm/model/customvariants.h"
+#include "mvvm/standarditems/linkeditem.h"
 
 using namespace ModelView;
 

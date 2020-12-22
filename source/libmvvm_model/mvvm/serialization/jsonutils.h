@@ -10,7 +10,7 @@
 #ifndef MVVM_SERIALIZATION_JSONUTILS_H
 #define MVVM_SERIALIZATION_JSONUTILS_H
 
-#include <mvvm/model_export.h>
+#include "mvvm/model_export.h"
 #include <string>
 
 namespace ModelView {

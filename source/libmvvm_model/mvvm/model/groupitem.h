@@ -11,8 +11,8 @@
 #define MVVM_MODEL_GROUPITEM_H
 
 #include <memory>
-#include <mvvm/model/itemcatalogue.h>
-#include <mvvm/model/sessionitem.h>
+#include "mvvm/model/itemcatalogue.h"
+#include "mvvm/model/sessionitem.h"
 
 namespace ModelView {
 

@@ -10,7 +10,7 @@
 #ifndef MVVM_INTERFACES_MODELLISTENERINTERFACE_H
 #define MVVM_INTERFACES_MODELLISTENERINTERFACE_H
 
-#include <mvvm/signals/callback_types.h>
+#include "mvvm/signals/callback_types.h"
 
 namespace ModelView {
 

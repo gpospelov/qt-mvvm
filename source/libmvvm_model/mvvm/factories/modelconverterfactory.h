@@ -14,7 +14,7 @@
 //! Collection of factory functions to create SessionModel converters to/from serialized content.
 
 #include <memory>
-#include <mvvm/serialization/jsonmodelconverterinterface.h>
+#include "mvvm/serialization/jsonmodelconverterinterface.h"
 
 namespace ModelView {
 

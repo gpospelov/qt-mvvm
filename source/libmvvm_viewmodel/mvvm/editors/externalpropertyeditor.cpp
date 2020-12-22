@@ -11,11 +11,11 @@
 #include <QLabel>
 #include <QMessageBox>
 #include <QToolButton>
-#include <mvvm/editors/customeventfilters.h>
-#include <mvvm/editors/externalpropertyeditor.h>
-#include <mvvm/editors/styleutils.h>
-#include <mvvm/model/customvariants.h>
-#include <mvvm/model/externalproperty.h>
+#include "mvvm/editors/customeventfilters.h"
+#include "mvvm/editors/externalpropertyeditor.h"
+#include "mvvm/editors/styleutils.h"
+#include "mvvm/model/customvariants.h"
+#include "mvvm/model/externalproperty.h"
 #include <stdexcept>
 
 using namespace ModelView;

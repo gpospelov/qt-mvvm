@@ -12,7 +12,7 @@
 
 #include <QString>
 #include <memory>
-#include <mvvm/serialization/jsonitemconverterinterface.h>
+#include "mvvm/serialization/jsonitemconverterinterface.h"
 
 namespace ModelView {
 

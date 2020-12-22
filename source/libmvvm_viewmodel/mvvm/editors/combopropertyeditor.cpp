@@ -9,8 +9,8 @@
 
 #include <QComboBox>
 #include <QVBoxLayout>
-#include <mvvm/editors/combopropertyeditor.h>
-#include <mvvm/model/comboproperty.h>
+#include "mvvm/editors/combopropertyeditor.h"
+#include "mvvm/model/comboproperty.h"
 
 namespace {
 QStringList toList(const std::vector<std::string>& container)

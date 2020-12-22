@@ -11,7 +11,7 @@
 #define MVVM_SERIALIZATION_ITEMBACKUPSTRATEGY_H
 
 #include <memory>
-#include <mvvm/model_export.h>
+#include "mvvm/model_export.h"
 
 namespace ModelView {
 

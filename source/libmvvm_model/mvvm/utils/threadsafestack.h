@@ -14,7 +14,7 @@
 #include <condition_variable>
 #include <memory>
 #include <mutex>
-#include <mvvm/model_export.h>
+#include "mvvm/model_export.h"
 #include <stack>
 #include <stdexcept>
 #include <thread>

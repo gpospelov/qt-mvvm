@@ -12,7 +12,7 @@
 
 #include <functional>
 #include <memory>
-#include <mvvm/model_export.h>
+#include "mvvm/model_export.h"
 #include <vector>
 
 namespace ModelView {

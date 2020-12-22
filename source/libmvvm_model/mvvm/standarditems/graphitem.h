@@ -10,7 +10,7 @@
 #ifndef MVVM_STANDARDITEMS_GRAPHITEM_H
 #define MVVM_STANDARDITEMS_GRAPHITEM_H
 
-#include <mvvm/model/compounditem.h>
+#include "mvvm/model/compounditem.h"
 
 namespace ModelView {
 

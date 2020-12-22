@@ -11,7 +11,7 @@
 #define MVVM_SIGNALS_CALLBACK_TYPES_H
 
 #include <functional>
-#include <mvvm/model/tagrow.h>
+#include "mvvm/model/tagrow.h"
 #include <string>
 
 namespace ModelView {

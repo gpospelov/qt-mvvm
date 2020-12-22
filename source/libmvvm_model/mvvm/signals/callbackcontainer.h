@@ -13,8 +13,8 @@
 #include <algorithm>
 #include <functional>
 #include <list>
-#include <mvvm/model_export.h>
-#include <mvvm/signals/callback_types.h>
+#include "mvvm/model_export.h"
+#include "mvvm/signals/callback_types.h"
 
 namespace ModelView {
 

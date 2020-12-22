@@ -12,8 +12,8 @@
 #include <QIcon>
 #include <QLabel>
 #include <QMouseEvent>
-#include <mvvm/widgets/collapsiblebar.h>
-#include <mvvm/widgets/widgetutils.h>
+#include "mvvm/widgets/collapsiblebar.h"
+#include "mvvm/widgets/widgetutils.h"
 
 using namespace ModelView;
 

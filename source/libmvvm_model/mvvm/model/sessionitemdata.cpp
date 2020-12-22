@@ -8,8 +8,8 @@
 // ************************************************************************** //
 
 #include <algorithm>
-#include <mvvm/model/customvariants.h>
-#include <mvvm/model/sessionitemdata.h>
+#include "mvvm/model/customvariants.h"
+#include "mvvm/model/sessionitemdata.h"
 #include <sstream>
 #include <stdexcept>
 

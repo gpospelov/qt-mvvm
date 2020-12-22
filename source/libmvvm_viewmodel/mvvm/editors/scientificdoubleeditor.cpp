@@ -10,8 +10,8 @@
 #include <QDoubleValidator>
 #include <QLineEdit>
 #include <QVBoxLayout>
-#include <mvvm/editors/scientificdoubleeditor.h>
-#include <mvvm/utils/numericutils.h>
+#include "mvvm/editors/scientificdoubleeditor.h"
+#include "mvvm/utils/numericutils.h"
 #include <stdexcept>
 
 namespace {

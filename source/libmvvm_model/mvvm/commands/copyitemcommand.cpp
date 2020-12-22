@@ -7,13 +7,13 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/commands/commandutils.h>
-#include <mvvm/commands/copyitemcommand.h>
-#include <mvvm/interfaces/itembackupstrategy.h>
-#include <mvvm/interfaces/itemcopystrategy.h>
-#include <mvvm/model/path.h>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/model/sessionmodel.h>
+#include "mvvm/commands/commandutils.h"
+#include "mvvm/commands/copyitemcommand.h"
+#include "mvvm/interfaces/itembackupstrategy.h"
+#include "mvvm/interfaces/itemcopystrategy.h"
+#include "mvvm/model/path.h"
+#include "mvvm/model/sessionitem.h"
+#include "mvvm/model/sessionmodel.h"
 #include <sstream>
 
 using namespace ModelView;

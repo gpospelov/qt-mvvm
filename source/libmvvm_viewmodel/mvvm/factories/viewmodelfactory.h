@@ -11,9 +11,9 @@
 #define MVVM_VIEWMODEL_STANDARDVIEWMODELS_H
 
 #include <memory>
-#include <mvvm/factories/viewmodelcontrollerfactory.h>
-#include <mvvm/viewmodel/viewmodel.h>
-#include <mvvm/viewmodel_export.h>
+#include "mvvm/factories/viewmodelcontrollerfactory.h"
+#include "mvvm/viewmodel/viewmodel.h"
+#include "mvvm/viewmodel_export.h"
 
 namespace ModelView {
 

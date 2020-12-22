@@ -8,11 +8,11 @@
 // ************************************************************************** //
 
 #include <QColor>
-#include <mvvm/model/comboproperty.h>
-#include <mvvm/standarditems/data1ditem.h>
-#include <mvvm/standarditems/graphitem.h>
-#include <mvvm/standarditems/linkeditem.h>
-#include <mvvm/standarditems/plottableitems.h>
+#include "mvvm/model/comboproperty.h"
+#include "mvvm/standarditems/data1ditem.h"
+#include "mvvm/standarditems/graphitem.h"
+#include "mvvm/standarditems/linkeditem.h"
+#include "mvvm/standarditems/plottableitems.h"
 
 using namespace ModelView;
 

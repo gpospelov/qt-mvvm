@@ -12,9 +12,9 @@
 
 #include <QStringList>
 #include <memory>
-#include <mvvm/model/tagrow.h>
-#include <mvvm/signals/modellistener.h>
-#include <mvvm/viewmodel_export.h>
+#include "mvvm/model/tagrow.h"
+#include "mvvm/signals/modellistener.h"
+#include "mvvm/viewmodel_export.h"
 #include <vector>
 
 class QStandardItem;

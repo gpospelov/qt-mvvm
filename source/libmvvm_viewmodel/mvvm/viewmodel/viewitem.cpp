@@ -8,11 +8,11 @@
 // ************************************************************************** //
 
 #include <algorithm>
-#include <mvvm/model/customvariants.h>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/utils/containerutils.h>
-#include <mvvm/viewmodel/viewitem.h>
-#include <mvvm/viewmodel/viewmodelutils.h>
+#include "mvvm/model/customvariants.h"
+#include "mvvm/model/sessionitem.h"
+#include "mvvm/utils/containerutils.h"
+#include "mvvm/viewmodel/viewitem.h"
+#include "mvvm/viewmodel/viewmodelutils.h"
 #include <stdexcept>
 #include <vector>
 

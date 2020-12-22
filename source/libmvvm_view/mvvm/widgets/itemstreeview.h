@@ -12,7 +12,7 @@
 
 #include <QWidget>
 #include <memory>
-#include <mvvm/view_export.h>
+#include "mvvm/view_export.h"
 
 class QTreeView;
 class QItemSelection;

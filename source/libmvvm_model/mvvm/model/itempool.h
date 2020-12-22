@@ -11,8 +11,8 @@
 #define MVVM_MODEL_ITEMPOOL_H
 
 #include <map>
-#include <mvvm/model/mvvm_types.h>
-#include <mvvm/model_export.h>
+#include "mvvm/model/mvvm_types.h"
+#include "mvvm/model_export.h"
 
 namespace ModelView {
 

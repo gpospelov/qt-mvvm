@@ -10,7 +10,7 @@
 #ifndef MVVM_STANDARDITEMS_CONTAINERITEM_H
 #define MVVM_STANDARDITEMS_CONTAINERITEM_H
 
-#include <mvvm/model/compounditem.h>
+#include "mvvm/model/compounditem.h"
 
 namespace ModelView {
 

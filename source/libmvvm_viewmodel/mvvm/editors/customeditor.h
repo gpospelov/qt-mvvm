@@ -11,8 +11,8 @@
 #define MVVM_EDITORS_CUSTOMEDITOR_H
 
 #include <QWidget>
-#include <mvvm/core/variant.h>
-#include <mvvm/viewmodel_export.h>
+#include "mvvm/core/variant.h"
+#include "mvvm/viewmodel_export.h"
 
 namespace ModelView {
 
