@@ -8,10 +8,10 @@
 // ************************************************************************** //
 
 #include "modeleditorwidget.h"
+#include "samplemodel.h"
 #include "mvvm/viewmodel/defaultviewmodel.h"
 #include "mvvm/viewmodel/propertytableviewmodel.h"
 #include "mvvm/viewmodel/viewmodeldelegate.h"
-#include "samplemodel.h"
 #include <QBoxLayout>
 #include <QHeaderView>
 #include <QTableView>

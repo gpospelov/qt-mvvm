@@ -8,12 +8,12 @@
 // ************************************************************************** //
 
 #include "containereditorwidget.h"
+#include "samplemodel.h"
 #include "mvvm/model/modelutils.h"
 #include "mvvm/viewmodel/propertytableviewmodel.h"
 #include "mvvm/viewmodel/viewmodeldelegate.h"
 #include "mvvm/viewmodel/viewmodelutils.h"
 #include "mvvm/widgets/widgetutils.h"
-#include "samplemodel.h"
 #include <QBoxLayout>
 #include <QHeaderView>
 #include <QPushButton>

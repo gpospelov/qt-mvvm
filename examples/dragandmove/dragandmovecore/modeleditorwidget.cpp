@@ -9,9 +9,9 @@
 
 #include "modeleditorwidget.h"
 #include "containereditorwidget.h"
+#include "samplemodel.h"
 #include "mvvm/commands/undostack.h"
 #include "mvvm/model/modelutils.h"
-#include "samplemodel.h"
 #include <QAction>
 #include <QDebug>
 #include <QHBoxLayout>

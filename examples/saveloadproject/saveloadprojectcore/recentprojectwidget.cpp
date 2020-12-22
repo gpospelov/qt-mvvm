@@ -8,10 +8,10 @@
 // ************************************************************************** //
 
 #include "recentprojectwidget.h"
+#include "projectpanewidget.h"
 #include "mvvm/project/projectutils.h"
 #include "mvvm/widgets/adjustingscrollarea.h"
 #include "mvvm/widgets/widgetutils.h"
-#include "projectpanewidget.h"
 #include <QGuiApplication>
 #include <QLabel>
 #include <QScreen>

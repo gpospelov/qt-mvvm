@@ -10,10 +10,10 @@
 #include "mvvm/model/compounditem.h"
 
 #include "google_test.h"
+#include "test_utils.h"
 #include "mvvm/model/customvariants.h"
 #include "mvvm/model/itemutils.h"
 #include "mvvm/model/sessionmodel.h"
-#include "test_utils.h"
 #include <memory>
 #include <stdexcept>
 

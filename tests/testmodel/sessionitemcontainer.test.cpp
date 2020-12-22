@@ -10,8 +10,8 @@
 #include "mvvm/model/sessionitemcontainer.h"
 
 #include "google_test.h"
-#include "mvvm/model/sessionitem.h"
 #include "test_utils.h"
+#include "mvvm/model/sessionitem.h"
 
 using namespace ModelView;
 
