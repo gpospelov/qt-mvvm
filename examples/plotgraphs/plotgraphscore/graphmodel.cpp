@@ -8,8 +8,6 @@
 // ************************************************************************** //
 
 #include "graphmodel.h"
-#include <QColor>
-#include <cmath>
 #include "mvvm/interfaces/undostackinterface.h"
 #include "mvvm/model/mvvm_types.h"
 #include "mvvm/standarditems/axisitems.h"
@@ -19,6 +17,8 @@
 #include "mvvm/standarditems/graphviewportitem.h"
 #include "mvvm/utils/numericutils.h"
 #include "mvvm/widgets/widgetutils.h"
+#include <QColor>
+#include <cmath>
 #include <stdexcept>
 
 namespace {

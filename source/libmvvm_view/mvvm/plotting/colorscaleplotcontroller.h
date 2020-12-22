@@ -10,9 +10,9 @@
 #ifndef MVVM_PLOTTING_COLORSCALEPLOTCONTROLLER_H
 #define MVVM_PLOTTING_COLORSCALEPLOTCONTROLLER_H
 
-#include <memory>
 #include "mvvm/signals/itemlistener.h"
 #include "mvvm/view_export.h"
+#include <memory>
 
 class QCPColorScale;
 

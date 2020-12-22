@@ -10,10 +10,10 @@
 #ifndef MVVM_SERIALIZATION_JSONVARIANTCONVERTER_H
 #define MVVM_SERIALIZATION_JSONVARIANTCONVERTER_H
 
-#include <functional>
-#include <map>
 #include "mvvm/core/variant.h"
 #include "mvvm/serialization/jsonvariantconverterinterface.h"
+#include <functional>
+#include <map>
 #include <string>
 
 class QJsonObject;

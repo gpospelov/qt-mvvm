@@ -10,11 +10,11 @@
 #ifndef MVVM_VIEWMODEL_REFVIEWMODELCONTROLLER_H
 #define MVVM_VIEWMODEL_REFVIEWMODELCONTROLLER_H
 
-#include <QStringList>
-#include <memory>
 #include "mvvm/model/tagrow.h"
 #include "mvvm/signals/modellistener.h"
 #include "mvvm/viewmodel_export.h"
+#include <QStringList>
+#include <memory>
 #include <vector>
 
 class QStandardItem;

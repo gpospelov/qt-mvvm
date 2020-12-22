@@ -8,8 +8,6 @@
 // ************************************************************************** //
 
 #include "google_test.h"
-#include "test_utils.h"
-#include <memory>
 #include "mvvm/model/itempool.h"
 #include "mvvm/model/itemutils.h"
 #include "mvvm/model/sessionitem.h"
@@ -17,6 +15,8 @@
 #include "mvvm/model/sessionitemtags.h"
 #include "mvvm/model/taginfo.h"
 #include "mvvm/model/variant_constants.h"
+#include "test_utils.h"
+#include <memory>
 #include <stdexcept>
 
 using namespace ModelView;

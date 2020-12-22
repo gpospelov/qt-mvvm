@@ -7,9 +7,9 @@
 //
 // ************************************************************************** //
 
-#include "qcustomplot.h"
 #include "mvvm/plotting/axistitlecontroller.h"
 #include "mvvm/standarditems/plottableitems.h"
+#include "qcustomplot.h"
 #include <stdexcept>
 
 using namespace ModelView;

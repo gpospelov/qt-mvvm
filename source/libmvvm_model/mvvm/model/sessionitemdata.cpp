@@ -7,9 +7,9 @@
 //
 // ************************************************************************** //
 
-#include <algorithm>
-#include "mvvm/model/customvariants.h"
 #include "mvvm/model/sessionitemdata.h"
+#include "mvvm/model/customvariants.h"
+#include <algorithm>
 #include <sstream>
 #include <stdexcept>
 

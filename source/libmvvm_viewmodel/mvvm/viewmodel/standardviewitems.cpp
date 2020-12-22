@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#include "mvvm/model/sessionitem.h"
 #include "mvvm/viewmodel/standardviewitems.h"
+#include "mvvm/model/sessionitem.h"
 #include "mvvm/viewmodel/viewmodelutils.h"
 
 using namespace ModelView;

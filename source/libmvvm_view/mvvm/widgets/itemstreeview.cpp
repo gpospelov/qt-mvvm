@@ -7,11 +7,11 @@
 //
 // ************************************************************************** //
 
-#include <QTreeView>
-#include <QVBoxLayout>
+#include "mvvm/widgets/itemstreeview.h"
 #include "mvvm/viewmodel/viewmodel.h"
 #include "mvvm/viewmodel/viewmodeldelegate.h"
-#include "mvvm/widgets/itemstreeview.h"
+#include <QTreeView>
+#include <QVBoxLayout>
 
 using namespace ModelView;
 

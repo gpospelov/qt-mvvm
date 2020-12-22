@@ -10,8 +10,8 @@
 #ifndef MVVM_FACTORIES_PROJECTMANAGERFACTORY_H
 #define MVVM_FACTORIES_PROJECTMANAGERFACTORY_H
 
-#include <memory>
 #include "mvvm/interfaces/projectmanagerinterface.h"
+#include <memory>
 
 namespace ModelView {
 

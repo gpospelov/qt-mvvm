@@ -10,9 +10,9 @@
 #ifndef MVVM_SIGNALS_ITEMMAPPER_H
 #define MVVM_SIGNALS_ITEMMAPPER_H
 
-#include <memory>
 #include "mvvm/interfaces/itemlistenerinterface.h"
 #include "mvvm/signals/modellistener.h"
+#include <memory>
 
 namespace ModelView {
 

@@ -7,11 +7,11 @@
 //
 // ************************************************************************** //
 
-#include <iterator>
 #include "mvvm/model/itemutils.h"
 #include "mvvm/model/sessionitem.h"
 #include "mvvm/model/sessionitemtags.h"
 #include "mvvm/utils/containerutils.h"
+#include <iterator>
 
 using namespace ModelView;
 

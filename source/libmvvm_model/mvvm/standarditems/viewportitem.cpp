@@ -7,9 +7,9 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/standarditems/viewportitem.h"
 #include "mvvm/model/modelutils.h"
 #include "mvvm/standarditems/axisitems.h"
-#include "mvvm/standarditems/viewportitem.h"
 
 using namespace ModelView;
 

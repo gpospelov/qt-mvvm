@@ -10,11 +10,11 @@
 #ifndef MVVM_UTILS_CONTAINERUTILS_H
 #define MVVM_UTILS_CONTAINERUTILS_H
 
+#include "mvvm/model_export.h"
 #include <algorithm>
 #include <complex>
 #include <iterator>
 #include <memory>
-#include "mvvm/model_export.h"
 #include <string>
 #include <type_traits>
 #include <unordered_set>

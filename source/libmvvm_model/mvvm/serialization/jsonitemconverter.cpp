@@ -7,18 +7,18 @@
 //
 // ************************************************************************** //
 
-#include <QJsonArray>
-#include <QJsonObject>
+#include "mvvm/serialization/jsonitemconverter.h"
 #include "mvvm/core/uniqueidgenerator.h"
 #include "mvvm/interfaces/itemfactoryinterface.h"
 #include "mvvm/model/sessionitem.h"
 #include "mvvm/model/sessionitemdata.h"
 #include "mvvm/model/sessionitemtags.h"
 #include "mvvm/serialization/jsonitem_types.h"
-#include "mvvm/serialization/jsonitemconverter.h"
 #include "mvvm/serialization/jsonitemdataconverter.h"
 #include "mvvm/serialization/jsonitemformatassistant.h"
 #include "mvvm/serialization/jsonitemtagsconverter.h"
+#include <QJsonArray>
+#include <QJsonObject>
 
 using namespace ModelView;
 

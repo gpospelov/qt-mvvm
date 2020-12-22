@@ -7,10 +7,7 @@
 //
 // ************************************************************************** //
 
-#include <QDataWidgetMapper>
-#include <QDebug>
-#include <QGridLayout>
-#include <QLabel>
+#include "mvvm/widgets/propertyflatview.h"
 #include "mvvm/editors/customeditor.h"
 #include "mvvm/editors/defaulteditorfactory.h"
 #include "mvvm/factories/viewmodelfactory.h"
@@ -20,7 +17,10 @@
 #include "mvvm/viewmodel/viewmodel.h"
 #include "mvvm/viewmodel/viewmodeldelegate.h"
 #include "mvvm/widgets/layoututils.h"
-#include "mvvm/widgets/propertyflatview.h"
+#include <QDataWidgetMapper>
+#include <QDebug>
+#include <QGridLayout>
+#include <QLabel>
 
 using namespace ModelView;
 

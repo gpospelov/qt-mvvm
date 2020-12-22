@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#include "mvvm/viewmodel/standardviewitems.h"
 #include "mvvm/viewmodel/viewmodelbase.h"
+#include "mvvm/viewmodel/standardviewitems.h"
 #include <stdexcept>
 
 using namespace ModelView;

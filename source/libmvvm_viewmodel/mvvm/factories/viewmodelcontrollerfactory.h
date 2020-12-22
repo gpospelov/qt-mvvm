@@ -10,9 +10,9 @@
 #ifndef MVVM_FACTORIES_VIEWMODELCONTROLLERFACTORY_H
 #define MVVM_FACTORIES_VIEWMODELCONTROLLERFACTORY_H
 
-#include <memory>
 #include "mvvm/factories/viewmodelcontrollerbuilder.h"
 #include "mvvm/viewmodel_export.h"
+#include <memory>
 
 namespace ModelView {
 

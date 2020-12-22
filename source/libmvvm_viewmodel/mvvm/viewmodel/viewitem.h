@@ -10,9 +10,9 @@
 #ifndef MVVM_VIEWMODEL_VIEWITEM_H
 #define MVVM_VIEWMODEL_VIEWITEM_H
 
-#include <memory>
 #include "mvvm/core/variant.h"
 #include "mvvm/viewmodel_export.h"
+#include <memory>
 #include <vector>
 
 namespace ModelView {

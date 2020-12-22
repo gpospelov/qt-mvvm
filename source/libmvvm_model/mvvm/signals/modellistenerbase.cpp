@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#include "mvvm/model/sessionmodel.h"
 #include "mvvm/signals/modellistenerbase.h"
+#include "mvvm/model/sessionmodel.h"
 #include "mvvm/signals/modelmapper.h"
 #include <stdexcept>
 

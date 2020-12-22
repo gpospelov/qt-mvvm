@@ -10,8 +10,8 @@
 #ifndef MVVM_EDITORS_CUSTOMEVENTFILTERS_H
 #define MVVM_EDITORS_CUSTOMEVENTFILTERS_H
 
-#include <QObject>
 #include "mvvm/viewmodel_export.h"
+#include <QObject>
 
 namespace ModelView {
 

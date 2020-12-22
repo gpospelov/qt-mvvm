@@ -10,12 +10,12 @@
 #ifndef MVVM_COMMANDS_COMMANDSERVICE_H
 #define MVVM_COMMANDS_COMMANDSERVICE_H
 
-#include <memory>
 #include "mvvm/commands/commandresult.h"
 #include "mvvm/commands/undostack.h"
 #include "mvvm/core/variant.h"
 #include "mvvm/model/function_types.h"
 #include "mvvm/model_export.h"
+#include <memory>
 
 class QUndoCommand;
 

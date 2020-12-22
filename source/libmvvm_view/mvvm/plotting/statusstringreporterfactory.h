@@ -12,9 +12,9 @@
 
 //! Contains factory methods to create StatusStringReporter
 
+#include "mvvm/view_export.h"
 #include <functional>
 #include <memory>
-#include "mvvm/view_export.h"
 
 class QCustomPlot;
 

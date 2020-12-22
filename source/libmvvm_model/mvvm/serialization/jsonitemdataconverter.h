@@ -10,10 +10,10 @@
 #ifndef MVVM_SERIALIZATION_JSONITEMDATACONVERTER_H
 #define MVVM_SERIALIZATION_JSONITEMDATACONVERTER_H
 
+#include "mvvm/serialization/jsonitemdataconverterinterface.h"
 #include <QString>
 #include <functional>
 #include <memory>
-#include "mvvm/serialization/jsonitemdataconverterinterface.h"
 
 class QJsonObject;
 

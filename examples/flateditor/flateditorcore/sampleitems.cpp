@@ -8,9 +8,9 @@
 // ************************************************************************** //
 
 #include "sampleitems.h"
-#include <QColor>
 #include "mvvm/model/comboproperty.h"
 #include "mvvm/signals/itemmapper.h"
+#include <QColor>
 
 using namespace ModelView;
 

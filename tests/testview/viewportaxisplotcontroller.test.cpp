@@ -10,12 +10,12 @@
 #include "customplot_test_utils.h"
 #include "google_test.h"
 #include "mockwidgets.h"
-#include "qcustomplot.h"
-#include <QSignalSpy>
 #include "mvvm/model/sessionmodel.h"
 #include "mvvm/plotting/viewportaxisplotcontroller.h"
 #include "mvvm/standarditems/axisitems.h"
 #include "mvvm/standarditems/plottableitems.h"
+#include "qcustomplot.h"
+#include <QSignalSpy>
 
 using namespace ModelView;
 using ::testing::_;

@@ -7,10 +7,10 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/plotting/statusstringreporterfactory.h"
 #include "mvvm/plotting/colormapinfoformatter.h"
 #include "mvvm/plotting/graphinfoformatter.h"
 #include "mvvm/plotting/statusstringreporter.h"
-#include "mvvm/plotting/statusstringreporterfactory.h"
 
 namespace ModelView {
 

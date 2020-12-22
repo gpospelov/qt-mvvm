@@ -7,11 +7,11 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/widgets/layoututils.h"
 #include <QBoxLayout>
 #include <QGridLayout>
 #include <QLayoutItem>
 #include <QWidget>
-#include "mvvm/widgets/layoututils.h"
 
 namespace {
 void remove(QGridLayout* layout, int row, int column, bool deleteWidgets);

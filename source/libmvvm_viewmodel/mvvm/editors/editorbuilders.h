@@ -10,9 +10,9 @@
 #ifndef MVVM_EDITORS_EDITORBUILDERS_H
 #define MVVM_EDITORS_EDITORBUILDERS_H
 
+#include "mvvm/viewmodel_export.h"
 #include <functional>
 #include <memory>
-#include "mvvm/viewmodel_export.h"
 
 namespace ModelView {
 

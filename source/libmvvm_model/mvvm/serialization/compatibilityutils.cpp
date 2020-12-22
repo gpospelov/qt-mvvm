@@ -7,10 +7,10 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/serialization/compatibilityutils.h"
 #include "mvvm/model/groupitem.h"
 #include "mvvm/model/sessionitemcontainer.h"
 #include "mvvm/model/sessionitemdata.h"
-#include "mvvm/serialization/compatibilityutils.h"
 #include <set>
 
 namespace ModelView ::Compatibility {

@@ -13,9 +13,9 @@
 //! @file commandutils.h
 //! Collection of various utility functions for command service.
 
-#include <memory>
 #include "mvvm/interfaces/itembackupstrategy.h"
 #include "mvvm/interfaces/itemcopystrategy.h"
+#include <memory>
 
 namespace ModelView {
 

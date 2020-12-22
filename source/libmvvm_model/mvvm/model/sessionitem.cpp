@@ -7,9 +7,9 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/model/sessionitem.h"
 #include "mvvm/core/uniqueidgenerator.h"
 #include "mvvm/model/customvariants.h"
-#include "mvvm/model/sessionitem.h"
 #include "mvvm/model/sessionitemdata.h"
 #include "mvvm/model/sessionitemtags.h"
 #include "mvvm/model/sessionmodel.h"

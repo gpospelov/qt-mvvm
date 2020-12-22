@@ -10,9 +10,9 @@
 #ifndef MVVM_WIDGETS_UTILS_H
 #define MVVM_WIDGETS_UTILS_H
 
+#include "mvvm/view_export.h"
 #include <QString>
 #include <QStringList>
-#include "mvvm/view_export.h"
 #include <string>
 #include <vector>
 

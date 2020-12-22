@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#include "mvvm/signals/callbackcontainer.h"
 #include "mvvm/signals/modelmapper.h"
+#include "mvvm/signals/callbackcontainer.h"
 
 using namespace ModelView;
 

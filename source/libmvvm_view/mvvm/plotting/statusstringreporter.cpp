@@ -7,10 +7,10 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/plotting/statusstringreporter.h"
 #include "mvvm/plotting/mousemovereporter.h"
 #include "mvvm/plotting/mouseposinfo.h"
 #include "mvvm/plotting/statusstringformatterinterface.h"
-#include "mvvm/plotting/statusstringreporter.h"
 #include <stdexcept>
 
 using namespace ModelView;

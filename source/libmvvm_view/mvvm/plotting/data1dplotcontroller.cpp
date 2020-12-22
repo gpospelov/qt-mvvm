@@ -7,9 +7,9 @@
 //
 // ************************************************************************** //
 
-#include "qcustomplot.h"
 #include "mvvm/plotting/data1dplotcontroller.h"
 #include "mvvm/standarditems/data1ditem.h"
+#include "qcustomplot.h"
 #include <stdexcept>
 
 namespace {

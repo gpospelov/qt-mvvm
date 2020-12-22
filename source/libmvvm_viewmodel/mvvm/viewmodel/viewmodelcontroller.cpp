@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include <map>
+#include "mvvm/viewmodel/viewmodelcontroller.h"
 #include "mvvm/interfaces/childrenstrategyinterface.h"
 #include "mvvm/interfaces/rowstrategyinterface.h"
 #include "mvvm/model/itemutils.h"
@@ -18,8 +18,8 @@
 #include "mvvm/utils/containerutils.h"
 #include "mvvm/viewmodel/standardviewitems.h"
 #include "mvvm/viewmodel/viewmodelbase.h"
-#include "mvvm/viewmodel/viewmodelcontroller.h"
 #include "mvvm/viewmodel/viewmodelutils.h"
+#include <map>
 #include <stdexcept>
 
 using namespace ModelView;

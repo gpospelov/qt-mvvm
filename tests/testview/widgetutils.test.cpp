@@ -8,10 +8,10 @@
 // ************************************************************************** //
 
 #include "google_test.h"
+#include "mvvm/widgets/widgetutils.h"
 #include "test_utils.h"
 #include <QDebug>
 #include <QDir>
-#include "mvvm/widgets/widgetutils.h"
 
 using namespace ModelView;
 

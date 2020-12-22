@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#include "mvvm/commands/commandutils.h"
 #include "mvvm/commands/copyitemcommand.h"
+#include "mvvm/commands/commandutils.h"
 #include "mvvm/interfaces/itembackupstrategy.h"
 #include "mvvm/interfaces/itemcopystrategy.h"
 #include "mvvm/model/path.h"

@@ -10,11 +10,11 @@
 #ifndef MVVM_UTILS_THREADSAFESTACK_H
 #define MVVM_UTILS_THREADSAFESTACK_H
 
+#include "mvvm/model_export.h"
 #include <atomic>
 #include <condition_variable>
 #include <memory>
 #include <mutex>
-#include "mvvm/model_export.h"
 #include <stack>
 #include <stdexcept>
 #include <thread>

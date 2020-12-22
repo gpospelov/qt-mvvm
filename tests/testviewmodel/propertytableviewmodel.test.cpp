@@ -8,13 +8,13 @@
 // ************************************************************************** //
 
 #include "google_test.h"
-#include "toyitems.h"
 #include "mvvm/model/propertyitem.h"
 #include "mvvm/model/sessionitem.h"
 #include "mvvm/model/sessionmodel.h"
 #include "mvvm/model/taginfo.h"
 #include "mvvm/standarditems/vectoritem.h"
 #include "mvvm/viewmodel/propertytableviewmodel.h"
+#include "toyitems.h"
 
 using namespace ModelView;
 

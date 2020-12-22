@@ -7,10 +7,10 @@
 //
 // ************************************************************************** //
 
-#include "qcustomplot.h"
 #include "mvvm/plotting/colorscaleplotcontroller.h"
 #include "mvvm/plotting/viewportaxisplotcontroller.h"
 #include "mvvm/standarditems/axisitems.h"
+#include "qcustomplot.h"
 #include <stdexcept>
 
 using namespace ModelView;

@@ -9,9 +9,6 @@
 
 #include "folderbasedtest.h"
 #include "google_test.h"
-#include "test_utils.h"
-#include <QJsonObject>
-#include <QSignalSpy>
 #include "mvvm/model/compounditem.h"
 #include "mvvm/model/sessionmodel.h"
 #include "mvvm/model/taginfo.h"
@@ -27,6 +24,9 @@
 #include "mvvm/viewmodel/defaultviewmodel.h"
 #include "mvvm/viewmodel/standardviewitems.h"
 #include "mvvm/viewmodel/viewmodelutils.h"
+#include "test_utils.h"
+#include <QJsonObject>
+#include <QSignalSpy>
 
 using namespace ModelView;
 

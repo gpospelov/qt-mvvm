@@ -9,9 +9,9 @@
 
 #include "folderbasedtest.h"
 #include "google_test.h"
+#include "mvvm/utils/fileutils.h"
 #include "test_utils.h"
 #include <QDir>
-#include "mvvm/utils/fileutils.h"
 #include <stdexcept>
 #include <string>
 

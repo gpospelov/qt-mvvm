@@ -10,8 +10,8 @@
 #ifndef MVVM_MODEL_ITEMUTILS_H
 #define MVVM_MODEL_ITEMUTILS_H
 
-#include <functional>
 #include "mvvm/model_export.h"
+#include <functional>
 #include <string>
 #include <vector>
 

@@ -7,12 +7,12 @@
 //
 // ************************************************************************** //
 
-#include <QApplication>
+#include "mvvm/viewmodel/viewmodeldelegate.h"
 #include "mvvm/editors/customeditor.h"
 #include "mvvm/editors/defaulteditorfactory.h"
 #include "mvvm/model/comboproperty.h"
 #include "mvvm/viewmodel/defaultcelldecorator.h"
-#include "mvvm/viewmodel/viewmodeldelegate.h"
+#include <QApplication>
 
 namespace {
 const double scale_default_height_factor{1.2};

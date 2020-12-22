@@ -10,11 +10,11 @@
 #ifndef MVVM_SIGNALS_CALLBACKCONTAINER_H
 #define MVVM_SIGNALS_CALLBACKCONTAINER_H
 
+#include "mvvm/model_export.h"
+#include "mvvm/signals/callback_types.h"
 #include <algorithm>
 #include <functional>
 #include <list>
-#include "mvvm/model_export.h"
-#include "mvvm/signals/callback_types.h"
 
 namespace ModelView {
 

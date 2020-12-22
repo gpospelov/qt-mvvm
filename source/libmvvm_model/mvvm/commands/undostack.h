@@ -10,9 +10,9 @@
 #ifndef MVVM_COMMANDS_UNDOSTACK_H
 #define MVVM_COMMANDS_UNDOSTACK_H
 
-#include <memory>
 #include "mvvm/interfaces/undostackinterface.h"
 #include "mvvm/model_export.h"
+#include <memory>
 
 class QUndoStack;
 

@@ -8,12 +8,12 @@
 // ************************************************************************** //
 
 #include "google_test.h"
-#include "toyitems.h"
-#include "toymodel.h"
-#include <QGridLayout>
 #include "mvvm/model/sessionmodel.h"
 #include "mvvm/standarditems/vectoritem.h"
 #include "mvvm/widgets/propertyflatview.h"
+#include "toyitems.h"
+#include "toymodel.h"
+#include <QGridLayout>
 
 using namespace ModelView;
 

@@ -8,11 +8,6 @@
 // ************************************************************************** //
 
 #include "sampleeditorwidget.h"
-#include <QBoxLayout>
-#include <QLabel>
-#include <QMenu>
-#include <QTreeView>
-#include <QUndoView>
 #include "mvvm/commands/undostack.h"
 #include "mvvm/model/sessionitem.h"
 #include "mvvm/model/sessionmodel.h"
@@ -20,6 +15,11 @@
 #include "mvvm/viewmodel/topitemsviewmodel.h"
 #include "mvvm/viewmodel/viewitem.h"
 #include "mvvm/widgets/standardtreeviews.h"
+#include <QBoxLayout>
+#include <QLabel>
+#include <QMenu>
+#include <QTreeView>
+#include <QUndoView>
 
 using namespace ModelView;
 

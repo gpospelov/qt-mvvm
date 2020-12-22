@@ -9,13 +9,13 @@
 
 #include "google_test.h"
 #include "mockwidgets.h"
-#include <QColor>
 #include "mvvm/model/sessionmodel.h"
 #include "mvvm/standarditems/axisitems.h"
 #include "mvvm/standarditems/data1ditem.h"
 #include "mvvm/standarditems/graphitem.h"
 #include "mvvm/standarditems/linkeditem.h"
 #include "mvvm/standarditems/plottableitems.h"
+#include <QColor>
 
 using namespace ModelView;
 using ::testing::_;

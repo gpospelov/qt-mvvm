@@ -10,9 +10,9 @@
 #ifndef MVVM_PLOTTING_COLORMAPCANVAS_H
 #define MVVM_PLOTTING_COLORMAPCANVAS_H
 
+#include "mvvm/view_export.h"
 #include <QWidget>
 #include <memory>
-#include "mvvm/view_export.h"
 
 namespace ModelView {
 

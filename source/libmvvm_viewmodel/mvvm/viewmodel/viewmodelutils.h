@@ -10,11 +10,11 @@
 #ifndef MVVM_VIEWMODEL_VIEWMODELUTILS_H
 #define MVVM_VIEWMODEL_VIEWMODELUTILS_H
 
+#include "mvvm/viewmodel_export.h"
 #include <QModelIndex>
 #include <QModelIndexList>
 #include <QVector>
 #include <functional>
-#include "mvvm/viewmodel_export.h"
 #include <vector>
 
 class QStandardItemModel;

@@ -9,14 +9,14 @@
 
 #include "containereditorwidget.h"
 #include "dragviewmodel.h"
+#include "mvvm/model/modelutils.h"
+#include "mvvm/viewmodel/viewmodeldelegate.h"
+#include "mvvm/viewmodel/viewmodelutils.h"
 #include "samplemodel.h"
 #include <QBoxLayout>
 #include <QHeaderView>
 #include <QPushButton>
 #include <QTreeView>
-#include "mvvm/model/modelutils.h"
-#include "mvvm/viewmodel/viewmodeldelegate.h"
-#include "mvvm/viewmodel/viewmodelutils.h"
 
 using namespace ModelView;
 

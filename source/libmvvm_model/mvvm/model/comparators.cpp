@@ -7,12 +7,12 @@
 //
 // ************************************************************************** //
 
-#include <QMetaType>
-#include "mvvm/model/comboproperty.h"
 #include "mvvm/model/comparators.h"
+#include "mvvm/model/comboproperty.h"
 #include "mvvm/model/customvariants.h"
 #include "mvvm/model/externalproperty.h"
 #include "mvvm/utils/reallimits.h"
+#include <QMetaType>
 
 using namespace ModelView;
 

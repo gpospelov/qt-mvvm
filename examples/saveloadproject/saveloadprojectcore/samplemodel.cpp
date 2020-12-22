@@ -8,11 +8,11 @@
 // ************************************************************************** //
 
 #include "samplemodel.h"
-#include <QColor>
 #include "mvvm/model/sessionitemcontainer.h"
 #include "mvvm/standarditems/containeritem.h"
 #include "mvvm/utils/numericutils.h"
 #include "mvvm/widgets/widgetutils.h"
+#include <QColor>
 
 namespace {
 std::string random_name()

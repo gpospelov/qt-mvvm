@@ -10,8 +10,8 @@
 #ifndef MVVM_PROJECT_MODELHASCHANGEDCONTROLLER_H
 #define MVVM_PROJECT_MODELHASCHANGEDCONTROLLER_H
 
-#include <functional>
 #include "mvvm/signals/modellistener.h"
+#include <functional>
 
 namespace ModelView {
 

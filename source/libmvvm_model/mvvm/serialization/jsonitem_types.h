@@ -13,9 +13,9 @@
 //! @file jsonitem_types.h
 //! Collection of custom types involved into SessionItem and JSON mutual convertion.
 
+#include "mvvm/model_export.h"
 #include <functional>
 #include <memory>
-#include "mvvm/model_export.h"
 #include <vector>
 
 class QJsonObject;

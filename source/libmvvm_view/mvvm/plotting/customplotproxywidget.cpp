@@ -7,12 +7,12 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/plotting/customplotproxywidget.h"
 #include <QEvent>
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
 #include <QGraphicsSceneWheelEvent>
 #include <QWidget>
-#include "mvvm/plotting/customplotproxywidget.h"
 
 using namespace ModelView;
 

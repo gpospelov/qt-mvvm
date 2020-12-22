@@ -7,9 +7,9 @@
 //
 // ************************************************************************** //
 
-#include <QColor>
-#include "mvvm/model/comboproperty.h"
 #include "mvvm/standarditems/plottableitems.h"
+#include "mvvm/model/comboproperty.h"
+#include <QColor>
 
 using namespace ModelView;
 

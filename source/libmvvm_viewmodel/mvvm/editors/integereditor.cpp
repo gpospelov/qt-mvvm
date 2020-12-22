@@ -7,10 +7,10 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/editors/integereditor.h"
 #include <QSpinBox>
 #include <QVBoxLayout>
 #include <cmath>
-#include "mvvm/editors/integereditor.h"
 #include <stdexcept>
 
 namespace {

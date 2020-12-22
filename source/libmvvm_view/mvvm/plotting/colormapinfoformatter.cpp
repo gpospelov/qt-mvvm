@@ -7,9 +7,9 @@
 //
 // ************************************************************************** //
 
-#include "qcustomplot.h"
 #include "mvvm/plotting/colormapinfoformatter.h"
 #include "mvvm/utils/stringutils.h"
+#include "qcustomplot.h"
 #include <sstream>
 
 using namespace ModelView;

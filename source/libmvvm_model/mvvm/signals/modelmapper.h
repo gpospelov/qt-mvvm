@@ -10,8 +10,8 @@
 #ifndef MVVM_SIGNALS_MODELMAPPER_H
 #define MVVM_SIGNALS_MODELMAPPER_H
 
-#include <memory>
 #include "mvvm/interfaces/modellistenerinterface.h"
+#include <memory>
 
 namespace ModelView {
 

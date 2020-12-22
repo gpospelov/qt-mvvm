@@ -7,13 +7,13 @@
 //
 // ************************************************************************** //
 
-#include <functional>
-#include "mvvm/factories/modeldocumentfactory.h"
 #include "mvvm/project/project.h"
+#include "mvvm/factories/modeldocumentfactory.h"
 #include "mvvm/project/project_types.h"
 #include "mvvm/project/projectchangecontroller.h"
 #include "mvvm/project/projectutils.h"
 #include "mvvm/utils/fileutils.h"
+#include <functional>
 
 using namespace ModelView;
 

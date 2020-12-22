@@ -7,14 +7,14 @@
 //
 // ************************************************************************** //
 
-#include "qcustomplot.h"
+#include "mvvm/plotting/graphplotcontroller.h"
 #include "mvvm/model/comboproperty.h"
 #include "mvvm/plotting/data1dplotcontroller.h"
-#include "mvvm/plotting/graphplotcontroller.h"
 #include "mvvm/plotting/pencontroller.h"
 #include "mvvm/standarditems/data1ditem.h"
 #include "mvvm/standarditems/graphitem.h"
 #include "mvvm/standarditems/plottableitems.h"
+#include "qcustomplot.h"
 
 using namespace ModelView;
 

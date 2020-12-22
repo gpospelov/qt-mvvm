@@ -9,10 +9,6 @@
 
 #include "folderbasedtest.h"
 #include "google_test.h"
-#include "test_utils.h"
-#include <QJsonArray>
-#include <QJsonDocument>
-#include <QJsonObject>
 #include "mvvm/model/itempool.h"
 #include "mvvm/model/propertyitem.h"
 #include "mvvm/model/sessionitem.h"
@@ -22,6 +18,10 @@
 #include "mvvm/serialization/jsonitem_types.h"
 #include "mvvm/serialization/jsonitemformatassistant.h"
 #include "mvvm/serialization/jsonmodelconverter.h"
+#include "test_utils.h"
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
 #include <stdexcept>
 
 using namespace ModelView;

@@ -7,12 +7,12 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/editors/externalpropertycomboeditor.h"
+#include "mvvm/model/externalproperty.h"
 #include <QColor>
 #include <QComboBox>
 #include <QStandardItemModel>
 #include <QVBoxLayout>
-#include "mvvm/editors/externalpropertycomboeditor.h"
-#include "mvvm/model/externalproperty.h"
 
 using namespace ModelView;
 

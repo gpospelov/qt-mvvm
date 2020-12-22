@@ -10,9 +10,9 @@
 #ifndef MVVM_PLOTTING_STATUSSTRINGREPORTER_H
 #define MVVM_PLOTTING_STATUSSTRINGREPORTER_H
 
+#include "mvvm/view_export.h"
 #include <functional>
 #include <memory>
-#include "mvvm/view_export.h"
 #include <string>
 
 class QCustomPlot;

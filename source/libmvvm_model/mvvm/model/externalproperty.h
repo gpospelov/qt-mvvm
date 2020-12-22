@@ -10,9 +10,9 @@
 #ifndef MVVM_MODEL_EXTERNALPROPERTY_H
 #define MVVM_MODEL_EXTERNALPROPERTY_H
 
-#include <QColor>
 #include "mvvm/core/variant.h"
 #include "mvvm/model_export.h"
+#include <QColor>
 #include <string>
 
 namespace ModelView {

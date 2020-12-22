@@ -7,13 +7,13 @@
 //
 // ************************************************************************** //
 
-#include <cctype>
+#include "mvvm/project/projectutils.h"
 #include "mvvm/interfaces/applicationmodelsinterface.h"
 #include "mvvm/model/sessionmodel.h"
 #include "mvvm/project/project.h"
 #include "mvvm/project/project_types.h"
-#include "mvvm/project/projectutils.h"
 #include "mvvm/utils/fileutils.h"
+#include <cctype>
 
 namespace {
 const std::string json_extention = ".json";

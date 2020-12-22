@@ -9,8 +9,6 @@
 
 #include "customplot_test_utils.h"
 #include "google_test.h"
-#include "qcustomplot.h"
-#include <QSignalSpy>
 #include "mvvm/model/comboproperty.h"
 #include "mvvm/model/sessionmodel.h"
 #include "mvvm/plotting/graphplotcontroller.h"
@@ -18,6 +16,8 @@
 #include "mvvm/standarditems/data1ditem.h"
 #include "mvvm/standarditems/graphitem.h"
 #include "mvvm/standarditems/plottableitems.h"
+#include "qcustomplot.h"
+#include <QSignalSpy>
 
 using namespace ModelView;
 

@@ -7,11 +7,11 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/editors/scientificspinbox.h"
+#include "mvvm/editors/editor_constants.h"
 #include <QLineEdit>
 #include <cmath>
 #include <limits>
-#include "mvvm/editors/editor_constants.h"
-#include "mvvm/editors/scientificspinbox.h"
 
 namespace {
 const double upper_switch = 1000;

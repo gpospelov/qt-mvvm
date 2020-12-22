@@ -7,13 +7,13 @@
 //
 // ************************************************************************** //
 
-#include "qcustomplot.h"
-#include <map>
-#include "mvvm/model/comboproperty.h"
 #include "mvvm/plotting/colormapplotcontroller.h"
+#include "mvvm/model/comboproperty.h"
 #include "mvvm/plotting/data2dplotcontroller.h"
 #include "mvvm/standarditems/colormapitem.h"
 #include "mvvm/standarditems/data2ditem.h"
+#include "qcustomplot.h"
+#include <map>
 
 namespace {
 using gradient_map_t = std::map<std::string, QCPColorGradient::GradientPreset>;

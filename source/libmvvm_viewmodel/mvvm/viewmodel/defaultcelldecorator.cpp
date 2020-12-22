@@ -7,14 +7,14 @@
 //
 // ************************************************************************** //
 
-#include <QModelIndex>
-#include <QStyleOptionViewItem>
+#include "mvvm/viewmodel/defaultcelldecorator.h"
 #include "mvvm/editors/editor_constants.h"
 #include "mvvm/editors/scientificspinbox.h"
 #include "mvvm/model/comboproperty.h"
 #include "mvvm/model/customvariants.h"
 #include "mvvm/model/externalproperty.h"
-#include "mvvm/viewmodel/defaultcelldecorator.h"
+#include <QModelIndex>
+#include <QStyleOptionViewItem>
 
 using namespace ModelView;
 

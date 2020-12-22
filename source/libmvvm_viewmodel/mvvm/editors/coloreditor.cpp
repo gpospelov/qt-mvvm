@@ -7,13 +7,13 @@
 //
 // ************************************************************************** //
 
-#include <QColorDialog>
-#include <QHBoxLayout>
-#include <QLabel>
 #include "mvvm/editors/coloreditor.h"
 #include "mvvm/editors/customeventfilters.h"
 #include "mvvm/editors/styleutils.h"
 #include "mvvm/model/customvariants.h"
+#include <QColorDialog>
+#include <QHBoxLayout>
+#include <QLabel>
 #include <stdexcept>
 
 using namespace ModelView;

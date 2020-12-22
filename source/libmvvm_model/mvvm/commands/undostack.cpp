@@ -7,9 +7,9 @@
 //
 // ************************************************************************** //
 
-#include <QUndoStack>
-#include "mvvm/commands/commandadapter.h"
 #include "mvvm/commands/undostack.h"
+#include "mvvm/commands/commandadapter.h"
+#include <QUndoStack>
 
 using namespace ModelView;
 

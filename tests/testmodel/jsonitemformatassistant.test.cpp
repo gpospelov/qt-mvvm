@@ -8,10 +8,10 @@
 // ************************************************************************** //
 
 #include "google_test.h"
-#include <QJsonArray>
-#include <QJsonObject>
 #include "mvvm/serialization/jsonitemformatassistant.h"
 #include "mvvm/serialization/jsonvariantconverter.h"
+#include <QJsonArray>
+#include <QJsonObject>
 
 using namespace ModelView;
 

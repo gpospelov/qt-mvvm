@@ -7,10 +7,10 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/viewmodel/viewmodel.h"
 #include "mvvm/model/sessionitem.h"
 #include "mvvm/model/sessionmodel.h"
 #include "mvvm/viewmodel/standardviewitems.h"
-#include "mvvm/viewmodel/viewmodel.h"
 #include "mvvm/viewmodel/viewmodelcontroller.h"
 
 using namespace ModelView;

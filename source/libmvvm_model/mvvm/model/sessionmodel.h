@@ -10,13 +10,13 @@
 #ifndef MVVM_MODEL_SESSIONMODEL_H
 #define MVVM_MODEL_SESSIONMODEL_H
 
-#include <memory>
 #include "mvvm/core/types.h"
 #include "mvvm/core/variant.h"
 #include "mvvm/model/function_types.h"
 #include "mvvm/model/sessionitem.h"
 #include "mvvm/model/tagrow.h"
 #include "mvvm/model_export.h"
+#include <memory>
 
 namespace ModelView {
 

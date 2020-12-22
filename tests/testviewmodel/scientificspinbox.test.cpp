@@ -8,8 +8,8 @@
 // ************************************************************************** //
 
 #include "google_test.h"
-#include <limits>
 #include "mvvm/editors/scientificspinbox.h"
+#include <limits>
 
 using namespace ModelView;
 

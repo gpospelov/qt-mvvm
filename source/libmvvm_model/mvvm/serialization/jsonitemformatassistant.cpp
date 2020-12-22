@@ -7,9 +7,9 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/serialization/jsonitemformatassistant.h"
 #include <QJsonObject>
 #include <QStringList>
-#include "mvvm/serialization/jsonitemformatassistant.h"
 
 using namespace ModelView;
 

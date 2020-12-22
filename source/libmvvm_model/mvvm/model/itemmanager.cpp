@@ -7,9 +7,9 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/model/itemmanager.h"
 #include "mvvm/factories/itemcataloguefactory.h"
 #include "mvvm/model/itemfactory.h"
-#include "mvvm/model/itemmanager.h"
 #include "mvvm/model/itempool.h"
 #include "mvvm/model/sessionitem.h"
 

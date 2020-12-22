@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#include "mvvm/commands/abstractitemcommand.h"
 #include "mvvm/commands/commandadapter.h"
+#include "mvvm/commands/abstractitemcommand.h"
 
 using namespace ModelView;
 

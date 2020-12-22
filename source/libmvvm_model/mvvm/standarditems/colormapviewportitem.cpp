@@ -7,11 +7,11 @@
 //
 // ************************************************************************** //
 
-#include <algorithm>
+#include "mvvm/standarditems/colormapviewportitem.h"
 #include "mvvm/standarditems/axisitems.h"
 #include "mvvm/standarditems/colormapitem.h"
-#include "mvvm/standarditems/colormapviewportitem.h"
 #include "mvvm/standarditems/data2ditem.h"
+#include <algorithm>
 #include <vector>
 
 namespace {

@@ -10,8 +10,8 @@
 #ifndef MVVM_PROJECT_PROJECTUTILS_H
 #define MVVM_PROJECT_PROJECTUTILS_H
 
-#include <memory>
 #include "mvvm/model_export.h"
+#include <memory>
 #include <string>
 #include <vector>
 

@@ -13,6 +13,10 @@
 // https://gist.github.com/mistic100/c3b7f3eabc65309687153fe3e0a9a720
 // ----------------------------------------------------------------------------
 
+#include "mvvm/editors/selectablecomboboxeditor.h"
+#include "mvvm/editors/customeventfilters.h"
+#include "mvvm/model/comboproperty.h"
+#include "mvvm/utils/containerutils.h"
 #include <QAbstractItemView>
 #include <QComboBox>
 #include <QLineEdit>
@@ -21,10 +25,6 @@
 #include <QStandardItemModel>
 #include <QStyledItemDelegate>
 #include <QVBoxLayout>
-#include "mvvm/editors/customeventfilters.h"
-#include "mvvm/editors/selectablecomboboxeditor.h"
-#include "mvvm/model/comboproperty.h"
-#include "mvvm/utils/containerutils.h"
 
 using namespace ModelView;
 

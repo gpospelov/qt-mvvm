@@ -8,9 +8,9 @@
 // ************************************************************************** //
 
 #include "google_test.h"
-#include <memory>
 #include "mvvm/model/itempool.h"
 #include "mvvm/model/sessionitem.h"
+#include <memory>
 #include <stdexcept>
 
 using namespace ModelView;

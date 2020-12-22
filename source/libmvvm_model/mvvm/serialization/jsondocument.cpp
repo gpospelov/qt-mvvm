@@ -7,13 +7,13 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/serialization/jsondocument.h"
+#include "mvvm/factories/modelconverterfactory.h"
+#include "mvvm/model/sessionmodel.h"
 #include <QFile>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
-#include "mvvm/factories/modelconverterfactory.h"
-#include "mvvm/model/sessionmodel.h"
-#include "mvvm/serialization/jsondocument.h"
 #include <sstream>
 #include <stdexcept>
 

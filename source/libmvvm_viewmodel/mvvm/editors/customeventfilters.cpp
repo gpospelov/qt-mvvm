@@ -7,10 +7,10 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/editors/customeventfilters.h"
 #include <QAbstractSpinBox>
 #include <QComboBox>
 #include <QEvent>
-#include "mvvm/editors/customeventfilters.h"
 
 using namespace ModelView;
 

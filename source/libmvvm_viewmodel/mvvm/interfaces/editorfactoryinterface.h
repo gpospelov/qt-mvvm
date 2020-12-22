@@ -10,8 +10,8 @@
 #ifndef MVVM_EDITORS_EDITORFACTORYINTERFACE_H
 #define MVVM_EDITORS_EDITORFACTORYINTERFACE_H
 
-#include <memory>
 #include "mvvm/viewmodel_export.h"
+#include <memory>
 #include <string>
 
 class QModelIndex;

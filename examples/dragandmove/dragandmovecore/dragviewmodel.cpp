@@ -8,14 +8,14 @@
 // ************************************************************************** //
 
 #include "dragviewmodel.h"
-#include <QByteArray>
-#include <QDataStream>
-#include <QMimeData>
-#include <algorithm>
 #include "mvvm/model/sessionitem.h"
 #include "mvvm/model/sessionmodel.h"
 #include "mvvm/viewmodel/viewmodelutils.h"
 #include "mvvm/widgets/widgetutils.h"
+#include <QByteArray>
+#include <QDataStream>
+#include <QMimeData>
+#include <algorithm>
 
 namespace {
 const QString AppMimeType = "application/org.bornagainproject.moveitem";

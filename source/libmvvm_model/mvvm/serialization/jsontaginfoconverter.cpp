@@ -7,11 +7,11 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/serialization/jsontaginfoconverter.h"
+#include "mvvm/model/taginfo.h"
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QStringList>
-#include "mvvm/model/taginfo.h"
-#include "mvvm/serialization/jsontaginfoconverter.h"
 #include <stdexcept>
 
 using namespace ModelView;

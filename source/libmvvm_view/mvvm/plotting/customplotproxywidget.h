@@ -10,8 +10,8 @@
 #ifndef MVVM_PLOTTING_CUSTOMPLOTPROXYWIDGET_H
 #define MVVM_PLOTTING_CUSTOMPLOTPROXYWIDGET_H
 
-#include <QGraphicsProxyWidget>
 #include "mvvm/view_export.h"
+#include <QGraphicsProxyWidget>
 
 class QWidget;
 

@@ -10,9 +10,9 @@
 #ifndef MVVM_VIEWMODEL_VIEWMODELBASE_H
 #define MVVM_VIEWMODEL_VIEWMODELBASE_H
 
+#include "mvvm/viewmodel_export.h"
 #include <QAbstractItemModel>
 #include <memory>
-#include "mvvm/viewmodel_export.h"
 
 namespace ModelView {
 

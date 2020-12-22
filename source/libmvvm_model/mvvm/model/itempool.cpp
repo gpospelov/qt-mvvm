@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#include "mvvm/core/uniqueidgenerator.h"
 #include "mvvm/model/itempool.h"
+#include "mvvm/core/uniqueidgenerator.h"
 #include <stdexcept>
 
 using namespace ModelView;

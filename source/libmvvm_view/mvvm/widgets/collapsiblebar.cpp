@@ -7,13 +7,13 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/widgets/collapsiblebar.h"
+#include "mvvm/widgets/widgetutils.h"
 #include <QEvent>
 #include <QHBoxLayout>
 #include <QIcon>
 #include <QLabel>
 #include <QMouseEvent>
-#include "mvvm/widgets/collapsiblebar.h"
-#include "mvvm/widgets/widgetutils.h"
 
 using namespace ModelView;
 

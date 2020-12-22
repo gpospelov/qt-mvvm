@@ -10,8 +10,8 @@
 #ifndef MVVM_SIGNALS_CALLBACK_TYPES_H
 #define MVVM_SIGNALS_CALLBACK_TYPES_H
 
-#include <functional>
 #include "mvvm/model/tagrow.h"
+#include <functional>
 #include <string>
 
 namespace ModelView {

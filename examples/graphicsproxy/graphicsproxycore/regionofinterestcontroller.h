@@ -10,8 +10,8 @@
 #ifndef GRAPHICSPROXY_REGIONOFINTERESTCONTROLLER_H
 #define GRAPHICSPROXY_REGIONOFINTERESTCONTROLLER_H
 
-#include <memory>
 #include "mvvm/signals/itemlistener.h"
+#include <memory>
 
 namespace ModelView {
 class SceneAdapterInterface;

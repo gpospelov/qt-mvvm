@@ -9,10 +9,10 @@
 
 #include "google_test.h"
 #include "mockwidgets.h"
-#include <memory>
 #include "mvvm/model/mvvm_types.h"
 #include "mvvm/model/sessionitem.h"
 #include "mvvm/signals/callbackcontainer.h"
+#include <memory>
 
 using namespace ModelView;
 using ::testing::_;

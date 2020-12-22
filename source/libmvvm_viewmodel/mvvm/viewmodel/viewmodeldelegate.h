@@ -10,9 +10,9 @@
 #ifndef MVVM_VIEWMODEL_VIEWMODELDELEGATE_H
 #define MVVM_VIEWMODEL_VIEWMODELDELEGATE_H
 
+#include "mvvm/viewmodel_export.h"
 #include <QStyledItemDelegate>
 #include <memory>
-#include "mvvm/viewmodel_export.h"
 
 namespace ModelView {
 

@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#include "mvvm/factories/itemconverterfactory.h"
 #include "mvvm/factories/modelconverterfactory.h"
+#include "mvvm/factories/itemconverterfactory.h"
 #include "mvvm/serialization/jsonitem_types.h"
 #include "mvvm/serialization/jsonmodelconverter.h"
 

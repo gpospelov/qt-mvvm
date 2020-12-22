@@ -8,14 +8,14 @@
 // ************************************************************************** //
 
 #include "projecthandler.h"
+#include "mvvm/factories/projectmanagerfactory.h"
+#include "mvvm/project/project_types.h"
+#include "mvvm/widgets/widgetutils.h"
 #include "recentprojectsettings.h"
 #include "recentprojectwidget.h"
 #include "samplemodel.h"
 #include "userinteractor.h"
 #include <QMainWindow>
-#include "mvvm/factories/projectmanagerfactory.h"
-#include "mvvm/project/project_types.h"
-#include "mvvm/widgets/widgetutils.h"
 
 using namespace ModelView;
 

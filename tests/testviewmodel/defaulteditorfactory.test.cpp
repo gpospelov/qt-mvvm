@@ -8,10 +8,6 @@
 // ************************************************************************** //
 
 #include "google_test.h"
-#include "widgetbasedtest.h"
-#include <QSpinBox>
-#include <QStandardItemModel>
-#include <limits>
 #include "mvvm/editors/booleditor.h"
 #include "mvvm/editors/coloreditor.h"
 #include "mvvm/editors/combopropertyeditor.h"
@@ -31,6 +27,10 @@
 #include "mvvm/utils/reallimits.h"
 #include "mvvm/viewmodel/defaultviewmodel.h"
 #include "mvvm/viewmodel/viewmodeldelegate.h"
+#include "widgetbasedtest.h"
+#include <QSpinBox>
+#include <QStandardItemModel>
+#include <limits>
 
 using namespace ModelView;
 

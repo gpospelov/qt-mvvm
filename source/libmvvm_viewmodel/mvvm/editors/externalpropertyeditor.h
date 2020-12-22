@@ -10,8 +10,8 @@
 #ifndef MVVM_EDITORS_EXTERNALPROPERTYEDITOR_H
 #define MVVM_EDITORS_EXTERNALPROPERTYEDITOR_H
 
-#include <functional>
 #include "mvvm/editors/customeditor.h"
+#include <functional>
 
 class QLabel;
 

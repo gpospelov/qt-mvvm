@@ -10,9 +10,9 @@
 #ifndef MVVM_COMMANDS_COMMANDADAPTER_H
 #define MVVM_COMMANDS_COMMANDADAPTER_H
 
+#include "mvvm/model_export.h"
 #include <QUndoCommand>
 #include <memory>
-#include "mvvm/model_export.h"
 
 namespace ModelView {
 

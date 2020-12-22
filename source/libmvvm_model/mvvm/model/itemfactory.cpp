@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#include "mvvm/model/itemcatalogue.h"
 #include "mvvm/model/itemfactory.h"
+#include "mvvm/model/itemcatalogue.h"
 #include "mvvm/model/sessionitem.h"
 
 using namespace ModelView;

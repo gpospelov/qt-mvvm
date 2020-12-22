@@ -10,9 +10,9 @@
 #ifndef MVVM_SERIALIZATION_JSONITEMFORMATASSISTANT_H
 #define MVVM_SERIALIZATION_JSONITEMFORMATASSISTANT_H
 
+#include "mvvm/serialization/jsonitemconverterinterface.h"
 #include <QString>
 #include <memory>
-#include "mvvm/serialization/jsonitemconverterinterface.h"
 
 namespace ModelView {
 

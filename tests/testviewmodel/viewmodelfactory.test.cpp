@@ -8,13 +8,13 @@
 // ************************************************************************** //
 
 #include "google_test.h"
-#include "test_utils.h"
 #include "mvvm/factories/viewmodelfactory.h"
 #include "mvvm/model/propertyitem.h"
 #include "mvvm/model/sessionmodel.h"
 #include "mvvm/viewmodel/labeldatarowstrategy.h"
 #include "mvvm/viewmodel/standardchildrenstrategies.h"
 #include "mvvm/viewmodel/standardviewitems.h"
+#include "test_utils.h"
 
 using namespace ModelView;
 
