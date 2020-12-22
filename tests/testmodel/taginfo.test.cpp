@@ -15,11 +15,7 @@ using namespace ModelView;
 //! Tests of TagInfo class.
 
 class TagInfoTest : public ::testing::Test {
-public:
-    ~TagInfoTest();
 };
-
-TagInfoTest::~TagInfoTest() = default;
 
 TEST_F(TagInfoTest, initialState)
 {

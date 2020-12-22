@@ -27,10 +27,7 @@ using namespace ModelView;
 class JsonItemDataConverterTest : public FolderBasedTest {
 public:
     JsonItemDataConverterTest() : FolderBasedTest("test_JsonItemData") {}
-    ~JsonItemDataConverterTest();
 };
-
-JsonItemDataConverterTest::~JsonItemDataConverterTest() = default;
 
 //! Creating QJsonArray from SessionItemData.
 

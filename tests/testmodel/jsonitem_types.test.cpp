@@ -15,11 +15,7 @@ using namespace ModelView;
 //! Testing json related flags.
 
 class JsonItemTypesTest : public ::testing::Test {
-public:
-    ~JsonItemTypesTest();
 };
-
-JsonItemTypesTest::~JsonItemTypesTest() = default;
 
 TEST_F(JsonItemTypesTest, isRegenerateIdWhenBackFromJson)
 {

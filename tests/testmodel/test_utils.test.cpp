@@ -15,11 +15,7 @@ using TestUtils::toVector;
 //! Testing functions in test_utils.
 
 class TestUtilsTest : public ::testing::Test {
-public:
-    ~TestUtilsTest();
 };
-
-TestUtilsTest::~TestUtilsTest() = default;
 
 //! Testing toVector function.
 

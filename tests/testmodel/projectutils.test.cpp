@@ -30,8 +30,6 @@ public:
     {
     }
 
-    ~ProjectUtilsTest();
-
     std::vector<SessionModel*> models() const { return {sample_model.get()}; };
 
     ProjectContext createContext()
@@ -43,8 +41,6 @@ public:
 
     std::unique_ptr<SessionModel> sample_model;
 };
-
-ProjectUtilsTest::~ProjectUtilsTest() = default;
 
 //! Testing helper structure.
 

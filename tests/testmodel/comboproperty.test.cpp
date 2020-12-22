@@ -15,11 +15,7 @@
 using namespace ModelView;
 
 class ComboPropertyTest : public ::testing::Test {
-public:
-    ~ComboPropertyTest();
 };
-
-ComboPropertyTest::~ComboPropertyTest() = default;
 
 TEST_F(ComboPropertyTest, initialState)
 {

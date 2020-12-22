@@ -32,7 +32,6 @@ public:
         , sample_model(std::make_unique<ModelView::SessionModel>(samplemodel_name))
     {
     }
-    ~ProjectManagerDecoratorTest();
 
     std::vector<SessionModel*> models() const { return {sample_model.get()}; };
 
@@ -54,8 +53,6 @@ public:
 
     std::unique_ptr<SessionModel> sample_model;
 };
-
-ProjectManagerDecoratorTest::~ProjectManagerDecoratorTest() = default;
 
 //! Initial state of ProjectManager. Project created, and not-saved.
 

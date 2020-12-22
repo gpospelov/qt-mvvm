@@ -15,11 +15,7 @@
 using namespace ModelView;
 
 class JsonUtilsTest : public ::testing::Test {
-protected:
-    ~JsonUtilsTest();
 };
-
-JsonUtilsTest::~JsonUtilsTest() = default;
 
 TEST_F(JsonUtilsTest, toString)
 {

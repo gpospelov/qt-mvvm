@@ -21,7 +21,6 @@ class ItemListenerTest : public ::testing::Test {
 public:
     class TestController : public ItemListener<PropertyItem> {
     public:
-        ~TestController();
         size_t ondata_change_call_count{0};
         size_t on_unsubscribe_call_count{0};
         void subscribe()
@@ -32,12 +31,7 @@ public:
 
         void unsubscribe() { on_unsubscribe_call_count++; }
     };
-
-    ~ItemListenerTest();
 };
-
-ItemListenerTest::~ItemListenerTest() = default;
-ItemListenerTest::TestController::~TestController() = default;
 
 //! Initial state.
 

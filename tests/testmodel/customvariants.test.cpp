@@ -24,15 +24,11 @@ using namespace ModelView;
 
 class CustomVariantsTest : public ::testing::Test {
 public:
-    ~CustomVariantsTest();
-
     template <typename T> QVariant variantFromArgument(const T& value)
     {
         return QVariant::fromValue(value);
     }
 };
-
-CustomVariantsTest::~CustomVariantsTest() = default;
 
 //! To keep under control implicit type conversion.
 

@@ -17,11 +17,7 @@ using namespace ModelView;
 //! VectorItem tests.
 
 class VectorItemTest : public ::testing::Test {
-public:
-    ~VectorItemTest();
 };
-
-VectorItemTest::~VectorItemTest() = default;
 
 //! Initial state of item when it is created outside of model context.
 

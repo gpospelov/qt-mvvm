@@ -17,11 +17,7 @@ using namespace ModelView;
 //! Tests for TestSessionItemContainer class.
 
 class SessionItemContainerTest : public ::testing::Test {
-public:
-    ~SessionItemContainerTest();
 };
-
-SessionItemContainerTest::~SessionItemContainerTest() = default;
 
 //! Initial state of emty SessionItemTag.
 

@@ -20,11 +20,7 @@ using namespace ModelView;
 //! Test of CompatibilityUtilsTest.
 
 class CompatibilityUtilsTest : public ::testing::Test {
-public:
-    ~CompatibilityUtilsTest();
 };
-
-CompatibilityUtilsTest::~CompatibilityUtilsTest() = default;
 
 //! Testing IsCompatibleSingleProperty.
 

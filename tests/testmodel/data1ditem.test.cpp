@@ -20,11 +20,7 @@ using ::testing::_;
 //! Testing Data1DItem.
 
 class Data1DItemTest : public ::testing::Test {
-public:
-    ~Data1DItemTest();
 };
-
-Data1DItemTest::~Data1DItemTest() = default;
 
 //! Initial state.
 

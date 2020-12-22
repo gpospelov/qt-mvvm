@@ -31,10 +31,7 @@ using namespace ModelView;
 class JsonModelConverterTest : public FolderBasedTest {
 public:
     JsonModelConverterTest() : FolderBasedTest("test_JsonModelConverter") {}
-    ~JsonModelConverterTest();
 };
-
-JsonModelConverterTest::~JsonModelConverterTest() = default;
 
 //! Creation of json object: empty model.
 

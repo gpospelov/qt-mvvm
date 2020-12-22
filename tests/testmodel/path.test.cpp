@@ -18,11 +18,7 @@
 using namespace ModelView;
 
 class PathTest : public ::testing::Test {
-public:
-    ~PathTest();
 };
-
-PathTest::~PathTest() = default;
 
 TEST_F(PathTest, initialState)
 {

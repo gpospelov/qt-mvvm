@@ -16,11 +16,7 @@ using namespace ModelView;
 //! Testing BinUtils
 
 class BinUtilsTest : public ::testing::Test {
-public:
-    ~BinUtilsTest();
 };
-
-BinUtilsTest::~BinUtilsTest() = default;
 
 //! Testing Binary Files
 

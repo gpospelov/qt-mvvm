@@ -16,11 +16,7 @@ using namespace ModelView;
 //! Testing GroupItem class.
 
 class GroupItemTest : public ::testing::Test {
-public:
-    ~GroupItemTest();
 };
-
-GroupItemTest::~GroupItemTest() = default;
 
 TEST_F(GroupItemTest, initialState)
 {

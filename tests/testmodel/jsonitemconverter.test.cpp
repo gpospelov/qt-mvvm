@@ -52,7 +52,6 @@ public:
         : FolderBasedTest("test_JsonItemConverter"), m_model(std::make_unique<TestModel>())
     {
     }
-    ~JsonItemConverterTest();
 
     std::unique_ptr<JsonItemConverter> createConverter()
     {
@@ -63,8 +62,6 @@ public:
 private:
     std::unique_ptr<SessionModel> m_model;
 };
-
-JsonItemConverterTest::~JsonItemConverterTest() = default;
 
 //! PropertyItem to json object.
 

@@ -17,11 +17,7 @@ using namespace ModelView;
 //! Testing PlottableItemsTest.
 
 class PlottableItemsTest : public ::testing::Test {
-public:
-    ~PlottableItemsTest();
 };
-
-PlottableItemsTest::~PlottableItemsTest() = default;
 
 //! Initial state.
 

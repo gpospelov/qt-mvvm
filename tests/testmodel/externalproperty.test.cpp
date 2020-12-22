@@ -14,11 +14,7 @@
 using namespace ModelView;
 
 class ExternalPropertyTest : public ::testing::Test {
-public:
-    ~ExternalPropertyTest();
 };
-
-ExternalPropertyTest::~ExternalPropertyTest() = default;
 
 TEST_F(ExternalPropertyTest, initialState)
 {

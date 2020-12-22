@@ -21,11 +21,7 @@ using ::testing::_;
 //! Testing ColorMapViewportItem.
 
 class ColorMapViewportItemTest : public ::testing::Test {
-public:
-    ~ColorMapViewportItemTest();
 };
-
-ColorMapViewportItemTest::~ColorMapViewportItemTest() = default;
 
 //! Initial state.
 

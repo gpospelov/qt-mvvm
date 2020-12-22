@@ -16,12 +16,8 @@ using namespace ModelView;
 
 class TagRowTest : public ::testing::Test {
 public:
-    ~TagRowTest();
-
     TagRow test_method(const TagRow& input) { return input; }
 };
-
-TagRowTest::~TagRowTest() = default;
 
 //! Initial state.
 

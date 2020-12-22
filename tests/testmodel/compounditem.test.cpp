@@ -25,11 +25,7 @@ const std::string property_name("name");
 //! Test of CompountItem machinery (property children etc).
 
 class CompoundItemTest : public ::testing::Test {
-public:
-    ~CompoundItemTest();
 };
-
-CompoundItemTest::~CompoundItemTest() = default;
 
 TEST_F(CompoundItemTest, initialState)
 {

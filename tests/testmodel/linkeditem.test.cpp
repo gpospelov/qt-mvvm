@@ -20,11 +20,7 @@ using ::testing::_;
 //! LinkedItem tests.
 
 class LinkedItemTest : public ::testing::Test {
-public:
-    ~LinkedItemTest();
 };
-
-LinkedItemTest::~LinkedItemTest() = default;
 
 //! Initial state of item when it is created outside of model context.
 

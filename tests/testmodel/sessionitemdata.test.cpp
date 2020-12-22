@@ -18,11 +18,7 @@ using namespace ModelView;
 //! Test of SessionItemData.
 
 class SessionItemDataTest : public ::testing::Test {
-public:
-    ~SessionItemDataTest();
 };
-
-SessionItemDataTest::~SessionItemDataTest() = default;
 
 //! Initial state of SessionItemData object.
 

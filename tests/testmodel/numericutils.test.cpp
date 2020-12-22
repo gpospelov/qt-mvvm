@@ -14,11 +14,7 @@
 using namespace ModelView;
 
 class NumericUtilsTest : public ::testing::Test {
-public:
-    ~NumericUtilsTest();
 };
-
-NumericUtilsTest::~NumericUtilsTest() = default;
 
 TEST_F(NumericUtilsTest, areAlmostEqual)
 {

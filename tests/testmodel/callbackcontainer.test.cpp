@@ -20,11 +20,7 @@ using ::testing::_;
 //! Testing CallbackContainer class.
 
 class CallbackContainerTest : public ::testing::Test {
-public:
-    ~CallbackContainerTest();
 };
-
-CallbackContainerTest::~CallbackContainerTest() = default;
 
 //! Callback container notifies single widget. Check if removal of widget disables notifications.
 

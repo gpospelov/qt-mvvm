@@ -13,11 +13,7 @@
 using namespace ModelView;
 
 class ProgressHandlerTest : public ::testing::Test {
-public:
-    ~ProgressHandlerTest();
 };
-
-ProgressHandlerTest::~ProgressHandlerTest() = default;
 
 TEST_F(ProgressHandlerTest, initialState)
 {

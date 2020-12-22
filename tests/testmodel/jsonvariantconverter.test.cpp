@@ -29,7 +29,6 @@ using namespace ModelView;
 class JsonVariantConverterTest : public FolderBasedTest {
 public:
     JsonVariantConverterTest() : FolderBasedTest("test_JsonVariant") {}
-    ~JsonVariantConverterTest();
 
     static QVariant ToJsonAndBack(const QVariant& variant)
     {
@@ -38,8 +37,6 @@ public:
         return converter.get_variant(json);
     }
 };
-
-JsonVariantConverterTest::~JsonVariantConverterTest() = default;
 
 //! Invalid QVariant conversion.
 

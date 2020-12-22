@@ -19,11 +19,7 @@ using namespace ModelView;
 //! Testing ItemCatalogue construction
 
 class ItemCatalogueTest : public ::testing::Test {
-public:
-    ~ItemCatalogueTest();
 };
-
-ItemCatalogueTest::~ItemCatalogueTest() = default;
 
 TEST_F(ItemCatalogueTest, initialState)
 {

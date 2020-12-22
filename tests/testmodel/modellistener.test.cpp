@@ -22,14 +22,8 @@ public:
     class TestListener : public ModelListener<SessionModel> {
     public:
         TestListener(SessionModel* model) : ModelListener(model) {}
-        ~TestListener();
     };
-
-    ~ModelListenerTest();
 };
-
-ModelListenerTest::~ModelListenerTest() = default;
-ModelListenerTest::TestListener::~TestListener() = default;
 
 //! Initial state.
 

@@ -66,12 +66,8 @@ public:
         return std::make_unique<JsonItemContainerConverter>(callbacks);
     }
 
-    ~JsonItemContainerConverterTest();
-
     std::unique_ptr<JsonItemDataConverter> m_itemdata_converter;
 };
-
-JsonItemContainerConverterTest::~JsonItemContainerConverterTest() = default;
 
 //! SessionItemContainer (with single property item) to json object.
 

@@ -16,11 +16,7 @@ using namespace ModelView;
 //! Testing AxisItems.
 
 class ThreadSafeStackTest : public ::testing::Test {
-public:
-    ~ThreadSafeStackTest();
 };
-
-ThreadSafeStackTest::~ThreadSafeStackTest() = default;
 
 //! Checking stack initial state (single thread mode).
 

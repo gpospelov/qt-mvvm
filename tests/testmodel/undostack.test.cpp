@@ -26,11 +26,7 @@
 using namespace ModelView;
 
 class UndoStackTest : public ::testing::Test {
-public:
-    ~UndoStackTest();
 };
-
-UndoStackTest::~UndoStackTest() = default;
 
 //! Checking time of life of the command during undo/redo.
 //! This is connected with the fact, that Qt takes ownership of the command and we have to use

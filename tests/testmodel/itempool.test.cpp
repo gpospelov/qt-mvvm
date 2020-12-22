@@ -18,11 +18,7 @@ using namespace ModelView;
 //! Tests of ItemPool and its abilities to register/deregister SessionItem.
 
 class ItemPoolTest : public ::testing::Test {
-public:
-    ~ItemPoolTest();
 };
-
-ItemPoolTest::~ItemPoolTest() = default;
 
 TEST_F(ItemPoolTest, initialState)
 {

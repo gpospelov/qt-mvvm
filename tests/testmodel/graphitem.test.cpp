@@ -23,11 +23,7 @@ using ::testing::_;
 //! Testing GraphItem.
 
 class GraphItemTest : public ::testing::Test {
-public:
-    ~GraphItemTest();
 };
-
-GraphItemTest::~GraphItemTest() = default;
 
 //! Initial state.
 

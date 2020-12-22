@@ -21,11 +21,7 @@ using ::testing::_;
 //! Testing AxesItems.
 
 class GraphViewportItemTest : public ::testing::Test {
-public:
-    ~GraphViewportItemTest();
 };
-
-GraphViewportItemTest::~GraphViewportItemTest() = default;
 
 //! Initial state.
 

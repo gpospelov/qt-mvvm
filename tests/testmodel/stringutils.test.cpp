@@ -15,11 +15,7 @@ using namespace ModelView;
 using namespace TestUtils;
 
 class StringUtilsTest : public ::testing::Test {
-public:
-    ~StringUtilsTest();
 };
-
-StringUtilsTest::~StringUtilsTest() = default;
 
 TEST_F(StringUtilsTest, ScientificDoubleToString)
 {

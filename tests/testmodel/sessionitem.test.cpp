@@ -22,11 +22,7 @@
 using namespace ModelView;
 
 class SessionItemTest : public ::testing::Test {
-public:
-    ~SessionItemTest();
 };
-
-SessionItemTest::~SessionItemTest() = default;
 
 TEST_F(SessionItemTest, initialState)
 {

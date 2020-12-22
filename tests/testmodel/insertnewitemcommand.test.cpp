@@ -22,7 +22,6 @@ using namespace ModelView;
 
 class InsertNewItemCommandTest : public ::testing::Test {
 public:
-    ~InsertNewItemCommandTest();
     std::unique_ptr<InsertNewItemCommand> create_command(SessionItem* parent, std::string tag,
                                                          int row)
     {
@@ -32,8 +31,6 @@ public:
         return std::make_unique<InsertNewItemCommand>(factory_func, parent, TagRow{tag, row});
     }
 };
-
-InsertNewItemCommandTest::~InsertNewItemCommandTest() = default;
 
 //! Insert new item through InsertNewItemCommand command.
 

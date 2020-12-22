@@ -19,11 +19,7 @@
 using namespace ModelView;
 
 class CopyItemCommandTest : public ::testing::Test {
-public:
-    ~CopyItemCommandTest();
 };
-
-CopyItemCommandTest::~CopyItemCommandTest() = default;
 
 TEST_F(CopyItemCommandTest, copyChild)
 {

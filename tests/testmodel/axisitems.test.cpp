@@ -15,11 +15,7 @@ using namespace ModelView;
 //! Testing AxisItems.
 
 class AxisItemsTest : public ::testing::Test {
-public:
-    ~AxisItemsTest();
 };
-
-AxisItemsTest::~AxisItemsTest() = default;
 
 //! Initial state
 

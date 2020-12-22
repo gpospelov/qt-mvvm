@@ -19,11 +19,7 @@ using namespace ModelView;
 //! Tests for SessionItemTags class.
 
 class SessionItemTagsTest : public ::testing::Test {
-public:
-    ~SessionItemTagsTest();
 };
-
-SessionItemTagsTest::~SessionItemTagsTest() = default;
 
 //! Initial state of emty SessionItemTags.
 

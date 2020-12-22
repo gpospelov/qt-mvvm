@@ -22,11 +22,7 @@ using ::testing::_;
 //! Testing ColorMapItem.
 
 class ColorMapItemTest : public ::testing::Test {
-public:
-    ~ColorMapItemTest();
 };
-
-ColorMapItemTest::~ColorMapItemTest() = default;
 
 //! Initial state.
 

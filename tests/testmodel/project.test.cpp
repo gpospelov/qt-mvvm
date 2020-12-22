@@ -43,7 +43,6 @@ public:
         , material_model(std::make_unique<SessionModel>(materialmodel_name))
     {
     }
-    ~ProjectTest();
 
     std::vector<SessionModel*> models() const
     {
@@ -60,8 +59,6 @@ public:
     std::unique_ptr<SessionModel> sample_model;
     std::unique_ptr<SessionModel> material_model;
 };
-
-ProjectTest::~ProjectTest() = default;
 
 TEST_F(ProjectTest, initialState)
 {

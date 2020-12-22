@@ -16,11 +16,7 @@
 using namespace ModelView;
 
 class SetValueCommandTest : public ::testing::Test {
-public:
-    ~SetValueCommandTest();
 };
-
-SetValueCommandTest::~SetValueCommandTest() = default;
 
 //! Set item value through SetValueCommand command.
 

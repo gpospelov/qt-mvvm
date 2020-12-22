@@ -21,11 +21,7 @@ using ::testing::_;
 //! Testing ModelMapper callbacks on basic model manipulations.
 
 class ModelMapperTest : public ::testing::Test {
-public:
-    ~ModelMapperTest();
 };
-
-ModelMapperTest::~ModelMapperTest() = default;
 
 //! Setting item data and checking corresponding signal.
 

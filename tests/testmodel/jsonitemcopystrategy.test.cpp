@@ -23,7 +23,6 @@ public:
         : m_factory(std::make_unique<ItemFactory>(CreateStandardItemCatalogue()))
     {
     }
-    ~JsonItemCopyStrategyTest();
 
     std::unique_ptr<JsonItemCopyStrategy> createCopyStrategy()
     {
@@ -32,8 +31,6 @@ public:
 
     std::unique_ptr<ItemFactory> m_factory;
 };
-
-JsonItemCopyStrategyTest::~JsonItemCopyStrategyTest() = default;
 
 //! Saving/restoring PropertyItem.
 

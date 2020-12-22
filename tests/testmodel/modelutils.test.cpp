@@ -15,11 +15,7 @@
 using namespace ModelView;
 
 class ModelUtilsTest : public ::testing::Test {
-public:
-    ~ModelUtilsTest();
 };
-
-ModelUtilsTest::~ModelUtilsTest() = default;
 
 TEST_F(ModelUtilsTest, topItem)
 {

@@ -17,11 +17,7 @@
 using namespace ModelView;
 
 class MoveItemCommandTest : public ::testing::Test {
-public:
-    ~MoveItemCommandTest();
 };
-
-MoveItemCommandTest::~MoveItemCommandTest() = default;
 
 TEST_F(MoveItemCommandTest, rootContextNext)
 {

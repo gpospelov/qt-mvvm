@@ -24,10 +24,7 @@ using namespace ModelView;
 class JsonTagInfoConverterTest : public FolderBasedTest {
 public:
     JsonTagInfoConverterTest() : FolderBasedTest("test_JsonTagInfoConverter") {}
-    ~JsonTagInfoConverterTest();
 };
-
-JsonTagInfoConverterTest::~JsonTagInfoConverterTest() = default;
 
 //! Checks if json object is correctly identified as representing TagInfo.
 

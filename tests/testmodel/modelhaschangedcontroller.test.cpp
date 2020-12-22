@@ -17,11 +17,7 @@ using namespace ModelView;
 //! Tests for ModelHasChangedController class.
 
 class ModelHasChangedControllerTest : public ::testing::Test {
-public:
-    ~ModelHasChangedControllerTest();
 };
-
-ModelHasChangedControllerTest::~ModelHasChangedControllerTest() = default;
 
 //! Tests initial state of the controller.
 

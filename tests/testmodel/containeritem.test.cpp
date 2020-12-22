@@ -17,11 +17,7 @@ using namespace ModelView;
 //! Test of ContainerItem.
 
 class ContainerItemTest : public ::testing::Test {
-public:
-    ~ContainerItemTest();
 };
-
-ContainerItemTest::~ContainerItemTest() = default;
 
 TEST_F(ContainerItemTest, initialState)
 {

@@ -19,11 +19,7 @@ using namespace ModelView;
 using ::testing::_;
 
 class ItemMapperTest : public ::testing::Test {
-public:
-    ~ItemMapperTest();
 };
-
-ItemMapperTest::~ItemMapperTest() = default;
 
 //! Check that mapper works only in model context.
 

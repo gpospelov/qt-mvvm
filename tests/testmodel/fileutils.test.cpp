@@ -20,10 +20,7 @@ using namespace ModelView;
 class FileUtilsTest : public FolderBasedTest {
 public:
     FileUtilsTest() : FolderBasedTest("test_FileUtils") {}
-    ~FileUtilsTest();
 };
-
-FileUtilsTest::~FileUtilsTest() = default;
 
 TEST_F(FileUtilsTest, exists)
 {

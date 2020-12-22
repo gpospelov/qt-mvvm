@@ -17,11 +17,7 @@ using namespace ModelView;
 //! Tests for ProjectChangeController class.
 
 class ProjectChangeControllerTest : public ::testing::Test {
-public:
-    ~ProjectChangeControllerTest();
 };
-
-ProjectChangeControllerTest::~ProjectChangeControllerTest() = default;
 
 TEST_F(ProjectChangeControllerTest, initialState)
 {

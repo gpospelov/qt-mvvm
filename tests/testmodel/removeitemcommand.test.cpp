@@ -18,11 +18,7 @@
 using namespace ModelView;
 
 class RemoveItemCommandTest : public ::testing::Test {
-public:
-    ~RemoveItemCommandTest();
 };
-
-RemoveItemCommandTest::~RemoveItemCommandTest() = default;
 
 TEST_F(RemoveItemCommandTest, removeAtCommand)
 {

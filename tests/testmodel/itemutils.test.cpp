@@ -20,11 +20,7 @@
 using namespace ModelView;
 
 class ItemUtilsTest : public ::testing::Test {
-public:
-    ~ItemUtilsTest();
 };
-
-ItemUtilsTest::~ItemUtilsTest() = default;
 
 //! Simple iteration over item and its children
 
