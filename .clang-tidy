@@ -49,6 +49,7 @@ readability-uppercase-literal-suffix,
 -cppcoreguidelines-avoid-magic-numbers,
 -cppcoreguidelines-avoid-non-const-global-variables,
 -cppcoreguidelines-special-member-functions,
+-cppcoreguidelines-avoid-goto,
 -bugprone-reserved-identifier
 '
 CheckOptions:
