@@ -31,7 +31,7 @@ class ProjectHandler : public QObject {
     Q_OBJECT
 
 public:
-    explicit ProjectHandler(SampleModel* sample_model, QMainWindow* main_window);
+    ProjectHandler(SampleModel* sample_model, QMainWindow* main_window);
     ~ProjectHandler() override;
 
 signals:

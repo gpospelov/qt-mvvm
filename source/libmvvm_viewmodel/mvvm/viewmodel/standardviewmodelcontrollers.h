@@ -25,7 +25,7 @@ namespace ModelView {
 
 class MVVM_VIEWMODEL_EXPORT DefaultViewModelController : public ViewModelController {
 public:
-    explicit DefaultViewModelController(SessionModel* session_model, ViewModelBase* view_model);
+    DefaultViewModelController(SessionModel* session_model, ViewModelBase* view_model);
 };
 
 //! Controller for AbstractViewModel to show top level items.
@@ -41,7 +41,7 @@ public:
 
 class MVVM_VIEWMODEL_EXPORT PropertyViewModelController : public ViewModelController {
 public:
-    explicit PropertyViewModelController(SessionModel* session_model, ViewModelBase* view_model);
+    PropertyViewModelController(SessionModel* session_model, ViewModelBase* view_model);
 
 protected:
     void onDataChange(SessionItem* item, int role) override;
@@ -62,8 +62,7 @@ public:
 
 class MVVM_VIEWMODEL_EXPORT PropertyFlatViewModelController : public ViewModelController {
 public:
-    explicit PropertyFlatViewModelController(SessionModel* session_model,
-                                             ViewModelBase* view_model);
+    PropertyFlatViewModelController(SessionModel* session_model, ViewModelBase* view_model);
 
 protected:
     void onDataChange(SessionItem* item, int role) override;
