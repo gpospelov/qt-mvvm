@@ -19,6 +19,7 @@ namespace ModelView {
 
 class MVVM_VIEWMODEL_EXPORT PropertyViewModel : public ViewModel {
     Q_OBJECT
+
 public:
     PropertyViewModel(SessionModel* model, QObject* parent = nullptr);
 };

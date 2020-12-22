@@ -14,8 +14,7 @@
 
 namespace ModelView {
 
-//! Limits for double.
-//! @ingroup fitting
+//! Limits for double value.
 
 class MVVM_MODEL_EXPORT RealLimits {
 public:

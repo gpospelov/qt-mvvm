@@ -15,8 +15,7 @@
 
 //! Convenience class which creates a directory on disk for test content.
 
-class FolderBasedTest : public ::testing::Test
-{
+class FolderBasedTest : public ::testing::Test {
 public:
     FolderBasedTest(const std::string& test_dir);
     ~FolderBasedTest();

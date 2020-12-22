@@ -15,20 +15,14 @@
 class QCPColorScale;
 class QCPAxis;
 
-namespace ModelView {
-
-namespace Utils {
+namespace ModelView::Utils {
 
 //! Switch axis to logarithmic scale mode.
-
 MVVM_VIEW_EXPORT void SetLogarithmicScale(QCPColorScale* axis, bool is_log_scale);
 
 //! Switch axis to logarithmic scale mode.
-
 MVVM_VIEW_EXPORT void SetLogarithmicScale(QCPAxis* axis, bool is_log_scale);
 
-} // namespace Utils
-
-} // namespace ModelView
+} // namespace ModelView::Utils
 
 #endif // MVVM_PLOTTING_CUSTOMPLOTUTILS_H

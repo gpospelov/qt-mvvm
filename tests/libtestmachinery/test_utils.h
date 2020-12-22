@@ -20,15 +20,13 @@
 class QJsonObject;
 class QJsonArray;
 
-namespace ModelView
-{
+namespace ModelView {
 class SessionModel;
 }
 
 //! Various common utils for unit tests.
 
-namespace TestUtils
-{
+namespace TestUtils {
 
 //! Returns full path to the main test folder, as defined by CMake at compile time.
 //! Shoud point to CMAKE_BINARY_DIR/test_output

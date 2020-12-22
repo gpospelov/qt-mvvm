@@ -11,8 +11,7 @@
 #include "toyitems.h"
 #include <mvvm/model/itemcatalogue.h>
 
-namespace
-{
+namespace {
 std::unique_ptr<ModelView::ItemCatalogue> CreateItemCatalogue()
 {
     auto result = std::make_unique<ModelView::ItemCatalogue>();

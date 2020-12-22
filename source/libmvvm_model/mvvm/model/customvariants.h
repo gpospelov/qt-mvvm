@@ -20,8 +20,7 @@
 #include <string>
 #include <vector>
 
-namespace ModelView {
-namespace Utils {
+namespace ModelView::Utils {
 
 //! Returns name of variant.
 MVVM_MODEL_EXPORT std::string VariantName(const Variant& variant);
@@ -68,8 +67,7 @@ MVVM_MODEL_EXPORT bool IsExtPropertyVariant(const Variant& variant);
 //! Returns true in the case of RealLimits based variant.
 MVVM_MODEL_EXPORT bool IsRealLimitsVariant(const Variant& variant);
 
-} // namespace Utils
-} // namespace ModelView
+} // namespace ModelView::Utils
 
 Q_DECLARE_METATYPE(std::string)
 Q_DECLARE_METATYPE(std::vector<double>)

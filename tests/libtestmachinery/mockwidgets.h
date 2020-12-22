@@ -13,16 +13,14 @@
 #include "mockinterfaces.h"
 #include <gmock/gmock.h>
 
-namespace ModelView
-{
+namespace ModelView {
 class SessionItem;
 class SessionModel;
 } // namespace ModelView
 
 //! Mock class for CallbackContainer.
 
-class CallbackMockWidget
-{
+class CallbackMockWidget {
 public:
     MOCK_METHOD1(onItemDestroy, void(ModelView::SessionItem* item));
     MOCK_METHOD2(onDataChange, void(ModelView::SessionItem* item, int role));
@@ -30,8 +28,7 @@ public:
 
 //! Mock widget to test ItemMapper functionality.
 
-class MockWidgetForItem : public ItemTestWidgetInterface
-{
+class MockWidgetForItem : public ItemTestWidgetInterface {
 public:
     MockWidgetForItem(ModelView::SessionItem* item);
     ~MockWidgetForItem();
@@ -52,8 +49,7 @@ private:
 
 //! Mock class to test ModelMapper functionality.
 
-class MockWidgetForModel : public ModelTestWidgetInterface
-{
+class MockWidgetForModel : public ModelTestWidgetInterface {
 public:
     MockWidgetForModel(ModelView::SessionModel* model);
     ~MockWidgetForModel();

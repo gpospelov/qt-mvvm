@@ -21,6 +21,7 @@ namespace ModelView {
 
 class MVVM_VIEWMODEL_EXPORT PropertyTableViewModel : public ViewModel {
     Q_OBJECT
+
 public:
     PropertyTableViewModel(SessionModel* model, QObject* parent = nullptr);
 };
