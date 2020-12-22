@@ -14,8 +14,7 @@ using namespace ModelView;
 
 //! Testing AxisItems.
 
-class AxisItemsTest : public ::testing::Test
-{
+class AxisItemsTest : public ::testing::Test {
 public:
     ~AxisItemsTest();
 };

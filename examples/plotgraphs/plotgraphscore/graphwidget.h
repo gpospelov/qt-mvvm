@@ -17,22 +17,19 @@ class QBoxLayout;
 class QToolBar;
 class QAction;
 
-namespace ModelView
-{
+namespace ModelView {
 class ItemsTreeView;
 class GraphCanvas;
 } // namespace ModelView
 
-namespace PlotGraphs
-{
+namespace PlotGraphs {
 
 class GraphModel;
 class GraphPropertyWidget;
 
 //! Shows canvas with plots on the left and property editor on the right.
 
-class GraphWidget : public QWidget
-{
+class GraphWidget : public QWidget {
     Q_OBJECT
 
 public:

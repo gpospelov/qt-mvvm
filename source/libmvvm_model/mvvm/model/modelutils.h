@@ -18,13 +18,11 @@
 #include <mvvm/model_export.h>
 #include <vector>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class Path;
 
-namespace Utils
-{
+namespace Utils {
 
 //! Returns all top level items of given type.
 

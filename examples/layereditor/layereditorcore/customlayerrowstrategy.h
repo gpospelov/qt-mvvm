@@ -19,8 +19,7 @@
 
 //! Custom strategy to form table rows for nested multilayers and layers.
 
-class CustomLayerRowStrategy : public ModelView::RowStrategyInterface
-{
+class CustomLayerRowStrategy : public ModelView::RowStrategyInterface {
 public:
     QStringList horizontalHeaderLabels() const
     {

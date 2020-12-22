@@ -24,8 +24,7 @@
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 
 //! Returns true if given SessionItem role is valid for view
 bool isValidItemRole(const ViewItem* view, int item_role)
@@ -286,7 +285,8 @@ void ViewModelController::onAboutToRemoveItem(SessionItem* parent, TagRow tagrow
         p_impl->m_itemToVview.clear();
         p_impl->m_rootItemPath = {};
         p_impl->m_viewModel->endResetModel();
-    } else {
+    }
+    else {
         p_impl->remove_row_of_views(item_to_remove);
     }
 }

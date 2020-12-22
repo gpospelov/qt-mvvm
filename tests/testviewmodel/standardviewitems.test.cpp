@@ -16,8 +16,7 @@
 
 using namespace ModelView;
 
-class StandardViewItemsTest : public ::testing::Test
-{
+class StandardViewItemsTest : public ::testing::Test {
 public:
     ~StandardViewItemsTest();
 };

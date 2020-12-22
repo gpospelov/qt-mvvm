@@ -13,13 +13,11 @@
 #include <mvvm/core/variant.h>
 #include <mvvm/model_export.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! Represents pair of data,role for SessionItemData.
 
-class MVVM_MODEL_EXPORT DataRole
-{
+class MVVM_MODEL_EXPORT DataRole {
 public:
     DataRole(Variant data = Variant(), int role = -1);
     Variant m_data;

@@ -17,8 +17,7 @@
 
 using namespace ModelView;
 
-namespace CellEditors
-{
+namespace CellEditors {
 
 DemoPropertiesItem::DemoPropertiesItem() : CompoundItem(::Constants::DemoPropertiesType)
 {

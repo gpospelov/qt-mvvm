@@ -11,8 +11,7 @@
 #include <mvvm/utils/numericutils.h>
 #include <mvvm/utils/reallimits.h>
 
-namespace
-{
+namespace {
 const double lmin = std::numeric_limits<double>::lowest();
 const double lmax = std::numeric_limits<double>::max();
 const double poszero = std::numeric_limits<double>::min();

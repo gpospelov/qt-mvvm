@@ -14,13 +14,11 @@
 #include <mvvm/model/itemcatalogue.h>
 #include <mvvm/model/sessionitem.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! Group item holds collection of predefined items.
 
-class MVVM_MODEL_EXPORT GroupItem : public SessionItem
-{
+class MVVM_MODEL_EXPORT GroupItem : public SessionItem {
 public:
     static inline const std::string T_GROUP_ITEMS = "T_GROUP_ITEMS";
 

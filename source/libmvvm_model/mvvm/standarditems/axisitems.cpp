@@ -10,8 +10,7 @@
 #include <mvvm/standarditems/axisitems.h>
 #include <mvvm/standarditems/plottableitems.h>
 
-namespace
-{
+namespace {
 const double default_axis_min = 0.0;
 const double default_axis_max = 1.0;
 } // namespace

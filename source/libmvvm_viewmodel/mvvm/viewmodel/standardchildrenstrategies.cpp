@@ -89,7 +89,8 @@ std::vector<SessionItem*> PropertyItemsFlatStrategy::children(const SessionItem*
             result.push_back(group_item);
             for (auto sub_property : Utils::SinglePropertyItems(*group_item->currentItem()))
                 result.push_back(sub_property);
-        } else {
+        }
+        else {
             result.push_back(child);
         }
     }

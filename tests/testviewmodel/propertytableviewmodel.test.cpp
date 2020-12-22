@@ -18,8 +18,7 @@
 
 using namespace ModelView;
 
-class PropertyTableViewModelTest : public ::testing::Test
-{
+class PropertyTableViewModelTest : public ::testing::Test {
 public:
     ~PropertyTableViewModelTest();
 };

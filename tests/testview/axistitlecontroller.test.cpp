@@ -18,8 +18,7 @@ using namespace ModelView;
 
 //! Testing AxisTitleControllers.
 
-class AxisTitleControllerTest : public ::testing::Test
-{
+class AxisTitleControllerTest : public ::testing::Test {
 public:
     ~AxisTitleControllerTest();
 };

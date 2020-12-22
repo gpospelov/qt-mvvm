@@ -13,15 +13,13 @@
 #include <functional>
 #include <mvvm/signals/modellistener.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! Tracks changes in the model.
 //! Allows to check if model has been changed (e.g. modified, inserted or removed items) since last
 //! call of ::resetChanged().
 
-class MVVM_MODEL_EXPORT ModelHasChangedController : public ModelListener<SessionModel>
-{
+class MVVM_MODEL_EXPORT ModelHasChangedController : public ModelListener<SessionModel> {
 public:
     using callback_t = std::function<void()>;
     ModelHasChangedController(SessionModel* model, callback_t callback = {});

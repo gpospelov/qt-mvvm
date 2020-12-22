@@ -14,15 +14,13 @@
 
 class QCustomPlot;
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! Formats status string for current mouse position in QCPColorMap.
 //! Includes coordinates of mouse pointer in viewport axes coordinates, add bins info for
 //! QCPColorMap beneath.
 
-class MVVM_VIEW_EXPORT ColorMapInfoFormatter : public StatusStringFormatterInterface
-{
+class MVVM_VIEW_EXPORT ColorMapInfoFormatter : public StatusStringFormatterInterface {
 public:
     //! Returns status string representing data in color map.
     //! @params x: mouse x-position given in axis viewport coordinates

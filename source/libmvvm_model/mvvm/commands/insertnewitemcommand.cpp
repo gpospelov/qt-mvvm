@@ -14,8 +14,7 @@
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 std::string generate_description(const std::string& modelType, const TagRow& tagrow);
 } // namespace
 
@@ -63,14 +62,14 @@ void InsertNewItemCommand::execute_command()
     setDescription(generate_description(child->modelType(), p_impl->tagrow));
     if (parent->insertItem(child, p_impl->tagrow)) {
         setResult(child);
-    } else {
+    }
+    else {
         delete child;
         setObsolete(true);
     }
 }
 
-namespace
-{
+namespace {
 std::string generate_description(const std::string& modelType, const TagRow& tagrow)
 {
     std::ostringstream ostr;

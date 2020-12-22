@@ -13,8 +13,7 @@
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 //! Returns list of keys which should be in QJsonObject to represent SessionItem.
 QStringList expected_item_keys()
 {

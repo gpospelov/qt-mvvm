@@ -14,8 +14,7 @@
 using namespace ModelView;
 using namespace TestUtils;
 
-class StringUtilsTest : public ::testing::Test
-{
+class StringUtilsTest : public ::testing::Test {
 public:
     ~StringUtilsTest();
 };

@@ -10,7 +10,6 @@
 #include "google_test.h"
 #include "toyitems.h"
 #include "toymodel.h"
-#include "toyitems.h"
 #include <mvvm/commands/commandadapter.h>
 #include <mvvm/commands/setvaluecommand.h>
 #include <mvvm/commands/undostack.h>
@@ -26,8 +25,7 @@
 
 using namespace ModelView;
 
-class UndoStackTest : public ::testing::Test
-{
+class UndoStackTest : public ::testing::Test {
 public:
     ~UndoStackTest();
 };

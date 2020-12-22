@@ -17,8 +17,7 @@ using namespace ModelView;
 
 //! Test of SessionItemData.
 
-class SessionItemDataTest : public ::testing::Test
-{
+class SessionItemDataTest : public ::testing::Test {
 public:
     ~SessionItemDataTest();
 };

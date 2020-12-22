@@ -10,8 +10,7 @@
 #include "sceneitems.h"
 #include <mvvm/utils/reallimits.h>
 
-namespace
-{
+namespace {
 const std::string RegionOfInterestItemType = "RegionOfInterest";
 }
 

@@ -21,14 +21,12 @@ class QStandardItemModel;
 class QStandardItem;
 class QVariant;
 
-namespace ModelView
-{
+namespace ModelView {
 
 class ViewItem;
 class SessionItem;
 
-namespace Utils
-{
+namespace Utils {
 
 //! Iterates through QAbstractItem model
 MVVM_VIEWMODEL_EXPORT void iterate_model(const QAbstractItemModel* model, const QModelIndex& parent,

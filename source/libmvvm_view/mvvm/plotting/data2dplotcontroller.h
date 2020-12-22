@@ -16,16 +16,14 @@
 
 class QCPColorMap;
 
-namespace ModelView
-{
+namespace ModelView {
 
 class Data2DItem;
 
 //! Establish communication between QCPColorMap and Data2DItem.
 //! Provide update of data points on QCPColorMap when Graph2DItem is changed.
 
-class MVVM_VIEW_EXPORT Data2DPlotController : public ItemListener<Data2DItem>
-{
+class MVVM_VIEW_EXPORT Data2DPlotController : public ItemListener<Data2DItem> {
 public:
     explicit Data2DPlotController(QCPColorMap* color_map);
     ~Data2DPlotController() override;

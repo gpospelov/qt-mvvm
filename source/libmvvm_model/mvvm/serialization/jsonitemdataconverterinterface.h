@@ -15,15 +15,13 @@
 
 class QJsonArray;
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionItemData;
 
 //! Base class for all converters of SessionItemData to/from JSON object.
 
-class MVVM_MODEL_EXPORT JsonItemDataConverterInterface
-{
+class MVVM_MODEL_EXPORT JsonItemDataConverterInterface {
 public:
     virtual ~JsonItemDataConverterInterface() = default;
 

@@ -16,15 +16,13 @@
 
 class QCPColorScale;
 
-namespace ModelView
-{
+namespace ModelView {
 
 class ViewportAxisItem;
 
 //! Establishes communication between QCPColorScale and ViewportAxisItem.
 
-class MVVM_VIEW_EXPORT ColorScalePlotController : public ItemListener<ViewportAxisItem>
-{
+class MVVM_VIEW_EXPORT ColorScalePlotController : public ItemListener<ViewportAxisItem> {
 public:
     explicit ColorScalePlotController(QCPColorScale* color_scale);
     ~ColorScalePlotController() override;

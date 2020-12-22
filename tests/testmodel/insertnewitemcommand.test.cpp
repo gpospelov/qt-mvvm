@@ -20,8 +20,7 @@
 
 using namespace ModelView;
 
-class InsertNewItemCommandTest : public ::testing::Test
-{
+class InsertNewItemCommandTest : public ::testing::Test {
 public:
     ~InsertNewItemCommandTest();
     std::unique_ptr<InsertNewItemCommand> create_command(SessionItem* parent, std::string tag,

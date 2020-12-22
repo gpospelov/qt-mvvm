@@ -13,14 +13,12 @@
 #include <mvvm/model_export.h>
 #include <string>
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! Interface to manipulate projects on disk.
 //! Project represents content of all application models in a folder on disk.
 
-class MVVM_MODEL_EXPORT ProjectInterface
-{
+class MVVM_MODEL_EXPORT ProjectInterface {
 public:
     virtual ~ProjectInterface() = default;
     virtual std::string projectDir() const = 0;

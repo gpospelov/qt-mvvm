@@ -16,8 +16,7 @@ class QLabel;
 
 //! Panel with labels to hold project name and project dir. Part of RecentProjectsWidget.
 
-class ProjectPaneWidget : public QWidget
-{
+class ProjectPaneWidget : public QWidget {
     Q_OBJECT
 
 public:

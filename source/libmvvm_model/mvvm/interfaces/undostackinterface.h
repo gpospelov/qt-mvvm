@@ -15,15 +15,13 @@
 
 class QUndoCommand;
 
-namespace ModelView
-{
+namespace ModelView {
 
 class AbstractItemCommand;
 
 //! Interface class for undo/redo stack.
 
-class UndoStackInterface
-{
+class UndoStackInterface {
 public:
     virtual ~UndoStackInterface() = default;
 

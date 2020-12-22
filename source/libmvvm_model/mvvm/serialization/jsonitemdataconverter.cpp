@@ -19,8 +19,7 @@
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 QJsonValue keyValue(const QJsonValue& parent_value, const QString& key)
 {
     const QJsonObject& parent_object = parent_value.toObject();

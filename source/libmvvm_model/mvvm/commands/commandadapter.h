@@ -14,15 +14,13 @@
 #include <memory>
 #include <mvvm/model_export.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class AbstractItemCommand;
 
 //! Adapter to execute our commands within Qt undo/redo framework.
 
-class MVVM_MODEL_EXPORT CommandAdapter : public QUndoCommand
-{
+class MVVM_MODEL_EXPORT CommandAdapter : public QUndoCommand {
 public:
     CommandAdapter(std::shared_ptr<AbstractItemCommand> command);
     ~CommandAdapter() override;

@@ -15,8 +15,7 @@
 #include <mvvm/standarditems/colormapitem.h>
 #include <mvvm/standarditems/data2ditem.h>
 
-namespace
-{
+namespace {
 using gradient_map_t = std::map<std::string, QCPColorGradient::GradientPreset>;
 gradient_map_t createGradientMap()
 {

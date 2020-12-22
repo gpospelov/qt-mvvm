@@ -13,8 +13,7 @@
 #include <mvvm/serialization/compatibilityutils.h>
 #include <set>
 
-namespace ModelView ::Compatibility
-{
+namespace ModelView ::Compatibility {
 
 /*
 Returns `true` if given TagInfo is compatible with given container.

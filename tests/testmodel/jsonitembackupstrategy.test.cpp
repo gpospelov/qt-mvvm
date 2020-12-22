@@ -17,8 +17,7 @@
 
 using namespace ModelView;
 
-class JsonItemBackupStrategyTest : public ::testing::Test
-{
+class JsonItemBackupStrategyTest : public ::testing::Test {
 public:
     JsonItemBackupStrategyTest()
         : m_factory(std::make_unique<ItemFactory>(CreateStandardItemCatalogue()))

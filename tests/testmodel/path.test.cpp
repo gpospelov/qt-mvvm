@@ -17,8 +17,7 @@
 
 using namespace ModelView;
 
-class PathTest : public ::testing::Test
-{
+class PathTest : public ::testing::Test {
 public:
     ~PathTest();
 };

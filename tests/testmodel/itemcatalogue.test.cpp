@@ -18,8 +18,7 @@ using namespace ModelView;
 
 //! Testing ItemCatalogue construction
 
-class ItemCatalogueTest : public ::testing::Test
-{
+class ItemCatalogueTest : public ::testing::Test {
 public:
     ~ItemCatalogueTest();
 };

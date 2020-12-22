@@ -15,13 +15,11 @@
 
 class QWidget;
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! Custom proxy widget to embed color map in graphics scene.
 
-class MVVM_VIEW_EXPORT CustomPlotProxyWidget : public QGraphicsProxyWidget
-{
+class MVVM_VIEW_EXPORT CustomPlotProxyWidget : public QGraphicsProxyWidget {
     Q_OBJECT
 
 public:

@@ -16,16 +16,14 @@
 #include <mvvm/model_export.h>
 #include <mvvm/signals/callback_types.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionItem;
 class SessionModel;
 
 //! Container to hold callbacks in the context of ModelMapper.
 
-template <typename T, typename U> class SignalBase
-{
+template <typename T, typename U> class SignalBase {
 public:
     SignalBase() = default;
 
@@ -64,8 +62,7 @@ template <typename T, typename U> void SignalBase<T, U>::remove_client(U client)
 
 //! Callback container for specific client type.
 
-template <typename T> class Signal : public SignalBase<T, Callbacks::slot_t>
-{
+template <typename T> class Signal : public SignalBase<T, Callbacks::slot_t> {
 };
 
 } // namespace ModelView

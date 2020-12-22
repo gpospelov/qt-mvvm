@@ -29,7 +29,8 @@ void ModelView::Utils::SetLogarithmicScale(QCPAxis* axis, bool is_log_scale)
         axis->setScaleType(QCPAxis::stLogarithmic);
         QSharedPointer<QCPAxisTicker> ticker(new QCPAxisTickerLog);
         axis->setTicker(ticker);
-    } else {
+    }
+    else {
         axis->setNumberFormat("g");
         axis->setNumberPrecision(6);
         axis->setScaleType(QCPAxis::stLinear);

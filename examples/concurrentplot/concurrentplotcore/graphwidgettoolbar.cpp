@@ -16,8 +16,7 @@
 #include <QSpinBox>
 #include <QVBoxLayout>
 
-namespace
-{
+namespace {
 const int initial_value = 50;
 const int min_value = 0;
 const int max_value = 100;

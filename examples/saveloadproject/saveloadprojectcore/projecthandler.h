@@ -14,8 +14,7 @@
 #include <memory>
 #include <vector>
 
-namespace ModelView
-{
+namespace ModelView {
 class ProjectManagerInterface;
 }
 
@@ -28,8 +27,7 @@ class QMainWindow;
 //! Main class to coordinate all activity on user's request to create new project,
 //! open existing one, or choose one of recent projects on disk.
 
-class ProjectHandler : public QObject
-{
+class ProjectHandler : public QObject {
     Q_OBJECT
 
 public:

@@ -16,8 +16,7 @@
 #include <memory>
 #include <mvvm/serialization/jsonitemconverterinterface.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class ItemFactoryInterface;
 

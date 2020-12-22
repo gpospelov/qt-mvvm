@@ -15,13 +15,11 @@
 
 class QJsonObject;
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! Base class for all supported converters of Variant to/from json object
 
-class MVVM_MODEL_EXPORT JsonVariantConverterInterface
-{
+class MVVM_MODEL_EXPORT JsonVariantConverterInterface {
 public:
     virtual ~JsonVariantConverterInterface() = default;
 

@@ -15,8 +15,7 @@ using namespace ModelView;
 
 //! Testing "utilr for testing" defined in TestUtils namespace.
 
-class CustomplotTestUtilsTest : public ::testing::Test
-{
+class CustomplotTestUtilsTest : public ::testing::Test {
 public:
     ~CustomplotTestUtilsTest();
 };

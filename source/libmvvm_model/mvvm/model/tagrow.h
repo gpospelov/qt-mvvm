@@ -13,13 +13,11 @@
 #include <mvvm/model_export.h>
 #include <string>
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! Aggregate to hold (tag, row) information for SessionModel.
 
-class MVVM_MODEL_EXPORT TagRow
-{
+class MVVM_MODEL_EXPORT TagRow {
 public:
     std::string tag = {};
     int row = -1;

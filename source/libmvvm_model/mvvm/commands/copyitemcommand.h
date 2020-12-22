@@ -12,16 +12,14 @@
 
 #include <mvvm/commands/abstractitemcommand.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionItem;
 class TagRow;
 
 //! Command to copy an item.
 
-class MVVM_MODEL_EXPORT CopyItemCommand : public AbstractItemCommand
-{
+class MVVM_MODEL_EXPORT CopyItemCommand : public AbstractItemCommand {
 public:
     CopyItemCommand(const SessionItem* item, SessionItem* parent, TagRow tagrow);
     ~CopyItemCommand() override;

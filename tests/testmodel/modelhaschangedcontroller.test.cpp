@@ -16,8 +16,7 @@ using namespace ModelView;
 
 //! Tests for ModelHasChangedController class.
 
-class ModelHasChangedControllerTest : public ::testing::Test
-{
+class ModelHasChangedControllerTest : public ::testing::Test {
 public:
     ~ModelHasChangedControllerTest();
 };

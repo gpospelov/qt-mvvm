@@ -16,13 +16,11 @@
 #include <sstream>
 #include <stdexcept>
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! Base for factories.
 
-template <class Key, class Value> class IFactory
-{
+template <class Key, class Value> class IFactory {
 public:
     using function_t = std::function<std::unique_ptr<Value>()>;
     using map_t = std::map<Key, function_t>;

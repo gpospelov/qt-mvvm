@@ -16,13 +16,11 @@
 #include <mvvm/model/taginfo.h>
 #include <mvvm/utils/reallimits.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! Complex item holding mixed SessionItem types (single properties and other CompountItems).
 
-class MVVM_MODEL_EXPORT CompoundItem : public SessionItem
-{
+class MVVM_MODEL_EXPORT CompoundItem : public SessionItem {
 public:
     CompoundItem(const std::string& modelType = Constants::CompoundItemType);
 

@@ -18,8 +18,7 @@ using namespace ModelView;
 
 //! Tests for SessionItemTags class.
 
-class SessionItemTagsTest : public ::testing::Test
-{
+class SessionItemTagsTest : public ::testing::Test {
 public:
     ~SessionItemTagsTest();
 };

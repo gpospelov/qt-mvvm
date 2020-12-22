@@ -15,8 +15,7 @@ using namespace ModelView;
 
 //! Testing CustomPlotSceneAdapter.
 
-class CustomPlotSceneAdapterTest : public ::testing::Test
-{
+class CustomPlotSceneAdapterTest : public ::testing::Test {
 public:
     ~CustomPlotSceneAdapterTest();
 };

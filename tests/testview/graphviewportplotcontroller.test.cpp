@@ -22,8 +22,7 @@ using namespace ModelView;
 
 //! Testing GraphViewportPlotController.
 
-class GraphViewportPlotControllerTest : public ::testing::Test
-{
+class GraphViewportPlotControllerTest : public ::testing::Test {
 public:
     ~GraphViewportPlotControllerTest();
 };

@@ -14,8 +14,7 @@
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 const std::string xrays = "x-rays";
 const std::string neutrons = "neutrons";
 } // namespace

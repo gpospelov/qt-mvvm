@@ -15,8 +15,7 @@
 
 //! Layer with name, thickness and reference to material.
 
-class LayerItem : public ModelView::CompoundItem
-{
+class LayerItem : public ModelView::CompoundItem {
 public:
     static inline const std::string P_NAME = "P_NAME";
     static inline const std::string P_MATERIAL = "P_MATERIAL";
@@ -26,8 +25,7 @@ public:
 
 //! Multi layer capable of holding layers and other multi-layers.
 
-class MultiLayerItem : public ModelView::CompoundItem
-{
+class MultiLayerItem : public ModelView::CompoundItem {
 public:
     static inline const std::string T_LAYERS = "T_LAYERS";
     static inline const std::string P_NREPETITIONS = "P_NREPETITIONS";
@@ -36,8 +34,7 @@ public:
 
 //! Model to hold layers and multi-layers.
 
-class SampleModel : public ModelView::SessionModel
-{
+class SampleModel : public ModelView::SessionModel {
 public:
     SampleModel();
 

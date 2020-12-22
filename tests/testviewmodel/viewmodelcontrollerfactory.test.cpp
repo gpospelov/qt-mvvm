@@ -19,8 +19,7 @@ using namespace ModelView;
 
 //! Tests of ViewModelControllerFactory method.
 
-class ViewModelControllerFactoryTest : public ::testing::Test
-{
+class ViewModelControllerFactoryTest : public ::testing::Test {
 public:
     ~ViewModelControllerFactoryTest();
 };

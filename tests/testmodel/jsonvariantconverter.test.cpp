@@ -26,8 +26,7 @@ using namespace ModelView;
 
 //! Test convertion of QVariant from/to QJsonObject.
 
-class JsonVariantConverterTest : public FolderBasedTest
-{
+class JsonVariantConverterTest : public FolderBasedTest {
 public:
     JsonVariantConverterTest() : FolderBasedTest("test_JsonVariant") {}
     ~JsonVariantConverterTest();

@@ -15,8 +15,7 @@ using namespace ModelView;
 
 //! Testing GroupItem class.
 
-class GroupItemTest : public ::testing::Test
-{
+class GroupItemTest : public ::testing::Test {
 public:
     ~GroupItemTest();
 };

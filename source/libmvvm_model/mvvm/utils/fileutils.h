@@ -14,11 +14,9 @@
 #include <string>
 #include <vector>
 
-namespace ModelView
-{
+namespace ModelView {
 
-namespace Utils
-{
+namespace Utils {
 
 //! Returns true if file exists.
 MVVM_MODEL_EXPORT bool exists(const std::string& fileName);

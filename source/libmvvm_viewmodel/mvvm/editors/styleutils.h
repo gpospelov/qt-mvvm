@@ -12,11 +12,9 @@
 
 #include <mvvm/viewmodel_export.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
-namespace Style
-{
+namespace Style {
 
 //! Returns int value corresponding to pixmap in standard Qt table/tree decorations.
 MVVM_VIEWMODEL_EXPORT int DefaultPixmapSize();

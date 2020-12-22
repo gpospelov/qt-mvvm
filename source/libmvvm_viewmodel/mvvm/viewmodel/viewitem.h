@@ -15,15 +15,13 @@
 #include <mvvm/viewmodel_export.h>
 #include <vector>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionItem;
 
 //! Represents the view of SessionItem's data in a single cell of ViewModel.
 
-class MVVM_VIEWMODEL_EXPORT ViewItem
-{
+class MVVM_VIEWMODEL_EXPORT ViewItem {
 public:
     virtual ~ViewItem();
 

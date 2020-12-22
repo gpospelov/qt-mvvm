@@ -16,8 +16,7 @@
 
 //! Handles all thread activity for running job simulation in the background.
 
-class JobManager : public QObject
-{
+class JobManager : public QObject {
     Q_OBJECT
 
 public:

@@ -18,8 +18,7 @@
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 const int nbinsx = 200;
 const int nbinsy = 100;
 

@@ -14,8 +14,7 @@
 #include <mvvm/standarditems/data2ditem.h>
 #include <vector>
 
-namespace
-{
+namespace {
 const std::pair<double, double> default_axis_range{0.0, 1.0};
 }
 

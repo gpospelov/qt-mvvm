@@ -19,4 +19,4 @@ include(installation)
 add_subdirectory(examples)
 
 # Defines new 'clangformat' target. See CodeTools.cmake for details.
-# project_clangformat_setup()
+project_clangformat_setup()

@@ -17,15 +17,13 @@
 #include <mvvm/viewmodel/viewmodelutils.h>
 #include <mvvm/widgets/widgetutils.h>
 
-namespace
-{
+namespace {
 const QString AppMimeType = "application/org.bornagainproject.moveitem";
 } // namespace
 
 using namespace ModelView;
 
-namespace DragAndView
-{
+namespace DragAndView {
 
 DragViewModel::DragViewModel(SessionModel* model, QObject* parent)
     : PropertyTableViewModel(model, parent)

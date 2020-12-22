@@ -13,8 +13,7 @@
 
 using namespace ModelView;
 
-class NumericUtilsTest : public ::testing::Test
-{
+class NumericUtilsTest : public ::testing::Test {
 public:
     ~NumericUtilsTest();
 };

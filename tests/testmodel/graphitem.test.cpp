@@ -22,8 +22,7 @@ using ::testing::_;
 
 //! Testing GraphItem.
 
-class GraphItemTest : public ::testing::Test
-{
+class GraphItemTest : public ::testing::Test {
 public:
     ~GraphItemTest();
 };

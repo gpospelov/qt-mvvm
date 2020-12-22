@@ -13,8 +13,7 @@
 
 using namespace ModelView;
 
-class ExternalPropertyTest : public ::testing::Test
-{
+class ExternalPropertyTest : public ::testing::Test {
 public:
     ~ExternalPropertyTest();
 };

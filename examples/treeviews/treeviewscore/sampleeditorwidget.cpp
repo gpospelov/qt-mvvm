@@ -23,8 +23,7 @@
 
 using namespace ModelView;
 
-namespace TreeViews
-{
+namespace TreeViews {
 
 SampleEditorWdiget::SampleEditorWdiget(SessionModel* model, QWidget* parent)
     : QWidget(parent)

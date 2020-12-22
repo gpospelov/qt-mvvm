@@ -17,15 +17,13 @@ class QBoxLayout;
 class MaterialTableWidget;
 class MultiLayerTreeView;
 
-namespace ModelView
-{
+namespace ModelView {
 class ItemsTreeView;
 }
 
 //! Main widget with material and layer editors.
 
-class SampleWidget : public QWidget
-{
+class SampleWidget : public QWidget {
     Q_OBJECT
 
 public:

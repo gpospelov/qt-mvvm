@@ -14,8 +14,7 @@
 #include <mvvm/interfaces/itemlistenerinterface.h>
 #include <mvvm/signals/modellistener.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionItem;
 
@@ -25,8 +24,7 @@ class SessionItem;
 //! going with the item and its relatives.
 
 class MVVM_MODEL_EXPORT ItemMapper : public ItemListenerInterface,
-                                     private ModelListener<SessionModel>
-{
+                                     private ModelListener<SessionModel> {
 public:
     ItemMapper(SessionItem* item);
     ~ItemMapper();

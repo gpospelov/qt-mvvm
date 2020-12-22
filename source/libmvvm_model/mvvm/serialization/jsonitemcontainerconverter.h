@@ -16,8 +16,7 @@
 
 class QJsonObject;
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionItem;
 class SessionItemContainer;
@@ -25,8 +24,7 @@ struct ConverterCallbacks;
 
 //! Converter between SessionItemContainer and JSON object.
 
-class MVVM_MODEL_EXPORT JsonItemContainerConverter
-{
+class MVVM_MODEL_EXPORT JsonItemContainerConverter {
 public:
     JsonItemContainerConverter(ConverterCallbacks callbacks);
     ~JsonItemContainerConverter();

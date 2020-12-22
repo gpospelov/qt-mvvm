@@ -15,8 +15,7 @@
 //! Collection of settings for RecentProjectWidget. Used to save last directory selected
 //! by the user, and list of recent projects. Relies on QSettings machinery.
 
-class RecentProjectSettings
-{
+class RecentProjectSettings {
 public:
     RecentProjectSettings();
     ~RecentProjectSettings();

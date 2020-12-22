@@ -12,19 +12,16 @@
 
 #include <mvvm/viewmodel/propertytableviewmodel.h>
 
-namespace ModelView
-{
+namespace ModelView {
 class SessionModel;
 }
 
-namespace DragAndView
-{
+namespace DragAndView {
 
 //! View model with drag-and-drop support. Relies on PropertyTableViewModel to show
 //! properties of DemoItem in table-like views.
 
-class DragViewModel : public ModelView::PropertyTableViewModel
-{
+class DragViewModel : public ModelView::PropertyTableViewModel {
     Q_OBJECT
 
 public:

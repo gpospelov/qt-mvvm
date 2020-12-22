@@ -28,8 +28,7 @@ using namespace ModelView;
 
 //! Checks JsonModel class and its ability to convert SessionModel to json and back.
 
-class JsonModelConverterTest : public FolderBasedTest
-{
+class JsonModelConverterTest : public FolderBasedTest {
 public:
     JsonModelConverterTest() : FolderBasedTest("test_JsonModelConverter") {}
     ~JsonModelConverterTest();

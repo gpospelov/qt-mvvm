@@ -15,8 +15,7 @@
 #include <mvvm/viewmodel_export.h>
 #include <vector>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionItem;
 class ViewItem;
@@ -24,8 +23,7 @@ class ViewItem;
 //! Base class to construct row of ViewItem's from given SessionItem.
 //! Used in context of AbstractViewModel while exposing SessionModel to Qt.
 
-class MVVM_VIEWMODEL_EXPORT RowStrategyInterface
-{
+class MVVM_VIEWMODEL_EXPORT RowStrategyInterface {
 public:
     virtual ~RowStrategyInterface() = default;
 

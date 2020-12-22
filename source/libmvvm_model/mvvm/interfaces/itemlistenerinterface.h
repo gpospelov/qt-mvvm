@@ -12,13 +12,11 @@
 
 #include <mvvm/signals/callback_types.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! Interface to subscribe to various events happening with specific SessionItem.
 
-class MVVM_MODEL_EXPORT ItemListenerInterface
-{
+class MVVM_MODEL_EXPORT ItemListenerInterface {
 public:
     virtual ~ItemListenerInterface() = default;
 

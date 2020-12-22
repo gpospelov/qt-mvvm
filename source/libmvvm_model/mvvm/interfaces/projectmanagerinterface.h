@@ -13,16 +13,14 @@
 #include <mvvm/model_export.h>
 #include <string>
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! Interface class for ProjectManager family.
 
 //! Responsible for handling new/save/save-as/close Project logic, where the Project represents
 //! a collection of serialized application models in the project directory.
 
-class MVVM_MODEL_EXPORT ProjectManagerInterface
-{
+class MVVM_MODEL_EXPORT ProjectManagerInterface {
 public:
     virtual ~ProjectManagerInterface() = default;
     virtual bool createNewProject(const std::string& dirname = {}) = 0;

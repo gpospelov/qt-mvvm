@@ -16,15 +16,13 @@
 #include <memory>
 #include <mvvm/model_export.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionItemData;
 class SessionItemContainer;
 class TagInfo;
 
-namespace Compatibility
-{
+namespace Compatibility {
 
 //! Returns `true` if given TagInfo is compatible with given container.
 //! See explanations in the code.

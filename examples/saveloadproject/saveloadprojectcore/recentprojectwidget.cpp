@@ -21,8 +21,7 @@
 #include <mvvm/widgets/adjustingscrollarea.h>
 #include <mvvm/widgets/widgetutils.h>
 
-namespace
-{
+namespace {
 int max_recent_project_count = 7;
 }
 

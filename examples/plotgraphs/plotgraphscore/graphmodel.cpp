@@ -21,8 +21,7 @@
 #include <mvvm/widgets/widgetutils.h>
 #include <stdexcept>
 
-namespace
-{
+namespace {
 
 constexpr double pi = 3.14159265358979323846;
 constexpr int npoints = 400;
@@ -45,8 +44,7 @@ std::vector<double> bin_values(double amp_factor = 1.0)
 
 using namespace ModelView;
 
-namespace PlotGraphs
-{
+namespace PlotGraphs {
 
 GraphModel::GraphModel() : SessionModel("GraphModel")
 {

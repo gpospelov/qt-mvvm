@@ -18,8 +18,7 @@
 
 class QCustomPlot;
 
-namespace ModelView
-{
+namespace ModelView {
 
 class StatusStringReporter;
 

@@ -14,15 +14,13 @@
 #include <mvvm/model_export.h>
 #include <vector>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionItem;
 
 //! Holds collection of SessionItem objects related to the same tag.
 
-class MVVM_MODEL_EXPORT SessionItemContainer
-{
+class MVVM_MODEL_EXPORT SessionItemContainer {
 public:
     using container_t = std::vector<SessionItem*>;
     using const_iterator = container_t::const_iterator;

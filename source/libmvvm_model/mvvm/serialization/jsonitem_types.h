@@ -20,8 +20,7 @@
 
 class QJsonObject;
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionItem;
 class ItemFactoryInterface;

@@ -16,8 +16,7 @@
 #include <memory>
 #include <mvvm/serialization/jsonmodelconverterinterface.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! Creates a JSON model converter intended for model cloning.
 MVVM_MODEL_EXPORT std::unique_ptr<JsonModelConverterInterface> CreateModelCloneConverter();

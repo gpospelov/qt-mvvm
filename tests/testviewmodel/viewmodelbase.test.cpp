@@ -19,13 +19,11 @@ using namespace ModelView;
 
 //! Tests for ViewModelBase class.
 
-class ViewModelBaseTest : public ::testing::Test
-{
+class ViewModelBaseTest : public ::testing::Test {
 public:
     ~ViewModelBaseTest();
 
-    class TestItem : public ViewItem
-    {
+    class TestItem : public ViewItem {
     public:
         TestItem() : ViewItem(nullptr, 0) {}
         ~TestItem() override;

@@ -16,8 +16,7 @@
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 //! Returns QCPRange of axis.
 QCPRange qcpRange(const BinnedAxisItem* axis)
 {

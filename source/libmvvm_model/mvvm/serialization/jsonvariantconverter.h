@@ -19,13 +19,11 @@
 class QJsonObject;
 class QJsonVariant;
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! Default converter between supported variants and json objects.
 
-class MVVM_MODEL_EXPORT JsonVariantConverter : public JsonVariantConverterInterface
-{
+class MVVM_MODEL_EXPORT JsonVariantConverter : public JsonVariantConverterInterface {
 public:
     JsonVariantConverter();
 

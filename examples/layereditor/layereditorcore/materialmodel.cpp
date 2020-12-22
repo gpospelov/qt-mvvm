@@ -16,8 +16,7 @@
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 std::unique_ptr<ItemCatalogue> CreateItemCatalogue()
 {
     auto result = std::make_unique<ModelView::ItemCatalogue>();

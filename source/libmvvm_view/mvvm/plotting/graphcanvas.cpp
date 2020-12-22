@@ -17,8 +17,7 @@
 #include <mvvm/standarditems/graphviewportitem.h>
 #include <mvvm/widgets/statuslabel.h>
 
-namespace
-{
+namespace {
 
 //! Returns policy to which side of the axes box margins can be applied.
 //! If number is negative, this side will be callulated automatically.

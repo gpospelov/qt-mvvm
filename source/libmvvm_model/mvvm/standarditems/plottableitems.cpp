@@ -13,8 +13,7 @@
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 //! Following Qt styles.
 const ComboProperty penStyleCombo = ComboProperty::createFrom(
     {"NoPen", "SolidLine", "DashLine", "DotLine", "DashDotLine", "DashDotDotLine"}, "SolidLine");

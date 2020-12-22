@@ -14,8 +14,7 @@
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 QCPColorMap* find_colormap(QCustomPlot* custom_plot)
 {
     for (int i = 0; i < custom_plot->plottableCount(); ++i) {

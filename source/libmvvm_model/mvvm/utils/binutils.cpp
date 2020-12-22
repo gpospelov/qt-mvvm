@@ -2,8 +2,7 @@
 #include <iostream>
 #include <mvvm/utils/binutils.h>
 
-namespace
-{
+namespace {
 //! Returns buffer size
 int get_buffer_size(const std::string& filename);
 
@@ -17,8 +16,7 @@ bool is_control_char(int ch);
 bool null_check(int* buffer, int buffer_size);
 } // namespace
 
-namespace ModelView ::Utils
-{
+namespace ModelView ::Utils {
 
 // length of buffer
 #define BYTE_LENGTH 2048
@@ -60,8 +58,7 @@ bool is_text(const std::string& filename)
 
 } // namespace ModelView::Utils
 
-namespace
-{
+namespace {
 
 int get_buffer_size(const std::string& filename)
 {

@@ -18,8 +18,7 @@
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 //! Map of standard Qt answers to what ProjectManager expects.
 std::map<QMessageBox::StandardButton, SaveChangesAnswer> answer_map()
 {

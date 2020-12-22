@@ -14,8 +14,7 @@
 
 using namespace ModelView;
 
-class ComboPropertyTest : public ::testing::Test
-{
+class ComboPropertyTest : public ::testing::Test {
 public:
     ~ComboPropertyTest();
 };

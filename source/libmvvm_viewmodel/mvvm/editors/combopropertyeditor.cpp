@@ -12,8 +12,7 @@
 #include <mvvm/editors/combopropertyeditor.h>
 #include <mvvm/model/comboproperty.h>
 
-namespace
-{
+namespace {
 QStringList toList(const std::vector<std::string>& container)
 {
     QStringList result;

@@ -17,20 +17,17 @@ class QBoxLayout;
 class QBoxLayout;
 class QSlider;
 
-namespace ModelView
-{
+namespace ModelView {
 class ItemsTreeView;
 } // namespace ModelView
 
-namespace PlotColorMap
-{
+namespace PlotColorMap {
 
 class ColorMapModel;
 
 //! Shows model content in standard tree view.
 
-class ColorMapPropertyWidget : public QWidget
-{
+class ColorMapPropertyWidget : public QWidget {
     Q_OBJECT
 
 public:

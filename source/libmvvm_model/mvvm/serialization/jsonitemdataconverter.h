@@ -17,15 +17,13 @@
 
 class QJsonObject;
 
-namespace ModelView
-{
+namespace ModelView {
 
 class JsonVariantConverterInterface;
 
 //! Default converter of SessionItemData to/from json object.
 
-class MVVM_MODEL_EXPORT JsonItemDataConverter : public JsonItemDataConverterInterface
-{
+class MVVM_MODEL_EXPORT JsonItemDataConverter : public JsonItemDataConverterInterface {
 public:
     using accept_strategy_t = std::function<bool(int)>;
 

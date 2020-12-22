@@ -16,12 +16,10 @@ using namespace ModelView;
 
 //! Tests for ViewItem class.
 
-class ViewItemTest : public ::testing::Test
-{
+class ViewItemTest : public ::testing::Test {
 public:
     ~ViewItemTest();
-    class TestItem : public ViewItem
-    {
+    class TestItem : public ViewItem {
     public:
         TestItem() : ViewItem(nullptr, 0) {}
         ~TestItem() override;

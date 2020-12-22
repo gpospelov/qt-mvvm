@@ -15,11 +15,9 @@
 class QCPColorScale;
 class QCPAxis;
 
-namespace ModelView
-{
+namespace ModelView {
 
-namespace Utils
-{
+namespace Utils {
 
 //! Switch axis to logarithmic scale mode.
 

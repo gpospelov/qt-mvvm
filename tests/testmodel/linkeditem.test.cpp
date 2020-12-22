@@ -19,8 +19,7 @@ using ::testing::_;
 
 //! LinkedItem tests.
 
-class LinkedItemTest : public ::testing::Test
-{
+class LinkedItemTest : public ::testing::Test {
 public:
     ~LinkedItemTest();
 };

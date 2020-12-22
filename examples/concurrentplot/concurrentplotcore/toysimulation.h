@@ -15,8 +15,7 @@
 
 //! Represents long running toy scientific simulation.
 
-class ToySimulation
-{
+class ToySimulation {
 public:
     //! Represents input conditions for toy simulation.
     struct InputData {

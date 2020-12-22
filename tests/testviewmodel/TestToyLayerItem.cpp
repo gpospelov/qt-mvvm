@@ -21,8 +21,7 @@ using namespace ModelView;
 
 //! Tests for toy Layer in the context of model and view model.
 
-class ToyLayerItemTest : public ::testing::Test
-{
+class ToyLayerItemTest : public ::testing::Test {
 public:
     ~ToyLayerItemTest();
 };

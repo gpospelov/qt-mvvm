@@ -21,8 +21,7 @@ using namespace ModelView;
 
 //! Tests for PropertyViewModel class.
 
-class PropertyViewModelTest : public ::testing::Test
-{
+class PropertyViewModelTest : public ::testing::Test {
 public:
     ~PropertyViewModelTest();
 };

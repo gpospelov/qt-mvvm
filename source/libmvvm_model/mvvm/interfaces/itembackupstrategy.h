@@ -13,15 +13,13 @@
 #include <memory>
 #include <mvvm/model_export.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionItem;
 
 //! Interface to backup items for later restore.
 
-class MVVM_MODEL_EXPORT ItemBackupStrategy
-{
+class MVVM_MODEL_EXPORT ItemBackupStrategy {
 public:
     virtual ~ItemBackupStrategy() = default;
 

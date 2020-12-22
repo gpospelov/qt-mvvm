@@ -19,8 +19,7 @@
 
 class QStandardItem;
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionModel;
 class SessionItem;
@@ -31,8 +30,7 @@ class RowStrategyInterface;
 
 //! Propagates changes from SessionModel to its ViewModelBase.
 
-class MVVM_VIEWMODEL_EXPORT ViewModelController : public ModelListener<SessionModel>
-{
+class MVVM_VIEWMODEL_EXPORT ViewModelController : public ModelListener<SessionModel> {
 public:
     ViewModelController(SessionModel* session_model, ViewModelBase* view_model = nullptr);
     ~ViewModelController();

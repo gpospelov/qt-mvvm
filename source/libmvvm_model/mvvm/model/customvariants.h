@@ -20,10 +20,8 @@
 #include <string>
 #include <vector>
 
-namespace ModelView
-{
-namespace Utils
-{
+namespace ModelView {
+namespace Utils {
 
 //! Returns name of variant.
 MVVM_MODEL_EXPORT std::string VariantName(const Variant& variant);

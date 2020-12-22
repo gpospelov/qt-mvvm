@@ -21,8 +21,7 @@ using ::testing::_;
 
 //! Testing ColorMapItem.
 
-class ColorMapItemTest : public ::testing::Test
-{
+class ColorMapItemTest : public ::testing::Test {
 public:
     ~ColorMapItemTest();
 };

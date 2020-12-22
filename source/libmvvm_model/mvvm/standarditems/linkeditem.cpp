@@ -12,8 +12,7 @@
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 const Variant empty_link = Variant::fromValue(std::string());
 }
 

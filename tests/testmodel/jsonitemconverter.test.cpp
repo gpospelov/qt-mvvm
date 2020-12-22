@@ -27,11 +27,9 @@ using namespace ModelView;
 
 //! Checks JsonItem class and its ability to convert SessionItems to json and back.
 
-class JsonItemConverterTest : public FolderBasedTest
-{
+class JsonItemConverterTest : public FolderBasedTest {
 public:
-    class TestItem : public CompoundItem
-    {
+    class TestItem : public CompoundItem {
     public:
         TestItem() : CompoundItem("TestItem")
         {
@@ -40,8 +38,7 @@ public:
         }
     };
 
-    class TestModel : public SessionModel
-    {
+    class TestModel : public SessionModel {
     public:
         TestModel() : SessionModel("TestModel")
         {

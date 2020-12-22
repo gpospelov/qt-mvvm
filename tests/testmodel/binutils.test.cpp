@@ -15,8 +15,7 @@ using namespace ModelView;
 
 //! Testing BinUtils
 
-class BinUtilsTest : public ::testing::Test
-{
+class BinUtilsTest : public ::testing::Test {
 public:
     ~BinUtilsTest();
 };

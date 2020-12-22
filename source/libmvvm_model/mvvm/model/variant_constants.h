@@ -15,10 +15,8 @@
 //! @file variant-constants.h
 //! Collection of constants with supported variant names.
 
-namespace ModelView
-{
-namespace Constants
-{
+namespace ModelView {
+namespace Constants {
 
 const std::string invalid_type_name = "invalid";
 const std::string bool_type_name = "bool";

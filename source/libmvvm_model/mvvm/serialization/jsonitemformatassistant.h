@@ -14,8 +14,7 @@
 #include <memory>
 #include <mvvm/serialization/jsonitemconverterinterface.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class ItemFactoryInterface;
 
@@ -23,8 +22,7 @@ class ItemFactoryInterface;
 //! SessionModel. It is made a class (and not a set of free functions) to allow different formats in
 //! the future.
 
-class MVVM_MODEL_EXPORT JsonItemFormatAssistant
-{
+class MVVM_MODEL_EXPORT JsonItemFormatAssistant {
 public:
     static inline const QString modelKey = "model";
     static inline const QString itemDataKey = "itemData";

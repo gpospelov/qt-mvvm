@@ -17,8 +17,7 @@
 
 using namespace ModelView;
 
-namespace PlotGraphs
-{
+namespace PlotGraphs {
 
 GraphPropertyWidget::GraphPropertyWidget(GraphModel* model, QWidget* parent)
     : QWidget(parent), m_treeView(new ItemsTreeView), m_model(model)

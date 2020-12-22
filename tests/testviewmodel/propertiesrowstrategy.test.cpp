@@ -17,8 +17,7 @@
 
 using namespace ModelView;
 
-class PropertiesRowStrategyTest : public ::testing::Test
-{
+class PropertiesRowStrategyTest : public ::testing::Test {
 public:
     ~PropertiesRowStrategyTest();
 };

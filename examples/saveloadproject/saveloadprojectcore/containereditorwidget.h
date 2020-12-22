@@ -19,8 +19,7 @@ class QTreeView;
 class QBoxLayout;
 class QItemSelectionModel;
 
-namespace ModelView
-{
+namespace ModelView {
 class ViewModel;
 class ViewModelDelegate;
 class SessionItem;
@@ -28,8 +27,7 @@ class SessionItem;
 
 //! Shows content of container and provide functionality to add, copy and move items.
 
-class ContainerEditorWidget : public QWidget
-{
+class ContainerEditorWidget : public QWidget {
     Q_OBJECT
 
 public:

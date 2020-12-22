@@ -17,8 +17,7 @@ using namespace ModelView;
 
 //! Checks JsonItem class and its ability to convert SessionItems to json and back.
 
-class JsonItemFormatAssistantTest : public ::testing::Test
-{
+class JsonItemFormatAssistantTest : public ::testing::Test {
 public:
     ~JsonItemFormatAssistantTest();
 };

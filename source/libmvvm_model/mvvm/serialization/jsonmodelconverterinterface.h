@@ -14,15 +14,13 @@
 
 class QJsonObject;
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionModel;
 
 //! Base class for all converters of SessionModel to/from json object.
 
-class MVVM_MODEL_EXPORT JsonModelConverterInterface
-{
+class MVVM_MODEL_EXPORT JsonModelConverterInterface {
 public:
     virtual ~JsonModelConverterInterface() = default;
 

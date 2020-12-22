@@ -15,15 +15,13 @@
 
 class QTreeView;
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionModel;
 
 //! Saves and restores list of SessionModel's to/from disk using json format.
 
-class MVVM_VIEW_EXPORT ItemsTreeViewInterface : public QWidget
-{
+class MVVM_VIEW_EXPORT ItemsTreeViewInterface : public QWidget {
     Q_OBJECT
 
 public:

@@ -12,15 +12,13 @@
 
 #include <mvvm/standarditems/viewportitem.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class Data2DItem;
 
 //! Container with viewport and collection of ColorMapItem's to plot.
 
-class MVVM_MODEL_EXPORT ColorMapViewportItem : public ViewportItem
-{
+class MVVM_MODEL_EXPORT ColorMapViewportItem : public ViewportItem {
 public:
     static inline const std::string P_ZAXIS = "P_ZAXIS";
 

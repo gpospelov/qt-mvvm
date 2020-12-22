@@ -19,8 +19,7 @@
 
 using namespace ModelView;
 
-namespace PlotColorMap
-{
+namespace PlotColorMap {
 
 ColorMapWidget::ColorMapWidget(ColorMapModel* model, QWidget* parent)
     : QWidget(parent)

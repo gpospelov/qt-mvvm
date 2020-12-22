@@ -20,11 +20,9 @@
 #include <unordered_set>
 #include <vector>
 
-namespace ModelView
-{
+namespace ModelView {
 
-namespace Utils
-{
+namespace Utils {
 
 template <class T> struct is_unique_ptr : std::false_type {
 };

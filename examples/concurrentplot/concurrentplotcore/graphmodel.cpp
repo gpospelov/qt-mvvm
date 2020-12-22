@@ -18,8 +18,7 @@
 #include <mvvm/utils/numericutils.h>
 #include <mvvm/widgets/widgetutils.h>
 
-namespace
-{
+namespace {
 
 auto simulation_result(double amp_factor = 1.0)
 {

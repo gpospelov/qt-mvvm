@@ -17,8 +17,7 @@
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 const int nbinsx = 200;
 const int nbinsy = 100;
 
@@ -40,8 +39,7 @@ void fill_data(Data2DItem* data_item, double scale = 1.0)
 }
 } // namespace
 
-namespace PlotColorMap
-{
+namespace PlotColorMap {
 
 ColorMapModel::ColorMapModel() : SessionModel("ColorMapModel")
 {

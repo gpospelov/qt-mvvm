@@ -23,8 +23,7 @@
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/utils/reallimits.h>
 
-namespace
-{
+namespace {
 double singleStep(int decimals)
 {
     // For item with decimals=3 (i.e. 0.001) single step will be 0.1
@@ -38,8 +37,7 @@ double getStep(double val)
 
 } // namespace
 
-namespace ModelView ::EditorBuilders
-{
+namespace ModelView ::EditorBuilders {
 
 builder_t BoolEditorBuilder()
 {

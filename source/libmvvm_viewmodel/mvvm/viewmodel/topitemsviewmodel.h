@@ -12,15 +12,13 @@
 
 #include <mvvm/viewmodel/viewmodel.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! View model to show top level items of SessionModel in Qt trees and tables.
 //! All property items (i.e. "thickness", "color" etc) will be filtered out, top level items
 //! (i.e. Layer, MultiLayer, ...) will be presented as simple parent/child tree.
 
-class MVVM_VIEWMODEL_EXPORT TopItemsViewModel : public ViewModel
-{
+class MVVM_VIEWMODEL_EXPORT TopItemsViewModel : public ViewModel {
     Q_OBJECT
 
 public:

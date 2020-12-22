@@ -17,8 +17,7 @@
 
 using namespace ModelView;
 
-class FileUtilsTest : public FolderBasedTest
-{
+class FileUtilsTest : public FolderBasedTest {
 public:
     FileUtilsTest() : FolderBasedTest("test_FileUtils") {}
     ~FileUtilsTest();

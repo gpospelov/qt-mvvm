@@ -13,16 +13,15 @@
 #include <mvvm/model/itempool.h>
 #include <mvvm/model/itemutils.h>
 #include <mvvm/model/sessionitem.h>
-#include <mvvm/model/sessionitemtags.h>
 #include <mvvm/model/sessionitemdata.h>
+#include <mvvm/model/sessionitemtags.h>
 #include <mvvm/model/taginfo.h>
 #include <mvvm/model/variant_constants.h>
 #include <stdexcept>
 
 using namespace ModelView;
 
-class SessionItemTest : public ::testing::Test
-{
+class SessionItemTest : public ::testing::Test {
 public:
     ~SessionItemTest();
 };

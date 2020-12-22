@@ -15,8 +15,7 @@ using namespace ModelView;
 
 //! Testing AxisItems.
 
-class ThreadSafeStackTest : public ::testing::Test
-{
+class ThreadSafeStackTest : public ::testing::Test {
 public:
     ~ThreadSafeStackTest();
 };
@@ -115,8 +114,8 @@ TEST_F(ThreadSafeStackTest, concurentPushAndPop)
 
         EXPECT_EQ(*pop_done.get(), 42);
         EXPECT_TRUE(stack.empty());
-
-    } catch (...) {
+    }
+    catch (...) {
         go.set_value();
         throw;
     }
@@ -151,8 +150,8 @@ TEST_F(ThreadSafeStackTest, concurentStopWaiting)
         // stopping stack will raise exception
         EXPECT_THROW(*pop_done.get(), empty_stack);
         EXPECT_TRUE(stack.empty());
-
-    } catch (...) {
+    }
+    catch (...) {
         go.set_value();
         throw;
     }

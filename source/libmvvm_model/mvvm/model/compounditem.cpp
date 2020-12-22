@@ -12,8 +12,7 @@
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 bool has_custom_display_name(const SessionItem* item)
 {
     return item->SessionItem::displayName() != item->modelType();

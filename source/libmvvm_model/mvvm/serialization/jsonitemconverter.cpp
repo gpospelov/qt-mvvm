@@ -22,8 +22,7 @@
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 
 //! Creates converter for SessionItemData/JSON.
 

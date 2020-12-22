@@ -64,7 +64,8 @@ void CollapsibleBar::updatePixmap()
     if (m_controlledWidget->isVisible()) {
         m_pixmapLabel->setPixmap(QPixmap(":/icons/chevron-down.svg"));
         setFrameStyle(QFrame::StyledPanel);
-    } else {
+    }
+    else {
         m_pixmapLabel->setPixmap(QPixmap(":/icons/chevron-right.svg"));
         setFrameStyle(QFrame::StyledPanel | QFrame::Raised);
     }

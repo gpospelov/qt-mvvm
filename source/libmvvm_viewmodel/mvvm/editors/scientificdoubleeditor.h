@@ -15,13 +15,11 @@
 class QLineEdit;
 class QDoubleValidator;
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! Custom editor for QVariant based on double with scientific notation support.
 
-class MVVM_VIEWMODEL_EXPORT ScientificDoubleEditor : public CustomEditor
-{
+class MVVM_VIEWMODEL_EXPORT ScientificDoubleEditor : public CustomEditor {
     Q_OBJECT
 
 public:

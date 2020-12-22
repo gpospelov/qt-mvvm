@@ -21,8 +21,7 @@ using namespace ModelView;
 
 //! Test convertion of TagInfo from/to QJsonObject.
 
-class JsonTagInfoConverterTest : public FolderBasedTest
-{
+class JsonTagInfoConverterTest : public FolderBasedTest {
 public:
     JsonTagInfoConverterTest() : FolderBasedTest("test_JsonTagInfoConverter") {}
     ~JsonTagInfoConverterTest();

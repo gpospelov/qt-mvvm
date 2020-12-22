@@ -14,8 +14,7 @@ using namespace ModelView;
 
 //! Testing AxisItems.
 
-class TagRowTest : public ::testing::Test
-{
+class TagRowTest : public ::testing::Test {
 public:
     ~TagRowTest();
 

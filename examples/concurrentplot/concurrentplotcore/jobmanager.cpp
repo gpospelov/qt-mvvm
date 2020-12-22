@@ -81,8 +81,8 @@ void JobManager::wait_and_run()
             // with results is not empty it means that plotting is disabled or running too slow.
             simulation_results.update_top(simulation.simulationResult());
             simulationCompleted();
-
-        } catch (std::exception& ex) {
+        }
+        catch (std::exception& ex) {
             // Exception is thrown
             // a) If waiting on stack was stopped my calling threadsafe_stack::stop.
             // b) If simulation was interrupted via interrupt_request

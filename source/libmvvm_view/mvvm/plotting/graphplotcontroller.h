@@ -16,8 +16,7 @@
 
 class QCustomPlot;
 
-namespace ModelView
-{
+namespace ModelView {
 
 class GraphItem;
 
@@ -26,8 +25,7 @@ class GraphItem;
 //! QCPGraph is added to QCustomPlot plottables, when controller is created, and removed from
 //! plottables when controller is destroyed.
 
-class MVVM_VIEW_EXPORT GraphPlotController : public ItemListener<GraphItem>
-{
+class MVVM_VIEW_EXPORT GraphPlotController : public ItemListener<GraphItem> {
 public:
     explicit GraphPlotController(QCustomPlot* plot);
     ~GraphPlotController() override;

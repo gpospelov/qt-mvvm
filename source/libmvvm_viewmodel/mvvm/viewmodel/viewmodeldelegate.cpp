@@ -14,8 +14,7 @@
 #include <mvvm/viewmodel/defaultcelldecorator.h>
 #include <mvvm/viewmodel/viewmodeldelegate.h>
 
-namespace
-{
+namespace {
 const double scale_default_height_factor{1.2};
 }
 
@@ -71,7 +70,8 @@ void ViewModelDelegate::setModelData(QWidget* editor, QAbstractItemModel* model,
 
     if (auto customEditor = dynamic_cast<CustomEditor*>(editor)) {
         model->setData(index, customEditor->data());
-    } else {
+    }
+    else {
         QStyledItemDelegate::setModelData(editor, model, index);
     }
 }

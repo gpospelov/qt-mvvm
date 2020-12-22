@@ -18,8 +18,7 @@
 #include <mvvm/model/tagrow.h>
 #include <mvvm/model_export.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionItem;
 class ItemCatalogue;
@@ -30,8 +29,7 @@ class UndoStackInterface;
 
 //! Main class to hold hierarchy of SessionItem objects.
 
-class MVVM_MODEL_EXPORT SessionModel
-{
+class MVVM_MODEL_EXPORT SessionModel {
 public:
     explicit SessionModel(std::string model_type = {}, std::shared_ptr<ItemPool> pool = {});
     virtual ~SessionModel();

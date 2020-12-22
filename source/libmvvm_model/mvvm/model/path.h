@@ -14,8 +14,7 @@
 #include <string>
 #include <vector>
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! Supports navigation through SessionModel. Contains a chain of indexes that have to
 //! be used to reach the desired SessionItem starting from the root item. Path class plays
@@ -28,8 +27,7 @@ namespace ModelView
 //!     - grandchild    path:"0,1"
 //!   - child           path:"1"
 
-class MVVM_MODEL_EXPORT Path
-{
+class MVVM_MODEL_EXPORT Path {
 public:
     using PathElement = int;
     using container_t = std::vector<PathElement>;

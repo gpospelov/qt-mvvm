@@ -19,8 +19,7 @@ using ::testing::_;
 
 //! Testing CallbackContainer class.
 
-class CallbackContainerTest : public ::testing::Test
-{
+class CallbackContainerTest : public ::testing::Test {
 public:
     ~CallbackContainerTest();
 };

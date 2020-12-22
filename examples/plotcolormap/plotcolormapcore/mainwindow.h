@@ -15,15 +15,13 @@
 
 class QTabWidget;
 
-namespace PlotColorMap
-{
+namespace PlotColorMap {
 
 class ColorMapModel;
 
 //! The main window of this application.
 
-class MainWindow : public QMainWindow
-{
+class MainWindow : public QMainWindow {
     Q_OBJECT
 public:
     MainWindow();

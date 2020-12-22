@@ -23,8 +23,7 @@
 //! @brief Thread-safe stack borrowed from Anthony Williams, C++ Concurrency in Action, Second
 //! edition.
 
-namespace ModelView
-{
+namespace ModelView {
 
 struct empty_stack : public std::exception {
     const char* what() const noexcept { return "Empty stack"; }
@@ -34,8 +33,7 @@ struct empty_stack : public std::exception {
 //! @brief Thread-safe stack borrowed from Anthony Williams, C++ Concurrency in Action, Second
 //! edition.
 
-template <typename T> class threadsafe_stack
-{
+template <typename T> class threadsafe_stack {
 private:
     std::stack<T> data;
     mutable std::mutex m;

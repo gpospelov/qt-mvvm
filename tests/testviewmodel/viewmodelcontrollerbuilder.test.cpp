@@ -19,8 +19,7 @@ using namespace ModelView;
 
 //! Tests of ViewModelController class.
 
-class ViewModelControllerBuilderTest : public ::testing::Test
-{
+class ViewModelControllerBuilderTest : public ::testing::Test {
 public:
     ~ViewModelControllerBuilderTest();
 };

@@ -19,8 +19,7 @@ using namespace ModelView;
 
 //! Tests of toy MultiLayer in the context of model and viewmodel.
 
-class ToyParticleItemTest : public ::testing::Test
-{
+class ToyParticleItemTest : public ::testing::Test {
 public:
     ~ToyParticleItemTest();
 };

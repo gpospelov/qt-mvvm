@@ -18,21 +18,18 @@
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 std::unique_ptr<ViewModelController> createController(SessionModel* model, ViewModelBase* viewModel)
 {
     return Factory::CreateController<TopItemsStrategy, LabelDataRowStrategy>(model, viewModel);
 }
 } // namespace
 
-class ViewModelFactoryTest : public ::testing::Test
-{
+class ViewModelFactoryTest : public ::testing::Test {
 public:
     ~ViewModelFactoryTest();
 
-    class CustomModel : public ViewModel
-    {
+    class CustomModel : public ViewModel {
     public:
         CustomModel(SessionModel* model) : ViewModel(createController(model, this), nullptr) {}
     };

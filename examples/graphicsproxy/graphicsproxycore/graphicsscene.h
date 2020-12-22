@@ -13,8 +13,7 @@
 #include <QGraphicsScene>
 #include <memory>
 
-namespace ModelView
-{
+namespace ModelView {
 class ColorMapCanvas;
 class SceneAdapterInterface;
 class CustomPlotProxyWidget;
@@ -24,8 +23,7 @@ class RegionOfInterestItem;
 
 //! Custom graphics scene to show QCustomPlot with additional elements on top.
 
-class GraphicsScene : public QGraphicsScene
-{
+class GraphicsScene : public QGraphicsScene {
     Q_OBJECT
 
 public:

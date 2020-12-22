@@ -12,8 +12,7 @@
 #include <sstream>
 #include <stdexcept>
 
-namespace
-{
+namespace {
 const std::string value_separator = ";";
 const std::string selection_separator = ",";
 const std::string multiple_label = "Multiple";
@@ -203,7 +202,8 @@ void ComboProperty::setSelected(int index, bool value)
     if (value) {
         if (pos == m_selected_indices.end())
             m_selected_indices.push_back(index);
-    } else {
+    }
+    else {
         if (pos != m_selected_indices.end())
             m_selected_indices.erase(pos);
     }
@@ -245,9 +245,11 @@ std::string ComboProperty::label() const
 {
     if (m_selected_indices.size() > 1) {
         return multiple_label;
-    } else if (m_selected_indices.size() == 1) {
+    }
+    else if (m_selected_indices.size() == 1) {
         return value();
-    } else {
+    }
+    else {
         return none_label;
     }
 }

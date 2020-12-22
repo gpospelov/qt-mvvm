@@ -13,8 +13,7 @@
 #include <mvvm/editors/integereditor.h>
 #include <stdexcept>
 
-namespace
-{
+namespace {
 const int max_val = 65536;
 const int min_val = -max_val;
 } // namespace

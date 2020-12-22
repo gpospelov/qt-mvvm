@@ -22,8 +22,7 @@ using ::testing::_;
 
 //! Testing AxisPlotControllers.
 
-class ViewportAxisPlotControllerTest : public ::testing::Test
-{
+class ViewportAxisPlotControllerTest : public ::testing::Test {
 public:
     ~ViewportAxisPlotControllerTest();
 

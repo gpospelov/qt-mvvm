@@ -12,8 +12,7 @@
 
 #include <QGraphicsObject>
 
-namespace ModelView
-{
+namespace ModelView {
 class SceneAdapterInterface;
 }
 
@@ -21,8 +20,7 @@ class SceneAdapterInterface;
 //! rectangle always matches axes viewport at any zoom level. Hides all children items which
 //! go out of axes range of QCustomPlot.
 
-class AxesRectangleView : public QGraphicsObject
-{
+class AxesRectangleView : public QGraphicsObject {
     Q_OBJECT
 
 public:

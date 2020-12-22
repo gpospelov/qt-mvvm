@@ -17,8 +17,7 @@
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 
 const SessionItem* itemFromIndex(const QModelIndex& index)
 {

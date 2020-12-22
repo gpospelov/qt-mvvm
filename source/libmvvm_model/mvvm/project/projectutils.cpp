@@ -15,14 +15,12 @@
 #include <mvvm/project/projectutils.h>
 #include <mvvm/utils/fileutils.h>
 
-namespace
-{
+namespace {
 const std::string json_extention = ".json";
 const std::string untitled_name = "Untitled";
 } // namespace
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! Suggests file name which can be used to store json content of given model.
 //! Uses the model type to construct a filename: MaterialModel -> materialmodel.json

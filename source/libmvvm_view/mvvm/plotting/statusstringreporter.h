@@ -17,16 +17,14 @@
 
 class QCustomPlot;
 
-namespace ModelView
-{
+namespace ModelView {
 
 class StatusStringFormatterInterface;
 
 //! Reports back status string composed for current mouse position in QCustomPlot.
 //! Doesn't report if cursor is outside of the axes range.
 
-class MVVM_VIEW_EXPORT StatusStringReporter
-{
+class MVVM_VIEW_EXPORT StatusStringReporter {
 public:
     using callback_t = std::function<void(const std::string&)>;
     StatusStringReporter(QCustomPlot* custom_plot, callback_t callback,

@@ -14,8 +14,7 @@
 #include <mvvm/viewmodel/viewmodelcontroller.h>
 #include <stdexcept>
 
-namespace ModelView
-{
+namespace ModelView {
 
 ViewModelControllerBuilder::ViewModelControllerBuilder() = default;
 

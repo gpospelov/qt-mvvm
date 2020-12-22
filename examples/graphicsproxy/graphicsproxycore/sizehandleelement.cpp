@@ -15,8 +15,7 @@
 #include <map>
 #include <stdexcept>
 
-namespace
-{
+namespace {
 
 //! Constructs vector of all possible handle elements together with accompanying information.
 

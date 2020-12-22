@@ -14,15 +14,13 @@
 
 class QCustomPlot;
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! Formats status string for current mouse position in QCustomPlot with QCPGraph's.
 //! Includes coordinates of mouse pointer in viewport axes coordinates, add graph info if there is
 //! one nearby.
 
-class MVVM_VIEW_EXPORT GraphInfoFormatter : public StatusStringFormatterInterface
-{
+class MVVM_VIEW_EXPORT GraphInfoFormatter : public StatusStringFormatterInterface {
 public:
     //! Returns status string representing graph nearby.
     //! @params x: mouse x-position given in axis viewport coordinates

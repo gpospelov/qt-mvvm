@@ -12,16 +12,14 @@
 
 #include <mvvm/model/sessionitem.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class RealLimits;
 
 //! Item to carry concrete editable entity (e.g. 'double' value with limits).
 //! Intended for use as a child or CompountItem, not expected to have own children.
 
-class MVVM_MODEL_EXPORT PropertyItem : public SessionItem
-{
+class MVVM_MODEL_EXPORT PropertyItem : public SessionItem {
 public:
     PropertyItem();
 

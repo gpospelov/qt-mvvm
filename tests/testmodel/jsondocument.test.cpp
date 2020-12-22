@@ -22,21 +22,18 @@ using namespace ModelView;
 
 //! Tests JsonDocument class
 
-class JsonDocumentTest : public FolderBasedTest
-{
+class JsonDocumentTest : public FolderBasedTest {
 public:
     JsonDocumentTest() : FolderBasedTest("test_JsonDocument") {}
     ~JsonDocumentTest();
 
-    class TestModel1 : public SessionModel
-    {
+    class TestModel1 : public SessionModel {
     public:
         TestModel1() : SessionModel("TestModel1") {}
         ~TestModel1();
     };
 
-    class TestModel2 : public SessionModel
-    {
+    class TestModel2 : public SessionModel {
     public:
         TestModel2() : SessionModel("TestModel2") {}
         ~TestModel2();

@@ -17,8 +17,7 @@ class MaterialModel;
 
 //! Listens for all changes in material model and updates properties in SampleModel.
 
-class MaterialPropertyController : public ModelView::ModelListener<MaterialModel>
-{
+class MaterialPropertyController : public ModelView::ModelListener<MaterialModel> {
 public:
     MaterialPropertyController(MaterialModel* material_model, SampleModel* sample_model);
 

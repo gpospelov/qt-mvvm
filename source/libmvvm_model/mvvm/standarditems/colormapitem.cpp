@@ -15,8 +15,7 @@
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 const ComboProperty gradientCombo =
     ComboProperty::createFrom({"Grayscale", "Hot", "Cold", "Night", "Candy", "Geography", "Ion",
                                "Thermal", "Polar", "Spectrum", "Jet", "Hues"},

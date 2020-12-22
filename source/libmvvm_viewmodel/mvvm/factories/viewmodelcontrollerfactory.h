@@ -14,15 +14,13 @@
 #include <mvvm/factories/viewmodelcontrollerbuilder.h>
 #include <mvvm/viewmodel_export.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionModel;
 class ViewModelBase;
 class ViewModelController;
 
-namespace Factory
-{
+namespace Factory {
 
 //! Create universal controller.
 

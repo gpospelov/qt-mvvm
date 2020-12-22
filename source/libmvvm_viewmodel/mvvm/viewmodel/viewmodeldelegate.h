@@ -14,16 +14,14 @@
 #include <memory>
 #include <mvvm/viewmodel_export.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class EditorFactoryInterface;
 class CellDecoratorInterface;
 
 //! Model delegate to provide editing/painting for custom variants.
 
-class MVVM_VIEWMODEL_EXPORT ViewModelDelegate : public QStyledItemDelegate
-{
+class MVVM_VIEWMODEL_EXPORT ViewModelDelegate : public QStyledItemDelegate {
     Q_OBJECT
 
 public:

@@ -15,8 +15,7 @@
 #include <string>
 #include <vector>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionModel;
 class ProjectInterface;
@@ -24,8 +23,7 @@ struct ProjectContext;
 
 //! Collection of utility functions to handle project saving and loading.
 
-namespace ProjectUtils
-{
+namespace ProjectUtils {
 
 MVVM_MODEL_EXPORT std::string SuggestFileName(const SessionModel& model);
 

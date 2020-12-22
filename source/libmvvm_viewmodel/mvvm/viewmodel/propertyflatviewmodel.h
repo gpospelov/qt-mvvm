@@ -12,14 +12,12 @@
 
 #include <mvvm/viewmodel/viewmodel.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! View model to show content of SessionModel in Qt widgets.
 //! Only property items are shown, also hides inactive items of GroupProperty.
 
-class MVVM_VIEWMODEL_EXPORT PropertyFlatViewModel : public ViewModel
-{
+class MVVM_VIEWMODEL_EXPORT PropertyFlatViewModel : public ViewModel {
     Q_OBJECT
 public:
     PropertyFlatViewModel(SessionModel* model, QObject* parent = nullptr);

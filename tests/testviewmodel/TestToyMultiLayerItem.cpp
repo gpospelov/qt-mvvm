@@ -11,17 +11,16 @@
 #include "toyitems.h"
 #include "toymodel.h"
 #include <QSignalSpy>
+#include <mvvm/model/itemutils.h>
 #include <mvvm/viewmodel/defaultviewmodel.h>
 #include <mvvm/viewmodel/standardviewitems.h>
 #include <mvvm/viewmodel/viewmodelutils.h>
-#include <mvvm/model/itemutils.h>
 
 using namespace ModelView;
 
 //! Tests of toy MultiLayer in the context of model and viewmodel.
 
-class ToyMultilayerItemTest : public ::testing::Test
-{
+class ToyMultilayerItemTest : public ::testing::Test {
 public:
     ~ToyMultilayerItemTest();
 };

@@ -20,8 +20,7 @@
 
 using namespace ModelView;
 
-class SessionModelTest : public ::testing::Test
-{
+class SessionModelTest : public ::testing::Test {
 public:
     ~SessionModelTest();
 
@@ -29,7 +28,6 @@ public:
     public:
         TestItem() : SessionItem("TestItemType"){};
     };
-
 };
 
 SessionModelTest::~SessionModelTest() = default;
@@ -462,4 +460,3 @@ TEST_F(SessionModelTest, registerItem)
     ASSERT_TRUE(dynamic_cast<TestItem*>(item) != nullptr);
     EXPECT_EQ(item->modelType(), expectedModelType);
 }
-

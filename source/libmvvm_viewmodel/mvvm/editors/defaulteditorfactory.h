@@ -18,15 +18,13 @@
 #include <mvvm/editors/editorbuilders.h>
 #include <mvvm/interfaces/editorfactoryinterface.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! Abstract editor factory for ViewModelDelegate.
 //! Creates cell editors for Qt trees and tables from model index. Cell editor is
 //! Qt widget intended for editing DATA role of some SessionItem.
 
-class MVVM_VIEWMODEL_EXPORT AbstractEditorFactory : public EditorFactoryInterface
-{
+class MVVM_VIEWMODEL_EXPORT AbstractEditorFactory : public EditorFactoryInterface {
 protected:
     void registerBuilder(const std::string& name, EditorBuilders::builder_t builder);
     EditorBuilders::builder_t findBuilder(const std::string& name) const;
@@ -37,8 +35,7 @@ protected:
 //! Editor factory for cell editors in Qt trees and tables, relies on EDITORTYPE role stored
 //! on board of SessionItem.
 
-class MVVM_VIEWMODEL_EXPORT RoleDependentEditorFactory : public AbstractEditorFactory
-{
+class MVVM_VIEWMODEL_EXPORT RoleDependentEditorFactory : public AbstractEditorFactory {
 public:
     RoleDependentEditorFactory();
 
@@ -51,8 +48,7 @@ protected:
 //! Editor factory for cell editors in Qt trees and tables, relies on variant type stored as
 //! DATA role on board of SessionItem.
 
-class MVVM_VIEWMODEL_EXPORT VariantDependentEditorFactory : public AbstractEditorFactory
-{
+class MVVM_VIEWMODEL_EXPORT VariantDependentEditorFactory : public AbstractEditorFactory {
 public:
     VariantDependentEditorFactory();
 
@@ -62,8 +58,7 @@ public:
 //! Default editor factory for cell editors in Qt trees and tables.
 //! Internaly it uses two factories
 
-class MVVM_VIEWMODEL_EXPORT DefaultEditorFactory : public EditorFactoryInterface
-{
+class MVVM_VIEWMODEL_EXPORT DefaultEditorFactory : public EditorFactoryInterface {
 public:
     DefaultEditorFactory();
 

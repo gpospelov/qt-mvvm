@@ -13,8 +13,7 @@
 #include <QWidget>
 #include <memory>
 
-namespace ModelView
-{
+namespace ModelView {
 class SessionModel;
 class AllItemsTreeView;
 class PropertyTreeView;
@@ -25,8 +24,7 @@ class QBoxLayout;
 
 //! Demonstrates usage of PropertyFlatView.
 
-class DemoWidget : public QWidget
-{
+class DemoWidget : public QWidget {
     Q_OBJECT
 
 public:

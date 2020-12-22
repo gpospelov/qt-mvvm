@@ -18,8 +18,7 @@
 #include <QHBoxLayout>
 #include <QSettings>
 
-namespace
-{
+namespace {
 const QString main_window_group = "MainWindow";
 const QString size_key = "size";
 const QString pos_key = "pos";
@@ -40,7 +39,8 @@ void MainWindow::closeEvent(QCloseEvent* event)
     if (m_projectHandler->canCloseProject()) {
         write_settings();
         event->accept();
-    } else {
+    }
+    else {
         event->ignore();
     }
 }

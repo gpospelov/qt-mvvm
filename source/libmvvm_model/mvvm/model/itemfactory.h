@@ -14,21 +14,19 @@
 #include <mvvm/interfaces/itemfactoryinterface.h>
 #include <mvvm/model_export.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class ItemCatalogue;
 
 //! Default SessionItem factory.
 
-class MVVM_MODEL_EXPORT ItemFactory : public ItemFactoryInterface
-{
+class MVVM_MODEL_EXPORT ItemFactory : public ItemFactoryInterface {
 public:
     ItemFactory(std::unique_ptr<ItemCatalogue> catalogue);
     ~ItemFactory() override;
 
     void registerItem(const std::string& modelType, item_factory_func_t func,
-                         const std::string& label) override;
+                      const std::string& label) override;
 
     std::unique_ptr<SessionItem> createItem(const model_type& modelType) const override;
 

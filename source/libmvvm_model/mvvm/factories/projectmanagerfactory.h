@@ -13,8 +13,7 @@
 #include <memory>
 #include <mvvm/interfaces/projectmanagerinterface.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 struct ProjectContext;
 struct UserInteractionContext;

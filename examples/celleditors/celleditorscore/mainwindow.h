@@ -15,15 +15,13 @@
 
 class QTabWidget;
 
-namespace CellEditors
-{
+namespace CellEditors {
 
 class SampleModel;
 
 //! A main window. Contain two sample models and tabs with two model editors.
 
-class MainWindow : public QMainWindow
-{
+class MainWindow : public QMainWindow {
     Q_OBJECT
 
 public:

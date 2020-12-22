@@ -12,8 +12,7 @@
 
 #include <mvvm/standarditems/viewportitem.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class GraphItem;
 
@@ -21,8 +20,7 @@ class GraphItem;
 //! Provides calculation of viewport's x-axis and y-axis range basing on GraphItem data.
 //! Provides functionality to hide selected graphs.
 
-class MVVM_MODEL_EXPORT GraphViewportItem : public ViewportItem
-{
+class MVVM_MODEL_EXPORT GraphViewportItem : public ViewportItem {
 public:
     GraphViewportItem(const std::string& model_type = Constants::GraphViewportItemType);
 

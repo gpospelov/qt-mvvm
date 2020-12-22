@@ -13,16 +13,14 @@
 #include <memory>
 #include <mvvm/interfaces/itembackupstrategy.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionItem;
 class ItemFactoryInterface;
 
 //! Provide backup of SessionItem using json strategy.
 
-class MVVM_MODEL_EXPORT JsonItemBackupStrategy : public ItemBackupStrategy
-{
+class MVVM_MODEL_EXPORT JsonItemBackupStrategy : public ItemBackupStrategy {
 public:
     JsonItemBackupStrategy(const ItemFactoryInterface* item_factory);
     ~JsonItemBackupStrategy() override;

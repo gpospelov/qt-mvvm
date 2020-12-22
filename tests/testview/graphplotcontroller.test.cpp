@@ -23,8 +23,7 @@ using namespace ModelView;
 
 //! Testing GraphPlotController.
 
-class GraphPlotControllerTest : public ::testing::Test
-{
+class GraphPlotControllerTest : public ::testing::Test {
 public:
     ~GraphPlotControllerTest();
 };

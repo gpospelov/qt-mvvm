@@ -12,8 +12,7 @@
 #include <mvvm/standarditems/data1ditem.h>
 #include <stdexcept>
 
-namespace
-{
+namespace {
 template <typename T> QVector<T> fromStdVector(const std::vector<T>& vec)
 {
 #if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)

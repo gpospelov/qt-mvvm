@@ -13,8 +13,7 @@
 
 using namespace ModelView;
 
-class ScientificSpinBoxTest : public ::testing::Test
-{
+class ScientificSpinBoxTest : public ::testing::Test {
 public:
     ~ScientificSpinBoxTest() override;
 };

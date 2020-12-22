@@ -14,8 +14,7 @@
 
 class QCustomPlot;
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! Aggregate to hold mouse position info in QCustomPlot context.
 //! Position is given in axis coordinates corresponding to the current zoom level.

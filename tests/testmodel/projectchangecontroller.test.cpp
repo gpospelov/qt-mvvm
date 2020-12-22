@@ -16,8 +16,7 @@ using namespace ModelView;
 
 //! Tests for ProjectChangeController class.
 
-class ProjectChangeControllerTest : public ::testing::Test
-{
+class ProjectChangeControllerTest : public ::testing::Test {
 public:
     ~ProjectChangeControllerTest();
 };

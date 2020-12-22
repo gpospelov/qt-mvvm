@@ -13,15 +13,13 @@
 #include <memory>
 #include <mvvm/model_export.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionItem;
 
 //! Interface for deep item copying.
 
-class MVVM_MODEL_EXPORT ItemCopyStrategy
-{
+class MVVM_MODEL_EXPORT ItemCopyStrategy {
 public:
     virtual ~ItemCopyStrategy() = default;
 

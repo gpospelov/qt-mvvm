@@ -19,8 +19,7 @@ using ::testing::_;
 
 //! Testing Data1DItem.
 
-class Data1DItemTest : public ::testing::Test
-{
+class Data1DItemTest : public ::testing::Test {
 public:
     ~Data1DItemTest();
 };

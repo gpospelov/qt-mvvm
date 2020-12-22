@@ -15,8 +15,7 @@
 #include <string>
 #include <vector>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionModel;
 

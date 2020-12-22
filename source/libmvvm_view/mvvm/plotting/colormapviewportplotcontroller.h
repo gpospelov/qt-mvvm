@@ -16,16 +16,14 @@
 
 class QCustomPlot;
 
-namespace ModelView
-{
+namespace ModelView {
 
 class ColorMapViewportItem;
 
 //! Establishes communications and mutual updates for ColorMapViewportItem and QCutomPlot.
 //! Populates custom plot with color map and tracks updates in items.
 
-class MVVM_VIEW_EXPORT ColorMapViewportPlotController : public ItemListener<ColorMapViewportItem>
-{
+class MVVM_VIEW_EXPORT ColorMapViewportPlotController : public ItemListener<ColorMapViewportItem> {
 public:
     explicit ColorMapViewportPlotController(QCustomPlot* plot);
     ~ColorMapViewportPlotController() override;

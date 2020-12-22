@@ -14,16 +14,14 @@
 #include <mvvm/model/mvvm_types.h>
 #include <mvvm/model_export.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionItem;
 
 //! Provides registration of SessionItem pointers and their unique identifiers
 //! in global memory pool.
 
-class MVVM_MODEL_EXPORT ItemPool
-{
+class MVVM_MODEL_EXPORT ItemPool {
 public:
     ItemPool() = default;
     ItemPool(const ItemPool&) = delete;

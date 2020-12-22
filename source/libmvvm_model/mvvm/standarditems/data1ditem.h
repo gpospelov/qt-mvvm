@@ -14,8 +14,7 @@
 #include <mvvm/model/sessionmodel.h>
 #include <vector>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class BinnedAxisItem;
 
@@ -23,8 +22,7 @@ class BinnedAxisItem;
 //! Values are stored in Data1DItem itself, axis is attached as a child. Corresponding plot
 //! properties will be served by GraphItem.
 
-class MVVM_MODEL_EXPORT Data1DItem : public CompoundItem
-{
+class MVVM_MODEL_EXPORT Data1DItem : public CompoundItem {
 public:
     static inline const std::string P_VALUES = "P_VALUES";
     static inline const std::string P_ERRORS = "P_ERRORS";
@@ -32,7 +30,7 @@ public:
 
     Data1DItem();
 
-//    void setAxis(std::unique_ptr<BinnedAxisItem> axis);
+    //    void setAxis(std::unique_ptr<BinnedAxisItem> axis);
 
     std::vector<double> binCenters() const;
 
@@ -50,8 +48,7 @@ public:
 // or added later? It is not clear how to create axis a) via Data1DItem::setAxis
 // b) via model directly c) in constructor?
 
-template<typename T, typename... Args>
-T* Data1DItem::setAxis(Args&&... args)
+template <typename T, typename... Args> T* Data1DItem::setAxis(Args&&... args)
 {
     // we disable possibility to re-create axis to facilitate undo/redo
     if (getItem(T_AXIS, 0))
@@ -61,7 +58,8 @@ T* Data1DItem::setAxis(Args&&... args)
     if (model()) {
         // acting through the model to enable undo/redo
         result = model()->insertItem<T>(this);
-    } else {
+    }
+    else {
         result = new T;
         insertItem(result, {T_AXIS, 0});
     }

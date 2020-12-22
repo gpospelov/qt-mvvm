@@ -15,15 +15,13 @@
 class QComboBox;
 class QStandardItemModel;
 
-namespace ModelView
-{
+namespace ModelView {
 
 class WheelEventFilter;
 
 //! Adds multi-selection capabilities to QComboBox.
 
-class MVVM_VIEWMODEL_EXPORT SelectableComboBoxEditor : public CustomEditor
-{
+class MVVM_VIEWMODEL_EXPORT SelectableComboBoxEditor : public CustomEditor {
     Q_OBJECT
 
 public:

@@ -22,8 +22,7 @@ using namespace ModelView;
 
 //! Tests for TopItemsViewModel class.
 
-class TopItemsViewModelTest : public ::testing::Test
-{
+class TopItemsViewModelTest : public ::testing::Test {
 public:
     ~TopItemsViewModelTest();
 };

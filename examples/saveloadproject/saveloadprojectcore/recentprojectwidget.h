@@ -19,8 +19,7 @@ class ProjectPaneWidget;
 
 //! Widget with the name of current project and collection of recent projects.
 
-class RecentProjectWidget : public QWidget
-{
+class RecentProjectWidget : public QWidget {
     Q_OBJECT
 
 public:

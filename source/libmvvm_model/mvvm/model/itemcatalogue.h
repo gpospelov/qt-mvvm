@@ -15,16 +15,14 @@
 #include <string>
 #include <vector>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionItem;
 
 //! Catalogue for item constructions. Contains collection of factory functions associated with
 //! item's modelType and optional label.
 
-class MVVM_MODEL_EXPORT ItemCatalogue
-{
+class MVVM_MODEL_EXPORT ItemCatalogue {
 public:
     ItemCatalogue();
     ~ItemCatalogue();

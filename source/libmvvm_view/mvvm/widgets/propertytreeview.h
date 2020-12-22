@@ -12,14 +12,12 @@
 
 #include <mvvm/widgets/itemstreeview.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! Widget holding standard QTreeView and intended for displaying all properties of given
 //! SessionItem.
 
-class MVVM_VIEW_EXPORT PropertyTreeView : public ItemsTreeView
-{
+class MVVM_VIEW_EXPORT PropertyTreeView : public ItemsTreeView {
     Q_OBJECT
 
 public:

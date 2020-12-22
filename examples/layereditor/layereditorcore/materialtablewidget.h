@@ -16,8 +16,7 @@
 class QTreeView;
 class MaterialModel;
 
-namespace ModelView
-{
+namespace ModelView {
 class ViewModel;
 class ViewModelDelegate;
 class SessionItem;
@@ -25,8 +24,7 @@ class SessionItem;
 
 //! Shows content of material container in table-like view.
 
-class MaterialTableWidget : public QWidget
-{
+class MaterialTableWidget : public QWidget {
 public:
     explicit MaterialTableWidget(MaterialModel* material_model, QWidget* parent = nullptr);
     ~MaterialTableWidget() override;

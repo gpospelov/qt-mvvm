@@ -16,8 +16,7 @@ using namespace ModelView;
 
 //! Tests of container utils.
 
-class ContainerUtilsTest : public ::testing::Test
-{
+class ContainerUtilsTest : public ::testing::Test {
 public:
     ~ContainerUtilsTest();
 };

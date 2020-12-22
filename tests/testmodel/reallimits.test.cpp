@@ -13,8 +13,7 @@
 
 using namespace ModelView;
 
-class RealLimitsTest : public ::testing::Test
-{
+class RealLimitsTest : public ::testing::Test {
 protected:
     ~RealLimitsTest();
 };

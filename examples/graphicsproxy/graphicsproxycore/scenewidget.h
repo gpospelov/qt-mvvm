@@ -20,15 +20,13 @@ class SceneModel;
 class GraphicsScene;
 class GraphicsView;
 
-namespace ModelView
-{
+namespace ModelView {
 class ColorMapCanvas;
 } // namespace ModelView
 
 //! Shows canvas with plots on the left and property editor on the right.
 
-class SceneWidget : public QWidget
-{
+class SceneWidget : public QWidget {
     Q_OBJECT
 
 public:

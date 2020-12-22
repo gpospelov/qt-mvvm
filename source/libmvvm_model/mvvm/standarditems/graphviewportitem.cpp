@@ -14,8 +14,7 @@
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 
 const double failback_min = 0.0;
 const double failback_max = 1.0;

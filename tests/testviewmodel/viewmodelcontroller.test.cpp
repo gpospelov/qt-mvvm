@@ -23,8 +23,7 @@ using namespace ModelView;
 
 //! Tests of ViewModelController class.
 
-class ViewModelControllerTest : public ::testing::Test
-{
+class ViewModelControllerTest : public ::testing::Test {
 public:
     ~ViewModelControllerTest();
 

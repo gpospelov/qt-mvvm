@@ -22,8 +22,7 @@ using namespace ModelView;
 
 //! Tests of ProjectUtils namespace functions.
 
-class ProjectUtilsTest : public FolderBasedTest
-{
+class ProjectUtilsTest : public FolderBasedTest {
 public:
     ProjectUtilsTest()
         : FolderBasedTest("test_ProjectUtils")

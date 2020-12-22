@@ -12,18 +12,15 @@
 
 #include <mvvm/model/sessionmodel.h>
 
-namespace ModelView
-{
+namespace ModelView {
 class ContainerItem;
 }
 
-namespace PlotColorMap
-{
+namespace PlotColorMap {
 
 //! Main application model to demonstrate how to plot data.
 
-class ColorMapModel : public ModelView::SessionModel
-{
+class ColorMapModel : public ModelView::SessionModel {
 public:
     ColorMapModel();
 

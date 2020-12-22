@@ -14,13 +14,11 @@
 #include <string>
 #include <vector>
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! Holds info about single tag for SessionItem.
 
-class MVVM_MODEL_EXPORT TagInfo
-{
+class MVVM_MODEL_EXPORT TagInfo {
 public:
     TagInfo();
 

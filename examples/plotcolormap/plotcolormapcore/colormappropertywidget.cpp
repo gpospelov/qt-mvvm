@@ -17,8 +17,7 @@
 
 using namespace ModelView;
 
-namespace PlotColorMap
-{
+namespace PlotColorMap {
 
 ColorMapPropertyWidget::ColorMapPropertyWidget(ColorMapModel* model, QWidget* parent)
     : QWidget(parent), m_slider(new QSlider), m_treeView(new ItemsTreeView), m_model(model)

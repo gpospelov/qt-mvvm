@@ -13,15 +13,13 @@
 #include <mvvm/commands/abstractitemcommand.h>
 #include <mvvm/core/variant.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionItem;
 
 //! Command for unddo/redo framework to set the data of SessionItem.
 
-class MVVM_MODEL_EXPORT SetValueCommand : public AbstractItemCommand
-{
+class MVVM_MODEL_EXPORT SetValueCommand : public AbstractItemCommand {
 public:
     SetValueCommand(SessionItem* item, Variant value, int role);
     ~SetValueCommand() override;

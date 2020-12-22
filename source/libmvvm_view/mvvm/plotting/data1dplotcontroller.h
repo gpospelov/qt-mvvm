@@ -16,16 +16,14 @@
 
 class QCPGraph;
 
-namespace ModelView
-{
+namespace ModelView {
 
 class Data1DItem;
 
 //! Establishes communication between QCPGraph and Data1DItem.
 //! Provides update of data points on QCPGraph when Graph1DItem is changed.
 
-class MVVM_VIEW_EXPORT Data1DPlotController : public ItemListener<Data1DItem>
-{
+class MVVM_VIEW_EXPORT Data1DPlotController : public ItemListener<Data1DItem> {
 public:
     explicit Data1DPlotController(QCPGraph* graph);
     ~Data1DPlotController() override;

@@ -21,8 +21,7 @@ using namespace ModelView;
 
 //! Tests for PropertyFlatViewModel class.
 
-class PropertyFlatViewModelTest : public ::testing::Test
-{
+class PropertyFlatViewModelTest : public ::testing::Test {
 public:
     ~PropertyFlatViewModelTest();
 };

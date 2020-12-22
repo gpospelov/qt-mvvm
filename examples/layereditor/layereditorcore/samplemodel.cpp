@@ -14,8 +14,7 @@
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 const std::string MultiLayerType = "MultiLayer";
 const std::string LayerType = "Layer";
 } // namespace

@@ -15,8 +15,7 @@
 
 using namespace ModelView;
 
-class SetValueCommandTest : public ::testing::Test
-{
+class SetValueCommandTest : public ::testing::Test {
 public:
     ~SetValueCommandTest();
 };

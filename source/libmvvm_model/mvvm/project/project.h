@@ -13,16 +13,14 @@
 #include <memory>
 #include <mvvm/interfaces/projectinterface.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 struct ProjectContext;
 
 //! Project represents content of all application models in a folder on disk.
 //! Responsible for saving/loading application models to/from disk.
 
-class MVVM_MODEL_EXPORT Project : public ModelView::ProjectInterface
-{
+class MVVM_MODEL_EXPORT Project : public ModelView::ProjectInterface {
 public:
     Project(const ProjectContext& context);
     ~Project();

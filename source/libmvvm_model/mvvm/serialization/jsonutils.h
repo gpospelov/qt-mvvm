@@ -13,14 +13,12 @@
 #include <mvvm/model_export.h>
 #include <string>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionModel;
 class RealLimits;
 
-namespace JsonUtils
-{
+namespace JsonUtils {
 
 //! Returns multiline string representing model content as json.
 MVVM_MODEL_EXPORT std::string ModelToJsonString(const SessionModel& model);

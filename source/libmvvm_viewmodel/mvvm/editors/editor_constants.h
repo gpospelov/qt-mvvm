@@ -15,11 +15,9 @@
 
 #include <string>
 
-namespace ModelView
-{
+namespace ModelView {
 
-namespace Constants
-{
+namespace Constants {
 
 const std::string BoolEditorType = "BoolEditor";
 const std::string ColorEditorType = "ColorEditor";

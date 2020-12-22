@@ -20,8 +20,7 @@
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 std::unique_ptr<JsonItemConverterInterface> CreateConverter(const ItemFactoryInterface* factory,
                                                             ConverterMode mode)
 {

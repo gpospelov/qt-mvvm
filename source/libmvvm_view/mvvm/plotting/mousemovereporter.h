@@ -16,8 +16,7 @@
 
 class QCustomPlot;
 
-namespace ModelView
-{
+namespace ModelView {
 
 struct MousePosInfo;
 
@@ -25,8 +24,7 @@ struct MousePosInfo;
 //! Notifies client about mouse moves and corresponding pointer coordinates expressed in axes units
 //! at current zoom level.
 
-class MVVM_VIEW_EXPORT MouseMoveReporter
-{
+class MVVM_VIEW_EXPORT MouseMoveReporter {
 public:
     using callback_t = std::function<void(const MousePosInfo& pos_info)>;
     MouseMoveReporter(QCustomPlot* custom_plot, callback_t callback);

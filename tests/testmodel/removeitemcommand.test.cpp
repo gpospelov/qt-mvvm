@@ -17,8 +17,7 @@
 
 using namespace ModelView;
 
-class RemoveItemCommandTest : public ::testing::Test
-{
+class RemoveItemCommandTest : public ::testing::Test {
 public:
     ~RemoveItemCommandTest();
 };

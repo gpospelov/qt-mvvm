@@ -19,14 +19,12 @@
 
 using namespace ModelView;
 
-class StandardChildrenStrategiesTest : public ::testing::Test
-{
+class StandardChildrenStrategiesTest : public ::testing::Test {
 public:
     ~StandardChildrenStrategiesTest();
 
     //! Helper class with two properties and one top level item on board.
-    class TestItem : public CompoundItem
-    {
+    class TestItem : public CompoundItem {
     public:
         TestItem() : CompoundItem("test")
         {

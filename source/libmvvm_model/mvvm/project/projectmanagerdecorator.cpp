@@ -15,8 +15,7 @@
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 const bool succeeded = true;
 const bool failed = false;
 } // namespace

@@ -14,15 +14,13 @@
 
 class QJsonObject;
 
-namespace ModelView
-{
+namespace ModelView {
 
 class TagInfo;
 
 //! Base class for all converters of TagInfo to/from json object
 
-class MVVM_MODEL_EXPORT JsonTagInfoConverterInterface
-{
+class MVVM_MODEL_EXPORT JsonTagInfoConverterInterface {
 public:
     virtual ~JsonTagInfoConverterInterface() = default;
 

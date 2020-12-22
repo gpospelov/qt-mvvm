@@ -16,8 +16,7 @@
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 QStringList expected_taginfo_keys()
 {
     QStringList result = QStringList()

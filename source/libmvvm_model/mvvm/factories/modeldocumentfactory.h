@@ -14,8 +14,7 @@
 #include <mvvm/interfaces/modeldocumentinterface.h>
 #include <vector>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionModel;
 

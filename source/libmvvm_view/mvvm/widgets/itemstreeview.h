@@ -18,8 +18,7 @@ class QTreeView;
 class QItemSelection;
 class QItemSelectionModel;
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionItem;
 class ViewModel;
@@ -28,8 +27,7 @@ class ViewModelDelegate;
 //! Tree view to show items of SessionModel via ViewModel mechanism.
 //! Provides notification mechanism for SessionItem selections, use custom delegate.
 
-class MVVM_VIEW_EXPORT ItemsTreeView : public QWidget
-{
+class MVVM_VIEW_EXPORT ItemsTreeView : public QWidget {
     Q_OBJECT
 
 public:

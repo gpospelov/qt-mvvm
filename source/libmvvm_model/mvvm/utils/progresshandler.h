@@ -14,14 +14,12 @@
 #include <mutex>
 #include <mvvm/model_export.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! Maintain information about progress of a computation.
 //! Initialized with callback function to report progress and retrieve interruption request status.
 
-class MVVM_MODEL_EXPORT ProgressHandler
-{
+class MVVM_MODEL_EXPORT ProgressHandler {
 public:
     using callback_t = std::function<bool(size_t)>;
 

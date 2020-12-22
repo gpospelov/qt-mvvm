@@ -20,8 +20,7 @@
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 
 const QString variantTypeKey = "type";
 const QString variantValueKey = "value";
@@ -114,8 +113,7 @@ bool JsonVariantConverter::isVariant(const QJsonObject& object) const
     return object.keys() == expected;
 }
 
-namespace
-{
+namespace {
 
 QStringList expected_variant_keys()
 {

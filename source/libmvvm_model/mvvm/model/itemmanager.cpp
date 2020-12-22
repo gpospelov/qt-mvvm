@@ -13,8 +13,7 @@
 #include <mvvm/model/itempool.h>
 #include <mvvm/model/sessionitem.h>
 
-namespace
-{
+namespace {
 std::unique_ptr<ModelView::ItemFactory> DefaultItemFactory()
 {
     return std::make_unique<ModelView::ItemFactory>(ModelView::CreateStandardItemCatalogue());

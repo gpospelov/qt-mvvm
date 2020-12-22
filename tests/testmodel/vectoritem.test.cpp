@@ -8,16 +8,15 @@
 // ************************************************************************** //
 
 #include "google_test.h"
+#include <mvvm/model/itemutils.h>
 #include <mvvm/model/sessionmodel.h>
 #include <mvvm/standarditems/vectoritem.h>
-#include <mvvm/model/itemutils.h>
 
 using namespace ModelView;
 
 //! VectorItem tests.
 
-class VectorItemTest : public ::testing::Test
-{
+class VectorItemTest : public ::testing::Test {
 public:
     ~VectorItemTest();
 };

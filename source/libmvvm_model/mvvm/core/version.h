@@ -15,8 +15,7 @@
 
 #include <string>
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! Returns major project version.
 inline int ProjectVersionMajor()

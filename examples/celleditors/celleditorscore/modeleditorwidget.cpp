@@ -19,8 +19,7 @@
 
 using namespace ModelView;
 
-namespace CellEditors
-{
+namespace CellEditors {
 
 ModelEditorWidget::ModelEditorWidget(SampleModel* model, QWidget* parent)
     : QWidget(parent)

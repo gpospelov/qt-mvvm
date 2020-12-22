@@ -12,8 +12,7 @@
 
 #include <variant>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionItem;
 

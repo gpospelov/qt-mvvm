@@ -39,7 +39,8 @@ struct StatusStringReporter::StatusStringReporterImpl {
                 notify_client(pos);
                 if (!prevPos.in_axes_range)
                     entering_the_area();
-            } else {
+            }
+            else {
                 if (prevPos.in_axes_range)
                     leaving_the_area();
             }

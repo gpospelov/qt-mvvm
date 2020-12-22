@@ -13,8 +13,7 @@
 #include <mvvm/viewmodel_export.h>
 #include <vector>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionItem;
 
@@ -24,8 +23,7 @@ class SessionItem;
 //! The strategy is used in context of AbstractViewModel while exposing SessionModel to Qt.
 //! Thanks to this strategy ViewModel decides which items to visit.
 
-class MVVM_VIEWMODEL_EXPORT ChildrenStrategyInterface
-{
+class MVVM_VIEWMODEL_EXPORT ChildrenStrategyInterface {
 public:
     virtual ~ChildrenStrategyInterface() = default;
 

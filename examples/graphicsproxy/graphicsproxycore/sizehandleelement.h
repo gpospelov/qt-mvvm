@@ -17,8 +17,7 @@ class RegionOfInterestView;
 
 //! Handle element to resize RegionOfInterestView.
 
-class SizeHandleElement : public QGraphicsItem
-{
+class SizeHandleElement : public QGraphicsItem {
 public:
     //! This enum defines various handle positions which roi can have.
 

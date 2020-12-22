@@ -13,16 +13,14 @@
 #include <QObject>
 #include <mvvm/viewmodel_export.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! Event filter to prevent loss of the focus.
 //! Can be used in the context of QTreeView and similar widgets to call external editor. Such an
 //! editor is created by clicking on a cell of a tree and it appears as  modal window on top of a
 //! tree.
 
-class MVVM_VIEWMODEL_EXPORT LostFocusFilter : public QObject
-{
+class MVVM_VIEWMODEL_EXPORT LostFocusFilter : public QObject {
     Q_OBJECT
 
 public:
@@ -35,8 +33,7 @@ protected:
 //! Event filter to install on combo boxes and spin boxes to ignore wheel events during scrolling.
 //! Helpful than the spin box is a child of some larger scroll area.
 
-class MVVM_VIEWMODEL_EXPORT WheelEventFilter : public QObject
-{
+class MVVM_VIEWMODEL_EXPORT WheelEventFilter : public QObject {
     Q_OBJECT
 
 public:

@@ -14,13 +14,11 @@
 
 class QCheckBox;
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! Custom editor for QVariant based on bool values.
 
-class MVVM_VIEWMODEL_EXPORT BoolEditor : public CustomEditor
-{
+class MVVM_VIEWMODEL_EXPORT BoolEditor : public CustomEditor {
     Q_OBJECT
 
 public:

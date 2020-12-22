@@ -31,8 +31,7 @@
 
 using namespace ModelView;
 
-class DefaultViewModelTest : public FolderBasedTest
-{
+class DefaultViewModelTest : public FolderBasedTest {
 public:
     DefaultViewModelTest() : FolderBasedTest("test_DefaultViewModel") {}
     ~DefaultViewModelTest();

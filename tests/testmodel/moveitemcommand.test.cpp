@@ -16,8 +16,7 @@
 
 using namespace ModelView;
 
-class MoveItemCommandTest : public ::testing::Test
-{
+class MoveItemCommandTest : public ::testing::Test {
 public:
     ~MoveItemCommandTest();
 };

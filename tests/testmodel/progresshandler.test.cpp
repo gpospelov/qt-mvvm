@@ -12,8 +12,7 @@
 
 using namespace ModelView;
 
-class ProgressHandlerTest : public ::testing::Test
-{
+class ProgressHandlerTest : public ::testing::Test {
 public:
     ~ProgressHandlerTest();
 };

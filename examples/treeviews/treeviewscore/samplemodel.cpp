@@ -13,8 +13,7 @@
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 std::unique_ptr<ModelView::ItemCatalogue> CreateItemCatalogue()
 {
     auto result = std::make_unique<ItemCatalogue>();
@@ -30,8 +29,7 @@ std::unique_ptr<ModelView::ItemCatalogue> CreateItemCatalogue()
 }
 } // namespace
 
-namespace TreeViews
-{
+namespace TreeViews {
 
 SampleModel::SampleModel() : SessionModel("SampleModel")
 {

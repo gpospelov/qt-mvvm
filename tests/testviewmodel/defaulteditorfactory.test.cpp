@@ -34,8 +34,7 @@
 
 using namespace ModelView;
 
-class DefaultEditorFactoryTest : public WidgetBasedTest
-{
+class DefaultEditorFactoryTest : public WidgetBasedTest {
 public:
     DefaultEditorFactoryTest() : m_factory(std::make_unique<DefaultEditorFactory>()) {}
     ~DefaultEditorFactoryTest();

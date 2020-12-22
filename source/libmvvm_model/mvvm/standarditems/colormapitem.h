@@ -12,8 +12,7 @@
 
 #include <mvvm/model/compounditem.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class Data2DItem;
 
@@ -21,8 +20,7 @@ class Data2DItem;
 //! Contains plot properties (i.e. color, gradient etc) and link to Data2DItem, which will provide
 //! actual data to plot. ColorMapItem is intended for plotting only via ColorMapViewportItem.
 
-class MVVM_MODEL_EXPORT ColorMapItem : public CompoundItem
-{
+class MVVM_MODEL_EXPORT ColorMapItem : public CompoundItem {
 public:
     static inline const std::string P_LINK = "P_LINK";
     static inline const std::string P_TITLE = "P_TITLE";

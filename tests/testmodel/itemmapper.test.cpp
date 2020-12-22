@@ -18,8 +18,7 @@
 using namespace ModelView;
 using ::testing::_;
 
-class ItemMapperTest : public ::testing::Test
-{
+class ItemMapperTest : public ::testing::Test {
 public:
     ~ItemMapperTest();
 };

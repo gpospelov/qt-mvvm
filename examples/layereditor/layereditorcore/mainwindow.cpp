@@ -17,8 +17,7 @@
 #include <layereditorcore/mainwindow.h>
 #include <layereditorcore/samplewidget.h>
 
-namespace
-{
+namespace {
 const QString main_window_group = "MainWindow";
 const QString size_key = "size";
 const QString pos_key = "pos";

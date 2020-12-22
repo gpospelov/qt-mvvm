@@ -15,13 +15,11 @@
 #include <string>
 #include <vector>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionItem;
 
-namespace Utils
-{
+namespace Utils {
 
 //! Iterates through item and all its children.
 MVVM_MODEL_EXPORT void iterate(SessionItem* item, const std::function<void(SessionItem*)>& fun);

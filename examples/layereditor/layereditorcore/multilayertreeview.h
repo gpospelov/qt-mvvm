@@ -16,8 +16,7 @@
 class QTreeView;
 class ApplicationModels;
 
-namespace ModelView
-{
+namespace ModelView {
 class ViewModel;
 class SessionItem;
 class ViewModelDelegate;
@@ -25,8 +24,7 @@ class ViewModelDelegate;
 
 //! Shows content of multi layer in a tree view in special "flat" form.
 
-class MultiLayerTreeView : public QWidget
-{
+class MultiLayerTreeView : public QWidget {
 public:
     explicit MultiLayerTreeView(ApplicationModels* models, QWidget* parent = nullptr);
     ~MultiLayerTreeView();

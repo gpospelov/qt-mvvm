@@ -20,8 +20,7 @@ using ::testing::_;
 
 //! Testing AxesItems.
 
-class GraphViewportItemTest : public ::testing::Test
-{
+class GraphViewportItemTest : public ::testing::Test {
 public:
     ~GraphViewportItemTest();
 };

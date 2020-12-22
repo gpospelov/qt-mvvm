@@ -14,8 +14,7 @@ using TestUtils::toVector;
 
 //! Testing functions in test_utils.
 
-class TestUtilsTest : public ::testing::Test
-{
+class TestUtilsTest : public ::testing::Test {
 public:
     ~TestUtilsTest();
 };

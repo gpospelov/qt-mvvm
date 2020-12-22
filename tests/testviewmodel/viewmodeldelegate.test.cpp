@@ -22,8 +22,7 @@ using namespace ModelView;
 
 //! Tests of ViewModelDelegate class.
 
-class ViewModelDelegateTest : public WidgetBasedTest
-{
+class ViewModelDelegateTest : public WidgetBasedTest {
 public:
     ~ViewModelDelegateTest();
 

@@ -28,8 +28,7 @@ using namespace ModelView;
 //! to json and back. Full testing is not possible since JsonItemContainerConverter
 //! requires machinery provided by JsonItemConverter. Simplifed item/json creation is used.
 
-class JsonItemContainerConverterTest : public FolderBasedTest
-{
+class JsonItemContainerConverterTest : public FolderBasedTest {
 public:
     JsonItemContainerConverterTest()
         : FolderBasedTest("test_JsonItemContainerConverterTest")

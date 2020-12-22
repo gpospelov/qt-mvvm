@@ -14,8 +14,7 @@
 #include <mvvm/utils/numericutils.h>
 #include <stdexcept>
 
-namespace
-{
+namespace {
 const int max_digits = 1000;
 }
 

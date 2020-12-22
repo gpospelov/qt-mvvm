@@ -15,14 +15,12 @@
 #include <mvvm/viewmodel/viewmodel.h>
 #include <mvvm/viewmodel_export.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionModel;
 class ViewModel;
 
-namespace Factory
-{
+namespace Factory {
 
 //! Creates view model to represent SessionModel for Qt views.
 //! The model has two columns, all items are shown.

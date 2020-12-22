@@ -30,8 +30,7 @@ using namespace ModelView;
 
 //! Provides custom style delegate for QComboBox to allow checkboxes.
 
-class QCheckListStyledItemDelegate : public QStyledItemDelegate
-{
+class QCheckListStyledItemDelegate : public QStyledItemDelegate {
 public:
     QCheckListStyledItemDelegate(QObject* parent = nullptr) : QStyledItemDelegate(parent) {}
 
@@ -138,13 +137,13 @@ bool SelectableComboBoxEditor::eventFilter(QObject* obj, QEvent* event)
         auto index = m_box->view()->indexAt(mouseEvent->pos());
         onClickedList(index);
         return true;
-
-    } else if (isClickToExpand(obj, event)) {
+    }
+    else if (isClickToExpand(obj, event)) {
         // Expands box when clicking on None/Multiple label
         m_box->showPopup();
         return true;
-
-    } else {
+    }
+    else {
         // Propagate to the parent class.
         return QObject::eventFilter(obj, event);
     }
@@ -182,7 +181,8 @@ void SelectableComboBoxEditor::setConnected(bool isConnected)
     if (isConnected) {
         connect(m_model, &QStandardItemModel::dataChanged, this,
                 &SelectableComboBoxEditor::onModelDataChanged);
-    } else {
+    }
+    else {
         disconnect(m_model, &QStandardItemModel::dataChanged, this,
                    &SelectableComboBoxEditor::onModelDataChanged);
     }

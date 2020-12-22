@@ -13,14 +13,12 @@
 #include <QScrollArea>
 #include <mvvm/view_export.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! Modification of standard scroll area, which makes widget with dynamic layout occupy the whole
 //! available space.
 
-class MVVM_VIEW_EXPORT AdjustingScrollArea : public QScrollArea
-{
+class MVVM_VIEW_EXPORT AdjustingScrollArea : public QScrollArea {
     Q_OBJECT
 
 public:

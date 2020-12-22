@@ -12,13 +12,11 @@
 
 #include <mvvm/model_export.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! Helper class to register variant comparators.
 
-class MVVM_MODEL_EXPORT Comparators
-{
+class MVVM_MODEL_EXPORT Comparators {
 public:
     static void registerComparators();
     static bool registered();

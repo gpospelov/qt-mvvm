@@ -18,16 +18,14 @@
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 const std::string samplemodel_name = "samplemodel";
 
 } // namespace
 
 //! Tests for ProjectManager class.
 
-class ProjectManagerDecoratorTest : public FolderBasedTest
-{
+class ProjectManagerDecoratorTest : public FolderBasedTest {
 public:
     ProjectManagerDecoratorTest()
         : FolderBasedTest("test_ProjectManagerDecorator")

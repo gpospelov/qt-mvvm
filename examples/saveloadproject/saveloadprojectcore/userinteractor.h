@@ -12,8 +12,7 @@
 
 #include <string>
 
-namespace ModelView
-{
+namespace ModelView {
 enum class SaveChangesAnswer;
 }
 
@@ -23,8 +22,7 @@ class RecentProjectSettings;
 //! Provide save/discard/cancel and similar dialogs on user request.
 //! Intended to work in pair with ProjectManagerDecorator.
 
-class UserInteractor
-{
+class UserInteractor {
 public:
     UserInteractor(RecentProjectSettings* settings, QWidget* parent);
 

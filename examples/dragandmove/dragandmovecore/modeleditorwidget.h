@@ -16,8 +16,7 @@
 class QToolBar;
 class QAction;
 
-namespace DragAndView
-{
+namespace DragAndView {
 
 class SampleModel;
 class ContainerEditorWidget;
@@ -26,8 +25,7 @@ class ContainerEditorWidget;
 //! It is expected that model has two containers with demo items, left tree shows first container,
 //! right tree the second. It is possible to drag-and-drop items between two containers.
 
-class ModelEditorWidget : public QWidget
-{
+class ModelEditorWidget : public QWidget {
     Q_OBJECT
 
 public:

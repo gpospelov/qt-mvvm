@@ -16,8 +16,7 @@
 
 //! Various common utils for unit tests.
 
-namespace TestUtils
-{
+namespace TestUtils {
 
 //! Returns vector representing bin centers/values on QCPGraph.
 

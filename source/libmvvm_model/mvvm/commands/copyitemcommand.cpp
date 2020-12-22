@@ -18,8 +18,7 @@
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 std::string generate_description(const std::string& modelType, const TagRow& tagrow);
 } // namespace
 
@@ -61,14 +60,14 @@ void CopyItemCommand::execute_command()
     if (parent->insertItem(item.get(), p_impl->tagrow)) {
         auto result = item.release();
         setResult(result);
-    } else {
+    }
+    else {
         setResult(nullptr);
         setObsolete(true);
     }
 }
 
-namespace
-{
+namespace {
 std::string generate_description(const std::string& modelType, const TagRow& tagrow)
 {
     std::ostringstream ostr;

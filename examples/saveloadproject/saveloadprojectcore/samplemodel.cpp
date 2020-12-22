@@ -14,8 +14,7 @@
 #include <mvvm/utils/numericutils.h>
 #include <mvvm/widgets/widgetutils.h>
 
-namespace
-{
+namespace {
 std::string random_name()
 {
     static const std::string alphabet = "abcdefgh";

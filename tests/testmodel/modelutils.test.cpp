@@ -14,8 +14,7 @@
 
 using namespace ModelView;
 
-class ModelUtilsTest : public ::testing::Test
-{
+class ModelUtilsTest : public ::testing::Test {
 public:
     ~ModelUtilsTest();
 };

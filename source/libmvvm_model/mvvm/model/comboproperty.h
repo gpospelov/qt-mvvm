@@ -15,13 +15,11 @@
 #include <string>
 #include <vector>
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! Custom property to define list of string values with multiple selections.
 
-class MVVM_MODEL_EXPORT ComboProperty
-{
+class MVVM_MODEL_EXPORT ComboProperty {
 public:
     ComboProperty();
 

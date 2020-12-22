@@ -17,16 +17,14 @@
 class QComboBox;
 class QStandardItemModel;
 
-namespace ModelView
-{
+namespace ModelView {
 
 class ExternalProperty;
 
 //! Custom editor for table/tree cells to select ExternalProperty from the list of
 //! external properties. Uses callbacks to retrieve vector of possible properties.
 
-class MVVM_VIEWMODEL_EXPORT ExternalPropertyComboEditor : public CustomEditor
-{
+class MVVM_VIEWMODEL_EXPORT ExternalPropertyComboEditor : public CustomEditor {
     Q_OBJECT
 
 public:

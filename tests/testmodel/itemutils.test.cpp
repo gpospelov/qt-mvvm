@@ -19,8 +19,7 @@
 
 using namespace ModelView;
 
-class ItemUtilsTest : public ::testing::Test
-{
+class ItemUtilsTest : public ::testing::Test {
 public:
     ~ItemUtilsTest();
 };
@@ -135,8 +134,8 @@ TEST_F(ItemUtilsTest, HasTag)
     SessionItem item;
     item.registerTag(TagInfo::universalTag("default_tag"), /*set_as_default*/ true);
 
-    EXPECT_TRUE(Utils::HasTag(item , "default_tag"));
-    EXPECT_FALSE(Utils::HasTag(item , "nonexisting_tag"));
+    EXPECT_TRUE(Utils::HasTag(item, "default_tag"));
+    EXPECT_FALSE(Utils::HasTag(item, "nonexisting_tag"));
 }
 
 //! Checks method ::IsSinglePropertyTag.
@@ -147,8 +146,8 @@ TEST_F(ItemUtilsTest, IsSinglePropertyTag)
     item.registerTag(TagInfo::universalTag("default_tag"), /*set_as_default*/ true);
     item.registerTag(TagInfo::propertyTag("property_tag", Constants::PropertyType));
 
-    EXPECT_FALSE(Utils::IsSinglePropertyTag(item , "default_tag"));
-    EXPECT_TRUE(Utils::IsSinglePropertyTag(item , "property_tag"));
+    EXPECT_FALSE(Utils::IsSinglePropertyTag(item, "default_tag"));
+    EXPECT_TRUE(Utils::IsSinglePropertyTag(item, "property_tag"));
 }
 
 //! Check access to top level and property items.

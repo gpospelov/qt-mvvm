@@ -17,21 +17,18 @@ class QBoxLayout;
 class QTreeView;
 class QTableView;
 
-namespace ModelView
-{
+namespace ModelView {
 class ViewModel;
 class ViewModelDelegate;
 } // namespace ModelView
 
-namespace CellEditors
-{
+namespace CellEditors {
 
 class SampleModel;
 
 //! Shows content of the model as vertical tree, horizontal tree and table.
 
-class ModelEditorWidget : public QWidget
-{
+class ModelEditorWidget : public QWidget {
     Q_OBJECT
 
 public:

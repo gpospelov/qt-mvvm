@@ -13,8 +13,7 @@
 #include <mvvm/model_export.h>
 #include <string>
 
-namespace ModelView ::Utils
-{
+namespace ModelView ::Utils {
 
 //! Returns true if file is binary
 MVVM_MODEL_EXPORT bool is_binary(const std::string& filename);

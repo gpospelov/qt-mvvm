@@ -21,13 +21,11 @@ class QSize;
 class QMainWindow;
 class QLabel;
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! Collection of various widget-related utils.
 
-namespace Utils
-{
+namespace Utils {
 
 //! Returns random color.
 MVVM_VIEW_EXPORT QColor RandomColor();

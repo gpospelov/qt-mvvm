@@ -12,8 +12,7 @@
 #include <mvvm/model/externalproperty.h>
 #include <mvvm/model/variant_constants.h>
 
-namespace
-{
+namespace {
 const QString qstring_name = "QString";
 }
 
@@ -62,7 +61,8 @@ Variant Utils::toQtVariant(const Variant& custom)
     // converts variant based on std::string to variant based on QString
     if (custom.typeName() == Constants::string_type_name) {
         return Variant(QString::fromStdString(custom.value<std::string>()));
-    } else if (IsDoubleVectorVariant(custom)) {
+    }
+    else if (IsDoubleVectorVariant(custom)) {
         QString str =
             QString("vector of %1 elements").arg(custom.value<std::vector<double>>().size());
         return Variant(str);

@@ -16,15 +16,13 @@
 
 class QCPAxis;
 
-namespace ModelView
-{
+namespace ModelView {
 
 class TextItem;
 
 //! Propagates title settings from TextItem to QCPAxis.
 
-class MVVM_VIEW_EXPORT AxisTitleController : public ItemListener<TextItem>
-{
+class MVVM_VIEW_EXPORT AxisTitleController : public ItemListener<TextItem> {
 public:
     explicit AxisTitleController(QCPAxis* axis);
     ~AxisTitleController() override;

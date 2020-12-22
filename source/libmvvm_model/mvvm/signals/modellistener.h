@@ -12,15 +12,13 @@
 
 #include <mvvm/signals/modellistenerbase.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionItem;
 
 //! Templated class for all objects willing to listen for changes in concrete SessionModel.
 
-template <typename T> class ModelListener : public ModelListenerBase
-{
+template <typename T> class ModelListener : public ModelListenerBase {
 public:
     ModelListener(T* session_model) : ModelListenerBase(session_model) {}
 

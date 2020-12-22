@@ -16,16 +16,14 @@
 
 class QCustomPlot;
 
-namespace ModelView
-{
+namespace ModelView {
 
 class GraphViewportItem;
 
 //! Establishes communications and mutual updates for GraphViewportItem and QCutomPlot.
 //! Populates custom plot with all graphs found in GraphViewportItem.
 
-class MVVM_VIEW_EXPORT GraphViewportPlotController : public ItemListener<GraphViewportItem>
-{
+class MVVM_VIEW_EXPORT GraphViewportPlotController : public ItemListener<GraphViewportItem> {
 public:
     explicit GraphViewportPlotController(QCustomPlot* plot);
     ~GraphViewportPlotController() override;

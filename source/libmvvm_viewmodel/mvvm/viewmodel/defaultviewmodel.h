@@ -12,16 +12,14 @@
 
 #include <mvvm/viewmodel/viewmodel.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! View model to show content of SessionModel in Qt widgets: two column tree with label/data.
 
 //! Provides two column tree with label/data, with one-to-one child/parent
 //! correspondence as in the original SessionModel.
 
-class MVVM_VIEWMODEL_EXPORT DefaultViewModel : public ViewModel
-{
+class MVVM_VIEWMODEL_EXPORT DefaultViewModel : public ViewModel {
     Q_OBJECT
 public:
     DefaultViewModel(SessionModel* model, QObject* parent = nullptr);

@@ -19,8 +19,7 @@
 #include <mvvm/viewmodel/standardviewitems.h>
 #include <mvvm/viewmodel/viewmodelutils.h>
 
-namespace
-{
+namespace {
 QList<QStandardItem*> get_items(std::vector<int> data)
 {
     QList<QStandardItem*> result;
@@ -34,8 +33,7 @@ QList<QStandardItem*> get_items(std::vector<int> data)
 
 using namespace ModelView;
 
-class ViewModelUtilsTest : public ::testing::Test
-{
+class ViewModelUtilsTest : public ::testing::Test {
 public:
     ~ViewModelUtilsTest();
 };

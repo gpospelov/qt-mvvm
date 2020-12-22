@@ -18,8 +18,7 @@ using namespace ModelView;
 
 //! Testing ItemFactory in the context of SessionModel and unique identifiers of SessionItem.
 
-class ItemManagerTest : public ::testing::Test
-{
+class ItemManagerTest : public ::testing::Test {
 public:
     ~ItemManagerTest();
 };

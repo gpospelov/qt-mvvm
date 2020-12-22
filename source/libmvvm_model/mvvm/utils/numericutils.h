@@ -12,11 +12,9 @@
 
 #include <mvvm/model_export.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
-namespace Utils
-{
+namespace Utils {
 
 //! Returns true if two doubles agree within epsilon*tolerance.
 MVVM_MODEL_EXPORT bool AreAlmostEqual(double a, double b, double tolerance_factor = 1.0);

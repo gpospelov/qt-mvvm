@@ -14,8 +14,7 @@
 
 using namespace ModelView;
 
-class JsonUtilsTest : public ::testing::Test
-{
+class JsonUtilsTest : public ::testing::Test {
 protected:
     ~JsonUtilsTest();
 };

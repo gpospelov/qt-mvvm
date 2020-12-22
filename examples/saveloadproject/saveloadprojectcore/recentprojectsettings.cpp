@@ -12,8 +12,7 @@
 #include <QSettings>
 #include <mvvm/utils/fileutils.h>
 
-namespace
-{
+namespace {
 const int max_recent_projects = 10;
 
 const QString group_key = "recentproect";

@@ -17,8 +17,7 @@
 
 using namespace ModelView;
 
-namespace TreeViews
-{
+namespace TreeViews {
 
 MultiLayer::MultiLayer() : CompoundItem(::Constants::MultiLayerItemType)
 {

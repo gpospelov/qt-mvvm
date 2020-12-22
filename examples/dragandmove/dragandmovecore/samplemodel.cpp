@@ -13,11 +13,9 @@
 #include <mvvm/utils/numericutils.h>
 #include <mvvm/widgets/widgetutils.h>
 
-namespace DragAndView
-{
+namespace DragAndView {
 
-namespace
-{
+namespace {
 std::string random_name()
 {
     static const std::string alphabet = "abcdefgh";

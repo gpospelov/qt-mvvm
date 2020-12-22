@@ -14,8 +14,7 @@
 #include <QVBoxLayout>
 #include <mvvm/widgets/widgetutils.h>
 
-namespace
-{
+namespace {
 int widget_height()
 {
     return ModelView::Utils::SizeOfLetterM().height() * 3;

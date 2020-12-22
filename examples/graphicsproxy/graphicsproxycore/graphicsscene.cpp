@@ -14,8 +14,7 @@
 #include <mvvm/plotting/customplotproxywidget.h>
 #include <mvvm/plotting/sceneadapterinterface.h>
 
-namespace
-{
+namespace {
 const double scene_origin_x{0.0};
 const double scene_origin_y{0.0};
 const QRectF default_scene_rect{QPointF{scene_origin_x, scene_origin_y}, QSizeF{800, 600}};

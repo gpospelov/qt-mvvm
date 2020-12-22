@@ -21,8 +21,7 @@ using namespace ModelView;
 
 //! Testing Data1DPlotController.
 
-class Data1DPlotControllerTest : public ::testing::Test
-{
+class Data1DPlotControllerTest : public ::testing::Test {
 public:
     ~Data1DPlotControllerTest();
 };

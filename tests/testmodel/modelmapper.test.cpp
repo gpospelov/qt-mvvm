@@ -20,8 +20,7 @@ using ::testing::_;
 
 //! Testing ModelMapper callbacks on basic model manipulations.
 
-class ModelMapperTest : public ::testing::Test
-{
+class ModelMapperTest : public ::testing::Test {
 public:
     ~ModelMapperTest();
 };

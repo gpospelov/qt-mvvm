@@ -14,16 +14,14 @@
 
 class QJsonObject;
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionModel;
 enum class ConverterMode;
 
 //! Converter of SessionModel to/from json object with posibility to select one of convertion modes.
 
-class MVVM_MODEL_EXPORT JsonModelConverter : public JsonModelConverterInterface
-{
+class MVVM_MODEL_EXPORT JsonModelConverter : public JsonModelConverterInterface {
 public:
     JsonModelConverter(ConverterMode mode);
     ~JsonModelConverter() override;

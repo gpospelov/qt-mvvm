@@ -15,8 +15,7 @@
 #include <mvvm/utils/reallimits.h>
 #include <stdexcept>
 
-namespace
-{
+namespace {
 const std::string text_limitless = "limitless";
 const std::string text_positive = "positive";
 const std::string text_nonnegative = "nonnegative";

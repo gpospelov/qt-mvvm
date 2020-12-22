@@ -16,8 +16,7 @@ using namespace ModelView;
 
 //! Test of ContainerItem.
 
-class ContainerItemTest : public ::testing::Test
-{
+class ContainerItemTest : public ::testing::Test {
 public:
     ~ContainerItemTest();
 };

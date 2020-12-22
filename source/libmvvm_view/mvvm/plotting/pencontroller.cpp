@@ -15,8 +15,7 @@
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 //! Returns Qt pen style from current ComboProperty index.
 Qt::PenStyle getQtPenFromComboIndex(const ComboProperty& combo)
 {

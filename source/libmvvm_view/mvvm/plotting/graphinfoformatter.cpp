@@ -14,8 +14,7 @@
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 
 QCPGraph* find_graph_nearby(QCustomPlot* custom_plot, double x, double y)
 {

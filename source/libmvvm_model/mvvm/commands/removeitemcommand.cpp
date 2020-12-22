@@ -7,18 +7,17 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/commands/removeitemcommand.h>
 #include <mvvm/commands/commandutils.h>
+#include <mvvm/commands/removeitemcommand.h>
 #include <mvvm/interfaces/itembackupstrategy.h>
+#include <mvvm/model/path.h>
 #include <mvvm/model/sessionitem.h>
 #include <mvvm/model/sessionmodel.h>
-#include <mvvm/model/path.h>
 #include <sstream>
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 std::string generate_description(const TagRow& tagrow);
 } // namespace
 
@@ -56,14 +55,14 @@ void RemoveItemCommand::execute_command()
         p_impl->backup_strategy->saveItem(child);
         delete child;
         setResult(true);
-    } else {
+    }
+    else {
         setResult(false);
         setObsolete(true);
     }
 }
 
-namespace
-{
+namespace {
 std::string generate_description(const TagRow& tagrow)
 {
     std::ostringstream ostr;

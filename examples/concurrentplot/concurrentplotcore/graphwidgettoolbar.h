@@ -19,8 +19,7 @@ class QProgressBar;
 
 //! Toolbar for GraphWidget. Contains elements to steer background simulation.
 
-class GraphWidgetToolBar : public QToolBar
-{
+class GraphWidgetToolBar : public QToolBar {
     Q_OBJECT
 
 public:

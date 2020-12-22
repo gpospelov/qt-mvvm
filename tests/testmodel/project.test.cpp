@@ -19,8 +19,7 @@
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 const std::string samplemodel_name = "SampleModel";
 const std::string materialmodel_name = "MaterialModel";
 
@@ -36,8 +35,7 @@ std::string get_json_filename(const std::string& model_name)
 
 //! Tests for Project class.
 
-class ProjectTest : public FolderBasedTest
-{
+class ProjectTest : public FolderBasedTest {
 public:
     ProjectTest()
         : FolderBasedTest("test_ProjectTest")

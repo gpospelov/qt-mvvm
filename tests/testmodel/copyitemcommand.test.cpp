@@ -18,8 +18,7 @@
 
 using namespace ModelView;
 
-class CopyItemCommandTest : public ::testing::Test
-{
+class CopyItemCommandTest : public ::testing::Test {
 public:
     ~CopyItemCommandTest();
 };

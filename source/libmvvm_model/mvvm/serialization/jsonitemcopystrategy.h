@@ -13,16 +13,14 @@
 #include <memory>
 #include <mvvm/interfaces/itemcopystrategy.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionItem;
 class ItemFactoryInterface;
 
 //! Provide SessionItem copying using json based strategy.
 
-class MVVM_MODEL_EXPORT JsonItemCopyStrategy : public ItemCopyStrategy
-{
+class MVVM_MODEL_EXPORT JsonItemCopyStrategy : public ItemCopyStrategy {
 public:
     JsonItemCopyStrategy(const ItemFactoryInterface* item_factory);
     ~JsonItemCopyStrategy();

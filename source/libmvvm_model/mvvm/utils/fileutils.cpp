@@ -122,7 +122,8 @@ bool Utils::is_empty(const std::string& path)
     if (info.isDir()) {
         QDir dir(QString::fromStdString(path));
         return dir.isEmpty();
-    } else {
+    }
+    else {
         return info.size() == 0;
     }
     return false;

@@ -19,8 +19,7 @@ class QString;
 //! Container class to hold all SessionModel's used during GUI session.
 //! Holds SampleModel with multilayer structure and MaterialModel with collection of materials.
 
-class ApplicationModels
-{
+class ApplicationModels {
 public:
     ApplicationModels();
     ~ApplicationModels();

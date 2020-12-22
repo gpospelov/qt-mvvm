@@ -23,8 +23,7 @@ using namespace ModelView;
 
 //! Testing ColorMapViewportPlotController.
 
-class ColorMapViewportPlotControllerTest : public ::testing::Test
-{
+class ColorMapViewportPlotControllerTest : public ::testing::Test {
 public:
     ~ColorMapViewportPlotControllerTest();
 };

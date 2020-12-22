@@ -12,8 +12,7 @@
 
 #include <mvvm/model/sessionmodel.h>
 
-namespace ModelView
-{
+namespace ModelView {
 class GraphViewportItem;
 class ContainerItem;
 } // namespace ModelView
@@ -21,8 +20,7 @@ class ContainerItem;
 //! Main application model holding data for single graph.
 //! Contains few Data1DItem's, GraphItem's and ViewPortItem.
 
-class GraphModel : public ModelView::SessionModel
-{
+class GraphModel : public ModelView::SessionModel {
 public:
     GraphModel();
 

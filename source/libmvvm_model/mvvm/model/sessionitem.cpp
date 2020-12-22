@@ -20,8 +20,7 @@
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 int appearance(const ModelView::SessionItem& item)
 {
     const int default_appearance = Appearance::EDITABLE | Appearance::ENABLED;

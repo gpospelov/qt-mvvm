@@ -16,8 +16,7 @@
 
 class QJsonObject;
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionItem;
 class SessionItemTags;
@@ -25,8 +24,7 @@ struct ConverterCallbacks;
 
 //! Converter between SessionItemTags and JSON object.
 
-class MVVM_MODEL_EXPORT JsonItemTagsConverter
-{
+class MVVM_MODEL_EXPORT JsonItemTagsConverter {
 public:
     JsonItemTagsConverter(ConverterCallbacks callbacks);
     ~JsonItemTagsConverter();

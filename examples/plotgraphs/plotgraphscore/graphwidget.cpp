@@ -19,8 +19,7 @@
 
 using namespace ModelView;
 
-namespace PlotGraphs
-{
+namespace PlotGraphs {
 
 GraphWidget::GraphWidget(GraphModel* model, QWidget* parent)
     : QWidget(parent)
