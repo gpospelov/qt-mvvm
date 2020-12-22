@@ -7,11 +7,12 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/editors/defaulteditorfactory.h"
+
 #include "google_test.h"
 #include "mvvm/editors/booleditor.h"
 #include "mvvm/editors/coloreditor.h"
 #include "mvvm/editors/combopropertyeditor.h"
-#include "mvvm/editors/defaulteditorfactory.h"
 #include "mvvm/editors/editor_constants.h"
 #include "mvvm/editors/externalpropertyeditor.h"
 #include "mvvm/editors/integereditor.h"

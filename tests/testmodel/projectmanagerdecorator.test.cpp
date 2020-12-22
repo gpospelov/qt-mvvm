@@ -7,12 +7,13 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/project/projectmanagerdecorator.h"
+
 #include "folderbasedtest.h"
 #include "google_test.h"
 #include "mvvm/model/propertyitem.h"
 #include "mvvm/model/sessionmodel.h"
 #include "mvvm/project/project_types.h"
-#include "mvvm/project/projectmanagerdecorator.h"
 #include "mvvm/utils/fileutils.h"
 #include <cctype>
 

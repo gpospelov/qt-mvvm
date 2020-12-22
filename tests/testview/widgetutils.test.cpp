@@ -7,8 +7,9 @@
 //
 // ************************************************************************** //
 
-#include "google_test.h"
 #include "mvvm/widgets/widgetutils.h"
+
+#include "google_test.h"
 #include "test_utils.h"
 #include <QDebug>
 #include <QDir>

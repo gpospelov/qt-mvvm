@@ -7,10 +7,11 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/signals/modellistener.h"
+
 #include "google_test.h"
 #include "mvvm/model/propertyitem.h"
 #include "mvvm/model/sessionmodel.h"
-#include "mvvm/signals/modellistener.h"
 #include <memory>
 
 using namespace ModelView;

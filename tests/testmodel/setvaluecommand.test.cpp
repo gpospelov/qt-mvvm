@@ -7,8 +7,9 @@
 //
 // ************************************************************************** //
 
-#include "google_test.h"
 #include "mvvm/commands/setvaluecommand.h"
+
+#include "google_test.h"
 #include "mvvm/model/sessionitem.h"
 #include "mvvm/model/sessionmodel.h"
 #include <stdexcept>

@@ -14,7 +14,7 @@
 #include "mvvm/plotting/statusstringreporterfactory.h"
 #include "mvvm/standarditems/graphviewportitem.h"
 #include "mvvm/widgets/statuslabel.h"
-#include "qcustomplot.h"
+#include <qcustomplot.h>
 #include <QBoxLayout>
 
 namespace {

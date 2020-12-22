@@ -7,8 +7,9 @@
 //
 // ************************************************************************** //
 
-#include "google_test.h"
 #include "mvvm/factories/viewmodelcontrollerfactory.h"
+
+#include "google_test.h"
 #include "mvvm/model/sessionmodel.h"
 #include "mvvm/viewmodel/labeldatarowstrategy.h"
 #include "mvvm/viewmodel/standardchildrenstrategies.h"

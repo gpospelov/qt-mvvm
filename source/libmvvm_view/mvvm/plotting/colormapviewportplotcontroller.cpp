@@ -14,8 +14,8 @@
 #include "mvvm/standarditems/axisitems.h"
 #include "mvvm/standarditems/colormapitem.h"
 #include "mvvm/standarditems/colormapviewportitem.h"
-#include <list>
 #include <qcustomplot.h>
+#include <list>
 
 using namespace ModelView;
 

@@ -7,8 +7,9 @@
 //
 // ************************************************************************** //
 
-#include "google_test.h"
 #include "mvvm/utils/progresshandler.h"
+
+#include "google_test.h"
 
 using namespace ModelView;
 

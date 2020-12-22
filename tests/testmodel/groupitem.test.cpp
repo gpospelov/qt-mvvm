@@ -7,8 +7,9 @@
 //
 // ************************************************************************** //
 
-#include "google_test.h"
 #include "mvvm/model/groupitem.h"
+
+#include "google_test.h"
 #include <stdexcept>
 
 using namespace ModelView;

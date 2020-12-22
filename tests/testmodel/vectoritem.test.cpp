@@ -7,10 +7,11 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/standarditems/vectoritem.h"
+
 #include "google_test.h"
 #include "mvvm/model/itemutils.h"
 #include "mvvm/model/sessionmodel.h"
-#include "mvvm/standarditems/vectoritem.h"
 
 using namespace ModelView;
 

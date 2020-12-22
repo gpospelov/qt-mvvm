@@ -7,12 +7,13 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/standarditems/colormapitem.h"
+
 #include "google_test.h"
 #include "mockwidgets.h"
 #include "mvvm/model/comboproperty.h"
 #include "mvvm/model/sessionmodel.h"
 #include "mvvm/standarditems/axisitems.h"
-#include "mvvm/standarditems/colormapitem.h"
 #include "mvvm/standarditems/data2ditem.h"
 #include "mvvm/standarditems/linkeditem.h"
 

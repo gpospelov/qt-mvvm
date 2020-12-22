@@ -7,9 +7,10 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/standarditems/plottableitems.h"
+
 #include "google_test.h"
 #include "mvvm/model/comboproperty.h"
-#include "mvvm/standarditems/plottableitems.h"
 #include <QColor>
 
 using namespace ModelView;

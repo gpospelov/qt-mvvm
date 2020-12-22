@@ -10,7 +10,7 @@
 #include "mvvm/plotting/pencontroller.h"
 #include "mvvm/model/comboproperty.h"
 #include "mvvm/standarditems/plottableitems.h"
-#include "qcustomplot.h"
+#include <qcustomplot.h>
 #include <stdexcept>
 
 using namespace ModelView;

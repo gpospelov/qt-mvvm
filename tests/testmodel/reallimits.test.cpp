@@ -7,8 +7,9 @@
 //
 // ************************************************************************** //
 
-#include "google_test.h"
 #include "mvvm/utils/reallimits.h"
+
+#include "google_test.h"
 #include <limits>
 
 using namespace ModelView;

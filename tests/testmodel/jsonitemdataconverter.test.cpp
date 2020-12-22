@@ -7,12 +7,13 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/serialization/jsonitemdataconverter.h"
+
 #include "folderbasedtest.h"
 #include "google_test.h"
 #include "mvvm/model/customvariants.h"
 #include "mvvm/model/mvvm_types.h"
 #include "mvvm/model/sessionitemdata.h"
-#include "mvvm/serialization/jsonitemdataconverter.h"
 #include "mvvm/serialization/jsonitemformatassistant.h"
 #include "mvvm/serialization/jsonvariantconverter.h"
 #include "test_utils.h"

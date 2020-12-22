@@ -7,10 +7,11 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/viewmodel/viewmodelbase.h"
+
 #include "google_test.h"
 #include "mvvm/model/sessionitem.h"
 #include "mvvm/viewmodel/standardviewitems.h"
-#include "mvvm/viewmodel/viewmodelbase.h"
 #include "test_utils.h"
 #include <QSignalSpy>
 #include <QStandardItemModel>

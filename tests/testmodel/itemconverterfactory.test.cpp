@@ -7,8 +7,9 @@
 //
 // ************************************************************************** //
 
-#include "google_test.h"
 #include "mvvm/factories/itemconverterfactory.h"
+
+#include "google_test.h"
 #include "mvvm/model/compounditem.h"
 #include "mvvm/model/itemcatalogue.h"
 #include "mvvm/model/propertyitem.h"

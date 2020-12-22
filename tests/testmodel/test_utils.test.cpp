@@ -7,8 +7,9 @@
 //
 // ************************************************************************** //
 
-#include "google_test.h"
 #include "test_utils.h"
+
+#include "google_test.h"
 
 using TestUtils::toVector;
 

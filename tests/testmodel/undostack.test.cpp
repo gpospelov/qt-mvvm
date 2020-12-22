@@ -7,10 +7,11 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/commands/undostack.h"
+
 #include "google_test.h"
 #include "mvvm/commands/commandadapter.h"
 #include "mvvm/commands/setvaluecommand.h"
-#include "mvvm/commands/undostack.h"
 #include "mvvm/interfaces/undostackinterface.h"
 #include "mvvm/model/itemutils.h"
 #include "mvvm/model/propertyitem.h"

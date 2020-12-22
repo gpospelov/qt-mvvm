@@ -7,9 +7,10 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/utils/containerutils.h"
+
 #include "google_test.h"
 #include "mvvm/model/sessionitem.h"
-#include "mvvm/utils/containerutils.h"
 #include <complex>
 
 using namespace ModelView;

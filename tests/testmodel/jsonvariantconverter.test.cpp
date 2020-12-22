@@ -7,13 +7,14 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/serialization/jsonvariantconverter.h"
+
 #include "folderbasedtest.h"
 #include "google_test.h"
 #include "mvvm/model/comboproperty.h"
 #include "mvvm/model/customvariants.h"
 #include "mvvm/model/externalproperty.h"
 #include "mvvm/model/variant_constants.h"
-#include "mvvm/serialization/jsonvariantconverter.h"
 #include "mvvm/utils/reallimits.h"
 #include "test_utils.h"
 #include <QColor>

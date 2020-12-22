@@ -7,8 +7,9 @@
 //
 // ************************************************************************** //
 
-#include "google_test.h"
 #include "mvvm/utils/stringutils.h"
+
+#include "google_test.h"
 #include "test_utils.h"
 
 using namespace ModelView;

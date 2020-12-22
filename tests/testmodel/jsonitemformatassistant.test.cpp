@@ -7,8 +7,9 @@
 //
 // ************************************************************************** //
 
-#include "google_test.h"
 #include "mvvm/serialization/jsonitemformatassistant.h"
+
+#include "google_test.h"
 #include "mvvm/serialization/jsonvariantconverter.h"
 #include <QJsonArray>
 #include <QJsonObject>

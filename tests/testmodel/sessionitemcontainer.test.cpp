@@ -7,9 +7,10 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/model/sessionitemcontainer.h"
+
 #include "google_test.h"
 #include "mvvm/model/sessionitem.h"
-#include "mvvm/model/sessionitemcontainer.h"
 #include "test_utils.h"
 
 using namespace ModelView;

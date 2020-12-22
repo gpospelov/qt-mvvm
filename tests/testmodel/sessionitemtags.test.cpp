@@ -7,9 +7,10 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/model/sessionitemtags.h"
+
 #include "google_test.h"
 #include "mvvm/model/sessionitem.h"
-#include "mvvm/model/sessionitemtags.h"
 #include "mvvm/model/taginfo.h"
 #include "test_utils.h"
 #include <stdexcept>

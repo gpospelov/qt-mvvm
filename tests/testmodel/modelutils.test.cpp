@@ -7,8 +7,9 @@
 //
 // ************************************************************************** //
 
-#include "google_test.h"
 #include "mvvm/model/modelutils.h"
+
+#include "google_test.h"
 #include "toyitems.h"
 #include "toymodel.h"
 

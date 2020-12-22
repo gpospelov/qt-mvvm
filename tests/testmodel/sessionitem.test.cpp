@@ -7,10 +7,11 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/model/sessionitem.h"
+
 #include "google_test.h"
 #include "mvvm/model/itempool.h"
 #include "mvvm/model/itemutils.h"
-#include "mvvm/model/sessionitem.h"
 #include "mvvm/model/sessionitemdata.h"
 #include "mvvm/model/sessionitemtags.h"
 #include "mvvm/model/taginfo.h"

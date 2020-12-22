@@ -7,13 +7,14 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/viewmodel/viewmodeldelegate.h"
+
 #include "google_test.h"
 #include "mvvm/editors/customeditor.h"
 #include "mvvm/model/propertyitem.h"
 #include "mvvm/model/sessionmodel.h"
 #include "mvvm/standarditems/vectoritem.h"
 #include "mvvm/viewmodel/defaultviewmodel.h"
-#include "mvvm/viewmodel/viewmodeldelegate.h"
 #include "widgetbasedtest.h"
 #include <QDataWidgetMapper>
 #include <QStyleOptionViewItem>

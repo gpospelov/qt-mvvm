@@ -7,8 +7,9 @@
 //
 // ************************************************************************** //
 
-#include "google_test.h"
 #include "mvvm/commands/insertnewitemcommand.h"
+
+#include "google_test.h"
 #include "mvvm/interfaces/itemfactoryinterface.h"
 #include "mvvm/model/compounditem.h"
 #include "mvvm/model/itempool.h"

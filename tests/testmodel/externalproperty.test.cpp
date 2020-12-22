@@ -7,9 +7,10 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/model/externalproperty.h"
+
 #include "google_test.h"
 #include "mvvm/model/comparators.h"
-#include "mvvm/model/externalproperty.h"
 
 using namespace ModelView;
 

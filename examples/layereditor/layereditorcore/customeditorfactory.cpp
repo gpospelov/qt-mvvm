@@ -9,10 +9,10 @@
 
 #include "mvvm/editors/externalpropertycomboeditor.h"
 #include "mvvm/model/externalproperty.h"
-#include <QModelIndex>
 #include <layereditorcore/applicationmodels.h>
 #include <layereditorcore/customeditorfactory.h>
 #include <layereditorcore/materialmodel.h>
+#include <QModelIndex>
 
 using namespace ModelView;
 

@@ -7,10 +7,11 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/serialization/jsontaginfoconverter.h"
+
 #include "folderbasedtest.h"
 #include "google_test.h"
 #include "mvvm/model/taginfo.h"
-#include "mvvm/serialization/jsontaginfoconverter.h"
 #include "test_utils.h"
 #include <QJsonArray>
 #include <QJsonDocument>

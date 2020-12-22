@@ -12,7 +12,7 @@
 #include "mvvm/plotting/customplotutils.h"
 #include "mvvm/standarditems/axisitems.h"
 #include "mvvm/standarditems/plottableitems.h"
-#include "qcustomplot.h"
+#include <qcustomplot.h>
 #include <QObject>
 #include <stdexcept>
 

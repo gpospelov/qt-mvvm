@@ -7,11 +7,12 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/standarditems/data2ditem.h"
+
 #include "google_test.h"
 #include "mockwidgets.h"
 #include "mvvm/model/sessionmodel.h"
 #include "mvvm/standarditems/axisitems.h"
-#include "mvvm/standarditems/data2ditem.h"
 #include <stdexcept>
 
 using namespace ModelView;
