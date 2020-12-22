@@ -12,8 +12,7 @@
 #include "mvvm/model/sessionmodel.h"
 #include "mvvm/plotting/pencontroller.h"
 #include "mvvm/standarditems/plottableitems.h"
-#include "qcustomplot.h"
-
+#include <qcustomplot.h>
 #include <stdexcept>
 
 using namespace ModelView;

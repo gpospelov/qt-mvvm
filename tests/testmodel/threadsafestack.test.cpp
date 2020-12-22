@@ -7,8 +7,9 @@
 //
 // ************************************************************************** //
 
-#include "google_test.h"
 #include "mvvm/utils/threadsafestack.h"
+
+#include "google_test.h"
 #include <future>
 
 using namespace ModelView;

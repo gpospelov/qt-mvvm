@@ -14,7 +14,7 @@
 #include "mvvm/plotting/viewportaxisplotcontroller.h"
 #include "mvvm/standarditems/axisitems.h"
 #include "mvvm/standarditems/plottableitems.h"
-#include "qcustomplot.h"
+#include <qcustomplot.h>
 #include <QSignalSpy>
 
 using namespace ModelView;

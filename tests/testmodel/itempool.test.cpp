@@ -7,8 +7,9 @@
 //
 // ************************************************************************** //
 
-#include "google_test.h"
 #include "mvvm/model/itempool.h"
+
+#include "google_test.h"
 #include "mvvm/model/sessionitem.h"
 #include <memory>
 #include <stdexcept>

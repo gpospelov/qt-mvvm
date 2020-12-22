@@ -8,7 +8,7 @@
 // ************************************************************************** //
 
 #include "customplotsceneadapter.h"
-#include "qcustomplot.h"
+#include <qcustomplot.h>
 #include <QObject>
 
 using namespace ModelView;

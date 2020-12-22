@@ -14,7 +14,7 @@
 #include "mvvm/plotting/statusstringreporterfactory.h"
 #include "mvvm/standarditems/colormapviewportitem.h"
 #include "mvvm/widgets/statuslabel.h"
-#include "qcustomplot.h"
+#include <qcustomplot.h>
 
 using namespace ModelView;
 

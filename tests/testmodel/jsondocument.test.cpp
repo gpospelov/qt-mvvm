@@ -7,6 +7,8 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/serialization/jsondocument.h"
+
 #include "folderbasedtest.h"
 #include "google_test.h"
 #include "mvvm/model/propertyitem.h"
@@ -14,7 +16,6 @@
 #include "mvvm/model/sessionitemtags.h"
 #include "mvvm/model/sessionmodel.h"
 #include "mvvm/model/taginfo.h"
-#include "mvvm/serialization/jsondocument.h"
 #include "test_utils.h"
 #include <stdexcept>
 

@@ -7,12 +7,13 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/signals/itemmapper.h"
+
 #include "google_test.h"
 #include "mockwidgets.h"
 #include "mvvm/model/compounditem.h"
 #include "mvvm/model/sessionitem.h"
 #include "mvvm/model/sessionmodel.h"
-#include "mvvm/signals/itemmapper.h"
 #include <stdexcept>
 
 using namespace ModelView;

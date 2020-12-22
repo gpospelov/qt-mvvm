@@ -12,7 +12,7 @@
 #include "mvvm/plotting/data2dplotcontroller.h"
 #include "mvvm/standarditems/colormapitem.h"
 #include "mvvm/standarditems/data2ditem.h"
-#include "qcustomplot.h"
+#include <qcustomplot.h>
 #include <map>
 
 namespace {

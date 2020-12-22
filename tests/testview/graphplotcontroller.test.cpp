@@ -16,7 +16,7 @@
 #include "mvvm/standarditems/data1ditem.h"
 #include "mvvm/standarditems/graphitem.h"
 #include "mvvm/standarditems/plottableitems.h"
-#include "qcustomplot.h"
+#include <qcustomplot.h>
 #include <QSignalSpy>
 
 using namespace ModelView;

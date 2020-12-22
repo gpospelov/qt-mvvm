@@ -8,8 +8,9 @@
 // ************************************************************************** //
 
 #include "customplot_test_utils.h"
+
 #include "google_test.h"
-#include "qcustomplot.h"
+#include <qcustomplot.h>
 
 using namespace ModelView;
 

@@ -7,9 +7,10 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/model/customvariants.h"
+
 #include "google_test.h"
 #include "mvvm/model/comboproperty.h"
-#include "mvvm/model/customvariants.h"
 #include "mvvm/model/externalproperty.h"
 #include "mvvm/model/itemutils.h"
 #include "mvvm/model/sessionitem.h"

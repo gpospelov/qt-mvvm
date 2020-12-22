@@ -7,9 +7,10 @@
 //
 // ************************************************************************** //
 
-#include "google_test.h"
 #include "mvvm/plotting/customplotsceneadapter.h"
-#include "qcustomplot.h"
+
+#include "google_test.h"
+#include <qcustomplot.h>
 
 using namespace ModelView;
 

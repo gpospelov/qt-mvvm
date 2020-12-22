@@ -8,11 +8,11 @@
 // ************************************************************************** //
 
 #include "google_test.h"
-#include "qcustomplot.h"
 #include "mvvm/interfaces/undostackinterface.h"
 #include "mvvm/model/sessionmodel.h"
 #include "mvvm/plotting/viewportaxisplotcontroller.h"
 #include "mvvm/standarditems/axisitems.h"
+#include <qcustomplot.h>
 
 using namespace ModelView;
 

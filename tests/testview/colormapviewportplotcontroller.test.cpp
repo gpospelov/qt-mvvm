@@ -7,16 +7,16 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/plotting/colormapviewportplotcontroller.h"
+
 #include "customplot_test_utils.h"
 #include "google_test.h"
 #include "mvvm/model/sessionmodel.h"
-#include "mvvm/plotting/colormapviewportplotcontroller.h"
 #include "mvvm/standarditems/axisitems.h"
 #include "mvvm/standarditems/colormapitem.h"
 #include "mvvm/standarditems/colormapviewportitem.h"
 #include "mvvm/standarditems/data1ditem.h"
 #include "mvvm/standarditems/data2ditem.h"
-#include "qcustomplot.h"
 #include <qcustomplot.h>
 
 using namespace ModelView;

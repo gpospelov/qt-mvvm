@@ -7,8 +7,9 @@
 //
 // ************************************************************************** //
 
-#include "google_test.h"
 #include "mvvm/serialization/jsonitem_types.h"
+
+#include "google_test.h"
 
 using namespace ModelView;
 
