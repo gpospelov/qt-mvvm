@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include <modelinqmlcore/particlemodel.h>
-#include <modelinqmlcore/particleviewmodel.h>
+#include "modelinqmlcore/particleviewmodel.h"
+#include "modelinqmlcore/particlemodel.h"
 
 ParticleViewModel::ParticleViewModel(ParticleModel* model) : ModelView::PropertyViewModel(model) {}

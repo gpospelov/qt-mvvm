@@ -8,16 +8,15 @@
 // ************************************************************************** //
 
 #include "mousemodel.h"
-#include <QColor>
-#include <algorithm>
-#include <cmath>
 #include "mvvm/factories/modeldocumentfactory.h"
 #include "mvvm/interfaces/undostackinterface.h"
 #include "mvvm/utils/reallimits.h"
 #include "mvvm/widgets/widgetutils.h"
+#include <QColor>
+#include <algorithm>
+#include <cmath>
 
-namespace
-{
+namespace {
 static const int MouseCount = 7;
 } // namespace
 
@@ -64,7 +63,8 @@ void MouseModel::setUndoPosition(int value)
     if (undoStack()->index() < desired_command_id) {
         while (undoStack()->index() != desired_command_id)
             undoStack()->redo(); // going forward
-    } else {
+    }
+    else {
         while (undoStack()->index() != desired_command_id)
             undoStack()->undo(); // going back in time
     }

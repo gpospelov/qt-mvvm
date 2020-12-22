@@ -51,13 +51,13 @@
 #include "mouse.h"
 
 #include "mousemodel.h"
+#include "mvvm/signals/itemmapper.h"
+#include "mvvm/utils/mathconstants.h"
+#include "mvvm/utils/numericutils.h"
 #include <QGraphicsScene>
 #include <QPainter>
 #include <QStyleOption>
 #include <cmath>
-#include "mvvm/signals/itemmapper.h"
-#include "mvvm/utils/mathconstants.h"
-#include "mvvm/utils/numericutils.h"
 
 const qreal Pi = M_PI;
 const qreal TwoPi = 2 * M_PI;
@@ -165,13 +165,16 @@ void Mouse::advance(int step)
         if (angleToCenter < Pi && angleToCenter > Pi / 4) {
             // Rotate left
             angle += (angle < -Pi / 2) ? 0.25 : -0.25;
-        } else if (angleToCenter >= Pi && angleToCenter < (Pi + Pi / 2 + Pi / 4)) {
+        }
+        else if (angleToCenter >= Pi && angleToCenter < (Pi + Pi / 2 + Pi / 4)) {
             // Rotate right
             angle += (angle < Pi / 2) ? 0.25 : -0.25;
         }
-    } else if (::sin(angle) < 0) {
+    }
+    else if (::sin(angle) < 0) {
         angle += 0.25;
-    } else if (::sin(angle) > 0) {
+    }
+    else if (::sin(angle) > 0) {
         angle -= 0.25;
         //! [5] //! [6]
     }
@@ -192,7 +195,8 @@ void Mouse::advance(int step)
         if (angleToMouse >= 0 && angleToMouse < Pi / 2) {
             // Rotate right
             angle += 0.5;
-        } else if (angleToMouse <= TwoPi && angleToMouse > (TwoPi - Pi / 2)) {
+        }
+        else if (angleToMouse <= TwoPi && angleToMouse > (TwoPi - Pi / 2)) {
             // Rotate left
             angle -= 0.5;
             //! [7] //! [8]

@@ -10,17 +10,13 @@
 #ifndef MODELINQMLCORE_BACKEND_H
 #define MODELINQMLCORE_BACKEND_H
 
+#include "particleviewmodel.h"
+#include "tablemodel.h"
 #include <QObject>
 #include <QString>
 #include <memory>
-#include "tablemodel.h"
-#include "particleviewmodel.h"
 
-//class TableModel;
-//class ParticleViewModel;
-
-class BackEnd : public QObject
-{
+class BackEnd : public QObject {
     Q_OBJECT
 
 public:

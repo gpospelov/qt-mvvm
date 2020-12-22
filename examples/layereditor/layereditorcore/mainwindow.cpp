@@ -7,9 +7,9 @@
 //
 // ************************************************************************** //
 
-#include <layereditorcore/applicationmodels.h>
-#include <layereditorcore/mainwindow.h>
-#include <layereditorcore/samplewidget.h>
+#include "layereditorcore/mainwindow.h"
+#include "layereditorcore/applicationmodels.h"
+#include "layereditorcore/samplewidget.h"
 #include <QAction>
 #include <QCoreApplication>
 #include <QFileDialog>

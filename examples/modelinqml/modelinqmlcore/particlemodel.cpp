@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include <modelinqmlcore/particlemodel.h>
+#include "modelinqmlcore/particlemodel.h"
 #include "mvvm/model/itemcatalogue.h"
 #include "mvvm/standarditems/vectoritem.h"
 

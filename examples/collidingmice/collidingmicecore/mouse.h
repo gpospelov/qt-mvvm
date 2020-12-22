@@ -56,8 +56,7 @@
 class MouseItem;
 
 //! [0]
-class Mouse : public QGraphicsItem
-{
+class Mouse : public QGraphicsItem {
 public:
     Mouse(MouseItem* item);
 
