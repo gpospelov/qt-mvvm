@@ -18,13 +18,8 @@ using namespace ModelView;
 
 //! Testing serialization of ToyItems using json converters.
 
-class StandardItemsSerializationTest : public ::testing::Test
-{
-public:
-    ~StandardItemsSerializationTest();
+class StandardItemsSerializationTest : public ::testing::Test {
 };
-
-StandardItemsSerializationTest::~StandardItemsSerializationTest() = default;
 
 //! Checking that serialization works (not crashing) for all defined standard items.
 

@@ -21,11 +21,7 @@ using namespace ModelView;
 //! Tests of toy MultiLayer in the context of model and viewmodel.
 
 class ToyMultilayerItemTest : public ::testing::Test {
-public:
-    ~ToyMultilayerItemTest();
 };
-
-ToyMultilayerItemTest::~ToyMultilayerItemTest() = default;
 
 //! Initial state.
 

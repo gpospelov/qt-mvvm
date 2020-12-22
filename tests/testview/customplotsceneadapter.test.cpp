@@ -16,11 +16,7 @@ using namespace ModelView;
 //! Testing CustomPlotSceneAdapter.
 
 class CustomPlotSceneAdapterTest : public ::testing::Test {
-public:
-    ~CustomPlotSceneAdapterTest();
 };
-
-CustomPlotSceneAdapterTest::~CustomPlotSceneAdapterTest() = default;
 
 //! Scenario when QCustomPlot destroyed before adapter.
 

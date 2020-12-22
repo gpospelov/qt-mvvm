@@ -24,8 +24,6 @@ using ::testing::_;
 
 class ViewportAxisPlotControllerTest : public ::testing::Test {
 public:
-    ~ViewportAxisPlotControllerTest();
-
     std::unique_ptr<QSignalSpy> createSpy(QCPAxis* axis)
     {
         return std::make_unique<QSignalSpy>(
@@ -39,8 +37,6 @@ public:
                       &QCPAxis::rangeChanged));
     }
 };
-
-ViewportAxisPlotControllerTest::~ViewportAxisPlotControllerTest() = default;
 
 //! Initial state.
 

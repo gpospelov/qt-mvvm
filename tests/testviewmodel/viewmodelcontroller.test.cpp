@@ -25,8 +25,6 @@ using namespace ModelView;
 
 class ViewModelControllerTest : public ::testing::Test {
 public:
-    ~ViewModelControllerTest();
-
     auto create_controller(SessionModel* session_model, ViewModelBase* view_model)
     {
         auto result = std::make_unique<ViewModelController>(session_model, view_model);
@@ -36,8 +34,6 @@ public:
         return result;
     }
 };
-
-ViewModelControllerTest::~ViewModelControllerTest() = default;
 
 //! Initial state of the controller. It is in working state only after setRootItem.
 

@@ -16,13 +16,8 @@ using namespace ToyItems;
 
 //! Test toy LatticeItem.
 
-class ToyItemsLatticeTest : public ::testing::Test
-{
-public:
-    ~ToyItemsLatticeTest();
+class ToyItemsLatticeTest : public ::testing::Test {
 };
-
-ToyItemsLatticeTest::~ToyItemsLatticeTest() = default;
 
 //! Business logice (enabled/disabled).
 

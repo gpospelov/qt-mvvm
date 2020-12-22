@@ -17,11 +17,7 @@
 using namespace ModelView;
 
 class StandardViewItemsTest : public ::testing::Test {
-public:
-    ~StandardViewItemsTest();
 };
-
-StandardViewItemsTest::~StandardViewItemsTest() = default;
 
 // ----------------------------------------------------------------------------
 // Tests for ViewLabelItem

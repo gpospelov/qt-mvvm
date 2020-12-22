@@ -21,11 +21,7 @@ using namespace ModelView;
 //! Testing PenController.
 
 class PenControllerTest : public ::testing::Test {
-public:
-    ~PenControllerTest();
 };
-
-PenControllerTest::~PenControllerTest() = default;
 
 //! Initial state.
 

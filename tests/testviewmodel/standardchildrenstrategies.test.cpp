@@ -21,8 +21,6 @@ using namespace ModelView;
 
 class StandardChildrenStrategiesTest : public ::testing::Test {
 public:
-    ~StandardChildrenStrategiesTest();
-
     //! Helper class with two properties and one top level item on board.
     class TestItem : public CompoundItem {
     public:
@@ -33,7 +31,6 @@ public:
             insertItem(new SessionItem, TagRow::append());
             addProperty("height", 12.0);
         }
-        ~TestItem();
     };
 
     struct ChildrenData {
@@ -53,9 +50,6 @@ public:
         return result;
     }
 };
-
-StandardChildrenStrategiesTest::~StandardChildrenStrategiesTest() = default;
-StandardChildrenStrategiesTest::TestItem::~TestItem() = default;
 
 //! Testing AllChildrenStrategy.
 

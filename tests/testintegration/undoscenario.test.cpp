@@ -18,13 +18,8 @@ using namespace ModelView;
 
 //! Testing various undo/redo scenario.
 
-class UndoScenarioTest : public ::testing::Test
-{
-public:
-    ~UndoScenarioTest();
+class UndoScenarioTest : public ::testing::Test {
 };
-
-UndoScenarioTest::~UndoScenarioTest() = default;
 
 //! Check undo/redo of ViewportAxisItem range, when it is listened by the controller.
 //! Real-life bug.

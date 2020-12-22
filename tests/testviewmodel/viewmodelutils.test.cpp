@@ -34,11 +34,7 @@ QList<QStandardItem*> get_items(std::vector<int> data)
 using namespace ModelView;
 
 class ViewModelUtilsTest : public ::testing::Test {
-public:
-    ~ViewModelUtilsTest();
 };
-
-ViewModelUtilsTest::~ViewModelUtilsTest() = default;
 
 TEST_F(ViewModelUtilsTest, iterate)
 {

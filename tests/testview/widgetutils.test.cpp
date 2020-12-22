@@ -18,11 +18,7 @@ using namespace ModelView;
 //! Testing functions from utils.
 
 class WidgetUtilsTest : public ::testing::Test {
-public:
-    ~WidgetUtilsTest();
 };
-
-WidgetUtilsTest::~WidgetUtilsTest() = default;
 
 //! Test of WithTildeHomePath function.
 

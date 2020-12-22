@@ -14,11 +14,7 @@
 using namespace ModelView;
 
 class ScientificSpinBoxTest : public ::testing::Test {
-public:
-    ~ScientificSpinBoxTest() override;
 };
-
-ScientificSpinBoxTest::~ScientificSpinBoxTest() = default;
 
 TEST_F(ScientificSpinBoxTest, testValueFromText)
 {

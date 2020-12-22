@@ -16,11 +16,7 @@ using namespace ModelView;
 //! Testing "utilr for testing" defined in TestUtils namespace.
 
 class CustomplotTestUtilsTest : public ::testing::Test {
-public:
-    ~CustomplotTestUtilsTest();
 };
-
-CustomplotTestUtilsTest::~CustomplotTestUtilsTest() = default;
 
 //! Check methods to access graph bin centers and values.
 

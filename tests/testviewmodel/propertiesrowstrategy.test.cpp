@@ -18,11 +18,7 @@
 using namespace ModelView;
 
 class PropertiesRowStrategyTest : public ::testing::Test {
-public:
-    ~PropertiesRowStrategyTest();
 };
-
-PropertiesRowStrategyTest::~PropertiesRowStrategyTest() = default;
 
 TEST_F(PropertiesRowStrategyTest, initialState)
 {

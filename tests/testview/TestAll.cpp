@@ -23,8 +23,6 @@ int main(int argc, char** argv)
     qRegisterMetaType<QStandardItem*>("QStandardItem*");
     qRegisterMetaType<QCPRange>("QCPRange");
 
-    // FIXME find the way not to run app for all tests which doesn't use QWidget.
-    // The problem here is because of ctest autodiscovery which runs given main at every test.
     QApplication app(argc, argv);
     Q_UNUSED(app)
 

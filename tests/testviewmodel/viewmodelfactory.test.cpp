@@ -27,15 +27,11 @@ std::unique_ptr<ViewModelController> createController(SessionModel* model, ViewM
 
 class ViewModelFactoryTest : public ::testing::Test {
 public:
-    ~ViewModelFactoryTest();
-
     class CustomModel : public ViewModel {
     public:
         CustomModel(SessionModel* model) : ViewModel(createController(model, this), nullptr) {}
     };
 };
-
-ViewModelFactoryTest::~ViewModelFactoryTest() = default;
 
 //! Creating DefaultViewModel using strategies.
 

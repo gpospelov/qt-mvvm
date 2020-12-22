@@ -19,11 +19,7 @@
 using namespace ModelView;
 
 class PropertyTableViewModelTest : public ::testing::Test {
-public:
-    ~PropertyTableViewModelTest();
 };
-
-PropertyTableViewModelTest::~PropertyTableViewModelTest() = default;
 
 TEST_F(PropertyTableViewModelTest, initialState)
 {

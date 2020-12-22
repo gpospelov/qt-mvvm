@@ -20,11 +20,7 @@ using namespace ModelView;
 //! Tests of ViewModelControllerFactory method.
 
 class ViewModelControllerFactoryTest : public ::testing::Test {
-public:
-    ~ViewModelControllerFactoryTest();
 };
-
-ViewModelControllerFactoryTest::~ViewModelControllerFactoryTest() = default;
 
 TEST_F(ViewModelControllerFactoryTest, allItemsControllerBuild)
 {

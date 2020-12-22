@@ -24,11 +24,7 @@ using namespace ModelView;
 //! Testing GraphPlotController.
 
 class GraphPlotControllerTest : public ::testing::Test {
-public:
-    ~GraphPlotControllerTest();
 };
-
-GraphPlotControllerTest::~GraphPlotControllerTest() = default;
 
 //! Initial state.
 

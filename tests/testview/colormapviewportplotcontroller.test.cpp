@@ -24,11 +24,7 @@ using namespace ModelView;
 //! Testing ColorMapViewportPlotController.
 
 class ColorMapViewportPlotControllerTest : public ::testing::Test {
-public:
-    ~ColorMapViewportPlotControllerTest();
 };
-
-ColorMapViewportPlotControllerTest::~ColorMapViewportPlotControllerTest() = default;
 
 //! Initial state.
 

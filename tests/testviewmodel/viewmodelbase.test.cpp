@@ -21,12 +21,9 @@ using namespace ModelView;
 
 class ViewModelBaseTest : public ::testing::Test {
 public:
-    ~ViewModelBaseTest();
-
     class TestItem : public ViewItem {
     public:
         TestItem() : ViewItem(nullptr, 0) {}
-        ~TestItem() override;
     };
 
     using children_t = std::vector<std::unique_ptr<ViewItem>>;
@@ -44,9 +41,6 @@ public:
         return std::make_pair(std::move(vector_of_unique), std::move(vector_of_pointers));
     }
 };
-
-ViewModelBaseTest::~ViewModelBaseTest() = default;
-ViewModelBaseTest::TestItem::~TestItem() = default;
 
 //! Checking behaviour of QStandardItemModel for reference.
 

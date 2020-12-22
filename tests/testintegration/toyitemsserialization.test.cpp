@@ -19,13 +19,8 @@ using namespace ToyItems;
 
 //! Testing serialization of ToyItems using json converters.
 
-class ToyItemsSerializationTest : public ::testing::Test
-{
-public:
-    ~ToyItemsSerializationTest();
+class ToyItemsSerializationTest : public ::testing::Test {
 };
-
-ToyItemsSerializationTest::~ToyItemsSerializationTest() = default;
 
 //! Checking ShapeGroupItem in a model.
 //! Serialization/deserelization should give an item identical to original.

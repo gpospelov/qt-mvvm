@@ -22,11 +22,7 @@ const QStringList expected_labels = QStringList() << "Name"
 using namespace ModelView;
 
 class LabelDataRowStrategyTest : public ::testing::Test {
-public:
-    ~LabelDataRowStrategyTest();
 };
-
-LabelDataRowStrategyTest::~LabelDataRowStrategyTest() = default;
 
 TEST_F(LabelDataRowStrategyTest, initialState)
 {

@@ -37,7 +37,6 @@ using namespace ModelView;
 class DefaultEditorFactoryTest : public WidgetBasedTest {
 public:
     DefaultEditorFactoryTest() : m_factory(std::make_unique<DefaultEditorFactory>()) {}
-    ~DefaultEditorFactoryTest();
 
     //! Helper function to build temporary model and create editor for cell.
     std::unique_ptr<CustomEditor> createEditor(const QVariant& variant,
@@ -61,8 +60,6 @@ public:
 protected:
     std::unique_ptr<DefaultEditorFactory> m_factory;
 };
-
-DefaultEditorFactoryTest::~DefaultEditorFactoryTest() = default;
 
 //! Tests editor creation on bool property.
 

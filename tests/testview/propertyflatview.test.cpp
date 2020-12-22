@@ -21,10 +21,7 @@ using namespace ModelView;
 
 class PropertyFlatViewTest : public ::testing::Test {
 public:
-    ~PropertyFlatViewTest();
-
     //! Returns vector representing enable status of widgets in layout.
-
     std::vector<int> enable_status(PropertyFlatView& flat_view)
     {
         std::vector<int> result;
@@ -36,8 +33,6 @@ public:
         return result;
     }
 };
-
-PropertyFlatViewTest::~PropertyFlatViewTest() = default;
 
 TEST_F(PropertyFlatViewTest, layoutForVector)
 {

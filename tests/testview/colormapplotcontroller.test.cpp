@@ -23,11 +23,7 @@ using namespace ModelView;
 //! Testing ColorMapPlotController.
 
 class ColorMapPlotControllerTest : public ::testing::Test {
-public:
-    ~ColorMapPlotControllerTest();
 };
-
-ColorMapPlotControllerTest::~ColorMapPlotControllerTest() = default;
 
 //! Initial state.
 

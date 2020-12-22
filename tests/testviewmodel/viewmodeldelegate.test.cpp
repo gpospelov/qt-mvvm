@@ -24,8 +24,6 @@ using namespace ModelView;
 
 class ViewModelDelegateTest : public WidgetBasedTest {
 public:
-    ~ViewModelDelegateTest();
-
     struct TestData {
         SessionModel model{};
         DefaultViewModel view_model;
@@ -54,8 +52,6 @@ public:
 
     std::unique_ptr<TestData> test_data() { return std::make_unique<TestData>(); }
 };
-
-ViewModelDelegateTest::~ViewModelDelegateTest() = default;
 
 TEST_F(ViewModelDelegateTest, createEditor)
 {

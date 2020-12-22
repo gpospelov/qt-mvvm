@@ -22,11 +22,7 @@ using namespace ModelView;
 //! Tests for PropertyFlatViewModel class.
 
 class PropertyFlatViewModelTest : public ::testing::Test {
-public:
-    ~PropertyFlatViewModelTest();
 };
-
-PropertyFlatViewModelTest::~PropertyFlatViewModelTest() = default;
 
 TEST_F(PropertyFlatViewModelTest, initialState)
 {

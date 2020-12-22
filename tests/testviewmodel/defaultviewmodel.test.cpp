@@ -10,7 +10,6 @@
 #include "folderbasedtest.h"
 #include "google_test.h"
 #include "test_utils.h"
-#include <QDebug>
 #include <QJsonObject>
 #include <QSignalSpy>
 #include <mvvm/model/compounditem.h>
@@ -34,10 +33,7 @@ using namespace ModelView;
 class DefaultViewModelTest : public FolderBasedTest {
 public:
     DefaultViewModelTest() : FolderBasedTest("test_DefaultViewModel") {}
-    ~DefaultViewModelTest();
 };
-
-DefaultViewModelTest::~DefaultViewModelTest() = default;
 
 TEST_F(DefaultViewModelTest, initialState)
 {

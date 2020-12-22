@@ -20,11 +20,7 @@ using namespace ModelView;
 //! Tests of ViewModelController class.
 
 class ViewModelControllerBuilderTest : public ::testing::Test {
-public:
-    ~ViewModelControllerBuilderTest();
 };
-
-ViewModelControllerBuilderTest::~ViewModelControllerBuilderTest() = default;
 
 //! Initial state of the builder.
 //! It can't build anything without configuration.
