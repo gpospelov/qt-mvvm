@@ -20,13 +20,11 @@ class MouseModel;
 class QAction;
 class QSlider;
 
-namespace ModelView
-{
+namespace ModelView {
 class AllItemsTreeView;
 }
 
-class MainWindow : public QMainWindow
-{
+class MainWindow : public QMainWindow {
     Q_OBJECT
 
 public:

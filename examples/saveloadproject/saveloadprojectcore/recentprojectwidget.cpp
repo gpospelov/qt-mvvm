@@ -12,7 +12,6 @@
 #include "mvvm/widgets/adjustingscrollarea.h"
 #include "mvvm/widgets/widgetutils.h"
 #include "projectpanewidget.h"
-#include <QDebug>
 #include <QGuiApplication>
 #include <QLabel>
 #include <QScreen>

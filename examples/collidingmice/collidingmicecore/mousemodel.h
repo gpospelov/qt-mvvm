@@ -15,8 +15,7 @@
 
 //! Domain object to hold mouse info.
 
-class MouseItem : public ModelView::CompoundItem
-{
+class MouseItem : public ModelView::CompoundItem {
 public:
     static inline const std::string P_COLOR = "P_COLOR";
     static inline const std::string P_XPOS = "P_XPOS";
@@ -29,8 +28,7 @@ public:
 
 //! Holds collection of mice.
 
-class MouseModel : public ModelView::SessionModel
-{
+class MouseModel : public ModelView::SessionModel {
 public:
     MouseModel();
 

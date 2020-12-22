@@ -11,7 +11,7 @@
 #include "mvvm/model/itemcatalogue.h"
 #include "mvvm/standarditems/containeritem.h"
 #include "mvvm/standarditems/vectoritem.h"
-#include <layereditorcore/materialmodel.h>
+#include "layereditorcore/materialmodel.h"
 #include <QColor>
 
 using namespace ModelView;

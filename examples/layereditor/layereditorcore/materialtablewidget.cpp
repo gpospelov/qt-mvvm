@@ -11,8 +11,8 @@
 #include "mvvm/signals/modelmapper.h"
 #include "mvvm/standarditems/containeritem.h"
 #include "mvvm/viewmodel/viewmodeldelegate.h"
-#include <layereditorcore/materialmodel.h>
-#include <layereditorcore/materialtablewidget.h>
+#include "layereditorcore/materialmodel.h"
+#include "layereditorcore/materialtablewidget.h"
 #include <QTreeView>
 #include <QVBoxLayout>
 
