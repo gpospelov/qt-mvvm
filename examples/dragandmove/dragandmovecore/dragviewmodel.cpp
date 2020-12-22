@@ -12,10 +12,10 @@
 #include <QDataStream>
 #include <QMimeData>
 #include <algorithm>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/viewmodel/viewmodelutils.h>
-#include <mvvm/widgets/widgetutils.h>
+#include "mvvm/model/sessionitem.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/viewmodel/viewmodelutils.h"
+#include "mvvm/widgets/widgetutils.h"
 
 namespace {
 const QString AppMimeType = "application/org.bornagainproject.moveitem";

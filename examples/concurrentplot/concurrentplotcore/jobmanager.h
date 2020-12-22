@@ -12,7 +12,7 @@
 
 #include "toysimulation.h"
 #include <QObject>
-#include <mvvm/utils/threadsafestack.h>
+#include "mvvm/utils/threadsafestack.h"
 
 //! Handles all thread activity for running job simulation in the background.
 

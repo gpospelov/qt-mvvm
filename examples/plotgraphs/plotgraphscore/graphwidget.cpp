@@ -14,8 +14,8 @@
 #include <QBoxLayout>
 #include <QToolBar>
 #include <QToolButton>
-#include <mvvm/plotting/graphcanvas.h>
-#include <mvvm/standarditems/graphviewportitem.h>
+#include "mvvm/plotting/graphcanvas.h"
+#include "mvvm/standarditems/graphviewportitem.h"
 
 using namespace ModelView;
 

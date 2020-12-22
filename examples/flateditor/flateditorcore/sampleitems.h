@@ -10,8 +10,8 @@
 #ifndef FLATEDITORCORE_ITEMS_H
 #define FLATEDITORCORE_ITEMS_H
 
-#include <mvvm/model/compounditem.h>
-#include <mvvm/model/groupitem.h>
+#include "mvvm/model/compounditem.h"
+#include "mvvm/model/groupitem.h"
 #include <string>
 
 namespace Constants {

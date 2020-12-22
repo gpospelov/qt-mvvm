@@ -9,7 +9,7 @@
 
 #include "samplemodel.h"
 #include "sampleitems.h"
-#include <mvvm/model/itemcatalogue.h>
+#include "mvvm/model/itemcatalogue.h"
 
 using namespace ModelView;
 

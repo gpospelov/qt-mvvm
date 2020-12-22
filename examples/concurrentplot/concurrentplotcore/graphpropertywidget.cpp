@@ -10,9 +10,9 @@
 #include "graphpropertywidget.h"
 #include "graphmodel.h"
 #include <QBoxLayout>
-#include <mvvm/factories/viewmodelfactory.h>
-#include <mvvm/viewmodel/viewmodel.h>
-#include <mvvm/widgets/itemstreeview.h>
+#include "mvvm/factories/viewmodelfactory.h"
+#include "mvvm/viewmodel/viewmodel.h"
+#include "mvvm/widgets/itemstreeview.h"
 
 using namespace ModelView;
 

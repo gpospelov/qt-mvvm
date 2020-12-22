@@ -17,9 +17,9 @@
 #include <QStandardItemModel>
 #include <QTreeView>
 #include <QVBoxLayout>
-#include <mvvm/project/projectutils.h>
-#include <mvvm/widgets/adjustingscrollarea.h>
-#include <mvvm/widgets/widgetutils.h>
+#include "mvvm/project/projectutils.h"
+#include "mvvm/widgets/adjustingscrollarea.h"
+#include "mvvm/widgets/widgetutils.h"
 
 namespace {
 int max_recent_project_count = 7;

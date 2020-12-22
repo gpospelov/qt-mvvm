@@ -8,8 +8,8 @@
 // ************************************************************************** //
 
 #include <modelinqmlcore/particlemodel.h>
-#include <mvvm/model/itemcatalogue.h>
-#include <mvvm/standarditems/vectoritem.h>
+#include "mvvm/model/itemcatalogue.h"
+#include "mvvm/standarditems/vectoritem.h"
 
 using namespace ModelView;
 

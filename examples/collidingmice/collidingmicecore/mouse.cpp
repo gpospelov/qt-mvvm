@@ -55,9 +55,9 @@
 #include <QPainter>
 #include <QStyleOption>
 #include <cmath>
-#include <mvvm/signals/itemmapper.h>
-#include <mvvm/utils/mathconstants.h>
-#include <mvvm/utils/numericutils.h>
+#include "mvvm/signals/itemmapper.h"
+#include "mvvm/utils/mathconstants.h"
+#include "mvvm/utils/numericutils.h"
 
 const qreal Pi = M_PI;
 const qreal TwoPi = 2 * M_PI;

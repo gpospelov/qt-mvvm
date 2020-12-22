@@ -11,10 +11,10 @@
 #include <QColor>
 #include <algorithm>
 #include <cmath>
-#include <mvvm/factories/modeldocumentfactory.h>
-#include <mvvm/interfaces/undostackinterface.h>
-#include <mvvm/utils/reallimits.h>
-#include <mvvm/widgets/widgetutils.h>
+#include "mvvm/factories/modeldocumentfactory.h"
+#include "mvvm/interfaces/undostackinterface.h"
+#include "mvvm/utils/reallimits.h"
+#include "mvvm/widgets/widgetutils.h"
 
 namespace
 {

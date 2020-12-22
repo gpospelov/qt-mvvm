@@ -10,7 +10,7 @@
 #include "regionofinterestcontroller.h"
 #include "regionofinterestview.h"
 #include "sceneitems.h"
-#include <mvvm/plotting/sceneadapterinterface.h>
+#include "mvvm/plotting/sceneadapterinterface.h"
 
 using namespace ModelView;
 

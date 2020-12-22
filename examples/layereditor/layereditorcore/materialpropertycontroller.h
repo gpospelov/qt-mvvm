@@ -10,7 +10,7 @@
 #ifndef MATERIALPROPERTYCONTROLLER_H
 #define MATERIALPROPERTYCONTROLLER_H
 
-#include <mvvm/signals/modellistener.h>
+#include "mvvm/signals/modellistener.h"
 
 class SampleModel;
 class MaterialModel;

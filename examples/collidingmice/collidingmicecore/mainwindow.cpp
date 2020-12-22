@@ -21,8 +21,8 @@
 #include <QTimer>
 #include <QToolBar>
 #include <QVBoxLayout>
-#include <mvvm/model/modelutils.h>
-#include <mvvm/widgets/standardtreeviews.h>
+#include "mvvm/model/modelutils.h"
+#include "mvvm/widgets/standardtreeviews.h"
 
 namespace
 {

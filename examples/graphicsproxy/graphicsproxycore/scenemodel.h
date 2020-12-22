@@ -10,7 +10,7 @@
 #ifndef GRAPHICSPROXY_SCENEMODEL_H
 #define GRAPHICSPROXY_SCENEMODEL_H
 
-#include <mvvm/model/sessionmodel.h>
+#include "mvvm/model/sessionmodel.h"
 
 namespace ModelView {
 class ContainerItem;

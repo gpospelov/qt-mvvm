@@ -10,15 +10,15 @@
 #include "graphmodel.h"
 #include <QColor>
 #include <cmath>
-#include <mvvm/interfaces/undostackinterface.h>
-#include <mvvm/model/mvvm_types.h>
-#include <mvvm/standarditems/axisitems.h>
-#include <mvvm/standarditems/containeritem.h>
-#include <mvvm/standarditems/data1ditem.h>
-#include <mvvm/standarditems/graphitem.h>
-#include <mvvm/standarditems/graphviewportitem.h>
-#include <mvvm/utils/numericutils.h>
-#include <mvvm/widgets/widgetutils.h>
+#include "mvvm/interfaces/undostackinterface.h"
+#include "mvvm/model/mvvm_types.h"
+#include "mvvm/standarditems/axisitems.h"
+#include "mvvm/standarditems/containeritem.h"
+#include "mvvm/standarditems/data1ditem.h"
+#include "mvvm/standarditems/graphitem.h"
+#include "mvvm/standarditems/graphviewportitem.h"
+#include "mvvm/utils/numericutils.h"
+#include "mvvm/widgets/widgetutils.h"
 #include <stdexcept>
 
 namespace {

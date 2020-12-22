@@ -17,9 +17,9 @@
 #include <QBoxLayout>
 #include <QToolBar>
 #include <QToolButton>
-#include <mvvm/plotting/colormapcanvas.h>
-#include <mvvm/standarditems/axisitems.h>
-#include <mvvm/standarditems/colormapviewportitem.h>
+#include "mvvm/plotting/colormapcanvas.h"
+#include "mvvm/standarditems/axisitems.h"
+#include "mvvm/standarditems/colormapviewportitem.h"
 
 using namespace ModelView;
 

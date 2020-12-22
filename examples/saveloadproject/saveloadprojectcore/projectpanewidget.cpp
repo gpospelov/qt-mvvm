@@ -12,7 +12,7 @@
 #include <QMouseEvent>
 #include <QPainter>
 #include <QVBoxLayout>
-#include <mvvm/widgets/widgetutils.h>
+#include "mvvm/widgets/widgetutils.h"
 
 namespace {
 int widget_height()

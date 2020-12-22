@@ -15,9 +15,9 @@
 #include <layereditorcore/customlayerrowstrategy.h>
 #include <layereditorcore/multilayertreeview.h>
 #include <layereditorcore/samplemodel.h>
-#include <mvvm/factories/viewmodelfactory.h>
-#include <mvvm/viewmodel/standardchildrenstrategies.h>
-#include <mvvm/viewmodel/viewmodeldelegate.h>
+#include "mvvm/factories/viewmodelfactory.h"
+#include "mvvm/viewmodel/standardchildrenstrategies.h"
+#include "mvvm/viewmodel/viewmodeldelegate.h"
 
 using namespace ModelView;
 

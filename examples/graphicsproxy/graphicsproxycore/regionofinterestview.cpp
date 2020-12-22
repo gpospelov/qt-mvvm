@@ -13,7 +13,7 @@
 #include "sizehandleelement.h"
 #include <QGraphicsSceneMouseEvent>
 #include <QPainter>
-#include <mvvm/plotting/sceneadapterinterface.h>
+#include "mvvm/plotting/sceneadapterinterface.h"
 #include <stdexcept>
 
 namespace {

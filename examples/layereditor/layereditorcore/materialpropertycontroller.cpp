@@ -10,9 +10,9 @@
 #include <layereditorcore/materialmodel.h>
 #include <layereditorcore/materialpropertycontroller.h>
 #include <layereditorcore/samplemodel.h>
-#include <mvvm/model/externalproperty.h>
-#include <mvvm/model/modelutils.h>
-#include <mvvm/signals/modelmapper.h>
+#include "mvvm/model/externalproperty.h"
+#include "mvvm/model/modelutils.h"
+#include "mvvm/signals/modelmapper.h"
 
 using namespace ModelView;
 

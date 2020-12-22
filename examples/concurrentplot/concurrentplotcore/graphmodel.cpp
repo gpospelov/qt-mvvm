@@ -10,13 +10,13 @@
 #include "graphmodel.h"
 #include "toysimulation.h"
 #include <QColor>
-#include <mvvm/standarditems/axisitems.h>
-#include <mvvm/standarditems/containeritem.h>
-#include <mvvm/standarditems/data1ditem.h>
-#include <mvvm/standarditems/graphitem.h>
-#include <mvvm/standarditems/graphviewportitem.h>
-#include <mvvm/utils/numericutils.h>
-#include <mvvm/widgets/widgetutils.h>
+#include "mvvm/standarditems/axisitems.h"
+#include "mvvm/standarditems/containeritem.h"
+#include "mvvm/standarditems/data1ditem.h"
+#include "mvvm/standarditems/graphitem.h"
+#include "mvvm/standarditems/graphviewportitem.h"
+#include "mvvm/utils/numericutils.h"
+#include "mvvm/widgets/widgetutils.h"
 
 namespace {
 

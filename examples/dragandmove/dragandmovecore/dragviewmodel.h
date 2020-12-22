@@ -10,7 +10,7 @@
 #ifndef DRAGVIEWMODEL_H
 #define DRAGVIEWMODEL_H
 
-#include <mvvm/viewmodel/propertytableviewmodel.h>
+#include "mvvm/viewmodel/propertytableviewmodel.h"
 
 namespace ModelView {
 class SessionModel;
