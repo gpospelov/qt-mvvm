@@ -7,10 +7,10 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/plotting/mousemovereporter.h>
-#include <mvvm/plotting/mouseposinfo.h>
-#include <mvvm/plotting/statusstringformatterinterface.h>
-#include <mvvm/plotting/statusstringreporter.h>
+#include "mvvm/plotting/statusstringreporter.h"
+#include "mvvm/plotting/mousemovereporter.h"
+#include "mvvm/plotting/mouseposinfo.h"
+#include "mvvm/plotting/statusstringformatterinterface.h"
 #include <stdexcept>
 
 using namespace ModelView;
@@ -39,7 +39,8 @@ struct StatusStringReporter::StatusStringReporterImpl {
                 notify_client(pos);
                 if (!prevPos.in_axes_range)
                     entering_the_area();
-            } else {
+            }
+            else {
                 if (prevPos.in_axes_range)
                     leaving_the_area();
             }

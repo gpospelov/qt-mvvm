@@ -7,18 +7,17 @@
 //
 // ************************************************************************** //
 
-#include "qcustomplot.h"
+#include "mvvm/plotting/graphcanvas.h"
+#include "mvvm/plotting/customplotsceneadapter.h"
+#include "mvvm/plotting/graphviewportplotcontroller.h"
+#include "mvvm/plotting/statusstringreporter.h"
+#include "mvvm/plotting/statusstringreporterfactory.h"
+#include "mvvm/standarditems/graphviewportitem.h"
+#include "mvvm/widgets/statuslabel.h"
+#include <qcustomplot.h>
 #include <QBoxLayout>
-#include <mvvm/plotting/customplotsceneadapter.h>
-#include <mvvm/plotting/graphcanvas.h>
-#include <mvvm/plotting/graphviewportplotcontroller.h>
-#include <mvvm/plotting/statusstringreporter.h>
-#include <mvvm/plotting/statusstringreporterfactory.h>
-#include <mvvm/standarditems/graphviewportitem.h>
-#include <mvvm/widgets/statuslabel.h>
 
-namespace
-{
+namespace {
 
 //! Returns policy to which side of the axes box margins can be applied.
 //! If number is negative, this side will be callulated automatically.

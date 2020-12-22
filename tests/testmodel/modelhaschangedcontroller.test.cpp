@@ -7,22 +7,18 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/project/modelhaschangedcontroller.h"
+
 #include "google_test.h"
-#include <mvvm/model/propertyitem.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/project/modelhaschangedcontroller.h>
+#include "mvvm/model/propertyitem.h"
+#include "mvvm/model/sessionmodel.h"
 
 using namespace ModelView;
 
 //! Tests for ModelHasChangedController class.
 
-class ModelHasChangedControllerTest : public ::testing::Test
-{
-public:
-    ~ModelHasChangedControllerTest();
+class ModelHasChangedControllerTest : public ::testing::Test {
 };
-
-ModelHasChangedControllerTest::~ModelHasChangedControllerTest() = default;
 
 //! Tests initial state of the controller.
 

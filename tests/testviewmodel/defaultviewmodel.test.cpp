@@ -7,38 +7,34 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/viewmodel/defaultviewmodel.h"
+
 #include "folderbasedtest.h"
 #include "google_test.h"
 #include "test_utils.h"
-#include <QDebug>
+#include "mvvm/model/compounditem.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/model/taginfo.h"
+#include "mvvm/serialization/jsondocument.h"
+#include "mvvm/serialization/jsonitem_types.h"
+#include "mvvm/serialization/jsonmodelconverter.h"
+#include "mvvm/standarditems/axisitems.h"
+#include "mvvm/standarditems/containeritem.h"
+#include "mvvm/standarditems/data1ditem.h"
+#include "mvvm/standarditems/graphitem.h"
+#include "mvvm/standarditems/graphviewportitem.h"
+#include "mvvm/standarditems/vectoritem.h"
+#include "mvvm/viewmodel/standardviewitems.h"
+#include "mvvm/viewmodel/viewmodelutils.h"
 #include <QJsonObject>
 #include <QSignalSpy>
-#include <mvvm/model/compounditem.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/model/taginfo.h>
-#include <mvvm/serialization/jsondocument.h>
-#include <mvvm/serialization/jsonitem_types.h>
-#include <mvvm/serialization/jsonmodelconverter.h>
-#include <mvvm/standarditems/axisitems.h>
-#include <mvvm/standarditems/containeritem.h>
-#include <mvvm/standarditems/data1ditem.h>
-#include <mvvm/standarditems/graphitem.h>
-#include <mvvm/standarditems/graphviewportitem.h>
-#include <mvvm/standarditems/vectoritem.h>
-#include <mvvm/viewmodel/defaultviewmodel.h>
-#include <mvvm/viewmodel/standardviewitems.h>
-#include <mvvm/viewmodel/viewmodelutils.h>
 
 using namespace ModelView;
 
-class DefaultViewModelTest : public FolderBasedTest
-{
+class DefaultViewModelTest : public FolderBasedTest {
 public:
     DefaultViewModelTest() : FolderBasedTest("test_DefaultViewModel") {}
-    ~DefaultViewModelTest();
 };
-
-DefaultViewModelTest::~DefaultViewModelTest() = default;
 
 TEST_F(DefaultViewModelTest, initialState)
 {

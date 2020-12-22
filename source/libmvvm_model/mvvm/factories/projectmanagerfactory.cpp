@@ -7,12 +7,11 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/factories/projectmanagerfactory.h>
-#include <mvvm/project/project_types.h>
-#include <mvvm/project/projectmanagerdecorator.h>
+#include "mvvm/factories/projectmanagerfactory.h"
+#include "mvvm/project/project_types.h"
+#include "mvvm/project/projectmanagerdecorator.h"
 
-namespace ModelView
-{
+namespace ModelView {
 std::unique_ptr<ProjectManagerInterface>
 CreateProjectManager(const ProjectContext& project_context,
                      const UserInteractionContext& user_context)

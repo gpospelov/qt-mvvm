@@ -8,17 +8,16 @@
 // ************************************************************************** //
 
 #include "colormapmodel.h"
+#include "mvvm/standarditems/axisitems.h"
+#include "mvvm/standarditems/colormapitem.h"
+#include "mvvm/standarditems/colormapviewportitem.h"
+#include "mvvm/standarditems/containeritem.h"
+#include "mvvm/standarditems/data2ditem.h"
 #include <cmath>
-#include <mvvm/standarditems/axisitems.h>
-#include <mvvm/standarditems/colormapitem.h>
-#include <mvvm/standarditems/colormapviewportitem.h>
-#include <mvvm/standarditems/containeritem.h>
-#include <mvvm/standarditems/data2ditem.h>
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 const int nbinsx = 200;
 const int nbinsy = 100;
 
@@ -40,8 +39,7 @@ void fill_data(Data2DItem* data_item, double scale = 1.0)
 }
 } // namespace
 
-namespace PlotColorMap
-{
+namespace PlotColorMap {
 
 ColorMapModel::ColorMapModel() : SessionModel("ColorMapModel")
 {

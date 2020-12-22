@@ -7,23 +7,19 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/viewmodel/propertiesrowstrategy.h"
+
 #include "google_test.h"
 #include "test_utils.h"
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/standarditems/vectoritem.h>
-#include <mvvm/viewmodel/propertiesrowstrategy.h>
-#include <mvvm/viewmodel/standardviewitems.h>
+#include "mvvm/model/sessionitem.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/standarditems/vectoritem.h"
+#include "mvvm/viewmodel/standardviewitems.h"
 
 using namespace ModelView;
 
-class PropertiesRowStrategyTest : public ::testing::Test
-{
-public:
-    ~PropertiesRowStrategyTest();
+class PropertiesRowStrategyTest : public ::testing::Test {
 };
-
-PropertiesRowStrategyTest::~PropertiesRowStrategyTest() = default;
 
 TEST_F(PropertiesRowStrategyTest, initialState)
 {

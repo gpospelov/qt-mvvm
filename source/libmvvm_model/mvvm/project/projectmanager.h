@@ -10,11 +10,10 @@
 #ifndef MVVM_PROJECT_PROJECTMANAGER_H
 #define MVVM_PROJECT_PROJECTMANAGER_H
 
+#include "mvvm/interfaces/projectmanagerinterface.h"
 #include <memory>
-#include <mvvm/interfaces/projectmanagerinterface.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 struct ProjectContext;
 
@@ -25,8 +24,7 @@ struct ProjectContext;
 //! the creation of a new project will be possible only if the old project is in a saved state. See
 //! description to the class methods.
 
-class MVVM_MODEL_EXPORT ProjectManager : public ModelView::ProjectManagerInterface
-{
+class MVVM_MODEL_EXPORT ProjectManager : public ModelView::ProjectManagerInterface {
 public:
     ProjectManager(const ProjectContext& context);
     ~ProjectManager() override;

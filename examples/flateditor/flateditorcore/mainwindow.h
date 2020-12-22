@@ -18,8 +18,7 @@ class QTabWidget;
 
 //! The main window of this application.
 
-class MainWindow : public QMainWindow
-{
+class MainWindow : public QMainWindow {
     Q_OBJECT
 
 public:

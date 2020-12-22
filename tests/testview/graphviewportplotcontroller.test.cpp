@@ -7,28 +7,24 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/plotting/graphviewportplotcontroller.h"
+
 #include "customplot_test_utils.h"
 #include "google_test.h"
-#include "qcustomplot.h"
-#include <mvvm/interfaces/undostackinterface.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/plotting/graphviewportplotcontroller.h>
-#include <mvvm/standarditems/axisitems.h>
-#include <mvvm/standarditems/data1ditem.h>
-#include <mvvm/standarditems/graphitem.h>
-#include <mvvm/standarditems/graphviewportitem.h>
+#include "mvvm/interfaces/undostackinterface.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/standarditems/axisitems.h"
+#include "mvvm/standarditems/data1ditem.h"
+#include "mvvm/standarditems/graphitem.h"
+#include "mvvm/standarditems/graphviewportitem.h"
+#include <qcustomplot.h>
 
 using namespace ModelView;
 
 //! Testing GraphViewportPlotController.
 
-class GraphViewportPlotControllerTest : public ::testing::Test
-{
-public:
-    ~GraphViewportPlotControllerTest();
+class GraphViewportPlotControllerTest : public ::testing::Test {
 };
-
-GraphViewportPlotControllerTest::~GraphViewportPlotControllerTest() = default;
 
 //! Initial state.
 

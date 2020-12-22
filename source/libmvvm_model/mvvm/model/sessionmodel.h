@@ -10,16 +10,15 @@
 #ifndef MVVM_MODEL_SESSIONMODEL_H
 #define MVVM_MODEL_SESSIONMODEL_H
 
+#include "mvvm/core/types.h"
+#include "mvvm/core/variant.h"
+#include "mvvm/model/function_types.h"
+#include "mvvm/model/sessionitem.h"
+#include "mvvm/model/tagrow.h"
+#include "mvvm/model_export.h"
 #include <memory>
-#include <mvvm/core/types.h>
-#include <mvvm/core/variant.h>
-#include <mvvm/model/function_types.h>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/model/tagrow.h>
-#include <mvvm/model_export.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionItem;
 class ItemCatalogue;
@@ -30,8 +29,7 @@ class UndoStackInterface;
 
 //! Main class to hold hierarchy of SessionItem objects.
 
-class MVVM_MODEL_EXPORT SessionModel
-{
+class MVVM_MODEL_EXPORT SessionModel {
 public:
     explicit SessionModel(std::string model_type = {}, std::shared_ptr<ItemPool> pool = {});
     virtual ~SessionModel();

@@ -7,14 +7,13 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/standarditems/axisitems.h>
-#include <mvvm/standarditems/data2ditem.h>
+#include "mvvm/standarditems/data2ditem.h"
+#include "mvvm/standarditems/axisitems.h"
 #include <stdexcept>
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 size_t total_bin_count(Data2DItem* item)
 {
     if (auto xaxis = item->xAxis(); xaxis)

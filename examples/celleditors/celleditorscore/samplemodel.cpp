@@ -9,16 +9,15 @@
 
 #include "samplemodel.h"
 #include "item_constants.h"
+#include "mvvm/editors/editor_constants.h"
+#include "mvvm/model/comboproperty.h"
+#include "mvvm/model/externalproperty.h"
+#include "mvvm/utils/reallimits.h"
 #include <QColor>
-#include <mvvm/editors/editor_constants.h>
-#include <mvvm/model/comboproperty.h>
-#include <mvvm/model/externalproperty.h>
-#include <mvvm/utils/reallimits.h>
 
 using namespace ModelView;
 
-namespace CellEditors
-{
+namespace CellEditors {
 
 DemoPropertiesItem::DemoPropertiesItem() : CompoundItem(::Constants::DemoPropertiesType)
 {

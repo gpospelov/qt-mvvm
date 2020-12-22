@@ -7,31 +7,30 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/serialization/jsonitemconverter.h"
+
 #include "folderbasedtest.h"
 #include "google_test.h"
 #include "test_utils.h"
+#include "mvvm/model/compounditem.h"
+#include "mvvm/model/itemcatalogue.h"
+#include "mvvm/model/propertyitem.h"
+#include "mvvm/model/sessionitem.h"
+#include "mvvm/model/sessionitemtags.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/serialization/jsonitem_types.h"
+#include "mvvm/serialization/jsonitemformatassistant.h"
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
-#include <mvvm/model/compounditem.h>
-#include <mvvm/model/itemcatalogue.h>
-#include <mvvm/model/propertyitem.h>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/model/sessionitemtags.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/serialization/jsonitem_types.h>
-#include <mvvm/serialization/jsonitemconverter.h>
-#include <mvvm/serialization/jsonitemformatassistant.h>
 
 using namespace ModelView;
 
 //! Checks JsonItem class and its ability to convert SessionItems to json and back.
 
-class JsonItemConverterTest : public FolderBasedTest
-{
+class JsonItemConverterTest : public FolderBasedTest {
 public:
-    class TestItem : public CompoundItem
-    {
+    class TestItem : public CompoundItem {
     public:
         TestItem() : CompoundItem("TestItem")
         {
@@ -40,8 +39,7 @@ public:
         }
     };
 
-    class TestModel : public SessionModel
-    {
+    class TestModel : public SessionModel {
     public:
         TestModel() : SessionModel("TestModel")
         {
@@ -55,7 +53,6 @@ public:
         : FolderBasedTest("test_JsonItemConverter"), m_model(std::make_unique<TestModel>())
     {
     }
-    ~JsonItemConverterTest();
 
     std::unique_ptr<JsonItemConverter> createConverter()
     {
@@ -66,8 +63,6 @@ public:
 private:
     std::unique_ptr<SessionModel> m_model;
 };
-
-JsonItemConverterTest::~JsonItemConverterTest() = default;
 
 //! PropertyItem to json object.
 

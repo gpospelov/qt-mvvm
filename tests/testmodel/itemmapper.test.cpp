@@ -7,24 +7,20 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/signals/itemmapper.h"
+
 #include "google_test.h"
 #include "mockwidgets.h"
-#include <mvvm/model/compounditem.h>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/signals/itemmapper.h>
+#include "mvvm/model/compounditem.h"
+#include "mvvm/model/sessionitem.h"
+#include "mvvm/model/sessionmodel.h"
 #include <stdexcept>
 
 using namespace ModelView;
 using ::testing::_;
 
-class ItemMapperTest : public ::testing::Test
-{
-public:
-    ~ItemMapperTest();
+class ItemMapperTest : public ::testing::Test {
 };
-
-ItemMapperTest::~ItemMapperTest() = default;
 
 //! Check that mapper works only in model context.
 

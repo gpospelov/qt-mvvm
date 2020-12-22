@@ -14,15 +14,13 @@
 #include <QSettings>
 #include <QTabWidget>
 
-namespace
-{
+namespace {
 const QString main_window_group = "MainWindow";
 const QString size_key = "size";
 const QString pos_key = "pos";
 } // namespace
 
-namespace TreeViews
-{
+namespace TreeViews {
 
 MainWindow::MainWindow() : m_sample_model(std::make_unique<SampleModel>())
 {

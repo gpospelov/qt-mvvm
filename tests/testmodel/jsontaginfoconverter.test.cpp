@@ -7,28 +7,25 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/serialization/jsontaginfoconverter.h"
+
 #include "folderbasedtest.h"
 #include "google_test.h"
 #include "test_utils.h"
+#include "mvvm/model/taginfo.h"
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
-#include <mvvm/model/taginfo.h>
-#include <mvvm/serialization/jsontaginfoconverter.h>
 #include <string>
 
 using namespace ModelView;
 
 //! Test convertion of TagInfo from/to QJsonObject.
 
-class JsonTagInfoConverterTest : public FolderBasedTest
-{
+class JsonTagInfoConverterTest : public FolderBasedTest {
 public:
     JsonTagInfoConverterTest() : FolderBasedTest("test_JsonTagInfoConverter") {}
-    ~JsonTagInfoConverterTest();
 };
-
-JsonTagInfoConverterTest::~JsonTagInfoConverterTest() = default;
 
 //! Checks if json object is correctly identified as representing TagInfo.
 

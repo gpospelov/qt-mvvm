@@ -7,11 +7,10 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/factories/modeldocumentfactory.h>
-#include <mvvm/serialization/jsondocument.h>
+#include "mvvm/factories/modeldocumentfactory.h"
+#include "mvvm/serialization/jsondocument.h"
 
-namespace ModelView
-{
+namespace ModelView {
 
 std::unique_ptr<ModelDocumentInterface> CreateJsonDocument(const std::vector<SessionModel*>& models)
 {

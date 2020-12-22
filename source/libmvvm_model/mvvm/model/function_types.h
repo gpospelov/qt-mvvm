@@ -13,8 +13,7 @@
 #include <functional>
 #include <memory>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionItem;
 

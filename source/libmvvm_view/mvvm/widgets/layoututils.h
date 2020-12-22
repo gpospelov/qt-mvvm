@@ -10,7 +10,7 @@
 #ifndef MVVM_WIDGETS_LAYOUTUTILS_H
 #define MVVM_WIDGETS_LAYOUTUTILS_H
 
-#include <mvvm/view_export.h>
+#include "mvvm/view_export.h"
 
 class QLayout;
 class QGridLayout;
@@ -21,8 +21,7 @@ class QWidget;
 //! Taken from https://stackoverflow.com/questions/5395266/removing-widgets-from-qgridlayout
 //! Caveat: according to explanations given, grid layouts can only grow and never shrink.
 
-namespace LayoutUtils
-{
+namespace LayoutUtils {
 
 //! Removes content from box layout.
 MVVM_VIEW_EXPORT void clearLayout(QLayout* layout, bool deleteWidgets = true);

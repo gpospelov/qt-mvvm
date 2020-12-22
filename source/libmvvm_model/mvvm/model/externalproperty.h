@@ -10,19 +10,17 @@
 #ifndef MVVM_MODEL_EXTERNALPROPERTY_H
 #define MVVM_MODEL_EXTERNALPROPERTY_H
 
+#include "mvvm/core/variant.h"
+#include "mvvm/model_export.h"
 #include <QColor>
-#include <mvvm/core/variant.h>
-#include <mvvm/model_export.h>
 #include <string>
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! Property to carry text, color and identifier.
 //! Can be used to link items with each other.
 
-class MVVM_MODEL_EXPORT ExternalProperty
-{
+class MVVM_MODEL_EXPORT ExternalProperty {
 public:
     ExternalProperty();
     ExternalProperty(std::string text, QColor color, std::string id = {});

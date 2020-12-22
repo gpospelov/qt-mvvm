@@ -7,12 +7,11 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/factories/itemconverterfactory.h>
-#include <mvvm/serialization/jsonitem_types.h>
-#include <mvvm/serialization/jsonitemconverter.h>
+#include "mvvm/factories/itemconverterfactory.h"
+#include "mvvm/serialization/jsonitem_types.h"
+#include "mvvm/serialization/jsonitemconverter.h"
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! Creates JSON item converter intended for item cloning.
 //! Saves full deep copy of item to JSON. When restoring from JSON, reconstruct everything,

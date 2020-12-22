@@ -7,32 +7,27 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/model/sessionmodel.h"
+
 #include "google_test.h"
+#include "mvvm/model/compounditem.h"
+#include "mvvm/model/itempool.h"
+#include "mvvm/model/itemutils.h"
+#include "mvvm/model/propertyitem.h"
+#include "mvvm/model/sessionitem.h"
+#include "mvvm/model/taginfo.h"
 #include <memory>
-#include <mvvm/model/compounditem.h>
-#include <mvvm/model/itempool.h>
-#include <mvvm/model/itemutils.h>
-#include <mvvm/model/propertyitem.h>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/model/taginfo.h>
 #include <stdexcept>
 
 using namespace ModelView;
 
-class SessionModelTest : public ::testing::Test
-{
+class SessionModelTest : public ::testing::Test {
 public:
-    ~SessionModelTest();
-
     class TestItem : public SessionItem {
     public:
         TestItem() : SessionItem("TestItemType"){};
     };
-
 };
-
-SessionModelTest::~SessionModelTest() = default;
 
 TEST_F(SessionModelTest, initialState)
 {
@@ -462,4 +457,3 @@ TEST_F(SessionModelTest, registerItem)
     ASSERT_TRUE(dynamic_cast<TestItem*>(item) != nullptr);
     EXPECT_EQ(item->modelType(), expectedModelType);
 }
-

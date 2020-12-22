@@ -10,15 +10,11 @@
 #ifndef MVVM_UTILS_FILEUTILS_H
 #define MVVM_UTILS_FILEUTILS_H
 
-#include <mvvm/model_export.h>
+#include "mvvm/model_export.h"
 #include <string>
 #include <vector>
 
-namespace ModelView
-{
-
-namespace Utils
-{
+namespace ModelView::Utils {
 
 //! Returns true if file exists.
 MVVM_MODEL_EXPORT bool exists(const std::string& fileName);
@@ -49,8 +45,6 @@ MVVM_MODEL_EXPORT std::string parent_path(const std::string& path);
 //! Returns true if the file indicated by 'path' refers to empty file or directory.
 MVVM_MODEL_EXPORT bool is_empty(const std::string& path);
 
-} // namespace Utils
-
-} // namespace ModelView
+} // namespace ModelView::Utils
 
 #endif // MVVM_UTILS_FILEUTILS_H

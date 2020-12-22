@@ -10,19 +10,17 @@
 #ifndef MVVM_MODEL_MVVM_TYPES_H
 #define MVVM_MODEL_MVVM_TYPES_H
 
-#include <mvvm/core/types.h>
+#include "mvvm/core/types.h"
 #include <string>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionItem;
 class SessionModel;
 
 //! Defines constants to be used as SessionItem data role.
 
-namespace ItemDataRole
-{
+namespace ItemDataRole {
 const int IDENTIFIER = 0; //!< unique identifier
 const int DATA = 1;       //!< main data role
 const int DISPLAY = 2;    //!< display name
@@ -38,8 +36,7 @@ enum Appearance {
     EDITABLE = 0x002 // editable in Qt widgets; readonly otherwise
 };
 
-namespace Constants
-{
+namespace Constants {
 const model_type BaseType = "SessionItem";
 const model_type ColorMapItemType = "ColorMap";
 const model_type ColorMapViewportItemType = "ColorMapViewport";

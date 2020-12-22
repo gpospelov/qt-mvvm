@@ -7,13 +7,13 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/widgets/collapsiblebar.h"
+#include "mvvm/widgets/widgetutils.h"
 #include <QEvent>
 #include <QHBoxLayout>
 #include <QIcon>
 #include <QLabel>
 #include <QMouseEvent>
-#include <mvvm/widgets/collapsiblebar.h>
-#include <mvvm/widgets/widgetutils.h>
 
 using namespace ModelView;
 
@@ -64,7 +64,8 @@ void CollapsibleBar::updatePixmap()
     if (m_controlledWidget->isVisible()) {
         m_pixmapLabel->setPixmap(QPixmap(":/icons/chevron-down.svg"));
         setFrameStyle(QFrame::StyledPanel);
-    } else {
+    }
+    else {
         m_pixmapLabel->setPixmap(QPixmap(":/icons/chevron-right.svg"));
         setFrameStyle(QFrame::StyledPanel | QFrame::Raised);
     }

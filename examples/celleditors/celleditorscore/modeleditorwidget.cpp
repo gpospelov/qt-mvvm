@@ -9,18 +9,17 @@
 
 #include "modeleditorwidget.h"
 #include "samplemodel.h"
+#include "mvvm/viewmodel/defaultviewmodel.h"
+#include "mvvm/viewmodel/propertytableviewmodel.h"
+#include "mvvm/viewmodel/viewmodeldelegate.h"
 #include <QBoxLayout>
 #include <QHeaderView>
 #include <QTableView>
 #include <QTreeView>
-#include <mvvm/viewmodel/defaultviewmodel.h>
-#include <mvvm/viewmodel/propertytableviewmodel.h>
-#include <mvvm/viewmodel/viewmodeldelegate.h>
 
 using namespace ModelView;
 
-namespace CellEditors
-{
+namespace CellEditors {
 
 ModelEditorWidget::ModelEditorWidget(SampleModel* model, QWidget* parent)
     : QWidget(parent)

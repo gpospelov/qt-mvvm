@@ -7,9 +7,9 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/model/sessionitemdata.h"
+#include "mvvm/model/customvariants.h"
 #include <algorithm>
-#include <mvvm/model/customvariants.h>
-#include <mvvm/model/sessionitemdata.h>
 #include <sstream>
 #include <stdexcept>
 
@@ -45,7 +45,8 @@ bool SessionItemData::setData(const Variant& value, int role)
                 if (Utils::IsTheSame(it->m_data, value))
                     return false;
                 it->m_data = value;
-            } else {
+            }
+            else {
                 m_values.erase(it);
             }
             return true;

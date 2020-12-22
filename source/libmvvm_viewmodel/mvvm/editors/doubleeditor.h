@@ -10,17 +10,15 @@
 #ifndef MVVM_EDITORS_DOUBLEEDITOR_H
 #define MVVM_EDITORS_DOUBLEEDITOR_H
 
-#include <mvvm/editors/customeditor.h>
+#include "mvvm/editors/customeditor.h"
 
 class QDoubleSpinBox;
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! Custom editor for QVariant based on double with possibility to set limits.
 
-class MVVM_VIEWMODEL_EXPORT DoubleEditor : public CustomEditor
-{
+class MVVM_VIEWMODEL_EXPORT DoubleEditor : public CustomEditor {
     Q_OBJECT
 
 public:

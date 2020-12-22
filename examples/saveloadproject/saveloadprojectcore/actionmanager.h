@@ -20,8 +20,7 @@ class QToolBar;
 //! Actions for MainWindow. Equips toolbar and menubar with actions to create, open, save,
 //! and save-as projects. It doesn't have logic and simply forwards requests further.
 
-class ActionManager : public QObject
-{
+class ActionManager : public QObject {
     Q_OBJECT
 
 public:

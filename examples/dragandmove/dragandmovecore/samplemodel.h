@@ -10,20 +10,17 @@
 #ifndef SAMPLEMODEL_H
 #define SAMPLEMODEL_H
 
-#include <mvvm/model/sessionmodel.h>
+#include "mvvm/model/sessionmodel.h"
 
-namespace ModelView
-{
+namespace ModelView {
 class SessionItem;
 }
 
-namespace DragAndView
-{
+namespace DragAndView {
 
 //! Main application model.
 
-class SampleModel : public ModelView::SessionModel
-{
+class SampleModel : public ModelView::SessionModel {
 public:
     SampleModel();
 

@@ -10,22 +10,20 @@
 #ifndef MVVM_PLOTTING_VIEWPORTAXISPLOTCONTROLLER_H
 #define MVVM_PLOTTING_VIEWPORTAXISPLOTCONTROLLER_H
 
+#include "mvvm/signals/itemlistener.h"
+#include "mvvm/view_export.h"
 #include <memory>
-#include <mvvm/signals/itemlistener.h>
-#include <mvvm/view_export.h>
 
 class QCPAxis;
 
-namespace ModelView
-{
+namespace ModelView {
 
 class ViewportAxisItem;
 
 //! Establishes communication between QCPAxis and ViewportAxisItem.
 //! Provide mutual update of axis parameters (min, max, title) for two axes representations.
 
-class MVVM_VIEW_EXPORT ViewportAxisPlotController : public ItemListener<ViewportAxisItem>
-{
+class MVVM_VIEW_EXPORT ViewportAxisPlotController : public ItemListener<ViewportAxisItem> {
 public:
     explicit ViewportAxisPlotController(QCPAxis* axis);
     ~ViewportAxisPlotController() override;

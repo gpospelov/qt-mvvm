@@ -15,20 +15,17 @@
 
 class QBoxLayout;
 
-namespace ModelView
-{
+namespace ModelView {
 class ItemsTreeView;
 } // namespace ModelView
 
-namespace PlotGraphs
-{
+namespace PlotGraphs {
 
 class GraphModel;
 
 //! Shows model content in standard tree view.
 
-class GraphPropertyWidget : public QWidget
-{
+class GraphPropertyWidget : public QWidget {
     Q_OBJECT
 
 public:

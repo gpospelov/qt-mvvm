@@ -10,17 +10,15 @@
 #ifndef MVVM_EDITORS_INTEGEREDITOR_H
 #define MVVM_EDITORS_INTEGEREDITOR_H
 
-#include <mvvm/editors/customeditor.h>
+#include "mvvm/editors/customeditor.h"
 
 class QSpinBox;
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! Custom editor for QVariant based on integer with possibility to set limits.
 
-class MVVM_VIEWMODEL_EXPORT IntegerEditor : public CustomEditor
-{
+class MVVM_VIEWMODEL_EXPORT IntegerEditor : public CustomEditor {
     Q_OBJECT
 
 public:

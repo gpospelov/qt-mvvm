@@ -7,24 +7,21 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/viewmodel/viewitem.h"
+
 #include "google_test.h"
 #include "test_utils.h"
-#include <mvvm/viewmodel/viewitem.h>
 #include <stdexcept>
 
 using namespace ModelView;
 
 //! Tests for ViewItem class.
 
-class ViewItemTest : public ::testing::Test
-{
+class ViewItemTest : public ::testing::Test {
 public:
-    ~ViewItemTest();
-    class TestItem : public ViewItem
-    {
+    class TestItem : public ViewItem {
     public:
         TestItem() : ViewItem(nullptr, 0) {}
-        ~TestItem() override;
     };
 
     using children_t = std::vector<std::unique_ptr<ViewItem>>;
@@ -42,9 +39,6 @@ public:
         return std::make_pair(std::move(vector_of_unique), std::move(vector_of_pointers));
     }
 };
-
-ViewItemTest::~ViewItemTest() = default;
-ViewItemTest::TestItem::~TestItem() = default;
 
 //! Initial state of RefViewItem.
 

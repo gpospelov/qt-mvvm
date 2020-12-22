@@ -10,11 +10,10 @@
 #ifndef MVVM_STANDARDITEMS_LINKEDITEM_H
 #define MVVM_STANDARDITEMS_LINKEDITEM_H
 
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/model/sessionmodel.h>
+#include "mvvm/model/sessionitem.h"
+#include "mvvm/model/sessionmodel.h"
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! Item to store a persistent link to other arbitrary items.
 
@@ -23,8 +22,7 @@ namespace ModelView
 //! Provided mechanism is persistent and outlive serialization. Can be used to find items in
 //! different models. For that being the case, models should use same ItemPool.
 
-class MVVM_MODEL_EXPORT LinkedItem : public SessionItem
-{
+class MVVM_MODEL_EXPORT LinkedItem : public SessionItem {
 public:
     LinkedItem();
 

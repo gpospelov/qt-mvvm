@@ -7,25 +7,21 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/model/itemutils.h"
+
 #include "google_test.h"
+#include "mvvm/model/customvariants.h"
+#include "mvvm/model/propertyitem.h"
+#include "mvvm/model/sessionitem.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/model/taginfo.h"
+#include "mvvm/standarditems/vectoritem.h"
 #include <memory>
-#include <mvvm/model/customvariants.h>
-#include <mvvm/model/itemutils.h>
-#include <mvvm/model/propertyitem.h>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/model/taginfo.h>
-#include <mvvm/standarditems/vectoritem.h>
 
 using namespace ModelView;
 
-class ItemUtilsTest : public ::testing::Test
-{
-public:
-    ~ItemUtilsTest();
+class ItemUtilsTest : public ::testing::Test {
 };
-
-ItemUtilsTest::~ItemUtilsTest() = default;
 
 //! Simple iteration over item and its children
 
@@ -135,8 +131,8 @@ TEST_F(ItemUtilsTest, HasTag)
     SessionItem item;
     item.registerTag(TagInfo::universalTag("default_tag"), /*set_as_default*/ true);
 
-    EXPECT_TRUE(Utils::HasTag(item , "default_tag"));
-    EXPECT_FALSE(Utils::HasTag(item , "nonexisting_tag"));
+    EXPECT_TRUE(Utils::HasTag(item, "default_tag"));
+    EXPECT_FALSE(Utils::HasTag(item, "nonexisting_tag"));
 }
 
 //! Checks method ::IsSinglePropertyTag.
@@ -147,8 +143,8 @@ TEST_F(ItemUtilsTest, IsSinglePropertyTag)
     item.registerTag(TagInfo::universalTag("default_tag"), /*set_as_default*/ true);
     item.registerTag(TagInfo::propertyTag("property_tag", Constants::PropertyType));
 
-    EXPECT_FALSE(Utils::IsSinglePropertyTag(item , "default_tag"));
-    EXPECT_TRUE(Utils::IsSinglePropertyTag(item , "property_tag"));
+    EXPECT_FALSE(Utils::IsSinglePropertyTag(item, "default_tag"));
+    EXPECT_TRUE(Utils::IsSinglePropertyTag(item, "property_tag"));
 }
 
 //! Check access to top level and property items.

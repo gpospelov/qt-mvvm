@@ -7,25 +7,21 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/factories/viewmodelcontrollerbuilder.h"
+
 #include "google_test.h"
-#include <mvvm/factories/viewmodelcontrollerbuilder.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/viewmodel/labeldatarowstrategy.h>
-#include <mvvm/viewmodel/standardchildrenstrategies.h>
-#include <mvvm/viewmodel/viewmodelbase.h>
-#include <mvvm/viewmodel/viewmodelcontroller.h>
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/viewmodel/labeldatarowstrategy.h"
+#include "mvvm/viewmodel/standardchildrenstrategies.h"
+#include "mvvm/viewmodel/viewmodelbase.h"
+#include "mvvm/viewmodel/viewmodelcontroller.h"
 
 using namespace ModelView;
 
 //! Tests of ViewModelController class.
 
-class ViewModelControllerBuilderTest : public ::testing::Test
-{
-public:
-    ~ViewModelControllerBuilderTest();
+class ViewModelControllerBuilderTest : public ::testing::Test {
 };
-
-ViewModelControllerBuilderTest::~ViewModelControllerBuilderTest() = default;
 
 //! Initial state of the builder.
 //! It can't build anything without configuration.

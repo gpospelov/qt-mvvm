@@ -7,21 +7,17 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/plotting/customplotsceneadapter.h"
+
 #include "google_test.h"
-#include "qcustomplot.h"
-#include <mvvm/plotting/customplotsceneadapter.h>
+#include <qcustomplot.h>
 
 using namespace ModelView;
 
 //! Testing CustomPlotSceneAdapter.
 
-class CustomPlotSceneAdapterTest : public ::testing::Test
-{
-public:
-    ~CustomPlotSceneAdapterTest();
+class CustomPlotSceneAdapterTest : public ::testing::Test {
 };
-
-CustomPlotSceneAdapterTest::~CustomPlotSceneAdapterTest() = default;
 
 //! Scenario when QCustomPlot destroyed before adapter.
 

@@ -7,17 +7,16 @@
 //
 // ************************************************************************** //
 
+#include "layereditorcore/materialmodel.h"
+#include "mvvm/model/externalproperty.h"
+#include "mvvm/model/itemcatalogue.h"
+#include "mvvm/standarditems/containeritem.h"
+#include "mvvm/standarditems/vectoritem.h"
 #include <QColor>
-#include <layereditorcore/materialmodel.h>
-#include <mvvm/model/externalproperty.h>
-#include <mvvm/model/itemcatalogue.h>
-#include <mvvm/standarditems/containeritem.h>
-#include <mvvm/standarditems/vectoritem.h>
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 std::unique_ptr<ItemCatalogue> CreateItemCatalogue()
 {
     auto result = std::make_unique<ModelView::ItemCatalogue>();

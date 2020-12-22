@@ -10,12 +10,11 @@
 #ifndef MVVM_EDITORS_EDITORBUILDERS_H
 #define MVVM_EDITORS_EDITORBUILDERS_H
 
+#include "mvvm/viewmodel_export.h"
 #include <functional>
 #include <memory>
-#include <mvvm/viewmodel_export.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class CustomEditor;
 class SessionItem;
@@ -23,8 +22,7 @@ class SessionItem;
 //! Collection of methods to build custom editors for trees/tables cells.
 //! Used to edit SessionItem data in the context of DefaultEditorFactory.
 
-namespace EditorBuilders
-{
+namespace EditorBuilders {
 
 using editor_t = std::unique_ptr<CustomEditor>;
 using builder_t = std::function<editor_t(const SessionItem*)>;

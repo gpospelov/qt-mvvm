@@ -9,17 +9,16 @@
 
 #include "userinteractor.h"
 #include "recentprojectsettings.h"
+#include "mvvm/project/project_types.h"
+#include "mvvm/project/projectutils.h"
+#include "mvvm/utils/fileutils.h"
 #include <QFileDialog>
 #include <QMessageBox>
 #include <map>
-#include <mvvm/project/project_types.h>
-#include <mvvm/project/projectutils.h>
-#include <mvvm/utils/fileutils.h>
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 //! Map of standard Qt answers to what ProjectManager expects.
 std::map<QMessageBox::StandardButton, SaveChangesAnswer> answer_map()
 {

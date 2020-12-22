@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/utils/progresshandler.h>
+#include "mvvm/utils/progresshandler.h"
 
 using namespace ModelView;
 

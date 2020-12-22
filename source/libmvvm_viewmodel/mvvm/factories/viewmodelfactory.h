@@ -10,19 +10,17 @@
 #ifndef MVVM_VIEWMODEL_STANDARDVIEWMODELS_H
 #define MVVM_VIEWMODEL_STANDARDVIEWMODELS_H
 
+#include "mvvm/factories/viewmodelcontrollerfactory.h"
+#include "mvvm/viewmodel/viewmodel.h"
+#include "mvvm/viewmodel_export.h"
 #include <memory>
-#include <mvvm/factories/viewmodelcontrollerfactory.h>
-#include <mvvm/viewmodel/viewmodel.h>
-#include <mvvm/viewmodel_export.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionModel;
 class ViewModel;
 
-namespace Factory
-{
+namespace Factory {
 
 //! Creates view model to represent SessionModel for Qt views.
 //! The model has two columns, all items are shown.

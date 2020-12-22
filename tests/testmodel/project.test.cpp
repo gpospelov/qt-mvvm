@@ -7,20 +7,20 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/project/project.h"
+
 #include "folderbasedtest.h"
 #include "google_test.h"
 #include "test_utils.h"
+#include "mvvm/model/propertyitem.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/project/project_types.h"
+#include "mvvm/utils/fileutils.h"
 #include <cctype>
-#include <mvvm/model/propertyitem.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/project/project.h>
-#include <mvvm/project/project_types.h>
-#include <mvvm/utils/fileutils.h>
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 const std::string samplemodel_name = "SampleModel";
 const std::string materialmodel_name = "MaterialModel";
 
@@ -36,8 +36,7 @@ std::string get_json_filename(const std::string& model_name)
 
 //! Tests for Project class.
 
-class ProjectTest : public FolderBasedTest
-{
+class ProjectTest : public FolderBasedTest {
 public:
     ProjectTest()
         : FolderBasedTest("test_ProjectTest")
@@ -45,7 +44,6 @@ public:
         , material_model(std::make_unique<SessionModel>(materialmodel_name))
     {
     }
-    ~ProjectTest();
 
     std::vector<SessionModel*> models() const
     {
@@ -62,8 +60,6 @@ public:
     std::unique_ptr<SessionModel> sample_model;
     std::unique_ptr<SessionModel> material_model;
 };
-
-ProjectTest::~ProjectTest() = default;
 
 TEST_F(ProjectTest, initialState)
 {

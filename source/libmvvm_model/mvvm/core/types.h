@@ -12,8 +12,7 @@
 
 #include <string>
 
-namespace ModelView
-{
+namespace ModelView {
 
 using identifier_type = std::string;
 using model_type = std::string;

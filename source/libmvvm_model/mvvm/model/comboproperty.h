@@ -10,18 +10,16 @@
 #ifndef MVVM_MODEL_COMBOPROPERTY_H
 #define MVVM_MODEL_COMBOPROPERTY_H
 
-#include <mvvm/core/variant.h>
-#include <mvvm/model_export.h>
+#include "mvvm/core/variant.h"
+#include "mvvm/model_export.h"
 #include <string>
 #include <vector>
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! Custom property to define list of string values with multiple selections.
 
-class MVVM_MODEL_EXPORT ComboProperty
-{
+class MVVM_MODEL_EXPORT ComboProperty {
 public:
     ComboProperty();
 

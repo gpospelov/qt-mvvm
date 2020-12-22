@@ -7,35 +7,33 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/project/projectmanager.h"
+
 #include "folderbasedtest.h"
 #include "google_test.h"
 #include "test_utils.h"
+#include "mvvm/model/propertyitem.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/project/project_types.h"
+#include "mvvm/utils/fileutils.h"
 #include <cctype>
-#include <mvvm/model/propertyitem.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/project/project_types.h>
-#include <mvvm/project/projectmanager.h>
-#include <mvvm/utils/fileutils.h>
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 const std::string samplemodel_name = "samplemodel";
 
 } // namespace
 
 //! Tests for ProjectManager class.
 
-class ProjectManagerTest : public FolderBasedTest
-{
+class ProjectManagerTest : public FolderBasedTest {
 public:
     ProjectManagerTest()
         : FolderBasedTest("test_ProjectManager")
         , sample_model(std::make_unique<ModelView::SessionModel>(samplemodel_name))
     {
     }
-    ~ProjectManagerTest();
 
     std::vector<SessionModel*> models() const { return {sample_model.get()}; };
 
@@ -48,8 +46,6 @@ public:
 
     std::unique_ptr<SessionModel> sample_model;
 };
-
-ProjectManagerTest::~ProjectManagerTest() = default;
 
 //! Initial state of ProjectManager. Project created, and not-saved.
 

@@ -10,17 +10,15 @@
 #ifndef GRAPHICSPROXY_SCENEMODEL_H
 #define GRAPHICSPROXY_SCENEMODEL_H
 
-#include <mvvm/model/sessionmodel.h>
+#include "mvvm/model/sessionmodel.h"
 
-namespace ModelView
-{
+namespace ModelView {
 class ContainerItem;
 }
 
 //! Main application model with data for graphics scene.
 
-class SceneModel : public ModelView::SessionModel
-{
+class SceneModel : public ModelView::SessionModel {
 public:
     SceneModel();
 

@@ -13,12 +13,11 @@
 //! @file sceneitems.h
 //! Collection of items for graphics scene.
 
-#include <mvvm/model/compounditem.h>
+#include "mvvm/model/compounditem.h"
 
 //! Item to represent region of interest on top of heat map.
 
-class RegionOfInterestItem : public ModelView::CompoundItem
-{
+class RegionOfInterestItem : public ModelView::CompoundItem {
 public:
     static inline const std::string P_XLOW = "P_XLOW";
     static inline const std::string P_YLOW = "P_YLOW";

@@ -7,32 +7,27 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/commands/undostack.h"
+
 #include "google_test.h"
 #include "toyitems.h"
 #include "toymodel.h"
-#include "toyitems.h"
-#include <mvvm/commands/commandadapter.h>
-#include <mvvm/commands/setvaluecommand.h>
-#include <mvvm/commands/undostack.h>
-#include <mvvm/interfaces/undostackinterface.h>
-#include <mvvm/model/itemutils.h>
-#include <mvvm/model/propertyitem.h>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/model/taginfo.h>
-#include <mvvm/standarditems/axisitems.h>
-#include <mvvm/standarditems/data1ditem.h>
-#include <mvvm/standarditems/graphitem.h>
+#include "mvvm/commands/commandadapter.h"
+#include "mvvm/commands/setvaluecommand.h"
+#include "mvvm/interfaces/undostackinterface.h"
+#include "mvvm/model/itemutils.h"
+#include "mvvm/model/propertyitem.h"
+#include "mvvm/model/sessionitem.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/model/taginfo.h"
+#include "mvvm/standarditems/axisitems.h"
+#include "mvvm/standarditems/data1ditem.h"
+#include "mvvm/standarditems/graphitem.h"
 
 using namespace ModelView;
 
-class UndoStackTest : public ::testing::Test
-{
-public:
-    ~UndoStackTest();
+class UndoStackTest : public ::testing::Test {
 };
-
-UndoStackTest::~UndoStackTest() = default;
 
 //! Checking time of life of the command during undo/redo.
 //! This is connected with the fact, that Qt takes ownership of the command and we have to use

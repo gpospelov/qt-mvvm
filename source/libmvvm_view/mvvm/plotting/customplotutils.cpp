@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/plotting/customplotutils.h>
+#include "mvvm/plotting/customplotutils.h"
 #include <qcustomplot.h>
 
 void ModelView::Utils::SetLogarithmicScale(QCPColorScale* axis, bool is_log_scale)
@@ -29,7 +29,8 @@ void ModelView::Utils::SetLogarithmicScale(QCPAxis* axis, bool is_log_scale)
         axis->setScaleType(QCPAxis::stLogarithmic);
         QSharedPointer<QCPAxisTicker> ticker(new QCPAxisTickerLog);
         axis->setTicker(ticker);
-    } else {
+    }
+    else {
         axis->setNumberFormat("g");
         axis->setNumberPrecision(6);
         axis->setScaleType(QCPAxis::stLinear);

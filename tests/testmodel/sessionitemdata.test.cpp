@@ -7,23 +7,19 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/model/sessionitemdata.h"
+
 #include "google_test.h"
-#include <mvvm/model/comboproperty.h>
-#include <mvvm/model/mvvm_types.h>
-#include <mvvm/model/sessionitemdata.h>
+#include "mvvm/model/comboproperty.h"
+#include "mvvm/model/mvvm_types.h"
 #include <stdexcept>
 
 using namespace ModelView;
 
 //! Test of SessionItemData.
 
-class SessionItemDataTest : public ::testing::Test
-{
-public:
-    ~SessionItemDataTest();
+class SessionItemDataTest : public ::testing::Test {
 };
-
-SessionItemDataTest::~SessionItemDataTest() = default;
 
 //! Initial state of SessionItemData object.
 

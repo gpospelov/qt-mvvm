@@ -7,19 +7,15 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/model/externalproperty.h"
+
 #include "google_test.h"
-#include <mvvm/model/comparators.h>
-#include <mvvm/model/externalproperty.h>
+#include "mvvm/model/comparators.h"
 
 using namespace ModelView;
 
-class ExternalPropertyTest : public ::testing::Test
-{
-public:
-    ~ExternalPropertyTest();
+class ExternalPropertyTest : public ::testing::Test {
 };
-
-ExternalPropertyTest::~ExternalPropertyTest() = default;
 
 TEST_F(ExternalPropertyTest, initialState)
 {

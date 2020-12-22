@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/core/uniqueidgenerator.h"
 #include <QUuid>
-#include <mvvm/core/uniqueidgenerator.h>
 
 using namespace ModelView;
 

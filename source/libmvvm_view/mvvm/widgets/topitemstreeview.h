@@ -10,10 +10,9 @@
 #ifndef MVVM_WIDGETS_TOPITEMSTREEVIEW_H
 #define MVVM_WIDGETS_TOPITEMSTREEVIEW_H
 
-#include <mvvm/widgets/itemstreeview.h>
+#include "mvvm/widgets/itemstreeview.h"
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionModel;
 
@@ -23,8 +22,7 @@ class SessionModel;
 //! All property items (i.e. "thickness", "color" etc) will be filtered out, top level items
 //! (i.e. Layer, MultiLayer, ...) will be presented as simple parent/child tree.
 
-class MVVM_VIEW_EXPORT TopItemsTreeView : public ItemsTreeView
-{
+class MVVM_VIEW_EXPORT TopItemsTreeView : public ItemsTreeView {
     Q_OBJECT
 
 public:

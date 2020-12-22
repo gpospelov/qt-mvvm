@@ -10,19 +10,17 @@
 #ifndef MVVM_COMMANDS_INSERTNEWITEMCOMMAND_H
 #define MVVM_COMMANDS_INSERTNEWITEMCOMMAND_H
 
-#include <mvvm/commands/abstractitemcommand.h>
-#include <mvvm/model/function_types.h>
+#include "mvvm/commands/abstractitemcommand.h"
+#include "mvvm/model/function_types.h"
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionItem;
 class TagRow;
 
 //! Command for unddo/redo to insert new item.
 
-class MVVM_MODEL_EXPORT InsertNewItemCommand : public AbstractItemCommand
-{
+class MVVM_MODEL_EXPORT InsertNewItemCommand : public AbstractItemCommand {
 public:
     InsertNewItemCommand(item_factory_func_t func, SessionItem* parent, const TagRow& tagrow);
     ~InsertNewItemCommand() override;

@@ -10,15 +10,14 @@
 #ifndef MVVM_PLOTTING_COLORMAPPLOTCONTROLLER_H
 #define MVVM_PLOTTING_COLORMAPPLOTCONTROLLER_H
 
+#include "mvvm/signals/itemlistener.h"
+#include "mvvm/view_export.h"
 #include <memory>
-#include <mvvm/signals/itemlistener.h>
-#include <mvvm/view_export.h>
 
 class QCustomPlot;
 class QCPColorScale;
 
-namespace ModelView
-{
+namespace ModelView {
 
 class ColorMapItem;
 
@@ -27,8 +26,7 @@ class ColorMapItem;
 //! QCustomPlot plottables, when controller is created, and removed from plottables, when controller
 //! is destroyed.
 
-class MVVM_VIEW_EXPORT ColorMapPlotController : public ItemListener<ColorMapItem>
-{
+class MVVM_VIEW_EXPORT ColorMapPlotController : public ItemListener<ColorMapItem> {
 public:
     explicit ColorMapPlotController(QCustomPlot* plot, QCPColorScale* color_scale = nullptr);
     ~ColorMapPlotController() override;

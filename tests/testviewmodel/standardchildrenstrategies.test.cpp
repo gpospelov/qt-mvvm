@@ -7,26 +7,23 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/viewmodel/standardchildrenstrategies.h"
+
 #include "google_test.h"
 #include "toyitems.h"
 #include "toymodel.h"
-#include <mvvm/model/compounditem.h>
-#include <mvvm/model/propertyitem.h>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/model/taginfo.h>
-#include <mvvm/standarditems/vectoritem.h>
-#include <mvvm/viewmodel/standardchildrenstrategies.h>
+#include "mvvm/model/compounditem.h"
+#include "mvvm/model/propertyitem.h"
+#include "mvvm/model/sessionitem.h"
+#include "mvvm/model/taginfo.h"
+#include "mvvm/standarditems/vectoritem.h"
 
 using namespace ModelView;
 
-class StandardChildrenStrategiesTest : public ::testing::Test
-{
+class StandardChildrenStrategiesTest : public ::testing::Test {
 public:
-    ~StandardChildrenStrategiesTest();
-
     //! Helper class with two properties and one top level item on board.
-    class TestItem : public CompoundItem
-    {
+    class TestItem : public CompoundItem {
     public:
         TestItem() : CompoundItem("test")
         {
@@ -35,7 +32,6 @@ public:
             insertItem(new SessionItem, TagRow::append());
             addProperty("height", 12.0);
         }
-        ~TestItem();
     };
 
     struct ChildrenData {
@@ -55,9 +51,6 @@ public:
         return result;
     }
 };
-
-StandardChildrenStrategiesTest::~StandardChildrenStrategiesTest() = default;
-StandardChildrenStrategiesTest::TestItem::~TestItem() = default;
 
 //! Testing AllChildrenStrategy.
 

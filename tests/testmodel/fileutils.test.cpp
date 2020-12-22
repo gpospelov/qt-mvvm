@@ -7,24 +7,21 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/utils/fileutils.h"
+
 #include "folderbasedtest.h"
 #include "google_test.h"
 #include "test_utils.h"
 #include <QDir>
-#include <mvvm/utils/fileutils.h>
 #include <stdexcept>
 #include <string>
 
 using namespace ModelView;
 
-class FileUtilsTest : public FolderBasedTest
-{
+class FileUtilsTest : public FolderBasedTest {
 public:
     FileUtilsTest() : FolderBasedTest("test_FileUtils") {}
-    ~FileUtilsTest();
 };
-
-FileUtilsTest::~FileUtilsTest() = default;
 
 TEST_F(FileUtilsTest, exists)
 {

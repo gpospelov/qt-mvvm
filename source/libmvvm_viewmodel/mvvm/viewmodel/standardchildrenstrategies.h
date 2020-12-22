@@ -14,17 +14,15 @@
 //! @brief Collection of strategies to find children, actual of fictional, of given SessionItem.
 //! Used for ViewModel generation when underlying SessionModel changes its layout.
 
-#include <mvvm/interfaces/childrenstrategyinterface.h>
+#include "mvvm/interfaces/childrenstrategyinterface.h"
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionItem;
 
 //! Strategy to find children of given item: gives all actual children back.
 
-class MVVM_VIEWMODEL_EXPORT AllChildrenStrategy : public ChildrenStrategyInterface
-{
+class MVVM_VIEWMODEL_EXPORT AllChildrenStrategy : public ChildrenStrategyInterface {
 public:
     std::vector<SessionItem*> children(const SessionItem* item) const override;
 };
@@ -32,8 +30,7 @@ public:
 //! Strategy to find children of given item: only top level items will be given, all
 //! property items will be filtered out.
 
-class MVVM_VIEWMODEL_EXPORT TopItemsStrategy : public ChildrenStrategyInterface
-{
+class MVVM_VIEWMODEL_EXPORT TopItemsStrategy : public ChildrenStrategyInterface {
 public:
     std::vector<SessionItem*> children(const SessionItem* item) const override;
 };
@@ -42,8 +39,7 @@ public:
 //! will be filtered out, all inactive children of GroupItem will be filtered out. See example
 //! in code.
 
-class MVVM_VIEWMODEL_EXPORT PropertyItemsStrategy : public ChildrenStrategyInterface
-{
+class MVVM_VIEWMODEL_EXPORT PropertyItemsStrategy : public ChildrenStrategyInterface {
 public:
     std::vector<SessionItem*> children(const SessionItem* item) const override;
 };
@@ -52,8 +48,7 @@ public:
 //! Acts as PropertyItemStrategy, with the difference that active subproperties of
 //! GroupItem are moved to the same parent, as GroupItem itself. See example in code.
 
-class MVVM_VIEWMODEL_EXPORT PropertyItemsFlatStrategy : public ChildrenStrategyInterface
-{
+class MVVM_VIEWMODEL_EXPORT PropertyItemsFlatStrategy : public ChildrenStrategyInterface {
 public:
     std::vector<SessionItem*> children(const SessionItem* item) const override;
 };

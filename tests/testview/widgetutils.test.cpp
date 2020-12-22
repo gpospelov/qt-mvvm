@@ -7,23 +7,19 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/widgets/widgetutils.h"
+
 #include "google_test.h"
 #include "test_utils.h"
 #include <QDebug>
 #include <QDir>
-#include <mvvm/widgets/widgetutils.h>
 
 using namespace ModelView;
 
 //! Testing functions from utils.
 
-class WidgetUtilsTest : public ::testing::Test
-{
-public:
-    ~WidgetUtilsTest();
+class WidgetUtilsTest : public ::testing::Test {
 };
-
-WidgetUtilsTest::~WidgetUtilsTest() = default;
 
 //! Test of WithTildeHomePath function.
 
@@ -32,7 +28,8 @@ TEST_F(WidgetUtilsTest, WithTildeHomePath)
     if (ModelView::Utils::IsWindowsHost()) {
         auto test_dir = QString::fromStdString(TestUtils::TestOutputDir());
         EXPECT_EQ(Utils::WithTildeHomePath(test_dir), test_dir);
-    } else {
+    }
+    else {
         auto home_path = QDir::homePath();
         auto test_dir = QString::fromStdString(TestUtils::TestOutputDir());
         auto expected = test_dir.startsWith(home_path)

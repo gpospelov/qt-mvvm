@@ -13,8 +13,7 @@
 #include <QWidget>
 #include <memory>
 
-namespace ModelView
-{
+namespace ModelView {
 class SessionItem;
 class SessionModel;
 class AllItemsTreeView;
@@ -26,13 +25,11 @@ class QTreeView;
 class QUndoView;
 class QBoxLayout;
 
-namespace TreeViews
-{
+namespace TreeViews {
 
 //! Collection of tree editors.
 
-class SampleEditorWdiget : public QWidget
-{
+class SampleEditorWdiget : public QWidget {
     Q_OBJECT
 
 public:

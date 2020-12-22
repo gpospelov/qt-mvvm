@@ -7,21 +7,20 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/serialization/jsonvariantconverter.h"
+#include "mvvm/model/comboproperty.h"
+#include "mvvm/model/customvariants.h"
+#include "mvvm/model/externalproperty.h"
+#include "mvvm/model/variant_constants.h"
+#include "mvvm/serialization/jsonutils.h"
+#include "mvvm/utils/reallimits.h"
 #include <QJsonArray>
 #include <QJsonObject>
-#include <mvvm/model/comboproperty.h>
-#include <mvvm/model/customvariants.h>
-#include <mvvm/model/externalproperty.h>
-#include <mvvm/model/variant_constants.h>
-#include <mvvm/serialization/jsonutils.h>
-#include <mvvm/serialization/jsonvariantconverter.h>
-#include <mvvm/utils/reallimits.h>
 #include <stdexcept>
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 
 const QString variantTypeKey = "type";
 const QString variantValueKey = "value";
@@ -114,8 +113,7 @@ bool JsonVariantConverter::isVariant(const QJsonObject& object) const
     return object.keys() == expected;
 }
 
-namespace
-{
+namespace {
 
 QStringList expected_variant_keys()
 {

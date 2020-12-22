@@ -16,8 +16,7 @@ class GraphicsScene;
 
 //! Custom graphics view to show QCustomPlot with additional elements on top.
 
-class GraphicsView : public QGraphicsView
-{
+class GraphicsView : public QGraphicsView {
     Q_OBJECT
 
 public:

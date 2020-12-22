@@ -7,27 +7,23 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/plotting/data1dplotcontroller.h"
+
 #include "customplot_test_utils.h"
 #include "google_test.h"
-#include "qcustomplot.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/standarditems/axisitems.h"
+#include "mvvm/standarditems/data1ditem.h"
+#include <qcustomplot.h>
 #include <algorithm>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/plotting/data1dplotcontroller.h>
-#include <mvvm/standarditems/axisitems.h>
-#include <mvvm/standarditems/data1ditem.h>
 #include <stdexcept>
 
 using namespace ModelView;
 
 //! Testing Data1DPlotController.
 
-class Data1DPlotControllerTest : public ::testing::Test
-{
-public:
-    ~Data1DPlotControllerTest();
+class Data1DPlotControllerTest : public ::testing::Test {
 };
-
-Data1DPlotControllerTest::~Data1DPlotControllerTest() = default;
 
 //! Initial state.
 

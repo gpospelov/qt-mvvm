@@ -7,22 +7,18 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/utils/containerutils.h"
+
 #include "google_test.h"
+#include "mvvm/model/sessionitem.h"
 #include <complex>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/utils/containerutils.h>
 
 using namespace ModelView;
 
 //! Tests of container utils.
 
-class ContainerUtilsTest : public ::testing::Test
-{
-public:
-    ~ContainerUtilsTest();
+class ContainerUtilsTest : public ::testing::Test {
 };
-
-ContainerUtilsTest::~ContainerUtilsTest() = default;
 
 TEST_F(ContainerUtilsTest, isUniquePtr)
 {

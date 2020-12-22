@@ -73,8 +73,7 @@
 #include <experimental/filesystem>
 
 // We need the alias from std::experimental::filesystem to std::filesystem
-namespace std
-{
+namespace std {
 namespace filesystem = experimental::filesystem;
 }
 

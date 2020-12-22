@@ -8,12 +8,11 @@
 // ************************************************************************** //
 
 #include "sampleitems.h"
+#include "mvvm/model/comboproperty.h"
+#include "mvvm/model/externalproperty.h"
 #include <QColor>
-#include <mvvm/model/comboproperty.h>
-#include <mvvm/model/externalproperty.h>
 
-namespace
-{
+namespace {
 
 const std::string DemoItemType = "DemoItem";
 const std::string DemoContainerItemType = "DemoItemContainer";
@@ -22,8 +21,7 @@ const std::string DemoContainerItemType = "DemoItemContainer";
 
 using namespace ModelView;
 
-namespace DragAndView
-{
+namespace DragAndView {
 
 DemoItem::DemoItem() : CompoundItem(DemoItemType)
 {

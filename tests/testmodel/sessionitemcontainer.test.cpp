@@ -7,22 +7,18 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/model/sessionitemcontainer.h"
+
 #include "google_test.h"
 #include "test_utils.h"
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/model/sessionitemcontainer.h>
+#include "mvvm/model/sessionitem.h"
 
 using namespace ModelView;
 
 //! Tests for TestSessionItemContainer class.
 
-class SessionItemContainerTest : public ::testing::Test
-{
-public:
-    ~SessionItemContainerTest();
+class SessionItemContainerTest : public ::testing::Test {
 };
-
-SessionItemContainerTest::~SessionItemContainerTest() = default;
 
 //! Initial state of emty SessionItemTag.
 

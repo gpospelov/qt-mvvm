@@ -7,18 +7,17 @@
 //
 // ************************************************************************** //
 
+#include "layereditorcore/mainwindow.h"
+#include "layereditorcore/applicationmodels.h"
+#include "layereditorcore/samplewidget.h"
 #include <QAction>
 #include <QCoreApplication>
 #include <QFileDialog>
 #include <QMenuBar>
 #include <QSettings>
 #include <QTabWidget>
-#include <layereditorcore/applicationmodels.h>
-#include <layereditorcore/mainwindow.h>
-#include <layereditorcore/samplewidget.h>
 
-namespace
-{
+namespace {
 const QString main_window_group = "MainWindow";
 const QString size_key = "size";
 const QString pos_key = "pos";

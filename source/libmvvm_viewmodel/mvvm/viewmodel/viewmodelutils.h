@@ -10,25 +10,23 @@
 #ifndef MVVM_VIEWMODEL_VIEWMODELUTILS_H
 #define MVVM_VIEWMODEL_VIEWMODELUTILS_H
 
+#include "mvvm/viewmodel_export.h"
 #include <QModelIndex>
 #include <QModelIndexList>
 #include <QVector>
 #include <functional>
-#include <mvvm/viewmodel_export.h>
 #include <vector>
 
 class QStandardItemModel;
 class QStandardItem;
 class QVariant;
 
-namespace ModelView
-{
+namespace ModelView {
 
 class ViewItem;
 class SessionItem;
 
-namespace Utils
-{
+namespace Utils {
 
 //! Iterates through QAbstractItem model
 MVVM_VIEWMODEL_EXPORT void iterate_model(const QAbstractItemModel* model, const QModelIndex& parent,

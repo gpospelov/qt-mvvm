@@ -10,21 +10,19 @@
 #ifndef MVVM_COMMANDS_UNDOSTACK_H
 #define MVVM_COMMANDS_UNDOSTACK_H
 
+#include "mvvm/interfaces/undostackinterface.h"
+#include "mvvm/model_export.h"
 #include <memory>
-#include <mvvm/interfaces/undostackinterface.h>
-#include <mvvm/model_export.h>
 
 class QUndoStack;
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! Default undo stack implementation. Internally relies on QUndoStack.
 //! It serves two goals: a) hides Qt usage b) simplifies future refactoring toward Qt-independent
 //! libmvvm_model library.
 
-class MVVM_MODEL_EXPORT UndoStack : public UndoStackInterface
-{
+class MVVM_MODEL_EXPORT UndoStack : public UndoStackInterface {
 public:
     UndoStack();
     ~UndoStack() override;

@@ -7,14 +7,14 @@
 //
 // ************************************************************************** //
 
-#include "qcustomplot.h"
-#include <mvvm/model/comboproperty.h>
-#include <mvvm/plotting/data1dplotcontroller.h>
-#include <mvvm/plotting/graphplotcontroller.h>
-#include <mvvm/plotting/pencontroller.h>
-#include <mvvm/standarditems/data1ditem.h>
-#include <mvvm/standarditems/graphitem.h>
-#include <mvvm/standarditems/plottableitems.h>
+#include "mvvm/plotting/graphplotcontroller.h"
+#include "mvvm/model/comboproperty.h"
+#include "mvvm/plotting/data1dplotcontroller.h"
+#include "mvvm/plotting/pencontroller.h"
+#include "mvvm/standarditems/data1ditem.h"
+#include "mvvm/standarditems/graphitem.h"
+#include "mvvm/standarditems/plottableitems.h"
+#include <qcustomplot.h>
 
 using namespace ModelView;
 
@@ -55,10 +55,7 @@ struct GraphPlotController::GraphItemControllerImpl {
 
     //! Updates graph pen from GraphItem.
 
-    void update_graph_pen()
-    {
-        m_penController->setItem(graph_item()->penItem());
-    }
+    void update_graph_pen() { m_penController->setItem(graph_item()->penItem()); }
 
     //! Update visible
     void update_visible()

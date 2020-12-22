@@ -4,7 +4,7 @@ AllowAllConstructorInitializersOnNextLine: true
 AllowShortFunctionsOnASingleLine: Inline
 AllowShortIfStatementsOnASingleLine: false
 BreakBeforeBinaryOperators: NonAssignment
-BreakBeforeBraces: Linux
+BreakBeforeBraces: Stroustrup
 BreakConstructorInitializers : BeforeComma
 ColumnLimit: 100
 ConstructorInitializerAllOnOneLineOrOnePerLine: true
@@ -12,3 +12,19 @@ IndentCaseLabels: false
 IndentWidth: 4
 PointerAlignment: Left
 UseTab: Never
+IncludeCategories:
+  # Headers in <> without extension.
+  - Regex:           '<([A-Za-z0-9\Q/-_\E])+>'
+    Priority:        5
+  # Headers in <> from specific external libraries.
+  - Regex:           '<(catch2|boost)\/'
+    Priority:        4
+  # Headers in <> with extension.
+  - Regex:           '<([A-Za-z0-9.\Q/-_\E])+>'
+    Priority:        3
+  # Headers in "" from specific internal libraries.
+  - Regex:           '"(mvvm)\/'
+    Priority:        2
+  # Headers in "" with extension.
+  - Regex:           '"([A-Za-z0-9.\Q/-_\E])+"'
+    Priority:        1

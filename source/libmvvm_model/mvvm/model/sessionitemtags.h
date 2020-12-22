@@ -10,13 +10,12 @@
 #ifndef MVVM_MODEL_SESSIONITEMTAGS_H
 #define MVVM_MODEL_SESSIONITEMTAGS_H
 
-#include <mvvm/model/tagrow.h>
-#include <mvvm/model_export.h>
+#include "mvvm/model/tagrow.h"
+#include "mvvm/model_export.h"
 #include <string>
 #include <vector>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionItemContainer;
 class TagInfo;
@@ -24,8 +23,7 @@ class SessionItem;
 
 //! Collection of SessionItem's containers according to their tags.
 
-class MVVM_MODEL_EXPORT SessionItemTags
-{
+class MVVM_MODEL_EXPORT SessionItemTags {
 public:
     using container_t = std::vector<SessionItemContainer*>;
     using const_iterator = container_t::const_iterator;

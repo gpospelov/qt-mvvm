@@ -7,24 +7,20 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/plotting/axistitlecontroller.h"
+
 #include "google_test.h"
-#include "qcustomplot.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/standarditems/plottableitems.h"
+#include <qcustomplot.h>
 #include <QFont>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/plotting/axistitlecontroller.h>
-#include <mvvm/standarditems/plottableitems.h>
 
 using namespace ModelView;
 
 //! Testing AxisTitleControllers.
 
-class AxisTitleControllerTest : public ::testing::Test
-{
-public:
-    ~AxisTitleControllerTest();
+class AxisTitleControllerTest : public ::testing::Test {
 };
-
-AxisTitleControllerTest::~AxisTitleControllerTest() = default;
 
 //! Initial state.
 

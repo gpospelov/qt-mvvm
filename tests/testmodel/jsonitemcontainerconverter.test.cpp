@@ -7,20 +7,21 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/serialization/jsonitemcontainerconverter.h"
+
 #include "folderbasedtest.h"
 #include "google_test.h"
 #include "test_utils.h"
+#include "mvvm/model/mvvm_types.h"
+#include "mvvm/model/propertyitem.h"
+#include "mvvm/model/sessionitemcontainer.h"
+#include "mvvm/model/sessionitemdata.h"
+#include "mvvm/serialization/jsonitem_types.h"
+#include "mvvm/serialization/jsonitemdataconverter.h"
+#include "mvvm/serialization/jsonitemformatassistant.h"
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
-#include <mvvm/model/mvvm_types.h>
-#include <mvvm/model/propertyitem.h>
-#include <mvvm/model/sessionitemcontainer.h>
-#include <mvvm/model/sessionitemdata.h>
-#include <mvvm/serialization/jsonitem_types.h>
-#include <mvvm/serialization/jsonitemcontainerconverter.h>
-#include <mvvm/serialization/jsonitemdataconverter.h>
-#include <mvvm/serialization/jsonitemformatassistant.h>
 
 using namespace ModelView;
 
@@ -28,8 +29,7 @@ using namespace ModelView;
 //! to json and back. Full testing is not possible since JsonItemContainerConverter
 //! requires machinery provided by JsonItemConverter. Simplifed item/json creation is used.
 
-class JsonItemContainerConverterTest : public FolderBasedTest
-{
+class JsonItemContainerConverterTest : public FolderBasedTest {
 public:
     JsonItemContainerConverterTest()
         : FolderBasedTest("test_JsonItemContainerConverterTest")
@@ -67,12 +67,8 @@ public:
         return std::make_unique<JsonItemContainerConverter>(callbacks);
     }
 
-    ~JsonItemContainerConverterTest();
-
     std::unique_ptr<JsonItemDataConverter> m_itemdata_converter;
 };
-
-JsonItemContainerConverterTest::~JsonItemContainerConverterTest() = default;
 
 //! SessionItemContainer (with single property item) to json object.
 

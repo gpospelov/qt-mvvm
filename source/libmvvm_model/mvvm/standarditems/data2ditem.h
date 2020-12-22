@@ -10,11 +10,10 @@
 #ifndef MVVM_STANDARDITEMS_DATA2DITEM_H
 #define MVVM_STANDARDITEMS_DATA2DITEM_H
 
-#include <mvvm/model/compounditem.h>
+#include "mvvm/model/compounditem.h"
 #include <vector>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class BinnedAxisItem;
 
@@ -22,8 +21,7 @@ class BinnedAxisItem;
 //! Values are stored in Data2DItem itself, axes are attached as children. Corresponding plot
 //! properties will be served by ColorMapItem.
 
-class MVVM_MODEL_EXPORT Data2DItem : public CompoundItem
-{
+class MVVM_MODEL_EXPORT Data2DItem : public CompoundItem {
 public:
     static inline const std::string T_XAXIS = "T_XAXIS";
     static inline const std::string T_YAXIS = "T_YAXIS";

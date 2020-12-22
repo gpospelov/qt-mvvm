@@ -7,28 +7,24 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/plotting/colormapplotcontroller.h"
+
 #include "customplot_test_utils.h"
 #include "google_test.h"
-#include "qcustomplot.h"
+#include "mvvm/model/comboproperty.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/standarditems/axisitems.h"
+#include "mvvm/standarditems/colormapitem.h"
+#include "mvvm/standarditems/data2ditem.h"
+#include <qcustomplot.h>
 #include <QSignalSpy>
-#include <mvvm/model/comboproperty.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/plotting/colormapplotcontroller.h>
-#include <mvvm/standarditems/axisitems.h>
-#include <mvvm/standarditems/colormapitem.h>
-#include <mvvm/standarditems/data2ditem.h>
 
 using namespace ModelView;
 
 //! Testing ColorMapPlotController.
 
-class ColorMapPlotControllerTest : public ::testing::Test
-{
-public:
-    ~ColorMapPlotControllerTest();
+class ColorMapPlotControllerTest : public ::testing::Test {
 };
-
-ColorMapPlotControllerTest::~ColorMapPlotControllerTest() = default;
 
 //! Initial state.
 
@@ -53,7 +49,8 @@ TEST_F(ColorMapPlotControllerTest, setItem)
     // creating data item
     SessionModel model;
     auto data_item = model.insertItem<Data2DItem>();
-    const int nx = 3, ny = 2;
+    const int nx = 3;
+    const int ny = 2;
     data_item->setAxes(FixedBinAxisItem::create(nx, 0.0, 3.0),
                        FixedBinAxisItem::create(ny, 0.0, 2.0));
     std::vector<double> expected = {1.0, 2.0, 3.0, 4.0, 5.0, 6.0};

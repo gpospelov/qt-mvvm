@@ -7,14 +7,14 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/utils/fileutils.h"
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
-#include <mvvm/utils/fileutils.h>
 #include <stdexcept>
 
 #ifdef ENABLE_FILESYSTEM
-#include <mvvm/core/filesystem.h>
+#include "mvvm/core/filesystem.h"
 #endif
 
 using namespace ModelView;
@@ -122,7 +122,8 @@ bool Utils::is_empty(const std::string& path)
     if (info.isDir()) {
         QDir dir(QString::fromStdString(path));
         return dir.isEmpty();
-    } else {
+    }
+    else {
         return info.size() == 0;
     }
     return false;

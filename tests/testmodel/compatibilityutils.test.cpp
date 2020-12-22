@@ -7,25 +7,21 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/serialization/compatibilityutils.h"
+
 #include "google_test.h"
-#include <mvvm/model/mvvm_types.h>
-#include <mvvm/model/propertyitem.h>
-#include <mvvm/model/sessionitemcontainer.h>
-#include <mvvm/model/sessionitemdata.h>
-#include <mvvm/model/groupitem.h>
-#include <mvvm/serialization/compatibilityutils.h>
+#include "mvvm/model/groupitem.h"
+#include "mvvm/model/mvvm_types.h"
+#include "mvvm/model/propertyitem.h"
+#include "mvvm/model/sessionitemcontainer.h"
+#include "mvvm/model/sessionitemdata.h"
 
 using namespace ModelView;
 
 //! Test of CompatibilityUtilsTest.
 
-class CompatibilityUtilsTest : public ::testing::Test
-{
-public:
-    ~CompatibilityUtilsTest();
+class CompatibilityUtilsTest : public ::testing::Test {
 };
-
-CompatibilityUtilsTest::~CompatibilityUtilsTest() = default;
 
 //! Testing IsCompatibleSingleProperty.
 

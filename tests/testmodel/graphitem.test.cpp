@@ -7,28 +7,24 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/standarditems/graphitem.h"
+
 #include "google_test.h"
 #include "mockwidgets.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/standarditems/axisitems.h"
+#include "mvvm/standarditems/data1ditem.h"
+#include "mvvm/standarditems/linkeditem.h"
+#include "mvvm/standarditems/plottableitems.h"
 #include <QColor>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/standarditems/axisitems.h>
-#include <mvvm/standarditems/data1ditem.h>
-#include <mvvm/standarditems/graphitem.h>
-#include <mvvm/standarditems/linkeditem.h>
-#include <mvvm/standarditems/plottableitems.h>
 
 using namespace ModelView;
 using ::testing::_;
 
 //! Testing GraphItem.
 
-class GraphItemTest : public ::testing::Test
-{
-public:
-    ~GraphItemTest();
+class GraphItemTest : public ::testing::Test {
 };
-
-GraphItemTest::~GraphItemTest() = default;
 
 //! Initial state.
 

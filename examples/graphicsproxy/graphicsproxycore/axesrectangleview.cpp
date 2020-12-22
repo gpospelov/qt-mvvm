@@ -8,7 +8,7 @@
 // ************************************************************************** //
 
 #include "axesrectangleview.h"
-#include <mvvm/plotting/sceneadapterinterface.h>
+#include "mvvm/plotting/sceneadapterinterface.h"
 
 AxesRectangleView::AxesRectangleView(const ModelView::SceneAdapterInterface* scene_adapter)
     : scene_adapter(scene_adapter)

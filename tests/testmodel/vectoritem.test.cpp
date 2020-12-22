@@ -7,22 +7,18 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/standarditems/vectoritem.h"
+
 #include "google_test.h"
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/standarditems/vectoritem.h>
-#include <mvvm/model/itemutils.h>
+#include "mvvm/model/itemutils.h"
+#include "mvvm/model/sessionmodel.h"
 
 using namespace ModelView;
 
 //! VectorItem tests.
 
-class VectorItemTest : public ::testing::Test
-{
-public:
-    ~VectorItemTest();
+class VectorItemTest : public ::testing::Test {
 };
-
-VectorItemTest::~VectorItemTest() = default;
 
 //! Initial state of item when it is created outside of model context.
 

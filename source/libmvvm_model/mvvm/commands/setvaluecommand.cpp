@@ -7,15 +7,14 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/commands/setvaluecommand.h>
-#include <mvvm/core/variant.h>
-#include <mvvm/model/path.h>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/model/modelutils.h>
+#include "mvvm/commands/setvaluecommand.h"
+#include "mvvm/core/variant.h"
+#include "mvvm/model/modelutils.h"
+#include "mvvm/model/path.h"
+#include "mvvm/model/sessionitem.h"
 #include <sstream>
 
-namespace
-{
+namespace {
 std::string generate_description(const std::string& str, int role);
 } // namespace
 
@@ -62,8 +61,7 @@ void SetValueCommand::swap_values()
     p_impl->m_value = old;
 }
 
-namespace
-{
+namespace {
 std::string generate_description(const std::string& str, int role)
 {
     std::ostringstream ostr;

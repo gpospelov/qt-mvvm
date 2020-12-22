@@ -12,9 +12,9 @@
 #include "graphpropertywidget.h"
 #include "graphwidgettoolbar.h"
 #include "jobmanager.h"
+#include "mvvm/plotting/graphcanvas.h"
+#include "mvvm/standarditems/graphviewportitem.h"
 #include <QBoxLayout>
-#include <mvvm/plotting/graphcanvas.h>
-#include <mvvm/standarditems/graphviewportitem.h>
 
 using namespace ModelView;
 

@@ -7,20 +7,16 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/utils/stringutils.h"
+
 #include "google_test.h"
 #include "test_utils.h"
-#include <mvvm/utils/stringutils.h>
 
 using namespace ModelView;
 using namespace TestUtils;
 
-class StringUtilsTest : public ::testing::Test
-{
-public:
-    ~StringUtilsTest();
+class StringUtilsTest : public ::testing::Test {
 };
-
-StringUtilsTest::~StringUtilsTest() = default;
 
 TEST_F(StringUtilsTest, ScientificDoubleToString)
 {

@@ -14,8 +14,7 @@
 
 //! Collection of toy items and models for testing purposes.
 
-namespace Constants
-{
+namespace Constants {
 
 const std::string DemoPropertiesType = "DemoProperties";
 

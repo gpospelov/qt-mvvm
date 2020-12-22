@@ -10,17 +10,15 @@
 #ifndef MVVM_MODEL_TAGINFO_H
 #define MVVM_MODEL_TAGINFO_H
 
-#include <mvvm/model_export.h>
+#include "mvvm/model_export.h"
 #include <string>
 #include <vector>
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! Holds info about single tag for SessionItem.
 
-class MVVM_MODEL_EXPORT TagInfo
-{
+class MVVM_MODEL_EXPORT TagInfo {
 public:
     TagInfo();
 

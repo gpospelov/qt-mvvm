@@ -11,21 +11,16 @@
 #include "toyitems.h"
 #include "toymodel.h"
 #include <QJsonObject>
-#include <mvvm/model/modelutils.h>
-#include <mvvm/serialization/jsonmodelconverter.h>
+#include "mvvm/model/modelutils.h"
+#include "mvvm/serialization/jsonmodelconverter.h"
 
 using namespace ModelView;
 using namespace ToyItems;
 
 //! Testing serialization of ToyItems using json converters.
 
-class ToyItemsSerializationTest : public ::testing::Test
-{
-public:
-    ~ToyItemsSerializationTest();
+class ToyItemsSerializationTest : public ::testing::Test {
 };
-
-ToyItemsSerializationTest::~ToyItemsSerializationTest() = default;
 
 //! Checking ShapeGroupItem in a model.
 //! Serialization/deserelization should give an item identical to original.

@@ -10,14 +10,13 @@
 #ifndef CUSTOMPLOT_TEST_UTILS_H
 #define CUSTOMPLOT_TEST_UTILS_H
 
-#include <algorithm>
 #include <qcustomplot.h>
+#include <algorithm>
 #include <vector>
 
 //! Various common utils for unit tests.
 
-namespace TestUtils
-{
+namespace TestUtils {
 
 //! Returns vector representing bin centers/values on QCPGraph.
 

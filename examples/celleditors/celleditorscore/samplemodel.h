@@ -10,17 +10,15 @@
 #ifndef SAMPLEMODEL_H
 #define SAMPLEMODEL_H
 
-#include <mvvm/model/compounditem.h>
-#include <mvvm/model/sessionmodel.h>
+#include "mvvm/model/compounditem.h"
+#include "mvvm/model/sessionmodel.h"
 #include <string>
 
-namespace CellEditors
-{
+namespace CellEditors {
 
 //! Demo item demonstrating supported properties.
 
-class DemoPropertiesItem : public ModelView::CompoundItem
-{
+class DemoPropertiesItem : public ModelView::CompoundItem {
 public:
     static inline const std::string P_BOOL_PROPERTY = "P_BOOL_PROPERTY";
     static inline const std::string P_INTEGER_PROPERTY = "P_INTEGER_PROPERTY";
@@ -36,8 +34,7 @@ public:
 
 //! Main application model.
 
-class SampleModel : public ModelView::SessionModel
-{
+class SampleModel : public ModelView::SessionModel {
 public:
     SampleModel();
 };

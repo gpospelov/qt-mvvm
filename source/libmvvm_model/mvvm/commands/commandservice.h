@@ -10,17 +10,16 @@
 #ifndef MVVM_COMMANDS_COMMANDSERVICE_H
 #define MVVM_COMMANDS_COMMANDSERVICE_H
 
+#include "mvvm/commands/commandresult.h"
+#include "mvvm/commands/undostack.h"
+#include "mvvm/core/variant.h"
+#include "mvvm/model/function_types.h"
+#include "mvvm/model_export.h"
 #include <memory>
-#include <mvvm/commands/commandresult.h>
-#include <mvvm/commands/undostack.h>
-#include <mvvm/core/variant.h>
-#include <mvvm/model/function_types.h>
-#include <mvvm/model_export.h>
 
 class QUndoCommand;
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionModel;
 class SessionItem;
@@ -28,8 +27,7 @@ class TagRow;
 
 //! Provides undo/redo for all commands of SessionModel.
 
-class MVVM_MODEL_EXPORT CommandService
-{
+class MVVM_MODEL_EXPORT CommandService {
 public:
     CommandService(SessionModel* model);
 
@@ -70,7 +68,8 @@ CommandResult CommandService::process_command(Args&&... args)
         auto command = std::make_shared<C>(std::forward<Args>(args)...);
         m_commands->execute(command);
         return command->result();
-    } else {
+    }
+    else {
         C command(std::forward<Args>(args)...);
         command.execute();
         return command.result();

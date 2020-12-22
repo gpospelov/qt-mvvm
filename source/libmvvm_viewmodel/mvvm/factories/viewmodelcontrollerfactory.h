@@ -10,19 +10,17 @@
 #ifndef MVVM_FACTORIES_VIEWMODELCONTROLLERFACTORY_H
 #define MVVM_FACTORIES_VIEWMODELCONTROLLERFACTORY_H
 
+#include "mvvm/factories/viewmodelcontrollerbuilder.h"
+#include "mvvm/viewmodel_export.h"
 #include <memory>
-#include <mvvm/factories/viewmodelcontrollerbuilder.h>
-#include <mvvm/viewmodel_export.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionModel;
 class ViewModelBase;
 class ViewModelController;
 
-namespace Factory
-{
+namespace Factory {
 
 //! Create universal controller.
 

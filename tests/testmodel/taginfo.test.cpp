@@ -7,20 +7,16 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/model/taginfo.h"
+
 #include "google_test.h"
-#include <mvvm/model/taginfo.h>
 
 using namespace ModelView;
 
 //! Tests of TagInfo class.
 
-class TagInfoTest : public ::testing::Test
-{
-public:
-    ~TagInfoTest();
+class TagInfoTest : public ::testing::Test {
 };
-
-TagInfoTest::~TagInfoTest() = default;
 
 TEST_F(TagInfoTest, initialState)
 {

@@ -7,23 +7,19 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/model/itempool.h"
+
 #include "google_test.h"
+#include "mvvm/model/sessionitem.h"
 #include <memory>
-#include <mvvm/model/itempool.h>
-#include <mvvm/model/sessionitem.h>
 #include <stdexcept>
 
 using namespace ModelView;
 
 //! Tests of ItemPool and its abilities to register/deregister SessionItem.
 
-class ItemPoolTest : public ::testing::Test
-{
-public:
-    ~ItemPoolTest();
+class ItemPoolTest : public ::testing::Test {
 };
-
-ItemPoolTest::~ItemPoolTest() = default;
 
 TEST_F(ItemPoolTest, initialState)
 {

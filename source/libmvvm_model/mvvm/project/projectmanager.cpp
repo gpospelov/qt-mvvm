@@ -7,15 +7,14 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/interfaces/projectinterface.h>
-#include <mvvm/project/project_types.h>
-#include <mvvm/project/projectmanager.h>
-#include <mvvm/project/projectutils.h>
+#include "mvvm/project/projectmanager.h"
+#include "mvvm/interfaces/projectinterface.h"
+#include "mvvm/project/project_types.h"
+#include "mvvm/project/projectutils.h"
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 const bool succeeded = true;
 const bool failed = false;
 } // namespace

@@ -7,22 +7,18 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/standarditems/containeritem.h"
+
 #include "google_test.h"
 #include "test_utils.h"
 #include <memory>
-#include <mvvm/standarditems/containeritem.h>
 
 using namespace ModelView;
 
 //! Test of ContainerItem.
 
-class ContainerItemTest : public ::testing::Test
-{
-public:
-    ~ContainerItemTest();
+class ContainerItemTest : public ::testing::Test {
 };
-
-ContainerItemTest::~ContainerItemTest() = default;
 
 TEST_F(ContainerItemTest, initialState)
 {

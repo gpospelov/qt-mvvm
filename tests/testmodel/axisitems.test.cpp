@@ -7,20 +7,16 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/standarditems/axisitems.h"
+
 #include "google_test.h"
-#include <mvvm/standarditems/axisitems.h>
 
 using namespace ModelView;
 
 //! Testing AxisItems.
 
-class AxisItemsTest : public ::testing::Test
-{
-public:
-    ~AxisItemsTest();
+class AxisItemsTest : public ::testing::Test {
 };
-
-AxisItemsTest::~AxisItemsTest() = default;
 
 //! Initial state
 

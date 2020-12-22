@@ -10,18 +10,16 @@
 #ifndef MVVM_SERIALIZATION_JSONITEMCONVERTER_H
 #define MVVM_SERIALIZATION_JSONITEMCONVERTER_H
 
-#include <mvvm/serialization/jsonitemconverterinterface.h>
+#include "mvvm/serialization/jsonitemconverterinterface.h"
 
-namespace ModelView
-{
+namespace ModelView {
 
 class ItemFactoryInterface;
 struct ConverterContext;
 
 //! Converter between SessionItem and JSON object.
 
-class MVVM_MODEL_EXPORT JsonItemConverter : public JsonItemConverterInterface
-{
+class MVVM_MODEL_EXPORT JsonItemConverter : public JsonItemConverterInterface {
 public:
     JsonItemConverter(const ConverterContext& context);
     JsonItemConverter(const JsonItemConverter&) = delete;

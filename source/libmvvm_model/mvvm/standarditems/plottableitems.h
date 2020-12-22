@@ -13,15 +13,13 @@
 //! @file plottableitems.h
 //! Collection of items to plot in QCustomPlot context.
 
-#include <mvvm/model/compounditem.h>
+#include "mvvm/model/compounditem.h"
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! Represent text item on plot.
 
-class MVVM_MODEL_EXPORT TextItem : public CompoundItem
-{
+class MVVM_MODEL_EXPORT TextItem : public CompoundItem {
 public:
     static inline const std::string P_TEXT = "P_TEXT";
     static inline const std::string P_FONT = "P_FONT";
@@ -32,8 +30,7 @@ public:
 
 //! Represents basics settings of QPen.
 
-class MVVM_MODEL_EXPORT PenItem : public CompoundItem
-{
+class MVVM_MODEL_EXPORT PenItem : public CompoundItem {
 public:
     static inline const std::string P_COLOR = "P_COLOR";
     static inline const std::string P_STYLE = "P_STYLE";

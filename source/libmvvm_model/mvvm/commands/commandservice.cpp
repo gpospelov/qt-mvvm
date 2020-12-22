@@ -7,14 +7,14 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/commands/commandservice.h>
-#include <mvvm/commands/copyitemcommand.h>
-#include <mvvm/commands/insertnewitemcommand.h>
-#include <mvvm/commands/moveitemcommand.h>
-#include <mvvm/commands/removeitemcommand.h>
-#include <mvvm/commands/setvaluecommand.h>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/model/sessionmodel.h>
+#include "mvvm/commands/commandservice.h"
+#include "mvvm/commands/copyitemcommand.h"
+#include "mvvm/commands/insertnewitemcommand.h"
+#include "mvvm/commands/moveitemcommand.h"
+#include "mvvm/commands/removeitemcommand.h"
+#include "mvvm/commands/setvaluecommand.h"
+#include "mvvm/model/sessionitem.h"
+#include "mvvm/model/sessionmodel.h"
 #include <stdexcept>
 
 using namespace ModelView;

@@ -14,8 +14,7 @@
 #include <memory>
 #include <vector>
 
-namespace ModelView
-{
+namespace ModelView {
 class SceneAdapterInterface;
 }
 
@@ -26,8 +25,7 @@ class SizeHandleElement;
 //! Graphics object to represent RegionOfInterestItem on graphics scene.
 //! Follows standard QGraphicsScene notations: (x,y) origin is top left corner.
 
-class RegionOfInterestView : public QGraphicsItem
-{
+class RegionOfInterestView : public QGraphicsItem {
 public:
     RegionOfInterestView(RegionOfInterestItem* item,
                          const ModelView::SceneAdapterInterface* scene_adapter);

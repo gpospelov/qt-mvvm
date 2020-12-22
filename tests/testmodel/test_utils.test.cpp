@@ -7,20 +7,16 @@
 //
 // ************************************************************************** //
 
-#include "google_test.h"
 #include "test_utils.h"
+
+#include "google_test.h"
 
 using TestUtils::toVector;
 
 //! Testing functions in test_utils.
 
-class TestUtilsTest : public ::testing::Test
-{
-public:
-    ~TestUtilsTest();
+class TestUtilsTest : public ::testing::Test {
 };
-
-TestUtilsTest::~TestUtilsTest() = default;
 
 //! Testing toVector function.
 

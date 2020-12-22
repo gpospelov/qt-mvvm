@@ -7,23 +7,21 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/signals/itemlistener.h"
+
 #include "google_test.h"
+#include "mvvm/model/propertyitem.h"
+#include "mvvm/model/sessionmodel.h"
 #include <memory>
-#include <mvvm/model/propertyitem.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/signals/itemlistener.h>
 
 using namespace ModelView;
 
 //! Testing ItemListener.
 
-class ItemListenerTest : public ::testing::Test
-{
+class ItemListenerTest : public ::testing::Test {
 public:
-    class TestController : public ItemListener<PropertyItem>
-    {
+    class TestController : public ItemListener<PropertyItem> {
     public:
-        ~TestController();
         size_t ondata_change_call_count{0};
         size_t on_unsubscribe_call_count{0};
         void subscribe()
@@ -34,12 +32,7 @@ public:
 
         void unsubscribe() { on_unsubscribe_call_count++; }
     };
-
-    ~ItemListenerTest();
 };
-
-ItemListenerTest::~ItemListenerTest() = default;
-ItemListenerTest::TestController::~TestController() = default;
 
 //! Initial state.
 

@@ -10,21 +10,17 @@
 #ifndef MVVM_UTILS_CONTAINERUTILS_H
 #define MVVM_UTILS_CONTAINERUTILS_H
 
+#include "mvvm/model_export.h"
 #include <algorithm>
 #include <complex>
 #include <iterator>
 #include <memory>
-#include <mvvm/model_export.h>
 #include <string>
 #include <type_traits>
 #include <unordered_set>
 #include <vector>
 
-namespace ModelView
-{
-
-namespace Utils
-{
+namespace ModelView::Utils {
 
 template <class T> struct is_unique_ptr : std::false_type {
 };
@@ -54,7 +50,7 @@ template <typename C, typename T> int IndexOfItem(const C& container, const T& i
     return IndexOfItem(container.begin(), container.end(), item);
 }
 
-//! Returns vector containing results of elemntwise unary function application.
+//! Returns vector containing results of elementwise unary function application.
 
 template <typename It, typename UnaryFunction>
 std::vector<double> Apply(It begin, It end, UnaryFunction func)
@@ -102,8 +98,6 @@ template <typename A, typename B> bool Contains(const A& container, const B& ele
     return std::find(container.begin(), container.end(), element) != container.end();
 }
 
-} // namespace Utils
-
-} // namespace ModelView
+} // namespace ModelView::Utils
 
 #endif // MVVM_UTILS_CONTAINERUTILS_H

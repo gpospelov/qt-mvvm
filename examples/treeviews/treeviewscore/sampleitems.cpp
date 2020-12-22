@@ -9,16 +9,15 @@
 
 #include "sampleitems.h"
 #include "item_constants.h"
+#include "mvvm/model/comboproperty.h"
+#include "mvvm/model/taginfo.h"
+#include "mvvm/signals/itemmapper.h"
+#include "mvvm/standarditems/vectoritem.h"
 #include <QColor>
-#include <mvvm/model/comboproperty.h>
-#include <mvvm/model/taginfo.h>
-#include <mvvm/signals/itemmapper.h>
-#include <mvvm/standarditems/vectoritem.h>
 
 using namespace ModelView;
 
-namespace TreeViews
-{
+namespace TreeViews {
 
 MultiLayer::MultiLayer() : CompoundItem(::Constants::MultiLayerItemType)
 {

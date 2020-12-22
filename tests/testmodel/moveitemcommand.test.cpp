@@ -7,22 +7,18 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/commands/moveitemcommand.h"
+
 #include "google_test.h"
-#include <mvvm/commands/moveitemcommand.h>
-#include <mvvm/model/itemutils.h>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/model/taginfo.h>
+#include "mvvm/model/itemutils.h"
+#include "mvvm/model/sessionitem.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/model/taginfo.h"
 
 using namespace ModelView;
 
-class MoveItemCommandTest : public ::testing::Test
-{
-public:
-    ~MoveItemCommandTest();
+class MoveItemCommandTest : public ::testing::Test {
 };
-
-MoveItemCommandTest::~MoveItemCommandTest() = default;
 
 TEST_F(MoveItemCommandTest, rootContextNext)
 {

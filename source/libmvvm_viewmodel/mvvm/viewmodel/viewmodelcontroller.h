@@ -10,17 +10,16 @@
 #ifndef MVVM_VIEWMODEL_REFVIEWMODELCONTROLLER_H
 #define MVVM_VIEWMODEL_REFVIEWMODELCONTROLLER_H
 
+#include "mvvm/model/tagrow.h"
+#include "mvvm/signals/modellistener.h"
+#include "mvvm/viewmodel_export.h"
 #include <QStringList>
 #include <memory>
-#include <mvvm/model/tagrow.h>
-#include <mvvm/signals/modellistener.h>
-#include <mvvm/viewmodel_export.h>
 #include <vector>
 
 class QStandardItem;
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionModel;
 class SessionItem;
@@ -31,8 +30,7 @@ class RowStrategyInterface;
 
 //! Propagates changes from SessionModel to its ViewModelBase.
 
-class MVVM_VIEWMODEL_EXPORT ViewModelController : public ModelListener<SessionModel>
-{
+class MVVM_VIEWMODEL_EXPORT ViewModelController : public ModelListener<SessionModel> {
 public:
     ViewModelController(SessionModel* session_model, ViewModelBase* view_model = nullptr);
     ~ViewModelController();

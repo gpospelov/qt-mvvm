@@ -7,20 +7,16 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/model/comboproperty.h"
+
 #include "google_test.h"
-#include <mvvm/model/comboproperty.h>
-#include <mvvm/model/comparators.h>
+#include "mvvm/model/comparators.h"
 #include <stdexcept>
 
 using namespace ModelView;
 
-class ComboPropertyTest : public ::testing::Test
-{
-public:
-    ~ComboPropertyTest();
+class ComboPropertyTest : public ::testing::Test {
 };
-
-ComboPropertyTest::~ComboPropertyTest() = default;
 
 TEST_F(ComboPropertyTest, initialState)
 {

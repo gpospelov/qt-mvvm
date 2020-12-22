@@ -10,15 +10,13 @@
 #ifndef MVVM_STANDARDITEMS_VECTORITEM_H
 #define MVVM_STANDARDITEMS_VECTORITEM_H
 
-#include <mvvm/model/compounditem.h>
+#include "mvvm/model/compounditem.h"
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! Vector item with three x,y,z property items.
 
-class MVVM_MODEL_EXPORT VectorItem : public CompoundItem
-{
+class MVVM_MODEL_EXPORT VectorItem : public CompoundItem {
 public:
     static inline const std::string P_X = "P_X";
     static inline const std::string P_Y = "P_Y";

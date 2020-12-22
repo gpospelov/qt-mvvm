@@ -7,22 +7,18 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/standarditems/plottableitems.h"
+
 #include "google_test.h"
+#include "mvvm/model/comboproperty.h"
 #include <QColor>
-#include <mvvm/model/comboproperty.h>
-#include <mvvm/standarditems/plottableitems.h>
 
 using namespace ModelView;
 
 //! Testing PlottableItemsTest.
 
-class PlottableItemsTest : public ::testing::Test
-{
-public:
-    ~PlottableItemsTest();
+class PlottableItemsTest : public ::testing::Test {
 };
-
-PlottableItemsTest::~PlottableItemsTest() = default;
 
 //! Initial state.
 

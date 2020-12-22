@@ -10,22 +10,20 @@
 #ifndef MVVM_SERIALIZATION_JSONITEMDATACONVERTER_H
 #define MVVM_SERIALIZATION_JSONITEMDATACONVERTER_H
 
+#include "mvvm/serialization/jsonitemdataconverterinterface.h"
 #include <QString>
 #include <functional>
 #include <memory>
-#include <mvvm/serialization/jsonitemdataconverterinterface.h>
 
 class QJsonObject;
 
-namespace ModelView
-{
+namespace ModelView {
 
 class JsonVariantConverterInterface;
 
 //! Default converter of SessionItemData to/from json object.
 
-class MVVM_MODEL_EXPORT JsonItemDataConverter : public JsonItemDataConverterInterface
-{
+class MVVM_MODEL_EXPORT JsonItemDataConverter : public JsonItemDataConverterInterface {
 public:
     using accept_strategy_t = std::function<bool(int)>;
 

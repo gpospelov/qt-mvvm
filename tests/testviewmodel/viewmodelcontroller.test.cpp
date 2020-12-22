@@ -7,27 +7,25 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/viewmodel/viewmodelcontroller.h"
+
 #include "google_test.h"
 #include "test_utils.h"
+#include "mvvm/model/propertyitem.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/standarditems/vectoritem.h"
+#include "mvvm/viewmodel/labeldatarowstrategy.h"
+#include "mvvm/viewmodel/standardchildrenstrategies.h"
+#include "mvvm/viewmodel/standardviewitems.h"
+#include "mvvm/viewmodel/viewmodelbase.h"
 #include <QSignalSpy>
-#include <mvvm/model/propertyitem.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/standarditems/vectoritem.h>
-#include <mvvm/viewmodel/labeldatarowstrategy.h>
-#include <mvvm/viewmodel/standardchildrenstrategies.h>
-#include <mvvm/viewmodel/standardviewitems.h>
-#include <mvvm/viewmodel/viewmodelbase.h>
-#include <mvvm/viewmodel/viewmodelcontroller.h>
 
 using namespace ModelView;
 
 //! Tests of ViewModelController class.
 
-class ViewModelControllerTest : public ::testing::Test
-{
+class ViewModelControllerTest : public ::testing::Test {
 public:
-    ~ViewModelControllerTest();
-
     auto create_controller(SessionModel* session_model, ViewModelBase* view_model)
     {
         auto result = std::make_unique<ViewModelController>(session_model, view_model);
@@ -37,8 +35,6 @@ public:
         return result;
     }
 };
-
-ViewModelControllerTest::~ViewModelControllerTest() = default;
 
 //! Initial state of the controller. It is in working state only after setRootItem.
 

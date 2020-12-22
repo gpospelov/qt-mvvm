@@ -10,23 +10,22 @@
 #ifndef MVVM_VIEWMODEL_VIEWMODELBASE_H
 #define MVVM_VIEWMODEL_VIEWMODELBASE_H
 
+#include "mvvm/viewmodel_export.h"
 #include <QAbstractItemModel>
 #include <memory>
-#include <mvvm/viewmodel_export.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class ViewItem;
 
 //! Base class for all view models to show content of SessionModel in Qt views.
 //! ViewModelBase is made of ViewItems, where each ViewItem represents some concrete data role
-//!  of SessionItem. ViewModelBase doesn't have own logic and needs ViewModelController to listen
+//! of SessionItem. ViewModelBase doesn't have own logic and needs ViewModelController to listen
 //! for SessionModel changes.
 
-class MVVM_VIEWMODEL_EXPORT ViewModelBase : public QAbstractItemModel
-{
+class MVVM_VIEWMODEL_EXPORT ViewModelBase : public QAbstractItemModel {
     Q_OBJECT
+
 public:
     explicit ViewModelBase(QObject* parent = nullptr);
     ~ViewModelBase() override;

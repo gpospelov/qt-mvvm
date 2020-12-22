@@ -7,12 +7,12 @@
 //
 // ************************************************************************** //
 
-#include <modelinqmlcore/backend.h>
-#include <modelinqmlcore/particlemodel.h>
-#include <modelinqmlcore/particleviewmodel.h>
-#include <modelinqmlcore/tablemodel.h>
-#include <mvvm/factories/viewmodelfactory.h>
-#include <mvvm/viewmodel/viewmodel.h>
+#include "modelinqmlcore/backend.h"
+#include "modelinqmlcore/particlemodel.h"
+#include "modelinqmlcore/particleviewmodel.h"
+#include "modelinqmlcore/tablemodel.h"
+#include "mvvm/factories/viewmodelfactory.h"
+#include "mvvm/viewmodel/viewmodel.h"
 
 using namespace ModelView;
 
@@ -22,9 +22,9 @@ struct BackEnd::BackEndImpl {
     TableModel* m_tableModel{nullptr};
 
     BackEndImpl()
-        : m_model(std::make_unique<ParticleModel>()),
-          m_viewModel(std::make_unique<ParticleViewModel>(m_model.get())),
-          m_tableModel(new TableModel)
+        : m_model(std::make_unique<ParticleModel>())
+        , m_viewModel(std::make_unique<ParticleViewModel>(m_model.get()))
+        , m_tableModel(new TableModel)
     {
         m_viewModel->setRootSessionItem(m_model->topItem());
     }

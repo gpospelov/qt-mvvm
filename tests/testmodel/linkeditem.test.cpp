@@ -7,25 +7,21 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/standarditems/linkeditem.h"
+
 #include "google_test.h"
 #include "mockwidgets.h"
-#include <mvvm/model/itempool.h>
-#include <mvvm/model/propertyitem.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/standarditems/linkeditem.h>
+#include "mvvm/model/itempool.h"
+#include "mvvm/model/propertyitem.h"
+#include "mvvm/model/sessionmodel.h"
 
 using namespace ModelView;
 using ::testing::_;
 
 //! LinkedItem tests.
 
-class LinkedItemTest : public ::testing::Test
-{
-public:
-    ~LinkedItemTest();
+class LinkedItemTest : public ::testing::Test {
 };
-
-LinkedItemTest::~LinkedItemTest() = default;
 
 //! Initial state of item when it is created outside of model context.
 

@@ -7,20 +7,16 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/model/modelutils.h"
+
 #include "google_test.h"
 #include "toyitems.h"
 #include "toymodel.h"
-#include <mvvm/model/modelutils.h>
 
 using namespace ModelView;
 
-class ModelUtilsTest : public ::testing::Test
-{
-public:
-    ~ModelUtilsTest();
+class ModelUtilsTest : public ::testing::Test {
 };
-
-ModelUtilsTest::~ModelUtilsTest() = default;
 
 TEST_F(ModelUtilsTest, topItem)
 {

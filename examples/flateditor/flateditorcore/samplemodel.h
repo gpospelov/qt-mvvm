@@ -10,12 +10,11 @@
 #ifndef SAMPLEMODEL_H
 #define SAMPLEMODEL_H
 
-#include <mvvm/model/sessionmodel.h>
+#include "mvvm/model/sessionmodel.h"
 
 //! Main application model.
 
-class SampleModel : public ModelView::SessionModel
-{
+class SampleModel : public ModelView::SessionModel {
 public:
     SampleModel();
 

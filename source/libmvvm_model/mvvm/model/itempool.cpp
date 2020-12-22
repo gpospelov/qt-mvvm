@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/core/uniqueidgenerator.h>
-#include <mvvm/model/itempool.h>
+#include "mvvm/model/itempool.h"
+#include "mvvm/core/uniqueidgenerator.h"
 #include <stdexcept>
 
 using namespace ModelView;
@@ -31,7 +31,8 @@ identifier_type ItemPool::register_item(SessionItem* item, identifier_type key)
         key = UniqueIdGenerator::generate();
         while (m_key_to_item.find(key) != m_key_to_item.end())
             key = UniqueIdGenerator::generate(); // preventing improbable duplicates
-    } else {
+    }
+    else {
         if (m_key_to_item.find(key) != m_key_to_item.end())
             throw std::runtime_error(" ItemPool::register_item() -> Attempt to reuse existing key");
     }

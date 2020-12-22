@@ -7,23 +7,22 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/commands/insertnewitemcommand.h"
+
 #include "google_test.h"
-#include <mvvm/commands/insertnewitemcommand.h>
-#include <mvvm/interfaces/itemfactoryinterface.h>
-#include <mvvm/model/compounditem.h>
-#include <mvvm/model/itempool.h>
-#include <mvvm/model/itemutils.h>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/model/taginfo.h>
+#include "mvvm/interfaces/itemfactoryinterface.h"
+#include "mvvm/model/compounditem.h"
+#include "mvvm/model/itempool.h"
+#include "mvvm/model/itemutils.h"
+#include "mvvm/model/sessionitem.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/model/taginfo.h"
 #include <stdexcept>
 
 using namespace ModelView;
 
-class InsertNewItemCommandTest : public ::testing::Test
-{
+class InsertNewItemCommandTest : public ::testing::Test {
 public:
-    ~InsertNewItemCommandTest();
     std::unique_ptr<InsertNewItemCommand> create_command(SessionItem* parent, std::string tag,
                                                          int row)
     {
@@ -33,8 +32,6 @@ public:
         return std::make_unique<InsertNewItemCommand>(factory_func, parent, TagRow{tag, row});
     }
 };
-
-InsertNewItemCommandTest::~InsertNewItemCommandTest() = default;
 
 //! Insert new item through InsertNewItemCommand command.
 

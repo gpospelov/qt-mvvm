@@ -7,18 +7,14 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/utils/progresshandler.h"
+
 #include "google_test.h"
-#include <mvvm/utils/progresshandler.h>
 
 using namespace ModelView;
 
-class ProgressHandlerTest : public ::testing::Test
-{
-public:
-    ~ProgressHandlerTest();
+class ProgressHandlerTest : public ::testing::Test {
 };
-
-ProgressHandlerTest::~ProgressHandlerTest() = default;
 
 TEST_F(ProgressHandlerTest, initialState)
 {

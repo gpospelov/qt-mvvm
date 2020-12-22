@@ -8,24 +8,22 @@
 // ************************************************************************** //
 
 #include "dragviewmodel.h"
+#include "mvvm/model/sessionitem.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/viewmodel/viewmodelutils.h"
+#include "mvvm/widgets/widgetutils.h"
 #include <QByteArray>
 #include <QDataStream>
 #include <QMimeData>
 #include <algorithm>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/viewmodel/viewmodelutils.h>
-#include <mvvm/widgets/widgetutils.h>
 
-namespace
-{
+namespace {
 const QString AppMimeType = "application/org.bornagainproject.moveitem";
 } // namespace
 
 using namespace ModelView;
 
-namespace DragAndView
-{
+namespace DragAndView {
 
 DragViewModel::DragViewModel(SessionModel* model, QObject* parent)
     : PropertyTableViewModel(model, parent)

@@ -10,10 +10,9 @@
 #ifndef MVVM_STANDARDITEMS_GRAPHITEM_H
 #define MVVM_STANDARDITEMS_GRAPHITEM_H
 
-#include <mvvm/model/compounditem.h>
+#include "mvvm/model/compounditem.h"
 
-namespace ModelView
-{
+namespace ModelView {
 
 class Data1DItem;
 class PenItem;
@@ -22,8 +21,7 @@ class PenItem;
 //! Contains plot properties (i.e. color, line type etc) and link to Data1DItem, which will provide
 //! actual data to plot. GraphItem is intended for plotting only via GraphViewportItem.
 
-class MVVM_MODEL_EXPORT GraphItem : public CompoundItem
-{
+class MVVM_MODEL_EXPORT GraphItem : public CompoundItem {
 public:
     static inline const std::string P_LINK = "P_LINK";
     static inline const std::string P_GRAPH_TITLE = "P_GRAPH_TITLE";

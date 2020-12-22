@@ -13,16 +13,14 @@
 //! @file items.h
 //! Collection of items for our application model.
 
-#include <mvvm/model/compounditem.h>
+#include "mvvm/model/compounditem.h"
 #include <string>
 
-namespace DragAndView
-{
+namespace DragAndView {
 
 //! Demo item which demonstrating supported properties.
 
-class DemoItem : public ModelView::CompoundItem
-{
+class DemoItem : public ModelView::CompoundItem {
 public:
     static inline const std::string P_BOOL_PROPERTY = "P_BOOL_PROPERTY";
     static inline const std::string P_INTEGER_PROPERTY = "P_INTEGER_PROPERTY";
@@ -36,8 +34,7 @@ public:
 
 //! Container to hold demo items
 
-class DemoContainerItem : public ModelView::CompoundItem
-{
+class DemoContainerItem : public ModelView::CompoundItem {
 public:
     static inline const std::string T_ITEMS = "T_ITEMS";
 

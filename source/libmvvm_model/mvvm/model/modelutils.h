@@ -10,21 +10,19 @@
 #ifndef MVVM_MODEL_MODELUTILS_H
 #define MVVM_MODEL_MODELUTILS_H
 
+#include "mvvm/factories/modelconverterfactory.h"
+#include "mvvm/model/itemutils.h"
+#include "mvvm/model/sessionitem.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/model_export.h"
 #include <memory>
-#include <mvvm/factories/modelconverterfactory.h>
-#include <mvvm/model/itemutils.h>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/model_export.h>
 #include <vector>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class Path;
 
-namespace Utils
-{
+namespace Utils {
 
 //! Returns all top level items of given type.
 

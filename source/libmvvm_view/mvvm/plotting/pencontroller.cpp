@@ -7,16 +7,15 @@
 //
 // ************************************************************************** //
 
-#include "qcustomplot.h"
-#include <mvvm/model/comboproperty.h>
-#include <mvvm/plotting/pencontroller.h>
-#include <mvvm/standarditems/plottableitems.h>
+#include "mvvm/plotting/pencontroller.h"
+#include "mvvm/model/comboproperty.h"
+#include "mvvm/standarditems/plottableitems.h"
+#include <qcustomplot.h>
 #include <stdexcept>
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 //! Returns Qt pen style from current ComboProperty index.
 Qt::PenStyle getQtPenFromComboIndex(const ComboProperty& combo)
 {

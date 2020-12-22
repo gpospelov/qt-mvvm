@@ -8,23 +8,18 @@
 // ************************************************************************** //
 
 #include "google_test.h"
-#include "qcustomplot.h"
-#include <mvvm/interfaces/undostackinterface.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/plotting/viewportaxisplotcontroller.h>
-#include <mvvm/standarditems/axisitems.h>
+#include "mvvm/interfaces/undostackinterface.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/plotting/viewportaxisplotcontroller.h"
+#include "mvvm/standarditems/axisitems.h"
+#include <qcustomplot.h>
 
 using namespace ModelView;
 
 //! Testing various undo/redo scenario.
 
-class UndoScenarioTest : public ::testing::Test
-{
-public:
-    ~UndoScenarioTest();
+class UndoScenarioTest : public ::testing::Test {
 };
-
-UndoScenarioTest::~UndoScenarioTest() = default;
 
 //! Check undo/redo of ViewportAxisItem range, when it is listened by the controller.
 //! Real-life bug.

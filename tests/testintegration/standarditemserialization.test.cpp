@@ -10,21 +10,16 @@
 #include "google_test.h"
 #include <QDebug>
 #include <QJsonObject>
-#include <mvvm/model/modelutils.h>
-#include <mvvm/serialization/jsonmodelconverter.h>
-#include <mvvm/standarditems/standarditemincludes.h>
+#include "mvvm/model/modelutils.h"
+#include "mvvm/serialization/jsonmodelconverter.h"
+#include "mvvm/standarditems/standarditemincludes.h"
 
 using namespace ModelView;
 
 //! Testing serialization of ToyItems using json converters.
 
-class StandardItemsSerializationTest : public ::testing::Test
-{
-public:
-    ~StandardItemsSerializationTest();
+class StandardItemsSerializationTest : public ::testing::Test {
 };
-
-StandardItemsSerializationTest::~StandardItemsSerializationTest() = default;
 
 //! Checking that serialization works (not crashing) for all defined standard items.
 

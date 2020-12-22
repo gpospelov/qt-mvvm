@@ -9,16 +9,15 @@
 
 #include "graphpropertywidget.h"
 #include "graphmodel.h"
+#include "mvvm/factories/viewmodelfactory.h"
+#include "mvvm/viewmodel/viewmodel.h"
+#include "mvvm/widgets/itemstreeview.h"
 #include <QBoxLayout>
 #include <QPushButton>
-#include <mvvm/factories/viewmodelfactory.h>
-#include <mvvm/viewmodel/viewmodel.h>
-#include <mvvm/widgets/itemstreeview.h>
 
 using namespace ModelView;
 
-namespace PlotGraphs
-{
+namespace PlotGraphs {
 
 GraphPropertyWidget::GraphPropertyWidget(GraphModel* model, QWidget* parent)
     : QWidget(parent), m_treeView(new ItemsTreeView), m_model(model)

@@ -10,12 +10,11 @@
 #ifndef MVVM_FACTORIES_VIEWMODELCONTROLLERBUILDER_H
 #define MVVM_FACTORIES_VIEWMODELCONTROLLERBUILDER_H
 
+#include "mvvm/viewmodel/viewmodelcontroller.h"
+#include "mvvm/viewmodel_export.h"
 #include <memory>
-#include <mvvm/viewmodel/viewmodelcontroller.h>
-#include <mvvm/viewmodel_export.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionModel;
 class ViewModelBase;
@@ -24,8 +23,7 @@ class RowStrategyInterface;
 
 //! Builder class for ViewModelController.
 
-class MVVM_VIEWMODEL_EXPORT ViewModelControllerBuilder
-{
+class MVVM_VIEWMODEL_EXPORT ViewModelControllerBuilder {
 public:
     using self = ViewModelControllerBuilder;
 

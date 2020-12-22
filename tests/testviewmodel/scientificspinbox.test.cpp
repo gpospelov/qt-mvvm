@@ -7,19 +7,15 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/editors/scientificspinbox.h"
+
 #include "google_test.h"
 #include <limits>
-#include <mvvm/editors/scientificspinbox.h>
 
 using namespace ModelView;
 
-class ScientificSpinBoxTest : public ::testing::Test
-{
-public:
-    ~ScientificSpinBoxTest() override;
+class ScientificSpinBoxTest : public ::testing::Test {
 };
-
-ScientificSpinBoxTest::~ScientificSpinBoxTest() = default;
 
 TEST_F(ScientificSpinBoxTest, testValueFromText)
 {

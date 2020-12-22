@@ -10,10 +10,10 @@
 #ifndef MVVM_SERIALIZATION_JSONCONVERTERINTERFACES_H
 #define MVVM_SERIALIZATION_JSONCONVERTERINTERFACES_H
 
-#include <mvvm/serialization/jsonitemconverterinterface.h>
-#include <mvvm/serialization/jsonitemdataconverterinterface.h>
-#include <mvvm/serialization/jsonmodelconverterinterface.h>
-#include <mvvm/serialization/jsontaginfoconverterinterface.h>
-#include <mvvm/serialization/jsonvariantconverterinterface.h>
+#include "mvvm/serialization/jsonitemconverterinterface.h"
+#include "mvvm/serialization/jsonitemdataconverterinterface.h"
+#include "mvvm/serialization/jsonmodelconverterinterface.h"
+#include "mvvm/serialization/jsontaginfoconverterinterface.h"
+#include "mvvm/serialization/jsonvariantconverterinterface.h"
 
 #endif // MVVM_SERIALIZATION_JSONCONVERTERINTERFACES_H

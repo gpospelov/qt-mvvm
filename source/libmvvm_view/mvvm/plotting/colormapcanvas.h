@@ -10,12 +10,11 @@
 #ifndef MVVM_PLOTTING_COLORMAPCANVAS_H
 #define MVVM_PLOTTING_COLORMAPCANVAS_H
 
+#include "mvvm/view_export.h"
 #include <QWidget>
 #include <memory>
-#include <mvvm/view_export.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class ColorMapViewportItem;
 class SceneAdapterInterface;
@@ -23,8 +22,7 @@ class SceneAdapterInterface;
 //! Widget to show 2D data as color map.
 //! Contains embedded QCustomPlot widget, shows content of ColorMapViewportItem.
 
-class MVVM_VIEW_EXPORT ColorMapCanvas : public QWidget
-{
+class MVVM_VIEW_EXPORT ColorMapCanvas : public QWidget {
     Q_OBJECT
 
 public:

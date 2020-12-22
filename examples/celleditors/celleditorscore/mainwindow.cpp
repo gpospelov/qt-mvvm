@@ -15,15 +15,13 @@
 #include <QSettings>
 #include <QTabWidget>
 
-namespace
-{
+namespace {
 const QString main_window_group = "MainWindow";
 const QString size_key = "size";
 const QString pos_key = "pos";
 } // namespace
 
-namespace CellEditors
-{
+namespace CellEditors {
 
 MainWindow::MainWindow() : m_tabWidget(new QTabWidget), m_model(std::make_unique<SampleModel>())
 {

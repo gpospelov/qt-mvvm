@@ -7,21 +7,17 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/utils/binutils.h"
+
 #include "google_test.h"
-#include <mvvm/utils/binutils.h>
-#include <testconfig.h>
+#include "testconfig.h"
 
 using namespace ModelView;
 
 //! Testing BinUtils
 
-class BinUtilsTest : public ::testing::Test
-{
-public:
-    ~BinUtilsTest();
+class BinUtilsTest : public ::testing::Test {
 };
-
-BinUtilsTest::~BinUtilsTest() = default;
 
 //! Testing Binary Files
 

@@ -11,13 +11,12 @@
 #include "regionofinterestcontroller.h"
 #include "sceneitems.h"
 #include "sizehandleelement.h"
+#include "mvvm/plotting/sceneadapterinterface.h"
 #include <QGraphicsSceneMouseEvent>
 #include <QPainter>
-#include <mvvm/plotting/sceneadapterinterface.h>
 #include <stdexcept>
 
-namespace
-{
+namespace {
 const double bbox_margins = 5; // additional margins around rectangle to form bounding box
 } // namespace
 
@@ -100,8 +99,8 @@ void RegionOfInterestView::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
             controller->update_item_from_horizontal_handle(left, right);
 
         update_geometry();
-
-    } else {
+    }
+    else {
         QGraphicsItem::mouseMoveEvent(event);
         controller->update_item_from_view();
     }

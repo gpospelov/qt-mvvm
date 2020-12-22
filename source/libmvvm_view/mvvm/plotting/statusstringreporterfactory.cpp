@@ -7,13 +7,12 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/plotting/colormapinfoformatter.h>
-#include <mvvm/plotting/graphinfoformatter.h>
-#include <mvvm/plotting/statusstringreporter.h>
-#include <mvvm/plotting/statusstringreporterfactory.h>
+#include "mvvm/plotting/statusstringreporterfactory.h"
+#include "mvvm/plotting/colormapinfoformatter.h"
+#include "mvvm/plotting/graphinfoformatter.h"
+#include "mvvm/plotting/statusstringreporter.h"
 
-namespace ModelView
-{
+namespace ModelView {
 
 std::unique_ptr<StatusStringReporter>
 CreateGraphReporter(QCustomPlot* custom_plot, std::function<void(const std::string&)> callback)

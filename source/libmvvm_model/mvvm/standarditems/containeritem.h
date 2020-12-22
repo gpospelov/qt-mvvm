@@ -10,16 +10,14 @@
 #ifndef MVVM_STANDARDITEMS_CONTAINERITEM_H
 #define MVVM_STANDARDITEMS_CONTAINERITEM_H
 
-#include <mvvm/model/compounditem.h>
+#include "mvvm/model/compounditem.h"
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! Simple container to store any type of children.
 //! Used as convenience item to create branch with uniform children beneath.
 
-class MVVM_MODEL_EXPORT ContainerItem : public CompoundItem
-{
+class MVVM_MODEL_EXPORT ContainerItem : public CompoundItem {
 public:
     static inline const std::string T_ITEMS = "T_ITEMS";
 

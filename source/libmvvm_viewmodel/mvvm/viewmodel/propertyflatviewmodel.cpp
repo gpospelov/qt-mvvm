@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/viewmodel/propertyflatviewmodel.h>
-#include <mvvm/viewmodel/standardviewmodelcontrollers.h>
+#include "mvvm/viewmodel/propertyflatviewmodel.h"
+#include "mvvm/viewmodel/standardviewmodelcontrollers.h"
 
 using namespace ModelView;
 

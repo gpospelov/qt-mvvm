@@ -7,10 +7,10 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/editors/scientificspinboxeditor.h"
+#include "mvvm/editors/scientificspinbox.h"
+#include "mvvm/utils/numericutils.h"
 #include <QVBoxLayout>
-#include <mvvm/editors/scientificspinbox.h>
-#include <mvvm/editors/scientificspinboxeditor.h>
-#include <mvvm/utils/numericutils.h>
 #include <stdexcept>
 
 using namespace ModelView;

@@ -7,15 +7,14 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/factories/viewmodelcontrollerbuilder.h>
-#include <mvvm/interfaces/childrenstrategyinterface.h>
-#include <mvvm/interfaces/rowstrategyinterface.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/viewmodel/viewmodelcontroller.h>
+#include "mvvm/factories/viewmodelcontrollerbuilder.h"
+#include "mvvm/interfaces/childrenstrategyinterface.h"
+#include "mvvm/interfaces/rowstrategyinterface.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/viewmodel/viewmodelcontroller.h"
 #include <stdexcept>
 
-namespace ModelView
-{
+namespace ModelView {
 
 ViewModelControllerBuilder::ViewModelControllerBuilder() = default;
 

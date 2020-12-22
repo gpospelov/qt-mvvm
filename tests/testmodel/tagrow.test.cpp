@@ -7,22 +7,18 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/model/tagrow.h"
+
 #include "google_test.h"
-#include <mvvm/model/tagrow.h>
 
 using namespace ModelView;
 
 //! Testing AxisItems.
 
-class TagRowTest : public ::testing::Test
-{
+class TagRowTest : public ::testing::Test {
 public:
-    ~TagRowTest();
-
     TagRow test_method(const TagRow& input) { return input; }
 };
-
-TagRowTest::~TagRowTest() = default;
 
 //! Initial state.
 

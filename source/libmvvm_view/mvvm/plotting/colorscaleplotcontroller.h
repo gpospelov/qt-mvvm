@@ -10,21 +10,19 @@
 #ifndef MVVM_PLOTTING_COLORSCALEPLOTCONTROLLER_H
 #define MVVM_PLOTTING_COLORSCALEPLOTCONTROLLER_H
 
+#include "mvvm/signals/itemlistener.h"
+#include "mvvm/view_export.h"
 #include <memory>
-#include <mvvm/signals/itemlistener.h>
-#include <mvvm/view_export.h>
 
 class QCPColorScale;
 
-namespace ModelView
-{
+namespace ModelView {
 
 class ViewportAxisItem;
 
 //! Establishes communication between QCPColorScale and ViewportAxisItem.
 
-class MVVM_VIEW_EXPORT ColorScalePlotController : public ItemListener<ViewportAxisItem>
-{
+class MVVM_VIEW_EXPORT ColorScalePlotController : public ItemListener<ViewportAxisItem> {
 public:
     explicit ColorScalePlotController(QCPColorScale* color_scale);
     ~ColorScalePlotController() override;

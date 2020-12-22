@@ -10,12 +10,11 @@
 #ifndef MVVM_MODEL_ITEMMANAGER_H
 #define MVVM_MODEL_ITEMMANAGER_H
 
+#include "mvvm/model/mvvm_types.h"
+#include "mvvm/model_export.h"
 #include <memory>
-#include <mvvm/model/mvvm_types.h>
-#include <mvvm/model_export.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionItem;
 class ItemPool;
@@ -23,8 +22,7 @@ class ItemFactoryInterface;
 
 //! Manages item creation/registration for SessionModel.
 
-class MVVM_MODEL_EXPORT ItemManager
-{
+class MVVM_MODEL_EXPORT ItemManager {
 public:
     ItemManager();
     ~ItemManager();

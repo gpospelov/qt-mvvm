@@ -7,31 +7,26 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/model/compounditem.h"
+
 #include "google_test.h"
 #include "test_utils.h"
+#include "mvvm/model/customvariants.h"
+#include "mvvm/model/itemutils.h"
+#include "mvvm/model/sessionmodel.h"
 #include <memory>
-#include <mvvm/model/compounditem.h>
-#include <mvvm/model/customvariants.h>
-#include <mvvm/model/itemutils.h>
-#include <mvvm/model/sessionmodel.h>
 #include <stdexcept>
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 const std::string property_name("name");
 }
 
 //! Test of CompountItem machinery (property children etc).
 
-class CompoundItemTest : public ::testing::Test
-{
-public:
-    ~CompoundItemTest();
+class CompoundItemTest : public ::testing::Test {
 };
-
-CompoundItemTest::~CompoundItemTest() = default;
 
 TEST_F(CompoundItemTest, initialState)
 {

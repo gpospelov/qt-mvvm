@@ -10,10 +10,9 @@
 #ifndef MVVM_SIGNALS_MODELLISTENERBASE_H
 #define MVVM_SIGNALS_MODELLISTENERBASE_H
 
-#include <mvvm/interfaces/modellistenerinterface.h>
+#include "mvvm/interfaces/modellistenerinterface.h"
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionModel;
 
@@ -21,8 +20,7 @@ class SessionModel;
 //! Automatically tracks the time of life of SessionModel. Unsubscribes from the model on
 //! own destruction.
 
-class MVVM_MODEL_EXPORT ModelListenerBase : public ModelListenerInterface
-{
+class MVVM_MODEL_EXPORT ModelListenerBase : public ModelListenerInterface {
 public:
     ModelListenerBase(SessionModel* model);
     ~ModelListenerBase() override;

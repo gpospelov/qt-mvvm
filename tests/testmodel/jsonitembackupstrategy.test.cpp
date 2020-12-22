@@ -7,24 +7,23 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/serialization/jsonitembackupstrategy.h"
+
 #include "google_test.h"
-#include <mvvm/factories/itemcataloguefactory.h>
-#include <mvvm/model/compounditem.h>
-#include <mvvm/model/itemfactory.h>
-#include <mvvm/model/propertyitem.h>
-#include <mvvm/model/sessionitemtags.h>
-#include <mvvm/serialization/jsonitembackupstrategy.h>
+#include "mvvm/factories/itemcataloguefactory.h"
+#include "mvvm/model/compounditem.h"
+#include "mvvm/model/itemfactory.h"
+#include "mvvm/model/propertyitem.h"
+#include "mvvm/model/sessionitemtags.h"
 
 using namespace ModelView;
 
-class JsonItemBackupStrategyTest : public ::testing::Test
-{
+class JsonItemBackupStrategyTest : public ::testing::Test {
 public:
     JsonItemBackupStrategyTest()
         : m_factory(std::make_unique<ItemFactory>(CreateStandardItemCatalogue()))
     {
     }
-    ~JsonItemBackupStrategyTest();
 
     std::unique_ptr<JsonItemBackupStrategy> createBackupStrategy()
     {
@@ -33,8 +32,6 @@ public:
 
     std::unique_ptr<ItemFactory> m_factory;
 };
-
-JsonItemBackupStrategyTest::~JsonItemBackupStrategyTest() = default;
 
 //! Saving/restoring PropertyItem.
 

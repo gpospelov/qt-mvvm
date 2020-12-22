@@ -7,28 +7,24 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/viewmodel/topitemsviewmodel.h"
+
 #include "google_test.h"
 #include "toyitems.h"
 #include "toymodel.h"
+#include "mvvm/model/propertyitem.h"
+#include "mvvm/model/sessionitem.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/model/taginfo.h"
+#include "mvvm/standarditems/vectoritem.h"
 #include <QSignalSpy>
-#include <mvvm/model/propertyitem.h>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/model/taginfo.h>
-#include <mvvm/standarditems/vectoritem.h>
-#include <mvvm/viewmodel/topitemsviewmodel.h>
 
 using namespace ModelView;
 
 //! Tests for TopItemsViewModel class.
 
-class TopItemsViewModelTest : public ::testing::Test
-{
-public:
-    ~TopItemsViewModelTest();
+class TopItemsViewModelTest : public ::testing::Test {
 };
-
-TopItemsViewModelTest::~TopItemsViewModelTest() = default;
 
 TEST_F(TopItemsViewModelTest, initialState)
 {

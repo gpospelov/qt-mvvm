@@ -10,19 +10,17 @@
 #ifndef MVVM_SERIALIZATION_JSONMODELCONVERTERINTERFACE_H
 #define MVVM_SERIALIZATION_JSONMODELCONVERTERINTERFACE_H
 
-#include <mvvm/model_export.h>
+#include "mvvm/model_export.h"
 
 class QJsonObject;
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionModel;
 
 //! Base class for all converters of SessionModel to/from json object.
 
-class MVVM_MODEL_EXPORT JsonModelConverterInterface
-{
+class MVVM_MODEL_EXPORT JsonModelConverterInterface {
 public:
     virtual ~JsonModelConverterInterface() = default;
 

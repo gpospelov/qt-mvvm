@@ -15,15 +15,13 @@
 
 class QTabWidget;
 
-namespace PlotGraphs
-{
+namespace PlotGraphs {
 
 class GraphModel;
 
 //! The main window of this application.
 
-class MainWindow : public QMainWindow
-{
+class MainWindow : public QMainWindow {
     Q_OBJECT
 
 public:

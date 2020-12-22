@@ -7,15 +7,14 @@
 //
 // ************************************************************************** //
 
+#include "layereditorcore/samplemodel.h"
+#include "layereditorcore/materialmodel.h"
+#include "mvvm/model/externalproperty.h"
 #include <QVariant>
-#include <layereditorcore/materialmodel.h>
-#include <layereditorcore/samplemodel.h>
-#include <mvvm/model/externalproperty.h>
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 const std::string MultiLayerType = "MultiLayer";
 const std::string LayerType = "Layer";
 } // namespace

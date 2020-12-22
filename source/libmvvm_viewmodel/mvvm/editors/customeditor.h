@@ -10,17 +10,15 @@
 #ifndef MVVM_EDITORS_CUSTOMEDITOR_H
 #define MVVM_EDITORS_CUSTOMEDITOR_H
 
+#include "mvvm/core/variant.h"
+#include "mvvm/viewmodel_export.h"
 #include <QWidget>
-#include <mvvm/core/variant.h>
-#include <mvvm/viewmodel_export.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! Base class for all custom variant editors.
 
-class MVVM_VIEWMODEL_EXPORT CustomEditor : public QWidget
-{
+class MVVM_VIEWMODEL_EXPORT CustomEditor : public QWidget {
     Q_OBJECT
     Q_PROPERTY(QVariant value MEMBER m_data READ data WRITE setData NOTIFY dataChanged USER true)
 

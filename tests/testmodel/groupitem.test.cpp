@@ -7,21 +7,17 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/model/groupitem.h"
+
 #include "google_test.h"
-#include <mvvm/model/groupitem.h>
 #include <stdexcept>
 
 using namespace ModelView;
 
 //! Testing GroupItem class.
 
-class GroupItemTest : public ::testing::Test
-{
-public:
-    ~GroupItemTest();
+class GroupItemTest : public ::testing::Test {
 };
-
-GroupItemTest::~GroupItemTest() = default;
 
 TEST_F(GroupItemTest, initialState)
 {

@@ -10,20 +10,18 @@
 #ifndef MVVM_EDITORS_SELECTABLECOMBOBOXEDITOR_H
 #define MVVM_EDITORS_SELECTABLECOMBOBOXEDITOR_H
 
-#include <mvvm/editors/customeditor.h>
+#include "mvvm/editors/customeditor.h"
 
 class QComboBox;
 class QStandardItemModel;
 
-namespace ModelView
-{
+namespace ModelView {
 
 class WheelEventFilter;
 
 //! Adds multi-selection capabilities to QComboBox.
 
-class MVVM_VIEWMODEL_EXPORT SelectableComboBoxEditor : public CustomEditor
-{
+class MVVM_VIEWMODEL_EXPORT SelectableComboBoxEditor : public CustomEditor {
     Q_OBJECT
 
 public:

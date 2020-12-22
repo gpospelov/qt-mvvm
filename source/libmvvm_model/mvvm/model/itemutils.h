@@ -10,18 +10,16 @@
 #ifndef MVVM_MODEL_ITEMUTILS_H
 #define MVVM_MODEL_ITEMUTILS_H
 
+#include "mvvm/model_export.h"
 #include <functional>
-#include <mvvm/model_export.h>
 #include <string>
 #include <vector>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionItem;
 
-namespace Utils
-{
+namespace Utils {
 
 //! Iterates through item and all its children.
 MVVM_MODEL_EXPORT void iterate(SessionItem* item, const std::function<void(SessionItem*)>& fun);

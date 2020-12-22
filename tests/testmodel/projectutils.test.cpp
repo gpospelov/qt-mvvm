@@ -7,31 +7,29 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/project/projectutils.h"
+
 #include "folderbasedtest.h"
 #include "google_test.h"
 #include "test_utils.h"
-#include <mvvm/interfaces/applicationmodelsinterface.h>
-#include <mvvm/interfaces/projectinterface.h>
-#include <mvvm/model/propertyitem.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/project/project_types.h>
-#include <mvvm/project/projectutils.h>
-#include <mvvm/utils/fileutils.h>
+#include "mvvm/interfaces/applicationmodelsinterface.h"
+#include "mvvm/interfaces/projectinterface.h"
+#include "mvvm/model/propertyitem.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/project/project_types.h"
+#include "mvvm/utils/fileutils.h"
 
 using namespace ModelView;
 
 //! Tests of ProjectUtils namespace functions.
 
-class ProjectUtilsTest : public FolderBasedTest
-{
+class ProjectUtilsTest : public FolderBasedTest {
 public:
     ProjectUtilsTest()
         : FolderBasedTest("test_ProjectUtils")
         , sample_model(std::make_unique<SessionModel>("SampleModel"))
     {
     }
-
-    ~ProjectUtilsTest();
 
     std::vector<SessionModel*> models() const { return {sample_model.get()}; };
 
@@ -44,8 +42,6 @@ public:
 
     std::unique_ptr<SessionModel> sample_model;
 };
-
-ProjectUtilsTest::~ProjectUtilsTest() = default;
 
 //! Testing helper structure.
 

@@ -7,25 +7,21 @@
 //
 // ************************************************************************** //
 
-#include "google_test.h"
 #include "toyitems.h"
+
+#include "google_test.h"
 #include "toymodel.h"
+#include "mvvm/model/itemutils.h"
+#include "mvvm/viewmodel/defaultviewmodel.h"
+#include "mvvm/viewmodel/viewmodelutils.h"
 #include <QSignalSpy>
-#include <mvvm/model/itemutils.h>
-#include <mvvm/viewmodel/defaultviewmodel.h>
-#include <mvvm/viewmodel/viewmodelutils.h>
 
 using namespace ModelView;
 
 //! Tests of toy MultiLayer in the context of model and viewmodel.
 
-class ToyParticleItemTest : public ::testing::Test
-{
-public:
-    ~ToyParticleItemTest();
+class ToyParticleItemTest : public ::testing::Test {
 };
-
-ToyParticleItemTest::~ToyParticleItemTest() = default;
 
 //! Initial state.
 

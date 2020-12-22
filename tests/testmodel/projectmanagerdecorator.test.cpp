@@ -7,34 +7,32 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/project/projectmanagerdecorator.h"
+
 #include "folderbasedtest.h"
 #include "google_test.h"
+#include "mvvm/model/propertyitem.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/project/project_types.h"
+#include "mvvm/utils/fileutils.h"
 #include <cctype>
-#include <mvvm/model/propertyitem.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/project/project_types.h>
-#include <mvvm/project/projectmanagerdecorator.h>
-#include <mvvm/utils/fileutils.h>
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 const std::string samplemodel_name = "samplemodel";
 
 } // namespace
 
 //! Tests for ProjectManager class.
 
-class ProjectManagerDecoratorTest : public FolderBasedTest
-{
+class ProjectManagerDecoratorTest : public FolderBasedTest {
 public:
     ProjectManagerDecoratorTest()
         : FolderBasedTest("test_ProjectManagerDecorator")
         , sample_model(std::make_unique<ModelView::SessionModel>(samplemodel_name))
     {
     }
-    ~ProjectManagerDecoratorTest();
 
     std::vector<SessionModel*> models() const { return {sample_model.get()}; };
 
@@ -56,8 +54,6 @@ public:
 
     std::unique_ptr<SessionModel> sample_model;
 };
-
-ProjectManagerDecoratorTest::~ProjectManagerDecoratorTest() = default;
 
 //! Initial state of ProjectManager. Project created, and not-saved.
 

@@ -7,45 +7,36 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/serialization/jsondocument.h"
+
 #include "folderbasedtest.h"
 #include "google_test.h"
 #include "test_utils.h"
-#include <mvvm/model/propertyitem.h>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/model/sessionitemtags.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/model/taginfo.h>
-#include <mvvm/serialization/jsondocument.h>
+#include "mvvm/model/propertyitem.h"
+#include "mvvm/model/sessionitem.h"
+#include "mvvm/model/sessionitemtags.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/model/taginfo.h"
 #include <stdexcept>
 
 using namespace ModelView;
 
 //! Tests JsonDocument class
 
-class JsonDocumentTest : public FolderBasedTest
-{
+class JsonDocumentTest : public FolderBasedTest {
 public:
     JsonDocumentTest() : FolderBasedTest("test_JsonDocument") {}
-    ~JsonDocumentTest();
 
-    class TestModel1 : public SessionModel
-    {
+    class TestModel1 : public SessionModel {
     public:
         TestModel1() : SessionModel("TestModel1") {}
-        ~TestModel1();
     };
 
-    class TestModel2 : public SessionModel
-    {
+    class TestModel2 : public SessionModel {
     public:
         TestModel2() : SessionModel("TestModel2") {}
-        ~TestModel2();
     };
 };
-
-JsonDocumentTest::~JsonDocumentTest() = default;
-JsonDocumentTest::TestModel1::~TestModel1() = default;
-JsonDocumentTest::TestModel2::~TestModel2() = default;
 
 //! Saving the model with content into document and restoring it after.
 

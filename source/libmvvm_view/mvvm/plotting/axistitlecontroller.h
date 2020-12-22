@@ -10,21 +10,19 @@
 #ifndef MVVM_PLOTTING_AXISTITLECONTROLLER_H
 #define MVVM_PLOTTING_AXISTITLECONTROLLER_H
 
+#include "mvvm/signals/itemlistener.h"
+#include "mvvm/view_export.h"
 #include <memory>
-#include <mvvm/signals/itemlistener.h>
-#include <mvvm/view_export.h>
 
 class QCPAxis;
 
-namespace ModelView
-{
+namespace ModelView {
 
 class TextItem;
 
 //! Propagates title settings from TextItem to QCPAxis.
 
-class MVVM_VIEW_EXPORT AxisTitleController : public ItemListener<TextItem>
-{
+class MVVM_VIEW_EXPORT AxisTitleController : public ItemListener<TextItem> {
 public:
     explicit AxisTitleController(QCPAxis* axis);
     ~AxisTitleController() override;

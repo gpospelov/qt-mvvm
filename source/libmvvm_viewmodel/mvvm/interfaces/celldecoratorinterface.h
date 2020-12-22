@@ -10,19 +10,17 @@
 #ifndef MVVM_INTERFACES_CELLDECORATORINTERFACE_H
 #define MVVM_INTERFACES_CELLDECORATORINTERFACE_H
 
-#include <mvvm/viewmodel_export.h>
+#include "mvvm/viewmodel_export.h"
 #include <string>
 
 class QModelIndex;
 class QStyleOptionViewItem;
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! Interface class to generate cell decorations (i.e. text) in Qt trees and tables.
 
-class MVVM_VIEWMODEL_EXPORT CellDecoratorInterface
-{
+class MVVM_VIEWMODEL_EXPORT CellDecoratorInterface {
 public:
     virtual ~CellDecoratorInterface() = default;
 

@@ -10,15 +10,15 @@
 #ifndef MOCKINTERFACES_h
 #define MOCKINTERFACES_h
 
+#include "mvvm/model/tagrow.h"
 #include <string>
-#include <mvvm/model/tagrow.h>
 
 //! Various common utils for unit tests.
 
 namespace ModelView {
 class SessionItem;
 class SessionModel;
-}
+} // namespace ModelView
 
 //! Interface for testing callbacks comming from SessionItem within gmock framework.
 

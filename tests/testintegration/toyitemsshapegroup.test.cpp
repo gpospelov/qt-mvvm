@@ -11,10 +11,10 @@
 #include "toyitems.h"
 #include "toymodel.h"
 #include <QSignalSpy>
-#include <mvvm/model/comboproperty.h>
-#include <mvvm/viewmodel/defaultviewmodel.h>
-#include <mvvm/viewmodel/propertyviewmodel.h>
-#include <mvvm/viewmodel/standardviewitems.h>
+#include "mvvm/model/comboproperty.h"
+#include "mvvm/viewmodel/defaultviewmodel.h"
+#include "mvvm/viewmodel/propertyviewmodel.h"
+#include "mvvm/viewmodel/standardviewitems.h"
 
 using namespace ModelView;
 
@@ -22,11 +22,7 @@ using namespace ModelView;
 
 class ToyItemsShapeGroupTest : public ::testing::Test
 {
-public:
-    ~ToyItemsShapeGroupTest();
 };
-
-ToyItemsShapeGroupTest::~ToyItemsShapeGroupTest() = default;
 
 //! Toy multilayer as produced bo toy SampleModel.
 
@@ -47,7 +43,7 @@ TEST_F(ToyItemsShapeGroupTest, initialState)
     EXPECT_EQ(item.children().at(2)->parent(), &item);
 
     // expected value in combo
-    ComboProperty combo = item.data<ComboProperty>();
+    auto combo = item.data<ComboProperty>();
     EXPECT_EQ(combo.currentIndex(), 1);
     EXPECT_EQ(combo.values(),
               std::vector<std::string>({"Cylinder", "Full sphere", "Anysotropical pyramid"}));
@@ -66,7 +62,7 @@ TEST_F(ToyItemsShapeGroupTest, setCurrentType)
     EXPECT_EQ(item.children().size(), 3);
 
     // expected value in combo
-    ComboProperty combo = item.data<ComboProperty>();
+    auto combo = item.data<ComboProperty>();
     EXPECT_EQ(combo.currentIndex(), 0);
     EXPECT_EQ(combo.values(),
               std::vector<std::string>({"Cylinder", "Full sphere", "Anysotropical pyramid"}));
@@ -111,7 +107,7 @@ TEST_F(ToyItemsShapeGroupTest, setDataInModelContext)
     // initial status
     EXPECT_EQ(item->currentIndex(), 1);
     EXPECT_EQ(item->currentType(), ToyItems::Constants::SphereItemType);
-    ComboProperty combo = model.data(item, ItemDataRole::DATA).value<ComboProperty>();
+    auto combo = model.data(item, ItemDataRole::DATA).value<ComboProperty>();
     EXPECT_EQ(combo.currentIndex(), 1);
 
     // setting through combo
@@ -164,7 +160,7 @@ TEST_F(ToyItemsShapeGroupTest, inDefaultViewModelContext)
     QSignalSpy spyData(&viewModel, &DefaultViewModel::dataChanged);
 
     // changing the data
-    ComboProperty combo = model.data(groupItem, ItemDataRole::DATA).value<ComboProperty>();
+    auto combo = model.data(groupItem, ItemDataRole::DATA).value<ComboProperty>();
     combo.setCurrentIndex(0);
     model.setData(groupItem, QVariant::fromValue(combo), ItemDataRole::DATA);
 
@@ -238,7 +234,7 @@ TEST_F(ToyItemsShapeGroupTest, inPropertyViewModelContext)
     QSignalSpy spyData(&viewModel, &DefaultViewModel::dataChanged);
 
     // changing the data (now GroupItem's current item changed from Sphere to Cylinder
-    ComboProperty combo = model.data(groupItem, ItemDataRole::DATA).value<ComboProperty>();
+    auto combo = model.data(groupItem, ItemDataRole::DATA).value<ComboProperty>();
     combo.setCurrentIndex(0);
     model.setData(groupItem, QVariant::fromValue(combo), ItemDataRole::DATA);
 

@@ -7,9 +7,9 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/model/groupitem.h>
-#include <mvvm/model/itemutils.h>
-#include <mvvm/viewmodel/standardchildrenstrategies.h>
+#include "mvvm/viewmodel/standardchildrenstrategies.h"
+#include "mvvm/model/groupitem.h"
+#include "mvvm/model/itemutils.h"
 
 using namespace ModelView;
 
@@ -89,7 +89,8 @@ std::vector<SessionItem*> PropertyItemsFlatStrategy::children(const SessionItem*
             result.push_back(group_item);
             for (auto sub_property : Utils::SinglePropertyItems(*group_item->currentItem()))
                 result.push_back(sub_property);
-        } else {
+        }
+        else {
             result.push_back(child);
         }
     }

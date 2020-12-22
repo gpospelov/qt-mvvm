@@ -10,11 +10,10 @@
 #ifndef GRAPHICSPROXY_REGIONOFINTERESTCONTROLLER_H
 #define GRAPHICSPROXY_REGIONOFINTERESTCONTROLLER_H
 
+#include "mvvm/signals/itemlistener.h"
 #include <memory>
-#include <mvvm/signals/itemlistener.h>
 
-namespace ModelView
-{
+namespace ModelView {
 class SceneAdapterInterface;
 }
 
@@ -26,8 +25,7 @@ class QRectF;
 //! Provides updates of view position/appearance on graphics scene, when underlying item changes.
 //! Similarly, provides update of item's properties when view is moved/resized by the user.
 
-class RegionOfInterestController : public ModelView::ItemListener<RegionOfInterestItem>
-{
+class RegionOfInterestController : public ModelView::ItemListener<RegionOfInterestItem> {
 public:
     RegionOfInterestController(RegionOfInterestItem* item,
                                const ModelView::SceneAdapterInterface* scene_adapter,

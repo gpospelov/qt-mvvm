@@ -7,14 +7,13 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/editors/scientificspinbox.h"
+#include "mvvm/editors/editor_constants.h"
 #include <QLineEdit>
 #include <cmath>
 #include <limits>
-#include <mvvm/editors/editor_constants.h>
-#include <mvvm/editors/scientificspinbox.h>
 
-namespace
-{
+namespace {
 const double upper_switch = 1000;
 const double lower_switch = 0.1;
 const double min_val = std::numeric_limits<double>::min();
@@ -163,8 +162,7 @@ bool ScientificSpinBox::inRange(double val) const
     return val >= m_min && val <= m_max;
 }
 
-namespace
-{
+namespace {
 bool useExponentialNotation(double val)
 {
     const double abs_val = std::abs(val);

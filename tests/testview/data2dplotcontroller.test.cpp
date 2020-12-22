@@ -7,27 +7,23 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/plotting/data2dplotcontroller.h"
+
 #include "customplot_test_utils.h"
 #include "google_test.h"
-#include "qcustomplot.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/standarditems/axisitems.h"
+#include "mvvm/standarditems/data2ditem.h"
+#include <qcustomplot.h>
 #include <QSignalSpy>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/plotting/data2dplotcontroller.h>
-#include <mvvm/standarditems/axisitems.h>
-#include <mvvm/standarditems/data2ditem.h>
 #include <stdexcept>
 
 using namespace ModelView;
 
 //! Testing Data1DPlotController.
 
-class Data2DPlotControllerTest : public ::testing::Test
-{
-public:
-    ~Data2DPlotControllerTest();
+class Data2DPlotControllerTest : public ::testing::Test {
 };
-
-Data2DPlotControllerTest::~Data2DPlotControllerTest() = default;
 
 //! Initial state.
 

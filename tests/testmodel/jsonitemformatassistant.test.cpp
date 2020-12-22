@@ -7,23 +7,19 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/serialization/jsonitemformatassistant.h"
+
 #include "google_test.h"
+#include "mvvm/serialization/jsonvariantconverter.h"
 #include <QJsonArray>
 #include <QJsonObject>
-#include <mvvm/serialization/jsonitemformatassistant.h>
-#include <mvvm/serialization/jsonvariantconverter.h>
 
 using namespace ModelView;
 
 //! Checks JsonItem class and its ability to convert SessionItems to json and back.
 
-class JsonItemFormatAssistantTest : public ::testing::Test
-{
-public:
-    ~JsonItemFormatAssistantTest();
+class JsonItemFormatAssistantTest : public ::testing::Test {
 };
-
-JsonItemFormatAssistantTest::~JsonItemFormatAssistantTest() = default;
 
 //! Checks the validity of json object representing SessionItem.
 

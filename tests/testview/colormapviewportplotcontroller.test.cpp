@@ -7,29 +7,24 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/plotting/colormapviewportplotcontroller.h"
+
 #include "customplot_test_utils.h"
 #include "google_test.h"
-#include "qcustomplot.h"
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/plotting/colormapviewportplotcontroller.h>
-#include <mvvm/standarditems/axisitems.h>
-#include <mvvm/standarditems/colormapitem.h>
-#include <mvvm/standarditems/colormapviewportitem.h>
-#include <mvvm/standarditems/data1ditem.h>
-#include <mvvm/standarditems/data2ditem.h>
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/standarditems/axisitems.h"
+#include "mvvm/standarditems/colormapitem.h"
+#include "mvvm/standarditems/colormapviewportitem.h"
+#include "mvvm/standarditems/data1ditem.h"
+#include "mvvm/standarditems/data2ditem.h"
 #include <qcustomplot.h>
 
 using namespace ModelView;
 
 //! Testing ColorMapViewportPlotController.
 
-class ColorMapViewportPlotControllerTest : public ::testing::Test
-{
-public:
-    ~ColorMapViewportPlotControllerTest();
+class ColorMapViewportPlotControllerTest : public ::testing::Test {
 };
-
-ColorMapViewportPlotControllerTest::~ColorMapViewportPlotControllerTest() = default;
 
 //! Initial state.
 
@@ -40,7 +35,8 @@ TEST_F(ColorMapViewportPlotControllerTest, initialState)
     EXPECT_EQ(controller.currentItem(), nullptr);
     EXPECT_TRUE(TestUtils::GetPlottable<QCPColorMap>(custom_plot.get()) != nullptr);
 
-    const double customplot_default_lower(0.0), customplot_default_upper(5.0);
+    const double customplot_default_lower(0.0);
+    const double customplot_default_upper(5.0);
     EXPECT_DOUBLE_EQ(custom_plot->xAxis->range().lower, customplot_default_lower);
     EXPECT_DOUBLE_EQ(custom_plot->xAxis->range().upper, customplot_default_upper);
     EXPECT_DOUBLE_EQ(custom_plot->yAxis->range().lower, customplot_default_lower);

@@ -10,16 +10,14 @@
 #ifndef MVVM_VIEWMODEL_DEFAULTCELLDECORATOR_H
 #define MVVM_VIEWMODEL_DEFAULTCELLDECORATOR_H
 
-#include <mvvm/interfaces/celldecoratorinterface.h>
+#include "mvvm/interfaces/celldecoratorinterface.h"
 #include <optional>
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! Generates default cell decorations for Qt trees and tables.
 
-class MVVM_VIEWMODEL_EXPORT DefaultCellDecorator : public CellDecoratorInterface
-{
+class MVVM_VIEWMODEL_EXPORT DefaultCellDecorator : public CellDecoratorInterface {
 public:
     bool hasCustomDecoration(const QModelIndex& index) const override;
     void initStyleOption(QStyleOptionViewItem* option, const QModelIndex& index) override;

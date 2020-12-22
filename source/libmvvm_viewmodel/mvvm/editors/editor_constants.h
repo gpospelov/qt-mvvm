@@ -15,11 +15,7 @@
 
 #include <string>
 
-namespace ModelView
-{
-
-namespace Constants
-{
+namespace ModelView::Constants {
 
 const std::string BoolEditorType = "BoolEditor";
 const std::string ColorEditorType = "ColorEditor";
@@ -33,8 +29,6 @@ const std::string SelectableComboPropertyEditorType = "SelectableComboPropertyEd
 
 const int default_double_decimals = 4; //! number of digits after decimal points
 
-} // namespace Constants
-
-} // namespace ModelView
+} // namespace ModelView::Constants
 
 #endif // MVVM_EDITORS_EDITORCONSTANTS_H

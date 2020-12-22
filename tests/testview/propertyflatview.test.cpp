@@ -7,25 +7,22 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/widgets/propertyflatview.h"
+
 #include "google_test.h"
 #include "toyitems.h"
 #include "toymodel.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/standarditems/vectoritem.h"
 #include <QGridLayout>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/standarditems/vectoritem.h>
-#include <mvvm/widgets/propertyflatview.h>
 
 using namespace ModelView;
 
 //! Tests of PropertyFlatView class.
 
-class PropertyFlatViewTest : public ::testing::Test
-{
+class PropertyFlatViewTest : public ::testing::Test {
 public:
-    ~PropertyFlatViewTest();
-
     //! Returns vector representing enable status of widgets in layout.
-
     std::vector<int> enable_status(PropertyFlatView& flat_view)
     {
         std::vector<int> result;
@@ -37,8 +34,6 @@ public:
         return result;
     }
 };
-
-PropertyFlatViewTest::~PropertyFlatViewTest() = default;
 
 TEST_F(PropertyFlatViewTest, layoutForVector)
 {

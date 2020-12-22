@@ -10,11 +10,10 @@
 #ifndef MVVM_SIGNALS_MODELMAPPER_H
 #define MVVM_SIGNALS_MODELMAPPER_H
 
+#include "mvvm/interfaces/modellistenerinterface.h"
 #include <memory>
-#include <mvvm/interfaces/modellistenerinterface.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionItem;
 class SessionModel;
@@ -22,8 +21,7 @@ class SessionModel;
 //! Provides notifications on various SessionModel changes.
 //! Allows to subscribe to SessionModel's changes, and triggers notifications.
 
-class MVVM_MODEL_EXPORT ModelMapper : public ModelListenerInterface
-{
+class MVVM_MODEL_EXPORT ModelMapper : public ModelListenerInterface {
 public:
     ModelMapper(SessionModel* model);
     ~ModelMapper();

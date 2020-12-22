@@ -10,19 +10,17 @@
 #ifndef MVVM_COMMANDS_MOVEITEMCOMMAND_H
 #define MVVM_COMMANDS_MOVEITEMCOMMAND_H
 
+#include "mvvm/commands/abstractitemcommand.h"
 #include <memory>
-#include <mvvm/commands/abstractitemcommand.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionItem;
 class TagRow;
 
 //! Command for unddo/redo framework to move item from one parent to another.
 
-class MVVM_MODEL_EXPORT MoveItemCommand : public AbstractItemCommand
-{
+class MVVM_MODEL_EXPORT MoveItemCommand : public AbstractItemCommand {
 public:
     MoveItemCommand(SessionItem* item, SessionItem* new_parent, TagRow tagrow);
     ~MoveItemCommand() override;

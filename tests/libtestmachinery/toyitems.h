@@ -10,19 +10,17 @@
 #ifndef TOYITEMS_H
 #define TOYITEMS_H
 
-#include <mvvm/model/compounditem.h>
-#include <mvvm/model/groupitem.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/model/itempool.h>
+#include "mvvm/model/compounditem.h"
+#include "mvvm/model/groupitem.h"
+#include "mvvm/model/itempool.h"
+#include "mvvm/model/sessionmodel.h"
 #include <string>
 
 //! Collection of toy items and models for testing purposes.
 
-namespace ToyItems
-{
+namespace ToyItems {
 
-namespace Constants
-{
+namespace Constants {
 
 const ModelView::model_type MultiLayerItemType = "MultiLayer";
 const ModelView::model_type LayerItemType = "Layer";
@@ -36,11 +34,9 @@ const ModelView::model_type AnysoPyramidItemType = "AnysoPyramid";
 const ModelView::model_type ShapeGroupItemType = "ShapeGroup";
 } // namespace Constants
 
-
 //! Represents multilayer with collection of layers.
 
-class MultiLayerItem : public ModelView::CompoundItem
-{
+class MultiLayerItem : public ModelView::CompoundItem {
 public:
     static inline const std::string T_LAYERS = "T_LAYERS";
     MultiLayerItem();
@@ -48,8 +44,7 @@ public:
 
 //! Represents a layer, with thickness and color, and possibly populated with particles.
 
-class LayerItem : public ModelView::CompoundItem
-{
+class LayerItem : public ModelView::CompoundItem {
 public:
     static inline const std::string P_THICKNESS = "Thickness";
     static inline const std::string P_COLOR = "Color";
@@ -59,8 +54,7 @@ public:
 
 //! Represents a particle, with a position, and a selection of possible shapes.
 
-class ParticleItem : public ModelView::CompoundItem
-{
+class ParticleItem : public ModelView::CompoundItem {
 public:
     static inline const std::string P_POSITION = "Position";
     static inline const std::string P_SHAPES = "Shapes";
@@ -70,8 +64,7 @@ public:
 
 //! Represents a lattice.
 
-class LatticeItem : public ModelView::CompoundItem
-{
+class LatticeItem : public ModelView::CompoundItem {
 public:
     static inline const std::string P_ROTATION_ANLE = "Rotation";
     static inline const std::string P_INTEGRATION = "Integration";
@@ -87,8 +80,7 @@ private:
 
 //! Represents a cylindrical shape.
 
-class CylinderItem : public ModelView::CompoundItem
-{
+class CylinderItem : public ModelView::CompoundItem {
 public:
     static inline const std::string P_RADIUS = "Radius";
     static inline const std::string P_HEIGHT = "Height";
@@ -98,8 +90,7 @@ public:
 
 //! Represents a shpere.
 
-class SphereItem : public ModelView::CompoundItem
-{
+class SphereItem : public ModelView::CompoundItem {
 public:
     static inline const std::string P_RADIUS = "Radius";
 
@@ -108,8 +99,7 @@ public:
 
 //! Represents an anysotropical pyramid.
 
-class AnysoPyramidItem : public ModelView::CompoundItem
-{
+class AnysoPyramidItem : public ModelView::CompoundItem {
 public:
     static inline const std::string P_LENGTH = "Length";
     static inline const std::string P_WIDTH = "Width";
@@ -121,8 +111,7 @@ public:
 
 //! Represents a group item holding a collection of shapes.
 
-class ShapeGroupItem : public ModelView::GroupItem
-{
+class ShapeGroupItem : public ModelView::GroupItem {
 public:
     ShapeGroupItem();
 };

@@ -10,6 +10,8 @@
 #include "mainwindow.h"
 #include "mouse.h"
 #include "mousemodel.h"
+#include "mvvm/model/modelutils.h"
+#include "mvvm/widgets/standardtreeviews.h"
 #include <QAction>
 #include <QDebug>
 #include <QFileDialog>
@@ -21,11 +23,8 @@
 #include <QTimer>
 #include <QToolBar>
 #include <QVBoxLayout>
-#include <mvvm/model/modelutils.h>
-#include <mvvm/widgets/standardtreeviews.h>
 
-namespace
-{
+namespace {
 const int msec_update_period = 30;
 const int max_slider_value = 100;
 } // namespace
@@ -86,7 +85,8 @@ void MainWindow::init_toolbar()
     auto on_pause_action = [this]() {
         if (timer->isActive()) {
             timer->stop();
-        } else {
+        }
+        else {
             timer->start(msec_update_period);
             slider->setValue(max_slider_value);
         }

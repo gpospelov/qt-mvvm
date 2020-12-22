@@ -7,17 +7,16 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/commands/moveitemcommand.h>
-#include <mvvm/model/path.h>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/model/itemutils.h>
+#include "mvvm/commands/moveitemcommand.h"
+#include "mvvm/model/itemutils.h"
+#include "mvvm/model/path.h"
+#include "mvvm/model/sessionitem.h"
 #include <sstream>
 #include <stdexcept>
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 void check_input_data(const SessionItem* item, const SessionItem* parent);
 std::string generate_description(const TagRow& tagrow);
 } // namespace
@@ -97,8 +96,7 @@ void MoveItemCommand::execute_command()
     p_impl->original_parent_path = pathFromItem(original_parent);
 }
 
-namespace
-{
+namespace {
 void check_input_data(const SessionItem* item, const SessionItem* parent)
 {
     if (!item || !item->model())

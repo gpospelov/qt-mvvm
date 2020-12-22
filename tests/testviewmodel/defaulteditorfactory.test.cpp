@@ -7,38 +7,37 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/editors/defaulteditorfactory.h"
+
 #include "google_test.h"
 #include "widgetbasedtest.h"
+#include "mvvm/editors/booleditor.h"
+#include "mvvm/editors/coloreditor.h"
+#include "mvvm/editors/combopropertyeditor.h"
+#include "mvvm/editors/editor_constants.h"
+#include "mvvm/editors/externalpropertyeditor.h"
+#include "mvvm/editors/integereditor.h"
+#include "mvvm/editors/scientificdoubleeditor.h"
+#include "mvvm/editors/scientificspinbox.h"
+#include "mvvm/editors/scientificspinboxeditor.h"
+#include "mvvm/editors/selectablecomboboxeditor.h"
+#include "mvvm/model/comboproperty.h"
+#include "mvvm/model/externalproperty.h"
+#include "mvvm/model/propertyitem.h"
+#include "mvvm/model/sessionitem.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/utils/reallimits.h"
+#include "mvvm/viewmodel/defaultviewmodel.h"
+#include "mvvm/viewmodel/viewmodeldelegate.h"
 #include <QSpinBox>
 #include <QStandardItemModel>
 #include <limits>
-#include <mvvm/editors/booleditor.h>
-#include <mvvm/editors/coloreditor.h>
-#include <mvvm/editors/combopropertyeditor.h>
-#include <mvvm/editors/defaulteditorfactory.h>
-#include <mvvm/editors/editor_constants.h>
-#include <mvvm/editors/externalpropertyeditor.h>
-#include <mvvm/editors/integereditor.h>
-#include <mvvm/editors/scientificdoubleeditor.h>
-#include <mvvm/editors/scientificspinbox.h>
-#include <mvvm/editors/scientificspinboxeditor.h>
-#include <mvvm/editors/selectablecomboboxeditor.h>
-#include <mvvm/model/comboproperty.h>
-#include <mvvm/model/externalproperty.h>
-#include <mvvm/model/propertyitem.h>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/utils/reallimits.h>
-#include <mvvm/viewmodel/defaultviewmodel.h>
-#include <mvvm/viewmodel/viewmodeldelegate.h>
 
 using namespace ModelView;
 
-class DefaultEditorFactoryTest : public WidgetBasedTest
-{
+class DefaultEditorFactoryTest : public WidgetBasedTest {
 public:
     DefaultEditorFactoryTest() : m_factory(std::make_unique<DefaultEditorFactory>()) {}
-    ~DefaultEditorFactoryTest();
 
     //! Helper function to build temporary model and create editor for cell.
     std::unique_ptr<CustomEditor> createEditor(const QVariant& variant,
@@ -62,8 +61,6 @@ public:
 protected:
     std::unique_ptr<DefaultEditorFactory> m_factory;
 };
-
-DefaultEditorFactoryTest::~DefaultEditorFactoryTest() = default;
 
 //! Tests editor creation on bool property.
 

@@ -7,14 +7,13 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/standarditems/plottableitems.h"
+#include "mvvm/model/comboproperty.h"
 #include <QColor>
-#include <mvvm/model/comboproperty.h>
-#include <mvvm/standarditems/plottableitems.h>
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 //! Following Qt styles.
 const ComboProperty penStyleCombo = ComboProperty::createFrom(
     {"NoPen", "SolidLine", "DashLine", "DotLine", "DashDotLine", "DashDotDotLine"}, "SolidLine");

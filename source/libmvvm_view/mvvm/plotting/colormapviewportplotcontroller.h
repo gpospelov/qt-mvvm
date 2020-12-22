@@ -10,22 +10,20 @@
 #ifndef MVVM_PLOTTING_COLORMAPVIEWPORTPLOTCONTROLLER_H
 #define MVVM_PLOTTING_COLORMAPVIEWPORTPLOTCONTROLLER_H
 
+#include "mvvm/signals/itemlistener.h"
+#include "mvvm/view_export.h"
 #include <memory>
-#include <mvvm/signals/itemlistener.h>
-#include <mvvm/view_export.h>
 
 class QCustomPlot;
 
-namespace ModelView
-{
+namespace ModelView {
 
 class ColorMapViewportItem;
 
 //! Establishes communications and mutual updates for ColorMapViewportItem and QCutomPlot.
 //! Populates custom plot with color map and tracks updates in items.
 
-class MVVM_VIEW_EXPORT ColorMapViewportPlotController : public ItemListener<ColorMapViewportItem>
-{
+class MVVM_VIEW_EXPORT ColorMapViewportPlotController : public ItemListener<ColorMapViewportItem> {
 public:
     explicit ColorMapViewportPlotController(QCustomPlot* plot);
     ~ColorMapViewportPlotController() override;

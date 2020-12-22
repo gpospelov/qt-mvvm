@@ -8,21 +8,20 @@
 // ************************************************************************** //
 
 #include "graphmodel.h"
+#include "mvvm/interfaces/undostackinterface.h"
+#include "mvvm/model/mvvm_types.h"
+#include "mvvm/standarditems/axisitems.h"
+#include "mvvm/standarditems/containeritem.h"
+#include "mvvm/standarditems/data1ditem.h"
+#include "mvvm/standarditems/graphitem.h"
+#include "mvvm/standarditems/graphviewportitem.h"
+#include "mvvm/utils/numericutils.h"
+#include "mvvm/widgets/widgetutils.h"
 #include <QColor>
 #include <cmath>
-#include <mvvm/interfaces/undostackinterface.h>
-#include <mvvm/model/mvvm_types.h>
-#include <mvvm/standarditems/axisitems.h>
-#include <mvvm/standarditems/containeritem.h>
-#include <mvvm/standarditems/data1ditem.h>
-#include <mvvm/standarditems/graphitem.h>
-#include <mvvm/standarditems/graphviewportitem.h>
-#include <mvvm/utils/numericutils.h>
-#include <mvvm/widgets/widgetutils.h>
 #include <stdexcept>
 
-namespace
-{
+namespace {
 
 constexpr double pi = 3.14159265358979323846;
 constexpr int npoints = 400;
@@ -45,8 +44,7 @@ std::vector<double> bin_values(double amp_factor = 1.0)
 
 using namespace ModelView;
 
-namespace PlotGraphs
-{
+namespace PlotGraphs {
 
 GraphModel::GraphModel() : SessionModel("GraphModel")
 {

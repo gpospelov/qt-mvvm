@@ -10,13 +10,12 @@
 #ifndef MVVM_UTILS_STRINGUTILS_H
 #define MVVM_UTILS_STRINGUTILS_H
 
-#include <mvvm/model_export.h>
+#include "mvvm/model_export.h"
 #include <optional>
 #include <string>
 #include <vector>
 
-namespace ModelView ::Utils
-{
+namespace ModelView::Utils {
 
 //! Returns string representation of double with given precision.
 //! Provides additional formatting on top of iomanip, so "double x{0}" becomes "0.0".

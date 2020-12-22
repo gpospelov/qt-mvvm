@@ -10,6 +10,8 @@
 #include "modeleditorwidget.h"
 #include "containereditorwidget.h"
 #include "samplemodel.h"
+#include "mvvm/commands/undostack.h"
+#include "mvvm/model/modelutils.h"
 #include <QAction>
 #include <QDebug>
 #include <QHBoxLayout>
@@ -17,13 +19,10 @@
 #include <QToolButton>
 #include <QUndoStack>
 #include <cassert>
-#include <mvvm/commands/undostack.h>
-#include <mvvm/model/modelutils.h>
 
 using namespace ModelView;
 
-namespace DragAndView
-{
+namespace DragAndView {
 
 ModelEditorWidget::ModelEditorWidget(SampleModel* model, QWidget* parent)
     : QWidget(parent)

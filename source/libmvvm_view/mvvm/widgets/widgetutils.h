@@ -10,9 +10,9 @@
 #ifndef MVVM_WIDGETS_UTILS_H
 #define MVVM_WIDGETS_UTILS_H
 
+#include "mvvm/view_export.h"
 #include <QString>
 #include <QStringList>
-#include <mvvm/view_export.h>
 #include <string>
 #include <vector>
 
@@ -21,13 +21,9 @@ class QSize;
 class QMainWindow;
 class QLabel;
 
-namespace ModelView
-{
-
 //! Collection of various widget-related utils.
 
-namespace Utils
-{
+namespace ModelView::Utils {
 
 //! Returns random color.
 MVVM_VIEW_EXPORT QColor RandomColor();
@@ -84,8 +80,6 @@ MVVM_VIEW_EXPORT QByteArray serialize(const QStringList& data);
 //! Converts byte array to vector of strings.
 MVVM_VIEW_EXPORT QStringList deserialize(const QByteArray& byteArray);
 
-} // namespace Utils
-
-} // namespace ModelView
+} // namespace ModelView::Utils
 
 #endif // MVVM_WIDGETS_UTILS_H

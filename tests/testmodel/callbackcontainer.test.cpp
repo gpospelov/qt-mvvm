@@ -7,25 +7,21 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/signals/callbackcontainer.h"
+
 #include "google_test.h"
 #include "mockwidgets.h"
+#include "mvvm/model/mvvm_types.h"
+#include "mvvm/model/sessionitem.h"
 #include <memory>
-#include <mvvm/model/mvvm_types.h>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/signals/callbackcontainer.h>
 
 using namespace ModelView;
 using ::testing::_;
 
 //! Testing CallbackContainer class.
 
-class CallbackContainerTest : public ::testing::Test
-{
-public:
-    ~CallbackContainerTest();
+class CallbackContainerTest : public ::testing::Test {
 };
-
-CallbackContainerTest::~CallbackContainerTest() = default;
 
 //! Callback container notifies single widget. Check if removal of widget disables notifications.
 

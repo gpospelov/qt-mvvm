@@ -7,27 +7,23 @@
 //
 // ************************************************************************** //
 
-#include "google_test.h"
 #include "toyitems.h"
+
+#include "google_test.h"
 #include "toymodel.h"
+#include "mvvm/model/itemutils.h"
+#include "mvvm/standarditems/vectoritem.h"
+#include "mvvm/viewmodel/defaultviewmodel.h"
+#include "mvvm/viewmodel/standardviewitems.h"
+#include "mvvm/viewmodel/topitemsviewmodel.h"
 #include <QSignalSpy>
-#include <mvvm/model/itemutils.h>
-#include <mvvm/standarditems/vectoritem.h>
-#include <mvvm/viewmodel/defaultviewmodel.h>
-#include <mvvm/viewmodel/standardviewitems.h>
-#include <mvvm/viewmodel/topitemsviewmodel.h>
 
 using namespace ModelView;
 
 //! Tests for toy Layer in the context of model and view model.
 
-class ToyLayerItemTest : public ::testing::Test
-{
-public:
-    ~ToyLayerItemTest();
+class ToyLayerItemTest : public ::testing::Test {
 };
-
-ToyLayerItemTest::~ToyLayerItemTest() = default;
 
 //! Initial state.
 

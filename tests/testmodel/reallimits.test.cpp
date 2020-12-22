@@ -7,19 +7,15 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/utils/reallimits.h"
+
 #include "google_test.h"
 #include <limits>
-#include <mvvm/utils/reallimits.h>
 
 using namespace ModelView;
 
-class RealLimitsTest : public ::testing::Test
-{
-protected:
-    ~RealLimitsTest();
+class RealLimitsTest : public ::testing::Test {
 };
-
-RealLimitsTest::~RealLimitsTest() = default;
 
 TEST_F(RealLimitsTest, initialState)
 {

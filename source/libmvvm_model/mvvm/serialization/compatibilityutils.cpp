@@ -7,14 +7,13 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/model/groupitem.h>
-#include <mvvm/model/sessionitemcontainer.h>
-#include <mvvm/model/sessionitemdata.h>
-#include <mvvm/serialization/compatibilityutils.h>
+#include "mvvm/serialization/compatibilityutils.h"
+#include "mvvm/model/groupitem.h"
+#include "mvvm/model/sessionitemcontainer.h"
+#include "mvvm/model/sessionitemdata.h"
 #include <set>
 
-namespace ModelView ::Compatibility
-{
+namespace ModelView ::Compatibility {
 
 /*
 Returns `true` if given TagInfo is compatible with given container.

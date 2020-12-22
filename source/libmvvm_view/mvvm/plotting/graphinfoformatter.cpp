@@ -7,15 +7,14 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/plotting/graphinfoformatter.h>
-#include <mvvm/utils/stringutils.h>
+#include "mvvm/plotting/graphinfoformatter.h"
+#include "mvvm/utils/stringutils.h"
 #include <qcustomplot.h>
 #include <sstream>
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 
 QCPGraph* find_graph_nearby(QCustomPlot* custom_plot, double x, double y)
 {

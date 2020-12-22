@@ -13,6 +13,10 @@
 // https://gist.github.com/mistic100/c3b7f3eabc65309687153fe3e0a9a720
 // ----------------------------------------------------------------------------
 
+#include "mvvm/editors/selectablecomboboxeditor.h"
+#include "mvvm/editors/customeventfilters.h"
+#include "mvvm/model/comboproperty.h"
+#include "mvvm/utils/containerutils.h"
 #include <QAbstractItemView>
 #include <QComboBox>
 #include <QLineEdit>
@@ -21,17 +25,12 @@
 #include <QStandardItemModel>
 #include <QStyledItemDelegate>
 #include <QVBoxLayout>
-#include <mvvm/editors/customeventfilters.h>
-#include <mvvm/editors/selectablecomboboxeditor.h>
-#include <mvvm/model/comboproperty.h>
-#include <mvvm/utils/containerutils.h>
 
 using namespace ModelView;
 
 //! Provides custom style delegate for QComboBox to allow checkboxes.
 
-class QCheckListStyledItemDelegate : public QStyledItemDelegate
-{
+class QCheckListStyledItemDelegate : public QStyledItemDelegate {
 public:
     QCheckListStyledItemDelegate(QObject* parent = nullptr) : QStyledItemDelegate(parent) {}
 
@@ -138,13 +137,13 @@ bool SelectableComboBoxEditor::eventFilter(QObject* obj, QEvent* event)
         auto index = m_box->view()->indexAt(mouseEvent->pos());
         onClickedList(index);
         return true;
-
-    } else if (isClickToExpand(obj, event)) {
+    }
+    else if (isClickToExpand(obj, event)) {
         // Expands box when clicking on None/Multiple label
         m_box->showPopup();
         return true;
-
-    } else {
+    }
+    else {
         // Propagate to the parent class.
         return QObject::eventFilter(obj, event);
     }
@@ -182,7 +181,8 @@ void SelectableComboBoxEditor::setConnected(bool isConnected)
     if (isConnected) {
         connect(m_model, &QStandardItemModel::dataChanged, this,
                 &SelectableComboBoxEditor::onModelDataChanged);
-    } else {
+    }
+    else {
         disconnect(m_model, &QStandardItemModel::dataChanged, this,
                    &SelectableComboBoxEditor::onModelDataChanged);
     }

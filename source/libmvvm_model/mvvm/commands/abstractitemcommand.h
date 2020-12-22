@@ -10,13 +10,12 @@
 #ifndef MVVM_COMMANDS_ABSTRACTITEMCOMMAND_H
 #define MVVM_COMMANDS_ABSTRACTITEMCOMMAND_H
 
+#include "mvvm/commands/commandresult.h"
+#include "mvvm/model_export.h"
 #include <memory>
-#include <mvvm/commands/commandresult.h>
-#include <mvvm/model_export.h>
 #include <string>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionItem;
 class SessionModel;
@@ -24,8 +23,7 @@ class Path;
 
 //! Abstract command interface to manipulate SessionItem in model context.
 
-class MVVM_MODEL_EXPORT AbstractItemCommand
-{
+class MVVM_MODEL_EXPORT AbstractItemCommand {
 public:
     explicit AbstractItemCommand(SessionItem* receiver);
     virtual ~AbstractItemCommand();

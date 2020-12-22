@@ -10,19 +10,17 @@
 #ifndef MVVM_EDITORS_COLOREDITOR_H
 #define MVVM_EDITORS_COLOREDITOR_H
 
-#include <mvvm/editors/customeditor.h>
+#include "mvvm/editors/customeditor.h"
 
 class QLabel;
 
-namespace ModelView
-{
+namespace ModelView {
 
 class LostFocusFilter;
 
 //! Custom editor for QVariant based on QColor.
 
-class MVVM_VIEWMODEL_EXPORT ColorEditor : public CustomEditor
-{
+class MVVM_VIEWMODEL_EXPORT ColorEditor : public CustomEditor {
     Q_OBJECT
 
 public:

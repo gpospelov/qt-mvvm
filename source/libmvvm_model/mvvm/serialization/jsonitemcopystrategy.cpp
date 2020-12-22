@@ -7,10 +7,10 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/serialization/jsonitemcopystrategy.h"
+#include "mvvm/factories/itemconverterfactory.h"
+#include "mvvm/model/sessionitem.h"
 #include <QJsonObject>
-#include <mvvm/factories/itemconverterfactory.h>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/serialization/jsonitemcopystrategy.h>
 
 using namespace ModelView;
 

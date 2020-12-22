@@ -7,31 +7,24 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/signals/modellistener.h"
+
 #include "google_test.h"
+#include "mvvm/model/propertyitem.h"
+#include "mvvm/model/sessionmodel.h"
 #include <memory>
-#include <mvvm/model/propertyitem.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/signals/modellistener.h>
 
 using namespace ModelView;
 
 //! Tests of ModelListener class.
 
-class ModelListenerTest : public ::testing::Test
-{
+class ModelListenerTest : public ::testing::Test {
 public:
-    class TestListener : public ModelListener<SessionModel>
-    {
+    class TestListener : public ModelListener<SessionModel> {
     public:
         TestListener(SessionModel* model) : ModelListener(model) {}
-        ~TestListener();
     };
-
-    ~ModelListenerTest();
 };
-
-ModelListenerTest::~ModelListenerTest() = default;
-ModelListenerTest::TestListener::~TestListener() = default;
 
 //! Initial state.
 

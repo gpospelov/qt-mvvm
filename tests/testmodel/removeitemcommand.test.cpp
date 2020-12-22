@@ -7,23 +7,19 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/commands/removeitemcommand.h"
+
 #include "google_test.h"
-#include <mvvm/commands/removeitemcommand.h>
-#include <mvvm/model/compounditem.h>
-#include <mvvm/model/itemutils.h>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/model/taginfo.h>
+#include "mvvm/model/compounditem.h"
+#include "mvvm/model/itemutils.h"
+#include "mvvm/model/sessionitem.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/model/taginfo.h"
 
 using namespace ModelView;
 
-class RemoveItemCommandTest : public ::testing::Test
-{
-public:
-    ~RemoveItemCommandTest();
+class RemoveItemCommandTest : public ::testing::Test {
 };
-
-RemoveItemCommandTest::~RemoveItemCommandTest() = default;
 
 TEST_F(RemoveItemCommandTest, removeAtCommand)
 {

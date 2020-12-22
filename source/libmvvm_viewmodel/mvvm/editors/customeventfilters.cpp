@@ -7,10 +7,10 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/editors/customeventfilters.h"
 #include <QAbstractSpinBox>
 #include <QComboBox>
 #include <QEvent>
-#include <mvvm/editors/customeventfilters.h>
 
 using namespace ModelView;
 
@@ -35,21 +35,25 @@ bool WheelEventFilter::eventFilter(QObject* obj, QEvent* event)
             if (spinBox->focusPolicy() == Qt::WheelFocus) {
                 event->accept();
                 return false;
-            } else {
+            }
+            else {
                 event->ignore();
                 return true;
             }
-        } else if (event->type() == QEvent::FocusIn) {
+        }
+        else if (event->type() == QEvent::FocusIn) {
             spinBox->setFocusPolicy(Qt::WheelFocus);
-        } else if (event->type() == QEvent::FocusOut) {
+        }
+        else if (event->type() == QEvent::FocusOut) {
             spinBox->setFocusPolicy(Qt::StrongFocus);
         }
-
-    } else if (auto comboBox = qobject_cast<QComboBox*>(obj); comboBox) {
+    }
+    else if (auto comboBox = qobject_cast<QComboBox*>(obj); comboBox) {
         if (event->type() == QEvent::Wheel) {
             event->ignore();
             return true;
-        } else {
+        }
+        else {
             event->accept();
             return false;
         }

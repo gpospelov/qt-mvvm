@@ -9,16 +9,15 @@
 
 #include "colormappropertywidget.h"
 #include "colormapmodel.h"
+#include "mvvm/factories/viewmodelfactory.h"
+#include "mvvm/widgets/itemstreeview.h"
 #include <QBoxLayout>
 #include <QPushButton>
 #include <QSlider>
-#include <mvvm/factories/viewmodelfactory.h>
-#include <mvvm/widgets/itemstreeview.h>
 
 using namespace ModelView;
 
-namespace PlotColorMap
-{
+namespace PlotColorMap {
 
 ColorMapPropertyWidget::ColorMapPropertyWidget(ColorMapModel* model, QWidget* parent)
     : QWidget(parent), m_slider(new QSlider), m_treeView(new ItemsTreeView), m_model(model)

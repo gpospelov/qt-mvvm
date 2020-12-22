@@ -7,38 +7,32 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/factories/viewmodelfactory.h"
+
 #include "google_test.h"
 #include "test_utils.h"
-#include <mvvm/factories/viewmodelfactory.h>
-#include <mvvm/model/propertyitem.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/viewmodel/labeldatarowstrategy.h>
-#include <mvvm/viewmodel/standardchildrenstrategies.h>
-#include <mvvm/viewmodel/standardviewitems.h>
+#include "mvvm/model/propertyitem.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/viewmodel/labeldatarowstrategy.h"
+#include "mvvm/viewmodel/standardchildrenstrategies.h"
+#include "mvvm/viewmodel/standardviewitems.h"
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 std::unique_ptr<ViewModelController> createController(SessionModel* model, ViewModelBase* viewModel)
 {
     return Factory::CreateController<TopItemsStrategy, LabelDataRowStrategy>(model, viewModel);
 }
 } // namespace
 
-class ViewModelFactoryTest : public ::testing::Test
-{
+class ViewModelFactoryTest : public ::testing::Test {
 public:
-    ~ViewModelFactoryTest();
-
-    class CustomModel : public ViewModel
-    {
+    class CustomModel : public ViewModel {
     public:
         CustomModel(SessionModel* model) : ViewModel(createController(model, this), nullptr) {}
     };
 };
-
-ViewModelFactoryTest::~ViewModelFactoryTest() = default;
 
 //! Creating DefaultViewModel using strategies.
 

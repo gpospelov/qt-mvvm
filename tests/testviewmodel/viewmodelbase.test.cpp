@@ -7,28 +7,24 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/viewmodel/viewmodelbase.h"
+
 #include "google_test.h"
 #include "test_utils.h"
+#include "mvvm/model/sessionitem.h"
+#include "mvvm/viewmodel/standardviewitems.h"
 #include <QSignalSpy>
 #include <QStandardItemModel>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/viewmodel/standardviewitems.h>
-#include <mvvm/viewmodel/viewmodelbase.h>
 
 using namespace ModelView;
 
 //! Tests for ViewModelBase class.
 
-class ViewModelBaseTest : public ::testing::Test
-{
+class ViewModelBaseTest : public ::testing::Test {
 public:
-    ~ViewModelBaseTest();
-
-    class TestItem : public ViewItem
-    {
+    class TestItem : public ViewItem {
     public:
         TestItem() : ViewItem(nullptr, 0) {}
-        ~TestItem() override;
     };
 
     using children_t = std::vector<std::unique_ptr<ViewItem>>;
@@ -46,9 +42,6 @@ public:
         return std::make_pair(std::move(vector_of_unique), std::move(vector_of_pointers));
     }
 };
-
-ViewModelBaseTest::~ViewModelBaseTest() = default;
-ViewModelBaseTest::TestItem::~TestItem() = default;
 
 //! Checking behaviour of QStandardItemModel for reference.
 

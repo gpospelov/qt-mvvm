@@ -10,11 +10,10 @@
 #ifndef MVVM_PROJECT_PROJECTMANAGERDECORATOR_H
 #define MVVM_PROJECT_PROJECTMANAGERDECORATOR_H
 
+#include "mvvm/interfaces/projectmanagerinterface.h"
 #include <memory>
-#include <mvvm/interfaces/projectmanagerinterface.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 struct ProjectContext;
 struct UserInteractionContext;
@@ -25,8 +24,7 @@ struct UserInteractionContext;
 //! For example, on createNewProject it will check if previous project is saved, and will
 //! call external dialog save/discard/cancel via provided callback.
 
-class MVVM_MODEL_EXPORT ProjectManagerDecorator : public ProjectManagerInterface
-{
+class MVVM_MODEL_EXPORT ProjectManagerDecorator : public ProjectManagerInterface {
 public:
     ProjectManagerDecorator(const ProjectContext& project_context,
                             const UserInteractionContext& user_context);

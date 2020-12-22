@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/project/modelhaschangedcontroller.h>
+#include "mvvm/project/modelhaschangedcontroller.h"
 
 using namespace ModelView;
 

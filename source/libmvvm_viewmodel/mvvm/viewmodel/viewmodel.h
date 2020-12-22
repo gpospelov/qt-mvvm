@@ -10,10 +10,9 @@
 #ifndef MVVM_VIEWMODEL_VIEWMODEL_H
 #define MVVM_VIEWMODEL_VIEWMODEL_H
 
-#include <mvvm/viewmodel/viewmodelbase.h>
+#include "mvvm/viewmodel/viewmodelbase.h"
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionModel;
 class SessionItem;
@@ -22,8 +21,7 @@ class ViewModelController;
 
 //! Main class to represent content of SessionModel in Qt's trees and tables.
 
-class MVVM_VIEWMODEL_EXPORT ViewModel : public ViewModelBase
-{
+class MVVM_VIEWMODEL_EXPORT ViewModel : public ViewModelBase {
     Q_OBJECT
 
 public:

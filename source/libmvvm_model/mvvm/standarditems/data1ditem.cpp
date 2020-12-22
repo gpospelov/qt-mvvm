@@ -7,14 +7,13 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/standarditems/axisitems.h>
-#include <mvvm/standarditems/data1ditem.h>
+#include "mvvm/standarditems/data1ditem.h"
+#include "mvvm/standarditems/axisitems.h"
 #include <stdexcept>
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 size_t total_bin_count(Data1DItem* item)
 {
     auto axis = item->item<BinnedAxisItem>(Data1DItem::T_AXIS);
@@ -37,7 +36,7 @@ Data1DItem::Data1DItem() : CompoundItem(Constants::Data1DItemType)
 
 //! Sets axis. Bin content will be set to zero.
 
-//void Data1DItem::setAxis(std::unique_ptr<BinnedAxisItem> axis)
+// void Data1DItem::setAxis(std::unique_ptr<BinnedAxisItem> axis)
 //{
 //    // we disable possibility to re-create axis to facilitate undo/redo
 

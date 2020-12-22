@@ -7,26 +7,22 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/standarditems/graphviewportitem.h"
+
 #include "google_test.h"
 #include "mockwidgets.h"
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/standarditems/axisitems.h>
-#include <mvvm/standarditems/data1ditem.h>
-#include <mvvm/standarditems/graphitem.h>
-#include <mvvm/standarditems/graphviewportitem.h>
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/standarditems/axisitems.h"
+#include "mvvm/standarditems/data1ditem.h"
+#include "mvvm/standarditems/graphitem.h"
 
 using namespace ModelView;
 using ::testing::_;
 
 //! Testing AxesItems.
 
-class GraphViewportItemTest : public ::testing::Test
-{
-public:
-    ~GraphViewportItemTest();
+class GraphViewportItemTest : public ::testing::Test {
 };
-
-GraphViewportItemTest::~GraphViewportItemTest() = default;
 
 //! Initial state.
 

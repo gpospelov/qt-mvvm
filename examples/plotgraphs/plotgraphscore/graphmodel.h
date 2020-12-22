@@ -10,23 +10,20 @@
 #ifndef GRAPHMODEL_H
 #define GRAPHMODEL_H
 
-#include <mvvm/model/sessionmodel.h>
+#include "mvvm/model/sessionmodel.h"
 
-namespace ModelView
-{
+namespace ModelView {
 class GraphViewportItem;
 class ContainerItem;
 } // namespace ModelView
 
-namespace PlotGraphs
-{
+namespace PlotGraphs {
 
 //! Main application model to demonstrate how to plot data.
 //! Contains few Data1DItem's, GraphItem's and ViewPortItem. Provides functionality to easily
 //! add and remove graphs.
 
-class GraphModel : public ModelView::SessionModel
-{
+class GraphModel : public ModelView::SessionModel {
 public:
     GraphModel();
 

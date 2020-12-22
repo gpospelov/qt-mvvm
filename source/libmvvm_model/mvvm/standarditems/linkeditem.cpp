@@ -7,13 +7,12 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/model/customvariants.h>
-#include <mvvm/standarditems/linkeditem.h>
+#include "mvvm/standarditems/linkeditem.h"
+#include "mvvm/model/customvariants.h"
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 const Variant empty_link = Variant::fromValue(std::string());
 }
 

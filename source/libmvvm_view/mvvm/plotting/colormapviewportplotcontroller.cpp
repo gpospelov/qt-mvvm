@@ -7,15 +7,15 @@
 //
 // ************************************************************************** //
 
-#include <list>
-#include <mvvm/plotting/colormapplotcontroller.h>
-#include <mvvm/plotting/colormapviewportplotcontroller.h>
-#include <mvvm/plotting/colorscaleplotcontroller.h>
-#include <mvvm/plotting/viewportaxisplotcontroller.h>
-#include <mvvm/standarditems/axisitems.h>
-#include <mvvm/standarditems/colormapitem.h>
-#include <mvvm/standarditems/colormapviewportitem.h>
+#include "mvvm/plotting/colormapviewportplotcontroller.h"
+#include "mvvm/plotting/colormapplotcontroller.h"
+#include "mvvm/plotting/colorscaleplotcontroller.h"
+#include "mvvm/plotting/viewportaxisplotcontroller.h"
+#include "mvvm/standarditems/axisitems.h"
+#include "mvvm/standarditems/colormapitem.h"
+#include "mvvm/standarditems/colormapviewportitem.h"
 #include <qcustomplot.h>
+#include <list>
 
 using namespace ModelView;
 

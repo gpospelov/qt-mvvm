@@ -7,24 +7,20 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/model/itemcatalogue.h"
+
 #include "google_test.h"
-#include <mvvm/factories/itemcataloguefactory.h>
-#include <mvvm/model/itemcatalogue.h>
-#include <mvvm/model/propertyitem.h>
-#include <mvvm/standarditems/vectoritem.h>
+#include "mvvm/factories/itemcataloguefactory.h"
+#include "mvvm/model/propertyitem.h"
+#include "mvvm/standarditems/vectoritem.h"
 #include <stdexcept>
 
 using namespace ModelView;
 
 //! Testing ItemCatalogue construction
 
-class ItemCatalogueTest : public ::testing::Test
-{
-public:
-    ~ItemCatalogueTest();
+class ItemCatalogueTest : public ::testing::Test {
 };
-
-ItemCatalogueTest::~ItemCatalogueTest() = default;
 
 TEST_F(ItemCatalogueTest, initialState)
 {

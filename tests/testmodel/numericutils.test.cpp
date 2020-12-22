@@ -7,19 +7,15 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/utils/numericutils.h"
+
 #include "google_test.h"
 #include <cmath>
-#include <mvvm/utils/numericutils.h>
 
 using namespace ModelView;
 
-class NumericUtilsTest : public ::testing::Test
-{
-public:
-    ~NumericUtilsTest();
+class NumericUtilsTest : public ::testing::Test {
 };
-
-NumericUtilsTest::~NumericUtilsTest() = default;
 
 TEST_F(NumericUtilsTest, areAlmostEqual)
 {

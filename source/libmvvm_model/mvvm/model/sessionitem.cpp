@@ -7,21 +7,20 @@
 //
 // ************************************************************************** //
 
-#include <mvvm/core/uniqueidgenerator.h>
-#include <mvvm/model/customvariants.h>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/model/sessionitemdata.h>
-#include <mvvm/model/sessionitemtags.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/model/taginfo.h>
-#include <mvvm/signals/itemmapper.h>
-#include <mvvm/signals/modelmapper.h>
+#include "mvvm/model/sessionitem.h"
+#include "mvvm/core/uniqueidgenerator.h"
+#include "mvvm/model/customvariants.h"
+#include "mvvm/model/sessionitemdata.h"
+#include "mvvm/model/sessionitemtags.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/model/taginfo.h"
+#include "mvvm/signals/itemmapper.h"
+#include "mvvm/signals/modelmapper.h"
 #include <stdexcept>
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 int appearance(const ModelView::SessionItem& item)
 {
     const int default_appearance = Appearance::EDITABLE | Appearance::ENABLED;

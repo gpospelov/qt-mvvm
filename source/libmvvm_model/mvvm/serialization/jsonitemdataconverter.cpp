@@ -7,20 +7,19 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/serialization/jsonitemdataconverter.h"
+#include "mvvm/model/mvvm_types.h"
+#include "mvvm/model/sessionitemdata.h"
+#include "mvvm/serialization/jsonitemformatassistant.h"
+#include "mvvm/serialization/jsonvariantconverter.h"
 #include <QJsonArray>
 #include <QJsonObject>
-#include <mvvm/model/mvvm_types.h>
-#include <mvvm/model/sessionitemdata.h>
-#include <mvvm/serialization/jsonitemdataconverter.h>
-#include <mvvm/serialization/jsonitemformatassistant.h>
-#include <mvvm/serialization/jsonvariantconverter.h>
 #include <set>
 #include <stdexcept>
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 QJsonValue keyValue(const QJsonValue& parent_value, const QString& key)
 {
     const QJsonObject& parent_object = parent_value.toObject();

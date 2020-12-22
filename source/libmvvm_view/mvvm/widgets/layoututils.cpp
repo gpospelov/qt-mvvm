@@ -7,14 +7,13 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/widgets/layoututils.h"
 #include <QBoxLayout>
 #include <QGridLayout>
 #include <QLayoutItem>
 #include <QWidget>
-#include <mvvm/widgets/layoututils.h>
 
-namespace
-{
+namespace {
 void remove(QGridLayout* layout, int row, int column, bool deleteWidgets);
 void deleteChildWidgets(QLayoutItem* item);
 } // namespace
@@ -72,8 +71,7 @@ void LayoutUtils::clearGridLayout(QGridLayout* layout, bool deleteWidgets)
     }
 }
 
-namespace
-{
+namespace {
 
 /**
  * Helper function. Removes all layout items within the given layout

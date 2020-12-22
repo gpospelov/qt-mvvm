@@ -10,9 +10,9 @@
 #ifndef MODELINQMLCORE_PARTICLEMODEL_H
 #define MODELINQMLCORE_PARTICLEMODEL_H
 
-#include <mvvm/model/compounditem.h>
-#include <mvvm/model/groupitem.h>
-#include <mvvm/model/sessionmodel.h>
+#include "mvvm/model/compounditem.h"
+#include "mvvm/model/groupitem.h"
+#include "mvvm/model/sessionmodel.h"
 
 //! @file particlemodel.h
 //! Collection of items and their model representing Particle.

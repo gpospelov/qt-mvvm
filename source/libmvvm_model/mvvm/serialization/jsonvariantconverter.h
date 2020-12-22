@@ -10,22 +10,20 @@
 #ifndef MVVM_SERIALIZATION_JSONVARIANTCONVERTER_H
 #define MVVM_SERIALIZATION_JSONVARIANTCONVERTER_H
 
+#include "mvvm/core/variant.h"
+#include "mvvm/serialization/jsonvariantconverterinterface.h"
 #include <functional>
 #include <map>
-#include <mvvm/core/variant.h>
-#include <mvvm/serialization/jsonvariantconverterinterface.h>
 #include <string>
 
 class QJsonObject;
 class QJsonVariant;
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! Default converter between supported variants and json objects.
 
-class MVVM_MODEL_EXPORT JsonVariantConverter : public JsonVariantConverterInterface
-{
+class MVVM_MODEL_EXPORT JsonVariantConverter : public JsonVariantConverterInterface {
 public:
     JsonVariantConverter();
 

@@ -14,8 +14,7 @@
 
 //! Constants to define toy items.
 
-namespace Constants
-{
+namespace Constants {
 
 const std::string MultiLayerItemType = "MultiLayer";
 const std::string LayerItemType = "Layer";

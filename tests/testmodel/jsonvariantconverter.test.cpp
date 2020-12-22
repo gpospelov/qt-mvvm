@@ -7,30 +7,29 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/serialization/jsonvariantconverter.h"
+
 #include "folderbasedtest.h"
 #include "google_test.h"
 #include "test_utils.h"
+#include "mvvm/model/comboproperty.h"
+#include "mvvm/model/customvariants.h"
+#include "mvvm/model/externalproperty.h"
+#include "mvvm/model/variant_constants.h"
+#include "mvvm/utils/reallimits.h"
 #include <QColor>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
-#include <mvvm/model/comboproperty.h>
-#include <mvvm/model/customvariants.h>
-#include <mvvm/model/externalproperty.h>
-#include <mvvm/model/variant_constants.h>
-#include <mvvm/serialization/jsonvariantconverter.h>
-#include <mvvm/utils/reallimits.h>
 #include <vector>
 
 using namespace ModelView;
 
 //! Test convertion of QVariant from/to QJsonObject.
 
-class JsonVariantConverterTest : public FolderBasedTest
-{
+class JsonVariantConverterTest : public FolderBasedTest {
 public:
     JsonVariantConverterTest() : FolderBasedTest("test_JsonVariant") {}
-    ~JsonVariantConverterTest();
 
     static QVariant ToJsonAndBack(const QVariant& variant)
     {
@@ -39,8 +38,6 @@ public:
         return converter.get_variant(json);
     }
 };
-
-JsonVariantConverterTest::~JsonVariantConverterTest() = default;
 
 //! Invalid QVariant conversion.
 

@@ -18,15 +18,13 @@ class SceneModel;
 class QBoxLayout;
 class QSlider;
 
-namespace ModelView
-{
+namespace ModelView {
 class ItemsTreeView;
 } // namespace ModelView
 
 //! Shows model content in standard tree view.
 
-class ScenePropertyWidget : public QWidget
-{
+class ScenePropertyWidget : public QWidget {
     Q_OBJECT
 
 public:

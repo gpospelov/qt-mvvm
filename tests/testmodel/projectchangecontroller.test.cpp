@@ -7,22 +7,18 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/project/projectchangecontroller.h"
+
 #include "google_test.h"
-#include <mvvm/model/propertyitem.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/project/projectchangecontroller.h>
+#include "mvvm/model/propertyitem.h"
+#include "mvvm/model/sessionmodel.h"
 
 using namespace ModelView;
 
 //! Tests for ProjectChangeController class.
 
-class ProjectChangeControllerTest : public ::testing::Test
-{
-public:
-    ~ProjectChangeControllerTest();
+class ProjectChangeControllerTest : public ::testing::Test {
 };
-
-ProjectChangeControllerTest::~ProjectChangeControllerTest() = default;
 
 TEST_F(ProjectChangeControllerTest, initialState)
 {

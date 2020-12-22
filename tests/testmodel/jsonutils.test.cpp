@@ -7,20 +7,16 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/serialization/jsonutils.h"
+
 #include "google_test.h"
+#include "mvvm/utils/reallimits.h"
 #include <limits>
-#include <mvvm/serialization/jsonutils.h>
-#include <mvvm/utils/reallimits.h>
 
 using namespace ModelView;
 
-class JsonUtilsTest : public ::testing::Test
-{
-protected:
-    ~JsonUtilsTest();
+class JsonUtilsTest : public ::testing::Test {
 };
-
-JsonUtilsTest::~JsonUtilsTest() = default;
 
 TEST_F(JsonUtilsTest, toString)
 {

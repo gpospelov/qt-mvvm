@@ -10,19 +10,17 @@
 #ifndef MVVM_PLOTTING_CUSTOMPLOTSCENEADAPTER_H
 #define MVVM_PLOTTING_CUSTOMPLOTSCENEADAPTER_H
 
+#include "mvvm/plotting/sceneadapterinterface.h"
 #include <memory>
-#include <mvvm/plotting/sceneadapterinterface.h>
 
 class QCustomPlot;
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! Converts QGraphicsScene coordinates in the coordinates of local system of QCustomPlot
 //! and vice versa.
 
-class MVVM_VIEW_EXPORT CustomPlotSceneAdapter : public SceneAdapterInterface
-{
+class MVVM_VIEW_EXPORT CustomPlotSceneAdapter : public SceneAdapterInterface {
 public:
     explicit CustomPlotSceneAdapter(QCustomPlot* custom_plot);
     ~CustomPlotSceneAdapter() override;

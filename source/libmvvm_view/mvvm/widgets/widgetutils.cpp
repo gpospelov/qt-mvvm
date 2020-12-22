@@ -7,6 +7,8 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/widgets/widgetutils.h"
+#include "mvvm/utils/numericutils.h"
 #include <QApplication>
 #include <QColor>
 #include <QDir>
@@ -14,11 +16,8 @@
 #include <QLabel>
 #include <QMainWindow>
 #include <QSize>
-#include <mvvm/utils/numericutils.h>
-#include <mvvm/widgets/widgetutils.h>
 
-namespace
-{
+namespace {
 
 //! Calculates size of letter `M` for current system font settings.
 

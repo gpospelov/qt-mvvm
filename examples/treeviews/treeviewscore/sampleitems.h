@@ -13,17 +13,15 @@
 //! @file items.h
 //! Collection of test items for our sample model.
 
-#include <mvvm/model/compounditem.h>
-#include <mvvm/model/groupitem.h>
+#include "mvvm/model/compounditem.h"
+#include "mvvm/model/groupitem.h"
 #include <string>
 
-namespace TreeViews
-{
+namespace TreeViews {
 
 //! A multi layer with possibility to attach layers.
 
-class MultiLayer : public ModelView::CompoundItem
-{
+class MultiLayer : public ModelView::CompoundItem {
 public:
     static inline const std::string T_LAYERS = "T_LAYERS";
     MultiLayer();
@@ -31,8 +29,7 @@ public:
 
 //! A layer with thickness, color property and possibility to attach particles.
 
-class LayerItem : public ModelView::CompoundItem
-{
+class LayerItem : public ModelView::CompoundItem {
 public:
     static inline const std::string P_THICKNESS = "Thickness";
     static inline const std::string P_COLOR = "Color";
@@ -43,8 +40,7 @@ public:
 //! A particle with position and shape group.
 //! Demonstrates how to create group of properties.
 
-class ParticleItem : public ModelView::CompoundItem
-{
+class ParticleItem : public ModelView::CompoundItem {
 public:
     static inline const std::string P_POSITION = "Position";
     static inline const std::string P_SHAPES = "Shapes";
@@ -54,8 +50,7 @@ public:
 //! Lattice with bool, double and combo on board.
 //! Demonstrates how to syncronize properties between each other.
 
-class LatticeItem : public ModelView::CompoundItem
-{
+class LatticeItem : public ModelView::CompoundItem {
 public:
     static inline const std::string P_ROTATION_ANLE = "Rotation";
     static inline const std::string P_INTEGRATION = "Integration";
@@ -71,8 +66,7 @@ private:
 
 //! Simple cylinder with radius and height.
 
-class CylinderItem : public ModelView::CompoundItem
-{
+class CylinderItem : public ModelView::CompoundItem {
 public:
     static inline const std::string P_RADIUS = "Radius";
     static inline const std::string P_HEIGHT = "Height";
@@ -81,8 +75,7 @@ public:
 
 //! Simple spherer with radius.
 
-class SphereItem : public ModelView::CompoundItem
-{
+class SphereItem : public ModelView::CompoundItem {
 public:
     static inline const std::string P_RADIUS = "Radius";
     SphereItem();
@@ -90,8 +83,7 @@ public:
 
 //! Pyramid with 4 parameters.
 
-class AnysoPyramidItem : public ModelView::CompoundItem
-{
+class AnysoPyramidItem : public ModelView::CompoundItem {
 public:
     static inline const std::string P_LENGTH = "Length";
     static inline const std::string P_WIDTH = "Width";
@@ -102,8 +94,7 @@ public:
 
 //! Special group of shapes.
 
-class ShapeGroupItem : public ModelView::GroupItem
-{
+class ShapeGroupItem : public ModelView::GroupItem {
 public:
     ShapeGroupItem();
 };

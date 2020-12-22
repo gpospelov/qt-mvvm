@@ -7,14 +7,14 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/viewmodel/labeldatarowstrategy.h"
+
 #include "google_test.h"
 #include "test_utils.h"
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/viewmodel/labeldatarowstrategy.h>
-#include <mvvm/viewmodel/standardviewitems.h>
+#include "mvvm/model/sessionitem.h"
+#include "mvvm/viewmodel/standardviewitems.h"
 
-namespace
-{
+namespace {
 const int expected_column_count = 2;
 const QStringList expected_labels = QStringList() << "Name"
                                                   << "Value";
@@ -22,13 +22,8 @@ const QStringList expected_labels = QStringList() << "Name"
 
 using namespace ModelView;
 
-class LabelDataRowStrategyTest : public ::testing::Test
-{
-public:
-    ~LabelDataRowStrategyTest();
+class LabelDataRowStrategyTest : public ::testing::Test {
 };
-
-LabelDataRowStrategyTest::~LabelDataRowStrategyTest() = default;
 
 TEST_F(LabelDataRowStrategyTest, initialState)
 {

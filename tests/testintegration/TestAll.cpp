@@ -8,7 +8,7 @@
 // ************************************************************************** //
 
 #include "google_test.h"
-#include "qcustomplot.h"
+#include <qcustomplot.h>
 #include <QApplication>
 #include <QStandardItem>
 

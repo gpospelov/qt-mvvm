@@ -7,26 +7,22 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/signals/modelmapper.h"
+
 #include "google_test.h"
 #include "mockwidgets.h"
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/model/sessionitemtags.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/model/tagrow.h>
-#include <mvvm/signals/modelmapper.h>
+#include "mvvm/model/sessionitem.h"
+#include "mvvm/model/sessionitemtags.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/model/tagrow.h"
 
 using namespace ModelView;
 using ::testing::_;
 
 //! Testing ModelMapper callbacks on basic model manipulations.
 
-class ModelMapperTest : public ::testing::Test
-{
-public:
-    ~ModelMapperTest();
+class ModelMapperTest : public ::testing::Test {
 };
-
-ModelMapperTest::~ModelMapperTest() = default;
 
 //! Setting item data and checking corresponding signal.
 

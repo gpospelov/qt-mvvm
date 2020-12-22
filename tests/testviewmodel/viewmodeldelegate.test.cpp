@@ -7,26 +7,24 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/viewmodel/viewmodeldelegate.h"
+
 #include "google_test.h"
 #include "widgetbasedtest.h"
+#include "mvvm/editors/customeditor.h"
+#include "mvvm/model/propertyitem.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/standarditems/vectoritem.h"
+#include "mvvm/viewmodel/defaultviewmodel.h"
 #include <QDataWidgetMapper>
 #include <QStyleOptionViewItem>
-#include <mvvm/editors/customeditor.h>
-#include <mvvm/model/propertyitem.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/standarditems/vectoritem.h>
-#include <mvvm/viewmodel/defaultviewmodel.h>
-#include <mvvm/viewmodel/viewmodeldelegate.h>
 
 using namespace ModelView;
 
 //! Tests of ViewModelDelegate class.
 
-class ViewModelDelegateTest : public WidgetBasedTest
-{
+class ViewModelDelegateTest : public WidgetBasedTest {
 public:
-    ~ViewModelDelegateTest();
-
     struct TestData {
         SessionModel model{};
         DefaultViewModel view_model;
@@ -55,8 +53,6 @@ public:
 
     std::unique_ptr<TestData> test_data() { return std::make_unique<TestData>(); }
 };
-
-ViewModelDelegateTest::~ViewModelDelegateTest() = default;
 
 TEST_F(ViewModelDelegateTest, createEditor)
 {

@@ -7,11 +7,12 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/standarditems/data2ditem.h"
+
 #include "google_test.h"
 #include "mockwidgets.h"
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/standarditems/axisitems.h>
-#include <mvvm/standarditems/data2ditem.h>
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/standarditems/axisitems.h"
 #include <stdexcept>
 
 using namespace ModelView;
@@ -19,13 +20,8 @@ using ::testing::_;
 
 //! Testing Data1DItem.
 
-class Data2DItemTest : public ::testing::Test
-{
-public:
-    ~Data2DItemTest();
+class Data2DItemTest : public ::testing::Test {
 };
-
-Data2DItemTest::~Data2DItemTest() = default;
 
 //! Initial state.
 

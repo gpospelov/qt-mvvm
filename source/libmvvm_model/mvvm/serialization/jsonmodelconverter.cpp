@@ -7,21 +7,20 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/serialization/jsonmodelconverter.h"
+#include "mvvm/factories/itemconverterfactory.h"
+#include "mvvm/model/sessionitem.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/serialization/jsonitem_types.h"
+#include "mvvm/serialization/jsonitemconverter.h"
+#include "mvvm/serialization/jsonitemformatassistant.h"
 #include <QJsonArray>
 #include <QJsonObject>
-#include <mvvm/factories/itemconverterfactory.h>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/serialization/jsonitem_types.h>
-#include <mvvm/serialization/jsonitemconverter.h>
-#include <mvvm/serialization/jsonitemformatassistant.h>
-#include <mvvm/serialization/jsonmodelconverter.h>
 #include <stdexcept>
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 std::unique_ptr<JsonItemConverterInterface> CreateConverter(const ItemFactoryInterface* factory,
                                                             ConverterMode mode)
 {

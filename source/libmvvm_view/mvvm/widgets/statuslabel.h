@@ -10,20 +10,18 @@
 #ifndef MVVM_WIDGETS_STATUSLABEL_H
 #define MVVM_WIDGETS_STATUSLABEL_H
 
+#include "mvvm/view_export.h"
 #include <QFrame>
-#include <mvvm/view_export.h>
 
 class QPaintEvent;
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! Shows a single line of text on a white background.
 //! Opposite to QLabel, doesn't trigger layout resize, being happy with place it has. If text string
 //! is too long for current size, it will be clipped.
 
-class MVVM_VIEW_EXPORT StatusLabel : public QFrame
-{
+class MVVM_VIEW_EXPORT StatusLabel : public QFrame {
     Q_OBJECT
 
 public:

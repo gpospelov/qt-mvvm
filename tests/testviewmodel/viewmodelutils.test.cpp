@@ -7,21 +7,21 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/viewmodel/viewmodelutils.h"
+
 #include "google_test.h"
+#include "mvvm/model/mvvm_types.h"
+#include "mvvm/model/sessionitem.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/standarditems/vectoritem.h"
+#include "mvvm/viewmodel/propertytableviewmodel.h"
+#include "mvvm/viewmodel/standardviewitems.h"
 #include <QColor>
 #include <QModelIndexList>
 #include <QStandardItemModel>
-#include <mvvm/model/mvvm_types.h>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/standarditems/vectoritem.h>
-#include <mvvm/viewmodel/propertytableviewmodel.h>
-#include <mvvm/viewmodel/standardviewitems.h>
-#include <mvvm/viewmodel/viewmodelutils.h>
 
-namespace
-{
-QList<QStandardItem*> get_items(std::vector<int> data)
+namespace {
+QList<QStandardItem*> get_items(const std::vector<int>& data)
 {
     QList<QStandardItem*> result;
 
@@ -34,13 +34,8 @@ QList<QStandardItem*> get_items(std::vector<int> data)
 
 using namespace ModelView;
 
-class ViewModelUtilsTest : public ::testing::Test
-{
-public:
-    ~ViewModelUtilsTest();
+class ViewModelUtilsTest : public ::testing::Test {
 };
-
-ViewModelUtilsTest::~ViewModelUtilsTest() = default;
 
 TEST_F(ViewModelUtilsTest, iterate)
 {

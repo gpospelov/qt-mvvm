@@ -10,12 +10,11 @@
 #ifndef MVVM_PLOTTING_GRAPHCANVAS_H
 #define MVVM_PLOTTING_GRAPHCANVAS_H
 
+#include "mvvm/view_export.h"
 #include <QWidget>
 #include <memory>
-#include <mvvm/view_export.h>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class GraphViewportItem;
 class SceneAdapterInterface;
@@ -23,8 +22,7 @@ class SceneAdapterInterface;
 //! Widget to show scientific figure with multiple 1D graphs.
 //! Contains embedded QCustomPlot widget, shows content of GraphViewportItem.
 
-class MVVM_VIEW_EXPORT GraphCanvas : public QWidget
-{
+class MVVM_VIEW_EXPORT GraphCanvas : public QWidget {
     Q_OBJECT
 
 public:

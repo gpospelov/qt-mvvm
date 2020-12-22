@@ -7,25 +7,24 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/viewmodel/viewmodelcontroller.h"
+#include "mvvm/interfaces/childrenstrategyinterface.h"
+#include "mvvm/interfaces/rowstrategyinterface.h"
+#include "mvvm/model/itemutils.h"
+#include "mvvm/model/modelutils.h"
+#include "mvvm/model/path.h"
+#include "mvvm/model/sessionitem.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/utils/containerutils.h"
+#include "mvvm/viewmodel/standardviewitems.h"
+#include "mvvm/viewmodel/viewmodelbase.h"
+#include "mvvm/viewmodel/viewmodelutils.h"
 #include <map>
-#include <mvvm/interfaces/childrenstrategyinterface.h>
-#include <mvvm/interfaces/rowstrategyinterface.h>
-#include <mvvm/model/itemutils.h>
-#include <mvvm/model/modelutils.h>
-#include <mvvm/model/path.h>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/utils/containerutils.h>
-#include <mvvm/viewmodel/standardviewitems.h>
-#include <mvvm/viewmodel/viewmodelbase.h>
-#include <mvvm/viewmodel/viewmodelcontroller.h>
-#include <mvvm/viewmodel/viewmodelutils.h>
 #include <stdexcept>
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 
 //! Returns true if given SessionItem role is valid for view
 bool isValidItemRole(const ViewItem* view, int item_role)
@@ -286,7 +285,8 @@ void ViewModelController::onAboutToRemoveItem(SessionItem* parent, TagRow tagrow
         p_impl->m_itemToVview.clear();
         p_impl->m_rootItemPath = {};
         p_impl->m_viewModel->endResetModel();
-    } else {
+    }
+    else {
         p_impl->remove_row_of_views(item_to_remove);
     }
 }

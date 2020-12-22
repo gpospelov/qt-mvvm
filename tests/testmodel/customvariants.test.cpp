@@ -7,33 +7,29 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/model/customvariants.h"
+
 #include "google_test.h"
+#include "mvvm/model/comboproperty.h"
+#include "mvvm/model/externalproperty.h"
+#include "mvvm/model/itemutils.h"
+#include "mvvm/model/sessionitem.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/model/taginfo.h"
+#include "mvvm/model/variant_constants.h"
 #include <QColor>
 #include <functional>
 #include <memory>
-#include <mvvm/model/comboproperty.h>
-#include <mvvm/model/customvariants.h>
-#include <mvvm/model/externalproperty.h>
-#include <mvvm/model/itemutils.h>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/model/taginfo.h>
-#include <mvvm/model/variant_constants.h>
 
 using namespace ModelView;
 
-class CustomVariantsTest : public ::testing::Test
-{
+class CustomVariantsTest : public ::testing::Test {
 public:
-    ~CustomVariantsTest();
-
     template <typename T> QVariant variantFromArgument(const T& value)
     {
         return QVariant::fromValue(value);
     }
 };
-
-CustomVariantsTest::~CustomVariantsTest() = default;
 
 //! To keep under control implicit type conversion.
 
@@ -94,7 +90,8 @@ TEST_F(CustomVariantsTest, CompatibleVariantTypes)
             if (i == j) {
                 EXPECT_TRUE(Utils::VariantType(variants[i]) == Utils::VariantType(variants[j]));
                 EXPECT_TRUE(Utils::CompatibleVariantTypes(variants[i], variants[j]));
-            } else {
+            }
+            else {
                 EXPECT_FALSE(Utils::CompatibleVariantTypes(variants[i], variants[j]));
                 EXPECT_FALSE(Utils::VariantType(variants[i]) == Utils::VariantType(variants[j]));
             }

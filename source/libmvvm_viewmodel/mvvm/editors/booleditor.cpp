@@ -7,13 +7,12 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/editors/booleditor.h"
 #include <QCheckBox>
 #include <QHBoxLayout>
-#include <mvvm/editors/booleditor.h>
 #include <stdexcept>
 
-namespace
-{
+namespace {
 const QString true_text = "True";
 const QString false_text = "False";
 } // namespace

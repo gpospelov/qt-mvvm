@@ -7,20 +7,16 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/serialization/jsonitem_types.h"
+
 #include "google_test.h"
-#include <mvvm/serialization/jsonitem_types.h>
 
 using namespace ModelView;
 
 //! Testing json related flags.
 
-class JsonItemTypesTest : public ::testing::Test
-{
-public:
-    ~JsonItemTypesTest();
+class JsonItemTypesTest : public ::testing::Test {
 };
-
-JsonItemTypesTest::~JsonItemTypesTest() = default;
 
 TEST_F(JsonItemTypesTest, isRegenerateIdWhenBackFromJson)
 {

@@ -14,18 +14,16 @@
 #include <QJsonObject>
 #include <QString>
 #include <QTextStream>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/serialization/jsonconverterinterfaces.h>
-#include <mvvm/serialization/jsonutils.h>
-#include <mvvm/utils/fileutils.h>
-#include <string>
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/serialization/jsonconverterinterfaces.h"
+#include "mvvm/serialization/jsonutils.h"
+#include "mvvm/utils/fileutils.h"
 #include <stdexcept>
-
+#include <string>
 
 using namespace ModelView;
 
-namespace
-{
+namespace {
 void SaveDocument(const QJsonDocument& document, const std::string& fileName);
 }
 
@@ -112,8 +110,7 @@ std::string TestUtils::CreateEmptyFile(const std::string& dirname, const std::st
     return filename;
 }
 
-namespace
-{
+namespace {
 
 void SaveDocument(const QJsonDocument& document, const std::string& fileName)
 {

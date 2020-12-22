@@ -10,17 +10,16 @@
 #ifndef MVVM_MODEL_SESSIONITEM_H
 #define MVVM_MODEL_SESSIONITEM_H
 
+#include "mvvm/core/variant.h"
+#include "mvvm/model/customvariants.h"
+#include "mvvm/model/mvvm_types.h"
+#include "mvvm/model/tagrow.h"
+#include "mvvm/model_export.h"
 #include <memory>
-#include <mvvm/core/variant.h>
-#include <mvvm/model/customvariants.h>
-#include <mvvm/model/mvvm_types.h>
-#include <mvvm/model/tagrow.h>
-#include <mvvm/model_export.h>
 #include <stdexcept>
 #include <vector>
 
-namespace ModelView
-{
+namespace ModelView {
 
 class SessionModel;
 class TagInfo;
@@ -28,8 +27,7 @@ class ItemMapper;
 class SessionItemData;
 class SessionItemTags;
 
-class MVVM_MODEL_EXPORT SessionItem
-{
+class MVVM_MODEL_EXPORT SessionItem {
 public:
     explicit SessionItem(model_type modelType = Constants::BaseType);
     virtual ~SessionItem();

@@ -10,17 +10,15 @@
 #ifndef MVVM_EDITORS_COMBOPROPERTYEDITOR_H
 #define MVVM_EDITORS_COMBOPROPERTYEDITOR_H
 
-#include <mvvm/editors/customeditor.h>
+#include "mvvm/editors/customeditor.h"
 
 class QComboBox;
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! Custom editor for QVariant based on ComboProperty.
 
-class MVVM_VIEWMODEL_EXPORT ComboPropertyEditor : public CustomEditor
-{
+class MVVM_VIEWMODEL_EXPORT ComboPropertyEditor : public CustomEditor {
     Q_OBJECT
 
 public:

@@ -7,22 +7,18 @@
 //
 // ************************************************************************** //
 
+#include "mvvm/viewmodel/standardviewitems.h"
+
 #include "google_test.h"
+#include "mvvm/model/sessionitem.h"
 #include <QColor>
 #include <memory>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/viewmodel/standardviewitems.h>
 #include <stdexcept>
 
 using namespace ModelView;
 
-class StandardViewItemsTest : public ::testing::Test
-{
-public:
-    ~StandardViewItemsTest();
+class StandardViewItemsTest : public ::testing::Test {
 };
-
-StandardViewItemsTest::~StandardViewItemsTest() = default;
 
 // ----------------------------------------------------------------------------
 // Tests for ViewLabelItem

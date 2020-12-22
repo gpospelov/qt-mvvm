@@ -10,15 +10,13 @@
 #ifndef MVVM_INTERFACES_ITEMLISTENERINTERFACE_H
 #define MVVM_INTERFACES_ITEMLISTENERINTERFACE_H
 
-#include <mvvm/signals/callback_types.h>
+#include "mvvm/signals/callback_types.h"
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! Interface to subscribe to various events happening with specific SessionItem.
 
-class MVVM_MODEL_EXPORT ItemListenerInterface
-{
+class MVVM_MODEL_EXPORT ItemListenerInterface {
 public:
     virtual ~ItemListenerInterface() = default;
 

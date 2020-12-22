@@ -10,15 +10,14 @@
 #ifndef MATERIALPROPERTYCONTROLLER_H
 #define MATERIALPROPERTYCONTROLLER_H
 
-#include <mvvm/signals/modellistener.h>
+#include "mvvm/signals/modellistener.h"
 
 class SampleModel;
 class MaterialModel;
 
 //! Listens for all changes in material model and updates properties in SampleModel.
 
-class MaterialPropertyController : public ModelView::ModelListener<MaterialModel>
-{
+class MaterialPropertyController : public ModelView::ModelListener<MaterialModel> {
 public:
     MaterialPropertyController(MaterialModel* material_model, SampleModel* sample_model);
 

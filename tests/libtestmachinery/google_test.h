@@ -11,7 +11,7 @@
 #define GOOGLETEST_H
 
 #include <gtest/gtest.h>
-#include <mvvm/model/customvariants.h>
-#include <mvvm/model/comparators.h>
+#include "mvvm/model/comparators.h"
+#include "mvvm/model/customvariants.h"
 
 #endif

@@ -16,8 +16,7 @@ class QApplication;
 
 //! Convenience class to setup QApplication for tests involving QWidget creation.
 
-class WidgetBasedTest : public ::testing::Test
-{
+class WidgetBasedTest : public ::testing::Test {
 public:
     WidgetBasedTest();
 

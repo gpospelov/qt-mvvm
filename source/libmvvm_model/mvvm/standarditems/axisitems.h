@@ -13,17 +13,15 @@
 //! @file axisitems.h
 //! Collection of axis items for 1D and 2D data/plotting support.
 
+#include "mvvm/model/compounditem.h"
 #include <memory>
-#include <mvvm/model/compounditem.h>
 #include <vector>
 
-namespace ModelView
-{
+namespace ModelView {
 
 //! Base class for all axes items. Has min, max defined, but nothing else.
 
-class MVVM_MODEL_EXPORT BasicAxisItem : public CompoundItem
-{
+class MVVM_MODEL_EXPORT BasicAxisItem : public CompoundItem {
 public:
     static inline const std::string P_MIN = "P_MIN";
     static inline const std::string P_MAX = "P_MAX";
@@ -37,8 +35,7 @@ protected:
 //! Item to represent viewport axis.
 //! Serves as a counterpart of QCPAxis from QCustomPlot. Intended to cary title, fonts etc.
 
-class MVVM_MODEL_EXPORT ViewportAxisItem : public BasicAxisItem
-{
+class MVVM_MODEL_EXPORT ViewportAxisItem : public BasicAxisItem {
 public:
     static inline const std::string P_TITLE = "P_TITLE";
     static inline const std::string P_IS_LOG = "P_IS_LOG";
@@ -56,8 +53,7 @@ public:
 //! Data2Ditem to store 1d and 2d data.  Doesn't carry any appearance info (e.g. axis title, label
 //! size, etc) and thus not intended for direct plotting.
 
-class MVVM_MODEL_EXPORT BinnedAxisItem : public BasicAxisItem
-{
+class MVVM_MODEL_EXPORT BinnedAxisItem : public BasicAxisItem {
 public:
     explicit BinnedAxisItem(const std::string& model_type);
 
@@ -71,11 +67,10 @@ public:
 //! Item to represent fixed bin axis.
 //! Defines an axis with equidistant binning.
 
-class MVVM_MODEL_EXPORT FixedBinAxisItem : public BinnedAxisItem
-{
+class MVVM_MODEL_EXPORT FixedBinAxisItem : public BinnedAxisItem {
 public:
     static inline const std::string P_NBINS = "P_NBINS";
-    FixedBinAxisItem(const std::string& model_type = Constants::FixedBinAxisItemType);
+    explicit FixedBinAxisItem(const std::string& model_type = Constants::FixedBinAxisItemType);
 
     void setParameters(int nbins, double xmin, double xmax);
 
@@ -91,10 +86,9 @@ public:
 //! Item to represent pointwise axis.
 //! Defines an axis via array of points representing point coordinates.
 
-class MVVM_MODEL_EXPORT PointwiseAxisItem : public BinnedAxisItem
-{
+class MVVM_MODEL_EXPORT PointwiseAxisItem : public BinnedAxisItem {
 public:
-    PointwiseAxisItem(const std::string& model_type = Constants::PointwiseAxisItemType);
+    explicit PointwiseAxisItem(const std::string& model_type = Constants::PointwiseAxisItemType);
 
     void setParameters(const std::vector<double>& data);
 

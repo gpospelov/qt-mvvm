@@ -10,17 +10,16 @@
 #include "colormapwidget.h"
 #include "colormapmodel.h"
 #include "colormappropertywidget.h"
+#include "mvvm/plotting/colormapcanvas.h"
+#include "mvvm/standarditems/colormapviewportitem.h"
 #include <QAction>
 #include <QBoxLayout>
 #include <QToolBar>
 #include <QToolButton>
-#include <mvvm/plotting/colormapcanvas.h>
-#include <mvvm/standarditems/colormapviewportitem.h>
 
 using namespace ModelView;
 
-namespace PlotColorMap
-{
+namespace PlotColorMap {
 
 ColorMapWidget::ColorMapWidget(ColorMapModel* model, QWidget* parent)
     : QWidget(parent)
