@@ -7,8 +7,9 @@
 //
 // ************************************************************************** //
 
-#include "google_test.h"
 #include "mvvm/model/comboproperty.h"
+
+#include "google_test.h"
 #include "mvvm/model/comparators.h"
 #include <stdexcept>
 

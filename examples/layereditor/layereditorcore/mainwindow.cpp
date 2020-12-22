@@ -7,15 +7,15 @@
 //
 // ************************************************************************** //
 
+#include <layereditorcore/applicationmodels.h>
+#include <layereditorcore/mainwindow.h>
+#include <layereditorcore/samplewidget.h>
 #include <QAction>
 #include <QCoreApplication>
 #include <QFileDialog>
 #include <QMenuBar>
 #include <QSettings>
 #include <QTabWidget>
-#include <layereditorcore/applicationmodels.h>
-#include <layereditorcore/mainwindow.h>
-#include <layereditorcore/samplewidget.h>
 
 namespace {
 const QString main_window_group = "MainWindow";

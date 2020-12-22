@@ -10,9 +10,9 @@
 #include "customplot_test_utils.h"
 #include "google_test.h"
 #include "qcustomplot.h"
+#include <gmock/gmock.h>
 #include <QApplication>
 #include <QStandardItem>
-#include <gmock/gmock.h>
 
 int main(int argc, char** argv)
 {

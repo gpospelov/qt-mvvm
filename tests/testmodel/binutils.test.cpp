@@ -7,9 +7,10 @@
 //
 // ************************************************************************** //
 
-#include "google_test.h"
 #include "mvvm/utils/binutils.h"
-#include <testconfig.h>
+
+#include "google_test.h"
+#include "testconfig.h"
 
 using namespace ModelView;
 

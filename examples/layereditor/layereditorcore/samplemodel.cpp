@@ -8,9 +8,9 @@
 // ************************************************************************** //
 
 #include "mvvm/model/externalproperty.h"
-#include <QVariant>
 #include <layereditorcore/materialmodel.h>
 #include <layereditorcore/samplemodel.h>
+#include <QVariant>
 
 using namespace ModelView;
 

@@ -13,8 +13,8 @@
 #include "mvvm/standarditems/axisitems.h"
 #include "mvvm/standarditems/graphitem.h"
 #include "mvvm/standarditems/graphviewportitem.h"
-#include <list>
 #include <qcustomplot.h>
+#include <list>
 #include <stdexcept>
 
 using namespace ModelView;
