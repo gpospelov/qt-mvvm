@@ -10,8 +10,8 @@
 #include "google_test.h"
 #include <QColor>
 #include <memory>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/viewmodel/standardviewitems.h>
+#include "mvvm/model/sessionitem.h"
+#include "mvvm/viewmodel/standardviewitems.h"
 #include <stdexcept>
 
 using namespace ModelView;

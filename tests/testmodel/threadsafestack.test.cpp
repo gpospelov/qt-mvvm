@@ -9,7 +9,7 @@
 
 #include "google_test.h"
 #include <future>
-#include <mvvm/utils/threadsafestack.h>
+#include "mvvm/utils/threadsafestack.h"
 
 using namespace ModelView;
 

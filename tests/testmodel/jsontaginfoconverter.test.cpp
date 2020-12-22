@@ -13,8 +13,8 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
-#include <mvvm/model/taginfo.h>
-#include <mvvm/serialization/jsontaginfoconverter.h>
+#include "mvvm/model/taginfo.h"
+#include "mvvm/serialization/jsontaginfoconverter.h"
 #include <string>
 
 using namespace ModelView;

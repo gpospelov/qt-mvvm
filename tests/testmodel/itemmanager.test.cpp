@@ -9,10 +9,10 @@
 
 #include "google_test.h"
 #include <memory>
-#include <mvvm/model/itemmanager.h>
-#include <mvvm/model/itempool.h>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/model/sessionmodel.h>
+#include "mvvm/model/itemmanager.h"
+#include "mvvm/model/itempool.h"
+#include "mvvm/model/sessionitem.h"
+#include "mvvm/model/sessionmodel.h"
 
 using namespace ModelView;
 

@@ -9,11 +9,11 @@
 
 #include "google_test.h"
 #include "mockwidgets.h"
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/model/sessionitemtags.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/model/tagrow.h>
-#include <mvvm/signals/modelmapper.h>
+#include "mvvm/model/sessionitem.h"
+#include "mvvm/model/sessionitemtags.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/model/tagrow.h"
+#include "mvvm/signals/modelmapper.h"
 
 using namespace ModelView;
 using ::testing::_;

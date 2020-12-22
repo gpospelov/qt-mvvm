@@ -11,13 +11,13 @@
 #include "google_test.h"
 #include "qcustomplot.h"
 #include <QSignalSpy>
-#include <mvvm/model/comboproperty.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/plotting/graphplotcontroller.h>
-#include <mvvm/standarditems/axisitems.h>
-#include <mvvm/standarditems/data1ditem.h>
-#include <mvvm/standarditems/graphitem.h>
-#include <mvvm/standarditems/plottableitems.h>
+#include "mvvm/model/comboproperty.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/plotting/graphplotcontroller.h"
+#include "mvvm/standarditems/axisitems.h"
+#include "mvvm/standarditems/data1ditem.h"
+#include "mvvm/standarditems/graphitem.h"
+#include "mvvm/standarditems/plottableitems.h"
 
 using namespace ModelView;
 

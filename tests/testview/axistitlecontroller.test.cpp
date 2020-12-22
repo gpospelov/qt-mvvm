@@ -10,9 +10,9 @@
 #include "google_test.h"
 #include "qcustomplot.h"
 #include <QFont>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/plotting/axistitlecontroller.h>
-#include <mvvm/standarditems/plottableitems.h>
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/plotting/axistitlecontroller.h"
+#include "mvvm/standarditems/plottableitems.h"
 
 using namespace ModelView;
 

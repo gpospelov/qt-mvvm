@@ -9,7 +9,7 @@
 
 #include "google_test.h"
 #include "qcustomplot.h"
-#include <mvvm/plotting/customplotsceneadapter.h>
+#include "mvvm/plotting/customplotsceneadapter.h"
 
 using namespace ModelView;
 

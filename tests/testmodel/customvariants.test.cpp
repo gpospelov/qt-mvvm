@@ -11,14 +11,14 @@
 #include <QColor>
 #include <functional>
 #include <memory>
-#include <mvvm/model/comboproperty.h>
-#include <mvvm/model/customvariants.h>
-#include <mvvm/model/externalproperty.h>
-#include <mvvm/model/itemutils.h>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/model/taginfo.h>
-#include <mvvm/model/variant_constants.h>
+#include "mvvm/model/comboproperty.h"
+#include "mvvm/model/customvariants.h"
+#include "mvvm/model/externalproperty.h"
+#include "mvvm/model/itemutils.h"
+#include "mvvm/model/sessionitem.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/model/taginfo.h"
+#include "mvvm/model/variant_constants.h"
 
 using namespace ModelView;
 

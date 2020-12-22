@@ -9,10 +9,10 @@
 
 #include "google_test.h"
 #include "mockwidgets.h"
-#include <mvvm/model/itempool.h>
-#include <mvvm/model/propertyitem.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/standarditems/linkeditem.h>
+#include "mvvm/model/itempool.h"
+#include "mvvm/model/propertyitem.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/standarditems/linkeditem.h"
 
 using namespace ModelView;
 using ::testing::_;

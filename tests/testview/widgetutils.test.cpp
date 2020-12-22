@@ -11,7 +11,7 @@
 #include "test_utils.h"
 #include <QDebug>
 #include <QDir>
-#include <mvvm/widgets/widgetutils.h>
+#include "mvvm/widgets/widgetutils.h"
 
 using namespace ModelView;
 

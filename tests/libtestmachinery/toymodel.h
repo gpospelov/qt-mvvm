@@ -10,8 +10,8 @@
 #ifndef TOYMODEL_H
 #define TOYMODEL_H
 
-#include <mvvm/model/itempool.h>
-#include <mvvm/model/sessionmodel.h>
+#include "mvvm/model/itempool.h"
+#include "mvvm/model/sessionmodel.h"
 
 //! Collection of toy items and models for testing purposes.
 

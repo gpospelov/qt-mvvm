@@ -9,8 +9,8 @@
 
 #include "google_test.h"
 #include <QColor>
-#include <mvvm/model/comboproperty.h>
-#include <mvvm/standarditems/plottableitems.h>
+#include "mvvm/model/comboproperty.h"
+#include "mvvm/standarditems/plottableitems.h"
 
 using namespace ModelView;
 

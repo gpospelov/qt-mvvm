@@ -9,8 +9,8 @@
 
 #include "google_test.h"
 #include <limits>
-#include <mvvm/serialization/jsonutils.h>
-#include <mvvm/utils/reallimits.h>
+#include "mvvm/serialization/jsonutils.h"
+#include "mvvm/utils/reallimits.h"
 
 using namespace ModelView;
 

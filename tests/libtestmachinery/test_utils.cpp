@@ -14,10 +14,10 @@
 #include <QJsonObject>
 #include <QString>
 #include <QTextStream>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/serialization/jsonconverterinterfaces.h>
-#include <mvvm/serialization/jsonutils.h>
-#include <mvvm/utils/fileutils.h>
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/serialization/jsonconverterinterfaces.h"
+#include "mvvm/serialization/jsonutils.h"
+#include "mvvm/utils/fileutils.h"
 #include <stdexcept>
 #include <string>
 

@@ -9,9 +9,9 @@
 
 #include "google_test.h"
 #include "test_utils.h"
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/viewmodel/labeldatarowstrategy.h>
-#include <mvvm/viewmodel/standardviewitems.h>
+#include "mvvm/model/sessionitem.h"
+#include "mvvm/viewmodel/labeldatarowstrategy.h"
+#include "mvvm/viewmodel/standardviewitems.h"
 
 namespace {
 const int expected_column_count = 2;

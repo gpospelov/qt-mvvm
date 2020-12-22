@@ -11,11 +11,11 @@
 #include "google_test.h"
 #include "test_utils.h"
 #include <cctype>
-#include <mvvm/model/propertyitem.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/project/project_types.h>
-#include <mvvm/project/projectmanager.h>
-#include <mvvm/utils/fileutils.h>
+#include "mvvm/model/propertyitem.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/project/project_types.h"
+#include "mvvm/project/projectmanager.h"
+#include "mvvm/utils/fileutils.h"
 
 using namespace ModelView;
 

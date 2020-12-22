@@ -8,14 +8,14 @@
 // ************************************************************************** //
 
 #include "google_test.h"
-#include <mvvm/commands/insertnewitemcommand.h>
-#include <mvvm/interfaces/itemfactoryinterface.h>
-#include <mvvm/model/compounditem.h>
-#include <mvvm/model/itempool.h>
-#include <mvvm/model/itemutils.h>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/model/taginfo.h>
+#include "mvvm/commands/insertnewitemcommand.h"
+#include "mvvm/interfaces/itemfactoryinterface.h"
+#include "mvvm/model/compounditem.h"
+#include "mvvm/model/itempool.h"
+#include "mvvm/model/itemutils.h"
+#include "mvvm/model/sessionitem.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/model/taginfo.h"
 #include <stdexcept>
 
 using namespace ModelView;

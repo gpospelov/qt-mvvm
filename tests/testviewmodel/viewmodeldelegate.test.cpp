@@ -11,12 +11,12 @@
 #include "widgetbasedtest.h"
 #include <QDataWidgetMapper>
 #include <QStyleOptionViewItem>
-#include <mvvm/editors/customeditor.h>
-#include <mvvm/model/propertyitem.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/standarditems/vectoritem.h>
-#include <mvvm/viewmodel/defaultviewmodel.h>
-#include <mvvm/viewmodel/viewmodeldelegate.h>
+#include "mvvm/editors/customeditor.h"
+#include "mvvm/model/propertyitem.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/standarditems/vectoritem.h"
+#include "mvvm/viewmodel/defaultviewmodel.h"
+#include "mvvm/viewmodel/viewmodeldelegate.h"
 
 using namespace ModelView;
 

@@ -9,11 +9,11 @@
 
 #include "google_test.h"
 #include <memory>
-#include <mvvm/model/modelutils.h>
-#include <mvvm/model/path.h>
-#include <mvvm/model/sessionitem.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/model/taginfo.h>
+#include "mvvm/model/modelutils.h"
+#include "mvvm/model/path.h"
+#include "mvvm/model/sessionitem.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/model/taginfo.h"
 
 using namespace ModelView;
 

@@ -9,7 +9,7 @@
 
 #include "google_test.h"
 #include <limits>
-#include <mvvm/editors/scientificspinbox.h>
+#include "mvvm/editors/scientificspinbox.h"
 
 using namespace ModelView;
 

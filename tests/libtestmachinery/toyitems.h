@@ -10,10 +10,10 @@
 #ifndef TOYITEMS_H
 #define TOYITEMS_H
 
-#include <mvvm/model/compounditem.h>
-#include <mvvm/model/groupitem.h>
-#include <mvvm/model/itempool.h>
-#include <mvvm/model/sessionmodel.h>
+#include "mvvm/model/compounditem.h"
+#include "mvvm/model/groupitem.h"
+#include "mvvm/model/itempool.h"
+#include "mvvm/model/sessionmodel.h"
 #include <string>
 
 //! Collection of toy items and models for testing purposes.

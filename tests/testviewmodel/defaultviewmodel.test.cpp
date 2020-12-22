@@ -12,21 +12,21 @@
 #include "test_utils.h"
 #include <QJsonObject>
 #include <QSignalSpy>
-#include <mvvm/model/compounditem.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/model/taginfo.h>
-#include <mvvm/serialization/jsondocument.h>
-#include <mvvm/serialization/jsonitem_types.h>
-#include <mvvm/serialization/jsonmodelconverter.h>
-#include <mvvm/standarditems/axisitems.h>
-#include <mvvm/standarditems/containeritem.h>
-#include <mvvm/standarditems/data1ditem.h>
-#include <mvvm/standarditems/graphitem.h>
-#include <mvvm/standarditems/graphviewportitem.h>
-#include <mvvm/standarditems/vectoritem.h>
-#include <mvvm/viewmodel/defaultviewmodel.h>
-#include <mvvm/viewmodel/standardviewitems.h>
-#include <mvvm/viewmodel/viewmodelutils.h>
+#include "mvvm/model/compounditem.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/model/taginfo.h"
+#include "mvvm/serialization/jsondocument.h"
+#include "mvvm/serialization/jsonitem_types.h"
+#include "mvvm/serialization/jsonmodelconverter.h"
+#include "mvvm/standarditems/axisitems.h"
+#include "mvvm/standarditems/containeritem.h"
+#include "mvvm/standarditems/data1ditem.h"
+#include "mvvm/standarditems/graphitem.h"
+#include "mvvm/standarditems/graphviewportitem.h"
+#include "mvvm/standarditems/vectoritem.h"
+#include "mvvm/viewmodel/defaultviewmodel.h"
+#include "mvvm/viewmodel/standardviewitems.h"
+#include "mvvm/viewmodel/viewmodelutils.h"
 
 using namespace ModelView;
 

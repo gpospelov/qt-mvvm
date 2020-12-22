@@ -8,9 +8,9 @@
 // ************************************************************************** //
 
 #include "google_test.h"
-#include <mvvm/model/comboproperty.h>
-#include <mvvm/model/mvvm_types.h>
-#include <mvvm/model/sessionitemdata.h>
+#include "mvvm/model/comboproperty.h"
+#include "mvvm/model/mvvm_types.h"
+#include "mvvm/model/sessionitemdata.h"
 #include <stdexcept>
 
 using namespace ModelView;

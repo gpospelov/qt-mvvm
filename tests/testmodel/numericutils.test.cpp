@@ -9,7 +9,7 @@
 
 #include "google_test.h"
 #include <cmath>
-#include <mvvm/utils/numericutils.h>
+#include "mvvm/utils/numericutils.h"
 
 using namespace ModelView;
 

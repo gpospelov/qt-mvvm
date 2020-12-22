@@ -10,13 +10,13 @@
 #include "customplot_test_utils.h"
 #include "google_test.h"
 #include "qcustomplot.h"
-#include <mvvm/interfaces/undostackinterface.h>
-#include <mvvm/model/sessionmodel.h>
-#include <mvvm/plotting/graphviewportplotcontroller.h>
-#include <mvvm/standarditems/axisitems.h>
-#include <mvvm/standarditems/data1ditem.h>
-#include <mvvm/standarditems/graphitem.h>
-#include <mvvm/standarditems/graphviewportitem.h>
+#include "mvvm/interfaces/undostackinterface.h"
+#include "mvvm/model/sessionmodel.h"
+#include "mvvm/plotting/graphviewportplotcontroller.h"
+#include "mvvm/standarditems/axisitems.h"
+#include "mvvm/standarditems/data1ditem.h"
+#include "mvvm/standarditems/graphitem.h"
+#include "mvvm/standarditems/graphviewportitem.h"
 
 using namespace ModelView;
 

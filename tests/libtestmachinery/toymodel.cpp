@@ -9,7 +9,7 @@
 
 #include "toymodel.h"
 #include "toyitems.h"
-#include <mvvm/model/itemcatalogue.h>
+#include "mvvm/model/itemcatalogue.h"
 
 namespace {
 std::unique_ptr<ModelView::ItemCatalogue> CreateItemCatalogue()

@@ -10,9 +10,9 @@
 #include "google_test.h"
 #include <QDebug>
 #include <QJsonObject>
-#include <mvvm/model/modelutils.h>
-#include <mvvm/serialization/jsonmodelconverter.h>
-#include <mvvm/standarditems/standarditemincludes.h>
+#include "mvvm/model/modelutils.h"
+#include "mvvm/serialization/jsonmodelconverter.h"
+#include "mvvm/standarditems/standarditemincludes.h"
 
 using namespace ModelView;
 
