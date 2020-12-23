@@ -44,6 +44,14 @@ struct SessionItem::SessionItemImpl {
         , m_tags(std::make_unique<SessionItemTags>())
     {
     }
+
+    bool do_setData(const Variant& variant, int role)
+    {
+        bool result = m_data->setData(variant, role);
+        if (result && m_model)
+            m_model->mapper()->callOnDataChange(m_self, role);
+        return result;
+    }
 };
 
 SessionItem::SessionItem(model_type modelType) : p_impl(std::make_unique<SessionItemImpl>(this))
@@ -120,15 +128,15 @@ bool SessionItem::hasData(int role) const
     return p_impl->m_data->hasData(role);
 }
 
-//! Sets the data for given role, notifies the model.
+////! Sets the data for given role, notifies the model.
 
-bool SessionItem::setDataIntern(const Variant& variant, int role)
-{
-    bool result = p_impl->m_data->setData(variant, role);
-    if (result && model())
-        model()->mapper()->callOnDataChange(this, role);
-    return result;
-}
+// bool SessionItem::setDataIntern(const Variant& variant, int role)
+//{
+//    bool result = p_impl->m_data->setData(variant, role);
+//    if (result && model())
+//        model()->mapper()->callOnDataChange(this, role);
+//    return result;
+//}
 
 //! Returns pointer to item's data container (const version).
 
@@ -323,13 +331,14 @@ SessionItem* SessionItem::setEditorType(const std::string& editor_type)
     return this;
 }
 
-//! Sets the data for given role.
-//! Method invented to hide implementaiton details.
+//! Sets the data for given role. Method invented to hide implementaiton details.
 
-bool SessionItem::set_data_internal(const Variant& value, int role)
+bool SessionItem::set_data_internal(const Variant& value, int role, bool direct)
 {
-    return model() && model()->undoStack() ? model()->setData(this, value, role)
-                                           : setDataIntern(value, role);
+    // if model is present, undo stack is enabled, will forward request to the model
+    const bool act_through_model = !direct && model() && model()->undoStack();
+    return act_through_model ? model()->setData(this, value, role)
+                             : p_impl->do_setData(value, role);
 }
 
 //! Returns data for given role. Method invented to hide implementaiton details and avoid
@@ -370,7 +379,7 @@ void SessionItem::setAppearanceFlag(int flag, bool value)
     // By setting data with internal method we are bypassing the model, and so undo/redo.
     // So current convention is to not invoke undo when changing appearance properties.
     // Shall we change it?
-    setDataIntern(flags, ItemDataRole::APPEARANCE);
+    p_impl->do_setData(flags, ItemDataRole::APPEARANCE);
 }
 
 //! Returns item mapper. Allows subscribing to various events happening to the item.
