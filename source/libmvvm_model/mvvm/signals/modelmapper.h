@@ -46,9 +46,9 @@ private:
     friend class SessionItem;
 
     void callOnDataChange(SessionItem* item, int role);
-    void callOnItemInserted(SessionItem* parent, TagRow tagrow);
-    void callOnItemRemoved(SessionItem* parent, TagRow tagrow);
-    void callOnItemAboutToBeRemoved(SessionItem* parent, TagRow tagrow);
+    void callOnItemInserted(SessionItem* parent, const TagRow& tagrow);
+    void callOnItemRemoved(SessionItem* parent, const TagRow& tagrow);
+    void callOnItemAboutToBeRemoved(SessionItem* parent, const TagRow& tagrow);
     void callOnModelDestroyed();
     void callOnModelAboutToBeReset();
     void callOnModelReset();

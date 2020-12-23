@@ -7,11 +7,11 @@
 //
 // ************************************************************************** //
 
-#include "layereditorcore/multilayertreeview.h"
-#include "layereditorcore/applicationmodels.h"
-#include "layereditorcore/customeditorfactory.h"
-#include "layereditorcore/customlayerrowstrategy.h"
-#include "layereditorcore/samplemodel.h"
+#include "multilayertreeview.h"
+#include "applicationmodels.h"
+#include "customeditorfactory.h"
+#include "customlayerrowstrategy.h"
+#include "samplemodel.h"
 #include "mvvm/factories/viewmodelfactory.h"
 #include "mvvm/viewmodel/standardchildrenstrategies.h"
 #include "mvvm/viewmodel/viewmodeldelegate.h"

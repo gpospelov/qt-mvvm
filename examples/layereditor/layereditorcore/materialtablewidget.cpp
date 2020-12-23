@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#include "layereditorcore/materialtablewidget.h"
-#include "layereditorcore/materialmodel.h"
+#include "materialtablewidget.h"
+#include "materialmodel.h"
 #include "mvvm/factories/viewmodelfactory.h"
 #include "mvvm/signals/modelmapper.h"
 #include "mvvm/standarditems/containeritem.h"

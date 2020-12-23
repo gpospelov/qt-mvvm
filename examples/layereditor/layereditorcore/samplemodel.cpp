@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#include "layereditorcore/samplemodel.h"
-#include "layereditorcore/materialmodel.h"
+#include "samplemodel.h"
+#include "materialmodel.h"
 #include "mvvm/model/externalproperty.h"
 #include <QVariant>
 

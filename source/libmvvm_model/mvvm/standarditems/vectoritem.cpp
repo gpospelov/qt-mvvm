@@ -36,5 +36,5 @@ void VectorItem::update_label()
     std::ostringstream ostr;
     ostr << "(" << property<double>(P_X) << ", " << property<double>(P_Y) << ", "
          << property<double>(P_Z) << ")";
-    setDataIntern(Variant::fromValue(ostr.str()), ItemDataRole::DATA);
+    setData(Variant::fromValue(ostr.str()), ItemDataRole::DATA, /*direct*/true);
 }
