@@ -7,12 +7,12 @@
 //
 // ************************************************************************** //
 
-#include "layereditorcore/samplewidget.h"
-#include "layereditorcore/applicationmodels.h"
-#include "layereditorcore/materialmodel.h"
-#include "layereditorcore/materialtablewidget.h"
-#include "layereditorcore/multilayertreeview.h"
-#include "layereditorcore/samplemodel.h"
+#include "samplewidget.h"
+#include "applicationmodels.h"
+#include "materialmodel.h"
+#include "materialtablewidget.h"
+#include "multilayertreeview.h"
+#include "samplemodel.h"
 #include "mvvm/factories/viewmodelfactory.h"
 #include "mvvm/widgets/itemstreeview.h"
 #include <QTreeView>

@@ -7,9 +7,9 @@
 //
 // ************************************************************************** //
 
-#include "layereditorcore/customeditorfactory.h"
-#include "layereditorcore/applicationmodels.h"
-#include "layereditorcore/materialmodel.h"
+#include "customeditorfactory.h"
+#include "applicationmodels.h"
+#include "materialmodel.h"
 #include "mvvm/editors/externalpropertycomboeditor.h"
 #include "mvvm/model/externalproperty.h"
 #include <QModelIndex>

@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "layereditorcore/materialmodel.h"
+#include "materialmodel.h"
 #include "mvvm/model/externalproperty.h"
 #include "mvvm/model/itemcatalogue.h"
 #include "mvvm/standarditems/containeritem.h"

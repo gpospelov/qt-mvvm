@@ -10,7 +10,7 @@
 #ifndef CUSTOMLAYERROWSTRATEGY_H
 #define CUSTOMLAYERROWSTRATEGY_H
 
-#include "layereditorcore/samplemodel.h"
+#include "samplemodel.h"
 #include "mvvm/interfaces/rowstrategyinterface.h"
 #include "mvvm/viewmodel/standardviewitems.h"
 #include "mvvm/viewmodel/viewitem.h"

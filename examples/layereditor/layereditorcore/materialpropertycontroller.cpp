@@ -7,9 +7,9 @@
 //
 // ************************************************************************** //
 
-#include "layereditorcore/materialpropertycontroller.h"
-#include "layereditorcore/materialmodel.h"
-#include "layereditorcore/samplemodel.h"
+#include "materialpropertycontroller.h"
+#include "materialmodel.h"
+#include "samplemodel.h"
 #include "mvvm/model/externalproperty.h"
 #include "mvvm/model/modelutils.h"
 #include "mvvm/signals/modelmapper.h"
