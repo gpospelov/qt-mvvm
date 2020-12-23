@@ -335,7 +335,8 @@ SessionItem* SessionItem::setEditorType(const std::string& editor_type)
 
 bool SessionItem::set_data_internal(const Variant& value, int role, bool direct)
 {
-    // if model is present, undo stack is enabled, will forward request to the model
+    // If model is present, and undo stack is enabled, will forward request to the model
+    // (unless user explicitely asks for direct processing via direct=true flag).
     const bool act_through_model = !direct && model() && model()->undoStack();
     return act_through_model ? model()->setData(this, value, role)
                              : p_impl->do_setData(value, role);

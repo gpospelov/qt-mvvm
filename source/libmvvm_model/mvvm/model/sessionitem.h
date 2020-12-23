@@ -27,9 +27,8 @@ class ItemMapper;
 class SessionItemData;
 class SessionItemTags;
 
-//! The main object representing an editable/displayable/serializable entity of the GUI
-//! application. Construction element (node) of SessionModel to represent all the data of GUI
-//! application.
+//! The main object representing an editable/displayable/serializable entity. Serves as a
+//! construction element (node) of SessionModel to represent all the data of GUI application.
 
 class MVVM_MODEL_EXPORT SessionItem {
 public:
