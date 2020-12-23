@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include <graphicsproxycore/mainwindow.h>
+#include "graphicsproxycore/mainwindow.h"
 #include <QApplication>
 #include <QLocale>
 

@@ -7,9 +7,9 @@
 //
 // ************************************************************************** //
 
+#include "plotgraphscore/mainwindow.h"
 #include <QApplication>
 #include <QLocale>
-#include <plotgraphscore/mainwindow.h>
 
 int main(int argc, char** argv)
 {
