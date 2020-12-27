@@ -10,6 +10,8 @@ target_sources(${library_name} PRIVATE
     mainwindow.h
     modeleditorwidget.cpp
     modeleditorwidget.h
+    sampleitems.cpp
+    sampleitems.h
     samplemodel.cpp
     samplemodel.h
 )
