@@ -20,20 +20,26 @@ namespace NodeEditor {
 const std::string ParticleItemType = "Particle";
 const std::string TransformationItemType = "Transformation";
 
-//! Base class for all items representing content of QGraphicsScene.
+//! Base class for all node editor items.
 
-class GraphicsItem : public ModelView::CompoundItem {
+class ConnectableItem : public ModelView::CompoundItem {
 public:
     static inline const std::string P_XPOS = "P_XPOS";
     static inline const std::string P_YPOS = "P_YPOS";
     static inline const std::string P_COLOR = "P_COLOR";
 
-    explicit GraphicsItem(const std::string& modelType);
+    explicit ConnectableItem(const std::string& modelType);
+
+    std::string namedColor() const;
+
+    double xPos() const;
+
+    double yPos() const;
 };
 
 //! Represents particle item box on graph canvas.
 
-class ParticleItem : public GraphicsItem {
+class ParticleItem : public ConnectableItem {
 public:
     static inline const std::string T_TRANSFORMATION = "T_TRANSFORMATION";
     ParticleItem();
@@ -41,7 +47,7 @@ public:
 
 //! Represents transformation item box on graph canvas.
 
-class TransformationItem : public GraphicsItem {
+class TransformationItem : public ConnectableItem {
 public:
     TransformationItem();
 };

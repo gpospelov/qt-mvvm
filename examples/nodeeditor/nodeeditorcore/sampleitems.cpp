@@ -15,19 +15,34 @@ using namespace ModelView;
 
 namespace NodeEditor {
 
-GraphicsItem::GraphicsItem(const std::string& modelType) : ModelView::CompoundItem(modelType)
+ConnectableItem::ConnectableItem(const std::string& modelType) : ModelView::CompoundItem(modelType)
 {
     addProperty(P_XPOS, 0.0)->setDisplayName("X");
     addProperty(P_YPOS, 0.0)->setDisplayName("Y");
     addProperty(P_COLOR, "antiquewhite");
 }
 
-ParticleItem::ParticleItem() : GraphicsItem(ParticleItemType)
+std::string ConnectableItem::namedColor() const
+{
+    return property<std::string>(P_COLOR);
+}
+
+double ConnectableItem::xPos() const
+{
+    return property<double>(P_XPOS);
+}
+
+double ConnectableItem::yPos() const
+{
+    return property<double>(P_YPOS);
+}
+
+ParticleItem::ParticleItem() : ConnectableItem(ParticleItemType)
 {
     // intended to attach TransformationItem
     registerTag(TagInfo(T_TRANSFORMATION, 0, 1, {TransformationItemType}), true);
 }
 
-TransformationItem::TransformationItem() : GraphicsItem(TransformationItemType) {}
+TransformationItem::TransformationItem() : ConnectableItem(TransformationItemType) {}
 
 } // namespace NodeEditor
