@@ -77,9 +77,9 @@ TEST_F(CompoundItemTest, addDoubleProperty)
 
     EXPECT_TRUE(propertyItem->data<QVariant>(ItemDataRole::LIMITS).isValid());
 
-    // limits should be non negative by default
+    // limits should be "negative 'unlimited' by default
     auto limits = propertyItem->data<RealLimits>(ItemDataRole::LIMITS);
-    EXPECT_TRUE(limits.hasLowerLimit());
+    EXPECT_FALSE(limits.hasLowerLimit());
     EXPECT_FALSE(limits.hasUpperLimit());
 }
 

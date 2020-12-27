@@ -57,10 +57,8 @@ PropertyItem* CompoundItem::addProperty(const std::string& name, const V& value)
     property->setDisplayName(name);
     property->setData(value);
 
-    // FIXME consider limitless values by default.
-
     if constexpr (std::is_floating_point_v<V>)
-        property->setData(RealLimits::nonnegative(), ItemDataRole::LIMITS);
+        property->setData(RealLimits::limitless(), ItemDataRole::LIMITS);
 
     insertItem(property, {name, 0});
     return property;
