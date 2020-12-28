@@ -30,6 +30,8 @@ public:
 protected:
     QColor color() const;
 
+    QString label() const;
+
 private:
     QRectF m_rect;
     ConnectableItem* m_item{nullptr};
