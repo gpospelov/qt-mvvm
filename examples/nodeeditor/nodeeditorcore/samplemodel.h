@@ -21,6 +21,9 @@ namespace NodeEditor {
 class SampleModel : public ModelView::SessionModel {
 public:
     SampleModel();
+
+private:
+    void create_initial_content();
 };
 
 } // namespace NodeEditor

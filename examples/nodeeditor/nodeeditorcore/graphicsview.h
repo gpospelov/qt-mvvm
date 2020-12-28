@@ -16,7 +16,7 @@ namespace NodeEditor {
 
 class GraphicsScene;
 
-//! Graphics view to show QCustomPlot with additional elements on top.
+//! Graphics view for our cusrom graphics scene.
 
 class GraphicsView : public QGraphicsView {
     Q_OBJECT

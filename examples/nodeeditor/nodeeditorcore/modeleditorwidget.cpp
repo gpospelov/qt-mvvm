@@ -17,9 +17,9 @@ using namespace ModelView;
 
 namespace NodeEditor {
 
-ModelEditorWidget::ModelEditorWidget(SampleModel*, QWidget* parent)
+ModelEditorWidget::ModelEditorWidget(SampleModel* model, QWidget* parent)
     : QWidget(parent)
-    , m_graphicsScene(new GraphicsScene(this))
+    , m_graphicsScene(new GraphicsScene(model, this))
     , m_graphicsView(new GraphicsView(m_graphicsScene, this))
 {
     auto layout = new QHBoxLayout(this);

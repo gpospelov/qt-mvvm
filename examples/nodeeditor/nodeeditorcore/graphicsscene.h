@@ -14,14 +14,19 @@
 
 namespace NodeEditor {
 
-//! Custom graphics scene to show QCustomPlot with additional elements on top.
+class SampleModel;
+
+//! Custom graphics scene for node editor.
 
 class GraphicsScene : public QGraphicsScene {
     Q_OBJECT
 
 public:
-    GraphicsScene(QObject* parent);
+    GraphicsScene(SampleModel* model, QObject* parent);
     ~GraphicsScene() override;
+
+private:
+    SampleModel* m_model{nullptr};
 };
 
 } // namespace NodeEditor
