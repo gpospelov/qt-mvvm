@@ -17,8 +17,8 @@ class GraphViewportItem;
 class ContainerItem;
 } // namespace ModelView
 
-//! Main application model holding data for single graph.
-//! Contains few Data1DItem's, GraphItem's and ViewPortItem.
+//! Main application model holding data for single graph. Contains Data1DItem, GraphItem and
+//! ViewPortItem.
 
 class GraphModel : public ModelView::SessionModel {
 public:

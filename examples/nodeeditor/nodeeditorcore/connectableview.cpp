@@ -9,23 +9,13 @@
 
 #include "connectableview.h"
 #include "sampleitems.h"
+#include "sceneutils.h"
 #include "mvvm/widgets/widgetutils.h"
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
 
 namespace {
 const int round_par = 5;
-
-//! Returns vertical gradient using provided base color and rectangle.
-QGradient view_gradient(const QColor& color, const QRectF& rect)
-{
-    QLinearGradient result(rect.x() + rect.width() / 2, rect.y(), rect.x() + rect.width() / 2,
-                           rect.y() + rect.height());
-    result.setColorAt(0, color);
-    result.setColorAt(0.5, color.lighter(150));
-    result.setColorAt(1, color);
-    return result;
-}
 
 //! Returns rectangle to display ConnectableView label. Takes bounding box of a view as input
 //! parameter.
@@ -60,7 +50,7 @@ void ConnectableView::paint(QPainter* painter, const QStyleOptionGraphicsItem* o
     if (option->state & (QStyle::State_Selected | QStyle::State_HasFocus))
         painter->setPen(Qt::DashLine);
 
-    painter->setBrush(view_gradient(color(), boundingRect()));
+    painter->setBrush(CreateViewGradient(color(), boundingRect()));
     painter->drawRoundedRect(boundingRect(), round_par, round_par);
 
     painter->setPen(Qt::black);

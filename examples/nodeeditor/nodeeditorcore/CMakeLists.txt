@@ -20,5 +20,7 @@ target_sources(${library_name} PRIVATE
     sampleitems.h
     samplemodel.cpp
     samplemodel.h
+    sceneutils.cpp
+    sceneutils.h
 )
 

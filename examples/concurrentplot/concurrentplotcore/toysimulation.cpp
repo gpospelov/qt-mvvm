@@ -10,7 +10,6 @@
 #include "toysimulation.h"
 #include <chrono>
 #include <cmath>
-#include <iostream>
 #include <stdexcept>
 #include <thread>
 
@@ -46,9 +45,6 @@ void ToySimulation::runSimulation()
 
         progress_handler.setCompletedTicks(1);
 
-        //        std::cout << "delay " << delay << " amplitude:" << input_data.amplitude <<
-        //        std::endl;
-
         if (delay > 0)
             std::this_thread::sleep_for(std::chrono::microseconds(delay));
     }
@@ -63,5 +59,5 @@ ToySimulation::Result ToySimulation::simulationResult() const
 
 void ToySimulation::setProgressCallback(ProgressHandler::callback_t callback)
 {
-    progress_handler.subscribe(callback);
+    progress_handler.subscribe(std::move(callback));
 }
