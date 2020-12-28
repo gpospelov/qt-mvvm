@@ -14,11 +14,15 @@
 
 namespace {
 const int round_par = 5;
-}
+const QRectF rectangle = QRectF(0, 0, 100, 200);
+} // namespace
 
 namespace NodeEditor {
 
-ConnectableView::ConnectableView(QGraphicsObject* parent) : QGraphicsObject(parent) {}
+ConnectableView::ConnectableView(ConnectableItem* item, QGraphicsObject* parent)
+    : QGraphicsObject(parent), m_rect(rectangle), m_item(item)
+{
+}
 
 QRectF ConnectableView::boundingRect() const
 {

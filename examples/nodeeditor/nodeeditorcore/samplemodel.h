@@ -23,7 +23,7 @@ public:
     SampleModel();
 
 private:
-    void create_initial_content();
+    void createInitialContent();
 };
 
 } // namespace NodeEditor

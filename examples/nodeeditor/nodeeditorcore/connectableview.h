@@ -21,7 +21,7 @@ class ConnectableItem;
 
 class ConnectableView : public QGraphicsObject {
 public:
-    ConnectableView(QGraphicsObject* parent = nullptr);
+    ConnectableView(ConnectableItem* item, QGraphicsObject* parent = nullptr);
 
     QRectF boundingRect() const override;
 

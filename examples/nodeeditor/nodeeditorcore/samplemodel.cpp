@@ -19,10 +19,10 @@ SampleModel::SampleModel() : SessionModel("SampleModel")
     registerItem<ParticleItem>();
     registerItem<TransformationItem>();
 
-    create_initial_content();
+    createInitialContent();
 }
 
-void SampleModel::create_initial_content()
+void SampleModel::createInitialContent()
 {
     auto item = insertItem<ParticleItem>();
 }

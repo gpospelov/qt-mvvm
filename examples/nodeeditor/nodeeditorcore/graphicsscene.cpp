@@ -8,6 +8,11 @@
 // ************************************************************************** //
 
 #include "graphicsscene.h"
+#include "connectableview.h"
+#include "sampleitems.h"
+#include "samplemodel.h"
+#include "mvvm/model/itemutils.h"
+#include <QDebug>
 
 namespace {
 const double scene_origin_x{0.0};
@@ -21,8 +26,27 @@ GraphicsScene::GraphicsScene(SampleModel* model, QObject* parent)
     : QGraphicsScene(parent), m_model(model)
 {
     setSceneRect(default_scene_rect);
+
+    updateScene();
 }
 
 GraphicsScene::~GraphicsScene() = default;
+
+//! Updates scene content from the model.
+
+void GraphicsScene::updateScene()
+{
+    auto on_iterate = [this](auto item) {
+        if (auto connectableItem = dynamic_cast<ConnectableItem*>(item); connectableItem)
+            processItem(connectableItem);
+    };
+    ModelView::Utils::iterate(m_model->rootItem(), on_iterate);
+}
+
+void GraphicsScene::processItem(ConnectableItem* item)
+{
+    auto view = new ConnectableView(item);
+    addItem(view);
+}
 
 } // namespace NodeEditor
