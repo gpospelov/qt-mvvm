@@ -8,6 +8,10 @@ target_link_libraries(${library_name} PRIVATE MVVM::View)
 target_sources(${library_name} PRIVATE
     connectableview.cpp
     connectableview.h
+    graphicsscene.cpp
+    graphicsscene.h
+    graphicsview.cpp
+    graphicsview.h
     mainwindow.cpp
     mainwindow.h
     modeleditorwidget.cpp
