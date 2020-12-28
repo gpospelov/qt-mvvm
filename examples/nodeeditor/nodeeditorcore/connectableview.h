@@ -16,8 +16,8 @@ namespace NodeEditor {
 
 class ConnectableItem;
 
-//! Represents ConnectableItem on QGraphicsScene. Provides basic machinery to connect input and
-//! output ports.
+//! Represents ConnectableItem on QGraphicsScene. Shown as a reactangle with rounded corners,
+//! gradient, label, and set of input/output ports to connect.
 
 class ConnectableView : public QGraphicsObject {
 public:
@@ -27,12 +27,11 @@ public:
 
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget*) override;
 
-protected:
-    QColor color() const;
-
-    QString label() const;
-
 private:
+    QColor color() const;
+    QString label() const;
+    void init_ports();
+
     QRectF m_rect;
     ConnectableItem* m_item{nullptr};
 };

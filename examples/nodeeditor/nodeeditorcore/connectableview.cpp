@@ -10,6 +10,7 @@
 #include "connectableview.h"
 #include "sampleitems.h"
 #include "sceneutils.h"
+#include "nodeport.h"
 #include "mvvm/widgets/widgetutils.h"
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
@@ -37,6 +38,8 @@ ConnectableView::ConnectableView(ConnectableItem* item, QGraphicsObject* parent)
     setFlag(QGraphicsItem::ItemIsMovable, true);
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     setFlag(QGraphicsItem::ItemSendsGeometryChanges);
+
+    init_ports();
 }
 
 QRectF ConnectableView::boundingRect() const
@@ -71,6 +74,14 @@ QColor ConnectableView::color() const
 QString ConnectableView::label() const
 {
     return m_item ? QString::fromStdString(m_item->displayName()) : QString("Unnamed");
+}
+
+//! Init ports to connect.
+
+void ConnectableView::init_ports()
+{
+    auto port = new NodePort(this);
+    port->setPos(boundingRect().width(), boundingRect().height()*0.4);
 }
 
 } // namespace NodeEditor
