@@ -17,6 +17,8 @@
 namespace ModelView {
 
 //! Holds info about single tag for SessionItem.
+//! The tag specifies information about children that can be added to a SessionItem. A tag has a name,
+//! min, max allowed number of children, and vector of all modelTypes that children can have.
 
 class MVVM_MODEL_EXPORT TagInfo {
 public:
@@ -40,7 +42,7 @@ public:
 
     bool maximumReached() const;
 
-    bool isValidChild(const std::string& child) const;
+    bool isValidChild(const std::string& modelType) const;
 
     bool isSinglePropertyTag() const;
 
