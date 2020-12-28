@@ -12,6 +12,8 @@
 
 #include <QGraphicsView>
 
+namespace NodeEditor {
+
 class GraphicsScene;
 
 //! Graphics view to show QCustomPlot with additional elements on top.
@@ -22,5 +24,7 @@ class GraphicsView : public QGraphicsView {
 public:
     GraphicsView(GraphicsScene* scene, QWidget* parent);
 };
+
+} // namespace NodeEditor
 
 #endif //  NODEEDITORCORE_GRAPHICSVIEW_H

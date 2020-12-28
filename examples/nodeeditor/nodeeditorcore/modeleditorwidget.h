@@ -16,6 +16,8 @@
 namespace NodeEditor {
 
 class SampleModel;
+class GraphicsView;
+class GraphicsScene;
 
 //! Shows content of the model as vertical tree, horizontal tree and table.
 
@@ -25,6 +27,10 @@ class ModelEditorWidget : public QWidget {
 public:
     explicit ModelEditorWidget(SampleModel* model = nullptr, QWidget* parent = nullptr);
     void setModel(SampleModel* model);
+
+private:
+    NodeEditor::GraphicsScene* m_graphicsScene{nullptr};
+    NodeEditor::GraphicsView* m_graphicsView{nullptr};
 };
 
 } // namespace NodeEditor

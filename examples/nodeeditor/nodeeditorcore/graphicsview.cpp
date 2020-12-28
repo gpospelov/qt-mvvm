@@ -9,11 +9,12 @@
 
 #include "graphicsview.h"
 #include "graphicsscene.h"
-#include <QResizeEvent>
 
-GraphicsView::GraphicsView(GraphicsScene* scene, QWidget* parent)
-    : QGraphicsView(scene, parent)
+namespace NodeEditor {
+
+GraphicsView::GraphicsView(GraphicsScene* scene, QWidget* parent) : QGraphicsView(scene, parent)
 {
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 }
 
+} // namespace NodeEditor

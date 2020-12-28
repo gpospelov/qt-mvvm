@@ -12,7 +12,6 @@
 #include "samplemodel.h"
 #include <QCoreApplication>
 #include <QSettings>
-#include <QTabWidget>
 
 namespace {
 const QString main_window_group = "MainWindow";
@@ -22,9 +21,10 @@ const QString pos_key = "pos";
 
 namespace NodeEditor {
 
-MainWindow::MainWindow() : m_tabWidget(new QTabWidget), m_model(std::make_unique<SampleModel>())
+MainWindow::MainWindow() : m_model(std::make_unique<SampleModel>())
 {
-    setCentralWidget(m_tabWidget);
+    setCentralWidget(new ModelEditorWidget(m_model.get()));
+
     init_application();
 }
 
@@ -58,14 +58,6 @@ void MainWindow::init_application()
         move(settings.value(pos_key, QPoint(200, 200)).toPoint());
         settings.endGroup();
     }
-
-    init_models();
-}
-
-void MainWindow::init_models()
-{
-    m_tabWidget->addTab(new ModelEditorWidget(m_model.get()), "Available properties");
-    m_tabWidget->setCurrentIndex(m_tabWidget->count() - 1);
 }
 
 } // namespace NodeEditor

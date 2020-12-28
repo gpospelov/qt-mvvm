@@ -12,6 +12,8 @@
 
 #include <QGraphicsScene>
 
+namespace NodeEditor {
+
 //! Custom graphics scene to show QCustomPlot with additional elements on top.
 
 class GraphicsScene : public QGraphicsScene {
@@ -21,5 +23,7 @@ public:
     GraphicsScene(QObject* parent);
     ~GraphicsScene() override;
 };
+
+} // namespace NodeEditor
 
 #endif //  NODEEDITORCORE_GRAPHICSSCENE_H

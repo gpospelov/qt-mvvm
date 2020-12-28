@@ -15,9 +15,13 @@ const double scene_origin_y{0.0};
 const QRectF default_scene_rect{QPointF{scene_origin_x, scene_origin_y}, QSizeF{800, 600}};
 } // namespace
 
+namespace NodeEditor {
+
 GraphicsScene::GraphicsScene(QObject* parent) : QGraphicsScene(parent)
 {
     setSceneRect(default_scene_rect);
 }
 
 GraphicsScene::~GraphicsScene() = default;
+
+} // namespace NodeEditor
