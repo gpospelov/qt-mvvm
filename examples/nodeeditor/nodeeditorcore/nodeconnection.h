@@ -7,26 +7,25 @@
 //
 // ************************************************************************** //
 
-#ifndef NODEPORT_H
-#define NODEPORT_H
+#ifndef NODECONNECTION_H
+#define NODECONNECTION_H
 
 //! Node editor: original code is taken from
 //! http://algoholic.eu/qnodeseditor-qt-nodesports-based-data-processing-flow-editor/
 //! Copyright (c) 2012, STANISLAW ADASZEWSKI
 
-#include <QGraphicsObject>
+#include <QGraphicsPathItem>
 
 namespace NodeEditor {
 
-//! Round element representing either input or output port of ConnectableView.
+//! Elastic connection to connect two NodePorts together.
 
-class NodePort : public QGraphicsPathItem {
+class NodeConnection : public QGraphicsPathItem {
 public:
-    NodePort(QGraphicsItem* parent = nullptr);
+    NodeConnection(QGraphicsScene* scene);
+    virtual ~NodeConnection();
 };
-
-
 
 } // namespace NodeEditor
 
-#endif
+#endif // NODECONNECTION_H

@@ -7,15 +7,12 @@
 //
 // ************************************************************************** //
 
-#include "graphicsview.h"
-#include "graphicsscene.h"
+#include "nodeconnection.h"
 
 namespace NodeEditor {
 
-GraphicsView::GraphicsView(GraphicsScene* scene, QWidget* parent) : QGraphicsView(scene, parent)
-{
-    setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    setRenderHint(QPainter::Antialiasing);
-}
+NodeConnection::NodeConnection(QGraphicsScene* /*scene*/) {}
+
+NodeConnection::~NodeConnection() = default;
 
 } // namespace NodeEditor

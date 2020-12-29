@@ -16,6 +16,10 @@ target_sources(${library_name} PRIVATE
     mainwindow.h
     modeleditorwidget.cpp
     modeleditorwidget.h
+    nodeconnection.cpp
+    nodeconnection.h
+    nodecontroller.cpp
+    nodecontroller.h
     nodeport.cpp
     nodeport.h
     sampleitems.cpp

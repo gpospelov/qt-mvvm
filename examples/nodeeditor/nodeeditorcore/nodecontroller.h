@@ -7,26 +7,27 @@
 //
 // ************************************************************************** //
 
-#ifndef NODEPORT_H
-#define NODEPORT_H
+#ifndef NODECONTROLLER_H
+#define NODECONTROLLER_H
 
 //! Node editor: original code is taken from
 //! http://algoholic.eu/qnodeseditor-qt-nodesports-based-data-processing-flow-editor/
 //! Copyright (c) 2012, STANISLAW ADASZEWSKI
 
-#include <QGraphicsObject>
+#include <QObject>
+
+class QGraphicsScene;
 
 namespace NodeEditor {
 
-//! Round element representing either input or output port of ConnectableView.
+//! Main controller of NodeEditor machinery. Listens mouse events of the graphics scene, updates
+//! connections between ports.
 
-class NodePort : public QGraphicsPathItem {
+class NodeController : public QObject {
 public:
-    NodePort(QGraphicsItem* parent = nullptr);
+    NodeController(QGraphicsScene* scene);
 };
-
-
 
 } // namespace NodeEditor
 
-#endif
+#endif // NODECONTROLLER_H

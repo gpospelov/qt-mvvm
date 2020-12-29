@@ -7,15 +7,5 @@
 //
 // ************************************************************************** //
 
-#include "graphicsview.h"
-#include "graphicsscene.h"
+#include "nodecontroller.h"
 
-namespace NodeEditor {
-
-GraphicsView::GraphicsView(GraphicsScene* scene, QWidget* parent) : QGraphicsView(scene, parent)
-{
-    setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    setRenderHint(QPainter::Antialiasing);
-}
-
-} // namespace NodeEditor
