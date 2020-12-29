@@ -11,6 +11,7 @@
 #include "connectableview.h"
 #include "sampleitems.h"
 #include "samplemodel.h"
+#include "nodecontroller.h"
 #include "mvvm/model/itemutils.h"
 #include <QDebug>
 
@@ -23,7 +24,7 @@ const QRectF default_scene_rect{QPointF{scene_origin_x, scene_origin_y}, QSizeF{
 namespace NodeEditor {
 
 GraphicsScene::GraphicsScene(SampleModel* model, QObject* parent)
-    : QGraphicsScene(parent), m_model(model)
+    : QGraphicsScene(parent), m_model(model), m_nodeController(new NodeController(this))
 {
     setSceneRect(default_scene_rect);
 

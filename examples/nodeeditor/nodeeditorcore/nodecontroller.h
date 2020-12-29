@@ -17,15 +17,31 @@
 #include <QObject>
 
 class QGraphicsScene;
+class QGraphicsSceneMouseEvent;
 
 namespace NodeEditor {
 
-//! Main controller of NodeEditor machinery. Listens mouse events of the graphics scene, updates
-//! connections between ports.
+class NodeConnection;
+
+//! The main controller of NodeEditor machinery. Listens to mouse events of the graphics scene,
+//! updates connections between ports.
 
 class NodeController : public QObject {
 public:
     NodeController(QGraphicsScene* scene);
+
+    bool eventFilter(QObject* object, QEvent* event);
+
+signals:
+    void connectionIsEstablished(NodeConnection*);
+
+private:
+    bool processMousePress(QGraphicsSceneMouseEvent* event);
+    bool processMouseMove(QGraphicsSceneMouseEvent* event);
+    bool processMouseRelease(QGraphicsSceneMouseEvent* event);
+
+    QGraphicsScene* m_scene{nullptr};
+    NodeConnection* m_conn{nullptr};
 };
 
 } // namespace NodeEditor

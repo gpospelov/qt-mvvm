@@ -18,7 +18,7 @@ namespace NodeEditor {
 class SampleModel;
 class ConnectableView;
 class ConnectableItem;
-class SessionItem;
+class NodeController;
 
 //! Custom graphics scene for node editor.
 
@@ -34,7 +34,8 @@ private:
     void processItem(ConnectableItem* item);
 
     SampleModel* m_model{nullptr};
-    std::map<SessionItem*, ConnectableView> m_itemToView;
+    std::map<ConnectableItem*, ConnectableView> m_itemToView;
+    NodeController* m_nodeController;
 };
 
 } // namespace NodeEditor
