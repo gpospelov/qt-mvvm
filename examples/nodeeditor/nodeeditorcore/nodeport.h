@@ -25,8 +25,6 @@ public:
     NodePort(QGraphicsItem* parent = nullptr);
 };
 
-
-
 } // namespace NodeEditor
 
 #endif

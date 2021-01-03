@@ -22,6 +22,7 @@ class QGraphicsSceneMouseEvent;
 namespace NodeEditor {
 
 class NodeConnection;
+class NodePort;
 
 //! The main controller of NodeEditor machinery. Listens to mouse events of the graphics scene,
 //! updates connections between ports.
@@ -31,6 +32,8 @@ public:
     NodeController(QGraphicsScene* scene);
 
     bool eventFilter(QObject* object, QEvent* event);
+
+    NodePort* findPort(const QPointF& pos);
 
 signals:
     void connectionIsEstablished(NodeConnection*);

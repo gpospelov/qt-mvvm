@@ -18,12 +18,28 @@
 
 namespace NodeEditor {
 
+class NodePort;
+
 //! Elastic connection to connect two NodePorts together.
 
 class NodeConnection : public QGraphicsPathItem {
 public:
     NodeConnection(QGraphicsScene* scene);
     virtual ~NodeConnection();
+
+    void setPos1(const QPointF& pos);
+    void setPos2(const QPointF& pos);
+    void setPort1(NodePort* port);
+    void setPort2(NodePort* port);
+
+    void updatePosFromPorts();
+    void updatePath();
+
+private:
+    QPointF m_pos1;
+    QPointF m_pos2;
+    NodePort* m_port1{nullptr};
+    NodePort* m_port2{nullptr};
 };
 
 } // namespace NodeEditor
