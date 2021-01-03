@@ -35,6 +35,8 @@ public:
     void updatePosFromPorts();
     void updatePath();
 
+    NodePort* port1() const;
+
 private:
     QPointF m_pos1;
     QPointF m_pos2;

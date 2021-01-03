@@ -8,8 +8,8 @@
 // ************************************************************************** //
 
 #include "nodecontroller.h"
-#include "nodeport.h"
 #include "nodeconnection.h"
+#include "nodeport.h"
 #include <QGraphicsItem>
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
@@ -53,35 +53,50 @@ NodePort* NodeController::findPort(const QPointF& pos)
 
 bool NodeController::processMousePress(QGraphicsSceneMouseEvent* event)
 {
-    bool result(false);
-
     if (!m_conn && event->button() == Qt::LeftButton) {
         if (auto port = findPort(event->scenePos()); port) {
             m_conn = new NodeConnection(m_scene);
+            m_conn->setPort1(port);
+            m_conn->setPos1(port->scenePos());
+            m_conn->setPos2(event->scenePos());
+            m_conn->updatePath();
+            return true;
         }
-
-//        QGraphicsItem* item = itemAt(event->scenePos());
-//        if (item && item->type() == ViewTypes::NODE_EDITOR_PORT) {
-//            emit selectionModeChangeRequest(DesignerView::SIMPLE_SELECTION);
-//            m_conn = new NodeEditorConnection(0, m_scene);
-//            m_conn->setPort1((NodeEditorPort*)item);
-//            m_conn->setPos1(item->scenePos());
-//            m_conn->setPos2(event->scenePos());
-//            m_conn->updatePath();
-
-//            result = true;
-//        }
     }
-    return result;
+    return false;
 }
 
 bool NodeController::processMouseMove(QGraphicsSceneMouseEvent* event)
 {
+    if (m_conn) {
+        m_conn->setPos2(event->scenePos());
+        m_conn->updatePath();
+        return true;
+    }
     return false;
 }
 
 bool NodeController::processMouseRelease(QGraphicsSceneMouseEvent* event)
 {
+    if (m_conn && event->button() == Qt::LeftButton) {
+        if (auto port2 = findPort(event->scenePos()); port2) {
+            auto port1 = m_conn->port1();
+
+            //            if (port1->parentItem() != port2->parentItem() && port1->isOutput() !=
+            //            port2->isOutput()
+            //                && !port1->isConnected(port2) && port1->getPortType() ==
+            //                port2->getPortType()) { m_conn->setPos2(port2->scenePos());
+            //                m_conn->setPort2(port2);
+            //                m_conn->updatePath();
+            //                emit connectionIsEstablished(m_conn);
+            //                m_conn = 0;
+            //                return true;
+            //            }
+        }
+        delete m_conn;
+        m_conn = nullptr;
+        return true;
+    }
     return false;
 }
 

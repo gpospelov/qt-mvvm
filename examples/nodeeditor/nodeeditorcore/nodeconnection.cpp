@@ -67,4 +67,9 @@ void NodeConnection::updatePath()
     setPath(p);
 }
 
+NodePort *NodeConnection::port1() const
+{
+    return m_port1;
+}
+
 } // namespace NodeEditor

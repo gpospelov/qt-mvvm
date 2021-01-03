@@ -18,11 +18,31 @@
 
 namespace NodeEditor {
 
-//! Round element representing either input or output port of ConnectableView.
+//! Base class to represent either input or output port of connectable view.
+//! Looks like round element attached to parent's bounding box.
 
 class NodePort : public QGraphicsPathItem {
 public:
     NodePort(QGraphicsItem* parent = nullptr);
+
+    virtual bool isInput() = 0;
+    virtual bool isOutput() = 0;
+};
+
+//! Represents input port of connectable view.
+
+class NodeInputPort : public NodePort {
+    using NodePort::NodePort;
+    bool isInput() override;
+    bool isOutput() override;
+};
+
+//! Represents output port of connectable view.
+
+class NodeOutputPort : public NodePort {
+    using NodePort::NodePort;
+    bool isInput() override;
+    bool isOutput() override;
 };
 
 } // namespace NodeEditor

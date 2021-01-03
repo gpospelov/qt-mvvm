@@ -80,7 +80,7 @@ QString ConnectableView::label() const
 
 void ConnectableView::init_ports()
 {
-    auto port = new NodePort(this);
+    auto port = new NodeInputPort(this);
     port->setPos(boundingRect().width(), boundingRect().height()*0.4);
 }
 
