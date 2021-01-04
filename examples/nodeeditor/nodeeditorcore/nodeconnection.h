@@ -39,6 +39,8 @@ public:
 
     bool hasPort(const NodePort& port) const;
 
+    void paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*);
+
 private:
     QPointF m_pos1;
     QPointF m_pos2;

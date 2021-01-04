@@ -10,6 +10,7 @@
 #include "nodeconnection.h"
 #include "nodeport.h"
 #include <QGraphicsScene>
+#include <QPainter>
 #include <QPen>
 
 namespace NodeEditor {
@@ -85,6 +86,17 @@ NodePort* NodeConnection::port1() const
 bool NodeConnection::hasPort(const NodePort& port) const
 {
     return m_port1 == &port || m_port2 == &port;
+}
+
+void NodeConnection::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
+{
+    painter->setPen(QPen(Qt::darkGray, 2));
+    painter->setBrush(Qt::NoBrush);
+
+    if (isSelected())
+        painter->setPen(Qt::DashLine);
+
+    painter->drawPath(path());
 }
 
 } // namespace NodeEditor
