@@ -80,8 +80,11 @@ QString ConnectableView::label() const
 
 void ConnectableView::init_ports()
 {
-    auto port = new NodeInputPort(this, QString::fromStdString(m_item->modelType()));
-    port->setPos(boundingRect().width(), boundingRect().height()*0.4);
+    auto inputPort = new NodeInputPort(this, QString::fromStdString(m_item->modelType()));
+    inputPort->initPort();
+
+    auto outputPort = new NodeOutputPort(this, QString::fromStdString(m_item->modelType()));
+    outputPort->initPort();
 }
 
 } // namespace NodeEditor

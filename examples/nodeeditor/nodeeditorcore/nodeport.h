@@ -24,7 +24,7 @@ namespace NodeEditor {
 
 class NodePort : public QGraphicsPathItem {
 public:
-    NodePort(QGraphicsItem* parent, const QString& portType);
+    NodePort(QGraphicsItem* parent, QString portType);
 
     QString portType() const;
 
@@ -32,22 +32,29 @@ public:
 
     bool isOutput() const;
 
-private:
+    virtual void initPort() = 0;
+
+protected:
     QString m_portType; //! Port type.
+    QGraphicsTextItem* m_label{nullptr};
 };
 
 //! Represents input port of connectable view.
 
 class NodeInputPort : public NodePort {
+public:
     using NodePort::NodePort;
     bool isInput() const override;
+    void initPort() override;
 };
 
 //! Represents output port of connectable view.
 
 class NodeOutputPort : public NodePort {
+public:
     using NodePort::NodePort;
     bool isInput() const override;
+    void initPort() override;
 };
 
 } // namespace NodeEditor

@@ -9,14 +9,28 @@
 
 #include "nodeport.h"
 #include "mvvm/widgets/widgetutils.h"
+#include <QFont>
 #include <QPen>
+
+namespace {
+
+double port_radius()
+{
+    return ModelView::Utils::WidthOfLetterM() * 0.4;
+}
+
+} // namespace
 
 namespace NodeEditor {
 
-NodePort::NodePort(QGraphicsItem* parent, const QString& portType)
-    : QGraphicsPathItem(parent), m_portType(portType)
+NodePort::NodePort(QGraphicsItem* parent, QString portType)
+    : QGraphicsPathItem(parent)
+    , m_portType(std::move(portType))
+    , m_label(new QGraphicsTextItem(this))
 {
-    const double radius = ModelView::Utils::WidthOfLetterM() * 0.4;
+    setFlag(QGraphicsItem::ItemSendsScenePositionChanges);
+
+    const double radius = port_radius();
     const QColor color(Qt::red);
 
     QPainterPath p;
@@ -25,6 +39,9 @@ NodePort::NodePort(QGraphicsItem* parent, const QString& portType)
 
     setPen(QPen(color.darker(180)));
     setBrush(color);
+
+    QFont serifFont("Monospace", 8, QFont::Normal);
+    m_label->setFont(serifFont);
 }
 
 //! Returns port type. Input and output ports of the same type are compatible.
@@ -46,11 +63,31 @@ bool NodeInputPort::isInput() const
     return true;
 }
 
+void NodeInputPort::initPort()
+{
+    // initializing label and its position
+    m_label->setPlainText(m_portType.toLower());
+    m_label->setPos(port_radius() * 1.5, -m_label->boundingRect().height() / 2);
+
+    // initializing port position
+    setPos(0.0, parentItem()->boundingRect().height() * 0.4);
+}
+
 // ----------------------------------------------------------------------------
 
 bool NodeOutputPort::isInput() const
 {
     return false;
+}
+
+void NodeOutputPort::initPort()
+{
+    // initializing label and its position
+    m_label->setPlainText("Out");
+    m_label->setPos(port_radius() * 1.5, -m_label->boundingRect().height() / 2);
+
+    // initializing port position
+    setPos(parentItem()->boundingRect().width(), parentItem()->boundingRect().height() * 0.4);
 }
 
 } // namespace NodeEditor
