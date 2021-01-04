@@ -26,6 +26,7 @@ class NodePort : public QGraphicsPathItem {
 public:
     NodePort(QGraphicsItem* parent = nullptr);
 
+    QString portType() const;
 
     virtual bool isInput() = 0;
     virtual bool isOutput() = 0;
