@@ -13,6 +13,7 @@
 #include <QGraphicsItem>
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
+#include <QDebug>
 
 namespace NodeEditor {
 
@@ -79,19 +80,18 @@ bool NodeController::processMouseMove(QGraphicsSceneMouseEvent* event)
 bool NodeController::processMouseRelease(QGraphicsSceneMouseEvent* event)
 {
     if (m_conn && event->button() == Qt::LeftButton) {
+        qDebug() << "MouseRelease 1.1";
         if (auto port2 = findPort(event->scenePos()); port2) {
+            qDebug() << "MouseRelease 1.2";
             auto port1 = m_conn->port1();
-
-            //            if (port1->parentItem() != port2->parentItem() && port1->isOutput() !=
-            //            port2->isOutput()
-            //                && !port1->isConnected(port2) && port1->getPortType() ==
-            //                port2->getPortType()) { m_conn->setPos2(port2->scenePos());
-            //                m_conn->setPort2(port2);
-            //                m_conn->updatePath();
-            //                emit connectionIsEstablished(m_conn);
-            //                m_conn = 0;
-            //                return true;
-            //            }
+            if (port1->isCompatible(*port2)) {
+                qDebug() << "MouseRelease 1.3";
+                m_conn->setPort2(port2);
+                m_conn->updatePath();
+                m_conn = nullptr;
+                qDebug() << "establihsed";
+                return true;
+            }
         }
         delete m_conn;
         m_conn = nullptr;

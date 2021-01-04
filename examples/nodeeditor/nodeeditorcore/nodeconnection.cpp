@@ -80,4 +80,11 @@ NodePort* NodeConnection::port1() const
     return m_port1;
 }
 
+//! Returns true if given port belongs to this connection.
+
+bool NodeConnection::hasPort(const NodePort& port) const
+{
+    return m_port1 == &port || m_port2 == &port;
+}
+
 } // namespace NodeEditor

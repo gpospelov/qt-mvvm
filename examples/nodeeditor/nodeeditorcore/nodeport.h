@@ -41,6 +41,10 @@ public:
 
     void remove(NodeConnection* connection);
 
+    bool isCompatible(const NodePort& other) const;
+
+    bool isConnected(const NodePort& other) const;
+
 protected:
     QString m_portType; //! Port type.
     QGraphicsTextItem* m_label{nullptr};

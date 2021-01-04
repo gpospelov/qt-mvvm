@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include "nodeport.h"
+#include "nodeconnection.h"
 #include "mvvm/widgets/widgetutils.h"
 #include <QFont>
 #include <QPen>
@@ -29,14 +30,12 @@ NodePort::NodePort(QGraphicsItem* parent, QString portType)
     , m_label(new QGraphicsTextItem(this))
 {
     setFlag(QGraphicsItem::ItemSendsScenePositionChanges);
-
     const double radius = port_radius();
     const QColor color(Qt::red);
 
     QPainterPath p;
     p.addEllipse(-radius, -radius, 2 * radius, 2 * radius);
     setPath(p);
-
     setPen(QPen(color.darker(180)));
     setBrush(color);
 
@@ -64,6 +63,27 @@ void NodePort::append(NodeConnection* connection)
 void NodePort::remove(NodeConnection* connection)
 {
     m_connections.removeAll(connection);
+}
+
+//! Returns true if this port can be connected with the other one.
+
+bool NodePort::isCompatible(const NodePort& other) const
+{
+    bool different_parents = parentItem() != other.parentItem();
+    bool output_to_input = isInput() != other.isInput();
+    bool compatible_types = portType() == other.portType();
+    bool not_already_connected = !isConnected(other);
+    return different_parents && output_to_input && compatible_types && not_already_connected;
+}
+
+//! Returns true if ports are connected.
+
+bool NodePort::isConnected(const NodePort& other) const
+{
+    for (auto conn : m_connections)
+        if (conn->hasPort(other))
+            return true;
+    return false;
 }
 
 // ----------------------------------------------------------------------------

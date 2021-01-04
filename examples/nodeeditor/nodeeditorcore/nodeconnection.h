@@ -37,11 +37,13 @@ public:
 
     NodePort* port1() const;
 
+    bool hasPort(const NodePort& port) const;
+
 private:
     QPointF m_pos1;
     QPointF m_pos2;
-    NodePort* m_port1{nullptr};
-    NodePort* m_port2{nullptr};
+    NodePort* m_port1{nullptr}; //! The beginning of the connection.
+    NodePort* m_port2{nullptr}; //! Connection end.
 };
 
 } // namespace NodeEditor
