@@ -21,6 +21,7 @@ class ConnectableItem;
 class NodeController;
 
 //! Custom graphics scene for node editor.
+//! Listens for updates in SessionModel and populates the scene with views.
 
 class GraphicsScene : public QGraphicsScene {
     Q_OBJECT
@@ -33,8 +34,10 @@ private:
     void updateScene();
     void processItem(ConnectableItem* item);
 
+    ConnectableView* findView(ConnectableItem* item);
+
     SampleModel* m_model{nullptr};
-    std::map<ConnectableItem*, ConnectableView> m_itemToView;
+    std::map<ConnectableItem*, ConnectableView*> m_itemToView;
     NodeController* m_nodeController;
 };
 

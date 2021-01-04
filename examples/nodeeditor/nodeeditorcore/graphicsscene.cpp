@@ -9,9 +9,9 @@
 
 #include "graphicsscene.h"
 #include "connectableview.h"
+#include "nodecontroller.h"
 #include "sampleitems.h"
 #include "samplemodel.h"
-#include "nodecontroller.h"
 #include "mvvm/model/itemutils.h"
 #include <QDebug>
 
@@ -46,8 +46,19 @@ void GraphicsScene::updateScene()
 
 void GraphicsScene::processItem(ConnectableItem* item)
 {
-    auto view = new ConnectableView(item);
-    addItem(view);
+    if (!findView(item)) {
+        auto view = new ConnectableView(item);
+        addItem(view);
+        m_itemToView[item] = view;
+    }
+}
+
+//! Find view for given item.
+
+ConnectableView* GraphicsScene::findView(ConnectableItem* item)
+{
+    auto it = m_itemToView.find(item);
+    return it == m_itemToView.end() ? nullptr : it->second;
 }
 
 } // namespace NodeEditor

@@ -63,6 +63,13 @@ void ConnectableView::paint(QPainter* painter, const QStyleOptionGraphicsItem* o
     painter->drawText(label_rectangle(boundingRect()), Qt::AlignCenter, label());
 }
 
+//! Connects children's output port to appropriate input port.
+
+void ConnectableView::makeChildConnected(ConnectableView* childView)
+{
+
+}
+
 //! Returns base color of this item.
 
 QColor ConnectableView::color() const

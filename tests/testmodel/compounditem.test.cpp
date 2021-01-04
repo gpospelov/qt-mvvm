@@ -236,3 +236,14 @@ TEST_F(CompoundItemTest, displayNameIndexAddition)
     EXPECT_EQ(child0->displayName(), "Jekyll");
     EXPECT_EQ(child1->displayName(), "Hyde");
 }
+
+//! Test all children method.
+//! Property items are also children.
+
+TEST_F(CompoundItemTest, children)
+{
+    CompoundItem item;
+    EXPECT_TRUE(item.children().empty());
+    auto propertyItem = item.addProperty(property_name, false);
+    EXPECT_EQ(item.children(), std::vector<SessionItem*>({propertyItem}));
+}

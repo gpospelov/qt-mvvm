@@ -27,6 +27,8 @@ public:
 
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget*) override;
 
+    void makeChildConnected(ConnectableView* childView);
+
 private:
     QColor color() const;
     QString label() const;
