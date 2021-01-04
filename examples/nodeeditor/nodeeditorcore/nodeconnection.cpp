@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include "nodeconnection.h"
+#include "nodeport.h"
 #include <QGraphicsScene>
 #include <QPen>
 
@@ -23,7 +24,14 @@ NodeConnection::NodeConnection(QGraphicsScene* scene)
         scene->addItem(this);
 }
 
-NodeConnection::~NodeConnection() = default;
+NodeConnection::~NodeConnection()
+{
+    if (m_port1)
+        m_port1->remove(this);
+
+    if (m_port2)
+        m_port2->remove(this);
+}
 
 void NodeConnection::setPos1(const QPointF& pos)
 {
@@ -38,21 +46,21 @@ void NodeConnection::setPos2(const QPointF& pos)
 void NodeConnection::setPort1(NodePort* port)
 {
     m_port1 = port;
-    //    m_port1->append(this);
-    //    setPos1(port->scenePos());
+    m_port1->append(this);
+    setPos1(port->scenePos());
 }
 
 void NodeConnection::setPort2(NodePort* port)
 {
     m_port2 = port;
-    //    m_port2->append(this);
-    //    setPos2(port->scenePos());
+    m_port2->append(this);
+    setPos2(port->scenePos());
 }
 
 void NodeConnection::updatePosFromPorts()
 {
-    //    m_pos1 = m_port1->scenePos();
-    //    m_pos2 = m_port2->scenePos();
+    m_pos1 = m_port1->scenePos();
+    m_pos2 = m_port2->scenePos();
 }
 
 void NodeConnection::updatePath()
@@ -67,7 +75,7 @@ void NodeConnection::updatePath()
     setPath(p);
 }
 
-NodePort *NodeConnection::port1() const
+NodePort* NodeConnection::port1() const
 {
     return m_port1;
 }

@@ -56,12 +56,24 @@ bool NodePort::isOutput() const
     return !isInput();
 }
 
+void NodePort::append(NodeConnection* connection)
+{
+    m_connections.append(connection);
+}
+
+void NodePort::remove(NodeConnection* connection)
+{
+    m_connections.removeAll(connection);
+}
+
 // ----------------------------------------------------------------------------
 
 bool NodeInputPort::isInput() const
 {
     return true;
 }
+
+//! Initializes port position and labels.
 
 void NodeInputPort::initPort()
 {
@@ -80,11 +92,14 @@ bool NodeOutputPort::isInput() const
     return false;
 }
 
+//! Initializes port position and labels.
+
 void NodeOutputPort::initPort()
 {
     // initializing label and its position
     m_label->setPlainText("Out");
-    m_label->setPos(port_radius() * 1.5, -m_label->boundingRect().height() / 2);
+    m_label->setPos(-port_radius() * 1.5 - m_label->boundingRect().width(),
+                    -m_label->boundingRect().height() / 2);
 
     // initializing port position
     setPos(parentItem()->boundingRect().width(), parentItem()->boundingRect().height() * 0.4);

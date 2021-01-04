@@ -15,8 +15,11 @@
 //! Copyright (c) 2012, STANISLAW ADASZEWSKI
 
 #include <QGraphicsObject>
+#include <QList>
 
 namespace NodeEditor {
+
+class NodeConnection;
 
 //! Base class representing input/output ports of connectable view.
 //! Looks like round element attached to parent's bounding box. Input and output ports of the
@@ -34,9 +37,14 @@ public:
 
     virtual void initPort() = 0;
 
+    void append(NodeConnection* connection);
+
+    void remove(NodeConnection* connection);
+
 protected:
     QString m_portType; //! Port type.
     QGraphicsTextItem* m_label{nullptr};
+    QList<NodeConnection*> m_connections;
 };
 
 //! Represents input port of connectable view.
