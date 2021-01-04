@@ -28,6 +28,7 @@ class NodeConnection;
 class NodePort : public QGraphicsPathItem {
 public:
     NodePort(QGraphicsItem* parent, QString portType);
+    virtual ~NodePort() override;
 
     QString portType() const;
 
@@ -46,6 +47,8 @@ public:
     bool isConnected(const NodePort& other) const;
 
 protected:
+    QVariant itemChange(GraphicsItemChange change, const QVariant& value);
+
     QString m_portType; //! Port type.
     QGraphicsTextItem* m_label{nullptr};
     QList<NodeConnection*> m_connections;

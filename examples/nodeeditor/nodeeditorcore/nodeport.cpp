@@ -43,6 +43,15 @@ NodePort::NodePort(QGraphicsItem* parent, QString portType)
     m_label->setFont(serifFont);
 }
 
+NodePort::~NodePort()
+{
+    while (!m_connections.empty()) {
+        auto conn = m_connections.last();
+        conn->setSelected(false);
+        delete conn;
+    }
+}
+
 //! Returns port type. Input and output ports of the same type are compatible.
 
 QString NodePort::portType() const
@@ -84,6 +93,17 @@ bool NodePort::isConnected(const NodePort& other) const
         if (conn->hasPort(other))
             return true;
     return false;
+}
+
+QVariant NodePort::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant& value)
+{
+    if (change == ItemScenePositionHasChanged) {
+        for (auto conn : m_connections) {
+            conn->updatePosFromPorts();
+            conn->updatePath();
+        }
+    }
+    return value;
 }
 
 // ----------------------------------------------------------------------------
