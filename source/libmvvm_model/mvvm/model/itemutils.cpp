@@ -9,6 +9,7 @@
 
 #include "mvvm/model/itemutils.h"
 #include "mvvm/model/sessionitem.h"
+#include "mvvm/model/sessionitemcontainer.h"
 #include "mvvm/model/sessionitemtags.h"
 #include "mvvm/utils/containerutils.h"
 #include <iterator>
@@ -85,6 +86,23 @@ bool Utils::HasTag(const SessionItem& item, const std::string& tag)
 bool Utils::IsSinglePropertyTag(const SessionItem& item, const std::string& tag)
 {
     return item.itemTags()->isSinglePropertyTag(tag);
+}
+
+std::vector<std::string> Utils::RegisteredTags(const SessionItem& item)
+{
+    std::vector<std::string> result;
+    for (const auto container : *item.itemTags())
+        result.push_back(container->name());
+    return result;
+}
+
+std::vector<std::string> Utils::RegisteredUniversalTags(const SessionItem& item)
+{
+    std::vector<std::string> result;
+    for (const auto& tag : RegisteredTags(item))
+        if (!IsSinglePropertyTag(item, tag))
+            result.push_back(tag);
+    return result;
 }
 
 std::vector<SessionItem*> Utils::TopLevelItems(const SessionItem& item)
