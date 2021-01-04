@@ -13,7 +13,8 @@
 
 namespace NodeEditor {
 
-NodePort::NodePort(QGraphicsItem* parent) : QGraphicsPathItem(parent)
+NodePort::NodePort(QGraphicsItem* parent, const QString& portType)
+    : QGraphicsPathItem(parent), m_portType(portType)
 {
     const double radius = ModelView::Utils::WidthOfLetterM() * 0.4;
     const QColor color(Qt::red);
@@ -26,33 +27,30 @@ NodePort::NodePort(QGraphicsItem* parent) : QGraphicsPathItem(parent)
     setBrush(color);
 }
 
+//! Returns port type. Input and output ports of the same type are compatible.
+
 QString NodePort::portType() const
 {
     return m_portType;
 }
 
-// ----------------------------------------------------------------------------
-
-bool NodeInputPort::isInput()
+bool NodePort::isOutput() const
 {
-    return true;
-}
-
-bool NodeInputPort::isOutput()
-{
-    return false;
+    return !isInput();
 }
 
 // ----------------------------------------------------------------------------
 
-bool NodeOutputPort::isInput()
-{
-    return false;
-}
-
-bool NodeOutputPort::isOutput()
+bool NodeInputPort::isInput() const
 {
     return true;
+}
+
+// ----------------------------------------------------------------------------
+
+bool NodeOutputPort::isInput() const
+{
+    return false;
 }
 
 } // namespace NodeEditor
