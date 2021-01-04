@@ -18,15 +18,22 @@
 
 namespace NodeEditor {
 
-//! Base class to represent either input or output port of connectable view.
-//! Looks like round element attached to parent's bounding box.
+//! Base class representing either input or output port of connectable view.
+//! Looks like round element attached to parent's bounding box. Input and output ports of the
+//! same type can be connected together.
 
 class NodePort : public QGraphicsPathItem {
 public:
     NodePort(QGraphicsItem* parent = nullptr);
 
+
     virtual bool isInput() = 0;
     virtual bool isOutput() = 0;
+
+
+
+private:
+   QString m_portType; //! Port type.
 };
 
 //! Represents input port of connectable view.

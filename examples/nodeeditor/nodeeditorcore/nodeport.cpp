@@ -26,6 +26,11 @@ NodePort::NodePort(QGraphicsItem* parent) : QGraphicsPathItem(parent)
     setBrush(color);
 }
 
+QString NodePort::portType() const
+{
+    return m_portType;
+}
+
 // ----------------------------------------------------------------------------
 
 bool NodeInputPort::isInput()
