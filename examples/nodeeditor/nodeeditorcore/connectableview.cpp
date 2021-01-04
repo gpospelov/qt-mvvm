@@ -8,9 +8,10 @@
 // ************************************************************************** //
 
 #include "connectableview.h"
+#include "nodeport.h"
 #include "sampleitems.h"
 #include "sceneutils.h"
-#include "nodeport.h"
+#include "mvvm/model/itemutils.h"
 #include "mvvm/widgets/widgetutils.h"
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
@@ -80,8 +81,10 @@ QString ConnectableView::label() const
 
 void ConnectableView::init_ports()
 {
-    auto inputPort = new NodeInputPort(this, QString::fromStdString(m_item->modelType()));
-    inputPort->initPort();
+    for (const auto& tag : ModelView::Utils::RegisteredUniversalTags(*m_item)) {
+        auto inputPort = new NodeInputPort(this, QString::fromStdString(tag));
+        inputPort->initPort();
+    }
 
     auto outputPort = new NodeOutputPort(this, QString::fromStdString(m_item->modelType()));
     outputPort->initPort();

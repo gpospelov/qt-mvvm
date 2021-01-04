@@ -102,7 +102,7 @@ void NodeInputPort::initPort()
     m_label->setPos(port_radius() * 1.5, -m_label->boundingRect().height() / 2);
 
     // initializing port position
-    setPos(0.0, parentItem()->boundingRect().height() * 0.4);
+    setPos(0.0, parentItem()->boundingRect().height() * 0.6);
 }
 
 // ----------------------------------------------------------------------------
@@ -117,7 +117,7 @@ bool NodeOutputPort::isInput() const
 void NodeOutputPort::initPort()
 {
     // initializing label and its position
-    m_label->setPlainText("Out");
+    m_label->setPlainText("out");
     m_label->setPos(-port_radius() * 1.5 - m_label->boundingRect().width(),
                     -m_label->boundingRect().height() / 2);
 

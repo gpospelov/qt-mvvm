@@ -41,7 +41,7 @@ public:
 
 class ParticleItem : public ConnectableItem {
 public:
-    static inline const std::string T_TRANSFORMATION = "T_TRANSFORMATION";
+    static inline const std::string T_TRANSFORMATION = "Transformation";
     ParticleItem();
 };
 
