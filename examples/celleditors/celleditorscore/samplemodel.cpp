@@ -24,9 +24,7 @@ DemoPropertiesItem::DemoPropertiesItem() : CompoundItem(::Constants::DemoPropert
     addProperty(P_BOOL_PROPERTY, true)->setDisplayName("Bool")->setToolTip("tooltip");
     addProperty(P_INTEGER_PROPERTY, 42)->setDisplayName("Integer");
     addProperty(P_STRING_PROPERTY, "abc")->setDisplayName("String");
-    addProperty(P_DOUBLE_PROPERTY, 42.1234)
-        ->setDisplayName("Double")
-        ->setLimits(RealLimits::limitless());
+    addProperty(P_DOUBLE_PROPERTY, 42.1234)->setDisplayName("Double");
     addProperty(P_COLOR_PROPERTY, QColor(Qt::green))->setDisplayName("Color");
 
     auto combo = ComboProperty::createFrom({"option 1", "option 2", "option 3"});

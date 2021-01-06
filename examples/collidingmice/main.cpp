@@ -7,9 +7,9 @@
 //
 // ************************************************************************** //
 
+#include "collidingmicecore/mainwindow.h"
 #include <QApplication>
 #include <QLocale>
-#include <collidingmicecore/mainwindow.h>
 
 void messageHandler(QtMsgType, const QMessageLogContext&, const QString&) {}
 

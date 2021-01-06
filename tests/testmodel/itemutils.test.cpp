@@ -124,7 +124,7 @@ TEST_F(ItemUtilsTest, itemCopyNumber)
     EXPECT_EQ(Utils::CopyNumber(child3), -1);
 }
 
-//! Checks method ::IsSinglePropertyTag.
+//! Checks method ::HasTag.
 
 TEST_F(ItemUtilsTest, HasTag)
 {
@@ -145,6 +145,33 @@ TEST_F(ItemUtilsTest, IsSinglePropertyTag)
 
     EXPECT_FALSE(Utils::IsSinglePropertyTag(item, "default_tag"));
     EXPECT_TRUE(Utils::IsSinglePropertyTag(item, "property_tag"));
+}
+
+//! Checks method ::RegisteredTags.
+
+TEST_F(ItemUtilsTest, RegisteredTags)
+{
+    SessionItem item;
+    EXPECT_TRUE(Utils::RegisteredTags(item).empty());
+
+    item.registerTag(TagInfo::universalTag("default_tag"), /*set_as_default*/ true);
+    item.registerTag(TagInfo::propertyTag("property_tag", Constants::PropertyType));
+
+    EXPECT_EQ(Utils::RegisteredTags(item),
+              std::vector<std::string>({"default_tag", "property_tag"}));
+}
+
+//! Checks method ::RegisteredUniversalTags.
+
+TEST_F(ItemUtilsTest, RegisteredUniversalTags)
+{
+    SessionItem item;
+    EXPECT_TRUE(Utils::RegisteredUniversalTags(item).empty());
+
+    item.registerTag(TagInfo::universalTag("default_tag"), /*set_as_default*/ true);
+    item.registerTag(TagInfo::propertyTag("property_tag", Constants::PropertyType));
+
+    EXPECT_EQ(Utils::RegisteredUniversalTags(item), std::vector<std::string>({"default_tag"}));
 }
 
 //! Check access to top level and property items.

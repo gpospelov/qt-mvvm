@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include <treeviewscore/mainwindow.h>
+#include "treeviewscore/mainwindow.h"
 #include <QApplication>
 #include <QLocale>
 

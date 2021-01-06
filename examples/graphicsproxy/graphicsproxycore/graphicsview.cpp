@@ -21,6 +21,6 @@ GraphicsView::GraphicsView(GraphicsScene* scene, QWidget* parent)
 
 void GraphicsView::resizeEvent(QResizeEvent* event)
 {
-    QWidget::resizeEvent(event);
+    QGraphicsView::resizeEvent(event);
     scene->update_size(event->size());
 }

@@ -43,7 +43,7 @@ public:
 class ParticleItem : public ModelView::CompoundItem {
 public:
     static inline const std::string P_POSITION = "Position";
-    static inline const std::string P_SHAPES = "Shapes";
+    static inline const std::string P_SHAPE = "Shape";
     ParticleItem();
 };
 

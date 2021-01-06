@@ -57,10 +57,15 @@ std::vector<std::string> ModelView::TagInfo::modelTypes() const
     return m_modelTypes;
 }
 
-bool ModelView::TagInfo::isValidChild(const std::string& child) const
+//! Returns true if given modelType matches the list of possible model types.
+
+bool ModelView::TagInfo::isValidChild(const std::string& modelType) const
 {
-    return m_modelTypes.empty() ? true : Utils::Contains(m_modelTypes, child);
+    return m_modelTypes.empty() ? true : Utils::Contains(m_modelTypes, modelType);
 }
+
+//! Returns true if this tag is used to store single properties.
+//! Properties are children that are created in SessionItem constructor using ::addProperty method.
 
 bool ModelView::TagInfo::isSinglePropertyTag() const
 {

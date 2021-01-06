@@ -40,7 +40,7 @@ LayerItem::LayerItem() : CompoundItem(::Constants::LayerItemType)
 ParticleItem::ParticleItem() : CompoundItem(::Constants::ParticleItemType)
 {
     addProperty<VectorItem>(P_POSITION);
-    addProperty<ShapeGroupItem>(P_SHAPES);
+    addProperty<ShapeGroupItem>(P_SHAPE);
 }
 
 // ----------------------------------------------------------------------------
@@ -58,7 +58,7 @@ LatticeItem::LatticeItem() : CompoundItem(::Constants::LatticeItemType)
 
 void LatticeItem::activate()
 {
-    auto onIntegrationFlagChange = [this](SessionItem*, std::string property) {
+    auto onIntegrationFlagChange = [this](SessionItem*, const std::string& property) {
         if (property == P_INTEGRATION)
             update_appearance();
     };

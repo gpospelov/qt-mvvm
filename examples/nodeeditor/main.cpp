@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "flateditorcore/mainwindow.h"
+#include "nodeeditorcore/mainwindow.h"
 #include <QApplication>
 #include <QLocale>
 
@@ -17,7 +17,7 @@ int main(int argc, char** argv)
 
     QApplication app(argc, argv);
 
-    MainWindow win;
+    NodeEditor::MainWindow win;
     win.show();
 
     return app.exec();

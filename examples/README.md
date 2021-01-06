@@ -73,4 +73,5 @@
 ### Under development
 
 + modelinqml
++ nodeeditor
 

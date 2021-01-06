@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include <dragandmovecore/mainwindow.h>
+#include "dragandmovecore/mainwindow.h"
 #include <QApplication>
 #include <QLocale>
 

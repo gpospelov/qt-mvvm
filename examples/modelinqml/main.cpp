@@ -1,7 +1,7 @@
+#include "modelinqmlcore/backend.h"
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
-#include <modelinqmlcore/backend.h>
 
 int main(int argc, char* argv[])
 {

@@ -7,18 +7,15 @@
 //
 // ************************************************************************** //
 
-#include "flateditorcore/mainwindow.h"
-#include <QApplication>
-#include <QLocale>
+#include "graphicsview.h"
+#include "graphicsscene.h"
 
-int main(int argc, char** argv)
+namespace NodeEditor {
+
+GraphicsView::GraphicsView(GraphicsScene* scene, QWidget* parent) : QGraphicsView(scene, parent)
 {
-    QLocale::setDefault(QLocale(QLocale::English, QLocale::UnitedStates));
-
-    QApplication app(argc, argv);
-
-    MainWindow win;
-    win.show();
-
-    return app.exec();
+    setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    setRenderHint(QPainter::Antialiasing);
 }
+
+} // namespace NodeEditor

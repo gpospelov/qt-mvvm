@@ -7,26 +7,24 @@
 //
 // ************************************************************************** //
 
-#ifndef GRAPHICSPROXY_GRAPHICSVIEW_H
-#define GRAPHICSPROXY_GRAPHICSVIEW_H
+#ifndef NODEEDITORCORE_GRAPHICSVIEW_H
+#define NODEEDITORCORE_GRAPHICSVIEW_H
 
 #include <QGraphicsView>
 
+namespace NodeEditor {
+
 class GraphicsScene;
 
-//! Custom graphics view to show QCustomPlot with additional elements on top.
+//! Graphics view for our cusrom graphics scene.
 
 class GraphicsView : public QGraphicsView {
     Q_OBJECT
 
 public:
     GraphicsView(GraphicsScene* scene, QWidget* parent);
-
-protected:
-    void resizeEvent(QResizeEvent* event) override;
-
-private:
-    GraphicsScene* scene{nullptr};
 };
 
-#endif //  GRAPHICSPROXY_GRAPHICSVIEW_H
+} // namespace NodeEditor
+
+#endif //  NODEEDITORCORE_GRAPHICSVIEW_H
