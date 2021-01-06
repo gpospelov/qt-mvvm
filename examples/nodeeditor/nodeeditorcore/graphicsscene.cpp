@@ -44,12 +44,18 @@ void GraphicsScene::updateScene()
     ModelView::Utils::iterate(m_model->rootItem(), on_iterate);
 }
 
+//! Constructs a view for a given item and adds it to a scene, if necessary.
+//! Connects new view with parent view.
+
 void GraphicsScene::processItem(ConnectableItem* item)
 {
     if (!findView(item)) {
         auto view = new ConnectableView(item);
-        addItem(view);
         m_itemToView[item] = view;
+        addItem(view);
+
+        if (auto parentView = findView(dynamic_cast<ConnectableItem*>(item->parent())); parentView)
+            parentView->makeChildConnected(view);
     }
 }
 

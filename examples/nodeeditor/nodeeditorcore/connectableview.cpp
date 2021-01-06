@@ -9,6 +9,7 @@
 
 #include "connectableview.h"
 #include "nodeport.h"
+#include "nodeconnection.h"
 #include "sampleitems.h"
 #include "sceneutils.h"
 #include "mvvm/model/itemutils.h"
@@ -67,7 +68,32 @@ void ConnectableView::paint(QPainter* painter, const QStyleOptionGraphicsItem* o
 
 void ConnectableView::makeChildConnected(ConnectableView* childView)
 {
+    auto output = childView->outputPort();
+    if (!output)
+        return;
 
+    for (auto input : inputPorts()) {
+        if (input->isCompatible(*output)) {
+            auto connection = new NodeConnection(scene());
+            connection->setPort2(input);
+            connection->setPort1(output);
+            connection->updatePath();
+            break;
+        }
+    }
+}
+
+//! Returns list of input ports of given
+
+QList<NodeInputPort*> ConnectableView::inputPorts() const
+{
+    return ports<NodeInputPort>();
+}
+
+NodeOutputPort* ConnectableView::outputPort() const
+{
+    auto output_ports = ports<NodeOutputPort>();
+    return output_ports.empty() ? nullptr : output_ports.front();
 }
 
 //! Returns base color of this item.
