@@ -73,7 +73,7 @@ void ConnectableView::makeChildConnected(ConnectableView* childView)
         return;
 
     for (auto input : inputPorts()) {
-        if (input->isCompatible(*output)) {
+        if (input->isConnectable(*output)) {
             auto connection = new NodeConnection(scene());
             connection->setPort2(input);
             connection->setPort1(output);

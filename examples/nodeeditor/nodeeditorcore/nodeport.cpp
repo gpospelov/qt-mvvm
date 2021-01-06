@@ -76,7 +76,7 @@ void NodePort::remove(NodeConnection* connection)
 
 //! Returns true if this port can be connected with the other one.
 
-bool NodePort::isCompatible(const NodePort& other) const
+bool NodePort::isConnectable(const NodePort& other) const
 {
     bool different_parents = parentItem() != other.parentItem();
     bool output_to_input = isInput() != other.isInput();

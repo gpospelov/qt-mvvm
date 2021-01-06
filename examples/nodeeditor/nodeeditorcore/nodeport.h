@@ -42,7 +42,7 @@ public:
 
     void remove(NodeConnection* connection);
 
-    bool isCompatible(const NodePort& other) const;
+    bool isConnectable(const NodePort& other) const;
 
     bool isConnected(const NodePort& other) const;
 
