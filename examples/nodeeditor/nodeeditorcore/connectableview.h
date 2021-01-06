@@ -39,6 +39,8 @@ public:
 
     NodeOutputPort* outputPort() const;
 
+    ConnectableItem* connectableItem() const;
+
 private:
     template <typename T> QList<T*> ports() const;
 

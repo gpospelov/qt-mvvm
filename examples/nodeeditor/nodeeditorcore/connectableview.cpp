@@ -8,8 +8,8 @@
 // ************************************************************************** //
 
 #include "connectableview.h"
-#include "nodeport.h"
 #include "nodeconnection.h"
+#include "nodeport.h"
 #include "sampleitems.h"
 #include "sceneutils.h"
 #include "mvvm/model/itemutils.h"
@@ -94,6 +94,11 @@ NodeOutputPort* ConnectableView::outputPort() const
 {
     auto output_ports = ports<NodeOutputPort>();
     return output_ports.empty() ? nullptr : output_ports.front();
+}
+
+ConnectableItem* ConnectableView::connectableItem() const
+{
+    return m_item;
 }
 
 //! Returns base color of this item.

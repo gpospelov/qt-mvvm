@@ -30,6 +30,9 @@ public:
     GraphicsScene(SampleModel* model, QObject* parent);
     ~GraphicsScene() override;
 
+private slots:
+    void onConnectionRequest(ConnectableView* childView, ConnectableView* parentView);
+
 private:
     void updateScene();
     void processItem(ConnectableItem* item);

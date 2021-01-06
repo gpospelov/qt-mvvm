@@ -29,6 +29,15 @@ GraphicsScene::GraphicsScene(SampleModel* model, QObject* parent)
     setSceneRect(default_scene_rect);
 
     updateScene();
+
+    connect(m_nodeController, &NodeController::connectionRequest, this,
+            &GraphicsScene::onConnectionRequest);
+}
+
+void GraphicsScene::onConnectionRequest(ConnectableView* childView, ConnectableView* parentView)
+{
+    qDebug() << "on connection request";
+    m_model->moveItem(childView->connectableItem(), parentView->connectableItem(), {"", -1});
 }
 
 GraphicsScene::~GraphicsScene() = default;
@@ -49,14 +58,15 @@ void GraphicsScene::updateScene()
 
 void GraphicsScene::processItem(ConnectableItem* item)
 {
-    if (!findView(item)) {
-        auto view = new ConnectableView(item);
-        m_itemToView[item] = view;
-        addItem(view);
-
-        if (auto parentView = findView(dynamic_cast<ConnectableItem*>(item->parent())); parentView)
-            parentView->makeChildConnected(view);
+    auto itemView = findView(item);
+    if (!itemView) {
+        itemView = new ConnectableView(item);
+        m_itemToView[item] = itemView;
+        addItem(itemView);
     }
+
+    if (auto parentView = findView(dynamic_cast<ConnectableItem*>(item->parent())); parentView)
+        parentView->makeChildConnected(itemView);
 }
 
 //! Find view for given item.

@@ -39,7 +39,7 @@ public:
     NodePort* findPort(const QPointF& pos);
 
 signals:
-    void connectionRequest(ConnectableView* child, ConnectableView* parent);
+    void connectionRequest(ConnectableView* childView, ConnectableView* parentView);
 
 private:
     bool processMousePress(QGraphicsSceneMouseEvent* event);
