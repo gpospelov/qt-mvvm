@@ -60,8 +60,11 @@ void NodeConnection::setPort2(NodePort* port)
 
 void NodeConnection::updatePath()
 {
-    m_pos1 = m_port1->scenePos();
-    m_pos2 = m_port2->scenePos();
+    if (m_port1)
+        m_pos1 = m_port1->scenePos();
+
+    if (m_port2)
+        m_pos2 = m_port2->scenePos();
 
     QPainterPath p;
     p.moveTo(m_pos1);
