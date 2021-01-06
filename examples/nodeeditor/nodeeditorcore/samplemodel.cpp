@@ -24,8 +24,11 @@ SampleModel::SampleModel() : SessionModel("SampleModel")
 
 void SampleModel::createInitialContent()
 {
+//    auto particleItem = insertItem<ParticleItem>();
+//    auto transformation = insertItem<TransformationItem>(particleItem);
+
     auto particleItem = insertItem<ParticleItem>();
-    auto transformation = insertItem<TransformationItem>(particleItem);
+    auto transformation = insertItem<TransformationItem>();
 }
 
 } // namespace NodeEditor

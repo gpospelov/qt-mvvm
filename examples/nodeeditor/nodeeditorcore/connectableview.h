@@ -24,6 +24,8 @@ class NodeOutputPort;
 //! of different type.
 
 class ConnectableView : public QGraphicsObject {
+    Q_OBJECT
+
 public:
     ConnectableView(ConnectableItem* item, QGraphicsObject* parent = nullptr);
 

@@ -10,10 +10,15 @@
 #include "nodecontroller.h"
 #include "nodeconnection.h"
 #include "nodeport.h"
+#include <QDebug>
 #include <QGraphicsItem>
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
-#include <QDebug>
+
+namespace {
+const bool event_was_handled = true;
+const bool event_was_ignored = false;
+} // namespace
 
 namespace NodeEditor {
 
@@ -36,7 +41,7 @@ bool NodeController::eventFilter(QObject* object, QEvent* event)
             isProcessedEvent = processMouseRelease(mouseEvent);
     }
 
-    return isProcessedEvent ? isProcessedEvent : QObject::eventFilter(object, event);
+    return isProcessedEvent ? event_was_handled : QObject::eventFilter(object, event);
 }
 
 //! Finds NodePort around given coordinate.
@@ -61,10 +66,10 @@ bool NodeController::processMousePress(QGraphicsSceneMouseEvent* event)
             m_conn->setPos1(port->scenePos());
             m_conn->setPos2(event->scenePos());
             m_conn->updatePath();
-            return true;
+            return event_was_handled;
         }
     }
-    return false;
+    return event_was_ignored;
 }
 
 bool NodeController::processMouseMove(QGraphicsSceneMouseEvent* event)
@@ -72,9 +77,9 @@ bool NodeController::processMouseMove(QGraphicsSceneMouseEvent* event)
     if (m_conn) {
         m_conn->setPos2(event->scenePos());
         m_conn->updatePath();
-        return true;
+        return event_was_handled;
     }
-    return false;
+    return event_was_ignored;
 }
 
 bool NodeController::processMouseRelease(QGraphicsSceneMouseEvent* event)
@@ -85,15 +90,17 @@ bool NodeController::processMouseRelease(QGraphicsSceneMouseEvent* event)
             if (port1->isConnectable(*port2)) {
                 m_conn->setPort2(port2);
                 m_conn->updatePath();
-                m_conn = nullptr;
-                return true;
+                // Sending request for connection.
+                emit connectionRequest(m_conn->childView(), m_conn->parentView());
+                // At this point we do not need NodeConnection object anymore.
+                // It will be redrawn automatically, when the model process our request.
             }
         }
         delete m_conn;
         m_conn = nullptr;
-        return true;
+        return event_was_handled;
     }
-    return false;
+    return event_was_ignored;
 }
 
 } // namespace NodeEditor

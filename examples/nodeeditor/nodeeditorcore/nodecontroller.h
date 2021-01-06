@@ -23,11 +23,14 @@ namespace NodeEditor {
 
 class NodeConnection;
 class NodePort;
+class ConnectableView;
 
 //! The main controller of NodeEditor machinery. Listens to mouse events of the graphics scene,
 //! updates connections between ports.
 
 class NodeController : public QObject {
+    Q_OBJECT
+
 public:
     NodeController(QGraphicsScene* scene);
 
@@ -36,7 +39,7 @@ public:
     NodePort* findPort(const QPointF& pos);
 
 signals:
-    void connectionIsEstablished(NodeConnection*);
+    void connectionRequest(ConnectableView* child, ConnectableView* parent);
 
 private:
     bool processMousePress(QGraphicsSceneMouseEvent* event);
@@ -44,7 +47,7 @@ private:
     bool processMouseRelease(QGraphicsSceneMouseEvent* event);
 
     QGraphicsScene* m_scene{nullptr};
-    NodeConnection* m_conn{nullptr};
+    NodeConnection* m_conn{nullptr}; //! Currently processed connection.
 };
 
 } // namespace NodeEditor
