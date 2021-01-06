@@ -58,14 +58,11 @@ void NodeConnection::setPort2(NodePort* port)
     setPos2(port->scenePos());
 }
 
-void NodeConnection::updatePosFromPorts()
+void NodeConnection::updatePath()
 {
     m_pos1 = m_port1->scenePos();
     m_pos2 = m_port2->scenePos();
-}
 
-void NodeConnection::updatePath()
-{
     QPainterPath p;
     p.moveTo(m_pos1);
     qreal dx = m_pos2.x() - m_pos1.x();

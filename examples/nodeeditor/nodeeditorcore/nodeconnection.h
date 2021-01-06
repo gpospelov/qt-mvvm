@@ -33,7 +33,6 @@ public:
     void setPort1(NodePort* port);
     void setPort2(NodePort* port);
 
-    void updatePosFromPorts();
     void updatePath();
 
     NodePort* port1() const;

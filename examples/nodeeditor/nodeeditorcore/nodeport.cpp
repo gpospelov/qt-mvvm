@@ -108,10 +108,8 @@ ConnectableView* NodePort::connectableView() const
 QVariant NodePort::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant& value)
 {
     if (change == ItemScenePositionHasChanged) {
-        for (auto conn : m_connections) {
-            conn->updatePosFromPorts();
+        for (auto conn : m_connections)
             conn->updatePath();
-        }
     }
     return value;
 }
