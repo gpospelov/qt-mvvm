@@ -20,6 +20,7 @@
 namespace NodeEditor {
 
 class NodeConnection;
+class ConnectableView;
 
 //! Base class representing input/output ports of connectable view.
 //! Looks like round element attached to parent's bounding box. Input and output ports of the
@@ -46,8 +47,10 @@ public:
 
     bool isConnected(const NodePort& other) const;
 
+    ConnectableView* connectableView() const;
+
 protected:
-    QVariant itemChange(GraphicsItemChange change, const QVariant& value);
+    QVariant itemChange(GraphicsItemChange change, const QVariant& value) override;
 
     QString m_portType; //! Port type.
     QGraphicsTextItem* m_label{nullptr};

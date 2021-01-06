@@ -76,6 +76,9 @@ void NodeConnection::updatePath()
     setPath(p);
 }
 
+//! Returns the port from where the connection begins.
+//! It corresponds to the NodePort, on which the user has clicked first while connecting two ports.
+
 NodePort* NodeConnection::port1() const
 {
     return m_port1;
@@ -97,6 +100,24 @@ void NodeConnection::paint(QPainter* painter, const QStyleOptionGraphicsItem*, Q
         painter->setPen(Qt::DashLine);
 
     painter->drawPath(path());
+}
+
+//! Returns ConnectableView playing the role of a child.
+//! By our convention, child has NodeOutputPort belonging to this connection.
+
+ConnectableView* NodeConnection::childView() const
+{
+    auto output_port = m_port1->isOutput() ? m_port1 : m_port2;
+    return output_port->connectableView();
+}
+
+//! Returns ConnectableView playing the role of a parent.
+//! By our convention, the parent has NodeOutputPort belonging to this connection.
+
+ConnectableView* NodeConnection::parentView() const
+{
+    auto input_port = m_port1->isInput() ? m_port1 : m_port2;
+    return input_port->connectableView();
 }
 
 } // namespace NodeEditor

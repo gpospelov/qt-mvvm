@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include "nodeport.h"
+#include "connectableview.h"
 #include "nodeconnection.h"
 #include "mvvm/widgets/widgetutils.h"
 #include <QFont>
@@ -59,6 +60,8 @@ QString NodePort::portType() const
     return m_portType;
 }
 
+//! Returns true if this is a NodeOutputPort.
+
 bool NodePort::isOutput() const
 {
     return !isInput();
@@ -95,6 +98,13 @@ bool NodePort::isConnected(const NodePort& other) const
     return false;
 }
 
+//! Returns parent to which this port belongs.
+
+ConnectableView* NodePort::connectableView() const
+{
+    return dynamic_cast<ConnectableView*>(parentItem());
+}
+
 QVariant NodePort::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant& value)
 {
     if (change == ItemScenePositionHasChanged) {
@@ -107,6 +117,8 @@ QVariant NodePort::itemChange(QGraphicsItem::GraphicsItemChange change, const QV
 }
 
 // ----------------------------------------------------------------------------
+
+//! Returns true if this is a NodeInputPort.
 
 bool NodeInputPort::isInput() const
 {
@@ -126,6 +138,8 @@ void NodeInputPort::initPort()
 }
 
 // ----------------------------------------------------------------------------
+
+//! Returns true if this is a NodeInputPort.
 
 bool NodeOutputPort::isInput() const
 {

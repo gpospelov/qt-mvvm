@@ -19,8 +19,9 @@
 namespace NodeEditor {
 
 class NodePort;
+class ConnectableView;
 
-//! Elastic connection to connect two NodePorts together.
+//! Elastic connection to connect two NodeInput ports together.
 
 class NodeConnection : public QGraphicsPathItem {
 public:
@@ -40,6 +41,10 @@ public:
     bool hasPort(const NodePort& port) const;
 
     void paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*);
+
+    ConnectableView* childView() const;
+
+    ConnectableView* parentView() const;
 
 private:
     QPointF m_pos1;
