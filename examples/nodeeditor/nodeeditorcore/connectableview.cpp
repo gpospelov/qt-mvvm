@@ -33,8 +33,7 @@ QRectF label_rectangle(const QRectF& rect)
 namespace NodeEditor {
 
 ConnectableView::ConnectableView(ConnectableItem* item)
-    : m_item(item)
-    , m_controller(std::make_unique<ConnectableItemController>(item, this))
+    : m_item(item), m_controller(std::make_unique<ConnectableItemController>(item, this))
 {
     // make size of rectangle depending on 'M'-letter size to address scaling issues
     m_rect = QRectF(0, 0, ModelView::Utils::WidthOfLetterM() * 8,
@@ -103,6 +102,12 @@ NodeOutputPort* ConnectableView::outputPort() const
 ConnectableItem* ConnectableView::connectableItem() const
 {
     return m_item;
+}
+
+void ConnectableView::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
+{
+    QGraphicsItem::mouseMoveEvent(event);
+    m_controller->updateItemFromView();
 }
 
 //! Returns base color of this item.

@@ -22,6 +22,15 @@ struct ConnectableItemController::ConnectableItemControllerImpl {
         : m_item(item), m_view(view)
     {
     }
+    //! Updates item properties from the current view position.
+
+    void updateItemFromView()
+    {
+        m_blockOnPropertyChanged = true;
+        m_item->setX(m_view->x());
+        m_item->setY(m_view->y());
+        m_blockOnPropertyChanged = false;
+    }
 };
 
 ConnectableItemController::ConnectableItemController(ConnectableItem* item, ConnectableView* view)
@@ -29,11 +38,15 @@ ConnectableItemController::ConnectableItemController(ConnectableItem* item, Conn
 {
 }
 
+//! Updates item properties from the current view position.
+
+void ConnectableItemController::updateItemFromView()
+{
+    p_impl->updateItemFromView();
+}
+
 ConnectableItemController::~ConnectableItemController() = default;
 
-void ConnectableItemController::subscribe()
-{
-
-}
+void ConnectableItemController::subscribe() {}
 
 } // namespace NodeEditor

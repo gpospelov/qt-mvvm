@@ -41,6 +41,9 @@ public:
 
     ConnectableItem* connectableItem() const;
 
+protected:
+    void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;
+
 private:
     template <typename T> QList<T*> ports() const;
 

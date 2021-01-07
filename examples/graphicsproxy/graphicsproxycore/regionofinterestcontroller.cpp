@@ -28,7 +28,7 @@ struct RegionOfInterestController::RegionOfInterestControllerImpl {
     {
     }
 
-    //! Updates item properties from current view position.
+    //! Updates item properties from the current view position.
 
     void update_item_from_view()
     {
