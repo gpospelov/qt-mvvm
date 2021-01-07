@@ -10,7 +10,7 @@
 #ifndef CONNECTABLEVIEW_H
 #define CONNECTABLEVIEW_H
 
-#include <QGraphicsObject>
+#include <QGraphicsItem>
 
 namespace NodeEditor {
 
@@ -24,11 +24,9 @@ class ConnectableItemController;
 //! In current design, ConnectableView can have only single output port and multiple input ports
 //! of different type.
 
-class ConnectableView : public QGraphicsObject {
-    Q_OBJECT
-
+class ConnectableView : public QGraphicsItem {
 public:
-    ConnectableView(ConnectableItem* item, QGraphicsObject* parent = nullptr);
+    ConnectableView(ConnectableItem* item);
     ~ConnectableView() override;
 
     QRectF boundingRect() const override;

@@ -32,9 +32,8 @@ QRectF label_rectangle(const QRectF& rect)
 
 namespace NodeEditor {
 
-ConnectableView::ConnectableView(ConnectableItem* item, QGraphicsObject* parent)
-    : QGraphicsObject(parent)
-    , m_item(item)
+ConnectableView::ConnectableView(ConnectableItem* item)
+    : m_item(item)
     , m_controller(std::make_unique<ConnectableItemController>(item, this))
 {
     // make size of rectangle depending on 'M'-letter size to address scaling issues
