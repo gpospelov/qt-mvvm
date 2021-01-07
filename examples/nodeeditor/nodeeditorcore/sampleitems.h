@@ -32,9 +32,11 @@ public:
 
     std::string namedColor() const;
 
-    double xPos() const;
+    double x() const;
+    void setX(double x);
 
-    double yPos() const;
+    double y() const;
+    void setY(double y);
 };
 
 //! Represents particle item box on graph canvas.

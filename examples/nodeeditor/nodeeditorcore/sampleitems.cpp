@@ -27,14 +27,24 @@ std::string ConnectableItem::namedColor() const
     return property<std::string>(P_COLOR);
 }
 
-double ConnectableItem::xPos() const
+double ConnectableItem::x() const
 {
     return property<double>(P_XPOS);
 }
 
-double ConnectableItem::yPos() const
+void ConnectableItem::setX(double x)
+{
+    setProperty(P_XPOS, x);
+}
+
+double ConnectableItem::y() const
 {
     return property<double>(P_YPOS);
+}
+
+void ConnectableItem::setY(double y)
+{
+    setProperty(P_YPOS, y);
 }
 
 ParticleItem::ParticleItem() : ConnectableItem(ParticleItemType)
