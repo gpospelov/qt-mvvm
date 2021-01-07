@@ -32,10 +32,10 @@ public:
     explicit ModelEditorWidget(SampleModel* model = nullptr, QWidget* parent = nullptr);
 
 private:
+    PropertyWidget* m_propertyWidget{nullptr};
     NodeEditor::GraphicsScene* m_graphicsScene{nullptr};
     NodeEditor::GraphicsView* m_graphicsView{nullptr};
     QSplitter* m_splitter{nullptr};
-    PropertyWidget* m_propertyWidget{nullptr};
 };
 
 } // namespace NodeEditor
