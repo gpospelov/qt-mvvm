@@ -24,16 +24,14 @@ ModelEditorWidget::ModelEditorWidget(SampleModel* model, QWidget* parent)
     , m_graphicsScene(new GraphicsScene(model, this))
     , m_graphicsView(new GraphicsView(m_graphicsScene, this))
     , m_splitter(new QSplitter)
-    , m_propertyWidget(new PropertyWidget)
+    , m_propertyWidget(new PropertyWidget(model))
 {
     auto layout = new QHBoxLayout(this);
     m_splitter->addWidget(m_graphicsView);
     m_splitter->addWidget(m_propertyWidget);
-    m_splitter->setSizes(QList<int>() << 3 << 1);
+    m_splitter->setSizes(QList<int>() << 300 << 100);
 
     layout->addWidget(m_splitter);
 }
-
-void ModelEditorWidget::setModel(SampleModel*) {}
 
 } // namespace NodeEditor

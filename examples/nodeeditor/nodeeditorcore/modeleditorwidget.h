@@ -22,14 +22,14 @@ class GraphicsView;
 class GraphicsScene;
 class PropertyWidget;
 
-//! Shows content of the model as vertical tree, horizontal tree and table.
+//! Main widget for model editing. Contains a graphics scene with node editor on the left,
+//! and property panel on the right. Belongs to MainWindow.
 
 class ModelEditorWidget : public QWidget {
     Q_OBJECT
 
 public:
     explicit ModelEditorWidget(SampleModel* model = nullptr, QWidget* parent = nullptr);
-    void setModel(SampleModel* model);
 
 private:
     NodeEditor::GraphicsScene* m_graphicsScene{nullptr};

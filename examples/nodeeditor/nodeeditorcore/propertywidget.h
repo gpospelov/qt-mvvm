@@ -12,7 +12,17 @@
 
 #include <QWidget>
 
+class QSplitter;
+
+namespace ModelView {
+class SessionModel;
+class PropertyTreeView;
+class TopItemsTreeView;
+} // namespace ModelView
+
 namespace NodeEditor {
+
+class SampleModel;
 
 //! The panel with sample tree on top, and item property editor at the bottom.
 //! Located on the right side of ModelEditorWidget.
@@ -21,7 +31,13 @@ class PropertyWidget : public QWidget {
     Q_OBJECT
 
 public:
-    PropertyWidget(QWidget* parent = nullptr);
+    PropertyWidget(SampleModel* model, QWidget* parent = nullptr);
+
+private:
+    SampleModel* m_model{nullptr};
+    ModelView::TopItemsTreeView* m_topItemsTree{nullptr};
+    ModelView::PropertyTreeView* m_propertyTree{nullptr};
+    QSplitter* m_splitter{nullptr};
 };
 
 } // namespace NodeEditor
