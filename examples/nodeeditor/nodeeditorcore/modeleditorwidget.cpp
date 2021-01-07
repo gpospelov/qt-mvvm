@@ -12,6 +12,7 @@
 #include "graphicsview.h"
 #include "propertywidget.h"
 #include "samplemodel.h"
+#include "sampleitems.h"
 #include <QHBoxLayout>
 #include <QSplitter>
 
@@ -32,6 +33,9 @@ ModelEditorWidget::ModelEditorWidget(SampleModel* model, QWidget* parent)
     m_splitter->setSizes(QList<int>() << 300 << 100);
 
     layout->addWidget(m_splitter);
+
+    auto on_selection = [this](ConnectableItem* item) { m_propertyWidget->onSelectionRequest(item); };
+    connect(m_graphicsScene, &GraphicsScene::connectableItemSelectionChanged, on_selection);
 }
 
 } // namespace NodeEditor

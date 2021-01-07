@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include "propertywidget.h"
+#include "sampleitems.h"
 #include "samplemodel.h"
 #include "mvvm/widgets/standardtreeviews.h"
 #include <QSplitter>
@@ -29,6 +30,14 @@ PropertyWidget::PropertyWidget(SampleModel* model, QWidget* parent)
     m_splitter->addWidget(m_propertyTree);
     m_splitter->setSizes(QList<int>() << 300 << 200);
     layout->addWidget(m_splitter);
+}
+
+//! Process selection request.
+
+void PropertyWidget::onSelectionRequest(ConnectableItem* item)
+{
+    m_topItemsTree->setSelected(item);
+    m_propertyTree->setItem(item);
 }
 
 } // namespace NodeEditor

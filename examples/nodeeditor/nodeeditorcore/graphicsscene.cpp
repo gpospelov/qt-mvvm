@@ -52,8 +52,12 @@ void GraphicsScene::onConnectionRequest(ConnectableView* childView, ConnectableV
 
 void GraphicsScene::onSelectionChanged()
 {
-    qDebug() << "on selection change";
-
+    ConnectableItem* selectedItem{nullptr};
+    for (auto view : selectedItems()) {
+        if (auto connectableView = dynamic_cast<ConnectableView*>(view); connectableView)
+            selectedItem = connectableView->connectableItem();
+    }
+    emit connectableItemSelectionChanged(selectedItem);
 }
 
 //! Updates scene content from the model.
