@@ -19,7 +19,7 @@ ConnectableItem::ConnectableItem(const std::string& modelType) : ModelView::Comp
 {
     addProperty(P_XPOS, 0.0)->setDisplayName("X");
     addProperty(P_YPOS, 0.0)->setDisplayName("Y");
-    addProperty(P_COLOR, "antiquewhite");
+    addProperty(P_COLOR, "antiquewhite")->setDisplayName("Color");
 }
 
 std::string ConnectableItem::namedColor() const
@@ -43,6 +43,9 @@ ParticleItem::ParticleItem() : ConnectableItem(ParticleItemType)
     registerTag(TagInfo(T_TRANSFORMATION, 0, 1, {TransformationItemType}), true);
 }
 
-TransformationItem::TransformationItem() : ConnectableItem(TransformationItemType) {}
+TransformationItem::TransformationItem() : ConnectableItem(TransformationItemType)
+{
+    setProperty(P_COLOR, "lightseagreen");
+}
 
 } // namespace NodeEditor
