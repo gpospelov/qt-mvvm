@@ -32,11 +32,11 @@ public:
 
 private slots:
     void onConnectionRequest(ConnectableView* childView, ConnectableView* parentView);
+    void onSelectionChanged();
 
 private:
     void updateScene();
     void processItem(ConnectableItem* item);
-
     ConnectableView* findView(ConnectableItem* item);
 
     SampleModel* m_model{nullptr};

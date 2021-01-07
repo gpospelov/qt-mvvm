@@ -32,15 +32,29 @@ GraphicsScene::GraphicsScene(SampleModel* model, QObject* parent)
 
     connect(m_nodeController, &NodeController::connectionRequest, this,
             &GraphicsScene::onConnectionRequest);
+
+    connect(this, &GraphicsScene::selectionChanged, this, &GraphicsScene::onSelectionChanged);
 }
+
+GraphicsScene::~GraphicsScene() = default;
+
+//! Propagates connection request to the model.
 
 void GraphicsScene::onConnectionRequest(ConnectableView* childView, ConnectableView* parentView)
 {
     qDebug() << "on connection request";
+    // On model level connection of views means simply changing the parent of underlying items.
     m_model->moveItem(childView->connectableItem(), parentView->connectableItem(), {"", -1});
 }
 
-GraphicsScene::~GraphicsScene() = default;
+//! Processes change in scene selection. Finds ConnectableItem corresponding to a selected view
+//! and emit the signal.
+
+void GraphicsScene::onSelectionChanged()
+{
+    qDebug() << "on selection change";
+
+}
 
 //! Updates scene content from the model.
 
