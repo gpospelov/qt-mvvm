@@ -13,11 +13,14 @@
 #include <QWidget>
 #include <memory>
 
+class QSplitter;
+
 namespace NodeEditor {
 
 class SampleModel;
 class GraphicsView;
 class GraphicsScene;
+class PropertyWidget;
 
 //! Shows content of the model as vertical tree, horizontal tree and table.
 
@@ -31,6 +34,8 @@ public:
 private:
     NodeEditor::GraphicsScene* m_graphicsScene{nullptr};
     NodeEditor::GraphicsView* m_graphicsView{nullptr};
+    QSplitter* m_splitter{nullptr};
+    PropertyWidget* m_propertyWidget{nullptr};
 };
 
 } // namespace NodeEditor
