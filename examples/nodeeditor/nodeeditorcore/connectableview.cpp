@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include "connectableview.h"
+#include "connectableitemcontroller.h"
 #include "nodeconnection.h"
 #include "nodeport.h"
 #include "sampleitems.h"
@@ -32,7 +33,9 @@ QRectF label_rectangle(const QRectF& rect)
 namespace NodeEditor {
 
 ConnectableView::ConnectableView(ConnectableItem* item, QGraphicsObject* parent)
-    : QGraphicsObject(parent), m_item(item)
+    : QGraphicsObject(parent)
+    , m_item(item)
+    , m_controller(std::make_unique<ConnectableItemController>(item, this))
 {
     // make size of rectangle depending on 'M'-letter size to address scaling issues
     m_rect = QRectF(0, 0, ModelView::Utils::WidthOfLetterM() * 8,
@@ -43,6 +46,8 @@ ConnectableView::ConnectableView(ConnectableItem* item, QGraphicsObject* parent)
 
     init_ports();
 }
+
+ConnectableView::~ConnectableView() = default;
 
 QRectF ConnectableView::boundingRect() const
 {

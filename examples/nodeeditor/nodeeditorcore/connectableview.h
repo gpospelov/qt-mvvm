@@ -17,6 +17,7 @@ namespace NodeEditor {
 class ConnectableItem;
 class NodeInputPort;
 class NodeOutputPort;
+class ConnectableItemController;
 
 //! Represents ConnectableItem on QGraphicsScene. Shown as a reactangle with rounded corners,
 //! gradient, label, and set of input/output ports to connect.
@@ -28,6 +29,7 @@ class ConnectableView : public QGraphicsObject {
 
 public:
     ConnectableView(ConnectableItem* item, QGraphicsObject* parent = nullptr);
+    ~ConnectableView() override;
 
     QRectF boundingRect() const override;
 
@@ -50,7 +52,10 @@ private:
 
     QRectF m_rect;                    //!< Bounding rectangle.
     ConnectableItem* m_item{nullptr}; //!< Underlying item of this view.
+    std::unique_ptr<ConnectableItemController> m_controller;
 };
+
+//! Return list of ports of required type.
 
 template <typename T> QList<T*> ConnectableView::ports() const
 {

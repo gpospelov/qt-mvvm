@@ -27,6 +27,9 @@ public:
     ConnectableItemController(ConnectableItem* item, ConnectableView* view);
     ~ConnectableItemController() override;
 
+protected:
+    void subscribe() override;
+
 private:
     struct ConnectableItemControllerImpl;
     std::unique_ptr<ConnectableItemControllerImpl> p_impl;

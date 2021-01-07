@@ -16,6 +16,8 @@ namespace NodeEditor {
 struct ConnectableItemController::ConnectableItemControllerImpl {
     ConnectableItem* m_item{nullptr};
     ConnectableView* m_view{nullptr};
+    bool m_blockOnPropertyChanged{false};
+
     ConnectableItemControllerImpl(ConnectableItem* item, ConnectableView* view)
         : m_item(item), m_view(view)
     {
@@ -25,6 +27,13 @@ struct ConnectableItemController::ConnectableItemControllerImpl {
 ConnectableItemController::ConnectableItemController(ConnectableItem* item, ConnectableView* view)
     : p_impl(std::make_unique<ConnectableItemControllerImpl>(item, view))
 {
+}
+
+ConnectableItemController::~ConnectableItemController() = default;
+
+void ConnectableItemController::subscribe()
+{
+
 }
 
 } // namespace NodeEditor
