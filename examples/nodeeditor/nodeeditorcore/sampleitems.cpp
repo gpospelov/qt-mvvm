@@ -39,7 +39,7 @@ double ConnectableItem::yPos() const
 
 ParticleItem::ParticleItem() : ConnectableItem(ParticleItemType)
 {
-    // intended to attach TransformationItem
+    // intended to attach TransformationItem (maximum 1)
     registerTag(TagInfo(T_TRANSFORMATION, 0, 1, {TransformationItemType}), true);
 }
 
