@@ -49,10 +49,10 @@ void ItemsTreeView::setViewModelDelegate(std::unique_ptr<ViewModelDelegate> dele
 
 void ItemsTreeView::setSelected(SessionItem* item)
 {
-    if (!item || !m_viewModel) {
-        selectionModel()->clearSelection();
+    // Provide possibility to clear selection when item == nullptr. Provide unit tests.
+    // Make sure it works when SessionModel is already destroyed.
+    if (!m_viewModel || !item)
         return;
-    }
 
     auto indexes = m_viewModel->indexOfSessionItem(item);
     if (!indexes.empty())
