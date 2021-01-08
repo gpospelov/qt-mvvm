@@ -22,7 +22,7 @@ const double bbox_margins = 5; // additional margins around rectangle to form bo
 
 RegionOfInterestView::RegionOfInterestView(RegionOfInterestItem* item,
                                            const ModelView::SceneAdapterInterface* scene_adapter)
-    : controller(std::make_unique<RegionOfInterestController>(item, scene_adapter, this))
+    : m_controller(std::make_unique<RegionOfInterestController>(scene_adapter, item, this))
 {
     if (!scene_adapter)
         throw std::runtime_error("Error in RegionOfInterestView: scene adapter is not initialized");
@@ -38,12 +38,12 @@ RegionOfInterestView::~RegionOfInterestView() = default;
 
 QRectF RegionOfInterestView::boundingRect() const
 {
-    return controller->roi_rectangle().marginsAdded(
+    return m_controller->roiRectangle().marginsAdded(
         QMarginsF(bbox_margins, bbox_margins, bbox_margins, bbox_margins));
 }
 
 //! Updates view appearance from RegionOfInterestItem.
-//! Triggered by QGraphicsScene::advance method on any QGraphicsView resize ore zoom in/out
+//! Triggered by QGraphicsScene::advance method on a) QGraphicsView resize b) zoom in/out
 //! events in QCustomPlot.
 
 void RegionOfInterestView::advance(int phase)
@@ -67,17 +67,17 @@ void RegionOfInterestView::setActiveHandle(SizeHandleElement* element)
 void RegionOfInterestView::update_geometry()
 {
     prepareGeometryChange();
-    controller->update_view_from_item();
+    m_controller->updateViewFromItem();
     for (auto handle : handles)
-        handle->updateHandleElementPosition(controller->roi_rectangle());
+        handle->updateHandleElementPosition(m_controller->roiRectangle());
 }
 
 void RegionOfInterestView::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
 {
     // drawing rectangular frame made of two colors to look good on both black and white
     painter->setPen(QPen(QColor(34, 67, 255)));
-    painter->drawRect(controller->roi_rectangle());
-    QRectF secondRect = controller->roi_rectangle().marginsAdded(QMarginsF(1, 1, 1, 1));
+    painter->drawRect(m_controller->roiRectangle());
+    QRectF secondRect = m_controller->roiRectangle().marginsAdded(QMarginsF(1, 1, 1, 1));
     painter->setPen(QPen(QColor(255, 255, 245)));
     painter->drawRect(secondRect);
 }
@@ -92,17 +92,17 @@ void RegionOfInterestView::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
         auto top = std::max(event->scenePos().y(), opposite_origin.y());
 
         if (active_handle->isCornerHandle())
-            controller->update_item_from_corner(left, right, top, bottom);
+            m_controller->updateItemFromCorner(left, right, top, bottom);
         else if (active_handle->isVerticalHandle())
-            controller->update_item_from_vertical_handle(top, bottom);
+            m_controller->updateItemFromVerticalHandle(top, bottom);
         else if (active_handle->isHorizontalHandle())
-            controller->update_item_from_horizontal_handle(left, right);
+            m_controller->updateItemFromHorizontalHandle(left, right);
 
         update_geometry();
     }
     else {
         QGraphicsItem::mouseMoveEvent(event);
-        controller->update_item_from_view();
+        m_controller->updateItemFromView();
     }
 }
 

@@ -48,7 +48,7 @@ protected:
 private:
     void create_size_handle_elements();
     SizeHandleElement* findOpposite(SizeHandleElement* element);
-    std::unique_ptr<RegionOfInterestController> controller;
+    std::unique_ptr<RegionOfInterestController> m_controller;
     std::vector<SizeHandleElement*> handles;
     SizeHandleElement* active_handle{nullptr}; //!
     QPointF opposite_origin; //! coordinate of opposite corner at the moment of click

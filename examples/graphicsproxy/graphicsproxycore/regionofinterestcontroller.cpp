@@ -15,157 +15,154 @@
 using namespace ModelView;
 
 struct RegionOfInterestController::RegionOfInterestControllerImpl {
-    RegionOfInterestItem* roi_item{nullptr};
-    const SceneAdapterInterface* scene_adapter{nullptr};
-    RegionOfInterestView* roi_view{nullptr};
-    bool block_on_property_changed{false};
-    QRectF roi_rectangle;
+    const SceneAdapterInterface* m_sceneAdapter{nullptr};
+    RegionOfInterestItem* m_item{nullptr};
+    RegionOfInterestView* m_view{nullptr};
+    bool m_blockOnPropertyChanged{false};
+    QRectF m_roiRectangle;
 
-    RegionOfInterestControllerImpl(RegionOfInterestItem* item,
-                                   const ModelView::SceneAdapterInterface* scene_adapter,
-                                   RegionOfInterestView* view)
-        : roi_item(item), scene_adapter(scene_adapter), roi_view(view)
+    RegionOfInterestControllerImpl(const ModelView::SceneAdapterInterface* scene_adapter,
+                                   RegionOfInterestItem* item, RegionOfInterestView* view)
+        : m_sceneAdapter(scene_adapter), m_item(item), m_view(view)
     {
     }
 
     //! Updates item properties from the current view position.
 
-    void update_item_from_view()
+    void updateItemFromView()
     {
-        block_on_property_changed = true;
+        m_blockOnPropertyChanged = true;
 
-        roi_item->setProperty(RegionOfInterestItem::P_XLOW,
-                              scene_adapter->fromSceneX(roi_view->x()));
-        roi_item->setProperty(RegionOfInterestItem::P_XUP,
-                              scene_adapter->fromSceneX(roi_view->x() + roi_rectangle.width()));
+        m_item->setProperty(RegionOfInterestItem::P_XLOW, m_sceneAdapter->fromSceneX(m_view->x()));
+        m_item->setProperty(RegionOfInterestItem::P_XUP,
+                            m_sceneAdapter->fromSceneX(m_view->x() + m_roiRectangle.width()));
 
-        roi_item->setProperty(RegionOfInterestItem::P_YLOW,
-                              scene_adapter->fromSceneY(roi_view->y() + roi_rectangle.height()));
-        roi_item->setProperty(RegionOfInterestItem::P_YUP,
-                              scene_adapter->fromSceneY(roi_view->y()));
+        m_item->setProperty(RegionOfInterestItem::P_YLOW,
+                            m_sceneAdapter->fromSceneY(m_view->y() + m_roiRectangle.height()));
+        m_item->setProperty(RegionOfInterestItem::P_YUP, m_sceneAdapter->fromSceneY(m_view->y()));
 
-        block_on_property_changed = false;
+        m_blockOnPropertyChanged = false;
     }
 
     //! Calculates view rectangle in scene coordinates from item properties.
 
-    void set_view_rectangle_from_item() { roi_rectangle = QRectF(0.0, 0.0, width(), height()); }
+    void setViewRectangleFromItem() { m_roiRectangle = QRectF(0.0, 0.0, width(), height()); }
 
     //! Sets view position in scene from item properties.
 
-    void set_view_position_from_item()
+    void setViewPositionFromItem()
     {
-        roi_view->setX(scene_adapter->toSceneX(par(RegionOfInterestItem::P_XLOW)));
-        roi_view->setY(scene_adapter->toSceneY(par(RegionOfInterestItem::P_YUP)));
+        m_view->setX(m_sceneAdapter->toSceneX(par(RegionOfInterestItem::P_XLOW)));
+        m_view->setY(m_sceneAdapter->toSceneY(par(RegionOfInterestItem::P_YUP)));
     }
 
     //! Updates view appearance using current values of item properties and state of scene adapter.
 
-    void update_view_from_item()
+    void updateViewFromItem()
     {
-        set_view_rectangle_from_item();
-        set_view_position_from_item();
+        setViewRectangleFromItem();
+        setViewPositionFromItem();
     }
 
-    void update_item_from_corner(double left, double right, double top, double bottom)
+    void updateItemFromCorner(double left, double right, double top, double bottom)
     {
-        roi_item->setProperty(RegionOfInterestItem::P_XLOW, scene_adapter->fromSceneX(left));
-        roi_item->setProperty(RegionOfInterestItem::P_YLOW, scene_adapter->fromSceneY(top));
-        roi_item->setProperty(RegionOfInterestItem::P_XUP, scene_adapter->fromSceneX(right));
-        roi_item->setProperty(RegionOfInterestItem::P_YUP, scene_adapter->fromSceneY(bottom));
+        m_item->setProperty(RegionOfInterestItem::P_XLOW, m_sceneAdapter->fromSceneX(left));
+        m_item->setProperty(RegionOfInterestItem::P_YLOW, m_sceneAdapter->fromSceneY(top));
+        m_item->setProperty(RegionOfInterestItem::P_XUP, m_sceneAdapter->fromSceneX(right));
+        m_item->setProperty(RegionOfInterestItem::P_YUP, m_sceneAdapter->fromSceneY(bottom));
     }
 
-    void update_item_from_vertical_handle(double top, double bottom)
+    void updateItemFromVerticalHandle(double top, double bottom)
     {
-        roi_item->setProperty(RegionOfInterestItem::P_YLOW, scene_adapter->fromSceneY(top));
-        roi_item->setProperty(RegionOfInterestItem::P_YUP, scene_adapter->fromSceneY(bottom));
+        m_item->setProperty(RegionOfInterestItem::P_YLOW, m_sceneAdapter->fromSceneY(top));
+        m_item->setProperty(RegionOfInterestItem::P_YUP, m_sceneAdapter->fromSceneY(bottom));
     }
 
-    void update_item_from_horizontal_handle(double left, double right)
+    void updateItemFromHorizontalHandle(double left, double right)
     {
-        roi_item->setProperty(RegionOfInterestItem::P_XLOW, scene_adapter->fromSceneX(left));
-        roi_item->setProperty(RegionOfInterestItem::P_XUP, scene_adapter->fromSceneX(right));
+        m_item->setProperty(RegionOfInterestItem::P_XLOW, m_sceneAdapter->fromSceneX(left));
+        m_item->setProperty(RegionOfInterestItem::P_XUP, m_sceneAdapter->fromSceneX(right));
     }
 
     double width() const { return right() - left(); }
     double height() const { return bottom() - top(); }
 
     //! Returns the x-coordinate of the rectangle's left edge.
-    double left() const { return scene_adapter->toSceneX(par(RegionOfInterestItem::P_XLOW)); }
+    double left() const { return m_sceneAdapter->toSceneX(par(RegionOfInterestItem::P_XLOW)); }
 
     //! Returns the x-coordinate of the rectangle's right edge.
-    double right() const { return scene_adapter->toSceneX(par(RegionOfInterestItem::P_XUP)); }
+    double right() const { return m_sceneAdapter->toSceneX(par(RegionOfInterestItem::P_XUP)); }
 
     //! Returns the y-coordinate of the rectangle's top edge.
-    double top() const { return scene_adapter->toSceneY(par(RegionOfInterestItem::P_YUP)); }
+    double top() const { return m_sceneAdapter->toSceneY(par(RegionOfInterestItem::P_YUP)); }
 
     //! Returns the y-coordinate of the rectangle's bottom edge.
-    double bottom() const { return scene_adapter->toSceneY(par(RegionOfInterestItem::P_YLOW)); }
+    double bottom() const { return m_sceneAdapter->toSceneY(par(RegionOfInterestItem::P_YLOW)); }
 
-    double par(const std::string& name) const { return roi_item->property<double>(name); }
+    double par(const std::string& name) const { return m_item->property<double>(name); }
 };
 
 RegionOfInterestController::RegionOfInterestController(
-    RegionOfInterestItem* item, const ModelView::SceneAdapterInterface* scene_adapter,
+    const ModelView::SceneAdapterInterface* scene_adapter, RegionOfInterestItem* item,
     RegionOfInterestView* view)
-    : p_impl(std::make_unique<RegionOfInterestControllerImpl>(item, scene_adapter, view))
+    : p_impl(std::make_unique<RegionOfInterestControllerImpl>(scene_adapter, item, view))
 {
     setItem(item);
 }
 
 RegionOfInterestController::~RegionOfInterestController() = default;
 
-QRectF RegionOfInterestController::roi_rectangle() const
+QRectF RegionOfInterestController::roiRectangle() const
 {
-    return p_impl->roi_rectangle;
+    return p_impl->m_roiRectangle;
 }
 
 //! Updates view appearance using current values of item properties and state of scene adapter.
 
-void RegionOfInterestController::update_view_from_item()
+void RegionOfInterestController::updateViewFromItem()
 {
-    p_impl->update_view_from_item();
+    p_impl->updateViewFromItem();
 }
 
 //! Updates item properties from current view position.
 
-void RegionOfInterestController::update_item_from_view()
+void RegionOfInterestController::updateItemFromView()
 {
-    p_impl->update_item_from_view();
+    p_impl->updateItemFromView();
 }
 
 //! Updates item properties using coordinates reported during corner resize.
 
-void RegionOfInterestController::update_item_from_corner(double left, double right, double top,
-                                                         double bottom)
+void RegionOfInterestController::updateItemFromCorner(double left, double right, double top,
+                                                      double bottom)
 {
-    p_impl->update_item_from_corner(left, right, top, bottom);
+    p_impl->updateItemFromCorner(left, right, top, bottom);
 }
 
 //! Updates item properties using coordinates reported during vertical resize.
 
-void RegionOfInterestController::update_item_from_vertical_handle(double top, double bottom)
+void RegionOfInterestController::updateItemFromVerticalHandle(double top, double bottom)
 {
-    p_impl->update_item_from_vertical_handle(top, bottom);
+    p_impl->updateItemFromVerticalHandle(top, bottom);
 }
 
 //! Updates item properties using coordinates reported during horizontal resize.
 
-void RegionOfInterestController::update_item_from_horizontal_handle(double left, double right)
+void RegionOfInterestController::updateItemFromHorizontalHandle(double left, double right)
 {
-    p_impl->update_item_from_horizontal_handle(left, right);
+    p_impl->updateItemFromHorizontalHandle(left, right);
 }
 
 void RegionOfInterestController::subscribe()
 {
     auto on_property_change = [this](auto, auto) {
-        if (p_impl->block_on_property_changed)
+        if (p_impl->m_blockOnPropertyChanged)
             return;
 
-        p_impl->roi_view->update_geometry();
-        p_impl->roi_view->update();
+        p_impl->m_view->update_geometry();
+        p_impl->m_view->update();
     };
     setOnPropertyChange(on_property_change);
 
-    p_impl->update_view_from_item();
+    p_impl->updateViewFromItem();
 }
