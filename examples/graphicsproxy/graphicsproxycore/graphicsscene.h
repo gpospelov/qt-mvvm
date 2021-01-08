@@ -19,6 +19,8 @@ class SceneAdapterInterface;
 class CustomPlotProxyWidget;
 } // namespace ModelView
 
+namespace GraphicsProxy {
+
 class RegionOfInterestItem;
 
 //! Custom graphics scene to show QCustomPlot with additional elements on top.
@@ -41,5 +43,7 @@ private:
     ModelView::CustomPlotProxyWidget* colormap_proxy{nullptr};
     std::unique_ptr<ModelView::SceneAdapterInterface> scene_adapter;
 };
+
+}
 
 #endif //  GRAPHICSPROXY_GRAPHICSSCENE_H

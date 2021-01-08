@@ -10,6 +10,8 @@
 #include "axesrectangleview.h"
 #include "mvvm/plotting/sceneadapterinterface.h"
 
+namespace GraphicsProxy {
+
 AxesRectangleView::AxesRectangleView(const ModelView::SceneAdapterInterface* scene_adapter)
     : scene_adapter(scene_adapter)
 {
@@ -36,3 +38,5 @@ void AxesRectangleView::paint(QPainter*, const QStyleOptionGraphicsItem*, QWidge
 {
     // nothing to paint
 }
+
+} // namespace GraphicsProxy

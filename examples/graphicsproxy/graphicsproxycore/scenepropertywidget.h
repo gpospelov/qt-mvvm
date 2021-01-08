@@ -14,13 +14,16 @@
 #include <memory>
 
 class QBoxLayout;
-class SceneModel;
 class QBoxLayout;
 class QSlider;
 
 namespace ModelView {
 class ItemsTreeView;
 } // namespace ModelView
+
+namespace GraphicsProxy {
+
+class SceneModel;
 
 //! Shows model content in standard tree view.
 
@@ -40,5 +43,7 @@ private:
     ModelView::ItemsTreeView* m_treeView{nullptr};
     SceneModel* m_model{nullptr};
 };
+
+}
 
 #endif // GRAPHICSPROXY_SCENEPROPERTYWIDGET_H

@@ -13,13 +13,16 @@
 #include "mvvm/signals/itemlistener.h"
 #include <memory>
 
+class QRectF;
+
 namespace ModelView {
 class SceneAdapterInterface;
 }
 
+namespace GraphicsProxy {
+
 class RegionOfInterestItem;
 class RegionOfInterestView;
-class QRectF;
 
 //! Establishes communications between RegionOfInterestItem and RegionOfInterestView.
 //! Provides updates of view position/appearance on graphics scene, when underlying item changes.
@@ -50,5 +53,7 @@ private:
     struct RegionOfInterestControllerImpl;
     std::unique_ptr<RegionOfInterestControllerImpl> p_impl;
 };
+
+} // namespace GraphicsProxy
 
 #endif // GRAPHICSPROXY_REGIONOFINTERESTCONTROLLER_H

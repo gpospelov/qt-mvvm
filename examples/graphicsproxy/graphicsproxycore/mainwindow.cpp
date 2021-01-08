@@ -20,6 +20,8 @@ const QString size_key = "size";
 const QString pos_key = "pos";
 } // namespace
 
+namespace GraphicsProxy {
+
 MainWindow::MainWindow() : m_model(std::make_unique<SceneModel>())
 {
     setCentralWidget(new SceneWidget(m_model.get()));
@@ -58,3 +60,5 @@ void MainWindow::write_settings()
     settings.setValue(pos_key, pos());
     settings.endGroup();
 }
+
+} // namespace GraphicsProxy

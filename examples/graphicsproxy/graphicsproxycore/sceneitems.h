@@ -15,6 +15,8 @@
 
 #include "mvvm/model/compounditem.h"
 
+namespace GraphicsProxy {
+
 //! Item to represent region of interest on top of heat map.
 
 class RegionOfInterestItem : public ModelView::CompoundItem {
@@ -26,5 +28,7 @@ public:
 
     RegionOfInterestItem();
 };
+
+} // namespace GraphicsProxy
 
 #endif // GRAPHICSPROXY_SCENEMODEL_H

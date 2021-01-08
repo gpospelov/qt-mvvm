@@ -9,11 +9,14 @@
 
 #include "sizehandleelement.h"
 #include "regionofinterestview.h"
+#include "mvvm/utils/containerutils.h"
 #include <QCursor>
 #include <QPainter>
 #include <functional>
 #include <map>
 #include <stdexcept>
+
+namespace GraphicsProxy {
 
 namespace {
 
@@ -22,37 +25,30 @@ namespace {
 auto create_handle_data()
 {
     std::vector<SizeHandleElement::HandleInfo> result = {
-        {SizeHandleElement::TOPLEFT, Qt::SizeFDiagCursor, SizeHandleElement::BOTTOMRIGHT,
+        {SizeHandleElement::topleft, Qt::SizeFDiagCursor, SizeHandleElement::bottomright,
          [](auto r) { return r.topLeft(); }},
-        {SizeHandleElement::TOPMIDDLE, Qt::SizeVerCursor, SizeHandleElement::BOTTOMMIDLE,
+        {SizeHandleElement::topmiddle, Qt::SizeVerCursor, SizeHandleElement::bottommiddle,
          [](auto r) { return QPointF(r.x() + r.width() / 2., r.y()); }},
-        {SizeHandleElement::TOPRIGHT, Qt::SizeBDiagCursor, SizeHandleElement::BOTTOMLEFT,
+        {SizeHandleElement::topright, Qt::SizeBDiagCursor, SizeHandleElement::bottomleft,
          [](auto r) { return r.topRight(); }},
-        {SizeHandleElement::MIDDLERIGHT, Qt::SizeHorCursor, SizeHandleElement::MIDDLELEFT,
+        {SizeHandleElement::middleright, Qt::SizeHorCursor, SizeHandleElement::middleleft,
          [](auto r) { return QPointF(r.x() + r.width(), r.y() + r.height() / 2.); }},
-        {SizeHandleElement::BOTTOMRIGHT, Qt::SizeFDiagCursor, SizeHandleElement::TOPLEFT,
+        {SizeHandleElement::bottomright, Qt::SizeFDiagCursor, SizeHandleElement::topleft,
          [](auto r) { return r.bottomRight(); }},
-        {SizeHandleElement::BOTTOMMIDLE, Qt::SizeVerCursor, SizeHandleElement::TOPMIDDLE,
+        {SizeHandleElement::bottommiddle, Qt::SizeVerCursor, SizeHandleElement::topmiddle,
          [](auto r) { return QPointF(r.x() + r.width() / 2., r.y() + r.height()); }},
-        {SizeHandleElement::BOTTOMLEFT, Qt::SizeBDiagCursor, SizeHandleElement::TOPRIGHT,
+        {SizeHandleElement::bottomleft, Qt::SizeBDiagCursor, SizeHandleElement::topright,
          [](auto r) { return r.bottomLeft(); }},
-        {SizeHandleElement::MIDDLELEFT, Qt::SizeHorCursor, SizeHandleElement::MIDDLERIGHT,
+        {SizeHandleElement::middleleft, Qt::SizeHorCursor, SizeHandleElement::middleright,
          [](auto r) { return QPointF(r.x(), r.y() + r.height() / 2.); }}};
 
     return result;
 }
 
-//! Returns true if container contains an item.
-
-template <typename T, typename U> bool contains(const T& vec, U item)
-{
-    return std::find(vec.begin(), vec.end(), item) != vec.end();
-}
-
 } // namespace
 
 SizeHandleElement::SizeHandleElement(SizeHandleElement::HandleInfo info, RegionOfInterestView* view)
-    : QGraphicsItem(view), roi_view(view), info(info)
+    : QGraphicsItem(view), m_roiView(view), m_info(std::move(info))
 {
     setCursor(QCursor(info.cursor));
     setVisible(false);
@@ -92,45 +88,45 @@ QRectF SizeHandleElement::boundingRect() const
 
 void SizeHandleElement::updateHandleElementPosition(const QRectF& rect)
 {
-    setPos(info.rect_to_pos(rect));
+    setPos(m_info.rect_to_pos(rect));
 }
 
 //! Returns position identifier of this handle.
 
 SizeHandleElement::EHandlePosition SizeHandleElement::handlePosition() const
 {
-    return info.position;
+    return m_info.position;
 }
 
 //! Returns position of identifier located at opposite "side" of rectangle.
 
 SizeHandleElement::EHandlePosition SizeHandleElement::oppositeHandlePosition() const
 {
-    return info.opposite_position;
+    return m_info.opposite_position;
 }
 
 //! Returns true if this handle is one of the corners.
 
 bool SizeHandleElement::isCornerHandle() const
 {
-    static std::vector<EHandlePosition> expected = {TOPLEFT, TOPRIGHT, BOTTOMLEFT, BOTTOMRIGHT};
-    return ::contains(expected, info.position);
+    static std::vector<EHandlePosition> expected = {topleft, topright, bottomleft, bottomright};
+    return ModelView::Utils::Contains(expected, m_info.position);
 }
 
 //! Returns true if this handle is intended for resize along y-direction only.
 
 bool SizeHandleElement::isVerticalHandle() const
 {
-    static std::vector<EHandlePosition> expected = {TOPMIDDLE, BOTTOMMIDLE};
-    return ::contains(expected, info.position);
+    static std::vector<EHandlePosition> expected = {topmiddle, bottommiddle};
+    return ModelView::Utils::Contains(expected, m_info.position);
 }
 
 //! Returns true if this handle is intended for resize along x-direction only.
 
 bool SizeHandleElement::isHorizontalHandle() const
 {
-    static std::vector<EHandlePosition> expected = {MIDDLELEFT, MIDDLERIGHT};
-    return ::contains(expected, info.position);
+    static std::vector<EHandlePosition> expected = {middleleft, middleright};
+    return ModelView::Utils::Contains(expected, m_info.position);
 }
 
 void SizeHandleElement::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
@@ -146,7 +142,7 @@ void SizeHandleElement::paint(QPainter* painter, const QStyleOptionGraphicsItem*
 
 void SizeHandleElement::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
-    roi_view->setActiveHandle(this);
+    m_roiView->setActiveHandle(this);
     QGraphicsItem::mousePressEvent(event);
 }
 
@@ -156,3 +152,5 @@ void SizeHandleElement::mouseReleaseEvent(QGraphicsSceneMouseEvent* /*event*/)
     //    roi_view->setActiveHandle(nullptr);
     //    QGraphicsItem::mouseReleaseEvent(event);
 }
+
+} // namespace GraphicsProxy

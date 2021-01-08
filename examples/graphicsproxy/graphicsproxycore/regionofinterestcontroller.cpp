@@ -14,6 +14,8 @@
 
 using namespace ModelView;
 
+namespace GraphicsProxy {
+
 struct RegionOfInterestController::RegionOfInterestControllerImpl {
     const SceneAdapterInterface* m_sceneAdapter{nullptr};
     RegionOfInterestItem* m_item{nullptr};
@@ -166,3 +168,5 @@ void RegionOfInterestController::subscribe()
 
     p_impl->updateViewFromItem();
 }
+
+} // namespace GraphicsProxy

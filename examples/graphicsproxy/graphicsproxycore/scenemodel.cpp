@@ -41,6 +41,8 @@ void fill_data(Data2DItem* data_item, double scale = 1.0)
 
 } // namespace
 
+namespace GraphicsProxy {
+
 SceneModel::SceneModel() : SessionModel("ColorMapModel")
 {
     registerItem<RegionOfInterestItem>();
@@ -86,3 +88,5 @@ void SceneModel::create_colormap()
     auto colormap_item = insertItem<ColorMapItem>(viewport_item);
     colormap_item->setDataItem(topItem<Data2DItem>());
 }
+
+} // namespace GraphicsProxy

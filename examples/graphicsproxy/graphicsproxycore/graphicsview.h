@@ -12,6 +12,8 @@
 
 #include <QGraphicsView>
 
+namespace GraphicsProxy {
+
 class GraphicsScene;
 
 //! Custom graphics view to show QCustomPlot with additional elements on top.
@@ -28,5 +30,7 @@ protected:
 private:
     GraphicsScene* scene{nullptr};
 };
+
+} // namespace GraphicsProxy
 
 #endif //  GRAPHICSPROXY_GRAPHICSVIEW_H

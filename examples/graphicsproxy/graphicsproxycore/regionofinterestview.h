@@ -18,6 +18,8 @@ namespace ModelView {
 class SceneAdapterInterface;
 }
 
+namespace GraphicsProxy {
+
 class RegionOfInterestItem;
 class RegionOfInterestController;
 class SizeHandleElement;
@@ -53,5 +55,7 @@ private:
     SizeHandleElement* active_handle{nullptr}; //!
     QPointF opposite_origin; //! coordinate of opposite corner at the moment of click
 };
+
+} // namespace GraphicsProxy
 
 #endif // GRAPHICSPROXY_REGIONOFINTERESTVIEW_H

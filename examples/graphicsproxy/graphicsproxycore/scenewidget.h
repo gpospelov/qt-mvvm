@@ -13,16 +13,19 @@
 #include <QWidget>
 
 class QBoxLayout;
-class ScenePropertyWidget;
 class QToolBar;
 class QAction;
-class SceneModel;
-class GraphicsScene;
-class GraphicsView;
 
 namespace ModelView {
 class ColorMapCanvas;
 } // namespace ModelView
+
+namespace GraphicsProxy {
+
+class ScenePropertyWidget;
+class SceneModel;
+class GraphicsScene;
+class GraphicsView;
 
 //! Shows canvas with plots on the left and property editor on the right.
 
@@ -44,9 +47,11 @@ private:
 
     ScenePropertyWidget* m_propertyWidget{nullptr};
     ModelView::ColorMapCanvas* m_colorMapCanvas{nullptr};
-    GraphicsScene* graphics_scene{nullptr};
-    GraphicsView* graphics_view{nullptr};
+    GraphicsScene* m_graphicsScene{nullptr};
+    GraphicsView* m_graphicsView{nullptr};
     SceneModel* m_model{nullptr};
 };
+
+} // namespace GraphicsProxy
 
 #endif // GRAPHICSPROXY_SCENEWIDGET_H

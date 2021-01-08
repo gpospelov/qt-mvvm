@@ -20,6 +20,8 @@ namespace {
 const double bbox_margins = 5; // additional margins around rectangle to form bounding box
 } // namespace
 
+namespace GraphicsProxy {
+
 RegionOfInterestView::RegionOfInterestView(RegionOfInterestItem* item,
                                            const ModelView::SceneAdapterInterface* scene_adapter)
     : m_controller(std::make_unique<RegionOfInterestController>(scene_adapter, item, this))
@@ -145,3 +147,5 @@ SizeHandleElement* RegionOfInterestView::findOpposite(SizeHandleElement* element
         throw std::runtime_error("Error in RegionOfInterestView: can't find opposite handle");
     return *it;
 }
+
+} // namespace GraphicsProxy

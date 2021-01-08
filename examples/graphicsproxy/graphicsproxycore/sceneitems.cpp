@@ -14,12 +14,14 @@ namespace {
 const std::string RegionOfInterestItemType = "RegionOfInterest";
 }
 
-using namespace ModelView;
+namespace GraphicsProxy {
 
-RegionOfInterestItem::RegionOfInterestItem() : CompoundItem(RegionOfInterestItemType)
+RegionOfInterestItem::RegionOfInterestItem() : ModelView::CompoundItem(RegionOfInterestItemType)
 {
     addProperty(P_XLOW, 0.0)->setDisplayName("Xlow");
     addProperty(P_YLOW, 0.0)->setDisplayName("Ylow");
     addProperty(P_XUP, 0.0)->setDisplayName("Xup");
     addProperty(P_YUP, 0.0)->setDisplayName("Yup");
 }
+
+} // namespace GraphicsProxy

@@ -11,6 +11,8 @@
 #include "graphicsscene.h"
 #include <QResizeEvent>
 
+namespace GraphicsProxy {
+
 GraphicsView::GraphicsView(GraphicsScene* scene, QWidget* parent)
     : QGraphicsView(scene, parent), scene(scene)
 {
@@ -24,3 +26,5 @@ void GraphicsView::resizeEvent(QResizeEvent* event)
     QGraphicsView::resizeEvent(event);
     scene->update_size(event->size());
 }
+
+} // namespace GraphicsProxy

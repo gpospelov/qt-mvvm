@@ -13,8 +13,11 @@
 #include <QMainWindow>
 #include <memory>
 
-class SceneModel;
 class QTabWidget;
+
+namespace GraphicsProxy {
+
+class SceneModel;
 
 //! The main window of this application.
 
@@ -35,5 +38,7 @@ private:
 
     std::unique_ptr<SceneModel> m_model;
 };
+
+}
 
 #endif //  GRAPHICSPROXY_MAINWINDOW_H
