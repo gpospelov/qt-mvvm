@@ -158,7 +158,7 @@ void RegionOfInterestController::update_item_from_horizontal_handle(double left,
 
 void RegionOfInterestController::subscribe()
 {
-    auto on_property_change = [this](SessionItem*, std::string) {
+    auto on_property_change = [this](auto, auto) {
         if (p_impl->block_on_property_changed)
             return;
 

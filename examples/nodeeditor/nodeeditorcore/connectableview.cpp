@@ -38,10 +38,9 @@ ConnectableView::ConnectableView(ConnectableItem* item)
     // make size of rectangle depending on 'M'-letter size to address scaling issues
     m_rect = QRectF(0, 0, ModelView::Utils::WidthOfLetterM() * 8,
                     ModelView::Utils::HeightOfLetterM() * 8);
-    setFlag(QGraphicsItem::ItemIsMovable, true);
-    setFlag(QGraphicsItem::ItemIsSelectable, true);
+    setFlag(QGraphicsItem::ItemIsSelectable);
+    setFlag(QGraphicsItem::ItemIsMovable);
     setFlag(QGraphicsItem::ItemSendsGeometryChanges);
-
     init_ports();
 }
 
@@ -103,6 +102,12 @@ ConnectableItem* ConnectableView::connectableItem() const
 {
     return m_item;
 }
+
+//void ConnectableView::updateGeometry()
+//{
+//    prepareGeometryChange();
+//    m_controller->updateViewFromItem();
+//}
 
 void ConnectableView::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 {

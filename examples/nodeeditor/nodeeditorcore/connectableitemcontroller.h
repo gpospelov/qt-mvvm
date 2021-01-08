@@ -28,6 +28,7 @@ public:
     ~ConnectableItemController() override;
 
     void updateItemFromView();
+    void updateViewFromItem();
 
 protected:
     void subscribe() override;
