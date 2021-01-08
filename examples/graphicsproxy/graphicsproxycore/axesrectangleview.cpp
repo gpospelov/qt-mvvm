@@ -13,7 +13,7 @@
 namespace GraphicsProxy {
 
 AxesRectangleView::AxesRectangleView(const ModelView::SceneAdapterInterface* scene_adapter)
-    : scene_adapter(scene_adapter)
+    : m_sceneAdapter(scene_adapter)
 {
     // the key flag to hide children going outside of *this* bounding rectangle
     setFlag(QGraphicsItem::ItemClipsChildrenToShape, true);
@@ -21,7 +21,7 @@ AxesRectangleView::AxesRectangleView(const ModelView::SceneAdapterInterface* sce
 
 QRectF AxesRectangleView::boundingRect() const
 {
-    return rect;
+    return m_rect;
 }
 
 //! Recalculates bounding rectangle using axes viewport as reported by the adapter.
@@ -31,7 +31,7 @@ void AxesRectangleView::advance(int phase)
     if (!phase)
         return;
     prepareGeometryChange();
-    rect = scene_adapter->viewportRectangle();
+    m_rect = m_sceneAdapter->viewportRectangle();
 }
 
 void AxesRectangleView::paint(QPainter*, const QStyleOptionGraphicsItem*, QWidget*)

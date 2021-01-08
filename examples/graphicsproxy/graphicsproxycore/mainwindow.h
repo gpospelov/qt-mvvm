@@ -39,6 +39,6 @@ private:
     std::unique_ptr<SceneModel> m_model;
 };
 
-}
+} // namespace GraphicsProxy
 
 #endif //  GRAPHICSPROXY_MAINWINDOW_H

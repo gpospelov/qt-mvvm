@@ -44,6 +44,6 @@ private:
     SceneModel* m_model{nullptr};
 };
 
-}
+} // namespace GraphicsProxy
 
 #endif // GRAPHICSPROXY_SCENEPROPERTYWIDGET_H

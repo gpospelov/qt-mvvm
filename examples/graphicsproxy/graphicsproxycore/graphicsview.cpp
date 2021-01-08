@@ -14,7 +14,7 @@
 namespace GraphicsProxy {
 
 GraphicsView::GraphicsView(GraphicsScene* scene, QWidget* parent)
-    : QGraphicsView(scene, parent), scene(scene)
+    : QGraphicsView(scene, parent), m_scene(scene)
 {
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 }
@@ -24,7 +24,7 @@ GraphicsView::GraphicsView(GraphicsScene* scene, QWidget* parent)
 void GraphicsView::resizeEvent(QResizeEvent* event)
 {
     QGraphicsView::resizeEvent(event);
-    scene->update_size(event->size());
+    m_scene->update_size(event->size());
 }
 
 } // namespace GraphicsProxy

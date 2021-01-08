@@ -40,10 +40,10 @@ private:
     void create_colormap_proxy(ModelView::ColorMapCanvas* colormap);
     void create_roi_view(RegionOfInterestItem* roi_item);
 
-    ModelView::CustomPlotProxyWidget* colormap_proxy{nullptr};
-    std::unique_ptr<ModelView::SceneAdapterInterface> scene_adapter;
+    ModelView::CustomPlotProxyWidget* m_colormapProxy{nullptr};
+    std::unique_ptr<ModelView::SceneAdapterInterface> m_sceneAdapter;
 };
 
-}
+} // namespace GraphicsProxy
 
 #endif //  GRAPHICSPROXY_GRAPHICSSCENE_H

@@ -36,10 +36,10 @@ protected:
     void paint(QPainter*, const QStyleOptionGraphicsItem*, QWidget*) override;
 
 private:
-    const ModelView::SceneAdapterInterface* scene_adapter{nullptr};
-    QRectF rect;
+    const ModelView::SceneAdapterInterface* m_sceneAdapter{nullptr};
+    QRectF m_rect;
 };
 
-}
+} // namespace GraphicsProxy
 
 #endif // GRAPHICSPROXY_AXESRECTANGLEVIEW_H

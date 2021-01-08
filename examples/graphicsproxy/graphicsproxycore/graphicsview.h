@@ -28,7 +28,7 @@ protected:
     void resizeEvent(QResizeEvent* event) override;
 
 private:
-    GraphicsScene* scene{nullptr};
+    GraphicsScene* m_scene{nullptr};
 };
 
 } // namespace GraphicsProxy

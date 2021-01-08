@@ -40,10 +40,10 @@ GraphicsScene::~GraphicsScene() = default;
 
 void GraphicsScene::update_size(const QSize& newSize)
 {
-    if (colormap_proxy) {
-        colormap_proxy->resize(newSize);
+    if (m_colormapProxy) {
+        m_colormapProxy->resize(newSize);
         setSceneRect(scene_origin_x, scene_origin_y, newSize.width(), newSize.height());
-        colormap_proxy->setPos(0.0, 0.0);
+        m_colormapProxy->setPos(0.0, 0.0);
         advance(); // notifies all QGraphicsItem that it is time to replot themself using new status
                    // of scene adapter
     }
@@ -51,9 +51,9 @@ void GraphicsScene::update_size(const QSize& newSize)
 
 void GraphicsScene::create_colormap_proxy(ModelView::ColorMapCanvas* colormap)
 {
-    scene_adapter = colormap->createSceneAdapter();
-    colormap_proxy = new ModelView::CustomPlotProxyWidget(colormap);
-    addItem(colormap_proxy);
+    m_sceneAdapter = colormap->createSceneAdapter();
+    m_colormapProxy = new ModelView::CustomPlotProxyWidget(colormap);
+    addItem(m_colormapProxy);
 }
 
 //! Creates parent object AxesRectangleView to hold single child RegionOfInterestView.
@@ -62,8 +62,8 @@ void GraphicsScene::create_colormap_proxy(ModelView::ColorMapCanvas* colormap)
 
 void GraphicsScene::create_roi_view(RegionOfInterestItem* roi_item)
 {
-    auto axes_view = new AxesRectangleView(scene_adapter.get());
-    auto roi_view = new RegionOfInterestView(roi_item, scene_adapter.get());
+    auto axes_view = new AxesRectangleView(m_sceneAdapter.get());
+    auto roi_view = new RegionOfInterestView(roi_item, m_sceneAdapter.get());
     roi_view->setParentItem(axes_view);
     addItem(axes_view);
 }
