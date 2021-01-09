@@ -8,8 +8,10 @@
 // ************************************************************************** //
 
 #include "sampleitems.h"
+#include "mvvm/editors/editor_constants.h"
 #include "mvvm/model/taginfo.h"
 #include "mvvm/widgets/widgetutils.h"
+#include <QColor>
 
 using namespace ModelView;
 
@@ -19,12 +21,12 @@ ConnectableItem::ConnectableItem(const std::string& modelType) : ModelView::Comp
 {
     addProperty(P_XPOS, 0.0)->setDisplayName("X");
     addProperty(P_YPOS, 0.0)->setDisplayName("Y");
-    addProperty(P_COLOR, "antiquewhite")->setDisplayName("Color");
+    addProperty(P_COLOR, QColor(Qt::gray))->setDisplayName("Color");
 }
 
-std::string ConnectableItem::namedColor() const
+QColor ConnectableItem::color() const
 {
-    return property<std::string>(P_COLOR);
+    return property<QColor>(P_COLOR);
 }
 
 double ConnectableItem::x() const
@@ -47,15 +49,24 @@ void ConnectableItem::setY(double y)
     setProperty(P_YPOS, y);
 }
 
+//! Sets named color following schema from https://www.w3.org/TR/css-color-3/#svg-color.
+//! e.g. "mediumaquamarine"
+
+void ConnectableItem::setNamedColor(const std::string& named_color)
+{
+    setProperty(P_COLOR, QColor(QString::fromStdString(named_color)));
+}
+
 ParticleItem::ParticleItem() : ConnectableItem(ParticleItemType)
 {
     // intended to attach TransformationItem (maximum 1)
     registerTag(TagInfo(T_TRANSFORMATION, 0, 1, {TransformationItemType}), true);
+    setNamedColor("antiquewhite");
 }
 
 TransformationItem::TransformationItem() : ConnectableItem(TransformationItemType)
 {
-    setProperty(P_COLOR, "lightseagreen");
+    setNamedColor("lightseagreen");
 }
 
 } // namespace NodeEditor

@@ -103,7 +103,7 @@ ConnectableItem* ConnectableView::connectableItem() const
     return m_item;
 }
 
-//void ConnectableView::updateGeometry()
+// void ConnectableView::updateGeometry()
 //{
 //    prepareGeometryChange();
 //    m_controller->updateViewFromItem();
@@ -119,7 +119,7 @@ void ConnectableView::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 
 QColor ConnectableView::color() const
 {
-    return m_item ? QColor(QString::fromStdString(m_item->namedColor())) : QColor(Qt::red);
+    return m_item ? m_item->color() : QColor(Qt::red);
 }
 
 //! Returns label of this item.
