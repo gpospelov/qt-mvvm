@@ -41,7 +41,6 @@ public:
 
     ConnectableItem* connectableItem() const;
 
-//    void updateGeometry();
 protected:
     void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;
 

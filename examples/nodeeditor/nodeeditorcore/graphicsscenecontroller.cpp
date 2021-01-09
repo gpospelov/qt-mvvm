@@ -10,14 +10,13 @@
 #include "graphicsscenecontroller.h"
 #include "graphicsscene.h"
 #include "samplemodel.h"
-#include <QDebug>
 
 namespace NodeEditor {
 
 GraphicsSceneController::GraphicsSceneController(SampleModel* model, GraphicsScene* scene)
     : ModelView::ModelListener<SampleModel>(model), m_scene(scene)
 {
-    setOnItemInserted([this](auto, auto) { qDebug() << "xxx"; m_scene->updateScene(); });
+    setOnItemInserted([this](auto, auto) { m_scene->updateScene(); });
 }
 
 } // namespace NodeEditor

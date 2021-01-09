@@ -11,7 +11,6 @@
 #include "connectableview.h"
 #include "nodeconnection.h"
 #include "mvvm/widgets/widgetutils.h"
-#include <QDebug>
 #include <QFont>
 #include <QPen>
 
@@ -80,20 +79,18 @@ void NodePort::remove(NodeConnection* connection)
 
 //! Returns true if this port can be connected with the other one.
 
-bool NodePort::isConnectable(const NodePort *other) const
+bool NodePort::isConnectable(const NodePort* other) const
 {
     bool different_parents = parentItem() != other->parentItem();
     bool output_to_input = isInput() != other->isInput();
     bool compatible_types = portType() == other->portType();
     bool not_already_connected = !isConnected(other);
-    qDebug() << "different_parents" << different_parents << "output_to_input" << output_to_input << "compatible_types" << compatible_types
-             << "not_already_connected" << not_already_connected;
     return different_parents && output_to_input && compatible_types && not_already_connected;
 }
 
 //! Returns true if ports are connected.
 
-bool NodePort::isConnected(const NodePort *other) const
+bool NodePort::isConnected(const NodePort* other) const
 {
     for (auto conn : m_connections)
         if (conn->hasPort(other))
