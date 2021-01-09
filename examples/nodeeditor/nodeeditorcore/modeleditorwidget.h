@@ -21,6 +21,7 @@ class SampleModel;
 class GraphicsView;
 class GraphicsScene;
 class PropertyWidget;
+class GraphicsSceneController;
 
 //! Main widget for model editing. Contains a graphics scene with node editor on the left,
 //! and property panel on the right. Belongs to MainWindow.
@@ -30,11 +31,13 @@ class ModelEditorWidget : public QWidget {
 
 public:
     explicit ModelEditorWidget(SampleModel* model = nullptr, QWidget* parent = nullptr);
+    ~ModelEditorWidget() override;
 
 private:
     PropertyWidget* m_propertyWidget{nullptr};
-    NodeEditor::GraphicsScene* m_graphicsScene{nullptr};
-    NodeEditor::GraphicsView* m_graphicsView{nullptr};
+    GraphicsScene* m_graphicsScene{nullptr};
+    GraphicsView* m_graphicsView{nullptr};
+    std::unique_ptr<GraphicsSceneController> m_sceneContoller;
     QSplitter* m_splitter{nullptr};
 };
 

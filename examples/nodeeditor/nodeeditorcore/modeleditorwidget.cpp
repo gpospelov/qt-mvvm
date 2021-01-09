@@ -13,6 +13,7 @@
 #include "propertywidget.h"
 #include "sampleitems.h"
 #include "samplemodel.h"
+#include "graphicsscenecontroller.h"
 #include <QHBoxLayout>
 #include <QSplitter>
 
@@ -25,6 +26,7 @@ ModelEditorWidget::ModelEditorWidget(SampleModel* model, QWidget* parent)
     , m_propertyWidget(new PropertyWidget(model, this))
     , m_graphicsScene(new GraphicsScene(model, this))
     , m_graphicsView(new GraphicsView(m_graphicsScene, this))
+    , m_sceneContoller(std::make_unique<GraphicsSceneController>(model, m_graphicsScene))
     , m_splitter(new QSplitter)
 {
     auto layout = new QHBoxLayout(this);
@@ -37,5 +39,7 @@ ModelEditorWidget::ModelEditorWidget(SampleModel* model, QWidget* parent)
     connect(m_graphicsScene, &GraphicsScene::connectableItemSelectionChanged, m_propertyWidget,
             &PropertyWidget::onSelectionRequest);
 }
+
+ModelEditorWidget::~ModelEditorWidget() = default;
 
 } // namespace NodeEditor

@@ -12,6 +12,8 @@ target_sources(${library_name} PRIVATE
     connectableview.h
     graphicsscene.cpp
     graphicsscene.h
+    graphicsscenecontroller.cpp
+    graphicsscenecontroller.h
     graphicsview.cpp
     graphicsview.h
     mainwindow.cpp
