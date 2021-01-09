@@ -8,8 +8,8 @@
 // ************************************************************************** //
 
 #include "regionofinterestcontroller.h"
-#include "regionofinterestview.h"
 #include "regionofinterestitem.h"
+#include "regionofinterestview.h"
 #include "mvvm/plotting/sceneadapterinterface.h"
 
 using namespace ModelView;
@@ -34,15 +34,10 @@ struct RegionOfInterestController::RegionOfInterestControllerImpl {
     void updateItemFromView()
     {
         m_blockOnPropertyChanged = true;
-
-        m_item->setProperty(RegionOfInterestItem::P_XLOW, m_sceneAdapter->fromSceneX(m_view->x()));
-        m_item->setProperty(RegionOfInterestItem::P_XUP,
-                            m_sceneAdapter->fromSceneX(m_view->x() + m_roiRectangle.width()));
-
-        m_item->setProperty(RegionOfInterestItem::P_YLOW,
-                            m_sceneAdapter->fromSceneY(m_view->y() + m_roiRectangle.height()));
-        m_item->setProperty(RegionOfInterestItem::P_YUP, m_sceneAdapter->fromSceneY(m_view->y()));
-
+        m_item->setXLow(m_sceneAdapter->fromSceneX(m_view->x()));
+        m_item->setXUp(m_sceneAdapter->fromSceneX(m_view->x() + m_roiRectangle.width()));
+        m_item->setYLow(m_sceneAdapter->fromSceneY(m_view->y() + m_roiRectangle.height()));
+        m_item->setYUp(m_sceneAdapter->fromSceneY(m_view->y()));
         m_blockOnPropertyChanged = false;
     }
 
@@ -54,8 +49,8 @@ struct RegionOfInterestController::RegionOfInterestControllerImpl {
 
     void setViewPositionFromItem()
     {
-        m_view->setX(m_sceneAdapter->toSceneX(par(RegionOfInterestItem::P_XLOW)));
-        m_view->setY(m_sceneAdapter->toSceneY(par(RegionOfInterestItem::P_YUP)));
+        m_view->setX(m_sceneAdapter->toSceneX(m_item->xLow()));
+        m_view->setY(m_sceneAdapter->toSceneY(m_item->yUp()));
     }
 
     //! Updates view appearance using current values of item properties and state of scene adapter.
@@ -68,40 +63,38 @@ struct RegionOfInterestController::RegionOfInterestControllerImpl {
 
     void updateItemFromCorner(double left, double right, double top, double bottom)
     {
-        m_item->setProperty(RegionOfInterestItem::P_XLOW, m_sceneAdapter->fromSceneX(left));
-        m_item->setProperty(RegionOfInterestItem::P_YLOW, m_sceneAdapter->fromSceneY(top));
-        m_item->setProperty(RegionOfInterestItem::P_XUP, m_sceneAdapter->fromSceneX(right));
-        m_item->setProperty(RegionOfInterestItem::P_YUP, m_sceneAdapter->fromSceneY(bottom));
+        m_item->setXLow(m_sceneAdapter->fromSceneX(left));
+        m_item->setYLow(m_sceneAdapter->fromSceneY(top));
+        m_item->setXUp(m_sceneAdapter->fromSceneX(right));
+        m_item->setYUp(m_sceneAdapter->fromSceneY(bottom));
     }
 
     void updateItemFromVerticalHandle(double top, double bottom)
     {
-        m_item->setProperty(RegionOfInterestItem::P_YLOW, m_sceneAdapter->fromSceneY(top));
-        m_item->setProperty(RegionOfInterestItem::P_YUP, m_sceneAdapter->fromSceneY(bottom));
+        m_item->setYLow(m_sceneAdapter->fromSceneY(top));
+        m_item->setYUp(m_sceneAdapter->fromSceneY(bottom));
     }
 
     void updateItemFromHorizontalHandle(double left, double right)
     {
-        m_item->setProperty(RegionOfInterestItem::P_XLOW, m_sceneAdapter->fromSceneX(left));
-        m_item->setProperty(RegionOfInterestItem::P_XUP, m_sceneAdapter->fromSceneX(right));
+        m_item->setXLow(m_sceneAdapter->fromSceneX(left));
+        m_item->setXUp(m_sceneAdapter->fromSceneX(right));
     }
 
     double width() const { return right() - left(); }
     double height() const { return bottom() - top(); }
 
     //! Returns the x-coordinate of the rectangle's left edge.
-    double left() const { return m_sceneAdapter->toSceneX(par(RegionOfInterestItem::P_XLOW)); }
+    double left() const { return m_sceneAdapter->toSceneX(m_item->xLow()); }
 
     //! Returns the x-coordinate of the rectangle's right edge.
-    double right() const { return m_sceneAdapter->toSceneX(par(RegionOfInterestItem::P_XUP)); }
+    double right() const { return m_sceneAdapter->toSceneX(m_item->xUp()); }
 
     //! Returns the y-coordinate of the rectangle's top edge.
-    double top() const { return m_sceneAdapter->toSceneY(par(RegionOfInterestItem::P_YUP)); }
+    double top() const { return m_sceneAdapter->toSceneY(m_item->yUp()); }
 
     //! Returns the y-coordinate of the rectangle's bottom edge.
-    double bottom() const { return m_sceneAdapter->toSceneY(par(RegionOfInterestItem::P_YLOW)); }
-
-    double par(const std::string& name) const { return m_item->property<double>(name); }
+    double bottom() const { return m_sceneAdapter->toSceneY(m_item->yLow()); }
 };
 
 RegionOfInterestController::RegionOfInterestController(
