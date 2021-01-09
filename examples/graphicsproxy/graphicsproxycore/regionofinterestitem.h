@@ -7,11 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef GRAPHICSPROXY_SCENEITEMS_H
-#define GRAPHICSPROXY_SCENEITEMS_H
-
-//! @file sceneitems.h
-//! Collection of items for graphics scene.
+#ifndef GRAPHICSPROXY_REGIONOFINTERESTITEM_H
+#define GRAPHICSPROXY_REGIONOFINTERESTITEM_H
 
 #include "mvvm/model/compounditem.h"
 
@@ -31,4 +28,4 @@ public:
 
 } // namespace GraphicsProxy
 
-#endif // GRAPHICSPROXY_SCENEMODEL_H
+#endif // GRAPHICSPROXY_REGIONOFINTERESTITEM_H

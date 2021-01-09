@@ -9,7 +9,7 @@
 
 #include "regionofinterestcontroller.h"
 #include "regionofinterestview.h"
-#include "sceneitems.h"
+#include "regionofinterestitem.h"
 #include "mvvm/plotting/sceneadapterinterface.h"
 
 using namespace ModelView;

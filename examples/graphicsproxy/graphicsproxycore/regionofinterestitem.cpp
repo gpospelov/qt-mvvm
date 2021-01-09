@@ -7,7 +7,7 @@
 //
 // ************************************************************************** //
 
-#include "sceneitems.h"
+#include "regionofinterestitem.h"
 #include "mvvm/utils/reallimits.h"
 
 namespace {

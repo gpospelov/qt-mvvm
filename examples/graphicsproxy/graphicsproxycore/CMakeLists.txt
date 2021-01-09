@@ -17,10 +17,10 @@ target_sources(${library_name} PRIVATE
     mainwindow.h
     regionofinterestcontroller.cpp
     regionofinterestcontroller.h
+    regionofinterestitem.cpp
+    regionofinterestitem.h
     regionofinterestview.cpp
     regionofinterestview.h
-    sceneitems.cpp
-    sceneitems.h
     scenemodel.cpp
     scenemodel.h
     scenepropertywidget.cpp

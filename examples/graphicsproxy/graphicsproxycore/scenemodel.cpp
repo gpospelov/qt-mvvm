@@ -8,7 +8,7 @@
 // ************************************************************************** //
 
 #include "scenemodel.h"
-#include "sceneitems.h"
+#include "regionofinterestitem.h"
 #include "mvvm/standarditems/axisitems.h"
 #include "mvvm/standarditems/colormapitem.h"
 #include "mvvm/standarditems/colormapviewportitem.h"

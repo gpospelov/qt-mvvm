@@ -10,7 +10,7 @@
 #include "scenewidget.h"
 #include "graphicsscene.h"
 #include "graphicsview.h"
-#include "sceneitems.h"
+#include "regionofinterestitem.h"
 #include "scenemodel.h"
 #include "scenepropertywidget.h"
 #include "mvvm/plotting/colormapcanvas.h"
