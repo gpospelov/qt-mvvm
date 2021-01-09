@@ -87,7 +87,7 @@ bool NodeController::processMouseRelease(QGraphicsSceneMouseEvent* event)
     if (m_conn && event->button() == Qt::LeftButton) {
         if (auto port2 = findPort(event->scenePos()); port2) {
             auto port1 = m_conn->port1();
-            if (port1->isConnectable(*port2)) {
+            if (port1->isConnectable(port2)) {
                 m_conn->setPort2(port2);
                 m_conn->updatePath();
                 // Sending request for connection.

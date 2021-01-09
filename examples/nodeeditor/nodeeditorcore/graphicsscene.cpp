@@ -76,10 +76,13 @@ void GraphicsScene::updateScene()
 
 void GraphicsScene::processItem(ConnectableItem* item)
 {
+    qDebug() << "processItem";
+
     auto itemView = findView(item);
     if (!itemView) {
         itemView = new ConnectableView(item);
         m_itemToView[item] = itemView;
+        qDebug() << "adding item";
         addItem(itemView);
     }
 

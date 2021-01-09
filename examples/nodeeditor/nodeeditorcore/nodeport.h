@@ -43,9 +43,9 @@ public:
 
     void remove(NodeConnection* connection);
 
-    bool isConnectable(const NodePort& other) const;
+    bool isConnectable(const NodePort* other) const;
 
-    bool isConnected(const NodePort& other) const;
+    bool isConnected(const NodePort* other) const;
 
     ConnectableView* connectableView() const;
 

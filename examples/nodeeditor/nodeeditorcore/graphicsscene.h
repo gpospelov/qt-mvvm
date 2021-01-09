@@ -30,6 +30,8 @@ public:
     GraphicsScene(SampleModel* model, QObject* parent);
     ~GraphicsScene() override;
 
+    void updateScene();
+
 signals:
     void connectableItemSelectionChanged(ConnectableItem* item);
 
@@ -38,7 +40,6 @@ private slots:
     void onSelectionChanged();
 
 private:
-    void updateScene();
     void processItem(ConnectableItem* item);
     ConnectableView* findView(ConnectableItem* item);
 

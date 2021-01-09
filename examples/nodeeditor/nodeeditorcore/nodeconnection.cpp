@@ -86,9 +86,9 @@ NodePort* NodeConnection::port1() const
 
 //! Returns true if given port belongs to this connection.
 
-bool NodeConnection::hasPort(const NodePort& port) const
+bool NodeConnection::hasPort(const NodePort* port) const
 {
-    return m_port1 == &port || m_port2 == &port;
+    return m_port1 == port || m_port2 == port;
 }
 
 void NodeConnection::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)

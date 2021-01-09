@@ -8,17 +8,16 @@
 // ************************************************************************** //
 
 #include "graphicsscenecontroller.h"
-#include "samplemodel.h"
 #include "graphicsscene.h"
+#include "samplemodel.h"
+#include <QDebug>
 
 namespace NodeEditor {
 
 GraphicsSceneController::GraphicsSceneController(SampleModel* model, GraphicsScene* scene)
-    : ModelView::ModelListener<SampleModel>(model)
-    , m_scene(scene)
+    : ModelView::ModelListener<SampleModel>(model), m_scene(scene)
 {
+    setOnItemInserted([this](auto, auto) { qDebug() << "xxx"; m_scene->updateScene(); });
 }
 
 } // namespace NodeEditor
-
-

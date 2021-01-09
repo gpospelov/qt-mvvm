@@ -17,6 +17,7 @@
 #include "mvvm/widgets/widgetutils.h"
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
+#include <QDebug>
 
 namespace {
 const int round_par = 5;
@@ -70,12 +71,16 @@ void ConnectableView::paint(QPainter* painter, const QStyleOptionGraphicsItem* o
 
 void ConnectableView::makeChildConnected(ConnectableView* childView)
 {
+    qDebug() << "makeChildConnected  1.1";
     auto output = childView->outputPort();
     if (!output)
         return;
 
+    qDebug() << "makeChildConnected  1.2";
     for (auto input : inputPorts()) {
-        if (input->isConnectable(*output)) {
+        qDebug() << "makeChildConnected  1.3" << "child" << childView << " parent" << (this);
+        if (input->isConnectable(output)) {
+            qDebug() << "makeChildConnected  1.4";
             auto connection = new NodeConnection(scene());
             connection->setPort2(input);
             connection->setPort1(output);
@@ -102,12 +107,6 @@ ConnectableItem* ConnectableView::connectableItem() const
 {
     return m_item;
 }
-
-// void ConnectableView::updateGeometry()
-//{
-//    prepareGeometryChange();
-//    m_controller->updateViewFromItem();
-//}
 
 void ConnectableView::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 {
