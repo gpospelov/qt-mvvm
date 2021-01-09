@@ -24,6 +24,18 @@ public:
     static inline const std::string P_YUP = "P_YUP";
 
     RegionOfInterestItem();
+
+    double xLow() const;
+    void setXLow(double value);
+
+    double yLow() const;
+    void setYLow(double value);
+
+    double xUp() const;
+    void setXUp(double value);
+
+    double yUp() const;
+    void setYUp(double value);
 };
 
 } // namespace GraphicsProxy

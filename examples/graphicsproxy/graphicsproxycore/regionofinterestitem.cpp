@@ -24,4 +24,44 @@ RegionOfInterestItem::RegionOfInterestItem() : ModelView::CompoundItem(RegionOfI
     addProperty(P_YUP, 0.0)->setDisplayName("Yup");
 }
 
+double RegionOfInterestItem::xLow() const
+{
+    return property<double>(P_XLOW);
+}
+
+void RegionOfInterestItem::setXLow(double value)
+{
+    setProperty(P_XLOW, value);
+}
+
+double RegionOfInterestItem::yLow() const
+{
+    return property<double>(P_YLOW);
+}
+
+void RegionOfInterestItem::setYLow(double value)
+{
+    setProperty(P_YLOW, value);
+}
+
+double RegionOfInterestItem::xUp() const
+{
+    return property<double>(P_XUP);
+}
+
+void RegionOfInterestItem::setXUp(double value)
+{
+    setProperty(P_XUP, value);
+}
+
+double RegionOfInterestItem::yUp() const
+{
+    return property<double>(P_YUP);
+}
+
+void RegionOfInterestItem::setYUp(double value)
+{
+    setProperty(P_YUP, value);
+}
+
 } // namespace GraphicsProxy
