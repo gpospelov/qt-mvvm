@@ -12,7 +12,11 @@
 
 namespace {
 const std::string RegionOfInterestItemType = "RegionOfInterest";
-}
+const std::string P_XLOW = "P_XLOW";
+const std::string P_YLOW = "P_YLOW";
+inline const std::string P_XUP = "P_XUP";
+inline const std::string P_YUP = "P_YUP";
+} // namespace
 
 namespace GraphicsProxy {
 
@@ -62,6 +66,14 @@ double RegionOfInterestItem::yUp() const
 void RegionOfInterestItem::setYUp(double value)
 {
     setProperty(P_YUP, value);
+}
+
+void RegionOfInterestItem::setCorners(double xlow, double ylow, double xup, double yup)
+{
+    setXLow(xlow);
+    setYLow(ylow);
+    setXUp(xup);
+    setYUp(yup);
 }
 
 } // namespace GraphicsProxy

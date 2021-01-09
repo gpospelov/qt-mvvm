@@ -18,11 +18,6 @@ namespace GraphicsProxy {
 
 class RegionOfInterestItem : public ModelView::CompoundItem {
 public:
-    static inline const std::string P_XLOW = "P_XLOW";
-    static inline const std::string P_YLOW = "P_YLOW";
-    static inline const std::string P_XUP = "P_XUP";
-    static inline const std::string P_YUP = "P_YUP";
-
     RegionOfInterestItem();
 
     double xLow() const;
@@ -36,6 +31,8 @@ public:
 
     double yUp() const;
     void setYUp(double value);
+
+    void setCorners(double xlow, double ylow, double xup, double yup);
 };
 
 } // namespace GraphicsProxy

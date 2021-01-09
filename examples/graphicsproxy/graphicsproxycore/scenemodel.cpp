@@ -64,10 +64,7 @@ void SceneModel::update_data(double scale)
 void SceneModel::create_roi()
 {
     auto roi = insertItem<RegionOfInterestItem>();
-    roi->setProperty(RegionOfInterestItem::P_XLOW, -2.0);
-    roi->setProperty(RegionOfInterestItem::P_YLOW, 1.0);
-    roi->setProperty(RegionOfInterestItem::P_XUP, 2.0);
-    roi->setProperty(RegionOfInterestItem::P_YUP, 2.0);
+    roi->setCorners(-2.0, 1.0, 2.0, 2.0);
 }
 
 //! Creates item to store 2D data and fills it with values.
