@@ -11,6 +11,7 @@
 #define CONNECTABLEVIEW_H
 
 #include <QGraphicsItem>
+#include <memory>
 
 namespace NodeEditor {
 
