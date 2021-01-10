@@ -7,25 +7,16 @@
 //
 // ************************************************************************** //
 
-#ifndef NODEEDITORCORE_SAMPLEMODEL_H
-#define NODEEDITORCORE_SAMPLEMODEL_H
-
-#include "mvvm/model/compounditem.h"
-#include "mvvm/model/sessionmodel.h"
-#include <string>
+#include "graphicsscenecontroller.h"
+#include "graphicsscene.h"
+#include "samplemodel.h"
 
 namespace NodeEditor {
 
-//! Main application model.
-
-class SampleModel : public ModelView::SessionModel {
-public:
-    SampleModel();
-
-private:
-    void createInitialContent();
-};
+GraphicsSceneController::GraphicsSceneController(SampleModel* model, GraphicsScene* scene)
+    : ModelView::ModelListener<SampleModel>(model), m_scene(scene)
+{
+    setOnItemInserted([this](auto, auto) { m_scene->updateScene(); });
+}
 
 } // namespace NodeEditor
-
-#endif // NODEEDITORCORE_SAMPLEMODEL_H

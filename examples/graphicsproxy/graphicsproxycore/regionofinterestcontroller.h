@@ -13,13 +13,16 @@
 #include "mvvm/signals/itemlistener.h"
 #include <memory>
 
+class QRectF;
+
 namespace ModelView {
 class SceneAdapterInterface;
 }
 
+namespace GraphicsProxy {
+
 class RegionOfInterestItem;
 class RegionOfInterestView;
-class QRectF;
 
 //! Establishes communications between RegionOfInterestItem and RegionOfInterestView.
 //! Provides updates of view position/appearance on graphics scene, when underlying item changes.
@@ -27,22 +30,21 @@ class QRectF;
 
 class RegionOfInterestController : public ModelView::ItemListener<RegionOfInterestItem> {
 public:
-    RegionOfInterestController(RegionOfInterestItem* item,
-                               const ModelView::SceneAdapterInterface* scene_adapter,
-                               RegionOfInterestView* view);
+    RegionOfInterestController(const ModelView::SceneAdapterInterface* scene_adapter,
+                               RegionOfInterestItem* item, RegionOfInterestView* view);
     ~RegionOfInterestController() override;
 
-    QRectF roi_rectangle() const;
+    QRectF roiRectangle() const;
 
-    void update_view_from_item();
+    void updateViewFromItem();
 
-    void update_item_from_view();
+    void updateItemFromView();
 
-    void update_item_from_corner(double left, double right, double top, double bottom);
+    void updateItemFromCorner(double left, double right, double top, double bottom);
 
-    void update_item_from_vertical_handle(double top, double bottom);
+    void updateItemFromVerticalHandle(double top, double bottom);
 
-    void update_item_from_horizontal_handle(double left, double right);
+    void updateItemFromHorizontalHandle(double left, double right);
 
 protected:
     void subscribe() override;
@@ -51,5 +53,7 @@ private:
     struct RegionOfInterestControllerImpl;
     std::unique_ptr<RegionOfInterestControllerImpl> p_impl;
 };
+
+} // namespace GraphicsProxy
 
 #endif // GRAPHICSPROXY_REGIONOFINTERESTCONTROLLER_H

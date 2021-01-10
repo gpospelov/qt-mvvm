@@ -18,6 +18,8 @@ namespace ModelView {
 class SceneAdapterInterface;
 }
 
+namespace GraphicsProxy {
+
 class RegionOfInterestItem;
 class RegionOfInterestController;
 class SizeHandleElement;
@@ -48,10 +50,12 @@ protected:
 private:
     void create_size_handle_elements();
     SizeHandleElement* findOpposite(SizeHandleElement* element);
-    std::unique_ptr<RegionOfInterestController> controller;
-    std::vector<SizeHandleElement*> handles;
-    SizeHandleElement* active_handle{nullptr}; //!
-    QPointF opposite_origin; //! coordinate of opposite corner at the moment of click
+    std::unique_ptr<RegionOfInterestController> m_controller;
+    std::vector<SizeHandleElement*> m_handles;
+    SizeHandleElement* m_activeHandle{nullptr}; //!
+    QPointF m_oppositeOrigin; //! coordinate of opposite corner at the moment of click
 };
+
+} // namespace GraphicsProxy
 
 #endif // GRAPHICSPROXY_REGIONOFINTERESTVIEW_H

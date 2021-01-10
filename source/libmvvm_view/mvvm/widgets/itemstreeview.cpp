@@ -49,7 +49,9 @@ void ItemsTreeView::setViewModelDelegate(std::unique_ptr<ViewModelDelegate> dele
 
 void ItemsTreeView::setSelected(SessionItem* item)
 {
-    if (!m_viewModel)
+    // Provide possibility to clear selection when item == nullptr. Provide unit tests.
+    // Make sure it works when SessionModel is already destroyed.
+    if (!m_viewModel || !item)
         return;
 
     auto indexes = m_viewModel->indexOfSessionItem(item);
@@ -87,8 +89,6 @@ void ItemsTreeView::onSelectionChanged(const QItemSelection&, const QItemSelecti
 
 void ItemsTreeView::set_connected(bool flag)
 {
-    Q_ASSERT(selectionModel());
-
     if (flag)
         connect(selectionModel(), &QItemSelectionModel::selectionChanged, this,
                 &ItemsTreeView::onSelectionChanged);

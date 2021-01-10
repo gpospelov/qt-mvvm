@@ -15,6 +15,8 @@
 
 #include "mvvm/model/compounditem.h"
 
+class QColor;
+
 namespace NodeEditor {
 
 const std::string ParticleItemType = "Particle";
@@ -30,11 +32,15 @@ public:
 
     explicit ConnectableItem(const std::string& modelType);
 
-    std::string namedColor() const;
+    QColor color() const;
 
-    double xPos() const;
+    double x() const;
+    void setX(double x);
 
-    double yPos() const;
+    double y() const;
+    void setY(double y);
+
+    void setNamedColor(const std::string& named_color);
 };
 
 //! Represents particle item box on graph canvas.

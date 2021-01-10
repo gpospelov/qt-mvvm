@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include "connectableview.h"
+#include "connectableitemcontroller.h"
 #include "nodeconnection.h"
 #include "nodeport.h"
 #include "sampleitems.h"
@@ -31,18 +32,19 @@ QRectF label_rectangle(const QRectF& rect)
 
 namespace NodeEditor {
 
-ConnectableView::ConnectableView(ConnectableItem* item, QGraphicsObject* parent)
-    : QGraphicsObject(parent), m_item(item)
+ConnectableView::ConnectableView(ConnectableItem* item)
+    : m_item(item), m_controller(std::make_unique<ConnectableItemController>(item, this))
 {
     // make size of rectangle depending on 'M'-letter size to address scaling issues
     m_rect = QRectF(0, 0, ModelView::Utils::WidthOfLetterM() * 8,
                     ModelView::Utils::HeightOfLetterM() * 8);
-    setFlag(QGraphicsItem::ItemIsMovable, true);
-    setFlag(QGraphicsItem::ItemIsSelectable, true);
+    setFlag(QGraphicsItem::ItemIsSelectable);
+    setFlag(QGraphicsItem::ItemIsMovable);
     setFlag(QGraphicsItem::ItemSendsGeometryChanges);
-
     init_ports();
 }
+
+ConnectableView::~ConnectableView() = default;
 
 QRectF ConnectableView::boundingRect() const
 {
@@ -73,12 +75,11 @@ void ConnectableView::makeChildConnected(ConnectableView* childView)
         return;
 
     for (auto input : inputPorts()) {
-        if (input->isConnectable(*output)) {
-            auto connection = new NodeConnection(scene());
+        if (input->isConnectable(output)) {
+            auto connection = new NodeConnection(scene()); // ownership to scene
             connection->setPort2(input);
             connection->setPort1(output);
             connection->updatePath();
-            break;
         }
     }
 }
@@ -101,11 +102,17 @@ ConnectableItem* ConnectableView::connectableItem() const
     return m_item;
 }
 
+void ConnectableView::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
+{
+    QGraphicsItem::mouseMoveEvent(event);
+    m_controller->updateItemFromView();
+}
+
 //! Returns base color of this item.
 
 QColor ConnectableView::color() const
 {
-    return m_item ? QColor(QString::fromStdString(m_item->namedColor())) : QColor(Qt::red);
+    return m_item ? m_item->color() : QColor(Qt::red);
 }
 
 //! Returns label of this item.

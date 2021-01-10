@@ -21,10 +21,10 @@ const QString pos_key = "pos";
 
 namespace NodeEditor {
 
-MainWindow::MainWindow() : m_model(std::make_unique<SampleModel>())
+MainWindow::MainWindow()
+    : m_model(std::make_unique<SampleModel>()), m_editorWidget(new ModelEditorWidget(m_model.get()))
 {
-    setCentralWidget(new ModelEditorWidget(m_model.get()));
-
+    setCentralWidget(m_editorWidget);
     init_application();
 }
 

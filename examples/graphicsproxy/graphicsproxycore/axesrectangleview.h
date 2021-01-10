@@ -16,6 +16,8 @@ namespace ModelView {
 class SceneAdapterInterface;
 }
 
+namespace GraphicsProxy {
+
 //! Transparent rectangle to cover axes area of QCustomPlot on QGraphicsScene. The size of
 //! rectangle always matches axes viewport at any zoom level. Hides all children items which
 //! go out of axes range of QCustomPlot.
@@ -34,8 +36,10 @@ protected:
     void paint(QPainter*, const QStyleOptionGraphicsItem*, QWidget*) override;
 
 private:
-    const ModelView::SceneAdapterInterface* scene_adapter{nullptr};
-    QRectF rect;
+    const ModelView::SceneAdapterInterface* m_sceneAdapter{nullptr};
+    QRectF m_rect;
 };
+
+} // namespace GraphicsProxy
 
 #endif // GRAPHICSPROXY_AXESRECTANGLEVIEW_H

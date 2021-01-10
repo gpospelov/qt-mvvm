@@ -10,24 +10,25 @@
 #ifndef CONNECTABLEVIEW_H
 #define CONNECTABLEVIEW_H
 
-#include <QGraphicsObject>
+#include <QGraphicsItem>
+#include <memory>
 
 namespace NodeEditor {
 
 class ConnectableItem;
 class NodeInputPort;
 class NodeOutputPort;
+class ConnectableItemController;
 
 //! Represents ConnectableItem on QGraphicsScene. Shown as a reactangle with rounded corners,
 //! gradient, label, and set of input/output ports to connect.
 //! In current design, ConnectableView can have only single output port and multiple input ports
 //! of different type.
 
-class ConnectableView : public QGraphicsObject {
-    Q_OBJECT
-
+class ConnectableView : public QGraphicsItem {
 public:
-    ConnectableView(ConnectableItem* item, QGraphicsObject* parent = nullptr);
+    ConnectableView(ConnectableItem* item);
+    ~ConnectableView() override;
 
     QRectF boundingRect() const override;
 
@@ -41,6 +42,9 @@ public:
 
     ConnectableItem* connectableItem() const;
 
+protected:
+    void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;
+
 private:
     template <typename T> QList<T*> ports() const;
 
@@ -50,7 +54,10 @@ private:
 
     QRectF m_rect;                    //!< Bounding rectangle.
     ConnectableItem* m_item{nullptr}; //!< Underlying item of this view.
+    std::unique_ptr<ConnectableItemController> m_controller;
 };
+
+//! Return list of ports of required type.
 
 template <typename T> QList<T*> ConnectableView::ports() const
 {

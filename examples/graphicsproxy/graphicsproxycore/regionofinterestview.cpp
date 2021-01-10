@@ -9,7 +9,7 @@
 
 #include "regionofinterestview.h"
 #include "regionofinterestcontroller.h"
-#include "sceneitems.h"
+#include "regionofinterestitem.h"
 #include "sizehandleelement.h"
 #include "mvvm/plotting/sceneadapterinterface.h"
 #include <QGraphicsSceneMouseEvent>
@@ -20,9 +20,11 @@ namespace {
 const double bbox_margins = 5; // additional margins around rectangle to form bounding box
 } // namespace
 
+namespace GraphicsProxy {
+
 RegionOfInterestView::RegionOfInterestView(RegionOfInterestItem* item,
                                            const ModelView::SceneAdapterInterface* scene_adapter)
-    : controller(std::make_unique<RegionOfInterestController>(item, scene_adapter, this))
+    : m_controller(std::make_unique<RegionOfInterestController>(scene_adapter, item, this))
 {
     if (!scene_adapter)
         throw std::runtime_error("Error in RegionOfInterestView: scene adapter is not initialized");
@@ -38,12 +40,12 @@ RegionOfInterestView::~RegionOfInterestView() = default;
 
 QRectF RegionOfInterestView::boundingRect() const
 {
-    return controller->roi_rectangle().marginsAdded(
+    return m_controller->roiRectangle().marginsAdded(
         QMarginsF(bbox_margins, bbox_margins, bbox_margins, bbox_margins));
 }
 
 //! Updates view appearance from RegionOfInterestItem.
-//! Triggered by QGraphicsScene::advance method on any QGraphicsView resize ore zoom in/out
+//! Triggered by QGraphicsScene::advance method on a) QGraphicsView resize b) zoom in/out
 //! events in QCustomPlot.
 
 void RegionOfInterestView::advance(int phase)
@@ -56,10 +58,10 @@ void RegionOfInterestView::advance(int phase)
 void RegionOfInterestView::setActiveHandle(SizeHandleElement* element)
 {
     setFlag(QGraphicsItem::ItemIsMovable, element ? false : true);
-    active_handle = element;
+    m_activeHandle = element;
     // saving position of opposite corner to allow resize
-    if (active_handle)
-        opposite_origin = findOpposite(active_handle)->scenePos();
+    if (m_activeHandle)
+        m_oppositeOrigin = findOpposite(m_activeHandle)->scenePos();
 }
 
 //! Recalculates view rectangle and position of handles using properties of RegionOfInterestItem.
@@ -67,42 +69,42 @@ void RegionOfInterestView::setActiveHandle(SizeHandleElement* element)
 void RegionOfInterestView::update_geometry()
 {
     prepareGeometryChange();
-    controller->update_view_from_item();
-    for (auto handle : handles)
-        handle->updateHandleElementPosition(controller->roi_rectangle());
+    m_controller->updateViewFromItem();
+    for (auto handle : m_handles)
+        handle->updateHandleElementPosition(m_controller->roiRectangle());
 }
 
 void RegionOfInterestView::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
 {
     // drawing rectangular frame made of two colors to look good on both black and white
     painter->setPen(QPen(QColor(34, 67, 255)));
-    painter->drawRect(controller->roi_rectangle());
-    QRectF secondRect = controller->roi_rectangle().marginsAdded(QMarginsF(1, 1, 1, 1));
+    painter->drawRect(m_controller->roiRectangle());
+    QRectF secondRect = m_controller->roiRectangle().marginsAdded(QMarginsF(1, 1, 1, 1));
     painter->setPen(QPen(QColor(255, 255, 245)));
     painter->drawRect(secondRect);
 }
 
 void RegionOfInterestView::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 {
-    if (active_handle) {
+    if (m_activeHandle) {
 
-        auto left = std::min(event->scenePos().x(), opposite_origin.x());
-        auto right = std::max(event->scenePos().x(), opposite_origin.x());
-        auto bottom = std::min(event->scenePos().y(), opposite_origin.y());
-        auto top = std::max(event->scenePos().y(), opposite_origin.y());
+        auto left = std::min(event->scenePos().x(), m_oppositeOrigin.x());
+        auto right = std::max(event->scenePos().x(), m_oppositeOrigin.x());
+        auto bottom = std::min(event->scenePos().y(), m_oppositeOrigin.y());
+        auto top = std::max(event->scenePos().y(), m_oppositeOrigin.y());
 
-        if (active_handle->isCornerHandle())
-            controller->update_item_from_corner(left, right, top, bottom);
-        else if (active_handle->isVerticalHandle())
-            controller->update_item_from_vertical_handle(top, bottom);
-        else if (active_handle->isHorizontalHandle())
-            controller->update_item_from_horizontal_handle(left, right);
+        if (m_activeHandle->isCornerHandle())
+            m_controller->updateItemFromCorner(left, right, top, bottom);
+        else if (m_activeHandle->isVerticalHandle())
+            m_controller->updateItemFromVerticalHandle(top, bottom);
+        else if (m_activeHandle->isHorizontalHandle())
+            m_controller->updateItemFromHorizontalHandle(left, right);
 
         update_geometry();
     }
     else {
         QGraphicsItem::mouseMoveEvent(event);
-        controller->update_item_from_view();
+        m_controller->updateItemFromView();
     }
 }
 
@@ -112,7 +114,7 @@ QVariant RegionOfInterestView::itemChange(QGraphicsItem::GraphicsItemChange chan
                                           const QVariant& value)
 {
     if (change == QGraphicsItem::ItemSelectedChange)
-        for (auto handle : handles)
+        for (auto handle : m_handles)
             handle->setVisible(!this->isSelected());
     return value;
 }
@@ -127,7 +129,7 @@ void RegionOfInterestView::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 void RegionOfInterestView::create_size_handle_elements()
 {
     for (auto pos_type : SizeHandleElement::possible_handle_positions())
-        handles.push_back(SizeHandleElement::create(pos_type, this));
+        m_handles.push_back(SizeHandleElement::create(pos_type, this));
 }
 
 //! Finds handle element which is located on "opposite" rectangle corner with
@@ -139,9 +141,11 @@ SizeHandleElement* RegionOfInterestView::findOpposite(SizeHandleElement* element
         return nullptr;
 
     auto opposite = element->oppositeHandlePosition();
-    auto it = std::find_if(handles.begin(), handles.end(),
+    auto it = std::find_if(m_handles.begin(), m_handles.end(),
                            [opposite](auto x) { return x->handlePosition() == opposite; });
-    if (it == handles.end())
+    if (it == m_handles.end())
         throw std::runtime_error("Error in RegionOfInterestView: can't find opposite handle");
     return *it;
 }
+
+} // namespace GraphicsProxy

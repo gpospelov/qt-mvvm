@@ -18,6 +18,7 @@ class QTabWidget;
 namespace NodeEditor {
 
 class SampleModel;
+class ModelEditorWidget;
 
 //! A main window. Contain two sample models and tabs with two model editors.
 
@@ -36,6 +37,7 @@ private:
     void init_application();
 
     std::unique_ptr<SampleModel> m_model;
+    ModelEditorWidget* m_editorWidget{nullptr};
 };
 
 } // namespace NodeEditor

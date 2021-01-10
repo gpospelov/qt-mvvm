@@ -10,7 +10,6 @@
 #include "nodecontroller.h"
 #include "nodeconnection.h"
 #include "nodeport.h"
-#include <QDebug>
 #include <QGraphicsItem>
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
@@ -87,20 +86,31 @@ bool NodeController::processMouseRelease(QGraphicsSceneMouseEvent* event)
     if (m_conn && event->button() == Qt::LeftButton) {
         if (auto port2 = findPort(event->scenePos()); port2) {
             auto port1 = m_conn->port1();
-            if (port1->isConnectable(*port2)) {
+            if (port1->isConnectable(port2)) {
                 m_conn->setPort2(port2);
                 m_conn->updatePath();
-                // Sending request for connection.
-                emit connectionRequest(m_conn->childView(), m_conn->parentView());
+
                 // At this point we do not need NodeConnection object anymore.
                 // It will be redrawn automatically, when the model process our request.
+
+                auto child = m_conn->childView();
+                auto parent = m_conn->parentView();
+                resetConnection();
+
+                // Sending request for connection.
+                emit connectionRequest(child, parent);
             }
         }
-        delete m_conn;
-        m_conn = nullptr;
+        resetConnection();
         return event_was_handled;
     }
     return event_was_ignored;
+}
+
+void NodeController::resetConnection()
+{
+    delete m_conn;
+    m_conn = nullptr;
 }
 
 } // namespace NodeEditor

@@ -10,7 +10,7 @@
 #include "scenewidget.h"
 #include "graphicsscene.h"
 #include "graphicsview.h"
-#include "sceneitems.h"
+#include "regionofinterestitem.h"
 #include "scenemodel.h"
 #include "scenepropertywidget.h"
 #include "mvvm/plotting/colormapcanvas.h"
@@ -23,14 +23,15 @@
 
 using namespace ModelView;
 
+namespace GraphicsProxy {
+
 SceneWidget::SceneWidget(SceneModel* model, QWidget* parent)
     : QWidget(parent)
     , m_toolBar(new QToolBar)
-    , m_resetViewportAction(nullptr)
     , m_propertyWidget(new ScenePropertyWidget)
     , m_colorMapCanvas(new ColorMapCanvas)
-    , graphics_scene(new GraphicsScene(this))
-    , graphics_view(new GraphicsView(graphics_scene, this))
+    , m_graphicsScene(new GraphicsScene(this))
+    , m_graphicsView(new GraphicsView(m_graphicsScene, this))
     , m_model(model)
 {
     auto mainLayout = new QVBoxLayout;
@@ -50,7 +51,7 @@ SceneWidget::SceneWidget(SceneModel* model, QWidget* parent)
     m_colorMapCanvas->setItem(model->topItem<ColorMapViewportItem>());
     init_actions();
 
-    graphics_scene->setContext(m_colorMapCanvas, model->topItem<RegionOfInterestItem>());
+    m_graphicsScene->setContext(m_colorMapCanvas, model->topItem<RegionOfInterestItem>());
 }
 
 void SceneWidget::init_actions()
@@ -70,10 +71,8 @@ void SceneWidget::init_actions()
     auto on_set_to_roi = [this]() {
         auto viewport = m_model->topItem<ColorMapViewportItem>();
         auto roi = m_model->topItem<RegionOfInterestItem>();
-        viewport->xAxis()->set_range(roi->property<double>(RegionOfInterestItem::P_XLOW),
-                                     roi->property<double>(RegionOfInterestItem::P_XUP));
-        viewport->yAxis()->set_range(roi->property<double>(RegionOfInterestItem::P_YLOW),
-                                     roi->property<double>(RegionOfInterestItem::P_YUP));
+        viewport->xAxis()->set_range(roi->xLow(), roi->xUp());
+        viewport->yAxis()->set_range(roi->yLow(), roi->yUp());
     };
     connect(m_setViewportToRoiAction, &QAction::triggered, on_set_to_roi);
     m_toolBar->addAction(m_setViewportToRoiAction);
@@ -82,7 +81,7 @@ void SceneWidget::init_actions()
 QBoxLayout* SceneWidget::create_left_layout()
 {
     auto result = new QVBoxLayout;
-    result->addWidget(graphics_view);
+    result->addWidget(m_graphicsView);
     return result;
 }
 
@@ -92,3 +91,5 @@ QBoxLayout* SceneWidget::create_right_layout()
     result->addWidget(m_propertyWidget);
     return result;
 }
+
+} // namespace GraphicsProxy

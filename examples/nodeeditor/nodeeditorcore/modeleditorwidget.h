@@ -13,24 +13,32 @@
 #include <QWidget>
 #include <memory>
 
+class QSplitter;
+
 namespace NodeEditor {
 
 class SampleModel;
 class GraphicsView;
 class GraphicsScene;
+class PropertyWidget;
+class GraphicsSceneController;
 
-//! Shows content of the model as vertical tree, horizontal tree and table.
+//! Main widget for model editing. Contains a graphics scene with node editor on the left,
+//! and property panel on the right. Belongs to MainWindow.
 
 class ModelEditorWidget : public QWidget {
     Q_OBJECT
 
 public:
     explicit ModelEditorWidget(SampleModel* model = nullptr, QWidget* parent = nullptr);
-    void setModel(SampleModel* model);
+    ~ModelEditorWidget() override;
 
 private:
-    NodeEditor::GraphicsScene* m_graphicsScene{nullptr};
-    NodeEditor::GraphicsView* m_graphicsView{nullptr};
+    PropertyWidget* m_propertyWidget{nullptr};
+    GraphicsScene* m_graphicsScene{nullptr};
+    GraphicsView* m_graphicsView{nullptr};
+    std::unique_ptr<GraphicsSceneController> m_sceneContoller;
+    QSplitter* m_splitter{nullptr};
 };
 
 } // namespace NodeEditor

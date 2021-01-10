@@ -128,16 +128,6 @@ bool SessionItem::hasData(int role) const
     return p_impl->m_data->hasData(role);
 }
 
-////! Sets the data for given role, notifies the model.
-
-// bool SessionItem::setDataIntern(const Variant& variant, int role)
-//{
-//    bool result = p_impl->m_data->setData(variant, role);
-//    if (result && model())
-//        model()->mapper()->callOnDataChange(this, role);
-//    return result;
-//}
-
 //! Returns pointer to item's data container (const version).
 
 const SessionItemData* SessionItem::itemData() const

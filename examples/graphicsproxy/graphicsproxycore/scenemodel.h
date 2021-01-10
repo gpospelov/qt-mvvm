@@ -16,6 +16,8 @@ namespace ModelView {
 class ContainerItem;
 }
 
+namespace GraphicsProxy {
+
 //! Main application model with data for graphics scene.
 
 class SceneModel : public ModelView::SessionModel {
@@ -29,5 +31,7 @@ private:
     void create_data();
     void create_colormap();
 };
+
+} // namespace GraphicsProxy
 
 #endif // GRAPHICSPROXY_SCENEMODEL_H

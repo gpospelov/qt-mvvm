@@ -37,7 +37,7 @@ public:
 
     NodePort* port1() const;
 
-    bool hasPort(const NodePort& port) const;
+    bool hasPort(const NodePort *port) const;
 
     void paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*);
 

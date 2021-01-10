@@ -8,7 +8,7 @@
 // ************************************************************************** //
 
 #include "scenemodel.h"
-#include "sceneitems.h"
+#include "regionofinterestitem.h"
 #include "mvvm/standarditems/axisitems.h"
 #include "mvvm/standarditems/colormapitem.h"
 #include "mvvm/standarditems/colormapviewportitem.h"
@@ -41,6 +41,8 @@ void fill_data(Data2DItem* data_item, double scale = 1.0)
 
 } // namespace
 
+namespace GraphicsProxy {
+
 SceneModel::SceneModel() : SessionModel("ColorMapModel")
 {
     registerItem<RegionOfInterestItem>();
@@ -62,10 +64,7 @@ void SceneModel::update_data(double scale)
 void SceneModel::create_roi()
 {
     auto roi = insertItem<RegionOfInterestItem>();
-    roi->setProperty(RegionOfInterestItem::P_XLOW, -2.0);
-    roi->setProperty(RegionOfInterestItem::P_YLOW, 1.0);
-    roi->setProperty(RegionOfInterestItem::P_XUP, 2.0);
-    roi->setProperty(RegionOfInterestItem::P_YUP, 2.0);
+    roi->setCorners(-2.0, 1.0, 2.0, 2.0);
 }
 
 //! Creates item to store 2D data and fills it with values.
@@ -86,3 +85,5 @@ void SceneModel::create_colormap()
     auto colormap_item = insertItem<ColorMapItem>(viewport_item);
     colormap_item->setDataItem(topItem<Data2DItem>());
 }
+
+} // namespace GraphicsProxy

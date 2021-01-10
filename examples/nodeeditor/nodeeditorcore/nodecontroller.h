@@ -45,6 +45,7 @@ private:
     bool processMousePress(QGraphicsSceneMouseEvent* event);
     bool processMouseMove(QGraphicsSceneMouseEvent* event);
     bool processMouseRelease(QGraphicsSceneMouseEvent* event);
+    void resetConnection();
 
     QGraphicsScene* m_scene{nullptr};
     NodeConnection* m_conn{nullptr}; //! Currently processed connection.

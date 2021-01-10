@@ -13,6 +13,8 @@
 #include <QGraphicsItem>
 #include <vector>
 
+namespace GraphicsProxy {
+
 class RegionOfInterestView;
 
 //! Handle element to resize RegionOfInterestView.
@@ -22,14 +24,14 @@ public:
     //! This enum defines various handle positions which roi can have.
 
     enum EHandlePosition {
-        TOPLEFT,
-        TOPMIDDLE,
-        TOPRIGHT,
-        MIDDLELEFT,
-        MIDDLERIGHT,
-        BOTTOMLEFT,
-        BOTTOMMIDLE,
-        BOTTOMRIGHT,
+        topleft,
+        topmiddle,
+        topright,
+        middleleft,
+        middleright,
+        bottomleft,
+        bottommiddle,
+        bottomright,
     };
 
     //! Aggregate to hold all handle's accompanying information.
@@ -66,8 +68,10 @@ protected:
 private:
     SizeHandleElement(HandleInfo info, RegionOfInterestView* view);
 
-    RegionOfInterestView* roi_view;
-    HandleInfo info;
+    RegionOfInterestView* m_roiView;
+    HandleInfo m_info;
 };
+
+} // namespace GraphicsProxy
 
 #endif // GRAPHICSPROXY_SIZEHANDLEELEMENT_H
