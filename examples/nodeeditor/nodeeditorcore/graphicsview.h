@@ -18,7 +18,8 @@ namespace NodeEditor {
 
 class GraphicsScene;
 
-//! Graphics view for our cusrom graphics scene.
+//! Graphics view for graphics scene.
+//! Contains mostly logic for key events.
 
 class GraphicsView : public QGraphicsView {
     Q_OBJECT

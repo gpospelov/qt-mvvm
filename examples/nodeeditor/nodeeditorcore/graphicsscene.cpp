@@ -88,12 +88,9 @@ void GraphicsScene::onDeleteSelectedRequest()
     for (auto connection : selectedViewItems<NodeConnection>())
         deleteConnection(connection);
 
-    // Delete selected views and underlying items.
-    for (auto view : selectedViewItems<ConnectableView>()) {
-        auto item = view->connectableItem();
-        delete view;
-        m_model->removeItem(m_model->rootItem(), item->tagRow());
-    }
+    // Remove underlying items from the model. Views will on model.
+    for (auto view : selectedViewItems<ConnectableView>())
+        m_model->removeItem(m_model->rootItem(), view->connectableItem()->tagRow());
 }
 
 //! Constructs a view for a given item and adds it to a scene, if necessary.
@@ -111,6 +108,7 @@ void GraphicsScene::processItem(ConnectableItem* item)
         addItem(itemView);
     }
 
+    // If item has parent, look for corresponding view. Connect it with itemView.
     if (auto parentView = findView(dynamic_cast<ConnectableItem*>(item->parent())); parentView)
         parentView->makeChildConnected(itemView);
 }
@@ -121,6 +119,17 @@ ConnectableView* GraphicsScene::findView(ConnectableItem* item)
 {
     auto it = m_itemToView.find(item);
     return it == m_itemToView.end() ? nullptr : it->second;
+}
+
+//! Removes view corresponding to given item.
+
+void GraphicsScene::removeViewForItem(ConnectableItem* item)
+{
+    auto it = m_itemToView.find(item);
+    if (it != m_itemToView.end()) {
+        delete it->second;
+        m_itemToView.erase(it);
+    }
 }
 
 } // namespace NodeEditor
