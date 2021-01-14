@@ -105,6 +105,13 @@ ConnectableView* NodePort::connectableView() const
     return dynamic_cast<ConnectableView*>(parentItem());
 }
 
+//! Returns vector of connections of given port.
+
+QList<NodeConnection*> NodePort::connections() const
+{
+    return m_connections;
+}
+
 QVariant NodePort::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant& value)
 {
     if (change == ItemScenePositionHasChanged) {

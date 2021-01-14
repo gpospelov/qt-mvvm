@@ -102,6 +102,14 @@ ConnectableItem* ConnectableView::connectableItem() const
     return m_item;
 }
 
+QList<NodeConnection*> ConnectableView::inputConnections() const
+{
+    QList<NodeConnection*> result;
+    for (auto port : inputPorts())
+        result.append(port->connections());
+    return result;
+}
+
 void ConnectableView::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 {
     QGraphicsItem::mouseMoveEvent(event);
