@@ -87,6 +87,13 @@ void GraphicsScene::onDeleteSelectedRequest()
     // Delete selected connections and move child item from parent to scene's root.
     for (auto connection : selectedViewItems<NodeConnection>())
         deleteConnection(connection);
+
+    // Delete selected views and underlying items.
+    for (auto view : selectedViewItems<ConnectableView>()) {
+        auto item = view->connectableItem();
+        delete view;
+        m_model->removeItem(m_model->rootItem(), item->tagRow());
+    }
 }
 
 //! Constructs a view for a given item and adds it to a scene, if necessary.

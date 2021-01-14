@@ -23,6 +23,7 @@ class NodeConnection;
 
 //! Custom graphics scene for node editor.
 //! Listens for updates in SessionModel and populates the scene with views.
+//! Contains the logic to establish and break connections between ConnectableViewItem.
 
 class GraphicsScene : public QGraphicsScene {
     Q_OBJECT
@@ -51,7 +52,7 @@ private:
 
     SampleModel* m_model{nullptr};
     std::map<ConnectableItem*, ConnectableView*> m_itemToView;
-    NodeController* m_nodeController;
+    NodeController* m_nodeController{nullptr};
 };
 
 template <typename T> inline std::vector<T*> GraphicsScene::selectedViewItems()
