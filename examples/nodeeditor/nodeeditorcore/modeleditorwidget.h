@@ -34,6 +34,8 @@ public:
     ~ModelEditorWidget() override;
 
 private:
+    void initConnections();
+
     PropertyWidget* m_propertyWidget{nullptr};
     GraphicsScene* m_graphicsScene{nullptr};
     GraphicsView* m_graphicsView{nullptr};

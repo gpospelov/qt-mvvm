@@ -9,11 +9,11 @@
 
 #include "modeleditorwidget.h"
 #include "graphicsscene.h"
+#include "graphicsscenecontroller.h"
 #include "graphicsview.h"
 #include "propertywidget.h"
 #include "sampleitems.h"
 #include "samplemodel.h"
-#include "graphicsscenecontroller.h"
 #include <QHBoxLayout>
 #include <QSplitter>
 
@@ -36,10 +36,22 @@ ModelEditorWidget::ModelEditorWidget(SampleModel* model, QWidget* parent)
 
     layout->addWidget(m_splitter);
 
-    connect(m_graphicsScene, &GraphicsScene::connectableItemSelectionChanged, m_propertyWidget,
-            &PropertyWidget::onSelectionRequest);
+    initConnections();
 }
 
 ModelEditorWidget::~ModelEditorWidget() = default;
+
+//! Inist widget connections.
+
+void ModelEditorWidget::initConnections()
+{
+    // Propagates selection from the scene to the property widget.
+    connect(m_graphicsScene, &GraphicsScene::connectableItemSelectionChanged, m_propertyWidget,
+            &PropertyWidget::onSelectionRequest);
+
+    // Propagates delete request from the graphics view to the scene.
+    connect(m_graphicsView, &GraphicsView::deleteSelectedRequest, m_graphicsScene,
+            &GraphicsScene::onDeleteSelectedRequest);
+}
 
 } // namespace NodeEditor

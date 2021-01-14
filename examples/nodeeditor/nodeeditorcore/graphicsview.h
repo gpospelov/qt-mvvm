@@ -12,6 +12,8 @@
 
 #include <QGraphicsView>
 
+class QKeyEvent;
+
 namespace NodeEditor {
 
 class GraphicsScene;
@@ -21,8 +23,14 @@ class GraphicsScene;
 class GraphicsView : public QGraphicsView {
     Q_OBJECT
 
+signals:
+    void deleteSelectedRequest();
+
 public:
     GraphicsView(GraphicsScene* scene, QWidget* parent);
+
+protected:
+    void keyPressEvent(QKeyEvent* event);
 };
 
 } // namespace NodeEditor

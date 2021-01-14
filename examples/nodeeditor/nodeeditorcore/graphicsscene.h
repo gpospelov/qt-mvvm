@@ -32,12 +32,15 @@ public:
 
     void updateScene();
 
+    void onDeleteSelectedRequest();
+
 signals:
     void connectableItemSelectionChanged(ConnectableItem* item);
 
+
 private slots:
     void onConnectionRequest(ConnectableView* childView, ConnectableView* parentView);
-    void onSelectionChanged();
+    void onSelectionChanged();    
 
 private:
     void processItem(ConnectableItem* item);

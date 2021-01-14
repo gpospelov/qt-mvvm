@@ -38,7 +38,7 @@ GraphicsScene::GraphicsScene(SampleModel* model, QObject* parent)
 
 GraphicsScene::~GraphicsScene() = default;
 
-//! Propagates connection request to the model.
+//! Propagates elastic connection request between two views to the model.
 
 void GraphicsScene::onConnectionRequest(ConnectableView* childView, ConnectableView* parentView)
 {
@@ -69,6 +69,13 @@ void GraphicsScene::updateScene()
             processItem(connectableItem);
     };
     ModelView::Utils::iterate(m_model->rootItem(), on_iterate);
+}
+
+//! Deletes item of selected type.
+
+void GraphicsScene::onDeleteSelectedRequest()
+{
+    qDebug() << "GraphicsScene::onDeleteSelectedRequest()";
 }
 
 //! Constructs a view for a given item and adds it to a scene, if necessary.
