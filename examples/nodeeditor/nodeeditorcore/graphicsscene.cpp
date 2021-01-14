@@ -14,6 +14,7 @@
 #include "nodecontroller.h"
 #include "sampleitems.h"
 #include "samplemodel.h"
+#include "mvvm/model/modelutils.h"
 #include <QDebug>
 
 namespace {
@@ -59,7 +60,7 @@ void GraphicsScene::onSelectionChanged()
 }
 
 //! Deletes connection. All children items connected to the parents via this connection will
-//! be become children of model's root item.
+//! be moved to the top of the model (i.e. will become children of the model's root item).
 
 void GraphicsScene::deleteConnection(NodeConnection* connection)
 {
@@ -79,18 +80,31 @@ void GraphicsScene::updateScene()
     ModelView::Utils::iterate(m_model->rootItem(), on_iterate);
 }
 
-//! Deletes item of selected type.
+//! Deletes all currently selected views on the scene. This propagates the request to delete to the
+//! underlying model. Actual deletion of views will happen later, when the controller will be
+//! notified about the model change.
 
 void GraphicsScene::onDeleteSelectedRequest()
 {
-    qDebug() << "GraphicsScene::onDeleteSelectedRequest()";
-    // Delete selected connections and move child item from parent to scene's root.
+    // Delete explicitely selected connections.
     for (auto connection : selectedViewItems<NodeConnection>())
         deleteConnection(connection);
 
-    // Remove underlying items from the model. Views will on model.
-    for (auto view : selectedViewItems<ConnectableView>())
-        m_model->removeItem(m_model->rootItem(), view->connectableItem()->tagRow());
+    // Remove selected views.
+    for (auto view : selectedViewItems<ConnectableView>()) {
+
+//        // If the view has input connections, they have to be deleted first. This will lead in turn
+//        // to moving of all connected children to the model's root item. As a result, they will all
+//        // remain on the scene, while parent view will be deleted.
+//        for (auto connection : view->inputConnections())
+//            deleteConnection(connection);
+
+//        // if the view has output connections, no action is required. View will be deleted,
+//        // connections will be removed automatically, as soon as ports gone.
+
+//        // deleting item
+        ModelView::Utils::DeleteItemFromModel(view->connectableItem());
+    }
 }
 
 //! Constructs a view for a given item and adds it to a scene, if necessary.
