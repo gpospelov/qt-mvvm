@@ -19,6 +19,7 @@ class SampleModel;
 class ConnectableView;
 class ConnectableItem;
 class NodeController;
+class NodeConnection;
 
 //! Custom graphics scene for node editor.
 //! Listens for updates in SessionModel and populates the scene with views.
@@ -44,6 +45,7 @@ private slots:
 private:
     void processItem(ConnectableItem* item);
     ConnectableView* findView(ConnectableItem* item);
+    void deleteConnection(NodeConnection* connection);
 
     template <typename T> std::vector<T*> selectedViewItems();
 

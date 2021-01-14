@@ -10,6 +10,7 @@
 #include "graphicsscene.h"
 #include "connectableview.h"
 #include "mvvm/model/itemutils.h"
+#include "nodeconnection.h"
 #include "nodecontroller.h"
 #include "sampleitems.h"
 #include "samplemodel.h"
@@ -57,6 +58,16 @@ void GraphicsScene::onSelectionChanged()
                                                           : selected.front()->connectableItem());
 }
 
+//! Deletes connection. All children items connected to the parents via this connection will
+//! be become children of model's root item.
+
+void GraphicsScene::deleteConnection(NodeConnection* connection)
+{
+    auto childView = connection->childView();
+    m_model->moveItem(childView->connectableItem(), m_model->rootItem(), {"", -1});
+    delete connection;
+}
+
 //! Updates scene content from the model.
 
 void GraphicsScene::updateScene()
@@ -73,6 +84,9 @@ void GraphicsScene::updateScene()
 void GraphicsScene::onDeleteSelectedRequest()
 {
     qDebug() << "GraphicsScene::onDeleteSelectedRequest()";
+    // Delete selected connections and move child item from parent to scene's root.
+    for (auto connection : selectedViewItems<NodeConnection>())
+        deleteConnection(connection);
 }
 
 //! Constructs a view for a given item and adds it to a scene, if necessary.
