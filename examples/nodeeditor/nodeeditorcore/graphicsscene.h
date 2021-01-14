@@ -37,19 +37,29 @@ public:
 signals:
     void connectableItemSelectionChanged(ConnectableItem* item);
 
-
 private slots:
     void onConnectionRequest(ConnectableView* childView, ConnectableView* parentView);
-    void onSelectionChanged();    
+    void onSelectionChanged();
 
 private:
     void processItem(ConnectableItem* item);
     ConnectableView* findView(ConnectableItem* item);
 
+    template <typename T> std::vector<T*> selectedViewItems();
+
     SampleModel* m_model{nullptr};
     std::map<ConnectableItem*, ConnectableView*> m_itemToView;
     NodeController* m_nodeController;
 };
+
+template <typename T> inline std::vector<T*> GraphicsScene::selectedViewItems()
+{
+    std::vector<T*> result;
+    for (auto item : selectedItems())
+        if (auto casted = dynamic_cast<T*>(item); casted)
+            result.push_back(casted);
+    return result;
+}
 
 } // namespace NodeEditor
 

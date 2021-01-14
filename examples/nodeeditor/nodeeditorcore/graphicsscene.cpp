@@ -9,10 +9,10 @@
 
 #include "graphicsscene.h"
 #include "connectableview.h"
+#include "mvvm/model/itemutils.h"
 #include "nodecontroller.h"
 #include "sampleitems.h"
 #include "samplemodel.h"
-#include "mvvm/model/itemutils.h"
 #include <QDebug>
 
 namespace {
@@ -52,12 +52,9 @@ void GraphicsScene::onConnectionRequest(ConnectableView* childView, ConnectableV
 
 void GraphicsScene::onSelectionChanged()
 {
-    ConnectableItem* selectedItem{nullptr};
-    for (auto view : selectedItems()) {
-        if (auto connectableView = dynamic_cast<ConnectableView*>(view); connectableView)
-            selectedItem = connectableView->connectableItem();
-    }
-    emit connectableItemSelectionChanged(selectedItem);
+    auto selected = selectedViewItems<ConnectableView>();
+    emit connectableItemSelectionChanged(selected.empty() ? nullptr
+                                                          : selected.front()->connectableItem());
 }
 
 //! Updates scene content from the model.
