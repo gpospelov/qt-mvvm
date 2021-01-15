@@ -19,6 +19,7 @@ class ConnectableItem;
 class NodeInputPort;
 class NodeOutputPort;
 class ConnectableItemController;
+class NodeConnection;
 
 //! Represents ConnectableItem on QGraphicsScene. Shown as a reactangle with rounded corners,
 //! gradient, label, and set of input/output ports to connect.
@@ -41,6 +42,8 @@ public:
     NodeOutputPort* outputPort() const;
 
     ConnectableItem* connectableItem() const;
+
+    QList<NodeConnection*> inputConnections() const;
 
 protected:
     void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;

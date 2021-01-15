@@ -22,6 +22,7 @@ class GraphicsView;
 class GraphicsScene;
 class PropertyWidget;
 class GraphicsSceneController;
+class PiecesList;
 
 //! Main widget for model editing. Contains a graphics scene with node editor on the left,
 //! and property panel on the right. Belongs to MainWindow.
@@ -34,6 +35,9 @@ public:
     ~ModelEditorWidget() override;
 
 private:
+    void initConnections();
+
+    PiecesList* m_piecesList{nullptr};
     PropertyWidget* m_propertyWidget{nullptr};
     GraphicsScene* m_graphicsScene{nullptr};
     GraphicsView* m_graphicsView{nullptr};

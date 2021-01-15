@@ -49,6 +49,8 @@ public:
 
     ConnectableView* connectableView() const;
 
+    QList<NodeConnection*> connections() const;
+
 protected:
     QVariant itemChange(GraphicsItemChange change, const QVariant& value) override;
 

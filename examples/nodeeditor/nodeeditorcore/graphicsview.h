@@ -12,17 +12,25 @@
 
 #include <QGraphicsView>
 
+class QKeyEvent;
+
 namespace NodeEditor {
 
 class GraphicsScene;
 
-//! Graphics view for our cusrom graphics scene.
+//! Graphics view for the graphics scene.
 
 class GraphicsView : public QGraphicsView {
     Q_OBJECT
 
+signals:
+    void deleteSelectedRequest();
+
 public:
     GraphicsView(GraphicsScene* scene, QWidget* parent);
+
+protected:
+    void keyPressEvent(QKeyEvent* event);
 };
 
 } // namespace NodeEditor
