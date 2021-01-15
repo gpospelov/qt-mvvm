@@ -59,14 +59,18 @@ void GraphicsScene::onSelectionChanged()
                                                           : selected.front()->connectableItem());
 }
 
-//! Deletes connection. All children items connected to the parents via this connection will
-//! be moved to the top of the model (i.e. will become children of the model's root item).
+//! Disconnect items connected by the given connection.
+//! All children items connected to the parents via this connection will be moved to the top of
+//! the model (i.e. will become children of the model's root item). This in turn will trigger
+//! corresponding ConnectableView recreation.
 
 void GraphicsScene::deleteConnection(NodeConnection* connection)
 {
+    qDebug() << "deleteConnection 1.1";
     auto childView = connection->childView();
     m_model->moveItem(childView->connectableItem(), m_model->rootItem(), {"", -1});
-    delete connection;
+    // No need to delete the connection explicitly.
+    qDebug() << "deleteConnection 1.2";
 }
 
 //! Updates scene content from the model.
@@ -86,10 +90,15 @@ void GraphicsScene::updateScene()
 
 void GraphicsScene::onDeleteSelectedRequest()
 {
+    qDebug() << "onDeleteSelectedRequest 1.1";
     // Delete explicitely selected connections.
-    for (auto connection : selectedViewItems<NodeConnection>())
+    for (auto connection : selectedViewItems<NodeConnection>()) {
+        qDebug() << "onDeleteSelectedRequest 1.1a";
         deleteConnection(connection);
+        qDebug() << "onDeleteSelectedRequest 1.1b";
+    }
 
+    qDebug() << "onDeleteSelectedRequest 1.2";
     // Remove selected views.
     for (auto view : selectedViewItems<ConnectableView>()) {
 
@@ -105,6 +114,7 @@ void GraphicsScene::onDeleteSelectedRequest()
 //        // deleting item
         ModelView::Utils::DeleteItemFromModel(view->connectableItem());
     }
+    qDebug() << "onDeleteSelectedRequest 1.3";
 }
 
 //! Constructs a view for a given item and adds it to a scene, if necessary.
@@ -139,11 +149,14 @@ ConnectableView* GraphicsScene::findView(ConnectableItem* item)
 
 void GraphicsScene::removeViewForItem(ConnectableItem* item)
 {
+    qDebug() << "removeViewForItem 1.1" << QString::fromStdString(item->modelType()) << m_itemToView.size();
     auto it = m_itemToView.find(item);
     if (it != m_itemToView.end()) {
+        qDebug() << "removeViewForItem 1.1a" << QString::fromStdString(item->modelType());
         delete it->second;
         m_itemToView.erase(it);
     }
+    qDebug() << "removeViewForItem 1.2" << m_itemToView.size();
 }
 
 } // namespace NodeEditor
