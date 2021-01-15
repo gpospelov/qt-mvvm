@@ -10,12 +10,11 @@
 #include "graphicsscene.h"
 #include "connectableview.h"
 #include "mvvm/model/itemutils.h"
+#include "mvvm/model/modelutils.h"
 #include "nodeconnection.h"
 #include "nodecontroller.h"
 #include "sampleitems.h"
 #include "samplemodel.h"
-#include "mvvm/model/modelutils.h"
-#include <QDebug>
 
 namespace {
 const double scene_origin_x{0.0};
@@ -44,7 +43,6 @@ GraphicsScene::~GraphicsScene() = default;
 
 void GraphicsScene::onConnectionRequest(ConnectableView* childView, ConnectableView* parentView)
 {
-    qDebug() << "on connection request";
     // On model level connection of views means simply changing the parent of underlying items.
     m_model->moveItem(childView->connectableItem(), parentView->connectableItem(), {"", -1});
 }
@@ -59,18 +57,19 @@ void GraphicsScene::onSelectionChanged()
                                                           : selected.front()->connectableItem());
 }
 
-//! Disconnect items connected by the given connection.
-//! All children items connected to the parents via this connection will be moved to the top of
-//! the model (i.e. will become children of the model's root item). This in turn will trigger
-//! corresponding ConnectableView recreation.
+//! Disconnect views connected by the given connection.
 
-void GraphicsScene::deleteConnection(NodeConnection* connection)
+void GraphicsScene::disconnectConnectedViews(NodeConnection* connection)
 {
-    qDebug() << "deleteConnection 1.1";
+    // No actual view disconnection is going on here. We act on underlying ConnectableItem's.
+    // All children items connected to the parents via this connection will be moved to the top of
+    // the model (i.e. will become children of the model's root item). This in turn will trigger
+    // corresponding ConnectableView recreation.
+
     auto childView = connection->childView();
     m_model->moveItem(childView->connectableItem(), m_model->rootItem(), {"", -1});
-    // No need to delete the connection explicitly.
-    qDebug() << "deleteConnection 1.2";
+    // No need to delete the connection explicitly. It will be done by ConnectableView via its
+    // ports.
 }
 
 //! Updates scene content from the model.
@@ -90,31 +89,21 @@ void GraphicsScene::updateScene()
 
 void GraphicsScene::onDeleteSelectedRequest()
 {
-    qDebug() << "onDeleteSelectedRequest 1.1";
-    // Delete explicitely selected connections.
-    for (auto connection : selectedViewItems<NodeConnection>()) {
-        qDebug() << "onDeleteSelectedRequest 1.1a";
-        deleteConnection(connection);
-        qDebug() << "onDeleteSelectedRequest 1.1b";
-    }
+    // Break explicitely selected connections.
+    for (auto connection : selectedViewItems<NodeConnection>())
+        disconnectConnectedViews(connection);
 
-    qDebug() << "onDeleteSelectedRequest 1.2";
     // Remove selected views.
     for (auto view : selectedViewItems<ConnectableView>()) {
 
-//        // If the view has input connections, they have to be deleted first. This will lead in turn
-//        // to moving of all connected children to the model's root item. As a result, they will all
-//        // remain on the scene, while parent view will be deleted.
-//        for (auto connection : view->inputConnections())
-//            deleteConnection(connection);
+        // If the parent is intended to the deletion and has input connections, they have to be
+        // disconnected first. This will prevent child item to be deleted when the parent is gone.
+        for (auto connection : view->inputConnections())
+            disconnectConnectedViews(connection);
 
-//        // if the view has output connections, no action is required. View will be deleted,
-//        // connections will be removed automatically, as soon as ports gone.
-
-//        // deleting item
+        // deleting item
         ModelView::Utils::DeleteItemFromModel(view->connectableItem());
     }
-    qDebug() << "onDeleteSelectedRequest 1.3";
 }
 
 //! Constructs a view for a given item and adds it to a scene, if necessary.
@@ -122,17 +111,14 @@ void GraphicsScene::onDeleteSelectedRequest()
 
 void GraphicsScene::processItem(ConnectableItem* item)
 {
-    qDebug() << "processItem";
-
     auto itemView = findView(item);
     if (!itemView) {
         itemView = new ConnectableView(item);
         m_itemToView[item] = itemView;
-        qDebug() << "adding item";
         addItem(itemView);
     }
 
-    // If item has parent, look for corresponding view. Connect it with itemView.
+    // If item has parent, look for parent's corresponding view. Connect it with itemView.
     if (auto parentView = findView(dynamic_cast<ConnectableItem*>(item->parent())); parentView)
         parentView->makeChildConnected(itemView);
 }
@@ -149,14 +135,11 @@ ConnectableView* GraphicsScene::findView(ConnectableItem* item)
 
 void GraphicsScene::removeViewForItem(ConnectableItem* item)
 {
-    qDebug() << "removeViewForItem 1.1" << QString::fromStdString(item->modelType()) << m_itemToView.size();
     auto it = m_itemToView.find(item);
     if (it != m_itemToView.end()) {
-        qDebug() << "removeViewForItem 1.1a" << QString::fromStdString(item->modelType());
         delete it->second;
         m_itemToView.erase(it);
     }
-    qDebug() << "removeViewForItem 1.2" << m_itemToView.size();
 }
 
 } // namespace NodeEditor

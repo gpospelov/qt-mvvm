@@ -50,7 +50,7 @@ private:
     ConnectableView* findView(ConnectableItem* item);
     void removeViewForItem(ConnectableItem* item);
 
-    void deleteConnection(NodeConnection* connection);
+    void disconnectConnectedViews(NodeConnection* connection);
 
     template <typename T> std::vector<T*> selectedViewItems();
 
