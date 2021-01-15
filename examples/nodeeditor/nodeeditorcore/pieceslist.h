@@ -14,7 +14,8 @@
 
 namespace NodeEditor {
 
-//! The list view with all pieces, representing connectable elements of the node editor.
+//! The list widget with all pieces, representing connectable elements of the node editor.
+//! Located at the left-hand side of the ModelEditorWidget.
 //! Elements from the list can be drag-and-dropped on the graphics scene.
 
 class PiecesList : public QListWidget {
@@ -22,6 +23,11 @@ class PiecesList : public QListWidget {
 
 public:
     PiecesList(QWidget* parent = nullptr);
+
+    static QString piecesMimeType();
+
+protected:
+    void startDrag(Qt::DropActions supportedActions) override;
 
 private:
     void setupList();
