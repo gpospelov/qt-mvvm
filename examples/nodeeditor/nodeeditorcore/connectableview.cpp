@@ -9,12 +9,11 @@
 
 #include "connectableview.h"
 #include "connectableitemcontroller.h"
+#include "mvvm/model/itemutils.h"
 #include "nodeconnection.h"
 #include "nodeport.h"
 #include "sampleitems.h"
 #include "sceneutils.h"
-#include "mvvm/model/itemutils.h"
-#include "mvvm/widgets/widgetutils.h"
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
 
@@ -35,9 +34,8 @@ namespace NodeEditor {
 ConnectableView::ConnectableView(ConnectableItem* item)
     : m_item(item), m_controller(std::make_unique<ConnectableItemController>(item, this))
 {
-    // make size of rectangle depending on 'M'-letter size to address scaling issues
-    m_rect = QRectF(0, 0, ModelView::Utils::WidthOfLetterM() * 8,
-                    ModelView::Utils::HeightOfLetterM() * 8);
+    m_rect = ConnectableViewRectangle();
+
     setFlag(QGraphicsItem::ItemIsSelectable);
     setFlag(QGraphicsItem::ItemIsMovable);
     setFlag(QGraphicsItem::ItemSendsGeometryChanges);
@@ -57,7 +55,7 @@ void ConnectableView::paint(QPainter* painter, const QStyleOptionGraphicsItem* o
     if (option->state & (QStyle::State_Selected | QStyle::State_HasFocus))
         painter->setPen(Qt::DashLine);
 
-    painter->setBrush(CreateViewGradient(color(), boundingRect()));
+    painter->setBrush(ConnectableViewGradient(color(), boundingRect()));
     painter->drawRoundedRect(boundingRect(), round_par, round_par);
 
     painter->setPen(Qt::black);
