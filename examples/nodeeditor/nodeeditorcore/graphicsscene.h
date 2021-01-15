@@ -40,6 +40,10 @@ public:
 signals:
     void connectableItemSelectionChanged(ConnectableItem* item);
 
+protected:
+    void dragMoveEvent(QGraphicsSceneDragDropEvent* event) override;
+    void dropEvent(QGraphicsSceneDragDropEvent* event) override;
+
 private slots:
     void onConnectionRequest(ConnectableView* childView, ConnectableView* parentView);
     void onSelectionChanged();

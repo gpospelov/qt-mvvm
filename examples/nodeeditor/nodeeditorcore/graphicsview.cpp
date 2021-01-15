@@ -17,6 +17,9 @@ GraphicsView::GraphicsView(GraphicsScene* scene, QWidget* parent) : QGraphicsVie
 {
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     setRenderHint(QPainter::Antialiasing);
+    setAcceptDrops(true);
+    setMouseTracking(true);
+
 }
 
 void GraphicsView::keyPressEvent(QKeyEvent* event)

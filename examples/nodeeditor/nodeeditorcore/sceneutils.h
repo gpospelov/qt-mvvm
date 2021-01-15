@@ -19,7 +19,7 @@ class QRectF;
 
 namespace NodeEditor {
 
-//! Returns vertical gradient using provided base color and rectangle.
+//! Returns vertical gradient to paint connectable view with given color and bounding rectangle.
 QGradient ConnectableViewGradient(const QColor& color, const QRectF& rect);
 
 //! Returns characteristic rectangle to represent connectable view on a graphics scene.

@@ -11,10 +11,15 @@
 #include "connectableview.h"
 #include "mvvm/model/itemutils.h"
 #include "mvvm/model/modelutils.h"
+#include "mvvm/widgets/widgetutils.h"
 #include "nodeconnection.h"
 #include "nodecontroller.h"
+#include "pieceslist.h"
 #include "sampleitems.h"
 #include "samplemodel.h"
+#include <QDebug>
+#include <QGraphicsSceneDragDropEvent>
+#include <QMimeData>
 
 namespace {
 const double scene_origin_x{0.0};
@@ -38,6 +43,24 @@ GraphicsScene::GraphicsScene(SampleModel* model, QObject* parent)
 }
 
 GraphicsScene::~GraphicsScene() = default;
+
+void GraphicsScene::dragMoveEvent(QGraphicsSceneDragDropEvent* event)
+{
+    if (event->mimeData()->hasFormat(PiecesList::piecesMimeType()))
+        event->accept();
+    else
+        event->ignore();
+}
+
+void GraphicsScene::dropEvent(QGraphicsSceneDragDropEvent* event)
+{
+    auto mimeData = event->mimeData();
+    if (!mimeData->hasFormat(PiecesList::piecesMimeType()))
+        return;
+
+    auto requestedType =
+        ModelView::Utils::deserialize(mimeData->data(PiecesList::piecesMimeType()));
+}
 
 //! Propagates elastic connection request between two views to the model.
 
