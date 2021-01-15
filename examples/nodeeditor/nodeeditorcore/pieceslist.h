@@ -22,6 +22,10 @@ class PiecesList : public QListWidget {
 
 public:
     PiecesList(QWidget* parent = nullptr);
+
+private:
+    void setupList();
+    void addPiece(const QString& name);
 };
 
 } // namespace NodeEditor
