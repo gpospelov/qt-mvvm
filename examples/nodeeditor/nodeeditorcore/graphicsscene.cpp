@@ -9,14 +9,15 @@
 
 #include "graphicsscene.h"
 #include "connectableview.h"
-#include "mvvm/model/itemutils.h"
-#include "mvvm/model/modelutils.h"
-#include "mvvm/widgets/widgetutils.h"
 #include "nodeconnection.h"
 #include "nodecontroller.h"
 #include "pieceslist.h"
 #include "sampleitems.h"
 #include "samplemodel.h"
+#include "sceneutils.h"
+#include "mvvm/model/itemutils.h"
+#include "mvvm/model/modelutils.h"
+#include "mvvm/widgets/widgetutils.h"
 #include <QDebug>
 #include <QGraphicsSceneDragDropEvent>
 #include <QMimeData>
@@ -54,12 +55,22 @@ void GraphicsScene::dragMoveEvent(QGraphicsSceneDragDropEvent* event)
 
 void GraphicsScene::dropEvent(QGraphicsSceneDragDropEvent* event)
 {
+    // for later coordinate calculation, where to drop
+    static QRectF refViewRectangle = ConnectableViewRectangle();
+
     auto mimeData = event->mimeData();
     if (!mimeData->hasFormat(PiecesList::piecesMimeType()))
         return;
 
-    auto requestedType =
+    auto requestedTypes =
         ModelView::Utils::deserialize(mimeData->data(PiecesList::piecesMimeType()));
+
+    for (const auto& itemType : requestedTypes) {
+        QPointF dropPos(event->scenePos().x() - refViewRectangle.width() / 2,
+                        event->scenePos().y() - refViewRectangle.height() / 2);
+
+        m_model->insertConnectableItem(itemType.toStdString(), dropPos.x(), dropPos.y());
+    }
 }
 
 //! Propagates elastic connection request between two views to the model.

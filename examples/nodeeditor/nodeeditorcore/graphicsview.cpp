@@ -22,8 +22,11 @@ GraphicsView::GraphicsView(GraphicsScene* scene, QWidget* parent) : QGraphicsVie
 
 }
 
+//! Handles mouse press events.
+
 void GraphicsView::keyPressEvent(QKeyEvent* event)
 {
+    // Currently the only function is to emit signal on delete keys.
     const bool delete_key = event->key() == Qt::Key_Delete || event->key() == Qt::Key_Backspace;
     if (delete_key)
         deleteSelectedRequest();

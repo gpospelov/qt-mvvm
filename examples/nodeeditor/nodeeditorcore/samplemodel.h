@@ -22,8 +22,10 @@ class SampleModel : public ModelView::SessionModel {
 public:
     SampleModel();
 
+    void insertConnectableItem(const std::string& itemType, double xpos, double ypos);
+
 private:
-    void createInitialContent();
+    void populateModel();
 };
 
 } // namespace NodeEditor
