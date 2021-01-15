@@ -17,10 +17,11 @@
 #include <QPixmap>
 
 namespace {
+
 QPixmap createPixmap()
 {
-    QRect rect = QRect(0, 0, ModelView::Utils::WidthOfLetterM() * 6,
-                       ModelView::Utils::HeightOfLetterM() * 6);
+    QRect rect = QRect(0, 0, ModelView::Utils::WidthOfLetterM() * 4,
+                       ModelView::Utils::HeightOfLetterM() * 4);
     QPixmap pixmap(rect.width() + 1, rect.height() + 1);
     pixmap.fill(Qt::transparent);
     QPainter painter(&pixmap);
@@ -46,7 +47,8 @@ PiecesList::PiecesList(QWidget* parent) : QListWidget(parent)
     setSpacing(static_cast<int>(rect.height() * 0.1));
     setAcceptDrops(false);
     setUniformItemSizes(true);
-    setupList();
+
+    populateList();
 }
 
 QString PiecesList::piecesMimeType()
@@ -59,6 +61,7 @@ QString PiecesList::piecesMimeType()
 void PiecesList::startDrag(Qt::DropActions)
 {
     QListWidgetItem* item = currentItem();
+    auto pixmap = item->data(PixmapRole).value<QPixmap>();
     QStringList dataToGo = QStringList() << item->data(Qt::UserRole).toString();
 
     auto mimeData = new QMimeData;
@@ -66,22 +69,24 @@ void PiecesList::startDrag(Qt::DropActions)
 
     auto drag = new QDrag(this);
     drag->setMimeData(mimeData);
-    drag->setPixmap(item->data(PixmapRole).value<QPixmap>());
+    drag->setPixmap(pixmap);
+    drag->setHotSpot(QPoint(pixmap.width() / 2, pixmap.height() / 2));
 
     drag->exec(Qt::CopyAction);
 }
 
-//! Setups list. Populates it with icons representing ConnectableView's to drop on scene.
+//! Populates list with icons representing ConnectableView's to drop on scene.
 
-void PiecesList::setupList()
+void PiecesList::populateList()
 {
-    addPiece(QString::fromStdString(NodeEditor::ParticleItemType));
-    addPiece(QString::fromStdString(NodeEditor::TransformationItemType));
-
+    addEntry(QString::fromStdString(NodeEditor::ParticleItemType));
+    addEntry(QString::fromStdString(NodeEditor::TransformationItemType));
     selectionModel()->reset();
 }
 
-void PiecesList::addPiece(const QString& name)
+//! Adds entry to the list. It will be the icon (gray rectangle) with the name.
+
+void PiecesList::addEntry(const QString& name)
 {
     auto pieceItem = new QListWidgetItem(this);
     auto pixmap = createPixmap();

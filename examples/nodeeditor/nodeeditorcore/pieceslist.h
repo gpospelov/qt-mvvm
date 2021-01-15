@@ -30,8 +30,8 @@ protected:
     void startDrag(Qt::DropActions supportedActions) override;
 
 private:
-    void setupList();
-    void addPiece(const QString& name);
+    void populateList();
+    void addEntry(const QString& name);
 };
 
 } // namespace NodeEditor
