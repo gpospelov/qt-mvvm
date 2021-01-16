@@ -27,7 +27,6 @@ namespace NodeEditor {
 
 NodePort::NodePort(QGraphicsItem* parent, const PortInfo& info)
     : QGraphicsPathItem(parent)
-    , m_portType(QString::fromStdString(info.m_type))
     , m_label(new QGraphicsTextItem(this))
     , m_portInfo(info)
 {
@@ -58,7 +57,7 @@ NodePort::~NodePort()
 
 QString NodePort::portType() const
 {
-    return m_portType;
+    return QString::fromStdString(m_portInfo.m_type);
 }
 
 //! Returns true if this is a NodeOutputPort.
@@ -136,7 +135,7 @@ bool NodeInputPort::isInput() const
 void NodeInputPort::initPort()
 {
     // initializing label and its position
-    m_label->setPlainText(m_portType.toLower());
+    m_label->setPlainText(portType().toLower());
     m_label->setPos(port_radius() * 1.5, -m_label->boundingRect().height() / 2);
 
     // initializing port position

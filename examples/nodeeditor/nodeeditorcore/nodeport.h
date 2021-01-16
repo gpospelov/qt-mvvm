@@ -55,7 +55,6 @@ public:
 protected:
     QVariant itemChange(GraphicsItemChange change, const QVariant& value) override;
 
-    QString m_portType; //! Port type.
     QGraphicsTextItem* m_label{nullptr};
     QList<NodeConnection*> m_connections;
     PortInfo m_portInfo;
