@@ -45,25 +45,6 @@ NodePort::NodePort(QGraphicsItem* parent, const PortInfo& info)
     m_label->setFont(serifFont);
 }
 
-NodePort::NodePort(QGraphicsItem* parent, QString portType)
-    : QGraphicsPathItem(parent)
-    , m_portType(std::move(portType))
-    , m_label(new QGraphicsTextItem(this))
-{
-    setFlag(QGraphicsItem::ItemSendsScenePositionChanges);
-    const double radius = port_radius();
-    const QColor color(Qt::red);
-
-    QPainterPath p;
-    p.addEllipse(-radius, -radius, 2 * radius, 2 * radius);
-    setPath(p);
-    setPen(QPen(color.darker(180)));
-    setBrush(color);
-
-    QFont serifFont("Monospace", 8, QFont::Normal);
-    m_label->setFont(serifFont);
-}
-
 NodePort::~NodePort()
 {
     while (!m_connections.empty()) {

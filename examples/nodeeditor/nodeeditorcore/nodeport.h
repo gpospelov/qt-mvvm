@@ -30,7 +30,6 @@ class ConnectableView;
 class NodePort : public QGraphicsPathItem {
 public:
     NodePort(QGraphicsItem* parent, const PortInfo& info);
-    NodePort(QGraphicsItem* parent, QString portType);
     virtual ~NodePort() override;
 
     QString portType() const;

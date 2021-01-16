@@ -132,13 +132,15 @@ QString ConnectableView::label() const
 
 void ConnectableView::init_ports()
 {
-    for (const auto& tag : ModelView::Utils::RegisteredUniversalTags(*m_item)) {
-        auto inputPort = new NodeInputPort(this, QString::fromStdString(tag));
+    for (const auto& info : m_item->inputPorts()) {
+        auto inputPort = new NodeInputPort(this, info);
         inputPort->initPort();
     }
 
-    auto outputPort = new NodeOutputPort(this, QString::fromStdString(m_item->modelType()));
-    outputPort->initPort();
+    for (const auto& info : m_item->outputPorts()) {
+        auto outputPort = new NodeOutputPort(this, info);
+        outputPort->initPort();
+    }
 }
 
 } // namespace NodeEditor
