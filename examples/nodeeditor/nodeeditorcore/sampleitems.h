@@ -14,6 +14,7 @@
 //! Classes to represent content of node editor.
 
 #include "mvvm/model/compounditem.h"
+#include "portinfo.h"
 
 class QColor;
 
@@ -41,6 +42,10 @@ public:
     void setY(double y);
 
     void setNamedColor(const std::string& named_color);
+
+    virtual std::vector<PortInfo> inputPorts() const;
+
+    virtual std::vector<PortInfo> outputPorts() const;
 };
 
 //! Represents particle item box on graph canvas.

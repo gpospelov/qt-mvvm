@@ -57,6 +57,16 @@ void ConnectableItem::setNamedColor(const std::string& named_color)
     setProperty(P_COLOR, QColor(QString::fromStdString(named_color)));
 }
 
+std::vector<PortInfo> ConnectableItem::inputPorts() const
+{
+    return {};
+}
+
+std::vector<PortInfo> ConnectableItem::outputPorts() const
+{
+    return {};
+}
+
 ParticleItem::ParticleItem() : ConnectableItem(ParticleItemType)
 {
     // intended to attach TransformationItem (maximum 1)
