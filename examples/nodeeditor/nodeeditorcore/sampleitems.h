@@ -54,6 +54,8 @@ class ParticleItem : public ConnectableItem {
 public:
     static inline const std::string T_TRANSFORMATION = "Transformation";
     ParticleItem();
+
+    std::vector<PortInfo> inputPorts() const override;
 };
 
 //! Represents transformation item box on graph canvas.
@@ -61,6 +63,8 @@ public:
 class TransformationItem : public ConnectableItem {
 public:
     TransformationItem();
+
+    std::vector<PortInfo> outputPorts() const override;
 };
 
 } // namespace NodeEditor

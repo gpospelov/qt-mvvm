@@ -74,9 +74,19 @@ ParticleItem::ParticleItem() : ConnectableItem(ParticleItemType)
     setNamedColor("antiquewhite");
 }
 
+std::vector<PortInfo> ParticleItem::inputPorts() const
+{
+    return {TransformationPort};
+}
+
 TransformationItem::TransformationItem() : ConnectableItem(TransformationItemType)
 {
     setNamedColor("lightseagreen");
+}
+
+std::vector<PortInfo> TransformationItem::outputPorts() const
+{
+    return {TransformationPort};
 }
 
 } // namespace NodeEditor

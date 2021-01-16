@@ -25,6 +25,26 @@ double port_radius()
 
 namespace NodeEditor {
 
+NodePort::NodePort(QGraphicsItem* parent, const PortInfo& info)
+    : QGraphicsPathItem(parent)
+    , m_portType(QString::fromStdString(info.m_type))
+    , m_label(new QGraphicsTextItem(this))
+    , m_portInfo(info)
+{
+    setFlag(QGraphicsItem::ItemSendsScenePositionChanges);
+    const double radius = port_radius();
+    const QColor color(Qt::red);
+
+    QPainterPath p;
+    p.addEllipse(-radius, -radius, 2 * radius, 2 * radius);
+    setPath(p);
+    setPen(QPen(color.darker(180)));
+    setBrush(color);
+
+    QFont serifFont("Monospace", 8, QFont::Normal);
+    m_label->setFont(serifFont);
+}
+
 NodePort::NodePort(QGraphicsItem* parent, QString portType)
     : QGraphicsPathItem(parent)
     , m_portType(std::move(portType))
