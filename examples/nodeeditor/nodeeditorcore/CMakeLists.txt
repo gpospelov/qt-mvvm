@@ -28,6 +28,7 @@ target_sources(${library_name} PRIVATE
     nodeport.h
     pieceslist.cpp
     pieceslist.h
+    portinfo.h
     propertywidget.cpp
     propertywidget.h
     sampleitems.cpp
