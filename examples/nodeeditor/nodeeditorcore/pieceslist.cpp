@@ -46,7 +46,6 @@ PiecesList::PiecesList(QWidget* parent) : QListWidget(parent)
 
     setDragEnabled(true);
     setViewMode(QListView::IconMode);
-    setMovement(QListView::Static);
     setMaximumWidth(200);
 //    setFixedWidth(column_width);
 //    setWrapping(false);
