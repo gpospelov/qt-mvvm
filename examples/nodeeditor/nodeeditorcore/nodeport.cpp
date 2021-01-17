@@ -26,13 +26,11 @@ double port_radius()
 namespace NodeEditor {
 
 NodePort::NodePort(QGraphicsItem* parent, const PortInfo& info)
-    : QGraphicsPathItem(parent)
-    , m_label(new QGraphicsTextItem(this))
-    , m_portInfo(info)
+    : QGraphicsPathItem(parent), m_label(new QGraphicsTextItem(this)), m_portInfo(info)
 {
     setFlag(QGraphicsItem::ItemSendsScenePositionChanges);
     const double radius = port_radius();
-    const QColor color(Qt::red);
+    const QColor color(QColor(QString::fromStdString(info.m_color)));
 
     QPainterPath p;
     p.addEllipse(-radius, -radius, 2 * radius, 2 * radius);
@@ -130,7 +128,8 @@ bool NodeInputPort::isInput() const
     return true;
 }
 
-//! Initializes port position and labels.
+//! Initializes port position and labels. The input port is located on the right side of
+//! the ConnectableView.
 
 void NodeInputPort::initPort()
 {
@@ -151,7 +150,8 @@ bool NodeOutputPort::isInput() const
     return false;
 }
 
-//! Initializes port position and labels.
+//! Initializes port position and labels. The output port is located on the right side of
+//! the ConnectableView.
 
 void NodeOutputPort::initPort()
 {

@@ -16,6 +16,7 @@ namespace NodeEditor {
 
 SampleModel::SampleModel() : SessionModel("SampleModel")
 {
+    registerItem<ParticleLayoutItem>();
     registerItem<ParticleItem>();
     registerItem<TransformationItem>();
 
@@ -26,9 +27,10 @@ SampleModel::SampleModel() : SessionModel("SampleModel")
 
 void SampleModel::insertConnectableItem(const std::string& itemType, double xpos, double ypos)
 {
-    auto item = static_cast<ConnectableItem*>(insertNewItem(itemType));
-    item->setX(xpos);
-    item->setY(ypos);
+    if (auto item = dynamic_cast<ConnectableItem*>(insertNewItem(itemType)); item) {
+        item->setX(xpos);
+        item->setY(ypos);
+    }
 }
 
 //! Populates the model with

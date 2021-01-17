@@ -25,8 +25,8 @@ struct PortInfo {
     const std::string m_color;
 };
 
-const static PortInfo ParticlePort = {"Particle", "darkblue"};
-const static PortInfo TransformationPort = {"Transformation", "blueviolet"};
+const static PortInfo ParticlePort = {"Particle", "cornflowerblue"};
+const static PortInfo TransformationPort = {"Transformation", "fuchsia"};
 
 } // namespace NodeEditor
 

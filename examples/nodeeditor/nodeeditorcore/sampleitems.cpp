@@ -16,11 +16,30 @@ namespace NodeEditor {
 
 // ----------------------------------------------------------------------------
 
+ParticleLayoutItem::ParticleLayoutItem() : ConnectableItem(ParticleLayoutItemType)
+{
+    // The tag is intended to attach unlimited amount of particles.
+    registerTag(TagInfo(T_PARTICLES, 0, -1, {ParticleItemType}), true);
+    setNamedColor("chartreuse");
+}
+
+std::vector<PortInfo> ParticleLayoutItem::inputPorts() const
+{
+    return {ParticlePort};
+}
+
+// ----------------------------------------------------------------------------
+
 ParticleItem::ParticleItem() : ConnectableItem(ParticleItemType)
 {
-    // intended to attach TransformationItem (maximum 1)
+    // The tag is intended to attach TransformationItem (maximum 1).
     registerTag(TagInfo(T_TRANSFORMATION, 0, 1, {TransformationItemType}), true);
     setNamedColor("antiquewhite");
+}
+
+std::vector<PortInfo> ParticleItem::outputPorts() const
+{
+    return {ParticlePort};
 }
 
 std::vector<PortInfo> ParticleItem::inputPorts() const

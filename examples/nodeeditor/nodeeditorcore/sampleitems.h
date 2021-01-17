@@ -19,6 +19,17 @@ namespace NodeEditor {
 
 const std::string ParticleItemType = "Particle";
 const std::string TransformationItemType = "Transformation";
+const std::string ParticleLayoutItemType = "ParticleLayout";
+
+//! Represents particle item box on graph canvas.
+
+class ParticleLayoutItem : public ConnectableItem {
+public:
+    static inline const std::string T_PARTICLES = "Particles";
+    ParticleLayoutItem();
+
+    std::vector<PortInfo> inputPorts() const override;
+};
 
 //! Represents particle item box on graph canvas.
 
@@ -27,6 +38,7 @@ public:
     static inline const std::string T_TRANSFORMATION = "Transformation";
     ParticleItem();
 
+    std::vector<PortInfo> outputPorts() const override;
     std::vector<PortInfo> inputPorts() const override;
 };
 
