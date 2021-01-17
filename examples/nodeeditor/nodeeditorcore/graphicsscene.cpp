@@ -11,14 +11,15 @@
 #include "connectableview.h"
 #include "nodeconnection.h"
 #include "nodecontroller.h"
+#include "nodeport.h"
 #include "pieceslist.h"
 #include "sampleitems.h"
 #include "samplemodel.h"
 #include "sceneutils.h"
-#include "nodeport.h"
 #include "mvvm/model/itemutils.h"
 #include "mvvm/model/modelutils.h"
 #include "mvvm/widgets/widgetutils.h"
+#include <QDebug>
 #include <QGraphicsSceneDragDropEvent>
 #include <QMimeData>
 
@@ -80,8 +81,16 @@ void GraphicsScene::onConnectionRequest(ConnectableView* childView, ConnectableV
     // Our current design implies that port type coincides with tag to use.
     auto tag = childView->outputPort()->portType().toStdString();
 
-    // On model level connection of views means simply changing the parent of underlying items.
-    m_model->moveItem(childView->connectableItem(), parentView->connectableItem(), {tag, -1});
+    try {
+        // On model level connection of views means simply changing the parent of underlying items.
+        m_model->moveItem(childView->connectableItem(), parentView->connectableItem(), {tag, -1});
+    }
+    catch (const std::runtime_error& ex) {
+        qWarning() << "Error in GraphicsScene::onConnectionRequest(): can't establish the "
+                      "connection. Wrong port type, or number of items esceeds "
+                      "the limit. Exception:"
+                   << QString::fromStdString(ex.what());
+    }
 }
 
 //! Processes change in scene selection. Finds ConnectableItem corresponding to a selected view
