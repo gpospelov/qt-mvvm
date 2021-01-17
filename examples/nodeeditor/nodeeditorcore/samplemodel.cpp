@@ -17,7 +17,8 @@ namespace NodeEditor {
 SampleModel::SampleModel() : SessionModel("SampleModel")
 {
     registerItem<ParticleLayoutItem>();
-    registerItem<ParticleItem>();
+    registerItem<SphereItem>();
+    registerItem<CylinderItem>();
     registerItem<TransformationItem>();
 
     populateModel();
@@ -37,8 +38,8 @@ void SampleModel::insertConnectableItem(const std::string& itemType, double xpos
 
 void SampleModel::populateModel()
 {
-    auto particleItem = insertItem<ParticleItem>();
-    auto transformation = insertItem<TransformationItem>(particleItem);
+    auto cylinderItem = insertItem<CylinderItem>();
+    auto transformation = insertItem<TransformationItem>(cylinderItem);
 
     //    auto particleItem = insertItem<ParticleItem>();
     //    auto transformation = insertItem<TransformationItem>();

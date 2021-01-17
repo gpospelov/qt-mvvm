@@ -17,12 +17,15 @@
 
 namespace NodeEditor {
 
-const std::string ParticleItemType = "Particle";
+const std::string SphereItemType = "Sphere";
+const std::string CylinderItemType = "Cylinder";
 const std::string TransformationItemType = "Transformation";
 const std::string ParticleLayoutItemType = "ParticleLayout";
 const std::string LatticeItemType = "Lattice";
 
 //! Represents particle item box on graph canvas.
+//! It has two input ports: one to connect an arbitrary amount of particles of various shape,
+//! another to connect a singel lattice.
 
 class ParticleLayoutItem : public ConnectableItem {
 public:
@@ -33,15 +36,33 @@ public:
     std::vector<PortInfo> inputPorts() const override;
 };
 
-//! Represents particle item box on graph canvas.
+//! Base class for particle presentation on the graphics canvas.
+//! Has single input port to connect single transformation item, and single output.
+//! Can be connected with ParticleLayoutItem.
 
 class ParticleItem : public ConnectableItem {
 public:
     static inline const std::string T_TRANSFORMATION = "Transformation";
-    ParticleItem();
+    ParticleItem(const std::string& modelType);
 
     std::vector<PortInfo> outputPorts() const override;
     std::vector<PortInfo> inputPorts() const override;
+};
+
+//! Item representing sphere.
+
+class SphereItem : public ParticleItem
+{
+public:
+    SphereItem();
+};
+
+//! Item representing cylinder.
+
+class CylinderItem : public ParticleItem
+{
+public:
+    CylinderItem();
 };
 
 //! Represents transformation item box on graph canvas.

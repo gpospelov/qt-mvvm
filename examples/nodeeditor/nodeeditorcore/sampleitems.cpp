@@ -19,8 +19,8 @@ namespace NodeEditor {
 ParticleLayoutItem::ParticleLayoutItem() : ConnectableItem(ParticleLayoutItemType)
 {
     // The tag is intended to attach unlimited amount of particles.
-    registerTag(TagInfo(T_PARTICLE, 0, -1, {ParticleItemType}), true);
-    registerTag(TagInfo(T_LATTICE, 0, -1, {LatticeItemType}), true);
+    registerTag(TagInfo(T_PARTICLE, 0, -1, {SphereItemType, CylinderItemType}));
+    registerTag(TagInfo(T_LATTICE, 0, -1, {LatticeItemType}));
     setNamedColor("chartreuse");
 }
 
@@ -31,7 +31,7 @@ std::vector<PortInfo> ParticleLayoutItem::inputPorts() const
 
 // ----------------------------------------------------------------------------
 
-ParticleItem::ParticleItem() : ConnectableItem(ParticleItemType)
+ParticleItem::ParticleItem(const std::string &modelType) : ConnectableItem(modelType)
 {
     // The tag is intended to attach TransformationItem (maximum 1).
     registerTag(TagInfo(T_TRANSFORMATION, 0, 1, {TransformationItemType}), true);
@@ -50,6 +50,20 @@ std::vector<PortInfo> ParticleItem::inputPorts() const
 
 // ----------------------------------------------------------------------------
 
+SphereItem::SphereItem() : ParticleItem(SphereItemType)
+{
+
+}
+
+// ----------------------------------------------------------------------------
+
+CylinderItem::CylinderItem() : ParticleItem(CylinderItemType)
+{
+
+}
+
+// ----------------------------------------------------------------------------
+
 TransformationItem::TransformationItem() : ConnectableItem(TransformationItemType)
 {
     setNamedColor("lightseagreen");
@@ -59,5 +73,6 @@ std::vector<PortInfo> TransformationItem::outputPorts() const
 {
     return {TransformationPort};
 }
+
 
 } // namespace NodeEditor

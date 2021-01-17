@@ -81,7 +81,8 @@ void PiecesList::startDrag(Qt::DropActions)
 void PiecesList::populateList()
 {
     addEntry(QString::fromStdString(NodeEditor::ParticleLayoutItemType));
-    addEntry(QString::fromStdString(NodeEditor::ParticleItemType));
+    addEntry(QString::fromStdString(NodeEditor::SphereItemType));
+    addEntry(QString::fromStdString(NodeEditor::CylinderItemType));
     addEntry(QString::fromStdString(NodeEditor::TransformationItemType));
     selectionModel()->reset();
 }
