@@ -26,6 +26,8 @@ public:
 
     static QString piecesMimeType();
 
+    QSize sizeHint() const;
+
 protected:
     void startDrag(Qt::DropActions supportedActions) override;
 

@@ -34,6 +34,8 @@ QPixmap createPixmap()
 
 const int ModelTypeRole = Qt::UserRole;
 const int PixmapRole = Qt::UserRole + 1;
+
+const int column_width = 160;
 } // namespace
 
 namespace NodeEditor {
@@ -44,8 +46,9 @@ PiecesList::PiecesList(QWidget* parent) : QListWidget(parent)
 
     setDragEnabled(true);
     setViewMode(QListView::IconMode);
-//    setMovement(QListView::Static);
+    setMovement(QListView::Static);
     setMaximumWidth(200);
+//    setFixedWidth(column_width);
 //    setWrapping(false);
 
     auto rect = ConnectableViewRectangle();
@@ -60,6 +63,11 @@ PiecesList::PiecesList(QWidget* parent) : QListWidget(parent)
 QString PiecesList::piecesMimeType()
 {
     return QStringLiteral("image/x-connectable-view");
+}
+
+QSize PiecesList::sizeHint() const
+{
+    return QSize(column_width, 600);
 }
 
 //! Prepare data for dragging.
@@ -97,13 +105,19 @@ void PiecesList::populateList()
 
 void PiecesList::addEntry(const QString& name)
 {
-    auto pieceItem = new QListWidgetItem(this);
+    auto pieceItem = new QListWidgetItem;
     auto pixmap = createPixmap();
     pieceItem->setIcon(QIcon(pixmap));
     pieceItem->setData(Qt::DisplayRole, name);
     pieceItem->setData(ModelTypeRole, name);
     pieceItem->setData(PixmapRole, QVariant(pixmap));
     pieceItem->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsDragEnabled);
+
+    // to make text centered under the icon, and items aligned vertically
+    pieceItem->setTextAlignment(Qt::AlignCenter);
+    pieceItem->setSizeHint(QSize(column_width, pixmap.height()*1.5));
+
+    addItem(pieceItem);
 }
 
 } // namespace NodeEditor
