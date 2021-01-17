@@ -35,7 +35,7 @@ ModelEditorWidget::ModelEditorWidget(SampleModel* model, QWidget* parent)
     m_splitter->addWidget(m_piecesList);
     m_splitter->addWidget(m_graphicsView);
     m_splitter->addWidget(m_propertyWidget);
-    m_splitter->setSizes(QList<int>() << 50 << 300 << 100);
+    m_splitter->setSizes(QList<int>() << 50 << 300 << 120);
 
     layout->addWidget(m_splitter);
 

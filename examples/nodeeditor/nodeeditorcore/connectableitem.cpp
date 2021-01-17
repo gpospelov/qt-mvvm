@@ -46,6 +46,12 @@ void ConnectableItem::setY(double y)
     setProperty(P_YPOS, y);
 }
 
+void ConnectableItem::setPos(double x, double y)
+{
+    setX(x);
+    setY(y);
+}
+
 //! Sets named color following schema from https://www.w3.org/TR/css-color-3/#svg-color.
 //! e.g. "mediumaquamarine"
 

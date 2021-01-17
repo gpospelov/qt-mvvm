@@ -20,7 +20,7 @@ ParticleLayoutItem::ParticleLayoutItem() : ConnectableItem(ParticleLayoutItemTyp
 {
     // The tag is intended to attach unlimited amount of particles.
     registerTag(TagInfo(T_PARTICLE, 0, -1, {SphereItemType, CylinderItemType}));
-    registerTag(TagInfo(T_LATTICE, 0, -1, {LatticeItemType}));
+    registerTag(TagInfo(T_LATTICE, 0, 1, {LatticeItemType}));
     setNamedColor("chartreuse");
 }
 

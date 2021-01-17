@@ -39,11 +39,18 @@ void SampleModel::insertConnectableItem(const std::string& itemType, double xpos
 
 void SampleModel::populateModel()
 {
-    auto cylinderItem = insertItem<CylinderItem>();
-    auto transformation = insertItem<TransformationItem>(cylinderItem);
+    auto layout = insertItem<ParticleLayoutItem>();
+    layout->setPos(490, 30);
 
-    //    auto particleItem = insertItem<ParticleItem>();
-    //    auto transformation = insertItem<TransformationItem>();
+    auto sphere = insertItem<SphereItem>(layout, {ParticleLayoutItem::T_PARTICLE, -1});
+    sphere->setPos(250, 30);
+    auto cylinder = insertItem<CylinderItem>(layout, {ParticleLayoutItem::T_PARTICLE, -1});
+    cylinder->setPos(250, 200);
+    auto transformation = insertItem<TransformationItem>(cylinder);
+    transformation->setPos(90, 200);
+
+    auto lattice = insertItem<LatticeItem>(layout, {ParticleLayoutItem::T_LATTICE, -1});
+    lattice->setPos(250, 380);
 }
 
 } // namespace NodeEditor

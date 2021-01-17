@@ -35,6 +35,8 @@ public:
     double y() const;
     void setY(double y);
 
+    void setPos(double x, double y);
+
     void setNamedColor(const std::string& named_color);
 
     virtual std::vector<PortInfo> inputPorts() const;
