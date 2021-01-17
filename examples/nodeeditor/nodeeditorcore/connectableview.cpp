@@ -132,14 +132,16 @@ QString ConnectableView::label() const
 
 void ConnectableView::init_ports()
 {
+    int portIndex{0};
     for (const auto& info : m_item->inputPorts()) {
         auto inputPort = new NodeInputPort(this, info);
-        inputPort->initPort();
+        inputPort->initPort(portIndex++);
     }
 
+    portIndex = 0;
     for (const auto& info : m_item->outputPorts()) {
         auto outputPort = new NodeOutputPort(this, info);
-        outputPort->initPort();
+        outputPort->initPort(portIndex++);
     }
 }
 

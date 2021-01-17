@@ -131,14 +131,15 @@ bool NodeInputPort::isInput() const
 //! Initializes port position and labels. The input port is located on the right side of
 //! the ConnectableView.
 
-void NodeInputPort::initPort()
+void NodeInputPort::initPort(int portIndex)
 {
-    // initializing label and its position
+    // The label will be located on the right side of the port.
     m_label->setPlainText(portType().toLower());
     m_label->setPos(port_radius() * 1.5, -m_label->boundingRect().height() / 2);
 
-    // initializing port position
-    setPos(0.0, parentItem()->boundingRect().height() * 0.6);
+    // Port itself will be located on the left side of the connectable view.
+    auto rect = parentItem()->boundingRect();
+    setPos(0.0, rect.height() * 0.6 + portIndex * 4 * port_radius());
 }
 
 // ----------------------------------------------------------------------------
@@ -153,15 +154,16 @@ bool NodeOutputPort::isInput() const
 //! Initializes port position and labels. The output port is located on the right side of
 //! the ConnectableView.
 
-void NodeOutputPort::initPort()
+void NodeOutputPort::initPort(int portIndex)
 {
-    // initializing label and its position
+    // The label will be located on the left side of the port.
     m_label->setPlainText("out");
     m_label->setPos(-port_radius() * 1.5 - m_label->boundingRect().width(),
                     -m_label->boundingRect().height() / 2);
 
-    // initializing port position
-    setPos(parentItem()->boundingRect().width(), parentItem()->boundingRect().height() * 0.4);
+    // Port itself will be located on the right side of the connectable view.
+    auto rect = parentItem()->boundingRect();
+    setPos(rect.width(), rect.height() * 0.4 + portIndex * 4 * port_radius());
 }
 
 } // namespace NodeEditor

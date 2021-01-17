@@ -38,7 +38,7 @@ public:
 
     bool isOutput() const;
 
-    virtual void initPort() = 0;
+    virtual void initPort(int portIndex) = 0;
 
     void append(NodeConnection* connection);
 
@@ -66,7 +66,7 @@ class NodeInputPort : public NodePort {
 public:
     using NodePort::NodePort;
     bool isInput() const override;
-    void initPort() override;
+    void initPort(int portIndex) override;
 };
 
 //! Represents output port of connectable view.
@@ -75,7 +75,7 @@ class NodeOutputPort : public NodePort {
 public:
     using NodePort::NodePort;
     bool isInput() const override;
-    void initPort() override;
+    void initPort(int portIndex) override;
 };
 
 } // namespace NodeEditor

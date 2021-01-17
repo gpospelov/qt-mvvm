@@ -10,14 +10,11 @@
 #ifndef NODEEDITORCORE_PORTINFO_H
 #define NODEEDITORCORE_PORTINFO_H
 
-//! @file portinfo.h
-//! Collecti
-
 #include <string>
 
 namespace NodeEditor {
 
-//! Aggregate to hold basic port information: type and color.
+//! Aggregate to hold basic port information (i.e. type and color) for NodePort class.
 //! Colors must be what QColor understands (i.e. https://www.w3.org/TR/css-color-3/#svg-color).
 
 struct PortInfo {
@@ -27,6 +24,7 @@ struct PortInfo {
 
 const static PortInfo ParticlePort = {"Particle", "cornflowerblue"};
 const static PortInfo TransformationPort = {"Transformation", "fuchsia"};
+const static PortInfo LatticePort = {"Lattice", "gold"};
 
 } // namespace NodeEditor
 

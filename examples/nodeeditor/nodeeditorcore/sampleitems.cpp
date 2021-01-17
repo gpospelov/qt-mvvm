@@ -20,12 +20,13 @@ ParticleLayoutItem::ParticleLayoutItem() : ConnectableItem(ParticleLayoutItemTyp
 {
     // The tag is intended to attach unlimited amount of particles.
     registerTag(TagInfo(T_PARTICLES, 0, -1, {ParticleItemType}), true);
+    registerTag(TagInfo(T_LATTICE, 0, -1, {LatticeItemType}), true);
     setNamedColor("chartreuse");
 }
 
 std::vector<PortInfo> ParticleLayoutItem::inputPorts() const
 {
-    return {ParticlePort};
+    return {ParticlePort, LatticePort};
 }
 
 // ----------------------------------------------------------------------------
