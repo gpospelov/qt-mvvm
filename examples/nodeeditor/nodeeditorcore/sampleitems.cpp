@@ -52,14 +52,15 @@ std::vector<PortInfo> ParticleItem::inputPorts() const
 
 SphereItem::SphereItem() : ParticleItem(SphereItemType)
 {
-
+    addProperty(P_RADIUS, 42.0);
 }
 
 // ----------------------------------------------------------------------------
 
 CylinderItem::CylinderItem() : ParticleItem(CylinderItemType)
 {
-
+    addProperty(P_RADIUS, 10.0);
+    addProperty(P_HEIGHT, 20.0);
 }
 
 // ----------------------------------------------------------------------------
@@ -72,6 +73,19 @@ TransformationItem::TransformationItem() : ConnectableItem(TransformationItemTyp
 std::vector<PortInfo> TransformationItem::outputPorts() const
 {
     return {TransformationPort};
+}
+
+// ----------------------------------------------------------------------------
+
+LatticeItem::LatticeItem()
+    : ConnectableItem(LatticeItemType)
+{
+    setNamedColor("gold");
+}
+
+std::vector<PortInfo> LatticeItem::outputPorts() const
+{
+    return {LatticePort};
 }
 
 

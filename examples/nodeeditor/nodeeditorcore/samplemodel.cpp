@@ -20,6 +20,7 @@ SampleModel::SampleModel() : SessionModel("SampleModel")
     registerItem<SphereItem>();
     registerItem<CylinderItem>();
     registerItem<TransformationItem>();
+    registerItem<LatticeItem>();
 
     populateModel();
 }

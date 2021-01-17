@@ -40,8 +40,13 @@ namespace NodeEditor {
 
 PiecesList::PiecesList(QWidget* parent) : QListWidget(parent)
 {
+    setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
+
     setDragEnabled(true);
     setViewMode(QListView::IconMode);
+//    setMovement(QListView::Static);
+    setMaximumWidth(200);
+//    setWrapping(false);
 
     auto rect = ConnectableViewRectangle();
     setIconSize(QSize(rect.width(), rect.height()));
@@ -84,6 +89,7 @@ void PiecesList::populateList()
     addEntry(QString::fromStdString(NodeEditor::SphereItemType));
     addEntry(QString::fromStdString(NodeEditor::CylinderItemType));
     addEntry(QString::fromStdString(NodeEditor::TransformationItemType));
+    addEntry(QString::fromStdString(NodeEditor::LatticeItemType));
     selectionModel()->reset();
 }
 

@@ -23,9 +23,10 @@ const std::string TransformationItemType = "Transformation";
 const std::string ParticleLayoutItemType = "ParticleLayout";
 const std::string LatticeItemType = "Lattice";
 
-//! Represents particle item box on graph canvas.
+//! Represents layout box on the graphics scene.
 //! It has two input ports: one to connect an arbitrary amount of particles of various shape,
-//! another to connect a singel lattice.
+//! another to connect a singel lattice. Doesn't have output port (i.e. the top level item in
+//! the node editor hierarchy).
 
 class ParticleLayoutItem : public ConnectableItem {
 public:
@@ -36,7 +37,7 @@ public:
     std::vector<PortInfo> inputPorts() const override;
 };
 
-//! Base class for particle presentation on the graphics canvas.
+//! Base class for particle presentation on the graphics scene.
 //! Has single input port to connect single transformation item, and single output.
 //! Can be connected with ParticleLayoutItem.
 
@@ -54,6 +55,8 @@ public:
 class SphereItem : public ParticleItem
 {
 public:
+    static inline const std::string P_RADIUS = "Radius";
+
     SphereItem();
 };
 
@@ -62,14 +65,28 @@ public:
 class CylinderItem : public ParticleItem
 {
 public:
+    static inline const std::string P_RADIUS = "Radius";
+    static inline const std::string P_HEIGHT = "Height";
+
     CylinderItem();
 };
 
-//! Represents transformation item box on graph canvas.
+//! Represents transformation item box on the graphics scene.
+//! Doesn't have input ports. Can be connected with particle items.
 
 class TransformationItem : public ConnectableItem {
 public:
     TransformationItem();
+
+    std::vector<PortInfo> outputPorts() const override;
+};
+
+//! Lattice item.
+//! Doesn't have input ports. Can be connected with layout items.
+
+class LatticeItem : public ConnectableItem {
+public:
+    LatticeItem();
 
     std::vector<PortInfo> outputPorts() const override;
 };
