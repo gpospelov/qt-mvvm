@@ -26,7 +26,7 @@ const std::string LatticeItemType = "Lattice";
 
 class ParticleLayoutItem : public ConnectableItem {
 public:
-    static inline const std::string T_PARTICLES = "Particles";
+    static inline const std::string T_PARTICLE = "Particle";
     static inline const std::string T_LATTICE = "Lattice";
     ParticleLayoutItem();
 

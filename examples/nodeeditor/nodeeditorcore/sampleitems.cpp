@@ -19,7 +19,7 @@ namespace NodeEditor {
 ParticleLayoutItem::ParticleLayoutItem() : ConnectableItem(ParticleLayoutItemType)
 {
     // The tag is intended to attach unlimited amount of particles.
-    registerTag(TagInfo(T_PARTICLES, 0, -1, {ParticleItemType}), true);
+    registerTag(TagInfo(T_PARTICLE, 0, -1, {ParticleItemType}), true);
     registerTag(TagInfo(T_LATTICE, 0, -1, {LatticeItemType}), true);
     setNamedColor("chartreuse");
 }
