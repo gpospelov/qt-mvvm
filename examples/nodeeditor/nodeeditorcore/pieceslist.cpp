@@ -8,9 +8,9 @@
 // ************************************************************************** //
 
 #include "pieceslist.h"
-#include "mvvm/widgets/widgetutils.h"
 #include "sampleitems.h"
 #include "sceneutils.h"
+#include "mvvm/widgets/widgetutils.h"
 #include <QDrag>
 #include <QMimeData>
 #include <QPainter>
@@ -25,7 +25,8 @@ QPixmap createPixmap()
     QPixmap pixmap(rect.width() + 1, rect.height() + 1);
     pixmap.fill(Qt::transparent);
     QPainter painter(&pixmap);
-    painter.setPen(Qt::black);
+    painter.setRenderHint(QPainter::Antialiasing);
+    painter.setPen(Qt::white);
     painter.setBrush(NodeEditor::ConnectableViewGradient(QColor(Qt::gray), rect));
     painter.drawRoundedRect(rect, 5, 5);
     return pixmap;
