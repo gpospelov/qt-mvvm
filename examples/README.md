@@ -70,8 +70,13 @@
 
 <hr>
 
+### [Nodeeditor: how to implement the node editor.](nodeeditor/README.md)
+
+![saveloadproject](../doc/assets/nodeeditor.png)
+
+<hr>
+
 ### Under development
 
 + modelinqml
-+ nodeeditor
 
