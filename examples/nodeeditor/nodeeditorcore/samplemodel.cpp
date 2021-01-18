@@ -23,6 +23,8 @@ SampleModel::SampleModel() : SessionModel("SampleModel")
     registerItem<LatticeItem>();
 
     populateModel();
+
+    setUndoRedoEnabled(true);
 }
 
 //! Inserts new item of given type at given position.
@@ -35,7 +37,8 @@ void SampleModel::insertConnectableItem(const std::string& itemType, double xpos
     }
 }
 
-//! Populates the model with
+//! Populates the model with an exemplary hierarchical structure representing an initial node editor
+//! content.
 
 void SampleModel::populateModel()
 {

@@ -13,7 +13,6 @@
 #include "mvvm/commands/undostack.h"
 #include "mvvm/model/modelutils.h"
 #include <QAction>
-#include <QDebug>
 #include <QHBoxLayout>
 #include <QToolBar>
 #include <QToolButton>

@@ -15,6 +15,7 @@
 
 class QSplitter;
 class QToolBar;
+class QLayout;
 
 namespace NodeEditor {
 
@@ -25,8 +26,9 @@ class PropertyWidget;
 class GraphicsSceneController;
 class PiecesList;
 
-//! Main widget for model editing. Contains a graphics scene with node editor on the left,
-//! and property panel on the right. Belongs to MainWindow.
+//! Main widget for model editing. Contains a toolbar on top, and few widgets beneath:
+//! a graphics scene representing a node editor, a toolbox with items to drag-and-drop on the
+//! scene, property editor, and sample tree view. Belongs to MainWindow.
 
 class ModelEditorWidget : public QWidget {
     Q_OBJECT
@@ -36,14 +38,18 @@ public:
     ~ModelEditorWidget() override;
 
 private:
+    void setupToolBar();
     void setupConnections();
+    QLayout* createBottomLayout();
 
+    QToolBar* m_toolBar{nullptr};
     PiecesList* m_piecesList{nullptr};
     PropertyWidget* m_propertyWidget{nullptr};
     GraphicsScene* m_graphicsScene{nullptr};
     GraphicsView* m_graphicsView{nullptr};
     std::unique_ptr<GraphicsSceneController> m_sceneContoller;
     QSplitter* m_splitter{nullptr};
+    SampleModel* m_model{nullptr};
 };
 
 } // namespace NodeEditor
