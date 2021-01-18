@@ -9,6 +9,8 @@
 
 #include "samplemodel.h"
 #include "sampleitems.h"
+#include "mvvm/interfaces/undostackinterface.h"
+#include "mvvm/model/modelutils.h"
 
 using namespace ModelView;
 
@@ -31,10 +33,14 @@ SampleModel::SampleModel() : SessionModel("SampleModel")
 
 void SampleModel::insertConnectableItem(const std::string& itemType, double xpos, double ypos)
 {
+    Utils::BeginMacros(this, "insertConnectableItem");
+
     if (auto item = dynamic_cast<ConnectableItem*>(insertNewItem(itemType)); item) {
         item->setX(xpos);
         item->setY(ypos);
     }
+
+    Utils::EndMacros(this);
 }
 
 //! Populates the model with an exemplary hierarchical structure representing an initial node editor
