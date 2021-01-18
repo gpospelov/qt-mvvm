@@ -43,14 +43,14 @@ void SampleModel::populateModel()
     layout->setPos(490, 30);
 
     auto sphere = insertItem<SphereItem>(layout, {ParticleLayoutItem::T_PARTICLE, -1});
-    sphere->setPos(250, 30);
+    sphere->setPos(250, 00);
     auto cylinder = insertItem<CylinderItem>(layout, {ParticleLayoutItem::T_PARTICLE, -1});
     cylinder->setPos(250, 200);
     auto transformation = insertItem<TransformationItem>(cylinder);
-    transformation->setPos(90, 200);
+    transformation->setPos(60, 200);
 
     auto lattice = insertItem<LatticeItem>(layout, {ParticleLayoutItem::T_LATTICE, -1});
-    lattice->setPos(250, 380);
+    lattice->setPos(250, 400);
 }
 
 } // namespace NodeEditor
