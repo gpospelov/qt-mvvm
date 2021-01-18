@@ -38,7 +38,7 @@ private slots:
     void onRedo();
 
 private:
-    void init_actions();
+    void setupActions();
 
     QToolBar* m_toolBar{nullptr};
     ContainerEditorWidget* m_leftWidget{nullptr};

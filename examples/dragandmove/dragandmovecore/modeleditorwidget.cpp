@@ -29,9 +29,6 @@ ModelEditorWidget::ModelEditorWidget(SampleModel* model, QWidget* parent)
     , m_toolBar(new QToolBar)
     , m_leftWidget(new ContainerEditorWidget)
     , m_rightWidget(new ContainerEditorWidget)
-    , m_undoAction(nullptr)
-    , m_redoAction(nullptr)
-    , m_model(nullptr)
 {
     auto mainLayout = new QVBoxLayout;
     mainLayout->setSpacing(10);
@@ -51,7 +48,7 @@ ModelEditorWidget::ModelEditorWidget(SampleModel* model, QWidget* parent)
     setLayout(mainLayout);
     setModel(model);
 
-    init_actions();
+    setupActions();
 }
 
 void ModelEditorWidget::setModel(SampleModel* model)
@@ -78,7 +75,7 @@ void ModelEditorWidget::onRedo()
     Utils::Redo(*m_model);
 }
 
-void ModelEditorWidget::init_actions()
+void ModelEditorWidget::setupActions()
 {
     const int toolbar_icon_size = 24;
     m_toolBar->setIconSize(QSize(toolbar_icon_size, toolbar_icon_size));

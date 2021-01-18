@@ -14,6 +14,7 @@
 #include <memory>
 
 class QSplitter;
+class QToolBar;
 
 namespace NodeEditor {
 
@@ -35,7 +36,7 @@ public:
     ~ModelEditorWidget() override;
 
 private:
-    void initConnections();
+    void setupConnections();
 
     PiecesList* m_piecesList{nullptr};
     PropertyWidget* m_propertyWidget{nullptr};

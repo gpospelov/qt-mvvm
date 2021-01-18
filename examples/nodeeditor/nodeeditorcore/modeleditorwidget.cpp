@@ -39,14 +39,14 @@ ModelEditorWidget::ModelEditorWidget(SampleModel* model, QWidget* parent)
 
     layout->addWidget(m_splitter);
 
-    initConnections();
+    setupConnections();
 }
 
 ModelEditorWidget::~ModelEditorWidget() = default;
 
 //! Inist widget connections.
 
-void ModelEditorWidget::initConnections()
+void ModelEditorWidget::setupConnections()
 {
     // Propagates selection from the scene to the property widget.
     connect(m_graphicsScene, &GraphicsScene::connectableItemSelectionChanged, m_propertyWidget,
