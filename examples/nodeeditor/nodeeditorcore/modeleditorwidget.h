@@ -38,7 +38,8 @@ public:
     ~ModelEditorWidget() override;
 
 private:
-    void setupToolBar();
+    void setupSaveLoadActions();
+    void setupUndoRedoActions();
     void setupConnections();
     QLayout* createBottomLayout();
 

@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include "connectableitem.h"
+#include "mvvm/model/modelutils.h"
 #include <QColor>
 
 using namespace ModelView;
@@ -48,8 +49,10 @@ void ConnectableItem::setY(double y)
 
 void ConnectableItem::setPos(double x, double y)
 {
+    Utils::BeginMacros(this, "setPos");
     setX(x);
     setY(y);
+    Utils::EndMacros(this);
 }
 
 //! Sets named color following schema from https://www.w3.org/TR/css-color-3/#svg-color.

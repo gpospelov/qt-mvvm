@@ -31,8 +31,7 @@ struct ConnectableItemController::ConnectableItemControllerImpl {
     void updateItemFromView()
     {
         m_blockOnPropertyChanged = true;
-        m_item->setX(m_view->x());
-        m_item->setY(m_view->y());
+        m_item->setPos(m_view->x(), m_view->y());
         m_blockOnPropertyChanged = false;
     }
 

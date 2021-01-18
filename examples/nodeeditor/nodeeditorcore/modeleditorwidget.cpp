@@ -44,15 +44,12 @@ ModelEditorWidget::ModelEditorWidget(SampleModel* model, QWidget* parent)
     layout->addWidget(m_toolBar);
     layout->addLayout(createBottomLayout());
 
-    setupToolBar();
+    setupSaveLoadActions();
+    setupUndoRedoActions();
     setupConnections();
 }
 
-ModelEditorWidget::~ModelEditorWidget() = default;
-
-//! Setups toolbar actions.
-
-void ModelEditorWidget::setupToolBar()
+void ModelEditorWidget::setupSaveLoadActions()
 {
     const int toolbar_icon_size = 24;
     m_toolBar->setIconSize(QSize(toolbar_icon_size, toolbar_icon_size));
@@ -75,6 +72,17 @@ void ModelEditorWidget::setupToolBar()
         m_model->saveToFile(fileName.toStdString());
     };
     connect(saveAction, &QAction::triggered, onSaveAction);
+
+    m_toolBar->addSeparator();
+}
+
+void ModelEditorWidget::setupUndoRedoActions()
+{
+    // delete action
+    auto deleteAction = new QAction("Remove selected", this);
+    connect(deleteAction, &QAction::triggered,
+            [this]() { m_graphicsScene->onDeleteSelectedRequest(); });
+    m_toolBar->addAction(deleteAction);
 
     // undo action
     auto undoAction = new QAction("Undo", this);
@@ -102,6 +110,8 @@ void ModelEditorWidget::setupToolBar()
                 can_redo_changed);
     }
 }
+
+ModelEditorWidget::~ModelEditorWidget() = default;
 
 //! Setups widget connections.
 
