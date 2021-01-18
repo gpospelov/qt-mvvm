@@ -135,6 +135,8 @@ void GraphicsScene::updateScene()
 
 void GraphicsScene::onDeleteSelectedRequest()
 {
+    ModelView::Utils::BeginMacros(m_model, "onDeleteSelectedRequest");
+
     // Break explicitely selected connections.
     for (auto connection : selectedViewItems<NodeConnection>())
         disconnectConnectedViews(connection);
@@ -150,6 +152,8 @@ void GraphicsScene::onDeleteSelectedRequest()
         // deleting item
         ModelView::Utils::DeleteItemFromModel(view->connectableItem());
     }
+
+    ModelView::Utils::EndMacros(m_model);
 }
 
 //! Constructs a view for a given item and adds it to a scene, if necessary.
