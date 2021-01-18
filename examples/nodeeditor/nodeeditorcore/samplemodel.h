@@ -24,6 +24,10 @@ public:
 
     void insertConnectableItem(const std::string& itemType, double xpos, double ypos);
 
+    void loadFromFile(const std::string& name);
+
+    void saveToFile(const std::string& name);
+
 private:
     void populateModel();
 };

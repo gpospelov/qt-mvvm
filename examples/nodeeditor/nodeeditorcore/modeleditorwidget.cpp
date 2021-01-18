@@ -18,6 +18,7 @@
 #include "mvvm/commands/undostack.h"
 #include "mvvm/model/modelutils.h"
 #include <QAction>
+#include <QFileDialog>
 #include <QHBoxLayout>
 #include <QSplitter>
 #include <QToolBar>
@@ -56,16 +57,38 @@ void ModelEditorWidget::setupToolBar()
     const int toolbar_icon_size = 24;
     m_toolBar->setIconSize(QSize(toolbar_icon_size, toolbar_icon_size));
 
+    // open file
+    auto openAction = new QAction("&Open...", this);
+    m_toolBar->addAction(openAction);
+    auto onOpenAction = [&]() {
+        QString fileName = QFileDialog::getOpenFileName(this);
+        m_model->loadFromFile(fileName.toStdString());
+    };
+    connect(openAction, &QAction::triggered, onOpenAction);
+
+    // save file
+    auto saveAction = new QAction("&Save As...", this);
+    m_toolBar->addAction(saveAction);
+
+    auto onSaveAction = [&]() {
+        QString fileName = QFileDialog::getSaveFileName(this);
+        m_model->saveToFile(fileName.toStdString());
+    };
+    connect(saveAction, &QAction::triggered, onSaveAction);
+
+    // undo action
     auto undoAction = new QAction("Undo", this);
     connect(undoAction, &QAction::triggered, [this]() { Utils::Undo(*m_model); });
     undoAction->setDisabled(true);
     m_toolBar->addAction(undoAction);
 
+    // redo action
     auto redoAction = new QAction("Redo", this);
     connect(redoAction, &QAction::triggered, [this]() { Utils::Redo(*m_model); });
     redoAction->setDisabled(true);
     m_toolBar->addAction(redoAction);
 
+    // enable/disable undo/redo actions when there is something to undo
     if (m_model && m_model->undoStack()) {
         auto can_undo_changed = [undoAction, this]() {
             undoAction->setEnabled(m_model->undoStack()->canUndo());

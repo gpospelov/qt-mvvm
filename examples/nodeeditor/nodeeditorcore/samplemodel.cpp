@@ -11,6 +11,7 @@
 #include "sampleitems.h"
 #include "mvvm/interfaces/undostackinterface.h"
 #include "mvvm/model/modelutils.h"
+#include "mvvm/factories/modeldocumentfactory.h"
 
 using namespace ModelView;
 
@@ -41,6 +42,22 @@ void SampleModel::insertConnectableItem(const std::string& itemType, double xpos
     }
 
     Utils::EndMacros(this);
+}
+
+void SampleModel::loadFromFile(const std::string& name)
+{
+    if (name.empty())
+        return;
+    auto document = ModelView::CreateJsonDocument({this});
+    document->load(name);
+}
+
+void SampleModel::saveToFile(const std::string& name)
+{
+    if (name.empty())
+        return;
+    auto document = ModelView::CreateJsonDocument({this});
+    document->save(name);
 }
 
 //! Populates the model with an exemplary hierarchical structure representing an initial node editor

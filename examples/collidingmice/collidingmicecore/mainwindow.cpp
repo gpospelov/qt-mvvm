@@ -123,7 +123,7 @@ void MainWindow::init_menu()
     auto onOpenAction = [&]() {
         QString fileName = QFileDialog::getOpenFileName(this);
         if (!fileName.isEmpty()) {
-            mouse_model->readFromFile(fileName);
+            mouse_model->loadFromFile(fileName);
             populate_scene();
         }
     };
@@ -136,7 +136,7 @@ void MainWindow::init_menu()
     auto onSaveAction = [&]() {
         QString fileName = QFileDialog::getSaveFileName(this);
         if (!fileName.isEmpty())
-            mouse_model->writeToFile(fileName);
+            mouse_model->saveToFile(fileName);
     };
     connect(saveAction, &QAction::triggered, onSaveAction);
 }
