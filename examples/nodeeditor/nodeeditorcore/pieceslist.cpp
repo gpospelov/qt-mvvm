@@ -47,8 +47,8 @@ PiecesList::PiecesList(QWidget* parent) : QListWidget(parent)
     setDragEnabled(true);
     setViewMode(QListView::IconMode);
     setMaximumWidth(200);
-//    setFixedWidth(column_width);
-//    setWrapping(false);
+    //    setFixedWidth(column_width);
+    //    setWrapping(false);
 
     auto rect = ConnectableViewRectangle();
     setIconSize(QSize(rect.width(), rect.height()));
@@ -114,7 +114,7 @@ void PiecesList::addEntry(const QString& name)
 
     // to make text centered under the icon, and items aligned vertically
     pieceItem->setTextAlignment(Qt::AlignCenter);
-    pieceItem->setSizeHint(QSize(column_width, pixmap.height()*1.5));
+    pieceItem->setSizeHint(QSize(column_width, pixmap.height() * 1.5));
 
     addItem(pieceItem);
 }
