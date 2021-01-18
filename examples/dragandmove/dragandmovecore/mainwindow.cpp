@@ -20,7 +20,7 @@ const QString size_key = "size";
 const QString pos_key = "pos";
 } // namespace
 
-namespace DragAndView {
+namespace DragAndMove {
 
 MainWindow::MainWindow() : m_tabWidget(new QTabWidget), m_model(std::make_unique<SampleModel>())
 {

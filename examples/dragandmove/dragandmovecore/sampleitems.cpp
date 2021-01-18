@@ -21,7 +21,7 @@ const std::string DemoContainerItemType = "DemoItemContainer";
 
 using namespace ModelView;
 
-namespace DragAndView {
+namespace DragAndMove {
 
 DemoItem::DemoItem() : CompoundItem(DemoItemType)
 {

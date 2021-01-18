@@ -22,7 +22,7 @@
 
 using namespace ModelView;
 
-namespace DragAndView {
+namespace DragAndMove {
 
 ModelEditorWidget::ModelEditorWidget(SampleModel* model, QWidget* parent)
     : QWidget(parent)

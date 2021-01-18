@@ -16,7 +16,7 @@
 class QToolBar;
 class QAction;
 
-namespace DragAndView {
+namespace DragAndMove {
 
 class SampleModel;
 class ContainerEditorWidget;

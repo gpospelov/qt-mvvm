@@ -15,7 +15,7 @@
 
 class QTabWidget;
 
-namespace DragAndView {
+namespace DragAndMove {
 
 class SampleModel;
 

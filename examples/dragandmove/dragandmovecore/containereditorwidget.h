@@ -24,7 +24,7 @@ class ViewModelDelegate;
 class SessionItem;
 } // namespace ModelView
 
-namespace DragAndView {
+namespace DragAndMove {
 
 class SampleModel;
 

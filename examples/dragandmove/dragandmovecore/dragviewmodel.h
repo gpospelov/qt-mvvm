@@ -16,7 +16,7 @@ namespace ModelView {
 class SessionModel;
 }
 
-namespace DragAndView {
+namespace DragAndMove {
 
 //! View model with drag-and-drop support. Relies on PropertyTableViewModel to show
 //! properties of DemoItem in table-like views.

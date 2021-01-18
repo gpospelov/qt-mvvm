@@ -23,7 +23,7 @@ const QString AppMimeType = "application/org.bornagainproject.moveitem";
 
 using namespace ModelView;
 
-namespace DragAndView {
+namespace DragAndMove {
 
 DragViewModel::DragViewModel(SessionModel* model, QObject* parent)
     : PropertyTableViewModel(model, parent)
