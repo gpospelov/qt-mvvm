@@ -40,13 +40,13 @@ MouseModel::MouseModel() : ModelView::SessionModel("MouseModel")
     undoStack()->setUndoLimit(max_commands_to_keep);
 }
 
-void MouseModel::readFromFile(const QString& name)
+void MouseModel::loadFromFile(const QString& name)
 {
     auto document = ModelView::CreateJsonDocument({this});
     document->load(name.toStdString());
 }
 
-void MouseModel::writeToFile(const QString& name)
+void MouseModel::saveToFile(const QString& name)
 {
     auto document = ModelView::CreateJsonDocument({this});
     document->save(name.toStdString());

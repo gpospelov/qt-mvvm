@@ -32,9 +32,9 @@ class MouseModel : public ModelView::SessionModel {
 public:
     MouseModel();
 
-    void readFromFile(const QString& name);
+    void loadFromFile(const QString& name);
 
-    void writeToFile(const QString& name);
+    void saveToFile(const QString& name);
 
     //! Sets undo stack to given position.
     //! value=0   - first command in the stack (corresponds to the model status "in the past")
