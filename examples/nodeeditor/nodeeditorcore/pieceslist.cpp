@@ -8,9 +8,9 @@
 // ************************************************************************** //
 
 #include "pieceslist.h"
-#include "mvvm/widgets/widgetutils.h"
 #include "sampleitems.h"
 #include "sceneutils.h"
+#include "mvvm/widgets/widgetutils.h"
 #include <QDrag>
 #include <QMimeData>
 #include <QPainter>
@@ -25,7 +25,8 @@ QPixmap createPixmap()
     QPixmap pixmap(rect.width() + 1, rect.height() + 1);
     pixmap.fill(Qt::transparent);
     QPainter painter(&pixmap);
-    painter.setPen(Qt::black);
+    painter.setRenderHint(QPainter::Antialiasing);
+    painter.setPen(Qt::white);
     painter.setBrush(NodeEditor::ConnectableViewGradient(QColor(Qt::gray), rect));
     painter.drawRoundedRect(rect, 5, 5);
     return pixmap;
@@ -33,14 +34,21 @@ QPixmap createPixmap()
 
 const int ModelTypeRole = Qt::UserRole;
 const int PixmapRole = Qt::UserRole + 1;
+
+const int column_width = 160;
 } // namespace
 
 namespace NodeEditor {
 
 PiecesList::PiecesList(QWidget* parent) : QListWidget(parent)
 {
+    setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
+
     setDragEnabled(true);
     setViewMode(QListView::IconMode);
+    setMaximumWidth(200);
+    //    setFixedWidth(column_width);
+    //    setWrapping(false);
 
     auto rect = ConnectableViewRectangle();
     setIconSize(QSize(rect.width(), rect.height()));
@@ -54,6 +62,11 @@ PiecesList::PiecesList(QWidget* parent) : QListWidget(parent)
 QString PiecesList::piecesMimeType()
 {
     return QStringLiteral("image/x-connectable-view");
+}
+
+QSize PiecesList::sizeHint() const
+{
+    return QSize(column_width, 600);
 }
 
 //! Prepare data for dragging.
@@ -79,8 +92,11 @@ void PiecesList::startDrag(Qt::DropActions)
 
 void PiecesList::populateList()
 {
-    addEntry(QString::fromStdString(NodeEditor::ParticleItemType));
+    addEntry(QString::fromStdString(NodeEditor::ParticleLayoutItemType));
+    addEntry(QString::fromStdString(NodeEditor::SphereItemType));
+    addEntry(QString::fromStdString(NodeEditor::CylinderItemType));
     addEntry(QString::fromStdString(NodeEditor::TransformationItemType));
+    addEntry(QString::fromStdString(NodeEditor::LatticeItemType));
     selectionModel()->reset();
 }
 
@@ -88,13 +104,19 @@ void PiecesList::populateList()
 
 void PiecesList::addEntry(const QString& name)
 {
-    auto pieceItem = new QListWidgetItem(this);
+    auto pieceItem = new QListWidgetItem;
     auto pixmap = createPixmap();
     pieceItem->setIcon(QIcon(pixmap));
     pieceItem->setData(Qt::DisplayRole, name);
     pieceItem->setData(ModelTypeRole, name);
     pieceItem->setData(PixmapRole, QVariant(pixmap));
     pieceItem->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsDragEnabled);
+
+    // to make text centered under the icon, and items aligned vertically
+    pieceItem->setTextAlignment(Qt::AlignCenter);
+    pieceItem->setSizeHint(QSize(column_width, pixmap.height() * 1.5));
+
+    addItem(pieceItem);
 }
 
 } // namespace NodeEditor

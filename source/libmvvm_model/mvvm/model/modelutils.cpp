@@ -85,18 +85,30 @@ void Utils::Redo(SessionModel& model)
 
 void Utils::BeginMacros(const SessionItem* item, const std::string& macro_name)
 {
-    if (!item->model())
+    if (!item)
         return;
-
-    if (auto stack = item->model()->undoStack(); stack)
-        stack->beginMacro(macro_name);
+    BeginMacros(item->model(), macro_name);
 }
 
 void Utils::EndMacros(const SessionItem* item)
 {
-    if (!item->model())
+    if (!item)
         return;
+    EndMacros(item->model());
+}
 
-    if (auto stack = item->model()->undoStack(); stack)
+void Utils::BeginMacros(const SessionModel* model, const std::string& macro_name)
+{
+    if (!model)
+        return;
+    if (auto stack = model->undoStack(); stack)
+        stack->beginMacro(macro_name);
+}
+
+void Utils::EndMacros(const SessionModel* model)
+{
+    if (!model)
+        return;
+    if (auto stack = model->undoStack(); stack)
         stack->endMacro();
 }

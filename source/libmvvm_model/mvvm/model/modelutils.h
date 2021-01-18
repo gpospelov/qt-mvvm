@@ -113,6 +113,13 @@ MVVM_MODEL_EXPORT void BeginMacros(const SessionItem* item, const std::string& m
 //! enabled. Otherwise, do nothing.
 MVVM_MODEL_EXPORT void EndMacros(const SessionItem* item);
 
+//! Begin undo/redo macros with given name. Works only if the model has undo/redo enabled.
+//! Otherwise, do nothing.
+MVVM_MODEL_EXPORT void BeginMacros(const SessionModel* model, const std::string& macro_name);
+
+//! Finishes undo/redo macros. Works only if the model has undo/redo enabled. Otherwise, do nothing.
+MVVM_MODEL_EXPORT void EndMacros(const SessionModel* model);
+
 } // namespace Utils
 } // namespace ModelView
 

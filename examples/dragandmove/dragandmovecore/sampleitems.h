@@ -16,7 +16,7 @@
 #include "mvvm/model/compounditem.h"
 #include <string>
 
-namespace DragAndView {
+namespace DragAndMove {
 
 //! Demo item which demonstrating supported properties.
 

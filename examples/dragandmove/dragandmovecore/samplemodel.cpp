@@ -13,7 +13,7 @@
 #include "mvvm/widgets/widgetutils.h"
 #include <QColor>
 
-namespace DragAndView {
+namespace DragAndMove {
 
 namespace {
 std::string random_name()

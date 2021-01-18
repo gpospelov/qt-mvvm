@@ -8,65 +8,85 @@
 // ************************************************************************** //
 
 #include "sampleitems.h"
-#include "mvvm/editors/editor_constants.h"
-#include "mvvm/model/taginfo.h"
-#include "mvvm/widgets/widgetutils.h"
 #include <QColor>
 
 using namespace ModelView;
 
 namespace NodeEditor {
 
-ConnectableItem::ConnectableItem(const std::string& modelType) : ModelView::CompoundItem(modelType)
+// ----------------------------------------------------------------------------
+
+ParticleLayoutItem::ParticleLayoutItem() : ConnectableItem(ParticleLayoutItemType)
 {
-    addProperty(P_XPOS, 0.0)->setDisplayName("X");
-    addProperty(P_YPOS, 0.0)->setDisplayName("Y");
-    addProperty(P_COLOR, QColor(Qt::gray))->setDisplayName("Color");
+    // The tag is intended to attach unlimited amount of particles.
+    registerTag(TagInfo(T_PARTICLE, 0, -1, {SphereItemType, CylinderItemType}));
+    registerTag(TagInfo(T_LATTICE, 0, 1, {LatticeItemType}));
+    setNamedColor("chartreuse");
 }
 
-QColor ConnectableItem::color() const
+std::vector<PortInfo> ParticleLayoutItem::inputPorts() const
 {
-    return property<QColor>(P_COLOR);
+    return {ParticlePort, LatticePort};
 }
 
-double ConnectableItem::x() const
-{
-    return property<double>(P_XPOS);
-}
+// ----------------------------------------------------------------------------
 
-void ConnectableItem::setX(double x)
+ParticleItem::ParticleItem(const std::string &modelType) : ConnectableItem(modelType)
 {
-    setProperty(P_XPOS, x);
-}
-
-double ConnectableItem::y() const
-{
-    return property<double>(P_YPOS);
-}
-
-void ConnectableItem::setY(double y)
-{
-    setProperty(P_YPOS, y);
-}
-
-//! Sets named color following schema from https://www.w3.org/TR/css-color-3/#svg-color.
-//! e.g. "mediumaquamarine"
-
-void ConnectableItem::setNamedColor(const std::string& named_color)
-{
-    setProperty(P_COLOR, QColor(QString::fromStdString(named_color)));
-}
-
-ParticleItem::ParticleItem() : ConnectableItem(ParticleItemType)
-{
-    // intended to attach TransformationItem (maximum 1)
+    // The tag is intended to attach TransformationItem (maximum 1).
     registerTag(TagInfo(T_TRANSFORMATION, 0, 1, {TransformationItemType}), true);
     setNamedColor("antiquewhite");
 }
+
+std::vector<PortInfo> ParticleItem::outputPorts() const
+{
+    return {ParticlePort};
+}
+
+std::vector<PortInfo> ParticleItem::inputPorts() const
+{
+    return {TransformationPort};
+}
+
+// ----------------------------------------------------------------------------
+
+SphereItem::SphereItem() : ParticleItem(SphereItemType)
+{
+    addProperty(P_RADIUS, 42.0);
+}
+
+// ----------------------------------------------------------------------------
+
+CylinderItem::CylinderItem() : ParticleItem(CylinderItemType)
+{
+    addProperty(P_RADIUS, 10.0);
+    addProperty(P_HEIGHT, 20.0);
+}
+
+// ----------------------------------------------------------------------------
 
 TransformationItem::TransformationItem() : ConnectableItem(TransformationItemType)
 {
     setNamedColor("lightseagreen");
 }
+
+std::vector<PortInfo> TransformationItem::outputPorts() const
+{
+    return {TransformationPort};
+}
+
+// ----------------------------------------------------------------------------
+
+LatticeItem::LatticeItem()
+    : ConnectableItem(LatticeItemType)
+{
+    setNamedColor("gold");
+}
+
+std::vector<PortInfo> LatticeItem::outputPorts() const
+{
+    return {LatticePort};
+}
+
 
 } // namespace NodeEditor

@@ -19,7 +19,7 @@ GraphicsView::GraphicsView(GraphicsScene* scene, QWidget* parent) : QGraphicsVie
     setRenderHint(QPainter::Antialiasing);
     setAcceptDrops(true);
     setMouseTracking(true);
-    setDragMode(QGraphicsView::RubberBandDrag);
+    //setDragMode(QGraphicsView::RubberBandDrag);
 }
 
 //! Handles mouse press events.

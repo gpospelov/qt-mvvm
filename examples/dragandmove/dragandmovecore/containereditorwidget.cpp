@@ -20,7 +20,7 @@
 
 using namespace ModelView;
 
-namespace DragAndView {
+namespace DragAndMove {
 
 ContainerEditorWidget::ContainerEditorWidget(QWidget* parent)
     : QWidget(parent)

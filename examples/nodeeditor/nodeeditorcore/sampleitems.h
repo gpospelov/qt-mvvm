@@ -13,49 +13,82 @@
 //! @file sampleitems.h
 //! Classes to represent content of node editor.
 
-#include "mvvm/model/compounditem.h"
-
-class QColor;
+#include "connectableitem.h"
 
 namespace NodeEditor {
 
-const std::string ParticleItemType = "Particle";
+const std::string SphereItemType = "Sphere";
+const std::string CylinderItemType = "Cylinder";
 const std::string TransformationItemType = "Transformation";
+const std::string ParticleLayoutItemType = "ParticleLayout";
+const std::string LatticeItemType = "Lattice";
 
-//! Base class for all node editor items.
+//! Represents layout box on the graphics scene.
+//! It has two input ports: one to connect an arbitrary amount of particles of various shape,
+//! another to connect a singel lattice. Doesn't have output port (i.e. the top level item in
+//! the node editor hierarchy).
 
-class ConnectableItem : public ModelView::CompoundItem {
+class ParticleLayoutItem : public ConnectableItem {
 public:
-    static inline const std::string P_XPOS = "P_XPOS";
-    static inline const std::string P_YPOS = "P_YPOS";
-    static inline const std::string P_COLOR = "P_COLOR";
+    static inline const std::string T_PARTICLE = "Particle";
+    static inline const std::string T_LATTICE = "Lattice";
+    ParticleLayoutItem();
 
-    explicit ConnectableItem(const std::string& modelType);
-
-    QColor color() const;
-
-    double x() const;
-    void setX(double x);
-
-    double y() const;
-    void setY(double y);
-
-    void setNamedColor(const std::string& named_color);
+    std::vector<PortInfo> inputPorts() const override;
 };
 
-//! Represents particle item box on graph canvas.
+//! Base class for particle presentation on the graphics scene.
+//! Has single input port to connect single transformation item, and single output.
+//! Can be connected with ParticleLayoutItem.
 
 class ParticleItem : public ConnectableItem {
 public:
     static inline const std::string T_TRANSFORMATION = "Transformation";
-    ParticleItem();
+    ParticleItem(const std::string& modelType);
+
+    std::vector<PortInfo> outputPorts() const override;
+    std::vector<PortInfo> inputPorts() const override;
 };
 
-//! Represents transformation item box on graph canvas.
+//! Item representing sphere.
+
+class SphereItem : public ParticleItem
+{
+public:
+    static inline const std::string P_RADIUS = "Radius";
+
+    SphereItem();
+};
+
+//! Item representing cylinder.
+
+class CylinderItem : public ParticleItem
+{
+public:
+    static inline const std::string P_RADIUS = "Radius";
+    static inline const std::string P_HEIGHT = "Height";
+
+    CylinderItem();
+};
+
+//! Represents transformation item box on the graphics scene.
+//! Doesn't have input ports. Can be connected with particle items.
 
 class TransformationItem : public ConnectableItem {
 public:
     TransformationItem();
+
+    std::vector<PortInfo> outputPorts() const override;
+};
+
+//! Lattice item.
+//! Doesn't have input ports. Can be connected with layout items.
+
+class LatticeItem : public ConnectableItem {
+public:
+    LatticeItem();
+
+    std::vector<PortInfo> outputPorts() const override;
 };
 
 } // namespace NodeEditor

@@ -13,6 +13,7 @@
 #include "mvvm/widgets/standardtreeviews.h"
 #include <QSplitter>
 #include <QVBoxLayout>
+#include <QTreeView>
 
 namespace NodeEditor {
 
@@ -30,6 +31,10 @@ PropertyWidget::PropertyWidget(SampleModel* model, QWidget* parent)
     m_splitter->addWidget(m_propertyTree);
     m_splitter->setSizes(QList<int>() << 300 << 200);
     layout->addWidget(m_splitter);
+
+    layout->setContentsMargins(3, 0, 3, 0);
+
+    m_topItemsTree->treeView()->setHeaderHidden(true);
 }
 
 //! Process selection request.

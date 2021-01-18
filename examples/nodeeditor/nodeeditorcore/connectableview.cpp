@@ -9,11 +9,11 @@
 
 #include "connectableview.h"
 #include "connectableitemcontroller.h"
-#include "mvvm/model/itemutils.h"
 #include "nodeconnection.h"
 #include "nodeport.h"
 #include "sampleitems.h"
 #include "sceneutils.h"
+#include "mvvm/model/itemutils.h"
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
 
@@ -132,13 +132,17 @@ QString ConnectableView::label() const
 
 void ConnectableView::init_ports()
 {
-    for (const auto& tag : ModelView::Utils::RegisteredUniversalTags(*m_item)) {
-        auto inputPort = new NodeInputPort(this, QString::fromStdString(tag));
-        inputPort->initPort();
+    int portIndex{0};
+    for (const auto& info : m_item->inputPorts()) {
+        auto inputPort = new NodeInputPort(this, info);
+        inputPort->initPort(portIndex++);
     }
 
-    auto outputPort = new NodeOutputPort(this, QString::fromStdString(m_item->modelType()));
-    outputPort->initPort();
+    portIndex = 0;
+    for (const auto& info : m_item->outputPorts()) {
+        auto outputPort = new NodeOutputPort(this, info);
+        outputPort->initPort(portIndex++);
+    }
 }
 
 } // namespace NodeEditor

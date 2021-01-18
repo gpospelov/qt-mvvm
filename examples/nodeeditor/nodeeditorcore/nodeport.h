@@ -14,6 +14,7 @@
 //! http://algoholic.eu/qnodeseditor-qt-nodesports-based-data-processing-flow-editor/
 //! Copyright (c) 2012, STANISLAW ADASZEWSKI
 
+#include "portinfo.h"
 #include <QGraphicsObject>
 #include <QList>
 
@@ -28,7 +29,7 @@ class ConnectableView;
 
 class NodePort : public QGraphicsPathItem {
 public:
-    NodePort(QGraphicsItem* parent, QString portType);
+    NodePort(QGraphicsItem* parent, const PortInfo& info);
     virtual ~NodePort() override;
 
     QString portType() const;
@@ -37,7 +38,7 @@ public:
 
     bool isOutput() const;
 
-    virtual void initPort() = 0;
+    virtual void initPort(int portIndex) = 0;
 
     void append(NodeConnection* connection);
 
@@ -54,9 +55,9 @@ public:
 protected:
     QVariant itemChange(GraphicsItemChange change, const QVariant& value) override;
 
-    QString m_portType; //! Port type.
     QGraphicsTextItem* m_label{nullptr};
     QList<NodeConnection*> m_connections;
+    PortInfo m_portInfo;
 };
 
 //! Represents input port of connectable view.
@@ -65,7 +66,7 @@ class NodeInputPort : public NodePort {
 public:
     using NodePort::NodePort;
     bool isInput() const override;
-    void initPort() override;
+    void initPort(int portIndex) override;
 };
 
 //! Represents output port of connectable view.
@@ -74,7 +75,7 @@ class NodeOutputPort : public NodePort {
 public:
     using NodePort::NodePort;
     bool isInput() const override;
-    void initPort() override;
+    void initPort(int portIndex) override;
 };
 
 } // namespace NodeEditor

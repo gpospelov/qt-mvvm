@@ -11,6 +11,7 @@
 #include "connectableview.h"
 #include "nodeconnection.h"
 #include "nodecontroller.h"
+#include "nodeport.h"
 #include "pieceslist.h"
 #include "sampleitems.h"
 #include "samplemodel.h"
@@ -77,8 +78,19 @@ void GraphicsScene::dropEvent(QGraphicsSceneDragDropEvent* event)
 
 void GraphicsScene::onConnectionRequest(ConnectableView* childView, ConnectableView* parentView)
 {
-    // On model level connection of views means simply changing the parent of underlying items.
-    m_model->moveItem(childView->connectableItem(), parentView->connectableItem(), {"", -1});
+    // Our current design implies that port type coincides with tag to use.
+    auto tag = childView->outputPort()->portType().toStdString();
+
+    try {
+        // On model level connection of views means simply changing the parent of underlying items.
+        m_model->moveItem(childView->connectableItem(), parentView->connectableItem(), {tag, -1});
+    }
+    catch (const std::runtime_error& ex) {
+        qWarning() << "Error in GraphicsScene::onConnectionRequest(): can't establish the "
+                      "connection. Wrong port type, or number of items esceeds "
+                      "the limit. Exception:"
+                   << QString::fromStdString(ex.what());
+    }
 }
 
 //! Processes change in scene selection. Finds ConnectableItem corresponding to a selected view
@@ -123,6 +135,8 @@ void GraphicsScene::updateScene()
 
 void GraphicsScene::onDeleteSelectedRequest()
 {
+    ModelView::Utils::BeginMacros(m_model, "onDeleteSelectedRequest");
+
     // Break explicitely selected connections.
     for (auto connection : selectedViewItems<NodeConnection>())
         disconnectConnectedViews(connection);
@@ -138,6 +152,8 @@ void GraphicsScene::onDeleteSelectedRequest()
         // deleting item
         ModelView::Utils::DeleteItemFromModel(view->connectableItem());
     }
+
+    ModelView::Utils::EndMacros(m_model);
 }
 
 //! Constructs a view for a given item and adds it to a scene, if necessary.

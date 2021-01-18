@@ -16,7 +16,7 @@ namespace ModelView {
 class SessionItem;
 }
 
-namespace DragAndView {
+namespace DragAndMove {
 
 //! Main application model.
 
