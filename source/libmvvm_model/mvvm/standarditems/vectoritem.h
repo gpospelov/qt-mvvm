@@ -26,6 +26,15 @@ public:
 
     void activate() override;
 
+    double x() const;
+    void setX(double value);
+
+    double y() const;
+    void setY(double value);
+
+    double z() const;
+    void setZ(double value);
+
 private:
     void update_label();
 };
