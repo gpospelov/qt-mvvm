@@ -24,7 +24,7 @@ jobs:
     - name: Install Qt
       uses: jurplel/install-qt-action@v2
       with:
-        version: '5.15.1'
+        version: '5.15.2'
         host: 'windows'
         target: 'desktop'
         arch: 'win64_msvc2019_64'
@@ -69,7 +69,7 @@ jobs:
         CCACHE_MAXSIZE: "1000M"
       run: |
         call "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat"
-        set QTDIR=${{github.workspace}}\qt5\Qt\5.15.1\msvc2019_64
+        set QTDIR=${{github.workspace}}\qt5\Qt\5.15.2\msvc2019_64
         set PATH=${{github.workspace}};%QTDIR%\bin;%PATH%
         cd ${{github.workspace}}
         dir
