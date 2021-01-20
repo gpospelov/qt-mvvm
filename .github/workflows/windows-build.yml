@@ -29,6 +29,7 @@ jobs:
         target: 'desktop'
         arch: 'win64_msvc2019_64'
         dir: '${{ github.workspace }}/qt5/'
+        mirror: 'http://mirrors.ocf.berkeley.edu/qt/'
         install-deps: 'true'
         cached: 'false'
 
