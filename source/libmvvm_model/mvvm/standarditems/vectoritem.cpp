@@ -31,10 +31,39 @@ void VectorItem::activate()
     mapper()->setOnPropertyChange(on_property_change, this);
 }
 
+double VectorItem::x() const
+{
+    return property<double>(P_X);
+}
+
+void VectorItem::setX(double value)
+{
+    setProperty(P_X, value);
+}
+
+double VectorItem::y() const
+{
+    return property<double>(P_Y);
+}
+
+void VectorItem::setY(double value)
+{
+    setProperty(P_Y, value);
+}
+
+double VectorItem::z() const
+{
+    return property<double>(P_Z);
+}
+
+void VectorItem::setZ(double value)
+{
+    setProperty(P_Z, value);
+}
+
 void VectorItem::update_label()
 {
     std::ostringstream ostr;
-    ostr << "(" << property<double>(P_X) << ", " << property<double>(P_Y) << ", "
-         << property<double>(P_Z) << ")";
-    setData(Variant::fromValue(ostr.str()), ItemDataRole::DATA, /*direct*/true);
+    ostr << "(" << x() << ", " << y() << ", " << z() << ")";
+    setData(Variant::fromValue(ostr.str()), ItemDataRole::DATA, /*direct*/ true);
 }
