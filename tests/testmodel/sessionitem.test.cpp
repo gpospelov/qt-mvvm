@@ -647,11 +647,13 @@ TEST_F(SessionItemTest, appearance)
     // default status
     EXPECT_TRUE(item.isEnabled());
     EXPECT_TRUE(item.isEditable());
+    EXPECT_TRUE(item.isVisible());
 
     // disabling item
     item.setEnabled(false);
     EXPECT_FALSE(item.isEnabled());
     EXPECT_TRUE(item.isEditable());
+    EXPECT_TRUE(item.isVisible());
 
     // data should be there now
     variant = item.data<QVariant>(ItemDataRole::APPEARANCE);
@@ -661,6 +663,13 @@ TEST_F(SessionItemTest, appearance)
     item.setEditable(false);
     EXPECT_FALSE(item.isEnabled());
     EXPECT_FALSE(item.isEditable());
+    EXPECT_TRUE(item.isVisible());
+
+    // making it hidden
+    item.setVisible(false);
+    EXPECT_FALSE(item.isEnabled());
+    EXPECT_FALSE(item.isEditable());
+    EXPECT_FALSE(item.isVisible());
 }
 
 //! Checks item tooltip.

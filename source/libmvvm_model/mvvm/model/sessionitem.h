@@ -100,6 +100,9 @@ public:
     bool isEnabled() const;
     SessionItem* setEnabled(bool value);
 
+    bool isVisible() const;
+    SessionItem* setVisible(bool value);
+
     std::string toolTip() const;
     SessionItem* setToolTip(const std::string& tooltip);
 

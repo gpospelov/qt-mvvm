@@ -288,6 +288,17 @@ SessionItem* SessionItem::setEnabled(bool value)
     return this;
 }
 
+bool SessionItem::isVisible() const
+{
+    return appearance(*this) & Appearance::VISIBLE;
+}
+
+SessionItem* SessionItem::setVisible(bool value)
+{
+    setAppearanceFlag(Appearance::VISIBLE, value);
+    return this;
+}
+
 //! Returns item tooltip, if exists.
 
 std::string SessionItem::toolTip() const
