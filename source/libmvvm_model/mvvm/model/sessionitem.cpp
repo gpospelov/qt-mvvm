@@ -23,7 +23,7 @@ using namespace ModelView;
 namespace {
 int appearance(const ModelView::SessionItem& item)
 {
-    const int default_appearance = Appearance::EDITABLE | Appearance::ENABLED;
+    const int default_appearance = Appearance::EDITABLE | Appearance::ENABLED | Appearance::VISIBLE;
     return item.hasData(ItemDataRole::APPEARANCE) ? item.data<int>(ItemDataRole::APPEARANCE)
                                                   : default_appearance;
 }

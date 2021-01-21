@@ -31,9 +31,9 @@ const int EDITORTYPE = 6; //!< type of custom editor for the data role
 } // namespace ItemDataRole
 
 enum Appearance {
-    NOFLAGS = 0x000,
-    ENABLED = 0x001, // enabled in Qt widgets; when disabled, will be shown in gray
-    EDITABLE = 0x002 // editable in Qt widgets; readonly otherwise
+    ENABLED = 1,  // enabled in Qt widgets; when disabled, will be shown in gray
+    EDITABLE = 2, // editable in Qt widgets; readonly otherwise
+    VISIBLE = 4   // visible in Qt widgets; doesn't appear in trees and tables otherwise
 };
 
 namespace Constants {
