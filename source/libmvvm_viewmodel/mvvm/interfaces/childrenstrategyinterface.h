@@ -17,10 +17,9 @@ namespace ModelView {
 
 class SessionItem;
 
-//! Base class for strategies to find children, actual of fictional, of given item.
-
-//! Reported vector of children might be different from actual children of given item.
-//! The strategy is used in context of AbstractViewModel while exposing SessionModel to Qt.
+//! Base class for strategies to find children, actual or fictional, of a given item.
+//! The reported vector of children might be different from the actual children of a given item.
+//! The strategy is used in the context of AbstractViewModel while exposing SessionModel to Qt.
 //! Thanks to this strategy ViewModel decides which items to visit.
 
 class MVVM_VIEWMODEL_EXPORT ChildrenStrategyInterface {
