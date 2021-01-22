@@ -12,13 +12,11 @@
 
 #include "mvvm/interfaces/rowstrategyinterface.h"
 
-class QStandardItem;
-
 namespace ModelView {
 
 class SessionItem;
 
-//! Constructs row of QStandardItem's for given SessionItem.
+//! Constructs row of ViewItem's for given SessionItem.
 //! Row consists of columns with all PropertyItem's of given SessionItem.
 
 class MVVM_VIEWMODEL_EXPORT PropertiesRowStrategy : public RowStrategyInterface {

@@ -17,8 +17,6 @@
 #include <functional>
 #include <vector>
 
-class QStandardItemModel;
-class QStandardItem;
 class QVariant;
 
 namespace ModelView {
