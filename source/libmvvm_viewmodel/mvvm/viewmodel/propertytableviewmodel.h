@@ -15,7 +15,6 @@
 namespace ModelView {
 
 //! View model to show content of SessionModel in Qt widgets: all item properties as a table row.
-
 //! Intended to show registered properties of items in table-like view.
 //! Registered properties will form columns of the table, top level items will form table rows.
 

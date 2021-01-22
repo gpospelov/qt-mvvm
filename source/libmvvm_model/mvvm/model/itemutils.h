@@ -55,24 +55,20 @@ MVVM_MODEL_EXPORT std::vector<std::string> RegisteredTags(const SessionItem& ite
 //! children's insertion.
 MVVM_MODEL_EXPORT std::vector<std::string> RegisteredUniversalTags(const SessionItem& item);
 
-//! Returns vector of children representing top level items.
+//! Returns vector of all visible children representing top level items.
 MVVM_MODEL_EXPORT std::vector<SessionItem*> TopLevelItems(const SessionItem& item);
 
-//! Returns vector of children representing property items.
-
+//! Returns vector of all visible children representing property items.
 MVVM_MODEL_EXPORT std::vector<SessionItem*> SinglePropertyItems(const SessionItem& item);
 
 //! Returns next sibling with same tag.
-
 MVVM_MODEL_EXPORT SessionItem* FindNextSibling(SessionItem* item);
 
 //! Returns previous sibling with same tag.
-
 MVVM_MODEL_EXPORT SessionItem* FindPreviousSibling(SessionItem* item);
 
 //! Finds next item to select
 //! Method is used in the context of next item selection after given item was deleted.
-
 MVVM_MODEL_EXPORT SessionItem* FindNextItemToSelect(SessionItem* item);
 
 //! Returns true if 'candidate' is one of ancestor of given item.
