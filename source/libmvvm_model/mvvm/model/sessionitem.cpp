@@ -273,14 +273,15 @@ SessionItem* SessionItem::setEditable(bool value)
 }
 
 //! Returns true if this item has `enabled` flag set.
-//! Enabled items appear in normal color, disabled items are grayed out.
 
 bool SessionItem::isEnabled() const
 {
     return appearance(*this) & Appearance::ENABLED;
 }
 
-//! Sets `enabled` flag to given value (fluent interface).
+//! Sets `enabled` flag to given value (fluent interface). Used in Qt-widgets to show that given
+//! property is currently enabled. Enabled items appear in normal color, disabled items are grayed
+//! out.
 
 SessionItem* SessionItem::setEnabled(bool value)
 {
@@ -288,10 +289,16 @@ SessionItem* SessionItem::setEnabled(bool value)
     return this;
 }
 
+//! Returns true if this item has `visible` flag set.
+
 bool SessionItem::isVisible() const
 {
     return appearance(*this) & Appearance::VISIBLE;
 }
+
+//! Sets `visible` flag to given value (fluent interface). Used in Qt-widgets to hide given
+//! property from a view. For example, `PropertyTreeView` will not show PropertyItem with the given
+//! flag set to `true` among other properties.
 
 SessionItem* SessionItem::setVisible(bool value)
 {

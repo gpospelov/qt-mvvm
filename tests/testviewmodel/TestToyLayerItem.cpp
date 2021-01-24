@@ -46,10 +46,57 @@ TEST_F(ToyLayerItemTest, inModel)
     EXPECT_EQ(layer->displayName(), ToyItems::Constants::LayerItemType);
 }
 
+//! Tests LayerItem appearance in the DefaultViewModel.
+
 TEST_F(ToyLayerItemTest, inViewModel)
 {
     ToyItems::SampleModel model;
     auto layerItem = model.insertItem<ToyItems::LayerItem>();
+
+    // constructing viewModel from sample model
+    DefaultViewModel viewModel(&model);
+
+    // root item should have one child, item looking at our layerItem
+    EXPECT_EQ(viewModel.rowCount(), 1);
+    EXPECT_EQ(viewModel.columnCount(), 2);
+
+    // accessing to viewItem representing layerItem
+    QModelIndex layerIndex = viewModel.index(0, 0);
+    auto viewItem = dynamic_cast<ViewLabelItem*>(viewModel.itemFromIndex(layerIndex));
+    EXPECT_TRUE(viewItem != nullptr);
+    EXPECT_EQ(viewItem->item(), layerItem);
+
+    // it has two rows and two columns, corresponding to our "thickness" and "color" properties
+    EXPECT_EQ(viewModel.rowCount(layerIndex), 2);
+    EXPECT_EQ(viewModel.columnCount(layerIndex), 2);
+
+    // accessing to views representing label and value of thickness property
+    QModelIndex thicknessLabelIndex = viewModel.index(0, 0, layerIndex);
+    auto thicknessLabelView =
+        dynamic_cast<ViewLabelItem*>(viewModel.itemFromIndex(thicknessLabelIndex));
+    EXPECT_TRUE(thicknessLabelView != nullptr);
+
+    QModelIndex thicknessValueIndex = viewModel.index(0, 1, layerIndex);
+    auto thicknessValueView =
+        dynamic_cast<ViewDataItem*>(viewModel.itemFromIndex(thicknessValueIndex));
+    EXPECT_TRUE(thicknessValueView != nullptr);
+
+    // internally, views for label and data should point to single SessionItem corresponding to
+    // thickness property
+    EXPECT_EQ(thicknessLabelView->item(), layerItem->getItem(ToyItems::LayerItem::P_THICKNESS));
+    EXPECT_EQ(thicknessValueView->item(), layerItem->getItem(ToyItems::LayerItem::P_THICKNESS));
+}
+
+//! Tests LayerItem appearance in the DefaultViewModel, when one of layer property is hidden.
+//! Currently, DefaultViewModel doesn't respect isVisible property of items. The test is equivalent
+//! to the test above.
+
+TEST_F(ToyLayerItemTest, inViewModelWhenPropertyHidden)
+{
+    ToyItems::SampleModel model;
+    auto layerItem = model.insertItem<ToyItems::LayerItem>();
+    // Hiding one of the items. The DefaultViewModel should show everything as before.
+    layerItem->getItem(ToyItems::LayerItem::P_THICKNESS)->setVisible(false);
 
     // constructing viewModel from sample model
     DefaultViewModel viewModel(&model);

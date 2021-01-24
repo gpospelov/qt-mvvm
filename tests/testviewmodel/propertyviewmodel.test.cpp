@@ -85,6 +85,47 @@ TEST_F(PropertyViewModelTest, vectorItem)
     EXPECT_EQ(viewModel.columnCount(), 2);
 }
 
+//! VectorItem in with hidden component. An item with setVisible(false) set shouldn't appear in a
+//! view model. The current implementation is limited and respects this flag only if it was set
+//! before the view model creation.
+
+TEST_F(PropertyViewModelTest, vectorItemWithHiddenComponent)
+{
+    SessionModel model;
+    auto vectorItem = model.insertItem<VectorItem>();
+    vectorItem->getItem(VectorItem::P_Y)->setVisible(false);
+
+    PropertyViewModel viewModel(&model);
+
+    EXPECT_EQ(viewModel.rowCount(), 0); // root item doesn't have properties
+    EXPECT_EQ(viewModel.columnCount(), 0);
+
+    // switching to vectorItem and checking that it has only 2 properties (y-item was skipped).
+    viewModel.setRootSessionItem(vectorItem);
+    EXPECT_EQ(viewModel.rowCount(), 2);
+    EXPECT_EQ(viewModel.columnCount(), 2);
+
+    auto vector_index = QModelIndex();
+    auto x_index = viewModel.index(0, 0, vector_index);
+    auto z_index = viewModel.index(1, 0, vector_index);
+    EXPECT_EQ(viewModel.sessionItemFromIndex(vector_index), vectorItem);
+    EXPECT_EQ(viewModel.sessionItemFromIndex(x_index), vectorItem->getItem(VectorItem::P_X));
+    EXPECT_EQ(viewModel.sessionItemFromIndex(z_index), vectorItem->getItem(VectorItem::P_Z));
+
+    // attempt to make P_Y visible again
+    vectorItem->getItem(VectorItem::P_Y)->setVisible(true);
+
+    // The current implementation is somewhat limited: PropertyViewModel doesn't listen for updates
+    // in isVisible flag. If flag is changed after the model creation, item still be invisible.
+
+    vector_index = QModelIndex();
+    x_index = viewModel.index(0, 0, vector_index);
+    z_index = viewModel.index(1, 0, vector_index);
+    EXPECT_EQ(viewModel.sessionItemFromIndex(vector_index), vectorItem);
+    EXPECT_EQ(viewModel.sessionItemFromIndex(x_index), vectorItem->getItem(VectorItem::P_X));
+    EXPECT_EQ(viewModel.sessionItemFromIndex(z_index), vectorItem->getItem(VectorItem::P_Z));
+}
+
 //! LayerItem in a MultiLayer.
 
 TEST_F(PropertyViewModelTest, layerInMultiLayerAsRootItem)

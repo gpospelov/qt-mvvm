@@ -71,6 +71,34 @@ TEST_F(DefaultViewModelTest, fromPropertyItem)
     EXPECT_EQ(dataItem->item(), propertyItem);
 }
 
+//! Hidden property item in a model. Current DefaultViewModel implementation deliberately doesn't
+//! respect `hidden` property. Item will be shown as usual, test is identical to the thest above.
+
+TEST_F(DefaultViewModelTest, fromPropertyItemWhenHidden)
+{
+    SessionModel model;
+    auto propertyItem = model.insertItem<PropertyItem>();
+    propertyItem->setData(42.0);
+    propertyItem->setVisible(false);
+
+    DefaultViewModel viewModel(&model);
+    EXPECT_EQ(viewModel.rowCount(), 1);
+    EXPECT_EQ(viewModel.columnCount(), 2);
+
+    // accessing first child under the root item
+    QModelIndex labelIndex = viewModel.index(0, 0);
+    QModelIndex dataIndex = viewModel.index(0, 1);
+
+    // it should be ViewLabelItem looking at our PropertyItem item
+    auto labelItem = dynamic_cast<ViewLabelItem*>(viewModel.itemFromIndex(labelIndex));
+    ASSERT_TRUE(labelItem != nullptr);
+    EXPECT_EQ(labelItem->item(), propertyItem);
+
+    auto dataItem = dynamic_cast<ViewDataItem*>(viewModel.itemFromIndex(dataIndex));
+    ASSERT_TRUE(dataItem != nullptr);
+    EXPECT_EQ(dataItem->item(), propertyItem);
+}
+
 //! Single property item in a model, inserted after DefaultViewModel was setup.
 
 TEST_F(DefaultViewModelTest, initThenInsert)
