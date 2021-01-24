@@ -90,6 +90,18 @@ TEST_F(StandardChildrenStrategiesTest, AllChildrenStrategy)
     EXPECT_EQ(children.size(), 3); // number of registered children
 }
 
+//! Testing AllChildrenStrategy when one of children is hidden.
+//! By the current convention this strategy still show all items.
+
+TEST_F(StandardChildrenStrategiesTest, AllChildrenStrategyWhenHidden)
+{
+    AllChildrenStrategy strategy;
+    VectorItem item;
+    item.getItem(VectorItem::P_X)->setVisible(false);
+    auto children = strategy.children(&item);
+    EXPECT_EQ(children.size(), 3); // hidden items are still shown
+}
+
 //! Testing TopItemsStrategy.
 
 TEST_F(StandardChildrenStrategiesTest, TopItemsStrategy)
@@ -126,6 +138,22 @@ TEST_F(StandardChildrenStrategiesTest, TopItemsStrategy)
     item5.setCurrentType(ToyItems::Constants::CylinderItemType);
     children = strategy.children(&item5);
     EXPECT_EQ(children.size(), 3); // number of registered children
+}
+
+//! Testing TopItemsStrategy when some items are hidden.
+
+TEST_F(StandardChildrenStrategiesTest, TopItemsStrategyWhenHidden)
+{
+    TopItemsStrategy strategy;
+
+    SessionModel model;
+    auto vec1 = model.insertItem<VectorItem>();
+    auto vec2 = model.insertItem<VectorItem>();
+    vec2->setVisible(false);
+    auto vec3 = model.insertItem<VectorItem>();
+
+    auto children = strategy.children(model.rootItem());
+    EXPECT_EQ(children, std::vector<SessionItem*>({vec1, vec3}));
 }
 
 //! Testing PropertyItemsStrategy.
@@ -182,6 +210,35 @@ TEST_F(StandardChildrenStrategiesTest, PropertyItemsStrategy)
         EXPECT_EQ(children_data(children), expected_children_data);
     }
 }
+
+//! Testing PropertyItemsStrategy when some items are hidden.
+
+TEST_F(StandardChildrenStrategiesTest, PropertyItemsStrategyWhenHidden)
+{
+    PropertyItemsStrategy strategy;
+
+    // VectorItem
+    {
+        VectorItem item;
+        item.getItem(VectorItem::P_Y)->setVisible(false);
+        auto children = strategy.children(&item);
+        EXPECT_EQ(children.size(), 2);
+    }
+
+    // GroupItem
+    {
+        ToyItems::ShapeGroupItem item;
+        item.setCurrentType(ToyItems::Constants::CylinderItemType);
+        item.currentItem()->getItem(ToyItems::CylinderItem::P_RADIUS)->setVisible(false);
+        auto children = strategy.children(&item);
+        EXPECT_EQ(children.size(), 1);
+
+        std::vector<ChildrenData> expected_children_data{
+            {Constants::PropertyType, ToyItems::CylinderItem::P_HEIGHT}};
+        EXPECT_EQ(children_data(children), expected_children_data);
+    }
+}
+
 
 //! Testing PropertyItemsFlatStrategy.
 

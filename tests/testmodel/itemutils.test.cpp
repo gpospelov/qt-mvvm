@@ -193,6 +193,29 @@ TEST_F(ItemUtilsTest, TopLevelItems)
     EXPECT_EQ(Utils::TopLevelItems(*parent), std::vector<SessionItem*>({child1, child3}));
 }
 
+//! Check access to top level and property items when some of items are hidden via corresponding
+//! appearance flag.
+
+TEST_F(ItemUtilsTest, TopLevelItemsWhenHidden)
+{
+    SessionModel model;
+
+    auto parent = model.insertItem<SessionItem>();
+    parent->registerTag(TagInfo::universalTag("default_tag1"), /*set_as_default*/ true);
+    parent->registerTag(TagInfo::universalTag("default_tag2"), /*set_as_default*/ true);
+    parent->registerTag(TagInfo::propertyTag("property_tag", Constants::PropertyType));
+
+    auto child1 = model.insertItem<SessionItem>(parent, "default_tag1");
+    auto child2 = model.insertItem<SessionItem>(parent, "default_tag1");
+    child2->setVisible(false);
+    auto child3 = model.insertItem<SessionItem>(parent, "default_tag2");
+    model.insertItem<PropertyItem>(parent, "property_tag");
+
+    EXPECT_EQ(Utils::TopLevelItems(*model.rootItem()), std::vector<SessionItem*>({parent}));
+    EXPECT_EQ(Utils::TopLevelItems(*child1), std::vector<SessionItem*>({}));
+    EXPECT_EQ(Utils::TopLevelItems(*parent), std::vector<SessionItem*>({child1, child3}));
+}
+
 //! Check access to top level and property items.
 
 TEST_F(ItemUtilsTest, SinglePropertyItems)
@@ -210,6 +233,29 @@ TEST_F(ItemUtilsTest, SinglePropertyItems)
     EXPECT_EQ(Utils::SinglePropertyItems(*model.rootItem()), std::vector<SessionItem*>({}));
     EXPECT_EQ(Utils::SinglePropertyItems(*child1), std::vector<SessionItem*>({}));
     EXPECT_EQ(Utils::SinglePropertyItems(*parent), std::vector<SessionItem*>({child2}));
+}
+
+//! Check access to top level and property items when some of items are hidden via corresponding
+//! appearance flag.
+
+TEST_F(ItemUtilsTest, SinglePropertyItemsWhenHidden)
+{
+    SessionModel model;
+
+    auto parent = model.insertItem<SessionItem>();
+    parent->registerTag(TagInfo::universalTag("default_tag"), /*set_as_default*/ true);
+    parent->registerTag(TagInfo::propertyTag("property_tag1", Constants::PropertyType));
+    parent->registerTag(TagInfo::propertyTag("property_tag2", Constants::PropertyType));
+
+    auto child1 = model.insertItem<SessionItem>(parent, "default_tag");
+    auto child2 = model.insertItem<PropertyItem>(parent, "property_tag1");
+    child2->setVisible(false);
+    auto child3 = model.insertItem<PropertyItem>(parent, "property_tag2");
+    model.insertItem<SessionItem>(parent, "default_tag");
+
+    EXPECT_EQ(Utils::SinglePropertyItems(*model.rootItem()), std::vector<SessionItem*>({}));
+    EXPECT_EQ(Utils::SinglePropertyItems(*child1), std::vector<SessionItem*>({}));
+    EXPECT_EQ(Utils::SinglePropertyItems(*parent), std::vector<SessionItem*>({child3}));
 }
 
 //! Looking for next item.

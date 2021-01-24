@@ -17,8 +17,6 @@
 #include <memory>
 #include <vector>
 
-class QStandardItem;
-
 namespace ModelView {
 
 class SessionModel;

@@ -17,6 +17,7 @@ using namespace ModelView;
 
 std::vector<SessionItem*> AllChildrenStrategy::children(const SessionItem* item) const
 {
+    // we returns all children, even if some marked as invisible
     return item ? item->children() : std::vector<SessionItem*>();
 }
 

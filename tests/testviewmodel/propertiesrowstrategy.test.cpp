@@ -152,3 +152,22 @@ TEST_F(PropertiesRowStrategyTest, vectorItemInModelContext)
     auto items = strategy.constructRow(model.rootItem());
     EXPECT_EQ(items.size(), 0);
 }
+
+//! Checks row construction for vector item when 'y' is hidden.
+//! There should be 2 view items looking to 'x' and 'z' properties.
+
+TEST_F(PropertiesRowStrategyTest, vectorItemWhenChildHidden)
+{
+    VectorItem item;
+    item.getItem(VectorItem::P_Y)->setVisible(false);
+
+    PropertiesRowStrategy strategy({"a", "b", "c"});
+    auto items = strategy.constructRow(&item);
+
+    // views should look at 3 property items
+    auto view_x = items.at(0).get();
+    EXPECT_EQ(view_x->item(), item.getItem(VectorItem::P_X));
+
+    auto view_y = items.at(1).get();
+    EXPECT_EQ(view_y->item(), item.getItem(VectorItem::P_Z));
+}

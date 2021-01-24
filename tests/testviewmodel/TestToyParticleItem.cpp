@@ -41,6 +41,16 @@ TEST_F(ToyParticleItemTest, TopLevelItems)
     EXPECT_EQ(Utils::TopLevelItems(*particle), std::vector<SessionItem*>{});
 }
 
+TEST_F(ToyParticleItemTest, TopLevelItemsWhenHidden)
+{
+    ToyItems::SampleModel model;
+    auto particle = model.insertItem<ToyItems::ParticleItem>();
+    particle->setVisible(false);
+
+    EXPECT_EQ(Utils::TopLevelItems(*model.rootItem()), std::vector<SessionItem*>({}));
+    EXPECT_EQ(Utils::TopLevelItems(*particle), std::vector<SessionItem*>{});
+}
+
 TEST_F(ToyParticleItemTest, SinglePropertyItems)
 {
     ToyItems::SampleModel model;
@@ -51,5 +61,19 @@ TEST_F(ToyParticleItemTest, SinglePropertyItems)
     EXPECT_EQ(Utils::SinglePropertyItems(*model.rootItem()), std::vector<SessionItem*>{});
     std::vector<SessionItem*> expected = {particle->getItem(ToyItems::ParticleItem::P_POSITION),
                                           particle->getItem(ToyItems::ParticleItem::P_SHAPES)};
+    EXPECT_EQ(Utils::SinglePropertyItems(*particle), expected);
+}
+
+TEST_F(ToyParticleItemTest, SinglePropertyItemsWhenPropertyHidden)
+{
+    ToyItems::SampleModel model;
+    auto particle = model.insertItem<ToyItems::ParticleItem>();
+
+    EXPECT_EQ(Utils::TopLevelItems(*model.rootItem()), std::vector<SessionItem*>({particle}));
+
+    EXPECT_EQ(Utils::SinglePropertyItems(*model.rootItem()), std::vector<SessionItem*>{});
+
+    particle->getItem(ToyItems::ParticleItem::P_POSITION)->setVisible(false);
+    std::vector<SessionItem*> expected = {particle->getItem(ToyItems::ParticleItem::P_SHAPES)};
     EXPECT_EQ(Utils::SinglePropertyItems(*particle), expected);
 }

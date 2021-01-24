@@ -61,6 +61,38 @@ TEST_F(TopItemsViewModelTest, insertLayerThenRemove)
     EXPECT_EQ(viewmodel.columnCount(QModelIndex()), 0);
 }
 
+//! Hidden LayerItem in a model. An item with setVisible(false) set shouldn't appear in a view
+//! model. The current implementation is limited and respects this flag only if it was set before
+//! the view model creation.
+
+TEST_F(TopItemsViewModelTest, hidenLayerInModel)
+{
+    // the model with two layers, where one is invisible
+    ToyItems::SampleModel model;
+    auto layer0 = model.insertItem<ToyItems::LayerItem>();
+    auto layer1 = model.insertItem<ToyItems::LayerItem>();
+    layer0->setVisible(false);
+
+    TopItemsViewModel viewmodel(&model);
+
+    // TopItemsViewModel should see only one layer.
+    EXPECT_EQ(viewmodel.rowCount(QModelIndex()), 1);
+    EXPECT_EQ(viewmodel.columnCount(QModelIndex()), 2);
+    auto layer1_index = viewmodel.index(0, 0, QModelIndex());
+    EXPECT_EQ(viewmodel.sessionItemFromIndex(layer1_index), layer1);
+
+    // The current implementation is somewhat limited: TopItemsViewModel doesn't listen for updates
+    // in isVisible flag. If flag is set after the model creation, item still be visible.
+
+    layer1->setVisible(false);
+
+    // model still sees the layer
+    EXPECT_EQ(viewmodel.rowCount(QModelIndex()), 1);
+    EXPECT_EQ(viewmodel.columnCount(QModelIndex()), 2);
+    layer1_index = viewmodel.index(0, 0, QModelIndex());
+    EXPECT_EQ(viewmodel.sessionItemFromIndex(layer1_index), layer1);
+}
+
 //! Insert LayerItem in MultiLayer.
 
 TEST_F(TopItemsViewModelTest, insertLayerInMultiLayerThenRemove)

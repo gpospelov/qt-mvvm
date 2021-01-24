@@ -21,6 +21,7 @@ namespace ModelView {
 class SessionItem;
 
 //! Strategy to find children of given item: gives all actual children back.
+//! Hidden children by the current convention will be also in the list.
 
 class MVVM_VIEWMODEL_EXPORT AllChildrenStrategy : public ChildrenStrategyInterface {
 public:
@@ -28,7 +29,8 @@ public:
 };
 
 //! Strategy to find children of given item: only top level items will be given, all
-//! property items will be filtered out.
+//! property items will be filtered out. All items explicitly marked with setVisible(false)
+//! will not show up.
 
 class MVVM_VIEWMODEL_EXPORT TopItemsStrategy : public ChildrenStrategyInterface {
 public:

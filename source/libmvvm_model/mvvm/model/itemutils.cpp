@@ -109,7 +109,7 @@ std::vector<SessionItem*> Utils::TopLevelItems(const SessionItem& item)
 {
     std::vector<SessionItem*> result;
     for (auto child : item.children())
-        if (!IsSinglePropertyTag(item, item.tagRowOfItem(child).tag))
+        if (child->isVisible() && !IsSinglePropertyTag(item, item.tagRowOfItem(child).tag))
             result.push_back(child);
     return result;
 }
@@ -118,7 +118,7 @@ std::vector<SessionItem*> Utils::SinglePropertyItems(const SessionItem& item)
 {
     std::vector<SessionItem*> result;
     for (auto child : item.children())
-        if (IsSinglePropertyTag(item, item.tagRowOfItem(child).tag))
+        if (child->isVisible() && IsSinglePropertyTag(item, item.tagRowOfItem(child).tag))
             result.push_back(child);
     return result;
 }

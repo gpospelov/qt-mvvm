@@ -62,7 +62,9 @@ QVector<int> Utils::ItemRoleToQtRole(int role)
 
 QVariant Utils::TextColorRole(const SessionItem& item)
 {
-    return item.isEnabled() ? QVariant() : QColor(Qt::gray);
+    const bool item_hidden = !item.isVisible();
+    const bool item_disabled = !item.isEnabled();
+    return item_disabled || item_hidden ? QColor(Qt::gray) : QVariant();
 }
 
 QVariant Utils::CheckStateRole(const SessionItem& item)
