@@ -26,18 +26,18 @@ MainWindow::MainWindow() : m_sample_model(std::make_unique<SampleModel>())
 {
     auto central_widget = new SampleEditorWdiget(m_sample_model.get());
     setCentralWidget(central_widget);
-    init_application();
+    initApplication();
 }
 
 MainWindow::~MainWindow() = default;
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {
-    write_settings();
+    writeSettings();
     QMainWindow::closeEvent(event);
 }
 
-void MainWindow::init_application()
+void MainWindow::initApplication()
 {
     QCoreApplication::setApplicationName("treeviews");
     QCoreApplication::setApplicationVersion("0.1");
@@ -52,7 +52,7 @@ void MainWindow::init_application()
     }
 }
 
-void MainWindow::write_settings()
+void MainWindow::writeSettings()
 {
     QSettings settings;
     settings.beginGroup(main_window_group);

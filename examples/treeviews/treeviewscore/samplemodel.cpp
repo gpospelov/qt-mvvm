@@ -34,12 +34,12 @@ namespace TreeViews {
 SampleModel::SampleModel() : SessionModel("SampleModel")
 {
     setItemCatalogue(CreateItemCatalogue());
-    init_model();
+    populateModel();
 }
 
 //! Provides initial model content.
 
-void SampleModel::init_model()
+void SampleModel::populateModel()
 {
     auto multi_layer = insertItem<MultiLayer>();
     auto layer = insertItem<LayerItem>(multi_layer);

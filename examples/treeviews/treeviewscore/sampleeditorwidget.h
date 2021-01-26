@@ -13,6 +13,10 @@
 #include <QWidget>
 #include <memory>
 
+class QTreeView;
+class QUndoView;
+class QBoxLayout;
+
 namespace ModelView {
 class SessionItem;
 class SessionModel;
@@ -20,10 +24,6 @@ class AllItemsTreeView;
 class PropertyTreeView;
 class TopItemsTreeView;
 } // namespace ModelView
-
-class QTreeView;
-class QUndoView;
-class QBoxLayout;
 
 namespace TreeViews {
 

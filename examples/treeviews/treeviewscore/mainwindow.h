@@ -30,9 +30,8 @@ protected:
     void closeEvent(QCloseEvent* event);
 
 private:
-    void init_application();
-    void write_settings();
-    void init_model();
+    void initApplication();
+    void writeSettings();
 
     std::unique_ptr<SampleModel> m_sample_model;
 };
