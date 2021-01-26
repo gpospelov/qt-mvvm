@@ -52,6 +52,7 @@ void ModelEditorWidget::setModel(SampleModel* model)
 
     // setting up right tree
     m_horizontalViewModel = std::make_unique<PropertyTableViewModel>(model);
+
     m_horizontalTree->setModel(m_horizontalViewModel.get());
     m_horizontalTree->setItemDelegate(m_delegate.get());
     m_horizontalTree->expandAll();
