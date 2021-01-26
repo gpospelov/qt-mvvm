@@ -24,18 +24,16 @@ namespace PlotColorMap {
 ColorMapWidget::ColorMapWidget(ColorMapModel* model, QWidget* parent)
     : QWidget(parent)
     , m_toolBar(new QToolBar)
-    , m_resetViewportAction(nullptr)
     , m_propertyWidget(new ColorMapPropertyWidget)
     , m_colorMapCanvas(new ColorMapCanvas)
-    , m_model(nullptr)
 {
     auto mainLayout = new QVBoxLayout;
     mainLayout->setSpacing(10);
 
     auto centralLayout = new QHBoxLayout;
 
-    centralLayout->addLayout(create_left_layout(), 3);
-    centralLayout->addLayout(create_right_layout(), 1);
+    centralLayout->addLayout(createLeftLayout(), 3);
+    centralLayout->addLayout(createRightLayout(), 1);
 
     mainLayout->addWidget(m_toolBar);
     mainLayout->addLayout(centralLayout);
@@ -43,7 +41,7 @@ ColorMapWidget::ColorMapWidget(ColorMapModel* model, QWidget* parent)
     setLayout(mainLayout);
     setModel(model);
 
-    init_actions();
+    initActions();
 }
 
 void ColorMapWidget::setModel(ColorMapModel* model)
@@ -58,7 +56,7 @@ void ColorMapWidget::setModel(ColorMapModel* model)
     m_colorMapCanvas->setItem(model->topItem<ColorMapViewportItem>());
 }
 
-void ColorMapWidget::init_actions()
+void ColorMapWidget::initActions()
 {
     const int toolbar_icon_size = 24;
     m_toolBar->setIconSize(QSize(toolbar_icon_size, toolbar_icon_size));
@@ -73,14 +71,14 @@ void ColorMapWidget::init_actions()
     m_toolBar->addAction(m_resetViewportAction);
 }
 
-QBoxLayout* ColorMapWidget::create_left_layout()
+QBoxLayout* ColorMapWidget::createLeftLayout()
 {
     auto result = new QVBoxLayout;
     result->addWidget(m_colorMapCanvas);
     return result;
 }
 
-QBoxLayout* ColorMapWidget::create_right_layout()
+QBoxLayout* ColorMapWidget::createRightLayout()
 {
     auto result = new QVBoxLayout;
     result->addWidget(m_propertyWidget);
