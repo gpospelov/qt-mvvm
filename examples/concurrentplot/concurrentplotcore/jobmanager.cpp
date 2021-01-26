@@ -14,6 +14,8 @@ JobManager::JobManager(QObject* parent) : QObject(parent), is_running(true)
 {
     // starting thread to run consequent simulations
     sim_thread = std::thread{&JobManager::wait_and_run, this};
+
+    setDelay(1000); // initial slowness of the simulation
 }
 
 JobManager::~JobManager()
@@ -66,7 +68,7 @@ void JobManager::wait_and_run()
             // Waiting here for the value which we will use as simulation input parameter.
             auto value = requested_values.wait_and_pop();
 
-            double amplitude = *value.get() / 100.;
+            double amplitude = *value / 100.;
             ToySimulation simulation(amplitude, delay);
 
             auto on_progress = [this](int value) {

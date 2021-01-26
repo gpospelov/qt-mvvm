@@ -14,7 +14,6 @@
 #include <memory>
 
 class GraphModel;
-class QTabWidget;
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -27,11 +26,10 @@ protected:
     void closeEvent(QCloseEvent* event);
 
 private:
-    void init_application();
-    void write_settings();
-    void init_model();
+    void initApplication();
+    void writeSettings();
+    void populateModel();
 
-    QTabWidget* m_tabWidget;
     std::unique_ptr<GraphModel> m_graph_model;
 };
 
