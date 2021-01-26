@@ -1,7 +1,6 @@
 # Example "layereditor".
 
-The example demonstrates how to create a custom tree layout and how to serialize
-application data.
+The example demonstrates how to create a tree with a custom layout.
 
 This application represents a simplified multi-layer editor, where the user
 defines materials, their scattering properties and assembles multi-layer system

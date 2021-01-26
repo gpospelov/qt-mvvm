@@ -36,10 +36,9 @@ public:
     explicit SceneWidget(SceneModel* model = nullptr, QWidget* parent = nullptr);
 
 private:
-    void init_actions();
-
-    QBoxLayout* create_left_layout();
-    QBoxLayout* create_right_layout();
+    void initActions();
+    QBoxLayout* createLeftLayout();
+    QBoxLayout* createRightLayout();
 
     QToolBar* m_toolBar{nullptr};
     QAction* m_resetViewportAction{nullptr};

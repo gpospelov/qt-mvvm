@@ -47,7 +47,7 @@ public:
     ModelView::ExternalProperty material_property(const std::string& id);
 
 private:
-    void init_model();
+    void populateModel();
 };
 
 #endif //  MATERIALMODEL_H

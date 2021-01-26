@@ -30,8 +30,8 @@ public:
     SampleWidget(ApplicationModels* models, QWidget* parent = nullptr);
 
 private:
-    QBoxLayout* create_top_layout();
-    QBoxLayout* create_bottom_layout();
+    QBoxLayout* createTopLayout();
+    QBoxLayout* createBottomLayout();
 
     ModelView::ItemsTreeView* m_materialTree{nullptr};
     ModelView::ItemsTreeView* m_sampleTree{nullptr};

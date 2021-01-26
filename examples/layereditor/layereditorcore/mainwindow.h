@@ -14,7 +14,6 @@
 #include <memory>
 
 class ApplicationModels;
-class QTabWidget;
 
 //! Application main window.
 
@@ -29,11 +28,10 @@ protected:
     void closeEvent(QCloseEvent* event);
 
 private:
-    void init_application();
-    void write_settings();
-    void create_menus();
+    void initApplication();
+    void writeSettings();
+    void createMenus();
 
-    QTabWidget* m_tabWidget;
     std::unique_ptr<ApplicationModels> m_models;
 };
 

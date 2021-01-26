@@ -36,9 +36,9 @@ public:
     void setModel(SceneModel* model);
 
 private:
-    void setup_slider();
+    void setupSlider();
+    QBoxLayout* createButtonLayout();
 
-    QBoxLayout* create_button_layout();
     QSlider* m_slider{nullptr};
     ModelView::ItemsTreeView* m_treeView{nullptr};
     SceneModel* m_model{nullptr};

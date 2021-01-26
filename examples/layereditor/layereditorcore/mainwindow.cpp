@@ -15,7 +15,6 @@
 #include <QFileDialog>
 #include <QMenuBar>
 #include <QSettings>
-#include <QTabWidget>
 
 namespace {
 const QString main_window_group = "MainWindow";
@@ -23,27 +22,24 @@ const QString size_key = "size";
 const QString pos_key = "pos";
 } // namespace
 
-MainWindow::MainWindow()
-    : m_tabWidget(new QTabWidget), m_models(std::make_unique<ApplicationModels>())
+MainWindow::MainWindow() : m_models(std::make_unique<ApplicationModels>())
 {
-    m_tabWidget->addTab(new SampleWidget(m_models.get()), "Materials and Layers");
-
-    setCentralWidget(m_tabWidget);
-
-    create_menus();
-    init_application();
+    setCentralWidget(new SampleWidget(m_models.get()));
+    initApplication();
 }
 
 MainWindow::~MainWindow() = default;
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {
-    write_settings();
+    writeSettings();
     QMainWindow::closeEvent(event);
 }
 
-void MainWindow::init_application()
+void MainWindow::initApplication()
 {
+    createMenus();
+
     QCoreApplication::setApplicationName("layereditor");
     QCoreApplication::setApplicationVersion("0.1");
     QCoreApplication::setOrganizationName("qt-mvvm");
@@ -57,7 +53,7 @@ void MainWindow::init_application()
     }
 }
 
-void MainWindow::write_settings()
+void MainWindow::writeSettings()
 {
     QSettings settings;
     settings.beginGroup(main_window_group);
@@ -68,7 +64,7 @@ void MainWindow::write_settings()
 
 //! Creates application file menu.
 
-void MainWindow::create_menus()
+void MainWindow::createMenus()
 {
     auto fileMenu = menuBar()->addMenu("&File");
 
