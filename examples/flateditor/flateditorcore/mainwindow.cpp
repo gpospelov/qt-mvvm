@@ -12,7 +12,6 @@
 #include "samplemodel.h"
 #include <QCoreApplication>
 #include <QSettings>
-#include <QTabWidget>
 
 namespace {
 const QString main_window_group = "MainWindow";
@@ -20,26 +19,21 @@ const QString size_key = "size";
 const QString pos_key = "pos";
 } // namespace
 
-MainWindow::MainWindow()
-    : m_tabWidget(new QTabWidget), m_sample_model(std::make_unique<SampleModel>())
+MainWindow::MainWindow() : m_sampleModel(std::make_unique<SampleModel>())
 {
-    m_tabWidget->addTab(new DemoWidget(m_sample_model.get()), "Automatic widget generation");
-
-    m_tabWidget->setCurrentIndex(m_tabWidget->count() - 1);
-    setCentralWidget(m_tabWidget);
-
-    init_application();
+    setCentralWidget(new DemoWidget(m_sampleModel.get()));
+    initApplication();
 }
 
 MainWindow::~MainWindow() = default;
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {
-    write_settings();
+    writeSettings();
     QMainWindow::closeEvent(event);
 }
 
-void MainWindow::init_application()
+void MainWindow::initApplication()
 {
     QCoreApplication::setApplicationName("flateditor");
     QCoreApplication::setApplicationVersion("0.1");
@@ -54,7 +48,7 @@ void MainWindow::init_application()
     }
 }
 
-void MainWindow::write_settings()
+void MainWindow::writeSettings()
 {
     QSettings settings;
     settings.beginGroup(main_window_group);

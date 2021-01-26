@@ -19,7 +19,7 @@ public:
     SampleModel();
 
 private:
-    void init_model();
+    void populateModel();
 };
 
 #endif
