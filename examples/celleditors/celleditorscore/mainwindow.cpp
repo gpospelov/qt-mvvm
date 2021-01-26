@@ -59,12 +59,12 @@ void MainWindow::initApplication()
         settings.endGroup();
     }
 
-    setupModel();
+    populateModel();
 }
 
 //! Populating the model with the content.
 
-void MainWindow::setupModel()
+void MainWindow::populateModel()
 {
     m_model->insertItem<DemoPropertiesItem>();
     m_model->insertItem<DemoPropertiesItem>();

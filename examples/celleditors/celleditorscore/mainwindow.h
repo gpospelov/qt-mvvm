@@ -32,7 +32,7 @@ protected:
 private:
     void writeSettings();
     void initApplication();
-    void setupModel();
+    void populateModel();
 
     std::unique_ptr<SampleModel> m_model;
 };

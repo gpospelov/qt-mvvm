@@ -42,7 +42,7 @@ public:
     void setUndoPosition(int value);
 
 private:
-    void populate_model();
+    void populateModel();
 };
 
 #endif // MOUSEMODEL_H
