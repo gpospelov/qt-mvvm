@@ -38,8 +38,8 @@ public:
     void setModel(SampleModel* model);
 
 private:
-    QBoxLayout* create_left_layout();
-    QBoxLayout* create_right_layout();
+    QBoxLayout* createLeftLayout();
+    QBoxLayout* createRightLayout();
 
     QTreeView* m_verticalTree{nullptr};
     QTreeView* m_horizontalTree{nullptr};

@@ -13,8 +13,6 @@
 #include <QMainWindow>
 #include <memory>
 
-class QTabWidget;
-
 namespace CellEditors {
 
 class SampleModel;
@@ -32,11 +30,10 @@ protected:
     void closeEvent(QCloseEvent* event) override;
 
 private:
-    void write_settings();
-    void init_application();
-    void init_models();
+    void writeSettings();
+    void initApplication();
+    void setupModel();
 
-    QTabWidget* m_tabWidget{nullptr};
     std::unique_ptr<SampleModel> m_model;
 };
 

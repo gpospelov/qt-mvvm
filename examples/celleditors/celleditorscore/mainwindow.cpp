@@ -13,7 +13,6 @@
 #include "samplemodel.h"
 #include <QCoreApplication>
 #include <QSettings>
-#include <QTabWidget>
 
 namespace {
 const QString main_window_group = "MainWindow";
@@ -23,21 +22,21 @@ const QString pos_key = "pos";
 
 namespace CellEditors {
 
-MainWindow::MainWindow() : m_tabWidget(new QTabWidget), m_model(std::make_unique<SampleModel>())
+MainWindow::MainWindow() : m_model(std::make_unique<SampleModel>())
 {
-    setCentralWidget(m_tabWidget);
-    init_application();
+    setCentralWidget(new ModelEditorWidget(m_model.get()));
+    initApplication();
 }
 
 MainWindow::~MainWindow() = default;
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {
-    write_settings();
+    writeSettings();
     QMainWindow::closeEvent(event);
 }
 
-void MainWindow::write_settings()
+void MainWindow::writeSettings()
 {
     QSettings settings;
     settings.beginGroup(main_window_group);
@@ -46,7 +45,7 @@ void MainWindow::write_settings()
     settings.endGroup();
 }
 
-void MainWindow::init_application()
+void MainWindow::initApplication()
 {
     QCoreApplication::setApplicationName("celleditors");
     QCoreApplication::setApplicationVersion("0.1");
@@ -60,18 +59,16 @@ void MainWindow::init_application()
         settings.endGroup();
     }
 
-    init_models();
+    setupModel();
 }
 
-void MainWindow::init_models()
-{
-    // populating first model with content
-    m_model->insertItem<DemoPropertiesItem>();
-    m_model->insertItem<DemoPropertiesItem>();
-    m_model->insertItem<DemoPropertiesItem>();
+//! Populating the model with the content.
 
-    m_tabWidget->addTab(new ModelEditorWidget(m_model.get()), "Available properties");
-    m_tabWidget->setCurrentIndex(m_tabWidget->count() - 1);
+void MainWindow::setupModel()
+{
+    m_model->insertItem<DemoPropertiesItem>();
+    m_model->insertItem<DemoPropertiesItem>();
+    m_model->insertItem<DemoPropertiesItem>();
 }
 
 } // namespace CellEditors
