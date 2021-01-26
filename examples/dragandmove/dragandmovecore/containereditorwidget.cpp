@@ -65,7 +65,7 @@ void ContainerEditorWidget::setModel(SampleModel* model, SessionItem* root_item)
 
 void ContainerEditorWidget::onAdd()
 {
-    m_model->append_random_item(m_container);
+    m_model->appendRandomItem(m_container);
 }
 
 void ContainerEditorWidget::onCopy()

@@ -13,8 +13,6 @@
 #include <QMainWindow>
 #include <memory>
 
-class QTabWidget;
-
 namespace DragAndMove {
 
 class SampleModel;
@@ -32,10 +30,9 @@ protected:
     void closeEvent(QCloseEvent* event);
 
 private:
-    void write_settings();
-    void init_application();
+    void writeSettings();
+    void initApplication();
 
-    QTabWidget* m_tabWidget;
     std::unique_ptr<SampleModel> m_model;
 };
 

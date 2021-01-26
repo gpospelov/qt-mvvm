@@ -8,9 +8,9 @@
 // ************************************************************************** //
 
 #include "samplemodel.h"
-#include "sampleitems.h"
 #include "mvvm/utils/numericutils.h"
 #include "mvvm/widgets/widgetutils.h"
+#include "sampleitems.h"
 #include <QColor>
 
 namespace DragAndMove {
@@ -36,11 +36,11 @@ SampleModel::SampleModel() : SessionModel("SampleModel")
 {
     registerItem<DemoItem>();
     registerItem<DemoContainerItem>();
-    init_model_content();
+    populateModel();
     setUndoRedoEnabled(true);
 }
 
-void SampleModel::append_random_item(ModelView::SessionItem* container)
+void SampleModel::appendRandomItem(ModelView::SessionItem* container)
 {
     auto item = insertItem<DemoItem>(container);
     item->setProperty(DemoItem::P_COLOR_PROPERTY, ModelView::Utils::RandomColor());
@@ -50,16 +50,16 @@ void SampleModel::append_random_item(ModelView::SessionItem* container)
 
 //! Generates initial model content.
 
-void SampleModel::init_model_content()
+void SampleModel::populateModel()
 {
     auto container = insertItem<DemoContainerItem>();
-    append_random_item(container);
-    append_random_item(container);
-    append_random_item(container);
+    appendRandomItem(container);
+    appendRandomItem(container);
+    appendRandomItem(container);
 
     container = insertItem<DemoContainerItem>();
-    append_random_item(container);
-    append_random_item(container);
+    appendRandomItem(container);
+    appendRandomItem(container);
 }
 
-} // namespace DragAndView
+} // namespace DragAndMove
