@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef FLATEDITORCORE_MAINWINDOW_H
+#define FLATEDITORCORE_MAINWINDOW_H
 
 #include <QMainWindow>
 #include <memory>
@@ -34,4 +34,4 @@ private:
     std::unique_ptr<SampleModel> m_sampleModel;
 };
 
-#endif //  MAINWINDOW_H
+#endif // FLATEDITORCORE_MAINWINDOW_H

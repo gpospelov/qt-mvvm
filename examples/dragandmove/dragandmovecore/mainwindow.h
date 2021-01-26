@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef DRAGANDMOVECORE_MAINWINDOW_H
+#define DRAGANDMOVECORE_MAINWINDOW_H
 
 #include <QMainWindow>
 #include <memory>
@@ -38,4 +38,4 @@ private:
 
 } // namespace DragAndMove
 
-#endif //  MAINWINDOW_H
+#endif // DRAGANDMOVECORE_MAINWINDOW_H

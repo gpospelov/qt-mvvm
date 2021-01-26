@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef SAMPLEMODEL_H
-#define SAMPLEMODEL_H
+#ifndef LAYEREDITORCORE_SAMPLEMODEL_H
+#define LAYEREDITORCORE_SAMPLEMODEL_H
 
 #include "mvvm/model/compounditem.h"
 #include "mvvm/model/sessionmodel.h"
@@ -42,4 +42,4 @@ private:
     void populateModel();
 };
 
-#endif //  SAMPLEMODEL_H
+#endif // LAYEREDITORCORE_SAMPLEMODEL_H

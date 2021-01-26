@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef PROJECTPANEWIDGET_H
-#define PROJECTPANEWIDGET_H
+#ifndef SAVELOADPROJECTCORE_PROJECTPANEWIDGET_H
+#define SAVELOADPROJECTCORE_PROJECTPANEWIDGET_H
 
 #include <QWidget>
 
@@ -45,4 +45,4 @@ private:
     QString m_project_dir;
 };
 
-#endif // PROJECTPANEWIDGET_H
+#endif // SAVELOADPROJECTCORE_PROJECTPANEWIDGET_H

@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef LAYEREDITORCORE_MAINWINDOW_H
+#define LAYEREDITORCORE_MAINWINDOW_H
 
 #include <QMainWindow>
 #include <memory>
@@ -35,4 +35,4 @@ private:
     std::unique_ptr<ApplicationModels> m_models;
 };
 
-#endif //  MAINWINDOW_H
+#endif // LAYEREDITORCORE_MAINWINDOW_H

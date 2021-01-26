@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef GRAPHICSPROXY_GRAPHICSVIEW_H
-#define GRAPHICSPROXY_GRAPHICSVIEW_H
+#ifndef GRAPHICSPROXYCORE_GRAPHICSVIEW_H
+#define GRAPHICSPROXYCORE_GRAPHICSVIEW_H
 
 #include <QGraphicsView>
 
@@ -33,4 +33,4 @@ private:
 
 } // namespace GraphicsProxy
 
-#endif //  GRAPHICSPROXY_GRAPHICSVIEW_H
+#endif // GRAPHICSPROXYCORE_GRAPHICSVIEW_H

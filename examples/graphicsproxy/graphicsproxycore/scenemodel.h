@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef GRAPHICSPROXY_SCENEMODEL_H
-#define GRAPHICSPROXY_SCENEMODEL_H
+#ifndef GRAPHICSPROXYCORE_SCENEMODEL_H
+#define GRAPHICSPROXYCORE_SCENEMODEL_H
 
 #include "mvvm/model/sessionmodel.h"
 
@@ -34,4 +34,4 @@ private:
 
 } // namespace GraphicsProxy
 
-#endif // GRAPHICSPROXY_SCENEMODEL_H
+#endif // GRAPHICSPROXYCORE_SCENEMODEL_H

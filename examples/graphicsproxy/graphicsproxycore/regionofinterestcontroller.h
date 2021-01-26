@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef GRAPHICSPROXY_REGIONOFINTERESTCONTROLLER_H
-#define GRAPHICSPROXY_REGIONOFINTERESTCONTROLLER_H
+#ifndef GRAPHICSPROXYCORE_REGIONOFINTERESTCONTROLLER_H
+#define GRAPHICSPROXYCORE_REGIONOFINTERESTCONTROLLER_H
 
 #include "mvvm/signals/itemlistener.h"
 #include <memory>
@@ -56,4 +56,4 @@ private:
 
 } // namespace GraphicsProxy
 
-#endif // GRAPHICSPROXY_REGIONOFINTERESTCONTROLLER_H
+#endif // GRAPHICSPROXYCORE_REGIONOFINTERESTCONTROLLER_H

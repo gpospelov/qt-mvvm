@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef CONCURRENTPLOTCORE_MAINWINDOW_H
+#define CONCURRENTPLOTCORE_MAINWINDOW_H
 
 #include <QMainWindow>
 #include <memory>
@@ -33,4 +33,4 @@ private:
     std::unique_ptr<GraphModel> m_graph_model;
 };
 
-#endif //  MAINWINDOW_H
+#endif // CONCURRENTPLOTCORE_MAINWINDOW_H

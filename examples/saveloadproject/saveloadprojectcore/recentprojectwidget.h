@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef RECENTPROJECTWIDGET_H
-#define RECENTPROJECTWIDGET_H
+#ifndef SAVELOADPROJECTCORE_RECENTPROJECTWIDGET_H
+#define SAVELOADPROJECTCORE_RECENTPROJECTWIDGET_H
 
 #include <QWidget>
 #include <memory>
@@ -45,4 +45,4 @@ private:
     std::vector<ProjectPaneWidget*> m_recentProjectPanes;
 };
 
-#endif // RECENTPROJECTWIDGET_H
+#endif // SAVELOADPROJECTCORE_RECENTPROJECTWIDGET_H

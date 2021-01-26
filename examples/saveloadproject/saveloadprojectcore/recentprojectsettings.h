@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef RECENTPROJECTSETTINGS_H
-#define RECENTPROJECTSETTINGS_H
+#ifndef SAVELOADPROJECTCORE_RECENTPROJECTSETTINGS_H
+#define SAVELOADPROJECTCORE_RECENTPROJECTSETTINGS_H
 
 #include <QStringList>
 
@@ -36,4 +36,4 @@ private:
     QStringList m_recentProjects;
 };
 
-#endif // RECENTPROJECTSETTINGS_H
+#endif // SAVELOADPROJECTCORE_RECENTPROJECTSETTINGS_H

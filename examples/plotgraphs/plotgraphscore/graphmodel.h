@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef GRAPHMODEL_H
-#define GRAPHMODEL_H
+#ifndef PLOTGRAPHSCORE_GRAPHMODEL_H
+#define PLOTGRAPHSCORE_GRAPHMODEL_H
 
 #include "mvvm/model/sessionmodel.h"
 
@@ -46,4 +46,4 @@ private:
 
 } // namespace PlotGraphs
 
-#endif // GRAPHMODEL_H
+#endif // PLOTGRAPHSCORE_GRAPHMODEL_H

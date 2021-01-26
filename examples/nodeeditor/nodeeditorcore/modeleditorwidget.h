@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MODELEDITORWIDGET_H
-#define MODELEDITORWIDGET_H
+#ifndef NODEEDITORCORE_MODELEDITORWIDGET_H
+#define NODEEDITORCORE_MODELEDITORWIDGET_H
 
 #include <QWidget>
 #include <memory>
@@ -55,4 +55,4 @@ private:
 
 } // namespace NodeEditor
 
-#endif // MODELEDITORWIDGET_H
+#endif // NODEEDITORCORE_MODELEDITORWIDGET_H

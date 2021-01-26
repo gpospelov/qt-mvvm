@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef GRAPHICSPROXY_SCENEWIDGET_H
-#define GRAPHICSPROXY_SCENEWIDGET_H
+#ifndef GRAPHICSPROXYCORE_SCENEWIDGET_H
+#define GRAPHICSPROXYCORE_SCENEWIDGET_H
 
 #include <QWidget>
 
@@ -53,4 +53,4 @@ private:
 
 } // namespace GraphicsProxy
 
-#endif // GRAPHICSPROXY_SCENEWIDGET_H
+#endif // GRAPHICSPROXYCORE_SCENEWIDGET_H

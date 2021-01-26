@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef SAMPLEITEMS_H
-#define SAMPLEITEMS_H
+#ifndef DRAGANDMOVECORE_SAMPLEITEMS_H
+#define DRAGANDMOVECORE_SAMPLEITEMS_H
 
 //! @file items.h
 //! Collection of items for our application model.
@@ -43,4 +43,4 @@ public:
 
 } // namespace DragAndMove
 
-#endif // SAMPLEITEMS_H
+#endif // DRAGANDMOVECORE_SAMPLEITEMS_H

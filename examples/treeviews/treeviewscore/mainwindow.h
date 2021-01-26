@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef TREEVIEWSCORE_MAINWINDOW_H
+#define TREEVIEWSCORE_MAINWINDOW_H
 
 #include <QMainWindow>
 #include <memory>
@@ -38,4 +38,4 @@ private:
 
 } // namespace TreeViews
 
-#endif //  MAINWINDOW_H
+#endif // TREEVIEWSCORE_MAINWINDOW_H

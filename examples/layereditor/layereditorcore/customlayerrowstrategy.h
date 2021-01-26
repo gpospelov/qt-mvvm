@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef CUSTOMLAYERROWSTRATEGY_H
-#define CUSTOMLAYERROWSTRATEGY_H
+#ifndef LAYEREDITORCORE_CUSTOMLAYERROWSTRATEGY_H
+#define LAYEREDITORCORE_CUSTOMLAYERROWSTRATEGY_H
 
 #include "samplemodel.h"
 #include "mvvm/interfaces/rowstrategyinterface.h"
@@ -60,4 +60,4 @@ public:
     }
 };
 
-#endif //  CUSTOMLAYERROWSTRATEGY_H
+#endif // LAYEREDITORCORE_CUSTOMLAYERROWSTRATEGY_H

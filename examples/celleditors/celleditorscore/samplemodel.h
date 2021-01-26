@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef SAMPLEMODEL_H
-#define SAMPLEMODEL_H
+#ifndef CELLEDITORSCORE_SAMPLEMODEL_H
+#define CELLEDITORSCORE_SAMPLEMODEL_H
 
 #include "mvvm/model/compounditem.h"
 #include "mvvm/model/sessionmodel.h"
@@ -41,4 +41,4 @@ public:
 
 } // namespace CellEditors
 
-#endif
+#endif // CELLEDITORSCORE_SAMPLEMODEL_H

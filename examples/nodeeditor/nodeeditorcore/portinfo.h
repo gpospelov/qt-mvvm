@@ -28,4 +28,4 @@ const static PortInfo LatticePort = {"Lattice", "gold"};
 
 } // namespace NodeEditor
 
-#endif //  NODEEDITORCORE_PORTINFO_H
+#endif // NODEEDITORCORE_PORTINFO_H

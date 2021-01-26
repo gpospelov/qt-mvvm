@@ -35,4 +35,4 @@ protected:
 
 } // namespace NodeEditor
 
-#endif //  NODEEDITORCORE_GRAPHICSVIEW_H
+#endif // NODEEDITORCORE_GRAPHICSVIEW_H

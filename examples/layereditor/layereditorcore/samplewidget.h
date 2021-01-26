@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef SAMPLEWIDGET_H
-#define SAMPLEWIDGET_H
+#ifndef LAYEREDITORCORE_SAMPLEWIDGET_H
+#define LAYEREDITORCORE_SAMPLEWIDGET_H
 
 #include <QWidget>
 
@@ -40,4 +40,4 @@ private:
     ApplicationModels* m_models{nullptr};
 };
 
-#endif // SAMPLEWIDGET_H
+#endif // LAYEREDITORCORE_SAMPLEWIDGET_H

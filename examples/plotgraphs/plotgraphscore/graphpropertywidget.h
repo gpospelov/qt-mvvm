@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef GRAPHPROPERTYWIDGET_H
-#define GRAPHPROPERTYWIDGET_H
+#ifndef PLOTGRAPHSCORE_GRAPHPROPERTYWIDGET_H
+#define PLOTGRAPHSCORE_GRAPHPROPERTYWIDGET_H
 
 #include <QWidget>
 #include <memory>
@@ -42,4 +42,4 @@ private:
 
 } // namespace PlotGraphs
 
-#endif // GRAPHPROPERTYWIDGET_H
+#endif // PLOTGRAPHSCORE_GRAPHPROPERTYWIDGET_H

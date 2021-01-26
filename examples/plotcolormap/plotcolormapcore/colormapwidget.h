@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef COLORMAPWIDGET_H
-#define COLORMAPWIDGET_H
+#ifndef PLOTCOLORMAPCORE_COLORMAPWIDGET_H
+#define PLOTCOLORMAPCORE_COLORMAPWIDGET_H
 
 #include <QWidget>
 
@@ -51,4 +51,4 @@ private:
 
 } // namespace PlotColorMap
 
-#endif // COLORMAPWIDGET_H
+#endif // PLOTCOLORMAPCORE_COLORMAPWIDGET_H

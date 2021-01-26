@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MATERIALTABLEWIDGETS_H
-#define MATERIALTABLEWIDGETS_H
+#ifndef LAYEREDITORCORE_MATERIALTABLEWIDGET_H
+#define LAYEREDITORCORE_MATERIALTABLEWIDGET_H
 
 #include <QWidget>
 #include <memory>
@@ -39,4 +39,4 @@ private:
     std::unique_ptr<ModelView::ViewModelDelegate> m_delegate;
 };
 
-#endif // MATERIALTABLEWIDGETS_H
+#endif // LAYEREDITORCORE_MATERIALTABLEWIDGET_H

@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef PLOTCOLORMAPCORE_MAINWINDOW_H
+#define PLOTCOLORMAPCORE_MAINWINDOW_H
 
 #include <QMainWindow>
 #include <memory>
@@ -37,4 +37,4 @@ private:
 
 } // namespace PlotColorMap
 
-#endif //  MAINWINDOW_H
+#endif // PLOTCOLORMAPCORE_MAINWINDOW_H

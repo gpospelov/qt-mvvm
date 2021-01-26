@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MATERIALMODEL_H
-#define MATERIALMODEL_H
+#ifndef LAYEREDITORCORE_MATERIALMODEL_H
+#define LAYEREDITORCORE_MATERIALMODEL_H
 
 #include "mvvm/model/compounditem.h"
 #include "mvvm/model/sessionmodel.h"
@@ -50,4 +50,4 @@ private:
     void populateModel();
 };
 
-#endif //  MATERIALMODEL_H
+#endif // LAYEREDITORCORE_MATERIALMODEL_H

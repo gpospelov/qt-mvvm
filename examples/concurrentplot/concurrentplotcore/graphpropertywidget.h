@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef GRAPHPROPERTYWIDGET_H
-#define GRAPHPROPERTYWIDGET_H
+#ifndef CONCURRENTPLOTCORE_GRAPHPROPERTYWIDGET_H
+#define CONCURRENTPLOTCORE_GRAPHPROPERTYWIDGET_H
 
 #include <QWidget>
 #include <memory>
@@ -36,4 +36,4 @@ private:
     ModelView::ItemsTreeView* m_treeView{nullptr};
 };
 
-#endif // GRAPHPROPERTYWIDGET_H
+#endif // CONCURRENTPLOTCORE_GRAPHPROPERTYWIDGET_H

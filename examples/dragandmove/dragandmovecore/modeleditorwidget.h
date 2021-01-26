@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MODELEDITORWIDGET_H
-#define MODELEDITORWIDGET_H
+#ifndef DRAGANDMOVECORE_MODELEDITORWIDGET_H
+#define DRAGANDMOVECORE_MODELEDITORWIDGET_H
 
 #include <QWidget>
 #include <memory>
@@ -50,4 +50,4 @@ private:
 
 } // namespace DragAndMove
 
-#endif // MODELEDITORWIDGET_H
+#endif // DRAGANDMOVECORE_MODELEDITORWIDGET_H

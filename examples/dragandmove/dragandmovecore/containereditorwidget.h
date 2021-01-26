@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef CONTAINEREDITORWIDGET_H
-#define CONTAINEREDITORWIDGET_H
+#ifndef DRAGANDMOVECORE_CONTAINEREDITORWIDGET_H
+#define DRAGANDMOVECORE_CONTAINEREDITORWIDGET_H
 
 #include <QWidget>
 #include <memory>
@@ -59,4 +59,4 @@ private:
 
 } // namespace DragAndMove
 
-#endif // CONTAINEREDITORWIDGET_H
+#endif // DRAGANDMOVECORE_CONTAINEREDITORWIDGET_H

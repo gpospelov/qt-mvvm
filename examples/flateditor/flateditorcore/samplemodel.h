@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef SAMPLEMODEL_H
-#define SAMPLEMODEL_H
+#ifndef FLATEDITORCORE_SAMPLEMODEL_H
+#define FLATEDITORCORE_SAMPLEMODEL_H
 
 #include "mvvm/model/sessionmodel.h"
 
@@ -22,4 +22,4 @@ private:
     void populateModel();
 };
 
-#endif
+#endif // FLATEDITORCORE_SAMPLEMODEL_H

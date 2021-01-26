@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef SAMPLEMODEL_H
-#define SAMPLEMODEL_H
+#ifndef DRAGANDMOVECORE_SAMPLEMODEL_H
+#define DRAGANDMOVECORE_SAMPLEMODEL_H
 
 #include "mvvm/model/sessionmodel.h"
 
@@ -32,4 +32,4 @@ private:
 
 } // namespace DragAndMove
 
-#endif
+#endif // DRAGANDMOVECORE_SAMPLEMODEL_H

@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef PLOTGRAPHSCORE_MAINWINDOW_H
+#define PLOTGRAPHSCORE_MAINWINDOW_H
 
 #include <QMainWindow>
 #include <memory>
@@ -39,4 +39,4 @@ private:
 
 } // namespace PlotGraphs
 
-#endif //  MAINWINDOW_H
+#endif // PLOTGRAPHSCORE_MAINWINDOW_H

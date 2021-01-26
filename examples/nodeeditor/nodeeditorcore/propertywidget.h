@@ -45,4 +45,4 @@ private:
 
 } // namespace NodeEditor
 
-#endif //  NODEEDITORCORE_PROPERTYWIDGET_H
+#endif // NODEEDITORCORE_PROPERTYWIDGET_H

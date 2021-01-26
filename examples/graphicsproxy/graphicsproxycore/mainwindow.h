@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef GRAPHICSPROXY_MAINWINDOW_H
-#define GRAPHICSPROXY_MAINWINDOW_H
+#ifndef GRAPHICSPROXYCORE_MAINWINDOW_H
+#define GRAPHICSPROXYCORE_MAINWINDOW_H
 
 #include <QMainWindow>
 #include <memory>
@@ -38,4 +38,4 @@ private:
 
 } // namespace GraphicsProxy
 
-#endif //  GRAPHICSPROXY_MAINWINDOW_H
+#endif // GRAPHICSPROXYCORE_MAINWINDOW_H

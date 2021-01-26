@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef ACTIONMANAGER_H
-#define ACTIONMANAGER_H
+#ifndef SAVELOADPROJECTCORE_ACTIONMANAGER_H
+#define SAVELOADPROJECTCORE_ACTIONMANAGER_H
 
 #include <QObject>
 
@@ -45,4 +45,4 @@ private:
     QAction* m_saveProjectAsAction{nullptr};
 };
 
-#endif //  ACTIONMANAGER_H
+#endif // SAVELOADPROJECTCORE_ACTIONMANAGER_H

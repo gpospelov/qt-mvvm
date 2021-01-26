@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MULTILAYERTREEVIEW_H
-#define MULTILAYERTREEVIEW_H
+#ifndef LAYEREDITORCORE_MULTILAYERTREEVIEW_H
+#define LAYEREDITORCORE_MULTILAYERTREEVIEW_H
 
 #include <QWidget>
 #include <memory>
@@ -37,4 +37,4 @@ private:
     std::unique_ptr<ModelView::ViewModelDelegate> m_delegate;
 };
 
-#endif // MULTILAYERTREEVIEW_H
+#endif // LAYEREDITORCORE_MULTILAYERTREEVIEW_H

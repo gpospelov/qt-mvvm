@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef SAMPLEITEMS_H
-#define SAMPLEITEMS_H
+#ifndef NODEEDITORCORE_SAMPLEITEMS_H
+#define NODEEDITORCORE_SAMPLEITEMS_H
 
 //! @file sampleitems.h
 //! Classes to represent content of node editor.
@@ -93,4 +93,4 @@ public:
 
 } // namespace NodeEditor
 
-#endif
+#endif // NODEEDITORCORE_SAMPLEITEMS_H

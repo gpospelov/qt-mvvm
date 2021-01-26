@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef SAMPLEMODEL_H
-#define SAMPLEMODEL_H
+#ifndef TREEVIEWSCORE_SAMPLEMODEL_H
+#define TREEVIEWSCORE_SAMPLEMODEL_H
 
 #include "mvvm/model/sessionmodel.h"
 
@@ -26,4 +26,4 @@ private:
 
 } // namespace TreeViews
 
-#endif
+#endif // TREEVIEWSCORE_SAMPLEMODEL_H

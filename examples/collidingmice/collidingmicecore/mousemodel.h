@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MOUSEMODEL_H
-#define MOUSEMODEL_H
+#ifndef COLLIDINGMICECORE_MOUSEMODEL_H
+#define COLLIDINGMICECORE_MOUSEMODEL_H
 
 #include "mvvm/model/compounditem.h"
 #include "mvvm/model/sessionmodel.h"
@@ -45,4 +45,4 @@ private:
     void populateModel();
 };
 
-#endif // MOUSEMODEL_H
+#endif // COLLIDINGMICECORE_MOUSEMODEL_H

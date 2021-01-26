@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef GRAPHWIDGET_H
-#define GRAPHWIDGET_H
+#ifndef CONCURRENTPLOTCORE_GRAPHWIDGET_H
+#define CONCURRENTPLOTCORE_GRAPHWIDGET_H
 
 #include <QWidget>
 
@@ -47,4 +47,4 @@ private:
     JobManager* m_jobManager{nullptr};
 };
 
-#endif // GRAPHWIDGET_H
+#endif // CONCURRENTPLOTCORE_GRAPHWIDGET_H

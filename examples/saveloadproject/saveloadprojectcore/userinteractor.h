@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef USERINTERACTOR_H
-#define USERINTERACTOR_H
+#ifndef SAVELOADPROJECTCORE_USERINTERACTOR_H
+#define SAVELOADPROJECTCORE_USERINTERACTOR_H
 
 #include <string>
 
@@ -39,4 +39,4 @@ private:
     QWidget* m_parent{nullptr};
 };
 
-#endif // USERINTERACTOR_H
+#endif // SAVELOADPROJECTCORE_USERINTERACTOR_H

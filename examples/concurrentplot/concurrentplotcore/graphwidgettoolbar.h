@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef GRAPHWIDGETTOOLBAR_H
-#define GRAPHWIDGETTOOLBAR_H
+#ifndef CONCURRENTPLOTCORE_GRAPHWIDGETTOOLBAR_H
+#define CONCURRENTPLOTCORE_GRAPHWIDGETTOOLBAR_H
 
 #include <QToolBar>
 
@@ -46,4 +46,4 @@ private:
     QPushButton* cancel_button{nullptr}; //! Cancels simulation.
 };
 
-#endif // GRAPHWIDGETTOOLBAR_H
+#endif // CONCURRENTPLOTCORE_GRAPHWIDGETTOOLBAR_H

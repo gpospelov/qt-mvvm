@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef SAMPLEEDITORWIDGET_H
-#define SAMPLEEDITORWIDGET_H
+#ifndef TREEVIEWSCORE_SAMPLEEDITORWIDGET_H
+#define TREEVIEWSCORE_SAMPLEEDITORWIDGET_H
 
 #include <QWidget>
 #include <memory>
@@ -58,4 +58,4 @@ private:
 
 } // namespace TreeViews
 
-#endif // SAMPLEEDITORWIDGET_H
+#endif // TREEVIEWSCORE_SAMPLEEDITORWIDGET_H

@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef GRAPHICSPROXY_AXESRECTANGLEVIEW_H
-#define GRAPHICSPROXY_AXESRECTANGLEVIEW_H
+#ifndef GRAPHICSPROXYCORE_AXESRECTANGLEVIEW_H
+#define GRAPHICSPROXYCORE_AXESRECTANGLEVIEW_H
 
 #include <QGraphicsObject>
 
@@ -42,4 +42,4 @@ private:
 
 } // namespace GraphicsProxy
 
-#endif // GRAPHICSPROXY_AXESRECTANGLEVIEW_H
+#endif // GRAPHICSPROXYCORE_AXESRECTANGLEVIEW_H
