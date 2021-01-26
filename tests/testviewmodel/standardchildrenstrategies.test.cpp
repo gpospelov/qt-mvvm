@@ -239,7 +239,6 @@ TEST_F(StandardChildrenStrategiesTest, PropertyItemsStrategyWhenHidden)
     }
 }
 
-
 //! Testing PropertyItemsFlatStrategy.
 
 TEST_F(StandardChildrenStrategiesTest, PropertyItemsFlatStrategy)

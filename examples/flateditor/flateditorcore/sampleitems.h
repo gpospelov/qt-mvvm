@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef FLATEDITORCORE_ITEMS_H
-#define FLATEDITORCORE_ITEMS_H
+#ifndef FLATEDITORCORE_SAMPLEITEMS_H
+#define FLATEDITORCORE_SAMPLEITEMS_H
 
 #include "mvvm/model/compounditem.h"
 #include "mvvm/model/groupitem.h"
@@ -90,4 +90,4 @@ public:
     DistributionGroupItem();
 };
 
-#endif // FLATEDITORCORE_ITEMS_H
+#endif // FLATEDITORCORE_SAMPLEITEMS_H

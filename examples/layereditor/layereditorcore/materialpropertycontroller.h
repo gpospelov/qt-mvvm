@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MATERIALPROPERTYCONTROLLER_H
-#define MATERIALPROPERTYCONTROLLER_H
+#ifndef LAYEREDITORCORE_MATERIALPROPERTYCONTROLLER_H
+#define LAYEREDITORCORE_MATERIALPROPERTYCONTROLLER_H
 
 #include "mvvm/signals/modellistener.h"
 
@@ -27,4 +27,4 @@ private:
     SampleModel* m_sample_model{nullptr};
 };
 
-#endif //  MATERIALPROPERTYCONTROLLER_H
+#endif // LAYEREDITORCORE_MATERIALPROPERTYCONTROLLER_H

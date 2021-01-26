@@ -23,7 +23,6 @@ GraphWidget::GraphWidget(GraphModel* model, QWidget* parent)
     , m_toolbar(new GraphWidgetToolBar)
     , m_graphCanvas(new GraphCanvas)
     , m_propertyWidget(new GraphPropertyWidget)
-    , m_model(nullptr)
     , m_jobManager(new JobManager(this))
 {
     auto mainLayout = new QVBoxLayout;

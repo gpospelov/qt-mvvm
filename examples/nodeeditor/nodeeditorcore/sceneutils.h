@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef SCENEUTILS_H
-#define SCENEUTILS_H
+#ifndef NODEEDITORCORE_SCENEUTILS_H
+#define NODEEDITORCORE_SCENEUTILS_H
 
 //! @file sceneutils.h
 //! Collection of utility functions for graphics scene.
@@ -27,4 +27,4 @@ QRectF ConnectableViewRectangle();
 
 } // namespace NodeEditor
 
-#endif
+#endif // NODEEDITORCORE_SCENEUTILS_H

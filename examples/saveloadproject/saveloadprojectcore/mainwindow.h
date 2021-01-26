@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef SAVELOADPROJECTCORE_MAINWINDOW_H
+#define SAVELOADPROJECTCORE_MAINWINDOW_H
 
 #include <QMainWindow>
 #include <memory>
@@ -31,10 +31,10 @@ protected:
     void closeEvent(QCloseEvent* event);
 
 private:
-    void init_application();
-    void init_components();
-    void init_connections();
-    void write_settings();
+    void initApplication();
+    void initComponents();
+    void initConnections();
+    void writeSettings();
 
     std::unique_ptr<SampleModel> m_sampleModel;
     ActionManager* m_actionManager{nullptr};
@@ -42,4 +42,4 @@ private:
     ProjectHandler* m_projectHandler{nullptr};
 };
 
-#endif //  MAINWINDOW_H
+#endif // SAVELOADPROJECTCORE_MAINWINDOW_H

@@ -48,8 +48,8 @@
 **
 ****************************************************************************/
 
-#ifndef MOUSE_H
-#define MOUSE_H
+#ifndef COLLIDINGMICECORE_MOUSE_H
+#define COLLIDINGMICECORE_MOUSE_H
 
 #include <QGraphicsItem>
 
@@ -74,4 +74,4 @@ private:
 };
 //! [0]
 
-#endif
+#endif // COLLIDINGMICECORE_MOUSE_H

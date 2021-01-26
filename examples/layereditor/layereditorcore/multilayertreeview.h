@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MULTILAYERTREEVIEW_H
-#define MULTILAYERTREEVIEW_H
+#ifndef LAYEREDITORCORE_MULTILAYERTREEVIEW_H
+#define LAYEREDITORCORE_MULTILAYERTREEVIEW_H
 
 #include <QWidget>
 #include <memory>
@@ -32,9 +32,9 @@ public:
     void setItem(ModelView::SessionItem* multilayer);
 
 private:
-    QTreeView* m_treeView;
+    QTreeView* m_treeView{nullptr};
     std::unique_ptr<ModelView::ViewModel> m_viewModel;
     std::unique_ptr<ModelView::ViewModelDelegate> m_delegate;
 };
 
-#endif // MULTILAYERTREEVIEW_H
+#endif // LAYEREDITORCORE_MULTILAYERTREEVIEW_H

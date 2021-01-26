@@ -34,7 +34,7 @@ MouseItem::MouseItem() : ModelView::CompoundItem("MouseItem")
 MouseModel::MouseModel() : ModelView::SessionModel("MouseModel")
 {
     registerItem<MouseItem>();
-    populate_model();
+    populateModel();
     setUndoRedoEnabled(true);
     const int max_commands_to_keep = 1000;
     undoStack()->setUndoLimit(max_commands_to_keep);
@@ -66,7 +66,7 @@ void MouseModel::setUndoPosition(int value)
     }
 }
 
-void MouseModel::populate_model()
+void MouseModel::populateModel()
 {
     for (int i = 0; i < MouseCount; ++i) {
         auto item = insertItem<MouseItem>();

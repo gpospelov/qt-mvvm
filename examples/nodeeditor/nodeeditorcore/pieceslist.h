@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef PIECESLIST_H
-#define PIECESLIST_H
+#ifndef NODEEDITORCORE_PIECESLIST_H
+#define NODEEDITORCORE_PIECESLIST_H
 
 #include <QListWidget>
 
@@ -38,4 +38,4 @@ private:
 
 } // namespace NodeEditor
 
-#endif // PIECESLIST_H
+#endif // NODEEDITORCORE_PIECESLIST_H

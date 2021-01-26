@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef ITEM_CONSTANTS_H
-#define ITEM_CONSTANTS_H
+#ifndef CELLEDITORSCORE_ITEM_CONSTANTS_H
+#define CELLEDITORSCORE_ITEM_CONSTANTS_H
 
 #include <string>
 
@@ -20,4 +20,4 @@ const std::string DemoPropertiesType = "DemoProperties";
 
 } // namespace Constants
 
-#endif // ITEM_CONSTANTS_H
+#endif // CELLEDITORSCORE_ITEM_CONSTANTS_H

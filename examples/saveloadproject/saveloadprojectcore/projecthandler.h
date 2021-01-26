@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef PROJECTHANDLER_H
-#define PROJECTHANDLER_H
+#ifndef SAVELOADPROJECTCORE_PROJECTHANDLER_H
+#define SAVELOADPROJECTCORE_PROJECTHANDLER_H
 
 #include <QObject>
 #include <memory>
@@ -57,4 +57,4 @@ private:
     SampleModel* m_model{nullptr};
 };
 
-#endif // PROJECTHANDLER_H
+#endif // SAVELOADPROJECTCORE_PROJECTHANDLER_H

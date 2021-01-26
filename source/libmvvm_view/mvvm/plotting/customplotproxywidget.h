@@ -41,4 +41,4 @@ private:
 
 } // namespace ModelView
 
-#endif //  MVVM_PLOTTING_CUSTOMPLOTPROXYWIDGET_H
+#endif // MVVM_PLOTTING_CUSTOMPLOTPROXYWIDGET_H

@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef CONTAINEREDITORWIDGET_H
-#define CONTAINEREDITORWIDGET_H
+#ifndef DRAGANDMOVECORE_CONTAINEREDITORWIDGET_H
+#define DRAGANDMOVECORE_CONTAINEREDITORWIDGET_H
 
 #include <QWidget>
 #include <memory>
@@ -57,6 +57,6 @@ private:
     SampleModel* m_model{nullptr};
 };
 
-} // namespace DragAndView
+} // namespace DragAndMove
 
-#endif // CONTAINEREDITORWIDGET_H
+#endif // DRAGANDMOVECORE_CONTAINEREDITORWIDGET_H

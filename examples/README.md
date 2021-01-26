@@ -40,7 +40,7 @@
 
 <hr>
 
-### [Layereditor: how to creates custom tree layout and how to serialize application data.](layereditor/README.md)
+### [Layereditor: how to create a tree with a custom layout
 
 ![layereditor](../doc/assets/layereditor.png)
 

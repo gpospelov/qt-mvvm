@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef JOBMANAGER_H
-#define JOBMANAGER_H
+#ifndef CONCURRENTPLOTCORE_JOBMANAGER_H
+#define CONCURRENTPLOTCORE_JOBMANAGER_H
 
 #include "toysimulation.h"
 #include "mvvm/utils/threadsafestack.h"
@@ -45,4 +45,4 @@ private:
     int delay{0};
 };
 
-#endif // JOBMANAGER_H
+#endif // CONCURRENTPLOTCORE_JOBMANAGER_H

@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef GRAPHICSPROXY_REGIONOFINTERESTVIEW_H
-#define GRAPHICSPROXY_REGIONOFINTERESTVIEW_H
+#ifndef GRAPHICSPROXYCORE_REGIONOFINTERESTVIEW_H
+#define GRAPHICSPROXYCORE_REGIONOFINTERESTVIEW_H
 
 #include <QGraphicsItem>
 #include <memory>
@@ -58,4 +58,4 @@ private:
 
 } // namespace GraphicsProxy
 
-#endif // GRAPHICSPROXY_REGIONOFINTERESTVIEW_H
+#endif // GRAPHICSPROXYCORE_REGIONOFINTERESTVIEW_H

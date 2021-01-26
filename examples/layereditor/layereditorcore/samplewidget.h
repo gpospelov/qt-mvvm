@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef SAMPLEWIDGET_H
-#define SAMPLEWIDGET_H
+#ifndef LAYEREDITORCORE_SAMPLEWIDGET_H
+#define LAYEREDITORCORE_SAMPLEWIDGET_H
 
 #include <QWidget>
 
@@ -30,8 +30,8 @@ public:
     SampleWidget(ApplicationModels* models, QWidget* parent = nullptr);
 
 private:
-    QBoxLayout* create_top_layout();
-    QBoxLayout* create_bottom_layout();
+    QBoxLayout* createTopLayout();
+    QBoxLayout* createBottomLayout();
 
     ModelView::ItemsTreeView* m_materialTree{nullptr};
     ModelView::ItemsTreeView* m_sampleTree{nullptr};
@@ -40,4 +40,4 @@ private:
     ApplicationModels* m_models{nullptr};
 };
 
-#endif // SAMPLEWIDGET_H
+#endif // LAYEREDITORCORE_SAMPLEWIDGET_H

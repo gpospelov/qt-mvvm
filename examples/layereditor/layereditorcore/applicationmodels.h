@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef APPLICATIONMODELS_H
-#define APPLICATIONMODELS_H
+#ifndef LAYEREDITORCORE_APPLICATIONMODELS_H
+#define LAYEREDITORCORE_APPLICATIONMODELS_H
 
 #include <memory>
 
@@ -36,4 +36,4 @@ private:
     std::unique_ptr<ApplicationModelsImpl> p_impl;
 };
 
-#endif //  APPLICATIONMODELS_H
+#endif // LAYEREDITORCORE_APPLICATIONMODELS_H

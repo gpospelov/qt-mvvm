@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef GRAPHMODEL_H
-#define GRAPHMODEL_H
+#ifndef PLOTGRAPHSCORE_GRAPHMODEL_H
+#define PLOTGRAPHSCORE_GRAPHMODEL_H
 
 #include "mvvm/model/sessionmodel.h"
 
@@ -27,11 +27,11 @@ class GraphModel : public ModelView::SessionModel {
 public:
     GraphModel();
 
-    void add_graph();
+    void addGraph();
 
-    void remove_graph();
+    void removeGraph();
 
-    void randomize_graphs();
+    void randomizeGraphs();
 
     void undo();
 
@@ -39,11 +39,11 @@ public:
 
 private:
     ModelView::GraphViewportItem* viewport();
-    ModelView::ContainerItem* data_container();
+    ModelView::ContainerItem* dataContainer();
 
-    void init_model();
+    void populateModel();
 };
 
 } // namespace PlotGraphs
 
-#endif // GRAPHMODEL_H
+#endif // PLOTGRAPHSCORE_GRAPHMODEL_H

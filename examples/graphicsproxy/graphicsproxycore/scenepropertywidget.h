@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef GRAPHICSPROXY_SCENEPROPERTYWIDGET_H
-#define GRAPHICSPROXY_SCENEPROPERTYWIDGET_H
+#ifndef GRAPHICSPROXYCORE_SCENEPROPERTYWIDGET_H
+#define GRAPHICSPROXYCORE_SCENEPROPERTYWIDGET_H
 
 #include <QWidget>
 #include <memory>
@@ -36,9 +36,9 @@ public:
     void setModel(SceneModel* model);
 
 private:
-    void setup_slider();
+    void setupSlider();
+    QBoxLayout* createButtonLayout();
 
-    QBoxLayout* create_button_layout();
     QSlider* m_slider{nullptr};
     ModelView::ItemsTreeView* m_treeView{nullptr};
     SceneModel* m_model{nullptr};
@@ -46,4 +46,4 @@ private:
 
 } // namespace GraphicsProxy
 
-#endif // GRAPHICSPROXY_SCENEPROPERTYWIDGET_H
+#endif // GRAPHICSPROXYCORE_SCENEPROPERTYWIDGET_H

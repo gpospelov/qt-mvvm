@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef DRAGVIEWMODEL_H
-#define DRAGVIEWMODEL_H
+#ifndef DRAGANDMOVECORE_DRAGVIEWMODEL_H
+#define DRAGANDMOVECORE_DRAGVIEWMODEL_H
 
 #include "mvvm/viewmodel/propertytableviewmodel.h"
 
@@ -37,6 +37,6 @@ public:
                       const QModelIndex& parent) override;
 };
 
-} // namespace DragAndView
+} // namespace DragAndMove
 
-#endif // DRAGVIEWMODEL_H
+#endif // DRAGANDMOVECORE_DRAGVIEWMODEL_H

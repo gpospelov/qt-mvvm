@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef COLORMAPWIDGET_H
-#define COLORMAPWIDGET_H
+#ifndef PLOTCOLORMAPCORE_COLORMAPWIDGET_H
+#define PLOTCOLORMAPCORE_COLORMAPWIDGET_H
 
 #include <QWidget>
 
@@ -37,10 +37,9 @@ public:
     void setModel(ColorMapModel* model);
 
 private:
-    void init_actions();
-
-    QBoxLayout* create_left_layout();
-    QBoxLayout* create_right_layout();
+    void initActions();
+    QBoxLayout* createLeftLayout();
+    QBoxLayout* createRightLayout();
 
     QToolBar* m_toolBar{nullptr};
     QAction* m_resetViewportAction{nullptr};
@@ -52,4 +51,4 @@ private:
 
 } // namespace PlotColorMap
 
-#endif // COLORMAPWIDGET_H
+#endif // PLOTCOLORMAPCORE_COLORMAPWIDGET_H

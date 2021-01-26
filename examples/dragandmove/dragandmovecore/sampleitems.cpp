@@ -37,4 +37,4 @@ DemoContainerItem::DemoContainerItem() : CompoundItem(DemoContainerItemType)
     registerTag(TagInfo::universalTag(T_ITEMS, {DemoItemType}), /*set_default*/ true);
 }
 
-} // namespace DragAndView
+} // namespace DragAndMove

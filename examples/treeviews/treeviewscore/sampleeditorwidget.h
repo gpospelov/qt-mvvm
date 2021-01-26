@@ -7,11 +7,15 @@
 //
 // ************************************************************************** //
 
-#ifndef SAMPLEEDITORWIDGET_H
-#define SAMPLEEDITORWIDGET_H
+#ifndef TREEVIEWSCORE_SAMPLEEDITORWIDGET_H
+#define TREEVIEWSCORE_SAMPLEEDITORWIDGET_H
 
 #include <QWidget>
 #include <memory>
+
+class QTreeView;
+class QUndoView;
+class QBoxLayout;
 
 namespace ModelView {
 class SessionItem;
@@ -20,10 +24,6 @@ class AllItemsTreeView;
 class PropertyTreeView;
 class TopItemsTreeView;
 } // namespace ModelView
-
-class QTreeView;
-class QUndoView;
-class QBoxLayout;
 
 namespace TreeViews {
 
@@ -58,4 +58,4 @@ private:
 
 } // namespace TreeViews
 
-#endif // SAMPLEEDITORWIDGET_H
+#endif // TREEVIEWSCORE_SAMPLEEDITORWIDGET_H

@@ -40,12 +40,12 @@ SampleModel::SampleModel() : SessionModel("SampleModel")
     registerItem<MultiLayerItem>();
     registerItem<LayerItem>();
 
-    init_model();
+    populateModel();
 }
 
 //! Populats the model with some default content.
 
-void SampleModel::init_model()
+void SampleModel::populateModel()
 {
     auto multilayer = insertItem<MultiLayerItem>();
     insertItem<LayerItem>(multilayer);

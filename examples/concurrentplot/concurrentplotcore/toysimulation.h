@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef TOYSIMULATION_H
-#define TOYSIMULATION_H
+#ifndef CONCURRENTPLOTCORE_TOYSIMULATION_H
+#define CONCURRENTPLOTCORE_TOYSIMULATION_H
 
 #include "mvvm/utils/progresshandler.h"
 #include <vector>
@@ -47,4 +47,4 @@ private:
     ModelView::ProgressHandler progress_handler;
 };
 
-#endif //  TOYSIMULATION_H
+#endif // CONCURRENTPLOTCORE_TOYSIMULATION_H

@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef CONTAINEREDITORWIDGET_H
-#define CONTAINEREDITORWIDGET_H
+#ifndef SAVELOADPROJECTCORE_CONTAINEREDITORWIDGET_H
+#define SAVELOADPROJECTCORE_CONTAINEREDITORWIDGET_H
 
 #include <QWidget>
 #include <memory>
@@ -57,4 +57,4 @@ private:
     SampleModel* m_model{nullptr};
 };
 
-#endif // CONTAINEREDITORWIDGET_H
+#endif // SAVELOADPROJECTCORE_CONTAINEREDITORWIDGET_H

@@ -7,13 +7,11 @@
 //
 // ************************************************************************** //
 
-#ifndef GRAPHICSPROXY_MAINWINDOW_H
-#define GRAPHICSPROXY_MAINWINDOW_H
+#ifndef GRAPHICSPROXYCORE_MAINWINDOW_H
+#define GRAPHICSPROXYCORE_MAINWINDOW_H
 
 #include <QMainWindow>
 #include <memory>
-
-class QTabWidget;
 
 namespace GraphicsProxy {
 
@@ -32,13 +30,12 @@ protected:
     void closeEvent(QCloseEvent* event);
 
 private:
-    void init_application();
-    void write_settings();
-    void init_model();
+    void initApplication();
+    void writeSettings();
 
     std::unique_ptr<SceneModel> m_model;
 };
 
 } // namespace GraphicsProxy
 
-#endif //  GRAPHICSPROXY_MAINWINDOW_H
+#endif // GRAPHICSPROXYCORE_MAINWINDOW_H

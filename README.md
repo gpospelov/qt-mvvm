@@ -23,6 +23,8 @@ Main features of the framework are:
 + Property editors.
 + Flexible layout of Qt's trees and tables.
 
+![alt text](doc/assets/examples-thumb-3.png)
+
 ## Requirements
 
 + C++-17

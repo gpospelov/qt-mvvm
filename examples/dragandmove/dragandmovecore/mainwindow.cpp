@@ -12,7 +12,6 @@
 #include "samplemodel.h"
 #include <QCoreApplication>
 #include <QSettings>
-#include <QTabWidget>
 
 namespace {
 const QString main_window_group = "MainWindow";
@@ -22,24 +21,21 @@ const QString pos_key = "pos";
 
 namespace DragAndMove {
 
-MainWindow::MainWindow() : m_tabWidget(new QTabWidget), m_model(std::make_unique<SampleModel>())
+MainWindow::MainWindow() : m_model(std::make_unique<SampleModel>())
 {
-    setCentralWidget(m_tabWidget);
-    init_application();
-
-    m_tabWidget->addTab(new ModelEditorWidget(m_model.get()), "Drag and Move");
-    m_tabWidget->setCurrentIndex(m_tabWidget->count() - 1);
+    setCentralWidget(new ModelEditorWidget(m_model.get()));
+    initApplication();
 }
 
 MainWindow::~MainWindow() = default;
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {
-    write_settings();
+    writeSettings();
     QMainWindow::closeEvent(event);
 }
 
-void MainWindow::write_settings()
+void MainWindow::writeSettings()
 {
     QSettings settings;
     settings.beginGroup(main_window_group);
@@ -48,7 +44,7 @@ void MainWindow::write_settings()
     settings.endGroup();
 }
 
-void MainWindow::init_application()
+void MainWindow::initApplication()
 {
     QCoreApplication::setApplicationName("dragandmove");
     QCoreApplication::setApplicationVersion("0.1");
@@ -63,4 +59,4 @@ void MainWindow::init_application()
     }
 }
 
-} // namespace DragAndView
+} // namespace DragAndMove

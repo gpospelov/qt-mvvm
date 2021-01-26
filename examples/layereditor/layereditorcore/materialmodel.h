@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MATERIALMODEL_H
-#define MATERIALMODEL_H
+#ifndef LAYEREDITORCORE_MATERIALMODEL_H
+#define LAYEREDITORCORE_MATERIALMODEL_H
 
 #include "mvvm/model/compounditem.h"
 #include "mvvm/model/sessionmodel.h"
@@ -47,7 +47,7 @@ public:
     ModelView::ExternalProperty material_property(const std::string& id);
 
 private:
-    void init_model();
+    void populateModel();
 };
 
-#endif //  MATERIALMODEL_H
+#endif // LAYEREDITORCORE_MATERIALMODEL_H

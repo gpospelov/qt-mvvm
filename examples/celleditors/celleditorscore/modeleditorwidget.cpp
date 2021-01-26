@@ -31,8 +31,8 @@ ModelEditorWidget::ModelEditorWidget(SampleModel* model, QWidget* parent)
     auto mainLayout = new QHBoxLayout;
     mainLayout->setSpacing(10);
 
-    mainLayout->addLayout(create_left_layout(), 1);
-    mainLayout->addLayout(create_right_layout(), 3);
+    mainLayout->addLayout(createLeftLayout(), 1);
+    mainLayout->addLayout(createRightLayout(), 3);
 
     setLayout(mainLayout);
     setModel(model);
@@ -52,6 +52,7 @@ void ModelEditorWidget::setModel(SampleModel* model)
 
     // setting up right tree
     m_horizontalViewModel = std::make_unique<PropertyTableViewModel>(model);
+
     m_horizontalTree->setModel(m_horizontalViewModel.get());
     m_horizontalTree->setItemDelegate(m_delegate.get());
     m_horizontalTree->expandAll();
@@ -65,14 +66,14 @@ void ModelEditorWidget::setModel(SampleModel* model)
 
 ModelEditorWidget::~ModelEditorWidget() = default;
 
-QBoxLayout* ModelEditorWidget::create_left_layout()
+QBoxLayout* ModelEditorWidget::createLeftLayout()
 {
     auto result = new QVBoxLayout;
     result->addWidget(m_verticalTree);
     return result;
 }
 
-QBoxLayout* ModelEditorWidget::create_right_layout()
+QBoxLayout* ModelEditorWidget::createRightLayout()
 {
     auto result = new QVBoxLayout;
     result->addWidget(m_horizontalTree);

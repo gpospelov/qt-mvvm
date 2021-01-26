@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef SAMPLEMODEL_H
-#define SAMPLEMODEL_H
+#ifndef DRAGANDMOVECORE_SAMPLEMODEL_H
+#define DRAGANDMOVECORE_SAMPLEMODEL_H
 
 #include "mvvm/model/sessionmodel.h"
 
@@ -24,12 +24,12 @@ class SampleModel : public ModelView::SessionModel {
 public:
     SampleModel();
 
-    void append_random_item(ModelView::SessionItem* container);
+    void appendRandomItem(ModelView::SessionItem* container);
 
 private:
-    void init_model_content();
+    void populateModel();
 };
 
-} // namespace DragAndView
+} // namespace DragAndMove
 
-#endif
+#endif // DRAGANDMOVECORE_SAMPLEMODEL_H

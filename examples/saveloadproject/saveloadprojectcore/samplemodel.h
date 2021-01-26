@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef SAMPLEMODEL_H
-#define SAMPLEMODEL_H
+#ifndef SAVELOADPROJECTCORE_SAMPLEMODEL_H
+#define SAVELOADPROJECTCORE_SAMPLEMODEL_H
 
 #include "mvvm/model/compounditem.h"
 #include "mvvm/model/sessionmodel.h"
@@ -37,7 +37,7 @@ public:
     void appendNewItem(ModelView::SessionItem* container);
 
 private:
-    void initModelContent();
+    void populateModel();
 };
 
-#endif
+#endif // SAVELOADPROJECTCORE_SAMPLEMODEL_H

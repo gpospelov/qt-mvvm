@@ -7,13 +7,11 @@
 //
 // ************************************************************************** //
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef CELLEDITORSCORE_MAINWINDOW_H
+#define CELLEDITORSCORE_MAINWINDOW_H
 
 #include <QMainWindow>
 #include <memory>
-
-class QTabWidget;
 
 namespace CellEditors {
 
@@ -32,14 +30,13 @@ protected:
     void closeEvent(QCloseEvent* event) override;
 
 private:
-    void write_settings();
-    void init_application();
-    void init_models();
+    void writeSettings();
+    void initApplication();
+    void populateModel();
 
-    QTabWidget* m_tabWidget{nullptr};
     std::unique_ptr<SampleModel> m_model;
 };
 
 } // namespace CellEditors
 
-#endif //  MAINWINDOW_H
+#endif // CELLEDITORSCORE_MAINWINDOW_H

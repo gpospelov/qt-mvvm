@@ -28,7 +28,7 @@ only one single lattice. Particles can be rotated with the help of the
 
 - The list view on the left. Items from the list can be drag-and-dropped on the scene.
 - Node editor. Ports of the same color can be connected together.
-- Tree view present same data model as node editor in the form of object hierarchy.
+- Tree view present same model as node editor in the form of object hierarchy.
 - Property editor shows all properties of currently selected node.
 
 ## Details.
@@ -38,9 +38,9 @@ only one single lattice. Particles can be rotated with the help of the
 The `ConnectableItem` is a base class for all items representing nodes. Doesn't
 have own visual representation. Serves as a building block for `SampleModel`. The
 `ConnectableView` is a counterpart of `ConnectableItem` on the graphics scene.
-The `ConnectableItemController` provides updates of view's position/appearance on
-graphics scene, when underlying item changes. Similarly, it provides update of
-item's properties while view is moved on the scene by the user.
+The `ConnectableItemController` provides updates of the view's position/appearance on
+the graphics scene when the underlying item changes. Similarly, it provides an update of
+the item's properties while the view is moved on the scene by the user.
 
 ### `NodePort, NodeConnection and NodeController`
 
@@ -50,10 +50,11 @@ Contains machinery to establish elastic connections between ports.
 ### `GraphicsScene and GraphicsSceneController`
 
 The `GraphicsSceneController` listens to the original `SampleModel` 
-and updates scene on model change. When item is removed from the model, the corresponding view will be removed too. When item is added to the model, 
-new view will be added to the scene.
-When elastic connection is established between two nodes, this triggers parent change request to the `SampleModel`. This in turn, leads to the
-connections in the node editor created as necessary to represent new parent/child relationships in the underlying model.
+and updates the scene on model change. When an item is removed from the model, the corresponding view will be removed too. When an item is added to the model, 
+a new view will be added to the scene.
+When the elastic connection is established between two nodes, this triggers a parent change request to the `SampleModel`. 
+This, in turn, leads to the update on the graphics scene. Views will be created and connected with elastic connections  
+to represent new parent/child relationships in the underlying model.
 
 ![plotgraphs](../../doc/assets/nodeeditor.gif)
 

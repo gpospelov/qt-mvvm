@@ -7,13 +7,11 @@
 //
 // ************************************************************************** //
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef PLOTCOLORMAPCORE_MAINWINDOW_H
+#define PLOTCOLORMAPCORE_MAINWINDOW_H
 
 #include <QMainWindow>
 #include <memory>
-
-class QTabWidget;
 
 namespace PlotColorMap {
 
@@ -31,14 +29,12 @@ protected:
     void closeEvent(QCloseEvent* event);
 
 private:
-    void init_application();
-    void write_settings();
-    void init_model();
+    void initApplication();
+    void writeSettings();
 
-    QTabWidget* m_tabWidget{nullptr};
     std::unique_ptr<ColorMapModel> m_model;
 };
 
 } // namespace PlotColorMap
 
-#endif //  MAINWINDOW_H
+#endif // PLOTCOLORMAPCORE_MAINWINDOW_H

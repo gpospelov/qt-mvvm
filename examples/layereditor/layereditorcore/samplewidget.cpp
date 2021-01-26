@@ -31,13 +31,13 @@ SampleWidget::SampleWidget(ApplicationModels* models, QWidget* parent)
     auto mainLayout = new QVBoxLayout;
     mainLayout->setSpacing(10);
 
-    mainLayout->addLayout(create_top_layout());
-    mainLayout->addLayout(create_bottom_layout());
+    mainLayout->addLayout(createTopLayout());
+    mainLayout->addLayout(createBottomLayout());
 
     setLayout(mainLayout);
 }
 
-QBoxLayout* SampleWidget::create_top_layout()
+QBoxLayout* SampleWidget::createTopLayout()
 {
     auto result = new QHBoxLayout;
 
@@ -49,7 +49,7 @@ QBoxLayout* SampleWidget::create_top_layout()
     return result;
 }
 
-QBoxLayout* SampleWidget::create_bottom_layout()
+QBoxLayout* SampleWidget::createBottomLayout()
 {
     auto result = new QHBoxLayout;
     result->addWidget(m_materialTableWidget);

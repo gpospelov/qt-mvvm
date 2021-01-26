@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef ITEM_CONSTANTS_H
-#define ITEM_CONSTANTS_H
+#ifndef TREEVIEWSCORE_ITEM_CONSTANTS_H
+#define TREEVIEWSCORE_ITEM_CONSTANTS_H
 
 #include <string>
 
@@ -29,4 +29,4 @@ const std::string ShapeGroupItemType = "ShapeGroup";
 
 } // namespace Constants
 
-#endif // ITEM_CONSTANTS_H
+#endif // TREEVIEWSCORE_ITEM_CONSTANTS_H

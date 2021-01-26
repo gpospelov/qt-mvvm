@@ -74,4 +74,4 @@ template <typename T> inline std::vector<T*> GraphicsScene::selectedViewItems()
 
 } // namespace NodeEditor
 
-#endif //  NODEEDITORCORE_GRAPHICSSCENE_H
+#endif // NODEEDITORCORE_GRAPHICSSCENE_H

@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef GRAPHMODEL_H
-#define GRAPHMODEL_H
+#ifndef CONCURRENTPLOTCORE_GRAPHMODEL_H
+#define CONCURRENTPLOTCORE_GRAPHMODEL_H
 
 #include "mvvm/model/sessionmodel.h"
 
@@ -31,4 +31,4 @@ private:
     void add_graph(ModelView::ContainerItem* container, ModelView::GraphViewportItem* viewport);
 };
 
-#endif // GRAPHMODEL_H
+#endif // CONCURRENTPLOTCORE_GRAPHMODEL_H

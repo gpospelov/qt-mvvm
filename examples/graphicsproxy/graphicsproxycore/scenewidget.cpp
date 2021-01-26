@@ -39,8 +39,8 @@ SceneWidget::SceneWidget(SceneModel* model, QWidget* parent)
 
     auto centralLayout = new QHBoxLayout;
 
-    centralLayout->addLayout(create_left_layout(), 3);
-    centralLayout->addLayout(create_right_layout(), 1);
+    centralLayout->addLayout(createLeftLayout(), 3);
+    centralLayout->addLayout(createRightLayout(), 1);
 
     mainLayout->addWidget(m_toolBar);
     mainLayout->addLayout(centralLayout);
@@ -49,12 +49,12 @@ SceneWidget::SceneWidget(SceneModel* model, QWidget* parent)
 
     m_propertyWidget->setModel(model);
     m_colorMapCanvas->setItem(model->topItem<ColorMapViewportItem>());
-    init_actions();
+    initActions();
 
     m_graphicsScene->setContext(m_colorMapCanvas, model->topItem<RegionOfInterestItem>());
 }
 
-void SceneWidget::init_actions()
+void SceneWidget::initActions()
 {
     const int toolbar_icon_size = 24;
     m_toolBar->setIconSize(QSize(toolbar_icon_size, toolbar_icon_size));
@@ -78,14 +78,14 @@ void SceneWidget::init_actions()
     m_toolBar->addAction(m_setViewportToRoiAction);
 }
 
-QBoxLayout* SceneWidget::create_left_layout()
+QBoxLayout* SceneWidget::createLeftLayout()
 {
     auto result = new QVBoxLayout;
     result->addWidget(m_graphicsView);
     return result;
 }
 
-QBoxLayout* SceneWidget::create_right_layout()
+QBoxLayout* SceneWidget::createRightLayout()
 {
     auto result = new QVBoxLayout;
     result->addWidget(m_propertyWidget);

@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef GRAPHICSPROXY_SIZEHANDLEELEMENT_H
-#define GRAPHICSPROXY_SIZEHANDLEELEMENT_H
+#ifndef GRAPHICSPROXYCORE_SIZEHANDLEELEMENT_H
+#define GRAPHICSPROXYCORE_SIZEHANDLEELEMENT_H
 
 #include <QGraphicsItem>
 #include <vector>
@@ -74,4 +74,4 @@ private:
 
 } // namespace GraphicsProxy
 
-#endif // GRAPHICSPROXY_SIZEHANDLEELEMENT_H
+#endif // GRAPHICSPROXYCORE_SIZEHANDLEELEMENT_H

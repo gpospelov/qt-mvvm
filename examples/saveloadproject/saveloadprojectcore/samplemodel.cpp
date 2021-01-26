@@ -48,7 +48,7 @@ DemoItem::DemoItem() : CompoundItem(DemoItemType)
 SampleModel::SampleModel() : SessionModel("SampleModel")
 {
     registerItem<DemoItem>();
-    initModelContent();
+    populateModel();
     setUndoRedoEnabled(true);
 }
 
@@ -62,7 +62,7 @@ void SampleModel::appendNewItem(ModelView::SessionItem* container)
 
 //! Generates initial model content.
 
-void SampleModel::initModelContent()
+void SampleModel::populateModel()
 {
     auto container = insertItem<ModelView::ContainerItem>();
     appendNewItem(container);

@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef GRAPHICSPROXY_GRAPHICSSCENE_H
-#define GRAPHICSPROXY_GRAPHICSSCENE_H
+#ifndef GRAPHICSPROXYCORE_GRAPHICSSCENE_H
+#define GRAPHICSPROXYCORE_GRAPHICSSCENE_H
 
 #include <QGraphicsScene>
 #include <memory>
@@ -46,4 +46,4 @@ private:
 
 } // namespace GraphicsProxy
 
-#endif //  GRAPHICSPROXY_GRAPHICSSCENE_H
+#endif // GRAPHICSPROXYCORE_GRAPHICSSCENE_H

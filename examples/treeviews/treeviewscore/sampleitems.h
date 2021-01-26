@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef SAMPLEITEMS_H
-#define SAMPLEITEMS_H
+#ifndef TREEVIEWSCORE_SAMPLEITEMS_H
+#define TREEVIEWSCORE_SAMPLEITEMS_H
 
 //! @file items.h
 //! Collection of test items for our sample model.
@@ -101,4 +101,4 @@ public:
 
 } // namespace TreeViews
 
-#endif // SAMPLEITEMS_H
+#endif // TREEVIEWSCORE_SAMPLEITEMS_H

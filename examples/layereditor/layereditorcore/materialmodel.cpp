@@ -51,7 +51,7 @@ void SLDMaterialItem::set_properties(const std::string& name, const QColor& colo
 MaterialModel::MaterialModel() : SessionModel("MaterialModel")
 {
     setItemCatalogue(CreateItemCatalogue());
-    init_model();
+    populateModel();
 }
 
 //! Returns default property representing non-existent material.
@@ -75,7 +75,7 @@ std::vector<ExternalProperty> MaterialModel::material_data()
                 auto text = material->property<std::string>(SLDMaterialItem::P_NAME);
                 auto color = material->property<QColor>(SLDMaterialItem::P_COLOR);
                 auto id = material->identifier();
-                result.push_back(ExternalProperty(text, color, id));
+                result.emplace_back(ExternalProperty(text, color, id));
             }
         }
     }
@@ -96,7 +96,7 @@ ExternalProperty MaterialModel::material_property(const std::string& id)
 
 //! Populates the model with some default content.
 
-void MaterialModel::init_model()
+void MaterialModel::populateModel()
 {
     auto container = insertItem<ModelView::ContainerItem>();
     auto material = insertItem<SLDMaterialItem>(container);

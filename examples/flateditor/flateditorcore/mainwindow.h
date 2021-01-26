@@ -7,14 +7,13 @@
 //
 // ************************************************************************** //
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef FLATEDITORCORE_MAINWINDOW_H
+#define FLATEDITORCORE_MAINWINDOW_H
 
 #include <QMainWindow>
 #include <memory>
 
 class SampleModel;
-class QTabWidget;
 
 //! The main window of this application.
 
@@ -29,11 +28,10 @@ protected:
     void closeEvent(QCloseEvent* event);
 
 private:
-    void init_application();
-    void write_settings();
+    void initApplication();
+    void writeSettings();
 
-    QTabWidget* m_tabWidget{nullptr};
-    std::unique_ptr<SampleModel> m_sample_model;
+    std::unique_ptr<SampleModel> m_sampleModel;
 };
 
-#endif //  MAINWINDOW_H
+#endif // FLATEDITORCORE_MAINWINDOW_H

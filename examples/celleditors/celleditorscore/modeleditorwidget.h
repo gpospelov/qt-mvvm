@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MODELEDITORWIDGET_H
-#define MODELEDITORWIDGET_H
+#ifndef CELLEDITORSCORE_MODELEDITORWIDGET_H
+#define CELLEDITORSCORE_MODELEDITORWIDGET_H
 
 #include <QWidget>
 #include <memory>
@@ -38,8 +38,8 @@ public:
     void setModel(SampleModel* model);
 
 private:
-    QBoxLayout* create_left_layout();
-    QBoxLayout* create_right_layout();
+    QBoxLayout* createLeftLayout();
+    QBoxLayout* createRightLayout();
 
     QTreeView* m_verticalTree{nullptr};
     QTreeView* m_horizontalTree{nullptr};
@@ -52,4 +52,4 @@ private:
 
 } // namespace CellEditors
 
-#endif // MODELEDITORWIDGET_H
+#endif // CELLEDITORSCORE_MODELEDITORWIDGET_H

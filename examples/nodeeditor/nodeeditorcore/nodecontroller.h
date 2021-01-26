@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef NODECONTROLLER_H
-#define NODECONTROLLER_H
+#ifndef NODEEDITORCORE_NODECONTROLLER_H
+#define NODEEDITORCORE_NODECONTROLLER_H
 
 //! Node editor: original code is taken from
 //! http://algoholic.eu/qnodeseditor-qt-nodesports-based-data-processing-flow-editor/
@@ -53,4 +53,4 @@ private:
 
 } // namespace NodeEditor
 
-#endif // NODECONTROLLER_H
+#endif // NODEEDITORCORE_NODECONTROLLER_H

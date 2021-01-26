@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef CONNECTABLEITEM_H
-#define CONNECTABLEITEM_H
+#ifndef NODEEDITORCORE_CONNECTABLEITEM_H
+#define NODEEDITORCORE_CONNECTABLEITEM_H
 
 #include "portinfo.h"
 #include "mvvm/model/compounditem.h"
@@ -46,4 +46,4 @@ public:
 
 } // namespace NodeEditor
 
-#endif // CONNECTABLEITEM_H
+#endif // NODEEDITORCORE_CONNECTABLEITEM_H

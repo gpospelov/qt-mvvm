@@ -12,7 +12,6 @@
 #include "scenewidget.h"
 #include <QCoreApplication>
 #include <QSettings>
-#include <QTabWidget>
 
 namespace {
 const QString main_window_group = "MainWindow";
@@ -25,19 +24,18 @@ namespace GraphicsProxy {
 MainWindow::MainWindow() : m_model(std::make_unique<SceneModel>())
 {
     setCentralWidget(new SceneWidget(m_model.get()));
-
-    init_application();
+    initApplication();
 }
 
 MainWindow::~MainWindow() = default;
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {
-    write_settings();
+    writeSettings();
     QMainWindow::closeEvent(event);
 }
 
-void MainWindow::init_application()
+void MainWindow::initApplication()
 {
     QCoreApplication::setApplicationName("graphicsproxy");
     QCoreApplication::setApplicationVersion("0.1");
@@ -52,7 +50,7 @@ void MainWindow::init_application()
     }
 }
 
-void MainWindow::write_settings()
+void MainWindow::writeSettings()
 {
     QSettings settings;
     settings.beginGroup(main_window_group);

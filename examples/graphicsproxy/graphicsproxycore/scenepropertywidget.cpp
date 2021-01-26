@@ -30,7 +30,7 @@ ScenePropertyWidget::ScenePropertyWidget(SceneModel* model, QWidget* parent)
     setLayout(mainLayout);
     setModel(model);
 
-    setup_slider();
+    setupSlider();
 }
 
 void ScenePropertyWidget::setModel(SceneModel* model)
@@ -45,7 +45,7 @@ void ScenePropertyWidget::setModel(SceneModel* model)
 
 //! Slider to regenerate the data in the model.
 
-void ScenePropertyWidget::setup_slider()
+void ScenePropertyWidget::setupSlider()
 {
     m_slider->setOrientation(Qt::Horizontal);
     m_slider->setRange(0, 100);

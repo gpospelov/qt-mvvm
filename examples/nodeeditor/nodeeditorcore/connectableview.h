@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef CONNECTABLEVIEW_H
-#define CONNECTABLEVIEW_H
+#ifndef NODEEDITORCORE_CONNECTABLEVIEW_H
+#define NODEEDITORCORE_CONNECTABLEVIEW_H
 
 #include <QGraphicsItem>
 #include <memory>
@@ -73,4 +73,4 @@ template <typename T> QList<T*> ConnectableView::ports() const
 
 } // namespace NodeEditor
 
-#endif
+#endif // NODEEDITORCORE_CONNECTABLEVIEW_H

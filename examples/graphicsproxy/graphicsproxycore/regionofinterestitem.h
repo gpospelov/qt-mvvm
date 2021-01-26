@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef GRAPHICSPROXY_REGIONOFINTERESTITEM_H
-#define GRAPHICSPROXY_REGIONOFINTERESTITEM_H
+#ifndef GRAPHICSPROXYCORE_REGIONOFINTERESTITEM_H
+#define GRAPHICSPROXYCORE_REGIONOFINTERESTITEM_H
 
 #include "mvvm/model/compounditem.h"
 
@@ -37,4 +37,4 @@ public:
 
 } // namespace GraphicsProxy
 
-#endif // GRAPHICSPROXY_REGIONOFINTERESTITEM_H
+#endif // GRAPHICSPROXYCORE_REGIONOFINTERESTITEM_H

@@ -30,12 +30,12 @@ std::unique_ptr<ModelView::ItemCatalogue> CreateItemCatalogue()
 SampleModel::SampleModel() : SessionModel("SampleModel")
 {
     setItemCatalogue(CreateItemCatalogue());
-    init_model();
+    populateModel();
 }
 
 //! Provides initial model content.
 
-void SampleModel::init_model()
+void SampleModel::populateModel()
 {
     insertItem<BeamItem>();
     insertItem<DistributionGroupItem>();

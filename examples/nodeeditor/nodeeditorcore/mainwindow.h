@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef NODEEDITORCORE_MAINWINDOW_H
+#define NODEEDITORCORE_MAINWINDOW_H
 
 #include <QMainWindow>
 #include <memory>
@@ -33,8 +33,8 @@ protected:
     void closeEvent(QCloseEvent* event) override;
 
 private:
-    void write_settings();
-    void init_application();
+    void writeSettings();
+    void initApplication();
 
     std::unique_ptr<SampleModel> m_model;
     ModelEditorWidget* m_editorWidget{nullptr};
@@ -42,4 +42,4 @@ private:
 
 } // namespace NodeEditor
 
-#endif //  MAINWINDOW_H
+#endif // NODEEDITORCORE_MAINWINDOW_H

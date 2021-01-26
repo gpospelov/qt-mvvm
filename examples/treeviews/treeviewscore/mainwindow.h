@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef TREEVIEWSCORE_MAINWINDOW_H
+#define TREEVIEWSCORE_MAINWINDOW_H
 
 #include <QMainWindow>
 #include <memory>
@@ -30,13 +30,12 @@ protected:
     void closeEvent(QCloseEvent* event);
 
 private:
-    void init_application();
-    void write_settings();
-    void init_model();
+    void initApplication();
+    void writeSettings();
 
     std::unique_ptr<SampleModel> m_sample_model;
 };
 
 } // namespace TreeViews
 
-#endif //  MAINWINDOW_H
+#endif // TREEVIEWSCORE_MAINWINDOW_H

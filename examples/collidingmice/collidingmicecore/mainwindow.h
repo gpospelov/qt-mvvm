@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef COLLIDINGMICECORE_MAINWINDOW_H
+#define COLLIDINGMICECORE_MAINWINDOW_H
 
 #include <QMainWindow>
 #include <memory>
@@ -46,4 +46,4 @@ private:
     ModelView::AllItemsTreeView* itemsTreeView;
 };
 
-#endif //  MAINWINDOW_H
+#endif // COLLIDINGMICECORE_MAINWINDOW_H

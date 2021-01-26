@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef COLORMAPMODEL_H
-#define COLORMAPMODEL_H
+#ifndef PLOTCOLORMAPCORE_COLORMAPMODEL_H
+#define PLOTCOLORMAPCORE_COLORMAPMODEL_H
 
 #include "mvvm/model/sessionmodel.h"
 
@@ -34,4 +34,4 @@ private:
 
 } // namespace PlotColorMap
 
-#endif // COLORMAPMODEL_H
+#endif // PLOTCOLORMAPCORE_COLORMAPMODEL_H

@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef GRAPHWIDGET_H
-#define GRAPHWIDGET_H
+#ifndef PLOTGRAPHSCORE_GRAPHWIDGET_H
+#define PLOTGRAPHSCORE_GRAPHWIDGET_H
 
 #include <QWidget>
 #include <memory>
@@ -39,16 +39,14 @@ public:
     void setModel(GraphModel* model);
 
 private:
-    void init_actions();
-
-    QBoxLayout* create_left_layout();
-    QBoxLayout* create_right_layout();
+    void initActions();
+    QBoxLayout* createLeftLayout();
+    QBoxLayout* createRightLayout();
 
     QToolBar* m_toolBar{nullptr};
     QAction* m_resetViewportAction{nullptr};
     QAction* m_addGraphAction{nullptr};
     QAction* m_removeGraphAction{nullptr};
-
     ModelView::GraphCanvas* m_graphCanvas{nullptr};
     GraphPropertyWidget* m_propertyWidget{nullptr};
     GraphModel* m_model{nullptr};
@@ -56,4 +54,4 @@ private:
 
 } // namespace PlotGraphs
 
-#endif // GRAPHWIDGET_H
+#endif // PLOTGRAPHSCORE_GRAPHWIDGET_H
