@@ -36,6 +36,6 @@ private:
     std::unique_ptr<SampleModel> m_model;
 };
 
-} // namespace DragAndView
+} // namespace DragAndMove
 
 #endif //  MAINWINDOW_H

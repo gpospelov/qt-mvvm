@@ -55,7 +55,7 @@ void SetValueCommand::swap_values()
 {
     auto item = itemFromPath(p_impl->m_item_path);
     auto old = item->data<Variant>(p_impl->m_role);
-    auto result = item->setData(p_impl->m_value, p_impl->m_role, /*direct*/true);
+    auto result = item->setData(p_impl->m_value, p_impl->m_role, /*direct*/ true);
     setResult(result);
     setObsolete(!result);
     p_impl->m_value = old;

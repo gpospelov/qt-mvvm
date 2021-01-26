@@ -37,6 +37,6 @@ public:
                       const QModelIndex& parent) override;
 };
 
-} // namespace DragAndView
+} // namespace DragAndMove
 
 #endif // DRAGVIEWMODEL_H

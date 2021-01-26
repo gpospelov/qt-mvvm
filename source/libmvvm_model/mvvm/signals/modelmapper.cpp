@@ -119,19 +119,19 @@ void ModelMapper::callOnDataChange(SessionItem* item, int role)
 
 //! Notifies all callbacks subscribed to "item data is changed" event.
 
-void ModelMapper::callOnItemInserted(SessionItem* parent, const TagRow &tagrow)
+void ModelMapper::callOnItemInserted(SessionItem* parent, const TagRow& tagrow)
 {
     if (p_impl->m_active)
         p_impl->m_on_item_inserted(parent, tagrow);
 }
 
-void ModelMapper::callOnItemRemoved(SessionItem* parent, const TagRow &tagrow)
+void ModelMapper::callOnItemRemoved(SessionItem* parent, const TagRow& tagrow)
 {
     if (p_impl->m_active)
         p_impl->m_on_item_removed(parent, tagrow);
 }
 
-void ModelMapper::callOnItemAboutToBeRemoved(SessionItem* parent, const TagRow &tagrow)
+void ModelMapper::callOnItemAboutToBeRemoved(SessionItem* parent, const TagRow& tagrow)
 {
     if (p_impl->m_active)
         p_impl->m_on_item_about_removed(parent, tagrow);

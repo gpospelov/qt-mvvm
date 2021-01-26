@@ -103,4 +103,4 @@ void ModelEditorWidget::setupActions()
     }
 }
 
-} // namespace DragAndView
+} // namespace DragAndMove

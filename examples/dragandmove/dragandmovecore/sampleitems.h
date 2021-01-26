@@ -41,6 +41,6 @@ public:
     DemoContainerItem();
 };
 
-} // namespace DragAndView
+} // namespace DragAndMove
 
 #endif // SAMPLEITEMS_H

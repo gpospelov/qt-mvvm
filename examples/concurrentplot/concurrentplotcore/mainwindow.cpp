@@ -19,8 +19,7 @@ const QString size_key = "size";
 const QString pos_key = "pos";
 } // namespace
 
-MainWindow::MainWindow()
-    : m_graph_model(std::make_unique<GraphModel>())
+MainWindow::MainWindow() : m_graph_model(std::make_unique<GraphModel>())
 {
     setCentralWidget(new GraphWidget(m_graph_model.get()));
     initApplication();

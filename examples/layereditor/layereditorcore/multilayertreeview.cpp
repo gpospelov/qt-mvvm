@@ -11,10 +11,10 @@
 #include "applicationmodels.h"
 #include "customeditorfactory.h"
 #include "customlayerrowstrategy.h"
+#include "samplemodel.h"
 #include "mvvm/factories/viewmodelfactory.h"
 #include "mvvm/viewmodel/standardchildrenstrategies.h"
 #include "mvvm/viewmodel/viewmodeldelegate.h"
-#include "samplemodel.h"
 #include <QHeaderView>
 #include <QTreeView>
 #include <QVBoxLayout>

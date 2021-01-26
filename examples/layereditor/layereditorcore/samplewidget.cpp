@@ -12,9 +12,9 @@
 #include "materialmodel.h"
 #include "materialtablewidget.h"
 #include "multilayertreeview.h"
+#include "samplemodel.h"
 #include "mvvm/factories/viewmodelfactory.h"
 #include "mvvm/widgets/itemstreeview.h"
-#include "samplemodel.h"
 #include <QTreeView>
 #include <QVBoxLayout>
 

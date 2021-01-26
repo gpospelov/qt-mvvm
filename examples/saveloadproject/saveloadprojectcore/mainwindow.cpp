@@ -39,7 +39,8 @@ void MainWindow::closeEvent(QCloseEvent* event)
     if (m_projectHandler->canCloseProject()) {
         writeSettings();
         event->accept();
-    } else {
+    }
+    else {
         event->ignore();
     }
 }

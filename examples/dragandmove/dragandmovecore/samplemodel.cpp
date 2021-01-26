@@ -8,9 +8,9 @@
 // ************************************************************************** //
 
 #include "samplemodel.h"
+#include "sampleitems.h"
 #include "mvvm/utils/numericutils.h"
 #include "mvvm/widgets/widgetutils.h"
-#include "sampleitems.h"
 #include <QColor>
 
 namespace DragAndMove {

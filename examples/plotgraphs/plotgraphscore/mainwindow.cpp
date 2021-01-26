@@ -21,8 +21,7 @@ const QString pos_key = "pos";
 
 namespace PlotGraphs {
 
-MainWindow::MainWindow()
-    : m_graph_model(std::make_unique<GraphModel>())
+MainWindow::MainWindow() : m_graph_model(std::make_unique<GraphModel>())
 {
     setCentralWidget(new GraphWidget(m_graph_model.get()));
     initApplication();
