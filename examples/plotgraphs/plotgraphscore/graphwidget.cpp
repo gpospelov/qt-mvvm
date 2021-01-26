@@ -24,20 +24,16 @@ namespace PlotGraphs {
 GraphWidget::GraphWidget(GraphModel* model, QWidget* parent)
     : QWidget(parent)
     , m_toolBar(new QToolBar)
-    , m_resetViewportAction(nullptr)
-    , m_addGraphAction(nullptr)
-    , m_removeGraphAction(nullptr)
     , m_graphCanvas(new GraphCanvas)
     , m_propertyWidget(new GraphPropertyWidget)
-    , m_model(nullptr)
 {
     auto mainLayout = new QVBoxLayout;
     mainLayout->setSpacing(10);
 
     auto centralLayout = new QHBoxLayout;
 
-    centralLayout->addLayout(create_left_layout(), 3);
-    centralLayout->addLayout(create_right_layout(), 1);
+    centralLayout->addLayout(createLeftLayout(), 3);
+    centralLayout->addLayout(createRightLayout(), 1);
 
     mainLayout->addWidget(m_toolBar);
     mainLayout->addLayout(centralLayout);
@@ -45,7 +41,7 @@ GraphWidget::GraphWidget(GraphModel* model, QWidget* parent)
     setLayout(mainLayout);
     setModel(model);
 
-    init_actions();
+    initActions();
 }
 
 void GraphWidget::setModel(GraphModel* model)
@@ -60,7 +56,7 @@ void GraphWidget::setModel(GraphModel* model)
     m_graphCanvas->setItem(model->topItem<GraphViewportItem>());
 }
 
-void GraphWidget::init_actions()
+void GraphWidget::initActions()
 {
     const int toolbar_icon_size = 24;
     m_toolBar->setIconSize(QSize(toolbar_icon_size, toolbar_icon_size));
@@ -73,11 +69,11 @@ void GraphWidget::init_actions()
     connect(m_resetViewportAction, &QAction::triggered, on_reset);
 
     m_addGraphAction = new QAction("Add graph", this);
-    auto on_add_graph = [this]() { m_model->add_graph(); };
+    auto on_add_graph = [this]() { m_model->addGraph(); };
     connect(m_addGraphAction, &QAction::triggered, on_add_graph);
 
     m_removeGraphAction = new QAction("Remove graph", this);
-    auto on_remove_graph = [this]() { m_model->remove_graph(); };
+    auto on_remove_graph = [this]() { m_model->removeGraph(); };
     connect(m_removeGraphAction, &QAction::triggered, on_remove_graph);
 
     m_toolBar->addAction(m_resetViewportAction);
@@ -97,14 +93,14 @@ void GraphWidget::init_actions()
 
 GraphWidget::~GraphWidget() = default;
 
-QBoxLayout* GraphWidget::create_left_layout()
+QBoxLayout* GraphWidget::createLeftLayout()
 {
     auto result = new QVBoxLayout;
     result->addWidget(m_graphCanvas);
     return result;
 }
 
-QBoxLayout* GraphWidget::create_right_layout()
+QBoxLayout* GraphWidget::createRightLayout()
 {
     auto result = new QVBoxLayout;
     result->addWidget(m_propertyWidget);

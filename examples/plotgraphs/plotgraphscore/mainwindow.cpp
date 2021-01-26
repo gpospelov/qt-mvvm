@@ -12,7 +12,6 @@
 #include "graphwidget.h"
 #include <QCoreApplication>
 #include <QSettings>
-#include <QTabWidget>
 
 namespace {
 const QString main_window_group = "MainWindow";
@@ -23,25 +22,21 @@ const QString pos_key = "pos";
 namespace PlotGraphs {
 
 MainWindow::MainWindow()
-    : m_tabWidget(new QTabWidget), m_graph_model(std::make_unique<GraphModel>())
+    : m_graph_model(std::make_unique<GraphModel>())
 {
-    m_tabWidget->addTab(new GraphWidget(m_graph_model.get()), "Graphs");
-
-    m_tabWidget->setCurrentIndex(m_tabWidget->count() - 1);
-    setCentralWidget(m_tabWidget);
-
-    init_application();
+    setCentralWidget(new GraphWidget(m_graph_model.get()));
+    initApplication();
 }
 
 MainWindow::~MainWindow() = default;
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {
-    write_settings();
+    writeSettings();
     QMainWindow::closeEvent(event);
 }
 
-void MainWindow::init_application()
+void MainWindow::initApplication()
 {
     QCoreApplication::setApplicationName("plotgraphs");
     QCoreApplication::setApplicationVersion("0.1");
@@ -56,7 +51,7 @@ void MainWindow::init_application()
     }
 }
 
-void MainWindow::write_settings()
+void MainWindow::writeSettings()
 {
     QSettings settings;
     settings.beginGroup(main_window_group);

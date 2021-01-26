@@ -27,11 +27,11 @@ class GraphModel : public ModelView::SessionModel {
 public:
     GraphModel();
 
-    void add_graph();
+    void addGraph();
 
-    void remove_graph();
+    void removeGraph();
 
-    void randomize_graphs();
+    void randomizeGraphs();
 
     void undo();
 
@@ -39,9 +39,9 @@ public:
 
 private:
     ModelView::GraphViewportItem* viewport();
-    ModelView::ContainerItem* data_container();
+    ModelView::ContainerItem* dataContainer();
 
-    void init_model();
+    void populateModel();
 };
 
 } // namespace PlotGraphs

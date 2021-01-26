@@ -48,17 +48,17 @@ namespace PlotGraphs {
 
 GraphModel::GraphModel() : SessionModel("GraphModel")
 {
-    init_model();
+    populateModel();
 }
 
 //! Adds Graph1DItem with some random points.
 
-void GraphModel::add_graph()
+void GraphModel::addGraph()
 {
     if (undoStack())
         undoStack()->beginMacro("addGraph");
 
-    auto data = insertItem<Data1DItem>(data_container());
+    auto data = insertItem<Data1DItem>(dataContainer());
     data->setAxis<FixedBinAxisItem>(npoints, xmin, xmax);
     data->setValues(bin_values(ModelView::Utils::RandDouble(0.5, 1.0)));
 
@@ -72,13 +72,13 @@ void GraphModel::add_graph()
 
 //! Remove last graph and data item.
 
-void GraphModel::remove_graph()
+void GraphModel::removeGraph()
 {
     if (undoStack())
         undoStack()->beginMacro("removeGraph");
 
     const int graph_count = viewport()->itemCount(ViewportItem::T_ITEMS);
-    const int data_count = data_container()->itemCount(ContainerItem::T_ITEMS);
+    const int data_count = dataContainer()->itemCount(ContainerItem::T_ITEMS);
 
     if (graph_count != data_count)
         throw std::runtime_error("Number of graphs do not much number of data items.");
@@ -87,7 +87,7 @@ void GraphModel::remove_graph()
         removeItem(viewport(), {"", graph_count - 1});
 
     if (data_count)
-        removeItem(data_container(), {"", data_count - 1});
+        removeItem(dataContainer(), {"", data_count - 1});
 
     if (undoStack())
         undoStack()->endMacro();
@@ -95,9 +95,9 @@ void GraphModel::remove_graph()
 
 //! Put random noise to graph.
 
-void GraphModel::randomize_graphs()
+void GraphModel::randomizeGraphs()
 {
-    for (auto item : data_container()->items<Data1DItem>(ContainerItem::T_ITEMS)) {
+    for (auto item : dataContainer()->items<Data1DItem>(ContainerItem::T_ITEMS)) {
         auto values = item->binValues();
         std::transform(std::begin(values), std::end(values), std::begin(values),
                        [](auto x) { return x * ModelView::Utils::RandDouble(0.8, 1.2); });
@@ -126,12 +126,12 @@ GraphViewportItem* GraphModel::viewport()
 
 //! Returns container with data items.
 
-ContainerItem* GraphModel::data_container()
+ContainerItem* GraphModel::dataContainer()
 {
     return topItem<ContainerItem>();
 }
 
-void GraphModel::init_model()
+void GraphModel::populateModel()
 {
     auto container = insertItem<ContainerItem>();
     container->setDisplayName("Data container");
@@ -139,7 +139,7 @@ void GraphModel::init_model()
     auto viewport = insertItem<GraphViewportItem>();
     viewport->setDisplayName("Graph container");
 
-    add_graph();
+    addGraph();
     setUndoRedoEnabled(true);
 }
 

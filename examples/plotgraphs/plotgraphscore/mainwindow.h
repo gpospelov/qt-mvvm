@@ -13,8 +13,6 @@
 #include <QMainWindow>
 #include <memory>
 
-class QTabWidget;
-
 namespace PlotGraphs {
 
 class GraphModel;
@@ -32,11 +30,10 @@ protected:
     void closeEvent(QCloseEvent* event);
 
 private:
-    void init_application();
-    void write_settings();
-    void init_model();
+    void initApplication();
+    void writeSettings();
+    void populateModel();
 
-    QTabWidget* m_tabWidget{nullptr};
     std::unique_ptr<GraphModel> m_graph_model;
 };
 
