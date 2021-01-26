@@ -37,7 +37,7 @@ public:
     void appendNewItem(ModelView::SessionItem* container);
 
 private:
-    void initModelContent();
+    void populateModel();
 };
 
 #endif

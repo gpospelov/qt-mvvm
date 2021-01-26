@@ -40,6 +40,7 @@ private:
     QBoxLayout* createCurrentProjectLayout() const;
     QBoxLayout* createRecentProjectLayout();
     QWidget* createRecentProjectScrollArea();
+
     ProjectPaneWidget* m_currentProjectPane{nullptr};
     std::vector<ProjectPaneWidget*> m_recentProjectPanes;
 };

@@ -27,9 +27,9 @@ const QString pos_key = "pos";
 MainWindow::MainWindow()
     : m_sampleModel(std::make_unique<SampleModel>()), m_actionManager(new ActionManager(this))
 {
-    init_application();
-    init_components();
-    init_connections();
+    initApplication();
+    initComponents();
+    initConnections();
 }
 
 MainWindow::~MainWindow() = default;
@@ -37,10 +37,9 @@ MainWindow::~MainWindow() = default;
 void MainWindow::closeEvent(QCloseEvent* event)
 {
     if (m_projectHandler->canCloseProject()) {
-        write_settings();
+        writeSettings();
         event->accept();
-    }
-    else {
+    } else {
         event->ignore();
     }
 }
@@ -48,7 +47,7 @@ void MainWindow::closeEvent(QCloseEvent* event)
 //! Inits application. It should be called first, to make all possible usages of QSettings
 //! consistent among all widgets which relies on it.
 
-void MainWindow::init_application()
+void MainWindow::initApplication()
 {
     QCoreApplication::setApplicationName("saveloadproject");
     QCoreApplication::setApplicationVersion("0.1");
@@ -65,7 +64,7 @@ void MainWindow::init_application()
 
 //! Inits all main window components.
 
-void MainWindow::init_components()
+void MainWindow::initComponents()
 {
     auto central_widget = new QWidget;
     auto central_layout = new QHBoxLayout(central_widget);
@@ -84,7 +83,7 @@ void MainWindow::init_components()
 
 //! Setup main connections.
 
-void MainWindow::init_connections()
+void MainWindow::initConnections()
 {
     // connect ActionManager signals with ProjectHandler slots
     connect(m_actionManager, &ActionManager::createNewProjectRequest, m_projectHandler,
@@ -108,7 +107,7 @@ void MainWindow::init_connections()
     m_projectHandler->updateNames();
 }
 
-void MainWindow::write_settings()
+void MainWindow::writeSettings()
 {
     QSettings settings;
     settings.beginGroup(main_window_group);
