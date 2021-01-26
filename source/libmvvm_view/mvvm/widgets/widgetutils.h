@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_WIDGETS_UTILS_H
-#define MVVM_WIDGETS_UTILS_H
+#ifndef MVVM_WIDGETS_WIDGETUTILS_H
+#define MVVM_WIDGETS_WIDGETUTILS_H
 
 #include "mvvm/view_export.h"
 #include <QString>
@@ -82,4 +82,4 @@ MVVM_VIEW_EXPORT QStringList deserialize(const QByteArray& byteArray);
 
 } // namespace ModelView::Utils
 
-#endif // MVVM_WIDGETS_UTILS_H
+#endif // MVVM_WIDGETS_WIDGETUTILS_H

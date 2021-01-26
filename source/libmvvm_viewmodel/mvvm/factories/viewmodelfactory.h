@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_VIEWMODEL_STANDARDVIEWMODELS_H
-#define MVVM_VIEWMODEL_STANDARDVIEWMODELS_H
+#ifndef MVVM_FACTORIES_VIEWMODELFACTORY_H
+#define MVVM_FACTORIES_VIEWMODELFACTORY_H
 
 #include "mvvm/factories/viewmodelcontrollerfactory.h"
 #include "mvvm/viewmodel/viewmodel.h"
@@ -66,4 +66,4 @@ std::unique_ptr<ViewModel> CreateViewModel(SessionModel* session_model)
 
 } // namespace ModelView
 
-#endif // MVVM_VIEWMODEL_STANDARDVIEWMODELS_H
+#endif // MVVM_FACTORIES_VIEWMODELFACTORY_H

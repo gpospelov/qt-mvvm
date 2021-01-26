@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_SERIALIZATION_ITEMBACKUPSTRATEGY_H
-#define MVVM_SERIALIZATION_ITEMBACKUPSTRATEGY_H
+#ifndef MVVM_INTERFACES_ITEMBACKUPSTRATEGY_H
+#define MVVM_INTERFACES_ITEMBACKUPSTRATEGY_H
 
 #include "mvvm/model_export.h"
 #include <memory>
@@ -32,4 +32,4 @@ public:
 
 } // namespace ModelView
 
-#endif // MVVM_SERIALIZATION_ITEMBACKUPSTRATEGY_H
+#endif // MVVM_INTERFACES_ITEMBACKUPSTRATEGY_H

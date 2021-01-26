@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_VIEWMODEL_REFVIEWMODELCONTROLLER_H
-#define MVVM_VIEWMODEL_REFVIEWMODELCONTROLLER_H
+#ifndef MVVM_VIEWMODEL_VIEWMODELCONTROLLER_H
+#define MVVM_VIEWMODEL_VIEWMODELCONTROLLER_H
 
 #include "mvvm/model/tagrow.h"
 #include "mvvm/signals/modellistener.h"
@@ -64,4 +64,4 @@ private:
 
 } // namespace ModelView
 
-#endif // MVVM_VIEWMODEL_REFVIEWMODELCONTROLLER_H
+#endif // MVVM_VIEWMODEL_VIEWMODELCONTROLLER_H

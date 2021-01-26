@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_CORE_MODELDOCUMENTINTERFACE_H
-#define MVVM_CORE_MODELDOCUMENTINTERFACE_H
+#ifndef MVVM_INTERFACES_MODELDOCUMENTINTERFACE_H
+#define MVVM_INTERFACES_MODELDOCUMENTINTERFACE_H
 
 #include "mvvm/model_export.h"
 #include <string>
@@ -27,4 +27,4 @@ public:
 
 } // namespace ModelView
 
-#endif // MVVM_CORE_MODELDOCUMENTINTERFACE_H
+#endif // MVVM_INTERFACES_MODELDOCUMENTINTERFACE_H

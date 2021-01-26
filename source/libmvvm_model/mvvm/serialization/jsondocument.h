@@ -36,4 +36,4 @@ private:
 
 } // namespace ModelView
 
-#endif // MVVM_SERIALIZATION_ITEMBACKUPSTRATEGY_H
+#endif // MVVM_SERIALIZATION_JSONDOCUMENT_H

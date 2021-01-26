@@ -7,8 +7,8 @@
 //
 // ************************************************************************** //
 
-#ifndef MVVM_VIEWMODEL_VIEWITEMS_H
-#define MVVM_VIEWMODEL_VIEWITEMS_H
+#ifndef MVVM_VIEWMODEL_STANDARDVIEWITEMS_H
+#define MVVM_VIEWMODEL_STANDARDVIEWITEMS_H
 
 #include "mvvm/viewmodel/viewitem.h"
 
@@ -53,4 +53,4 @@ public:
 
 } // namespace ModelView
 
-#endif // MVVM_VIEWMODEL_VIEWITEMS_H
+#endif // MVVM_VIEWMODEL_STANDARDVIEWITEMS_H
