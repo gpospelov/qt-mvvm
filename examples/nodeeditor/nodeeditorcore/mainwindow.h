@@ -33,8 +33,8 @@ protected:
     void closeEvent(QCloseEvent* event) override;
 
 private:
-    void write_settings();
-    void init_application();
+    void writeSettings();
+    void initApplication();
 
     std::unique_ptr<SampleModel> m_model;
     ModelEditorWidget* m_editorWidget{nullptr};

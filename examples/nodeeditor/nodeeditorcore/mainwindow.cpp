@@ -25,18 +25,18 @@ MainWindow::MainWindow()
     : m_model(std::make_unique<SampleModel>()), m_editorWidget(new ModelEditorWidget(m_model.get()))
 {
     setCentralWidget(m_editorWidget);
-    init_application();
+    initApplication();
 }
 
 MainWindow::~MainWindow() = default;
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {
-    write_settings();
+    writeSettings();
     QMainWindow::closeEvent(event);
 }
 
-void MainWindow::write_settings()
+void MainWindow::writeSettings()
 {
     QSettings settings;
     settings.beginGroup(main_window_group);
@@ -45,7 +45,7 @@ void MainWindow::write_settings()
     settings.endGroup();
 }
 
-void MainWindow::init_application()
+void MainWindow::initApplication()
 {
     QCoreApplication::setApplicationName("nodeeditor");
     QCoreApplication::setApplicationVersion("0.1");
