@@ -8,7 +8,6 @@
 // ************************************************************************** //
 
 #include "google_test.h"
-#include <QDebug>
 #include <QJsonObject>
 #include "mvvm/model/modelutils.h"
 #include "mvvm/serialization/jsonmodelconverter.h"

@@ -15,7 +15,6 @@
 #include "mvvm/standarditems/colormapitem.h"
 #include "mvvm/standarditems/colormapviewportitem.h"
 #include <qcustomplot.h>
-#include <list>
 
 using namespace ModelView;
 

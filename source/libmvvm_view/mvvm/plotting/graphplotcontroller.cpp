@@ -8,7 +8,6 @@
 // ************************************************************************** //
 
 #include "mvvm/plotting/graphplotcontroller.h"
-#include "mvvm/model/comboproperty.h"
 #include "mvvm/plotting/data1dplotcontroller.h"
 #include "mvvm/plotting/pencontroller.h"
 #include "mvvm/standarditems/data1ditem.h"
