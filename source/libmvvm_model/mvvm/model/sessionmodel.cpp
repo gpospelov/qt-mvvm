@@ -10,15 +10,12 @@
 #include "mvvm/model/sessionmodel.h"
 #include "mvvm/commands/commandservice.h"
 #include "mvvm/factories/itemcataloguefactory.h"
-#include "mvvm/model/customvariants.h"
 #include "mvvm/model/itemcatalogue.h"
 #include "mvvm/model/itemfactory.h"
 #include "mvvm/model/itemmanager.h"
 #include "mvvm/model/itempool.h"
-#include "mvvm/model/itemutils.h"
 #include "mvvm/model/sessionitem.h"
 #include "mvvm/model/taginfo.h"
-#include "mvvm/model/tagrow.h"
 #include "mvvm/signals/modelmapper.h"
 
 using namespace ModelView;

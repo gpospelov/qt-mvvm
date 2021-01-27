@@ -8,7 +8,6 @@
 // ************************************************************************** //
 
 #include "mvvm/project/projectmanagerdecorator.h"
-#include "mvvm/interfaces/projectinterface.h"
 #include "mvvm/project/project_types.h"
 #include "mvvm/project/projectmanager.h"
 #include <stdexcept>
