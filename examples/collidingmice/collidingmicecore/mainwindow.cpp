@@ -10,7 +10,6 @@
 #include "mainwindow.h"
 #include "mouse.h"
 #include "mousemodel.h"
-#include "mvvm/model/modelutils.h"
 #include "mvvm/widgets/standardtreeviews.h"
 #include <QAction>
 #include <QDebug>

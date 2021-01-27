@@ -10,7 +10,6 @@
 #include "mousemodel.h"
 #include "mvvm/factories/modeldocumentfactory.h"
 #include "mvvm/interfaces/undostackinterface.h"
-#include "mvvm/utils/reallimits.h"
 #include "mvvm/widgets/widgetutils.h"
 #include <QColor>
 #include <algorithm>
