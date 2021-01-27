@@ -14,7 +14,6 @@
 #include "mvvm/model/itemutils.h"
 #include "mvvm/viewmodel/defaultviewmodel.h"
 #include "mvvm/viewmodel/standardviewitems.h"
-#include "mvvm/viewmodel/viewmodelutils.h"
 #include <QSignalSpy>
 
 using namespace ModelView;
